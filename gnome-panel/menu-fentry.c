@@ -18,7 +18,8 @@
 #include <string.h>
 #include <limits.h>
 #include <errno.h>
-#include <libgnomeui.h>
+
+#include <libgnome/gnome-util.h>
 
 #include "panel-include.h"
 
@@ -243,8 +244,11 @@ get_mfiles_from_menudir (const char *menudir)
 }
 
 char *
-get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
+get_applet_goad_id_from_ditem(GnomeDesktopItem *ii)
 {
+  printf ("GET THAT GOAD OUT OF HERE...menu-fentry.c get_applet_gaod_id_from_ditem\n");
+  return NULL;
+  /*
 	int i;
 	int constantlen = strlen ("--activate-goad-server");
 
@@ -259,9 +263,9 @@ get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
 	} else {
 		if (ii->exec[0] == NULL)
 			return NULL;
-		/*this is here as a horrible hack since that's the way it
-		  used to work, but now one should make the .desktop type
-		  PanelApplet*/
+		//this is here as a horrible hack since that's the way it
+		//  used to work, but now one should make the .desktop type
+		//  PanelApplet
 		for(i=1;ii->exec[i];i++) {
 			if(strncmp("--activate-goad-server",
 				   ii->exec[i],constantlen)==0) {
@@ -273,6 +277,7 @@ get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
 		}
 	}
 	return NULL;
+*/
 }
 
 static void
@@ -348,6 +353,7 @@ fr_free (FileRec *fr, gboolean free_fr)
 static void
 fr_fill_dir(FileRec *fr, int sublevels)
 {
+#ifdef FIXME
 	GSList *flist;
 	struct stat s;
 	DirRec *dr = (DirRec *)fr;
@@ -407,7 +413,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 				dr->recs = g_slist_prepend(dr->recs,ffr);
 			}
 		} else {
-			GnomeDesktopEntry *dentry;
+			GnomeDesktopItem *ditem;
 			char *tryexec_path;
 			char *p = strrchr(name,'.');
 			if (p == NULL ||
@@ -419,21 +425,21 @@ fr_fill_dir(FileRec *fr, int sublevels)
 
 			tryexec_path = NULL;
 
-			dentry = gnome_desktop_entry_load_unconditional (name);
-			if (dentry != NULL &&
-			    dentry->tryexec != NULL) {
-				tryexec_path = panel_is_program_in_path (dentry->tryexec);
+			ditem = gnome_desktop_item_load_unconditional (name);
+			if (ditem != NULL &&
+			    ditem->tryexec != NULL) {
+				tryexec_path = panel_is_program_in_path (ditem->tryexec);
 				if (tryexec_path == NULL) {
-					dr->tryexecs = g_slist_prepend (dr->tryexecs, dentry->tryexec);
-					dentry->tryexec = NULL;
-					gnome_desktop_entry_free (dentry);
-					dentry = NULL;
+					dr->tryexecs = g_slist_prepend (dr->tryexecs, ditem->tryexec);
+					ditem->tryexec = NULL;
+					gnome_desktop_item_free (ditem);
+					ditem = NULL;
 				}
 			}
-			if (dentry != NULL) {
+			if (ditem != NULL) {
 				ffr = g_chunk_new0 (FileRec, file_chunk);
-				if (dentry->type != NULL &&
-				    strcasecmp_no_locale (dentry->type,
+				if (ditem->type != NULL &&
+				    strcasecmp_no_locale (ditem->type,
 							  "separator") == 0)
 					ffr->type = FILE_REC_SEP;
 				else
@@ -443,15 +449,15 @@ fr_fill_dir(FileRec *fr, int sublevels)
 				ffr->mtime = s.st_mtime;
 				ffr->last_stat = curtime;
 				ffr->parent = dr;
-				ffr->icon = dentry->icon;
-				dentry->icon = NULL;
-				ffr->fullname = dentry->name;
-				ffr->comment = g_strdup (dentry->comment);
-				dentry->name = NULL;
+				ffr->icon = ditem->icon;
+				ditem->icon = NULL;
+				ffr->fullname = ditem->name;
+				ffr->comment = g_strdup (ditem->comment);
+				ditem->name = NULL;
 				ffr->tryexec_path = tryexec_path;
 				ffr->goad_id =
-					get_applet_goad_id_from_dentry (dentry);
-				gnome_desktop_entry_free (dentry);
+					get_applet_goad_id_from_ditem (ditem);
+				gnome_desktop_item_free (ditem);
 
 				dr->recs = g_slist_prepend (dr->recs, ffr);
 			} else {
@@ -462,12 +468,14 @@ fr_fill_dir(FileRec *fr, int sublevels)
 	dr->recs = g_slist_reverse (dr->recs);
 
 	g_free (mergedir);
+#endif
 }
 
 FileRec *
 fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 	     struct stat *merge_dstat, int sublevels)
 {
+#ifdef FIXME
 	char *fname;
 	struct stat s;
 	FileRec *fr;
@@ -523,20 +531,20 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 
 	s.st_mtime = 0;
 	fname = g_concat_dir_and_file (mdir, ".directory");
-	if (dr->dentrylast_stat >= curtime-STAT_EVERY ||
+	if (dr->ditemlast_stat >= curtime-STAT_EVERY ||
 	    stat (fname, &s) != -1) {
-		GnomeDesktopEntry *dentry;
-		dentry = gnome_desktop_entry_load(fname);
-		if (dentry != NULL) {
+		GnomeDesktopItem *ditem;
+		ditem = gnome_desktop_item_load(fname);
+		if (ditem != NULL) {
 			g_free (fr->icon);
-			fr->icon = dentry->icon;
-			dentry->icon = NULL;
+			fr->icon = ditem->icon;
+			ditem->icon = NULL;
 			g_free (fr->fullname);
-			fr->fullname = dentry->name;
+			fr->fullname = ditem->name;
 			g_free (fr->comment);
-			fr->comment = g_strdup (dentry->comment);
-			dentry->name = NULL;
-			gnome_desktop_entry_free (dentry);
+			fr->comment = g_strdup (ditem->comment);
+			ditem->name = NULL;
+			gnome_desktop_item_free (ditem);
 		} else {
 			g_free (fr->icon);
 			fr->icon = NULL;
@@ -547,8 +555,8 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 		}
 		/*if we statted*/
 		if (s.st_mtime != 0)
-			dr->dentrylast_stat = curtime;
-		dr->dentrymtime = s.st_mtime;
+			dr->ditemlast_stat = curtime;
+		dr->ditemmtime = s.st_mtime;
 	}
 	g_free (fname);
 	
@@ -562,6 +570,9 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 		fr_fill_dir (fr, sublevels);
 
 	return fr;
+#else
+	return NULL;
+#endif
 }
 
 
@@ -595,6 +606,7 @@ fr_replace (FileRec *fr)
 FileRec *
 fr_check_and_reread (FileRec *fr)
 {
+#ifdef FIXME
 	DirRec *dr = (DirRec *)fr;
 	FileRec *ret = fr;
 	time_t curtime;
@@ -661,11 +673,11 @@ fr_check_and_reread (FileRec *fr)
 				ddr = (DirRec *)ffr;
 				p = g_concat_dir_and_file(ffr->name,
 							  ".directory");
-				if (ddr->dentrylast_stat >= curtime-STAT_EVERY) {
+				if (ddr->ditemlast_stat >= curtime-STAT_EVERY) {
 					g_free (p);
 					break;
 				}
-				dr->dentrylast_stat = curtime;
+				dr->ditemlast_stat = curtime;
 				if(stat(p,&s)==-1) {
 					/* perhaps the directory is gone */
 					if ( ! panel_file_exists (ffr->name)) {
@@ -674,33 +686,33 @@ fr_check_and_reread (FileRec *fr)
 					}
 					/* if not, we're just now missing a
 					 * desktop file */
-					if(dr->dentrymtime) {
+					if(dr->ditemmtime) {
 						g_free(ffr->icon);
 						ffr->icon = NULL;
 						g_free(ffr->fullname);
 						ffr->fullname = NULL;
 						g_free(ffr->comment);
 						ffr->comment = NULL;
-						ddr->dentrymtime = 0;
+						ddr->ditemmtime = 0;
 						any_change = TRUE;
 					}
-					dr->dentrylast_stat = 0;
+					dr->ditemlast_stat = 0;
 					g_free(p);
 					break;
 				}
-				if(ddr->dentrymtime != s.st_mtime) {
-					GnomeDesktopEntry *dentry;
-					dentry = gnome_desktop_entry_load(p);
-					if(dentry) {
+				if(ddr->ditemmtime != s.st_mtime) {
+					GnomeDesktopItem *ditem;
+					ditem = gnome_desktop_item_load(p);
+					if(ditem) {
 						g_free(ffr->icon);
-						ffr->icon = dentry->icon;
-						dentry->icon = NULL;
+						ffr->icon = ditem->icon;
+						ditem->icon = NULL;
 						g_free(ffr->fullname);
-						ffr->fullname = dentry->name;
+						ffr->fullname = ditem->name;
 						g_free(ffr->comment);
-						ffr->comment = g_strdup (dentry->comment);
-						dentry->name = NULL;
-						gnome_desktop_entry_free(dentry);
+						ffr->comment = g_strdup (ditem->comment);
+						ditem->name = NULL;
+						gnome_desktop_item_free(ditem);
 					} else {
 						g_free(ffr->icon);
 						ffr->icon = NULL;
@@ -709,7 +721,7 @@ fr_check_and_reread (FileRec *fr)
 						g_free(ffr->comment);
 						ffr->comment = NULL;
 					}
-					ddr->dentrymtime = s.st_mtime;
+					ddr->ditemmtime = s.st_mtime;
 					any_change = TRUE;
 				}
 				g_free(p);
@@ -723,25 +735,25 @@ fr_check_and_reread (FileRec *fr)
 				}
 				ffr->last_stat = curtime;
 				if(ffr->mtime != s.st_mtime) {
-					GnomeDesktopEntry *dentry;
-					dentry = gnome_desktop_entry_load(ffr->name);
-					if (dentry != NULL) {
+					GnomeDesktopItem *ditem;
+					ditem = gnome_desktop_item_load(ffr->name);
+					if (ditem != NULL) {
 						/* take over memory */
 						g_free (ffr->icon);
-						ffr->icon = dentry->icon;
-						dentry->icon = NULL;
+						ffr->icon = ditem->icon;
+						ditem->icon = NULL;
 
 						/* take over memory */
 						g_free (ffr->fullname);
-						ffr->fullname = dentry->name;
-						dentry->name = NULL;
+						ffr->fullname = ditem->name;
+						ditem->name = NULL;
 
 						/* take over memory */
 						g_free (ffr->comment);
-						ffr->comment = dentry->comment;
-						dentry->comment = NULL;
+						ffr->comment = ditem->comment;
+						ditem->comment = NULL;
 
-						gnome_desktop_entry_free (dentry);
+						gnome_desktop_item_free (ditem);
 					} else {
 						reread = TRUE;
 						break;
@@ -779,6 +791,9 @@ fr_check_and_reread (FileRec *fr)
 		}
 	}
 	return ret;
+#else
+	return NULL;
+#endif
 }
 
 FileRec *

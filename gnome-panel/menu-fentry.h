@@ -3,6 +3,7 @@
 
 #include <sys/stat.h>
 #include <unistd.h>
+#include <gnome-desktop/gnome-ditem.h>
 
 G_BEGIN_DECLS
 
@@ -61,7 +62,7 @@ struct _DirRec {
 	GSList *mfl;  /*records of menus using this record*/
 };
 
-char * get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii);
+char * get_applet_goad_id_from_dentry(GnomeDesktopItem *ii);
 
 GSList * get_mfiles_from_menudir(const char *menudir);
 
