@@ -576,21 +576,7 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	frame->priv->property_bag = 
 		bonobo_control_frame_get_control_property_bag (control_frame, NULL);
 
-	/* FIXME: use bonobo_control_frame_get_popup_component in due course */
-	ui_component = bonobo_ui_component_new_default ();
-
-	{
-		CORBA_Environment  env;
-		Bonobo_UIContainer popup_container;
-
-		CORBA_exception_init (&env);
-
-		popup_container = Bonobo_Control_getPopupContainer (control, &env);
-
-                bonobo_ui_component_set_container (ui_component, popup_container, &env);
-		
-                CORBA_exception_free (&env);
-        }
+	ui_component = bonobo_control_frame_get_popup_component (control_frame, NULL);
 
 	bonobo_ui_util_set_ui (ui_component, DATADIR, "GNOME_Panel_Popup.xml", "panel", NULL);
 

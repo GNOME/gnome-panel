@@ -1,3 +1,19 @@
+2002-03-06  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.[ch]: (panel_applet_position_save_timeout),
+	(panel_applet_save_position), (panel_applet_save_to_gconf):
+	queue position saves so things are nice and smooth again.
+
+	* menu.c: (create_applets_menu): use the untranslated category
+	names for grouping.
+
+	* panel-applet-frame.c: (panel_applet_frame_construct): use
+	bonobo_control_frame_get_popup_ui_component.
+
+	* panel.c: (panel_applet_move):
+	* session.c: (panel_session_save_applets), (panel_session_die):
+	update for panel_applet_save_position change.
+
 Tue Mar 05 14:56:15 2002  George Lebl <jirka@5z.com>
 
 	* menu.c, menu-ditem.[ch], nothing.cP: move the ditem editting

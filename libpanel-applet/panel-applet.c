@@ -99,7 +99,6 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 
 	list = gconf_client_all_entries (client, schema_dir, error);
 
-	g_return_if_fail (list != NULL);
 	g_return_if_fail (*error == NULL);
 
 	for (l = list; l; l = l->next) {

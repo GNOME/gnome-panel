@@ -649,9 +649,7 @@ panel_applet_move(PanelWidget *panel, GtkWidget *widget, gpointer data)
 
 	g_return_if_fail (info);
 
-	/* FIXME: just queue a save, to make things a bit easier on
-	 * the resources */
-	panel_applet_save_position (info, info->gconf_key);
+	panel_applet_save_position (info, info->gconf_key, FALSE);
 }
 
 static void

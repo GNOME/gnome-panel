@@ -2483,29 +2483,25 @@ create_applets_menu (GtkWidget *menu)
 		iid = info->iid;
 
 		name     = bonobo_server_info_prop_lookup (info, "name", langs_gslist);
-		icon     = bonobo_server_info_prop_lookup (info, "panel:icon", langs_gslist);
 		category = bonobo_server_info_prop_lookup (info, "panel:category", langs_gslist);
+
+		icon = bonobo_server_info_prop_lookup (info, "panel:icon", NULL);
 		untranslated_category =
 			bonobo_server_info_prop_lookup (info, "panel:category", NULL);
 
-		if (string_empty (name)) {
+		if (!name)
 			continue;
-		}
 
 		if (string_empty (category)) {
 			applet_menu_append (menu, name, icon);
 			continue;
 		}
 
-		if (prev_category == NULL ||
-		    strcmp (prev_category, category) != 0) {
+		if (!prev_category || strcmp (prev_category, untranslated_category)) {
 			const gchar *cat_icon;
 
-			prev_category = category;
+			prev_category = untranslated_category;
 			prev_menu = menu_new ();
-			/* FIXME: EEK! WHY DO WE NEED THIS! THIS SHOULD NOT BE NEEDED! */
-			g_signal_connect (G_OBJECT (prev_menu), "show",
-					  G_CALLBACK (our_gtk_menu_position), NULL);
 
 			cat_icon = applet_menu_get_category_icon (untranslated_category);
 
@@ -2518,12 +2514,8 @@ create_applets_menu (GtkWidget *menu)
 
 		setup_applet_drag (menuitem, iid);
 
-		g_signal_connect_data (G_OBJECT (menuitem),
-				       "activate",
-				       G_CALLBACK (add_bonobo_applet),
-				       g_strdup (iid),
-				       (GClosureNotify)g_free,
-				       0 /* flags */);
+		g_signal_connect_data (menuitem, "activate", G_CALLBACK (add_bonobo_applet),
+				       g_strdup (iid), (GClosureNotify) g_free, 0);
 	}
 
 	g_slist_free (langs_gslist);

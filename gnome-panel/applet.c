@@ -991,13 +991,52 @@ panel_applet_load_applets_from_gconf (void)
 	panel_applet_load_list (APPLET_EMPTY);
 }
 
+static GSList *queued_position_saves = NULL;
+static guint   queued_position_source = 0;
+
+static gboolean
+panel_applet_position_save_timeout (gpointer dummy)
+{
+	GSList *l;
+
+	queued_position_source = 0;
+
+	for (l = queued_position_saves; l; l = l->next) {
+		AppletInfo *info = l->data;
+
+		panel_applet_save_position (info, info->gconf_key, TRUE);
+	}
+
+	g_slist_free (queued_position_saves);
+	queued_position_saves = NULL;
+
+	return FALSE;
+}
+
 void
 panel_applet_save_position (AppletInfo *applet_info,
-			    const char *gconf_key)
+			    const char *gconf_key,
+			    gboolean    immediate)
 {
-	GConfClient *client;
-	const char  *profile;
-	char        *temp_key;
+	GConfClient  *client;
+	const char   *profile;
+	char         *temp_key;
+
+	g_return_if_fail (applet_info != NULL);
+
+	if (!immediate) {
+		if (!queued_position_source)
+			queued_position_source =
+				g_timeout_add (1000,
+					       (GSourceFunc) panel_applet_position_save_timeout,
+					       NULL);
+
+		if (!g_slist_find (queued_position_saves, applet_info))
+			queued_position_saves =
+				g_slist_prepend (queued_position_saves, applet_info);
+
+		return;
+	}
 
 	client  = panel_gconf_get_client ();
 	profile = panel_gconf_get_profile ();
@@ -1062,7 +1101,7 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 				 NULL);
 	g_free (temp_key);
 
-	panel_applet_save_position (applet_info, applet_info->gconf_key);
+	panel_applet_save_position (applet_info, applet_info->gconf_key, TRUE);
 
 	switch (applet_info->type) {
 	case APPLET_BONOBO:

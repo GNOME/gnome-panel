@@ -92,7 +92,8 @@ AppletUserMenu *panel_applet_get_callback    (GList       *user_menu,
 void        panel_applet_load_applets_from_gconf (void);
 void        panel_applet_save_to_gconf           (AppletInfo *applet_info);
 void        panel_applet_save_position           (AppletInfo *applet_info,
-						  const char *gconf_key);
+						  const char *gconf_key,
+						  gboolean    immediate);
 
 int         panel_applet_get_position    (AppletInfo *applet);
 gchar      *panel_applet_get_panel_id    (AppletInfo *applet);

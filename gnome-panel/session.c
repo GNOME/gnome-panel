@@ -76,7 +76,7 @@ panel_session_save_applets (GSList *applets_list)
 	
 		g_return_if_fail (info && info->widget);
 
-		panel_applet_save_position (info, info->gconf_key);
+		panel_applet_save_position (info, info->gconf_key, TRUE);
 	}
 }
 
@@ -262,7 +262,7 @@ panel_session_die (GnomeClient *client,
 	for (l = applets; l; l = l->next) {
 		AppletInfo *info = l->data;
 
-		panel_applet_save_position (info, info->gconf_key);
+		panel_applet_save_position (info, info->gconf_key, TRUE);
 
 		if (info->type == APPLET_BONOBO) {
 			PanelAppletFrame *frame = info->data;
