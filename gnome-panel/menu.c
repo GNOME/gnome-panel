@@ -642,7 +642,7 @@ create_menu_at (GtkWidget *menu,
 
 			pixmap_name = item_info?item_info->icon:NULL;
 			
-			gtk_object_set_data(GTK_OBJECT(sub),"pixmap",
+			gtk_object_set_data(GTK_OBJECT(sub), "pixmap",
 					    pixmap_name);
 			
 			if (!fake_submenus && create_app_menu) {
@@ -809,7 +809,7 @@ get_real_menu_path(char *arguments, char *menu_base)
 	char *this_menu;
 
 	/*if null, let's put the main menu up*/
-	if (arguments == NULL)
+	if (!arguments || !*arguments)
 		arguments = ".";
 
 	if (*arguments == '/')
@@ -1287,10 +1287,10 @@ create_menu_applet(char *arguments, PanelOrientType orient, MainMenuType main_me
 		}
 	}
 
-	main_menu = (!arguments || (strcmp (arguments, ".") == 0));
+	main_menu = (!arguments || !*arguments || (strcmp (arguments, ".") == 0));
 
 	menu = create_panel_menu (this_menu, main_menu, orient,main_menu_type);
-	menu->path=g_strdup(arguments?arguments:".");
+	menu->path=g_strdup((arguments && *arguments)?arguments:".");
 
 	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
 
