@@ -179,19 +179,19 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 		if(params[0]!='#') {
 			/*this applet is dumb and wants us to start it :)*/
 			AppletChild *child;
+			FILE *fp;
+			char buf[256];
+			gint i;
 
 			child = g_new(AppletChild,1);
+
+			g_snprintf(buf,256,"(true;%s & echo $! )", fullparams);
+			fp = popen(buf,"r");
+			fscanf(fp,"%d",&child->pid);
+			fclose(fp);
+
+			printf("started applet, pid: %d\n",child->pid);
 			
-			child->pid = fork();
-
-			if(child->pid==-1)
-				g_error("Can't fork!");
-			if(child->pid==0) {
-				execlp(fullparams,fullparams,NULL);
-				g_error("Can't execlp!");
-				_exit(1);
-			}
-
 			child->applet_id = applet_count-1;
 				
 			children = g_list_prepend(children,child);

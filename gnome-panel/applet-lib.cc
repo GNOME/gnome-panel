@@ -93,6 +93,12 @@ public:
 			}
 		}
 	}
+	void start_new_applet (const char *ccookie,
+			       const char *params)
+	{
+		CHECK_COOKIE ();
+		/*FIXME: start new applet*/
+	}
 };
 
 int
