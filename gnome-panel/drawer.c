@@ -554,13 +554,15 @@ load_drawer_applet (char          *toplevel_id,
 	if (!toplevel)
 		toplevel = create_drawer_toplevel (id);
 
-	if (toplevel) 
+	if (toplevel) {
+		panel_toplevel_hide (toplevel, FALSE, -1);
 		drawer = create_drawer_applet (toplevel,
 					       parent_toplevel,
 					       tooltip,
 					       custom_icon,
 					       use_custom_icon,
 					       orientation);
+	}
 
 	if (!drawer)
 		return;
@@ -584,8 +586,6 @@ load_drawer_applet (char          *toplevel_id,
 	panel_widget_add_forbidden (panel_toplevel_get_panel_widget (drawer->toplevel));
 	panel_widget_set_applet_expandable (panel_widget, GTK_WIDGET (drawer->button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel_widget, GTK_WIDGET (drawer->button), TRUE);
-
-	gtk_window_present (GTK_WINDOW (drawer->toplevel));
 
 	if (!commie_mode)
 		panel_applet_add_callback (drawer->info,

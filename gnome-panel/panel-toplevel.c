@@ -3061,8 +3061,10 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 		panel_toplevel_update_hide_buttons (toplevel);
 	}
 
-	if (toplevel->priv->animate)
+	if (toplevel->priv->animate && GTK_WIDGET_REALIZED (toplevel))
 		panel_toplevel_start_animation (toplevel);
+	else
+		gtk_widget_hide (GTK_WIDGET (toplevel));
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 }
@@ -3100,8 +3102,10 @@ panel_toplevel_unhide (PanelToplevel *toplevel)
 
 	panel_toplevel_update_hide_buttons (toplevel);
 
-	if (toplevel->priv->animate)
+	if (toplevel->priv->animate && GTK_WIDGET_REALIZED (toplevel))
 		panel_toplevel_start_animation (toplevel);
+	else
+		gtk_widget_show (GTK_WIDGET (toplevel));
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 

@@ -1,5 +1,16 @@
 2003-09-05  Mark McLoughlin  <mark@skynet.ie>
 
+	Fixes problem with drawers where they are always open on
+	login. Make them closed at login instead.
+
+	* drawer.c: (load_drawer_applet): hide the drawer on startup.
+	
+	* panel-toplevel.c:
+	(panel_toplevel_hide), (panel_toplevel_unhide): show/hide
+	drawers when not animating.
+
+2003-09-05  Mark McLoughlin  <mark@skynet.ie>
+
 	Patch from George to fix bug #120107 and some other
 	stuff.
 
