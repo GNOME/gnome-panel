@@ -1,7 +1,7 @@
 #ifndef SWALLOW_H
 #define SWALLOW_H
 
-#include <panel-widget.h>
+#include "panel-widget.h"
 
 G_BEGIN_DECLS
 

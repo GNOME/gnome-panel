@@ -10,8 +10,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "panel-include.h"
-#include <libgnome/gnome-config.h>
+#include <libgnome/libgnome.h>
 
 #include "conditional.h"
 

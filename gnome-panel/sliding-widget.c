@@ -12,6 +12,7 @@
 #include "foobar-widget.h"
 #include "panel-util.h"
 #include "multiscreen-stuff.h"
+#include "panel-typebuiltins.h"
 
 static void sliding_pos_class_init (SlidingPosClass *klass);
 static void sliding_pos_init (SlidingPos *pos);
@@ -73,7 +74,7 @@ sliding_pos_class_init (SlidingPosClass *klass)
 						 anchor_change),
 			       gtk_marshal_VOID__ENUM, /* FIXME:2 use NONE__ENUM ? */
 			       GTK_TYPE_NONE,
-			       1, GTK_TYPE_ENUM);
+			       1, PANEL_TYPE_SLIDING_ANCHOR);
 
 	sliding_pos_signals[OFFSET_CHANGE_SIGNAL] =
 		gtk_signal_new("offset_change",

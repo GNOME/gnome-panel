@@ -4,7 +4,16 @@
 
 #include <config.h>
 
-#include "panel-include.h"
+#include <libgnome/libgnome.h>
+
+#include "logout.h"
+
+#include "applet.h"
+#include "drawer-widget.h"
+#include "menu.h"
+#include "panel_config_global.h"
+#include "panel.h"
+#include "extern.h"
 
 extern GSList *applets_last;
 

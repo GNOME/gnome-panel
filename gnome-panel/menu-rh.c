@@ -17,9 +17,9 @@
 #include <limits.h>
 #include <errno.h>
 
-#include <libgnome/gnome-util.h>
+#include <libgnome/libgnome.h>
 
-#include "panel-include.h"
+#include "menu-rh.h"
 
 /*#define PANEL_DEBUG 1*/
 

@@ -1,6 +1,8 @@
 #ifndef MENU_UTIL_H
 #define MENU_UTIL_H
 
+#include <gtk/gtk.h>
+
 G_BEGIN_DECLS
 
 void       applet_menu_position   (GtkMenu  *menu,

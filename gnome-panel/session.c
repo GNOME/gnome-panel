@@ -13,14 +13,36 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "gnome-desktop-item.h"
-#include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-init.h>
-#include <libgnome/gnome-config.h>
-#include <libbonobo.h>
+
 #include <gdk/gdkx.h>
 #include <X11/keysym.h>
-#include "panel-include.h"
+
+#include <libgnome/libgnome.h>
+#include <libbonobo.h>
+
+#include "gnome-desktop-item.h"
+
+#include "session.h"
+
+#include "aligned-widget.h"
+#include "button-widget.h"
+#include "distribution.h"
+#include "drawer-widget.h"
+#include "edge-widget.h"
+#include "extern.h"
+#include "floating-widget.h"
+#include "foobar-widget.h"
+#include "launcher.h"
+#include "logout.h"
+#include "menu-fentry.h"
+#include "menu-util.h"
+#include "menu.h"
+#include "panel-util.h"
+#include "panel_config_global.h"
+#include "session.h"
+#include "sliding-widget.h"
+#include "status.h"
+#include "swallow.h"
 #include "gnome-run.h"
 #include "global-keys.h"
 #include "xstuff.h"

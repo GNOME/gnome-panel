@@ -14,13 +14,31 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-#include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-util.h>
+
+#include <libgnome/libgnome.h>
 #include <libbonobo.h>
 
-#include "panel-include.h"
+#include "panel.h"
+
+#include "applet.h"
+#include "button-widget.h"
+#include "distribution.h"
+#include "drawer-widget.h"
+#include "edge-widget.h"
+#include "extern.h"
+#include "floating-widget.h"
+#include "foobar-widget.h"
 #include "gnome-run.h"
-#include "gnome-panel.h"
+#include "launcher.h"
+#include "logout.h"
+#include "menu-fentry.h"
+#include "menu-util.h"
+#include "menu.h"
+#include "panel-util.h"
+#include "panel_config.h"
+#include "session.h"
+#include "status.h"
+#include "swallow.h"
 
 /* nautilus uses this UTTER HACK to reset backgrounds, ugly ugly ugly,
  * broken, ugly ugly, but whatever */

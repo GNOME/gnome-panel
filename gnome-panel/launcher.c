@@ -16,16 +16,24 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
-#include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-util.h>
-#include <libgnomeui/gnome-dialog.h>
-#include <libgnomeui/gnome-uidefs.h>
+
+#include <libgnome/libgnome.h>
+#include <libgnomeui/libgnomeui.h>
 #include <libgnomevfs/gnome-vfs.h>
+
+#include "launcher.h"
+
+#include "basep-widget.h"
+#include "button-widget.h"
+#include "drawer-widget.h"
+#include "menu-fentry.h"
+#include "menu.h"
+#include "panel-util.h"
+#include "panel_config_global.h"
+#include "session.h"
 
 #include "gnome-desktop-item.h"
 #include "gnome-ditem-edit.h"
-
-#include "panel-include.h"
 
 static void properties_apply (Launcher *launcher);
 

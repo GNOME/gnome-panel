@@ -22,20 +22,29 @@
  */
 
 #include <config.h>
-#include <libgnome/libgnome.h>
-#include <libgnomeui/libgnomeui.h>
 #include <errno.h>
 #include <sys/types.h>
 #include <dirent.h>
 
-#include "panel-include.h"
+#include <libgnome/libgnome.h>
+#include <libgnomeui/libgnomeui.h>
+
+#include "gnome-run.h"
+
 #include "foobar-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
 #include "main.h"
 #include "multiscreen-stuff.h"
 
-#include "gnome-run.h"
+#include "applet.h"
+#include "button-widget.h"
+#include "foobar-widget.h"
+#include "main.h"
+#include "menu-fentry.h"
+#include "menu.h"
+#include "multiscreen-stuff.h"
+#include "panel-util.h"
 
 #define ADVANCED_DIALOG_KEY "advanced_run_dialog"
 

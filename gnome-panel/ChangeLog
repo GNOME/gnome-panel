@@ -1,3 +1,22 @@
+2001-10-09  Mark McLoughlin <mark@skynet.ie>
+
+	* panel-include.h: remove.
+
+	* *.c, *.h: don't include panel-include.h. Include the
+	actual required headers. Give automatic dependancy
+	generation a chance.
+
+	* aligned-widget.c (aligned_pos_class_init): use proper
+	enum def instead of GTK_TYPE_ENUM.
+	  basep-widget.c (basep_widget_class_init): ditto.
+	  border-widget.c (border_pos_class_init): ditto.
+	  panel-widget.c (panel_widget_class_init): ditto.
+	  sliding-widget.c (sliding_pos_class_init): ditto.
+
+	* Makefile.am: only generate the enums we actually
+	want. Also don't include panel-include.h from
+	panel-typebuiltins.c - include the required headers.
+
 2001-10-08  Mark McLoughlin <mark@skynet.ie>
 
 	* extern.c: privatised the Extern struct. Implemented

@@ -11,18 +11,24 @@
 #include <string.h>
 #include <signal.h>
 #include <sys/wait.h>
+
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+
+#include <libbonoboui.h>
 #include <bonobo-activation/bonobo-activation.h>
-#include <bonobo/bonobo-ui-main.h>
 
-#include "panel-include.h"
-
-#include "gwmh.h"
-
-#include "xstuff.h"
-#include "multiscreen-stuff.h"
 #include "conditional.h"
+#include "drawer-widget.h"
+#include "extern.h"
+#include "menu-fentry.h"
+#include "menu.h"
+#include "multiscreen-stuff.h"
+#include "panel-util.h"
+#include "panel_config_global.h"
+#include "session.h"
+#include "status.h"
+#include "xstuff.h"
 
 extern int config_sync_timeout;
 

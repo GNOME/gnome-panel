@@ -3,13 +3,15 @@
 #include <X11/keysym.h>
 #include <gdk/gdkx.h>
 #include <gdk/gdk.h>
-#include "global-keys.h"
-#include "applet.h"
-#include "panel-include.h"
-#include "gnome-run.h"
-#include "panel_config_global.h"
 
-#include <libgnome/gnome-util.h>
+#include <libgnome/libgnome.h>
+
+#include "global-keys.h"
+
+#include "applet.h"
+#include "gnome-run.h"
+#include "panel.h"
+#include "panel_config_global.h"
 
 extern GlobalConfig global_config;
 extern GSList *panels;

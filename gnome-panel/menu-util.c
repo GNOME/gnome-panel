@@ -8,8 +8,14 @@
 
 #include <config.h>
 
-#include "panel-include.h"
+#include "menu-util.h"
+
+#include "basep-widget.h"
+#include "foobar-widget.h"
 #include "multiscreen-stuff.h"
+#include "distribution.h"
+#include "panel_config_global.h"
+#include "menu.h"
 
 /*#define PANEL_DEBUG 1*/
 

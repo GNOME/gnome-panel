@@ -143,7 +143,6 @@ panel_sources = \
 
 panel_headers = \
 	panel-types.h		\
-	panel-include.h		\
 	main.h			\
 	panel-widget.h		\
 	basep-widget.h		\
@@ -234,12 +233,20 @@ desk_DATA = gnome-panel-properties.desktop
 
 $(srcdir)/panel-util.c: $(CORBA_SRCLIST)
 
-$(srcdir)/panel-typebuiltins.c: @REBUILD@ Makefile.am $(panel_headers)
+panel_enum_headers =      \
+	panel-types.h     \
+	panel-widget.h    \
+	basep-widget.h    \
+	aligned-widget.h  \
+	sliding-widget.h
+
+$(srcdir)/panel-typebuiltins.c: @REBUILD@ Makefile.am $(panel_enum_headers)
 	cd $(srcdir) \
 	&& glib-mkenums \
 			--fhead "#include <gobject/genums.h>\n" \
 			--fhead "#include \"panel-typebuiltins.h\"\n\n" \
 			--fprod "\n/* enumerations from \"@filename@\" */" \
+			--fprod "\n#include \"@filename@\"\n" \
 			--vhead "static const G@Type@Value _@enum_name@_values[] = {" \
 			--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 			--vtail "  { 0, NULL, NULL }\n};\n\n" \
@@ -248,23 +255,22 @@ $(srcdir)/panel-typebuiltins.c: @REBUILD@ Makefile.am $(panel_headers)
 			--vtail "  if (!type)\n" \
 			--vtail "    type = g_@type@_register_static (\"@EnumName@\", _@enum_name@_values);\n\n" \
 			--vtail "  return type;\n}\n\n" \
-		$(panel_headers) > xgen-gtbec \
+		$(panel_enum_headers) > xgen-gtbec \
 	&& cp xgen-gtbec $(@F) \
 	&& rm -f xgen-gtbec
 
-$(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_headers)
+$(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_enum_headers)
 	cd $(srcdir) \
 	&& glib-mkenums \
 			--fhead "#ifndef __PANEL_TYPEBUILTINS_H__\n" \
 			--fhead "#define __PANEL_TYPEBUILTINS_H__ 1\n\n" \
-			--fhead "#include <panel-include.h>\n\n" \
 			--fhead "G_BEGIN_DECLS\n\n" \
 			--ftail "G_END_DECLS\n\n" \
 			--ftail "#endif /* __PANEL_TYPEBUILTINS_H__ */\n" \
 			--fprod "\n/* --- @filename@ --- */" \
 			--eprod "#define PANEL_TYPE_@ENUMNAME@ @enum_name@_get_type()\n" \
 			--eprod "GType @enum_name@_get_type (void);\n" \
-		$(panel_headers) > xgen-gth \
+		$(panel_enum_headers) > xgen-gth \
 	&& cp xgen-gth $(@F) \
 	&& rm -f xgen-gth
 

@@ -22,9 +22,6 @@
 
 #include <config.h>
 
-#include "panel-include.h"
-#include "foobar-widget.h"
-
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <gdk/gdkx.h>
@@ -33,6 +30,9 @@
 #endif
 
 #include "multiscreen-stuff.h"
+
+#include "foobar-widget.h"
+#include "basep-widget.h"
 
 /* some globals */
 static int		screens = 1;

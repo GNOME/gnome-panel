@@ -12,13 +12,14 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-#include "panel-include.h"
-#include "gnome-panel.h"
-#include "global-keys.h"
-#include "gwmh.h"
-
 #include "xstuff.h"
+#include "gwmh.h"
 #include "multiscreen-stuff.h"
+#include "basep-widget.h"
+#include "foobar-widget.h"
+#include "global-keys.h"
+#include "status.h"
+#include "swallow.h"
 
 static GdkAtom KWM_MODULE = 0;
 static GdkAtom KWM_MODULE_DOCKWIN_ADD = 0;

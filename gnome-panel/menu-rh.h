@@ -1,6 +1,9 @@
 #ifndef MENU_RH_H
 #define MENU_RH_H
 
+#include <glib.h>
+#include <gtk/gtk.h>
+
 G_BEGIN_DECLS
 
 void create_rh_menu(int dofork);

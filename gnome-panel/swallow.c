@@ -12,16 +12,21 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
+
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 
 #include <libgnomeui/libgnomeui.h>
+#include <libgnome/libgnome.h>
 
 #include "gnome-desktop-item.h"
 
-#include "panel-include.h"
-#include "panel-widget.h"
+#include "swallow.h"
 
+#include "applet.h"
+#include "extern.h"
+#include "panel.h"
+#include "panel-widget.h"
 #include "xstuff.h"
 
 /* from gtkhandlebox.c */

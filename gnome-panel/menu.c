@@ -21,20 +21,39 @@
 #include <limits.h>
 #include <errno.h>
 #include <math.h>
+
 #include <gdk/gdkkeysyms.h>
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
-
 #include <gnome-desktop-item.h>
 #include <gnome-ditem-edit.h>
 
-#include "panel-include.h"
-#include "panel-widget.h"
-#include "tearoffitem.h"
-#include "gnome-run.h"
-#include "title-item.h"
-#include "multiscreen-stuff.h"
+#include "aligned-widget.h"
+#include "button-widget.h"
 #include "conditional.h"
+#include "distribution.h"
+#include "drawer-widget.h"
+#include "edge-widget.h"
+#include "floating-widget.h"
+#include "foobar-widget.h"
+#include "gnome-run.h"
+#include "launcher.h"
+#include "logout.h"
+#include "main.h"
+#include "menu-fentry.h"
+#include "menu-properties.h"
+#include "menu-util.h"
+#include "multiscreen-stuff.h"
+#include "panel-util.h"
+#include "panel.h"
+#include "panel_config_global.h"
+#include "session.h"
+#include "sliding-widget.h"
+#include "status.h"
+#include "swallow.h"
+#include "tasklist_icon.h"
+#include "tearoffitem.h"
+#include "title-item.h"
 
 /*#define PANEL_DEBUG 1*/
 

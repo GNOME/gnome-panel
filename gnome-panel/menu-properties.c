@@ -19,8 +19,13 @@
 #include <errno.h>
 
 #include <libgnomeui/libgnomeui.h>
+#include <libgnome/libgnome.h>
 
-#include "panel-include.h"
+#include "gnome-desktop-item.h"
+
+#include "menu-properties.h"
+
+#include "panel-util.h"
 
 /*#define PANEL_DEBUG 1*/
 

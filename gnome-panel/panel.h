@@ -2,6 +2,7 @@
 #define PANEL_H
 
 #include <gtk/gtk.h>
+#include "basep-widget.h"
 #include "panel-widget.h"
 #include "applet.h"
 

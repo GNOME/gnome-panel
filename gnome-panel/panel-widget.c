@@ -4,19 +4,23 @@
  *
  * Authors:  George Lebl
  */
+#include <config.h>
 #include <limits.h>
 #include <math.h>
-#include <config.h>
+
 #include <gtk/gtk.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include <libart_lgpl/art_misc.h>
+#include <libart_lgpl/art_affine.h>
+#include <libart_lgpl/art_filterlevel.h>
+
 #include "panel-widget.h"
 #include "button-widget.h"
 #include "panel-util.h"
 #include "panel-marshal.h"
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libart_lgpl/art_misc.h>
-#include <libart_lgpl/art_affine.h>
-#include <libart_lgpl/art_filterlevel.h>
 #include "rgb-stuff.h"
+#include "panel-typebuiltins.h"
 
 GSList *panels = NULL; /*other panels we might want to move the applet to*/
 
@@ -159,7 +163,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       gtk_marshal_VOID__ENUM, /* FIXME:2 should this be gtk_marshal_NONE__ENUM ? */
 			       GTK_TYPE_NONE,
 			       1,
-			       GTK_TYPE_ENUM);
+			       PANEL_TYPE_PANEL_ORIENTATION);
 	panel_widget_signals[SIZE_CHANGE_SIGNAL] =
 		gtk_signal_new("size_change",
 			       GTK_RUN_LAST,

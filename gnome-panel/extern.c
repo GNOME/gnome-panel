@@ -13,14 +13,20 @@
 #include <string.h>
 #include <signal.h>
 
-#include "panel-include.h"
-#include "gnome-panel.h"
-#include "gnome-run.h"
-
-#include <bonobo/bonobo-exception.h>
-#include <libgnome/gnome-config.h>
-
+#include <libgnome/libgnome.h>
+#include <libbonobo.h>
 #include <bonobo-activation/bonobo-activation.h>
+
+#include "extern.h"
+
+#include "gnome-run.h"
+#include "launcher.h"
+#include "menu-fentry.h"
+#include "menu.h"
+#include "panel-util.h"
+#include "panel_config_global.h"
+#include "session.h"
+#include "status.h"
 
 struct Extern_struct {
 	POA_GNOME_PanelSpot  servant;

@@ -5,7 +5,6 @@
 #include "border-widget.h"
 #include "aligned-widget.h"
 #include "sliding-widget.h"
-#include "drawer-widget.h"
 
 #include "panel-util.h"
 

@@ -10,6 +10,7 @@
 #include "border-widget.h"
 #include "panel_config_global.h"
 #include "multiscreen-stuff.h"
+#include "panel-typebuiltins.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -82,7 +83,7 @@ border_pos_class_init (BorderPosClass *klass)
 						 edge_change),
 			       gtk_marshal_VOID__ENUM, /* FIXME:2 should we be using NONE__ENUM? */
 			       GTK_TYPE_NONE, 1,
-			       GTK_TYPE_ENUM);
+			       PANEL_TYPE_BORDER_EDGE);
 
 	/* fill out the virtual funcs */
 	pos_class->set_hidebuttons = border_pos_set_hidebuttons;

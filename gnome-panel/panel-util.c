@@ -17,8 +17,12 @@
 #include <dirent.h>
 
 #include <libgnomeui/libgnomeui.h>
+#include <libgnome/libgnome.h>
 
-#include "panel-include.h"
+#include "panel-util.h"
+
+#include "applet.h"
+#include "panel_config_global.h"
 
 extern GlobalConfig global_config;
 

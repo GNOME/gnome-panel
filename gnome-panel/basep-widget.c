@@ -346,7 +346,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 						 type_change),
 			       gtk_marshal_NONE__ENUM,
 			       GTK_TYPE_NONE,
-			       1, GTK_TYPE_ENUM);*/
+			       1, PANEL_TYPE_PANEL_TYPE);*/
 
 	basep_widget_signals[MODE_CHANGE_SIGNAL] = 
 		gtk_signal_new("mode_change",

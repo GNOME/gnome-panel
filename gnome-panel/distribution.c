@@ -7,7 +7,10 @@
 
 #include <config.h>
 
-#include "panel-include.h"
+#include <libgnome/libgnome.h>
+
+#include "distribution.h"
+#include "menu-rh.h"
 
 /* Note for distribution vendors:
  *

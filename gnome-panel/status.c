@@ -7,13 +7,17 @@
 #include <config.h>
 #include <string.h>
 #include <signal.h>
+
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-#include "panel-include.h"
-#include "gnome-panel.h"
+#include "libgnome/libgnome.h"
 
+#include "status.h"
+
+#include "applet.h"
+#include "extern.h"
 #include "xstuff.h"
 
 static StatusApplet *the_status = NULL; /*"there can only be one" status

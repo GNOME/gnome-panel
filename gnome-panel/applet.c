@@ -9,12 +9,22 @@
 #include <config.h>
 #include <string.h>
 #include <signal.h>
-#include <libgnome/gnome-i18n.h>
+#include <libgnome/libgnome.h>
 #include <libbonobo.h>
 #include <gdk/gdkx.h>
 
-#include "panel-include.h"
-#include "gnome-panel.h"
+#include "basep-widget.h"
+#include "button-widget.h"
+#include "drawer.h"
+#include "extern.h"
+#include "launcher.h"
+#include "menu-properties.h"
+#include "menu-util.h"
+#include "panel_config.h"
+#include "panel_config_global.h"
+#include "session.h"
+#include "status.h"
+#include "swallow.h"
 
 #define SMALL_ICON_SIZE 20
 

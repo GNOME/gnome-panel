@@ -15,11 +15,18 @@
 #include <dirent.h>
 #include <string.h>
 
-#include "panel-include.h"
+#include <libgnomeui/libgnomeui.h>
+#include <libgnome/libgnome.h>
 
+#include "drawer.h"
+
+#include "applet.h"
+#include "button-widget.h"
+#include "drawer-widget.h"
+#include "panel_config_global.h"
+#include "panel-util.h"
+#include "session.h"
 #include "xstuff.h"
-
-#include <libgnomeui/gnome-uidefs.h>
 
 extern GSList *applets_last;
 extern GlobalConfig global_config;

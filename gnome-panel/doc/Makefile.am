@@ -51,7 +51,7 @@ scan:
 		--ignore-headers="aligned-widget.h   menu-rh.h	\
 			menu-util.h	   sliding-widget.h	\
 			applet.h           menu.h		\
-			basep-widget.h     panel-include.h	\
+			basep-widget.h     xstuff.h             \
 			border-widget.h    panel-types.h	\
 			button-widget.h    panel-util.h		\
 			drawer-widget.h    panel-widget.h	\
@@ -64,7 +64,7 @@ scan:
 			launcher.h         status.h		\
 			logout.h           swallow.h		\
 			main.h             tearoffitem.h	\
-			menu-fentry.h      xstuff.h" )
+			menu-fentry.h" )
 
 templates: scan
 	cd $(srcdir) && gtkdoc-mktmpl --module=$(DOC_MODULE)

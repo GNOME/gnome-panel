@@ -11,18 +11,31 @@
 
 #include <config.h>
 
-#include "panel-include.h"
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
 #include <libart_lgpl/art_filterlevel.h>
-#include "rgb-stuff.h"
-#include "multiscreen-stuff.h"
-#include "nothing.cP"
 
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+
+#include "panel_config.h"
+
+#include "aligned-widget.h"
+#include "basep-widget.h"
+#include "border-widget.h"
+#include "drawer-widget.h"
+#include "edge-widget.h"
+#include "floating-widget.h"
+#include "sliding-widget.h"
+#include "panel.h"
+#include "rgb-stuff.h"
+#include "multiscreen-stuff.h"
+
+/*
+ * FIXME
+ */
+#include "nothing.cP"
 
 static void config_apply (PerPanelConfig *ppc);
 

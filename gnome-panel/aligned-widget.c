@@ -10,6 +10,7 @@
 #include "panel_config_global.h"
 #include "foobar-widget.h"
 #include "multiscreen-stuff.h"
+#include "panel-typebuiltins.h"
 
 static void aligned_pos_class_init (AlignedPosClass *klass);
 static void aligned_pos_init (AlignedPos *pos);
@@ -72,7 +73,7 @@ aligned_pos_class_init (AlignedPosClass *klass)
 						   align_change),
 				gtk_marshal_VOID__ENUM,
 				GTK_TYPE_NONE,
-				1, GTK_TYPE_ENUM);
+				1, PANEL_TYPE_ALIGNED_ALIGNMENT);
 
 	pos_class->set_pos = aligned_pos_set_pos;
 	pos_class->get_pos = aligned_pos_get_pos;

@@ -23,6 +23,8 @@
 #ifndef MULTISCREEN_STUFF_H
 #define MULTISCREEN_STUFF_H
 
+#include <gtk/gtk.h>
+
 void		multiscreen_init		(void);
 
 int		multiscreen_screens		(void) G_GNUC_CONST;

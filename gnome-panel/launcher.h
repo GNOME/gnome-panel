@@ -11,7 +11,9 @@
 #ifndef LAUNCHER_H
 #define LAUNCHER_H
 
-#include <panel-widget.h>
+#include "applet.h"
+#include "panel-widget.h"
+
 #include "gnome-desktop-item.h"
 
 G_BEGIN_DECLS
