@@ -216,6 +216,9 @@ computer_clock_update_func (ClockData * cd,
   		gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (cd->applet),
 				      utf8, NULL);
 		g_free (utf8);
+	} else {
+  		gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (cd->applet),
+				      NULL, NULL);
 	}
 	
 	/*if we are vertical, just make it char per line */
