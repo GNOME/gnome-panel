@@ -1,13 +1,3 @@
-# Before making a release, the LTVERSION string should be modified.
-# The string is of the form C:R:A.
-# - If interfaces have been changed or added, but binary compatibility has
-#   been preserved, change to C+1:0:A+1
-# - If binary compatibility has been broken (eg removed or changed interfaces)
-#   change to C+1:0:0
-# - If the interface is the same as the previous version, change to C:R+1:A
-
-LTVERSION = 0:0:0
-
 INCLUDES =							\
 	-I$(top_builddir)/libpanel-applet			\
 	-DPANEL_APPLET_DATADIR=\""$(datadir)"\"			\
@@ -32,7 +22,7 @@ libpanel_applet_2_la_SOURCES =		\
 	panel-applet-enums.h		\
 	$(CORBA_SRCLIST)
 
-libpanel_applet_2_la_LDFLAGS = -version-info $(LTVERSION)
+libpanel_applet_2_la_LDFLAGS = -version-info $(LIB_PANEL_APPLET_LT_VERSION)
 libpanel_applet_2_la_LIBADD  = $(LIBPANEL_APPLET_LIBS)
 
 libpanel_appletincludedir = $(includedir)/panel-2.0
