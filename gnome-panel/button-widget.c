@@ -782,26 +782,15 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 static gboolean
 button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
-	GtkWidget *event_widget;
-	ButtonWidget *button_widget;
-	GtkButton *button;
+	gboolean in_button;
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
-	g_return_val_if_fail (event != NULL, FALSE);
 
-	event_widget = gtk_get_event_widget ((GdkEvent*) event);
-
-	button_widget = BUTTON_WIDGET (widget);
-	button = GTK_BUTTON (widget);
-
-	if ((event_widget == widget) &&
-	    (event->detail != GDK_NOTIFY_INFERIOR) &&
-	    (!button_widget->ignore_leave)) {
-		button->in_button = FALSE;
-		if (global_config.highlight_when_over) {
-			gtk_widget_queue_draw (widget);
-		}
-	}
+	in_button = GTK_BUTTON (widget)->in_button;
+	GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget, event);
+	if (in_button != GTK_BUTTON (widget)->in_button &&
+	    global_config.highlight_when_over)
+		gtk_widget_queue_draw (widget);
 
 	return FALSE;
 }

@@ -1,3 +1,11 @@
+2003-01-02  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* button-widget.c (button_widget_leave_notify): Call GtkButton's
+	leave_notify_event to cause the button's state to be reset from 
+	PRELIGHT.
+
+	This fixes bug #101546.
+
 2003-01-02  Mark McLoughlin  <mark@skynet.ie>
 
 	Impl periodically re-running the applet menu bonobo
