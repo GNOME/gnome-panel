@@ -5292,6 +5292,9 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 		menu->menu = create_root_menu(NULL,
 			fake_subs, flags, TRUE,
 			IS_BASEP_WIDGET (panel->panel_parent), TRUE);
+
+		gtk_tooltips_set_tip (panel_tooltips, menu->button,
+				      _("Main Menu"), NULL);
 	} else {
 		menu->menu = NULL;
 		for(li = menudirl; li != NULL; li = li->next)
@@ -5300,6 +5303,11 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 						     FALSE /* launcher_add */,
 						     NULL, NULL,
 						     fake_subs, FALSE, TRUE);
+
+		/* FIXME: A more descriptive name would be better */
+		gtk_tooltips_set_tip (panel_tooltips, menu->button,
+				      _("Menu"), NULL);
+
 		if(menu->menu == NULL) {
 			int flags;
 			if (menu->global_main)
@@ -5311,7 +5319,10 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 				fake_subs, flags, TRUE,
 				IS_BASEP_WIDGET (panel->panel_parent),
 				TRUE);
+			gtk_tooltips_set_tip (panel_tooltips, menu->button,
+					      _("Main Menu"), NULL);
 		}
+
 	}
 	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
 			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
@@ -5440,6 +5451,14 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 			     dnd_targets, 1,
 			     GDK_ACTION_MOVE);
 	GTK_WIDGET_SET_FLAGS (menu->button, GTK_NO_WINDOW);
+
+	if (main_menu)
+		gtk_tooltips_set_tip (panel_tooltips, menu->button,
+				      _("Main Menu"), NULL);
+	else
+		/* FIXME: A more descriptive name would be better */
+		gtk_tooltips_set_tip (panel_tooltips, menu->button,
+				      _("Menu"), NULL);
 
 	gtk_signal_connect (GTK_OBJECT (menu->button), "drag_data_get",
 			    GTK_SIGNAL_FUNC (drag_data_get_cb),

@@ -38,6 +38,8 @@ extern int pw_maximize_delay;
 extern gboolean pw_disable_animations;
 extern PanelMovementType pw_movement_type;
 
+extern GtkTooltips *panel_tooltips;
+
 extern GlobalConfig global_config;
 
 static void basep_widget_class_init	(BasePWidgetClass *klass);
@@ -833,6 +835,10 @@ make_hidebutton(BasePWidget *basep,
 	gtk_object_set_user_data(GTK_OBJECT(w), pixmap);
 	gtk_object_set_data(GTK_OBJECT(w), "gnome_disable_sound_events",
 			    GINT_TO_POINTER(1));
+
+	gtk_tooltips_set_tip (panel_tooltips, w,
+			      _("Hide this panel"), NULL);
+
 	return w;
 }
 
