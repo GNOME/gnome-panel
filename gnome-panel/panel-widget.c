@@ -2134,8 +2134,8 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 	GSList *forb;
 	GdkModifierType mods;
 
-	g_return_val_if_fail(panel!=NULL,FALSE);
-	g_return_val_if_fail(IS_PANEL_WIDGET(panel),FALSE);
+	g_return_if_fail(panel!=NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(panel));
 
 	if (!panel->currently_dragged_applet)
 		return;

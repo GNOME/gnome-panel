@@ -1,5 +1,14 @@
 2000-02-15  Jacob Berkman  <jacob@helixcode.com>
 
+	* menu.c (make_panel_submenu): add a menu item to show some help
+
+	* panel-widget.c (panel_widget_applet_move_to_cursor): don't return
+	a val in a void func
+
+	* help/C/Makefile.am: generate panel.sgml from panel.sgml.*
+	and install images correctly, and add some stuff so we show
+	up in the help browser
+
 	* Makefile.am: add doc and help dirs (note: this won't build,
 	please wait a bit)
 	

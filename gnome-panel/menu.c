@@ -3384,6 +3384,13 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 		gtk_label_set_text(GTK_LABEL(label), _("Remove this panel"));
 }
 
+static void
+show_panel_help (GtkWidget *w, gpointer data)
+{
+	static GnomeHelpMenuEntry help_ref = { "panel", "index.html" };
+	gnome_help_display (NULL, &help_ref);
+}
+
 
 void
 make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
@@ -3477,6 +3484,18 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC(panel_config_global), 
 			    NULL);
+
+	add_menu_separator (menu);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem,
+			gnome_stock_pixmap_widget_at_size (
+				menu, GNOME_STOCK_PIXMAP_HELP,
+				SMALL_ICON_SIZE, SMALL_ICON_SIZE),
+			_("Panel Manual..."));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC (show_panel_help), NULL);
 }
 
 void
@@ -3580,8 +3599,6 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 	}
 
 	make_panel_submenu (menu, fake_submenus);
-
-	add_menu_separator (menu);
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem,
