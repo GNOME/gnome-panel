@@ -1,3 +1,29 @@
+2004-01-07  Vincent Untz  <vincent@vuntz.net>
+
+	Add a "custom" format: the user can specify a custom format in gconf
+	to be used by the clock. UI-wise, the preferences dialog show the
+	"custom" stuff only if it's used: it doesn't change anything for
+	normal users.
+	Fix bug #122601.
+
+	* clock.c: remove some useless trailing spaces.
+	(update_timeformat), (update_clock), (copy_time), (copy_date): avoid
+	crashes if g_locale_from_utf8 returns NULL for some specified formats
+	which will be passed to strftime().
+	(format_changed): refresh the timeout when the format is changed. Else
+	changing the format to unix from anything else without seconds won't
+	make the clock update correctly.
+	(update_clock), (refresh_clock_timeout), (destroy_clock), (copy_time),
+	(setup_gconf), (fill_clock_applet): some trivial stuff for the custom
+	format.
+	(custom_format_changed), (set_custom_format_cb): new functions for the
+	custom format
+	(display_properties_dialog): add widgets to configure the custom
+	format and show them only if necessary. Also handle the sensitivity of
+	the widgets.
+	* clock.schemas.in: add a new custom_format key and modify the long
+	description of the format key to reflect the newly available format.
+
 2004-01-06  Vincent Untz  <vincent@vuntz.net>
 
 	* clock.c: (create_calendar): if showing UTC time, select the right

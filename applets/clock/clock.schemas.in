@@ -10,18 +10,36 @@
           <short>Hour format</short>
           <long>
             This key specifies the hour format used by the clock applet.
-            Possible values are "12-hour", "24-hour", "internet" and "unix".
+            Possible values are "12-hour", "24-hour", "internet", "unix" and
+	    "custom".
             If set to "internet", the clock will display internet time.
             The internet time system divides the day into 1000 ".beats". There
             are no time zones in this system, so time is the same all over the
             world.
             If set to "unix", the clock will display time in seconds since
             Epoch, i.e. 1970-01-01.
+	    If set to "custom", the clock will display time according to the
+	    format specified in the custom_format key.
           </long>
         </locale>
 	<locale name="en_US">
 	  <default>12</default>
 	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/clock_applet/prefs/custom_format</key>
+        <owner>clock-applet</owner>
+        <type>string</type>
+        <default></default>
+        <locale name="C">
+          <short>Custom format of the clock</short>
+          <long>
+            This key specifies the format used by the clock applet when the
+	    format key is set to "custom". You can use conversion specifiers
+	    understood by strftime() to obtain a specific format.
+          </long>
+        </locale>
       </schema>
 
       <schema>

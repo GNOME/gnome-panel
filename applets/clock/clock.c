@@ -51,7 +51,7 @@
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
 
-#define N_GCONF_PREFS 5
+#define N_GCONF_PREFS 6
 
 #define NEVER_SENSITIVE "never_sensitive"
 
@@ -60,20 +60,23 @@ static const char* KEY_SHOW_SECONDS  = "show_seconds";
 static const char* KEY_SHOW_DATE     = "show_date";
 static const char* KEY_GMT_TIME      = "gmt_time";
 static const char* KEY_CONFIG_TOOL   = "config_tool";
+static const char* KEY_CUSTOM_FORMAT = "custom_format";
 
 typedef enum {
 	CLOCK_FORMAT_12,
 	CLOCK_FORMAT_24,
 	CLOCK_FORMAT_UNIX,
-	CLOCK_FORMAT_INTERNET
+	CLOCK_FORMAT_INTERNET,
+	CLOCK_FORMAT_CUSTOM
 } ClockFormat;
 
 static GConfEnumStringPair format_type_enum_map [] = {
-	{ CLOCK_FORMAT_12,       "12-hour" },
-	{ CLOCK_FORMAT_24,       "24-hour" },
-	{ CLOCK_FORMAT_UNIX,     "unix" },
+	{ CLOCK_FORMAT_12,       "12-hour"  },
+	{ CLOCK_FORMAT_24,       "24-hour"  },
+	{ CLOCK_FORMAT_UNIX,     "unix"     },
 	{ CLOCK_FORMAT_INTERNET, "internet" },
-	{ 0, NULL}
+	{ CLOCK_FORMAT_CUSTOM,   "custom"   },
+	{ 0, NULL }
 };
 
 typedef struct _ClockData ClockData;
@@ -85,15 +88,16 @@ struct _ClockData {
         GtkWidget *toggle;
 	GtkWidget *props;
 	GtkWidget *about;
-  
+
 	/* preferences */
-	ClockFormat format;
-	gboolean    showseconds;
-	gboolean    showdate;
-	gboolean    gmt_time;
+	ClockFormat  format;
+	char        *custom_format;
+	gboolean     showseconds;
+	gboolean     showdate;
+	gboolean     gmt_time;
 
         char *config_tool;
-        
+
 	/* runtime data */
 	char *timeformat;
 	guint timeout;
@@ -258,6 +262,10 @@ update_timeformat (ClockData *cd)
 
 	g_free (cd->timeformat);
 	cd->timeformat = g_locale_from_utf8 (clock_format, -1, NULL, NULL, NULL);
+	/* let's be paranoid */
+	if (!cd->timeformat)
+		cd->timeformat = g_strdup ("???");
+
 	g_free (clock_format);
 
 #undef USE_TWO_LINE_FORMAT
@@ -280,7 +288,7 @@ set_atk_name_description (GtkWidget  *widget,
 		atk_object_set_description (obj, desc);
 	if (name != NULL)
 		atk_object_set_name (obj, name);
-} 
+}
 
 /* sets up ATK relation between the widgets */
 static void
@@ -338,13 +346,21 @@ update_clock (ClockData * cd, time_t current_time)
 				    (unsigned long)(current_time % 100000L));
 		} else {
 			g_snprintf (hour, sizeof(hour), "%lu", (unsigned long)current_time);
-		} 
+		}
 	} else if (cd->format == CLOCK_FORMAT_INTERNET) {
 		float itime = get_itime (current_time);
 		if (cd->showseconds)
 			g_snprintf (hour, sizeof (hour), "@%3.2f", itime);
 		else
 			g_snprintf (hour, sizeof (hour), "@%3.0f", itime);
+	} else if (cd->format == CLOCK_FORMAT_CUSTOM) {
+		char *timeformat = g_locale_from_utf8 (cd->custom_format, -1,
+						       NULL, NULL, NULL);
+		if (!timeformat)
+			strcpy (hour, "???");
+		else if (strftime (hour, sizeof (hour), timeformat, tm) <= 0)
+			strcpy (hour, "???");
+		g_free (timeformat);
 	} else {
 		if (strftime (hour, sizeof (hour), cd->timeformat, tm) <= 0)
 			strcpy (hour, "???");
@@ -356,7 +372,9 @@ update_clock (ClockData * cd, time_t current_time)
 
 	/* Show date in tooltip */
 	loc = g_locale_from_utf8 (_("%A %B %d"), -1, NULL, NULL, NULL);
-	if (strftime (date, sizeof (date), loc, tm) <= 0)
+	if (!loc)
+		strcpy (date, "???");
+	else if (strftime (date, sizeof (date), loc, tm) <= 0)
 		strcpy (date, "???");
 	g_free (loc);
 
@@ -406,7 +424,9 @@ refresh_clock_timeout(ClockData *cd)
 			cd->timeouttime = (864 - isec)*100;
 		}
 	}
-	else if(cd->format == CLOCK_FORMAT_UNIX || cd->showseconds)
+	else if(cd->format == CLOCK_FORMAT_UNIX ||
+		cd->format == CLOCK_FORMAT_CUSTOM ||
+		cd->showseconds)
 		cd->timeouttime = 1000;
 	else
 		cd->timeouttime = (60 - current_time % 60)*1000;
@@ -443,8 +463,9 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 		cd->props = NULL;
 	}
 
-        g_free (cd->timeformat);
+	g_free (cd->timeformat);
 	g_free (cd->config_tool);
+	g_free (cd->custom_format);
 	g_free (cd);
 }
 
@@ -453,7 +474,7 @@ close_on_escape (GtkWidget   *widget,
 		 GdkEventKey *event,
 		 ClockData   *cd)
 {
-	if (event->keyval == GDK_Escape) {             
+	if (event->keyval == GDK_Escape) {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->toggle), FALSE);
 		return TRUE;
 	}
@@ -646,7 +667,7 @@ do_not_eat_button_press (GtkWidget      *widget,
 }
 
 /* Don't request smaller size then the last one we did, this avoids
-   jumping when proportional fonts are used.  We must take care to 
+   jumping when proportional fonts are used.  We must take care to
    call "unfix_size" whenever options are changed or such where
    we'd want to forget the fixed size */
 static void
@@ -683,7 +704,7 @@ create_clock_widget (ClockData *cd)
 	toggle = gtk_toggle_button_new ();
 	gtk_container_set_resize_mode (GTK_CONTAINER (toggle), GTK_RESIZE_IMMEDIATE);
 	gtk_button_set_relief (GTK_BUTTON (toggle), GTK_RELIEF_NONE);
-        
+
 	alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
 	gtk_container_add (GTK_CONTAINER (alignment), clock);
 	gtk_container_set_resize_mode (GTK_CONTAINER (alignment), GTK_RESIZE_IMMEDIATE);
@@ -695,9 +716,9 @@ create_clock_widget (ClockData *cd)
 
 	g_signal_connect (toggle, "toggled",
 			  G_CALLBACK (toggle_calendar), cd);
-        
-	gtk_widget_show (toggle);        
-        
+
+	gtk_widget_show (toggle);
+
 	cd->toggle = toggle;
 
 	cd->clockw = clock;
@@ -796,7 +817,10 @@ copy_time (BonoboUIComponent *uic,
 		struct tm *tm;
 		char      *format;
 
-		if (cd->format == CLOCK_FORMAT_12) {
+		if (cd->format == CLOCK_FORMAT_CUSTOM) {
+			format = g_locale_from_utf8 (cd->custom_format, -1,
+						     NULL, NULL, NULL);
+		} else if (cd->format == CLOCK_FORMAT_12) {
 			if (cd->showseconds)
 				format = g_locale_from_utf8 (_("%I:%M:%S %p"), -1, NULL, NULL, NULL);
 			else
@@ -813,7 +837,9 @@ copy_time (BonoboUIComponent *uic,
 		else
 			tm = localtime (&current_time);
 
-		if (strftime (string, sizeof (string), format, tm) <= 0)
+		if (!format)
+			strcpy (string, "???");
+		else if (strftime (string, sizeof (string), format, tm) <= 0)
 			strcpy (string, "???");
 		g_free (format);
 	}
@@ -840,7 +866,9 @@ copy_date (BonoboUIComponent *uic,
 		tm = localtime (&current_time);
 
 	loc = g_locale_from_utf8 (_("%A, %B %d %Y"), -1, NULL, NULL, NULL);
-	if (strftime (string, sizeof (string), loc, tm) <= 0)
+	if (!loc)
+		strcpy (string, "???");
+	else if (strftime (string, sizeof (string), loc, tm) <= 0)
 		strcpy (string, "???");
 	g_free (loc);
 	
@@ -962,7 +990,7 @@ format_changed (GConfClient  *client,
 
 	clock->format = new_format;
 	update_timeformat (clock);
-	refresh_clock (clock);
+	refresh_clock_timeout (clock);
 }
 
 static void
@@ -1035,6 +1063,26 @@ config_tool_changed (GConfClient  *client,
 }
 
 static void
+custom_format_changed (GConfClient  *client,
+                       guint         cnxn_id,
+                       GConfEntry   *entry,
+                       ClockData    *clock)
+{
+	const char *value;
+	
+	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
+		return;
+
+	value = gconf_value_get_string (entry->value);
+
+        g_free (clock->custom_format);
+	clock->custom_format = g_strdup (value);
+
+	if (clock->format == CLOCK_FORMAT_CUSTOM)
+		refresh_clock (clock);
+}
+
+static void
 setup_gconf (ClockData *clock)
 {
 	GConfClient *client;
@@ -1078,7 +1126,7 @@ setup_gconf (ClockData *clock)
 				clock, NULL, NULL);
 	g_free (key);
 
-        key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
 					       KEY_CONFIG_TOOL);
 	clock->listeners [4] =
 		gconf_client_notify_add (
@@ -1087,6 +1135,15 @@ setup_gconf (ClockData *clock)
 				clock, NULL, NULL);
 	g_free (key);
 
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_CUSTOM_FORMAT);
+	clock->listeners [5] =
+		gconf_client_notify_add (
+				client, key,
+				(GConfClientNotifyFunc) custom_format_changed,
+				clock, NULL, NULL);
+	g_free (key);
+	
 	g_object_unref (G_OBJECT (client));
 }
 
@@ -1169,6 +1226,7 @@ fill_clock_applet (PanelApplet *applet)
 		cd->format = clock_locale_format ();
 	}
 
+	cd->custom_format = panel_applet_gconf_get_string (applet, KEY_CUSTOM_FORMAT, NULL);
 	cd->showseconds = panel_applet_gconf_get_bool (applet, KEY_SHOW_SECONDS, NULL);
 	
 	error = NULL;
@@ -1196,7 +1254,7 @@ fill_clock_applet (PanelApplet *applet)
 	gtk_widget_show (cd->applet);
 
 	/* FIXME: Update this comment. */
-	/* we have to bind change_orient before we do applet_widget_add 
+	/* we have to bind change_orient before we do applet_widget_add
 	   since we need to get an initial change_orient signal to set our
 	   initial oriantation, and we get that during the _add call */
 	g_signal_connect (G_OBJECT (cd->applet),
@@ -1270,7 +1328,7 @@ setup_writability_sensitivity (ClockData *clock, GtkWidget *w, GtkWidget *label,
 
 static void
 set_data_sensitive_cb (GtkWidget *w,
-		      GtkWidget *wid)
+		       GtkWidget *wid)
 {
 	if ( ! g_object_get_data (G_OBJECT (wid), NEVER_SENSITIVE))
 		gtk_widget_set_sensitive (wid, TRUE);
@@ -1278,7 +1336,7 @@ set_data_sensitive_cb (GtkWidget *w,
 
 static void
 set_data_insensitive_cb (GtkWidget *w,
-		      GtkWidget *wid)
+			 GtkWidget *wid)
 {
 	gtk_widget_set_sensitive (wid, FALSE);
 }
@@ -1327,6 +1385,17 @@ set_gmt_time_cb (GtkWidget *w,
 }
 
 static void
+set_custom_format_cb (GtkEntry  *entry,
+		      ClockData *cd)
+{
+	const char *custom_format;
+
+	custom_format = gtk_entry_get_text (entry);
+	panel_applet_gconf_set_string (PANEL_APPLET (cd->applet),
+				       KEY_CUSTOM_FORMAT, custom_format, NULL);
+}
+
+static void
 properties_response_cb (GtkWidget *widget,
 			int        id,
 			ClockData *cd)
@@ -1364,7 +1433,7 @@ properties_response_cb (GtkWidget *widget,
 	}
 }
 
-static void 
+static void
 display_properties_dialog (BonoboUIComponent *uic,
 			   ClockData         *cd,
 			   const gchar       *verbname)
@@ -1377,10 +1446,14 @@ display_properties_dialog (BonoboUIComponent *uic,
 	GtkWidget *showdate;
 	GtkWidget *unixtime;
 	GtkWidget *internettime;
+	GtkWidget *customtime;
 	GtkWidget *use_gmt_time;
 	GtkWidget *option_menu;
 	GtkWidget *menu;
 	GtkWidget *label;
+	GtkWidget *custom_hbox;
+	GtkWidget *custom_label;
+	GtkWidget *custom_entry;
 	GSList    *list;
 	char      *file;
 
@@ -1439,14 +1512,14 @@ display_properties_dialog (BonoboUIComponent *uic,
 
 	menu = gtk_menu_new ();
 	twelvehour = gtk_menu_item_new_with_label (_("12 hour"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), twelvehour); 
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), twelvehour);
 	g_object_set_data (G_OBJECT (twelvehour), "user_data", cd);
    	g_signal_connect (G_OBJECT (twelvehour), "activate",
 			  G_CALLBACK (set_format_cb),
 			  GINT_TO_POINTER (CLOCK_FORMAT_12));
 	gtk_widget_show (twelvehour);
 
-	twentyfourhour = gtk_menu_item_new_with_label (_("24 hour")); 
+	twentyfourhour = gtk_menu_item_new_with_label (_("24 hour"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), twentyfourhour);	
 	g_object_set_data (G_OBJECT (twentyfourhour), "user_data", cd);
    	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
@@ -1454,27 +1527,54 @@ display_properties_dialog (BonoboUIComponent *uic,
 			  GINT_TO_POINTER (CLOCK_FORMAT_24));
 	gtk_widget_show (twentyfourhour);
 
-	unixtime = gtk_menu_item_new_with_label (_("UNIX time")); 
+	unixtime = gtk_menu_item_new_with_label (_("UNIX time"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), unixtime);
 	g_object_set_data (G_OBJECT (unixtime), "user_data", cd);
-	g_signal_connect (G_OBJECT (unixtime), "activate", 
+	g_signal_connect (G_OBJECT (unixtime), "activate",
 			  G_CALLBACK (set_format_cb),
 			  GINT_TO_POINTER (CLOCK_FORMAT_UNIX));
 	gtk_widget_show (unixtime);
 
-	internettime = gtk_menu_item_new_with_label (_("Internet time")); 
+	internettime = gtk_menu_item_new_with_label (_("Internet time"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), internettime);
 	g_object_set_data (G_OBJECT (internettime), "user_data", cd);
 	g_signal_connect (G_OBJECT (internettime), "activate",
 			  G_CALLBACK (set_format_cb),
 			  GINT_TO_POINTER (CLOCK_FORMAT_INTERNET));
-	gtk_widget_show (internettime);		   
+	gtk_widget_show (internettime);
 
+	customtime = gtk_menu_item_new_with_label (_("Custom format"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), customtime);
+	g_object_set_data (G_OBJECT (customtime), "user_data", cd);
+	g_signal_connect (G_OBJECT (customtime), "activate",
+			G_CALLBACK (set_format_cb),
+			GINT_TO_POINTER (CLOCK_FORMAT_CUSTOM));
+	
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
 	gtk_widget_show (option_menu);
 	gtk_widget_show (menu);
-  
+
 	gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
+
+	custom_hbox = gtk_hbox_new (FALSE, 12);
+	gtk_box_pack_start (GTK_BOX (vbox), custom_hbox, TRUE, TRUE, 0);
+
+	custom_label = gtk_label_new_with_mnemonic (_("Custom _format:"));
+	gtk_label_set_use_markup (GTK_LABEL (custom_label), TRUE);
+	gtk_label_set_justify (GTK_LABEL (custom_label),
+			       GTK_JUSTIFY_LEFT);
+	gtk_misc_set_alignment (GTK_MISC (custom_label), 0, 0.5);
+	gtk_box_pack_start (GTK_BOX (custom_hbox), custom_label,
+			    FALSE, FALSE, 0);
+
+	custom_entry = gtk_entry_new ();
+	gtk_box_pack_start (GTK_BOX (custom_hbox), custom_entry,
+			    FALSE, FALSE, 0);
+	gtk_entry_set_text (GTK_ENTRY (custom_entry),
+			    cd->custom_format);
+	g_signal_connect (G_OBJECT (custom_entry), "changed",
+			  G_CALLBACK (set_custom_format_cb),
+			  cd);
 
 	showseconds = gtk_check_button_new_with_mnemonic (_("Show _seconds"));
 	gtk_box_pack_start (GTK_BOX (vbox), showseconds, FALSE, FALSE, 0);
@@ -1482,7 +1582,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	                              cd->showseconds);
 	g_signal_connect (G_OBJECT (showseconds), "toggled",
 			  G_CALLBACK (set_show_seconds_cb),
-			  cd);	   
+			  cd);
 	gtk_widget_show (showseconds);
 
 	showdate = gtk_check_button_new_with_mnemonic (_("Show _date"));
@@ -1505,15 +1605,33 @@ display_properties_dialog (BonoboUIComponent *uic,
 
 	gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), cd->format);
 
+	/* only show the custom format stuff if necessary */
+	if (cd->format == CLOCK_FORMAT_CUSTOM ||
+	    (cd->custom_format && cd->custom_format [0])) {
+		gtk_widget_show (custom_hbox);
+		gtk_widget_show (custom_label);
+		gtk_widget_show (custom_entry);
+		gtk_widget_show (customtime);
+	}
+
 	/* Some combinations of options do not make sense */
 	if (cd->format == CLOCK_FORMAT_UNIX) {
 		gtk_widget_set_sensitive (showseconds, FALSE);
 		gtk_widget_set_sensitive (showdate, FALSE);
 		gtk_widget_set_sensitive (use_gmt_time, FALSE);
-	}
-	if (cd->format == CLOCK_FORMAT_INTERNET) {
+		gtk_widget_set_sensitive (custom_entry, FALSE);
+		gtk_widget_set_sensitive (custom_label, FALSE);
+	} else if (cd->format == CLOCK_FORMAT_INTERNET) {
 		gtk_widget_set_sensitive (showdate, FALSE);
 		gtk_widget_set_sensitive (use_gmt_time, FALSE);
+		gtk_widget_set_sensitive (custom_entry, FALSE);
+		gtk_widget_set_sensitive (custom_label, FALSE);
+	} else if (cd->format == CLOCK_FORMAT_CUSTOM) {
+		gtk_widget_set_sensitive (showseconds, FALSE);
+		gtk_widget_set_sensitive (showdate, FALSE);
+	} else {
+		gtk_widget_set_sensitive (custom_entry, FALSE);
+		gtk_widget_set_sensitive (custom_label, FALSE);
 	}
 
 	/* 12 hour mode -- toggle sensitivity of check button items */
@@ -1526,6 +1644,12 @@ display_properties_dialog (BonoboUIComponent *uic,
 	g_signal_connect (G_OBJECT (twelvehour), "activate",
 			  G_CALLBACK (set_data_sensitive_cb),
 			  use_gmt_time);
+	g_signal_connect (G_OBJECT (twelvehour), "activate",
+			  G_CALLBACK (set_data_insensitive_cb),
+			  custom_entry);
+	g_signal_connect (G_OBJECT (twelvehour), "activate",
+			  G_CALLBACK (set_data_insensitive_cb),
+			  custom_label);
 
 	/* 24 hour mode -- toggle sensitivity of check button items */
 	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
@@ -1537,8 +1661,14 @@ display_properties_dialog (BonoboUIComponent *uic,
 	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
 			  G_CALLBACK (set_data_sensitive_cb),
 			  use_gmt_time);
+	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
+			  G_CALLBACK (set_data_insensitive_cb),
+			  custom_entry);
+	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
+			  G_CALLBACK (set_data_insensitive_cb),
+			  custom_label);
 
-	/* UNIX time mode -- toggle sensitivity of check button items */			  	  
+	/* UNIX time mode -- toggle sensitivity of check button items */
 	g_signal_connect (G_OBJECT (unixtime), "activate",
 			  G_CALLBACK (set_data_insensitive_cb),
 			  showseconds);
@@ -1548,18 +1678,47 @@ display_properties_dialog (BonoboUIComponent *uic,
 	g_signal_connect (G_OBJECT (unixtime), "activate",
 			  G_CALLBACK (set_data_insensitive_cb),
 			  use_gmt_time);
+	g_signal_connect (G_OBJECT (unixtime), "activate",
+			  G_CALLBACK (set_data_insensitive_cb),
+			  custom_entry);
+	g_signal_connect (G_OBJECT (unixtime), "activate",
+			  G_CALLBACK (set_data_insensitive_cb),
+			  custom_label);
 
 	/* Internet time mode -- toggle sensitivity of check button items */	
 	g_signal_connect (G_OBJECT (internettime), "activate",
 			  G_CALLBACK (set_data_sensitive_cb),
-			  showseconds);		  
+			  showseconds);
 	g_signal_connect (G_OBJECT (internettime), "activate",
 			  G_CALLBACK (set_data_insensitive_cb),
 			  showdate);
 	g_signal_connect (G_OBJECT (internettime), "activate",
 			  G_CALLBACK (set_data_insensitive_cb),
-			  use_gmt_time);   
-   
+			  use_gmt_time);
+	g_signal_connect (G_OBJECT (internettime), "activate",
+			  G_CALLBACK (set_data_insensitive_cb),
+			  custom_entry);
+	g_signal_connect (G_OBJECT (internettime), "activate",
+			  G_CALLBACK (set_data_insensitive_cb),
+			  custom_label);
+
+	/* Custom mode -- toggle sensitivity of check button items */	
+	g_signal_connect (G_OBJECT (customtime), "activate",
+			  G_CALLBACK (set_data_insensitive_cb),
+			  showseconds);
+	g_signal_connect (G_OBJECT (customtime), "activate",
+			  G_CALLBACK (set_data_insensitive_cb),
+			  showdate);
+	g_signal_connect (G_OBJECT (customtime), "activate",
+			  G_CALLBACK (set_data_sensitive_cb),
+			  use_gmt_time);
+	g_signal_connect (G_OBJECT (customtime), "activate",
+			  G_CALLBACK (set_data_sensitive_cb),
+			  custom_entry);
+	g_signal_connect (G_OBJECT (customtime), "activate",
+			  G_CALLBACK (set_data_sensitive_cb),
+			  custom_label);
+	
 	g_signal_connect (G_OBJECT (cd->props), "destroy",
 			  G_CALLBACK (gtk_widget_destroyed), &(cd->props));
 	g_signal_connect (G_OBJECT (cd->props), "response",
@@ -1567,6 +1726,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 
 	/* Now set up the sensitivity based on gconf key writability */
 	setup_writability_sensitivity (cd, option_menu, label, KEY_FORMAT);
+	setup_writability_sensitivity (cd, custom_entry, custom_label,
+				       KEY_CUSTOM_FORMAT);
 	setup_writability_sensitivity (cd, showseconds, NULL, KEY_SHOW_SECONDS);
 	setup_writability_sensitivity (cd, showdate, NULL, KEY_SHOW_DATE);
 	setup_writability_sensitivity (cd, use_gmt_time, NULL, KEY_GMT_TIME);
