@@ -240,7 +240,19 @@ make_panel_submenu (PanelWidget *panel_widget,
 		gtk_widget_set_sensitive (menuitem, FALSE);
 
 	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem (menuitem,
+			GTK_ICON_SIZE_MENU,
+			gtk_image_new_from_stock (GTK_STOCK_PROPERTIES,
+						  GTK_ICON_SIZE_MENU),
+			_("_Properties"),
+			FALSE);
 
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (panel_properties_dialog_present), 
+				  panel_widget->toplevel);
+
+	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem, 
 			GTK_ICON_SIZE_MENU,
 			gtk_image_new_from_stock (GTK_STOCK_DELETE,
@@ -254,19 +266,6 @@ make_panel_submenu (PanelWidget *panel_widget,
 	g_signal_connect (G_OBJECT (menu), "show",
 			  G_CALLBACK (panel_context_menu_setup_remove_panel_item),
 			  menuitem);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem,
-			GTK_ICON_SIZE_MENU,
-			gtk_image_new_from_stock (GTK_STOCK_PROPERTIES,
-						  GTK_ICON_SIZE_MENU),
-			_("_Properties"),
-			FALSE);
-
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (panel_properties_dialog_present), 
-				  panel_widget->toplevel);
 
 	add_menu_separator (menu);
 
