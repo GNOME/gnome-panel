@@ -1,3 +1,24 @@
+2002-05-14  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* menu.c (create_new_panel):
+	Correct window argument passed to gtk_window_set_title()
+
+	* panel-widget.c:
+	Add function panel_widget_reset_saved_focus() to reset focus to
+	saved_focus_widget
+	Add function panel_widget_force_grab_focus() which sets focus to
+	specified widget event if widget does not have CAN_FOCUS flag set.
+	Add new function panel_woidget_reset_focus() which resets the focus
+	widget when the currently focused widget is removed from a panel
+	(panel_widget_cremove): Call panel_widget_reset_focus() to reset
+	focus when applet is removed from panel.
+	(panel_widget_reparent): Set focus to new widget, unset GTK_CAN_FOCUS
+	flag on new PanelWidget, if set, and make panel window active when 
+	applet is moved from another panel.
+	(panel_widget_tab_move): Do not unset saved_focus_widget after moving
+	applet to another panel using Tab key.
+	(This fixes bug #80688)
+
 2002-05-13  Seth Nickell  <snickell@stanford.edu>
 
 	* foobar-widget.c: (append_actions_menu):

@@ -250,7 +250,7 @@ add_all_move_bindings (PanelWidget *panel)
                                       GDK_space, 0,
                                       "end_move", 0);
 
-	focus_widget = GTK_WINDOW (panel->panel_parent)->focus_widget;
+	focus_widget = gtk_window_get_focus (GTK_WINDOW (panel->panel_parent));
 	if (GTK_IS_SOCKET (focus_widget)) {
 		/*
 		 * If the focus widget is a GtkSocket, i.e. the
@@ -262,6 +262,30 @@ add_all_move_bindings (PanelWidget *panel)
 		GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
 		gtk_widget_grab_focus (GTK_WIDGET (panel));
 		saved_focus_widget = focus_widget;
+	}
+}
+
+static void
+panel_widget_force_grab_focus (GtkWidget *widget)
+{
+	gboolean can_focus = GTK_WIDGET_CAN_FOCUS (widget);
+	/*
+	 * This follows what gtk_socket_claim_focus() does
+	 */
+	if (!can_focus)
+		GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
+	gtk_widget_grab_focus (widget);
+	if (!can_focus)
+		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
+}
+
+static void
+panel_widget_reset_saved_focus (PanelWidget *panel)
+{
+	if (saved_focus_widget) {
+		GTK_WIDGET_UNSET_FLAGS (panel, GTK_CAN_FOCUS);
+		panel_widget_force_grab_focus (saved_focus_widget);
+		saved_focus_widget = NULL;
 	}
 }
 
@@ -294,11 +318,8 @@ remove_all_move_bindings (PanelWidget *panel)
 
 	binding_set = gtk_binding_set_by_class (class);
 
-	if (saved_focus_widget) {
-		GTK_WIDGET_UNSET_FLAGS (panel, GTK_CAN_FOCUS);
-		gtk_widget_grab_focus (saved_focus_widget);
-		saved_focus_widget = NULL;
-	}
+	panel_widget_reset_saved_focus (panel);
+
 	remove_move_bindings (binding_set, GDK_SHIFT_MASK);
 	remove_move_bindings (binding_set, GDK_CONTROL_MASK);
 	remove_move_bindings (binding_set, GDK_MOD1_MASK);
@@ -565,6 +586,24 @@ run_up_forbidden(PanelWidget *panel,
 	(*runfunc)(panel,panel);
 }
 
+static void
+panel_widget_reset_focus (GtkContainer *container,
+                          GtkWidget    *widget)
+{
+	PanelWidget *panel = PANEL_WIDGET (container);
+
+	if (container->focus_child == widget) {
+		GtkWidget *panelw = panel->panel_parent;
+		gboolean return_val;
+
+		g_signal_emit_by_name (panelw, "focus",
+				       GTK_DIR_TAB_FORWARD,
+				       &return_val);
+		if (!gtk_window_get_focus (GTK_WINDOW (panelw))) {
+			panel_widget_focus (panel);	
+		}
+	}
+}
 
 static void
 panel_widget_cadd (GtkContainer *container,
@@ -610,6 +649,8 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 
 	if (p != NULL)
 		run_up_forbidden (p, remove_panel_from_forbidden);
+
+	panel_widget_reset_focus (container, widget);
 
 	if(panel->currently_dragged_applet == ad)
 		panel_widget_applet_drag_end(panel);
@@ -2696,6 +2737,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 		       int pos)
 {
 	AppletData *ad;
+	GtkWidget *focus_widget = NULL;
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(old_panel),-1);
 	g_return_val_if_fail(PANEL_IS_WIDGET(new_panel),-1);
@@ -2712,7 +2754,24 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 	ad->no_die++;
 
+	panel_widget_reset_saved_focus (old_panel);
+	if (GTK_CONTAINER (old_panel)->focus_child == applet) {
+		focus_widget = gtk_window_get_focus (GTK_WINDOW (old_panel->panel_parent));
+	}
 	gtk_widget_reparent (applet, GTK_WIDGET (new_panel));
+
+	if (GTK_WIDGET_CAN_FOCUS (new_panel))
+		GTK_WIDGET_UNSET_FLAGS (new_panel, GTK_CAN_FOCUS);
+	if (focus_widget) {
+		panel_widget_force_grab_focus (focus_widget);
+	} else {
+		gboolean return_val;
+
+		g_signal_emit_by_name (applet, "focus",
+				       GTK_DIR_TAB_FORWARD,
+				       &return_val);
+	}
+ 	gtk_window_present (GTK_WINDOW (new_panel->panel_parent));
 
 	gdk_flush();
 
@@ -2937,8 +2996,6 @@ panel_widget_tab_move (PanelWidget *panel,
 			new_panel = previous_panel;
 	}
 	if (new_panel && (new_panel != panel)) {
-		if (saved_focus_widget)
-			saved_focus_widget = NULL;
 		panel_widget_reparent (panel, new_panel, ad->applet, 0);
 	}
 }

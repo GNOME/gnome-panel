@@ -2517,7 +2517,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    TRUE, FALSE, TRUE,
 					    &bcolor);
 		panel_setup (panel);
-		gtk_window_set_title (GTK_WINDOW (panel->window), _("Aligned Panel"));
+		gtk_window_set_title (GTK_WINDOW (panel), _("Aligned Panel"));
 		gtk_widget_show (panel);
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
@@ -2538,7 +2538,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 					 TRUE, FALSE, TRUE,
 					 &bcolor);
 		panel_setup (panel);
-		gtk_window_set_title (GTK_WINDOW (panel->window), _("Edge Panel"));
+		gtk_window_set_title (GTK_WINDOW (panel), _("Edge Panel"));
 		gtk_widget_show (panel);	
 		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
 				   _("Edge Panel"),
@@ -2558,7 +2558,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    NULL, TRUE, FALSE, TRUE,
 					    &bcolor);
 		panel_setup (panel);
-		gtk_window_set_title (GTK_WINDOW (panel->window), _("Sliding Panel"));
+		gtk_window_set_title (GTK_WINDOW (panel), _("Sliding Panel"));
 		gtk_widget_show (panel);	
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
@@ -2579,7 +2579,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 					     NULL, TRUE, FALSE, TRUE,
 					     &bcolor);
 		panel_setup (panel);
-		gtk_window_set_title (GTK_WINDOW (panel->window), _("Floating Panel"));
+		gtk_window_set_title (GTK_WINDOW (panel), _("Floating Panel"));
 		gtk_widget_show (panel);
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
@@ -2595,7 +2595,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 			panel_id = PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id;
 			
 			panel_setup (panel);
-			gtk_window_set_title (GTK_WINDOW (panel->window), _("Menu Panel"));
+			gtk_window_set_title (GTK_WINDOW (panel), _("Menu Panel"));
 			gtk_widget_show (panel);
 			break;
 		}
