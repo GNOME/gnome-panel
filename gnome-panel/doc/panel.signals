@@ -1,0 +1,59 @@
+<SIGNAL>
+<NAME>AppletWidget::change-orient</NAME>
+<RETURNS>void</RETURNS>
+AppletWidget *appletwidget
+GtkEnum  arg1
+</SIGNAL>
+
+<SIGNAL>
+<NAME>AppletWidget::change-pixel-size</NAME>
+<RETURNS>void</RETURNS>
+AppletWidget *appletwidget
+gint  arg1
+</SIGNAL>
+
+<SIGNAL>
+<NAME>AppletWidget::save-session</NAME>
+<RETURNS>gboolean</RETURNS>
+AppletWidget *appletwidget
+GtkString  arg1
+GtkString  arg2
+</SIGNAL>
+
+<SIGNAL>
+<NAME>AppletWidget::back-change</NAME>
+<RETURNS>void</RETURNS>
+AppletWidget *appletwidget
+GtkEnum  arg1
+gpointer  arg2
+gpointer  arg3
+</SIGNAL>
+
+<SIGNAL>
+<NAME>AppletWidget::do-draw</NAME>
+<RETURNS>void</RETURNS>
+AppletWidget *appletwidget
+</SIGNAL>
+
+<SIGNAL>
+<NAME>AppletWidget::tooltip-state</NAME>
+<RETURNS>void</RETURNS>
+AppletWidget *appletwidget
+gint  arg1
+</SIGNAL>
+
+<SIGNAL>
+<NAME>AppletWidget::change-position</NAME>
+<RETURNS>void</RETURNS>
+AppletWidget *appletwidget
+gint  arg1
+gint  arg2
+</SIGNAL>
+
+<SIGNAL>
+<NAME>StatusDocklet::build-plug</NAME>
+<RETURNS>void</RETURNS>
+StatusDocklet *statusdocklet
+gpointer  arg1
+</SIGNAL>
+
