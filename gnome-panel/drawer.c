@@ -13,15 +13,9 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
-#include "gnome.h"
-#include "panel-widget.h"
-#include "drawer-widget.h"
-#include "panel-util.h"
-#include "main.h"
-#include "panel.h"
-#include "panel_config_global.h"
-#include "drawer.h"
-#include "panel-util.h"
+#include <gnome.h>
+
+#include "panel-include.h"
 
 #define DRAWER_PROPERTIES "drawer_properties"
 
@@ -31,6 +25,8 @@ extern GlobalConfig global_config;
 
 extern GtkTooltips *panel_tooltips;
 static char *default_drawer_pixmap=NULL;
+
+extern GList *panel_list;
 
 static void
 properties_apply_callback(GtkWidget *widget, int page, gpointer data)
@@ -232,7 +228,7 @@ enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	return TRUE;
 }
 
-Drawer *
+static Drawer *
 create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 		     PanelOrientType orient)
 {
@@ -311,7 +307,7 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 	return drawer;
 }
 
-Drawer *
+static Drawer *
 create_empty_drawer_applet(char *tooltip, char *pixmap,
 			   PanelOrientType orient)
 {
@@ -398,3 +394,117 @@ set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
 	
 	g_free(pixmap_name);*/
 }
+
+static void
+monitor_drawers(GtkWidget *w, PanelWidget *panel)
+{
+	DrawerWidget *drawer = gtk_object_get_data(GTK_OBJECT(panel),
+						   PANEL_PARENT);
+	PanelWidget *parent =
+		gtk_object_get_data(GTK_OBJECT(panel->master_widget),
+				    PANEL_APPLET_PARENT_KEY);
+	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(parent),
+						PANEL_PARENT);
+	
+	if(IS_SNAPPED_WIDGET(panelw)) {
+		if(drawer->state==DRAWER_SHOWN)
+			SNAPPED_WIDGET(panelw)->drawers_open++;
+		else
+			SNAPPED_WIDGET(panelw)->drawers_open--;
+	}
+}
+
+static void
+drawer_realize_cb(GtkWidget *button, Drawer *drawer)
+{
+	reposition_drawer(drawer);
+	if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN)
+		gtk_widget_show(drawer->drawer);
+	else {
+		if(!GTK_WIDGET_REALIZED(drawer->drawer))
+			gtk_widget_realize(drawer->drawer);
+		gtk_widget_hide(drawer->drawer);
+	}
+}
+
+
+void
+load_drawer_applet(char *params, char *pixmap, char *tooltip,
+		   int pos, PanelWidget *panel)
+{
+	Drawer *drawer;
+	PanelWidget *dr_panel;
+
+	if(!params) {
+		drawer = create_empty_drawer_applet(tooltip,pixmap,
+						    get_applet_orient(panel));
+		if(drawer) panel_setup(drawer->drawer);
+	} else {
+		int i;
+		PanelData *dr_pd;
+
+		sscanf(params,"%d",&i);
+		dr_pd = g_list_nth(panel_list,i)->data;
+
+		drawer=create_drawer_applet(dr_pd->panel,
+					    tooltip,pixmap,
+					    get_applet_orient(panel));
+	}
+
+	if(!drawer)
+		return;
+
+	g_return_if_fail(drawer != NULL);
+
+	register_toy(drawer->button,drawer, pos, panel, APPLET_DRAWER);
+
+	/*the panel of the drawer*/
+	dr_panel = PANEL_WIDGET(DRAWER_WIDGET(drawer->drawer)->panel);
+
+	gtk_signal_connect(GTK_OBJECT(drawer->button), "clicked",
+			   GTK_SIGNAL_FUNC(monitor_drawers),
+			   dr_panel);
+
+	if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN) {
+		GtkWidget *wpanel;
+		/*pop up, if popped down*/
+		wpanel = gtk_object_get_data(GTK_OBJECT(panel),
+					     PANEL_PARENT);
+		if(IS_SNAPPED_WIDGET(wpanel)) {
+			/*drawer is open so we track it*/
+			SNAPPED_WIDGET(wpanel)->drawers_open++;
+			snapped_widget_pop_up(SNAPPED_WIDGET(wpanel));
+		}
+	} 
+
+	panel_widget_add_forbidden(PANEL_WIDGET(DRAWER_WIDGET(drawer->drawer)->panel));
+
+	gtk_tooltips_set_tip (panel_tooltips,drawer->button->parent,
+			      drawer->tooltip,NULL);
+	if(GTK_WIDGET_REALIZED(drawer->button)) {
+		reposition_drawer(drawer);
+		if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN)
+			gtk_widget_show(drawer->drawer);
+		else {
+			/*hmm ... weird but it works*/
+			gtk_widget_set_uposition(drawer->drawer,
+						 -100,-100);
+			gtk_widget_show(drawer->drawer);
+			/*gtk_widget_realize(drawer->drawer);*/
+			gtk_widget_hide(drawer->drawer);
+		}
+	} else
+		gtk_signal_connect_after(GTK_OBJECT(drawer->button),
+					 "realize",
+					 GTK_SIGNAL_FUNC(drawer_realize_cb),
+					 drawer);
+	gtk_signal_connect_after(GTK_OBJECT(drawer->drawer),
+				 "realize",
+				 GTK_SIGNAL_FUNC(drawer_realize_cb),
+				 drawer);
+
+	applet_add_callback(applet_count-1,"properties",
+			    GNOME_STOCK_MENU_PROP,
+			    _("Properties..."));
+}
+

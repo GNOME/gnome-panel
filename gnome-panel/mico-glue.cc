@@ -3,11 +3,9 @@
 #include <mico/gtkmico.h>
 #include <mico/naming.h>
 #include <gnome.h>
-#include "mico-glue.h"
+
+#include "panel-include.h"
 #include "gnome-panel.h"
-#include "panel.h"
-#include "panel-widget.h"
-#include "mico-parse.h"
 
 #include "cookie.h"
 

@@ -67,25 +67,31 @@ libpanel_applet_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
 BUILT_SOURCES = $(CORBA_SRCLIST)
 
 panel_SOURCES = 		\
-	drawer.c  		\
-	drawer.h  		\
-	gdkextra.c		\
-	gdkextra.h		\
+	panel-include.h		\
 	main.c			\
 	main.h			\
-	menu.c  		\
-	cookie.h		\
-	cookie.c		\
-	menu.h  		\
-	swallow.c  		\
-	swallow.h  		\
-	$(PANEL_ORB_SRCLIST)	\
+	applet.c		\
+	applet.h         	\
 	panel.c			\
 	panel.h         	\
+	session.c		\
+	session.h		\
 	panel_config.c  	\
 	panel_config.h		\
 	panel_config_global.c  	\
 	panel_config_global.h  	\
+	menu.c  		\
+	menu.h  		\
+	launcher.c		\
+	launcher.h		\
+	logout.c		\
+	logout.h		\
+	extern.c  		\
+	extern.h  		\
+	swallow.c  		\
+	swallow.h  		\
+	drawer.c  		\
+	drawer.h  		\
 	panel-widget.c  	\
 	panel-widget.h		\
 	snapped-widget.c  	\
@@ -94,14 +100,17 @@ panel_SOURCES = 		\
 	drawer-widget.h		\
 	corner-widget.c  	\
 	corner-widget.h		\
-	panel-util.c		\
-	panel-util.h		\
+	exec-queue.c		\
+	exec-queue.h		\
 	mulapp.c		\
 	mulapp.h		\
-	launcher.c		\
-	launcher.h		\
-	logout.c		\
-	logout.h		\
+	panel-util.c		\
+	panel-util.h		\
+	gdkextra.c		\
+	gdkextra.h		\
+	cookie.h		\
+	cookie.c		\
+	$(PANEL_ORB_SRCLIST)	\
 	$(CORBA_SRCLIST)
 
 panel_LDADD = $(GNOME_LIBDIR) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)

@@ -3,10 +3,8 @@
 #include <string.h>
 #include <config.h>
 #include <gnome.h>
-#include "panel.h"
-#include "panel-widget.h"
-#include "panel_config.h"
-#include "panel_config_global.h"
+
+#include "panel-include.h"
 
 /* Used for all the packing and padding options */
 #define CONFIG_PADDING_SIZE 3

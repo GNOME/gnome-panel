@@ -15,17 +15,12 @@ typedef struct {
 	PanelOrientType orient;
 } Drawer;
 
-Drawer * create_drawer_applet(GtkWidget * drawer_panel,
-			      char *tooltip, char *pixmap,
-			      PanelOrientType orient);
+void load_drawer_applet(char *params, char *pixmap, char *tooltip,
+			int pos, PanelWidget *panel);
 
 void set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient);
 
-Drawer * create_empty_drawer_applet(char *tooltip, char *pixmap,
-				    PanelOrientType orient);
-
 void reposition_drawer(Drawer *drawer);
-
 void drawer_properties(Drawer *drawer);
 
 END_GNOME_DECLS

@@ -13,17 +13,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <gnome.h>
-#include "panel-widget.h"
-#include "snapped-widget.h"
-#include "drawer-widget.h"
-#include "corner-widget.h"
-#include "panel-util.h"
-#include "panel.h"
-#include "main.h"
-#include "panel_config_global.h"
-#include "menu.h"
-#include "swallow.h"
-#include "mico-glue.h"
+
+#include "panel-include.h"
 
 #define SMALL_ICON_SIZE 20
 #define BIG_ICON_SIZE   48

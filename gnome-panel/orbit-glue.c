@@ -1,11 +1,9 @@
 #include <config.h>
 #include <gnome.h>
 #include <orb/orbit.h>
+
+#include "panel-include.h"
 #include "gnome-panel.h"
-#include "panel.h"
-#include "panel-widget.h"
-#include "gnome-panel.h"
-#include "cookie.h"
 
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;

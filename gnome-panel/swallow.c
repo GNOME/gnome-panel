@@ -13,12 +13,8 @@
 #include <gnome.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
-#include "panel-widget.h"
-#include "main.h"
-#include "panel.h"
-#include "panel_config_global.h"
-#include "swallow.h"
-#include "mico-glue.h"
+
+#include "panel-include.h"
 
 extern PanelWidget *current_panel;
 

@@ -7,9 +7,8 @@
 #include <gnome.h>
 #include <stdio.h>
 #include <string.h>
-#include "panel.h"
-#include "mulapp.h"
-#include "mico-glue.h"
+
+#include "panel-include.h"
 
 extern GArray *applets;
 extern int applet_count;

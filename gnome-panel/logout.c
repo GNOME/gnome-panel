@@ -4,7 +4,8 @@
 
 #include <config.h>
 #include <gnome.h>
-#include "panel.h"
+
+#include "panel-include.h"
 
 static void
 logout(void)

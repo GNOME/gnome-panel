@@ -14,11 +14,9 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
-#include "gnome.h"
-#include "panel.h"
-#include "panel-util.h"
+#include <gnome.h>
 
-#include "launcher.h"
+#include "panel-include.h"
 
 #define LAUNCHER_PROPERTIES "launcher_properties"
 

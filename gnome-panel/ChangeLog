@@ -1,3 +1,14 @@
+Wed Jul 22 02:05:49 1998  George Lebl  <jirka@5z.com>
+
+	* *.(cc|c|h): major moving of code from one file to another, no
+	  bugs fixed or anything like that, it's purely moving of stuff
+	  around, all session stuff from main.c and panel.c is now in
+	  session.c, all applet stuff from panel.c is now in applet.c,
+	  all extern stuff from main.c and panel.c is now in extern.c,
+	  all panel stuff from main.c is now in panel.c, and and the
+	  exec-queue stuff from main.c is now in exec-queue.c. essentially
+	  panel.c is COMPLETELY different :)
+
 Tue Jul 21 03:47:55 1998  George Lebl  <jirka@5z.com>
 
 	* *.[ch]: cleanups in panel core,  plus a whole bunch of fixes
