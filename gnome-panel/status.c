@@ -7,7 +7,6 @@
 #include <config.h>
 #include <string.h>
 #include <signal.h>
-#include <libgnomeui.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -364,7 +363,7 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 		return TRUE;
 	the_status->info = applets_last->data;
 	applet_add_callback(applets_last->data, "help",
-			    GNOME_STOCK_PIXMAP_HELP,
+			    GTK_STOCK_HELP,
 			    _("Help"));
 	return TRUE;
 }
