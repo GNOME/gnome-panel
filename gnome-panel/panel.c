@@ -914,6 +914,11 @@ register_toy(GtkWidget *applet,
 
 	gtk_object_set_user_data(GTK_OBJECT(eventbox),info);
 
+	if(type == APPLET_DRAWER)
+		gtk_object_set_data(GTK_OBJECT(eventbox),
+				    PANEL_APPLET_ASSOC_PANEL_KEY,assoc);
+		
+
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
 	panel_widget_add(panelw, eventbox, pos);

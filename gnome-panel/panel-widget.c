@@ -1463,7 +1463,7 @@ artificial_drag_start (GtkWidget *widget, int x, int y)
 #endif
 
 static gint
-panel_widget_is_cursor(PanelWidget *panel)
+panel_widget_is_cursor(PanelWidget *panel, int overlap)
 {
 	gint x,y;
 	gint w,h;
@@ -1475,7 +1475,10 @@ panel_widget_is_cursor(PanelWidget *panel)
 	w = GTK_WIDGET(panel->fixed)->allocation.width;
 	h = GTK_WIDGET(panel->fixed)->allocation.height;
 
-	if(x>=0 && x<=w && y>=0 && y<=h)
+	if((x+overlap)>=0 &&
+	   (x-overlap)<=w &&
+	   (y+overlap)>=0 &&
+	   (y-overlap)<=h)
 		return TRUE;
 	return FALSE;
 }
@@ -1503,8 +1506,10 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 		gint moveby;
 		gint pos = panel->currently_dragged_applet_pos;
 		GtkWidget *applet = panel->currently_dragged_applet;
+		PanelWidget *assoc = gtk_object_get_data(GTK_OBJECT(applet),
+						PANEL_APPLET_ASSOC_PANEL_KEY);
 
-		if(!panel_widget_is_cursor(panel)) {
+		if(!panel_widget_is_cursor(panel,0)) {
 			GList *list;
 			for(list=panels;
 			    list!=NULL;
@@ -1513,7 +1518,8 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 			    		PANEL_WIDGET(list->data);
 
 			    	if(panel != new_panel &&
-			    	   panel_widget_is_cursor(new_panel)) {
+			    	   panel_widget_is_cursor(new_panel,20) &&
+				   new_panel != assoc) {
 					pos = panel_widget_get_moveby(panel,0);
 					panel_widget_reparent(panel,
 							      new_panel,

@@ -21,6 +21,7 @@ extern "C" {
 #define PANEL_DRAWER_DROP_TARGET_SIZE 5
 
 #define PANEL_APPLET_PARENT_KEY "panel_applet_parent_key"
+#define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
 
 typedef struct _PanelWidget		PanelWidget;
 typedef struct _PanelWidgetClass	PanelWidgetClass;
