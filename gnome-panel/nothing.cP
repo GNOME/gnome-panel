@@ -6,6 +6,7 @@
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
 #include <libart_lgpl/art_filterlevel.h>
+#include <libgnome/libgnome.h>
 
 #include "panel-util.h"
 #include "rgb-stuff.h"
@@ -206,13 +207,13 @@ goat_realize(GtkWidget *widget)
 }
 
 /*thy evil easter egg*/
-static int config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook) G_GNUC_UNUSED;
-static int
+int config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook) G_GNUC_UNUSED;
+int
 config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 {
 	static int clicks=0;
 	GdkEventButton *bevent;
-	
+
 	if(event->type != GDK_BUTTON_PRESS)
 		return FALSE;
 	

@@ -1,5 +1,14 @@
 2002-07-02  Mark McLoughlin  <mark@skynet.ie>
 
+	* gnome-panel-preferences.c: clean up, a lot. No
+	global variables, use glade properly, error dialog
+	if glade file not found ...
+
+	* gnome-panel-preferences.glade: implement string changes
+	recommended in #85651. Also remove extra useless widgets.
+
+2002-07-02  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-config.c: Various string changes from #85623.
 
 Mon Jul  1 16:44:35 2002  Jonathan Blandford  <jrb@gnome.org>

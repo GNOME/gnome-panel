@@ -1,10 +1,9 @@
 /*   gnome-panel-preferences: crapplet for global panel properties
  *
  *   Copyright (C) 1999 Free Software Foundation
- *   Copyright 2000 Helix Code, Inc.
- *   Copyright 2000 Eazel, Inc.
- *   Authors: George Lebl <jirka@5z.com>
- *            Jacob Berkman <jacob@helixcode.com>
+ *   Copyright (C) 2000 Helix Code, Inc.
+ *   Copyright (C) 2000 Eazel, Inc.
+ *   Copyright (C) 2002 Sun Microsystems Inc.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -20,36 +19,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  * USA
+ *
+ * Authors: George Lebl <jirka@5z.com>
+ *          Jacob Berkman <jacob@helixcode.com>
+ *          Mark McLoughlin <mark@skynet.ie>
  */
 
 #include <config.h>
+#include <string.h>
+
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
-#include <gtk/gtk.h>
 #include <glade/glade.h>
-
-#include <gdk/gdkx.h>
-
-#include <libart_lgpl/art_misc.h>
-#include <libart_lgpl/art_affine.h>
-#include <libart_lgpl/art_rgb_affine.h>
-#include <libart_lgpl/art_rgb_rgba_affine.h>
-#include <libart_lgpl/art_filterlevel.h>
-#include <libart_lgpl/art_alphagamma.h>
-
 #include <gconf/gconf-client.h>
 
 #include "panel-gconf.h"
-#include "global-keys.h"
 #include "panel-types.h"
-#include "rgb-stuff.h"
 
-/* Just so we can link with panel-util.c for the convert keys stuff*/
-GSList *applets;
-
-/* Ugly globals to help reduce code size */
-GladeXML *glade_gui;
-GConfClient *gconf_client;
+#define GLADE_FILE   GLADEDIR "/gnome-panel-preferences.glade"
 
 static GConfEnumStringPair global_properties_speed_type_enum_map [] = {
 	{ PANEL_SPEED_SLOW,   "panel-speed-slow" },
@@ -57,19 +44,20 @@ static GConfEnumStringPair global_properties_speed_type_enum_map [] = {
 	{ PANEL_SPEED_FAST,   "panel-speed-fast" },
 };
 
-#include "nothing.cP"
+/* Hooked up by glade */
+void preferences_response (GtkWindow *window,
+			   int        button,
+			   gpointer   data);
 
 static void
-update_sensitive_for_checkbox (char *key,
-			       int   checked)
+update_sensitive_for_checkbox (GladeXML *gui,
+			       char     *key,
+			       int       checked)
 {
 	GtkWidget *associate = NULL;
 
-	if (strcmp (key, "enable_animations") == 0)
-                associate = glade_xml_get_widget (glade_gui, "animation-vbox");
-
-	else if (strcmp (key, "enable_key_bindings") == 0)
-                associate = glade_xml_get_widget (glade_gui,"kb-table");
+	if (!strcmp (key, "enable_animations"))
+                associate = glade_xml_get_widget (gui, "panel_animation_hbox");
 
         if (associate)
                 gtk_widget_set_sensitive (associate, checked);
@@ -79,35 +67,45 @@ static void
 checkbox_clicked (GtkWidget *widget,
 		  char      *key)
 {
-	const char *full_key;
-	int         checked;
+	GConfClient *client;
+	int          checked;
+
+	client = gconf_client_get_default ();
 
 	checked = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
-	full_key = panel_gconf_global_key (key);
+	gconf_client_set_bool (client,
+			       panel_gconf_global_key (key),
+			       checked, NULL);
 
-	gconf_client_set_bool (gconf_client, full_key, checked, NULL);
+	update_sensitive_for_checkbox (
+			g_object_get_data (G_OBJECT (widget), "glade-xml"),
+			key, checked);
 
-	update_sensitive_for_checkbox (key, checked);
+	g_object_unref (client);
 }
 
 static void
 option_menu_changed (GtkWidget *widget,
 		     char      *key)
 {
-	const char *full_key;
+	GConfClient *client;
 
-	full_key = panel_gconf_global_key (key);
+	client = gconf_client_get_default ();
 
-	if (strcmp (key, "panel_animation_speed") == 0)
-		gconf_client_set_string (gconf_client, full_key,
+	if (!strcmp (key, "panel_animation_speed"))
+		gconf_client_set_string (client,
+					 panel_gconf_global_key (key),
 				         gconf_enum_to_string (global_properties_speed_type_enum_map,
 			       		 		       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
 				 	 NULL);	
+
+	g_object_unref (client);
 }
 
 static void
-load_checkboxes (void)
+load_checkboxes (GladeXML    *gui,
+		 GConfClient *client)
 {
 	static char *checkboxes [] = {
 		"drawer_autoclose",
@@ -121,22 +119,24 @@ load_checkboxes (void)
 		const char *key;
 		int         checked;
 
-		checkbox= glade_xml_get_widget (glade_gui, checkboxes [i]);
+		checkbox = glade_xml_get_widget (gui, checkboxes [i]);
+		g_object_set_data (G_OBJECT (checkbox), "glade-xml", gui);
 
 		key = panel_gconf_global_key (checkboxes [i]);
 
-		checked = gconf_client_get_bool (gconf_client, key, NULL);
+		checked = gconf_client_get_bool (client, key, NULL);
 
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(checkbox), checked);
 
 		g_signal_connect (checkbox, "clicked",
 				  G_CALLBACK (checkbox_clicked), checkboxes [i]);
-		update_sensitive_for_checkbox (checkboxes [i], checked);
+		update_sensitive_for_checkbox (gui, checkboxes [i], checked);
 	}
 }
 
 static void
-load_option_menus (void)
+load_option_menus (GladeXML    *gui,
+		   GConfClient *client)
 {
 	char *optionmenus[] = {
 		"panel_animation_speed",
@@ -149,12 +149,12 @@ load_option_menus (void)
 		const char *key;
 		int         retval = 0;
 
-        	option = glade_xml_get_widget (glade_gui, optionmenus [i]);
+        	option = glade_xml_get_widget (gui, optionmenus [i]);
         	key = panel_gconf_global_key (optionmenus [i]);
 		
 		if (strcmp (optionmenus[i], "panel_animation_speed") == 0)
 			gconf_string_to_enum (global_properties_speed_type_enum_map,
-			      		      gconf_client_get_string (gconf_client, key, NULL),
+			      		      gconf_client_get_string (client, key, NULL),
 			                      &retval);
 
         	gtk_option_menu_set_history (GTK_OPTION_MENU (option), retval);
@@ -164,66 +164,28 @@ load_option_menus (void)
 }
 
 static void
-load_config_into_gui (void)
+load_config_into_gui (GladeXML *gui)
 {
-	load_checkboxes ();
-	load_option_menus ();
+	GConfClient *client;
+
+	client = gconf_client_get_default ();
+
+	load_checkboxes (gui, client);
+	load_option_menus (gui, client);
+
+	g_object_unref (client);
 }
 
-static void
-setup_the_ui(GtkWidget *main_window)
-{
-	gchar *glade_file;
-	GtkWidget *widget;
-	gchar *icon_name;
-
-	glade_file = GLADEDIR "/gnome-panel-preferences.glade";
-
-	glade_gui = glade_xml_new(glade_file, "main_notebook",NULL);
-	if (!glade_gui) {
-		g_warning("Error loading %s",glade_file);
-		return;
-	}
-	glade_xml_signal_autoconnect(glade_gui);
-
-	widget = glade_xml_get_widget(glade_gui,"main_notebook");
-
-	g_signal_connect (G_OBJECT (widget), "event",
-                          G_CALLBACK (config_event),
-                          widget);
-
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(main_window)->vbox),widget,
-			   TRUE,TRUE,0);
-#if 0
-	icon_name = gnome_program_locate_file (NULL,
-					       GNOME_FILE_DOMAIN_PIXMAP,
-					       "gnome-panel.png",
-					       TRUE,
-					       NULL);
-	/* FIXME: I really don't like the icon.  If we can get another one, we
-	 * can put this back. */
-	g_free (icon_name);
-#endif
-	icon_name = NULL;
-		
-	if (icon_name == NULL) {
-		widget = glade_xml_get_widget(glade_gui, "icon_vbox");
-		gtk_widget_hide (widget);
-	} else {
-		widget = glade_xml_get_widget(glade_gui, "panel_icon");
-		gtk_image_set_from_file (GTK_IMAGE (widget), icon_name);
-		g_free (icon_name);
-	}
-	load_config_into_gui();
-}
-
-static void
-main_dialog_response(GtkWindow *window, int button, gpointer data)
+void
+preferences_response (GtkWindow *window,
+		      int        button,
+		      gpointer   data)
 {
 	GError *error = NULL;
+
 	switch (button) {
 		case GTK_RESPONSE_CLOSE:
-			gtk_main_quit();
+			gtk_main_quit ();
 			break;
 
 		case GTK_RESPONSE_HELP:
@@ -255,69 +217,95 @@ main_dialog_response(GtkWindow *window, int button, gpointer data)
 	}
 }
 
+static void
+error_dialog (const char *message)
+{
+	GtkWidget *dialog;
+
+	dialog = gtk_message_dialog_new (NULL, 0,
+					 GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+					 message);
+
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (gtk_widget_destroy), NULL);
+	g_signal_connect (dialog, "destroy",
+			  G_CALLBACK (gtk_main_quit), NULL);
+	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+	gtk_widget_show (dialog);
+
+}
+
+static gboolean
+check_lockdown (void)
+{
+	GConfClient *client;
+	gboolean     locked_down;
+
+	client = gconf_client_get_default ();
+
+	locked_down = gconf_client_get_bool (
+				client, panel_gconf_global_key ("lock-down"), NULL);
+	if (locked_down)
+		error_dialog (_("The system administrator has disallowed\n"
+			        "modification of the panel configuration"));
+
+	g_object_unref (client);
+
+	return locked_down;
+}
+
 int
 main (int argc, char **argv)
 {
-  	GtkWidget  *main_window;
-	const char *key;
-	char       *panel_icon;
+	GladeXML *gui = NULL;
 
-	bindtextdomain(GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-	textdomain(GETTEXT_PACKAGE);
+	textdomain (GETTEXT_PACKAGE);
 
-	gnome_program_init("gnome-panel-preferences",VERSION,
-                LIBGNOMEUI_MODULE, argc, argv,
-		GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
+	gnome_program_init ("gnome-panel-preferences", VERSION,
+			    LIBGNOMEUI_MODULE, argc, argv,
+			    GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 
-  	main_window = gtk_dialog_new();
-	g_object_set (G_OBJECT (main_window), "has-separator", FALSE, NULL);
-	gtk_dialog_add_buttons (GTK_DIALOG(main_window),
-		GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-		GTK_STOCK_HELP, GTK_RESPONSE_HELP,NULL);
+	if (!check_lockdown ()) {
+		GtkWidget *dialog;
+		char      *panel_icon;
 
-	gtk_dialog_set_default_response (GTK_DIALOG (main_window), GTK_RESPONSE_CLOSE);
-	g_signal_connect (G_OBJECT(main_window), "response",
-			  G_CALLBACK (main_dialog_response),
-			  main_window);
+		gui = glade_xml_new (
+				GLADE_FILE, "gnome_panel_preferences_dialog", NULL);
+		if (!gui) {
+			char *error;
 
-	g_signal_connect (G_OBJECT (main_window), "destroy",
-			  G_CALLBACK (gtk_main_quit),
-			  NULL);
+			error = g_strdup_printf (_("Error loading glade file %s"), GLADE_FILE);
+			error_dialog (error);
+			g_free (error);
+		
+			gtk_main ();
+		}
 
-	gconf_client = gconf_client_get_default();
+		glade_xml_signal_autoconnect (gui);
 
-	/* Ahhh, yes the infamous commie mode, don't allow running of this,
-	 * just display a label */
+		dialog = glade_xml_get_widget (
+				gui, "gnome_panel_preferences_dialog");
 
-	key = panel_gconf_global_key ("lock-down");
+		load_config_into_gui (gui);
 
-	if(gconf_client_get_bool (gconf_client, key, NULL)) {
-		GtkWidget *label;
+		panel_icon = gnome_program_locate_file (
+					NULL, GNOME_FILE_DOMAIN_PIXMAP,
+					"gnome-panel.png", TRUE, NULL);
+		if (panel_icon) {
+			gnome_window_icon_set_from_file (
+				GTK_WINDOW (dialog), panel_icon);
+			g_free (panel_icon);
+		}
 
-		label = gtk_label_new (_("The system administrator has "
-					 "disallowed\n modification of the "
-					 "panel configuration"));
-		gtk_box_pack_start (GTK_BOX(GTK_DIALOG(main_window)->vbox),
-			label,TRUE,TRUE,0);
-
-		gtk_widget_set_size_request (main_window, 350, 350);
-	} else
-		setup_the_ui(main_window);
-
-	gtk_window_set_title (
-		GTK_WINDOW (main_window), _("Panel Preferences"));
-
-	panel_icon = gnome_program_locate_file (
-			NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-panel.png", TRUE, NULL);
-	if (panel_icon) {
-		gnome_window_icon_set_from_file (GTK_WINDOW (main_window), panel_icon);
-		g_free (panel_icon);
+		gtk_widget_show (dialog);
 	}
 
-	gtk_widget_show(main_window);
+	gtk_main ();
 
-	gtk_main();
+	if (gui)
+		g_object_unref (gui);
 
 	return 0;
 }

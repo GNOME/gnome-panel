@@ -163,7 +163,6 @@ gnome_panel_LDFLAGS = -export-dynamic
 gnome_panel_preferences_SOURCES =	\
 	gnome-panel-preferences.c	\
 	panel-gconf.c			\
-	rgb-stuff.c			\
 	panel-access.c
 
 gnome_panel_preferences_LDADD =		\
