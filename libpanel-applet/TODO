@@ -4,8 +4,6 @@ libpanel-applet todo list
 	Things that need to be finished before this library can be considered
 anyway complete.
 
-	* pixmap backgrounds don't work - or do they ?
-
 	* Size negotiation. Basically make sure this works. It should be no
 	  different than the usual GtkWidget size request/allocation. The
 	  applets shouldn't be allowed to be any bigger than the panel. The
@@ -14,8 +12,3 @@ anyway complete.
 	  but this ends up with some freaky stuff going on when you're moving
 	  applets. Maybe we should consider having a re-sizable flag which would
 	  make the applets have grabs for re-sizing.
-
-	* The popup menu doesn't appear outside of the panel. Use
-	  bonobo_control_do_popup_full.
-
-	* We need a replacement for the "Applet Died - Reload ?" dialog box.
