@@ -10,7 +10,6 @@
 #include <gtk/gtk.h>
 
 #include <config.h>
-#include <libgnomeui.h>
 
 #include "panel-include.h"
 
@@ -385,6 +384,7 @@ update_config_back (PanelWidget *pw)
 		history = 1;
 		break;
 	case PANEL_BACK_PIXMAP:
+#ifdef FIXME
 		t = gnome_pixmap_entry_gtk_entry
 			(GNOME_PIXMAP_ENTRY (ppc->pix_entry));
 		text = gtk_entry_get_text (GTK_ENTRY (t));
@@ -395,6 +395,7 @@ update_config_back (PanelWidget *pw)
 		}
 		item = ppc->pix;
 		history = 2;
+#endif
 		break;
 	}
 
@@ -1211,12 +1212,14 @@ size_set_size (GtkWidget *widget, gpointer data)
 
 /* XXX: until this is fixed in GTK+ */
 static void
-activate_proper_item (GtkMenu *menu)
+activate_proper_item (GtkMenuShell *menu)
 {
+#ifdef FIXME
 	GtkWidget *active;
-	active = gtk_menu_get_active (menu);
+	active = gtk_menu_shell_get_active (menu);
 	if (active != NULL)
 		gtk_menu_item_activate (GTK_MENU_ITEM (active));
+#endif
 }
 
 GtkWidget *
@@ -1248,7 +1251,7 @@ make_size_widget (PerPanelConfig *ppc)
 
 	menuitem = gtk_menu_item_new_with_label (_("Ultra Tiny (12 pixels)"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
@@ -1256,7 +1259,7 @@ make_size_widget (PerPanelConfig *ppc)
 
 	menuitem = gtk_menu_item_new_with_label (_("Tiny (24 pixels)"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
@@ -1264,7 +1267,7 @@ make_size_widget (PerPanelConfig *ppc)
 	
 	menuitem = gtk_menu_item_new_with_label (_("Small (36 pixels)"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
@@ -1272,7 +1275,7 @@ make_size_widget (PerPanelConfig *ppc)
 	
 	menuitem = gtk_menu_item_new_with_label (_("Standard (48 pixels)"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
@@ -1280,7 +1283,7 @@ make_size_widget (PerPanelConfig *ppc)
 
 	menuitem = gtk_menu_item_new_with_label (_("Large (64 pixels)"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
@@ -1288,7 +1291,7 @@ make_size_widget (PerPanelConfig *ppc)
 
 	menuitem = gtk_menu_item_new_with_label (_("Huge (80 pixels)"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
@@ -1296,7 +1299,7 @@ make_size_widget (PerPanelConfig *ppc)
 
 	menuitem = gtk_menu_item_new_with_label (_("Ridiculous (128 pixels)"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
@@ -1383,7 +1386,7 @@ make_level_widget (PerPanelConfig *ppc)
 
 	menuitem = gtk_menu_item_new_with_label (_("Default (from global preferences)"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (level_set_level),
@@ -1391,7 +1394,7 @@ make_level_widget (PerPanelConfig *ppc)
 
 	menuitem = gtk_menu_item_new_with_label (_("Above other windows"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (level_set_level),
@@ -1399,7 +1402,7 @@ make_level_widget (PerPanelConfig *ppc)
 
 	menuitem = gtk_menu_item_new_with_label (_("Normal"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (level_set_level),
@@ -1407,7 +1410,7 @@ make_level_widget (PerPanelConfig *ppc)
 
 	menuitem = gtk_menu_item_new_with_label (_("Below other windows"));
 	gtk_widget_show(menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (level_set_level),
@@ -1445,12 +1448,14 @@ make_level_widget (PerPanelConfig *ppc)
 static void
 value_changed (GtkWidget *w, gpointer data)
 {
+#ifdef FIXME
 	PerPanelConfig *ppc = data;
 
 	g_free(ppc->back_pixmap);
 	ppc->back_pixmap = gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
 
 	panel_config_register_changes (ppc);
+#endif
 }
 
 static void
@@ -1524,6 +1529,7 @@ set_back (GtkWidget *widget, gpointer data)
 static void
 color_picker_clicked_signal (GtkWidget *widget, gpointer data)
 {
+#ifdef FIXME
 	GtkWidget *toplevel;
 	GnomeColorPicker *cp;
 
@@ -1540,6 +1546,7 @@ color_picker_clicked_signal (GtkWidget *widget, gpointer data)
 
 	gtk_window_set_transient_for (GTK_WINDOW (cp->cs_dialog),
 				      GTK_WINDOW (toplevel));
+#endif
 }
 
 static GtkWidget *
@@ -1566,15 +1573,15 @@ background_page (PerPanelConfig *ppc)
 	ppc->non = gtk_menu_item_new_with_label (_("Standard"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->non),ppc);
 	gtk_widget_show (ppc->non);
-	gtk_menu_append (GTK_MENU (m), ppc->non);
+	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->non);
 	ppc->col = gtk_menu_item_new_with_label (_("Color"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->col),ppc);
 	gtk_widget_show (ppc->col);
-	gtk_menu_append (GTK_MENU (m), ppc->col);
+	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->col);
 	ppc->pix = gtk_menu_item_new_with_label (_("Pixmap"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->pix),ppc);
 	gtk_widget_show (ppc->pix);
-	gtk_menu_append (GTK_MENU (m), ppc->pix);
+	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->pix);
 
 	ppc->back_om = gtk_option_menu_new ();
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->back_om), m);
@@ -1628,6 +1635,7 @@ background_page (PerPanelConfig *ppc)
 	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (f), box);
 
+#ifdef FIXME
 	ppc->pix_entry = gnome_pixmap_entry_new ("pixmap", _("Browse"), TRUE);
 	if(gdk_screen_height()<600)
 		gnome_pixmap_entry_set_preview_size (GNOME_PIXMAP_ENTRY (ppc->pix_entry),
@@ -1640,6 +1648,7 @@ background_page (PerPanelConfig *ppc)
 	
 	gtk_entry_set_text (GTK_ENTRY (t),
 			    sure_string (ppc->back_pixmap));
+#endif
 	
 	noscale = gtk_radio_button_new_with_label (
 		NULL, _("Don't scale image to fit"));
@@ -1775,6 +1784,7 @@ update_config_type (BasePWidget *w)
 static void
 window_clicked (GtkWidget *w, int button, gpointer data)
 {
+#ifdef FIXME
 	GtkWidget *notebook = data;
 	char *help_path = gtk_object_get_data (GTK_OBJECT (w), "help_path");
 
@@ -1790,11 +1800,13 @@ window_clicked (GtkWidget *w, int button, gpointer data)
 	} else {
 		gnome_dialog_close (GNOME_DIALOG (w));
 	}
+#endif
 }
 	     
 void 
 panel_config (GtkWidget *panel)
 {
+#ifdef FIXME
 	GtkWidget *page;
 	PerPanelConfig *ppc;
 	GtkWidget *prop_nbook;
@@ -1839,10 +1851,11 @@ panel_config (GtkWidget *panel)
 	ppc->panel = panel;
 	
 	/* main window */
-	ppc->config_window = gnome_dialog_new (_("Panel properties"),
-					       GNOME_STOCK_BUTTON_CLOSE,
-					       GNOME_STOCK_BUTTON_HELP,
-					       NULL);
+	ppc->config_window = gtk_dialog_new_with_buttons (_("Panel properties"),
+							  NULL, 0,
+							  GTK_STOCK_CLOSE,
+							  GTK_STOCK_HELP,
+							  NULL);
 	gnome_dialog_set_close (GNOME_DIALOG (ppc->config_window),
 				FALSE /* click_closes */);
 	gtk_window_set_wmclass (GTK_WINDOW(ppc->config_window),
@@ -1935,6 +1948,7 @@ panel_config (GtkWidget *panel)
 	/* grab the focus on the size menu always, if it exists */
 	if (ppc->size_menu != NULL)
 		gtk_widget_grab_focus (ppc->size_menu);
+#endif
 }
 
 
