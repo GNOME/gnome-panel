@@ -6,6 +6,8 @@
 #include "panel-widget.h"
 #include <libgnorba/gnorba.h>
 
+#include "panel2.h"
+
 BEGIN_GNOME_DECLS
 
 typedef struct _Extern Extern;
