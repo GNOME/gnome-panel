@@ -1503,8 +1503,11 @@ basep_widget_set_hidebuttons (BasePWidget *basep)
 		gtk_widget_hide(basep->hidebutton_w);
 		gtk_widget_hide(basep->hidebutton_s);	
 
-		if (basep->state == BASEP_HIDDEN_LEFT ||
-		    basep->state == BASEP_HIDDEN_RIGHT)
+		/* if we removed hidebuttons we need to show ourselves,
+		 * except for the drawers case that is */
+		if ((basep->state == BASEP_HIDDEN_LEFT ||
+		     basep->state == BASEP_HIDDEN_RIGHT) &&
+		    ! IS_DRAWER_WIDGET (basep))
 			basep_widget_explicit_show (basep);
 	} else {
 		g_return_if_fail (klass && klass->set_hidebuttons);
