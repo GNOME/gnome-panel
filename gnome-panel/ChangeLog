@@ -1,5 +1,19 @@
 2003-01-07  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-util.c: (set_color_back): don't try to set the
+	background colour on the hide buttons if the colour
+	contains an alpha channel. Fixes hide buttons being
+	a weird colour with transparent panels.
+
+	* panel-widget.c:
+	(panel_widget_set_background_region): impl correctly
+	setting the desktop background to use. Fixes mis-aligned
+	background when using hide-buttons.
+	(panel_widget_size_allocate),
+	(toplevel_configure_event): use it here.
+
+2003-01-07  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-per-panel-config.schemas.in: make the bottom
 	panel opaque again.
 

@@ -1187,6 +1187,26 @@ queue_resize_on_all_applets(PanelWidget *panel)
 }
 
 static void
+panel_widget_set_background_region (PanelWidget *panel)
+{
+	GtkWidget *widget;
+	int       origin_x = -1, origin_y = -1;
+
+	widget = GTK_WIDGET (panel);
+
+	if (!GTK_WIDGET_REALIZED (widget))
+		return;
+
+	gdk_window_get_origin (widget->window, &origin_x, &origin_y);
+
+	panel_background_change_region (
+		&panel->background, panel->orient,
+		origin_x, origin_y,
+		widget->allocation.width,
+		widget->allocation.height);
+}
+
+static void
 panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
 	PanelWidget *panel;
@@ -1364,6 +1384,8 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			       0, ad->applet);
 	}
 	g_slist_free(send_move);
+
+	panel_widget_set_background_region (panel);
 }
 
 gboolean
@@ -1446,12 +1468,7 @@ toplevel_configure_event (GtkWidget         *widget,
 			  GdkEventConfigure *event,
 			  PanelWidget       *panel)
 {
-	panel_background_change_region (
-		&panel->background, panel->orient,
-		widget->allocation.x,
-		widget->allocation.y,
-		widget->allocation.width,
-		widget->allocation.height);
+	panel_widget_set_background_region (panel);
 
 	return FALSE;
 }

@@ -571,6 +571,15 @@ set_color_back (GtkWidget *widget, PanelWidget *panel)
 	GdkColor  gdkcolor = {0, };
 	int       i;
 
+	/* FIXME:
+	 *   need to implement alpha background for these
+	 *   widgets too ...
+	 */
+	if (panel->background.has_alpha) {
+		gtk_widget_set_style (widget, NULL);
+		return;
+	}
+
 	gdkcolor = panel->background.color.gdk;
 
 	gtk_widget_set_style (widget, NULL);
