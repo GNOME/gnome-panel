@@ -7,6 +7,7 @@
 #include "applet-lib.h"
 #include "applet-widget.h"
 #include "panel-widget.h"
+#include "mico-parse.h"
 
 GNOME::Panel_var panel_client;
 
@@ -54,7 +55,7 @@ public:
 };
 
 int
-gnome_panel_applet_init_corba (int *argc, char ***argv)
+gnome_panel_applet_init_corba (void)
 {
 	char *binder_address;
 	char *name;

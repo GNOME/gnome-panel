@@ -1,15 +1,17 @@
+/* mico-glue.h - Glue connecting MICO to C.  */
+
+#ifndef __MICO_GLUE_H__
+#define __MICO_GLUE_H__
 
 BEGIN_GNOME_DECLS	
-void panel_corba_register_arguments (void);
-void panel_corba_gtk_main (int *argc, char ***argv, char *service_name);
+
+void panel_corba_gtk_main (char *service_name);
 
 void send_applet_session_save (const char *ior, int id, int panel, int pos);
 void send_applet_shutdown_applet (const char *ior, int id);
 void send_applet_change_orient (const char *ior, int id,  int orient);
 void send_applet_do_callback (const char *ior, int id, char *callback_name);
 
-#ifdef __cplusplus
-void panel_initialize_corba (CORBA::ORB_ptr *orb, CORBA::BOA_ptr *boa);
-#endif
-
 END_GNOME_DECLS
+
+#endif /* __MICO_GLUE_H__ */

@@ -14,6 +14,7 @@
 #include "menu.h"
 #include "drawer.h"
 #include "mico-glue.h"
+#include "mico-parse.h"
 
 GList *panels = NULL;
 GList *applets = NULL;
@@ -491,7 +492,7 @@ main(int argc, char **argv)
 
 	printf ("starting corba looop\n");
 	/* I use the glue code to avoid making this a C++ file */
-	panel_corba_gtk_main (&argc, &argv, "IDL:GNOME/Panel:1.0");
+	panel_corba_gtk_main ("IDL:GNOME/Panel:1.0");
 
 	return 0;
 }

@@ -55,6 +55,7 @@ panel_SOURCES = 		\
 	mico-glue.cc		\
 	mico-glue.h		\
 	mico-parse.cc		\
+	mico-parse.h		\
 	panel.c			\
 	panel.h         	\
 	panel_config.c  	\

@@ -4,6 +4,7 @@
 #include "applet-lib.h"
 #include "applet-widget.h"
 #include "panel.h"
+#include "mico-parse.h"
 
 #define APPLET_ID "Logout"
 
@@ -51,7 +52,7 @@ main(int argc, char *argv[])
   panel_corba_register_arguments ();
   gnome_init("logout_applet", NULL, argc, argv, 0, NULL);
 
-  if(!gnome_panel_applet_init_corba(&argc, &argv))
+  if(!gnome_panel_applet_init_corba ())
     {
       fprintf(stderr, "Could not communicate with the panel\n");
       exit(1);

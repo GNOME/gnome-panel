@@ -22,6 +22,7 @@
 #include "applet-lib.h"
 #include "applet-widget.h"
 #include "panel.h"
+#include "mico-parse.h"
 
 #define CLOCK_DATA "clock_data"
 
@@ -215,7 +216,7 @@ main(int argc, char **argv)
 	panel_corba_register_arguments ();
 	gnome_init("clock_applet", NULL, argc, argv, 0, NULL);
 
-	if (!gnome_panel_applet_init_corba (&argc, &argv)){
+	if (!gnome_panel_applet_init_corba ()){
 		fprintf (stderr, "Could not comunicate with the panel\n");
 		exit (1);
 	}

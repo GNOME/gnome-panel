@@ -5,7 +5,7 @@
 #include "mico-glue.h"
 #include "gnome-panel.h"
 #include "panel.h"
-
+#include "mico-parse.h"
 
 /* This implements the server-side of the gnome-panel.idl
  * specification Currently there is no way to create new CORBA
@@ -68,7 +68,7 @@ CORBA::ORB_ptr orb_ptr;
 CORBA::BOA_ptr boa_ptr;
 
 void
-panel_corba_gtk_main (int *argc, char ***argv, char *service_name)
+panel_corba_gtk_main (char *service_name)
 {
 	GNOME::Panel_ptr acc = new Panel_impl ();
 	char hostname [4096];

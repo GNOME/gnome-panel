@@ -10,6 +10,7 @@
 #include "mico-glue.h"
 #include "gnome-panel.h"
 #include "panel.h"
+#include "mico-parse.h"
 
 static error_t parse_mico_arg (int key, char *arg, struct argp_state *state);
 
@@ -95,8 +96,6 @@ panel_corba_register_arguments (void)
   gnome_parse_register_arguments (&our_mico_parser);
 }
 
-extern CORBA::ORB_ptr orb_ptr;
-
 void
 panel_initialize_corba (CORBA::ORB_ptr *orb, CORBA::BOA_ptr *boa)
 {
@@ -105,8 +104,8 @@ panel_initialize_corba (CORBA::ORB_ptr *orb, CORBA::BOA_ptr *boa)
   our_mico_argv[our_mico_argc] = NULL;
   *orb = CORBA::ORB_init (our_mico_argc, our_mico_argv,
 			  "mico-local-orb");
-  *boa = orb_ptr->BOA_init (our_mico_argc, our_mico_argv,
-			    "mico-local-boa");
+  *boa = (*orb)->BOA_init (our_mico_argc, our_mico_argv,
+			   "mico-local-boa");
 
   for (i = 0; i < our_mico_argc; ++i)
     free (our_mico_argv[i]);

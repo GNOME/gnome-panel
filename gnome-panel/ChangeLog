@@ -1,3 +1,23 @@
+Tue Mar 10 01:31:25 1998  Tom Tromey  <tromey@cygnus.com>
+
+	* Makefile.am (panel_SOURCES): Added mico-parse.h.
+	* clock.c: Include "mico-parse.h".
+	* cdplayer/cdplayer.c: Include "mico-parse.h".
+	* logout.c: Include "mico-parse.h".
+	* applet-lib.cc (gnome_panel_applet_init_corba): Removed argc,
+	argv arguments.
+	Include "mico-parse.h".
+	* main.c: Include "mico-parse.h".
+	* mico-glue.cc (panel_corba_gtk_main): Removed argc, argv
+	arguments.
+	Include "mico-parse.h".
+	* mico-glue.h: Don't declare panel_initialize_corba,
+	panel_corba_register_arguments.
+	* mico-parse.cc (orb_ptr): Don't declare.
+	(panel_initialize_corba): Use (*orb), not orb_ptr, as ORB.
+	Include "mico-parse.h".
+	* mico-parse.h: New file.
+
 Sun Mar  8 18:55:09 1998  Tom Tromey  <tromey@cygnus.com>
 
 	* mico-parse.cc (parse_mico_arg): MICO now takes "--" arguments.
