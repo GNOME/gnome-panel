@@ -33,9 +33,6 @@
 #include "panel.h"
 #include "multiscreen-stuff.h"
 
-/*
- * FIXME
- */
 #include "nothing.cP"
 
 static void config_apply (PerPanelConfig *ppc);
@@ -1078,18 +1075,6 @@ size_set_size (GtkWidget *widget, gpointer data)
 	panel_config_register_changes (ppc);
 }
 
-/* XXX: until this is fixed in GTK+ */
-static void
-activate_proper_item (GtkMenuShell *menu)
-{
-#ifdef FIXME
-	GtkWidget *active;
-	active = gtk_menu_shell_get_active (menu);
-	if (active != NULL)
-		gtk_menu_item_activate (GTK_MENU_ITEM (active));
-#endif
-}
-
 GtkWidget *
 make_size_widget (PerPanelConfig *ppc)
 {
@@ -1115,9 +1100,6 @@ make_size_widget (PerPanelConfig *ppc)
 
 	
 	menu = gtk_menu_new ();
-	g_signal_connect (G_OBJECT (menu), "deactivate", 
-			  G_CALLBACK (activate_proper_item), 
-			  NULL);
 
 	menuitem = gtk_menu_item_new_with_label (_("XX Small (12 pixels)"));
 	gtk_widget_show(menuitem);
@@ -1322,9 +1304,6 @@ background_page (PerPanelConfig *ppc)
 
 	/*background type option menu*/
 	m = gtk_menu_new ();
-	g_signal_connect (G_OBJECT (m), "deactivate", 
-			  G_CALLBACK (activate_proper_item), 
-			  NULL);
 	ppc->non = gtk_menu_item_new_with_label (_("Standard"));
 	g_object_set_data (G_OBJECT (ppc->non), "PerPanelConfig", ppc);
 	gtk_widget_show (ppc->non);
