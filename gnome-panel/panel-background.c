@@ -45,7 +45,11 @@ free_prepared_resources (PanelBackground *background)
 	case PANEL_BACK_NONE:
 		break;
 	case PANEL_BACK_COLOR:
-		if (!background->has_alpha) {
+		if (background->has_alpha) {
+			if (background->pixmap)
+				g_object_unref (background->pixmap);
+			background->pixmap = NULL;
+		} else {
 			if (background->colormap && background->color.gdk.pixel)
 				gdk_colormap_free_colors (
 					background->colormap,

@@ -1,5 +1,13 @@
 2004-01-27  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix for bug #129855 from Kristian Rietveld.
+
+	* panel-background.c: (free_prepared_resources):
+	Free background pixmap when we have a translucent
+	colour background.
+
+2004-01-27  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-run-dialog.c: (panel_run_dialog_present):
 	Revert unapproved commit.
 
