@@ -7,6 +7,7 @@
 #include <config.h>
 #include <libgnomeui.h>
 #include <gdk/gdkx.h>
+#include <string.h>
 
 #include <X11/Xmd.h>
 #include <X11/Xlib.h>
