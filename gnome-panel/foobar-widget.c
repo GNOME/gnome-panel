@@ -1146,7 +1146,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	menu_bar = gtk_menu_bar_new ();	
 	
 	
-	menuitem = pixmap_menu_item_new (_("Programs"),
+	menuitem = pixmap_menu_item_new (_("Applications"),
 					 "gnome-logo-icon-transparent.png");
 	flags = (get_default_menu_flags() & 
 		 ~(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER | MAIN_MENU_USER_SUB |

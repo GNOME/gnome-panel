@@ -5018,7 +5018,7 @@ image_menu_shown (GtkWidget *w, gpointer data)
 	if (gtk_image_get_storage_type (GTK_IMAGE (image)) != GTK_IMAGE_EMPTY)
 		return;
 
-	icons_to_load = g_list_prepend (icons_to_load,
+	icons_to_load = g_list_append (icons_to_load,
 					icon_to_load_copy (icon));
 	if (load_icons_id == 0)
 		load_icons_id = g_idle_add (load_icons_handler, NULL);

@@ -1,3 +1,17 @@
+2001-12-01  Seth Nickell  <snickell@stanford.edu>
+
+	* foobar-widget.c: (foobar_widget_instance_init):
+
+	Change menu name to "Applications" per Nils' panel
+	menu design.
+	
+	* menu.c: (image_menu_shown):
+
+	Icons for upper most menus should be loaded first. Most users
+	start reading from top to bottom. When you load icons
+	from bottom to top scanning is essentially disrupted until
+	all icons are loaded.
+	
 Sat Dec 01 22:44:28 2001  George Lebl <jirka@5z.com>
 
 	* menu.c: get rid of the large icon stuff, if we already have 
