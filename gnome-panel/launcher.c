@@ -116,7 +116,7 @@ launch_cb (GtkWidget *widget,
 
 	item = launcher->ditem;
 
-	if (global_config.enable_animations)
+	if (panel_global_config_get_enable_animations ())
 		xstuff_zoom_animate (widget, NULL);
 	
 	if (gnome_desktop_item_get_entry_type (item) == GNOME_DESKTOP_ITEM_TYPE_LINK)
@@ -137,7 +137,7 @@ launch_cb (GtkWidget *widget,
 		}
 	}
 	
-	if (global_config.drawer_auto_close) {
+	if (panel_global_config_get_drawer_auto_close ()) {
 		PanelToplevel *toplevel;
 
 		toplevel = PANEL_WIDGET (launcher->button->parent)->toplevel;
@@ -709,13 +709,11 @@ launcher_save_to_gconf (Launcher   *launcher,
 	if (!location)
 		return;
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
 	gconf_client_set_string (client, key, location, NULL);
-
-	g_object_unref (client);
 }
 
 void
@@ -732,13 +730,11 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
 	launcher_location = gconf_client_get_string (client, key, NULL);
-
-	g_object_unref (client);
 
 	if (!launcher_location) {
 		g_printerr (_("Key %s is not set, can't load launcher\n"), key);

@@ -42,7 +42,6 @@
 #include "panel-gconf.h"
 #include "panel-profile.h"
 #include "panel-applet-frame.h"
-#include "global-keys.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
 #include "panel-compatibility.h"
@@ -61,12 +60,6 @@ enum {
 	TARGET_ICON_INTERNAL,
 	TARGET_BGIMAGE,
 	TARGET_BACKGROUND_RESET,
-};
-
-static GConfEnumStringPair panel_speed_type_enum_map [] = {
-	{ PANEL_SPEED_MEDIUM, "panel-speed-medium" },
-	{ PANEL_SPEED_SLOW,   "panel-speed-slow" },
-	{ PANEL_SPEED_FAST,   "panel-speed-fast" },
 };
 
 /*we call this recursively*/
@@ -277,10 +270,6 @@ panel_destroy (PanelToplevel *toplevel,
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
 	panel_remove_applets (panel_widget);
-
-#ifdef FIXME_FOR_NEW_CONFIG		
-	kill_config_dialog (toplevel);
-#endif /* FIXME_FOR_NEW_CONFIG */
 
 	if (pd->menu)
 		g_object_unref (pd->menu);
@@ -1149,97 +1138,4 @@ panel_is_applet_right_stick (GtkWidget *applet)
 		return FALSE;
 
 	return panel_widget_is_applet_stuck (panel_widget, applet);
-}
-
-void
-panel_load_global_config (void)
-{
-	GSList *li, *list;
-
-	list = panel_gconf_all_global_entries ();
-
-	for (li = list; li != NULL; li = li->next) {
-		GConfEntry *entry = li->data;
-		li->data = NULL;
-		panel_global_config_set_entry (entry);
-		gconf_entry_free (entry);
-	}
-
-	g_slist_free (list);
-
-	panel_apply_global_config ();
-}
-
-void
-panel_save_global_config (void)
-{
-	GConfChangeSet *change_set;
-	const char     *full_key;
-
-	change_set = gconf_change_set_new ();
-
-	/*
-	 * keep in sync with panel-config-global.h and
-	 * panel-global-config.schemas
-	 */
-
-	full_key = panel_gconf_global_key ("tooltips_enabled");
-	gconf_change_set_set_bool (change_set, full_key, global_config.tooltips_enabled);
-
-	full_key = panel_gconf_global_key ("enable_animations");
-	gconf_change_set_set_bool (change_set, full_key, global_config.enable_animations);
-
-	full_key = panel_gconf_global_key ("panel_minimized_size");
-	gconf_change_set_set_int (change_set, full_key, global_config.minimized_size);
-
-	full_key = panel_gconf_global_key ("panel_show_delay");
-	gconf_change_set_set_int (change_set, full_key, global_config.show_delay);
-
-	full_key = panel_gconf_global_key ("panel_animation_speed");
-	gconf_change_set_set_string (
-			change_set, full_key ,
-			gconf_enum_to_string (panel_speed_type_enum_map,
-					      global_config.animation_speed));
-
-	full_key = panel_gconf_global_key ("panel_hide_delay");
-	gconf_change_set_set_int (change_set, full_key, global_config.hide_delay);
-
-	full_key = panel_gconf_global_key ("enable_key_bindings");
-	gconf_change_set_set_bool (change_set, full_key, global_config.keys_enabled);
-
-	full_key = panel_gconf_global_key ("menu_key");
-	gconf_change_set_set_string (change_set, full_key, global_config.menu_key.str);
-
-	full_key = panel_gconf_global_key ("run_key");
-	gconf_change_set_set_string (change_set, full_key, global_config.run_key.str);
-
-	full_key = panel_gconf_global_key ("screenshot-key");
-	gconf_change_set_set_string (change_set, full_key, global_config.screenshot_key.str);
-	
-	full_key = panel_gconf_global_key ("window_screenshot_key");
-	gconf_change_set_set_string (change_set, full_key, global_config.window_screenshot_key.str);
-
-	full_key = panel_gconf_global_key ("drawer_autoclose");
-	gconf_change_set_set_bool (change_set, full_key, global_config.drawer_auto_close);
-
-	full_key = panel_gconf_global_key ("confirm_panel_remove");
-	gconf_change_set_set_bool (change_set, full_key, global_config.confirm_panel_remove);
-
-	full_key = panel_gconf_global_key ("highlight_launchers_on_mouseover");
-	gconf_change_set_set_bool (change_set, full_key, global_config.highlight_when_over);
-
-	gconf_client_commit_change_set (panel_gconf_get_client (), change_set, FALSE, NULL);
-
-	gconf_change_set_unref (change_set);
-}
-
-void
-panel_apply_global_config (void)
-{
-	if (global_config.tooltips_enabled)
-		gtk_tooltips_enable (panel_tooltips);
-	else
-		gtk_tooltips_disable (panel_tooltips);
-
-	panel_global_keys_setup ();
 }

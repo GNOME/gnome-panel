@@ -76,11 +76,6 @@ void		panel_set_frame_colors	(PanelWidget *panel,
 					 GtkWidget *but3,
 					 GtkWidget *but4);
 
-gboolean        panel_parse_accelerator (GlobalConfigKey *key);
-
-char *		convert_keysym_state_to_string (guint keysym,
-						GdkModifierType state);
-
 GtkWidget      *panel_error_dialog      (GdkScreen  *screen,
 					 const char *class,
 					 const char *format,

@@ -1,5 +1,5 @@
 /*
- * panel-bindings.c:
+ * panel-bindings.c: panel keybindings support module
  *
  * Copyright (C) 2003 Sun Microsystems, Inc.
  *
@@ -126,20 +126,15 @@ static void
 panel_binding_watch (PanelBinding *binding,
 		     const char   *key)
 {
-	GConfClient *client;
-	GError      *error = NULL;
+	GError *error = NULL;
 
-	client = gconf_client_get_default ();
-
-	gconf_client_notify_add (client, key,
+	gconf_client_notify_add (panel_gconf_get_client (), key,
 				(GConfClientNotifyFunc) panel_binding_changed,
 				binding, NULL, &error);
 	if (error) {
 		g_warning (_("Error watching gconf key '%s': %s"), key, error->message);
 		g_error_free (error);
 	}
-
-	g_object_unref (client);
 }
 
 static void
@@ -149,7 +144,7 @@ panel_bindings_initialise (void)
 	GError      *error;
 	int          i;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	error = NULL;
 	gconf_client_add_dir (client, BINDINGS_PREFIX,
@@ -179,8 +174,6 @@ panel_bindings_initialise (void)
 
 		g_free (str);
 	}
-
-	g_object_unref (client);
 }
 
 void

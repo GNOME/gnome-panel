@@ -1,3 +1,71 @@
+2003-02-27  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: kill global-keys.[ch]
+
+	* throughout: use panel_gconf_get_client() - gconf_client_get_default
+	isn't a lightweight accessor.
+
+	* panel-config-global.[ch]:
+	(panel_global_config_get_highlight_when_over),
+	(panel_global_config_get_enable_animations),
+	(panel_global_config_get_drawer_auto_close),
+	(panel_global_config_get_tooltips_enabled),
+	(panel_global_config_get_confirm_panel_remove): impl these accessors so
+	we don't have to use a global variable.
+	(panel_global_config_set_entry): actually directly handle changes so we can
+	kill panel_apply_global_config() - also make the function statis.
+	(panel_global_config_notify): make static.
+	(panel_global_config_load): move initialisation from main() to here.
+
+	* panel-session.[ch]:
+	(panel_session_request_logout): don't require passing in a client.
+	(panel_session_handle_die_request): make static.
+	(panel_session_init): move initialisation here from main ().
+
+	* button-widget.c: (button_widget_expose),
+	(button_widget_leave_notify): upd for global_config changes.
+
+	* drawer.c:
+	(load_drawer_applet): add the drawer button to the parent toplevel,
+	not the drawer toplevel - oops :-)
+
+	* launcher.c: (launch_cb): upd for global_config changes.
+
+	* main.c: (main): upd for global_config and session changes.
+
+	* menu.c: (drag_end_menu_cb),
+	(remove_panel_query), (setup_remove_this_panel): global_config changes.
+	(make_panel_submenu): remove the "Toplevel testing" menu.
+
+	* panel-action-button.c:
+	(panel_action_logout),
+	(panel_action_button_clicked):  upd for global_config and session changes.
+
+	* panel-gconf.c:
+	(panel_gconf_all_global_entries), (panel_gconf_get_int),
+	(panel_gconf_get_string), (panel_gconf_get_bool),
+	(panel_gconf_set_int), (panel_gconf_set_string),
+	(panel_gconf_set_bool): kill cruft.
+
+	* panel-globals.h: kill global_config.
+
+	* panel-profile.c:
+	(panel_profile_set_queued_changes),
+	(panel_profile_set_commit_timeout): take a toplevel as the first
+	arg rather than a GObject.
+
+	* panel-util.[ch]: kill accelerator parsing code.
+
+	* panel.c:
+	(panel_destroy): don't kill the properties dialog here - it gets
+	destroyed automagically when the toplevel is destroyed.
+	(panel_load_global_config): move to panel-config-global.c
+	(panel_save_global_config): wtf ? we never change the global
+	configuration anywhere in the panel - why on earth were we saving
+	it ?
+
+	* xstuff.[ch]: kill xstuff_init.
+
 2003-02-25  Mark McLoughlin  <mark@skynet.ie>
 
 	* applet.c: (panel_applet_register): disable the initial

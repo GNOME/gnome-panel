@@ -30,13 +30,10 @@
 #include "panel-session.h"
 #include "xstuff.h"
 #include "panel-stock-icons.h"
-#include "global-keys.h"
 
 #include "nothing.cP"
 
 /* globals */
-GlobalConfig global_config;
-
 GSList *panels = NULL;
 GSList *applets = NULL;
 GSList *panel_list = NULL;
@@ -112,8 +109,6 @@ static const struct poptOption options[] = {
 int
 main(int argc, char **argv)
 {
-	GnomeClient *sm_client;
-
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
@@ -125,8 +120,6 @@ main(int argc, char **argv)
 			    GNOME_PROGRAM_STANDARD_PROPERTIES,
 			    NULL);
 
-	bonobo_activate ();
-
 	if (!panel_shell_register ())
 		return -1;
 
@@ -134,26 +127,20 @@ main(int argc, char **argv)
 	
 	find_kde_directory();
 
-	sm_client = gnome_master_client ();
-	panel_session_set_restart_command (sm_client, argv [0]);
-	g_signal_connect (sm_client, "die",
-			  G_CALLBACK (panel_session_handle_die_request), NULL);
+	panel_session_init (argv [0]);
 
 	panel_register_window_icon ();
 
 	panel_tooltips = gtk_tooltips_new ();
 
-	xstuff_init ((GdkFilterFunc) panel_global_keys_filter);
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 
         init_menus ();
 
-	panel_gconf_add_dir ("/apps/panel/global");
 	panel_gconf_add_dir ("/desktop/gnome/interface");
-	panel_gconf_notify_add ("/apps/panel/global", panel_global_config_notify, NULL);
 
-	panel_load_global_config ();
+	panel_global_config_load ();
 	panel_profile_load (profile_arg);
 
 	/*add forbidden lists to ALL panels*/

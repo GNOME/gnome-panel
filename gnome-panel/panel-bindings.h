@@ -1,5 +1,5 @@
 /*
- * panel-bindings.h:
+ * panel-bindings.h: panel keybindings support module
  *
  * Copyright (C) 2003 Sun Microsystems, Inc.
  *
@@ -19,7 +19,7 @@
  * 02111-1307, USA.
  *
  * Authors:
- *	Mark McLoughlin <mark@skynet.ie>
+ *      Mark McLoughlin <mark@skynet.ie>
  */
 
 #ifndef __PANEL_BINDINGS_H__

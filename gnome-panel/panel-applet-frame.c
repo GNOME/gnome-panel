@@ -1,22 +1,22 @@
 /*
- * panel-applet-frame.c:
+ * panel-applet-frame.c: panel side container for applets
  *
- * Copyright (C) 2001 Sun Microsystems, Inc.
+ * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  *
  * Authors:
  *	Mark McLoughlin <mark@skynet.ie>
@@ -76,17 +76,13 @@ void
 panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
 				  const char       *id)
 {
-	GConfClient *client;
 	const char  *profile;
 	const char  *key;
 
-	client  = gconf_client_get_default ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
-	gconf_client_set_string (client, key, frame->priv->iid, NULL);
-
-	g_object_unref (client);
+	gconf_client_set_string (panel_gconf_get_client (), key, frame->priv->iid, NULL);
 }
 
 void
@@ -94,7 +90,6 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 				    int          position,
 				    const char  *id)
 {
-	GConfClient *client;
 	const char  *profile;
 	const char  *key;
 	char        *applet_iid;
@@ -102,17 +97,14 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	client  = gconf_client_get_default ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
-	applet_iid = gconf_client_get_string (client, key, NULL);
+	applet_iid = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
 
 	panel_applet_frame_load (applet_iid, panel_widget, position, TRUE, id);
 
 	g_free (applet_iid);
-
-	g_object_unref (client);
 }
 
 static void

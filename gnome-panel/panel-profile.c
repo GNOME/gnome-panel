@@ -226,12 +226,10 @@ panel_profile_find_new_id (PanelGConfKeyType  type,
 		GConfClient *client;
 		const char   *key;
 
-		client = gconf_client_get_default ();
+		client = panel_gconf_get_client ();
 
 		key = panel_gconf_general_key (current_profile, id_list_key);
 		free_me = existing_ids = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
-
-		g_object_unref (client);
 	}
 
 	for (i = 0; !retval; i++) {
@@ -255,13 +253,13 @@ panel_profile_find_new_id (PanelGConfKeyType  type,
 }
 
 static void
-panel_profile_set_queued_changes (GObject        *object,
+panel_profile_set_queued_changes (PanelToplevel  *toplevel,
 				  GConfChangeSet *changes)
 {
 	if (!queued_changes_quark)
 		queued_changes_quark = g_quark_from_static_string ("panel-queued-changes");
 
-	g_object_set_qdata_full (object,
+	g_object_set_qdata_full (G_OBJECT (toplevel),
 				 queued_changes_quark,
 				 changes,
 				 (GDestroyNotify) gconf_change_set_unref);
@@ -277,13 +275,15 @@ panel_profile_get_queued_changes (GObject *object)
 }
 
 static void
-panel_profile_set_commit_timeout (GObject *object,
-				  guint    timeout)
+panel_profile_set_commit_timeout (PanelToplevel *toplevel,
+				  guint          timeout)
 {
 	if (!commit_timeout_quark)
 		commit_timeout_quark = g_quark_from_static_string ("panel-queued-timeout");
 
-	g_object_set_qdata (object, commit_timeout_quark, GUINT_TO_POINTER (timeout));
+	g_object_set_qdata (G_OBJECT (toplevel),
+			    commit_timeout_quark,
+			    GUINT_TO_POINTER (timeout));
 }
 
 static const guint
@@ -313,15 +313,13 @@ panel_profile_set_background_type (PanelToplevel       *toplevel,
 	GConfClient *client;
 	const char  *key;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "background/type");
 	gconf_client_set_string (client,
 				 key,
 				 gconf_enum_to_string (panel_background_type_map, background_type),
 			         NULL);
-
-	g_object_unref (client);
 }
 
 PanelBackgroundType
@@ -332,7 +330,7 @@ panel_profile_get_background_type (PanelToplevel *toplevel)
 	const char          *key;
 	char                *str;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "background/type");
 	str = gconf_client_get_string (client, key, NULL);
@@ -340,7 +338,6 @@ panel_profile_get_background_type (PanelToplevel *toplevel)
 	if (!str || !panel_profile_map_background_type_string (str, &background_type))
 		background_type = PANEL_BACK_NONE;
 
-	g_object_unref (client);
 	g_free (str);
 
 	return background_type;
@@ -384,7 +381,7 @@ panel_profile_set_background_pango_color (PanelToplevel *toplevel,
 	const char  *key;
 	char        *color_str;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	color_str = g_strdup_printf ("#%02x%02x%02x",
 				     pango_color->red   / 256,
@@ -395,7 +392,6 @@ panel_profile_set_background_pango_color (PanelToplevel *toplevel,
 	gconf_client_set_string (client, key, color_str, NULL);
 
 	g_free (color_str);
-	g_object_unref (client);
 }
 
 void
@@ -406,7 +402,7 @@ panel_profile_get_background_pango_color (PanelToplevel *toplevel,
 	const char  *key;
 	char        *color_str;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "background/color");
 	color_str = gconf_client_get_string (client, key, NULL);
@@ -426,12 +422,10 @@ panel_profile_set_background_opacity (PanelToplevel *toplevel,
 	GConfClient *client;
 	const char  *key;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
 	gconf_client_set_int (client, key, opacity, NULL);
-
-	g_object_unref (client);
 }
 
 guint16
@@ -441,12 +435,10 @@ panel_profile_get_background_opacity (PanelToplevel *toplevel)
 	const char  *key;
 	guint16      opacity;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
 	opacity = gconf_client_get_int (client, key, NULL);
-
-	g_object_unref (client);
 
 	return opacity;
 }
@@ -458,7 +450,7 @@ panel_profile_set_background_image (PanelToplevel *toplevel,
 	GConfClient *client;
 	const char  *key;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "image");
 
@@ -466,8 +458,6 @@ panel_profile_set_background_image (PanelToplevel *toplevel,
 		gconf_client_set_string (client, key, image, NULL);
 	else
 		gconf_client_unset (client, key, NULL);
-
-	g_object_unref (client);
 }
 
 char *
@@ -477,12 +467,10 @@ panel_profile_get_background_image (PanelToplevel *toplevel)
 	const char  *key;
 	char        *retval;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "image");
 	retval = gconf_client_get_string (client, key, NULL);
-
-	g_object_unref (client);
 
 	return retval;
 }
@@ -494,7 +482,7 @@ panel_profile_set_toplevel_name (PanelToplevel *toplevel,
 	GConfClient *client;
 	const char  *key;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "name");
 
@@ -502,8 +490,6 @@ panel_profile_set_toplevel_name (PanelToplevel *toplevel,
 		gconf_client_set_string (client, key, name, NULL);
 	else
 		gconf_client_unset (client, key, NULL);
-
-	g_object_unref (client);
 }
 
 char *
@@ -513,12 +499,10 @@ panel_profile_get_toplevel_name (PanelToplevel *toplevel)
 	const char  *key;
 	char        *retval;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "name");
 	retval = gconf_client_get_string (client, key, NULL);
-
-	g_object_unref (client);
 
 	return retval;
 }
@@ -530,15 +514,13 @@ panel_profile_set_toplevel_orientation (PanelToplevel    *toplevel,
 	GConfClient *client;
 	const char  *key;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "orientation");
 	gconf_client_set_string (client,
 				 key,
 				 gconf_enum_to_string (panel_orientation_map, orientation),
 				 NULL);
-
-	g_object_unref (client);
 }
 
 PanelOrientation
@@ -549,12 +531,10 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 	const char       *key;
 	char             *str;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "orientation");
 	str = gconf_client_get_string (client, key, NULL);
-
-	g_object_unref (client);
 
 	panel_profile_map_orientation_string (str, &orientation);
 
@@ -569,11 +549,10 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 	{                                                             \
 		GConfClient *client;                                  \
 		const char  *key;                                     \
-		client = gconf_client_get_default ();                 \
+		client = panel_gconf_get_client ();                   \
 		d_print ("Setting '%s'\n", k);                        \
 		key = panel_profile_get_toplevel_key (toplevel, k);   \
 		gconf_client_set_##t (client, key, s, NULL);          \
-		g_object_unref (client);                              \
 	}                                                             \
 	a                                                             \
 	panel_profile_get_##p##_##s (PanelToplevel *toplevel)         \
@@ -581,11 +560,10 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 		GConfClient *client;                                  \
 		const char  *key;                                     \
 		a retval;                                             \
-		client = gconf_client_get_default ();                 \
+		client = panel_gconf_get_client ();                   \
 		d_print ("Getting '%s'\n", k);                        \
 		key = panel_profile_get_toplevel_key (toplevel, k);   \
-		retval = gconf_client_get_##t (client, key, NULL); \
-		g_object_unref (client);                              \
+		retval = gconf_client_get_##t (client, key, NULL);    \
 		return retval;                                        \
 	}
 
@@ -731,16 +709,13 @@ panel_profile_commit_toplevel_changes (PanelToplevel *toplevel)
 	GConfChangeSet *queued_changes;
 
 	queued_changes = panel_profile_get_queued_changes (G_OBJECT (toplevel));
-	if (queued_changes) {
-		GConfClient *client;
+	if (queued_changes)
+		gconf_client_commit_change_set (
+				panel_gconf_get_client (),
+				queued_changes, FALSE, NULL);
 
-		client = gconf_client_get_default ();
-		gconf_client_commit_change_set (client, queued_changes, FALSE, NULL);
-		g_object_unref (client);
-	}
-
-	panel_profile_set_queued_changes (G_OBJECT (toplevel), NULL);
-	panel_profile_set_commit_timeout (G_OBJECT (toplevel), 0);
+	panel_profile_set_queued_changes (toplevel, NULL);
+	panel_profile_set_commit_timeout (toplevel, 0);
 
 	return FALSE;
 }
@@ -755,7 +730,7 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 	queued_changes = panel_profile_get_queued_changes (G_OBJECT (toplevel));
 	if (!queued_changes) {
 		queued_changes = gconf_change_set_new ();
-		panel_profile_set_queued_changes (G_OBJECT (toplevel), queued_changes);
+		panel_profile_set_queued_changes (toplevel, queued_changes);
 	}
 
 #define DEBUG_CHANGE(k,n) \
@@ -825,7 +800,7 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 			g_timeout_add (500,
 				       (GSourceFunc) panel_profile_commit_toplevel_changes,
 				       toplevel);
-		panel_profile_set_commit_timeout (G_OBJECT (toplevel), commit_timeout);
+		panel_profile_set_commit_timeout (toplevel, commit_timeout);
 	}
 }
 
@@ -1094,11 +1069,9 @@ panel_profile_disconnect_toplevel (PanelToplevel *toplevel,
 	GConfClient *client;
 	guint        notify_id = GPOINTER_TO_UINT (data);
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	gconf_client_notify_remove (client, notify_id);
-
-	g_object_unref (client);
 }
 
 guint
@@ -1111,7 +1084,7 @@ panel_profile_toplevel_notify_add (PanelToplevel         *toplevel,
 	const char  *tmp;
 	guint        retval;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	if (!key)
 		tmp = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/toplevels/%s",
@@ -1124,8 +1097,6 @@ panel_profile_toplevel_notify_add (PanelToplevel         *toplevel,
 					   key);
 
 	retval = gconf_client_notify_add (client, tmp, func, data, NULL, NULL);
-
-	g_object_unref (client);
 
 	return retval;
 }
@@ -1481,7 +1452,7 @@ panel_profile_create_toplevel (void)
 	GSList      *list, *l;
 	const char  *key;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_gconf_general_key (current_profile, "toplevel_id_list");
 	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
@@ -1493,8 +1464,6 @@ panel_profile_create_toplevel (void)
 	for (l = list; l; l = l->next)
 		g_free (l->data);
 	g_slist_free (list);
-
-	g_object_unref (client);
 }
 
 void
@@ -1505,7 +1474,7 @@ panel_profile_delete_toplevel (PanelToplevel *toplevel)
 	const char  *key;
 	const char  *id;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_gconf_general_key (current_profile, "toplevel_id_list");
 	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
@@ -1525,8 +1494,6 @@ panel_profile_delete_toplevel (PanelToplevel *toplevel)
 	for (l = list; l; l = l->next)
 		g_free (l->data);
 	g_slist_free (list);
-
-	g_object_unref (client);
 }
 
 static void
@@ -1606,7 +1573,7 @@ panel_profile_load (char *profile_name)
 
 	current_profile = profile_name ? profile_name : "default";
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 
 	dir = gconf_concat_dir_and_key (PANEL_CONFIG_DIR, current_profile);
 	if (!gconf_client_dir_exists (client, dir, NULL))
@@ -1622,8 +1589,6 @@ panel_profile_load (char *profile_name)
 	panel_applet_load_applets_from_gconf ();
 
 	/* FIXME: need to load the defaults on any new screens */
-
-	g_object_unref (client);
 }
 
 static gboolean
@@ -1633,12 +1598,10 @@ get_program_listing_setting (const char *setting)
 	const char  *key;
 	gboolean     retval;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_gconf_general_key (current_profile, setting);
 	retval = gconf_client_get_bool (client, key, NULL);
-
-	g_object_unref (client);
 
 	return retval;
 }
@@ -1661,10 +1624,8 @@ panel_profile_set_show_program_list (gboolean show_program_list)
 	GConfClient *client;
 	const char  *key;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	key = panel_gconf_general_key (current_profile, "show_program_list");
 	gconf_client_set_bool (client, key, show_program_list, NULL);
-
-	g_object_unref (client);
 }

@@ -135,7 +135,7 @@ static GdkScreen   *menuitem_to_screen (GtkWidget *menuitem);
 
 static inline gboolean
 panel_menu_have_icons (void)
-{
+{	
 	return gconf_client_get_bool (
 			panel_gconf_get_client (),
 			"/desktop/gnome/interface/menus_have_icons",
@@ -1618,7 +1618,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
   /* FIXME: workaround for a possible gtk+ bug
    *    See bugs #92085(gtk+) and #91184(panel) for details.
    */
-  if (global_config.tooltips_enabled)
+  if (panel_global_config_get_tooltips_enabled ())
     gtk_tooltips_enable (panel_tooltips);
 
   while (parent)
@@ -2816,7 +2816,7 @@ remove_panel_query (GtkWidget *menuitem,
 		return;
 	}
 
-	if (!global_config.confirm_panel_remove) {
+	if (panel_global_config_get_confirm_panel_remove ()) {
 		gtk_widget_destroy (GTK_WIDGET (toplevel));
 		return;
 	}
@@ -2896,148 +2896,14 @@ setup_remove_this_panel (GtkWidget *menu,
 
 	/* this will not handle the case of menu being torn off
 	 * and then the confirm_panel_remove changed, but oh well */
-	if (panel_widget->applet_list != NULL &&
-	    global_config.confirm_panel_remove)
+	if (panel_widget->applet_list &&
+	    panel_global_config_get_confirm_panel_remove ())
 		gtk_label_set_text_with_mnemonic (
 			GTK_LABEL (label), _("_Delete This Panel..."));
 	else
 		gtk_label_set_text_with_mnemonic (
 			GTK_LABEL (label), _("_Delete This Panel"));
 }
-
-#ifdef FIXME_FOR_NEW_CONFIG
-static void
-current_panel_config (GtkWidget *menuitem)
-{
-	PanelWidget *panel_widget;
-
-	panel_widget = menu_get_panel (menuitem);
-
-	panel_config (panel_widget->toplevel);
-}
-#endif
-
-#ifndef FIXME_FOR_NEW_CONFIG
-
-static void
-toggle_expand (PanelToplevel *toplevel)
-{
-	panel_profile_set_toplevel_expand (
-		toplevel, !panel_toplevel_get_expand (toplevel));
-}
-
-static void
-toggle_auto_hide (PanelToplevel *toplevel)
-{
-	panel_profile_set_toplevel_auto_hide (
-		toplevel, !panel_toplevel_get_auto_hide (toplevel));
-}
-
-static void
-rotate_clockwise (PanelToplevel *toplevel)
-{
-	panel_toplevel_rotate (toplevel, TRUE);
-}
-
-static void
-rotate_counter_clockwise (PanelToplevel *toplevel)
-{
-	panel_toplevel_rotate (toplevel, FALSE);
-}
-
-static void
-increase_size (PanelToplevel *toplevel)
-{
-	panel_toplevel_set_size (toplevel, panel_toplevel_get_size (toplevel) + 4);
-}
-
-static void
-decrease_size (PanelToplevel *toplevel)
-{
-	panel_toplevel_set_size (toplevel, panel_toplevel_get_size (toplevel) - 4);
-}
-
-static void
-toggle_buttons (PanelToplevel *toplevel)
-{
-	panel_profile_set_toplevel_enable_buttons (
-		toplevel, !panel_toplevel_get_enable_buttons (toplevel));
-}
-
-static void
-toggle_arrows (PanelToplevel *toplevel)
-{
-	panel_profile_set_toplevel_enable_arrows (
-		toplevel, !panel_toplevel_get_enable_arrows (toplevel));
-}
-
-static GtkWidget *
-create_toplevel_testing_menu (PanelToplevel *toplevel)
-{
-	GtkWidget *retval;
-	GtkWidget *menuitem;
-	
-	retval = menu_new ();
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Expand"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (toggle_expand), toplevel);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Auto Hide"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (toggle_auto_hide), toplevel);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Rotate Clockwise"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (rotate_clockwise), toplevel);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Rotate Counter Clockwise"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (rotate_counter_clockwise), toplevel);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Increase Size (for only $2000!!)"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (increase_size), toplevel);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Decrease Size"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (decrease_size), toplevel);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Buttons"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (toggle_buttons), toplevel);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Arrows"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (toggle_arrows), toplevel);
-
-	return retval;
-}
-#endif /* FIXME_FOR_NEW_CONFIG */
 
 static void
 make_panel_submenu (PanelWidget *panel_widget,
@@ -3075,7 +2941,6 @@ make_panel_submenu (PanelWidget *panel_widget,
 			    G_CALLBACK(setup_remove_this_panel),
 			    menuitem);
 
-#ifndef FIXME_FOR_NEW_CONFIG
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem,
 			GTK_ICON_SIZE_MENU,
@@ -3087,17 +2952,6 @@ make_panel_submenu (PanelWidget *panel_widget,
 	g_signal_connect_swapped (menuitem, "activate",
 				  G_CALLBACK (panel_properties_dialog_present), 
 				  panel_widget->toplevel);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toplevel Testing"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-
-	submenu = create_toplevel_testing_menu (panel_widget->toplevel);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
-	g_signal_connect (submenu, "show",
-			  G_CALLBACK (submenu_to_display), NULL);
-#endif /* FIXME_FOR_NEW_CONFIG */
 
 	add_menu_separator (menu);
 

@@ -1,22 +1,22 @@
 /*
- * panel-action-button.c:
+ * panel-action-button.c: panel "Action Button" module
  *
  * Copyright (C) 2002 Sun Microsystems, Inc.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  *
  * Authors:
  *	Mark McLoughlin <mark@skynet.ie>
@@ -123,7 +123,7 @@ panel_action_logout (GtkWidget *widget)
 
 	recursion_guard++;
 
-	panel_session_request_logout (gnome_master_client ());
+	panel_session_request_logout ();
 
 	recursion_guard--;
 }
@@ -216,17 +216,13 @@ static void
 panel_action_button_finalize (GObject *object)
 {
 	PanelActionButton *button = PANEL_ACTION_BUTTON (object);
-	GConfClient       *client;
 
 	button->priv->info = NULL;
 	button->priv->type = PANEL_ACTION_NONE;
 
-	client = gconf_client_get_default ();
-
-	gconf_client_notify_remove (client, button->priv->gconf_notify);
+	gconf_client_notify_remove (panel_gconf_get_client (),
+				    button->priv->gconf_notify);
 	button->priv->gconf_notify = 0;
-
-	g_object_unref (client);
 
 	g_free (button->priv);
 	button->priv = NULL;
@@ -316,7 +312,7 @@ panel_action_button_clicked (GtkButton *gtk_button)
 	g_return_if_fail (button->priv->type > PANEL_ACTION_NONE);
 	g_return_if_fail (button->priv->type < PANEL_ACTION_LAST);
 
-	if (global_config.drawer_auto_close) {
+	if (panel_global_config_get_drawer_auto_close ()) {
 		PanelToplevel *toplevel;
 
 		toplevel = PANEL_WIDGET (GTK_WIDGET (button)->parent)->toplevel;
@@ -449,22 +445,18 @@ panel_action_button_type_changed (GConfClient       *client,
 static void
 panel_action_button_connect_to_gconf (PanelActionButton *button)
 {
-	GConfClient *client;
 	const char  *key;
 	const char  *profile;
 
-	client  = gconf_client_get_default ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, button->priv->info->id, "action_type");
 
 	button->priv->gconf_notify =
-		gconf_client_notify_add (client, key, 
+		gconf_client_notify_add (panel_gconf_get_client (), key, 
 					 (GConfClientNotifyFunc) panel_action_button_type_changed,
 					 button, NULL, NULL);
-
-	g_object_unref (client);
 }
 
 GtkWidget *
@@ -516,18 +508,14 @@ panel_action_button_load_from_gconf (PanelWidget *panel,
 				     const char  *id)
 {
 	int          type;
-	GConfClient *client;
 	const char  *key;
 	const char  *profile;
 	char        *action_type;
 
-	client  = gconf_client_get_default ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "action_type");
-	action_type = gconf_client_get_string (client, key, NULL);
-
-	g_object_unref (client);
+	action_type = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
 
 	if (!gconf_string_to_enum (panel_action_type_map, action_type, &type)) {
 		g_warning ("Unkown action type '%s' from %s", action_type, key);
@@ -544,14 +532,12 @@ void
 panel_action_button_save_to_gconf (PanelActionButton *button,
 				   const char        *id)
 {
-	GConfClient *client;
 	const char  *key;
 	const char  *profile;
 	const char  *action_type;
 
 	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
 
-	client  = gconf_client_get_default ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_sprintf ("/apps/panel/profiles/%s/objects/%s", profile, id);
@@ -560,9 +546,7 @@ panel_action_button_save_to_gconf (PanelActionButton *button,
 	action_type = gconf_enum_to_string (panel_action_type_map, button->priv->type);
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "action_type");
-	gconf_client_set_string (client, key, action_type, NULL);
-
-	g_object_unref (client);
+	gconf_client_set_string (panel_gconf_get_client (), key, action_type, NULL);
 }
 
 void

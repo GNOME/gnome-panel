@@ -1,22 +1,22 @@
 /*
- * panel-menu-button.c:
+ * panel-menu-button.c: panel menu button
  *
  * Copyright (C) 2003 Sun Microsystems, Inc.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  *
  * Authors:
  *	Mark McLoughlin <mark@skynet.ie>
@@ -98,16 +98,11 @@ static void
 panel_menu_button_finalize (GObject *object)
 {
 	PanelMenuButton *button = PANEL_MENU_BUTTON (object);
-	GConfClient     *client;
 
 	button->priv->info = NULL;
 
-	client = gconf_client_get_default ();
-
-	gconf_client_notify_remove (client, button->priv->gconf_notify);
+	gconf_client_notify_remove (panel_gconf_get_client (), button->priv->gconf_notify);
 	button->priv->gconf_notify = 0;
-
-	g_object_unref (client);
 
 	if (button->priv->menu)
 		g_object_unref (button->priv->menu);
@@ -500,7 +495,7 @@ panel_menu_button_connect_to_gconf (PanelMenuButton *button)
 	const char  *key;
 	const char  *profile;
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/objects/%s",
@@ -511,7 +506,6 @@ panel_menu_button_connect_to_gconf (PanelMenuButton *button)
 		gconf_client_notify_add (client, key,
 					 (GConfClientNotifyFunc) panel_menu_button_gconf_notify,
 					 button, NULL, NULL);
-        g_object_unref (client);
 }
 
 GtkWidget *
@@ -682,7 +676,7 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 	gboolean     use_menu_path;
 	gboolean     use_custom_icon;
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/objects/%s", profile, id);
@@ -723,7 +717,7 @@ panel_menu_button_save_to_gconf (PanelMenuButton *button,
 	const char  *profile;
 	const char  *key;
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	if (button->priv->menu_path) {
@@ -741,8 +735,6 @@ panel_menu_button_save_to_gconf (PanelMenuButton *button,
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_custom_icon");
 	gconf_client_set_bool (client, key, button->priv->use_custom_icon, NULL);
-
-	g_object_unref (client);
 }
 
 void

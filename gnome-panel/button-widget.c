@@ -582,7 +582,7 @@ button_widget_expose (GtkWidget         *widget,
 	off = (button->in_button && button->button_down) ?
 		SCALE(BUTTON_WIDGET_DISPLACEMENT) : 0;
 	
-	if (global_config.highlight_when_over && 
+	if (panel_global_config_get_highlight_when_over () && 
 	    (button->in_button || GTK_WIDGET_HAS_FOCUS (widget)))
 		pb = button_widget->scaled_hc;
 	else
@@ -745,7 +745,7 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 	in_button = GTK_BUTTON (widget)->in_button;
 	GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget, event);
 	if (in_button != GTK_BUTTON (widget)->in_button &&
-	    global_config.highlight_when_over)
+	    panel_global_config_get_highlight_when_over ())
 		gtk_widget_queue_draw (widget);
 
 	return FALSE;

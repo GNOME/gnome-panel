@@ -1,22 +1,22 @@
 /*
- * panel-session.c:
+ * panel-session.c: panel session management routines
  *
  * Copyright (C) 2003 Sun Microsystems, Inc.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  *
  * Authors:
  *	Mark McLoughlin <mark@skynet.ie>
@@ -31,7 +31,7 @@
 #include "panel-profile.h"
 #include "panel-shell.h"
 
-void
+static void
 panel_session_set_restart_command (GnomeClient *client,
 				   const char  *argv0)
 {
@@ -54,9 +54,12 @@ panel_session_set_restart_command (GnomeClient *client,
 }
 
 void
-panel_session_request_logout (GnomeClient *client)
+panel_session_request_logout (void)
 {
-	g_return_if_fail (GNOME_IS_CLIENT (client));
+	GnomeClient *client;
+
+	if (!(client = gnome_master_client ()))
+		return;
 
 	/* Only request a Global save. We only want a Local
 	 * save if the user selects 'Save current setup'
@@ -70,7 +73,7 @@ panel_session_request_logout (GnomeClient *client)
 				   TRUE);
 }
 
-void
+static void
 panel_session_handle_die_request (GnomeClient *client)
 {
 	GSList *toplevels_to_destroy, *l;
@@ -85,4 +88,17 @@ panel_session_handle_die_request (GnomeClient *client)
 	panel_shell_unregister ();
 
 	gtk_main_quit ();
+}
+
+void
+panel_session_init (const char *argv0)
+{
+	GnomeClient *client;
+
+	client = gnome_master_client ();
+
+	panel_session_set_restart_command (client, argv0);
+
+	g_signal_connect (client, "die",
+			  G_CALLBACK (panel_session_handle_die_request), NULL);
 }

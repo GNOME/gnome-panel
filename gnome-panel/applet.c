@@ -78,7 +78,7 @@ panel_applet_clean_gconf (AppletType  type,
 
 	g_return_if_fail (id != NULL);
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_general_key (profile,
@@ -109,8 +109,6 @@ panel_applet_clean_gconf (AppletType  type,
 	for (l = id_list; l; l = l->next)
 		g_free (l->data);
 	g_slist_free (id_list);
-
-	g_object_unref (client);
 }
 
 /* permanently remove an applet - all non-permanent
@@ -860,7 +858,7 @@ panel_applet_load_list (PanelGConfKeyType type)
 	const char  *profile;
 	const char  *key;
 	
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_general_key (profile,
@@ -873,8 +871,6 @@ panel_applet_load_list (PanelGConfKeyType type)
 		g_free (l->data);
 	}
 	g_slist_free (id_list);
-
-	g_object_unref (client);
 }
 
 static int
@@ -968,7 +964,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 	if (!(toplevel_id = panel_applet_get_toplevel_id (applet_info)))
 		return;
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	key_type = applet_info->type == APPLET_BONOBO ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
@@ -987,8 +983,6 @@ panel_applet_save_position (AppletInfo *applet_info,
 
 	key = panel_gconf_full_key (key_type, profile, id, "position");
 	gconf_client_set_int (client, key, position, NULL);
-
-	g_object_unref (client);
 }
 
 static void
@@ -1000,7 +994,7 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 	const char        *key;
 	GSList            *id_list, *l;
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_general_key (profile,
@@ -1068,8 +1062,6 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 	default:
 		break;
 	}
-
-	g_object_unref (client);
 }
 
 AppletInfo *

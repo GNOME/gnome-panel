@@ -111,7 +111,6 @@ panel_sources =			\
 	panel-config-global.c  	\
 	panel-util.c		\
 	panel-gconf.c		\
-	global-keys.c		\
 	panel-properties-dialog.c \
 	distribution.c		\
 	gnome-run.c  		\
@@ -154,7 +153,6 @@ panel_headers =			\
 	applet.h         	\
 	drawer.h  		\
 	panel-util.h		\
-	global-keys.h		\
 	panel-properties-dialog.h \
 	panel-config-global.h  	\
 	panel-gconf.h		\

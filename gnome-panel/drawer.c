@@ -592,11 +592,9 @@ load_drawer_applet (char          *toplevel_id,
 	if (!drawer)
 		return NULL;
 
-	toplevel = drawer->toplevel;
-
 	drawer->info = panel_applet_register (drawer->button, drawer,
 					      (GDestroyNotify) free_drawer,
-					      panel_toplevel_get_panel_widget (toplevel),
+					      panel_toplevel_get_panel_widget (parent_toplevel),
 					      pos, exactpos, APPLET_DRAWER, id);
 
 	if (!drawer->info) {
@@ -634,7 +632,7 @@ drawer_save_to_gconf (Drawer     *drawer,
 
 	g_return_if_fail (drawer && PANEL_IS_TOPLEVEL (drawer->toplevel));
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_full_key (
@@ -654,8 +652,6 @@ drawer_save_to_gconf (Drawer     *drawer,
 				PANEL_GCONF_OBJECTS, profile, id, "tooltip");
 		gconf_client_set_string (client, key, drawer->tooltip, NULL);
 	}
-
-	g_object_unref (client);
 }
 
 void
@@ -673,7 +669,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	client  = gconf_client_get_default ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "attached_panel_id");

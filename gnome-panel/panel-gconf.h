@@ -1,5 +1,30 @@
-#ifndef PANEL_GCONF_H
-#define PANEL_GCONF_H
+/*
+ * panel-gconf.h: panel gconf utility methods
+ *
+ * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ *
+ * Authors:
+ *      Mark McLoughlin <mark@skynet.ie>
+ *      Glynn Foster <glynn.foster@sun.com>
+ */
+
+#ifndef __PANEL_GCONF_H__
+#define __PANEL_GCONF_H__
 
 #include <gconf/gconf-client.h>
 
@@ -27,22 +52,6 @@ G_CONST_RETURN char *panel_gconf_full_key    (PanelGConfKeyType  type,
 
 
 
-GSList         *panel_gconf_all_global_entries (void);
-
-int		panel_gconf_get_int     (const char *key,
-					 int         default_val);
-gboolean	panel_gconf_get_bool    (const char *key,
-					 gboolean    default_val);
-char*		panel_gconf_get_string  (const char *key,
-					 const char *default_val);
-
-void 		panel_gconf_set_int     (const char *key,
-					 int         value);
-void 		panel_gconf_set_bool    (const char *key,
-					 gboolean    value);
-void 		panel_gconf_set_string  (const char *key,
-					 const char *value);
-
 guint		panel_gconf_notify_add             (const char            *key,
 						    GConfClientNotifyFunc  notify_func,
 						    gpointer               user_data);
@@ -64,4 +73,4 @@ void            panel_gconf_associate_schemas_in_dir       (GConfClient *client,
 
 G_END_DECLS
 
-#endif /* PANEL_GCONF_H */
+#endif /* __PANEL_GCONF_H__ */

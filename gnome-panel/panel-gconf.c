@@ -1,15 +1,49 @@
-#include <config.h>
-#include <string.h>
+/*
+ * panel-gconf.c: panel gconf utility methods
+ *
+ * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ *
+ * Authors:
+ *      Mark McLoughlin <mark@skynet.ie>
+ *      Glynn Foster <glynn.foster@sun.com>
+ */
 
+#include <config.h>
+
+#include "panel-gconf.h"
+
+#include <string.h>
 #include <glib.h>
 #include <gconf/gconf-client.h>
 #include <libgnomeui/gnome-client.h>
 
-#include "panel-gconf.h"
-
 #undef PANEL_GCONF_DEBUG
 
-static GConfClient *panel_gconf_client = NULL;
+GConfClient *
+panel_gconf_get_client (void)
+{
+	static GConfClient *panel_gconf_client = NULL;
+
+	if (!panel_gconf_client)
+		panel_gconf_client = gconf_client_get_default ();
+
+	return panel_gconf_client;
+}
 
 /*
  * panel_gconf_sprintf:
@@ -135,136 +169,14 @@ panel_gconf_dirname (const char *key)
 	return retval;
 }
 
-GConfClient * 
-panel_gconf_get_client (void)
-{
-        if (!panel_gconf_client)
-                panel_gconf_client = gconf_client_get_default ();
-
-        return panel_gconf_client;
-}
-
-GSList *
-panel_gconf_all_global_entries (void)
-{
-	GSList *list;
-
-	list = gconf_client_all_entries (
-			panel_gconf_get_client (), "/apps/panel/global", NULL);
-
-	return list;
-}
-
-int 
-panel_gconf_get_int (const char *key,
-		     int         default_val)
-{
-	GConfValue *value;
-	GError     *error = NULL;
-
-	value = gconf_client_get (panel_gconf_get_client (), key, &error);
-
-	if (value) {
-		int retval; 
-	
-		if (value->type == GCONF_VALUE_INT) 
-			retval = gconf_value_get_int (value);
-		else
-			retval = default_val;
-
-		gconf_value_free (value);
-
-		return retval;
-	}
-
-	return default_val;
-}
-
-gboolean
-panel_gconf_get_bool (const char *key,
-		      gboolean    default_val)
-{
-	GConfValue *value;
-	GError     *error = NULL;
-
-	value = gconf_client_get (panel_gconf_get_client (), key, &error);
-	
-	if (value) {
-		gboolean retval;
-
-		if (value->type == GCONF_VALUE_BOOL)
-			retval = gconf_value_get_bool (value);
-		else
-			retval = default_val;
-
-		gconf_value_free (value);
-
-		return retval;
-	}
-
-	return default_val;
-}
-
-char * 
-panel_gconf_get_string (const char *key,
-			const char *default_val)
-{
-	GConfValue *value;
-	GError     *error = NULL;
-
-	value = gconf_client_get (panel_gconf_get_client (), key, &error);
-
-	if (value) {
-		char *retval;
-	
-		if (value->type == GCONF_VALUE_STRING)
-			retval = g_strdup (gconf_value_get_string (value));
-		else
-			retval = g_strdup (default_val);
-
-		gconf_value_free (value);
-
-		return retval;
-	}
-
-	return g_strdup (default_val);
-}
-
-void 
-panel_gconf_set_int (const char *key,
-		     int         value)
-{
-	gconf_client_set_int (panel_gconf_get_client (), key, value, NULL);
-}
-
-void 
-panel_gconf_set_bool (const char *key,
-		      gboolean    value)
-{
-	gconf_client_set_bool (panel_gconf_get_client (), key, value, NULL);
-}
-
-void 
-panel_gconf_set_string (const char *key,
-			const char *value)
-{
-	gconf_client_set_string (panel_gconf_get_client (), key, value, NULL);
-}
-
-guint 
-panel_gconf_notify_add (const char            *key,
-		        GConfClientNotifyFunc  notify_func,
-			gpointer               user_data)
-{
-	return gconf_client_notify_add (
-			panel_gconf_get_client (), key, notify_func,
-			user_data, NULL, NULL);
-}
-
 static void
 panel_notify_object_dead (guint notify_id)
 {
-	gconf_client_notify_remove (panel_gconf_get_client (), notify_id);
+	GConfClient *client;
+
+	client = panel_gconf_get_client ();
+
+	gconf_client_notify_remove (client, notify_id);
 }
 
 guint
@@ -272,20 +184,20 @@ panel_gconf_notify_add_while_alive (const char            *key,
 				    GConfClientNotifyFunc  notify_func, 
 				    GObject               *alive_object)
 {
-	guint notify_id;
+	GConfClient *client;
+	guint        notify_id;
 
 	g_return_val_if_fail (G_IS_OBJECT (alive_object), 0);
 
-	notify_id = panel_gconf_notify_add (key, notify_func, alive_object);
+	client = panel_gconf_get_client ();
 
-	if (notify_id > 0) {
-		/* Add a weak reference to the object so that we can
-		 * remove the notification when the object's gone.
-		 */
+	notify_id = gconf_client_notify_add (client, key, notify_func,
+					     alive_object, NULL, NULL);
+
+	if (notify_id > 0)
 		g_object_weak_ref (alive_object,
 				   (GWeakNotify) panel_notify_object_dead,
 				   GUINT_TO_POINTER (notify_id));
-	}
 
 	return notify_id;
 }

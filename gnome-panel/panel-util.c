@@ -609,38 +609,6 @@ panel_set_frame_colors (PanelWidget *panel, GtkWidget *frame,
 	}
 }
 
-gboolean
-panel_parse_accelerator (GlobalConfigKey *key)
-{
-	g_return_val_if_fail (key != NULL, FALSE);
-	
-	key->keysym = 0;
-	key->state = 0;
-
-	if (key->str == NULL ||
-	    key->str[0] == '\0' ||
-	    strcmp (key->str, "Disabled") == 0 ||
-	    strcmp (key->str, _("Disabled")) == 0)
-		return FALSE;
-
-	gtk_accelerator_parse (key->str, &key->keysym, &key->state);
-
-	if (key->keysym == 0)
-		return FALSE;
-
-	return TRUE;
-}
-
-char *
-convert_keysym_state_to_string(guint keysym,
-			       GdkModifierType state)
-{
-	if (keysym == 0)
-		return g_strdup (_("Disabled"));
-
-	return gtk_accelerator_name (keysym, state);
-}
-
 static GtkWidget *
 panel_dialog (GdkScreen  *screen,
 	      int         type,

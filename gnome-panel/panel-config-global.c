@@ -1,47 +1,123 @@
-#include <config.h>
-#include <string.h>
+/*
+ * panel-config-global.c: panel global configuration module
+ *
+ * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ *
+ * Authors:
+ *      Mark McLoughlin <mark@skynet.ie>
+ *      Glynn Foster <glynn.foster@sun.com>
+ */
 
+#include <config.h>
+
+#include "panel-config-global.h"
+
+#include <string.h>
 #include <gconf/gconf.h>
 
-#include "panel.h"
-#include "panel-util.h"
-#include "panel-gconf.h"
 #include "panel-globals.h"
+#include "panel-gconf.h"
 
-#undef PANEL_GLOBAL_CONFIG_DEBUG
+typedef struct {
+	int                 minimized_size;
+	int                 show_delay;
+	PanelAnimationSpeed animation_speed;
+	int                 hide_delay;
 
+	guint               tooltips_enabled : 1;
+	guint               enable_animations : 1;
+
+	guint               drawer_auto_close : 1;
+	guint               confirm_panel_remove : 1;
+	guint               highlight_when_over : 1;
+} GlobalConfig;
+
+static GlobalConfig global_config = { 0, };
+static gboolean global_config_initialised = FALSE;
 static GConfEnumStringPair panel_speed_map [] = {
-        { PANEL_SPEED_SLOW,   "panel-speed-slow" },
-        { PANEL_SPEED_MEDIUM, "panel-speed-medium" },
-        { PANEL_SPEED_FAST,   "panel-speed-fast" },
+        { PANEL_ANIMATION_SLOW,   "panel-speed-slow" },
+        { PANEL_ANIMATION_MEDIUM, "panel-speed-medium" },
+        { PANEL_ANIMATION_FAST,   "panel-speed-fast" },
 };
 
-/*
- * Map between a gconf entry and a member of the
- * GlobalConfig structure.
- *
- * Note: keep in sync with panel-config-global.h and
- * panel-global-config.schemas
- */
-void
+gboolean
+panel_global_config_get_highlight_when_over (void)
+{
+	g_assert (global_config_initialised == TRUE);
+
+	return global_config.highlight_when_over;
+}
+
+gboolean
+panel_global_config_get_enable_animations (void)
+{
+	g_assert (global_config_initialised == TRUE);
+
+	return global_config.enable_animations;
+}
+
+gboolean
+panel_global_config_get_drawer_auto_close (void)
+{
+	g_assert (global_config_initialised == TRUE);
+
+	return global_config.drawer_auto_close;
+}
+
+gboolean
+panel_global_config_get_tooltips_enabled (void)
+{
+	g_assert (global_config_initialised == TRUE);
+
+	return global_config.tooltips_enabled;
+}
+
+gboolean
+panel_global_config_get_confirm_panel_remove (void)
+{
+	g_assert (global_config_initialised == TRUE);
+
+	return global_config.confirm_panel_remove;
+}
+
+static void
 panel_global_config_set_entry (GConfEntry *entry)
 {
 	GConfValue *value;
-	gchar      *key;
+	const char *key;
 
 	g_return_if_fail (entry != NULL);
 
 	value = gconf_entry_get_value (entry);
-	key   = g_path_get_basename (gconf_entry_get_key (entry));
+	key   = panel_gconf_basename (gconf_entry_get_key (entry));
 
 	if (!value || !key)
 		return;
 
-	if (strcmp (key, "tooltips_enabled") == 0)
+	if (strcmp (key, "tooltips_enabled") == 0) {
 		global_config.tooltips_enabled =
 				gconf_value_get_bool (value);
+		if (global_config.tooltips_enabled)
+			gtk_tooltips_enable (panel_tooltips);
+		else
+			gtk_tooltips_disable (panel_tooltips);
 
-	else if (strcmp (key, "enable_animations") == 0)
+	} else if (strcmp (key, "enable_animations") == 0)
 		global_config.enable_animations =
 				gconf_value_get_bool (value);
 
@@ -54,59 +130,17 @@ panel_global_config_set_entry (GConfEntry *entry)
 				gconf_value_get_int (value);
 
 	else if (strcmp (key, "panel_animation_speed") == 0) {
-		PanelSpeed speed = PANEL_SPEED_SLOW;
+		int speed = PANEL_ANIMATION_SLOW;
 
 		if (gconf_string_to_enum (
-			panel_speed_map,
-			gconf_value_get_string (value),
-			(int *) &speed))
+			panel_speed_map, gconf_value_get_string (value), &speed))
 			global_config.animation_speed = speed;
 
 	} else if (strcmp (key, "panel_hide_delay") == 0)
 		global_config.hide_delay =
 				gconf_value_get_int (value);
 
-	else if (strcmp (key, "enable_key_bindings") == 0)
-		global_config.keys_enabled =
-				gconf_value_get_bool (value);
-
-	else if (strcmp (key, "menu_key") == 0) { 
-		if (global_config.menu_key.str)
-			g_free (global_config.menu_key.str);
-
-		global_config.menu_key.str =
-			g_strdup (gconf_value_get_string (value));
-
-		panel_parse_accelerator (&global_config.menu_key);
-
-	} else if (strcmp (key, "run_key") == 0) {
-		if (global_config.run_key.str)
-			g_free (global_config.run_key.str);
-
-		global_config.run_key.str =
-			g_strdup (gconf_value_get_string (value));
-
-		panel_parse_accelerator (&global_config.run_key);
-
-	} else if (strcmp (key, "screenshot_key") == 0) {
-		if (global_config.screenshot_key.str)
-			g_free (global_config.screenshot_key.str);
-
-		global_config.screenshot_key.str =
-			 g_strdup (gconf_value_get_string (value));
-
-		panel_parse_accelerator (&global_config.screenshot_key);
-
-	} else if (strcmp (key, "window_screenshot_key") == 0) {
-		if (global_config.window_screenshot_key.str)
-			g_free (global_config.window_screenshot_key.str);
-
-		global_config.window_screenshot_key.str =
-			 g_strdup (gconf_value_get_string (value));
-
-		panel_parse_accelerator (&global_config.window_screenshot_key);
-
-	} else if (strcmp (key, "drawer_autoclose") == 0)
+	else if (strcmp (key, "drawer_autoclose") == 0)
 		global_config.drawer_auto_close =
 			gconf_value_get_bool (value);
 
@@ -118,25 +152,41 @@ panel_global_config_set_entry (GConfEntry *entry)
 		global_config.highlight_when_over =
 			gconf_value_get_bool (value);
 
-	else if (strcmp (key, "keep_menus_in_memory") == 0)
-		; /* ignore */
+#if 0
 	else
 		g_warning ("%s not handled", key);
-
-	g_free (key);
+#endif
 }
 
-void
+static void
 panel_global_config_notify (GConfClient *client,
 			    guint        cnxn_id,
 			    GConfEntry  *entry,
 			    gpointer     user_data)
 {
         panel_global_config_set_entry (entry);
+}
 
-	/*
-	 * FIXME: we should handle config changes
-	 *        per config item.
-	 */
-	panel_apply_global_config ();
+void
+panel_global_config_load (void)
+{
+	GConfClient *client;
+	GSList      *l, *entries;
+	const char  *key = "/apps/panel/global";
+
+	client = panel_gconf_get_client ();
+
+	gconf_client_add_dir (client, key, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+
+	entries = gconf_client_all_entries (client, key, NULL);
+
+	for (l = entries; l; l = l->next) {
+		panel_global_config_set_entry (l->data);
+		gconf_entry_free (l->data);
+	}
+	g_slist_free (entries);
+
+	gconf_client_notify_add (client, key, panel_global_config_notify, NULL, NULL, NULL);
+
+	global_config_initialised = TRUE;
 }

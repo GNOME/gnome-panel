@@ -66,7 +66,7 @@ panel_properties_dialog_free (PanelPropertiesDialog *dialog)
 {
 	GConfClient *client;
 
-	client = gconf_client_get_default ();
+	client = panel_gconf_get_client ();
 
 	if (dialog->toplevel_notify)
 		gconf_client_notify_remove (client, dialog->toplevel_notify);
@@ -75,8 +75,6 @@ panel_properties_dialog_free (PanelPropertiesDialog *dialog)
 	if (dialog->background_notify)
 		gconf_client_notify_remove (client, dialog->background_notify);
 	dialog->background_notify = 0;
-
-	g_object_unref (client);
 
 	if (dialog->properties_dialog)
 		gtk_widget_destroy (dialog->properties_dialog);

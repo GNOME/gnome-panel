@@ -4,7 +4,6 @@
 #include <gdk/gdk.h>
 #include <gtk/gtkwidget.h>
 
-void xstuff_init			(GdkFilterFunc keys_filter);
 void xstuff_delete_property		(GdkWindow *window,
 					 const char *name);
 gboolean xstuff_is_compliant_wm		(void);
