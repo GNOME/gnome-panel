@@ -596,7 +596,7 @@ load_drawer_applet (char          *toplevel_id,
 	panel_applet_add_callback (drawer->info,
 				   "add",
 				   GTK_STOCK_ADD,
-				   _("_Add to drawer..."),
+				   _("_Add to Drawer..."),
 				   drawer_changes_enabled);
 
 	panel_applet_add_callback (drawer->info,
