@@ -153,9 +153,12 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 		gchar *subdir = l->data;
 		gchar *prefs_subdir;
 		gchar *schema_subdir;
+		gchar *tmp;
 
-		prefs_subdir  = g_strdup_printf ("%s/%s", prefs_key, subdir);
-		schema_subdir = g_strdup_printf ("%s/%s", schema_dir, subdir);
+		tmp = g_path_get_basename (subdir);
+
+		prefs_subdir  = g_strdup_printf ("%s/%s", prefs_key, tmp);
+		schema_subdir = g_strdup_printf ("%s/%s", schema_dir, tmp);
 
 		panel_applet_associate_schemas_in_dir (
 			client, prefs_subdir, schema_subdir, error);
@@ -163,6 +166,7 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 		g_free (prefs_subdir);
 		g_free (schema_subdir);
 		g_free (subdir);
+		g_free (tmp);
 
 		if (*error) {
 			g_slist_free (list);
