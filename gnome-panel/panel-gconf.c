@@ -12,6 +12,22 @@ panel_gconf_global_config_get_full_key (const gchar *key) {
 	return g_strdup_printf ("/apps/panel/global/%s", key);
 }
 
+static gchar *
+panel_gconf_general_profile_get_full_key (const gchar * profile, const gchar *key) {
+	return g_strdup_printf ("/apps/panel/profiles/%s/general/%s", profile, key);
+}
+
+static gchar *
+panel_gconf_panel_profile_get_full_key (const gchar *profile, gint panel_id, const gchar *key) {
+	return g_strdup_printf ("/apps/panel/profiles/%s/panels/%d/%s", profile, panel_id, key);
+}
+
+static gchar *
+panel_gconf_applets_profile_get_full_key (const gchar *profile, gint applet_id, const gchar *key) {
+	return g_strdup_printf ("/apps/panel/profiles/%s/applets/%d/%s", profile, applet_id, key);
+}
+
+
 GConfClient * 
 panel_gconf_get_client (void) {
 	static GConfClient *client = NULL;

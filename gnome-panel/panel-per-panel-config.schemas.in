@@ -1,0 +1,229 @@
+<gconfschemafile>
+
+<!-- 
+Per Panel Config Schema File -  work in progress
+We need to change some of the ints into user visible strings
+-->
+
+    <schemalist>    
+
+<!--
+************
+Small Screen
+************
+-->
+
+<!-- ############### general ####################### -->
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/general/panel-id-list</key>
+        <applyto>/apps/panel/default-profiles/small/general/panel-id-list</applyto>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[00000001]</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
+<!-- ############### panel id: 00000001 ####################### -->
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-type</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/panel-type</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-hide-mode</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/panel-hide-mode</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-hide-state</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/panel-hide-state</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/screen-id</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/screen-id</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/screen-edge</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/screen-edge</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>2</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/hide-buttons-enabled</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/hide-buttons-enabled</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/hide-button-pixmaps-enabled</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/hide-button-pixmaps-enabled</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-type</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/panel-background-type</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default> </default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap-fit</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap-fit</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap-stretch</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap-stretch</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap-rotate</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap-rotate</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-color</key>
+        <applyto>/apps/panel/default-profiles/small/panels/00000001/panel-background-color</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>#000000</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+<!--
+*************
+Medium Screen
+*************
+-->
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/general/panel-id-list</key>
+        <applyto>/apps/panel/default-profiles/medium/general/panel-id-list</applyto>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[00000001 00000002]</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>     
+      
+<!-- 
+************
+Large Screen
+************
+-->
+ 
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/large/general/panel-id-list</key>
+        <applyto>/apps/panel/default-profiles/large/general/panel-id-list</applyto>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[00000001 00000002]</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>     
+      
+  </schemalist>
+  
+</gconfschemafile>

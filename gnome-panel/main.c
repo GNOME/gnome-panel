@@ -56,6 +56,8 @@ char *kde_menudir = NULL;
 char *kde_icondir = NULL;
 char *kde_mini_icondir = NULL;
 
+gchar *profile_name = NULL;
+
 static gboolean
 menu_age_timeout(gpointer data)
 {
@@ -435,6 +437,12 @@ session_notify_global_changes (GConfClient *client, guint cnxn_id, GConfEntry *e
 	session_read_global_config ();
 }
 
+static const struct poptOption options[] = {
+  {"profile", '\0', POPT_ARG_STRING, &profile_name, 0, N_("Specify a profile name to load"), NULL},
+  {NULL, '\0', 0, NULL, 0}
+};
+
+
 int
 main(int argc, char **argv)
 {
@@ -447,6 +455,7 @@ main(int argc, char **argv)
 	gnome_program_init ("panel", VERSION,
 			    LIBGNOMEUI_MODULE,
 			    argc, argv,
+			    GNOME_PARAM_POPT_TABLE, options,
 			    GNOME_PROGRAM_STANDARD_PROPERTIES,
 			    NULL);
 
@@ -454,6 +463,9 @@ main(int argc, char **argv)
 	
 	if (g_getenv ("I_LOVE_PANEL_CRACK") == NULL)
 		tell_user_Im_on_crack ();
+
+	if (profile_name == NULL)
+		profile_name = g_strdup ("default");
 
 	/*
 	 * Let applets spew.
@@ -542,5 +554,6 @@ main(int argc, char **argv)
 
 	gtk_main ();
 
+	g_free (profile_name);
 	return 0;
 }
