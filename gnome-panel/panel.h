@@ -27,9 +27,6 @@ BEGIN_GNOME_DECLS
 
 #define DEFAULT_PANEL_NUM 0
 
-#define PANEL_UNKNOWN_APPLET_POSITION -1
-#define PANEL_UNKNOWN_STEP_SIZE -1
-
 typedef enum {
 	APPLET_EXTERN,
 	APPLET_EXTERN_RESERVED,
@@ -66,26 +63,32 @@ struct _AppletInfo {
 	int applet_id;
 	GtkWidget *widget; /*an event box*/
 	GtkWidget *applet_widget; /*the actual applet widget*/
-	GtkWidget *assoc; /*associated widget, e.g. a drawer or a menu*/
 	GtkWidget *menu; /*the applet menu*/
 	GtkWidget *remove_item; /*remove item in the applet_menu*/
-	gpointer data;
-	char *id_str; /*used for IOR or string Id*/
-	char *cfg; /*used for passing around the per applet config path*/
-	char *path; /*used for path on external applets */
-	char *params; /*used for parameters to applets */
 	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
+	gpointer data; /*the per applet structure, if it exists*/
 };
+
+/*FIXME: split into extern.[ch] files*/
+typedef struct _Extern Extern;
+struct _Extern {
+	char *ior;
+	char *path;
+	char *params;
+	char *cfg;
+};
+void extern_clean(Extern *ext);
+
 
 
 
 int panel_session_save (GnomeClient *client,
-			 int phase,
-			 GnomeSaveStyle save_style,
-			 int shutdown,
-			 GnomeInteractStyle interact_style,
-			 int fast,
-			 gpointer client_data);
+			int phase,
+			GnomeSaveStyle save_style,
+			int shutdown,
+			GnomeInteractStyle interact_style,
+			int fast,
+			gpointer client_data);
 
 int panel_session_die (GnomeClient *client,
 			gpointer client_data);
@@ -93,15 +96,10 @@ int panel_session_die (GnomeClient *client,
 GtkWidget * create_panel_root_menu(GtkWidget *panel);
 
 int register_toy(GtkWidget *applet,
-		  GtkWidget *assoc,
-		  gpointer data,
-		  char *id_str,
-		  char *path,
-		  char *params,
-		  int pos,
-		  PanelWidget *panel,
-		  char *cfgpath,
-		  AppletType type);
+		 gpointer data,
+		 int pos,
+		 PanelWidget *panel,
+		 AppletType type);
 
 void panel_quit(void);
 
@@ -116,9 +114,7 @@ int applet_request_id (const char *path, const char *param,
 		       int dorestart, char **cfgpath,
 		       char **globcfgpath, guint32 *winid);
 void applet_register (const char * ior, int applet_id);
-guint32 reserve_applet_spot (const char *id_str, const char *path,
-			     const char *param,
-			     PanelWidget *panel, int pos, char *cfgpath,
+guint32 reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 			     AppletType type);
 void applet_abort_id(int applet_id);
 int applet_get_panel(int applet_id);

@@ -34,11 +34,12 @@ is_applet_running(const char *path)
 	AppletInfo *info;
 
 	for(info=(AppletInfo *)applets->data,i=0;i<applet_count;i++,info++) {
-		if((info->type == APPLET_EXTERN ||
+		if(info->type == APPLET_EXTERN ||
 		    info->type == APPLET_EXTERN_PENDING ||
-		    info->type == APPLET_EXTERN_RESERVED) &&
-		   strcmp(info->path,path)==0) {
-		   	return TRUE;
+		    info->type == APPLET_EXTERN_RESERVED) {
+			Extern *ext = info->data;
+			if(strcmp(ext->path,path)==0)
+				return TRUE;
 		}
 	}
 	return FALSE;

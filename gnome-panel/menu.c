@@ -171,28 +171,18 @@ free_string (GtkWidget *widget, void *data)
 }
 
 static int
-add_to_panel (char *applet, char *path, char *arg)
-{
-	load_applet(applet,path,arg,
-		    PANEL_UNKNOWN_APPLET_POSITION,
-		    current_panel,NULL);
-	return TRUE;
-}
-
-static int
 add_app_to_panel (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *ii = data;
-
-	return add_to_panel (LAUNCHER_ID, NULL, ii->location);
+	
+	load_launcher_applet(ii->location,0,current_panel);
+	return TRUE;
 }
 
 static int
 add_menu_to_panel (GtkWidget *widget, void *data)
 {
-	load_menu_applet(data,0,
-			 PANEL_UNKNOWN_APPLET_POSITION,
-			 current_panel);
+	load_menu_applet(data,0, 0, current_panel);
 	return TRUE;
 }
 
@@ -200,18 +190,16 @@ static int
 add_drawer_to_panel (GtkWidget *widget, void *data)
 {
 	load_drawer_applet(NULL,NULL,NULL,
-			   PANEL_UNKNOWN_APPLET_POSITION,
-			   current_panel);
+			   0, current_panel);
 	return TRUE;
 }
 
 static int
 add_logout_to_panel (GtkWidget *widget, void *data)
 {
-	return add_to_panel(LOGOUT_ID,NULL,NULL);
+	load_logout_applet(0,current_panel);
+	return TRUE;
 }
-
-
 
 static int
 add_applet (GtkWidget *w, gpointer data)
@@ -219,7 +207,6 @@ add_applet (GtkWidget *w, gpointer data)
 	GnomeDesktopEntry *ii = data;
 	char *path;
 	char *param;
-	int r;
 
 	path = ii->exec[0];
 
@@ -230,10 +217,10 @@ add_applet (GtkWidget *w, gpointer data)
 	else
 		param = NULL;
 
-	r = add_to_panel(EXTERN_ID,path,param);
+	load_extern_applet(path,param,0,current_panel,NULL);
 
 	if(param) g_free(param);
-	return r;
+	return TRUE;
 }
 
 static int
@@ -790,6 +777,7 @@ destroy_menu (GtkWidget *widget, gpointer data)
 {
 	Menu *menu = data;
 	gtk_widget_unref(menu->menu);
+	g_free(menu->path);
 	g_free(menu);
 }
 
@@ -1263,7 +1251,7 @@ create_panel_menu (char *menudir, int main_menu,
 	return menu;
 }
 
-Menu *
+static Menu *
 create_menu_applet(char *arguments, PanelOrientType orient, MainMenuType main_menu_type)
 {
 	Menu *menu;
@@ -1353,4 +1341,17 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 	gtk_widget_show (pixmap);
 
 	g_free(pixmap_name);
+}
+
+void
+load_menu_applet(char *params, int main_menu_type,
+		 int pos, PanelWidget *panel)
+{
+	Menu *menu;
+
+	menu = create_menu_applet(params, ORIENT_UP,main_menu_type);
+
+	if(menu)
+		register_toy(menu->button,menu,
+			     pos,panel,APPLET_MENU);
 }

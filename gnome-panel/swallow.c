@@ -106,6 +106,7 @@ socket_destroyed(GtkWidget *w, gpointer data)
 	Swallow *swallow = data;
 	
 	g_free(swallow->title);
+	g_free(swallow->path);
 	g_free(swallow);
 
 	return FALSE;
@@ -132,8 +133,7 @@ really_add_swallow(GtkWidget *d,int button, gpointer data)
 						GTK_SPIN_BUTTON(width_s)),
 			    gtk_spin_button_get_value_as_int(
 						GTK_SPIN_BUTTON(height_s)),
-			    PANEL_UNKNOWN_APPLET_POSITION,
-			    current_panel);
+			    0, current_panel);
 	gtk_widget_destroy(d);
 }
 
@@ -222,8 +222,8 @@ ask_about_swallowing(void)
 }
 
 
-Swallow *
-create_swallow_applet(char *title, int width, int height, SwallowOrient orient)
+static Swallow *
+create_swallow_applet(char *title, char *path, int width, int height, SwallowOrient orient)
 {
 	Swallow *swallow;
 	GtkWidget *w;
@@ -298,6 +298,7 @@ create_swallow_applet(char *title, int width, int height, SwallowOrient orient)
 	gtk_object_set_user_data(GTK_OBJECT(swallow->socket),swallow);
 
 	swallow->title = g_strdup(title);
+	swallow->path = path?g_strdup(path):NULL;
 	swallow->width = width;
 	swallow->height = height;
 	swallow->wid = -1;
@@ -316,5 +317,25 @@ set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient)
 	} else {
 		gtk_widget_hide(swallow->handle_n);
 		gtk_widget_show(swallow->handle_w);
+	}
+}
+
+void
+load_swallow_applet(char *path, char *params, int width, int height,
+		    int pos, PanelWidget *panel)
+{
+	Swallow *swallow;
+
+	swallow = create_swallow_applet(params, path, width, height,
+					SWALLOW_HORIZONTAL);
+	if(!swallow)
+		return;
+
+	register_toy(swallow->table,swallow, pos, panel, APPLET_SWALLOW);
+
+	if(path && *path) {
+		char *s = g_copy_strings("(true; ",path," &)",NULL);
+		system(s);
+		g_free(s);
 	}
 }

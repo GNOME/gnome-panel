@@ -11,6 +11,10 @@
 #ifndef LAUNCHER_H
 #define LAUNCHER_H
 
+#include <panel-widget.h>
+
+BEGIN_GNOME_DECLS
+
 typedef struct {
 	int                applet_id;
 	GtkWidget         *button;
@@ -19,7 +23,9 @@ typedef struct {
 	GnomeDesktopEntry *dentry;
 } Launcher;
 
-Launcher * create_launcher (char *parameters);
+void load_launcher_applet(char *params, int pos, PanelWidget *panel);
 void launcher_properties(Launcher *launcher);
+
+END_GNOME_DECLS
 
 #endif

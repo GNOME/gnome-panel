@@ -12,7 +12,7 @@ logout(void)
 	panel_quit();
 }
 
-GtkWidget *
+static GtkWidget *
 create_logout_widget(void)
 {
 	GtkWidget *button;
@@ -39,3 +39,15 @@ create_logout_widget(void)
 
 	return button;
 }
+
+void
+load_logout_applet(int pos, PanelWidget *panel)
+{
+	GtkWidget *logout;
+
+	logout = create_logout_widget();
+
+	if(logout)
+		register_toy(logout,NULL, pos, panel,APPLET_LOGOUT);
+}
+

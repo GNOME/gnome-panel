@@ -23,8 +23,10 @@
 #define LAUNCHER_PROPERTIES "launcher_properties"
 
 extern GtkTooltips *panel_tooltips;
+extern int applet_count;
 
 static char *default_app_pixmap=NULL;
+
 
 static void
 launch (GtkWidget *widget, void *data)
@@ -230,4 +232,25 @@ launcher_properties(Launcher *launcher)
 	gtk_object_set_data(GTK_OBJECT(launcher->button),
 			    LAUNCHER_PROPERTIES,dialog);
 	gtk_widget_show_all (dialog);
+}
+
+void
+load_launcher_applet(char *params, int pos, PanelWidget *panel)
+{
+	Launcher *launcher;
+
+	launcher = create_launcher(params);
+
+	if(launcher) {
+		register_toy(launcher->button,launcher, pos,panel,
+			     APPLET_LAUNCHER);
+
+		gtk_tooltips_set_tip (panel_tooltips,
+				      launcher->button->parent,
+				      launcher->dentry->comment,NULL);
+
+		applet_add_callback(applet_count-1,"properties",
+				    GNOME_STOCK_MENU_PROP,
+				    _("Properties..."));
+	}
 }

@@ -8,6 +8,12 @@
 #ifndef LOGOUT_H
 #define LOGOUT_H
 
-GtkWidget * create_logout_widget (void);
+#include <panel-widget.h>
+
+BEGIN_GNOME_DECLS
+
+void load_logout_applet(int pos, PanelWidget *panel);
+
+END_GNOME_DECLS
 
 #endif

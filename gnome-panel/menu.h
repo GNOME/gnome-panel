@@ -1,6 +1,8 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include <panel-widget.h>
+
 BEGIN_GNOME_DECLS
 
 typedef enum {
@@ -17,9 +19,8 @@ struct _Menu {
 	PanelOrientType orient;
 };
 
-Menu * create_menu_applet(char *arguments,
-			  PanelOrientType orient,
-			  MainMenuType main_menu_type);
+void load_menu_applet(char *params, int main_menu_type,
+		      int pos, PanelWidget *panel);
 
 void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
 

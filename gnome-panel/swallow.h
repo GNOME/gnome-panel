@@ -1,6 +1,8 @@
 #ifndef SWALLOW_H
 #define SWALLOW_H
 
+#include <panel-widget.h>
+
 BEGIN_GNOME_DECLS
 
 typedef enum {
@@ -14,14 +16,14 @@ typedef struct {
 	GtkWidget *handle_w;
 	GtkWidget *socket;
 	char *title;
+	char *path;
 	int width;
 	int height;
 	guint32 wid;
 } Swallow;
 
-Swallow * create_swallow_applet(char *title, int width, int height,
-				SwallowOrient orient);
-
+void load_swallow_applet(char *path, char *params, int width, int height,
+			 int pos, PanelWidget *panel);
 void set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient);
 
 /*I couldn't resist the naming of this function*/
