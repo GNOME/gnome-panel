@@ -207,7 +207,8 @@ gboolean panel_widget_get_applet_locked           (PanelWidget *panel,
 gboolean panel_widget_toggle_applet_locked        (PanelWidget *panel,
 						   GtkWidget   *applet);
 
-
+void     panel_widget_register_open_dialog        (PanelWidget *panel,
+						   GtkWidget   *dialog);  
 G_END_DECLS
 
 #endif /* PANEL_WIDGET_H */

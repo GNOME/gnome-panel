@@ -237,52 +237,12 @@ menu_deactivate(GtkWidget *w, PanelData *pd)
 }
 
 static void
-panel_remove_applets (PanelWidget *panel)
-{
-	GList *l;
-
-	for (l = panel->applet_list; l; l = l->next) {
-		AppletData *applet_data = l->data;
-		AppletInfo *info;
-
-		info = g_object_get_data (
-				G_OBJECT (applet_data->applet), "applet_info");
-
-		if (info && info->type == PANEL_OBJECT_LAUNCHER)
-			launcher_properties_destroy (info->data);
-			
-	}
-}
-
-static void
-panel_remove_open_create_launcher_dialogs (PanelWidget *panel)
-{
-	GSList *list;
-	GSList *l;
-
-	list = panel->open_dialogs;
-	panel->open_dialogs = NULL;
-
-	for (l = list; l ; l = l->next) {
-		GtkWidget *dialog = l->data;
-
-		if (GTK_IS_WIDGET (dialog))
-			gtk_widget_destroy (dialog);
-	}
-	g_slist_free (list);
-}
-
-static void
 panel_destroy (PanelToplevel *toplevel,
 	       PanelData     *pd)
 {
 	PanelWidget *panel_widget;
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
-
-	panel_remove_applets (panel_widget);
-
-	panel_remove_open_create_launcher_dialogs (panel_widget);
 
 	if (pd->menu)
 		g_object_unref (pd->menu);

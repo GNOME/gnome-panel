@@ -1031,10 +1031,17 @@ static void
 add_new_app_to_menu (GtkWidget    *widget,
 		     ShowItemMenu *sim)
 {
+	GtkWidget *dialog;
+	PanelWidget *panel;
+
 	g_return_if_fail (sim->mf != NULL);
 
-	panel_new_launcher (sim->mf->menudir,
-			    menuitem_to_screen (sim->menuitem));
+	panel = menu_get_panel (sim->menuitem);
+
+	dialog = panel_new_launcher (sim->mf->menudir,
+			    	     menuitem_to_screen (sim->menuitem));
+
+	panel_widget_register_open_dialog (panel, dialog);
 }
 
 static void
@@ -1397,6 +1404,8 @@ static void
 edit_dentry (GtkWidget    *widget,
 	     ShowItemMenu *sim)
 {
+	GtkWidget *dialog;
+	PanelWidget *panel;
 	char *dir = NULL;
 
 	g_return_if_fail (sim != NULL);
@@ -1405,20 +1414,32 @@ edit_dentry (GtkWidget    *widget,
 	if (sim->mf)
 		dir = sim->mf->menudir;
 
-	panel_edit_dentry (sim->item_loc, dir,
-			   menuitem_to_screen (sim->menuitem));
+	panel = menu_get_panel (sim->menuitem);
+
+	dialog = panel_edit_dentry (sim->item_loc, dir,
+			   	    menuitem_to_screen (sim->menuitem));
+
+	panel_widget_register_open_dialog (panel, dialog);
 }
 
 static void
 edit_direntry (GtkWidget    *widget,
 	       ShowItemMenu *sim)
 {
+	GtkWidget *dialog;
+	PanelWidget *panel;
+
 	g_return_if_fail (sim != NULL);
 	g_return_if_fail (sim->mf != NULL);
 
-	panel_edit_direntry (sim->mf->menudir,
-			     sim->mf->dir_name,
-			     menuitem_to_screen (sim->menuitem));
+	panel = menu_get_panel (sim->menuitem);
+
+	dialog = panel_edit_direntry (sim->mf->menudir,
+			     	      sim->mf->dir_name,
+				      menuitem_to_screen (sim->menuitem));
+
+	panel_widget_register_open_dialog (panel, dialog);
+	
 }
 
 static void

@@ -737,10 +737,6 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 			panel_profile_delete_object (info);
 	}
 
-	 frame->priv->panel->open_dialogs = 
-					g_slist_remove (
-					frame->priv->panel->open_dialogs,
-					dialog);
 	g_object_unref (frame);
 	gtk_widget_destroy (dialog);
 }
@@ -817,10 +813,8 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 			  G_CALLBACK (panel_applet_frame_reload_response),
 			  g_object_ref (frame));
 
-	frame->priv->panel->open_dialogs 
-				= g_slist_append (
-					frame->priv->panel->open_dialogs,
-					dialog);
+	panel_widget_register_open_dialog (frame->priv->panel, dialog);
+
 	gtk_widget_show (dialog);
 	g_free (applet_name);
 	g_free (txt);

@@ -1643,6 +1643,33 @@ panel_widget_finalize (GObject *obj)
 }
 
 static void
+panel_widget_open_dialog_destroyed (PanelWidget *panel_widget,
+				    GtkWidget   *dialog)
+{
+	g_return_if_fail (panel_widget->open_dialogs != NULL);
+
+	panel_widget->open_dialogs = g_slist_remove (panel_widget->open_dialogs, dialog);
+}
+
+static void
+panel_widget_destroy_open_dialogs (PanelWidget *panel_widget)
+{
+	GSList *l, *list;
+
+	list = panel_widget->open_dialogs;
+	panel_widget->open_dialogs = NULL;
+
+	for (l = list; l; l = l->next) {
+		g_signal_handlers_disconnect_by_func (G_OBJECT (l->data),
+				G_CALLBACK (panel_widget_open_dialog_destroyed),
+				panel_widget);
+		gtk_widget_destroy (l->data);
+	}
+	g_slist_free (list);
+
+}
+
+static void
 panel_widget_destroy (GtkObject *obj)
 {
 	PanelWidget *panel;
@@ -1652,6 +1679,8 @@ panel_widget_destroy (GtkObject *obj)
 	panel = PANEL_WIDGET (obj);
 
 	panels = g_slist_remove (panels, panel);
+
+	panel_widget_destroy_open_dialogs (panel);
 
 	if (panel->master_widget != NULL)
 		g_object_set_data (G_OBJECT (panel->master_widget),
@@ -2855,4 +2884,16 @@ gboolean
 panel_applet_is_in_drag ()
 {
 	return panel_applet_in_drag;
+}
+
+void 
+panel_widget_register_open_dialog (PanelWidget *panel,
+				   GtkWidget   *dialog)
+{
+	panel->open_dialogs = g_slist_append (panel->open_dialogs,
+					      dialog);
+	
+	panel_signal_connect_object_while_alive (dialog, "destroy",
+	 		 G_CALLBACK (panel_widget_open_dialog_destroyed),
+			 panel);
 }

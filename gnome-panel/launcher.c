@@ -683,6 +683,10 @@ create_properties_dialog (Launcher  *launcher,
 	g_signal_connect (launcher->dedit, "changed",
 			  G_CALLBACK (launcher_changed),
 			  launcher);
+	
+	panel_widget_register_open_dialog (PANEL_WIDGET 
+					   (launcher->info->widget->parent),
+					   dialog);
 
         g_signal_connect_swapped (launcher->dedit, "changed",
 				  G_CALLBACK (set_revert_sensitive),
@@ -892,10 +896,6 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 		return;
 	}
 
-	panel->open_dialogs = 
-					g_slist_remove (panel->open_dialogs, 
-							dialog);
-
 	gtk_widget_destroy (dialog);
 }
 
@@ -931,9 +931,7 @@ ask_about_launcher (const char  *file,
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    GTK_WIDGET (dee), TRUE, TRUE, 0);
 
-	panel->open_dialogs = 
-					g_slist_append (panel->open_dialogs,
-							dialog);
+	panel_widget_register_open_dialog (panel, dialog);
 
 	ditem = gnome_desktop_item_new ();
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_EXEC, file);
