@@ -177,13 +177,15 @@ main(int argc, char **argv)
 	}
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_policy (GTK_WINDOW (window), 1, 1, 1);
 
 	clock = create_clock_widget (GTK_WIDGET(window));
 	gtk_widget_show(clock);
 	gtk_container_add (GTK_CONTAINER (window), clock);
-	
-	result = gnome_panel_prepare_and_transfer(window);
+	gtk_widget_show (window);
 
+	result = gnome_panel_prepare_and_transfer(window);
+	printf ("Done\n");
 	if (result){
 		printf ("Could not talk to the Panel: %s\n", result);
 		exit (1);
