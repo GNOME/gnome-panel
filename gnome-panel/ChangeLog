@@ -1,3 +1,13 @@
+2005-04-03  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-run-dialog.c: (panel_run_dialog_execute): fix usages of
+	filenames encoded in UTF-8 and the locale used for the filesystem
+	Patch from Takao Fujiwara <Takao.Fujiwara@Sun.COM> (partial fix for
+	bug #170268)
+	(entry_event): clean up
+	(panel_run_dialog_setup_entry): connect to "key-press-event" instead
+	of "event"
+
 2005-04-01  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmarks):
