@@ -9,6 +9,7 @@ static void panel_widget_init		(PanelWidget      *panel_widget);
 static GdkCursor *fleur_cursor;
 
 static char *applet_drop_types[]={"internal/pointer"};
+static char *applet_drag_types[]={"internal/pointer"};
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -1508,6 +1509,18 @@ bind_top_applet_events(PanelWidget *panel, GtkWidget *widget)
 				       bind_applet_events, 0);
 }
 
+static gint
+panel_widget_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+	
+	gtk_widget_dnd_data_set (widget, event, &widget, sizeof(widget));
+
+	puts("test");
+
+	return TRUE;
+}
+
+
 
 gint
 panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
@@ -1564,6 +1577,14 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	gtk_object_set_data(GTK_OBJECT(applet),PANEL_APPLET_PARENT_KEY,panel);
 
 	bind_top_applet_events(panel,applet);
+
+	/*set up drag'n'drop (the drag)*/
+	gtk_signal_connect (GTK_OBJECT (panel), 
+			    "drag_request_event",
+			    GTK_SIGNAL_FUNC(panel_widget_dnd_drag_request),
+			    NULL);
+	gtk_widget_dnd_drag_set (GTK_WIDGET(panel), TRUE,
+				 applet_drag_types, 1);
 
 	return i;
 }
