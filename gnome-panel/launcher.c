@@ -427,14 +427,13 @@ setup_button (Launcher *launcher)
 	char *real_docpath;
 	char *str;
 	char *icon;
+	
+	g_return_if_fail (launcher != NULL);
 
 	name = gnome_desktop_item_get_string (launcher->ditem,
 					      GNOME_DESKTOP_ITEM_NAME);
 	comment = gnome_desktop_item_get_string (launcher->ditem,
 						 GNOME_DESKTOP_ITEM_COMMENT);
-
-	/* GnomeDesktopItem makes this guarantee */
-	g_assert (name != NULL);
 
 	/* Setup tooltip */
 	if (comment != NULL)
