@@ -77,9 +77,13 @@ GtkWidget * create_fake_menu_at (const char *menudir,
 				 const char *dir_name,
 				 const char *pixmap_name,
 				 gboolean title);
+
 void submenu_to_display(GtkWidget *menuw, gpointer data);
+gboolean menu_need_reread(GtkWidget *menuw);
+
 void setup_internal_applet_drag (GtkWidget *menuitem, char *applet_type);
-GtkWidget * create_root_menu(gboolean fake_submenus, int flags,
+GtkWidget * create_root_menu(GtkWidget *root_menu,
+			     gboolean fake_submenus, int flags,
 			     gboolean tearoff, gboolean is_basep,
 			     gboolean title);
 

@@ -1,3 +1,10 @@
+Wed Apr 19 00:05:46 2000  George Lebl <jirka@5z.com>
+
+	* menu.[ch], foobar-widget.c: create_root_menu can work on an
+	  existing menu, there is a menu_needs_reread function and in
+	  foobar we use that to reread the menu instead of
+	  submenu_to_display.  also very minor cleanup
+
 Tue Apr 18 23:38:40 2000  George Lebl <jirka@5z.com>
 
 	* session.c: if we find a gnomepager applet and gnomepager_applet is

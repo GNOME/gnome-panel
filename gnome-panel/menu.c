@@ -1672,38 +1672,11 @@ static GtkWidget * create_menu_at_fr (GtkWidget *menu, FileRec *fr,
 static void
 check_and_reread_applet(Menu *menu, gboolean main_menu)
 {
-	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menu->menu), "mf");
-	GSList *list;
-	gboolean need_reread = FALSE;
+	GSList *mfl, *list;
 
-	/*we shouldn't warn, this is more for debugging anyway,
-	  and nowdays we do have menus that don't have one, this
-	  however might be needed for further debugging*/
-	/*if(!mfl)
-	  g_warning("Weird menu doesn't have mf entry");*/
+	if(menu_need_reread(menu->menu)) {
+		mfl = gtk_object_get_data(GTK_OBJECT(menu->menu), "mf");
 
-	/*check if we need to reread this*/
-	for(list = mfl; list != NULL; list = g_slist_next(list)) {
-		MenuFinfo *mf = list->data;
-		if(mf->fake_menu ||
-		   mf->fr == NULL) {
-			if(mf->fr)
-				mf->fr = fr_replace(mf->fr);
-			else
-				mf->fr = fr_get_dir(mf->menudir);
-			need_reread = TRUE;
-		} else {
-			FileRec *fr;
-			fr = fr_check_and_reread(mf->fr);
-			if(fr!=mf->fr ||
-			   fr == NULL) {
-				need_reread = TRUE;
-				mf->fr = fr;
-			}
-		}
-	}
-
-	if(need_reread) {
 		/*that will be destroyed in add_menu_widget*/
 		if(main_menu)
 			add_menu_widget(menu, NULL, NULL, main_menu, TRUE);
@@ -1976,9 +1949,8 @@ add_tearoff(GtkMenu *menu)
 			   menu);
 }
 
-
-static void
-try_menu_reread(GtkWidget *menuw, gboolean position)
+gboolean
+menu_need_reread(GtkWidget *menuw)
 {
 	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
 	GSList *list;
@@ -1988,7 +1960,7 @@ try_menu_reread(GtkWidget *menuw, gboolean position)
 	  g_warning("Weird menu doesn't have mf entry");*/
 
 	if (GTK_MENU(menuw)->torn_off)
-		return;
+		return FALSE;
 	
 	/*check if we need to reread this*/
 	for(list = mfl; list != NULL; list = g_slist_next(list)) {
@@ -2011,8 +1983,21 @@ try_menu_reread(GtkWidget *menuw, gboolean position)
 		}
 	}
 
+	return need_reread;
+}
+
+void
+submenu_to_display(GtkWidget *menuw, gpointer data)
+{
+	GSList *mfl, *list;
+
+	if (GTK_MENU(menuw)->torn_off)
+		return;
+
 	/*this no longer constitutes a bad hack, now it's purely cool :)*/
-	if(need_reread) {
+	if(menu_need_reread(menuw)) {
+		mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
+
 		while(GTK_MENU_SHELL(menuw)->children)
 			gtk_widget_destroy(GTK_MENU_SHELL(menuw)->children->data);
 		if (gnome_preferences_get_menus_have_tearoff ())
@@ -2035,15 +2020,8 @@ try_menu_reread(GtkWidget *menuw, gboolean position)
 		}
 		g_slist_free(mfl);
 
-		if(position)
-			gtk_menu_position(GTK_MENU(menuw));
+		gtk_menu_position(GTK_MENU(menuw));
 	}
-}
-
-void
-submenu_to_display(GtkWidget *menuw, gpointer data)
-{
-	try_menu_reread(menuw, TRUE);
 }
 
 GtkWidget *
@@ -2859,7 +2837,7 @@ panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 
 	menu_panel = get_panel_from_menu_data(w);
 
-	menu = create_root_menu (TRUE, flags, FALSE,
+	menu = create_root_menu (NULL, TRUE, flags, FALSE,
 				 IS_BASEP_WIDGET (menu_panel->panel_parent),
 				 TRUE);
 
@@ -2887,7 +2865,7 @@ create_panel_root_menu(PanelWidget *panel, gboolean tearoff)
 {
 	GtkWidget *menu;
 
-	menu = create_root_menu (TRUE, global_config.menu_flags, tearoff,
+	menu = create_root_menu (NULL, TRUE, global_config.menu_flags, tearoff,
 				 IS_BASEP_WIDGET (panel->panel_parent),
 				 TRUE);
 
@@ -4042,10 +4020,10 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 }
 
 GtkWidget *
-create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff,
+create_root_menu(GtkWidget *root_menu,
+		 gboolean fake_submenus, int flags, gboolean tearoff,
 		 gboolean is_basep, gboolean title)
 {
-	GtkWidget *root_menu;
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 
@@ -4071,7 +4049,8 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff,
 	IconSize size = global_config.use_large_icons 
 		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
 
-	root_menu = menu_new ();
+	if(!root_menu)
+		root_menu = menu_new ();
 	if (tearoff && gnome_preferences_get_menus_have_tearoff ()) {
 		GtkWidget *menuitem = tearoff_item_new ();
 		gtk_widget_show (menuitem);
@@ -4281,7 +4260,7 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 	}
 
 	if (main_menu)
-		menu->menu = create_root_menu(
+		menu->menu = create_root_menu(NULL,
 			fake_subs, menu->main_menu_flags, TRUE,
 			IS_BASEP_WIDGET (panel->panel_parent), TRUE);
 	else {
@@ -4292,7 +4271,7 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 						     fake_subs, FALSE, TRUE);
 		if(!menu->menu) {
 			g_warning(_("Can't create menu, using main menu!"));
-			menu->menu = create_root_menu(
+			menu->menu = create_root_menu(NULL,
 				fake_subs, menu->main_menu_flags, TRUE,
 				IS_BASEP_WIDGET (panel->panel_parent),
 				TRUE);
@@ -4549,7 +4528,7 @@ create_special_menu(char *special, PanelWidget *menu_panel_widget)
 		int flags;
 		if(sscanf(special, "PANEL:%d", &flags)!=1)
 			flags = global_config.menu_flags;
-		menu = create_root_menu (TRUE, flags, FALSE,
+		menu = create_root_menu (NULL, TRUE, flags, FALSE,
 					 IS_BASEP_WIDGET (menu_panel_widget->panel_parent),
 					 TRUE);
 	} else if(strcmp(special, "DESKTOP")==0) {

@@ -455,6 +455,23 @@ foobar_widget_update_winhints (FoobarWidget *foo)
 				   : WIN_LAYER_DOCK);
 }
 
+static void
+programs_menu_to_display(GtkWidget *menu)
+{
+	if(menu_need_reread(menu)) {
+		int flags;
+
+		while(GTK_MENU_SHELL(menu)->children)
+			gtk_widget_destroy(GTK_MENU_SHELL(menu)->children->data);
+		flags = (get_default_menu_flags() & 
+			 ~(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER |
+			   MAIN_MENU_USER_SUB | MAIN_MENU_PANEL |
+			   MAIN_MENU_PANEL_SUB | MAIN_MENU_DESKTOP |
+			   MAIN_MENU_DESKTOP_SUB)) |
+			MAIN_MENU_SYSTEM;
+		create_root_menu (menu, TRUE, flags, TRUE, FALSE, FALSE);
+	}
+}
 
 static void
 foobar_widget_init (FoobarWidget *foo)
@@ -509,11 +526,11 @@ foobar_widget_init (FoobarWidget *foo)
 		 ~(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER | MAIN_MENU_USER_SUB |
 		   MAIN_MENU_PANEL | MAIN_MENU_PANEL_SUB | MAIN_MENU_DESKTOP |
 		   MAIN_MENU_DESKTOP_SUB)) | MAIN_MENU_SYSTEM;
-	menu = create_root_menu (TRUE, flags, TRUE, FALSE, FALSE);
+	menu = create_root_menu (NULL, TRUE, flags, TRUE, FALSE, FALSE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menu), "show",
-			    GTK_SIGNAL_FUNC (submenu_to_display),
+			    GTK_SIGNAL_FUNC (programs_menu_to_display),
 			    NULL);
 
 	append_folder_menu  (menu_bar, _("Favorites"), NULL, FALSE, "apps/.");
