@@ -840,12 +840,35 @@ snapped_widget_init (SnappedWidget *snapped)
 
 static void
 s_back_change(PanelWidget *panel,
-	    PanelBackType type,
-	    char *pixmap,
-	    GdkColor *color,
-	    SnappedWidget *snapped)
+	      PanelBackType type,
+	      char *pixmap,
+	      GdkColor *color,
+	      SnappedWidget *snapped)
 {
-	set_frame_colors(PANEL_WIDGET(snapped->panel),
+	if(type == PANEL_BACK_PIXMAP &&
+	   snapped->panel->parent == snapped->frame) {
+		gtk_widget_hide(snapped->frame);
+		gtk_widget_ref(snapped->panel);
+		gtk_container_remove(GTK_CONTAINER(snapped->frame),
+				     snapped->panel);
+		gtk_table_attach(GTK_TABLE(snapped->table),snapped->panel,
+				 1,2,1,2,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 0,0);
+		gtk_widget_unref(snapped->panel);
+	} else if(type != PANEL_BACK_PIXMAP &&
+		  snapped->panel->parent == snapped->table) {
+		gtk_widget_ref(snapped->panel);
+		gtk_container_remove(GTK_CONTAINER(snapped->table),
+				     snapped->panel);
+		gtk_container_add(GTK_CONTAINER(snapped->frame),
+				  snapped->panel);
+		gtk_widget_unref(snapped->panel);
+		gtk_widget_show(snapped->frame);
+	}
+
+	set_frame_colors(panel,
 			 snapped->frame,
 			 snapped->hidebutton_n,
 			 snapped->hidebutton_e,
@@ -893,9 +916,17 @@ snapped_widget_new (SnappedPos pos,
 	gtk_widget_show(snapped->panel);
 
 	snapped->frame = gtk_frame_new(NULL);
-	gtk_widget_show(snapped->frame);
 	gtk_frame_set_shadow_type(GTK_FRAME(snapped->frame),GTK_SHADOW_OUT);
-	gtk_container_add(GTK_CONTAINER(snapped->frame),snapped->panel);
+	if(back_type != PANEL_BACK_PIXMAP) {
+		gtk_widget_show(snapped->frame);
+		gtk_container_add(GTK_CONTAINER(snapped->frame),snapped->panel);
+	} else {
+		gtk_table_attach(GTK_TABLE(snapped->table),snapped->panel,
+				 1,2,1,2,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 0,0);
+	}
 
 	gtk_table_attach(GTK_TABLE(snapped->table),snapped->frame,1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,

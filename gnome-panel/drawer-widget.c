@@ -688,7 +688,30 @@ d_back_change(PanelWidget *panel,
 	    GdkColor *color,
 	    DrawerWidget *drawer)
 {
-	set_frame_colors(PANEL_WIDGET(drawer->panel),
+	if(type == PANEL_BACK_PIXMAP &&
+	   drawer->panel->parent == drawer->frame) {
+		gtk_widget_hide(drawer->frame);
+		gtk_widget_ref(drawer->panel);
+		gtk_container_remove(GTK_CONTAINER(drawer->frame),
+				     drawer->panel);
+		gtk_table_attach(GTK_TABLE(drawer->table),drawer->panel,
+				 1,2,1,2,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 0,0);
+		gtk_widget_unref(drawer->panel);
+	} else if(type != PANEL_BACK_PIXMAP &&
+		  drawer->panel->parent == drawer->table) {
+		gtk_widget_ref(drawer->panel);
+		gtk_container_remove(GTK_CONTAINER(drawer->table),
+				     drawer->panel);
+		gtk_container_add(GTK_CONTAINER(drawer->frame),
+				  drawer->panel);
+		gtk_widget_unref(drawer->panel);
+		gtk_widget_show(drawer->frame);
+	}
+
+	set_frame_colors(panel,
 			 drawer->frame,
 			 drawer->handle_n,
 			 drawer->handle_e,
@@ -739,9 +762,18 @@ drawer_widget_new (PanelOrientType orient,
 	gtk_widget_show(drawer->panel);
 
 	drawer->frame = gtk_frame_new(NULL);
-	gtk_widget_show(drawer->frame);
 	gtk_frame_set_shadow_type(GTK_FRAME(drawer->frame),GTK_SHADOW_OUT);
-	gtk_container_add(GTK_CONTAINER(drawer->frame),drawer->panel);
+	
+	if(back_type != PANEL_BACK_PIXMAP) {
+		gtk_container_add(GTK_CONTAINER(drawer->frame),drawer->panel);
+		gtk_widget_show(drawer->frame);
+	} else {
+		gtk_table_attach(GTK_TABLE(drawer->table),drawer->panel,
+				 1,2,1,2,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 0,0);
+	}
 
 	gtk_table_attach(GTK_TABLE(drawer->table),drawer->frame,1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,

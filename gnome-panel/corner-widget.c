@@ -717,12 +717,35 @@ corner_widget_show_hidebutton_pixmaps(CornerWidget *corner)
 
 static void
 c_back_change(PanelWidget *panel,
-	    PanelBackType type,
-	    char *pixmap,
-	    GdkColor *color,
-	    CornerWidget *corner)
+	      PanelBackType type,
+	      char *pixmap,
+	      GdkColor *color,
+	      CornerWidget *corner)
 {
-	set_frame_colors(PANEL_WIDGET(corner->panel),
+	if(type == PANEL_BACK_PIXMAP &&
+	   corner->panel->parent == corner->frame) {
+		gtk_widget_hide(corner->frame);
+		gtk_widget_ref(corner->panel);
+		gtk_container_remove(GTK_CONTAINER(corner->frame),
+				     corner->panel);
+		gtk_table_attach(GTK_TABLE(corner->table),corner->panel,
+				 1,2,1,2,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 0,0);
+		gtk_widget_unref(corner->panel);
+	} else if(type != PANEL_BACK_PIXMAP &&
+		  corner->panel->parent == corner->table) {
+		gtk_widget_ref(corner->panel);
+		gtk_container_remove(GTK_CONTAINER(corner->table),
+				     corner->panel);
+		gtk_container_add(GTK_CONTAINER(corner->frame),
+				  corner->panel);
+		gtk_widget_unref(corner->panel);
+		gtk_widget_show(corner->frame);
+	}
+
+	set_frame_colors(panel,
 			 corner->frame,
 			 corner->hidebutton_n,
 			 corner->hidebutton_e,
@@ -761,9 +784,18 @@ corner_widget_new (CornerPos pos,
 	gtk_widget_show(corner->panel);
 
 	corner->frame = gtk_frame_new(NULL);
-	gtk_widget_show(corner->frame);
 	gtk_frame_set_shadow_type(GTK_FRAME(corner->frame),GTK_SHADOW_OUT);
-	gtk_container_add(GTK_CONTAINER(corner->frame),corner->panel);
+
+	if(back_type != PANEL_BACK_PIXMAP) {
+		gtk_widget_show(corner->frame);
+		gtk_container_add(GTK_CONTAINER(corner->frame),corner->panel);
+	} else {
+		gtk_table_attach(GTK_TABLE(corner->table),corner->panel,
+				 1,2,1,2,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+				 0,0);
+	}
 
 	gtk_table_attach(GTK_TABLE(corner->table),corner->frame,1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
