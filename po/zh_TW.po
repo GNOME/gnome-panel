@@ -1,5 +1,5 @@
 # traditional Chinese translation of gnome-panel.
-# Copyright (C) 1999, 2000, 01, 02, 03, 04 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2000, 01, 02, 03, 04, 05 Free Software Foundation, Inc.
 # gnome-core:
 # Yuan-Chung Cheng <platin@linux.org.tw>, 1999.
 # Jing-Jong SHYUE <shyue@sonoma.com.tw>, 2000.
@@ -13,10 +13,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.9.91\n"
+"Project-Id-Version: gnome-panel 2.11.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-01 16:51+0800\n"
-"PO-Revision-Date: 2005-03-01 16:51+0800\n"
+"POT-Creation-Date: 2005-03-30 08:43+0800\n"
+"PO-Revision-Date: 2005-03-30 08:48+0800\n"
 "Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
 "Language-Team: Chinese/Traditional <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,7 @@ msgstr "關於(_A)"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:743
-#: ../gnome-panel/panel-context-menu.c:325 ../gnome-panel/panel-menu-bar.c:302
+#: ../gnome-panel/panel-context-menu.c:325 ../gnome-panel/panel-menu-bar.c:225
 #: ../gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "求助(_H)"
@@ -693,7 +693,7 @@ msgstr "工作區切換程式"
 msgid "Failed to load %s: %s\n"
 msgstr "無法載入 %s：%s\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:569
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:601
 msgid "Icon not found"
 msgstr "圖示不存在"
 
@@ -987,7 +987,7 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "沒有空位"
 
-#: ../gnome-panel/button-widget.c:196
+#: ../gnome-panel/button-widget.c:198
 #, c-format
 msgid "Failed to load image %s"
 msgstr "無法載入圖片 %s"
@@ -1089,19 +1089,19 @@ msgid ""
 "writable."
 msgstr "無法在這個位置建立啟動圖示，因為沒有寫入這個位置的權限。"
 
-#: ../gnome-panel/menu.c:818
+#: ../gnome-panel/menu.c:857
 msgid "Add this launcher to panel"
 msgstr "將這個啟動圖示加入面板"
 
-#: ../gnome-panel/menu.c:838
+#: ../gnome-panel/menu.c:877
 msgid "Entire menu"
 msgstr "整個選單"
 
-#: ../gnome-panel/menu.c:848
+#: ../gnome-panel/menu.c:887
 msgid "Add this as drawer to panel"
 msgstr "以抽屜方式加入面板"
 
-#: ../gnome-panel/menu.c:860
+#: ../gnome-panel/menu.c:899
 msgid "Add this as menu to panel"
 msgstr "以選單方式加入面板"
 
@@ -1123,7 +1123,7 @@ msgstr "重新啟動螢幕保護伺服程式(_S)"
 
 #: ../gnome-panel/panel-action-button.c:209
 #: ../gnome-panel/panel-action-button.c:222
-#: ../gnome-panel/panel-action-button.c:246 ../gnome-panel/panel-util.c:633
+#: ../gnome-panel/panel-action-button.c:246 ../gnome-panel/panel-util.c:665
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "無法執行 '%s'"
@@ -1237,24 +1237,24 @@ msgstr "(空白)"
 msgid "query returned exception %s\n"
 msgstr "詢問時回傳了例外情況 %s\n"
 
-#: ../gnome-panel/panel-addto.c:952
+#: ../gnome-panel/panel-addto.c:1006
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "選擇加入至“%s”的項目(_I)："
 
-#: ../gnome-panel/panel-addto.c:956
+#: ../gnome-panel/panel-addto.c:1010
 msgid "Add to Drawer"
 msgstr "加入至抽屜"
 
-#: ../gnome-panel/panel-addto.c:958
+#: ../gnome-panel/panel-addto.c:1012
 msgid "Select an _item to add to the drawer:"
 msgstr "選擇加入至抽屜的項目(_I)："
 
-#: ../gnome-panel/panel-addto.c:960
+#: ../gnome-panel/panel-addto.c:1014
 msgid "Add to Panel"
 msgstr "加入至面板"
 
-#: ../gnome-panel/panel-addto.c:962
+#: ../gnome-panel/panel-addto.c:1016
 msgid "Select an _item to add to the panel:"
 msgstr "選擇準備加入至面板的東西(_I):"
 
@@ -1402,14 +1402,24 @@ msgstr ""
 "選單按鈕/選單列)。而這些面板物件的設定都存放在 /apps/panel/objects/$(id)。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
-msgid "Enable program list in \"Run Application\" dialog"
+#, fuzzy
+msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "在「執行程式」對話方塊中允許顯示程式清單"
 
 #: ../gnome-panel/panel-general.schemas.in.h:6
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "在「執行程式」對話方塊中允許顯示程式清單"
+
+#: ../gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "在「執行程式」對話方塊中顯示並展開完整的程式清單"
 
-#: ../gnome-panel/panel-general.schemas.in.h:7
+#: ../gnome-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+
+#: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1418,7 +1428,7 @@ msgstr ""
 "如選用本選項，顯示「執行程式」對話方塊時，會展開「已知的應用程式」清單中的內"
 "容。只有在啟用了 enable_program_list 選項時，本選項方會生效。"
 
-#: ../gnome-panel/panel-general.schemas.in.h:8
+#: ../gnome-panel/panel-general.schemas.in.h:10
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1427,19 +1437,19 @@ msgstr ""
 "如選用本選項，「執行程式」對話方塊中會顯示「已知的應用程式」清單。至於顯示對"
 "話方塊時會否展開清單中的內容，則是由 show_program_list 選項決定。"
 
-#: ../gnome-panel/panel-general.schemas.in.h:9
+#: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
 msgstr "舊的設定組合已轉移"
 
-#: ../gnome-panel/panel-general.schemas.in.h:10
+#: ../gnome-panel/panel-general.schemas.in.h:12
 msgid "Panel ID list"
 msgstr "面板識別碼清單"
 
-#: ../gnome-panel/panel-general.schemas.in.h:11
+#: ../gnome-panel/panel-general.schemas.in.h:13
 msgid "Panel applet ID list"
 msgstr "面板程式識別碼清單"
 
-#: ../gnome-panel/panel-general.schemas.in.h:12
+#: ../gnome-panel/panel-general.schemas.in.h:14
 msgid "Panel object ID list"
 msgstr "面板物件識別碼清單"
 
@@ -1581,7 +1591,7 @@ msgstr "擷取畫面"
 msgid "Take window screenshot"
 msgstr "擷取視窗畫面"
 
-#: ../gnome-panel/panel-menu-bar.c:132
+#: ../gnome-panel/panel-menu-bar.c:71
 msgid "Applications"
 msgstr "應用程式"
 
@@ -1808,25 +1818,25 @@ msgid "Use custom path for menu contents"
 msgstr "使用自選的路徑作為選單內容"
 
 #: ../gnome-panel/panel-profile.c:743 ../gnome-panel/panel-profile.c:770
-#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1611
+#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1628
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "讀取 GConf 字串值‘%s’時發生錯誤：%s"
 
-#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1509
-#: ../gnome-panel/panel-profile.c:1580 ../gnome-panel/panel-profile.c:1643
+#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1524
+#: ../gnome-panel/panel-profile.c:1597 ../gnome-panel/panel-profile.c:1660
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "讀取 GConf 整數值‘%s’時發生錯誤：%s"
 
-#: ../gnome-panel/panel-profile.c:1519
+#: ../gnome-panel/panel-profile.c:1534
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr "面板‘%s’被指定在第 %d 個螢幕中顯示，但該螢幕不存在，因此不會載入面板。"
 
-#: ../gnome-panel/panel-profile.c:1595
+#: ../gnome-panel/panel-profile.c:1612
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "讀取 GConf 布林值‘%s’時發生錯誤：%s"
@@ -1983,8 +1993,8 @@ msgid ""
 msgstr ""
 "如果您清除了最近存取文件的清單，您會同時清除了：\n"
 "\n"
-"• 在‘位置’ → 中的最近存取文件裡面的所有項目。\n"
-"• 所有程式的選單中最近存取文件的所有項目。"
+"• 在「位置」中「最近存取文件」內的所有項目。\n"
+"• 所有程式選單中最近存取文件的所有項目。"
 
 #: ../gnome-panel/panel-recent.c:219
 msgid "Recent Documents"
@@ -1992,7 +2002,7 @@ msgstr "最近存取的文件"
 
 #: ../gnome-panel/panel-recent.c:249
 msgid "Clear Recent Documents"
-msgstr "清除最近存取的文件"
+msgstr "清除最近存取文件"
 
 #: ../gnome-panel/panel-recent.c:253
 msgid "Clear all items from the recent documents list"
@@ -2008,21 +2018,21 @@ msgstr "無法啟動‘%s’指令"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "無法由 UTF-8 轉換‘%s’"
 
-#: ../gnome-panel/panel-run-dialog.c:1067
+#: ../gnome-panel/panel-run-dialog.c:1109
 msgid "Choose a file to append to the command..."
 msgstr "在指令後附加檔案名稱..."
 
-#: ../gnome-panel/panel-run-dialog.c:1414
+#: ../gnome-panel/panel-run-dialog.c:1465
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "將會執行指令：‘%s’"
 
-#: ../gnome-panel/panel-run-dialog.c:1421
+#: ../gnome-panel/panel-run-dialog.c:1472
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "選取應用程式後可以顯示有關該程式的說明。"
 
-#: ../gnome-panel/panel-run-dialog.c:1456
+#: ../gnome-panel/panel-run-dialog.c:1507
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "拖曳到執行視窗的 URI 清單 的格式 (%d) 或 長度(%d) 錯誤\n"
@@ -2503,7 +2513,7 @@ msgstr "面板的垂直座標"
 msgid "Cannot display help document"
 msgstr "無法顯示說明文件"
 
-#: ../gnome-panel/panel-util.c:255
+#: ../gnome-panel/panel-util.c:287
 #, c-format
 msgid "Details: %s"
 msgstr "詳情：%s"
