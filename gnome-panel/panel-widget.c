@@ -1432,8 +1432,7 @@ panel_widget_set_back_pixmap (PanelWidget *panel, char *file)
 #endif
 
 	if (panel_try_to_set_pixmap (panel, file)) {
-		if (panel->back_pixmap)
-			g_free (panel->back_pixmap);
+		g_free (panel->back_pixmap);
 		panel->back_pixmap = g_strdup (file);
 		panel->back_type = PANEL_BACK_PIXMAP;
 		panel_widget_draw_all(panel,NULL);
@@ -1793,7 +1792,7 @@ panel_widget_new (gboolean packed,
 	panel->fit_pixmap_bg = fit_pixmap_bg;
 	panel->strech_pixmap_bg = strech_pixmap_bg;
 	panel->rotate_pixmap_bg = rotate_pixmap_bg;
-	panel->back_pixmap = g_strdup (back_pixmap ? back_pixmap : "");
+	panel->back_pixmap = back_pixmap ? back_pixmap : g_strdup ("");
 	panel->no_padding_on_ends = no_padding_on_ends;
 	
 	if(back_color)
@@ -2759,9 +2758,8 @@ panel_widget_change_params(PanelWidget *panel,
 	if(pixmap && pixmap != panel->back_pixmap) {
 		if(back_type == PANEL_BACK_PIXMAP)
 			change_back = TRUE;
-		if (panel->back_pixmap)
-			g_free (panel->back_pixmap);
 
+		g_free (panel->back_pixmap);
 		panel->back_pixmap = g_strdup (pixmap);
 	}
 

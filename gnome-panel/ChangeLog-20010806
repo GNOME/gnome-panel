@@ -1,3 +1,15 @@
+2000-05-18  Jacob Berkman  <jacob@helixcode.com>
+
+	* button-widget.c (button_widget_destroy): free the filename
+
+	* basep-widget.c (basep_widget_destroy): unref the pos
+
+2000-05-17  Jacob Berkman  <jacob@helixcode.com>
+
+	* panel-widget.c (panel_widget_change_params): don't need to check
+	for NULL first
+	(panel_widget_set_back_pixmap): ditto
+
 2000-05-18  Karl Eichwalder  <ke@suse.de>
 
 	* panel.hints: Improve "de" entries.

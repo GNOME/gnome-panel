@@ -790,6 +790,7 @@ basep_widget_destroy (BasePWidget *basep)
 	 * there was */
 	if (basep->leave_notify_timer_tag != 0)
 		gtk_timeout_remove (basep->leave_notify_timer_tag);
+	gtk_object_unref (GTK_OBJECT (basep->pos));
 }	
 
 static void

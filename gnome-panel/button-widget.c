@@ -354,6 +354,7 @@ button_widget_destroy(GtkWidget *w, gpointer data)
 		gdk_pixmap_unref(button->cache);
 	button->cache = NULL;
 
+	g_free(button->filename);
 	g_free(button->text);
 
 	buttons = g_list_remove(buttons,button);
