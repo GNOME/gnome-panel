@@ -307,7 +307,7 @@ static PanelAction actions [] = {
 		PANEL_ACTION_LOCK,
 		NULL,
 		"gnome-lockscreen",
-		N_("Lock screen"),
+		N_("Lock Screen"),
 		N_("Protect your computer from unauthorized use"),
 		"gospanel-21",
 		"ACTION:lock:NEW",
