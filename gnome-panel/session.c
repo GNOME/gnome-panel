@@ -91,10 +91,7 @@ apply_global_config (void)
 {
 	static int layer_old = -1;
 	static int menu_flags_old = -1;
-	static int old_use_large_icons = -1;
-	static int old_merge_menus = -1;
 	static int old_menu_check = -1;
-	static int old_avoid_collisions = -1;
 	GSList *li;
 
 	if (global_config.tooltips_enabled)
@@ -103,16 +100,10 @@ apply_global_config (void)
 		gtk_tooltips_disable (panel_tooltips);
 	/* not incredibly efficent way to do this, we just make
 	 * sure that all directories are reread */
-	if (old_merge_menus != global_config.merge_menus ||
-	    old_menu_check != global_config.menu_check) {
-		fr_force_reread();
+	if (old_menu_check != global_config.menu_check) {
+		fr_force_reread ();
 	}
-	/*if we changed small_icons mark all menus as dirty
-	  for rereading, hopefullly the user doesn't do this too often
-	  so that he doesn't have to reread his menus all the time:)*/
-	if( old_use_large_icons != global_config.use_large_icons ||
-	   old_merge_menus != global_config.merge_menus ||
-	   old_menu_check != global_config.menu_check) {
+	if(old_menu_check != global_config.menu_check) {
 		GSList *li;
 		for(li = applets; li != NULL; li = g_slist_next(li)) {
 			AppletInfo *info = li->data;
@@ -140,8 +131,6 @@ apply_global_config (void)
 		}
 		foobar_widget_force_menu_remake();
 	}
-	old_use_large_icons = global_config.use_large_icons;
-	old_merge_menus = global_config.merge_menus;
 	old_menu_check = global_config.menu_check;
 
 	/* if we changed global menu flags, cmark all main menus that use
@@ -190,13 +179,6 @@ apply_global_config (void)
 		}
 	}
 	menu_flags_old = global_config.menu_flags;
-
-	if (old_avoid_collisions != global_config.avoid_collisions) {
-		int i;
-		for (i = 0; i < multiscreen_screens (); i++)
-			basep_border_queue_recalc (i);
-	}
-	old_avoid_collisions = global_config.avoid_collisions;
 
 	panel_global_keys_setup();
 }
@@ -1365,16 +1347,16 @@ load_system_wide (void)
 void
 session_read_global_config (void)
 {
-	GSList *l;
+	GSList *li, *list;
 
-	l = panel_gconf_all_global_entries ();
+	list = panel_gconf_all_global_entries ();
 
-	for (; l ; l = l->next) {
+	for (li = list; li != NULL ; li = li->next) {
 		GConfEntry *entry;
 		GConfValue *value;
 		gchar      *key;
 
-		entry = (GConfEntry *)l->data;
+		entry = (GConfEntry *)li->data;
 
 		value = gconf_entry_get_value (entry);
 
@@ -1493,26 +1475,20 @@ session_read_global_config (void)
 							&global_config.window_screenshot_keysym,
 							&global_config.window_screenshot_state);
 
-		} else if (!strcmp (key, "use-large-icons"))
-			global_config.use_large_icons =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "avoid-panel-overlap"))
-			global_config.avoid_collisions =
-				gconf_value_get_bool (value);
-		else 
+		} else  {
 			g_warning ("%s not handled", key);
+		}
 
 		g_free (key);
-		gconf_entry_free (l->data);
+		gconf_entry_free (entry);
 	}
 
-	g_slist_free (l);
+	g_slist_free (list);
 
 	/* FIXME STUFF THAT IS BORKED */
-	global_config.merge_menus = TRUE;
 	global_config.menu_check = TRUE;
 	global_config.menu_flags = get_default_menu_flags();
+	g_print ("Got flags: %d\n", global_config.menu_flags);
 
 	apply_global_config ();
 }
@@ -1528,7 +1504,6 @@ session_write_global_config (void)
 	
 	/* FIXME STUFF THAT IS BORKED 
 	panel_gconf_global_config_set_int ("menu-flags", global_config.menu_flags);
-	panel_gconf_global_config_set_bool ("merge-menus", global_config.merge_menus);
 	panel_gconf_global_config_set_bool ("menu-check", global_config.menu_check);
 	*/
 
@@ -1539,14 +1514,12 @@ session_write_global_config (void)
 	gconf_change_set_set_int (global_config_cs, "panel-window-layer", global_config.layer);
 
 	gconf_change_set_set_bool (global_config_cs, "tooltips-enabled", global_config.tooltips_enabled);
-	gconf_change_set_set_bool (global_config_cs, "use-large-icons", global_config.use_large_icons);
 	gconf_change_set_set_bool (global_config_cs, "enable-animations", global_config.enable_animations);
 	gconf_change_set_set_bool (global_config_cs, "autoraise-panel", global_config.autoraise);
 	gconf_change_set_set_bool (global_config_cs, "drawer-autoclose", global_config.drawer_auto_close);
 	gconf_change_set_set_bool (global_config_cs, "highlight-launchers-on-mouseover", global_config.highlight_when_over);
 	gconf_change_set_set_bool (global_config_cs, "confirm-panel-remove", global_config.confirm_panel_remove);
 	gconf_change_set_set_bool (global_config_cs, "keep-menus-in-memory", global_config.keep_menus_in_memory);
-	gconf_change_set_set_bool (global_config_cs, "avoid-panel-overlap", global_config.avoid_collisions);
 
 	gconf_change_set_set_string (global_config_cs, "menu-key", global_config.menu_key);
 	gconf_change_set_set_string (global_config_cs, "run-key", global_config.run_key);

@@ -231,12 +231,12 @@ entry_changed (GtkWidget *widget, gpointer data)
 }
 
 static void
-load_checkboxes()
+load_checkboxes (void)
 {
 	gchar* checkboxes[] = {"drawer-autoclose", "auto-raise-panel",
-        	"confirm-panel-remove", "avoid-panel-overlap",
-		"keep-menus-in-memory", "enable-animations", 
-		"enable-key-bindings", "auto-update-menus", NULL };
+        	"confirm-panel-remove", "keep-menus-in-memory",
+		"enable-animations", "enable-key-bindings",
+		"auto-update-menus", NULL };
 	int i = 0;
 
 	while(checkboxes[i]!=NULL){
@@ -257,7 +257,7 @@ load_checkboxes()
 }
 
 static void
-load_option_menus()
+load_option_menus (void)
 {
 	gchar *optionmenus[] = {"panel-animation-speed", "panel-window-layer",
 				 NULL };
@@ -271,15 +271,17 @@ load_option_menus()
         	key = g_strdup_printf("/apps/panel/global/%s",optionmenus[i]);
         	gtk_option_menu_set_history(GTK_OPTION_MENU(option),
                 	gconf_client_get_int(gconf_client,key,NULL));
-        	g_signal_connect(G_OBJECT(option),"changed",
-                        G_CALLBACK(option_menu_changed),key);
+        	g_signal_connect_data (G_OBJECT (option), "changed",
+				       G_CALLBACK (option_menu_changed),
+				       key,
+				       (GClosureNotify)g_free,
+				       0 /* connect_flags */);
 		i++;
-		/*g_free(key);*/
 	}
 }
 
 static void
-load_spin_buttons()
+load_spin_buttons (void)
 {
 	/* keep the spin buttons and their associated adjustment in sync */
 	gchar *spinbuttons[] = {"panel-hide-delay", "panel-show-delay", NULL };
@@ -300,10 +302,12 @@ load_spin_buttons()
 		key = g_strdup_printf("/apps/panel/global/%s",spinbuttons[i]);
         	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_button),
                 	(double)gconf_client_get_int(gconf_client, key, NULL));
-        	g_signal_connect(G_OBJECT(spin_button),"value-changed",
-                	G_CALLBACK(spin_button_changed), key);
+        	g_signal_connect_data (G_OBJECT (spin_button), "value-changed",
+				       G_CALLBACK (spin_button_changed),
+				       key,
+				       (GClosureNotify)g_free,
+				       0 /* connect_flags */);
 		i++;
-		/*g_free(key);*/
         }
 }
 
@@ -325,10 +329,13 @@ load_key_bindings()
 		button = glade_xml_get_widget(glade_gui, button_name);
                 g_signal_connect(G_OBJECT(button),"clicked",
                         G_CALLBACK(grab_button_pressed), entry);
-		g_signal_connect(G_OBJECT(entry),"changed",
-			G_CALLBACK(entry_changed),key);
+        	g_signal_connect_data (G_OBJECT (entry), "changed",
+				       G_CALLBACK (entry_changed),
+				       key,
+				       (GClosureNotify)g_free,
+				       0 /* connect_flags */);
                 i++;
-                /*g_free(button_name);*/
+                g_free (button_name);
         }
 }
 

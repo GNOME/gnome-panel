@@ -2353,10 +2353,7 @@ basep_border_recalc (int screen)
 		sb->borders[i].right = 0;
 	}
 
-	/* if not avoiding collisions, keeping things at 0 is a safe bet */
-	if (global_config.avoid_collisions) {
-		basep_calculate_borders (screen);
-	}
+	basep_calculate_borders (screen);
 
 	sb->left = border_max (sb, BORDER_LEFT);
 	sb->right = border_max (sb, BORDER_RIGHT);

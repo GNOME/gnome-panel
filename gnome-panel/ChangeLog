@@ -1,3 +1,15 @@
+Wed Dec 12 23:33:33 2001  George Lebl <jirka@5z.com>
+
+	* basep-widget.c, session.c, panel-config-global.h,
+	  gnome-panel-properties.c, panel-global-config.schemas,
+	  gnome-panel-properties.glade:  Remove the user large icons,
+	  avoid collissions and merge menus config options and keys and
+	  all that.  large icons were gone already, merged menus as well,
+	  and who would ever want to turn off collision avoidance.  Also
+	  fix some memleaks and some cleanups.
+
+	* foobar-widget.c: fix memleaks
+
 Wed Dec 12 12:47:38 2001  George Lebl <jirka@5z.com>
 
 	* foobar-widget.c: reposition menu after hiding an item

@@ -696,14 +696,18 @@ add_window (WnckWindow *window, FoobarWidget *foo)
 		pix_y = gdk_pixbuf_get_height (pb);
 		if (pix_x > ICON_SIZE || pix_y > ICON_SIZE) {
 			double greatest;
+			GdkPixbuf *scaled;
 
 			greatest = pix_x > pix_y ? pix_x : pix_y;
-			pb = gdk_pixbuf_scale_simple (pb,
-						     (ICON_SIZE / greatest) * pix_x,
-						     (ICON_SIZE / greatest) * pix_y,
-						      GDK_INTERP_BILINEAR);
+			scaled = gdk_pixbuf_scale_simple (pb,
+							  (ICON_SIZE / greatest) * pix_x,
+							  (ICON_SIZE / greatest) * pix_y,
+							  GDK_INTERP_BILINEAR);
+			image = gtk_image_new_from_pixbuf (scaled);
+			gdk_pixbuf_unref (scaled);
+		} else {
+			image = gtk_image_new_from_pixbuf (pb);
 		}
-		image = gtk_image_new_from_pixbuf (pb);
 		gtk_widget_show (image);
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
 					       GTK_WIDGET (image));
@@ -808,14 +812,18 @@ set_das_pixmap (FoobarWidget *foo, WnckWindow *window)
 		pix_y = gdk_pixbuf_get_height (pb);
 		if (pix_x > ICON_SIZE || pix_y > ICON_SIZE) {
 			double greatest;
+			GdkPixbuf *scaled;
 
 			greatest = pix_x > pix_y ? pix_x : pix_y;
-			pb = gdk_pixbuf_scale_simple (pb,
-						     (ICON_SIZE / greatest) * pix_x,
-						     (ICON_SIZE / greatest) * pix_y,
-						      GDK_INTERP_BILINEAR);
+			scaled = gdk_pixbuf_scale_simple (pb,
+							  (ICON_SIZE / greatest) * pix_x,
+							  (ICON_SIZE / greatest) * pix_y,
+							  GDK_INTERP_BILINEAR);
+			foo->task_image = gtk_image_new_from_pixbuf (scaled);
+			gdk_pixbuf_unref (scaled);
+		} else {
+			foo->task_image = gtk_image_new_from_pixbuf (pb);
 		}
-		foo->task_image = gtk_image_new_from_pixbuf (pb);
 		gtk_widget_show (foo->task_image);
 
 		gtk_container_add (GTK_CONTAINER (foo->task_bin),
