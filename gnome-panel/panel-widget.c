@@ -1830,6 +1830,8 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 	g_message("Starting drag [grabbed] on a %s at %p\n",
 		  g_type_name(G_TYPE_FROM_INSTANCE(applet)), applet);
 #endif
+	panel_toplevel_block_auto_hide (panel->toplevel);
+
 	if (!panel_widget_applet_drag_start_no_grab (panel, applet, drag_off))
 		return;
 
@@ -1865,6 +1867,7 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 	gdk_pointer_ungrab (GDK_CURRENT_TIME);
 	gtk_grab_remove (panel->currently_dragged_applet->applet);
 	panel_widget_applet_drag_end_no_grab (panel);
+	panel_toplevel_unblock_auto_hide (panel->toplevel);
 	gdk_flush ();
 }
 
