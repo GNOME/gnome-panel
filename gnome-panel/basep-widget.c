@@ -271,6 +271,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 			h = move_step(oh,dh,start_time,end_time,cur_time);
 			gdk_window_move_resize(wid->window, x,y,w,h);
 			gdk_flush();
+			usleep(1000);
 		}
 
 		gdk_window_resize(wid->window,dw,dh);
@@ -391,6 +392,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			else
 				gtk_widget_draw(basep->table, NULL);
 			gdk_flush();
+			usleep(1000);
 		}
 
 		gdk_window_resize(wid->window,dw,dh);
