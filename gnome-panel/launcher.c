@@ -319,6 +319,12 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos)
 }
 
 void
+load_launcher_applet_dentry(GnomeDesktopEntry *dentry, PanelWidget *panel, int pos)
+{
+	_load_launcher_applet(NULL,dentry,panel, pos);
+}
+
+void
 load_launcher_applet(char *params, PanelWidget *panel, int pos)
 {
 	_load_launcher_applet(params,NULL,panel, pos);

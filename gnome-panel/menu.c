@@ -7,6 +7,7 @@
  */
 
 #include <config.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <sys/stat.h>
 #include <dirent.h>
@@ -121,7 +122,7 @@ add_app_to_panel (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *ii = data;
 	
-	load_launcher_applet(ii->location,current_panel,0);
+	load_launcher_applet_dentry(gnome_desktop_entry_copy(ii),current_panel,0);
 }
 
 /*reads in the order file and makes a list*/
@@ -1022,8 +1023,10 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 			if(!mf->fake_menu)
 				all_fake = FALSE;
 			if(!need_reread &&
-			   (mf->fake_menu || !check_finfo_list(mf->finfo)))
+			   (mf->fake_menu || !check_finfo_list(mf->finfo))) {
 				need_reread = TRUE;
+
+			}
 		}
 		if(need_reread) {
 			GtkWidget *old_menu = NULL;
@@ -1643,9 +1646,9 @@ create_panel_root_menu(GtkWidget *panel)
 		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 		menu = create_rh_menu();
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+		/*gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
+				   NULL);*/
 	}
 
 	menuitem = gtk_menu_item_new();
@@ -2151,6 +2154,52 @@ exec_rh_item(GtkWidget *w, RHMenuItem *ri)
 	g_free(s);
 }
 
+/* This is a simple-minded string splitter.  It splits on whitespace.
+   Something better would be to define a quoting syntax so that the
+   user can use quotes and such.  FIXME.  */
+/*stolen from gnome-dentry-edit*/
+static void
+gnome_dentry_edit_split (char *text, int *argcp, char ***argvp)
+{
+  char *p;
+  int count = 0;
+
+  /* First pass: find out how large to make the return vector.  */
+  for (p = text; *p; ++p) {
+    while (*p && isspace (*p))
+      ++p;
+    if (! *p)
+      break;
+    while (*p && ! isspace (*p))
+      ++p;
+    ++count;
+  }
+
+  /* Increment count to account for NULL terminator.  Resulting ARGC
+     doesn't include NULL terminator, though.  */
+  *argcp = count;
+  ++count;
+  *argvp = (char **) g_malloc (count * sizeof (char *));
+
+  count = 0;
+  for (p = text; *p; ++p) {
+    char *q;
+
+    while (*p && isspace (*p))
+      ++p;
+    if (! *p)
+      break;
+
+    q = p;
+    while (*p && ! isspace (*p))
+      ++p;
+    (*argvp)[count++] = (char *) g_strndup (q, p - q);
+  }
+
+  (*argvp)[count] = NULL;
+}
+
+
 static GtkWidget *
 make_submenu(MenuFinfo *mf, GList *rhlist)
 {
@@ -2178,6 +2227,21 @@ make_submenu(MenuFinfo *mf, GList *rhlist)
 			w = make_submenu(mf,ri->u.items);
 			gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem),w);
 		} else {
+			/*GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
+
+			dentry->name = g_strdup(ri->name);
+			dentry->comment = g_strdup(ri->u.item.description);
+			dentry->icon = g_strdup(ri->u.item.icon);
+			gnome_dentry_edit_split(ri->u.item.exec,
+						&dentry->exec_length,
+						&dentry->exec);
+
+			setup_full_menuitem (menuitem, pixmap, ri->name,
+					     dentry);
+			gtk_signal_connect (GTK_OBJECT (menuitem), "destroy",
+					    (GtkSignalFunc) free_app_def,
+					    dentry);
+			gtk_menu_append (GTK_MENU (menu), menuitem);*/
 			gtk_signal_connect_full(GTK_OBJECT(menuitem),
 						"activate",
 						GTK_SIGNAL_FUNC (exec_rh_item),
@@ -2326,9 +2390,9 @@ create_root_menu(int fake_submenus, int flags)
 		setup_menuitem (menuitem, pixmap, _("RedHat menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+		/*gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
+				   NULL);*/
 	}
 
 	add_special_entries (root_menu, fake_submenus);

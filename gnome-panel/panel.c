@@ -904,6 +904,7 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		    continue;
 
 		  mimetype = gnome_mime_type(ltmp->data);
+		  puts(mimetype);
 		  if(mimetype && !strncmp(mimetype, "image", sizeof("image")-1))
 		    panel_widget_set_back_pixmap (panel, ltmp->data);
 		  else if(mimetype
