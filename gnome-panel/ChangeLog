@@ -1,5 +1,10 @@
 2005-01-10  Vincent Untz  <vincent@vuntz.net>
 
+	* main.c: (main): call gnome_authentication_manager_init() because the
+	user might need the authentication dialogs.
+
+2005-01-10  Vincent Untz  <vincent@vuntz.net>
+
 	* launcher.c: (really_add_launcher): don't try to remove the busy
 	cursor when an error dialog is closed, destroy the error dialog when
 	the launcher editor dialog is closed

@@ -12,6 +12,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 
+#include <libgnomeui/gnome-authentication-manager.h>
 #include <libgnomeui/gnome-icon-theme.h>
 #include <libgnomeui/gnome-ui-init.h>
 
@@ -62,6 +63,8 @@ main (int argc, char **argv)
 
 	if (!panel_shell_register ())
 		return -1;
+
+	gnome_authentication_manager_init ();
 
 	panel_icon_theme = gnome_icon_theme_new ();
 	gnome_icon_theme_set_allow_svg (panel_icon_theme, TRUE);
