@@ -5,12 +5,12 @@
 #include <gtk/gtktypeutils.h>
 #include "GNOME_Panel.h"
 
-typedef GNOME_Vertigo_PanelOrient PanelOrient;
-
-#define PANEL_ORIENT_UP    GNOME_Vertigo_PANEL_ORIENT_UP
-#define PANEL_ORIENT_DOWN  GNOME_Vertigo_PANEL_ORIENT_DOWN
-#define PANEL_ORIENT_LEFT  GNOME_Vertigo_PANEL_ORIENT_LEFT
-#define PANEL_ORIENT_RIGHT GNOME_Vertigo_PANEL_ORIENT_RIGHT
+typedef enum {
+	PANEL_ORIENT_UP    = GNOME_Vertigo_PANEL_ORIENT_UP,
+	PANEL_ORIENT_DOWN  = GNOME_Vertigo_PANEL_ORIENT_DOWN,
+	PANEL_ORIENT_LEFT  = GNOME_Vertigo_PANEL_ORIENT_LEFT,
+	PANEL_ORIENT_RIGHT = GNOME_Vertigo_PANEL_ORIENT_RIGHT,
+} PanelOrient;
 
 typedef enum {
 	PANEL_SIZE_XX_SMALL = GNOME_Vertigo_PANEL_XX_SMALL,

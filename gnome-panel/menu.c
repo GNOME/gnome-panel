@@ -4092,7 +4092,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 	/*make the pixmap*/
 	menu->button = button_widget_new (pixmap_name, -1,
-					  TRUE, orient, _("Menu"));
+					  TRUE, orient);
 	g_free (pixmap_name);
 	if (!menu->button) {
 		free_menu (menu);

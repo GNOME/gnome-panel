@@ -1,3 +1,29 @@
+2002-09-24  Mark McLoughlin  <mark@skynet.ie>
+
+	* button-widget.c:
+	(button_widget_load_pixbuf_and_scale): split out from
+	size_allocate(). Load the pixbuf here.
+	(button_widget_finalize): use a finalize handler instead
+	of a destroy handler.
+	(button_widget_get_property),
+	(button_widget_set_property): use GObject properties for
+	all construct time params.
+	(button_widget_size_allocate): use load_pixbuf_and_scale().
+	(button_widget_new): pass all construct time properties
+	to g_object_new and don't load the pixbuf here.
+	(button_widget_set_pixmap): just set the GObject property.
+	(button_widget_set_params): ditto.
+
+	* button-widget.h: kill button_widget_set_text(), it seems
+	this is totally unused as we set the tooltips elsewhere.
+	Don't pass size to button_widget_set_pixmap.
+
+	* drawer.c, launcher.c, logout.c, menu.c: update for
+	button-widget changes above.
+
+	* panel-types.h: actually define PanelOrient as an enum
+	so glib-mkenums will pick it up.
+
 2002-09-19  jacob berkman  <jacob@ximian.com>
 
 	* launcher.c (launch_cb): draw a zoom thingie when clicked

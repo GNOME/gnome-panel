@@ -62,8 +62,7 @@ properties_apply_callback(gpointer data)
 							    "panel-drawer.png", TRUE, NULL);
 	}
 
-	button_widget_set_pixmap (BUTTON_WIDGET (drawer->button),
-				  drawer->pixmap, -1);
+	button_widget_set_pixmap (BUTTON_WIDGET (drawer->button), drawer->pixmap);
 
 	cs = gtk_entry_get_text(GTK_ENTRY(gnome_entry_gtk_entry(GNOME_ENTRY(tipentry))));
 	if (string_empty (cs))
@@ -475,8 +474,7 @@ create_drawer_applet (GtkWidget   *drawer_panel,
 		drawer->pixmap = g_strdup (pixmap);
 	}
 	drawer->button = button_widget_new (drawer->pixmap, -1,
-					    TRUE, orient,
-					    _("Drawer"));
+					    TRUE, orient);
 	if (!drawer->button) {
 		free_drawer (drawer);
 		return NULL;

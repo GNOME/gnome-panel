@@ -80,8 +80,7 @@ create_logout_widget (void)
 
 	button = button_widget_new (pixmap_name, -1,
 				    FALSE,
-				    PANEL_ORIENT_UP,
-				    _("Log out"));
+				    PANEL_ORIENT_UP);
 	g_free (pixmap_name);
 	if (!button)
 		return NULL;
@@ -154,8 +153,7 @@ create_lock_widget (void)
 
 	button = button_widget_new (pixmap_name, -1,
 				    FALSE,
-				    PANEL_ORIENT_UP,
-				    _("Lock screen"));
+				    PANEL_ORIENT_UP);
 	g_free (pixmap_name);
 	if (!button)
 		return NULL;

@@ -218,7 +218,7 @@ icon_theme_changed_cb (GnomeIconLoader *icon_loader,
 	icon = gnome_desktop_item_get_string (
 			launcher->ditem, GNOME_DESKTOP_ITEM_ICON);
 
-	button_widget_set_pixmap (BUTTON_WIDGET (launcher->button), icon, -1);
+	button_widget_set_pixmap (BUTTON_WIDGET (launcher->button), icon);
 }
 
 static void
@@ -414,12 +414,11 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	launcher->dedit = NULL;
 	launcher->prop_dialog = NULL;
 
-	/* Icon/Text will be setup later */
+	/* Icon will be setup later */
 	launcher->button = button_widget_new (NULL /* icon */,
 					      -1,
 					      FALSE,
-					      PANEL_ORIENT_UP,
-					      NULL /* text */);
+					      PANEL_ORIENT_UP);
 
 	gtk_widget_show (launcher->button);
 
@@ -491,13 +490,10 @@ setup_button (Launcher *launcher)
 
 	g_free (str);
 
-	/* Setup text */
-	button_widget_set_text (BUTTON_WIDGET (launcher->button), name);
-
 	/* Setup icon */
 	icon = gnome_desktop_item_get_string (launcher->ditem,
 					      GNOME_DESKTOP_ITEM_ICON);
-	button_widget_set_pixmap (BUTTON_WIDGET (launcher->button), icon, -1);
+	button_widget_set_pixmap (BUTTON_WIDGET (launcher->button), icon);
 
 	launcher->icon_changed_signal =
 			g_signal_connect (panel_icon_loader, "changed",

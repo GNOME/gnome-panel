@@ -29,8 +29,6 @@ struct _ButtonWidget
 	char			*filename;
 	int			size;
 	
-	char			*text;
-	
 	guint			ignore_leave:1; /*ignore the leave notify,
 						  if you do this remember to
 						  set the in_button properly
@@ -55,15 +53,10 @@ GType		button_widget_get_type		(void) G_GNUC_CONST;
 GtkWidget*	button_widget_new		(const char *pixmap,
 						 int size,
 						 gboolean arrow,
-						 PanelOrient orient,
-						 const char *text);
+						 PanelOrient orient);
 
 void		button_widget_set_pixmap	(ButtonWidget *button,
-						 const char *pixmap,
-						 int size);
-
-void		button_widget_set_text		(ButtonWidget *button,
-						 const char *text);
+						 const char   *pixmap);
 
 void		button_widget_set_params	(ButtonWidget *button,
 						 gboolean arrow,
