@@ -918,12 +918,12 @@ try_evil_config_hacks (const char *goad_id, PanelWidget *panel, int pos)
 			g_free(tmp);
 		}
 
-		if(!in_path) {
-			load_extern_applet("deskguide_applet", NULL,
-					   panel, pos, TRUE, TRUE);
+		if (!in_path) {
+			extern_load_applet ("deskguide_applet", NULL,
+					    panel, pos, TRUE, TRUE);
 
-			load_extern_applet("tasklist_applet", NULL,
-					   panel, pos+1, TRUE, TRUE);
+			extern_load_applet ("tasklist_applet", NULL,
+					    panel, pos+1, TRUE, TRUE);
 			ret = TRUE;
 		}
 	}
@@ -1076,7 +1076,8 @@ init_user_applets(void)
 				  applet when it loads*/
 				g_string_sprintf (buf, "%sApplet_%d_Extern/",
 						  PANEL_CONFIG_PATH, num);
-				load_extern_applet (goad_id, buf->str, 
+
+				extern_load_applet (goad_id, buf->str, 
 						    panel, pos, TRUE, TRUE);
 			}
 			g_free (goad_id);

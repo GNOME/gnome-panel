@@ -12,6 +12,14 @@ G_BEGIN_DECLS
 
 typedef struct Extern_struct *Extern;
 
+typedef enum {
+	EXTERN_SUCCESS,
+	EXTERN_FAILURE,
+	EXTERN_ALREADY_ACTIVE
+} ExternResult;
+
+ExternResult extern_init                  (void);
+
 GNOME_Applet extern_get_applet            (Extern ext);
 
 void         extern_set_config_string     (Extern  ext,
@@ -39,18 +47,16 @@ gboolean     extern_handle_set_tooltips_state
 
 void	     extern_before_remove         (Extern ext);
 
-void         load_extern_applet           (const char  *goad_id,
+void         extern_load_applet           (const char  *goad_id,
 					   const char  *cfgpath,
 					   PanelWidget *panel,
 					   int          pos,
 					   gboolean     exactpos,
 					   gboolean     queue);
 
-void	     load_queued_externs          (void);
+void	     extern_load_queued           (void);
 
 void         panel_corba_clean_up         (void);
-
-gint	     panel_corba_gtk_init         (CORBA_ORB panel_orb);
 
 /* to be called when we want to send a draw signal to an applet */
 void	     extern_send_draw             (Extern ext);

@@ -12,7 +12,8 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-#include "libgnome/libgnome.h"
+#include <libgnome/libgnome.h>
+#include <libbonobo.h>
 
 #include "status.h"
 
@@ -196,8 +197,6 @@ new_status_spot(void)
 void
 status_spot_remove(StatusSpot *ss, gboolean destroy_socket)
 {
-	CORBA_Environment ev;
-	PortableServer_ObjectId *id;
 	GtkWidget *w;
 
 	spots = g_slist_remove(spots,ss);
@@ -215,14 +214,26 @@ status_spot_remove(StatusSpot *ss, gboolean destroy_socket)
 	DPRINTD(nspots);
 	DPRINTD(g_slist_length(spots));
 
-	if(ss->sspot != CORBA_OBJECT_NIL) {
-		CORBA_exception_init(&ev);
-		CORBA_Object_release(ss->sspot, &ev);
-		id = PortableServer_POA_servant_to_id(thepoa, ss, &ev);
-		PortableServer_POA_deactivate_object(thepoa, id, &ev);
+	if (ss->sspot != CORBA_OBJECT_NIL) {
+		PortableServer_POA       poa;
+		PortableServer_ObjectId *id;
+		CORBA_Environment        env;
+
+		CORBA_exception_init (&env);
+
+		poa = bonobo_poa ();
+
+		CORBA_Object_release (ss->sspot, &env);
+
+		id = PortableServer_POA_servant_to_id (poa, ss, &env);
+
+		PortableServer_POA_deactivate_object (poa, id, &env);
+
 		CORBA_free (id);
-		POA_GNOME_StatusSpot__fini((PortableServer_Servant) ss, &ev);
-		CORBA_exception_free(&ev);
+
+		POA_GNOME_StatusSpot__fini ((PortableServer_Servant)ss, &env);
+
+		CORBA_exception_free (&env);
 	}
 
 	g_free(ss);

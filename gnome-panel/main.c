@@ -474,7 +474,6 @@ tell_user_Im_on_crack (void)
 int
 main(int argc, char **argv)
 {
-	CORBA_ORB orb;
 	gboolean duplicate;
 	gchar *real_global_path;
 	
@@ -487,43 +486,53 @@ main(int argc, char **argv)
 
 	tell_user_Im_on_crack ();
 
-	orb = bonobo_orb ();
-#ifdef FIXME
 	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-panel.png");
-#endif
+
 	setup_visuals ();
 
-	switch (panel_corba_gtk_init (orb)) {
-	case 0: 
+	switch (extern_init ()) {
+	case EXTERN_SUCCESS: 
 		duplicate = FALSE;
-		break; /* success */
-	case -4: {
-		GtkWidget* box = gtk_message_dialog_new
-			(NULL, 0,
-			 GTK_MESSAGE_QUESTION,
-			 GTK_BUTTONS_YES_NO,
-			 (_("I've detected a panel already running.\n"
-			    "Start another panel as well?\n" 
-			    "(The new panel will not be restarted.)")));
+		break;
+	case EXTERN_ALREADY_ACTIVE: {
+		GtkWidget* box;
+
+		box = gtk_message_dialog_new (
+				NULL, 0,
+				GTK_MESSAGE_QUESTION,
+				GTK_BUTTONS_YES_NO,
+				(_("I've detected a panel already running.\n"
+				"Start another panel as well?\n" 
+				"(The new panel will not be restarted.)")));
+
 		if (gtk_dialog_run (GTK_DIALOG (box)) != GTK_RESPONSE_YES) {
 			gtk_widget_destroy (box);
-			return 0;
+			return -1;
 		}
+
 		gtk_widget_destroy (box);
 		duplicate = TRUE;
+
 		break;
 	}
-	default: {
-		GtkWidget *box = panel_error_dialog
-			("no_panel_register",
-			 _("There was a problem registering the panel "
-			   "with the GOAD server.\n"
-			   "The panel will now exit."));
+	case EXTERN_FAILURE: {
+		GtkWidget *box;
+
+		box = panel_error_dialog (
+				"no_panel_register",
+				_("There was a problem registering the panel "
+				"with the GOAD server.\n"
+				"The panel will now exit."));
+
 		gtk_dialog_run (GTK_DIALOG (box));
 		gtk_widget_destroy (box);
-		return 0;
+
+		return -1;
 		break;
 	}
+	default:
+		g_assert_not_reached ();
+		break;
 	}
 
 	setup_merge_directory();
@@ -616,7 +625,7 @@ main(int argc, char **argv)
 	
 	/*load these as the last thing to prevent some races any races from
 	  starting multiple goad_id's at once are libgnorba's problem*/
-	load_queued_externs ();
+	extern_load_queued ();
 
 	status_applet_create_offscreen ();
 

@@ -1421,8 +1421,8 @@ drag_data_recieved_cb (GtkWidget	*widget,
 			gtk_drag_finish (context, FALSE, FALSE, time);
 			return;
 		}
-		load_extern_applet ((char *)selection_data->data, NULL,
-				    panel, pos, TRUE, FALSE);
+		extern_load_applet ((char *)selection_data->data,
+				    NULL, panel, pos, TRUE, FALSE);
 		break;
 	case TARGET_APPLET_INTERNAL:
 		drop_internal_applet (panel, pos, (char *)selection_data->data,

@@ -1,3 +1,21 @@
+2001-10-19  Mark McLoughlin  <mark@skynet.ie>
+
+	* extern.c, extern.h: 
+	(extern_load_applet): renamed from load_extern_applet.
+	(extern_load_queued): renamed from load_queued_externs.
+	(extern_init): renamed from panel_corba_gtk_init.
+	(extern_start_new_goad_id), (reload_applet_callback),
+	(extern_clean), (send_position_change),
+	(panel_corba_clean_up), (s_panel_add_applet_full),
+	(s_panel_add_status), (send_draw):
+	(extern_activate_panelspot): cleaned up.
+
+	* main.c: (main): 
+	* menu.c: (add_applet):
+	* panel.c: (drag_data_recieved_cb):
+	* session.c: (try_evil_config_hacks), (init_user_applets):
+	* status.c: (status_spot_remove): update.
+
 2001-10-19  Glynn Foster  <glynn.foster@sun.com>
 
 	* basep-widget.c, gnome-panel-properties.c,

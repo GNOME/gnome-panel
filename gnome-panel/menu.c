@@ -2296,11 +2296,12 @@ add_applet (GtkWidget *w, const char *item_loc)
 				   _("Can't get goad_id from desktop entry!"));
 		return;
 	}
-	load_extern_applet(goad_id, NULL,
-			   get_panel_from_menu_data(w, TRUE),
-			   -1, FALSE, FALSE);
 
-	g_free(goad_id);
+	extern_load_applet (goad_id, NULL,
+			    get_panel_from_menu_data (w, TRUE),
+			    -1, FALSE, FALSE);
+
+	g_free (goad_id);
 #endif
 }
 
