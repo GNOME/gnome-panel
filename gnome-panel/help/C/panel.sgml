@@ -18,7 +18,7 @@
        Version 1.1 or any later version published by the Free Software
        Foundation; with no Invariant Sections, with no  Front-Cover
        Texts, and with no Back-Cover Texts.  A copy of the license is
-       available from the GNU Foundation and can be viewed <ulink
+       available from the Free Software Foundation and can be viewed <ulink
        url="http://www.gnu.org/copyleft/fdl.html"
        type="http">online</ulink>.
       </para>
@@ -30,7 +30,7 @@
     </legalnotice>
 
     <releaseinfo>
-     This is version 1.0 of The GNOME Panel.
+     This is version 1.0 of The GNOME Panel manual.
     </releaseinfo>
   </artheader>
   <sect1>
@@ -97,7 +97,7 @@
         <title>Menus</title>
         <para>
          Menus are lists of items, each of which either starts an
-         application, executes a command, or is a sub-menu.  In the
+         application, executes a command, or is a submenu.  In the
          example <interface>Panel</interface> in <xref
          linkend="examplepanelfig"> , the left-most  icon  after the
          arrow is a stylized footprint icon (the GNOME logo). This is
@@ -212,7 +212,7 @@
      <guimenuitem>Move</guimenuitem> for  moving objects within the
      <interface>Panel</interface> or between two
      <interface>Panels</interface>,  the
-     <guisubmenu>Panel</guisubmenu> sub-menu described below, and
+     <guisubmenu>Panel</guisubmenu> submenu described below, and
      typically one or more object-specific menu items.  For drawers,
      menus, and launchers the only object-specific item is
      <guimenuitem>Properties...</guimenuitem> which allows you to
@@ -227,7 +227,7 @@
      <guimenu>right-click</guimenu> menus.
     </para>
     <para>
-     The <guisubmenu>Panel</guisubmenu> sub-menu allows you to <link
+     The <guisubmenu>Panel</guisubmenu> submenu allows you to <link
      linkend="panelmove">create and remove
      <interface>Panels</interface></link> and <link
      linkend="appletadd">add objects</link> to the
@@ -374,7 +374,7 @@
      just type your login password.
     </para>
     <note>
-     <title>Screensavers and The Lock Button</title>
+     <title>Screensavers and the Lock Button</title>
      <para>
       The <guibutton>Lock screen</guibutton> button uses a feature of
       the <application>xscreensaver</application> program. This is the
@@ -453,12 +453,13 @@
         GNOME graphical file manager.
        </para>
       </listitem>
-      <listitem>
+   <!-- this was made obsolete by "run..." (see below)
+     <listitem>
        <para>
         <guimenuitem>Run program&hellip;</guimenuitem> &mdash; gives
         you the command line prompt where you can enter any command.
        </para>
-      </listitem>
+      </listitem> -->
       <listitem>
        <para>
         <guimenuitem>Help system</guimenuitem> &mdash; launches the
@@ -546,7 +547,7 @@
         <guimenuitem>Desktop</guimenuitem>&mdash; This submenu contains
         <guimenuitem>Log out</guimenuitem>, which ends your GNOME
         session (see <xref linkend="loggingout">), and
-        <guimenuitem>Lock screen</guimenuitem>(see <xref
+        <guimenuitem>Lock screen</guimenuitem> (see <xref
         linkend="lockscreen">). 
        </para>
       </listitem>
@@ -673,7 +674,7 @@
    shown in <xref linkend = "example-menu-fig">. Unlike the
    <guimenu>Main Menu</guimenu>, normal menus only contain whatever
    launchers and submenus you place in them - no default submenus,
-   <guimenuitem>Run program</guimenuitem>, etc. as the <guimenu>Main
+   <guimenuitem>Run...</guimenuitem> command, etc. as the <guimenu>Main
    Menu</guimenu> has.  You can also add any submenu of your
    <guimenu>Favorites</guimenu> menu or the
    <guimenu>Programs</guimenu> menu as a separate menu to a
@@ -693,18 +694,18 @@
   </figure>
 
    <sect2 id="addingmenus">
-    <title>Adding A Menu to a Panel</title>  <para>     To learn how
+    <title>Adding a Menu to a Panel</title>  <para>     To learn how
     to add a menu to a <interface>Panel</interface>, see <xref
     linkend="add">.
     </para>
    </sect2>
 
   <sect2 id="tearoff">
-   <title>Tearing Off A Menu</title>
+   <title>Tearing Off a Menu</title>
    <para>
     All menus in GNOME have the tear-off feature: if you left-click on
     the "perforation" (thin dashed line at the top of the menu, right
-    above the menu title) the menu will be turned into a separate
+    above the menu title), the menu will be turned into a separate
     window on your desktop, which will stay there even after you move
     the mouse cursor elsewhere. This is very convenient if you will be
     using the same command from some deeply nested submenu
@@ -719,9 +720,9 @@
     <title> Configuring a Menu</title>
     <para>
      You can easily change a menu name and icon (for user menus
-     only, not for sub-menus taken from the <guimenu>Main
+     only, not for submenus taken from the <guimenu>Main
      Menu</guimenu>). To do so, click on the menu, right-click
-     on the menu name (at the very top of the list, above all other
+     on the menu title (at the very top of the list, above all other
      items), and select <guimenuitem>Properties&hellip;</guimenuitem>
      from the pop-up menu. This will bring up the 
      <interface>Desktop Entry Properties</interface> dialog, quite similar to
@@ -745,8 +746,9 @@
      using the <application>GNOME Control Center</application> by
      selecting <menuchoice> <guimenu>Main Menu</guimenu>
      <guisubmenu>Settings</guisubmenu>
-     <guisubmenu>Desktop</guisubmenu>  <guimenuitem>Theme
-     Selector</guimenuitem> </menuchoice>.
+     <guisubmenu>User Interface</guisubmenu>
+     <guimenuitem>Themes</guimenuitem> 
+     </menuchoice>.
     </para>
    </sect2>
   </sect1>
@@ -982,18 +984,18 @@
    </screenshot>
   </figure>
   <para>
-   Once you have placed a Drawer on the Panel, you may click on it to
-   "open" the Drawer, revealing its contents.   You may then add items
-   to the Drawer in the same way you would add items to the panel,
-   right clicking on the end of the drawer with the arrow.  You can
-   close the Drawer by clicking on its icon again or by clicking on
-   the arrow at its end.
+   Once you have placed a Drawer on the <interface>Panel</interface>,
+   you may click on it to "open" the Drawer, revealing its contents.
+   You may then add items to the Drawer in the same way you would add
+   items to the panel, right clicking on the end of the drawer with
+   the arrow.  You can close the Drawer by clicking on its icon again
+   or by clicking on the arrow at its end.
   </para>
   <para>
    You can configure a Drawer's properties by right clicking on the
    Drawer's icon and selecting
    <guimenuitem>Properties</guimenuitem>. This brings up the
-   <interface>Drawer Properties Dialog</interface>. Here you can
+   <interface>Drawer Properties</interface> dialog. Here you can
    select the icon used for the drawer by clicking on the icon. A
    tooltip may be entered by typing in the
    <guilabel>Tooltip/Name</guilabel> entry. This tooltip will be
@@ -1449,16 +1451,18 @@
 	    <listitem>
 	      <para>
 		<guilabel>Menu Panel</guilabel> &mdash; The Menu Panel
-		is a special panel which contains several pull-down
-		menus.  These are Programs, Favorites, Settings,
-		Desktop, a clock/calendar, and a URL resource
-		launcher.  It can also hold the other objects which
-		other panels can hold, but it does not have the
-		configuration properties which other panels have. Note
-		that the <guilabel>Menu Panel</guilabel> is more
-		restrictive than other panels, and some normal panel
-		operations, such as moving the panel, cannot be
-		performed on it.
+		is a special panel which is always placed at the top
+		of your screen and contains several pull-down menus.
+		These are Programs, Favorites, Settings, Desktop, a
+		clock/calendar, and a special launcher which provides
+		quick access to GNOME-related Internet resources (look
+		for the bullet hole icon).  This panel can
+		also hold the other objects which other panels can
+		hold, but it does not have the configuration
+		properties which other panels have. Note that the
+		<guilabel>Menu Panel</guilabel> is more restrictive
+		than other panels, and some normal panel operations,
+		such as moving the panel, cannot be performed on it.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
@@ -2009,16 +2013,16 @@
 
      <listitem>
       <para>
- <!-- <indexterm id="idx-a64"> <primary>Panel</primary>
-       <secondary>Auto-hide</secondary> </indexterm> -->
+      <indexterm id="idx-a64"> <primary>Panel</primary>
+       <secondary>Auto-hide</secondary> </indexterm>
 
 	    <guilabel>Hiding</guilabel> &mdash; In this section, you
-	    can choose whether you want to enable panel Auto Hide
-	    &mdash; that is, have the panel automatically hide when
+	    can choose whether you want to enable Panel Auto-hide
+	    &mdash; that is, have the Panel automatically hide when
 	    the mouse is not over the Panel. The autohide parameters
 	    can be configured in <link linkend="animtab">Global
-	    Preferences dialog</link>. If you  choose to Auto Hide you
-	    might want to Disable the hide buttons here as well. You
+	    Preferences dialog</link>. If you  choose to Auto-hide you
+	    might want to disable the hide buttons here as well. You
 	    may also disable the hide button arrows graphics on the
 	    Panel.
       </para>
@@ -2210,7 +2214,7 @@
       comments and suggestions regarding this manual to the GNOME
       Documentation Project at <email>docs@gnome.org</email> or enter
       your comments online using the <ulink type="http"
-      url="http://www.gnome.org/gdp/doctable">  GNOME Documentation
+      url="http://www.gnome.org/gdp/doctable">GNOME Documentation
       Status Table</ulink>.
       </para>
     </sect1>
