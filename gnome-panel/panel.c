@@ -782,16 +782,14 @@ panel_do_popup_menu (PanelWidget *panel, BasePWidget *basep, GtkWidget *widget, 
 }
 
 static gboolean
-panel_popup_menu (GtkWidget *widget)
+panel_popup_menu (GtkWidget *widget, gpointer data)
 {
  	PanelWidget *panel = NULL;
 	BasePWidget *basep = NULL;
 
-	if (BASEP_IS_WIDGET (widget)) {
-		basep = BASEP_WIDGET (widget);
-		panel = PANEL_WIDGET (basep->panel);
-	} else if (FOOBAR_IS_WIDGET (widget)) {
-		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
+	panel = PANEL_WIDGET (widget);
+	if (BASEP_IS_WIDGET (data)) {
+		basep = BASEP_WIDGET (data);
 	}
 	return panel_do_popup_menu (panel, basep, widget, 3, GDK_CURRENT_TIME);
 }
@@ -1739,8 +1737,8 @@ panel_setup(GtkWidget *panelw)
 
 	g_signal_connect (G_OBJECT (panelw), "event",
 			  G_CALLBACK (panel_event), pd);
-	g_signal_connect (G_OBJECT (panelw), "popup_menu",
-                          G_CALLBACK (panel_popup_menu), pd);
+	g_signal_connect (G_OBJECT (panel), "popup_menu",
+                          G_CALLBACK (panel_popup_menu), panelw);
 	g_signal_connect (G_OBJECT (panel), "event",
 			  G_CALLBACK (panel_widget_event), panelw);
 	
