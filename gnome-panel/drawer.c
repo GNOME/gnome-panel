@@ -319,7 +319,7 @@ set_tooltip_and_name (Drawer     *drawer,
 	if (tooltip && !tooltip [0])
 		tooltip = NULL;
 
-	panel_toplevel_set_name (drawer->toplevel, tooltip ? tooltip : _("Drawer"));
+	panel_toplevel_set_name (drawer->toplevel, tooltip);
 	gtk_tooltips_set_tip (panel_tooltips, drawer->button, tooltip, NULL);
 }
 

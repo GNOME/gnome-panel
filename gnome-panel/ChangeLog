@@ -1,3 +1,12 @@
+2005-01-10  Vincent Untz  <vincent@vuntz.net>
+
+	* drawer.c: (set_tooltip_and_name): don't set toplevel name to Drawer
+	if the tooltip is not set
+	* panel-toplevel.c: (panel_toplevel_construct_description):
+	description should be Drawer if the toplevel is attached (drawers
+	don't have default names anymore)
+	The previous commit and this one should fix bug #152480.
+
 2005-01-09  Vincent Untz  <vincent@vuntz.net>
 
 	HIG work on the "Add to Panel" dialog. Fix bug #163317

@@ -1496,6 +1496,9 @@ panel_toplevel_construct_description (PanelToplevel *toplevel)
 		},
 	};
 
+	if (toplevel->priv->attached)
+		return N_("Drawer");
+
 	switch (toplevel->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
 		orientation = 0;
