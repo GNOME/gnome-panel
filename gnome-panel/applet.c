@@ -191,7 +191,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		if (strcmp (menu->name, "properties") == 0) {
 			launcher_properties (menu->info->data);
 		} else if (strcmp (menu->name, "help") == 0) {
-			panel_show_help ("launchers", NULL);
+			panel_show_help ("wgospanel.xml", "gospanel-16");
 		} else if (strcmp (menu->name, "help_on_app") == 0) {
 			Launcher * launcher = menu->info->data;
 			if (launcher->ditem != NULL) {
@@ -214,7 +214,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			g_assert(drawer);
 			panel_config(drawer->drawer);
 		} else if (strcmp (menu->name, "help") == 0) {
-			panel_show_help ("drawers", NULL);
+			panel_show_help ("wgospanel.xml", "gospanel-18");
 		}
 		break;
 	case APPLET_MENU:
@@ -228,10 +228,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 				g_free (tmp[0]);
 			}
 		} else if (strcmp (menu->name, "help") == 0) {
-			Menu *menu2 = menu->info->data;
-			char *page;
-			page = menu2->main_menu ? "mainmenu" : "menus";
-			panel_show_help (page, NULL);
+			panel_show_help ("wgospanel.xml", "gospanel-37");
 		}
 		break;
 	case APPLET_LOCK: {
@@ -249,7 +246,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		char *command = NULL;
 		gboolean freeit = FALSE;
 		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("specialobjects", "LOCKBUTTON");
+			panel_show_help ("wgospanel.xml", "gospanel-21");
 		else if (strcmp (menu->name, "restart") == 0) {
 			command = "xscreensaver-command -exit ; xscreensaver &";
 		} else if (strcmp (menu->name, "prefs") == 0) {
@@ -267,7 +264,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	}
 	case APPLET_LOGOUT:
 		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("specialobjects", "LOGOUTBUTTON");
+			panel_show_help ("wgospanel.xml", "gospanel-20");
 		break;
 	case APPLET_BONOBO:
 		/*
