@@ -2361,6 +2361,7 @@ applet_menu_get_category_icon (const char *untranslated_category)
 
 	if (!hash) {
 		hash = g_hash_table_new (g_str_hash, g_str_equal);
+		g_hash_table_insert (hash, "Accessories", PANEL_STOCK_ACCESSORIES); 
 		g_hash_table_insert (hash, "Amusements", PANEL_STOCK_AMUSEMENTS);
 		g_hash_table_insert (hash, "Multimedia", PANEL_STOCK_MULTIMEDIA);
 		g_hash_table_insert (hash, "Internet",   PANEL_STOCK_INTERNET);

@@ -43,6 +43,7 @@ G_BEGIN_DECLS
 #define PANEL_STOCK_DEBIAN              "panel-debian"
 #define PANEL_STOCK_SUSE                "panel-suse"
 #define PANEL_STOCK_CDE                 "panel-cde"
+#define PANEL_STOCK_ACCESSORIES         "panel-accessories"
 #define PANEL_STOCK_AMUSEMENTS          "panel-amusements"
 #define PANEL_STOCK_MULTIMEDIA          "panel-multimedia"
 #define PANEL_STOCK_INTERNET            "panel-internet"
