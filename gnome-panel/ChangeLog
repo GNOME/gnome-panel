@@ -1,3 +1,15 @@
+2002-01-09  Alexander Larsson  <alla@lysator.liu.se>
+
+	* button-widget.[ch]:
+	Make it a normal widget that exposes using
+	gdk_pixbuf_render_to_drawable_alpha ().
+
+	* panel-widget.[ch]:
+	Override signals instead of connecting to them.
+	Remove lots of code that handled button-widgets.
+	Expose like normal Gtk widgets.
+	Remove no_window_applet_list, as it's not needed anymore.
+	
 2002-01-08  Glynn Foster  <glynn.foster@sun.com>
 
 	* AUTHORS: Adding Mark and myself.

@@ -19,13 +19,13 @@ typedef struct _ButtonWidgetClass	ButtonWidgetClass;
 
 struct _ButtonWidget
 {
-	GtkWidget		pixmap;
+	GtkWidget		parent;
 	
 	GdkPixbuf		*pixbuf;
-	GdkPixbuf		*pixbuf_hc;
+  
+	GdkPixbuf		*scaled;
+	GdkPixbuf		*scaled_hc;
 
-	GdkPixmap		*cache;
-	
 	char			*filename;
 	int			size;
 	
@@ -47,10 +47,6 @@ struct _ButtonWidget
 					   to do*/
 	guint			dnd_highlight:1;
 
-	guint			no_alpha:1; /*we don't have any alpha to speak
-					      of, so we don't have to dump the
-					      cache all the time*/
-	
 	PanelOrient		orient;
 
 	guint			pressed_timeout;
@@ -74,12 +70,6 @@ GtkWidget*	button_widget_new		(const char *pixmap,
 						 PanelOrient orient,
 						 const char *text);
 
-void		button_widget_draw		(ButtonWidget *button,
-						 GdkPixbuf    *dest);
-/* draw the xlib part (arrow/text) */
-void		button_widget_draw_xlib		(ButtonWidget *button,
-						 GdkPixmap *pixmap);
-
 gboolean	button_widget_set_pixmap	(ButtonWidget *button,
 						 const char *pixmap,
 						 int size);
@@ -98,8 +88,6 @@ void		button_widget_set_dnd_highlight	(ButtonWidget *button,
 void		button_widget_clicked		(ButtonWidget *button);
 void		button_widget_down		(ButtonWidget *button);
 void		button_widget_up		(ButtonWidget *button);
-
-void		button_widget_redo_all		(void);
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

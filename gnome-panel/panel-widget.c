@@ -44,8 +44,8 @@ gboolean panel_applet_in_drag = FALSE;
 /* Commie mode! */
 extern gboolean commie_mode;
 
-static void panel_widget_class_init	(PanelWidgetClass *klass);
-static void panel_widget_instance_init	(PanelWidget      *panel_widget);
+static void panel_widget_class_init     (PanelWidgetClass *klass);
+static void panel_widget_instance_init  (PanelWidget      *panel_widget);
 static int  panel_try_to_set_pixmap     (PanelWidget      *panel,
 					 const char       *pixmap);
 static void panel_resize_pixmap         (PanelWidget      *panel);
@@ -55,14 +55,18 @@ static void panel_widget_size_request   (GtkWidget        *widget,
 					 GtkRequisition   *requisition);
 static void panel_widget_size_allocate  (GtkWidget        *widget,
 					 GtkAllocation    *allocation);
-static void panel_widget_cadd		(GtkContainer     *container,
+static void panel_widget_cadd           (GtkContainer     *container,
 					 GtkWidget        *widget);
-static void panel_widget_cremove	(GtkContainer     *container,
+static void panel_widget_cremove        (GtkContainer     *container,
 					 GtkWidget        *widget);
-static int  panel_widget_expose		(GtkWidget        *widget,
+static int  panel_widget_expose         (GtkWidget        *widget,
 					 GdkEventExpose   *event);
-static void applet_move			(PanelWidget      *panel,
+static void panel_widget_destroy        (GtkObject        *obj);
+static void applet_move                 (PanelWidget      *panel,
 					 GtkWidget        *applet);
+static void panel_widget_style_set      (GtkWidget        *widget,
+					 GtkStyle         *previous_style);
+static void panel_widget_realize        (GtkWidget        *widget);
 
 typedef void (*BackSignal) (GtkObject * object,
 			    PanelBackType type,
@@ -267,9 +271,13 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->applet_draw = NULL;
 	class->applet_about_to_die = NULL;
 	
+	object_class->destroy = panel_widget_destroy;
+	
 	widget_class->size_request = panel_widget_size_request;
 	widget_class->size_allocate = panel_widget_size_allocate;
+	widget_class->realize = panel_widget_realize;
 	widget_class->expose_event = panel_widget_expose;
+	widget_class->style_set = panel_widget_style_set;
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
@@ -282,13 +290,6 @@ applet_move(PanelWidget *panel, GtkWidget *applet)
 	   (panel->back_type == PANEL_BACK_NONE &&
 	    !GTK_WIDGET(panel)->style->bg_pixmap[GTK_WIDGET_STATE(panel)]))
 		return;
-	if(BUTTON_IS_WIDGET(applet)) {
-		ButtonWidget *button = BUTTON_WIDGET(applet);
-		if(!button->no_alpha && button->cache) {
-			g_object_unref (G_OBJECT (button->cache));
-			button->cache = NULL;
-		}
-	}
 	g_signal_emit (G_OBJECT(panel),
 		       panel_widget_signals[APPLET_DRAW_SIGNAL],
 		       0, applet);
@@ -427,8 +428,6 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 		PanelWidget *panel = PANEL_WIDGET (container);
 
 		panel->applet_list = g_list_remove (panel->applet_list, ad);
-		panel->no_window_applet_list =
-			g_list_remove (panel->no_window_applet_list, ad);
 	}
 
 	g_signal_emit (G_OBJECT (container),
@@ -987,6 +986,7 @@ queue_resize_on_all_applets(PanelWidget *panel)
 	}
 }
 
+/* TODO: I think this function, and the whole APPLET_DRAW_SIGNAL is utterly bogus */
 static void
 send_draw_to_all_applets(PanelWidget *panel)
 {
@@ -997,24 +997,6 @@ send_draw_to_all_applets(PanelWidget *panel)
 		g_signal_emit (G_OBJECT(panel),
 			       panel_widget_signals[APPLET_DRAW_SIGNAL],
 			       0, ad->applet);
-	}
-}
-
-static void
-kill_cache_on_all_buttons(PanelWidget *panel, gboolean even_no_alpha)
-{
-	GList *li;
-	for(li = panel->applet_list; li != NULL;
-	    li = g_list_next(li)) {
-		AppletData *ad = li->data;
-		if(BUTTON_IS_WIDGET(ad->applet)) {
-			ButtonWidget *button = BUTTON_WIDGET(ad->applet);
-			if((even_no_alpha || !button->no_alpha)
-			   && button->cache) {
-				g_object_unref (G_OBJECT (button->cache));
-				button->cache = NULL;
-			}
-		}
 	}
 }
 
@@ -1038,12 +1020,10 @@ setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 			panel->backpix = gdk_pixbuf_get_from_drawable
 				(NULL, bg_pixmap, widget->style->colormap,
 				 0, 0, 0, 0, w, h);
-			kill_cache_on_all_buttons(panel, FALSE);
 			send_draw_to_all_applets(panel);
 		} else if(!bg_pixmap && panel->backpix) {
 			g_object_unref (G_OBJECT (panel->backpix));
 			panel->backpix = NULL;
-			kill_cache_on_all_buttons(panel, FALSE);
 			send_draw_to_all_applets(panel);
 		}
 		*pb = panel->backpix;
@@ -1072,157 +1052,14 @@ setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 	} 
 }
 
-void
-panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
-{
-	GList *li;
-	GtkWidget *widget;
-	GdkGC *gc;
-	GdkPixmap *pixmap;
-	GdkRectangle da;
-	GdkPixbuf *pb = NULL;
-	int size;
-	int scale_w = 0,scale_h = 0;
-	int rotate = FALSE;
-
-	g_return_if_fail(panel!=NULL);
-	g_return_if_fail(PANEL_IS_WIDGET(panel));
-
-	widget = GTK_WIDGET(panel);
-
-#ifdef PANEL_WIDGET_DEBUG
-	puts("PANEL_WIDGET_DRAW_ALL");
-#endif
-
-	if(!GTK_WIDGET_DRAWABLE(widget) ||
-	   widget->allocation.width <= 0 ||
-	   widget->allocation.height <= 0)
-		return;
-
-	if(area) {
-		if(area->width==0 || area->height==0)
-			return;
-		da = *area;
-	} else {
-		da.x = 0;
-		da.y = 0;
-		da.width = widget->allocation.width;
-		da.height = widget->allocation.height;
-	}
-
-	setup_background(panel, &pb, &scale_w, &scale_h, &rotate);
-	
-	pixmap = gdk_pixmap_new(widget->window,
-				da.width,da.height,
-				gtk_widget_get_visual(widget)->depth);
-	
-	gc = gdk_gc_new(pixmap);
-	gdk_gc_copy(gc,widget->style->bg_gc[GTK_WIDGET_STATE(widget)]);
-
-	if(panel->back_type == PANEL_BACK_NONE) {
-		if(widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]) {
-			gdk_gc_set_fill(gc, GDK_TILED);
-			gdk_gc_set_tile(gc,
-					widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]);
-			gdk_gc_set_ts_origin(gc,-da.x,-da.y);
-		}
-	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
-		if(panel->backpixmap) {
-			gdk_gc_set_fill(gc, GDK_TILED);
-			gdk_gc_set_tile(gc, panel->backpixmap);
-			gdk_gc_set_ts_origin(gc,-da.x,-da.y);
-		}
-	} else /*COLOR*/ {
-		gdk_gc_set_foreground(gc, &panel->back_color);
-	}
-
-
-	gdk_draw_rectangle(pixmap,gc, TRUE, 0, 0, -1, -1);
-
-	/* get pixel size of an icon */
-	size = panel->sz;
-
-	for(li = panel->applet_list; li != NULL;
-	    li = g_list_next(li)) {
-		AppletData *ad = li->data;
-		if(BUTTON_IS_WIDGET(ad->applet) &&
-		   ad->applet->allocation.x>=0 &&
-		   (!area || gtk_widget_intersect(ad->applet, area, NULL))) {
-			ButtonWidget *button = BUTTON_WIDGET(ad->applet);
-			if(!button->cache) {
-				GdkPixbuf *pixbuf;
-
-				button->cache =
-					gdk_pixmap_new(widget->window, size,size,
-						       gtk_widget_get_visual(widget)->depth);
-				pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, size, size);
-				/*if the icon doesn't have an opaque tile,
-				  draw us a background*/
-				if(!button->no_alpha)
-					make_background(panel,
-							gdk_pixbuf_get_pixels (pixbuf),
-							ad->applet->allocation.x,
-							ad->applet->allocation.y,
-							size,size, gdk_pixbuf_get_rowstride (pixbuf),
-							pb, scale_w, scale_h,
-							rotate);
-				button_widget_draw (button, pixbuf);
-				gdk_pixbuf_render_to_drawable (pixbuf, button->cache, gc,
-							       0, 0,
-							       0, 0,
-							       size, size,
-							       GDK_RGB_DITHER_NORMAL,
-							       0, 0);
-				g_object_unref (pixbuf);
-				button_widget_draw_xlib(button, button->cache);
-			}
-			gdk_draw_drawable (pixmap, gc,
-					   button->cache,
-					   0, 0,
-					   ad->applet->allocation.x - da.x,
-					   ad->applet->allocation.y - da.y,
-					   size, size);
-		}
-	}
-	g_object_unref (G_OBJECT (gc));
-
-	gdk_draw_drawable (widget->window,
-			   widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
-			   pixmap,
-			   0,0,da.x,da.y,da.width,da.height);
-	g_object_unref (G_OBJECT (pixmap));
-}
-
-void
-panel_widget_draw_icon(PanelWidget *panel, ButtonWidget *button)
-{
-	GtkWidget *widget;
-	GdkRectangle area;
-
-	g_return_if_fail(button != NULL);
-	g_return_if_fail(GTK_IS_WIDGET(button));
-	g_return_if_fail(panel != NULL);
-	g_return_if_fail(PANEL_IS_WIDGET(panel));
-	
-#ifdef PANEL_WIDGET_DEBUG
-	puts("PANEL_WIDGET_DRAW_ICON");
-#endif
-
-	widget = GTK_WIDGET(button);
-	
-	area.x = widget->allocation.x;
-	area.y = widget->allocation.y;
-	area.width = widget->allocation.width;
-	area.height = widget->allocation.height;
-
-	panel_widget_draw_all(panel, &area);
-}
-
 static int
 panel_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 {
-	GList *li;
 	PanelWidget *panel;
+	GdkGC *gc;
+	GdkPixbuf *pb = NULL;
+	int scale_w = 0,scale_h = 0;
+	int rotate = FALSE;
 
 	g_return_val_if_fail(widget!=NULL,FALSE);
 	g_return_val_if_fail(PANEL_IS_WIDGET(widget),FALSE);
@@ -1230,29 +1067,42 @@ panel_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 
 	panel = PANEL_WIDGET(widget);
 
-	if(!GTK_WIDGET_DRAWABLE(widget))
-		return FALSE;
-	
 #ifdef PANEL_WIDGET_DEBUG
 	puts("PANEL_WIDGET_EXPOSE");
 #endif
 
-	panel_widget_draw_all(panel, &event->area);
+	if(!GTK_WIDGET_DRAWABLE(widget) ||
+	   widget->allocation.width <= 0 ||
+	   widget->allocation.height <= 0)
+		return FALSE;
 
-	for(li = panel->applet_list;
-	    li != NULL;
-	    li = g_list_next(li)) {
-		AppletData *ad = li->data;
-		GdkEventExpose ch_event = *event;
+	setup_background (panel, &pb, &scale_w, &scale_h, &rotate);
+	
+	gc = gdk_gc_new (widget->window);
+	gdk_gc_copy (gc, widget->style->bg_gc[GTK_WIDGET_STATE(widget)]);
 
-		if(!BUTTON_IS_WIDGET(ad->applet) &&
-		   GTK_WIDGET_NO_WINDOW (ad->applet) &&
-		   gtk_widget_intersect (ad->applet, &event->area, 
-					 &ch_event.area))
-			gtk_widget_event (ad->applet, (GdkEvent*) &ch_event);
+	if (panel->back_type == PANEL_BACK_NONE) {
+		if (widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]) {
+			gdk_gc_set_fill (gc, GDK_TILED);
+			gdk_gc_set_tile (gc,
+					 widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]);
+		}
+	} else if (panel->back_type == PANEL_BACK_PIXMAP) {
+		if(panel->backpixmap) {
+			gdk_gc_set_fill (gc, GDK_TILED);
+			gdk_gc_set_tile (gc, panel->backpixmap);
+		}
+	} else /*COLOR*/ {
+		gdk_gc_set_foreground (gc, &panel->back_color);
 	}
 
-	return FALSE;
+	gdk_draw_rectangle (widget->window, gc, TRUE,
+			    event->area.x, event->area.y, event->area.width, event->area.height);
+
+	g_object_unref (G_OBJECT (gc));
+
+	/* Chain up to get no-window widget exposes */
+	return (* GTK_WIDGET_CLASS (panel_widget_parent_class)->expose_event) (widget, event);
 }
 
 static void
@@ -1293,7 +1143,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	   panel->back_type != PANEL_BACK_COLOR &&
 	   (panel->back_type != PANEL_BACK_NONE ||
 	    GTK_WIDGET(panel)->style->bg_pixmap[GTK_WIDGET_STATE(panel)])) {
-		kill_cache_on_all_buttons(panel, FALSE);
 		send_draw_to_all_applets(panel);
 	}
 	
@@ -1443,9 +1292,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			       0, ad->applet);
 	}
 	g_slist_free(send_move);
-	
-	if (GTK_WIDGET_REALIZED (widget))
-		panel_widget_draw_all(panel,NULL);
 }
 
 gboolean
@@ -1492,15 +1338,16 @@ panel_widget_set_back_pixmap (PanelWidget *panel, const char *file)
 		g_free (panel->back_pixmap);
 		panel->back_pixmap = g_strdup (file);
 		panel->back_type = PANEL_BACK_PIXMAP;
-		panel_widget_draw_all(panel,NULL);
+		gtk_widget_queue_draw (GTK_WIDGET (panel));
 
 		g_signal_emit (G_OBJECT(panel),
 			       panel_widget_signals[BACK_CHANGE_SIGNAL],
 			       0, panel->back_type,
 				panel->back_pixmap,
 				&panel->back_color);
-	} else
-		panel_widget_draw_all(panel,NULL);
+	}
+	else
+		gtk_widget_queue_draw (GTK_WIDGET (panel));
 }
 
 static void
@@ -1512,7 +1359,6 @@ panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
 	g_return_if_fail(PANEL_IS_WIDGET(panel));
 	g_return_if_fail(color!=NULL);
 	
-	kill_cache_on_all_buttons(panel, FALSE);
 	send_draw_to_all_applets(panel);
 
 	cmap = gtk_widget_get_colormap(GTK_WIDGET(panel));
@@ -1531,7 +1377,7 @@ panel_widget_set_back_color(PanelWidget *panel, GdkColor *color)
 
 	panel->back_type = PANEL_BACK_COLOR;
 	panel_try_to_set_back_color(panel, color);
-	panel_widget_draw_all(panel,NULL);
+	gtk_widget_queue_draw (GTK_WIDGET (panel));
 
 	g_signal_emit(GTK_OBJECT(panel),
 		      panel_widget_signals[BACK_CHANGE_SIGNAL],
@@ -1657,7 +1503,6 @@ panel_try_to_set_pixmap (PanelWidget *panel, const char *pixmap)
 	g_return_val_if_fail(panel!=NULL,FALSE);
 	g_return_val_if_fail(PANEL_IS_WIDGET(panel),FALSE);
 
-	kill_cache_on_all_buttons(panel, FALSE);
 	send_draw_to_all_applets(panel);
 
 	if(panel->backpix)
@@ -1685,7 +1530,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, const char *pixmap)
 }
 
 static void
-panel_widget_realize(GtkWidget *w, gpointer data)
+panel_widget_realize(GtkWidget *w)
 {
 	PanelWidget *panel;
 
@@ -1694,6 +1539,9 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 
 	panel = PANEL_WIDGET(w);
 
+	if (GTK_WIDGET_CLASS (panel_widget_parent_class)->realize)
+		(* GTK_WIDGET_CLASS (panel_widget_parent_class)->realize) (w);
+	
 	if(panel->back_type == PANEL_BACK_PIXMAP) {
 		if (!panel_try_to_set_pixmap (panel, panel->back_pixmap))
 			panel->back_type = PANEL_BACK_NONE;
@@ -1704,13 +1552,13 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 #ifdef PANEL_WIDGET_DEBUG
 	puts("PANEL_WIDGET_REALIZE");
 #endif
-	panel_widget_draw_all(panel,NULL);
 }
 
 static void
-panel_widget_destroy(GtkWidget *w, gpointer data)
+panel_widget_destroy (GtkObject *obj)
 {
 	PanelWidget *panel;
+	GtkWidget *w = GTK_WIDGET (obj);
 
 	g_return_if_fail(w!=NULL);
 	g_return_if_fail(PANEL_IS_WIDGET(w));
@@ -1727,66 +1575,28 @@ panel_widget_destroy(GtkWidget *w, gpointer data)
 	/*remove from panels list*/
 	panels = g_slist_remove(panels,w);
 	session_remove_panel_from_config (panel);
+
+	if (GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy)
+		GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy (obj);
 }
 
 static void
-panel_widget_style_set(PanelWidget *panel)
+panel_widget_style_set(GtkWidget *widget,
+		       GtkStyle  *previous_style)
 {
-	if(panel->back_type == PANEL_BACK_NONE) {
+	PanelWidget *panel = PANEL_WIDGET (widget);
+	if (panel->back_type == PANEL_BACK_NONE) {
 		if(panel->backpix)
 			g_object_unref (G_OBJECT (panel->backpix));
 		panel->backpix = NULL;
-		kill_cache_on_all_buttons(panel, TRUE);
 		send_draw_to_all_applets(panel);
 	}
+
+	if (GTK_WIDGET_CLASS (panel_widget_parent_class)->style_set)
+		(* GTK_WIDGET_CLASS (panel_widget_parent_class)->style_set) (widget, previous_style);
+
 }
 
-static gboolean panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data);
-
-static gboolean
-is_in_widget(GdkEventButton *bevent, GtkWidget *widget)
-{
-	g_return_val_if_fail(widget!=NULL,FALSE);
-	g_return_val_if_fail(GTK_IS_WIDGET(widget),FALSE);
-	g_return_val_if_fail(bevent!=NULL,FALSE);
-
-	if(bevent->x >= widget->allocation.x &&
-	   bevent->x < (widget->allocation.x + widget->allocation.width) &&
-	   bevent->y >= widget->allocation.y &&
-	   bevent->y < (widget->allocation.y + widget->allocation.height))
-		return TRUE;
-	return FALSE;
-}
-
-static gboolean
-panel_widget_event(GtkWidget *widget, GdkEvent *event, gpointer data)
-{
-	PanelWidget *panel;
-	GList *list;
-	GdkEventButton *bevent;
-
-	g_return_val_if_fail(widget!=NULL,FALSE);
-	g_return_val_if_fail(PANEL_IS_WIDGET(widget),FALSE);
-	g_return_val_if_fail(event!=NULL,FALSE);
-
-	panel = PANEL_WIDGET(widget);
-	bevent = (GdkEventButton *) event;
-
-	if((event->type != GDK_BUTTON_PRESS &&
-	    event->type != GDK_BUTTON_RELEASE) ||
-	   bevent->window != widget->window)
-		return FALSE;
-
-	for(list = panel->no_window_applet_list; list!=NULL;
-	    list = g_list_next(list)) {
-		AppletData *ad = list->data;
-		if(is_in_widget(bevent,ad->applet) &&
-		   bevent->button != 1)
-			return panel_widget_applet_event(ad->applet,
-							 event,data);
-	}
-	return FALSE;
-}
 static gchar * 
 generate_unique_id (void)
 {
@@ -1895,22 +1705,11 @@ panel_widget_instance_init (PanelWidget *panel)
 	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel->size = G_MAXINT;
 	panel->applet_list = NULL;
-	panel->no_window_applet_list = NULL;
 	panel->master_widget = NULL;
 	panel->drop_widget = GTK_WIDGET(panel);
 	panel->backpix = NULL;
 	panel->backpixmap = NULL;
 	panel->inhibit_draw = FALSE;
-
-	g_signal_connect (G_OBJECT(panel), "destroy",
-			  G_CALLBACK (panel_widget_destroy),
-			  NULL);
-	g_signal_connect (G_OBJECT(panel), "style_set",
-			  G_CALLBACK (panel_widget_style_set),
-			  NULL);
-	g_signal_connect (GTK_OBJECT(panel), "event",
-			  G_CALLBACK (panel_widget_event),
-			  NULL);
 
 	panels = g_slist_append(panels,panel);
 }
@@ -1968,11 +1767,6 @@ panel_widget_new (gchar *panel_id,
 		panel->size = 0;
 	else
 		panel->size = G_MAXINT;
-	
-	g_signal_connect_after (G_OBJECT(panel),
-				"realize",
-				G_CALLBACK (panel_widget_realize),
-				panel);
 	
 	return GTK_WIDGET(panel);
 }
@@ -2468,7 +2262,7 @@ schedule_try_move(PanelWidget *panel, gboolean repeater)
 }
 
 static gboolean
-panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
+panel_widget_applet_event(GtkWidget *widget, GdkEvent *event)
 {
 	PanelWidget *panel;
 	GdkEventButton *bevent;
@@ -2603,9 +2397,6 @@ panel_widget_applet_destroy (GtkWidget *applet, gpointer data)
 			panel_widget_applet_drag_end (panel);
 
 		panel->applet_list = g_list_remove (panel->applet_list,ad);
-		panel->no_window_applet_list =
-			g_list_remove (panel->no_window_applet_list, ad);
-
 	}
 
 	g_free (ad);
@@ -2761,9 +2552,6 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos,
 	panel->applet_list =
 		g_list_insert_sorted(panel->applet_list,ad,
 				     (GCompareFunc)applet_data_compare);
-	if(GTK_WIDGET_NO_WINDOW(applet))
-		panel->no_window_applet_list =
-			g_list_prepend(panel->no_window_applet_list,ad);
 
 	/*this will get done right on size allocate!*/
 	if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -2812,18 +2600,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 	ad->no_die++;
 
-	/*reparent applet*/
-	if (BUTTON_IS_WIDGET (applet)) {
-		ButtonWidget *button = BUTTON_WIDGET(applet);
-		if (button->cache != NULL)
-			g_object_unref (G_OBJECT (button->cache));
-		button->cache = NULL;
-		gtk_widget_ref (applet);
-		gtk_container_remove (GTK_CONTAINER (applet->parent), applet);
-		gtk_container_add (GTK_CONTAINER (new_panel), applet);
-		gtk_widget_unref (applet);
-	} else 
-		gtk_widget_reparent (applet, GTK_WIDGET (new_panel));
+	gtk_widget_reparent (applet, GTK_WIDGET (new_panel));
 
 	gdk_flush();
 
@@ -2846,8 +2623,6 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
 	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
 	ad->pos = -1;
 	panel->applet_list = g_list_remove (panel->applet_list, ad);
-	panel->no_window_applet_list =
-		g_list_remove (panel->no_window_applet_list, ad);
 	
 	if(pos < 0)
 		pos = 0;
@@ -2865,9 +2640,6 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
 	panel->applet_list =
 		g_list_insert_sorted(panel->applet_list,ad,
 				     (GCompareFunc)applet_data_compare);
-	if(GTK_WIDGET_NO_WINDOW(ad->applet))
-		panel->no_window_applet_list =
-			g_list_remove(panel->no_window_applet_list,ad);
 
 	g_signal_emit (G_OBJECT(panel),
 		       panel_widget_signals[APPLET_MOVE_SIGNAL],
@@ -2926,7 +2698,6 @@ panel_widget_change_params(PanelWidget *panel,
 	printf("GOT SIZE OF %d\n",sz);
 #endif
 
-	kill_cache_on_all_buttons(panel, TRUE);
 	queue_resize_on_all_applets(panel);
 	send_draw_to_all_applets(panel);
 

@@ -63,7 +63,6 @@ struct _PanelWidget
 	gchar 			*unique_id;
 	
 	GList			*applet_list;
-	GList			*no_window_applet_list;
 
 	int			size;
 	GtkOrientation		orient;
