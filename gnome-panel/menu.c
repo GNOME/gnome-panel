@@ -114,8 +114,9 @@ about_cb (GtkWidget *widget, gpointer data)
 	  "Ian Main (imain@gtk.org)",
 	  "Elliot Lee (sopwith@redhat.com)",
 	  "Owen Taylor (otaylor@redhat.com)",
-	  "Many many others ...",
-	  "and finally, The Knights Who Say ... NI!",
+	N_("Many many others ..."),
+	/* ... from the Monty Pythons show...  */
+	N_("and finally, The Knights Who Say ... NI!"),
 	  NULL
 	  };
 
@@ -125,6 +126,16 @@ about_cb (GtkWidget *widget, gpointer data)
 		return;
 	}
 
+#ifdef ENABLE_NLS
+	{
+		int i=0;
+		while (authors[i] != NULL) {
+		       	authors[i]=_(authors[i]);
+			i++;
+		}
+	}
+#endif
+	
 	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
 			"(C) 1997-2000 the Free Software Foundation",
 			(const gchar **)authors,
