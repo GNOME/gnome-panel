@@ -13,14 +13,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.gnome-2-0\n"
-"POT-Creation-Date: 2002-10-14 14:20+1300\n"
-"PO-Revision-Date: 2002-09-28 19:23+0200\n"
+"POT-Creation-Date: 2002-10-21 16:30-0300\n"
+"PO-Revision-Date: 2002-10-18 17:14+0200\n"
 "Last-Translator: Juan Manuel García Molina <juanma_gm@wanadoo.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0beta2\n"
+"X-Generator: KBabel 0.9.6\n"
 
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
@@ -396,49 +396,50 @@ msgid "Display date in applet, in addition to time"
 msgstr "Muestra la fecha en el aplique, además de la hora"
 
 #: applets/gen_util/clock.schemas.in.h:3
+msgid "Display seconds in time"
+msgstr "segundos"
+
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Muestra la hora en la zona UMT"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "segundos"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Formato de hora"
 
-#: applets/gen_util/clock.schemas.in.h:6
-msgid ""
-"Sets the hour format, may be either 12 or 24</long> <default>24</default> </"
-"locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets the "
-"hour format, may be either 12 or 24</long> <default>12</default> </locale> </"
-"schema> <schema> <key>/schemas/apps/clock_applet/prefs/show_seconds</key> "
-"<owner>clock-applet</owner> <type>bool</type> <default>true</default> "
-"<locale name=\"C\"> <short>Show time with seconds</short> <long>Display "
-"seconds in time"
-msgstr ""
-
 #: applets/gen_util/clock.schemas.in.h:7
+msgid "Sets the hour format, may be either 12 or 24"
+msgstr "Establece el formato de hora, 12 ó 24 horas"
+
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr "Muestra la fecha en un consejo al pasar el ratón sobre el aplique"
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in applet"
 msgstr "Mostrar la fecha en aplique"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Show date in tooltip"
 msgstr "Mostrar la fecha en el consejo"
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:11
+msgid "Show time with seconds"
+msgstr "Mostrar hora con segundos"
+
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Use Internet time"
 msgstr "Usar la hora de Internet"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use UNIX time"
 msgstr "Usar hora UNIX"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:14
 msgid "Use UTC"
 msgstr "Usar UTC"
 
@@ -1083,7 +1084,7 @@ msgstr "_Quitar del panel"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:441 gnome-panel/foobar-widget.c:394
+#: gnome-panel/applet.c:441 gnome-panel/foobar-widget.c:397
 msgid "???"
 msgstr "¿?"
 
@@ -1097,7 +1098,7 @@ msgstr "No se ha fijado object_type para el objeto del panel con id %s\n"
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "No se ha fijado panel_id para el objeto del panel con id %s\n"
 
-#: gnome-panel/applet.c:1142
+#: gnome-panel/applet.c:1137
 msgid "Can't find an empty spot"
 msgstr "No se pudo encontrar un espacio vacío"
 
@@ -1234,72 +1235,72 @@ msgstr "Cajón"
 msgid "_Properties"
 msgstr "_Propiedades"
 
-#: gnome-panel/foobar-widget.c:169 gnome-panel/menu.c:3602
+#: gnome-panel/foobar-widget.c:172 gnome-panel/menu.c:3602
 msgid "Cannot execute gnome-panel-screenshot"
 msgstr "No puede ejecutar gnome-panel-screenshot"
 
-#: gnome-panel/foobar-widget.c:180 gnome-panel/menu.c:3612
+#: gnome-panel/foobar-widget.c:183 gnome-panel/menu.c:3612
 msgid "Cannot execute gnome-search-tool"
 msgstr "No se pudo ejecutar la herramienta de búsqueda de GNOME"
 
-#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3731
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3731
 msgid "Run Program..."
 msgstr "Lanzar programa..."
 
-#: gnome-panel/foobar-widget.c:194
+#: gnome-panel/foobar-widget.c:197
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Ejecuta aplicaciones, si conoce el comando correcto a teclear"
 
-#: gnome-panel/foobar-widget.c:203 gnome-panel/menu.c:3743
+#: gnome-panel/foobar-widget.c:206 gnome-panel/menu.c:3743
 msgid "Search for Files..."
 msgstr "Buscar archivos..."
 
-#: gnome-panel/foobar-widget.c:208 gnome-panel/menu.c:3746
+#: gnome-panel/foobar-widget.c:211 gnome-panel/menu.c:3746
 msgid "Find files, folders, and documents on your computer"
 msgstr "Busca archivos, carpetas y documentos en su computador"
 
-#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3756
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3756
 msgid "Screenshot..."
 msgstr "Captura de pantalla..."
 
-#: gnome-panel/foobar-widget.c:222 gnome-panel/menu.c:3759
+#: gnome-panel/foobar-widget.c:225 gnome-panel/menu.c:3759
 msgid "Take a screenshot of your desktop"
 msgstr "Captura la pantalla de su escritorio"
 
-#: gnome-panel/foobar-widget.c:233 gnome-panel/menu.c:3516
+#: gnome-panel/foobar-widget.c:236 gnome-panel/menu.c:3516
 msgid "Lock Screen"
 msgstr "Bloquear la pantalla"
 
-#: gnome-panel/foobar-widget.c:237
+#: gnome-panel/foobar-widget.c:240
 msgid "Protect your computer from unauthorized use"
 msgstr "Proteja su computadora del uso no autorizado"
 
-#: gnome-panel/foobar-widget.c:246 gnome-panel/menu.c:3527
+#: gnome-panel/foobar-widget.c:249 gnome-panel/menu.c:3527
 msgid "Log Out"
 msgstr "Terminar sesión"
 
-#: gnome-panel/foobar-widget.c:250
+#: gnome-panel/foobar-widget.c:253
 msgid "Quit from the GNOME desktop"
 msgstr "Salir del escritorio de GNOME"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:259
+#: gnome-panel/foobar-widget.c:262
 msgid "Actions"
 msgstr "Acciones"
 
-#: gnome-panel/foobar-widget.c:476
+#: gnome-panel/foobar-widget.c:479
 msgid "No windows open"
 msgstr "No hay ventanas abiertas"
 
-#: gnome-panel/foobar-widget.c:714 gnome-panel/menu.c:2744
+#: gnome-panel/foobar-widget.c:717 gnome-panel/menu.c:2744
 msgid "Menu Panel"
 msgstr "Panel de menú"
 
-#: gnome-panel/foobar-widget.c:714
+#: gnome-panel/foobar-widget.c:717
 msgid "GNOME Menu Panel"
 msgstr "Panel de menú de GNOME"
 
-#: gnome-panel/foobar-widget.c:734 gnome-panel/menu.c:2880
+#: gnome-panel/foobar-widget.c:737 gnome-panel/menu.c:2880
 #: gnome-panel/menu.c:2885 gnome-panel/menu.c:3699
 msgid "Applications"
 msgstr "Aplicaciones"
@@ -1555,7 +1556,7 @@ msgstr ""
 "\n"
 "Detalles: %s"
 
-#: gnome-panel/gnome-run.c:347 gnome-panel/gnome-run.c:421
+#: gnome-panel/gnome-run.c:356 gnome-panel/gnome-run.c:431
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1566,7 +1567,7 @@ msgstr ""
 "\n"
 "Detalles: %s"
 
-#: gnome-panel/gnome-run.c:444
+#: gnome-panel/gnome-run.c:454
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1577,7 +1578,7 @@ msgstr ""
 "\n"
 "Detalles: no hay ninguna aplicación disponible para abrir el archivo"
 
-#: gnome-panel/gnome-run.c:458
+#: gnome-panel/gnome-run.c:468
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1588,44 +1589,44 @@ msgstr ""
 "\n"
 "Detalles: %s"
 
-#: gnome-panel/gnome-run.c:536
+#: gnome-panel/gnome-run.c:557
 msgid "Choose a file"
 msgstr "Seleccione un archivo"
 
-#: gnome-panel/gnome-run.c:775 gnome-panel/gnome-run.c:776
+#: gnome-panel/gnome-run.c:796 gnome-panel/gnome-run.c:797
 msgid "Known Applications"
 msgstr "Aplicaciones conocidas"
 
-#: gnome-panel/gnome-run.c:904
+#: gnome-panel/gnome-run.c:927
 msgid "Command to run"
 msgstr "Comando a ejecutar"
 
-#: gnome-panel/gnome-run.c:939
+#: gnome-panel/gnome-run.c:962
 msgid "Run in _terminal"
 msgstr "Ejecutar en _terminal"
 
-#: gnome-panel/gnome-run.c:944
+#: gnome-panel/gnome-run.c:967
 msgid "_Append File..."
 msgstr "_Añadir archivo..."
 
-#: gnome-panel/gnome-run.c:1327
+#: gnome-panel/gnome-run.c:1350
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Se ejecutará el comando \"%s\""
 
-#: gnome-panel/gnome-run.c:1336
+#: gnome-panel/gnome-run.c:1359
 msgid "No application selected"
 msgstr "No hay aplicación(es) seleccionada(s)"
 
-#: gnome-panel/gnome-run.c:1456
+#: gnome-panel/gnome-run.c:1479
 msgid "List of known applications"
 msgstr "Lista de aplicaciones conocidas"
 
-#: gnome-panel/gnome-run.c:1457
+#: gnome-panel/gnome-run.c:1480
 msgid "Choose an application to run from the list"
 msgstr "Seleccione una aplicación a ejecutar de la lista"
 
-#: gnome-panel/gnome-run.c:1581
+#: gnome-panel/gnome-run.c:1604
 msgid "Run Program"
 msgstr "Lanzar Programa"
 
@@ -2527,14 +2528,23 @@ msgstr "Muy grande"
 msgid "XX Small"
 msgstr "Muy pequeño"
 
-#~ msgid "Display seconds in time"
-#~ msgstr "segundos"
-
-#~ msgid "Sets the hour format, may be either 12 or 24"
-#~ msgstr "Establece el formato de hora, 12 ó 24 horas"
-
-#~ msgid "Show time with seconds"
-#~ msgstr "Mostrar hora con segundos"
+#~ msgid ""
+#~ "Sets the hour format, may be either 12 or 24</long> <default>24</default> "
+#~ "</locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets "
+#~ "the hour format, may be either 12 or 24</long> <default>12</default> </"
+#~ "locale> </schema> <schema> <key>/schemas/apps/clock_applet/prefs/"
+#~ "show_seconds</key> <owner>clock-applet</owner> <type>bool</type> "
+#~ "<default>true</default> <locale name=\"C\"> <short>Show time with "
+#~ "seconds</short> <long>Display seconds in time"
+#~ msgstr ""
+#~ "Fija el formato de hora, puede ser o bien 12 o bien 24</long> "
+#~ "<default>24</default> </locale> <locale name=\"en_US\"> <short>Formato de "
+#~ "hora</short> <long>Fija el formato de hora, puede ser o bien 12 o bien "
+#~ "24</long> <default>12</default> </locale> </schema> <schema> <key>/"
+#~ "schemas/apps/clock_applet/prefs/show_seconds</key> <owner>clock-applet</"
+#~ "owner> <type>bool</type> <default>true</default> <locale name=\"C\"> "
+#~ "<short>Muestra la hora con los segundos</short> <long>Muestra los "
+#~ "segundos en la hora"
 
 #~ msgid "1.0"
 #~ msgstr "1.0"
