@@ -16,7 +16,8 @@
 #include <string.h>
 #include <limits.h>
 #include <errno.h>
-#include <libgnomeui.h>
+
+#include <libgnome/gnome-util.h>
 
 #include "panel-include.h"
 
@@ -279,6 +280,7 @@ add_redhat_entry(GSList *list, char *file)
 static void
 make_rh_submenu(char *dir, GSList *rhlist)
 {
+#ifdef FIXME
 	GSList *li;
 	FILE *fp;
 	char *order_file;
@@ -329,6 +331,7 @@ make_rh_submenu(char *dir, GSList *rhlist)
 		g_free(dentry.location);
 	}
 	if(fp) fclose(fp);
+#endif
 }
 
 
