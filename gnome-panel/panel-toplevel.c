@@ -3161,6 +3161,8 @@ panel_toplevel_auto_hide_timeout_handler (PanelToplevel *toplevel)
 
 	panel_toplevel_hide (toplevel, TRUE, -1);
 
+	toplevel->priv->hide_timeout = 0;
+
 	return FALSE;
 }
 
@@ -3210,6 +3212,8 @@ panel_toplevel_auto_unhide_timeout_handler (PanelToplevel *toplevel)
 	}
 
 	panel_toplevel_unhide (toplevel);
+
+	toplevel->priv->unhide_timeout = 0;
 
 	return FALSE;
 }
