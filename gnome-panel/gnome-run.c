@@ -297,7 +297,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                                 for(i = term_argc; i < term_argc+temp_argc; i++)
                                         argv[i] = temp_argv[i-term_argc];
                                 argv[i] = NULL;
-                                g_free(argv);
+                                g_free (term_argv);
                         } else {
                                 char *check;
                                 int i;
