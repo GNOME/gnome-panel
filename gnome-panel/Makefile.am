@@ -23,6 +23,7 @@ MYLIBS = \
 	$(top_builddir)/libgnomeui/libgnomeui.la 	\
 	$(top_builddir)/libgnome/libgnome.la		\
 	$(DL_LIB)					\
+	$(GTK_LIBS)					\
         $(X_LIBS) $(x_libs)
 
 panel_LDADD = $(MYLIBS) 
