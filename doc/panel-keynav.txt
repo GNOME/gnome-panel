@@ -1,0 +1,70 @@
+This note describes areas where implementation of keynav for panels was 
+difficult.
+
+- PanelWidget and objects on the panel such as launchers and applets need to
+be focusable
+
+Both the PanelWidget and objects on the panel need to be focusable in order
+to invoke the context menu using only the keyboard. In the normal course of
+things, GTK+ does not support a widget and its children be focusable.
+
+When a PanelWidget is created it has GTK_CAN_FOCUS flag set and when the 
+panel is first focused the PanelWidget receives focus.
+
+The function panel_widget_focus_out_event() is called when the PanelWidget
+loses focus. This function unsets the GTK_CAN_FOCUS flag for the PanelWidget 
+if the window containing the PanelWidget has focus. This means that the
+GTK_CAN_FOCUS flags is not unset if the focus is moved from the panel to some
+other window but is unset if some other widget in the panel receives focus,
+perhaps because of a mouse click.
+
+The function panel_widget_real_focus is PanelWidget's default signal
+handler for focus signal. This function is called when either PanelWidget 
+or a child has focus and Tab or arrow keys are used to move focus. If the 
+PanelWidget has focus the GTK_CAN_FOCUS flag is unset so that a child can 
+receive focus.
+
+
+- Tab should move focus from within an applet to the next object on the panel
+
+This is implemented by defining an action signal "move_focus_out_of_applet"
+on PanelApplet and binding Tab  and Shift+Tab to this action. 
+
+When focus is in an applet the event is passed to the focus widget then its 
+children until a toplevel is reached unless the event is handled. This is 
+done in gtk_window_key_press_event(). The original implemementation  for 
+"move_focus_out_of_applet" had the action signal defined on PanelAppletFrame 
+but as a GtkSocket always reports a key press event as being handled when 
+the GtkPlug is in a different process, the event has not passed to the 
+PanelAppletFrame.
+
+The implementation for "moving_focus_out_of_applet" sets a flag 
+moving_focus_out so that the function panel_applet_focus() which is 
+PanelApplet's default signal handler for focus signal will not attempt to
+move the focus within the applet if this flag is set.
+
+
+- Ctrl+Tab should move focus from an object on the panel to the PanelWidget
+
+The difficulty is when focus is in an applet which is in a different process
+to the panel. In PanelApplet Ctrl+Tab (and Ctrl+Shift+Tab) are specified
+as bindings which cause focus to be moved out of the applet. This will cause
+PanelWidget's signal handler for focus signal, panel_widget_real_focus(),
+to be called. If panel_widget_real_focus is called because of Ctrl+Tab 
+we wish to focus the panel, otherwise move focus to the next object 
+on the panel. In order to determine whether panel_widget_real_focus() was
+called because of Ctrl+Tab, basep_widget_key_press() and 
+foobar_widget_key_press() call panel_widget_save_key_event() to preserve a 
+copy of the event. It is not sufficient to call gtk_get_current_event() in
+panel_widget_real_focus() as the event is no longer current when 
+panel_widget_real_focus() is called as it is called after a XEMBED message
+from a GtkPlug.
+
+There will be a problem is another key event occurs before the GtkPlug sends
+the XEMBED message.
+
+For widgets in the same process as the panel Ctrl+Tab is defined a key 
+binding on the top level, either BasePWidget or FoobarWidget. In both cases,
+the signal handler calls panel_widget_focus() to set the focus on the
+PanelWidget. This function resets the GTK_CAN_FOCUS flag on the PanelWidget
+so the PanelWidget can grab the focus.
