@@ -301,6 +301,30 @@ panel_addto_drag_data_get_cb (GtkWidget        *widget,
 }
 
 static void
+panel_addto_drag_begin_cb (GtkWidget      *widget,
+			   GdkDragContext *context,
+			   gpointer        data)
+{
+	GtkTreeModel *model;
+	GtkTreePath  *path;
+	GtkTreeIter   iter;
+	GdkPixbuf    *pixbuf;
+
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
+	   
+	gtk_tree_view_get_cursor (GTK_TREE_VIEW (widget), &path, NULL);
+	gtk_tree_model_get_iter (model, &iter, path);
+	gtk_tree_path_free (path);
+
+	gtk_tree_model_get (model, &iter,
+	                    COLUMN_ICON, &pixbuf,
+	                    -1);
+
+	gtk_drag_set_icon_pixbuf (context, pixbuf, 0, 0);
+	g_object_unref (pixbuf);
+}
+
+static void
 panel_addto_setup_drag (GtkTreeView          *tree_view,
 			const GtkTargetEntry *target,
 			const char           *text)
@@ -317,6 +341,9 @@ panel_addto_setup_drag (GtkTreeView          *tree_view,
 			       g_strdup (text),
 			       (GClosureNotify) g_free,
 			       0 /* connect_flags */);
+	g_signal_connect_after (G_OBJECT (tree_view), "drag-begin",
+	                        G_CALLBACK (panel_addto_drag_begin_cb),
+	                        NULL);
 }
 
 static void
