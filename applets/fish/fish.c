@@ -183,7 +183,7 @@ fish_timeout(gpointer data)
 	if(curpix>=3) curpix=0;
 	gtk_pixmap_set(GTK_PIXMAP(pixmap),pix[curpix]->pixmap,
 					  pix[curpix]->shape_mask);
-	gtk_widget_queue_draw(pixmap);
+	gtk_widget_draw(pixmap,NULL);
 	return TRUE;
 }
 
