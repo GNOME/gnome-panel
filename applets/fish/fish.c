@@ -55,37 +55,11 @@ typedef struct {
 	PanelAppletOrient  orient;
 } Fish;
 
-/* Multihead support:
- *    Move these inline when we require gtk+ with multihead.
- */
 static inline GdkWindow *
 fishy_root_window (Fish *fish)
 {
-#ifdef HAVE_GTK_MULTIHEAD
 	return gdk_screen_get_root_window (
 			gtk_widget_get_screen (fish->applet));
-#else
-	return gdk_get_default_root_window ();
-#endif
-}
-
-static inline void
-fishy_window_set_screen (GtkWindow *window,
-			 GtkWidget *widget)
-{
-#ifdef HAVE_GTK_MULTIHEAD
-	gtk_window_set_screen (window, gtk_widget_get_screen (widget));
-#endif
-}
-
-static inline GdkScreen *
-fishy_get_screen (Fish *fish)
-{
-#ifdef HAVE_GTK_MULTIHEAD
-	return gtk_widget_get_screen (fish->applet);
-#else
-	return NULL;
-#endif
 }
 
 /*
@@ -622,7 +596,8 @@ fish_properties_apply (GtkDialog *pb, Fish *fish)
 						      "which would make the applet "
 						      "\"practical\" or useful."));
 			gtk_window_set_wmclass (GTK_WINDOW (w), "fish_useful_warning", "Fish");
-			fishy_window_set_screen (GTK_WINDOW (w), fish->applet);
+			gtk_window_set_screen (GTK_WINDOW (w),
+					       gtk_widget_get_screen (fish->applet));
 
 			gtk_widget_show_all (w);
 
@@ -658,7 +633,7 @@ phelp (Fish *fish)
 	GError *error = NULL;
 
 	egg_screen_help_display_desktop (
-		fishy_get_screen (fish),
+		gtk_widget_get_screen (fish->applet),
 		NULL, "fish-applet-2", "fish-applet-2", NULL, &error);
 	if (error) {
 		g_warning ("help error: %s\n", error->message);
@@ -719,7 +694,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 	GtkWidget     *apply_button;
 
 	if (fish->pb) {
-		fishy_window_set_screen (GTK_WINDOW (fish->pb), fish->applet);
+		gtk_window_set_screen (GTK_WINDOW (fish->pb),
+				       gtk_widget_get_screen (fish->applet));
 		gtk_window_present (GTK_WINDOW (fish->pb));
 		return;
 	}
@@ -743,7 +719,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE, 
 				GTK_STOCK_OK, GTK_RESPONSE_OK, NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (fish->pb), "fish", "Fish");
-	fishy_window_set_screen (GTK_WINDOW (fish->pb), fish->applet);
+	gtk_window_set_screen (GTK_WINDOW (fish->pb),
+			       gtk_widget_get_screen (fish->applet));
 
 	gtk_dialog_set_default_response (GTK_DIALOG (fish->pb), GTK_RESPONSE_OK);
 
@@ -890,7 +867,8 @@ something_fishy_going_on (Fish       *fish,
 			  NULL);
 
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-	fishy_window_set_screen (GTK_WINDOW (dialog), fish->applet);
+	gtk_window_set_screen (GTK_WINDOW (dialog),
+			       gtk_widget_get_screen (fish->applet));
 	gtk_widget_show (dialog);
 }
 
@@ -992,7 +970,8 @@ update_fortune_dialog (Fish *fish)
 		g_signal_connect (G_OBJECT (fish->fortune_dialog), "response",
 				  G_CALLBACK (response), NULL);
 		gtk_window_set_wmclass (GTK_WINDOW (fish->fortune_dialog), "fish", "Fish");
-		fishy_window_set_screen (GTK_WINDOW (fish->fortune_dialog), fish->applet);
+		gtk_window_set_screen (GTK_WINDOW (fish->fortune_dialog),
+				       gtk_widget_get_screen (fish->applet));
 		gnome_window_icon_set_from_file (GTK_WINDOW (fish->fortune_dialog),
 						 GNOME_ICONDIR"/gnome-fish.png");
 
@@ -1034,8 +1013,8 @@ update_fortune_dialog (Fish *fish)
 		gtk_widget_show_all (fish->fortune_dialog);
 	} else {
 		set_access_name_desc (NULL, fish);
-		fishy_window_set_screen (GTK_WINDOW (fish->fortune_dialog),
-					 fish->applet);
+		gtk_window_set_screen (GTK_WINDOW (fish->fortune_dialog),
+				       gtk_widget_get_screen (fish->applet));
 		gtk_window_present (GTK_WINDOW (fish->fortune_dialog));
 	}
 
@@ -1083,7 +1062,8 @@ change_water (Fish *fish)
 				    _("The water needs changing!\n"
 				    "(Look at today's date)"));
 	gtk_window_set_wmclass (GTK_WINDOW (w), "fish", "Fish");
-	fishy_window_set_screen (GTK_WINDOW (w), fish->applet);
+	gtk_window_set_screen (GTK_WINDOW (w),
+			       gtk_widget_get_screen (fish->applet));
 
 	gtk_widget_show_all (w);
 
@@ -1230,7 +1210,7 @@ display_help_dialog (BonoboUIComponent *uic,
 	GError *error = NULL;
 
 	egg_screen_help_display_desktop (
-		fishy_get_screen (fish),
+		gtk_widget_get_screen (fish->applet),
 		NULL, "fish-applet-2", "fish-applet-2", NULL, &error);
 	if (error) {
 		g_warning ("help error: %s\n", error->message);
@@ -1254,7 +1234,8 @@ display_about_dialog (BonoboUIComponent *uic,
 	gchar       *name;
 
 	if (fish->aboutbox) {
-		fishy_window_set_screen (GTK_WINDOW (fish->aboutbox), fish->applet);
+		gtk_window_set_screen (GTK_WINDOW (fish->aboutbox),
+				       gtk_widget_get_screen (fish->applet));
 		gtk_window_present (GTK_WINDOW (fish->aboutbox));
 		return;
 	}
@@ -1299,7 +1280,8 @@ display_about_dialog (BonoboUIComponent *uic,
 		gdk_pixbuf_unref (pixbuf);
 
 	gtk_window_set_wmclass (GTK_WINDOW (fish->aboutbox), "fish", "Fish");
-	fishy_window_set_screen (GTK_WINDOW (fish->aboutbox), fish->applet);
+	gtk_window_set_screen (GTK_WINDOW (fish->aboutbox),
+			       gtk_widget_get_screen (fish->applet));
 	gnome_window_icon_set_from_file (GTK_WINDOW (fish->aboutbox),
 					 GNOME_ICONDIR"/gnome-fish.png");
 	gtk_signal_connect (GTK_OBJECT (fish->aboutbox), "destroy",
