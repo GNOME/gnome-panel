@@ -193,6 +193,7 @@ panel_2_SOURCES = \
 
 panel_2_LDADD=\
 	$(PANEL_LIBS)		\
+	$(XINERAMA_LIBS)	\
 	$(top_builddir)/gnome-desktop/libgnome-desktop-2.la
 
 panel_2_LDFLAGS=-export-dynamic

@@ -1099,11 +1099,10 @@ static void
 add_drawers_from_dir (const char *dirname, const char *name,
 		      int pos, PanelWidget *panel)
 {
-#ifdef FIXME
 	AppletInfo *info;
 	Drawer *drawer;
 	PanelWidget *newpanel;
-	GnomeDesktopEntry *item_info;
+	GnomeDesktopItem *item_info;
 	char *dentry_name;
 	const char *subdir_name;
 	char *pixmap_name;
@@ -1118,14 +1117,16 @@ add_drawers_from_dir (const char *dirname, const char *name,
 	dentry_name = g_build_filename (dirname,
 					".directory",
 					NULL);
-	item_info = gnome_desktop_entry_load (dentry_name);
+	item_info = gnome_desktop_item_new_from_file (dentry_name,
+						      GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS,
+						      NULL);
 	g_free (dentry_name);
 
 	if(!name)
-		subdir_name = item_info ? item_info->name : NULL;
+		subdir_name = item_info ? gnome_desktop_item_get_string (item_info, "name") : NULL;
 	else
 		subdir_name = name;
-	pixmap_name = item_info?item_info->icon:NULL;
+	pixmap_name = item_info?gnome_desktop_item_get_icon (item_info):NULL;
 
 	if( ! load_drawer_applet (-1, pixmap_name, subdir_name,
 				  panel, pos, FALSE) ||
@@ -1150,7 +1151,7 @@ add_drawers_from_dir (const char *dirname, const char *name,
 	for(li = list; li!= NULL; li = li->next) {
 		MFile *mfile = li->data;
 		struct stat s;
-		GnomeDesktopEntry *dentry;
+		GnomeDesktopItem *dentry;
 
 		g_free (filename);
 		if ( ! mfile->merged) {
@@ -1177,7 +1178,8 @@ add_drawers_from_dir (const char *dirname, const char *name,
 			  strcmp(p,".kdelnk")==0)) {
 			/*we load the applet at the right
 			  side, that is end of the drawer*/
-			dentry = gnome_desktop_entry_load (filename);
+			dentry = gnome_desktop_item_new_from_file (filename,
+								   GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS, NULL);
 			if (dentry) {
 				Launcher *launcher;
 
@@ -1197,7 +1199,6 @@ add_drawers_from_dir (const char *dirname, const char *name,
 	g_free (mergedir);
 
 	free_mfile_list (list);
-#endif
 }
 
 /*add a drawer with the contents of a menu to the panel*/
