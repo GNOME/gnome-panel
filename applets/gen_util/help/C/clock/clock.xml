@@ -1,408 +1,300 @@
 <?xml version="1.0"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY legal SYSTEM "legal.xml"> <!-- this is file with legalinfo; -->
-                                   <!-- no need to edit it. --> 
-<!ENTITY version "1.0">      <!-- replace with application version -->
-<!ENTITY date "April 2000"> <!-- date the manual was last updated -->
-<!ENTITY app "<application>GNOME Clock applet</application>">
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.0">
+  <!ENTITY manrevision "2.0">
+  <!ENTITY date "March 2002">
+  <!ENTITY applet "Clock">
 ]>
-
-<article id="index" lang="en"> 
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 11, 2002
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="en">
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
-
-
- 
-
-<articleinfo>
-  <title>GNOME Clock Applet</title>
- <!-- According to GFDL, the Title Page "should use  a title distinct from that of 
-      the Document, and from those of previous versions (which should, if there were 
-      any, be listed in the History section of the Document). You may use the same 
-      title as a previous version if the original publisher of that version gives 
-      permission." An easy way to satisfy this requirement (if you do
-      not have orginal publisher's permission)  is to include version
-      number as part of the title, e.g. MY-GNOME-APP V2.0
-   -->
-  <copyright>
-	<year>2000</year>
-	<holder>Dan Mueth</holder>
-  </copyright>
-  
-
-  
-  <!-- translators: uncomment this:
+  <articleinfo> 
+	 <title>&applet; Applet Manual V&manrevision;</title> 
+	 <copyright> 
+		<year>2002</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>Dan Mueth</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
 
   <copyright>
-   <year>2000</year>
+   <year>2002</year>
    <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
   </copyright>
 
    -->
-
-
-
 <!-- An address can be added to the publisher information.  If a role is 
      not specified, the publisher/author is the same for all versions of the 
      document.  -->
+	 <publisher> 
+		<publishername> GNOME Documentation Project </publishername> 
+	 </publisher> 
 
-  <publisher>
-	<publishername>
-	  GNOME Documentation Project
-	</publishername>
-  </publisher>
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
 
-
- &legal; <!-- This file  contains link to license for the documentation (GNU
-               FDL), and other
-               legal stuff such as "NO WARRANTY" statement. Please do
-               not change any of this. -->
-
-
-  <legalnotice id="feedback">
-      <title>Feedback Information</title>
-	<para>
-	  To report a bug or make a suggestion regarding this
-	  application or this documentation, please see  the
-	  <ulink type="help"
-	  url="ghelp:gnome-feedback">GNOME Feedback Page</ulink>.
-	</para>
-  </legalnotice>
-
-  <authorgroup>
-	<author>
-	  <firstname>Dan </firstname>
-	  <surname> Mueth</surname>
-	  <affiliation>
-		<orgname>GNOME Documentation Project</orgname>
-	  </affiliation>
-	</author>
-  </authorgroup>
-
-
-
+	 <authorgroup> 
+		<author> 
+		  <firstname>Sun </firstname> 
+		  <surname>Microsystems</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>docs@gnome.org</email> </address> 
+		  </affiliation> 
+		</author> 
+		<author> 
+		  <firstname>Dan </firstname> 
+		  <surname> Mueth</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>d-mueth@uchicago.edu</email> </address> 
+		  </affiliation> 
+		</author> 
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
 <!-- According to GNU FDL, revision history is mandatory if you are -->
-<!-- modifiyng/reusing someone else's document.  If not, you can omit it. -->  
+<!-- modifying/reusing someone else's document.  If not, you can omit it. -->
+<!-- Remember to remove the &manrevision; entity from the revision entries other-->
+<!-- than the current revision. -->
+<!-- The revision numbering system for GNOME manuals is as follows: -->
+<!-- * the revision number consists of two components -->
+<!-- * the first component of the revision number reflects the release version of the GNOME desktop. -->
+<!-- * the second component of the revision number is a decimal unit that is incremented with each revision of the manual. -->
+<!-- For example, if the GNOME desktop release is V2.x, the first version of the manual that -->
+<!-- is written in that desktop timeframe is V2.0, the second version of the manual is V2.1, etc. -->
+<!-- When the desktop release version changes to V3.x, the revision number of the manual changes -->
+<!-- to V3.0, and so on. -->  
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems
+				<email>docs@gnome.org</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
+		  <revnumber>&applet; Applet Manual</revnumber> 
+		  <date>April 2000</date> 
+		  <revdescription> 
+			 <para role="author">Dan Mueth
+				<email>d-mueth@uchicago.edu</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+	 </revhistory> 
+	 <releaseinfo> This manual describes version &appletversion; of the &applet; applet.
+		</releaseinfo> 
+	 <legalnotice> 
+		<title>Feedback</title> 
+		<para> To report a bug or make a suggestion regarding the &applet; applet or this
+		  manual, follow the directions in the 
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice> 
+  </articleinfo> 
+  <indexterm> 
+	 <primary>Clock applet</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
 
+<!-- ============= Introduction ============================== -->
 
-  <revhistory>
+  <sect1 id="clock-introduction"> 
+	 <title>Introduction</title> 
+	 
+<!-- ==== Figure ============================================= -->
+	 <figure id="clock-fig"> 
+		<title>&applet; Applet</title> 
+		<screenshot> 
+		  <mediaobject> 
+			 <imageobject><imagedata fileref="figures/clock_applet.png"
+				format="PNG"/> 
+			 </imageobject>
+			 <textobject> 
+				<phrase>Screenshot of the &applet; applet.</phrase> 
+			 </textobject> 
+		  </mediaobject> 
+		</screenshot> 
+	 </figure> 
+    <!-- ==== End of Figure ======================================= -->
+<para>
+The <application>&applet;</application> applet displays the time and the 
+date in a panel. 
+</para>
 
-	<revision>
-	  <revnumber>1.0</revnumber>
-	  <date> April 2000</date> <!-- or use &date; -->
-	  <revdescription>
-	    <para role="author">Dan Mueth</para>
-                   <para role="publisher">GNOME Documentation Project</para>
-          </revdescription>
-
-	</revision>
-      <revision>
-	<revnumber>2.0</revnumber>
-	<date>February 2002</date>
-	<revdescription>
-	  <para role="author">John Fleck</para>
-	  <para role="publisher">GNOME Documentation Project</para>
-	</revdescription>
-      </revision>
-
-
-  </revhistory>
-
-    <releaseinfo>
-       This manual describes version &version; of &app;. It was
-       last updated on &date;.
-    </releaseinfo>
- </articleinfo>
-
-<indexterm zone="index"><primary>Clock applet</primary></indexterm>
-
-
- <!-- ============= Document Body ============================= -->
-
-
- <sect1 id="clock">
-  <title>Clock Applet</title>
-
-   <para>
-   <application>Clock</application> applet, shown in <xref
-   linkend="clockapplet-fig" />, is a simple applet which shows the
-   time (and optionally the date too) in any of several formats.  To
-   add this applet to a <interface>Panel</interface>, 
-   right-click on the <interface>Panel</interface> and choose
+<para>
+To add the <application>&applet;</application> applet to a panel, right-click 
+on the panel to open the panel menu, then choose
    <menuchoice>
-    <guimenu>Panel</guimenu>
-    <guisubmenu>Add to panel</guisubmenu>
+    <guimenu>Add to panel</guimenu>
     <guisubmenu>Utility</guisubmenu>
     <guimenuitem>Clock</guimenuitem>
-   </menuchoice>
-  </para>
+   </menuchoice>.
+</para>
+<para>
+The applet popup menu for the <application>&applet;</application> applet 
+contains the standard applet menu items plus the following additional menu items:
+		<itemizedlist>
+			<listitem>
+				<para>
+				Copy time
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				Copy date
+				</para>
+			</listitem>
+		</itemizedlist>
 
-    <figure  id="clockapplet-fig">
-      <title>Clock Applet</title>
-      <screenshot>
-	<mediaobject>
-	  <imageobject>
-	    <imagedata fileref="figures/clock_applet.png" format="PNG"/>
-	  </imageobject>
-	  <imageobject>
-	    <imagedata fileref="figures/clock_applet.eps" format="EPS"/>
-	  </imageobject>
-	  <textobject>
-	    <phrase>Clock applet</phrase>
-	  </textobject>
-	</mediaobject>
-      </screenshot>
-    </figure>
+ You can use these menu items to insert the time or date into an application, 
+ such as a text editor. 
+</para>
+</sect1>
+<!-- ================ Usage ================================ -->
 
-  <!-- ============= Usage  ================================ -->
-  <sect2 id="clock-usage">
-   <title>Usage</title>
-   <para>
-    <application>Clock</application> applet requires no user
-    input. You may optionally configure it, as described below. 
-   </para>
+  <sect1 id="clock-usage"> 
+	 <title>Usage</title> 
+<para>The <application>&applet;</application> applet takes the time from the
+system clock.
+</para>
+<para>
+	To insert the time or date from the <application>&applet;
+	</application> applet into an application perform the following steps:</para>
+	<orderedlist>
+		<listitem>
+			<para>Right-click on the <application>&applet;</application> applet
+			to open the applet popup menu.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Choose one of the following menu items from the applet popup
+				menu:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+					<guilabel>Copy time</guilabel>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+					<guilabel>Copy date</guilabel>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+			Point to the location in your application where you want to
+			insert the item.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+			Middle-click to insert the item.
+			</para>
+		</listitem>
+		</orderedlist>
+</sect1>
 
-   <para>
-    Right-clicking on the applet brings up a menu containing the
-    following items:
-    <itemizedlist>
+<!-- ============= Settings ============================= -->
 
-     <listitem>
-      <para>
-       <guimenuitem>Properties&hellip;</guimenuitem> &mdash;
-       opens the <link linkend="clock-prefs">
-       <guilabel>Properties</guilabel></link> dialog.
-      </para>
-     </listitem>
-
-	  <listitem>
-	    <para><guimenuitem>Copy time</guimenuitem> &mdash; Copy the current
-	    time to the GNOME clipboard. It may then be pasted into another
-	    application.</para>
-	  </listitem>
-
-	  <listitem>
-	    <para><guimenuitem>Copy date</guimenuitem> &mdash; Copy the current
-	    date to the GNOME clipboard. It may then be pasted into another
-	    application.</para>
-	  </listitem>
-
-     <listitem>
-      <para>
-       <guimenuitem>Help</guimenuitem> &mdash;
-       displays this document.
-      </para>
-     </listitem>
-
-     <listitem>
-      <para>
-       <guimenuitem>About&hellip;</guimenuitem> &mdash;
-       shows basic information about <application>Clock
-       Applet</application>, including the applet's version and the
-       author's name.
-      </para>
-     </listitem>
-
-    </itemizedlist>
-   </para>
-  </sect2>
-
-
-  <!-- ============= Customization ============================= -->
-  <sect2 id="clock-prefs">
-    <title>Customization</title>
-    <para>
-      Customize <application>Clock</application>
-      applet by right-clicking on it and choosing
-      <guimenuitem>Properties&hellip;</guimenuitem>. This will open the
-      <interface>Properties</interface> dialog(shown in <xref
-      linkend="clock-settings-fig" />), which allows you to
-      change various settings.
-    </para>
-
-      <figure id="clock-settings-fig">
-	<title>Properties dialog</title>
-	<screenshot>
-	  <mediaobject>
-	    <imageobject>
-	      <imagedata fileref="figures/clock_settings.png" format="PNG"/>
-	    </imageobject>
-	    <imageobject>
-	      <imagedata fileref="figures/clock_settings.eps" format="EPS"/>
-	    </imageobject>
-	    <textobject>
-	      <phrase>Properties dialog</phrase>
-	    </textobject>
-	  </mediaobject>
-	</screenshot>
-      </figure>
-
-
-    <para>
-     The properties are:
-     <itemizedlist>
-
-      <listitem>
-       <para>
-	      <guilabel>Time Format</guilabel> &mdash; Select either
-        <guilabel>12 hour</guilabel>
-        format for <quote>AM/PM</quote> formatted time, or
-        <guilabel>24 hour</guilabel> for a 24 hour clock.
-       </para>
-      </listitem>
-
-      <listitem>
-       <para>
-	      <guilabel>Show date in applet</guilabel> &mdash; Select this to
-	      show the date inside the applet.
-       </para>
-      </listitem>
-
-      <listitem>
-       <para>
-	      <guilabel>Show date in tooltip</guilabel> &mdash; Select this to
-        show the date in 
-        the tooltip that pops up when the mouse is briefly left over
-        the applet.
-       </para>
-      </listitem>
-
-      <listitem>
-       <para>
-        Use GMT &mdash; Select this to show the Greenwich Mean Time
-        instead of the local time.
-       </para>
-      </listitem>
-
-      <listitem>
-       <para>
-	      <guilabel>Unix time</guilabel> &mdash; Select this to show the
-        time, in seconds, 
-        that has elapsed since Jan 1, 1970.
-       </para>
-      </listitem>
-
-     </itemizedlist>
-    </para>
-
-    <para> 
-      After you have made your changes, click on
-      <guibutton>OK</guibutton> to apply the changes and close the
-      <interface>Properties</interface> dialog. To cancel the changes
-      and return to previous values, click the
-      <guibutton>Close</guibutton> button.
-    </para>
-
-   <note>
-    <title>Setting the Time</title>
-    <para>
-     <application>Clock</application> applet only displays the time;
-     it does not allow you to set the time.  In order to set the time
-     on a Unix or Linux system, you should use the
-     <command>date</command> command. For example, to set the time to
-     11:43:01PM and the date to April 4, use <command>date --set="Apr
-     4 23:43:01"</command>. Note that you must be logged in as root to
-     set the time. More information about the <command>date</command> command is
-     available from the <ulink type="man" url="man:date">date manual page</ulink>.
-     You may set your timezone using the <command>timeconfig</command> or
-     <command>tzselect</command> commands on some Linux
-     distributions.
-    </para>
-   </note>
-
-  </sect2>
-
-
-  <!-- ============= Bugs ================================== -->
-  <!-- This section should describe known bugs and limitations of
-       the program if there are any - please be frank and list all
-       problems you know of -->
-
-
-  <!-- ============= Authors ================================ -->
-
-  <sect2 id="authors">
-   <title>Authors</title>
-   <para>
-    <application>Clock</application> was written by Miguel de Icaza
-    (<email>miguel@kernel.org</email>), Federico Mena
-    (<email>quartic@gimp.org</email>), and Stuart Parmenter
-    (<email>pavlov@innerx.net</email>).  Please send all comments,
-    suggestions, and bug 
-    reports to the <ulink url="http://bugs.gnome.org/" type="http">GNOME
-    bug tracking database</ulink>. (Instructions for submitting bug
-    reports can be found <ulink
-    url="http://bugs.gnome.org/Reporting.html" type="http">
-    on-line</ulink>. If you are using
-    GNOME 1.1 or later, you can also use <application>Bug Report
-    Tool</application> (<command>bug-buddy</command>), available in the
-    <guisubmenu>Utilities</guisubmenu> submenu of <guimenu>Main
-    Menu</guimenu>, for submitting bug reports.
-   </para>
-
-   <para>
-    This manual was written by Dan Mueth
-    (<email>d-mueth@uchicago.edu</email>) and updated by John Fleck
-    <email>jfleck@inkstain.net</email>. Please send all comments and
-    suggestions regarding this manual to the <ulink type="http"
-    url="http://developer.gnome.org/projects/gdp/">GNOME Documentation Project</ulink> 
-    by sending an email to <email>docs@gnome.org</email>. You can also
-    submit comments online by using the <ulink type="http"
-    url="http://developer.gnome.org/projects/gdp/doctable/">GNOME Documentation Status
-    Table</ulink>.
-   </para>
-
-   <!-- For translations: uncomment this:
-
-   <para>
-    Latin translation was done by ME
-    (<email>MYNAME@MYADDRESS</email>). Please send all  comments  and
-    suggestions regarding this translation to SOMEWHERE.
-   </para>
-
-   -->
-
-  </sect2>
-
-
-  <!-- ============= Application License ============================= -->
-
-  <sect2 id="license">
-   <title>License</title>
-   <para>
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the <ulink type="help"
-    url="gnome-help:gpl"><citetitle>GNU General Public
-    License</citetitle></ulink> as published by the Free Software
-    Foundation; either version 2 of the License, or (at your option)
-    any later version.
-   </para>
-   <para>
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    <ulink type="help" url="gnome-help:gpl"><citetitle>GNU General
-    Public License</citetitle></ulink> for more details.
-   </para>
-   <para>
-    A copy of the <ulink type="help"
-    url="gnome-help:gpl"><citetitle>GNU General Public
-    License</citetitle></ulink> is included with the GNOME
-    documentation.  You may also obtain a copy of the <ulink
-    type="help" url="gnome-help:gpl"><citetitle>GNU General Public
-    License</citetitle></ulink> from the Free Software Foundation by
-    visiting <ulink type="http" url="http://www.fsf.org/">their Web
-    site</ulink> or by writing to
-    <address>
-     Free Software Foundation, Inc.
-     <street>59 Temple Place</street> - Suite 330
-     <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
-     <country>USA</country>
-    </address>
-   </para>
-  </sect2>
-
- </sect1>
-
-  </article>
+<sect1 id="clock-settings"> 
+<title>Settings</title> 
+	<para>
+	To modify the properties of the <application>&applet;</application>, right-click
+	on the <application>&applet;</application> applet, then choose <guimenuitem>
+	Properties</guimenuitem> from the applet popup menu. 
+	</para>
+	<para>
+	<guilabel>Time Format</guilabel>
+	</para>
+	<para>
+	Select <guilabel>12 hour</guilabel> to display time in the a.m./p.m. format, 
+	or select <guilabel>24 hour</guilabel> to display time in the 00.00
+	to 24.00 format.
+	</para>
+	<para>
+	Default: 12 hour format
+	</para>
+	<para>
+	<guilabel>Show date in applet</guilabel>
+	</para>
+	<para>
+	Select this option to display the date in the applet.
+	</para>
+	<para>
+	Default: selected.
+	</para>
+	<para>
+	<guilabel>Show date in tooltip</guilabel>
+	</para>
+	<para>
+	Select this option to display the date in the tooltip. 
+	</para>
+	<para>
+	Default: unselected.
+	</para>
+	<para>
+	<guilabel>Use GMT</guilabel>
+	</para>
+	<para>
+	Select this option to display Greenwich Mean Time in the applet.
+	</para>
+	<para>
+	Default: unselected.
+	</para>
+	<para>
+	<guilabel>UNIX time</guilabel>
+	</para>
+	<para>
+	Select this option to display the time in seconds elapsed since January
+	1, 1970. Developers are the primary users of UNIX time. 
+	</para>
+	<para>
+	Default: unselected.
+	</para>
+	<para>
+	<guilabel>Internet time</guilabel>
+	</para>
+	<para>
+	Select this option to display Internet time in the applet. Internet
+	time is based on Biel Mean Time (BMT) as a universal reference, and is the
+	same all over the world. Internet time enables Internet users to synchronize
+	to a common time.
+</para>
+	<para>
+	Default: unselected.
+	</para> 
+</sect1> 
+</article> 

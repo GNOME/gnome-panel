@@ -1,6 +1,5 @@
 figs = \
-	figures/clock_applet.png		\
-	figures/clock_settings.png
+	figures/clock_applet.png
 docname = clock
 lang = C
 omffile = clock-C.omf
