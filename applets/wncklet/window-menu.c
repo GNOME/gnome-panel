@@ -550,6 +550,10 @@ window_menu_destroy_menu (GtkWidget  *widget,
 	if (window_menu->window_hash)
 		g_hash_table_destroy (window_menu->window_hash);
 	window_menu->window_hash = NULL;
+
+	if (window_menu->no_windows_item)
+		g_object_unref (window_menu->no_windows_item);
+	window_menu->no_windows_item = NULL;
 }
 
 static void
@@ -603,6 +607,8 @@ window_menu_popup_menu (WindowMenu *window_menu,
 		window_menu->menu = gtk_menu_new (); 
 		g_signal_connect (window_menu->menu, "hide",
 				  G_CALLBACK (window_menu_menu_hidden), window_menu);
+		g_signal_connect (window_menu->menu, "destroy",
+				  G_CALLBACK (window_menu_destroy_menu), window_menu);
 	}
 
 	list = gtk_container_get_children (GTK_CONTAINER (window_menu->menu));
@@ -614,8 +620,6 @@ window_menu_popup_menu (WindowMenu *window_menu,
 		g_object_unref (window_menu->no_windows_item);
 	window_menu->no_windows_item = NULL;
 
-	g_signal_connect (window_menu->menu, "destroy",
-			  G_CALLBACK (window_menu_destroy_menu), window_menu);
 
 	seperator = gtk_separator_menu_item_new ();
 	gtk_widget_show (seperator);

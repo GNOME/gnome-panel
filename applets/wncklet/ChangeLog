@@ -1,3 +1,12 @@
+2004-10-22  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	Re-worked patch based on Crispin Flowerday <gnome@flowerday.cx>
+
+	* window-menu.c: (window_menu_destroy_menu): Cleanup 
+	no_windows_item element.
+	(window_menu_popup_menu): Attach destory single once.
+	Fixes #1527397
+
 ==================== 2.8.0.1 ====================
 
 ==================== 2.8.0 ====================
