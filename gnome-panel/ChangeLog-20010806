@@ -1,3 +1,16 @@
+Sun May 14 03:06:30 2000  George Lebl <jirka@5z.com>
+
+	* applet-widget.c: an extra sanity check for shlib applets, and
+	  minor doc update
+
+	* panel.c:  Signal connection fixed up.  No longer connect basep
+	  signals on a per type basis as it can change.  So connect to
+	  a single handler which just runs the correct thing for the correct
+	  panel type.
+
+	* panel_config.c: setup defaults for the per type ppc stuff.  So
+	  that there are legal values when changing type
+
 Fri May 12 15:07:34 2000  George Lebl <jirka@5z.com>
 
 	* xstuff.c: setup a dnd proxy for the swallowed KDE docklets

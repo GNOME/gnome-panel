@@ -78,7 +78,7 @@ void
 update_config_floating_pos (BasePWidget *panel)
 {
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
-	if (!ppc)
+	if(!ppc)
 		return;
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->x_spin),
@@ -96,7 +96,7 @@ update_config_floating_pos_limits (BasePWidget *panel)
 	int xlimit, ylimit;
 	int val;
 	GtkAdjustment *adj;
-	if (!ppc)
+	if(!ppc)
 		return;
 
 	xlimit = gdk_screen_width() - widget->allocation.width;
@@ -128,7 +128,7 @@ update_config_floating_orient (BasePWidget *panel)
 {
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
 	GtkWidget *toggle;
-	if (!ppc)
+	if(!ppc)
 		return;
 
 	toggle = (PANEL_WIDGET (panel->panel)->orient == PANEL_HORIZONTAL)
@@ -188,6 +188,7 @@ update_config_back(PanelWidget *pw)
 
 	if(!ppc)
 		return;
+
 	switch(pw->back_type) {
 	default:
 	case PANEL_BACK_NONE:
@@ -222,7 +223,7 @@ update_config_anchor (BasePWidget *w)
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
 	g_return_if_fail (IS_SLIDING_WIDGET (w));
 
-	if (!ppc) 
+	if(!ppc)
 		return;
 	
 	ppc->align = SLIDING_POS (w->pos)->anchor;
@@ -236,7 +237,7 @@ update_config_offset (BasePWidget *w)
 
 	g_return_if_fail (IS_SLIDING_WIDGET (w));
 
-	if (!ppc)
+	if(!ppc)
 		return;
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->offset_spin),
@@ -250,7 +251,7 @@ update_config_offset_limit (BasePWidget *panel)
 	PerPanelConfig *ppc = get_config_struct (widget);
 	int range, val;
 	GtkAdjustment *adj;
-	if (!ppc)
+	if(!ppc)
 		return;
 
 	if(ppc->edge == BORDER_LEFT || ppc->edge == BORDER_RIGHT)
@@ -276,7 +277,7 @@ update_config_align (BasePWidget *w)
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
 	g_return_if_fail (IS_ALIGNED_WIDGET (w));
 
-	if (!ppc)
+	if(!ppc)
 		return;
 
 	ppc->align = ALIGNED_POS (w->pos)->align;
@@ -1208,6 +1209,28 @@ background_page (PerPanelConfig *ppc)
 	return vbox;
 }
 
+static void
+setup_pertype_defs(BasePWidget *basep, PerPanelConfig *ppc)
+{
+	if (IS_BORDER_WIDGET (basep))
+		ppc->edge = BORDER_POS (basep->pos)->edge;
+	
+	if(IS_ALIGNED_WIDGET(basep))
+		ppc->align = ALIGNED_POS (basep->pos)->align;
+	else if (IS_FLOATING_WIDGET (basep)) {
+		FloatingPos *pos = FLOATING_POS (basep->pos);
+		ppc->x = pos->x;
+		ppc->y = pos->y;
+		ppc->orient = PANEL_WIDGET(basep->panel)->orient;
+	} else if(IS_SLIDING_WIDGET(basep)) {
+		SlidingPos *pos = SLIDING_POS (basep->pos);
+		ppc->offset = pos->offset;
+		ppc->align = pos->anchor;
+	} else
+		ppc->align = 0;
+}
+
+
 void
 update_config_type (BasePWidget *w)
 {
@@ -1215,7 +1238,7 @@ update_config_type (BasePWidget *w)
 	int i,j;
 	GtkWidget *page;
 
-	if (!ppc)
+	if(!ppc)
 		return;
 
 	g_return_if_fail(ppc->type_tab);
@@ -1226,6 +1249,9 @@ update_config_type (BasePWidget *w)
 	for(i = 0; i < POSITION_EDGES; i++)
 		for(j = 0; j < POSITION_ALIGNS; j++)
 			ppc->toggle[i][j] = NULL;
+
+	setup_pertype_defs(BASEP_WIDGET(w), ppc);
+
 	if(IS_EDGE_WIDGET(w)) {
 		/* edge notebook page */
 		page = edge_notebook_page(ppc);
@@ -1298,22 +1324,7 @@ panel_config(GtkWidget *panel)
 	ppc->back_type = pw->back_type;
 	ppc->mode = basep->mode;
 
-	if (IS_BORDER_WIDGET (panel))
-		ppc->edge = BORDER_POS (basep->pos)->edge;
-	
-	if(IS_ALIGNED_WIDGET(panel))
-		ppc->align = ALIGNED_POS (basep->pos)->align;
-	else if (IS_FLOATING_WIDGET (panel)) {
-		FloatingPos *pos = FLOATING_POS (basep->pos);
-		ppc->x = pos->x;
-		ppc->y = pos->y;
-		ppc->orient = pw->orient;
-	} else if(IS_SLIDING_WIDGET(panel)) {
-		SlidingPos *pos = SLIDING_POS (basep->pos);
-		ppc->offset = pos->offset;
-		ppc->align = pos->anchor;
-	} else
-		ppc->align = 0;
+	setup_pertype_defs(basep, ppc);
 
 	ppc->panel = panel;
 	

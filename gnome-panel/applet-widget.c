@@ -183,7 +183,7 @@ static GtkTooltips *applet_tooltips = NULL;
 #define CD(applet) ((CustomAppletServant *)APPLET_WIDGET(applet)->_priv->corbadat)
 
 guint
-applet_widget_get_type ()
+applet_widget_get_type (void)
 {
 	static guint applet_widget_type = 0;
 
@@ -1975,6 +1975,12 @@ server_applet_factory_create_object(PortableServer_Servant _servant,
 		return CORBA_OBJECT_NIL;
 	}
 
+	if(!IS_APPLET_WIDGET(applet)) {
+		g_warning(_("Object created is not AppletWidget"));
+		gtk_widget_destroy(applet);
+		return CORBA_OBJECT_NIL;
+	}
+
 	return CORBA_Object_duplicate(CD(applet)->obj, ev);
 }
 
@@ -1996,7 +2002,8 @@ static POA_GNOME_GenericFactory__vepv applet_factory_vepv = {
  * a specified GOAD ID can be created.
  * @afunc: #AppletFactoryActivator to activate a specified GOAD ID.
  *
- * Description: create a new applet factory.
+ * Description: create a new applet factory.  It is used for applets
+ * that can run many applets from one process.
  **/
 void applet_factory_new(const char *goad_id, AppletFactoryQuerier qfunc,
 			AppletFactoryActivator afunc)

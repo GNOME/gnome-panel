@@ -1191,16 +1191,12 @@ basep_pos_connect_signals (BasePWidget *basep)
 					   "align_change",
 					   GTK_SIGNAL_FUNC (update_config_align),
 					   GTK_OBJECT (basep));
-	else if (IS_FLOATING_WIDGET (basep)) {
+	else if (IS_FLOATING_WIDGET (basep))
 		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
 					   "floating_coords_change",
 					   GTK_SIGNAL_FUNC (update_config_floating_pos),
 					   GTK_OBJECT(basep));
-		gtk_signal_connect_object_after (GTK_OBJECT (basep),
-						 "size_allocate",
-						 GTK_SIGNAL_FUNC (update_config_floating_pos_limits),
-						 GTK_OBJECT (basep));
-	} else if (IS_SLIDING_WIDGET (basep)) {
+	else if (IS_SLIDING_WIDGET (basep)) {
 		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
 					   "anchor_change",
 					   GTK_SIGNAL_FUNC (update_config_anchor),
@@ -1209,22 +1205,7 @@ basep_pos_connect_signals (BasePWidget *basep)
 					   "offset_change",
 					   GTK_SIGNAL_FUNC (update_config_offset),
 					   GTK_OBJECT (basep));
-		gtk_signal_connect_object_after (GTK_OBJECT (basep),
-						 "size_allocate",
-						 GTK_SIGNAL_FUNC (update_config_offset_limit),
-						 GTK_OBJECT (basep));
 	}
-}
-
-static void
-floating_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
-{
-	if(!GTK_WIDGET_REALIZED(basep))
-		return;
-
-	gtk_container_foreach(GTK_CONTAINER(basep->panel),
-			      orient_change_foreach,
-			      basep->panel);
 }
 
 static void
@@ -1238,14 +1219,30 @@ drawer_orient_change_foreach(GtkWidget *w, gpointer data)
 }
 
 static void
-sliding_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
+panelw_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
 {
 	if(!GTK_WIDGET_REALIZED(basep))
 		return;
 
-	gtk_container_foreach(GTK_CONTAINER(basep->panel),
-			      drawer_orient_change_foreach,
-			      basep->panel);
+	if(IS_DRAWER_WIDGET(basep)) {
+		gtk_container_foreach(GTK_CONTAINER(basep->panel),
+				      orient_change_foreach,
+				      basep->panel);
+	} else if(IS_FLOATING_WIDGET(basep)) {
+		gtk_container_foreach(GTK_CONTAINER(basep->panel),
+				      orient_change_foreach,
+				      basep->panel);
+		update_config_floating_pos_limits(basep);
+	} else if(IS_ALIGNED_WIDGET(basep)) {
+		gtk_container_foreach(GTK_CONTAINER(basep->panel),
+				      drawer_orient_change_foreach,
+				      basep->panel);
+	} else if(IS_SLIDING_WIDGET(basep)) {
+		gtk_container_foreach(GTK_CONTAINER(basep->panel),
+				      drawer_orient_change_foreach,
+				      basep->panel);
+		update_config_offset_limit(basep);
+	}
 }
 
 void
@@ -1314,6 +1311,10 @@ panel_setup(GtkWidget *panelw)
 				    NULL);
 		basep_pos_connect_signals (basep);
 		basep_widget_disable_buttons(basep);
+
+		gtk_signal_connect_after(GTK_OBJECT(panelw), "size_allocate",
+					 GTK_SIGNAL_FUNC(panelw_size_alloc),
+					 NULL);
 	}
 
 	gtk_signal_connect(GTK_OBJECT(panelw),
@@ -1352,17 +1353,6 @@ panel_setup(GtkWidget *panelw)
 	else
 		gtk_signal_connect_after(GTK_OBJECT(panelw), "realize",
 					 GTK_SIGNAL_FUNC(panel_realize),
-					 NULL);
-
-	if(IS_FLOATING_WIDGET(panelw) ||
-	   IS_DRAWER_WIDGET(panelw))
-		gtk_signal_connect_after(GTK_OBJECT(panelw), "size_allocate",
-					 GTK_SIGNAL_FUNC(floating_size_alloc),
-					 NULL);
-	if(IS_SLIDING_WIDGET(panelw) ||
-	   IS_ALIGNED_WIDGET(panelw))
-		gtk_signal_connect_after(GTK_OBJECT(panelw), "size_allocate",
-					 GTK_SIGNAL_FUNC(sliding_size_alloc),
 					 NULL);
 }
 
