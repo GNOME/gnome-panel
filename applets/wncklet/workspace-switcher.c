@@ -373,7 +373,7 @@ fill_pager_applet(PanelApplet *applet)
 	error = NULL;
 	pager->n_rows = panel_applet_gconf_get_int (applet, "num_rows", &error);
 	if (error) {
-                g_printerr (_("Error loading num_rows value for workspace switcher: %s\n"),
+                g_printerr (_("Error loading num_rows value for Workspace Switcher: %s\n"),
                             error->message);
 		g_error_free (error);
                 /* leave current value */
@@ -384,7 +384,7 @@ fill_pager_applet(PanelApplet *applet)
 	error = NULL;
 	display_names = panel_applet_gconf_get_bool (applet, "display_workspace_names", &error);
 	if (error) {
-                g_printerr (_("Error loading display_workspace_names value for workspace switcher: %s\n"),
+                g_printerr (_("Error loading display_workspace_names value for Workspace Switcher: %s\n"),
                             error->message);
 		g_error_free (error);
                 /* leave current value */
@@ -399,7 +399,7 @@ fill_pager_applet(PanelApplet *applet)
 	error = NULL;
 	pager->display_all = panel_applet_gconf_get_bool (applet, "display_all_workspaces", &error);
 	if (error) {
-                g_printerr (_("Error loading display_all_workspaces value for workspace switcher: %s\n"),
+                g_printerr (_("Error loading display_all_workspaces value for Workspace Switcher: %s\n"),
                             error->message);
 		g_error_free (error);
                 /* leave current value */
