@@ -220,9 +220,8 @@ ask_about_swallowing(PanelWidget *panel, int pos)
 	gtk_object_set_data(GTK_OBJECT(d),"panel",panel);
 	gtk_object_set_data(GTK_OBJECT(d),"pos",GINT_TO_POINTER(pos));
 
-	box = gtk_hbox_new(FALSE,5);
-	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box,
-			   TRUE,TRUE,5);
+	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
+	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box, TRUE,TRUE,0);
 	w = gtk_label_new(_("Title of application to swallow"));
 	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
 	w = gnome_entry_new("swallow_title");
@@ -231,9 +230,8 @@ ask_about_swallowing(PanelWidget *panel, int pos)
 	gtk_signal_connect(GTK_OBJECT(title_e),"activate",
 			   GTK_SIGNAL_FUNC(act_really_add_swallow),d);
 
-	box = gtk_hbox_new(FALSE,5);
-	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box,
-			   TRUE,TRUE,5);
+	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
+	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box, TRUE,TRUE,0);
 	w = gtk_label_new(_("Command (optional)"));
 	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
 	w = gnome_file_entry_new("execute",_("Browse"));
@@ -242,9 +240,8 @@ ask_about_swallowing(PanelWidget *panel, int pos)
 	gtk_signal_connect(GTK_OBJECT(exec_e),"activate",
 			   GTK_SIGNAL_FUNC(act_really_add_swallow),d);
 
-	box = gtk_hbox_new(FALSE,5);
-	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box,
-			   TRUE,TRUE,5);
+	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
+	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box, TRUE,TRUE,0);
 
 	w = gtk_label_new(_("Width"));
 	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
@@ -256,7 +253,7 @@ ask_about_swallowing(PanelWidget *panel, int pos)
 
 
 	i_box =gtk_hbox_new(FALSE,0);
-	gtk_box_pack_start(GTK_BOX(box), i_box, FALSE, FALSE, 5);
+	gtk_box_pack_start(GTK_BOX(box), i_box, FALSE, FALSE, GNOME_PAD_SMALL);
 	
 	w = gtk_label_new(_("Height"));
 	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);

@@ -34,7 +34,7 @@ create_text_entry(GtkWidget *table,
 			 0, 1, row, row + 1,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
+			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_widget_show(wlabel);
 
 	entry = gtk_entry_new();
@@ -44,7 +44,7 @@ create_text_entry(GtkWidget *table,
 			 1, 2, row, row + 1,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
+			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (entry), "changed",
 					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
@@ -71,7 +71,7 @@ create_pixmap_entry(GtkWidget *table,
 			 0, 1, row, row + 1,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
+			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_widget_show(wlabel);
 
 	entry = gnome_pixmap_entry_new(history_id,_("Browse"),TRUE);
@@ -83,7 +83,7 @@ create_pixmap_entry(GtkWidget *table,
 			 1, 2, row, row + 1,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
+			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
 					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
@@ -109,7 +109,7 @@ create_icon_entry(GtkWidget *table,
 			 0, 1, row, row + 1,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
+			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_widget_show(wlabel);
 
 	entry = gnome_icon_entry_new(history_id,_("Browse"));
@@ -121,7 +121,7 @@ create_icon_entry(GtkWidget *table,
 			 1, 2, row, row + 1,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
+			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
 					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
@@ -147,7 +147,7 @@ create_file_entry(GtkWidget *table,
 			 0, 1, row, row + 1,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
+			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_widget_show(wlabel);
 
 	entry = gnome_file_entry_new(history_id,_("Browse"));
@@ -158,7 +158,7 @@ create_file_entry(GtkWidget *table,
 			 1, 2, row, row + 1,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
+			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
 					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 

@@ -5,9 +5,6 @@
 
 #include "panel-include.h"
 
-/* Used for all the packing and padding options */
-#define CONFIG_PADDING_SIZE 3
-
 static GList *ppconfigs=NULL;
 
 static PerPanelConfig *
@@ -267,20 +264,19 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	vbox = gtk_vbox_new (FALSE, 0);
 	
 	/* main hbox */
-	hbox = gtk_hbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_set_border_width(GTK_CONTAINER (hbox), CONFIG_PADDING_SIZE);
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
 	
 	/* Position frame */
 	frame = gtk_frame_new (_("Position"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE,0);
 	
 	/* table for frame */
 	table = gtk_table_new(3, 3, TRUE);
-	gtk_table_set_row_spacings(GTK_TABLE(table), CONFIG_PADDING_SIZE);
-	gtk_table_set_col_spacings(GTK_TABLE(table), CONFIG_PADDING_SIZE);
-	gtk_container_set_border_width(GTK_CONTAINER(table), CONFIG_PADDING_SIZE);
+	gtk_table_set_row_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
+	gtk_table_set_col_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 	
 	/* Top Position */
@@ -346,13 +342,12 @@ snapped_notebook_page(PerPanelConfig *ppc)
 
 	/* Auto-hide/stayput frame */
 	frame = gtk_frame_new (_("Minimize options"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE,0);
 
 	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_set_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
 	/* Auto-hide */
@@ -363,8 +358,7 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (snapped_set_auto_hide), 
 			    NULL);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	/* Hidebuttons enable */
 	w = button = gtk_check_button_new_with_label (_("Enable hidebuttons"));
@@ -374,8 +368,7 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->hidebuttons);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	/* Arrow enable */
 	button = gtk_check_button_new_with_label (_("Enable hidebutton arrows"));
@@ -390,8 +383,7 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->hidebutton_pixmaps);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
@@ -439,20 +431,19 @@ corner_notebook_page(PerPanelConfig *ppc)
         GtkWidget *table;
 	
 	/* main hbox */
-	hbox = gtk_hbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_set_border_width(GTK_CONTAINER (hbox), CONFIG_PADDING_SIZE);
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
 	
 	/* Position frame */
 	frame = gtk_frame_new (_("Position"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE,0);
 	
 	/* table for frame */
 	table = gtk_table_new(3, 3, TRUE);
-	gtk_table_set_row_spacings(GTK_TABLE(table), CONFIG_PADDING_SIZE);
-	gtk_table_set_col_spacings(GTK_TABLE(table), CONFIG_PADDING_SIZE);
-	gtk_container_set_border_width(GTK_CONTAINER(table), CONFIG_PADDING_SIZE);
+	gtk_table_set_row_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
+	gtk_table_set_col_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 	
 	/* North East Position */
@@ -516,19 +507,17 @@ corner_notebook_page(PerPanelConfig *ppc)
 		break;
 	}
 
-	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE,0);
 
 	/* Orientation frame */
 	frame = gtk_frame_new (_("Orientation"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,0);
 
 	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_set_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
 	/* Horizontal */
@@ -539,8 +528,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (corner_set_orient), 
 			    (gpointer)PANEL_HORIZONTAL);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 	
 	/* Vertical */
 	button = gtk_radio_button_new_with_label (
@@ -552,18 +540,16 @@ corner_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (corner_set_orient), 
 			    (gpointer)PANEL_VERTICAL);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	/* Hidebuttons frame */
 	frame = gtk_frame_new (_("Hidebutton options"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,0);
 
 	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_set_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
 
@@ -575,8 +561,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->hidebuttons);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	/* Arrow enable */
 	button = gtk_check_button_new_with_label (_("Enable hidebutton arrows"));
@@ -591,8 +576,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->hidebutton_pixmaps);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	return (hbox);
 }
@@ -672,39 +656,35 @@ background_page (PerPanelConfig *ppc)
 	GtkWidget *vbox;
 	GtkWidget *w;
 
-	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_set_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
+	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
 
 	/*selector frame*/
 	f = gtk_frame_new (_("Background"));
-	gtk_container_set_border_width(GTK_CONTAINER (f), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 
-			    CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (f), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 0);
 
 	box = gtk_hbox_new (0, 0);
-	gtk_container_set_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (f), box);
 	
 	/*standard background*/
 	ppc->non = gtk_radio_button_new_with_label (NULL, _("Standard"));
-	gtk_box_pack_start (GTK_BOX (box), ppc->non, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);	
+	gtk_box_pack_start (GTK_BOX (box), ppc->non, FALSE, FALSE,0);
 	gtk_object_set_user_data(GTK_OBJECT(ppc->non),ppc);
 
 	/* pixmap */
 	ppc->pix = gtk_radio_button_new_with_label (
 		gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->non)),
 		_("Pixmap"));
-	gtk_box_pack_start (GTK_BOX (box), ppc->pix, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);	
+	gtk_box_pack_start (GTK_BOX (box), ppc->pix, FALSE, FALSE,0);
 	gtk_object_set_user_data(GTK_OBJECT(ppc->pix),ppc);
 	
 	/* color */
 	ppc->col = gtk_radio_button_new_with_label (
 		gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->non)),
 		_("Color"));
-	gtk_box_pack_start (GTK_BOX (box), ppc->col, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);	
+	gtk_box_pack_start (GTK_BOX (box), ppc->col, FALSE, FALSE,0);
 	gtk_object_set_user_data(GTK_OBJECT(ppc->col),ppc);
 
 	/*image frame*/
@@ -717,12 +697,11 @@ background_page (PerPanelConfig *ppc)
 	gtk_object_set_data(GTK_OBJECT(ppc->pix),"pix",f);
 	gtk_object_set_data(GTK_OBJECT(ppc->col),"pix",f);
 	gtk_object_set_data(GTK_OBJECT(ppc->non),"pix",f);
-	gtk_container_set_border_width(GTK_CONTAINER (f), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 
-			    CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (f), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 0);
 
 	box = gtk_vbox_new (0, 0);
-	gtk_container_set_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (f), box);
 
 	ppc->pix_entry = gnome_pixmap_entry_new ("pixmap", _("Browse"),TRUE);
@@ -731,8 +710,7 @@ background_page (PerPanelConfig *ppc)
 	gtk_signal_connect_while_alive (GTK_OBJECT (t), "changed",
 					GTK_SIGNAL_FUNC (value_changed), ppc,
 					GTK_OBJECT (ppc->pix_entry));
-	gtk_box_pack_start (GTK_BOX (box), ppc->pix_entry, FALSE, FALSE, 
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), ppc->pix_entry, FALSE, FALSE, 0);
 	
 	gtk_entry_set_text (GTK_ENTRY(t),
 			    ppc->back_pixmap?ppc->back_pixmap:"");
@@ -743,14 +721,12 @@ background_page (PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (w), "toggled",
 			    GTK_SIGNAL_FUNC (set_fit_pixmap_bg),
 			    ppc);
-	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,0);
 
 
 	/*color frame*/
 	box = gtk_hbox_new (0, 0);
-	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
 	f = gtk_frame_new (_("Background color"));
 	if(ppc->back_type == PANEL_BACK_COLOR) {
 		gtk_widget_set_sensitive(f,TRUE);
@@ -760,12 +736,11 @@ background_page (PerPanelConfig *ppc)
 	gtk_object_set_data(GTK_OBJECT(ppc->pix),"col",f);
 	gtk_object_set_data(GTK_OBJECT(ppc->col),"col",f);
 	gtk_object_set_data(GTK_OBJECT(ppc->non),"col",f);
-	gtk_container_set_border_width(GTK_CONTAINER (f), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (box), f, FALSE, FALSE, 
-			    CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (f), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (box), f, FALSE, FALSE, 0);
 
 	box = gtk_vbox_new (0, 0);
-	gtk_container_set_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (f), box);
 
 	ppc->backsel = gnome_color_picker_new();
@@ -777,8 +752,7 @@ background_page (PerPanelConfig *ppc)
 				   ppc->back_color.blue,
 				   65535);
 
-	gtk_box_pack_start (GTK_BOX (box), ppc->backsel,
-			    FALSE, FALSE, CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), ppc->backsel, FALSE, FALSE, 0);
 
 	gtk_signal_connect (GTK_OBJECT (ppc->non), "toggled", 
 			    GTK_SIGNAL_FUNC (set_back), 
@@ -858,7 +832,7 @@ panel_config(GtkWidget *panel)
 	gtk_window_set_title (GTK_WINDOW(ppc->config_window),
 			      _("Panel properties"));
 	gtk_container_set_border_width (GTK_CONTAINER(ppc->config_window),
-				    CONFIG_PADDING_SIZE);
+					GNOME_PAD_SMALL);
 	
 	prop_nbook = GNOME_PROPERTY_BOX (ppc->config_window)->notebook;
 	

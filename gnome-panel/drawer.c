@@ -19,9 +19,6 @@
 
 #define DRAWER_PROPERTIES "drawer_properties"
 
-/* Used for all the packing and padding options */
-#define CONFIG_PADDING_SIZE 3
-
 extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;
@@ -110,9 +107,7 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	GtkWidget *button;
 	
 	table = gtk_table_new(2, 2, FALSE);
-	gtk_container_set_border_width(GTK_CONTAINER(table), 5);
-	gtk_table_set_col_spacings(GTK_TABLE(table), 6);
-	gtk_table_set_row_spacings(GTK_TABLE(table), 2);
+	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD_SMALL);
 
 	w = create_text_entry(table, "drawer_name", 0, _("Tooltip/Name"),
 			      drawer->tooltip, dialog);
@@ -125,12 +120,13 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	f = gtk_frame_new(_("Applet appearance"));
 	gtk_container_add(GTK_CONTAINER(f),table);
 
-	box = gtk_vbox_new(FALSE,5);
-	gtk_container_set_border_width(GTK_CONTAINER(box), 5);
+	box = gtk_vbox_new(FALSE,GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER(box), GNOME_PAD_SMALL);
 	gtk_box_pack_start(GTK_BOX(box),f,FALSE,FALSE,0);
 
 	f = gtk_frame_new(_("Drawer handle"));
-	box_in = gtk_vbox_new(FALSE,5);
+	box_in = gtk_vbox_new(FALSE,GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER(box_in), GNOME_PAD_SMALL);
 	/*we store this in w for later use!, so don't use w as temp from now
 	  on*/
 	w = button = gtk_check_button_new_with_label (_("Enable hidebutton"));
@@ -140,8 +136,7 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->hidebuttons);
-	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, FALSE,
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, FALSE, 0);
 
 	button = gtk_check_button_new_with_label (_("Enable hidebutton arrow"));
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
@@ -155,8 +150,7 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->hidebutton_pixmaps);
-	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, TRUE, 0);
 	gtk_container_add(GTK_CONTAINER(f),box_in);
 	gtk_box_pack_start (GTK_BOX (box),f,FALSE,FALSE,0);
 

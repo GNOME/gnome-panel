@@ -3209,14 +3209,14 @@ create_properties_dialog(Menu *menu)
 	/*gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
-	vbox = gtk_vbox_new(FALSE,5);
-	gtk_container_set_border_width(GTK_CONTAINER(vbox),5);
+	vbox = gtk_vbox_new(FALSE,GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox),GNOME_PAD_SMALL);
 
 	f = gtk_frame_new(_("Menu type"));
 	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
 	
-	box = gtk_hbox_new(FALSE,5);
-	gtk_container_set_border_width(GTK_CONTAINER(box),5);
+	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER(box),GNOME_PAD_SMALL);
 	gtk_container_add(GTK_CONTAINER(f),box);
 	
 	w = gtk_radio_button_new_with_label (NULL, _("Main menu"));
@@ -3246,7 +3246,7 @@ create_properties_dialog(Menu *menu)
 	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
 	
 	table = gtk_table_new(3,4,FALSE);
-	gtk_container_set_border_width(GTK_CONTAINER(table),5);
+	gtk_container_set_border_width(GTK_CONTAINER(table),GNOME_PAD_SMALL);
 	gtk_container_add(GTK_CONTAINER(f),table);
 
 	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),0,
@@ -3268,8 +3268,8 @@ create_properties_dialog(Menu *menu)
 	gtk_object_set_data(GTK_OBJECT(dialog),"normal_frame",f);
 	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
 	
-	box = gtk_hbox_new(FALSE,5);
-	gtk_container_set_border_width(GTK_CONTAINER(box),5);
+	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER(box),GNOME_PAD_SMALL);
 	gtk_container_add(GTK_CONTAINER(f),box);
 	
 	w = gtk_label_new(_("Menu path"));

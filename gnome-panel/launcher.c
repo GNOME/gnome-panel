@@ -175,7 +175,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	launcher->dentry =
 		gnome_dentry_get_dentry(GNOME_DENTRY_EDIT(launcher->dedit));
 
-			/* and install the new one with the right dentry pointer */
+	/* and install the new one with the right dentry pointer */
 	gtk_signal_connect (GTK_OBJECT(launcher->button),
 			    "clicked",
 			    (GtkSignalFunc) launch,
@@ -222,7 +222,6 @@ create_properties_dialog(Launcher *launcher)
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
 			       "launcher_properties","Panel");
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Launcher properties"));
-	/*gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	launcher->dedit =
@@ -313,12 +312,11 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos)
 			     NULL);
 	gtk_window_set_wmclass(GTK_WINDOW(d),
 			       "create_launcher","Panel");
-	/*gtk_window_set_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(d), FALSE, FALSE, TRUE);
 	
 	notebook = gtk_notebook_new();
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),notebook,
-			   TRUE,TRUE,5);
+			   TRUE,TRUE,GNOME_PAD_SMALL);
 	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook)));
 	
 	if(file)
