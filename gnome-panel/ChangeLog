@@ -1,3 +1,18 @@
+2002-03-21  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-widget.c:
+	(panel_widget_add): rename from panel_widget_add_full and
+	kill bind_lower arg.
+	(bind_top_applet_events): kill bind_lower arg.
+	(panel_widget_cadd): upd.
+
+	* applet.c: (panel_applet_register): upd for panel_widget_add
+	change.
+
+	* button-widget.c: (button_widget_class_init),
+	(button_widget_parent_set): impl so we don't leave the overlay
+	window behind when the widget gets re-parented (#75455)
+
 2002-03-20  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-marshal.list: kill VOID:ENUM, its in glib.

@@ -1194,12 +1194,12 @@ panel_applet_register (GtkWidget      *applet,
 
 	
 
-	if (panel_widget_add_full (panel, applet, newpos, TRUE,
-				   insert_at_pos, expand_major, expand_minor)==-1) {
+	if (panel_widget_add (panel, applet, newpos,
+			      insert_at_pos, expand_major, expand_minor) == -1) {
 		GSList *list;
 		for(list = panels; list != NULL; list = g_slist_next(list))
-			if (panel_widget_add_full (panel, applet, 0,
-						   TRUE, TRUE, expand_major, expand_minor)!=-1)
+			if (panel_widget_add (panel, applet, 0, TRUE,
+					      expand_major, expand_minor) != -1)
 				break;
 		if(!list) {
 			/*can't put it anywhere, clean up*/

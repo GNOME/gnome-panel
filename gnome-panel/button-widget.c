@@ -28,6 +28,8 @@ static void     button_widget_size_request   (GtkWidget         *widget,
 static void     button_widget_size_allocate  (GtkWidget         *widget,
 					      GtkAllocation     *allocation);
 static void     button_widget_realize        (GtkWidget         *widget);
+static void     button_widget_parent_set     (GtkWidget         *widget,
+					      GtkWidget         *previous_parent);
 static gboolean button_widget_expose         (GtkWidget         *widget,
 					      GdkEventExpose    *event);
 static void     button_widget_destroy        (GtkObject         *obj);
@@ -78,6 +80,7 @@ button_widget_class_init (ButtonWidgetClass *class)
 	gtk_object_class->destroy = button_widget_destroy;
 	  
 	widget_class->realize = button_widget_realize;
+	widget_class->parent_set = button_widget_parent_set;
 	widget_class->size_allocate = button_widget_size_allocate;
 	widget_class->size_request = button_widget_size_request;
 	widget_class->button_press_event = button_widget_button_press;
@@ -88,7 +91,7 @@ button_widget_class_init (ButtonWidgetClass *class)
 	button_class->pressed = button_widget_button_pressed;
 	button_class->released = button_widget_button_released;
 }
- 
+
 static void
 translate_to(GtkWidget *from, GtkWidget *to, int *x, int *y)
 {
@@ -247,6 +250,27 @@ button_widget_realize(GtkWidget *widget)
 	gdk_window_set_user_data (button->event_window, widget);
 
 	widget->style = gtk_style_attach (widget->style, widget->window);
+}
+
+static void
+button_widget_parent_set (GtkWidget *widget,
+			  GtkWidget *previous_parent)
+{
+	GtkWidget *parent;
+	int        x, y, w, h;
+
+	g_return_if_fail (BUTTON_IS_WIDGET (widget));
+
+	if (!GTK_WIDGET_REALIZED (widget)|| !widget->parent)
+		return;
+
+	parent = PANEL_WIDGET (widget->parent)->panel_parent;
+
+	calculate_overlay_geometry (
+		PANEL_WIDGET (widget->parent), parent, widget, &x, &y, &w, &h);
+
+	gdk_window_reparent (
+		GTK_BUTTON (widget)->event_window, parent->window, x, y);
 }
 
 static void
@@ -552,7 +576,6 @@ button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	}
 	
 	button_widget->scaled_hc = make_hc_pixbuf (button_widget->scaled);
-	
 	if (GTK_WIDGET_REALIZED (widget)) {
 		PanelWidget *panel;
 		int x,y,w,h;
@@ -561,6 +584,7 @@ button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 		calculate_overlay_geometry (panel, panel->panel_parent,
 					    widget, &x, &y, &w, &h);
+
 		gdk_window_move_resize (button->event_window, x, y, w, h);
 	}
 }

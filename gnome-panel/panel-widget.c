@@ -531,14 +531,17 @@ run_up_forbidden(PanelWidget *panel,
 
 
 static void
-panel_widget_cadd(GtkContainer *container, GtkWidget *widget)
+panel_widget_cadd (GtkContainer *container,
+		   GtkWidget    *widget)
 {
 	PanelWidget *p;
 
 	g_return_if_fail (PANEL_IS_WIDGET (container));
 	g_return_if_fail (GTK_IS_WIDGET (widget));
 
-	panel_widget_add(PANEL_WIDGET(container),widget,0);
+	panel_widget_add (PANEL_WIDGET (container), widget, 0,
+			  FALSE, FALSE, FALSE);
+
 	p = g_object_get_data (G_OBJECT(widget),
 			       PANEL_APPLET_ASSOC_PANEL_KEY);
 	if(p)
@@ -2384,15 +2387,16 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 	g_return_val_if_fail(event!=NULL,FALSE);
 
 	switch (event->type) {
-		GdkEventButton *bevent;
 		/*pass these to the parent!*/
 		case GDK_BUTTON_PRESS:
 		case GDK_BUTTON_RELEASE:
-		case GDK_MOTION_NOTIFY:
-			bevent = (GdkEventButton *)event;
-			if(bevent->button != 1 || panel_applet_in_drag)
-				return gtk_widget_event(data, event);
+		case GDK_MOTION_NOTIFY: {
+			GdkEventButton *bevent = (GdkEventButton *)event;
 
+			if (bevent->button != 1 || panel_applet_in_drag)
+				return gtk_widget_event (data, event);
+
+			}
 			break;
 		case GDK_KEY_PRESS:
 			if (panel_applet_in_drag)
@@ -2457,7 +2461,7 @@ panel_widget_applet_destroy (GtkWidget *applet, gpointer data)
 
 
 static void
-bind_top_applet_events(GtkWidget *widget, gboolean bind_lower)
+bind_top_applet_events (GtkWidget *widget)
 {
 	g_return_if_fail(GTK_IS_WIDGET(widget));
 
@@ -2478,7 +2482,7 @@ bind_top_applet_events(GtkWidget *widget, gboolean bind_lower)
 	 * GtkEventBox) for processing by us.
 	 */
 
-	if (bind_lower && GTK_IS_CONTAINER(widget))
+	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
 				       bind_applet_events, widget);
 }
@@ -2541,9 +2545,12 @@ panel_widget_add_forbidden (PanelWidget *panel)
 }
 
 int
-panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos,
-		       gboolean bind_lower_events, gboolean insert_at_pos,
-		       gboolean expand_major, gboolean expand_minor)
+panel_widget_add (PanelWidget *panel,
+		  GtkWidget   *applet,
+		  int          pos,
+		  gboolean     insert_at_pos,
+		  gboolean     expand_major,
+		  gboolean     expand_minor)
 {
 	AppletData *ad = NULL;
 
@@ -2595,7 +2602,7 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos,
 				   PANEL_APPLET_DATA, ad);
 		
 		/*this is a completely new applet, which was not yet bound*/
-		bind_top_applet_events (applet, bind_lower_events);
+		bind_top_applet_events (applet);
 	}
 
 	panel->applet_list =
