@@ -30,6 +30,7 @@
 
 /* even 16 is pretty darn dubious. */
 #define MAX_REASONABLE_ROWS 16
+#define DEFAULT_ROWS 1
 
 typedef struct {
 	GtkWidget *applet;
@@ -163,7 +164,7 @@ num_rows_changed (GConfClient *client,
 		  GConfEntry  *entry,
 		  PagerData   *pager)
 {
-	int n_rows = 2; /* Default value */
+	int n_rows = DEFAULT_ROWS;
 	
 	if (entry->value != NULL &&
 	    entry->value->type == GCONF_VALUE_INT) {
