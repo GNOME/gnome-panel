@@ -122,12 +122,13 @@ load_default_applets(void)
 {
 	/* XXX: the IDs for these applets are hardcoded here. */
 
-	load_applet("Menu", ".", PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
+	load_applet(MENU_ID, ".", PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
+	load_applet(EXTERN_ID, "clock_applet", PANEL_UNKNOWN_APPLET_POSITION,0,
+		    NULL);
 /*
 	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
 	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
 */
-/*FIXME: fix applet loading with corba*/
 }
 
 static void
