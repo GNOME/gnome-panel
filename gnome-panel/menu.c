@@ -24,9 +24,11 @@
 
 #define MENU_PATH "menu_path"
 
-static char *gnome_folder;
+static char *gnome_folder = NULL;
 
-static GList *small_icons = NULL;
+Menu *root_menu = NULL;
+
+GList *small_icons = NULL;
 int show_small_icons = TRUE;
 
 static PanelCmdFunc panel_cmd_func;
@@ -43,6 +45,12 @@ activate_app_def (GtkWidget *widget, void *data)
 	GnomeDesktopEntry *item = data;
 
 	gnome_desktop_entry_launch (item);
+}
+
+static void
+kill_small_icon(GtkWidget *widget, gpointer data)
+{
+	if(small_icons) g_list_remove(small_icons,widget);
 }
 
 void
@@ -71,6 +79,8 @@ setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title)
 		gtk_widget_set_usize (align, 22, 16);
 
 	*small_icons = g_list_prepend (*small_icons, align);
+	gtk_signal_object_connect(GTK_OBJECT(align),"destroy",
+				  GTK_SIGNAL_FUNC(kill_small_icon),NULL);
 
 	gtk_widget_show (align);
 	gtk_widget_show (hbox);
@@ -291,13 +301,13 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu);
 void
 menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 {
-	Menu * menu = data;
+	Menu * menup = data;
 	GtkWidget *widget = menu->button;
 	int wx, wy;
 	
 	gdk_window_get_origin (widget->window, &wx, &wy);
 
-	switch(menu->oerientation) {
+	switch(menup->orient) {
 		case MENU_DOWN:
 			*x = wx;
 			*y = wy + widget->allocation.height;
@@ -315,10 +325,14 @@ menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 			*y = wy;
 			break;
 	}
+
 	if(*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width())
 		*x=gdk_screen_width() - GTK_WIDGET (menu)->allocation.width;
+	if(*x < 0) *x =0;
+
 	if(*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height())
 		*y=gdk_screen_height() - GTK_WIDGET (menu)->allocation.height;
+	if(*y < 0) *y =0;
 }
 
 void
@@ -550,29 +564,31 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_logout, 0);
 }
 
-static GtkWidget *
-create_panel_menu (GtkWidget *window, char *menudir, int main_menu)
+static Menu *
+create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
+		   MenuOrient orient)
 {
 	GtkWidget *button;
 	GtkWidget *pixmap;
-	GtkWidget *menu;
+	Menu *menu;
 	GtkWidget *app_menu;
 	
 	char *pixmap_name;
 
+	menu = g_new(Menu,1);
+
 	if (main_menu)
-		switch(panel_snapped) {
-			case PANEL_TOP:
+		switch(orient) {
+			case MENU_DOWN:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.xpm");
 				break;
-			case PANEL_FREE:
-			case PANEL_BOTTOM:
+			case MENU_UP:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.xpm");
 				break;
-			case PANEL_LEFT:
+			case MENU_RIGHT:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.xpm");
 				break;
-			case PANEL_RIGHT:
+			case MENU_LEFT:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.xpm");
 				break;
 		}
@@ -580,39 +596,75 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu)
 		/*FIXME: these guys need arrows as well*/
 		pixmap_name = gnome_unconditional_pixmap_file ("panel-folder.xpm");
 		
+	menu->orient = orient;
+
 	/* main button */
-	button = gtk_button_new ();
+	menu->button = gtk_button_new ();
 	
 	/*make the pixmap*/
-	pixmap = gnome_create_pixmap_widget (window, button, pixmap_name);
+	pixmap = gnome_create_pixmap_widget (window, menu->button, pixmap_name);
 	gtk_widget_show(pixmap);
-	gtk_widget_set_usize (button, pixmap->requisition.width,
+	/*FIXME:this is not right, but it's how we can get the buttons to
+	  be 48x48 (given the icons are 48x48)*/
+	gtk_widget_set_usize (menu->button, pixmap->requisition.width,
 			      pixmap->requisition.height);
 
 	/* put pixmap in button */
-	gtk_container_add (GTK_CONTAINER(button), pixmap);
-	gtk_widget_show (button);
+	gtk_container_add (GTK_CONTAINER(menu->button), pixmap);
+	gtk_widget_show (menu->button);
 
-	menu = create_menu_at (window, menudir, 0);
 	if (main_menu) {
+		if(!root_menu)
+			root_menu = create_menu_at (window, menudir, 0);
+		menu->menu = root_menu;
 		app_menu = create_menu_at (window, menudir, 1);
-		add_special_entries (menu, app_menu);
+		add_special_entries (menu->menu, app_menu);
+	} else {
+		menu->menu = create_menu_at (window, menudir, 0);
 	}
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+	gtk_signal_connect (GTK_OBJECT (menu->button), "clicked",
 			    GTK_SIGNAL_FUNC (activate_menu), menu);
 
 	g_free (pixmap_name);
-	return button;
+	return menu;
 }
 
-static GtkWidget *
-create_menu_widget (GtkWidget *window, char *arguments, char *menudir)
+Menu *
+create_menu(GtkWidget *window, char *arguments, char *menudir,
+	    MenuOrient orient)
 {
-	GtkWidget *menu;
+	Menu *menu;
 	int main_menu;
+
+	char *menu_base = gnome_unconditional_datadir_file ("apps");
+	char *this_menu;
+
+	if (*arguments == '/')
+		this_menu = g_strdup (arguments);
+	else 
+		this_menu = g_concat_dir_and_file (menu_base, arguments);
+
+	if (!g_file_exists (this_menu)) {
+		g_free (menu_base);
+		g_free (this_menu);
+		return NULL;
+	}
+	
+	if(!gnome_folder) {
+		gnome_folder = gnome_unconditional_pixmap_file
+					("gnome-folder-small.xpm");
+		if (!g_file_exists (gnome_folder)) {
+			free (gnome_folder);
+			gnome_folder = NULL;
+		}
+	}
 	
 	main_menu = (strcmp (arguments, ".") == 0);
-	menu = create_panel_menu (window, menudir, main_menu);
+
+	menu = create_panel_menu (window, menudir, main_menu, orient);
+
+	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
+
 	return menu;
 }
 
@@ -631,95 +683,29 @@ set_show_small_icons(gpointer data, gpointer user_data)
 }
 
 static void
-create_instance (PanelWidget *panel, char *params, int pos, int panelnum)
-{
-	char *menu_base = gnome_unconditional_datadir_file ("apps");
-	char *this_menu;
-	char *p;
-	Menu *menu;
-	PanelCommand cmd;
-	int show_small_icons;
-
-	if (!getenv ("PATH"))
-		return;
-
-	if(!params)
-		return;
-
-	/*parse up the params*/
-	p = strchr(params,':');
-	show_small_icons = TRUE;
-	if (p) {
-		*(p++)='\0';
-		if(*(p++)=='0')
-			show_small_icons = FALSE;
-	}
-
-	if (*params == '/')
-		this_menu = strdup (params);
-	else 
-		this_menu = g_concat_dir_and_file (menu_base, params);
-
-	if (!g_file_exists (this_menu)) {
-		g_free (menu_base);
-		g_free (this_menu);
-		return;
-	}
-
-	gnome_folder = gnome_unconditional_pixmap_file ("gnome-folder-small.xpm");
-	if (!g_file_exists (gnome_folder)) {
-		free (gnome_folder);
-		gnome_folder = NULL;
-	}
-
-	menu = g_new(Menu,1);
-	menu->button = create_menu_widget (GTK_WIDGET(panel), params,
-					   this_menu);
-	menu->path = g_strdup(params);
-
-	g_list_foreach(small_icons,set_show_small_icons, &show_small_icons);
-	
-	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
-	
-	cmd.cmd = PANEL_CMD_REGISTER_TOY;
-	cmd.params.register_toy.applet = menu->button;
-	cmd.params.register_toy.id     = APPLET_ID;
-	cmd.params.register_toy.pos    = pos;
-	cmd.params.register_toy.panel  = panelnum;
-	cmd.params.register_toy.flags  = APPLET_HAS_PROPERTIES;
-
-	(*panel_cmd_func) (&cmd);
-}
-
-static void
-set_orientation(GtkWidget *applet, PanelWidget *panel, PanelSnapped snapped)
+set_orientation(Menu *menu)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name;
-	Menu *menu;
 
-	panel_snapped = snapped; /*FIXME: this should probably be in the structure*/
-
-	menu = gtk_object_get_user_data(GTK_OBJECT(applet));
 	if(!menu || !menu->path)
 		return;
 
 	if (strcmp (menu->path, ".") == 0)
-		switch (panel_snapped) {
-			case PANEL_TOP:
+		switch (menu->orient) {
+			case MENU_DOWN:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-down.xpm");
 				break;
-			case PANEL_FREE:
-			case PANEL_BOTTOM:
+			case MENU_UP:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-up.xpm");
 				break;
-			case PANEL_LEFT:
+			case MENU_RIGHT:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-right.xpm");
 				break;
-			case PANEL_RIGHT:
+			case MENU_LEFT:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-left.xpm");
 				break;

@@ -16,6 +16,7 @@
 #include "panel_cmds.h"
 #include "applet_cmds.h"
 #include "panel.h"
+#include "menu.h"
 #include "panel_config.h"
 
 
@@ -42,6 +43,10 @@ extern GList *applets;
 
 extern GtkTooltips *panel_tooltips;
 extern gint tooltips_enabled;	
+
+/*FIXME: integrate with menu.[ch]*/
+/*extern GtkMenu *root_menu;
+extern GList *small_icons;*/
 
 /*FIXME: a hack for current code to work*/
 #define the_panel (PANEL_WIDGET(panels->data))
@@ -353,6 +358,19 @@ panel_session_save (gpointer client_data,
 	g_hash_table_foreach(applet_files_ht, destroy_applet_module, NULL);
 	applet_files_destroy();
 
+	gtk_widget_unref(applet_menu);
+	gtk_widget_unref(panel_tooltips);
+
+	/*FIXME: integrate with menu.[ch]*/
+	/*small_icons = NULL;*/ /*prevent searches through the g_list to speed
+				up this thing*/
+
+	/*FIXME: integrate with menu.[ch]*/
+	/*gtk_widget_unref(root_menu);*/
+
+	/*FIXME: unref all menus here */
+	
+
 	/* Always successful.  */
 	return 1;
 }
@@ -363,8 +381,6 @@ panel_quit(void)
   if (! gnome_session_connected_p ())
     {
       panel_session_save (NULL, GNOME_SAVE_BOTH, 1, GNOME_INTERACT_NONE, 0);
-      gtk_widget_unref(applet_menu);
-      gtk_widget_unref(panel_tooltips);
       gtk_main_quit ();
       /* We don't want to return, because we've probably been called from an
        * applet which has since been dlclose()'d, and we'd end up with a SEGV
@@ -376,8 +392,6 @@ panel_quit(void)
       /* We request a completely interactive, full, slow shutdown.  */
       gnome_session_request_save (GNOME_SAVE_BOTH, 1, GNOME_INTERACT_ANY,
 				  0, 1);
-      gtk_widget_unref(applet_menu);
-      gtk_widget_unref(panel_tooltips);
     }
 }
 
