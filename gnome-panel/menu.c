@@ -2905,8 +2905,10 @@ setup_stock_menu_item (GtkWidget  *item,
 		       const char *stock_id,
 		       const char *title)
 {
-	panel_load_menu_image_deferred (
+	if (stock_id != NULL) {
+		panel_load_menu_image_deferred (
 			item, stock_id, NULL, NULL, FALSE);
+	}
 
 	setup_menuitem (item, NULL, title);
 }
@@ -3011,6 +3013,59 @@ create_add_launcher_menu (GtkWidget *menu, gboolean fake_submenus)
 	return menu;
 }
 
+static GtkWidget *
+create_button_menu (GtkWidget *menu,
+		    gboolean fake_submenus)
+{
+	GtkWidget *menuitem;
+	
+	if (menu == NULL) {
+		menu = menu_new ();
+	}
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menuitem, PANEL_STOCK_LOGOUT, _("Log Out"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_action_button_to_panel),
+			  GINT_TO_POINTER (PANEL_ACTION_LOGOUT));
+	setup_internal_applet_drag (menuitem, "ACTION:logout:NEW");
+	
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menuitem, PANEL_STOCK_LOCKSCREEN, _("Lock"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_action_button_to_panel),
+			  GINT_TO_POINTER (PANEL_ACTION_LOCK));
+	setup_internal_applet_drag (menuitem, "ACTION:lock:NEW");
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menuitem, PANEL_STOCK_SCREENSHOT, _("Screenshot"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_action_button_to_panel),
+			  GINT_TO_POINTER (PANEL_ACTION_SCREENSHOT));
+	setup_internal_applet_drag (menuitem, "ACTION:screenshot:NEW");
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menuitem, PANEL_STOCK_SEARCHTOOL, _("Search"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_action_button_to_panel),
+			  GINT_TO_POINTER (PANEL_ACTION_SEARCH));
+	setup_internal_applet_drag (menuitem, "ACTION:search:NEW");
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menuitem, PANEL_STOCK_RUN, _("Run"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_action_button_to_panel),
+			  GINT_TO_POINTER (PANEL_ACTION_RUN));
+	setup_internal_applet_drag (menuitem, "ACTION:run:NEW");
+
+	return menu;
+}	
+		
 static void
 remove_panel_accept (GtkWidget *w,
 		     int        response,
@@ -3346,6 +3401,15 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), m);
 	g_signal_connect (G_OBJECT (m),"show",
 			  G_CALLBACK (submenu_to_display), NULL);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menuitem, NULL, _("Button"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	
+	m = create_button_menu (NULL, fake_submenus);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), m);
+	g_signal_connect (G_OBJECT (m), "show",
+			  G_CALLBACK (submenu_to_display), NULL);
 	
   	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (menuitem, PANEL_STOCK_GNOME_LOGO, _("GNOME Menu"));
@@ -3363,45 +3427,6 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 			   NULL);
 	setup_internal_applet_drag(menuitem, "DRAWER:NEW");
 
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menuitem, PANEL_STOCK_LOGOUT, _("Log Out Button"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_action_button_to_panel),
-			  GINT_TO_POINTER (PANEL_ACTION_LOGOUT));
-	setup_internal_applet_drag (menuitem, "ACTION:logout:NEW");
-	
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menuitem, PANEL_STOCK_LOCKSCREEN, _("Lock Button"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_action_button_to_panel),
-			  GINT_TO_POINTER (PANEL_ACTION_LOCK));
-	setup_internal_applet_drag (menuitem, "ACTION:lock:NEW");
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menuitem, PANEL_STOCK_SCREENSHOT, _("Screenshot Button"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_action_button_to_panel),
-			  GINT_TO_POINTER (PANEL_ACTION_SCREENSHOT));
-	setup_internal_applet_drag (menuitem, "ACTION:screenshot:NEW");
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menuitem, PANEL_STOCK_SEARCHTOOL, _("Search Button"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_action_button_to_panel),
-			  GINT_TO_POINTER (PANEL_ACTION_SEARCH));
-	setup_internal_applet_drag (menuitem, "ACTION:search:NEW");
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menuitem, PANEL_STOCK_RUN, _("Run Button"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_action_button_to_panel),
-			  GINT_TO_POINTER (PANEL_ACTION_RUN));
-	setup_internal_applet_drag (menuitem, "ACTION:run:NEW");
 }
 
 static void
