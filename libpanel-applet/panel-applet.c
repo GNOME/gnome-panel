@@ -937,6 +937,10 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 	if (!GTK_WIDGET_REALIZED (applet))
 		return NULL;
 
+	gc = gdk_gc_new (GDK_DRAWABLE (GTK_WIDGET (applet)->window));
+
+	g_return_val_if_fail (GDK_IS_GC (gc), NULL);
+
 	display = gdk_display_get_default ();
 	
 	pixmap = gdk_pixmap_lookup_for_display (display, xid);
@@ -951,10 +955,6 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 			       &width, &height);
 
 	retval = gdk_pixmap_new (GTK_WIDGET (applet)->window, width, height, -1);
-
-	gc = gdk_gc_new (GDK_DRAWABLE (GTK_WIDGET (applet)->window));
-
-	g_return_val_if_fail (GDK_IS_GC (gc), NULL);
 
 	gdk_draw_drawable (GDK_DRAWABLE (retval),
 			   gc, 
