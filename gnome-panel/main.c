@@ -418,15 +418,17 @@ load_applet(char *id_str, char *path, char *params,
 
 		launcher = create_launcher(params);
 
-		register_toy(launcher->button,NULL,launcher,LAUNCHER_ID,NULL,
-			     params,pos,panel,NULL,APPLET_LAUNCHER);
-
-		gtk_tooltips_set_tip (panel_tooltips,launcher->button->parent,
-				      launcher->dentry->comment,NULL);
-
-		applet_add_callback(applet_count-1,"properties",
-				    GNOME_STOCK_MENU_PROP,
-				    _("Properties..."));
+		if (launcher){
+			register_toy(launcher->button,NULL,launcher,LAUNCHER_ID,NULL,
+				     params,pos,panel,NULL,APPLET_LAUNCHER);
+			
+			gtk_tooltips_set_tip (panel_tooltips,launcher->button->parent,
+					      launcher->dentry->comment,NULL);
+			
+			applet_add_callback(applet_count-1,"properties",
+					    GNOME_STOCK_MENU_PROP,
+					    _("Properties..."));
+		}
 	} else if(strcmp(id_str,DRAWER_ID) == 0) {
 		Drawer *drawer;
 		PanelWidget *parent;
