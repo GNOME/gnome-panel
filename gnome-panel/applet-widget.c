@@ -111,6 +111,32 @@ applet_widget_marshal_signal_save (GtkObject * object,
 	gnome_config_drop_all();
 }
 
+/*THIS ONE WILL GIVE A WARNING ABOUT USING OLD API*/
+static void
+applet_widget_marshal_signal_save_old (GtkObject * object,
+				       GtkSignalFunc func,
+				       gpointer func_data,
+				       GtkArg * args)
+{
+	AppletWidgetSaveSignal rfunc;
+	int *retval;
+
+	rfunc = (AppletWidgetSaveSignal) func;
+
+	retval = GTK_RETLOC_BOOL(args[2]);
+	
+	g_warning("Do not use the session_save signal on applets, "
+		  "please use the save_session signal");
+
+	*retval = (*rfunc) (object, GTK_VALUE_STRING (args[0]),
+		  	    GTK_VALUE_STRING (args[1]),
+		  	    func_data);
+	
+	/*make applets that forget to do this not fsckup*/
+	gnome_config_sync();
+	gnome_config_drop_all();
+}
+
 static void
 applet_widget_marshal_signal_back (GtkObject * object,
 				   GtkSignalFunc func,
@@ -178,7 +204,7 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
 			       			 session_save),
-			       applet_widget_marshal_signal_save,
+			       applet_widget_marshal_signal_save_old,
 			       GTK_TYPE_BOOL,
 			       2,
 			       GTK_TYPE_STRING,
