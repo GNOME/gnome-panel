@@ -1,3 +1,11 @@
+2004-11-08  James Henstridge  <james@jamesh.id.au>
+
+	* panel-background.c (panel_background_prepare): call
+	gdk_display_sync() after drawing the panel background.  Since
+	applets will be looking up the background pixmap using a different
+	display connection, we need to make sure all drawing has occurred
+	first.  Fixes bug #157303.
+
 2004-11-06  Vincent Untz  <vincent@vuntz.net>
 
 	* menu.c: (create_root_menu):
