@@ -1286,7 +1286,6 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 {
 	PanelOrientation  orientation;
 	GdkScreen        *screen;
-	gboolean          topmost, bottommost, leftmost, rightmost;
 	gboolean          geometry_changed = FALSE;
 	int               strut, strut_start, strut_end;
 	int               x, y, width, height;
