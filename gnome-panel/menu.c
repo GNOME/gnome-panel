@@ -1916,7 +1916,7 @@ add_action_button_to_panel (GtkWidget *widget,
 		insertion_pos = pd->insertion_pos;
 	
 	panel_action_button_load (
-		GPOINTER_TO_INT (data), panel, insertion_pos, FALSE, NULL);
+		GPOINTER_TO_INT (data), panel, insertion_pos, FALSE, NULL, FALSE);
 }
 
 static void

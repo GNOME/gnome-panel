@@ -65,11 +65,12 @@ struct _PanelActionButtonClass {
 
 GType      panel_action_button_get_type  (void) G_GNUC_CONST;
 
-GtkWidget *panel_action_button_load             (PanelActionButtonType  type,
+GtkWidget *panel_action_button_load             (PanelActionButtonType   type,
 						 PanelWidget            *panel,
 						 int                     position,
 						 gboolean                exactpos,
-						 const char             *gconf_key);
+						 const char             *gconf_key,
+						 gboolean                compatibility);
 
 void       panel_action_button_set_type         (PanelActionButton     *button,
 						 PanelActionButtonType  type);

@@ -223,6 +223,8 @@ applet_callback_callback (GtkWidget      *widget,
 			panel_show_help (screen, "wgospanel.xml", "gospanel-37");
 		break;
 	case APPLET_ACTION:
+	case APPLET_LOGOUT:
+	case APPLET_LOCK:
 		panel_action_button_invoke_menu (
 			PANEL_ACTION_BUTTON (menu->info->widget), menu->name);
 		break;
@@ -741,11 +743,13 @@ panel_applet_load_idle_handler (gpointer dummy)
 	case APPLET_LOGOUT:  /* FIXME: This is backward compatibility only. */
 	case APPLET_LOCK:    /*        Remove at some time in the future    */
 		panel_action_button_load (
-				APPLET_LOGOUT ? PANEL_ACTION_LOGOUT : PANEL_ACTION_LOCK,
+				applet->type == APPLET_LOGOUT ? PANEL_ACTION_LOGOUT :
+								PANEL_ACTION_LOCK,
 				applet->panel_widget,
 				applet->position,
 				TRUE,
-				applet->unique_id);
+				applet->unique_id,
+				TRUE);
 		break;
 	case APPLET_ACTION:
 		panel_action_button_load_from_gconf (
@@ -1170,6 +1174,8 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 					applet_info->gconf_key);
 		break;
 	case APPLET_ACTION:
+	case APPLET_LOGOUT:
+	case APPLET_LOCK:
 		panel_action_button_save_to_gconf (
 			PANEL_ACTION_BUTTON (applet_info->widget),
 			applet_info->gconf_key);
@@ -1178,10 +1184,6 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 		panel_menu_bar_save_to_gconf (
 			PANEL_MENU_BAR (applet_info->widget),
 			applet_info->gconf_key);
-		break;
-	case APPLET_LOGOUT:
-	case APPLET_LOCK:
-		g_assert_not_reached ();
 		break;
 	default:
 		break;

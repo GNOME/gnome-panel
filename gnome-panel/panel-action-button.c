@@ -480,17 +480,27 @@ panel_action_button_load (PanelActionButtonType  type,
 			  PanelWidget           *panel,
 			  int                    position,
 			  gboolean               exactpos,
-			  const char            *gconf_key)
+			  const char            *gconf_key,
+			  gboolean               compatibility)
 {
 	PanelActionButton *button;
+	AppletType         applet_type;
 
 	g_return_val_if_fail (panel != NULL, NULL);
 
 	button = g_object_new (PANEL_TYPE_ACTION_BUTTON, "action-type", type, NULL);
 
+	applet_type = APPLET_ACTION;
+	if (compatibility) { /* Backward compatibility with GNOME 2.0.x */
+		if (type == PANEL_ACTION_LOCK)
+			applet_type = APPLET_LOCK;
+		else if (type == PANEL_ACTION_LOGOUT)
+			applet_type = APPLET_LOGOUT;
+	}
+
 	button->priv->info = panel_applet_register (
 				GTK_WIDGET (button), NULL, NULL, panel,
-				position, exactpos, APPLET_ACTION, gconf_key);
+				position, exactpos, applet_type, gconf_key);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
 		return NULL;
@@ -537,7 +547,7 @@ panel_action_button_load_from_gconf (PanelWidget *panel,
 		return NULL;
 
 	return panel_action_button_load (
-			type, panel, position, exactpos, gconf_key);
+			type, panel, position, exactpos, gconf_key, FALSE);
 }
 
 void
@@ -634,7 +644,7 @@ panel_action_button_load_from_drag (const char  *drag_string,
 	g_strfreev (elements);
 
 	panel_action_button_load (
-			type, panel, position, exactpos, gconf_key);
+			type, panel, position, exactpos, gconf_key, FALSE);
 
 	return retval;
 }
