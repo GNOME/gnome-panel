@@ -46,9 +46,11 @@ static const BonoboUIVerb test_applet_menu_verbs [] = {
 };
 
 static const char test_applet_menu_xml [] =
-	"<menuitem name=\"Test Item 1\" verb=\"TestAppletDo1\" _label=\"Test This One\"/>\n"
-	"<menuitem name=\"Test Item 2\" verb=\"TestAppletDo2\" _label=\"Test This Two\"/>\n"
-	"<menuitem name=\"Test Item 3\" verb=\"TestAppletDo3\" _label=\"Test This Three\"/>\n";
+	"<popup name=\"button3\">\n"
+	"   <menuitem name=\"Test Item 1\" verb=\"TestAppletDo1\" _label=\"Test This One\"/>\n"
+	"   <menuitem name=\"Test Item 2\" verb=\"TestAppletDo2\" _label=\"Test This Two\"/>\n"
+	"   <menuitem name=\"Test Item 3\" verb=\"TestAppletDo3\" _label=\"Test This Three\"/>\n"
+	"</popup>\n";
 
 static BonoboObject *
 test_applet_new (const gchar *iid)
@@ -84,8 +86,8 @@ test_applet_factory (BonoboGenericFactory *this,
 	return applet;
 }
 
-BONOBO_ACTIVATION_FACTORY ("OAFIID:GNOME_Panel_TestBonoboApplet_Factory",
-			   "A Test Applet for the GNOME-2.0 Panel",
-			   "0",
-			   test_applet_factory,
-			   NULL)
+PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_Panel_TestBonoboApplet_Factory",
+			     "A Test Applet for the GNOME-2.0 Panel",
+			     "0",
+			     test_applet_factory,
+			     NULL)

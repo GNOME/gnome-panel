@@ -14,6 +14,7 @@
 #include <gtk/gtkeventbox.h>
 #include <bonobo/bonobo-control.h>
 #include <bonobo/bonobo-ui-component.h>
+#include <bonobo/bonobo-generic-factory.h>
 
 G_BEGIN_DECLS
  
@@ -59,6 +60,23 @@ void               panel_applet_setup_menu_from_file (PanelApplet        *applet
 						      const gchar        *opt_app_name,
 						      const BonoboUIVerb *verb_list,
 						      gpointer            user_data);
+
+
+int                panel_applet_factory_main         (int                     argc,
+						      char                  **argv,
+						      const gchar            *iid,
+						      const gchar            *name,
+						      const gchar            *version,
+						      BonoboFactoryCallback   callback,
+						      gpointer                data);
+
+#define PANEL_APPLET_BONOBO_FACTORY(iid, name, version, callback, data)		\
+int main (int argc, char *argv [])						\
+{										\
+        return panel_applet_factory_main (argc, argv, iid, name,		\
+					  version, callback, data);		\
+}
+
 
 G_END_DECLS
 

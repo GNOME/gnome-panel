@@ -9,6 +9,8 @@
 
 #include <unistd.h>
 #include <bonobo/bonobo-ui-util.h>
+#include <libgnome/gnome-program.h>
+#include <libgnomeui/gnome-ui-init.h>
 
 #include "panel-applet.h"
 
@@ -30,10 +32,9 @@ panel_applet_setup_menu (PanelApplet        *applet,
 
 	popup_component = panel_applet_get_popup_component (applet);
 
-	bonobo_ui_component_set (popup_component, "/",
-				 "<popups><popup name=\"button3\"/></popups>", NULL);
+	bonobo_ui_component_set (popup_component, "/", "<popups/>", NULL);
 
-	bonobo_ui_component_set_translate (popup_component, "/", xml, NULL);
+	bonobo_ui_component_set_translate (popup_component, "/popups", xml, NULL);
 
 	bonobo_ui_component_add_verb_list_with_data (popup_component, verb_list, user_data);
 }
@@ -178,4 +179,26 @@ panel_applet_new (GtkWidget *widget)
 	panel_applet_construct (applet, widget);
 
 	return applet;
+}
+
+int
+panel_applet_factory_main (int                     argc,
+			   char                  **argv,
+			   const gchar            *iid,
+			   const gchar            *name,
+			   const gchar            *version,
+			   BonoboFactoryCallback   callback,
+			   gpointer                data)
+{
+	GnomeProgram *program;
+	int           retval;
+
+	program = gnome_program_init (name, version,
+				      LIBGNOMEUI_MODULE,
+				      argc, argv,
+				      GNOME_PARAM_NONE);
+
+	retval = bonobo_generic_factory_main (iid, callback, data);
+
+	return retval;
 }

@@ -1,5 +1,16 @@
 2001-11-15  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet.c: 
+	(panel_applet_setup_menu), only set the popups path, not the
+	button3 path - seems we can't insert a list of xml nodes.
+	(panel_applet_factory_main): impl.
+
+	* panel-applet.h: nice bonobo factory api.
+
+	* test-bonobo-applet.c: upd.
+
+2001-11-15  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-applet.[ch]: (panel_applet_setup_menu),
 	(panel_applet_setup_menu_from_file): impl convience functions.
 
