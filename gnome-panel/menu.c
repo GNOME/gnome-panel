@@ -933,13 +933,11 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 			   LOGOUT_ID);
 
 
-#ifdef _SWALLOW_
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add swallowed app"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) ask_about_swallowing,NULL);
-#endif
 
 	add_menu_separator(menu);
 

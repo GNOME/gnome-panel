@@ -3,10 +3,7 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.2f
 
-# enable swallows for testing only, not for release!
-# (it's after 0.20 so I guess swallows can be enabled,
-# maybe someone will fix it up)
-CFLAGS += -D_SWALLOW_ $(ORBIT_CFLAGS)
+CFLAGS += $(ORBIT_CFLAGS)
 
 if ORBIT_INSTALLED
 CXX = $(CC)
