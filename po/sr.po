@@ -9,27 +9,115 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-10 01:48+0100\n"
-"PO-Revision-Date: 2004-01-10 01:54+0100\n"
+"POT-Creation-Date: 2004-01-13 10:15+0100\n"
+"PO-Revision-Date: 2004-01-13 10:25+0100\n"
 "Last-Translator: Данило Шеган <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <serbiagnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/clock/clock.c:232
+#: applets/clock/GNOME_ClockApplet.xml.h:1
+msgid "Ad_just Date & Time..."
+msgstr "Подеси датум и _време..."
+
+#: applets/clock/GNOME_ClockApplet.xml.h:2
+msgid "Copy _Date"
+msgstr "Копирај _датум"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:3
+msgid "Copy _Time"
+msgstr "Копирај _време"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:4
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
+msgid "_About..."
+msgstr "_О програму..."
+
+#: applets/clock/GNOME_ClockApplet.xml.h:5
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
+#: gnome-panel/drawer.c:600 gnome-panel/menu.c:3087
+#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:323
+#: gnome-panel/panel-menu-button.c:608
+msgid "_Help"
+msgstr "_Помоћ"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:6
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
+msgid "_Preferences..."
+msgstr "_Поставке..."
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
+msgid "Accessories"
+msgstr "Помоћни алати"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
+#: applets/clock/clock.c:2490
+msgid "Clock"
+msgstr "Часовник"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+msgid "Clock Applet Factory"
+msgstr "Производња програмчета за часовник"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+msgid "Factory for creating clock applets."
+msgstr "Производња програмчета за часовник."
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
+msgid "Get the current time and date"
+msgstr "Сазнај тренутно време и датум"
+
+#: applets/clock/calendar-client.c:177
+msgid "Day"
+msgstr "Дан"
+
+#: applets/clock/calendar-client.c:178
+msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+msgstr "Тренутно праћен дан између 1 и 31 (0 означава непостављено)"
+
+#: applets/clock/calendar-client.c:185
+msgid "Month"
+msgstr "Месец"
+
+#: applets/clock/calendar-client.c:186
+msgid "The currently monitored month between 0 and 11"
+msgstr "Тренутно праћен месец између 0 и 11"
+
+#: applets/clock/calendar-client.c:193
+msgid "Year"
+msgstr "Година"
+
+#: applets/clock/calendar-client.c:194
+msgid "The currently monitored year"
+msgstr "Тренутно праћена година"
+
+#: applets/clock/clock.c:263
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:232
+#: applets/clock/clock.c:263 applets/clock/clock.c:610
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:234 applets/clock/clock.c:830
+#: applets/clock/clock.c:265 applets/clock/clock.c:1501
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:234 applets/clock/clock.c:832
+#: applets/clock/clock.c:265 applets/clock/clock.c:612
+#: applets/clock/clock.c:1503
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -38,7 +126,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:245
+#: applets/clock/clock.c:276
 msgid "%a %b %e"
 msgstr "%a, %e. %b"
 
@@ -46,7 +134,7 @@ msgstr "%a, %e. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:252
+#: applets/clock/clock.c:283
 #, c-format
 msgid ""
 "%1$s\n"
@@ -59,42 +147,54 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:259
+#: applets/clock/clock.c:290
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:374
+#: applets/clock/clock.c:407
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#: applets/clock/clock.c:508
+#: applets/clock/clock.c:826
+msgid "Tasks"
+msgstr "Задужења"
+
+#: applets/clock/clock.c:954
+msgid "All Day"
+msgstr "Цео дан"
+
+#: applets/clock/clock.c:985
+msgid "Appointments"
+msgstr "Заказани састанци"
+
+#: applets/clock/clock.c:1201
 msgid "Calendar"
 msgstr "Календар"
 
-#: applets/clock/clock.c:736
+#: applets/clock/clock.c:1414
 msgid "Computer Clock"
 msgstr "Рачунарски часовник"
 
-#: applets/clock/clock.c:825
+#: applets/clock/clock.c:1496
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:827
+#: applets/clock/clock.c:1498
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:868
+#: applets/clock/clock.c:1538
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y."
 
-#: applets/clock/clock.c:910
+#: applets/clock/clock.c:1580
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Не може да покрене алат за подешавање: %s"
 
-#: applets/clock/clock.c:951
+#: applets/clock/clock.c:1621
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -102,7 +202,7 @@ msgstr ""
 "Не може да пронађе програм за подешавање датума и времена. Можда ниједан "
 "није инсталиран?"
 
-#: applets/clock/clock.c:1418 applets/clock/clock.c:1775
+#: applets/clock/clock.c:2079 applets/clock/clock.c:2436
 #: applets/fish/fish.c:127 applets/notification_area/main.c:82
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -112,52 +212,52 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "Дошло је до грешке при приказивању помоћи: %s"
 
-#: applets/clock/clock.c:1467
+#: applets/clock/clock.c:2128
 msgid "Clock Preferences"
 msgstr "Поставке часовника"
 
-#: applets/clock/clock.c:1503
+#: applets/clock/clock.c:2164
 msgid "Clock _type:"
 msgstr "_Врста часовника:"
 
-#: applets/clock/clock.c:1514
+#: applets/clock/clock.c:2175
 msgid "12 hour"
 msgstr "12-точасовни"
 
-#: applets/clock/clock.c:1522
+#: applets/clock/clock.c:2183
 msgid "24 hour"
 msgstr "24-очасовни"
 
-#: applets/clock/clock.c:1530
+#: applets/clock/clock.c:2191
 msgid "UNIX time"
 msgstr "UNIX време"
 
-#: applets/clock/clock.c:1538
+#: applets/clock/clock.c:2199
 msgid "Internet time"
 msgstr "Интернет време"
 
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:2207
 msgid "Custom format"
 msgstr "Облик по избору"
 
-#: applets/clock/clock.c:1562
+#: applets/clock/clock.c:2223
 msgid "Custom _format:"
 msgstr "Облик по _избору:"
 
-#: applets/clock/clock.c:1579
+#: applets/clock/clock.c:2240
 msgid "Show _seconds"
 msgstr "Прикажи _секунде"
 
-#: applets/clock/clock.c:1588
+#: applets/clock/clock.c:2249
 msgid "Show _date"
 msgstr "Прикажи _датум"
 
-#: applets/clock/clock.c:1597
+#: applets/clock/clock.c:2258
 msgid "Use _UTC"
 msgstr "Користи _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:1810 applets/notification_area/main.c:116
+#: applets/clock/clock.c:2471 applets/notification_area/main.c:116
 #: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
 #: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:502
 #: gnome-panel/menu.c:283
@@ -167,12 +267,7 @@ msgstr ""
 "\n"
 "Prevod.org — превод на српски језик"
 
-#: applets/clock/clock.c:1829
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-msgid "Clock"
-msgstr "Часовник"
-
-#: applets/clock/clock.c:1831
+#: applets/clock/clock.c:2492
 msgid "The Clock displays the current time and date"
 msgstr "Часовник приказује тренутно време и датум"
 
@@ -235,7 +330,10 @@ msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
-msgstr "Овај кључ наводи облик часовника који користи програмче када је облик постављен на „custom“. Можете користити ознаке које разуме strftime() ради добијања жељеног облика."
+msgstr ""
+"Овај кључ наводи облик часовника који користи програмче када је облик "
+"постављен на „custom“. Можете користити ознаке које разуме strftime() ради "
+"добијања жељеног облика."
 
 # bug: ".beats" or "beats"?
 #: applets/clock/clock.schemas.in.h:14
@@ -248,7 +346,15 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
-msgstr "Овај кључ наводи облик часа који користи програмче са сатом. Дозвољене вредности су „12-hour“, „24-hour“, „internet“, „unix“ и „custom“. Уколико је постављено на „internet“, сат ће приказивати Интернет време. Систем Интернет времена дели дан на 1.000 „откуцаја“. У овом систему нема временских зона, па је време исто у целом свету. Уколико је постављено на „unix“, сат ће приказивати протекло време у секундама од Епохе, тј. 1. јануара 1970. Ако је постављено на „custom“, сат ће приказивати време у складу са обликом наведеним у кључу custom_format."
+msgstr ""
+"Овај кључ наводи облик часа који користи програмче са сатом. Дозвољене "
+"вредности су „12-hour“, „24-hour“, „internet“, „unix“ и „custom“. Уколико је "
+"постављено на „internet“, сат ће приказивати Интернет време. Систем Интернет "
+"времена дели дан на 1.000 „откуцаја“. У овом систему нема временских зона, "
+"па је време исто у целом свету. Уколико је постављено на „unix“, сат ће "
+"приказивати протекло време у секундама од Епохе, тј. 1. јануара 1970. Ако је "
+"постављено на „custom“, сат ће приказивати време у складу са обликом "
+"наведеним у кључу custom_format."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -270,63 +376,290 @@ msgstr "Користи UTC"
 msgid "Use internet time"
 msgstr "Користи Интернет време"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "Помоћни алати"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:186
+msgid "Text"
+msgstr "Текст"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
-msgid "Clock Applet Factory"
-msgstr "Производња програмчета за часовник"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:187
+msgid "Text to render"
+msgstr "Текст за исцртавање"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
-msgid "Factory for creating clock applets."
-msgstr "Производња програмчета за часовник."
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:194
+msgid "Markup"
+msgstr "Означени"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
-msgid "Get the current time and date"
-msgstr "Сазнај тренутно време и датум"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:195
+msgid "Marked up text to render"
+msgstr "Означени текст за исцртавање"
 
-#: applets/clock/GNOME_ClockApplet.xml.h:1
-msgid "Ad_just Date & Time..."
-msgstr "Подеси датум и _време..."
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:202
+msgid "Attributes"
+msgstr "Особине"
 
-#: applets/clock/GNOME_ClockApplet.xml.h:2
-msgid "Copy _Date"
-msgstr "Копирај _датум"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:203
+msgid "A list of style attributes to apply to the text of the renderer"
+msgstr "Списак стилских особина које се примењују на текст при исцртавању"
 
-#: applets/clock/GNOME_ClockApplet.xml.h:3
-msgid "Copy _Time"
-msgstr "Копирај _време"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:210
+msgid "Ellipsize"
+msgstr "Пресеци"
 
-#: applets/clock/GNOME_ClockApplet.xml.h:4
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
-#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
-#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
-#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
-#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
-msgid "_About..."
-msgstr "_О програму..."
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:211
+msgid "Whether to crop the text and display \"...\" when space is limited"
+msgstr "Да ли да пресече текст и прикаже „...“ када је простор ограничен"
 
-#: applets/clock/GNOME_ClockApplet.xml.h:5
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
-#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
-#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
-#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:600 gnome-panel/menu.c:3087
-#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:323
-#: gnome-panel/panel-menu-button.c:608
-msgid "_Help"
-msgstr "_Помоћ"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:218
+msgid "Background color name"
+msgstr "Име боје позадине"
 
-#: applets/clock/GNOME_ClockApplet.xml.h:6
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
-#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
-msgid "_Preferences..."
-msgstr "_Поставке..."
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:219
+msgid "Background color as a string"
+msgstr "Боја позадине као ниска"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:226
+#: gnome-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "Боја позадине"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:227
+msgid "Background color as a GdkColor"
+msgstr "Боја позадине као GdkColor"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:234
+msgid "Foreground color name"
+msgstr "Име боје исцртавања"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:235
+msgid "Foreground color as a string"
+msgstr "Боја исцртавања као ниска"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:242
+msgid "Foreground color"
+msgstr "Боја исцртавања"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:243
+msgid "Foreground color as a GdkColor"
+msgstr "Боја исцртавања као GdkColor"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:251
+msgid "Editable"
+msgstr "Измењив"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:252
+msgid "Whether the text can be modified by the user"
+msgstr "Да ли корисник може изменити текст"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:259
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:267
+msgid "Font"
+msgstr "Фонт"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:260
+msgid "Font description as a string"
+msgstr "Опис фонта као ниска"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:268
+msgid "Font description as a PangoFontDescription struct"
+msgstr "Опис фонта као структура PangoFontDescription"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:276
+msgid "Font family"
+msgstr "Породица фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:277
+msgid "Name of the font family, e.g. Sans, Helvetica, Times, Monospace"
+msgstr "Име породице фонта, нпр. Санс, Хелветика, Тајмс, Моноспејс"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:284
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:285
+msgid "Font style"
+msgstr "Стил фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:293
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:294
+msgid "Font variant"
+msgstr "Врста фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:302
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:303
+msgid "Font weight"
+msgstr "Тежина фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:312
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:313
+msgid "Font stretch"
+msgstr "Развлачење фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:321
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:322
+msgid "Font size"
+msgstr "Величина фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:331
+msgid "Font points"
+msgstr "Фонт у тачкама"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:332
+msgid "Font size in points"
+msgstr "Величина фонта у тачкама"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:341
+msgid "Font scale"
+msgstr "Размера фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:342
+msgid "Font scaling factor"
+msgstr "Чинилац размере фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:351
+msgid "Rise"
+msgstr "Издигнуће"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:352
+msgid ""
+"Offset of text above the baseline (below the baseline if rise is negative)"
+msgstr "Померај текста изнад основне линије (испод ње ако је издигнуће негативно)"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:362
+msgid "Strikethrough"
+msgstr "Прецртано"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:363
+msgid "Whether to strike through the text"
+msgstr "Да ли да прецртам текст"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:370
+msgid "Underline"
+msgstr "Подвучено"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:371
+msgid "Style of underline for this text"
+msgstr "Стил подвлачења текста"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:381
+msgid "Background set"
+msgstr "Позадина постављена"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:382
+msgid "Whether this tag affects the background color"
+msgstr "Да ли ова ознака утиче на боју позадине"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:385
+msgid "Foreground set"
+msgstr "Боја постављена"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:386
+msgid "Whether this tag affects the foreground color"
+msgstr "Да ли ова ознака утиче на боју исцртавања"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:389
+msgid "Editability set"
+msgstr "Измењљивост постављена"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:390
+msgid "Whether this tag affects text editability"
+msgstr "Да ли ова ознака утиче на измењљивост"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:393
+msgid "Font family set"
+msgstr "Породица фонта постављена"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:394
+msgid "Whether this tag affects the font family"
+msgstr "Да ли ова ознака утиче на породицу фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:397
+msgid "Font style set"
+msgstr "Стил фонта постављен"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:398
+msgid "Whether this tag affects the font style"
+msgstr "Да ли ова ознака утиче на стил фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:401
+msgid "Font variant set"
+msgstr "Врста фонта постављена"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:402
+msgid "Whether this tag affects the font variant"
+msgstr "Да ли ова ознака утиче на врсту фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:405
+msgid "Font weight set"
+msgstr "Тежина фонта постављена"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:406
+msgid "Whether this tag affects the font weight"
+msgstr "Да ли ова ознака утиче на тежину фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:409
+msgid "Font stretch set"
+msgstr "Развлачење фонта постављено"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:410
+msgid "Whether this tag affects the font stretch"
+msgstr "Да ли ова ознака утиче на развлачење фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:413
+msgid "Font size set"
+msgstr "Величина фонта постављена"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:414
+msgid "Whether this tag affects the font size"
+msgstr "Да ли ова ознака утиче на величину фонта"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:417
+msgid "Font scale set"
+msgstr "Размера фонта постављена"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:418
+msgid "Whether this tag scales the font size by a factor"
+msgstr "Да ли ова ознака утиче на величину фонта према чиниоцу"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:421
+msgid "Rise set"
+msgstr "Издигнуће постављено"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:422
+msgid "Whether this tag affects the rise"
+msgstr "Да ли ова ознака утиче на издигнуће"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:425
+msgid "Strikethrough set"
+msgstr "Прецртавање постављено"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:426
+msgid "Whether this tag affects strikethrough"
+msgstr "Да ли ова ознака утиче на прецртано"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:429
+msgid "Underline set"
+msgstr "Подвлачење постављено"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:430
+msgid "Whether this tag affects underlining"
+msgstr "Да ли ова ознака утиче на подвлачење"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
+msgid "Amusements"
+msgstr "Занимљивости"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
+msgid "Display a swimming fish or another animated creature"
+msgstr "Прикажи рибу како плива или неко друго анимирано створење"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:493
+msgid "Fish"
+msgstr "Риба"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+msgid "From Whence That Stupid Fish Came"
+msgstr "Одакле Та Глупа Риба Изиђе"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
+msgid "Wanda Factory"
+msgstr "Ванда Фабрика"
 
 #: applets/fish/fish.c:194
 #, c-format
@@ -362,11 +695,6 @@ msgstr ""
 #: applets/fish/fish.c:477
 msgid "(with minor help from George)"
 msgstr "(уз малу помоћ Џорџа)"
-
-#: applets/fish/fish.c:493
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-msgid "Fish"
-msgstr "Риба"
 
 #: applets/fish/fish.c:526
 #, c-format
@@ -545,22 +873,6 @@ msgstr "Овај кључ наводи број кадрова у анимаци
 #: applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr "Овај кључ наводи трајање сваког кадра у секундама."
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
-msgid "Amusements"
-msgstr "Занимљивости"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-msgid "Display a swimming fish or another animated creature"
-msgstr "Прикажи рибу како плива или неко друго анимирано створење"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
-msgid "From Whence That Stupid Fish Came"
-msgstr "Одакле Та Глупа Риба Изиђе"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
-msgid "Wanda Factory"
-msgstr "Ванда Фабрика"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
@@ -927,27 +1239,31 @@ msgstr ""
 "вертикалан распоред) ће приказивати измена радних површина. Овај кључ има "
 "значаја једино ако је кључ display_all_workspaces постављен."
 
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "Гномова љуска панела"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
+#: gnome-panel/applet.c:497 gnome-panel/panel-applet-frame.c:111
+msgid "_Lock"
+msgstr "_Привежи"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:505
+msgid "_Move"
+msgstr "_Премести"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:483
+msgid "_Remove From Panel"
+msgstr "_Уклони са панела"
+
 #: gnome-panel/applet.c:103 gnome-panel/applet.c:497
 #: gnome-panel/panel-applet-frame.c:111
 msgid "Un_lock"
 msgstr "Од_вежи"
 
-#: gnome-panel/applet.c:103 gnome-panel/applet.c:497
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:111
-msgid "_Lock"
-msgstr "_Привежи"
-
 #: gnome-panel/applet.c:406
 msgid "???"
 msgstr "???"
-
-#: gnome-panel/applet.c:483 gnome-panel/GNOME_Panel_Popup.xml.h:3
-msgid "_Remove From Panel"
-msgstr "_Уклони са панела"
-
-#: gnome-panel/applet.c:505 gnome-panel/GNOME_Panel_Popup.xml.h:2
-msgid "_Move"
-msgstr "_Премести"
 
 #: gnome-panel/applet.c:1115
 msgid "Can't find an empty spot"
@@ -1242,10 +1558,6 @@ msgstr ""
 msgid "Web directory"
 msgstr "Веб директоријум"
 
-#: gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "Гномова љуска панела"
-
 #: gnome-panel/launcher.c:101
 msgid "Cannot save launcher to disk"
 msgstr "Не може да сачува покретач на диск"
@@ -1305,6 +1617,27 @@ msgstr "Направи покретач"
 #: gnome-panel/main.c:48
 msgid "Specify a profile name to load"
 msgstr "Наведите име профила који учитавате"
+
+#: gnome-panel/menu-ditem.c:127
+msgid "Cannot save changes to launcher"
+msgstr "Не може да сачува измене покретача"
+
+#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1323
+msgid "Menu"
+msgstr "Мени"
+
+#. class
+#: gnome-panel/menu-ditem.c:511
+msgid "Cannot save menu item to disk"
+msgstr "Не може да сачува ставку менија на диск"
+
+#: gnome-panel/menu-ditem.c:537
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
+"Не можете направити нови покретач на овом месту пошто је овде снимање "
+"забрањено."
 
 #: gnome-panel/menu.c:110
 msgid "Log Out"
@@ -1426,10 +1759,6 @@ msgstr "Нема „Exec“ нити „URL“ поља у уносу"
 msgid "Main Menu"
 msgstr "Главни мени"
 
-#: gnome-panel/menu.c:1323 gnome-panel/menu-ditem.c:309
-msgid "Menu"
-msgstr "Мени"
-
 #: gnome-panel/menu.c:1461
 msgid "Add this launcher to panel"
 msgstr "Додај овај покретач на панел"
@@ -1533,7 +1862,9 @@ msgstr "%s: одјава"
 msgid ""
 "Log out %s of this session to log in as a different user or to to shut down "
 "your computer"
-msgstr "%s: Одјавите се из ове сесије како бисте се пријавили као неки други корисник, или да искључите ваш рачунар."
+msgstr ""
+"%s: Одјавите се из ове сесије како бисте се пријавили као неки други "
+"корисник, или да искључите ваш рачунар."
 
 #: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:126
 msgid "Run Application..."
@@ -1554,23 +1885,6 @@ msgstr "Снимак екрана..."
 #: gnome-panel/menu.c:3431
 msgid "Desktop"
 msgstr "Радна површина"
-
-#: gnome-panel/menu-ditem.c:127
-msgid "Cannot save changes to launcher"
-msgstr "Не може да сачува измене покретача"
-
-#. class
-#: gnome-panel/menu-ditem.c:511
-msgid "Cannot save menu item to disk"
-msgstr "Не може да сачува ставку менија на диск"
-
-#: gnome-panel/menu-ditem.c:537
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
-"Не можете направити нови покретач на овом месту пошто је овде снимање "
-"забрањено."
 
 # Zar nije dobar prevod, a?
 #: gnome-panel/panel-action-button.c:87
@@ -1692,23 +2006,6 @@ msgstr "Грешка при учитавању gconf директоријума 
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "Грешка при учитавању вредности за „%s“: %s"
-
-#: gnome-panel/panel.c:433
-#, c-format
-msgid "Open URL: %s"
-msgstr "Отвори URL: %s"
-
-#: gnome-panel/panel.c:1228
-msgid ""
-"When a panel is deleted, the panel and its\n"
-" settings are lost. Delete this panel?"
-msgstr ""
-"Када се панел уклони, панел и његове поставке се \n"
-"неповратно губе. Сигурно желите да уклоните панел?"
-
-#: gnome-panel/panel.c:1237
-msgid "Delete Panel"
-msgstr "Уклони панел"
 
 #: gnome-panel/panel-force-quit.c:73
 msgid ""
@@ -2630,10 +2927,6 @@ msgstr "Прикажи стрелице на дугмићима за скрив�
 msgid "Automatically hide panel into corner"
 msgstr "Аутоматски сакриј панел у ћошак"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:3
-msgid "Background color"
-msgstr "Боја позадине"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:4
 msgid "Background color opacity"
 msgstr "Провидност боје позадине"
@@ -2981,6 +3274,23 @@ msgstr "Усправна координата панела"
 #: gnome-panel/panel-util.c:69
 msgid "Cannot display help document"
 msgstr "Не може да прикаже помоћ"
+
+#: gnome-panel/panel.c:433
+#, c-format
+msgid "Open URL: %s"
+msgstr "Отвори URL: %s"
+
+#: gnome-panel/panel.c:1228
+msgid ""
+"When a panel is deleted, the panel and its\n"
+" settings are lost. Delete this panel?"
+msgstr ""
+"Када се панел уклони, панел и његове поставке се \n"
+"неповратно губе. Сигурно желите да уклоните панел?"
+
+#: gnome-panel/panel.c:1237
+msgid "Delete Panel"
+msgstr "Уклони панел"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
