@@ -72,7 +72,6 @@ struct _AppletData
 	gint prevy;
 	gint prevwidth;
 	gint prevheight;
-	gint prevpanelthick;
 };
 
 struct _DNDRecord
