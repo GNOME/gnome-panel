@@ -594,6 +594,8 @@ s_panel_add_status(POA_GNOME_Panel *servant,
 	GNOME_StatusSpot acc;
 	StatusSpot *ss;
 	
+	*wid = 0;
+	
 	ss = new_status_spot();
 	if(!ss)
 		return CORBA_OBJECT_NIL;

@@ -23,6 +23,7 @@ static int nspots = 0;
 extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;
+int status_inhibit_add = FALSE;
 
 #define DOCKLET_SPOT 22
 
@@ -79,7 +80,7 @@ status_applet_update(StatusApplet *s)
 			j+=DOCKLET_SPOT;
 		}
 	}
-	gtk_widget_queue_resize(s->handle);
+	gtk_widget_queue_resize(s->handle->parent);
 }
 
 static void
@@ -91,7 +92,12 @@ status_socket_destroyed(GtkWidget *w, StatusSpot *ss)
 StatusSpot *
 new_status_spot(void)
 {
-	StatusSpot *ss = g_new0(StatusSpot,1);
+	StatusSpot *ss;
+	
+	if(status_inhibit_add)
+		return NULL;
+
+	ss = g_new0(StatusSpot,1);
 	ss->wid = 0;
 
 	spots = g_slist_prepend(spots,ss);
@@ -115,8 +121,10 @@ new_status_spot(void)
 		gtk_fixed_put(GTK_FIXED(fixed),ss->socket,0,0);
 		gtk_widget_show_now(offscreen);
 	} else {
+		g_assert(fixed);
 		gtk_fixed_put(GTK_FIXED(fixed),ss->socket,0,0);
-		status_applet_update(the_status);
+		if(the_status)
+			status_applet_update(the_status);
 	}
 	gtk_widget_show_now(ss->socket);
 	gtk_signal_connect(GTK_OBJECT(ss->socket),"destroy",
@@ -142,6 +150,14 @@ status_spot_remove(StatusSpot *ss)
 
 	g_free(ss);
 	if(the_status) status_applet_update(the_status);
+}
+
+/*kill all status spots*/
+void
+status_spot_remove_all(void)
+{
+	while(spots)
+		status_spot_remove(spots->data);
 }
 
 static int
