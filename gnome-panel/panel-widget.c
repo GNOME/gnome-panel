@@ -16,6 +16,8 @@ static char *applet_drag_types[]={"internal/pointer"};
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
+#define DRAG_BUFFER 50
+
 typedef void (*PanelWidgetOrientSignal) (GtkObject * object,
 					 PanelOrientation orient,
 					 PanelSnapped snapped,
@@ -631,6 +633,9 @@ panel_widget_switch_move(PanelWidget *panel, gint pos, gint moveby)
 	g_return_val_if_fail(pos>=0,-1);
 	g_return_val_if_fail(panel,-1);
 
+	if(moveby==0)
+		return pos;
+
 	width = panel->applets[pos].cells;
 	finalpos = pos+moveby;
 
@@ -1091,6 +1096,8 @@ panel_widget_dnd_drop(GtkWidget *widget, GdkEvent *event, gpointer data)
 		return FALSE;
 
 	panel_widget_add(PANEL_WIDGET(panel),applet,pos);
+	gtk_widget_unref(applet);
+
 	puts("\n\nDROP\n\n");
 
 	return TRUE;
@@ -1330,34 +1337,108 @@ panel_widget_applet_drag_end(PanelWidget *panel)
 	panel_widget_applet_drag_end_no_grab(panel);
 }
 
+/*
+ * Hackisigh routine taken from GDK
+ */
+static void
+gdk_dnd_drag_begin (GdkWindow *initial_window)
+{
+  GdkEventDragBegin tev;
+  tev.type = GDK_DRAG_BEGIN;
+  tev.window = initial_window;
+  tev.u.allflags = 0;
+  tev.u.flags.protocol_version = DND_PROTOCOL_VERSION;
+
+  gdk_event_put ((GdkEvent *) &tev);
+}
+
+static void
+drag_addwindow_recurse(GtkWidget *widget,gpointer data)
+{
+	if (!GTK_WIDGET_NO_WINDOW(widget))
+		gdk_dnd_drag_addwindow (widget->window);
+		
+	if (GTK_IS_CONTAINER(widget))
+		gtk_container_foreach (GTK_CONTAINER (widget),
+				       drag_addwindow_recurse, 0);
+}
+
+static void
+artificial_drag_start (GtkWidget *widget, int x, int y)
+{
+	GdkWindow *window = widget->window;
+	GdkWindowPrivate *wp = (GdkWindowPrivate *) window;
+
+	puts("1");
+	if (!wp->dnd_drag_enabled)
+		return;
+	puts("2");
+	/*if (!gdk_dnd.drag_perhaps)
+		return;*/
+	puts("3");
+	if (gdk_dnd.dnd_grabbed)
+		return;
+	puts("4");
+	if (gdk_dnd.drag_really)
+		return;
+	puts("5");
+
+	printf ("Pushing artificial drag\n");
+	/*gdk_dnd_drag_addwindow (window);*/
+	drag_addwindow_recurse(widget,0);
+	gdk_dnd_drag_begin (window);
+	XGrabPointer (gdk_display, wp->xwindow, False,
+		      ButtonMotionMask | ButtonPressMask | ButtonReleaseMask,
+		      GrabModeAsync, GrabModeAsync, gdk_root_window,
+		      None, CurrentTime);
+	gdk_dnd.dnd_grabbed = TRUE;
+	gdk_dnd.drag_perhaps = 1;
+	gdk_dnd.drag_really = 1;
+	gdk_dnd_display_drag_cursor (x, y, FALSE, TRUE);
+}
+
+
 int
 panel_widget_applet_move_to_cursor(PanelWidget *panel)
 {
 	if (panel->currently_dragged_applet) {
 		gint x,y;
+		gint w,h;
 		gint moveby;
 		gint pos = panel->currently_dragged_applet_pos;
 
 		gtk_widget_get_pointer(panel->fixed, &x, &y);
+		w = GTK_WIDGET(panel->fixed)->allocation.width;
+		h = GTK_WIDGET(panel->fixed)->allocation.height;
 
-		if(panel->orient == PANEL_HORIZONTAL)
-			moveby = (x/PANEL_CELL_SIZE)- pos;
-		else
-			moveby = (y/PANEL_CELL_SIZE)- pos;
+		/*printf("x:%d y:%d w:%d h:%d\n",x,y,w,h);*/
 
-		panel->currently_dragged_applet_pos =
-			panel_widget_switch_move(panel, pos, moveby);
-		/*now done in size_allocate*/
-		/*gtk_signal_emit(GTK_OBJECT(panel),
+		if((x+DRAG_BUFFER)>0 &&
+		   (x-DRAG_BUFFER)<w &&
+		   (y+DRAG_BUFFER)>0 &&
+		   (y-DRAG_BUFFER)<h) {
+			if(panel->orient == PANEL_HORIZONTAL)
+				moveby = (x/PANEL_CELL_SIZE)- pos;
+			else
+				moveby = (y/PANEL_CELL_SIZE)- pos;
+
+			if(moveby != 0)
+				panel->currently_dragged_applet_pos =
+					panel_widget_switch_move(panel, pos,
+								 moveby);
+			/*now done in size_allocate*/
+			/*gtk_signal_emit(GTK_OBJECT(panel),
 				panel_widget_signals[APPLET_MOVE_SIGNAL],
 				panel->currently_dragged_applet);*/
-		/*gtk_signal_emit_by_name(
-			GTK_OBJECT(panel->currently_dragged_applet),
-			"drag_request_event");*/
-		/*we have to figure out when and how to start drag,
-		  rigth now this just doesn't work*/
-		/*gdk_dnd_drag_addwindow(
-			panel->currently_dragged_applet->window);*/
+		} else {
+			/*FIXME: fix this dnd stuff*/
+			/*GtkWidget *w = panel->currently_dragged_applet;
+			panel_widget_applet_drag_end(panel);
+			artificial_drag_start(w,x,y);
+			return FALSE;*/
+			puts("panel: THIS IS WHERE DND WILL KICK IN");
+		}
+
 		return TRUE;
 	}
 	return FALSE;
@@ -1449,6 +1530,25 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 	return FALSE;
 }
 
+static gint
+panel_widget_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+	PanelWidget *panel = data;
+	
+	gtk_widget_dnd_data_set (widget, event, &widget, sizeof(widget));
+	gtk_widget_ref(widget);
+	panel_widget_remove(panel,widget);
+
+	return TRUE;
+}
+
+
+static gint
+panel_widget_dnd_drag_request_sub(GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+	return gtk_widget_event(listening_parent(widget->parent), event);
+}
+
 
 static void
 bind_applet_events(GtkWidget *widget, gpointer data)
@@ -1472,9 +1572,18 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 		/*FIXME: can't be realized!*/
 		/*gtk_widget_set_events(widget, gtk_widget_get_events(widget) |
 				      APPLET_EVENT_MASK);*/
+		gtk_signal_connect (GTK_OBJECT (widget), 
+				    "drag_request_event",
+				    GTK_SIGNAL_FUNC(
+					panel_widget_dnd_drag_request_sub),
+				    NULL);
 		gtk_signal_connect(GTK_OBJECT(widget), "event",
 				   (GtkSignalFunc) panel_sub_event_handler,
 				   NULL);
+
+		gtk_widget_dnd_drag_set (GTK_WIDGET(widget), TRUE,
+					 applet_drag_types, 1);
+
 	}
 	
 	if (GTK_IS_CONTAINER(widget))
@@ -1493,6 +1602,16 @@ bind_top_applet_events(PanelWidget *panel, GtkWidget *widget)
 					 NULL);
 		return;
 	}*/
+
+	/*set up drag'n'drop (the drag)*/
+	gtk_signal_connect (GTK_OBJECT (widget), 
+			    "drag_request_event",
+			    GTK_SIGNAL_FUNC(panel_widget_dnd_drag_request),
+			    NULL);
+
+	gtk_widget_dnd_drag_set (GTK_WIDGET(widget), TRUE,
+				 applet_drag_types, 1);
+
 	gtk_signal_connect_after(GTK_OBJECT(widget),
 			   	 "size_allocate",
 			   	 GTK_SIGNAL_FUNC(
@@ -1515,15 +1634,6 @@ bind_top_applet_events(PanelWidget *panel, GtkWidget *widget)
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
 				       bind_applet_events, 0);
-}
-
-static gint
-panel_widget_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
-{
-	
-	gtk_widget_dnd_data_set (widget, event, &widget, sizeof(widget));
-
-	return TRUE;
 }
 
 
@@ -1583,15 +1693,6 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	gtk_object_set_data(GTK_OBJECT(applet),PANEL_APPLET_PARENT_KEY,panel);
 
 	bind_top_applet_events(panel,applet);
-
-	/*set up drag'n'drop (the drag)*/
-	gtk_signal_connect (GTK_OBJECT (applet), 
-			    "drag_request_event",
-			    GTK_SIGNAL_FUNC(panel_widget_dnd_drag_request),
-			    NULL);
-
-	gtk_widget_dnd_drag_set (GTK_WIDGET(applet), TRUE,
-				 applet_drag_types, 1);
 
 	return i;
 }
