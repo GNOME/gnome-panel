@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-09 18:06+0100\n"
-"PO-Revision-Date: 2004-08-07 15:34+0530\n"
+"POT-Creation-Date: 2004-08-16 03:43+0200\n"
+"PO-Revision-Date: 2004-08-16 15:05+0530\n"
 "Last-Translator: Ankit Patel <ankit@redhat.com>\n"
 "Language-Team: Gujarati\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "<magnet@magnet-i.com>\n"
 "X-Generator: KBabel 1.3.1\n"
-"Plural-Forms: Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
 "\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
@@ -57,7 +57,7 @@ msgstr "વિશે (_A)"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
-#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
+#: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:620
 msgid "_Help"
 msgstr "મદદ (_H)"
@@ -265,51 +265,53 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "ઘડિયાળ હાલનો સમય અને તારીખ દર્શાવે છે"
 
-#: applets/clock/clock.schemas.in.h:1
+#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:2
 msgid "24"
 msgstr "24"
 
-#: applets/clock/clock.schemas.in.h:2
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
 msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:3
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr "ઘડિયાળનુ કસ્ટમ બંધારણ"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "કલાક માળખું"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr "જો ખરુ હોય તો, ઘડિયાળમાં સમયની સાથે જ તારીખ પણ દર્શાવો."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr "જો ખરુ હોય તો, સમયમાં સેકંડ પણ દર્શાવો."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "જો ખરુ હોય તો, યુનિવર્સલ કોર્ડિનેટ ટાઇમ ઝોનમાં સમય દર્શાવો."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "જો ખરુ હોય તો, જ્યારે માઉસ ઘડિયાળ ઉપર હોય ત્યારે સાધન મદદમાં તારીખ દર્શાવો."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "ઘડિયાળમાં તારીખ દર્શાવો"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "સાધન મદદમાં તારીખ દર્શાવો"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "સમય સેકંડોની સાથે દર્શાવો"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -317,7 +319,7 @@ msgstr ""
 "'format' કીને આધારિત આ કીનો વપરાશ જીનોમ ૨.૬ માં ઘટાડવામાં આવ્યો હતો. આ યોજના જૂની "
 "આવૃત્તિઓ સાથે સુસંગતા મેળવવા માટે રાખવામાં આવે છે."
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -327,7 +329,7 @@ msgstr ""
 "બંધારણ સ્પષ્ટ કરે છે. કોઈ ચોક્કસ બંધારણ મેળવવા માટે તમે strftime() દ્વારા સમજી શકાય એવા "
 "રુપાતર સ્પષ્ટ કરનારાઓ વાપરી શકો છો."
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -347,23 +349,23 @@ msgstr ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "આ કી સમયને રુપરેખાંકિત કરવા માટે વડે ચલાવાનો કાર્યક્રમ સ્પષ્ટ કરે છે."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "સમયને રુપરેખાંકિત કરવાનું સાધન"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use Internet time"
 msgstr "ઇન્ટરનેટ સમયનો ઉપયોગ કરો"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "યુનિક્સ સમયનો ઉપયોગ કરો"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "UTCનો ઉપયોગ કરો"
 
@@ -547,8 +549,7 @@ msgid "Frames in fish's animation"
 msgstr "માછલીના એનિમેશનમાંના ચોકઠાઓ"
 
 #: applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "જો ખરુ હોય તો, માછલીનું એનિમેશન ઊભી પેનલો પર ફરતુ દેખાશે."
 
 #: applets/fish/fish.schemas.in.h:5
@@ -571,8 +572,7 @@ msgstr "માછલીનું નામ"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr ""
-"જ્યારે માછલી ને ક્લિક કરવામાં આવે ત્યારે જે આદેશ ચલાવવાનો પ્રયત્ન કરવાનો છે તે સ્પષ્ટ કરો."
+msgstr "જ્યારે માછલી ને ક્લિક કરવામાં આવે ત્યારે જે આદેશ ચલાવવાનો પ્રયત્ન કરવાનો છે તે સ્પષ્ટ કરો."
 
 #: applets/fish/fish.schemas.in.h:10
 msgid ""
@@ -638,8 +638,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "વિન્ડોમાં શોધખોળ કરવા માટેના એપ્લેટોનું કારખાનું"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:746
-#: applets/wncklet/window-menu.c:748
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:749
+#: applets/wncklet/window-menu.c:751
 msgid "Window Selector"
 msgstr "વિન્ડો પસંદગીકારક"
 
@@ -685,8 +685,7 @@ msgstr ""
 
 #: applets/wncklet/window-list.c:822
 msgid "The Window List shows a list of all windows and lets you browse them."
-msgstr ""
-"વિન્ડોની મેનુ તમને બધી દ્રશ્યમાન વિન્ડોની મેનુ બતાડે છે અને તેમને જોવાની પરવાનગી આપે છે."
+msgstr "વિન્ડોની મેનુ તમને બધી દ્રશ્યમાન વિન્ડોની મેનુ બતાડે છે અને તેમને જોવાની પરવાનગી આપે છે."
 
 #: applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -816,20 +815,18 @@ msgid "When to group windows"
 msgstr "વિન્ડોના જૂથ ક્યારે પાડવા"
 
 #: applets/wncklet/window-menu.c:152
-msgid ""
-"The Window Selector shows a list of all windows and lets you browse them."
-msgstr ""
-"વિન્ડોની મેનુ તમને બધી દ્રશ્યમાન વિન્ડોની મેનુ બતાડે છે અને તેમને જોવાની પરવાનગી આપે છે."
+msgid "The Window Selector shows a list of all windows and lets you browse them."
+msgstr "વિન્ડોની મેનુ તમને બધી દ્રશ્યમાન વિન્ડોની મેનુ બતાડે છે અને તેમને જોવાની પરવાનગી આપે છે."
 
 #: applets/wncklet/window-menu.c:435
 msgid "Unknown Window"
 msgstr "અજાણી વિન્ડો"
 
-#: applets/wncklet/window-menu.c:640
+#: applets/wncklet/window-menu.c:643
 msgid "No Windows Open"
 msgstr "કોઇ વિન્ડો ખુલેલી નથી"
 
-#: applets/wncklet/window-menu.c:747
+#: applets/wncklet/window-menu.c:750
 msgid "Tool to switch between windows"
 msgstr "ખુલેલી વિન્ડો વચ્ચે ફેરબદલી કરવાનુ સાધન"
 
@@ -851,8 +848,7 @@ msgstr "કામ કરવાની જગ્યાની ફેરબદલી
 
 #: applets/wncklet/workspace-switcher.c:369
 #, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "કામ કરવાની જગ્યાની ફેરબદલી કરનાર માટે કામ કરવાની જગ્યાના નામ પ્રદર્શિત કરવા માટેી "
 "કિંમતો મેળવવામાં થતી ભૂલ: %s\n"
@@ -1014,76 +1010,18 @@ msgid "CDE Menu"
 msgstr "CDE મેનુ"
 
 #: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:212
+#: gnome-panel/panel-addto.c:147
 msgid "Drawer"
 msgstr "ડ્રાેઅર"
 
 #: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
-#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:131
+#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "ગુણધર્મો (_P)"
 
 #: gnome-panel/gnome-desktop-item-edit.c:26
 msgid "Create new file in the given directory"
 msgstr "આપેલ ડિરેકટરીમાં નવી ફાઇલ બનાવો"
-
-#: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:708
-#, c-format
-msgid ""
-"There was an error displaying help: \n"
-"%s"
-msgstr ""
-"મદદ દર્શાવવામાં ભૂલ: \n"
-"%s"
-
-#: gnome-panel/gnome-panel-preferences.c:390
-msgid ""
-"The system administrator has disallowed\n"
-"modification of the panel configuration"
-msgstr "પેનલની રુપરેખામાં ફેરફાર માટે સિસ્ટમ સંચાલકે પરવાનગી આપી નથી"
-
-#: gnome-panel/gnome-panel-preferences.c:421
-#, c-format
-msgid "Error loading glade file %s"
-msgstr "ગ્લેડ ફાઇલ %s લાવવામાં ભૂલ"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-msgid "Panel"
-msgstr "પેનલ"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
-msgid "Select preferences for all your panels"
-msgstr "તમારી દરેક પેનલો માટે પસંદગીઓ પસંદ કરો"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation _speed:"
-msgstr "એનિમેશન ઝડપઃ  (_s)"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:2
-msgid "Close _drawer when launcher is clicked"
-msgstr "જ્યારે શરૂ કરનાર પર ક્લિક થાય ત્યારે ડ્રાેઅર બંધ કરો (_d)"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "Drawer and panel _animation"
-msgstr "ડ્રાેઅર અને પેનલ એનિમેશન (_a)"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-msgid "Fast"
-msgstr "ઝડપી"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:5
-#: libpanel-applet/panel-test-applets.glade.h:5
-msgid "Medium"
-msgstr "મધ્યમ"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:6
-msgid "Panel Preferences"
-msgstr "પેનલ પસંદગીઓ"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "Slow"
-msgstr "ધીમું"
 
 #: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
@@ -1168,6 +1106,15 @@ msgstr "સ્ક્રીનની છબી-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "ફાઇલ %s માં લખવા માટે પૂરતી જગ્યા નથી"
 
+#: gnome-panel/gnome-panel-screenshot.c:708
+#, c-format
+msgid ""
+"There was an error displaying help: \n"
+"%s"
+msgstr ""
+"મદદ દર્શાવવામાં ભૂલ: \n"
+"%s"
+
 #: gnome-panel/gnome-panel-screenshot.c:1189
 msgid ""
 "Glade file for the screenshot program is missing.\n"
@@ -1221,8 +1168,7 @@ msgstr "વેબ પેજ પર સ્ક્રીનની છબી સં�
 msgid ""
 "The user's directory in which screenshots should be saved so as to appear on "
 "the web."
-msgstr ""
-"વપરાશકર્તાની ડિરેક્ટરી કે જેમાં સ્ક્રીનની છબીને સંગ્રહીત કરવી જેથી કરીને તે વેબ પર દેખાય."
+msgstr "વપરાશકર્તાની ડિરેક્ટરી કે જેમાં સ્ક્રીનની છબીને સંગ્રહીત કરવી જેથી કરીને તે વેબ પર દેખાય."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
 msgid "Web directory"
@@ -1322,8 +1268,8 @@ msgstr ""
 "આ કાર્યક્રમ બીજા કાર્યક્રમો ને શરૂ કરવા માટે અને પોતાનામાં નાના એપ્લેટો જડવા માટે "
 "જવાબદાર છે."
 
-#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:201
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s' ચલાવી શકાતું નથી"
@@ -1360,7 +1306,7 @@ msgstr "પથ %s માંથી ફાઇલનું નામ મેળવ�
 msgid "Could not get directory name from path: %s"
 msgstr "પથ %s માંથી ડિરેક્ટરીનું નામ મેળવી શકાતું નથી"
 
-#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:190
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:125
 msgid "Main Menu"
 msgstr "મુખ્ય મેનુ"
 
@@ -1392,8 +1338,8 @@ msgstr "આ મેનુમાં નવી વસ્તુ ઉમેરો"
 msgid "Properties"
 msgstr "ગુણધર્મો"
 
-#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2554
-#: gnome-panel/panel-menu-bar.c:226
+#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2561
+#: gnome-panel/panel-menu-bar.c:202
 msgid "Applications"
 msgstr "કાર્યક્રમો"
 
@@ -1418,186 +1364,140 @@ msgid "_New Panel"
 msgstr "નવી પેનલ (_N)"
 
 #: gnome-panel/menu.c:2381
-#, fuzzy
 msgid "A_bout Panels"
-msgstr "પેનલ વિશે (_A)"
+msgstr "પેનલો વિશે (_b)"
 
 #: gnome-panel/menu.c:2395
 msgid "About _GNOME"
 msgstr "જીનોમ વિશે (_G)"
 
-#: gnome-panel/menu.c:2419 gnome-panel/panel-menu-bar.c:191
-msgid "Lock Screen"
-msgstr "સ્ક્રીનને તાળું લગાવો"
-
-#: gnome-panel/menu.c:2425
-msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr "સ્ક્રીનને તાળું લગાવો જેથી તમે તમારુ કમ્પ્યુટર થોડો સમય મુક્ત થઇ શકે"
-
-#: gnome-panel/menu.c:2441 gnome-panel/panel-addto.c:102
-#: gnome-panel/panel-menu-bar.c:200
-msgid "Log Out"
-msgstr "બહાર નીકળો"
-
-#: gnome-panel/menu.c:2448 gnome-panel/panel-addto.c:103
-msgid ""
-"Log out of this session to log in as a different user or to shut down the "
-"computer"
-msgstr ""
-"અન્ય વપરાશકર્તા તરીકે પ્રવેશ કરવા માટે આ સત્રમાંથી બહાર નીકળો અથવા તમારું કમ્પ્યુટરબંધ કરો"
-
-#: gnome-panel/menu.c:2574 gnome-panel/panel-menu-bar.c:137
-msgid "Run Application..."
-msgstr "કાર્યક્રમ ચલાવો..."
-
-#: gnome-panel/menu.c:2581 gnome-panel/panel-menu-bar.c:139
-msgid "Run an Application by entering a command"
-msgstr "આદેશ આપીને કાર્યક્રમ ચલાવો"
-
-#: gnome-panel/menu.c:2589 gnome-panel/panel-menu-bar.c:152
-msgid "Search for Files..."
-msgstr "ફાઇલોને શોધો..."
-
-#: gnome-panel/menu.c:2592 gnome-panel/panel-addto.c:147
-#: gnome-panel/panel-menu-bar.c:154
-msgid "Find files, folders, and documents on your computer"
-msgstr "કમ્પ્યુટરમાં ફાઇલો, ફોલ્ડરો અને દસ્તાવેજો શોધો"
-
-#: gnome-panel/menu.c:2608 gnome-panel/panel-menu-bar.c:168
-msgid "Take Screenshot..."
-msgstr "સ્ક્રીનની છબી લો..."
-
-#: gnome-panel/menu.c:2611 gnome-panel/panel-addto.c:136
-#: gnome-panel/panel-menu-bar.c:170
-msgid "Take a screenshot of your desktop"
-msgstr "તમારા ડેસ્કટોપની છબી લો"
-
 # gnome-session/splash.c:72
-#: gnome-panel/menu.c:2626
+#: gnome-panel/menu.c:2642
 msgid "Desktop"
 msgstr "ડેસ્કટોપ"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:108
 msgid "_Activate Screensaver"
 msgstr "સ્ક્રીન સેવર શરુ કરો (_A) "
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:114
 msgid "_Lock Screen"
 msgstr "સ્ક્રીનને તાળું લગાવો (_L)"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:120
 msgid "_Kill Screensaver Daemon"
 msgstr "સ્ક્રીન સેવર ડિમનને મૃત કરો (_K)"
 
-#: gnome-panel/panel-action-button.c:125
+#: gnome-panel/panel-action-button.c:126
 msgid "Restart _Screensaver Daemon"
 msgstr "સ્ક્રીન સેવર ડિમનને ફરી ચાલુ કરો (_S)"
 
-#: gnome-panel/panel-action-button.c:258
+#: gnome-panel/panel-action-button.c:266
 msgid "Lock screen"
 msgstr "સ્ક્રીનને તાળું લગાવો"
 
-#: gnome-panel/panel-action-button.c:266 gnome-panel/panel-menu-bar.c:202
-msgid "Log out of GNOME"
-msgstr "જીનોમમાંથી બહાર નીકળો"
-
-#: gnome-panel/panel-action-button.c:272
-#: gnome-panel/panel-run-dialog.glade.h:7
-msgid "Run Application"
-msgstr "કાર્યક્રમ ચલાવો"
+#: gnome-panel/panel-action-button.c:267
+msgid "Protect your computer from unauthorized use"
+msgstr "તમારા કમ્પ્યુટરને અપ્રમાણિત ઉપયોગથી બચાવો"
 
 #: gnome-panel/panel-action-button.c:278
-msgid "Search for Files"
-msgstr "ફાઇલોને શોધો"
+msgid "Log Out"
+msgstr "બહાર નીકળો"
 
-#: gnome-panel/panel-action-button.c:283 gnome-panel/panel-addto.c:135
-msgid "Screenshot"
-msgstr "સ્ક્રીનની છબી"
+#: gnome-panel/panel-action-button.c:279
+msgid ""
+"Log out of this session to log in as a different user or to shut down the "
+"computer"
+msgstr "અન્ય વપરાશકર્તા તરીકે પ્રવેશ કરવા માટે આ સત્રમાંથી બહાર નીકળો અથવા તમારું કમ્પ્યુટરબંધ કરો"
 
-#: gnome-panel/panel-action-button.c:288 gnome-panel/panel-addto.c:124
+#: gnome-panel/panel-action-button.c:288
+msgid "Run Application..."
+msgstr "કાર્યક્રમ ચલાવો..."
+
+#: gnome-panel/panel-action-button.c:289
+msgid "Run an Application by entering a command"
+msgstr "આદેશ આપીને કાર્યક્રમ ચલાવો"
+
+#: gnome-panel/panel-action-button.c:298
+msgid "Search for Files..."
+msgstr "ફાઇલોને શોધો..."
+
+#: gnome-panel/panel-action-button.c:299
+msgid "Find files, folders, and documents on your computer"
+msgstr "કમ્પ્યુટરમાં ફાઇલો, ફોલ્ડરો અને દસ્તાવેજો શોધો"
+
+#: gnome-panel/panel-action-button.c:307
+msgid "Take Screenshot..."
+msgstr "સ્ક્રીનની છબી લો..."
+
+#: gnome-panel/panel-action-button.c:308
+msgid "Take a screenshot of your desktop"
+msgstr "તમારા ડેસ્કટોપની છબી લો"
+
+#: gnome-panel/panel-action-button.c:316
 msgid "Force Quit"
 msgstr "જબરદસ્તી બહાર નીકળો"
 
-#: gnome-panel/panel-addto.c:113
-msgid "Lock"
-msgstr "તાળું મારો"
-
-#: gnome-panel/panel-addto.c:114
-msgid "Lock the screen so you can temporarily leave your computer"
-msgstr "તમારા સ્ક્રીનને તાળું મારો જેથી તમે થોડી વાર માટે તમારું કમ્પ્યુટર છુટું મૂકી શકો"
-
-#: gnome-panel/panel-addto.c:125
+#: gnome-panel/panel-action-button.c:317
 msgid "Force a misbehaving application to quit"
 msgstr "બહાર નીકળવા માટે ખરાબ વર્તણૂકવાળા કાર્યક્રમને દબાણ કરો"
 
-#: gnome-panel/panel-addto.c:146
-msgid "Search"
-msgstr "શોધો"
-
-#: gnome-panel/panel-addto.c:157
-msgid "Run"
-msgstr "ચલાવો"
-
-#: gnome-panel/panel-addto.c:158
-msgid "Run a command"
-msgstr "આદેશ ચલાવો"
-
-#: gnome-panel/panel-addto.c:168
+#: gnome-panel/panel-addto.c:103
 msgid "Custom Application Launcher"
 msgstr "કાર્યક્રમ ચલાવો"
 
-#: gnome-panel/panel-addto.c:169
+#: gnome-panel/panel-addto.c:104
 msgid "Create a new launcher"
 msgstr "શરૂ કરનાર બનાવો"
 
-#: gnome-panel/panel-addto.c:179
+#: gnome-panel/panel-addto.c:114
 msgid "Application Launcher..."
 msgstr "કાર્યક્રમ ચલાવો..."
 
-#: gnome-panel/panel-addto.c:180
+#: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "કાર્યક્રમ લાવો કે જે પહેલાથી જીનોમ મેનુમાં છે"
 
-#: gnome-panel/panel-addto.c:191
+#: gnome-panel/panel-addto.c:126
 msgid "The main GNOME menu"
 msgstr "જીનોમ પેનલ"
 
-#: gnome-panel/panel-addto.c:201
+#: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
 msgstr "મેનુદર્શક પટ્ટી"
 
-#: gnome-panel/panel-addto.c:202
+#: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
 msgstr "કસ્ટમ મેનુબાર"
 
-#: gnome-panel/panel-addto.c:213
+#: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
 msgstr "માં બીજી વસ્તુઓ સંગ્રહવા માટે દોરનાર બતાવો"
 
-#: gnome-panel/panel-addto.c:301
+#: gnome-panel/panel-addto.c:236
 msgid "(empty)"
 msgstr "(ખાલી)"
 
-#: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
+#: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "કોયડાએ વળતરમાં અપવાદ %s મોકલાવયો\n"
 
-#: gnome-panel/panel-addto.c:831
+#: gnome-panel/panel-addto.c:766
 #, c-format
 msgid "Add to %s"
 msgstr "%s માં ઉમેરો"
 
-#: gnome-panel/panel-addto.c:833
+#: gnome-panel/panel-addto.c:768
 msgid "Add to the panel"
 msgstr "પેનલમાં ઉમેરો (_A)"
 
-#: gnome-panel/panel-addto.c:839
+#: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr "%s માં ઉમેરવા માટે વસ્તુ પસંદ કરો (_i):"
 
-#: gnome-panel/panel-addto.c:842
+#: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
 msgstr "પેનલમાં ઉમેરવા માટે વસ્તુ પસંદ કરો (_i):"
 
@@ -1674,10 +1574,8 @@ msgid "Error getting value for '%s': %s"
 msgstr "'%s' ની કિંમત મેળવવામાં ભૂલ : %s"
 
 #: gnome-panel/panel-force-quit.c:74
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"કાર્યક્રમને જબરદસ્તી બહાર કાઢવા માટે વિન્ડો પર ક્લિક કરો. રદ કરવા માટે <ESC> દબાવો."
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr "કાર્યક્રમને જબરદસ્તી બહાર કાઢવા માટે વિન્ડો પર ક્લિક કરો. રદ કરવા માટે <ESC> દબાવો."
 
 #: gnome-panel/panel-force-quit.c:186
 msgid ""
@@ -1835,19 +1733,16 @@ msgstr "શરૂ કરનાર ઉપર માઉસ આવે ત્યા�
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr ""
-"જો ખરુ હોય તો, જો વપરાશકર્તાને પેનલ કાઢવી હોય તો ખાતરી કરવા માટે સંવાદદર્શાવાય છે."
+msgstr "જો ખરુ હોય તો, જો વપરાશકર્તાને પેનલ કાઢવી હોય તો ખાતરી કરવા માટે સંવાદદર્શાવાય છે."
 
 #: gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr ""
-"જો ખરુ હોય તો, જો વપરાશકર્તા ડ્રોઅરમાં શરૂ કરનાર પર ક્લિક કરશે તો તેઆપમેળે બંધ થઇ જશે."
+msgstr "જો ખરુ હોય તો, જો વપરાશકર્તા ડ્રોઅરમાં શરૂ કરનાર પર ક્લિક કરશે તો તેઆપમેળે બંધ થઇ જશે."
 
 #: gnome-panel/panel-global.schemas.in.h:19
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "જો ખરુ હોય તો, વપરાશકર્તા શરૂ કરનાર પર નિર્દેશક લાવે તો તે પ્રકાશિત થશે."
 
 #: gnome-panel/panel-global.schemas.in.h:20
@@ -1904,11 +1799,7 @@ msgstr "સ્ક્રીનની છબી લો"
 msgid "Take window screenshot"
 msgstr "વિન્ડોની છબી લો"
 
-#: gnome-panel/panel-menu-bar.c:193
-msgid "Protect your computer from unauthorized use"
-msgstr "તમારા કમ્પ્યુટરને અપ્રમાણિત ઉપયોગથી બચાવો"
-
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/panel-menu-bar.c:184
 msgid "Actions"
 msgstr "ક્રિયાઓ"
 
@@ -2246,8 +2137,7 @@ msgid "Couldn't find a suitable application"
 msgstr "ઉચિત કાર્યક્રમ શોધી શકાયો નહિં."
 
 #: gnome-panel/panel-recent.c:87
-msgid ""
-"The default application for this type of file cannot handle remote files"
+msgid "The default application for this type of file cannot handle remote files"
 msgstr "આ પ્રકારની ફાઇલો માટેનો મૂળભૂત કાર્યક્રમ દૂરસ્થ ફાઇલોને સાચવી શકતો નથી"
 
 #: gnome-panel/panel-recent.c:150 gnome-panel/panel-recent.c:157
@@ -2260,9 +2150,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "%s ને ખોલવાના પ્રયાસમાં અજાણી ભૂલ થઇ હતી"
 
 #: gnome-panel/panel-recent.c:212
-#, fuzzy
 msgid "Clear the Recent Documents list?"
-msgstr "છેલ્લે ખોલેલા દસ્તાવેજો"
+msgstr "છેલ્લા દસ્તાવેજોની યાદી સાફ કરો?"
 
 #: gnome-panel/panel-recent.c:213
 msgid ""
@@ -2271,6 +2160,10 @@ msgid ""
 "• All items from the Actions → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
+"જો તમે છેલ્લા દસ્તાવેજોની યાદી સાફ કરો, તો તમે નીચેનું સાફ કરો:\n"
+"\n"
+"• ક્રિયાઓમાંથી બધી વસ્તુઓ → છેલ્લા દસ્તાવેજોની મેનુ વસ્તુઓ.\n"
+"• છેલ્લા દસ્તાવેજોમાંથી બધી વસ્તુઓ બધા કાર્યક્રમોમાં દેખાશે."
 
 #: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
@@ -2333,6 +2226,10 @@ msgstr "આદેશ ચિહ્ન"
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Enter a command string here to run it."
 msgstr "આદેશને ચલાવવા માટે અહિ તેની શબ્દમાળા દાખલ કરો."
+
+#: gnome-panel/panel-run-dialog.glade.h:7
+msgid "Run Application"
+msgstr "કાર્યક્રમ ચલાવો"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
@@ -2530,8 +2427,7 @@ msgstr ""
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr ""
-"જો ખરુ હોય તો, આ પેનલને સંતાડવાનુ અને પાછુ દેખીતુ કરવાનું તુરંત થવા કરતા એનિમેટ થતુ રહેશે."
+msgstr "જો ખરુ હોય તો, આ પેનલને સંતાડવાનુ અને પાછુ દેખીતુ કરવાનું તુરંત થવા કરતા એનિમેટ થતુ રહેશે."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2551,8 +2447,7 @@ msgstr ""
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr ""
-"જો ખરુ હોય તો, પેનલના પરિમાણ પ્રમાણે ચિત્રનું માપ બદલાશે. ચિત્રની ગુણવત્તા બદલાઇ જાય છે. "
+msgstr "જો ખરુ હોય તો, પેનલના પરિમાણ પ્રમાણે ચિત્રનું માપ બદલાશે. ચિત્રની ગુણવત્તા બદલાઇ જાય છે. "
 
 #: gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2867,8 +2762,7 @@ msgid "Specify an applet IID to load"
 msgstr "લાવવા માટેના અેપ્લેટની IID સ્પષ્ટ કરો"
 
 #: libpanel-applet/panel-test-applets.c:34
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
+msgid "Specify a gconf location in which the applet preferences should be stored"
 msgstr "જીકૉન્ફનું સ્થાન દર્શાવો કે જેમાં અેપ્લેટની પસંદગીઓ સંગ્રહાય છે"
 
 #: libpanel-applet/panel-test-applets.c:35
@@ -2876,8 +2770,7 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "અેપ્લેટનું શરુઆતનું માપ દર્શાવો (xx-નાનું, મધ્યમ, મોટું વગેરે.)"
 
 #: libpanel-applet/panel-test-applets.c:37
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "અેપ્લેટની શરુઆતની દિશા સ્પષ્ટ કરો (ઉપર, નીચે, ડાબે અથવા જમણે)"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
@@ -2887,6 +2780,10 @@ msgstr "અેપ્લેટ:"
 #: libpanel-applet/panel-test-applets.glade.h:3
 msgid "Large"
 msgstr "મોટું"
+
+#: libpanel-applet/panel-test-applets.glade.h:5
+msgid "Medium"
+msgstr "મધ્યમ"
 
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
@@ -2920,19 +2817,3 @@ msgstr "XX મોટું"
 msgid "XX Small"
 msgstr "XX નાનું"
 
-# #-#-#-#-#  gnome-applets.gnome-2-2.hi.po (gnome-applets 2.x)  #-#-#-#-#
-# desktop-links/Accessories.directory.in.h:1
-#~ msgid "Accessories"
-#~ msgstr "સહાયક કાર્યક્રમો"
-
-#~ msgid "Amusements"
-#~ msgstr "મનોરંજન"
-
-#~ msgid "Utility"
-#~ msgstr "ઉપયોગિતા"
-
-#~ msgid "Clear recent document history?"
-#~ msgstr "છેલ્લે ખોલેલા દસ્તાવેજો"
-
-#~ msgid "This will clear the contents of the Recent Documents menu."
-#~ msgstr "છેલ્લા દસ્તાવેજના મેનુના સમાવિષ્ટોને આ સાફ કરી દેશે."
