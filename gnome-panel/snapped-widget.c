@@ -99,7 +99,13 @@ snapped_widget_realize(GtkWidget *w)
 
 	gnome_win_hints_init();
 	if (gnome_win_hints_wm_exists()) {
-		gnome_win_hints_set_hints(w, 
+		if(snapped->mode == SNAPPED_AUTO_HIDE)
+			basep_widget_add_fake(BASEP_WIDGET(w), -1,
+					      FALSE, -1, -1,-1,-1,TRUE,TRUE);
+		else
+			basep_widget_add_fake(BASEP_WIDGET(w), -1,
+					      FALSE, -1, -1,-1,-1,TRUE,FALSE);
+		/*gnome_win_hints_set_hints(w, 
 					  WIN_HINTS_SKIP_FOCUS |
 					  WIN_HINTS_SKIP_WINLIST |
 					  WIN_HINTS_SKIP_TASKBAR);
@@ -112,7 +118,7 @@ snapped_widget_realize(GtkWidget *w)
 			gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
 		}
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
-		gdk_window_set_decorations(w->window, 0);
+		gdk_window_set_decorations(w->window, 0);*/
 	}    
 }
 
@@ -200,7 +206,7 @@ snapped_widget_get_hidepos(SnappedWidget *snapped,
 	
 	*w = GTK_WIDGET(snapped)->allocation.width;
 	*h = GTK_WIDGET(snapped)->allocation.height;
-	*hide_orient = ORIENT_UP;
+	*hide_orient = -1;
 	if(snapped->state == SNAPPED_SHOWN)
 		return;
 
@@ -316,7 +322,8 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			int w,h;
 			snapped_widget_get_hidepos(snapped, &hide_orient, &w, &h);
 			basep_widget_add_fake(basep,hide_orient,FALSE,
-					      -1,-1,w,h,TRUE);
+					      -1,-1,w,h,TRUE,TRUE);
+			basep_widget_set_fake_orient(basep, -1);
 			gdk_window_show(widget->window);
 			gdk_window_resize (widget->window,
 					   allocation->width, 
@@ -325,12 +332,15 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			PanelOrientType hide_orient;
 			int w,h;
 			snapped_widget_get_hidepos(snapped, &hide_orient, &w, &h);
-			basep_widget_set_fake_orient(basep, hide_orient);
+			basep_widget_set_fake_orient(basep, -1);
 			gdk_window_move_resize (basep->fake,
 						allocation->x, 
 						allocation->y,
 						w,
 						h);
+			gdk_window_set_hints (basep->fake,
+					      allocation->x, allocation->y,
+					      0, 0, 0, 0, GDK_HINT_POS);
 			gdk_window_show(widget->window);
 			gdk_window_resize (widget->window,
 					   allocation->width, 
@@ -343,6 +353,9 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 						allocation->y,
 						allocation->width, 
 						allocation->height);
+			gdk_window_set_hints (widget->window,
+					      allocation->x, allocation->y,
+					      0, 0, 0, 0, GDK_HINT_POS);
 		}
 	}
 
@@ -830,13 +843,20 @@ snapped_widget_change_params(SnappedWidget *snapped,
 	if(mode != snapped->mode) {
 		snapped->mode = mode;
 		if (gnome_win_hints_wm_exists()) {
+			GtkWidget *wid = GTK_WIDGET(snapped);
+			BasePWidget *basep = BASEP_WIDGET(snapped);
+			GdkWindow *win = wid->window;
+			/*a hack to set the hints on the fake*/
+			if(basep->fake)
+				wid->window = basep->fake;
 			if(snapped->mode == SNAPPED_AUTO_HIDE) {
-				gnome_win_hints_set_layer(GTK_WIDGET(snapped),
+				gnome_win_hints_set_layer(wid,
 							  WIN_LAYER_ABOVE_DOCK);
 			} else {
-				gnome_win_hints_set_layer(GTK_WIDGET(snapped),
+				gnome_win_hints_set_layer(wid,
 							  WIN_LAYER_DOCK);
 			}
+			wid->window = win;
 		}
 	}
 

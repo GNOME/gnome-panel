@@ -11,6 +11,7 @@
 #include <gnome.h>
 #include "panel-widget.h"
 #include "basep-widget.h"
+#include "snapped-widget.h" /*slight hack*/
 #include "panel-util.h"
 #include "panel_config_global.h"
 #include "gdkextra.h"
@@ -128,7 +129,7 @@ void
 basep_widget_add_fake(BasePWidget *basep,
 		      PanelOrientType hide_orient,
 		      int override, int x, int y, int w, int h,
-		      int show)
+		      int show, int above_dock)
 {
 	GdkWindowAttr attributes;
 	gint attributes_mask;
@@ -187,7 +188,10 @@ basep_widget_add_fake(BasePWidget *basep,
 		gnome_win_hints_set_state(widget, 
 					  WIN_STATE_STICKY |
 					  WIN_STATE_FIXED_POSITION);
-		gnome_win_hints_set_layer(widget, WIN_LAYER_ABOVE_DOCK);
+		if(above_dock)
+			gnome_win_hints_set_layer(widget, WIN_LAYER_ABOVE_DOCK);
+		else
+			gnome_win_hints_set_layer(widget, WIN_LAYER_DOCK);
 
 		gnome_win_hints_set_expanded_size(widget, 0, 0, 0, 0);
 		
@@ -245,16 +249,12 @@ basep_widget_set_fake_orient(BasePWidget *basep,
 
 	switch(hide_orient) {
 	case ORIENT_UP:
-		xattributes.win_gravity = SouthGravity;
+	case ORIENT_LEFT:
+		xattributes.win_gravity = SouthEastGravity;
 		break;
 	case ORIENT_DOWN:
-		xattributes.win_gravity = NorthGravity;
-		break;
-	case ORIENT_LEFT:
-		xattributes.win_gravity = EastGravity;
-		break;
 	case ORIENT_RIGHT:
-		xattributes.win_gravity = WestGravity;
+		xattributes.win_gravity = NorthWestGravity;
 		break;
 	default:
 		xattributes.win_gravity = NorthWestGravity;
@@ -362,7 +362,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 							 -1,-1);
 		} else {
 			basep_widget_add_fake(basep, hide_orient,
-					      TRUE, -1,-1,-1,-1,TRUE);
+					      TRUE, -1,-1,-1,-1,TRUE,TRUE);
 		}
 		while(x != dx ||
 		      y != dy ||
@@ -382,6 +382,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	
 	if(dw == 0 || dh == 0) {
 		if(basep->fake) {
+			basep_widget_set_fake_orient(basep,-1);
 			gdk_window_move(basep->fake,-dw-1,-dh-1);
 		} else {
 			gdk_window_move(wid->window,
@@ -390,15 +391,16 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 		}
 	} else {
 		if(!basep->fake) {
-			basep_widget_add_fake(basep, hide_orient,
-					      FALSE, -1,-1,dw,dh,TRUE);
+			basep_widget_add_fake(basep, -1,
+					      FALSE, -1,-1,dw,dh,TRUE,TRUE);
 		} else {
 			if (gnome_win_hints_wm_exists()) {
 				basep_widget_add_fake(basep,
-						      hide_orient,
+						      -1,
 						      FALSE,
-						      -1,-1,dw,dh,TRUE);
+						      -1,-1,dw,dh,TRUE,TRUE);
 			} else {
+				basep_widget_set_fake_orient(basep,-1);
 				gdk_window_resize(basep->fake,dw,dh);
 			}
 		}
@@ -464,7 +466,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			gdk_window_resize(basep->fake,ow,oh);
 		} else {
 			basep_widget_add_fake(basep, hide_orient,
-					      TRUE, -1,-1,ow,oh,FALSE);
+					      TRUE, -1,-1,ow,oh,FALSE,TRUE);
 		}
 		/*make sure the window doesn't blink*/
 		{
@@ -496,15 +498,25 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	if(basep->fake) {
 		if (gnome_win_hints_wm_exists()) {
 			/*add a NON-OVERRIDE REDIRECT fake window*/
-			/*basep_widget_add_fake(basep, hide_orient,
-					      FALSE, dx, dy,-1,-1,TRUE);*/
-			gdk_window_reparent(wid->window,NULL,dx,dy);
+			/*slight hack for snapped autohide which is always above dock*/
+			if(IS_SNAPPED_WIDGET(basep)) {
+				if(SNAPPED_WIDGET(basep)->mode == SNAPPED_AUTO_HIDE)
+					basep_widget_add_fake(basep, -1,
+							      FALSE, dx, dy,-1,-1,TRUE,TRUE);
+				else
+					basep_widget_add_fake(basep, -1,
+							      FALSE, dx, dy,-1,-1,TRUE,FALSE);
+			} else 
+				basep_widget_add_fake(basep, -1,
+						      FALSE, dx, dy,-1,-1,TRUE,FALSE);
+			/*gdk_window_reparent(wid->window,NULL,dx,dy);
 			gdk_window_destroy(basep->fake);
-			basep->fake = NULL;
+			basep->fake = NULL;*/
 		/*else we would have an override redirect window anyhow,
 		  so just keep it to avoid a flash*/
 		} else {
 			gdk_window_move_resize(basep->fake,dx,dy,dw,dh);
+			basep_widget_set_fake_orient(basep,-1);
 		}
 	} else {
 		gtk_widget_set_uposition(wid,dx,dy);
@@ -530,9 +542,13 @@ make_hidebutton(BasePWidget *basep,
 	else
 		gtk_widget_set_usize(w,PANEL_MINIMUM_WIDTH,0);
 
-	pixmap_name=gnome_unconditional_pixmap_file(pixmaparrow);
-	pixmap = gnome_pixmap_new_from_file(pixmap_name);
-	g_free(pixmap_name);
+	pixmap_name=gnome_pixmap_file(pixmaparrow);
+	if(pixmap_name) {
+		pixmap = gnome_pixmap_new_from_file(pixmap_name);
+		g_free(pixmap_name);
+	} else {
+		pixmap = gtk_label_new("*");
+	}
 	gtk_widget_show(pixmap);
 
 	gtk_container_add(GTK_CONTAINER(w),pixmap);
@@ -553,9 +569,9 @@ basep_widget_init (BasePWidget *basep)
 {
 	/*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
 	gnome_win_hints_init();
-	if (gnome_win_hints_wm_exists())
+	/*if (gnome_win_hints_wm_exists())
 		GTK_WINDOW(basep)->type = GTK_WINDOW_TOPLEVEL;
-	else
+	else*/
 		GTK_WINDOW(basep)->type = GTK_WINDOW_POPUP;
 	GTK_WINDOW(basep)->allow_shrink = TRUE;
 	GTK_WINDOW(basep)->allow_grow = TRUE;
@@ -739,8 +755,6 @@ basep_widget_construct (BasePWidget *basep,
 
 	return GTK_WIDGET(basep);
 }
-
-#include "drawer-widget.h"
 
 void
 basep_widget_change_params(BasePWidget *basep,

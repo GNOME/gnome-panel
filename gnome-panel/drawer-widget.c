@@ -99,7 +99,9 @@ drawer_widget_realize(GtkWidget *w)
 
 	gnome_win_hints_init();
 	if (gnome_win_hints_wm_exists()) {
-		gnome_win_hints_set_hints(w,
+		basep_widget_add_fake(BASEP_WIDGET(w), -1,
+				      FALSE, -1, -1,-1,-1,TRUE,FALSE);
+		/*gnome_win_hints_set_hints(w,
 					  WIN_HINTS_SKIP_FOCUS |
 					  WIN_HINTS_SKIP_WINLIST |
 					  WIN_HINTS_SKIP_TASKBAR);
@@ -108,7 +110,7 @@ drawer_widget_realize(GtkWidget *w)
 					  WIN_STATE_FIXED_POSITION);
 		gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
-		gdk_window_set_decorations(w->window, 0);
+		gdk_window_set_decorations(w->window, 0);*/
 	}
 }
 
@@ -282,16 +284,21 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			x = -allocation->width -1;
 			y = -allocation->height -1;
 		}
-		if(!basep->fake)
+		if(!basep->fake) {
 			gdk_window_move_resize (widget->window,
 						x,y,
 						allocation->width, 
 						allocation->height);
-		else {
+			gdk_window_set_hints (widget->window, x, y,
+					      0, 0, 0, 0, GDK_HINT_POS);
+		} else {
+			basep_widget_set_fake_orient(basep,-1);
 			gdk_window_move_resize (basep->fake,
 						x,y,
 						allocation->width, 
 						allocation->height);
+			gdk_window_set_hints (basep->fake, x, y,
+					      0, 0, 0, 0, GDK_HINT_POS);
 			gdk_window_show(widget->window);
 			gdk_window_move_resize (widget->window,
 						0,

@@ -97,7 +97,8 @@ void		basep_widget_add_fake		(BasePWidget *basep,
 						 int y,
 						 int w,
 						 int h,
-						 int show);
+						 int show,
+						 int above_dock);
 void		basep_widget_remove_fake	(BasePWidget *basep);
 
 END_GNOME_DECLS
