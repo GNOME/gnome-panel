@@ -105,11 +105,14 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	}
 	gtk_label_set(GTK_LABEL(cc->date), date);
 
-	/* This format string is used, to display the actual time.  */
 	if (cd->hourformat == 0) {
+	  /* This format string is used, to display the actual time in
+             12 hour format.  */
 		if (strftime(hour, 20, _("%I:%M %p"), tm) == 20)
 			hour[19] = '\0';
 	} else if (cd->hourformat == 1) {
+	  /* This format string is used, to display the actual time in
+             24 hour format.  */
 		if (strftime(hour, 20, _("%H:%M"), tm) == 20)
 			hour[19] = '\0';
 	}
@@ -220,7 +223,7 @@ make_clock_applet(const gchar * param)
 
 	applet = applet_widget_new_with_param(param);
 	if (!applet)
-		g_error("Can't create applet!\n");
+		g_error(_("Can't create applet!\n"));
 
 	cd = create_clock_widget(applet);
 
@@ -251,7 +254,7 @@ make_clock_applet(const gchar * param)
 
 	applet_widget_register_callback(APPLET_WIDGET(applet),
 					"properties",
-					_("Properties"),
+					_("Properties..."),
 					clock_properties,
 					cd);
 
@@ -314,7 +317,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_table_set_col_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
 
 
-	twelvehour = gtk_radio_button_new_with_label(NULL, "12 hour");
+	twelvehour = gtk_radio_button_new_with_label(NULL, _("12 hour"));
 	gtk_table_attach(GTK_TABLE(table), twelvehour, 0, 1, 0, 1,
 			 GTK_FILL, GTK_FILL | GTK_EXPAND,
 			 0, 0);
@@ -323,7 +326,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 
 	twentyfourhour = gtk_radio_button_new_with_label(
 			 gtk_radio_button_group(GTK_RADIO_BUTTON(twelvehour)),
-					        "24 hour");
+					        _("24 hour"));
 
 	gtk_table_attach(GTK_TABLE(table), twentyfourhour, 0, 1, 1, 2,
 			 GTK_FILL, GTK_FILL | GTK_EXPAND,
