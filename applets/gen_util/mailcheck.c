@@ -1168,13 +1168,13 @@ make_mailcheck_applet(const gchar *goad_id)
         mc->clicked_cmd = gnome_config_get_string("mail/clicked_command");
 	mc->clicked_enabled = gnome_config_get_bool("mail/clicked_enabled=0");
 
-	mc->remote_server = gnome_config_get_string("mail/remote_server=mail");
+	mc->remote_server = gnome_config_private_get_string("mail/remote_server=mail");
 	
 	query = g_strconcat("mail/remote_username=", getenv("USER"), NULL);
-	mc->remote_username = gnome_config_get_string(query);
+	mc->remote_username = gnome_config_private_get_string(query);
 	g_free(query);
 
-	mc->remote_password = gnome_config_get_string("mail/remote_password");
+	mc->remote_password = gnome_config_private_get_string("mail/remote_password");
 	mc->mailbox_type = gnome_config_get_int("mail/mailbox_type=0");
 
 	mc->play_sound = gnome_config_get_bool("mail/play_sound=false");
