@@ -732,6 +732,7 @@ applet_register (const char * ior, int applet_id)
 	orientation_change(applet_id,panel);
 }
 
+/* fixed in libgnomeui now
 static gint
 socket_destroy(GtkWidget *widget, gpointer data)
 {
@@ -743,6 +744,7 @@ socket_destroy(GtkWidget *widget, gpointer data)
 
 	return FALSE;
 }
+*/
 
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
   only*/
@@ -754,9 +756,10 @@ reserve_applet_spot (const char *id_str, const char *path, int panel,
 
 	socket = gtk_socket_new();
 
-	gtk_signal_connect(GTK_OBJECT(socket),"destroy",
+	/*fixed in libgnomeui now*/
+	/*gtk_signal_connect(GTK_OBJECT(socket),"destroy",
 			   GTK_SIGNAL_FUNC(socket_destroy),
-			   NULL);
+			   NULL);*/
 
 	g_return_val_if_fail(socket!=NULL,0);
 
