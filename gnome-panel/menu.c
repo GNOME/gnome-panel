@@ -2260,6 +2260,7 @@ applet_menu_get_category_icon (const gchar *untranslated_category)
 static GtkWidget *
 applet_menu_append (GtkWidget   *menu,
 		    const gchar *name,
+		    const gchar *description,
 		    const gchar *icon)
 {
 	GtkWidget *menuitem;
@@ -2275,6 +2276,9 @@ applet_menu_append (GtkWidget   *menu,
 	gtk_widget_show_all (menuitem);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+	if (description)
+		gtk_tooltips_set_tip (panel_tooltips, menuitem, description, NULL);
 
 	return menuitem;
 }
@@ -2348,6 +2352,7 @@ create_applets_menu (GtkWidget *menu)
 		Bonobo_ServerInfo *info;
 		GtkWidget         *menuitem;
 		const gchar       *name;
+		const gchar       *description;
 		const gchar       *icon;
 		const gchar       *category;
 		const gchar       *untranslated_category;
@@ -2359,6 +2364,7 @@ create_applets_menu (GtkWidget *menu)
 
 		name     = bonobo_server_info_prop_lookup (info, "name", langs_gslist);
 		category = bonobo_server_info_prop_lookup (info, "panel:category", langs_gslist);
+	        description = bonobo_server_info_prop_lookup (info, "description", langs_gslist);
 
 		icon = bonobo_server_info_prop_lookup (info, "panel:icon", NULL);
 		untranslated_category =
@@ -2368,7 +2374,7 @@ create_applets_menu (GtkWidget *menu)
 			continue;
 
 		if (string_empty (category)) {
-			applet_menu_append (menu, name, icon);
+			applet_menu_append (menu, name, description, icon);
 			continue;
 		}
 
@@ -2380,12 +2386,12 @@ create_applets_menu (GtkWidget *menu)
 
 			cat_icon = applet_menu_get_category_icon (untranslated_category);
 
-			menuitem = applet_menu_append (menu, category, cat_icon);
+			menuitem = applet_menu_append (menu, category, NULL, cat_icon);
 
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), prev_menu);
 		}
 
-		menuitem = applet_menu_append (prev_menu, name, icon);
+		menuitem = applet_menu_append (prev_menu, name, description, icon);
 
 		setup_applet_drag (menuitem, iid);
 
