@@ -1,5 +1,11 @@
 2001-10-12  Alex Larsson  <alexl@redhat.com>
 
+	* panel_config.c (panel_config):
+	un-ifdef out this function. Seems to work reasonably well
+	already.
+
+2001-10-12  Alex Larsson  <alexl@redhat.com>
+
 	* main.c (kill_free_drawers):
 	Queue up all the destroys until after we've gone through
 	the panel_list, since the destroys can change the list.

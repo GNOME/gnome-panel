@@ -14,6 +14,7 @@ INCLUDES = \
 	-I$(top_srcdir)/intl	\
 	-I$(top_builddir)/intl	\
 	-I$(top_builddir)/panel	\
+	-DPANEL_DEBUG		\
 	-DGNOME_CORE_INTERNAL	\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DGNOME_DATADIR=\""$(datadir)"\" \

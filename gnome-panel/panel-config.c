@@ -1821,7 +1821,6 @@ window_clicked (GtkWidget *w, int button, gpointer data)
 void 
 panel_config (GtkWidget *panel)
 {
-#ifdef FIXME
 	GtkWidget *page;
 	PerPanelConfig *ppc;
 	GtkWidget *prop_nbook;
@@ -1971,7 +1970,6 @@ panel_config (GtkWidget *panel)
 	/* grab the focus on the size menu always, if it exists */
 	if (ppc->size_menu != NULL)
 		gtk_widget_grab_focus (ppc->size_menu);
-#endif
 }
 
 
