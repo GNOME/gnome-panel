@@ -21,6 +21,7 @@ AC_ISC_POSIX
 AC_PROG_CC
 AC_STDC_HEADERS
 AC_ARG_PROGRAM
+AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 AC_PATH_PROGS(PATH_TO_XRDB, "xrdb")
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
@@ -94,6 +95,9 @@ CPPFLAGS="$CPPFLAGS $X_CFLAGS"
 AC_CHECK_HEADERS(X11/extensions/shape.h, XSHAPE_LIBS="-lXext")
 AC_SUBST(XSHAPE_LIBS)
 CPPFLAGS=$savecppflags
+
+# For egg-recent-files
+AC_CHECK_FUNCS(lockf)
 
 dnl X development libraries check
 

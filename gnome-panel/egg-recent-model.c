@@ -871,23 +871,31 @@ egg_recent_model_open_file (EggRecentModel *model)
 static gboolean
 egg_recent_model_lock_file (FILE *file)
 {
+#ifdef HAVE_LOCKF
 	int fd;
 
 	rewind (file);
 	fd = fileno (file);
 
 	return lockf (fd, F_LOCK, 0) == 0 ? TRUE : FALSE;
+#else
+	return FALSE; /* FIXME */
+#endif
 }
 
 static gboolean
 egg_recent_model_unlock_file (FILE *file)
 {
+#ifdef HAVE_LOCKF
 	int fd;
 
 	rewind (file);
 	fd = fileno (file);
 
 	return lockf (fd, F_ULOCK, 0) < 0 ? FALSE : TRUE;
+#else
+	return FALSE; /* FIXME */
+#endif
 }
 
 static void

@@ -30,7 +30,7 @@ libclock_applet_2_la_SOURCES = \
 	clock.c \
 	$(EGGFILES)
 
-libclock_applet_2_la_LDFLAGS = -module -avoid-version
+libclock_applet_2_la_LDFLAGS = -module -avoid-version -no-undefined
 libclock_applet_2_la_LIBADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
 	$(CLOCK_LIBS)

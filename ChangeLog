@@ -1,3 +1,18 @@
+2003-05-14  Masahiro Sakai  <sakai@tom.sfc.keio.ac.jp>
+
+	* configure.in: call AC_LIBTOOL_WIN32_DLL which is necessary for
+	building shared library on win32 platform.
+	check lockf() for egg-recent-files.
+
+	* libpanel-applet/Makefile.am (libpanel_applet_2_la_LDFLAGS):
+	* applets/clock/Makefile.am (libclock_applet_2_la_LDFLAGS):
+	add -no-undefined which is necessary for building shared library on
+	some platforms (e.g. Win32 and BeOS).
+
+	* gnome-panel/egg-recent-model.c: disable egg_recent_model_lock_file()
+	and egg_recent_model_unlock_file() when lockf() isn't available.
+	[FIXME: should be implemented using fcntl() and F_SETLK in such case.]
+
 2003-05-13  Greg Merchan  <merchan@phys.lsu.edu>
 	* applets/fish/fish.c, applets/notification_area/main.c,
 	  applets/clock/clock.c, applets/wncklet/showdesktop.c,
