@@ -134,6 +134,12 @@ load_logout_applet (PanelWidget *panel,
 	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("_Help"));
 }
 
+static void
+lock_button_pressed (GtkWidget *widget)
+{
+	panel_lock_screen (gtk_widget_get_screen (widget));
+}
+
 static GtkWidget *
 create_lock_widget (void)
 {
@@ -173,7 +179,7 @@ create_lock_widget (void)
 	gtk_tooltips_set_tip (panel_tooltips, button, _("Lock screen"), NULL);
 
 	g_signal_connect (button, "clicked",
-			  G_CALLBACK (panel_lock), NULL);
+			  G_CALLBACK (lock_button_pressed), NULL);
 
 	return button;
 }

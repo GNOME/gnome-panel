@@ -21,6 +21,14 @@
 	unconditionally get the pixmap directory, fixes
 	#88125.
 
+2002-07-15  Mark McLoughlin  <mark@skynet.ie>
+
+	* mailcheck.c:
+	(mailcheck_execute_shell): add mailcheck arg and set
+	screen upon which the dialog should realise.
+	(after_mail_check), (mail_check_timeout),
+	(exec_clicked_cmd): update for above change.
+
 2002-05-21  Jorn Baayen  <jorn@nl.linux.org>
 
 	* pager.glade: use GTK_SHADOW_IN for consistency
@@ -63,6 +71,30 @@
 2002-07-01  Mark McLoughlin  <mark@skynet.ie>
 
 	* tasklist.glade: #85344 - s/Tasklist/Window List/
+
+2002-06-25  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add multihead-hacks.h.
+
+	* multihead-hacks.h: some hacks to reduce the number
+	of HAVE_GTK_MULTIHEADs needed.
+
+	* clock.c, mailcheck.c: make sure all dialogs realize on 
+	the right screen.
+
+	* pager.c: (applet_get_screen): impl helper method.
+	(applet_realized): set the screen that the pager controls
+	when the applet is realized.
+	(response_cb), (fill_pager_applet), (display_help_dialog),
+	(display_about_dialog), (display_properties_dialog): make
+	sure all dialogs realize on the right screen.
+
+	* tasklist.c: (applet_get_screen): impl helper method.
+	(applet_realized): set the screen that the tasklist
+	controls when the applet is realized.
+	(response_cb), (fill_tasklist_applet), (display_help_dialog),
+	(display_about_dialog), (display_properties_dialog): make
+	sure all dialogs realize on the right screen.
 
 2002-06-18  Mark McLoughlin  <mark@skynet.ie>
 

@@ -46,7 +46,10 @@ void panel_save_to_gconf     (PanelData *pd);
 
 void panel_register_window_icon (void);
 
+GdkScreen *panel_screen_from_toplevel (GtkWidget *panel);
 int        panel_monitor_from_toplevel (GtkWidget *panel);
+int        panel_screen_from_panel_widget  (PanelWidget *panel);
+int        panel_monitor_from_panel_widget (PanelWidget *panel);
 
 gboolean panel_is_applet_right_stick (GtkWidget *applet);
 

@@ -143,14 +143,14 @@ drawer_pos_get_applet_orient (BasePWidget *basep)
 	y = GTK_WIDGET(basep)->allocation.y;
 
 	if(porient == GTK_ORIENTATION_VERTICAL) {
-		if (x > (multiscreen_width (basep->screen)/2 +
-			 multiscreen_x (basep->screen)))
+		if (x > (multiscreen_width (basep->screen, basep->monitor)/2 +
+			 multiscreen_x (basep->screen, basep->monitor)))
 			return PANEL_ORIENT_LEFT;
 		else
 			return PANEL_ORIENT_RIGHT;
 	} else {
-		if (y > (multiscreen_height (basep->screen)/2 +
-			 multiscreen_y (basep->screen)))
+		if (y > (multiscreen_height (basep->screen, basep->monitor)/2 +
+			 multiscreen_y (basep->screen, basep->monitor)))
 			return PANEL_ORIENT_UP;
 		else
 			return PANEL_ORIENT_DOWN;
@@ -360,19 +360,21 @@ drawer_pos_pre_convert_hook (BasePWidget *basep)
 }
 
 void
-drawer_widget_change_params (DrawerWidget *drawer,
-			     PanelOrient orient,
-			     BasePMode mode,
-			     BasePState state,
-			     int sz,
-			     gboolean hidebuttons_enabled,
-			     gboolean hidebutton_pixmap_enabled,
-			     PanelBackType back_type,
-			     char *back_pixmap,
-			     gboolean fit_pixmap_bg,
-			     gboolean stretch_pixmap_bg,
-			     gboolean rotate_pixmap_bg,
-			     GdkColor *back_color)
+drawer_widget_change_params (DrawerWidget  *drawer,
+			     int            screen,
+			     int            monitor,
+			     PanelOrient    orient,
+			     BasePMode      mode,
+			     BasePState     state,
+			     int            sz,
+			     gboolean       hidebuttons_enabled,
+			     gboolean       hidebutton_pixmap_enabled,
+			     PanelBackType  back_type,
+			     char          *back_pixmap,
+			     gboolean       fit_pixmap_bg,
+			     gboolean       stretch_pixmap_bg,
+			     gboolean       rotate_pixmap_bg,
+			     GdkColor      *back_color)
 {
 	GtkOrientation porient;
 	DrawerPos *pos = DRAWER_POS (BASEP_WIDGET (drawer)->pos);
@@ -414,7 +416,8 @@ drawer_widget_change_params (DrawerWidget *drawer,
 	}
 
 	basep_widget_change_params (BASEP_WIDGET (drawer),
-				    0 /*FIXME */,
+				    screen,
+				    monitor,
 				    porient,
 				    sz,
 				    mode,
@@ -439,6 +442,8 @@ drawer_widget_change_orient (DrawerWidget *drawer,
 		BasePWidget *basep = BASEP_WIDGET (drawer);
 		PanelWidget *panel = PANEL_WIDGET (basep->panel);
 		drawer_widget_change_params (drawer,
+					     basep->screen,
+					     basep->monitor,
 					     orient,
 					     basep->mode,
 					     basep->state,
@@ -455,19 +460,21 @@ drawer_widget_change_orient (DrawerWidget *drawer,
 }
 
 GtkWidget *
-drawer_widget_new (gchar *panel_id,
-		   PanelOrient orient,
-		   BasePMode mode,
-		   BasePState state,
-		   int sz,
-		   gboolean hidebuttons_enabled,
-		   gboolean hidebutton_pixmap_enabled,
-		   PanelBackType back_type,
-		   char *back_pixmap,
-		   gboolean fit_pixmap_bg,
-		   gboolean stretch_pixmap_bg,
-		   gboolean rotate_pixmap_bg,
-		   GdkColor *back_color)
+drawer_widget_new (char          *panel_id,
+		   int            screen,
+		   int            monitor,
+		   PanelOrient    orient,
+		   BasePMode      mode,
+		   BasePState     state,
+		   int            sz,
+		   gboolean       hidebuttons_enabled,
+		   gboolean       hidebutton_pixmap_enabled,
+		   PanelBackType  back_type,
+		   char          *back_pixmap,
+		   gboolean       fit_pixmap_bg,
+		   gboolean       stretch_pixmap_bg,
+		   gboolean       rotate_pixmap_bg,
+		   GdkColor      *back_color)
 {
 	DrawerWidget *drawer;
 	DrawerPos *pos;
@@ -491,7 +498,8 @@ drawer_widget_new (gchar *panel_id,
 	basep_widget_construct (panel_id, 
 				BASEP_WIDGET (drawer),
 				TRUE, TRUE,
-				0 /*FIXME */,
+				screen,
+				monitor,
 				porient,
 				sz, mode, state,
 				hidebuttons_enabled,

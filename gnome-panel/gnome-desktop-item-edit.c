@@ -14,6 +14,8 @@
 #include "menu-ditem.h"
 #include "panel-util.h"
 
+#include "multihead-hacks.h"
+
 #include "nothing.cP"
 
 /* Just so we can link with panel-util.c for the convert keys stuff*/
@@ -108,7 +110,8 @@ main (int argc, char * argv[])
 		    (uri, info, GNOME_VFS_FILE_INFO_DEFAULT) == GNOME_VFS_OK) {
 
 			if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY && create_new) {
-				dlg = panel_new_launcher (uri);
+				dlg = panel_new_launcher (
+						uri, gdk_screen_get_default ());
 
 			} else if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
 				/* rerun this iteration with the .directory file */
@@ -126,14 +129,16 @@ main (int argc, char * argv[])
 				   && is_ext (desktops[i], ".directory")
 				   && !create_new) {
 				char *dirname = g_path_get_dirname (uri);
-				dlg = panel_edit_direntry (dirname, NULL);
+				dlg = panel_edit_direntry (dirname, NULL,
+							   gdk_screen_get_default ());
 				g_free (dirname);
 			
 			} else if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
 				   && is_ext (desktops[i], ".desktop")
 				   && !create_new) {
 				char *dirname = g_path_get_dirname (uri);
-				dlg = panel_edit_dentry (uri, dirname);
+				dlg = panel_edit_dentry (uri, dirname,
+							 gdk_screen_get_default ());
 				g_free (dirname);
 				
 			} else {
@@ -147,7 +152,8 @@ main (int argc, char * argv[])
 			/* a non-existant file.  Well we can still edit that sort
 			 * of.  We will just create it new */
 			char *dirname = g_path_get_dirname (uri);
-			dlg = panel_edit_direntry (dirname, NULL);
+			dlg = panel_edit_direntry (dirname, NULL,
+						   gdk_screen_get_default ());
 			g_free (dirname);
 		
 		} else if (is_ext (desktops[i], ".desktop")
@@ -157,7 +163,8 @@ main (int argc, char * argv[])
 			/* FIXME: deal with issues of item existing in
 			 * another vfolder! */
 			char *dirname = g_path_get_dirname (uri);
-			dlg = panel_edit_dentry (uri, dirname);
+			dlg = panel_edit_dentry (uri, dirname,
+						 gdk_screen_get_default ());
 			g_free (dirname);
 
 		} else {

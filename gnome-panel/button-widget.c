@@ -743,7 +743,8 @@ button_widget_new (const char  *filename,
 	if (filename != NULL) {
 		pixbuf = button_load_pixbuf (filename, size, &error);
 		if (error != NULL) {
-			panel_error_dialog ("cannot_load_pixbuf",
+			panel_error_dialog (gdk_screen_get_default (),
+					    "cannot_load_pixbuf",
 					    _("Failed to load image %s\n\n"
 					      "Details: %s"),
 					    filename,
@@ -781,7 +782,8 @@ button_widget_set_pixmap (ButtonWidget *button,
 
 	pixbuf = button_load_pixbuf (pixmap, size, &error);
 	if (error != NULL) {
-		panel_error_dialog ("cannot_load_pixbuf",
+		panel_error_dialog (gdk_screen_get_default (),
+				    "cannot_load_pixbuf",
 				    _("Failed to load image %s\n\n"
 				      "Details: %s"),
 				    pixmap ? pixmap : "(null)",

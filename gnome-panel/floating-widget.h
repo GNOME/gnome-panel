@@ -48,6 +48,7 @@ GType floating_pos_get_type (void) G_GNUC_CONST;
 
 GtkWidget *floating_widget_new (gchar *panel_id,
 				int screen,
+				int monitor,
 				gint16 x,
 				gint16 y,
 				GtkOrientation orient,
@@ -65,6 +66,7 @@ GtkWidget *floating_widget_new (gchar *panel_id,
 
 void floating_widget_change_params (FloatingWidget *floating,
 				    int screen,
+				    int monitor,
 				    gint16 x,
 				    gint16 y,
 				    GtkOrientation orient,

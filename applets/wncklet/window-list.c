@@ -28,6 +28,8 @@
 
 #include "tasklist.h"
 
+#include "multihead-hacks.h"
+
 typedef struct {
 	GtkWidget *applet;
 	GtkWidget *tasklist;
@@ -88,7 +90,7 @@ tasklist_update (TasklistData *tasklist)
 							  tasklist->move_unminimized_windows);
 }
 static void
-response_cb(GtkWidget * widget,int id, gpointer data)
+response_cb(GtkWidget * widget,int id, TasklistData *tasklist)
 {
 	if(id == GTK_RESPONSE_HELP) {
 
@@ -119,12 +121,42 @@ response_cb(GtkWidget * widget,int id, gpointer data)
 					  NULL);
 	
 			gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+			gtk_window_set_screen (GTK_WINDOW (dialog),
+					       gtk_widget_get_screen (tasklist->applet));
 			gtk_widget_show (dialog);
 			g_error_free (error);
 		}
 	}
 	else
 		gtk_widget_hide (widget);
+}
+
+static WnckScreen *
+applet_get_screen (GtkWidget *applet)
+{
+#ifdef HAVE_GTK_MULTIHEAD
+	int screen_num;
+
+	if (!gtk_widget_has_screen (applet))
+		return wnck_screen_get_default ();
+
+	screen_num = gdk_screen_get_number (gtk_widget_get_screen (applet));
+
+	return wnck_screen_get (screen_num);
+#else
+	return wnck_screen_get_default ();
+#endif /* HAVE_GTK_MULTIHEAD */
+}
+
+static void
+applet_realized (PanelApplet  *applet,
+		 TasklistData *tasklist)
+{
+	WnckScreen *screen;
+
+	screen = applet_get_screen (GTK_WIDGET (applet));
+
+	wnck_tasklist_set_screen (WNCK_TASKLIST (tasklist->tasklist), screen);
 }
 
 static void
@@ -581,7 +613,7 @@ fill_tasklist_applet(PanelApplet *applet)
 		break;
 	}
 
-	tasklist->screen = wnck_screen_get_default ();
+	tasklist->screen = applet_get_screen (tasklist->applet);
 
 	/* because the tasklist doesn't respond to signals at the moment */
 	wnck_screen_force_update (tasklist->screen);
@@ -629,6 +661,10 @@ fill_tasklist_applet(PanelApplet *applet)
 
 	gtk_widget_show (tasklist->applet);
 
+	g_signal_connect (G_OBJECT (tasklist->applet),
+			  "realize",
+			  G_CALLBACK (applet_realized),
+			  tasklist);
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "change_orient",
 			  G_CALLBACK (applet_change_orient),
@@ -686,6 +722,8 @@ display_help_dialog (BonoboUIComponent *uic,
 				  NULL);
 
 		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		gtk_window_set_screen (GTK_WINDOW (dialog),
+				       gtk_widget_get_screen (tasklist->applet));
 		gtk_widget_show (dialog);
 		g_error_free (error);
 	}
@@ -710,7 +748,9 @@ display_about_dialog (BonoboUIComponent *uic,
 	};
 	const char *translator_credits = _("translator_credits");
 
-	if (about != NULL) {
+	if (about) {
+		gtk_window_set_screen (GTK_WINDOW (about),
+				       gtk_widget_get_screen (tasklist->applet));
 		gtk_widget_show (about);
 		gtk_window_present (GTK_WINDOW (about));
 		return;
@@ -729,6 +769,8 @@ display_about_dialog (BonoboUIComponent *uic,
 				 pixbuf);
 	
 	gtk_window_set_wmclass (GTK_WINDOW (about), "tasklist", "Tasklist");
+	gtk_window_set_screen (GTK_WINDOW (about),
+			       gtk_widget_get_screen (tasklist->applet));
 
 	if (pixbuf) {
 		gtk_window_set_icon (GTK_WINDOW (about), pixbuf);
@@ -908,7 +950,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 		g_object_unref (G_OBJECT (xml));
 	}
 
+	gtk_window_set_screen (GTK_WINDOW (tasklist->properties_dialog),
+			       gtk_widget_get_screen (tasklist->applet));
 	gtk_window_present (GTK_WINDOW (tasklist->properties_dialog));
 }
-
-

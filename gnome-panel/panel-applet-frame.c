@@ -34,9 +34,12 @@
 #include "panel-applet-frame.h"
 #include "panel-gconf.h"
 #include "panel-util.h"
+#include "panel.h"
 #include "session.h"
 #include "applet.h"
 #include "panel-marshal.h"
+
+#include "multihead-hacks.h"
 
 #define HANDLE_SIZE 10
 
@@ -701,8 +704,15 @@ static void
 panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 {
 	GtkWidget *dialog;
+	GdkScreen *screen;
 	char      *applet_name;
 	char      *txt;
+
+	g_return_if_fail (frame->priv->applet_info != NULL);
+
+	screen = gtk_window_get_screen (
+			GTK_WINDOW (get_panel_parent (
+					frame->priv->applet_info->widget)));
 
 	applet_name = panel_applet_frame_get_name (frame->priv->iid);
 
@@ -721,6 +731,7 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 				GTK_MESSAGE_QUESTION,
 				GTK_BUTTONS_YES_NO,
 				txt);
+	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (panel_applet_frame_reload_response),
@@ -927,11 +938,12 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	if (BONOBO_EX (&ev)) {
 		char *err = bonobo_exception_get_text (&ev);
-		panel_error_dialog
-			("problem_loading_applet",
-			 _("<b>There was a problem loading applet '%s'</b>\n\n"
-			   "Details: %s"),
-			  iid, err);
+		panel_error_dialog (
+			gtk_window_get_screen (GTK_WINDOW (panel->panel_parent)),
+			"problem_loading_applet",
+			_("<b>There was a problem loading applet '%s'</b>\n\n"
+			  "Details: %s"),
+			iid, err);
 
 		/* FIXME: 2.2.x addition: #89173
 		 * 

@@ -55,6 +55,7 @@ GType sliding_pos_get_type (void) G_GNUC_CONST;
 
 GtkWidget *sliding_widget_new (gchar *panel_id,
 			       int screen,
+			       int monitor,
 			       SlidingAnchor anchor,
 			       gint16 offset,
 			       BorderEdge edge,
@@ -72,6 +73,7 @@ GtkWidget *sliding_widget_new (gchar *panel_id,
 
 void sliding_widget_change_params (SlidingWidget *slidingw,
 				   int screen,
+				   int monitor,
 				   SlidingAnchor anchor,
 				   gint16 offset,
 				   BorderEdge edge,

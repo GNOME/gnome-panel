@@ -24,6 +24,8 @@
 #include "panel-util.h"
 #include "menu.h"
 
+#include "multihead-hacks.h"
+
 #undef MENU_UTIL_DEBUG
 
 extern char *kde_menudir;
@@ -48,6 +50,7 @@ panel_standard_menu_pos (GtkMenu *menu, gint *x, gint *y)
 {
 	GtkRequisition requisition;
 	int            screen;
+	int            monitor;
 	int            monitor_basex;
 	int            monitor_basey;
 	int            monitor_width;
@@ -56,12 +59,14 @@ panel_standard_menu_pos (GtkMenu *menu, gint *x, gint *y)
 	gtk_widget_get_child_requisition (GTK_WIDGET (menu),
 					  &requisition);
 
-	screen = multiscreen_locate_coords (*x, *y);
+	screen = gdk_screen_get_number (
+			gtk_widget_get_screen (GTK_WIDGET (menu)));
+	monitor = multiscreen_locate_coords (screen, *x, *y);
 
-	monitor_basex  = multiscreen_x (screen);
-	monitor_basey  = multiscreen_y (screen);
-	monitor_width  = multiscreen_width (screen);
-	monitor_height = multiscreen_height (screen);
+	monitor_basex  = multiscreen_x (screen, monitor);
+	monitor_basey  = multiscreen_y (screen, monitor);
+	monitor_width  = multiscreen_width (screen, monitor);
+	monitor_height = multiscreen_height (screen, monitor);
 
 	*x -= monitor_basex;
 	*y -= monitor_basey;
@@ -206,9 +211,9 @@ applet_menu_position_outside (GtkMenu  *menu,
 		FoobarWidget *foo = FOOBAR_WIDGET (w);
 		gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
 		*x = MIN (*x,
-			  multiscreen_width (foo->screen) +
-			  multiscreen_x (foo->screen) -  req.width);
-		*y = w->allocation.height + multiscreen_y (foo->screen);
+			  multiscreen_width (foo->screen, foo->monitor) +
+			  multiscreen_x (foo->screen, foo->monitor) - req.width);
+		*y = w->allocation.height + multiscreen_y (foo->screen, foo->monitor);
 	}
 
 	*push_in = TRUE;

@@ -48,6 +48,7 @@ GType edge_pos_get_type (void) G_GNUC_CONST;
 
 GtkWidget *edge_widget_new (gchar *panel_id,
 			    int screen,
+			    int monitor,
 			    BorderEdge edge,
 			    BasePMode mode,
 			    BasePState state,

@@ -2,7 +2,7 @@
  *   multiscreen-stuff: Multiscreen and Xinerama support for the panel.
  *
  *   Copyright (C) 2001 George Lebl <jirka@5z.com>
- *                 2002 Sun Microsystems Inc. (Mark McLoughlin <mark@skynet.ie>)
+ *                 2002 Sun Microsystems Inc.
  *
  * This program is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License as 
@@ -18,6 +18,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  * USA
+ *
+ * Authors: George Lebl <jirka@5z.com>,
+ *          Mark McLoughlin <mark@skynet.ie>
  */
 
 #include <config.h>
@@ -26,12 +29,42 @@
 #include "panel-util.h"
 #include "panel.h"
 
+#include "multihead-hacks.h"
+
 static int            screens     = 0;
 static int           *monitors    = NULL;
 static GdkRectangle **geometries  = NULL;
 static gboolean	      initialized = FALSE;
 
-#ifdef HAVE_LIBXINERAMA
+#ifdef HAVE_GTK_MULTIHEAD
+static void
+multiscreen_support_init (void)
+{
+	GdkDisplay *display;
+	int         i;
+
+	display = gdk_display_get_default ();
+	screens = gdk_display_get_n_screens (display);
+
+	monitors   = g_new0 (int, screens);
+	geometries = g_new0 (GdkRectangle *, screens);
+
+	for (i = 0; i < screens; i++) {
+		GdkScreen *screen;
+		int        j;
+
+		screen = gdk_display_get_screen (display, i);
+
+		monitors   [i] = gdk_screen_get_n_monitors (screen);
+		geometries [i] = g_new0 (GdkRectangle, monitors [i]);
+
+		for (j = 0; j < monitors [i]; j++)
+			gdk_screen_get_monitor_geometry (
+				screen, j, &geometries [i][j]);
+	}
+}
+
+#elif defined(HAVE_LIBXINERAMA)
 
 #include <gdk/gdkx.h>
 #include <X11/extensions/Xinerama.h>
@@ -85,7 +118,7 @@ multiscreen_support_init (void)
 	}
 }
 
-#else /* !defined(HAVE_LIBXINERAMA) */
+#else /* !defined (HAVE_GTK_MULTIHEAD) && !defined(HAVE_LIBXINERAMA) */
 
 static void
 multiscreen_support_init (void)
@@ -113,8 +146,13 @@ multiscreen_init (void)
 	if (g_getenv ("FAKE_XINERAMA_PANEL")) {
 		int width, height;
 
+#ifdef HAVE_GTK_MULTIHEAD
+		width  = gdk_screen_get_width  (gdk_screen_get_default ());
+		height = gdk_screen_get_height (gdk_screen_get_default ());
+#else
 		width  = gdk_screen_width  ();
 		height = gdk_screen_height ();
+#endif
 
 		/* fake xinerama setup for debugging */
 		screens = 1;
@@ -148,63 +186,82 @@ multiscreen_screens ()
 {
 	g_return_val_if_fail (initialized, 1);
 
-	return monitors [0];
+	return screens;
 }
 
 int
-multiscreen_x (int screen)
+multiscreen_monitors (int screen)
+{
+	g_return_val_if_fail (initialized, 1);
+	g_return_val_if_fail (screen >= 0 && screen < screens, 1);
+
+	return monitors [screen];
+}
+
+int
+multiscreen_x (int screen,
+	       int monitor)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0 || screen < monitors [0], 0);
+	g_return_val_if_fail (screen >= 0 && screen < screens, 0);
+	g_return_val_if_fail (monitor >= 0 || monitor < monitors [screen], 0);
 
-	return geometries [0][screen].x;
+	return geometries [screen][monitor].x;
 }
 
 int
-multiscreen_y (int screen)
+multiscreen_y (int screen,
+	       int monitor)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0 || screen < monitors [0], 0);
+	g_return_val_if_fail (screen >= 0 && screen < screens, 0);
+	g_return_val_if_fail (monitor >= 0 || monitor < monitors [screen], 0);
 
-	return geometries [0][screen].y;
+	return geometries [screen][monitor].y;
 }
 
 int
-multiscreen_width (int screen)
+multiscreen_width (int screen,
+		   int monitor)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0 || screen < monitors [0], 0);
+	g_return_val_if_fail (screen >= 0 && screen < screens, 0);
+	g_return_val_if_fail (monitor >= 0 || monitor < monitors [screen], 0);
 
-	return geometries [0][screen].width;
+	return geometries [screen][monitor].width;
 }
 
 int
-multiscreen_height (int screen)
+multiscreen_height (int screen,
+		    int monitor)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0 || screen < monitors [0], 0);
+	g_return_val_if_fail (screen >= 0 && screen < screens, 0);
+	g_return_val_if_fail (monitor >= 0 || monitor < monitors [screen], 0);
 
-	return geometries [0][screen].height;
+	return geometries [screen][monitor].height;
 }
 
 int
-multiscreen_locate_coords (int x,
+multiscreen_locate_coords (int screen,
+			   int x,
 			   int y)
 {
 	int i;
 
-	for (i = 0; i < monitors [0]; i++)
-		if (x >= geometries [0][i].x &&
-		    x <  geometries [0][i].x + geometries [0][i].width &&
-		    y >= geometries [0][i].y &&
-		    y <  geometries [0][i].y + geometries [0][i].height)
+	for (i = 0; i < monitors [screen]; i++)
+		if (x >= geometries [screen][i].x &&
+		    x <  geometries [screen][i].x + geometries [screen][i].width &&
+		    y >= geometries [screen][i].y &&
+		    y <  geometries [screen][i].y + geometries [screen][i].height)
 			return i;
 
 	return -1;
 }
 
 int
-multiscreen_locate_widget (GtkWidget *widget)
+multiscreen_locate_widget (int        screen,
+			   GtkWidget *widget)
 {
 	return panel_monitor_from_toplevel (
 				gtk_widget_get_toplevel (widget));

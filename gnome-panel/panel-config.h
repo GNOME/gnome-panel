@@ -19,6 +19,7 @@ struct _PerPanelConfig {
 
 	/*basep types*/
 	int			screen;
+	int			monitor;
 	gboolean		hidebuttons;
 	gboolean		hidebutton_pixmaps;
 	BasePMode               mode;
@@ -59,8 +60,9 @@ struct _PerPanelConfig {
 
 	GtkWidget		*pix_entry;
 
-	/*screen number spinner*/
+	/*screen number spinners*/
 	GtkWidget               *screen_spin;
+	GtkWidget               *monitor_spin;
 
 	/*hiding stuff*/
 	GtkWidget               *autohide_button;

@@ -25,11 +25,13 @@
 #define GNOME_RUN_H
 
 #include <glib/gmacros.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-void show_run_dialog           (void);
-void show_run_dialog_with_text (const char *text);
+void show_run_dialog           (GdkScreen  *screen);
+void show_run_dialog_with_text (GdkScreen  *screen,
+				const char *text);
 
 G_END_DECLS
 

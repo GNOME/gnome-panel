@@ -28,6 +28,8 @@
 #include "remote-helper.h"
 #include "mailcheck.h"
 
+#include "multihead-hacks.h"
+
 typedef enum {
 	MAILBOX_LOCAL,
 	MAILBOX_LOCALDIR,
@@ -161,7 +163,8 @@ static void set_atk_relation (GtkWidget *label, GtkWidget *entry, AtkRelationTyp
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
 
 static void
-mailcheck_execute_shell (const char *command)
+mailcheck_execute_shell (MailCheck  *mailcheck,
+			 const char *command)
 {
 	GError *error = NULL;
 
@@ -182,6 +185,8 @@ mailcheck_execute_shell (const char *command)
 				  NULL);
 
 		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		gtk_window_set_screen (GTK_WINDOW (dialog),
+				       gtk_widget_get_screen (GTK_WIDGET (mailcheck->applet)));
 
 		gtk_widget_show (dialog);
 
@@ -233,7 +238,7 @@ calc_dir_contents (char *dir)
 }
 
 static char *
-get_remote_password (void)
+get_remote_password (MailCheck *mc)
 {
 	GtkWidget *dialog;
 	GtkWidget *hbox;
@@ -270,6 +275,8 @@ get_remote_password (void)
 	gtk_widget_grab_focus (GTK_WIDGET (entry));
 
 	gtk_window_set_modal (GTK_WINDOW(dialog), TRUE);
+	gtk_window_set_screen (GTK_WINDOW (dialog),
+			       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
 
 	response = gtk_dialog_run (GTK_DIALOG (dialog));
 
@@ -362,7 +369,7 @@ check_mail_file_status (MailCheck *mc)
 				gtk_timeout_remove(mc->mail_timeout);
 				mc->mail_timeout = 0;
 			}
-			mc->real_password = get_remote_password();
+			mc->real_password = get_remote_password(mc);
 			mc->mail_timeout = gtk_timeout_add(mc->update_freq,
 							   mail_check_timeout,
 							   mc);
@@ -531,7 +538,7 @@ after_mail_check (MailCheck *mc)
 		if (mc->newmail_enabled &&
 		    mc->newmail_cmd && 
 		    (strlen(mc->newmail_cmd) > 0))
-			mailcheck_execute_shell (mc->newmail_cmd);
+			mailcheck_execute_shell (mc, mc->newmail_cmd);
 	}
 
 	switch (mc->report_mail_mode) {
@@ -601,7 +608,7 @@ mail_check_timeout (gpointer data)
 			mc->mail_timeout = 0;
 		}
 
-		mailcheck_execute_shell (mc->pre_check_cmd);
+		mailcheck_execute_shell (mc, mc->pre_check_cmd);
 
 		mc->mail_timeout = gtk_timeout_add(mc->update_freq, mail_check_timeout, mc);
 	}
@@ -641,7 +648,7 @@ exec_clicked_cmd (GtkWidget *widget, GdkEventButton *event, gpointer data)
 	if (event->button == 1) {
 		
 		if (mc->clicked_enabled && mc->clicked_cmd && (strlen(mc->clicked_cmd) > 0))
-			mailcheck_execute_shell (mc->clicked_cmd);
+			mailcheck_execute_shell (mc, mc->clicked_cmd);
 		
 		if (mc->reset_on_clicked) {
 			mc->newmail = mc->unreadmail = 0;
@@ -1554,7 +1561,7 @@ mailcheck_properties_page (MailCheck *mc)
 }
 
 static void
-phelp_cb (GtkDialog *w, gint tab, gpointer data)
+phelp_cb (GtkDialog *w, gint tab, MailCheck *mc)
 {
 	GError *error = NULL;
 	static GnomeProgram *applet_program = NULL;
@@ -1583,37 +1590,37 @@ phelp_cb (GtkDialog *w, gint tab, gpointer data)
 				  NULL);
 
 		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		gtk_window_set_screen (GTK_WINDOW (dialog),
+				       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
 		gtk_widget_show (dialog);
 		g_error_free (error);
 	}
 }	
 
 static void
-response_cb (GtkDialog *dialog, gint id, gpointer data)
+response_cb (GtkDialog *dialog, gint id, MailCheck *mc)
 {
-	MailCheck *mc = data;
-	if(id == GTK_RESPONSE_HELP)
-	{
-		phelp_cb (dialog,id,data);
+	if (id == GTK_RESPONSE_HELP) {
+		phelp_cb (dialog, id, mc);
 		return;	
 	}
+
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 	mc->property_window = NULL;
-	
 }
 
 
 static void
-mailcheck_properties (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
+mailcheck_properties (BonoboUIComponent *uic, MailCheck *mc, const gchar *verbname)
 {
 	GtkWidget *p;
 	GtkWidget *notebook;
 
-	MailCheck *mc = data;
-
-	if (mc->property_window != NULL) {
+	if (mc->property_window) {
+		gtk_window_set_screen (GTK_WINDOW (mc->property_window),
+				       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
 		gtk_window_present (GTK_WINDOW (mc->property_window));
-		return; /* Only one instance of the properties dialog! */
+		return;
 	}
 	
 	mc->property_window = gtk_dialog_new_with_buttons (_("Inbox Monitor Preferences"), 
@@ -1627,7 +1634,8 @@ mailcheck_properties (BonoboUIComponent *uic, gpointer data, const gchar *verbna
 	gtk_dialog_set_default_response (GTK_DIALOG (mc->property_window), GTK_RESPONSE_CLOSE);
 	gnome_window_icon_set_from_file (GTK_WINDOW (mc->property_window),
 					 GNOME_ICONDIR"/gnome-mailcheck.png");
-	
+	gtk_window_set_screen (GTK_WINDOW (mc->property_window),
+			       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
 	
 	notebook = gtk_notebook_new ();
 	gtk_widget_show (notebook);
@@ -1688,9 +1696,8 @@ applet_load_prefs(MailCheck *mc)
 }
 
 static void
-mailcheck_about(BonoboUIComponent *uic, gpointer data, const gchar *verbname)
+mailcheck_about(BonoboUIComponent *uic, MailCheck *mc, const gchar *verbname)
 {
-	MailCheck *mc = data;
 	GdkPixbuf *pixbuf = NULL;
 	gchar *file;
 
@@ -1707,10 +1714,10 @@ mailcheck_about(BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 	};
 	const char *translator_credits = _("translator_credits");
 
-	if (mc->about != NULL)
-	{
-		gtk_widget_show_now(mc->about);
-		gdk_window_raise(mc->about->window);
+	if (mc->about) {
+		gtk_window_set_screen (GTK_WINDOW (mc->about),
+				       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
+		gtk_window_present (GTK_WINDOW (mc->about));
 		return;
 	}
 	
@@ -1727,7 +1734,8 @@ mailcheck_about(BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 				     pixbuf);
 				     
 	gtk_window_set_wmclass (GTK_WINDOW (mc->about), "mailcheck", "Mailcheck");
-	
+	gtk_window_set_screen (GTK_WINDOW (mc->about),
+			       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
 
 	gnome_window_icon_set_from_file (GTK_WINDOW (mc->about),
 					 GNOME_ICONDIR"/gnome-mailcheck.png");
@@ -1759,7 +1767,7 @@ applet_change_pixel_size(PanelApplet * w, gint size, gpointer data)
 }
 
 static void
-help_callback (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
+help_callback (BonoboUIComponent *uic, MailCheck *mc, const gchar *verbname)
 {
 	GError *error = NULL;
 	static GnomeProgram *applet_program = NULL;
@@ -1788,6 +1796,8 @@ help_callback (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 				  NULL);
 
 		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		gtk_window_set_screen (GTK_WINDOW (dialog),
+				       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
 		gtk_widget_show (dialog);
 		g_error_free (error);
 	}

@@ -79,6 +79,27 @@
 	* menu.c (panel_menu_key_press_handler): Ensure that Shift+F10 has
 	no effect for menus without context menus. (bug #88861)
 
+2002-07-23  Mark McLoughlin  <mark@skynet.ie>
+
+	* drawer.c: (properties_apply_callback): kill unused (apart
+	from freeing whatever random data it points too) variable.
+	Fixes #88427.
+
+2002-07-24  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes #84101 - were casting a GtkButton to GtkMenu.
+
+	* logout.c:
+	(lock_button_pressed): impl. to use panel_lock_screen.
+	(create_lock_widget): use it here.
+
+	* menu.[ch]: (panel_menuitem_lock_screen): rename from panel_lock.
+	(create_desktop_menu): update.
+	* menu.h:
+	* panel-util.[ch]: (panel_lock_screen): implement.
+
+	* foobar-widget.c: (append_actions_menu): use panel_menuitem_lock.
+
 2002-07-23  Frank Worsley  <fworsley@shaw.ca>
 
 	* gnome-panel-screenshot.glade:
@@ -159,6 +180,14 @@ Tue Jul 16 12:18:02 2002  George Lebl <jirka@5z.com>
 
 	* foobar-widget.c: set the direction of the foobar hbox to be LTR
 	  as otherwise it is completely whacked in RTL locales.
+
+2002-07-15  Mark McLoughlin  <mark@skynet.ie>
+
+	* button-widget.c:
+	(button_widget_new), (button_widget_set_pixmap): realise
+	error dialogs on the default screen.
+
+	* menu.c: (remove_panel_query): remove #ifdef HAVE_GTK_MULTIHEAD.
 
 2002-07-14  Frank Worsley  <fworsley@shaw.ca>
 
@@ -332,6 +361,16 @@ Wed Jul 10 15:13:37 2002  George Lebl <jirka@5z.com>
 	* menu.c: Changed the section Id for Panel Manual to point  
 	  correct section in the help document.
 
+2002-07-03  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add egg-screen-exec.[ch] to build.
+
+	* applet.c, foobar-widget.c, global-keys.c, gnome-run.c,
+	  menu.c: use egg-screen-exec methods instead of the
+	  ones in panel-util.c.
+
+	* panel-util.[ch]: kill screen-exec methods.
+
 2002-07-02  Mark McLoughlin  <mark@skynet.ie>
 
 	* gnome-panel-screenshot.c:
@@ -432,6 +471,126 @@ Mon Jul  1 16:44:35 2002  Jonathan Blandford  <jrb@gnome.org>
 	change.
 
 	* menu.c: (add_bonobo_applet): add exactpos = FALSE.
+
+2002-06-26  Mark McLoughlin  <mark@skynet.ie>
+
+	* multihead-hacks.h:
+	s/gdk_get_default_screen/gdk_screen_get_default/
+	s/gdk_get_default_display/gdk_display_get_default/
+
+	* panel-util.c:
+	s/launch_env/launch_with_env/
+
+2002-06-25  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add multihead-hacks.h
+
+	* border-widget.[ch]:
+	* drawer-widget.[ch]:
+	* edge-widget.[ch]:
+	* floating-widget.[ch]: 
+	* sliding-widget.[ch]: 
+	* aligned-widget.[ch]: pass screen and xinerama
+	monitor number around.
+
+	* basep-widget.[ch]:
+	(basep_widget_class_init), (basep_widget_real_screen_change),
+	(basep_widget_screen_change): screen_change signal now takes
+	monitor and screen.
+	(basep_widget_construct): set the screen to realize the
+	window on.
+	(get_borders), (basep_calculate_borders), (basep_border_recalc),
+	(queue_recalc_handler), (basep_border_queue_recalc),
+	(basep_border_get): package the screena and monitor info
+	up in a struct and pass it around.
+
+	* applet.c: (applet_user_menu_get_screen): impl helper.
+	(applet_callback_callback): use panel_execute_shell.
+	(applet_show_menu): set screen info for menu.
+
+	* drawer.c:
+	(create_empty_drawer_applet): make sure the drawer is on the
+	correct screen.
+
+	* foobar-widget.c:
+	(foobar_screenshot), (foobar_search): use panel_execute_sync.
+	(add_window), (create_task_menu): make sure we use the right WnckScreen.
+	(foobar_widget_new): set the screen on which to realize the panel.
+
+	* global-keys.c: (screen_from_event): impl helper.
+	(panel_global_keys_filter): make sure all menus, dialogs and
+	programs come up on the right screen.
+
+	* gnome-run.c: (get_environment): if DISPLAY is not already
+	in the command, set it to the screen the dialog is on.
+	(launch_selected), (run_dialog_response), (create_simple_contents),
+	(show_run_dialog), (show_run_dialog_with_text): make sure dialogs
+	etc. come up on the right screen.
+
+	* launcher.c: (launcher_get_screen): helper method.
+	(launch_url), (launch_cb), (drag_data_received_cb),
+	(create_properties_dialog), (launcher_properties), (launcher_save),
+	(launcher_show_help): dialogs on the right screen.
+
+	* menu-ditem.c, menu-properties.c, menu-util.c,
+	  panel-applet-frame.c, panel-shell.c: ditto.
+
+	* menu.c: make sure dialogs, menus and launcher apps come
+	up on the right screen. Various updates for other changes.
+
+	* multihead-hacks.h: some hacks to reduce the number
+	of HAVE_GTK_MULTIHEADs needed.
+
+	* multiscreen-stuff.c: (multiscreen_support_init): impl using
+	gtk multihead apis.
+	(multiscreen_init): use gdk_screen_get_(width|height).
+	(multiscreen_screens), (multiscreen_monitors),
+	(multiscreen_x), (multiscreen_y), (multiscreen_width),
+	(multiscreen_height), (multiscreen_locate_coords),
+	(multiscreen_locate_widget): use the screen number to
+	index the geometries vector.
+
+	* panel-config.c:
+	(update_config_screen), (screen_set), (monitor_set),
+	(make_misc_widget): add crappy UI for changing screens.
+
+	* panel-per-panel-config.schemas.in: set "screen" and
+	"monitor" key on all panels.
+
+	* panel-util.[ch]:
+	(panel_screen_from_number): helper method.
+	(panel_display_string): impl method to munge the
+	DISPLAY string into one that will set the default screen
+	to the one specified.
+	(panel_munge_environment): impl method to change the
+	value of DISPLAY in the environ array.
+	(panel_execute_async), (panel_execute_shell),
+	(panel_execute_command_line), (panel_ditem_launch): impl
+	versions of these methods that will bring the launched
+	app up on the correct screen.
+	(panel_dialog), (panel_error_dialog), (panel_info_dialog):
+	allow the screen on which to realize to be specified.
+
+	* panel-widget.c: (panel_widget_applet_move_to_cursor): make
+	sure the panels are on the same screen before trying to
+	reparent the applet.
+
+	* panel.c: (move_panel_to_cursor): use the correct root window
+	when getting pointer coords.
+	(panel_popup_menu): popup on the right screen.
+	(panel_ensure_panel_per_screen): impl method to make sure
+	there's at least one panel per screen.
+	(panel_load_panels_from_gconf): use "screen" and "monitor"
+	keys but keep support for "screen_id" key.
+	(panel_save_to_gconf): save screen and monitor numbers.
+	(panel_screen_from_toplevel), (panel_monitor_from_toplevel),
+	(panel_screen_from_panel_widget), (panel_monitor_from_panel_widget):
+	implement these utility methods.
+
+	* xstuff.c:
+	(xstuff_is_compliant_wm): use new multihead apis.
+	(xstuff_init): set the event filter on the root window
+	of every screen.
 
 2002-06-22  Mark McLoughlin  <mark@skynet.ie>
 

@@ -55,6 +55,7 @@ GType aligned_pos_get_type (void) G_GNUC_CONST;
 
 GtkWidget *aligned_widget_new (gchar *panel_id,
 			       int screen,
+			       int monitor,
 			       AlignedAlignment aligned,
 			       BorderEdge edge,
 			       BasePMode mode,
@@ -71,6 +72,7 @@ GtkWidget *aligned_widget_new (gchar *panel_id,
 
 void aligned_widget_change_params (AlignedWidget *alignedw,
 				   int screen,
+				   int monitor,
 				   AlignedAlignment align,
 				   BorderEdge edge,
 				   int sz,

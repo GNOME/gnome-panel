@@ -27,6 +27,7 @@ struct _FoobarWidget
 	/*< private >*/
 
 	int screen;
+	int monitor;
 
 	GtkWidget *ebox;
 	GtkWidget *hbox;
@@ -56,13 +57,17 @@ struct _FoobarWidgetClass
 
 GType		foobar_widget_get_type		(void) G_GNUC_CONST;
 
-GtkWidget *	foobar_widget_new		(const char *panel_id, int screen);
+GtkWidget *	foobar_widget_new		(const char *panel_id,
+						 int         screen,
+						 int         monitor);
 
 void		foobar_widget_update_winhints	(FoobarWidget *foo);
 void		foobar_widget_redo_window	(FoobarWidget *foo);
 
-gboolean	foobar_widget_exists		(int screen);
-gint		foobar_widget_get_height	(int screen);
+gboolean	foobar_widget_exists		(int screen,
+						 int monitor);
+int		foobar_widget_get_height	(int screen,
+						 int monitor);
 
 void		foobar_widget_force_menu_remake	(void);
 
