@@ -205,6 +205,10 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			      &allocation->y,
 			      allocation->width,
 			      allocation->height);
+	
+	/*ugly optimisation*/
+	if(memcmp(allocation,&widget->allocation,sizeof(GtkAllocation))==0)
+		return;
 
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget))
