@@ -44,8 +44,9 @@ libpanel_applet_la_SOURCES = \
 	$(CORBA_SRCLIST)
 
 libpanel_appletinclude_HEADERS = \
-	applet-lib.h \
-	applet-widget.h
+	applet-lib.h		\
+	applet-widget.h		\
+	panel-types.h
 
 libpanel_applet_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
 libpanel_applet_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
@@ -123,7 +124,10 @@ panelrc: panelrc.in Makefile
 MOSTLYCLEANFILES = panelrc
 MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
 
-EXTRA_DIST = panelrc.in panel.in gnome-panel.idl appletsConf.sh.in
+EXTRA_DIST = \
+	panelrc.in		\
+	panel.in		\
+	appletsConf.sh.in
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
