@@ -104,8 +104,9 @@ about_cb (BonoboUIComponent *uic,
           SystemTray        *tray,
           const gchar       *verbname)
 {
-  GdkPixbuf *pixbuf = NULL;
+  GdkPixbuf    *pixbuf;
   GtkIconTheme *icon_theme;
+  GdkScreen    *screen;
 
   const char *authors[] = {
     "Havoc Pennington <hp@redhat.com>",
@@ -118,28 +119,34 @@ about_cb (BonoboUIComponent *uic,
   };
   const char *translator_credits = _("translator_credits");
 
+  screen = gtk_widget_get_screen (GTK_WIDGET (tray->applet));
+
   if (tray->about_dialog)
     {
+      gtk_window_set_screen (GTK_WINDOW (tray->about_dialog), screen);
       gtk_window_present (GTK_WINDOW (tray->about_dialog));
       return;
     }
 
-  icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (tray->applet));
-  pixbuf = gtk_icon_theme_load_icon (icon_theme, "panel-notification-area",
-                                     48, 0, NULL);
+  icon_theme = gtk_icon_theme_get_for_screen (screen);
+  pixbuf = gtk_icon_theme_load_icon (icon_theme,
+				     "panel-notification-area",
+                                     48,
+				     0,
+				     NULL);
 
   tray->about_dialog = gnome_about_new (_("Panel Notification Area"), VERSION,
-                              "Copyright \xc2\xa9 2002 Red Hat, Inc.",
-                              NULL,
-                              (const char **)authors,
-                              (const char **)documenters,
-                              strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-                              pixbuf);
+					"Copyright \xc2\xa9 2002 Red Hat, Inc.",
+					NULL,
+					(const char **) authors,
+					(const char **) documenters,
+					strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
+					pixbuf);
   
-  g_object_unref(pixbuf);
+  if (pixbuf)
+    g_object_unref (pixbuf);
 
-  gtk_window_set_screen (GTK_WINDOW (tray->about_dialog),
-                         gtk_widget_get_screen (GTK_WIDGET (tray->applet)));
+  gtk_window_set_screen (GTK_WINDOW (tray->about_dialog), screen);
 
   g_object_add_weak_pointer (G_OBJECT (tray->about_dialog),
                              (gpointer) &tray->about_dialog);
