@@ -1,0 +1,3599 @@
+<!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[]>
+
+ <article id="index">
+
+  <artheader> 
+    <title>The GNOME パネル</title>
+    <copyright>
+      <year>2000</year>
+      <holder>Red Hat, Inc., Dan Mueth, and Alexander Kirillov</holder>
+    </copyright>
+    <copyright>
+      <year>2000</year>
+      <holder>NOGUCHI Yusuke &lt;noguchi@swlab.csce.kyushu-u.ac.jp&gt; (邦訳)</holder>
+    </copyright>
+
+    <legalnotice>
+      <para>
+       Permission is granted to copy, distribute and/or modify this
+       document under the terms of the GNU Free Documentation License,
+       Version 1.1 or any later version published by the Free Software
+       Foundation; with no Invariant Sections, with no  Front-Cover
+       Texts, and with no Back-Cover Texts.  A copy of the license is
+       available from the Free Software Foundation and can be viewed <ulink
+       url="http://www.gnu.org/copyleft/fdl.html"
+       type="http">online</ulink>.
+      </para>
+      <para>
+       この文書を、フリーソフトウェア財団発行の GNU フリー文書利用許諾契
+       約書(第 1.1 版かそれ以降の版から一つを選択)が定める条件の下で複製、
+       配布、あるいは変更することを許可します。変更不可部分、表表紙テキ
+       スト、裏表紙テキストは指定しません。この利用許諾契約書の複写はフ
+       リーソフトウェア財団から手にいれることができ、<ulink
+       url="http://www.gnu.org/copyleft/fdl.html" type="http">オンライ
+       ン</ulink>で参照することもできます。
+      </para>
+
+      <para> Many of the names used by companies to distinguish their
+	products and services are claimed as trademarks. Where those
+	names appear in any GNOME documentation, and those trademarks
+	are made aware to the members of the GNOME Documentation
+	Project, the names have been printed in caps or initial
+	caps.
+      </para>
+      <para> 
+        企業の製品やサービスを識別するために使用されている名称の
+        多くは、その企業によって商標として登録されています。あらゆる
+        GNOME文書中でこれらの名称が用いられる場合、およびこれらの商標が
+        GNOME文書化プロジェクトの一部と思われてしまうような場合には、
+        その名前は、全て大文字、もしくは頭文字のみ大文字で表記されます。
+      </para>
+
+    </legalnotice>
+
+    <releaseinfo>
+     これは、GNOME パネル に関する説明文書の第1版です。
+    </releaseinfo>
+  </artheader>
+  <sect1>
+   <title>はじめに</title>
+   <para>
+    <indexterm id="idx-a2">
+     <primary>パネル</primary>
+    </indexterm>
+    GNOME <interface>パネル</interface> は、GNOMEユーザインタフェースの
+    中核であり、<link linkend="mainmenu">メインメニュー</link>・ ユー
+    ザ <link linkend="menus">メニュー</link>, アプリケーション <link
+    linkend="launchers">ランチャ</link>, <link linkend="applets">アプ
+    レット</link> (パネル の内部のみで動作するアプリケーション)
+    ・<link linkend="drawers">引き出し</link>・<link
+    linkend="specialobjects">特殊部品</link>の格納部として働
+    きます。
+    <interface>パネル</interface> は、高度な構成可能性を持つように設計
+    されています。<link linkend="panelproperties">その動作や見た目を簡
+    単に変更する</link>ことができ、また、自分の用途や好みに合わせて<link
+    linkend="appletadd">部品を追加したり削除</link>することが
+    できます。それぞれ独自の見た目・設定・内容の<link
+    linkend="paneladd">複数のパネル</link>を持つ事もできます。この柔軟
+    性により、快適で効率の良いあなた専用のデスクトップ環境を創ることが
+    できます。
+   </para>
+   <para> このマニュアルは、GNOME <interface>パネル</interface>の第1.2
+   版についての記述です。
+   </para>
+  </sect1>
+
+
+<!-- ########### Panel Basics  ############## -->
+<sect1 id="panelbasics">   <title>パネル の基礎</title>
+   <para>
+    GNOME <interface>パネル</interface> の使い方はとても単純ですから、
+    グラフィカルなデスクトップ環境を使ってきた人なら誰でも、簡単に思う
+    でしょう。この章では使い始めの手助けとなる基本的な紹介を行い、以降
+    の章で様々な パネル 部品やより詳しい特徴について説明します。
+   </para>
+
+   <sect2 id="intropanel">
+    <title>パネル部品の紹介</title>
+    <para>
+     <interface>パネル</interface> は、数種類の部品を持つことができます。
+     <xref linkend="examplepanelfig">の
+     <interface>パネル</interface>例では、各種パネル部品を示しています。
+    </para>
+    <figure id="examplepanelfig">
+     <title>パネル例</title>
+     <screenshot>
+      <screeninfo>パネル例</screeninfo>
+       <graphic fileref="./figures/example_panel" format="png"
+       srccredit="muet">
+       </graphic>
+     </screenshot>
+    </figure>
+
+    <para>
+     これは、以下に挙げる部品を含んでいる<interface>パネル</interface>
+     の例です。
+     <itemizedlist>    <listitem>
+       <formalpara>
+        <title>メニュー</title>
+        <para>
+         「メニュー」は、項目の一覧です。各々、アプリケーション
+         を起動する、コマンドを実行する、サブメニューを表示する、を
+         行います。<xref linkend="examplepanelfig">の
+         <interface>パネル</interface>例で、左端の矢印の隣にあるアイコン
+         は、漫画化された足跡のアイコン(GNOME のロゴマーク)です。これ
+         が、<interface>パネル</interface>で最も重要な部品の一つである、
+         <guimenu>メインメニュー</guimenu>です。メインメニューから、
+         GNOMEにある全てのアプリケーション・コマンド・設定オプションに
+         アクセスすることができます。<xref linkend="mainmenu">でメイン
+         メニューの詳細について記述しています。2番目に見えるアイコンは、フォ
+         ルダで、ユーザメニューのための標準アイコンが使われています。
+         GNOMEでは、ユーザが独自の中身を持った自分のメニューを、<guimenu>
+         メインメニュー</guimenu>に追加することができます。メニューを
+         開くには、単にアイコンをマウスの左ボタンでクリックするだけです。
+         メニューについての更なる情報は、<xref linkend="menus">を見てください。
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>ランチャ</title>
+        <para>
+         「ランチャ」とは、(マウスの左ボタンでクリックして)押すことで、ア
+         プリケーションやコマンドを起動するボタンのことです。
+         <interface>パネル</interface>例の3番目のボタンが、表計算ソフト
+         <application>Gnumeric</application>を起動するランチャです。ラ
+         ンチャについての更なる情報は、<xref linkend="launchers">を見
+         てください。
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>アプレット</title> 
+        <para> 「アプレット」とは、<interface>パネル</interface>の一部分で
+        のみ走行するアプリケーションのことです。
+        <interface>パネル</interface>例の4番目から8番目が、アプレットの
+        例です。最初のアプレットは、<application>GNOME
+        Weather</application>アプレットで、定期的に Web のお天気情報を
+        ダウンロードしてその情報を表示するものです。2番目のアプレット
+        は、<application>Drive Mount</application>アプレットで、あるディ
+        スク(この場合は、フロッピードライブ)がマウントされているかどう
+        かを表示し、マウスのシングルクリックでマウント/アンマウントを
+        行うことができます。3番目のアプレットは、<application>Quick
+        Launch</application>アプレットで、ランチャの入れ物の役割を持っ
+        ていて、ランチャを<interface>パネル</interface>上に直接配置するより
+        も場所を節約することができます。この例では、<application>Quick
+        Launch</application>は、6つのランチャが入れられています。その
+        隣は、<application>GNOME Desk Guide</application>で、それぞれ
+        が複数の画面を持っている、複数個の仮想デスクトップを操作するこ
+        とができます。マウスの左ボタンをクリックすることで、デスクトッ
+        プや画面を移動することができます。最後は、
+        <application>Tasklist</application>で、アプリケーションウィン
+        ドウに対して、フォーカスの移動・ウィンドウのアイコン化・ウィン
+        ドウを閉じる・アプリケーションの強制終了といった様々な操作を行
+        うことができます。ここで示されている
+        <application>Tasklist</application>は、2つのウィンドウだけを持
+        つ画面に対してのもので、両方とも<application>Electric
+        Eyes</application>アプリケーションになっています。アプレットに
+        ついての更なる情報は、<xref linkend="applets">を見てください。
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>引き出し</title>
+        <para>「引き出し」は、<interface>パネル</interface>の基本的な拡
+        張部で、開いたり閉じたりすることができます。これは、
+        <interface>パネル</interface>が持てるもの全てを持つことができま
+        す。<interface>パネル</interface>例にある茶色のアイコンが、引き
+        出しの標準アイコンです、ただし他のどんなアイコンにもできます。
+        <guiicon>引き出し</guiicon>を左クリックすると、開いたり閉じた
+        りできます。引き出しについての更なる情報は、<xref
+        linkend="drawers">を見てください。
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>特殊部品</title>
+        <para>
+         「特殊部品」とは、他の<interface>パネル</interface>部品には無い様
+         なものを<interface>パネル</interface>に追加できるようにするた
+         めのものです。<interface>パネル</interface>例の最後の項目が、
+         <guibutton>ログアウトボタン</guibutton>と呼ばれる特殊部品です。
+         これをマウスの左クリックで押すことで、GNOMEセッションを終了す
+         るための、ログアウト処理が始まります。特殊部品に
+         ついての更なる情報は、<xref linkend="specialobjects">を見てください。
+        </para>
+       </formalpara>
+      </listitem>
+     </itemizedlist>
+    </para>
+    <para>
+     それぞれの部品の詳細については、以降の章で説明しています。パネル部
+     品は、簡単に追加・移動・削除することができます(<xref
+     linkend="appletadd">参照)。
+    </para>
+   </sect2>
+
+ 
+   <sect2 id="rightclick">
+    <title>右クリックメニュー</title>
+    <para>
+     あらゆるパネル部品上で、マウスの右ボタンでクリックすると、パネル部
+     品の<guimenu>右クリック</guimenu>メニューが表われます。このメニュー
+     は、<interface>パネル</interface>から部品を削除する
+     <guimenuitem>パネルから取り除く</guimenuitem>・
+     <interface>パネル</interface>内部もしくは
+     <interface>パネル</interface>間で部品を移動させる
+     <guimenuitem>移動</guimenuitem>・以下に挙げるサブメニュー・基本的
+     には1つもしくはもう少し多い部品特有のメニュー項目、があります。
+     「引き出し」・「メニュー」・「ランチャ」についての部品特有の項目は、
+     部品の設定や環境を変更する事のできる<guimenuitem>プロパティ...
+     </guimenuitem>があります。「アプレット」の右クリックメニューには、
+     作者名やアプレットの版を表示するための
+     <guimenuitem>情報</guimenuitem>や、アプレットの説明書を見るた
+     めの<guimenuitem>ヘルプ</guimenuitem>、アプレットの設定や環境を変更
+     するための<guimenuitem>プロパティ...</guimenuitem>が、含まれてい
+     ることがよくあります。アプレットには、その他にもアプレット固有の
+     項目が<guimenu>右クリック</guimenu>メニューに出てくることもあります。
+    </para>
+    <para>
+     <guisubmenu>パネル</guisubmenu>サブメニューでは、<link
+     linkend="panelmove"><interface>パネル</interface>の作成や削除
+     </link>・<interface>パネル</interface>への部品の追加を行うことが
+     できます。また、<guimenuitem>プロパティ</guimenuitem>メニュー項目
+     (<xref linkend="panelproperties">参照)で特定の
+     <interface>パネル</interface>の設定を変更することができ、
+     <guimenuitem>全体の設定...</guimenuitem>メニュー項目で全
+     ての<interface>パネル</interface>の設定を変更することができます
+     (<xref linkend="globalpanelprefs">参照)。
+    </para>
+    <para>
+     <interface>パネル</interface>本体上で右クリックすることもできます。     
+     これで、<link linkend="mainmenu"><guimenu>メインメニュー
+     </guimenu></link>が表われます。この場合は特に、上で説明した
+     <guisubmenu>パネル</guisubmenu>サブメニューも含まれます。
+    </para>
+   </sect2>
+
+   <sect2 id="panelhide">
+    <title>パネルを隠す</title>
+    <para>
+     <indexterm id="idx-a4">
+      <primary>パネル</primary> <secondary>Hide Buttons</secondary>
+     </indexterm>
+     <indexterm id="idx-a5">
+      <primary>パネル</primary> <secondary>Hiding</secondary>
+     </indexterm>
+     <interface>パネル</interface>例や<xref linkend="fig2">の両端に見え
+     る右矢印と左矢印は、<interface>パネル</interface>を隠すために使用
+     します。
+     <figure id="fig2">
+      <title>かたづけボタン</title>
+      <screenshot>
+       <screeninfo>かたづけボタン</screeninfo>
+        <graphic fileref="./figures/hide-button" format="png"
+        srccredit="dcm">
+        </graphic>
+      </screenshot>
+     </figure>
+    </para>
+    <para>
+     これらのボタンの片方を押すと、<interface>パネル</interface>は押さ
+     れた矢印の方向にスライドしていって隠れてしまいます。画面上に見え
+     る<interface>パネル</interface>は、<guibutton>かたづけボタン
+     </guibutton>のみになります。再度このボタンを押すと、
+     <interface>パネル</interface>が伸びてきます。
+    </para>
+    <para>
+     <interface>パネル</interface>を、使わないときには隠して、マウスを
+     画面上でパネルのあるところに移動させると再表示させるように設定す
+     ることができます。これは、高い解像度を使用できないときに役立ちま
+     す。<interface>パネル</interface>を自動的に隠す方法を知りたい場合
+     は、<xref linkend="panelproperties">を見てください。
+    </para>
+   </sect2>
+
+   <sect2 id="loggingout">
+    <title>ログアウト</title>
+    <para>
+     GNOMEを抜けるには、<interface>パネル</interface>上で右クリックして、
+     <guimenuitem>ログアウト</guimenuitem>を選んでください。これにより、
+     <xref linkend="logoutdialog-fig">に示す
+     <interface>ログアウト</interface>ダイアログが表示されます。
+    </para>
+    <figure id="logoutdialog-fig">
+     <title>ログアウトダイアログ</title>
+     <screenshot>
+      <screeninfo>Logout</screeninfo>
+      <graphic fileref="./figures/logout-screen" format="png"
+      srccredit="dcm">
+      </graphic>
+     </screenshot>
+    </figure>
+    <para>
+     現在の設定を保存したい場合には、<guilabel>現在の設定を保存する
+     </guilabel>のチェックボックスを選んでください。これは、起動してい
+     る全てのGNOMEアプリケーションや<application>コントロールセンター
+     </application>を使って変更した設定を保存するものです。
+    </para>
+    <para>
+     ログアウトの標準的な手順は、<guilabel>ログアウト</guilabel>オプショ
+     ンを使用することで、これはGNOMEセッションを終了させますが、コン
+     ピュータを終了させはしません。これは、あなたのシステム設定(おそらく
+     コンピュータを終了させる<guilabel>Halt</guilabel>オプションやコン
+     ピュータをリブートする<guilabel>Reboot</guilabel>オプションがある
+     でしょう)に依存します。
+    </para>
+    <note>    
+	<title>詳しい人向けの注意事項</title>   
+	<para><guilabel>Halt</guilabel>と<guilabel>Reboot</guilabel>の
+	選択は、<command>/usr/bin/shutdown</command>コマンドの実行許可
+	が与えられている場合にのみ表示されます。
+	</para>
+    </note>
+    <para>
+     ログアウトしたくない場合には、<guibutton>いいえ</guibutton>ボタンを押
+     せばGNOMEセッションに戻ります。もしくは、ログアウトするために
+     <guibutton>はい</guibutton>ボタンを押してください。
+    </para>
+    <note>
+     <title>ログアウトとウィンドウマネージャ</title>
+     <para>
+      GNOME対応のウィンドウマネージャを使用していれば、ログアウト機能
+      はGNOMEどうようにウィンドウマネージャも終了します。GNOME非対応の
+      ウィンドウマネージャを使用している場合には、別途ウィンドウマネー
+      ジャを終了させなくてはなりません。
+     </para>
+    </note>
+    <para>
+     <interface>ログアウト</interface>ダイアログを表示しないようにする
+     ことができ、そうすると<guimenuitem>ログアウト</guimenuitem>メニュー
+     項目を選ぶと確認無しでGNOMEセッションを終了させます。そうするため
+     には、<menuchoice> <guimenu>メインメニュー</guimenu>
+     <guisubmenu>設定</guisubmenu> <guisubmenu>プログラム実行
+     </guisubmenu> </menuchoice>と選択していってGNOME<application>コン
+     トロールセンター</application>を起動し、<guilabel>Prompt on
+     logout</guilabel>のチェックをはずしてください。<!-- コメントアウ
+     ト  - Drake によると、<guilabel>Automatically save changes to
+     session</guilabel>ボタンを使うとセッションの変更を自動的に保存す
+     るかどうかも制御できるかもしれません。 -->
+    </para>
+   </sect2>
+   <sect2 id="lockscreen">
+    <title>セッションのロック</title>
+    <para>
+     GNOMEが動作しているコンピュータの前をはずすが、他の人に使われたり
+     見られたくないことがあるかも知れません。GNOMEは、画面をロックし、
+     解除にパスワードを要求して、これを実現します。
+     GNOMEセッションをロックするには、<interface>パネル</interface>の片
+     方の端で右クリックし、<guimenuitem>ロック</guimenuitem>を選
+     択します。もしくは、<interface>パネル</interface>上に
+     <guibutton>ロックボタン</guibutton>(<xref linkend="lockbutton">参
+     照)があれば、そのボタンをクリックするだけで画面をロックできます。
+     解除するには、ログインのパスワードを入力してください。
+    </para>
+    <note>
+     <title>スクリーンサーバとロックボタン</title>
+     <para>
+      <guibutton>ロックボタン</guibutton>は、
+      <application>xscreensaver</application>プログラムの機能を利用し
+      ます。これは、<application>コントロールセンター</application>が
+      スクリーンセーバを設定するときに使用するものと同じものです。
+      <guibutton>ロックボタン</guibutton>を正しく動作させるには、
+      <application>コントロールセンター</application>でスクリーンセー
+      バを有効にしなくてはなりません。
+     </para>
+    </note>
+   </sect2>
+  </sect1>
+
+
+
+   <!-- ########### Main Menu ############## -->
+
+  <sect1 id="mainmenu">
+   <title>メインメニュー</title>
+   <para>
+     <indexterm id="idx-a3">  <primary>Main Menu</primary>
+     </indexterm>
+<!--
+    The footprint icon seen towards the left end of the example
+    <interface>Panel</interface> (see <xref
+    linkend="examplepanelfig">) and in <xref
+    linkend="main-menu-button-fig"> is the   <guibutton>Main
+    Menu</guibutton> (yes, you guessed  right, it is the footprint of
+    the gnome). This menu provides access to almost all GNOME
+    features  &mdash; all the applications, configuration tools,
+    command line prompt, <guimenuitem>Logout</guimenuitem> and
+    <guimenuitem>Lock Screen</guimenuitem> commands, and much more.
+    To access any of these items, click on the <guibutton>Main
+    Menu</guibutton> button. You should release the mouse after
+    pressing the <guibutton>Main Menu</guibutton> button so that you
+    can take advantage of other mouse-activated features in the
+    <guimenu>Main Menu</guimenu> such as right-click pop-up menus and
+    drag-and-drop from the menu to the desktop or
+    <interface>Panel</interface>.
+-->
+    <interface>パネル</interface>例(<xref linkend="examplepanelfig">参
+    照)や<xref linkend="main-menu-button-fig">の左端にある足跡のアイコ
+    ン(そう、お察しの通りこれはノーム(地精)の足跡です)は、<guibutton>
+    メインメニュー</guibutton>です。このメニューから、GNOME のほぼ全ての
+    機能(全てのアプリケーション・設定ツール・コマンドラインプ
+    ロンプト・<guimenuitem>ログアウト</guimenuitem>や<guimenuitem>スク
+    リーンのロッ
+    ク</guimenuitem>コマンド・その他)へアクセスできます。
+    それぞれの項目にアクセスするためには、<guibutton>メインメニュー
+    </guibutton>をクリックしてください。<guibutton>メインメニュー
+    </guibutton>ボタンをクリックし、それからマウスを放してみましょう、
+    すると、右クリックによるポップアップメニューや、メニューからデスク
+    トップまたはメニューから<interface>パネル</interface>へのドラッグ
+    ＆ドロップといった、<guimenu>メインメニュー</guimenu>におけるマウ
+    ス操作を利用することができます。
+   </para>
+    <figure id="main-menu-button-fig">
+     <title>メインメニューボタン</title>
+     <screenshot>
+      <screeninfo>メインメニューボタン</screeninfo>
+       <graphic fileref="./figures/mm-button" format="png"
+       srccredit="dcm">
+       </graphic>
+     </screenshot>
+    </figure>
+    <para>違う<interface>パネル</interface>のそれぞれに、<guibutton>メ
+    インメニュー</guibutton>を持つことができ、それぞれで独立に設定可能
+    です。
+    </para>
+
+   <sect2 id="globalmenu">
+    <title>全体的なメニュー</title>
+    <para>
+     足跡アイコンをクリックして出てくる<guimenu>メインメニュー
+     </guimenu>に加えて、GNOMEでは、<guimenu>Global</guimenu>を提供し
+     ており、これは同じコマンドが含まれていますが、ボタン類は含みませ
+     ん。<guimenu>Global Menu</guimenu>にアクセスするためには、
+     <interface>パネル</interface>の何もないところで右クリックします。
+     キーボードの<keycombo action=simul><keycap>Alt</keycap>
+     <keycap>F1</keycap> </keycombo>と入力することでも、
+     <guimenu>Global  Menu</guimenu>にアクセスできます。
+     (<interface><link linkend="globalpanelprefs">全体の設定</link>ダ
+     イアログ</interface>の<link linkend="misctab"><guilabel>その他
+     </guilabel></link> タブ中で、<guimenu>Global Menu</guimenu>を呼び
+     出すための標準入力キーを変更できます。)
+    </para>
+    <para>
+     <guimenu>メインメニュー</guimenu>とは別個に、<guimenu>Global
+     Menu</guimenu>は、<interface>全体の設定</interface>ダイアログの
+     <guilabel>メニュー</guilabel>タブ中で、設定できることにご注意下さ
+     い。
+    </para>
+   </sect2>
+
+   <sect2 id="submenus">
+     <title>メインメニューの内容</title>
+     <para>
+      <guimenu>メインメニュー</guimenu>の最初の項目は、<guisubmenu>プ
+      ログラム</guisubmenu>サブメニューで、これにはあらかじめ設定されて
+      いるサブメニューとメニュー項目が入っています。ここで、表計算ソフ
+      ト<application>Gnumeric</application>からゲームソフト<application>フリー
+      セル</application>といったGNOMEアプリケーションや、ウェブブラウ
+      ザ<application>Netscape</application>や、テキストエディタ
+      <application>emacs</application>といった非GNOMEアプリケーション
+      を見えるでしょう。さらに、<guisubmenu>プログラム</guisubmenu>サ
+      ブメニューには、以下のコマンドが入っています:
+     </para>
+     <itemizedlist>
+      <listitem>
+       <para>
+        <guimenuitem>ファイルマネージャ</guimenuitem> &mdash;  GNOME
+        グラフィカルファイルマネージャを起動します。
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <guimenuitem>ヘルプシステム</guimenuitem> &mdash; 
+        <application>GNOMEヘルプブラウザ</application>を起動します。
+        <application>GNOMEヘルプブラウザ</application>は、システムにイ
+        ンストールされているドキュメント &mdash; GNOMEドキュメント
+        (GNOMEユーザーズガイド、アプリケーションマニュアル)だけでなく
+        その他の種類(man、info、&hellip;)のドキュメントにも &mdash; ア
+        クセスすることができます。
+       </para>
+      </listitem>
+     </itemizedlist>
+
+     <para> <guimenu>メインメニュー</guimenu>には、<guisubmenu>プログ
+     ラム</guisubmenu>サブメニューの他にも、いくつかのサブメニューと有
+     用なコマンドがあります。あなたの設定次第で、それらを全て見ないよ
+     うにすることができます。また、幾つかだけはサブメニューとして表示
+     し、残りは横線で他とは区切られた形でのメインメニューの一部として
+     表示させることもできます。
+     </para>
+     <itemizedlist>
+      <listitem>
+       <para>
+        <guisubmenu>お気に入り</guisubmenu>。初めは空である、このサブ
+        メニューは、あなたのお気に入りのアプリケーションに手早くアクセ
+        スするための場所です。このサブメニューは、<menuchoice><guisubmenu>
+        設定</guisubmenu><guimenuitem>メニューエディタ</guimenuitem>
+        </menuchoice>でアクセスできる<application>メニューエディタ
+        </application>を使って編集することができます。あらゆる項目で、
+        右クリックをして<guimenuitem>お気に入りへこれを追加する
+        </guimenuitem>を選ぶことで、別のメニュー(特に、<guimenu>プロ
+        グラム</guimenu>メニュー)から<guisubmenu>お気に入り
+        </guisubmenu>に追加することができます。
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        <guisubmenu>アプレット</guisubmenu>. このサブメニューには、イ
+        ンストールされているアプレットが入っています。アプレットを選択
+        すると、<interface>パネル</interface>上に追加されます。
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        <guisubmenu>KDEメニュー</guisubmenu>。Kデスクトップ環境(KDE)が
+        インストールされていれば、KDEのメニューが表示されます。
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        <guisubmenu>AnotherLevelメニュー</guisubmenu>と
+        <guisubmenu>Debianメニュー</guisubmenu>。これらのサブメニュー
+        は、Red Hat LinuxとDebian GNU/Linuxそれぞれのための、標準アプ
+        リケーションメニューです。これらは、特定のディストリビューショ
+        ンのユーザにしか見れません。
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        <guimenuitem>パネル</guimenuitem>。このサブメニューは、
+        <interface>パネル</interface>の設定(<link
+        linkend="panelproperties"> <interface>個別の
+        パネル</interface></link> と <link linkend="globalpanelprefs">
+        全体</link>(つまり全ての<interface>パネル</interface>)の両方)
+        の変更・パネルへの<link linkend="add">部品を追加</link>・<link
+        linkend="panelremoving">パネル全体の削除</link>・<link
+        linkend="paneladd">新規<interface>パネル</interface>の作成
+        </link>・<citetitle>パネルマニュアル</citetitle>の参照、などの
+        ために使用できます。
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        <guimenuitem>デスクトップ</guimenuitem>&mdash; このサブメニュー
+        には、GNOMEセッションを終了させる(<xref linkend="loggingout">
+        参照)<guimenuitem>ログアウト</guimenuitem>と<guimenuitem>スク
+        リーンのロック</guimenuitem>(<xref linkend="lockscreen">参照)
+        があります。
+       </para>
+      </listitem>
+
+      <listitem id="runcommand">
+       <para>
+        <guimenuitem>実行 &hellip;</guimenuitem> &mdash; このメニュー
+        は、シェルコマンド(<xref linkend="runbutton">参照)を実行するた
+        めの<interface>プログラムの実行</interface>ダイアログを開きま
+        す。
+       </para>
+      </listitem>
+     </itemizedlist>
+    </sect2>
+
+    <sect2 id="mainmenuconfig">
+     <title>メインメニューの設定</title>
+     <para>
+      <guimenu>メインメニュー</guimenu>の設定を変更するには、
+      <guibutton>メインメニュー</guibutton>ボタン上で右クリックし
+      (<xref linkend="main-menu-button-fig">参照)、ポップアップメニュー
+      から<guimenuitem>プロパティ &hellip;</guimenuitem>を選択します。
+      これで、<interface>メニューのプロパティ</interface>ダイアログが
+      表われます。このダイアログでは、上で述べた<guimenu>メインメニュー
+      </guimenu>のサブメニュー(<guisubmenu>プログラム</guisubmenu>・
+      <guisubmenu>お気に入り</guisubmenu>・&hellip;)それぞれについて、
+      <guimenu>メインメニュー</guimenu>の一部として表示する・サブメニュー
+      として表示する・表示しないを選択することができます。
+     </para>
+
+
+     <figure>
+      <title>メニューのプロパティダイアログ</title>
+      <screenshot>
+       <screeninfo>Menu Properties Dialog</screeninfo>
+       <graphic fileref="./figures/mainmenu_properties" format="png"
+       srccredit="muet">
+       </graphic>
+      </screenshot>
+     </figure>
+
+     <para>
+      <application>GNOMEメニューエディタ</application><guisubmenu>では、
+      お気に入り</guisubmenu>サブメニューの内容を(システム管理者
+      であれば、<guisubmenu>プログラム</guisubmenu>サブメニューも同様
+      に)編集する事もできます。これを行うには、<guibutton>メインメニュー
+      </guibutton>ボタン上で右クリックし、<guimenuitem>編集メニュー 
+      &hellip;</guimenuitem>を選択してください。もしくは、<guimenu>メ
+      インメニュー</guimenu>のから、<menuchoice>
+      <guisubmenu>プログラム</guisubmenu>
+      <guisubmenu>デスクトップ設定</guisubmenu> <guimenuitem>メニュー
+      エディタ</guimenuitem> </menuchoice>と選択してください。
+     </para>
+    </sect2>
+
+<!-- Do we need it now that we have information about Global menu?
+    <sect2 id="kbdnav">
+     <title>メインメニューでのキーボード操作</title>
+     
+     <para>   好み次第では、<guimenu>メインメニュー</guimenu>を操作す
+     るのに、マウスではなくキーボードを使用することができます。
+     <guimenu>メインメニュー</guimenu>を呼び出すには、キーボードの
+     <keycap>メニュー</keycap>キー(一般的なPC用キーボードを使っていれ
+     ば、大抵はスペースバーの左側にあって、メニューの絵が描かれてある
+     でしょう)を押してください。<interface><link
+     linkend="globalpanelprefs">全体の設定</link>ダイアログの
+     </interface><link linkend="misctab"><guilabel>その他
+     </guilabel></link>タグで、<guimenu>メインメニュー</guimenu>を呼び
+     出す標準キーを変更することができます。メニュー内での移動には
+     <keycap>上矢印</keycap>と<keycap>下矢印</keycap>キーを使用し、サブ
+     メニューへ移動するには<keycap>右矢印</keycap>キーを使用し、項目の
+     選択には<keycap>Enter</keycap>キーを使用します。メニューを抜け
+     るには、<keycap>Esc</keycap>キーを押します。
+     </para>
+    </sect2> -->
+   </sect1>
+
+
+ <!-- ########### Menus  ############## -->
+ <sect1 id="menus">
+  <title>Menus</title>
+  <para>
+<!-- 
+   In addition to the <guimenu>Main Menu</guimenu>, discussed in <xref
+   linkend="mainmenu">, you can also add "normal menus" to a
+   <interface>パネル</interface>. An example menu, in this case a
+   <guimenu>Favorites</guimenu> menu containing three application
+   launchers and one submenu titled <guisubmenu>Games</guisubmenu>, is
+   shown in <xref linkend = "example-menu-fig">. Unlike the
+   <guimenu>Main Menu</guimenu>, normal menus only contain whatever
+   launchers and submenus you place in them - no default submenus,
+   <guimenuitem>Run...</guimenuitem> command, etc. as the
+   <guimenu>Main Menu</guimenu> has.  You can also add any submenu of
+   your <guimenu>Favorites</guimenu> menu or the
+   <guimenu>Programs</guimenu> menu as a separate menu to a
+   <interface>パネル</interface>; to do so, bring up this submenu from
+   the <guimenu>Main Menu</guimenu>,  right click on the submenu
+   title, and select <guimenuitem>Add this as menu to
+   panel</guimenuitem>.
+-->
+   <xref linkend="mainmenu">で説明した<guimenu>メインメニュー
+   </guimenu>に加えて、<interface>パネル</interface>に"一般メニュー"を
+   追加することができます。メニューの例を<xref linkend =
+   "example-menu-fig">に示します。この場合では、<guimenu>お気に入り
+   </guimenu>メニューに、3つのアプリケーションランチャと、
+   <guisubmenu>Games</guisubmenu>という名前がつけられている1つのサブメニュー
+   が入っています。<guimenu>メインメニュー</guimenu>と違って、一般メ
+   ニューには何らかのランチャとあなたが置いたサブメニューしか入りませ
+   ん。<guimenu>メインメニュー</guimenu>が持っているような、標準のサブ
+   メニュー・<guimenuitem>実行...  </guimenuitem>コマンド・その他のも
+   のは存在しません。<guimenu>お気に入り</guimenu>メニューや<guimenu>プ
+   ログラム</guimenu>メニューのサブメニューを別のメニューとして
+   <interface>パネル</interface>に追加することができます。これには、
+   <guimenu>メインメニュー</guimenu>からサブメニューを呼び出し、そのサ
+   ブメニューのタイトル上で右クリックします、そして<guimenuitem>メニュー
+   としてパネルに追加する</guimenuitem>を選択してください。
+  </para>
+  <figure id="example-menu-fig">
+   <title>An Example Menu</title>
+   <screenshot>
+    <screeninfo>An Example Menu</screeninfo>
+     <graphic fileref="./figures/example_menu" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+
+   <sect2 id="addingmenus">
+    <title>パネルへのメニューの追加</title>  <para>
+<!--     To learn how
+    to add a menu to a <interface>Panel</interface>, see <xref
+    linkend="add">.
+-->
+     <interface>パネル</interface>へメニューを追加する方法については、<xref
+    linkend="add">を参照してください。
+    </para>
+   </sect2>
+
+  <sect2 id="tearoff">
+   <title>メニューの分離</title>
+   <para>
+<!-- 
+    All menus in GNOME have the tear-off feature: if you left-click on
+    the "perforation" (thin dashed line at the top of the menu, right
+    above the menu title), the menu will be turned into a separate
+    window on your desktop, which will stay there even after you move
+    the mouse cursor elsewhere. This is very convenient if you will be
+    using the same command from some deeply nested submenu
+    frequently. To remove a "torn-off" menu from your desktop, click
+    on the <guibutton>Close</guibutton> button in the window title
+    (its appearance and location depends on the window manager you are
+    using, but usually it is the rightmost button, labelled by an
+    "x").
+-->
+   GNOMEの全てのメニューは、分離機能を持ちます。“ミシン目”（メニュー
+   最上段にある狭い破線、メニュータイトルの右上）を左クリックすると、
+   そのメニューは、デスクトップ上の別ウィンドウとなり、マウスカーソル
+   を持っていったところに置かれます。これは、とても深い階層にあるサブ
+   メニューにあるコマンドへ頻繁にアクセスするときにべんりです。"切り放
+   した"メニューを消すには、ウィンドウタイトルの<guibutton>閉じる
+   </guibutton> ボタン(見た目や場所は使っているウィンドウマネージャに
+   依りますが、大抵は右端にある"x"印のボタンです)をクリックします。
+   </para>
+  </sect2>
+
+   <sect2 id="menusconf">
+    <title>メニューの設定</title>
+    <para>
+<!--
+     You can easily change a menu name and icon (for user menus only,
+     not for submenus taken from the <guimenu>Main Menu</guimenu>). To
+     do so, click on the menu, right-click on the menu title (at the
+     very top of the list, above all other items), and select
+     <guimenuitem>Properties&hellip;</guimenuitem> from the pop-up
+     menu. This will bring up the  <interface>Desktop Entry
+     Properties</interface> dialog, quite similar to the <link
+     linkend="launchers"><interface>Launcher Properties</interface>
+     dialog</link>.
+-->
+    メニューの名称やアイコンを簡単に変更することができます(ユーザメニュー
+    のみです、<guimenu>メインメニュー</guimenu>のサブメニューではでき
+    ません)。これには、メニューをクリックし、メニューのタイトル(項目リ
+    ストの最上段)で右クリックします、そしてポップアップメニューから
+    <guimenuitem>プロパティ&hellip;</guimenuitem>を選択してください。
+    これにより、<link linkend="launchers"><interface>ランチャのプロパ
+    ティ</interface>ダイアログ</link>とほぼ同様な、<interface>デスクトッ
+    プエントリのプロパティ</interface>ダイアログが表示されます。
+    </para>
+    <para>
+<!--
+     To add a new item to the menu, click on the menu button,
+     right-click on the Menu name, and select <guimenuitem>Add new
+     item to this menu</guimenuitem>. This will bring  up
+     <interface>Create Menu Item</interface> dialog, in which you can
+     enter the menu item name, comment, command, and type (see <xref
+     linkend="launchers"> for more information).  To remove an item
+     from the menu, right-click on the item and choose
+     <guimenuitem>Remove this item</guimenuitem>.
+-->
+     メニューに新しい項目を追加するには、メニューボタンをクリックし、
+     メニュー名で右クリックします、そして<guimenuitem>このメニューに新
+     しい項目を追加する</guimenuitem>を選択します。これにより、
+     <interface>新規メニューを作成します</interface>ダイアログが表示さ
+     れ、メニュー項目の名前・説明・命令・種類(詳しいことについては、<xref
+     linkend="launchers">参照)を入力することができます。項目をメニュー
+     から削除するには、メニュー項目上で右クリックして、<guimenuitem>こ
+     の項目を削除する</guimenuitem>を選択してください。
+    </para>
+    <para>
+<!-- 
+     Finally, a frequently asked question is "How I can change the
+     font and the background used by the menus?" The answer is that it
+     is determined by the current GTK Theme, which can be changed
+     using the <application>GNOME Control Center</application> by
+     selecting <menuchoice> <guimenu>Main Menu</guimenu>
+     <guisubmenu>Settings</guisubmenu> <guisubmenu>User
+     Interface</guisubmenu> <guimenuitem>Themes</guimenuitem>
+     </menuchoice>.
+-->
+     最後に、良く聞かれる質問「メニューで使用されるフォントや背景は、
+     どのようにして変更するのか?」についてです。答えは「現在のGTK テー
+     マで決定されている」で、<menuchoice> <guimenu>メインメニュー
+     </guimenu> <guisubmenu>設定</guisubmenu> <guisubmenu>ユーザインタ
+     フェース</guisubmenu> <guimenuitem>テーマ</guimenuitem>
+     </menuchoice> と選択し、<application>GNOMEコントロールセンター
+     </application>で変更することができます。
+    </para>
+   </sect2>
+  </sect1>
+
+
+ <!-- ###########  Launchers  ############## -->
+ <sect1 id="launchers">
+  <title>ランチャ</title>
+  <para>
+<!-- 
+   Launchers are buttons which reside in your
+   <interface>Panel</interface> and start an application or execute a
+   command when clicked.  A launcher can use any icon and has a
+   customized tooltip to display a message when the cursor is passed
+   over the launcher.
+-->
+   ランチャは、<interface>パネル</interface>内にあるボタンで、クリックすると
+   アプリケーションを開始したりコマンドを実行します。ランチャは、あら
+   ゆるアイコンを使用することができ、またカーソルがランチャの上にあ
+   るときにメッセージを表示させる、変更可能なツールチップがあります。
+  </para>
+  <para>
+<!-- 
+   You can change a launcher's properties, such as the icon it uses
+   and its name, by right-clicking on the launcher and selecting
+   <guimenuitem>Properties...</guimenuitem> from the pop-up menu. This
+   brings up the <interface>Launcher properties</interface> dialog,
+   shown in <xref linkend="launcherpropsfig">. A similar dialog is
+   used when you create a new launcher (see <xref
+   linkend="add">). Note that internally GNOME makes no distinction
+   between menu items and launchers: these are just different
+   representations of the same thing. You can place any menu item on a
+   <interface>Panel</interface>, and it will appear as a
+   launcher. Therefore, all the information below applies equally to
+   launchers and menu items.
+-->
+
+   ランチャ上で右クリックし、ポップアップメニューから<guimenuitem>プロ
+   パティ...</guimenuitem>を選択すると、使用するアイコン・名前といった
+   ランチャの設定を変更することができます。これにより、<xref
+   linkend="launcherpropsfig">に示す<interface>ランチャの設定
+   </interface>ダイアログが表示されます。GNOMEはその内部において、メ
+   ニュー項目とランチャとを区別しないことに注意してください。これらは、
+   同じものに対して異なる参照をしているに過ぎません。あらゆるメニュー
+   項目を<interface>パネル</interface>上に置くことができ、以降で述べる
+   全ての情報は、ランチャとメニューに対して同様に適用されます。
+  </para>
+  <figure id="launcherpropsfig">
+   <title>ランチャの生成/ランチャのプロパティダイアログ</title>
+   <screenshot>
+    <screeninfo>ランチャの生成/ランチャのプロパティダイアログ</screeninfo>
+     <graphic fileref="./figures/launcher_properties_basic" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+  <para>
+<!-- 
+   The <interface>Laucher Properties</interface> dialog has two tabs:
+   <guilabel>Basic</guilabel> and <guilabel>Advanced</guilabel>. In
+   the <guilabel>Basic</guilabel> tab, you can set:
+-->
+   <interface>ランチャの設定
+   </interface>ダイアログには、<guilabel>基本</guilabel>と
+   <guilabel>上級</guilabel>の、2つのタグがあります。<guilabel>基本
+   </guilabel>タグでは、以下を設定することができます。
+  </para>
+    <itemizedlist>
+      <listitem>
+	<para>
+<!-- 
+	  <guilabel>Name</guilabel> &mdash; this is the application
+	  name, for example, <userinput>GNOME
+	  terminal</userinput>. This name will be used if you later
+	  put this launcher in a menu.
+-->
+          <guilabel>名前</guilabel> &mdash; 例えば、<userinput>GNOME
+	  ターミナル</userinput>のような、アプリケーションの名前です。
+	  ランチャをメニューに追加した場合に、この名前が使用されます。
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+<!--
+	  <guilabel>Comment</guilabel> &mdash; this is a brief
+	  explanation of what this application does, for example,
+	  <userinput>Terminal emulation program</userinput>. This will
+	  be used for tooltips.
+-->
+          <guilabel>説明</guilabel> &mdash; 例えば、<userinput>ターミナルエミュ
+          レータプログラム</userinput>のような、このアプリケーションがなん
+          であるかを短く解説したもの。ツールチップとして利用されます。
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+<!--
+	  <guilabel>Command</guilabel> &mdash; the actual command that
+	  runs the application, for example,
+	  <userinput>gnome-terminal</userinput>.
+-->
+          <guilabel>命令</guilabel> &mdash; 例えば、
+          <userinput>gnome-terminal</userinput>のような、実際に走行させ
+          るコマンド。
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+<!-- 
+	  <guilabel>Type</guilabel> &mdash; should be
+	  <guilabel>Application</guilabel>; do not change it unless
+	  you want to create something other than an application
+	  launcher.
+-->
+          <guilabel>種類</guilabel> &mdash;
+          <guilabel>Application</guilabel>としておきましょう。アプリケー
+          ションランチャ以外のものを作るのでなければ、変更しては行けま
+          せん。
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+<!--
+	  <guilabel>Icon</guilabel> &mdash; this is the icon which
+	  will be used to represent the launcher in the
+	  <interface>Panel</interface>. If no icon is specified, a
+	  default icon will be used. To change the icon, just click on
+	  it to launch the icon browser.
+-->
+          <guilabel>アイコン</guilabel> &mdash;
+          <interface>パネル</interface>のランチャで表示するアイコン。ア
+          イコンを指定しない場合には、標準アイコンが使用されます。アイ
+          コンを変更するためには、クリックして、アイコンブラウザを呼び
+          出してください。
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+<!--
+	  <guilabel>Run in Terminal</guilabel> &mdash; this specifies
+	  whether the application should be run inside a terminal.  If
+	  the application doesn't create any windows on its own, check
+	  this button. If you are unsure, leave it unchecked.
+-->
+          <guilabel>ターミナル内で実行</guilabel> &mdash; アプリケーショ
+          ンをターミナル内で実行するかどうかを指定します。アプリケーショ
+          ンが自分自身のウィンドウを生成しない場合には、ボタンをチェッ
+          クしてください。良く分からない場合には、そのままにしておいて
+          ください。
+	</para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>
+<!-- 
+      The <guilabel>Advanced</guilabel> properties tab is shown
+      below. It is intended for advanced users; most of the time, you
+      will not need to change any of these settings.
+-->
+      以下に、<guilabel>上級</guilabel>設定タブを示します。これは、熟
+      練ユーザのために用意されたもので、ほとんどの場合これらの設定を変
+      更することはありません。
+    </para>
+  <figure id="launcheradvpropsfig">
+   <title>ランチャ/上級設定ダイアログ</title>
+   <screenshot>
+    <screeninfo>ランチャ/上級設定ダイアログ</screeninfo>
+     <graphic fileref="./figures/launcher_properties_advanced" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+    <para>
+<!--
+     In the <guilabel>Advanced</guilabel> tab, you can set:
+-->
+     <guilabel>上級</guilabel>タブでは、以下の設定を行うことができます。
+    </para>
+    <itemizedlist>
+      <listitem>
+	<para>
+<!--
+	  <guilabel>Try this before using</guilabel> &mdash; you can
+	  enter a command here, and GNOME will check if this command
+	  can be executed. If the command cannot be successfully
+	  executed, the launcher (or menu item) will not be shown even
+	  if you added it to a <interface>Panel</interface> or
+	  menu. It is mostly used by people preparing GNOME
+	  distributions. For example, the default GNOME <guimenu>Main
+	  Menu</guimenu> contains an item for the
+	  <application>TkRat</application> e-mail program, but you
+	  will only see this item if you have
+	  <application>TkRat</application> installed on your system.
+-->
+          <guilabel>実行前にチェック</guilabel> &mdash; コマンド名を入
+          力すると、コマンドを実行する前に、GNOMEが実行可能かどうかを
+          調べます。もし、コマンドが正常に実行できなければ、ランチャ
+          (もしくはメニュー)は、<interface>パネル</interface>やメニュー
+          上に表示しません。これはほとんどの場合、GNOMEディストリ
+          ビューションを用意する人たちに利用されるものです。例えば、標
+          準のGNOME<guimenu>メインメニュー</guimenu>には、
+          <application>TkRat</application>e-mailプログラムがありますが、
+          <application>TkRat</application>がそのシステムにインストール
+          されているときにのみ、この項目を見ることができます。
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+<!-- 
+	  <guilabel>Documentation</guilabel> &mdash; currently not
+	  used.
+-->
+          <guilabel>ドキュメント</guilabel> &mdash; 現在は使用されてい
+          ません。
+	</para>
+      </listitem>
+       <listitem>
+	<para>
+<!-- 
+	  <guilabel>Name/Comment translations</guilabel> &mdash; here
+	  you can set translations of the <guilabel>Name</guilabel>
+	  and <guilabel>Comment</guilabel> to other languages. For
+	  example, for <application>GNOME Terminal</application>, the
+	  translations to Spanish (es) are name:  <userinput>Terminal
+	  UNIX de GNOME</userinput> and comment: <userinput>Emulador
+	  de terminal GNOME</userinput>. This means that if a user
+	  sets his language to Spanish during login (this can be done
+	  by selecting the desired language from
+	  <guimenu>Languages</guimenu> menu of the <application>GNOME
+	  Display Manager</application> when logging in) he will see
+	  <guimenuitem>Terminal UNIX de  GNOME</guimenuitem> in the
+	  menu and <guilabel>Emulador de terminal GNOME</guilabel> as
+	  the tooltip. The actual command that runs the terminal is
+	  unchanged.
+-->
+          <guilabel>名前/説明 の訳</guilabel> &mdash; <guilabel>名前
+          </guilabel>と<guilabel>説明</guilabel>の他の言語への翻訳を設定
+          することができます。例えば、<application>GNOME
+          Terminal</application>では、スペイン語(es)への翻訳は、名前: <userinput>Terminal
+	  UNIX de GNOME</userinput>、 説明: <userinput>Emulador
+	  de terminal GNOME</userinput>となります。これは、ユーザがロ
+	  グイン時に言語をスペイン語と設定(これと同じことは、ログ
+	  イン中に、<application>GNOME
+	  Display Manager</application>の<guimenu>言語</guimenu>メニュー
+	  で、希望する言語を選択することでも設定できます)すれば、メニュー
+	  では<guimenuitem>Terminal UNIX de  GNOME</guimenuitem>と、
+	  tooltip? では<guilabel>Emulador de terminal GNOME</guilabel>
+	  と表示させることができます。ターミナルで実際に実行されるコマ
+	  ンドは変わりません。
+	</para>
+	<para>
+<!--          
+	  To add a new translation, enter the language 2-letter code
+	  and translations of <guilabel>Name</guilabel> and
+	  <guilabel>Comment</guilabel> fields in the empty fields
+	  under the list of current translations, and press the
+	  <guibutton>Add/Set</guibutton> button.  To change one of
+	  existing translations, select the row from the list, edit
+	  the fields you want to change, and press the
+	  <guibutton>Add/Set</guibutton> button. To remove one of
+	  existing translations, select it in the list and press the
+	  <guibutton>Remove</guibutton> button.
+-->
+          新しい翻訳を追加するためには、現在の翻訳リストの下にある空の
+          フィールドに、言語の2文字コードと<guilabel>
+          名前</guilabel>と<guilabel>説明</guilabel>の翻訳を入力し、
+          <guibutton>追加/設定</guibutton>ボタンを押してください。既に
+          ある翻訳を削除するには、それを選択して<guibutton>削除
+          </guibutton>ボタンを押してください。
+	</para>
+	<para>
+<!--
+          You can find the list of all languages supported by GNOME
+	  along with their 2-letter codes  in  <ulink type="http"
+	  url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
+	  Frequently Asked Questions</ulink>.
+-->
+          GNOMEでサポートされている全ての言語リストとその2文字コードは、
+          <ulink type="http"
+          url="http://www.gnome.org/gnomefaq/html/x867.html">GNOMEで良
+          く聞かれる質問</ulink>で見ることができます。
+	</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>
+<!--
+      All of the changes you make in the <interface>Launcher
+      Properties</interface> dialog will take effect when you press
+      <guibutton>Apply</guibutton> or
+      <guibutton>OK</guibutton>. Pressing <guibutton>OK</guibutton>
+      closes the dialog; pressing <guibutton>Apply</guibutton> will
+      allow you to continue editing.
+-->
+      <interface>ランチャのプロパティ</interface>ダイアログで、行った
+      全ての変更は、<guibutton>適用</guibutton>ボタンか
+      <guibutton>OK</guibutton>ボタンを押すことで有効になります。
+      <guibutton>適用</guibutton>ボタンを使えば、編集を継続することが
+      できます。
+    </para>
+ </sect1>
+
+
+<!-- ###########  Applets  ############## -->
+ <sect1 id="applets">
+  <title>アプレット</title>
+  <para>
+<!--
+   Applets are GNOME applications which reside in a
+   <interface>Panel</interface>.  An applet's appearance typically
+   reveals the state of the applet or other information. Applets often
+   have buttons, sliders, entries, or other methods to allow you to
+   control their behavior.
+-->
+   アプレットは、<interface>パネル</interface>上にあるGNOMEアプリケーショ
+   ンです。アプレットの見た目は、基本的に、アプレットの状態もしくはその
+   他の情報を表しています。アプレットは、ボタン・スライダ・エントリ・
+   その他のアプレットの振る舞いを制御することができるようなものを持っ
+   ていることがあります。
+  </para>
+  <figure id="example-applets-fig">
+   <title>アプレットの例</title>
+   <screenshot>
+    <screeninfo>アプレットの例</screeninfo>
+     <graphic fileref="./figures/panel_applets" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+  <para>
+<!--
+   Some example applets are shown above(see <xref
+   linkend="example-applets-fig">).  At the very left is the
+   <application>Mixer Applet</application> which allows you to change
+   the volume level and mute the sound. Next is the<application>Sound
+   Monitor Applet</application>, which displays the current volume of
+   sound being played and allows you to control various sound
+   features. The third applet is the <application>GTCD
+   Applet</application>, a CD player which has all its controls
+   available in the applet and displays the track and time.The next
+   applet is the <application>Drive Mount Applet</application>, used
+   to mount and unmount drives with a single click of the mouse. This
+   is followed by the <application>Desk-Guide Applet</application>
+   which shows you your desktops and the applications which are
+   running on them. The last applet shown is the <application>Tasklist
+   Applet</application> which allows you to control certain aspects of
+   each application or window which is open.
+-->
+   アプレットの数例を上に示します(<xref
+   linkend="example-applets-fig">参照)。一番左は、サウンドの音量を変え
+   たり消音したりすることのできる<application>ミキサアプレット
+   </application>です。次は、<application>サウンド
+   モニタアプレット</application>で、現在の音量を表示したり様々な音質
+   制御を行うことができます。3つめは、<application>GTCD
+   アプレット</application>で、これはアプレット内に見られる全ての操作
+   を行い、トラックや時間を表示するCDプレイヤーです。その隣のアプレッ
+   トは、<application>ドライブマウントアプレット</application>で、マウ
+   スのシングルクリックでドライブをマウントしたりアンマウントしたりす
+   るためのものです。その横には、デスクトップとそのうえで走行している
+   アプリケーションを表示する<application>デスクガイドアプレット
+   </application>がある。最後のアプレットは、各アプリケーションや開い
+   ているウィンドウの特定の表示方法を制御する<application>タスクリスト
+   アプレット</application>です。
+  </para>
+  <para>
+<!--
+   GNOME has many useful applets.  Just right click on a
+   <interface>Panel</interface> and add some applets to your
+   <interface>Panel</interface> to find out which applets are
+   available and which ones are best for you.  Right click on each
+   applet to see a menu listing various commands and operations the
+   applet can do and to access the documentation for the applet.
+-->
+   GNOMEには、沢山の有用なアプレットがあります。どんなアプレットがあっ
+   て、どれがあなたにとって最も役に立つのかをしるには、とにかく
+   <interface>パネル</interface>で右クリックして、いくつかのアプレット
+   を<interface>パネル</interface>に追加してみてください。そのアプレッ
+   トでどんなメニューや操作ができるかを調べたり、そのアプレットの説明
+   を見たければ、アプレット上で右クリックしてみてください。
+  </para>
+ </sect1>
+
+
+<!-- ###########  Drawers  ############## -->
+ <sect1 id="drawers">
+  <title>引き出し</title>
+  <para>
+<!-- 
+   The simplest way to think about a drawer is that it is a container
+   to store things.  Typically one may use a drawer to hold multiple
+   launchers which are related to each other in some way, such as the
+   various applications in GNOME Office. The drawers in the GNOME
+   <interface>Panel</interface> take this one step further by making a
+   drawer an actual extension of the <interface>Panel</interface>
+   itself.  Thus, a drawer is a collapsible branch of an existing
+   <interface>Panel</interface>.  It can contain anything that a
+   <interface>Panel</interface> can, including launchers, applets, and
+   other drawers.
+-->
+   引き出しをかなり大雑把に言うならば、これは色々なものを格納するため
+   の入れ物です。一般的には、GNOMEオフィスの各種アプリケー
+   ションのように、各々の方針に基づいた相互関係のある複数
+   のランチャを格納する目的で、引き出しは使われるでしょう。
+   GNOME<interface>パネル</interface>の引き出しは、それ自身を
+   <interface>パネル</interface>の事実上の拡張部とすることで、
+   <interface>パネル</interface>を 1 段深くします。
+|!|   つまり、引き出しとは既にある<interface>パネル</interface>の、伸縮可
+   能な分家です。これには、ランチャ・アプレット・その他の引き出しといっ
+   たような、<interface>パネル</interface>が持つことので
+   きるあらゆるものを入れることができます。
+  </para>
+  <figure>
+   <title>空いた引き出し</title>
+   <screenshot>
+    <screeninfo>空いた引き出し</screeninfo>
+    <graphic fileref="./figures/drawer_open" format="png"
+    srccredit="dcm">
+    </graphic>
+   </screenshot>
+  </figure>
+  <para>
+<!--
+   Once you have placed a drawer on a <interface>Panel</interface>,
+   you may click on it to "open" the drawer, revealing its contents.
+   You may then add items to the drawer in the same way you would add
+   items to a <interface>Panel</interface>, right clicking on the end
+   of the drawer with the arrow to open the <link
+   linkend="globalmenu"><interface>Global Menu</interface></link>.
+   You can close the drawer by clicking on its icon again or by
+   clicking on the arrow at its end.
+-->
+   一度引き出しを<interface>パネル</interface>上に置けば、引き出しを"開
+   く"ためにクリックするとその中身が表示されるでしょう。
+   <interface>パネル</interface>に部品を追加するのと同じ方法で、引き出
+   しに部品を追加することができます。???
+   アイコンを再度クリックするか先端にある矢印をクリックすれば引き出し
+   を閉めることができます。
+  </para>
+  <para>
+<!--
+   You can configure a drawer's properties by right clicking on the
+   drawer's icon and selecting
+   <guimenuitem>Properties...</guimenuitem>. This brings up the
+   <interface>Drawer Properties</interface> dialog. Here you can
+   select the icon used for the drawer by clicking on the icon. A
+   tooltip may be entered by typing in the
+   <guilabel>Tooltip/Name</guilabel> entry. This tooltip will be
+   displayed whenever the mouse is moved over the drawer to remind you
+   what is inside.  One may also select whether the <guibutton>hide
+   button</guibutton> and arrow are displayed at the end of the drawer.
+-->
+   引き出しのアイコン上で右クリックして<guimenuitem>プロパティ...
+   </guimenuitem>を選ぶことで、引き出しの設定を変更することができます。
+   これにより、<interface>引き出しのプロパティ</interface>ダイアログが
+   表われます。ここでは、アイコンをクリックすることで引き出しのアイコ
+   ンを選択することができます。<guilabel>ツールチップ/名前</guilabel>
+   の入力部分に、ツールチップを入れても良いでしょう。このツールチップ
+   は、この中に何が入っているかを思い出すために、マウスを引き出しの上
+   に持っていくと表示されるものです。また、引き出しの最後に<guibutton>
+   隠蔽ボタン</guibutton>や矢印ボタンを表示するかどうかを選択すること
+   ができます。
+  |!|</para>
+  <figure>
+   <title>引き出しのプロパティダイアログ</title>
+   <screenshot>
+    <screeninfo>引き出しのプロパティダイアログ</screeninfo>
+    <graphic fileref="./figures/drawer_properties" format="png"
+     srccredit="dcm">
+    </graphic>
+   </screenshot>
+  </figure>
+  <para>
+<!--
+   You may also control the background color or image of the
+   drawer. Just right click on the drawer and select
+   <guimenuitem>Properties...</guimenuitem> to open the
+   <interface>Drawer Properties</interface> dialog. Then select the
+   <guilabel>Background</guilabel> tab to bring up the
+   <interface>Panel Background Dialog</interface> (see <xref
+   linkend="panelbacktab">).
+-->
+   引き出しの背景色や画像を制御することもできます。<interface>引き出し
+   のプロパティ</interface>ダイアログを表示するには、引き出しの上で右
+   クリックして、<guimenuitem>プロパティ...</guimenuitem>を選択するだ
+   けです。そうして、<interface>パネルの背景ダイアログ</interface>を表
+   示させるために、<guilabel>背景</guilabel>タブをクリックしてください。
+   (<xref linkend="panelbacktab">参照)
+  </para>
+ </sect1>
+
+
+
+<!-- ###########  Special Panel Objects  ############## -->
+ <sect1 id="specialobjects">
+  <title>特別なパネル部品</title>
+  <para>
+<!--
+   There are several special Panel objects which are not considered
+   menus, applets, or launchers.  These special objects are described
+   below.
+-->
+   メニュー・アプレット・ランチャとは見なされない、特別なパネル部品が
+   幾つかあります。これらの特別な部品を以下について以降で説明します。
+  </para>
+  <sect2 id="lockbutton">
+   <title>ロックボタン</title>
+   <figure>
+    <title>ロックボタン</title>
+    <screenshot>
+     <screeninfo>ロックボタン</screeninfo>
+     <graphic fileref="./figures/panel_lockbut" format="png"
+     srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+<!--
+    The <guibutton>Lock Button</guibutton> is a
+    <interface>Panel</interface> button which starts a screensaver
+    which locks the screen. In order to remove the screensaver and
+    access the GNOME session again, you must supply your password.
+    For more information on locking the screen, see <xref
+    linkend="lockscreen">.
+-->
+    <guibutton>ロックボタン</guibutton>は、画面をロックするスクリーン
+    セーバを開始する<interface>パネル</interface>ボタンです。スクリーン
+    セーバを消して、再度GNOMEセッションにアクセスするためには、自分の
+    パスワードを入力する必要があります。画面のロックについての詳しい説
+    明は、<xref linkend="lockscreen">を参照してください。
+   </para>
+  </sect2>
+  <sect2 id="logoutbutton">
+   <title>ログアウトボタン</title>
+   <figure id="logoutbuttonfig">
+    <title>ログアウトボタン</title>
+    <screenshot>
+     <screeninfo>ログアウトボタン</screeninfo>
+     <graphic fileref="./figures/panel_logoutbut"
+     format="png" srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+<!--
+    The <guibutton>Logout</guibutton> button is used to exit the GNOME
+    desktop environment.  It initiates the logout sequence, bringing
+    up the <interface>Logout Dialog</interface>, as described in <xref
+    linkend="loggingout">.
+-->
+    <guibutton>ログアウト</guibutton>ボタンは、GNOMEデスクトップ環境か
+    ら抜けるために使用されます。これは、<xref linkend="loggingout">で
+    説明したように、ログアウトの処理を開始して<interface>ログアウト
+    </interface>ダイアログを表示します。
+   </para>
+  </sect2>
+  <sect2 id="runbutton">
+   <title>実行ボタン</title>
+   <figure id="runbuttonfig">
+    <title>実行ボタン</title>
+    <screenshot>
+     <screeninfo>実行ボタン</screeninfo>
+     <graphic fileref="./figures/panel_runbutton"
+     format="png" srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+<!--
+    The <guibutton>Run</guibutton> button opens the <interface>Run
+    Program</interface> dialog, shown in <xref
+    linkend="runprogramdialog-fig">.  This gives you access to the
+    command line prompt. It is not a full-blown shell, so it is not a
+    replacement for <application>GNOME terminal</application>, but it
+    is very convenient when you need to enter just one command
+    quickly. You can also open the <interface>Run Program</interface>
+    dialog by using a  keyboard shortcut. The default keyboard
+    shortcut is
+    <keycombo action=simul>
+     <keycap>Alt</keycap> <keycap>F2</keycap>
+    </keycombo>
+    but you can change this in the <link
+    linkend="misctab"><guilabel>Miscellaneous</guilabel></link> tab of
+    the <interface><link linkend="globalpanelprefs">Global Panel
+    Preferences</link> dialog</interface>.
+-->
+    <guibutton>実行ボタン</guibutton>は、<xref
+    linkend="runprogramdialog-fig">に示す、<interface>プログラムの実行
+    </interface>ダイアログを表示させます。これは、コマンドラインプロン
+    プトへのアクセスを提供するものです。これはコマンド補完が効くような
+    シェルではないため、<application>GNOMEターミナル</application>の代りには
+    なりません、しかし1つのコマンドを手早く入力する必要があるときには
+    大変便利なものです。キーボードショートカットを用いても、
+    <interface>プログラムの実行</interface>ダイアログを開くことができ
+    ます。標準のキーボードショートカットは、
+    <keycombo action=simul>
+     <keycap>Alt</keycap> <keycap>F2</keycap>
+    </keycombo>
+    です。ただし、
+    <interface><link linkend="globalpanelprefs">全体の設定</link>ダイ
+    アログ</interface>の<link linkend="misctab"><guilabel>その他
+    </guilabel></link>タブで変更することができます。
+
+   </para>
+   <figure id="runprogramdialog-fig">
+    <title>プログラムの実行ダイアログ</title>
+    <screenshot>
+     <screeninfo>プログラムの実行ダイアログ</screeninfo>
+     <graphic fileref="./figures/panel_runprogram"
+     format="png" srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+<!--
+    The command entry has a history buffer which allows you to execute
+    a previously entered command by pressing the <guiicon>down
+    arrow</guiicon> icon located to the right of the text field and
+    selecting the command. It also has a
+    <guibutton>Browse&hellip;</guibutton> button, which allows you to
+    choose a file &mdash; this filename will be appended to the end of
+    your command. For example, you can enter
+    <userinput>emacs</userinput> (an extremely powerful text editor)
+    on the command line and then use the
+    <guibutton>Browse&hellip;</guibutton> button to select the file to
+    be edited.
+-->
+    コマンドエントリは、テキストフィールドの右側にある<guiicon>下
+    矢印</guiicon>アイコンを押してそれを選択することで、以前に入力した
+    コマンドを実行することができる、履歴バッファを持っています。また、
+    <guibutton>参照&hellip;</guibutton>ボタンも持っており、ファイルを
+    選択することができます &mdash; このファイル名は、あなたのコマンド
+    の最後に追加されます。例えば、コマンドラインに
+    <userinput>emacs</userinput>(とても強力なテキストエディタ)と入力し
+    て、その後に<guibutton>参照&hellip;</guibutton>ボタンを使って編集
+    するファイルを選択することができます。
+   </para>
+  </sect2>
+  <sect2 id="swallowedapps">
+   <title>スワロード(飲み込まれた)アプリケーション</title>
+   <para>
+<!--
+    You can run many applications which are not applets inside the
+    <interface>Panel</interface> as if they were applets.
+    Applications which you pull into the <interface>Panel</interface>,
+    even though they are not GNOME applets, are called "swallowed
+    applications".  Applications do not have to be GNOME-compliant to
+    be swallowed.  In general, the only constraints for swallowing an
+    application are that the application must be small enough to fit
+    in your <interface>Panel</interface> and you must know the  title
+    of the window you would like to swallow.  In many cases, the
+    application can be automatically shrank to fit in the
+    <interface>Panel</interface>,  as specified in the
+    <interface>Create Swallowed Application Dialog</interface>.  If
+    the application is not small enough to fit in the
+    <interface>Panel</interface>, the <interface>Panel</interface>
+    will generally grow to allow the application to fit.
+-->
+    <interface>パネル</interface>内のアプレットではない多くのアプリケー
+    ションをまるでアプレットのように走行させることができます。GNOMEア
+    プレットではないけれども<interface>パネル</interface>の中に引きずり
+    込みたいアプリケーションのことを、"スワロード(飲み込まれた)アプリ
+    ケーション"と呼びます。飲み込まれるアプリケーションは、GNOME対応で
+    ある必要はありません。一般的に、あるアプリケーションを飲み込む為の
+    唯一の制約は、そのアプリケーションが<interface>パネル</interface>の
+    中に収められるように十分に小さく、かつ飲み込まれたアプリケーション
+    ウィンドウのタイトルをあなたが知っている、ととうことだけです。
+    <interface>スワロードアプリケーションダイアログを作る</interface>で説明し
+    ているように、多くの場合では、アプリケーションは
+    <interface>パネル</interface>に収まるように自動的に縮められます。
+    <interface>パネル</interface>に収まるように十分に小さくないアプリケー
+    ションでは、<interface>パネル</interface>はそのアプリケーションを収
+    める事ができるように大きくなります。
+   </para>
+   <figure id="swallappfig">
+     <title>スワロードアプリケーションダイアログを作る</title>
+     <screenshot>
+      <screeninfo>スワロードアプリケーションダイアログを作る</screeninfo>
+      <graphic fileref="./figures/panel_swallow" format="png"
+      srccredit="muet">
+      </graphic>
+     </screenshot>
+    </figure>
+   <para>
+<!--
+    The <guilabel>Title of application to swallow</guilabel> is the
+    window title, typically displayed on the top left edge of the
+    window. (Note that the window title is case sensitive.) The
+    <guilabel>Width</guilabel> and <guilabel>Height</guilabel>
+    determine the size of the swallowed application in the
+    <interface>Panel</interface> in pixels.
+-->
+    <guilabel>飲み込むアプリケーションのタイトル</guilabel>は、一般的
+    にはウィンドウの左上に表示されるウィンドウタイトルです。(ウィンド
+    ウタイトルは、大文字と小文字で区別される点に注意してください。)
+    <guilabel>幅</guilabel>と<guilabel>高さ</guilabel>は、<interface>
+    パネル</interface>内でのスワロードアプリケーションの大きさをピクセ
+    ル単位で示したものです。
+   </para>
+   <para>
+<!--
+    If you leave the <guilabel>Command</guilabel> field empty, this
+    dialog will create an empty window of given size on the panel
+    which will sit there waiting for a window with the given title to
+    appear on your desktop. As soon such a window appears (for
+    example, when you choose appropriate item in the menu), it will be
+    swallowed.
+-->
+    <guilabel>コマンド</guilabel>フィールドを空のままにしておくと、こ
+    のダイアログは パネルの上に与えられた大きさの空ウィンドウを作成し
+    ます。この空ウィンドウは、与えられたタイトルのウィンドウがデスクトッ
+    プ上に表われるのを待ち続けます。そのウィンドウが表われる(例えば、
+    適合する項目をメニューから選択した時)とすぐに、そのウィンドウは飲
+    み込まれます。
+   </para>
+   <para>
+<!--
+    You can also enter any command in the <guilabel>Command</guilabel>
+    field; this command will be executed before trying to swallowing
+    the window to the <interface>Panel</interface> (and  each time the
+    <interface>Panel</interface> is restarted afterwards). This is
+    normally used to start an application which you want the
+    <interface>Panel</interface> to swallow.
+-->
+    <guilabel>コマンドフィールド</guilabel>にコマンドを入力することも
+    できます。ウィンドウを<interface>パネル</interface>
+    に飲み込もうとする(そしてその度に、<interface>パネル</interface>は
+    後に再起動されます)前に、このコマンドは実行されます。これは、
+    <interface>パネル</interface>に飲み込ませたいアプリケーションを開始
+    するときに用いられます。
+   </para>
+         
+  </sect2>
+  <sect2 id="statusdock">
+   <title>ステータスドック</title>
+   <para>
+<!--
+    The <interface>status dock</interface> is a
+    <interface>Panel</interface> object which can hold status docklets
+    &mdash; small windows which applications place in the
+    <interface>status dock</interface> to provide status information.
+    Status docklets can also be used to control the
+    application. Essentially, docklets are small (both in size and in
+    complexity) applets.   GNOME currently does not have many
+    applications which place status docklets in the <interface>status
+    dock</interface>.  However, GNOME's <interface>status
+    dock</interface> is compatible with that of the K Desktop
+    Environment (KDE), so KDE applications, such as
+    <application>kscd</application>, may place status docklets in
+    GNOME's <interface>status dock</interface>.  Future versions of
+    GNOME applications will make use of this recently added
+    <interface>Panel</interface> object.
+-->
+    <interface>ステータスドック</interface>は、status docklets ??? を持つ
+    ことのできる<interface>パネル</interface>部品です。
+    &mdash; 
+    status dockletsは、アプリケーションを制御することもできます。基本
+    的には、docklets は小さな(大きさと複雑さの両方において)アプレット
+    です。現在の所、<interface>ステータスドック</interface>内に 
+    status docklets を置くようなアプリケーションを、GNOMEは多く持って
+    いません。しかしながら、GNOMEの<interface>ステータスドック
+    </interface>は、K デスクトップ環境(KDE)と互換があります、つまり
+    <application>kscd</application>のようなKDEアプリケーションは、
+    status docklets をGNOMEの<interface>ステータスドック</interface>に
+    置くでしょう。GNOMEアプリケーションの将来のバージョンでは、この最
+    近追加された<interface>パネル</interface>部品を利用することでしょう。
+   </para>
+   <figure id="statusdockfig">
+     <title>ステータスドックとDockletの例</title>
+     <screenshot>
+      <screeninfo>ステータスドックとDockletの例</screeninfo>
+      <graphic fileref="./figures/status_dock" format="png"
+      srccredit="lebl">
+      </graphic>
+     </screenshot>
+    </figure>
+   <para>
+<!--
+    The above example shows the <interface>status dock</interface>
+    with a status docklet from  the <application>kscd</application> CD
+    player program.  This particular docklet is used to open and close
+    the main <application>kscd</application> window without ending the
+    program.
+-->
+    上の例は、<application>kscd</application> CDプレイヤプログラムの
+    status docklet が乗った<interface>ステータスドック</interface>です。
+    この特別な docklet は、<application>kscd</application>のウィンドウ
+    をプログラム自体を終了させること無く、開いたり閉じたりするために使
+    用されます。
+   </para>
+  </sect2>
+ </sect1>
+
+
+<!-- ####### Adding, Moving, and Removing Panel Objects ########## -->
+  <sect1 id="appletadd">
+    <title>パネル部品の追加・移動・削除</title>
+    <sect2 id="moving">
+      <title>部品の移動</title>
+      <para>
+<!--
+       To move any object in a <interface>Panel</interface> to a
+       different location, just hold down the middle mouse button and
+       drag it to the new location. Or, you can right-click on it and
+       choose <guimenuitem>Move</guimenuitem>, then move the mouse to
+       the new location and press any mouse button to anchor it in its
+       new position. You can move it to a different location on the same
+       <interface>Panel</interface>, or to a different
+       <interface>Panel</interface>.  If in the course of this
+       movement it hits other objects, the behavior depends on the
+       global preferences (see <xref linkend="appletstab">): the
+       object you are moving can switch places with other objects,
+       "push" all objects it meets, or "jump" over all other objects
+       without disturbing them. You can also override the default
+       behavior by holding the <keycap>Shift</keycap> button (for
+       "push" mode), the <keycap>Ctrl</keycap> button (for "switched"
+       mode), or the <keycap>Alt</keycap> button (for "free" mode,
+       i.e. jumping other objects without disturbing them) while
+       moving the object.
+-->
+       <interface>パネル</interface>内の部品を別の場所に移動させるため
+       には、マウスの中ボンタンを押して新しい場所までドラッグするだけ
+       です。もしくは、その上で右クリックし、<guimenuitem>移動
+       </guimenuitem>を選択して新しい場所にマウスを移動させてからマウ
+       スボタンどれかを押してください。同じ
+       <interface>パネル</interface>の別の場所や、異なる
+       <interface>パネル</interface>に移動させることができます。この移
+       動中に他の部品とぶつかった場合には、その振る舞いは全体の設定
+       (<xref linkend="appletstab">参照)によって、以下のどれかになりま
+       す:他のオブジェクトと場所を入れ替える・進行方向にある全ての部品
+       を"押し込む"・部品の無いところまで"ジャンプ"する。
+       移動するときに、キーボードの<keycap>Shift</keycap>ボタン("押し
+       込み"モード)や<keycap>Ctrl</keycap>ボタン("入れ替え"モード)や
+       <keycap>Alt</keycap>("任意"モード。例:ぶつからないところまで他
+       の部品をジャンプする)を押しておくことで、標準の動作を無視するこ
+       とができます。
+      </para>
+    </sect2>
+
+    <sect2 id="remove">
+      <title>部品の削除</title>
+      <para>
+<!--
+       To remove an object from a <interface>Panel</interface>,
+       right-click on it and choose <guimenuitem>Remove from
+       panel</guimenuitem> from the pop-up menu.
+-->
+       <interface>パネル</interface>から部品を削除するには、その上で右
+       クリックして、ポップアップメニューから<guimenuitem>パネルから取
+       り除く</guimenuitem>を選択します。
+      </para>
+    </sect2>
+
+
+    <sect2 id="add">
+      <title>部品の追加</title>
+      <para>
+<!--
+	By default, the GNOME <interface>Panel</interface> contains
+	only a few basic objects, such as the <guimenu>Main
+	Menu</guimenu>. However, there are many
+	<interface>Panel</interface> objects you can
+	add to it. For example, every menu item in the <guimenu>Main
+	Menu</guimenu> or its submenus can be added to a
+	<interface>Panel</interface> as an
+	application launcher. GNOME also has many applets
+	that can be added to a <interface>Panel</interface>, ranging from
+	<application>Printer Applet</application>, which prints files
+	which you drag and drop onto the applet, to
+	<application>Wanda the Fish</application>. There are many
+	additional GNOME applets and applications available on the
+	Internet.
+-->
+        基本的には、GNOME<interface>パネル</interface>は、<guimenu>メイ
+        ンメニュー</guimenu>のような2・3の基本的        な部品だけを持っ
+        ています。しかしながら、多くの<interface>パネル</interface>部品
+        を追加することができます。例えば、<guimenu>メインメニュー
+        </guimenu>もしくはそのサブメニューにある全ての項目を、アプリケー
+        ションランチャとして<interface>パネル</interface>に追加すること
+        ができます。GNOMEはまた、ファイルをそのアプレットにドラッグ＆
+        ドロップすることで印刷する<application>プリンタアプレット
+        </application>から<application>GNOMEさかな君</application>に至
+        るまでのたくさんのアプレットを追加することもできます。これらた
+        くさんのGNOMEアプレットやアプリケーションは、インターネット上
+        に存在します。
+      </para>
+	<variablelist>
+	  <varlistentry>
+	    <term> <emphasis>アプレット</emphasis></term>
+	    <listitem>
+	      <para>
+<!--
+                To add an applet to a <interface>Panel</interface>,
+                right-click on the <interface>Panel</interface> and select
+                <menuchoice><guisubmenu>Panel</guisubmenu><guisubmenu>Add
+                to panel</guisubmenu>
+                <guisubmenu>Applet</guisubmenu></menuchoice>. This
+                will show you a
+                menu of all the applets on your system, divided into
+                categories; choosing any applet from this menu will
+                add it to the <interface>Panel</interface>.
+-->
+                <interface>パネル</interface>にアプレットを追加するため
+                には、<interface>パネル</interface>で右クリックをして、
+                <menuchoice><guisubmenu>パネル
+                </guisubmenu><guisubmenu>パネルに追加する</guisubmenu>
+                <guisubmenu>アプレット</guisubmenu></menuchoice>と選択
+                します。これにより、システム上の全てのアプレットが各分
+                類語とに分けて、表示されます。このメニューからアプレッ
+                トを選んで、<interface>パネル</interface>に追加してくだ
+                さい。
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+
+	  <varlistentry>
+	    <term> <emphasis>アプリケーションランチャ</emphasis></term>
+	    <listitem>
+	      <para>
+<!--
+		To create a new application launcher, right-click on
+		the <interface>Panel</interface> and select
+		<menuchoice><guisubmenu>Panel</guisubmenu><guisubmenu>Add
+		to panel</guisubmenu>
+		<guimenuitem>Launcher</guimenuitem></menuchoice>.
+		This will open the <interface>Create Launcher
+		dialog</interface>, shown below.  In this dialog you
+		should enter a name for your launcher, a comment, and
+		the command line to launch the application. This
+		dialog is virtually identical to <interface>Launcher
+		Properties</interface> dialog. See <xref
+		linkend="launchers"> for a more detailed description.
+-->
+                新しいアプリケーションランチャを作成するには、
+                <interface>パネル</interface>上で右クリックし、
+                <menuchoice><guisubmenu>パネル
+                </guisubmenu><guisubmenu>パネルに追加</guisubmenu>
+                <guimenuitem>ランチャ</guimenuitem></menuchoice>と選択
+                してください。これで、以下に示す<interface>ランチャ作
+                成ダイアログ</interface>が開きます。このダイアログでは、
+                ランチャ名・説明・呼び出すアプリケーションのコマンドラ
+                インを入力します。このダイアログは、実質上は
+                <interface>ランチャの設定</interface>ダイアログと同じ
+                ものです。詳しい説明は、<xref linkend="launchers">を参
+                照してください。
+	      </para>
+	      <figure>
+		<title>ランチャダイアログの作成</title>
+		<screenshot>
+		  <screeninfo>ランチャダイアログの作成</screeninfo>
+		  <graphic fileref="./figures/create_launcher" format="png"
+			   srccredit="muet">
+		  </graphic>
+		</screenshot>
+	      </figure>
+	      <para>
+<!--
+                You can also add any application in the <guimenu>Main
+                Menu</guimenu> or application launcher on your
+                desktop to a <interface>Panel</interface>.
+                To do so, use the first mouse button to drag the object 
+                onto the <interface>Panel</interface>. Be
+		careful to drop it in an empty space on the
+                <interface>Panel</interface> and
+		not on any existing object: for example, if you drop
+		it on the <interface>Printer Applet</interface>, it
+                will be printed. You can also right-click on an item
+                in the <guimenu>Main Menu</guimenu>
+		and select <guimenuitem>Add this launcher to
+		panel</guimenuitem>. After this, you can change any
+		options for that launcher by clicking on it with the
+		right mouse button and selecting
+		<guimenuitem>Properties...</guimenuitem>.
+-->
+               <guimenu>メインメニュー</guimenu>やデスクトップ上のアプ
+               リケーションランチャから<interface>パネル</interface>に
+               追加することもできます。これには、マウスの第1ボタンで、
+               部品を<interface>パネル</interface>上へドラッグします。
+               注意して、<interface>パネル</interface>の何もないところに置くよう
+               に、既にある部品上に置かないようにしてください。例えば、
+               もし<interface>印刷アプレット</interface>上に置いてしま
+               うと、それは印刷されてしまいます。<guimenu>メインメニュー
+               </guimenu>の上で右クリックをして、<guimenuitem>ランチャ
+               をパネルに追加する</guimenuitem>を選択しても追加するこ
+               とができます。この後に、ランチャの上で右クリックして
+               <guimenuitem>設定...</guimenuitem>メニューを選ぶことで、
+               ランチャのオプションを変更することができます。
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term> <emphasis>メニュー</emphasis></term>
+	    <listitem>
+	      <para>
+<!--
+                To add a menu, right-click on the
+                <interface>Panel</interface> and select
+                <menuchoice><guisubmenu>Panel</guisubmenu> <guisubmenu>Add
+                to panel</guisubmenu> <guisubmenu>Menu</guisubmenu>
+                </menuchoice>. This gives you a choice of the <guimenu>Main
+                menu</guimenu>, <guimenu>Programs menu</guimenu>, and
+                <guimenu>Favorites menu</guimenu>.
+-->
+                メニューを追加するには、<interface>パネル</interface>上
+                で右クリックし、<menuchoice><guisubmenu>パネル
+                </guisubmenu> <guisubmenu>パネルに追加</guisubmenu>
+                <guisubmenu>メニュー</guisubmenu> </menuchoice>と選択
+                します。すると、<guimenu>メインメニュー</guimenu>・
+                <guimenu>プログラムメニュー</guimenu>・ <guimenu>お気
+                に入りメニュー</guimenu>から選択します。
+	      </para>
+	      <para>
+<!--
+		You can also add the <guimenu>Main Menu</guimenu> or
+		any its submenu as a new menu to the
+		<interface>Panel</interface> by
+		right-clicking  on the menu title (the top line of the
+		menu, separated from menu items by a thin line) and
+		selecting <guimenuitem>Add this as a menu to the
+		panel</guimenuitem>.
+-->
+                メニュータイトル(メニューの最上段の行でメニュー項目と
+                は破線で区切られています)上で右クリックし、
+                <guimenuitem>メニューとしてパネルに追加する
+                </guimenuitem>を選択することで、<guimenu>メインメニュー
+                </guimenu>やその他のサブメニューを
+                <interface>パネル</interface>に追加することができます。
+	      </para>
+              <note>
+               <title>メニューを自分で作る</title>
+	       <para>
+<!--
+                Advanced users can also create new menus
+                manually. To do so, you need to know that internally,
+                GNOME represents a menu by a directory, with menu items
+                presented by files of special type
+                (<filename>.desktop</filename> files &mdash; these files
+                also represent the application launchers), and submenus
+                presented by subdirectories. For example, the
+                <guimenu>Favorites</guimenu> menu corresponds to the
+                directory <filename>~/.gnome/apps</filename> (where
+                <filename>~</filename> denotes your home directory), and
+                the <guimenu>Programs</guimenu> menu corresponds to the
+                directory
+                <filename>/usr/share/gnome/apps</filename>. Thus, you
+                can create a new directory, using the GNOME File
+                Manager, drag and drop there any
+                <filename>.desktop</filename> files from any other
+                directories you might have (for example, from
+                <filename>/usr/share/gnome/apps</filename>) or from the
+                desktop, and then drag and drop this directory from the
+                File Manager window to the
+                <interface>Panel</interface>. This will add this
+                directory as a menu to the <interface>Panel</interface>.
+-->
+                熟練ユーザは、新しいメニューを自分で作成することもでき
+                ます。これを行うには、内部について知っている必要があり
+                ます。GNOMEは、メニューをディレクトリで、メニュー 項目
+                を特別な型
+                (<filename>.desktop</filename> ファイル&mdash; これら
+                のファイルは、アプリケーションランチャも表しています。)
+                のファイルで、サブメニューをサブディレクトリで表します。
+                例えば、<guimenu>お気に入り</guimenu>メニューは
+                <filename>~/.gnome/apps</filename>ディレクトリ
+                (<filename>~</filename>はあなたのホームディレクトリを
+                意味します。)に対応し
+                ており、<guimenu>プログラムメニュー</guimenu>は
+                <filename>/usr/share/gnome/apps</filename>ディレクトリ
+                に対応しています。さらに、GNOMEファイルマネージャを使っ
+                て新しいディレクトリを作り、既にある他のディレクトリ
+                (例えば、<filename>/usr/share/gnome/apps</filename>)や
+                デスクトップから<filename>.desktop</filename>ファイル
+                をドラッグ＆ドロップで持ってきて、さらにこのディレクト
+                リをファイルマネージャから<interface>パネル</interface>
+                にドラッグ＆ドロップすることができます。これにより、こ
+                のディレクトリをメニューとして
+                <interface>パネル</interface>に追加したことになります。
+	       </para>
+              </note>
+	      <para>
+<!--
+                After you have added a menu to your
+                <interface>Panel</interface> using any of  the methods
+                described above, you can modify its properties (for
+                example, add new items to this menu or change the icon
+                used by the menu), as described in <xref
+                linkend="menus">.
+-->
+                これまでに述べた方法で<interface>パネル</interface>にメ
+                ニューを追加した後、<xref linkend="menus">で説明した方
+                法で、設定を変更することができます(例えば、新しい項目
+                を追加したり、そのメニューで使用するアイコンを変更する
+                のような)。
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term> <emphasis>引き出し</emphasis></term>
+	    <listitem>
+	      <para>
+<!--
+                To add a new empty drawer, select
+                <menuchoice><guisubmenu>Panel</guisubmenu>
+                <guisubmenu>Add to panel</guisubmenu>
+                <guisubmenu>Drawer</guisubmenu></menuchoice>. Then
+                right-click on the drawer and select
+                <guimenuitem>Properties...</guimenuitem> to change its
+                properties (for example, the icon it uses). You can
+                add new items to this drawer in the same way as you
+                add items to a <interface>Panel</interface>: all the
+                methods for adding new objects to the
+                <interface>Panel</interface> described in this section
+                will also work for adding new items to a drawer.
+-->
+                新しい空の引き出しを追加するには、
+                <menuchoice><guisubmenu>パネル</guisubmenu>
+                <guisubmenu>パネルに追加</guisubmenu> <guisubmenu>引き
+                出し</guisubmenu></menuchoice>と選択してください。その
+                後、設定(例えば、使用するアイコン)を変更するには引き出
+                しの上で右クリックし、<guimenuitem>プロパティ
+                </guimenuitem>を選択します。
+                <interface>パネル</interface>に項目を追加するのと同じ方
+                法で、引き出しにも新しい項目を追加することができます。
+                この章で説明している、<interface>パネル</interface>に新
+                しい項目を追加する方法は全て、引き出しに新しい項目を追
+                加するのにも適用されます。
+	    </para>
+	    <para>
+<!--
+                You can also add the <guimenu>Main Menu</guimenu> or any
+                of its submenus to the <interface>Panel</interface> as a
+                drawer by right-clicking on the menu title and selecting
+		<guimenuitem>Add this as drawer to
+		panel</guimenuitem>.
+-->
+                メニュータイトル上で右クリックし、<guimenuitem>引き出
+                しとしてパネルに追加する</guimenuitem>を選べば、
+                <guimenu>メインメニュー</guimenu>やそのサブメニューを、
+                引き出しとして<interface>パネル</interface>に追加するこ
+                とができます。
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term> <emphasis>Swallowed application</emphasis></term>
+	    <listitem>
+	      <para>
+<!--
+                To add a swallowed application to your
+		<interface>Panel</interface>, select
+		<menuchoice><guisubmenu>Panel</guisubmenu>
+		<guisubmenu>Add to panel</guisubmenu>
+		<guisubmenu>Swallowed
+		app</guisubmenu></menuchoice>. This will
+		open the <interface>Create Swallowed
+		Application</interface> dialog.  For detailed information
+		on using this dialog, see <xref
+		linkend="swallowedapps">.
+-->
+                <interface>パネル</interface>にスワロードアプリケーショ
+                ンを追加するには、<menuchoice><guisubmenu>パネル
+                </guisubmenu> <guisubmenu>パネルに追加</guisubmenu>
+                <guisubmenu>スワロードアプリケーション
+                </guisubmenu></menuchoice>と選択します。これにより、
+                <interface>スワロードアプリケーションダイアログ
+                </interface>が開きます。このダイアログの使い方について
+                の詳しい説明は、<xref linkend="swallowedapps">を参照し
+                てください。
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+
+   </sect2>
+ </sect1>
+
+
+
+
+<!-- ########### Creating, Moving, and Removing Panels  ########### -->
+  <sect1 id="panelmove">
+    <title>パネルの作成・移動・削除</title>
+    <sect2 id="paneladd">
+     <title>新しいパネルの作成</title>
+     <para>
+<!--
+       To add a new <interface>Panel</interface> to your desktop,
+       select
+       <menuchoice><guisubmenu>Panel</guisubmenu><guisubmenu>Create
+       panel</guisubmenu></menuchoice> from the <guimenu>Main
+       Menu</guimenu>. Choose from the following
+       <interface>Panel</interface> types:
+-->
+       デスクトップ上に新しい<interface>パネル</interface>を追加するに
+       は、<guimenu>メインメニュー</guimenu>から、
+       <menuchoice><guisubmenu>パネル</guisubmenu><guisubmenu>新規パネ
+       ルの作成</guisubmenu></menuchoice>と選択します。ここで、以下に
+       示す<interface>パネル</interface>の種類を選んでください:
+     </para>
+     <itemizedlist mark="bullet">
+      <listitem>
+        <para>
+<!--
+          <guilabel>Menu Panel</guilabel> &mdash; The <interface>Menu
+          Panel</interface> is a special <interface>Panel</interface>
+          which is always placed at the top of your screen and
+          contains several pull-down menus.  These are
+          <guimenu>Programs</guimenu>, <guimenu>Favorites</guimenu>,
+          <guimenu>Settings</guimenu>, <guimenu>Desktop</guimenu>, and
+          a special menu which provides quick access to GNOME-related
+          Internet resources (look for the bullet hole icon).  This
+          <interface>Panel</interface> can also hold the other objects
+          which other <interface>Panel</interface>s can hold, but it
+          does not have the configuration properties which other
+          <interface>Panel</interface>s have. Note that the
+          <interface>Menu Panel</interface> is more restrictive than
+          other <interface>Panel</interface>s, and some normal
+          <interface>Panel</interface> operations, such as moving the
+          <interface>Panel</interface>, cannot be performed on it.
+-->
+          <guilabel>メニューパネル</guilabel> &mdash; <interface>メニュー
+          パネル</interface>は、常に画面の最上段に置かれ、複数のプルダ
+          ウンメニューを持つ特別な<interface>パネル</interface>です。
+          このプルダウンメニューには、<guimenu>プログラム</guimenu>・
+          <guimenu>お気に入り</guimenu>・<guimenu>設定</guimenu>・
+          <guimenu>デスクトップ</guimenu>、そしてGNOME関連のインターネッ
+          トリソースに手軽にアクセスするための特別メニュー(弾痕のアイ
+          コンを探してみてください)があります。この
+          <interface>パネル</interface>は、他の
+          <interface>パネル</interface>が持つことのできる部品を持つこと
+          ができますが、他の<interface>パネル</interface>にある設定変更
+          の項目はありません。<interface>メニューパネル</interface>は、
+          他の<interface>パネル</interface>よりも制約が厳しいということ
+          と、<interface>パネル</interface>を移動させるといった他の
+          <interface>パネル</interface>には普通の操作が許されていないこ
+          とに注意してください。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+<!--
+          <guilabel>Edge Panel</guilabel> &mdash; An <interface>Edge
+           Panel</interface> is exactly like the main
+           <interface>Panel</interface> that starts up with GNOME; it
+           stretches along the whole length of one of screen edges. By
+           selecting this type of <interface>Panel</interface>, you
+           may add a new <interface>Panel</interface> to another edge
+           of your screen to give yourself more functionality.
+-->
+          <guilabel>エッジ・パネル</guilabel> &mdash; <interface>エッ
+          ジ・ パネル</interface>は、GNOMEの開始時のメイン
+          <interface>パネル</interface>と全く同じです。画面両端いっぱい
+          の長さに伸びています。このタイプの
+          <interface>パネル</interface>を選択すると、画面の反対側に新し
+          い<interface>パネル</interface>を追加して、より便利にできます。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+<!--
+          <guilabel>Aligned Panel</guilabel> &mdash;  An
+          <interface>Aligned Panel</interface> is also positioned
+          along one of the screen edges. But unlike an <interface>Edge
+          Panel</interface>, an <interface>Aligned Panel</interface>
+          will not stretch across the entire edge of the screen it is
+          on; It will only stretch as much as necessary to  display
+          the icons and applets it contains. It can be positioned
+          either at one of the corners (in this case, it will stretch
+          towards the opposite corner) or at the center of the edge
+          (in this case, it will stretch in both directions,
+          automatically recentering when you add new objects).
+-->
+          <guilabel>アライン・パネル</guilabel> &mdash; <interface>ア
+          ライン・パネル</interface>もまた、画面の片側に配置されていま
+          す。ただし、<interface>エッ
+          ジ・ パネル</interface>とは違って、<interface>ア
+          ライン・パネル</interface>は、スクリーンの幅一杯に伸びていま
+          せん。入っているアイコンやアプレットを表示するのに必要な幅の
+          分だけの長さをしています。これは、どちらか一方の角(そ
+          の場合、反対側の角に向けて伸びていきます)か、縁の中央部分(こ
+          の場合、新しい部品が追加されると、両方向に伸び、自動的に中央
+          に再配置されます)に置くことができます。
+        </para>
+        <para>
+<!--
+          If an <interface>Aligned Panel</interface> is aligned with
+          one of the corners, the hide buttons will work slightly
+          differently than for an <interface>Edge Panel</interface>.
+          The hide button closest to the edge of your screen will hide
+          the <interface>Panel</interface> as usual but the other hide
+          button will send the whole <interface>Panel</interface> to
+          the opposite corner. When the latter move is made it will
+          not hide the <interface>Panel</interface> since it is
+          changing the side of the screen it resides on.  If you want
+          to hide it you will have to press the hide button once again.
+-->
+          <interface>アライン・パネル</interface>が角に置かれている場
+          合では、隠すボタンは<interface>エッジ・パネル</interface>と
+          は少し異なる動作をします。画面の縁に最も近い隠すボタンは通
+          常通り<interface>パネル</interface>を隠しますが、逆側のボタ
+          ンは、反対側の角へ<interface>パネル</interface>全体を移動させ
+          ます。後者の移動をした場合には、<interface>パネル
+          </interface>は置かれる側をした後に、<interface>パネル
+          </interface>が隠れることはありません。
+          パネルを隠したい場合には、再度隠すボタンを押してください。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+<!--
+          <guilabel>Sliding Panel</guilabel> &mdash; A
+          <interface>Sliding Panel</interface> is very similar to an
+          <interface>Aligned Panel</interface>, but can be placed
+          anywhere along the screen edge, not necessarily in one of
+          the corners or in the center. As you add objects, it will
+          only grow in one direction &mdash; it won't automatically
+          recenter.
+-->
+          <guilabel>スライド・パネル</guilabel> &mdash; <interface>ス
+          ライド・パネル</interface>は、<interface>アライン・パネル
+          </interface>と大変良く似ていますが、角や中央に限らず、画面の縁であれば何処にで
+          も置くことができます。部品を追加すると、片方向に伸びていきま
+          す。&mdash; 自動的に中央へ置き直されることはありません。
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+<!--
+          <guilabel>Floating Panel</guilabel> &mdash; A
+          <interface>Floating Panel</interface> can be placed anywhere
+          on your screen, not necessarily along one of the edges.
+-->
+          <guilabel>フロ-ト・パネル</guilabel> &mdash; <interface>フロ- 
+          ト・パネル</interface>は、画面の縁に限らず、画面上のあらゆる
+          場所に置くことができます。
+       </para>
+      </listitem>
+     </itemizedlist>
+
+     <tip>
+      <title>パネルタイプの変更</title>
+      <para>
+<!--
+       You can also change type of existing panel &mdash; for example,
+       convert edge panel to a floating panel, see <xref
+       linkend="panelproperties">.
+-->
+       既にあるpanelの種類を変更することができます。 &mdash; 例えば、
+       エッジ・パネルからフロート・パネルへなど。<xref
+       linkend="panelproperties">を参照してください。
+      </para>
+     </tip>
+
+    </sect2>
+
+    <sect2 id="panelmoving">
+     <title>パネルの移動</title>
+     <para>
+<!--
+      Any <interface>Panel</interface> you have on your desktop(except
+      a <interface>Menu Panel</interface>) can be
+      moved by pressing the middle mouse button, or by simultaneously
+      pressing the left and right mouse buttons, while dragging the
+      <interface>Panel</interface> to
+      the desired position on your screen. If you do not have a middle
+      mouse button and did not configure your mouse to emulate a
+      middle button you may also move a <interface>Panel</interface>
+      by changing its location in the <interface>Panel
+      properties</interface> dialog.  You can read more about this in
+      <xref linkend="panelproperties"> of this documentation.
+--> 
+      マウスの中ボタンもしくは左と右のボタンを同時に押してドラッグするこ
+      とで、(<interface>メニュー・パネル</interface>を除く)デスクトッ
+      プ上のあらゆる<interface>パネル</interface>を、画面の任意の場所に
+      移動させることができます。マウスに中ボタンが無かったり、中ボタン
+      をエミュレートするようにマウスが設定されていない場合には、
+      <interface>パネルのプロパティ</interface>ダイアログでその位置を
+      変更する事ができます。この文書の、<xref
+      linkend="panelproperties">により詳しい記述があります。
+     </para>
+    </sect2>
+    <sect2 id="panelremoving">
+     <title>パネルの削除</title>
+     <para>
+<!--
+      To remove an existing <interface>Panel</interface>, right-click
+      on it and choose
+      <menuchoice><guisubmenu>Panel</guisubmenu><guisubmenu>Remove
+      this panel</guisubmenu></menuchoice>. If the
+      <interface>Panel</interface> is not empty, you will be prompted
+      to confirm.
+--> 
+      既にある<interface>パネル</interface>を削除するには、そのパネル上で
+      右クリックをして、<menuchoice><guisubmenu>パネル
+      </guisubmenu><guisubmenu>このパネルを削除
+      </guisubmenu></menuchoice>と選択してください。その
+      <interface>パネル</interface>が空でない場合には、確認のプロンプト
+      が表示されます。
+     </para>
+     <note>
+      <title>最後のパネルを削除する</title>
+      <para>
+<!--
+        You must have at least one <interface>Panel</interface>
+        running at all times.  GNOME will not allow you to remove your
+        only <interface>Panel</interface>.
+-->
+        実行中は、最低1つのパネルを持っていなければなりません。GNOMEで
+        は、最後に残ったパネルを削除することはできません。
+      </para>
+     </note>
+    </sect2>
+   </sect1>
+
+
+<!-- ############### Global Panel Preferences  ################## -->
+  <sect1 id="globalpanelprefs">
+   <title>パネル全体の設定</title>
+    <para>
+<!--
+     To start configure the behavior of all of your
+     <interface>Panel</interface>s, select
+     <menuchoice><guisubmenu>Panel</guisubmenu> <guisubmenu>Global
+     Preferences</guisubmenu></menuchoice> from  the <link
+     linkend="mainmenu"><guimenu>Main Menu</guimenu></link>.
+-->
+     全<interface>パネル</interface>の動作についての設定を行うには、
+     <link linkend="mainmenu"><guimenu>メインメニュー</guimenu></link>
+     から<menuchoice><guisubmenu>パネル</guisubmenu> <guisubmenu>全体
+     の設定</guisubmenu></menuchoice>と選択してください。
+    </para>
+    <para>
+<!--
+     This will open the <interface>Global Panel
+     Preferences</interface> dialog. (This dialog is a
+     component of the <application>GNOME Control
+     Center</application>).  With this dialog you can control many
+     properties shared by all of your <interface>Panel</interface>s.
+     <figure>
+      <title>The Global Panel Configuration Dialog</title>
+     <screenshot>
+      <screeninfo>The Global Panel Configuration Dialog</screeninfo>
+       <graphic fileref="./figures/glob_pref_anim"
+       format="png" srccredit="muet">
+       </graphic>
+     </screenshot>
+     </figure>
+-->
+     これにより、<interface>パネル全体の設定</interface>ダイアログ(この
+     ダイアログは、<application>GNOMEコントロールセンター
+     </application>の一部です。)が表示されます。このダイアログでは、全
+     ての<interface>パネル</interface>が共有している多くの設定を操作す
+     ることができます。
+    </para>
+    <para>
+<!--
+     The <interface>Global Panel Configuration</interface> dialog
+     contains the following five tabs:
+     <guilabel>Animation</guilabel>, <guilabel>Buttons</guilabel>,
+     <guilabel>Panel Objects</guilabel>, <guilabel>Menu</guilabel>, and
+     <guilabel>Miscellaneous</guilabel>. Each of these tabs is
+     explained below.
+-->
+     <interface>パネル全体の設定</interface>ダイアログには、以下の５つ
+     のタブがあります: <guilabel>アニメーション</guilabel>, <guilabel>
+     ボタン</guilabel>, <guilabel>パネルオブジェクト</guilabel>,
+     <guilabel>メニュー</guilabel> <guilabel>その他</guilabel>。以降では、
+     それぞれのタブについて説明します。
+    </para>
+    <sect2 id="animtab">
+     <title>アニメーションタブ</title>
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+<!--
+       <guilabel>Enable animations</guilabel> &mdash; This allows
+       <interface>Panel</interface>s and drawers to animate as the
+       hide and unhide.
+-->
+       <guilabel>アニメーションを有効にする</guilabel> &mdash; これは、
+       <interface>パネル</interface>や引き出しで、開いたり閉じたりする
+       際にアニメーション表示させます。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Constant speed animations</guilabel> &mdash; By
+       default, the animations start slowly, but then accelerate. If
+       you enable this option, the animations will not use any
+       acceleration.
+-->
+       <guilabel>アニメーションは一定速度にする</guilabel> &mdash; 標
+       準では、アニメーションはゆっくり始まりますが、次第に加速してい
+       きます。このお部署んを有効にすると、アニメーションはあらゆる加
+       速効果を使用しません。
+      </para>
+     </listitem>
+      <listitem>
+      <para>
+<!--
+       <guilabel>[Animation speed] Auto hide</guilabel> &mdash; This
+       controls the speed of animation for any
+       <interface>Panel</interface> which is set to hide automatically
+       when the mouse leaves the <interface>Panel</interface>. The
+       slowest setting is 1, and the fastest is 100.
+-->
+       <guilabel>[アニメーションの描画速度]自動的に隠す</guilabel>
+       &mdash; マウスが <interface>パネル</interface>から離れると自動的
+       に隠すように設定されているあらゆる<interface>パネル</interface>
+       におけるアニメーションのスピードを操作します。最低速度が1、最高
+       速度が100です。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>[Animation speed] Explicit hide</guilabel> &mdash; This
+       controls the hide speed when you press a <interface>Panel</interface>'s
+       <guibutton>Hide Button</guibutton>. The slowest setting is 1,
+       and the fastest is 100.
+-->
+       <guilabel>[アニメーションの描画速度]手動で隠す</guilabel>
+       &mdash; <interface>パネル</interface>の隠すボタンを押したときの、
+       隠れる速さを操作します。最低速度が1、最高速度が100です。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>[Animation speed] Drawer sliding</guilabel> &mdash;
+       This controls how fast a drawer menu will raise when you
+       press a drawer button on a <interface>Panel</interface>. The
+       slowest setting is 1, and the fastest is 100.
+-->
+       <guilabel>[アニメーションの描画速度]引き出しのスライド
+       </guilabel> &mdash; <interface>パネル</interface>上で引き出しボ
+       タンを押した時、どのくらいの速さで中身をだすかを操作します。最
+       低速度が1、最高速度が100です。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>[Auto hide] Delay (ms)</guilabel> &mdash; If you have
+       a <interface>Panel</interface> set to minimize automatically
+       after the mouse leaves the <interface>Panel</interface>
+       this will allow you to control how much time passes before it
+       minimizes.  The <interface>Panel</interface>
+       will start the time count once the mouse is no longer over
+       it. It will appear again when the mouse is passed over the
+       portion of the <interface>Panel</interface> that remains
+       visible. This time is measured in milliseconds.
+-->
+       <guilabel>[自動的に隠す]遅延(ms)</guilabel> &mdash;
+       <interface>パネル</interface>からマウスが放れると自動的に最小化
+       するように設定している場合に、ここで、最小化するまでの時間をどのくらい
+       おくかという設定することができます。<interface>パネル
+       </interface>は、自分の上にマウスから外れると時間を数え始めます。
+       まだ見えている<interface>パネル</interface>の一部をマウスが通過
+       すると、再表示されます。この時間は、ミリ秒単位です。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>[Auto hide] Size (pixels)</guilabel> &mdash;
+       This determines the number of pixels that show when a
+       <interface>Panel</interface> is minimized, for any
+       <interface>Panel</interface> which is set to hide automatically.
+       To maximize the <interface>Panel</interface>, the pointer must
+       enter the <interface>Panel</interface> area.
+-->
+       <guilabel>[自動的に隠す]大きさ(ピクセル)</guilabel> &mdash; こ
+       こでは、自動的に隠すように設定されている
+       <interface>パネル</interface>が最小化されている時の、見える部分
+       をピクセル数で決定します。<interface>パネル</interface>を最大化
+       するには、ポインタを<interface>パネル</interface>の領域に持って
+       いかねばなりません。
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   <sect2 id="launchtab">
+    <title>ボタンタブ</title>
+    <para>
+<!--
+      In this section, you can set the
+      appearance of the various types of buttons: launcher buttons, menu
+      buttons, drawer buttons, and special buttons(such as the <link
+      linkend="logoutbutton">Logout Button</link> and the <link
+      linkend="lockbutton">Lock Button</link>).
+-->
+      この部分では、各種ボタンの見た目を設定することができます: ランチャ
+      ボタン・メニューボタン・引き出しボタン・特殊ボタン(<link
+      linkend="logoutbutton">ログアウトボタン</link>や<link
+      linkend="lockbutton">ロックボタン</link>)
+    </para>
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+<!--
+       <guilabel>Button Type</guilabel> &mdash; Select the type of
+       button you wish to configure.
+-->
+       <guilabel>ボタンタイプ</guilabel> &mdash; 設定したいと思ってい
+       るボタンの種類を選択してください。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Tiles enabled</guilabel> &mdash; This checkbox will
+       enable background tiles for buttons of the given type on the
+       <interface>Panel</interface>.
+-->
+       <guilabel>タイルを使用</guilabel> &mdash; このチェックボックス
+       は、上で選択した種類のボタンが<interface>パネル</interface>上に
+       ある時に、背景タイルを有効にします。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Normal tile</guilabel> &mdash; This shows the image
+       used for the tile in the up position (inactive, not
+       pressed). To choose another image file, just click on the
+       image, and it will launch the icon browser. Tiles must be
+       enabled to access this option.
+-->
+       <guilabel>通常タイル</guilabel> &mdash; 飛び出ている(非
+       アクティブ、押されていない)状態のタイルで使用される画
+       像です。その他の画像ファイルを選択するには、この画像をクリック
+       して、アイコンブラウザを呼び出してください。このオプションを使
+       うには、タイルが有効になっていなければなりません。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Clicked tile</guilabel> &mdash; This shows the image
+       used for the tile in the down position (active, pressed). To
+       choose another image file, just press on the image, and it will
+       launch the icon browser. Tiles must be enabled to access this
+       option.
+-->
+       <guilabel>クリックドタイル</guilabel> &mdash; へこんで
+       いる(アクティブ、押されている)状態のタイルで使用される画像です。
+       その他の画像ファイルを選択するには、この画像をクリックして、ア
+       イコンブラウザを呼び出してください。このオプションを使うには、
+       タイルが有効になっていなければなりません。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Border width (tile only)</guilabel> &mdash; This
+       determines the width of the border around an icon. For example,
+       if you set border width equal to 5, this will ensure that at
+       least 5 pixels of the tile will be shown on every side of the
+       icon; if necessary, the icon will be cropped. This is very
+       useful if you have an icon that would normally cover up a tile.
+       Tiles must be enabled to access this option.
+-->
+       <guilabel>境界線の幅(タイルのみ)</guilabel> &mdash; アイコン周
+       囲の境界線の幅を決めます。例えば、境界線の幅を5にすると、アイコン
+       の全側面に最低5ピクセル幅分のタイルを表示することができます。必
+       要であれば、アイコン部分を侵食します。これは、普通ではタイルを
+       すっかり覆ってしまうようなアイコンを持つ場合、とても便利です。
+       タイルは、このオプションにアクセスできるようになっていなければ
+       なりません。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Depth (displacement when pressed)</guilabel> &mdash;
+       This determines the depth an icon will displace when
+       pressed. Tiles must be enabled to access this option.
+-->
+       <guilabel>深さ</guilabel> &mdash; アイコンが押されたときにずれ
+       る幅を決めます。このオプションを使うには、タイルが有効になって
+       いなければなりません。
+      </para>
+     </listitem>
+    </itemizedlist>
+      <para>
+<!--
+       This tab also contains 3 options which affect all types
+       of buttons simultaneously:
+-->
+       このタブには、全種類のボタン同時に影響する3つのオプションもあります。
+     </para>
+      <itemizedlist>
+	<listitem>
+         <para>
+<!--
+          <guilabel>Make buttons flush with panel edge</guilabel>
+	  &mdash; This allows you to align the button with
+	  the edge of the <interface>Panel</interface>.  If this
+	  option is not set then the border width setting is obeyed.
+	  By default this option is off.
+-->
+          <guilabel>ボタンとパネルを同じ高さにする</guilabel> &mdash;
+          <interface>パネル</interface>の境界に合わせてボタンを配置しま
+          す。このオプションをセットしていない場合には、「境界線の幅」
+          の設定に従います。標準では、このオプションはオフです。
+	  </para>
+	</listitem>
+	<listitem>
+	 <para>
+<!--
+          <guilabel>Show button tiles only when cursor is over
+	  the button</guilabel> &mdash; If this option is enabled, the
+	  tiles will only appear when mouse cursor is over the button.
+-->
+          <guilabel>カーソルが上に来た時のみボタンのタイルを表示する
+          </guilabel> &mdash; このオプションが有効になっていると、マウ
+          スカーソルがボタンの上に来た時のみタイルが表示されます。
+	 </para>
+	</listitem>
+	<listitem>
+	  <para>
+<!--
+	    <guilabel>Prelight buttons on mouseover</guilabel>
+	    &mdash; Choosing this option will make the buttons
+	    brighten up when the mouse cursor is over them.
+-->
+            <guilabel>マウスが来たときボタンを明るくする</guilabel>
+            &mdash; このオプションを選ぶと、マウスカーソルがボタンの上
+            に来た時に、ボタンが明るくなります。
+	  </para>
+	</listitem>
+      </itemizedlist>
+   </sect2>
+    <sect2 id="appletstab">
+      <title>パネルオブジェクト</title>
+      <para>
+<!--
+	This tab shows some options related to the placement and moving
+	of objects on the <interface>Panel</interface>.
+-->
+        このタブには、<interface>パネル</interface>の配置や移動に関する
+        オプションがあります。
+      </para>
+      <itemizedlist>
+	<listitem>
+	  <para>
+<!--
+	    <guilabel>Default movement mode</guilabel> &mdash; Here
+	    you can choose the default mode for moving objects on
+	    the <interface>Panel</interface>. Possible variants are
+-->
+            <guilabel>デフォルトの移動方式</guilabel> &mdash;
+            <interface>パネル</interface>上での部品の移動についての標準
+            モードを選択することができます。選択しには、
+	    </para>
+	    <itemizedlist>
+	      <listitem>
+               <para>
+<!--
+                <emphasis>Switched</emphasis> &mdash;
+                When the object you are moving hits another object,
+                they switch places.
+-->
+                <emphasis>入れ替え移動</emphasis> &mdash;
+                移動させている部品が他の部品にぶつかると、それらを入れ
+                替えます。
+	       </para>
+	      </listitem>
+
+	      <listitem>
+               <para>
+<!--
+                <emphasis>Free</emphasis> &mdash; When
+		the object you are moving hits another object, it
+                "jumps" over it, so no other object is disturbed.
+                This is a convenient option if you like the
+                current arrangement of objects on your
+		<interface>Panel</interface> and want to leave the
+		other objects in place.
+-->
+                <emphasis>自由に移動</emphasis> &mdash; 移動させている
+                部品が他の部品にぶつかると、それを"飛び越え"て、部品の
+                無い所に置かれます。これは、
+                <interface>パネル</interface>上の現時点での配置が気に入っ
+                ていて、他の部品を残しておきたいときには、便利なオプショ
+                ンです。
+		</para>
+	      </listitem>
+
+	      <listitem>
+<!--
+		<para>
+		  <emphasis>Push</emphasis> &mdash; The object you are
+		  moving pushes all other objects in front of it, like
+		  a snow plow.
+	        </para>
+-->
+        <para>
+                  <emphasis>押し移動</emphasis> &mdash; 移動している部
+                  品が、まるで雪かきのように、他の部品を進行方向に押し
+                  やります。
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  <para>
+<!--
+            You can override the default movement mode by dragging
+	    an  object while holding <keycap>Ctrl</keycap> (for
+	    switched movement), <keycap>Alt</keycap> (for free
+	    movement), or <keycap>Shift</keycap> (for push movement)
+	    button pressed.
+--> 
+            <keycap>Ctrl</keycap>キー(入れ替え移動)または
+            <keycap>Alt</keycap>キー(自由に移動)または
+            <keycap>Shift</keycap>キー(押し移動)を押しながらドラッグす
+            ることで、標準の移動モードを無視することができます。
+	    </para>
+	</listitem>
+	<listitem>
+	  <para>
+<!--
+	    <guilabel>Padding</guilabel> &mdash;  This changes
+	    the amount of space (padding) between objects on the
+	    <interface>Panel</interface>. It is measured in pixels.
+-->
+            <guilabel>間隔</guilabel> &mdash;
+            <interface>パネル</interface>上の部品の間隔を変更します。単
+            位はピクセルです。
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </sect2>
+
+   <sect2 id="menutab">
+    <title>メニュータブ</title>
+      <para>
+<!--
+       In this tab, you can set the options determining the
+       appearance of <interface>Panel</interface> menus.
+-->
+       このタブでは、<interface>パネル</interface>メニューの見た目を決
+       めるオプションを設定することができます。
+      </para>
+      
+     <itemizedlist>
+      <listitem>
+      <para>
+<!--
+       <guilabel>Use large icons</guilabel> &mdash; This will use
+       large icons (rather than the default size) in menus. This is only
+       practical for those with high resolution screens (1280x1024 and
+       higher).
+-->
+       <guilabel>大きいアイコンを使う</guilabel> &mdash; メニューの中
+       で(標準サイズよりも)大きなアイコンを使います。これは、高解像度
+       (1280x1024以上)の画面でのみ実用的です。
+      </para>
+     </listitem>
+      <listitem>
+      <para>
+<!--
+       <guilabel>Show [...] buttons</guilabel> &mdash; This will add
+       small buttons labelled by three dots (...) to all the items of
+       the <guimenu>Main Menu</guimenu>. Clicking on such a button
+       with the left mouse button will bring the
+       <guimenu>pop-up</guimenu> menu for this item, i.e. the same
+       menu which you get by clicking on the menu item with the right
+       mouse button.
+-->
+       <guilabel>[...]ボタンを表示</guilabel> &mdash; <guimenu>メイン
+       メニュー</guimenu>の全項目に、ピリオド3つ(...)のラベルがついた
+       小さなボタンを付けます。このボタンをマウスで左クリックすると、
+       このメニューの<guimenu>ポップアップ</guimenu>メニュー(そのメニュー
+       で右クリックしたときに表示されるものと同じもの)が表示されます。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Show popup menus outside of panels</guilabel> &mdash;
+       When this button is on, it allows pop-up menus to appear away
+       from the <interface>Panel</interface>. When toggled off, the
+       pop-ups will appear over the <interface>Panel</interface>. This
+       can be useful on smaller screens or cluttered desktops.
+-->
+       <guilabel>パネルの外側にポップアップメニューを表示する
+       </guilabel> &mdash; このボタンがオンになっていると、ポップアッ
+       プメニューが<interface>パネル</interface>の外側に表示されます。
+       オフになっていると、ポップアップメニューは
+       <interface>パネル</interface>の上に被さります。これは、画面が小
+       さかったりデスクトップが混雑しているときに便利です。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Keep menus in memory</guilabel> &mdash; This will
+       keep your menus in memory so that they do not rescan for added
+       items. This can increase the speed of GNOME, but may also
+       result in you missing new items added to your menu.
+-->
+       <guilabel>メニューをメモリ内に保持</guilabel> &mdash; メニュー
+       をメモリ内に保持することで、追加された項目のために再スキャンしな
+       くなります。これによりGNOMEの動作速度を向上させることができます
+       が、メニューに追加した新しい項目を見失うかも知れません。
+	</para>
+	</listitem>
+	<listitem>
+         <para>
+<!--
+          <guilabel>Global menu</guilabel> &mdash; This
+	  allows you to configure the <link linkend="globalmenu">
+          <guimenu>Global Menu</guimenu></link>
+	  which you get by right-clicking on a
+	  <interface>Panel</interface>, or by using
+	  the keyboard shortcut. For each of the possible submenus
+	  (<guisubmenu>Programs</guisubmenu>,
+	  <guisubmenu>Favorites</guisubmenu>, etc.), you can choose
+	  whether it should be included as a part of the <guimenu>Global
+	  Menu</guimenu>, as a submenu, or not included at all. A
+	  description of these submenus is given in <xref
+	  linkend="submenus">.
+-->
+          <guilabel>一般メニュー</guilabel> &mdash;
+          <interface>パネル</interface>上で右クリックした時やキーボード
+          ショートカットで表示される<link linkend="globalmenu">
+          <guimenu>一般メニュー</guimenu></link>の設定をすることができ
+          ます。それぞれの表示されるかも知れないサブメニュー
+          (<guisubmenu>プログラム</guisubmenu>、<guisubmenu>お気に入り
+          </guisubmenu>、その他)に対して、<guilabel>一般メニュー
+          </guilabel>の一部に含めるか、サブメニューとするか、まったく
+          含めないか、を選ぶことができます。これらのサブメニューに関す
+          る詳しい解説は、<xref linkend="submenus">にあります。
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </sect2>
+
+   <sect2 id="misctab">
+    <title>その他タブ</title>
+      <para>
+<!--
+       The <guilabel>Miscellaneous</guilabel> tab contains options for various
+       customizable behavior that didn't fit anywhere else.
+-->
+       <guilabel>その他</guilabel>タブには、他のタブへは分類できない振る
+       舞いについてのオプションがあります。
+      </para>
+
+     <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+<!--
+       <guilabel>Tooltips enabled</guilabel> &mdash; This option
+       defines whether GNOME should show a tooltip when the
+       pointer pauses on a <interface>Panel</interface> item.
+-->
+       <guilabel>ツールチップを表示する</guilabel> &mdash; このオプショ
+       ンでは、ポインタが<interface>パネル</interface>部品上に止ったと
+       きに、GNOMEがツールチップを表示するかどうかを決めます。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Close drawer if a launcher inside it is
+       pressed</guilabel> &mdash; By default drawers will remain open
+       when you select an item within one. This can be annoying as the
+       drawer will remain open until you close it with a mouse
+       click. With this option selected drawers will close
+       automatically when you select any item within one.
+-->
+       <guilabel>ランチャが押されたらその引き出しを自動的に閉じる
+       </guilabel> &mdash; 標準では、その中にある項目が選択されたても、
+       開いたままになっています。マウスクリックで閉じるまで開いたまま
+       でいるのは鬱陶しい事もあり得ます。このオプションを選ぶことで、
+       その中にある項目を選択すると、自動的に引き出しを閉じるようにする
+       ことができます。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Raise panels on mouse-over</guilabel> &mdash; If you
+       are using a window manager that is not GNOME compliant it will
+       not understand its relationship with the
+       <interface>Panel</interface>. This can cause
+       your <interface>Panel</interface> to be covered by
+       applications. If you enable this feature you can have the
+       <interface>Panel</interface> automatically raise when your
+       mouse is over it.
+-->
+       <guilabel>マウスが来た時パネルを上げる</guilabel> &mdash; GNOME
+       対応でないウィンドウマネージャを使っている場合には、そのウィン
+       ドウマネージャは、<interface>パネル</interface>との関連を理解し
+       ないでしょう。すると、<interface>パネル</interface>がアプリケー
+       ションの上に被さってしまうことがあり得ます。この機能を有効にす
+       ると、<interface>パネル</interface>の上にMausが来た時に、自動的
+       に<interface>パネル</interface>を表示させることができるようにな
+       ります。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Keep panel below windows</guilabel> &mdash; If you
+       are using a GNOME compliant window manager, the window manager
+       will understand its relationship with the
+       <interface>Panel</interface>. If you choose
+       this feature the window manager and GNOME will allow
+       applications to appear over the
+       <interface>Panel</interface>. This can be useful on
+       smaller screens.
+-->
+       <guilabel>パネルをウィンドウの下におく</guilabel> &mdash; GNOME
+       対応のウィンドウマネージャを使用している場合、そのウィンドウマ
+       ネージャは<interface>パネル</interface>との関連を理解します。こ
+       の機能を有効にすると、ウィンドマネージャとGNOMEは、アプリケーショ
+       ンを<interface>パネル</interface>より前にだして表示させることが
+       できます。これは、狭い画面を使用しているときに便利です。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Confirm removal of panels with a
+       dialog</guilabel> &mdash; If this option is enabled,
+       GNOME will ask for confirmation before removing a
+       <interface>Panel</interface>.
+-->
+       <guilabel>パネルの削除をダイアログで確認する</guilabel> &mdash; 
+       このオプションが有効になっていると、GNOMEは
+       <interface>パネル</interface> を削除する前に、確認を求めるように
+       なります。
+      </para>
+     </listitem>
+    </itemizedlist>
+    <para>
+<!--
+     This tab also allows you to configure some global key
+     bindings. You can define key bindings for the <link
+     linkend="globalmenu"><guimenu>Global Menu</guimenu></link>(ie.
+     <guimenu>Popup Menu</guimenu>) and
+     for the <link linkend="runbutton"><interface>Run
+     Program</interface></link> dialog. (The default key bindings for
+     these are
+     <keycombo action=simul>
+      <keycap>Alt</keycap>
+      <keycap>F1</keycap>
+     </keycombo>
+     and 
+     <keycombo action=simul>
+      <keycap>Alt</keycap>
+      <keycap>F2</keycap>
+     </keycombo>
+     respectively.)  To
+     change these key bindings,  select a key from the drop-down list
+     or press the <guibutton>Grab key&hellip;</guibutton> button and then
+     press the desired key.
+-->
+    このタブでも、いくつかの全体的なキーバインドを設定することができます。<link
+     linkend="globalmenu"><guimenu>Global Menu</guimenu></link>や<link
+     linkend="runbutton"><interface>Run Program</interface></link>ダイ
+     アログを呼び出すためにキーバインドを定義することができます。(これ
+     らの標準キーバインドはそれぞれ、
+     <keycombo action=simul>
+      <keycap>Alt</keycap>
+      <keycap>F1</keycap>
+     </keycombo>
+     and 
+     <keycombo action=simul>
+      <keycap>Alt</keycap>
+      <keycap>F2</keycap>
+     </keycombo>
+     です。
+     )これらのキーバインドを変更するためには、ポップダウンリストから選
+     択するか、もしくは<guibutton>Grab key&hellip;</guibutton>ボタンを
+     押してから希望するキーを入力してください。
+    </para>
+      <note>
+	<title>メニューとウィンドウズキーの利用</title>
+	<para>
+<!--
+	  You should be able to use the special <keycap>Menu</keycap>
+	  and <keycap>Windows</keycap> keys for keybindings. If you
+	  have problems with using these keys, the most probable reason
+	  is that your X server was incorrectly configured: the
+	  keyboard type chosen during installation does not match
+	  your actual keyboard. If you are using
+	  <application>XFree86</application> server, you can fix it by
+	  manually editing the configuration file. This file, named
+	  <filename>XF86Config</filename>, is usually located in
+	  the <filename class="directory">/etc</filename> or <filename
+	  class="directory">/etc/X11</filename>
+	  directory. Open this file with any text editor (not a
+	  word-processor!) and find the line containing the word
+	  <literal>XkbModel</literal>. Change it to read
+	  <programlisting>
+              XkbModel "pc104"
+	  </programlisting>
+	  You must be root (system administrator) to do this. Now,
+	  logout of GNOME and restart the X server by simultaneously
+	  pressing <keycombo> <keycap>Ctrl</keycap>
+	  <keycap>Alt</keycap> <keycap>Backspace</keycap> </keycombo>.
+-->
+          キーバインドのために、特別な<keycap>Menu</keycap>キーと
+          <keycap>Windows</keycap>キーが使えるようになっていなければな
+          りません。これらのキーの仕様に問題がある場合、最もありうる原
+          因に、X サーバの設定が正しくないことが挙げられます。インストー
+          ル時に選択したキーボードの種類が実際のキーボードに合致してい
+          ないとか。この<filename>XF86Config</filename>という名前の設
+          定ファイルは、大抵<filename
+          class="directory">/etc</filename>ディレクトリもしくは
+          <filename class="directory">/etc/X11</filename>ディレクトリ
+          にあります。適当なテキストエディタで開いて(ワープロを使わな
+          いように!)  <literal>XkbModel</literal>という文字のある行を
+          探してください。その部分を以下のように変更しましょう。
+	  <programlisting>
+              XkbModel "pc104"
+	  </programlisting>
+          これを行うには root (システム管理者) でなければなりません。
+          さあ、GNOMEを抜けて、<keycombo> <keycap>Ctrl</keycap>
+          <keycap>Alt</keycap> <keycap>Backspace</keycap> </keycombo> 
+          を同時に押して X サーバを再起動させましょう。
+	</para>
+      </note>
+      <warning>
+	<title>XF86Configを編集する際は注意しましょう</title>
+	<para>
+<!--
+	Making a mistake while editing the <filename>XF86Config</filename>
+	file can make your keyboard or screen unusable in X
+	Windows. Before editing this file, you should make a backup copy of
+	it and make sure you know how to restore it from the backup file
+	without using X Windows or GNOME, i.e., from a terminal. If
+	you don't know how to do this, then do not edit this file.
+-->
+        <filename>XF86Config</filename>ファイルの編集を失敗すると、X 
+        でキーボードや画面を使うことができなくなります。このファイルを
+        編集する前に、ファイルのバックアップをとっておいて、さらに X 
+        もしくは GNOME 無し(例えば、ターミナルから)でバックアップファ
+        イルから復元する手段を知っておくべきでしょう。どうやればいいの
+        かわからない人は、このファイルを編集しては行けません。
+       </para>
+      </warning>
+   </sect2>
+   </sect1>
+
+
+<!-- ###############  Individual Panel Properties  ################ -->
+
+   <sect1 id="panelproperties">
+    <title>パネル個別の設定</title>
+    <para>
+     <indexterm id="idx-a62"> <primary>Panel</primary>
+      <secondary>パネル個別の設定</secondary>
+     </indexterm>
+     <indexterm id="idx-a63">
+      <primary>パネル</primary> <secondary>設定</secondary>
+      </indexterm>
+<!--
+      In addition to global Panel properties, described in <xref
+      linkend="globalpanelprefs">, some properties can be configured
+      individually for each <interface>Panel</interface>.  This
+      includes <interface>Panel</interface> type (Edge,
+      Aligned, Sliding, Floating), size, location, background color,
+      and hiding preferences. To change these properties for a
+      <interface>Panel</interface>,
+      click on it with the right mouse button and select
+      <menuchoice><guimenu>Panel</guimenu>
+      <guisubmenu>Properties</guisubmenu></menuchoice>. You may also
+      press the <guibutton>Main Menu</guibutton> button and select
+      <menuchoice><guimenu>Panel</guimenu>
+      <guisubmenu>Properties</guisubmenu></menuchoice>.
+-->
+      <xref linkend="globalpanelprefs">で説明したパネル全体の設定に加
+      えて、いくつかの設定はそれぞれのパネル毎に行うことができます。こ
+      れには、<interface>パネル</interface>の種類(エッジ、アライン、ス
+      ライド、フロート)、大きさ、位置、背景色、隠蔽方式があります。あ
+      るパネルについてこれらの設定を変更するためには、そのパネル上で右
+      クリックして、<menuchoice><guimenu>パネル</guimenu> <guisubmenu>
+      プロパティ</guisubmenu></menuchoice>と選択します。<guibutton>メ
+      インメニュー</guibutton>を押して、<menuchoice><guimenu>パネル
+      </guimenu> <guisubmenu>プロパティ</guisubmenu></menuchoice>と選
+      択することもできます。
+    </para>
+    <para>
+<!--
+      From the <guisubmenu>Properties</guisubmenu> submenu, you can
+      choose <guimenuitem>All properties...</guimenuitem>, which will
+      launch the <interface>Panel properties</interface> dialog.  If you
+      are already familiar with this dialog, you can more quickly
+      change some of the properties &mdash; say,
+      <interface>Panel</interface> size or type
+      &mdash; by selecting the appropriate item in the
+      <guisubmenu>Properties</guisubmenu> menu.
+-->
+      <guisubmenu>プロパティ</guisubmenu>サブメニューでは、
+      <guimenuitem>全てのプロパティ</guimenuitem>を選択することができ、
+      これは<interface>パネルのプロパティ</interface>ダイアログを呼び
+      出します。すでにこのダイアログについて熟知していれば、
+      <guisubmenu>プロパティ</guisubmenu>メニューの適切な項目を選択す
+      ることで、いくつかのプロパティ &mdash; つまり
+      <interface>パネル</interface>の大きさや種類&mdash; についてはより
+      手早く変更することができます。
+    </para>
+    <para>
+<!--
+     The <interface>Panel properties</interface> dialog contains two
+     tabs to help you set the active <interface>Panel</interface>
+     properties: <guilabel>Edge
+     Panel</guilabel> (or <guilabel>Aligned</guilabel>, &hellip -
+     depending on your <interface>Panel</interface> type) and
+     <guilabel>Background</guilabel>. Both of these tabs are explained
+     below.
+-->
+     <interface>パネルのプロパティ</interface>ダイアログには、2つのタ
+     ブがあり、選択した<interface>パネル</interface>の設定を助けます:
+     <guilabel>エッジ・パネル</guilabel>(もしくは<guilabel>アライン・
+     パネル</guilabel>、&hellip; - <interface>パネル</interface>の種類
+     に依存します)と<guilabel>背景</guilabel>。それぞれのタブについて、
+     以降で説明します。
+    </para>
+
+   <sect2 id="edgetab">
+    <title>エッジ・パネルタブ</title>
+    <figure>
+     <title>エッジ・パネルプロパティダイアログ</title>
+    <screenshot>
+     <screeninfo>ッジ・パネルプロパティダイアログ</screeninfo>
+      <graphic fileref="./figures/panel_props_edge"
+      format="png" srccredit="muet">
+      </graphic>
+    </screenshot>
+    </figure>
+    <itemizedlist mark="bullet">
+	<listitem>
+	  <para>
+<!--
+	    <guilabel>Panel Position</guilabel> &mdash; This changes
+	    the position of the <interface>Panel</interface> on the screen. For
+	    <interface>Edge Panel</interface>, you must specify an
+	    edge (<guilabel>Top</guilabel>,
+	    <guilabel>Right</guilabel>, <guilabel>Left</guilabel> or
+	    <guilabel>Bottom</guilabel>). For <interface>Aligned
+	    Panel</interface>, you have to specify an edge and one of
+	    the edge's ends or the center. For <interface>Sliding
+	    Panel</interface>, you must specify the edge and offset
+	    from one of the corners (in pixels). Finally, for
+	    <interface>Floating Panel</interface> you must specify
+	    orientation (horizontal or vertical) and position of
+	    <interface>Panel</interface>'s left top corner (relative
+	    to the left top corner of the screen and measured in
+	    pixels).
+-->
+            <guilabel>パネルの位置</guilabel> &mdash;
+            <interface>パネル</interface>の画面上の位置を変更します。
+            <interface>エッジ・パネル</interface>では、どこかの縁
+            (<guilabel>上</guilabel>、<guilabel>右</guilabel>、
+            <guilabel>左</guilabel>、<guilabel>下</guilabel>)を指定し
+            なければなりません。<interface>アライン・パネル
+            </interface>では、どこかの縁とその中での端もしくは中央を選
+            択しなければなりません。<interface>スライド・パネル
+            </interface>では、縁とどこかの角からの距離を指定しなければ
+            なりません(ピクセル単位)。<interface>フロート・パネル
+            </interface>では、向き(水平または垂直)と
+            <interface>パネル</interface>の左上角の位置(画面の左上角と
+            のピクセル距離)を指定しなければなりません。
+	  </para>
+	  <para>
+<!--
+	    The <interface>Panel</interface> will change position once
+	    you have pressed the <guibutton>Apply</guibutton> or
+	    <guibutton>OK</guibutton> button.
+-->
+            <interface>パネル</interface>は、<guibutton>適用
+            </guibutton>もしくは<guibutton>OK</guibutton>ボタンを押すと
+            位置を変えます。
+	  </para>
+	  <tip>
+	    <title>パネルを手で移動させる</title>
+	    <para>
+<!--
+	      You can also change <interface>Panel</interface>
+	      position by dragging it with the middle mouse button to
+	      the new location.
+-->
+              マウスの中ボタンでドラッグすることでも、
+              <interface>パネル</interface>を新しい場所に持っていくこと
+              ができます。
+            </para>
+	  </tip>
+	</listitem>
+
+	<listitem>
+	 <para>
+<!--
+          <guilabel>Panel size</guilabel> &mdash; Here you can
+	  choose the <interface>Panel</interface> width. The default
+	  size is 48 pixels, which is
+	  also the default size of icons used by GNOME. Users with low
+	  screen resolution might want to decrease the
+	  <interface>Panel</interface> size to
+	  free some screen space; conversely, users with high
+	  resolution displays may try using larger
+	  <interface>Panel</interface> sizes.
+-->
+          <guilabel>パネルの大きさ</guilabel> &mdash; ここで、
+          <interface>パネル</interface>の太さを選ぶことができます。標準
+          お大きさは48ピクセルで、これはGNOMEの標準アイコンの大きさで
+          す。低解像度の画面では、<interface>パネル</interface>を
+          小さくしたいと思うでしょうし、逆に、高解像度の画面では、
+          <interface>パネル</interface>を大きくしたいと思うでしょう。
+        </para>
+        <para>
+<!--
+          Changing <interface>Panel</interface> size automatically
+          resizes all the icons on this <interface>Panel</interface>,
+          which can lead to some quality loss. Also,
+          the <interface>Panel</interface> will ask all the applets to resize
+          themselves. Most of the applets will comply; however, if
+          some applets do not obey this request, then the
+          <interface>Panel</interface> will resize itself so that it
+          can fit all the applets.
+-->
+          <interface>パネル</interface>の大きさを変更すると、
+          <interface>パネル</interface>は自動的に、その上にある全てのア
+          イコンの大きさを変更します。これは、品質を落とす可能性があり
+          ます。また、<interface>パネル</interface>は、全てのアプレット
+          に対して、それ自身が大きさを変更するかどうかを尋ねます。ほと
+          んどのアプレットは応じますが、いくつかのものがこの要求に従わ
+          ない場合には、<interface>パネル</interface> は自分自身の大き
+          さを変更して、全てのパネルが収まるようにします。
+	  </para>
+	</listitem>
+
+     <listitem>
+      <para>
+<!--
+       <indexterm id="idx-a64"> <primary>Panel</primary>
+        <secondary>Auto-hide</secondary>
+       </indexterm>
+       <guilabel>Hiding</guilabel> &mdash; In this section, you
+       can choose whether you want to <guilabel>Enable
+       Auto-hide</guilabel> &mdash; that is, have the
+       <interface>Panel</interface> automatically hide when
+       the mouse is not over the <interface>Panel</interface>. The
+       autohide parameters
+       can be configured in the <link linkend="animtab">Global
+       Preferences dialog</link>. If you choose to auto-hide, you
+       might want to disable the hide buttons here as well. You
+       may also disable the hide button arrows graphics on the
+       hide buttons.
+-->
+       <indexterm id="idx-a64"> <primary>パネル</primary>
+        <secondary>自動的に隠す</secondary>
+       </indexterm>
+       <guilabel>隠す</guilabel> &mdash; ここでは、どのようにして
+       <guilabel>自動的に隠す</guilabel>を行うかどうか選択することがで
+       きます。これは、マウスが<interface>パネル</interface>上に無いと
+       きに<interface>パネル</interface>を自動的に隠すものです。「自動的
+       に隠す」機能のパラメータは、<link linkend="animtab">全体の設定
+       ダイアログ</link>で設定することができます。「自動的に隠す」を選
+       択している、ここにある、隠すボタンを無効にしたいと思うでしょう。
+       また、隠すボタンにある矢印表示を無効にすることもできます。
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+
+   <sect2 id="panelbacktab">
+    <title>背景タブ</title>
+      <indexterm id="idx-a65">
+	<primary>パネル</primary>  <secondary>背景</secondary>
+	</indexterm>
+  
+      <figure>
+	<title>パネル背景の設定ダイアログ</title>
+	<screenshot>
+	  <screeninfo>パネル背景の設定ダイアログ</screeninfo>
+	  <graphic fileref="./figures/panel_props_back"
+	       format="png" srccredit="muet">
+	  </graphic>
+	</screenshot>
+      </figure>
+
+
+      <para>
+<!--
+	These options allow you to change the background of the
+       <interface>Panel</interface>
+       itself. You may choose, if you wish, to have the
+       <guilabel>Standard</guilabel>, <guilabel>Pixmap</guilabel>, or
+       <guilabel>Color</guilabel> background. The standard look for
+       the <interface>Panel</interface> is determined by the GTK theme
+       you are running at the
+       time (you can configure the GTK theme using the
+       <application>GNOME Control Center</application>).  The
+       <guilabel>Pixmap</guilabel> option allows you to choose an
+       image to tile or scale to the <interface>Panel</interface>. The
+       <guilabel>Color</guilabel> option allows you to specify a
+       particular color for the <interface>Panel</interface>.
+-->
+       これらのオプションでは、<interface>パネル</interface>の背景を変
+       更することができます。<guilabel>標準</guilabel>、<guilabel>ピッ
+       クスマップ</guilabel>、<guilabel>色</guilabel>といった背景を選
+       択することができます。<interface>パネル</interface>の標準的な見
+       た目は、現在実行しているGTKテーマにより、決定されます
+       (<application>GNOMEコントロールセンター</application>で、GTKテー
+       マを設定することができます)。<guilabel>ピックスマップ
+       </guilabel>オプションは、貼り付ける画像や<interface>パネル
+       </interface>の大きさの選択を行うことができます。<guilabel>色
+       </guilabel>オプションでは、その<interface>パネル</interface>特有
+       の色を指示することができます。
+      </para>
+
+   <itemizedlist mark="bullet">
+
+     <listitem>
+      <para>
+<!--
+       <guilabel>Color to use</guilabel> &mdash If you choose to have
+       your <interface>Panel</interface> one color, this button will
+       launch a dialog which allows you to specify which color to use.
+-->
+       <guilabel>色使い</guilabel> &mdash <interface>パネル</interface>
+       で色を用いることを決めた場合、このボタンで使用する色を指定する
+       ダイアログを呼び出します。
+      </para>
+     </listitem>
+
+
+     <listitem>
+      <para>
+<!--
+       <guilabel>Image</guilabel> &mdash; If you wish to have a
+       <guilabel>Pixmap</guilabel>
+       for the background of your <interface>Panel</interface>, this
+       section of the dialog allows you to choose which image to use.
+       If you press the <guibutton>Browse</guibutton> button, you can
+       search for the file you want to use. The current filename is
+       shown to the left of this button. The window above it shows you
+       the preview of this background.
+-->
+       <guilabel>画像</guilabel> &mdash; <interface>パネル</interface>
+       の背景に<guilabel>ピックスマップ
+       </guilabel>を選択した場合、ここで使用する画像を選択することがで
+       きます。<guibutton>参照</guibutton>ボタンを押すと、使用したいファ
+       イルを探すことができます。上のウィンドウには、この背景となるも
+       のがプレビュー表示されます。
+      </para>
+     </listitem>
+   </itemizedlist>
+
+      
+      <tip>
+	<title>画像をドラッグ＆ドロップする</title>
+	<para>
+<!--
+	  An easier way to change the  background of your
+	  <interface>Panel</interface> is to
+	  drag and  drop an image  file from the <application>GNOME
+	  File Manager</application> onto the
+	  <interface>Panel</interface>.  This will automatically
+	  change the background of the <interface>Panel</interface> to
+	  that image.
+-->
+          <interface>パネル</interface>パネルの背景を変更するもっと簡単
+          な方法は、<application>GNOMEファイルマネージャ</application>
+          から<interface>パネル</interface>へ、画像ファイルをドラッグ＆
+          ドロップすることです。これで、<interface>パネル</interface>の
+          背景をこの画像に変更させることができます。
+	</para>
+      </tip>
+    
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+<!--
+       <guilabel>Don't scale image to fit</guilabel> &mdash; If this
+       button is checked, the background image will be tiled to cover
+       the <interface>Panel</interface>, rather than scaled.
+-->
+       <guilabel>画像の大きさを変更しない</guilabel> &mdash; このボタ
+       ンがチェックされている場合には、背景画像は大きさを変えずにその
+       <interface>パネル</interface>上へ載ります。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Scale image (keep proportions)</guilabel> &mdash; If
+       this button is checked, the background image will be scaled as
+       much as possible preserving image's proportions, and then the
+       scaled image will be used to tile the
+       <interface>Panel</interface>.
+-->
+       <guilabel>画像を引き伸ばす(比率を維持)</guilabel> &mdash; この
+       ボタンがチェックされている場合には、背景画像は可能な限り比率を
+       保持しつつ大きさを調整して、調整した画像を
+       <interface>パネル</interface>に張ります。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Stretch image (change proportions)</guilabel> &mdash;
+       If this button is checked, the background image will be
+       stretched in both dimensions to the size of the
+       <interface>Panel</interface>.
+-->
+       <guilabel>画像を引き伸ばす(比率も変更)</guilabel> &mdash; この
+       ボタンがチェックされている場合には、長さと幅両方とも
+       <interface>パネル</interface>の大きさに引き伸ばされます。
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+<!--
+       <guilabel>Rotate image for vertical panel</guilabel> &mdash; If
+         this button is checked, the image will be rotated when you
+         change <interface>Panel</interface> orientation
+         (horizontal/vertical).
+-->
+       <guilabel>パネルが縦向きの時は画像を回転する</guilabel> &mdash; この
+       ボタンがチェックされている場合には、
+       <interface>パネル</interface>の向き(水平/垂直)を変更したときに、
+       画像を回転させます。
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   </sect1>
+
+<!-- ############### Current Bugs and Limitations ############### -->
+
+<sect1 id="panelbugs">
+
+    <title>現時点でのバグと制限事項</title>
+    <para>
+<!--
+      Most of the things here are not really bugs; rather, they
+      describe situations when the <interface>Panel</interface>'s
+      behavior is not what you would expect.
+-->
+      ここに挙げてあるほとんどは、本当の意味でのバグではありません。む
+      しろ、<interface>パネル</interface>の振る舞いが期待しているものと
+      違っている時の、状況を説明したものです。
+   </para>
+
+    <para>
+<!--
+      You cannot place an ordinary file or directory on the
+      <interface>Panel</interface>. If you try to drag and drop a file
+      from the File Manager window to the
+      <interface>Panel</interface>, it won't work. The only type of
+      file that can be placed on the <interface>Panel</interface> are
+      <filename>.desktop</filename>
+      files, which describe launchers (and
+      <filename>.kdelnk</filename> files, which describe launchers in
+      the format used by K Desktop Environment); any directory dropped on the
+      <interface>Panel</interface> will be interpreted as a menu
+      &mdash; that is, all the
+      files other than <filename>.desktop</filename> files will be
+      ignored.
+-->
+      通常ファイルやディレクトリを<interface>パネル</interface>の上に置
+      くことはできません。あるファイルをファイルマネージャのウィンドウ
+      からパネルへドラッグ＆ドロップしたとしても、それはうまくいきませ
+      ん。<interface>パネル</interface>の上に置くことが可能な唯一のファ
+      イルタイプは、<filename>.desktop</filename>ファイルのみで、こ
+      れはランチャを記述しているものです(また、K デスクトップ環境の形
+      式を使用してランチャを記述している<filename>.kdelnk</filename>ファ
+      イルも可能です。)。<interface>パネル</interface>の上にドロップさ
+      れたディレクトリは、メニューと判断されます。&mdash; つまり、
+      <filename>.desktop</filename>以外の全てのファイルは、無視されて
+      しまいます。 
+    </para>
+
+    <para>
+<!--
+      Editing menus other than the <guimenu>Main Menu</guimenu>
+      is rather confusing. <application>Menu Editor</application> at
+      the moment cannot be used for this, and the
+      <guimenuitem>Properties</guimenuitem> item of the right-click
+      menu is not too helpful either - for example, it doesn't allow
+      one to change the menu's icon (see <xref linkend="menusconf"> for
+      instructions for doing this). This will be improved in the next
+      release.
+-->
+      <guimenu>メインメニュー</guimenu>以外のメニューを編集すると、む
+      しろ混乱させてしまいます。こうなってしまうと、<application>メニュー
+      エディタ</application>は利用できないですし、右クリックメニューの
+      <guimenuitem>プロパティ</guimenuitem>項目もやはり訳には立ちませ
+      ん。例えば、メニューアイコンの変更(操作方法については、<xref
+      linkend="menusconf">を参照)を行うことができません。これについて
+      は、次のリリースで改善するつもりです。
+      
+    </para>
+
+    <para>
+<!--
+      The <guimenu>Global Menu</guimenu> (which you get by
+      pressing the
+      <keycombo><keycap>Alt</keycap><keycap>F1</keycap></keycombo> key
+      on the keyboard or by
+      right-clicking on the <interface>Panel</interface>), and the
+      <guimenu>Main
+      Menu</guimenu> (which you get by clicking on the foot icon)
+      are configured separately. The reason is that you
+      can have several <guimenu>Main Menu</guimenu> buttons on
+      different <interface>Panel</interface>s.
+-->
+      <guimenu>グローバルメニュー</guimenu>(キーボードの
+      <keycombo><keycap>Alt</keycap><keycap>F1</keycap></keycombo>キー
+      を打つか、<interface>パネル</interface>上で右クリックして呼び出し
+      ます)と、<guimenu>メインメニュー</guimenu>(足跡アイコンをクリッ
+      クして呼び出します)は、別個に設定されます。これは、異なる
+      <interface>|!|パネル</interface>それぞれに<guimenu>メインメニュー
+      </guimenu>があるためです。
+    </para>
+
+    <para>
+<!--
+     The <guibutton>Screen Lock</guibutton> button does not lock the
+     screen if <guilabel>No Screensaver</guilabel> is set in the
+     <application>GNOME Control Center</application>.
+-->
+     <application>GNOME コントロールセンター</application>で、
+     <guilabel>スクリーンセーバー無し</guilabel>が設定されている場合に
+     は、<guibutton>スクリーンロック</guibutton>ボタンが画面のロックを
+     行うことはありません。
+    </para>
+
+    <para>
+<!--
+      The only way of changing a <interface>Panel</interface>'s type
+      (Edge, Aligned, etc.)
+      is by choosing <menuchoice><guisubmenu>Panel</guisubmenu> <guisubmenu>Properties</guisubmenu>
+      <guisubmenu>Type</guisubmenu>  </menuchoice> from the
+      <guimenu>Main Menu</guimenu> or <guimenu>Global Menu</guimenu>:
+      you can not change <interface>Panel</interface> type in the 
+      <interface>Panel Properties</interface> dialog. Conversely,
+      <menuchoice> <guisubmenu>Panel</guisubmenu><guisubmenu>Properties</guisubmenu>
+      <guisubmenu>Background type</guisubmenu></menuchoice> allows
+      you to change the background type (Pixmap/Color/Standard), but
+      not to choose the actual color or image to use.
+-->
+    <interface>パネル</interface>の種類(エッジ、アライン、その他)を変更
+    する唯一の方法は、<guimenu>メインメニュー</guimenu>もしくは
+    <guimenu>グローバルメニュー</guimenu>から、
+    <menuchoice><guisubmenu>パネル</guisubmenu> <guisubmenu>プロパティ
+    </guisubmenu><guisubmenu>種類</guisubmenu></menuchoice>と選択して
+    いくものです。<interface>パネルのプロパティ</interface>ダイアログ
+    で変更することはできません。逆に、<menuchoice> <guisubmenu>パネル
+    </guisubmenu><guisubmenu>プロパティ</guisubmenu><guisubmenu>背景の
+    種類</guisubmenu></menuchoice>により、背景の種類(ピックスマップ/色
+    /標準)を変更することができますが、使用する色や画像を選択することは
+    できません。
+    </para>
+  </sect1>
+
+
+<!-- ###############  Authors  ################## -->
+  <sect1 id="authors">
+    <title>作者</title>
+     <para>
+<!--
+      <application>GNOME Panel</application> was written by many GNOME
+      developers; you can find a partial list in the
+      <interface>About</interface> dialog. By
+      the way: if you wonder what is the name of the animal shown in
+      the <interface>About</interface> dialog, it is called
+      "Gegl" and it has its own
+      <ulink type="http" url="http://www.gegl.org">Web page</ulink>.
+-->
+      <application>GNOME パネル</application>は、多くの GNOME 開発者に
+      より作成されました。<interface>パネルについて</interface>ダイア
+      ログで一部のリストを見ることができます。ところで、<interface>パ
+      ネルについて</interface>ダイアログにでてくる動物の名前を知りたい?
+      あれは、"Gegl" と呼ばれてて、そいつの<ulink type="http"
+      url="http://www.gegl.org">Web ページ</ulink>があります。
+    </para>
+    <para>
+<!--
+      Please send all comments, suggestions, and bug reports to the
+      <ulink url="http://bugs.gnome.org" type="http">GNOME bug
+      tracking database</ulink>. Instructions for submitting bug
+      reports can be found on-line at <ulink
+      url="http://bugs.gnome.org/Reporting.html" type="http">
+      http://bugs.gnome.org/Reporting.html</ulink>. You can also use
+      the <application>Bug Report Tool</application>
+      (<command>bug-buddy</command>), available in the
+      <guisubmenu>Utilities</guisubmenu> submenu of <guimenu>Main
+      Menu</guimenu>, for submitting bug reports.
+-->
+      批評、提案、バグ報告は全て、<ulink url="http://bugs.gnome.org"
+      type="http">GNOME バグトラッキングデータベース</ulink>に送ってく
+      ださい。バグ報告を送る手順については、オンラインの<ulink
+      url="http://bugs.gnome.org/Reporting.html" type="http">
+      http://bugs.gnome.org/Reporting.html</ulink>
+      (<command>bug-buddy</command>)で知ることができます。バグレポート
+      の送信には、<guimenu>メインメニュー</guimenu>中の
+      <guisubmenu>ユーティリティー</guisubmenu>サブメニューにある、
+      <application>バグレポートツール</application>を使うこともできま
+      す。
+    </para>
+    <para>
+<!--
+      This manual was written by Dave Mason
+      (<email>dcm@redhat.com</email>), Dan Mueth
+      (<email>d-mueth@uchicago.edu</email>), and Alexander Kirillov
+      (<email>kirillov@math.sunysb.edu</email>). Please send all
+      comments and suggestions regarding this manual to the GNOME
+      Documentation Project at <email>docs@gnome.org</email> or enter
+      your comments online using the <ulink type="http"
+      url="http://www.gnome.org/gdp/doctable">GNOME Documentation
+      Status Table</ulink>.
+-->
+      本マニュアルは、Dave Mason(<email>dcm@redhat.com</email>)、Dan
+      Mueth(<email>d-mueth@uchicago.edu</email>)、Alexander Kirillov
+      (<email>kirillov@math.sunysb.edu</email>)が作成しました。このマ
+      ニュアルに関する批評や提案は、GNOME Documentation
+      Project の <email>docs@gnome.org</email> に送るか、<ulink type="http"
+      url="http://www.gnome.org/gdp/doctable">GNOME Documentation
+      Status Table</ulink>を使って下さい。(訳注: 日本語訳に関して
+      は <email>gnome-translation@gnome.gr.jp</email>へ。) 
+      </para>
+    </sect1> 
+  <sect1 id="license">
+  <title>ライセンス</title>
+  <para>
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the <citetitle>GNU General Public
+   License</citetitle> as published by the Free Software Foundation;
+   either version 2 of the License, or (at your option) any later
+   version.
+  </para>
+  <para>
+   本プログラムはフリー・ソフトウェアです。あなたは、Free Software
+   Foundation が公表した<citetitle>GNU 一般公有使用許諾</citetitle>の
+   「バージョン 2」或いはそれ以降の各バージョンの中からいずれかを選択
+   し、そのバージョンが定める条項に従って本プログラムを再頒布または変
+   更することができます。
+  </para>
+  <para>
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   <citetitle>GNU General Public License</citetitle> for more details.
+  </para>
+  <para>
+   本プログラムは有用とは思いますが、頒布にあたっては、市場性及び特
+   定目的適合性についての暗黙の保証を含めて、いかなる保証も行ないま
+   せん。詳細については<citetitle>GNU 一般公有使用許諾書</citetitle>を
+   お読みください。
+  </para>
+  <para>
+   A copy of the <citetitle>GNU General Public License</citetitle> is
+   included as an appendix to the <citetitle>GNOME Users
+   Guide</citetitle>.  You may also obtain a copy of the
+   <citetitle>GNU General Public License</citetitle> from the Free
+   Software Foundation by visiting <ulink type="http"
+   url="http://www.fsf.org">their Web site</ulink> or by writing to
+   <address>
+    Free Software Foundation, Inc.
+    <street>59 Temple Place</street> - Suite 330
+    <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+    <country>USA</country>
+   </address>
+  </para>
+  <para>
+    <citetitle>GNU 一般公有使用許諾契約書</citetitle> のコピーは、
+    <citetitle>GNOME ユーザガイド</citetitle> に付録として含まれていま
+    す。また、コピーを手にいれるには、Free Software Foundation の
+    <ulink type="http" url="http://www.fsf.org">Web サイト</ulink>を訪
+    れて手にいれるか、もしくは以下の住所へ手紙を書いてください。
+   <address>
+    Free Software Foundation, Inc.
+    <street>59 Temple Place</street> - Suite 330
+    <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+    <country>USA</country>
+   </address>
+  </para>
+ </sect1>
+
+ </article>
+
+
+
+
+
+
+
