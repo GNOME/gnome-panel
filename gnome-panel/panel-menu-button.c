@@ -97,8 +97,9 @@ panel_menu_button_finalize (GObject *object)
 	button->priv->gconf_notify = 0;
 
 	if (button->priv->menu) {
+		/* detaching the menu will kill our reference */
 		gtk_menu_detach (button->priv->menu);
-		g_object_unref (button->priv->menu);
+		button->priv->menu = NULL;
 	}
 
 	g_free (button->priv->menu_path);
@@ -281,6 +282,12 @@ panel_menu_button_menu_detacher	(GtkWidget *widget,
 
 	g_return_if_fail (button->priv->menu == menu);
 
+	/* just in case someone still owns a reference to the
+	   menu (the menu may be up or some such other nonsense) */
+	g_signal_handlers_disconnect_by_func (button->priv->menu,
+					      G_CALLBACK (panel_menu_button_menu_deactivated),
+					      button);
+
 	/* This is a workaround pending fixing bug #113112 */
 	g_object_set_data (G_OBJECT (button), "gtk-attached-menu", NULL);
 	button->priv->menu = NULL;
@@ -296,15 +303,12 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
 
 	if (button->priv->menu && menu_need_reread (GTK_WIDGET (button->priv->menu))) {
-		g_object_unref (button->priv->menu);
+		gtk_menu_detach (button->priv->menu);
 		button->priv->menu = NULL;
 	}
 
 	if (!button->priv->menu) {
 		button->priv->menu = panel_menu_button_create_menu (button);
-
-		g_object_ref (button->priv->menu);
-		gtk_object_sink (GTK_OBJECT (button->priv->menu));
 
 		gtk_menu_attach_to_widget (button->priv->menu, 
 					   GTK_WIDGET (button),
@@ -648,7 +652,7 @@ panel_menu_button_set_menu_path (PanelMenuButton *button,
 		button->priv->menu_path = g_strdup (menu_path);
 
 	if (button->priv->menu)
-		g_object_unref (button->priv->menu);
+		gtk_menu_detach (button->priv->menu);
 	button->priv->menu = NULL;
 
 	panel_menu_button_set_icon (button);
@@ -683,7 +687,7 @@ panel_menu_button_set_use_menu_path (PanelMenuButton *button,
 	button->priv->use_menu_path = use_menu_path;
 
 	if (button->priv->menu)
-		g_object_unref (button->priv->menu);
+		gtk_menu_detach (button->priv->menu);
 	button->priv->menu = NULL;
 
 	panel_menu_button_set_icon (button);

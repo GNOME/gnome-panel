@@ -1,3 +1,25 @@
+Wed Jul 30 12:50:28 2003  George Lebl <jirka@5z.com>
+
+	* panel-util.c: in bug #117877 we saw 'foo' displayed since that
+	  was the temporary text in the error dialog before the real
+	  text was set.  Change that to be more meaningful (even though
+	  not translated, since it's a really bad bug if it ever happens)
+
+	* panel-menu-button.c: Don't ref/sink the menu when we make it,
+	  since we attach it to the button the button will own a ref.
+	  Also don't just unref to kill the menu, detach it, that will
+	  take care of the reference as well.  Also disconnect the
+	  signal handler in the detacher just in case something held
+	  onto a reference of the menu somewhere.
+
+	* panel-toplevel.c: Fixing bug #118368, where a vertical panel
+	  that was floating (or stuck to the right side) and wasn't
+	  expanded would gradually move to the top/left corner on
+	  each restart.  Add geometry_updated_initial flag to the
+	  private structure and don't do the position_centered
+	  stuff if geometry was not yet updated since we're still
+	  just setting initial values.
+
 Tue Jul 29 18:27:48 2003  George Lebl <jirka@5z.com>
 
 	* button-widget.c, launcher.c, menu.c, menu-ditem.c, panel-action-button.c,

@@ -441,7 +441,9 @@ panel_dialog (GdkScreen  *screen,
 	GtkWidget *dialog;
 
 	dialog = gtk_message_dialog_new (
-			NULL, 0, type, GTK_BUTTONS_OK, "foo");
+			NULL, 0, type, GTK_BUTTONS_OK,
+			/* No need to translate this, this should NEVER happen */
+			"Error with displaying error for dialog of class %s", class);
 	gtk_widget_add_events (dialog, GDK_KEY_PRESS_MASK);
 	g_signal_connect (dialog, "event",
 			  G_CALLBACK (panel_dialog_window_event), NULL);

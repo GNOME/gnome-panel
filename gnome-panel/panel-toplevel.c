@@ -163,6 +163,11 @@ struct _PanelToplevelPrivate {
 	/* More saved grab op state */
 	guint                   orig_x_centered : 1;
 	guint                   orig_y_centered : 1;
+
+	/* flag to see if we have already done geometry updating,
+	   if not then we're still loading and can ignore many things */
+	guint                   updated_geometry_initial : 1;
+
 };
 
 enum {
@@ -2090,6 +2095,7 @@ static void
 panel_toplevel_update_geometry (PanelToplevel  *toplevel,
 				GtkRequisition *requisition)
 {
+	toplevel->priv->updated_geometry_initial = TRUE;
 	panel_toplevel_update_size (toplevel, requisition);
 	panel_toplevel_update_position (toplevel);
 }
@@ -3876,6 +3882,7 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	toplevel->priv->block_auto_hide   = FALSE;
 	toplevel->priv->attached          = FALSE;
 	toplevel->priv->attach_hidden     = FALSE;
+	toplevel->priv->updated_geometry_initial = FALSE;
 
 	gtk_widget_add_events (GTK_WIDGET (toplevel),
 			       GDK_BUTTON_PRESS_MASK |
@@ -4039,7 +4046,8 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 		rotate = TRUE;
 
 	/* rotate around the center */
-	if (rotate && !toplevel->priv->position_centered && !toplevel->priv->expand) {
+	if (rotate && !toplevel->priv->position_centered && !toplevel->priv->expand &&
+	    toplevel->priv->updated_geometry_initial) {
 		toplevel->priv->position_centered = TRUE;
 
 		g_object_freeze_notify (G_OBJECT (toplevel));
