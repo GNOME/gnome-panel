@@ -6,6 +6,7 @@
 G_BEGIN_DECLS
 
 void         start_screen_check      (void);
+void	     start_geginv            (void);
 
 G_END_DECLS
 

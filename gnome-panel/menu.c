@@ -363,7 +363,7 @@ about_cb (GtkWidget *widget, gpointer data)
 			    G_CALLBACK (gtk_widget_destroyed),
 			    &about);
 	g_signal_connect (G_OBJECT (about), "event",
-			    G_CALLBACK (check_for_screen), NULL);
+			  G_CALLBACK (check_for_screen), NULL);
 
 	hbox = gtk_hbox_new (TRUE, 0);
 	l = gnome_href_new ("http://www.wfp.org/",

@@ -268,13 +268,11 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                 if (strcmp (s, "time shall be unixey") == 0) {
                         foobar_widget_global_set_clock_format ("%s");
                         goto return_and_close;
-                }
-                if (strcmp (s, "you shall bring us a shrubbery") == 0) {
+                } else if (strcmp (s, "you shall bring us a shrubbery") == 0) {
                         panel_info_dialog ("ni_ni_ni_ni",
 					   "NI! NI! NI! NI! NI! NI!");
                         goto return_and_close;
-                }
-                if (strcmp (s, "supreme executive power") == 0) {
+                } else if (strcmp (s, "supreme executive power") == 0) {
                         panel_info_dialog ("evil",
 					   "Listen -- strange women lying in\n"
 					   "ponds distributing swords is no\n"
@@ -283,9 +281,11 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 					   "a mandate from the masses, not from\n"
 					   "some farcical aquatic ceremony!");
                         goto return_and_close;
-                }
-                if (strcmp (s, "free the fish") == 0) {
+                } else if (strcmp (s, "free the fish") == 0) {
 			start_screen_check ();
+                        goto return_and_close;
+		} else if (strcmp (s, "gegls from outer space") == 0) {
+			start_geginv ();
                         goto return_and_close;
 		}
 

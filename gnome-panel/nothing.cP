@@ -1,4 +1,5 @@
 #include <string.h>
+#include <libgnomecanvas/libgnomecanvas.h>
 #include "panel-util.h"
 #include "nothing.h"
 
@@ -74,12 +75,12 @@ goat_timeout_func(gpointer data)
 
 	real_goat_frame = goat_frame/2;
 	
-	gdk_draw_pixmap(goat_darea->window,
-			goat_darea->style->white_gc,
-			goat_accx>0?goat_pix_rev[real_goat_frame]:
-				goat_pix[real_goat_frame],
-			0,0,goat_x,goat_y,
-			goat_width,goat_height);
+	gdk_draw_drawable (goat_darea->window,
+			   goat_darea->style->white_gc,
+			   goat_accx>0?goat_pix_rev[real_goat_frame]:
+			   goat_pix[real_goat_frame],
+			   0,0,goat_x,goat_y,
+			   goat_width,goat_height);
 
 	if(++goat_frame == 4)
 		goat_frame = 0;
@@ -346,17 +347,11 @@ phsh_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
         return GDK_FILTER_CONTINUE;
 }
 
-/* this checks the screen */
-static void
-check_screen (void)
+static char *
+get_phsh_file (void)
 {
-        GdkWindowAttr attributes;
-        char *phsh_file;
         char *name;
-        GdkPixbuf *gp, *tmp;
-
-        if (phsh.win != NULL)
-                return;
+        char *phsh_file;
 
         name = g_strdup_printf ("%cish/%cishanim.png",
                                 'f', 'f');
@@ -366,7 +361,34 @@ check_screen (void)
 
         g_free (name);
 
-        if (!phsh_file)
+	return phsh_file;
+}
+
+static GdkPixbuf *
+get_phsh_frame (GdkPixbuf *pb, int frame)
+{
+        GdkPixbuf *newpb;
+
+        newpb = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 60, 40);
+        gdk_pixbuf_copy_area (pb, frame * 60, 0, 60, 40, newpb, 0, 0);
+
+	return newpb;
+}
+
+/* this checks the screen */
+static void
+check_screen (void)
+{
+        GdkWindowAttr attributes;
+        char *phsh_file;
+        GdkPixbuf *gp, *tmp;
+
+        if (phsh.win != NULL)
+                return;
+
+	phsh_file = get_phsh_file ();
+
+        if (phsh_file == NULL)
                 return;
 
         tmp = gdk_pixbuf_new_from_file (phsh_file, NULL);
@@ -384,8 +406,7 @@ check_screen (void)
         phsh.state = 0;
         phsh.hide_mode = FALSE;
 
-        gp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 60, 40);
-        gdk_pixbuf_copy_area (tmp, 60, 0, 60, 40, gp, 0, 0);
+	gp = get_phsh_frame (tmp, 1);
 
         phsh_dered (gp);
         gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[2], &phsh.phsh_mask[2], 128);
@@ -456,4 +477,769 @@ start_screen_check (void)
         check_screen ();
 
         screen_check_id = gtk_timeout_add (rand()%120*1000, check_screen_timeout, NULL);
+}
+
+typedef struct {
+	gboolean live;
+	int x, y;
+} InvGoat;
+
+typedef struct {
+	gboolean good;
+	int y;
+	int x;
+} InvShot;
+
+
+static GtkWidget *geginv = NULL;
+static GtkWidget *geginv_canvas = NULL;
+static GtkWidget *geginv_label = NULL;
+static GdkPixmap *geginv_pixmap = NULL;
+static GdkPixmap *inv_goat1 = NULL;
+static GdkPixmap *inv_goat2 = NULL;
+static GdkPixmap *inv_phsh = NULL;
+static GdkBitmap *inv_phsh_mask = NULL;
+static int inv_goat_state = 0;
+static int inv_width = 0;
+static int inv_height = 0;
+static int inv_goat_width = 0;
+static int inv_goat_height = 0;
+static int inv_phsh_width = 0;
+static int inv_phsh_height = 0;
+#define INV_ROWS 3
+#define INV_COLS 5
+static InvGoat invs[INV_COLS][INV_ROWS] = { { { FALSE, 0, 0 } } };
+static int inv_num = INV_ROWS * INV_COLS;
+static double inv_factor = 1.0;
+static int inv_our_x = 0;
+static int inv_x = 0;
+static int inv_y = 0;
+static int inv_first_col = 0;
+static int inv_last_col = INV_COLS-1;
+static int inv_level = 0;
+static int inv_lives = 0;
+static gboolean inv_reverse = FALSE;
+static gboolean inv_game_over = FALSE;
+static gboolean inv_left_pressed = FALSE;
+static gboolean inv_right_pressed = FALSE;
+static gboolean inv_fire_pressed = FALSE;
+static gboolean inv_left_released = FALSE;
+static gboolean inv_right_released = FALSE;
+static gboolean inv_fire_released = FALSE;
+static GSList *inv_shots = NULL;
+static guint inv_draw_idle = 0;
+
+static void
+inv_show_status (void)
+{
+	char *s;
+	if (geginv == NULL)
+		return;
+
+	if (inv_game_over) {
+		s = g_strdup_printf ("<big><b>GAME OVER</b> at level %d!</big>   "
+				     "Press 'q' to quit   "
+				     "<big><b>GAME OVER</b> at level %d!</big>",
+				     inv_level+1, inv_level+1);
+	} else {
+		s = g_strdup_printf ("<big>Level: <b>%d</b>  Lives: <b>%d</b></big>    "
+				     "Left/Right to move, Space to fire, 'q' to quit",
+				     inv_level+1, inv_lives);
+	}
+	gtk_label_set_markup (GTK_LABEL (geginv_label), s);
+
+	g_free (s);
+}
+
+static gboolean
+inv_draw (gpointer data)
+{
+	GdkPixmap *goat;
+	GSList *li;
+	int i, j;
+
+	if (data != geginv) {
+		inv_draw_idle = 0;
+		return FALSE;
+	}
+
+	if ( ! GTK_WIDGET_DRAWABLE (geginv_canvas) ||
+	    geginv_pixmap == NULL)
+		return TRUE;
+
+	gdk_draw_rectangle (geginv_pixmap,
+			    geginv_canvas->style->white_gc,
+			    TRUE /* filled */,
+			    0, 0,
+			    inv_width, inv_height);
+
+	if (inv_goat_state == 0)
+		goat = inv_goat1;
+	else
+		goat = inv_goat2;
+
+	for (i = 0; i < INV_COLS; i++) {
+		for (j = 0; j < INV_ROWS; j++) {
+			int x, y;
+			if ( ! invs[i][j].live)
+				continue;
+
+			x = invs[i][j].x*inv_factor - inv_goat_width/2,
+			y = invs[i][j].y*inv_factor - inv_goat_height/2,
+
+			gdk_draw_drawable (geginv_pixmap,
+					   geginv_canvas->style->white_gc,
+					   goat,
+					   0, 0,
+					   x, y,
+					   inv_goat_width,
+					   inv_goat_height);
+		}
+	}
+
+	for (li = inv_shots; li != NULL; li = li->next) {
+		InvShot *shot = li->data;
+
+		gdk_draw_rectangle (geginv_pixmap,
+				    geginv_canvas->style->black_gc,
+				    TRUE /* filled */,
+				    (shot->x-1)*inv_factor,
+				    (shot->y-4)*inv_factor,
+				    3, 8);
+	}
+
+	if ( ! inv_game_over) {
+		gdk_gc_set_clip_origin (geginv_canvas->style->white_gc,
+					inv_our_x*inv_factor - inv_phsh_width/2,
+					550*inv_factor - inv_phsh_height/2);
+
+		gdk_gc_set_clip_mask (geginv_canvas->style->white_gc,
+				      inv_phsh_mask);
+
+		gdk_draw_drawable (geginv_pixmap,
+				   geginv_canvas->style->white_gc,
+				   inv_phsh,
+				   0, 0,
+				   inv_our_x*inv_factor - inv_phsh_width/2,
+				   550*inv_factor - inv_phsh_height/2,
+				   inv_phsh_width,
+				   inv_phsh_height);
+
+		gdk_gc_set_clip_origin (geginv_canvas->style->white_gc, 0, 0);
+
+		gdk_gc_set_clip_mask (geginv_canvas->style->white_gc, NULL);
+	}
+
+	gdk_draw_drawable (geginv_canvas->window,
+			   geginv_canvas->style->white_gc,
+			   geginv_pixmap,
+			   0, 0,
+			   0, 0,
+			   inv_width, inv_height);
+
+	inv_draw_idle = 0;
+	return FALSE;
+}
+
+static void
+inv_queue_draw (GtkWidget *window)
+{
+	if (inv_draw_idle == 0)
+		inv_draw_idle = g_idle_add (inv_draw, window);
+}
+
+static void
+inv_do_game_over (void)
+{
+	GSList *li;
+
+	inv_game_over = TRUE;
+	
+	for (li = inv_shots; li != NULL; li = li->next) {
+		InvShot *shot = li->data;
+		shot->good = FALSE;
+	}
+
+	inv_queue_draw (geginv);
+
+	inv_show_status ();
+}
+
+
+static GdkPixbuf *
+pb_scale (GdkPixbuf *pb, double scale)
+{
+	int w, h;
+	
+	if (scale == 1.0)
+		return gdk_pixbuf_ref (pb);
+
+	w = gdk_pixbuf_get_width (pb) * scale;
+	h = gdk_pixbuf_get_height (pb) * scale;
+
+	return gdk_pixbuf_scale_simple (pb, w, h,
+					GDK_INTERP_BILINEAR);
+}
+
+static void
+refind_first_and_last (void)
+{
+	int i, j;
+
+	for (i = 0; i < INV_COLS; i++) {
+		gboolean all_null = TRUE;
+		for (j = 0; j < INV_ROWS; j++) {
+			if (invs[i][j].live) {
+				all_null = FALSE;
+				break;
+			}
+		}
+		if ( ! all_null) {
+			inv_first_col = i;
+			break;
+		}
+	}
+
+	for (i = INV_COLS-1; i >= 0; i--) {
+		gboolean all_null = TRUE;
+		for (j = 0; j < INV_ROWS; j++) {
+			if (invs[i][j].live) {
+				all_null = FALSE;
+				break;
+			}
+		}
+		if ( ! all_null) {
+			inv_last_col = i;
+			break;
+		}
+	}
+}
+
+static void
+whack_gegl (int i, int j)
+{
+	if ( ! invs[i][j].live)
+		return;
+
+	invs[i][j].live = FALSE;
+	inv_num --;
+
+	if (inv_num > 0) {
+		refind_first_and_last ();
+	} else {
+		inv_x = 70;
+		inv_y = 70;
+		inv_first_col = 0;
+		inv_last_col = INV_COLS-1;
+		inv_reverse = FALSE;
+
+		g_slist_foreach (inv_shots, (GFunc)g_free, NULL);
+		g_slist_free (inv_shots);
+		inv_shots = NULL;
+
+		for (i = 0; i < INV_COLS; i++) {
+			for (j = 0; j < INV_ROWS; j++) {
+				invs[i][j].live = TRUE;
+				invs[i][j].x = 70 + i * 100;
+				invs[i][j].y = 70 + j * 80;
+			}
+		}
+		inv_num = INV_ROWS * INV_COLS;
+
+		inv_level ++;
+
+		inv_show_status ();
+	}
+
+	inv_queue_draw (geginv);
+}
+
+static gboolean
+geginv_timeout (gpointer data)
+{
+	int i, j;
+	int limitx1;
+	int limitx2;
+	int speed;
+	int shots;
+	int max_shots;
+
+	if (geginv != data ||
+	    inv_num <= 0 ||
+	    inv_y > 700)
+		return FALSE;
+
+	limitx1 = 70 - (inv_first_col * 100);
+	limitx2 = 800 - 70 - (inv_last_col * 100);
+
+	if (inv_game_over) {
+		inv_y += 30;
+	} else {
+		if (inv_num < (INV_COLS*INV_ROWS)/3)
+			speed = 45+2*inv_level;
+		else if (inv_num < (2*INV_COLS*INV_ROWS)/3)
+			speed = 30+2*inv_level;
+		else
+			speed = 15+2*inv_level;
+
+		if (inv_reverse) {
+			inv_x -= speed;
+			if (inv_x < limitx1) {
+				inv_reverse = FALSE;
+				inv_x = (limitx1 + (limitx1 - inv_x));
+				inv_y += 30+inv_level;
+			}
+		} else {
+			inv_x += speed;
+			if (inv_x > limitx2) {
+				inv_reverse = TRUE;
+				inv_x = (limitx2 - (inv_x - limitx2));
+				inv_y += 30+inv_level;
+			}
+		}
+	}
+
+	for (i = 0; i < INV_COLS; i++) {
+		for (j = 0; j < INV_ROWS; j++) {
+			if (invs[i][j].live) {
+				invs[i][j].x = inv_x + i * 100;
+				invs[i][j].y = inv_y + j * 80;
+
+				if (invs[i][j].y >= 570) {
+					inv_do_game_over ();
+				} else if (invs[i][j].y >= 530 &&
+					   invs[i][j].x + 40 > inv_our_x - 25 &&
+					   invs[i][j].x - 40 < inv_our_x + 25) {
+					inv_lives --;
+					if (inv_lives <= 0) {
+						inv_do_game_over ();
+					} else {
+						sleep (1);
+						inv_our_x = 400;
+						inv_show_status ();
+					}
+				}
+			}
+		}
+	}
+
+	shots = 0;
+	max_shots = (rand () >> 3) % (2+inv_level);
+	while ( ! inv_game_over && shots < MIN (max_shots, inv_num)) {
+		int i = (rand () >> 3) % INV_COLS;
+		for (j = INV_ROWS-1; j >= 0; j--) {
+			if (invs[i][j].live) {
+				InvShot *shot = g_new0 (InvShot, 1);
+
+				shot->good = FALSE;
+				shot->x = invs[i][j].x + (rand () % 6) - 3;
+				shot->y = invs[i][j].y + inv_goat_height/2 + (rand () % 3);
+
+				inv_shots = g_slist_prepend (inv_shots, shot);
+				shots++;
+				break;
+			}
+		}
+	}
+
+	inv_goat_state = (inv_goat_state+1) % 2;
+
+	inv_queue_draw (geginv);
+
+	g_timeout_add (((inv_num/4)+1) * 100, geginv_timeout, geginv);
+
+	return FALSE;
+}
+
+static gboolean
+find_gegls (int x, int y)
+{
+	int i, j;
+
+	/* FIXME: this is stupid, we can do better */
+	for (i = 0; i < INV_COLS; i++) {
+		for (j = 0; j < INV_ROWS; j++) {
+			int ix = invs[i][j].x;
+			int iy = invs[i][j].y;
+
+			if ( ! invs[i][j].live)
+				continue;
+
+			if (y >= iy - 30 &&
+			    y <= iy + 30 &&
+			    x >= ix - 40 &&
+			    x <= ix + 40) {
+				whack_gegl (i, j);
+				return TRUE;
+			}
+		}
+	}
+
+	return FALSE;
+}
+
+
+static gboolean
+geginv_move_timeout (gpointer data)
+{
+	GSList *li;
+	static int shot_inhibit = 0;
+
+	if (geginv != data ||
+	    inv_num <= 0 ||
+	    inv_y > 700)
+		return FALSE;
+
+	/* we will be drawing something */
+	if (inv_shots != NULL)
+		inv_queue_draw (geginv);
+
+	li = inv_shots;
+	while (li != NULL) {
+		InvShot *shot = li->data;
+
+		if (shot->good) {
+			shot->y -= 30;
+			if (find_gegls (shot->x, shot->y) ||
+			    shot->y <= 0) {
+				GSList *list = li;
+				/* we were restarted */
+				if (inv_shots == NULL)
+					return TRUE;
+				li = li->next;
+				g_free (shot);
+				inv_shots = g_slist_delete_link (inv_shots, list);
+				continue;
+			}
+		} else /* bad */ {
+			shot->y += 30;
+			if ( ! inv_game_over &&
+			    shot->y >= 535 &&
+			    shot->y <= 565 &&
+			    shot->x >= inv_our_x - 25 &&
+			    shot->x <= inv_our_x + 25) {
+				inv_lives --;
+				if (inv_lives <= 0) {
+					inv_do_game_over ();
+				} else {
+					sleep (1);
+					inv_our_x = 400;
+					inv_show_status ();
+					/* hack */
+					shot->y = 600;
+				}
+			}
+
+			if (shot->y >= 600) {
+				GSList *list = li;
+				li = li->next;
+				g_free (shot);
+				inv_shots = g_slist_delete_link (inv_shots, list);
+				continue;
+			}
+		}
+
+		li = li->next;
+	}
+
+	if ( ! inv_game_over) {
+		if (inv_left_pressed && inv_our_x > 100) {
+			inv_our_x -= 20;
+			inv_queue_draw (geginv);
+		} else if (inv_right_pressed && inv_our_x < 700) {
+			inv_our_x += 20;
+			inv_queue_draw (geginv);
+		}
+	}
+
+	if (shot_inhibit > 0)
+		shot_inhibit--;
+
+	if ( ! inv_game_over && inv_fire_pressed && shot_inhibit == 0) {
+		InvShot *shot = g_new0 (InvShot, 1);
+
+		shot->good = TRUE;
+		shot->x = inv_our_x;
+		shot->y = 540;
+
+		inv_shots = g_slist_prepend (inv_shots, shot);
+
+		shot_inhibit = 5;
+
+		inv_queue_draw (geginv);
+	}
+
+	if (inv_left_released)
+		inv_left_pressed = FALSE;
+	if (inv_right_released)
+		inv_right_pressed = FALSE;
+	if (inv_fire_released)
+		inv_fire_pressed = FALSE;
+
+	return TRUE;
+}
+
+static gboolean
+inv_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data)
+{
+	switch (event->keyval) {
+	case GDK_Left:
+	case GDK_KP_Left:
+	case GDK_Pointer_Left:
+		inv_left_pressed = TRUE;
+		inv_left_released = FALSE;
+		return TRUE;
+	case GDK_Right:
+	case GDK_KP_Right:
+	case GDK_Pointer_Right:
+		inv_right_pressed = TRUE;
+		inv_right_released = FALSE;
+		return TRUE;
+	case GDK_space:
+	case GDK_KP_Space:
+		inv_fire_pressed = TRUE;
+		inv_fire_released = FALSE;
+		return TRUE;
+	default:
+		break;
+	}
+	return FALSE;
+}
+
+static gboolean
+inv_key_release (GtkWidget *widget, GdkEventKey *event, gpointer data)
+{
+	switch (event->keyval) {
+	case GDK_Left:
+	case GDK_KP_Left:
+	case GDK_Pointer_Left:
+		inv_left_released = TRUE;
+		return TRUE;
+	case GDK_Right:
+	case GDK_KP_Right:
+	case GDK_Pointer_Right:
+		inv_right_released = TRUE;
+		return TRUE;
+	case GDK_space:
+	case GDK_KP_Space:
+		inv_fire_released = TRUE;
+		return TRUE;
+	case GDK_q:
+	case GDK_Q:
+		gtk_widget_destroy (widget);
+		return TRUE;
+	default:
+		break;
+	}
+	return FALSE;
+}
+
+static gboolean
+ensure_creatures (void)
+{
+	GdkPixbuf *pb, *pb1, *phsh, *goat1, *goat2;
+	char *phsh_file;
+	char *goat_file;
+
+	if (inv_goat1 != NULL)
+		return TRUE;
+
+	phsh_file = get_phsh_file ();
+
+        if (phsh_file == NULL)
+                return FALSE;
+
+	pb = gdk_pixbuf_new_from_file (phsh_file, NULL);
+	g_free (phsh_file);
+	if (pb == NULL)
+		return FALSE;
+
+	pb1 = get_phsh_frame (pb, 1);
+	gdk_pixbuf_unref (pb);
+	phsh = pb_scale (pb1, inv_factor);
+	gdk_pixbuf_unref (pb1);
+
+	phsh_dered (phsh);
+
+	goat_file = panel_pixmap_discovery ("gnome-gegl2.png",
+					    FALSE /* fallback */);
+	if (goat_file == NULL) {
+		gdk_pixbuf_unref (phsh);
+		return FALSE;
+	}
+
+	pb = gdk_pixbuf_new_from_file (goat_file, NULL);
+	g_free (goat_file);
+	if (pb == NULL) {
+		gdk_pixbuf_unref (phsh);
+		return FALSE;
+	}
+
+	goat1 = pb_scale (pb, inv_factor * 0.66);
+	gdk_pixbuf_unref (pb);
+
+	goat_file = panel_pixmap_discovery ("gnome-gegl2-2.png",
+					    FALSE /* fallback */);
+	if (goat_file == NULL) {
+		gdk_pixbuf_unref (goat1);
+		gdk_pixbuf_unref (phsh);
+		return FALSE;
+	}
+
+	pb = gdk_pixbuf_new_from_file (goat_file, NULL);
+	g_free (goat_file);
+	if (pb == NULL) {
+		gdk_pixbuf_unref (goat1);
+		gdk_pixbuf_unref (phsh);
+		return FALSE;
+	}
+
+	goat2 = pb_scale (pb, inv_factor * 0.66);
+	gdk_pixbuf_unref (pb);
+
+	inv_goat_width = gdk_pixbuf_get_width (goat1);
+	inv_goat_height = gdk_pixbuf_get_height (goat1);
+	inv_phsh_width = gdk_pixbuf_get_width (phsh);
+	inv_phsh_height = gdk_pixbuf_get_height (phsh);
+
+	gdk_pixbuf_render_pixmap_and_mask (goat1, &inv_goat1, NULL, 127);
+	gdk_pixbuf_unref (goat1);
+	gdk_pixbuf_render_pixmap_and_mask (goat2, &inv_goat2, NULL, 127);
+	gdk_pixbuf_unref (goat2);
+	gdk_pixbuf_render_pixmap_and_mask (phsh, &inv_phsh, &inv_phsh_mask, 127);
+	gdk_pixbuf_unref (phsh);
+
+	return TRUE;
+}
+
+static void
+geginv_destroyed (GtkWidget *w, gpointer data)
+{
+	geginv = NULL;
+	if (geginv_pixmap != NULL)
+		gdk_pixmap_unref (geginv_pixmap);
+	geginv_pixmap = NULL;
+}
+
+static void
+geginv_realized (GtkWidget *w, gpointer data)
+{
+	if (geginv_pixmap == NULL)
+		geginv_pixmap = gdk_pixmap_new (w->window,
+						inv_width, inv_height,
+						gtk_widget_get_visual (w)->depth);
+}
+
+static gboolean
+inv_expose (GtkWidget *widget, GdkEventExpose *event)
+{
+	if ( ! GTK_WIDGET_DRAWABLE (widget) ||
+	    geginv_pixmap == NULL)
+		return FALSE;
+
+	inv_queue_draw (geginv);
+	/*
+	gdk_draw_drawable (geginv_canvas->window,
+			   geginv_canvas->style->white_gc,
+			   geginv_pixmap,
+			   event->area.x, event->area.x,
+			   event->area.x, event->area.x,
+			   event->area.width, event->area.height);
+			   */
+
+	return FALSE;
+}
+
+void
+start_geginv (void)
+{
+	GtkWidget *vbox;
+	int i, j;
+
+	if (geginv != NULL) {
+		gtk_window_present (GTK_WINDOW (geginv));
+		return;
+	}
+
+	inv_width = 800;
+	inv_height = 600;
+
+	if (inv_width > gdk_screen_width () * 0.9) {
+		inv_width = gdk_screen_width () * 0.9;
+		inv_height = inv_width * (600.0/800.0);
+	}
+
+	if (inv_height > gdk_screen_height () * 0.9) {
+		inv_height = gdk_screen_height () * 0.9;
+		inv_width = inv_height * (800.0/600.0);
+	}
+
+	inv_factor = (double)inv_width / 800.0;
+
+	if ( ! ensure_creatures ())
+		return;
+
+	geginv = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	g_object_set (G_OBJECT (geginv), "resizable", FALSE, NULL);
+	g_signal_connect (G_OBJECT (geginv), "destroy",
+			  G_CALLBACK (geginv_destroyed),
+			  NULL);
+
+	geginv_canvas = gtk_drawing_area_new ();
+	gtk_widget_set_double_buffered (GTK_WIDGET (geginv_canvas), FALSE);
+	gtk_widget_set_size_request (geginv_canvas, inv_width, inv_height);
+
+	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_container_add (GTK_CONTAINER (geginv), vbox);
+	gtk_box_pack_start (GTK_BOX (vbox), geginv_canvas, TRUE, TRUE, 0);
+
+	geginv_label = gtk_label_new ("");
+	gtk_box_pack_start (GTK_BOX (vbox), geginv_label, FALSE, FALSE, 0);
+
+	inv_our_x = 400;
+	inv_x = 70;
+	inv_y = 70;
+	inv_first_col = 0;
+	inv_level = 0;
+	inv_lives = 3;
+	inv_last_col = INV_COLS-1;
+	inv_reverse = FALSE;
+	inv_game_over = FALSE;
+	inv_left_pressed = FALSE;
+	inv_right_pressed = FALSE;
+	inv_fire_pressed = FALSE;
+	inv_left_released = FALSE;
+	inv_right_released = FALSE;
+	inv_fire_released = FALSE;
+
+	gtk_widget_add_events (geginv, GDK_KEY_RELEASE_MASK);
+
+	g_signal_connect (G_OBJECT (geginv), "key_press_event",
+			  G_CALLBACK (inv_key_press), NULL);
+	g_signal_connect (G_OBJECT (geginv), "key_release_event",
+			  G_CALLBACK (inv_key_release), NULL);
+	g_signal_connect (G_OBJECT (geginv), "realize",
+			  G_CALLBACK (geginv_realized), NULL);
+	g_signal_connect (GTK_OBJECT (geginv_canvas), "expose_event",
+			  G_CALLBACK (inv_expose), NULL);
+
+	g_slist_foreach (inv_shots, (GFunc)g_free, NULL);
+	g_slist_free (inv_shots);
+	inv_shots = NULL;
+
+	for (i = 0; i < INV_COLS; i++) {
+		for (j = 0; j < INV_ROWS; j++) {
+			invs[i][j].live = TRUE;
+			invs[i][j].x = 70 + i * 100;
+			invs[i][j].y = 70 + j * 80;
+		}
+	}
+	inv_num = INV_ROWS * INV_COLS;
+
+	g_timeout_add (((inv_num/4)+1) * 100, geginv_timeout, geginv);
+	g_timeout_add (90, geginv_move_timeout, geginv);
+
+	inv_show_status ();
+
+	gtk_widget_show_all (geginv);
 }
