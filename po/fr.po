@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3.1\n"
-"POT-Creation-Date: 2003-02-09 20:35+0100\n"
-"PO-Revision-Date: 2003-02-09 20:32+0100\n"
+"POT-Creation-Date: 2003-02-10 18:06+0100\n"
+"PO-Revision-Date: 2003-02-10 17:48+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -86,13 +86,15 @@ msgstr "%A %d %B %Y"
 #: applets/clock/clock.c:753
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr ""
+msgstr "Échec au lancement de l'outil de configuration de l'heure : %s"
 
 #: applets/clock/clock.c:790
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
+"Échec à la localisation d'un programme pour configurer la date et l'heure. "
+"Peut-être qu'il n'y en a aucun d'installé ?"
 
 #: applets/clock/clock.c:1193 applets/clock/clock.c:1433
 #: applets/fish/fish.c:128 applets/mailcheck/mailcheck.c:1637
@@ -193,7 +195,7 @@ msgstr "Format de l'heure"
 
 #: applets/clock/clock.schemas.in.h:8
 msgid "Program to run in order to configure the time."
-msgstr ""
+msgstr "Programme à lancer pour configurer l'heure."
 
 #: applets/clock/clock.schemas.in.h:9
 msgid "Sets the hour format, may be either 12 or 24"
@@ -218,7 +220,7 @@ msgstr "Afficher l'heure avec les secondes"
 
 #: applets/clock/clock.schemas.in.h:14
 msgid "Time configuration tool"
-msgstr ""
+msgstr "Outil de configuration de l'heure"
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "Use Internet time"
@@ -250,7 +252,7 @@ msgstr "Donne l'heure et la date actuelle"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
-msgstr ""
+msgstr "A_juster la date et l'heure..."
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _date"
@@ -867,9 +869,8 @@ msgid "Button to hide application windows and show the desktop"
 msgstr "Bouton pour cacher les fenêtres d'applications et afficher le bureau"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
-#, fuzzy
 msgid "Factory for the window navigation related applets"
-msgstr "Fabrique pour créer quelques applets générales"
+msgstr "Fabrique pour les applets relatives à la navigation dans les fenêtres"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 #: applets/wncklet/showdesktop.c:453
@@ -891,14 +892,12 @@ msgstr "Liste des fenêtres"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
 #: applets/wncklet/window-menu.c:128
-#, fuzzy
 msgid "Window Menu"
-msgstr "Menu principal"
+msgstr "Menu fenêtre"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#, fuzzy
 msgid "Window Navigation Applet Factory"
-msgstr "Fabrique pour l'applet GenUtil"
+msgstr "Fabrique pour l'applet de navigation dans les fenêtres"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/workspace-switcher.c:551
@@ -1241,7 +1240,7 @@ msgstr "Les boutons de masquage ont des images"
 
 #: gnome-panel/basep-widget.c:583
 msgid "Hide this panel"
-msgstr "Cacher ce tableau de bord"
+msgstr "Masquer ce tableau de bord"
 
 #: gnome-panel/basep-widget.c:586
 msgid "Show this panel"
@@ -2330,6 +2329,13 @@ msgid ""
 "Applications/Actions menu or a Window Menu. This will will be fixed before "
 "GNOME 2.4 gets anywhere near release."
 msgstr ""
+"C'est votre jour de chance. J'ai juste cassé la compatibilité avec GNOME 2.0 "
+"et 2.2 en convertissant votre tableau de bord « menu » en un tableau de bord "
+"de coin avec deux applets. Si vous vous reconnectez sous GNOME 2.0/2.2 au "
+"lieu d'avoir un tableau de bord « menu » vous aurez un tableau de bord "
+"latéral en haut de votre écran sans menu Applications/Actions ou menu "
+"Fenêtres. Cela sera fixé avant la sortie de GNOME 2.4 dans une prochaine "
+"version."
 
 #. Auto-hide
 #: gnome-panel/panel-config.c:546
@@ -2691,23 +2697,25 @@ msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Intervalle de taille acceptable pour l'applet"
 
 #: libpanel-applet/panel-test-applets.c:33
-#, fuzzy
 msgid "Specify an applet IID to load"
-msgstr "Spécifier le nom de session à charger"
+msgstr "Spécifie un IID d'applet à charger"
 
 #: libpanel-applet/panel-test-applets.c:34
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
+"Spécifie un emplacement gconf dans lequel les préférences de l'applet "
+"doivent être stockées"
 
 #: libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr ""
+msgstr "Spécifie la taille initiale de l'applet (xx-small, medium, large etc.)"
 
 #: libpanel-applet/panel-test-applets.c:37
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
+"Spécifie l'orientation initiale de l'applet (top, bottom, left ou right)"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
