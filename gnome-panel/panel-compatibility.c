@@ -721,7 +721,7 @@ panel_compatibility_migrate_drawer_settings (GConfClient       *client,
 
 	if (!toplevel_id && panel_id &&
 	    (toplevel_id = g_hash_table_lookup (panel_id_hash, panel_id))) {
-		key = panel_gconf_full_key (key_type, profile, object_id, "toplevel_id");
+		key = panel_gconf_full_key (key_type, profile, object_id, "attached_toplevel_id");
 		gconf_client_set_string (client, key, toplevel_id, NULL);
 
 		toplevel_id = NULL;
@@ -778,9 +778,9 @@ panel_compatibility_migrate_menu_button_settings (GConfClient       *client,
 		gconf_client_set_string (client, key, custom_icon, NULL);
 	}
 
-	/* main_menu -> use_menu_path */
+	/* main_menu -> ! use_menu_path */
 	key = panel_gconf_full_key (key_type, profile, object_id, "main-menu");
-	use_menu_path = gconf_client_get_bool (client, key, NULL);
+	use_menu_path = ! gconf_client_get_bool (client, key, NULL);
 
 	key = panel_gconf_full_key (key_type, profile, object_id, "use_menu_path");
 	gconf_client_set_bool (client, key, use_menu_path, NULL);

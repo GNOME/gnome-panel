@@ -1,3 +1,12 @@
+Thu Aug 21 13:54:17 2003  George Lebl <jirka@5z.com>
+
+	* panel-compatibility.c: fixing RH #102790, "panel gnomes stole my
+	  drawers".  No longer will such gnomes profit from stealing ones
+	  drawers.  Issue was that we were setting "toplevel_id" instead
+	  of "attached_toplevel_id".  Also the menu setting migration code
+	  was migrating main menus into just menus with "applications:"
+	  path set.  main_menu=TRUE means use_menu_path must be FALSE.
+
 Thu Aug 21 12:56:48 2003  George Lebl <jirka@5z.com>
 
 	* panel-run-dialog.c: don't complete if the pointer is not on the
