@@ -54,6 +54,7 @@ typedef struct {
 	GtkWidget *label_row_col;
 	GtkWidget *num_workspaces_spin;
 	GtkWidget *workspaces_tree;
+	GtkWidget *about;
 
 	GtkListStore *workspaces_store;
 	
@@ -220,6 +221,9 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 
 	if (pager->properties_dialog)
 		gtk_widget_destroy (pager->properties_dialog);
+
+	if (pager->about)
+		gtk_widget_destroy (pager->about);
 
 	g_free (pager);
 
@@ -519,7 +523,6 @@ display_about_dialog (BonoboUIComponent *uic,
 		      PagerData         *pager,
 		      const gchar       *verbname)
 {
-	static GtkWidget *about = NULL;
 	GdkPixbuf *pixbuf = NULL;
 	gchar *file;
 	
@@ -533,10 +536,10 @@ display_about_dialog (BonoboUIComponent *uic,
 	};
 	const char *translator_credits = _("translator_credits");
 
-	if (about) {
-		gtk_window_set_screen (GTK_WINDOW (about),
+	if (pager->about) {
+		gtk_window_set_screen (GTK_WINDOW (pager->about),
 				       gtk_widget_get_screen (pager->applet));
-		gtk_window_present (GTK_WINDOW (about));
+		gtk_window_present (GTK_WINDOW (pager->about));
 		return;
 	}
 
@@ -544,7 +547,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	g_free(file);
 
-	about = gnome_about_new (_("Workspace Switcher"), VERSION,
+	pager->about = gnome_about_new (_("Workspace Switcher"), VERSION,
 				 "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
 				 _("The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."),
 				 authors,
@@ -552,19 +555,19 @@ display_about_dialog (BonoboUIComponent *uic,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 				 pixbuf);
 	
-	gtk_window_set_wmclass (GTK_WINDOW (about), "pager", "Pager");
-	gtk_window_set_screen (GTK_WINDOW (about),
+	gtk_window_set_wmclass (GTK_WINDOW (pager->about), "pager", "Pager");
+	gtk_window_set_screen (GTK_WINDOW (pager->about),
 			       gtk_widget_get_screen (pager->applet));
 
 	if (pixbuf) {
-		gtk_window_set_icon (GTK_WINDOW (about), pixbuf);
+		gtk_window_set_icon (GTK_WINDOW (pager->about), pixbuf);
 		g_object_unref (pixbuf);
 	}
 	
-	g_signal_connect (G_OBJECT(about), "destroy",
-			  (GCallback)gtk_widget_destroyed, &about);
+	g_signal_connect (G_OBJECT(pager->about), "destroy",
+			  (GCallback)gtk_widget_destroyed, &pager->about);
 	
-	gtk_widget_show (about);
+	gtk_widget_show (pager->about);
 }
 
 

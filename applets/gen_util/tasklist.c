@@ -60,6 +60,7 @@ typedef struct {
 
 	GtkWidget *minimum_size_spin;
 	GtkWidget *maximum_size_spin;
+	GtkWidget *about;
 
 	/* gconf listeners id */
 	guint listeners [5];
@@ -255,6 +256,9 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 
 	if (tasklist->properties_dialog)
 		gtk_widget_destroy (tasklist->properties_dialog);
+
+	if (tasklist->about)
+		gtk_widget_destroy (tasklist->about);
 
         g_free (tasklist);
 }
@@ -763,7 +767,6 @@ display_about_dialog (BonoboUIComponent *uic,
 		      TasklistData      *tasklist,
 		      const gchar       *verbname)
 {
-	static GtkWidget *about = NULL;
 	GdkPixbuf *pixbuf = NULL;
 	gchar *file;
 	
@@ -777,11 +780,11 @@ display_about_dialog (BonoboUIComponent *uic,
 	};
 	const char *translator_credits = _("translator_credits");
 
-	if (about) {
-		gtk_window_set_screen (GTK_WINDOW (about),
+	if (tasklist->about) {
+		gtk_window_set_screen (GTK_WINDOW (tasklist->about),
 				       gtk_widget_get_screen (tasklist->applet));
-		gtk_widget_show (about);
-		gtk_window_present (GTK_WINDOW (about));
+		gtk_widget_show (tasklist->about);
+		gtk_window_present (GTK_WINDOW (tasklist->about));
 		return;
 	}
 
@@ -789,7 +792,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	g_free(file);
 
-	about = gnome_about_new (_("Window List"), VERSION,
+	tasklist->about = gnome_about_new (_("Window List"), VERSION,
 				 "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
 				 _("The Window List shows a list of all visible windows and lets you browse them."),
 				 authors,
@@ -797,19 +800,19 @@ display_about_dialog (BonoboUIComponent *uic,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 				 pixbuf);
 	
-	gtk_window_set_wmclass (GTK_WINDOW (about), "tasklist", "Tasklist");
-	gtk_window_set_screen (GTK_WINDOW (about),
+	gtk_window_set_wmclass (GTK_WINDOW (tasklist->about), "tasklist", "Tasklist");
+	gtk_window_set_screen (GTK_WINDOW (tasklist->about),
 			       gtk_widget_get_screen (tasklist->applet));
 
 	if (pixbuf) {
-		gtk_window_set_icon (GTK_WINDOW (about), pixbuf);
+		gtk_window_set_icon (GTK_WINDOW (tasklist->about), pixbuf);
 		g_object_unref (pixbuf);
 	}
 	
-	g_signal_connect (G_OBJECT(about), "destroy",
-			  (GCallback)gtk_widget_destroyed, &about);
+	g_signal_connect (G_OBJECT(tasklist->about), "destroy",
+			  (GCallback)gtk_widget_destroyed, &tasklist->about);
 	
-	gtk_widget_show (about);
+	gtk_widget_show (tasklist->about);
 }
 
 static void
