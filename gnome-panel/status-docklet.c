@@ -110,9 +110,6 @@ status_docklet_class_init (StatusDockletClass *class)
 			       1,
 			       GTK_TYPE_POINTER);
 
-	gtk_object_class_add_signals(object_class,status_docklet_signals,
-				     LAST_SIGNAL);
-
 	class->build_plug = status_docklet_build_plug;
 	object_class->destroy = status_docklet_destroy;
 }
