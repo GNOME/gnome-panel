@@ -40,7 +40,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <string.h>
-#include <gobject/gboxed.h>
+#include <glib-object.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
 #include <libgnome/gnome-exec.h>

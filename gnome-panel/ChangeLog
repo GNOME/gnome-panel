@@ -1,3 +1,12 @@
+2001-11-18  Miles Lane  <miles@megapathdsl.net>
+
+	* quick-desktop-reader.c: replace includes of
+	<gobject/[genums, gboxed, gclosure and gvaluetypes].h
+	with one include of <glib-object.h>.
+	* panel-marshal-main.c:  replace include of
+	<gobject/gboxed.h> with include of <glib-object.h>.
+	Approved by Michael Meeks
+	
 Sun Nov 18 18:57:34 2001  George Lebl <jirka@5z.com>
 
 	* swallow.c, extern.c: a bit of s/GnomeDialog/GtkDialog/
