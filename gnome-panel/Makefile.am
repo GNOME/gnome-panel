@@ -39,8 +39,6 @@ my_gnome_panel_idl: $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
 extern.c: gnome-panel.h
 
 libpanel_applet_la_SOURCES = \
-	panel-util.c  \
-	panel-util.h  \
 	applet-widget.c \
 	$(CORBA_SRCLIST)
 

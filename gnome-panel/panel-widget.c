@@ -1446,7 +1446,6 @@ get_pixmap_from_pixbuf(GtkWidget *w, GdkPixbuf *pb, int scale_w, int scale_h,
 	affine[0] = scale_w / (double)(pb->art_pixbuf->width);
 	affine[3] = scale_h / (double)(pb->art_pixbuf->height);
 
-	/* libart is still to slow at rotating */
 	if(rotate) {
 		int tmp;
 		gdouble aff[6];

@@ -199,7 +199,6 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 	scaleaff[0] = scale_w / (double)(pbuf->width);
 	scaleaff[3] = scale_h / (double)(pbuf->height);
 
-	/* libart is still too slow */
 	if(rotate) {
 		int tmp;
 
