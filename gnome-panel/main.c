@@ -10,17 +10,28 @@
 #include "gnome.h"
 #include "panel-widget.h"
 #include "panel.h"
+#include "panel_config_global.h"
 #include "menu.h"
 
 GList *panels = NULL;
 GList *drawers = NULL;
 GList *applets = NULL;
 
+extern GtkWidget * root_menu;
+
 GtkTooltips *panel_tooltips = NULL;
 
-gint tooltips_enabled = TRUE;
-
 GnomeClient *client = NULL;
+
+GlobalConfig global_config = {
+		DEFAULT_AUTO_HIDE_STEP_SIZE,
+		DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
+		DEFAULT_MINIMIZED_SIZE,
+		DEFAULT_MINIMIZE_DELAY,
+		TRUE, /*tooltips*/
+		TRUE  /*show small icons*/
+	};
+
 
 static void
 load_applet(char *id, char *params, int pos, int panel)
@@ -198,25 +209,21 @@ init_user_panels(void)
 			PANEL_SHOWN);
 		config.state=gnome_config_get_int(buf);
 
-		sprintf(buf,"/panel/Panel_%d/step_size=%d",num,
-			DEFAULT_STEP_SIZE);
-		config.step_size=gnome_config_get_int(buf);
-
-		sprintf(buf,"/panel/Panel_%d/minimize_delay=%d",num,
-			DEFAULT_MINIMIZE_DELAY);
-		config.minimize_delay=gnome_config_get_int(buf);
-		sprintf(buf,"/panel/Panel_%d/minimized_size=%d",num,
-			DEFAULT_MINIMIZED_SIZE);
-		config.minimized_size=gnome_config_get_int(buf);
 
 		panel = panel_widget_new(length,
 					 config.orient,
 					 config.snapped,
 					 config.mode,
 					 config.state,
-					 config.step_size,
-					 config.minimized_size,
-					 config.minimize_delay);
+					 DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
+					 DEFAULT_MINIMIZED_SIZE,
+					 DEFAULT_MINIMIZE_DELAY);
+					/*the last three will get changed
+					  anyway, they are globals*/
+
+
+		/*FIXME: this should be made cleaner I guess*/
+		if(!root_menu) init_main_menu(panel);
 
 		panel_menu = create_panel_root_menu(PANEL_WIDGET(panel));
 		gtk_signal_connect(GTK_OBJECT(panel),
@@ -254,6 +261,7 @@ int
 main(int argc, char **argv)
 {
 	GtkWidget *base_panel;
+	char buf[256];
 	
 	gnome_init(&argc, &argv);
 	textdomain(PACKAGE);
@@ -262,18 +270,29 @@ main(int argc, char **argv)
 
 	create_applet_menu();
 
-	/*set up the tooltips*/
-	tooltips_enabled =
-		gnome_config_get_int("/panel/Config/tooltips_enabled=TRUE");
-	panel_tooltips=gtk_tooltips_new();
-	if(tooltips_enabled)
-		gtk_tooltips_enable(panel_tooltips);
-	else
-		gtk_tooltips_disable(panel_tooltips);
+	/*set up global options*/
+	global_config.tooltips_enabled =
+		gnome_config_get_bool("/panel/Config/tooltips_enabled=TRUE");
+	global_config.show_small_icons =
+		gnome_config_get_bool("/panel/Config/show_small_icons=TRUE");
+	sprintf(buf,"/panel/Config/auto_hide_step_size=%d",
+		DEFAULT_AUTO_HIDE_STEP_SIZE);
+	global_config.auto_hide_step_size=gnome_config_get_int(buf);
+	sprintf(buf,"/panel/Config/explicit_hide_step_size=%d",
+		DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
+	global_config.explicit_hide_step_size=gnome_config_get_int(buf);
+	sprintf(buf,"/panel/Config/minimize_delay=%d",
+		DEFAULT_MINIMIZE_DELAY);
+	global_config.minimize_delay=gnome_config_get_int(buf);
+	sprintf(buf,"/panel/Config/minimized_size=%d",
+		DEFAULT_MINIMIZED_SIZE);
+	global_config.minimized_size=gnome_config_get_int(buf);
 
 	init_user_panels();
 	init_user_drawers();
 	init_user_applets();
+
+	apply_global_config();
 
 	gtk_main();
 	return 0;

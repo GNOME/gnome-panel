@@ -16,6 +16,8 @@ panel_SOURCES = \
 	menu.h  	\
 	panel-widget.c  \
 	panel-widget.h  \
+	panel_config_global.c  \
+	panel_config_global.h  \
 	panel_config.c  \
 	panel_config.h
 

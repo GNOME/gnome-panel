@@ -12,7 +12,8 @@ BEGIN_GNOME_DECLS
 
 /*FIXME: maintain two global step sizes, one for autohide, one for
   drawers, and explicit (side) hide panels*/
-#define DEFAULT_STEP_SIZE 40
+#define DEFAULT_AUTO_HIDE_STEP_SIZE 10
+#define DEFAULT_EXPLICIT_HIDE_STEP_SIZE 50
 
 /* amount of time in ms. to wait before lowering panel */
 #define DEFAULT_MINIMIZE_DELAY 300
@@ -29,9 +30,6 @@ struct _PanelConfig {
 	PanelSnapped snapped;
 	PanelMode mode;
 	PanelState state;
-	gint step_size;
-	gint minimized_size;
-	gint minimize_delay;
 };
 
 typedef enum {
@@ -79,6 +77,11 @@ void register_toy(GtkWidget *applet,
 		  int panel,
 		  long flags,
 		  AppletType type);
+
+void panel_quit(void);
+
+void apply_global_config(void);
+
 
 END_GNOME_DECLS
 

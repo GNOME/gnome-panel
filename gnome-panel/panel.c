@@ -15,6 +15,7 @@
 #include "panel.h"
 #include "menu.h"
 #include "panel_config.h"
+#include "panel_config_global.h"
 
 #include <gdk/gdkx.h>
 
@@ -41,17 +42,10 @@ extern gint tooltips_enabled;
 
 extern GnomeClient *client;
 
-/*FIXME: integrate with menu.[ch]*/
 extern GtkWidget *root_menu;
 extern GList *small_icons;
 
-static void
-properties(PanelWidget *panel)
-{
-	panel_config(panel);
-}
-
-
+extern GlobalConfig global_config;
 
 static void
 get_applet_geometry(GtkWidget *applet, int *x, int *y, int *width, int *height)
@@ -67,6 +61,31 @@ get_applet_geometry(GtkWidget *applet, int *x, int *y, int *width, int *height)
 
 	if (height)
 		*height = applet->allocation.height;
+}
+
+static void
+apply_global_config_to_panel(gpointer data, gpointer user_data)
+{
+	PanelWidget *panel = data;
+
+	if(panel->mode == PANEL_AUTO_HIDE)
+		panel->step_size = global_config.auto_hide_step_size;
+	else
+		panel->step_size = global_config.explicit_hide_step_size;
+	panel->minimize_delay = global_config.minimize_delay;
+	panel->minimized_size = global_config.minimized_size;
+}
+
+void
+apply_global_config(void)
+{
+	g_list_foreach(panels,apply_global_config_to_panel,NULL);
+	if(global_config.tooltips_enabled)
+		gtk_tooltips_enable(panel_tooltips);
+	else
+		gtk_tooltips_disable(panel_tooltips);
+	g_list_foreach(small_icons,set_show_small_icons,NULL);
+	
 }
 
 /*FIXME this should be somehow done through signals and panel-widget*/
@@ -147,9 +166,9 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_int(fullpath,panel->state);
 	g_free(fullpath);
 
-	fullpath = g_copy_strings(path,"step_size",NULL);
+	/*fullpath = g_copy_strings(path,"step_size",NULL);
 	gnome_config_set_int(fullpath,panel->step_size);
-	g_free(fullpath);
+	g_free(fullpath);*/
 
 	fullpath = g_copy_strings(path,"minimized_size",NULL);
 	gnome_config_set_int(fullpath,panel->minimized_size);
@@ -249,8 +268,14 @@ panel_session_save (GnomeClient *client,
 	gnome_config_set_int("/panel/Config/panel_count",num-1);
 
 	/*global options*/
+	gnome_config_set_int("/panel/Config/auto_hide_step_size",
+			     global_config.auto_hide_step_size);
+	gnome_config_set_int("/panel/Config/explicit_hide_step_size",
+			     global_config.explicit_hide_step_size);
 	gnome_config_set_bool("/panel/Config/tooltips_enabled",
-			      tooltips_enabled);
+			      global_config.tooltips_enabled);
+	gnome_config_set_bool("/panel/Config/show_small_icons",
+			      global_config.show_small_icons);
 
 	gnome_config_sync();
 
@@ -262,11 +287,9 @@ panel_session_save (GnomeClient *client,
 	gtk_widget_unref(applet_menu);
 	gtk_widget_unref(panel_tooltips);
 
-	/*FIXME: integrate with menu.[ch]*/
 	small_icons = NULL; /*prevent searches through the g_list to speed
 				up this thing*/
 
-	/*FIXME: integrate with menu.[ch]*/
 	gtk_widget_unref(root_menu);
 
 	/*FIXME: unref all menus here */
@@ -276,7 +299,7 @@ panel_session_save (GnomeClient *client,
 	return TRUE;
 }
 
-static void
+void
 panel_quit(void)
 {
 	if (! GNOME_CLIENT_CONNECTED (client)) {
@@ -444,7 +467,13 @@ applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 static void
 panel_properties_callback(GtkWidget *widget, gpointer data)
 {
-	properties(PANEL_WIDGET(data));
+	panel_config(PANEL_WIDGET(data));
+}
+
+static void
+panel_global_properties_callback(GtkWidget *widget, gpointer data)
+{
+	panel_config_global();
 }
 
 static void
@@ -493,24 +522,29 @@ create_panel_root_menu(PanelWidget *panel)
 
 	panel_menu = gtk_menu_new();
 
-	menuitem = gtk_menu_item_new_with_label(_("Panel properties..."));
+	menuitem = gtk_menu_item_new_with_label(_("This panel properties..."));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) panel_properties_callback,
 			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
 
-	menuitem = gtk_menu_item_new_with_label(_("Add reparent"));
+	menuitem = gtk_menu_item_new_with_label(_("Global panel properties..."));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) panel_global_properties_callback,
+			   panel);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	menuitem = gtk_menu_item_new_with_label(_("Add reparent (testing)"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_reparent,
 			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
 
-	menuitem = gtk_menu_item_new_with_label(_("Add main menu applet"));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) add_main_menu,
-			   panel);
+	menuitem = gtk_menu_item_new_with_label(_("Main menu"));
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), root_menu);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
 
