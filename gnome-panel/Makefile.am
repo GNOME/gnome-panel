@@ -9,11 +9,11 @@ AUTOMAKE_OPTIONS = 1.2f
 CFLAGS += -D_SWALLOW_
 CFLAGS += -D_DRAWER_
 
-CXX = mico-c++
+#CXX = mico-c++
 ## We set this to force the values in mico-c++ to be used.  Otherwise,
 ## on Linux boxes, the compilation will fail with the default
 ## CXXFLAGS.
-CXXFLAGS =
+#CXXFLAGS =
 
 test:
 	echo $(CXXCOMPILE)
@@ -137,6 +137,5 @@ appletsConf.sh: appletsConf.sh.in Makefile
 	    -e 's,\@GNOMEUI_LIBS\@,$(GNOMEUI_LIBS),g' \
 	    -e 's,\@GNOME_INCLUDEDIR\@,$(GNOME_INCLUDEDIR),g' \
 	    -e 's,\@MICO_LIBS\@,$(MICO_LIBS),g' \
-	    -e 's,\@INTLLIBS\@,$(INTLLIBS),g' \
 	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
 	  && mv appletsConf.tmp appletsConf.sh
