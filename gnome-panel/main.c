@@ -419,14 +419,19 @@ static void
 kill_free_drawers (void)
 {
 	GSList *li;
+	GSList *to_destroy = NULL;
+	
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
 		if (IS_DRAWER_WIDGET (pd->panel) &&
 		    PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->master_widget == NULL) {
 			status_unparent (pd->panel);
-			gtk_widget_destroy (pd->panel);
+			to_destroy = g_slist_prepend (to_destroy, pd->panel);
 		}
 	}
+
+	g_slist_foreach (to_destroy, (GFunc)gtk_widget_destroy, NULL);
+	g_slist_free (to_destroy);
 }
 
 static void
