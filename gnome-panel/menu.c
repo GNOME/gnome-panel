@@ -204,7 +204,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 
 				menuitem = gtk_menu_item_new ();
 				if (gnome_folder) {
-					pixmap = gnome_create_pixmap_widget (window, menuitem, gnome_folder);
+					pixmap = gnome_pixmap_new_from_file (gnome_folder);
 					gtk_widget_show (pixmap);
 				}
 
@@ -243,8 +243,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 
 		pixmap = NULL;
 		if (pixmap_name && g_file_exists (pixmap_name)) {
-			pixmap = gnome_create_pixmap_widget (window, menuitem,
-							     pixmap_name);
+			pixmap = gnome_pixmap_new_from_file (pixmap_name);
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}
@@ -580,7 +579,7 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 	menu->button = gtk_event_box_new ();
 	
 	/*make the pixmap*/
-	pixmap = gnome_create_pixmap_widget (window, menu->button, pixmap_name);
+	pixmap = gnome_pixmap_new_from_file (pixmap_name);
 	gtk_widget_show(pixmap);
 	/*FIXME:this is not right, but it's how we can get the buttons to
 	  be 48x48 (given the icons are 48x48)*/
@@ -725,7 +724,7 @@ set_orientation(GtkWidget *window, Menu *menu)
 	gtk_widget_destroy(pixmap);
 
 	/*make the pixmap*/
-	pixmap = gnome_create_pixmap_widget (window,menu->button,pixmap_name);
+	pixmap = gnome_pixmap_new_from_file (pixmap_name);
 
 	gtk_container_add (GTK_CONTAINER(menu->button), pixmap);
 	gtk_widget_show (pixmap);

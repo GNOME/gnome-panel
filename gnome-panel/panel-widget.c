@@ -979,9 +979,7 @@ panel_widget_new (gint size,
 	/*EAST*/
 	panel->hidebutton_e=gtk_button_new();
 	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-left.xpm");
-	pixmap = gnome_create_pixmap_widget(GTK_WIDGET(panel),
-					    panel->hidebutton_e,
-					    pixmap_name);
+	pixmap = gnome_pixmap_new_from_file(pixmap_name);
 	g_free(pixmap_name);
 	gtk_container_add(GTK_CONTAINER(panel->hidebutton_e),pixmap);
 	gtk_widget_show(pixmap);
@@ -992,9 +990,7 @@ panel_widget_new (gint size,
 	/*NORTH*/
 	panel->hidebutton_n=gtk_button_new();
 	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-up.xpm");
-	pixmap = gnome_create_pixmap_widget(GTK_WIDGET(panel),
-					    panel->hidebutton_n,
-					    pixmap_name);
+	pixmap = gnome_pixmap_new_from_file(pixmap_name);
 	g_free(pixmap_name);
 	gtk_container_add(GTK_CONTAINER(panel->hidebutton_n),pixmap);
 	gtk_widget_show(pixmap);
@@ -1005,9 +1001,7 @@ panel_widget_new (gint size,
 	/*WEST*/
 	panel->hidebutton_w=gtk_button_new();
 	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-right.xpm");
-	pixmap = gnome_create_pixmap_widget(GTK_WIDGET(panel),
-					    panel->hidebutton_w,
-					    pixmap_name);
+	pixmap = gnome_pixmap_new_from_file(pixmap_name);
 	g_free(pixmap_name);
 	gtk_container_add(GTK_CONTAINER(panel->hidebutton_w),pixmap);
 	gtk_widget_show(pixmap);
@@ -1018,9 +1012,7 @@ panel_widget_new (gint size,
 	/*SOUTH*/
 	panel->hidebutton_s=gtk_button_new();
 	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-down.xpm");
-	pixmap = gnome_create_pixmap_widget(GTK_WIDGET(panel),
-					    panel->hidebutton_s,
-					    pixmap_name);
+	pixmap = gnome_pixmap_new_from_file(pixmap_name);
 	g_free(pixmap_name);
 	gtk_container_add(GTK_CONTAINER(panel->hidebutton_s),pixmap);
 	gtk_widget_show(pixmap);

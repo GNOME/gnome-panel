@@ -239,7 +239,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 
 				menuitem = gtk_menu_item_new ();
 				if (gnome_folder) {
-					pixmap = gnome_create_pixmap_widget (window, menuitem, gnome_folder);
+					pixmap = gnome_pixmap_new_from_file (gnome_folder);
 					gtk_widget_show (pixmap);
 				}
 
@@ -278,8 +278,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 
 		pixmap = NULL;
 		if (pixmap_name && g_file_exists (pixmap_name)) {
-			pixmap = gnome_create_pixmap_widget (window, menuitem,
-							     pixmap_name);
+			pixmap = gnome_pixmap_new_from_file (pixmap_name);
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}
@@ -605,7 +604,7 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 	button = gtk_button_new ();
 	
 	/*make the pixmap*/
-	pixmap = gnome_create_pixmap_widget (window, button, pixmap_name);
+	pixmap = gnome_pixmap_new_from_file (pixmap_name);
 	gtk_widget_show(pixmap);
 	gtk_widget_set_usize (button, pixmap->requisition.width,
 			      pixmap->requisition.height);
@@ -758,7 +757,7 @@ set_orientation(GtkWidget *applet, PanelWidget *panel, PanelSnapped snapped)
 	gtk_widget_destroy(pixmap);
 
 	/*make the pixmap*/
-	pixmap = gnome_create_pixmap_widget (GTK_WIDGET(panel),applet,pixmap_name);
+	pixmap = gnome_pixmap_new_from_file (pixmap_name);
 
 	gtk_container_add (GTK_CONTAINER(applet), pixmap);
 	gtk_widget_show (pixmap);
