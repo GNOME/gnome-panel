@@ -836,7 +836,7 @@ panel_applet_load_from_unique_id (AppletType   type,
 	if (!panel_widget)
 		return;
 
-	if (right_stick)
+	if (right_stick && !panel_widget->packed)
 		position = panel_widget->size - position;
 
 	applet = g_new0 (PanelAppletToLoad, 1);
