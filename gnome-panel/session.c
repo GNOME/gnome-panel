@@ -895,6 +895,41 @@ load_default_applets1(PanelWidget *panel)
 			   G_MAXINT/2 + 4000/*flush right*/, TRUE);
 }
 
+static gboolean
+battery_exists (void)
+{
+#ifdef __linux__
+	FILE *fp;
+	char buf[200] = "";
+	int foo;
+
+	if ( ! g_file_exists("/proc/apm"))
+		return FALSE;
+
+	fp = fopen ("/proc/apm", "r");
+	if (fp == NULL)
+		return FALSE;
+
+	if (fgets (buf, sizeof (buf), fp) == NULL) {
+		fclose (fp);
+		return FALSE;
+	}
+	fclose (fp);
+
+	foo = -1;
+	sscanf (buf,
+		"%*s %*d.%*d %*x %*x %*x %*x %d%% %*d %*s\n",
+		&foo);
+
+	if (foo >= 0)
+		return TRUE;
+	else
+		return FALSE;
+#else
+	return FALSE;
+#endif
+}
+
 static void
 load_default_applets2(PanelWidget *panel)
 {
@@ -903,10 +938,11 @@ load_default_applets2(PanelWidget *panel)
 	load_extern_applet("gen_util_mailcheck",NULL,
 			   panel, G_MAXINT/2 + 1000/*flush right*/,
 			   TRUE, TRUE);
-	if(g_file_exists("/proc/apm"))
+	if (battery_exists ()) {
 		load_extern_applet("battery_applet",NULL,
 				   panel, G_MAXINT/2 + 2000 /*flush right*/,
 				   TRUE, TRUE);
+	}
 }
 
 /* try evil hacks to rewrite panel config from old applets (gnomepager for

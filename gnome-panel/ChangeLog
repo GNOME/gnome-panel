@@ -1,3 +1,10 @@
+Thu Nov 02 22:19:18 2000  George Lebl <jirka@5z.com>
+
+	* session.c: only check for /proc/apm on linux.  Also read the
+	  thing and see if the percentage is >= 0, otherwise it's -1
+	  and that means there is no battery.  So don't add the battery
+	  applet by default in that case.
+
 Thu Nov 02 21:27:28 2000  George Lebl <jirka@5z.com>
 
 	* extern.c, panel.gnorba: Implement the Panel2 interface.
