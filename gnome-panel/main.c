@@ -105,7 +105,7 @@ sigchld_handler(int type)
 {
 	GList *list;
 	pid_t pid = waitpid(0,NULL,WNOHANG);
-
+	
 	if(pid <= 0)
 		return;
 
@@ -115,7 +115,7 @@ sigchld_handler(int type)
 		if(child->pid != pid)
 			continue;
 		info = get_applet_info(child->applet_id);
-		if(info && !info->widget) {
+		if(info) {
 			Extern *ext = info->data;
 			if(ext && ext->ior) {
 				int i;

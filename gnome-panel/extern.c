@@ -83,8 +83,7 @@ applet_get_panel_orient(int applet_id)
 
 	g_return_val_if_fail(info != NULL,ORIENT_UP);
 
-	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
+	panel = PANEL_WIDGET(info->widget->parent);
 
 	g_return_val_if_fail(panel != NULL,ORIENT_UP);
 
@@ -102,8 +101,7 @@ applet_get_panel(int applet_id)
 
 	g_return_val_if_fail(info != NULL,-1);
 
-	p = gtk_object_get_data(GTK_OBJECT(info->widget),
-				PANEL_APPLET_PARENT_KEY);
+	p = PANEL_WIDGET(info->widget->parent);
 
 	for(panel=0,list=panels;list!=NULL;list=g_list_next(list),panel++)
 		if(list->data == p)
@@ -151,8 +149,8 @@ applet_drag_start(int applet_id)
 
 	g_return_if_fail(info != NULL);
 
-	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
+	panel = PANEL_WIDGET(info->widget->parent);
+
 	g_return_if_fail(panel!=NULL);
 
 	panel_widget_applet_drag_start(panel,info->widget);
@@ -169,8 +167,8 @@ applet_drag_stop(int applet_id)
 
 	g_return_if_fail(info != NULL);
 
-	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
+	panel = PANEL_WIDGET(info->widget->parent);
+
 	g_return_if_fail(panel!=NULL);
 
 	panel_widget_applet_drag_end(panel);
@@ -211,7 +209,10 @@ applet_request_id (const char *path, const char *param,
 			   compare_params(param,ext->params)) {
 				/*we started this and already reserved a spot
 				  for it, including the socket widget*/
-				GtkWidget *socket = GTK_BIN(info->widget)->child;
+				GtkWidget *socket =
+					GTK_BIN(info->widget)->child;
+				g_return_val_if_fail(GTK_IS_SOCKET(socket),-1);
+
 				*cfgpath = ext->cfg;
 				ext->cfg = NULL;
 				*globcfgpath = g_strdup(old_panel_cfg_path);
@@ -270,8 +271,7 @@ applet_register (const char * ior, int applet_id)
 	ext = info->data;
 	g_assert(ext);
 
- 	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
+	panel = PANEL_WIDGET(info->widget->parent);
 	g_return_if_fail(panel!=NULL);
 
 	/*no longer pending*/
@@ -293,6 +293,8 @@ static int
 extern_socket_destroy(GtkWidget *w, gpointer data)
 {
 	Extern *ext = data;
+	puts("extern socket_destroy");
+	gtk_widget_destroy(w->parent);
 	extern_clean(ext);
 	return FALSE;
 }
@@ -330,6 +332,9 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 		g_warning("Couldn't add applet");
 		return 0;
 	}
+	
+	if(!GTK_WIDGET_REALIZED(socket))
+		gtk_widget_realize(socket);
 
 	printf("socket wid: %ld\n", GDK_WINDOW_XWINDOW(socket->window));
 	return GDK_WINDOW_XWINDOW(socket->window);
