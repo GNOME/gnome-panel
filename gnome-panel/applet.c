@@ -228,13 +228,15 @@ applet_menu_deactivate(GtkWidget *w, AppletInfo *info)
 }
 
 AppletUserMenu *
-applet_get_callback (GList *user_menu, const char *name)
+applet_get_callback (GList      *user_menu,
+		     const char *name)
 {
-	GList *li;
+	GList *l;
 
-	for (li = user_menu; li != NULL; li = li->next) {
-		AppletUserMenu *menu = li->data;
-		if (strcmp (menu->name, name) == 0)
+	for (l = user_menu; l; l = l->next) {
+		AppletUserMenu *menu = l->data;
+
+		if (!strcmp (menu->name, name))
 			return menu;
 	}
 
@@ -458,111 +460,162 @@ add_to_submenus (AppletInfo *info,
 	g_free(n);
 }
 
-void
-create_applet_menu (AppletInfo *info, gboolean is_basep)
+static GtkWidget *
+applet_setup_panel_menu (gboolean is_basep)
 {
-	GtkWidget *menuitem, *panel_menu;
-	GList *user_menu = info->user_menu;
-	gchar *pixmap;
+	GtkWidget *menuitem;
+	GtkWidget *panel_menu;
+	gchar     *pixmap_path;
 
-	info->menu = gtk_menu_new  ();
+	menuitem = gtk_menu_item_new ();
 
-	if ( ! commie_mode) {
-		menuitem = gtk_menu_item_new();
-		setup_menuitem(menuitem,
-			       gtk_image_new_from_stock (GTK_STOCK_REMOVE,
-							 GTK_ICON_SIZE_MENU),
-			       _("Remove from panel"));
-		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-				   (GtkSignalFunc) remove_applet_callback,
-				   info);
-		gtk_menu_shell_append(GTK_MENU_SHELL(info->menu), menuitem);
+	pixmap_path = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+						 "gnome-panel.png", TRUE, NULL);
+	if (pixmap_path) {
+		setup_menuitem (menuitem, 
+				gtk_image_new_from_file (pixmap_path),
+				_("Panel"));
 
-		menuitem = gtk_menu_item_new();
-		setup_menuitem(menuitem,NULL,_("Move"));
-		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-				   (GtkSignalFunc) move_applet_callback,
-				   info);
-		gtk_menu_shell_append(GTK_MENU_SHELL(info->menu), menuitem);
+		g_free (pixmap_path);
+	} else {
+		g_message (_("Cannot find pixmap file %s"), "gnome-panel.png");
+
+		setup_menuitem (menuitem, NULL, _("Panel"));
 	}
 
 	panel_menu = gtk_menu_new ();
-	make_panel_submenu (panel_menu, TRUE, is_basep);
-	menuitem = gtk_menu_item_new ();
 
-	pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-					    "gnome-panel.png", TRUE, NULL);
-	if (pixmap == NULL) {
-		g_message (_("Cannot find pixmap file %s"), "gnome-panel.png");
-		setup_menuitem (menuitem, NULL, _("Panel"));
-	} else {
-		setup_menuitem (menuitem, 
-				gtk_image_new_from_file (pixmap),
-				_("Panel"));
-		g_free (pixmap);
-	}
-	gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
+	make_panel_submenu (panel_menu, TRUE, is_basep);
+
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), panel_menu);
 
-	if(user_menu) {
-		menuitem = gtk_menu_item_new();
-		gtk_menu_shell_append(GTK_MENU_SHELL(info->menu), menuitem);
-		gtk_widget_set_sensitive (menuitem, FALSE);
-		gtk_widget_show(menuitem);
-	}
-
-	for(;user_menu!=NULL;user_menu = g_list_next(user_menu)) {
-		AppletUserMenu *menu=user_menu->data;
-		add_to_submenus (info, "", menu->name, menu, info->menu,
-				 info->user_menu);
-	}
-
-	/*connect the deactivate signal, so that we can "re-allow" autohide
-	  when the menu is deactivated*/
-	gtk_signal_connect (GTK_OBJECT (info->menu), "deactivate",
-			    GTK_SIGNAL_FUNC (applet_menu_deactivate),
-			    info);
-}
-
-static void
-set_data(GtkWidget *menu, gpointer panel)
-{
-	GList *children, *li;
-
-	gtk_object_set_data (GTK_OBJECT (menu), "menu_panel", panel);
-
-	children = gtk_container_children (GTK_CONTAINER (menu));
-
-	for(li = children; li; li = li->next) {
-		GtkMenuItem *item = li->data;
-		if (item->submenu != NULL)
-			set_data (item->submenu, panel);
-	}
-	g_list_free (children);
+	return menuitem;
 }
 
 void
-show_applet_menu(AppletInfo *info, GdkEventButton *event)
+create_applet_menu (AppletInfo *info,
+		    gboolean    is_basep)
+{
+	GtkWidget *menuitem;
+	GList     *l;
+
+	info->menu = gtk_menu_new ();
+
+	if (!commie_mode) {
+		GtkWidget *image;
+
+		menuitem = gtk_menu_item_new ();
+
+		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
+						  GTK_ICON_SIZE_MENU);
+
+		setup_menuitem (menuitem, image , _("Remove from panel"));
+
+		gtk_signal_connect (GTK_OBJECT (menuitem),
+				    "activate",
+				    (GtkSignalFunc) remove_applet_callback,
+				    info);
+
+		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
+
+		menuitem = gtk_menu_item_new();
+
+		/*
+		 * FIXME: should have a "Move" pixmap.
+		 */
+		setup_menuitem (menuitem, NULL, _("Move"));
+
+		gtk_signal_connect (GTK_OBJECT (menuitem),
+				    "activate",
+				    (GtkSignalFunc) move_applet_callback,
+				    info);
+
+		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
+	}
+
+	menuitem = applet_setup_panel_menu (is_basep);
+
+	gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
+
+	if (info->user_menu) {
+		menuitem = gtk_menu_item_new ();
+
+		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
+
+		gtk_widget_set_sensitive (menuitem, FALSE);
+
+		gtk_widget_show (menuitem);
+	}
+
+	for (l = info->user_menu; l; l = l->next) {
+		AppletUserMenu *menu = (AppletUserMenu *)l->data;
+
+		add_to_submenus (info, "", menu->name, menu, 
+				 info->menu, info->user_menu);
+	}
+
+	/*
+	 * connect the deactivate signal, so that we can "re-allow" 
+	 * autohide when the menu is deactivated.
+	 */
+	gtk_signal_connect (GTK_OBJECT (info->menu),
+			    "deactivate",
+			     GTK_SIGNAL_FUNC (applet_menu_deactivate),
+			     info);
+}
+
+static void
+applet_menu_set_data_recursively (GtkMenu     *menu,
+				  const gchar *key,
+				  gpointer     data)
+{
+	GList *children;
+	GList *l;
+
+	gtk_object_set_data (GTK_OBJECT (menu), key, data);
+
+	children = gtk_container_children (GTK_CONTAINER (menu));
+
+	for (l = children; l; l = l->next) {
+		GtkWidget *submenu = GTK_MENU_ITEM (l->data)->submenu;
+
+		if (submenu)
+			applet_menu_set_data_recursively (GTK_MENU (submenu), key, data);
+	}
+
+	g_list_free (children);
+}
+
+static void
+applet_show_menu (AppletInfo     *info,
+		  GdkEventButton *event)
 {
 	GtkWidget *panel;
 
-	g_return_if_fail(info!=NULL);
+	g_return_if_fail (info);
 
-	panel = get_panel_parent(info->widget);
+	panel = get_panel_parent (info->widget);
 
-	if (info->menu == NULL)
+	if (!info->menu)
 		create_applet_menu (info, BASEP_IS_WIDGET (panel));
-	g_assert (info->menu != NULL);
 
-	if(BASEP_IS_WIDGET(panel)) {
-		BASEP_WIDGET(panel)->autohide_inhibit = TRUE;
-		basep_widget_queue_autohide(BASEP_WIDGET(panel));
+	g_assert (info->menu);
+
+	if (BASEP_IS_WIDGET (panel)) {
+		BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
+		basep_widget_queue_autohide (BASEP_WIDGET (panel));
 	}
+
 	info->menu_age = 0;
 
-	set_data (info->menu, info->widget->parent);
+	applet_menu_set_data_recursively (GTK_MENU (info->menu),
+					  "menu_panel",
+					  info->widget->parent);
 
-/* FIXME - off panel popups, should be automatic with new gtk-menu? */
+	if (!GTK_WIDGET_REALIZED (info->menu))
+		gtk_widget_show (info->menu);
+
+	/* FIXME - off panel popups, should be automatic with new gtk-menu? */
 	gtk_menu_popup (GTK_MENU (info->menu),
 			NULL,
 			NULL,
@@ -571,8 +624,6 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 			event->button,
 			event->time);
 }
-
-
 
 static gboolean
 applet_button_press (GtkWidget      *widget,
@@ -584,7 +635,7 @@ applet_button_press (GtkWidget      *widget,
 			return FALSE;
 
 		if (info->type != APPLET_SWALLOW) 
-			show_applet_menu (info, event);
+			applet_show_menu (info, event);
 
 		else {
 			GtkHandleBox *handle_box;
@@ -592,7 +643,7 @@ applet_button_press (GtkWidget      *widget,
 			handle_box = GTK_HANDLE_BOX (((Swallow *)info->data)->handle_box);
 				
 			if (handle_box->child_detached)
-				show_applet_menu (info, event);
+				applet_show_menu (info, event);
 		}
 
 		return TRUE;

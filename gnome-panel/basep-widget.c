@@ -27,7 +27,7 @@
 #include "panel-typebuiltins.h"
 #include "panel-gconf.h"
 
-#define BASEP_WIDGET_DEBUG
+#undef BASEP_WIDGET_DEBUG
 
 extern gboolean panel_applet_in_drag;
 extern GSList *panel_list;
@@ -1828,7 +1828,7 @@ basep_widget_queue_autoshow (BasePWidget *basep)
          * there was */
 	if (basep->state == BASEP_MOVING) {
 #ifdef BASEP_WIDGET_DEBUG
-		g_print ("return 2");
+		g_print ("basep_widget_queue_autoshow: return 2");
 #endif
 		return; 
 	}
@@ -1841,14 +1841,14 @@ basep_widget_queue_autoshow (BasePWidget *basep)
         if (basep->enter_notify_timer_tag != 0) {
                 gtk_timeout_remove (basep->enter_notify_timer_tag);
 #ifdef BASEP_WIDGET_DEBUG
-		g_print ("<timeout removed>\n");
+		g_print ("basep_widget_queue_autoshow: <timeout removed>\n");
 #endif
 	}
 
         if ((basep->mode != BASEP_AUTO_HIDE) ||
             (basep->state == BASEP_SHOWN)) {
 #ifdef BASEP_WIDGET_DEBUG
-		g_print ("return 1\n");
+		g_print ("basep_widget_queue_autoshow: return 1\n");
 #endif
                 return;
 	}
@@ -1945,7 +1945,7 @@ basep_widget_queue_autohide(BasePWidget *basep)
          * there was */
 	if (basep->state == BASEP_MOVING) {
 #ifdef BASEP_WIDGET_DEBUG
-		g_print ("return 2");
+		g_print ("basep_widget_queue_autohide: return 2");
 #endif
 		return; 
 	}
@@ -1958,14 +1958,14 @@ basep_widget_queue_autohide(BasePWidget *basep)
         if (basep->leave_notify_timer_tag != 0) {
                 gtk_timeout_remove (basep->leave_notify_timer_tag);
 #ifdef BASEP_WIDGET_DEBUG
-		g_print ("<timeout removed>\n");
+		g_print ("basep_widget_queue_autohide: <timeout removed>\n");
 #endif
 	}
 
         if ((basep->mode != BASEP_AUTO_HIDE) ||
             (basep->state != BASEP_SHOWN)) {
 #ifdef BASEP_WIDGET_DEBUG
-		g_print ("return 1\n");
+		g_print ("basep_widget_queue_autohide: return 1\n");
 #endif
                 return;
 	}
@@ -1990,9 +1990,18 @@ basep_widget_get_menu_pos (BasePWidget *basep,
 
 	gtk_widget_get_child_requisition(menu, &mreq);
 
+#ifdef BASEP_WIDGET_DEBUG
+	g_print ("basep_widget_get_menu_pos: menu req: w = %d, h = %d\n", 
+		 mreq.width, mreq.height);
+#endif
+
 	klass->get_menu_pos (basep, menu, &mreq,
 			     x, y, wx, wy, 
 			     ww, wh);
+
+#ifdef BASEP_WIDGET_DEBUG
+	g_print ("basep_widget_get_menu_pos: x = %d, y = %d\n", *x, *y);
+#endif
 
 	if (*x + mreq.width >
 	    multiscreen_x (basep->screen) + multiscreen_width (basep->screen))

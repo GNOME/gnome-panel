@@ -151,6 +151,11 @@ applet_menu_position (GtkMenu  *menu,
 		wx += info->widget->allocation.x;
 		wy += info->widget->allocation.y;
 	}
+
+#ifdef MENU_UTIL_DEBUG
+	g_print ("applet_menu_position: origin x = %d, y = %d\n", wx, wy);
+#endif
+
 	if (BASEP_IS_WIDGET (w)) {
 		*x = *y = 0;
 		basep_widget_get_menu_pos(BASEP_WIDGET(w),
@@ -169,6 +174,11 @@ applet_menu_position (GtkMenu  *menu,
 	}
 
 	*push_in = TRUE;
+
+#ifdef MENU_UTIL_DEBUG
+	g_print ("applet_menu_position: x = %d, y = %d, push_in = %s\n",
+		 *x, *y, *push_in ? "(true)" : "(false)");
+#endif
 }
 
 int

@@ -1854,25 +1854,6 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 }
 
 static gboolean
-show_item_menu_b_cb(GtkWidget *w, GdkEvent *event, ShowItemMenu *sim)
-{
-	GdkEventButton *bevent = (GdkEventButton *)event;
-	GtkWidget *item;
-	
-	if (event->type != GDK_BUTTON_PRESS)
-		return FALSE;
-
-	/* no item menu in commie mode */
-	if (commie_mode)
-		return FALSE;
-	
-	item = w->parent->parent;
-	show_item_menu (item, bevent, sim);
-	
-	return TRUE;
-}
-
-static gboolean
 show_item_menu_mi_cb (GtkWidget *w, GdkEvent *event, ShowItemMenu *sim)
 {
 	GdkEventButton *bevent = (GdkEventButton *)event;
@@ -1977,7 +1958,8 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 				selection_data->target, 8, (guchar *)string,
 				strlen(string));
 }
- 
+
+#ifdef FIXME  
 static void
 setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 		      const char *title, MenuFinfo *mf)
@@ -2030,6 +2012,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 	gtk_widget_show (menuitem);
 
 }
+#endif /* FIXME */
 
 static void
 setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap, 
@@ -2134,6 +2117,7 @@ setup_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 				       FALSE, icon_size, NULL);
 }
 
+#ifdef FIXME
 static void
 setup_directory_drag (GtkWidget *menuitem, const char *directory)
 {
@@ -2153,6 +2137,7 @@ setup_directory_drag (GtkWidget *menuitem, const char *directory)
 	gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
 			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
 }
+#endif /* FIXME */
 
 void
 setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
@@ -3148,9 +3133,12 @@ create_menu_at_fr (GtkWidget *menu,
 	GtkWidget *menuitem;
 	MenuFinfo *mf = NULL;
 	DirRec *dr = (DirRec *)fr;
+
+#ifdef FIXME
 	GtkWidget *pixmap;
 	IconSize size = global_config.use_large_icons
 		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
+#endif /* FIXME */
 
 	g_return_val_if_fail(!(fr&&fr->type!=FILE_REC_DIR),menu);
 	
@@ -3229,7 +3217,8 @@ create_menu_at_fr (GtkWidget *menu,
 
 		mf->menudir = g_strdup (fr->name);
 	}
-/* FIXME - disable menu titles for now - do we need these? 
+
+#ifdef FIXME /* disable menu titles for now - do we need these? */
 	if (title && global_config.show_menu_titles) {
 		char *menu_name;
 
@@ -3275,7 +3264,8 @@ create_menu_at_fr (GtkWidget *menu,
 		if ( ! commie_mode)
 			setup_directory_drag (menuitem, mf->menudir);
 	}
-*/
+#endif /* FIXME */
+
 	/*add separator*/
 	if (add_separator) {
 		menuitem = gtk_menu_item_new();

@@ -3,7 +3,7 @@
 #include <gtk/gtk.h>
 #include <libbonobo.h>
 
-#define APPLET_DEBUG
+#undef APPLET_DEBUG
 
 #include "applet-widget.h"
 #include "applet-init.h"

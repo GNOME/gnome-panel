@@ -28,7 +28,7 @@
 #include "session.h"
 #include "status.h"
 
-#define EXTERN_DEBUG
+#undef EXTERN_DEBUG
 
 #ifndef EXTERN_DEBUG
 
