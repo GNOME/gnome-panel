@@ -5,16 +5,16 @@
 
 typedef struct _GlobalConfig GlobalConfig;
 struct _GlobalConfig {
-	gint auto_hide_step_size;
-	gint explicit_hide_step_size;
-	gint drawer_step_size;
-	gint minimized_size;
-	gint minimize_delay;
-	gint tooltips_enabled;
-	gint show_small_icons;
-	gint prompt_for_logout;
+	int auto_hide_step_size;
+	int explicit_hide_step_size;
+	int drawer_step_size;
+	int minimized_size;
+	int minimize_delay;
+	int tooltips_enabled;
+	int show_small_icons;
+	int prompt_for_logout;
 	PanelMovementType movement_type;
-	gint disable_animations;
+	int disable_animations;
 };
 
 

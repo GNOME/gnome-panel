@@ -37,7 +37,7 @@ extern GlobalConfig global_config;
 
 typedef struct _FileInfo FileInfo;
 struct _FileInfo {
-	gchar *name;
+	char *name;
 	time_t ctime;
 };
 
@@ -47,7 +47,7 @@ void
 about_cb (GtkWidget *widget, gpointer data)
 {
 	GtkWidget *about;
-	gchar *authors[] = {
+	char *authors[] = {
 	  "George Lebl (jirka@5z.com)",
 	  "Miguel de Icaza (miguel@kernel.org)",
 	  "Federico Mena (quartic@gimp.org)",
@@ -147,7 +147,7 @@ free_string (GtkWidget *widget, void *data)
 	g_free (data);
 }
 
-static gint
+static int
 add_to_panel (char *applet, char *path, char *arg)
 {
 	load_applet(applet,path,arg,NULL,NULL,
@@ -155,7 +155,7 @@ add_to_panel (char *applet, char *path, char *arg)
 	return TRUE;
 }
 
-static gint
+static int
 add_app_to_panel (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *ii = data;
@@ -163,20 +163,20 @@ add_app_to_panel (GtkWidget *widget, void *data)
 	return add_to_panel (LAUNCHER_ID, NULL, ii->location);
 }
 
-static gint
+static int
 add_dir_to_panel (GtkWidget *widget, void *data)
 {
 	return add_to_panel (MENU_ID, NULL, data);
 }
 
 
-static gint
+static int
 add_applet (GtkWidget *w, gpointer data)
 {
 	GnomeDesktopEntry *ii = data;
 	char *path;
 	char *param;
-	gint r;
+	int r;
 
 	path = ii->exec[0];
 
@@ -193,7 +193,7 @@ add_applet (GtkWidget *w, gpointer data)
 	return r;
 }
 
-static gint
+static int
 check_finfo_list(GList *finfo)
 {
 	struct stat s;
@@ -229,7 +229,7 @@ free_finfo_list(GList *finfo)
 }
 
 static FileInfo *
-make_finfo(gchar *name)
+make_finfo(char *name)
 {
 	struct stat s;
 	FileInfo *fi;
@@ -244,7 +244,7 @@ make_finfo(gchar *name)
 }
 
 static FileInfo *
-make_finfo_s(gchar *name, struct stat *s)
+make_finfo_s(char *name, struct stat *s)
 {
 	FileInfo *fi;
 
@@ -478,7 +478,7 @@ create_menu_at (char *menudir,
 }
 
 void
-menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
+menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 {
 	Menu * menup = data;
 	GtkWidget *widget = menup->button;
@@ -538,8 +538,8 @@ menu_deactivate(GtkWidget *w, gpointer data)
 	panel->autohide_inhibit = FALSE;
 }
 
-static gchar *
-get_real_menu_path(gchar *arguments, gchar *menu_base)
+static char *
+get_real_menu_path(char *arguments, char *menu_base)
 {
 	char *this_menu;
 
@@ -577,7 +577,7 @@ add_applet_to_panel_data(GtkWidget *widget, gpointer data)
 }
 
 #ifdef _SWALLOW_
-static gint
+static int
 act_really_add_swallow(GtkWidget *w, gpointer data)
 {
 	GtkWidget *entry = data;
@@ -589,8 +589,8 @@ act_really_add_swallow(GtkWidget *w, gpointer data)
 	return TRUE;
 }
 
-static gint
-really_add_swallow(GtkWidget *d,gint button, gpointer data)
+static int
+really_add_swallow(GtkWidget *d,int button, gpointer data)
 {
 	GtkWidget *entry = data;
 
@@ -811,7 +811,7 @@ add_menu_widget (Menu *menu, char *menudir, int main_menu)
 
 }
 
-static gint
+static int
 menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
 	Menu *menu = data;
@@ -836,7 +836,7 @@ menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 				puts("debug: rereading menu");
 
 				if (this_menu) {
-					gint main_menu =
+					int main_menu =
 						(strcmp(menu->path,".")==0);
 					
 					/*free the menu releated data*/

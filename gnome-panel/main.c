@@ -36,20 +36,20 @@
 
 /*the timeout handeler for panel dragging id,
   yes I am too lazy to get the events to work*/
-static gint panel_dragged = 0;
+static int panel_dragged = 0;
 
-gint config_sync_timeout = 0;
-gint config_changed = FALSE;
+int config_sync_timeout = 0;
+int config_changed = FALSE;
 
 GArray *applets;
-gint applet_count;
+int applet_count;
 
 extern GtkWidget * root_menu;
 
 char *panel_cfg_path=NULL;
 char *old_panel_cfg_path=NULL;
 
-gint main_menu_count=0;
+int main_menu_count=0;
 
 GtkTooltips *panel_tooltips = NULL;
 
@@ -66,14 +66,14 @@ GlobalConfig global_config = {
 
 typedef struct _LoadApplet LoadApplet;
 struct _LoadApplet {
-	gchar *id_str;
-	gchar *path;
-	gchar *params;
-	gchar *pixmap;
-	gchar *tooltip;
-	gint pos;
-	gint panel;
-	gchar *cfgpath;
+	char *id_str;
+	char *path;
+	char *params;
+	char *pixmap;
+	char *tooltip;
+	int pos;
+	int panel;
+	char *cfgpath;
 };
 
 GList * children = NULL;
@@ -81,7 +81,7 @@ GList * children = NULL;
 GList *load_queue=NULL;
 	
 /* True if parsing determined that all the work is already done.  */
-gint just_exit = 0;
+int just_exit = 0;
 
 /* The security cookie */
 char *cookie;
@@ -91,13 +91,13 @@ char *cookie;
 
 /*execution queue stuff, execute only one applet in a row, thereby getting
   rid of some problems with applet*/
-gint current_exec = -1;
+int current_exec = -1;
 guint cur_timeout=0;
 typedef struct _ExecQueue ExecQueue;
 struct _ExecQueue {
-	gint applet_id;
-	gchar *path;
-	gchar *param;
+	int applet_id;
+	char *path;
+	char *param;
 };
 GList *exec_queue=NULL;
 
@@ -133,10 +133,10 @@ static struct argp parser =
 /*needed for drawers*/
 static void panel_setup(PanelWidget *panel);
 
-static gint really_exec_prog(gint applet_id, gchar *path, gchar *param);
+static int really_exec_prog(int applet_id, char *path, char *param);
 static void exec_queue_start_next(void);
 
-static gint
+static int
 exec_queue_timeout(gpointer data)
 {
 	g_warning("TIMED OUT waiting to applet ID: %d!",current_exec);
@@ -145,8 +145,8 @@ exec_queue_timeout(gpointer data)
 	return FALSE;
 }
 
-static gint
-really_exec_prog(gint applet_id, gchar *path, gchar *param)
+static int
+really_exec_prog(int applet_id, char *path, char *param)
 {
 	/*check if this is an applet which is a multi applet and
 	  has something already loaded*/
@@ -191,7 +191,7 @@ static void
 exec_queue_start_next(void)
 {
 	ExecQueue *eq;
-	gint ret;
+	int ret;
 
 	current_exec = -1;
 	if(cur_timeout>0)
@@ -218,7 +218,7 @@ exec_queue_start_next(void)
 /* this applet has finished loading, if it was the one we were waiting
    on, start the next applet */
 void
-exec_queue_done(gint applet_id)
+exec_queue_done(int applet_id)
 {
 	if(applet_id>-1 && applet_id==current_exec)
 		exec_queue_start_next();
@@ -226,7 +226,7 @@ exec_queue_done(gint applet_id)
 
 
 static void
-exec_prog(gint applet_id, gchar *path, gchar *param)
+exec_prog(int applet_id, char *path, char *param)
 {
 	if(current_exec==-1) {
 		really_exec_prog(applet_id,path,param);
@@ -244,9 +244,9 @@ exec_prog(gint applet_id, gchar *path, gchar *param)
 
 
 static void
-queue_load_applet(gchar *id_str, gchar *path, gchar *params,
-		  gchar *pixmap, gchar *tooltip,
-		  gint pos, gint panel, gchar *cfgpath)
+queue_load_applet(char *id_str, char *path, char *params,
+		  char *pixmap, char *tooltip,
+		  int pos, int panel, char *cfgpath)
 {
 	LoadApplet *l;
 	l = g_new(LoadApplet,1);
@@ -264,7 +264,7 @@ queue_load_applet(gchar *id_str, gchar *path, gchar *params,
 	load_queue = g_list_append(load_queue,l);
 }
 
-static gint
+static int
 monitor_drawers(GtkWidget *w, gpointer data)
 {
 	PanelWidget **panel=data;
@@ -339,12 +339,12 @@ get_applet_orient(PanelWidget *panel)
 
 
 void
-load_applet(gchar *id_str, gchar *path, gchar *params,
-	    gchar *pixmap, gchar *tooltip,
-	    gint pos, gint panel, gchar *cfgpath)
+load_applet(char *id_str, char *path, char *params,
+	    char *pixmap, char *tooltip,
+	    int pos, int panel, char *cfgpath)
 {
 	if(strcmp(id_str,EXTERN_ID) == 0) {
-		gchar *fullpath;
+		char *fullpath;
 		char *param;
 
 		/*start nothing, applet is taking care of everything*/
@@ -619,7 +619,7 @@ panel_realize(GtkWidget *widget, gpointer data)
 static void orient_change_foreach(gpointer data, gpointer user_data);
 
 void
-orientation_change(gint applet_id, PanelWidget *panel)
+orientation_change(int applet_id, PanelWidget *panel)
 {
 	AppletInfo *info = get_applet_info(applet_id);
 	if(info->type == APPLET_EXTERN) {
@@ -648,7 +648,7 @@ orientation_change(gint applet_id, PanelWidget *panel)
 static void
 orient_change_foreach(gpointer data, gpointer user_data)
 {
-	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
+	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	PanelWidget *panel = user_data;
 
 	orientation_change(applet_id,panel);
@@ -669,7 +669,7 @@ panel_orient_change(GtkWidget *widget,
 }
 
 void
-back_change(gint applet_id,
+back_change(int applet_id,
 	    PanelWidget *panel)
 {
 	AppletInfo *info = get_applet_info(applet_id);
@@ -685,7 +685,7 @@ back_change(gint applet_id,
 static void
 back_change_foreach(gpointer data, gpointer user_data)
 {
-	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
+	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	PanelWidget *panel = user_data;
 
 	back_change(applet_id,panel);
@@ -694,7 +694,7 @@ back_change_foreach(gpointer data, gpointer user_data)
 static void
 panel_back_change(GtkWidget *widget,
 		  PanelBackType type,
-		  gchar *pixmap,
+		  char *pixmap,
 		  GdkColor *color)
 {
 	panel_widget_foreach(PANEL_WIDGET(widget),back_change_foreach,widget);
@@ -706,7 +706,7 @@ panel_back_change(GtkWidget *widget,
 static void
 state_restore_foreach(gpointer data, gpointer user_data)
 {
-	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
+	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	AppletInfo *info = get_applet_info(applet_id);
 
 	if(info->type == APPLET_DRAWER) {
@@ -722,7 +722,7 @@ state_restore_foreach(gpointer data, gpointer user_data)
 static void
 state_hide_foreach(gpointer data, gpointer user_data)
 {
-	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
+	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	AppletInfo *info = get_applet_info(applet_id);
 
 	if(info->type == APPLET_DRAWER) {
@@ -735,7 +735,7 @@ state_hide_foreach(gpointer data, gpointer user_data)
 	}
 }
 
-static gint
+static int
 panel_state_change(GtkWidget *widget,
 		    PanelState state,
 		    gpointer data)
@@ -752,7 +752,7 @@ panel_state_change(GtkWidget *widget,
 	return TRUE;
 }
 
-static gint
+static int
 panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 {
 	Drawer *drawer = gtk_object_get_data(GTK_OBJECT(widget),DRAWER_PANEL);
@@ -766,11 +766,11 @@ panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 }
 
 struct _added_info {
-	gint applet_id;
+	int applet_id;
 	PanelWidget *panel;
 };
 
-static gint
+static int
 panel_applet_added_idle(gpointer data)
 {
 	struct _added_info *ai = data;
@@ -783,10 +783,10 @@ panel_applet_added_idle(gpointer data)
 	return FALSE;
 }
 
-static gint
+static int
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(applet)));
+	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(applet)));
 	PanelWidget *panel = PANEL_WIDGET(widget);
 	struct _added_info *ai = g_new(struct _added_info,1);
 
@@ -800,7 +800,7 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	return TRUE;
 }
 
-static gint
+static int
 panel_applet_removed(GtkWidget *widget, gpointer data)
 {
 	config_changed = TRUE;
@@ -808,7 +808,7 @@ panel_applet_removed(GtkWidget *widget, gpointer data)
 }
 
 static void
-panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
+panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 {
 	int wx, wy;
 	PanelWidget *panel = data;
@@ -874,7 +874,7 @@ static void
 panel_move(PanelWidget *panel, double x, double y)
 {
 	PanelSnapped newloc;
-	gint minx, miny, maxx, maxy;
+	int minx, miny, maxx, maxy;
 
 	if(panel->snapped == PANEL_DRAWER || panel->snapped == PANEL_FREE)
 		return;
@@ -916,10 +916,10 @@ panel_move(PanelWidget *panel, double x, double y)
 	}
 }
 
-static gint
+static int
 panel_move_timeout(gpointer data)
 {
-	gint x,y;
+	int x,y;
 
 	gdk_window_get_pointer(NULL,&x,&y,NULL);
 	panel_move(data,x,y);
@@ -927,7 +927,7 @@ panel_move_timeout(gpointer data)
 }
 
 /* DOES NOT WORK!
-static gint
+static int
 panel_move_callback(GtkWidget *w, GdkEventMotion *event, gpointer data)
 {
 	puts("TEST");
@@ -937,7 +937,7 @@ panel_move_callback(GtkWidget *w, GdkEventMotion *event, gpointer data)
 }*/
 
 
-static gint
+static int
 panel_button_release_callback(GtkWidget *panel,GdkEventButton *event, gpointer data)
 {
 	if(panel_dragged) {
@@ -993,7 +993,7 @@ panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	return FALSE;
 }
 
-static gint
+static int
 panel_destroy(GtkWidget *widget, gpointer data)
 {
 	GtkWidget *panel_menu = data;
@@ -1007,7 +1007,7 @@ panel_destroy(GtkWidget *widget, gpointer data)
 static void
 applet_move_foreach(gpointer data, gpointer user_data)
 {
-	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
+	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	AppletInfo *info = get_applet_info(applet_id);
 
 	if(info->type == APPLET_DRAWER) {
@@ -1105,7 +1105,7 @@ init_user_panels(void)
 	PanelSnapped snapped;
 	PanelOrientation orient;
 	PanelMode mode;
-	gint fit_pixmap_bg;
+	int fit_pixmap_bg;
 	GtkWidget *panel;
 	PanelState state;
 	DrawerDropZonePos drop_pos;
@@ -1208,9 +1208,9 @@ init_user_panels(void)
   we don't want to clean the file before they load up, so now we
   only call it on the discard cmdline argument*/
 void
-discard_session (gchar *id)
+discard_session (char *id)
 {
-	gchar *sess;
+	char *sess;
 
 	sess = g_copy_strings ("/panel-Session-", id, NULL);
 
@@ -1239,10 +1239,10 @@ parse_an_arg (int key, char *arg, struct argp_state *state)
 /*
 static void
 panel_connect_client (GnomeClient *client,
-		      gint was_restarted,
+		      int was_restarted,
 		      gpointer client_data)
 {
-	gchar *session_id;
+	char *session_id;
 
 	session_id = gnome_client_get_previous_id (client);
 	
@@ -1285,7 +1285,7 @@ sigchld_handler(int type)
 	}
 }
 
-static gint
+static int
 try_config_sync(gpointer data)
 {
 	if(config_changed)
@@ -1329,7 +1329,7 @@ main(int argc, char **argv)
 			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
 
 	if (GNOME_CLIENT_CONNECTED (client)) {
-		gchar *session_id;
+		char *session_id;
 
 		session_id= gnome_client_get_id (gnome_cloned_client ());
 

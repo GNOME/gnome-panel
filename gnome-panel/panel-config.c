@@ -21,15 +21,15 @@ struct _PerPanelConfig {
 	PanelOrientation	orient;
 	PanelSnapped		snapped;
 	PanelMode		mode;
-	gboolean		fit_pixmap_bg;
+	int			fit_pixmap_bg;
 	PanelBackType		back_type;
-	gchar			*back_pixmap;
+	char			*back_pixmap;
 	GdkColor		back_color;
 	
-	gint			register_changes; /*used for startup*/
+	int			register_changes; /*used for startup*/
 	GtkWidget		*config_window;
 	GtkWidget		*pix_entry;
-	gint			pix_ch_signal;
+	int			pix_ch_signal;
 	/*snapped buttons*/
 	GtkWidget		*r_button;
 	GtkWidget		*l_button;
@@ -112,7 +112,7 @@ update_config_back(PanelWidget *panel)
 	}
 }
 
-static gint 
+static int 
 config_destroy(GtkWidget *widget, gpointer data)
 {
 	PerPanelConfig *ppc = data;
@@ -130,7 +130,7 @@ config_destroy(GtkWidget *widget, gpointer data)
 	return FALSE;
 }
 
-static gint
+static int
 set_snapped (GtkWidget *widget, gpointer data)
 {
 	PanelSnapped snapped = (PanelSnapped) data;
@@ -145,7 +145,7 @@ set_snapped (GtkWidget *widget, gpointer data)
 	return FALSE;
 }
 
-static gint
+static int
 set_mode (GtkWidget *widget, gpointer data)
 {
 	PanelMode mode = (PanelMode) data;
@@ -303,7 +303,7 @@ position_notebook_page(PerPanelConfig *ppc)
 	return (hbox);
 }
 
-static gint
+static int
 value_changed (GtkWidget *w, gpointer data)
 {
 	PerPanelConfig *ppc = data;
@@ -328,7 +328,7 @@ set_fit_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 static void
 color_changed_cb(GnomeColorSelector *sel, gpointer data)
 {
- 	gint r,g,b;
+ 	int r,g,b;
 	PerPanelConfig *ppc = data;
 
         gnome_color_selector_get_color_int(sel,&r,&g,&b, 65355);
@@ -341,7 +341,7 @@ color_changed_cb(GnomeColorSelector *sel, gpointer data)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
 }
 			   
-static gint
+static int
 set_back (GtkWidget *widget, gpointer data)
 {
 	GtkWidget *pixf,*colf;

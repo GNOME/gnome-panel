@@ -25,7 +25,7 @@ static GtkWidget *aniframe[3];
 
 static GtkWidget *config_window;
 
-static gint
+static int
 config_destroy(GtkWidget *widget, gpointer data)
 {
 	config_window = NULL;
@@ -55,17 +55,17 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 }
 
 static void
-gint_scale_update (GtkAdjustment *adjustment, gpointer data)
+int_scale_update (GtkAdjustment *adjustment, gpointer data)
 {
-	gint *val = data;
+	int *val = data;
 	double scale_val = adjustment->value;
-	*val = (gint) scale_val;
+	*val = (int) scale_val;
 	if(config_window)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
 }
 
 GtkWidget *
-make_gint_scale_frame(gchar *title, gint *data, double min, double max)
+make_int_scale_frame(char *title, int *data, double min, double max)
 {
 	GtkWidget *frame;
 	GtkWidget *box;
@@ -93,18 +93,18 @@ make_gint_scale_frame(gchar *title, gint *data, double min, double max)
 	gtk_box_pack_start (GTK_BOX (box), scale, TRUE, TRUE, CONFIG_PADDING_SIZE);
 	gtk_signal_connect(GTK_OBJECT (scale_data), 
 			   "value_changed",
-			   GTK_SIGNAL_FUNC (gint_scale_update),
+			   GTK_SIGNAL_FUNC (int_scale_update),
 			   data);
 	gtk_widget_show (scale);
 
 	return frame;
 }
 
-static gint
+static int
 set_anim_button_value(GtkWidget *w, gpointer data)
 {
-	gint i;
-	gint active = GTK_TOGGLE_BUTTON(w)->active;
+	int i;
+	int active = GTK_TOGGLE_BUTTON(w)->active;
 
 	for(i=0;i<3;i++)
 		gtk_widget_set_sensitive(aniframe[i],!active);
@@ -135,7 +135,7 @@ animation_notebook_page(void)
 
 
 	/* AutoHide Animation step_size scale frame */
-	frame = make_gint_scale_frame(_("Auto-Hide Animation Speed"),
+	frame = make_int_scale_frame(_("Auto-Hide Animation Speed"),
 				      &(temp_config.auto_hide_step_size),
 				      1.0,100.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
@@ -144,7 +144,7 @@ animation_notebook_page(void)
 	aniframe[0] = frame;
 
 	/* ExplicitHide Animation step_size scale frame */
-	frame = make_gint_scale_frame(_("Explicit-Hide Animation Speed"),
+	frame = make_int_scale_frame(_("Explicit-Hide Animation Speed"),
 				      &(temp_config.explicit_hide_step_size),
 				      1.0,100.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
@@ -153,7 +153,7 @@ animation_notebook_page(void)
 	aniframe[1] = frame;
 
 	/* DrawerHide Animation step_size scale frame */
-	frame = make_gint_scale_frame(_("Drawer Animation Speed"),
+	frame = make_int_scale_frame(_("Drawer Animation Speed"),
 				      &(temp_config.drawer_step_size),
 				      1.0,100.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
@@ -162,14 +162,14 @@ animation_notebook_page(void)
 	aniframe[2] = frame;
 
 	/* Minimize Delay scale frame */
-	frame = make_gint_scale_frame(_("Auto-Hide Minimize Delay (ms)"),
+	frame = make_int_scale_frame(_("Auto-Hide Minimize Delay (ms)"),
 				      &(temp_config.minimize_delay),
 				      30.0,1000.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
 	/* Minimized size scale frame */
-	frame = make_gint_scale_frame(_("Auto-Hide Minimized Size (pixels)"),
+	frame = make_int_scale_frame(_("Auto-Hide Minimized Size (pixels)"),
 				      &(temp_config.minimized_size),
 				      1.0,10.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
@@ -182,7 +182,7 @@ animation_notebook_page(void)
 	return (vbox);
 }
 
-static gint
+static int
 set_movement (GtkWidget *widget, gpointer data)
 {
 	PanelMovementType move_type = (PanelMovementType) data;

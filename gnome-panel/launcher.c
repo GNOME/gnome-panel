@@ -27,7 +27,7 @@ static char *default_app_pixmap=NULL;
 typedef struct {
 	int                applet_id;
 	GtkWidget         *button;
-	gint               signal_click_tag;
+	int               signal_click_tag;
 	GnomeDesktopEntry *dentry;
 } Launcher;
 
@@ -256,7 +256,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 
 #undef free_and_nullify
 
-static gint
+static int
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Properties *prop = data;
@@ -287,7 +287,7 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 	GtkWidget  *dialog;
 	GtkWidget  *table;
 	GtkWidget  *toggle;
-	gchar *exec;
+	char *exec;
 
 	prop = g_new(Properties, 1);
 	prop->dentry = dentry;

@@ -82,7 +82,7 @@ public:
 	CORBA::Short applet_get_panel_orient (const char *ccookie,
 				              CORBA::Short applet_id) {
 		CHECK_COOKIE_V (0);
-		return (gint)::applet_get_panel_orient (applet_id);
+		return (int)::applet_get_panel_orient (applet_id);
 	}
 	void applet_show_menu (const char *ccookie, CORBA::Short applet_id) {
 		CHECK_COOKIE ();

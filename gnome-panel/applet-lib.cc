@@ -34,7 +34,7 @@ GNOME::Panel_var panel_client;
 typedef struct _CallbackInfo CallbackInfo;
 struct _CallbackInfo {
 	char *name;
-	gint applet_id;
+	int applet_id;
 	AppletCallbackFunc func;
 	gpointer data;
 };
@@ -205,7 +205,7 @@ gnome_panel_applet_reinit_corba (void)
 }
 
 static CallbackInfo *
-get_callback_info(gint applet_id, gchar *name)
+get_callback_info(int applet_id, char *name)
 {
 	GList *list;
 	for(list=applet_callbacks;list!=NULL;list=g_list_next(list)) {
@@ -216,8 +216,8 @@ get_callback_info(gint applet_id, gchar *name)
 	return NULL;
 }
 
-static gchar*
-make_sane_name(gchar *name)
+static char*
+make_sane_name(char *name)
 {
 	if(!name)
 		return NULL;
@@ -280,7 +280,7 @@ gnome_panel_applet_register_callback_dir(int applet_id,
 					 char *stock_item,
 					 char *menutext)
 {
-	gchar *n;
+	char *n;
 	/*skip over leading '/'s*/
 	name = make_sane_name(name);
 	g_return_if_fail(name!=NULL);
@@ -299,7 +299,7 @@ void
 gnome_panel_applet_unregister_callback_dir(int applet_id,
 					   char *name)
 {
-	gchar *n;
+	char *n;
 
 	/*skip over leading '/'s*/
 	name = make_sane_name(name);
@@ -316,12 +316,12 @@ gnome_panel_applet_unregister_callback_dir(int applet_id,
 }
 
 /*catch events relevant to the panel and notify the panel*/
-static gint
+static int
 applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	int ourid = PTOI(data);
 	GdkEventButton *bevent;
-	gint in_drag;
+	int in_drag;
 
 	switch (event->type) {
 		case GDK_BUTTON_PRESS:
@@ -365,7 +365,7 @@ listening_parent(GtkWidget *widget)
 	return widget;
 }
 
-static gint
+static int
 applet_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	switch (event->type) {
@@ -503,21 +503,21 @@ gnome_panel_applet_register (GtkWidget *widget, int applet_id)
 }
 
 char *
-gnome_panel_applet_abort_id (gint applet_id)
+gnome_panel_applet_abort_id (int applet_id)
 {
 	panel_client->applet_abort_id(cookie, applet_id);
 
 	return 0;
 }
 
-gint
-gnome_panel_applet_get_panel_orient (gint applet_id)
+int
+gnome_panel_applet_get_panel_orient (int applet_id)
 {
 	return panel_client->applet_get_panel_orient(cookie, applet_id);
 }
 
 char *
-gnome_panel_applet_remove_from_panel (gint applet_id)
+gnome_panel_applet_remove_from_panel (int applet_id)
 {
 	panel_client->applet_remove_from_panel(cookie, applet_id);
 
@@ -525,7 +525,7 @@ gnome_panel_applet_remove_from_panel (gint applet_id)
 }
 
 char *
-gnome_panel_applet_add_tooltip (gint applet_id, char *tooltip)
+gnome_panel_applet_add_tooltip (int applet_id, char *tooltip)
 {
 	panel_client->applet_add_tooltip(cookie, applet_id,tooltip);
 
@@ -533,7 +533,7 @@ gnome_panel_applet_add_tooltip (gint applet_id, char *tooltip)
 }
 
 char *
-gnome_panel_applet_remove_tooltip (gint applet_id)
+gnome_panel_applet_remove_tooltip (int applet_id)
 {
 	panel_client->applet_remove_tooltip(cookie, applet_id);
 
@@ -562,7 +562,7 @@ gnome_panel_applet_request_glob_cfg (char **globcfgpath)
 }
 
 void
-gnome_panel_applet_cleanup(gint applet_id)
+gnome_panel_applet_cleanup(int applet_id)
 {
 	GList *list;
 	GList *nlist;
