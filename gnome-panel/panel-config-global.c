@@ -89,7 +89,7 @@ panel_global_config_set_entry (GConfEntry *entry)
 
 		panel_parse_accelerator (&global_config.run_key);
 
-	} else if (!strcmp (key, "screenshot-key")) {
+	} else if (!strcmp (key, "screenshot_key")) {
 		if (global_config.screenshot_key.str)
 			g_free (global_config.screenshot_key.str);
 

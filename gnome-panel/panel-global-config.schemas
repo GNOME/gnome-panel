@@ -108,9 +108,9 @@ Panel Global Config Schema File -  work in progress
         <applyto>/apps/panel/global/menu_key</applyto>
         <owner>panel</owner>
         <type>string</type>
-        <default>Mod1-F1</default>
+        <default>&lt;Alt&gt;F1</default>
         <locale name="C">
-          <short></short>
+          <short>Popup the panel menu</short>
           <long></long>
         </locale>
       </schema>
@@ -120,9 +120,21 @@ Panel Global Config Schema File -  work in progress
         <applyto>/apps/panel/global/run_key</applyto>
         <owner>panel</owner>
         <type>string</type>
-        <default>Mod1-F2</default>
+        <default>&lt;Alt&gt;F2</default>
         <locale name="C">
-          <short></short>
+          <short>Display "Run" dialog</short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/global/screenshot_key</key>
+        <applyto>/apps/panel/global/screenshot_key</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>Print</default>
+        <locale name="C">
+          <short>Take a screen shot</short>
           <long></long>
         </locale>
       </schema>
@@ -132,9 +144,9 @@ Panel Global Config Schema File -  work in progress
         <applyto>/apps/panel/global/window_screenshot_key</applyto>
         <owner>panel</owner>
         <type>string</type>
-        <default>Mod1-F2</default>
+        <default>&lt;Alt&gt;Print</default>
         <locale name="C">
-          <short></short>
+          <short>Take a screen shot of a window</short>
           <long></long>
         </locale>
       </schema>
