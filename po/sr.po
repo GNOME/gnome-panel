@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-29 13:31+0100\n"
-"PO-Revision-Date: 2003-11-29 13:33+0100\n"
+"POT-Creation-Date: 2003-12-03 04:42+0100\n"
+"PO-Revision-Date: 2003-12-03 04:42+0100\n"
 "Last-Translator: Данило Шеган <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <serbiagnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -297,7 +297,7 @@ msgstr "_О програму..."
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:600 gnome-panel/menu.c:3085
 #: gnome-panel/panel-action-button.c:547 gnome-panel/panel-menu-bar.c:312
-#: gnome-panel/panel-menu-button.c:609
+#: gnome-panel/panel-menu-button.c:582
 msgid "_Help"
 msgstr "_Помоћ"
 
@@ -696,7 +696,7 @@ msgstr "Прикажи прозоре са _текуће радне површи
 msgid "Show windows from a_ll workspaces"
 msgstr "Прикажи прозоре са _свих радних површина"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3622
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3623
 msgid "Size"
 msgstr "Величина"
 
@@ -962,7 +962,7 @@ msgstr "Истицање за превлачење и пуштање"
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Да ли се икона истиче приликом превлачења и пуштања"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3611
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3612
 msgid "Orientation"
 msgstr "Оријентација"
 
@@ -1024,7 +1024,7 @@ msgid "Create new file in the given directory"
 msgstr "Направи нову датотеку у датом директоријуму"
 
 #: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:705
+#: gnome-panel/gnome-panel-screenshot.c:708
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1121,7 +1121,7 @@ msgid "File %s already exists. Overwrite?"
 msgstr "Датотека „%s“ већ постоји. Преснимити преко ње?"
 
 #: gnome-panel/gnome-panel-screenshot.c:233
-#: gnome-panel/gnome-panel-screenshot.c:582
+#: gnome-panel/gnome-panel-screenshot.c:584
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1132,44 +1132,49 @@ msgstr ""
 "„%s“\n"
 "Проверите овлашћења и дозволе за текући директоријум"
 
-#. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:414
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if a specific window is taken
+#: gnome-panel/gnome-panel-screenshot.c:420
 #, c-format
-msgid "%s%cScreenshot-%s.png"
-msgstr "%s%csnimak-ekrana-%s.png"
+msgid "Screenshot-%s.png"
+msgstr "snimak-ekrana-%s.png"
 
-#. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:421
-#, c-format
-msgid "%s%cScreenshot.png"
-msgstr "%s%csnimak-ekrana.png"
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if the entire screen is taken
+#: gnome-panel/gnome-panel-screenshot.c:424
+msgid "Screenshot.png"
+msgstr "snimak-ekrana.png"
 
-#. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:438
-#, c-format
-msgid "%s%cScreenshot-%s-%d.png"
-msgstr "%s%csnimak-ekrana-%s-%d.png"
-
-#. translators: this is the file that gets made up with the screenshot if the entire screen is taken
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if a specific window is
+#. * taken
 #: gnome-panel/gnome-panel-screenshot.c:445
 #, c-format
-msgid "%s%cScreenshot-%d.png"
-msgstr "%s%csnimak-ekrana-%d.png"
+msgid "Screenshot-%s-%d.png"
+msgstr "snimak-ekrana-%s-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:606
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if the entire screen is
+#. * taken
+#: gnome-panel/gnome-panel-screenshot.c:452
+#, c-format
+msgid "Screenshot-%d.png"
+msgstr "snimak-ekrana-%d.png"
+
+#: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Недовољно места за упис датотеке „%s“"
 
-#: gnome-panel/gnome-panel-screenshot.c:1096
+#: gnome-panel/gnome-panel-screenshot.c:1098
 msgid "Grab a window instead of the entire screen"
 msgstr "Сними прозор уместо целог екрана"
 
-#: gnome-panel/gnome-panel-screenshot.c:1097
+#: gnome-panel/gnome-panel-screenshot.c:1099
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Сними екран након одређеног времена (у секундама)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1149
+#: gnome-panel/gnome-panel-screenshot.c:1151
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1177,7 +1182,7 @@ msgstr ""
 "Glade датотека за снимање екрана недостаје.\n"
 "Проверите инсталацију (пакет „gnome-panel“)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1165
+#: gnome-panel/gnome-panel-screenshot.c:1167
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Не може да сними екран са текућег десктопа."
 
@@ -1579,11 +1584,11 @@ msgstr "Врста акције"
 msgid "The type of action this button implements"
 msgstr "Врста акције коју ово дугме изводи"
 
-#: gnome-panel/panel-action-button.c:405 gnome-panel/panel-menu-button.c:486
+#: gnome-panel/panel-action-button.c:405 gnome-panel/panel-menu-button.c:459
 msgid "Drag and drop enabled"
 msgstr "Укључено превлачење и пуштање"
 
-#: gnome-panel/panel-action-button.c:406 gnome-panel/panel-menu-button.c:487
+#: gnome-panel/panel-action-button.c:406 gnome-panel/panel-menu-button.c:460
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Да ли је омогућено превлачење и пуштање на елемент"
 
@@ -1894,43 +1899,43 @@ msgstr "Заштитите ваш рачунар од неовлашћене у�
 msgid "Quit from the GNOME desktop"
 msgstr "Напустите Гномову радну површину"
 
-#: gnome-panel/panel-menu-button.c:441
+#: gnome-panel/panel-menu-button.c:414
 msgid "Menu Path"
 msgstr "Путања менија"
 
-#: gnome-panel/panel-menu-button.c:442
+#: gnome-panel/panel-menu-button.c:415
 msgid "The path from which to construct the menu"
 msgstr "Путања од које направити мени"
 
-#: gnome-panel/panel-menu-button.c:450
+#: gnome-panel/panel-menu-button.c:423
 msgid "Custom Icon"
 msgstr "Икона по избору"
 
-#: gnome-panel/panel-menu-button.c:451
+#: gnome-panel/panel-menu-button.c:424
 msgid "The custom icon for the menu"
 msgstr "Икона по избору за мени"
 
-#: gnome-panel/panel-menu-button.c:459
+#: gnome-panel/panel-menu-button.c:432
 msgid "Tooltip"
 msgstr "Облачић"
 
-#: gnome-panel/panel-menu-button.c:460
+#: gnome-panel/panel-menu-button.c:433
 msgid "Tooltip displayed for the menu"
 msgstr "Приказује се облачић за мени"
 
-#: gnome-panel/panel-menu-button.c:468
+#: gnome-panel/panel-menu-button.c:441
 msgid "Use Menu Path"
 msgstr "Користи путању менија"
 
-#: gnome-panel/panel-menu-button.c:469
+#: gnome-panel/panel-menu-button.c:442
 msgid "Use the path specified by the menu-path property"
 msgstr "Користи путању садржану у особини menu-path"
 
-#: gnome-panel/panel-menu-button.c:477
+#: gnome-panel/panel-menu-button.c:450
 msgid "Use Custom Icon"
 msgstr "Користи икону по избору"
 
-#: gnome-panel/panel-menu-button.c:478
+#: gnome-panel/panel-menu-button.c:451
 msgid "Use the icon specified by the custom-icon property"
 msgstr "Користи икону наведену помоћу особине custom-icon"
 
@@ -2281,8 +2286,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Дошло је до непознате грешке при покушају отварања „%s“"
 
 #: gnome-panel/panel-recent.c:175
-msgid "Open Recent"
-msgstr "Отвори скорашње"
+msgid "Recent Documents"
+msgstr "Скорашњи документи"
 
 #: gnome-panel/panel-run-dialog.c:293
 #, c-format
@@ -2455,132 +2460,132 @@ msgstr "Плутајући панел десно"
 msgid "Right Edge Panel"
 msgstr "Ивични панел десно"
 
-#: gnome-panel/panel-toplevel.c:3591
+#: gnome-panel/panel-toplevel.c:3592
 msgid "Name"
 msgstr "Име"
 
-#: gnome-panel/panel-toplevel.c:3592
+#: gnome-panel/panel-toplevel.c:3593
 msgid "The name of this panel"
 msgstr "Име овог панела"
 
-#: gnome-panel/panel-toplevel.c:3601
+#: gnome-panel/panel-toplevel.c:3602
 msgid "Expand"
 msgstr "Рашири"
 
-#: gnome-panel/panel-toplevel.c:3602
+#: gnome-panel/panel-toplevel.c:3603
 msgid "Expand to take up the full monitor width/height"
 msgstr "Рашири тако да заузме пуну ширину/висину екрана"
 
-#: gnome-panel/panel-toplevel.c:3612
+#: gnome-panel/panel-toplevel.c:3613
 msgid "The orientation of the panel"
 msgstr "Усмерење овог панела"
 
-#: gnome-panel/panel-toplevel.c:3623
+#: gnome-panel/panel-toplevel.c:3624
 msgid "The height (or width when vertical) of the panel"
 msgstr "Висина (или ширина када је усправан) панела"
 
-#: gnome-panel/panel-toplevel.c:3635
+#: gnome-panel/panel-toplevel.c:3636
 msgid "X position"
 msgstr "Водоравна позиција"
 
-#: gnome-panel/panel-toplevel.c:3636
+#: gnome-panel/panel-toplevel.c:3637
 msgid "The X position of the panel"
 msgstr "Водоравна позиција панела"
 
-#: gnome-panel/panel-toplevel.c:3647
+#: gnome-panel/panel-toplevel.c:3648
 msgid "X centered"
 msgstr "Водоравно центриран"
 
-#: gnome-panel/panel-toplevel.c:3648
+#: gnome-panel/panel-toplevel.c:3649
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Водоравна координата је дата у односу на средиште екрана"
 
-#: gnome-panel/panel-toplevel.c:3657
+#: gnome-panel/panel-toplevel.c:3658
 msgid "Y position"
 msgstr "Усправна позиција"
 
-#: gnome-panel/panel-toplevel.c:3658
+#: gnome-panel/panel-toplevel.c:3659
 msgid "The Y position of the panel"
 msgstr "Усправна позиција панела"
 
-#: gnome-panel/panel-toplevel.c:3669
+#: gnome-panel/panel-toplevel.c:3670
 msgid "Y centered"
 msgstr "Усправно центриран"
 
-#: gnome-panel/panel-toplevel.c:3670
+#: gnome-panel/panel-toplevel.c:3671
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Усправна координата је дата у односу на средиште екрана"
 
-#: gnome-panel/panel-toplevel.c:3679
+#: gnome-panel/panel-toplevel.c:3680
 msgid "Xinerama monitor"
 msgstr "Ксинерама екран"
 
-#: gnome-panel/panel-toplevel.c:3680
+#: gnome-panel/panel-toplevel.c:3681
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Екран (како је назван у Ксинерами) на ком је панел"
 
-#: gnome-panel/panel-toplevel.c:3691
+#: gnome-panel/panel-toplevel.c:3692
 msgid "Auto hide"
 msgstr "Самоскривање"
 
-#: gnome-panel/panel-toplevel.c:3692
+#: gnome-panel/panel-toplevel.c:3693
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Када миш напусти панел, сам га сакриј"
 
-#: gnome-panel/panel-toplevel.c:3701
+#: gnome-panel/panel-toplevel.c:3702
 msgid "Hide delay"
 msgstr "Време скривања"
 
-#: gnome-panel/panel-toplevel.c:3702
+#: gnome-panel/panel-toplevel.c:3703
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Колико милисекунди се чека пре него што се сакрије"
 
-#: gnome-panel/panel-toplevel.c:3713
+#: gnome-panel/panel-toplevel.c:3714
 msgid "Un-hide delay"
 msgstr "Време откривања"
 
-#: gnome-panel/panel-toplevel.c:3714
+#: gnome-panel/panel-toplevel.c:3715
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Колико милисекунди се чека пре него што се открије"
 
-#: gnome-panel/panel-toplevel.c:3725
+#: gnome-panel/panel-toplevel.c:3726
 msgid "Auto-hide size"
 msgstr "Величина за самоскривање"
 
-#: gnome-panel/panel-toplevel.c:3726
+#: gnome-panel/panel-toplevel.c:3727
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "Колико тачака се види када је панел самоскривен"
 
-#: gnome-panel/panel-toplevel.c:3737
+#: gnome-panel/panel-toplevel.c:3738
 msgid "Animate"
 msgstr "Анимирај"
 
-#: gnome-panel/panel-toplevel.c:3738
+#: gnome-panel/panel-toplevel.c:3739
 msgid "Enable hiding/showing animations"
 msgstr "Укључи анимацију при скривању/откривању"
 
-#: gnome-panel/panel-toplevel.c:3747
+#: gnome-panel/panel-toplevel.c:3748
 msgid "Animation Speed"
 msgstr "Брзина анимације"
 
-#: gnome-panel/panel-toplevel.c:3748
+#: gnome-panel/panel-toplevel.c:3749
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "Брзина којом се анимира сакривање/откривање панела"
 
-#: gnome-panel/panel-toplevel.c:3758
+#: gnome-panel/panel-toplevel.c:3759
 msgid "Buttons Enabled"
 msgstr "Омогућени дугмићи"
 
-#: gnome-panel/panel-toplevel.c:3759
+#: gnome-panel/panel-toplevel.c:3760
 msgid "Enable hide/show buttons"
 msgstr "Омогући дугмиће за скривање/откривање"
 
-#: gnome-panel/panel-toplevel.c:3768
+#: gnome-panel/panel-toplevel.c:3769
 msgid "Arrows Enabled"
 msgstr "Стрелице укључене"
 
-#: gnome-panel/panel-toplevel.c:3769
+#: gnome-panel/panel-toplevel.c:3770
 msgid "Enable arrows on hide/show buttons"
 msgstr "Прикажи стрелице на дугмићима за скривање и откривање"
 
@@ -2957,46 +2962,46 @@ msgstr "Испробај Бонобо програмче"
 msgid "Test Bonobo Applet Factory"
 msgstr "Испробај фабрику Бонобо програмчића"
 
-#: libpanel-applet/panel-applet.c:847
+#: libpanel-applet/panel-applet.c:872
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Непотпуна врста позадине: „%s“"
 
-#: libpanel-applet/panel-applet.c:861
+#: libpanel-applet/panel-applet.c:886
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Примљена непотпуна врста позадине „%s“: %s"
 
-#: libpanel-applet/panel-applet.c:870
+#: libpanel-applet/panel-applet.c:895
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Неуспешно учитавање слике %s"
 
-#: libpanel-applet/panel-applet.c:877
+#: libpanel-applet/panel-applet.c:902
 msgid "Unknown background type received"
 msgstr "Примљена непозната врста позадине"
 
-#: libpanel-applet/panel-applet.c:1062
+#: libpanel-applet/panel-applet.c:1087
 msgid "The Applet's containing Panel's orientation"
 msgstr "Програмче садржи и оријентацију панела"
 
-#: libpanel-applet/panel-applet.c:1070
+#: libpanel-applet/panel-applet.c:1095
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Програмче садржи и величину панела у тачкама"
 
-#: libpanel-applet/panel-applet.c:1078
+#: libpanel-applet/panel-applet.c:1103
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Програмче садржи и боју или слику позадине панела"
 
-#: libpanel-applet/panel-applet.c:1086
+#: libpanel-applet/panel-applet.c:1111
 msgid "The Applet's flags"
 msgstr "Особине програмчета"
 
-#: libpanel-applet/panel-applet.c:1094
+#: libpanel-applet/panel-applet.c:1119
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Опсег који означава које су величине прихватљиве за аплет"
 
-#: libpanel-applet/panel-applet.c:1102
+#: libpanel-applet/panel-applet.c:1127
 msgid "The Applet's containing Panel is locked down"
 msgstr "Панел који садржи програмче је привезан"
 
@@ -3059,6 +3064,9 @@ msgstr "Гигантски"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Патуљасти"
+
+#~ msgid "Open Recent"
+#~ msgstr "Отвори скорашње"
 
 #~ msgid "Print Screenshot"
 #~ msgstr "Штампај снимак екрана"
