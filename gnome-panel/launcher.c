@@ -67,30 +67,40 @@ launcher_get_screen (Launcher *launcher)
 	return gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel));
 }
 
+static const char *
+panel_launcher_get_filename (const char *path)
+{
+	char *p;
+
+	if ((p = strstr (path, PANEL_LAUNCHERS_PATH)))
+		p += sizeof (PANEL_LAUNCHERS_PATH);
+
+	return p;
+}
+
 static char *
-launcher_file_name (const char *location)
+panel_launcher_make_full_path (const char *filename)
 {
 	char *tmp, *retval;
 
-	g_return_val_if_fail (location!= NULL, NULL);
+	g_return_val_if_fail (filename != NULL, NULL);
 
 	tmp = gnome_util_home_file (PANEL_LAUNCHERS_PATH);
-	/* Make sure the launcher directory exists */
-	if (!g_file_test (tmp, G_FILE_TEST_EXISTS)) {
-		panel_ensure_dir (tmp);
-	}
 
-	retval = g_build_filename (tmp, location, NULL);
+	/* Make sure the launcher directory exists */
+	if (!g_file_test (tmp, G_FILE_TEST_EXISTS))
+		panel_ensure_dir (tmp);
+
+	retval = g_build_filename (tmp, filename, NULL);
 
 	g_free (tmp);
+
 	return retval;
 }
 
 static char *
-launcher_get_unique_uri (void)
+panel_launcher_make_unique_path (void)
 {
-	int rnd, word;
-	char *uri;
 #define NUM_OF_WORDS 12
 	char *words[] = {
 		"foo",
@@ -106,47 +116,45 @@ launcher_get_unique_uri (void)
 		"curly",
 		"moe",
 		NULL};
-	char *fname, *full;
+	char     *retval = NULL;
+	gboolean  exists = TRUE;
 
-	for (;;) {
+	while (exists) {
+		char *filename;
+		int   rnd;
+		int   word;
+
 		rnd = rand ();
 		word = rand () % NUM_OF_WORDS;
-		fname = g_strdup_printf ("%s-%010x.desktop",
-					 words[word],
-					 (guint)rnd);
-		full = launcher_file_name (fname);
-		g_free (fname);
 
-		if ( ! g_file_test (full, G_FILE_TEST_EXISTS)) {
-			uri = gnome_vfs_get_uri_from_local_path (full);
-			g_free (full);
-			return uri;
-		}
-		
-		g_free (full);
+		filename = g_strdup_printf ("%s-%010x.desktop",
+					  words [word],
+					  (guint) rnd);
+
+		retval = panel_launcher_make_full_path (filename);
+		exists = g_file_test (retval, G_FILE_TEST_EXISTS);
+		g_free (filename);
 	}
 
-	g_assert_not_reached ();
-	return NULL;
+	return retval;
 }
 
-static const char *
+static void
 panel_launcher_save_ditem (GnomeDesktopItem *ditem,
 			   GdkScreen        *screen)
 {
 	GError     *error = NULL;
 	const char  *location;
 
-	g_return_val_if_fail (ditem != NULL, NULL);
+	g_return_if_fail (ditem != NULL);
 
 	location = gnome_desktop_item_get_location (ditem);
 	if (!location) {
-		char *freeme;
+		char *path;
 
-		freeme = launcher_get_unique_uri ();
-		gnome_desktop_item_set_location (ditem, freeme);
-		g_free (freeme);
-		location = gnome_desktop_item_get_location (ditem);
+		path = panel_launcher_make_unique_path ();
+		gnome_desktop_item_set_location (ditem, path);
+		g_free (path);
 	}
 
 	gnome_desktop_item_save (ditem, NULL, TRUE, &error);
@@ -159,8 +167,6 @@ panel_launcher_save_ditem (GnomeDesktopItem *ditem,
 			error->message);
 		g_error_free (error);
 	}
-
-	return location;
 }
 
 static void
@@ -312,6 +318,23 @@ free_launcher (gpointer data)
 	g_free (launcher);
 }
 
+void
+panel_launcher_delete (Launcher *launcher)
+{
+	const char *location;
+
+	location = gnome_desktop_item_get_location (launcher->ditem);
+
+	if (location) {
+		GnomeVFSResult result;
+
+		result = gnome_vfs_unlink (location);
+		if (result != GNOME_VFS_OK)
+			g_warning ("Error unlinking '%s': %s\n", location,
+				   gnome_vfs_result_to_string (result));
+	}
+}
+
 static gboolean
 is_this_drop_ok (GtkWidget      *widget,
 		 GdkDragContext *context)
@@ -453,19 +476,14 @@ create_launcher (const char *location)
 		return NULL;
 	}
 
-	ditem = gnome_desktop_item_new_from_uri (location, 0, &error);
+	if (!strchr (location, G_DIR_SEPARATOR)) {
+		char *path;
 
-	if (!ditem) {
-		char *entry;
-
-		entry = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
-						   location, TRUE, NULL);
-
-		if (entry != NULL) {
-			ditem = gnome_desktop_item_new_from_file (entry, 0, NULL);
-			g_free (entry);
-		}
-	}
+		path = panel_launcher_make_full_path (location);
+		ditem = gnome_desktop_item_new_from_file (path, 0, &error);
+		g_free (path);
+	} else
+		ditem = gnome_desktop_item_new_from_uri (location, 0, &error);
 
 	if (!ditem) {
 		g_printerr (_("Unable to open desktop file %s for panel launcher%s%s\n"),
@@ -771,7 +789,7 @@ launcher_properties (Launcher  *launcher,
 	gtk_widget_show_all (launcher->prop_dialog);
 }
 
-static void
+static Launcher *
 load_launcher_applet (const char       *location,
 		      PanelWidget      *panel,
 		      int               pos,
@@ -782,15 +800,15 @@ load_launcher_applet (const char       *location,
 
 	launcher = create_launcher (location);
 
-	if (launcher == NULL)
-		return;
+	if (!launcher)
+		return NULL;
 
 	launcher->info = panel_applet_register (launcher->button, launcher,
 						free_launcher, panel, pos, 
 						exactpos, PANEL_OBJECT_LAUNCHER,
 						id);
 	if (!launcher->info)
-		return;
+		return NULL;
 
 	if (!commie_mode)
 		panel_applet_add_callback (launcher->info,
@@ -802,6 +820,41 @@ load_launcher_applet (const char       *location,
 
 	/* setup button according to ditem */
 	setup_button (launcher);
+
+	return launcher;
+}
+
+static void
+panel_launcher_ensure_hoarded (Launcher   *launcher,
+			       const char *launcher_location,
+			       const char *id)
+{
+	GConfClient *client;
+	const char  *profile;
+	const char  *key;
+	const char  *new_location = NULL;
+
+	if (!strchr (launcher_location, G_DIR_SEPARATOR))
+		return; /* already hoarded */
+	
+	if (!(new_location = panel_launcher_get_filename (launcher_location))) {
+		const char *path;
+
+		gnome_desktop_item_set_location (launcher->ditem, NULL);
+		panel_launcher_save_ditem (launcher->ditem, launcher_get_screen (launcher));
+		
+		path = gnome_desktop_item_get_location (launcher->ditem);
+		new_location = panel_launcher_get_filename (path);
+	}
+
+	if (!new_location)
+		return;
+
+	client  = panel_gconf_get_client ();
+	profile = panel_profile_get_name ();
+
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
+	gconf_client_set_string (client, key, new_location, NULL);
 }
 
 void
@@ -810,6 +863,7 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 			  const char  *id)
 {
 	GConfClient *client;
+	Launcher    *launcher;
 	const char  *profile;
 	const char  *key;
 	char        *launcher_location;
@@ -828,7 +882,14 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 		return;
 	}
         
-	load_launcher_applet (launcher_location, panel_widget, position, TRUE, id);
+	launcher = load_launcher_applet (launcher_location,
+					 panel_widget,
+					 position,
+					 TRUE,
+					 id);
+
+	if (launcher)
+		panel_launcher_ensure_hoarded (launcher, launcher_location, id);
 
 	g_free (launcher_location);
 }
@@ -846,8 +907,8 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 
 		ditem = gnome_ditem_edit_get_ditem (dedit);
 
-		location = panel_launcher_save_ditem (ditem,
-						      gtk_window_get_screen (GTK_WINDOW (dialog)));
+		panel_launcher_save_ditem (ditem, gtk_window_get_screen (GTK_WINDOW (dialog)));
+		location = gnome_desktop_item_get_location (ditem);
 
 		panel_launcher_create (panel->toplevel, pos, location);
 	} else if (response == GTK_RESPONSE_HELP) {
@@ -978,7 +1039,8 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 		gnome_desktop_item_set_entry_type (ditem, GNOME_DESKTOP_ITEM_TYPE_LINK);
 	}
 
-	location = panel_launcher_save_ditem (ditem, gtk_window_get_screen (GTK_WINDOW (toplevel)));
+	panel_launcher_save_ditem (ditem, gtk_window_get_screen (GTK_WINDOW (toplevel)));
+	location = gnome_desktop_item_get_location (ditem);
 
 	panel_launcher_create (toplevel, position, location);
 
@@ -1007,6 +1069,37 @@ panel_launcher_create (PanelToplevel *toplevel,
 
 	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+
+}
+
+void
+panel_launcher_create_copy (PanelToplevel *toplevel,
+			    int            position,
+			    const char    *location)
+{
+	GnomeVFSURI *source_uri;
+	GnomeVFSURI *dest_uri;
+	char        *new_location;
+	const char  *filename;
+
+	new_location = panel_launcher_make_unique_path ();
+	
+	source_uri = gnome_vfs_uri_new (location);
+	dest_uri   = gnome_vfs_uri_new (new_location);
+
+	gnome_vfs_xfer_uri (source_uri,
+			    dest_uri,
+			    GNOME_VFS_XFER_FOLLOW_LINKS,
+			    GNOME_VFS_XFER_ERROR_MODE_ABORT,
+			    GNOME_VFS_XFER_OVERWRITE_MODE_REPLACE,
+			    NULL, NULL);
+
+	gnome_vfs_uri_unref (source_uri);
+	gnome_vfs_uri_unref (dest_uri);
+
+	filename = panel_launcher_get_filename (new_location);
+	panel_launcher_create (toplevel, position, filename);
+	g_free (new_location);
 }
 
 static void

@@ -25,6 +25,8 @@ void    panel_drawer_create (PanelToplevel *toplevel,
 			     gboolean       use_custom_icon,
 			     const char    *tooltip);
 
+void    panel_drawer_delete (Drawer *drawer);
+
 void    drawer_load_from_gconf (PanelWidget *panel_widget,
 				gint         position,
 				const char  *id);

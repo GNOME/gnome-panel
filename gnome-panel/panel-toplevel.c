@@ -42,6 +42,7 @@
 #include "panel-marshal.h"
 #include "panel-widget.h"
 #include "panel-bindings.h"
+#include "xstuff.h"
 
 #define DEFAULT_SIZE              48
 #define DEFAULT_AUTO_HIDE_SIZE    6
@@ -52,7 +53,7 @@
 #define HIDE_BUTTON_SIZE          20
 #define HANDLE_SIZE               10
 #define N_ATTACH_TOPLEVEL_SIGNALS 5
-#define N_ATTACH_WIDGET_SIGNALS   3
+#define N_ATTACH_WIDGET_SIGNALS   5
 
 typedef enum {
 	PANEL_GRAB_OP_NONE,
@@ -1408,11 +1409,19 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 	parent_box   = toplevel->priv->attach_toplevel->priv->geometry;
 	attach_box   = GTK_WIDGET (toplevel->priv->attach_widget)->allocation;
 
-	gdk_window_get_origin (GTK_WIDGET (toplevel->priv->attach_widget)->window,
-			       &x_origin, &y_origin);
+	if (attach_box.x != -1) {
+		gdk_window_get_origin (GTK_WIDGET (toplevel->priv->attach_widget)->window,
+				       &x_origin, &y_origin);
 
-	attach_box.x += x_origin;
-	attach_box.y += y_origin;
+		attach_box.x += x_origin;
+		attach_box.y += y_origin;
+	} else {
+		/* attach_widget isn't allocated. Put the toplevel
+		 * off screen.
+		 */
+		attach_box.x = -toplevel_box.width;
+		attach_box.y = -toplevel_box.height;
+	}
 
 	attach_orientation = panel_toplevel_get_orientation (
 					toplevel->priv->attach_toplevel);
@@ -2032,15 +2041,19 @@ panel_toplevel_disconnect_attached (PanelToplevel *toplevel)
 {
 	int i;
 
-	for (i = 0; i < N_ATTACH_TOPLEVEL_SIGNALS; i++)
+	for (i = 0; i < N_ATTACH_TOPLEVEL_SIGNALS; i++) {
 		g_signal_handler_disconnect (
 			toplevel->priv->attach_toplevel,
 			toplevel->priv->attach_toplevel_signals [i]);
+		toplevel->priv->attach_toplevel_signals [i] = 0;
+	}
 
-	for (i = 0; i < N_ATTACH_WIDGET_SIGNALS; i++)
+	for (i = 0; i < N_ATTACH_WIDGET_SIGNALS; i++) {
 		g_signal_handler_disconnect (
 			toplevel->priv->attach_widget,
 			toplevel->priv->attach_widget_signals [i]);
+		toplevel->priv->attach_widget_signals [i] = 0;
+	}
 
 	panel_toplevel_reverse_arrows (toplevel);
 }
@@ -2083,6 +2096,12 @@ panel_toplevel_connect_attached (PanelToplevel *toplevel)
 	signals [i++] = g_signal_connect_swapped (
 		toplevel->priv->attach_widget, "parent-set",
 		G_CALLBACK (panel_toplevel_attach_widget_parent_set), toplevel);
+	signals [i++] = g_signal_connect_swapped (
+		toplevel->priv->attach_widget, "show",
+		G_CALLBACK (gtk_widget_show), toplevel);
+	signals [i++] = g_signal_connect_swapped (
+		toplevel->priv->attach_widget, "hide",
+		G_CALLBACK (gtk_widget_hide), toplevel);
 
 	g_assert (i == N_ATTACH_WIDGET_SIGNALS);
 
@@ -2110,6 +2129,7 @@ panel_toplevel_attach_to_widget (PanelToplevel *toplevel,
 
 	panel_toplevel_set_expand (toplevel, FALSE);
 	panel_toplevel_update_attach_orientation (toplevel);
+	panel_toplevel_update_hide_buttons (toplevel);
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 }

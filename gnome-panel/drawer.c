@@ -196,19 +196,24 @@ drawer_click (GtkWidget *w, Drawer *drawer)
 }
 
 static void
-destroy_drawer(GtkWidget *widget, gpointer data)
+destroy_drawer (GtkWidget *widget,
+		Drawer    *drawer)
 {
-	Drawer *drawer = data;
-	GtkWidget *prop_dialog = drawer->properties;
+	GtkWidget *prop_dialog;
 
+	prop_dialog = drawer->properties;
 	drawer->properties = NULL;
+
+	if (drawer->toplevel)
+		panel_toplevel_detach (drawer->toplevel);
+	drawer->toplevel = NULL;
 
 	if (drawer->close_timeout_id)
 		g_source_remove (drawer->close_timeout_id);
 	drawer->close_timeout_id = 0;
 
-	if(prop_dialog)
-		gtk_widget_destroy(prop_dialog);
+	if (prop_dialog)
+		gtk_widget_destroy (prop_dialog);
 }
 
 static void
@@ -556,18 +561,17 @@ create_drawer_toplevel (const char *drawer_id)
 	profile_dir = gconf_concat_dir_and_key (PANEL_CONFIG_DIR, profile);
 
 	toplevel_id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS);
-
-	panel_profile_load_toplevel (client, profile_dir, PANEL_GCONF_TOPLEVELS, toplevel_id);
-
+	
 	/* takes ownership of toplevel_id */
-	toplevel = panel_profile_get_toplevel_by_id (toplevel_id);
+	toplevel = panel_profile_load_toplevel (client, profile_dir,
+						PANEL_GCONF_TOPLEVELS, toplevel_id);
 
 	g_free (profile_dir);
 
 	if (!toplevel)
 		return NULL;
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer_id, "attached_panel_id");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer_id, "attached_toplevel_id");
 	gconf_client_set_string (client, key, toplevel_id, NULL);
 
 	panel_profile_set_toplevel_enable_buttons (toplevel, TRUE);
@@ -687,6 +691,11 @@ panel_drawer_create (PanelToplevel *toplevel,
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
 }
 
+void
+panel_drawer_delete (Drawer *drawer)
+{
+	panel_profile_delete_toplevel (drawer->toplevel);
+}
 
 void
 drawer_load_from_gconf (PanelWidget *panel_widget,
@@ -730,7 +739,6 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 			    id);
 
 	g_free (profile_dir);
-	g_free (toplevel_id);
 	g_free (pixmap);
 	g_free (tooltip);
 }

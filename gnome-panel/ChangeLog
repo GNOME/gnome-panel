@@ -1,3 +1,57 @@
+2003-05-12  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix loads of drawer bugs. Redo launcher hoarding. Don't
+	save the absolute path of launchers.
+	
+	* applet.[ch]:
+	(panel_applet_clean): unlink the .desktop file for
+	launchers and delete the toplevel for drawers.
+	(free_applet_to_load),
+	(panel_applet_load_idle_handler),
+	(panel_applet_queue_applet_to_load), (panel_applet_compare):
+	re-factor so as to defer looking up the toplevel associated
+	with an object so that objects on drawers load successfully
+	after the drawer toplevel is loaded.
+	
+	* button-widget.c: (button_widget_expose):
+	s/gdk_pixbuf_render_to_drawable_alpha/gdk_draw_pixbuf/
+	
+	* drawer.[ch]:
+	(destroy_drawer): detach from the toplevel.
+	(create_drawer_toplevel): load_toplevel now returns the
+	toplevel. Also s/attached_panel_id/attach_toplevel_id/
+	(panel_drawer_delete): impl deleting the associated toplevel.
+	(drawer_load_from_gconf): don't free the toplevel_id. load_toplevel()
+	takes ownership of it.
+	
+	* gnome-panel-screenshot.c: (on_preview_expose_event):
+	s/gdk_pixbuf_render_to_drawable_alpha/gdk_draw_pixbuf/
+	
+	* launcher.[ch]: fix launcher hoarding and don't save the
+	absolute path of the .desktop file.
+	
+	* panel-profile.[ch]:
+	(panel_profile_load_toplevel): return the toplevel and
+	free the toplevel_id if we fail. Also, don't actually
+	show the toplevel - drawers shouldn't be shown until
+	the button is shown.
+	(panel_profile_load_and_show_toplevel): impl wrapper
+	which loads and shows the toplevel.
+	(panel_profile_load_object): upd.
+	(panel_profile_toplevel_id_list_notify), (panel_profile_load):
+	use load_and_show().
+
+	* panel-toplevel.c:
+	(panel_toplevel_update_attached_position): if the attached
+	widget hasn't been allocated place the toplevel off-screen.
+	(panel_toplevel_disconnect_attached): zero out the signal ids.
+	(panel_toplevel_connect_attached): connect to the attached
+	widget's hide/shown and hide/show the toplevel as appropriate.
+	(panel_toplevel_attach_to_widget): update the hide buttons.
+	
+	* panel.c: (drop_internal_icon): create a copy of the .desktop
+	file when dnd-ing launchers.
+
 2003-05-09  Mark McLoughlin  <mark@skynet.ie>
 
 	* install-defaults.sh: remove.

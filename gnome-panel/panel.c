@@ -616,8 +616,10 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist)
 }
 
 static void
-drop_internal_icon (PanelWidget *panel, int pos, const char *icon_name,
-		    int action)
+drop_internal_icon (PanelWidget *panel,
+		    int          pos,
+		    const char  *icon_name,
+		    int          action)
 {
 	Launcher *old_launcher = NULL;
 
@@ -627,7 +629,7 @@ drop_internal_icon (PanelWidget *panel, int pos, const char *icon_name,
 	if (action == GDK_ACTION_MOVE)
 		old_launcher = find_launcher (icon_name);
 	
-	panel_launcher_create (panel->toplevel, pos, icon_name);
+	panel_launcher_create_copy (panel->toplevel, pos, icon_name);
 
 	if (old_launcher && old_launcher->button) {
 		if (old_launcher->prop_dialog) {

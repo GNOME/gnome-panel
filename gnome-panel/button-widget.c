@@ -633,19 +633,15 @@ button_widget_expose (GtkWidget         *widget,
 	area = event->area;
 	
 	if (gdk_rectangle_intersect (&area, &widget->allocation, &area) &&
-	    gdk_rectangle_intersect (&image_bound, &area, &image_bound))  {
-		gdk_pixbuf_render_to_drawable_alpha (pb,
-						     widget->window,
-						     image_bound.x - x, image_bound.y - y,
-						     image_bound.x, image_bound.y,
-						     image_bound.width, image_bound.height,
-						     GDK_PIXBUF_ALPHA_FULL,
-						     128,
-						     GDK_RGB_DITHER_NORMAL,
-						     0, 0);
-	}
+	    gdk_rectangle_intersect (&image_bound, &area, &image_bound))
+		gdk_draw_pixbuf (widget->window, NULL, pb,
+				 image_bound.x - x, image_bound.y - y,
+				 image_bound.x, image_bound.y,
+				 image_bound.width, image_bound.height,
+				 GDK_RGB_DITHER_NORMAL,
+				 0, 0);
 	
-	if(button_widget->arrow) {
+	if (button_widget->arrow) {
 		int i;
 		GdkPoint points[3];
 		draw_arrow (points, button_widget->orientation, widget->allocation.height);

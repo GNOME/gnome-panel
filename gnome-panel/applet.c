@@ -63,14 +63,15 @@ panel_applet_clean (AppletInfo *info)
 {
 	g_return_if_fail (info != NULL);
 
-	if (info->type == PANEL_OBJECT_LAUNCHER) {
-		Launcher   *launcher = info->data;
-		const char *location;
-
-		location = gnome_desktop_item_get_location (launcher->ditem);
-
-		if (location)
-			 unlink (location);
+	switch (info->type) {
+	case PANEL_OBJECT_LAUNCHER:
+		panel_launcher_delete (info->data);
+		break;
+	case PANEL_OBJECT_DRAWER:
+		panel_drawer_delete (info->data);
+		break;
+	default:
+		break;
 	}
 
 	if (info->widget) {
@@ -587,11 +588,11 @@ panel_applet_destroy (GtkWidget  *widget,
 }
 
 typedef struct {
-	PanelObjectType  type;
-	PanelWidget     *panel_widget;
-	int              position;
 	char            *id;
-	gulong           destroy_handler;
+	PanelObjectType  type;
+	char            *toplevel_id;
+	int              position;
+	guint            right_stick : 1;
 } PanelAppletToLoad;
 
 static GSList *panel_applets_to_load = NULL;
@@ -599,13 +600,11 @@ static GSList *panel_applets_to_load = NULL;
 static void
 free_applet_to_load (PanelAppletToLoad *applet)
 {
-	if (applet->destroy_handler)
-		g_signal_handler_disconnect (applet->panel_widget,
-					     applet->destroy_handler);
-	applet->destroy_handler = 0;
-
 	g_free (applet->id);
 	applet->id = NULL;
+
+	g_free (applet->toplevel_id);
+	applet->toplevel_id = NULL;
 
 	g_free (applet);
 }
@@ -613,37 +612,58 @@ free_applet_to_load (PanelAppletToLoad *applet)
 static gboolean
 panel_applet_load_idle_handler (gpointer dummy)
 {
-	PanelAppletToLoad *applet;
+	PanelAppletToLoad *applet = NULL;
+	PanelToplevel     *toplevel = NULL;
+	PanelWidget       *panel_widget;
+	GSList            *l;
 
 	if (!panel_applets_to_load)
 		return FALSE;
 
-	applet = (PanelAppletToLoad *) panel_applets_to_load->data;
-	panel_applets_to_load->data = NULL;
-	panel_applets_to_load =
-		g_slist_delete_link (panel_applets_to_load,
-				     panel_applets_to_load);
+	for (l = panel_applets_to_load; l; l = l->next) {
+		applet = l->data;
+
+		toplevel = panel_profile_get_toplevel_by_id (applet->toplevel_id);
+		if (toplevel)
+			break;
+	}
+
+	if (!l) {
+		/* All the rest of the applets don't have a panel */
+		for (l = panel_applets_to_load; l; l = l->next)
+			free_applet_to_load (l->data);
+		g_slist_free (panel_applets_to_load);
+		panel_applets_to_load = NULL;
+		return FALSE;
+	}
+
+	panel_applets_to_load = g_slist_delete_link (panel_applets_to_load, l);
+
+	panel_widget = panel_toplevel_get_panel_widget (toplevel);
+
+	if (applet->right_stick && !panel_widget->packed)
+		applet->position = panel_widget->size - applet->position;
 
 	switch (applet->type) {
 	case PANEL_OBJECT_BONOBO:
 		panel_applet_frame_load_from_gconf (
-					applet->panel_widget,
+					panel_widget,
 					applet->position,
 					applet->id);
 		break;
 	case PANEL_OBJECT_DRAWER:
-		drawer_load_from_gconf (applet->panel_widget,
+		drawer_load_from_gconf (panel_widget,
 					applet->position,
 					applet->id);
 		break;
 	case PANEL_OBJECT_MENU:
-		panel_menu_button_load_from_gconf (applet->panel_widget,
+		panel_menu_button_load_from_gconf (panel_widget,
 						   applet->position,
 						   TRUE,
 						   applet->id);
 		break;
 	case PANEL_OBJECT_LAUNCHER:
-		launcher_load_from_gconf (applet->panel_widget,
+		launcher_load_from_gconf (panel_widget,
 					  applet->position,
 					  applet->id);
 		break;
@@ -651,21 +671,21 @@ panel_applet_load_idle_handler (gpointer dummy)
 	case PANEL_OBJECT_LOCK:
 		panel_action_button_load_compatible (
 				applet->type,
-				applet->panel_widget,
+				panel_widget,
 				applet->position,
 				TRUE,
 				applet->id);
 		break;
 	case PANEL_OBJECT_ACTION:
 		panel_action_button_load_from_gconf (
-				applet->panel_widget,
+				panel_widget,
 				applet->position,
 				TRUE,
 				applet->id);
 		break;
 	case PANEL_OBJECT_MENU_BAR:
 		panel_menu_bar_load_from_gconf (
-				applet->panel_widget,
+				panel_widget,
 				applet->position,
 				TRUE,
 				applet->id);
@@ -679,49 +699,27 @@ panel_applet_load_idle_handler (gpointer dummy)
 	return TRUE;
 }
 
-static void
-panel_destroyed_while_loading (GtkWidget *panel, gpointer data)
-{
-	PanelAppletToLoad *applet = data;
-
-	applet->destroy_handler = 0;
-
-	panel_applets_to_load =
-		g_slist_remove (panel_applets_to_load, applet);
-
-	free_applet_to_load (applet);
-}
-
 void
 panel_applet_queue_applet_to_load (char            *id,
 				   PanelObjectType  type,
-				   PanelToplevel   *toplevel,
+				   char            *toplevel_id,
 				   int              position,
 				   gboolean         right_stick)
 {
 	PanelAppletToLoad *applet;
-	PanelWidget       *panel_widget;
 
-	if (!toplevel) {
+	if (!toplevel_id) {
 		g_warning ("No toplevel on which to load object '%s'\n", id);
 		return;
 	}
 
-	panel_widget = panel_toplevel_get_panel_widget (toplevel);
-
-	if (right_stick && !panel_widget->packed)
-		position = panel_widget->size - position;
-
 	applet = g_new0 (PanelAppletToLoad, 1);
 
-	applet->type            = type;
-	applet->panel_widget    = panel_widget;
-	applet->position        = position;
-	applet->id              = id;
-	applet->destroy_handler =
-			g_signal_connect (panel_widget, "destroy",
-					  G_CALLBACK (panel_destroyed_while_loading),
-					  applet);
+	applet->id          = id;
+	applet->type        = type;
+	applet->toplevel_id = toplevel_id;
+	applet->position    = position;
+	applet->right_stick = right_stick != FALSE;
 
 	panel_applets_to_load = g_slist_prepend (panel_applets_to_load, applet);
 }
@@ -730,8 +728,10 @@ static int
 panel_applet_compare (const PanelAppletToLoad *a,
 		      const PanelAppletToLoad *b)
 {
-	if (a->panel_widget != b->panel_widget)
-		return a->panel_widget - b->panel_widget;
+	int c;
+
+	if ((c = strcmp (a->toplevel_id, b->toplevel_id)))
+		return c;
 	else
 		return a->position - b->position;
 }

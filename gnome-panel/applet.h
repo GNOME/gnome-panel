@@ -56,7 +56,7 @@ void        panel_applet_clean        (AppletInfo    *info);
 
 void panel_applet_queue_applet_to_load (char            *id,
 					PanelObjectType  type,
-					PanelToplevel   *toplevel,
+					char            *toplevel_id,
 					int              position,
 					gboolean         right_stick);
 void panel_applet_load_queued_applets  (void);

@@ -35,6 +35,9 @@ typedef struct {
 void panel_launcher_create           (PanelToplevel *toplevel,
 				      int            position,
 				      const char    *location);
+void panel_launcher_create_copy      (PanelToplevel *toplevel,
+				      int            position,
+				      const char    *location);
 void panel_launcher_create_from_info (PanelToplevel *toplevel,
 				      int            position,
 				      gboolean       exec_info,
@@ -49,6 +52,8 @@ void		launcher_properties		(Launcher  *launcher,
 void            launcher_load_from_gconf        (PanelWidget *panel_widget,
 						 gint         position,
 						 const char  *id);
+
+void            panel_launcher_delete           (Launcher *launcher);
 
 void		ask_about_launcher		(const char *file,
 						 PanelWidget *panel,
