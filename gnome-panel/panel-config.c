@@ -103,21 +103,24 @@ position_notebook_page(void)
 	GtkWidget *frame;
 	GtkWidget *button;
 	GtkWidget *box;
-	GtkWidget *vbox;
-
-	/* main vbox */
-	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
+	GtkWidget *hbox;
+        GtkWidget *table;
+	
+	/* main hbox */
+	hbox = gtk_hbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (hbox), CONFIG_PADDING_SIZE);
 	
 	/* Position frame */
 	frame = gtk_frame_new (_("Position"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, CONFIG_PADDING_SIZE);
 	
-	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
-	gtk_container_add (GTK_CONTAINER (frame), box);
+	/* table for frame */
+	table = gtk_table_new(3, 3, TRUE);
+	gtk_table_set_row_spacings(GTK_TABLE(table), CONFIG_PADDING_SIZE);
+	gtk_table_set_col_spacings(GTK_TABLE(table), CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER(table), CONFIG_PADDING_SIZE);
+	gtk_container_add (GTK_CONTAINER (frame), table);
 	
 	/* Top Position */
 	button = gtk_radio_button_new_with_label (NULL, _("Top"));
@@ -126,7 +129,8 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_TOP);
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
+        gtk_table_attach(GTK_TABLE(table), button, 1, 2, 0, 1,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
 	
 	/* Bottom Position */
 	button = gtk_radio_button_new_with_label (
@@ -137,7 +141,8 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_BOTTOM);
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
+        gtk_table_attach(GTK_TABLE(table), button, 1, 2, 2, 3,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
 	
 	/* Left Position */
 	button = gtk_radio_button_new_with_label (
@@ -148,7 +153,8 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_LEFT);
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
+        gtk_table_attach(GTK_TABLE(table), button, 0, 1, 1, 2,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
 
 	/* Right Position */
 	button = gtk_radio_button_new_with_label (
@@ -159,12 +165,13 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_RIGHT);
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
+        gtk_table_attach(GTK_TABLE(table), button, 2, 3, 1, 2,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
 
 	/* Auto-hide/stayput frame */
 	frame = gtk_frame_new (_("Minimize Options"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, CONFIG_PADDING_SIZE);
 
 	/* vbox for frame */
 	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
@@ -191,7 +198,7 @@ position_notebook_page(void)
 			    (gpointer)PANEL_AUTO_HIDE);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
 
-	return (vbox);
+	return (hbox);
 }
 
 static GtkWidget *

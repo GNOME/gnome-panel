@@ -116,7 +116,6 @@ struct _PanelWidget
 						  holding this panel*/
 
 	char                    *back_pixmap;
-	gint			pixmap_enabled;
 	GdkColor		back_color;
 
 	gint			autohide_inhibit;
