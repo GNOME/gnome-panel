@@ -66,6 +66,7 @@ struct _PanelWidget
 	PanelOrientation	orient;
 	int			fit_pixmap_bg;
 	int			pixmap_resize_timeout;
+	int			pixmap_resize_timeout_top;
 	int			pixmap_resize_pending;
 
 	int			packed;

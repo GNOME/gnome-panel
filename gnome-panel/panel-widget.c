@@ -893,6 +893,7 @@ static int
 fit_pix_timeout_top(gpointer data)
 {
 	PanelWidget *panel = data;
+	panel->pixmap_resize_timeout_top = 0;
 	if(panel->pixmap_resize_timeout ||
 	   !panel->fit_pixmap_bg ||
 	   panel->back_type != PANEL_BACK_PIXMAP)
@@ -1035,7 +1036,10 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		if(panel->pixmap_resize_timeout)
 			panel->pixmap_resize_pending = TRUE;
 		else {
-			gtk_timeout_add(500,fit_pix_timeout_top,panel);
+			if(panel->pixmap_resize_timeout_top)
+				gtk_timeout_remove(panel->pixmap_resize_timeout_top);
+			panel->pixmap_resize_timeout_top = 
+				gtk_timeout_add(500,fit_pix_timeout_top,panel);
 		}
 	}
 
@@ -1305,6 +1309,7 @@ static void
 panel_widget_destroy(GtkWidget *w, gpointer data)
 {
 	GdkImlibImage *im;
+	PanelWidget *panel = PANEL_WIDGET(w);
 
 	g_return_if_fail(w!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(w));
@@ -1315,6 +1320,11 @@ panel_widget_destroy(GtkWidget *w, gpointer data)
 	
 	/*remove from panels list*/
 	panels = g_slist_remove(panels,w);
+
+	if(panel->pixmap_resize_timeout)
+		gtk_timeout_remove(panel->pixmap_resize_timeout);
+	if(panel->pixmap_resize_timeout_top)
+		gtk_timeout_remove(panel->pixmap_resize_timeout_top);
 }
 
 static int panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data);
@@ -1378,6 +1388,7 @@ panel_widget_init (PanelWidget *panel)
 	panel->back_type =PANEL_BACK_NONE;
 	panel->fit_pixmap_bg = FALSE;
 	panel->pixmap_resize_timeout = 0;
+	panel->pixmap_resize_timeout_top = 0;
 	panel->pixmap_resize_pending = FALSE;
 	panel->back_pixmap = NULL;
 	panel->back_color.red = 0;
