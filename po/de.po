@@ -1,13 +1,19 @@
-# German system tray applet translation.
-# Copyright (C) 2002 RedHat Inc.
-# This file is distributed under the same license as the PACKAGE package.
+# German gnome-panel translation.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gnome-panel package.
+# Carsten Schaar <nhadcasc@fs-maphy.uni-hannover.de>, 1998.
+# Matthias Warkus <mawa@iname.com>, 1999-2001.
+# Benedikt Roth <Benedikt.Roth@gmx.net>, 2000, 2001.
+# Christian Meyer <chrisime@gnome.org>, 2000, 2001.
+# Karl Eichwalder <ke@suse.de>, 2000, 2001.
+# Jörgen Scheibengruber <mfcn@gmx.de>, 2002.
 # Christian Neumair <chris@gnome-de.org>, 2002.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: system-tray-applet HEAD\n"
-"POT-Creation-Date: 2002-12-17 09:50+1300\n"
-"PO-Revision-Date: 2002-12-06 11:38+0100\n"
+"Project-Id-Version: gnome-panel HEAD\n"
+"POT-Creation-Date: 2002-12-25 22:23+0100\n"
+"PO-Revision-Date: 2002-12-14 23:44+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,16 +31,16 @@ msgid "There was an error displaying help: %s"
 msgstr "Beim Anzeigen der Hilfe ist ein Fehler aufgetreten: %s"
 
 #: applets/fish/fish.c:194
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
-"Warnung:  Dieser Befehl scheint in der Tat irgendwie nützlich zu sein.\n"
-"Da dies jedoch ein nutzloses Applet ist, sollten Sie diesen Befehl nicht "
-"verwenden.\n"
+"Warnung: Dieser Befehl scheint in der Tat in irgendeiner Form nützlich zu "
+"sein.\n"
+"Da dies jedoch ein nutzloses Applet ist, sollten Sie diesen nicht ausführen."
 "Wir bitten Sie nachdrücklich, %s nicht für etwas zu verwenden,\n"
 "das dieses Applet irgendwie »praktisch« oder »nützlich« machen könnte."
 
@@ -61,8 +67,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(mit etwas Hilfe von George)"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 #: applets/fish/fish.c:416
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
 msgstr "Fisch"
 
@@ -143,7 +149,6 @@ msgid "Frame_s in animation:"
 msgstr "_Einzelbildanzahl der Animation:"
 
 #: applets/fish/fish.glade.h:5
-#, fuzzy
 msgid "GNOME Fish Preferences"
 msgstr "Einstellungen des GNOME-Fisches"
 
@@ -228,8 +233,8 @@ msgstr "_Info..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:814 gnome-panel/launcher.c:804 gnome-panel/menu.c:3544
-#: gnome-panel/menu.c:4220 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3585
+#: gnome-panel/menu.c:4261 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_Hilfe"
 
@@ -271,6 +276,8 @@ msgid ""
 "%s\n"
 "%s"
 msgstr ""
+"%s\n"
+"%s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -279,7 +286,7 @@ msgstr ""
 #: applets/gen_util/clock.c:200
 #, c-format
 msgid "%s, %s"
-msgstr ""
+msgstr "%s, %s"
 
 #. Show date in tooltip
 #: applets/gen_util/clock.c:303
@@ -352,15 +359,10 @@ msgstr ""
 "Matthias Warkus <mawarkus@gnome.org>\n"
 "Christian Neumair <chris@gnome-de.org>"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 #: applets/gen_util/clock.c:1204
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "Clock"
 msgstr "Uhr"
-
-#: applets/gen_util/clock.c:1205
-#, fuzzy
-msgid "(C) 1998-2002 the Free Software Foundation"
-msgstr "© 1998 Free Software Foundation, Inc."
 
 # CHECK
 #: applets/gen_util/clock.c:1206
@@ -694,11 +696,6 @@ msgstr "E-_Mail-Anzeige"
 msgid "Mail_box"
 msgstr "_Postfach"
 
-#: applets/gen_util/mailcheck.c:1746
-#, fuzzy
-msgid "(c) 1998-2000 the Free Software Foundation"
-msgstr "© 1998 Free Software Foundation, Inc."
-
 #: applets/gen_util/mailcheck.c:1747
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr ""
@@ -875,11 +872,6 @@ msgstr ""
 "Fehler beim Laden des »display_all_workspaces«-Wertes des Arbeitsflächen-"
 "Umschalters: %s\n"
 
-#: applets/gen_util/pager.c:546
-#, fuzzy
-msgid "(c) 2001 Red Hat, Inc."
-msgstr "© 2001 Red Hat, Inc."
-
 #: applets/gen_util/pager.c:547
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
@@ -960,57 +952,6 @@ msgstr ""
 "Sollen die Namen der Arbeitsflächen im Arbeitsflächen-Umschalter angezeigt "
 "werden?"
 
-#: applets/gen_util/printer.c:120
-msgid "Can't execute printer command"
-msgstr "Der Druckbefehl konnte nicht ausgeführt werden"
-
-#: applets/gen_util/printer.c:306
-msgid "Printer properties"
-msgstr "Druckereigenschaften"
-
-#: applets/gen_util/printer.c:315
-msgid "Printer name:"
-msgstr "Druckername:"
-
-#: applets/gen_util/printer.c:319
-msgid "Print command:"
-msgstr "Druckbefehl:"
-
-#: applets/gen_util/printer.c:325
-msgid "Printer"
-msgstr "Drucker"
-
-#: applets/gen_util/printer.c:353
-msgid "Printer Applet"
-msgstr "Drucker-Applet"
-
-#: applets/gen_util/printer.c:354
-#, fuzzy
-msgid "(c) 1998 the Free Software Foundation"
-msgstr "© 1998 Free Software Foundation, Inc."
-
-#: applets/gen_util/printer.c:356
-msgid ""
-"The printer applet lets you easily drag files to be printed via a print "
-"command"
-msgstr "Das Drucker-Applet ermöglicht es, Dateien per Drag & Drop zu drucken"
-
-#: applets/gen_util/printer.c:423
-msgid "Can't create applet!\n"
-msgstr "Applet konnte nicht erstellt werden!\n"
-
-#: applets/gen_util/printer.c:466
-msgid "Properties..."
-msgstr "Eigenschaften..."
-
-#: applets/gen_util/printer.c:473
-msgid "Help"
-msgstr "Hilfe"
-
-#: applets/gen_util/printer.c:479
-msgid "About..."
-msgstr "Info..."
-
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
 msgstr "Klicken Sie hier, um die verborgenen Fenster wieder hervorzuholen."
@@ -1029,20 +970,11 @@ msgstr "»%s« konnte nicht geladen werden: %s\n"
 msgid "File not found"
 msgstr "Datei nicht gefunden"
 
-#: applets/gen_util/showdesktop.c:453
-msgid "(C) 2002 Red Hat, Inc."
-msgstr "© 2002 Red Hat, Inc."
-
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 "Beim Anklicken dieses Knopfes werden alle Fenster verborgen und der Desktop "
 "angezeigt"
-
-#: applets/gen_util/tasklist.c:809
-#, fuzzy
-msgid "(c) 2001 Red Hat, Inc"
-msgstr "© 2001 Red Hat, Inc."
 
 #: applets/gen_util/tasklist.c:810
 msgid ""
@@ -1195,79 +1127,74 @@ msgstr "Benachrichtigungsfeld-Fabrik"
 msgid "Panel Notification Area"
 msgstr "Panel-Benachrichtigungsfeld"
 
-#: applets/notification_area/main.c:126
-#, fuzzy
-msgid "Copyright 2002 Red Hat Inc."
-msgstr "© 2002 Red Hat, Inc."
-
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:428 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
+#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
-msgstr "Aus dem Panel entfe_rnen"
+msgstr "Aus dem Panel e_ntfernen"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
+#: gnome-panel/applet.c:504 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "_Verschieben"
 
-#: gnome-panel/applet.c:809
+#: gnome-panel/applet.c:791
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Für das Panelobjekt mit der Kennung %s ist kein Objekt festgelegt\n"
 
-#: gnome-panel/applet.c:831
+#: gnome-panel/applet.c:811 gnome-panel/applet.c:919
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Für das Panelobjekt mit der Kennung %s ist panel_id nicht festgelegt\n"
 
-#: gnome-panel/applet.c:1157
+#: gnome-panel/applet.c:1258
 msgid "Can't find an empty spot"
 msgstr "Kein freier Fleck mehr im Panel"
 
-#: gnome-panel/basep-widget.c:161
+#: gnome-panel/basep-widget.c:159
 msgid "Mode"
 msgstr "Modus"
 
-#: gnome-panel/basep-widget.c:162
+#: gnome-panel/basep-widget.c:160
 msgid "Mode of this panel"
 msgstr "Modus dieses Panels"
 
-#: gnome-panel/basep-widget.c:169
+#: gnome-panel/basep-widget.c:167
 msgid "State"
 msgstr "Zustand"
 
-#: gnome-panel/basep-widget.c:170
+#: gnome-panel/basep-widget.c:168
 msgid "Current state of this panel"
 msgstr "Momentaner Zustand dieses Panels"
 
-#: gnome-panel/basep-widget.c:178
+#: gnome-panel/basep-widget.c:176
 msgid "Hidebuttons enabled"
 msgstr "Versteckknöpfe _aktivieren"
 
-#: gnome-panel/basep-widget.c:179
+#: gnome-panel/basep-widget.c:177
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr ""
 "Sind Versteckknöpfe (Knöpfe, die das Panel anzeigen oder verbergen) "
 "aktiviert?"
 
-#: gnome-panel/basep-widget.c:186
+#: gnome-panel/basep-widget.c:184
 msgid "Hidebutton pixmaps enabled"
 msgstr "Versteckknopf-Pixmaps aktivieren"
 
-#: gnome-panel/basep-widget.c:187
+#: gnome-panel/basep-widget.c:185
 msgid "Hidebuttons have pixmaps"
 msgstr "Versteckknöpfe haben Pixmaps"
 
-#: gnome-panel/basep-widget.c:591
+#: gnome-panel/basep-widget.c:584
 msgid "Hide this panel"
 msgstr "Dieses Panel verbergen"
 
-#: gnome-panel/basep-widget.c:594
+#: gnome-panel/basep-widget.c:587
 msgid "Show this panel"
 msgstr "Dieses Panel entfernen"
 
@@ -1392,12 +1319,12 @@ msgstr "Versteckknopf aktivieren"
 msgid "Enable hidebutton arrow"
 msgstr "Pfeil auf Versteckknopf aktivieren"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3425
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3466
 msgid "Drawer"
 msgstr "Schublade"
 
-#: gnome-panel/drawer.c:811 gnome-panel/launcher.c:802 gnome-panel/menu.c:1488
-#: gnome-panel/menu.c:3519 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1529
+#: gnome-panel/menu.c:3560 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "Ei_genschaften"
 
@@ -1405,7 +1332,7 @@ msgstr "Ei_genschaften"
 msgid " (invalid Unicode)"
 msgstr " (ungültiger Unicode)"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3791
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3832
 msgid "Run Program..."
 msgstr "Programm ausführen..."
 
@@ -1413,23 +1340,23 @@ msgstr "Programm ausführen..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Anwendungen ausführen; wenn Sie den korrekten Befehl wissen"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3805
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3846
 msgid "Search for Files..."
 msgstr "Nach Dateien suchen..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3808
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3849
 msgid "Find files, folders, and documents on your computer"
 msgstr "Dateien, Ordner und Dokumente auf dem Computer finden"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3822
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3863
 msgid "Screenshot..."
 msgstr "Bildschirmfoto..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3866
 msgid "Take a screenshot of your desktop"
 msgstr "Ein Bildschirmfoto Ihres Desktops aufnehmen"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3601
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3642
 msgid "Lock Screen"
 msgstr "Bildschirm sperren"
 
@@ -1437,8 +1364,8 @@ msgstr "Bildschirm sperren"
 msgid "Protect your computer from unauthorized use"
 msgstr "Schützen Sie Ihren Computer vor unberechtigter Benutzung"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3029
-#: gnome-panel/menu.c:3612
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3070
+#: gnome-panel/menu.c:3653
 msgid "Log Out"
 msgstr "Abmelden"
 
@@ -1455,7 +1382,7 @@ msgstr "Aktionen"
 msgid "No windows open"
 msgstr "Keine Fenster geöffnet"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2793
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2834
 msgid "Menu Panel"
 msgstr "Menüpanel"
 
@@ -1463,8 +1390,8 @@ msgstr "Menüpanel"
 msgid "GNOME Menu Panel"
 msgstr "GNOME-Menüpanel"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2926
-#: gnome-panel/menu.c:2931 gnome-panel/menu.c:3758
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2967
+#: gnome-panel/menu.c:2972 gnome-panel/menu.c:3799
 msgid "Applications"
 msgstr "Anwendungen"
 
@@ -1878,7 +1805,7 @@ msgstr ""
 "Fehler trat auf:\n"
 "%s"
 
-#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1145
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1186
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1928,11 +1855,6 @@ msgstr ""
 msgid "The GNOME Panel"
 msgstr "Das GNOME-Panel"
 
-#: gnome-panel/menu.c:290
-#, fuzzy
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "© 1997 Free Software Foundation, Inc."
-
 #: gnome-panel/menu.c:311
 msgid "End world hunger"
 msgstr "Ein Ende dem Hunger in der Welt"
@@ -1959,7 +1881,7 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1119 gnome-panel/menu.c:1156
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1160 gnome-panel/menu.c:1197
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1970,7 +1892,7 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: gnome-panel/menu.c:1023
+#: gnome-panel/menu.c:1064
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1981,17 +1903,17 @@ msgstr ""
 "\n"
 "Details: %s\n"
 
-#: gnome-panel/menu.c:1033
+#: gnome-panel/menu.c:1074
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Dateiname konnte nicht aus Pfad entnommen werden: %s"
 
-#: gnome-panel/menu.c:1040
+#: gnome-panel/menu.c:1081
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Verzeichnisname konnte nicht aus Pfad entnommen werden: %s"
 
-#: gnome-panel/menu.c:1110
+#: gnome-panel/menu.c:1151
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -2001,156 +1923,156 @@ msgstr ""
 "\n"
 "Details: Kein »Exec«- oder »URL«-Feld im Eintrag"
 
-#: gnome-panel/menu.c:1420
+#: gnome-panel/menu.c:1461
 msgid "Add this launcher to panel"
 msgstr "Diesen Starter zum Panel hinzufügen"
 
-#: gnome-panel/menu.c:1428
+#: gnome-panel/menu.c:1469
 msgid "Remove this item"
 msgstr "Diesen Eintrag entfernen"
 
-#: gnome-panel/menu.c:1444
+#: gnome-panel/menu.c:1485
 msgid "Put into run dialog"
 msgstr "In den Ausführen-Dialog aufnehmen"
 
-#: gnome-panel/menu.c:1462
+#: gnome-panel/menu.c:1503
 #, c-format
 msgid "Help on %s"
 msgstr "Hilfe zu %s"
 
-#: gnome-panel/menu.c:1463
+#: gnome-panel/menu.c:1504
 msgid "Application"
 msgstr "Anwendung"
 
-#: gnome-panel/menu.c:1507
+#: gnome-panel/menu.c:1548
 msgid "Entire menu"
 msgstr "Vollständiges Menü"
 
-#: gnome-panel/menu.c:1516
+#: gnome-panel/menu.c:1557
 msgid "Add this as drawer to panel"
 msgstr "Dies als Schublade im Panel hinzufügen"
 
-#: gnome-panel/menu.c:1524
+#: gnome-panel/menu.c:1565
 msgid "Add this as menu to panel"
 msgstr "Dies als Menu im Panel hinzufügen"
 
-#: gnome-panel/menu.c:1532
+#: gnome-panel/menu.c:1573
 msgid "Add new item to this menu"
 msgstr "Neuen Eintrag zu diesem Menü hinzufügen"
 
-#: gnome-panel/menu.c:1557
+#: gnome-panel/menu.c:1598
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: gnome-panel/menu.c:2447 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2488 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "Die Anfrage gab die Ausnahme %s zurück\n"
 
-#: gnome-panel/menu.c:2703 gnome-panel/menu.c:2708
+#: gnome-panel/menu.c:2744 gnome-panel/menu.c:2749
 msgid "Aligned Panel"
 msgstr "Ausgerichtetes Panel"
 
-#: gnome-panel/menu.c:2709
+#: gnome-panel/menu.c:2750
 msgid "GNOME Aligned Panel"
 msgstr "Ausgerichtetes GNOME-Panel"
 
-#: gnome-panel/menu.c:2726 gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2767 gnome-panel/menu.c:2771
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Kantenpanel"
 
-#: gnome-panel/menu.c:2731
+#: gnome-panel/menu.c:2772
 msgid "GNOME Edge Panel"
 msgstr "GNOME-Kantenpanel"
 
-#: gnome-panel/menu.c:2752 gnome-panel/menu.c:2756
+#: gnome-panel/menu.c:2793 gnome-panel/menu.c:2797
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Gleitendes Panel"
 
-#: gnome-panel/menu.c:2757
+#: gnome-panel/menu.c:2798
 msgid "GNOME Sliding Panel"
 msgstr "Gleitendes GNOME-Panel"
 
-#: gnome-panel/menu.c:2775 gnome-panel/menu.c:2780
+#: gnome-panel/menu.c:2816 gnome-panel/menu.c:2821
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Frei schwebendes Panel"
 
-#: gnome-panel/menu.c:2781
+#: gnome-panel/menu.c:2822
 msgid "GNOME Floating Panel"
 msgstr "Frei-schwebendes GNOME-Panel"
 
-#: gnome-panel/menu.c:2801
+#: gnome-panel/menu.c:2842
 msgid "You can only have one menu panel at a time."
 msgstr "Sie können lediglich ein Menüpanel verwenden."
 
-#: gnome-panel/menu.c:2845
+#: gnome-panel/menu.c:2886
 msgid "C_orner Panel"
 msgstr "_Eckpanel"
 
-#: gnome-panel/menu.c:2847
+#: gnome-panel/menu.c:2888
 msgid "Create corner panel"
 msgstr "Ein Eckpanel erzeugen"
 
-#: gnome-panel/menu.c:2854
+#: gnome-panel/menu.c:2895
 msgid "_Edge Panel"
 msgstr "_Kantenpanel"
 
-#: gnome-panel/menu.c:2856
+#: gnome-panel/menu.c:2897
 msgid "Create edge panel"
 msgstr "Ein Kantenpanel erzeugen"
 
-#: gnome-panel/menu.c:2863
+#: gnome-panel/menu.c:2904
 msgid "_Floating Panel"
 msgstr "_Frei-schwebendes Panel"
 
-#: gnome-panel/menu.c:2865
+#: gnome-panel/menu.c:2906
 msgid "Create floating panel"
 msgstr "Ein frei schwebendes Panel erzeugen"
 
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:2913
 msgid "_Sliding Panel"
 msgstr "_Gleitendes Panel"
 
-#: gnome-panel/menu.c:2874
+#: gnome-panel/menu.c:2915
 msgid "Create sliding panel"
 msgstr "Ein gleitendes Panel erzeugen"
 
-#: gnome-panel/menu.c:2883
+#: gnome-panel/menu.c:2924
 msgid "_Menu Panel"
 msgstr "_Menüpanel"
 
-#: gnome-panel/menu.c:2885
+#: gnome-panel/menu.c:2926
 msgid "Create menu panel"
 msgstr "Ein Menüpanel erzeugen"
 
-#: gnome-panel/menu.c:2974 gnome-panel/menu.c:2980 gnome-panel/menu.c:3673
+#: gnome-panel/menu.c:3015 gnome-panel/menu.c:3021 gnome-panel/menu.c:3714
 msgid "KDE Menu"
 msgstr "KDE-Menü"
 
-#: gnome-panel/menu.c:3037
+#: gnome-panel/menu.c:3078
 msgid "Lock"
 msgstr "Sperren"
 
-#: gnome-panel/menu.c:3045 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3086 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Bildschirmfoto"
 
-#: gnome-panel/menu.c:3053
+#: gnome-panel/menu.c:3094
 msgid "Search"
 msgstr "Suchen"
 
-#: gnome-panel/menu.c:3061
+#: gnome-panel/menu.c:3102
 msgid "Run"
 msgstr "Ausführen"
 
-#: gnome-panel/menu.c:3133
+#: gnome-panel/menu.c:3174
 msgid "You cannot remove your last panel."
 msgstr "Sie können das letzte Panel nicht entfernen."
 
-#: gnome-panel/menu.c:3146
+#: gnome-panel/menu.c:3187
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2160,58 +2082,58 @@ msgstr ""
 "\n"
 "Soll dieses Panel entfernt werden?"
 
-#: gnome-panel/menu.c:3154
+#: gnome-panel/menu.c:3195
 msgid "Delete Panel"
 msgstr "Panel entfernen"
 
-#: gnome-panel/menu.c:3393
+#: gnome-panel/menu.c:3434
 msgid "Launcher..."
 msgstr "Starter..."
 
-#: gnome-panel/menu.c:3400
+#: gnome-panel/menu.c:3441
 msgid "Launcher from menu"
 msgstr "Starter aus Menü"
 
-#: gnome-panel/menu.c:3408
+#: gnome-panel/menu.c:3449
 msgid "Button"
 msgstr "Knopf"
 
-#: gnome-panel/menu.c:3417 gnome-panel/menu.c:3918 gnome-panel/menu.c:3946
-#: gnome-panel/menu.c:4142
+#: gnome-panel/menu.c:3458 gnome-panel/menu.c:3959 gnome-panel/menu.c:3987
+#: gnome-panel/menu.c:4183
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
-#: gnome-panel/menu.c:3470
+#: gnome-panel/menu.c:3511
 msgid "_Delete This Panel..."
 msgstr "Dieses Panel entfe_rnen..."
 
-#: gnome-panel/menu.c:3473 gnome-panel/menu.c:3505
+#: gnome-panel/menu.c:3514 gnome-panel/menu.c:3546
 msgid "_Delete This Panel"
 msgstr "Dieses Panel entfe_rnen"
 
-#: gnome-panel/menu.c:3492
+#: gnome-panel/menu.c:3533
 msgid "_Add to Panel"
 msgstr "Zum Panel _hinzufügen"
 
-#: gnome-panel/menu.c:3532
+#: gnome-panel/menu.c:3573
 msgid "_New Panel"
 msgstr "_Neues Panel"
 
-#: gnome-panel/menu.c:3566
+#: gnome-panel/menu.c:3607
 msgid "_About Panels"
 msgstr "_Info zu den Panels"
 
-#: gnome-panel/menu.c:3579
+#: gnome-panel/menu.c:3620
 msgid "About _GNOME"
 msgstr "Info zu _GNOME"
 
-#: gnome-panel/menu.c:3607
+#: gnome-panel/menu.c:3648
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 "Den Bildschirm sperren, sodass Sie Ihren Computer vorübergehend verlassen "
 "können"
 
-#: gnome-panel/menu.c:3618
+#: gnome-panel/menu.c:3659
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2219,31 +2141,31 @@ msgstr ""
 "Diese Sitzung beenden, um sich als ein anderer Benutzer anzumelden oder um "
 "den Computer herunterzufahren"
 
-#: gnome-panel/menu.c:3774
+#: gnome-panel/menu.c:3815
 msgid "Applets"
 msgstr "Applets"
 
-#: gnome-panel/menu.c:3798
+#: gnome-panel/menu.c:3839
 msgid "Run a command"
 msgstr "Einen Befehl ausführen"
 
-#: gnome-panel/menu.c:3838
+#: gnome-panel/menu.c:3879
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3866
+#: gnome-panel/menu.c:3907 gnome-panel/menu-ditem.c:290
 msgid "Menu"
 msgstr "Menü"
 
-#: gnome-panel/menu.c:3868
+#: gnome-panel/menu.c:3909
 msgid "Menu:"
 msgstr "Menü:"
 
-#: gnome-panel/menu.c:3940
+#: gnome-panel/menu.c:3981
 msgid "Can't create menu, using main menu!"
 msgstr "Menü kann nicht erzeugt werden, Hauptmenü wird verwendet!"
 
-#: gnome-panel/menu.c:4463
+#: gnome-panel/menu.c:4498
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Kein Pfad bei %s für das Panel-Menüobjekt festgelegt\n"
@@ -2357,7 +2279,7 @@ msgstr ""
 "Soll dieses Applet neu geladen werden?\n"
 "\n"
 "(Falls Sie sich nicht dafür entscheiden, das Applet jetzt neu zu laden, "
-"können Sie es jederzeit durch einen Rechsklick auf ein Panel und das "
+"können Sie es jederzeit durch einen Rechtsklick auf ein Panel und das "
 "Anklicken des »Zum Panel hinzufügen«-Untermenüs hinzufügen)"
 
 #: gnome-panel/panel-applet-frame.c:746
@@ -2387,7 +2309,7 @@ msgstr ""
 msgid "Open URL: %s"
 msgstr "URL öffnen: %s"
 
-#: gnome-panel/panel.c:2266
+#: gnome-panel/panel.c:2594
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2755,3 +2677,70 @@ msgstr "Größe:"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Oben"
+
+#~ msgid "Can't execute printer command"
+#~ msgstr "Der Druckbefehl konnte nicht ausgeführt werden"
+
+#~ msgid "Printer properties"
+#~ msgstr "Druckereigenschaften"
+
+#~ msgid "Printer name:"
+#~ msgstr "Druckername:"
+
+#~ msgid "Print command:"
+#~ msgstr "Druckbefehl:"
+
+#~ msgid "Printer"
+#~ msgstr "Drucker"
+
+#~ msgid "Printer Applet"
+#~ msgstr "Drucker-Applet"
+
+#~ msgid ""
+#~ "The printer applet lets you easily drag files to be printed via a print "
+#~ "command"
+#~ msgstr ""
+#~ "Das Drucker-Applet ermöglicht es, Dateien per Drag & Drop zu drucken"
+
+#~ msgid "Can't create applet!\n"
+#~ msgstr "Applet konnte nicht erstellt werden!\n"
+
+#~ msgid "Properties..."
+#~ msgstr "Eigenschaften..."
+
+#~ msgid "Help"
+#~ msgstr "Hilfe"
+
+#~ msgid "About..."
+#~ msgstr "Info..."
+
+#, fuzzy
+#~ msgid "Copyright 2002 Red Hat Inc."
+#~ msgstr "© 2002 Red Hat, Inc."
+
+#, fuzzy
+#~ msgid "(C) 1998-2002 the Free Software Foundation"
+#~ msgstr "© 1998 Free Software Foundation, Inc."
+
+#, fuzzy
+#~ msgid "(c) 1998-2000 the Free Software Foundation"
+#~ msgstr "© 1998 Free Software Foundation, Inc."
+
+#, fuzzy
+#~ msgid "(c) 2001 Red Hat, Inc."
+#~ msgstr "© 2001 Red Hat, Inc."
+
+#, fuzzy
+#~ msgid "(c) 1998 the Free Software Foundation"
+#~ msgstr "© 1998 Free Software Foundation, Inc."
+
+#~ msgid "(C) 2002 Red Hat, Inc."
+#~ msgstr "© 2002 Red Hat, Inc."
+
+#, fuzzy
+#~ msgid "(c) 2001 Red Hat, Inc"
+#~ msgstr "© 2001 Red Hat, Inc."
+
+#, fuzzy
+#~ msgid "(C) 1997-2002 the Free Software Foundation"
+#~ msgstr "© 1997 Free Software Foundation, Inc."
