@@ -130,7 +130,6 @@ foobar_enter_notify (GtkWidget *widget,
 	return FALSE;
 }
 
-#if 0
 static void
 foobar_screenshot (GtkWidget *widget, gpointer data) 
 {
@@ -228,7 +227,6 @@ append_actions_menu (GtkWidget *menu_bar)
 
 	panel_stretch_events_to_toplevel (item, PANEL_STRETCH_TOP);
 }
-#endif
 
 void
 foobar_widget_update_winhints (FoobarWidget *foo)
@@ -274,34 +272,6 @@ programs_menu_to_display (GtkWidget    *menu,
 		create_root_menu (
 			menu, PANEL_WIDGET (foo->panel),
 			TRUE, FOOBAR_MENU_FLAGS, FALSE, FALSE);
-	}
-}
-
-static void
-settings_menu_to_display (GtkWidget    *menu,
-			  FoobarWidget *foo)
-{
-	if (menu_need_reread (menu)) {
-		while (GTK_MENU_SHELL (menu)->children)
-			gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
-
-		create_root_menu (
-			menu, PANEL_WIDGET (foo->panel),
-			TRUE, MAIN_MENU_SETTINGS, FALSE, FALSE);
-	}
-}
-
-static void
-actions_menu_to_display (GtkWidget    *menu,
-			  FoobarWidget *foo)
-{
-	if (menu_need_reread (menu)) {
-		while (GTK_MENU_SHELL (menu)->children)
-			gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
-
-		create_root_menu (
-			menu, PANEL_WIDGET (foo->panel),
-			TRUE, MAIN_MENU_ACTIONS, FALSE, FALSE);
 	}
 }
 
@@ -725,7 +695,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	gtk_widget_set_name (menu_bar,
 			     "panel-foobar-menubar");
 	
-	menuitem = pixmap_menu_item_new (_("Programs"),
+	menuitem = pixmap_menu_item_new (_("Applications"),
 					 "gnome-logo-icon-transparent.png",
 					 TRUE /* force_image */);
 
@@ -742,33 +712,8 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	/* Strech the applications menu to the corner */
 	panel_stretch_events_to_toplevel (
 		menuitem, PANEL_STRETCH_TOP | PANEL_STRETCH_LEFT);
-	
-	menuitem = gtk_menu_item_new_with_label (_("Settings"));
-	menu = create_root_menu (
-			NULL, PANEL_WIDGET (foo->panel),
-			TRUE, MAIN_MENU_SETTINGS, FALSE, FALSE);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), menuitem);
-	g_signal_connect (G_OBJECT (menu), "show",
-			  G_CALLBACK (settings_menu_to_display),
-			  foo);
-	foo->settings = menu;
 
-	
-	menuitem = gtk_menu_item_new_with_label (_("Actions"));
-	menu = create_root_menu (
-			NULL, PANEL_WIDGET (foo->panel),
-			TRUE, MAIN_MENU_ACTIONS, FALSE, FALSE);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), menuitem);
-	g_signal_connect (G_OBJECT (menu), "show",
-			  G_CALLBACK (actions_menu_to_display),
-			  foo);
-	foo->actions = menu;
-
-#if 0
 	append_actions_menu (menu_bar);
-#endif
 
 	gtk_box_pack_start (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
 	
