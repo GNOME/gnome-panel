@@ -11,13 +11,13 @@ typedef enum {
 typedef struct {
 	GtkWidget *table;
 	GtkWidget *handle_n;
-	GtkWidget *handle_e;
+	GtkWidget *handle_w;
 	GtkWidget *socket;
 	gchar *title;
 	guint32 wid;
 } Swallow;
 
-Menu * create_swallow_applet(char *arguments, SwallowOrient orient);
+Swallow * create_swallow_applet(char *arguments, SwallowOrient orient);
 
 void set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient);
 

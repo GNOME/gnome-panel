@@ -13,6 +13,7 @@
 #include "panel_config_global.h"
 #include "menu.h"
 #include "drawer.h"
+#include "swallow.h"
 #include "mico-glue.h"
 #include "mico-parse.h"
 #include "panel-util.h"
@@ -127,6 +128,13 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 
 		register_toy(drawer->button,drawer->drawer,drawer,DRAWER_ID,
 			     params, pos, panel, NULL, APPLET_DRAWER);
+	} else if(strcmp(id,SWALLOW_ID) == 0) {
+		Swallow *swallow;
+
+		swallow = create_swallow_applet(params, SWALLOW_HORIZONTAL);
+		
+		register_toy(swallow->table,NULL,swallow,MENU_ID,params,pos,
+			     panel,NULL,APPLET_SWALLOW);
 	}
 }
 
@@ -269,6 +277,13 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 		panel_widget_foreach(PANEL_WIDGET(info->assoc),
 				     orient_change_foreach,
 				     (gpointer)info->assoc);
+	} else if(info->type == APPLET_SWALLOW) {
+		Swallow *swallow = info->data;
+
+		if(panel->orient == PANEL_VERTICAL)
+			set_swallow_applet_orient(swallow,SWALLOW_VERTICAL);
+		else
+			set_swallow_applet_orient(swallow,SWALLOW_HORIZONTAL);
 	}
 }
 

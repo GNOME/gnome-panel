@@ -59,6 +59,8 @@ panel_SOURCES = 		\
 	main.c			\
 	menu.c  		\
 	menu.h  		\
+	swallow.c  		\
+	swallow.h  		\
 	mico-glue.cc		\
 	mico-glue.h		\
 	mico-parse.cc		\
