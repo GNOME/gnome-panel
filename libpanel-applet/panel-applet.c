@@ -107,7 +107,8 @@ panel_applet_associate_schemas_in_dir (GConfEngine  *engine,
 
 		g_free (key);
 
-		g_return_if_fail (list && !*error);
+		if (*error)
+			return;
 	}
 
 	list = gconf_engine_all_dirs (engine, schema_dir, error);
@@ -126,7 +127,8 @@ panel_applet_associate_schemas_in_dir (GConfEngine  *engine,
 		g_free (schema_subdir);
 		g_free (subdir);
 
-		g_return_if_fail (list && !*error);
+		if (*error)
+			return;
 	}
 }
 
