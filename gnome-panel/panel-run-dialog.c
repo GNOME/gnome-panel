@@ -1341,7 +1341,6 @@ static void
 entry_changed (GtkEntry       *entry,
 	       PanelRunDialog *dialog)
 {
-	static GtkTargetEntry  drag_types[] = { { "text/uri-list", 0, 0 } };
 	const char            *text;
 	char                  *msg;
 
@@ -1355,9 +1354,9 @@ entry_changed (GtkEntry       *entry,
 		gtk_widget_set_sensitive (dialog->run_button, TRUE);
 		gtk_drag_source_set (dialog->run_dialog,
 				     GDK_BUTTON1_MASK,
-				     drag_types,
-				     G_N_ELEMENTS (drag_types),
+				     NULL, 0,
 				     GDK_ACTION_COPY);
+		gtk_drag_source_add_uri_targets (dialog->run_dialog);
 	}
 	
 	/* update description label */
@@ -1398,13 +1397,23 @@ entry_drag_data_received (GtkEditable      *entry,
 			  guint32           time,
 			  PanelRunDialog   *dialog)
 {
+	char  *uri_list;
 	char **uris;
 	char  *file;
 	int    i;
 
-	uris = g_strsplit (selection_data->data, "\r\n", -1);
+        if (selection_data->format != 8 || selection_data->length == 0) {
+        	g_warning (_("URI list dropped on run dialog had wrong format (%d) or length (%d)\n"),
+			   selection_data->format,
+			   selection_data->length);
+		return;
+        }
+
+	uri_list = g_strndup (selection_data->data, selection_data->length);
+	uris = g_strsplit (uri_list, "\r\n", -1);
 
 	if (!uris) {
+		g_free (uri_list);
 		gtk_drag_finish (context, FALSE, FALSE, time);
 		return;
 	}
@@ -1424,6 +1433,7 @@ entry_drag_data_received (GtkEditable      *entry,
 	}
 
 	g_strfreev (uris);
+	g_free (uri_list);
 	gtk_drag_finish (context, TRUE, FALSE, time);
 }
 
@@ -1431,7 +1441,6 @@ static void
 panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 			      GladeXML       *gui)
 {
-	static GtkTargetEntry  drop_types[] = { { "text/uri-list", 0, 0 } };
 	GdkScreen             *screen;
 	int                    width_request;
 	
@@ -1455,10 +1464,10 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 	gtk_drag_dest_unset (dialog->gtk_entry);
 	
 	gtk_drag_dest_set (dialog->gtk_entry,
-			   GTK_DEST_DEFAULT_ALL,
-			   drop_types,
-			   G_N_ELEMENTS (drop_types),
+			   GTK_DEST_DEFAULT_MOTION|GTK_DEST_DEFAULT_HIGHLIGHT,
+			   NULL, 0,
 			   GDK_ACTION_COPY);
+	gtk_drag_dest_add_uri_targets (dialog->gtk_entry);
 
 	g_signal_connect (dialog->gtk_entry, "drag_data_received",
 			  G_CALLBACK (entry_drag_data_received), dialog);

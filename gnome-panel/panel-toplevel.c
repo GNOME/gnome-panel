@@ -1767,7 +1767,7 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 				       int           *h)
 {
 	int width, height;
-	int auto_hide_size;
+	int min_hide_size;
 	int monitor_height, monitor_width;
 
 	g_assert (x != NULL && y != NULL);
@@ -1788,28 +1788,27 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 	width  = toplevel->priv->original_width;
 	height = toplevel->priv->original_height;
 
-	auto_hide_size = toplevel->priv->auto_hide_size;
-	if (auto_hide_size <= 0)
-		auto_hide_size = DEFAULT_AUTO_HIDE_SIZE;
+	//FIXME should find a better default
+	min_hide_size = DEFAULT_AUTO_HIDE_SIZE;
 
 	switch (toplevel->priv->state) {
 	case PANEL_STATE_HIDDEN_UP:
-		*y = - (height - MAX (toplevel->priv->hide_button_top->allocation.height,
-				      auto_hide_size));
+		*y = - (height - MAX (toplevel->priv->hide_button_top->requisition.height,
+				      min_hide_size));
 		break;
 	case PANEL_STATE_HIDDEN_DOWN:
 		*y = monitor_height -
-			MAX (toplevel->priv->hide_button_bottom->allocation.height,
-			     auto_hide_size);
+			MAX (toplevel->priv->hide_button_bottom->requisition.height,
+			     min_hide_size);
 		break;
 	case PANEL_STATE_HIDDEN_LEFT:
-		*x = - (width - MAX (toplevel->priv->hide_button_left->allocation.width,
-				    auto_hide_size));
+		*x = - (width - MAX (toplevel->priv->hide_button_left->requisition.width,
+				    min_hide_size));
 		break;
 	case PANEL_STATE_HIDDEN_RIGHT:
 		*x = monitor_width -
-			MAX (toplevel->priv->hide_button_right->allocation.width,
-			     auto_hide_size);
+			MAX (toplevel->priv->hide_button_right->requisition.width,
+			     min_hide_size);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -4262,6 +4261,27 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 		toplevel->priv->orientation & PANEL_HORIZONTAL_MASK ?
 					GTK_ORIENTATION_HORIZONTAL :
 					GTK_ORIENTATION_VERTICAL);
+
+	switch (toplevel->priv->state) {
+	case PANEL_STATE_HIDDEN_UP:
+		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+			toplevel->priv->state = PANEL_STATE_HIDDEN_LEFT;
+		break;
+	case PANEL_STATE_HIDDEN_DOWN:
+		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+			toplevel->priv->state = PANEL_STATE_HIDDEN_RIGHT;
+		break;
+	case PANEL_STATE_HIDDEN_LEFT:
+		if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
+			toplevel->priv->state = PANEL_STATE_HIDDEN_UP;
+		break;
+	case PANEL_STATE_HIDDEN_RIGHT:
+		if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
+			toplevel->priv->state = PANEL_STATE_HIDDEN_DOWN;
+		break;
+	default:
+		break;
+	}
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
