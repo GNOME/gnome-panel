@@ -313,19 +313,6 @@ panel_quit(void)
 	}
 }
 
-static PanelWidget *
-find_applet_panel(GtkWidget *applet)
-{
-	GList *list;
-
-	for(list=panels;list!=NULL;list=g_list_next(list))
-		if(panel_widget_get_pos(PANEL_WIDGET(list->data),applet)!=-1)
-			break;
-	if(!list)
-		return NULL;
-	return PANEL_WIDGET(list->data);
-}
-
 static void
 move_applet_callback(GtkWidget *widget, gpointer data)
 {
@@ -334,7 +321,8 @@ move_applet_callback(GtkWidget *widget, gpointer data)
 
 	info = data;
 
-	if(!(panel = find_applet_panel(info->widget)))
+	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+					 PANEL_APPLET_PARENT_KEY)))
 		return;
 
 	panel_widget_applet_drag_start(panel,info->widget);
@@ -347,15 +335,14 @@ panel_clean_applet(AppletInfo *info)
 
 	g_return_if_fail(info != NULL);
 
-	if(info->type == APPLET_EXTERN)
-		send_applet_shutdown_applet(info->id_str,info->applet_id);
 	info->type = APPLET_EMPTY;
 
-	if(!(panel = find_applet_panel(info->widget)))
+	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+					 PANEL_APPLET_PARENT_KEY)))
 		return;
 
 	panel_widget_remove(panel,info->widget);
-	gtk_widget_unref(info->widget);
+	//gtk_widget_unref(info->widget);
 	info->widget = NULL;
 	if(info->type == APPLET_DRAWER && info->assoc) {
 		panels = g_list_remove(panels,info->assoc);
@@ -440,7 +427,8 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 {
 	AppletInfo *info = data;
 	int wx, wy;
-	PanelWidget *panel = find_applet_panel(info->widget);
+	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+					 	 PANEL_APPLET_PARENT_KEY);
 
 	g_return_if_fail(panel != NULL);
 
@@ -623,7 +611,9 @@ applet_drag_start(gint applet_id)
 
 	if(!info)
 		return;
-	panel = find_applet_panel(info->widget);
+	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+					 PANEL_APPLET_PARENT_KEY)))
+		return;
 
 	panel_widget_applet_drag_start_no_grab(panel,info->widget);
 	panel_widget_applet_move_use_idle(panel);
@@ -637,7 +627,9 @@ applet_drag_stop(gint applet_id)
 
 	if(!info)
 		return;
-	panel = find_applet_panel(info->widget);
+	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+					 PANEL_APPLET_PARENT_KEY)))
+		return;
 
 	panel_widget_applet_drag_end_no_grab(panel);
 }
@@ -796,7 +788,7 @@ create_panel_root_menu(PanelWidget *panel)
 
 
 void
-applet_set_tooltip(gint applet_id, char *tooltip)
+applet_set_tooltip(gint applet_id, const char *tooltip)
 {
 	AppletInfo *info = get_applet_by_id(applet_id);
 	if(!info)
@@ -809,7 +801,11 @@ static gint
 panel_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	AppletInfo *info = data;
-	PanelWidget *panel = find_applet_panel(info->widget);
+	PanelWidget *panel;
+
+	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+					 PANEL_APPLET_PARENT_KEY)))
+		return;
 
 	gtk_widget_dnd_data_set (widget, event, &info->widget,
 				 sizeof(GtkWidget *));

@@ -214,17 +214,6 @@ send_applet_session_save (const char *ior, int applet_id, const char *cfgpath,
 }
 
 void
-send_applet_shutdown_applet (const char *ior, int applet_id)
-{
-	/* Use the ior that was sent to us to get an Applet CORBA object */
-	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
-	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
-
-	/* Now, use corba to invoke the routine in the panel */
-	applet->shutdown_applet(applet_id);
-}
-
-void
 send_applet_change_orient (const char *ior, int applet_id, int orient)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */

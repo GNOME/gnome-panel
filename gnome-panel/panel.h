@@ -118,7 +118,7 @@ void applet_drag_stop(gint applet_id);
 void applet_add_callback(gint applet_id,
 			 char *callback_name,
 			 char *menuitem_text);
-void applet_set_tooltip(gint applet_id, char *tooltip);
+void applet_set_tooltip(gint applet_id, const char *tooltip);
 void applet_remove_from_panel(gint applet_id);
 
 
