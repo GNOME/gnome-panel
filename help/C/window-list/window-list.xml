@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "2.3.4">
-  <!ENTITY manrevision "2.5">
-  <!ENTITY date "August 2003">
+  <!ENTITY appletversion "2.4.0">
+  <!ENTITY manrevision "2.6">
+  <!ENTITY date "September 2003">
   <!ENTITY applet "Window List">
 
 ]>
@@ -23,6 +23,7 @@
   <articleinfo> 
 	 <title>&applet; Applet Manual V&manrevision;</title> 
 	 <copyright> 
+		<year>2002</year>
 		<year>2003</year> 
 		<holder>Sun Microsystems</holder> 
 	 </copyright> 
@@ -33,7 +34,7 @@
 <!-- translators: uncomment this:
 
   <copyright>
-   <year>2002</year>
+   <year>2003</year>
    <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
   </copyright>
 
@@ -81,6 +82,14 @@
 		<revision> 
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
 		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Window List Applet Manual V2.5</revnumber> 
+		  <date>August 2003</date> 
 		  <revdescription> 
 			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
@@ -171,39 +180,33 @@
 	 that are open on the GNOME desktop. <application>&applet;</application> uses a button
 	 to represent each window or group of windows that is open. The state of the buttons in the 
 	 applet varies depending on the state of the window that the button represents. The following 
-	 table explains the possible states of the <application>&applet;</application> buttons:</para>
+	 table explains the possible states of the <application>&applet;</application> buttons.</para>
 	<informaltable>
-	<tgroup cols="3">
+	<tgroup cols="2">
 	<colspec colname="col1"/>
 	<colspec colname="col2"/>
-	<colspec colname="col3"/>
 	<thead>
 	<row valign="top">
 	<entry colname="col1"><para>State</para></entry>
 	<entry colname="col2"><para>Indicates...</para></entry>
-	<entry colname="col3"><para>Example in <xref linkend="windowlist-applet-fig"/></para></entry>
 	</row>
 	</thead>
 	<tbody>
 	<row valign="top">
 	<entry colname="col1"><para>Button is pressed in.</para></entry>
 	<entry colname="col2"><para>The window has focus.</para></entry>
-	<entry colname="col3"><para><guibutton>gedit</guibutton></para></entry>
 	</row>
 	<row valign="top">
 	<entry colname="col1"><para>Square brackets around window title, button contents faded.</para></entry>
 	<entry colname="col2"><para>The window is minimized.</para></entry>
-	<entry colname="col3"><para><guibutton>Dictionary</guibutton></para></entry>
 	</row> 
 	<row valign="top">
 	<entry colname="col1"><para>Button is not pressed in, no square brackets around title.</para></entry>
 	<entry colname="col2"><para>The window is displayed on the desktop and is not minimized.</para></entry>
-	<entry colname="col3"><para><guibutton>ghex</guibutton></para></entry>
 	</row>
 	<row valign="top">
 	<entry colname="col1"><para>Dotted triangular shape in upper right corner of button and a number in parentheses.</para></entry>
 	<entry colname="col2"><para>The button represents a group of buttons. </para></entry>
-	<entry colname="col3"><para><guibutton>Gnome-terminal</guibutton></para></entry>
 	</row>
 	</tbody>
 	</tgroup>
@@ -222,7 +225,7 @@
 	buttons that represent windows that belong to the same process under one <application>&applet;</application> 
 	button. To open a list of the buttons in a button group, click on the 
 	<application>&applet;</application> button that represents the button group. The 
-	<guibutton>Gnome-terminal</guibutton> button in <xref linkend="windowlist-applet-fig"/> 
+	<guibutton>Terminal</guibutton> button in <xref linkend="windowlist-applet-fig"/> 
 	is an example of a button that represents a group of buttons.
 	The following figure shows an example of the <application>&applet;</application> applet with a button group open.</para> 
 	<!-- ==== Figure ============================================= -->
@@ -248,18 +251,18 @@
 	<itemizedlist>
 	<listitem>
 	<para>To give focus to a window</para>
-	<para>If you click on the <application>&applet;</application> button that represents a window that is displayed on the desktop but 
-	does not have focus, the applet gives focus to the window. </para>
+	<para>If you click on the <application>&applet;</application> button that represents a window that is 
+	on the desktop but does not have focus, the applet gives focus to the window. </para>
 	</listitem>
 	<listitem>
 	<para>To minimize a window</para>
-	<para>If you click on the <application>&applet;</application> button that represents the window that has focus, the applet 
-	minimizes the window. </para>
+	<para>If you click on the <application>&applet;</application> button that represents the window 
+	that has focus, the applet minimizes the window. </para>
 	</listitem>
 	<listitem>
 	<para>To restore a minimized window</para>
-	<para>If you click on the <application>&applet;</application> button that represents a minimized window, 
-	the applet restores the window.</para>
+	<para>If you click on the <application>&applet;</application> button that represents a 
+	minimized window, the applet restores the window.</para>
 	</listitem>
 	</itemizedlist>
   </sect1>
