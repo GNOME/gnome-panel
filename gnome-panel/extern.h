@@ -45,4 +45,6 @@ void extern_send_draw(Extern *ext);
 
 END_GNOME_DECLS
 
+
+
 #endif

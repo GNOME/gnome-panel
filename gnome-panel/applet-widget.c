@@ -27,8 +27,8 @@ static GNOME_Panel panel_client = CORBA_OBJECT_NIL;
 
 #define APPLET_ID_KEY "applet_id_key"
 #define APPLET_WIDGET_KEY "applet_widget_key"
-#define pg_return_if_fail(x) if(!(x)) { g_print("type = %d exid = %s\n", ev._major, ev._repo_id); return; }
-#define pg_return_val_if_fail(x,y) if(!(x)) { g_print("type = %d exid = %s\n", ev._major, ev._repo_id); return y;}
+#define pg_return_if_fail(x) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, ev._major, ev._repo_id); return; }}
+#define pg_return_val_if_fail(x,y) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, ev._major, ev._repo_id); return y;}}
 
 typedef struct {
 	POA_GNOME_Applet		servant;
@@ -845,7 +845,10 @@ applet_widget_construct(AppletWidget* applet, const char *goad_id)
 
 	applet->corbadat = corbadat = gnome_panel_applet_corba_init(applet,goad_id);
 
-	g_return_if_fail(corbadat!=NULL);
+	if(!corbadat) {
+		g_warning(_("Cannot start CORBA"));
+		return;
+	}
 
 	gtk_plug_construct(GTK_PLUG(applet), corbadat->winid);
 	
@@ -1556,7 +1559,10 @@ server_applet_factory_create_object(AppletFactory *servant,
 	applet = servant->afunc(goad_id, (const char **)params->_buffer,
 				params->_length);
 
-	g_return_val_if_fail(applet, CORBA_OBJECT_NIL);
+	if(!applet) {
+		g_warning(_("Cannot create object"));
+		return CORBA_OBJECT_NIL;
+	}
 
 	return CORBA_Object_duplicate(CD(applet)->obj, ev);
 }
@@ -1596,10 +1602,10 @@ void applet_factory_new(const char *goad_id, AppletFactoryQuerier qfunc,
 	PortableServer_POAManager_activate
 		(PortableServer_POA__get_the_POAManager(poa, &ev), &ev);
 
-	g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+	pg_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
 
 	f->objid = PortableServer_POA_activate_object(poa, f, &ev);
-	g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+	pg_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
 
 	f->fobj = PortableServer_POA_servant_to_reference(poa, f, &ev);
 

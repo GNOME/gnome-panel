@@ -1,3 +1,9 @@
+Wed Jan 26 21:49:48 2000  George Lebl <jirka@5z.com>
+
+	* applet-widget.c,extern.c: don't use g_return.*_if_fail stuff
+	  for error returning and use pg_return.*_if_fail macros for corba
+	  exception checking
+
 Wed Jan 26 20:52:55 2000  George Lebl <jirka@5z.com>
 
 	* *.[ch]: pedantic warning fixes
