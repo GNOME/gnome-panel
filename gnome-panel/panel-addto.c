@@ -249,18 +249,42 @@ panel_addto_make_text (const char *name,
 
 static GdkPixbuf *
 panel_addto_make_pixbuf (const char *filename,
-			 int         size)
+			 GtkIconSize size)
 {
 	char *file;
-	GdkPixbuf *pb;
+	GdkPixbuf *pb, *newpb;
+	int width, height;
+	int desired_width, desired_height;
+
+	if (!gtk_icon_size_lookup (size, &desired_width, &desired_height))
+		return NULL;
 
 	file = gnome_desktop_item_find_icon (panel_icon_theme,
-					     filename, size, 0);
+					     filename, desired_height, 0);
 
 	if (file == NULL)
 		return NULL;
 
-	pb = gdk_pixbuf_new_from_file (file, NULL);
+	pb = gdk_pixbuf_new_from_file_at_size (file, desired_width,
+					       desired_height, NULL);
+	width = gdk_pixbuf_get_width (pb);
+	height = gdk_pixbuf_get_height (pb);
+
+	/* If the icon is larger than the icon size, then scale down
+	 * to fit in the bounding box. */
+	if (height > desired_height || width > desired_width) {
+		if (width * desired_height / height > desired_width)
+			desired_height = height * desired_width / width;
+		else
+			desired_width = width * desired_height / height;
+
+		newpb = gdk_pixbuf_scale_simple (pb,
+						 desired_width,
+						 desired_height,
+						 GDK_INTERP_BILINEAR);
+		g_object_unref (pb);
+		pb = newpb;
+	}
 
 	g_free (file);
 	return pb;
@@ -438,7 +462,7 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 
 		if (applet->icon != NULL) {
 			pixbuf = panel_addto_make_pixbuf (applet->icon,
-							  PANEL_DEFAULT_MENU_ICON_SIZE);
+							  GTK_ICON_SIZE_DIALOG);
 		} else {
 			pixbuf = gtk_widget_render_icon (GTK_WIDGET (dialog->panel_widget),
 							 applet->stock_icon,
@@ -529,7 +553,7 @@ panel_addto_make_application_model_r (GtkTreeStore *store,
 		text = panel_addto_make_text (data->item_info.name,
 					      data->item_info.description);
 		pixbuf = panel_addto_make_pixbuf (data->item_info.icon,
-						  PANEL_DEFAULT_MENU_ICON_SIZE);
+						  GTK_ICON_SIZE_DIALOG);
 		gtk_tree_store_set (store, &iter,
 				    COLUMN_ICON, pixbuf,
 				    COLUMN_TEXT, text,

@@ -1,3 +1,14 @@
+2004-09-21  James Henstridge  <james@jamesh.id.au>
+
+	* panel-addto.c (panel_addto_make_pixbuf): use
+	gdk_pixbuf_new_from_file_at_size() to give the loader a hint about
+	the size we want to load the image at.  If the image is still too
+	large, scale it down to fit.
+	(panel_addto_make_applet_model): update to pass in the desired
+	GtkIconSize for the icon rather than a pixel size.
+	(panel_addto_make_application_model_r): same here.
+	Fixes bug #153135.
+
 2004-09-16  Mark McLoughlin  <mark@skynet.ie>
 
 	Sync with libegg:
