@@ -468,7 +468,7 @@ panel_clean_applet(gint applet_id)
 	info->assoc=NULL;
 	if(info->menu)
 		gtk_widget_unref(info->menu);
-	info->menu = NULL;
+	info->menu=NULL;
 	info->remove_item = NULL;
 
 	if(info->id_str) g_free(info->id_str);
@@ -529,6 +529,158 @@ applet_menu_deactivate(GtkWidget *w, gpointer data)
 	panel->autohide_inhibit = FALSE;
 }
 
+static AppletUserMenu *
+applet_get_callback(GList *user_menu, gchar *name)
+{
+	GList *list;
+	for(list=user_menu;list!=NULL;list=g_list_next(list)) {
+		AppletUserMenu *menu = list->data;
+		if(strcmp(menu->name,name)==0)
+			return menu;
+	}
+	return NULL;	
+}
+
+void
+applet_add_callback(gint applet_id, char *callback_name, char *menuitem_text)
+{
+	AppletUserMenu *menu;
+	AppletInfo *info = get_applet_info(applet_id);
+
+	g_return_if_fail(info != NULL);
+	
+	if((menu=applet_get_callback(info->user_menu,callback_name))==NULL) {
+		menu = g_new(AppletUserMenu,1);
+		menu->name = g_strdup(callback_name);
+		menu->text = g_strdup(menuitem_text);
+		menu->applet_id = applet_id;
+		menu->menuitem = NULL;
+		menu->submenu = NULL;
+		info->user_menu = g_list_append(info->user_menu,menu);
+	} else {
+		if(menu->text)
+			g_free(menu->text);
+		menu->text = g_strdup(menuitem_text);
+	}
+
+	/*make sure the menu is rebuilt*/
+	if(info->menu) {
+		GList *list;
+		for(list=info->user_menu;list!=NULL;list=g_list_next(list)) {
+			AppletUserMenu *menu = list->data;
+			menu->menuitem=NULL;
+			menu->submenu=NULL;
+		}
+		gtk_widget_unref(info->menu);
+		info->menu=NULL;
+	}
+}
+
+void
+applet_remove_callback(gint applet_id, char *callback_name)
+{
+	AppletUserMenu *menu;
+	AppletInfo *info = get_applet_info(applet_id);
+
+	g_return_if_fail(info != NULL);
+	
+	if((menu=applet_get_callback(info->user_menu,callback_name))!=NULL) {
+		info->user_menu = g_list_remove(info->user_menu,menu);
+		if(menu->name)
+			g_free(menu->name);
+		if(menu->text)
+			g_free(menu->text);
+		g_free(menu);
+	}
+
+	/*make sure the menu is rebuilt*/
+	if(info->menu) {
+		GList *list;
+		for(list=info->user_menu;list!=NULL;list=g_list_next(list)) {
+			AppletUserMenu *menu = list->data;
+			menu->menuitem=NULL;
+			menu->submenu=NULL;
+		}
+		gtk_widget_unref(info->menu);
+		info->menu=NULL;
+	}
+}
+
+
+static AppletUserMenu *
+find_sub_menu(GList *user_menu, gchar *name)
+{
+	GList *list;
+	for(list=user_menu;list!=NULL;list=g_list_next(list)) {
+		AppletUserMenu *menu = list->data;
+		if(strcmp(menu->name,name)==0)
+			return menu;
+	}
+	return NULL;
+}
+
+static void
+add_to_submenus(gint applet_id,char *path,char *name, AppletUserMenu *menu, GtkWidget *submenu,
+		GList *user_menu)
+{
+	GList *list;
+	char *n = g_strdup(name);
+	char *p = strchr(n,'/');
+	char *t;
+	AppletUserMenu *s_menu;
+	
+	/*this is the last one*/
+	if(p==NULL ||
+	   p==(n + strlen(n) - 1)) {
+		g_free(n);
+
+		menu->menuitem = gtk_menu_item_new_with_label(menu->text);
+		gtk_widget_show(menu->menuitem);
+		if(menu->submenu)
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menu->menuitem), menu->submenu);
+
+		if(submenu)
+			gtk_menu_append (GTK_MENU (submenu), menu->menuitem);
+		/*if an item not a submenu*/
+		if(p==NULL) {
+			gtk_signal_connect(GTK_OBJECT(menu->menuitem), "activate",
+					   (GtkSignalFunc) applet_callback_callback,
+					   menu);
+		/* if the item is a submenu and doesn't have it's menu created yet*/
+		} else if(!menu->submenu) {
+			menu->submenu = gtk_menu_new();
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menu->menuitem), menu->submenu);
+		}
+		return;
+	}
+	
+	*p = '\0';
+	p++;
+	
+	t = g_copy_strings(path,n,"/",NULL);
+	s_menu = find_sub_menu(user_menu,t);
+	/*the user did not give us this sub menu, whoops, will create an empty one then*/
+	if(!s_menu) {
+		AppletInfo *info = get_applet_info(applet_id);
+		s_menu = g_new(AppletUserMenu,1);
+		s_menu->name = g_strdup(t);
+		s_menu->text = g_strdup(_("???"));
+		s_menu->applet_id = applet_id;
+		s_menu->menuitem = NULL;
+		s_menu->submenu = NULL;
+		info->user_menu = g_list_append(info->user_menu,s_menu);
+		user_menu = info->user_menu;
+	}
+	
+	if(!s_menu->submenu)
+		s_menu->submenu = gtk_menu_new();
+	
+	add_to_submenus(applet_id,t,p,menu,s_menu->submenu,user_menu);
+	
+	g_free(t);
+	g_free(n);
+}
+
 static void
 create_applet_menu(AppletInfo *info)
 {
@@ -560,12 +712,7 @@ create_applet_menu(AppletInfo *info)
 
 	for(;user_menu!=NULL;user_menu = g_list_next(user_menu)) {
 		AppletUserMenu *menu=user_menu->data;
-		menuitem = gtk_menu_item_new_with_label(menu->text);
-		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-				   (GtkSignalFunc) applet_callback_callback,
-				   menu);
-		gtk_menu_append(GTK_MENU(info->menu), menuitem);
-		gtk_widget_show(menuitem);
+		add_to_submenus(info->applet_id,"",menu->name,menu,info->menu,info->user_menu);
 	}
 
 	/*connect the deactivate signal, so that we can "re-allow" autohide
@@ -830,27 +977,6 @@ applet_drag_stop(gint applet_id)
 	g_return_if_fail(panel!=NULL);
 
 	panel_widget_applet_drag_end(panel);
-}
-
-void
-applet_add_callback(gint applet_id, char *callback_name, char *menuitem_text)
-{
-	AppletUserMenu *menu = g_new(AppletUserMenu,1);
-	AppletInfo *info = get_applet_info(applet_id);
-
-	g_return_if_fail(info != NULL);
-
-	menu->name = g_strdup(callback_name);
-	menu->text = g_strdup(menuitem_text);
-	menu->applet_id = applet_id;
-
-	/*make sure the menu is rebuilt*/
-	if(info->menu) {
-		gtk_widget_unref(info->menu);
-		info->menu=NULL;
-	}
-
-	info->user_menu = g_list_append(info->user_menu,menu);
 }
 
 static gint

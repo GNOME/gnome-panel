@@ -1,3 +1,4 @@
+#include <string.h>
 #include <gtk/gtk.h>
 #include <gnome.h>
 #include <applet-widget.h>
@@ -172,6 +173,26 @@ applet_widget_register_callback(AppletWidget *applet,
 	gnome_panel_applet_register_callback (applet->applet_id,name,
 					      menutext,func,data);
 }
+
+void
+applet_widget_unregister_callback(AppletWidget *applet,
+				  char *name)
+{
+	gnome_panel_applet_unregister_callback (applet->applet_id,name);
+}
+
+void
+applet_widget_register_callback_dir(AppletWidget *applet, char *name, char *menutext)
+{
+	gnome_panel_applet_register_callback_dir (applet->applet_id,name,menutext);
+}
+
+void
+applet_widget_unregister_callback_dir(AppletWidget *applet, char *name)
+{
+	gnome_panel_applet_unregister_callback_dir (applet->applet_id,name);
+}
+
 
 GtkWidget *
 applet_widget_new_with_param(const gchar *param)

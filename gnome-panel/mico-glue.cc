@@ -110,6 +110,13 @@ public:
 				      (char *)callback_name,
 				      (char *)menuitem_text);
 	}
+        void applet_remove_callback (const char *ccookie, 
+				     CORBA::Short applet_id,
+				     const char *callback_name) {
+		CHECK_COOKIE ();
+		::applet_remove_callback(applet_id,
+					 (char *)callback_name);
+	}
 	void applet_add_tooltip (const char *ccookie, CORBA::Short applet_id,
 				 const char *tooltip) {
 		CHECK_COOKIE ();

@@ -2215,7 +2215,7 @@ _panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
 
 	gtk_grab_add(applet);
 	gdk_pointer_grab(applet->window,
-			 TRUE,
+			 FALSE,
 			 APPLET_EVENT_MASK,
 			 NULL,
 			 fleur_cursor,

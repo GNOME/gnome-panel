@@ -34,6 +34,9 @@ module GNOME {
 					  in short applet_id,
 					  in string callback_name,
 					  in string menuitem_text);
+		void applet_remove_callback (in string cookie,
+					     in short applet_id,
+					     in string callback_name);
 		void applet_add_tooltip (in string cookie, in short applet_id,
 					 in string tooltip);
 		void applet_remove_tooltip (in string cookie,

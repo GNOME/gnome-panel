@@ -85,15 +85,28 @@ void		applet_widget_add		(AppletWidget *applet,
 /* remove the plug from the panel, this will destroy the applet */
 void		applet_widget_remove_from_panel (AppletWidget *applet);
 
-
-/* Add a callback onto the applet's right click menu, use for properies
-   callback, help, etc... etc...
+/* The callback functions control the applet's right click menu, the name is just a string, which has
+   to be unique and which controls the nesting, for example a name of "foo/bar" will add an item to the
+   submenu identified by "/foo" (which you should have created before with register_callback_dir, 
+   use this for properies callback, help, about, etc... etc...
   */
+/*add a callback onto the applet's right click menu*/
 void		applet_widget_register_callback	(AppletWidget *applet,
 						 gchar *name,
 						 gchar *menutext,
 						 AppletCallbackFunc func,
 						 gpointer data);
+/*remove a menuitem*/
+void		applet_widget_unregister_callback (AppletWidget *applet,
+						   gchar *name);
+/*add a submenu*/
+void		applet_widget_register_callback_dir (AppletWidget *applet,
+						     char *name,
+						     char *menutext);
+/*remove a submenu*/
+void		applet_widget_unregister_callback_dir (AppletWidget *applet,
+						       char *name);
+
 
 /* get the applet widget with the id of applet_id */
 AppletWidget*	applet_widget_get_by_id		(gint applet_id);

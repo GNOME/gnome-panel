@@ -65,6 +65,8 @@ struct _AppletUserMenu {
 	gchar *name;
 	gchar *text;
 	gint applet_id;
+	GtkWidget *menuitem;
+	GtkWidget *submenu;
 };
 
 struct _AppletInfo {
@@ -136,6 +138,8 @@ void applet_drag_stop(gint applet_id);
 void applet_add_callback(gint applet_id,
 			 char *callback_name,
 			 char *menuitem_text);
+void applet_remove_callback(gint applet_id,
+			    char *callback_name);
 void applet_set_tooltip(gint applet_id, const char *tooltip);
 void applet_remove_from_panel(gint applet_id);
 

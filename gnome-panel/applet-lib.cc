@@ -176,6 +176,30 @@ gnome_panel_applet_reinit_corba (void)
 	return 1;
 }
 
+static CallbackInfo *
+get_callback_info(gchar *name)
+{
+	GList *list;
+	for(list=applet_callbacks;list!=NULL;list=g_list_next(list)) {
+		CallbackInfo *info = (CallbackInfo *)list->data;
+		if(strcmp(name,info->name)==0)
+			return info;
+	}
+	return NULL;
+}
+
+static gchar*
+make_sane_name(gchar *name)
+{
+	if(!name)
+		return NULL;
+	while(*name=='/')
+		name++;
+	if(*name)
+		return name;
+	return NULL;
+}
+
 /*adds a callback to the callback hash*/
 void
 gnome_panel_applet_register_callback(int applet_id,
@@ -184,19 +208,80 @@ gnome_panel_applet_register_callback(int applet_id,
 				     AppletCallbackFunc func,
 				     gpointer data)
 {
-	CallbackInfo *info = g_new(CallbackInfo,1);
-	GList *list;
+	CallbackInfo *info;
+	/*skip over leading '/'s*/
+	name = make_sane_name(name);
+
+	g_return_if_fail(name!=NULL);
+	
+	info = get_callback_info(name);
+	if(!info) {
+		info = g_new(CallbackInfo,1);
+		applet_callbacks = g_list_prepend(applet_callbacks,info);
+	} else
+		g_free(info->name);
 
 	info->name = g_strdup(name);
 	info->applet_id = applet_id;
 	info->func = func;
 	info->data = data;
 
-	applet_callbacks = g_list_prepend(applet_callbacks,info);
-
 	/*register the callback with the panel*/
-	panel_client->applet_add_callback(cookie,
-					  applet_id,name,menutext);
+	panel_client->applet_add_callback(cookie,applet_id,name,menutext);
+}
+
+/*removes a callback from the callback hash*/
+void
+gnome_panel_applet_unregister_callback(int applet_id,
+				       char *name)
+{
+	/*skip over leading '/'s*/
+	name = make_sane_name(name);
+
+	g_return_if_fail(name!=NULL);
+
+	/*unregister the callback with the panel*/
+	panel_client->applet_remove_callback(cookie,applet_id,name);
+}
+
+void
+gnome_panel_applet_register_callback_dir(int applet_id,
+					 char *name,
+					 char *menutext)
+{
+	gchar *n;
+	/*skip over leading '/'s*/
+	name = make_sane_name(name);
+	g_return_if_fail(name!=NULL);
+
+	if(name[strlen(name)-1]!='/')
+		n = g_copy_strings(name,"/",NULL);
+	else
+		n = g_strdup(name);
+	/*unregister the dir with the panel*/
+	panel_client->applet_add_callback(cookie,applet_id,n,menutext);
+	g_free(n);
+}
+
+/*removes a callback dir from the callback menu*/
+void
+gnome_panel_applet_unregister_callback_dir(int applet_id,
+					   char *name)
+{
+	gchar *n;
+
+	/*skip over leading '/'s*/
+	name = make_sane_name(name);
+	if(name[strlen(name)-1]!='/')
+		n = g_copy_strings(name,"/",NULL);
+	else
+		n = g_strdup(name);
+
+	g_return_if_fail(name!=NULL);
+
+	/*unregister the callback with the panel*/
+	panel_client->applet_remove_callback(cookie,applet_id,n);
+	g_free(n);
 }
 
 /*catch events relevant to the panel and notify the panel*/
