@@ -1377,7 +1377,7 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 	mc->about = gnome_about_new ( _("Mail check Applet"), "1.1",
 				      _("(c) 1998-2000 the Free Software Foundation"),
 				      authors,
-				      _("Mail check notifies you when new mail is on your mailbox"),
+				      _("Mail check notifies you when new mail arrives in your mailbox"),
 				      NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (mc->about),
 				"mailcheck", "Mailcheck");
