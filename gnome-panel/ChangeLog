@@ -1,5 +1,10 @@
 2002-12-04  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-background.c: (panel_background_set):
+	don't unset loaded flag when color hasn't changed.
+
+2002-12-04  Mark McLoughlin  <mark@skynet.ie>
+
 	Re-write the background rendering code to be
 	less buggy and to be less resource hungry for
 	opaque backgrounds. Code is a lot clearer now.

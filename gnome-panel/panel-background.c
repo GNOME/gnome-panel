@@ -527,16 +527,16 @@ panel_background_set (PanelBackground     *background,
 		background->loaded    = TRUE;
 		break;
 	case PANEL_BACK_COLOR:
-		free_loaded_resources (background);
-
-		background->type = type;
-
 		if (!background_changed &&
 		     background->color.gdk.red   == color->gdk.red &&
 		     background->color.gdk.green == color->gdk.green &&
 		     background->color.gdk.blue  == color->gdk.blue &&
 		     background->color.alpha     == color->alpha)
 			return FALSE;
+
+		free_loaded_resources (background);
+
+		background->type = type;
 
 		background_changed = TRUE;
 
