@@ -1,5 +1,13 @@
 2004-11-28  Vincent Untz  <vincent@vuntz.net>
 
+	Patch from Romain Baffet <rbaffert0-pub@yahoo.fr> in bug #152098.
+
+	* panel.c: (drop_url): split the dropped data in URL and name so we
+	can have a launcher that works, use a nice Name for the launcher if
+	possible
+
+2004-11-28  Vincent Untz  <vincent@vuntz.net>
+
 	Why create launcher that call nautilus? Fix bug #159535.
 
 	* panel.c: (drop_nautilus_uri): killed

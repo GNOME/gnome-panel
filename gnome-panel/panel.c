@@ -429,19 +429,39 @@ drop_url (PanelWidget *panel,
 	  int          position,
 	  const char  *url)
 {
-	char *comment;
+	enum {
+		NETSCAPE_URL_URL,
+		NETSCAPE_URL_NAME
+	};
+	char **netscape_url;
+	char  *name;
+	char  *comment;
 
 	g_return_val_if_fail (url != NULL, FALSE);
 
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
 
-	comment = g_strdup_printf (_("Open URL: %s"), url);
+	netscape_url = g_strsplit (url, "\n", 2);
+	if (!netscape_url || string_empty (netscape_url[NETSCAPE_URL_URL])) {
+		g_strfreev (netscape_url);
+		return FALSE;
+	}
+	
+	comment = g_strdup_printf (_("Open URL: %s"),
+				   netscape_url[NETSCAPE_URL_URL]);
 
-	panel_launcher_create_from_info (
-		panel->toplevel, position, FALSE, url, url, comment, "gnome-globe.png");
+	if (string_empty (netscape_url[NETSCAPE_URL_NAME]))
+		name = netscape_url[NETSCAPE_URL_URL];
+	else
+		name = netscape_url[NETSCAPE_URL_NAME];
+
+	panel_launcher_create_from_info (panel->toplevel, position, FALSE,
+					 netscape_url[NETSCAPE_URL_URL],
+					 name, comment, "gnome-globe.png");
 
 	g_free (comment);
+	g_strfreev (netscape_url);
 
 	return TRUE;
 }
