@@ -43,6 +43,9 @@
 extern GlobalConfig global_config;
 extern GSList *panel_list;
 
+#define FORMAT_ITEM_NUM 4
+static GtkWidget *format_items[FORMAT_ITEM_NUM] = { NULL };
+
 extern GtkTooltips *panel_tooltips;
 
 static void foobar_widget_class_init	(FoobarWidgetClass *klass);
@@ -404,21 +407,18 @@ timeout_cb (gpointer data)
 }
 
 static void
-set_fooclock_format (GtkWidget *w, char *format)
+set_fooclock_format (GtkWidget *w, const char *format)
 {
-	GList *li;
+	if ( ! GTK_CHECK_MENU_ITEM (w)->active)
+		return;
 
-	for (li = foobars; li != NULL; li = li->next) {
-		foobar_widget_set_clock_format (FOOBAR_WIDGET (li->data),
-						_(format));
-	}
+	foobar_widget_global_set_clock_format (format);
 }
 
 static void
 append_format_items (GtkWidget *menu)
 {
 	char hour[256];
-	GtkWidget *item;
 	GSList *group = NULL;
 	struct tm *das_tm;
 	time_t das_time = 0;
@@ -426,19 +426,18 @@ append_format_items (GtkWidget *menu)
 	char *str_utf8;
 	char *s;
 	int i;
-	const char *formats[] = {
+	const char *formats[FORMAT_ITEM_NUM] = {
 		N_("%H:%M"),
 		N_("%H:%M:%S"),
 		N_("%l:%M %p"),
-		N_("%l:%M:%S %p"),
-		NULL
+		N_("%l:%M:%S %p")
 	};
 
 	key = panel_gconf_global_config_get_full_key ("clock-format");
 	s = panel_gconf_get_string (key, _("%I:%M:%S %p"));
 	g_free (key);
 	
-	for (i = 0; formats[i]; i++) {
+	for (i = 0; i < FORMAT_ITEM_NUM; i++) {
 		das_tm = localtime (&das_time);
 		if (strftime (hour, sizeof(hour), _(formats[i]), das_tm) == 0) {
  			/* according to docs, if the string does not fit, the
@@ -449,18 +448,21 @@ append_format_items (GtkWidget *menu)
 		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
 		str_utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
-		item = gtk_radio_menu_item_new_with_label (group, sure_string (str_utf8));
+		format_items[i] = gtk_radio_menu_item_new_with_label (group, sure_string (str_utf8));
+		g_object_set_data (G_OBJECT (format_items[i]),
+				   "Format", _(formats[i]));
+
 		g_free (str_utf8);
 
-		group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
+		group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (format_items[i]));
 	
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);	
-		g_signal_connect (G_OBJECT (item), "activate",
-			  G_CALLBACK (set_fooclock_format),
-			  (char *)formats[i]);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), format_items[i]);	
+		g_signal_connect (G_OBJECT (format_items[i]), "activate",
+				  G_CALLBACK (set_fooclock_format),
+				  _(formats[i]));
 
-		if (s && !strcmp (s, formats[i])) {
-			gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
+		if (strcmp (sure_string (s), _(formats[i])) == 0) {
+			gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (format_items[i]), TRUE);
 		}
 	}
 	g_free (s);
@@ -545,7 +547,10 @@ foobar_widget_global_set_clock_format (const char *format)
 void
 foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 {
+	int i;
+
 	g_return_if_fail (FOOBAR_IS_WIDGET (foo));
+
 	if (foo->clock_format != NULL)
 		g_free (foo->clock_format);
 	foo->clock_format = g_strdup (clock_format);
@@ -578,6 +583,25 @@ foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 		}
 		g_free (str_utf8);
 	}
+
+	/* update the menu */
+	for (i = 0; i < FORMAT_ITEM_NUM; i++) {
+		const char *item_format;
+
+		/* sanity (or insanity?) */
+		if (format_items[i] == NULL)
+			break;
+
+		item_format = g_object_get_data (G_OBJECT (format_items[i]), "Format");
+		if (strcmp (sure_string (item_format), sure_string (clock_format)) == 0) {
+			if ( ! GTK_CHECK_MENU_ITEM (format_items[i])->active)
+				gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (format_items[i]), TRUE);
+			break;
+		} else if (GTK_CHECK_MENU_ITEM (format_items[i])->active) {
+			gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (format_items[i]), FALSE);
+		}
+	}
+
 	update_clock (foo);
 }
 
