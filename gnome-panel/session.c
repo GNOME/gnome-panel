@@ -352,7 +352,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 static void
 do_session_save(GnomeClient *client,
 		int complete_sync,
-		GList *sync_applets,
+		GList **sync_applets,
 		int sync_panels,
 		int sync_globals)
 {
@@ -391,10 +391,10 @@ do_session_save(GnomeClient *client,
 		for(i=0;i<applet_count;i++)
 			save_applet_configuration(i);
 	} else {
-		while(sync_applets) {
-			/*printf("\nsaving: %d\n",GPOINTER_TO_INT(sync_applets->data));*/
-			save_applet_configuration(GPOINTER_TO_INT(sync_applets->data));
-			sync_applets = my_g_list_pop_first(sync_applets);
+		while(sync_applets && *sync_applets) {
+			/*printf("\nsaving: %d\n",GPOINTER_TO_INT((*sync_applets)->data));*/
+			save_applet_configuration(GPOINTER_TO_INT((*sync_applets)->data));
+			*sync_applets = my_g_list_pop_first(*sync_applets);
 		}
 	}
 	/*DEBUG*/printf(" 2"); fflush(stdout);
@@ -466,7 +466,7 @@ panel_config_sync(void)
 	   panels_to_sync ||
 	   globals_to_sync) {
 		do_session_save(client,need_complete_save,
-				applets_to_sync,panels_to_sync,globals_to_sync);
+				&applets_to_sync,panels_to_sync,globals_to_sync);
 		need_complete_save = FALSE;
 		g_list_free(applets_to_sync);
 		applets_to_sync = NULL;
@@ -521,7 +521,6 @@ panel_session_die (GnomeClient *client,
 		}
 	}
 			
-	
 	/*clean up corba stuff*/
 	panel_corba_clean_up();
 	

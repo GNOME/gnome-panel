@@ -1,3 +1,8 @@
+Mon Aug 31 20:22:04 1998  Owen Taylor  <otaylor@redhat.com>
+
+	* session.c (do_session_save): Pass the sync_applets list by
+	reference so that the list can be properly modified.
+
 Mon Aug 31 01:30:50 1998  George Lebl  <jirka@5z.com>
 
 	* session.c: commented out debug info
