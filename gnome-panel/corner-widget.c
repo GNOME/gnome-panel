@@ -446,7 +446,7 @@ is_right(CornerWidget *corner)
 static void
 jump_to_opposite(CornerWidget *corner)
 {
-	CornerPos newpos;
+	CornerPos newpos = CORNER_NW;
 	PanelWidget *panel = PANEL_WIDGET(corner->panel);
 	
 	switch(corner->pos) {

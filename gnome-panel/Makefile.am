@@ -1,4 +1,7 @@
 ## Process this file with automake to produce Makefile.in.
+CFLAGS += -Wall  \
+	            -Wpointer-arith  	\
+	-Wmissing-prototypes -Wmissing-declarations 
 
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.2f

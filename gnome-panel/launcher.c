@@ -238,7 +238,6 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 void
 launcher_properties(Launcher *launcher)
 {
-	GnomeDesktopEntry *dentry;
 	GtkWidget         *dialog;
 
 	dialog = gtk_object_get_data(GTK_OBJECT(launcher->button),
@@ -248,7 +247,7 @@ launcher_properties(Launcher *launcher)
 		return;
 	}
 
-	dialog = create_properties_dialog(dentry,launcher);
+	dialog = create_properties_dialog(NULL,launcher);
 	gtk_object_set_data(GTK_OBJECT(launcher->button),
 			    LAUNCHER_PROPERTIES,dialog);
 	gtk_widget_show_all (dialog);

@@ -301,7 +301,7 @@ add_panel_to_forbidden(PanelWidget *panel, PanelWidget *r)
 	}
 
 	panel = PANEL_WIDGET(panel->master_widget->parent);
-	if(panel)
+	if (panel)
 		add_panel_to_forbidden(panel, r);
 }
 
@@ -671,7 +671,7 @@ panel_widget_draw_all(PanelWidget *panel)
 	gdk_draw_rectangle(panel->pixmap,gc, TRUE, 0,0,-1,-1);
 
 	gdk_gc_set_fill(gc, GDK_SOLID);
-	gdk_gc_set_tile(gc, NULL);
+/*	gdk_gc_set_tile(gc, NULL); */
 	
 	for(li = panel->applet_list; li != NULL;
 	    li = g_list_next(li)) {
@@ -714,7 +714,7 @@ panel_widget_draw_icon(PanelWidget *panel, ButtonWidget *button)
 			   applet->allocation.width,applet->allocation.height);
 
 	gdk_gc_set_fill(gc, GDK_SOLID);
-	gdk_gc_set_tile(gc, NULL);
+/*	gdk_gc_set_tile(gc, NULL); */
 
 	button_widget_draw(button, panel->pixmap);
 

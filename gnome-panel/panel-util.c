@@ -301,7 +301,7 @@ my_g_list_pop_first(GList *list)
 	GList *r;
 	
 	if(!list)
-		return;
+		return NULL;
        
 	r = list->next;
 	list->next = NULL;

@@ -1425,7 +1425,8 @@ create_root_menu(int fake_submenus, MainMenuType type)
 	GtkWidget *uroot_menu;
 
 	root_menu = create_system_menu(NULL,fake_submenus);
-
+	uroot_menu = NULL;
+	
 	if(type == MAIN_MENU_BOTH)
 		root_menu = create_user_menu(root_menu, fake_submenus);
 	else

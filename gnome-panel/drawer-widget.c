@@ -581,6 +581,8 @@ drawer_widget_new (PanelOrientType orient,
 	case ORIENT_DOWN: porient = PANEL_VERTICAL; break;
 	case ORIENT_LEFT: porient = PANEL_HORIZONTAL; break;
 	case ORIENT_RIGHT: porient = PANEL_HORIZONTAL; break;
+	default:
+		porient = PANEL_HORIZONTAL;
 	}
 
 	drawer->panel = panel_widget_new(TRUE,
@@ -633,6 +635,7 @@ drawer_widget_change_params(DrawerWidget *drawer,
 	case ORIENT_DOWN: porient = PANEL_VERTICAL; break;
 	case ORIENT_LEFT: porient = PANEL_HORIZONTAL; break;
 	case ORIENT_RIGHT: porient = PANEL_HORIZONTAL; break;
+	default: porient = PANEL_HORIZONTAL;
 	}
 
 	oldstate = drawer->state;
