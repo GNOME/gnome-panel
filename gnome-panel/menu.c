@@ -796,6 +796,8 @@ add_menudrawer_to_panel (GtkWidget     *menuitem,
 	add_drawers_from_dir (directory,
 			      insertion_pos,
 			      panel_profile_get_toplevel_id (panel->toplevel));
+
+	menu_tree_directory_unref (directory);
 }
 
 static void
@@ -1238,16 +1240,29 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 static void
 submenu_to_display (GtkWidget *menu)
 {
-	if (g_object_get_data (G_OBJECT (menu), "panel-menu-needs-loading")) {
-		MenuTreeDirectory *directory;
+	MenuTree          *tree;
+	MenuTreeDirectory *directory;
+	const char        *menu_path;
 
-		directory = g_object_get_data (G_OBJECT (menu), "panel-menu-tree-directory");
+	if (!g_object_get_data (G_OBJECT (menu), "panel-menu-needs-loading"))
+		return;
 
-		if (directory)
-			populate_menu_from_directory (menu, directory);
+	g_object_set_data (G_OBJECT (menu), "panel-menu-needs-loading", NULL);
 
-		g_object_set_data (G_OBJECT (menu), "panel-menu-needs-loading", NULL);
+	if (!(directory = g_object_get_data (G_OBJECT (menu), "panel-menu-tree-directory")) &&
+	     (menu_path = g_object_get_data (G_OBJECT (menu), "panel-menu-tree-path"))) {
+		if (!(tree = g_object_get_data (G_OBJECT (menu), "panel-menu-tree")))
+			return;
+
+		directory = menu_tree_get_directory_from_path (tree, menu_path);
+
+		g_object_set_data_full (G_OBJECT (menu), "panel-menu-tree-directory",
+					directory,
+					(GDestroyNotify) menu_tree_directory_unref);
 	}
+
+	if (directory)
+		populate_menu_from_directory (menu, directory);
 }
 
 static GtkWidget *
@@ -1377,8 +1392,7 @@ handle_menu_tree_changed (MenuTree  *tree,
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree-directory",
-				menu_tree_get_root_directory (tree),
-				(GDestroyNotify) menu_tree_directory_unref);
+				NULL, NULL);
 
 	g_object_set_data (G_OBJECT (menu),
 			   "panel-menu-needs-loading",
@@ -1398,29 +1412,31 @@ GtkWidget *
 create_applications_menu (const char *menu_file,
 			  const char *menu_path)
 {
-	MenuTree          *tree;
-	MenuTreeDirectory *root;
-	GtkWidget         *menu;
+	MenuTree  *tree;
+	GtkWidget *menu;
+
+	menu = create_empty_menu ();
 
 	tree = menu_tree_lookup (menu_file);
-
-	if (!menu_path)
-		root = menu_tree_get_root_directory (tree);
-	else
-		root = menu_tree_get_directory_from_path (tree, menu_path);
-
-	if (root) {
-		menu = create_fake_menu (root);
-
-		menu_tree_directory_unref (root);
-	} else {
-		menu = create_empty_menu ();
-	}
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree",
 				menu_tree_ref (tree),
 				(GDestroyNotify) menu_tree_unref);
+
+	g_object_set_data_full (G_OBJECT (menu),
+				"panel-menu-tree-path",
+				g_strdup (menu_path ? menu_path : "/"),
+				(GDestroyNotify) g_free);
+	
+	g_object_set_data (G_OBJECT (menu),
+			   "panel-menu-needs-loading",
+			   GUINT_TO_POINTER (TRUE));
+
+	g_signal_connect (menu, "show",
+			  G_CALLBACK (submenu_to_display), NULL);
+	g_signal_connect (menu, "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 	menu_tree_add_monitor (tree,
 			       (MenuTreeChangedFunc) handle_menu_tree_changed,

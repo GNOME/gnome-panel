@@ -1,3 +1,24 @@
+2004-12-05  Mark McLoughlin  <mark@skynet.ie>
+
+	Don't actually reload the the menu tree until the menu
+	is to be shown as was originally intended.
+	
+	* menu.c:
+	(submenu_to_display): if there's no menu directory
+	associated with the widget, lookup the directory
+	using the menu path.
+	(handle_menu_tree_changed): don't reload the menu, just
+	unset the root menu directory.
+	(create_applications_menu): just set the root menu path
+	on the widget.
+	
+2004-12-05  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch from Frederic Crozat <fcrozat@mandrakesoft.com>
+
+	* menu.c: (add_menudrawer_to_panel): don't leak the
+	menu directory.
+
 2004-12-04  Vincent Untz  <vincent@vuntz.net>
 
 	* menu.[ch]: (setup_internal_applet_drag): setup the drag icon too.
