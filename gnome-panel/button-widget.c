@@ -329,7 +329,8 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 						widget->allocation.y);
 		}
 		gdk_draw_pixmap(pixmap, gc, tile, 0,0,
-				widget->allocation.x, widget->allocation.y,
+				widget->allocation.x,
+				widget->allocation.y,
 				BIG_ICON_SIZE, BIG_ICON_SIZE);
 		if (tile_mask) {
 			gdk_gc_set_clip_mask (gc, NULL);
@@ -504,7 +505,7 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 	button = BUTTON_WIDGET (widget);
 
 	if (button->pressed_timeout)
-		return;
+		return TRUE;
 
 	if (event->button == 1) {
 		gtk_grab_add(widget);

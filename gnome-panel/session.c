@@ -520,7 +520,7 @@ do_session_save(GnomeClient *client,
 
 	gnome_config_pop_prefix ();
 	gnome_config_sync();
-#ifdef	
+#ifdef DEBUG
 	/*DEBUG*/puts("");
 #endif
 }
@@ -644,7 +644,7 @@ panel_really_logout(GtkWidget *w, int button, gpointer data)
 					      GNOME_STOCK_BUTTON_OK,
 					      GNOME_STOCK_BUTTON_CANCEL,
 					      NULL);
-		if(gnome_dialog_run_and_close(dlg)==0) {
+		if(gnome_dialog_run_and_close(GNOME_DIALOG(dlg))==0) {
 			gnome_client_set_restart_style (client,
 							GNOME_RESTART_NEVER);
 			panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,

@@ -696,88 +696,84 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 }
 
 void
-panel_widget_draw_all(PanelWidget *panel)
+panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 {
 	GList *li;
 	GtkWidget *widget;
 	GdkGC *gc;
+	GdkPixmap *pixmap;
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 	
-	if(!panel->pixmap) /*it will get drawn soon anyhow*/
+	widget = GTK_WIDGET(panel);
+
+	if(widget->allocation.width <= 0 ||
+	   widget->allocation.height <= 0 ||
+	   !GTK_WIDGET_DRAWABLE(widget))
 		return;
 
-	widget = GTK_WIDGET(panel);
+	pixmap = gdk_pixmap_new(widget->window,
+				widget->allocation.width,
+				widget->allocation.height,
+				gtk_widget_get_visual(widget)->depth);
 	
-	gc = widget->style->bg_gc[GTK_WIDGET_STATE(widget)];
+	gc = gdk_gc_new(pixmap);
+	gdk_gc_copy(gc,widget->style->bg_gc[GTK_WIDGET_STATE(widget)]);
 
 	if(widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]) {
 		gdk_gc_set_fill(gc, GDK_TILED);
 		gdk_gc_set_tile(gc, widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]);
 	}
 				
-	gdk_draw_rectangle(panel->pixmap,gc, TRUE, 0,0,-1,-1);
+	if(!area)
+		gdk_draw_rectangle(pixmap,gc, TRUE, 0, 0,-1,-1);
+	else
+		gdk_draw_rectangle(pixmap,gc, TRUE, area->x, area->y,
+				   area->width, area->height);
 
-	gdk_gc_set_fill(gc, GDK_SOLID);
-/*	gdk_gc_set_tile(gc, NULL); */
-	
+	gdk_gc_unref(gc);
+
 	for(li = panel->applet_list; li != NULL;
 	    li = g_list_next(li)) {
 		AppletData *ad = li->data;
-		if(IS_BUTTON_WIDGET(ad->applet))
-			button_widget_draw(BUTTON_WIDGET(ad->applet),
-					   panel->pixmap);
+		if(IS_BUTTON_WIDGET(ad->applet) &&
+		   (!area || gtk_widget_intersect(ad->applet, area, NULL)))
+				button_widget_draw(BUTTON_WIDGET(ad->applet),
+						   pixmap);
 	}
-	if(GTK_WIDGET_DRAWABLE(widget))
+	if(!area)
 		gdk_draw_pixmap(widget->window,
 				widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
-				panel->pixmap,
+				pixmap,
 				0,0,0,0,-1,-1);
+	else
+		gdk_draw_pixmap(widget->window,
+				widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
+				pixmap,
+				area->x,area->y,
+				area->x,area->y,
+				area->width,area->height);
+	gdk_pixmap_unref(pixmap);
 }
 
 void
 panel_widget_draw_icon(PanelWidget *panel, ButtonWidget *button)
 {
 	GtkWidget *widget;
-	GtkWidget *applet;
-	GdkGC *gc;
-	
-	g_return_if_fail(panel!=NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(panel));
+	GdkRectangle area;
+
 	g_return_if_fail(button != NULL);
-	g_return_if_fail(IS_BUTTON_WIDGET(button));
-
-	if(!panel->pixmap) /*it will get drawn soon anyhow*/
-		return;
-
-	widget = GTK_WIDGET(panel);
-	applet = GTK_WIDGET(button);
+	g_return_if_fail(GTK_IS_WIDGET(button));
 	
-	gc = widget->style->bg_gc[GTK_WIDGET_STATE(widget)];
+	widget = GTK_WIDGET(button);
+	
+	area.x = widget->allocation.x;
+	area.y = widget->allocation.y;
+	area.width = widget->allocation.width;
+	area.height = widget->allocation.height;
 
-	if(widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]) {
-		gdk_gc_set_fill(gc, GDK_TILED);
-		gdk_gc_set_tile(gc, widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]);
-	}
-				
-	gdk_draw_rectangle(panel->pixmap,gc, TRUE,
-			   applet->allocation.x,applet->allocation.y,
-			   applet->allocation.width,applet->allocation.height);
-
-	gdk_gc_set_fill(gc, GDK_SOLID);
-/*	gdk_gc_set_tile(gc, NULL); */
-
-	button_widget_draw(button, panel->pixmap);
-
-	if(GTK_WIDGET_DRAWABLE(widget))
-		gdk_draw_pixmap(widget->window,
-				widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
-				panel->pixmap,
-				applet->allocation.x,applet->allocation.y,
-				applet->allocation.x,applet->allocation.y,
-				applet->allocation.width,applet->allocation.height);
-
+	panel_widget_draw_all(panel,&area);
 }
 
 static void
@@ -793,14 +789,9 @@ panel_widget_draw(GtkWidget *widget, GdkRectangle *area)
 
 	if(!GTK_WIDGET_DRAWABLE(widget))
 		return;
-	if(panel->pixmap) {
-		gdk_draw_pixmap(widget->window,
-				widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
-				panel->pixmap,
-				area->x, area->y,
-				area->x, area->y,
-				area->width, area->height);
-	}
+
+	panel_widget_draw_all(panel,area);
+
 	for(li = panel->applet_list;
 	    li != NULL;
 	    li = g_list_next(li)) {
@@ -826,14 +817,9 @@ panel_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 
 	if(!GTK_WIDGET_DRAWABLE(widget))
 		return FALSE;
-	if(panel->pixmap) {
-		gdk_draw_pixmap(widget->window,
-				widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
-				panel->pixmap,
-				event->area.x, event->area.y,
-				event->area.x, event->area.y,
-				event->area.width, event->area.height);
-	}
+
+	panel_widget_draw_all(panel,&event->area);
+
 	for(li = panel->applet_list;
 	    li != NULL;
 	    li = g_list_next(li)) {
@@ -1023,21 +1009,8 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	}
 	g_slist_free(send_move);
 	
-	if (GTK_WIDGET_REALIZED (widget)) {
-		if(!panel->pixmap ||
-		   allocation->width != panel->pixw ||
-		   allocation->height != panel->pixh) {
-			if(panel->pixmap)
-				gdk_pixmap_unref(panel->pixmap);
-			panel->pixw = allocation->width;
-			panel->pixh = allocation->height;
-			panel->pixmap = gdk_pixmap_new(widget->window,
-						       panel->pixw,
-						       panel->pixh,
-						       gtk_widget_get_visual(widget)->depth);
-		}
-		panel_widget_draw_all(panel);
-	}
+	if (GTK_WIDGET_REALIZED (widget))
+		panel_widget_draw_all(panel,NULL);
 }
 
 int
@@ -1098,7 +1071,7 @@ panel_try_to_set_default_back(PanelWidget *panel)
 
 	gtk_widget_set_rc_style(GTK_WIDGET(panel));
 
-	panel_widget_draw_all(panel);
+	panel_widget_draw_all(panel,NULL);
 }
 
 static void
@@ -1126,7 +1099,7 @@ panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
 
 	gtk_style_unref(ns);
 
-	panel_widget_draw_all(panel);
+	panel_widget_draw_all(panel,NULL);
 }
 
 void
@@ -1189,7 +1162,7 @@ panel_resize_pixmap(PanelWidget *panel)
 	
 	gtk_style_unref(ns);
 
-	panel_widget_draw_all(panel);
+	panel_widget_draw_all(panel,NULL);
 }
 
 static int
@@ -1216,7 +1189,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	
 		gtk_style_unref(ns);
 
-		panel_widget_draw_all(panel);
+		panel_widget_draw_all(panel,NULL);
 		return TRUE;
 	}
 
@@ -1265,7 +1238,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	gtk_style_unref(ns);
 	gtk_object_set_data(GTK_OBJECT(panel),"gdk_image",im);
 	
-	panel_widget_draw_all(panel);
+	panel_widget_draw_all(panel,NULL);
 	return TRUE;
 }
 
@@ -1286,15 +1259,7 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 		panel_try_to_set_back_color(panel, &panel->back_color);
 	}
 
-	if(panel->pixmap)
-		gdk_pixmap_unref(panel->pixmap);
-	panel->pixw = w->allocation.width;
-	panel->pixh = w->allocation.height;
-	panel->pixmap = gdk_pixmap_new(w->window,
-				       panel->pixw,
-				       panel->pixh,
-				       gtk_widget_get_visual(w)->depth);
-	panel_widget_draw_all(panel);
+	panel_widget_draw_all(panel,NULL);
 }
 
 static void
@@ -1371,9 +1336,6 @@ panel_widget_init (PanelWidget *panel)
 			      gtk_widget_get_events(GTK_WIDGET(panel)) |
 			      GDK_BUTTON_RELEASE_MASK);
 	
-	panel->pixmap = NULL;
-	panel->pixw = panel->pixh = -1;
-
 	panel->back_type =PANEL_BACK_NONE;
 	panel->fit_pixmap_bg = FALSE;
 	panel->pixmap_resize_timeout = 0;

@@ -58,9 +58,6 @@ struct _PanelWidget
 {
 	GtkFixed		fixed;
 	
-	GdkPixmap		*pixmap;
-	int			pixw,pixh;
-
 	GList			*applet_list;
 	GList			*no_window_applet_list;
 
@@ -176,7 +173,8 @@ void		panel_widget_set_back_color	(PanelWidget *panel,
 						 GdkColor *color);
 
 /*draw EVERYTHING (meaning icons)*/
-void		panel_widget_draw_all		(PanelWidget *panel);
+void		panel_widget_draw_all		(PanelWidget *panel,
+						 GdkRectangle *area);
 /*draw just one icon (applet has to be an icon of course)*/
 void		panel_widget_draw_icon		(PanelWidget *panel,
 						 ButtonWidget *applet);
