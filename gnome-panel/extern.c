@@ -568,23 +568,27 @@ send_position_change(Extern *ext)
 }
 
 static void
-ebox_size_allocate(GtkWidget *applet, GtkAllocation *alloc, Extern *ext)
+ebox_size_allocate (GtkWidget *applet, GtkAllocation *alloc, Extern *ext)
 {
-	if(ext->send_position)
-		send_position_change(ext);
+	if (ext->send_position)
+		send_position_change (ext);
 }
 
-#if 0
 static void
-socket_size_allocate(GtkWidget *applet, GtkAllocation *alloc)
+socket_size_allocate (GtkWidget *applet, GtkAllocation *alloc)
 {
 	
 	GtkRequisition req;
 
 	gtk_widget_get_child_requisition (applet, &req);
 
-	/* perhaps an already unnecessary hack to avoid some missed
-	   reallocations */
+	/* This hack must be here.  The problem is that since it is a two
+	 * widget deep hierarchy, an applet that shrink will not cause the
+	 * panel to allocate less space.  Such as a tasklist in dynamic
+	 * mode.  Since applets always get their requisition, then if they
+	 * are ever allocated more, that means we can have the panel resize
+	 * them to their preferred size.  Here applet->parent is the
+	 * PanelWidget actually. */
 	if (req.width > 0 &&
 	    req.height > 0 &&
 	    (alloc->width > req.width ||
@@ -592,26 +596,6 @@ socket_size_allocate(GtkWidget *applet, GtkAllocation *alloc)
 		gtk_widget_queue_resize (applet->parent);
 
 }
-#endif
-
-static void
-ebox_size_request (GtkWidget *applet, GtkRequisition *req, Extern *ext)
-{
-	int size;
-
-	if (ext->info->type != APPLET_EXTERN) {
-		if (ext->ebox->parent != NULL) {
-			PanelWidget *panel = PANEL_WIDGET (ext->ebox->parent);
-			size = panel->sz < 24 ? panel->sz : 24;
-		} else {
-			size = 24;
-		}
-
-		req->width = size;
-		req->height = size;
-	}
-}
-
 
 static void
 socket_set_loading (GtkWidget *socket, PanelWidget *panel)
@@ -687,6 +671,7 @@ static CORBA_unsigned_long
 reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 		     AppletType type)
 {
+	int size;
 	GtkWidget *socket;
 
 	ext->ebox = gtk_event_box_new();
@@ -694,9 +679,12 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 					  APPLET_EVENT_MASK) &
 			      ~( GDK_POINTER_MOTION_MASK |
 				 GDK_POINTER_MOTION_HINT_MASK));
-	gtk_signal_connect_after (GTK_OBJECT (ext->ebox), "size_request",
-				  GTK_SIGNAL_FUNC (ebox_size_request),
-				  ext);
+
+	size = panel->sz < 24 ? panel->sz : 24;
+
+	ext->ebox->requisition.width = size;
+	ext->ebox->requisition.height = size;
+
 	gtk_signal_connect_after (GTK_OBJECT (ext->ebox),"size_allocate",
 				  GTK_SIGNAL_FUNC (ebox_size_allocate),
 				  ext);
@@ -708,13 +696,9 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 		return 0;
 	}
 
-#if 0
-	/* XXX: This freezes the panel sometimes, and likely isn't needed
-	 * anymore */
-	gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
-				 GTK_SIGNAL_FUNC(socket_size_allocate),
-				 NULL);
-#endif
+	gtk_signal_connect_after (GTK_OBJECT (socket),"size_allocate",
+				  GTK_SIGNAL_FUNC (socket_size_allocate),
+				  NULL);
 
 	/* here for debugging purposes */
 	/*gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
