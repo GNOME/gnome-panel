@@ -56,7 +56,7 @@
 #define DEFAULT_UNHIDE_DELAY      500
 #define MINIMUM_WIDTH             100
 #define SNAP_TOLERANCE            20
-#define HIDE_BUTTON_SIZE          20
+#define DEFAULT_ARROW_SIZE        20
 #define HANDLE_SIZE               10
 #define N_ATTACH_TOPLEVEL_SIGNALS 5
 #define N_ATTACH_WIDGET_SIGNALS   5
@@ -1100,24 +1100,29 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 	GtkWidget *button;
 	AtkObject *obj;
 	GtkWidget *arrow;
+	int        arrow_size;
 	
 	button = gtk_button_new ();
 	obj = gtk_widget_get_accessible (button);
 	atk_object_set_name (obj, _("Hide Panel"));
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_DEFAULT);
 
+	gtk_widget_style_get (GTK_WIDGET (toplevel),
+			      "arrow-size", &arrow_size,
+			      NULL);
+
 	switch (arrow_type) {
 	case GTK_ARROW_UP:
-		gtk_widget_set_size_request (button, -1, HIDE_BUTTON_SIZE);
+		gtk_widget_set_size_request (button, -1, arrow_size);
 		break;
 	case GTK_ARROW_DOWN:
-		gtk_widget_set_size_request (button, -1, HIDE_BUTTON_SIZE);
+		gtk_widget_set_size_request (button, -1, arrow_size);
 		break;
 	case GTK_ARROW_LEFT:
-		gtk_widget_set_size_request (button, HIDE_BUTTON_SIZE, -1);
+		gtk_widget_set_size_request (button, arrow_size, -1);
 		break;
 	case GTK_ARROW_RIGHT:
-		gtk_widget_set_size_request (button, HIDE_BUTTON_SIZE, -1);
+		gtk_widget_set_size_request (button, arrow_size, -1);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1218,19 +1223,25 @@ panel_toplevel_update_hide_buttons (PanelToplevel *toplevel)
 	}
 
 	if (toplevel->priv->arrows_enabled) {
+		int arrow_size;
+
 		gtk_widget_show (GTK_BIN (toplevel->priv->hide_button_top)->child);
 		gtk_widget_show (GTK_BIN (toplevel->priv->hide_button_bottom)->child);
 		gtk_widget_show (GTK_BIN (toplevel->priv->hide_button_left)->child);
 		gtk_widget_show (GTK_BIN (toplevel->priv->hide_button_right)->child);
 
+		gtk_widget_style_get (GTK_WIDGET (toplevel),
+				      "arrow-size", &arrow_size,
+				      NULL);
+
 		gtk_widget_set_size_request (toplevel->priv->hide_button_top,
-					     -1, HIDE_BUTTON_SIZE);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_top,
-					     -1, HIDE_BUTTON_SIZE);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_top,
-					     HIDE_BUTTON_SIZE, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_top,
-					     HIDE_BUTTON_SIZE, -1);
+					     -1, arrow_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom,
+					     -1, arrow_size);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_left,
+					     arrow_size, -1);
+		gtk_widget_set_size_request (toplevel->priv->hide_button_right,
+					     arrow_size, -1);
 	} else {
 		gtk_widget_hide (GTK_BIN (toplevel->priv->hide_button_top)->child);
 		gtk_widget_hide (GTK_BIN (toplevel->priv->hide_button_bottom)->child);
@@ -3346,6 +3357,16 @@ panel_toplevel_focus_out_event (GtkWidget     *widget,
 }
 
 static void
+panel_toplevel_style_set (GtkWidget *widget,
+			  GtkStyle  *previous_style)
+{
+	panel_toplevel_update_hide_buttons (PANEL_TOPLEVEL (widget));
+
+	if (GTK_WIDGET_CLASS (parent_class)->style_set)
+		GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
+}
+
+static void
 panel_toplevel_screen_changed (GtkWidget *widget,
 			       GdkScreen *previous_screen)
 {
@@ -3566,6 +3587,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->screen_changed       = panel_toplevel_screen_changed;
 	widget_class->focus_in_event       = panel_toplevel_focus_in_event;
 	widget_class->focus_out_event      = panel_toplevel_focus_out_event;
+	widget_class->style_set            = panel_toplevel_style_set;
 
 	container_class->check_resize = panel_toplevel_check_resize;
 
@@ -3767,6 +3789,17 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			"Enable arrows on hide/show buttons",
 			TRUE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+	gtk_widget_class_install_style_property (
+		widget_class,
+		g_param_spec_int (
+			"arrow-size",
+			"Arrow Size",
+			"The size of the arrows on the hide/show buttons",
+			0,
+			G_MAXINT,
+			DEFAULT_ARROW_SIZE,
+			G_PARAM_READABLE));
 
 	toplevel_signals [HIDE_SIGNAL] =
 		g_signal_new ("hiding",
