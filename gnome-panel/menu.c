@@ -129,6 +129,7 @@ about_cb (GtkWidget *widget, gpointer data)
 			"other applications, embedding small applets "
 			"within itself, world peace, and random X crashes."),
 			"gnome-gegl2.png");
+	gtk_window_set_wmclass (GTK_WINDOW (about), "about_dialog", "Panel");
 	gtk_signal_connect (GTK_OBJECT (about), "destroy",
 			    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
 			    &about);

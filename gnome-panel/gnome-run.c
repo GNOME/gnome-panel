@@ -200,6 +200,7 @@ show_run_dialog ()
 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
 			   &dialog);
 	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
+	gtk_window_set_wmclass (GTK_WINDOW (dialog), "run_dialog", "Panel");
 	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (dialog),
 						_("Run"),
 						GNOME_STOCK_PIXMAP_EXEC);
