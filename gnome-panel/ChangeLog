@@ -1,3 +1,14 @@
+2003-05-20  Arvind Samptur <arvind.samptur@wipro.com>
+	* panel-applet-frame.c: (panel_applet_frame_set_panel):
+	When moving applets between panels, update
+	PanelAppletFrame->priv->panel.
+	(panel_applet_frame_get_panel): Gets the PanelWidget
+	for the PanelApplerFrame. Added it now, could be useful
+	in future.
+	(panel_widget_reparent): If the applet is of type
+	PANEL_OBJECT_BONOBO call panel_applet_frame_set_panel()
+	with the new panel.
+
 2003-05-20  Dennis Cranston <dennis_cranston at yahoo com>
 
 	* panel-run-dialog.glade:  HIGify the dialog:  adjust widget 

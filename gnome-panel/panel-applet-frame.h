@@ -87,6 +87,11 @@ void       panel_applet_frame_load_from_gconf   (PanelWidget *panel_widget,
 int        panel_applet_frame_get_size_hints    (PanelAppletFrame  *frame,
 						 int              **size_hints);
 
+void       panel_applet_frame_set_panel         (PanelAppletFrame *frame,
+						 PanelWidget *panel);
+
+PanelWidget    *panel_applet_frame_get_panel    (PanelAppletFrame *frame);
+
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_FRAME_H__ */
