@@ -52,9 +52,10 @@ panel_shell_register (void)
 				    "and will now exit.");
 			break;
 		default:
-			message = _("There was a problem registering the panel "
-				    "with the bonobo-activation server.\n"
-				    "The panel will now exit.");
+			message = g_strdup_printf (_("There was a problem registering the panel "
+						     "with the bonobo-activation server.\n"
+						     "The error code is: %d\n"
+						     "The panel will now exit."), reg_res);
 			break;
 		}
 
