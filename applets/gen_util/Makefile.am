@@ -120,6 +120,8 @@ EXTRA_DIST = GNOME_GenUtilApplet_Factory.server.in.in	\
 	$(pixmap_DATA)					\
 	$(ui_DATA)
 
+CLEANFILES = $(server_in_files) $(server_DATA)
+
 EGGDIR = $(srcdir)/../../../libegg/libegg/screen-exec
 
 regenerate-built-sources:
