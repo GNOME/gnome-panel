@@ -178,15 +178,6 @@ init_menus (void)
 	  and a level down*/
 	fr_read_dir (NULL, "applications:/", 0, 2);
 
-	menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
-					  "applets", TRUE, NULL);
-	if (menu != NULL) {
-		char *uri = gnome_vfs_get_uri_from_local_path (menu);
-		fr_read_dir (NULL, uri, 0, 2);
-		g_free (uri);
-	}
-	g_free (menu);
-
 	if (distribution_info != NULL &&
 	    distribution_info->menu_init_func != NULL)
 		distribution_info->menu_init_func ();
