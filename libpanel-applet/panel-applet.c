@@ -362,7 +362,8 @@ panel_applet_setup_menu_from_file (PanelApplet        *applet,
 		opt_datadir = PANEL_APPLET_DATADIR;
 
 	if (!opt_app_name)
-		opt_app_name = app_name = g_strdup_printf ("%d", getpid ());
+		opt_app_name = app_name = g_strdup_printf ("%lu",
+							   (unsigned long) getpid ());
 
 	popup_component = panel_applet_get_popup_component (applet);
 
