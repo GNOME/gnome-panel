@@ -53,7 +53,7 @@ static gboolean foobar_leave_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
 static gboolean foobar_enter_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
-static void append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar);
+static void append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar);
 static void setup_task_menu (FoobarWidget *foo);
 
 static GList *foobars = NULL;
@@ -318,7 +318,7 @@ append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	item = pixmap_menu_item_new ("", "gnome-spider.png");
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
-	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
 	return item;
 }
 #endif
@@ -451,7 +451,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 
 	item = gtk_menu_item_new_with_label (_(" Desktop "));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
-	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
 
 	gtk_signal_connect_full (GTK_OBJECT (menu), "show",
 				 G_CALLBACK (desktop_selected),
@@ -514,7 +514,7 @@ append_actions_menu (GtkWidget *menu_bar)
 
 	item = gtk_menu_item_new_with_label (_("Actions"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
-	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
 }
 
 static GtkWidget *
@@ -546,7 +546,7 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	else
 		item = gtk_menu_item_new_with_label (label);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
-	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
 
 	g_signal_connect (G_OBJECT (menu), "show",
 			  G_CALLBACK (submenu_to_display),
@@ -741,7 +741,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	gtk_container_add (GTK_CONTAINER (item), foo->clock_label);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 
-	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
 
 	return item;
 }
@@ -1093,7 +1093,7 @@ task_notify (gpointer data,
 #endif /* FIXME */
 
 static void
-append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar)
+append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar)
 {
 	foo->task_item = gtk_menu_item_new ();
 
@@ -1102,7 +1102,7 @@ append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar)
 	gtk_widget_show (foo->task_bin);
 	gtk_container_add (GTK_CONTAINER (foo->task_item), foo->task_bin);
 
-	gtk_menu_bar_append (menu_bar, foo->task_item);
+	gtk_menu_shell_append (menu_bar, foo->task_item);
 }
 
 static void
@@ -1208,7 +1208,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 		   MAIN_MENU_DESKTOP_SUB)) | MAIN_MENU_SYSTEM;
 	menu = create_root_menu (NULL, TRUE, flags, TRUE, FALSE, FALSE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), menuitem);
 	g_signal_connect (G_OBJECT (menu), "show",
 			  G_CALLBACK (programs_menu_to_display),
 			  NULL);
@@ -1265,7 +1265,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	/* TODO: use the gnome menu if no gnome compliant WM or tasklist disabled */
 	append_gnome_menu (foo, menu_bar);
 #endif
-	append_task_menu (foo, GTK_MENU_BAR (bar));
+	append_task_menu (foo, GTK_MENU_SHELL (bar));
 
 
 	gtk_box_pack_end (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
