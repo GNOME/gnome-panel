@@ -1,3 +1,10 @@
+2004-03-09  Alexander Larsson  <alexl@redhat.com>
+
+	* panel-run-dialog.c (command_is_executable):
+	Make sure the command to be launched is a regular file.
+	This makes executable directories typed into the run dialog
+	now work correctly.
+
 2004-03-09  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* panel-force-quit.c (display_popup_window): Set role to 

@@ -233,9 +233,12 @@ command_is_executable (const char *command)
 		return FALSE;
 	
 	/* If we pass an absolute path to g_find_program it just returns
-	 * that absolute path without checking if it is executable.
+	 * that absolute path without checking if it is executable. Also
+	 * make sure its a regular file so we don't try to launch
+	 * directories or device nodes.
 	 */
-	if (!g_file_test (path, G_FILE_TEST_IS_EXECUTABLE)) {
+	if (!g_file_test (path, G_FILE_TEST_IS_EXECUTABLE) ||
+	    !g_file_test (path, G_FILE_TEST_IS_REGULAR)) {
 		g_free (path);
 		return FALSE;
 	}
