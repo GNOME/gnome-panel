@@ -357,6 +357,7 @@ display_preferences_dialog (BonoboUIComponent *uic,
 
 	gtk_window_set_screen (GTK_WINDOW (fish->preferences_dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (fish)));
+	gtk_window_set_resizable (GTK_WINDOW (fish->preferences_dialog), FALSE);
 	gtk_window_present (GTK_WINDOW (fish->preferences_dialog));
 
 	g_object_unref (xml);
