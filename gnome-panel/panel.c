@@ -293,7 +293,7 @@ panel_session_save (GnomeClient *client,
 				gtk_signal_disconnect(GTK_OBJECT(info->widget),
 						      info->destroy_callback);
 			/*FIXME: VERY BAD HACK*/
-			if(GTK_IS_SOCKET(info->applet_widget))
+			if(info->widget && GTK_IS_SOCKET(info->applet_widget))
 				((GdkWindowPrivate *)
 					GTK_SOCKET(info->applet_widget)->
 						plug_window)->colormap = NULL;
@@ -372,7 +372,7 @@ panel_clean_applet(gint applet_id)
 					    PANEL_APPLET_PARENT_KEY);
 
 		/*FIXME: VERY BAD HACK*/
-		if(GTK_IS_SOCKET(info->applet_widget))
+		if(info->widget && GTK_IS_SOCKET(info->applet_widget))
 			((GdkWindowPrivate *)
 				GTK_SOCKET(info->applet_widget)->
 					plug_window)->colormap = NULL;
