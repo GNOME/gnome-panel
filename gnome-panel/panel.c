@@ -278,12 +278,10 @@ panel_session_save (GnomeClient *client,
 		for(i=0,list=applets;list!=NULL;list = g_list_next(list),i++) {
 			info = list->data;
 			if(info->type == APPLET_EXTERN) {
-				/*printf("SHUTTING DOWN EXTERN (%d)\n",i);*/
 				gtk_container_remove(
 					GTK_CONTAINER(info->widget),
 					info->applet_widget);
 				send_applet_shutdown_applet(info->id,i);
-				/*puts("DONE");*/
 			}
 			if(info->menu)
 				gtk_widget_unref(info->menu);
@@ -297,16 +295,11 @@ panel_session_save (GnomeClient *client,
 		  up this thing*/
 		small_icons = NULL;
 
-		/*puts("unreffing root menu");*/
 		gtk_widget_unref(root_menu);
-		/*puts("done");*/
 
 		/*clean up corba stuff*/
 		panel_corba_clean_up();
 	}
-
-	/*puts("AFTER_SESSION_SAVE");*/
-	
 
 	/* Always successful.  */
 	return TRUE;
@@ -737,8 +730,6 @@ reserve_applet_spot (const char *id, const char *path, int panel, int pos,
 {
 	GtkWidget *socket;
 
-	/*printf ("entering reserve spot\n");*/
-	
 	socket = gtk_socket_new();
 
 	g_return_val_if_fail(socket!=NULL,0);
@@ -750,12 +741,7 @@ reserve_applet_spot (const char *id, const char *path, int panel, int pos,
 	register_toy(socket,NULL,NULL,g_strdup(id),g_strdup(path),
 		     pos,panel,cfgpath, type);
 
-	printf("winpointer(%lu)\n",(unsigned long)(socket->window));
-	printf("XWIN(%lu)\n",(unsigned long)GDK_WINDOW_XWINDOW(socket->window));
-
 	return GDK_WINDOW_XWINDOW(socket->window);
-
-	/*printf ("leaving reserve spot\n");*/
 }
 
 GtkWidget *

@@ -142,16 +142,14 @@ static void
 load_default_applets(void)
 {
 	load_applet(MENU_ID, ".", PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
-	/* FIXME: this for some reason segfaulst rather frequently
+	/* FIXME: this for some reason segfaults rather frequently*/
 	load_applet(EXTERN_ID, "clock_applet", PANEL_UNKNOWN_APPLET_POSITION,0,
 		    NULL);
-	*/
 }
 
 static void
 init_user_applets(void)
 {
-	/*FIXME: change fields so that we can start corba applets*/
 	char *applet_name;
 	char *applet_params;
 	int   pos=0,panel;

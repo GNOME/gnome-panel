@@ -202,6 +202,8 @@ panel_widget_init (PanelWidget *panel_widget)
 	panel_widget->drawer_drop_zone_pos = DROP_ZONE_LEFT;
 }
 
+/*this is used to do an immediate move instead of set_uposition, which
+queues one*/
 static void
 move_window(GtkWidget *widget, int x, int y)
 {
@@ -212,7 +214,8 @@ move_window(GtkWidget *widget, int x, int y)
 
 
 
-/*this is only for snapped panels!*/
+/*this is only for snapped panels! it sets their position, the positions
+of drawer and free are handeled by the app not panel-widget*/
 static void
 panel_widget_set_position(PanelWidget *panel)
 {
@@ -291,8 +294,6 @@ drawer_resize_drop_zone(PanelWidget *panel)
 static void
 panel_widget_set_size(PanelWidget *panel, gint size)
 {
-	printf("set_size size: %d\n",size);
-	
 	if(size == 0)
 		size = panel->size;
 	switch(panel->snapped) {
@@ -1335,6 +1336,7 @@ panel_widget_new (gint size,
 			 0,0);
 	gtk_widget_show(panel->fixed);
 
+	/*we add all the hide buttons to the table here*/
 	/*EAST*/
 	panel->hidebutton_e=gtk_button_new();
 	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-left.xpm");
@@ -1402,13 +1404,13 @@ panel_widget_new (gint size,
 			panel->state = PANEL_HIDDEN;
 	} else {
 		panel->size = PANEL_MAX;
-		/*sanity check*/
 		if(panel->mode == PANEL_EXPLICIT_HIDE &&
 		   panel->state == PANEL_HIDDEN)
 			panel->state = PANEL_SHOWN;
 	}
 
 
+	/*make the panel empty*/
 	for(i=0;i<PANEL_MAX;i++) {
 		panel->applets[i].applet = NULL;
 		panel->applets[i].cells = 1;
@@ -1468,6 +1470,7 @@ panel_widget_new (gint size,
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
 
+	/*FIXME: ???? will we delete this or make it work*/
 	/*set up drag'n'drop (the drop)*/
 	/*gtk_signal_connect (GTK_OBJECT (panel->fixed), 
 			    "drop_data_available_event",
@@ -1507,12 +1510,6 @@ panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
 {
 	panel_widget_applet_drag_start_no_grab(panel,applet);
 
-	/*if (warp)
-	gdk_pointer_warp(NULL, applet->window,
-			 0, 0, 0, 0,
-			 applet->allocation.width / 2,
-			 applet->allocation.height / 2);*/
-	
 	gtk_grab_add(applet);
 	gdk_pointer_grab(applet->window,
 			 TRUE,
@@ -1530,6 +1527,7 @@ panel_widget_applet_drag_end(PanelWidget *panel)
 	panel_widget_applet_drag_end_no_grab(panel);
 }
 
+/*DND ... commented out*/
 #if 0
 /*
  * Hackisigh routine taken from GDK
@@ -1614,6 +1612,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	return FALSE;
 }
 
+/*calculates the value to move the applet by*/
 static gint
 panel_widget_get_moveby(PanelWidget *panel, gint pos)
 {
@@ -1628,12 +1627,12 @@ panel_widget_get_moveby(PanelWidget *panel, gint pos)
 }
 
 
+/*find the cursor position and move the applet to that position*/
 gint
 panel_widget_applet_move_to_cursor(PanelWidget *panel)
 {
 	if (panel->currently_dragged_applet) {
 		gint x,y;
-		/*gint w,h;*/
 		gint moveby;
 		gint pos = panel->currently_dragged_applet_pos;
 		GtkWidget *applet = panel->currently_dragged_applet;
@@ -1656,9 +1655,9 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 							      new_panel,
 							      applet,
 							      pos);
-					panel_widget_applet_drag_end_no_grab(
+					panel_widget_applet_drag_end(
 						panel);
-					panel_widget_applet_drag_start_no_grab(
+					panel_widget_applet_drag_start(
 						new_panel, applet);
 					panel_widget_applet_move_use_idle(
 						new_panel);
@@ -1669,37 +1668,12 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 		}
 
 		gtk_widget_get_pointer(panel->fixed, &x, &y);
-		/*w = GTK_WIDGET(panel->fixed)->allocation.width;
-		h = GTK_WIDGET(panel->fixed)->allocation.height;*/
-
-		/*printf("x:%d y:%d w:%d h:%d\n",x,y,w,h);*/
-
-		/*if((x+DRAG_BUFFER)>0 &&
-		   (x-DRAG_BUFFER)<w &&
-		   (y+DRAG_BUFFER)>0 &&
-		   (y-DRAG_BUFFER)<h) {*/
-		/*if(panel->orient == PANEL_HORIZONTAL)
-			moveby = (x/PANEL_CELL_SIZE)- pos;
-		else
-			moveby = (y/PANEL_CELL_SIZE)- pos;*/
 
 		moveby = panel_widget_get_moveby(panel,pos);
 		if(moveby != 0)
 			panel->currently_dragged_applet_pos =
 				panel_widget_switch_move(panel, pos,
 							 moveby);
-		/*now done in size_allocate*/
-		/*gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_MOVE_SIGNAL],
-			panel->currently_dragged_applet);*/
-		/*} else {
-			//FIXME: fix this dnd stuff
-			GtkWidget *w = panel->currently_dragged_applet;
-			panel_widget_applet_drag_end(panel);
-			artificial_drag_start(w,x,y);
-			return FALSE;
-		}*/
-
 		return TRUE;
 	}
 	return FALSE;
@@ -1807,13 +1781,6 @@ panel_widget_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
 static void
 bind_applet_events(GtkWidget *widget, gpointer data)
 {
-	/*if(!GTK_WIDGET_REALIZED(widget)) {
-		gtk_signal_connect_after(GTK_OBJECT(widget),
-					 "realize",
-					 GTK_SIGNAL_FUNC(bind_applet_events),
-					 NULL);
-		return;
-	}*/
 	/* XXX: This is more or less a hack.  We need to be able to
 	 * capture events over applets so that we can drag them with
 	 * the mouse and such.  So we need to force the applet's
@@ -1822,15 +1789,10 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 	 * GtkEventBox) for processing by us.
 	 */
 	
-	if (!GTK_WIDGET_NO_WINDOW(widget)) {
-		/*FIXME: can't be realized!*/
-		/*gtk_widget_set_events(widget, gtk_widget_get_events(widget) |
-				      APPLET_EVENT_MASK);*/
+	if (!GTK_WIDGET_NO_WINDOW(widget))
 		gtk_signal_connect(GTK_OBJECT(widget), "event",
 				   (GtkSignalFunc) panel_sub_event_handler,
 				   NULL);
-
-	}
 	
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
@@ -1840,15 +1802,6 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 static void
 bind_top_applet_events(GtkWidget *widget)
 {
-	/*if(!GTK_WIDGET_REALIZED(widget)) {
-		gtk_signal_connect_after(GTK_OBJECT(widget),
-					 "realize",
-					 GTK_SIGNAL_FUNC(
-					 	bind_top_applet_events),
-					 NULL);
-		return;
-	}*/
-
 	gtk_signal_connect_after(GTK_OBJECT(widget),
 			   	 "size_allocate",
 			   	 GTK_SIGNAL_FUNC(
@@ -1990,7 +1943,6 @@ panel_widget_reparent (PanelWidget *old_panel,
 	  panel will again be set to the largest thickness*/
 	old_panel->thick = PANEL_MINIMUM_WIDTH;
 	panel_widget_set_size(old_panel,old_panel->size);
-	//gtk_widget_queue_resize(GTK_WIDGET(old_panel));
 
 	if(old_panel->snapped==PANEL_DRAWER)
 		panel_widget_pack_applets(old_panel);
@@ -2012,12 +1964,6 @@ panel_widget_reparent (PanelWidget *old_panel,
 			panel_widget_signals[APPLET_ADDED_SIGNAL],
 			applet);
 
-	/*if(old_panel->snapped==PANEL_DRAWER) {
-		puts("HERE");
-		gtk_widget_set_usize(GTK_WIDGET(old_panel),
-				     old_panel->thick+1,
-				     old_panel->size*PANEL_CELL_SIZE-1);
-	}*/
 	return pos;
 }
 
