@@ -125,41 +125,41 @@ socket_destroyed(GtkWidget *w, gpointer data)
 static int
 swallow_detached (GtkWidget *handle_box, gpointer data)
 {
-  Swallow *swallow  = gtk_object_get_data(GTK_OBJECT(handle_box), "swallow_obj");
-
-  if(GPOINTER_TO_INT(gtk_object_get_user_data
-		     (GTK_OBJECT(handle_box)))==SWALLOW_VERTICAL) {
-    GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_TOP;
-    gtk_widget_set_usize( swallow->handle_box, swallow->width, DRAG_HANDLE_SIZE);
-  } else {
-    GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_LEFT; 
-    gtk_widget_set_usize( handle_box, DRAG_HANDLE_SIZE,
-			  swallow->height );
-  } 
-  gtk_widget_queue_resize ( GTK_WIDGET(swallow->ebox) );
-  return FALSE;
+	Swallow *swallow  = gtk_object_get_data(GTK_OBJECT(handle_box), "swallow_obj");
+	
+	if(GPOINTER_TO_INT(gtk_object_get_user_data
+			   (GTK_OBJECT(handle_box)))==SWALLOW_VERTICAL) {
+		GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_TOP;
+		gtk_widget_set_usize( swallow->handle_box, swallow->width,
+				      DRAG_HANDLE_SIZE);
+	} else {
+		GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_LEFT; 
+		gtk_widget_set_usize( handle_box, DRAG_HANDLE_SIZE,
+				      swallow->height );
+	} 
+	gtk_widget_queue_resize ( GTK_WIDGET(swallow->ebox) );
+	return FALSE;
 }
 
 static int
 swallow_attached (GtkWidget *handle_box, gpointer data)
 {
-  Swallow *swallow = gtk_object_get_data(GTK_OBJECT(handle_box), "swallow_obj");
-  
-  if(GPOINTER_TO_INT(gtk_object_get_user_data
-		     (GTK_OBJECT(handle_box)))== SWALLOW_VERTICAL) {
-    GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_TOP;
-    gtk_widget_set_usize( handle_box, swallow->width,
-			  swallow->height + DRAG_HANDLE_SIZE);
-  } else {
-    GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_LEFT;
-    gtk_widget_set_usize( handle_box,
-			  swallow->width + DRAG_HANDLE_SIZE,
-			  swallow->height);
-  } 
-  gtk_widget_queue_resize ( GTK_WIDGET(swallow->ebox) );
-  return FALSE;
+	Swallow *swallow = gtk_object_get_data(GTK_OBJECT(handle_box), "swallow_obj");
+	
+	if(GPOINTER_TO_INT(gtk_object_get_user_data
+			   (GTK_OBJECT(handle_box)))== SWALLOW_VERTICAL) {
+		GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_TOP;
+		gtk_widget_set_usize( handle_box, swallow->width,
+				      swallow->height + DRAG_HANDLE_SIZE);
+	} else {
+		GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_LEFT;
+		gtk_widget_set_usize( handle_box,
+				      swallow->width + DRAG_HANDLE_SIZE,
+				      swallow->height);
+	} 
+	gtk_widget_queue_resize ( GTK_WIDGET(swallow->ebox) );
+	return FALSE;
 }
-
 
 static void
 really_add_swallow(GtkWidget *d,int button, gpointer data)
@@ -286,17 +286,19 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 	
 	swallow->socket=gtk_socket_new();
 	if(width != 0 || height != 0)
-	  gtk_widget_set_usize(swallow->socket, width, height);
+		gtk_widget_set_usize(swallow->socket, width, height);
 	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"realize",
 			         GTK_SIGNAL_FUNC(socket_realized), NULL);
 	gtk_signal_connect(GTK_OBJECT(swallow->socket),"destroy",
 			   GTK_SIGNAL_FUNC(socket_destroyed), swallow);
-
-
+	
+	
 	swallow->handle_box = gtk_handle_box_new();
 	
-	/* WHAT??? why the f*** can't I put swallow as an argument to
-           the signal funcs??? Using *-set-data for now. I need a brain.*/
+	/*
+	  WHAT??? why the f*** can't I put swallow as an argument to
+	  the signal funcs??? Using *-set-data for now. I need a brain.
+	*/
 	gtk_signal_connect (GTK_OBJECT(swallow->handle_box), "child_attached",
 			    GTK_SIGNAL_FUNC(swallow_attached), NULL);
 	gtk_signal_connect (GTK_OBJECT(swallow->handle_box), "child_detached",
@@ -306,17 +308,18 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 	
 	gtk_container_add ( GTK_CONTAINER(swallow->ebox),
 			    swallow->handle_box );
-
+	
 	w = gtk_frame_new(NULL);
-
+	
 	gtk_frame_set_shadow_type( GTK_FRAME(w), GTK_SHADOW_IN);
 	gtk_container_add ( GTK_CONTAINER(swallow->handle_box), w );
 	
 	gtk_widget_show ( swallow->handle_box );
-	/* FIXME: I want to add the title of the swallowed window.
-	   E.g. a Pager is "sticky", but having a pager in a handlebox
-	   is not -> clicking will change the desktop, but leave the
-	   pager behind :-( Below is one of the non working versions...
+	/*
+	  FIXME: I want to add the title of the swallowed window.
+	  E.g. a Pager is "sticky", but having a pager in a handlebox
+	  is not -> clicking will change the desktop, but leave the
+	  pager behind :-( Below is one of the non working versions...
 	*/
 	/*gdk_window_set_title(GTK_HANDLE_BOX(swallow->handle_box)->float_window,
 	  g_strdup(title));*/
@@ -341,30 +344,30 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 void
 set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient)
 {
-  if (GTK_HANDLE_BOX(swallow->handle_box)->child_detached) {
-    if(orient==SWALLOW_VERTICAL) {
-      GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_TOP;
-      gtk_widget_set_usize( swallow->handle_box, swallow->width,
-			    DRAG_HANDLE_SIZE);
-    } else {
-      GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_LEFT;
-      gtk_widget_set_usize( swallow->handle_box, DRAG_HANDLE_SIZE,
-			    swallow->height );
-    }
-  } else {
-    if(orient==SWALLOW_VERTICAL) {
-      GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_TOP;
-      gtk_widget_set_usize( swallow->handle_box, swallow->width,
-			    swallow->height + DRAG_HANDLE_SIZE);
-    } else {
-      GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_LEFT;
-      gtk_widget_set_usize( swallow->handle_box,
-			    swallow->width + DRAG_HANDLE_SIZE,
-			    swallow->height );
-    }
-  }
-  gtk_object_set_user_data(GTK_OBJECT(swallow->handle_box),
-			   GINT_TO_POINTER(orient));
+	if (GTK_HANDLE_BOX(swallow->handle_box)->child_detached) {
+		if(orient==SWALLOW_VERTICAL) {
+			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_TOP;
+			gtk_widget_set_usize( swallow->handle_box, swallow->width,
+					      DRAG_HANDLE_SIZE);
+		} else {
+			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_LEFT;
+			gtk_widget_set_usize( swallow->handle_box, DRAG_HANDLE_SIZE,
+					      swallow->height );
+		}
+	} else {
+		if(orient==SWALLOW_VERTICAL) {
+			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_TOP;
+			gtk_widget_set_usize( swallow->handle_box, swallow->width,
+					      swallow->height + DRAG_HANDLE_SIZE);
+		} else {
+			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_LEFT;
+			gtk_widget_set_usize( swallow->handle_box,
+					      swallow->width + DRAG_HANDLE_SIZE,
+					      swallow->height );
+		}
+	}
+	gtk_object_set_user_data(GTK_OBJECT(swallow->handle_box),
+				 GINT_TO_POINTER(orient));
 }
 
 void

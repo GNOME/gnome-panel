@@ -93,6 +93,15 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			panel_config(drawer->drawer);
 		}
 		break;
+      /*
+	case APPLET_SWALLOW: 
+		if(strcmp(menu->name,"properties")==0) {
+			Swallow *swallow = info->data;
+			g_assert(swallow);
+			swallow_properties(swallow); // doesn't exist yet
+		} 
+		break; 
+      */
 	case APPLET_MENU:
 		if(strcmp(menu->name,"properties")==0)
 			menu_properties(info->data);
@@ -339,11 +348,18 @@ show_applet_menu(int applet_id, GdkEventButton *event)
 
 
 static int
-applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
+applet_button_press (GtkWidget *widget,GdkEventButton *event, gpointer data)
 {
+	int applet_id = GPOINTER_TO_INT(data);
+	AppletInfo *info = get_applet_info (applet_id);
+	Swallow *swallow = info->data;
+	GtkWidget *handle_box = swallow->handle_box;
+	
 	if(event->button==3) {
 		if(!panel_applet_in_drag)
-			show_applet_menu(GPOINTER_TO_INT(data), event);
+			if(! ((info->type == APPLET_SWALLOW)
+			      && GTK_HANDLE_BOX(handle_box)->child_detached))
+				show_applet_menu(GPOINTER_TO_INT(data), event);
 	}
 	/*stop all button press events here so that they don't get to the
 	  panel*/
