@@ -542,7 +542,7 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
 	/* Auto-hide */
-	button = gtk_check_button_new_with_label(_("Enable Auto-hide"));
+	button = gtk_check_button_new_with_label(_("Autohide"));
 	ppc->autohide_button = button;
 	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	if (ppc->mode == BASEP_AUTO_HIDE)
@@ -564,7 +564,7 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	/* Arrow enable */
-	button = gtk_check_button_new_with_label (_("Show arrows on hide button"));
+	button = gtk_check_button_new_with_label (_("Arrows on hide buttons"));
 	ppc->hidebutton_pixmaps_button = button;
 	g_signal_connect (G_OBJECT (w), "toggled", 
 			  G_CALLBACK (set_sensitive_toggle),
@@ -723,7 +723,7 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 	gtk_container_set_border_width (GTK_CONTAINER (pos_box),
 					GNOME_PAD_SMALL);
 
-	label = gtk_label_new (_("Panel Position"));
+	label = gtk_label_new (_("Panel position"));
 	gtk_box_pack_start (GTK_BOX (pos_box), label, FALSE, FALSE, 0);
 
 	w = gtk_alignment_new (0.5, 0.5, 0, 0);	
@@ -1150,9 +1150,7 @@ make_size_widget (PerPanelConfig *ppc)
 	GtkWidget *vbox;
 	GtkWidget *menu;
 	GtkWidget *menuitem;
-	GtkWidget *w;
 	GtkWidget *label;
-	gchar *s;
 	int i;
 
 	/* main vbox */
@@ -1233,14 +1231,6 @@ make_size_widget (PerPanelConfig *ppc)
 
 	set_relation (ppc->size_menu, GTK_LABEL (label), 1);
 	
-	s = _("Note: The panel will size itself to the\n"
-	      "largest applet in the panel, and that\n"
-	      "not all applets obey these sizes.");
-
-	w = gtk_label_new (s);
-	gtk_label_set_justify (GTK_LABEL (w), GTK_JUSTIFY_LEFT);
-	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
-
 	switch(ppc->sz) {
 	case PANEL_SIZE_XX_SMALL:
 		i = 0;
@@ -1367,12 +1357,12 @@ background_page (PerPanelConfig *ppc)
 	box = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
 
-	w = gtk_label_new(_("Background Type: "));
+	w = gtk_label_new(_("Background type: "));
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
 
 	/*background type option menu*/
 	m = gtk_menu_new ();
-	ppc->non = gtk_menu_item_new_with_label (_("Standard"));
+	ppc->non = gtk_menu_item_new_with_label (_("Default"));
 	g_object_set_data (G_OBJECT (ppc->non), "PerPanelConfig", ppc);
 	gtk_widget_show (ppc->non);
 	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->non);
@@ -1380,7 +1370,7 @@ background_page (PerPanelConfig *ppc)
 	g_object_set_data (G_OBJECT (ppc->col), "PerPanelConfig", ppc);
 	gtk_widget_show (ppc->col);
 	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->col);
-	ppc->pix = gtk_menu_item_new_with_label (_("Pixmap"));
+	ppc->pix = gtk_menu_item_new_with_label (_("Image"));
 	g_object_set_data (G_OBJECT (ppc->pix), "PerPanelConfig", ppc);
 	gtk_widget_show (ppc->pix);
 	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->pix);
@@ -1448,18 +1438,18 @@ background_page (PerPanelConfig *ppc)
 			    sure_string (ppc->back_pixmap));
 	
 	noscale = gtk_radio_button_new_with_label (
-		NULL, _("Don't scale image to fit"));
+		NULL, _("Do not scale image to fit"));
 		
 	gtk_box_pack_start (GTK_BOX (box), noscale, FALSE, FALSE,0);
 
 	fit = gtk_radio_button_new_with_label (
 		gtk_radio_button_get_group(GTK_RADIO_BUTTON(noscale)),
-		_("Scale image (keep proportions)"));
+		_("Scale image"));
 	gtk_box_pack_start (GTK_BOX (box), fit, FALSE, FALSE,0);
 
 	stretch = gtk_radio_button_new_with_label (
 		gtk_radio_button_get_group(GTK_RADIO_BUTTON(noscale)),
-		_("Stretch image (change proportions)"));
+		_("Stretch image"));
 	gtk_box_pack_start (GTK_BOX (box), stretch, FALSE, FALSE,0);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (noscale),
@@ -1645,11 +1635,13 @@ panel_config (GtkWidget *panel)
 	
 	/* main window */
 	ppc->config_window = gtk_dialog_new_with_buttons (
-					_("Panel properties"),
+					_("Panel Properties"),
 					NULL, 0,
 					GTK_STOCK_HELP, GTK_RESPONSE_HELP,
 					GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 					NULL);
+	gtk_dialog_set_default_response (GTK_DIALOG (ppc->config_window),
+					 GTK_RESPONSE_CLOSE);
 	gtk_widget_add_events (ppc->config_window, GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (ppc->config_window), "event",
 			  G_CALLBACK (panel_dialog_window_event), NULL);
@@ -1674,7 +1666,7 @@ panel_config (GtkWidget *panel)
 		page = edge_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
-		ppc->type_tab_label = gtk_label_new (_("Edge panel"));
+		ppc->type_tab_label = gtk_label_new (_("Edge Panel"));
 		gtk_notebook_append_page(GTK_NOTEBOOK(prop_nbook),
 					 ppc->type_tab,
 					 ppc->type_tab_label);
@@ -1685,7 +1677,7 @@ panel_config (GtkWidget *panel)
 		page = aligned_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
-		ppc->type_tab_label = gtk_label_new (_("Corner panel"));
+		ppc->type_tab_label = gtk_label_new (_("Corner Panel"));
 		gtk_notebook_append_page(GTK_NOTEBOOK(prop_nbook),
 					 ppc->type_tab,
 					 ppc->type_tab_label);
@@ -1696,7 +1688,7 @@ panel_config (GtkWidget *panel)
 		page = sliding_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
-		ppc->type_tab_label = gtk_label_new (_("Sliding panel"));
+		ppc->type_tab_label = gtk_label_new (_("Sliding Panel"));
 		gtk_notebook_append_page(GTK_NOTEBOOK (prop_nbook),
 					 ppc->type_tab,
 					 ppc->type_tab_label);
@@ -1707,7 +1699,7 @@ panel_config (GtkWidget *panel)
 		page = floating_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
-		ppc->type_tab_label = gtk_label_new (_("Floating panel"));
+		ppc->type_tab_label = gtk_label_new (_("Floating Panel"));
 		gtk_notebook_append_page(GTK_NOTEBOOK (prop_nbook),
 					 ppc->type_tab,
 					 ppc->type_tab_label);

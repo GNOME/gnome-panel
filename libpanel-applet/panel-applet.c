@@ -787,7 +787,13 @@ panel_applet_handle_background_string (PanelApplet  *applet,
  * @color: A #GdkColor to be filled in.
  * @pixmap: Returned #GdkPixmap
  *
- * Returns the current background type and fills in the relevant
+ * Returns the current background type. If the background
+ * type is %PANEL_NO_BACKGROUND both @color and @pixmap will
+ * be unaffected. If the background type is %PANEL_COLOR_BACKGROUND
+ * then @color will contain the current panel background colour.
+ * If the background type is %PANEL_PIXMAP_BACKGROUND, @pixmap will
+ * contain a pointer to a #GdkPixmap which is a copy of the applet's
+ * portion of the panel's background pixmap.
  * 
  * Return value: a #PanelAppletOrient value.
  */
@@ -1290,10 +1296,8 @@ panel_applet_setup (PanelApplet *applet)
 
 /**
  * panel_applet_new:
- * @widget: The widget the contains all the widgetry the applet
- *          wishes to expose.
  *
- * Creates a new #PanelApplet which exposes @widget.
+ * Creates a new #PanelApplet.
  *
  * Return value: A #GtkWidget on success, %NULL on failure.
  */

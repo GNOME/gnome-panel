@@ -36,14 +36,16 @@
     <para>Writing applets is very simple. You take some boiler plate
 code like below, change a couple of things and write the code that
 implements your widgetry. The hardest part is writing your widgetry -
-and its completely up to yourself how hard that should be.</para>
+and its completely up to yourself how hard that should be.
+    </para>
 
     <sect1 id="hello-world">
       <title>Hello World Applet</title>
 
       <para>As usual, following the pointless tradition of starting with
 an example of how get 'Hello World' on the screen in some form, here's
-just about the simplest applet you could write.</para>
+just about the simplest applet you could write.
+      </para>
 
       <programlisting>
 #include &lt;string.h&gt;
@@ -51,52 +53,91 @@ just about the simplest applet you could write.</para>
 #include &lt;panel-applet.h&gt;
 #include &lt;gtk/gtklabel.h&gt;
 
-static BonoboObject *
-hello_applet_new ()
+static gboolean
+hello_applet_fill (PanelApplet *applet,
+		   const gchar *iid,
+		   gpointer     data)
 {
-        PanelApplet *applet;
-        GtkWidget   *label;
+        GtkWidget *label;
+
+        if (strcmp (iid, "OAFIID:GNOME_HelloApplet") != 0)
+		return FALSE;
 
         label = gtk_label_new ("Hello World");
+	gtk_container_add (GTK_CONTAINER (applet), label);
 
-        applet = panel_applet_new (label);
+	gtk_widget_show_all (GTK_WIDGET (applet));
 
-        return BONOBO_OBJECT (panel_applet_get_control (applet));
-}
-
-static BonoboObject *
-hello_applet_factory (BonoboGenericFactory *this,
-                      const gchar          *iid,
-                      gpointer              data)
-{
-        BonoboObject *applet = NULL;
-
-        if (!strcmp (iid, "OAFIID:GNOME_HelloApplet"))
-                applet = hello_applet_new ();
-
-        return applet;
+        return TRUE;
 }
 
 
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_HelloApplet_Factory",
+                             PANEL_TYPE_APPLET,
                              "The Hello World Applet",
                              "0",
-                             hello_applet_factory,
-                             NULL)
+                             hello_applet_fill,
+                             NULL);
       </programlisting>
 
       <para>The code here is very similar to writing a normal Bonobo
 control. You define a factory using PANEL_APPLET_BONOBO_FACTORY(),
-passing it a factory functions like hello_applet_factory().</para>
+passing it a factory function like hello_applet_fill().
+      </para>
 
-      <para>To crete a #PanelApplet object, you first should set up
-the widgets for you applet and then call panel_applet_new(), passing the
-top-level widget of the applet. For example, if you were writing a
-cdplayer applet, you would stuff all the buttons for cdplayer into a
-#GtkHBox, and then call</para>
+      <para>libpanel-applet automatically creates a #PanelApplet object
+for you, passing this to your factory method. Here, you should fill
+the applet with your widgets just like a #GtkBin. For example, if you
+were writing a cdplayer applet you would create a #GtkHBox, pack the
+hbox with the cdplayer buttons and in turn add the hbox to the applet.
+      </para>
 
-     <programlisting>panel_applet_new (hbox);</programlisting>
-   </sect1>
+    </sect1>
+
+    <sect1 id="server-files">
+      <title>Bonobo Activation .server Files For Applets</title>
+
+      <para>Since an applet is a bonobo component, you must write
+a .server file so that the bonobo activation daemon is aware that
+your component exists and how to activate it. Copy and paste is
+your friend here ...
+      </para>
+
+      <programlisting>
+&lt;oaf_info&gt;
+&lt;oaf_server iid="OAFIID:My_HelloApplet_Factory" type="exe"
+            location="test-bonobo-applet"&gt;
+
+        &lt;oaf_attribute name="repo_ids" type="stringv"&gt;
+                &lt;item value="IDL:Bonobo/GenericFactory:1.0"/&gt;
+                &lt;item value="IDL:Bonobo/Unknown:1.0"/&gt;
+        &lt;/oaf_attribute&gt;
+        &lt;oaf_attribute name="name" type="string" value="Hello World Applet Factory"/&gt;
+        &lt;oaf_attribute name="description" type="string" value="My first applet factory"/&gt;
+&lt;/oaf_server&gt;
+
+&lt;oaf_server iid="OAFIID:My_HelloApplet" type="factory"
+            location="OAFIID:My_HelloApplet_Factory"&gt;
+
+        &lt;oaf_attribute name="repo_ids" type="stringv"&gt;
+                &lt;item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/&gt;
+                &lt;item value="IDL:Bonobo/Control:1.0"/&gt;
+                &lt;item value="IDL:Bonobo/Unknown:1.0"/&gt;
+        &lt;/oaf_attribute&gt;
+        &lt;oaf_attribute name="name" type="string" value="Hello World Applet"/&gt;
+        &lt;oaf_attribute name="description" type="string" value="My fist applet for the GNOME2 panel"/&gt;
+        &lt;oaf_attribute name="panel:category" type="string" value="Amusements"/&gt;
+        &lt;oaf_attribute name="panel:icon" type="string" value="gnome-applets.png"/&gt;
+&lt;/oaf_server&gt;
+&lt;/oaf_info&gt;
+      </programlisting>
+
+      <para>Probably the most important thing to note here is that, unlike
+.server files for other bonobo components, applet .server files contain
+two special attributes - 'panel:category' and 'panel:icon'. Both are used
+by the panel to display an entry for the applet in the 'Add to Panel' menu.
+      </para>
+    </sect1>
 
     <sect1 id="applet-popups">
       <title>Defining a Popup Context Menu</title>

@@ -74,6 +74,27 @@ of a panel.
 background.
 @PANEL_PIXMAP_BACKGROUND: 
 
+<!-- ##### ENUM PanelAppletFlags ##### -->
+<para>
+
+</para>
+
+@PANEL_APPLET_FLAGS_NONE: 
+@PANEL_APPLET_EXPAND_MAJOR: 
+@PANEL_APPLET_EXPAND_MINOR: 
+@PANEL_APPLET_HAS_HANDLE: 
+
+<!-- ##### USER_FUNCTION PanelAppletFactoryCallback ##### -->
+<para>
+
+</para>
+
+@applet: 
+@iid: 
+@user_data: 
+@Returns: 
+
+
 <!-- ##### FUNCTION panel_applet_new ##### -->
 <para>
 
@@ -82,6 +103,15 @@ background.
 @Returns: 
 <!-- # Unused Parameters # -->
 @widget: 
+
+
+<!-- ##### FUNCTION panel_applet_get_orient ##### -->
+<para>
+
+</para>
+
+@applet: 
+@Returns: 
 
 
 <!-- ##### FUNCTION panel_applet_get_size ##### -->
@@ -93,13 +123,63 @@ background.
 @Returns: 
 
 
-<!-- ##### FUNCTION panel_applet_get_orient ##### -->
+<!-- ##### FUNCTION panel_applet_get_background ##### -->
+<para>
+
+</para>
+
+@applet: 
+@color: 
+@pixmap: 
+@Returns: 
+
+
+<!-- ##### FUNCTION panel_applet_get_preferences_key ##### -->
 <para>
 
 </para>
 
 @applet: 
 @Returns: 
+
+
+<!-- ##### FUNCTION panel_applet_add_preferences ##### -->
+<para>
+
+</para>
+
+@applet: 
+@schema_dir: 
+@opt_error: 
+
+
+<!-- ##### FUNCTION panel_applet_get_flags ##### -->
+<para>
+
+</para>
+
+@applet: 
+@Returns: 
+
+
+<!-- ##### FUNCTION panel_applet_set_flags ##### -->
+<para>
+
+</para>
+
+@applet: 
+@flags: 
+
+
+<!-- ##### FUNCTION panel_applet_set_size_hints ##### -->
+<para>
+
+</para>
+
+@applet: 
+@size_hints: 
+@n_elements: 
+@base_size: 
 
 
 <!-- ##### FUNCTION panel_applet_get_control ##### -->
@@ -161,6 +241,17 @@ background.
 @version: 
 
 
+<!-- ##### FUNCTION panel_applet_factory_main_closure ##### -->
+<para>
+
+</para>
+
+@iid: 
+@applet_type: 
+@closure: 
+@Returns: 
+
+
 <!-- ##### MACRO PANEL_APPLET_BONOBO_FACTORY ##### -->
 <para>
 Defines a 'main' routine for the applet factory.
@@ -172,6 +263,47 @@ Defines a 'main' routine for the applet factory.
 @version: The applet version string.
 @callback: The factory callback.
 @data: he factory user data pointer.
+
+
+<!-- ##### FUNCTION panel_applet_shlib_factory ##### -->
+<para>
+
+</para>
+
+@iid: 
+@applet_type: 
+@poa: 
+@impl_ptr: 
+@callback: 
+@user_data: 
+@ev: 
+@Returns: 
+
+
+<!-- ##### FUNCTION panel_applet_shlib_factory_closure ##### -->
+<para>
+
+</para>
+
+@iid: 
+@applet_type: 
+@poa: 
+@impl_ptr: 
+@closure: 
+@ev: 
+@Returns: 
+
+
+<!-- ##### MACRO PANEL_APPLET_BONOBO_SHLIB_FACTORY ##### -->
+<para>
+
+</para>
+
+@iid: 
+@type: 
+@descr: 
+@callback: 
+@data: 
 
 
 <!-- ##### SIGNAL PanelApplet::change-background ##### -->

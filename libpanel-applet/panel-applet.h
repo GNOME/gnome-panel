@@ -169,10 +169,36 @@ Bonobo_Unknown	   panel_applet_shlib_factory_closure (const char                
  * These macros are getting a bit unwieldy.
  *
  * Things to define for these:
- *	+ required : GETTEXT_PACKAGE and GNOMELOCALEDIR.
+ *	+ required if Native Language Support is enabled (ENABLE_NLS):
+ *                   GETTEXT_PACKAGE and GNOMELOCALEDIR 
  *      + optional : PREFIX, SYSCONFDIR, DATADIR and LIBDIR.
  */
 
+#if !defined(ENABLE_NLS)
+#if defined(PREFIX) && defined(SYSCONFDIR) && defined(DATADIR) && defined(LIBDIR)
+#define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
+int main (int argc, char *argv [])						\
+{										\
+	gnome_program_init (name, version,					\
+			    LIBGNOMEUI_MODULE,					\
+			    argc, argv,						\
+			    GNOME_PROGRAM_STANDARD_PROPERTIES,			\
+			    NULL);						\
+        return panel_applet_factory_main (iid, type, callback, data);		\
+}
+#else /* !defined(PREFIX) ... */
+#define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
+int main (int argc, char *argv [])						\
+{										\
+	gnome_program_init (name, version,					\
+			    LIBGNOMEUI_MODULE,					\
+			    argc, argv,						\
+			    GNOME_PARAM_NONE);					\
+        return panel_applet_factory_main (iid, type, callback, data);		\
+}
+#endif /* defined(PREFIX) ... */
+#else /* defined(ENABLE_NLS) */
+#include <libintl.h>
 #if defined(PREFIX) && defined(SYSCONFDIR) && defined(DATADIR) && defined(LIBDIR)
 #define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
 int main (int argc, char *argv [])						\
@@ -187,7 +213,7 @@ int main (int argc, char *argv [])						\
 			    NULL);						\
         return panel_applet_factory_main (iid, type, callback, data);		\
 }
-#else
+#else /* !defined(PREFIX) ... */
 #define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
 int main (int argc, char *argv [])						\
 {										\
@@ -200,8 +226,27 @@ int main (int argc, char *argv [])						\
 			    GNOME_PARAM_NONE);					\
         return panel_applet_factory_main (iid, type, callback, data);		\
 }
-#endif
+#endif /* defined(PREFIX) ... */
+#endif /* !defined(ENABLE_NLS) */
 
+#if !defined(ENABLE_NLS)
+#define PANEL_APPLET_BONOBO_SHLIB_FACTORY(iid, type, descr, callback, data)	\
+static Bonobo_Unknown								\
+__panel_applet_shlib_factory (PortableServer_POA  poa,				\
+			      const char         *oafiid,			\
+			      gpointer            impl_ptr,			\
+			      CORBA_Environment  *ev)				\
+{										\
+        return panel_applet_shlib_factory ((iid), (type), poa, impl_ptr,	\
+					   (callback), (data), ev);		\
+}										\
+static BonoboActivationPluginObject plugin_list[] = {				\
+	{ (iid), __panel_applet_shlib_factory },				\
+	{ NULL }								\
+};										\
+const  BonoboActivationPlugin Bonobo_Plugin_info = { plugin_list, (descr) };
+#else /* defined(ENABLE_NLS) */
+#include <libintl.h>
 #define PANEL_APPLET_BONOBO_SHLIB_FACTORY(iid, type, descr, callback, data)	\
 static Bonobo_Unknown								\
 __panel_applet_shlib_factory (PortableServer_POA  poa,				\
@@ -220,6 +265,7 @@ static BonoboActivationPluginObject plugin_list[] = {				\
 	{ NULL }								\
 };										\
 const  BonoboActivationPlugin Bonobo_Plugin_info = { plugin_list, (descr) };
+#endif /* !defined(ENABLE_NLS) */
 
 G_END_DECLS
 
