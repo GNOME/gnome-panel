@@ -1,6 +1,8 @@
 #include <string.h>
 #include <libgnomecanvas/libgnomecanvas.h>
 #include "panel-util.h"
+#include "rgb-stuff.h"
+#include "xstuff.h"
 #include "nothing.h"
 
 /*code snippet, not to be compiled separately*/

@@ -32,7 +32,6 @@
 #include "panel-config-global.h"
 #include "panel-gconf.h"
 #include "session.h"
-#include "xstuff.h"
 
 #include "gnome-desktop-item.h"
 #include "gnome-ditem-edit.h"

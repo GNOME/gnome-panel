@@ -83,9 +83,6 @@ void floating_widget_change_params (FloatingWidget *floating,
 void floating_widget_change_coords (FloatingWidget *floating,
 				    gint16 x, gint16 y);
 
-void floating_widget_change_orient (FloatingWidget *floating,
-				    GtkOrientation orient);
-
 G_END_DECLS
 
 #endif

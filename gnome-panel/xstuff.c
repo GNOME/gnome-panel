@@ -146,73 +146,9 @@ xstuff_go_through_client_list (void)
 #endif
 }
 
-#ifdef FIXME
-
-static void
-redo_interface (void)
-{
-	GSList *li;
-	for (li = panel_list; li != NULL; li = li->next) {
-		PanelData *pd = li->data;
-		if (BASEP_IS_WIDGET (pd->panel))
-			basep_widget_redo_window (BASEP_WIDGET (pd->panel));
-		else if (IS_FOOBAR_WIDGET (pd->panel))
-			foobar_widget_redo_window (FOOBAR_WIDGET (pd->panel));
-	}
-}
-
-/* some deskguide code borrowed */
-static gboolean
-desk_notifier (gpointer func_data,
-	       GwmhDesk *desk,
-	       GwmhDeskInfoMask change_mask)
-{
-	if (change_mask & GWMH_DESK_INFO_BOOTUP)
-		redo_interface ();
-
-	/* we should maybe notice desk changes here */
-
-	return TRUE;
-}
-
-static gboolean
-task_notifier (gpointer func_data,
-	       GwmhTask *task,
-	       GwmhTaskNotifyType ntype,
-	       GwmhTaskInfoMask imask)
-{
-	/* skip own windows */
-	if (task->name != NULL &&
-	    strcmp (task->name, "panel") == 0)
-		return TRUE;
-
-	switch (ntype) {
-	case GWMH_NOTIFY_NEW:
-		try_adding_status (task->xwin);
-		/* fall through */
-	case GWMH_NOTIFY_INFO_CHANGED:
-		if (check_swallows != NULL)
-			try_checking_swallows (task);
-		break;
-	default:
-		break;
-	}
-
-	return TRUE;
-}
-
-#endif /* FIXME */
-
 void
 xstuff_init (void)
 {
-#ifdef FIXME
-	gwmh_init ();
-
-	gwmh_desk_notifier_add (desk_notifier, NULL);
-	gwmh_task_notifier_add (task_notifier, NULL);
-#endif
-
 	/* setup the keys filter */
 	gdk_window_add_filter (gdk_get_default_root_window (),
 			       panel_global_keys_filter,

@@ -169,9 +169,6 @@ int		panel_widget_reparent		(PanelWidget *old_panel,
 						 PanelWidget *new_panel,
 						 GtkWidget *applet,
 						 int pos);
-/*return position of an applet*/
-int		panel_widget_get_pos		(PanelWidget *panel,
-						 GtkWidget *applet);
 
 /*get amount of free space around the applet (including the applet size),
   or return 0 on error or if the panel is packed*/
@@ -205,10 +202,6 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 gboolean rotate_pixmap_bg,
 						 GdkColor *back_color);
 
-/* changing parameters (orient only) */
-void		panel_widget_change_orient	(PanelWidget *panel,
-						 GtkOrientation orient);
-
 void		panel_widget_set_back_pixmap	(PanelWidget *panel,
 						 const char *file);
 void		panel_widget_set_back_color	(PanelWidget *panel,
@@ -222,9 +215,6 @@ void		panel_widget_draw_icon		(PanelWidget *panel,
 						 ButtonWidget *applet);
 
 
-/*get the number of applets*/
-int		panel_widget_get_applet_count	(PanelWidget *panel);
-
 /*tells us if an applet is "stuck" on the right side*/
 int		panel_widget_is_applet_stuck	(PanelWidget *panel,
 						 GtkWidget *applet);
@@ -234,17 +224,6 @@ int		panel_widget_get_cursorloc	(PanelWidget *panel);
 /*needed for other panel types*/
 gboolean	panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
-
-/* when we get color_only, we also optionally set r, g, b to the
-   color and w, and h to the area if the background is one color
-   only, otherwise normally return an rgb and set r, g, b to -1 */
-void panel_widget_get_applet_rgb_bg(PanelWidget *panel,
-				    GtkWidget *applet,
-				    guchar **rgb,
-				    int *w, int *h,
-				    int *rowstride,
-				    gboolean color_only,
-				    int *r, int *g, int *b);
 
 extern gboolean panel_applet_in_drag;
 

@@ -471,33 +471,6 @@ floating_widget_change_params (FloatingWidget *floating,
 }
 
 void
-floating_widget_change_orient (FloatingWidget *floating,
-			       GtkOrientation orient)
-{
-	FloatingPos *pos = FLOATING_POS (floating->pos);
-	if (PANEL_WIDGET (BASEP_WIDGET (floating)->panel)->orient != orient) {
-		BasePWidget *basep = BASEP_WIDGET (floating);
-		PanelWidget *panel = PANEL_WIDGET (basep->panel);
-		floating_widget_change_params (floating, 
-					       basep->screen,
-					       pos->x,
-					       pos->y,
-					       orient,
-					       basep->mode,
-					       basep->state,
-					       panel->sz,
-					       basep->hidebuttons_enabled,
-					       basep->hidebutton_pixmaps_enabled,
-					       panel->back_type,
-					       panel->back_pixmap,
-					       panel->fit_pixmap_bg,
-					       panel->stretch_pixmap_bg,
-					       panel->rotate_pixmap_bg,
-					       &panel->back_color);
-	}
-}
-
-void
 floating_widget_change_coords (FloatingWidget *floating,
 			       gint16 x, gint16 y)
 {

@@ -502,13 +502,3 @@ drawer_widget_new (gchar *panel_id,
 
 	return GTK_WIDGET (drawer);
 }
-
-#if 0
-void
-drawer_widget_restore_state(DrawerWidget *drawer)
-{
-	DRAWER_POS (BASEP_WIDGET (drawer)->pos)->temp_hidden = FALSE;
-	gtk_widget_queue_resize(GTK_WIDGET(drawer));
-	gtk_widget_show(GTK_WIDGET(drawer));
-}
-#endif

@@ -25,7 +25,6 @@
 
 #include "quick-desktop-reader.h"
 #include "panel-util.h"
-#include "xstuff.h"
 
 #include "menu-properties.h"
 

@@ -1,3 +1,58 @@
+2002-01-10  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.[ch]: (panel_applet_load_from_unique_id),
+	(panel_applet_save_to_gconf): enable swallow loading/saving.
+	(panel_applet_callback_set_sensitive): kill.
+
+	* basep-widget.[ch]:
+	(basep_widget_enable_buttons): make sane.
+	(basep_widget_pre_convert_hook):
+	(basep_widget_get_hide_size): kill.
+	(basep_widget_get_hide_orient): ditto.
+	(basep_widget_set_state): ditto.
+
+	* button-widget.c: (make_hc_pixbuf): upd.
+	(do_saturate_darken): kill do_saturate_darken - not used.
+
+	* drawer-widget.[ch]:
+	(rawer_widget_restore_state): kill
+
+	* floating-widget.[ch]:
+	(floating_widget_change_orient): kill.
+
+	* gnome-run.c, launcher.c, menu-properties.c: don't include
+	  xstuff.h
+
+	* panel-config.c:
+	(update_config_mode), (update_config_mode): kill unused.
+
+	* panel-gconf.[ch]: (panel_gconf_get_session_key): ditto.
+
+	* panel-util.c:
+	(string_is_in_list), (strtok_with_escape), (escape_string):
+	kill unused.
+
+	* panel-widget.[ch]:
+	(panel_widget_get_applet_count), (make_background),
+	(panel_widget_get_pos), (panel_widget_change_orient), 
+	(panel_widget_get_applet_rgb_bg): ditto.
+	(panel_widget_move), (panel_widget_get_free_space): not used,
+	but is probably useful ... #ifdef out.
+
+	* panel.[ch]:
+	(panel_realize), (panel_setup): upd.
+	(panel_data_by_id): kill unused.
+
+	* rgb-stuff.[ch]: #ifdef everything out apart from
+	transform_pixbuf. Can we kill all that stuff?
+
+	* status-docklet.c: (status_docklet_instance_init): rename
+	from status_docklet_init. An he claims i suck? :-)
+
+	* xstuff.c: (redo_interface), (desk_notifier),
+	(task_notifier): kill unused.
+	(xstuff_init): kill old notifiers.
+
 2002-01-10  Glynn Foster  <glynn.foster@sun.com>
 
 	* Makefile.am, main.c, panel.c, session.c: Remove old cruft that 

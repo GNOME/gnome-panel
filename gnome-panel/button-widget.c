@@ -5,16 +5,12 @@
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libart_lgpl/art_misc.h>
-#include <libart_lgpl/art_affine.h>
-#include <libart_lgpl/art_filterlevel.h>
 #include "button-widget.h"
 #include "panel-widget.h"
 #include "basep-widget.h"
 #include "panel-types.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
-#include "rgb-stuff.h"
 
 #undef BUTTON_WIDGET_DEBUG
 
@@ -399,59 +395,6 @@ loadup_file(const char *file)
 	return pb;
 }
 
-#if 0
-/* #define INTENSITY(r, g, b) ((r) * 0.30 + (g) * 0.59 + (b) * 0.11) */
-#define INTENSITY(r, g, b) (((r)*77 + (g)*150 + (b)*28)>>8)
-
-/* saturation is 0-255, darken is 0-255 */
-static void
-do_saturate_darken (GdkPixbuf *dest, GdkPixbuf *src,
-		    int saturation, int darken)
-{
-	gint i, j;
-	gint width, height, has_alpha, srcrowstride, destrowstride;
-	guchar *target_pixels;
-	guchar *original_pixels;
-	guchar *pixsrc;
-	guchar *pixdest;
-	int intensity;
-	int alpha;
-	int negalpha;
-	int val;
-	guchar r,g,b;
-
-	has_alpha = gdk_pixbuf_get_has_alpha (src);
-	width = gdk_pixbuf_get_width (src);
-	height = gdk_pixbuf_get_height (src);
-	srcrowstride = gdk_pixbuf_get_rowstride (src);
-	destrowstride = gdk_pixbuf_get_rowstride (dest);
-	target_pixels = gdk_pixbuf_get_pixels (dest);
-	original_pixels = gdk_pixbuf_get_pixels (src);
-
-	for (i = 0; i < height; i++) {
-		pixdest = target_pixels + i*destrowstride;
-		pixsrc = original_pixels + i*srcrowstride;
-		for (j = 0; j < width; j++) {
-			r = *(pixsrc++);
-			g = *(pixsrc++);
-			b = *(pixsrc++);
-			intensity = INTENSITY(r,g,b);
-			negalpha = ((255 - saturation)*darken)>>8;
-			alpha = (saturation*darken)>>8;
-			val = (negalpha * intensity + alpha * r) >> 8;
-			*(pixdest++) = MIN(val, 255);
-			val = (negalpha * intensity + alpha * g) >> 8;
-			*(pixdest++) = MIN(val, 255);
-			val = (negalpha * intensity + alpha * b) >> 8;
-			*(pixdest++) = MIN(val, 255);
-			if (has_alpha)
-				*(pixdest++) = *(pixsrc++);
-		}
-	}
-}
-#undef INTENSITY
-#endif
-
 /* colorshift a pixbuf */
 static void
 do_colorshift (GdkPixbuf *dest, GdkPixbuf *src, int shift)
@@ -640,7 +583,6 @@ make_hc_pixbuf(GdkPixbuf *pb)
 			      gdk_pixbuf_get_width (pb),
 			      gdk_pixbuf_get_height (pb));
 	do_colorshift (new, pb, 30);
-	/*do_saturate_darken (new, pb, (int)(1.00*255), (int)(1.15*255));*/
 
 	return new;
 }

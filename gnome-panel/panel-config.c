@@ -31,9 +31,7 @@
 #include "floating-widget.h"
 #include "sliding-widget.h"
 #include "panel.h"
-#include "rgb-stuff.h"
 #include "multiscreen-stuff.h"
-#include "xstuff.h"
 
 /*
  * FIXME
@@ -215,61 +213,6 @@ update_config_screen (BasePWidget *w)
 		update_config_floating_pos_limits (w);
 	else if (SLIDING_IS_WIDGET (w))
 		update_config_offset_limit (w);
-}
-
-void
-update_config_mode (BasePWidget *panel)
-{
-	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
-	GtkWidget *toggle;
-
-	if (ppc == NULL ||
-	    ppc->ppc_origin_change)
-		return;
-
-	toggle = ppc->autohide_button;
-
-	if (panel->mode == BASEP_AUTO_HIDE &&
-	    ! GTK_TOGGLE_BUTTON (toggle)->active)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-					      TRUE);
-	else if (panel->mode == BASEP_EXPLICIT_HIDE &&
-		 GTK_TOGGLE_BUTTON (toggle)->active)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-					      FALSE);
-}
-
-void
-update_config_hidebuttons (BasePWidget *panel)
-{
-	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
-	GtkWidget *toggle;
-
-	if (ppc == NULL ||
-	    ppc->ppc_origin_change)
-		return;
-
-	toggle = ppc->hidebuttons_button;
-
-	if (panel->hidebuttons_enabled &&
-	    ! GTK_TOGGLE_BUTTON (toggle)->active)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-					      TRUE);
-	else if ( ! panel->hidebuttons_enabled &&
-		 GTK_TOGGLE_BUTTON (toggle)->active)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-					      FALSE);
-
-	toggle = ppc->hidebutton_pixmaps_button;
-
-	if (panel->hidebutton_pixmaps_enabled &&
-	    ! GTK_TOGGLE_BUTTON (toggle)->active)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-					      TRUE);
-	else if ( ! panel->hidebutton_pixmaps_enabled &&
-		 GTK_TOGGLE_BUTTON (toggle)->active)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-					      FALSE);
 }
 
 void

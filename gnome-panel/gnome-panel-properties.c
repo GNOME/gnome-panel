@@ -66,13 +66,10 @@ static GConfEnumStringPair global_properties_type_enum_map [] = {
  * See rgb-stuff.c.
  */
 
-void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
-                      GdkPixbuf *pixbuf, double affine[6],
-                      int level, ArtAlphaGamma *ag);
-
-void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
-                      GdkPixbuf *pixbuf, double affine[6],
-                      int level, ArtAlphaGamma *ag)
+static void
+transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
+		 GdkPixbuf *pixbuf, double affine[6],
+		 int level, ArtAlphaGamma *ag)
 {
         gint w, h, rs;
 

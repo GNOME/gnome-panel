@@ -437,16 +437,6 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 }
 
 
-/*get the number of applets*/
-int
-panel_widget_get_applet_count(PanelWidget *panel)
-{
-	g_return_val_if_fail(panel!=NULL,-1);
-	g_return_val_if_fail(PANEL_IS_WIDGET(panel),-1);
-
-	return g_list_length(GTK_FIXED(panel)->children);
-}
-
 /*get the list item of the data on the position pos*/
 static GList *
 get_applet_list_pos(PanelWidget *panel, int pos)
@@ -926,53 +916,6 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 	
 	requisition->width = CLAMP (requisition->width, 12, gdk_screen_width ());
 	requisition->height = CLAMP (requisition->height, 12, gdk_screen_height ());
-}
-
-static void
-make_background(PanelWidget *panel, guchar *rgb_buf,
-		int x, int y, int w, int h, int rowstride,
-		GdkPixbuf *pb, int scale_w, int scale_h,
-		int rotate)
-{
-	if(pb) {
-		if(scale_w == 0 || scale_h == 0) {
-			tile_rgb(rgb_buf,w,h,x,y,rowstride,
-				 gdk_pixbuf_get_pixels(pb),
-				 gdk_pixbuf_get_width(pb),
-				 gdk_pixbuf_get_height(pb),
-				 gdk_pixbuf_get_rowstride(pb),
-				 gdk_pixbuf_get_has_alpha(pb));
-		} else {
-			tile_rgb_pixbuf(rgb_buf, w, h, x, y, rowstride,
-					pb, scale_w, scale_h,
-					rotate);
-		}
-	} else {
-		int i, j;
-		int r,g,b;
-		guchar *p;
-		if(panel->back_type != PANEL_BACK_COLOR) {
-			GtkWidget *widget = GTK_WIDGET(panel);
-			/* convert to 8 bit per channel */
-			r = widget->style->bg[GTK_WIDGET_STATE(widget)].red>>8;
-			g = widget->style->bg[GTK_WIDGET_STATE(widget)].green>>8;
-			b = widget->style->bg[GTK_WIDGET_STATE(widget)].blue>>8;
-		} else {
-			/* convert to 8 bit per channel */
-			r = panel->back_color.red>>8;
-			g = panel->back_color.green>>8;
-			b = panel->back_color.blue>>8;
-		}
-		
-		for (i = 0; i < h; i++)	{
-			p = rgb_buf + i * rowstride;
-			for(j = 0; j < w; j++) {
-				(*p++) = r;
-				(*p++) = g;
-				(*p++) = b;
-			}
-		}
-	}
 }
 
 static void
@@ -1893,6 +1836,8 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 	}
 }
 
+#ifdef FIXME /* This isn't used anymore but looks useful */
+
 /*get amount of free space around the applet (including the applet size),
   or return 0 on error or if the panel is packed*/
 int
@@ -1934,6 +1879,7 @@ panel_widget_get_free_space(PanelWidget *panel, GtkWidget *applet)
 	
 	return right - left;
 }
+#endif
 
 /*calculates the value to move the applet by*/
 static int
@@ -2609,6 +2555,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	return pos;
 }
 
+#ifdef FIXME /* This isn't used anymore but looks useful */
 int
 panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
 {
@@ -2648,26 +2595,7 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
 
 	return pos;
 }
-
-int
-panel_widget_get_pos(PanelWidget *panel, GtkWidget *applet)
-{
-	AppletData *ad;
-
-	g_return_val_if_fail(panel!=NULL,-1);
-	g_return_val_if_fail(PANEL_IS_WIDGET(panel),-1);
-	g_return_val_if_fail(applet!=NULL,-1);
-	g_return_val_if_fail(GTK_IS_WIDGET(applet),-1);
-
-	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
-
-	g_return_val_if_fail(ad,-1);
-
-	if(panel != PANEL_WIDGET(applet->parent))
-		return -1;
-
-	return ad->pos;
-}
+#endif
 
 void
 panel_widget_change_params(PanelWidget *panel,
@@ -2760,87 +2688,4 @@ panel_widget_change_params(PanelWidget *panel,
 	/* inhibit draws until we resize */
 	panel->inhibit_draw = TRUE;
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
-}
-
-void
-panel_widget_change_orient(PanelWidget *panel,
-			   GtkOrientation orient)
-{
-	panel_widget_change_params(panel,
-				   orient,
-				   panel->sz,
-				   panel->back_type,
-				   panel->back_pixmap,
-				   panel->fit_pixmap_bg,
-				   panel->stretch_pixmap_bg,
-				   panel->rotate_pixmap_bg,
-				   &panel->back_color);
-}
-
-
-/* when we get color_only, we also optionally set r, g, b to the
-   color and w, and h to the area if the background is one color
-   only, otherwise normally return an rgb and set r, g, b to -1 */
-void
-panel_widget_get_applet_rgb_bg (PanelWidget *panel,
-				GtkWidget *applet,
-				guchar **rgb,
-				int *w, int *h,
-				int *rowstride,
-				gboolean color_only,
-				int *r, int *g, int *b)
-{
-	GtkWidget *widget;
-
-	GdkPixbuf *pb = NULL;
-
-	int scale_w = 0,scale_h = 0;
-	int rotate = FALSE;
-	
-	*rgb = NULL;
-	*w = *h = *rowstride = 0;
-	*r = *g = *b = -1;
-
-	g_return_if_fail (panel != NULL);
-	g_return_if_fail (PANEL_IS_WIDGET (panel));
-	g_return_if_fail (applet != NULL);
-	g_return_if_fail (GTK_IS_WIDGET (applet));
-
-	widget = GTK_WIDGET (panel);
-
-	if( ! GTK_WIDGET_DRAWABLE (widget) ||
-	   widget->allocation.width <= 0 ||
-	   widget->allocation.height <= 0)
-		return;
-
-	setup_background (panel, &pb, &scale_w, &scale_h, &rotate);
-	
-	*w = applet->allocation.width;
-	*h = applet->allocation.height;
-	
-	if (color_only &&
-	    pb == NULL) {
-		if(panel->back_type != PANEL_BACK_COLOR) {
-			GtkWidget *widget = GTK_WIDGET(panel);
-			/* convert to 8 bit per channel */
-			*r = widget->style->bg[GTK_WIDGET_STATE(widget)].red>>8;
-			*g = widget->style->bg[GTK_WIDGET_STATE(widget)].green>>8;
-			*b = widget->style->bg[GTK_WIDGET_STATE(widget)].blue>>8;
-		} else {
-			/* convert to 8 bit per channel */
-			*r = panel->back_color.red>>8;
-			*g = panel->back_color.green>>8;
-			*b = panel->back_color.blue>>8;
-		}
-		return;
-	}
-	*rowstride = applet->allocation.width * 3;
-
-	*rgb = g_new0(guchar,
-		      (*h) * (*rowstride));
-
-	make_background (panel, *rgb,
-			 applet->allocation.x,
-			 applet->allocation.y,
-			 *w, *h, *w*3, pb, scale_w, scale_h, rotate);
 }

@@ -215,14 +215,8 @@ void		basep_widget_change_params	(BasePWidget *basep,
 /*gboolean       basep_widget_convert_to         (BasePWidget *basep,
 						 PanelType type);*/
 
-void            basep_widget_enable_buttons_ (BasePWidget *basep,
-					      gboolean enabled);
-
-#define         basep_widget_enable_buttons(basep) \
-                (basep_widget_enable_buttons_ ((basep),TRUE))
-
-#define         basep_widget_disable_buttons(basep) \
-                (basep_widget_enable_buttons_ ((basep),FALSE))
+void            basep_widget_enable_buttons     (BasePWidget *basep,
+						 gboolean     enabled);
 
 void		basep_widget_set_hidebuttons	(BasePWidget *basep);
 void            basep_widget_update_winhints    (BasePWidget *basep);
@@ -275,23 +269,8 @@ void            basep_widget_get_pos           (BasePWidget *basep,
 void            basep_widget_get_size          (BasePWidget *basep,
 						int *w, int *h);
 
-PanelOrient basep_widget_get_hide_orient   (BasePWidget *basep);
-
-/*
-void            basep_widget_get_hide_size      (BasePWidget *basep,
-						 PanelOrient hide_orient,
-						 int *w, int *h);
-
-void            basep_widget_get_hide_pos      (BasePWidget *basep,
-						PanelOrient hide_orient,
-						int *w, int *h);
-						*/
-
 void            basep_widget_pre_convert_hook (BasePWidget *basep);
 
-void            basep_widget_set_state         (BasePWidget *basep,
-						BasePState state,
-						gboolean emit);
 void		basep_widget_screen_change	(BasePWidget *basep,
 						 int screen);
 

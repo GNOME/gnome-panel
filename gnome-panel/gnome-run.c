@@ -49,7 +49,6 @@
 #include "menu.h"
 #include "multiscreen-stuff.h"
 #include "panel-util.h"
-#include "xstuff.h"
 
 #define ADVANCED_DIALOG_KEY "advanced_run_dialog"
 

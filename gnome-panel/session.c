@@ -392,7 +392,9 @@ void session_load (void) {
 	init_menus ();
 	panel_session_init_panels ();
 
-	/* FIXME: We still need to load up possible tearoffs */
+	/* FIXME: We still need to load up possible tearoffs
+	panel_menu_session_load_tornoffs
+	*/
 
 	panel_applet_load_applets_from_gconf ();
 }

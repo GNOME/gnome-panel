@@ -97,8 +97,6 @@ void panel_config_register_changes (PerPanelConfig *ppc);
 void panel_config (GtkWidget *panel);
 void update_config_size (GtkWidget *panel);
 void update_config_screen (BasePWidget *panel);
-void update_config_mode (BasePWidget *panel);
-void update_config_hidebuttons (BasePWidget *panel);
 void update_config_back (PanelWidget *panel);
 void update_config_edge (BasePWidget *w);
 void update_config_anchor (BasePWidget *w);

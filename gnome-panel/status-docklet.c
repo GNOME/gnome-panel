@@ -84,7 +84,7 @@ status_docklet_class_init (StatusDockletClass *class)
 }
 
 static void
-status_docklet_init (StatusDocklet *docklet)
+status_docklet_instance_init (StatusDocklet *docklet)
 {
 	g_return_if_fail(docklet != NULL);
 	g_return_if_fail(IS_STATUS_DOCKLET(docklet));

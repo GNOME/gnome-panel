@@ -65,23 +65,6 @@ panel_gconf_get_client (void) {
         return client;
 }
 
-gchar * 
-panel_gconf_get_session_key (void) {
-	static gchar *session_key;
-	if (session_key == NULL)  {
-		const gchar *panel_client_id;
-
-		panel_client_id = gnome_client_get_id (gnome_master_client ());	
-		if (!panel_client_id) {
-			g_warning (G_STRLOC " : gnome_client_get_id returned NULL");
-			return NULL;
-		}
-
-		session_key =  g_strdup_printf ("/apps/panel/sessions/%s", panel_client_id);
-	}
-	return session_key;
-}
-
 GSList *
 panel_gconf_all_global_entries (void)
 {

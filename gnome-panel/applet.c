@@ -393,35 +393,6 @@ panel_applet_remove_callback (AppletInfo *info,
 	}
 }
 
-void
-panel_applet_callback_set_sensitive (AppletInfo  *info,
-				     const gchar *callback_name,
-				     gint         sensitive)
-{
-	AppletUserMenu *menu;
-
-	g_return_if_fail(info != NULL);
-	
-	menu = panel_applet_get_callback(info->user_menu, callback_name);
-	if (menu != NULL)
-		menu->sensitive = sensitive;
-	else
-		return; /*it just isn't there*/
-
-	/*make sure the menu is rebuilt*/
-	if(info->menu) {
-		GList *list;
-		for(list=info->user_menu;list!=NULL;list=g_list_next(list)) {
-			AppletUserMenu *menu = list->data;
-			menu->menuitem=NULL;
-			menu->submenu=NULL;
-		}
-		gtk_widget_unref(info->menu);
-		info->menu = NULL;
-		info->menu_age = 0;
-	}
-}
-
 static void
 setup_an_item(AppletUserMenu *menu,
 	      GtkWidget *submenu,
@@ -886,7 +857,7 @@ panel_applet_load_from_unique_id (AppletType   type,
 		drawer_load_from_gconf (panel_widget, position, unique_id);
 		break;
 	case APPLET_SWALLOW:
-		/*swallow_load_from_gconf (panel_widget, position, unique_id);*/
+		swallow_load_from_gconf (panel_widget, position, unique_id);
 		break;
 	case APPLET_MENU:
 		menu_load_from_gconf (panel_widget, position, unique_id);
@@ -1024,8 +995,8 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 				      applet_info->gconf_key);
 		break;
 	case APPLET_SWALLOW:
-		/*swallow_save_to_gconf ((Drawer *) applet_info->data,
-				       applet_info->gconf_key);*/
+		swallow_save_to_gconf ((Drawer *) applet_info->data,
+				       applet_info->gconf_key);
 		break;
 	case APPLET_MENU:
 		menu_save_to_gconf ((Menu *) applet_info->data,

@@ -177,7 +177,7 @@ panel_realize (GtkWidget *widget, gpointer data)
 	change_window_cursor (widget->window, GDK_LEFT_PTR);
 	
 	if (BASEP_IS_WIDGET (widget))
-		basep_widget_enable_buttons(BASEP_WIDGET(widget));
+		basep_widget_enable_buttons(BASEP_WIDGET(widget), TRUE);
 	else if (FOOBAR_IS_WIDGET (widget))
 		foobar_widget_update_winhints (FOOBAR_WIDGET(widget));
 
@@ -1747,7 +1747,7 @@ panel_setup(GtkWidget *panelw)
 				  G_CALLBACK (basep_state_change),
 				  NULL);
 		basep_pos_connect_signals (basep);
-		basep_widget_disable_buttons(basep);
+		basep_widget_enable_buttons(basep, FALSE);
 
 		g_signal_connect_after (G_OBJECT(panelw), "size_allocate",
 					G_CALLBACK(panelw_size_alloc),
@@ -1825,20 +1825,6 @@ panel_data_by_id (const char *id)
 		}
 	}
 	return NULL;
-}
-
-void
-panel_set_id (GtkWidget *widget, const char *id)
-{
-	if (BASEP_IS_WIDGET (widget))  {
-		if (PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id != NULL)
-			g_free (PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id);	
-		PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id = g_strdup (id);
-	} else if (FOOBAR_IS_WIDGET (widget)) {
-		if (PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id != NULL)
-			g_free (PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id);
-		PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id = g_strdup (id);
-	}
 }
 
 void

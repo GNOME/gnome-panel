@@ -82,15 +82,11 @@ void drawer_widget_change_params (DrawerWidget *drawer,
 void drawer_widget_change_orient (DrawerWidget *drawer,
 				  PanelOrient orient);
 
-void drawer_widget_restore_state (DrawerWidget *drawer);
-
 /*open and close drawers*/
 void		drawer_widget_open_drawer	(DrawerWidget *panel,
 						 GtkWidget *parentp);
 void		drawer_widget_close_drawer	(DrawerWidget *panel,
 						 GtkWidget *parentp);
-
-void            drawer_widget_restore_state     (DrawerWidget *drawer);
 
 G_END_DECLS
 

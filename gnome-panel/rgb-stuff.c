@@ -20,6 +20,8 @@
 #include <libart_lgpl/art_rgb_rgba_affine.h>
 #include "rgb-stuff.h"
 
+#ifdef FIXME /* None of this is used any anymore */
+
 void
 combine_rgb_rgba(guchar *dest, int dx, int dy, int dw, int dh, int drs,
 		 guchar *rgba, int rw, int rh, int rrs)
@@ -140,7 +142,6 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 	}
 }
 
-#if 0
 void
 make_scale_affine(double affine[], int w, int h, int size, int *outw, int *outh)
 {
@@ -167,7 +168,6 @@ make_scale_affine(double affine[], int w, int h, int size, int *outw, int *outh)
 	if(outh)
 		*outh = h;
 }
-#endif
 
 GdkPixbuf *
 scale_pixbuf_to_square (GdkPixbuf *pb, int size, int *outw, int *outh, GdkInterpType interp)
@@ -212,6 +212,8 @@ scale_pixbuf_to_square (GdkPixbuf *pb, int size, int *outw, int *outh, GdkInterp
 	return new_pb;
 }
 
+#endif /* FIXME */
+
 void
 transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
 		 GdkPixbuf *pixbuf, double affine[6],
@@ -236,7 +238,7 @@ transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
 
 
 
-#if 0
+#ifdef FIXME /* None of this is used any anymore */
 void
 rgb_rotate270(guchar *dest, int drs, guchar *src, int w, int h, int srs)
 {
@@ -277,4 +279,4 @@ rgba_rotate270(guchar *dest, int drs, guchar *src, int w, int h, int srs)
 		}
 	}
 }
-#endif
+#endif /* FIXME */

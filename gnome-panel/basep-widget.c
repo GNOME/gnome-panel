@@ -1633,7 +1633,7 @@ basep_widget_change_params (BasePWidget *basep,
 	gtk_widget_queue_resize (GTK_WIDGET (basep));
 }
 
-#if 0
+#if FIXME 
 gboolean
 basep_widget_convert_to (BasePWidget *basep,
 			 PanelType type)
@@ -1684,12 +1684,13 @@ basep_widget_convert_to (BasePWidget *basep,
 #endif
 
 void
-basep_widget_enable_buttons_ (BasePWidget *basep, gboolean enabled)
+basep_widget_enable_buttons (BasePWidget *basep,
+			     gboolean     enabled)
 {
-	gtk_widget_set_sensitive(basep->hidebutton_n, enabled);
-	gtk_widget_set_sensitive(basep->hidebutton_e, enabled);
-	gtk_widget_set_sensitive(basep->hidebutton_w, enabled);
-	gtk_widget_set_sensitive(basep->hidebutton_s, enabled);
+	gtk_widget_set_sensitive (basep->hidebutton_n, enabled);
+	gtk_widget_set_sensitive (basep->hidebutton_e, enabled);
+	gtk_widget_set_sensitive (basep->hidebutton_w, enabled);
+	gtk_widget_set_sensitive (basep->hidebutton_s, enabled);
 }
 
 void
@@ -2077,60 +2078,6 @@ basep_widget_get_applet_orient (BasePWidget *basep)
 	return klass->get_applet_orient(basep);
 }
 
-#if 0
-void
-basep_widget_get_hide_size (BasePWidget *basep,
-			    PanelOrient hide_orient,
-			    int *w, int *h)
-{
-	BasePPosClass *klass = basep_widget_get_pos_class(basep);
-
-	basep_widget_get_size(basep, w, h);
-
-	if (basep->state == BASEP_SHOWN) {
-		g_warning ("get_hide_size() called on shown BasePWidget");
-		return;
-	}
-	
-	g_return_if_fail (klass && klass->get_hide_size);
-	klass->get_hide_size (basep, hide_orient, w, h);
-}
-
-void
-basep_widget_get_hide_orient (BasePWidget *basep,
-			      PanelOrient *hide_orient)
-{
-	BasePPosClass *klass = basep_widget_get_pos_class(basep);
-
-	*hide_orient = -1;
-	if (basep->state == BASEP_SHOWN) {
-		g_warning ("get_hide_orient() called on shown BasePWidget");
-		return;
-	}
-	
-	g_return_if_fail (klass && klass->get_hide_size);
-	klass->get_hide_orient (basep, hide_orient);
-}
-
-void
-basep_widget_get_hide_pos (BasePWidget *basep,
-			   PanelOrient hide_orient,
-			   int *x, int *y)
-{
-	BasePPosClass *klass = basep_widget_get_pos_class(basep);
-	int w, h;
-
-	if (basep->state == BASEP_SHOWN) {
-		g_warning ("get_hide_pos() called on shown BasePWidget");
-		return;
-	}
-	
-	basep_widget_get_hide_size (basep, hide_orient, &w, &h);
-	g_return_if_fail (klass && klass->get_hide_size);
-	klass->get_hide_orient (basep, hide_orient);
-}
-#endif
-
 void
 basep_widget_get_size (BasePWidget *basep,
 		       int *w, int *h)
@@ -2210,22 +2157,6 @@ basep_widget_pre_convert_hook (BasePWidget *basep)
 	g_return_if_fail (klass && klass->pre_convert_hook);
 
 	klass->pre_convert_hook (basep);
-}
-
-void
-basep_widget_set_state (BasePWidget *basep, BasePState state,
-			gboolean emit)
-{
-	if (basep->state == state)
-		return;
-
-	basep->state = state;
-	
-	if (emit)
-		g_signal_emit (G_OBJECT(basep),
-			       basep_widget_signals[STATE_CHANGE_SIGNAL],
-			       0, state);
-	panels_to_sync = TRUE;
 }
 
 void

@@ -33,9 +33,6 @@ void		panel_gconf_panel_profile_set_int (const gchar *profile, const gchar *pane
 void		panel_gconf_panel_profile_set_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean value);
 void		panel_gconf_panel_profile_set_string (const gchar *profile, const gchar *panel_id, const gchar *key, const gchar *value);
 
-/* FIXME - Probably not need anymore */
-gchar *		panel_gconf_get_session_key (void);
-
 GSList         *panel_gconf_all_global_entries (void);
 
 gint		panel_gconf_get_int (const gchar *key, gint default_val);

@@ -87,10 +87,6 @@ AppletUserMenu *panel_applet_get_callback    (GList       *user_menu,
 					      const gchar *name);
 
 
-void        panel_applet_callback_set_sensitive (AppletInfo *info,
-						 const char *callback_name,
-						 gint        sensitive);
-
 void        panel_applet_load_applets_from_gconf (void);
 void        panel_applet_save_to_gconf           (AppletInfo *applet_info);
 void        panel_applet_save_position           (AppletInfo *applet_info,

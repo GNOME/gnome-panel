@@ -134,15 +134,6 @@ panel_gnome_kde_help_path (const char *docpath)
 #endif
 }
 
-gboolean
-string_is_in_list(const GSList *list, const char *text)
-{
-	for(;list != NULL; list = list->next)
-		if(strcmp(text,(char *)list->data) == 0)
-			return TRUE;
-	return FALSE;
-}
-
 static void
 updated (GtkWidget *w, gpointer data)
 {
@@ -571,76 +562,6 @@ remove_directory(const char *dirname, gboolean just_clean)
 	if(!just_clean)
 		rmdir(dirname);
 	g_free(oldcwd);
-}
-
-char *
-strtok_with_escape(char *string, const char *seps, gboolean empty)
-{
-	char *our_string;
-	static char *p = NULL;
-
-	g_return_val_if_fail(seps != NULL, NULL);
-
-	if(string)
-		p = string;
-	else if(!p)
-		return NULL;
-
-	our_string = p;
-	while(*p) {
-		if(*p == '\\' && *(p+1)) {
-			strcpy(p,p+1);
-		} else if(strchr(seps,*p)) {
-			*p = '\0';
-			if(empty || *our_string) {
-				p++;
-				return our_string;
-			}
-
-			/* this was an empty part and
-			   we don't want to return empty
-			   parts, so skip it */
-			our_string = p+1;
-		}
-		p++;
-	}
-	p = NULL;
-
-	if(!empty && !*our_string)
-		return NULL;
-	return our_string;
-}
-
-/* return a newly allocated string that escapes / and 'special' */
-char *
-escape_string(const char *string, const char *special)
-{
-	int count;
-	const char *p;
-	char *ret;
-	int i;
-
-	if(!string) return NULL;
-
-	g_return_val_if_fail(special != NULL, NULL);
-
-	for(p=string,count=0; *p; p++,count++) {
-		if(*p == '\\' ||
-		   strchr(special,*p))
-			count++;
-	}
-
-	ret = g_new(char,count+1);
-	i = 0;
-	for(p=string; *p; p++) {
-		if(*p == '\\' ||
-		   strchr(special,*p))
-			ret[i++] = '\\';
-		ret[i++] = *p;
-	}
-	ret[i] = '\0';
-
-	return ret;
 }
 
 gboolean
