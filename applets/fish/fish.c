@@ -97,6 +97,7 @@ static gboolean load_fish_image          (FishApplet *fish);
 static void     update_pixmap            (FishApplet *fish);
 static void     something_fishy_going_on (FishApplet *fish,
 					  const char *message);
+static void     set_tooltip              (FishApplet *fish);
 
 static GType fish_applet_get_type (void);
 
@@ -523,8 +524,8 @@ static void
 set_ally_name_desc (GtkWidget  *widget,
 		    FishApplet *fish)
 {
-	const char *name_format = _("%s the GNOME Fish");
-	const char *desc_format = _("%s the GNOME Fish, a contemporary oracle");
+	const char *name_format = _("%s the Fish");
+	const char *desc_format = _("%s the Fish, a contemporary oracle");
 	AtkObject  *obj;
 	char       *desc, *name;
 
@@ -616,7 +617,7 @@ update_fortune_dialog (FishApplet *fish)
 	g_free (text);
 
 	/* xgettext:no-c-format */
-	label_text = g_strdup_printf (_("%s the GNOME Fish Says:"), fish->name);
+	label_text = g_strdup_printf (_("%s the Fish Says:"), fish->name);
 
 	text = g_strdup_printf ("<big><big>%s</big></big>", label_text);
 	gtk_label_set_markup (GTK_LABEL (fish->fortune_label), text);
@@ -792,6 +793,7 @@ name_changed_notify (GConfClient *client,
 	fish->name = g_strdup (value);
 
 	update_fortune_dialog (fish);
+	set_tooltip (fish);
 
 	if (fish->name_entry &&
 	    strcmp (gtk_entry_get_text (GTK_ENTRY (fish->name_entry)), fish->name))
@@ -1424,6 +1426,8 @@ static void
 set_tooltip (FishApplet *fish)
 {
 	GtkTooltips *tooltips;
+	const char  *desc_format = _("%s the Fish, the fortune teller");
+	char        *desc;
 
 	tooltips = gtk_tooltips_new ();
 	g_object_ref (tooltips);
@@ -1431,8 +1435,9 @@ set_tooltip (FishApplet *fish)
 
 	g_object_set_data (G_OBJECT (fish), "tooltips", tooltips);
 
-	gtk_tooltips_set_tip (tooltips, GTK_WIDGET (fish),
-			      _("GNOME Fish, the fortune teller"), NULL);
+	desc = g_strdup_printf (desc_format, fish->name);
+	gtk_tooltips_set_tip (tooltips, GTK_WIDGET (fish), desc, NULL);
+	g_free (desc);
 }
 
 static void
@@ -1559,13 +1564,12 @@ fish_applet_fill (FishApplet *fish)
 	}
 
 	fish->rotate = panel_applet_gconf_get_bool (applet, "rotate", &error);
-	fish->rotate = FALSE;
 	if (error) {
 		g_warning ("Error getting 'rotate' preference: %s", error->message);
 		g_error_free (error);
 		error = NULL;
 
-		fish->rotate = TRUE; /* Fallback */
+		fish->rotate = FALSE; /* Fallback */
 	}
 
 	panel_applet_setup_menu_from_file (

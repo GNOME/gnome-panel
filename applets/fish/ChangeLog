@@ -1,3 +1,15 @@
+2003-11-06  Vincent Untz  <vincent@vuntz.net>
+
+	* fish.schemas.in: rotate pref default is false because it looks better
+	on vertical panel when the applet is not rotated (look at the bubbles).
+
+	* fish.c: (set_ally_name_desc), (update_fortune_dialog): remove GNOME
+	from some visible strings: it's a Fish and not a GNOME Fish any more.
+	(set_tooltip): use the name of the fish in the tooltip.
+	(name_changed_notify): update tooltip with the new name.
+	(fish_applet_fill): the rotate pref was always set to false. Now we
+	just default it to false and respect what the user wants.
+
 Mon Sep 15 15:31:42 2003  George Lebl <jirka@5z.com>
 
 	* fish.c: if /desktop/gnome/lockdown/inhibit_command_line is true,
