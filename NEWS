@@ -1,4 +1,88 @@
 =============
+Version 2.9.4
+=============
+
+  Panel
+
+	* Close parent drawers of a drawer when a launcher is launched
+	  (Vincent)
+	* Fix 100% CPU usage when changing screen size (Vincent)
+	* Fix z-order of drawers using their depth (Vincent)
+	* Fix (again) autohiding not always working (Vincent)
+	* Only open background images from regular files (Vasista Sarma,
+	  Vincent)
+	* Fix invalid usage of de-allocated memory (Vincent)
+	* Fix labels in the "Add to Panel" dialog when the panel name is not
+	  set (Christian Neumair)
+	* Use new GtkFileChooserButton in panel properties (Vincent)
+	* Do not allow to select non-image files for panel backgrounds
+	  (Vincent)
+	* Make Lock menu item HIG compliant (Madhan Raj M, Vincent)
+	* Update the Lock check menu item when the gconf key changes
+	  (Leena Gunda, Vincent)
+	* Remove default panel names in the first-time config
+	  (Christian Neumair)
+	* Fix look of applet with handles in RTL environment (Vincent)
+	* Add a focus line around the menu bar (Vincent Noel)
+	* Draw animation when dropping files on a launcher (Vincent)
+	* Fix crasher when moving a menu button between panels (Mark)
+	* Make drawer context menu use header capitalization (Dennis Cranston)
+	* New menu layout (Vincent)
+	* Don't draw handles for drawers (Vincent)
+	* HIG work on the "Add to Panel" dialog (Luca Ferretti, Vincent)
+	* Fix strings in the "Add to Panel" dialog to help translators
+	  (Luca Ferretti, Vincent)
+	* Fix crash when closing an error dialog in some circumstances
+	  (Vincent)
+
+  libpanel-applet
+
+	* Add new API to allow applets to request focus (Elijah Newren, Mark)
+
+  Fish Applet
+
+	* Fix leak (Vincent)
+	* Open the fortune dialog only on button release (Vincent)
+	* Instant apply for the disable_command_line lockdown key (Vincent)
+
+  Workspace Switcher Applet
+
+	* Add mouse wheel scrolling to change workspaces (Mark, Vincent)
+	* Fix visual glitch when starting (Vincent)
+
+  Window Selector Applet
+
+	* Fix applet name in the about dialog (Vincent)
+	* Make the applet look consistent with other menus (Søren Sandmann,
+	  Vincent Noel)
+
+  Show Desktop Applet
+
+	* Activate show desktop button on drag an drop (Maciej Katafiasz)
+
+  Misc
+
+	* Use a better name in the notification area about dialog (Vincent)
+	* Fix spec files to build RPM (Vincent)
+	* Add API doc for panel_applet_request_focus() (Vincent)
+	* Cleanups (Vincent, Mark)
+
+  Translators
+
+	* Miloslav Trmac (cs)
+	* Nikos Charonitakis (el)
+	* Adam Weinberger (en_CA)
+	* Francisco Javier F. Serrador (es)
+	* Luca Ferretti (it)
+	* Takeshi AIHANA (ja)
+	* Žygimantas Beručka (lt)
+	* Kjartan Maraas (nb)
+	* Kjartan Maraas (no)
+	* Leonid Kanter (ru)
+	* Elian Myftiu (sq)
+	* Christian Rose (sv)
+
+=============
 Version 2.9.3
 =============
 

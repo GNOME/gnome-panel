@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-07 20:13+0100\n"
+"POT-Creation-Date: 2005-01-10 20:27+0100\n"
 "PO-Revision-Date: 2005-01-07 22:57+0100\n"
 "Last-Translator: Elian Myftiu <elian@lycos.com>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -45,8 +45,8 @@ msgstr "_Informacione"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:770
-#: gnome-panel/panel-context-menu.c:346 gnome-panel/panel-menu-bar.c:350
+#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:727
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:942
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "_Ndihmë"
@@ -59,7 +59,7 @@ msgid "_Preferences"
 msgstr "_Preferimet"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:2595
+#: applets/clock/clock.c:2594
 msgid "Clock"
 msgstr "Ora"
 
@@ -179,13 +179,13 @@ msgstr ""
 "Nuk arrij të gjej asnjë program për të konfiguruar datën dhe orën. Keni "
 "instaluar një të tillë, vërtet?"
 
-#: applets/clock/clock.c:2254
+#: applets/clock/clock.c:2253
 msgid "Custom format"
 msgstr "Format i personalizuar"
 
-#: applets/clock/clock.c:2375 applets/clock/clock.c:2552
+#: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:81
-#: applets/wncklet/showdesktop.c:437 applets/wncklet/window-list.c:114
+#: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
 #: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
 #: applets/wncklet/workspace-switcher.c:261
 #: applets/wncklet/workspace-switcher.c:569
@@ -193,56 +193,56 @@ msgstr "Format i personalizuar"
 msgid "There was an error displaying help: %s"
 msgstr "U verifikua një gabim gjatë shfaqjes së ndihmës: %s"
 
-#: applets/clock/clock.c:2410
+#: applets/clock/clock.c:2409
 msgid "Clock Preferences"
 msgstr "Preferimet e Orës"
 
-#: applets/clock/clock.c:2434
+#: applets/clock/clock.c:2433
 msgid "Clock _type:"
 msgstr "_Lloji i orës:"
 
-#: applets/clock/clock.c:2444
+#: applets/clock/clock.c:2443
 msgid "12 hour"
 msgstr "12 orë"
 
-#: applets/clock/clock.c:2445
+#: applets/clock/clock.c:2444
 msgid "24 hour"
 msgstr "24 orë"
 
-#: applets/clock/clock.c:2446
+#: applets/clock/clock.c:2445
 msgid "UNIX time"
 msgstr "Ora UNIX"
 
-#: applets/clock/clock.c:2447
+#: applets/clock/clock.c:2446
 msgid "Internet time"
 msgstr "Ora e Internetit"
 
-#: applets/clock/clock.c:2455
+#: applets/clock/clock.c:2454
 msgid "Custom _format:"
 msgstr "_Formati i personalizuar:"
 
-#: applets/clock/clock.c:2474
+#: applets/clock/clock.c:2473
 msgid "Show _seconds"
 msgstr "Shfaq _sekondat"
 
-#: applets/clock/clock.c:2483
+#: applets/clock/clock.c:2482
 msgid "Show _date"
 msgstr "Trego _datën"
 
-#: applets/clock/clock.c:2492
+#: applets/clock/clock.c:2491
 msgid "Use _UTC"
 msgstr "Përdor _UTC(orën e Greenwich)"
 
 #. Translator credits
-#: applets/clock/clock.c:2584 applets/fish/fish.c:481
-#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:467
+#: applets/clock/clock.c:2583 applets/fish/fish.c:481
+#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:529
 #: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
 #: applets/wncklet/workspace-switcher.c:600
-#: gnome-panel/panel-context-menu.c:128
+#: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
 msgstr "Elian Myftiu <elian@lycos.com>"
 
-#: applets/clock/clock.c:2598
+#: applets/clock/clock.c:2597
 msgid "The Clock displays the current time and date"
 msgstr "Ora tregon kohën e tanishme dhe datën"
 
@@ -670,34 +670,34 @@ msgstr "Zgjedhësi i Dritareve"
 msgid "Workspace Switcher"
 msgstr "Zgjedhësi i hapësirës së punës"
 
-#: applets/wncklet/showdesktop.c:240
+#: applets/wncklet/showdesktop.c:245
 msgid "Click here to restore hidden windows."
 msgstr "Kliko këtu për të rivendosur dritaret e fshehura."
 
-#: applets/wncklet/showdesktop.c:243
+#: applets/wncklet/showdesktop.c:248
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "Kliko këtu për të fshehur të gjitha dritaret dhe për të shfaqur hapësirën e "
 "punës."
 
-#: applets/wncklet/showdesktop.c:326
+#: applets/wncklet/showdesktop.c:379
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Ngarkimi i %s dështoi: %s\n"
 
-#: applets/wncklet/showdesktop.c:328
+#: applets/wncklet/showdesktop.c:381
 msgid "File not found"
 msgstr "File nuk u gjet"
 
-#: applets/wncklet/showdesktop.c:358 applets/wncklet/showdesktop.c:478
+#: applets/wncklet/showdesktop.c:411 applets/wncklet/showdesktop.c:540
 msgid "Show Desktop Button"
 msgstr "Shfaq Butonin e Hapësirës së Punës"
 
-#: applets/wncklet/showdesktop.c:481
+#: applets/wncklet/showdesktop.c:543
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Ky buton fsheh të gjtha dritaret dhe shfaq hapësirën e punës."
 
-#: applets/wncklet/showdesktop.c:522
+#: applets/wncklet/showdesktop.c:584
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -1013,17 +1013,18 @@ msgstr "asnjë"
 msgid "file not found"
 msgstr "file nuk u gjet"
 
-#: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:150
+#: gnome-panel/drawer.c:356 gnome-panel/panel-addto.c:151
+#: gnome-panel/panel-toplevel.c:1500
 msgid "Drawer"
 msgstr "Sirtari"
 
 #: gnome-panel/drawer.c:599
-msgid "_Add to drawer..."
+#, fuzzy
+msgid "_Add to Drawer..."
 msgstr "_Shto tek sirtari..."
 
 #: gnome-panel/drawer.c:605 gnome-panel/launcher.c:840
-#: gnome-panel/panel-action-button.c:135 gnome-panel/panel-context-menu.c:283
+#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:265
 msgid "_Properties"
 msgstr "_Pronësitë"
 
@@ -1112,11 +1113,11 @@ msgid ""
 msgstr ""
 "Nuk mund të krijoni lëshues të ri këtu pasi nuk keni të drejtë shkrimi."
 
-#: gnome-panel/menu.c:124
+#: gnome-panel/menu.c:124 gnome-panel/panel-menu-bar.c:136
 msgid "Cannot launch entry"
 msgstr "Nuk arrij të lëshoj elementin"
 
-#: gnome-panel/menu.c:136
+#: gnome-panel/menu.c:136 gnome-panel/panel-menu-bar.c:148
 msgid "Cannot load entry"
 msgstr "Nuk arrij të ngarkoj elementin"
 
@@ -1136,46 +1137,45 @@ msgstr "Shtoje këtë si sirtar në panel"
 msgid "Add this as menu to panel"
 msgstr "Shtoje këtë si menu në panel"
 
-#: gnome-panel/menu.c:1446 gnome-panel/panel-menu-bar.c:201
+#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:748
 msgid "Applications"
 msgstr "Programe"
 
-#: gnome-panel/panel-action-button.c:111
+#: gnome-panel/panel-action-button.c:108
 msgid "_Activate Screensaver"
 msgstr "_Aktivizo Screensaver"
 
-#: gnome-panel/panel-action-button.c:117
+#: gnome-panel/panel-action-button.c:114
 msgid "_Lock Screen"
 msgstr "_Blloko Ekranin"
 
-#: gnome-panel/panel-action-button.c:123
+#: gnome-panel/panel-action-button.c:120
 msgid "_Kill Screensaver Daemon"
 msgstr "_Vrit Demonin e Screensaver-it"
 
-#: gnome-panel/panel-action-button.c:129
+#: gnome-panel/panel-action-button.c:126
 msgid "Restart _Screensaver Daemon"
 msgstr "Rinis Demonin e _Screensaver-it"
 
-#: gnome-panel/panel-action-button.c:230 gnome-panel/panel-action-button.c:243
-#: gnome-panel/panel-action-button.c:267 gnome-panel/panel-context-menu.c:58
-#: gnome-panel/panel-util.c:542
+#: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:542
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "I pamundur ekzekutimi i '%s'"
 
-#: gnome-panel/panel-action-button.c:310
+#: gnome-panel/panel-action-button.c:289
 msgid "Lock Screen"
 msgstr "Blloko ekranin"
 
-#: gnome-panel/panel-action-button.c:311
+#: gnome-panel/panel-action-button.c:290
 msgid "Protect your computer from unauthorized use"
 msgstr "Mbro kompjuterin nga përdorimi i paautorizuar"
 
-#: gnome-panel/panel-action-button.c:323
+#: gnome-panel/panel-action-button.c:302
 msgid "Log Out"
 msgstr "Dil Jashtë"
 
-#: gnome-panel/panel-action-button.c:324
+#: gnome-panel/panel-action-button.c:303
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1183,114 +1183,104 @@ msgstr ""
 "Dil jashtë nga kjo seancë për t'u futur si përdorues tjetër ose për të "
 "shuajtur kompjuterin"
 
-#: gnome-panel/panel-action-button.c:334
-msgid "Shut Down"
-msgstr "Fik"
-
-#: gnome-panel/panel-action-button.c:335
-msgid "Log out of GNOME and shut down the computer"
-msgstr "Dil jashtë nga GNOME dhe fik kompjuterin"
-
-#: gnome-panel/panel-action-button.c:345
-msgid "Restart"
-msgstr "Rinis"
-
-#: gnome-panel/panel-action-button.c:346
-msgid "Log out of GNOME and reboot the computer"
-msgstr "Dil jashtë nga GNOME dhe rinis kompjuterin"
-
-#: gnome-panel/panel-action-button.c:356
+#: gnome-panel/panel-action-button.c:313
 msgid "Run Application..."
 msgstr "Nis Programin..."
 
-#: gnome-panel/panel-action-button.c:357
+#: gnome-panel/panel-action-button.c:314
 msgid "Run an Application by entering a command"
 msgstr "Nis një program duke shkruar një komandë"
 
-#: gnome-panel/panel-action-button.c:367
+#: gnome-panel/panel-action-button.c:324
 msgid "Search for Files..."
 msgstr "Kërko për files..."
 
-#: gnome-panel/panel-action-button.c:368
+#: gnome-panel/panel-action-button.c:325
 msgid "Find files, folders, and documents on your computer"
 msgstr "Gjej files, kartela, dhe dokumentë në kompjuterin tuaj"
 
-#: gnome-panel/panel-action-button.c:377
+#: gnome-panel/panel-action-button.c:334
 msgid "Take Screenshot..."
 msgstr "Fotografo Ekranin..."
 
-#: gnome-panel/panel-action-button.c:378
+#: gnome-panel/panel-action-button.c:335
 msgid "Take a screenshot of your desktop"
 msgstr "Ruaj një pamje të hapësirës së punës"
 
-#: gnome-panel/panel-action-button.c:387
+#: gnome-panel/panel-action-button.c:344
 msgid "Force Quit"
 msgstr "Detyro përfundimin"
 
-#: gnome-panel/panel-action-button.c:388
+#: gnome-panel/panel-action-button.c:345
 msgid "Force a misbehaving application to quit"
 msgstr "Detyro një program që nuk përgjigjet të ndalojë"
 
-#: gnome-panel/panel-addto.c:102
+#: gnome-panel/panel-addto.c:103
 msgid "Custom Application Launcher"
 msgstr "Lëshuesi i programit vetjak"
 
-#: gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-addto.c:104
 msgid "Create a new launcher"
 msgstr "Krijo një lëshues të ri"
 
-#: gnome-panel/panel-addto.c:113
+#: gnome-panel/panel-addto.c:114
 msgid "Application Launcher..."
 msgstr "Lëshuesi i programit..."
 
-#: gnome-panel/panel-addto.c:114
+#: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "Nis një program që bën pjesë tek menu e GNOME"
 
-#: gnome-panel/panel-addto.c:128
+#: gnome-panel/panel-addto.c:129
 msgid "Main Menu"
 msgstr "Menuja qendrore"
 
-#: gnome-panel/panel-addto.c:129
+#: gnome-panel/panel-addto.c:130
 msgid "The main GNOME menu"
 msgstr "Menu kryesore e GNOME"
 
-#: gnome-panel/panel-addto.c:139
+#: gnome-panel/panel-addto.c:140
 msgid "Menu Bar"
 msgstr "Paneli i Menusë"
 
-#: gnome-panel/panel-addto.c:140
+#: gnome-panel/panel-addto.c:141
 msgid "A custom menu bar"
 msgstr "Një panel menuje e personalizuar"
 
-#: gnome-panel/panel-addto.c:151
+#: gnome-panel/panel-addto.c:152
 msgid "A pop out drawer to store other items in"
 msgstr "Një krijues pop out për të vendosur elementë të tjerë në të"
 
-#: gnome-panel/panel-addto.c:240
+#: gnome-panel/panel-addto.c:241
 msgid "(empty)"
 msgstr "(bosh)"
 
-#: gnome-panel/panel-addto.c:379 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:380 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "pyetja ktheu përjashtim %s\n"
 
-#: gnome-panel/panel-addto.c:885
-#, c-format
-msgid "Add to %s"
-msgstr "Shtoje tek %s"
-
-#: gnome-panel/panel-addto.c:887
-msgid "Add to the panel"
-msgstr "Shtoje tek Paneli"
-
-#: gnome-panel/panel-addto.c:893
-#, c-format
-msgid "Select an _item to add to %s:"
+#: gnome-panel/panel-addto.c:914
+#, fuzzy, c-format
+msgid "Select an _item to add to \"%s\":"
 msgstr "Zgjidh një _element për t'a shtuar tek %s:"
 
-#: gnome-panel/panel-addto.c:896
+#: gnome-panel/panel-addto.c:918
+#, fuzzy
+msgid "Add to Drawer"
+msgstr "_Shto tek sirtari..."
+
+#: gnome-panel/panel-addto.c:920
+#, fuzzy
+msgid "Select an _item to add to the drawer:"
+msgstr "Zgjidh një _element për t'a shtuar në panel:"
+
+#: gnome-panel/panel-addto.c:922
+#, fuzzy
+msgid "Add to Panel"
+msgstr "_Shto tek Paneli..."
+
+#: gnome-panel/panel-addto.c:924
 msgid "Select an _item to add to the panel:"
 msgstr "Zgjidh një _element për t'a shtuar në panel:"
 
@@ -1355,24 +1345,15 @@ msgstr "Gabim gjatë ngarkimin të kartelës gconf '%s': %s"
 msgid "Error getting value for '%s': %s"
 msgstr "Gabim gjatë marrjes së vlerës për '%s': %s"
 
-#: gnome-panel/panel-context-menu.c:59
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
-#: gnome-panel/panel-context-menu.c:60
-msgid "About GNOME"
-msgstr "Informacione mbi GNOME"
-
-#: gnome-panel/panel-context-menu.c:118
+#: gnome-panel/panel-context-menu.c:100
 msgid "And many, many others..."
 msgstr "Dhe shumë, shumë të tjerë..."
 
-#: gnome-panel/panel-context-menu.c:143
+#: gnome-panel/panel-context-menu.c:125
 msgid "The GNOME Panel"
 msgstr "Paneli i GNOME"
 
-#: gnome-panel/panel-context-menu.c:146
+#: gnome-panel/panel-context-menu.c:128
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1380,33 +1361,29 @@ msgstr ""
 "Ky program është përgjegjës për lëshimin e programeve të tjerë, si dhe të "
 "trupëzojë mini-programe në vetvete."
 
-#: gnome-panel/panel-context-menu.c:186
+#: gnome-panel/panel-context-menu.c:168
 msgid "You cannot remove your last panel."
 msgstr "Nuk mund t'a hiqni panelin e fundit"
 
-#: gnome-panel/panel-context-menu.c:235
+#: gnome-panel/panel-context-menu.c:217
 msgid "_Delete This Panel..."
 msgstr "_Fshije Këtë Panel..."
 
-#: gnome-panel/panel-context-menu.c:238 gnome-panel/panel-context-menu.c:268
+#: gnome-panel/panel-context-menu.c:220 gnome-panel/panel-context-menu.c:250
 msgid "_Delete This Panel"
 msgstr "_Fshije Këtë Panel"
 
-#: gnome-panel/panel-context-menu.c:252
+#: gnome-panel/panel-context-menu.c:234
 msgid "_Add to Panel..."
 msgstr "_Shto tek Paneli..."
 
-#: gnome-panel/panel-context-menu.c:298
+#: gnome-panel/panel-context-menu.c:280
 msgid "_New Panel"
 msgstr "_Panel i Ri"
 
-#: gnome-panel/panel-context-menu.c:357
+#: gnome-panel/panel-context-menu.c:338
 msgid "A_bout Panels"
 msgstr "_Informacione mbi Panelët"
-
-#: gnome-panel/panel-context-menu.c:373
-msgid "About _GNOME"
-msgstr "Informacione mbi _GNOME"
 
 #: gnome-panel/panel-force-quit.c:74
 msgid ""
@@ -1660,9 +1637,41 @@ msgstr "Fotografo ekranin"
 msgid "Take window screenshot"
 msgstr "Merr një pamje të dritares"
 
-#: gnome-panel/panel-menu-bar.c:210
-msgid "Actions"
-msgstr "Veprime"
+#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:319
+#, c-format
+msgid "Cannot display location '%s'"
+msgstr "E pamundur shfaqja e pozicionit '%s'"
+
+#: gnome-panel/panel-menu-bar.c:455
+msgid "Bookmarks"
+msgstr ""
+
+#. Translators: %s is a URI
+#: gnome-panel/panel-menu-bar.c:470 gnome-panel/panel-recent.c:200
+#, c-format
+msgid "Open '%s'"
+msgstr "Hap :'%s'"
+
+#: gnome-panel/panel-menu-bar.c:528
+msgid "Network Places"
+msgstr ""
+
+#: gnome-panel/panel-menu-bar.c:530
+msgid "Removable Media"
+msgstr ""
+
+#: gnome-panel/panel-menu-bar.c:581 gnome-panel/panel-menu-bar.c:765
+msgid "Desktop"
+msgstr "Hapësira e Punës"
+
+#: gnome-panel/panel-menu-bar.c:582
+#, fuzzy
+msgid "Desktop directory"
+msgstr "Directory web"
+
+#: gnome-panel/panel-menu-bar.c:759
+msgid "Places"
+msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2024,12 +2033,6 @@ msgstr ""
 "• Të gjithë elementët nga lista e dokumentëve të fundit në të gjithë "
 "programet."
 
-#. Translators: %s is a URI
-#: gnome-panel/panel-recent.c:200
-#, c-format
-msgid "Open '%s'"
-msgstr "Hap :'%s'"
-
 #: gnome-panel/panel-recent.c:222
 msgid "Recent Documents"
 msgstr "Dokumentat e Fundit"
@@ -2046,11 +2049,6 @@ msgstr "Pastro të gjithë elementët nga lista e dokumentëve të fundit"
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "E pamundur nisja e komandës '%s'"
-
-#: gnome-panel/panel-run-dialog.c:319
-#, c-format
-msgid "Cannot display location '%s'"
-msgstr "E pamundur shfaqja e pozicionit '%s'"
 
 #: gnome-panel/panel-run-dialog.c:371
 #, c-format
@@ -2073,7 +2071,9 @@ msgstr "Zgjidh një program për të lexuar përshkrimin e tij."
 #: gnome-panel/panel-run-dialog.c:1406
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Lista URI që u lëshua në dialogun e ekzekutimit pati një format (%d) ose gjatësi (%d) të gabuar\n"
+msgstr ""
+"Lista URI që u lëshua në dialogun e ekzekutimit pati një format (%d) ose "
+"gjatësi (%d) të gabuar\n"
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
@@ -2627,46 +2627,46 @@ msgstr "Programi i provave Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Fabrika e programit të provave Bonobo"
 
-#: libpanel-applet/panel-applet.c:983
+#: libpanel-applet/panel-applet.c:984
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "U mor një lloj sfondi i papërfunduar '%s'"
 
-#: libpanel-applet/panel-applet.c:997
+#: libpanel-applet/panel-applet.c:998
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "U mor një lloj sfondi i papërfunduar '%s':%s"
 
-#: libpanel-applet/panel-applet.c:1006
+#: libpanel-applet/panel-applet.c:1007
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Dështoi në marrjen e pixmap %s"
 
-#: libpanel-applet/panel-applet.c:1013
+#: libpanel-applet/panel-applet.c:1014
 msgid "Unknown background type received"
 msgstr "U mor një lloj i panjohur sfondi"
 
-#: libpanel-applet/panel-applet.c:1198
+#: libpanel-applet/panel-applet.c:1199
 msgid "The Applet's containing Panel's orientation"
 msgstr "Programi që përmban orientimin e Panelit"
 
-#: libpanel-applet/panel-applet.c:1206
+#: libpanel-applet/panel-applet.c:1207
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Programi që përmban përmasën e Panelit në pikë"
 
-#: libpanel-applet/panel-applet.c:1214
+#: libpanel-applet/panel-applet.c:1215
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Programi që përmban ngjyrën e sfondit apo pixmap-in e panelit"
 
-#: libpanel-applet/panel-applet.c:1222
+#: libpanel-applet/panel-applet.c:1223
 msgid "The Applet's flags"
 msgstr "Flamujt e programit"
 
-#: libpanel-applet/panel-applet.c:1230
+#: libpanel-applet/panel-applet.c:1231
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Shtrirjet e pranueshme të përmasave të programit"
 
-#: libpanel-applet/panel-applet.c:1238
+#: libpanel-applet/panel-applet.c:1239
 msgid "The Applet's containing Panel is locked down"
 msgstr "Programi që përmban Panelin është bllokuar"
 
@@ -2730,6 +2730,36 @@ msgstr "_Programthi:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Dosja e Preferimeve:"
+
+#~ msgid "Shut Down"
+#~ msgstr "Fik"
+
+#~ msgid "Log out of GNOME and shut down the computer"
+#~ msgstr "Dil jashtë nga GNOME dhe fik kompjuterin"
+
+#~ msgid "Restart"
+#~ msgstr "Rinis"
+
+#~ msgid "Log out of GNOME and reboot the computer"
+#~ msgstr "Dil jashtë nga GNOME dhe rinis kompjuterin"
+
+#~ msgid "Add to %s"
+#~ msgstr "Shtoje tek %s"
+
+#~ msgid "Add to the panel"
+#~ msgstr "Shtoje tek Paneli"
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#~ msgid "About GNOME"
+#~ msgstr "Informacione mbi GNOME"
+
+#~ msgid "About _GNOME"
+#~ msgstr "Informacione mbi _GNOME"
+
+#~ msgid "Actions"
+#~ msgstr "Veprime"
 
 #~ msgid "Workspace Selector"
 #~ msgstr "Zgjedhësi i Hapësirës së Punës"
@@ -2894,12 +2924,6 @@ msgstr "_Dosja e Preferimeve:"
 #~ msgstr ""
 #~ "Kartela e përdoruesit në të cilën pamjet e ekranit duhet të ruhen në "
 #~ "mënyrë që të shfaqen në internet."
-
-#~ msgid "Web directory"
-#~ msgstr "Directory web"
-
-#~ msgid "Desktop"
-#~ msgstr "Hapësira e Punës"
 
 #~ msgid ""
 #~ "The \"%s\" applet appears to have died unexpectedly.\n"
