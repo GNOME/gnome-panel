@@ -413,7 +413,7 @@ set_panel_position(void)
 	int i;
 
 	for(i=0;i<PANEL_TABLE_SIZE;i++)
-		if(!the_panel->applets[i]->placeholder) {
+		if(!the_panel->applets[i]->type==APPLET_PLACEHOLDER) {
 			if(the_panel->applets[i]->applet->allocation.width >
 			   width)
 				width = the_panel->applets[i]->
@@ -622,7 +622,7 @@ panel_session_save (gpointer client_data,
 	num = 1;
 	gnome_config_clean_section("/panel/Applets");
 	for(i=0;i<PANEL_TABLE_SIZE;i++)
-		if(!the_panel->applets[i]->placeholder)
+		if(!the_panel->applets[i]->type==APPLET_PLACEHOLDER)
 			save_applet_configuration(the_panel->applets[i]->applet,
 						  &num);
 
@@ -677,13 +677,13 @@ put_applet_in_free_slot_starting_at(Panel *panel, GtkWidget *applet, int start)
 {
 	int i;
 	for(i=start;i<PANEL_TABLE_SIZE;i++)
-		if(panel->applets[i]->placeholder)
+		if(panel->applets[i]->type==APPLET_PLACEHOLDER)
 			break;
 
 	/*panel is full to the right*/
 	if(i==PANEL_TABLE_SIZE) {
 		for(i=start-1;i>=0;i--)
-			if(panel->applets[i]->placeholder)
+			if(panel->applets[i]->type==APPLET_PLACEHOLDER)
 				break;
 		/*panel is full!*/
 		if(i<=0)
@@ -696,7 +696,7 @@ put_applet_in_free_slot_starting_at(Panel *panel, GtkWidget *applet, int start)
 	
 
 	panel->applets[i]->applet = applet;
-	panel->applets[i]->placeholder = FALSE;
+	panel->applets[i]->type = APPLET_NORMAL;
 	panel->applet_count++;
 
 	switch (the_panel->pos) {
@@ -740,7 +740,7 @@ move_applet_n_right_by_pos(Panel *panel, int n, int pos)
 		return 0;
 
 	tmp.applet = panel->applets[pos]->applet;
-	tmp.placeholder = panel->applets[pos]->placeholder;
+	tmp.type = panel->applets[pos]->type;
 
 	gtk_container_remove(GTK_CONTAINER(panel->panel),
 			     panel->applets[pos]->applet);
@@ -756,10 +756,10 @@ move_applet_n_right_by_pos(Panel *panel, int n, int pos)
 						 pos+i-1,pos+i,0,1,
 						 GTK_SHRINK|
 						 (panel->applets[pos+i]->
-						  placeholder?GTK_EXPAND|GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 						 GTK_SHRINK|
 						 (panel->applets[pos+i]->
-						  placeholder?GTK_EXPAND|GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 						 0,0);
 				break;
 			case PANEL_POS_LEFT:
@@ -769,15 +769,15 @@ move_applet_n_right_by_pos(Panel *panel, int n, int pos)
 						 0,1,pos+i-1,pos+i,
 						 GTK_SHRINK|
 						 (panel->applets[pos+i]->
-						  placeholder?GTK_EXPAND|GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 						 GTK_SHRINK|
 						 (panel->applets[pos+i]->
-						  placeholder?GTK_EXPAND|GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 						 0,0);
 				break;
 		}
-		panel->applets[pos+i-1]->placeholder =
-			panel->applets[pos+i]->placeholder;
+		panel->applets[pos+i-1]->type =
+			panel->applets[pos+i]->type;
 		panel->applets[pos+i-1]->applet =
 			panel->applets[pos+i]->applet;
 	}
@@ -788,9 +788,9 @@ move_applet_n_right_by_pos(Panel *panel, int n, int pos)
 					 tmp.applet,
 					 pos+n,pos+n+1,0,1,
 					 GTK_SHRINK|
-					 (tmp.placeholder?GTK_EXPAND|GTK_FILL:0),
+					 (tmp.type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 					 GTK_SHRINK|
-					 (tmp.placeholder?GTK_EXPAND|GTK_FILL:0),
+					 (tmp.type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 					 0,0);
 			break;
 		case PANEL_POS_LEFT:
@@ -799,13 +799,13 @@ move_applet_n_right_by_pos(Panel *panel, int n, int pos)
 					 tmp.applet,
 					 0,1,pos+n,pos+n+1,
 					 GTK_SHRINK|
-					 (tmp.placeholder?GTK_EXPAND|GTK_FILL:0),
+					 (tmp.type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 					 GTK_SHRINK|
-					 (tmp.placeholder?GTK_EXPAND|GTK_FILL:0),
+					 (tmp.type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 					 0,0);
 			break;
 	}
-	panel->applets[pos+n]->placeholder = tmp.placeholder;
+	panel->applets[pos+n]->type = tmp.type;
 	panel->applets[pos+n]->applet = tmp.applet;
 
 	return n;
@@ -827,7 +827,7 @@ move_applet_n_left_by_pos(Panel *panel, int n, int pos)
 		return 0;
 
 	tmp.applet = panel->applets[pos]->applet;
-	tmp.placeholder = panel->applets[pos]->placeholder;
+	tmp.type = panel->applets[pos]->type;
 
 	gtk_container_remove(GTK_CONTAINER(panel->panel),
 			     panel->applets[pos]->applet);
@@ -843,10 +843,10 @@ move_applet_n_left_by_pos(Panel *panel, int n, int pos)
 						 pos-i+1,pos-i+2,0,1,
 						 GTK_SHRINK|
 						 (panel->applets[pos-i]->
-						  placeholder?GTK_EXPAND|GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 						 GTK_SHRINK|
 						 (panel->applets[pos-i]->
-						  placeholder?GTK_EXPAND|GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 						 0,0);
 				break;
 			case PANEL_POS_LEFT:
@@ -856,15 +856,15 @@ move_applet_n_left_by_pos(Panel *panel, int n, int pos)
 						 0,1,pos-i+1,pos-i+2,
 						 GTK_SHRINK|
 						 (panel->applets[pos-i]->
-						  placeholder?GTK_EXPAND|GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 						 GTK_SHRINK|
 						 (panel->applets[pos-i]->
-						  placeholder?GTK_EXPAND|GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 						 0,0);
 				break;
 		}
-		panel->applets[pos-i+1]->placeholder =
-			panel->applets[pos-i]->placeholder;
+		panel->applets[pos-i+1]->type =
+			panel->applets[pos-i]->type;
 		panel->applets[pos-i+1]->applet =
 			panel->applets[pos-i]->applet;
 	}
@@ -875,9 +875,9 @@ move_applet_n_left_by_pos(Panel *panel, int n, int pos)
 					 tmp.applet,
 					 pos-n,pos-n+1,0,1,
 					 GTK_SHRINK|
-					 (tmp.placeholder?GTK_EXPAND|GTK_FILL:0),
+					 (tmp.type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 					 GTK_SHRINK|
-					 (tmp.placeholder?GTK_EXPAND|GTK_FILL:0),
+					 (tmp.type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 					 0,0);
 			break;
 		case PANEL_POS_LEFT:
@@ -886,13 +886,13 @@ move_applet_n_left_by_pos(Panel *panel, int n, int pos)
 					 tmp.applet,
 					 0,1,pos-n,pos-n+1,
 					 GTK_SHRINK|
-					 (tmp.placeholder?GTK_EXPAND|GTK_FILL:0),
+					 (tmp.type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 					 GTK_SHRINK|
-					 (tmp.placeholder?GTK_EXPAND|GTK_FILL:0),
+					 (tmp.type==APPLET_PLACEHOLDER?GTK_EXPAND|GTK_FILL:0),
 					 0,0);
 			break;
 	}
-	panel->applets[pos-n]->placeholder = tmp.placeholder;
+	panel->applets[pos-n]->type = tmp.type;
 	panel->applets[pos-n]->applet = tmp.applet;
 
 	return n;
@@ -1006,7 +1006,7 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 			break;
 	}
 	gtk_widget_show(the_panel->applets[pos]->applet);
-	the_panel->applets[pos]->placeholder = TRUE;
+	the_panel->applets[pos]->type = APPLET_PLACEHOLDER;
 }
 
 
@@ -1503,7 +1503,7 @@ panel_init(void)
 				break;
 		}
 		gtk_widget_show(the_panel->applets[i]->applet);
-		the_panel->applets[i]->placeholder = TRUE;
+		the_panel->applets[i]->type = APPLET_PLACEHOLDER;
 	}
 	the_panel->applet_count = 0;
 
@@ -1659,12 +1659,6 @@ register_toy(GtkWidget *applet, char *id, int pos, long flags)
 				 NULL);
 }
 
-static void
-change_size_notify(GtkWidget *applet)
-{
-	set_panel_position();
-}
-
 
 static void
 panel_change_orient(void)
@@ -1688,10 +1682,10 @@ panel_change_orient(void)
 						 i,i+1,0,1,
 						 GTK_SHRINK|GTK_EXPAND|
 						 (the_panel->applets[i]->
-						  placeholder?GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_FILL:0),
 						 GTK_SHRINK|GTK_EXPAND|
 						 (the_panel->applets[i]->
-						  placeholder?GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_FILL:0),
 						 0,0);
 			break;
 		case PANEL_POS_LEFT:
@@ -1707,10 +1701,10 @@ panel_change_orient(void)
 						 0,1,i,i+1,
 						 GTK_SHRINK|GTK_EXPAND|
 						 (the_panel->applets[i]->
-						  placeholder?GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_FILL:0),
 						 GTK_SHRINK|GTK_EXPAND|
 						 (the_panel->applets[i]->
-						  placeholder?GTK_FILL:0),
+						  type==APPLET_PLACEHOLDER?GTK_FILL:0),
 						 0,0);
 			break;
 	}
@@ -1759,7 +1753,7 @@ panel_reconfigure(Panel *newconfig)
 		}
 		/*notify each applet that we're changing orientation!*/
 		for(i=0;i<PANEL_TABLE_SIZE;i++)
-			if(!the_panel->applets[i]->placeholder)
+			if(!the_panel->applets[i]->type==APPLET_PLACEHOLDER)
 				applet_orientation_notify(
 					the_panel->applets[i]->applet,NULL);
 	} else if(oldmode != newconfig->mode) {
@@ -1813,14 +1807,15 @@ panel_command(PanelCommand *cmd)
 				     cmd->params.register_toy.flags);
 			break;
 
+		case PANEL_CMD_CREATE_DRAWER:
+			create_applet(cmd->params.create_drawer.name,
+				      cmd->params.create_drawer.icon,
+				      cmd->params.create_drawer.pos);
+			break;
+
 		case PANEL_CMD_SET_TOOLTIP:
 			set_tooltip(cmd->params.set_tooltip.applet,
 				    cmd->params.set_tooltip.tooltip);
-			break;
-
-		case PANEL_CMD_CHANGE_SIZE_NOTIFY:
-			change_size_notify(
-				cmd->params.change_size_notify.applet);
 			break;
 
 		case PANEL_CMD_PROPERTIES:

@@ -30,10 +30,31 @@ typedef enum {
 	PANEL_GETS_HIDDEN
 } PanelMode;
 
+typedef enum {
+	APPLET_NORMAL,
+	APPLET_PLACEHOLDER,
+	APPLET_DRAWER
+} AppletType;
+
 typedef struct {
 	GtkWidget    *applet;
-	gint          placeholder;
+	AppletType    type;
 } PanelApplet;
+
+typedef struct {
+	GtkWidget    *window;
+	GtkWidget    *table;
+	GtkWidget    *panel_eb;
+	GtkWidget    *panel;
+	PanelApplet **applets;        
+	gint          applet_count;
+	PanelState    state;
+	gint          step_size;
+	gint          button_press_id;
+	gint          leave_notify_timer_tag;
+	GtkWidget    *applet_being_dragged;
+	gint          applet_id_being_dragged;
+} PanelDrawer;
 
 typedef struct {
 	GtkWidget    *window;
@@ -50,11 +71,11 @@ typedef struct {
 	PanelState    state;
 	PanelMode     mode;
 	gint          step_size;
+	gint          drawer_step_size;
 	gint          delay;
 	gint          tooltips_enabled;
 	gint          enter_notify_id;
 	gint          leave_notify_id;
-	gint          visibility_notify_id;
 	gint          button_press_id;
 	gint          leave_notify_timer_tag;
 	gint          minimize_delay;
