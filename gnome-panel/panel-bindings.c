@@ -188,8 +188,10 @@ panel_bindings_register_toplevel (PanelToplevel *toplevel)
 {
 	int i;
 
-	if (!initialised)
+	if (!initialised) {
 		panel_bindings_initialise ();
+		initialised = TRUE;
+	}
 
 	for (i = 0; i < G_N_ELEMENTS (bindings); i++) {
 		if (!bindings [i].keyval)

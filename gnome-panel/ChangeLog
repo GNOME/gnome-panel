@@ -1,3 +1,72 @@
+2003-02-14  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: make the binary gnome-new-panel for the
+	moment. Build panel-profile.[ch] and use install-defaults.sh
+	to install the default setup.
+
+	* panel-profile.[ch]: start of the new GConf implementation. Loading
+	toplevels, changing toplevels configuration, responding to changes in
+	toplevels setttings work. Need to impl support for applets, objects and
+	the panel background.
+
+	* panel-toplevel.c:
+	(panel_toplevel_move_resize_window): split this out from size_request.
+	(panel_toplevel_realize): use it here.
+	(panel_toplevel_size_request): upd.
+	(panel_toplevel_button_press_event): initialise the grab offsets from
+	the event rather than the current pointer location.
+
+	* install-defaults.sh: gconftool script to install the default
+	panel setup. Will be replaced by a gconftool-2 --load < defaults.xml
+	thing when I get a chance.
+
+	* panel-toplevel.schemas.in: change where these are installed and
+	also split out the opacity from the background color the way it was
+	previously.
+
+	* panel-global.schemas.in: rename from panel-global-config.schemas.in.
+
+	* panel-general.schemas.in: add.
+
+	* panel-gconf.[ch]:
+	(panel_gconf_get_profile): kill.
+	(panel_gconf_basename): basically g_basename(), but hardcodes
+	"/" instead of G_DIR_SEPERATOR.
+	(panel_gconf_copy_dir): impl copying a directory full of entries.
+	(panel_gconf_associate_schemas_in_dir): don't use GError.
+	(panel_gconf_setup_profile): kill.
+	(panel_gconf_load_default_config_for_screen): don't use GError.
+
+	* main.c: (main): use panel_profile_load() instead of session_load().
+
+	* panel.c: (panel_load_panels_from_gconf): kill.
+
+	* session.[ch]: (panel_session_set_restart_command): upd.
+	(session_load): kill.
+
+	* menu.c: (init_menus): um, don't read all the .desktop files for
+	applets on startup - um ... .desktop files for applets ? I think
+	we might have missed some thing while porting :-)
+	(toggle_expand), (toggle_auto_hide),
+	(toggle_animations), (toggle_buttons), (toggle_arrows): make
+	all these changes through GConf instead of to the widget directly.
+
+	* gnome-run.c: (sync_entry_to_list), (toggle_contents),
+	(create_disclosure_widget), (create_simple_contents),
+	(update_contents), (show_run_dialog): use
+	panel_profile_get_(show|enable)_program_list().
+
+	* panel-applet-frame.c: (panel_applet_frame_construct_moniker): the
+	configuration is stored in /apps/new_panel temporarily while this stuff
+	is being worked on.
+
+	* panel-bindings.c: (panel_bindings_register_toplevel): actually set
+	initialise to TRUE. Pointed out by Arvind ... dunno why he didn't
+	commit it.
+
+	* applet.c, drawer.c, launcher.c, panel-action-button.c: disable
+	more gconf related stuff.
+
 2003-02-07  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-toplevel.schemas.in: add some schemas.

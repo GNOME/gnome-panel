@@ -548,7 +548,9 @@ properties_apply (Launcher *launcher)
 	/* Setup the button look */
 	setup_button (launcher);
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	launcher_save_to_gconf (launcher, launcher->info->gconf_key);
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 }
 
 static void
@@ -705,6 +707,7 @@ launcher_properties (Launcher  *launcher,
 	gtk_widget_show_all (launcher->prop_dialog);
 }
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 void
 launcher_save_to_gconf (Launcher   *launcher,
 			const char *gconf_key)
@@ -758,6 +761,7 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 
 	g_free (launcher_location);
 }
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 Launcher *
 load_launcher_applet_full (const char       *params,
@@ -1085,7 +1089,9 @@ launcher_idle_hoard (void)
 					launchers_to_hoard, launchers_to_hoard);
 
 	launcher_save (launcher);
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	launcher_save_to_gconf (launcher, launcher->info->gconf_key);
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 	return launchers_to_hoard ? TRUE : FALSE;
 }

@@ -928,7 +928,6 @@ panel_applet_load_applets_from_gconf (void)
 
 	g_idle_add (panel_applet_load_idle_handler, NULL);
 }
-#endif /* FIXME_FOR_TOPLEVEL */
 
 static void
 panel_applet_load_default_applet_for_screen (PanelGConfKeyType  type,
@@ -1041,7 +1040,6 @@ panel_applet_load_defaults_for_screen (PanelGConfKeyType  type,
         g_slist_free (applets);
 }
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
 static G_CONST_RETURN char *
 panel_applet_get_panel_id (AppletInfo *applet)
 {

@@ -41,12 +41,12 @@ STANDARD_PROPERTIES_CFLAGS = 					\
 	$(NULL)
 
 bin_PROGRAMS = \
-	gnome-panel 			\
+	gnome-new-panel 		\
 	gnome-panel-preferences		\
 	gnome-panel-screenshot		\
 	gnome-desktop-item-edit
 
-$(gnome_panel_OBJECTS) $(gnome_panel_properties_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
+$(gnome_new_panel_OBJECTS) $(gnome_panel_preferences_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
 
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
@@ -136,6 +136,7 @@ panel_sources =			\
 	panel-multiscreen.c	\
 	panel-a11y.c		\
 	panel-bindings.c	\
+	panel-profile.c         \
 	$(EGG_RECENT_FILES_C)	\
 	$(NULL)
 
@@ -179,11 +180,12 @@ panel_headers =			\
 	panel-multiscreen.h	\
 	panel-a11y.h		\
 	panel-bindings.h	\
+	panel-profile.h         \
 	panel-enums.h		\
 	$(EGG_RECENT_FILES_H)	\
 	$(NULL)
 
-gnome_panel_SOURCES =			\
+gnome_new_panel_SOURCES =		\
 	$(CORBA_SRCLIST)		\
 	$(EGG_SCREEN_EXEC_FILES)	\
 	$(EGG_ACCELERATORS_FILES)	\
@@ -191,13 +193,13 @@ gnome_panel_SOURCES =			\
 	$(panel_headers)		\
 	$(NULL)
 
-gnome_panel_LDADD =		\
+gnome_new_panel_LDADD =		\
 	$(X_LIBS)		\
 	$(PANEL_LIBS)		\
 	$(XINERAMA_LIBS)	\
 	-lpopt
 
-gnome_panel_LDFLAGS = -export-dynamic
+gnome_new_panel_LDFLAGS = -export-dynamic
 
 gnome_panel_preferences_SOURCES =	\
 	gnome-panel-preferences.c	\
@@ -254,7 +256,8 @@ EXTRA_DIST =					\
 	$(ui_DATA)				\
 	panel-marshal.list			\
 	update-from-egg.sh			\
-	gnome-panelrc
+	gnome-panelrc				\
+	install-defaults.sh
 
 sysdir = $(datadir)/control-center-2.0/capplets
 sys_in_files = gnome-panel-preferences.desktop.in
@@ -317,8 +320,9 @@ rc_DATA = gnome-panelrc
 
 schemasdir       = $(sysconfdir)/gconf/schemas
 schemas_in_files =				\
-	panel-global-config.schemas.in		\
-	panel-per-panel-config.schemas.in	\
+	panel-global.schemas.in 		\
+	panel-general.schemas.in		\
+	panel-toplevel.schemas.in		\
 	gnome-panel-screenshot.schemas.in	\
 	$(NULL)
 schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
@@ -329,7 +333,8 @@ install-data-local:
 	if test -z "$(DESTDIR)" ; then \
 		for p in $(schemas_DATA) ; do \
 			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/gnome-panel/$$p ; \
-		done \
+		done ; \
+		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) GCONFTOOL=$(GCONFTOOL) $(srcdir)/install-defaults.sh ; \
 	fi
 
 CLEANFILES = $(BUILT_SOURCES)

@@ -740,4 +740,4 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	g_free (pixmap);
 	g_free (tooltip);
 }
-#endif
+#endif /* FIXME_FOR_NEW_TOPELVEL */

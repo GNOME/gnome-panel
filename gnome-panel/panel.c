@@ -2195,14 +2195,4 @@ panel_remove_from_gconf (PanelWidget *panel)
 		panel_g_slist_deep_free (new_panels);
 }
 
-#else
-void
-panel_load_panels_from_gconf (void)
-{
-	PanelToplevel *toplevel;
-
-	toplevel = g_object_new (PANEL_TYPE_TOPLEVEL, NULL);
-	panel_setup (toplevel);
-	gtk_widget_show (GTK_WIDGET (toplevel));
-}
 #endif /* FIXME_FOR_NEW_TOPLEVEL */

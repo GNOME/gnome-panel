@@ -421,6 +421,7 @@ panel_action_button_set_type (PanelActionButton     *button,
 			      _(actions [type].tooltip), NULL);
 }
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 static void
 panel_action_button_type_changed (GConfClient       *client,
 				  guint              cnxn_id,
@@ -461,6 +462,7 @@ panel_action_button_connect_to_gconf (PanelActionButton *button)
 					 (GConfClientNotifyFunc) panel_action_button_type_changed,
 					 button, NULL, NULL);
 }
+#endif
 
 GtkWidget *
 panel_action_button_load (PanelActionButtonType  type,
@@ -499,11 +501,14 @@ panel_action_button_load (PanelActionButtonType  type,
 	if (actions [button->priv->type].setup_menu)
 		actions [button->priv->type].setup_menu (button);
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	panel_action_button_connect_to_gconf (button);
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 	return GTK_WIDGET (button);
 }
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 GtkWidget *
 panel_action_button_load_from_gconf (PanelWidget *panel,
 				     int          position,
@@ -564,6 +569,7 @@ panel_action_button_save_to_gconf (PanelActionButton *button,
 
 	gconf_client_set_string (client, key, action_type, NULL);
 }
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 void
 panel_action_button_invoke_menu (PanelActionButton *button,

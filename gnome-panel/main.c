@@ -23,6 +23,7 @@
 #include "panel.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
+#include "panel-profile.h"
 #include "panel-config-global.h"
 #include "panel-shell.h"
 #include "panel-multiscreen.h"
@@ -170,8 +171,6 @@ main(int argc, char **argv)
 
 	bonobo_activate ();
 
-	panel_gconf_setup_profile (profile_name);
-	
 	if (!panel_shell_register ())
 		return -1;
 
@@ -196,11 +195,14 @@ main(int argc, char **argv)
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 
+        init_menus ();
+
 	panel_gconf_add_dir ("/apps/panel/global");
 	panel_gconf_add_dir ("/desktop/gnome/interface");
 	panel_gconf_notify_add ("/apps/panel/global", panel_global_config_notify, NULL);
 
-	session_load ();	
+	panel_load_global_config ();
+	panel_profile_load (profile_name);
 
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,

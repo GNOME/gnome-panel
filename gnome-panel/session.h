@@ -28,8 +28,6 @@ void panel_config_sync_schedule (void);
 
 void load_system_wide (void);
 
-void session_load (void);
-
 void session_add_dead_launcher (const gchar *location);
 
 void panel_session_setup_config_sync   (void);

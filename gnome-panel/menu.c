@@ -63,6 +63,7 @@
 #include "panel-compatibility.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
+#include "panel-profile.h"
 
 #undef MENU_DEBUG
 
@@ -169,21 +170,11 @@ void
 init_menus (void)
 {
 	const DistributionInfo *distribution_info = get_distribution_info ();
-	char *menu;
 
 	/*just load the menus from disk, don't make the widgets
 	  this just reads the .desktops of the top most directory
 	  and a level down*/
 	fr_read_dir (NULL, "applications:/", 0, 2);
-
-	menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
-					  "applets", TRUE, NULL);
-	if (menu != NULL) {
-		char *uri = gnome_vfs_get_uri_from_local_path (menu);
-		fr_read_dir (NULL, uri, 0, 2);
-		g_free (uri);
-	}
-	g_free (menu);
 
 	if (distribution_info != NULL &&
 	    distribution_info->menu_init_func != NULL)
@@ -3209,15 +3200,15 @@ current_panel_config (GtkWidget *menuitem)
 static void
 toggle_expand (PanelToplevel *toplevel)
 {
-	panel_toplevel_set_expand (toplevel,
-				   !panel_toplevel_get_expand (toplevel));
+	panel_profile_set_toplevel_expand (
+		toplevel, !panel_toplevel_get_expand (toplevel));
 }
 
 static void
 toggle_auto_hide (PanelToplevel *toplevel)
 {
-	panel_toplevel_set_auto_hide (toplevel,
-				      !panel_toplevel_get_auto_hide (toplevel));
+	panel_profile_set_toplevel_auto_hide (
+		toplevel, !panel_toplevel_get_auto_hide (toplevel));
 }
 
 static void
@@ -3247,19 +3238,22 @@ decrease_size (PanelToplevel *toplevel)
 static void
 toggle_animations (PanelToplevel *toplevel)
 {
-	panel_toplevel_set_animate (toplevel, !panel_toplevel_get_animate (toplevel));
+	panel_profile_set_toplevel_enable_animations (
+		toplevel, !panel_toplevel_get_animate (toplevel));
 }
 
 static void
 toggle_buttons (PanelToplevel *toplevel)
 {
-	panel_toplevel_set_enable_buttons (toplevel, !panel_toplevel_get_enable_buttons (toplevel));
+	panel_profile_set_toplevel_enable_buttons (
+		toplevel, !panel_toplevel_get_enable_buttons (toplevel));
 }
 
 static void
 toggle_arrows (PanelToplevel *toplevel)
 {
-	panel_toplevel_set_enable_arrows (toplevel, !panel_toplevel_get_enable_arrows (toplevel));
+	panel_profile_set_toplevel_enable_arrows (
+		toplevel, !panel_toplevel_get_enable_arrows (toplevel));
 }
 
 static GtkWidget *
@@ -4257,6 +4251,7 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 	image_menu_items = g_slist_prepend (image_menu_items, image);
 }
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 void
 menu_save_to_gconf (Menu       *menu,
 		    const char *gconf_key)
@@ -4355,6 +4350,7 @@ menu_load_from_gconf (PanelWidget *panel_widget,
 	g_free (path);
 	g_free (custom_icon_file);
 }
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 static gboolean
 panel_menu_key_press_handler (GtkWidget   *widget,

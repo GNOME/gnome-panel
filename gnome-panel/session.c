@@ -26,7 +26,7 @@
 #include "panel.h"
 #include "panel-applet-frame.h"
 #include "panel-config-global.h"
-#include "panel-gconf.h"
+#include "panel-profile.h"
 #include "panel-shell.h"
 #include "xstuff.h"
 
@@ -204,7 +204,7 @@ panel_session_set_restart_command (GnomeClient *client,
 
 	argv [0] = exec;
 	argv [1] = "--profile";
-	argv [2] = (char *) panel_gconf_get_profile ();
+	argv [2] = (char *) panel_profile_get_name ();
 	argv [3] = NULL;
 
 	gnome_client_set_restart_command (client, argc, argv);
@@ -345,17 +345,3 @@ load_system_wide (void)
 	gnome_config_pop_prefix ();
 }
 #endif
-
-void session_load (void) {
-	/* FIXME : We still have to load up system preferences
-	 * load_system_wide ();
-	 */ 
-
-	panel_load_global_config ();
-	init_menus ();
-
-	panel_load_panels_from_gconf ();
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-	panel_applet_load_applets_from_gconf ();
-#endif
-}

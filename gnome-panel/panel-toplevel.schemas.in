@@ -3,8 +3,10 @@
 
   <schemalist>    
 
+    <!-- FIXME_FOR_NEW_TOPLEVEL: s/new_panel/panel/ -->
+
     <schema>
-      <key>/schemas/apps/panel/toplevel/name</key>
+      <key>/schemas/apps/new_panel/toplevels/name</key>
       <owner>panel</owner>
       <type>string</type>
       <default></default>
@@ -19,7 +21,7 @@
     </schema>
 
     <schema>
-      <key>/schemas/apps/panel/toplevel/screen</key>
+      <key>/schemas/apps/new_panel/toplevels/screen</key>
       <owner>panel</owner>
       <type>int</type>
       <default>0</default>
@@ -34,7 +36,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/monitor</key>
+      <key>/schemas/apps/new_panel/toplevels/monitor</key>
       <owner>panel</owner>
       <type>int</type>
       <default>0</default>
@@ -49,7 +51,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/expand</key>
+      <key>/schemas/apps/new_panel/toplevels/expand</key>
       <owner>panel</owner>
       <type>bool</type>
       <default>true</default>
@@ -66,7 +68,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/orientation</key>
+      <key>/schemas/apps/new_panel/toplevels/orientation</key>
       <owner>panel</owner>
       <type>string</type>
       <default>top</default>
@@ -87,7 +89,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/size</key>
+      <key>/schemas/apps/new_panel/toplevels/size</key>
       <owner>panel</owner>
       <type>int</type>
       <default>48</default>
@@ -103,7 +105,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/x</key>
+      <key>/schemas/apps/new_panel/toplevels/x</key>
       <owner>panel</owner>
       <type>int</type>
       <default>0</default>
@@ -119,7 +121,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/y</key>
+      <key>/schemas/apps/new_panel/toplevels/y</key>
       <owner>panel</owner>
       <type>int</type>
       <default>0</default>
@@ -135,7 +137,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/x_centered</key>
+      <key>/schemas/apps/new_panel/toplevels/x_centered</key>
       <owner>panel</owner>
       <type>bool</type>
       <default>false</default>
@@ -152,7 +154,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/y_centered</key>
+      <key>/schemas/apps/new_panel/toplevels/y_centered</key>
       <owner>panel</owner>
       <type>bool</type>
       <default>false</default>
@@ -169,7 +171,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/auto_hide</key>
+      <key>/schemas/apps/new_panel/toplevels/auto_hide</key>
       <owner>panel</owner>
       <type>bool</type>
       <default>false</default>
@@ -184,7 +186,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/enable_animations</key>
+      <key>/schemas/apps/new_panel/toplevels/enable_animations</key>
       <owner>panel</owner>
       <type>bool</type>
       <default>true</default>
@@ -198,7 +200,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/enable_buttons</key>
+      <key>/schemas/apps/new_panel/toplevels/enable_buttons</key>
       <owner>panel</owner>
       <type>bool</type>
       <default>false</default>
@@ -213,7 +215,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/enable_arrows</key>
+      <key>/schemas/apps/new_panel/toplevels/enable_arrows</key>
       <owner>panel</owner>
       <type>bool</type>
       <default>true</default>
@@ -227,7 +229,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/hide_delay</key>
+      <key>/schemas/apps/new_panel/toplevels/hide_delay</key>
       <owner>panel</owner>
       <type>int</type>
       <default>500</default>
@@ -242,7 +244,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/unhide_delay</key>
+      <key>/schemas/apps/new_panel/toplevels/unhide_delay</key>
       <owner>panel</owner>
       <type>int</type>
       <default>500</default>
@@ -258,7 +260,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/auto_hide_size</key>
+      <key>/schemas/apps/new_panel/toplevels/auto_hide_size</key>
       <owner>panel</owner>
       <type>int</type>
       <default>6</default>
@@ -273,7 +275,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/animation_speed</key>
+      <key>/schemas/apps/new_panel/toplevels/animation_speed</key>
       <owner>panel</owner>
       <type>string</type>
       <default>medium</default>
@@ -288,9 +290,9 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/background</key>
+      <key>/schemas/apps/new_panel/toplevels/background/type</key>
       <owner>panel</owner>
-      <type>type</type>
+      <type>string</type>
       <default>gtk</default>
       <locale name="C">
         <short>The background type.</short>
@@ -306,22 +308,37 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/background/color</key>
+      <key>/schemas/apps/new_panel/toplevels/background/color</key>
       <owner>panel</owner>
       <type>string</type>
-      <default>#00000000</default>
+      <default>#000000</default>
       <locale name="C">
         <short>The background color.</short>
         <long>
-          Specifies the background color for the panel in #RGBA
-          format. If the color contains any alpha, the color will be
-          composited onto the desktop background image.
+          Specifies the background color for the panel in #RGB
+          format.
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/new_panel/toplevels/background/opacity</key>
+      <owner>panel</owner>
+      <type>int</type>
+      <default>65535</default>
+      <locale name="C">
+        <short>The background color opactity.</short>
+        <long>
+          Specifies the opacity of the background color format. If the
+          color is not completely opaque (a value of less than 65535)
+          and the color will be composited onto the desktop background
+          image.
         </long>
       </locale>
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/background/image</key>
+      <key>/schemas/apps/new_panel/toplevels/background/image</key>
       <owner>panel</owner>
       <type>string</type>
       <default></default>
@@ -336,7 +353,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/background/fit</key>
+      <key>/schemas/apps/new_panel/toplevels/background/fit</key>
       <owner>panel</owner>
       <type>bool</type>
       <default>false</default>
@@ -350,7 +367,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/background/stretch</key>
+      <key>/schemas/apps/new_panel/toplevels/background/stretch</key>
       <owner>panel</owner>
       <type>bool</type>
       <default>false</default>
@@ -364,7 +381,7 @@
     </schema>
  
     <schema>
-      <key>/schemas/apps/panel/toplevel/background/rotate</key>
+      <key>/schemas/apps/new_panel/toplevels/background/rotate</key>
       <owner>panel</owner>
       <type>bool</type>
       <default>false</default>

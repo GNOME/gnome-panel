@@ -2170,16 +2170,47 @@ panel_toplevel_begin_resize (PanelToplevel *toplevel)
 }
 
 static void
+panel_toplevel_move_resize_window (PanelToplevel *toplevel,
+				   gboolean       move,
+				   gboolean       resize)
+{
+	GtkWidget *widget;
+
+	widget = GTK_WIDGET (toplevel);
+
+	g_assert (GTK_WIDGET_REALIZED (widget));
+
+	if (move && resize)
+		gdk_window_move_resize (widget->window,
+					toplevel->priv->geometry.x,
+					toplevel->priv->geometry.y,
+					toplevel->priv->geometry.width,
+					toplevel->priv->geometry.height);
+	else if (move)
+		gdk_window_move (widget->window,
+				 toplevel->priv->geometry.x,
+				 toplevel->priv->geometry.y);
+	else if (resize)
+		gdk_window_resize (widget->window,
+				   toplevel->priv->geometry.width,
+				   toplevel->priv->geometry.height);
+}
+
+static void
 panel_toplevel_realize (GtkWidget *widget)
 {
+	PanelToplevel *toplevel = (PanelToplevel *) widget;
+
 	gtk_window_set_decorated (GTK_WINDOW (widget), FALSE);
 	gtk_window_stick (GTK_WINDOW (widget));
 
 	if (GTK_WIDGET_CLASS (parent_class)->realize)
 		GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
-	panel_toplevel_update_struts (PANEL_TOPLEVEL (widget));
+	panel_toplevel_update_struts (toplevel);
 	panel_xutils_set_window_type (widget->window, PANEL_XUTILS_TYPE_DOCK);
+
+	panel_toplevel_move_resize_window (toplevel, TRUE, TRUE);
 }
 
 static void
@@ -2273,20 +2304,7 @@ panel_toplevel_size_request (GtkWidget      *widget,
 	    old_geometry.y != toplevel->priv->geometry.y)
 		position_changed = TRUE;
 
-	if (size_changed && position_changed)
-		gdk_window_move_resize (widget->window,
-					toplevel->priv->geometry.x,
-					toplevel->priv->geometry.y,
-					toplevel->priv->geometry.width,
-					toplevel->priv->geometry.height);
-	else if (position_changed)
-		gdk_window_move (widget->window,
-				 toplevel->priv->geometry.x,
-				 toplevel->priv->geometry.y);
-	else if (size_changed)
-		gdk_window_resize (widget->window,
-				   toplevel->priv->geometry.width,
-				   toplevel->priv->geometry.height);
+	panel_toplevel_move_resize_window (toplevel, position_changed, size_changed);
 }
 
 static void
@@ -2501,12 +2519,17 @@ panel_toplevel_button_press_event (GtkWidget      *widget,
 		panel_toplevel_init_resize_drag_offsets (toplevel, grab_op);
 
 	else {
+		GtkWidget *event_widget;
+
 		grab_op = PANEL_GRAB_OP_MOVE;
 
-		gdk_window_get_pointer (widget->window,
-					&toplevel->priv->drag_offset_x,
-					&toplevel->priv->drag_offset_y,
-					NULL);
+		gdk_window_get_user_data (event->window, (gpointer *)&event_widget);
+		gtk_widget_translate_coordinates (event_widget,
+						  widget,
+						  event->x,
+						  event->y,
+						  &toplevel->priv->drag_offset_x,
+						  &toplevel->priv->drag_offset_y);
 	}
 
 	panel_toplevel_begin_grab_op (toplevel, grab_op, FALSE, event->time);

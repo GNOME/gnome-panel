@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<gconfschemafile>
+
+  <schemalist>    
+
+    <!-- FIXME_FOR_NEW_TOPLEVEL: s/new_panel/panel/ -->
+
+    <schema>
+      <key>/schemas/apps/new_panel/general/enable_program_list</key>
+      <owner>panel</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Enable the program list in the "Run Program" dialog.</short>
+        <long>
+          If true the "Known Applications" listing in the "Run
+          Program" dialog is made available. Whether or not the
+          listing is expanded when the dialog is shown is controlled
+          by the show_program_list setting.
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/new_panel/general/show_program_list</key>
+      <owner>panel</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Expand the program list in the "Run Program" dialog</short>
+        <long>
+          If true the "Known Applications" listing in the "Run
+          Program" is expanded when the dialog is opened. This
+          setting is only relevant if enable_program_list is true.
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/new_panel/general/toplevel_id_list</key>
+      <owner>panel</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <default>[]</default>
+      <locale name="C">
+        <short>A list of panel IDs</short>
+        <long>
+          A list of panel IDs. Each ID identifies an individual
+          toplevel panel. The settings for each of these panels is
+          stored in /apps/panel/general/$(profile)/toplevels/$(id).
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/new_panel/general/applet_id_list</key>
+      <owner>panel</owner>
+      <list_type>string</list_type>
+      <type>list</type>
+      <default>[]</default>
+      <locale name="C">
+        <short>A list of panel applet Ids</short>
+        <long>
+          A list of panel applet IDs. Each ID identifies an
+          individual panel applet. The settings for each of these
+          applets is stored in
+          /apps/panel/general/$(profiles)/applets/$(id).
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/new_panel/general/object_id_list</key>
+      <owner>panel</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <default>[]</default>
+      <locale name="C">
+        <short>A list of panel object IDs</short>
+        <long>
+          A list of panel object IDs. Each ID identifies an individual
+          panel object (e.g. a launcher, action button or menu
+          button/bar). The settings for each of these applets is
+          stored in
+          /apps/panel/general/$(profiles)/objects/$(id).
+        </long>
+      </locale>
+    </schema>
+
+  </schemalist>
+  
+</gconfschemafile>

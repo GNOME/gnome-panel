@@ -32,7 +32,7 @@
 #include <gdk/gdkx.h>
 
 #include "panel-applet-frame.h"
-#include "panel-gconf.h"
+#include "panel-profile.h"
 #include "panel-util.h"
 #include "panel.h"
 #include "session.h"
@@ -73,6 +73,7 @@ typedef enum {
 	APPLET_HAS_HANDLE   = 1 << 2,
 } PanelAppletFlags;
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 void
 panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
 				  const char       *gconf_key)
@@ -111,6 +112,7 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 
 	g_free (applet_iid);
 }
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 static void
 popup_handle_remove (BonoboUIComponent *uic,
@@ -1005,10 +1007,11 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	bg_str = panel_applet_frame_get_background_string (
 				frame, panel, panel->background.type);
 
+	/* FIXME_FOR_NEW_TOPLEVEL: s/new_panel/panel/ */
 	retval = g_strdup_printf (
-			"%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs;"
+			"%s!prefs_key=/apps/new_panel/profiles/%s/applets/%s/prefs;"
 			"background=%s;orient=%s;size=%s",
-			iid, panel_gconf_get_profile (), gconf_key, bg_str,
+			iid, panel_profile_get_name (), gconf_key, bg_str,
 			panel_applet_frame_get_orient_string (frame, panel),
 			panel_applet_frame_get_size_string (frame, panel));
 
