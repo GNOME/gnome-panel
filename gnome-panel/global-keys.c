@@ -7,7 +7,9 @@
 #include "applet.h"
 #include "panel-include.h"
 #include "gnome-run.h"
+#include "panel_config_global.h"
 
+extern GlobalConfig global_config;
 extern GSList *panel_list;
 
 static int
@@ -19,11 +21,21 @@ watch_xerrors(Display *disp, XErrorEvent *errev)
 void
 panel_global_keys_setup(void)
 {
+	static guint lastkey = 0;
 	XErrorHandler old_err_handler;
-	
+
 	old_err_handler = XSetErrorHandler (watch_xerrors);
-	XGrabKey (GDK_DISPLAY(), XK_LEFT_WIN, AnyModifier, GDK_ROOT_WINDOW(),
-		  True, GrabModeAsync, GrabModeAsync);
+	if (lastkey)
+		XUngrabKey (GDK_DISPLAY(), lastkey, AnyModifier,
+			    GDK_ROOT_WINDOW());
+	
+	if (global_config.keys_enabled) {
+		lastkey = global_config.menu_keycode;
+		XGrabKey (GDK_DISPLAY(), lastkey, AnyModifier, 
+			  GDK_ROOT_WINDOW(), True,
+			  GrabModeAsync, GrabModeAsync);
+	} else
+		lastkey = 0;
 	XSetErrorHandler (old_err_handler);
 }
 
@@ -32,10 +44,16 @@ panel_global_keys_filter(GdkXEvent *gdk_xevent, GdkEvent *event)
 {
 	static int winkey_depth = 0, num_subkeys = 0;
 	XKeyEvent *kev = gdk_xevent;
-	
 	switch (kev->type) {
 	case KeyPress:
-		if(kev->keycode == XK_LEFT_WIN) {
+		if(kev->keycode == global_config.menu_keycode) {
+#ifdef PANEL_DEBUG
+			g_message ("(%ld) %d [%x]: %s", 
+				   XKeycodeToKeysym (GDK_DISPLAY(),
+						     kev->keycode, 1),
+				   kev->keycode, kev->keycode,
+				   gdk_keyval_name (kev->keycode));
+#endif
 			winkey_depth++;
 			num_subkeys = 0;
 			return GDK_FILTER_REMOVE;
@@ -49,49 +67,18 @@ panel_global_keys_filter(GdkXEvent *gdk_xevent, GdkEvent *event)
 			num_subkeys++;
 			
 			/* Do Win+key hotkeys */
-			switch(ks) {
-			case XK_R:
-			case XK_r: 
+			if (kev->keycode == global_config.run_keycode)
 				show_run_dialog ();
-				break;
-			default:
+			else
 				num_subkeys--;
-				break;
-			}
 			return GDK_FILTER_REMOVE;
 		}
 		break;
 	case KeyRelease:
-		if(kev->keycode == XK_LEFT_WIN) {
+		if(kev->keycode == global_config.menu_keycode) {
 			winkey_depth--;
-			if(!num_subkeys) {
-				extern PanelWidget *current_panel;
-				GtkWidget *menu;
-				GtkWidget *panel;
-				GtkWidget *menuitem;
-				PanelData *pd;
-				extern int base_panels;
-
-				if (!current_panel) {
-					panel = GTK_WIDGET (((PanelData *)panel_list->data)->panel);
-					current_panel = BASEP_WIDGET (panel)->panel;
-				} else {
-					panel = PANEL_WIDGET (current_panel)->panel_parent;
-				}
-				pd = gtk_object_get_user_data (GTK_OBJECT (panel));
-				menu = panel_menu_get (pd);
-				menuitem = gtk_object_get_data (GTK_OBJECT (menu),
-								"remove_item");
-				
-				if (!IS_DRAWER_WIDGET (panel))
-					gtk_widget_set_sensitive(menuitem, base_panels > 1);
-				pd->menu_age = 0;
-
-				gtk_menu_popup(GTK_MENU (menu), NULL, NULL,
-                                               NULL,
-                                               NULL, 0,
-                                               ((GdkEventKey *)event)->time);
-			}
+			if(!num_subkeys)
+				popup_panel_menu (GDK_CURRENT_TIME);
 			return GDK_FILTER_REMOVE;
 		}
 		break;

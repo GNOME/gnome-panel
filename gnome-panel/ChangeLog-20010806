@@ -1,3 +1,30 @@
+1999-12-13  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* session.c (apply_global_config): (re)init keystuff here
+	(load_up_globals): load up keystuff config
+
+	* panel_config_global.h: add keybinding config stuff
+
+	* panel.c (popup_panel_menu): pop up a panel context menu
+	(panel_event): moved stuff to popup_panel_menu()
+
+	* main.c (main): don't init keybindings here
+
+	* gnome-run.c (show_run_dialog): add pixmaps to buttons
+
+	* gnome-panel-properties.c (sync_config_with_misc_page): 
+	(sync_config_with_misc_page): 
+	(grab_key_filter): 
+	(grab_button_pressed): 
+	(misc_notebook_page): 
+	(loadup_vals): 
+	(write_config): add keybinding configuration.  UI is not yet
+	good (in fact it is pretty poor)
+
+	* global-keys.c (panel_global_keys_setup): honor the configuration,
+	and ungrab() if we had previously grab()ed
+	(panel_global_keys_filter): call popup_panel_menu() and honor config
+
 1999-12-11  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* global-keys.c (panel_global_keys_filter): call the internal

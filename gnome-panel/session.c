@@ -13,8 +13,9 @@
 #include <unistd.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>
-
+#include <X11/keysym.h>
 #include "panel-include.h"
+#include "global-keys.h"
 
 /*#define PANEL_DEBUG 1*/
 
@@ -164,6 +165,8 @@ apply_global_config(void)
 		}
 	}
 	autohide_size_old = global_config.minimized_size;
+
+	panel_global_keys_setup();
 }
 
 static int
@@ -1169,6 +1172,18 @@ load_up_globals(void)
 	g_string_sprintf(buf,"movement_type=%d", PANEL_SWITCH_MOVE);
 	global_config.movement_type=gnome_config_get_int(buf->str);
 
+	global_config.keys_enabled=gnome_config_get_bool("keys_enabled=TRUE");
+
+	g_string_sprintf(buf,"menu_keycode=%d", XK_RIGHT_MENU);
+	global_config.menu_keycode=gnome_config_get_int(buf->str);
+
+	global_config.menu_state=gnome_config_get_int("menu_state=0");
+
+	g_string_sprintf(buf,"run_keycode=%d", XK_r);
+	global_config.run_keycode=gnome_config_get_int(buf->str);
+
+	global_config.run_state=gnome_config_get_int("run_state=0");
+	
 	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");

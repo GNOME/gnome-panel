@@ -31,6 +31,11 @@ struct _GlobalConfig {
 	int hide_panel_frame;
 	int tile_when_over;
 	int saturate_when_over;
+	int keys_enabled;
+	guint menu_keycode;
+	guint menu_state;
+	guint run_keycode;
+	guint run_state;
 };
 
 #endif /* PANEL_CONFIG_GLOBAL_H */

@@ -607,7 +607,7 @@ panel_applet_draw(GtkWidget *panel, GtkWidget *widget, gpointer data)
 		extern_send_draw(info->data);
 }
 
-GtkWidget *
+static GtkWidget *
 panel_menu_get(PanelData *pd)
 {
 	if(pd->menu)
@@ -617,6 +617,35 @@ panel_menu_get(PanelData *pd)
 	gtk_signal_connect(GTK_OBJECT(pd->menu), "deactivate",
 			   GTK_SIGNAL_FUNC(menu_deactivate),pd);
 	return pd->menu;
+}
+
+void
+popup_panel_menu (long time)
+{
+	BasePWidget *basep;
+	PanelData *pd;
+	GtkWidget *menu;
+
+	if (!current_panel) {
+	        basep = BASEP_WIDGET (((PanelData *)panel_list->data)->panel);			
+		current_panel = PANEL_WIDGET (basep->panel);
+	} else
+		basep = BASEP_WIDGET (current_panel->panel_parent);
+	
+
+	pd = gtk_object_get_user_data (GTK_OBJECT (basep));
+	menu = panel_menu_get (pd);
+	
+	if (!IS_DRAWER_WIDGET (PANEL_WIDGET (current_panel)->panel_parent)) {
+		GtkWidget *menuitem = gtk_object_get_data (GTK_OBJECT (menu),
+							   "remove_item");
+		gtk_widget_set_sensitive (menuitem, base_panels > 1);
+	}
+
+	pd->menu_age = 0;
+	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, 
+			NULL, NULL, 0, time);
+		
 }
 
 static int
@@ -630,27 +659,9 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 		switch(bevent->button) {
 		case 3: /* fall through */
 			if(!panel_applet_in_drag) {
-				GtkWidget *panel_menu;
-				GtkWidget *rem;
 				current_panel =
 					PANEL_WIDGET(basep->panel);
-				panel_menu = panel_menu_get(pd);
-				rem = gtk_object_get_data(GTK_OBJECT(panel_menu),
-							  "remove_item");
-				
-				if (!IS_DRAWER_WIDGET(basep))
-					gtk_widget_set_sensitive(rem, base_panels > 1);
-
-				basep->autohide_inhibit = TRUE;
-				basep_widget_queue_autohide(basep);
-
-				pd->menu_age = 0;
-				
-				gtk_menu_popup(GTK_MENU(panel_menu), NULL, NULL,
-					       global_config.off_panel_popups?
-					        panel_menu_position:NULL,
-					       widget, bevent->button,
-					       bevent->time);
+				popup_panel_menu (bevent->time);
 				return TRUE;
 			}
 			break;

@@ -286,8 +286,6 @@ main(int argc, char **argv)
 	  starting multiple goad_id's at once are libgnorba's problem*/
 	load_queued_externs();
 
-	panel_global_keys_setup();
-
 	/* set up a filter on the root window to get map requests */
 	/* we will select the events later when we actually need them */
 	gdk_window_add_filter(GDK_ROOT_PARENT(), event_filter, NULL);

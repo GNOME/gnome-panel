@@ -22,8 +22,9 @@
 #include <config.h>
 #include <gnome.h>
 #include <libgnorba/gnorba.h>
+#include <gdk/gdkx.h>
 #include "capplet-widget.h"
-
+#include "global-keys.h"
 /*we just use the GlobalConfig and LAST_TILE definitions, some panel-util stuff,
   and the DEFAULT_* defines from session.h !!!*/
 #include "panel-types.h"
@@ -84,6 +85,9 @@ static GtkWidget *tooltips_enabled_cb;
 static GtkWidget *drawer_auto_close_cb;
 static GtkWidget *autoraise_cb;
 static GtkWidget *keep_bottom_cb;
+static GtkWidget *keys_enabled_cb;
+static GtkWidget *menu_key_sb;
+static GtkWidget *run_key_sb;
 
 static gboolean changing = TRUE;
 static GtkWidget *capplet;
@@ -592,6 +596,16 @@ sync_misc_page_with_config(GlobalConfig *conf)
 				    conf->autoraise);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(keep_bottom_cb),
 				    conf->keep_bottom);
+	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(keys_enabled_cb),
+				    conf->keys_enabled);
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (menu_key_sb),
+				   (float)conf->menu_keycode);
+	gtk_object_set_user_data (GTK_OBJECT (menu_key_sb),
+				  GINT_TO_POINTER (conf->menu_state));
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (run_key_sb),
+				   (float)conf->run_keycode);
+	gtk_object_set_user_data (GTK_OBJECT (run_key_sb),
+				  GINT_TO_POINTER (conf->run_state));
 }
 static void
 sync_config_with_misc_page(GlobalConfig *conf)
@@ -612,6 +626,76 @@ sync_config_with_misc_page(GlobalConfig *conf)
 		GTK_TOGGLE_BUTTON(autoraise_cb)->active;
 	conf->keep_bottom =
 		GTK_TOGGLE_BUTTON(keep_bottom_cb)->active;
+	conf->keys_enabled =
+		GTK_TOGGLE_BUTTON(keys_enabled_cb)->active;
+	conf->menu_keycode = gtk_spin_button_get_value_as_int (
+		GTK_SPIN_BUTTON (menu_key_sb));
+	conf->menu_state = GPOINTER_TO_INT (gtk_object_get_user_data (
+		GTK_OBJECT (menu_key_sb)));		
+	conf->run_keycode = gtk_spin_button_get_value_as_int (
+		GTK_SPIN_BUTTON (run_key_sb));
+	conf->run_state = GPOINTER_TO_INT (gtk_object_get_user_data (
+		GTK_OBJECT (run_key_sb)));		
+}
+
+static GtkWidget *grab_dialog;
+
+static GdkFilterReturn
+grab_key_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
+{
+	XEvent *xevent = (XEvent *)gdk_xevent;
+	XKeyEvent *xkevent;
+	GtkSpinButton *sb;
+
+	if (xevent->type != KeyPress && xevent->type != KeyRelease)
+		return GDK_FILTER_CONTINUE;
+	
+	xkevent = (XKeyEvent *)xevent;
+	sb = GTK_SPIN_BUTTON (data);
+
+	g_message ("keycode: %d\tstate: %d",
+		   xkevent->keycode, xkevent->state);
+
+	gtk_spin_button_set_value (sb, (float)xkevent->keycode);
+	gtk_object_set_user_data (GTK_OBJECT (sb),
+				  GINT_TO_POINTER (xkevent->state));
+
+	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+	gtk_widget_destroy (grab_dialog);
+	gdk_window_remove_filter (GDK_ROOT_PARENT(),
+				  grab_key_filter, data);
+
+	return GDK_FILTER_REMOVE;
+}
+
+static void
+grab_button_pressed (GtkButton *button, gpointer data)
+{
+	GtkWidget *frame;
+	GtkWidget *box;
+	GtkWidget *label;
+	grab_dialog = gtk_window_new (GTK_WINDOW_POPUP);
+
+
+	gdk_keyboard_grab (GDK_ROOT_PARENT(), TRUE, GDK_CURRENT_TIME);
+	gdk_window_add_filter (GDK_ROOT_PARENT(), grab_key_filter, data);
+
+	gtk_window_set_policy (GTK_WINDOW (grab_dialog), FALSE, FALSE, TRUE);
+	gtk_window_set_position (GTK_WINDOW (grab_dialog), GTK_WIN_POS_CENTER);
+	gtk_window_set_modal (GTK_WINDOW (grab_dialog), TRUE);
+
+	frame = gtk_frame_new (NULL);
+	gtk_container_add (GTK_CONTAINER (grab_dialog), frame);
+
+	box = gtk_hbox_new (0, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (box), 20);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+
+	label = gtk_label_new (_("Press a key..."));
+	gtk_container_add (GTK_CONTAINER (box), label);
+	
+	gtk_widget_show_all (grab_dialog);
+	return;
 }
 
 static GtkWidget *
@@ -621,6 +705,8 @@ misc_notebook_page(void)
 	GtkWidget *box;
 	GtkWidget *table;
 	GtkWidget *vbox;
+	GtkWidget *w;
+	GtkObject *adj;
 	
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -694,7 +780,63 @@ misc_notebook_page(void)
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), keep_bottom_cb, FALSE, FALSE, 0);
 
-	return (vbox);
+
+	/* Key Bindings frame */
+	frame = gtk_frame_new (_("Key Bindings"));
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+
+	
+	/* table for frame */
+	table = gtk_table_new (3, 3, FALSE);
+	gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD_SMALL);
+	gtk_table_set_col_spacings (GTK_TABLE (table), GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER (table), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), table);
+
+	/* enabled */
+	keys_enabled_cb = gtk_check_button_new_with_label (_("Enable panel keybindings"));
+	gtk_signal_connect (GTK_OBJECT (keys_enabled_cb), "toggled",
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	gtk_table_attach_defaults (GTK_TABLE (table), keys_enabled_cb, 
+				   0, 3, 0, 1);
+	
+	/* menu key */
+	w = gtk_label_new (_("Popup menu key"));
+	gtk_table_attach_defaults (GTK_TABLE (table), w, 0, 1, 1, 2);
+	
+	adj = gtk_adjustment_new (0, 0, 255, 1, 10, 10);
+	gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	menu_key_sb = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 1, 0);
+	gtk_widget_set_sensitive (menu_key_sb, FALSE);
+	gtk_table_attach_defaults (GTK_TABLE (table), menu_key_sb, 1, 2, 1, 2);
+
+	w = gtk_button_new_with_label (_("Grab key..."));
+	gtk_table_attach_defaults (GTK_TABLE (table), w, 2, 3, 1, 2);
+	gtk_signal_connect (GTK_OBJECT (w), "clicked",
+			    GTK_SIGNAL_FUNC (grab_button_pressed),
+			    menu_key_sb);
+
+	/* run key...*/
+	w = gtk_label_new (_("Run dialog key"));
+	gtk_table_attach_defaults (GTK_TABLE (table), w, 0, 1, 2, 3);
+	
+	adj = gtk_adjustment_new (0, 0, 255, 1, 10, 10);
+	gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	run_key_sb = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 1, 0);
+	gtk_widget_set_sensitive (run_key_sb, FALSE);
+	gtk_table_attach_defaults (GTK_TABLE (table), run_key_sb, 1, 2, 2, 3);
+
+	w = gtk_button_new_with_label (_("Grab key..."));
+	gtk_table_attach_defaults (GTK_TABLE (table), w, 2, 3, 2, 3);
+	gtk_signal_connect (GTK_OBJECT (w), "clicked",
+			    GTK_SIGNAL_FUNC (grab_button_pressed),
+			    run_key_sb);
+	
+
+ 	return (vbox);
 }
 
 static void
@@ -769,6 +911,18 @@ loadup_vals(void)
 	g_string_sprintf(buf,"movement_type=%d", PANEL_SWITCH_MOVE);
 	global_config.movement_type=gnome_config_get_int(buf->str);
 
+	global_config.keys_enabled=gnome_config_get_bool("keys_enabled=TRUE");
+
+	g_string_sprintf(buf,"menu_keycode=%d", XK_LEFT_WIN);
+	global_config.menu_keycode=gnome_config_get_int(buf->str);
+
+	global_config.menu_state=gnome_config_get_int("menu_state=0");
+
+	g_string_sprintf(buf,"run_keycode=%d", GDK_r);
+	global_config.run_keycode=gnome_config_get_int(buf->str);
+
+	global_config.run_state=gnome_config_get_int("run_state=0");
+
 	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
@@ -780,6 +934,8 @@ loadup_vals(void)
 	global_config.hide_panel_frame = gnome_config_get_bool("hide_panel_frame=FALSE");
 	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
 	global_config.saturate_when_over = gnome_config_get_bool("saturate_when_over=TRUE");
+	
+
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"tiles_enabled_%d=FALSE",i);
 		global_config.tiles_enabled[i] =
@@ -870,6 +1026,12 @@ write_config(GlobalConfig *conf)
 			      conf->tile_when_over);
 	gnome_config_set_bool("saturate_when_over",
 			      conf->saturate_when_over);
+	gnome_config_set_bool("keys_enabled", conf->keys_enabled);
+	gnome_config_set_int("menu_keycode", conf->menu_keycode);
+	gnome_config_set_int("menu_state", conf->menu_state);
+	gnome_config_set_int("run_keycode", conf->run_keycode);
+	gnome_config_set_int("run_sate", conf->run_state);
+			     
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"tiles_enabled_%d",i);

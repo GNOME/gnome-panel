@@ -70,10 +70,13 @@ show_run_dialog ()
 	GtkWidget *dialog;
 	GtkWidget *fentry;
 	GtkWidget *entry;
-	
-	dialog = gnome_dialog_new(_("Run Program"),
-				  _("Run"), _("Cancel"), 
-				  NULL);
+
+	dialog = gnome_dialog_new(_("Run Program"), NULL);
+	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (dialog),
+						_("Run"), 
+						GNOME_STOCK_PIXMAP_EXEC);
+	gnome_dialog_append_button (GNOME_DIALOG (dialog),
+				    GNOME_STOCK_BUTTON_CANCEL);
 
 	gnome_dialog_set_default (GNOME_DIALOG (dialog), 0);
 	gnome_dialog_set_close (GNOME_DIALOG (dialog), TRUE);
