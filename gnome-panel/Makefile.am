@@ -86,6 +86,8 @@ panel_SOURCES = 		\
 	snapped-widget.h	\
 	drawer-widget.c  	\
 	drawer-widget.h		\
+	corner-widget.c  	\
+	corner-widget.h		\
 	panel-util.c		\
 	panel-util.h		\
 	mulapp.c		\
