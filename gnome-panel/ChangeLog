@@ -1,3 +1,9 @@
+Sun Jan 02 01:48:28 2000  George Lebl <jirka@5z.com>
+
+	* menu-fentry.c: set the FileRec type to FILE_REC_DIR so that
+	  we free it correctly if the dir doesn't exist.  Fixes the
+	  segfault on no .gnome/apps bug thingie
+
 Wed Dec 29 20:48:59 1999  George Lebl <jirka@5z.com>
 
 	* drawer.c,panel.c: send orientation changes to children on size

@@ -236,8 +236,12 @@ fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int sublevels)
 	g_return_val_if_fail(mdir!=NULL,NULL);
 
 	/*this will zero all fields*/
-	if(!dr)
+	if(!dr) {
 		dr = g_chunk_new0 (DirRec, dir_chunk);
+		/* this must be set otherwise we may messup on
+		   fr_free */
+		dr->frec.type = FILE_REC_DIR;
+	}
 	fr = (FileRec *)dr;
 
 	if(fr->last_stat < curtime-1) {
