@@ -27,6 +27,7 @@
 #include <libgnomeui/libgnomeui.h>
 #include <gnome-desktop-item.h>
 #include <gnome-ditem-edit.h>
+#include <gconf/gconf-client.h>
 
 #include "aligned-widget.h"
 #include "button-widget.h"
@@ -168,10 +169,9 @@ static void setup_menuitem_try_pixmap (GtkWidget *menuitem,
 static gboolean
 menus_have_icons (void)
 {
-#ifdef FIXME
-  /* Use gconf here */
-#endif
-        return TRUE;
+	return gconf_client_get_bool (panel_main_gconf_client (),
+				      "/desktop/gnome/interface/menus-have-icons",
+				      NULL);
 }
 
 /*to be called on startup to load in some of the directories,
