@@ -206,17 +206,29 @@ load_properties(Fish *fish)
 	zone = fopen(TIMEZONESPEC, "r");
 	if (zone != NULL) { /* If file doesn't exists we will stick to
 			       "Standard" fools day */
-	  fscanf(zone, "%255s", buf);
-	  fclose(zone);
-	  if (!strcmp("Europe/Madrid", buf) ||
-	      !strcmp("Africa/Ceuta", buf) ||
-	      !strcmp("Atlantic/Canary", buf)) { /* Hah!, We are in Spain */
-	    fools_day = 28;
-	    fools_month = 11; /* Spanish fool's day: 28th December*/
-	  } else {
-	    fools_day = 1; /* everybody? else fool's day */
-	    fools_month = 3;
-	  }
+		int i;
+		gboolean found = FALSE;
+		char *spanish_timezones[] = {
+			"Europe/Madrid",
+			"Africa/Ceuta",
+			"Atlantic/Canary",
+			"America/Mexico_City",
+			"Mexico/BajaSur",
+			"Mexico/BajaNorte",
+			"Mexico/General",
+			NULL
+		};
+		fscanf(zone, "%255s", buf);
+		fclose(zone);
+		for(i=0; !found && spanish_timezones[i]; i++) {
+			if (!strcmp(spanish_timezones[i], buf)) {
+				/* Hah!, We are in Spain or Mexico */
+				/* Spanish fool's day: 28th December*/
+				fools_day = 28;
+				fools_month = 11;
+				found = TRUE;
+			}
+		}
 	}
 
 	if(!defaults.image)
