@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.91\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-15 20:01+0100\n"
-"PO-Revision-Date: 2005-01-15 20:02+0100\n"
+"POT-Creation-Date: 2005-01-28 16:37+0100\n"
+"PO-Revision-Date: 2005-01-28 16:38+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "_Om"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:764
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:954
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:963
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "_Hjelp"
@@ -183,8 +183,8 @@ msgstr "Tilpasset format"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
-#: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
+#: applets/wncklet/showdesktop.c:516 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:65
 #: applets/wncklet/workspace-switcher.c:261
 #: applets/wncklet/workspace-switcher.c:569
 #, c-format
@@ -233,8 +233,8 @@ msgstr "Bruk _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:529
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:546
+#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:95
 #: applets/wncklet/workspace-switcher.c:600
 #: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
@@ -658,8 +658,7 @@ msgid "Window Navigation Applet Factory"
 msgstr "Fabrikk for applet for vindunavigering"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:901
-#: applets/wncklet/window-menu.c:903
+#: applets/wncklet/window-menu.c:106 applets/wncklet/window-menu.c:312
 msgid "Window Selector"
 msgstr "Vinduvelger"
 
@@ -676,24 +675,24 @@ msgstr "Klikk her for å gjenopprette skjulte vinduer."
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klikk her for å skjule alle vinduer og vise skrivebordet."
 
-#: applets/wncklet/showdesktop.c:379
+#: applets/wncklet/showdesktop.c:403
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Kunne ikke laste %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:381
+#: applets/wncklet/showdesktop.c:405
 msgid "File not found"
 msgstr "Fil ikke funnet"
 
-#: applets/wncklet/showdesktop.c:411 applets/wncklet/showdesktop.c:540
+#: applets/wncklet/showdesktop.c:438 applets/wncklet/showdesktop.c:557
 msgid "Show Desktop Button"
 msgstr "Vis skrivebordsknapp"
 
-#: applets/wncklet/showdesktop.c:543
+#: applets/wncklet/showdesktop.c:560
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Denne knappen lar deg skjule alle vinduer og vise skrivebordet."
 
-#: applets/wncklet/showdesktop.c:584
+#: applets/wncklet/showdesktop.c:601
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -833,23 +832,11 @@ msgstr "Denne nøkkelen oppgir minste bredde som oppgavelisten forespør."
 msgid "When to group windows"
 msgstr "Når skal vinduer grupperes"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:111
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Vinduvelgeren viser en liste med alle vinduer og lar deg bla gjennom dem."
-
-#: applets/wncklet/window-menu.c:340
-msgid "Unknown Window"
-msgstr "Ukjent vindu"
-
-#: applets/wncklet/window-menu.c:721
-msgid "No Windows Open"
-msgstr "Ingen åpne vinduer"
-
-#: applets/wncklet/window-menu.c:902
-msgid "Tool to switch between windows"
-msgstr "Verktøy for å bytte mellom vinduer"
 
 #: applets/wncklet/workspace-switcher.c:144
 #: applets/wncklet/workspace-switcher.c:922
@@ -969,11 +956,11 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME panel skall"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
 msgid "_Lock To Panel"
 msgstr "_Lås på panelet"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
 msgstr "_Flytt"
 
@@ -985,7 +972,7 @@ msgstr "Fje_rn fra panelet"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1208
+#: gnome-panel/applet.c:1212
 msgid "Can't find an empty spot"
 msgstr "Kunne ikke finne en tom plass"
 
@@ -1108,23 +1095,23 @@ msgstr "Kan ikke starte oppføring"
 msgid "Cannot load entry"
 msgstr "Kan ikke laste oppføring"
 
-#: gnome-panel/menu.c:802
+#: gnome-panel/menu.c:818
 msgid "Add this launcher to panel"
 msgstr "Legg til denne oppstarteren på panelet"
 
-#: gnome-panel/menu.c:819
+#: gnome-panel/menu.c:835
 msgid "Entire menu"
 msgstr "Hele menyen"
 
-#: gnome-panel/menu.c:829
+#: gnome-panel/menu.c:845
 msgid "Add this as drawer to panel"
 msgstr "Legg til som skuff på panelet"
 
-#: gnome-panel/menu.c:841
+#: gnome-panel/menu.c:857
 msgid "Add this as menu to panel"
 msgstr "Legg til som meny på panelet"
 
-#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:760
+#: gnome-panel/menu.c:1503 gnome-panel/panel-menu-bar.c:766
 msgid "Applications"
 msgstr "Applikasjoner"
 
@@ -1328,17 +1315,17 @@ msgstr "Vil du slette dette panelprogrammet fra din konfigurasjon?"
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Kan ikke finne AppletShell-grensesnitt i kontrollen\n"
 
-#: gnome-panel/panel-bindings.c:167
+#: gnome-panel/panel-bindings.c:168
 #, c-format
 msgid "Error watching gconf key '%s': %s"
 msgstr "Feil under overvåking av GConf-nøkkel «%s»: %s"
 
-#: gnome-panel/panel-bindings.c:185
+#: gnome-panel/panel-bindings.c:186
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
 msgstr "Feil under lasting av GConf-katalog «%s»: %s"
 
-#: gnome-panel/panel-bindings.c:199
+#: gnome-panel/panel-bindings.c:200
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "Feil under henting av verdi for «%s»: %s"
@@ -1656,15 +1643,11 @@ msgstr "Nettverkslokasjoner"
 msgid "Removable Media"
 msgstr "Avtagbare medier"
 
-#: gnome-panel/panel-menu-bar.c:591 gnome-panel/panel-menu-bar.c:777
-msgid "Desktop"
-msgstr "Skrivebord"
+#: gnome-panel/panel-menu-bar.c:598
+msgid "Open the desktop as a folder"
+msgstr "Åpne skrivebordet som en mappe"
 
-#: gnome-panel/panel-menu-bar.c:592
-msgid "Desktop directory"
-msgstr "Katalog for skrivebord"
-
-#: gnome-panel/panel-menu-bar.c:771
+#: gnome-panel/panel-menu-bar.c:777
 msgid "Places"
 msgstr "Steder"
 
@@ -2017,12 +2000,12 @@ msgstr "Tøm liste over siste dokumenter?"
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 "Hvis du tømmer listen over siste dokumenter vil følgende fjernes:\n"
 "\n"
-"* Alle oppføringer fra menyoppføringen Handlinger -> Siste dokumenter.\n"
+"* Alle oppføringer fra menyoppføringen Steder -> Siste dokumenter.\n"
 "* Alle oppføringer fra listen over siste dokumenter i alle applikasjoner."
 
 #: gnome-panel/panel-recent.c:222
@@ -2715,6 +2698,21 @@ msgstr "P_anelprogram:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Katalog for _brukervalg:"
+
+#~ msgid "Unknown Window"
+#~ msgstr "Ukjent vindu"
+
+#~ msgid "No Windows Open"
+#~ msgstr "Ingen åpne vinduer"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "Verktøy for å bytte mellom vinduer"
+
+#~ msgid "Desktop"
+#~ msgstr "Skrivebord"
+
+#~ msgid "Desktop directory"
+#~ msgstr "Katalog for skrivebord"
 
 #~ msgid "Workspace Selector"
 #~ msgstr "Velg arbeidsområde"
