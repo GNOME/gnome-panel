@@ -109,7 +109,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 			menubar->priv->actions_menu,
 			_("Run Program..."),
 			PANEL_STOCK_RUN,
-			_("Run applications, if you know the correct command to type in"),
+			_("Run an Application by entering a command"),
 			"ACTION:run:NEW",
 			G_CALLBACK (panel_action_run_program));
 
