@@ -36,8 +36,10 @@ extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;
 
-/*list of all panel widgets created*/
+/*list of all toplevel panel widgets (basep) created*/
 extern GSList *panel_list;
+/*list of all PanelWidgets created*/
+extern GSList *panels;
 
 extern GlobalConfig global_config;
 
@@ -55,6 +57,7 @@ typedef struct _TearoffMenu TearoffMenu;
 struct _TearoffMenu {
 	GtkWidget *menu;
 	GSList *mfl;
+	char *special;
 	char *title;
 	char *wmclass;
 };
@@ -1468,157 +1471,8 @@ tearoff_destroyed(GtkWidget *tearoff, TearoffMenu *tm)
 	tearoffs = g_slist_remove(tearoffs,tm);
 	g_free(tm->title);
 	g_free(tm->wmclass);
+	g_free(tm->special);
 	g_free(tm);
-}
-
-/* the data can be title:wmclass:x:y:path:applets:dirname:pixmapname:path ... */
-/* FIXME: we should escape :'s also, data is  */
-/* note that it kills and frees 'data' */
-static void
-make_tearoff_from_data(char *data)
-{
-	GtkWidget *menu;
-	char *title,*wmclass,*geom;
-	int ix,iy;
-	int workspace;
-	int hints;
-	int state;
-	TearoffMenu *tm;
-	gulong wmclass_num;
-
-	title = strtok(data,":");
-	if(!title) return;
-	wmclass = strtok(NULL,":");
-	if(!wmclass) return;
-	geom = strtok(NULL,":");
-	if(!geom) return;
-
-	ix = iy = 0;
-	workspace = hints = state = 0;
-	sscanf(geom,"%d,%d,%d,%d,%d",&ix,&iy,&workspace,&hints,&state);
-
-	/* find out the wmclass_number that was used
-	   for this wmclass and make our default one 1 higher
-	   so that we will always get unique wmclasses */
-	wmclass_num = 0;
-	sscanf(wmclass,"panel_tearoff_%lu",&wmclass_num);
-	if(wmclass_num>=wmclass_number)
-		wmclass_number = wmclass_num+1;
-
-	menu = NULL;
-	
-	while(1) {
-		char *path;
-		char *applets;
-		char *dir_name;
-		char *pixmap_name;
-
-		path = strtok(NULL,":");
-		if(!path) break;
-		applets = strtok(NULL,":");
-		if(!applets) applets="0";
-		dir_name = strtok(NULL,":");
-		if(!dir_name) dir_name=g_basename(path);
-		pixmap_name = strtok(NULL,":");
-		if(!pixmap_name) pixmap_name="";
-
-		menu = create_menu_at(menu,
-				      path,
-				      *applets=='1'?TRUE:FALSE,
-				      dir_name,
-				      pixmap_name,
-				      TRUE,
-				      FALSE);
-	}
-
-	if(!menu) {
-		g_free(data);
-		return;
-	}
-	
-	/* This is so that we get size of the menu right */
-	show_tearoff_menu(menu,title,FALSE,ix,iy,wmclass);
-
-	{
-		GtkWidget *window = GTK_MENU(menu)->tearoff_window;
-		gnome_win_hints_set_workspace(window,workspace);
-		gnome_win_hints_set_hints(window,hints);
-		gnome_win_hints_set_state(window,state);
-	}
-
-	tm = g_new0(TearoffMenu,1);
-	tm->menu = menu;
-	tm->mfl = gtk_object_get_data(GTK_OBJECT(menu), "mf");
-	tm->title = g_strdup(title);
-	tm->wmclass = g_strdup(wmclass);
-	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
-			   GTK_SIGNAL_FUNC(tearoff_destroyed), tm);
-
-
-	tearoffs = g_slist_prepend(tearoffs,tm);
-
-	g_free(data);
-}
-
-/* this function also frees the list as a byproduct */
-void
-make_tearoffs_from_data(GSList *list)
-{
-	GSList *li;
-	for(li=list;li;li=li->next)
-		make_tearoff_from_data(li->data);
-	g_slist_free(list);
-}
-
-/* returns a list of strings that can be loaded later with
-   make_tearoffs_from_data */
-/* FIXME: we need to escape the :'s inside fields here */
-GSList *
-make_data_from_tearoffs(void)
-{
-	GSList *li;
-	GSList *data = NULL;
-
-	for(li=tearoffs;li;li=li->next) {
-		GString *gs = g_string_new("");
-		GSList *l;
-		TearoffMenu *tm = li->data;
-		int x = 0,y = 0;
-		GtkWidget *tw;
-		int workspace = 0;
-		int hints = 0;
-		int state = 0;
-
-		tw = GTK_MENU(tm->menu)->tearoff_window;
-
-		if(tw && tw->window) {
-			gdk_window_get_root_origin(tw->window, &x, &y);
-			/* unfortunately we must do this or set_uposition
-			   will crap out */
-			if(x<0) x=0;
-			if(y<0) y=0;
-		}
-
-		workspace = gnome_win_hints_get_workspace(tw);
-		hints = gnome_win_hints_get_hints(tw);
-		state = gnome_win_hints_get_state(tw);
-
-		g_string_sprintf(gs,"%s:%s:%d,%d,%d,%d,%d",
-				 tm->title,tm->wmclass,
-				 x,y,workspace,hints,state);
-
-		for(l=tm->mfl;l;l=l->next) {
-			MenuFinfo *mf = l->data;
-			g_string_sprintfa(gs,":%s:%d:%s:%s",
-					  mf->fr->name,
-					  mf->applets?1:0,
-					  mf->dir_name?mf->dir_name:"",
-					  mf->pixmap_name?mf->pixmap_name:"");
-		}
-		data = g_slist_prepend(data,gs->str);
-		g_string_free(gs,FALSE);
-	}
-	return data;
 }
 
 static void
@@ -1660,6 +1514,7 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 	tm = g_new0(TearoffMenu,1);
 	tm->menu = menu;
 	tm->mfl = gtk_object_get_data(GTK_OBJECT(menu), "mf");
+	tm->special = NULL;
 	tm->title = title->str;
 	tm->wmclass = g_strdup(wmclass);
 	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
@@ -2232,9 +2087,21 @@ static GtkWidget * create_add_panel_submenu (int tearoff);
 static void
 add_panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 {
+	TearoffMenu *tm;
+	char *wmclass = get_unique_tearoff_wmclass();
 	GtkWidget *menu = create_add_panel_submenu(FALSE);
-	show_tearoff_menu(menu, _("Create panel"),TRUE,0,0,
-			  get_unique_tearoff_wmclass());
+	show_tearoff_menu(menu, _("Create panel"),TRUE,0,0,wmclass);
+
+	tm = g_new0(TearoffMenu,1);
+	tm->menu = menu;
+	tm->mfl = NULL;
+	tm->title = g_strdup(_("Create panel"));
+	tm->special = g_strdup("ADD_PANEL");
+	tm->wmclass = g_strdup(wmclass);
+	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
+			   GTK_SIGNAL_FUNC(tearoff_destroyed), tm);
+
+	tearoffs = g_slist_prepend(tearoffs,tm);
 }
 
 static GtkWidget *
@@ -2410,12 +2277,26 @@ status_unparent(GtkWidget *widget)
 static void
 panel_tearoff_new_menu(GtkWidget *w, GtkWidget *panel)
 {
+	TearoffMenu *tm;
+	char *wmclass = get_unique_tearoff_wmclass();
+
 	GtkWidget *menu = create_panel_root_menu(panel,FALSE);
+
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(panel),
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
 		      GTK_OBJECT(menu));
-	show_tearoff_menu(menu, _("Panel"),TRUE,0,0,
-			  get_unique_tearoff_wmclass());
+	show_tearoff_menu(menu, _("Panel"),TRUE,0,0,wmclass);
+
+	tm = g_new0(TearoffMenu,1);
+	tm->menu = menu;
+	tm->mfl = NULL;
+	tm->title = g_strdup(_("Panel"));
+	tm->special = g_strdup("PANEL");
+	tm->wmclass = g_strdup(wmclass);
+	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
+			   GTK_SIGNAL_FUNC(tearoff_destroyed), tm);
+
+	tearoffs = g_slist_prepend(tearoffs,tm);
 }
 
 GtkWidget *
@@ -3279,6 +3160,9 @@ static void
 add_to_panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 {
 	GtkWidget *menu;
+	TearoffMenu *tm;
+	char *wmclass = get_unique_tearoff_wmclass();
+
 	menu = gtk_menu_new();
 	make_add_submenu(menu, TRUE);
 	
@@ -3288,8 +3172,18 @@ add_to_panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(current_panel),
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
 		      GTK_OBJECT(menu));
-	show_tearoff_menu(menu, _("Add to panel"),TRUE,0,0,
-			  get_unique_tearoff_wmclass());
+	show_tearoff_menu(menu, _("Add to panel"),TRUE,0,0, wmclass);
+
+	tm = g_new0(TearoffMenu,1);
+	tm->menu = menu;
+	tm->mfl = NULL;
+	tm->title = g_strdup(_("Add to panel"));
+	tm->special = g_strdup("ADD_TO_PANEL");
+	tm->wmclass = g_strdup(wmclass);
+	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
+			   GTK_SIGNAL_FUNC(tearoff_destroyed), tm);
+
+	tearoffs = g_slist_prepend(tearoffs,tm);
 }
 
 /* just run the gnome-panel-properties */
@@ -3391,6 +3285,8 @@ static GtkWidget *create_desktop_menu (GtkWidget *m, int fake_sub, int tear);
 static void
 panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 {
+	TearoffMenu *tm;
+	char *wmclass = get_unique_tearoff_wmclass();
 	GtkWidget *menu = create_panel_submenu (NULL, TRUE, FALSE);
 
 	/*set the panel to use as the data*/
@@ -3399,16 +3295,39 @@ panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(current_panel),
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
 		      GTK_OBJECT(menu));
-	show_tearoff_menu(menu, _("Panel"),TRUE,0,0,
-			  get_unique_tearoff_wmclass());
+	show_tearoff_menu(menu, _("Panel"),TRUE,0,0,wmclass);
+
+	tm = g_new0(TearoffMenu,1);
+	tm->menu = menu;
+	tm->mfl = NULL;
+	tm->title = g_strdup(_("Panel"));
+	tm->special = g_strdup("PANEL_SUBMENU");
+	tm->wmclass = g_strdup(wmclass);
+	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
+			   GTK_SIGNAL_FUNC(tearoff_destroyed), tm);
+
+	tearoffs = g_slist_prepend(tearoffs,tm);
 }
 
 static void
 desktop_menu_tearoff_new_menu (GtkWidget *w, gpointer data)
 {
+	TearoffMenu *tm;
+	char *wmclass = get_unique_tearoff_wmclass();
+
 	GtkWidget *menu = create_desktop_menu (NULL, TRUE, FALSE);
-	show_tearoff_menu (menu, _("Desktop"),TRUE,0,0,
-			  get_unique_tearoff_wmclass());
+	show_tearoff_menu (menu, _("Desktop"),TRUE,0,0, wmclass);
+
+	tm = g_new0(TearoffMenu,1);
+	tm->menu = menu;
+	tm->mfl = NULL;
+	tm->title = g_strdup(_("Desktop"));
+	tm->special = g_strdup("DESKTOP");
+	tm->wmclass = g_strdup(wmclass);
+	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
+			   GTK_SIGNAL_FUNC(tearoff_destroyed), tm);
+
+	tearoffs = g_slist_prepend(tearoffs,tm);
 }
 
 static GtkWidget *
@@ -3881,3 +3800,220 @@ load_menu_applet(char *params, int main_menu_flags,
 		}
 	}
 }
+
+/* the data can be title:wmclass:x:y:path:applets:dirname:pixmapname:path ... */
+/* FIXME: we should escape :'s also, data is  */
+/* note that it kills and frees 'data' */
+static void
+make_tearoff_from_data(char *data)
+{
+	GtkWidget *menu;
+	char *title,*wmclass,*geom,*menu_panel;
+	char *special;
+	int ix,iy,i;
+	int workspace;
+	int hints;
+	int state;
+	TearoffMenu *tm;
+	gulong wmclass_num;
+	PanelWidget *menu_panel_widget = NULL;
+
+	title = strtok(data,":");
+	if(!title) return;
+	wmclass = strtok(NULL,":");
+	if(!wmclass) return;
+	menu_panel = strtok(NULL,":");
+	if(!menu_panel) return;
+	geom = strtok(NULL,":");
+	if(!geom) return;
+
+	ix = iy = 0;
+	workspace = hints = state = 0;
+	sscanf(geom,"%d,%d,%d,%d,%d",&ix,&iy,&workspace,&hints,&state);
+
+	i=0;
+	sscanf(menu_panel,"%d",&i);
+	if(i<0) i = 0;
+	menu_panel_widget = g_slist_nth_data(panels,i);
+	if(!menu_panel_widget)
+		menu_panel_widget = panels->data;
+
+	/* find out the wmclass_number that was used
+	   for this wmclass and make our default one 1 higher
+	   so that we will always get unique wmclasses */
+	wmclass_num = 0;
+	sscanf(wmclass,"panel_tearoff_%lu",&wmclass_num);
+	if(wmclass_num>=wmclass_number)
+		wmclass_number = wmclass_num+1;
+
+	menu = NULL;
+	special = NULL;
+	
+	while(1) {
+		char *path;
+
+		path = strtok(NULL,":");
+		if(!path) break;
+
+		if(strcmp(path,"ADD_PANEL")==0) {
+			menu = create_add_panel_submenu(FALSE);
+			title = _("Create panel");
+			special = "ADD_PANEL";
+		} else if(strcmp(path,"PANEL")==0) {
+			menu = create_panel_root_menu(
+				      menu_panel_widget->panel_parent,FALSE);
+			title = _("Panel");
+			special = "PANEL";
+			gtk_signal_connect_object_while_alive(
+			      GTK_OBJECT(menu_panel_widget),
+			      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
+			      GTK_OBJECT(menu));
+		} else if(strcmp(path,"DESKTOP")==0) {
+			menu = create_desktop_menu (NULL, TRUE, FALSE);
+			title = _("Desktop");
+			special = "DESKTOP";
+		} else if(strcmp(path,"ADD_TO_PANEL")==0) {
+			menu = gtk_menu_new();
+			make_add_submenu(menu, TRUE);
+
+			gtk_signal_connect_object_while_alive(
+			      GTK_OBJECT(menu_panel_widget),
+			      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
+			      GTK_OBJECT(menu));
+			title = _("Add to panel");
+			special = "ADD_TO_PANEL";
+		} else if(strcmp(path,"PANEL_SUBMENU")==0) {
+			menu = create_panel_submenu (NULL, TRUE, FALSE);
+
+			gtk_signal_connect_object_while_alive(
+			      GTK_OBJECT(menu_panel_widget),
+			      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
+			      GTK_OBJECT(menu));
+			title = _("Panel");
+			special = "PANEL_SUBMENU";
+		} else {
+			char *applets;
+			char *dir_name;
+			char *pixmap_name;
+			applets = strtok(NULL,":");
+			if(!applets) applets="0";
+			dir_name = strtok(NULL,":");
+			if(!dir_name) dir_name=g_basename(path);
+			pixmap_name = strtok(NULL,":");
+			if(!pixmap_name) pixmap_name="";
+
+			menu = create_menu_at(menu,
+					      path,
+					      *applets=='1'?TRUE:FALSE,
+					      dir_name,
+					      pixmap_name,
+					      TRUE,
+					      FALSE);
+		}
+	}
+
+	if(!menu) {
+		g_free(data);
+		return;
+	}
+
+	/*set the panel to use as the data, or we will use current_panel*/
+	gtk_object_set_data(GTK_OBJECT(menu),"menu_panel",
+			    menu_panel_widget);
+	
+	/* This is so that we get size of the menu right */
+	show_tearoff_menu(menu,title,FALSE,ix,iy,wmclass);
+
+	{
+		GtkWidget *window = GTK_MENU(menu)->tearoff_window;
+		gnome_win_hints_set_workspace(window,workspace);
+		gnome_win_hints_set_hints(window,hints);
+		gnome_win_hints_set_state(window,state);
+	}
+
+	tm = g_new0(TearoffMenu,1);
+	tm->menu = menu;
+	tm->mfl = gtk_object_get_data(GTK_OBJECT(menu), "mf");
+	tm->title = g_strdup(title);
+	tm->special = special?g_strdup(special):NULL;
+	tm->wmclass = g_strdup(wmclass);
+	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
+			   GTK_SIGNAL_FUNC(tearoff_destroyed), tm);
+
+
+	tearoffs = g_slist_prepend(tearoffs,tm);
+
+	g_free(data);
+}
+
+/* this function also frees the list as a byproduct */
+void
+make_tearoffs_from_data(GSList *list)
+{
+	GSList *li;
+	for(li=list;li;li=li->next)
+		make_tearoff_from_data(li->data);
+	g_slist_free(list);
+}
+
+/* returns a list of strings that can be loaded later with
+   make_tearoffs_from_data */
+/* FIXME: we need to escape the :'s inside fields here */
+GSList *
+make_data_from_tearoffs(void)
+{
+	GSList *li;
+	GSList *data = NULL;
+
+	for(li=tearoffs;li;li=li->next) {
+		GString *gs = g_string_new("");
+		GSList *l;
+		TearoffMenu *tm = li->data;
+		int x = 0,y = 0;
+		GtkWidget *tw;
+		int workspace = 0;
+		int hints = 0;
+		int state = 0;
+		int menu_panel = 0;
+		PanelWidget *menu_panel_widget = NULL;
+
+		tw = GTK_MENU(tm->menu)->tearoff_window;
+
+		if(tw && tw->window) {
+			gdk_window_get_root_origin(tw->window, &x, &y);
+			/* unfortunately we must do this or set_uposition
+			   will crap out */
+			if(x<0) x=0;
+			if(y<0) y=0;
+		}
+
+		workspace = gnome_win_hints_get_workspace(tw);
+		hints = gnome_win_hints_get_hints(tw);
+		state = gnome_win_hints_get_state(tw);
+
+		menu_panel_widget = gtk_object_get_data(GTK_OBJECT(tm->menu),
+							"menu_panel");
+		menu_panel = g_slist_index(panels,menu_panel_widget);
+		if(menu_panel<0) menu_panel = 0;
+
+		g_string_sprintf(gs,"%s:%s:%d:%d,%d,%d,%d,%d",
+				 tm->title,tm->wmclass,menu_panel,
+				 x,y,workspace,hints,state);
+
+		if(tm->special)
+			g_string_sprintfa(gs,":%s",tm->special);
+
+		for(l=tm->mfl;l;l=l->next) {
+			MenuFinfo *mf = l->data;
+			g_string_sprintfa(gs,":%s:%d:%s:%s",
+					  mf->fr->name,
+					  mf->applets?1:0,
+					  mf->dir_name?mf->dir_name:"",
+					  mf->pixmap_name?mf->pixmap_name:"");
+		}
+		data = g_slist_prepend(data,gs->str);
+		g_string_free(gs,FALSE);
+	}
+	return data;
+}
+
