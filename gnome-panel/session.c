@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <gnome-desktop/gnome-ditem.h>
+#include <gnome-desktop/gnome-desktop-item.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnomecompat.h>
 #include <gdk/gdkx.h>

@@ -20,7 +20,7 @@
 #include <libgnome/gnome-util.h>
 #include <libgnomeui.h>
 
-#include <gnome-desktop/gnome-ditem.h>
+#include <gnome-desktop/gnome-desktop-item.h>
 
 #include "panel-include.h"
 

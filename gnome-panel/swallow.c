@@ -16,7 +16,7 @@
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 
-#include <gnome-desktop/gnome-ditem.h>
+#include <gnome-desktop/gnome-desktop-item.h>
 
 #include "panel-include.h"
 #include "panel-widget.h"
