@@ -791,9 +791,22 @@ size_set_size (GtkWidget *widget, gpointer data)
 	int sz = GPOINTER_TO_INT(data);
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 
+	if(ppc->sz == sz)
+		return;
+
 	ppc->sz = sz;
 	
 	REGISTER_CHANGES (ppc);
+}
+
+/* XXX: until this is fixed in GTK+ */
+static void
+activate_proper_item (GtkMenu *menu)
+{
+	GtkWidget *active;
+	active = gtk_menu_get_active(menu);
+	if(active)
+		gtk_menu_item_activate(GTK_MENU_ITEM(active));
 }
 
 static GtkWidget *
@@ -819,6 +832,9 @@ make_size_widget (PerPanelConfig *ppc)
 
 	
 	menu = gtk_menu_new ();
+	gtk_signal_connect (GTK_OBJECT (menu), "deactivate", 
+			    GTK_SIGNAL_FUNC (activate_proper_item), 
+			    NULL);
 
 	menuitem = gtk_menu_item_new_with_label (_("Tiny (24 pixels)"));
 	gtk_widget_show(menuitem);
@@ -957,6 +973,9 @@ set_back (GtkWidget *widget, gpointer data)
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 	PanelBackType back_type = GPOINTER_TO_INT(data);
 
+	if(ppc->back_type == back_type)
+		return;
+
 	pixf = gtk_object_get_data(GTK_OBJECT(widget),"pix");
 	colf = gtk_object_get_data(GTK_OBJECT(widget),"col");
 	
@@ -976,7 +995,6 @@ set_back (GtkWidget *widget, gpointer data)
 	REGISTER_CHANGES (ppc);
 }
 
-
 static GtkWidget *
 background_page (PerPanelConfig *ppc)
 {
@@ -995,6 +1013,9 @@ background_page (PerPanelConfig *ppc)
 
 	/*background type option menu*/
 	m = gtk_menu_new ();
+	gtk_signal_connect (GTK_OBJECT (m), "deactivate", 
+			    GTK_SIGNAL_FUNC (activate_proper_item), 
+			    NULL);
 	ppc->non = gtk_menu_item_new_with_label (_("Standard"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->non),ppc);
 	gtk_widget_show (ppc->non);
