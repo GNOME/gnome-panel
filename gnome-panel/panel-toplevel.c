@@ -2085,21 +2085,21 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		GdkRectangle *geometry;
 
 		style = GTK_WIDGET (toplevel->priv->inner_frame)->style;
-		geometry = toplevel->priv->geometry;
+		geometry = &toplevel->priv->geometry;
 
-		if (geometry.x <= style->xthickness && geometry.x > 0)
-			geometry.x = 0;
+		if (geometry->x <= style->xthickness && geometry->x > 0)
+			geometry->x = 0;
 
-		if (geometry.y <= style->ythickness && geometry.y > 0)
-			geometry.y = 0;
+		if (geometry->y <= style->ythickness && geometry->y > 0)
+			geometry->y = 0;
 
-		if (geometry.x + geometry.width + (2 * style->xthickness) >= monitor_width &&
-		    geometry.x < monitor_width)
-			geometry.x = monitor_width - geometry.width - style->xthickness;
+		if (geometry->x + geometry->width + (2 * style->xthickness) >= monitor_width &&
+		    geometry->x < monitor_width)
+			geometry->x = MAX (geometry->x, monitor_width - geometry->width - style->xthickness);
 
-		if (geometry.y + geometry.height + (2 * style->ythickness) >= monitor_height &&
-		    geometry.y < monitor_height)
-			geometry.y = monitor_height - geometry.height - style->ythickness;
+		if (geometry->y + geometry->height + (2 * style->ythickness) >= monitor_height &&
+		    geometry->y < monitor_height)
+			geometry->y = MAX (geometry->y, monitor_height - geometry->height - style->ythickness);
 	}
 
 	panel_toplevel_update_struts (toplevel, FALSE);
