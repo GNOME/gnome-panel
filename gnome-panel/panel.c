@@ -489,8 +489,10 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	   info && info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
-		if(dw->state == DRAWER_SHOWN)
+		if(dw->state == DRAWER_SHOWN) {
 			SNAPPED_WIDGET(panelw)->drawers_open++;
+			snapped_widget_pop_up(SNAPPED_WIDGET(panelw));
+		}
 	}
 
 	/*pop the panel up on addition*/

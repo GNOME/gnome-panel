@@ -183,11 +183,11 @@ drawer_click(Drawer *drawer)
 	if(drawerw->state == DRAWER_SHOWN) {
 		drawer_widget_close_drawer(DRAWER_WIDGET(drawer->drawer));
 		if(IS_SNAPPED_WIDGET(panelw))
-			SNAPPED_WIDGET(panelw)->drawers_open++;
+			SNAPPED_WIDGET(panelw)->drawers_open--;
 	} else {
 		drawer_widget_open_drawer(DRAWER_WIDGET(drawer->drawer));
 		if(IS_SNAPPED_WIDGET(panelw))
-			SNAPPED_WIDGET(panelw)->drawers_open--;
+			SNAPPED_WIDGET(panelw)->drawers_open++;
 	}
 }
 
@@ -472,11 +472,6 @@ load_drawer_applet(char *params, char *pixmap, char *tooltip,
 		/*pop up, if popped down*/
 		wpanel = gtk_object_get_data(GTK_OBJECT(panel),
 					     PANEL_PARENT);
-		if(IS_SNAPPED_WIDGET(wpanel)) {
-			/*drawer is open so we track it*/
-			SNAPPED_WIDGET(wpanel)->drawers_open++;
-			snapped_widget_pop_up(SNAPPED_WIDGET(wpanel));
-		}
 	} 
 
 	panel_widget_add_forbidden(PANEL_WIDGET(DRAWER_WIDGET(drawer->drawer)->panel));
