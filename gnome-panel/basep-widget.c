@@ -883,6 +883,8 @@ basep_widget_redo_window(BasePWidget *basep)
 
 	basep_widget_update_winhints (basep);
 
+	gtk_drag_dest_set (widget, 0, NULL, 0, 0);
+
 	gtk_widget_map(widget);
 }
 
