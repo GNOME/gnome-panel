@@ -213,6 +213,41 @@ applet_remove_callback(AppletInfo *info, char *callback_name)
 }
 
 static void
+setup_an_item(AppletUserMenu *menu,
+	      GtkWidget *submenu,
+	      int is_submenu)
+{
+	menu->menuitem = gtk_menu_item_new ();
+	if(menu->stock_item && *(menu->stock_item))
+		setup_menuitem (menu->menuitem,
+				gnome_stock_pixmap_widget(submenu,
+							  menu->stock_item),
+				menu->text);
+	else
+		setup_menuitem (menu->menuitem,
+				NULL,
+				menu->text);
+
+	if(submenu)
+		gtk_menu_append (GTK_MENU (submenu), menu->menuitem);
+
+	/*if an item not a submenu*/
+	if(!is_submenu) {
+		gtk_signal_connect(GTK_OBJECT(menu->menuitem), "activate",
+				   (GtkSignalFunc) applet_callback_callback,
+				   menu);
+	/* if the item is a submenu and doesn't have it's menu
+	   created yet*/
+	} else if(!menu->submenu) {
+		menu->submenu = gtk_menu_new();
+	}
+
+	if(menu->submenu)
+		gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
+					  menu->submenu);
+}
+
+static void
 add_to_submenus(AppletInfo *info,
 		char *path,
 		char *name,
@@ -224,39 +259,18 @@ add_to_submenus(AppletInfo *info,
 	char *p = strchr(n,'/');
 	char *t;
 	AppletUserMenu *s_menu;
-	
+
 	/*this is the last one*/
-	if(p==NULL ||
-	   p==(n + strlen(n) - 1)) {
+	if(p==NULL) {
 		g_free(n);
-
-		menu->menuitem = gtk_menu_item_new ();
-		if(menu->stock_item && *(menu->stock_item))
-			setup_menuitem (menu->menuitem,
-					gnome_stock_pixmap_widget(submenu,
-								  menu->stock_item),
-					menu->text);
-		else
-			setup_menuitem (menu->menuitem,
-					NULL,
-					menu->text);
-		if(menu->submenu)
-			gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
-						  menu->submenu);
-
-		if(submenu)
-			gtk_menu_append (GTK_MENU (submenu), menu->menuitem);
-		/*if an item not a submenu*/
-		if(p==NULL) {
-			gtk_signal_connect(GTK_OBJECT(menu->menuitem), "activate",
-					   (GtkSignalFunc) applet_callback_callback,
-					   menu);
-		/* if the item is a submenu and doesn't have it's menu created yet*/
-		} else if(!menu->submenu) {
-			menu->submenu = gtk_menu_new();
-			gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
-						  menu->submenu);
-		}
+		setup_an_item(menu,submenu,FALSE);
+		return;
+	}
+	
+	/*this is the last one and we are a submenu, we have already been
+	  set up*/
+	if(p==(n + strlen(n) - 1)) {
+		g_free(n);
 		return;
 	}
 	
@@ -277,10 +291,11 @@ add_to_submenus(AppletInfo *info,
 		s_menu->submenu = NULL;
 		info->user_menu = g_list_append(info->user_menu,s_menu);
 		user_menu = info->user_menu;
+
 	}
 	
-	if(!s_menu->submenu)
-		s_menu->submenu = gtk_menu_new();
+	if(!s_menu->menuitem)
+		setup_an_item(s_menu,submenu,TRUE);
 	
 	add_to_submenus(info,t,p,menu,s_menu->submenu,user_menu);
 	
