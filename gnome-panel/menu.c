@@ -2694,12 +2694,16 @@ create_new_panel (GtkWidget *w, gpointer data)
 		}
 		s = _("You can only have one menu panel at a time.");
 		
-		dialog = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_ERROR,
+		dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
 						 GTK_BUTTONS_OK,
 						 s);
-		gtk_window_set_wmclass (GTK_WINDOW (dialog),
-					"only_one_foobar", "Panel");
-		gtk_widget_show_all (dialog);
+		/* FIXME: What the fuck are we doing here? 
+		 * gtk_window_set_wmclass (GTK_WINDOW (dialog),
+		 * 			"only_one_foobar", "Panel");
+		 * gtk_widget_show_all (dialog); 
+		 */
+		gtk_dialog_run (GTK_DIALOG (dialog));
+	        gtk_widget_destroy (dialog); 
 		break;
 	}
 	default: break;
