@@ -278,6 +278,60 @@ panel_orient_change(GtkWidget *widget,
 						 PANEL_PARENT));
 }
 
+/*we call this recursively*/
+static void size_change_foreach(GtkWidget *w, gpointer data);
+
+void
+size_change(AppletInfo *info, PanelWidget *panel)
+{
+	if(info->type == APPLET_EXTERN) {
+		Extern *ext = info->data;
+		g_assert(ext);
+		/*ingore this until we get an ior*/
+		if(ext->applet) {
+			CORBA_Environment ev;
+			CORBA_exception_init(&ev);
+			GNOME_Applet_change_size(ext->applet,
+						 panel->sz,
+						 &ev);
+			if(ev._major)
+				panel_clean_applet(ext->info);
+			CORBA_exception_free(&ev);
+		}
+	} else if(info->type == APPLET_DRAWER) {
+		Drawer *drawer = info->data;
+		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
+		set_drawer_applet_orient(drawer,get_applet_orient(panel));
+		gtk_widget_queue_resize(drawer->drawer);
+		gtk_container_foreach(GTK_CONTAINER(basep->panel),
+				      orient_change_foreach,
+				      (gpointer)basep->panel);
+	}
+}
+
+static void
+size_change_foreach(GtkWidget *w, gpointer data)
+{
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	PanelWidget *panel = data;
+	
+	size_change(info,panel);
+}
+
+
+static void
+panel_size_change(GtkWidget *widget,
+		  PanelSizeType sz,
+		  gpointer data)
+{
+	gtk_container_foreach(GTK_CONTAINER(widget), size_change_foreach,
+			      widget);
+	panels_to_sync = TRUE;
+	/*update the configuration box if it is displayed*/
+	update_config_size(gtk_object_get_data(GTK_OBJECT(widget),
+					       PANEL_PARENT));
+}
+
 static void
 basep_pos_change(GtkWidget *widget,
 		   SnappedPos pos,
@@ -1085,6 +1139,7 @@ panel_setup(GtkWidget *panelw)
 {
 	PanelData *pd;
 	BasePWidget *basep = BASEP_WIDGET(panelw);
+	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(panelw)->panel);
 	
 	pd = g_new(PanelData,1);
 	pd->menu = NULL;
@@ -1117,10 +1172,15 @@ panel_setup(GtkWidget *panelw)
 			   (GtkSignalFunc) panel_sub_event_handler,
 			   panelw);
 
+	panel_widget_setup(panel);
+
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "size_change",
+			   GTK_SIGNAL_FUNC(panel_size_change),
+			   NULL);
+
 	if(IS_DRAWER_WIDGET(panelw)) {
-		PanelWidget *panel = PANEL_WIDGET(basep->panel);
 		DrawerWidget *drawer = DRAWER_WIDGET(panelw);
-		panel_widget_setup(panel);
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "orient_change",
 				   GTK_SIGNAL_FUNC(panel_orient_change),
@@ -1130,10 +1190,7 @@ panel_setup(GtkWidget *panelw)
 				   GTK_SIGNAL_FUNC(drawer_state_change),
 				   NULL);
 	} else if(IS_SNAPPED_WIDGET(panelw)) {
-		PanelWidget *panel =
-			PANEL_WIDGET(BASEP_WIDGET(panelw)->panel);
 		SnappedWidget *snapped = SNAPPED_WIDGET(panelw);
-		panel_widget_setup(panel);
 		gtk_signal_connect(GTK_OBJECT(panelw), "pos_change",
 				   GTK_SIGNAL_FUNC(basep_pos_change),
 				   NULL);
@@ -1144,10 +1201,7 @@ panel_setup(GtkWidget *panelw)
 		/*this is a base panel*/
 		base_panels++;
 	} else if(IS_CORNER_WIDGET(panelw)) {
-		PanelWidget *panel =
-			PANEL_WIDGET(BASEP_WIDGET(panelw)->panel);
 		CornerWidget *corner = CORNER_WIDGET(panelw);
-		panel_widget_setup(panel);
 		gtk_signal_connect(GTK_OBJECT(panel), "orient_change",
 				   GTK_SIGNAL_FUNC(panel_orient_change),
 				   NULL);

@@ -3,11 +3,18 @@
 #define PANEL_TYPES_H
 
 typedef enum {
-	ORIENT_UP,
+	ORIENT_UP=0,
 	ORIENT_DOWN,
 	ORIENT_LEFT,
 	ORIENT_RIGHT
 } PanelOrientType;
+
+typedef enum {
+	SIZE_TINY=0,
+	SIZE_STANDARD,
+	SIZE_LARGE,
+	SIZE_HUGE
+} PanelSizeType;
 
 typedef enum {
 	LAUNCHER_TILE=0,

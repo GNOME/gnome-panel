@@ -13,6 +13,7 @@
 
 #include <gtk/gtk.h>
 #include "button-widget.h"
+#include "panel-types.h"
 
 BEGIN_GNOME_DECLS
 
@@ -38,11 +39,11 @@ typedef enum {
 	PANEL_VERTICAL
 } PanelOrientation;
 typedef enum {
-	PANEL_SWITCH_MOVE,
+	PANEL_SWITCH_MOVE=0,
 	PANEL_FREE_MOVE
 } PanelMovementType;
 typedef enum {
-	PANEL_BACK_NONE,
+	PANEL_BACK_NONE=0,
 	PANEL_BACK_COLOR,
 	PANEL_BACK_PIXMAP
 } PanelBackType;
@@ -64,6 +65,7 @@ struct _PanelWidget
 
 	int			size;
 	PanelOrientation	orient;
+	PanelSizeType		sz;
 	int			fit_pixmap_bg;
 	int			pixmap_resize_timeout;
 	int			pixmap_resize_timeout_top;
@@ -93,6 +95,8 @@ struct _PanelWidgetClass
 
 	void (* orient_change) (PanelWidget *panel,
 				PanelOrientation orient);
+	void (* size_change) (PanelWidget *panel,
+			      PanelSizeType sz);
 	void (* applet_move) (PanelWidget *panel,
 			      GtkWidget *applet);
 	void (* applet_added) (PanelWidget *panel,
@@ -108,6 +112,7 @@ struct _PanelWidgetClass
 guint		panel_widget_get_type		(void);
 GtkWidget *	panel_widget_new		(int packed,
 						 PanelOrientation orient,
+						 PanelSizeType sz,
 						 PanelBackType back_type,
 						 char *back_pixmap,
 						 int fit_pixmap_bg,
@@ -150,6 +155,7 @@ int		panel_widget_applet_move_to_cursor(PanelWidget *panel);
 /* changing parameters */
 void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelOrientation orient,
+						 PanelSizeType sz,
 						 PanelBackType back_type,
 						 char *pixmap_name,
 						 int fit_pixmap_bg,
@@ -194,6 +200,8 @@ int		panel_widget_get_cursorloc	(PanelWidget *panel);
 /*needed for other panel types*/
 int		panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
+
+int		panel_widget_get_pixel_size	(PanelWidget *panel);
 
 /*extern GSList *panels;*/
 

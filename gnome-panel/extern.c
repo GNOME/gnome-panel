@@ -581,6 +581,7 @@ s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
 	ext->info->type = APPLET_EXTERN;
 
 	orientation_change(ext->info,panel);
+	size_change(ext->info,panel);
 	back_change(ext->info,panel);
 
 	GNOME_Applet_set_tooltips_state(ext->applet,

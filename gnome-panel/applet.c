@@ -514,6 +514,7 @@ register_toy(GtkWidget *applet,
 				 applet_drag_types, 1);*/
 
 	orientation_change(info,panel);
+	size_change(info,panel);
 	back_change(info,panel);
 
 	return TRUE;

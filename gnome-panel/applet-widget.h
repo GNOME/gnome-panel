@@ -15,6 +15,7 @@
 
 #define HAVE_SAVE_SESSION_SIGNAL 1
 #define HAVE_APPLET_BIND_EVENTS 1
+#define HAVE_PANEL_SIZE 1
 
 BEGIN_GNOME_DECLS
 
@@ -59,6 +60,9 @@ struct _AppletWidgetClass
 	   that you can update your orientation properly */
 	void (* change_orient) (AppletWidget *applet,
 				GNOME_Panel_OrientType orient);
+	/* when the panel size changes, semantics are the same as above */
+	void (* change_size) (AppletWidget *applet,
+			      GNOME_Panel_SizeType size);
 	/* the panel background changes, the pixmap handeling is likely
 	   to change */
 	void (* back_change) (AppletWidget *applet,
@@ -116,7 +120,7 @@ void		applet_widget_add_full		(AppletWidget *applet,
 /* bind the events for button2 and button3 on a widget, this is useful
    when you are added a new widget and want the right click menu and middle
    button move events to work on it*/
-void		applet_bind_events		(AppletWidget *applet,
+void		applet_widget_bind_events	(AppletWidget *applet,
 						 GtkWidget *widget);
 
 /* remove the plug from the panel, this will destroy the applet */

@@ -46,6 +46,7 @@ struct _DrawerWidgetClass
 guint		drawer_widget_get_type		(void);
 GtkWidget*	drawer_widget_new		(PanelOrientType orient,
 						 DrawerState state,
+						 PanelSizeType sz,
 						 PanelBackType back_type,
 						 char *back_pixmap,
 						 int fit_pixmap_bg,
@@ -61,6 +62,7 @@ void		drawer_widget_close_drawer	(DrawerWidget *panel);
 void		drawer_widget_change_params	(DrawerWidget *drawer,
 						 PanelOrientType orient,
 						 DrawerState state,
+						 PanelSizeType sz,
 						 PanelBackType back_type,
 						 char *pixmap_name,
 						 int fit_pixmap_bg,

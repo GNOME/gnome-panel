@@ -75,6 +75,34 @@ update_config_orient(GtkWidget *panel)
 }
 
 void
+update_config_size(GtkWidget *panel)
+{
+	PerPanelConfig *ppc = get_config_struct(panel);
+	PanelWidget *p;
+	if(!ppc)
+		return;
+	p = PANEL_WIDGET(BASEP_WIDGET(panel)->panel);
+	switch(p->sz) {
+	case SIZE_TINY:
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_tiny),
+					     TRUE);
+		break;
+	case SIZE_STANDARD:
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_std),
+					     TRUE);
+		break;
+	case SIZE_LARGE:
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_large),
+					     TRUE);
+		break;
+	case SIZE_HUGE:
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_huge),
+					     TRUE);
+		break;
+	}
+}
+
+void
 update_config_back(PanelWidget *pw)
 {
 	GtkWidget *t;
@@ -131,6 +159,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					     ppc->snapped_pos,
 					     ppc->snapped_mode,
 					     SNAPPED_WIDGET(ppc->panel)->state,
+					     ppc->sz,
 					     ppc->hidebuttons,
 					     ppc->hidebutton_pixmaps,
 					     ppc->back_type,
@@ -143,6 +172,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					    ppc->corner_orient,
 					    ppc->corner_mode,
 					    CORNER_WIDGET(ppc->panel)->state,
+					    ppc->sz,
 					    ppc->hidebuttons,
 					    ppc->hidebutton_pixmaps,
 					    ppc->back_type,
@@ -154,6 +184,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 		drawer_widget_change_params(dw,
 					    dw->orient,
 					    dw->state, 
+					    ppc->sz,
 					    ppc->back_type,
 					    ppc->back_pixmap,
 					    ppc->fit_pixmap_bg,
@@ -336,15 +367,15 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	switch(ppc->snapped_pos) {
 	case SNAPPED_TOP:
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->t_button),
-					    TRUE);
+					     TRUE);
 		break;
 	case SNAPPED_BOTTOM:
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->b_button),
-					    TRUE);
+					     TRUE);
 		break;
 	case SNAPPED_LEFT:
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->l_button),
-					    TRUE);
+					     TRUE);
 		break;
 	case SNAPPED_RIGHT:
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->r_button),
@@ -399,7 +430,116 @@ snapped_notebook_page(PerPanelConfig *ppc)
 
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	return (vbox);
+	return vbox;
+}
+
+static void
+size_set_size (GtkWidget *widget, gpointer data)
+{
+	PanelSizeType sz = (PanelSizeType) data;
+	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+	if(!(GTK_TOGGLE_BUTTON(widget)->active))
+		return;
+	
+	ppc->sz = sz;
+	if (ppc->register_changes)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+static GtkWidget *
+size_notebook_page(PerPanelConfig *ppc)
+{
+	GtkWidget *frame;
+	GtkWidget *button;
+	GtkWidget *box;
+	GtkWidget *hbox;
+	GtkWidget *vbox;
+        GtkWidget *w;
+
+	/* main vbox */
+	vbox = gtk_vbox_new (FALSE, 0);
+	
+	/* main hbox */
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
+	
+	/* Position frame */
+	frame = gtk_frame_new (_("Panel size"));
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE,0);
+	
+	/* box for radio buttons */
+	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+
+	gtk_box_pack_start (GTK_BOX (box),
+			    gtk_label_new(_("Note: The panel will size itself to the\n"
+					    "largest applet. The applets get notified of\n"
+					    "the size, but they may choose not to follow it.\n"
+					    "All standard panel icons follow this size.")),
+			    FALSE, FALSE,0);
+	
+	/* Tiny Size */
+	ppc->s_tiny = gtk_radio_button_new_with_label (NULL, _("Tiny (24 pixels)"));
+	gtk_object_set_user_data(GTK_OBJECT(ppc->s_tiny),ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->s_tiny), "toggled", 
+			    GTK_SIGNAL_FUNC (size_set_size), 
+			    (gpointer)SIZE_TINY);
+	gtk_box_pack_start (GTK_BOX (box), ppc->s_tiny, FALSE, FALSE,0);
+	
+	/* Standard Size */
+	ppc->s_std = gtk_radio_button_new_with_label (
+			  gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->s_tiny)),
+			  _("Standard (48 pixels)"));
+	gtk_object_set_user_data(GTK_OBJECT(ppc->s_std),ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->s_std), "toggled", 
+			    GTK_SIGNAL_FUNC (size_set_size), 
+			    (gpointer)SIZE_STANDARD);
+	gtk_box_pack_start (GTK_BOX (box), ppc->s_std, FALSE, FALSE,0);
+
+	/* Large Size */
+	ppc->s_large = gtk_radio_button_new_with_label (
+			  gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->s_tiny)),
+			  _("Large (64 pixels)"));
+	gtk_object_set_user_data(GTK_OBJECT(ppc->s_large),ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->s_large), "toggled", 
+			    GTK_SIGNAL_FUNC (size_set_size), 
+			    (gpointer)SIZE_LARGE);
+	gtk_box_pack_start (GTK_BOX (box), ppc->s_large, FALSE, FALSE,0);
+	
+	/* Huge Size */
+	ppc->s_huge = gtk_radio_button_new_with_label (
+			  gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->s_tiny)),
+			  _("Huge (80 pixels)"));
+	gtk_object_set_user_data(GTK_OBJECT(ppc->s_huge),ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->s_huge), "toggled", 
+			    GTK_SIGNAL_FUNC (size_set_size), 
+			    (gpointer)SIZE_HUGE);
+	gtk_box_pack_start (GTK_BOX (box), ppc->s_huge, FALSE, FALSE,0);
+	
+	switch(ppc->sz) {
+	case SIZE_TINY:
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_tiny),
+					     TRUE);
+		break;
+	case SIZE_STANDARD:
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_std),
+					     TRUE);
+		break;
+	case SIZE_LARGE:
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_large),
+					     TRUE);
+		break;
+	case SIZE_HUGE:
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_huge),
+					     TRUE);
+		break;
+	}
+
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+	return vbox;
 }
 
 static void
@@ -902,6 +1042,12 @@ panel_config(GtkWidget *panel)
 		add_drawer_properties_page(ppc, info->data);
 	}
 						
+#if 0
+	/* Size configuration */
+	page = size_notebook_page (ppc);
+	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
+				  page, gtk_label_new (_("Size")));
+#endif
 
 	/* Backing configuration */
 	page = background_page (ppc);

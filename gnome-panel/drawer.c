@@ -265,6 +265,7 @@ create_empty_drawer_applet(char *tooltip, char *pixmap,
 {
 	GtkWidget *dw = drawer_widget_new(orient,
 					  DRAWER_SHOWN,
+					  SIZE_STANDARD,
 					  PANEL_BACK_NONE, NULL,
 					  TRUE, NULL, TRUE, TRUE);
 	return create_drawer_applet(dw, tooltip,pixmap,orient);

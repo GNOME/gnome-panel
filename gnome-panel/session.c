@@ -788,6 +788,7 @@ init_user_panels(void)
 		panel = snapped_widget_new(SNAPPED_BOTTOM,
 					   SNAPPED_EXPLICIT_HIDE,
 					   SNAPPED_SHOWN,
+					   SIZE_STANDARD,
 					   TRUE,
 					   TRUE,
 					   PANEL_BACK_NONE,
@@ -847,6 +848,7 @@ init_user_panels(void)
 				SnappedPos pos;
 				SnappedMode mode;
 				SnappedState state;
+				PanelSizeType sz;
 
 				g_string_sprintf(buf,"pos=%d", SNAPPED_BOTTOM);
 				pos=gnome_config_get_int(buf->str);
@@ -858,9 +860,13 @@ init_user_panels(void)
 				g_string_sprintf(buf,"state=%d", SNAPPED_SHOWN);
 				state=gnome_config_get_int(buf->str);
 
+				g_string_sprintf(buf,"sz=%d", SIZE_STANDARD);
+				sz=gnome_config_get_int(buf->str);
+
 				panel = snapped_widget_new(pos,
 							   mode,
 							   state,
+							   sz,
 							   hidebuttons_enabled,
 							   hidebutton_pixmaps_enabled,
 							   back_type,
@@ -873,6 +879,7 @@ init_user_panels(void)
 			{
 				DrawerState state;
 				PanelOrientType orient;
+				PanelSizeType sz;
 
 				g_string_sprintf(buf,"state=%d", DRAWER_SHOWN);
 				state=gnome_config_get_int(buf->str);
@@ -880,8 +887,12 @@ init_user_panels(void)
 				g_string_sprintf(buf,"orient=%d", ORIENT_UP);
 				orient=gnome_config_get_int(buf->str);
 
+				g_string_sprintf(buf,"sz=%d", SIZE_STANDARD);
+				sz=gnome_config_get_int(buf->str);
+
 				panel = drawer_widget_new(orient,
 							  state,
+							  sz,
 							  back_type,
 							  back_pixmap,
 							  fit_pixmap_bg,
@@ -896,6 +907,7 @@ init_user_panels(void)
 				PanelOrientation orient;
 				CornerState state;
 				CornerMode mode;
+				PanelSizeType sz;
 				
 				g_string_sprintf(buf,"pos=%d", CORNER_NE);
 				pos=gnome_config_get_int(buf->str);
@@ -911,10 +923,14 @@ init_user_panels(void)
 						 CORNER_EXPLICIT_HIDE);
 				mode=gnome_config_get_int(buf->str);
 
+				g_string_sprintf(buf,"sz=%d", SIZE_STANDARD);
+				sz=gnome_config_get_int(buf->str);
+
 				panel = corner_widget_new(pos,
 							  orient,
 							  mode,
 							  state,
+							  sz,
 							  hidebuttons_enabled,
 							  hidebutton_pixmaps_enabled,
 							  back_type,

@@ -2141,6 +2141,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 		panel = snapped_widget_new(find_empty_spos(),
 					   SNAPPED_EXPLICIT_HIDE,
 					   SNAPPED_SHOWN,
+					   SIZE_STANDARD,
 					   TRUE,
 					   TRUE,
 					   PANEL_BACK_NONE,
@@ -2156,6 +2157,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 					  cori,
 					  CORNER_EXPLICIT_HIDE,
 					  CORNER_SHOWN,
+					  SIZE_STANDARD,
 					  TRUE,
 					  TRUE,
 					  PANEL_BACK_NONE,
@@ -2427,6 +2429,7 @@ convert_to_panel(GtkWidget *w, gpointer data)
 					     SNAPPED_EXPLICIT_HIDE:
 					     SNAPPED_AUTO_HIDE,
 					   SNAPPED_SHOWN,
+					   current_panel->sz,
 					   BASEP_WIDGET(cw)->hidebuttons_enabled,
 					   BASEP_WIDGET(cw)->hidebutton_pixmaps_enabled,
 					   current_panel->back_type,
@@ -2451,6 +2454,7 @@ convert_to_panel(GtkWidget *w, gpointer data)
 					    CORNER_EXPLICIT_HIDE:
 					    CORNER_AUTO_HIDE,
 					  CORNER_SHOWN,
+					  current_panel->sz,
 					  BASEP_WIDGET(sw)->hidebuttons_enabled,
 					  BASEP_WIDGET(sw)->hidebutton_pixmaps_enabled,
 					  current_panel->back_type,

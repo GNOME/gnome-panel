@@ -23,6 +23,7 @@ struct _PerPanelConfig {
         CornerMode              corner_mode;
 
 	/*panel types*/
+	PanelSizeType		sz;
 	int			fit_pixmap_bg;
 	PanelBackType		back_type;
 	char			*back_pixmap;
@@ -37,6 +38,10 @@ struct _PerPanelConfig {
 	GtkWidget		*l_button; /*nw*/
 	GtkWidget		*t_button; /*ne*/
 	GtkWidget		*b_button; /*sw*/
+	GtkWidget		*s_tiny;
+	GtkWidget		*s_std;
+	GtkWidget		*s_large;
+	GtkWidget		*s_huge;
 	GtkWidget		*non;
 	GtkWidget		*pix;
 	GtkWidget		*col;
@@ -45,6 +50,7 @@ struct _PerPanelConfig {
 
 void panel_config(GtkWidget *panel);
 void update_config_orient(GtkWidget *panel);
+void update_config_size(GtkWidget *panel);
 void update_config_back(PanelWidget *panel);
 void kill_config_dialog(GtkWidget *panel);
 #endif /* PANEL_CONFIG_H */

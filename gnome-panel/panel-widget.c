@@ -57,19 +57,11 @@ int pw_applet_padding = 3;
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
-typedef void (*OrientSignal) (GtkObject * object,
-			      PanelOrientation orient,
-			      gpointer data);
-
 typedef void (*BackSignal) (GtkObject * object,
 			    PanelBackType type,
 			    char *pixmap,
 			    GdkColor *color,
 			    gpointer data);
-
-typedef void (*AppletSignal) (GtkObject * object,
-			      GtkWidget * applet,
-			      gpointer data);
 
 /************************
  debugging
@@ -125,6 +117,7 @@ panel_widget_get_type ()
 
 enum {
 	ORIENT_CHANGE_SIGNAL,
+	SIZE_CHANGE_SIGNAL,
 	APPLET_MOVE_SIGNAL,
 	APPLET_ADDED_SIGNAL,
 	APPLET_REMOVED_SIGNAL,
@@ -135,34 +128,6 @@ enum {
 static int panel_widget_signals[LAST_SIGNAL] = {0,0,0,0,0};
 static GtkFixedClass *parent_class = NULL;
 
-
-static void
-marshal_signal_orient (GtkObject * object,
-		       GtkSignalFunc func,
-		       gpointer func_data,
-		       GtkArg * args)
-{
-	OrientSignal rfunc;
-
-	rfunc = (OrientSignal) func;
-
-	(*rfunc) (object, GTK_VALUE_ENUM (args[0]),
-		  func_data);
-}
-
-static void
-marshal_signal_applet (GtkObject * object,
-		       GtkSignalFunc func,
-		       gpointer func_data,
-		       GtkArg * args)
-{
-	AppletSignal rfunc;
-
-	rfunc = (AppletSignal) func;
-
-	(*rfunc) (object, GTK_VALUE_POINTER (args[0]),
-		  func_data);
-}
 
 static void
 marshal_signal_back (GtkObject * object,
@@ -195,7 +160,17 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 orient_change),
-			       marshal_signal_orient,
+			       gtk_marshal_NONE__ENUM,
+			       GTK_TYPE_NONE,
+			       1,
+			       GTK_TYPE_ENUM);
+	panel_widget_signals[SIZE_CHANGE_SIGNAL] =
+		gtk_signal_new("size_change",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
+			       			 size_change),
+			       gtk_marshal_NONE__ENUM,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);
@@ -205,7 +180,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_move),
-			       marshal_signal_applet,
+			       gtk_marshal_NONE__POINTER,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_POINTER);
@@ -215,7 +190,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_added),
-			       marshal_signal_applet,
+			       gtk_marshal_NONE__POINTER,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_POINTER);
@@ -225,7 +200,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_removed),
-			       marshal_signal_applet,
+			       gtk_marshal_NONE__POINTER,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_POINTER);
@@ -245,6 +220,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 				     LAST_SIGNAL);
 
 	class->orient_change = NULL;
+	class->size_change = NULL;
 	class->applet_move = NULL;
 	class->applet_added = NULL;
 	class->applet_removed = NULL;
@@ -699,10 +675,10 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 
 	if(panel->orient == PANEL_HORIZONTAL) {
 		requisition->width = pw_applet_padding;
-		requisition->height = PANEL_MINIMUM_WIDTH;
+		requisition->height = panel_widget_get_pixel_size(panel);
 	} else {
 		requisition->height = pw_applet_padding;
-		requisition->width = PANEL_MINIMUM_WIDTH;
+		requisition->width = panel_widget_get_pixel_size(panel);
 	}
 
 	for(list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
@@ -1419,6 +1395,7 @@ panel_widget_init (PanelWidget *panel)
 GtkWidget *
 panel_widget_new (int packed,
 		  PanelOrientation orient,
+		  PanelSizeType sz,
 		  PanelBackType back_type,
 		  char *back_pixmap,
 		  int fit_pixmap_bg,
@@ -1452,6 +1429,7 @@ panel_widget_new (int packed,
 	}	
 
 	panel->orient = orient;
+	panel->sz = sz;
 
 	panel->packed = packed;
 	if(packed)
@@ -1471,8 +1449,8 @@ static void
 _panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
 {
 #ifdef PANEL_DEBUG
-  g_message("Starting drag on a %s at %p\n",
-	    gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
+	g_message("Starting drag on a %s at %p\n",
+		  gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
 #endif
 	panel->currently_dragged_applet =
 		gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
@@ -1514,8 +1492,8 @@ static void
 _panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
 {
 #ifdef PANEL_DEBUG
-  g_message("Starting drag [grabbed] on a %s at %p\n",
-	    gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
+	g_message("Starting drag [grabbed] on a %s at %p\n",
+		  gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
 #endif
 	_panel_widget_applet_drag_start_no_grab(panel,applet);
 
@@ -1823,8 +1801,6 @@ move_timeout_handler(gpointer data)
 	
 	return FALSE;
 }
-
-
 
 static int
 panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
@@ -2221,12 +2197,14 @@ panel_widget_get_pos(PanelWidget *panel, GtkWidget *applet)
 void
 panel_widget_change_params(PanelWidget *panel,
 			   PanelOrientation orient,
+			   PanelSizeType sz,
 			   PanelBackType back_type,
 			   char *pixmap,
 			   int fit_pixmap_bg,
 			   GdkColor *back_color)
 {
 	PanelOrientation oldorient;
+	PanelSizeType oldsz;
 	int change_back = FALSE;
 
 	g_return_if_fail(panel!=NULL);
@@ -2234,13 +2212,20 @@ panel_widget_change_params(PanelWidget *panel,
 	g_return_if_fail(GTK_WIDGET_REALIZED(panel));
 
 	oldorient = panel->orient;
-
 	panel->orient = orient;
+
+	oldsz = panel->sz;
+	panel->sz = sz;
 
 	if(oldorient != panel->orient) {
 	   	gtk_signal_emit(GTK_OBJECT(panel),
 	   			panel_widget_signals[ORIENT_CHANGE_SIGNAL],
 	   			panel->orient);
+	}
+	if(oldsz != panel->size) {
+	   	gtk_signal_emit(GTK_OBJECT(panel),
+	   			panel_widget_signals[SIZE_CHANGE_SIGNAL],
+	   			panel->size);
 	}
 	if(back_color) {
 		/*this will allways trigger, but so what*/
@@ -2292,6 +2277,7 @@ panel_widget_change_orient(PanelWidget *panel,
 {
 	panel_widget_change_params(panel,
 				   orient,
+				   panel->sz,
 				   panel->back_type,
 				   panel->back_pixmap,
 				   panel->fit_pixmap_bg,
@@ -2329,5 +2315,20 @@ panel_widget_change_global(int explicit_step,
 		pw_applet_padding = applet_padding;
 		for(li=panels;li!=NULL;li=g_slist_next(li))
 			gtk_widget_queue_resize(li->data);
+	}
+}
+
+int
+panel_widget_get_pixel_size(PanelWidget *panel)
+{
+	g_return_if_fail(panel!=NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(panel));
+
+	switch(panel->sz) {
+	case SIZE_TINY: return 24;
+	case SIZE_STANDARD: return 48;
+	case SIZE_LARGE: return 64;
+	case SIZE_HUGE: return 80;
+	default: return 48;
 	}
 }

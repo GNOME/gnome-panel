@@ -442,7 +442,9 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap, int offx, int offy)
 static void
 button_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 {
-	requisition->width = requisition->height = BIG_ICON_SIZE;
+	PanelWidget *panel = PANEL_WIDGET(widget->parent);
+	requisition->width = requisition->height = 
+		panel_widget_get_pixel_size(panel);
 }
 static void
 button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
@@ -653,7 +655,7 @@ button_widget_new(GdkPixmap *pixmap,
 }
 
 static void
-loadup_file(GdkPixmap **pixmap, GdkBitmap **mask, char *file)
+loadup_file(GdkPixmap **pixmap, GdkBitmap **mask, char *file, int size)
 {
 	GdkImlibImage *im = NULL;
 	int w,h;
@@ -682,14 +684,14 @@ loadup_file(GdkPixmap **pixmap, GdkBitmap **mask, char *file)
 	w = im->rgb_width;
 	h = im->rgb_height;
 	if(w>h) {
-		if(w>BIG_ICON_SIZE) {
-			h = h*((double)BIG_ICON_SIZE/w);
-			w = BIG_ICON_SIZE;
+		if(w>size) {
+			h = h*((double)size/w);
+			w = size;
 		}
 	} else {
-		if(h>BIG_ICON_SIZE) {
-			w = w*((double)BIG_ICON_SIZE/h);
-			h = BIG_ICON_SIZE;
+		if(h>size) {
+			w = w*((double)size/h);
+			h = size;
 		}
 	}
 	w = w>0?w:1;
@@ -712,7 +714,7 @@ button_widget_new_from_file(char *pixmap,
 	GdkPixmap *_pixmap;
 	GdkBitmap *mask;
 	
-	loadup_file(&_pixmap,&mask,pixmap);
+	loadup_file(&_pixmap,&mask,pixmap,BIG_ICON_SIZE);
 	
 	return button_widget_new(_pixmap,mask,tile,arrow,orient,text);
 }
@@ -740,7 +742,7 @@ button_widget_set_pixmap_from_file(ButtonWidget *button, char *pixmap)
 	GdkPixmap *_pixmap;
 	GdkBitmap *mask;
 	
-	loadup_file(&_pixmap,&mask,pixmap);
+	loadup_file(&_pixmap,&mask,pixmap,BIG_ICON_SIZE);
 	button_widget_set_pixmap(button,_pixmap,mask);
 
 	if(!_pixmap)
@@ -793,8 +795,8 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 		gdk_bitmap_unref(tiles_down_mask[tile]);
 	tiles_down_mask[tile] = NULL;
 
-	loadup_file(&tiles_up[tile],&tiles_up_mask[tile],tile_up);
-	loadup_file(&tiles_down[tile],&tiles_down_mask[tile],tile_down);
+	loadup_file(&tiles_up[tile],&tiles_up_mask[tile],tile_up,BIG_ICON_SIZE);
+	loadup_file(&tiles_down[tile],&tiles_down_mask[tile],tile_down,BIG_ICON_SIZE);
 	
 	tile_border[tile] = border;
 	tile_depth[tile] = depth;
