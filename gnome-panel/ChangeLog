@@ -1,3 +1,34 @@
+2003-05-09  Mark McLoughlin  <mark@skynet.ie>
+
+	Some fixes for migrating from 2.2.x.
+	
+	* panel-profile.[ch]:
+	(panel_profile_prepare_object_with_id),
+	(panel_profile_prepare_object): add an extra "right_stick"
+	arg so we can set that if needs be.
+	(panel_profile_load): migrate settings before monitoring
+	for gconf changes so we don't get duplicate launchers and
+	things.
+
+	* drawer.c:
+	(panel_drawer_create): upd.
+	(drawer_load_from_gconf): fix FIXME typo.
+	
+	* launcher.c: (panel_launcher_create):
+	* panel-action-button.c: (panel_action_button_create):
+	* panel-applet-frame.c: (panel_applet_frame_create):
+	* panel-menu-bar.c: (panel_menu_bar_create):
+	* panel-menu-button.c: (panel_menu_button_create):
+	upd for prepare_object() change.
+	
+	* panel-compatibility.c:
+	(panel_compatibility_migrate_menu_panel_settings): when migrating
+	an edge panel, set it to expand. Make the window menu right
+	stuck and add it to the "applets" list and not the "objects" 
+	list.
+	(panel_compatibility_migrate_menu_button_settings): set the menu
+	path with the menu's path not the icon path. Doh.
+		
 2003-05-07  Miloslav Trmac  <mitr@volny.cz>
 
 	* panel-toplevel.schemas.in: Fixed some typos.

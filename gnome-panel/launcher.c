@@ -1000,7 +1000,7 @@ panel_launcher_create (PanelToplevel *toplevel,
 	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
-	id = panel_profile_prepare_object (PANEL_OBJECT_LAUNCHER, toplevel, position);
+	id = panel_profile_prepare_object (PANEL_OBJECT_LAUNCHER, toplevel, position, FALSE);
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
 	gconf_client_set_string (client, key, location, NULL);

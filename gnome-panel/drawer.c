@@ -668,7 +668,7 @@ panel_drawer_create (PanelToplevel *toplevel,
 	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
-	id = panel_profile_prepare_object (PANEL_OBJECT_DRAWER, toplevel, position);
+	id = panel_profile_prepare_object (PANEL_OBJECT_DRAWER, toplevel, position, FALSE);
 
 	if (tooltip) {
 		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "tooltip");
@@ -714,7 +714,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 
 	panel_profile_load_toplevel (client, profile_dir, PANEL_GCONF_TOPLEVELS, toplevel_id);
 
-	/* FIXME_FOR_NEW_TOLEVEL: get the use_custom_icon setting */
+	/* FIXME_FOR_NEW_TOPLEVEL: get the use_custom_icon setting */
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "custom_icon");
 	pixmap = gconf_client_get_string (client, key, NULL);
 

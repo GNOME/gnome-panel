@@ -505,7 +505,7 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
 	profile = panel_profile_get_name ();
 
 	key = panel_gconf_sprintf ("%s/expand", toplevel_dir);
-	gconf_client_set_bool (client, key, FALSE, NULL);
+	gconf_client_set_bool (client, key, TRUE, NULL);
 
 	key = panel_gconf_sprintf ("%s/orientation", toplevel_dir);
 	gconf_client_set_string (client, key,
@@ -515,17 +515,17 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
 	toplevel_id = panel_gconf_basename (toplevel_dir);
 
 	/* menu bar on far right corner */
-        id = panel_profile_prepare_object_with_id (PANEL_OBJECT_MENU_BAR, toplevel_id, 0);
+        id = panel_profile_prepare_object_with_id (PANEL_OBJECT_MENU_BAR, toplevel_id, 0, FALSE);
 
         panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
 
 	/* window menu on far left corner */
-        id = panel_profile_prepare_object_with_id (PANEL_OBJECT_BONOBO, toplevel_id, G_MAXINT);
+        id = panel_profile_prepare_object_with_id (PANEL_OBJECT_BONOBO, toplevel_id, 0, TRUE);
 
 	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
         gconf_client_set_string (client, key, "OAFIID:GNOME_WindowMenuApplet", NULL);
 
-        panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+        panel_profile_add_to_list (PANEL_GCONF_APPLETS, id);
 }
 
 static void
@@ -791,7 +791,7 @@ panel_compatibility_migrate_menu_button_settings (GConfClient       *client,
 
 	if (menu_path) {
 		key = panel_gconf_full_key (key_type, profile, object_id, "menu_path");
-		gconf_client_set_string (client, key, custom_icon, NULL);
+		gconf_client_set_string (client, key, menu_path, NULL);
 	}
 
 	g_free (custom_icon);

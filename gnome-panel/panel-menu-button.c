@@ -718,7 +718,7 @@ panel_menu_button_create (PanelToplevel *toplevel,
 	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
-	id = panel_profile_prepare_object (PANEL_OBJECT_MENU, toplevel, position);
+	id = panel_profile_prepare_object (PANEL_OBJECT_MENU, toplevel, position, FALSE);
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_menu_path");
 	gconf_client_set_bool (client, key, use_menu_path, NULL);

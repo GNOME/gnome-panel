@@ -1426,7 +1426,8 @@ panel_profile_destroy_toplevel (const char *id)
 char *
 panel_profile_prepare_object_with_id (PanelObjectType  object_type,
 				      const char      *toplevel_id,
-				      int              position)
+				      int              position,
+				      gboolean         right_stick)
 {
 	PanelGConfKeyType  key_type;
 	GConfClient       *client;
@@ -1458,6 +1459,9 @@ panel_profile_prepare_object_with_id (PanelObjectType  object_type,
 	key = panel_gconf_full_key (key_type, current_profile, id, "position");
 	gconf_client_set_int (client, key, position, NULL);
 
+	key = panel_gconf_full_key (key_type, current_profile, id, "panel_right_stick");
+	gconf_client_set_bool (client, key, right_stick, NULL);
+
 	g_free (dir);
 
 	return id;
@@ -1466,11 +1470,13 @@ panel_profile_prepare_object_with_id (PanelObjectType  object_type,
 char *
 panel_profile_prepare_object (PanelObjectType  object_type,
 			      PanelToplevel   *toplevel,
-			      int              position)
+			      int              position,
+			      gboolean         right_stick)
 {
 	return panel_profile_prepare_object_with_id (object_type,
 						     panel_profile_get_toplevel_id (toplevel),
-						     position);
+						     position,
+						     right_stick);
 }
 
 void
@@ -2069,10 +2075,10 @@ panel_profile_load (char *profile_name)
 	if (!gconf_client_dir_exists (client, dir, NULL))
 		panel_profile_copy_defaults (client, dir);
 
+	panel_compatibility_migrate_panel_id_list (client);
+
 	key = panel_gconf_sprintf ("%s/general", dir);
 	gconf_client_add_dir (client, key, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-
-	panel_compatibility_migrate_panel_id_list (client);
 
 	panel_profile_load_list (client,
 				 dir,
