@@ -105,19 +105,22 @@ static void
 test_applet_handle_background_change (PanelApplet               *applet,
 				      PanelAppletBackgroundType  type,
 				      GdkColor                  *color,
-				      const gchar               *pixmap,
+				      GdkPixmap                 *pixmap,
 				      GtkLabel                  *label)
 {
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
 		g_message ("Setting background to default");
+		gdk_window_set_back_pixmap (GTK_WIDGET (label)->window, NULL, FALSE);
 		break;
 	case PANEL_COLOR_BACKGROUND:
 		g_message ("Setting background to #%2x%2x%2x",
 			    color->red, color->green, color->blue);
+		gdk_window_set_back_pixmap (GTK_WIDGET (label)->window, NULL, FALSE);
 		break;
 	case PANEL_PIXMAP_BACKGOUND:
 		g_message ("Setting background to '%s'", pixmap);
+		gdk_window_set_back_pixmap (GTK_WIDGET (label)->window, pixmap, FALSE);
 		break;
 	default:
 		g_assert_not_reached ();

@@ -57,6 +57,8 @@ struct _PanelAppletPrivate {
 
 	gboolean                    expand_major;
 	gboolean                    expand_minor;
+
+	GdkPixmap                  *bg_pixmap;
 };
 
 static GObjectClass *parent_class;
@@ -414,7 +416,7 @@ panel_applet_parse_pixmap_str (const char *str,
 	g_return_val_if_fail (x != NULL, FALSE);
 	g_return_val_if_fail (y != NULL, FALSE);
 
-	elements = g_strsplit (str, "'", -1);
+	elements = g_strsplit (str, ",", -1);
 
 	if (!elements)
 		return FALSE;
@@ -452,6 +454,7 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 {
 	GdkPixmap *pixmap;
 	GdkPixmap *retval;
+	GdkGC     *gc;
 	int        width;
 	int        height;
 
@@ -470,13 +473,18 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 
 	retval = gdk_pixmap_new (GTK_WIDGET (applet)->window, width, height, -1);
 
+	gc = gdk_gc_new (GDK_DRAWABLE (GTK_WIDGET (applet)->window));
+
+	g_return_val_if_fail (GDK_IS_GC (gc), NULL);
+
 	gdk_draw_drawable (GDK_DRAWABLE (retval),
-			   GTK_WIDGET (applet)->style->bg_gc, /* FIXME: is this right? */
+			   gc, 
 			   GDK_DRAWABLE (pixmap),
 			   x, y,
 			   0, 0,
 			   width, height);
 
+	g_object_unref (G_OBJECT (gc));
 	g_object_unref (G_OBJECT (pixmap));
 
 	return retval;
@@ -549,7 +557,6 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 		gchar  *bg_str;
 		gchar **elements;
 
-
 		bg_str = BONOBO_ARG_GET_STRING (arg);
 
 		elements = g_strsplit (bg_str, ":", -1);
@@ -590,7 +597,8 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 
 			if (!panel_applet_parse_pixmap_str (elements [1], &pixmap_id, &x, &y)) {
 				g_warning (_("panel_applet_set_prop: Incomplete '%s'"
-					     " background type received"), elements [0]);
+					     " background type received: %s"),
+					   elements [0], elements [1]);
 
 				g_strfreev (elements);
 				return;
@@ -613,6 +621,7 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 				       panel_applet_signals [CHANGE_BACKGROUND],
 				       0, PANEL_PIXMAP_BACKGOUND, NULL, pixmap);
 
+			g_object_unref (G_OBJECT (pixmap));
 		} else {
 			g_warning (_("panel_applet_set_prop: Unknown backgound type received"));
 			return;
@@ -768,7 +777,7 @@ panel_applet_class_init (PanelAppletClass *klass,
 			      3,
 			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
 			      G_TYPE_POINTER,
-			      G_TYPE_STRING);
+			      GDK_TYPE_PIXMAP);
 }
 
 static void

@@ -1,3 +1,15 @@
+2002-01-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet.c:
+	(panel_applet_parse_pixmap_str): fix silly.
+	(panel_applet_get_pixmap): create a new GC.
+	(panel_applet_set_prop): unref the pixmap.
+	(panel_applet_class_init): update signal param type.
+
+	* test-bonobo-applet.c:
+	(test_applet_handle_background_change): add a test to
+	demonstrate that this doesn't work yet.
+
 2002-01-08  Mark McLoughlin  <mark@skynet.ie>
 
 	Implement the applet side of the pixmap background stuff.
