@@ -1,3 +1,10 @@
+2002-06-03  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu.c: (setup_full_menuitem),
+	(panel_load_menu_image_deferred_with_size): fix
+	scary, scary g_free on GObjects instead of 
+	g_object_unref. More than likely fixes #81690.
+
 2002-06-02  Satyajit Kanungo <satyajit.kanungo@wipro.com>
 
 	* gnome-panel-preferences.c: Added a help button to the panel capplet

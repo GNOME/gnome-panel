@@ -1430,11 +1430,9 @@ create_program_list_contents (void)
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 5);
         g_object_set_data (G_OBJECT (run_dialog), "desc_label", label);
 
-        g_object_ref (G_OBJECT (vbox));
-        
         g_object_set_data_full (G_OBJECT (run_dialog),
 				"program_list_box",
-				vbox,
+				g_object_ref (vbox),
 				(GtkDestroyNotify) g_object_unref);
 
         unset_selected (run_dialog);

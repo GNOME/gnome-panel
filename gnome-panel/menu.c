@@ -1596,8 +1596,8 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 	if (pixmap) {
 		g_object_set_data_full (G_OBJECT (menuitem),
 					"Panel:Image",
-					g_object_ref (G_OBJECT (pixmap)),
-					(GDestroyNotify) g_free);
+					g_object_ref (pixmap),
+					(GDestroyNotify) g_object_unref);
 		gtk_widget_show (pixmap);
 		if (panel_menu_have_icons ())
 			gtk_image_menu_item_set_image
@@ -4087,8 +4087,8 @@ panel_load_menu_image_deferred_with_size (GtkWidget *image_menu_item,
 
   g_object_set_data_full (G_OBJECT (image_menu_item),
 			  "Panel:Image",
-			  g_object_ref (G_OBJECT (image)),
-			  (GDestroyNotify) g_free);
+			  g_object_ref (image),
+			  (GDestroyNotify) g_object_unref);
   if (force_image)
 	  g_object_set_data (G_OBJECT (image_menu_item),
 			     "Panel:ForceImage",
