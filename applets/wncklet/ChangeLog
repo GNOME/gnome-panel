@@ -1,3 +1,18 @@
+2003-12-10  Mark McLoughlin  <mark@skynet.ie>
+
+	* showdesktop.c: (display_help_dialog):
+	* window-list.c: (response_cb), (display_help_dialog):
+	* workspace-switcher.c: (response_cb), (display_help_dialog):
+	Use the new libgnomeui and gdk functions instead of the
+	egg-screen stuff.
+
+	* Makefile.am: don't do the libegg thang.
+
+	* egg-screen-exec.[ch],
+	  egg-screen-help.[ch],
+	  egg-screen-url.[ch],
+	  update-from-egg.sh: die.
+	
 ==================== 2.5.2 ====================
 
 2003-12-09  Mark McLoughlin  <mark@skynet.ie>

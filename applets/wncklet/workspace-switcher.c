@@ -25,13 +25,12 @@
 #include <libbonobo.h>
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-help.h>
 #include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
 
 #include "workspace-switcher.h"
-
-#include "egg-screen-help.h"
 
 #include "wncklet.h"
 
@@ -155,7 +154,7 @@ response_cb (GtkWidget *widget,
 	if (id == GTK_RESPONSE_HELP) {
 		GError *error = NULL;
 
-		egg_help_display_desktop_on_screen (
+		gnome_help_display_desktop_on_screen (
 			NULL, "workspace-switcher", "workspace-switcher", "workspacelist-prefs",
 			gtk_widget_get_screen (pager->applet),
 			&error);
@@ -458,7 +457,7 @@ display_help_dialog (BonoboUIComponent *uic,
 {
 	GError *error = NULL;
 
-	egg_help_display_desktop_on_screen (
+	gnome_help_display_desktop_on_screen (
 		NULL, "workspace-switcher", "workspace-switcher", NULL,
 		gtk_widget_get_screen (pager->applet),
 		&error);

@@ -34,13 +34,13 @@
 #include <panel-applet.h>
 #include <gdk/gdkkeysyms.h>
 #include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-help.h>
 
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 
 #include "inlinepixbufs.h"
 #include "eel/eel-ellipsizing-label.h"
-#include "egg-screen-help.h"
 #include "wncklet.h"
 
 typedef struct {
@@ -71,7 +71,7 @@ window_menu_help (BonoboUIComponent *uic,
 {
 	GError *error = NULL;
 
-	egg_help_display_desktop_on_screen (
+	gnome_help_display_desktop_on_screen (
 		NULL, "user-guide", "wgosmetacity.xml", "gosmetacity-27",
 		gtk_widget_get_screen (window_menu->applet),
 		&error);

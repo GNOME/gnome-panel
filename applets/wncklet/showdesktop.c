@@ -30,10 +30,10 @@
 #include <gtk/gtkmessagedialog.h>
 #include <libgnome/libgnome.h>
 #include <libgnomeui/gnome-about.h>
+#include <libgnomeui/gnome-help.h>
 #include <libgnomeui/gnome-icon-theme.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/screen.h>
-#include "egg-screen-help.h"
 #include "wncklet.h"
 #include <gdk/gdkx.h>
 
@@ -405,7 +405,7 @@ display_help_dialog (BonoboUIComponent *uic,
 {
         GError *error = NULL;
 
-        egg_help_display_desktop_on_screen (
+        gnome_help_display_desktop_on_screen (
                 NULL, "user-guide", "wgospanel.xml", "gospanel-564",
                 gtk_widget_get_screen (sdd->applet),
 		&error);

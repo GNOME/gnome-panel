@@ -23,14 +23,13 @@
 #include <libbonobo.h>
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-help.h>
 #include <libgnome/gnome-desktop-item.h>
 #include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
 
 #include "window-list.h"
-
-#include "egg-screen-help.h"
 
 typedef struct {
 	GtkWidget *applet;
@@ -104,7 +103,7 @@ response_cb (GtkWidget    *widget,
 	if (id == GTK_RESPONSE_HELP) {
 		GError *error = NULL;
 
-		egg_help_display_desktop_on_screen (
+		gnome_help_display_desktop_on_screen (
 			NULL, "window-list", "window-list", "windowlist-prefs",
 			gtk_widget_get_screen (tasklist->applet),
 			&error);
@@ -761,7 +760,7 @@ display_help_dialog (BonoboUIComponent *uic,
 {
 	GError *error = NULL;
 
-	egg_help_display_desktop_on_screen (
+	gnome_help_display_desktop_on_screen (
 			NULL, "window-list", "window-list", NULL,
 			gtk_widget_get_screen (tasklist->applet),
 			&error);

@@ -19,14 +19,6 @@ INCLUDES = \
         -DDATADIR=\"$(datadir)\" \
         -DLIBDIR=\"$(libdir)\"
 
-EGGFILES = \
-	egg-screen-exec.h \
-	egg-screen-exec.c \
-	egg-screen-help.h \
-	egg-screen-help.c \
-	egg-screen-url.h \
-	egg-screen-url.c
-
 wnck_applet_SOURCES = \
 	wncklet.c \
 	wncklet.h \
@@ -37,8 +29,7 @@ wnck_applet_SOURCES = \
 	workspace-switcher.c \
 	workspace-switcher.h \
 	showdesktop.c \
-	showdesktop.h \
-	$(EGGFILES)
+	showdesktop.h
 
 $(wnck_applet_OBJECTS): $(BUILT_SOURCES)
 
@@ -80,11 +71,6 @@ noinst_DATA = inlinepixbufs.h
 
 inlinepixbufs.h: $(IMAGES)
 	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(VARIABLES) > inlinepixbufs.h
-
-EGGDIR = $(srcdir)/../../../libegg/libegg/screen-exec
-
-regenerate-built-sources:
-	EGGFILES="$(EGGFILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = workspace-switcher.schemas.in window-list.schemas.in 
