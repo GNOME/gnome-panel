@@ -2,6 +2,7 @@
 /* Original author unknown. CORBAized by Elliot Lee */
 /* uncorbized by George Lebl */
 
+#include <config.h>
 #include <gnome.h>
 #include "panel.h"
 
