@@ -43,18 +43,23 @@ extern GSList *applets;
 void
 panel_show_help (const char *doc_name, const char *linkid)
 {
-	gnome_help_display (doc_name,
-			    linkid,
-			    NULL);
+	GError *error = NULL;
 
-	/* FIXME: handle error */
+	if ( ! gnome_help_display (doc_name,
+				   linkid,
+				   &error)) {
+		panel_error_dialog ("cannot_show_help",
+				    _("<b>Cannot display help document</b>\n\n"
+				      "Details: %s"), error->message);
+		g_clear_error (&error);
+	}
 }
 
-#ifdef FIXME
-static char *
-panel_gnome_help_path (const char *docpath)
+static gboolean
+panel_show_gnome_help (const char *docpath, GError **error)
 {
-	char *fullpath, *app, *p, *path, *uri;
+	char *app, *p, *path;
+	gboolean retval;
 
 	app = g_strdup (docpath);
 
@@ -62,36 +67,49 @@ panel_gnome_help_path (const char *docpath)
 
 	if (p == NULL) {
 		g_free (app);
-		return NULL;
+		g_set_error (error,
+			     PANEL_HELP_ERROR,
+			     PANEL_HELP_ERROR_NOT_FOUND,
+			     /* XXX: Not really a correct error,
+			      * but just somewhat correct */
+			     _("Help document not found"));
+		return FALSE;
 	}
 
 	path = p+1;
 	*p = '\0';
 
-	fullpath = gnome_help_file_path (app, path);
+	retval = TRUE;
+
+	if ( ! gnome_help_display_desktop (NULL /* program */,
+					   app /* doc_id */,
+					   path /* file_name */,
+					   NULL /* link_id */,
+					   error)) {
+		retval = gnome_help_display_with_doc_id (NULL /* program */,
+							 app /* doc_id */,
+							 path /* file_name */,
+							 NULL /* link_id */,
+							 error);
+	}
 
 	g_free (app);
 
-	if ( ! g_file_test (fullpath, G_FILE_TEST_EXISTS)) {
-		g_free (fullpath);
-		fullpath = NULL;
-	}
-
-	uri = g_strconcat ("ghelp:", fullpath, NULL);
-	g_free (fullpath);
-
-	return uri;
+	return retval;
 }
-#endif /* FIXME */
 
-#ifdef FIXME
-static char *
-panel_kde_help_path (const char *docpath)
+static gboolean
+panel_show_kde_help (const char *docpath, GError **error)
 {
 	const GList *li;
 
-	if ( ! g_file_test (KDE_DOCDIR, G_FILE_TEST_EXISTS))
-		return NULL;
+	if ( ! g_file_test (KDE_DOCDIR, G_FILE_TEST_EXISTS)) {
+		g_set_error (error,
+			     PANEL_HELP_ERROR,
+			     PANEL_HELP_ERROR_NOT_FOUND,
+			     _("Help document not found"));
+		return FALSE;
+	}
 
 	for (li = gnome_i18n_get_language_list ("LC_MESSAGES");
 	     li != NULL;
@@ -101,38 +119,54 @@ panel_kde_help_path (const char *docpath)
 						  (char *)li->data,
 						  docpath);
 		if (g_file_test (fullpath, G_FILE_TEST_EXISTS)) {
+			gboolean retval;
 			char *uri = g_strconcat ("ghelp:", fullpath, NULL);
 			g_free (fullpath);
-			return uri;
+			retval = gnome_help_display_uri (uri, error);
+			g_free (uri);
+			return retval;
 		}
 		g_free (fullpath);
 	}
 
-	return NULL;
+	g_set_error (error,
+		     PANEL_HELP_ERROR,
+		     PANEL_HELP_ERROR_NOT_FOUND,
+		     _("Help document not found"));
+
+	return FALSE;
 }
-#endif /* FIXME */
 
-char *
-panel_gnome_kde_help_path (const char *docpath)
+gboolean
+panel_show_gnome_kde_help (const char *docpath,
+			   GError **error)
 {
-#ifdef FIXME
-	char *path;
-
-	if (string_empty (docpath))
-		return NULL;
+	if (string_empty (docpath)) {
+		g_set_error (error,
+			     PANEL_HELP_ERROR,
+			     PANEL_HELP_ERROR_NO_DOCPATH,
+			     _("No document to show"));
+		return FALSE;
+	}
 
 	if (panel_is_url (docpath))
-		return g_strdup (docpath);
+		return gnome_help_display_uri (docpath, error);
 
-	path = panel_gnome_help_path (docpath);
+	if ( ! panel_show_gnome_help (docpath, error)) {
+		return panel_show_kde_help (docpath, error);
+	}
 
-	if (path == NULL)
-		path = panel_kde_help_path (docpath);
+	return TRUE;
+}
 
-	return path;
-#else
-	return NULL;
-#endif
+GQuark
+panel_help_error_quark (void)
+{
+	static GQuark q = 0;
+	if (q == 0)
+		q = g_quark_from_static_string ("panel-help-error-quark");
+
+	return q;
 }
 
 static void
@@ -229,7 +263,7 @@ create_icon_entry(GtkWidget *table,
 }
 
 GList *
-my_g_list_swap_next (GList *list, GList *dl)
+panel_g_list_swap_next (GList *list, GList *dl)
 {
 	GList *t;
 
@@ -252,7 +286,7 @@ my_g_list_swap_next (GList *list, GList *dl)
 }
 
 GList *
-my_g_list_swap_prev (GList *list, GList *dl)
+panel_g_list_swap_prev (GList *list, GList *dl)
 {
 	GList *t;
 
@@ -277,7 +311,7 @@ my_g_list_swap_prev (GList *list, GList *dl)
 /*maybe this should be a glib function?
  it resorts a single item in the list*/
 GList *
-my_g_list_resort_item(GList *list, gpointer data, GCompareFunc func)
+panel_g_list_resort_item(GList *list, gpointer data, GCompareFunc func)
 {
 	GList *dl;
 
@@ -290,10 +324,10 @@ my_g_list_resort_item(GList *list, gpointer data, GCompareFunc func)
 
 	while(dl->next &&
 	      (*func)(dl->data,dl->next->data)>0)
-		list=my_g_list_swap_next(list,dl);
+		list = panel_g_list_swap_next (list, dl);
 	while(dl->prev &&
 	      (*func)(dl->data,dl->prev->data)<0)
-		list=my_g_list_swap_prev(list,dl);
+		list = panel_g_list_swap_prev (list, dl);
 	return list;
 }
 
@@ -618,12 +652,15 @@ panel_error_dialog (const char *class,
 	}
 
 	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_ERROR,
-				    GTK_BUTTONS_OK, s);
+				    GTK_BUTTONS_OK, "foo");
 	gtk_widget_add_events (w, GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (w), "event",
 			  G_CALLBACK (panel_dialog_window_event), NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (w),
 				class, "Panel");
+
+	gtk_label_set_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (w)->label), s);
+
 	g_free (s);
 
 	gtk_widget_show_all (w);
@@ -654,11 +691,14 @@ panel_info_dialog (const char *class,
 	}
 
 	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_INFO,
-				    GTK_BUTTONS_OK, s);
+				    GTK_BUTTONS_OK, "foo");
 	g_signal_connect (G_OBJECT (w), "event",
 			  G_CALLBACK (panel_dialog_window_event), NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (w),
 				class, "Panel");
+
+	gtk_label_set_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (w)->label), s);
+
 	g_free (s);
 
 	gtk_widget_show_all (w);

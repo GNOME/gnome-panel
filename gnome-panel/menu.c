@@ -330,25 +330,29 @@ about_gnome_cb(GtkObject *object, char *program_path)
 static void
 activate_app_def (GtkWidget *widget, const char *item_loc)
 {
+	GError *error = NULL;
 	GnomeDesktopItem *item = gnome_desktop_item_new_from_uri
 		(item_loc,
 		 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
-		 NULL /* error */);
+		 &error);
 	if (item != NULL) {
-		char *curdir = g_get_current_dir ();
-		chdir (g_get_home_dir ());
-
 		gnome_desktop_item_launch (item,
 					   NULL /* file_list */,
 					   0 /* flags */,
-					   NULL /* error */);
+					   &error);
+		if (error != NULL) {
+			panel_error_dialog ("cant_load_entry",
+					    _("<b>Can't launch entry</b>\n\n"
+					      "Details: %s"), error->message);
+			g_clear_error (&error);
+		}
 		gnome_desktop_item_unref (item);
-
-		chdir (curdir);
-		g_free (curdir);
 	} else {
-		panel_error_dialog ("cannot_load_entry",
-				    _("Can't load entry"));
+		g_assert (error != NULL);
+		panel_error_dialog ("cant_load_entry",
+				    _("<b>Can't load entry</b>\n\n"
+				      "Details: %s"), error->message);
+		g_clear_error (&error);
 	}
 }
 
@@ -753,7 +757,8 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 
 	if (unlink (sim->item_loc) < 0) {
 		panel_error_dialog("cant_remove_menu_item",
-				   _("Could not remove the menu item %s: %s\n"), 
+				   _("<b>Could not remove the menu item %s</b>\n\n"
+				     "Details: %s\n"), 
 				    sim->item_loc, g_strerror (errno));
 		return;
 	}
@@ -815,10 +820,11 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 static void
 add_to_run_dialog (GtkWidget *widget, const char *item_loc)
 {
+	GError *error = NULL;
 	GnomeDesktopItem *item =
 		gnome_desktop_item_new_from_uri (item_loc,
 						 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
-						 NULL /* error */);
+						 &error);
 	if (item != NULL) {
 		const char *exec;
 
@@ -836,41 +842,39 @@ add_to_run_dialog (GtkWidget *widget, const char *item_loc)
 		}
 		gnome_desktop_item_unref (item);
 	} else {
+		g_assert (error != NULL);
 		panel_error_dialog ("cant_load_entry",
-				    _("Can't load entry"));
+				    _("<b>Can't load entry</b>\n\n"
+				      "Details: %s"), error->message);
+		g_clear_error (&error);
 	}
 }
 
 static void
 show_help_on (GtkWidget *widget, const char *item_loc)
 {
+	GError *error = NULL;
 	GnomeDesktopItem *item =
 		gnome_desktop_item_new_from_uri (item_loc,
 						 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
-						 NULL /* error */);
+						 &error);
 	if (item != NULL) {
 		const char *docpath = gnome_desktop_item_get_string
 			(item, "DocPath");
-		char *path = panel_gnome_kde_help_path (docpath);
-		if (path != NULL) {
-			GError *error = NULL;
-			gnome_url_show (path, &error);
-			if (error != NULL) {
-				const char *name = gnome_desktop_item_get_localestring
-					(item, GNOME_DESKTOP_ITEM_NAME);
-				panel_error_dialog ("cant_load_help_on",
-						    _("Cannot load help on %s.\n\n%s"),
-						    name, error->message);
-				g_clear_error (&error);
-			}
-
-			/* FIXME: this should prolly use gnome_help */
-			g_free (path);
+		if ( ! panel_show_gnome_kde_help (docpath, &error)) {
+			panel_error_dialog ("cannot_show_gnome_kde_help",
+					    _("<b>Cannot display help document</b>\n\n"
+					      "Details: %s"), error->message);
+			g_clear_error (&error);
 		}
+
 		gnome_desktop_item_unref (item);
 	} else {
+		g_assert (error != NULL);
 		panel_error_dialog ("cant_load_entry",
-				    _("Can't load entry"));
+				    _("<b>Can't load entry</b>\n\n"
+				      "Details: %s"), error->message);
+		g_clear_error (&error);
 	}
 }
 
@@ -1398,6 +1402,13 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 		if (sim->type == 1) {
 			ii = gnome_desktop_item_new_from_uri (sim->item_loc, 0, NULL);
 
+			/* eek */
+			if (ii == NULL) {
+				gtk_widget_destroy (sim->menu);
+				sim->menu = NULL;
+				return;
+			}
+
 			menuitem = gtk_image_menu_item_new ();
 			if ( ! sim->applet)
 				setup_menuitem (menuitem, NULL,
@@ -1442,18 +1453,9 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					 G_OBJECT(item->parent));
 			}
 
-			if (ii != NULL) {
-				const char *doc_path = gnome_desktop_item_get_string (ii, "DocPath");
-				tmp = panel_gnome_kde_help_path (doc_path);
-			} else {
-				tmp = NULL;
-			}
-
-			if (tmp != NULL) {
+			if (gnome_desktop_item_get_string (ii, "DocPath") != NULL) {
 				char *title;
 				const char *name;
-
-				g_free (tmp);
 
 				menuitem = gtk_image_menu_item_new ();
 				name = gnome_desktop_item_get_localestring (ii, GNOME_DESKTOP_ITEM_NAME);

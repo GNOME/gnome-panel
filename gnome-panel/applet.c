@@ -194,15 +194,15 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		} else if (strcmp (menu->name, "help_on_app") == 0) {
 			Launcher * launcher = menu->info->data;
 			if (launcher->ditem != NULL) {
+				GError *error = NULL;
 				const char *docpath =
 					gnome_desktop_item_get_string
 					    (launcher->ditem, "DocPath");
-				char *path =
-					panel_gnome_kde_help_path (docpath);
-				if (path != NULL) {
-					gnome_url_show (path, NULL);
-					/* FIXME: handle errors */
-					g_free (path);
+				if ( ! panel_show_gnome_kde_help (docpath, &error)) {
+					panel_error_dialog ("cannot_show_gnome_kde_help",
+							    _("<b>Cannot display help document</b>\n\n"
+							      "Details: %s"), error->message);
+					g_clear_error (&error);
 				}
 			}
 		}

@@ -107,7 +107,8 @@ launch (Launcher *launcher)
 					   &error);
 		if (error != NULL) {
 			panel_error_dialog ("cannot_launch_icon",
-					    _("Cannot launch icon\n%s"),
+					    _("<b>Cannot launch icon</b>\n\n"
+					      "Details: %s"),
 					    error->message);
 			g_clear_error (&error);
 		}
@@ -419,7 +420,6 @@ setup_button (Launcher *launcher)
 	const char *comment;
 	const char *name;
 	const char *docpath;
-	char *real_docpath;
 	char *str;
 	char *icon;
 	
@@ -456,18 +456,15 @@ setup_button (Launcher *launcher)
 
 	panel_applet_remove_callback (launcher->info, "help_on_app");
 
-	real_docpath = panel_gnome_kde_help_path (docpath);
-	if (real_docpath != NULL) {
+	if (docpath != NULL) {
 		char *title;
-
-		g_free (real_docpath);
 
 		title = g_strdup_printf (_("Help on %s Application"), name);
 
 		panel_applet_add_callback (launcher->info,
 					   "help_on_app",
-					    GTK_STOCK_HELP,
-					    title);
+					   GTK_STOCK_HELP,
+					   title);
 		g_free (title);
 	}
 }

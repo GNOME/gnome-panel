@@ -34,13 +34,13 @@ GtkWidget *	create_icon_entry	(GtkWidget *table,
 void		panel_show_help		(const char *path,
 					 const char *linkid);
 
-GList *		my_g_list_swap_next	(GList *list,
+GList *		panel_g_list_swap_next	(GList *list,
 					 GList *dl);
-GList *		my_g_list_swap_prev	(GList *list,
+GList *		panel_g_list_swap_prev	(GList *list,
 					 GList *dl);
 /*maybe this should be a glib function?
  it resorts a single item in the list*/
-GList *		my_g_list_resort_item	(GList *list,
+GList *		panel_g_list_resort_item(GList *list,
 					 gpointer data,
 					 GCompareFunc func);
 
@@ -85,7 +85,16 @@ int		find_applet		(GtkWidget *widget);
 int		get_requisition_width	(GtkWidget *widget);
 int		get_requisition_height	(GtkWidget *widget);
 
-char *		panel_gnome_kde_help_path (const char *docpath);
+typedef enum {
+	PANEL_HELP_ERROR_NO_DOCPATH /* No docpath sent */,
+	PANEL_HELP_ERROR_NOT_FOUND /* Document not found */
+} PanelHelpError;
+
+#define PANEL_HELP_ERROR panel_help_error_quark ()
+GQuark panel_help_error_quark (void);
+
+gboolean	panel_show_gnome_kde_help (const char *docpath,
+					   GError **error);
 
 gboolean	panel_is_url		(const char *url);
 

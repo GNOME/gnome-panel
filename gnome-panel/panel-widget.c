@@ -564,7 +564,7 @@ panel_widget_switch_applet_right(PanelWidget *panel, GList *list)
 
 	nad->pos = ad->pos;
 	ad->pos = nad->pos+nad->min_cells;
-	panel->applet_list = my_g_list_swap_next(panel->applet_list,list);
+	panel->applet_list = panel_g_list_swap_next(panel->applet_list,list);
 
 	panel_widget_queue_applet_for_resize(ad);
 	panel_widget_queue_applet_for_resize(nad);
@@ -597,7 +597,7 @@ panel_widget_switch_applet_left(PanelWidget *panel, GList *list)
 
 	ad->pos = pad->pos;
 	pad->pos = ad->pos+ad->min_cells;
-	panel->applet_list = my_g_list_swap_prev(panel->applet_list,list);
+	panel->applet_list = panel_g_list_swap_prev(panel->applet_list,list);
 
 	panel_widget_queue_applet_for_resize(ad);
 	panel_widget_queue_applet_for_resize(pad);
@@ -1975,8 +1975,8 @@ panel_widget_nice_move (PanelWidget *panel, AppletData *ad, int pos)
 	ad->pos = pos;
 
 	panel->applet_list =
-		my_g_list_resort_item (panel->applet_list, ad,
-				       (GCompareFunc)applet_data_compare);
+		panel_g_list_resort_item (panel->applet_list, ad,
+					  (GCompareFunc)applet_data_compare);
 
 	l = g_list_find (panel->applet_list, ad);
 	if (l && l->prev) {
