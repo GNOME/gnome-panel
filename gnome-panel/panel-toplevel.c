@@ -3082,7 +3082,6 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 		     gboolean          auto_hide,
 		     GtkDirectionType  direction)
 {
-
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
 	if (toplevel->priv->state != PANEL_STATE_NORMAL)
@@ -3337,7 +3336,8 @@ panel_toplevel_focus_in_event (GtkWidget     *widget,
 {
 	PanelToplevel *toplevel = PANEL_TOPLEVEL (widget);
 	
-	panel_toplevel_unhide (toplevel);
+	if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
+		panel_toplevel_unhide (toplevel);
 
 	if (GTK_WIDGET_CLASS (parent_class)->focus_in_event)
 		return GTK_WIDGET_CLASS (parent_class)->focus_in_event (widget, event);

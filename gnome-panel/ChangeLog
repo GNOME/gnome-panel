@@ -1,5 +1,13 @@
 2004-08-11  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix for nested drawer craziness reported at:
+	https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=127488
+
+	* panel-toplevel.c:
+	(panel_toplevel_focus_in_event): only unhide if its autohidden.
+
+2004-08-11  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-addto.c: (panel_addto_append_internal_applets): set the
 	action type before appending.
 
