@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-05-27 14:58+0100\n"
-"PO-Revision-Date: 2003-05-21 01:51+0200\n"
+"POT-Creation-Date: 2003-05-29 13:55+0200\n"
+"PO-Revision-Date: 2003-05-29 13:56+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -868,15 +868,13 @@ msgstr "Huruvida namnen på arbetsytorna ska visas i arbetsytebytaren."
 
 #: gnome-panel/applet.c:97 gnome-panel/applet.c:483
 #: gnome-panel/panel-applet-frame.c:88
-#, fuzzy
 msgid "Un_lock"
-msgstr "Klocka"
+msgstr "_Lås upp"
 
 #: gnome-panel/applet.c:97 gnome-panel/applet.c:483
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:88
-#, fuzzy
 msgid "_Lock"
-msgstr "Lås"
+msgstr "_Lås"
 
 #: gnome-panel/applet.c:410
 msgid "???"
@@ -1713,12 +1711,11 @@ msgstr "Typen av åtgärd som denna knapp implementerar"
 
 #: gnome-panel/panel-action-button.c:389 gnome-panel/panel-menu-button.c:463
 msgid "Drag N' Drop enabled"
-msgstr ""
+msgstr "Dar och släpp aktiverat"
 
 #: gnome-panel/panel-action-button.c:390 gnome-panel/panel-menu-button.c:464
-#, fuzzy
 msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Huruvida en pilindikator ska ritas eller inte"
+msgstr "Huruvida dra och släpp är aktiverat på widgeten eller inte"
 
 # SUN NEW TRANSLATION
 #
@@ -1841,6 +1838,9 @@ msgid ""
 "settings for each of these panels is stored in /apps/panel/general/"
 "$(profile)/toplevels/$(id)."
 msgstr ""
+"En lista med panel-ID. Varje ID identifierar en individuell toppnivåpanel. "
+"Inställningarna för var och en av dessa paneler lagras i /apps/panel/general/"
+"$(profile)/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
 msgid "A list of panel applet IDs"
@@ -1852,6 +1852,9 @@ msgid ""
 "The settings for each of these applets is stored in /apps/panel/general/"
 "$(profiles)/applets/$(id)."
 msgstr ""
+"En lista med panelprogram-ID. Varje ID identifierar ett individuellt "
+"panelprogram. Inställningarna för var och en av dessa panelprogram lagras i /"
+"apps/panel/general/$(profile)/applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "A list of panel object IDs"
@@ -1863,6 +1866,10 @@ msgid ""
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects is stored in /apps/panel/general/$(profiles)/objects/$(id)."
 msgstr ""
+"En lista med panelobjekt-ID. Varje ID identifierar ett individuellt "
+"panelobjekt (dvs en programstartare, åtgärdsknapp eller menyknapp/menyrad). "
+"Inställningarna för vart och ett av dessa objekt lagras i /apps/panel/"
+"general/$(profile)/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:7
 msgid "Enable the program list in the \"Run Application\" dialog."
@@ -1878,6 +1885,9 @@ msgid ""
 "made available. Whether or not the listing is expanded when the dialog is "
 "shown is controlled by the show_program_list setting."
 msgstr ""
+"Om detta är sant görs listan \"Kända program\" i dialogfönstret \"Kör program"
+"\" tillgänglig. Huruvida listan fälls ut eller inte när dialogfönstret visas "
+"styrs av inställningen show_program_list."
 
 #: gnome-panel/panel-general.schemas.in.h:10
 msgid ""
@@ -1885,6 +1895,9 @@ msgid ""
 "expanded when the dialog is opened. This setting is only relevant if "
 "enable_program_list is true."
 msgstr ""
+"Om detta är sant fälls listan \"Kända program\" i dialogfönstret \"Kör "
+"program\" ut när dialogfönstret öppnas. Denna inställning är endast relevant "
+"om enable_program_list är sant."
 
 #: gnome-panel/panel-global.schemas.in.h:1
 msgid "Display \"Run\" dialog"
@@ -1955,6 +1968,8 @@ msgid ""
 "If true the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
+"Om detta är sant kommer positionen för objektet att tolkas relativt den "
+"högra (eller nedre om vertikalt) panelkanten."
 
 #: gnome-panel/panel-object.schemas.in.h:2
 msgid ""
@@ -1962,6 +1977,10 @@ msgid ""
 "false, the custom_icon setting is ignored. This setting is only relevant if "
 "the object_type is \"menu-object\" or \"drawer-object\"."
 msgstr ""
+"Om detta är sant kommer inställningen custom_icon att användas som en "
+"anpassad ikon för knappen. Om detta är falskt kommer inställningen "
+"custom_icon att ignoreras. Denna inställning är endast relevant om "
+"object_type är \"menu-object\" eller \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:3
 msgid ""
@@ -1978,12 +1997,11 @@ msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:5
 msgid "Interpret the position relative to the bottom/right edge"
-msgstr ""
+msgstr "Tolka positionen relativt till nedre/högra kanten"
 
 #: gnome-panel/panel-object.schemas.in.h:6
-#, fuzzy
 msgid "Lock the object to the panel"
-msgstr "Objektets position på panelen"
+msgstr "Lås objektet på panelen"
 
 #: gnome-panel/panel-object.schemas.in.h:7
 msgid "The Bonobo IID of the applet"
@@ -2301,6 +2319,8 @@ msgid ""
 "A description of the currently selected application or information on the "
 "command that will be run."
 msgstr ""
+"En beskrivning av det för tillfället valda programmet eller information om "
+"det kommando som kommer att köras."
 
 #: gnome-panel/panel-run-dialog.glade.h:3
 msgid "Application description"
@@ -2311,12 +2331,16 @@ msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
+"Klicka på denna knapp för att bläddra efter en fil vars namn ska läggas till "
+"efter kommandosträngen."
 
 #: gnome-panel/panel-run-dialog.glade.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
+"Klicka på denna knapp för att köra det valda programmet eller kommandot i "
+"kommandofältet."
 
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Command entry"
@@ -2348,7 +2372,7 @@ msgstr "Välj ett program från listan för att köra det"
 
 #: gnome-panel/panel-run-dialog.glade.h:15
 msgid "Select this box to run the command in a terminal window."
-msgstr ""
+msgstr "Välj denna ruta för att köra kommandot i ett terminalfönster."
 
 #: gnome-panel/panel-run-dialog.glade.h:16
 msgid "Show list of known _applications"
@@ -2435,7 +2459,7 @@ msgstr "Fäll ut"
 
 #: gnome-panel/panel-toplevel.c:3306
 msgid "Expand to take up the full monitor width/height"
-msgstr ""
+msgstr "Expandera så att hela bildskärmshöjden/-bredden tas upp"
 
 #: gnome-panel/panel-toplevel.c:3316
 msgid "The orientation of the panel"
@@ -2483,7 +2507,7 @@ msgstr "Xinerama-bildskärm"
 
 #: gnome-panel/panel-toplevel.c:3384
 msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr ""
+msgstr "Bildskärmen (i Xinerama-termer) som panelen är på"
 
 #: gnome-panel/panel-toplevel.c:3395
 msgid "Auto hide"
@@ -2507,7 +2531,7 @@ msgstr "Visningsfördröjning"
 
 #: gnome-panel/panel-toplevel.c:3418
 msgid "The number of miliseconds to delay before automatically un-hiding"
-msgstr ""
+msgstr "Antalet millisekunder att dröja innan panelen automatiskt visas"
 
 #: gnome-panel/panel-toplevel.c:3429
 msgid "Auto-hide size"
@@ -2516,7 +2540,7 @@ msgstr "Storlek för automatisk döljning"
 #: gnome-panel/panel-toplevel.c:3430
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
+msgstr "Antalet bildpunkter som är synliga när panelen automatiskt har dolts"
 
 #: gnome-panel/panel-toplevel.c:3441
 msgid "Animate"
@@ -2532,7 +2556,7 @@ msgstr "Animationshastighet"
 
 #: gnome-panel/panel-toplevel.c:3452
 msgid "The speed at which to animate panel hiding/showing"
-msgstr ""
+msgstr "Hastigheten med vilken paneldöljning/-visning ska animeras"
 
 #: gnome-panel/panel-toplevel.c:3462
 msgid "Buttons Enabled"
@@ -2948,6 +2972,12 @@ msgstr "Jättestor"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Jätteliten"
+
+#~ msgid "Unlock"
+#~ msgstr "Lås upp"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "Antalet millisekunder att dröja innan panelen automatiskt visas"
 
 #~ msgid "Error loading gconf dir '%s': %s"
 #~ msgstr "Fel vid inläsning av gconf-katalogen \"%s\": %s"
