@@ -70,7 +70,7 @@ main (int argc, char **argv)
 	panel_icon_theme = gnome_icon_theme_new ();
 	gnome_icon_theme_set_allow_svg (panel_icon_theme, TRUE);
 	
-	panel_register_window_icon ();
+	gtk_window_set_default_icon_name ("gnome-panel");
 
 	panel_tooltips = gtk_tooltips_new ();
 

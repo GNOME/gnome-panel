@@ -1147,19 +1147,6 @@ panel_setup (PanelToplevel *toplevel)
 	return pd;
 }
 
-void
-panel_register_window_icon (void)
-{
-	char *panel_icon;
-
-	panel_icon = panel_pixmap_discovery ("gnome-panel.png", FALSE);
-
-	if (panel_icon) {
-		gnome_window_icon_set_default_from_file (panel_icon);
-		g_free (panel_icon);
-	}
-}
-
 GdkScreen *
 panel_screen_from_panel_widget (PanelWidget *panel)
 {

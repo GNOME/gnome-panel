@@ -57,9 +57,6 @@ void		panel_pop_window_busy	(GtkWidget *window);
 
 gboolean	panel_is_program_in_path (const char *program);
 
-char *		panel_pixmap_discovery	(const char *name,
-					 gboolean fallback);
-
 gboolean	panel_is_uri_writable	(const char *uri);
 gboolean	panel_uri_exists	(const char *uri);
 

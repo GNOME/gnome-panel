@@ -3559,7 +3559,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	GtkWidgetClass    *widget_class    = (GtkWidgetClass    *) klass;
 	GtkContainerClass *container_class = (GtkContainerClass *) klass;
 	GtkBindingSet     *binding_set;
-	char              *icon_file;
 
         binding_set = gtk_binding_set_by_class (klass);
 
@@ -3902,13 +3901,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
                                      "popup_panel_menu", 0);
 
 	panel_bindings_set_entries (binding_set);
-
-	icon_file = gnome_program_locate_file (
-			NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-panel.png", TRUE, NULL);
-	if (icon_file) {
-		gtk_window_set_default_icon_from_file (icon_file, NULL);
-		g_free (icon_file);
-	}
 }
 
 static void

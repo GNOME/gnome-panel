@@ -1,3 +1,15 @@
+2004-10-27  Vincent Untz  <vincent@vuntz.net>
+
+	* main.c: (main): set the default icon directly insted of calling
+	panel_register_window_icon()
+	* menu.c: (show_about_dialog): port to GtkAboutDialog, and move to
+	translator-credits
+	* panel-stock-icons.c: remove gnome-panel-type*
+	* panel-toplevel.c: (panel_toplevel_class_init): we don't need to set
+	an icon here since we set a default icon in main.c
+	* panel-util.[ch]: (panel_pixmap_discovery): kill
+	* panel.[ch]: (panel_register_window_icon): kill
+
 2004-10-27  Christian Neumair  <chris@gnome-de.org>
 
 	Fix bug #113801: "'Reload applet?' dialog does not accord to HIG".

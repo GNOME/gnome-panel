@@ -188,7 +188,7 @@ show_about_dialog (GtkWidget *menuitem)
 		NULL
 	  };
 	/* Translator credits */
-	char *translator_credits = _("translator_credits");
+	char *translator_credits = _("translator-credits");
 	int   i;
 
 	if (about) {
@@ -201,15 +201,18 @@ show_about_dialog (GtkWidget *menuitem)
 	for (i = 0; authors [i]; i++)
 		authors [i] = _(authors [i]);
 
-	about = gnome_about_new (_("The GNOME Panel"),
-				 VERSION,
-				 "Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.",
-				 _("This program is responsible for launching other "
-				   "applications and embedding small applets within itself."),
-				 (const char **) authors,
-				 (const char **) documenters,
-				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-				 NULL);
+	about = gtk_about_dialog_new ();
+	g_object_set (about,
+		      "name",  _("The GNOME Panel"),
+		      "version", VERSION,
+		      "copyright", "Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.",
+		      "comments", _("This program is responsible for launching other "
+				    "applications and embedding small applets within itself."),
+		      "authors", authors,
+		      "documenters", documenters,
+		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+		      "logo_icon_name", "gnome-panel",
+		      NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (about), "about_dialog", "Panel");
 	gtk_window_set_screen (GTK_WINDOW (about),
