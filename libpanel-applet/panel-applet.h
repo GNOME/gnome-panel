@@ -128,6 +128,9 @@ void      	   panel_applet_set_size_hints       (PanelApplet      *applet,
 
 gboolean           panel_applet_get_locked_down      (PanelApplet  *applet);
 
+void               panel_applet_request_focus        (PanelApplet  *applet,
+						      guint32       timestamp);
+
 BonoboControl     *panel_applet_get_control          (PanelApplet  *applet);
 BonoboUIComponent *panel_applet_get_popup_component  (PanelApplet  *applet);
 

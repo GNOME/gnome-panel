@@ -45,6 +45,7 @@
 #include <libgnomeui/gnome-ui-init.h>
 #include <gconf/gconf.h>
 #include <gconf/gconf-client.h>
+#include <X11/Xatom.h>
 
 #include "panel-applet.h"
 #include "panel-applet-private.h"
@@ -322,6 +323,102 @@ panel_applet_get_locked_down (PanelApplet *applet)
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), FALSE);
 
 	return applet->priv->locked_down;
+}
+
+void
+panel_applet_request_focus (PanelApplet  *applet,
+                           guint32       timestamp)
+{
+	gboolean found_panel_xid;
+	gint num_children;
+	Window win, *child, parent, root;
+	Atom window_type_atom, type_dock_atom;
+
+	GdkWindow *start;
+	GdkDisplay *display;
+
+	XEvent xev;
+
+	/* This function
+	 *   1) Gets the window id of the panel that contains the applet
+	 *   2) Sends a _NET_ACTIVE_WINDOW message to get that panel focused
+	 * The first task is accomplished using XQueryTree and
+	 * XGetWindowProperty to find an ancestor window with the
+	 * _NET_WM_WINDOW_TYPE_DOCK window type.
+	 */
+
+	found_panel_xid = FALSE;
+
+	start = gtk_widget_get_toplevel (GTK_WIDGET (applet))->window;
+	win = GDK_WINDOW_XID (start);
+	display = gdk_drawable_get_display (start);
+
+	window_type_atom = 
+	  gdk_x11_get_xatom_by_name_for_display (display,
+						 "_NET_WM_WINDOW_TYPE");
+	type_dock_atom = 
+	  gdk_x11_get_xatom_by_name_for_display (display, 
+						 "_NET_WM_WINDOW_TYPE_DOCK");
+
+	while (XQueryTree (GDK_DISPLAY_XDISPLAY (display), win, &root, &parent,
+			   &child, (unsigned int *)&num_children)) {
+
+		Atom type_return;
+		gint format_return;
+		gulong number_return, bytes_after_return;
+		guchar *data_return;
+
+		if ((child) && (num_children > 0))
+			XFree (child);
+
+		if (!parent)
+			break;
+		else
+			win = parent;
+
+		if (win == root)
+			break;
+
+		data_return = NULL;
+		XGetWindowProperty (GDK_DISPLAY_XDISPLAY (display),
+				    win, window_type_atom, 0, 1,
+				    False, XA_ATOM, &type_return, &format_return,
+				    &number_return, &bytes_after_return,
+				    &data_return);
+
+		if (type_return == XA_ATOM) {
+			gulong window_type;
+			window_type = *((guint32*)data_return);
+			XFree (data_return);
+			if (type_dock_atom == window_type) {
+				found_panel_xid = TRUE;
+				break;
+			}
+		}
+	}
+
+	if (!found_panel_xid) {
+		g_warning ("Couldn't find containing panel's window id; can't get focus\n");
+		return;
+	}
+
+	xev.xclient.type = ClientMessage;
+	xev.xclient.serial = 0;
+	xev.xclient.send_event = True;
+	xev.xclient.window = win;   /* window id of containing panel */
+	xev.xclient.message_type =
+	  gdk_x11_get_xatom_by_name_for_display (display,
+						 "_NET_ACTIVE_WINDOW");
+	xev.xclient.format = 32;
+	xev.xclient.data.l[0] = 1; /* requestor type; we're an app, I guess */
+	xev.xclient.data.l[1] = timestamp;
+	xev.xclient.data.l[2] = None; /* "currently active window", supposedly */
+	xev.xclient.data.l[3] = 0;
+	xev.xclient.data.l[4] = 0;
+
+	XSendEvent (GDK_DISPLAY_XDISPLAY (display), root, False,
+		    SubstructureRedirectMask | SubstructureNotifyMask,
+		    &xev);
 }
 
 void
