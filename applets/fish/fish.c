@@ -251,6 +251,8 @@ load_image_file (Fish *fish)
 		gdk_pixmap_unref (fish->pix);
 
 	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+	if (frames <= 0)
+		frames = 1;
 
 	tmp = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet), FISH_PREFS_IMAGE, NULL);
 	if (g_path_is_absolute (tmp)) {
@@ -375,6 +377,8 @@ setup_size (Fish *fish)
 	gint frames;
 
 	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+	if (frames <= 0)
+		frames = 1;
 
 	if (fish_applet_rotate (fish)) {
 		GTK_WIDGET (fish->darea)->requisition.width = fish->w;
@@ -411,6 +415,8 @@ fish_draw (GtkWidget *darea,
 		return;
 
 	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+	if (frames <= 0)
+		frames = 1;
 
 	if (fish_applet_rotate (fish))
 		gdk_draw_pixmap (fish->darea->window,
@@ -460,6 +466,8 @@ fish_timeout(gpointer data)
 		gint frames;
 
 		frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+		if (frames <= 0)
+			frames = 1;
 
 		fish->curpix++;
 		if (fish->curpix >= frames)
@@ -500,7 +508,7 @@ apply_dialog_properties (Fish *fish)
 static void
 apply_properties (Fish *fish) 
 {
-	gdouble     speed;
+	gdouble speed;
 
 	apply_dialog_properties (fish);
 	
@@ -512,6 +520,8 @@ apply_properties (Fish *fish)
 		gtk_timeout_remove (fish->timeout_id);
 
 	speed = panel_applet_gconf_get_float (PANEL_APPLET (fish->applet), FISH_PREFS_SPEED, NULL);
+	if (speed <= 0)
+		speed = 1.0;
 
         fish->timeout_id = gtk_timeout_add (speed * 1000, fish_timeout, fish);
 	fish->curpix = 0;
@@ -1044,9 +1054,11 @@ fish_expose (GtkWidget      *darea,
 	     GdkEventExpose *event,
 	     Fish           *fish)
 {
-	gint frames;
+	int frames;
 
 	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+	if (frames <= 0)
+		frames = 1;
 
 	if (fish_applet_rotate (fish))
 		gdk_draw_pixmap (fish->darea->window,
@@ -1076,6 +1088,12 @@ create_fish_widget(Fish *fish)
 
 	frames = panel_applet_gconf_get_int   (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
 	speed  = panel_applet_gconf_get_float (PANEL_APPLET (fish->applet), FISH_PREFS_SPEED, NULL);
+
+	/* Sanity checking */
+	if (frames <= 0)
+		frames = 1;
+	if (speed <= 0)
+		speed = 1.0;
 
 	fish->darea = gtk_drawing_area_new();
 
