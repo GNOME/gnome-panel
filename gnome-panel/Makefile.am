@@ -138,6 +138,18 @@ panel_temp_SOURCES=\
 	foobar-widget.c		\
 	tasklist_icon.c		\
 	tasklist_icon.h		\
+	border-widget.c		\
+	border-widget.h		\
+	edge-widget.c		\
+	edge-widget.h		\
+	aligned-widget.c	\
+	aligned-widget.h	\
+	drawer-widget.c		\
+	drawer-widget.h		\
+	sliding-widget.c	\
+	sliding-widget.h	\
+	floating-widget.c	\
+	floating-widget.h	\
 	$(NULL)
 
 panel_temp_LDADD=\
@@ -178,18 +190,6 @@ panel_SOURCES=\
 	swallow.h  		\
 	drawer.c  		\
 	drawer.h  		\
-	border-widget.c		\
-	border-widget.h		\
-	edge-widget.c		\
-	edge-widget.h		\
-	aligned-widget.c	\
-	aligned-widget.h	\
-	sliding-widget.c	\
-	sliding-widget.h	\
-	floating-widget.c	\
-	floating-widget.h	\
-	drawer-widget.c		\
-	drawer-widget.h		\
 	panel-util.c		\
 	panel-util.h		\
 	tearoffitem.c		\
