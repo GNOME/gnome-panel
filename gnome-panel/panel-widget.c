@@ -366,8 +366,9 @@ panel_widget_pop_up(PanelWidget *panel)
 }
 
 static gint
-panel_widget_pop_down(PanelWidget *panel)
+panel_widget_pop_down(gpointer data)
 {
+	PanelWidget *panel = data;
 	int width, height;
 	int swidth, sheight;
 
@@ -504,7 +505,47 @@ panel_show_hide_left(GtkWidget *widget, gpointer data)
 		panel_widget_pop_hide(panel,FALSE);
 }
 
-/* FIXME: autohide functions! */
+static gint
+panel_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
+{
+	PanelWidget *panel=data;
+	/*FIXME: do we want this autoraise piece?*/
+	gdk_window_raise(GTK_WIDGET(panel)->window);
+
+	if ((panel->mode == PANEL_EXPLICIT_HIDE) ||
+	    (event->detail == GDK_NOTIFY_INFERIOR))
+		return FALSE;
+
+	if (panel->leave_notify_timer_tag != 0) {
+		gtk_timeout_remove (panel->leave_notify_timer_tag);
+		panel->leave_notify_timer_tag = 0;
+	}
+ 
+	panel_widget_pop_up(panel);
+	
+	return FALSE;
+}
+
+
+static gint
+panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
+{
+	if ((panel->mode == PANEL_EXPLICIT_HIDE) ||
+	    (event->detail == GDK_NOTIFY_INFERIOR))
+		return FALSE;
+	
+	/* check if there's already a timeout set, and delete it if 
+	 * there was */
+	if (panel->leave_notify_timer_tag != 0) {
+		gtk_timeout_remove (panel->leave_notify_timer_tag);
+	}
+	
+	/* set up our delay for popup. */
+	panel->leave_notify_timer_tag =
+		gtk_timeout_add (panel->minimize_delay, pop_down, panel);
+	
+	return FALSE;
+}
 
 static void
 panel_widget_set_hidebuttons(PanelWidget *panel)
@@ -524,30 +565,16 @@ panel_widget_set_hidebuttons(PanelWidget *panel)
 	}
 }
 
-GtkWidget*
-panel_widget_new (gint length,
-		  PanelOrientation orient,
-		  PanelSnapped snapped,
-		  PanelMode mode,
-		  PanelState state,
-		  gint step_size,
-		  gint minimized_size,
-		  gint minimize_delay,
-		  gint tooltips_enabled)
+static void
+panel_widget_set_size(PanelWidget *panel, gint length)
 {
-	PanelWidget *panel;
-	gint i;
-	gchar *pixmap_name;
-	GtkWidget *pixmap;
-
-	g_return_val_if_fail(length>=0,NULL);
-
-	panel = gtk_type_new(panel_widget_get_type());
-	GTK_WINDOW(panel)->type = GTK_WINDOW_POPUP;
-
-	switch(snapped) {
+	switch(panel->snapped) {
 		case PANEL_FREE:
-			if(orient == PANEL_HORIZONTAL)
+			if(length == 0 && panel->orient == PANEL_HORIZONTAL)
+				length = GTK_WIDGET(panel)->allocation.width;
+			else if(length == 0 && panel->orient == PANEL_VERTICAL)
+				length = GTK_WIDGET(panel)->allocation.height;
+			if(panel->orient == PANEL_HORIZONTAL)
 				gtk_widget_set_usize(GTK_WIDGET(panel),
 						     length, PANEL_CELL_SIZE);
 			else
@@ -557,7 +584,7 @@ panel_widget_new (gint length,
 			break;
 		case PANEL_TOP:
 		case PANEL_BOTTOM:
-			orient = PANEL_HORIZONTAL;
+			panel->orient = PANEL_HORIZONTAL;
 			gtk_widget_set_usize(GTK_WIDGET(panel),
 					     gdk_screen_width(),
 					     PANEL_CELL_SIZE);
@@ -565,7 +592,7 @@ panel_widget_new (gint length,
 			break;
 		case PANEL_LEFT:
 		case PANEL_RIGHT:
-			orient = PANEL_VERTICAL;
+			panel->orient = PANEL_VERTICAL;
 			gtk_widget_set_usize(GTK_WIDGET(panel),
 					     PANEL_CELL_SIZE,
 					     gdk_screen_height());
@@ -573,7 +600,7 @@ panel_widget_new (gint length,
 			break;
 	}
 
-	switch(snapped) {
+	switch(panel->snapped) {
 		case PANEL_TOP:
 			gtk_widget_set_uposition(GTK_WIDGET(panel),
 					         0,
@@ -598,6 +625,64 @@ panel_widget_new (gint length,
 			break;
 		default: break; /*to get rid of a warning*/
 	}
+}
+
+static void
+panel_widget_apply_size_limit(GtkWidget *widget, gpointer data)
+{
+	gint i;
+	gint length;
+	PanelWidget *panel = widget;
+
+	g_return_if_fail(panel);
+	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(panel)));
+
+	if(panel->orient == PANEL_HORIZONTAL)
+		length = panel->fixed->allocation.width;
+	else
+		length = panel->fixed->allocation.height;
+
+	if(length%PANEL_CELL_SIZE) length--; /*just so that I get size*/
+	panel->size = length/PANEL_CELL_SIZE;
+
+
+	for(i=panel->size;i<PANEL_MAX;i += panel->applets[i].cells)
+		if(panel->applets[i].applet)
+			/*FIXME: move drawers as well!*/
+			if(!panel->applets[i].drawer)
+				panel_widget_add(panel,
+						 panel->applets[i].applet,
+						 panel->size-1);
+	for(i=panel->size;i<PANEL_MAX;i++) {
+		panel->applets[i].applet = NULL;
+		panel->applets[i].drawer = NULL;
+		panel->applets[i].cells = 1;
+	}
+}
+
+GtkWidget*
+panel_widget_new (gint length,
+		  PanelOrientation orient,
+		  PanelSnapped snapped,
+		  PanelMode mode,
+		  PanelState state,
+		  gint step_size,
+		  gint minimized_size,
+		  gint minimize_delay)
+{
+	PanelWidget *panel;
+	gint i;
+	gchar *pixmap_name;
+	GtkWidget *pixmap;
+
+	g_return_val_if_fail(length>=0,NULL);
+
+	panel = gtk_type_new(panel_widget_get_type());
+	GTK_WINDOW(panel)->type = GTK_WINDOW_POPUP;
+
+	panel->snapped = snapped;
+	panel->orient = orient;
+	panel_widget_set_size(panel,length);
 
 	panel->table = gtk_table_new(3,3,FALSE);
 	gtk_container_add(GTK_CONTAINER(panel),panel->table);
@@ -663,8 +748,6 @@ panel_widget_new (gint length,
 	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_s,
 			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
 
-	panel->orient = orient;
-	panel->snapped = snapped;
 	panel->mode = mode;
 	panel->state = PANEL_SHOWN; /*state;*/
 				/*FIXME make it appear at the right
@@ -672,7 +755,6 @@ panel_widget_new (gint length,
 	panel->step_size = step_size;
 	panel->minimized_size = minimized_size;
 	panel->minimize_delay = minimize_delay;
-	panel->tooltips_enabled = tooltips_enabled;
 
 	panel_widget_set_hidebuttons(panel);
 
@@ -684,6 +766,17 @@ panel_widget_new (gint length,
 
 	if(!fleur_cursor)
 		fleur_cursor = gdk_cursor_new(GDK_FLEUR);
+
+	gtk_signal_connect(GTK_OBJECT(panel), "enter_notify_event",
+			   GTK_SIGNAL_FUNC(panel_enter_notify),
+			   panel);
+	gtk_signal_connect(GTK_OBJECT(panel), "leave_notify_event",
+			   GTK_SIGNAL_FUNC(panel_leave_notify),
+			   panel);
+	gtk_signal_connect_after(GTK_OBJECT(panel),
+				 "realize",
+				 GTK_SIGNAL_FUNC(panel_widget_apply_size_limit),
+				 NULL);
 
 	return GTK_WIDGET(panel);
 }
@@ -986,4 +1079,54 @@ panel_widget_foreach(PanelWidget *panel, GFunc func, gpointer user_data)
 	for(i=0;i<panel->size;i += panel->applets[i].cells)
 		if(panel->applets[i].applet && !panel->applets[i].drawer)
 			(*func)(panel->applets[i].applet,user_data);
+}
+
+void
+panel_widget_change_params(PanelWidget *panel,
+			   PanelOrientation orient,
+			   PanelSnapped snapped,
+			   PanelMode mode,
+			   PanelState state,
+			   gint step_size,
+			   gint minimized_size,
+			   gint minimize_delay)
+{
+	PanelOrientation oldorient;
+	int i;
+
+	g_return_if_fail(panel);
+	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(panel)));
+
+	/*pop itself up if hidden!*/
+	if(panel->mode == PANEL_AUTO_HIDE) {
+		panel->step_size=0;
+		panel_widget_pop_up(panel);
+	}
+
+	/*the set_size will make it shown, this may change!  it would
+	  require more work to keep the state to be persistent accross
+	  sessions or even reconfigurations*/
+	panel->state = PANEL_SHOWN;
+	panel->mode = mode;
+	oldorient = panel->orient;
+
+	panel->snapped = snapped;
+	panel->orient = orient;
+	panel_widget_set_size(panel,0);
+
+	panel_widget_set_hidebuttons(panel);
+
+	if(oldorient != panel->orient)
+		panel_widget_switch_orient(panel);
+
+	/*FIXME: notify each applet that we're changing orientation!*/
+	/*FIXME: this should look into drawers as well*/
+	/*NOTE: this will probably be handeled by the app itself since
+	  there should be no applet<->panel configuration in the widget!*/
+
+	the_panel->panel->step_size = newconfig->panel->step_size;
+	the_panel->minimize_delay = newconfig->minimize_delay;
+	the_panel->minimized_size = newconfig->minimized_size;
+
+	panel_widget_apply_size_limit(panel);
 }

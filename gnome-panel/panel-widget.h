@@ -82,7 +82,6 @@ struct _PanelWidget
 	gint			step_size;
 	gint			minimized_size;
 	gint			minimize_delay;
-	gint			tooltips_enabled;
 
 	gint			leave_notify_timer_tag;
 
@@ -126,6 +125,16 @@ GList*		panel_widget_get_applets	(PanelWidget *panel);
 void		panel_widget_foreach		(PanelWidget *panel,
 						 GFunc func,
 						 gpointer user_data);
+
+/*changing parameters*/
+void		panel_widget_change_params	(PanelWidget *panel,
+						 PanelOrientation orient,
+						 PanelSnapped snapped,
+						 PanelMode mode,
+						 PanelState state,
+						 gint step_size,
+						 gint minimized_size,
+						 gint minimize_delay);
 
 #ifdef __cplusplus
 }
