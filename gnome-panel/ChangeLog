@@ -1,7 +1,39 @@
+2003-10-06  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-widget.[ch] : (panel_widget_register_open_dialog):
+	Register the open dialog in to the list of open dialogs.
+	(panel_widget_destroy_open_dialogs) : On destroying the panel,
+	destroy all the open dialogs
+	(panel_widget_open_dialog_destroyed) : Update the open dialogs
+	list when the dialog is destroyed
+
+	* launcher.c,  menu.c, panel-applet-frame.c :
+	Use panel_widget_register_open_dialog() to register all the dialogs
+	created.
+
+	* panel.c: (panel_remove_open_create_launcher_dialogs),
+	(panel_remove_applets): Remove it, no longer required.  Fix #122922
+
 2003-10-03  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* panel-widget.c (panel_widget_real_focus): Prevent PanelWidget
 	getting focus after applet has focus (bug #123697)
+
+2003-09-29  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-widget.[ch] : (panel_widget_register_open_dialog):
+	Register the open dialog in to the list of open dialogs.
+	(panel_widget_destroy_open_dialogs) : On destroying the panel,
+	destroy all the open dialogs
+	(panel_widget_open_dialog_destroyed) : Update the open dialogs
+	list when the dialog is destroyed
+
+	* launcher.c,  menu.c, panel-applet-frame.c : 
+	Use panel_widget_register_open_dialog() to register all the dialogs 
+	created.
+
+	* panel.c: (panel_remove_open_create_launcher_dialogs), 
+	(panel_remove_applets): Remove it, no longer required.  Fix #122922
 
 2003-09-20  Kjartan Maraas  <kmaraas@gnome.org>
 
