@@ -1014,6 +1014,9 @@ set_panel_position(void)
 void
 panel_init(void)
 {
+	GtkWidget *pixmap;
+	char *pixmap_name;
+
 	the_panel = g_new(Panel, 1);
 
 	the_panel->window = gtk_window_new(GTK_WINDOW_POPUP);
@@ -1036,12 +1039,26 @@ panel_init(void)
 
 
 	/*hide buttons (one for vertical one for horizontal)*/
-	the_panel->hidebutton_l_h=gtk_button_new_with_label("<");
+	the_panel->hidebutton_l_h=gtk_button_new();
+	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-left.xpm");
+	pixmap = gnome_create_pixmap_widget(the_panel->window,
+					    the_panel->hidebutton_l_h,
+					    pixmap_name);
+	g_free(pixmap_name);
+	gtk_container_add(GTK_CONTAINER(the_panel->hidebutton_l_h),pixmap);
+	gtk_widget_show(pixmap);
 	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton_l_h), "clicked",
 			   GTK_SIGNAL_FUNC(panel_show_hide_right),NULL);
 	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_l_h,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
-	the_panel->hidebutton_l_v=gtk_button_new_with_label("^");
+	the_panel->hidebutton_l_v=gtk_button_new();
+	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-up.xpm");
+	pixmap = gnome_create_pixmap_widget(the_panel->window,
+					    the_panel->hidebutton_l_v,
+					    pixmap_name);
+	g_free(pixmap_name);
+	gtk_container_add(GTK_CONTAINER(the_panel->hidebutton_l_v),pixmap);
+	gtk_widget_show(pixmap);
 	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton_l_v), "clicked",
 			   GTK_SIGNAL_FUNC(panel_show_hide_right),NULL);
 	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_l_v,
@@ -1056,12 +1073,26 @@ panel_init(void)
 	gtk_widget_show(the_panel->fixed);
 
 	/*show buttons (one for vertical one for horizontal)*/
-	the_panel->hidebutton_r_h=gtk_button_new_with_label(">");
+	the_panel->hidebutton_r_h=gtk_button_new();
+	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-right.xpm");
+	pixmap = gnome_create_pixmap_widget(the_panel->window,
+					    the_panel->hidebutton_r_h,
+					    pixmap_name);
+	g_free(pixmap_name);
+	gtk_container_add(GTK_CONTAINER(the_panel->hidebutton_r_h),pixmap);
+	gtk_widget_show(pixmap);
 	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton_r_h), "clicked",
 			   GTK_SIGNAL_FUNC(panel_show_hide_left),NULL);
 	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_r_h,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
-	the_panel->hidebutton_r_v=gtk_button_new_with_label("\\/");
+	the_panel->hidebutton_r_v=gtk_button_new();
+	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-down.xpm");
+	pixmap = gnome_create_pixmap_widget(the_panel->window,
+					    the_panel->hidebutton_r_v,
+					    pixmap_name);
+	g_free(pixmap_name);
+	gtk_container_add(GTK_CONTAINER(the_panel->hidebutton_r_v),pixmap);
+	gtk_widget_show(pixmap);
 	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton_r_v), "clicked",
 			   GTK_SIGNAL_FUNC(panel_show_hide_left),NULL);
 	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_r_v,
