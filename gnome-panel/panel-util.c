@@ -496,7 +496,8 @@ panel_error_dialog (GdkScreen  *screen,
 		s = g_strdup_vprintf (format, ap);
 		va_end (ap);
 
-		g_free (format);
+		if (format != primary_format)
+			g_free (format);
 	}
 
 	w = panel_dialog (screen, GTK_MESSAGE_ERROR, class, s);
