@@ -7,9 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.3.1\n"
-"POT-Creation-Date: 2003-06-06 15:52+0100\n"
-"PO-Revision-Date: 2003-05-19 01:06+0200\n"
+"Project-Id-Version: gnome-panel 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-08 21:00+0200\n"
+"PO-Revision-Date: 2003-06-08 20:08+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -657,7 +658,7 @@ msgid "Show windows from a_ll workspaces"
 msgstr "Afficher les fenêtres de _tous les espaces de travail"
 
 #: applets/wncklet/window-list.glade.h:14 gnome-panel/button-widget.c:856
-#: gnome-panel/panel-toplevel.c:3326
+#: gnome-panel/panel-toplevel.c:3358
 msgid "Size"
 msgstr "Taille"
 
@@ -880,15 +881,13 @@ msgstr ""
 
 #: gnome-panel/applet.c:99 gnome-panel/applet.c:485
 #: gnome-panel/panel-applet-frame.c:88
-#, fuzzy
 msgid "Un_lock"
-msgstr "Horloge"
+msgstr "_Déverrouiller"
 
 #: gnome-panel/applet.c:99 gnome-panel/applet.c:485
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:88
-#, fuzzy
 msgid "_Lock"
-msgstr "Verrouiller"
+msgstr "_Verrouiller"
 
 #: gnome-panel/applet.c:412
 msgid "???"
@@ -937,7 +936,7 @@ msgstr "A une flèche"
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Si il faut ou non dessiner un indicateur fléché"
 
-#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3315
+#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3347
 msgid "Orientation"
 msgstr "Orientation"
 
@@ -1725,12 +1724,11 @@ msgstr "Le type d'action que ce bouton implémente"
 
 #: gnome-panel/panel-action-button.c:389 gnome-panel/panel-menu-button.c:463
 msgid "Drag N' Drop enabled"
-msgstr ""
+msgstr "Glisser/Déposer activé"
 
 #: gnome-panel/panel-action-button.c:390 gnome-panel/panel-menu-button.c:464
-#, fuzzy
 msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Si il faut ou non dessiner un indicateur fléché"
+msgstr "Indique si le glisser/déposer est activé sur le widget"
 
 #: gnome-panel/panel-applet-frame.c:661
 #, c-format
@@ -1782,14 +1780,14 @@ msgid "Error watching gconf key '%s': %s"
 msgstr "Erreur en regardant la clé gconf « %s » : %s"
 
 #: gnome-panel/panel-bindings.c:185
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading gconf directory '%s': %s"
 msgstr "Erreur lors du chargement du répertoire gconf « %s » : %s"
 
 #: gnome-panel/panel-bindings.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Error getting value for '%s': %s"
-msgstr "erreur lors de l'obtention de la valeur pour « %s » : %s"
+msgstr "Erreur lors de l'obtention de la valeur pour « %s » : %s"
 
 #: gnome-panel/panel.c:455
 #, c-format
@@ -1812,12 +1810,16 @@ msgstr "Supprimer ce tableau de bord"
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
+"Cliquez sur la fenêtre pour forcer l'application à quitter. Pour annuler "
+"pressez <ESC>"
 
 #: gnome-panel/panel-force-quit.c:185
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
 msgstr ""
+"Forcer cette application à quitter ?\n"
+"(Tous les documents ouverts seront perdus.)"
 
 #: gnome-panel/panel-frame.c:261
 msgid "Edges"
@@ -1842,7 +1844,6 @@ msgstr ""
 "sont stockés dans /apps/panel/general/$(profile)/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
-#, fuzzy
 msgid "A list of panel applet IDs"
 msgstr "Une liste d'ID d'applets de tableaux de bord"
 
@@ -2004,15 +2005,16 @@ msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
+"Si vrai, l'utilisateur ne pouura pas déplacer l'applet sans débloquer "
+"l'objet en premier en utilisant l'élément de menu « Déverrouiller »."
 
 #: gnome-panel/panel-object.schemas.in.h:5
 msgid "Interpret the position relative to the bottom/right edge"
 msgstr "Interprète la position relativement au coté bas/droit"
 
 #: gnome-panel/panel-object.schemas.in.h:6
-#, fuzzy
 msgid "Lock the object to the panel"
-msgstr "La position de l'objet sur le tableau de bord"
+msgstr "Verrouille l'objet sur le tableau de bord"
 
 #: gnome-panel/panel-object.schemas.in.h:7
 msgid "The Bonobo IID of the applet"
@@ -2216,7 +2218,6 @@ msgid "Background _image:"
 msgstr "_Image d'arrière-plan :"
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
-#: gnome-panel/panel-toplevel.c:1345
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "Bas"
@@ -2238,7 +2239,6 @@ msgid "Image Background Details"
 msgstr "Détails de l'image d'arrière-plan"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
-#: gnome-panel/panel-toplevel.c:1348
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Gauche"
@@ -2252,7 +2252,6 @@ msgid "Pick a color"
 msgstr "Choisissez une couleur"
 
 #: gnome-panel/panel-properties-dialog.glade.h:20
-#: gnome-panel/panel-toplevel.c:1351
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "Droite"
@@ -2278,7 +2277,6 @@ msgid "St_retch"
 msgstr "É_tiré"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#: gnome-panel/panel-toplevel.c:1342
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Haut"
@@ -2321,30 +2319,30 @@ msgid "Open Recent"
 msgstr "Récemment ouverts"
 
 #: gnome-panel/panel-run-dialog.c:276
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Error launching command: '%s'</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>Ne peut lancer d'icône</b>\n"
+"<b>Erreur au lancement de la commande : « %s »</b>\n"
 "\n"
 "Détails : %s"
 
 #: gnome-panel/panel-run-dialog.c:305
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Error displaying location: '%s'</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>Impossible d'afficher le document d'aide</b>\n"
+"<b>Erreur à l'affichage de l'emplacement : « %s »</b>\n"
 "\n"
 "Détails : %s"
 
 #: gnome-panel/panel-run-dialog.c:1035
 msgid "Choose a file to append to the command..."
-msgstr ""
+msgstr "Choisir un fichier à ajouter à la commande..."
 
 #: gnome-panel/panel-run-dialog.c:1214
 #, c-format
@@ -2353,44 +2351,47 @@ msgstr "Lancement de « %s »"
 
 #: gnome-panel/panel-run-dialog.c:1220 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
-msgstr ""
+msgstr "Sélectionnez une application pour voir sa description."
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
 "A description of the currently selected application or information on the "
 "command that will be run."
 msgstr ""
+"Une description de l'application actuellement sélectionnée ou information "
+"sur la commande qui sera exécutée."
 
 #: gnome-panel/panel-run-dialog.glade.h:3
-#, fuzzy
 msgid "Application description"
-msgstr "Applications"
+msgstr "Description de l'application"
 
 #: gnome-panel/panel-run-dialog.glade.h:4
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
+"Cliquez sur ce bouton pour sélectionner un fichier à ajouter à la chaîne de "
+"commande."
 
 #: gnome-panel/panel-run-dialog.glade.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
+"Cliquez sur ce bouton pour exécuter l'application sélectionnée ou la "
+"commande dans le champ d'entrée de la commande"
 
 #: gnome-panel/panel-run-dialog.glade.h:6
-#, fuzzy
 msgid "Command entry"
-msgstr "Zone de saisie de la commande"
+msgstr "Entrée de la commande"
 
 #: gnome-panel/panel-run-dialog.glade.h:7
-#, fuzzy
 msgid "Command icon"
-msgstr "Commande à lancer"
+msgstr "Icône de la commande"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Enter a command string here to run it."
-msgstr ""
+msgstr "Saisissez ici une chaîne de commande à exécuter."
 
 #: gnome-panel/panel-run-dialog.glade.h:9
 msgid "List of known applications"
@@ -2401,33 +2402,31 @@ msgid "Run in _terminal"
 msgstr "Lancer dans un _terminal"
 
 #: gnome-panel/panel-run-dialog.glade.h:12
-#, fuzzy
 msgid "Run with _file..."
 msgstr "Lancer avec un _fichier..."
 
 #: gnome-panel/panel-run-dialog.glade.h:13
-#, fuzzy
 msgid "Select an application from the list to run it"
-msgstr "Choisissez une application à exécuter depuis la liste"
+msgstr "Sélectionnez une application dans la liste pour l'exécuter"
 
 #: gnome-panel/panel-run-dialog.glade.h:15
 msgid "Select this box to run the command in a terminal window."
 msgstr ""
+"Sélectionnez cette boîte pour exécuter la commande dans une fenêtre de "
+"terminal."
 
 #: gnome-panel/panel-run-dialog.glade.h:16
-#, fuzzy
 msgid "Show list of known _applications"
-msgstr "Liste des applications connues"
+msgstr "Afficher la liste des applications _connues"
 
 #: gnome-panel/panel-run-dialog.glade.h:17
-#, fuzzy
 msgid "The icon of the command to be run."
-msgstr "Incapable de localiser la commande à exécuter"
+msgstr "L'icône de la commande à exécuter."
 
 #: gnome-panel/panel-run-dialog.glade.h:18
-#, fuzzy
 msgid "When this is selected the list of known applications is displayed."
-msgstr "Cacher la liste des applications connues"
+msgstr ""
+"Quand c'est sélectionné, la liste des applications connues est affichée."
 
 #: gnome-panel/panel-run-dialog.glade.h:19 gnome-panel/panel-stock-icons.c:147
 msgid "_Run"
@@ -2462,164 +2461,200 @@ msgstr "Incapable de charger l'icône de stock « %s » du tableau de bord\n"
 msgid "_Force quit"
 msgstr "_Forcer quitter"
 
-#: gnome-panel/panel-toplevel.c:1359
-msgid "Floating"
-msgstr "Flottant"
+#: gnome-panel/panel-toplevel.c:1340
+msgid "Top Expanded Edge Panel"
+msgstr "Tableau de bord supérieur de coté étendu"
+
+#: gnome-panel/panel-toplevel.c:1341
+msgid "Top Centered Panel"
+msgstr "Tableau de bord supérieur centré"
+
+#: gnome-panel/panel-toplevel.c:1342
+msgid "Top Floating Panel"
+msgstr "Tableau de bord supérieur flottant"
+
+#: gnome-panel/panel-toplevel.c:1343
+msgid "Top Edge Panel"
+msgstr "Tableau de bord supérieur de coté"
+
+#: gnome-panel/panel-toplevel.c:1347
+msgid "Bottom Expanded Edge Panel"
+msgstr "Tableau de bord inférieur de coté étendu"
+
+#: gnome-panel/panel-toplevel.c:1348
+msgid "Bottom Centered Panel"
+msgstr "Tableau de bord inférieur centré"
+
+#: gnome-panel/panel-toplevel.c:1349
+msgid "Bottom Floating Panel"
+msgstr "Tableau de bord inférieur flottant"
+
+#: gnome-panel/panel-toplevel.c:1350
+msgid "Bottom Edge Panel"
+msgstr "Tableau de bord inférieur de coté"
+
+#: gnome-panel/panel-toplevel.c:1354
+msgid "Left Expanded Edge Panel"
+msgstr "Tableau de bord gauche de coté étendu"
+
+#: gnome-panel/panel-toplevel.c:1355
+msgid "Left Centered Panel"
+msgstr "Tableau de bord gauche centré"
+
+#: gnome-panel/panel-toplevel.c:1356
+msgid "Left Floating Panel"
+msgstr "Tableau de bord gauche flottant"
+
+#: gnome-panel/panel-toplevel.c:1357
+msgid "Left Edge Panel"
+msgstr "Tableau de bord gauche de coté"
+
+#: gnome-panel/panel-toplevel.c:1361
+msgid "Right Expanded Edge Panel"
+msgstr "Tableau de bord droit de coté étendu"
 
 #: gnome-panel/panel-toplevel.c:1362
-msgid "Centered"
-msgstr "Centré"
+msgid "Right Centered Panel"
+msgstr "Tableau de bord droit centré"
+
+#: gnome-panel/panel-toplevel.c:1363
+msgid "Right Floating Panel"
+msgstr "Tableau de bord droit flottant"
 
 #: gnome-panel/panel-toplevel.c:1364
-msgid "Expanded Edge"
-msgstr "Coté étendu"
+msgid "Right Edge Panel"
+msgstr "Tableau de bord droit de coté"
 
-#: gnome-panel/panel-toplevel.c:1366
-msgid "Edge"
-msgstr "Coté"
-
-#. Translators: the first argument is the current orientation
-#. * (Top, Bottom, Left or Right) and the second argument is the
-#. * type of panel (Expanded Edge, Edge, Floating or Centered).
-#.
-#: gnome-panel/panel-toplevel.c:1372
-#, c-format
-msgid "%s %s Panel"
-msgstr "Tableau de bord %s %s"
-
-#: gnome-panel/panel-toplevel.c:3295
+#: gnome-panel/panel-toplevel.c:3327
 msgid "Name"
 msgstr "Nom"
 
-#: gnome-panel/panel-toplevel.c:3296
+#: gnome-panel/panel-toplevel.c:3328
 msgid "The name of this panel"
 msgstr "Le nom de ce tableau de bord"
 
-#: gnome-panel/panel-toplevel.c:3305
+#: gnome-panel/panel-toplevel.c:3337
 msgid "Expand"
 msgstr "Étendre"
 
-#: gnome-panel/panel-toplevel.c:3306
+#: gnome-panel/panel-toplevel.c:3338
 msgid "Expand to take up the full monitor width/height"
 msgstr "Étendre pour prendre toute la largeur/hauteur du moniteur"
 
-#: gnome-panel/panel-toplevel.c:3316
+#: gnome-panel/panel-toplevel.c:3348
 msgid "The orientation of the panel"
 msgstr "L'orientation de ce tableau de bord"
 
-#: gnome-panel/panel-toplevel.c:3327
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3359
 msgid "The height (or width when vertical) of the panel"
 msgstr "La hauteur (ou largeur si vertical) du tableau de bord"
 
-#: gnome-panel/panel-toplevel.c:3339
+#: gnome-panel/panel-toplevel.c:3371
 msgid "X position"
 msgstr "Position en X"
 
-#: gnome-panel/panel-toplevel.c:3340
+#: gnome-panel/panel-toplevel.c:3372
 msgid "The X position of the panel"
 msgstr "La position en X de ce tableau de bord"
 
-#: gnome-panel/panel-toplevel.c:3351
+#: gnome-panel/panel-toplevel.c:3383
 msgid "X centered"
 msgstr "Centré en X"
 
-#: gnome-panel/panel-toplevel.c:3352
+#: gnome-panel/panel-toplevel.c:3384
 msgid "The x co-ordinate is relative to center screen"
 msgstr "La coordonnée en X relativement au centre de l'écran"
 
-#: gnome-panel/panel-toplevel.c:3361
+#: gnome-panel/panel-toplevel.c:3393
 msgid "Y position"
 msgstr "Position en Y"
 
-#: gnome-panel/panel-toplevel.c:3362
+#: gnome-panel/panel-toplevel.c:3394
 msgid "The Y position of the panel"
 msgstr "La position en Y du tableau de bord"
 
-#: gnome-panel/panel-toplevel.c:3373
+#: gnome-panel/panel-toplevel.c:3405
 msgid "Y centered"
 msgstr "Centré en Y"
 
-#: gnome-panel/panel-toplevel.c:3374
+#: gnome-panel/panel-toplevel.c:3406
 msgid "The y co-ordinate is relative to center screen"
 msgstr "La coordonnée en Y relativement au centre de l'écran"
 
-#: gnome-panel/panel-toplevel.c:3383
+#: gnome-panel/panel-toplevel.c:3415
 msgid "Xinerama monitor"
 msgstr "Moniteur Xinerama"
 
-#: gnome-panel/panel-toplevel.c:3384
+#: gnome-panel/panel-toplevel.c:3416
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Le moniteur (au sens de Xinerama) sur lequel est le tableau de bord"
 
-#: gnome-panel/panel-toplevel.c:3395
+#: gnome-panel/panel-toplevel.c:3427
 msgid "Auto hide"
 msgstr "Masquage automatique"
 
-#: gnome-panel/panel-toplevel.c:3396
+#: gnome-panel/panel-toplevel.c:3428
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr ""
 "Cacher automatiquement le tableau de bord lorsque la souris quitte le "
 "tableau de bord"
 
-#: gnome-panel/panel-toplevel.c:3405
+#: gnome-panel/panel-toplevel.c:3437
 msgid "Hide delay"
 msgstr "Délai de masquage"
 
-#: gnome-panel/panel-toplevel.c:3406
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3438
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Le nombre de millisecondes à attendre avant le masquage automatique"
 
-#: gnome-panel/panel-toplevel.c:3417
+#: gnome-panel/panel-toplevel.c:3449
 msgid "Un-hide delay"
 msgstr "Délai d'affichage"
 
-#: gnome-panel/panel-toplevel.c:3418
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3450
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Le nombre de millisecondes à attendre avant le démasquage automatique"
 
-#: gnome-panel/panel-toplevel.c:3429
+#: gnome-panel/panel-toplevel.c:3461
 msgid "Auto-hide size"
 msgstr "Taille du masquage automatique"
 
-#: gnome-panel/panel-toplevel.c:3430
+#: gnome-panel/panel-toplevel.c:3462
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 "Le nombre de pixels visible lorsque le tableau de bord a été automatiquent "
 "caché"
 
-#: gnome-panel/panel-toplevel.c:3441
+#: gnome-panel/panel-toplevel.c:3473
 msgid "Animate"
 msgstr "Animer"
 
-#: gnome-panel/panel-toplevel.c:3442
+#: gnome-panel/panel-toplevel.c:3474
 msgid "Enable hiding/showing animations"
 msgstr "Activer les animations de masquage/affichage"
 
-#: gnome-panel/panel-toplevel.c:3451
+#: gnome-panel/panel-toplevel.c:3483
 msgid "Animation Speed"
 msgstr "Vitesse de l'animation"
 
-#: gnome-panel/panel-toplevel.c:3452
+#: gnome-panel/panel-toplevel.c:3484
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "La vitesse a laquelle animer le masquage/affichage du tableau de bord"
 
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3494
 msgid "Buttons Enabled"
 msgstr "Boutons activés"
 
-#: gnome-panel/panel-toplevel.c:3463
+#: gnome-panel/panel-toplevel.c:3495
 msgid "Enable hide/show buttons"
 msgstr "Activer les boutons de masquage/affichage"
 
-#: gnome-panel/panel-toplevel.c:3472
+#: gnome-panel/panel-toplevel.c:3504
 msgid "Arrows Enabled"
 msgstr "Flèches activées"
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3505
 msgid "Enable arrows on hide/show buttons"
 msgstr "Activer les flèches sur les boutons de masquage/affichage"
 
@@ -2843,7 +2878,6 @@ msgid "The Y co-ordinate of the panel."
 msgstr "La coordonnée en Y du tableau de bord."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:35
-#, fuzzy
 msgid "The background color opacity."
 msgstr "L'opacité de la couleur de l'arrière-plan."
 
@@ -2896,7 +2930,6 @@ msgid "The orientation of the panel."
 msgstr "L'orientation du tableau de bord."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:43
-#, fuzzy
 msgid ""
 "The orientation of the panel. There are four possible values; \"top\", "
 "\"bottom\", \"left\", \"right\". In expanded mode the value specifies which "
@@ -2907,15 +2940,16 @@ msgid ""
 "menu below the panel, whereas on a \"bottom\" panel the menu will be popped "
 "up above the panel."
 msgstr ""
-"L'orientation du tableau de bord. Les valeurs possibles sont : « top », "
-"« bottom », « left » et « right ». En mode étendue, la valeur spécifie sur "
-"quel coté de l'écran est placé le tableau de bord. En mode non étendue, la "
-"différence entre « top » et « bottom » est moins importante - les deux "
-"indiquent que c'est un tableau de bord horizontal - mais donne toutefois une "
-"indication utile sur la manière dont certains objets de tableau de bord "
-"doivent se comporter. par exemple, sur un tableau de bord « top » le bouton "
-"de menu affichera le menu sous le tableau de bord alors qu'avec un tableau "
-"de bord « bottom », le menu sera affché au-dessus du tableau de bord."
+"L'orientation du tableau de bord. Les quatre valeurs possibles sont : "
+"« top », « bottom », « left » et « right ». En mode étendue, la valeur "
+"spécifie sur quel coté de l'écran est placé le tableau de bord. En mode non "
+"étendue, la différence entre « top » et « bottom » est moins importante - "
+"les deux indiquent que c'est un tableau de bord horizontal - mais donne "
+"toutefois une indication utile sur la manière dont certains objets de "
+"tableau de bord doivent se comporter. par exemple, sur un tableau de bord "
+"« top » le bouton de menu affichera le menu sous le tableau de bord alors "
+"qu'avec un tableau de bord « bottom », le menu sera affché au-dessus du "
+"tableau de bord."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "The size of the panel."
@@ -3101,6 +3135,18 @@ msgstr "Très très grand"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Très très petit"
+
+#~ msgid "Floating"
+#~ msgstr "Flottant"
+
+#~ msgid "Centered"
+#~ msgstr "Centré"
+
+#~ msgid "Edge"
+#~ msgstr "Coté"
+
+#~ msgid "%s %s Panel"
+#~ msgstr "Tableau de bord %s %s"
 
 #~ msgid ""
 #~ "<b>Failed to run this program</b>\n"
@@ -3485,14 +3531,8 @@ msgstr "Très très petit"
 #~ msgid "Run Program"
 #~ msgstr "Lancer un programme"
 
-#~ msgid "Aligned Panel"
-#~ msgstr "Tableau de bord aligné"
-
 #~ msgid "GNOME Aligned Panel"
 #~ msgstr "Tableau de bord GNOME aligné"
-
-#~ msgid "Edge Panel"
-#~ msgstr "Tableau de bord latéral"
 
 #~ msgid "GNOME Edge Panel"
 #~ msgstr "Tableau de bord GNOME latéral"
@@ -3520,9 +3560,6 @@ msgstr "Très très petit"
 
 #~ msgid "Create edge panel"
 #~ msgstr "Créer un tableau de bord latéral"
-
-#~ msgid "_Floating Panel"
-#~ msgstr "Tableau de bord _flottant"
 
 #~ msgid "Create floating panel"
 #~ msgstr "Créer un tableau de bord flottant"
@@ -3620,9 +3657,6 @@ msgstr "Très très petit"
 
 #~ msgid "Floating panel"
 #~ msgstr "Tableau de bord flottant"
-
-#~ msgid "Corner Panel"
-#~ msgstr "Tableau de bord de coin"
 
 #~ msgid "Show the program listing by default when opening the Run box"
 #~ msgstr ""
@@ -4027,9 +4061,6 @@ msgstr "Très très petit"
 
 #~ msgid "Gnome Sliding Panel"
 #~ msgstr "Tableau de bord GNOME coulissant"
-
-#~ msgid "Gnome Floating Panel"
-#~ msgstr "Tableau de bord GNOME flottant"
 
 #~ msgid "Global Panel Properties"
 #~ msgstr "Propriétés globales du tableau de bord"
