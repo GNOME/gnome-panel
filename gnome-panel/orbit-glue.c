@@ -37,11 +37,6 @@ server_applet_abort_id(POA_GNOME_Panel *servant,
 		       CORBA_Environment *ev);
 
 static void
-server_applet_request_glob_cfg(POA_GNOME_Panel *servant,
-			       CORBA_char ** globcfgpath,
-			       CORBA_Environment *ev);
-
-static void
 server_applet_remove_from_panel(POA_GNOME_Panel *servant,
 				CORBA_short applet_id,
 				CORBA_Environment *ev);
@@ -125,7 +120,6 @@ static POA_GNOME_Panel__epv panel_epv = {
   (gpointer)&server_applet_request_id,
   (gpointer)&server_applet_register,
   (gpointer)&server_applet_abort_id,
-  (gpointer)&server_applet_request_glob_cfg,
   (gpointer)&server_applet_remove_from_panel,
   (gpointer)&server_applet_get_panel,
   (gpointer)&server_applet_get_pos,
@@ -192,15 +186,6 @@ server_applet_abort_id(POA_GNOME_Panel *servant,
 {
   applet_abort_id(applet_id);
 }
-
-static void
-server_applet_request_glob_cfg(POA_GNOME_Panel *servant,
-			       CORBA_char ** globcfgpath,
-			       CORBA_Environment *ev)
-{
-  *globcfgpath = CORBA_string_dup(old_panel_cfg_path);
-}
-
 
 static void
 server_applet_remove_from_panel(POA_GNOME_Panel *servant,

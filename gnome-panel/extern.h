@@ -41,6 +41,9 @@ void applet_drag_start(int applet_id);
 void applet_drag_stop(int applet_id);
 void applet_set_tooltip(int applet_id, const char *tooltip);
 
+/*start the next applet in queue*/
+void extern_start_next(void);
+
 END_GNOME_DECLS
 
 #endif

@@ -81,6 +81,13 @@ try_config_sync(gpointer data)
 	return TRUE;
 }
 
+static int
+start_extern_timeout(gpointer data)
+{
+	extern_start_next();
+	return FALSE;
+}
+
 
 int
 main(int argc, char **argv)
@@ -164,6 +171,10 @@ main(int argc, char **argv)
 	/*attempt to sync the config every 10 seconds, only if a change was
 	  indicated though*/
 	config_sync_timeout = gtk_timeout_add(10*1000,try_config_sync,NULL);
+	
+	/*actually start executing the external applets*/
+	/*extern_start_next();*/
+	gtk_timeout_add(500,start_extern_timeout,NULL);
 	
 	/* I use the glue code to avoid making this a C++ file */
 	panel_corba_gtk_main ("IDL:GNOME/Panel:1.0");

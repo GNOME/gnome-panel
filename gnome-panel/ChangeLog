@@ -1,3 +1,17 @@
+Sun Dec 06 13:42:27 1998  George Lebl  <jirka@5z.com>
+
+	* extern.c,main.c: launch applets so that always a new instance comes
+	  up, also make the execing of applets to be done after everything
+	  is initializedand done, so that we get no corba problems
+
+	* orbit-glue.c: removed request_globcfg because it was not used
+
+	* applet-widget.[ch]: moved in all the stuff from orbit-applet-lib
+	  and removed a lot of redunduncy, forgot to check the resulting
+	  binary size change but it shouldn't be drastic anyhow
+
+	* orbit-applet-lib.c,applet-lib.h: removed
+
 Fri Dec 04 03:01:53 1998  George Lebl  <jirka@5z.com>
 
 	* extern.c,orbit-applet-lib.c: do grabs on the panel side again

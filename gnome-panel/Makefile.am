@@ -25,26 +25,20 @@ CLEANFILES += $(CORBA_SRCLIST)
 $(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) $<
 
-APPLET_LIB = orbit-applet-lib.c applet-lib.h
-
 PANEL_ORB_SRCLIST= orbit-glue.c orbit-glue.h
 
 # We need explicit dependencies here for people building out
 # of the tarballs.
 
-orbit-applet-lib.c: gnome-panel.h
-
 orbit-glue.c: gnome-panel.h
 
 libpanel_applet_la_SOURCES = \
-	$(APPLET_LIB) \
 	panel-util.c  \
 	panel-util.h  \
 	applet-widget.c \
 	$(CORBA_SRCLIST)
 
 libpanel_appletinclude_HEADERS = \
-	applet-lib.h		\
 	applet-widget.h		\
 	panel-types.h
 

@@ -30,9 +30,9 @@ extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
 static GList *extern_applets = NULL;
-static char *goad_id_starting = NULL; /*the goad id of the applet that is
-					being started right now, before it
-					does applet_register*/
+static char *goad_id_starting = "???"; /*the goad id of the applet that is
+					 being started right now, before it
+					 does applet_register*/
 static GList *start_queue = NULL; /*the queue of the applets to be
 				    started*/
 static int start_timeout = -1; /*id of the timeout for starting new applet*/
@@ -55,8 +55,6 @@ extern_is_goad_ready(const char *goad_id)
 	return CORBA_OBJECT_NIL;
 }
 
-static void extern_start_next(void);
-
 static int
 start_timeout_handler(gpointer data)
 {
@@ -75,7 +73,7 @@ extern_start_new_goad_id(char *goad_id)
 		CORBA_Object obj;
 		obj = extern_is_goad_ready(goad_id);
 		if(obj==CORBA_OBJECT_NIL) {
-			CORBA_Object_release(goad_server_activate_with_id(NULL, goad_id, 0), NULL);
+			CORBA_Object_release(goad_server_activate_with_id(NULL, goad_id, GOAD_ACTIVATE_NEW_ONLY), NULL);
 		} else {
 			send_applet_start_new_applet(obj,goad_id);
 		}
@@ -89,7 +87,7 @@ extern_start_new_goad_id(char *goad_id)
 	}
 }
 
-static void
+void
 extern_start_next(void)
 {
 	char *goad_id;

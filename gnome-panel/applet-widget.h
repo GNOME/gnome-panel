@@ -187,6 +187,17 @@ applet_widget_init(app_id,app_version,argc,argv,options,flags,return_ctx, \
 /* use this as gtk_main in applets */
 void		applet_widget_gtk_main		(void);
 
+/*quit the applet*/
+void		applet_widget_gtk_main_quit	(void);
+
+/*logs you off the panel and most likely gnome, use qith caution!:)*/
+void		applet_widget_panel_quit	(void);
+
+/*FIXME: should this stay*/
+/*this is currently not used, it's an empty function for now, but it
+  should register the orbit arguments*/
+void panel_corba_register_arguments (void);
+
 END_GNOME_DECLS
 
 #endif /* __APPLET_WIDGET_H__ */
