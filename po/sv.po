@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-01-31 18:05+0100\n"
-"PO-Revision-Date: 2003-01-31 18:06+0100\n"
+"POT-Creation-Date: 2003-03-06 22:26+0100\n"
+"PO-Revision-Date: 2003-03-06 22:27+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,8 +21,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1638
-#: applets/gen_util/mailcheck.c:1846 applets/gen_util/pager.c:187
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1670
+#: applets/gen_util/mailcheck.c:1878 applets/gen_util/pager.c:187
 #: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
 #: applets/notification_area/main.c:80
@@ -133,7 +133,7 @@ msgstr "GNOME-fisken, siaren"
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1334
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1366
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Bläddra"
@@ -231,8 +231,8 @@ msgstr "_Om..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3536
-#: gnome-panel/menu.c:4258 gnome-panel/panel-action-button.c:510
+#: gnome-panel/drawer.c:775 gnome-panel/launcher.c:808 gnome-panel/menu.c:3446
+#: gnome-panel/menu.c:4190 gnome-panel/panel-action-button.c:518
 msgid "_Help"
 msgstr "_Hjälp"
 
@@ -344,7 +344,7 @@ msgid "Use _UTC"
 msgstr "Använd UT_C"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1768
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1800
 #: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
@@ -456,7 +456,7 @@ msgid "Get the current time and date"
 msgstr "Visa aktuell tid och aktuellt datum"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1781
+#: applets/gen_util/mailcheck.c:329 applets/gen_util/mailcheck.c:1813
 msgid "Inbox Monitor"
 msgstr "Inkorgsövervakare"
 
@@ -501,12 +501,12 @@ msgstr "fabrik för skapande av några allmänna panelprogram"
 msgid "_Check for mail"
 msgstr "_Kontrollera post"
 
-#: applets/gen_util/mailcheck.c:204
+#: applets/gen_util/mailcheck.c:205
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "Ett fel uppstod vid körande av %s: %s"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:335
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -514,196 +514,213 @@ msgstr ""
 "Du angav inte ett lösenord i inställningarna för inkorgsövervakaren,\n"
 "så du måste ange det varje gång det startar."
 
-#: applets/gen_util/mailcheck.c:340
+#: applets/gen_util/mailcheck.c:343
 msgid "Please enter your mailserver's _password:"
 msgstr "Ange lösenordet för din e-postserver:"
 
-#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1394
+#: applets/gen_util/mailcheck.c:348 applets/gen_util/mailcheck.c:1426
 msgid "Password Entry box"
 msgstr "Lösenordsinmatningsfält"
 
-#: applets/gen_util/mailcheck.c:386
-msgid ""
-"The Inbox Monitor failed to check your mails and thus automatic updating has "
-"been deactivated for now.\n"
-"Maybe you used a wrong server, username or password?"
-msgstr ""
-"Inkorgsövervakaren misslyckades med att kontrollera dina brev och därför har "
-"automatisk uppdatering inaktiverats tills vidare.\n"
-"Du kanske använde fel server, användarnamn eller lösenord?"
+#: applets/gen_util/mailcheck.c:402
+msgid "The Network May be down"
+msgstr "Nätverket kan vara nere"
 
-#: applets/gen_util/mailcheck.c:573
+#: applets/gen_util/mailcheck.c:405 applets/gen_util/mailcheck.c:408
+msgid "The User id or Password is not  correct"
+msgstr "Användar-id eller lösenordet är felaktigt"
+
+#: applets/gen_util/mailcheck.c:411
+msgid "The Server name may be wrong"
+msgstr "Servernamnet kan vara fel"
+
+#: applets/gen_util/mailcheck.c:415
+msgid "Maybe you used a wrong server, username or password?"
+msgstr "Du kanske använde fel server, användarnamn eller lösenord?"
+
+#: applets/gen_util/mailcheck.c:424
+#, c-format
+msgid ""
+"The Inbox Monitor failed to check your mails from %s and thus automatic "
+"updating has been deactivated for now.\n"
+"%s"
+msgstr ""
+"Inkorgsövervakaren misslyckades med att kontrollera dina brev från %s och "
+"därför har automatisk uppdatering inaktiverats tills vidare.\n"
+"%s"
+
+#: applets/gen_util/mailcheck.c:605
 msgid "You have new mail."
 msgstr "Du har ny post."
 
-#: applets/gen_util/mailcheck.c:575
+#: applets/gen_util/mailcheck.c:607
 msgid "You have mail."
 msgstr "Du har post."
 
-#: applets/gen_util/mailcheck.c:579
+#: applets/gen_util/mailcheck.c:611
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d meddelanden"
 
-#: applets/gen_util/mailcheck.c:581
+#: applets/gen_util/mailcheck.c:613
 #, c-format
 msgid "%d messages"
 msgstr "%d meddelanden"
 
-#: applets/gen_util/mailcheck.c:585
+#: applets/gen_util/mailcheck.c:617
 msgid "No mail."
 msgstr "Ingen post."
 
-#: applets/gen_util/mailcheck.c:1105 applets/gen_util/mailcheck.c:1106
-#: applets/gen_util/mailcheck.c:1972 applets/gen_util/mailcheck.c:1973
+#: applets/gen_util/mailcheck.c:1137 applets/gen_util/mailcheck.c:1138
+#: applets/gen_util/mailcheck.c:2004 applets/gen_util/mailcheck.c:2005
 msgid "Status not updated"
 msgstr "Status är inte uppdaterad"
 
-#: applets/gen_util/mailcheck.c:1278
+#: applets/gen_util/mailcheck.c:1310
 msgid "Mailbox _resides on:"
 msgstr "Brevlådan _finns på:"
 
-#: applets/gen_util/mailcheck.c:1286
+#: applets/gen_util/mailcheck.c:1318
 msgid "Local mailspool"
 msgstr "Lokal brevlåda"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1326
 msgid "Local maildir"
 msgstr "Lokal e-postkatalog"
 
-#: applets/gen_util/mailcheck.c:1302
+#: applets/gen_util/mailcheck.c:1334
 msgid "Remote POP3-server"
 msgstr "POP3-server"
 
-#: applets/gen_util/mailcheck.c:1310
+#: applets/gen_util/mailcheck.c:1342
 msgid "Remote IMAP-server"
 msgstr "IMAP-server"
 
-#: applets/gen_util/mailcheck.c:1330
+#: applets/gen_util/mailcheck.c:1362
 msgid "Mail _spool file:"
 msgstr "_Postlådefil (mail spool):"
 
-#: applets/gen_util/mailcheck.c:1349
+#: applets/gen_util/mailcheck.c:1381
 msgid "Mail s_erver:"
 msgstr "_E-postserver:"
 
-#: applets/gen_util/mailcheck.c:1355
+#: applets/gen_util/mailcheck.c:1387
 msgid "Mail Server Entry box"
 msgstr "E-postserverinmatningsfält"
 
-#: applets/gen_util/mailcheck.c:1369
+#: applets/gen_util/mailcheck.c:1401
 msgid "_Username:"
 msgstr "_Användarnamn:"
 
-#: applets/gen_util/mailcheck.c:1377
+#: applets/gen_util/mailcheck.c:1409
 msgid "Username Entry box"
 msgstr "Användarnamnsinmatningsfält"
 
-#: applets/gen_util/mailcheck.c:1386
+#: applets/gen_util/mailcheck.c:1418
 msgid "_Password:"
 msgstr "_Lösenord:"
 
-#: applets/gen_util/mailcheck.c:1407
+#: applets/gen_util/mailcheck.c:1439
 msgid "_Folder:"
 msgstr "_Mapp:"
 
-#: applets/gen_util/mailcheck.c:1415
+#: applets/gen_util/mailcheck.c:1447
 msgid "Folder Entry box"
 msgstr "Mappinmatningsfält"
 
-#: applets/gen_util/mailcheck.c:1427
+#: applets/gen_util/mailcheck.c:1459
 msgid "C_ommand to run before checking for mail:"
 msgstr "K_ommando som ska köras innan kontroll av post:"
 
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1467
 msgid "Command Entry box"
 msgstr "Kommandoinmatningsfält"
 
-#: applets/gen_util/mailcheck.c:1460
+#: applets/gen_util/mailcheck.c:1492
 msgid "Execute"
 msgstr "Kör program"
 
-#: applets/gen_util/mailcheck.c:1471
+#: applets/gen_util/mailcheck.c:1503
 msgid "Before each _update:"
 msgstr "Före varje _uppdatering:"
 
-#: applets/gen_util/mailcheck.c:1486
+#: applets/gen_util/mailcheck.c:1518
 msgid "Command to execute before each update"
 msgstr "Kommando som ska utföras före varje uppdatering"
 
-#: applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1528
 msgid "When new mail _arrives:"
 msgstr "När ny post _ankommer:"
 
-#: applets/gen_util/mailcheck.c:1509 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1541 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Kommando som ska utföras när ny post ankommer"
 
-#: applets/gen_util/mailcheck.c:1519
+#: applets/gen_util/mailcheck.c:1551
 msgid "When clicke_d:"
 msgstr "Vid _klick:"
 
-#: applets/gen_util/mailcheck.c:1532
+#: applets/gen_util/mailcheck.c:1564
 msgid "Command to execute when clicked"
 msgstr "Kommando som ska utföras vid klick"
 
-#: applets/gen_util/mailcheck.c:1542
+#: applets/gen_util/mailcheck.c:1574
 msgid "Set the number of unread mails to _zero"
 msgstr "Ställ in antalet olästa brev till _noll"
 
-#: applets/gen_util/mailcheck.c:1553
+#: applets/gen_util/mailcheck.c:1585
 msgid "Check for mail _every"
 msgstr "Kontrollera _post var"
 
-#: applets/gen_util/mailcheck.c:1565 applets/gen_util/mailcheck.c:1569
+#: applets/gen_util/mailcheck.c:1597 applets/gen_util/mailcheck.c:1601
 msgid "minutes"
 msgstr "minut"
 
-#: applets/gen_util/mailcheck.c:1565
+#: applets/gen_util/mailcheck.c:1597
 msgid "Choose time interval in minutes to check mail"
 msgstr "Välj tidsintervall i minuter för e-postkontroll"
 
-#: applets/gen_util/mailcheck.c:1579 applets/gen_util/mailcheck.c:1583
+#: applets/gen_util/mailcheck.c:1611 applets/gen_util/mailcheck.c:1615
 msgid "seconds"
 msgstr "sekund"
 
-#: applets/gen_util/mailcheck.c:1579
+#: applets/gen_util/mailcheck.c:1611
 msgid "Choose time interval in seconds to check mail"
 msgstr "Välj tidsintervall i sekunder för e-postkontroll"
 
-#: applets/gen_util/mailcheck.c:1591
+#: applets/gen_util/mailcheck.c:1623
 msgid "Play a _sound when new mail arrives"
 msgstr "Spela ett _ljud när ny post ankommer"
 
-#: applets/gen_util/mailcheck.c:1602
+#: applets/gen_util/mailcheck.c:1634
 msgid "Select a_nimation"
 msgstr "Välj ani_mation"
 
-#: applets/gen_util/mailcheck.c:1679
+#: applets/gen_util/mailcheck.c:1711
 msgid "Inbox Monitor Preferences"
 msgstr "Inställningar för inkorgsövervakare"
 
-#: applets/gen_util/mailcheck.c:1699
+#: applets/gen_util/mailcheck.c:1731
 msgid "_Mail check"
 msgstr "_E-postkontroll"
 
-#: applets/gen_util/mailcheck.c:1703
+#: applets/gen_util/mailcheck.c:1735
 msgid "Mail_box"
 msgstr "_Brevlåda"
 
-#: applets/gen_util/mailcheck.c:1783
+#: applets/gen_util/mailcheck.c:1815
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Inkorgsövervakaren meddelar dig när nya brev hamnar i din brevlåda"
 
-#: applets/gen_util/mailcheck.c:1948
+#: applets/gen_util/mailcheck.c:1980
 msgid "Text only"
 msgstr "Endast text"
 
-#: applets/gen_util/mailcheck.c:1974
+#: applets/gen_util/mailcheck.c:2006
 msgid "Mail check"
 msgstr "E-postkontroll"
 
-#: applets/gen_util/mailcheck.c:1975
+#: applets/gen_util/mailcheck.c:2007
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "E-postkontroll meddelar dig när nya brev hamnar i din brevlåda"
 
@@ -1098,29 +1115,29 @@ msgstr "Panelnotifieringsyta"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:428 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:433 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:497 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
 msgstr "_Ta bort från panelen"
 
-#: gnome-panel/applet.c:504 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/applet.c:509 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "_Flytta"
 
-#: gnome-panel/applet.c:793
+#: gnome-panel/applet.c:798
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Ingen object_type inställd för panelobjektet med ID %s\n"
 
-#: gnome-panel/applet.c:813 gnome-panel/applet.c:921
+#: gnome-panel/applet.c:818 gnome-panel/applet.c:926
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Inget panel_id inställt för panelobjektet med ID %s\n"
 
-#: gnome-panel/applet.c:1258
+#: gnome-panel/applet.c:1263
 msgid "Can't find an empty spot"
 msgstr "Kan inte hitta ett ledigt ställe"
 
@@ -1286,16 +1303,16 @@ msgstr "Visa döljknapp"
 msgid "Enable hidebutton arrow"
 msgstr "Visa pil på döljknappen"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3635
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3545
 msgid "Drawer"
 msgstr "Låda"
 
-#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
-#: gnome-panel/menu.c:3490 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:772 gnome-panel/launcher.c:806 gnome-panel/menu.c:1533
+#: gnome-panel/menu.c:3400 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Egenskaper"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3833
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3743
 msgid "Run Program..."
 msgstr "Kör program..."
 
@@ -1303,23 +1320,23 @@ msgstr "Kör program..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Kör program om du känner till rätt kommando att mata in"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3849
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3759
 msgid "Search for Files..."
 msgstr "Sök filer..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3852
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3762
 msgid "Find files, folders, and documents on your computer"
 msgstr "Sök efter filer, mappar och dokument i din dator"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3868
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3778
 msgid "Screenshot..."
 msgstr "Skärmdump..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3871
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3781
 msgid "Take a screenshot of your desktop"
 msgstr "Ta en skärmdump av ditt skrivbord"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3657
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3567
 msgid "Lock Screen"
 msgstr "Lås skärmen"
 
@@ -1328,7 +1345,7 @@ msgid "Protect your computer from unauthorized use"
 msgstr "Skydda din dator mot obehörig användning"
 
 #: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3224
-#: gnome-panel/menu.c:3669
+#: gnome-panel/menu.c:3579
 msgid "Log Out"
 msgstr "Logga ut"
 
@@ -1354,7 +1371,7 @@ msgid "GNOME Menu Panel"
 msgstr "GNOME-menypanelen"
 
 #: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3122
-#: gnome-panel/menu.c:3127 gnome-panel/menu.c:3808
+#: gnome-panel/menu.c:3127 gnome-panel/menu.c:3718
 msgid "Applications"
 msgstr "Program"
 
@@ -1399,7 +1416,7 @@ msgid "No panel found\n"
 msgstr "Hittade ingen panel\n"
 
 #: gnome-panel/gnome-panel-preferences.c:259
-#: gnome-panel/gnome-panel-screenshot.c:862
+#: gnome-panel/gnome-panel-screenshot.c:870
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1492,13 +1509,13 @@ msgstr ""
 "Inte tillräckligt med minne för att spara skärmdumpen.\n"
 "Frigör resurser och försök igen."
 
-#: gnome-panel/gnome-panel-screenshot.c:220
+#: gnome-panel/gnome-panel-screenshot.c:222
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Filen %s finns redan. Skriv över?"
 
-#: gnome-panel/gnome-panel-screenshot.c:237
-#: gnome-panel/gnome-panel-screenshot.c:743
+#: gnome-panel/gnome-panel-screenshot.c:241
+#: gnome-panel/gnome-panel-screenshot.c:747
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1509,52 +1526,52 @@ msgstr ""
 "\"%s\"\n"
 "Kontrollera dina rättigheter till förälderkatalogen"
 
-#: gnome-panel/gnome-panel-screenshot.c:509
+#: gnome-panel/gnome-panel-screenshot.c:513
 msgid "Print Screenshot"
 msgstr "Skriv ut skärmdump"
 
-#: gnome-panel/gnome-panel-screenshot.c:557
+#: gnome-panel/gnome-panel-screenshot.c:561
 msgid "Screenshot Print Preview"
 msgstr "FÖrhandsgranska skärmdump"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:584
+#: gnome-panel/gnome-panel-screenshot.c:588
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cSkärmdump-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:591
+#: gnome-panel/gnome-panel-screenshot.c:595
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cSkärmdump.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:608
+#: gnome-panel/gnome-panel-screenshot.c:612
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cSkärmdump-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:615
+#: gnome-panel/gnome-panel-screenshot.c:619
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cSkärmdump-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:764
+#: gnome-panel/gnome-panel-screenshot.c:768
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Inte tillräckligt med utrymme för att skriva filen %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1213
+#: gnome-panel/gnome-panel-screenshot.c:1221
 msgid "Grab a window instead of the entire screen"
 msgstr "Fånga ett fönster istället för hela skärmen"
 
-#: gnome-panel/gnome-panel-screenshot.c:1214
+#: gnome-panel/gnome-panel-screenshot.c:1222
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Ta skärmdump efter angiven fördröjning [i sekunder]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1266
+#: gnome-panel/gnome-panel-screenshot.c:1274
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1562,7 +1579,7 @@ msgstr ""
 "Glade-filen för skärmdumpsprogrammet saknas.\n"
 "Kontrollera din installation av gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1290
+#: gnome-panel/gnome-panel-screenshot.c:1298
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Kan inte ta en skärmdump av det aktuella skrivbordet."
 
@@ -1672,16 +1689,16 @@ msgstr "Kör i _terminal"
 msgid "_Append File..."
 msgstr "_Lägg till fil..."
 
-#: gnome-panel/gnome-run.c:1393
+#: gnome-panel/gnome-run.c:1396
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Kommer att köra kommandot: \"%s\""
 
-#: gnome-panel/gnome-run.c:1402
+#: gnome-panel/gnome-run.c:1405
 msgid "No application selected"
 msgstr "Inget program är valt"
 
-#: gnome-panel/gnome-run.c:1522
+#: gnome-panel/gnome-run.c:1526
 msgid "List of known applications"
 msgstr "Lista med kända program"
 
@@ -1691,11 +1708,11 @@ msgstr "Lista med kända program"
 # Jag vill ha "program" (detta är dessutom mer konsekvent med alla
 # andra meddelanden i denna fil och GNOME)
 #
-#: gnome-panel/gnome-run.c:1523
+#: gnome-panel/gnome-run.c:1527
 msgid "Choose an application to run from the list"
 msgstr "Välj ett program som ska köras från listan"
 
-#: gnome-panel/gnome-run.c:1649 gnome-panel/panel-action-button.c:203
+#: gnome-panel/gnome-run.c:1653 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "Kör program"
 
@@ -1741,26 +1758,26 @@ msgstr "Ingen URI tillhandahållen för desktop-fil för panelstartare\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan inte öppna desktop-filen %s för panelstartaren%s%s\n"
 
-#: gnome-panel/launcher.c:525
+#: gnome-panel/launcher.c:529
 #, c-format
 msgid "Help on %s _Application"
 msgstr "Hjälp med _programmet %s"
 
-#: gnome-panel/launcher.c:647 gnome-panel/menu-ditem.c:180
+#: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
 msgid "Launcher Properties"
 msgstr "Egenskaper för programstartaren"
 
-#: gnome-panel/launcher.c:758
+#: gnome-panel/launcher.c:762
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Nyckeln %s är inte inställd, kan inte läsa in startare\n"
 
-#: gnome-panel/launcher.c:858 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:862 gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
 msgstr "Skapa programstartare"
 
-#: gnome-panel/launcher.c:1084
+#: gnome-panel/launcher.c:1088
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1771,7 +1788,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1171 gnome-panel/menu.c:1188
+#: gnome-panel/launcher.c:1175 gnome-panel/menu.c:1188
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -2014,7 +2031,7 @@ msgstr "_Menypanel"
 msgid "Create menu panel"
 msgstr "Skapa menypanel"
 
-#: gnome-panel/menu.c:3170 gnome-panel/menu.c:3176 gnome-panel/menu.c:3732
+#: gnome-panel/menu.c:3170 gnome-panel/menu.c:3176 gnome-panel/menu.c:3642
 msgid "KDE Menu"
 msgstr "KDE-meny"
 
@@ -2034,33 +2051,16 @@ msgstr "Sök"
 msgid "Run"
 msgstr "Kör"
 
-#: gnome-panel/menu.c:3338
+#: gnome-panel/menu.c:3284
 msgid "You cannot remove your last panel."
 msgstr "Du kan inte ta bort din sista panel."
-
-# SUN CHANGED MESSAGE
-#
-# Sun skrev "panalen"
-# Jag ändrade till "panelen"
-#
-#: gnome-panel/menu.c:3357
-msgid ""
-"When a panel is deleted, the panel and its\n"
-" settings are lost. Delete this panel?"
-msgstr ""
-"När en panel tas bort förloras panelen och dess\n"
-" inställningar. Vill du ta bort denna panel?"
-
-#: gnome-panel/menu.c:3366
-msgid "Delete Panel"
-msgstr "Ta bort panel"
 
 # SUN CHANGED MESSAGE
 #
 # Sun vill ha "Ta bort den här panelen..."
 # Jag vill ha "Ta bort denna panel..."
 #
-#: gnome-panel/menu.c:3434
+#: gnome-panel/menu.c:3340
 msgid "_Delete This Panel..."
 msgstr "_Ta bort denna panel..."
 
@@ -2069,48 +2069,48 @@ msgstr "_Ta bort denna panel..."
 # Sun vill ha "Ta bort den här panelen..."
 # Jag vill ha "Ta bort denna panel..."
 #
-#: gnome-panel/menu.c:3437 gnome-panel/menu.c:3475
+#: gnome-panel/menu.c:3343 gnome-panel/menu.c:3385
 msgid "_Delete This Panel"
 msgstr "_Ta bort denna panel"
 
-#: gnome-panel/menu.c:3459
+#: gnome-panel/menu.c:3365
 msgid "_Add to Panel"
 msgstr "_Lägg till i panelen"
 
-#: gnome-panel/menu.c:3504
+#: gnome-panel/menu.c:3414
 msgid "_New Panel"
 msgstr "_Ny panel"
 
-#: gnome-panel/menu.c:3546
+#: gnome-panel/menu.c:3456
 msgid "_About Panels"
 msgstr "_Om paneler"
 
-#: gnome-panel/menu.c:3559
+#: gnome-panel/menu.c:3469
 msgid "About _GNOME"
 msgstr "Om _GNOME"
 
-#: gnome-panel/menu.c:3599
+#: gnome-panel/menu.c:3509
 msgid "Launcher..."
 msgstr "Programstartare..."
 
-#: gnome-panel/menu.c:3607
+#: gnome-panel/menu.c:3517
 msgid "Launcher from menu"
 msgstr "Programstartare från meny"
 
-#: gnome-panel/menu.c:3616
+#: gnome-panel/menu.c:3526
 msgid "Button"
 msgstr "Knapp"
 
-#: gnome-panel/menu.c:3626 gnome-panel/menu.c:3956 gnome-panel/menu.c:3984
-#: gnome-panel/menu.c:4180
+#: gnome-panel/menu.c:3536 gnome-panel/menu.c:3866 gnome-panel/menu.c:3894
+#: gnome-panel/menu.c:4112
 msgid "Main Menu"
 msgstr "Huvudmeny"
 
-#: gnome-panel/menu.c:3663
+#: gnome-panel/menu.c:3573
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Läs skärmen så att du kan lämna din dator tillfälligt"
 
-#: gnome-panel/menu.c:3675
+#: gnome-panel/menu.c:3585
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2118,27 +2118,27 @@ msgstr ""
 "Logga ut från denna session för att logga in som en annan användare eller "
 "stänga av din dator"
 
-#: gnome-panel/menu.c:3840
+#: gnome-panel/menu.c:3750
 msgid "Run a command"
 msgstr "Kör ett kommando"
 
-#: gnome-panel/menu.c:3886
+#: gnome-panel/menu.c:3796
 msgid "Desktop"
 msgstr "Skrivbord"
 
-#: gnome-panel/menu.c:3904 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu.c:3814 gnome-panel/menu-ditem.c:290
 msgid "Menu"
 msgstr "Meny"
 
-#: gnome-panel/menu.c:3906
+#: gnome-panel/menu.c:3816
 msgid "Menu:"
 msgstr "Meny:"
 
-#: gnome-panel/menu.c:3978
+#: gnome-panel/menu.c:3888
 msgid "Can't create menu, using main menu!"
 msgstr "Kan inte skapa meny, använder huvudmenyn!"
 
-#: gnome-panel/menu.c:4415
+#: gnome-panel/menu.c:4347
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Ingen sökväg angiven vid %s för panelmenyobjekt\n"
@@ -2293,6 +2293,23 @@ msgid ""
 msgstr ""
 "Inga paneler hittades i din konfiguration. Jag kommer att skapa en ny "
 "menypanel åt dig"
+
+# SUN CHANGED MESSAGE
+#
+# Sun skrev "panalen"
+# Jag ändrade till "panelen"
+#
+#: gnome-panel/panel.c:2892
+msgid ""
+"When a panel is deleted, the panel and its\n"
+" settings are lost. Delete this panel?"
+msgstr ""
+"När en panel tas bort förloras panelen och dess\n"
+" inställningar. Vill du ta bort denna panel?"
+
+#: gnome-panel/panel.c:2901
+msgid "Delete Panel"
+msgstr "Ta bort panel"
 
 #. Auto-hide
 #: gnome-panel/panel-config.c:546
@@ -2654,6 +2671,9 @@ msgstr "Storlek:"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Överkant"
+
+#~ msgid "The User id or Password is not correct"
+#~ msgstr "Användar-id:t eller lösenordet är felaktigt"
 
 #~ msgid "Remove server to connect to for our mail"
 #~ msgstr "Ta bort servern att ansluta till för vår post"
