@@ -124,6 +124,14 @@ struct _PanelWidgetClass
 			      GdkColor *color);
 	void (* applet_about_to_die) (PanelWidget *panel,
 				      GtkWidget *applet);
+	void (* push_move) (PanelWidget		*panel,
+                            GtkDirectionType	 dir);
+	void (* switch_move) (PanelWidget	*panel,
+                              GtkDirectionType	 dir);
+	void (* free_move) (PanelWidget		*panel,
+                            GtkDirectionType	 dir);
+	void (* move_to_panel) (PanelWidget	*panel,
+                             gboolean		 next);
 	void (* end_move) (PanelWidget	*panel);
 
 };
@@ -225,18 +233,6 @@ int		panel_widget_get_cursorloc	(PanelWidget *panel);
 gboolean	panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
 
-
-void            panel_widget_push_applet        (PanelWidget *panel,
-                                                 AppletData  *ad,
-                                                 GtkDirectionType dir);
-
-void            panel_widget_switch_applet      (PanelWidget *panel,
-                                                 AppletData  *ad,
-                                                 GtkDirectionType dir);
-
-void            panel_widget_free_move_applet   (PanelWidget *panel,
-                                                 AppletData  *ad,
-                                                 GtkDirectionType dir);
 extern gboolean panel_applet_in_drag;
 
 G_END_DECLS

@@ -48,13 +48,6 @@ struct _ButtonWidget
 struct _ButtonWidgetClass
 {
 	GtkButtonClass parent_class;
-
-	void (* push_move) (ButtonWidget	*button,
-                            GtkDirectionType	 dir);
-	void (* switch_move) (ButtonWidget	*button,
-                              GtkDirectionType	 dir);
-	void (* free_move) (ButtonWidget	*button,
-                            GtkDirectionType	 dir);
 };
 
 GType		button_widget_get_type		(void) G_GNUC_CONST;

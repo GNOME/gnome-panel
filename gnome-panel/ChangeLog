@@ -1,11 +1,15 @@
-2002-01-30  Mark McLoughlin  <mark@skynet.ie>
+2002-01-31  Padraig O'Briain  <padraig.obriain@sun.com>
 
-	* Makefile.am: update for AM_GCONF_SOURCE_2.
-
-2002-01-30  Glynn Foster  <glynn.foster@sun.com>
-
-	* Makefile.am: Temp build fix to get this compiling.
-
+	* button-widget.[c], panel-widget.[ch] panel-marshal.lst: 
+	Remove keyboard move functionality from ButtonWidget. It is now
+	necessary to be in Move mode before it is possible to move applets
+	using the keyboard.
+	Tab or Shift+Tab will move applet to next or previous panel.
+	Shift+arraow will push applet a small amount
+	Control+arrow will switch applet
+	Alt+arrow will free move an applet
+	Escape will exit Move mode
+ 
 Tue Jan 29 01:50:01 2002  George Lebl <jirka@5z.com>
 
 	* basep-widget.[ch], panel.c, floating-widget.c, drawer.c: the change

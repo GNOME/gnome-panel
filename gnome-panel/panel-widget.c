@@ -69,7 +69,15 @@ static void panel_widget_style_set      (GtkWidget        *widget,
 					 GtkStyle         *previous_style);
 static void panel_widget_realize        (GtkWidget        *widget);
 
-static void panel_widget_end_move       (PanelWidget      *panel);
+static void panel_widget_push_move_applet   (PanelWidget      *panel,
+                                             GtkDirectionType  dir);
+static void panel_widget_switch_move_applet (PanelWidget      *panel,
+                                             GtkDirectionType  dir);
+static void panel_widget_free_move_applet   (PanelWidget      *panel,
+                                             GtkDirectionType  dir);
+static void panel_widget_move_to_panel      (PanelWidget      *panel,
+                                             gboolean          next);
+static void panel_widget_end_move           (PanelWidget      *panel);
 
 
 typedef void (*BackSignal) (GtkObject * object,
@@ -154,6 +162,10 @@ enum {
 	APPLET_REMOVED_SIGNAL,
 	BACK_CHANGE_SIGNAL,
 	APPLET_ABOUT_TO_DIE_SIGNAL,
+	PUSH_MOVE_SIGNAL,
+	SWITCH_MOVE_SIGNAL,
+	FREE_MOVE_SIGNAL,
+	MOVE_TO_PANEL_SIGNAL,
 	END_MOVE_SIGNAL,
 	LAST_SIGNAL
 };
@@ -161,13 +173,103 @@ enum {
 static guint panel_widget_signals[LAST_SIGNAL] = {0};
 
 static void
+add_move_to_bindings (GtkBindingSet    *binding_set,
+	    	      GdkModifierType   modifiers,
+		      gboolean          next)
+{
+	gtk_binding_entry_add_signal (binding_set, GDK_Tab, modifiers,
+				      "move_to_panel", 1,
+				      G_TYPE_BOOLEAN, next);
+  	gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
+				      "move_to_panel", 1,
+				      G_TYPE_BOOLEAN, next);
+  	gtk_binding_entry_add_signal (binding_set, GDK_ISO_Left_Tab, modifiers,
+				      "move_to_panel", 1,
+				      G_TYPE_BOOLEAN, next);
+}
+
+static void
+add_move_bindings (GtkBindingSet    *binding_set,
+		   GdkModifierType   modifiers,
+		   const gchar      *name)
+{
+	gtk_binding_entry_add_signal (binding_set, GDK_Up, modifiers,
+                                      name, 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_UP);
+	gtk_binding_entry_add_signal (binding_set, GDK_Down, modifiers,
+                                      name, 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_DOWN);
+	gtk_binding_entry_add_signal (binding_set, GDK_Left, modifiers,
+                                      name, 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_LEFT);
+	gtk_binding_entry_add_signal (binding_set, GDK_Right, modifiers,
+                                      name, 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_RIGHT);
+}
+
+static void
+add_all_move_bindings (PanelWidget *panel)
+{
+	GtkWidgetClass *class;
+	GtkBindingSet *binding_set;
+
+	class = GTK_WIDGET_GET_CLASS (panel);
+
+	binding_set = gtk_binding_set_by_class (class);
+
+	add_move_bindings (binding_set, GDK_SHIFT_MASK, "push_move");
+	add_move_bindings (binding_set, GDK_CONTROL_MASK, "switch_move");
+	add_move_bindings (binding_set, GDK_MOD1_MASK, "free_move");
+	add_move_to_bindings (binding_set, 0, TRUE);
+	add_move_to_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Escape, 0,
+                                      "end_move", 0);
+}
+
+static void
+remove_move_to_bindings (GtkBindingSet    *binding_set,
+	    	         GdkModifierType   modifiers)
+{
+	gtk_binding_entry_clear (binding_set, GDK_Tab, modifiers);
+  	gtk_binding_entry_clear (binding_set, GDK_KP_Tab, modifiers);
+  	gtk_binding_entry_clear (binding_set, GDK_ISO_Left_Tab, modifiers);
+}
+
+static void
+remove_move_bindings (GtkBindingSet    *binding_set,
+		      GdkModifierType   modifiers)
+{
+	gtk_binding_entry_clear (binding_set, GDK_Up, modifiers);
+	gtk_binding_entry_clear (binding_set, GDK_Down, modifiers);
+	gtk_binding_entry_clear (binding_set, GDK_Left, modifiers);
+	gtk_binding_entry_clear (binding_set, GDK_Right, modifiers);
+}
+
+static void
+remove_all_move_bindings (PanelWidget *panel)
+{
+	GtkWidgetClass *class;
+	GtkBindingSet *binding_set;
+
+	class = GTK_WIDGET_GET_CLASS (panel);
+
+	binding_set = gtk_binding_set_by_class (class);
+
+	remove_move_bindings (binding_set, GDK_SHIFT_MASK);
+	remove_move_bindings (binding_set, GDK_CONTROL_MASK);
+	remove_move_bindings (binding_set, GDK_MOD1_MASK);
+	remove_move_to_bindings (binding_set, 0);
+	remove_move_to_bindings (binding_set, GDK_SHIFT_MASK);
+	gtk_binding_entry_clear (binding_set, GDK_Escape, 0);
+}
+
+static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
 	GtkObjectClass *object_class = (GtkObjectClass*) class;
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 	GtkContainerClass *container_class = (GtkContainerClass*) class;
-	GtkBindingSet *binding_set;
-	
 
 	panel_widget_signals[ORIENT_CHANGE_SIGNAL] =
                 g_signal_new ("orient_change",
@@ -255,6 +357,54 @@ panel_widget_class_init (PanelWidgetClass *class)
                               1,
                               G_TYPE_POINTER); 
 
+	panel_widget_signals[PUSH_MOVE_SIGNAL] =
+		g_signal_new ("push_move",
+                              G_TYPE_FROM_CLASS (class),
+                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                              G_STRUCT_OFFSET (PanelWidgetClass, push_move),
+                              NULL,
+                              NULL,
+                              panel_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+                              1,
+                              GTK_TYPE_DIRECTION_TYPE);
+	
+	panel_widget_signals[SWITCH_MOVE_SIGNAL] =
+                g_signal_new ("switch_move",
+                              G_TYPE_FROM_CLASS (class),
+                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                              G_STRUCT_OFFSET (PanelWidgetClass, switch_move),
+                              NULL,
+                              NULL,
+                              panel_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+                              1,
+                              GTK_TYPE_DIRECTION_TYPE);
+
+	panel_widget_signals[FREE_MOVE_SIGNAL] =
+                g_signal_new ("free_move",
+                              G_TYPE_FROM_CLASS (class),
+                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                              G_STRUCT_OFFSET (PanelWidgetClass, free_move),
+                              NULL,
+                              NULL,
+                              panel_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+                              1,
+                              GTK_TYPE_DIRECTION_TYPE);
+
+	panel_widget_signals[MOVE_TO_PANEL_SIGNAL] =
+                g_signal_new ("move_to_panel",
+                              G_TYPE_FROM_CLASS (class),
+                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			      G_STRUCT_OFFSET (PanelWidgetClass, move_to_panel),
+                              NULL,
+                              NULL,
+                              panel_marshal_VOID__BOOLEAN,
+                              G_TYPE_NONE,
+                              1,
+                              G_TYPE_BOOLEAN);
+
 	panel_widget_signals[END_MOVE_SIGNAL] =
 		g_signal_new ("end_move",
                               G_TYPE_FROM_CLASS (class),
@@ -273,8 +423,12 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->applet_removed = NULL;
 	class->back_change = NULL;
 	class->applet_about_to_die = NULL;
+	class->push_move = panel_widget_push_move_applet;
+	class->switch_move = panel_widget_switch_move_applet;
+	class->free_move = panel_widget_free_move_applet;
+	class->move_to_panel = panel_widget_move_to_panel;
 	class->end_move = panel_widget_end_move;
-	
+
 	object_class->destroy = panel_widget_destroy;
 	
 	widget_class->size_request = panel_widget_size_request;
@@ -285,11 +439,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
-
-	binding_set = gtk_binding_set_by_class (class);
-	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_Escape, 0,
-                                      "drop_applet", 0);
 }
 
 static void
@@ -781,7 +930,7 @@ panel_widget_push_move (PanelWidget *panel, AppletData *ad, int moveby)
 
 	list = g_list_find (panel->applet_list, ad);
 	g_return_if_fail (list != NULL);
-	
+
 	finalpos = ad->pos + moveby;
 
 	if (ad->pos < finalpos) {
@@ -789,18 +938,19 @@ panel_widget_push_move (PanelWidget *panel, AppletData *ad, int moveby)
 			if ( ! push_applet_right (panel, list))
 				break;
 		}
-		if (list->prev) {
+                if (list->prev) {
 			pad = list->prev->data;
 			if (pad->expand_major)
 				panel_widget_queue_applet_for_resize(pad);
 		}
 	} else {
-		while (ad->pos > finalpos) {
+                while (ad->pos > finalpos) {
 			if ( ! push_applet_left (panel, list))
 				break;
 		}
 	}
 }
+
 
 /*this is a special function and may fail if called improperly, it works
 only under special circumstance when we know there is nothing from
@@ -1684,6 +1834,8 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 	else
 		ad->drag_off = drag_off;
 
+	add_all_move_bindings (panel);
+
 	panel_applet_in_drag = TRUE;
 }
 
@@ -1700,6 +1852,7 @@ panel_widget_applet_drag_end_no_grab (PanelWidget *panel)
 	panel->currently_dragged_applet = NULL;
 	panel_applet_in_drag = FALSE;
 
+	remove_all_move_bindings (panel);
 	if (moving_timeout != 0) {
 		gtk_timeout_remove (moving_timeout);
 		moving_timeout = 0;
@@ -2180,7 +2333,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event)
 			schedule_try_move(panel, FALSE);
 			break;
 		case GDK_KEY_PRESS:
-			if (panel->currently_dragged_applet) {
+			if (panel_applet_in_drag) {
 				return gtk_bindings_activate (GTK_OBJECT (panel),
 					((GdkEventKey *)event)->keyval, 
 					((GdkEventKey *)event)->state);	
@@ -2602,87 +2755,126 @@ panel_widget_change_params(PanelWidget *panel,
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 }
 
-void
-panel_widget_push_applet (PanelWidget      *panel,
-                          AppletData       *ad,
-                          GtkDirectionType  dir)
+static void 
+panel_widget_push_move_applet (PanelWidget     *panel,
+                               GtkDirectionType dir)
 {
-	if (ad) {
-		gint increment = MOVE_INCREMENT;
+	AppletData       *ad;
+	gint increment = MOVE_INCREMENT;
 
-		switch (dir) {
-		case GTK_DIR_LEFT:
-		case GTK_DIR_UP:
-			increment = -increment;
-			break;
-		case GTK_DIR_RIGHT:
-		case GTK_DIR_DOWN:
-			break;
-		default:
-			return;
-		}
-		panel_widget_push_move (panel, ad, increment);
+	ad = panel->currently_dragged_applet;
+
+	g_return_if_fail (ad);
+
+	switch (dir) {
+	case GTK_DIR_LEFT:
+	case GTK_DIR_UP:
+		increment = -increment;
+		break;
+	case GTK_DIR_RIGHT:
+	case GTK_DIR_DOWN:
+		break;
+	default:
+		return;
 	}
+	panel_widget_push_move (panel, ad, increment);
 }
 
-void
-panel_widget_switch_applet (PanelWidget      *panel,
-                            AppletData       *ad,
-                            GtkDirectionType  dir)
+static void 
+panel_widget_switch_move_applet (PanelWidget      *panel,
+                                 GtkDirectionType  dir)
 {
+	AppletData       *ad;
+	AppletData *nad = NULL;
 	GList *list;
+	gint increment;
 
-	if (ad) {
-		AppletData *nad = NULL;
-		gint increment;
+	ad = panel->currently_dragged_applet;
 
-		list = g_list_find (panel->applet_list, ad);
-		g_return_if_fail (list);
-		switch (dir) {
-		case GTK_DIR_LEFT:
-		case GTK_DIR_UP:
-			if (list->prev)
-				nad = list->prev->data;
-			break;
-		case GTK_DIR_RIGHT:
-		case GTK_DIR_DOWN:
-			if (list->next)
-				nad = list->next->data;
-			break;
-		default:
-			return;
-		}
-		if (nad) {
-			increment = nad->pos - ad->pos;
-			panel_widget_switch_move (panel, ad, increment);
-		}
+	g_return_if_fail (ad);
+
+	list = g_list_find (panel->applet_list, ad);
+	g_return_if_fail (list);
+	switch (dir) {
+	case GTK_DIR_LEFT:
+	case GTK_DIR_UP:
+		if (list->prev)
+			nad = list->prev->data;
+		break;
+	case GTK_DIR_RIGHT:
+	case GTK_DIR_DOWN:
+		if (list->next)
+			nad = list->next->data;
+		break;
+	default:
+		return;
+	}
+	if (nad) {
+		increment = nad->pos - ad->pos;
+		panel_widget_switch_move (panel, ad, increment);
 	}
 }
 
-void
+static void 
 panel_widget_free_move_applet (PanelWidget      *panel,
-                               AppletData       *ad,
                                GtkDirectionType  dir)
 {
-	if (ad) {
-		gint increment = MOVE_INCREMENT;
-		gint pos;
+	AppletData       *ad;
+	gint increment = MOVE_INCREMENT;
+	gint pos;
 
-		switch (dir) {
-		case GTK_DIR_LEFT:
-		case GTK_DIR_UP:
-			increment = -increment;
-			break;
-		case GTK_DIR_RIGHT:
-		case GTK_DIR_DOWN:
-			break;
-		default:
-			return;
-		}
-		pos = panel_widget_get_free_spot (panel, ad, 
-                                                  increment + ad->pos);
-		panel_widget_nice_move (panel, ad, pos);
+	ad = panel->currently_dragged_applet;
+
+	g_return_if_fail (ad);
+
+	switch (dir) {
+	case GTK_DIR_LEFT:
+	case GTK_DIR_UP:
+		increment = -increment;
+		break;
+	case GTK_DIR_RIGHT:
+	case GTK_DIR_DOWN:
+		break;
+	default:
+		return;
 	}
+	pos = panel_widget_get_free_spot (panel, ad, 
+                                          increment + ad->pos + ad->drag_off);
+	panel_widget_nice_move (panel, ad, pos);
+}
+
+static void
+panel_widget_move_to_panel (PanelWidget *panel,
+                            gboolean     next)
+{
+	AppletData       *ad;
+	GSList *li;
+	PanelWidget *new_panel = NULL;
+
+	ad = panel->currently_dragged_applet;
+
+	g_return_if_fail (ad);
+	
+	for (li = panels; li; li = li->next) {
+		PanelWidget *previous_panel;
+		PanelWidget *panel_in_list = li->data;
+
+		if (panel_in_list == panel) {
+			if (next) {
+				if (li->next)
+					new_panel = li->next->data;
+			} else {
+				new_panel = previous_panel;
+			}
+			break;
+		} else {		
+			if (!next)
+				previous_panel = panel_in_list;
+		}
+	}
+	g_return_if_fail (li);
+        if (new_panel)
+		panel_widget_reparent (panel, new_panel, ad->applet, 0);
 }
 
 static void
@@ -2690,3 +2882,4 @@ panel_widget_end_move (PanelWidget *panel)
 {
 	panel_widget_applet_drag_end (panel);
 }
+
