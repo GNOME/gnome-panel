@@ -42,6 +42,8 @@ bin_PROGRAMS = \
 	gnome-panel-properties		\
 	gnome-panel-screenshot
 
+$(gnome_panel_2_OBJECTS) $(gnome_panel_properties_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
+
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
 	GNOME_Panel-skels.c	\

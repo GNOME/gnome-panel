@@ -68,6 +68,8 @@ BUILT_SOURCES = \
 	panel-applet-marshal.c	\
 	panel-applet-marshal.h
 
+$(libpanel_applet_2_la_OBJECTS) $(test_bonobo_applet_OBJECTS): $(BUILT_SOURCES)
+
 EXTRA_DIST =					\
 	GNOME_Panel_TestApplet.server.in	\
 	panel-applet-marshal.list		\
