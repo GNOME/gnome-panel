@@ -89,6 +89,18 @@ about_cb (GtkWidget *widget, gpointer data)
 }
 
 void
+about_gnome_cb(GtkObject *object, char *program_path)
+{
+  if(!fork()) {
+    int i;
+    for(i = 0; i < 255; i++)
+      close(i);
+    execlp(program_path, program_path, NULL);
+    _exit(1);
+  }
+}
+
+void
 activate_app_def (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *item = data;
@@ -1383,6 +1395,7 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 {
 	GtkWidget *menuitem;
 	GtkWidget *panel_menu;
+	char *char_tmp;
 
 	/* Panel entry */
 
@@ -1412,6 +1425,20 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC(about_cb),
 			    NULL);
+
+	char_tmp = gnome_is_program_in_path("guname");
+	if(char_tmp) {
+	  menuitem = gtk_menu_item_new ();
+	  setup_menuitem (menuitem,
+			  gnome_stock_pixmap_widget(menu,
+						    GNOME_STOCK_PIXMAP_ABOUT),
+			  _("About GNOME..."));
+	  gtk_menu_append (GTK_MENU (menu), menuitem);
+	  gtk_signal_connect_interp(GTK_OBJECT (menuitem), "activate",
+				    (GtkCallbackMarshal)about_gnome_cb,
+				    char_tmp, (GtkDestroyNotify)g_free,
+				    TRUE);
+	}
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem,
