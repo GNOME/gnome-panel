@@ -1,10 +1,18 @@
 1999-03-24  Nat Friedman  <nat@nat.org>
 
+	* battery/battery.h (BATTERY_DEFAULT_HEIGHT): Changed the default
+ 	height to 48.
+
+	* battery/battery.c (battery_update): Use the actual graph area's
+ 	height and width when drawing instead of the applet height and
+ 	width.
+
 	* battery/properties.c (battery_properties_window): Make the graph
  	tick color configurable.
 	(prop_apply): Update the tick color.
 
-	* battery/battery.h: Added graph_line_color_sel to the BatteryData structure.
+	* battery/battery.h: Added graph_line_color_sel to the BatteryData
+ 	structure.
 	(BATTERY_DEFAULT_GRAPH_LINE_COLOR): New macro.
 
 	* battery/battery.c (main): Call applet_factory_new.
