@@ -1558,6 +1558,52 @@ panel_widget_get_cursorloc(PanelWidget *panel)
 		return y;
 }
 
+/*get amount of free space around the applet (including the applet size),
+  or return 0 on error or if the panel is packed*/
+int
+panel_widget_get_free_space(PanelWidget *panel, GtkWidget *applet)
+{
+	int i,e;
+	int x,y;
+	int place;
+	int start;
+	int right,left;
+	GList *li;
+	AppletData *ad;
+
+	g_return_val_if_fail(panel!=NULL,0);
+	g_return_val_if_fail(IS_PANEL_WIDGET(panel),0);
+	g_return_val_if_fail(applet!=NULL,0);
+	g_return_val_if_fail(GTK_IS_WIDGET(applet),0);
+	
+	/*this function doesn't make sense on packed panels*/
+	if(panel->packed)
+		return 0;
+	
+	right = pw_applet_padding;
+	left = panel->size-pw_applet_padding;
+	
+	for(li = panel->applet_list; li; li = g_list_next(li)) {
+		ad = li->data;
+		if(ad->applet == applet)
+			break;
+	}
+	/*the applet is not on this panel*/
+	if(!li)
+		return 0;
+	
+	if(li->prev) {
+		AppletData *pad = li->prev->data;
+		left = pad->pos+pad->cells+pw_applet_padding;
+	}
+	if(li->next) {
+		AppletData *nad = li->next->data;
+		right = nad->pos-pw_applet_padding;
+	}
+	
+	return right-left;
+}
+
 /*calculates the value to move the applet by*/
 static int
 panel_widget_get_moveby(PanelWidget *panel, int pos)
@@ -2321,8 +2367,8 @@ panel_widget_change_global(int explicit_step,
 int
 panel_widget_get_pixel_size(PanelWidget *panel)
 {
-	g_return_if_fail(panel!=NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(panel));
+	g_return_val_if_fail(panel!=NULL,48);
+	g_return_val_if_fail(IS_PANEL_WIDGET(panel),48);
 
 	switch(panel->sz) {
 	case SIZE_TINY: return 24;

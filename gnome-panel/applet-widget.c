@@ -839,6 +839,22 @@ applet_widget_get_panel_size(AppletWidget *applet)
 	return r;
 }
 
+/* Get the free space for the applet if it's on an edge panel or 0
+   if on a packed panel or on error */
+int
+applet_widget_get_free_space(AppletWidget *applet)
+{
+	CORBA_Environment ev;
+	int r;
+	g_return_val_if_fail(applet != NULL,0);
+	g_return_val_if_fail(IS_APPLET_WIDGET(applet), 0);
+	
+	CORBA_exception_init(&ev);
+	r = GNOME_PanelSpot__get_free_space(CD(applet)->pspot, &ev);
+	CORBA_exception_free(&ev);
+	return r;
+}
+
 int	
 applet_widget_init(const char *app_id,
 		   const char *app_version,

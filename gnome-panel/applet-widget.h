@@ -183,6 +183,10 @@ GNOME_Panel_OrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
 /* Get the size the applet should use */
 GNOME_Panel_SizeType	applet_widget_get_panel_size	(AppletWidget *applet);
 
+/* Get the free space for the applet if it's on an edge panel or 0
+   if on a packed panel or on error */
+int		applet_widget_get_free_space	(AppletWidget *applet);
+
 /*use this instead of gnome init, if you want multi applet, you also
   have to specify a "start new applet" function which will launch a new
   applet*/

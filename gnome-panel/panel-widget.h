@@ -141,6 +141,11 @@ int		panel_widget_reparent		(PanelWidget *old_panel,
 int		panel_widget_get_pos		(PanelWidget *panel,
 						 GtkWidget *applet);
 
+/*get amount of free space around the applet (including the applet size),
+  or return 0 on error or if the panel is packed*/
+int		panel_widget_get_free_space	(PanelWidget *panel,
+						 GtkWidget *applet);
+
 /*drag*/
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
 						 GtkWidget *applet);
