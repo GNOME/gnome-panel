@@ -30,7 +30,6 @@ typedef struct {
 	int fd;
 	guint timeout;
 	RemoteHandler handler;
-	RemoteHandler error_handler;
        	gpointer data;
 	GDestroyNotify destroy_notify;
 } RemoteHandlerData;
@@ -65,10 +64,7 @@ try_reading (gpointer data)
 		return FALSE;
 	}
 
-	if (mails < 0)
-		handler->error_handler (mails, handler->data);
-	else
-		handler->handler (mails, handler->data);
+	handler->handler (mails, handler->data);
 
 	handler->timeout = 0;
 	helper_whack_handle (handler);
@@ -103,8 +99,8 @@ helper_whack_handle (gpointer handle)
 }
 
 static RemoteHandlerData *
-fork_new_handler (RemoteHandler handler, RemoteHandler error_handler,
-		  gpointer data, GDestroyNotify destroy_notify)
+fork_new_handler (RemoteHandler handler, gpointer data,
+		  GDestroyNotify destroy_notify)
 {
 	pid_t pid;
 	int fd[2];
@@ -169,7 +165,6 @@ fork_new_handler (RemoteHandler handler, RemoteHandler error_handler,
 		handler_data->pid = pid;
 		handler_data->fd = fd[0];
 		handler_data->handler = handler;
-		handler_data->error_handler = error_handler;
 		handler_data->data = data;
 		handler_data->destroy_notify = destroy_notify;
 		handler_data->timeout = gtk_timeout_add (500, try_reading,
@@ -181,27 +176,17 @@ fork_new_handler (RemoteHandler handler, RemoteHandler error_handler,
 
 
 gpointer
-helper_pop3_check (RemoteHandler handler, RemoteHandler error_handler,
-		   gpointer data,
+helper_pop3_check (RemoteHandler handler, gpointer data,
 		   GDestroyNotify destroy_notify,
 		   const char *command,
 		   const char *h, const char* n, const char* e)
 {
 	RemoteHandlerData *handler_data;
 
-	handler_data = fork_new_handler (handler, error_handler, data,
-					 destroy_notify);
+	handler_data = fork_new_handler (handler, data, destroy_notify);
 
 	if (handler_data == NULL) {
-		int mails;
-
-		mails = pop3_check (h, n, e);
-
-		if (mails < 0)
-			error_handler (mails, data);
-		else
-			handler (mails, data);
-
+		handler (pop3_check (h, n, e), data);
 		if (destroy_notify != NULL)
 			destroy_notify (data);
 		return NULL;
@@ -225,27 +210,17 @@ helper_pop3_check (RemoteHandler handler, RemoteHandler error_handler,
 }
 
 gpointer
-helper_imap_check (RemoteHandler handler, RemoteHandler error_handler,
-		   gpointer data,
+helper_imap_check (RemoteHandler handler, gpointer data,
 		   GDestroyNotify destroy_notify,
 		   const char *command,
 		   const char *h, const char* n, const char* e, const char *f)
 {
 	RemoteHandlerData *handler_data;
 
-	handler_data = fork_new_handler (handler, error_handler, data,
-					 destroy_notify);
+	handler_data = fork_new_handler (handler, data, destroy_notify);
 
 	if (handler_data == NULL) {
-		int mails;
-
-		mails = imap_check (h, n, e, f);
-
-		if (mails < 0)
-			error_handler (mails, data);
-		else
-			handler (mails, data);
-
+		handler (imap_check (h, n, e, f), data);
 		return NULL;
 	}
 
