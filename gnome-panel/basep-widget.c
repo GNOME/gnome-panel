@@ -1670,7 +1670,6 @@ basep_widget_set_pos (BasePWidget *basep,
 
 	basep_widget_get_size (basep, &w, &h);
 	klass->set_pos(basep, x, y, w, h);
-	gtk_widget_queue_resize (GTK_WIDGET (basep));
 }
 
 void

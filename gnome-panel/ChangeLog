@@ -1,5 +1,8 @@
 1999-10-27  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
+	* basep-widget.c (basep_widget_set_pos): I don't think we
+	need to queue_resize() here.
+
 	* drawer-widget.c (drawer_pos_get_applet_orient): know about
 	floating widgets
 	(drawer_widget_change_params): fix up state on orient change
