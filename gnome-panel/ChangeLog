@@ -1,5 +1,13 @@
 2003-07-02  Mark McLoughlin  <mark@skynet.ie>
 
+	Patch from Fernando Herrera in bug #115572.
+
+	* gnome-panel-screenshot.c: (take_window_shot): fix problem
+	with taking a window screenshot when the window is overlapped
+	by showing the window before taking the shot.
+
+2003-07-02  Mark McLoughlin  <mark@skynet.ie>
+
 	Patch from Christophe Fergeau in bug #113238.
 
 	* gnome-desktop-item-edit.c:
