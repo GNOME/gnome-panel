@@ -453,14 +453,6 @@ make_hidebutton(BasePWidget *basep,
 	return w;
 }
 
-/*static void
-basep_widget_destroy (BasePWidget *basep)
-{
-	if(basep->fake)
-		gdk_window_destroy(basep->fake);
-}*/
-
-
 static void
 basep_widget_init (BasePWidget *basep)
 {
@@ -498,10 +490,12 @@ basep_widget_init (BasePWidget *basep)
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);
 
+	basep->innerebox = gtk_event_box_new();
 
-	/*gtk_signal_connect(GTK_OBJECT(basep), "destroy",
-			   GTK_SIGNAL_FUNC(basep_widget_destroy),
-			   NULL);*/
+	gtk_table_attach(GTK_TABLE(basep->table),basep->innerebox,1,2,1,2,
+			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+			 0,0);
 
 	gtk_signal_connect(GTK_OBJECT(basep), "enter_notify_event",
 			   GTK_SIGNAL_FUNC(basep_enter_notify),
@@ -547,25 +541,14 @@ b_back_change(PanelWidget *panel,
 {
 	if(type == PANEL_BACK_PIXMAP &&
 	   basep->panel->parent == basep->frame) {
+		gtk_widget_show(basep->innerebox);
+		gtk_widget_reparent(basep->panel,basep->innerebox);
 		gtk_widget_hide(basep->frame);
-		gtk_widget_ref(basep->panel);
-		gtk_container_remove(GTK_CONTAINER(basep->frame),
-				     basep->panel);
-		gtk_table_attach(GTK_TABLE(basep->table),basep->panel,
-				 1,2,1,2,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 0,0);
-		gtk_widget_unref(basep->panel);
 	} else if(type != PANEL_BACK_PIXMAP &&
-		  basep->panel->parent == basep->table) {
-		gtk_widget_ref(basep->panel);
-		gtk_container_remove(GTK_CONTAINER(basep->table),
-				     basep->panel);
-		gtk_container_add(GTK_CONTAINER(basep->frame),
-				  basep->panel);
-		gtk_widget_unref(basep->panel);
+		  basep->panel->parent == basep->innerebox) {
 		gtk_widget_show(basep->frame);
+		gtk_widget_reparent(basep->panel,basep->frame);
+		gtk_widget_hide(basep->innerebox);
 	}
 
 	set_frame_colors(panel,
@@ -607,11 +590,8 @@ basep_widget_construct (BasePWidget *basep,
 		gtk_widget_show(basep->frame);
 		gtk_container_add(GTK_CONTAINER(basep->frame),basep->panel);
 	} else {
-		gtk_table_attach(GTK_TABLE(basep->table),basep->panel,
-				 1,2,1,2,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 0,0);
+		gtk_widget_show(basep->innerebox);
+		gtk_container_add(GTK_CONTAINER(basep->innerebox),basep->panel);
 	}
 
 	/*we add all the hide buttons to the table here*/

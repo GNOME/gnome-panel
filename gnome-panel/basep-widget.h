@@ -32,6 +32,7 @@ struct _BasePWidget
 	GtkWidget		*hidebutton_s;
 	
 	GtkWidget		*frame;
+	GtkWidget		*innerebox;
 
 	GtkAllocation		shown_alloc;
 

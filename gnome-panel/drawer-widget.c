@@ -294,7 +294,6 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				      allocation->y,
 				      0,0,0,0, GDK_HINT_POS);
 	}
-	
 
 	challoc.x = challoc.y = 0;
 	challoc.width = allocation->width;
