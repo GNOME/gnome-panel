@@ -818,12 +818,14 @@ create_task_list (ClockData  *cd,
                   GtkWidget **tree_view)
 {
         GtkWidget         *vbox;
-        GtkWidget         *scrolled_window;
         GtkWidget         *view;
         GtkCellRenderer   *cell;
         GtkTreeViewColumn *column;
 
         vbox = create_hig_frame (_("Tasks"));
+
+#ifdef FIX_BROKEN_SCROLLING
+        GtkWidget         *scrolled_window;
 
         scrolled_window = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -833,6 +835,7 @@ create_task_list (ClockData  *cd,
                                         GTK_POLICY_AUTOMATIC);
         gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
         gtk_widget_show (scrolled_window);
+#endif /* FIX_BROKEN_SCROLLING */
 
         if (!cd->tasks_model) {
                 GType column_types [N_TASK_COLUMNS] = {
@@ -910,7 +913,11 @@ create_task_list (ClockData  *cd,
                                              NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 
+#ifdef FIX_BROKEN_SCROLLING
         gtk_container_add (GTK_CONTAINER (scrolled_window), view);
+#else
+        gtk_box_pack_start (GTK_BOX (vbox), view, TRUE, TRUE, 0);
+#endif /* FIX_BROKEN_SCROLLING */
         gtk_widget_show (view);
 
         return vbox;
@@ -977,13 +984,15 @@ create_appointment_list (ClockData  *cd,
                          GtkWidget **tree_view)
 {
         GtkWidget         *vbox;
-        GtkWidget         *scrolled_window;
         GtkWidget         *view;
         GtkCellRenderer   *cell;
         GtkTreeViewColumn *column;
 
         vbox = create_hig_frame ( _("Appointments"));
 
+#ifdef FIX_BROKEN_SCROLLING
+        GtkWidget         *scrolled_window;
+        
         scrolled_window = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                              GTK_SHADOW_NONE);
@@ -992,6 +1001,7 @@ create_appointment_list (ClockData  *cd,
                                         GTK_POLICY_AUTOMATIC);
         gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
         gtk_widget_show (scrolled_window);
+#endif /* FIX_BROKEN_SCROLLING */
 
         if (!cd->appointments_model) {
                 cd->appointments_model =
@@ -1030,7 +1040,11 @@ create_appointment_list (ClockData  *cd,
                                             "text", APPOINTMENT_COLUMN_SUMMARY);
         gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 
+#ifdef FIX_BROKEN_SCROLLING
         gtk_container_add (GTK_CONTAINER (scrolled_window), view);
+#else
+        gtk_box_pack_start (GTK_BOX (vbox), view, TRUE, TRUE, 0);
+#endif /* FIX_BROKEN_SCROLLING */
         gtk_widget_show (view);
 
         return vbox;
@@ -1074,7 +1088,6 @@ calendar_month_selected (ClockData *cd)
         handle_tasks_changed (cd);
 }
 
-
 /* FIXME: all this is a terrible hack */
 typedef struct
 {
@@ -1088,12 +1101,14 @@ constrain_list_size (GtkWidget      *widget,
                      ConstraintData *constraint)
 {
         GtkRequisition req;
-        int            max_height;
 
         /* constrain width to the calendar width */
         gtk_widget_size_request (constraint->calendar, &req);
         /* g_print ("width: MIN (width = %d, calendar width = %d)\n", requisition->width, req.width); */
         requisition->width = MIN (requisition->width, req.width);
+
+#ifdef FIX_BROKEN_SCROLLING
+        int            max_height;
 
         /* constrain height to be the tree height up to a max */
         max_height = (gdk_screen_get_height (gtk_widget_get_screen (widget)) - req.height) / 3;
@@ -1102,6 +1117,7 @@ constrain_list_size (GtkWidget      *widget,
         requisition->height = MAX (requisition->height, req.height);
         requisition->height = MIN (requisition->height, max_height);
         requisition->height += 1;
+#endif /* FIX_BROKEN_SCROLLING */
 }
 
 static void
