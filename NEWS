@@ -1,4 +1,81 @@
 ==============
+Version 2.9.91
+==============
+
+  Panel
+
+	* Update libegg files (Vincent, Mark)
+	* Migrate launchers that are using applications: URI (Vincent)
+	* Don't use applications: URI in the default panel setup (Vincent)
+	* Use GtkIconTheme (Vincent)
+	* Use named icons instead of stock icons (Vincent)
+	* Fix object context menu positioning algorithm (Vincent)
+	* Allow use of the whole screen when hiding a panel (Mark, Vincent)
+	* Fix button menus using other menus than applications.menu (Vincent)
+	* Plug memory leak (Vincent)
+	* Don't let the user specify a panel size smaller than what is allowed
+	  (Vincent)
+	* Fix crash with context menus (Vincent)
+	* Fix error dialog to appear on the right screen (Vincent)
+	* Change the DnD icon to the dragged applet one in the "Add to panel"
+          dialog. (Carlos Garnacho Parro)
+	* Make "Run application" faster (Frank Worsley, Vincent)
+	* Add accessible name for list of known applications in "Run
+	  application" dialog (Muktha)
+	* Use the new gnome_desktop_item_set_launch_time() API (Elijah Newren)
+	* Make non local paths in the places menu work (Dennis Cranston)
+	* Update the applications menu when the disable_command_line lockdown
+	  key is changed (Vincent)
+	* Fix 100% CPU bug with non-expanded panels (Vincent)
+
+  libpanel-applet
+
+	* Fix applet context menu positioning algorithm (Vincent)
+
+  Show Desktop Applet
+
+	* Show/hide desktop on the right screen (Arvind, Vincent)
+	* Update the icon when icon theme changes (Paolo Borelli, Vincent)
+	* Use GtkIconTheme (Vincent)
+
+  Window Selector Applet
+
+	* Move most of the code to a new widget in libwnck (Vincent Noel)
+
+  Workspace Switcher Applet
+
+	* Make applet look better when using a color/image background (Vincent)
+
+  Misc
+
+	* Code cleanups
+	* Build fixes
+	* Add comments for translators
+	* Remove old useless files
+
+  Translators
+
+	* Vladimir Petkov (bg)
+	* Miloslav Trmac (cs)
+	* Martin Willemoes Hansen (da)
+	* Adam Weinberger (en_CA)
+	* Francisco Javier F. Serrador (es)
+	* Ivar Smolin (et)
+	* Pauli Virtanen (fi)
+	* Takeshi AIHANA (ja)
+	* Changwoo Ryu (ko)
+	* Žygimantas Beručka (lt)
+	* Kjartan Maraas (nb)
+	* Reinout van Schouwen (nl)
+	* Kjartan Maraas (no)
+	* Raphael Higino (pt_BR)
+	* Duarte Loreto (pt)
+	* Leonid Kanter (ru)
+	* Elian Myftiu (sq)
+	* Theppitak Karoonboonyanan (th)
+	* Funda Wang (zh_CN)
+
+==============
 Version 2.9.90
 ==============
 
