@@ -359,6 +359,10 @@ panel_applet_finalize (GObject *object)
 {
 	PanelApplet *applet = PANEL_APPLET (object);
 
+	if (applet->priv->prop_sack)
+		bonobo_object_unref (
+			BONOBO_OBJECT (applet->priv->prop_sack));
+
 	if (applet->priv->prefs_key)
 		g_free (applet->priv->prefs_key);
 

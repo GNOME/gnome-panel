@@ -1430,10 +1430,14 @@ applet_change_pixel_size(PanelApplet * w, gint size, gpointer data)
 static void
 help_callback (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 {
-#ifdef FIXME
-	GnomeHelpMenuEntry help_ref = { "mailcheck_applet", "index.html"};
-	gnome_help_display (NULL, &help_ref);
-#endif
+	GError *error = NULL;
+
+	gnome_help_display_desktop (
+			NULL, "mailcheck", "mailcheck", NULL, &error);
+	if (error) {
+		g_warning ("help error: %s\n", error->message);
+		g_error_free (error);
+	}
 }
 
 static const BonoboUIVerb mailcheck_menu_verbs [] = {

@@ -1,5 +1,5 @@
 /*
- * GNOME time/date display module.
+ * GNOME eime/date display module.
  * (C) 1997 The Free Software Foundation
  *
  * Authors: Miguel de Icaza
@@ -963,11 +963,13 @@ display_help_dialog (BonoboUIComponent *uic,
 		     ClockData         *cd,
 		     const gchar       *verbname)
 {
-#ifdef FIXME
-	GnomeHelpMenuEntry help_ref = { "clock_applet", "index.html"};
+	GError *error = NULL;
 
-	gnome_help_display (NULL, &help_ref);
-#endif
+	gnome_help_display_desktop (NULL, "clock", "clock", NULL, &error);
+	if (error) {
+		g_warning ("help error: %s\n", error->message);
+		g_error_free (error);
+	}
 }
 
 static void

@@ -395,7 +395,14 @@ display_help_dialog (BonoboUIComponent *uic,
 		     TasklistData      *tasklist,
 		     const gchar       *verbname)
 {
-	/* FIXME: Implement this */
+	GError *error = NULL;
+
+	gnome_help_display_desktop (
+			NULL, "tasklist", "tasklist", NULL, &error);
+	if (error) {
+		g_warning ("help error: %s\n", error->message);
+		g_error_free (error);
+	}
 }
 
 static void
