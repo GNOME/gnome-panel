@@ -461,10 +461,6 @@ button_widget_set_property (GObject      *object,
 
 		g_assert (!button->filename || !button->stock_id);
 
-		if (icon_name && button->filename &&
-		    !strcmp (button->filename, icon_name))
-			break;
-
 		if (button->stock_id) {
 			g_free (button->stock_id);
 			button->stock_id = NULL;
@@ -480,10 +476,6 @@ button_widget_set_property (GObject      *object,
 		stock_id = g_value_get_string (value);
 
 		g_assert (!button->filename || !button->stock_id);
-
-		if (stock_id && button->stock_id &&
-		    !strcmp (button->stock_id, stock_id))
-			break;
 
 		if (button->filename) {
 			g_free (button->filename);
