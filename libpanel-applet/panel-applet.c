@@ -462,17 +462,18 @@ panel_applet_focus (GtkWidget        *widget,
 
 	ret = GTK_WIDGET_CLASS (parent_class)->focus (widget, dir);
 	if (!ret) {
- 		if (!GTK_CONTAINER (widget)->focus_child)  {
+ 		if (!GTK_WIDGET_CAN_FOCUS (widget))  {
 			/*
 			 * Applet does not have a widget which can focus so set
 			 * the focus on the applet.
 			 */ 
 			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
 			gtk_widget_grab_focus (widget);
+			ret = TRUE;
 		}
 	}
 
-	return TRUE;
+	return ret;
 }
 
 static gboolean
