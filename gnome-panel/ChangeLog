@@ -1,3 +1,22 @@
+2001-12-01  Seth Nickell  <snickell@stanford.edu>
+
+	* menu.c: (load_icons_handler), (show_item_menu),
+	(setup_full_menuitem_with_size), (start_favourites_menu),
+	(create_menuitem), (create_menu_at_fr), (applet_menu_append),
+	(create_add_panel_submenu), (setup_menuitem_try_pixmap),
+	(make_add_submenu), (make_panel_submenu), (create_panel_submenu),
+	(create_desktop_menu), (add_distribution_submenu),
+	(add_kde_submenu), (create_root_menu), (load_menu_applet),
+	(load_menu_image_deferred):
+
+	Make panel menus use GtkImage rather than GtkPixmap. Furthermore
+	convert to using GtkImageMenuItem at the coercion of jrb. This
+	does some weird things (note that the height of menu items changes
+	pre and post image allocation) which I'll have to repair.
+
+	Got rid of the fake icon stuff since (hypothetically) this should
+	be handled by GtkImageMenuItem.
+	
 Fri Nov 30 17:34:01 2001  George Lebl <jirka@5z.com>
 
 	* *.[ch]: kill PanelOrientation and use GtkOrientation, Kill dialog
