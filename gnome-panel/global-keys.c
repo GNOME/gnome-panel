@@ -9,6 +9,8 @@
 #include "gnome-run.h"
 #include "panel_config_global.h"
 
+#include <libgnome/gnome-util.h>
+
 extern GlobalConfig global_config;
 extern GSList *panel_list;
 extern GSList *panels;
