@@ -601,6 +601,8 @@ panel_background_set_image (PanelBackground *background,
 	}
 
 	panel_background_update_has_alpha (background);
+
+	panel_background_transform (background);
 }
 
 void
