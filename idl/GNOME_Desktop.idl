@@ -11,15 +11,9 @@
 #define GNOME_DITEM_IDL
 
 #include <Bonobo.idl>
+#include <Gnome.idl>
 
 module GNOME {
-
-    struct LocalizedString {
-	string locale;
-	string text;
-    };
-
-    typedef sequence<LocalizedString> LocalizedStringList;
 
     typedef Bonobo::PropertySet ExtraAttributes;
 
