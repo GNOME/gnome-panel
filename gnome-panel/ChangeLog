@@ -1,3 +1,15 @@
+2002-12-04  Dennis Cranston <dennis_cranston@yahoo.com>
+
+	* gnome-panel-screenshot.c:  Fixed an old bug where 
+	clicking the 'Ok' button in the browse dialog would 
+	activate the 'Save' button.
+	
+	* gnome-panel-screenshot.[c|glade]: More fixes for
+	bug report #98912. 
+	  - 'save to file' option doesn't remember the last 
+	  directory you saved to.  [The history id of the
+	  gnome entry was not hooked up.]  
+	
 2002-12-04  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* drawer.c: (key_press_drawer) (key_press_drawer_widget): Allow
