@@ -1652,10 +1652,12 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 static void
 panel_widget_destroy(GtkWidget *w, gpointer data)
 {
-	PanelWidget *panel = PANEL_WIDGET(w);
+	PanelWidget *panel;
 
 	g_return_if_fail(w!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(w));
+
+	panel = PANEL_WIDGET(w);
 
 	if(panel->backpix)
 		gdk_pixbuf_unref(panel->backpix);

@@ -407,6 +407,11 @@ pixmap_unmap(GtkWidget *w, FakeIcon *fake)
 static void
 fake_destroyed(GtkWidget *w, FakeIcon *fake)
 {
+	/* XXX: we need to work right, so even though this should not be
+	 * necessary it's here for correctness sake.  It seems we might not
+	 * handle everything correctly and this may be needed */
+	icons_to_load = g_slist_remove(icons_to_load, fake);
+
 	g_free(fake->file);
 	g_free(fake);
 }

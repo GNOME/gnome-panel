@@ -1,3 +1,11 @@
+Thu May 18 19:23:43 2000  George Lebl <jirka@5z.com>
+
+	* panel-widget.c: use the checking cast AFTER preconditions.
+
+	* menu.c: remove a Fake from the icons to load when destroyed,
+	  this should kill the bug where a tearoff is destroyed while
+	  it's icons are loading.
+
 2000-05-19  Karl Eichwalder  <ke@suse.de>
 
 	* panel.hints: Remove the comment at the start of the file; since
