@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-28 12:27+0100\n"
-"PO-Revision-Date: 2005-01-28 15:01+0100\n"
+"POT-Creation-Date: 2005-01-31 05:40+0100\n"
+"PO-Revision-Date: 2005-01-31 10:53+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,9 +48,9 @@ msgstr "O _aplikaci"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:764
+#: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:743
 #: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:963
-#: gnome-panel/panel-menu-button.c:601
+#: gnome-panel/panel-menu-button.c:598
 msgid "_Help"
 msgstr "Nápo_věda"
 
@@ -188,10 +188,10 @@ msgstr "Vlastní formát"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
-#: applets/wncklet/showdesktop.c:516 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:65
-#: applets/wncklet/workspace-switcher.c:261
-#: applets/wncklet/workspace-switcher.c:569
+#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:65
+#: applets/wncklet/workspace-switcher.c:267
+#: applets/wncklet/workspace-switcher.c:575
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Chyba při zobrazování nápovědy: %s"
@@ -238,9 +238,9 @@ msgstr "Používat _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:546
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:95
-#: applets/wncklet/workspace-switcher.c:600
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:95
+#: applets/wncklet/workspace-switcher.c:606
 #: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
 msgstr ""
@@ -653,7 +653,7 @@ msgid "Switch between workspaces"
 msgstr "Přepínat mezi pracovními plochami"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:805
 msgid "Window List"
 msgstr "Seznam oken"
 
@@ -667,37 +667,37 @@ msgid "Window Selector"
 msgstr "Výběr oken"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:611
+#: applets/wncklet/workspace-switcher.c:617
 msgid "Workspace Switcher"
 msgstr "Přepínač pracovních ploch"
 
-#: applets/wncklet/showdesktop.c:245
-msgid "Click here to restore hidden windows."
-msgstr "Skrytá okna obnovíte kliknutím zde."
-
-#: applets/wncklet/showdesktop.c:248
-msgid "Click here to hide all windows and show the desktop."
-msgstr "Kliknutím zde skryjete všechna okna a zobrazíte pracovní plochu."
-
-#: applets/wncklet/showdesktop.c:403
+#: applets/wncklet/showdesktop.c:205
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Nemohu načíst %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:405
-msgid "File not found"
-msgstr "Soubor nenalezen"
+#: applets/wncklet/showdesktop.c:206 gnome-panel/panel-util.c:567
+msgid "Icon not found"
+msgstr "Ikona nenalezena"
 
-#: applets/wncklet/showdesktop.c:438 applets/wncklet/showdesktop.c:557
+#: applets/wncklet/showdesktop.c:264
+msgid "Click here to restore hidden windows."
+msgstr "Skrytá okna obnovíte kliknutím zde."
+
+#: applets/wncklet/showdesktop.c:267
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Kliknutím zde skryjete všechna okna a zobrazíte pracovní plochu."
+
+#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
 msgid "Show Desktop Button"
 msgstr "Tlačítko Zobrazit pracovní plochu"
 
-#: applets/wncklet/showdesktop.c:560
+#: applets/wncklet/showdesktop.c:582
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Toto tlačítko vám umožňuje skrýt všechna okna a zobrazit pracovní plochu."
 
-#: applets/wncklet/showdesktop.c:601
+#: applets/wncklet/showdesktop.c:623
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -705,7 +705,7 @@ msgstr ""
 "Váš správce oken nepodporuje tlačítko Zobrazit pracovní plochu nebo správce "
 "oken neběží."
 
-#: applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:808
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
 "Seznam oken zobrazuje seznam všech oken a umožňuje vám mezi nimi přepínat."
@@ -846,23 +846,23 @@ msgstr ""
 "Výběr oken zobrazuje seznam všech oken a umožňuje vám mezi nimi přepínat."
 
 #: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:922
+#: applets/wncklet/workspace-switcher.c:928
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "řádků"
 
 #: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:922
+#: applets/wncklet/workspace-switcher.c:928
 msgid "columns"
 msgstr "sloupců"
 
-#: applets/wncklet/workspace-switcher.c:449
+#: applets/wncklet/workspace-switcher.c:455
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Chyba při načítání hodnoty num_rows pro Přepínač pracovních ploch: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:460
+#: applets/wncklet/workspace-switcher.c:466
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -870,14 +870,14 @@ msgstr ""
 "Chyba při načítání hodnoty display_workspace_names pro Přepínač pracovních "
 "ploch: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:475
+#: applets/wncklet/workspace-switcher.c:481
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Chyba při načítání hodnoty display_all_workspaces pro Přepínač pracovních "
 "ploch: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:614
+#: applets/wncklet/workspace-switcher.c:620
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -979,34 +979,26 @@ msgstr "_Odstranit z panelu"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1212
+#: gnome-panel/applet.c:1214
 msgid "Can't find an empty spot"
 msgstr "Nemohu najít volné místo"
 
-#: gnome-panel/button-widget.c:226
+#: gnome-panel/button-widget.c:196
 #, c-format
 msgid "Failed to load image %s"
 msgstr "Nemohu načíst obrázek %s"
 
-#: gnome-panel/button-widget.c:394
-msgid "none"
-msgstr "žádný"
-
-#: gnome-panel/button-widget.c:399
-msgid "file not found"
-msgstr "soubor nenalezen"
-
-#: gnome-panel/drawer.c:356 gnome-panel/panel-addto.c:151
+#: gnome-panel/drawer.c:353 gnome-panel/panel-addto.c:145
 #: gnome-panel/panel-toplevel.c:1511
 msgid "Drawer"
 msgstr "Zásuvka"
 
-#: gnome-panel/drawer.c:599
+#: gnome-panel/drawer.c:596
 msgid "_Add to Drawer..."
 msgstr "_Přidat do zásuvky..."
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:854
-#: gnome-panel/panel-action-button.c:133 gnome-panel/panel-context-menu.c:265
+#: gnome-panel/drawer.c:602 gnome-panel/launcher.c:846
+#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:265
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
@@ -1014,62 +1006,62 @@ msgstr "_Vlastnosti"
 msgid "Create new file in the given directory"
 msgstr "Vytvořit nový soubor v daném adresáři"
 
-#: gnome-panel/launcher.c:135
+#: gnome-panel/launcher.c:136
 msgid "Cannot save launcher to disk"
 msgstr "Nemohu uložit spouštěč na disk"
 
-#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:215
-#: gnome-panel/launcher.c:272
+#: gnome-panel/launcher.c:166 gnome-panel/launcher.c:216
+#: gnome-panel/launcher.c:273
 msgid "Cannot launch icon"
 msgstr "Nemohu spustit ikonu"
 
-#: gnome-panel/launcher.c:166
+#: gnome-panel/launcher.c:167
 msgid "This launch icon does not specify a url to show."
 msgstr "Tato ikona spouštěče neurčuje url, které se má zobrazit."
 
-#: gnome-panel/launcher.c:178
+#: gnome-panel/launcher.c:179
 #, c-format
 msgid "Cannot show %s"
 msgstr "Nemohu zobrazit %s"
 
-#: gnome-panel/launcher.c:466
+#: gnome-panel/launcher.c:467
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Pro soubor desktop spouštěče na panelu nebylo poskytnuto URI\n"
 
-#: gnome-panel/launcher.c:480
+#: gnome-panel/launcher.c:481
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Nemohu otevřít soubor desktop %s pro spouštěč na panelu %s%s\n"
 
-#: gnome-panel/launcher.c:736 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:728 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Vlastnosti spouštěče"
 
-#: gnome-panel/launcher.c:848
+#: gnome-panel/launcher.c:840
 msgid "_Launch"
 msgstr "_Spustit"
 
-#: gnome-panel/launcher.c:925
+#: gnome-panel/launcher.c:918
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Klíč %s není nastaven, nemohu načíst spouštěč\n"
 
-#: gnome-panel/launcher.c:980 gnome-panel/launcher.c:998
+#: gnome-panel/launcher.c:973 gnome-panel/launcher.c:991
 #: gnome-panel/menu-ditem.c:469 gnome-panel/menu-ditem.c:486
 #: gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "Nemohu vytvořit spouštěč"
 
-#: gnome-panel/launcher.c:981 gnome-panel/menu-ditem.c:470
+#: gnome-panel/launcher.c:974 gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "Musíte zadat název."
 
-#: gnome-panel/launcher.c:999 gnome-panel/menu-ditem.c:487
+#: gnome-panel/launcher.c:992 gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "Musíte zadat platné URL nebo příkaz."
 
-#: gnome-panel/launcher.c:1042 gnome-panel/menu-ditem.c:550
+#: gnome-panel/launcher.c:1035 gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "Vytvořit spouštěč"
 
@@ -1094,73 +1086,73 @@ msgstr ""
 "Nemůžete vytvořit nový spouštěč v tomto umístění, protože na toto místo "
 "nelze zapisovat."
 
-#: gnome-panel/menu.c:124 gnome-panel/panel-menu-bar.c:136
+#: gnome-panel/menu.c:125 gnome-panel/panel-menu-bar.c:136
 msgid "Cannot launch entry"
 msgstr "Nemohu spustit položku"
 
-#: gnome-panel/menu.c:136 gnome-panel/panel-menu-bar.c:148
+#: gnome-panel/menu.c:137 gnome-panel/panel-menu-bar.c:148
 msgid "Cannot load entry"
 msgstr "Nemohu načíst položku"
 
-#: gnome-panel/menu.c:818
+#: gnome-panel/menu.c:815
 msgid "Add this launcher to panel"
 msgstr "Přidat tento spouštěč na panel"
 
-#: gnome-panel/menu.c:835
+#: gnome-panel/menu.c:832
 msgid "Entire menu"
 msgstr "Celé menu"
 
-#: gnome-panel/menu.c:845
+#: gnome-panel/menu.c:842
 msgid "Add this as drawer to panel"
 msgstr "Přidat jako zásuvku na panel"
 
-#: gnome-panel/menu.c:857
+#: gnome-panel/menu.c:854
 msgid "Add this as menu to panel"
 msgstr "Přidat jako menu na panel"
 
-#: gnome-panel/menu.c:1503 gnome-panel/panel-menu-bar.c:766
+#: gnome-panel/menu.c:1497 gnome-panel/panel-menu-bar.c:766
 msgid "Applications"
 msgstr "Aplikace"
 
-#: gnome-panel/panel-action-button.c:109
+#: gnome-panel/panel-action-button.c:108
 msgid "_Activate Screensaver"
 msgstr "_Aktivovat šetřič obrazovky"
 
-#: gnome-panel/panel-action-button.c:115
+#: gnome-panel/panel-action-button.c:114
 msgid "_Lock Screen"
 msgstr "_Zamknout obrazovku"
 
-#: gnome-panel/panel-action-button.c:121
+#: gnome-panel/panel-action-button.c:120
 msgid "_Kill Screensaver Daemon"
 msgstr "Zabít _démona šetřiče obrazovky"
 
-#: gnome-panel/panel-action-button.c:127
+#: gnome-panel/panel-action-button.c:126
 msgid "Restart _Screensaver Daemon"
 msgstr "_Restartovat démona šetřiče obrazovky"
 
-#: gnome-panel/panel-action-button.c:210 gnome-panel/panel-action-button.c:223
-#: gnome-panel/panel-action-button.c:247 gnome-panel/panel-util.c:542
+#: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:630
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Nemohu spustit '%s'"
 
-#: gnome-panel/panel-action-button.c:283
+#: gnome-panel/panel-action-button.c:282
 msgid "Cannot connect to server"
 msgstr "Nemohu se připojit k serveru"
 
-#: gnome-panel/panel-action-button.c:316
+#: gnome-panel/panel-action-button.c:313
 msgid "Lock Screen"
 msgstr "Zamknout obrazovku"
 
-#: gnome-panel/panel-action-button.c:317
+#: gnome-panel/panel-action-button.c:314
 msgid "Protect your computer from unauthorized use"
 msgstr "Chránit váš počítač před neautorizovaným použitím"
 
-#: gnome-panel/panel-action-button.c:329
+#: gnome-panel/panel-action-button.c:325
 msgid "Log Out"
 msgstr "Odhlásit se"
 
-#: gnome-panel/panel-action-button.c:330
+#: gnome-panel/panel-action-button.c:326
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1168,155 +1160,151 @@ msgstr ""
 "Odhlásit se z tohoto sezení, aby bylo možné přihlásit se jako jiný uživatel "
 "nebo vypnout počítač"
 
-#: gnome-panel/panel-action-button.c:340
+#: gnome-panel/panel-action-button.c:335
 msgid "Run Application..."
 msgstr "Spustit aplikaci..."
 
-#: gnome-panel/panel-action-button.c:341
+#: gnome-panel/panel-action-button.c:336
 msgid "Run an Application by entering a command"
 msgstr "Spustit aplikaci zadáním příkazu"
 
-#: gnome-panel/panel-action-button.c:351
+#: gnome-panel/panel-action-button.c:345
 msgid "Search for Files..."
 msgstr "Hledat soubory..."
 
-#: gnome-panel/panel-action-button.c:352
+#: gnome-panel/panel-action-button.c:346
 msgid "Find files, folders, and documents on your computer"
 msgstr "Hledat soubory, adresáře a dokumenty na vašem počítači"
 
-#: gnome-panel/panel-action-button.c:361
+#: gnome-panel/panel-action-button.c:354
 msgid "Take Screenshot..."
 msgstr "Zachytit obrazovku..."
 
-#: gnome-panel/panel-action-button.c:362
+#: gnome-panel/panel-action-button.c:355
 msgid "Take a screenshot of your desktop"
 msgstr "Zachytit obrázek vaší pracovní plochy"
 
-#: gnome-panel/panel-action-button.c:371
+#: gnome-panel/panel-action-button.c:363
 msgid "Force Quit"
 msgstr "Vynutit ukončení"
 
-#: gnome-panel/panel-action-button.c:372
+#: gnome-panel/panel-action-button.c:364
 msgid "Force a misbehaving application to quit"
 msgstr "Vynutit ukončení špatně se chovající aplikace"
 
 #. FIXME icon
-#: gnome-panel/panel-action-button.c:382
+#: gnome-panel/panel-action-button.c:373
 msgid "Connect to Server..."
 msgstr "Připojit se k serveru..."
 
-#: gnome-panel/panel-action-button.c:383
+#: gnome-panel/panel-action-button.c:374
 msgid "Connect to a remote server"
 msgstr "Připojit se k vzdálenému serveru"
 
-#: gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-addto.c:101
 msgid "Custom Application Launcher"
 msgstr "Vlastní spouštěč aplikace"
 
-#: gnome-panel/panel-addto.c:104
+#: gnome-panel/panel-addto.c:102
 msgid "Create a new launcher"
 msgstr "Vytvořit nový spouštěč"
 
-#: gnome-panel/panel-addto.c:114
+#: gnome-panel/panel-addto.c:111
 msgid "Application Launcher..."
 msgstr "Spouštěč aplikace..."
 
-#: gnome-panel/panel-addto.c:115
+#: gnome-panel/panel-addto.c:112
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "Spustit program, který již je v menu GNOME"
 
-#: gnome-panel/panel-addto.c:129
+#: gnome-panel/panel-addto.c:125
 msgid "Main Menu"
 msgstr "Hlavní menu"
 
-#: gnome-panel/panel-addto.c:130
+#: gnome-panel/panel-addto.c:126
 msgid "The main GNOME menu"
 msgstr "Hlavní menu GNOME"
 
-#: gnome-panel/panel-addto.c:140
+#: gnome-panel/panel-addto.c:135
 msgid "Menu Bar"
 msgstr "Lišta menu"
 
-#: gnome-panel/panel-addto.c:141
+#: gnome-panel/panel-addto.c:136
 msgid "A custom menu bar"
 msgstr "Vlastní lišta menu"
 
-#: gnome-panel/panel-addto.c:152
+#: gnome-panel/panel-addto.c:146
 msgid "A pop out drawer to store other items in"
 msgstr "Vyskakovací zásuvka pro ukládání jiných položek"
 
-#: gnome-panel/panel-addto.c:241
+#: gnome-panel/panel-addto.c:233
 msgid "(empty)"
 msgstr "(prázdné)"
 
-#: gnome-panel/panel-addto.c:380 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:367 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "dotaz vrátil výjimku %s\n"
 
-#: gnome-panel/panel-addto.c:914
+#: gnome-panel/panel-addto.c:898
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "Zvolte _položku, kterou přidat do \"%s\":"
 
-#: gnome-panel/panel-addto.c:918
+#: gnome-panel/panel-addto.c:902
 msgid "Add to Drawer"
 msgstr "Přidat do zásuvky"
 
-#: gnome-panel/panel-addto.c:920
+#: gnome-panel/panel-addto.c:904
 msgid "Select an _item to add to the drawer:"
 msgstr "Zvolte _položku, kterou přidat do zásuvky:"
 
-#: gnome-panel/panel-addto.c:922
+#: gnome-panel/panel-addto.c:906
 msgid "Add to Panel"
 msgstr "Přidat na panel"
 
-#: gnome-panel/panel-addto.c:924
+#: gnome-panel/panel-addto.c:908
 msgid "Select an _item to add to the panel:"
 msgstr "Zvolte _položku, kterou přidat na panel:"
 
-#: gnome-panel/panel-applet-frame.c:815
+#: gnome-panel/panel-applet-frame.c:814
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Výjimka z popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:934
+#: gnome-panel/panel-applet-frame.c:933
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" neočekávaně skončil"
 
-#: gnome-panel/panel-applet-frame.c:936
+#: gnome-panel/panel-applet-frame.c:935
 msgid "Panel object has quit unexpectedly"
 msgstr "Objekt panelu neočekávaně skončil"
 
-#: gnome-panel/panel-applet-frame.c:943
+#: gnome-panel/panel-applet-frame.c:942
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Pokud obnovíte objekt panelu, bude automaticky přidán zpět na panel."
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:948
 msgid "_Don't Reload"
 msgstr "_Neobnovovat"
 
-#: gnome-panel/panel-applet-frame.c:950
+#: gnome-panel/panel-applet-frame.c:949
 msgid "_Reload"
 msgstr "_Obnovit"
 
-#: gnome-panel/panel-applet-frame.c:976
-msgid "D_on't Delete"
-msgstr "_Neodstraňovat"
-
-#: gnome-panel/panel-applet-frame.c:1024
+#: gnome-panel/panel-applet-frame.c:995
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "V panelu došlo k problému při načítání \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:1041
+#: gnome-panel/panel-applet-frame.c:1012
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Chcete odstranit tento aplet ze svého nastavení?"
 
-#: gnome-panel/panel-applet-frame.c:1138
+#: gnome-panel/panel-applet-frame.c:1109
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Z ovládacího prvku nelze získat rozhraní AppletShell\n"
 
@@ -1375,13 +1363,13 @@ msgstr "_Nový panel"
 msgid "A_bout Panels"
 msgstr "_O panelech"
 
-#: gnome-panel/panel-force-quit.c:74
+#: gnome-panel/panel-force-quit.c:75
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Klikněte na okno pro vynucené ukončení aplikace. Pro zrušení stiskněte <ESC>."
 
-#: gnome-panel/panel-force-quit.c:186
+#: gnome-panel/panel-force-quit.c:187
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -1620,7 +1608,7 @@ msgstr "Zachytit obrazovku"
 msgid "Take window screenshot"
 msgstr "Zachytit snímek okna"
 
-#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:319
+#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:304
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Nemohu zobrazit umístění '%s'"
@@ -1889,7 +1877,7 @@ msgstr "Vlevo"
 msgid "Right"
 msgstr "Vpravo"
 
-#: gnome-panel/panel-properties-dialog.c:406
+#: gnome-panel/panel-properties-dialog.c:407
 msgid "Images"
 msgstr "Obrázky"
 
@@ -2036,30 +2024,30 @@ msgstr "Vymazat nedávné dokumenty"
 msgid "Clear all items from the recent documents list"
 msgstr "Vymazat všechny položky ze seznamu nedávných dokumentů"
 
-#: gnome-panel/panel-run-dialog.c:293
+#: gnome-panel/panel-run-dialog.c:278
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Nemohu spustit příkaz '%s'"
 
-#: gnome-panel/panel-run-dialog.c:371
+#: gnome-panel/panel-run-dialog.c:356
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Nemohu převést '%s' z UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1076
+#: gnome-panel/panel-run-dialog.c:1061
 msgid "Choose a file to append to the command..."
 msgstr "Vyberte soubor, který připojit k příkazu..."
 
-#: gnome-panel/panel-run-dialog.c:1353
+#: gnome-panel/panel-run-dialog.c:1338
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Spustím příkaz: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1359 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1344 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Vyberte aplikaci pro zobrazení jejího popisu."
 
-#: gnome-panel/panel-run-dialog.c:1394
+#: gnome-panel/panel-run-dialog.c:1379
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2118,7 +2106,7 @@ msgstr "Zobrazovat seznam známých _aplikací"
 msgid "The icon of the command to be run."
 msgstr "Ikona programu, který se má spustit."
 
-#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:102
+#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:89
 msgid "_Run"
 msgstr "_Spustit"
 
@@ -2142,13 +2130,17 @@ msgstr ""
 "Chybový kód je: %d\n"
 "Panel bude nyní ukončen."
 
-#: gnome-panel/panel-stock-icons.c:103
+#: gnome-panel/panel-stock-icons.c:90
 msgid "_Force quit"
 msgstr "_Vynutit ukončení"
 
-#: gnome-panel/panel-stock-icons.c:104
+#: gnome-panel/panel-stock-icons.c:91
 msgid "C_lear"
 msgstr "_Vymazat"
+
+#: gnome-panel/panel-stock-icons.c:92
+msgid "D_on't Delete"
+msgstr "_Neodstraňovat"
 
 #: gnome-panel/panel-toplevel.c:1121
 msgid "Hide Panel"
@@ -2565,11 +2557,11 @@ msgstr "Detaily: %s"
 msgid "Open URL: %s"
 msgstr "Otevřít URL: %s"
 
-#: gnome-panel/panel.c:1237
+#: gnome-panel/panel.c:1238
 msgid "Delete this drawer?"
 msgstr "Odstranit tuto zásuvku?"
 
-#: gnome-panel/panel.c:1238
+#: gnome-panel/panel.c:1239
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2577,15 +2569,15 @@ msgstr ""
 "Když je odstraněna zásuvka, je zásuvka a její\n"
 "nastavení ztraceno."
 
-#: gnome-panel/panel.c:1240
+#: gnome-panel/panel.c:1241
 msgid "Delete Drawer"
 msgstr "Odstranit zásuvku"
 
-#: gnome-panel/panel.c:1242
+#: gnome-panel/panel.c:1243
 msgid "Delete this panel?"
 msgstr "Odstranit tento panel?"
 
-#: gnome-panel/panel.c:1243
+#: gnome-panel/panel.c:1244
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2593,7 +2585,7 @@ msgstr ""
 "Když je panel odstraněn, je panel a jeho\n"
 "nastavení ztraceno."
 
-#: gnome-panel/panel.c:1245
+#: gnome-panel/panel.c:1246
 msgid "Delete Panel"
 msgstr "Odstranit panel"
 
@@ -2609,46 +2601,46 @@ msgstr "Applet testu Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Generátor appletu testu Bonobo"
 
-#: libpanel-applet/panel-applet.c:993
+#: libpanel-applet/panel-applet.c:995
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Přijat nedokončený typ pozadí '%s'"
 
-#: libpanel-applet/panel-applet.c:1007
+#: libpanel-applet/panel-applet.c:1009
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Přijat nedokončený typ pozadí '%s': %s"
 
-#: libpanel-applet/panel-applet.c:1016
+#: libpanel-applet/panel-applet.c:1018
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Nemohu získat obrázek %s"
 
-#: libpanel-applet/panel-applet.c:1023
+#: libpanel-applet/panel-applet.c:1025
 msgid "Unknown background type received"
 msgstr "Přijat neznámý typ pozadí"
 
-#: libpanel-applet/panel-applet.c:1208
+#: libpanel-applet/panel-applet.c:1210
 msgid "The Applet's containing Panel's orientation"
 msgstr "Orientace panelu obsahujícího applet"
 
-#: libpanel-applet/panel-applet.c:1216
+#: libpanel-applet/panel-applet.c:1218
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Velikost panelu obsahujícího applet v pixelech"
 
-#: libpanel-applet/panel-applet.c:1224
+#: libpanel-applet/panel-applet.c:1226
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Barva nebo obrázek na pozadí panelu obsahujícího applet"
 
-#: libpanel-applet/panel-applet.c:1232
+#: libpanel-applet/panel-applet.c:1234
 msgid "The Applet's flags"
 msgstr "Volby appletu"
 
-#: libpanel-applet/panel-applet.c:1240
+#: libpanel-applet/panel-applet.c:1242
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Rozsahy, které napovídají velikosti přijatelné pro applet"
 
-#: libpanel-applet/panel-applet.c:1248
+#: libpanel-applet/panel-applet.c:1250
 msgid "The Applet's containing Panel is locked down"
 msgstr "Panel obsahující tento aplet je zamčen"
 
@@ -2709,6 +2701,12 @@ msgstr "_Aplet:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Adresář nastavení:"
+
+#~ msgid "none"
+#~ msgstr "žádný"
+
+#~ msgid "file not found"
+#~ msgstr "soubor nenalezen"
 
 #~ msgid "Unknown Window"
 #~ msgstr "Neznámé okno"
