@@ -18,6 +18,8 @@ module GNOME {
 		void applet_add_callback (in short id,
 					  in string callback_name,
 					  in string menuitem_text);
+		void applet_add_tooltip (in short id, in string tooltip);
+		void applet_remove_tooltip (in short id);
 		void quit();
 	};
 

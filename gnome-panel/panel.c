@@ -783,22 +783,6 @@ reserve_applet_spot (const char *id, const char *path, int panel, int pos,
 	/*printf ("leaving reserve spot\n");*/
 }
 
-/*FIXME: add a function that does this, so generalize register_toy for this*/
-/*static void
-add_reparent(GtkWidget *widget, gpointer data)
-{
-	int id;
-	int appletid;
-
-	puts("** warning this will probably crash when saving session **");
-	puts("Enter window ID to reparent:");
-	scanf("%d",&id);
-
-	appletid = reserve_applet_spot("???","echo",0,0);
-
-	reparent_window_id (id,appletid);
-}*/
-
 GtkWidget *
 create_panel_root_menu(PanelWidget *panel)
 {
@@ -820,13 +804,6 @@ create_panel_root_menu(PanelWidget *panel)
 			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
-
-	/*menuitem = gtk_menu_item_new_with_label(_("Add reparent (testing)"));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) add_reparent,
-			   panel);
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);*/
 
 	menuitem = gtk_menu_item_new_with_label(_("Main menu"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), root_menu);

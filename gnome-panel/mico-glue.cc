@@ -81,6 +81,12 @@ public:
 				      (char *)callback_name,
 				      (char *)menuitem_text);
 	}
+	void applet_add_tooltip (CORBA::Short id, const char *tooltip) {
+		/*FIXME*/
+	}
+	void applet_remove_tooltip (CORBA::Short id) {
+		/*FIXME*/
+	}
 	void quit(void) {
 		::panel_quit();
 	}
