@@ -150,10 +150,10 @@ gnome_panel_properties_capplet_SOURCES = \
 	panel-util.c			\
 	$(CORBA_SRCLIST)
 
-gnome_panel_properties_capplet_LDADD = -lcapplet \
-		     $(GNOME_LIBDIR) $(ORB_LIBS) \
-		     $(GNOMEUI_LIBS) $(INTLLIBS) -lgnorba	\
-		     @PIXBUF_LIBS@
+gnome_panel_properties_capplet_LDADD = \
+	$(GNOME_LIBDIR)		\
+	$(GNOME_CAPPLET_LIBS)	\
+	$(INTLLIBS) @PIXBUF_LIBS@
 
 data_DATA = panelrc
 

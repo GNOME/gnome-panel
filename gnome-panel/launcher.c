@@ -521,6 +521,9 @@ load_launcher_applet_full (char *params, GnomeDesktopEntry *dentry,
 	applet_add_callback(applets_last->data,"properties",
 			    GNOME_STOCK_MENU_PROP,
 			    _("Properties..."));
+	applet_add_callback(applets_last->data, "help",
+			    GNOME_STOCK_PIXMAP_HELP,
+			    _("Help"));
 }
 
 static void

@@ -362,6 +362,8 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 			 panel, pos, exactpos, APPLET_STATUS))
 		return TRUE;
 	the_status->info = applets_last->data;
-
+	applet_add_callback(applets_last->data, "help",
+			    GNOME_STOCK_PIXMAP_HELP,
+			    _("Help"));
 	return TRUE;
 }

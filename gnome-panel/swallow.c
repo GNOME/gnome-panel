@@ -28,6 +28,8 @@ GList *check_swallows = NULL;
 
 extern GlobalConfig global_config;
 
+extern GSList *applets_last;
+
 #if 0
 static int
 get_window_id(Window win, char *title, guint32 *wid)
@@ -355,7 +357,9 @@ load_swallow_applet(char *path, char *params, int width, int height,
 	if(!register_toy(swallow->ebox, swallow, panel, pos,
 			 exactpos, APPLET_SWALLOW))
 		return;
-
+	applet_add_callback(applets_last->data, "help",
+			    GNOME_STOCK_PIXMAP_HELP,
+			    _("Help"));
 	if(path && *path) {
 		char *p = strrchr(path,'.');
 		GnomeDesktopEntry *item;

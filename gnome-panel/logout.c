@@ -7,6 +7,8 @@
 
 #include "panel-include.h"
 
+extern GSList *applets_last;
+
 extern GtkTooltips *panel_tooltips;
 
 extern GlobalConfig global_config;
@@ -61,7 +63,13 @@ load_logout_applet(PanelWidget *panel, int pos, gboolean exactpos)
 	if(!logout)
 		return;
 
-	register_toy(logout, NULL, panel, pos, exactpos, APPLET_LOGOUT);
+	if (!register_toy(logout, NULL, panel,
+			  pos, exactpos, APPLET_LOGOUT))
+		return;
+
+	applet_add_callback(applets_last->data, "help",
+			    GNOME_STOCK_PIXMAP_HELP,
+			    _("Help"));
 }
 
 static GtkWidget *
@@ -90,11 +98,15 @@ void
 load_lock_applet(PanelWidget *panel, int pos, gboolean exactpos)
 {
 	GtkWidget *lock;
-
 	lock = create_lock_widget();
 
 	if(!lock)
 		return;
-	register_toy(lock, NULL, panel, pos, exactpos, APPLET_LOCK);
+	if (!register_toy(lock, NULL, panel, pos, 
+			  exactpos, APPLET_LOCK))
+		return;
+	applet_add_callback(applets_last->data, "help",
+			    GNOME_STOCK_PIXMAP_HELP,
+			    _("Help"));
 }
 

@@ -95,23 +95,28 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	case APPLET_LAUNCHER:
 		if(strcmp(menu->name,"properties")==0)
 			launcher_properties(menu->info->data);
+		else if (strcmp (menu->name, "help") == 0)
+			panel_pbox_help_cb (NULL, 0, "launchers.html");
 		break;
 	case APPLET_DRAWER: 
 		if(strcmp(menu->name,"properties")==0) {
 			Drawer *drawer = menu->info->data;
 			g_assert(drawer);
 			panel_config(drawer->drawer);
-		}
+		} else if (strcmp (menu->name, "help") == 0)
+			panel_pbox_help_cb (NULL, 0, "drawers.html");
 		break;
+	case APPLET_SWALLOW:
+ 		if (strcmp (menu->name, "help") == 0)
+			panel_pbox_help_cb (NULL, 0, "specialobjects.html#SWALLOWEDAPP");
 #if 0
-	case APPLET_SWALLOW: 
 		if(strcmp(menu->name,"properties")==0) {
 			Swallow *swallow = info->data;
 			g_assert(swallow);
 			swallow_properties(swallow); /* doesn't exist yet*/
-		} 
-		break; 
+		}
 #endif
+		break; 
 	case APPLET_MENU:
 		if(strcmp(menu->name,"properties")==0)
 			menu_properties(menu->info->data);
@@ -121,7 +126,20 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 				gnome_execute_async(NULL, 1, &tmp);
 				g_free(tmp);
 			}
-		}
+		} else if (strcmp (menu->name, "help") == 0)
+			panel_pbox_help_cb (NULL, 0, "menus.html");
+		break;
+	case APPLET_LOCK:
+		if (strcmp (menu->name, "help") == 0)
+			panel_pbox_help_cb (NULL, 0, "specialobjects.html#LOCKBUTTON");
+		break;
+	case APPLET_LOGOUT:
+		if (strcmp (menu->name, "help") == 0)
+			panel_pbox_help_cb (NULL, 0, "specialobjects.html#LOGOUTBUTTON");
+		break;
+	case APPLET_STATUS:
+		if (strcmp (menu->name, "help") == 0)
+			panel_pbox_help_cb (NULL, 0, "specialobjects.html#STATUSDOC");
 		break;
 	default: break;
 	}

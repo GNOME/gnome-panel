@@ -4430,6 +4430,9 @@ load_menu_applet(char *params, int main_menu_flags,
 			applet_add_callback(menu->info, "edit_menus",
 					    NULL, _("Edit menus..."));
 		}
+		applet_add_callback(applets_last->data, "help",
+				    GNOME_STOCK_PIXMAP_HELP,
+				    _("Help"));
 	}
 }
 

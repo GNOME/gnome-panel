@@ -409,7 +409,9 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 	applet_add_callback(applets_last->data,"properties",
 			    GNOME_STOCK_MENU_PROP,
 			    _("Properties..."));
-
+	applet_add_callback(applets_last->data, "help",
+			    GNOME_STOCK_PIXMAP_HELP,
+			    _("Help"));
 	return TRUE;
 }
 

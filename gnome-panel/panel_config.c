@@ -1312,7 +1312,7 @@ panel_config(GtkWidget *panel)
 		AppletInfo *info =
 			gtk_object_get_data(GTK_OBJECT(applet), "applet_info");
 		add_drawer_properties_page(ppc, info->data);
-
+		help_path = "drawers.html";
 		/* we can't change to/from drawers anyhow */
 		ppc->type_tab = NULL;
  	}
