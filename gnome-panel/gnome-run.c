@@ -328,7 +328,7 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                         goto return_and_close;
 
 		escaped = g_markup_escape_text (s, -1);
-		disk = g_filename_from_utf8 (s, -1, NULL, NULL, NULL);
+		disk = g_locale_from_utf8 (s, -1, NULL, NULL, NULL);
 
 		/* save command in history */
 		gnome_entry = g_object_get_data (G_OBJECT (w), "gnome_entry");
@@ -377,13 +377,17 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 		 * even though it could contain strings, but more likely
 		 * it is all filenames and thus should be in disk encoding */
                 if ( ! g_shell_parse_argv (disk, &temp_argc, &temp_argv, &error)) {
-			panel_error_dialog (
-				gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-				"run_error",
-				_("<b>Failed to execute command:</b> '%s'\n\nDetails: %s"),
-				escaped, error->message);
-			g_clear_error (&error);
-                        goto return_and_close;
+                        g_clear_error (&error);
+                        error = NULL;
+                        if ( ! g_shell_parse_argv (s, &temp_argc, &temp_argv, &error)) {
+                                panel_error_dialog (
+                                                    gtk_window_get_screen (GTK_WINDOW (run_dialog)),
+                                                    "run_error",
+                                                    _("<b>Failed to execute command:</b> '%s'\n\nDetails: %s"),
+                                                    escaped, error->message);
+                                g_clear_error (&error);
+                                goto return_and_close;
+                        }
                 }
 
                 get_environment (
