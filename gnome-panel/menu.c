@@ -2962,7 +2962,7 @@ remove_panel_query (GtkWidget *menuitem,
 			GTK_MESSAGE_QUESTION,
 			GTK_BUTTONS_NONE,
 			_("When a panel is deleted, the panel "
-			"and its\napplet settings are lost. "
+			"and its\n settings are lost. "
 			"Delete this panel?"));
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
