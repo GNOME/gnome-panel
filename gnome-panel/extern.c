@@ -341,11 +341,11 @@ extern_before_remove (Extern *ext)
 	}
 
 	s = g_strdup_printf (_("%s applet appears to have "
-			       "died unexpectadly. "
+			       "died unexpectedly. "
 			       "Reload this applet?\n"
 			       "(If you choose not to reload it at "
 			       "this time you can always add it from "
-			       "the \"Applets\" sbumenu in the mail "
+			       "the \"Applets\" submenu in the main "
 			       "menu)"), id);
 
 	dlg = gnome_message_box_new (s, GNOME_MESSAGE_BOX_QUESTION,
