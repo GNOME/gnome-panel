@@ -18,8 +18,6 @@
 
 #include "panel-include.h"
 
-#define DRAWER_PROPERTIES "drawer_properties"
-
 extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;
@@ -75,8 +73,7 @@ static void
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
-	gtk_object_set_data(GTK_OBJECT(drawer->button),
-			    DRAWER_PROPERTIES,NULL);
+	drawer->properties = NULL;
 }
 
 static void
@@ -168,8 +165,7 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 			   GTK_SIGNAL_FUNC(properties_apply_callback),
 			   drawer);
 
-	gtk_object_set_data(GTK_OBJECT(drawer->button),
-			    DRAWER_PROPERTIES,dialog);
+	drawer->properties = dialog;
 }
 
 static void
@@ -198,8 +194,8 @@ static void
 destroy_drawer(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
-	GtkWidget *prop_dialog = gtk_object_get_data(GTK_OBJECT(drawer->button),
-						     DRAWER_PROPERTIES);
+	GtkWidget *prop_dialog = drawer->properties;
+
 	if(prop_dialog)
 		gtk_widget_destroy(prop_dialog);
 	g_free(drawer);
@@ -253,7 +249,9 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 {
 	Drawer *drawer;
 	
-	drawer = g_new(Drawer,1);
+	drawer = g_new0(Drawer,1);
+	
+	drawer->properties = NULL;
 
 	if(!tooltip ||
 	   !*tooltip)

@@ -13,6 +13,7 @@ typedef struct {
 	char *tooltip;
 	GtkWidget *button;
 	GtkWidget *drawer;
+	GtkWidget *properties;
 } Drawer;
 
 void load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
