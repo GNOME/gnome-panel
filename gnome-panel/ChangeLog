@@ -1,3 +1,13 @@
+2002-02-21  Mark McLoughlin  <mark@skynet.ie>
+
+	* GNOME_Panel_Popup.xml: split out the popup xml to here
+	so it can be translated.
+
+	* Makefile.am: install the xml file.
+
+	* panel-applet-frame.c: (panel_applet_frame_construct): kill
+	the static xml string and use the xml file instead.
+
 Wed Feb 20 19:13:33 2002  George Lebl <jirka@5z.com>
 
 	* menu.[ch], applet.c, foobar-widget.c, gnome-run.c:  Add

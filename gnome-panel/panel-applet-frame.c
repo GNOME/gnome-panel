@@ -135,20 +135,6 @@ static BonoboUIVerb popup_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
-static gchar popup_xml [] =
-        "<popups>\n"
-        "  <popup name=\"button3\">\n"
-        "    <placeholder delimit=\"top\">\n"
-        "      <menuitem name=\"remove\" verb=\"RemoveAppletFromPanel\" _label=\"Remove From Panel\""
-        "                pixtype=\"stock\" pixname=\"gtk-remove\"/>\n"
-        "      <menuitem name=\"move\" verb=\"MoveApplet\" _label=\"Move\"/>\n"
-        "    </placeholder>\n"
-        "  </popup>\n"
-        "</popups>\n";
-
-
-
-
 void
 panel_applet_frame_load (const gchar *iid,
 			 PanelWidget *panel,
@@ -596,7 +582,7 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
                 CORBA_exception_free (&env);
         }
 
-	bonobo_ui_component_set_translate (ui_component, "/", popup_xml, NULL);
+	bonobo_ui_util_set_ui (ui_component, DATADIR, "GNOME_Panel_Popup.xml", "panel", NULL);
 
 	bonobo_ui_component_add_verb_list_with_data (ui_component, popup_verbs, frame);
 

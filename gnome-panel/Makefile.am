@@ -256,6 +256,9 @@ panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(panel_enum_headers) >  $@
 
+uidir   = $(datadir)/gnome-2.0/ui
+ui_DATA = GNOME_Panel_Popup.xml
+
 schemadir   = $(sysconfdir)/gconf/schemas
 schema_DATA = panel-global-config.schemas panel-per-panel-config.schemas
 
