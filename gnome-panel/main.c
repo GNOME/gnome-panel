@@ -162,11 +162,6 @@ kill_free_drawers (void)
 	g_slist_free (to_destroy);
 }
 
-static void
-session_notify_global_changes (GConfClient *client, guint cnxn_id, GConfEntry *entry, gpointer user_data) {
-	panel_session_init_global_config ();
-}
-
 static const struct poptOption options[] = {
   {"profile", '\0', POPT_ARG_STRING, &profile_name, 0, N_("Specify a profile name to load"), NULL},
   {NULL, '\0', 0, NULL, 0}
@@ -221,7 +216,7 @@ main(int argc, char **argv)
 
 	panel_gconf_add_dir ("/apps/panel/global");
 	panel_gconf_add_dir ("/desktop/gnome/menus");
-	panel_gconf_notify_add ("/apps/panel/global", session_notify_global_changes, NULL);
+	panel_gconf_notify_add ("/apps/panel/global", panel_global_config_notify, NULL);
 
 	session_load ();	
 

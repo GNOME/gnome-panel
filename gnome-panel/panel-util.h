@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 #include "panel-widget.h"
+#include "panel-config-global.h"
 
 G_BEGIN_DECLS
 
@@ -62,9 +63,8 @@ void		panel_set_frame_colors	(PanelWidget *panel,
 					 GtkWidget *but3,
 					 GtkWidget *but4);
 
-gboolean	convert_string_to_keysym_state (const char *string,
-						guint *keysym,
-						GdkModifierType *state);
+gboolean        panel_parse_accelerator (GlobalConfigKey *key);
+
 char *		convert_keysym_state_to_string (guint keysym,
 						GdkModifierType state);
 

@@ -1804,139 +1804,16 @@ status_unparent (GtkWidget *widget)
 	}
 }
 
-
 void
-panel_session_init_global_config (void)
+panel_load_global_config (void)
 {
 	GSList *li, *list;
 
 	list = panel_gconf_all_global_entries ();
 
 	for (li = list; li != NULL ; li = li->next) {
-		GConfEntry *entry;
-		GConfValue *value;
-		gchar      *key;
-
-		entry = (GConfEntry *)li->data;
-
-		value = gconf_entry_get_value (entry);
-
-		key = g_path_get_basename (gconf_entry_get_key (entry));
-
-#ifdef PANEL_SESSION_DEBUG
-		printf ("Checking global config for %s\n", key);
-#endif
-		/* FIXME: We need to do something more user friendly here */
-		if (!strcmp (key, "panel-animation-speed")) {
-			gconf_string_to_enum (panel_speed_type_enum_map,
-					      gconf_value_get_string (value),
-					      (gint *) &global_config.animation_speed);
-		}
-
-		else if (!strcmp (key, "panel-minimized-speed"))
-			global_config.minimized_size =
-				gconf_value_get_int (value);
-
-		else if (!strcmp (key, "panel-minimized-size"))
-			global_config.minimized_size =
-				gconf_value_get_int (value);
-
-		else if (!strcmp (key, "panel-hide-delay"))
-			global_config.hide_delay =
-				gconf_value_get_int (value);
-
-		else if (!strcmp (key, "panel-show-delay"))
-			global_config.show_delay =
-				gconf_value_get_int (value);
-
-		else if (!strcmp (key, "tooltips-enabled"))
-			global_config.tooltips_enabled =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "keep-menus-in-memory"))
-			global_config.keep_menus_in_memory =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "enable-animations"))
-			global_config.enable_animations =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "autoraise-panel"))
-			global_config.autoraise =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "panel-window-layer"))
-			gconf_string_to_enum (panel_layer_type_enum_map,
-					      gconf_value_get_string (value),
-					      (gint *) &global_config.layer);
-
-		else if (!strcmp (key, "drawer-autoclose"))
-			global_config.drawer_auto_close =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "auto-update-menus"))
-			;
-
-		else if (!strcmp (key, "highlight-launchers-on-mouseover"))
-			global_config.highlight_when_over =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "confirm-panel-remove"))
-			global_config.confirm_panel_remove =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "enable-key-bindings"))
-			global_config.keys_enabled =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "menu-key")) { 
-			if (global_config.menu_key )
-				g_free (global_config.menu_key );
-
-			global_config.menu_key =
-				g_strdup (gconf_value_get_string (value));
-
-			convert_string_to_keysym_state (global_config.menu_key,
-							&global_config.menu_keysym,
-							&global_config.menu_state);
-		} else if (!strcmp (key, "run-key")) {
-			if (global_config.run_key )
-				g_free (global_config.run_key );
-
-			global_config.run_key =
-				 g_strdup (gconf_value_get_string (value));
-
-			convert_string_to_keysym_state (global_config.run_key,
-							&global_config.run_keysym,
-							&global_config.run_state);
-		} else if (!strcmp (key, "screenshot-key")) {
-			if (global_config.screenshot_key )
-				g_free (global_config.screenshot_key );
-
-			global_config.screenshot_key =
-				g_strdup (gconf_value_get_string (value));
-
-			convert_string_to_keysym_state (global_config.screenshot_key,
-							&global_config.screenshot_keysym,
-							&global_config.screenshot_state);
-
-		} else if (!strcmp (key, "window-screenshot-key")) {
-			if (global_config.window_screenshot_key )
-				g_free (global_config.window_screenshot_key );
-
-			global_config.window_screenshot_key =
-				g_strdup (gconf_value_get_string (value));
-
-			convert_string_to_keysym_state (global_config.window_screenshot_key,
-							&global_config.window_screenshot_keysym,
-							&global_config.window_screenshot_state);
-
-		} else  {
-			g_warning ("%s not handled", key);
-		}
-
-		g_free (key);
-		gconf_entry_free (entry);
+		panel_global_config_set_entry (li->data);
+		gconf_entry_free (li->data);
 	}
 
 	g_slist_free (list);
@@ -1951,86 +1828,99 @@ panel_session_init_global_config (void)
 void
 panel_session_save_global_config (void)
 {
-	GConfChangeSet *global_config_cs;
+	GConfChangeSet *change_set;
 	gchar *full_key;
 
-	global_config_cs = gconf_change_set_new ();
+	change_set = gconf_change_set_new ();
 
 	/* FIXME STUFF THAT IS BORKED 
 	panel_gconf_global_config_set_int ("menu-flags", global_config.menu_flags);
 	panel_gconf_global_config_set_bool ("menu-check", global_config.menu_check);
 	*/
 
-	/* FIXME: Make this more generic - this currently sucks */
-
-	full_key = panel_gconf_global_config_get_full_key ("panel-minimized-speed");
-	gconf_change_set_set_int (global_config_cs, full_key, global_config.minimized_size);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("panel-hide-delay");
-	gconf_change_set_set_int (global_config_cs, full_key, global_config.hide_delay);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("panel-show-delay");
-	gconf_change_set_set_int (global_config_cs, full_key, global_config.show_delay);
-	g_free (full_key);
+	/*
+	 * keep in sync with panel-config-global.h and
+	 * panel-global-config.schemas
+	 */
 
 	full_key = panel_gconf_global_config_get_full_key ("tooltips-enabled");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.tooltips_enabled);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("enable-animations");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.enable_animations);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("autoraise-panel");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.autoraise);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("drawer-autoclose");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.drawer_auto_close);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("highlight-launchers-on-mouseover");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.highlight_when_over);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("confirm-panel-remove");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.confirm_panel_remove);
+	gconf_change_set_set_bool (change_set, full_key, global_config.tooltips_enabled);
 	g_free (full_key);
 
 	full_key = panel_gconf_global_config_get_full_key ("keep-menus-in-memory");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.keep_menus_in_memory);
+	gconf_change_set_set_bool (change_set, full_key, global_config.keep_menus_in_memory);
 	g_free (full_key);
-	
+
+	full_key = panel_gconf_global_config_get_full_key ("enable-animations");
+	gconf_change_set_set_bool (change_set, full_key, global_config.enable_animations);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("panel-minimized-size");
+	gconf_change_set_set_int (change_set, full_key, global_config.minimized_size);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("panel-show-delay");
+	gconf_change_set_set_int (change_set, full_key, global_config.show_delay);
+	g_free (full_key);
+
 	full_key = panel_gconf_global_config_get_full_key ("panel-animation-speed");
-	gconf_change_set_set_string (global_config_cs, full_key , gconf_enum_to_string (panel_speed_type_enum_map, global_config.animation_speed));
+	gconf_change_set_set_string (
+			change_set, full_key ,
+			gconf_enum_to_string (panel_speed_type_enum_map,
+					      global_config.animation_speed));
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("panel-hide-delay");
+	gconf_change_set_set_int (change_set, full_key, global_config.hide_delay);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("enable-key-bindings");
+	gconf_change_set_set_bool (change_set, full_key, global_config.keys_enabled);
 	g_free (full_key);
 
 	full_key = panel_gconf_global_config_get_full_key ("menu-key");
-	gconf_change_set_set_string (global_config_cs, full_key, global_config.menu_key);
+	gconf_change_set_set_string (change_set, full_key, global_config.menu_key.str);
 	g_free (full_key);
 
 	full_key = panel_gconf_global_config_get_full_key ("run-key");
-	gconf_change_set_set_string (global_config_cs, full_key, global_config.run_key);
+	gconf_change_set_set_string (change_set, full_key, global_config.run_key.str);
 	g_free (full_key);
 
 	full_key = panel_gconf_global_config_get_full_key ("screenshot-key");
-	gconf_change_set_set_string (global_config_cs, full_key, global_config.screenshot_key);
+	gconf_change_set_set_string (change_set, full_key, global_config.screenshot_key.str);
 	g_free (full_key);
 	
 	full_key = panel_gconf_global_config_get_full_key ("window-screenshot-key");
-	gconf_change_set_set_string (global_config_cs, full_key, global_config.window_screenshot_key);
+	gconf_change_set_set_string (change_set, full_key, global_config.window_screenshot_key.str);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("autoraise-panel");
+	gconf_change_set_set_bool (change_set, full_key, global_config.autoraise);
 	g_free (full_key);
 
 	full_key = panel_gconf_global_config_get_full_key ("panel-window-layer");
-	gconf_change_set_set_string (global_config_cs, full_key, gconf_enum_to_string (panel_layer_type_enum_map, global_config.layer));
+	gconf_change_set_set_string (
+			change_set, full_key,
+			gconf_enum_to_string (panel_layer_type_enum_map, global_config.layer));
 	g_free (full_key);
 
-	gconf_client_commit_change_set (panel_gconf_get_client (), global_config_cs, FALSE, NULL);
 
-	gconf_change_set_unref (global_config_cs);
-			     
+	full_key = panel_gconf_global_config_get_full_key ("drawer-autoclose");
+	gconf_change_set_set_bool (change_set, full_key, global_config.drawer_auto_close);
+	g_free (full_key);
+
+
+	full_key = panel_gconf_global_config_get_full_key ("confirm-panel-remove");
+	gconf_change_set_set_bool (change_set, full_key, global_config.confirm_panel_remove);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("highlight-launchers-on-mouseover");
+	gconf_change_set_set_bool (change_set, full_key, global_config.highlight_when_over);
+	g_free (full_key);
+
+	gconf_client_commit_change_set (panel_gconf_get_client (), change_set, FALSE, NULL);
+
+	gconf_change_set_unref (change_set);
 }
 
 void

@@ -34,7 +34,6 @@
 
 #include "applet.h"
 #include "nothing.h"
-#include "panel-config-global.h"
 
 extern GlobalConfig global_config;
 
@@ -568,24 +567,21 @@ panel_set_frame_colors (PanelWidget *panel, GtkWidget *frame,
 }
 
 gboolean
-convert_string_to_keysym_state(const char *string,
-			       guint *keysym,
-			       GdkModifierType *state)
+panel_parse_accelerator (GlobalConfigKey *key)
 {
-	g_return_val_if_fail (keysym != NULL, FALSE);
-	g_return_val_if_fail (state != NULL, FALSE);
+	g_return_val_if_fail (key != NULL, FALSE);
 	
-	*state = 0;
-	*keysym = 0;
+	key->keysym = 0;
+	key->state = 0;
 
-	if (string_empty (string) ||
-	    strcmp (string, "Disabled") == 0 ||
-	    strcmp (string, _("Disabled")) == 0)
+	if (!key->str || !key->str [0] ||
+	    !strcmp (key->str, "Disabled") ||
+	    !strcmp (key->str, _("Disabled")))
 		return FALSE;
 
-	gtk_accelerator_parse (string, keysym, state);
+	gtk_accelerator_parse (key->str, &key->keysym, &key->state);
 
-	if (*keysym == 0)
+	if (!key->keysym)
 		return FALSE;
 
 	return TRUE;

@@ -91,6 +91,7 @@ panel_sources =			\
 	applet.c		\
 	logout.c		\
 	drawer.c  		\
+	panel-config-global.c  	\
 	panel-util.c		\
 	panel-gconf.c		\
 	global-keys.c		\

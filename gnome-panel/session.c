@@ -386,7 +386,7 @@ void session_load (void) {
 	 * load_system_wide ();
 	 */ 
 
-	panel_session_init_global_config ();
+	panel_load_global_config ();
 	init_menus ();
 	panel_session_init_panels ();
 

@@ -136,10 +136,10 @@ panel_global_keys_setup (void)
 	}
 	
 	if (global_config.keys_enabled && 
-	    global_config.menu_keysym) {
+	    global_config.menu_key.keysym) {
 		lastkey_menu = XKeysymToKeycode(GDK_DISPLAY(),
-						global_config.menu_keysym);
-		laststate_menu = global_config.menu_state;
+						global_config.menu_key.keysym);
+		laststate_menu = global_config.menu_key.state;
 		if (lastkey_menu != 0)
 			grab_key (laststate_menu, lastkey_menu);
 	} else {
@@ -147,10 +147,10 @@ panel_global_keys_setup (void)
 	}
 
 	if (global_config.keys_enabled && 
-	    global_config.run_keysym) {
+	    global_config.run_key.keysym) {
 		lastkey_run = XKeysymToKeycode (GDK_DISPLAY (),
-						global_config.run_keysym);
-		laststate_run = global_config.run_state;
+						global_config.run_key.keysym);
+		laststate_run = global_config.run_key.state;
 		if (lastkey_run != 0 &&
 		    (lastkey_menu != lastkey_run ||
 		     laststate_menu != laststate_run))
@@ -160,10 +160,10 @@ panel_global_keys_setup (void)
 	}
 
 	if (global_config.keys_enabled && 
-	    global_config.screenshot_keysym) {
+	    global_config.screenshot_key.keysym) {
 		lastkey_screenshot = XKeysymToKeycode
-			(GDK_DISPLAY (), global_config.screenshot_keysym);
-		laststate_screenshot = global_config.screenshot_state;
+			(GDK_DISPLAY (), global_config.screenshot_key.keysym);
+		laststate_screenshot = global_config.screenshot_key.state;
 		if (lastkey_screenshot != 0 &&
 		    (lastkey_menu != lastkey_screenshot ||
 		     laststate_menu != laststate_screenshot) &&
@@ -175,10 +175,10 @@ panel_global_keys_setup (void)
 	}
 
 	if (global_config.keys_enabled && 
-	    global_config.window_screenshot_keysym) {
+	    global_config.window_screenshot_key.keysym) {
 		lastkey_window_screenshot = XKeysymToKeycode
-			(GDK_DISPLAY (), global_config.window_screenshot_keysym);
-		laststate_window_screenshot = global_config.window_screenshot_state;
+			(GDK_DISPLAY (), global_config.window_screenshot_key.keysym);
+		laststate_window_screenshot = global_config.window_screenshot_key.state;
 		if (lastkey_window_screenshot != 0 &&
 		    (lastkey_menu != lastkey_window_screenshot ||
 		     laststate_menu != laststate_window_screenshot) &&
@@ -228,21 +228,21 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 	state = xevent->xkey.state;
 
 	menu_keycode = XKeysymToKeycode (GDK_DISPLAY (),
-					 global_config.menu_keysym);
-	menu_state = global_config.menu_state;
+					 global_config.menu_key.keysym);
+	menu_state = global_config.menu_key.state;
 
 	run_keycode = XKeysymToKeycode (GDK_DISPLAY (),
-					global_config.run_keysym);
-	run_state = global_config.run_state;
+					global_config.run_key.keysym);
+	run_state = global_config.run_key.state;
 
 	screenshot_keycode = XKeysymToKeycode (GDK_DISPLAY (),
-					       global_config.screenshot_keysym);
-	screenshot_state = global_config.screenshot_state;
+					       global_config.screenshot_key.keysym);
+	screenshot_state = global_config.screenshot_key.state;
 
 	window_screenshot_keycode =
 		XKeysymToKeycode (GDK_DISPLAY (),
-				  global_config.window_screenshot_keysym);
-	window_screenshot_state = global_config.window_screenshot_state;
+				  global_config.window_screenshot_key.keysym);
+	window_screenshot_state = global_config.window_screenshot_key.state;
 
 	if (keycode == menu_keycode &&
 	    (state & USED_MODS) == menu_state) {

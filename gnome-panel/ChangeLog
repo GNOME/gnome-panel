@@ -1,5 +1,36 @@
 2002-02-20  Mark McLoughlin  <mark@skynet.ie>
 
+	* main.c: (session_notify_global_changes): move notify
+	handler to panel_global_config_notify.
+
+	* panel.c: (panel_load_global_config): use
+	panel_global_config_set_entry.
+	(panel_session_save_global_config): audit for missing items.
+
+	* panel-config-global.c:
+	(panel_global_config_set_entry): impl method to map
+	between gconf key and config struct member.
+	(panel_global_config_notify): handle global config notifies.
+
+	* panel-config-global.h: clean up and add
+	panel_global_config_set_entry and panel_global_config_notify.
+
+	* panel-global-config.schemas: kill "auto-update-menus".
+
+	* panel-util.[ch]: (panel_parse_accelerator): rename from
+	convert_string_to_keysym_state and upd to handle
+	GlobalConfigKeys.
+
+	* global-keys.c: (panel_global_keys_setup),
+	(panel_global_keys_filter): upd to use GlobalConfigKey.
+
+	* gnome-panel-properties.c: (load_checkboxes): kill
+	"auto-update-menus".
+
+	* Makefile.am: add panel-config-global.c
+
+2002-02-20  Mark McLoughlin  <mark@skynet.ie>
+
 	* menu.c: (show_panel_help): pass 'panel' as file
 	name, not 'index'.
 
