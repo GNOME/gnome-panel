@@ -1925,10 +1925,10 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 						    GNOME_STOCK_PIXMAP_ABOUT),
 			  _("About GNOME..."));
 	  gtk_menu_append (GTK_MENU (menu), menuitem);
-	  gtk_signal_connect_interp(GTK_OBJECT (menuitem), "activate",
-				    (GtkCallbackMarshal)about_gnome_cb,
-				    char_tmp, (GtkDestroyNotify)g_free,
-				    TRUE);
+	  gtk_signal_connect_full(GTK_OBJECT (menuitem), "activate",
+				  GTK_SIGNAL_FUNC(about_gnome_cb),NULL,
+				  char_tmp, (GtkDestroyNotify)g_free,
+				  FALSE,TRUE);
 	}
 
 	menuitem = gtk_menu_item_new ();
