@@ -48,10 +48,15 @@ typedef enum {
 
 struct _AppletData
 {
-	GtkWidget *applet;
-	int pos;
-	int cells;
-	int dirty;
+	GtkWidget *	applet;
+	int		pos;
+	int		cells;
+	gboolean	dirty;
+
+	int		no_die; /* if >0 never send the about to die
+				   signal, an int and not a bool for
+				   nesting reasons */
+
 };
 
 struct _PanelWidget
@@ -122,6 +127,8 @@ struct _PanelWidgetClass
 			      GdkColor *color);
 	void (* applet_draw) (PanelWidget *panel,
 			      GtkWidget *applet);
+	void (* applet_about_to_die) (PanelWidget *panel,
+				      GtkWidget *applet);
 };
 
 guint		panel_widget_get_type		(void) G_GNUC_CONST;
