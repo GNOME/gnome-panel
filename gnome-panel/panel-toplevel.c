@@ -1923,10 +1923,10 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		x = monitor_x;
-		y = screen_height - toplevel->priv->geometry.height;
+		y = monitor_height - toplevel->priv->geometry.height;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		x = screen_width - toplevel->priv->geometry.width;
+		x = monitor_width - toplevel->priv->geometry.width;
 		y = monitor_y;
 		break;
 	default:
@@ -3316,7 +3316,7 @@ panel_toplevel_focus_in_event (GtkWidget     *widget,
 	   but just a focus in/out, so queue the autohide in that case.
 	   If the pointer is inside the panel then obviously we won't hide */
 	if (toplevel->priv->auto_hide)
-		panel_toplevel_queue_auto_hide (toplevel);
+		panel_toplevel_queue_auto_unhide (toplevel);
 
 	if (GTK_WIDGET_CLASS (parent_class)->focus_in_event)
 		return GTK_WIDGET_CLASS (parent_class)->focus_in_event (widget, event);
