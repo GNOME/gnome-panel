@@ -34,10 +34,13 @@ typedef struct {
 	PanelPos    pos;
 	PanelState  state;
 	PanelMode   mode;
-	int         step_size;
-	int         delay;
+	gint        step_size;
+	gint        delay;
 	gint        enter_notify_id;
 	gint        leave_notify_id;
+	gint        leave_notify_timer_tag;
+	gint        minimize_delay;
+	gint        minimized_size;
 	GtkWidget  *applet_being_dragged;
 	gint        applet_drag_click_x;
 	gint        applet_drag_click_y;

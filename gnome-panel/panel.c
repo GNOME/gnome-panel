@@ -30,6 +30,13 @@
 #define DEFAULT_DELAY     0
 #define DEFAULT_HEIGHT    48
 
+/* amount of time in ms. to wait before lowering panel */
+#define DEFAULT_MINIMIZE_DELAY 300
+
+/* number of pixels it'll stick up from the bottom when using
+ * PANEL_GETS_HIDDEN */
+#define DEFAULT_MINIMIZED_SIZE 6
+
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -124,26 +131,28 @@ pop_up(void)
 
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
-			move_vert(-height + 1, 0);
+		        move_vert(-height + the_panel->minimized_size, 0);
 			break;
 
 		case PANEL_POS_BOTTOM:
-			move_vert(sheight - 1, sheight - height);
+			move_vert(sheight - the_panel->minimized_size, 
+				  sheight - height);
 			break;
 
 		case PANEL_POS_LEFT:
-			move_horiz(-width + 1, 0);
+			move_horiz(-width + the_panel->minimized_size, 0);
 			break;
 
 		case PANEL_POS_RIGHT:
-			move_horiz(swidth - 1, swidth - width);
+			move_horiz(swidth - the_panel->minimized_size, 
+				   swidth - width);
 			break;
 	}
 
 	the_panel->state = PANEL_SHOWN;
 }
 
-static void
+static gint
 pop_down(void)
 {
 	int width, height;
@@ -162,23 +171,29 @@ pop_down(void)
 
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
-			move_vert(0, -height + 1);
+			move_vert(0, -height + the_panel->minimized_size);
 			break;
 
 		case PANEL_POS_BOTTOM:
-			move_vert(sheight - height, sheight - 1);
+			move_vert(sheight - height, 
+				  sheight - the_panel->minimized_size);
 			break;
 
 		case PANEL_POS_LEFT:
-			move_horiz(0, -width + 1);
+			move_horiz(0, -width + the_panel->minimized_size);
 			break;
 
 		case PANEL_POS_RIGHT:
-			move_horiz(swidth - width, swidth - 1);
+			move_horiz(swidth - width, 
+				   swidth - the_panel->minimized_size);
 			break;
 	}
 
 	the_panel->state = PANEL_HIDDEN;
+
+	the_panel->leave_notify_timer_tag = 0;
+  
+	return (FALSE);
 }
 
 static void
@@ -271,6 +286,11 @@ panel_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	    (event->detail == GDK_NOTIFY_INFERIOR))
 		return FALSE;
 
+	if (the_panel->leave_notify_timer_tag != 0) {
+		gtk_timeout_remove (the_panel->leave_notify_timer_tag);
+		the_panel->leave_notify_timer_tag = 0;
+	}
+ 
 	pop_up();
 	
 	return FALSE;
@@ -283,9 +303,16 @@ panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	if ((the_panel->mode == PANEL_STAYS_PUT) ||
 	    (event->detail == GDK_NOTIFY_INFERIOR))
 		return FALSE;
-
-	pop_down();
-
+	
+	/* check if there's already a timeout set, and delete it if 
+	 * there was */
+	if (the_panel->leave_notify_timer_tag != 0) {
+		gtk_timeout_remove (the_panel->leave_notify_timer_tag);
+	}
+	
+	/* set up our delay for popup. */
+	the_panel->leave_notify_timer_tag = gtk_timeout_add (500, pop_down, NULL);
+	
 	return FALSE;
 }
 
@@ -832,15 +859,25 @@ panel_init(void)
 	the_panel->box = gtk_hbox_new(FALSE,0); /*FIXME: this will have to be
 							vbox for a vertical
 							one!*/
+
+	the_panel->pos   = PANEL_POS_BOTTOM;
+	the_panel->state = PANEL_SHOWN;
+	the_panel->mode  = PANEL_GETS_HIDDEN;
+	/*the_panel->mode  = PANEL_STAYS_PUT;*/
+
 	/*FIXME: the hide button should only be shown if the panel
 	  is staying put*/
+	
+	/* I'll leave you to fix it, cause it does kinda screw up in
+	 * PANEL_GETS_HIDDEN mode */
 	the_panel->hidebutton=gtk_button_new_with_label("<");
 	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton), "clicked",
-				  GTK_SIGNAL_FUNC(panel_show_hide),NULL);
+			   GTK_SIGNAL_FUNC(panel_show_hide),NULL);
 	gtk_box_pack_start(GTK_BOX(the_panel->box),the_panel->hidebutton,
-		FALSE,FALSE,0);
+			   FALSE,FALSE,0);
 	gtk_widget_show(the_panel->hidebutton);
-
+	
+	
 	the_panel->fixed = gtk_fixed_new();
 
 	gtk_box_pack_start(GTK_BOX(the_panel->box),the_panel->fixed,
@@ -856,10 +893,6 @@ panel_init(void)
 	gtk_container_add(GTK_CONTAINER(the_panel->window), the_panel->box);
 	gtk_widget_show(the_panel->box);
 
-	the_panel->pos   = PANEL_POS_BOTTOM;
-	the_panel->state = PANEL_SHOWN;
-	/*the_panel->mode  = PANEL_GETS_HIDDEN;*/
-	the_panel->mode  = PANEL_STAYS_PUT;
 	gtk_widget_set_usize(the_panel->window, gdk_screen_width(), DEFAULT_HEIGHT);
 	gtk_widget_set_uposition(the_panel->window, 0, gdk_screen_height() - DEFAULT_HEIGHT);
 #if 0
@@ -885,6 +918,8 @@ panel_init(void)
 #endif
 	the_panel->step_size            = DEFAULT_STEP_SIZE;
 	the_panel->delay                = DEFAULT_DELAY;
+	the_panel->minimize_delay       = DEFAULT_MINIMIZE_DELAY;
+	the_panel->minimized_size       = DEFAULT_MINIMIZED_SIZE;
 	the_panel->applet_being_dragged = NULL;
 
 	the_panel->enter_notify_id = gtk_signal_connect(GTK_OBJECT(the_panel->window), "enter_notify_event",
