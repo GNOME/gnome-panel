@@ -135,7 +135,7 @@ popup_handle_move (BonoboUIComponent *uic,
 	g_return_if_fail (PANEL_IS_WIDGET (widget->parent));
 
 	panel_widget_applet_drag_start (
-		frame->priv->panel, widget, PW_DRAG_OFF_CENTER);
+		frame->priv->panel, widget, PW_DRAG_OFF_CENTER, GDK_CURRENT_TIME);
 }
 
 static BonoboUIVerb popup_verbs [] = {
@@ -595,7 +595,8 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 			if (event->type == GDK_BUTTON_PRESS ||
 			    event->type == GDK_2BUTTON_PRESS) {
 				panel_widget_applet_drag_start (
-					frame->priv->panel, GTK_WIDGET (frame), PW_DRAG_OFF_CURSOR);
+					frame->priv->panel, GTK_WIDGET (frame),
+					PW_DRAG_OFF_CURSOR, event->time);
 				handled = TRUE;
 			} else if (event->type == GDK_BUTTON_RELEASE) {
 				panel_widget_applet_drag_end (frame->priv->panel);

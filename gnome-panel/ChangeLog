@@ -1,5 +1,31 @@
 2003-02-27  Mark McLoughlin  <mark@skynet.ie>
 
+	Allow drawers to be moved by moving the toplevel.
+
+	* new-toplevel-todo: upd.
+
+	(panel_applet_frame_button_changed): use the event time.
+	* panel-widget.[ch]: (panel_widget_applet_drag_start): accept the
+	event time as an argument.
+	(panel_widget_applet_move_to_cursor): pass in CurrentTime
+	(panel_widget_applet_event): use the event time.
+
+	* panel-toplevel.c:
+	(panel_toplevel_begin_attached_move): when attached, move by
+	initiating a move on the drawer button.
+	(panel_toplevel_begin_grab_op): use it here.
+	(panel_toplevel_update_buttons_showing): shuffle.
+	(panel_toplevel_attach_widget_parent_set): impl handling
+	when the drawer button is moved to another panel.
+	(panel_toplevel_connect_attached): hook it up.
+
+	* applet.c: (move_applet_callback): use CurrentTime for
+	drag event time.
+
+	* panel-applet-frame.c: (popup_handle_move), use CurrentTime.
+
+2003-02-27  Mark McLoughlin  <mark@skynet.ie>
+
 	Don't draw a bevel around the panel when we've got a color
 	or image background.
 

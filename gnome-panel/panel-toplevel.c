@@ -70,7 +70,7 @@
 #define HIDE_BUTTON_SIZE          20
 #define HANDLE_SIZE               10
 #define N_ATTACH_TOPLEVEL_SIGNALS 5
-#define N_ATTACH_WIDGET_SIGNALS   2
+#define N_ATTACH_WIDGET_SIGNALS   3
 
 typedef enum {
 	PANEL_GRAB_OP_NONE,
@@ -349,9 +349,6 @@ panel_toplevel_warp_pointer (PanelToplevel *toplevel)
 	GdkRectangle  geometry;
 	int           x, y;
 
-	if (!toplevel->priv->grab_is_keyboard)
-		return;
-	
 	widget = GTK_WIDGET (toplevel);
 
 	geometry = toplevel->priv->geometry;
@@ -394,6 +391,21 @@ panel_toplevel_warp_pointer (PanelToplevel *toplevel)
 }
 
 static void
+panel_toplevel_begin_attached_move (PanelToplevel *toplevel,
+				    gboolean       is_keyboard,
+				    guint32        time_)
+{
+	PanelWidget *attached_panel_widget;
+
+	attached_panel_widget = panel_toplevel_get_panel_widget (toplevel->priv->attach_toplevel);
+
+	panel_widget_applet_drag_start (attached_panel_widget,
+					toplevel->priv->attach_widget,
+					is_keyboard ? PW_DRAG_OFF_CENTER : PW_DRAG_OFF_CURSOR,
+					time_);
+}
+
+static void
 panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 			      PanelGrabOpType  op_type,
 			      gboolean         grab_keyboard,
@@ -404,6 +416,11 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	GdkCursor     *cursor;
 
 	g_return_if_fail (toplevel->priv->grab_op == PANEL_GRAB_OP_NONE);
+
+	if (toplevel->priv->attached && op_type == PANEL_GRAB_OP_MOVE) {
+		panel_toplevel_begin_attached_move (toplevel, grab_keyboard, time_);
+		return;
+	}
 
 	widget = GTK_WIDGET (toplevel);
 
@@ -420,7 +437,8 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 
 	gtk_grab_add (widget);
 
-	panel_toplevel_warp_pointer (toplevel);
+	if (!toplevel->priv->grab_is_keyboard)
+		panel_toplevel_warp_pointer (toplevel);
 
 	cursor_type = panel_toplevel_grab_op_cursor (
 				toplevel, toplevel->priv->grab_op);
@@ -1105,25 +1123,24 @@ panel_toplevel_update_buttons_showing (PanelToplevel *toplevel)
 		gtk_widget_hide (toplevel->priv->hide_button_right);
 	}
 
-	if (!toplevel->priv->attached)
-		return;
-
-	switch (panel_toplevel_get_orientation (toplevel->priv->attach_toplevel)) {
-	case PANEL_ORIENTATION_TOP:
-		gtk_widget_hide (toplevel->priv->hide_button_top);
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
-		gtk_widget_hide (toplevel->priv->hide_button_bottom);
-		break;
-	case PANEL_ORIENTATION_LEFT:
-		gtk_widget_hide (toplevel->priv->hide_button_left);
-		break;
-	case PANEL_ORIENTATION_RIGHT:
-		gtk_widget_hide (toplevel->priv->hide_button_right);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
+	if (toplevel->priv->attached) {
+		switch (panel_toplevel_get_orientation (toplevel->priv->attach_toplevel)) {
+		case PANEL_ORIENTATION_TOP:
+			gtk_widget_hide (toplevel->priv->hide_button_top);
+			break;
+		case PANEL_ORIENTATION_BOTTOM:
+			gtk_widget_hide (toplevel->priv->hide_button_bottom);
+			break;
+		case PANEL_ORIENTATION_LEFT:
+			gtk_widget_hide (toplevel->priv->hide_button_left);
+			break;
+		case PANEL_ORIENTATION_RIGHT:
+			gtk_widget_hide (toplevel->priv->hide_button_right);
+			break;
+		default:
+			g_assert_not_reached ();
+			break;
+		}
 	}
 }
 
@@ -1926,6 +1943,24 @@ panel_toplevel_attach_widget_configure (PanelToplevel *toplevel)
 }
 
 static void
+panel_toplevel_attach_widget_parent_set (PanelToplevel *toplevel,
+					 GtkWidget     *previous_parent,
+					 GtkWidget     *attach_widget)
+{
+	GtkWidget *panel_widget;
+
+	panel_widget = GTK_WIDGET (attach_widget)->parent;
+	if (!panel_widget)
+		return;
+
+	g_assert (PANEL_IS_WIDGET (panel_widget));
+
+	toplevel->priv->attach_toplevel = PANEL_WIDGET (panel_widget)->toplevel;
+	panel_toplevel_update_attach_orientation (toplevel);
+	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+}
+
+static void
 panel_toplevel_update_attach_orientation (PanelToplevel *toplevel)
 {
 	PanelOrientation attach_orientation;
@@ -2069,6 +2104,9 @@ panel_toplevel_connect_attached (PanelToplevel *toplevel)
 	signals [i++] = g_signal_connect_swapped (
 		toplevel->priv->attach_widget, "configure-event",
 		G_CALLBACK (panel_toplevel_attach_widget_configure), toplevel);
+	signals [i++] = g_signal_connect_swapped (
+		toplevel->priv->attach_widget, "parent-set",
+		G_CALLBACK (panel_toplevel_attach_widget_parent_set), toplevel);
 
 	g_assert (i == N_ATTACH_WIDGET_SIGNALS);
 

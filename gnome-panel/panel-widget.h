@@ -144,8 +144,9 @@ int		panel_widget_reparent		(PanelWidget *old_panel,
 /*drag*/
 gboolean        panel_applet_is_in_drag         (void);
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
-						 GtkWidget *applet,
-						 int drag_off);
+						 GtkWidget   *applet,
+						 int          drag_off,
+						 guint32      time_);
 void		panel_widget_applet_drag_end	(PanelWidget *panel);
 
 /* needed for corba */

@@ -1586,8 +1586,9 @@ panel_widget_applet_drag_end_no_grab (PanelWidget *panel)
 
 void
 panel_widget_applet_drag_start (PanelWidget *panel,
-				GtkWidget *applet,
-				int drag_off)
+				GtkWidget   *applet,
+				int          drag_off,
+				guint32      time_)
 {
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 	g_return_if_fail (GTK_IS_WIDGET (applet));
@@ -1607,7 +1608,7 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 
 		status = gdk_pointer_grab (applet->window, FALSE,
 					   APPLET_EVENT_MASK, NULL,
-					   fleur_cursor, GDK_CURRENT_TIME);
+					   fleur_cursor, time_);
 
 		gdk_cursor_unref (fleur_cursor);
 		gdk_flush ();
@@ -1860,11 +1861,13 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 
 				/*disable reentrancy into this function*/
 				if (!panel_widget_reparent (panel, new_panel, applet, pos)) {
-					panel_widget_applet_drag_start (panel, applet, ad->drag_off);
+					panel_widget_applet_drag_start (
+						panel, applet, ad->drag_off, GDK_CURRENT_TIME);
 					continue;
 				}
 
-				panel_widget_applet_drag_start (new_panel, applet, ad->drag_off);
+				panel_widget_applet_drag_start (
+					new_panel, applet, ad->drag_off, GDK_CURRENT_TIME);
 				schedule_try_move (new_panel, TRUE);
 
 				return;
@@ -1988,8 +1991,8 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event)
 			if ( ! commie_mode &&
 			    bevent->button == 2) {
 				/* Start drag */
-				panel_widget_applet_drag_start
-					(panel, widget, PW_DRAG_OFF_CURSOR);
+				panel_widget_applet_drag_start (
+					panel, widget, PW_DRAG_OFF_CURSOR, bevent->time);
 				return TRUE;
 			}
 
