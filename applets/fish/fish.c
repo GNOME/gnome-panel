@@ -189,6 +189,7 @@ command_value_changed (GtkEntry   *entry,
 	    !strcmp  (text, "who")     ||
 	    !strcmp  (text, "uptime")  ||
 	    !strncmp (text, "tail ", 5)) {
+		static gboolean message_given = FALSE;
 		char       *message;
 		const char *warning_format =
 				_("Warning:  The command "
@@ -200,13 +201,15 @@ command_value_changed (GtkEntry   *entry,
 				   "which would make the applet "
 				   "\"practical\" or useful.");
 
-		message = g_strdup_printf (warning_format, fish->name);
+		if ( ! message_given) {
+			message = g_strdup_printf (warning_format, fish->name);
 
-		something_fishy_going_on (fish, message);
+			something_fishy_going_on (fish, message);
 
-		g_free (message);
+			g_free (message);
 
-		return;
+			message_given = TRUE;
+		}
 	}
 
 	panel_applet_gconf_set_string (
@@ -262,6 +265,43 @@ handle_response (GtkWidget  *widget,
 	gtk_widget_hide (fish->preferences_dialog);
 }
 
+static void
+setup_sensitivity (FishApplet *fish,
+		   GladeXML *xml,
+		   const char *wid,
+		   const char *label,
+		   const char *label_post,
+		   const char *key)
+{
+	PanelApplet *applet = (PanelApplet *) fish;
+	char *fullkey;
+	GtkWidget *w;
+
+	fullkey = panel_applet_gconf_get_full_key (applet, key);
+
+	if (gconf_client_key_is_writable (fish->client, fullkey, NULL)) {
+		g_free (fullkey);
+		return;
+	}
+	g_free (fullkey);
+
+	w = glade_xml_get_widget (xml, wid);
+	g_assert (w != NULL);
+	gtk_widget_set_sensitive (w, FALSE);
+
+	if (label != NULL) {
+		w = glade_xml_get_widget (xml, label);
+		g_assert (w != NULL);
+		gtk_widget_set_sensitive (w, FALSE);
+	}
+	if (label_post != NULL) {
+		w = glade_xml_get_widget (xml, label_post);
+		g_assert (w != NULL);
+		gtk_widget_set_sensitive (w, FALSE);
+	}
+
+}
+
 static void 
 display_preferences_dialog (BonoboUIComponent *uic,
 			    FishApplet        *fish,
@@ -298,6 +338,11 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	g_signal_connect (fish->name_entry, "changed",
 			  G_CALLBACK (name_value_changed), fish);
 
+	setup_sensitivity (fish, xml,
+			   "name_entry" /* wid */,
+			   "name_label" /* label */,
+			   NULL /* label_post */,
+			   "name" /* key */);
 
 	fish->pixmap_entry = glade_xml_get_widget (xml, "image_entry");
 	fish->image_entry = gnome_file_entry_gtk_entry (
@@ -307,6 +352,11 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	g_signal_connect (fish->image_entry, "changed",
 			  G_CALLBACK (image_value_changed), fish);
 
+	setup_sensitivity (fish, xml,
+			   "image_entry" /* wid */,
+			   "image_label" /* label */,
+			   NULL /* label_post */,
+			   "image" /* key */);
 
 	fish->command_entry = glade_xml_get_widget (xml, "command_entry");
 	gtk_entry_set_text (GTK_ENTRY (fish->command_entry), fish->command);
@@ -314,6 +364,11 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	g_signal_connect (fish->command_entry, "changed",
 			  G_CALLBACK (command_value_changed), fish);
 
+	setup_sensitivity (fish, xml,
+			   "command_entry" /* wid */,
+			   "command_label" /* label */,
+			   NULL /* label_post */,
+			   "command" /* key */);
 
 	fish->frames_spin = glade_xml_get_widget (xml, "frames_spin");
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (fish->frames_spin),
@@ -322,6 +377,11 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	g_signal_connect (fish->frames_spin, "value_changed",
 			  G_CALLBACK (n_frames_value_changed), fish);
 
+	setup_sensitivity (fish, xml,
+			   "frames_spin" /* wid */,
+			   "frames_label" /* label */,
+			   "frames_post_label" /* label_post */,
+			   "frames" /* key */);
 
 	fish->speed_spin = glade_xml_get_widget (xml, "speed_spin");
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (fish->speed_spin), fish->speed);
@@ -329,6 +389,11 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	g_signal_connect (fish->speed_spin, "value_changed",
 			  G_CALLBACK (speed_value_changed), fish);
 
+	setup_sensitivity (fish, xml,
+			   "speed_spin" /* wid */,
+			   "speed_label" /* label */,
+			   "speed_post_label" /* label_post */,
+			   "speed" /* key */);
 
 	fish->rotate_toggle = glade_xml_get_widget (xml, "rotate_toggle");
 	gtk_toggle_button_set_active (
@@ -337,6 +402,11 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	g_signal_connect (fish->rotate_toggle, "toggled",
 			  G_CALLBACK (rotate_value_changed), fish);
 
+	setup_sensitivity (fish, xml,
+			   "rotate_toggle" /* wid */,
+			   NULL /* label */,
+			   NULL /* label_post */,
+			   "rotate" /* key */);
 
 	g_signal_connect (fish->preferences_dialog, "delete_event",
 			  G_CALLBACK (delete_event), fish);
