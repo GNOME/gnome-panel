@@ -95,6 +95,7 @@ static gboolean load_fish_image          (FishApplet *fish);
 static void     update_pixmap            (FishApplet *fish);
 static void     something_fishy_going_on (FishApplet *fish,
 					  const char *message);
+static void     display_fortune_dialog   (FishApplet *fish);
 static void     set_tooltip              (FishApplet *fish);
 
 static GType fish_applet_get_type (void);
@@ -600,12 +601,17 @@ locate_fortune_command (FishApplet *fish)
 	return retval;
 }
 
+#define FISH_RESPONSE_SPEAK 1
+
 static void
 handle_fortune_response (GtkWidget  *widget,
 			 int         id,
 			 FishApplet *fish)
 {
-	gtk_widget_hide (fish->fortune_dialog);
+	if (id == FISH_RESPONSE_SPEAK)
+		display_fortune_dialog (fish);
+	else
+		gtk_widget_hide (fish->fortune_dialog);
 }
 
 static void
@@ -681,6 +687,7 @@ display_fortune_dialog (FishApplet *fish)
 		fish->fortune_dialog = 
 			gtk_dialog_new_with_buttons (
 				"", NULL, 0,
+				_("Speak again"), FISH_RESPONSE_SPEAK,
 				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 				NULL);
 
