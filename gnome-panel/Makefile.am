@@ -8,7 +8,7 @@ SUBDIRS =
 EXTRA_SUBDIRS = config help
 
 serverdir = $(libdir)/bonobo/servers
-server_in_files = GNOME_Panel.server.in
+server_in_files = GNOME_Panel.server.in GNOME_Panel_TestApplet.server.in
 server_DATA = $(server_in_files:.server.in=.server)
 
 @INTLTOOL_SERVER_RULE@
@@ -28,59 +28,65 @@ INCLUDES =							\
 	-DGLOBAL_CONFDIR=\""$(sysconfdir)/gnome/panel-config"\" \
 	-I$(includedir)						\
 	$(PANEL_CFLAGS)						\
-	$(WARN_CFLAGS)
+	$(WARN_CFLAGS)						\
+	$(NULL)
 
-bin_PROGRAMS = \
-	panel-2
+bin_PROGRAMS =			\
+	panel-2			\
+	test-applet		\
+	$(NULL)
 
-lib_LTLIBRARIES =                  \
-	libpanel-applet-2.la
+lib_LTLIBRARIES =		\
+	libpanel-applet-2.la	\
+	$(NULL)
 
-#	libpanel-status-2.la
+test_applet_SOURCES =		\
+	test-applet.c		\
+	$(NULL)
 
-gwmh_dir = $(top_srcdir)/applets/desk-guide
+test_applet_LDADD =					\
+	$(PANEL_LIBS)					\
+	$(top_builddir)/panel/libpanel-applet-2.la	\
+	$(NULL)
 
-CORBA_SRCLIST = \
-	GNOME_Panel-stubs.c	\
-	GNOME_Panel-skels.c	\
-	GNOME_Panel-common.c	\
-	GNOME_Panel.h
+libpanel_applet_2_la_SOURCES = 	\
+	applet-widget.c		\
+	applet-object.c		\
+	applet-init.c		\
+	applet-private.h	\
+	$(CORBA_SRCLIST)	\
+	$(NULL)
 
-$(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
-	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
-
-libpanel_applet_2_la_SOURCES =     \
-	applet-widget.c            \
-	applet-object.c            \
-	$(CORBA_SRCLIST)
-
-libpanel_applet_2_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
+libpanel_applet_2_la_LDFLAGS = -version-info 0:0:0
 libpanel_applet_2_la_LIBADD  = $(PANEL_LIBS) -lm
 
 libpanel_appletincludedir = $(includedir)/gnome-2.0/panel/applet
  
-libpanel_appletinclude_HEADERS =   \
-	applet-widget.h            \
-	applet-object.h            \
-	GNOME_Panel.h
+libpanel_appletinclude_HEADERS =\
+	applet-widget.h		\
+	applet-object.h		\
+	applet-init.h		\
+	GNOME_Panel.h		\
+	$(NULL)
 
-# libpanel_status_2_la_SOURCES = \
-# 	status-docklet.c         \
-# 	$(CORBA_SRCLIST)
-#
-# libpanel_status_2_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
-# libpanel_status_2_la_LIBADD  = $(PANEL_LIBS) -lm
-# 
-# libpanel_statusincludedir = $(includedir)
-#
-# libpanel_statusinclude_HEADERS = \
-# 	status-docklet.h
+CORBA_SRCLIST =			\
+	GNOME_Panel-stubs.c	\
+	GNOME_Panel-skels.c	\
+	GNOME_Panel-common.c	\
+	GNOME_Panel.h		\
+	$(NULL)
 
-GWMH_SRCLIST = \
+$(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
+	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
+
+gwmh_dir = $(top_srcdir)/applets/desk-guide
+
+GWMH_SRCLIST =		\
 	gwmh.c		\
 	gwmh.h		\
 	gstc.c		\
-	gstc.h
+	gstc.h		\
+	$(NULL)
 
 $(GWMH_SRCLIST):
 	for file in $(GWMH_SRCLIST); do \

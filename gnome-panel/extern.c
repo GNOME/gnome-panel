@@ -127,12 +127,11 @@ push_outside_extern (const char                    *iid,
 {
 	OutsideExtern *oe;
 
-	g_return_if_fail (iid);
-	g_return_if_fail (booter != CORBA_OBJECT_NIL);
+	g_return_if_fail (iid && booter != CORBA_OBJECT_NIL);
 
 	oe = g_new0 (OutsideExtern, 1);
 
-	oe->iid = g_strdup (iid);
+	oe->iid    = g_strdup (iid);
 	oe->booter = CORBA_Object_duplicate (booter, ev);
 
 	outside_externs = g_slist_prepend (outside_externs, oe);
@@ -908,17 +907,6 @@ extern_socket_destroy(GtkWidget *w, gpointer data)
 	extern_unref (ext);
 }
 
-/*static void
-sal(GtkWidget *applet, GtkAllocation *alloc)
-{
-	printf("SOCKET req:   %dx%d\nSOCKET alloc: %dx%d\n",
-	       applet->requisition.width,
-	       applet->requisition.height,
-	       applet->allocation.width,
-	       applet->allocation.height);
-}*/
-
-
 static void
 send_position_change (Extern ext)
 {
@@ -1092,10 +1080,6 @@ reserve_applet_spot (Extern ext, PanelWidget *panel, int pos,
 		g_warning("Can't create a socket");
 		return 0;
 	}
-
-	/* here for debugging purposes */
-	/*gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
-				 GTK_SIGNAL_FUNC(sal),NULL);*/
 
 	gtk_container_add(GTK_CONTAINER(ext->ebox), socket);
 
@@ -1409,9 +1393,8 @@ s_panel_add_applet_full (PortableServer_Servant   servant,
 				info->type = APPLET_EXTERN_RESERVED;
 
 				*wid = GDK_WINDOW_XWINDOW (socket->window);
-#ifdef PANEL_DEBUG
-				printf ("\nSOCKET XID: %lX\n\n", (long)*wid);
-#endif
+
+				dprintf ("\nSOCKET XID: %lX\n\n", (long)*wid);
 
 				panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 
@@ -1651,16 +1634,14 @@ s_panel_add_launcher_from_info_url (PortableServer_Servant _servant,
 }
 
 void
-s_panel_run_box (PortableServer_Servant _servant,
-		 const CORBA_char * initial_string,
-		 CORBA_Environment * ev)
+s_panel_run_box (PortableServer_Servant  servant,
+		 const CORBA_char       *initial_string,
+		 CORBA_Environment      *ev)
 {
-#ifdef FIXME
-	if (string_empty (initial_string))
+	if (!initial_string || initial_string [0] == '\0')
 		show_run_dialog ();
 	else
 		show_run_dialog_with_text (initial_string);
-#endif
 }
 
 void
@@ -1947,10 +1928,8 @@ s_panelspot_register_us(PortableServer_Servant servant,
 	g_assert (ext != NULL);
 	g_assert (ext->info != NULL);
 	
-#ifdef PANEL_DEBUG
-	printf("register ext: %lX\n",(long)ext);
-	printf("register ext->info: %lX\n",(long)(ext->info));
-#endif
+	dprintf("register ext: %lX\n",(long)ext);
+	dprintf("register ext->info: %lX\n",(long)(ext->info));
 
 	panel = PANEL_WIDGET (ext->info->widget->parent);
 	if (panel == NULL) {
@@ -2036,10 +2015,8 @@ s_panelspot_show_menu(PortableServer_Servant servant,
 	GtkWidget *panel;
 	Extern ext = (Extern)servant;
 	
-#ifdef PANEL_DEBUG
-	printf("show menu ext: %lX\n",(long)ext);
-	printf("show menu ext->info: %lX\n",(long)(ext->info));
-#endif
+	dprintf("show menu ext: %lX\n",(long)ext);
+	dprintf("show menu ext->info: %lX\n",(long)(ext->info));
 
 	g_assert (ext != NULL);
 	g_assert (ext->info != NULL);
@@ -2113,9 +2090,7 @@ s_panelspot_add_callback(PortableServer_Servant servant,
 {
 	Extern ext = (Extern)servant;
 
-#ifdef PANEL_DEBUG
 	printf("add callback ext: %lX\n",(long)ext);
-#endif
 
 	g_assert(ext != NULL);
 	g_assert(ext->info != NULL);

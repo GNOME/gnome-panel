@@ -65,7 +65,6 @@ typedef void (*PositionSignal) (GtkObject *object,
 
 static int applet_count = 0;
 
-static gboolean die_on_last = FALSE;
 static GtkPlugClass *parent_class;
 
 GType
@@ -385,7 +384,7 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 
 	applet_count--;
 
-	if (die_on_last && !applet_count)
+	if (!applet_count)
 		gtk_main_quit();
 
 	g_free (applet->priv);
@@ -784,51 +783,6 @@ applet_widget_get_rgb_background (AppletWidget  *applet,
 	}
 	
 	CORBA_free (image);
-}
-
-/**
- * applet_widget_init:
- * @app_id: applet id
- * @app_version: applet version
- * @argc: the argc passed to main
- * @argv: the argv passed to main
- * @options: extra popt options to use
- * @flags: extra popt flags
- * @return_ctx: return popt context
- *
- * Description: Initialize the applet library, gnome and corba.
- * Don't call this if your app has an applet, but your process is not
- * simply an applet process.  This will 1) disconnect the session
- * manager and 2) setup stuff to call gtk_main_quit when the last applet
- * you create exists.  And that's all really.
- *
- * Returns: A boolean, %TRUE if we succeed, %FALSE if an error occured
- **/
-gboolean
-applet_widget_init (const char         *app_id,
-		    const char         *app_version,
-		    int                 argc,
-		    char              **argv,
-		    struct poptOption  *options,
-		    unsigned int        flags,
-		    poptContext        *return_ctx)
-{
-
-	/*
-	 * this is not called for shlib applets
-	 * so we set it to true here.
-	 */
-	die_on_last = TRUE;
-
-	gnome_client_disable_master_connection ();
-
-	gnome_program_init (app_id, app_version,
-			    LIBGNOMEUI_MODULE,
-			    argc, argv,
-			    GNOME_PARAM_POPT_TABLE,
-			    options, GNOME_PARAM_NONE);
-
-	return TRUE;
 }
 
 /**

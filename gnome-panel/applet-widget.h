@@ -166,14 +166,6 @@ void		applet_widget_get_rgb_background   (AppletWidget  *applet,
 
 void		applet_widget_queue_resize         (AppletWidget *applet);
 
-gboolean	applet_widget_init                 (const char         *app_id,
-						    const char         *app_version,
-						    int                 argc,
-						    char              **argv,
-						    struct poptOption  *options,
-						    unsigned int       flags,
-						    poptContext       *return_ctx);
-
 G_END_DECLS
 
 #endif /* __APPLET_WIDGET_H__ */
