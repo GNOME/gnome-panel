@@ -1234,6 +1234,7 @@ try(GtkWidget *capplet, gpointer data)
 static void
 revert(GtkWidget *capplet, gpointer data)
 {
+	changing = TRUE;
 	sync_animation_page_with_config(&loaded_config);
 	sync_buttons_page_with_config(&loaded_config);
 	sync_applets_page_with_config(&loaded_config);
@@ -1241,6 +1242,7 @@ revert(GtkWidget *capplet, gpointer data)
 	sync_misc_page_with_config(&loaded_config);
 	global_config = loaded_config;
 	write_config(&global_config);
+	changing = FALSE;
 }
 
 static void
