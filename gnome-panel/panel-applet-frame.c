@@ -488,7 +488,7 @@ panel_applet_frame_get_size_string (PanelAppletFrame *frame,
 		retval = "small";
 		break;
 	case PANEL_SIZE_MEDIUM:
-		retval = "xx-small";
+		retval = "medium";
 		break;
 	case PANEL_SIZE_LARGE:
 		retval = "large";
