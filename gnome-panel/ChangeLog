@@ -1,5 +1,12 @@
 2005-03-30  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-menu-button.c: (panel_menu_button_get_icon): load the menu
+	directory for the menu if it's not already loaded so we can have the
+	right icon.
+	Fix bug #170654
+
+2005-03-30  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-context-menu.c: (make_panel_submenu): move "Properties" above
 	"Delete This Panel"
 	Fix bug #167133
