@@ -48,6 +48,9 @@ void panel_xutils_set_strut       (GdkWindow             *gdk_window,
 				   guint32                bottom,
 				   guint32                top);
 
+void panel_warp_pointer           (GdkWindow             *gdk_window,
+				   int                    x,
+				   int                    y);
 
 G_END_DECLS
 

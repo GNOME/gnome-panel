@@ -174,8 +174,6 @@ panel_bindings_initialise (void)
 			continue;
 		}
 
-		g_print ("%s: %s\n", key, str);
-
 		panel_binding_set_from_string (&bindings [i], str);
 		panel_binding_watch (&bindings [i], key);
 

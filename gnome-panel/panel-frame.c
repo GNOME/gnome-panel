@@ -41,8 +41,7 @@ static void
 panel_frame_size_request (GtkWidget      *widget,
 			  GtkRequisition *requisition)
 {
-	PanelFrame *frame = (PanelFrame *) widget;
-	GtkBin     *bin   = (GtkBin *) widget;
+	GtkBin *bin   = (GtkBin *) widget;
 
 	requisition->width = 1;
 	requisition->height = 1;
@@ -53,18 +52,8 @@ panel_frame_size_request (GtkWidget      *widget,
 	requisition->width  += GTK_CONTAINER (widget)->border_width;
 	requisition->height += GTK_CONTAINER (widget)->border_width;
 
-	if (frame->edges & PANEL_EDGE_TOP)
-		requisition->height += widget->style->ythickness;
-
-	if (frame->edges & PANEL_EDGE_BOTTOM)
-		requisition->height += widget->style->ythickness;
-
-	if (frame->edges & PANEL_EDGE_LEFT)
-		requisition->width += widget->style->xthickness;
-
-	if (frame->edges & PANEL_EDGE_RIGHT)
-		requisition->width += widget->style->xthickness;
-
+	requisition->width  += 2 * widget->style->ythickness;
+	requisition->height += 2 * widget->style->ythickness;
 }
 
 static void

@@ -1,3 +1,17 @@
+2003-02-06  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-toplevel.c: implement keybindings for move/resize
+	etc. Merge with the pointer move/resize code. Fix many
+	little glitches.
+
+	* panel-bindings.c: (panel_bindings_initialise): kill debug.
+
+	* panel-frame.c: (panel_frame_size_request): always request
+	enough room to draw the frame on all edges so we don't get
+	weird resizing glitches.
+
+	* panel-xutils.[ch]: (panel_warp_pointer): impl.
+
 2003-01-31  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: add panel-bindings.[ch].

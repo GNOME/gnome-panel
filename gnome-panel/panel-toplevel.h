@@ -88,9 +88,10 @@ int                  panel_toplevel_get_monitor         (PanelToplevel       *to
 void                 panel_toplevel_set_auto_hide_size  (PanelToplevel       *toplevel,
 							 int                  autohide_size);
 int                  panel_toplevel_get_auto_hide_size  (PanelToplevel       *toplevel);
-void                 panel_toplevel_set_position        (PanelToplevel       *toplevel,
+void                 panel_toplevel_set_x               (PanelToplevel       *toplevel,
 							 int                  x,
-							 gboolean             x_centered,
+							 gboolean             x_centered);
+void                 panel_toplevel_set_y               (PanelToplevel       *toplevel,
 							 int                  y,
 							 gboolean             y_centered);
 void                 panel_toplevel_get_position        (PanelToplevel       *toplevel,

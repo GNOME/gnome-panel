@@ -24,10 +24,6 @@
 
 /* TODO:
  *
- *  o Keynav - I want to be able to move and resize with the keyboard.
- *    Also should be able to toggle expand and maybe hide/unhide. These
- *    all should match the window managers keybindings for move/resize,
- *    maximise/un-maximise and roll up.
  *  o Saving to GConf, config GUI.
  *  o Initial position when a new panel is created.
  *  o Collision avoidance.
@@ -82,18 +78,15 @@
 #define N_ATTACH_TOPLEVEL_SIGNALS 5
 #define N_ATTACH_WIDGET_SIGNALS   2
 
-enum {
-	HIDE_SIGNAL,
-	UNHIDE_SIGNAL,
-	POPUP_PANEL_MENU_SIGNAL,
-	TOGGLE_EXPAND_SIGNAL,
-	EXPAND_SIGNAL,
-	UNEXPAND_SIGNAL,
-	TOGGLE_HIDDEN_SIGNAL,
-	BEGIN_MOVE_SIGNAL,
-	BEGIN_RESIZE_SIGNAL,
-	LAST_SIGNAL
-};
+typedef enum {
+	PANEL_GRAB_OP_NONE,
+	PANEL_GRAB_OP_MOVE,
+	PANEL_GRAB_OP_RESIZE,
+	PANEL_GRAB_OP_RESIZE_UP,
+	PANEL_GRAB_OP_RESIZE_DOWN,
+	PANEL_GRAB_OP_RESIZE_LEFT,
+	PANEL_GRAB_OP_RESIZE_RIGHT
+} PanelGrabOpType;
 
 struct _PanelToplevelPrivate {
 	gboolean                expand;
@@ -116,12 +109,13 @@ struct _PanelToplevelPrivate {
 	char                   *name;
 	char                   *description;
 
-	guint                   move_timeout;
 	guint                   hide_timeout;
 	guint                   unhide_timeout;
 
 	GdkRectangle            geometry;
 	PanelFrameEdge          edges;
+
+	PanelGrabOpType         grab_op;
 
 	/* The offset within the panel from which the panel
 	 * drag was initiated relative to the screen origin.
@@ -129,7 +123,12 @@ struct _PanelToplevelPrivate {
 	int                     drag_offset_x;
 	int                     drag_offset_y;
 
-	PanelFrameEdge          resize_edge;
+	/* Saved state before for cancelled grab op */
+	int                     orig_monitor;
+	int                     orig_x;
+	int                     orig_y;
+	int                     orig_size;
+	int                     orig_orientation;
 
 	/* relative to the monitor origin */
 	int                     animation_end_x;
@@ -163,17 +162,11 @@ struct _PanelToplevelPrivate {
 	/* The panel is not lined up with th screen edge */
 	guint                   floating : 1;
 
-	/* The panel is being dragged */
-	guint                   in_drag : 1;
-
 	/* We are currently animating a hide/show */
 	guint                   animating : 1;
 
-	/* The drag is a rotation */
-	guint                   drag_is_rotate : 1;
-
-	/* The drag is a resize */
-	guint                   drag_is_resize : 1;
+	/* This is a keyboard initiated grab operation */
+	guint                   grab_is_keyboard : 1;
 
 	/* The x-y co-ordinates temporarily specify the panel center */
 	guint                   position_centered : 1;
@@ -186,10 +179,24 @@ struct _PanelToplevelPrivate {
 
 	/* Hidden temporarily because the attach_toplevel was hidden */
 	guint                   attach_hidden : 1;
+
+	/* More saved grab op state */
+	guint                   orig_x_centered : 1;
+	guint                   orig_y_centered : 1;
 };
 
-static GObjectClass *parent_class;
-static guint         toplevel_signals [LAST_SIGNAL] = { 0 };
+enum {
+	HIDE_SIGNAL,
+	UNHIDE_SIGNAL,
+	POPUP_PANEL_MENU_SIGNAL,
+	TOGGLE_EXPAND_SIGNAL,
+	EXPAND_SIGNAL,
+	UNEXPAND_SIGNAL,
+	TOGGLE_HIDDEN_SIGNAL,
+	BEGIN_MOVE_SIGNAL,
+	BEGIN_RESIZE_SIGNAL,
+	LAST_SIGNAL
+};
 
 enum {
 	PROP_0,
@@ -211,6 +218,10 @@ enum {
 	PROP_BUTTONS_ENABLED,
 	PROP_ARROWS_ENABLED,
 };
+
+static GObjectClass *parent_class;
+static guint         toplevel_signals [LAST_SIGNAL] = { 0 };
+
 
 static GdkScreen *
 panel_toplevel_get_screen_geometry (PanelToplevel *toplevel,
@@ -246,6 +257,677 @@ panel_toplevel_get_monitor_geometry (PanelToplevel *toplevel,
 	*height = panel_multiscreen_height (screen, toplevel->priv->monitor);
 
 	return screen;
+}
+
+static GdkCursorType
+panel_toplevel_grab_op_cursor (PanelToplevel   *toplevel,
+			       PanelGrabOpType  grab_op)
+{
+	GdkCursorType retval = -1;
+
+	switch (grab_op) {
+	case PANEL_GRAB_OP_MOVE:
+	case PANEL_GRAB_OP_RESIZE:
+		if (toplevel->priv->grab_is_keyboard)
+			retval = GDK_CROSS;
+		else
+			retval = GDK_FLEUR;
+		break;
+		break;
+	case PANEL_GRAB_OP_RESIZE_UP:
+		retval = GDK_TOP_SIDE;
+		break;
+	case PANEL_GRAB_OP_RESIZE_DOWN:
+		retval = GDK_BOTTOM_SIDE;
+		break;
+	case PANEL_GRAB_OP_RESIZE_LEFT:
+		retval = GDK_LEFT_SIDE;
+		break;
+	case PANEL_GRAB_OP_RESIZE_RIGHT:
+		retval = GDK_RIGHT_SIDE;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	return retval;
+}
+
+static void
+panel_toplevel_init_resize_drag_offsets (PanelToplevel   *toplevel,
+					 PanelGrabOpType  grab_op)
+{
+	toplevel->priv->drag_offset_x = 0;
+	toplevel->priv->drag_offset_y = 0;
+
+	switch (grab_op) {
+	case PANEL_GRAB_OP_RESIZE_DOWN:
+		toplevel->priv->drag_offset_y = toplevel->priv->geometry.y;
+		break;
+	case PANEL_GRAB_OP_RESIZE_UP:
+		toplevel->priv->drag_offset_y =
+			toplevel->priv->geometry.y + toplevel->priv->geometry.height;
+		break;
+	case PANEL_GRAB_OP_RESIZE_RIGHT:
+		toplevel->priv->drag_offset_x = toplevel->priv->geometry.x;
+		break;
+	case PANEL_GRAB_OP_RESIZE_LEFT:
+		toplevel->priv->drag_offset_x =
+			toplevel->priv->geometry.x + toplevel->priv->geometry.width;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static void
+panel_toplevel_warp_pointer (PanelToplevel *toplevel)
+{
+	GtkWidget    *widget;
+	GdkRectangle  geometry;
+	int           x, y;
+
+	if (!toplevel->priv->grab_is_keyboard)
+		return;
+	
+	widget = GTK_WIDGET (toplevel);
+
+	geometry = toplevel->priv->geometry;
+
+	x = y = 0;
+
+	switch (toplevel->priv->grab_op) {
+	case PANEL_GRAB_OP_MOVE:
+	case PANEL_GRAB_OP_RESIZE:
+		x = (geometry.width  / 2);
+		y = (geometry.height / 2);
+		break;
+	case PANEL_GRAB_OP_RESIZE_UP:
+		x = (geometry.width  / 2);
+		break;
+	case PANEL_GRAB_OP_RESIZE_DOWN:
+		x = (geometry.width  / 2);
+		y = geometry.height;
+		break;
+	case PANEL_GRAB_OP_RESIZE_LEFT:
+		y = (geometry.height / 2);
+		break;
+	case PANEL_GRAB_OP_RESIZE_RIGHT:
+		x = geometry.width;
+		y = (geometry.height / 2);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	if (toplevel->priv->grab_op == PANEL_GRAB_OP_MOVE ||
+	    toplevel->priv->grab_op == PANEL_GRAB_OP_RESIZE) {
+		toplevel->priv->drag_offset_x = x;
+		toplevel->priv->drag_offset_y = y;
+	} else
+		panel_toplevel_init_resize_drag_offsets (toplevel, toplevel->priv->grab_op);
+
+	panel_warp_pointer (widget->window, x, y);
+}
+
+static void
+panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
+			      PanelGrabOpType  op_type,
+			      gboolean         grab_keyboard,
+			      guint32          time_)
+{
+	GtkWidget     *widget;
+	GdkCursorType  cursor_type;
+	GdkCursor     *cursor;
+
+	g_return_if_fail (toplevel->priv->grab_op == PANEL_GRAB_OP_NONE);
+
+	widget = GTK_WIDGET (toplevel);
+
+	toplevel->priv->grab_op          = op_type;
+	toplevel->priv->grab_is_keyboard = grab_keyboard;
+
+	toplevel->priv->orig_monitor     = toplevel->priv->monitor;
+	toplevel->priv->orig_x           = toplevel->priv->x;
+	toplevel->priv->orig_x_centered  = toplevel->priv->x_centered;
+	toplevel->priv->orig_y           = toplevel->priv->y;
+	toplevel->priv->orig_y_centered  = toplevel->priv->y_centered;
+	toplevel->priv->orig_size        = toplevel->priv->size;
+	toplevel->priv->orig_orientation = toplevel->priv->orientation;
+
+	gtk_grab_add (widget);
+
+	panel_toplevel_warp_pointer (toplevel);
+
+	cursor_type = panel_toplevel_grab_op_cursor (
+				toplevel, toplevel->priv->grab_op);
+
+	cursor = gdk_cursor_new (cursor_type);
+	gdk_pointer_grab (widget->window, FALSE, 
+			  GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+			  NULL, cursor, time_);
+	gdk_cursor_unref (cursor);
+
+	if (grab_keyboard)
+		gdk_keyboard_grab (widget->window, FALSE, time_);
+}
+
+static void
+panel_toplevel_end_grab_op (PanelToplevel *toplevel,
+			    guint32        time_)
+{
+	GtkWidget *widget;
+
+	g_return_if_fail (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE);
+
+	widget = GTK_WIDGET (toplevel);
+
+	toplevel->priv->grab_op          = PANEL_GRAB_OP_NONE;
+	toplevel->priv->grab_is_keyboard = FALSE;
+
+	gtk_grab_remove (widget);
+
+	gdk_pointer_ungrab (time_);
+	gdk_keyboard_ungrab (time_);
+}
+
+static void
+panel_toplevel_cancel_grab_op (PanelToplevel *toplevel,
+			       guint32        time_)
+{
+	panel_toplevel_set_orientation (toplevel, toplevel->priv->orig_orientation);
+	panel_toplevel_set_monitor (toplevel, toplevel->priv->orig_monitor);
+	panel_toplevel_set_size (toplevel, toplevel->priv->orig_size);
+	panel_toplevel_set_x (toplevel,
+			      toplevel->priv->orig_x,
+			      toplevel->priv->orig_x_centered);
+	panel_toplevel_set_y (toplevel,
+			      toplevel->priv->orig_y,
+			      toplevel->priv->orig_y_centered);
+}
+
+static void
+panel_toplevel_resize_to_pointer (PanelToplevel *toplevel,
+				  int            x,
+				  int            y)
+{
+	int new_size;
+	int new_x, new_y;
+	int new_x_centered, new_y_centered;
+	int monitor_width, monitor_height;
+
+	new_size       = toplevel->priv->size;
+	new_x          = toplevel->priv->x;
+	new_y          = toplevel->priv->y;
+	new_x_centered = toplevel->priv->x_centered;
+	new_y_centered = toplevel->priv->y_centered;
+
+	panel_toplevel_get_monitor_geometry (toplevel, &monitor_width, &monitor_height);
+
+	switch (toplevel->priv->grab_op) {
+	case PANEL_GRAB_OP_RESIZE_UP:
+		new_size = toplevel->priv->drag_offset_y - y;
+		new_size = CLAMP (new_size, 0, monitor_height / 4);
+		new_y -= (new_size - toplevel->priv->size);
+		break;
+	case PANEL_GRAB_OP_RESIZE_DOWN:
+		new_size = y - toplevel->priv->drag_offset_y;
+		new_size = CLAMP (new_size, 0, monitor_height / 4);
+		break;
+	case PANEL_GRAB_OP_RESIZE_LEFT:
+		new_size = toplevel->priv->drag_offset_x - x;
+		new_size = CLAMP (new_size, 0, monitor_width / 4);
+		new_x -= (new_size - toplevel->priv->size);
+		break;
+	case PANEL_GRAB_OP_RESIZE_RIGHT:
+		new_size = x - toplevel->priv->drag_offset_x;
+		new_size = CLAMP (new_size, 0, monitor_width / 4);
+		break;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	if (new_size == 0)
+		return;
+
+	panel_toplevel_set_x (toplevel, new_x, new_x_centered);
+	panel_toplevel_set_y (toplevel, new_y, new_y_centered);
+	panel_toplevel_set_size (toplevel, new_size);
+}
+
+static void
+panel_toplevel_calc_new_orientation (PanelToplevel *toplevel,
+				     int            pointer_x,
+				     int            pointer_y)
+{
+	PanelOrientation  new_orientation;
+	GdkScreen        *screen;
+	int               screen_width, screen_height;
+	int               hborder, vborder;
+	int               monitor;
+
+	screen = panel_toplevel_get_screen_geometry (
+			toplevel, &screen_width, &screen_height);
+
+	monitor = panel_multiscreen_locate_coords (screen, pointer_x, pointer_y);
+
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+		vborder = hborder = (3 * toplevel->priv->geometry.height) >> 1;
+	else
+		vborder = hborder = (3 * toplevel->priv->geometry.width)  >> 1;
+
+	new_orientation = toplevel->priv->orientation;
+
+	switch (toplevel->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+		if (pointer_y > (screen_height - hborder))
+			new_orientation = PANEL_ORIENTATION_BOTTOM;
+
+		else if (pointer_y > hborder) {
+			if (pointer_x > (screen_width - vborder))
+				new_orientation = PANEL_ORIENTATION_RIGHT;
+			else if (pointer_x < vborder)
+				new_orientation = PANEL_ORIENTATION_LEFT;
+		} else
+			panel_toplevel_set_monitor (toplevel, monitor);
+		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		if (pointer_y < hborder)
+			new_orientation = PANEL_ORIENTATION_TOP;
+
+		else if (pointer_y < (screen_height - hborder)) {
+			if (pointer_x > (screen_width - vborder))
+				new_orientation = PANEL_ORIENTATION_RIGHT;
+			else if (pointer_x < vborder)
+				new_orientation = PANEL_ORIENTATION_LEFT;
+		} else
+			panel_toplevel_set_monitor (toplevel, monitor);
+		break;
+	case PANEL_ORIENTATION_LEFT:
+		if (pointer_x > (screen_width - vborder))
+			new_orientation = PANEL_ORIENTATION_RIGHT;
+
+		else if (pointer_x > vborder) {
+			if (pointer_y > (screen_height - hborder))
+				new_orientation = PANEL_ORIENTATION_BOTTOM;
+			else if (pointer_y < hborder)
+				new_orientation = PANEL_ORIENTATION_TOP;
+		} else
+			panel_toplevel_set_monitor (toplevel, monitor);
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		if (pointer_x < vborder)
+			new_orientation = PANEL_ORIENTATION_LEFT;
+
+		else if (pointer_x < (screen_width - vborder)) {
+			if (pointer_y > (screen_height - hborder))
+				new_orientation = PANEL_ORIENTATION_BOTTOM;
+			else if (pointer_y < hborder)
+				new_orientation = PANEL_ORIENTATION_TOP;
+		} else
+			panel_toplevel_set_monitor (toplevel, monitor);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	panel_toplevel_set_orientation (toplevel, new_orientation);
+}
+
+static void
+panel_toplevel_move_to (PanelToplevel *toplevel,
+			int            new_x,
+			int            new_y)
+{
+	GdkScreen        *screen;
+	PanelOrientation  new_orientation;
+	gboolean          x_centered, y_centered;
+	int               screen_width, screen_height;
+	int               monitor_width, monitor_height;
+	int               width, height;
+	int               new_monitor;
+	int               x, y;
+
+	screen = panel_toplevel_get_screen_geometry (
+			toplevel, &screen_width, &screen_height);
+
+	width  = toplevel->priv->geometry.width;
+	height = toplevel->priv->geometry.height;
+
+	new_x = CLAMP (new_x, 0, screen_width  - width);
+	new_y = CLAMP (new_y, 0, screen_height - height);
+
+	new_orientation = toplevel->priv->orientation;
+
+	if (new_x <= SNAP_TOLERANCE &&
+	    toplevel->priv->orientation & PANEL_VERTICAL_MASK)
+		new_orientation = PANEL_ORIENTATION_LEFT;
+
+	else if ((new_x + width) >= (screen_width - SNAP_TOLERANCE) &&
+		 toplevel->priv->orientation & PANEL_VERTICAL_MASK)
+		new_orientation = PANEL_ORIENTATION_RIGHT;
+
+	if (new_y <= SNAP_TOLERANCE &&
+	    toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+		new_orientation = PANEL_ORIENTATION_TOP;
+
+	else if ((new_y + height) >= (screen_height - SNAP_TOLERANCE) &&
+		 toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+		new_orientation = PANEL_ORIENTATION_BOTTOM;
+
+	new_monitor = panel_multiscreen_locate_coords (screen, new_x, new_y);
+
+	panel_toplevel_get_monitor_geometry (
+			toplevel, &monitor_width, &monitor_height);
+
+	x_centered = toplevel->priv->x_centered;
+	y_centered = toplevel->priv->y_centered;
+
+	x = new_x - panel_multiscreen_x (screen, new_monitor);
+	y = new_y - panel_multiscreen_y (screen, new_monitor);
+
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
+		if (new_y == 0 || new_y == (screen_height - height))
+			x_centered = abs (x - ((monitor_width - width) / 2))
+								<= SNAP_TOLERANCE;
+		else
+			x_centered = FALSE;
+	} else {
+		if (new_x == 0 || new_x == (screen_width - width))
+			y_centered = abs (y - ((monitor_height - height) / 2))
+								<= SNAP_TOLERANCE;
+		else
+			y_centered = FALSE;
+	}
+
+	if (x_centered)
+		x -= (monitor_width  - width) / 2;
+	if (y_centered)
+		y -= (monitor_height - height) / 2;
+
+	panel_toplevel_set_monitor (toplevel, new_monitor);
+	panel_toplevel_set_orientation (toplevel, new_orientation);
+	panel_toplevel_set_x (toplevel, x, x_centered);
+	panel_toplevel_set_y (toplevel, y, y_centered);
+}
+
+static void
+panel_toplevel_move_to_pointer (PanelToplevel *toplevel,
+				int            pointer_x,
+				int            pointer_y)
+{
+	int new_x, new_y;
+
+	new_x = pointer_x - toplevel->priv->drag_offset_x;
+	new_y = pointer_y - toplevel->priv->drag_offset_y;
+
+	panel_toplevel_move_to (toplevel, new_x, new_y);
+}
+
+static void
+panel_toplevel_rotate_to_pointer (PanelToplevel *toplevel,
+				  int            pointer_x,
+				  int            pointer_y)
+{
+	GtkWidget *widget;
+	GdkScreen *screen;
+	int        x_diff, y_diff;
+	int        x, y;
+
+	widget = GTK_WIDGET (toplevel);
+
+	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+
+	x = toplevel->priv->geometry.x;
+	y = toplevel->priv->geometry.y;
+
+	x_diff = pointer_x - (x + toplevel->priv->geometry.width / 2);
+	y_diff = pointer_y - (y + toplevel->priv->geometry.height / 2);
+
+	if (((-y_diff > x_diff + SNAP_TOLERANCE) && x_diff > 0 && y_diff < 0) ||
+	    (( y_diff < x_diff + SNAP_TOLERANCE) && x_diff < 0 && y_diff < 0))
+		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_RIGHT);
+
+	else if (((-x_diff < y_diff - SNAP_TOLERANCE) && x_diff > 0 && y_diff < 0) ||
+	         (( x_diff > y_diff - SNAP_TOLERANCE) && x_diff > 0 && y_diff > 0))
+		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_BOTTOM);
+
+	else if ((( y_diff > x_diff + SNAP_TOLERANCE) && x_diff > 0 && y_diff > 0) ||
+	         ((-y_diff < x_diff + SNAP_TOLERANCE) && x_diff < 0 && y_diff > 0))
+		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_LEFT);
+
+	else if (((-x_diff > y_diff - SNAP_TOLERANCE) && x_diff < 0 && y_diff > 0) ||
+	         (( x_diff < y_diff - SNAP_TOLERANCE) && x_diff < 0 && y_diff < 0))
+		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_TOP);
+}
+
+static gboolean
+panel_toplevel_warp_pointer_increment (PanelToplevel *toplevel,
+				       int            keyval,
+				       int            increment)
+{
+	GdkScreen *screen;
+	GdkWindow *root_window;
+	int        new_x, new_y;
+
+	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	root_window = gdk_screen_get_root_window (screen);
+
+	gdk_window_get_pointer (root_window, &new_x, &new_y, NULL);
+
+	switch (keyval) {
+	case GDK_Up:
+	case GDK_KP_Up:
+		new_y -= increment;
+		break;
+	case GDK_Left:
+	case GDK_KP_Left:
+		new_x -= increment;
+		break;
+	case GDK_Down:
+	case GDK_KP_Down:
+		new_y += increment;
+		break;
+	case GDK_Right:
+	case GDK_KP_Right:
+		new_x += increment;
+		break;
+	default:
+		g_assert_not_reached ();
+		return FALSE;
+	}
+
+	panel_warp_pointer (root_window, new_x, new_y);
+
+	return TRUE;
+}
+
+static gboolean
+panel_toplevel_move_keyboard_floating (PanelToplevel *toplevel,
+				       GdkEventKey   *event)
+{
+#define SMALL_INCREMENT  1
+#define NORMAL_INCREMENT 10
+
+	int increment = NORMAL_INCREMENT;
+
+	if (event->state & GDK_SHIFT_MASK)
+		increment = SMALL_INCREMENT;
+
+	return panel_toplevel_warp_pointer_increment (
+				toplevel, event->keyval, increment);
+
+#undef SMALL_INCREMENT
+#undef NORMAL_INCREMENT
+}
+
+static gboolean
+panel_toplevel_move_keyboard_expanded (PanelToplevel *toplevel,
+				       GdkEventKey   *event)
+{
+	PanelOrientation new_orientation;
+
+	switch (event->keyval) {
+	case GDK_Up:
+	case GDK_KP_Up:
+		new_orientation = PANEL_ORIENTATION_TOP;
+		break;
+	case GDK_Left:
+	case GDK_KP_Left:
+		new_orientation = PANEL_ORIENTATION_LEFT;
+		break;
+	case GDK_Down:
+	case GDK_KP_Down:
+		new_orientation = PANEL_ORIENTATION_BOTTOM;
+		break;
+	case GDK_Right:
+	case GDK_KP_Right:
+		new_orientation = PANEL_ORIENTATION_RIGHT;
+		break;
+	default:
+		g_assert_not_reached ();
+		return FALSE;
+	}
+
+	panel_toplevel_set_orientation (toplevel, new_orientation);
+
+	return TRUE;
+}
+
+static gboolean
+panel_toplevel_initial_resize_keypress (PanelToplevel *toplevel,
+					GdkEventKey   *event)
+{
+	PanelGrabOpType grab_op;
+
+	switch (event->keyval) {
+	case GDK_Up:
+	case GDK_KP_Up:
+		if (!(toplevel->priv->orientation & PANEL_HORIZONTAL_MASK))
+			return FALSE;
+		grab_op = PANEL_GRAB_OP_RESIZE_UP;
+		break;
+	case GDK_Left:
+	case GDK_KP_Left:
+		if (!(toplevel->priv->orientation & PANEL_VERTICAL_MASK))
+			return FALSE;
+		grab_op = PANEL_GRAB_OP_RESIZE_LEFT;
+		break;
+	case GDK_Down:
+	case GDK_KP_Down:
+		if (!(toplevel->priv->orientation & PANEL_HORIZONTAL_MASK))
+			return FALSE;
+		grab_op = PANEL_GRAB_OP_RESIZE_DOWN;
+		break;
+	case GDK_Right:
+	case GDK_KP_Right:
+		if (!(toplevel->priv->orientation & PANEL_VERTICAL_MASK))
+			return FALSE;
+		grab_op = PANEL_GRAB_OP_RESIZE_RIGHT;
+		break;
+	default:
+		g_assert_not_reached ();
+		return FALSE;
+	}
+
+	panel_toplevel_end_grab_op (toplevel, event->time);
+	panel_toplevel_begin_grab_op (toplevel, grab_op, TRUE, event->time);
+
+	return TRUE;
+}
+
+static gboolean
+panel_toplevel_handle_grab_op_key_event (PanelToplevel *toplevel,
+					 GdkEventKey   *event)
+{
+	gboolean retval = FALSE;
+
+	switch (event->keyval) {
+	case GDK_Up:
+	case GDK_KP_Up:
+	case GDK_Left:
+	case GDK_KP_Left:
+	case GDK_Down:
+	case GDK_KP_Down:
+	case GDK_Right:
+	case GDK_KP_Right:
+		switch (toplevel->priv->grab_op) {
+		case PANEL_GRAB_OP_MOVE:
+			if (toplevel->priv->expand)
+				retval = panel_toplevel_move_keyboard_expanded (
+									toplevel, event);
+			else
+				retval = panel_toplevel_move_keyboard_floating (
+									toplevel, event);
+			break;
+		case PANEL_GRAB_OP_RESIZE:
+			retval = panel_toplevel_initial_resize_keypress (toplevel, event);
+			break;
+		case PANEL_GRAB_OP_RESIZE_UP:
+		case PANEL_GRAB_OP_RESIZE_DOWN:
+		case PANEL_GRAB_OP_RESIZE_LEFT:
+		case PANEL_GRAB_OP_RESIZE_RIGHT:
+			retval = panel_toplevel_warp_pointer_increment (
+						toplevel, event->keyval, 1);
+			break;
+		default:
+			g_assert_not_reached ();
+			break;
+		}
+		break;
+	case GDK_Escape: 
+		panel_toplevel_cancel_grab_op (toplevel, event->time);
+	case GDK_Return: /* drop through*/
+	case GDK_KP_Enter:
+	case GDK_space:
+	case GDK_KP_Space:
+		panel_toplevel_end_grab_op (toplevel, event->time);
+		retval = TRUE;
+	default: /* drop through*/
+		break;
+	}
+
+	return retval;
+}
+
+static gboolean
+panel_toplevel_handle_grab_op_motion_event (PanelToplevel  *toplevel,
+					    GdkEventMotion *event)
+{
+	switch (toplevel->priv->grab_op) {
+	case PANEL_GRAB_OP_MOVE:
+		if (toplevel->priv->expand)
+			panel_toplevel_calc_new_orientation (
+					toplevel, event->x_root, event->y_root);
+
+		else if (event->state & GDK_CONTROL_MASK)
+			panel_toplevel_rotate_to_pointer (
+					toplevel, event->x_root, event->y_root);
+
+		else
+			panel_toplevel_move_to_pointer (
+					toplevel, event->x_root, event->y_root);
+		return TRUE;
+	case PANEL_GRAB_OP_RESIZE:
+		break;
+	case PANEL_GRAB_OP_RESIZE_UP:
+	case PANEL_GRAB_OP_RESIZE_DOWN:
+	case PANEL_GRAB_OP_RESIZE_LEFT:
+	case PANEL_GRAB_OP_RESIZE_RIGHT:
+		panel_toplevel_resize_to_pointer (toplevel, event->x_root, event->y_root);
+		return TRUE;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	return FALSE;
 }
 
 static void
@@ -431,10 +1113,22 @@ panel_toplevel_update_hide_buttons (PanelToplevel *toplevel)
 	if (toplevel->priv->buttons_enabled)
 		panel_toplevel_update_buttons_showing (toplevel);
 	else {
-		gtk_widget_hide (toplevel->priv->hide_button_top);
-		gtk_widget_hide (toplevel->priv->hide_button_bottom);
-		gtk_widget_hide (toplevel->priv->hide_button_left);
-		gtk_widget_hide (toplevel->priv->hide_button_right);
+		g_object_set (
+			G_OBJECT (toplevel->priv->hide_button_top),
+			"visible", toplevel->priv->state == PANEL_STATE_HIDDEN_DOWN,
+			NULL);
+		g_object_set (
+			G_OBJECT (toplevel->priv->hide_button_bottom),
+			"visible", toplevel->priv->state == PANEL_STATE_HIDDEN_UP,
+			NULL);
+		g_object_set (
+			G_OBJECT (toplevel->priv->hide_button_left),
+			"visible", toplevel->priv->state == PANEL_STATE_HIDDEN_RIGHT,
+			NULL);
+		g_object_set (
+			G_OBJECT (toplevel->priv->hide_button_right),
+			"visible", toplevel->priv->state == PANEL_STATE_HIDDEN_LEFT,
+			NULL);
 	}
 
 	if (toplevel->priv->arrows_enabled) {
@@ -671,81 +1365,6 @@ panel_toplevel_update_description (PanelToplevel *toplevel)
 }
 
 static void
-panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
-					  int           *x,
-					  int           *y)
-{
-	GdkScreen *screen;
-	int        width, height;
-	int        screen_width, screen_height;
-	int        monitor_width, monitor_height;
-	int        monitor_x, monitor_y;
-	int        auto_hide_size;
-
-	g_assert (x != NULL && y != NULL);
-
-	if (toplevel->priv->floating)
-		return;
-
-	screen = panel_toplevel_get_screen_geometry (
-			toplevel, &screen_width, &screen_height);
-
-	panel_toplevel_get_monitor_geometry (
-			toplevel, &monitor_width, &monitor_height);
-
-	monitor_x = panel_multiscreen_x (screen, toplevel->priv->monitor);
-	monitor_y = panel_multiscreen_y (screen, toplevel->priv->monitor);
-
-	width  = toplevel->priv->geometry.width;
-	height = toplevel->priv->geometry.height;
-
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-		auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
-					1, height / 2);
-	else
-		auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
-					1, width / 2);
-
-	/* paranoia */
-	if (auto_hide_size <= 0)
-		auto_hide_size = DEFAULT_AUTO_HIDE_SIZE;
-
-	switch (toplevel->priv->orientation) {
-	case PANEL_ORIENTATION_TOP:
-		if (monitor_x + *x + width >= screen_width)
-			*x = monitor_width - auto_hide_size;
-		else if (monitor_x + *x <= 0)
-			*x = - (width  - auto_hide_size);
-		*y = - (height - auto_hide_size);
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
-		if (monitor_x + *x <= 0)
-			*x = - (width  - auto_hide_size);
-		else if (monitor_x + *x + width >= screen_width)
-			*x = monitor_width - auto_hide_size;
-		*y = monitor_height - auto_hide_size;
-		break;
-	case PANEL_ORIENTATION_LEFT:
-		*x = - (width - auto_hide_size);
-		if (monitor_y + *y + height >= screen_height)
-			*y = monitor_height - auto_hide_size;
-		else if (monitor_y + *y <= 0)
-			*y = - (height - auto_hide_size);
-		break;
-	case PANEL_ORIENTATION_RIGHT:
-		*x = monitor_width - auto_hide_size;
-		if (monitor_y + *y <= 0)
-			*y = - (height - auto_hide_size);
-		else if (monitor_y + *y + height >= screen_height)
-			*y = monitor_height - auto_hide_size;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-}
-
-static void
 panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 					 gboolean       hidden,
 					 int           *x,
@@ -810,6 +1429,121 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 
 	*x -= panel_multiscreen_x (screen, toplevel->priv->monitor);
 	*y -= panel_multiscreen_y (screen, toplevel->priv->monitor);
+}
+
+static void
+panel_toplevel_update_normal_position (PanelToplevel *toplevel,
+				       int           *x,
+				       int           *y)
+{
+	GtkWidget *widget;
+	int        monitor_width, monitor_height;
+	int        width, height;
+
+	g_assert (x != NULL && y != NULL);
+
+	if (toplevel->priv->attached) {
+		panel_toplevel_update_attached_position (toplevel, FALSE, x, y);
+		return;
+	}
+
+	widget = GTK_WIDGET (toplevel);
+
+	panel_toplevel_get_monitor_geometry (
+			toplevel, &monitor_width, &monitor_height);
+
+	width  = toplevel->priv->geometry.width;
+	height = toplevel->priv->geometry.height;
+
+	*x = CLAMP (*x, 0, monitor_width  - width);
+	*y = CLAMP (*y, 0, monitor_height - height);
+
+	if (*x <= SNAP_TOLERANCE)
+		*x = 0;
+	else if ((*x + width) >= (monitor_width - SNAP_TOLERANCE))
+		*x = monitor_width - width;
+
+	if (*y <= SNAP_TOLERANCE)
+		*y = 0;
+	else if ((*y + height) >= (monitor_height - SNAP_TOLERANCE))
+		*y = monitor_height - height;
+}
+
+static void
+panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
+					  int           *x,
+					  int           *y)
+{
+	GdkScreen *screen;
+	int        width, height;
+	int        screen_width, screen_height;
+	int        monitor_width, monitor_height;
+	int        monitor_x, monitor_y;
+	int        auto_hide_size;
+
+	g_assert (x != NULL && y != NULL);
+
+	if (toplevel->priv->floating) {
+		panel_toplevel_update_normal_position (toplevel, x, y);
+		return;
+	}
+
+	screen = panel_toplevel_get_screen_geometry (
+			toplevel, &screen_width, &screen_height);
+
+	panel_toplevel_get_monitor_geometry (
+			toplevel, &monitor_width, &monitor_height);
+
+	monitor_x = panel_multiscreen_x (screen, toplevel->priv->monitor);
+	monitor_y = panel_multiscreen_y (screen, toplevel->priv->monitor);
+
+	width  = toplevel->priv->geometry.width;
+	height = toplevel->priv->geometry.height;
+
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+		auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
+					1, height / 2);
+	else
+		auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
+					1, width / 2);
+
+	/* paranoia */
+	if (auto_hide_size <= 0)
+		auto_hide_size = DEFAULT_AUTO_HIDE_SIZE;
+
+	switch (toplevel->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+		if (monitor_x + *x + width >= screen_width)
+			*x = monitor_width - auto_hide_size;
+		else if (monitor_x + *x <= 0)
+			*x = - (width  - auto_hide_size);
+		*y = - (height - auto_hide_size);
+		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		if (monitor_x + *x <= 0)
+			*x = - (width  - auto_hide_size);
+		else if (monitor_x + *x + width >= screen_width)
+			*x = monitor_width - auto_hide_size;
+		*y = monitor_height - auto_hide_size;
+		break;
+	case PANEL_ORIENTATION_LEFT:
+		*x = - (width - auto_hide_size);
+		if (monitor_y + *y + height >= screen_height)
+			*y = monitor_height - auto_hide_size;
+		else if (monitor_y + *y <= 0)
+			*y = - (height - auto_hide_size);
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		*x = monitor_width - auto_hide_size;
+		if (monitor_y + *y <= 0)
+			*y = - (height - auto_hide_size);
+		else if (monitor_y + *y + height >= screen_height)
+			*y = monitor_height - auto_hide_size;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
 }
 
 /* FIXME: this is wrong for Xinerama. In the Xinerama case
@@ -946,30 +1680,6 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel,
 		if (toplevel->priv->state == PANEL_STATE_NORMAL)
 			g_signal_emit (toplevel, toplevel_signals [UNHIDE_SIGNAL], 0);
 	}
-}
-
-static void
-panel_toplevel_update_normal_position (PanelToplevel *toplevel,
-				       int           *x,
-				       int           *y)
-{
-	GtkWidget *widget;
-	int        monitor_width, monitor_height;
-
-	g_assert (x != NULL && y != NULL);
-
-	if (toplevel->priv->attached) {
-		panel_toplevel_update_attached_position (toplevel, FALSE, x, y);
-		return;
-	}
-
-	widget = GTK_WIDGET (toplevel);
-
-	panel_toplevel_get_monitor_geometry (
-			toplevel, &monitor_width, &monitor_height);
-
-	*x = CLAMP (*x, 0, monitor_width  - toplevel->priv->geometry.width);
-	*y = CLAMP (*y, 0, monitor_height - toplevel->priv->geometry.height);
 }
 
 static void
@@ -1403,31 +2113,34 @@ panel_toplevel_popup_panel_menu (PanelToplevel *toplevel)
 static gboolean
 panel_toplevel_toggle_expand (PanelToplevel *toplevel)
 {
-	g_print ("FIXME: implement toggle expand binding\n");
+	panel_toplevel_set_expand (toplevel, !toplevel->priv->expand);
 
-	return FALSE;
+	return TRUE;
 }
 
 static gboolean
 panel_toplevel_expand (PanelToplevel *toplevel)
 {
-	g_print ("FIXME: implement expand binding\n");
+	panel_toplevel_set_expand (toplevel, TRUE);
 
-	return FALSE;
+	return TRUE;
 }
 
 static gboolean
 panel_toplevel_unexpand (PanelToplevel *toplevel)
 {
-	g_print ("FIXME: implement unexpand binding\n");
+	panel_toplevel_set_expand (toplevel, FALSE);
 
-	return FALSE;
+	return TRUE;
 }
 
 static gboolean
 panel_toplevel_toggle_hidden (PanelToplevel *toplevel)
 {
-	g_print ("FIXME: implement toggle hidden binding\n");
+	if (toplevel->priv->state == PANEL_STATE_NORMAL)
+		panel_toplevel_hide (toplevel, toplevel->priv->auto_hide, -1);
+	else
+		panel_toplevel_unhide (toplevel);
 
 	return FALSE;
 }
@@ -1435,17 +2148,25 @@ panel_toplevel_toggle_hidden (PanelToplevel *toplevel)
 static gboolean
 panel_toplevel_begin_move (PanelToplevel *toplevel)
 {
-	g_print ("FIXME: implement begin move binding\n");
+	if (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
+		return FALSE;
 
-	return FALSE;
+	panel_toplevel_begin_grab_op (
+			toplevel, PANEL_GRAB_OP_MOVE, TRUE, GDK_CURRENT_TIME);
+
+	return TRUE;
 }
 
 static gboolean
 panel_toplevel_begin_resize (PanelToplevel *toplevel)
 {
-	g_print ("FIXME: implement begin resize binding\n");
+	if (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
+		return FALSE;
 
-	return FALSE;
+	panel_toplevel_begin_grab_op (
+			toplevel, PANEL_GRAB_OP_RESIZE, TRUE, GDK_CURRENT_TIME);
+
+	return TRUE;
 }
 
 static void
@@ -1464,10 +2185,6 @@ panel_toplevel_realize (GtkWidget *widget)
 static void
 panel_toplevel_disconnect_timeouts (PanelToplevel *toplevel)
 {
-	if (toplevel->priv->move_timeout)
-		g_source_remove (toplevel->priv->move_timeout);
-	toplevel->priv->move_timeout = 0;
-
 	if (toplevel->priv->hide_timeout)
 		g_source_remove (toplevel->priv->hide_timeout);
 	toplevel->priv->hide_timeout = 0;
@@ -1729,10 +2446,10 @@ panel_toplevel_expose (GtkWidget      *widget,
 	return retval;
 }
 
-static PanelFrameEdge
-panel_toplevel_get_resize_edge (PanelToplevel *toplevel,
-				int            x,
-				int            y)
+static PanelGrabOpType
+panel_toplevel_get_resize_op (PanelToplevel *toplevel,
+			      int            x,
+			      int            y)
 {
 	PanelFrameEdge edges;
 	PanelFrameEdge retval;
@@ -1741,48 +2458,22 @@ panel_toplevel_get_resize_edge (PanelToplevel *toplevel,
 	if (edges == PANEL_EDGE_NONE)
 		edges = panel_frame_get_edges (toplevel->priv->inner_frame);
 
-	retval = PANEL_EDGE_NONE;
+	retval = PANEL_GRAB_OP_NONE;
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		if (edges & PANEL_EDGE_TOP && y <= RESIZE_GRAB_AREA_SIZE)
-			retval = PANEL_EDGE_TOP;
+			retval = PANEL_GRAB_OP_RESIZE_UP;
 
 		else if (edges & PANEL_EDGE_BOTTOM &&
 			 toplevel->priv->geometry.height - y <= RESIZE_GRAB_AREA_SIZE)
-			retval = PANEL_EDGE_BOTTOM;
+			retval = PANEL_GRAB_OP_RESIZE_DOWN;
 	} else {
 		if (edges & PANEL_EDGE_LEFT && x <= RESIZE_GRAB_AREA_SIZE)
-			retval = PANEL_EDGE_LEFT;
+			retval = PANEL_GRAB_OP_RESIZE_LEFT;
 
 		else if (edges & PANEL_EDGE_RIGHT &&
 			 toplevel->priv->geometry.width - x <= RESIZE_GRAB_AREA_SIZE)
-			retval = PANEL_EDGE_RIGHT;
-	}
-
-	return retval;
-}
-
-static GdkCursorType
-panel_toplevel_edge_to_cursor (PanelFrameEdge edge)
-{
-	GdkCursorType retval = -1;
-
-	switch (edge) {
-	case PANEL_EDGE_TOP:
-		retval = GDK_TOP_SIDE;
-		break;
-	case PANEL_EDGE_BOTTOM:
-		retval = GDK_BOTTOM_SIDE;
-		break;
-	case PANEL_EDGE_LEFT:
-		retval = GDK_LEFT_SIDE;
-		break;
-	case PANEL_EDGE_RIGHT:
-		retval = GDK_RIGHT_SIDE;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
+			retval = PANEL_GRAB_OP_RESIZE_RIGHT;
 	}
 
 	return retval;
@@ -1792,10 +2483,8 @@ static gboolean
 panel_toplevel_button_press_event (GtkWidget      *widget,
 				   GdkEventButton *event)
 {
-	PanelToplevel  *toplevel;
-	PanelFrameEdge  edge;
-	GdkCursorType   cursor_type;
-	GdkCursor      *cursor;
+	PanelToplevel   *toplevel;
+	PanelGrabOpType  grab_op;
 
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (widget), FALSE);
 
@@ -1807,54 +2496,20 @@ panel_toplevel_button_press_event (GtkWidget      *widget,
 	if (toplevel->priv->animating)
 		return FALSE;
 
-	gtk_grab_add (widget);
+	grab_op = panel_toplevel_get_resize_op (toplevel, event->x, event->y);
+	if (grab_op != PANEL_GRAB_OP_NONE)
+		panel_toplevel_init_resize_drag_offsets (toplevel, grab_op);
 
-	toplevel->priv->in_drag = TRUE;
+	else {
+		grab_op = PANEL_GRAB_OP_MOVE;
 
-	cursor_type = GDK_FLEUR;
-
-	edge = panel_toplevel_get_resize_edge (toplevel, event->x, event->y);
-	if (edge != PANEL_EDGE_NONE) {
-		cursor_type = panel_toplevel_edge_to_cursor (edge);
-		g_assert (cursor_type != -1);
-
-		toplevel->priv->drag_is_resize = TRUE;
-		toplevel->priv->resize_edge    = edge;
-
-		toplevel->priv->drag_offset_x = 0;
-		toplevel->priv->drag_offset_y = 0;
-
-		switch (toplevel->priv->resize_edge) {
-		case PANEL_EDGE_BOTTOM:
-			toplevel->priv->drag_offset_y = toplevel->priv->geometry.y;
-			break;
-		case PANEL_EDGE_TOP:
-			toplevel->priv->drag_offset_y =
-				toplevel->priv->geometry.y + toplevel->priv->geometry.height;
-			break;
-		case PANEL_EDGE_RIGHT:
-			toplevel->priv->drag_offset_x = toplevel->priv->geometry.x;
-			break;
-		case PANEL_EDGE_LEFT:
-			toplevel->priv->drag_offset_x =
-				toplevel->priv->geometry.x + toplevel->priv->geometry.width;
-			break;
-		default:
-			g_assert_not_reached ();
-			break;
-		}
-	} else
 		gdk_window_get_pointer (widget->window,
 					&toplevel->priv->drag_offset_x,
 					&toplevel->priv->drag_offset_y,
 					NULL);
+	}
 
-	cursor = gdk_cursor_new (cursor_type);
-
-	gdk_pointer_grab (widget->window, FALSE,
-			  GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
-                          NULL, cursor, event->time);
-        gdk_cursor_unref (cursor);
+	panel_toplevel_begin_grab_op (toplevel, grab_op, FALSE, event->time);
 
 	return TRUE;
 }
@@ -1870,241 +2525,29 @@ panel_toplevel_button_release_event (GtkWidget      *widget,
 
 	toplevel = PANEL_TOPLEVEL (widget);
 
-	if (!toplevel->priv->in_drag)
+	if (toplevel->priv->grab_op == PANEL_GRAB_OP_NONE)
 		return FALSE;
 
-	gtk_grab_remove (widget);
-	gdk_pointer_ungrab (event->time);
+	if (toplevel->priv->grab_is_keyboard)
+		return FALSE;
 
-	if (toplevel->priv->move_timeout)
-		g_source_remove (toplevel->priv->move_timeout);
-	toplevel->priv->move_timeout = 0;
-
-	toplevel->priv->in_drag        = FALSE;
-	toplevel->priv->drag_is_rotate = FALSE;
-	toplevel->priv->drag_is_resize = FALSE;
+	panel_toplevel_end_grab_op (toplevel, event->time);
 
 	return TRUE;
 }
 
-static void
-panel_toplevel_calc_new_orientation (PanelToplevel *toplevel,
-				     int            pointer_x,
-				     int            pointer_y)
-{
-	PanelOrientation  new_orientation;
-	GdkScreen        *screen;
-	int               screen_width, screen_height;
-	int               hborder, vborder;
-	int               monitor;
-
-	screen = panel_toplevel_get_screen_geometry (
-			toplevel, &screen_width, &screen_height);
-
-	monitor = panel_multiscreen_locate_coords (screen, pointer_x, pointer_y);
-
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-		vborder = hborder = (3 * toplevel->priv->geometry.height) >> 1;
-	else
-		vborder = hborder = (3 * toplevel->priv->geometry.width)  >> 1;
-
-	new_orientation = toplevel->priv->orientation;
-
-	switch (toplevel->priv->orientation) {
-	case PANEL_ORIENTATION_TOP:
-		if (pointer_y > (screen_height - hborder))
-			new_orientation = PANEL_ORIENTATION_BOTTOM;
-
-		else if (pointer_y > hborder) {
-			if (pointer_x > (screen_width - vborder))
-				new_orientation = PANEL_ORIENTATION_RIGHT;
-			else if (pointer_x < vborder)
-				new_orientation = PANEL_ORIENTATION_LEFT;
-		} else
-			panel_toplevel_set_monitor (toplevel, monitor);
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
-		if (pointer_y < hborder)
-			new_orientation = PANEL_ORIENTATION_TOP;
-
-		else if (pointer_y < (screen_height - hborder)) {
-			if (pointer_x > (screen_width - vborder))
-				new_orientation = PANEL_ORIENTATION_RIGHT;
-			else if (pointer_x < vborder)
-				new_orientation = PANEL_ORIENTATION_LEFT;
-		} else
-			panel_toplevel_set_monitor (toplevel, monitor);
-		break;
-	case PANEL_ORIENTATION_LEFT:
-		if (pointer_x > (screen_width - vborder))
-			new_orientation = PANEL_ORIENTATION_RIGHT;
-
-		else if (pointer_x > vborder) {
-			if (pointer_y > (screen_height - hborder))
-				new_orientation = PANEL_ORIENTATION_BOTTOM;
-			else if (pointer_y < hborder)
-				new_orientation = PANEL_ORIENTATION_TOP;
-		} else
-			panel_toplevel_set_monitor (toplevel, monitor);
-		break;
-	case PANEL_ORIENTATION_RIGHT:
-		if (pointer_x < vborder)
-			new_orientation = PANEL_ORIENTATION_LEFT;
-
-		else if (pointer_x < (screen_width - vborder)) {
-			if (pointer_y > (screen_height - hborder))
-				new_orientation = PANEL_ORIENTATION_BOTTOM;
-			else if (pointer_y < hborder)
-				new_orientation = PANEL_ORIENTATION_TOP;
-		} else
-			panel_toplevel_set_monitor (toplevel, monitor);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	panel_toplevel_set_orientation (toplevel, new_orientation);
-}
-
-static void
-panel_toplevel_move_to_pointer (PanelToplevel *toplevel,
-				int            pointer_x,
-				int            pointer_y)
-{
-	PanelOrientation  new_orientation;
-	GdkScreen        *screen;
-	int               screen_width, screen_height;
-	int               width, height;
-	int               new_x, new_y;
-	int               new_monitor;
-	gboolean          x_centered = FALSE;
-	gboolean          y_centered = FALSE;
-
-	new_x = pointer_x - toplevel->priv->drag_offset_x;
-	new_y = pointer_y - toplevel->priv->drag_offset_y;
-
-	new_orientation = toplevel->priv->orientation;
-
-	screen = panel_toplevel_get_screen_geometry (
-			toplevel, &screen_width, &screen_height);
-
-	width  = toplevel->priv->geometry.width;
-	height = toplevel->priv->geometry.height;
-
-	new_x = CLAMP (new_x, 0, screen_width  - width);
-	new_y = CLAMP (new_y, 0, screen_height - height);
-
-	if (new_x <= SNAP_TOLERANCE) {
-		if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
-			new_orientation = PANEL_ORIENTATION_LEFT;
-		new_x = 0;
-	} else if ((new_x + width) >= (screen_width - SNAP_TOLERANCE)) {
-		if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
-			new_orientation = PANEL_ORIENTATION_RIGHT;
-		new_x = screen_width - width;
-	}
-
-	if (new_y <= SNAP_TOLERANCE) {
-		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-			new_orientation = PANEL_ORIENTATION_TOP;
-		new_y = 0;
-	} else if ((new_y + height) >= (screen_height - SNAP_TOLERANCE)) {
-		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-			new_orientation = PANEL_ORIENTATION_BOTTOM;
-		new_y = screen_height - height;
-	}
-
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK &&
-	    (new_y == 0 || new_y == (screen_height - height))) {
-		if (abs (new_x - ((screen_width - width) / 2)) <= SNAP_TOLERANCE) {
-			new_x = 0;
-			x_centered = TRUE;
-		}
-	} else if (toplevel->priv->orientation & PANEL_VERTICAL_MASK &&
-		   (new_x == 0 || new_x == (screen_width - width))) {
-		if (abs (new_y - ((screen_height - height) / 2)) <= SNAP_TOLERANCE) {
-			new_y = 0;
-			y_centered = TRUE;
-		}
-	}
-
-	new_monitor = panel_multiscreen_locate_coords (screen, new_x, new_y);
-
-	new_x -= panel_multiscreen_x (screen, new_monitor);
-	new_y -= panel_multiscreen_y (screen, new_monitor);
-
-	panel_toplevel_set_orientation (toplevel, new_orientation);
-	panel_toplevel_set_monitor (toplevel, new_monitor);
-	panel_toplevel_set_position (toplevel, new_x, x_centered, new_y, y_centered);
-}
-
-static void
-panel_toplevel_rotate_to_pointer (PanelToplevel *toplevel,
-				  int            pointer_x,
-				  int            pointer_y)
-{
-	GtkWidget *widget;
-	GdkScreen *screen;
-	int        x_diff, y_diff;
-	int        x, y;
-
-	widget = GTK_WIDGET (toplevel);
-
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-
-	x = toplevel->priv->geometry.x;
-	y = toplevel->priv->geometry.y;
-
-	x_diff = pointer_x - (x + toplevel->priv->geometry.width / 2);
-	y_diff = pointer_y - (y + toplevel->priv->geometry.height / 2);
-
-	if (((-y_diff > x_diff + SNAP_TOLERANCE) && x_diff > 0 && y_diff < 0) ||
-	    (( y_diff < x_diff + SNAP_TOLERANCE) && x_diff < 0 && y_diff < 0))
-		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_RIGHT);
-
-	else if (((-x_diff < y_diff - SNAP_TOLERANCE) && x_diff > 0 && y_diff < 0) ||
-	         (( x_diff > y_diff - SNAP_TOLERANCE) && x_diff > 0 && y_diff > 0))
-		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_BOTTOM);
-
-	else if ((( y_diff > x_diff + SNAP_TOLERANCE) && x_diff > 0 && y_diff > 0) ||
-	         ((-y_diff < x_diff + SNAP_TOLERANCE) && x_diff < 0 && y_diff > 0))
-		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_LEFT);
-
-	else if (((-x_diff > y_diff - SNAP_TOLERANCE) && x_diff < 0 && y_diff > 0) ||
-	         (( x_diff < y_diff - SNAP_TOLERANCE) && x_diff < 0 && y_diff < 0))
-		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_TOP);
-}
-
 static gboolean
-panel_toplevel_move_timeout_handler (GtkWidget *widget)
+panel_toplevel_key_press_event (GtkWidget   *widget,
+				GdkEventKey *event)
 {
-	PanelToplevel *toplevel;
-	GdkWindow     *root_window;
-	GdkScreen     *screen;
-	int            pointer_x = -1, pointer_y = -1;
+	PanelToplevel *toplevel = (PanelToplevel *) widget;
 
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (widget), FALSE);
+	if (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE &&
+	    panel_toplevel_handle_grab_op_key_event (toplevel, event))
+		return TRUE;
 
-	if (!GTK_WIDGET_REALIZED (widget))
-		return FALSE;
-
-	toplevel = PANEL_TOPLEVEL (widget);
-
-	toplevel->priv->move_timeout = 0;
-
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	root_window = gdk_screen_get_root_window (screen);
-	gdk_window_get_pointer (root_window, &pointer_x, &pointer_y, NULL);
-
-	if (toplevel->priv->expand)
-		panel_toplevel_calc_new_orientation (toplevel, pointer_x, pointer_y);
-
-	else if (!toplevel->priv->drag_is_rotate)
-		panel_toplevel_move_to_pointer (toplevel, pointer_x, pointer_y);
-
-	else
-		panel_toplevel_rotate_to_pointer (toplevel, pointer_x, pointer_y);
+	if (GTK_WIDGET_CLASS (parent_class)->key_press_event)
+		return GTK_WIDGET_CLASS (parent_class)->key_press_event (widget, event);
 
 	return FALSE;
 }
@@ -2113,78 +2556,26 @@ static void
 panel_toplevel_update_cursor_for_resize (PanelToplevel  *toplevel,
 					 GdkEventMotion *event)
 {
-	PanelFrameEdge  resize_edge;
-	GdkCursorType   cursor_type = -1;
-	GdkCursor      *cursor;
-	GtkWidget      *widget;
+	PanelGrabOpType  grab_op;
+	GdkCursorType    cursor_type = -1;
+	GdkCursor       *cursor;
+	GtkWidget       *widget;
 
 	widget = GTK_WIDGET (toplevel);
 
-	resize_edge = panel_toplevel_get_resize_edge (toplevel, event->x, event->y);
-
-	if (resize_edge == PANEL_EDGE_NONE) {
+	grab_op = panel_toplevel_get_resize_op (toplevel, event->x, event->y);
+	if (grab_op == PANEL_GRAB_OP_NONE) {
 		gdk_window_set_cursor (widget->window, NULL);
 		return;
 	}
 
-	cursor_type = panel_toplevel_edge_to_cursor (resize_edge);
+	cursor_type = panel_toplevel_grab_op_cursor (toplevel, grab_op);
 
 	g_assert (cursor_type != -1);
 
 	cursor = gdk_cursor_new (cursor_type);
 	gdk_window_set_cursor (widget->window, cursor);
 	gdk_cursor_unref (cursor);
-}
-
-static void
-panel_toplevel_resize_to_pointer (PanelToplevel *toplevel,
-				  int            x,
-				  int            y)
-{
-	int new_size;
-	int new_x, new_y;
-	int new_x_centered, new_y_centered;
-	int monitor_width, monitor_height;
-
-	new_size       = toplevel->priv->size;
-	new_x          = toplevel->priv->x;
-	new_y          = toplevel->priv->y;
-	new_x_centered = toplevel->priv->x_centered;
-	new_y_centered = toplevel->priv->x_centered;
-
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor_width, &monitor_height);
-
-	switch (toplevel->priv->resize_edge) {
-	case PANEL_EDGE_TOP:
-		new_size = toplevel->priv->drag_offset_y - y;
-		new_size = CLAMP (new_size, 0, monitor_height / 4);
-		new_y -= (new_size - toplevel->priv->size);
-		break;
-	case PANEL_EDGE_BOTTOM:
-		new_size = y - toplevel->priv->drag_offset_y;
-		new_size = CLAMP (new_size, 0, monitor_height / 4);
-		break;
-	case PANEL_EDGE_LEFT:
-		new_size = toplevel->priv->drag_offset_x - x;
-		new_size = CLAMP (new_size, 0, monitor_width / 4);
-		new_x -= (new_size - toplevel->priv->size);
-		break;
-	case PANEL_EDGE_RIGHT:
-		new_size = x - toplevel->priv->drag_offset_x;
-		new_size = CLAMP (new_size, 0, monitor_width / 4);
-		break;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	if (new_size == 0)
-		return;
-
-	panel_toplevel_set_position (
-		toplevel, new_x, new_x_centered, new_y, new_y_centered);
-	panel_toplevel_set_size (toplevel, new_size);
 }
 
 static gboolean
@@ -2195,27 +2586,13 @@ panel_toplevel_motion_notify_event (GtkWidget      *widget,
 
 	toplevel = PANEL_TOPLEVEL (widget);
 
-	if (!toplevel->priv->in_drag) {
+	if (toplevel->priv->grab_op == PANEL_GRAB_OP_NONE) {
 		panel_toplevel_update_cursor_for_resize (toplevel, event);
 		
 		return FALSE;
 	}
 
-	if (toplevel->priv->drag_is_resize) {
-		panel_toplevel_resize_to_pointer (toplevel, event->x_root, event->y_root);
-		return TRUE;
-	}
-
-	toplevel->priv->drag_is_rotate = (event->state & GDK_SHIFT_MASK);
-
-	if (!toplevel->priv->move_timeout)
-		toplevel->priv->move_timeout =
-			g_timeout_add (
-				50,
-				(GSourceFunc) panel_toplevel_move_timeout_handler,
-				widget);
-
-	return TRUE;
+	return panel_toplevel_handle_grab_op_motion_event (toplevel, event);
 }
 
 static gboolean
@@ -2391,6 +2768,8 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 			g_assert_not_reached ();
 			break;
 		}
+
+		panel_toplevel_update_hide_buttons (toplevel);
 	}
 
 	if (toplevel->priv->animate)
@@ -2429,6 +2808,8 @@ panel_toplevel_unhide (PanelToplevel *toplevel)
 		return;
 
 	toplevel->priv->state = PANEL_STATE_NORMAL;
+
+	panel_toplevel_update_hide_buttons (toplevel);
 
 	if (toplevel->priv->animate)
 		panel_toplevel_start_animation (toplevel);
@@ -2555,12 +2936,13 @@ panel_toplevel_enter_notify_event (GtkWidget        *widget,
 
 	toplevel = PANEL_TOPLEVEL (widget);
 
-	if (!toplevel->priv->auto_hide)
-		return FALSE;
+	if (toplevel->priv->auto_hide && event->detail != GDK_NOTIFY_INFERIOR)
+		panel_toplevel_queue_auto_unhide (toplevel);
 
-	panel_toplevel_queue_auto_unhide (toplevel);
+	if (GTK_WIDGET_CLASS (parent_class)->enter_notify_event)
+		return GTK_WIDGET_CLASS (parent_class)->enter_notify_event (widget, event);
 
-	return TRUE;
+	return FALSE;
 }
 
 static gboolean
@@ -2573,12 +2955,13 @@ panel_toplevel_leave_notify_event (GtkWidget        *widget,
 
 	toplevel = PANEL_TOPLEVEL (widget);
 
-	if (!toplevel->priv->auto_hide)
-		return FALSE;
+	if (toplevel->priv->auto_hide && event->detail != GDK_NOTIFY_INFERIOR)
+		panel_toplevel_queue_auto_hide (toplevel);
 
-	panel_toplevel_queue_auto_hide (toplevel);
+	if (GTK_WIDGET_CLASS (parent_class)->leave_notify_event)
+		return GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget, event);
 
-	return TRUE;
+	return FALSE;
 }
 
 static void
@@ -2617,28 +3000,24 @@ panel_toplevel_set_property (GObject      *object,
 		panel_toplevel_set_size (toplevel, g_value_get_int (value));
 		break;
 	case PROP_X:
-		panel_toplevel_set_position (toplevel,
-					     g_value_get_int (value),
-					     toplevel->priv->x_centered,
-					     -1,
-					     toplevel->priv->y_centered);
+		panel_toplevel_set_x (toplevel,
+				      g_value_get_int (value),
+				      toplevel->priv->x_centered);
 		break;
 	case PROP_X_CENTERED:
-		panel_toplevel_set_position (toplevel,
-					     -1, g_value_get_boolean (value),
-					     -1, toplevel->priv->y_centered);
+		panel_toplevel_set_x (toplevel,
+				      toplevel->priv->x,
+				      g_value_get_boolean (value));
 		break;
 	case PROP_Y:
-		panel_toplevel_set_position (toplevel,
-					     -1,
-					     toplevel->priv->x_centered,
-					     g_value_get_int (value),
-					     toplevel->priv->y_centered);
+		panel_toplevel_set_y (toplevel,
+				      g_value_get_int (value),
+				      toplevel->priv->y_centered);
 		break;
 	case PROP_Y_CENTERED:
-		panel_toplevel_set_position (toplevel,
-					     -1, g_value_get_boolean (value),
-					     -1, toplevel->priv->y_centered);
+		panel_toplevel_set_y (toplevel,
+				      toplevel->priv->y,
+				      g_value_get_boolean (value));
 		break;
 	case PROP_MONITOR:
 		panel_toplevel_set_monitor (toplevel, g_value_get_int (value));
@@ -2799,6 +3178,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->expose_event         = panel_toplevel_expose;
 	widget_class->button_press_event   = panel_toplevel_button_press_event;
 	widget_class->button_release_event = panel_toplevel_button_release_event;
+	widget_class->key_press_event      = panel_toplevel_key_press_event;
 	widget_class->motion_notify_event  = panel_toplevel_motion_notify_event;
 	widget_class->enter_notify_event   = panel_toplevel_enter_notify_event;
 	widget_class->leave_notify_event   = panel_toplevel_leave_notify_event;
@@ -3195,7 +3575,6 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	toplevel->priv->name        = NULL;
 	toplevel->priv->description = NULL;
 
-	toplevel->priv->move_timeout   = 0;
 	toplevel->priv->hide_timeout   = 0;
 	toplevel->priv->unhide_timeout = 0;
 
@@ -3203,6 +3582,8 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	toplevel->priv->geometry.y      = -1;
 	toplevel->priv->geometry.width  = -1;
 	toplevel->priv->geometry.height = -1;
+
+	toplevel->priv->grab_op = PANEL_GRAB_OP_NONE;
 
 	toplevel->priv->drag_offset_x = 0;
 	toplevel->priv->drag_offset_y = 0;
@@ -3235,10 +3616,8 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	toplevel->priv->arrows_enabled    = TRUE;
 	toplevel->priv->x_centered        = FALSE;
 	toplevel->priv->y_centered        = FALSE;
-	toplevel->priv->in_drag           = FALSE;
 	toplevel->priv->animating         = FALSE;
-	toplevel->priv->drag_is_rotate    = FALSE;
-	toplevel->priv->drag_is_resize    = FALSE;
+	toplevel->priv->grab_is_keyboard  = FALSE;
 	toplevel->priv->position_centered = FALSE;
 	toplevel->priv->block_auto_hide   = FALSE;
 	toplevel->priv->attached          = FALSE;
@@ -3355,9 +3734,9 @@ panel_toplevel_set_expand (PanelToplevel *toplevel,
 
 	if (!toplevel->priv->expand) {
 		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-			panel_toplevel_set_position (toplevel, 0, TRUE, -1, FALSE);
+			panel_toplevel_set_x (toplevel, 0, TRUE);
 		else
-			panel_toplevel_set_position (toplevel, -1, FALSE, 0, TRUE);
+			panel_toplevel_set_y (toplevel, 0, TRUE);
 	}
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
@@ -3493,52 +3872,63 @@ panel_toplevel_get_auto_hide_size (PanelToplevel *toplevel)
 }
 
 void
-panel_toplevel_set_position (PanelToplevel *toplevel,
-			     int            x,
-			     gboolean       x_centered,
-			     int            y,
-			     gboolean       y_centered)
+panel_toplevel_set_x (PanelToplevel *toplevel,
+		      int            x,
+		      gboolean       x_centered)
 {
 	gboolean changed = FALSE;
 
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-	g_return_if_fail (x >= 0 || x == -1);
-	g_return_if_fail (y >= 0 || y == -1);
 
 	x_centered = x_centered != FALSE;
+
+	g_object_freeze_notify (G_OBJECT (toplevel));
+
+	if (toplevel->priv->x != x) {
+		toplevel->priv->x = x;
+		changed = TRUE;
+		g_object_notify (G_OBJECT (toplevel), "x");
+	}
+
+	if (toplevel->priv->x_centered != x_centered) {
+		toplevel->priv->x_centered = x_centered;
+		changed = TRUE;
+		g_object_notify (G_OBJECT (toplevel), "x-centered");
+	}
+
+	if (changed)
+		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+
+	g_object_thaw_notify (G_OBJECT (toplevel));
+}
+
+void
+panel_toplevel_set_y (PanelToplevel *toplevel,
+		      int            y,
+		      gboolean       y_centered)
+{
+	gboolean changed = FALSE;
+
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
 	y_centered = y_centered != FALSE;
 
 	g_object_freeze_notify (G_OBJECT (toplevel));
 
-	if (x != -1) {
-		if (toplevel->priv->x != x) {
-			toplevel->priv->x = x;
-			changed = TRUE;
-			g_object_notify (G_OBJECT (toplevel), "x");
-		}
-
-		if (toplevel->priv->x_centered != x_centered) {
-			toplevel->priv->x_centered = x_centered;
-			changed = TRUE;
-			g_object_notify (G_OBJECT (toplevel), "x-centered");
-		}
+	if (toplevel->priv->y != y) {
+		toplevel->priv->y = y;
+		changed = TRUE;
+		g_object_notify (G_OBJECT (toplevel), "y");
 	}
 
-	if (y != -1) {
-		if (toplevel->priv->y != y) {
-			toplevel->priv->y = y;
-			changed = TRUE;
-			g_object_notify (G_OBJECT (toplevel), "y");
-		}
-
-		if (toplevel->priv->y_centered != y_centered) {
-			toplevel->priv->y_centered = y_centered;
-			changed = TRUE;
-			g_object_notify (G_OBJECT (toplevel), "y-centered");
-		}
+	if (toplevel->priv->y_centered != y_centered) {
+		toplevel->priv->y_centered = y_centered;
+		changed = TRUE;
+		g_object_notify (G_OBJECT (toplevel), "y-centered");
 	}
 
-	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+	if (changed)
+		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
 	g_object_thaw_notify (G_OBJECT (toplevel));
 }
@@ -3823,24 +4213,6 @@ panel_toplevel_get_is_hidden (PanelToplevel *toplevel)
 }
 
 void
-panel_toplevel_set_binding (PanelToplevel   *toplevel,
-			    guint            keyval,
-			    GdkModifierType  modifiers,
-			    const char      *signal)
-{
-	GtkBindingSet *binding_set;
-
-	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-	g_return_if_fail (keyval != 0);
-	g_return_if_fail (signal != NULL);
-
-	g_print ("setting binding %d %d %s\n", keyval, modifiers, signal);
-
-        binding_set = gtk_binding_set_by_class (PANEL_TOPLEVEL_GET_CLASS (toplevel));
-	gtk_binding_entry_add_signal (binding_set, keyval, modifiers, signal, 0);
-}
-
-void
 panel_toplevel_unset_binding (PanelToplevel   *toplevel,
 			      guint            keyval,
 			      GdkModifierType  modifiers)
@@ -3852,4 +4224,20 @@ panel_toplevel_unset_binding (PanelToplevel   *toplevel,
 
         binding_set = gtk_binding_set_by_class (PANEL_TOPLEVEL_GET_CLASS (toplevel));
 	gtk_binding_entry_clear (binding_set, keyval, modifiers);
+}
+
+void
+panel_toplevel_set_binding (PanelToplevel   *toplevel,
+			    guint            keyval,
+			    GdkModifierType  modifiers,
+			    const char      *signal)
+{
+	GtkBindingSet *binding_set;
+
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+	g_return_if_fail (keyval != 0);
+	g_return_if_fail (signal != NULL);
+
+        binding_set = gtk_binding_set_by_class (PANEL_TOPLEVEL_GET_CLASS (toplevel));
+	gtk_binding_entry_add_signal (binding_set, keyval, modifiers, signal, 0);
 }

@@ -113,3 +113,21 @@ panel_xutils_set_strut (GdkWindow *gdk_window,
 			 (guchar *) &struts, 4);
 	gdk_error_trap_pop ();
 }
+
+void
+panel_warp_pointer (GdkWindow *gdk_window,
+		    int        x,
+		    int        y)
+{
+	Display *display;
+	Window   window;
+
+	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
+
+	display = GDK_WINDOW_XDISPLAY (gdk_window);
+	window  = GDK_WINDOW_XWINDOW (gdk_window);
+
+	gdk_error_trap_push ();
+	XWarpPointer (display, None, window, 0, 0, 0, 0, x, y);
+	gdk_error_trap_pop ();
+}
