@@ -237,7 +237,8 @@ check_screen (void)
 	if (phsh_file == NULL)
 		return;
 
-	tmp = gdk_pixbuf_new_from_file (phsh_file);
+	tmp = gdk_pixbuf_new_from_file (fish_file, NULL);
+	/* FIXME:2 check error, for, well, errors */
 	if (tmp == NULL)
 		return;
 
@@ -337,7 +338,7 @@ static void
 find_kde_directory(void)
 {
 	int i;
-	char *kdedir = g_getenv ("KDEDIR");
+	const char *kdedir = g_getenv ("KDEDIR");
 	char *try_prefixes[] = {
 		"/usr",
 		"/opt/kde",
@@ -353,7 +354,7 @@ find_kde_directory(void)
 	}
 
 	/* if what configure gave us works use that */
-	if(g_file_test(KDE_MENUDIR,G_FILE_TEST_ISDIR)) {
+	if(g_file_test(KDE_MENUDIR,G_FILE_TEST_IS_DIR)) {
 		kde_menudir = g_strdup(KDE_MENUDIR);
 		kde_icondir = g_strdup(KDE_ICONDIR);
 		kde_mini_icondir = g_strdup(KDE_MINI_ICONDIR);
@@ -363,7 +364,7 @@ find_kde_directory(void)
 	for(i=0;try_prefixes[i];i++) {
 		char *try;
 		try = g_concat_dir_and_file(try_prefixes[i],"share/applnk");
-		if(g_file_test(try,G_FILE_TEST_ISDIR)) {
+		if(g_file_test(try,G_FILE_TEST_IS_DIR)) {
 			kde_menudir = try;
 			kde_icondir = g_concat_dir_and_file(try_prefixes[i],"share/icons");
 			kde_mini_icondir = g_concat_dir_and_file(try_prefixes[i],"share/icons/mini");
@@ -384,14 +385,15 @@ setup_merge_directory(void)
 {
 	int len;
 
-	merge_main_dir = gnome_datadir_file("gnome/apps/");
+	/* FIXME:2 this used to be gnome_datadir_file("gnome/apps") */
+	merge_main_dir = "/gnome/GNOME20/share/gnome/apps/";
 	merge_main_dir_len = merge_main_dir != NULL ? strlen (merge_main_dir) : 0;
 	merge_merge_dir = conditional_get_string ("/panel/Merge/Directory",
 						  "/etc/X11/applnk/",
 						  NULL);
 
 	if (string_empty (merge_merge_dir) ||
-	    ! g_file_test(merge_merge_dir, G_FILE_TEST_ISDIR)) {
+	    ! g_file_test(merge_merge_dir, G_FILE_TEST_IS_DIR)) {
 		g_free(merge_merge_dir);
 		merge_merge_dir = NULL;
 		return;
@@ -491,7 +493,9 @@ main(int argc, char **argv)
 		old_panel_cfg_path = g_strdup ("/panel.d/default/");
 
 #ifndef PER_SESSION_CONFIGURATION
-	real_global_path = gnome_config_get_real_path (old_panel_cfg_path);
+	/*FIXME:2 why did I comment this out ??? It complained 'gnome_user_dir' undeclared */
+	/* real_global_path = gnome_config_get_real_path (old_panel_cfg_path); */
+	real_global_path = "";
 	if ( ! panel_file_exists (real_global_path)) {
 		g_free (old_panel_cfg_path);
 		old_panel_cfg_path = g_strdup ("/panel.d/default/");

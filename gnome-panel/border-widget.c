@@ -77,10 +77,10 @@ border_pos_class_init (BorderPosClass *klass)
 	border_pos_signals[EDGE_CHANGE_SIGNAL] =
 		gtk_signal_new("edge_change",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(BorderPosClass,
 						 edge_change),
-			       gtk_marshal_NONE__ENUM,
+			       gtk_marshal_VOID__ENUM, /* FIXME:2 should we be using NONE__ENUM? */
 			       GTK_TYPE_NONE, 1,
 			       GTK_TYPE_ENUM);
 

@@ -105,7 +105,7 @@ button_widget_class_init (ButtonWidgetClass *class)
 	button_widget_signals[CLICKED_SIGNAL] =
 		gtk_signal_new("clicked",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(ButtonWidgetClass,
 			       			 clicked),
 			       gtk_signal_default_marshaller,
@@ -114,7 +114,7 @@ button_widget_class_init (ButtonWidgetClass *class)
 	button_widget_signals[PRESSED_SIGNAL] =
 		gtk_signal_new("pressed",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(ButtonWidgetClass,
 			       			 pressed),
 			       gtk_signal_default_marshaller,
@@ -123,7 +123,7 @@ button_widget_class_init (ButtonWidgetClass *class)
 	button_widget_signals[UNPRESSED_SIGNAL] =
 		gtk_signal_new("unpressed",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(ButtonWidgetClass,
 			       			 unpressed),
 			       gtk_signal_default_marshaller,

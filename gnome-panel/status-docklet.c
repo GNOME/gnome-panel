@@ -59,18 +59,35 @@ enum {
 static guint status_docklet_signals[LAST_SIGNAL] = {0};
 
 static void
-marshal_signal_build (GtkObject * object,
-		      GtkSignalFunc func,
-		      gpointer func_data,
-		      GtkArg * args)
+marshal_signal_build (GClosure     *closure,
+		      GValue       *return_value,
+		      guint         n_param_values,
+		      const GValue *param_values,
+		      gpointer      invocation_hint,
+		      gpointer      marshal_data)
 {
-	BuildSignal rfunc;
+  register BuildSignal callback;
+  register GCClosure *cc = (GCClosure*) closure;
+  register gpointer data1, data2;
 
-	rfunc = (BuildSignal) func;
+  g_return_if_fail (n_param_values == 3);
 
-	(*rfunc) (object,
-		  GTK_VALUE_POINTER (args[0]),
-		  func_data);
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+  callback = (BuildSignal) (marshal_data ? marshal_data : cc->callback);
+
+  callback (data1,
+            g_value_get_pointer (param_values + 1),
+            data2);
+
 }
 
 static void
@@ -85,7 +102,7 @@ status_docklet_class_init (StatusDockletClass *class)
 	status_docklet_signals[BUILD_PLUG_SIGNAL] =
 		gtk_signal_new("build_plug",
 			       GTK_RUN_FIRST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(StatusDockletClass,
 			       			 build_plug),
 			       marshal_signal_build,

@@ -71,17 +71,17 @@ sliding_pos_class_init (SlidingPosClass *klass)
 	sliding_pos_signals[ANCHOR_CHANGE_SIGNAL] =
 		gtk_signal_new("anchor_change",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(SlidingPosClass,
 						 anchor_change),
-			       gtk_marshal_NONE__ENUM,
+			       gtk_marshal_VOID__ENUM, /* FIXME:2 use NONE__ENUM ? */
 			       GTK_TYPE_NONE,
 			       1, GTK_TYPE_ENUM);
 
 	sliding_pos_signals[OFFSET_CHANGE_SIGNAL] =
 		gtk_signal_new("offset_change",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(SlidingPosClass,
 						 offset_change),
 			       gtk_marshal_NONE__INT,

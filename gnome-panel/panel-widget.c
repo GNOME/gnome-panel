@@ -116,8 +116,8 @@ panel_widget_get_type (void)
 			sizeof (PanelWidgetClass),
 			(GtkClassInitFunc) panel_widget_class_init,
 			(GtkObjectInitFunc) panel_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL,
+			NULL,
 		};
 
 		panel_widget_type =
@@ -143,21 +143,38 @@ enum {
 static guint panel_widget_signals[LAST_SIGNAL] = {0};
 static GtkFixedClass *parent_class = NULL;
 
-
 static void
-marshal_signal_back (GtkObject * object,
-		     GtkSignalFunc func,
-		     gpointer func_data,
-		     GtkArg * args)
+marshal_signal_back  (GClosure *closure,
+		     GValue *return_value,
+		     guint n_param_values,
+		     const GValue *param_values,
+		     gpointer invocation_hint,
+		     gpointer marshal_data)
 {
-	BackSignal rfunc;
+  register BackSignal callback;
+  register GCClosure *cc = (GCClosure*) closure;
+  register gpointer data1, data2;
+  
+  g_return_if_fail (n_param_values == 4);
+  
+  if (G_CLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
 
-	rfunc = (BackSignal) func;
+  callback = (BackSignal) (marshal_data ? marshal_data : cc->callback);
 
-	(*rfunc) (object, GTK_VALUE_ENUM (args[0]),
-		  GTK_VALUE_POINTER (args[1]),
-		  GTK_VALUE_POINTER (args[2]),
-		  func_data);
+  callback (data1, 
+	    g_value_get_enum (param_values + 1),
+	    (char *) g_value_get_string (param_values + 2),
+	    g_value_get_pointer (param_values + 3),
+	    data2);
 }
 
 static void
@@ -172,17 +189,17 @@ panel_widget_class_init (PanelWidgetClass *class)
 	panel_widget_signals[ORIENT_CHANGE_SIGNAL] =
 		gtk_signal_new("orient_change",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 orient_change),
-			       gtk_marshal_NONE__ENUM,
+			       gtk_marshal_VOID__ENUM, /* FIXME:2 should this be gtk_marshal_NONE__ENUM ? */
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);
 	panel_widget_signals[SIZE_CHANGE_SIGNAL] =
 		gtk_signal_new("size_change",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 size_change),
 			       gtk_marshal_NONE__INT,
@@ -192,7 +209,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	panel_widget_signals[APPLET_MOVE_SIGNAL] =
 		gtk_signal_new("applet_move",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_move),
 			       gtk_marshal_NONE__POINTER,
@@ -202,7 +219,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	panel_widget_signals[APPLET_ADDED_SIGNAL] =
 		gtk_signal_new("applet_added",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_added),
 			       gtk_marshal_NONE__POINTER,
@@ -212,7 +229,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	panel_widget_signals[APPLET_REMOVED_SIGNAL] =
 		gtk_signal_new("applet_removed",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_removed),
 			       gtk_marshal_NONE__POINTER,
@@ -222,7 +239,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	panel_widget_signals[BACK_CHANGE_SIGNAL] =
 		gtk_signal_new("back_change",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 back_change),
 			       marshal_signal_back,
@@ -234,7 +251,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	panel_widget_signals[APPLET_DRAW_SIGNAL] =
 		gtk_signal_new("applet_draw",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_draw),
 			       gtk_marshal_NONE__POINTER,
@@ -244,7 +261,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL] =
 		gtk_signal_new("applet_about_to_die",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_about_to_die),
 			       gtk_marshal_NONE__POINTER,
@@ -266,7 +283,8 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->size_request = panel_widget_size_request;
 	widget_class->size_allocate = panel_widget_size_allocate;
 	widget_class->expose_event = panel_widget_expose;
-	widget_class->draw = panel_widget_draw;
+	/* FIXME:2 is this necessary in GTK2? Compression stuff shouldn't be done */
+	/* widget_class->draw = panel_widget_draw; */
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
@@ -1642,7 +1660,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	if ( ! panel_file_exists (pixmap))
 		return FALSE;
 	
-	panel->backpix = gdk_pixbuf_new_from_file (pixmap);
+	panel->backpix = gdk_pixbuf_new_from_file (pixmap, NULL);
 	if (panel->backpix == NULL)
 		return FALSE;
 

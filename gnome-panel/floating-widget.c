@@ -98,7 +98,7 @@ floating_pos_class_init (FloatingPosClass *klass)
 	floating_pos_signals[COORDS_CHANGE_SIGNAL] =
 		gtk_signal_new ("floating_coords_change",
 				GTK_RUN_LAST,
-				object_class->type,
+				GTK_CLASS_TYPE (object_class),
 				GTK_SIGNAL_OFFSET (FloatingPosClass,
 						   coords_change),
 				gtk_marshal_NONE__INT_INT,
