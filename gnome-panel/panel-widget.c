@@ -11,6 +11,8 @@
 #include "panel-widget.h"
 #include "button-widget.h"
 #include "panel-util.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include "rgb-stuff.h"
 
 GSList *panels=NULL; /*other panels we might want to move the applet to*/
 
@@ -804,6 +806,45 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 	}
 }
 
+static void
+make_background(PanelWidget *panel, guchar *rgb_buf,
+		int x, int y, int w, int h,
+		GdkPixBuf *pb)
+{
+	if(pb) {
+		tile_rgb(rgb_buf,w,h,x,y,w*3,
+			 pb->art_pixbuf->pixels,
+			 pb->art_pixbuf->width,
+			 pb->art_pixbuf->height,
+			 pb->art_pixbuf->rowstride,
+			 pb->art_pixbuf->has_alpha);
+	} else {
+		int i;
+		int size;
+		int r,g,b;
+		guchar *p;
+		if(panel->back_type != PANEL_BACK_COLOR) {
+			GtkWidget *widget = GTK_WIDGET(panel);
+			/* convert to 8 bit per channel */
+			r = widget->style->bg[GTK_WIDGET_STATE(widget)].red>>8;
+			g = widget->style->bg[GTK_WIDGET_STATE(widget)].green>>8;
+			b = widget->style->bg[GTK_WIDGET_STATE(widget)].blue>>8;
+		} else {
+			/* convert to 8 bit per channel */
+			r = panel->back_color.red>>8;
+			g = panel->back_color.green>>8;
+			b = panel->back_color.blue>>8;
+		}
+		size = w*h;
+		p = rgb_buf;
+		for(i=0;i<size;i++) {
+			(*p++) = r;
+			(*p++) = g;
+			(*p++) = b;
+		}
+	}
+}
+
 void
 panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 {
@@ -811,7 +852,10 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	GtkWidget *widget;
 	GdkGC *gc;
 	GdkPixmap *pixmap;
+	GdkPixmap *bg_pixmap;
 	GdkRectangle da;
+	GdkPixBuf *pb = NULL;
+	int size;
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
@@ -822,7 +866,7 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	   widget->allocation.width <= 0 ||
 	   widget->allocation.height <= 0)
 		return;
-	
+
 	if(area) {
 		if(area->width==0 || area->height==0)
 			return;
@@ -834,6 +878,29 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 		da.height = widget->allocation.height;
 	}
 	
+	bg_pixmap = widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)];
+
+	if(panel->back_type == PANEL_BACK_NONE) {
+		if(bg_pixmap && bg_pixmap != panel->back_source) {
+			if(panel->backpix)
+				gdk_pixbuf_destroy(panel->backpix);
+			panel->backpix = my_gdk_pixbuf_rgb_from_drawable(bg_pixmap);
+			panel->back_source = bg_pixmap;
+		} else if(!bg_pixmap && panel->backpix) {
+			if(panel->backpix)
+				gdk_pixbuf_destroy(panel->backpix);
+			panel->backpix = NULL;
+		}
+		pb = panel->backpix;
+	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
+		if(panel->fit_pixmap_bg)
+			pb = gdk_pixbuf_scale(panel->backpix,
+					      panel->scale_w,
+					      panel->scale_h);
+		else
+			pb = panel->backpix;
+	} 
+	
 	pixmap = gdk_pixmap_new(widget->window,
 				da.width,da.height,
 				gtk_widget_get_visual(widget)->depth);
@@ -841,29 +908,64 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	gc = gdk_gc_new(pixmap);
 	gdk_gc_copy(gc,widget->style->bg_gc[GTK_WIDGET_STATE(widget)]);
 
-	if(widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]) {
-		gdk_gc_set_fill(gc, GDK_TILED);
-		gdk_gc_set_tile(gc, widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]);
-		gdk_gc_set_ts_origin(gc,-da.x,-da.y);
+	if(panel->back_type == PANEL_BACK_NONE) {
+		if(widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]) {
+			gdk_gc_set_fill(gc, GDK_TILED);
+			gdk_gc_set_tile(gc,
+					widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]);
+			gdk_gc_set_ts_origin(gc,-da.x,-da.y);
+		}
+	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
+		if(panel->backpixmap) {
+			gdk_gc_set_fill(gc, GDK_TILED);
+			gdk_gc_set_tile(gc, panel->backpixmap);
+			gdk_gc_set_ts_origin(gc,-da.x,-da.y);
+		}
+	} else /*COLOR*/ {
+		gdk_gc_set_foreground(gc, &panel->back_color);
 	}
-				
+
+
 	gdk_draw_rectangle(pixmap,gc, TRUE, 0,0,-1,-1);
 
-	gdk_gc_unref(gc);
+	/* get pixel size of an icon */
+	size = panel_widget_get_pixel_size(panel);
 
 	for(li = panel->applet_list; li != NULL;
 	    li = g_list_next(li)) {
 		AppletData *ad = li->data;
 		if(IS_BUTTON_WIDGET(ad->applet) &&
-		   (!area || gtk_widget_intersect(ad->applet, area, NULL)))
+		   ad->applet->allocation.x>=0 &&
+		   (!area || gtk_widget_intersect(ad->applet, area, NULL))) {
+			guchar *rgb_buf;
+			rgb_buf = g_new(guchar, size*size*3);
+			make_background(panel, rgb_buf,
+					ad->applet->allocation.x,
+					ad->applet->allocation.y,
+					size,size, pb);
 			button_widget_draw(BUTTON_WIDGET(ad->applet),
-					   pixmap,da.x,da.y);
+					   rgb_buf, size*3);
+			gdk_draw_rgb_image(pixmap,gc,
+					   ad->applet->allocation.x - da.x,
+					   ad->applet->allocation.y - da.y,
+					   size, size,
+					   GDK_RGB_DITHER_NONE,rgb_buf,
+					   size*3);
+			g_free(rgb_buf);
+			button_widget_draw_xlib(BUTTON_WIDGET(ad->applet),
+						pixmap, da.x, da.y);
+		}
 	}
+	gdk_gc_unref(gc);
+
 	gdk_draw_pixmap(widget->window,
 			widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
 			pixmap,
 			0,0,da.x,da.y,da.width,da.height);
 	gdk_pixmap_unref(pixmap);
+
+	if(pb!= panel->backpix)
+		gdk_pixbuf_destroy(pb);
 }
 
 void
@@ -1168,12 +1270,15 @@ panel_widget_set_back_pixmap (PanelWidget *panel, char *file)
 			g_free (panel->back_pixmap);
 		panel->back_pixmap = g_strdup (file);
 		panel->back_type = PANEL_BACK_PIXMAP;
+		panel_widget_draw_all(panel,NULL);
+
 		gtk_signal_emit(GTK_OBJECT(panel),
 				panel_widget_signals[BACK_CHANGE_SIGNAL],
 				panel->back_type,
 				panel->back_pixmap,
 				&panel->back_color);
-	}
+	} else
+		panel_widget_draw_all(panel,NULL);
 }
 
 static void
@@ -1182,37 +1287,25 @@ panel_try_to_set_default_back(PanelWidget *panel)
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 
-	gtk_widget_set_rc_style(GTK_WIDGET(panel));
-
 	panel_widget_draw_all(panel,NULL);
 }
 
 static void
 panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
 {
-	GtkStyle *ns;
+	GdkColormap *cmap;
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 	g_return_if_fail(color!=NULL);
+	
+	cmap = gtk_widget_get_colormap(GTK_WIDGET(panel));
 
-	ns = gtk_style_copy(GTK_WIDGET(panel)->style);
-	gtk_style_ref(ns);
+	if(gdk_colormap_alloc_color(cmap,color,FALSE,TRUE)) {
+		panel->back_color = *color;
 
-	ns->bg[GTK_STATE_NORMAL] = panel->back_color = *color;
-	ns->bg[GTK_STATE_NORMAL].pixel =
-		panel->back_color.pixel = 1; /* bogus */
-
-	if(ns->bg_pixmap[GTK_STATE_NORMAL]) {
-		gdk_pixmap_unref(ns->bg_pixmap[GTK_STATE_NORMAL]);
-		ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
+		panel_widget_draw_all(panel,NULL);
 	}
-
-	gtk_widget_set_style(GTK_WIDGET(panel), ns);
-
-	gtk_style_unref(ns);
-
-	panel_widget_draw_all(panel,NULL);
 }
 
 void
@@ -1222,9 +1315,9 @@ panel_widget_set_back_color(PanelWidget *panel, GdkColor *color)
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 	g_return_if_fail(color!=NULL);
 
+	panel->back_type = PANEL_BACK_COLOR;
 	panel_try_to_set_back_color(panel, color);
 
-	panel->back_type = PANEL_BACK_COLOR;
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[BACK_CHANGE_SIGNAL],
 			panel->back_type,
@@ -1232,19 +1325,60 @@ panel_widget_set_back_color(PanelWidget *panel, GdkColor *color)
 			&panel->back_color);
 }
 
+static GdkPixmap *
+get_pixmap_from_pixbuf(GtkWidget *w, GdkPixBuf *pb)
+{
+	GdkGC *gc;
+	GdkPixmap *p;
+	p = gdk_pixmap_new(w->window,
+			   pb->art_pixbuf->width,
+			   pb->art_pixbuf->height,
+			   gtk_widget_get_visual(GTK_WIDGET(w))->depth);
+	gc = gdk_gc_new(p);
+	if(!pb->art_pixbuf->has_alpha) {
+		gdk_draw_rgb_image(p,gc,0,0,
+				   pb->art_pixbuf->width,
+				   pb->art_pixbuf->height,
+				   GDK_RGB_DITHER_NORMAL,
+				   pb->art_pixbuf->pixels,
+				   pb->art_pixbuf->rowstride);
+	} else {
+		guchar *rgb;
+		rgb = g_new(guchar,pb->art_pixbuf->width*pb->art_pixbuf->height*3);
+		tile_rgb(rgb,
+			 pb->art_pixbuf->width,pb->art_pixbuf->height,
+			 0,0,
+			 pb->art_pixbuf->width*3,
+			 pb->art_pixbuf->pixels,
+			 pb->art_pixbuf->width,pb->art_pixbuf->height,
+			 pb->art_pixbuf->rowstride, TRUE);
+		gdk_draw_rgb_image(p,gc,0,0,
+				   pb->art_pixbuf->width,
+				   pb->art_pixbuf->height,
+				   GDK_RGB_DITHER_NORMAL,
+				   rgb,
+				   pb->art_pixbuf->width*3);
+		g_free(rgb);
+	}
+	gdk_gc_destroy(gc);
+	return p;
+}
+
+
 static void
 panel_resize_pixmap(PanelWidget *panel)
 {
-	GdkPixmap *p;
-	GtkStyle *ns;
-	GdkPixBuf *pb = NULL;
-	GdkGC *gc;
 	int w, h;
+	GdkPixBuf *pb = NULL;
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 	
 	if(!panel->backpix) return;
+	
+	if(panel->backpixmap)
+		gdk_pixmap_unref(panel->backpixmap);
+	panel->backpixmap = NULL;
 
 	w = panel->backpix->art_pixbuf->width;
 	h = panel->backpix->art_pixbuf->height;
@@ -1252,43 +1386,25 @@ panel_resize_pixmap(PanelWidget *panel)
 	switch (panel->orient) {
 	case PANEL_HORIZONTAL:
 		pb = gdk_pixbuf_scale(panel->backpix,
-				      w * panel->thick / h, panel->thick);
+				      w * panel->thick / h,
+				      panel->thick);
 		break;
 
 	case PANEL_VERTICAL:
 		pb = gdk_pixbuf_scale(panel->backpix,
-				      panel->thick, h * panel->thick / w);
+				      panel->thick,
+				      h * panel->thick / w);
 		break;
 
 	default:
 		g_assert_not_reached ();
 	}
 
-	p = gdk_pixmap_new(GTK_WIDGET(panel)->window,
-			   pb->art_pixbuf->width,
-			   pb->art_pixbuf->height,
-			   gtk_widget_get_visual(GTK_WIDGET(panel))->depth);
-	gc = gdk_gc_new(p);
-	gdk_draw_rgb_image(p,gc,0,0,
-			   pb->art_pixbuf->width,
-			   pb->art_pixbuf->height,
-			   GDK_RGB_DITHER_NORMAL,
-			   pb->art_pixbuf->pixels,
-			   pb->art_pixbuf->rowstride);
-	gdk_gc_destroy(gc);
+	panel->scale_w = pb->art_pixbuf->width;
+	panel->scale_h = pb->art_pixbuf->height;
 	
+	panel->backpixmap = get_pixmap_from_pixbuf(GTK_WIDGET(panel),pb);
 	gdk_pixbuf_destroy(pb);
-
-	ns = gtk_style_copy(GTK_WIDGET(panel)->style);
-	gtk_style_ref(ns);
-
-	if(ns->bg_pixmap[GTK_STATE_NORMAL])
-		gdk_pixmap_unref (ns->bg_pixmap[GTK_STATE_NORMAL]);
-	ns->bg_pixmap[GTK_STATE_NORMAL] = p;
-
-	gtk_widget_set_style(GTK_WIDGET(panel), ns);
-	
-	gtk_style_unref(ns);
 
 	panel_widget_draw_all(panel,NULL);
 }
@@ -1296,97 +1412,58 @@ panel_resize_pixmap(PanelWidget *panel)
 static int
 panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 {
-	GdkPixBuf *pb;
-	GdkPixBuf *pb_to_render;
-	GdkGC *gc;
-	GdkPixmap *p;
-	GtkStyle *ns;
-
 	g_return_val_if_fail(panel!=NULL,FALSE);
 	g_return_val_if_fail(IS_PANEL_WIDGET(panel),FALSE);
 
+	if(panel->backpix)
+		gdk_pixbuf_destroy(panel->backpix);
+	panel->backpix = NULL;
+	if(panel->backpixmap)
+		gdk_pixmap_unref(panel->backpixmap);
+	panel->backpixmap = NULL;
+
 	if(!pixmap || strcmp(pixmap,"")==0) {
-		ns = gtk_style_copy(GTK_WIDGET(panel)->style);
-		gtk_style_ref(ns);
-
-		p = ns->bg_pixmap[GTK_STATE_NORMAL];
-		if(p)
-			gdk_pixmap_unref (p);
-		ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
-
-		gtk_widget_set_style(GTK_WIDGET(panel), ns);
-	
-		gtk_style_unref(ns);
-
-		panel_widget_draw_all(panel,NULL);
 		return TRUE;
 	}
 
 	if (!g_file_exists (pixmap))
 		return FALSE;
 	
-	pb = gdk_pixbuf_load_image (pixmap);
-	if (!pb)
+	panel->backpix = gdk_pixbuf_load_image (pixmap);
+	if (!panel->backpix)
 		return FALSE;
 	
-	if(panel->backpix)
-		gdk_pixbuf_destroy(panel->backpix);
-
-	panel->backpix = pb_to_render = pb;
-
 	if (panel->fit_pixmap_bg) {
 		int w, h;
+		GdkPixBuf *pb = NULL;
 
-		w = pb->art_pixbuf->width;
-		h = pb->art_pixbuf->height;
+		w = panel->backpix->art_pixbuf->width;
+		h = panel->backpix->art_pixbuf->height;
 
 		switch (panel->orient) {
 		case PANEL_HORIZONTAL:
-			pb_to_render =
-				gdk_pixbuf_scale(pb,
-						 w * panel->thick / h, panel->thick);
+			pb = gdk_pixbuf_scale(panel->backpix,
+					      w * panel->thick / h, panel->thick);
 			break;
 
 		case PANEL_VERTICAL:
-			pb_to_render =
-				gdk_pixbuf_scale(pb,
-						 panel->thick, h * panel->thick / w);
+			pb = gdk_pixbuf_scale(panel->backpix,
+					      panel->thick, h * panel->thick / w);
 			break;
 
 		default:
 			g_assert_not_reached ();
 		}
+		panel->scale_w = pb->art_pixbuf->width;
+		panel->scale_h = pb->art_pixbuf->height;
+	
+		panel->backpixmap = get_pixmap_from_pixbuf(GTK_WIDGET(panel), pb);
+		gdk_pixbuf_destroy(pb);
+	} else {
+		panel->backpixmap = get_pixmap_from_pixbuf(GTK_WIDGET(panel),
+							   panel->backpix);
 	}
 
-	p = gdk_pixmap_new(GTK_WIDGET(panel)->window,
-			   pb_to_render->art_pixbuf->width,
-			   pb_to_render->art_pixbuf->height,
-			   gtk_widget_get_visual(GTK_WIDGET(panel))->depth);
-	gc = gdk_gc_new(p);
-	gdk_draw_rgb_image(p,gc,0,0,
-			   pb_to_render->art_pixbuf->width,
-			   pb_to_render->art_pixbuf->height,
-			   GDK_RGB_DITHER_NORMAL,
-			   pb_to_render->art_pixbuf->pixels,
-			   pb_to_render->art_pixbuf->rowstride);
-	gdk_gc_destroy(gc);
-	
-	/* if we made another pixbuf in scaling, destroy it now */
-	if(pb!=pb_to_render)
-		gdk_pixbuf_destroy(pb_to_render);
-
-	ns = gtk_style_copy(GTK_WIDGET(panel)->style);
-	gtk_style_ref(ns);
-
-	if(ns->bg_pixmap[GTK_STATE_NORMAL])
-		gdk_pixmap_unref (ns->bg_pixmap[GTK_STATE_NORMAL]);
-	ns->bg_pixmap[GTK_STATE_NORMAL] = p;
-
-	gtk_widget_set_style(GTK_WIDGET(panel), ns);
-	
-	gtk_style_unref(ns);
-	
-	panel_widget_draw_all(panel,NULL);
 	return TRUE;
 }
 
@@ -1403,6 +1480,7 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 	if(panel->back_type == PANEL_BACK_PIXMAP) {
 		if (!panel_try_to_set_pixmap (panel, panel->back_pixmap))
 			panel->back_type = PANEL_BACK_NONE;
+		panel_widget_draw_all(panel,NULL);
 	} else if(panel->back_type == PANEL_BACK_COLOR) {
 		panel_try_to_set_back_color(panel, &panel->back_color);
 	}
@@ -1507,6 +1585,8 @@ panel_widget_init (PanelWidget *panel)
 	panel->no_window_applet_list = NULL;
 	panel->master_widget = NULL;
 	panel->drop_widget = GTK_WIDGET(panel);
+	panel->backpix = NULL;
+	panel->backpixmap = NULL;
 
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "destroy",
@@ -2451,6 +2531,7 @@ panel_widget_change_params(PanelWidget *panel,
 	panel->fit_pixmap_bg = fit_pixmap_bg;
 	if(back_type == PANEL_BACK_PIXMAP) {
 		panel_try_to_set_pixmap (panel, panel->back_pixmap);
+		panel_widget_draw_all(panel,NULL);
 	} else if(back_type == PANEL_BACK_COLOR) {
 		panel_try_to_set_back_color(panel, &panel->back_color);
 	} else {

@@ -38,11 +38,11 @@ create_logout_widget(void)
 
 	pixmap_name = gnome_pixmap_file("gnome-term-night.png");
 
-	button = button_widget_new_from_file(pixmap_name,-1,
-					     MISC_TILE,
-					     FALSE,
-					     ORIENT_UP,
-					     _("Log out"));
+	button = button_widget_new(pixmap_name,-1,
+				   MISC_TILE,
+				   FALSE,
+				   ORIENT_UP,
+				   _("Log out"));
 	g_free(pixmap_name);
 	gtk_tooltips_set_tip (panel_tooltips,button,_("Log out of GNOME"),NULL);
 
@@ -71,11 +71,11 @@ create_lock_widget(void)
 
 	pixmap_name = gnome_pixmap_file("gnome-lockscreen.png");
 
-	button = button_widget_new_from_file(pixmap_name,-1,
-					     MISC_TILE,
-					     FALSE,
-					     ORIENT_UP,
-					     _("Lock screen"));
+	button = button_widget_new(pixmap_name,-1,
+				   MISC_TILE,
+				   FALSE,
+				   ORIENT_UP,
+				   _("Lock screen"));
 	g_free(pixmap_name);
 	gtk_tooltips_set_tip (panel_tooltips,button,_("Lock screen"),NULL);
 

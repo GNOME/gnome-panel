@@ -189,8 +189,8 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		char *pixmap_name = get_pixmap(this_menu,
 					       strcmp(menu->path,".")==0);
 		/*make the pixmap*/
-		button_widget_set_pixmap_from_file (BUTTON_WIDGET(menu->button),
-						    pixmap_name, -1);
+		button_widget_set_pixmap (BUTTON_WIDGET(menu->button),
+					  pixmap_name, -1);
 		g_free(pixmap_name);
 		
 		add_menu_widget(menu,list, strcmp(menu->path,".")==0, TRUE);

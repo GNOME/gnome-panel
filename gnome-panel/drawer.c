@@ -49,15 +49,15 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	s = gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(pixentry));
 	if(!s || !*s) {
 		drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
-		button_widget_set_pixmap_from_file (BUTTON_WIDGET(drawer->button),
-						    drawer->pixmap,-1);
+		button_widget_set_pixmap (BUTTON_WIDGET(drawer->button),
+					  drawer->pixmap,-1);
 	} else {
-		if(button_widget_set_pixmap_from_file(BUTTON_WIDGET(drawer->button), s, -1))
+		if(button_widget_set_pixmap(BUTTON_WIDGET(drawer->button), s, -1))
 			drawer->pixmap = g_strdup(s);
 		else {
 			drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
-			button_widget_set_pixmap_from_file (BUTTON_WIDGET(drawer->button),
-							    drawer->pixmap,-1);
+			button_widget_set_pixmap(BUTTON_WIDGET(drawer->button),
+						 drawer->pixmap,-1);
 		}
 	}
 	g_free(s);
@@ -266,10 +266,10 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 	} else {
 		drawer->pixmap = g_strdup(pixmap);
 	}
-	drawer->button = button_widget_new_from_file (drawer->pixmap, -1,
-						      DRAWER_TILE,
-						      TRUE,orient,
-						      _("Drawer"));
+	drawer->button = button_widget_new (drawer->pixmap, -1,
+					    DRAWER_TILE,
+					    TRUE,orient,
+					    _("Drawer"));
 		gtk_widget_show(drawer->button);
 
 	drawer->drawer = drawer_panel;

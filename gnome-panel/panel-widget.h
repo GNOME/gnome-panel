@@ -87,7 +87,19 @@ struct _PanelWidget
 	
 	GtkWidget		*panel_parent;
 	
-	GdkPixBuf		*backpix;
+	GdkPixBuf		*backpix;	/* background pixmap unscaled */
+	int			scale_w,scale_h;
+	
+	GdkPixmap		*backpixmap;	/* if a background pixmap was set,
+						   this is used for tiling onto the
+						   background */
+	
+	GdkPixmap		*back_source;	/* an X pixmap that was the source
+						   of backpix, we don't hold a
+						   refcount, we just use the
+						   pointer to find out if we should
+						   reread the scaledpix rgb from the
+						   bg_pixmap from style */
 };
 
 struct _PanelWidgetClass

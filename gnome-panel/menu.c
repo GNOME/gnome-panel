@@ -2378,7 +2378,6 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 	guint16 w, h;
 	BasePWidget *basep;
 	BasePPos *old_pos;
-	PanelWidget *panel;
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
 
 	g_return_if_fail(cur_panel != NULL);
@@ -2426,7 +2425,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
-		if (PANEL_WIDGET (panel)->orient == PANEL_HORIZONTAL) {
+		if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL) {
 			mid = x + w / 2;
 			max = gdk_screen_width ();
 		} else {
@@ -2456,7 +2455,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
 		
-		if (PANEL_WIDGET (panel)->orient == PANEL_HORIZONTAL) {
+		if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL) {
 			val = x;
 			max = gdk_screen_width ();
 		} else {
@@ -2728,7 +2727,7 @@ update_hiding_menu (GtkWidget *menu, gpointer data)
 	char *s = NULL;
 	GtkWidget *menuitem = NULL;
 	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
-	BasePWidget *basep = cur_panel->panel_parent;
+	BasePWidget *basep = BASEP_WIDGET(cur_panel->panel_parent);
 	s =  (basep->mode == BASEP_EXPLICIT_HIDE)
 		? MENU_MODE_EXPLICIT_HIDE
 		: MENU_MODE_AUTO_HIDE;
@@ -3397,10 +3396,8 @@ create_panel_menu (char *menudir, int main_menu,
 	menu->main_menu_flags = main_menu_flags;
 
 	/*make the pixmap*/
-	menu->button = button_widget_new_from_file (pixmap_name,-1,
-						    MENU_TILE,
-						    TRUE,orient,
-						    _("Menu"));
+	menu->button = button_widget_new (pixmap_name,-1, MENU_TILE,
+					  TRUE,orient, _("Menu"));
 	gtk_signal_connect_after (GTK_OBJECT (menu->button), "pressed",
 				  GTK_SIGNAL_FUNC (menu_button_pressed), menu);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",

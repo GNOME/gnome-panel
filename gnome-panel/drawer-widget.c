@@ -131,7 +131,7 @@ get_lowest_level_master_pd(PanelWidget *panel)
 
 	while(panel->master_widget)
 		panel = PANEL_WIDGET(panel->master_widget->parent);
-	parent = panel->panel_parent;
+	parent = GTK_OBJECT(panel->panel_parent);
 	g_return_val_if_fail(parent!=NULL,NULL);
 	
 	pd = gtk_object_get_user_data(parent);

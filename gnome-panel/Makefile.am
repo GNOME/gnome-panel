@@ -116,7 +116,9 @@ base_panel_SOURCES=\
 	panel-util.c		\
 	panel-util.h		\
 	tearoffitem.c		\
-	tearoffitem.h
+	tearoffitem.h		\
+	rgb-stuff.h		\
+	rgb-stuff.c
 
 panel_SOURCES = 		\
 	$(base_panel_SOURCES)

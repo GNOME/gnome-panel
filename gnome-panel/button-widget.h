@@ -18,10 +18,9 @@ typedef struct _ButtonWidgetClass	ButtonWidgetClass;
 
 struct _ButtonWidget
 {
-	GtkWidget		_pixmap;
+	GtkWidget		pixmap;
 	
-	GdkPixmap		*pixmap; /*this is the one we start from*/
-	GdkBitmap		*mask;
+	GdkPixBuf		*pixbuf;
 	
 	char			*filename;
 	int			size;
@@ -57,15 +56,7 @@ struct _ButtonWidgetClass
 
 guint		button_widget_get_type		(void);
 
-GtkWidget*	button_widget_new		(char *filename,
-						 GdkPixmap *pixmap,
-						 GdkBitmap *mask,
-						 int size,
-						 guint tile,
-						 guint arrow,
-						 PanelOrientType orient,
-						 char *text);
-GtkWidget*	button_widget_new_from_file	(char *pixmap,
+GtkWidget*	button_widget_new		(char *pixmap,
 						 int size,
 						 guint tile,
 						 guint arrow,
@@ -73,18 +64,16 @@ GtkWidget*	button_widget_new_from_file	(char *pixmap,
 						 char *text);
 
 void		button_widget_draw		(ButtonWidget *button,
+						 guchar *rgb,
+						 int rowstride);
+/* draw the xlib part (arrow/text) */
+void		button_widget_draw_xlib		(ButtonWidget *button,
 						 GdkPixmap *pixmap,
-						 int offx,
-						 int offy);
+						 int offx, int offy);
 
-void		button_widget_set_pixmap	(ButtonWidget *button,
-						 char *filename,
-						 int size,
-						 GdkPixmap *pixmap,
-						 GdkBitmap *mask);
-int		button_widget_set_pixmap_from_file(ButtonWidget *button,
-						   char *pixmap,
-						   int size);
+int		button_widget_set_pixmap	(ButtonWidget *button,
+						 char *pixmap,
+						 int size);
 
 void		button_widget_set_text		(ButtonWidget *button,
 						 char *text);

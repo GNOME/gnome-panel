@@ -365,7 +365,7 @@ basep_pos_get_hide_pos (BasePWidget *basep,
 static void
 basep_pos_class_init (BasePPosClass *klass)
 {
-	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
+	/*GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);*/
 
 	basep_pos_parent_class = gtk_type_class(gtk_object_get_type ());
 
