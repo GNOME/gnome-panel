@@ -1,3 +1,12 @@
+2004-10-04  Vincent Noel  <vnoel@cox.net>
+
+	* panel-addto.c: Split the "application launcher" items out of
+	internal_addto_items into their own array.
+	(panel_addto_append_item): extracted from panel_addto_make_applet_model.
+	(panel_addto_append_special_applets): new.
+	(panel_addto_make_applet_model): Move the "application launchers"
+	at the top of the list. Add a separator before the other applets.
+
 2004-09-29  Vincent Noel  <vnoel@cox.net>
 
 	* panel-run-dialog.c (panel_run_dialog_set_icon): scale down the

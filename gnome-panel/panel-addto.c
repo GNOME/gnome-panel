@@ -97,7 +97,7 @@ typedef struct {
 	PanelAddtoItemInfo  item_info;
 } PanelAddtoAppList;
 
-static PanelAddtoItemInfo internal_addto_items [] = {
+static PanelAddtoItemInfo special_addto_items [] = {
 
 	{ PANEL_ADDTO_LAUNCHER_NEW,
 	  N_("Custom Application Launcher"),
@@ -119,7 +119,11 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  NULL,
 	  NULL,
 	  "LAUNCHER:MENU",
-	  TRUE },
+	  TRUE }
+
+};
+
+static PanelAddtoItemInfo internal_addto_items [] = {
 
 	{ PANEL_ADDTO_MENU,
 	  N_("Main Menu"),
@@ -195,8 +199,10 @@ panel_addto_append_internal_applets (GSList *list)
 	int             i;
 
 	for (i = 0; i < G_N_ELEMENTS (internal_addto_items); i++) {
-		internal_addto_items [i].name        = _(internal_addto_items [i].name);
-		internal_addto_items [i].description = _(internal_addto_items [i].description);
+		if (!translated) {
+			internal_addto_items [i].name        = _(internal_addto_items [i].name);
+			internal_addto_items [i].description = _(internal_addto_items [i].description);
+		}
 
                 list = g_slist_append (list, &internal_addto_items [i]);
         }
@@ -429,37 +435,24 @@ panel_addto_query_applets (GSList *list)
 	return list;
 }
 
-static GtkTreeModel *
-panel_addto_make_applet_model (PanelAddtoDialog *dialog)
+static void
+panel_addto_append_item (PanelAddtoDialog *dialog,
+			 GtkListStore *model,
+			 PanelAddtoItemInfo *applet)
 {
-	GtkListStore *model;
+	char *text;
+	GdkPixbuf *pixbuf;
 	GtkTreeIter iter;
-	GSList *item = NULL;
 
-	if (panel_profile_list_is_writable (PANEL_GCONF_APPLETS)) {
-		dialog->applet_list = panel_addto_query_applets (dialog->applet_list);
-	}
-
-	if (panel_profile_list_is_writable (PANEL_GCONF_OBJECTS)) {
-		dialog->applet_list = panel_addto_append_internal_applets (dialog->applet_list);
-	}
-
-	dialog->applet_list = g_slist_sort (dialog->applet_list,
-					    (GCompareFunc) panel_addto_applet_info_sort_func);
-
-	model = gtk_list_store_new (NUMBER_COLUMNS,
-				    GDK_TYPE_PIXBUF,
-				    G_TYPE_STRING,
-				    G_TYPE_POINTER,
-				    G_TYPE_STRING);
-
-	for (item = dialog->applet_list; item != NULL; item = item->next) {
-		PanelAddtoItemInfo *applet;
-		char *text;
-		GdkPixbuf *pixbuf;
-
-		applet = (PanelAddtoItemInfo *) item->data;
-
+	if (applet == NULL) {
+		gtk_list_store_append (model, &iter);
+		gtk_list_store_set (model, &iter,
+				    COLUMN_ICON, NULL,
+				    COLUMN_TEXT, NULL,
+				    COLUMN_DATA, NULL,
+				    COLUMN_SEARCH, NULL,
+				    -1);
+	} else {
 		if (applet->icon != NULL) {
 			pixbuf = panel_addto_make_pixbuf (applet->icon,
 							  GTK_ICON_SIZE_DIALOG);
@@ -483,6 +476,56 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 				    -1);
 		g_free (text);
 	}
+}
+
+static void
+panel_addto_append_special_applets (PanelAddtoDialog *dialog,
+				    GtkListStore *model)
+{
+	static gboolean translated = FALSE;
+	int i;
+	
+	for (i = 0; i < G_N_ELEMENTS (special_addto_items); i++) {
+		if (!translated) {
+			special_addto_items [i].name = _(special_addto_items [i].name);
+			special_addto_items [i].description = _(special_addto_items [i].description);
+		}
+		
+		panel_addto_append_item (dialog, model, &special_addto_items [i]);
+	}
+	
+	translated = TRUE;
+}
+
+static GtkTreeModel *
+panel_addto_make_applet_model (PanelAddtoDialog *dialog)
+{
+	GtkListStore *model;
+	GSList       *l;
+
+	if (panel_profile_list_is_writable (PANEL_GCONF_APPLETS))
+		dialog->applet_list = panel_addto_query_applets (dialog->applet_list);
+
+	if (panel_profile_list_is_writable (PANEL_GCONF_OBJECTS))
+		dialog->applet_list = panel_addto_append_internal_applets (dialog->applet_list);
+
+	dialog->applet_list = g_slist_sort (dialog->applet_list,
+					    (GCompareFunc) panel_addto_applet_info_sort_func);
+
+	model = gtk_list_store_new (NUMBER_COLUMNS,
+				    GDK_TYPE_PIXBUF,
+				    G_TYPE_STRING,
+				    G_TYPE_POINTER,
+				    G_TYPE_STRING);
+
+	if (panel_profile_list_is_writable (PANEL_GCONF_OBJECTS)) {
+		panel_addto_append_special_applets (dialog, model);
+		if (dialog->applet_list)
+			panel_addto_append_item (dialog, model, NULL);
+	}
+
+	for (l = dialog->applet_list; l; l = l->next)
+		panel_addto_append_item (dialog, model, l->data);
 
 	return (GtkTreeModel *) model;
 }
@@ -906,6 +949,23 @@ panel_addto_selection_activated (GtkTreeView       *view,
 			     PANEL_ADDTO_RESPONSE_ADD);
 }
 
+static gboolean
+panel_addto_separator_func (GtkTreeModel *model,
+			    GtkTreeIter *iter,
+			    gpointer data)
+{
+	int column = GPOINTER_TO_INT (data);
+	char *text;
+	
+	gtk_tree_model_get (model, iter, column, &text, -1);
+	
+	if (!text)
+		return TRUE;
+	
+	g_free(text);
+	return FALSE;
+}
+
 static PanelAddtoDialog *
 panel_addto_dialog_new (PanelWidget *panel_widget)
 {
@@ -1004,6 +1064,12 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 
 	gtk_tree_view_set_search_column (GTK_TREE_VIEW (dialog->tree_view),
 					 COLUMN_SEARCH);
+
+	gtk_tree_view_set_row_separator_func (GTK_TREE_VIEW (dialog->tree_view),
+					      panel_addto_separator_func,
+					      GINT_TO_POINTER (COLUMN_TEXT),
+					      NULL);
+					      
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
