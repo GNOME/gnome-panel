@@ -1,3 +1,19 @@
+Mon Nov  1 15:52:04 2004  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-panel-screenshot:
+	* gnome-panel-screenshot.c:
+	* gnome-panel-screenshot.glade:
+	* gnome-panel-screenshot.schemas.in:
+	* screenshot-dialog.c:
+	* screenshot-dialog.h:
+	* screenshot-save.c:
+	* screenshot-save.h:
+	* screenshot-xfer.c:
+	* screenshot-xfer.h: Pretty big rewrite.  Start of gnome_vfs
+	support.  It's not complete, and the dialog is fully stubbed, but
+	you can now save to remote URI's.  Additionally, it now has a file
+	chooser embedded in it.
+
 2004-11-01  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-properties-dialog.c: remove a useless comma

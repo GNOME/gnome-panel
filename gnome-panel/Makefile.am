@@ -203,12 +203,16 @@ gnome_desktop_item_edit_LDADD = 	\
 
 gnome_panel_screenshot_SOURCES = \
 	gnome-panel-screenshot.c	\
+	screenshot-dialog.c		\
+	screenshot-dialog.h		\
 	screenshot-shadow.c		\
 	screenshot-shadow.h		\
 	screenshot-utils.c		\
 	screenshot-utils.h		\
 	screenshot-save.c		\
 	screenshot-save.h		\
+	screenshot-xfer.c		\
+	screenshot-xfer.h		\
 	$(NULL)
 
 gnome_panel_screenshot_LDFLAGS = -export-dynamic
@@ -222,6 +226,7 @@ gnome_panel_screenshot_LDADD = 	\
 gladedir = $(datadir)/gnome/panel/glade
 glade_DATA =					\
 	gnome-panel-screenshot.glade		\
+	gnome-panel-screenshot2.glade		\
 	panel-properties-dialog.glade		\
 	panel-run-dialog.glade
 
