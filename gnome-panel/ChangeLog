@@ -1,5 +1,14 @@
 2001-10-11  Alex Larsson  <alexl@redhat.com>
 
+	* menu.c (menus_have_icons):
+	New function that always returns TRUE. Should use GConf
+	instead. Changed all gnome_preferences_get_menus_have_icons
+	to menus_have_icons().
+	(fake_pixmap_from_fake):
+	Connect to the signals before showing the widget.
+	
+2001-10-11  Alex Larsson  <alexl@redhat.com>
+
 	* applet.c (applet_button_press):
 	Don't return TRUE here, it makes the buttons not
 	work. I'm not sure about the comment here in the old

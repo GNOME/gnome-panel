@@ -164,6 +164,15 @@ static void setup_menuitem_try_pixmap (GtkWidget *menuitem,
 				       const char *title,
 				       IconSize icon_size);
 
+static gboolean
+menus_have_icons (void)
+{
+#ifdef FIXME
+  /* Use gconf here */
+#endif
+        return TRUE;
+}
+
 /*to be called on startup to load in some of the directories,
   this makes the startup a little bit slower, and take up slightly
   more ram, but it also speeds up later operation*/
@@ -770,13 +779,13 @@ static GtkWidget *
 fake_pixmap_from_fake(FakeIcon *fake)
 {
 	fake->fake = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-	gtk_widget_show(fake->fake);
 	gtk_signal_connect(GTK_OBJECT(fake->fake), "map",
 			   GTK_SIGNAL_FUNC(fake_mapped_fake),
 			   fake);
 	gtk_signal_connect(GTK_OBJECT(fake->fake), "destroy",
 			   GTK_SIGNAL_FUNC(fake_destroyed),
 			   fake);
+	gtk_widget_show(fake->fake);
 
 	return fake->fake;
 }
@@ -1977,7 +1986,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
 
-	if (gnome_preferences_get_menus_have_icons () ||
+	if (menus_have_icons () ||
 	    global_config.show_dot_buttons) {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_widget_show (hbox);
@@ -1985,7 +1994,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 	} else
 		gtk_container_add (GTK_CONTAINER (menuitem), label);
 	
-	if (gnome_preferences_get_menus_have_icons ()) {
+	if (menus_have_icons ()) {
 		align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 		gtk_widget_show (align);
 		gtk_container_set_border_width (GTK_CONTAINER (align), 1);
@@ -2000,7 +2009,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 		gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
 	}
 
-	if (gnome_preferences_get_menus_have_icons () ||
+	if (menus_have_icons () ||
 	    global_config.show_dot_buttons)
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(mf) {
@@ -2051,7 +2060,7 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
 	
-	if (gnome_preferences_get_menus_have_icons () ||
+	if (menus_have_icons () ||
 	    global_config.show_dot_buttons) {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_widget_show (hbox);
@@ -2059,7 +2068,7 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 	} else
 		gtk_container_add (GTK_CONTAINER (menuitem), label);
 	
-	if (gnome_preferences_get_menus_have_icons ()) {
+	if (menus_have_icons ()) {
 		align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 		gtk_widget_show (align);
 		gtk_container_set_border_width (GTK_CONTAINER (align), 1);
@@ -2077,7 +2086,7 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 	} else if(pixmap)
 		gtk_widget_unref(pixmap);
 
-	if (gnome_preferences_get_menus_have_icons () ||
+	if (menus_have_icons () ||
 	    global_config.show_dot_buttons)
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 
@@ -3017,7 +3026,8 @@ create_menuitem (GtkWidget *menu,
 	}
 
 	pixmap = NULL;
-	if (gnome_preferences_get_menus_have_icons ()) {
+	if (menus_have_icons ())
+	  {
 		if (fr->icon && g_file_test (fr->icon, G_FILE_TEST_EXISTS)) {
 			pixmap = fake_pixmap_at_size (fr->icon, size);
 			if (pixmap)
@@ -3222,7 +3232,8 @@ create_menu_at_fr (GtkWidget *menu,
 		}
 
 		pixmap = NULL;
-		if (gnome_preferences_get_menus_have_icons ()) {
+		if (menus_have_icons ())
+		  {
 			if (pixmap_name) {
 				pixmap = fake_pixmap_at_size (pixmap_name, size);
 			}
@@ -3657,7 +3668,7 @@ setup_menuitem_try_pixmap (GtkWidget *menuitem, const char *try_file,
 {
 	char *file = NULL;
 
-	if (!gnome_preferences_get_menus_have_icons ()) {
+	if (!menus_have_icons ()) {
 		setup_menuitem_with_size (menuitem,
 					  NULL /*pixmap */,
 					  title,
