@@ -20,6 +20,8 @@
 
 #include "panel-include.h"
 
+#include "icon-entry-hack.h"
+
 static void properties_apply (Launcher *launcher);
 
 extern GtkTooltips *panel_tooltips;
@@ -525,6 +527,7 @@ create_properties_dialog (Launcher *launcher)
 	
 	launcher->dedit =
 		gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook));
+	hack_dentry_edit (GNOME_DENTRY_EDIT (launcher->dedit));
 	
 	types = NULL;
 	types = g_list_append (types, "Application");
@@ -687,6 +690,7 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 	gtk_box_pack_start (GTK_BOX(GNOME_DIALOG(dialog)->vbox), notebook,
 			    TRUE, TRUE, GNOME_PAD_SMALL);
 	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook)));
+	hack_dentry_edit (dee);
 
 	types = NULL;
 	types = g_list_append(types, "Application");

@@ -17,6 +17,7 @@
 #include <gnome.h>
 
 #include "panel-include.h"
+#include "icon-entry-hack.h"
 
 #include "xstuff.h"
 
@@ -48,7 +49,7 @@ properties_apply_callback(gpointer data)
 	drawer->pixmap = NULL;
 	g_free (drawer->tooltip);
 	drawer->tooltip = NULL;
-	s = gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(pixentry));
+	s = hack_icon_entry_get_icon (GNOME_ICON_ENTRY (pixentry));
 	if (string_empty (s)) {
 		drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
 		button_widget_set_pixmap (BUTTON_WIDGET(drawer->button),

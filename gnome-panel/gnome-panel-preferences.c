@@ -35,6 +35,7 @@
 #include "panel_config_global.h"
 #include "panel-util.h"
 #include "session.h"
+#include "icon-entry-hack.h"
 
 /* for MAIN_MENU_* */
 #include "menu.h"
@@ -430,10 +431,10 @@ sync_config_with_buttons_page(GlobalConfig *conf)
 			GTK_TOGGLE_BUTTON(tile_enable_cb[i])->active;
 		g_free(conf->tile_up[i]);
 		conf->tile_up[i] =
-			gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(entry_up[i]));
+			hack_icon_entry_get_icon (GNOME_ICON_ENTRY(entry_up[i]));
 		g_free(conf->tile_down[i]);
 		conf->tile_down[i] =
-			gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(entry_down[i]));
+			hack_icon_entry_get_icon (GNOME_ICON_ENTRY(entry_down[i]));
 		conf->tile_border[i] = tile_border[i]->value;
 		conf->tile_depth[i] = tile_depth[i]->value;
 	}

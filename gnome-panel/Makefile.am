@@ -170,7 +170,9 @@ panel_SOURCES=\
 	title-item.c		\
 	title-item-private.h	\
 	scroll-menu.h		\
-	scroll-menu.c
+	scroll-menu.c		\
+	icon-entry-hack.c	\
+	icon-entry-hack.h
 
 panel_LDADD = \
 	libpanel_applet.la	\
@@ -186,6 +188,7 @@ panel_LDFLAGS=-export-dynamic
 gnome_panel_properties_capplet_SOURCES = \
 	gnome-panel-properties.c	\
 	panel-util.c			\
+	icon-entry-hack.c		\
 	$(CORBA_SRCLIST)
 
 gnome_panel_properties_capplet_LDADD = \

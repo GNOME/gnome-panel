@@ -21,6 +21,8 @@
 
 #include "panel-include.h"
 
+#include "icon-entry-hack.h"
+
 /*#define PANEL_DEBUG 1*/
 
 extern GlobalConfig global_config;
@@ -162,7 +164,7 @@ properties_apply_callback (Menu *menu)
 		change_icon = TRUE;
 	}
 
-	s = gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(menu->dialog_info->custom_icon_entry));
+	s = hack_icon_entry_get_icon (GNOME_ICON_ENTRY(menu->dialog_info->custom_icon_entry));
 	if (menu->custom_icon_file == NULL ||
 	    s == NULL ||
 	    strcmp (menu->custom_icon_file, s) != 0) {
@@ -630,6 +632,7 @@ create_properties_dialog(Menu *menu)
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 
 	w = gnome_icon_entry_new("icon", _("Browse"));
+	hack_icon_entry (GNOME_ICON_ENTRY (w));
 	menu->dialog_info->custom_icon_entry = w;
 	if (menu->custom_icon_file != NULL) {
 		gnome_icon_entry_set_icon(GNOME_ICON_ENTRY(w),

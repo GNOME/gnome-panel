@@ -29,6 +29,7 @@
 #include "gnome-run.h"
 #include "title-item.h"
 #include "scroll-menu.h"
+#include "icon-entry-hack.h"
 
 /*#define PANEL_DEBUG 1*/
 
@@ -812,6 +813,7 @@ add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox), notebook,
 			    TRUE, TRUE, GNOME_PAD_SMALL);
 	dee = GNOME_DENTRY_EDIT (gnome_dentry_edit_new_notebook (GTK_NOTEBOOK (notebook)));
+	hack_dentry_edit (dee);
 
 	types = NULL;
 	types = g_list_append(types, "Application");
@@ -1324,6 +1326,7 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	dedit = gnome_dentry_edit_new_notebook (GTK_NOTEBOOK (notebook));
+	hack_dentry_edit (GNOME_DENTRY_EDIT (dedit));
 
 	types = NULL;
 	types = g_list_append (types, "Application");
@@ -1434,6 +1437,7 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 	gtk_window_set_policy (GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	dedit = gnome_dentry_edit_new_notebook (GTK_NOTEBOOK (notebook));
+	hack_dentry_edit (GNOME_DENTRY_EDIT (dedit));
 
 	types = NULL;
 	types = g_list_append (types, "Directory");
