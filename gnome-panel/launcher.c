@@ -96,7 +96,7 @@ drag_data_get_cb (GtkWidget *widget, GdkDragContext     *context,
 	g_return_if_fail(launcher!=NULL);
 	g_return_if_fail(launcher->dentry!=NULL);
 	g_return_if_fail(launcher->dentry->location!=NULL);
-       
+
 	uri_list = g_strconcat ("file:", launcher->dentry->location, "\r\n", NULL);
 
 	gtk_selection_data_set (selection_data,
@@ -354,6 +354,7 @@ really_add_launcher(GtkWidget *d,int button, gpointer data)
 			dentry->name=g_strdup("???");
 		}
 		_load_launcher_applet(NULL, dentry, panel, pos);
+		panel_config_sync();
 	}
 	gtk_widget_destroy(d);
 }
@@ -414,6 +415,7 @@ load_launcher_applet_from_info(char *name, char *comment,
 		dentry->icon = g_strdup(icon);
 
 	_load_launcher_applet(NULL,dentry,panel, pos);
+	panel_config_sync();
 }
 
 void
