@@ -502,8 +502,8 @@ main(int argc, char **argv)
 	gtk_widget_show(label);
 
 #ifdef HAVE_PANEL_PIXEL_SIZE
-	/*we have to bind change_size before we do applet_widget_add 
-	  since we need to get an initial change_size signal to set our
+	/*we have to bind change_pixel_size before we do applet_widget_add 
+	  since we need to get an initial change_pixel_size signal to set our
 	  initial size, and we get that during the _add call*/
 	gtk_signal_connect(GTK_OBJECT(applet),"change_pixel_size",
 			   GTK_SIGNAL_FUNC(applet_change_pixel_size),
