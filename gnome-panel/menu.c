@@ -3305,16 +3305,16 @@ status_unparent(GtkWidget *widget)
 }
 
 static void
-remove_panel (BasePWidget *basep)
+remove_panel (GtkWidget *widget)
 {
-	status_unparent (GTK_WIDGET (basep));
-	gtk_widget_destroy (GTK_WIDGET (basep));
+	status_unparent (widget);
+	gtk_widget_destroy (widget);
 }
 
 static void
-remove_panel_accept (GtkWidget *w, BasePWidget *basep)
+remove_panel_accept (GtkWidget *w, GtkWidget *panelw)
 {
-	remove_panel(basep);
+	remove_panel (panelw);
 }
 
 static void
@@ -3334,7 +3334,7 @@ remove_panel_query (GtkWidget *w, gpointer data)
 
 	/* if there are no applets just remove the panel */
 	if(!global_config.confirm_panel_remove || !panel->applet_list) {
-		remove_panel (BASEP_WIDGET (panelw));
+		remove_panel (panelw);
 		return;
 	}
 
