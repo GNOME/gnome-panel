@@ -18,6 +18,7 @@ gen_util_applet_SOURCES = \
 	mailcheck.c	\
 	mailcheck.h	\
 	printer.c	\
+	printer.h	\
 	clock.c		\
 	clock.h
 
