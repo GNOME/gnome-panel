@@ -786,7 +786,7 @@ foobar_widget_update_winhints (FoobarWidget *foo)
 	gtk_window_set_decorated (GTK_WINDOW (w), FALSE);
 	gtk_window_stick (GTK_WINDOW (w));
 
-	xstuff_set_wmspec_dock_hints (w->window);
+	xstuff_set_wmspec_dock_hints (w->window, FALSE /* autohide */);
 }
 
 static void

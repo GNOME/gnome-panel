@@ -622,17 +622,24 @@ xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
 
 
 void
-xstuff_set_wmspec_dock_hints (GdkWindow *window)
+xstuff_set_wmspec_dock_hints (GdkWindow *window,
+			      gboolean autohide)
 {
-        Atom atom;
+        Atom atoms[2] = { None, None };
         
-        atom = ATOMGDK (window, "_NET_WM_WINDOW_TYPE_DOCK");
+	if (autohide) {
+		atoms[0] = ATOMGDK (window, "_GNOME_WINDOW_TYPE_AUTOHIDE_PANEL");
+		atoms[1] = ATOMGDK (window, "_NET_WM_WINDOW_TYPE_DOCK");
+	} else {
+		atoms[0] = ATOMGDK (window, "_NET_WM_WINDOW_TYPE_DOCK");
+	}
 
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
                          GDK_WINDOW_XWINDOW (window),
 			 ATOMGDK (window, "_NET_WM_WINDOW_TYPE"),
                          XA_ATOM, 32, PropModeReplace,
-                         (guchar *)&atom, 1);
+                         (guchar *)atoms, 
+			 autohide ? 2 : 1);
 }
 
 void

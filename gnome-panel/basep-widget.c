@@ -1281,7 +1281,8 @@ basep_widget_update_winhints (BasePWidget *basep)
 	gtk_window_set_decorated (GTK_WINDOW (w), FALSE);
 	gtk_window_stick (GTK_WINDOW (w));
 
-	xstuff_set_wmspec_dock_hints (w->window);
+	xstuff_set_wmspec_dock_hints (w->window,
+				      (basep->mode == BASEP_AUTO_HIDE));
 
 	/* FIXME: non-compliance should be tested! */
 
