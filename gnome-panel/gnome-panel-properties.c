@@ -236,7 +236,7 @@ load_checkboxes()
 	gchar* checkboxes[] = {"drawer-autoclose", "auto-raise-panel",
         	"confirm-panel-remove", "avoid-panel-overlap",
 		"keep-menus-in-memory", "enable-animations", 
-		"enable-key-bindings", NULL };
+		"enable-key-bindings", "auto-update-menus", NULL };
 	int i = 0;
 
 	while(checkboxes[i]!=NULL){

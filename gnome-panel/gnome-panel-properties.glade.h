@@ -13,6 +13,7 @@ gchar *s = N_("Keep panels above other windows");
 gchar *s = N_("Confirm the removal of panels with a _dialog");
 gchar *s = N_("_Try to avoid overlapping panels");
 gchar *s = N_("_Keep menus in memory");
+gchar *s = N_("Automatically re-check menus for newly installed software");
 gchar *s = N_("General");
 gchar *s = N_("_Enable animation");
 gchar *s = N_("Animation speed");
