@@ -15,6 +15,8 @@ extern "C" {
 #define PANEL_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, panel_widget_get_type (), PanelWidgetClass)
 #define IS_PANEL_WIDGET(obj)       GTK_CHECK_TYPE (obj, panel_widget_get_type ())
 
+/*this is not actually used in this code, but is a constant one should
+  use when calculating how many cells a panel should have*/
 #define PANEL_CELL_SIZE 48
 
 typedef struct _PanelWidget		PanelWidget;
@@ -52,13 +54,22 @@ struct _PanelWidgetClass
 guint		panel_widget_get_type		(void);
 GtkWidget*	panel_widget_new		(gint size,
 						 PanelOrientation orient);
+/*add an applet to the panel, preferably at position pos*/
 gint		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
 						 gint pos);
+/*remove an applet from the panel*/
 gint		panel_widget_remove		(PanelWidget *panel,
 						 GtkWidget *applet);
-gint		panel_widget_getpos		(PanelWidget *panel,
+/*return position of an applet*/
+gint		panel_widget_get_pos		(PanelWidget *panel,
 						 GtkWidget *applet);
+/*return a list of all applets*/
+GList*		panel_widget_get_applets	(PanelWidget *panel);
+/*run func for each applet*/
+void		panel_widget_foreach		(PanelWidget *panel,
+						 GFunc func,
+						 gpointer user_data);
 
 #ifdef __cplusplus
 }
