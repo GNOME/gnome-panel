@@ -492,6 +492,10 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 		gtk_widget_destroy (cd->props);
         cd->props = NULL;
 
+	if (cd->calendar_popup)
+		gtk_widget_destroy (cd->calendar_popup);
+	cd->calendar_popup = NULL;
+
 	g_free (cd->timeformat);
 	g_free (cd->config_tool);
 	g_free (cd->custom_format);
