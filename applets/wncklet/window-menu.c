@@ -694,6 +694,24 @@ window_menu_setup_menu (WindowMenu *window_menu)
 	window_menu_connect_to_screen (window_menu, screen);
 }
 
+static void
+set_tooltip (GtkWidget  *widget,
+	     const char *tip)
+{
+	GtkTooltips *tooltips;
+
+	tooltips = g_object_get_data (G_OBJECT (widget), "window-menu-tooltips");
+	if (!tooltips) {
+		tooltips = gtk_tooltips_new ();
+		g_object_ref (tooltips);
+		gtk_object_sink (GTK_OBJECT (tooltips));
+		g_object_set_data_full (G_OBJECT (widget), "window-menu-tooltips", tooltips,
+					(GDestroyNotify) g_object_unref);
+	}
+
+	gtk_tooltips_set_tip (tooltips, widget, tip, NULL);
+}
+
 gboolean
 window_menu_applet_fill (PanelApplet *applet)
 {
@@ -707,7 +725,8 @@ window_menu_applet_fill (PanelApplet *applet)
 	atk_obj = gtk_widget_get_accessible (window_menu->applet);
 	atk_object_set_name (atk_obj, _("Window Selector"));
 	atk_object_set_description (atk_obj, _("Tool to switch between windows"));
-
+	set_tooltip (window_menu->applet, _("Window Selector"));
+ 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 
         window_menu->icon_theme = gnome_icon_theme_new ();
