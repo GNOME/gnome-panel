@@ -1,3 +1,10 @@
+Tue Jun 05 03:03:58 2001  George Lebl <jirka@5z.com>
+
+	* gnome-panel-screenshot.c: Use a temporary directory rather then
+	  just a file, this has two advantages, better (read more securely)
+	  deals with things like nautilus yanking things from under us, and
+	  second is that we get prettier filenames.
+
 Tue Jun 05 02:20:07 2001  George Lebl <jirka@5z.com>
 
 	* Makefile.am, gnome-panel-screenshot.c: Enabled the printing stuff
