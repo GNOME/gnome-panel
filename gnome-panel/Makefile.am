@@ -176,6 +176,7 @@ gnome_panel_LDFLAGS = -export-dynamic
 gnome_desktop_item_edit_SOURCES = \
 	gnome-desktop-item-edit.c \
 	menu-ditem.c		  \
+	menu-ditem.h		  \
 	panel-util.c		  \
 	xstuff.c
 
