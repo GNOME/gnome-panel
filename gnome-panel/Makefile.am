@@ -25,12 +25,6 @@ CLEANFILES += $(CORBA_SRCLIST)
 $(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) $<
 
-CORBA2_SRCLIST = panel2-stubs.c panel2-skels.c \
-	panel2-common.c panel2.h
-
-$(CORBA2_SRCLIST): $(top_srcdir)/idl/panel2.idl $(ORBIT_IDL)
-	$(ORBIT_IDL) $<
-
 PANEL_ORB_SRCLIST= orbit-glue.c orbit-glue.h
 
 # We need explicit dependencies here for people building out
@@ -94,8 +88,7 @@ panel_SOURCES = 		\
 	gdkextra.c		\
 	gdkextra.h		\
 	$(PANEL_ORB_SRCLIST)	\
-	$(CORBA_SRCLIST)	\
-	$(CORBA2_SRCLIST)
+	$(CORBA_SRCLIST)
 
 panel_LDADD = $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 
