@@ -48,7 +48,11 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 		/*make it an absolute path, same as the applets will
 		  interpret it and the applets will sign themselves as
 		  this, so it has to be exactly the same*/
-		fullparams = get_full_path(params);
+		if(params[0]!='#')
+			fullparams = get_full_path(params);
+		else
+			fullparams = g_strdup(params);
+	
 
 		/*start nothing, applet is taking care of everything*/
 		if(params == NULL ||
