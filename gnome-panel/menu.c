@@ -3245,7 +3245,7 @@ append_log_out (GtkWidget *menu)
 	
 	logout_tooltip = g_strdup_printf (_("Log out %s of this session to "
 					    "log in as a different user or to "
-					    "to shut down your computer"),
+					    "shut down your computer"),
 					  user_name);
 	gtk_tooltips_set_tip (panel_tooltips, menuitem, logout_tooltip, NULL);
 	g_free (logout_tooltip);
