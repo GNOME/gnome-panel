@@ -10,11 +10,11 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.7.92\n"
+"Project-Id-Version: gnome-panel 2.8.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-29 13:31+0100\n"
-"PO-Revision-Date: 2004-08-17 23:54+0200\n"
-"Last-Translator: Baptiste Mille-Mathias (crevette) <bmm80@free.fr>\n"
+"POT-Creation-Date: 2004-10-10 20:22+0200\n"
+"PO-Revision-Date: 2004-10-10 20:22+0200\n"
+"Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -255,56 +255,56 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "L'Horloge affiche l'heure et la date courante."
 
-#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:1
+msgid ""
+"<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
+msgstr "24"
+
 #: applets/clock/clock.schemas.in.h:2
-msgid "24"
-msgstr ""
+msgid ""
+"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+"hour\" --> 24-hour"
+msgstr "24-hour"
 
-#. Translators: the only valid values for this are "12-hour" and "24-hour"
-#: applets/clock/clock.schemas.in.h:4
-#, fuzzy
-msgid "24-hour"
-msgstr "24 heures"
-
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
 msgstr "Format personnalisé de l'horloge"
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
 msgstr "Format de l'heure"
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:5
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Si vrai, affiche la date dans l'Horloge, en plus de l'heure."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:6
 msgid "If true, display seconds in time."
 msgstr "Si vrai, affiche les secondes dans l'heure."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Si vrai, affiche l'heure en temps universel coordonné (UTC)."
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Si vrai, affiche la date dans une bulle d'aide lorsque la souris est sur "
 "l'horloge."
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:9
 msgid "Show date in clock"
 msgstr "Afficher la date dans l'horloge"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:10
 msgid "Show date in tooltip"
 msgstr "Afficher la date en bulle d'aide"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show time with seconds"
 msgstr "Afficher l'heure avec les secondes"
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:12
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -313,7 +313,7 @@ msgstr ""
 "clé « format ». Le schéma est conservé par compatibilité avec les anciennes "
 "versions."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:13
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -323,7 +323,7 @@ msgstr ""
 "format est défini à « custom ». Vous pouvez utiliser des spécificateur de "
 "conversion compris par strftime() pour obtenir un format spécifique."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -344,23 +344,23 @@ msgstr ""
 "est défini à « custom », l'horloge affichera l'heure en fonction du format "
 "spécifié dans la clé custom_format."
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Cette clé spécifie le programme à lancer pour configurer l'heure."
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:16
 msgid "Time configuration tool"
 msgstr "Outil de configuration de l'heure"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:17
 msgid "Use Internet time"
 msgstr "Utiliser l'heure Internet"
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:18
 msgid "Use UNIX time"
 msgstr "Utiliser l'heure UNIX"
 
-#: applets/clock/clock.schemas.in.h:21
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use UTC"
 msgstr "Utiliser UTC"
 
@@ -1035,7 +1035,7 @@ msgid "CDE Menu"
 msgstr "Menu CDE"
 
 #: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:147
+#: gnome-panel/panel-addto.c:151
 msgid "Drawer"
 msgstr "Tiroir"
 
@@ -1341,7 +1341,7 @@ msgstr "Impossible d'obtenir le nom du fichier à partir du chemin : %s"
 msgid "Could not get directory name from path: %s"
 msgstr "Impossible d'obtenir le nom du répertoire à partir du chemin : %s"
 
-#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:125
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:129
 msgid "Main Menu"
 msgstr "Menu principal"
 
@@ -1495,46 +1495,46 @@ msgstr "Lanceur d'application..."
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "Lance un programme qui existe déjà dans le menu GNOME"
 
-#: gnome-panel/panel-addto.c:126
+#: gnome-panel/panel-addto.c:130
 msgid "The main GNOME menu"
 msgstr "Le menu principal GNOME"
 
-#: gnome-panel/panel-addto.c:136
+#: gnome-panel/panel-addto.c:140
 msgid "Menu Bar"
 msgstr "Barre de menus"
 
-#: gnome-panel/panel-addto.c:137
+#: gnome-panel/panel-addto.c:141
 msgid "A custom menu bar"
 msgstr "Une barre de menus personnalisée"
 
-#: gnome-panel/panel-addto.c:148
+#: gnome-panel/panel-addto.c:152
 msgid "A pop out drawer to store other items in"
 msgstr "Un menu déroulant qui stocke d'autres objets"
 
-#: gnome-panel/panel-addto.c:236
+#: gnome-panel/panel-addto.c:242
 msgid "(empty)"
 msgstr "(vide)"
 
-#: gnome-panel/panel-addto.c:376 libpanel-applet/panel-test-applets.c:156
+#: gnome-panel/panel-addto.c:382 libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "la requête a retourné l'exception %s\n"
 
-#: gnome-panel/panel-addto.c:790
+#: gnome-panel/panel-addto.c:833
 #, c-format
 msgid "Add to %s"
 msgstr "Ajouter à %s"
 
-#: gnome-panel/panel-addto.c:792
+#: gnome-panel/panel-addto.c:835
 msgid "Add to the panel"
 msgstr "Ajouter au tableau de bord"
 
-#: gnome-panel/panel-addto.c:798
+#: gnome-panel/panel-addto.c:841
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr "Chois_ir un objet à ajouter à %s :"
 
-#: gnome-panel/panel-addto.c:801
+#: gnome-panel/panel-addto.c:844
 msgid "Select an _item to add to the panel:"
 msgstr "Chois_ir un objet à ajouter au tableau de bord :"
 
@@ -2916,13 +2916,3 @@ msgstr "Très très grand"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Très très petit"
-
-#~ msgid ""
-#~ "<!-- Translators: the only valid values for this are \"12\" and \"24\" --"
-#~ "> 24"
-#~ msgstr "24"
-
-#~ msgid ""
-#~ "<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
-#~ "hour\" --> 24-hour"
-#~ msgstr "24-hour"
