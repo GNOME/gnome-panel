@@ -36,6 +36,7 @@ libpanel_applet_la_SOURCES = \
 	applet-lib.cc \
 	mico-parse.cc \
 	panel-util.c  \
+	applet-widget.c \
 	$(CORBA_SOURCES)
 
 #libpanel_appletinclude_HEADERS = applet-lib.h \

@@ -3,24 +3,12 @@
 
 #include "gnome.h"
 #include "applet-lib.h"
+#include "applet-widget.h"
 
-GtkWidget *plug;
-int applet_id = (-1);
-
-void
-change_orient(int id, int orient)
-{
-	/*PanelOrientType o = (PanelOrientType) orient;*/
-}
-
-int
-session_save(int id, const char *cfgpath, const char *globcfgpath)
-{
-	return TRUE;
-}
+GtkWidget *applet;
 
 static gint
-destroy_plug(GtkWidget *widget, gpointer data)
+destroy_applet(GtkWidget *widget, gpointer data)
 {
 	gtk_exit(0);
 	return FALSE;
@@ -62,50 +50,24 @@ int
 main(int argc, char *argv[])
 {
 	GtkWidget *logout;
-	char *result;
-	char *cfgpath;
-	char *globcfgpath;
-	guint32 winid;
-	char *myinvoc;
-
-	myinvoc = get_full_path(argv[0]);
-	if(!myinvoc)
-		return 1;
 
 	panel_corba_register_arguments();
 
 	gnome_init("logout_applet", NULL, argc, argv, 0, NULL);
 
-	if (!gnome_panel_applet_init_corba())
-		g_error("Could not communicate with the panel\n");
-
-	result = gnome_panel_applet_request_id(myinvoc, &applet_id,
-					       &cfgpath, &globcfgpath,
-					       &winid);
-	if (result)
-		g_error("Could not talk to the panel: %s\n", result);
-
-	g_free(myinvoc);
-
-	g_free(cfgpath);	/* We should load up config data first... */
-	g_free(globcfgpath);
-
-	plug = gtk_plug_new(winid);
+	applet = applet_widget_new(argv[0]);
+	if (!applet)
+		g_error("Can't create applet!\n");
 
 	logout = create_logout_widget();
 	gtk_widget_show(logout);
-	gtk_container_add(GTK_CONTAINER(plug), logout);
-	gtk_widget_show(plug);
-	gtk_signal_connect(GTK_OBJECT(plug),"destroy",
-			   GTK_SIGNAL_FUNC(destroy_plug),
+	applet_widget_add(APPLET_WIDGET(applet), logout);
+	gtk_widget_show(applet);
+	gtk_signal_connect(GTK_OBJECT(applet),"destroy",
+			   GTK_SIGNAL_FUNC(destroy_applet),
 			   NULL);
 
-
-	result = gnome_panel_applet_register(plug, applet_id);
-	if (result)
-		g_error("Could not talk to the Panel: %s\n", result);
-
-	applet_corba_gtk_main("IDL:GNOME/Applet:1.0");
+	applet_widget_gtk_main();
 
 	return 0;
 }
