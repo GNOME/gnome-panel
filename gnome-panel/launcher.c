@@ -488,7 +488,7 @@ setup_button (Launcher *launcher)
 	if (docpath && *docpath != '\0') {
 		char *title;
 
-		title = g_strdup_printf (_("Help on %s Application"), name);
+		title = g_strdup_printf (_("Help on %s _Application"), name);
 
 		panel_applet_add_callback (launcher->info,
 					   "help_on_app",
