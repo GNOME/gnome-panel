@@ -448,7 +448,8 @@ fr_fill_dir(FileRec *fr, int sublevels)
 			if (dentry != NULL) {
 				ffr = g_chunk_new0 (FileRec, file_chunk);
 				if (dentry->type != NULL &&
-				    g_strcasecmp (dentry->type, "separator") == 0)
+				    strcasecmp_no_locale (dentry->type,
+							  "separator") == 0)
 					ffr->type = FILE_REC_SEP;
 				else
 					ffr->type = FILE_REC_FILE;
