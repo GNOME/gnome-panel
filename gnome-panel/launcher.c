@@ -443,6 +443,7 @@ create_launcher (const char *location)
 	launcher->dedit = NULL;
 	launcher->prop_dialog = NULL;
 	launcher->destroy_handler = 0;
+	launcher->non_writable = FALSE;
 
 	/* Icon will be setup later */
 	launcher->button = button_widget_new (NULL /* icon */,
@@ -766,6 +767,15 @@ panel_launcher_ensure_hoarded (Launcher   *launcher,
 
 	if (!strchr (launcher_location, G_DIR_SEPARATOR))
 		return; /* already hoarded */
+
+	client  = panel_gconf_get_client ();
+	profile = panel_profile_get_name ();
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
+	if ( ! gconf_client_key_is_writable (client, key, NULL)) {
+		/* can't hoard */
+		launcher->non_writable = TRUE;
+		return;
+	}
 	
 	if (!(new_location = panel_launcher_get_filename (launcher_location))) {
 		const char *path;
@@ -777,13 +787,12 @@ panel_launcher_ensure_hoarded (Launcher   *launcher,
 		new_location = panel_launcher_get_filename (path);
 	}
 
-	if (!new_location)
+	if (!new_location) {
+		/* hoarding must have failed */
+		launcher->non_writable = TRUE;
 		return;
+	}
 
-	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
-
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
 	gconf_client_set_string (client, key, new_location, NULL);
 }
 
@@ -820,8 +829,17 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 					 TRUE,
 					 id);
 
-	if (launcher)
+	if (launcher) {
 		panel_launcher_ensure_hoarded (launcher, launcher_location, id);
+
+		if (launcher->non_writable) {
+			AppletUserMenu *menu;
+			menu = panel_applet_get_callback (launcher->info->user_menu,
+							  "properties");
+			if (menu != NULL)
+				menu->sensitive = FALSE;
+		}
+	}
 
 	g_free (launcher_location);
 }

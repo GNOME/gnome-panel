@@ -86,29 +86,14 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 {
 	PanelWidget *panel_widget;
 	gboolean     locked;
-	GConfClient *client;
-	const char  *profile;
-	const char  *key;
 	gboolean     lockable;
 	gboolean     movable;
 	gboolean     removable;
 
 	panel_widget = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
 
-	client = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, frame->priv->applet_info->id, "locked");
-	lockable = gconf_client_key_is_writable (client, key, NULL);
-
-	/* If any of these are not writable then we can't really freely move */
-	/* FIXME: make this a general function just like for toplevels */
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, frame->priv->applet_info->id, "position");
-	movable = gconf_client_key_is_writable (client, key, NULL);
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, frame->priv->applet_info->id, "toplevel_id");
-	movable = movable && gconf_client_key_is_writable (client, key, NULL);
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, frame->priv->applet_info->id, "panel_right_stick");
-	movable = movable && gconf_client_key_is_writable (client, key, NULL);
-
+	lockable = panel_applet_lockable (frame->priv->applet_info);
+	movable = panel_applet_can_freely_move (frame->priv->applet_info);
 	removable = panel_profile_list_is_writable (PANEL_GCONF_APPLETS);
 
 	locked = panel_widget_get_applet_locked (panel_widget, GTK_WIDGET (frame));

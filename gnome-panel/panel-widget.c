@@ -1741,6 +1741,7 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 					int drag_off)
 {
 	AppletData *ad;
+	AppletInfo *info;
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), FALSE);
 	g_return_val_if_fail (GTK_IS_WIDGET (panel), FALSE);
@@ -1749,6 +1750,13 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 	g_return_val_if_fail (ad != NULL, FALSE);
 
 	if (ad->locked)
+		return FALSE;
+
+	/* Check if we can actually move this object in the
+	   configuration */
+	info = g_object_get_data (G_OBJECT (applet), "applet_info");
+	if (info != NULL &&
+	    ! panel_applet_can_freely_move (info))
 		return FALSE;
 
 	if (moving_timeout != 0) {

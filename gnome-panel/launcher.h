@@ -30,6 +30,10 @@ typedef struct {
 	GtkWidget         *prop_dialog;
 
 	gulong             destroy_handler;
+
+	/* If we can't hoard, and it's not hoarded
+	   already, then we can't write this launcher */
+	gboolean           non_writable;
 } Launcher;
 
 void panel_launcher_create           (PanelToplevel *toplevel,

@@ -114,8 +114,14 @@ panel_show_gnome_help (GdkScreen   *screen,
 	retval = TRUE;
 
 	if ( ! egg_help_display_desktop_on_screen (NULL, app, path, NULL, screen, error)) {
+		/* We wish to get the error from the first call, and not the second
+		   (since what would we do on both being set, which at best results
+		   in GError warnings) */
+		/* FIXME: perhaps merge error texts and create a new error */
 		retval = egg_help_display_with_doc_id_on_screen (
-				NULL, app, path, NULL, screen, error);
+				NULL, app, path, NULL, screen, NULL);
+		if (retval)
+			g_clear_error (error);
 	}
 
 	g_free (app);
@@ -181,7 +187,16 @@ panel_show_gnome_kde_help (GdkScreen   *screen,
 		return egg_help_display_uri_on_screen (docpath, screen, error);
 
 	if ( ! panel_show_gnome_help (screen, docpath, error)) {
-		return panel_show_kde_help (screen, docpath, error);
+		/* we don't want to pass error to panel_show_kde_help.
+		   If we fail we wish to display the error we got from
+		   panel_show_gnome_help.  Not to mention that if
+		   we pass the error here we get GError errors about
+		   resetting an error (and a memleak) */
+		/* FIXME: perhaps merge error texts and create a new error */
+		gboolean ret = panel_show_kde_help (screen, docpath, NULL);
+		if (ret)
+			g_clear_error (error);
+		return ret;
 	}
 
 	return TRUE;

@@ -462,6 +462,14 @@ panel_applet_create_menu (AppletInfo  *info,
 	if (!commie_mode) {
 		GtkWidget *image;
 		gboolean   locked;
+		gboolean   lockable;
+		gboolean   movable;
+		gboolean   removable;
+
+
+		lockable = panel_applet_lockable (info);
+		movable = panel_applet_can_freely_move (info);
+		removable = panel_profile_list_is_writable (PANEL_GCONF_OBJECTS);
 
 		locked = panel_widget_get_applet_locked (panel_widget, info->widget);
 
@@ -476,6 +484,7 @@ panel_applet_create_menu (AppletInfo  *info,
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		gtk_widget_set_sensitive (menuitem, removable);
 
 		menuitem = gtk_image_menu_item_new ();
 		image = gtk_image_new ();
@@ -483,14 +492,15 @@ panel_applet_create_menu (AppletInfo  *info,
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_applet_lock), info);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		gtk_widget_set_sensitive (menuitem, lockable);
 		
 		menuitem = gtk_image_menu_item_new ();
 		image = gtk_image_new ();
 		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, image, _("_Move"));
-		gtk_widget_set_sensitive (menuitem, !locked);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (move_applet_callback), info);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		gtk_widget_set_sensitive (menuitem, !locked && movable);
 
 		g_assert (info->move_item == NULL);
 
@@ -1095,4 +1105,37 @@ panel_applet_get_position (AppletInfo *applet)
 	applet_data = g_object_get_data (G_OBJECT (applet->widget), PANEL_APPLET_DATA);
 
 	return applet_data->pos;
+}
+
+/* True if all the keys relevant to moving are writable
+   (position, toplevel_id, panel_right_stick) */
+gboolean
+panel_applet_can_freely_move (AppletInfo *applet)
+{
+	GConfClient *client = panel_gconf_get_client ();
+	const char *profile = panel_profile_get_name ();
+	PanelGConfKeyType key_type = applet->type == PANEL_OBJECT_BONOBO ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
+	const char *key;
+       
+	key = panel_gconf_full_key (key_type, profile, applet->id, "position");
+	if ( ! gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+	key = panel_gconf_full_key (key_type, profile, applet->id, "toplevel_id");
+	if ( ! gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+	key = panel_gconf_full_key (key_type, profile, applet->id, "panel_right_stick");
+	if ( ! gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+	return TRUE;
+}
+
+/* True if the locked flag is writable */
+gboolean
+panel_applet_lockable (AppletInfo *applet)
+{
+	GConfClient *client = panel_gconf_get_client ();
+	const char *profile = panel_profile_get_name ();
+	PanelGConfKeyType key_type = applet->type == PANEL_OBJECT_BONOBO ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
+	const char *key = panel_gconf_full_key (key_type, profile, applet->id, "locked");
+	return gconf_client_key_is_writable (client, key, NULL);
 }

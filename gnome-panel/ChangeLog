@@ -1,3 +1,28 @@
+Mon Jun 30 11:25:29 2003  George Lebl <jirka@5z.com>
+
+	* applet.[ch], panel-applet-frame.c: add
+	  panel_applet_can_move_freely and panel_applet_lockable, which
+	  tests the writability of the keys needed for such actions.
+	  The bonobo applets now make use of this and the objects now
+	  also grey out respective menuitems.
+
+	* panel-widget.c: Check for freely being movable before starting
+	  a move.  (act as locked if we can't write any of the keys, needed
+	  for moving)
+
+	* menu.c: the menu rightclick options now respect key-writability
+
+	* launcher.[ch]: When we can't hoard a launcher (when the location
+	  key is non-writable), make the whole entry non-writable.  Doesn't
+	  affect already hoarded launchers, but if you set the location to
+	  somewhere else and make it mandatory, that prevents the properties
+	  from coming up (since we couldn't edit it anyway).
+
+	* panel-util.c: in the help showing code there was some error
+	  badness.  Now only show the first error set if nothing succeeded,
+	  as not to have GError complain, and also clear error if a 
+	  failover succeeded.
+
 2003-06-30  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* menu.c (panel_make_sure_menu_within_screen): Omit call to

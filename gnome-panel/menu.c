@@ -1509,6 +1509,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 
 		if (sim->type == 1) {
 			char *tmp;
+			gboolean objects_writable = panel_profile_list_is_writable (PANEL_GCONF_OBJECTS);
 
 			ii = gnome_desktop_item_new_from_uri (sim->item_loc, 0, NULL);
 
@@ -1526,6 +1527,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			g_signal_connect (menuitem, "activate",
 					  G_CALLBACK (add_app_to_panel),
 					  sim);
+			gtk_widget_set_sensitive (menuitem, objects_writable);
 
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, panel_menu_icon_get_size (),
@@ -1599,6 +1601,8 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 		
 		if (sim->mf != NULL) {
 			GtkWidget *submenu;
+			gboolean objects_writable = panel_profile_list_is_writable (PANEL_GCONF_OBJECTS);
+			gboolean toplevels_writable = panel_profile_list_is_writable (PANEL_GCONF_TOPLEVELS);
 
 			if (sim->type == 0) {
 				submenu = sim->menu;
@@ -1624,6 +1628,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 				   G_CALLBACK(add_menudrawer_to_panel),
 				   sim->mf);
+			gtk_widget_set_sensitive (menuitem, objects_writable && toplevels_writable);
 
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, panel_menu_icon_get_size (),
@@ -1632,6 +1637,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 					   G_CALLBACK(add_menu_to_panel),
 					   sim->mf->menudir);
+			gtk_widget_set_sensitive (menuitem, objects_writable);
 
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, panel_menu_icon_get_size (),

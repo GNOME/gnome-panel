@@ -85,6 +85,13 @@ void        panel_applet_save_position           (AppletInfo *applet_info,
 
 int         panel_applet_get_position    (AppletInfo *applet);
 
+/* True if all the keys relevant to moving are writable
+   (position, toplevel_id, panel_right_stick) */
+gboolean    panel_applet_can_freely_move (AppletInfo *applet);
+
+/* True if the locked flag is writable */
+gboolean    panel_applet_lockable (AppletInfo *applet);
+
 void        panel_applet_menu_set_recurse (GtkMenu     *menu,
 					   const gchar *key,
 					   gpointer     data);
