@@ -1,3 +1,8 @@
+Tue Feb 09 17:25:16 1999  George Lebl  <jirka@5z.com>
+
+	* main.c: don't do the corba init (which registers the goad server)
+	  until after we check that this wasn't just a discard command
+
 Mon Feb 08 18:18:34 1999  George Lebl  <jirka@5z.com>
 
 	* croner-widget.c,snapped-widget.c: fix allocation problems with

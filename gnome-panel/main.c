@@ -145,13 +145,13 @@ main(int argc, char **argv)
 					       GNORBA_INIT_SERVER_FUNC, &ev);
 	CORBA_exception_free(&ev);
 
-	panel_corba_gtk_init(orb);
-
 	if (just_exit) {
 	  gnome_client_disable_master_connection ();
 	  discard_session (just_exit);
 	  return 0;
 	}
+
+	panel_corba_gtk_init(orb);
 
 	client = gnome_master_client ();
 	gnome_client_set_priority(client,40);
