@@ -3061,7 +3061,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 			s = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
 									      panel_id,
 									      "clock-format",
-									      TRUE);
+									      FALSE, _("%I:%M:%S %p"));
 			g_free (panel_id);
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);

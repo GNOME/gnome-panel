@@ -651,7 +651,7 @@ panel_config_sync(void)
 			need_complete_save = FALSE;
 			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
-			/* do_session_save (client, ncs, ats, pts); */
+			do_session_save (client, ncs, ats, pts); 
 	}
 }
 
@@ -700,7 +700,7 @@ panel_session_save (GnomeClient *client,
 		ss_timeout = 1500;
 		ss_interactive = TRUE;
 	}
-	/* do_session_save(client,TRUE,FALSE,FALSE); */
+	do_session_save(client,TRUE,FALSE,FALSE);
 	if (is_shutdown) {
 		while(!ss_done_save)
 			gtk_main_iteration_do(TRUE);
@@ -1056,9 +1056,9 @@ session_init_panels(void)
 		int screen;
 
 		back_pixmap = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (), 
-										      (const gchar *) temp->data,
-										      "panel-background-pixmap",
-										      use_default);
+										(const gchar *) temp->data,
+										"panel-background-pixmap",
+										use_default, NULL);
 		if (string_empty (back_pixmap)) {
 			g_free (back_pixmap);
 			back_pixmap = NULL;
@@ -1067,7 +1067,7 @@ session_init_panels(void)
 		color = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
 								   	  (const gchar *) temp->data,
 									  "panel-background-color",
-									  use_default);
+									  use_default, NULL);
 		if ( ! string_empty (color))
 			gdk_color_parse (color, &back_color);
 
@@ -1075,27 +1075,27 @@ session_init_panels(void)
 		back_type = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								  	   (const gchar *) temp->data,
 									   "panel-background-type",
-									   use_default);
+									   use_default, PANEL_BACK_NONE);
 		
 		fit_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
 										(const gchar *) temp->data,
 										"panel-background-pixmap-fit",
-										use_default);
+										use_default, FALSE);
 
 		stretch_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
 										    (const gchar *) temp->data,
 										    "panel-background-pixmap-stretch",
-										    use_default);
+										    use_default, FALSE);
 
 		rotate_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
 										  (const gchar *) temp->data,
 								       		  "panel-background-pixmap-rotate",
-								       		  use_default);
+								       		  use_default, FALSE);
 		
 		sz = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								    (const gchar *) temp->data,
 								    "panel-size",
-								    use_default);
+								    use_default, PANEL_SIZE_SMALL);
 		
 
 		/* Now for type specific config */
@@ -1103,32 +1103,32 @@ session_init_panels(void)
 		type = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								      (const gchar *) temp->data,
 								      "panel-type",
-								      use_default);
+								      use_default, EDGE_PANEL);
 		
 		hidebuttons_enabled = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
 										      (const gchar *) temp->data,
 										      "hide-buttons-enabled",
-										      use_default);
+										      use_default, TRUE);
 		
 		hidebutton_pixmaps_enabled = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
 										   	     (const gchar *) temp->data,
 										   	     "hide-button-pixmaps-enabled",
-										   	     use_default);
+										   	     use_default, TRUE);
 
 		state = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								       (const gchar *) temp->data,
 									"panel-hide-state",
-									use_default);
+									use_default, 0);
 
 		mode = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								      (const gchar *) temp->data,
 								      "panel-hide-mode",
-								      use_default);
+								      use_default, 0);
 
 		screen = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								        (const gchar *) temp->data,
 									"screen-id",
-									use_default);
+									use_default, 0);
 
 		switch (type) {
 			
@@ -1136,7 +1136,7 @@ session_init_panels(void)
 			edge = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 									      (const gchar *) temp->data,
 									      "screen-edge",
-									      use_default);
+									      use_default, BORDER_BOTTOM);
 			
 			panel = edge_widget_new (screen,
 						 edge, 
@@ -1156,17 +1156,13 @@ session_init_panels(void)
 			edge = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 									      (const gchar *) temp->data,
 									      "screen-edge",
-									      use_default);
+									      use_default, BORDER_BOTTOM);
 			
 			align = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 									      (const gchar *) temp->data,
 									      "panel-align",
-									      use_default);
+									      use_default, ALIGNED_LEFT);
 
-/* Still need to write schema for this stuff..
-			align = conditional_get_int ("align", ALIGNED_LEFT,
-						     NULL);
-*/
 			panel = aligned_widget_new (screen,
 						    align,
 						    edge,
@@ -1190,25 +1186,18 @@ session_init_panels(void)
 			edge = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 									      (const gchar *) temp->data,
 									      "screen-edge",
-									      use_default);
+									      use_default, BORDER_BOTTOM);
 
 			anchor = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 										(const gchar *) temp->data,
 									        "panel-anchor",
-										use_default);
+										use_default, SLIDING_ANCHOR_LEFT);
 			
 			offset = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 										(const gchar *) temp->data,
 										"panel-offset",
-										use_default);
+										use_default, 0);
 	
-			/* FIXME : clean up after schema has been written, kept so we can remember default
-			anchor = conditional_get_int ("anchor",	
-						      SLIDING_ANCHOR_LEFT,
-						      NULL);
-			offset = conditional_get_int ("offset", 0, NULL);
-			*/
-
 			panel = sliding_widget_new (screen,
 						    anchor,
 						    offset,
@@ -1232,14 +1221,8 @@ session_init_panels(void)
 			orient = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 										(const gchar *) temp->data,
 										"panel-orient",
-										use_default);
+										use_default, PANEL_ORIENT_UP);
 
-			/* FIXME : clean up after schema has been written, kept so we can remember default
-			orient = conditional_get_int ("orient", PANEL_ORIENT_UP,
-						      NULL);
-			*/
-
-			/* FIXME: there are some issues with auto hiding drawers */
 
 			panel = drawer_widget_new (orient,
 						   BASEP_EXPLICIT_HIDE, 
@@ -1262,27 +1245,18 @@ session_init_panels(void)
 			orient = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 										(const gchar *) temp->data,
 										"panel-orient",
-										use_default);
+										use_default, GTK_ORIENTATION_HORIZONTAL);
 
 			x = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 									   (const gchar *) temp->data,
 									   "panel-x-position",
-									   use_default);
+									   use_default, 0);
 
 			y = panel_gconf_panel_profile_get_conditional_int  (session_get_current_profile (),
 									    (const gchar *) temp->data,
 									    "panel-y-position",
-									    use_default);
+									    use_default, 0);
 			
-			/* FIXME : clean up after schema has been written, kept so we can remember default
-			orient = conditional_get_int ("orient",
-						      GTK_ORIENTATION_HORIZONTAL,
-						      NULL);
-			x = conditional_get_int ("x", 0, NULL);
-			y = conditional_get_int ("y", 0, NULL);
-			*/
-
-
 			panel = floating_widget_new (screen,
 						     x,
 						     y,
@@ -1306,7 +1280,7 @@ session_init_panels(void)
 			timestring = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
 										       (const gchar *) temp->data,
 										       "clock-format",
-										       use_default);
+										       use_default, _("%I:%M:%S %p"));
 
 			if (timestring != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), timestring);

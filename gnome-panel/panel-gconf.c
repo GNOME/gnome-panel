@@ -7,6 +7,8 @@
 
 #include "panel-gconf.h"
 
+#define PANEL_GCONF_DEBUG 1
+
 gchar * 
 panel_gconf_global_config_get_full_key (const gchar *key) {
 	return g_strdup_printf ("/apps/panel/global/%s", key);
@@ -82,27 +84,54 @@ panel_gconf_all_global_entries (void)
 }
 
 gint 
-panel_gconf_get_int (const gchar *key) {
-	gint value;
+panel_gconf_get_int (const gchar *key, gint default_val) {
+	GConfValue *value;
 	
-	value =  gconf_client_get_int (panel_gconf_get_client (), key, NULL);
-	return value;
+	value =  gconf_client_get (panel_gconf_get_client (), key, NULL);
+
+	if (value != NULL) {
+		gint retval;
+
+		retval = gconf_value_get_int (value);
+		gconf_value_free (value);
+		return retval;
+	} else {
+		return default_val;
+	}
 }
 
 gboolean
-panel_gconf_get_bool (const gchar *key) {
-	gboolean value;
+panel_gconf_get_bool (const gchar *key, gboolean default_val) {
+	GConfValue *value;
+
+	value = gconf_client_get (panel_gconf_get_client (), key, NULL);
 	
-	value = gconf_client_get_bool (panel_gconf_get_client (), key, NULL);
-	return value;
+	if (value != NULL) {
+		gboolean retval;
+
+		retval = gconf_value_get_bool (value);
+		gconf_value_free (value);
+		return retval;
+	} else {
+		return default_val;
+	}
 }
 
 gchar * 
-panel_gconf_get_string (const gchar *key) {
-	gchar *value;
+panel_gconf_get_string (const gchar *key, const gchar *default_val) {
+	GConfValue *value;
 
-	value = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
-	return value;
+	value = gconf_client_get (panel_gconf_get_client (), key, NULL);
+
+	if (value != NULL) {
+		gchar *retval;
+		
+		retval = g_strdup (gconf_value_get_string (value));
+		gconf_value_free (value);
+		return retval;
+	} else {
+		return default_val;
+	}
 }
 
 void 
@@ -220,7 +249,7 @@ panel_gconf_panel_profile_set_string (const gchar *profile, const gchar *panel_i
 }
 
 gchar *
-panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default) {
+panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, const gchar *default_val) {
 	gchar *panel_profile_key;
 	gchar *return_val;
 
@@ -232,13 +261,13 @@ panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gc
                         panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
 		}
 
-	return_val = panel_gconf_get_string (panel_profile_key);
+	return_val = panel_gconf_get_string (panel_profile_key, default_val);
 	g_free (panel_profile_key);
 	return return_val;
 }
 
 gint
-panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default) {
+panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gint default_val) {
 	gchar *panel_profile_key;
 	gint return_val;
 
@@ -250,13 +279,13 @@ panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar
                         panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
 		}
 	
-	return_val = panel_gconf_get_int (panel_profile_key);
+	return_val = panel_gconf_get_int (panel_profile_key, default_val);
 	g_free (panel_profile_key);
 	return return_val;
 }
 
 gboolean
-panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default) {
+panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gboolean default_val) {
 	gchar *panel_profile_key;
 	gboolean return_val;
 
@@ -268,7 +297,7 @@ panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gcha
                         panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
 		}
 
-	return_val = panel_gconf_get_bool (panel_profile_key);
+	return_val = panel_gconf_get_bool (panel_profile_key, default_val);
 	g_free (panel_profile_key);
 	return return_val;
 }

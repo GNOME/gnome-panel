@@ -262,7 +262,8 @@ main(int argc, char **argv)
 	xstuff_init ();
 	multiscreen_init ();
 
-	load_system_wide ();
+	/* FIXME - need to start using gconf to this 
+	load_system_wide (); */
 
 	panel_gconf_add_dir ("/apps/panel/global");
 

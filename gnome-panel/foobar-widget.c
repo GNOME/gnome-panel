@@ -433,7 +433,7 @@ append_format_items (GtkWidget *menu)
 	};
 
 	key = panel_gconf_global_config_get_full_key ("clock-format");
-	s = panel_gconf_get_string (key);
+	s = panel_gconf_get_string (key, _("%I:%M:%S %p"));
 	g_free (key);
 	
 	for (i = 0; formats[i]; i++)

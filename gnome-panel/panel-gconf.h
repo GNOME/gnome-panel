@@ -18,12 +18,12 @@ gchar *		panel_gconf_applets_profile_get_full_key (const gchar *profile, const g
 
 /* Default Profiles */
 gchar *		panel_gconf_general_default_profile_get_full_key (const gchar *profile, const gchar *key);
-gchar *		panel_gconf_panel_default_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key); 
+gchar *		panel_gconf_panel_default_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key);
 gchar *		panel_gconf_applets_default_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key);
 
-gboolean	panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default);
-gchar *		panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default);
-gint		panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default);
+gboolean	panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gboolean default_val);
+gchar *		panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, const gchar *default_val);
+gint		panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gint default_val);
 
 void		panel_gconf_panel_profile_set_int (const gchar *profile, const gchar *panel_id, const gchar *key, gint value);
 void		panel_gconf_panel_profile_set_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean value);
@@ -34,9 +34,9 @@ gchar *		panel_gconf_get_session_key (void);
 
 GSList         *panel_gconf_all_global_entries (void);
 
-gint		panel_gconf_get_int (const gchar *key);
-gboolean	panel_gconf_get_bool (const gchar *key);
-gchar*		panel_gconf_get_string (const gchar *key);
+gint		panel_gconf_get_int (const gchar *key, gint default_val);
+gboolean	panel_gconf_get_bool (const gchar *key, gboolean default_val);
+gchar*		panel_gconf_get_string (const gchar *key, const gchar *default_val);
 
 void 		panel_gconf_set_int (const gchar *key, gint value);
 void 		panel_gconf_set_bool (const gchar *key, gboolean value);

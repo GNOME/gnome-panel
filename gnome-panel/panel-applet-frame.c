@@ -27,7 +27,7 @@
 
 #include "panel-applet-frame.h"
 #include "panel-gconf.h"
-#include "panel-main.h"
+#include "session.h"
 #include "applet.h"
 
 #undef PANEL_APPLET_FRAME_DEBUG
