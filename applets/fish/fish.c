@@ -589,6 +589,13 @@ create_fish_widget(Fish *fish)
 	gtk_widget_pop_visual ();
 }
 
+static void
+help_cb (AppletWidget *widget, gpointer data)
+{
+	GnomeHelpMenuEntry help_ref = { "fish", "index.html"};
+	gnome_help_display (NULL, &help_ref);
+}
+
 /*the most important dialog in the whole application*/
 static void
 about_cb (AppletWidget *widget, gpointer data)
@@ -608,7 +615,7 @@ about_cb (AppletWidget *widget, gpointer data)
 	authors[2] = NULL;
 
 	fish->aboutbox =
-		gnome_about_new (_("The GNOME Fish Applet"), "3.4.7.4",
+		gnome_about_new (_("The GNOME Fish Applet"), "3.4.7.4ac19",
 				 "(C) 1998 the Free Software Foundation",
 				 (const char **)authors,
 				 _("This applet has no use what-so-ever. "
@@ -748,6 +755,12 @@ wanda_activator(PortableServer_POA poa,
 					      about_cb,
 					      fish);
 
+	applet_widget_register_stock_callback(APPLET_WIDGET(fish->applet),
+					      "help",
+					      GNOME_STOCK_PIXMAP_HELP,
+					      _("Help"),
+					      help_cb,
+					      NULL);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(fish->applet),
 					      "properties",

@@ -1,0 +1,174 @@
+<!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.0//EN"[
+]>
+
+<article id="index">
+ <artheader>
+  <title>The GNOME fish</title>
+
+  <copyright>
+   <year>2000</year>
+   <holder>Telsa Gwynne</holder>
+  </copyright>
+
+  <legalnotice>
+   <para>
+     Permission is granted to make and distribute verbatim copies of this
+     manual provided the copyright notice and this permission notice are
+     preserved on all copies.
+   </para>
+   <para>
+     Permission is granted to copy and distribute modified versions of
+     this manual under the conditions for verbatim copying, provided that
+     the entire resulting derived work is distributed under the terms of a
+     permission notice identical to this one.
+   </para>
+   <para>
+     Permission is granted to copy and distribute translations of this
+     manual into another language, under the above conditions for modified
+     versions, except that this permission notice may be stated in a
+     translation approved by the Foundation.
+   </para>
+  </legalnotice>
+
+  <releaseinfo>
+     This is version 0.1 of this document: first release.
+  </releaseinfo>
+ </artheader>
+
+
+ <sect1 id="wanda-intro">
+  <title>The GNOME fish applet</title>
+
+  <para>
+    The <application>GNOME fish applet</application> displays a small
+    fish in your <interface>panel</interface> and does nothing useful 
+    whatsoever beyond that. It is part of the gnome-core package. This 
+    description of it refers to the fish as displayed in gnome-core-1.1.2.
+  </para>
+  <para>
+    It is occasionally found in the <interface>panel</interface> anyway, 
+    but if you don't see it, you can start it by clicking <mousebutton>button
+    2</mousebutton> on an empty part of the <interface>panel</interface>
+    and following the sequence
+   <menuchoice>
+   <guimenu>Applets</guimenu>
+    <guisubmenu>Amusements</guisubmenu>
+    <guimenuitem>Fish</guimenuitem>
+   </menuchoice>
+  </para>
+  <para>
+    The fish applet was written by George Lebl (<email>jirka@5z.com</email>). 
+    Please report bugs in it to the
+    <ulink type="http" url="http://bugs.gnome.org">GNOME bug tracking 
+    system</ulink>. You can do this by following the guidelines on that site 
+    or by using <command>bug-buddy</command> from the command-line. 
+    For the package, put gnome-core.
+  </para>
+
+  <sect2 id="wanda-usage">
+   <title>Usage</title>
+
+   <para>
+     Unlike most fishes, this fish requires little care and no fishbowl
+     cleaning. It swims happily about in its water. If you ask it, it
+     will tell you interesting thoughts. Various options are available
+     with the mouse: 
+   </para>
+
+   <orderedlist>
+    <listitem>
+     <para>
+       If you have the <application>fortune</application> package installed,
+       pressing <mousebutton>mouse button 1</mousebutton> brings up a
+       a <guilabel>dialogue box</guilabel> with a fortune in it. 
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+       Pressing <mousebutton>mouse button 2</mousebutton> brings up a
+       menu which includes a <guisubmenu>preferences menu</guisubmenu> and
+       an <guimenuitem>About</guimenuitem> box. 
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+      Pressing <mousebutton>mouse button 3</mousebutton> and holding it
+      down allows you to drag your fish about.
+     </para>
+    </listitem>
+   </orderedlist>
+
+  </sect2>
+
+  <sect2 id="wanda-prefs">
+   <title>Preferences</title>
+   <para>
+     The <guilabel>preferences dialogue box</guilabel> (called
+     GNOME Fish Properties) is simple, with five options you can
+     configure.
+   </para>
+
+   <variablelist>
+    <varlistentry>
+     <term>Your GNOME fish's name</term>
+     <listitem>
+      <para>
+        You can change your fish's name here. The default name is Wanda.
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>The animation filename</term>
+     <listitem>
+      <para>
+        You can select a different set of pictures here. By default, 
+        the list of pictures is in <filename>$PREFIX/pixmaps/fish/</filename>,
+        which you can browse and choose from. You may also put a different
+        pathname in pointing to your own pictures.
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>Frames in animation</term>
+     <listitem>
+      <para>
+        As it says, the number of frames in the animation. The default is
+        three, but the range is from 1 to 255.
+      </para>
+     </listitem>
+    </varlistentry>
+ 
+    <varlistentry>
+     <term>Pause per frame(s)</term>
+     <listitem>
+      <para>
+        The period in seconds before updating the picture. The default is
+        a second, but the range is from 0.10 to 10 seconds.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>Rotate on vertical panels</term>
+     <listitem>
+      <para>
+        This checkbox is used for vertical panels, and when checked, the
+        fish will appear swimming downwards on a vertical panel. If it is 
+        not checked, it will appear the same way as on a horizontal panel,
+        which forces the vertical panel to widen to accomodate it.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </sect2>
+
+  <sect2 id="wanda-bugs">
+   <title>Bugs and Limitations</title>
+   <para>
+     No bugs known.
+   </para>
+  </sect2>
+ 
+ </sect1>
+</article>

@@ -6,6 +6,8 @@ INCLUDES = -I. -I$(srcdir) 				\
 	-I$(includedir) $(GNOME_INCLUDEDIR)		\
 	@PIXBUF_CFLAGS@
 
+SUBDIRS = help
+
 #if DO_EXE
 #bin_PROGRAMS = fish_applet
 #else
@@ -21,11 +23,11 @@ libfish_applet_la_SOURCES = fish.c
 #		     	$(GNOMEGNORBA_LIBS) $(INTLLIBS) \
 #			@PIXBUF_LIBS@
 
-#libfish_applet_la_LIBADD = ../../panel/libpanel_applet.la \
+#libfish_applet_la_LIBADD = .e./../panel/libpanel_applet.la \
 #		 	$(GNOME_LIBDIR) \
 #		     	$(GNOMEGNORBA_LIBS) $(INTLLIBS) 
 
-FISH_BITMAPS = fishanim.png oldwanda.png footguy.png
+FISH_BITMAPS = fishanim.png oldwanda.png footguy.png monkey.png
 
 EXTRA_DIST = \
 	fish_applet.desktop \
