@@ -2081,12 +2081,6 @@ add_lock_to_panel (GtkWidget *widget, gpointer data)
 }
 
 static void
-add_run_to_panel (GtkWidget *widget, gpointer data)
-{
-	load_run_applet (get_panel_from_menu_data(widget, TRUE), 0, FALSE);
-}
-
-static void
 try_add_status_to_panel (GtkWidget *widget, gpointer data)
 {
 	if(!load_status_applet(get_panel_from_menu_data(widget, TRUE),
@@ -4098,16 +4092,6 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 			   G_CALLBACK(add_lock_to_panel),
 			   NULL);
 	setup_internal_applet_drag(menuitem, "LOCK:NEW");
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (menuitem,
-				   "gnome-run.png",
-				   _("Run button"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(add_run_to_panel),
-			   NULL);
-	setup_internal_applet_drag(menuitem, "RUN:NEW");
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem, 

@@ -29,6 +29,4 @@
 void show_run_dialog (void);
 void show_run_dialog_with_text (const char *text);
 
-void load_run_applet(PanelWidget *panel, int pos, gboolean exactpos);
-
 #endif /* GNOME_RUN_H */

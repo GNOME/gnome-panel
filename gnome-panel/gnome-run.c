@@ -1283,23 +1283,3 @@ create_run_widget(void)
 
 	return button;
 }
-
-void
-load_run_applet (PanelWidget *panel,
-		 int          pos,
-		 gboolean     exactpos)
-{
-	GtkWidget  *run;
-	AppletInfo *info;
-
-	run = create_run_widget ();
-	if (!run)
-		return;
-
-	info = panel_applet_register (run, NULL, NULL, panel,
-				      pos, exactpos, APPLET_RUN);
-	if (!info)
-		return;
-
-	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
-}

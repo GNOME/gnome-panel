@@ -968,9 +968,6 @@ session_init_user_applets (void)
 		} else if (strcmp (applet_name, STATUS_ID) == 0) {
 			load_status_applet (panel, pos, TRUE);
 			
-		} else if (strcmp (applet_name, RUN_ID) == 0) {
-			load_run_applet (panel, pos, TRUE);
-
 		} else if (strcmp (applet_name, SWALLOW_ID) == 0) {
 			char *path = conditional_get_string ("execpath",
 							     NULL, NULL);
@@ -1452,7 +1449,7 @@ session_read_global_config (void)
 				gconf_value_get_bool (value);
 
 		else if (!strcmp (key, "auto-update-menus"))
-			g_warning ("Gman: what's this '%s' ?", key);
+			g_warning ("Gman: what's this '%s' ?\nmarkmc: something that's probably not needed", key);
 
 		else if (!strcmp (key, "highlight-launchers-on-mouseover"))
 			global_config.highlight_when_over =

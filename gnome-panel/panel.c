@@ -1148,13 +1148,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 	} else if(strcmp(applet_type,"STATUS:TRY")==0) {
 		load_status_applet(panel, pos, TRUE);
 
-	} else if(strcmp(applet_type,"RUN:NEW")==0) {
-		load_run_applet(panel, pos, TRUE);
-
-	} else if (sscanf (applet_type, "RUN:%d", &applet_num) == 1) {
-		load_run_applet(panel, pos, TRUE);
-		remove_applet = TRUE;
-	}
+	} 
 
 	if (remove_applet &&
 	    action == GDK_ACTION_MOVE) {
