@@ -1,3 +1,24 @@
+Tue Jul 28 03:46:58 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: add .directory files to the checked file list as well
+
+	* menu.c: "add" button added to menuitems, no longer is there
+	  an "add app to panel" menu since it can all be done from the
+	  main menu, this makes it much nicer to add launchers to
+	  the panel
+
+	* panel.c,menu.c: put the panel menu creation routine into menu.c
+
+	* *.c: don't center dialogs, they now act nicely without it
+
+	* launcher.c,menu.c: add a way to create a new launcher
+
+	* orbit-applet-lib.c,applet-lib.cc,main.c: cookies are now
+	  per display which should allow two panels to run ...
+
+	* panel-widget.c: very unsuccessful attempt at fixing the geometry
+	  bugs in the widget, I will have to spend more time on this
+
 Mon Jul 27 03:38:22 1998  George Lebl  <jirka@5z.com>
 
 	* menu.[ch],panel.c: unified the "Panel" submenu in root

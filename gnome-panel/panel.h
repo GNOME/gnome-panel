@@ -21,8 +21,6 @@ struct _PanelData {
 	GtkWidget *panel;
 };
 
-GtkWidget * create_panel_root_menu(GtkWidget *panel);
-
 /*get the default panel widget if the panel has more then one or
   just get the that one*/
 PanelWidget * get_def_panel_widget(GtkWidget *panel);

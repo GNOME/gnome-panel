@@ -30,6 +30,8 @@ void set_show_small_icons(void);
 void setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title);
 void make_panel_submenu (GtkWidget *menu, int fake_submenus);
 
+GtkWidget * create_panel_root_menu(GtkWidget *panel);
+
 END_GNOME_DECLS
 
 #endif

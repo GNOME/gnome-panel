@@ -111,31 +111,36 @@ sigchld_handler(int type)
 
 	for(list=children;list!=NULL;list=g_list_next(list)) {
 		AppletChild *child=list->data;
-		if(child->pid == pid) {
-			AppletInfo *info = get_applet_info(child->applet_id);
-			if(info &&
-			   info->widget) {
-				Extern *ext = info->data;
-				if(ext && ext->ior) {
-					int i;
-					char *s = g_strdup(ext->ior);
-					for(i=0,info=(AppletInfo *)applets->data;
-					    i<applet_count;
-					    i++,info++) {
-						Extern *ext = info->data;
-						if(ext->ior &&
-						   strcmp(ext->ior,s)==0)
-							panel_clean_applet(info->applet_id);
-					}
-					g_free(s);
+		AppletInfo *info;
+		if(child->pid != pid)
+			continue;
+		info = get_applet_info(child->applet_id);
+		if(info && !info->widget) {
+			Extern *ext = info->data;
+			if(ext && ext->ior) {
+				int i;
+				AppletInfo *in;
+				for(i=0,in=(AppletInfo *)applets->data;
+				    i<applet_count;
+				    i++,in++) {
+					Extern *e;
+					if(in->type != APPLET_EXTERN &&
+					   in->type != APPLET_EXTERN_PENDING &&
+					   in->type != APPLET_EXTERN_RESERVED)
+						continue;
+					e = in->data;
+
+					if(e && e->ior &&
+					   strcmp(ext->ior,e->ior)==0)
+						panel_clean_applet(in->applet_id);
 				}
 			}
-			exec_queue_done(child->applet_id);
-
-			g_free(child);
-			children=g_list_remove_link(children,list);
-			return;
 		}
+		exec_queue_done(child->applet_id);
+
+		g_free(child);
+		children=g_list_remove_link(children,list);
+		return;
 	}
 }
 
@@ -170,7 +175,8 @@ main(int argc, char **argv)
 
 	/* Setup the cookie */
 	cookie = create_cookie ();
-	gnome_config_private_set_string ("/panel/Secret/cookie", cookie);
+	g_snprintf(buf,256,"/panel/Secret/cookie-DISPLAY-%s",getenv("DISPLAY"));
+	gnome_config_private_set_string (buf, cookie);
 	gnome_config_sync();
 	
 	panel_corba_gtk_init();

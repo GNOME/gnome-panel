@@ -103,7 +103,7 @@ create_properties_dialog(Drawer *drawer)
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Drawer properties"));
-	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
+	/*gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 
 	table = gtk_table_new(2, 2, FALSE);

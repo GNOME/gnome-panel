@@ -159,7 +159,7 @@ ask_about_swallowing(void)
 			     GNOME_STOCK_BUTTON_OK,
 			     GNOME_STOCK_BUTTON_CANCEL,
 			     NULL);
-	gtk_window_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);
+	/*gtk_window_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(d), FALSE, FALSE, TRUE);
 
 	box = gtk_hbox_new(FALSE,5);

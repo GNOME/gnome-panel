@@ -146,6 +146,7 @@ int gnome_panel_applet_reinit_corba(void)
   char *name;
   char *iior;
   char hostname [1024];
+  char buf[256];
   int i;
 	
   gethostname (hostname, sizeof (hostname));
@@ -167,7 +168,8 @@ int gnome_panel_applet_reinit_corba(void)
   if(!iior)
     return 0;
 
-  cookie = gnome_config_private_get_string ("/panel/Secret/cookie=");
+  g_snprintf(buf,256,"/panel/Secret/cookie-DISPLAY-%s=",getenv("DISPLAY"));
+  cookie = gnome_config_private_get_string (buf);
 
   if(panel_client)
     CORBA_Object_release(panel_client, &ev);

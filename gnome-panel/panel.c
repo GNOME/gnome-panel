@@ -63,41 +63,6 @@ panel_add_main_menu(GtkWidget *w, gpointer data)
 	load_menu_applet(NULL,0, 0, panel);
 }	
 
-GtkWidget *
-create_panel_root_menu(GtkWidget *panel)
-{
-	GtkWidget *menuitem;
-	GtkWidget *panel_menu;
-
-	panel_menu = gtk_menu_new();
-
-	make_panel_submenu(panel_menu,TRUE);
-
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, NULL, _("Remove this panel"));
-	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
-	gtk_signal_connect_object (GTK_OBJECT (menuitem), "activate",
-				   GTK_SIGNAL_FUNC(gtk_widget_destroy),
-				   GTK_OBJECT(panel));
-	gtk_object_set_data(GTK_OBJECT(panel),"remove_item",menuitem);
-
-	menuitem = gtk_menu_item_new();
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem,
-			gnome_stock_pixmap_widget(panel_menu,
-						  GNOME_STOCK_PIXMAP_QUIT),
-			_("Log out"));
-	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC(panel_quit),
-			    NULL);
-
-	return panel_menu;
-}
-
 
 /*get the default panel widget if the panel has more then one or
   just get the that one*/

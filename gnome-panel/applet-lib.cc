@@ -135,6 +135,7 @@ gnome_panel_applet_init_corba (void)
 	char *name;
 	char *iior;
 	char hostname [1024];
+	char buf[256];
 	int i;
 	
 	gethostname (hostname, sizeof (hostname));
@@ -156,7 +157,10 @@ gnome_panel_applet_init_corba (void)
 	if(!iior)
 		return 0;
 
-	cookie = gnome_config_private_get_string ("/panel/Secret/cookie=");
+	g_snprintf(buf,256,"/panel/Secret/cookie-DISPLAY-%s=",
+		   getenv("DISPLAY"));
+	cookie = gnome_config_private_get_string (buf);
+
 
 	panel_initialize_corba (&orb_ptr, &boa_ptr);
 
@@ -175,6 +179,7 @@ gnome_panel_applet_reinit_corba (void)
 	char *name;
 	char *iior;
 	char hostname [1024];
+	char buf[256];
 	int i;
 	
 	gethostname (hostname, sizeof (hostname));
@@ -196,7 +201,9 @@ gnome_panel_applet_reinit_corba (void)
 	if(!iior)
 		return 0;
 
-	cookie = gnome_config_private_get_string ("/panel/Secret/cookie=");
+	g_snprintf(buf,256,"/panel/Secret/cookie-DISPLAY-%s=",
+		   getenv("DISPLAY"));
+	cookie = gnome_config_private_get_string (buf);
 
 	CORBA::Object_var obj = orb_ptr->string_to_object (iior);
 	

@@ -506,7 +506,7 @@ panel_quit(void)
 				     GNOME_STOCK_BUTTON_YES,
 				     GNOME_STOCK_BUTTON_NO,
 				     NULL);
-	gtk_window_position(GTK_WINDOW(box), GTK_WIN_POS_CENTER);
+	/*gtk_window_position(GTK_WINDOW(box), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(box), FALSE, FALSE, TRUE);
 
 	gtk_signal_connect (GTK_OBJECT (box), "clicked",
