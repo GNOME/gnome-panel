@@ -268,6 +268,7 @@ main(int argc, char **argv)
 	char buf[256];
 	
 	gnome_init(&argc, &argv);
+	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
 
 	init_session_management (argc, argv);

@@ -2,6 +2,7 @@ SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
 	@PROGRAMS_PANEL_CDPLAYER@
 
 INCLUDES =	 			\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(X_CFLAGS)
 
 bin_PROGRAMS = panel clock_applet
