@@ -246,22 +246,6 @@ applet_callback_set_sensitive(AppletInfo *info, char *callback_name, int sensiti
 	}
 }
 
-static int
-submenu_destroy_cb (GtkWidget *w, gpointer data)
-{
-	AppletUserMenu *menu = data;
-	menu->submenu = NULL;
-	return FALSE;
-}
-
-static int
-menuitem_destroy_cb (GtkWidget *w, gpointer data)
-{
-	AppletUserMenu *menu = data;
-	menu->menuitem = NULL;
-	return FALSE;
-}	
-
 static void
 setup_an_item(AppletUserMenu *menu,
 	      GtkWidget *submenu,
@@ -269,8 +253,8 @@ setup_an_item(AppletUserMenu *menu,
 {
 	menu->menuitem = gtk_menu_item_new ();
 	gtk_signal_connect (GTK_OBJECT (menu->menuitem), "destroy",
-			    GTK_SIGNAL_FUNC (menuitem_destroy_cb),
-			    menu);
+			    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+			    &menu->menuitem);
 	if(menu->stock_item && *(menu->stock_item))
 		setup_menuitem (menu->menuitem,
 				gnome_stock_pixmap_widget(submenu,
@@ -290,8 +274,8 @@ setup_an_item(AppletUserMenu *menu,
 				   (GtkSignalFunc) applet_callback_callback,
 				   menu);
 		gtk_signal_connect(GTK_OBJECT (submenu), "destroy",
-				   GTK_SIGNAL_FUNC (submenu_destroy_cb),
-				   menu);
+				   GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+				   &menu->submenu);
 	/* if the item is a submenu and doesn't have it's menu
 	   created yet*/
 	} else if(!menu->submenu) {
@@ -302,8 +286,8 @@ setup_an_item(AppletUserMenu *menu,
 		gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
 					  menu->submenu);
 		gtk_signal_connect (GTK_OBJECT (menu->submenu), "destroy",
-				    GTK_SIGNAL_FUNC (submenu_destroy_cb),
-				    menu);
+				    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+				    &menu->submenu);
 	}
 	
 	gtk_widget_set_sensitive(menu->menuitem,menu->sensitive);
