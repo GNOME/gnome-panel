@@ -1,3 +1,10 @@
+2005-01-03  Vincent Untz  <vincent@vuntz.net>
+
+	* workspace-switcher.c: (set_tooltip): killed
+	(workspace_switcher_applet_fill): don't call set_tooltip()
+	What we really want is tooltips done at the libwnck level, with
+	workspace names.
+
 2005-01-01  Vincent Untz  <vincent@vuntz.net>
 
 	* window-list.c: revert previous commit because the tasklist widget

@@ -78,8 +78,6 @@ static void display_help_dialog       (BonoboUIComponent *uic,
 static void display_about_dialog      (BonoboUIComponent *uic,
 				       PagerData         *pager,
 				       const gchar       *verbname);
-static void set_tooltip               (GtkWidget         *applet);
-
 
 static void
 pager_update (PagerData *pager)
@@ -508,8 +506,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	
 	gtk_container_add (GTK_CONTAINER (pager->applet), pager->pager);
 	gtk_widget_show (pager->pager);
-
-	set_tooltip (GTK_WIDGET (pager->pager));
 
 	gtk_widget_show (pager->applet);
 
@@ -1003,21 +999,4 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_window_set_screen (GTK_WINDOW (pager->properties_dialog),
 			       gtk_widget_get_screen (pager->applet));
 	gtk_window_present (GTK_WINDOW (pager->properties_dialog));
-}
-
-/*
- *Function to set tooltip
- */
-static void
-set_tooltip (GtkWidget *applet)
-{
-	GtkTooltips *tooltips;
-
-	tooltips = gtk_tooltips_new ();
-	g_object_ref (tooltips);
-	gtk_object_sink (GTK_OBJECT (tooltips));
-	g_object_set_data_full (G_OBJECT (applet), "tooltips", tooltips,
-                                (GDestroyNotify) g_object_unref);
-        gtk_tooltips_set_tip (tooltips, applet,
-                              _("Workspace Switcher"), NULL);
 }
