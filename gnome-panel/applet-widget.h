@@ -42,7 +42,10 @@ struct _AppletWidgetClass
 {
 	GtkPlugClass parent_class;
 
-	/* when the orientation of the parent panel changes */
+	/* when the orientation of the parent panel changes, you should 
+	   connect this signal before doing applet_widget_add so that
+	   you get an initial change_orient signal during the add, so
+	   that you can update your orientation properly */
 	void (* change_orient) (AppletWidget *applet,
 				PanelOrientType orient);
 	/*when the panel wants to save a session it will call this signal 
