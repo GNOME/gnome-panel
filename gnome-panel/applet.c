@@ -56,6 +56,8 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 		break;
 	case PANEL_OBJECT_BONOBO:
 		break;
+	case PANEL_OBJECT_LOGOUT:
+	case PANEL_OBJECT_LOCK:
 	case PANEL_OBJECT_ACTION:
 		panel_action_button_set_dnd_enabled (PANEL_ACTION_BUTTON (info->widget),
 						     dnd_enabled);
