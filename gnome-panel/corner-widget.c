@@ -296,9 +296,8 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	if(corner->state != CORNER_SHOWN) {
 		PanelOrientType hide_orient;
-		int x,y;
-		int w = allocation->width;
-		int h = allocation->height;
+		int x,y,w,h;
+		widget->allocation = *allocation;
 		corner_widget_get_hidepos(corner, &hide_orient,
 					  &w, &h);
 		basep_widget_get_position(basep, hide_orient,
