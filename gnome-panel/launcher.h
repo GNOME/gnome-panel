@@ -75,16 +75,10 @@ void		ask_about_launcher		(const char *file,
 						 int pos,
 						 gboolean exactpos);
 
-/* if location == NULL make a new filename, convert to gnome style and
- * save */
-void		launcher_save			(Launcher *launcher);
 /* always make a new unique filename, useful for converting OLD configs */
 void		launcher_hoard			(Launcher *launcher);
 
 Launcher *	find_launcher			(const char *path);
-
-/* make file name from base */
-char *		launcher_file_name		(const char *base);
 
 G_END_DECLS
 

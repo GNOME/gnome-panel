@@ -1,3 +1,12 @@
+2002-02-04  Mark McLoughlin  <mark@skynet.ie>
+
+	* launcher.c: (properties_apply): save the launcher.
+	(launcher_save_to_gconf): don't save location if its not set.
+	(launcher_file_name), (launcher_save): make static.
+	(launcher_hoard): save to gconf.
+
+	* launcher.h: kill launcher_file_name and launcher_save.
+
 2002-02-04  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* panel.c: Correct popping up of panel's context meny using keyboard.

@@ -40,6 +40,7 @@
 #undef LAUNCHER_DEBUG
 
 static void properties_apply (Launcher *launcher);
+static void launcher_save    (Launcher *launcher);
 
 extern GtkTooltips *panel_tooltips;
 
@@ -488,6 +489,8 @@ properties_apply (Launcher *launcher)
 	gnome_desktop_item_set_location (launcher->ditem, location);
 	g_free (location);
 
+	launcher_save (launcher);
+
 	/* Setup the button look */
 	setup_button (launcher);
 }
@@ -596,19 +599,21 @@ void
 launcher_save_to_gconf (Launcher  *launcher,
 			const char *gconf_key)
 {
-	GConfClient *client;
-	char        *profile;
-	char        *temp_key;
-	const char  *location;
-
-	client  = panel_gconf_get_client ();
-	profile = session_get_current_profile ();
+	const char *location;
 
 	location = gnome_desktop_item_get_location (launcher->ditem);
+	if (location) {
+		GConfClient *client;
+		char        *profile;
+		char        *temp_key;
 
-	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "launcher-location");
-	gconf_client_set_string (client, temp_key, location, NULL);
-	g_free (temp_key);
+		client  = panel_gconf_get_client ();
+		profile = session_get_current_profile ();
+
+		temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "launcher-location");
+		gconf_client_set_string (client, temp_key, location, NULL);
+		g_free (temp_key);
+	}
 }
 
 void
@@ -855,6 +860,25 @@ load_launcher_applet (const char  *params,
 }
 
 static char *
+launcher_file_name (const char *location)
+{
+	char *tmp, *retval;
+
+	g_return_val_if_fail (location!= NULL, NULL);
+
+	tmp = gnome_util_home_file (PANEL_CONFIG_PATH "launchers");
+	/* Make sure the launcher directory exists */
+	if (!g_file_test (tmp, G_FILE_TEST_EXISTS)) {
+		panel_ensure_dir (tmp);
+	}
+
+	retval = g_build_filename (tmp, location, NULL);
+
+	g_free (tmp);
+	return retval;
+}
+
+static char *
 launcher_get_unique_uri (void)
 {
 	int rnd, word;
@@ -896,27 +920,7 @@ launcher_get_unique_uri (void)
 	return NULL;
 }
 
-char *
-launcher_file_name (const char *location)
-{
-	char *tmp, *retval;
-
-	g_return_val_if_fail (location!= NULL, NULL);
-
-	tmp = gnome_util_home_file (PANEL_CONFIG_PATH "launchers");
-	/* Make sure the launcher directory exists */
-	if (!g_file_test (tmp, G_FILE_TEST_EXISTS)) {
-		panel_ensure_dir (tmp);
-	}
-
-	retval = g_build_filename (tmp, location, NULL);
-
-	g_free (tmp);
-	return retval;
-}
-
-
-void
+static void
 launcher_save (Launcher *launcher)
 {
 	GError *error;
@@ -952,6 +956,8 @@ launcher_hoard (Launcher *launcher)
 	gnome_desktop_item_set_location (launcher->ditem, NULL);
 
 	launcher_save (launcher);
+
+	launcher_save_to_gconf (launcher, launcher->info->gconf_key);
 }
 
 Launcher *
