@@ -401,7 +401,7 @@ do_session_save(GnomeClient *client,
 	gnome_config_push_prefix (buf);
 	g_free(buf);
 
-	if(complete_sync)
+	if(complete_sync || sync_applets)
 		gnome_config_set_int ("applet_count", applet_count);
 	/*DEBUG*/printf(" 3"); fflush(stdout);
 	if(complete_sync || sync_panels) {
