@@ -1,0 +1,31 @@
+libpanel-applet todo list
+=========================
+
+	Things that need to be finished before this library can be considered
+anyway complete.
+
+	* Preferences handling. The panel needs to supply a gconf key for
+	  applets to save per-instance preferences. Also need to provide a way
+	  for applets can supply schemas that can be applied to per-applet
+	  instances. Also need some panel_applet_prefs_(get|set) convenience
+	  methods.
+
+	* Size negotiation. Basically make sure this works. It should be no
+	  different than the usual GtkWidget size request/allocation. The
+	  applets shouldn't be allowed to be any bigger than the panel. The
+	  other issue is with applets that want to expand to fill the available
+	  space on the panel. At the moment this is solved with getExpandFlags,
+	  but this ends up with some freaky stuff going on when you're moving
+	  applets. Maybe we should consider having a re-sizable flag which would
+	  make the applets have grabs for re-sizing.
+
+	* Middle mouse button dragging doesn't seem to work for some reason. The
+	  button presses are being forwarded in BonoboPlug so its is some other
+	  issue.
+
+	* The whole thing leaks like a three week old baby.
+
+	* The popup menu doesn't appear outside of the panel. Use
+	  bonobo_control_do_popup_full.
+
+	* We need a replacement for the "Applet Died - Reload ?" dialog box.
