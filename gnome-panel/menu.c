@@ -2148,6 +2148,7 @@ add_redhat_entry(GSList *list, char *file)
 			}
 		}
 	}
+	fclose(fp);
 	if(!rh->name || !rh->u.item.exec) {
 		if(group) {
 			g_slist_foreach(group,(GFunc)g_free,NULL);
