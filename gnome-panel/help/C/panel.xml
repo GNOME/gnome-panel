@@ -22,10 +22,13 @@
        type="http">online</ulink>.
       </para>
 
-      <para> UNIX is a trademark of X/Open Group.</para> <para> Linux
-      is a trademark of Linus Torvalds.</para> <para> X Window System
-      is a trademark of X Consortium, Inc.</para> <para> Windows is a
-      trademark of Microsoft Corp.</para>
+      <para> Many of the names used by companies to distinguish their
+	products and services are claimed as trademarks. Where those
+	names appear in any GNOME documentation, and those trademarks
+	are made aware to the members of the GNOME Documentation
+	Project, the names have been printed in caps or initial
+	caps.
+      </para>
     </legalnotice>
 
     <releaseinfo>
@@ -56,7 +59,7 @@
     flexibility allows you to easily create a comfortable and
     efficient personalized desktop environment.
    </para>
-   <para> This manual describes version 1.1.7 of the GNOME
+   <para> This manual describes version 1.1.90 of the GNOME
     <interface>Panel</interface>.
    </para>
   </sect1>
@@ -322,11 +325,13 @@
      <guilabel>Reboot</guilabel> option, which will reboot the
      computer.
     </para>
-    <note>    <title>Note for advanced users</title>   <para>    The
-     <guilabel>Halt</guilabel> and <guilabel>Reboot</guilabel> choices
-     will only be shown if you have permission to execute the command
-     <command>/usr/bin/shutdown</command>.
-     </para>
+    <note>    
+	<title>Note for advanced users</title>   
+	<para>The
+	  <guilabel>Halt</guilabel> and <guilabel>Reboot</guilabel> choices
+	  will only be shown if you have permission to execute the command
+	  <command>/usr/bin/shutdown</command>.
+	</para>
     </note>
     <para>
      If you do not want to log out, press the
@@ -1691,7 +1696,7 @@
        <guilabel>Auto hide minimized size (pixels)</guilabel> &mdash;
        If you have the Panel hiding automatically this determines the
        number of pixels that will show while the Panel is
-       minimized. To maximize the panel the pointer must enter the
+       minimized. To maximize the Panel the pointer must enter the
        Panel area.
       </para>
      </listitem>
@@ -1712,7 +1717,7 @@
      </listitem>
      <listitem>
       <para>
-       <guilabel>Normal Tile</guilabel> &mdash; This shows the image
+       <guilabel>Normal tile</guilabel> &mdash; This shows the image
        used for the tile in the up position (inactive, not
        pressed). To choose another image file, just click on the
        image, and it will launch the icon browser. Tiles must be
@@ -1721,7 +1726,7 @@
      </listitem>
      <listitem>
       <para>
-       <guilabel>Clicked Tile</guilabel> &mdash; This shows the image
+       <guilabel>Clicked tile</guilabel> &mdash; This shows the image
        used for the tile in the down position (active, pressed). To
        choose another image file, just press on the image, and it will
        launch the icon browser. Tiles must be enabled to access this
@@ -1766,10 +1771,9 @@
 	</listitem>
 	<listitem>
 	  <para>
-	    <guilabel> Keep saturation low when cursor is not over the
-	    button</guilabel> &mdash; Choosing this option will dim
-	    the panel buttons; the button will brighten up when the
-	    mouse cursor is over it.
+	    <guilabel> Prelight buttons on mouseover</guilabel>
+	    &mdash; Choosing this option will make the panel butons
+	    brighten up when the mouse cursor is over them.
 	  </para>
 	</listitem>
       </itemizedlist>
@@ -2303,9 +2307,11 @@
       tracking database</ulink>. Instructions for submitting bug
       reports can be found on-line at <ulink
       url="http://bugs.gnome.org/Reporting.html" type="http">
-      http://bugs.gnome.org/Reporting.html</ulink>. If you are using
-      GNOME 1.1 or later, you can also use the command
-      <command>bug-buddy</command> for submitting bug reports.
+      http://bugs.gnome.org/Reporting.html</ulink>. You can also use
+      the <application>Bug Report Tool</application>
+      (<command>bug-buddy</command>), available in the
+      <guisubmenu>Utilities</guisubmenu> submenu of <guimenu>Main
+      Menu</guimenu>, for submitting bug reports.
       </para>
     <para>
       This manual was written by Dave Mason
@@ -2318,7 +2324,38 @@
       url="http://www.gnome.org/gdp/doctable">GNOME Documentation
       Status Table</ulink>.
       </para>
-    </sect1>
+    </sect1> 
+  <sect1 id="license">
+  <title>License</title>
+  <para>
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the <citetitle>GNU General Public
+   License</citetitle> as published by the Free Software Foundation;
+   either version 2 of the License, or (at your option) any later
+   version.
+  </para>
+  <para>
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   <citetitle>GNU General Public License</citetitle> for more details.
+  </para>
+  <para>
+   A copy of the <citetitle>GNU General Public License</citetitle> is
+   included as an appendix to the <citetitle>GNOME Users
+   Guide</citetitle>.  You may also obtain a copy of the
+   <citetitle>GNU General Public License</citetitle> from the Free
+   Software Foundation by visiting <ulink type="http"
+   url="http://www.fsf.org">their Web site</ulink> or by writing to
+   <address>
+    Free Software Foundation, Inc.
+    <street>59 Temple Place</street> - Suite 330
+    <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+    <country>USA</country>
+   </address>
+  </para>
+ </sect1>
+
 
  </article>
 
