@@ -894,14 +894,15 @@ move_horiz_d(PanelWidget *panel, gint src_x, gint dest_x, gint step, gint hide)
 {
 	gint orig_x, x, y;
 	gint orig_w, w, h;
-	gint final_x;
 
-	gdk_window_get_geometry(GTK_WIDGET(panel)->window,&x,&y,&w,&h,NULL);
+	x = panel->x;
+	y = panel->y;
+	gdk_window_get_size(GTK_WIDGET(panel)->window,&w,&h);
+	if(!hide)
+		w = 0;
 
 	orig_x = x;
 	orig_w = w;
-
-	final_x = dest_x;
 
 	if (step != 0) {
 		if (src_x < dest_x) {
@@ -917,8 +918,6 @@ move_horiz_d(PanelWidget *panel, gint src_x, gint dest_x, gint step, gint hide)
 					w+=move_step(src_x,dest_x,x,step);
 				}
 			}
-			if(!hide)
-				final_x = orig_x;
 		} else {
 			for (x = src_x; x > dest_x;
 			     x-= move_step(src_x,dest_x,x,step)) {
@@ -932,8 +931,6 @@ move_horiz_d(PanelWidget *panel, gint src_x, gint dest_x, gint step, gint hide)
 					w+=move_step(src_x,dest_x,x,step);
 				}
 			}
-			if(hide)
-				final_x = orig_x;
 		}
 	}
 	
@@ -941,23 +938,24 @@ move_horiz_d(PanelWidget *panel, gint src_x, gint dest_x, gint step, gint hide)
 		w = orig_w - abs(src_x-dest_x);
 	else
 		w = orig_w + abs(src_x-dest_x);
-	move_resize_window(GTK_WIDGET(panel), final_x, y,w,h);
-}
 
+	move_resize_window(GTK_WIDGET(panel), dest_x, panel->y,w,h);
+}
 
 static void
 move_vert_d(PanelWidget *panel, gint src_y, gint dest_y, gint step, gint hide)
 {
 	gint orig_y, x, y;
 	gint orig_h, w, h;
-	gint final_y;
 
-	gdk_window_get_geometry(GTK_WIDGET(panel)->window,&x,&y,&w,&h,NULL);
+	x = panel->x;
+	y = panel->y;
+	gdk_window_get_size(GTK_WIDGET(panel)->window,&w,&h);
+	if(!hide)
+		h = 0;
 
 	orig_y = y;
 	orig_h = h;
-
-	final_y = dest_y;
 
 	if (step != 0) {
 		if (src_y < dest_y) {
@@ -973,8 +971,6 @@ move_vert_d(PanelWidget *panel, gint src_y, gint dest_y, gint step, gint hide)
 					h+=move_step(src_y,dest_y,y,step);
 				}
 			}
-			if(!hide)
-				final_y = orig_y;
 		} else {
 			for (y = src_y; y > dest_y;
 			     y-= move_step(src_y,dest_y,y,step)) {
@@ -988,16 +984,15 @@ move_vert_d(PanelWidget *panel, gint src_y, gint dest_y, gint step, gint hide)
 					h+=move_step(src_y,dest_y,y,step);
 				}
 			}
-			if(hide)
-				final_y = orig_y;
 		}
 	}
 	
 	if(hide)
-		h = orig_y + abs(src_y-dest_y);
+		h = orig_h - abs(src_y-dest_y);
 	else
-		h = orig_y - abs(src_y-dest_y);
-	move_resize_window(GTK_WIDGET(panel), x, final_y,w,h);
+		h = orig_h + abs(src_y-dest_y);
+
+	move_resize_window(GTK_WIDGET(panel), panel->x, dest_y, w,h);
 }
 
 static void
@@ -1270,7 +1265,8 @@ panel_widget_open_drawer(PanelWidget *panel)
 
 	width   = GTK_WIDGET(panel)->allocation.width;
 	height  = GTK_WIDGET(panel)->allocation.height;
-	gdk_window_get_position(GTK_WIDGET(panel)->window,&x,&y);
+	x = panel->x;
+	y = panel->y;
 
 	if(panel->orient == PANEL_HORIZONTAL) {
 		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT) {
@@ -1283,7 +1279,7 @@ panel_widget_open_drawer(PanelWidget *panel)
 		} else {
 			gdk_window_move(GTK_WIDGET(panel)->window,-1000,-1000);
 			gtk_widget_show(GTK_WIDGET(panel));
-			move_resize_window(GTK_WIDGET(panel),x,y,
+			move_resize_window(GTK_WIDGET(panel),x-width,y,
 					   0,height);
 			move_horiz_d(panel, x-width, x,
 				     pw_explicit_step,FALSE);
@@ -1299,14 +1295,14 @@ panel_widget_open_drawer(PanelWidget *panel)
 		} else {
 			gdk_window_move(GTK_WIDGET(panel)->window,-1000,-1000);
 			gtk_widget_show(GTK_WIDGET(panel));
-			move_resize_window(GTK_WIDGET(panel),x,y,
+			move_resize_window(GTK_WIDGET(panel),x,y-height,
 					   width,0);
 			move_vert_d(panel, y-height, y,
 				    pw_explicit_step,FALSE);
 		}
 	}
 
-	move_resize_window(GTK_WIDGET(panel),x,y,width,height);
+	/*move_resize_window(GTK_WIDGET(panel),x,y,width,height);*/
 
 	panel->state = PANEL_SHOWN;
 
@@ -1781,12 +1777,23 @@ panel_widget_new (gint size,
 
 	panel_widget_set_hidebuttons(panel);
 
-	if(snapped == PANEL_FREE)
+	if(snapped == PANEL_FREE) {
+		/*these are drawer positions, but what the hell, we can use
+		  em for free panels as well, though free panels can be
+		  moved by the em so we shouldn't realy on this*/
+		panel->x = pos_x;
+		panel->y = pos_y;
 		move_window(GTK_WIDGET(panel),pos_x,pos_y);
-
-	/*FIXME: slightly ugly hack to avoid flashing the drawer*/
-	if(snapped == PANEL_DRAWER)
+	} else if(snapped == PANEL_DRAWER) {
+		/*FIXME: slightly ugly hack to avoid flashing the drawer*/
+		panel->x = -100;
+		panel->y = -100;
 		move_window(GTK_WIDGET(panel),-100,-100);
+	} else {
+		panel->x = 0;
+		panel->y = 0;
+	}
+
 
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
@@ -2693,7 +2700,13 @@ panel_widget_disable_buttons(PanelWidget *panel)
 	gtk_widget_set_sensitive(panel->hidebutton_s,FALSE);
 }
 
-
+void
+panel_widget_set_drawer_pos(PanelWidget *panel, gint x, gint y)
+{
+	panel->x = x;
+	panel->y = y;
+	move_window(GTK_WIDGET(panel),x,y);
+}
 
 #if 0
 /*this does not really work, it's old test code, in the unlikely event

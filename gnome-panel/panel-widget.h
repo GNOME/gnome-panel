@@ -103,6 +103,8 @@ struct _PanelWidget
 	gint			currently_dragged_applet_pos;
 
 	DrawerDropZonePos	drawer_drop_zone_pos;
+	gint			x;
+	gint			y;
 
 	gint			thick;
 
@@ -137,7 +139,8 @@ GtkWidget*	panel_widget_new		(gint size,
 						 PanelState state,
 						 gint pos_x,
 						 gint pos_y,
-						 DrawerDropZonePos drop_zone_pos,
+						 DrawerDropZonePos
+						 	drop_zone_pos,
 						 char *back_pixmap);
 
 /*add an applet to the panel, preferably at position pos*/
@@ -218,6 +221,10 @@ void		panel_widget_pop_up		(PanelWidget *panel);
 
 void		panel_widget_enable_buttons	(PanelWidget *panel);
 void		panel_widget_disable_buttons	(PanelWidget *panel);
+
+void		panel_widget_set_drawer_pos	(PanelWidget *panel,
+						 gint x,
+						 gint y);
 
 
 extern GList *panels;

@@ -40,8 +40,8 @@ reposition_drawer(Drawer *drawer)
 	gdk_window_get_origin (drawer->button->window, &bx, &by);
 	gdk_window_get_size (drawer->button->window, &bw, &bh);
 	gdk_window_get_size (drawer->drawer->window, &dw, &dh);
-	gdk_window_get_geometry(GTK_WIDGET(panel)->window, &px, &py,
-				&pw, &ph, NULL);
+	gdk_window_get_geometry (GTK_WIDGET(panel)->window, &px, &py, &pw, &ph,
+				 NULL);
 
 	switch(drawer->orient) {
 		case DRAWER_UP:
@@ -62,7 +62,7 @@ reposition_drawer(Drawer *drawer)
 			break;
 	}
 
-	move_window(drawer->drawer,x,y);
+	panel_widget_set_drawer_pos(PANEL_WIDGET(drawer->drawer),x,y);
 }
 
 static gint

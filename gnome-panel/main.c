@@ -510,7 +510,7 @@ applet_move_foreach(gpointer data, gpointer user_data)
 		Drawer *drawer = info->data;
 		reposition_drawer(drawer);
 		panel_widget_foreach(PANEL_WIDGET(info->assoc),
-				     state_restore_foreach,
+				     applet_move_foreach,
 				     NULL);
 	}
 	return TRUE;
