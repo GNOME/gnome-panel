@@ -28,7 +28,7 @@ void basep_pos_connect_signals (BasePWidget *basep);
 void send_state_change(void);
 
 #define get_panel_parent(appletw) \
-	(gtk_object_get_data(GTK_OBJECT(appletw->parent), PANEL_PARENT))
+	 (PANEL_WIDGET(GTK_WIDGET(appletw)->parent)->panel_parent)
 
 
 END_GNOME_DECLS

@@ -2344,8 +2344,7 @@ static void
 current_panel_config(GtkWidget *w, gpointer data)
 {
 	PanelWidget *panel = get_panel_from_menu_data(w->parent);
-	GtkWidget *parent = gtk_object_get_data(GTK_OBJECT(panel),
-						PANEL_PARENT);
+	GtkWidget *parent = panel->panel_parent;
 	panel_config(parent);
 }
 
@@ -2383,12 +2382,15 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
 
 	g_return_if_fail(cur_panel != NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
-	basep = gtk_object_get_data(GTK_OBJECT(cur_panel),"panel_parent");
-	
-	g_return_if_fail (IS_BASEP_WIDGET (basep));
-	panel = PANEL_WIDGET (basep->panel);
+
+	g_assert (cur_panel->panel_parent);
+	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+
+	basep = BASEP_WIDGET(cur_panel->panel_parent);
 
 	pd = gtk_object_get_user_data (GTK_OBJECT (basep));
 	if (pd->type == type)
@@ -2491,11 +2493,15 @@ change_hiding_mode (GtkWidget *widget, gpointer data)
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
 
 	g_return_if_fail(cur_panel != NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
 
-	basep = gtk_object_get_data(GTK_OBJECT(cur_panel),"panel_parent");
-	g_return_if_fail (IS_BASEP_WIDGET (basep));
+	g_assert (cur_panel->panel_parent);
+	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+
+	basep = BASEP_WIDGET(cur_panel->panel_parent);
 	
 	basep_widget_change_params (basep,
 				    cur_panel->orient,
@@ -2553,12 +2559,15 @@ change_hidebuttons (GtkWidget *widget, gpointer data)
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
 
 	g_return_if_fail(cur_panel != NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
 
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
 
-	basep = gtk_object_get_data(GTK_OBJECT(cur_panel),PANEL_PARENT);
-	g_return_if_fail (IS_BASEP_WIDGET (basep));
+	g_assert (cur_panel->panel_parent);
+	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+
+	basep = BASEP_WIDGET(cur_panel->panel_parent);
 
 	hidebuttons_enabled = basep->hidebuttons_enabled;
 	hidebutton_pixmaps_enabled = basep->hidebutton_pixmaps_enabled;
@@ -2598,10 +2607,11 @@ show_x_on_panels(GtkWidget *menu, gpointer data)
 	GtkWidget *modes = gtk_object_get_data(GTK_OBJECT(menu),MENU_MODES);
 	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
 	g_return_if_fail(cur_panel != NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
 	g_return_if_fail(types != NULL);
 	g_return_if_fail(modes != NULL);
 	
-	pw = gtk_object_get_data(GTK_OBJECT(cur_panel),PANEL_PARENT);
+	pw = cur_panel->panel_parent;
 	g_return_if_fail(pw != NULL);
 	
 	if(IS_DRAWER_WIDGET(pw)) {
@@ -2619,8 +2629,7 @@ update_type_menu (GtkWidget *menu, gpointer data)
 	char *s = NULL;
 	GtkWidget *menuitem = NULL;
 	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
-	GtkWidget *basep = gtk_object_get_data(GTK_OBJECT(cur_panel),
-					       PANEL_PARENT);
+	GtkWidget *basep = cur_panel->panel_parent;
 	if (IS_EDGE_WIDGET (basep))
 		s = MENU_TYPE_EDGE;
 	else if (IS_ALIGNED_WIDGET (basep))
@@ -2699,8 +2708,7 @@ update_hidebutton_menu (GtkWidget *menu, gpointer data)
 	char *s = NULL;
 	GtkWidget *menuitem = NULL;
 	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
-	BasePWidget *basep = gtk_object_get_data(GTK_OBJECT(cur_panel),
-						 PANEL_PARENT);
+	BasePWidget *basep = BASEP_WIDGET(cur_panel->panel_parent);
 
 	if (!basep->hidebuttons_enabled)
 		s = MENU_HIDEBUTTONS_NONE;
@@ -2720,8 +2728,7 @@ update_hiding_menu (GtkWidget *menu, gpointer data)
 	char *s = NULL;
 	GtkWidget *menuitem = NULL;
 	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
-	BasePWidget *basep = gtk_object_get_data(GTK_OBJECT(cur_panel),
-						 PANEL_PARENT);
+	BasePWidget *basep = cur_panel->panel_parent;
 	s =  (basep->mode == BASEP_EXPLICIT_HIDE)
 		? MENU_MODE_EXPLICIT_HIDE
 		: MENU_MODE_AUTO_HIDE;

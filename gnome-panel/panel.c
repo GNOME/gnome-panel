@@ -77,15 +77,13 @@ static gint n_panel_drop_types =
 static PanelData *
 get_lowest_level_master_pd(PanelWidget *panel)
 {
-	GtkObject *parent;
 	PanelData *pd;
 
 	while(panel->master_widget)
 		panel = PANEL_WIDGET(panel->master_widget->parent);
-	parent = gtk_object_get_data(GTK_OBJECT(panel),PANEL_PARENT);
-	g_return_val_if_fail(parent!=NULL,NULL);
+	g_return_val_if_fail(panel->panel_parent!=NULL,NULL);
 	
-	pd = gtk_object_get_user_data(parent);
+	pd = gtk_object_get_user_data(panel->panel_parent);
 	g_return_val_if_fail(pd!=NULL,NULL);
 	
 	return pd;
@@ -113,8 +111,11 @@ panel_realize(GtkWidget *widget, gpointer data)
 PanelOrientType
 get_applet_orient (PanelWidget *panel)
 {
-	GtkWidget *panelw = gtk_object_get_data (GTK_OBJECT(panel),
-						 PANEL_PARENT);
+	GtkWidget *panelw;
+	g_return_val_if_fail(panel,ORIENT_UP);
+	g_return_val_if_fail(IS_PANEL_WIDGET(panel),ORIENT_UP);
+	g_return_val_if_fail(panel->panel_parent,ORIENT_UP);
+	panelw = panel->panel_parent;
 	g_assert (IS_BASEP_WIDGET (panelw));
 
 	if (IS_BASEP_WIDGET(panelw))
@@ -274,8 +275,7 @@ panel_size_change(GtkWidget *widget,
 			      widget);
 	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
-	update_config_size(gtk_object_get_data(GTK_OBJECT(widget),
-					       PANEL_PARENT));
+	update_config_size(PANEL_WIDGET(widget)->panel_parent);
 }
 
 void
@@ -407,8 +407,7 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
 	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(applet),
 					       "applet_info");
-	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(widget),
-						PANEL_PARENT);
+	GtkWidget *panelw = PANEL_WIDGET(widget)->panel_parent;
 	
 	/*on a real add the info will be NULL as the only adding
 	  is done in register_toy and that doesn't add the info to the
@@ -444,8 +443,7 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 static void
 panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	GtkWidget *parentw = gtk_object_get_data(GTK_OBJECT(widget),
-						 PANEL_PARENT);
+	GtkWidget *parentw = PANEL_WIDGET(widget)->panel_parent;
 	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(applet),
 					       "applet_info");
 

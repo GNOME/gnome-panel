@@ -1025,8 +1025,7 @@ basep_widget_construct (BasePWidget *basep,
 				 GTK_SIGNAL_FUNC(basep_back_change),
 				 basep);
 
-	gtk_object_set_data(GTK_OBJECT(basep->panel),PANEL_PARENT,
-			    basep);
+	PANEL_WIDGET(basep->panel)->panel_parent = GTK_WIDGET(basep);
 	PANEL_WIDGET(basep->panel)->drop_widget = GTK_WIDGET(basep);
 
 	gtk_widget_show(basep->panel);

@@ -27,7 +27,6 @@ BEGIN_GNOME_DECLS
 #define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
 #define PANEL_APPLET_FORBIDDEN_PANELS "panel_applet_forbidden_panels"
 #define PANEL_APPLET_DATA "panel_applet_data"
-#define PANEL_PARENT "panel_parent"
 
 typedef struct _PanelWidget		PanelWidget;
 typedef struct _PanelWidgetClass	PanelWidgetClass;
@@ -84,6 +83,8 @@ struct _PanelWidget
 						panel checks for the cursor
 						on drops usually the panel
 					        widget itself*/
+	
+	GtkWidget		*panel_parent;
 };
 
 struct _PanelWidgetClass

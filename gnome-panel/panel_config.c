@@ -93,8 +93,13 @@ void
 update_config_back(PanelWidget *pw)
 {
 	GtkWidget *t, *toggle = NULL;
-	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(pw), PANEL_PARENT);
-	PerPanelConfig *ppc = get_config_struct(panelw);
+	PerPanelConfig *ppc;
+	
+	g_return_if_fail(pw);
+	g_return_if_fail(IS_PANEL_WIDGET(pw));
+	g_return_if_fail(pw->panel_parent);
+
+	ppc = get_config_struct(pw->panel_parent);
 
 	if(!ppc)
 		return;

@@ -177,8 +177,7 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 {
 	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
 	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
-	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(parent),
-						PANEL_PARENT);
+	GtkWidget *panelw = parent->panel_parent;
 	
 	switch (BASEP_WIDGET (drawerw)->state) {
 	case BASEP_SHOWN:
@@ -388,12 +387,15 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 				 GTK_SIGNAL_FUNC(button_size_alloc),
 				 drawer);
 
+#if 0
+	/*FIXME: there used to be something here, what was it????*/
+	/* this doesn't make sense anymore */
 	if(BASEP_WIDGET(drawer->drawer)->state == BASEP_SHOWN) {
 		GtkWidget *wpanel;
 		/*pop up, if popped down*/
-		wpanel = gtk_object_get_data(GTK_OBJECT(panel),
-					     PANEL_PARENT);
+		wpanel = panel->panel_parent;
 	} 
+#endif
 
 	panel_widget_add_forbidden(PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel));
 

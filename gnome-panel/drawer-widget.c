@@ -131,7 +131,7 @@ get_lowest_level_master_pd(PanelWidget *panel)
 
 	while(panel->master_widget)
 		panel = PANEL_WIDGET(panel->master_widget->parent);
-	parent = gtk_object_get_data(GTK_OBJECT(panel),PANEL_PARENT);
+	parent = panel->panel_parent;
 	g_return_val_if_fail(parent!=NULL,NULL);
 	
 	pd = gtk_object_get_user_data(parent);
@@ -237,8 +237,7 @@ drawer_pos_hidebutton_click (BasePWidget *basep)
 	Drawer *drawer = gtk_object_get_data (GTK_OBJECT (basep),
 					      DRAWER_PANEL_KEY);
 	PanelWidget *panel = PANEL_WIDGET (drawer->button->parent);
-	BasePWidget *parent = gtk_object_get_data (GTK_OBJECT (panel),
-						   PANEL_PARENT);
+	BasePWidget *parent = BASEP_WIDGET(panel->panel_parent);
 
 	drawer_widget_close_drawer (DRAWER_WIDGET (basep), parent);
 

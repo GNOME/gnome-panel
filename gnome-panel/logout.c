@@ -15,14 +15,13 @@ static void
 logout(GtkWidget *widget)
 {
 	if(global_config.drawer_auto_close) {
-		GtkWidget *parent =
-			gtk_object_get_data(GTK_OBJECT(widget->parent),PANEL_PARENT);
+		GtkWidget *parent = PANEL_WIDGET(widget->parent)->panel_parent;
 		g_return_if_fail(parent!=NULL);
 		if(IS_DRAWER_WIDGET(parent)) {
 			BasePWidget *basep = BASEP_WIDGET(parent);
 			GtkWidget *grandparent = PANEL_WIDGET(basep->panel)->master_widget->parent;
-			GtkWidget *grandparentw = gtk_object_get_data(GTK_OBJECT(grandparent),
-								      PANEL_PARENT);
+			GtkWidget *grandparentw =
+				PANEL_WIDGET(grandparent)->panel_parent;
 			drawer_widget_close_drawer (DRAWER_WIDGET (parent),
 						    BASEP_WIDGET (grandparentw));
 		}

@@ -57,7 +57,7 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 	panel = PANEL_WIDGET(info->widget->parent);
 	g_return_if_fail(panel != NULL);
 	
-	w = gtk_object_get_data(GTK_OBJECT(panel), PANEL_PARENT);
+	w = panel->panel_parent;
 
 	gdk_window_get_origin (info->widget->window, &wx, &wy);
 	if(GTK_WIDGET_NO_WINDOW(info->widget)) {
