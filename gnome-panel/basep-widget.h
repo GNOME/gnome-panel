@@ -87,6 +87,12 @@ struct _BasePWidget
 	 * to be moved */
 	int			offset_x;
 	int			offset_y;
+
+	/* wm strut */
+	int			strut_left;
+	int			strut_right;
+	int			strut_top;
+	int			strut_bottom;
 };
 
 struct _BasePWidgetClass

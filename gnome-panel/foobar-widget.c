@@ -782,38 +782,11 @@ void
 foobar_widget_update_winhints (FoobarWidget *foo)
 {
 	GtkWidget *w = GTK_WIDGET (foo);
+
 	gtk_window_set_decorated (GTK_WINDOW (w), FALSE);
 	gtk_window_stick (GTK_WINDOW (w));
-	/* gtk_window_set_type_hint (GTK_WINDOW (w),
-				  GDK_WINDOW_TYPE_HINT_MENU); */
-#if FIXME  /* Nearly all of this is old cruft and should just be removed. We need to use the new wm spec instead */
-	GnomeWinLayer layer;
 
-	if ( ! foo->compliant_wm)
-		return;
-
-	xstuff_set_pos_size (w->window,
-			     multiscreen_x (foo->screen),
-			     multiscreen_y (foo->screen),
-			     w->allocation.width,
-			     w->allocation.height);
-
-	gnome_win_hints_set_expanded_size (w, 0, 0, 0, 0);
-	gdk_window_set_decorations (w->window, 0);
-	gnome_win_hints_set_state (w, WIN_STATE_STICKY |
-				   WIN_STATE_FIXED_POSITION);
-	
-	gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
-				   WIN_HINTS_DO_NOT_COVER);	
-	if (global_config.normal_layer) {
-		layer = WIN_LAYER_NORMAL;
-	} else if (global_config.keep_bottom) {
-		layer = WIN_LAYER_BELOW;
-	} else {
-		layer = WIN_LAYER_DOCK;
-	}
-	gnome_win_hints_set_layer (w, layer);
-#endif
+	xstuff_set_wmspec_dock_hints (w->window);
 }
 
 static void
@@ -829,6 +802,12 @@ foobar_widget_realize (GtkWidget *w)
 	xstuff_set_no_group_and_no_input (w->window);
 
 	setup_task_menu (FOOBAR_WIDGET (w));
+
+	xstuff_set_wmspec_strut (w->window,
+				 0 /* left */,
+				 0 /* right */,
+				 w->allocation.height /* top */,
+				 0 /* bottom */);
 }
 
 #ifdef FIXME
@@ -1350,6 +1329,12 @@ foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 
 		g_slist_foreach (panel_list, queue_panel_resize, NULL);
 		basep_border_queue_recalc (foo->screen);
+
+		xstuff_set_wmspec_strut (w->window,
+					 0 /* left */,
+					 0 /* right */,
+					 alloc->height /* top */,
+					 0 /* bottom */);
 	}
 }
 
@@ -1521,6 +1506,12 @@ foobar_widget_redo_window(FoobarWidget *foo)
 	gtk_widget_queue_resize(widget);
 
 	foobar_widget_update_winhints (foo);
+
+	xstuff_set_wmspec_strut (widget->window,
+				 0 /* left */,
+				 0 /* right */,
+				 widget->allocation.height /* top */,
+				 0 /* bottom */);
 
 	gtk_drag_dest_set (widget, 0, NULL, 0, 0);
 

@@ -12,6 +12,8 @@ Atom xstuff_atom_intern			(Display *display,
 void xstuff_set_simple_hint		(GdkWindow *w,
 					 const char *name,
 					 long val);
+void xstuff_delete_property		(GdkWindow *window,
+					 const char *name);
 void xstuff_setup_kde_dock_thingie	(GdkWindow *w);
 
 gboolean xstuff_is_compliant_wm		(void);

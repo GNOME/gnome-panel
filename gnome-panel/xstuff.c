@@ -655,3 +655,12 @@ xstuff_set_wmspec_strut (GdkWindow *window,
                          XA_ATOM, 32, PropModeReplace,
                          (guchar *)vals, 4);
 }
+
+void
+xstuff_delete_property (GdkWindow *window, const char *name)
+{
+        XDeleteProperty (GDK_WINDOW_XDISPLAY (window),
+                         GDK_WINDOW_XWINDOW (window),
+			 ATOMGDK (window, name));
+}
+

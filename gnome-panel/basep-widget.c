@@ -280,6 +280,16 @@ basep_widget_realize (GtkWidget *w)
 			  basep->hidebutton_w,
 			  basep->hidebutton_s);
 
+	if (basep->strut_left != 0 ||
+	    basep->strut_right != 0 ||
+	    basep->strut_top != 0 ||
+	    basep->strut_bottom != 0) {
+		xstuff_set_wmspec_strut (w->window,
+					 basep->strut_left,
+					 basep->strut_right,
+					 basep->strut_top,
+					 basep->strut_bottom);
+	}
 	
 	klass = basep_widget_get_pos_class (basep);
 	g_return_if_fail (klass);
@@ -395,7 +405,7 @@ basep_widget_size_allocate (GtkWidget *widget,
 
 		w = allocation->width;
 		h = allocation->height;
-		klass->get_hide_size (basep, hide_orient, &w,&h);
+		klass->get_hide_size (basep, hide_orient, &w, &h);
 		allocation->width = w;
 		allocation->height = h;
 
@@ -450,6 +460,66 @@ basep_widget_size_allocate (GtkWidget *widget,
 	}
 
 	gtk_widget_size_allocate (basep->ebox, &challoc);
+
+	/* FIXME: this should be handled in a nicer way */
+	if (BORDER_IS_WIDGET (basep)) {
+		int left = 0, right = 0, top = 0, bottom = 0;
+		switch (BORDER_POS (basep->pos)->edge) {
+		case BORDER_LEFT:
+			if (basep->mode == BASEP_AUTO_HIDE)
+				left = global_config.minimized_size ;
+			else
+				left = basep->shown_alloc.width;
+			break;
+		case BORDER_RIGHT:
+			if (basep->mode == BASEP_AUTO_HIDE)
+				right = global_config.minimized_size ;
+			else
+				right = basep->shown_alloc.width;
+			break;
+		case BORDER_TOP:
+			if (basep->mode == BASEP_AUTO_HIDE)
+				top = global_config.minimized_size ;
+			else
+				top = basep->shown_alloc.height;
+			break;
+		case BORDER_BOTTOM:
+			if (basep->mode == BASEP_AUTO_HIDE)
+				bottom = global_config.minimized_size ;
+			else
+				bottom = basep->shown_alloc.height;
+			break;
+		}
+		if (basep->strut_left != left ||
+		    basep->strut_right != right ||
+		    basep->strut_top != top ||
+		    basep->strut_bottom != bottom) {
+			basep->strut_left = left;
+			basep->strut_right = right;
+			basep->strut_top = top;
+			basep->strut_bottom = bottom;
+			if (GTK_WIDGET_REALIZED (widget)) {
+				xstuff_set_wmspec_strut (widget->window,
+							 left, right,
+							 top, bottom);
+			}
+		}
+	} else if (basep->strut_left != 0 ||
+		   basep->strut_right != 0 ||
+		   basep->strut_top != 0 ||
+		   basep->strut_bottom != 0) {
+		/* If not border widget and it seems to be
+		 * set to some bad values just whack the
+		 * _NET_WM_STRUT */
+		basep->strut_left =
+			basep->strut_right =
+			basep->strut_top =
+			basep->strut_bottom = 0;
+		if (GTK_WIDGET_REALIZED (widget)) {
+			xstuff_delete_property (widget->window,
+						"_NET_WM_STRUT");
+		}
+	}
 }
 
 static void
@@ -1098,6 +1168,17 @@ basep_widget_redo_window(BasePWidget *basep)
 
 	basep_widget_update_winhints (basep);
 
+	if (basep->strut_left != 0 ||
+	    basep->strut_right != 0 ||
+	    basep->strut_top != 0 ||
+	    basep->strut_bottom != 0) {
+		xstuff_set_wmspec_strut (widget->window,
+					 basep->strut_left,
+					 basep->strut_right,
+					 basep->strut_top,
+					 basep->strut_bottom);
+	}
+
 	gtk_drag_dest_set (widget, 0, NULL, 0, 0);
 
 	gtk_widget_map(widget);
@@ -1196,6 +1277,7 @@ void
 basep_widget_update_winhints (BasePWidget *basep)
 {
 	GtkWidget *w = GTK_WIDGET (basep);
+
 	gtk_window_set_decorated (GTK_WINDOW (w), FALSE);
 	gtk_window_stick (GTK_WINDOW (w));
 
