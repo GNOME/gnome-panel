@@ -1766,7 +1766,10 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 			    	if(panel != new_panel &&
 			    	   panel_widget_is_cursor(new_panel,10) &&
 				   new_panel != assoc) {
-					pos = panel_widget_get_moveby(panel,0);
+					pos = panel_widget_get_moveby(
+						new_panel,0);
+					if(pos<0)
+						pos=0;
 					panel_widget_reparent(panel,
 							      new_panel,
 							      applet,
@@ -2047,8 +2050,13 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	pos = panel_widget_find_empty_pos(panel,pos);
 	if(pos==-1) return -1;
 
-	/*this will get done on size allocate!*/
-	gtk_fixed_put(GTK_FIXED(panel->fixed),applet,0,0);
+	/*this will get done right on size allocate!*/
+	if(panel->orient == PANEL_HORIZONTAL)
+		gtk_fixed_put(GTK_FIXED(panel->fixed),applet,
+			      pos*PANEL_CELL_SIZE,0);
+	else
+		gtk_fixed_put(GTK_FIXED(panel->fixed),applet,
+			      0,pos*PANEL_CELL_SIZE);
 	panel->applets[pos].applet = applet;
 	panel->applets[pos].cells = 1;
 
@@ -2101,6 +2109,8 @@ panel_widget_reparent (PanelWidget *old_panel,
 		old_panel->applets[i+n].cells = 1;
 	}
 
+	gtk_widget_hide(applet);
+
 	/*reparent applet*/
 	gtk_widget_reparent(applet,new_panel->fixed);
 
@@ -2116,7 +2126,14 @@ panel_widget_reparent (PanelWidget *old_panel,
 		panel_widget_pack_applets(old_panel);
 
 	/*it will get moved to the right position on size_allocate*/
-	gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,0,0);
+	if(new_panel->orient == PANEL_HORIZONTAL)
+		gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,
+			       pos*PANEL_CELL_SIZE,0);
+	else
+		gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,
+			       0,pos*PANEL_CELL_SIZE);
+
+	gtk_widget_show(applet);
 
 	new_panel->applets[pos].applet = applet;
 	new_panel->applets[pos].cells = 1;
