@@ -125,9 +125,7 @@ apply_global_config (void)
 				    global_config.minimize_delay,
 				    global_config.maximize_delay,
 				    global_config.movement_type,
-				    global_config.disable_animations,
-				    global_config.applet_padding,
-				    global_config.applet_border_padding);
+				    global_config.disable_animations);
 
 	if (global_config.tooltips_enabled)
 		gtk_tooltips_enable (panel_tooltips);
@@ -1773,12 +1771,6 @@ load_up_globals (void)
 					&global_config.window_screenshot_keysym,
 					&global_config.window_screenshot_state);
 
-	global_config.applet_padding =
-		conditional_get_int ("applet_padding", 3, NULL);
-
-	global_config.applet_border_padding =
-		conditional_get_int ("applet_border_padding", 0, NULL);
-
 	global_config.autoraise = conditional_get_bool ("autoraise", TRUE, NULL);
 
 	global_config.keep_bottom =
@@ -1899,10 +1891,6 @@ write_global_config (void)
 			       global_config.off_panel_popups);
 	gnome_config_set_bool ("disable_animations",
 			       global_config.disable_animations);
-	gnome_config_set_int ("applet_padding",
-			      global_config.applet_padding);
-	gnome_config_set_int ("applet_border_padding",
-			      global_config.applet_border_padding);
 	gnome_config_set_bool ("autoraise",
 			       global_config.autoraise);
 	gnome_config_set_bool ("keep_bottom",
@@ -1997,8 +1985,6 @@ convert_write_config(void)
 			      global_config.off_panel_popups);
 	gnome_config_set_bool("disable_animations",
 			      global_config.disable_animations);
-	gnome_config_set_int("applet_padding",
-			     global_config.applet_padding);
 	gnome_config_set_bool("autoraise",
 			      global_config.autoraise);
 	gnome_config_set_bool("keep_bottom",
@@ -2097,8 +2083,6 @@ convert_read_old_config(void)
 
 	g_string_sprintf(buf,"movement_type=%d", PANEL_SWITCH_MOVE);
 	global_config.movement_type=gnome_config_get_int(buf->str);
-
-	global_config.applet_padding = gnome_config_get_int("applet_padding=3");
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
 

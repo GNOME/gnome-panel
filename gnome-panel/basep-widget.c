@@ -1322,9 +1322,6 @@ basep_widget_construct (BasePWidget *basep,
 					fit_pixmap_bg,
 					strech_pixmap_bg,
 					rotate_pixmap_bg,
-					/*if hidebuttons are enabled, then
-					  do no padding on the sides */
-					!hidebuttons_enabled,
 					back_color);
 
 	gtk_signal_connect_after(GTK_OBJECT(basep->panel), "back_change",
@@ -1482,9 +1479,6 @@ basep_widget_change_params (BasePWidget *basep,
 				   fit_pixmap_bg,
 				   strech_pixmap_bg,
 				   rotate_pixmap_bg,
-				   /*if hidebuttons are enabled, then
-				     do no padding on the sides */
-				   !hidebuttons_enabled,
 				   back_color);
 
 	if (basep->level != level ||

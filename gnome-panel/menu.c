@@ -4323,7 +4323,6 @@ change_size (GtkWidget *widget, gpointer data)
 				    cur_panel->fit_pixmap_bg,
 				    cur_panel->strech_pixmap_bg,
 				    cur_panel->rotate_pixmap_bg,
-				    cur_panel->no_padding_on_ends,
 				    &cur_panel->back_color);
 }
 
@@ -4380,7 +4379,6 @@ change_background (GtkWidget *widget, gpointer data)
 				    cur_panel->fit_pixmap_bg,
 				    cur_panel->strech_pixmap_bg,
 				    cur_panel->rotate_pixmap_bg,
-				    cur_panel->no_padding_on_ends,
 				    &cur_panel->back_color);
 }
 

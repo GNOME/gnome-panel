@@ -92,8 +92,6 @@ static GtkWidget *fast_button_scaling_cb;
 static GtkWidget *movement_type_switch_rb;
 static GtkWidget *movement_type_free_rb;
 static GtkWidget *movement_type_push_rb;
-static GtkAdjustment *applet_padding;
-static GtkAdjustment *applet_border_padding;
 
 
 /* menu page */
@@ -672,8 +670,6 @@ sync_applets_page_with_config(GlobalConfig *conf)
 		break;
 	default: break;
 	}
-	gtk_adjustment_set_value (applet_padding, conf->applet_padding);
-	gtk_adjustment_set_value (applet_border_padding, conf->applet_border_padding);
 }
 static void
 sync_config_with_applets_page(GlobalConfig *conf)
@@ -685,8 +681,6 @@ sync_config_with_applets_page(GlobalConfig *conf)
 	else if(GTK_TOGGLE_BUTTON(movement_type_push_rb)->active)
 		conf->movement_type = PANEL_PUSH_MOVE;
 	
-	conf->applet_padding = applet_padding->value;
-	conf->applet_border_padding = applet_border_padding->value;
 }
 
 
@@ -732,17 +726,6 @@ applets_notebook_page (void)
 	gtk_signal_connect (GTK_OBJECT (movement_type_push_rb), "toggled", 
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), movement_type_push_rb, FALSE, FALSE, 0);	
-
-	box = make_int_scale_box (_("Padding between applets"),
-				  &applet_padding,
-				  0.0, 10.0, 1.0);
-	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
-	
-	box = make_int_scale_box (_("Padding between applets and panel border"),
-				  &applet_border_padding,
-				  0.0, 10.0, 1.0);
-	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
-	
 
 	return vbox;
 }
@@ -1438,13 +1421,6 @@ loadup_vals (void)
 				       &global_config.window_screenshot_state);
 
 
-
-	global_config.applet_padding =
-		conditional_get_int ("applet_padding", 3, NULL);
-
-	global_config.applet_border_padding =
-		conditional_get_int ("applet_border_padding", 0, NULL);
-
 	global_config.autoraise = conditional_get_bool ("autoraise", TRUE, NULL);
 
 	global_config.keep_bottom =
@@ -1587,10 +1563,6 @@ write_config (GlobalConfig *conf)
 			      conf->off_panel_popups);
 	gnome_config_set_bool("disable_animations",
 			      conf->disable_animations);
-	gnome_config_set_int("applet_padding",
-			     conf->applet_padding);
-	gnome_config_set_int("applet_border_padding",
-			     conf->applet_border_padding);
 	gnome_config_set_bool("autoraise",
 			      conf->autoraise);
 	gnome_config_set_bool("keep_bottom",

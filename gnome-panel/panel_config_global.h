@@ -20,8 +20,6 @@ struct _GlobalConfig {
 	gboolean off_panel_popups;
 	PanelMovementType movement_type;
 	gboolean disable_animations;
-	int applet_padding;
-	int applet_border_padding;
 	gboolean autoraise;
 	gboolean keep_bottom;
 	gboolean normal_layer;
