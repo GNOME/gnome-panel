@@ -37,7 +37,9 @@ extern GList *drawers;
 extern GList *applets;
 
 extern GtkTooltips *panel_tooltips;
-extern gint tooltips_enabled;	
+extern gint tooltips_enabled;
+
+extern GnomeClient *client;
 
 /*FIXME: integrate with menu.[ch]*/
 extern GtkWidget *root_menu;
@@ -207,12 +209,14 @@ destroy_widget_list(gpointer data, gpointer user_data)
    can also be run directly when we don't detect a session manager.
    We assume no interaction is done by the applets.  And we ignore the
    other arguments for now.  Yes, this is lame.  */
-int
-panel_session_save (gpointer client_data,
+gint
+panel_session_save (GnomeClient *client,
+		    gint phase,
 		    GnomeSaveStyle save_style,
-		    int is_shutdown,
+		    gint is_shutdown,
 		    GnomeInteractStyle interact_style,
-		    int is_fast)
+		    gint is_fast,
+		    gpointer client_data)
 {
 	gint num;
 	gint drawernum;
@@ -269,15 +273,15 @@ panel_session_save (gpointer client_data,
 	
 
 	/* Always successful.  */
-	return 1;
+	return TRUE;
 }
 
 static void
 panel_quit(void)
 {
-	if (! gnome_session_connected_p ()) {
-		panel_session_save (NULL, GNOME_SAVE_BOTH, 1,
-				    GNOME_INTERACT_NONE, 0);
+	if (! GNOME_CLIENT_CONNECTED (client)) {
+		panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
+				    GNOME_INTERACT_NONE, 0, NULL);
 		gtk_main_quit ();
 		/* We don't want to return, because we've probably been
 		   called from an applet which has since been dlclose()'d,
@@ -286,8 +290,8 @@ panel_quit(void)
 		exit(0);
 	} else {
 		/* We request a completely interactive, full, slow shutdown.  */
-		gnome_session_request_save (GNOME_SAVE_BOTH, 1,
-					    GNOME_INTERACT_ANY, 0, 1);
+		gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
+					   GNOME_INTERACT_ANY, 0, 1);
 	}
 }
 
