@@ -1146,11 +1146,8 @@ static void
 panel_applet_cnx_broken_callback (BonoboControl *control)
 {
 	active_controls = g_slist_remove (active_controls, control);
-	if (!active_controls) {
-		/* FIXME: leak deliberately */
-		g_object_new (BONOBO_TYPE_PROPERTY_BAG, NULL);
+	if (!active_controls)
 		g_idle_add (panel_applet_idle_quit, NULL);
-	}
 }
 
 static gboolean
