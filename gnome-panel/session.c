@@ -669,7 +669,8 @@ panel_session_save (GnomeClient *client,
 		for(li=panel_list;li;li=g_slist_next(li)) {
 			PanelData *pd = li->data;
 			gtk_widget_hide(pd->panel);
-			gtk_widget_hide(pd->menu);
+			if (pd->menu)
+				gtk_widget_hide(pd->menu);
 		}
 		while(!ss_done_save)
 			gtk_main_iteration_do(TRUE);

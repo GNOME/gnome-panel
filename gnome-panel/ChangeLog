@@ -1,3 +1,8 @@
+1999-06-02  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* session.c (panel_session_save): check for a NULL pd->menu,
+	this gets rid of GTK warnings
+
 Wed Jun 02 00:55:27 1999  George Lebl  <jirka@5z.com>
 
 	* panel-widget.[ch],extern.c: implement a free_space attribute
