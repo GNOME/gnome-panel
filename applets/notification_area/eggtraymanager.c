@@ -395,16 +395,19 @@ egg_tray_manager_unmanage (EggTrayManager *manager)
   GtkWidget *invisible;
 
   if (manager->invisible == NULL)
-	  return;
+    return;
 
   invisible = manager->invisible;
+  g_assert (GTK_IS_INVISIBLE (invisible));
+  g_assert (GTK_WIDGET_REALIZED (invisible));
+  g_assert (GDK_IS_WINDOW (invisible->window));
   
-  display = GDK_WINDOW_XDISPLAY (manager->invisible);
+  display = GDK_WINDOW_XDISPLAY (invisible->window);
   
   if (XGetSelectionOwner (display, manager->selection_atom) ==
-      GDK_WINDOW_XWINDOW (manager->invisible->window))
+      GDK_WINDOW_XWINDOW (invisible->window))
     {
-      timestamp = gdk_x11_get_server_time (manager->invisible->window);      
+      timestamp = gdk_x11_get_server_time (invisible->window);      
       XSetSelectionOwner (display, manager->selection_atom, None, timestamp);
     }
 
@@ -412,6 +415,7 @@ egg_tray_manager_unmanage (EggTrayManager *manager)
 
   manager->invisible = NULL; /* prior to destroy for reentrancy paranoia */
   gtk_widget_destroy (invisible);
+  g_object_unref (G_OBJECT (invisible));
 }
 
 static gboolean
@@ -436,6 +440,7 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
 				   XScreenNumberOfScreen (xscreen));
   
   invisible = gtk_invisible_new_for_screen (screen);
+  gtk_widget_realize (invisible);
   
   gtk_widget_add_events (invisible, GDK_PROPERTY_CHANGE_MASK | GDK_STRUCTURE_MASK);
 
@@ -471,7 +476,8 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
 		  False, StructureNotifyMask, (XEvent *)&xev);
 
       manager->invisible = invisible;
-
+      g_object_ref (G_OBJECT (manager->invisible));
+      
       manager->opcode_atom = XInternAtom (DisplayOfScreen (xscreen),
 					  "_NET_SYSTEM_TRAY_OPCODE",
 					  False);
@@ -492,7 +498,6 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
     }
 }
 
-#if EGG_TRAY_ENABLE_MULTIHEAD
 gboolean
 egg_tray_manager_manage_screen (EggTrayManager *manager,
 				GdkScreen      *screen)
@@ -502,14 +507,6 @@ egg_tray_manager_manage_screen (EggTrayManager *manager,
 
   return egg_tray_manager_manage_xscreen (manager, 
 					  GDK_SCREEN_XSCREEN (screen));
-}
-#endif
-
-gboolean
-egg_tray_manager_manage (EggTrayManager *manager)
-{
-  return egg_tray_manager_manage_xscreen (manager, 
-					  DefaultScreenOfDisplay (gdk_display));
 }
 
 static gboolean
@@ -529,20 +526,12 @@ egg_tray_manager_check_running_xscreen (Screen *xscreen)
     return FALSE;
 }
 
-#if HAVE_GTK_MULTIHEAD
 gboolean
 egg_tray_manager_check_running (GdkScreen *screen)
 {
   g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 
-  return egg_tray_manager_check_running_xscreen (GDK_SCREEN_XSCREEN (xscreen));
-}
-#endif
-
-gboolean
-egg_tray_manager_check_running_default_screen (void)
-{
-  return egg_tray_manager_check_running_xscreen (DefaultScreenOfDisplay (gdk_display));
+  return egg_tray_manager_check_running_xscreen (GDK_SCREEN_XSCREEN (screen));
 }
 
 char *

@@ -303,9 +303,13 @@ applet_factory (PanelApplet *applet,
 
   if (tray_manager == NULL)
     {
+      GdkScreen *screen;
+
+      screen = gtk_widget_get_screen (GTK_WIDGET (applet));
+
       tray_manager = egg_tray_manager_new ();
 
-      if (!egg_tray_manager_manage (tray_manager))
+      if (!egg_tray_manager_manage_screen (tray_manager, screen))
         g_printerr ("System tray didn't get the system tray manager selection\n");
 
       g_signal_connect (tray_manager, "tray_icon_added",
