@@ -193,6 +193,8 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 
 		
 		/*get the parent of the applet*/
+		/*note we know these are not NO_WINDOW widgets, so
+		  we don't need to check*/
 		ppanel = panel->master_widget->parent;
 		bx = panel->master_widget->allocation.x +
 			ppanel->allocation.x;
@@ -201,8 +203,10 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 		/*go the the toplevel panel widget*/
 		while(ppanel->parent) {
 			ppanel = ppanel->parent;
-			bx += ppanel->allocation.x;
-			by += ppanel->allocation.y;
+			if(!GTK_WIDGET_NO_WINDOW(ppanel)) {
+				bx += ppanel->allocation.x;
+				by += ppanel->allocation.y;
+			}
 		}
 
 		bw = panel->master_widget->allocation.width;
