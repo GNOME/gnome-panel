@@ -235,187 +235,197 @@
 
     
     <sect2 id="rightclick">
-      <title>Right-Click Menu</title>
+      <title>Kontext-Men&uuml;</title>
       <para>
-     Clicking on any Panel object with the right mouse button brings
-     up the Panel object's <guimenu>right-click</guimenu> menu. This
-     menu contains <guimenuitem>Remove from panel</guimenuitem> for
-     removing the object from the <interface>Panel</interface>,
-     <guimenuitem>Move</guimenuitem> for  moving objects within the
-     <interface>Panel</interface> or between two
-     <interface>Panels</interface>,  the
-     <guisubmenu>Panel</guisubmenu> submenu described below, and
-     typically one or more object-specific menu items.  For drawers,
-     menus, and launchers the only object-specific item is
-     <guimenuitem>Properties...</guimenuitem> which allows you to
-     customize the properties and settings of the object. For applets,
-     the <guimenu>right-click</guimenu> menu will often contain
-     <guimenuitem>About...</guimenuitem> for viewing information about
-     the applet such as the author's name and the applet version,
-     <guimenuitem>Help</guimenuitem> for viewing the applet's
-     documentation,  and <guimenuitem>Properties...</guimenuitem> for
-     configuring preferences and settings for the applet.  Applets
-     often have other applet-specific controls in their
-     <guimenu>right-click</guimenu> menus.
-    </para>
+	Wenn Sie mit der rechten Maustaste auf ein Panel-Objekt klicken,
+	erscheint das <guimenu>Kontext-Men&uuml;</guimenu> dieses Objektes.
+	Dieses Men&uuml; enth&auml;t <guimenuitem>Entfernen</guimenuitem> um
+	das Objekt vom <interface>Panel</interface> zu entfernen,
+	<guimenuitem>Bewegen</guimenuitem> um das Objekt im
+	<interface>Panel</interface> oder zwischen zwei
+	<interface>Panels</interface> zu bewegen,  das unten beschriebene
+	<guisubmenu>Panel</guisubmenu> Untermen&uuml; und typischerweise
+	mehrere objektspezifische Men&uuml;eintr&auml;ge. Bei Schubladen,
+	Men&uuml;s und Startern ist <guimenuitem>Eigenschaften...</guimenuitem>
+	der einzige objektspezifische Men&uuml;eintr&auml;g, der Ihnen
+	erlaubt, die Eigenschaften des Objekts zu ver&auml;ndern. Applets
+	haben h&auml;ufig <guimenuitem>&Uuml;ber...</guimenuitem> in ihrem
+	<guimenu>Kontext-Men&uuml;</guimenu> um Informationen &uuml;ber das
+	Applet, wie etwa Name des Autors und die gegenw&auml;rtige Version,
+	anzuzeigen. Des weiteren findet sich dort oft ein
+	<guimenuitem>Hilfe</guimenuitem> Men&uuml;eintrag, um die Dokumentation
+	das Applets anzuzeigen, sowie ein
+	<guimenuitem>Eigenschaften...</guimenuitem> Men&uuml;eintrag, um
+	seine Eigenschaften zu &auml;ndern. Dar&uuml;berhinaus haben Applets
+	oft ihre eigenen spezifischen Steuerelemente in ihren
+	<guimenu>Kontext-Men&uuml;s</guimenu>.
+      </para>
       <para>
-     The <guisubmenu>Panel</guisubmenu> submenu allows you to <link
-     linkend="panelmove">create and remove
-     <interface>Panels</interface></link> and <link
-     linkend="appletadd">add objects</link> to the
-     <interface>Panel</interface>.  It also allows you to modify the
-     properties of the particular <interface>Panel</interface> of
-     interest using the  <guimenuitem>Properties</guimenuitem> menu
-     item (see <xref linkend="panelproperties">) or the properties of
-     all <interface>Panels</interface> using the <guimenuitem>Global
-     Preferences...</guimenuitem> menu item (see <xref
+	Das <guisubmenu>Panel</guisubmenu> Untermenü erlaubt Ihnen,
+	<interface>Panels</interface> zu
+	<link linkend="panelmove">erzeugen und zu löschen</link> sowie
+	Objekte zum <interface>Panel</interface>
+	<link linkend="appletadd">hinzuzufügen</link>.
+	Es ermöglicht Ihnen darüberhinaus, über den
+	<guimenuitem>Eigenschaften</guimenuitem> Menüeintrag die Eigenschaften
+	eines jeweiligen <interface>Panels</interface> zu ändern (siehe
+	<xref linkend="panelproperties">) sowie über den
+	<guimenuitem>Globale Eigenschaften...</guimenuitem> Menüeintrag
+	die aller <interface>Panels</interface> (siehe <xref
 	  linkend="globalpanelprefs">).
-    </para>
+      </para>
       <para>
-     You can also right-click on the <interface>Panel</interface>
-     itself. This will bring up the <link
-     linkend="mainmenu"><guimenu>Main Menu</guimenu></link>. In
-     particular, this menu also contains the
-     <guisubmenu>Panel</guisubmenu> submenu described above.
-    </para>
+	Sie können außerdem auf das <interface>Panel</interface> selbst
+	rechtsklicken, um das
+	<link linkend="mainmenu"><guimenu>Hauptmenü</guimenu></link>
+	hervorzubringen. Insbesondere enthält auch dieses Menü das oben
+	beschriebene <guisubmenu>Panel</guisubmenu> Untermenü.
+      </para>
     </sect2>
 
     <sect2 id="panelhide">
-      <title>Hiding the Panel</title>
+      <title>Das Panel verstecken</title>
       <para>
-     <indexterm id="idx-a4">
-	  <primary>Panel</primary> <secondary>Hide Buttons</secondary>
+	<indexterm id="idx-a4">
+	  <primary>Panel</primary>
+	  <secondary>Versteckknöpfe</secondary>
 	</indexterm>
-     <indexterm id="idx-a5">
-	  <primary>Panel</primary> <secondary>Hiding</secondary>
+	<indexterm id="idx-a5">
+	  <primary>Panel</primary>
+	  <secondary>Verstecken</secondary>
 	</indexterm>
-     The left and right arrow icons seen at either end of the example
-     <interface>Panel</interface> and in <xref linkend="fig2"> are
-     used to hide the <interface>Panel</interface>.
-     <figure id="fig2">
-	  <title>The Hide Button</title>
+	Die Rechts- und Linkspfeile an beiden Enden des
+	Beispiel-<interface>Panels</interface> und in <xref linkend="fig2">
+	dienen zum Verstecken des <interface>Panels</interface>.
+	<figure id="fig2">
+	  <title>Der Versteckknopf</title>
 	  <screenshot>
-	    <screeninfo>The Hide Button</screeninfo>
+	    <screeninfo>Der Versteckknopf</screeninfo>
 	    <graphic fileref="./figures/hide-button" format="png"
-        srccredit="dcm">
-        </graphic>
+	      srccredit="dcm">
+	    </graphic>
 	  </screenshot>
 	</figure>
-    </para>
+      </para>
       <para>
-     Pressing one of these arrows will hide the
-     <interface>Panel</interface> by sliding   it in the direction of
-     the arrow pressed, so that the only part of the
-     <interface>Panel</interface> which remains visible is the
-     <guibutton>Hide</guibutton> button itself.   Pressing it a second
-     time will expand the <interface>Panel</interface>.
-    </para>
+	Wenn Sie auf einen dieser Pfeile klicken, verschwindet das
+	<interface>Panel</interface>, indem es in Richtung des Pfeils
+	gleitet bis nur noch der Versteckknopf selbst sichtbar bleibt.
+	Drücken Sie ihn ein zweites Mal, erscheint das
+	<interface>Panels</interface> wieder.
+      </para>
       <para>
-     <interface>Panels</interface> can be configured to automatically
-     hide when you are  not using it and reappear when you move the
-     mouse to the part of the screen where the
-     <interface>Panel</interface> resides. This can be useful if you
-     are unable to run your system in a high resolution.  To learn how
-     to have a <interface>Panel</interface> auto-hide, see <xref
-	  linkend="panelproperties">.
-    </para>
+	<interface>Panels</interface> lassen sich so konfigurieren, daß
+	sie sich automatisch verstecken, wenn Sie sie nicht benutzen und
+	dann wieder erscheinen, wenn Sie mit der Maus über den Teil des
+	Bildschirms fahren, auf dem das <interface>Panel</interface> liegen
+	würde. Dies kann hilfreich sein, wenn Sie Ihr System nicht mit voller
+	Auflösung benutzen können. Um zu erfahren, wie Sie ein sich
+	automatisch versteckendes <interface>Panel</interface> bekommen,
+	sehen Sie bitte <link linkend="panelproperties">.
+      </para>
     </sect2>
 
     <sect2 id="loggingout">
-      <title>Logging Out</title>
+      <title>Abmelden</title>
       <para>
-     To log out of GNOME, right click on the
-     <interface>Panel</interface> and select <guimenuitem>Log
-     out</guimenuitem>. This will bring up the
-     <interface>Logout</interface> dialog, shown in <xref
-	  linkend="logoutdialog-fig">.
-    </para>
+	Um sich von GNOME abzumelden, klicken Sie mit der rechten Maustaste
+	auf das <interface>Panel</interface> und wählen Sie
+	<guimenuitem>Ablelden</guimenuitem>. Dies bringt den
+	<interface>Abmelden-Dialog</interface> hervor, den Sie in <xref
+	  linkend="logoutdialog-fig"> sehen.
+      </para>
       <figure id="logoutdialog-fig">
-	<title>The Logout Dialog</title>
+	<title>Der Abmelde-Dialog</title>
 	<screenshot>
-	  <screeninfo>Logout</screeninfo>
+	  <screeninfo>Abmelden</screeninfo>
 	  <graphic fileref="./figures/logout-screen" format="png"
-      srccredit="dcm">
-      </graphic>
+	    srccredit="dcm">
+	  </graphic>
 	</screenshot>
       </figure>
       <para>
-     If you would like to save your current setup, select the
-     <guilabel>Save current setup</guilabel> checkbox. This will save
-     any GNOME applications you have open and configuration changes
-     you may have made in the <application>Control
-     Center</application>.
-    </para>
+	Wenn Sie ihre gegenwärtige Konfiguration speichern wollen, wählen
+	Sie die <guilabel>Aktuelle Einstellungen speichern</guilabel>
+	Checkbox. Dies speichert, welchen GNOME-Applikationen Sie geöffnet
+	haben sowie alle Konfigurationsänderungen, die Sie im
+	<application>Kontrollzentrum</application> gemacht haben.
+      </para>
       <para>
-     The default way to log out is by using the
-     <guilabel>Logout</guilabel> option, which ends your GNOME session
-     but does not shut down the computer.  Depending on your system
-     configuration, you may also have the <guilabel>Halt</guilabel>
-     option, which shuts down the computer, and the
-     <guilabel>Reboot</guilabel> option, which will reboot the
-     computer.
-    </para>
-      <note>    <title>Note for advanced users</title>   <para>    The
-     <guilabel>Halt</guilabel> and <guilabel>Reboot</guilabel> choices
-     will only be shown if you have permission to execute the command
-     <command>/usr/bin/shutdown</command>.
-     </para>
-      </note>
-      <para>
-     If you do not want to log out, press the
-     <guibutton>No</guibutton> button and you will be returned to your
-     GNOME session. Otherwise press the <guibutton>Yes</guibutton>
-     button to log out.
-    </para>
+	Der normale Weg, sich abzumelden, ist mit der
+	<guilabel>Abmelden</guilabel> Option, die Ihre GNOME-Sitzung
+	beendet, aber nicht Ihren Computer herunterfährt. Je nach
+	Konfiguration Ihres Systems können Sie auch die
+	<guilabel>Herunterfahren</guilabel> Option haben, die den Computer
+	herunterfährt sowie die <guilabel>Neustart</guilabel> Option,
+	die den Computer neu startet.
+      </para>
       <note>
-	<title>Logging Out and Window Managers</title>
-	<para>
-      If you are running a window manager that is GNOME compliant, the
-      logout feature will quit the window manager as well as GNOME. If
-      you are running a non-compliant window manager you will have to
-      quit the window manager yourself.
-     </para>
+	<title>Hinweis für fortgeschrittene Benutzer</title>
+
+	<para>Die <guilabel>Herunterfahren</guilabel> and
+	  <guilabel>Neustart</guilabel> Optionen werden nur angezeigt,
+	  wenn Sie berechtigt sind, das Kommando
+	  <command>/usr/bin/shutdown</command> auszuführen.
+	</para>
       </note>
       <para>
-     You can disable the <interface>Logout</interface> dialog so that
-     selecting the <guimenuitem>Log out</guimenuitem> menu item will
-     end your GNOME session without asking any questions. To do so,
-     start the GNOME <application>Control Center</application> by
-     selecting <menuchoice> <guimenu>Main Menu</guimenu>
-	  <guisubmenu>Settings</guisubmenu> <guisubmenu>Startup
-     programs</guisubmenu> </menuchoice> and uncheck the
-     <guilabel>Prompt on logout</guilabel> button.  <!-- Commented out
-     - as suggested by Drake You may also control whether changes to
-     your session are automatically saved using the
+	Wenn Sie sich nicht abmelden wollen, drücken Sie den
+	<guibutton>Nein</guibutton> Knopf, und Sie kehren zu Ihrer
+	GNOME-Sitzung zurück. Andernfalls drücken Sie den
+	<guibutton>Ja</guibutton> Knopf um sich abzumelden.
+      </para>
+      <note>
+	<title>Abmelden und Fenstermanager</title>
+	<para>
+	  Wenn Sie einen Fenstermanager verwenden, der GNOME-kompilant ist,
+	  beendet das Abmelde-Feature sowohl GNOME als auch den Fenstermanager.
+	  Andernfalls müssen Sie den Fenstermanager manuell beenden.
+	</para>
+      </note>
+      <para>
+	Sie können den <interface>Abmelden</interface> Dialog abschalten, so
+	daß die Auswahl des <guimenuitem>Abmelden</guimenuitem> Menüeintrag
+	Ihre GNOME-Sitzung ohne Rückfrage beendet. Starten Sie dazu das
+	<application>GNOME-Kontrollzentrum</application>, indem Sie im
+	<menuchoice>
+	  <guimenu>Hauptmenü</guimenu>
+	  <guisubmenu>Einstellungen</guisubmenu>
+	  <guisubmenu>Gestartete Programme</guisubmenu>
+	</menuchoice> und den <guilabel>Rückfrage beim Abmelden</guilabel>
+	Knopf abwählen.
+	<!-- Commented out
+	- as suggested by Drake You may also control whether changes to
+	your session are automatically saved using the
       <guilabel>Automatically save changes to session</guilabel>
-     button. -->
-    </para>
+	button. -->
+      </para>
     </sect2>
     <sect2 id="lockscreen">
-      <title>Locking the Screen</title>
+      <title>Bildschirm sperren</title>
       <para>
-     Sometimes you may want to leave your computer with GNOME running
-     and not allow others to use or view your GNOME session.  GNOME
-     allows you to do this by locking the screen, requiring a password
-     to unlock it. To lock your GNOME session, right click on either
-     end of a <interface>Panel</interface> and select
-     <guimenuitem>Lock screen</guimenuitem>.  Alternately, if you have
-     the <guibutton>Lock Button</guibutton>(see <xref
-	  linkend="lockbutton">) on a <interface>Panel</interface>, you may
-     just press this button to lock the screen.  To unlock the screen,
-     just type your login password.
-    </para>
+	Manchmal möchten Sie Ihren Computer während Ihrer GNOME-Sitzung
+	verlassen, ohne daß andere diese ansehen und benutzen können.
+	GNOME ermöglicht Ihnen hierzu, den Bildschirm zu sperren, so daß
+	Sie Ihr Paßwort eingeben müssen um ihn wieder aufzuschließen.
+	Um Ihre GNOME-Sitzung zu sperren, klicken Sie entweder mit der
+	rechten Maustaste auf ein Ende eines <interface>Panels</interface>
+	und wählen Sie <guimenuitem>Bildschirm sperren</guimenuitem>, oder -
+	falls Sie den <guibutton>Sperrknopf</guibutton> (siehe <xref
+	  linkend="lockbutton">) auf einem <interface>Panel</interface> haben,
+	klicken Sie ihn einfach an. Zum Aufschließen geben Sie einfach Ihr
+	Anmeldepaßwort ein.
+      </para>
       <note>
-	<title>Screensavers and the Lock Button</title>
+	<title>Bildschirmschoner und der Sperrknopf</title>
 	<para>
-      The <guibutton>Lock screen</guibutton> button uses a feature of
-      the <application>xscreensaver</application> program. This is the
-      same program that the <application>Control Center</application>
-      uses to set your screensaver. In  order for the <guibutton>Lock
-      screen</guibutton> button to work properly, you must have a
-      screensaver enabled in the <application>Control
-      Center</application>.
-     </para>
+	  Der <guibutton>Sperrknopf</guibutton> benutzt ein Feature des
+	  <application>xscreensaver</application> Programms. Dies ist dasselbe
+	  Programm, das das <application>Kontrollzentrum</application> benutzt,
+	  um den Bildschirmschoner zu setzen. Sie müssen einen
+	  Bildschirmschoner im <application>Kontrollzentrum</application>
+	  aktiviert haben um den <guibutton>Sperrknopf</guibutton> zu verwenden.
+	</para>
       </note>
     </sect2>
   </sect1>
