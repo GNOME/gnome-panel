@@ -339,20 +339,20 @@ panel_widget_set_size(PanelWidget *panel, gint size)
 		case PANEL_BOTTOM:
 			panel->orient = PANEL_HORIZONTAL;
 			gtk_widget_set_usize(GTK_WIDGET(panel->fixed),
-					     -1,
+					     0,
 					     panel->thick);
 			gtk_widget_set_usize(GTK_WIDGET(panel),
 					     gdk_screen_width(),
-					     -1);
+					     0);
 			break;
 		case PANEL_LEFT:
 		case PANEL_RIGHT:
 			panel->orient = PANEL_VERTICAL;
 			gtk_widget_set_usize(GTK_WIDGET(panel->fixed),
 					     panel->thick,
-					     -1);
+					     0);
 			gtk_widget_set_usize(GTK_WIDGET(panel),
-					     -1,
+					     0,
 					     gdk_screen_height());
 			break;
 	}
@@ -1460,7 +1460,7 @@ panel_widget_new (gint size,
 		gtk_widget_show(panel->hidebutton_e);
 		gtk_frame_set_shadow_type(GTK_FRAME(panel->hidebutton_e),
 					  GTK_SHADOW_OUT);
-		gtk_widget_set_usize(panel->hidebutton_e,40,-1);
+		gtk_widget_set_usize(panel->hidebutton_e,40,0);
 	}
 	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_e,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
@@ -1481,7 +1481,7 @@ panel_widget_new (gint size,
 		gtk_widget_show(panel->hidebutton_n);
 		gtk_frame_set_shadow_type(GTK_FRAME(panel->hidebutton_n),
 					  GTK_SHADOW_OUT);
-		gtk_widget_set_usize(panel->hidebutton_n,-1,40);
+		gtk_widget_set_usize(panel->hidebutton_n,0,40);
 	}
 	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_n,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
@@ -1502,7 +1502,7 @@ panel_widget_new (gint size,
 		gtk_widget_show(panel->hidebutton_w);
 		gtk_frame_set_shadow_type(GTK_FRAME(panel->hidebutton_w),
 					  GTK_SHADOW_OUT);
-		gtk_widget_set_usize(panel->hidebutton_w,-1,40);
+		gtk_widget_set_usize(panel->hidebutton_w,40,0);
 	}
 	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_w,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
@@ -1523,7 +1523,7 @@ panel_widget_new (gint size,
 		gtk_widget_show(panel->hidebutton_s);
 		gtk_frame_set_shadow_type(GTK_FRAME(panel->hidebutton_s),
 					  GTK_SHADOW_OUT);
-		gtk_widget_set_usize(panel->hidebutton_s,40,-1);
+		gtk_widget_set_usize(panel->hidebutton_s,0,40);
 	}
 	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_s,
 			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);

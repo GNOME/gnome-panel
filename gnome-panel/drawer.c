@@ -37,26 +37,35 @@ reposition_drawer(Drawer *drawer)
 	gint x=0,y=0;
 	gint bx, by, bw, bh;
 	gint dw, dh;
+	gint px, py, pw, ph;
+	PanelWidget *panel; /*parent panel*/
+
+	/*get's the panel data from the event box that is the applet's
+	  parent*/
+	panel = gtk_object_get_data(GTK_OBJECT(drawer->button->parent),
+				    PANEL_APPLET_PARENT_KEY);
 
 	gdk_window_get_origin (drawer->button->window, &bx, &by);
 	gdk_window_get_size (drawer->button->window, &bw, &bh);
 	gdk_window_get_size (drawer->drawer->window, &dw, &dh);
+	gdk_window_get_geometry(GTK_WIDGET(panel)->window, &px, &py,
+				&pw, &ph, NULL);
 
 	switch(drawer->orient) {
 		case DRAWER_UP:
 			x = bx+(bw-dw)/2;
-			y = by - dh;
+			y = py - dh;
 			break;
 		case DRAWER_DOWN:
 			x = bx+(bw-dw)/2;
-			y = by - bh;
+			y = py + ph;
 			break;
 		case DRAWER_LEFT:
-			x = bx - dw;
+			x = px - dw;
 			y = by+(bh-dh)/2;
 			break;
 		case DRAWER_RIGHT:
-			x = bx + bw;
+			x = px + pw;
 			y = by+(bh-dh)/2;
 			break;
 	}

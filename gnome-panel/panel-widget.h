@@ -18,8 +18,6 @@ extern "C" {
 
 #define PANEL_MAX 1000 /*10,000 long screen, FIXME! make dynamic*/
 
-#define PANEL_DRAWER_DROP_TARGET_SIZE 5
-
 #define PANEL_APPLET_PARENT_KEY "panel_applet_parent_key"
 #define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
 #define PANEL_APPLET_DATA "panel_applet_data"
