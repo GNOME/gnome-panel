@@ -16,3 +16,6 @@ N_("You can drag applets from the applet\n"
 N_("You can drag icons from the Programs menu\n"
    "onto the desktop or onto the panel to\n"
    "make new icons"),
+N_("You can get some choices about an item\n"
+   "in the Programs menu, by right clicking\n"
+   "on the item in the menu"),
