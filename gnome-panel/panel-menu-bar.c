@@ -228,6 +228,15 @@ panel_menu_bar_append_from_desktop (GtkWidget *menu,
 
 	g_key_file_free (key_file);
 
+	if (icon)
+		g_free (icon);
+
+	if (name)
+		g_free (name);
+
+	if (comment)
+		g_free (comment);
+
 	if (path_freeme)
 		g_free (path_freeme);
 }

@@ -1,5 +1,10 @@
 2005-02-01  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-menu-bar.c: (panel_menu_bar_append_from_desktop): plug leak
+	found by Elijah
+
+2005-02-01  Vincent Untz  <vincent@vuntz.net>
+
 	* menu.c: (add_menu_to_panel): get the filename corresponding to the
 	MenuTree and use it to create the menu button
 	(create_item_context_menu): look for the filename corresponding to the
