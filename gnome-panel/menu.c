@@ -3451,7 +3451,7 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus)
 		setup_internal_applet_drag(menuitem, "LOCK:NEW");
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
 				      _("Lock the screen so that you can "
-					"temporairly leave your computer"), NULL);
+					"temporarily leave your computer"), NULL);
 	}
 
 	menuitem = gtk_image_menu_item_new ();
