@@ -447,7 +447,7 @@ show_applet_menu(AppletInfo *info)
 		gtk_widget_hide(applet_menu_remove_item);
 	gtk_object_set_user_data(GTK_OBJECT(applet_menu), info);
 
-	gtk_menu_popup(GTK_MENU(applet_menu), NULL, NULL, NULL, NULL, 3, time(NULL));
+	gtk_menu_popup(GTK_MENU(applet_menu), NULL, NULL, NULL, NULL, 0/*3*/, time(NULL));
 	/*FIXME: make it pop-up on some title bar of the applet menu or
 	  somehow avoid pressing remove applet being under the cursor!*/
 }
@@ -489,21 +489,38 @@ add_main_menu(GtkWidget *widget, gpointer data)
 }
 
 int
+applet_get_panel(int id)
+{
+	return 0;
+}
+
+int
+applet_get_pos(int id)
+{
+	return 0;
+}
+
+/*int
 applet_button_press_event(int id, int button)
 {
+	puts("BUTTONPRESS1");
 	if(button==3) {
 		AppletInfo *info = g_list_nth(applets,id)->data;
+	puts("BUTTONPRESS2");
 		show_applet_menu(info);
+	puts("BUTTONPRESS3");
 		return TRUE;
 	} else if(button == 2) {
 		AppletInfo *info = g_list_nth(applets,id)->data;
 		PanelWidget *panel = find_applet_panel(info->widget);
 
+	puts("BUTTONPRESS4");
 		panel_widget_applet_drag_start(panel,info->widget);
+	puts("BUTTONPRESS5");
 		return TRUE;
 	}
 	return FALSE;
-}
+}*/
 
 
 struct  reparent_struct {
@@ -561,7 +578,7 @@ reparent_window_id (unsigned long id, int panel, int pos)
 	for(i=0,list=applets;list!=NULL;list=g_list_next(list))
 		i++;
 
-	return i;
+	return i-1;
 }
 
 /*FIXME: add a function that does this, so generalize register_toy for this*/

@@ -21,11 +21,23 @@ public:
 
 		return ::reparent_window_id (wid,panel,pos);
 	}
-	CORBA::Short applet_button_press_event (CORBA::Short id,
-						CORBA::Short button) {
-		printf ("BUTTON_PRESS_EVENT!\n");
+	CORBA::Short applet_get_panel (CORBA::Short id) {
+		printf ("APPLET_GET_PANEL!\n");
 
-		return ::applet_button_press_event (id,button);
+		return ::applet_get_panel (id);
+	}
+	CORBA::Short applet_get_pos (CORBA::Short id) {
+		printf ("APPLET_GET_POS!\n");
+
+		return ::applet_get_pos (id);
+	}
+	void applet_moved_to (CORBA::Short id,
+			      CORBA::Short x,
+			      CORBA::Short y) {
+		printf ("APPLET_MOVED_TO!\n");
+	}
+	void applet_remove_from_panel (CORBA::Short id) {
+		printf ("APPLET_REMOVE_FROM_PANEL!\n");
 	}
 };
 
