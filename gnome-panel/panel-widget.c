@@ -477,7 +477,8 @@ panel_widget_push_left(PanelWidget *panel,gint pos)
 	panel->applets[pos].applet=NULL;
 	panel->applets[pos].cells=1;
 
-	if(panel->currently_dragged_applet)
+	if(panel->currently_dragged_applet &&
+	   panel->currently_dragged_applet_pos !=-999)
 		panel->currently_dragged_applet_pos =
 			panel_widget_get_pos(panel,
 					     panel->currently_dragged_applet);
@@ -520,13 +521,12 @@ panel_widget_push_right(PanelWidget *panel,gint pos)
 		panel->applets[pos].cells=1;
 		panel->size++;
 
-		if(panel->currently_dragged_applet)
+		if(panel->currently_dragged_applet &&
+		   panel->currently_dragged_applet_pos !=-999)
 			panel->currently_dragged_applet_pos =
 				panel_widget_get_pos(panel,
 					     panel->currently_dragged_applet);
 
-		for(i=pos+1;i<panel->size;i+=panel->applets[i].cells)
-			panel_widget_applet_put(panel,i);
 		panel_widget_set_size(panel,panel->size);
 		return TRUE;
 	}
@@ -553,7 +553,8 @@ panel_widget_push_right(PanelWidget *panel,gint pos)
 	panel->applets[pos].applet=NULL;
 	panel->applets[pos].cells=1;
 
-	if(panel->currently_dragged_applet)
+	if(panel->currently_dragged_applet &&
+	   panel->currently_dragged_applet_pos !=-999)
 		panel->currently_dragged_applet_pos =
 			panel_widget_get_pos(panel,
 					     panel->currently_dragged_applet);
@@ -571,9 +572,10 @@ panel_widget_seize_space(PanelWidget *panel,
 	GtkWidget *applet;
 	gint is_dragged = FALSE;
 
-	if(pos==panel->currently_dragged_applet_pos)
+	if(pos==panel->currently_dragged_applet_pos) {
 		is_dragged=TRUE;
-	panel->currently_dragged_applet_pos = -999;
+		panel->currently_dragged_applet_pos = -999;
+	}
 
 	applet = panel->applets[pos].applet;
 
