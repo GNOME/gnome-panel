@@ -1,3 +1,9 @@
+Sun Mar 29 01:16:20 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.c: fixed the annoying flicker of the
+	  panel at pos 0,0, by using gtk_widget_set_uposition
+	  instead of move_window routine
+
 Sun Mar 29 00:46:07 1998  George Lebl  <jirka@5z.com>
 
 	* panel-util.c: get rid of trailing '\n' in popen

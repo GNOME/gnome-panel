@@ -475,12 +475,11 @@ init_user_panels(void)
 					 DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
 					 DEFAULT_MINIMIZED_SIZE,
 					 DEFAULT_MINIMIZE_DELAY,
-					/*the last three will get changed
+					/*the previous three will get changed
 					  anyway, they are globals*/
 					 x,
 					 y,
 					 drop_pos);
-
 
 		panel_menu = create_panel_root_menu(PANEL_WIDGET(panel));
 		gtk_signal_connect(GTK_OBJECT(panel),
@@ -509,6 +508,7 @@ init_user_panels(void)
 					 NULL);
 
 		gtk_widget_show(panel);
+
 
 		panels = g_list_append(panels,panel);
 	}

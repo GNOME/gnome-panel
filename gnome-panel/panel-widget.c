@@ -231,7 +231,7 @@ panel_widget_set_position(PanelWidget *panel)
 		default: break; /*to get rid of a warning*/
 	}
 	if(newx != x || newy != y)
-		move_window(GTK_WIDGET(panel),newx,newy);
+		gtk_widget_set_uposition(GTK_WIDGET(panel),newx,newy);
 }
 
 static void
@@ -1219,6 +1219,7 @@ panel_widget_new (gint size,
 
 
 	panel_widget_set_size(panel,panel->size);
+	panel_widget_set_position(panel);
 
 	panel_widget_set_hidebuttons(panel);
 
@@ -1283,7 +1284,6 @@ panel_widget_new (gint size,
 			    NULL);
 	gtk_widget_dnd_drop_set (GTK_WIDGET(panel), TRUE,
 				 applet_drop_types, 1, FALSE);*/
-	
 
 	return GTK_WIDGET(panel);
 }
@@ -1532,8 +1532,6 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	g_return_val_if_fail(panel,-1);
 	g_return_val_if_fail(applet,-1);
 	g_return_val_if_fail(pos>=0,-1);
-
-	printf("ADDING at pos: %d\n",pos);
 
 	if(panel->snapped == PANEL_DRAWER) {
 		if(pos >= panel->size &&
@@ -1808,6 +1806,7 @@ panel_widget_change_params(PanelWidget *panel,
 	panel->drawer_drop_zone_pos = drop_zone_pos;
 
 	panel_widget_set_size(panel,panel->size);
+	panel_widget_set_position(panel);
 
 	if(oldorient != panel->orient ||
 	   oldsnapped != panel->snapped)
