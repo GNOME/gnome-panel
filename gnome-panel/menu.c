@@ -3996,7 +3996,7 @@ menu_button_menu_popup (Menu    *menu,
 
 	if (BASEP_IS_WIDGET (panel)) {
 		BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
-		basep_widget_autohide (BASEP_WIDGET (panel));
+		basep_widget_queue_autohide (BASEP_WIDGET (panel));
 	}
 
 	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;

@@ -1,3 +1,8 @@
+2003-12-03  Arvind Samptur <arvind.samptur@wipro.com>
+	* menu.c (menu_button_menu_popup)
+	* panel.c (panel_do_popup_menu): use basep_widget_queue_autohide
+	instead of basep_widget_autohide. Fixes #97182
+
 2002-12-03  Arvind Samptur <arvind.samptur@wipro.com>
 	* launcher.[ch]: add a destroy_handler to the 
 	launcher structure. Helps in the destroying the

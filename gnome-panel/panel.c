@@ -672,7 +672,7 @@ panel_do_popup_menu (PanelWidget *panel,
 		menu = make_popup_panel_menu (panel);
 		if (basep) {
                         basep->autohide_inhibit = TRUE;
-			basep_widget_autohide (basep);
+			basep_widget_queue_autohide (basep);
 		}
 
 		gtk_menu_set_screen (GTK_MENU (menu),
