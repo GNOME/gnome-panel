@@ -77,6 +77,7 @@ static GtkWidget *entry_down[LAST_TILE];
 static GtkWidget *hide_panel_frame_cb;
 static GtkWidget *tile_when_over_cb;
 static GtkWidget *saturate_when_over_cb;
+static GtkWidget *fast_button_scaling_cb;
 
 
 /* applet page*/
@@ -383,6 +384,8 @@ sync_buttons_page_with_config(GlobalConfig *conf)
 				    conf->tile_when_over);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(saturate_when_over_cb),
 				    conf->saturate_when_over);
+	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(fast_button_scaling_cb),
+				    conf->fast_button_scaling);
 	
 	for(i=0;i<LAST_TILE;i++) {
 		char *file;
@@ -409,6 +412,8 @@ sync_config_with_buttons_page(GlobalConfig *conf)
 		GTK_TOGGLE_BUTTON(tile_when_over_cb)->active;
 	conf->saturate_when_over =
 		GTK_TOGGLE_BUTTON(saturate_when_over_cb)->active;
+	conf->fast_button_scaling =
+		GTK_TOGGLE_BUTTON(fast_button_scaling_cb)->active;
 
 	for(i=0;i<LAST_TILE;i++) {
 		conf->tiles_enabled[i] =
@@ -609,6 +614,12 @@ buttons_notebook_page (void)
 	  gtk_signal_connect (GTK_OBJECT (saturate_when_over_cb), "toggled",
 			      GTK_SIGNAL_FUNC (changed_cb), NULL);
 	  gtk_box_pack_start (GTK_BOX (vbox), saturate_when_over_cb, FALSE, FALSE, 0);
+
+	  /* Fast but low quality scaling (Nearest versus Hyperbolic) */
+	  fast_button_scaling_cb = gtk_check_button_new_with_label (_("Fast but low quality scaling of button icons"));
+	  gtk_signal_connect (GTK_OBJECT (fast_button_scaling_cb), "toggled",
+			      GTK_SIGNAL_FUNC (changed_cb), NULL);
+	  gtk_box_pack_start (GTK_BOX (vbox), fast_button_scaling_cb, FALSE, FALSE, 0);
 	  
 	  return (vbox);
 }
@@ -863,9 +874,9 @@ sync_misc_page_with_config(GlobalConfig *conf)
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(keys_enabled_cb),
 				    conf->keys_enabled);
 	gtk_entry_set_text (GTK_ENTRY(menu_key_entry),
-			    conf->menu_key?conf->menu_key:"");
+			    conf->menu_key ? conf->menu_key : "");
 	gtk_entry_set_text (GTK_ENTRY(run_key_entry),
-			    conf->run_key?conf->run_key:"");
+			    conf->run_key ? conf->run_key : "");
 }
 static void
 sync_config_with_misc_page(GlobalConfig *conf)
@@ -1178,6 +1189,7 @@ loadup_vals(void)
 	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
 	global_config.saturate_when_over = gnome_config_get_bool("saturate_when_over=TRUE");
 	global_config.confirm_panel_remove = gnome_config_get_bool("confirm_panel_remove=TRUE");
+	global_config.fast_button_scaling = gnome_config_get_bool("fast_button_scaling=FALSE");
 
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"new_tiles_enabled_%d=FALSE",i);
@@ -1277,6 +1289,7 @@ write_config(GlobalConfig *conf)
 	gnome_config_set_bool("keys_enabled", conf->keys_enabled);
 	gnome_config_set_string("menu_key", conf->menu_key);
 	gnome_config_set_string("run_key", conf->run_key);
+	gnome_config_set_bool("fast_button_scaling", conf->fast_button_scaling);
 			     
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {

@@ -603,9 +603,16 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 		if(pb != NULL) {
 			GdkPixbuf *scaled_pb;
 			double affine[6];
+			GdkInterpType interp;
+
+			if (global_config.fast_button_scaling)
+				interp = GDK_INTERP_NEAREST;
+			else
+				interp = GDK_INTERP_HYPER;
 
 			scaled_pb = scale_pixbuf_to_square (pb, size,
-							    NULL, NULL);
+							    NULL, NULL,
+							    interp);
 
 			art_affine_identity (affine);
 
@@ -628,8 +635,15 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			double affine[6];
 			int w, h;
 			GdkPixbuf *scaled_pb;
+			GdkInterpType interp;
 
-			scaled_pb = scale_pixbuf_to_square (pb, size, &w, &h);
+			if (global_config.fast_button_scaling)
+				interp = GDK_INTERP_NEAREST;
+			else
+				interp = GDK_INTERP_HYPER;
+
+			scaled_pb = scale_pixbuf_to_square (pb, size, &w, &h,
+							    interp);
 
 			art_affine_translate(affine,
 					     -border+off + (size-w)/2,
@@ -1102,7 +1116,6 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 			int border, int depth)
 {
 	GdkPixbuf *pb;
-	GList *list;
 
 	g_return_if_fail(tile >= 0);
 	g_return_if_fail(tile < LAST_TILE);
@@ -1130,17 +1143,7 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 	tile_border[tile] = border;
 	tile_depth[tile] = depth;
 
-	for(list = buttons;list!=NULL;list=g_list_next(list)) {
-		ButtonWidget *button = list->data;
-		if(button->tile == tile) {
-			if(button->cache)
-				gdk_pixmap_unref(button->cache);
-			button->cache = NULL;
-			setup_no_alpha(button);
-			panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
-					       button);
-		}
-	}
+	button_widget_redo_all ();
 }
 
 void
@@ -1155,20 +1158,25 @@ button_widget_set_flags(int tile,
 	if(tiles_enabled[tile] != _tiles_enabled ||
 	   pixmaps_enabled[tile] != _pixmaps_enabled ||
 	   always_text[tile] != _always_text) {
-		GList *list;
-
 		tiles_enabled[tile] = _tiles_enabled;
 		pixmaps_enabled[tile] = _pixmaps_enabled;
 		always_text[tile] = _always_text;
 
-		for(list = buttons;list!=NULL;list=g_list_next(list)) {
-			ButtonWidget *button = list->data;
-			if(button->cache)
-				gdk_pixmap_unref(button->cache);
-			button->cache = NULL;
-			setup_no_alpha(button);
-			panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(list->data)->parent),
-					       button);
-		}
+		button_widget_redo_all ();
+	}
+}
+
+void
+button_widget_redo_all (void)
+{
+	GList *list;
+
+	for(list = buttons; list != NULL; list = list->next) {
+		ButtonWidget *button = list->data;
+		if(button->cache != NULL)
+			gdk_pixmap_unref(button->cache);
+		button->cache = NULL;
+		setup_no_alpha(button);
+		gtk_widget_queue_draw (GTK_WIDGET (button));
 	}
 }

@@ -170,7 +170,7 @@ make_scale_affine(double affine[], int w, int h, int size, int *outw, int *outh)
 #endif
 
 GdkPixbuf *
-scale_pixbuf_to_square (GdkPixbuf *pb, int size, int *outw, int *outh)
+scale_pixbuf_to_square (GdkPixbuf *pb, int size, int *outw, int *outh, GdkInterpType interp)
 {
 	GdkPixbuf *new_pb;
 	int width, height;
@@ -207,7 +207,7 @@ scale_pixbuf_to_square (GdkPixbuf *pb, int size, int *outw, int *outh)
 	gdk_pixbuf_scale (pb, new_pb, 0, 0, new_width, new_height, 0.0, 0.0,
 			  new_width / (double)width,
 			  new_height / (double)height,
-			  GDK_INTERP_HYPER);
+			  interp);
 
 	return new_pb;
 }

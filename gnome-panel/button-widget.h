@@ -114,6 +114,7 @@ void		button_widget_set_flags		(int tile,
 						 gboolean pixmaps_enabled,
 						 gboolean always_text);
 
+void		button_widget_redo_all		(void);
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

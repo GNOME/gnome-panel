@@ -90,7 +90,9 @@ apply_global_config(void)
 	static int menu_flags_old = -1;
 	static int old_use_large_icons = -1;
 	static int old_merge_menus = -1;
+	static int old_fast_button_scaling = -1;
 	GSList *li;
+
 	panel_widget_change_global(global_config.explicit_hide_step_size,
 				   global_config.auto_hide_step_size,
 				   global_config.drawer_step_size,
@@ -179,14 +181,19 @@ apply_global_config(void)
 	}
 	keep_bottom_old = global_config.keep_bottom;
 
-	for(i=0;i<LAST_TILE;i++) {
+	for(i = 0; i < LAST_TILE; i++) {
 		button_widget_set_flags(i, global_config.tiles_enabled[i],
 					1, 0);
 		button_widget_load_tile(i, global_config.tile_up[i],
 					global_config.tile_down[i],
 					global_config.tile_border[i],
 					global_config.tile_depth[i]);
-	}	
+	}
+
+	if (old_fast_button_scaling != global_config.fast_button_scaling) {
+		button_widget_redo_all ();
+	}
+	old_fast_button_scaling = global_config.fast_button_scaling;
 
 	for(li = panel_list; li != NULL; li = g_slist_next(li)) {
 		PanelData *pd = li->data;
@@ -1385,7 +1392,12 @@ void
 load_up_globals(void)
 {
 	GString *buf;
-	char *tile_def[]={"normal","purple","green","blue"};
+	char *tile_def[] = {
+		"normal",
+		"purple",
+		"green",
+		"blue"
+	};
 	int i;
 	
 	buf = g_string_new(NULL);
@@ -1463,6 +1475,7 @@ load_up_globals(void)
 	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
 	global_config.saturate_when_over = gnome_config_get_bool("saturate_when_over=TRUE");
 	global_config.confirm_panel_remove = gnome_config_get_bool("confirm_panel_remove=TRUE");
+	global_config.fast_button_scaling = gnome_config_get_bool("fast_button_scaling=FALSE");
 	
 	g_string_sprintf (buf, "menu_flags=%d", get_default_menu_flags ());
 	global_config.menu_flags = gnome_config_get_int (buf->str);
@@ -1553,6 +1566,7 @@ write_global_config(void)
 	gnome_config_set_bool("keys_enabled", global_config.keys_enabled);
 	gnome_config_set_string("menu_key", global_config.menu_key);
 	gnome_config_set_string("run_key", global_config.run_key);
+	gnome_config_set_bool("fast_button_scaling", global_config.fast_button_scaling);
 			     
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {

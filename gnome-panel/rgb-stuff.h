@@ -22,7 +22,7 @@ void make_scale_affine(double affine[], int w, int h, int size,
 		       int *outw, int *outh);
 #endif
 
-GdkPixbuf * scale_pixbuf_to_square (GdkPixbuf *pb, int size, int *outw, int *outh);
+GdkPixbuf * scale_pixbuf_to_square (GdkPixbuf *pb, int size, int *outw, int *outh, GdkInterpType interp);
 
 #if 0
 void rgb_rotate270(guchar *dest, int drs, guchar *src, int w, int h, int srs);
