@@ -30,14 +30,15 @@
 #include "panel-menu-bar.h"
 #include "panel-applet-frame.h"
 
+extern GSList *panels;
+
 GtkWidget *
 foobar_widget_new (const char *panel_id,
 		   int         screen,
 		   int         monitor)
 {
-	PanelWidget *panel;
-	GtkWidget   *retval;
-	PanelColor   color = { { 0, 0, 0, 0 }, 0xffff };
+	PanelColor  color = { { 0, 0, 0, 0 }, 0xffff };
+	GtkWidget  *retval;
 
 	retval = edge_widget_new (panel_id,
 				  screen,
@@ -55,14 +56,30 @@ foobar_widget_new (const char *panel_id,
 				  FALSE,
 				  &color);
 
-	panel = PANEL_WIDGET (BASEP_WIDGET (retval)->panel);
-
-	panel_menu_bar_load (panel, 0, TRUE, NULL);
-
-	panel_applet_frame_load ("OAFIID:GNOME_WindowMenuApplet",
-				 panel,
-				 multiscreen_width (screen, monitor) - 10,
-				 FALSE, NULL);
+	g_object_set_data (G_OBJECT (BASEP_WIDGET (retval)->panel),
+			   "load-compatibility-applets", GINT_TO_POINTER (1));
 
 	return retval;
+}
+
+void
+panel_compatibility_load_applets (void)
+{
+	GSList *l;
+
+	for (l = panels; l; l = l->next) {
+		PanelWidget *panel = l->data;
+
+		if (!g_object_get_data (G_OBJECT (panel), "load-compatibility-applets"))
+			continue;
+
+		g_object_set_data (G_OBJECT (panel), "load-compatibility-applets", NULL);
+
+		panel_menu_bar_load (panel, 0, TRUE, NULL);
+
+		panel_applet_frame_load ("OAFIID:GNOME_WindowMenuApplet",
+					 panel,
+					 panel->size - 10,
+					 TRUE, NULL);
+	}
 }

@@ -1,5 +1,31 @@
 2003-01-10  Mark McLoughlin  <mark@skynet.ie>
 
+	* menu.c:
+	(create_new_panel): remove the menu panel case.
+	(create_add_panel_submenu): remove the menu panel
+	item.
+
+2003-01-10  Mark McLoughlin  <mark@skynet.ie>
+
+	Screw this for a game of soldiers. Load the compatibility
+	applets after all other applets have been loaded so we can
+	guarantee their position.
+
+	* panel-compatibility.[ch]:
+	(foobar_widget_new): don't load the compat applets
+	here, set a flag and they'll be loaded later.
+	(panel_compatibility_load_applets): impl iterating
+	through all panels and loading compat applets where
+	the flag is set.
+
+	* applet.c:
+	(panel_applet_load_idle_handler): load compat applets
+	from here.
+	(panel_applet_loaded): kill this.
+	(panel_applet_load_from_unique_id):  update.
+
+2003-01-10  Mark McLoughlin  <mark@skynet.ie>
+
 	Hmm, that was loading two copies of the menu bar
 	and window menu. Fixed that but I'm still having
 	trouble getting the window menu on the far right

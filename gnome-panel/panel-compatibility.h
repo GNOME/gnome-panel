@@ -34,6 +34,8 @@ GtkWidget *foobar_widget_new (const char *panel_id,
 			      int         screen,
 			      int         monitor);
 
+void panel_compatibility_load_applets (void);
+
 G_END_DECLS
 
 #endif /* __PANEL_MENU_BAR_H__ */

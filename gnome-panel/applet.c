@@ -707,8 +707,10 @@ panel_applet_load_idle_handler (gpointer dummy)
 {
 	PanelAppletToLoad *applet;
 
-	if (panel_applets_to_load == NULL)
+	if (!panel_applets_to_load) {
+		panel_compatibility_load_applets ();
 		return FALSE;
+	}
 
 	applet = (PanelAppletToLoad *) panel_applets_to_load->data;
 	panel_applets_to_load->data = NULL;
@@ -783,24 +785,6 @@ panel_destroyed_while_loading (GtkWidget *panel, gpointer data)
 	whack_applet_to_load (applet);
 }
 
-static gboolean
-panel_applet_loaded (const char *unique_id)
-{
-	GSList *l;
-
-	if (!unique_id)
-		return FALSE;
-
-	for (l = applets; l; l = l->next) {
-		AppletInfo *info = l->data;
-
-		if (info->gconf_key && !strcmp (info->gconf_key, unique_id))
-			return TRUE;
-	}
-
-	return FALSE;
-}
-
 static void
 panel_applet_load_from_unique_id (PanelGConfKeyType  type,
 				  GConfClient       *gconf_client,
@@ -815,9 +799,6 @@ panel_applet_load_from_unique_id (PanelGConfKeyType  type,
 	char              *panel_id;
 	int                position;
 	gboolean           right_stick;
-
-	if (panel_applet_loaded (unique_id))
-		return;
 
 	temp_key = panel_gconf_full_key (type, profile, unique_id, "object_type");
 	type_string = gconf_client_get_string (gconf_client, temp_key, NULL);

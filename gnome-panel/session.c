@@ -346,6 +346,5 @@ void session_load (void) {
 	panel_load_global_config ();
 	init_menus ();
 	panel_load_panels_from_gconf ();
-
 	panel_applet_load_applets_from_gconf ();
 }

@@ -2960,55 +2960,15 @@ create_new_panel (GtkWidget *w, gpointer data)
 					 _("Floating Panel"),
 					 _("GNOME Floating Panel"));
 		break;
-	case FOOBAR_PANEL: {
-		GtkWidget *dialog;
-
-		if (!foobar_widget_exists (screen, monitor)) {
-			panel = foobar_widget_new (NULL, screen, monitor);
-			panel_save_to_gconf (panel_setup (panel));
-			
-			gtk_window_set_title (GTK_WINDOW (panel), _("Menu Panel"));
-			gtk_widget_show (panel);
-			break;
-		}
-
-		dialog = panel_error_dialog (
-				gdk_screen_get_default (),
-				"only_one_foobar",
-				_("You can only have one menu panel at a time."));
-		break;
-	}
 	default:
 		break;
 	}
 
-	if (panel == NULL)
+	if (!panel)
 		return;
 		
 	panels_to_sync = TRUE;
 	gtk_window_present (GTK_WINDOW (panel));
-}
-
-static void
-foobar_item_showhide (GtkWidget *widget, gpointer data)
-{
-	GtkWidget   *menuitem = data;
-	PanelWidget *panel;
-	int          screen = 0;
-	int          monitor = 0;
-
-	panel = menu_get_panel (menuitem);
-	if (panel) {
-		screen = gdk_screen_get_number (
-				gtk_widget_get_screen (GTK_WIDGET (panel)));
-		monitor = multiscreen_locate_widget (
-				screen, panel->panel_parent);
-	}
-
-	if (!foobar_widget_exists (screen, monitor))
-		gtk_widget_show (menuitem);
-	else
-		gtk_widget_hide (menuitem);
 }
 
 static GtkWidget *
@@ -3057,29 +3017,6 @@ create_add_panel_submenu (void)
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(create_new_panel),
 			   GINT_TO_POINTER(SLIDING_PANEL));
-
-	menuitem = add_menu_separator (menu);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_MENU_PANEL, _("_Menu Panel"));
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
-			      _("Create menu panel"), NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (create_new_panel),
-			  GINT_TO_POINTER (FOOBAR_PANEL));
-
-	/* HACK, initial hide/show based on screen 0, monitor 0,
-	 * this works most of the time and we get it correctly in
-	 * the show/hide thingie below */
-	if (foobar_widget_exists (0, 0))
-		gtk_widget_hide (menuitem);
-
-	g_signal_connect (G_OBJECT (menu), "show",
-			  G_CALLBACK (foobar_item_showhide),
-			  menuitem);
 
 	return menu;
 }
