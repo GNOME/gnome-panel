@@ -1,3 +1,13 @@
+2002-08-02  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu.c:
+	(find_empty_border_and_anchor): impl figuring
+	out the best place to use a sliding panel.
+	(create_new_panel): use it. Fixes #87733.
+
+	* xstuff.c: (xstuff_set_pos_size): don't set the
+	hint unless the size has actually changed.
+
 2002-08-01  Mark McLoughlin  <mark@skynet.ie>
 
 	* session.c: (panel_quit): request a Global
