@@ -1042,6 +1042,7 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 			g_free (menu_uri);
 		} else if (mimetype != NULL &&
 			   (strcmp(mimetype, "application/x-gnome-app-info") == 0 ||
+			    strcmp(mimetype, "application/x-desktop") == 0 ||
 			    strcmp(mimetype, "application/x-kde-app-info") == 0)) {
 			Launcher *launcher;
 			
