@@ -284,13 +284,14 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 			w = move_step(ow,dw,start_time,end_time,cur_time);
 			h = move_step(oh,dh,start_time,end_time,cur_time);
 			gdk_window_move_resize(wid->window, x,y,w,h);
+			gdk_flush();
 			/*drawing the entire table flickers, so don't
 			  do it often*/
-			if(i++%10)
+			/*if(i++%10)
 				gtk_widget_draw(basep->panel, NULL);
 			else
 				gtk_widget_draw(basep->table, NULL);
-			gdk_flush();
+			gdk_flush();*/
 		}
 
 		gdk_window_resize(wid->window,dw,dh);
@@ -395,12 +396,14 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			
 			cur_time = ((tval.tv_sec-start_secs)*1000000) +
 				tval.tv_usec;
-
+			
 			x = move_step(ox,dx,start_time,end_time,cur_time);
 			y = move_step(oy,dy,start_time,end_time,cur_time);
 			w = move_step(ow,dw,start_time,end_time,cur_time);
 			h = move_step(oh,dh,start_time,end_time,cur_time);
 			gdk_window_move_resize(wid->window, x,y,w,h);
+			gdk_flush();
+			
 			/*drawing the entire table flickers, so don't
 			  do it often*/
 			if(i++%10)

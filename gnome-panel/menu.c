@@ -1988,8 +1988,9 @@ create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 		}
 		g_return_val_if_fail(menu,NULL);
 		g_free (menudir);
-	} else
+	} else {
 		g_warning("No system menus found!");
+	}
 	
 	return menu;
 }
@@ -2030,10 +2031,12 @@ create_panel_root_menu(GtkWidget *panel)
 	setup_menuitem (menuitem, 0, _("System menus"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 	menu = create_system_menu(NULL,TRUE,TRUE);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
-	gtk_signal_connect(GTK_OBJECT(menu),"show",
-			   GTK_SIGNAL_FUNC(submenu_to_display),
-			   menuitem);
+	if(menu) {
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
+				   GTK_SIGNAL_FUNC(submenu_to_display),
+				   menuitem);
+	}
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("User menus"));
@@ -2788,10 +2791,13 @@ create_root_menu(int fake_submenus, int flags)
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, 0, _("System menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-		gtk_signal_connect(GTK_OBJECT(menu),"show",
-				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   menuitem);
+		if(menu) {
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+						   menu);
+			gtk_signal_connect(GTK_OBJECT(menu),"show",
+					   GTK_SIGNAL_FUNC(submenu_to_display),
+					   menuitem);
+		}
 	}
 	if(flags&MAIN_MENU_USER && flags&MAIN_MENU_USER_SUB) {
 		if(need_separ)
