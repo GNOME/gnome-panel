@@ -114,8 +114,17 @@ drag_data_received_cb (GtkWidget        *widget,
 	int argc;
 	char **argv;
 	int i;
+	GtkWidget *wid;
 
 	g_return_if_fail(launcher!=NULL);
+
+	wid = gtk_drag_get_source_widget(context);
+	if(wid == widget) {
+		gtk_drag_finish(context,FALSE,FALSE,time);
+
+		/*gdk_drag_abort(context,time);*/
+		return;
+	}
 
 	files = gnome_uri_list_extract_filenames(selection_data->data);
 	argc = g_list_length(files);
@@ -141,6 +150,28 @@ destroy_launcher(GtkWidget *widget, gpointer data)
 	gnome_desktop_entry_free(launcher->dentry);
 	g_free(launcher);
 }
+
+#if 0
+static gboolean
+drag_motion_cb(GtkWidget *widget,
+	       GdkDragContext *context,
+	       gint x,
+	       gint y,
+	       guint time,
+	       Launcher *launcher)
+{
+	GtkWidget *wid;
+
+	wid = gtk_drag_get_source_widget(context);
+
+	if(wid == widget) {
+		/* somehow make it not highlight or whatever the widget,
+		   I dunno how to do this though */
+	}
+
+	return TRUE;
+}
+#endif
 
 static void  
 drag_data_get_cb (GtkWidget *widget, GdkDragContext     *context,
@@ -242,16 +273,21 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 	GTK_WIDGET_SET_FLAGS(launcher->button,GTK_NO_WINDOW);
 	
 	gtk_drag_dest_set (GTK_WIDGET (launcher->button),
-			   GTK_DEST_DEFAULT_MOTION |
-			   GTK_DEST_DEFAULT_HIGHLIGHT |
-			   GTK_DEST_DEFAULT_DROP,
+			   GTK_DEST_DEFAULT_ALL,
 			   dnd_targets, 1,
 			   GDK_ACTION_COPY);
 
 	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_data_get",
-			   drag_data_get_cb, launcher);
+			   GTK_SIGNAL_FUNC(drag_data_get_cb),
+			   launcher);
 	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_data_received",
-			   drag_data_received_cb, launcher);
+			   GTK_SIGNAL_FUNC(drag_data_received_cb),
+			   launcher);
+#if 0
+	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_motion",
+			   GTK_SIGNAL_FUNC(drag_motion_cb),
+			   launcher);
+#endif
 
 	gtk_signal_connect (GTK_OBJECT(launcher->button), "clicked",
 			    (GtkSignalFunc) launch_cb,
