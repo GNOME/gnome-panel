@@ -294,8 +294,7 @@ main (int argc, char **argv)
 
 	key = panel_gconf_global_key ("lock-down");
 
-	if(gconf_client_get_bool (gconf_client, key, NULL))
-	{
+	if(gconf_client_get_bool (gconf_client, key, NULL)) {
 		GtkWidget *label;
 
 		label = gtk_label_new (_("The system administrator has "
@@ -305,14 +304,11 @@ main (int argc, char **argv)
 			label,TRUE,TRUE,0);
 
 		gtk_widget_set_size_request (main_window, 350, 350);
-	}
-	else
-	{
+	} else
 		setup_the_ui(main_window);
-	}
 
-	gtk_window_set_title(GTK_WINDOW(main_window),
-		_("Global Panel Properties"));
+	gtk_window_set_title (
+		GTK_WINDOW (main_window), _("Panel Preferences"));
 
 	panel_icon = gnome_program_locate_file (
 			NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-panel.png", TRUE, NULL);
