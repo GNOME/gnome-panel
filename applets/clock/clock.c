@@ -137,7 +137,7 @@ create_computer_clock_widget(GtkWidget ** clock, ClockUpdateFunc * update_func)
 	gtk_widget_show(frame);
 
 	align = gtk_alignment_new(0.5, 0.5, 0.0, 0.0);
-	gtk_container_border_width(GTK_CONTAINER(align), 4);
+	gtk_container_set_border_width(GTK_CONTAINER(align), 4);
 	gtk_container_add(GTK_CONTAINER(frame), align);
 	gtk_widget_show(align);
 
@@ -315,7 +315,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 	table = gtk_table_new(2, 2, FALSE);
 	gtk_widget_show(table);
 
-	gtk_container_border_width(GTK_CONTAINER(table), GNOME_PAD);
+	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD);
 	gtk_table_set_row_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
 	gtk_table_set_col_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
 

@@ -622,7 +622,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	
 	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	gtk_widget_show (align);
-	gtk_container_border_width (GTK_CONTAINER (align), 1);
+	gtk_container_set_border_width (GTK_CONTAINER (align), 1);
 
 	if (pixmap) {
 		gtk_container_add (GTK_CONTAINER (align), pixmap);
@@ -692,7 +692,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	
 	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	gtk_widget_show (align);
-	gtk_container_border_width (GTK_CONTAINER (align), 1);
+	gtk_container_set_border_width (GTK_CONTAINER (align), 1);
 
 	if (pixmap) {
 		gtk_container_add (GTK_CONTAINER (align), pixmap);
@@ -2101,13 +2101,13 @@ create_properties_dialog(Menu *menu)
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	vbox = gtk_vbox_new(FALSE,5);
-	gtk_container_border_width(GTK_CONTAINER(vbox),5);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox),5);
 
 	f = gtk_frame_new(_("Menu Type"));
 	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
 	
 	box = gtk_hbox_new(FALSE,5);
-	gtk_container_border_width(GTK_CONTAINER(box),5);
+	gtk_container_set_border_width(GTK_CONTAINER(box),5);
 	gtk_container_add(GTK_CONTAINER(f),box);
 	
 	w = gtk_radio_button_new_with_label (NULL, _("Main Menu"));
@@ -2137,7 +2137,7 @@ create_properties_dialog(Menu *menu)
 	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
 	
 	box = gtk_vbox_new(FALSE,5);
-	gtk_container_border_width(GTK_CONTAINER(box),5);
+	gtk_container_set_border_width(GTK_CONTAINER(box),5);
 	gtk_container_add(GTK_CONTAINER(f),box);
 
 	w = gtk_radio_button_new_with_label (NULL, _("Both System and User menus on the "
@@ -2178,7 +2178,7 @@ create_properties_dialog(Menu *menu)
 	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
 	
 	box = gtk_hbox_new(FALSE,5);
-	gtk_container_border_width(GTK_CONTAINER(box),5);
+	gtk_container_set_border_width(GTK_CONTAINER(box),5);
 	gtk_container_add(GTK_CONTAINER(f),box);
 	
 	w = gtk_label_new(_("Menu path"));

@@ -195,7 +195,7 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	gtk_window_set_title(GTK_WINDOW(pb), _("GNOME Fish Properties"));
 
 	vbox = gtk_vbox_new(FALSE, GNOME_PAD);
-	gtk_container_border_width(GTK_CONTAINER(vbox), GNOME_PAD);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox), GNOME_PAD);
 
 	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);

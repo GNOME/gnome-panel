@@ -342,7 +342,7 @@ printer_properties (AppletWidget *applet, gpointer data)
 	
 	table = gtk_table_new (2, 2, FALSE);
 	gtk_widget_show (table);
-	gtk_container_border_width (GTK_CONTAINER (table), GNOME_PAD);
+	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD);
 	gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD_SMALL);
 	gtk_table_set_col_spacings (GTK_TABLE (table), GNOME_PAD_SMALL);
 

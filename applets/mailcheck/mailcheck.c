@@ -491,7 +491,7 @@ mailcheck_properties_page (MailCheck *mc)
   GtkObject *freq_a;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_border_width (GTK_CONTAINER (vbox), 6);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 	gtk_widget_show (vbox);
 
 	hbox = gtk_hbox_new (FALSE, 6);

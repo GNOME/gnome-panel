@@ -112,7 +112,7 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	GtkWidget *button;
 	
 	table = gtk_table_new(2, 2, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(table), 5);
+	gtk_container_set_border_width(GTK_CONTAINER(table), 5);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 6);
 	gtk_table_set_row_spacings(GTK_TABLE(table), 2);
 
@@ -128,7 +128,7 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	gtk_container_add(GTK_CONTAINER(f),table);
 
 	box = gtk_vbox_new(FALSE,5);
-	gtk_container_border_width(GTK_CONTAINER(box), 5);
+	gtk_container_set_border_width(GTK_CONTAINER(box), 5);
 	gtk_box_pack_start(GTK_BOX(box),f,FALSE,FALSE,0);
 
 	f = gtk_frame_new(_("Drawer handle"));
