@@ -38,26 +38,28 @@ static void gtk_obox_size_allocate (GtkWidget      *widget,
 				    GtkAllocation  *allocation);
 
 
-GtkType
+GType
 gtk_obox_get_type (void)
 {
-  static GtkType obox_type = 0;
+  static GType obox_type = 0;
 
   if (!obox_type)
     {
-      static const GtkTypeInfo obox_info =
+      static const GTypeInfo obox_info =
       {
-	"GtkOBox",
-	sizeof (GtkOBox),
-	sizeof (GtkOBoxClass),
-	(GtkClassInitFunc) gtk_obox_class_init,
-	(GtkObjectInitFunc) gtk_obox_init,
-	/* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+        sizeof (GtkOBoxClass),
+        (GBaseInitFunc)         NULL,
+        (GBaseFinalizeFunc)     NULL,
+        (GClassInitFunc)        gtk_obox_class_init,
+        NULL,                   /* class_finalize */
+        NULL,                   /* class_data */
+        sizeof (GtkOBox),
+        0,                      /* n_preallocs */
+        (GInstanceInitFunc)     gtk_obox_init 
       };
 
-      obox_type = gtk_type_unique (GTK_TYPE_BOX, &obox_info);
+      obox_type = g_type_register_static (GTK_TYPE_BOX, "GtkOBox",
+                                          &obox_info, 0);
     }
 
   return obox_type;
@@ -85,7 +87,7 @@ gtk_obox_new (void)
 {
   GtkOBox *obox;
 
-  obox = gtk_type_new (gtk_obox_get_type ());
+  obox = g_object_new (GTK_TYPE_OBOX, NULL);
 
   return GTK_WIDGET (obox);
 }

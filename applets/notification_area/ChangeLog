@@ -1,5 +1,12 @@
 2004-11-01  Vincent Untz  <vincent@vuntz.net>
 
+	* fixedtip.c: (fixed_tip_show): replace deprecated
+	gtk_window_set_policy() call with gtk_window_set_resizable() call
+	* obox.[ch]: (gtk_obox_get_type):
+	(gtk_obox_new): stop using GtkType stuff and port to GType
+
+2004-11-01  Vincent Untz  <vincent@vuntz.net>
+
 	* main.c: stop including everything from libgnomeui
 
 2004-10-30  Vincent Untz  <vincent@vuntz.net>

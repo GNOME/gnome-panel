@@ -39,11 +39,11 @@ extern "C" {
 
 
 #define GTK_TYPE_OBOX            (gtk_obox_get_type ())
-#define GTK_OBOX(obj)            (GTK_CHECK_CAST ((obj), GTK_TYPE_OBOX, GtkOBox))
-#define GTK_OBOX_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_OBOX, GtkOBoxClass))
-#define GTK_IS_OBOX(obj)         (GTK_CHECK_TYPE ((obj), GTK_TYPE_OBOX))
-#define GTK_IS_OBOX_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_OBOX))
-#define GTK_OBOX_GET_CLASS(obj)  (GTK_CHECK_GET_CLASS ((obj), GTK_TYPE_OBOX, GtkOBoxClass))
+#define GTK_OBOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_OBOX, GtkOBox))
+#define GTK_OBOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GTK_TYPE_OBOX, GtkOBoxClass))
+#define GTK_IS_OBOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_OBOX))
+#define GTK_IS_OBOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GTK_TYPE_OBOX))
+#define GTK_OBOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_OBOX, GtkOBoxClass))
 
 
 typedef struct _GtkOBox	      GtkOBox;
@@ -62,7 +62,7 @@ struct _GtkOBoxClass
 };
 
 
-GtkType	   gtk_obox_get_type (void) G_GNUC_CONST;
+GType	   gtk_obox_get_type (void) G_GNUC_CONST;
 GtkWidget* gtk_obox_new	     (void);
 
 void gtk_obox_set_orientation (GtkOBox       *obox,
