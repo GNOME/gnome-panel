@@ -684,6 +684,9 @@ display_fortune_dialog (FishApplet *fish)
 				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 				NULL);
 
+		gtk_dialog_set_has_separator (
+			GTK_DIALOG (fish->fortune_dialog), FALSE);
+
 		gtk_dialog_set_default_response (
 			GTK_DIALOG (fish->fortune_dialog), GTK_RESPONSE_CLOSE);
 
