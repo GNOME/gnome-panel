@@ -2106,9 +2106,8 @@ create_menuitem (GtkWidget *menu,
 		*add_separator = FALSE;
 	}
 	
-	if(fr->comment)
-		gtk_tooltips_set_tip (panel_tooltips, menuitem,
-				      fr->comment, NULL);
+	if (fr->comment && fr->comment [0])
+		gtk_tooltips_set_tip (panel_tooltips, menuitem, fr->comment, NULL);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
 	if(!sub) {
