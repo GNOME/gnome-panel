@@ -4,6 +4,7 @@
 <glade-interface>
 
 <widget class="GtkDialog" id="gnome_panel_preferences_dialog">
+  <property name="border_width">5</property>
   <property name="visible">True</property>
   <property name="title" translatable="yes">Panel Preferences</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
@@ -17,17 +18,14 @@
 
   <child internal-child="vbox">
     <widget class="GtkVBox" id="dialog-vbox1">
-      <property name="border_width">2</property>
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
-      <property name="spacing">8</property>
+      <property name="spacing">6</property>
 
       <child internal-child="action_area">
 	<widget class="GtkHButtonBox" id="dialog-action_area1">
-	  <property name="border_width">5</property>
 	  <property name="visible">True</property>
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
-	  <property name="spacing">10</property>
 
 	  <child>
 	    <widget class="GtkButton" id="helpbutton1">
@@ -63,55 +61,53 @@
       </child>
 
       <child>
-	<widget class="GtkCheckButton" id="drawer_autoclose">
+	<widget class="GtkVBox" id="vbox1">
+	  <property name="border_width">5</property>
 	  <property name="visible">True</property>
-	  <property name="can_focus">True</property>
-	  <property name="label" translatable="yes">Close _drawer when launcher is clicked</property>
-	  <property name="use_underline">True</property>
-	  <property name="relief">GTK_RELIEF_NORMAL</property>
-	  <property name="active">False</property>
-	  <property name="inconsistent">False</property>
-	  <property name="draw_indicator">True</property>
-	</widget>
-	<packing>
-	  <property name="padding">0</property>
-	  <property name="expand">False</property>
-	  <property name="fill">False</property>
-	</packing>
-      </child>
-
-      <child>
-	<widget class="GtkCheckButton" id="enable_animations">
-	  <property name="visible">True</property>
-	  <property name="can_focus">True</property>
-	  <property name="label" translatable="yes">Drawer and Panel _Animation</property>
-	  <property name="use_underline">True</property>
-	  <property name="relief">GTK_RELIEF_NORMAL</property>
-	  <property name="active">False</property>
-	  <property name="inconsistent">False</property>
-	  <property name="draw_indicator">True</property>
-	</widget>
-	<packing>
-	  <property name="padding">0</property>
-	  <property name="expand">False</property>
-	  <property name="fill">False</property>
-	</packing>
-      </child>
-
-      <child>
-	<widget class="GtkAlignment" id="alignment1">
-	  <property name="visible">True</property>
-	  <property name="xalign">0.5</property>
-	  <property name="yalign">0.5</property>
-	  <property name="xscale">0</property>
-	  <property name="yscale">0</property>
+	  <property name="homogeneous">False</property>
+	  <property name="spacing">6</property>
 
 	  <child>
-	    <widget class="GtkHBox" id="panel_animation_hbox">
-	      <property name="border_width">4</property>
+	    <widget class="GtkCheckButton" id="drawer_autoclose">
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Close _drawer when launcher is clicked</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="active">False</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkCheckButton" id="enable_animations">
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Drawer and panel _animation</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="active">False</property>
+	      <property name="inconsistent">False</property>
+	      <property name="draw_indicator">True</property>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkHBox" id="hbox1">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
-	      <property name="spacing">8</property>
+	      <property name="spacing">12</property>
 
 	      <child>
 		<widget class="GtkLabel" id="panel_animation_label">
@@ -177,6 +173,11 @@
 		</packing>
 	      </child>
 	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">True</property>
+	      <property name="fill">True</property>
+	    </packing>
 	  </child>
 	</widget>
 	<packing>
