@@ -12,13 +12,13 @@
 #include "mico-glue.h"
 
 extern GArray *applets;
-extern gint applet_count;
+extern int applet_count;
 
 /*multiple applet load queue*/
 typedef struct _MultiLoadQueue MultiLoadQueue;
 struct _MultiLoadQueue {
-	gchar *path;
-	gchar *ior;
+	char *path;
+	char *ior;
 	GList *params; /*this is a list of parameters, each parameter
 			 represents one applet to start with that
 			 parameter, or an empty string to start an
@@ -27,10 +27,10 @@ struct _MultiLoadQueue {
 static GList *multiple_applet_load_list=NULL;
 
 /*check if we are running an extern applet with a certain path*/
-static gint
-is_applet_running(const gchar *path)
+static int
+is_applet_running(const char *path)
 {
-	gint i;
+	int i;
 	AppletInfo *info;
 
 	for(info=(AppletInfo *)applets->data,i=0;i<applet_count;i++,info++) {
@@ -73,8 +73,8 @@ mulapp_remove_empty_from_list(void)
 }
 
 /*is this path in the list of multi applets*/
-gint
-mulapp_is_in_list(const gchar *path)
+int
+mulapp_is_in_list(const char *path)
 {
 	GList *list;
 	mulapp_remove_empty_from_list();
@@ -89,7 +89,7 @@ mulapp_is_in_list(const gchar *path)
 /*if the parent is already in queue, load the applet or add the param,
   into a queue*/
 void
-mulapp_load_or_add_to_queue(const gchar *path,const gchar *param)
+mulapp_load_or_add_to_queue(const char *path,const char *param)
 {
 	GList *list;
 	mulapp_remove_empty_from_list();
@@ -109,7 +109,7 @@ mulapp_load_or_add_to_queue(const gchar *path,const gchar *param)
 
 /*add this path to the list of multi applets*/
 void
-mulapp_add_to_list(const gchar *path)
+mulapp_add_to_list(const char *path)
 {
 	MultiLoadQueue *mq;
 
@@ -124,7 +124,7 @@ mulapp_add_to_list(const gchar *path)
 /*we know the ior so let's store that and start all the applets that have
   accumulated in the queue for this executable*/
 void
-mulapp_add_ior_and_free_queue(const gchar *path, const gchar *ior)
+mulapp_add_ior_and_free_queue(const char *path, const char *ior)
 {
 	GList *list;
 	mulapp_remove_empty_from_list();
@@ -143,7 +143,7 @@ mulapp_add_ior_and_free_queue(const gchar *path, const gchar *ior)
 			list = mq->params;
 			mq->params = NULL;
 			for(li=list;li!=NULL;li=g_list_next(li)) {
-				gchar *param = li->data;
+				char *param = li->data;
 				send_applet_start_new_applet(mq->ior,param);
 				g_free(param);
 			}

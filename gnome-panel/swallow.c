@@ -20,7 +20,7 @@
 #include "mico-glue.h"
 
 
-static gint
+static int
 get_window_id(Window win, char *title, guint32 *wid)
 {
 	Window root_return;
@@ -29,7 +29,7 @@ get_window_id(Window win, char *title, guint32 *wid)
 	unsigned int nchildren;
 	unsigned int i;
 	char *tit;
-	gint ret = FALSE;
+	int ret = FALSE;
 
 	XQueryTree(GDK_DISPLAY(),
 		   win,
@@ -60,7 +60,7 @@ get_window_id(Window win, char *title, guint32 *wid)
 }
 
 /*we should really do this differently but for now this is good enough*/
-static gint
+static int
 socket_getwindow_timeout(Swallow *swallow)
 {
 	if(!get_window_id(GDK_ROOT_WINDOW(),swallow->title, &(swallow->wid)))
@@ -69,7 +69,7 @@ socket_getwindow_timeout(Swallow *swallow)
 	return FALSE;
 }
 
-static gint
+static int
 socket_realized(GtkWidget *w, gpointer data)
 {
 	Swallow *swallow = gtk_object_get_user_data(GTK_OBJECT(w));

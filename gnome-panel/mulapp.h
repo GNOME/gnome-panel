@@ -9,18 +9,18 @@
 BEGIN_GNOME_DECLS
 
 /*is this path in the list of multi applets*/
-gint mulapp_is_in_list(const gchar *path);
+int mulapp_is_in_list(const char *path);
 
 /*if the parent is already in queue, load the applet or add the param,
   into a queue*/
-void mulapp_load_or_add_to_queue(const gchar *path,const gchar *param);
+void mulapp_load_or_add_to_queue(const char *path,const char *param);
 
 /*add this path to the list of multi applets*/
-void mulapp_add_to_list(const gchar *path);
+void mulapp_add_to_list(const char *path);
 
 /*we know the ior so let's store that and start all the applets that have
   accumulated in the queue for this executable*/
-void mulapp_add_ior_and_free_queue(const gchar *path, const gchar *ior);
+void mulapp_add_ior_and_free_queue(const char *path, const char *ior);
 
 /* remove applets which are no longer on the panel from the list of multi
    applets */

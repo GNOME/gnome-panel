@@ -13,7 +13,7 @@ typedef struct {
 	GtkWidget *handle_n;
 	GtkWidget *handle_w;
 	GtkWidget *socket;
-	gchar *title;
+	char *title;
 	guint32 wid;
 } Swallow;
 
