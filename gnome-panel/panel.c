@@ -515,7 +515,7 @@ add_main_menu(GtkWidget *widget, gpointer data)
 {
 	PanelWidget *panel = data;
 	/*FIXME: 1) doesn't work at all, 2)should add to current panel*/
-	//create_applet("Menu",".",PANEL_UNKNOWN_APPLET_POSITION,1);
+	/* create_applet("Menu",".",PANEL_UNKNOWN_APPLET_POSITION,1); */
 }
 
 int
