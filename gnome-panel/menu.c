@@ -98,7 +98,6 @@ struct _ShowItemMenu {
 	MenuFinfo *mf;
 	GtkWidget *menu;
 	GtkWidget *menuitem;
-	int applet;
 };
 
 typedef struct {
@@ -870,17 +869,21 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 	char *file;
 	char *dir, *directory_file;
 	GnomeDesktopItem *ditem;
+	GnomeVFSResult result;
 
 	g_return_if_fail (sim->item_loc != NULL);
 	g_return_if_fail (sim->menuitem != NULL);
 
 	gtk_widget_hide (sim->menuitem);
 
-	if (unlink (sim->item_loc) < 0) {
+	result = gnome_vfs_unlink (sim->item_loc);
+
+	if (result != GNOME_VFS_OK) {
 		panel_error_dialog("cant_remove_menu_item",
 				   _("<b>Could not remove the menu item %s</b>\n\n"
 				     "Details: %s\n"), 
-				    sim->item_loc, g_strerror (errno));
+				    sim->item_loc, 
+				    gnome_vfs_result_to_string (result));
 		return;
 	}
 
@@ -1245,9 +1248,8 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			}
 
 			menuitem = gtk_image_menu_item_new ();
-			if ( ! sim->applet)
-				setup_menuitem (menuitem, NULL,
-						_("Add this launcher to panel"));
+			setup_menuitem (menuitem, NULL,
+					_("Add this launcher to panel"));
 			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 					    G_CALLBACK(add_app_to_panel),
@@ -1261,7 +1263,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					    G_CALLBACK (remove_menuitem),
 					    sim);
 			tmp = g_path_get_dirname(sim->item_loc);
-			if (access (tmp, W_OK) != 0)
+			if ( ! panel_is_uri_writable (tmp))
 				gtk_widget_set_sensitive(menuitem,FALSE);
 			g_free (tmp);
 			g_signal_connect_swapped (G_OBJECT (menuitem),
@@ -1269,21 +1271,19 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 						   G_CALLBACK (gtk_menu_shell_deactivate),
 						   G_OBJECT (item->parent));
 
-			if ( ! sim->applet) {
-				menuitem = gtk_image_menu_item_new ();
-				setup_menuitem (menuitem, NULL,
-						_("Put into run dialog"));
-				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu),
-						 menuitem);
-				g_signal_connect (G_OBJECT(menuitem), "activate",
-					          G_CALLBACK(add_to_run_dialog),
-					          (gpointer)sim->item_loc);
-				g_signal_connect_swapped
-					(G_OBJECT(menuitem),
-					 "activate",
-					 G_CALLBACK(gtk_menu_shell_deactivate),
-					 G_OBJECT(item->parent));
-			}
+			menuitem = gtk_image_menu_item_new ();
+			setup_menuitem (menuitem, NULL,
+					_("Put into run dialog"));
+			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu),
+					       menuitem);
+			g_signal_connect (G_OBJECT(menuitem), "activate",
+					  G_CALLBACK(add_to_run_dialog),
+					  (gpointer)sim->item_loc);
+			g_signal_connect_swapped
+				(G_OBJECT(menuitem),
+				 "activate",
+				 G_CALLBACK(gtk_menu_shell_deactivate),
+				 G_OBJECT(item->parent));
 
 			if (gnome_desktop_item_get_string (ii, "DocPath") != NULL) {
 				char *title;
@@ -1374,9 +1374,8 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 					    G_CALLBACK(add_new_app_to_menu),
 					    sim->mf->menudir);
-			if (access (sim->mf->menudir, W_OK) != 0)
+			if ( ! panel_is_uri_writable (sim->mf->menudir))
 				gtk_widget_set_sensitive (menuitem, FALSE);
-
 
 			menuitem = gtk_image_menu_item_new ();
 			/*when activated we must pop down the first menu*/
@@ -1524,7 +1523,7 @@ image_menuitem_size_request (GtkWidget      *menuitem,
 static void
 setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 		     const char *title, const char *item_loc,
-		     gboolean applet, MenuFinfo *mf)
+		     MenuFinfo *mf)
 			       
 {
         static GtkTargetEntry menu_item_targets[] = {
@@ -1558,7 +1557,6 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 		sim->type = 1;
 		sim->item_loc = item_loc; /*make sure you don't free this,
 					    it's not ours!*/
-		sim->applet = applet;
 		sim->mf = mf;
 		sim->menuitem = menuitem;
 		g_signal_connect (G_OBJECT (menuitem), "event",
@@ -1588,7 +1586,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 void
 setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, const char *title)
 {
-	setup_full_menuitem (menuitem, pixmap, title, NULL, FALSE, NULL);
+	setup_full_menuitem (menuitem, pixmap, title, NULL, NULL);
 }
 
 static void
@@ -1998,11 +1996,11 @@ create_menuitem (GtkWidget *menu,
 
 	if (sub) {
 	        setup_full_menuitem (menuitem, NULL, itemname,
-				     NULL, FALSE, mf);
+				     NULL, mf);
 
 	} else {
 	        setup_full_menuitem (menuitem, NULL, itemname,
-				     fr->name, FALSE, mf);
+				     fr->name, mf);
 	}
 
 
@@ -2237,7 +2235,7 @@ applet_menu_append (GtkWidget   *menu,
 		panel_load_menu_image_deferred (menuitem, icon, NULL,
 						FALSE /* force_image */);
 
-	setup_full_menuitem (menuitem, NULL, name, NULL, FALSE, NULL);
+	setup_full_menuitem (menuitem, NULL, name, NULL, NULL);
 
 	gtk_widget_show_all (menuitem);
 
