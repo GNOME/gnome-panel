@@ -2158,7 +2158,6 @@ fill_clock_applet (PanelApplet *applet)
 			  G_CALLBACK (applet_change_pixel_size),
 			  cd);
 
-	/* FIXME: initial background, this needs some panel-applet voodoo */
 	g_signal_connect (G_OBJECT (cd->applet),
 			  "change_background",
 			  G_CALLBACK (applet_change_background),
