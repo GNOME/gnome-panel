@@ -73,11 +73,12 @@ start_timeout_handler(gpointer data)
 static void
 extern_start_new_goad_id(char *goad_id)
 {
+        CORBA_Environment ev;
 	if(!goad_id_starting) {
 		CORBA_Object obj;
 		obj = extern_is_goad_ready(goad_id);
 		if(obj==CORBA_OBJECT_NIL) {
-			CORBA_Object_release(goad_server_activate_with_id(NULL, goad_id, GOAD_ACTIVATE_NEW_ONLY, NULL), NULL);
+			CORBA_Object_release(goad_server_activate_with_id(NULL, goad_id, GOAD_ACTIVATE_NEW_ONLY), &ev);
 		} else {
 			send_applet_start_new_applet(obj,goad_id);
 		}

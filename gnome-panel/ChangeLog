@@ -1,3 +1,10 @@
+1998-12-08  Michael Lausch  <mla@gams.at>
+
+	* applet-widget.c (gnome_panel_applet_reinit_corba): change the
+	goad_server_activate_with_repo_id to comply with the new version.
+	* extern.c (extern_start_new_goad_id): ditto and add a
+	CORBA_Environment parameter to the Object_release call
+
 Mon Dec 07 01:09:02 1998  George Lebl  <jirka@5z.com>
 
 	* applet-widget.[ch]: added an abort_load call to abort loading of
