@@ -1,5 +1,14 @@
 2003-05-09  Mark McLoughlin  <mark@skynet.ie>
 
+	* install-defaults.sh: remove.
+	
+	* panel-default-setup.entries: add a gconf entries file
+	to replace the install-defaults script.
+
+	* Makefile.am: gconftool-2 --load panel-default-setup.entries.
+
+2003-05-09  Mark McLoughlin  <mark@skynet.ie>
+
 	Some fixes for migrating from 2.2.x.
 	
 	* panel-profile.[ch]:

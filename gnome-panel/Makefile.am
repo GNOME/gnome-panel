@@ -260,7 +260,7 @@ EXTRA_DIST =					\
 	panel-marshal.list			\
 	update-from-egg.sh			\
 	gnome-panelrc				\
-	install-defaults.sh
+	panel-default-setup.entries
 
 sysdir = $(datadir)/control-center-2.0/capplets
 sys_in_files = gnome-panel-preferences.desktop.in
@@ -336,7 +336,7 @@ install-data-local:
 		for p in $(schemas_DATA) ; do \
 			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/gnome-panel/$$p ; \
 		done ; \
-		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) GCONFTOOL=$(GCONFTOOL) $(srcdir)/install-defaults.sh ; \
+		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(top_builddir)/gnome-panel/panel-default-setup.entries ; \
 	fi
 else
 install-data-local:

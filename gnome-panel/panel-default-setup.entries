@@ -1,0 +1,492 @@
+<gconfentryfile>
+
+  <entrylist base="/apps/panel/default_setup/general">
+
+    <!-- List of toplevels -->
+
+    <entry>
+      <key>toplevel_id_list</key>
+      <schema_key>/schemas/apps/panel/general/toplevel_id_list</schema_key>
+      <value>
+        <list type="string">
+          <value>
+            <string>top_panel</string>
+          </value>
+          <value>
+            <string>bottom_panel</string>
+          </value>
+        </list>
+      </value>
+    </entry>
+
+    <!-- List of objects -->
+
+    <entry>
+      <key>object_id_list</key>
+      <schema_key>/schemas/apps/panel/general/object_id_list</schema_key>
+      <value>
+        <list type="string">
+          <value>
+            <string>menu_bar</string>
+          </value>
+          <value>
+            <string>nautilus_launcher</string>
+          </value>
+          <value>
+            <string>terminal_launcher</string>
+          </value>
+        </list>
+      </value>
+    </entry>
+
+    <!-- List of applets -->
+
+    <entry>
+      <key>applet_id_list</key>
+      <schema_key>/schemas/apps/panel/general/applet_id_list</schema_key>
+      <value>
+        <list type="string">
+          <value>
+            <string>window_menu</string>
+          </value>
+          <value>
+            <string>mixer</string>
+          </value>
+          <value>
+            <string>clock</string>
+          </value>
+          <value>
+            <string>show_desktop_button</string>
+          </value>
+          <value>
+            <string>window_list</string>
+          </value>
+          <value>
+            <string>workspace_switcher</string>
+          </value>
+        </list>
+      </value>
+    </entry>
+
+  </entrylist>
+
+  <!-- Top Panel -->
+
+  <entrylist base="/apps/panel/default_setup/toplevels/top_panel">
+    <entry>
+      <key>name</key>
+      <schema_key>/schemas/apps/panel/toplevels/name</schema_key>
+      <value>
+        <string>Top Panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>expand</key>
+      <schema_key>/schemas/apps/panel/toplevels/expand</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>orientation</key>
+      <schema_key>/schemas/apps/panel/toplevels/orientation</schema_key>
+      <value>
+        <string>top</string>
+      </value>
+    </entry>
+    <entry>
+      <key>size</key>
+      <schema_key>/schemas/apps/panel/toplevels/size</schema_key>
+      <value>
+        <int>24</int>
+      </value>
+    </entry>
+  </entrylist>
+
+  <!-- Bottom Panel -->
+
+  <entrylist base="/apps/panel/default_setup/toplevels/bottom_panel">
+    <entry>
+      <key>name</key>
+      <schema_key>/schemas/apps/panel/toplevels/name</schema_key>
+      <value>
+        <string>Bottom Panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>expand</key>
+      <schema_key>/schemas/apps/panel/toplevels/expand</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>orientation</key>
+      <schema_key>/schemas/apps/panel/toplevels/orientation</schema_key>
+      <value>
+        <string>bottom</string>
+      </value>
+    </entry>
+    <entry>
+      <key>size</key>
+      <schema_key>/schemas/apps/panel/toplevels/size</schema_key>
+      <value>
+        <int>24</int>
+      </value>
+    </entry>
+  </entrylist>
+
+  <!-- Menu Bar -->
+
+  <entrylist base="/apps/panel/default_setup/objects/menu_bar">
+    <entry>
+      <key>object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>menu-bar</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>0</int>
+      </value>
+    </entry>
+    <entry>
+      <key>panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick_type</schema_key>
+      <value>
+        <bool>false</bool>
+      </value>
+    </entry>
+  </entrylist>
+
+  <!-- Nautilus Launcher -->
+
+  <entrylist base="/apps/panel/default_setup/objects/nautilus_launcher">
+    <entry>
+      <key>object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>launcher-object</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>1</int>
+      </value>
+    </entry>
+    <entry>
+      <key>panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick_type</schema_key>
+      <value>
+        <bool>false</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>launcher_location</key>
+      <schema_key>/schemas/apps/panel/objects/launcher_location</schema_key>
+      <value>
+        <string>applications:///nautilus.desktop</string>
+      </value>
+    </entry>
+  </entrylist>
+
+  <!-- Terminal Launcher -->
+
+  <entrylist base="/apps/panel/default_setup/objects/terminal_launcher">
+    <entry>
+      <key>object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>launcher-object</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>2</int>
+      </value>
+    </entry>
+    <entry>
+      <key>panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick_type</schema_key>
+      <value>
+        <bool>false</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>launcher_location</key>
+      <schema_key>/schemas/apps/panel/objects/launcher_location</schema_key>
+      <value>
+        <string>applications:///System/gnome-terminal.desktop</string>
+      </value>
+    </entry>
+  </entrylist>
+
+  <!-- Window Menu Applet -->
+
+  <entrylist base="/apps/panel/default_setup/applets/window_menu">
+    <entry>
+      <key>object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>bonobo-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>0</int>
+      </value>
+    </entry>
+    <entry>
+      <key>panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick_type</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>bonobo_iid</key>
+      <schema_key>/schemas/apps/panel/objects/bonobo_iid_type</schema_key>
+      <value>
+        <string>OAFIID:GNOME_WindowMenuApplet</string>
+      </value>
+    </entry>
+  </entrylist>
+
+  <!-- Mixer Applet -->
+
+  <entrylist base="/apps/panel/default_setup/applets/mixer">
+    <entry>
+      <key>object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>bonobo-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>1</int>
+      </value>
+    </entry>
+    <entry>
+      <key>panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick_type</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>bonobo_iid</key>
+      <schema_key>/schemas/apps/panel/objects/bonobo_iid_type</schema_key>
+      <value>
+        <string>OAFIID:GNOME_MixerApplet</string>
+      </value>
+    </entry>
+  </entrylist>
+
+  <!-- Clock Applet -->
+
+  <entrylist base="/apps/panel/default_setup/applets/clock">
+    <entry>
+      <key>object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>bonobo-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>top_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>2</int>
+      </value>
+    </entry>
+    <entry>
+      <key>panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick_type</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>bonobo_iid</key>
+      <schema_key>/schemas/apps/panel/objects/bonobo_iid_type</schema_key>
+      <value>
+        <string>OAFIID:GNOME_ClockApplet</string>
+      </value>
+    </entry>
+  </entrylist>
+
+  <!-- Show Desktop Applet -->
+
+  <entrylist base="/apps/panel/default_setup/applets/show_desktop_button">
+    <entry>
+      <key>object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>bonobo-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>bottom_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>0</int>
+      </value>
+    </entry>
+    <entry>
+      <key>panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick_type</schema_key>
+      <value>
+        <bool>false</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>bonobo_iid</key>
+      <schema_key>/schemas/apps/panel/objects/bonobo_iid_type</schema_key>
+      <value>
+        <string>OAFIID:GNOME_ShowDesktopApplet</string>
+      </value>
+    </entry>
+  </entrylist>
+
+  <!-- Window List Applet -->
+
+  <entrylist base="/apps/panel/default_setup/applets/window_list">
+    <entry>
+      <key>object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>bonobo-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>bottom_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>1</int>
+      </value>
+    </entry>
+    <entry>
+      <key>panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick_type</schema_key>
+      <value>
+        <bool>false</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>bonobo_iid</key>
+      <schema_key>/schemas/apps/panel/objects/bonobo_iid_type</schema_key>
+      <value>
+        <string>OAFIID:GNOME_WindowListApplet</string>
+      </value>
+    </entry>
+  </entrylist>
+
+  <!-- Workspace Switcher Applet -->
+
+  <entrylist base="/apps/panel/default_setup/applets/workspace_switcher">
+    <entry>
+      <key>object_type</key>
+      <schema_key>/schemas/apps/panel/objects/object_type</schema_key>
+      <value>
+        <string>bonobo-applet</string>
+      </value>
+    </entry>
+    <entry>
+      <key>toplevel_id</key>
+      <schema_key>/schemas/apps/panel/objects/toplevel_id</schema_key>
+      <value>
+        <string>bottom_panel</string>
+      </value>
+    </entry>
+    <entry>
+      <key>position</key>
+      <schema_key>/schemas/apps/panel/objects/position</schema_key>
+      <value>
+        <int>0</int>
+      </value>
+    </entry>
+    <entry>
+      <key>panel_right_stick</key>
+      <schema_key>/schemas/apps/panel/objects/panel_right_stick_type</schema_key>
+      <value>
+        <bool>true</bool>
+      </value>
+    </entry>
+    <entry>
+      <key>bonobo_iid</key>
+      <schema_key>/schemas/apps/panel/objects/bonobo_iid_type</schema_key>
+      <value>
+        <string>OAFIID:GNOME_WorkspaceSwitcherApplet</string>
+      </value>
+    </entry>
+  </entrylist>
+
+</gconfentryfile>
