@@ -220,7 +220,6 @@ append_actions_menu (GtkWidget *menu_bar)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (G_OBJECT (item), "activate",
 			  G_CALLBACK (show_run_dialog), 0);
-	setup_internal_applet_drag (item, "RUN:NEW");
 
 	if (panel_is_program_in_path  ("gnome-search-tool")) {
 		item = pixmap_menu_item_new (

@@ -404,11 +404,11 @@ panel_gconf_setup_profile (const char *profile)
 	schema_dir = g_strconcat ("/schemas/apps/panel/default_profiles/", "medium", NULL);
 
 	panel_gconf_associate_schemas_in_dir (
-		panel_gconf_client, profile_dir, schema_dir, &error);
+		panel_gconf_get_client (), profile_dir, schema_dir, &error);
 
-	if (error) {
+	if (error != NULL) {
 		g_warning ("gconf error: %s", error->message);
-		g_error_free (error);
+		g_clear_error (&error);
 	}
 
 	g_free (profile_dir);

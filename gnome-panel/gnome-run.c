@@ -455,7 +455,7 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 				panel_error_dialog ("run_error",
 						    _("<b>Failed to open file:</b> '%s'\n\nDetails: %s"),
 						    escaped, error->message);
-				g_error_free (error);
+				g_clear_error (&error);
 			}
 	
 			gnome_vfs_file_info_unref (info);
@@ -999,7 +999,7 @@ find_icon_timeout (gpointer data)
 	GtkTreeModel *model;
 	GtkTreePath *path;
 	GtkWidget *pixmap;
-	GValue value;
+	GValue value = {0};
 	char *exec, *icon;
 	char *found_icon = NULL;
 
@@ -1545,6 +1545,9 @@ show_run_dialog (void)
 
 	if (run_dialog != NULL) {
 		gtk_window_present (GTK_WINDOW (run_dialog));
+		/* always focus the entry initially */
+		w = g_object_get_data (G_OBJECT (run_dialog), "entry");
+		gtk_widget_grab_focus (w);
 		return;
 	}
 
@@ -1602,6 +1605,10 @@ show_run_dialog (void)
 			g_idle_add_full (G_PRIORITY_LOW, add_items_idle,
 			 		 w, NULL);
 	}
+
+	/* always focus the entry initially */
+	w = g_object_get_data (G_OBJECT (run_dialog), "entry");
+	gtk_widget_grab_focus (w);
 
 	gtk_widget_show_all (run_dialog);
 }

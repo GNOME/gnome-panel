@@ -3550,7 +3550,6 @@ create_root_menu (GtkWidget *root_menu,
 		g_signal_connect (G_OBJECT (menuitem), "activate",
 				    G_CALLBACK (run_cb), NULL);
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
-		setup_internal_applet_drag(menuitem, "RUN:NEW");
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
 				      _("Run a command"), NULL);
 	}

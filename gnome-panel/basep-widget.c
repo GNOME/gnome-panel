@@ -1064,8 +1064,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 			y = move_step(oy,dy,start_time,end_time,cur_time);
 			w = move_step(ow,dw,start_time,end_time,cur_time);
 			h = move_step(oh,dh,start_time,end_time,cur_time);
-			gdk_window_move_resize(wid->window, x,y,w,h);
-			gdk_flush();
+			xstuff_set_pos_size (wid->window, x, y, w, h);
 			g_usleep (1000);
 		}
 
@@ -1183,12 +1182,13 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 			y = move_step(oy,dy,start_time,end_time,cur_time);
 			w = move_step(ow,dw,start_time,end_time,cur_time);
 			h = move_step(oh,dh,start_time,end_time,cur_time);
-			gdk_window_move_resize(wid->window, x,y,w,h);
-			gdk_flush();
+			xstuff_set_pos_size (wid->window, x, y, w, h);
 			
 			/*drawing the entire table flickers, so don't
 			  do it often*/
 			/* FIXME: does it still flicker? */
+			/* FIXME: sometimes this updates, sometimes it doesn't
+			 * see bug #81654 */
 			if (i++ % 10) {
 				/* FIXME: is invalidation needed, and if so it should only be
 				 * partial */

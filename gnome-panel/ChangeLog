@@ -1,3 +1,17 @@
+Wed May 22 10:50:23 2002  George Lebl <jirka@5z.com>
+
+	* gnome-run.c: fix #82428 by focusing the entry on show.  Also zero
+	  out the GValue when trying to get icon, this should get rid of
+	  those random GValue warnings
+
+	* menu.c, foobar-widget.c: patch from Gman to remove the RUN:NEW drag
+	  stuff since there is no longer such an applet fixes #82593
+
+	* basep-widget.c: solved the moving (animation) while in metacity bug,
+	  still updates are not propagated as they should.  Hmmm we'll have
+	  to figure something out with that.  I think it has to do
+	  with double buffering or some such.
+
 Wed May 22 10:34:19 2002  George Lebl <jirka@5z.com>
 
 	* menu.c: fix sim menu refcounting
