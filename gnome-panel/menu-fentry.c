@@ -176,6 +176,8 @@ free_mfile (MFile *mfile)
 	if (mfile != NULL) {
 		g_free (mfile->name);
 		mfile->name = NULL;
+		g_free (mfile->name_collate_key);
+		mfile->name_collate_key = NULL;
 
 		g_free (mfile);
 	}
@@ -192,15 +194,40 @@ free_mfile_list (GSList *list)
 	g_slist_free (list);
 }
 
+static int
+compare_entry (MFile *m1, MFile *m2)
+{
+	if (m1->is_dir != m2->is_dir) {
+		if (m1->is_dir)
+			return 1;
+		else
+			return -1;
+	}
+	if (m1->name_collate_key == NULL) {
+		m1->name_collate_key = g_utf8_collate_key (m1->name, -1);
+	}
+	if (m2->name_collate_key == NULL) {
+		m2->name_collate_key = g_utf8_collate_key (m2->name, -1);
+	}
+        return strcmp (m2->name_collate_key, m2->name_collate_key);
+}
+
 GSList *
 get_mfiles_from_menudir (const char *menuuri)
 {
 	GSList *list = NULL;
+	gboolean sorted = FALSE;;
 
 	list = get_presorted_from (menuuri);
+	if (list != NULL)
+		sorted = TRUE;
 	list = read_directory (list, menuuri);
 
-	return g_slist_reverse (list);
+	if ( ! sorted) {
+		return g_slist_sort (list, (GCompareFunc)compare_entry);
+	} else {
+		return g_slist_reverse (list);
+	}
 }
 
 static void
@@ -213,6 +240,8 @@ fr_free (FileRec *fr, gboolean free_fr)
 	fr->name = NULL;
 	g_free (fr->fullname);
 	fr->fullname = NULL;
+	g_free (fr->name_collate_key);
+	fr->name_collate_key = NULL;
 	g_free (fr->comment);
 	fr->comment = NULL;
 	g_free (fr->icon);
@@ -434,16 +463,27 @@ fr_read_dir (DirRec *dr, const char *muri, time_t mtime, int sublevels)
 		if (qitem != NULL) {
 			g_free (fr->icon);
 			fr->icon = g_strdup (qitem->icon);
+
 			g_free (fr->fullname);
 			fr->fullname = g_strdup (qitem->name);
+
+			g_free (fr->name_collate_key);
+			fr->name_collate_key = NULL;
+
 			g_free (fr->comment);
 			fr->comment = g_strdup (qitem->comment);
+
 			quick_desktop_item_destroy (qitem);
 		} else {
 			g_free (fr->icon);
 			fr->icon = NULL;
+
 			g_free (fr->fullname);
 			fr->fullname = NULL;
+
+			g_free (fr->name_collate_key);
+			fr->name_collate_key = NULL;
+
 			g_free (fr->comment);
 			fr->comment = NULL;
 		}
@@ -592,10 +632,16 @@ fr_check_and_reread (FileRec *fr)
 					if (dr->ditemmtime > 0) {
 						g_free (ffr->icon);
 						ffr->icon = NULL;
+
 						g_free (ffr->fullname);
 						ffr->fullname = NULL;
+
+						g_free (fr->name_collate_key);
+						fr->name_collate_key = NULL;
+
 						g_free (ffr->comment);
 						ffr->comment = NULL;
+
 						ddr->ditemmtime = 0;
 						any_change = TRUE;
 					}
@@ -611,16 +657,27 @@ fr_check_and_reread (FileRec *fr)
 					if (qitem != NULL) {
 						g_free (ffr->icon);
 						ffr->icon = g_strdup (qitem->icon);
+
 						g_free (ffr->fullname);
 						ffr->fullname = g_strdup (qitem->name);
+
+						g_free (fr->name_collate_key);
+						fr->name_collate_key = NULL;
+
 						g_free (ffr->comment);
 						ffr->comment = g_strdup (qitem->comment);
+
 						quick_desktop_item_destroy (qitem);
 					} else {
 						g_free (ffr->icon);
 						ffr->icon = NULL;
+
 						g_free (ffr->fullname);
 						ffr->fullname = NULL;
+
+						g_free (fr->name_collate_key);
+						fr->name_collate_key = NULL;
+
 						g_free (ffr->comment);
 						ffr->comment = NULL;
 					}
@@ -651,6 +708,9 @@ fr_check_and_reread (FileRec *fr)
 
 						g_free (ffr->fullname);
 						ffr->fullname = g_strdup (qitem->name);
+
+						g_free (fr->name_collate_key);
+						fr->name_collate_key = NULL;
 
 						g_free (ffr->comment);
 						ffr->comment = g_strdup (qitem->comment);
@@ -720,13 +780,6 @@ fr_get_dir (const char *mdir)
 	return fr_read_dir (NULL, mdir, 0, 1);
 }
 
-/* Get all directories we have in memory */
-GSList*
-fr_get_all_dirs (void)
-{
-  return dir_list;
-}
-
 void
 fr_force_reread (void)
 {
@@ -737,4 +790,16 @@ fr_force_reread (void)
 
 		dr->force_reread = TRUE;
 	}
+}
+
+int
+fr_compare (FileRec *fra, FileRec *frb)
+{
+	if (fra->name_collate_key == NULL) {
+		fra->name_collate_key = g_utf8_collate_key (fra->fullname, -1);
+	}
+	if (frb->name_collate_key == NULL) {
+		frb->name_collate_key = g_utf8_collate_key (frb->fullname, -1);
+	}
+        return strcmp (fra->name_collate_key, frb->name_collate_key);
 }

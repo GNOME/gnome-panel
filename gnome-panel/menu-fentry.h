@@ -23,6 +23,7 @@ struct _MenuFinfo {
 
 struct _MFile {
 	char *name;
+	char *name_collate_key;
 	gboolean verified;
 	time_t mtime;
 	gboolean is_dir;
@@ -40,6 +41,7 @@ struct _FileRec {
 	char *name;
 	char *comment;
 	char *fullname;
+	char *name_collate_key;
 	char *icon;
 	char *tryexec_path;
 	DirRec *parent;
@@ -64,7 +66,8 @@ FileRec * fr_replace(FileRec *fr);
 FileRec * fr_check_and_reread(FileRec *fr);
 FileRec * fr_get_dir(const char *mdir);
 void fr_force_reread(void);
-GSList* fr_get_all_dirs (void);
+
+int fr_compare (FileRec *fra, FileRec *frb);
 
 void free_mfile (MFile *mfile);
 void free_mfile_list (GSList *list);

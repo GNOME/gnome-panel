@@ -1,3 +1,11 @@
+Wed Feb 20 17:14:00 2002  George Lebl <jirka@5z.com>
+
+	* gnome-run.c, menu-fentry.[ch]: Add a fentry sorting function and
+	  cache the name collate key, so that sorting is faster.  Also
+	  properly sort menu items if no set sort order has been given by
+	  a SortOrder thing in a .directory.  Also remove fr_get_all_dirs
+	  since it's a stupid function and isn't being used anyway.
+
 2002-02-20  Mark McLoughlin  <mark@skynet.ie>
 
 	* main.c: (session_notify_global_changes): move notify

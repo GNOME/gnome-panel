@@ -697,13 +697,6 @@ create_advanced_contents (void)
         return vbox;
 }
 
-static int
-sort_by_name (FileRec *fra,
-              FileRec *frb)
-{
-        return g_utf8_collate (fra->fullname, frb->fullname);
-}
-
 static void
 add_columns (GtkTreeView *treeview)
 {
@@ -753,7 +746,7 @@ fill_list (GtkWidget *list)
 	}
 
 	/* Collate */
-	files = g_slist_sort (files, (GCompareFunc) sort_by_name);
+	files = g_slist_sort (files, (GCompareFunc) fr_compare);
 
 	/* Strip duplicates */
 	tmp = files;
@@ -1035,6 +1028,12 @@ create_simple_contents (void)
         gtk_label_set_selectable (GTK_LABEL (label), TRUE);
         gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
         g_object_set_data (G_OBJECT (run_dialog), "desc_label", label);
+
+#if 0
+        label = gtk_label_new ("");
+        g_object_set_data (G_OBJECT (run_dialog), "label", label);
+        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+#endif
 
         unset_selected (run_dialog);
         
