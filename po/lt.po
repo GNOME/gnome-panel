@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.5.3\n"
-"POT-Creation-Date: 2002-03-18 14:10+0000\n"
+"POT-Creation-Date: 2002-03-25 13:31+0000\n"
 "PO-Revision-Date: 2001-12-16 16:25+0200\n"
 "Last-Translator: Gediminas Paulauskas <menesis@delfi.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -16,7 +16,9 @@ msgstr ""
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1 applets/gen_util/printer.c:479
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
+#: applets/gen_util/printer.c:479
 #, fuzzy
 msgid "About..."
 msgstr "Apie..."
@@ -24,19 +26,23 @@ msgstr "Apie..."
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2 applets/gen_util/printer.c:473
-#: gnome-panel/drawer.c:660 gnome-panel/launcher.c:723
-#: gnome-panel/logout.c:130 gnome-panel/logout.c:215 gnome-panel/menu.c:4003
-#: gnome-panel/status.c:375 gnome-panel/swallow.c:453
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:660
+#: gnome-panel/launcher.c:723 gnome-panel/logout.c:130
+#: gnome-panel/logout.c:215 gnome-panel/menu.c:4000 gnome-panel/status.c:375
+#: gnome-panel/swallow.c:453
 msgid "Help"
 msgstr "Pagalba"
 
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3 applets/gen_util/printer.c:466
-#: gnome-panel/drawer.c:657 gnome-panel/launcher.c:721 gnome-panel/menu.c:1363
-#: gnome-panel/menu.c:1435 gnome-panel/menu.c:3287 gnome-panel/menu.c:3993
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:657
+#: gnome-panel/launcher.c:721 gnome-panel/menu.c:1321 gnome-panel/menu.c:1393
+#: gnome-panel/menu.c:3284 gnome-panel/menu.c:3990
 msgid "Properties..."
 msgstr "Savybës..."
 
@@ -209,13 +215,13 @@ msgid "Utility"
 msgstr ""
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:506
+#: applets/gen_util/tasklist.c:501
 #, fuzzy
 msgid "Window List"
 msgstr "_Langas"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:430 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:432 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr ""
 
@@ -227,7 +233,7 @@ msgstr ""
 msgid "Check for mail"
 msgstr "Tikrinti paðtà"
 
-#: applets/gen_util/clock.c:174
+#: applets/gen_util/clock.c:164
 msgid ""
 "%I:%M\n"
 "%p"
@@ -237,21 +243,21 @@ msgstr ""
 
 #. This format string is used, to display the actual time in
 #. 12 hour format.
-#: applets/gen_util/clock.c:177 applets/gen_util/clock.c:443
+#: applets/gen_util/clock.c:167 applets/gen_util/clock.c:383
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. This format string is used, to display the actual time in
 #. 24 hour format.
-#: applets/gen_util/clock.c:184 applets/gen_util/clock.c:448
-#: gnome-panel/foobar-widget.c:433 gnome-panel/foobar-widget.c:1058
+#: applets/gen_util/clock.c:174 applets/gen_util/clock.c:388
+#: gnome-panel/foobar-widget.c:432 gnome-panel/foobar-widget.c:1057
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. This format string is used, to display the actual day,
 #. when showing a vertical panel.  For an explanation of
 #. this format string type 'man strftime'.
-#: applets/gen_util/clock.c:196
+#: applets/gen_util/clock.c:186
 msgid ""
 "%a\n"
 "%b %d"
@@ -261,84 +267,81 @@ msgstr ""
 
 #. This format string is used, to display the actual day,
 #. when showing a horizontal panel.
-#: applets/gen_util/clock.c:201
+#: applets/gen_util/clock.c:191
 msgid "%a %b %d"
 msgstr "%a %b %d"
 
-#: applets/gen_util/clock.c:213
-msgid "%A, %B %d"
+#. Set the applet's tooltip
+#: applets/gen_util/clock.c:202 gnome-panel/foobar-widget.c:353
+msgid "%A %B %d"
 msgstr "%A, %B %d"
 
-#: applets/gen_util/clock.c:473
+#: applets/gen_util/clock.c:301
+msgid "Computer Clock"
+msgstr ""
+
+#: applets/gen_util/clock.c:413
 msgid "%A, %B %d %Y"
 msgstr "%A, %Y %B %d"
 
-#. Do NOT translate the clock/hourformat= part.  What you
-#. * should change is the number 12.  If your country code should use
-#. * 12 hour format by default, leave it at 12, otherwise use 24
-#. * for 24 hour format.  Those are the only two supported
-#: applets/gen_util/clock.c:676
-msgid "clock/hourformat=12"
-msgstr "clock/hourformat=24"
-
-#: applets/gen_util/clock.c:867
+#: applets/gen_util/clock.c:749
 #, fuzzy
 msgid "Clock Properties"
 msgstr "Laikrodþio savybës"
 
-#: applets/gen_util/clock.c:888
+#: applets/gen_util/clock.c:772
 msgid "Time Format"
 msgstr "Laiko formatas"
 
-#: applets/gen_util/clock.c:900
-msgid "12 hour"
+#: applets/gen_util/clock.c:784
+#, fuzzy
+msgid "_12 hour"
 msgstr "12 valandø"
 
-#: applets/gen_util/clock.c:908
-msgid "24 hour"
+#: applets/gen_util/clock.c:792
+#, fuzzy
+msgid "_24 hour"
 msgstr "24 valandø"
 
-#: applets/gen_util/clock.c:939
-msgid "Show date in applet"
+#: applets/gen_util/clock.c:823
+#, fuzzy
+msgid "Show _date"
 msgstr "Rodyti datà átaise"
 
-#: applets/gen_util/clock.c:950
-msgid "Show date in tooltip"
-msgstr "Rodyti datà paaiðkinime"
-
-#: applets/gen_util/clock.c:961
-msgid "Use GMT"
+#: applets/gen_util/clock.c:834
+#, fuzzy
+msgid "Use _GMT"
 msgstr "Naudoti GMT"
 
-#: applets/gen_util/clock.c:972
-msgid "Unix time"
+#: applets/gen_util/clock.c:845
+#, fuzzy
+msgid "_UNIX time"
 msgstr "Unix laikas"
 
-#: applets/gen_util/clock.c:976
-msgid "Internet time"
+#: applets/gen_util/clock.c:849
+#, fuzzy
+msgid "_Internet time"
 msgstr "Interneto laikas"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1069 applets/gen_util/mailcheck.c:1509
-#: applets/gen_util/pager.c:418 applets/gen_util/tasklist.c:494
-#: gnome-panel/menu.c:280
+#: applets/gen_util/clock.c:942 applets/gen_util/mailcheck.c:1509
+#: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:489
+#: gnome-panel/menu.c:239
 msgid "translator_credits"
 msgstr ""
 
-#: applets/gen_util/clock.c:1081
+#: applets/gen_util/clock.c:960
 msgid "Clock Applet"
 msgstr "Laikrodþio átaisas"
 
-#: applets/gen_util/clock.c:1082
-msgid "(c) 1998-2001 the Free Software Foundation"
-msgstr "(c) 1998-2001 the Free Software Foundation"
+#: applets/gen_util/clock.c:961
+#, fuzzy
+msgid "(C) 1998-2002 the Free Software Foundation"
+msgstr "(C) 1997-2000 the Free Software Foundation"
 
-#: applets/gen_util/clock.c:1083
-msgid ""
-"The clock applet gives your panel a lightweight and simple display of the "
-"date and time"
+#: applets/gen_util/clock.c:962
+msgid "The Clock Applet displays current time and date"
 msgstr ""
-"Laikrodþio átaisas tavo skydelyje aiðkiai ir paprastai rodo laikà ir datà"
 
 #: applets/gen_util/mailcheck.c:208 applets/gen_util/mailcheck.c:1522
 msgid "Mail check Applet"
@@ -498,30 +501,30 @@ msgstr "Paðto tikrintuvas"
 msgid "New Mail"
 msgstr "Naujas paðtas"
 
-#: applets/gen_util/pager.c:296
+#: applets/gen_util/pager.c:298
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr ""
 
-#: applets/gen_util/pager.c:307
+#: applets/gen_util/pager.c:309
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
 "s\n"
 msgstr ""
 
-#: applets/gen_util/pager.c:322
+#: applets/gen_util/pager.c:324
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
 "s\n"
 msgstr ""
 
-#: applets/gen_util/pager.c:431
+#: applets/gen_util/pager.c:433
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:432
+#: applets/gen_util/pager.c:434
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage the windows."
@@ -600,12 +603,12 @@ msgstr ""
 msgid "Can't create applet!\n"
 msgstr "Neina sukurti priedo!\n"
 
-#: applets/gen_util/tasklist.c:507
+#: applets/gen_util/tasklist.c:502
 #, fuzzy
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/tasklist.c:508
+#: applets/gen_util/tasklist.c:503
 msgid ""
 "The Window List shows a list of all visible windows and let you browse them."
 msgstr ""
@@ -664,10 +667,9 @@ msgstr "Virð kitø langø"
 msgid "GNOME Panel Shell"
 msgstr "GNOME Pagrindinë svetainë"
 
+#. FIXME: should have a "Move" pixmap.
 #.
-#. * FIXME: should have a "Move" pixmap.
-#.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:592
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:563
 msgid "Move"
 msgstr "Perkelti"
 
@@ -676,8 +678,7 @@ msgstr "Perkelti"
 msgid "Remove From Panel"
 msgstr "Paðalinti ið skydelio"
 
-#: gnome-panel/applet.c:210 gnome-panel/menu.c:1030
-#: gnome-panel/panel-util.c:49
+#: gnome-panel/applet.c:216 gnome-panel/menu.c:988 gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -688,50 +689,40 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:495 gnome-panel/foobar-widget.c:757
+#: gnome-panel/applet.c:501 gnome-panel/foobar-widget.c:756
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:544 gnome-panel/applet.c:548
-#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3605
-msgid "Panel"
-msgstr "Skydelis"
-
-#: gnome-panel/applet.c:546
-#, c-format
-msgid "Cannot find pixmap file %s"
-msgstr "Negaliu rasti paveikslëlio bylos %s"
-
-#: gnome-panel/applet.c:578
+#: gnome-panel/applet.c:552
 msgid "Remove from panel"
 msgstr "Paðalinti ið skydelio"
 
-#: gnome-panel/applet.c:1209
+#: gnome-panel/applet.c:1161
 msgid "Can't find an empty spot"
 msgstr "Negaliu rasti laisvos vietos"
 
-#: gnome-panel/basep-widget.c:156 gnome-panel/basep-widget.c:157
+#: gnome-panel/basep-widget.c:154 gnome-panel/basep-widget.c:155
 msgid "mode"
 msgstr ""
 
-#: gnome-panel/basep-widget.c:164 gnome-panel/basep-widget.c:165
+#: gnome-panel/basep-widget.c:162 gnome-panel/basep-widget.c:163
 msgid "state"
 msgstr "bûsena"
 
-#: gnome-panel/basep-widget.c:173 gnome-panel/basep-widget.c:174
+#: gnome-panel/basep-widget.c:171 gnome-panel/basep-widget.c:172
 #, fuzzy
 msgid "hidebuttons_enabled"
 msgstr "Slëpimo mygtukai"
 
-#: gnome-panel/basep-widget.c:181 gnome-panel/basep-widget.c:182
+#: gnome-panel/basep-widget.c:179 gnome-panel/basep-widget.c:180
 msgid "hidebutton_pixmaps_enabled"
 msgstr ""
 
-#: gnome-panel/basep-widget.c:591
+#: gnome-panel/basep-widget.c:589
 msgid "Hide this panel"
 msgstr "Paslëpti ðá skydelá"
 
-#: gnome-panel/basep-widget.c:594
+#: gnome-panel/basep-widget.c:592
 #, fuzzy
 msgid "Show this panel"
 msgstr "Paðalinti ðá skydelá"
@@ -795,11 +786,11 @@ msgstr "Rodyti slëpimo mygtukà"
 msgid "Enable hidebutton arrow"
 msgstr "Rodyti rodyklæ ant slëpimo mygtuko"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:473 gnome-panel/menu.c:3132
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:473 gnome-panel/menu.c:3129
 msgid "Drawer"
 msgstr "Stalèius"
 
-#: gnome-panel/foobar-widget.c:203
+#: gnome-panel/foobar-widget.c:202
 msgid ""
 "Cannot execute the gnome calendar,\n"
 "perhaps it's not installed.\n"
@@ -809,84 +800,81 @@ msgstr ""
 "tikriausiai jis nëra ádiegtas.\n"
 "Kalendorius yra gnome-pim pakete."
 
-#: gnome-panel/foobar-widget.c:215 gnome-panel/menu.c:3589
-msgid "Run..."
-msgstr "Paleisti..."
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3586
+#, fuzzy
+msgid "Run Program..."
+msgstr "Paleisti programà"
 
-#: gnome-panel/foobar-widget.c:218
+#: gnome-panel/foobar-widget.c:217
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Paleisti programas, jei tu þinai, kokià teisingà komandà áraðyti"
 
-#: gnome-panel/foobar-widget.c:230
+#: gnome-panel/foobar-widget.c:229
 msgid "Lock Display"
 msgstr "Uþrakinti ekranà"
 
-#: gnome-panel/foobar-widget.c:234
+#: gnome-panel/foobar-widget.c:233
 msgid "Protect your computer from unauthorized use"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:243
+#: gnome-panel/foobar-widget.c:242
 msgid "Log Out"
 msgstr "Atsijungti"
 
-#: gnome-panel/foobar-widget.c:246
+#: gnome-panel/foobar-widget.c:245
 msgid "Quit from the GNOME desktop"
 msgstr "Iðeiti ið GNOME darbo aplinkos"
 
-#: gnome-panel/foobar-widget.c:253
+#: gnome-panel/foobar-widget.c:252
 msgid "Actions"
 msgstr "Veiksmai"
 
-#: gnome-panel/foobar-widget.c:279
+#: gnome-panel/foobar-widget.c:278
 msgid "menu wasn't created"
 msgstr "meniu nebuvo sukurtas"
 
-#: gnome-panel/foobar-widget.c:316
+#: gnome-panel/foobar-widget.c:315
 msgid "Today"
 msgstr "Ðiandien"
 
-#: gnome-panel/foobar-widget.c:316
+#: gnome-panel/foobar-widget.c:315
 msgid "View the calendar for today."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:317
+#: gnome-panel/foobar-widget.c:316
 msgid "This Week"
 msgstr "Ðià savaitæ"
 
-#: gnome-panel/foobar-widget.c:317
+#: gnome-panel/foobar-widget.c:316
 msgid "View the calendar for this week."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:318
+#: gnome-panel/foobar-widget.c:317
 msgid "This Month"
 msgstr "Ðá mënesá"
 
-#: gnome-panel/foobar-widget.c:318
+#: gnome-panel/foobar-widget.c:317
 msgid "View the calendar for this month."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:354
-msgid "%A %B %d"
-msgstr "%A, %B %d"
-
-#: gnome-panel/foobar-widget.c:434
+#: gnome-panel/foobar-widget.c:433
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: gnome-panel/foobar-widget.c:435
+#: gnome-panel/foobar-widget.c:434
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: gnome-panel/foobar-widget.c:436
+#: gnome-panel/foobar-widget.c:435
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: gnome-panel/foobar-widget.c:444 gnome-panel/panel.c:2403
+#: gnome-panel/foobar-widget.c:443 gnome-panel/panel.c:2404
 #, fuzzy
 msgid "%I:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: gnome-panel/foobar-widget.c:484
+#: gnome-panel/foobar-widget.c:483
 msgid ""
 "Could not call time-admin\n"
 "Perhaps time-admin is not installed"
@@ -894,30 +882,30 @@ msgstr ""
 "Negalëjau paleisti time-admin\n"
 "Tikriausiai time-admin nëra ádiegtas"
 
-#: gnome-panel/foobar-widget.c:498
+#: gnome-panel/foobar-widget.c:497
 #, fuzzy
 msgid "Add Appointment..."
 msgstr "Pridëti susitikimà..."
 
-#: gnome-panel/foobar-widget.c:507
+#: gnome-panel/foobar-widget.c:506
 #, fuzzy
 msgid "Set Time..."
 msgstr "Nustatyti laikà"
 
-#: gnome-panel/foobar-widget.c:510
+#: gnome-panel/foobar-widget.c:509
 msgid "Adjust the date and time."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:522
+#: gnome-panel/foobar-widget.c:521
 msgid "Format"
 msgstr "Formatas"
 
-#: gnome-panel/foobar-widget.c:839
+#: gnome-panel/foobar-widget.c:838
 msgid "No windows open"
 msgstr "Neatidarytas nei vienas langas"
 
-#: gnome-panel/foobar-widget.c:1098 gnome-panel/menu.c:2687
-#: gnome-panel/menu.c:2693
+#: gnome-panel/foobar-widget.c:1097 gnome-panel/menu.c:2684
+#: gnome-panel/menu.c:2690 gnome-panel/menu.c:3552
 msgid "Applications"
 msgstr "Programos"
 
@@ -983,6 +971,10 @@ msgstr "Bendros skydeliø savybës"
 #: gnome-panel/gnome-panel-properties.desktop.in.h:1
 msgid "Global panel properties"
 msgstr "Bendros skydeliø savybës"
+
+#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3602
+msgid "Panel"
+msgstr "Skydelis"
 
 #: gnome-panel/gnome-panel-properties.glade.h:1
 msgid "&lt;Alt&gt;F1"
@@ -1055,8 +1047,8 @@ msgid "Medium"
 msgstr "Vidutiniðkas"
 
 #: gnome-panel/gnome-panel-properties.glade.h:18 gnome-panel/menu-ditem.c:290
-#: gnome-panel/menu-properties.c:517 gnome-panel/menu.c:3644
-#: gnome-panel/menu.c:3869
+#: gnome-panel/menu-properties.c:517 gnome-panel/menu.c:3641
+#: gnome-panel/menu.c:3866
 msgid "Menu"
 msgstr "Meniu"
 
@@ -1215,7 +1207,7 @@ msgstr ""
 msgid "_Save screenshot to file:"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:266 gnome-panel/gnome-run.c:274
+#: gnome-panel/gnome-run.c:269 gnome-panel/gnome-run.c:277
 #, c-format
 msgid ""
 "Failed to load this program!\n"
@@ -1224,7 +1216,7 @@ msgstr ""
 "Nepavyko·ákelti ðios programos!\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:328
+#: gnome-panel/gnome-run.c:331
 #, c-format
 msgid ""
 "Failed to execute command:\n"
@@ -1233,7 +1225,7 @@ msgstr ""
 "Nepavyko ávykdyti komandos:\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:382
+#: gnome-panel/gnome-run.c:385
 #, c-format
 msgid ""
 "Failed to execute command:\n"
@@ -1244,60 +1236,60 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:425
+#: gnome-panel/gnome-run.c:428
 msgid "Choose a program to run"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:672
+#: gnome-panel/gnome-run.c:683
 #, fuzzy
 msgid "_Browse..."
 msgstr "Narðyti..."
 
-#: gnome-panel/gnome-run.c:681
+#: gnome-panel/gnome-run.c:692
 #, fuzzy
 msgid "Run in _terminal"
 msgstr "Paleisti terminale"
 
-#: gnome-panel/gnome-run.c:914
+#: gnome-panel/gnome-run.c:916
 #, c-format
 msgid "Will run '%s'"
 msgstr "Paleis '%s'"
 
-#: gnome-panel/gnome-run.c:925 gnome-panel/gnome-run.c:928
+#: gnome-panel/gnome-run.c:927 gnome-panel/gnome-run.c:930
 msgid "No program selected"
 msgstr "Jokia programa nepasirinkta"
 
-#: gnome-panel/gnome-run.c:1032
+#: gnome-panel/gnome-run.c:1034
 #, fuzzy
 msgid "A_pplications:"
 msgstr "Programos"
 
-#: gnome-panel/gnome-run.c:1144
+#: gnome-panel/gnome-run.c:1151
 #, fuzzy
 msgid "_Advanced <<"
 msgstr "Iðsamiai"
 
-#: gnome-panel/gnome-run.c:1147
+#: gnome-panel/gnome-run.c:1154
 msgid "Hide the advanced controls below this button."
 msgstr "Paslëpti iðsamias nuostatas þemiau ðio mygtuko."
 
-#: gnome-panel/gnome-run.c:1156
+#: gnome-panel/gnome-run.c:1163
 #, fuzzy
 msgid "_Advanced >>"
 msgstr "Iðsamiai"
 
-#: gnome-panel/gnome-run.c:1159
+#: gnome-panel/gnome-run.c:1166
 msgid ""
 "Allow typing in a command line instead of choosing an application from the "
 "list"
 msgstr "Leisti áraðyti komandinæ eilutæ, ne tik pasirinkti programà ið sàraðo"
 
-#: gnome-panel/gnome-run.c:1176
+#: gnome-panel/gnome-run.c:1183
 #, fuzzy
 msgid "_Run"
 msgstr "Paleisti"
 
-#: gnome-panel/gnome-run.c:1226
+#: gnome-panel/gnome-run.c:1240
 msgid "Run Program"
 msgstr "Paleisti programà"
 
@@ -1351,7 +1343,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3421
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3418
 msgid "Log out"
 msgstr "Atsijungti"
 
@@ -1359,7 +1351,7 @@ msgstr "Atsijungti"
 msgid "Log out of GNOME"
 msgstr "Atsijungti nuo GNOME"
 
-#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3408
+#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3405
 msgid "Lock screen"
 msgstr "Uþrakinti ekranà"
 
@@ -1441,8 +1433,8 @@ msgstr ""
 "Negaliu atidaryti katalogo,\n"
 "naudojam pagrindiná meniu!"
 
-#: gnome-panel/menu-properties.c:127 gnome-panel/menu.c:3308
-#: gnome-panel/menu.c:3999
+#: gnome-panel/menu-properties.c:127 gnome-panel/menu.c:3305
+#: gnome-panel/menu.c:3996
 msgid "Edit menus..."
 msgstr "Keisti meniu..."
 
@@ -1511,16 +1503,16 @@ msgstr "Meniu kelias"
 msgid "Use custom icon for panel button"
 msgstr "Ikona, kai numontuotas:"
 
-#: gnome-panel/menu.c:268
+#: gnome-panel/menu.c:227
 msgid "Many many others ..."
 msgstr "Daug daug kitø..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:270
+#: gnome-panel/menu.c:229
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr ""
 
-#: gnome-panel/menu.c:303
+#: gnome-panel/menu.c:262
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -1528,7 +1520,7 @@ msgstr ""
 "Ði programa atsakinga uþ kitø programø paleidimà, átaisø laikymà savyje, "
 "pasaulio taikà ir nenuspëjamus X'ø nulûþimus."
 
-#: gnome-panel/menu.c:309
+#: gnome-panel/menu.c:268
 msgid ""
 "\n"
 "\n"
@@ -1536,24 +1528,24 @@ msgid ""
 "prohibited any changes to the panel's configuration to take place."
 msgstr ""
 
-#: gnome-panel/menu.c:315
+#: gnome-panel/menu.c:274
 msgid "The GNOME Panel"
 msgstr "GNOME skydelis"
 
-#: gnome-panel/menu.c:316
+#: gnome-panel/menu.c:275
 #, fuzzy
 msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "(C) 1997-2000 the Free Software Foundation"
 
-#: gnome-panel/menu.c:335
+#: gnome-panel/menu.c:294
 msgid "End world hunger"
 msgstr "Baigti pasaulio alká"
 
-#: gnome-panel/menu.c:349
+#: gnome-panel/menu.c:308
 msgid "Can't execute 'About GNOME'"
 msgstr "Negaliu ávykdyti ¥Apie GNOME´"
 
-#: gnome-panel/menu.c:367 gnome-panel/swallow.c:84
+#: gnome-panel/menu.c:326 gnome-panel/swallow.c:84
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1561,7 +1553,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu.c:375 gnome-panel/menu.c:1011 gnome-panel/menu.c:1039
+#: gnome-panel/menu.c:334 gnome-panel/menu.c:969 gnome-panel/menu.c:997
 #, fuzzy, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1569,7 +1561,7 @@ msgid ""
 "Details: %s"
 msgstr "Negaliu ákelti áraðo"
 
-#: gnome-panel/menu.c:924
+#: gnome-panel/menu.c:882
 #, fuzzy, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1577,112 +1569,112 @@ msgid ""
 "Details: %s\n"
 msgstr "Negaliu paðalinti meniu punkto %s: %s\n"
 
-#: gnome-panel/menu.c:932
+#: gnome-panel/menu.c:890
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Negaliu gauti bylos vardo ið kelio: %s"
 
-#: gnome-panel/menu.c:939
+#: gnome-panel/menu.c:897
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Negalëjau gauti katalogo vardo ið kelio: %s"
 
-#: gnome-panel/menu.c:1005
+#: gnome-panel/menu.c:963
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr ""
 
-#: gnome-panel/menu.c:1293
+#: gnome-panel/menu.c:1251
 msgid "Add this launcher to panel"
 msgstr "Ádëti ðá leistukà á skydelá"
 
-#: gnome-panel/menu.c:1301
+#: gnome-panel/menu.c:1259
 msgid "Remove this item"
 msgstr "Paðalinti ðá punktà"
 
-#: gnome-panel/menu.c:1318
+#: gnome-panel/menu.c:1276
 msgid "Put into run dialog"
 msgstr "Ádëti á ¥Paleisti´ dialogà"
 
-#: gnome-panel/menu.c:1337
+#: gnome-panel/menu.c:1295
 #, c-format
 msgid "Help on %s"
 msgstr "Pagalba apie %s"
 
-#: gnome-panel/menu.c:1338
+#: gnome-panel/menu.c:1296
 #, fuzzy
 msgid "Application"
 msgstr "Animacija"
 
-#: gnome-panel/menu.c:1384
+#: gnome-panel/menu.c:1342
 #, fuzzy
 msgid "Entire menu"
 msgstr "Paèiame meniu"
 
-#: gnome-panel/menu.c:1393
+#: gnome-panel/menu.c:1351
 msgid "Add this as drawer to panel"
 msgstr "Ádëti já á skydelá kaip stalèiø"
 
-#: gnome-panel/menu.c:1401
+#: gnome-panel/menu.c:1359
 msgid "Add this as menu to panel"
 msgstr "Ádëti já á skydelá kaip meniu"
 
-#: gnome-panel/menu.c:1409
+#: gnome-panel/menu.c:1367
 msgid "Add new item to this menu"
 msgstr "Ádëti naujà punktà á ðá meniu"
 
-#: gnome-panel/menu.c:1733
+#: gnome-panel/menu.c:1706
 msgid "You already have a status dock on the panel. You can only have one"
 msgstr "Skydelyje jau yra bûsenos rodiklis. Jis gali bûti tik vienas"
 
-#: gnome-panel/menu.c:2327 libpanel-applet/panel-test-applets.c:107
+#: gnome-panel/menu.c:2304 libpanel-applet/panel-test-applets.c:107
 #, c-format
 msgid "query returned exception %s\n"
 msgstr ""
 
-#: gnome-panel/menu.c:2598
+#: gnome-panel/menu.c:2577
 #, fuzzy
 msgid "%I: %M: %S: %p"
 msgstr "%l:%M:%S %p"
 
-#: gnome-panel/menu.c:2605
+#: gnome-panel/menu.c:2584
 msgid "You can only have one menu panel at a time."
 msgstr "Tu gali turëti tik vienà meniu skydelá."
 
-#: gnome-panel/menu.c:2627
+#: gnome-panel/menu.c:2622
 msgid "Menu panel"
 msgstr "Meniu skydelis"
 
-#: gnome-panel/menu.c:2635 gnome-panel/panel-config.c:1497
+#: gnome-panel/menu.c:2632 gnome-panel/panel-config.c:1497
 #: gnome-panel/panel-config.c:1619
 msgid "Edge panel"
 msgstr "Kraðtinis skydelis"
 
-#: gnome-panel/menu.c:2643 gnome-panel/panel-config.c:1504
+#: gnome-panel/menu.c:2640 gnome-panel/panel-config.c:1504
 #: gnome-panel/panel-config.c:1630
 #, fuzzy
 msgid "Corner panel"
 msgstr "Sukurti skydelá"
 
-#: gnome-panel/menu.c:2651 gnome-panel/panel-config.c:1510
+#: gnome-panel/menu.c:2648 gnome-panel/panel-config.c:1510
 #: gnome-panel/panel-config.c:1641
 msgid "Sliding panel"
 msgstr "Slankiojantis skydelis"
 
-#: gnome-panel/menu.c:2659 gnome-panel/panel-config.c:1516
+#: gnome-panel/menu.c:2656 gnome-panel/panel-config.c:1516
 #: gnome-panel/panel-config.c:1652
 msgid "Floating panel"
 msgstr "Plaukiojantis skydelis"
 
 #. force_image
-#: gnome-panel/menu.c:2756 gnome-panel/menu.c:2763 gnome-panel/menu.c:3481
+#: gnome-panel/menu.c:2753 gnome-panel/menu.c:2760 gnome-panel/menu.c:3478
 msgid "KDE menus"
 msgstr "KDE meniu"
 
-#: gnome-panel/menu.c:2836
+#: gnome-panel/menu.c:2833
 msgid "You cannot remove your last panel."
 msgstr "Tu negali paðalinti paskutinio skydelio."
 
-#: gnome-panel/menu.c:2848
+#: gnome-panel/menu.c:2845
 msgid ""
 "When a panel is removed, the panel and its\n"
 "applet settings are lost. Remove this panel?"
@@ -1690,136 +1682,132 @@ msgstr ""
 "Kai skydelis paðalinamas, jo bei visø jo átaisø\n"
 "nuostatos prarandamos. Paðalinti ðá skydelá?"
 
-#: gnome-panel/menu.c:3104
+#: gnome-panel/menu.c:3101
 msgid "Launcher..."
 msgstr "Leistukas..."
 
-#: gnome-panel/menu.c:3112
+#: gnome-panel/menu.c:3109
 msgid "Launcher from menu"
 msgstr "Leistukas ið meniu"
 
-#: gnome-panel/menu.c:3122
+#: gnome-panel/menu.c:3119
 #, fuzzy
 msgid "GNOME Menu"
 msgstr "GNOME Pagalba"
 
-#: gnome-panel/menu.c:3142
+#: gnome-panel/menu.c:3139
 msgid "Log out button"
 msgstr "Atsijungimo mygtukas"
 
-#: gnome-panel/menu.c:3152
+#: gnome-panel/menu.c:3149
 msgid "Lock button"
 msgstr "Uþrakinimo mygtukas"
 
-#: gnome-panel/menu.c:3162
+#: gnome-panel/menu.c:3159
 msgid "Swallowed app..."
 msgstr "Praryta programa..."
 
-#: gnome-panel/menu.c:3169
+#: gnome-panel/menu.c:3166
 msgid "Status dock"
 msgstr "Bûsenos rodiklis"
 
-#: gnome-panel/menu.c:3183
+#: gnome-panel/menu.c:3180
 msgid "Cannot execute panel global properties"
 msgstr "Negaliu pakeisti bendrø skydeliø savybiø"
 
-#: gnome-panel/menu.c:3221
+#: gnome-panel/menu.c:3218
 msgid "Remove this panel..."
 msgstr "Paðalinti ðá skydelá..."
 
-#: gnome-panel/menu.c:3223 gnome-panel/menu.c:3271
+#: gnome-panel/menu.c:3220 gnome-panel/menu.c:3268
 msgid "Remove this panel"
 msgstr "Paðalinti ðá skydelá"
 
-#: gnome-panel/menu.c:3238
+#: gnome-panel/menu.c:3235
 #, fuzzy
 msgid "Cannot launch nautilus!"
 msgstr "Negaliu ákelti dëþutës %s"
 
-#: gnome-panel/menu.c:3250
+#: gnome-panel/menu.c:3247
 msgid "Add to panel"
 msgstr "Ádëti á skydelá"
 
-#: gnome-panel/menu.c:3262
+#: gnome-panel/menu.c:3259
 msgid "Create panel"
 msgstr "Sukurti skydelá"
 
-#: gnome-panel/menu.c:3299
+#: gnome-panel/menu.c:3296
 msgid "Global Preferences..."
 msgstr "Bendrosios nuostatos..."
 
-#: gnome-panel/menu.c:3318
+#: gnome-panel/menu.c:3315
 msgid "Reread all menus"
 msgstr "Ið naujo perskaityti meniu"
 
-#: gnome-panel/menu.c:3332
+#: gnome-panel/menu.c:3329
 msgid "Panel Manual..."
 msgstr "Skydelio þinynas..."
 
-#: gnome-panel/menu.c:3344
+#: gnome-panel/menu.c:3341
 msgid "Cannot execute xscreensaver"
 msgstr "Negaliu paleisti xscreensaver"
 
-#: gnome-panel/menu.c:3363
+#: gnome-panel/menu.c:3360
 msgid "About the panel..."
 msgstr "Apie skydelá..."
 
-#: gnome-panel/menu.c:3377
+#: gnome-panel/menu.c:3374
 msgid "About GNOME..."
 msgstr "Apie GNOME..."
 
-#: gnome-panel/menu.c:3414
+#: gnome-panel/menu.c:3411
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr ""
 
-#: gnome-panel/menu.c:3427
+#: gnome-panel/menu.c:3424
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr ""
 
-#: gnome-panel/menu.c:3555
-msgid "Programs"
-msgstr "Programos"
-
-#: gnome-panel/menu.c:3572
+#: gnome-panel/menu.c:3569
 msgid "Applets"
 msgstr "Átaisai"
 
-#: gnome-panel/menu.c:3595
+#: gnome-panel/menu.c:3592
 #, fuzzy
 msgid "Run a command"
 msgstr "Spausdinimo komanda:"
 
-#: gnome-panel/menu.c:3613
+#: gnome-panel/menu.c:3610
 msgid "Desktop"
 msgstr "Darbalaukis"
 
-#: gnome-panel/menu.c:3646
+#: gnome-panel/menu.c:3643
 #, fuzzy
 msgid "Menu:"
 msgstr "Meniu"
 
-#: gnome-panel/menu.c:3696 gnome-panel/menu.c:3724 gnome-panel/menu.c:3909
+#: gnome-panel/menu.c:3693 gnome-panel/menu.c:3721 gnome-panel/menu.c:3906
 msgid "Main Menu"
 msgstr "Pagrindinis meniu"
 
-#: gnome-panel/menu.c:3718
+#: gnome-panel/menu.c:3715
 msgid "Can't create menu, using main menu!"
 msgstr ""
 "Negaliu sukurti meniu,\n"
 "naudojam pagrindiná meniu!"
 
-#: gnome-panel/panel-applet-frame.c:169
+#: gnome-panel/panel-applet-frame.c:171
 #, fuzzy
 msgid "Cannot register control widget\n"
 msgstr "Negaliu uþsiregistruoti OAF"
 
-#: gnome-panel/panel-applet-frame.c:437
+#: gnome-panel/panel-applet-frame.c:448
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:564
+#: gnome-panel/panel-applet-frame.c:574
 #, fuzzy, c-format
 msgid "There was a problem loading applet '%s': %s"
 msgstr "Klaida skaitant bylà '%s': %s"
@@ -2010,12 +1998,12 @@ msgstr ""
 msgid "No document to show"
 msgstr ""
 
-#: gnome-panel/panel.c:974
+#: gnome-panel/panel.c:975
 #, c-format
 msgid "Open URL: %s"
 msgstr "Atidaryti URL: %s"
 
-#: gnome-panel/panel.c:2429
+#: gnome-panel/panel.c:2430
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2064,42 +2052,69 @@ msgstr "Uþduoèiø juostos savybës"
 msgid "Test Bonobo Applet Factory"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:609
+#: libpanel-applet/panel-applet.c:606
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:623
+#: libpanel-applet/panel-applet.c:620
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:632
+#: libpanel-applet/panel-applet.c:629
 #, fuzzy, c-format
 msgid "Failed to get pixmap %s"
 msgstr ""
 "Nepavyko ávykdyti komandos:\n"
 "%s"
 
-#: libpanel-applet/panel-applet.c:639
+#: libpanel-applet/panel-applet.c:636
 msgid "Unknown background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:794
+#: libpanel-applet/panel-applet.c:791
 msgid "The Applet's containing Panel's orientation"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:802
+#: libpanel-applet/panel-applet.c:799
 msgid "The Applet's containing Panel's size in pixels"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:810
+#: libpanel-applet/panel-applet.c:807
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:818
+#: libpanel-applet/panel-applet.c:815
 msgid "The Applet's flags"
 msgstr ""
+
+#~ msgid "%A, %B %d"
+#~ msgstr "%A, %B %d"
+
+#~ msgid "clock/hourformat=12"
+#~ msgstr "clock/hourformat=24"
+
+#~ msgid "Show date in tooltip"
+#~ msgstr "Rodyti datà paaiðkinime"
+
+#~ msgid "(c) 1998-2001 the Free Software Foundation"
+#~ msgstr "(c) 1998-2001 the Free Software Foundation"
+
+#~ msgid ""
+#~ "The clock applet gives your panel a lightweight and simple display of the "
+#~ "date and time"
+#~ msgstr ""
+#~ "Laikrodþio átaisas tavo skydelyje aiðkiai ir paprastai rodo laikà ir datà"
+
+#~ msgid "Cannot find pixmap file %s"
+#~ msgstr "Negaliu rasti paveikslëlio bylos %s"
+
+#~ msgid "Run..."
+#~ msgstr "Paleisti..."
+
+#~ msgid "Programs"
+#~ msgstr "Programos"
 
 #~ msgid "Panel Global Properties"
 #~ msgstr "Bendros skydeliø savybës"
