@@ -109,6 +109,7 @@ panel_sources =			\
 	panel-applet-frame.c	\
 	panel-shell.c		\
 	quick-desktop-reader.c	\
+	panel-access.c		\
 	$(NULL)
 
 panel_headers =			\
@@ -164,7 +165,7 @@ gnome_panel_LDADD =		\
 
 gnome_panel_LDFLAGS = -export-dynamic
 
-gnome_panel_properties_SOURCES = gnome-panel-properties.c panel-util.c panel-gconf.c
+gnome_panel_properties_SOURCES = gnome-panel-properties.c panel-util.c panel-gconf.c panel-access.c
 
 gnome_panel_properties_LDADD = $(X_LIBS) $(PANELCONFIG_LIBS)           
 
@@ -174,6 +175,7 @@ gnome_desktop_item_edit_SOURCES = \
 	gnome-desktop-item-edit.c \
 	menu-ditem.c		  \
 	panel-util.c		  \
+	panel-access.c		  \
 	rgb-stuff.c
 
 gnome_desktop_item_edit_LDFLAGS = -export-dynamic

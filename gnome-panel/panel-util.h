@@ -139,6 +139,10 @@ ReadBuf *	readbuf_open		(const char *uri);
 gboolean	readbuf_rewind		(ReadBuf *rb);
 void		readbuf_close		(ReadBuf *rb);
 
+/* Accessibility support routines */
+void add_atk_name_desc (GtkWidget *widget, gchar *name, gchar *desc);
+void set_relation (GtkWidget *widget, GtkLabel *label, int set_for);
+
 /* FIXME : make battery stuff public as appropriate */
 
 

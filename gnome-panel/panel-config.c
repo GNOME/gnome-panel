@@ -667,20 +667,23 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 	GtkWidget *pos_box;
 	GtkWidget *table;
 	GtkWidget *w = NULL;
+	GtkWidget *label;
 	int align;
 
 	pos_box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (pos_box),
 					GNOME_PAD_SMALL);
 
-	w = gtk_label_new (_("Panel Position"));
-	gtk_box_pack_start (GTK_BOX (pos_box), w, FALSE, FALSE, 0);
+	label = gtk_label_new (_("Panel Position"));
+	gtk_box_pack_start (GTK_BOX (pos_box), label, FALSE, FALSE, 0);
 
 	w = gtk_alignment_new (0.5, 0.5, 0, 0);	
 	gtk_box_pack_start (GTK_BOX (pos_box), w, FALSE, FALSE, 0);
 
 	table = gtk_table_new (2 + aligns, 2 + aligns, FALSE);
 	gtk_container_add (GTK_CONTAINER (w), table);
+
+	set_relation (table, GTK_LABEL (label), 1);
 
 	w = NULL;
 
@@ -954,6 +957,8 @@ floating_notebook_page (PerPanelConfig *ppc)
 			  G_CALLBACK (floating_set_xy), &ppc->x);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
+	set_relation (ppc->x_spin, GTK_LABEL (label), 1);
+
 	label = gtk_label_new (_("Y"));
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
@@ -966,6 +971,8 @@ floating_notebook_page (PerPanelConfig *ppc)
 	g_signal_connect (button, "value-changed",
 			  G_CALLBACK (floating_set_xy), &ppc->y);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+
+	set_relation (ppc->y_spin, GTK_LABEL (label), 1);
 
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
@@ -1045,6 +1052,8 @@ sliding_notebook_page (PerPanelConfig *ppc)
 			  G_CALLBACK (sliding_set_offset), ppc);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
+	set_relation (ppc->offset_spin, GTK_LABEL (l), 1);
+
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
@@ -1089,6 +1098,7 @@ make_size_widget (PerPanelConfig *ppc)
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	GtkWidget *w;
+	GtkWidget *label;
 	gchar *s;
 	int i;
 
@@ -1098,8 +1108,9 @@ make_size_widget (PerPanelConfig *ppc)
 	box = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
 
+	label = gtk_label_new (_("Panel size:"));
 	gtk_box_pack_start (GTK_BOX (box),
-			    gtk_label_new (_("Panel size:")),
+			    label,
 			    FALSE, FALSE, 0);
 
 	
@@ -1169,6 +1180,8 @@ make_size_widget (PerPanelConfig *ppc)
 	
 	gtk_box_pack_start (GTK_BOX (box), ppc->size_menu,
 			    FALSE, FALSE, 0);
+
+	set_relation (ppc->size_menu, GTK_LABEL (label), 1);
 	
 	s = _("Note: The panel will size itself to the\n"
 	      "largest applet in the panel, and that\n"
@@ -1296,6 +1309,7 @@ background_page (PerPanelConfig *ppc)
 	GtkWidget *box, *f, *t;
 	GtkWidget *vbox, *noscale, *fit, *stretch;
 	GtkWidget *w, *m;
+	GtkWidget *label;
 
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
@@ -1328,6 +1342,7 @@ background_page (PerPanelConfig *ppc)
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->back_om), m);
 	gtk_box_pack_start (GTK_BOX (box), ppc->back_om, FALSE, FALSE, 0);
 
+	set_relation (ppc->back_om, GTK_LABEL (w), 1);
 
 	/*color frame*/
 	f = gtk_frame_new (_("Color"));
@@ -1342,7 +1357,8 @@ background_page (PerPanelConfig *ppc)
 	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (f), box);
 
-	gtk_box_pack_start (GTK_BOX (box), gtk_label_new (_("Color to use:")),
+	label = gtk_label_new (_("Color to use:"));
+	gtk_box_pack_start (GTK_BOX (box), label,
 			    FALSE, FALSE, GNOME_PAD_SMALL);
 
 	ppc->backsel = gnome_color_picker_new();
@@ -1354,6 +1370,7 @@ background_page (PerPanelConfig *ppc)
 				   ppc->back_color.green,
 				   ppc->back_color.blue,
 				   65535);
+	set_relation (ppc->backsel, GTK_LABEL (label), 1);
 
 	gtk_box_pack_start (GTK_BOX (box), ppc->backsel, FALSE, FALSE, 0);
 

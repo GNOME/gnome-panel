@@ -423,6 +423,10 @@ setup_button (Launcher *launcher)
 		str = g_strdup (name);
 	gtk_tooltips_set_tip (panel_tooltips, launcher->button,
 			      str, NULL);
+
+	/* Setup accessible name */
+	add_atk_name_desc (launcher->button, str, NULL);
+
 	g_free (str);
 
 	/* Setup text */

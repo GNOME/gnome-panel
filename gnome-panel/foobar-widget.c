@@ -750,6 +750,8 @@ foobar_widget_instance_init (FoobarWidget *foo)
 
 	g_object_set_data (G_OBJECT (menu_bar), "menu_panel", foo->panel);
 
+	add_atk_name_desc (foo->panel, _("Base Panel"), _("Gnome Base Panel"));
+
 	path = panel_pixmap_discovery ("panel-corner-right.png", FALSE /* fallback */);
 	if (path != NULL) {
 		bufmap = gtk_image_new_from_file (path);

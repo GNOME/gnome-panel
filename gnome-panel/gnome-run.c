@@ -673,6 +673,8 @@ create_advanced_contents (void)
 	g_signal_connect (G_OBJECT (entry), "destroy",
 			  G_CALLBACK (kill_completion),
 			  NULL);
+
+	gtk_tooltips_set_tip (panel_tooltips, entry, _("Executable name for selected application"), NULL);
  
         gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
         g_object_set_data (G_OBJECT (run_dialog), "entry", entry);
@@ -1063,6 +1065,10 @@ create_simple_contents (void)
 
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), list);
+
+	add_atk_name_desc (list, _("List of Applications"),
+			   _("Choose an application to run from the list"));
+	set_relation (list, GTK_LABEL (label), 0);
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
 

@@ -2506,6 +2506,9 @@ create_new_panel (GtkWidget *w, gpointer data)
 		panel_setup (panel);
 		gtk_widget_show (panel);
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
+		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
+				   _("Aligned Panel"),
+				   _("Gnome Aligned Panel"));
 		break;
 	case EDGE_PANEL: 
 		panel = edge_widget_new (NULL,
@@ -2522,6 +2525,9 @@ create_new_panel (GtkWidget *w, gpointer data)
 					 &bcolor);
 		panel_setup (panel);
 		gtk_widget_show (panel);	
+		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
+				   _("Egde Panel"),
+				   _("Gnome Egde Panel"));
 		break;
 	case SLIDING_PANEL:
 		find_empty_pos (screen, &x, &y);
@@ -2539,6 +2545,9 @@ create_new_panel (GtkWidget *w, gpointer data)
 		panel_setup (panel);
 		gtk_widget_show (panel);	
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
+		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
+				   _("Sliding Panel"),
+				   _("Gnome Sliding Panel"));
 		break;
 	case FLOATING_PANEL:
 		find_empty_pos (screen, &x, &y);
@@ -2556,6 +2565,9 @@ create_new_panel (GtkWidget *w, gpointer data)
 		panel_setup (panel);
 		gtk_widget_show (panel);
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
+		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
+				   _("Floating Panel"),
+				   _("Gnome Floating Panel"));
 		break;
 	case FOOBAR_PANEL: {
 		GtkWidget *dialog;
