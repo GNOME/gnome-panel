@@ -3,8 +3,9 @@
 
 BEGIN_GNOME_DECLS
 
-char *gnome_panel_prepare_and_transfer (GtkWidget *widget, char *path, int *id,
-					int panel, int pos);
+char *gnome_panel_applet_request_id (GtkWidget *widget, char *path, int *id,
+				     char **cfgpath);
+char *gnome_panel_prepare_and_transfer (GtkWidget *widget, int id);
 int gnome_panel_applet_init_corba (void);
 void applet_corba_gtk_main (char *str);
 

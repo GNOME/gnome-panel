@@ -212,6 +212,10 @@ main(int argc, char **argv)
 {
 	GtkWidget *clock;
 	char *result;
+	char *cfgpath;
+
+	char *mypath;
+	char *myinvoc;
 
 	panel_corba_register_arguments ();
 	gnome_init("clock_applet", NULL, argc, argv, 0, NULL);
@@ -223,6 +227,20 @@ main(int argc, char **argv)
 
 	aw = applet_widget_new ();
 
+	mypath = getcwd(NULL,0);
+	myinvoc = g_copy_strings(mypath,"/",argv[0],NULL);
+	free(mypath);
+	result = gnome_panel_applet_request_id(aw,myinvoc,&applet_id,&cfgpath);
+	g_free(myinvoc);
+	if (result){
+		printf ("Could not talk to the Panel: %s\n", result);
+		exit (1);
+	}
+
+	/*use cfg path for loading up data!*/
+
+	g_free(cfgpath);
+
 	clock = create_clock_widget (GTK_WIDGET(aw));
 	gtk_widget_show(clock);
 	applet_widget_add (APPLET_WIDGET (aw), clock);
@@ -230,7 +248,7 @@ main(int argc, char **argv)
 
 	/*FIXME: do session saving, find out panel and pos from the panel
 		 so we can restore them on the next startup*/
-	result = gnome_panel_prepare_and_transfer(aw,argv[0],&applet_id,0,0);
+	result = gnome_panel_prepare_and_transfer(aw,applet_id);
 	printf ("Done\n");
 	if (result){
 		printf ("Could not talk to the Panel: %s\n", result);

@@ -36,7 +36,7 @@ GlobalConfig global_config = {
 
 
 void
-load_applet(char *id, char *params, int pos, int panel)
+load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 {
 	/*FIXME: somehow load the applet and call register_toy ... this
 	  thing has to exec the applet or if it is a local applet then it
@@ -44,13 +44,17 @@ load_applet(char *id, char *params, int pos, int panel)
 	  register_toy*/
 	if(strcmp(id,EXTERN_ID) == 0) {
 		gchar *command;
+		AppletInfo * info;
 
 		g_return_if_fail (params != NULL);
 
+		reserve_applet_spot (cfgpath, params, panel, pos);
+		
 		command = g_copy_strings ("(true;", params, ") &", NULL);
 
 		system (command);
 		g_free (command);
+
 	} else if(strcmp(id,MENU_ID) == 0) {
 		Menu *menu;
 
@@ -114,7 +118,7 @@ load_default_applets(void)
 {
 	/* XXX: the IDs for these applets are hardcoded here. */
 
-	load_applet("Menu", ".", PANEL_UNKNOWN_APPLET_POSITION,0);
+	load_applet("Menu", ".", PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
 /*
 	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
 	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
@@ -145,7 +149,11 @@ init_user_applets(void)
 		pos = gnome_config_get_int(buf);
 		sprintf(buf,"/panel/Applet_%d/panel=0",num);
 		panel = gnome_config_get_int(buf);
-		load_applet(applet_name, applet_params, pos, panel);
+
+		/*this is the config path to be passed to the applet when it
+		  loads*/
+		sprintf(buf,"/panel/Applet_%d/",num);
+		load_applet(applet_name, applet_params, pos, panel, buf);
 		g_free(applet_name);
 		g_free(applet_params);
 	}

@@ -128,6 +128,14 @@ save_applet_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_string(fullpath, EXTERN_ID);
 		g_free(fullpath);
 
+		fullpath = g_copy_strings(path,"position",NULL);
+		gnome_config_set_int(fullpath, pos);
+		g_free(fullpath);
+
+		fullpath = g_copy_strings(path,"panel",NULL);
+		gnome_config_set_int(fullpath, panel);
+		g_free(fullpath);
+
 		/*have the applet do it's own session saving*/
 		send_applet_session_save(info->id,(*num)-2,panel,pos);
 		fullpath = g_copy_strings(path,"parameters",NULL);
@@ -553,16 +561,56 @@ applet_add_callback(short id, char *callback_name, char *menuitem_text)
   g_warning("Unimplemented\n");
 }
 
+int
+applet_request_id (const char * ior, const char *path, char **cfgpath)
+{
+	GtkWidget *eb;
+	GdkWindow *win;
+	GList *list;
+	AppletInfo *info;
+	int i;
+
+	for(i=0,list=applets;list!=NULL;list=g_list_next(list),i++) {
+		info = list->data;
+		if(info && info->type == APPLET_EXTERN_PENDING &&
+		   strcmp(info->params,path)==0) {
+			*cfgpath = info->id;
+			info->id = g_strdup(ior);
+			return i;
+		}
+	}
+
+	reserve_applet_spot (ior, path, 0, 0);
+	info = g_new(AppletInfo,1);
+	info->type = APPLET_EXTERN_PENDING;
+	info->widget = NULL;
+	info->assoc = NULL;
+	info->data = NULL;
+	info->id = g_strdup(ior);
+	info->params = g_strdup(path);
+	info->flags = 0;
+	*cfgpath = g_strdup("");
+
+	applets = g_list_append(applets,info);
+	
+	return i;
+}
+
 void
 reparent_window_id (unsigned long winid, int id)
 {
 	GtkWidget *eb;
 	GdkWindow *win;
 	int w,h;
+	AppletInfo *info;
 	
 	printf ("I got this window ID to reparent: %d\n", winid);
 	/*FIXME: check for NULLS!*/
-	eb = ((AppletInfo *)(g_list_nth(applets,id)->data))->widget;
+	info = (AppletInfo *)(g_list_nth(applets,id)->data);
+
+	/*no longer pending*/
+	info->type = APPLET_EXTERN;
+	eb = info->widget;
 	
 	win = gdk_window_foreign_new(winid);
 	gdk_window_get_size(win,&w,&h);
@@ -574,13 +622,12 @@ reparent_window_id (unsigned long winid, int id)
 	printf ("leaving reparent\n");
 }
 
-int
-reserve_applet_spot (const char * ior, const char *path, int panel, int pos)
+void
+reserve_applet_spot (const char *id, const char *path, int panel, int pos)
 {
 	GtkWidget *eb;
 	GdkWindow *win;
 	GList *list;
-	int i;
 
 	printf ("entering reserve spot\n");
 	
@@ -589,18 +636,14 @@ reserve_applet_spot (const char * ior, const char *path, int panel, int pos)
 
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the params field*/
-	register_toy(eb,NULL,NULL,g_strdup(ior),g_strdup(path),pos,panel,0,APPLET_EXTERN);
-
-	for(i=0,list=applets;list!=NULL;list=g_list_next(list))
-		i++;
+	register_toy(eb,NULL,NULL,g_strdup(id),g_strdup(path),
+		     pos,panel,0,APPLET_EXTERN_PENDING);
 
 	printf ("leaving reserve spot\n");
-
-	return i-1;
 }
 
 /*FIXME: add a function that does this, so generalize register_toy for this*/
-static void
+/*static void
 add_reparent(GtkWidget *widget, gpointer data)
 {
 	int id;
@@ -613,7 +656,7 @@ add_reparent(GtkWidget *widget, gpointer data)
 	appletid = reserve_applet_spot("???","echo",0,0);
 
 	reparent_window_id (id,appletid);
-}
+}*/
 
 GtkWidget *
 create_panel_root_menu(PanelWidget *panel)
@@ -637,12 +680,12 @@ create_panel_root_menu(PanelWidget *panel)
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
 
-	menuitem = gtk_menu_item_new_with_label(_("Add reparent (testing)"));
+	/*menuitem = gtk_menu_item_new_with_label(_("Add reparent (testing)"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_reparent,
 			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
+	gtk_widget_show(menuitem);*/
 
 	menuitem = gtk_menu_item_new_with_label(_("Main menu"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), root_menu);

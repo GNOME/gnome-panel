@@ -1,8 +1,11 @@
 module GNOME {
 	interface Panel {
-		/* Sends the object identifier for the Applet server that contacts the Panel */
+		/* Sends the object identifier for the Applet server that
+		   contacts the Panel */
 		void reparent_window_id (in unsigned long wid, in short id);
-		short reserve_applet_spot (in string ior, in string path, in short panel,in short pos);
+		short applet_request_id(in string ior,
+					in string path,
+					out string cfgpath);
 		void applet_remove_from_panel (in short id);
 		short applet_get_panel (in short id);
 		short applet_get_pos (in short id);

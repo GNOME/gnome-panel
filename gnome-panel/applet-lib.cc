@@ -288,11 +288,14 @@ bind_top_applet_events(GtkWidget *widget, int id)
 /*id will return a unique id for this applet for the applet to identify
   itself as*/
 char *
-gnome_panel_prepare_and_transfer (GtkWidget *widget, char *path, int *id,
-				  int panel, int pos)
+gnome_panel_applet_request_id (GtkWidget *widget,
+			       char *path,
+			       int *id,
+			       char **cfgpath)
 {
 	char *result;
 	char *ior;
+	char *cfgpathback = NULL;
 
 	/* Create an applet object, I do pass the widget parameter to the
 	 * constructor object to have a way of sort out to which object
@@ -307,23 +310,43 @@ gnome_panel_prepare_and_transfer (GtkWidget *widget, char *path, int *id,
 
 	ior = orb_ptr->object_to_string (applet);
 
+	/*reserve a spot and get an id for this applet*/
+	*id = panel_client->applet_request_id(ior,path,cfgpathback);
+
+	if(cfgpath==NULL) {
+		CORBA::string_free(cfgpathback);
+	} else if(cfgpathback != NULL) {
+		*cfgpath = g_strdup(cfgpathback);
+		CORBA::string_free(cfgpathback);
+	} else {
+		*cfgpath = NULL;
+	}
+
+	return 0;
+}
+
+/*id will return a unique id for this applet for the applet to identify
+  itself as*/
+char *
+gnome_panel_prepare_and_transfer (GtkWidget *widget, int id)
+{
+	char *result;
+
 	gtk_widget_realize(widget);
 	gtk_widget_show(widget);
 	
 	printf ("Transfiriendo: %d\n", GDK_WINDOW_XWINDOW (widget->window));
 
-	/*reserve a spot and get an id for this applet*/
-	*id = panel_client->reserve_applet_spot(ior,path,panel,pos);
-
 	/*reparent the window*/
 	panel_client->reparent_window_id (GDK_WINDOW_XWINDOW (widget->window),
-					  *id);
-	bind_top_applet_events(widget,*id);
-
+					  id);
+	bind_top_applet_events(widget,id);
 
 	printf ("Transferido\n");
 	return 0;
 }
+
+
 
 void
 applet_corba_gtk_main (char *str)

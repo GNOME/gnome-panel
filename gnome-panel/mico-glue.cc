@@ -21,14 +21,21 @@ public:
 
 		::reparent_window_id (wid,id);
 	}
-	CORBA::Short reserve_applet_spot (const char *ior,
-					  const char *path,
-					  CORBA::Short panel,
-					  CORBA::Short pos) {
-		printf ("RESERVE_APPLET_SPOT!\n");
+	CORBA::Short applet_request_id (const char *ior,
+					const char *path,
+					char *&cfgpath) {
+		char *s=NULL;
+		int id;
+
+		printf ("REQUEST_ID!\n");
 		printf ("applet registered with IOR: %s\n", ior);
 
-		return ::reserve_applet_spot (ior,path,panel,pos);
+		id = ::applet_request_id (ior,path,&s);
+		if(s) {
+			cfgpath = CORBA::string_dup(s);
+			g_free(s);
+		}
+		return id;
 	}
 	CORBA::Short applet_get_panel (CORBA::Short id) {
 		printf ("APPLET_GET_PANEL!\n");

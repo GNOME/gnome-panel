@@ -94,7 +94,8 @@ free_app_def (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *item = data;
 
-	gnome_desktop_entry_free (item);
+	if(item)
+		gnome_desktop_entry_free (item);
 }
 
 void
@@ -116,7 +117,7 @@ free_string (GtkWidget *widget, void *data)
 void
 add_to_panel (char *applet, char *arg)
 {
-	load_applet(applet,arg,PANEL_UNKNOWN_APPLET_POSITION,0);
+	load_applet(applet,arg,PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
 }
 
 void
