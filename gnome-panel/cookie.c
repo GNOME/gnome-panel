@@ -66,9 +66,10 @@ compute_cookie ()
 void
 poor_security_cookie_init (void)
 {
-	char buffer [20];
+	char buffer [40];
 	
-	sprintf (buffer, "%d", getpid ());
+	srandom (time (NULL));
+	snprintf (buffer,40, "%d-%d", getpid (), (int)random());
 	cookie_dir = g_copy_strings ("/tmp/.panel-", buffer, NULL);
 	mkdir (cookie_dir, 0700);
 	check_dir_permissions (cookie_dir);

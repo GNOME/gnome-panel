@@ -2174,7 +2174,7 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	if(panel->snapped==PANEL_DRAWER)
 		panel_widget_pack_applets(panel);
 
-	/*this will trigger size_Allocate of all applets and thus the
+	/*this will trigger size_allocate of all applets and thus the
 	  panel will again be set to the largest thickness*/
 	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel_widget_set_size(panel,panel->size);
