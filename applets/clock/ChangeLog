@@ -1,3 +1,16 @@
+2002-03-16  Gediminas Paulauskas <menesis@delfi.lt>
+
+	* clock.c:
+	Set accessible description for clock, add accelerators for
+	property labels (#74748, patch from pasupathi.duraisamy@wipro.com)
+	Fixed clock to update at 0 seconds (#71039)
+	Removed "Show date in tooltip" option, show it always (#73928).
+	Determine if to show 12 or 24 hour clock from locale, not from
+	translation (#57153).
+	Applet is now made only of a label (it was packed into frame,
+	alignment, and box).
+	Add Dan Mueth as documenter, leave only George and me as authors.
+
 2002-03-14  Benedikt Roth  <Benedikt.Roth@gmx.net>
 
 	* mailcheck.c: (get_remote_password), (mailcheck_load_animation),
