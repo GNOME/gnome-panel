@@ -412,11 +412,11 @@ mailcheck_get_animation_menu (MailCheck *mc)
 			       strstr (e->d_name, ".jpg")))
 				continue;
 
+			s = g_strdup (e->d_name);
 			if (!mc->selected_pixmap_name)
 				mc->selected_pixmap_name = s;
 			if (basename && strcmp (basename, e->d_name) == 0)
 				select_item = i;
-			s = g_strdup (e->d_name);
 			item = gtk_menu_item_new_with_label (s);
 			i++;
 			gtk_widget_show (item);
