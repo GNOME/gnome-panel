@@ -15,6 +15,7 @@ struct _GlobalConfig {
 	gboolean tooltips_enabled;
 	/*gboolean show_small_icons;*/
 	gboolean show_dot_buttons;
+	gboolean show_menu_titles;
 	gboolean hungry_menus;
 	gboolean off_panel_popups;
 	PanelMovementType movement_type;

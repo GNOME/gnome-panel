@@ -94,6 +94,8 @@ apply_global_config (void)
 	int i;
 	static int dot_buttons_old = 0; /*doesn't matter first time this is
 					  done there are no menu applets*/
+	static int menu_titles_old = 0; /*doesn't matter first time this is
+					  done there are no menu applets*/
 	static int keep_bottom_old = -1;
 	static int normal_layer_old = -1;
 	static int autohide_size_old = -1;
@@ -129,7 +131,8 @@ apply_global_config (void)
 	/*if we changed dot_buttons/small_icons mark all menus as dirty
 	  for rereading, hopefullly the user doesn't do this too often
 	  so that he doesn't have to reread his menus all the time:)*/
-	if(dot_buttons_old != global_config.show_dot_buttons ||
+	if(menu_titles_old != global_config.show_menu_titles ||
+	   dot_buttons_old != global_config.show_dot_buttons ||
 	   old_use_large_icons != global_config.use_large_icons ||
 	   old_merge_menus != global_config.merge_menus ||
 	   old_menu_check != global_config.menu_check) {
@@ -160,6 +163,7 @@ apply_global_config (void)
 		}
 		foobar_widget_force_menu_remake();
 	}
+	menu_titles_old = global_config.show_menu_titles;
 	dot_buttons_old = global_config.show_dot_buttons;
 	old_use_large_icons = global_config.use_large_icons;
 	old_merge_menus = global_config.merge_menus;
@@ -1662,6 +1666,9 @@ load_up_globals (void)
 	global_config.show_dot_buttons =
 		conditional_get_bool ("show_dot_buttons", FALSE, NULL);
 
+	global_config.show_menu_titles =
+		conditional_get_bool ("show_menu_titles", FALSE, NULL);
+
 	global_config.hungry_menus =
 		conditional_get_bool ("memory_hungry_menus", FALSE, NULL);
 
@@ -1853,6 +1860,8 @@ write_global_config (void)
 			       global_config.tooltips_enabled);
 	gnome_config_set_bool ("show_dot_buttons",
 			       global_config.show_dot_buttons);
+	gnome_config_set_bool ("show_menu_titles",
+			       global_config.show_menu_titles);
 	gnome_config_set_bool ("memory_hungry_menus",
 			       global_config.hungry_menus);
 	gnome_config_set_bool ("use_large_icons",

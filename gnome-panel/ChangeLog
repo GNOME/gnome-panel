@@ -1,3 +1,18 @@
+Fri Jun 22 23:15:50 2001  George Lebl <jirka@5z.com>
+
+	* menu.c, gnome-panel-properties.c, panel_config_global.h,
+	  session.c: Make menu titles optional and off by default.  In
+	  the right click menu add a submenu for "Entire menu" so that
+	  one can have most of the funcationality that menu titles had
+	  without them
+
+	* menu.[ch], menu-fentry.h, foobar-widget.c, gnome-run.c: make an
+	  add to favourites menu item to make favourites easier to use
+
+	* menu.c: fix try_pixmap function to setup correct size, this fixes
+	  the problem of distribution menus being small even when icons are
+	  large
+
 2001-06-07  Christian Rose  <menthos@menthos.com>
 
 	* panel/panel.soundlist: Added Swedish translation.

@@ -99,6 +99,7 @@ static GtkAdjustment *applet_border_padding;
 /* menu page */
 
 static GtkWidget *show_dot_buttons_cb;
+static GtkWidget *show_menu_titles_cb;
 static GtkWidget *off_panel_popups_cb;
 static GtkWidget *hungry_menus_cb;
 static GtkWidget *use_large_icons_cb;
@@ -753,6 +754,8 @@ sync_menu_page_with_config(GlobalConfig *conf)
 	GtkWidget *w;
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(show_dot_buttons_cb),
 				    conf->show_dot_buttons);
+	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(show_menu_titles_cb),
+				    conf->show_menu_titles);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(off_panel_popups_cb),
 				    conf->off_panel_popups);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(hungry_menus_cb),
@@ -781,6 +784,8 @@ sync_config_with_menu_page(GlobalConfig *conf)
 	MenuOptions *opt;
 	conf->show_dot_buttons =
 		GTK_TOGGLE_BUTTON(show_dot_buttons_cb)->active;
+	conf->show_menu_titles =
+		GTK_TOGGLE_BUTTON(show_menu_titles_cb)->active;
 	conf->off_panel_popups =
 		GTK_TOGGLE_BUTTON(off_panel_popups_cb)->active;
 	conf->hungry_menus =
@@ -889,6 +894,14 @@ menu_notebook_page(void)
 			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
 	gtk_table_attach_defaults(GTK_TABLE(table), menu_check_cb,
 				  1, 2, 2, 3);
+	
+	/* Menu titles */
+	show_menu_titles_cb = gtk_check_button_new_with_label (_("Show menu titles"));
+	gtk_signal_connect (GTK_OBJECT (show_menu_titles_cb), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	gtk_table_attach_defaults (GTK_TABLE (table), show_menu_titles_cb,
+				   0, 1, 3, 4);
+
 
 	/* Menu frame */
 	frame = gtk_frame_new (_("Global menu"));
@@ -1339,6 +1352,9 @@ loadup_vals (void)
 	global_config.tooltips_enabled =
 		conditional_get_bool ("tooltips_enabled", TRUE, NULL);
 
+	global_config.show_menu_titles =
+		conditional_get_bool ("show_menu_titles", FALSE, NULL);
+
 	global_config.show_dot_buttons =
 		conditional_get_bool ("show_dot_buttons", FALSE, NULL);
 
@@ -1557,6 +1573,8 @@ write_config (GlobalConfig *conf)
 			      conf->tooltips_enabled);
 	gnome_config_set_bool("show_dot_buttons",
 			      conf->show_dot_buttons);
+	gnome_config_set_bool("show_menu_titles",
+			      conf->show_menu_titles);
 	gnome_config_set_bool("memory_hungry_menus",
 			      conf->hungry_menus);
 	gnome_config_set_bool("use_large_icons",

@@ -406,9 +406,17 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 		return NULL;
 	}
 
-	menu = create_fake_menu_at (real_path, FALSE, FALSE,
-				    label, NULL, FALSE);
+	menu = create_fake_menu_at (real_path,
+				    FALSE /* applets */,
+				    FALSE /* launcher_add */,
+				    FALSE /* favourites_add */,
+				    label /* dir_name */,
+				    NULL /* pixmap_name */,
+				    FALSE /* title */);
 	g_free (real_path);
+	if (path != NULL && strcmp (path, "apps") == 0)
+		/* This will add the add submenu thingie */
+		start_favourites_menu (menu, TRUE /* fake_submenus */);
 
 	if (menu == NULL) {
 		g_warning (_("menu wasn't created"));

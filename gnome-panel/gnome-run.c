@@ -185,7 +185,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	char **envv = NULL;
 	int envc;
         gboolean use_advanced;
-        gboolean add_to_favorites;
+        gboolean add_to_favourites;
         GtkWidget *favorites;
         
         use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
@@ -205,7 +205,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                                                           "terminal"));
         favorites = gtk_object_get_data (GTK_OBJECT (run_dialog), "favorites");
 
-        add_to_favorites = GTK_TOGGLE_BUTTON (favorites)->active;
+        add_to_favourites = GTK_TOGGLE_BUTTON (favorites)->active;
         
         if (gtk_object_get_data (GTK_OBJECT (run_dialog), "use_list")) {
                 char *name;
@@ -226,8 +226,8 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                                 gnome_desktop_entry_launch (dentry);
                                 gnome_desktop_entry_free (dentry);
 
-                                if (add_to_favorites)
-                                        panel_add_favorite (name);
+                                if (add_to_favourites)
+                                        panel_add_favourite (name);
                         } else {
                                 panel_error_dialog (_("Failed to load this program!\n"));
                         }

@@ -93,6 +93,7 @@ GtkWidget *	create_menu_at		(GtkWidget *menu,
 					 const char *menudir,
 					 gboolean applets,
 					 gboolean launcher_add,
+					 gboolean favourites_add,
 					 const char *dir_name,
 					 const char *pixmap_name,
 					 gboolean fake_submenus,
@@ -101,9 +102,12 @@ GtkWidget *	create_menu_at		(GtkWidget *menu,
 GtkWidget *	create_fake_menu_at	(const char *menudir,
 					 gboolean applets,
 					 gboolean launcher_add,
+					 gboolean favourites_add,
 					 const char *dir_name,
 					 const char *pixmap_name,
 					 gboolean title);
+GtkWidget *	start_favourites_menu	(GtkWidget *menu,
+					 gboolean fake_submenus);
 
 void		submenu_to_display	(GtkWidget *menuw, gpointer data);
 gboolean	menu_need_reread	(GtkWidget *menuw);
@@ -125,7 +129,7 @@ void		our_gtk_menu_position	(GtkMenu *menu);
  * scroll-menu, since people copy it around */
 GtkWidget *	hack_scroll_menu_new	(void);
 
-void panel_add_favorite         (const char *source_dentry);
+void		panel_add_favourite	(const char *source_dentry);
 
 #define MENU_PATH "menu_path"
 
