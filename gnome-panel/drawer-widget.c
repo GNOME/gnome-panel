@@ -167,14 +167,21 @@ drawer_widget_size_request(GtkWidget *widget,
 		return;
 	}
 
-	/* do a minimal 48 size*/
-	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
+	/* do a minimal 48x48 size*/
+	if(chreq.width<48)
+		chreq.width=48;
+	if(chreq.height<48)
+		chreq.height=48;
+	/*FIXME: this makes the drawers too small and I want them to
+	  be large!, once proper sizing is in place this won't be
+	  necessary*/
+	/*if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
 		if(chreq.width<PANEL_MINIMUM_WIDTH)
 			chreq.width=PANEL_MINIMUM_WIDTH;
 	} else {
 		if(chreq.height<PANEL_MINIMUM_WIDTH)
 			chreq.height=PANEL_MINIMUM_WIDTH;
-	}
+	}*/
 	requisition->width = chreq.width;
 	requisition->height = chreq.height;
 }
@@ -256,14 +263,21 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	  are sometimes a cube for the flicker prevention*/
 	gtk_widget_size_request (basep->ebox, &chreq);
 
-	/* do a minimal 48 size*/
-	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
+	/* do a minimal 48x48 size*/
+	if(chreq.width<48)
+		chreq.width=48;
+	if(chreq.height<48)
+		chreq.height=48;
+	/*FIXME: this makes the drawers too small and I want them to
+	  be large!, once proper sizing is in place this won't be
+	  necessary*/
+	/*if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
 		if(chreq.width<PANEL_MINIMUM_WIDTH)
 			chreq.width=PANEL_MINIMUM_WIDTH;
 	} else {
 		if(chreq.height<PANEL_MINIMUM_WIDTH)
 			chreq.height=PANEL_MINIMUM_WIDTH;
-	}
+	}*/
 	allocation->width = chreq.width;
 	allocation->height = chreq.height;
 
