@@ -24,6 +24,7 @@
 #define SMALL_ICON_SIZE 20
 #define BIG_ICON_SIZE   48
 
+#define PANEL_DEBUG 1;
 
 #define MENU_PATH "menu_path"
 
@@ -580,18 +581,6 @@ add_app_to_personal (GtkWidget *widget, char *item_loc)
 	g_free(s);
 }
 
-/* stolen from gmenu */
-static int
-isfile(gchar *s)
-{
-	struct stat st;
-
-	if ((!s)||(!*s)) return 0;
-	if (stat(s,&st)<0) return 0;
-	if (S_ISREG(st.st_mode)) return 1;
-	return 0;
-}
-
 /* returns a g_strdup'd string with filesystem reserved chars replaced */
 /* again from gmenu */
 static char *
@@ -613,11 +602,10 @@ validate_filename(char *file)
 }
 
 static void
-really_add_new_menu_item (GtkWidget *d,int button, gpointer data)
+really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 {
 	GnomeDEntryEdit *dedit = GNOME_DENTRY_EDIT(data);
-	char *tmp, *dir = gtk_object_get_data(GTK_OBJECT(d),"dir");
-	
+	char *file, *dir = gtk_object_get_data(GTK_OBJECT(d),"dir");
 	GnomeDesktopEntry *dentry;
 	FILE *fp;
 	
@@ -631,32 +619,39 @@ really_add_new_menu_item (GtkWidget *d,int button, gpointer data)
 		/* assume we are making a new file */
 		if (!dentry->location) {
 			int i=2;
+			char *tmp, *tmp2=NULL;
 			tmp = validate_filename(dentry->name);
-			dentry->location = g_strdup_printf("%s/%s.desktop", dir, tmp);
-			while (isfile(dentry->location)) {
+
+			file = g_strdup_printf("%s.desktop", tmp);
+			dentry->location = g_concat_dir_and_file(dir, file);
+				
+			while (g_file_exists(dentry->location)) {
 				g_free(dentry->location);
-				dentry->location = g_strdup_printf("%s/%s%d.desktop",
-								   dir, tmp, i++);
+				g_free(file);
+				file = g_strdup_printf("%s%d", tmp, i++);
+				dentry->location = g_concat_dir_and_file(dir, file);
 			}
 			g_free(tmp);
+			g_free(file);
 		}
-		tmp = g_strdup_printf("%s/.order", dir);
-		fp = fopen(tmp, "a");
+
+		file = g_concat_dir_and_file(dir, ".order");
+		fp = fopen(file, "a");
 		if (fp) {
-			char *file = strrchr(dentry->location, '/');
-			if (file)
-				fprintf(fp, "%s\n", file+1);
+			char *file2 = g_filename_pointer(dentry->location);
+			if (file2)
+				fprintf(fp, "%s\n", file2);
 			else
 				g_warning(_("Could not get file from path: %s"), 
 					  dentry->location);
+			fclose(fp);
 		} else
-			g_warning(_("Could not open .order file: %s"), tmp);
-		g_free(tmp);
+			g_warning(_("Could not open .order file: %s"), file);
+		g_free(file);
 
 		gnome_desktop_entry_save(dentry);
 		gnome_desktop_entry_free(dentry);
 
-		/* FIXME: put in the .order file */
 	}
 	gtk_widget_destroy(d);
 }
@@ -695,6 +690,69 @@ add_new_app_to_menu (GtkWidget *widget, char *item_loc)
 	gnome_dialog_set_default(GNOME_DIALOG(d),0);
 
 	gtk_widget_show_all(d);	
+}
+
+static void
+remove_menuitem (GtkWidget *widget, char *item_loc)
+{
+	char *file, *dir, buf[256], *order_in_name, *order_out_name;
+	FILE *order_in_file, *order_out_file;
+
+	g_return_if_fail (item_loc);
+	if (unlink(item_loc) < 0) {
+		g_warning(_("Could not remove the menu item %s: %s\n"), 
+			  item_loc, g_strerror(errno));
+		return;
+	}
+
+	file = g_filename_pointer(item_loc);
+	if (!file) {
+		g_warning(_("Could not get file name from path: %s"),
+			  item_loc);
+		return;
+	}
+
+	dir = g_strdup(item_loc);
+	dir[g_filename_index(dir)] = '\0';
+	
+	order_in_name = g_concat_dir_and_file(dir, ".order");
+	order_in_file = fopen(order_in_name, "r");
+
+	if (!order_in_file) {
+		g_warning(_("Could not open .order file: %s"),
+			  order_in_name);
+		g_free(order_in_name);
+		return;
+	}
+
+	order_out_name = g_concat_dir_and_file(dir, ".order.tmp");
+	order_out_file = fopen(order_out_name, "w");
+
+	if (!order_out_file) {
+		g_warning(_("Could not open .order file: %s"),
+			  order_in_name);
+		g_free(order_in_name);
+		g_free(order_out_name);
+		fclose(order_in_file);
+		return;
+	}
+
+	while (fgets(buf, 255, order_in_file)) {
+		g_strchomp (buf);  /* remove trailing '\n' */
+		if (strcmp(buf, file))
+			fprintf(order_out_file, "%s\n", buf);
+	}
+
+	fclose(order_out_file);
+	fclose(order_in_file);
+
+	if (rename(order_out_name, order_in_name) == -1)
+		g_warning(_("Could not rename tmp file %s"),
+			  order_out_name);
+
+	g_free(order_out_name);
+	g_free(order_in_name);
+	g_free(file);
 }
 
 static void
@@ -1013,6 +1071,20 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			/*ummmm slightly ugly but should work 99% of time*/
 			if(strstr(sim->item_loc,"/.gnome/apps/"))
 				gtk_widget_set_sensitive(menuitem,FALSE);
+
+			menuitem = gtk_menu_item_new ();
+			setup_menuitem (menuitem, 0,
+					_("Remove this item"));
+			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
+			gtk_signal_connect (GTK_OBJECT(menuitem), "activate",
+					    GTK_SIGNAL_FUNC (remove_menuitem),
+					    sim->item_loc);
+			if(access(sim->mf->menudir,W_OK)!=0)
+				gtk_widget_set_sensitive(menuitem,FALSE);
+			gtk_signal_connect_object(GTK_OBJECT(menuitem),
+						  "activate",
+						  GTK_SIGNAL_FUNC(gtk_menu_shell_deactivate),
+						  GTK_OBJECT(item->parent));
 		} else {
 			menuitem = gtk_menu_item_new ();
 			setup_menuitem (menuitem, 0,
@@ -1581,9 +1653,12 @@ check_and_reread_applet(Menu *menu,int main_menu)
 			    list = g_slist_next(list)) {
 				MenuFinfo *mf = list->data;
 				dirlist = g_slist_append(dirlist,
-							 mf->menudir);
+							 g_strdup(mf->menudir));
 			}
 			add_menu_widget(menu,dirlist, main_menu,TRUE);
+
+			for (list = dirlist; list; list = g_slist_next(list))
+				g_free(list->data);
 			g_slist_free(dirlist);
 		}
 	}
