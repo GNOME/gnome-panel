@@ -618,8 +618,9 @@ phelp (void)
 {
 	GError *error = NULL;
 
-	gnome_help_display_desktop (NULL, "fish_applet", "fish_applet", "FISH-PREFS", &error);
-	if (error != NULL) {
+	gnome_help_display_desktop (
+		NULL, "fish-applet-2", "fish-applet-2", NULL, &error);
+	if (error) {
 		g_warning ("help error: %s\n", error->message);
 		g_error_free (error);
 	}
@@ -1131,8 +1132,9 @@ display_help_dialog (BonoboUIComponent *uic,
 {
 	GError *error = NULL;
 
-	gnome_help_display_desktop (NULL, "fish_applet", "fish_applet", NULL, &error);
-	if (error != NULL) {
+	gnome_help_display_desktop (
+		NULL, "fish-applet-2", "fish-applet-2", NULL, &error);
+	if (error) {
 		g_warning ("help error: %s\n", error->message);
 		g_error_free (error);
 	}
