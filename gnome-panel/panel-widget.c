@@ -626,6 +626,7 @@ panel_widget_seize_space(PanelWidget *panel,
 
 	if(allocated < width) {
 		while(allocated < width &&
+		      pos+allocated-1 < panel->size &&
 		      panel_widget_push_right(panel,pos+allocated))
 			allocated++;
 		if(panel->snapped != PANEL_DRAWER) {
@@ -777,6 +778,7 @@ panel_widget_switch_move(PanelWidget *panel, gint pos, gint moveby)
 {
 	gint width;
 	gint finalpos;
+	gint newpos;
 
 	g_return_val_if_fail(pos>=0,-1);
 	g_return_val_if_fail(panel,-1);
@@ -793,8 +795,8 @@ panel_widget_switch_move(PanelWidget *panel, gint pos, gint moveby)
 		finalpos = 0;
 
 	while((pos+width-1)<finalpos) {
-		if((panel_widget_get_right_switch_pos(panel,pos)) >
-		   finalpos)
+		newpos = panel_widget_get_right_switch_pos(panel,pos);
+		if(newpos > finalpos || newpos+width-1 >= panel->size)
 			return pos;
 		pos = panel_widget_switch_applet_right(panel,pos);
 	}
@@ -1490,8 +1492,9 @@ panel_widget_apply_size_limit(PanelWidget *panel)
 			break;
 	}
 
-	for(i=panel->size;i<PANEL_MAX;i += panel->applets[i].cells)
-		if(panel->applets[i].applet)
+	for(i=0;i<PANEL_MAX;i+=panel->applets[i].cells)
+		if(panel->applets[i].applet &&
+		   panel->applets[i].cells+i>panel->size)
 			panel_widget_move(panel, i, panel->size-1);
 
 	for(i=panel->size;i<PANEL_MAX;i++) {
