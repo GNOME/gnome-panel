@@ -16,20 +16,6 @@ static GObjectClass *panel_shell_parent_class = NULL;
  */
 static PanelShell *panel_shell = NULL;
 
-static void
-panel_shell_show_error_dialog (const gchar *message)
-{
-	GtkWidget *box;
-
-	box = gtk_message_dialog_new (NULL,
-				      GTK_DIALOG_MODAL,
-				      GTK_MESSAGE_ERROR,
-				      GTK_BUTTONS_OK,
-				      message);
-	gtk_dialog_run (GTK_DIALOG (box));
-	gtk_widget_destroy (box);
-}
-
 gboolean
 panel_shell_register (void)
 {
@@ -65,7 +51,10 @@ panel_shell_register (void)
 		}
 
 		if (message) {
-			panel_shell_show_error_dialog (message);
+			GtkWidget *dlg = panel_error_dialog
+				("panel_shell_register_error", "%s", message);
+			gtk_window_set_modal (GTK_WINDOW (dlg), TRUE);
+			gtk_dialog_run (GTK_DIALOG (dlg));
 			return FALSE;
 		}
 	}
