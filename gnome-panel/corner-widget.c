@@ -598,7 +598,7 @@ corner_widget_init (CornerWidget *corner)
 	/*EAST*/
 	corner->hidebutton_e =
 		make_hidebutton(corner,
-				"panel-arrow-left.xpm",
+				"panel-arrow-left.png",
 				GTK_SIGNAL_FUNC(corner_show_hide_right),
 				TRUE);
 	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_e,
@@ -606,7 +606,7 @@ corner_widget_init (CornerWidget *corner)
 	/*NORTH*/
 	corner->hidebutton_n =
 		make_hidebutton(corner,
-				"panel-arrow-up.xpm",
+				"panel-arrow-up.png",
 				GTK_SIGNAL_FUNC(corner_show_hide_right),
 				FALSE);
 	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_n,
@@ -614,7 +614,7 @@ corner_widget_init (CornerWidget *corner)
 	/*WEST*/
 	corner->hidebutton_w =
 		make_hidebutton(corner,
-				"panel-arrow-right.xpm",
+				"panel-arrow-right.png",
 				GTK_SIGNAL_FUNC(corner_show_hide_left),
 				TRUE);
 	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_w,
@@ -622,7 +622,7 @@ corner_widget_init (CornerWidget *corner)
 	/*SOUTH*/
 	corner->hidebutton_s =
 		make_hidebutton(corner,
-				"panel-arrow-down.xpm",
+				"panel-arrow-down.png",
 				GTK_SIGNAL_FUNC(corner_show_hide_left),
 				FALSE);
 	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_s,

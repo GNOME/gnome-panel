@@ -716,7 +716,7 @@ snapped_widget_init (SnappedWidget *snapped)
 	/*EAST*/
 	snapped->hidebutton_e =
 		make_hidebutton(snapped,
-				"panel-arrow-left.xpm",
+				"panel-arrow-left.png",
 				GTK_SIGNAL_FUNC(snapped_show_hide_right),
 				TRUE);
 	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_e,
@@ -724,7 +724,7 @@ snapped_widget_init (SnappedWidget *snapped)
 	/*NORTH*/
 	snapped->hidebutton_n =
 		make_hidebutton(snapped,
-				"panel-arrow-up.xpm",
+				"panel-arrow-up.png",
 				GTK_SIGNAL_FUNC(snapped_show_hide_right),
 				FALSE);
 	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_n,
@@ -732,7 +732,7 @@ snapped_widget_init (SnappedWidget *snapped)
 	/*WEST*/
 	snapped->hidebutton_w =
 		make_hidebutton(snapped,
-				"panel-arrow-right.xpm",
+				"panel-arrow-right.png",
 				GTK_SIGNAL_FUNC(snapped_show_hide_left),
 				TRUE);
 	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_w,
@@ -740,7 +740,7 @@ snapped_widget_init (SnappedWidget *snapped)
 	/*SOUTH*/
 	snapped->hidebutton_s =
 		make_hidebutton(snapped,
-				"panel-arrow-down.xpm",
+				"panel-arrow-down.png",
 				GTK_SIGNAL_FUNC(snapped_show_hide_left),
 				FALSE);
 	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_s,
