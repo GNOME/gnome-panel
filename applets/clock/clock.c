@@ -575,6 +575,7 @@ enum {
         TASK_COLUMN_COMPLETED,
         TASK_COLUMN_COMPLETED_TIME,
         TASK_COLUMN_OVERDUE_ATTR,
+        TASK_COLUMN_URL,
         N_TASK_COLUMNS
 };
 
@@ -653,6 +654,7 @@ handle_tasks_changed (ClockData *cd)
                                     TASK_COLUMN_PERCENT_COMPLETE_TEXT, percent_complete_text,
                                     TASK_COLUMN_COMPLETED,             task->percent_complete == 100,
                                     TASK_COLUMN_COMPLETED_TIME,        task->completed_time,
+                                    TASK_COLUMN_URL,                   task->url,
                                     -1);
 
                 g_free (percent_complete_text);
@@ -821,6 +823,26 @@ create_hig_frame (const char  *title)
         return vbox;
 }
 
+static gboolean
+task_activated_cb (GtkTreeView       *view,
+                   GtkTreePath       *path,
+                   GtkTreeViewColumn *column,
+                   ClockData         *cd)
+{
+        GError     *err = NULL;
+        GtkTreeIter iter;
+        char       *uri;
+
+        gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, path);
+        gtk_tree_model_get (GTK_TREE_MODEL (cd->tasks_model), &iter,
+                            TASK_COLUMN_URL, &uri, -1);
+
+        if (uri)
+                gnome_url_show (uri, &err);
+
+        return TRUE;
+}
+
 static GtkWidget *
 create_task_list (ClockData  *cd,
                   GtkWidget **tree_view,
@@ -854,7 +876,8 @@ create_task_list (ClockData  *cd,
                         G_TYPE_STRING,         /* percent complete text   */
                         G_TYPE_BOOLEAN,        /* completed               */
                         G_TYPE_LONG,           /* completed time          */
-                        PANGO_TYPE_ATTR_LIST   /* summary text attributes */
+                        PANGO_TYPE_ATTR_LIST,  /* summary text attributes */
+                        G_TYPE_STRING          /* url                     */
                 };
 
                 cd->tasks_model = gtk_list_store_newv (N_TASK_COLUMNS, column_types);
@@ -880,6 +903,9 @@ create_task_list (ClockData  *cd,
 
         *tree_view = view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (cd->tasks_filter));
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
+
+        g_signal_connect (view, "row-activated",
+                          G_CALLBACK (task_activated_cb), cd);
 
         /* Completed toggle */
         column = gtk_tree_view_column_new ();

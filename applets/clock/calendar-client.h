@@ -88,6 +88,7 @@ typedef struct
   char  *uid;
   char  *summary;
   char  *description;
+  char  *url;
   GTime  start_time;
   GTime  due_time;
   guint  percent_complete;

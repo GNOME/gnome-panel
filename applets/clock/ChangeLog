@@ -1,5 +1,17 @@
 2004-05-26  William Jon McCann  <mccann@jhu.edu>
 
+	* clock.c (handle_tasks_changed, task_activated_cb) 
+	(create_task_list): Open URL when task is activated until we
+	have a task editor interface.
+
+	* calendar-client.[ch] (get_ical_url, calendar_task_equal) 
+	(calendar_task_copy, calendar_task_finalize, calendar_task_init):
+	Add support for task URLs.
+
+	Fixes bug #138567.
+
+2004-05-26  William Jon McCann  <mccann@jhu.edu>
+
 	* clock.c (format_time, handle_appointments_changed): If the event
 	did not start on the current day then display the start date in
 	the most abbreviated form.
