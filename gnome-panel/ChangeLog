@@ -1,5 +1,12 @@
 2002-09-12  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-frame.c:
+	(panel_applet_frame_get_background_string): if we haven't
+	actually rendered a pixmap background then just pretend
+	this is the default background. Fixes #91198.
+
+2002-09-12  Mark McLoughlin  <mark@skynet.ie>
+
 	Fix #90664 by giving focus to the PanelWidget
 	in a newly created drawer.
 	Patch from Padraig O'Briain.
