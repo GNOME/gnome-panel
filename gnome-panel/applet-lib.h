@@ -20,12 +20,14 @@ BEGIN_GNOME_DECLS
   the current session stuff (not in this file, but implemented in any
   applet)*/
 
+CORBA_Object gnome_panel_applet_corba_init(const char *goad_id);
 char *gnome_panel_applet_request_id (const char *path, const char *param,
 				     int dorestart,
 				     int *applet_id, char **cfgpath,
 				     char **globcfgpath, guint32 *winid);
 char *gnome_panel_applet_register (GtkWidget *widget, int applet_id,
-				   const char *goad_id);
+				   const char *goad_id,
+				   CORBA_Object applet);
 char *gnome_panel_applet_abort_id (int applet_id);
 char *gnome_panel_applet_remove_from_panel (int applet_id, const char *goad_id);
 char *gnome_panel_applet_request_glob_cfg (char **globcfgpath);

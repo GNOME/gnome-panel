@@ -380,10 +380,12 @@ applet_widget_new_with_param(const char *param,
 	guint32 winid;
 	int applet_id;
 	char *btmp;
+	CORBA_Object applet_obj;
 
 	if(!param)
 		param="";
 
+	applet_obj = gnome_panel_applet_corba_init(goad_id);
 	btmp = alloca(strlen(goad_id) + sizeof("--activate-goad-server="));
 	sprintf(btmp, "--activate-goad-server=%s", goad_id);
 	result = gnome_panel_applet_request_id(program_invocation_name, btmp,
@@ -393,7 +395,7 @@ applet_widget_new_with_param(const char *param,
 					       &winid);
 	if (result)
 		g_error("Could not talk to the panel: %s\n", result);
-	
+
 	applet = APPLET_WIDGET (gtk_type_new (applet_widget_get_type ()));
 	
 	gtk_plug_construct(GTK_PLUG(applet),winid);
@@ -408,6 +410,16 @@ applet_widget_new_with_param(const char *param,
 			   GTK_SIGNAL_FUNC(applet_widget_destroy),
 			   NULL);
 
+	result = gnome_panel_applet_register(GTK_WIDGET(applet),
+					     applet->applet_id,
+					     applet->goad_id,
+					     applet_obj);
+
+	CORBA_Object_release(applet_obj, NULL);
+
+	if (result)
+	  g_error("Could not talk to the Panel: %s\n", result);
+	
 	applet_widgets = g_list_prepend(applet_widgets,applet);
 
 	applet_count++;
@@ -432,12 +444,6 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 	g_return_if_fail(GTK_IS_WIDGET(widget));
 
 	gtk_container_add(GTK_CONTAINER(applet),widget);
-
-	result = gnome_panel_applet_register(GTK_WIDGET(applet),
-					     applet->applet_id, applet->goad_id);
-
-	if (result)
-	  g_error("Could not talk to the Panel: %s\n", result);
 }
 
 void

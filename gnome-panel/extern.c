@@ -358,8 +358,8 @@ load_extern_applet(char *path, char *params, char *cfgpath,
 	  if(ctmp2) {
 	    goad_id = g_strndup(ctmp1 + strlen("--activate-goad-server="),
 				ctmp2 - ctmp1 + strlen("--activate-goad-server="));
-	    g_message("Got goad_id = %s for applet", goad_id);
-	  }
+	  } else
+	    goad_id = g_strdup(ctmp1 + strlen("--activate-goad-server="));
 	}
 
 	if(!cfgpath || !*cfgpath)
@@ -394,7 +394,7 @@ load_extern_applet(char *path, char *params, char *cfgpath,
 	  itself but wants us to reserve a spot for it*/
 	if(path[0]!='#') {
 	  if(goad_id)
-	    goad_server_activate_with_id(NULL, goad_id, 0);
+	    CORBA_Object_release(goad_server_activate_with_id(NULL, goad_id, 0), NULL);
 	  else
 	    exec_prog(applet_count-1,fullpath,param);
 	}
