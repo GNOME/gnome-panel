@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"POT-Creation-Date: 2003-06-06 15:52+0100\n"
+"POT-Creation-Date: 2003-06-12 17:49+0100\n"
 "PO-Revision-Date: 2002-12-14 23:44+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -294,7 +294,7 @@ msgstr "_Info..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:742 gnome-panel/menu.c:3037
+#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:748 gnome-panel/menu.c:3088
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
@@ -430,7 +430,7 @@ msgstr "<b>Optionen</b>"
 msgid "<b>General</b>"
 msgstr "<b>Vorschau</b>"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:267
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:272
 msgid "Browse"
 msgstr "Auswählen"
 
@@ -694,7 +694,7 @@ msgid "Show windows from a_ll workspaces"
 msgstr "Fenster von a_llen Arbeitsflächen zeigen"
 
 #: applets/wncklet/window-list.glade.h:14 gnome-panel/button-widget.c:856
-#: gnome-panel/panel-toplevel.c:3326
+#: gnome-panel/panel-toplevel.c:3448
 msgid "Size"
 msgstr "Größe"
 
@@ -982,7 +982,7 @@ msgstr "Hat Pfeil"
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Soll ein Pfeil-Anzeiger dargestellt werden?"
 
-#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3315
+#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3437
 msgid "Orientation"
 msgstr "Ausrichtung"
 
@@ -1068,12 +1068,12 @@ msgstr "Versteckknopf aktivieren"
 msgid "Enable hidebutton arrow"
 msgstr "Pfeil auf Versteckknopf aktivieren"
 
-#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3134
+#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3185
 msgid "Drawer"
 msgstr "Schublade"
 
-#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:740 gnome-panel/menu.c:1545
-#: gnome-panel/menu.c:2991 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:746 gnome-panel/menu.c:1596
+#: gnome-panel/menu.c:3042 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "Ei_genschaften"
 
@@ -1315,18 +1315,23 @@ msgstr ""
 "%s konnte nicht angezeigt werden\n"
 "%s"
 
-#: gnome-panel/launcher.c:173
-#, c-format
-msgid ""
-"<b>Cannot launch icon</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:172
+#, fuzzy
+msgid "Cannot launch icon"
 msgstr ""
-"<b>Icon konnte nicht gestartet werden</b>\n"
-"\n"
-"Details: %s"
+"Icon konnte nicht gestartet werden\n"
+"%s"
 
-#: gnome-panel/launcher.c:218
+#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1092
+#: gnome-panel/menu.c:374 gnome-panel/menu.c:404 gnome-panel/menu.c:421
+#: gnome-panel/menu.c:1127 gnome-panel/menu.c:1236 gnome-panel/menu.c:1268
+#: gnome-panel/menu.c:1286 gnome-panel/menu-ditem.c:123
+#: gnome-panel/menu-ditem.c:501 gnome-panel/panel-run-dialog.c:278
+#: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:76
+msgid "Details"
+msgstr ""
+
+#: gnome-panel/launcher.c:224
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1335,42 +1340,39 @@ msgstr ""
 "Icon konnte nicht gestartet werden\n"
 "%s"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:415
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Keine URI für die Panel-Starter-Desktop-Datei angegeben\n"
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:429
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Desktop-Datei %s für den Panel-Starter %s%s konnte nicht geöffnet werden\n"
 
-#: gnome-panel/launcher.c:525
+#: gnome-panel/launcher.c:531
 #, c-format
 msgid "Help on %s _Application"
 msgstr "Hilfe zur _Anwendung %s"
 
-#: gnome-panel/launcher.c:645 gnome-panel/menu-ditem.c:180
-#: gnome-panel/menu-ditem.c:257
+#: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:187
+#: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Starter-Eigenschaften"
 
-#: gnome-panel/launcher.c:805
+#: gnome-panel/launcher.c:811
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Schlüssel %s ist nicht festgelegt, Starter kann nicht geladen werden\n"
 
-#: gnome-panel/launcher.c:865 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:871 gnome-panel/menu-ditem.c:538
 msgid "Create Launcher"
 msgstr "Einen Starter erstellen"
 
-#: gnome-panel/launcher.c:1086 gnome-panel/menu.c:1230
-#: gnome-panel/panel-util.c:76
-#, c-format
-msgid ""
-"<b>Cannot display help document</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:1091 gnome-panel/menu.c:1267
+#: gnome-panel/panel-util.c:75
+#, fuzzy
+msgid "Cannot display help document"
 msgstr ""
 "<b>Das Hilfedokument konnte nicht dargestellt werden</b>\n"
 "\n"
@@ -1380,7 +1382,7 @@ msgstr ""
 msgid "Specify a profile name to load"
 msgstr "Geben Sie einen zu ladenden Profilnamen an"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3168
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3219
 #: gnome-panel/panel-menu-bar.c:161
 msgid "Log Out"
 msgstr "Abmelden"
@@ -1413,7 +1415,7 @@ msgstr ""
 msgid "Screenshot"
 msgstr "Bildschirmfoto"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3369
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3420
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Ein Bildschirmfoto Ihres Desktops aufnehmen"
@@ -1422,7 +1424,7 @@ msgstr "Ein Bildschirmfoto Ihres Desktops aufnehmen"
 msgid "Search"
 msgstr "Suchen"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3350
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3401
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Dateien, Ordner und Dokumente auf dem Computer finden"
@@ -1474,181 +1476,165 @@ msgid "End world hunger"
 msgstr "Ein Ende dem Hunger in der Welt"
 
 #: gnome-panel/menu.c:373
-#, c-format
-msgid ""
-"<b>Can't execute 'About GNOME'</b>\n"
-"\n"
-"Details: %s probably does not exist"
+msgid "Can't execute 'About GNOME'"
 msgstr ""
-"<b>»Info zu GNOME« konnte nicht ausgeführt werden</b>\n"
-"\n"
-"Details: %s existiert wahrscheinlich nicht"
 
-#: gnome-panel/menu.c:397
-#, c-format
-msgid ""
-"<b>Can't launch entry</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu.c:375
+msgid "probably does not exist"
 msgstr ""
-"<b>Eintrag konnte nicht gestartet werden</b>\n"
-"\n"
-"Details: %s"
 
-#: gnome-panel/menu.c:407 gnome-panel/menu.c:1204 gnome-panel/menu.c:1241
-#, c-format
-msgid ""
-"<b>Can't load entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Eintrag konnte nicht geladen werden</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu.c:403
+#, fuzzy
+msgid "Can't launch entry"
+msgstr "Einen Starter erstellen"
 
-#: gnome-panel/menu.c:1108
-#, c-format
-msgid ""
-"<b>Could not remove the menu item %s</b>\n"
-"\n"
-"Details: %s\n"
+#: gnome-panel/menu.c:420 gnome-panel/menu.c:1235 gnome-panel/menu.c:1285
+#, fuzzy
+msgid "Can't load entry"
+msgstr "Befehlseingabefeld"
+
+#: gnome-panel/menu.c:1125
+#, fuzzy
+msgid "Could not remove the menu item"
 msgstr ""
 "<b>Menüeintrag %s konnte nicht entfernt werden</b>\n"
 "\n"
 "Details: %s\n"
 
-#: gnome-panel/menu.c:1118
+#: gnome-panel/menu.c:1142
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Dateiname konnte nicht aus Pfad entnommen werden: %s"
 
-#: gnome-panel/menu.c:1125
+#: gnome-panel/menu.c:1149
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Verzeichnisname konnte nicht aus Pfad entnommen werden: %s"
 
-#: gnome-panel/menu.c:1195
-msgid ""
-"<b>Can't add to run box</b>\n"
-"\n"
-"Details: No 'Exec' or 'URL' field in entry"
+#: gnome-panel/menu.c:1218
+msgid "Can't add to run box"
+msgstr ""
+
+#: gnome-panel/menu.c:1219
+#, fuzzy
+msgid "Details: No 'Exec' or 'URL' field in entry"
 msgstr ""
 "<b>Konnte nicht zum »Ausführen«-Dialog hinzugefügt werden</b>\n"
 "\n"
 "Details: Kein »Exec«- oder »URL«-Feld im Eintrag"
 
-#: gnome-panel/menu.c:1475
+#: gnome-panel/menu.c:1526
 msgid "Add this launcher to panel"
 msgstr "Diesen Starter zum Panel hinzufügen"
 
-#: gnome-panel/menu.c:1483
+#: gnome-panel/menu.c:1534
 msgid "Remove this item"
 msgstr "Diesen Eintrag entfernen"
 
-#: gnome-panel/menu.c:1499
+#: gnome-panel/menu.c:1550
 msgid "Put into run dialog"
 msgstr "In den Ausführen-Dialog aufnehmen"
 
-#: gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:1568
 #, c-format
 msgid "Help on %s"
 msgstr "Hilfe zu %s"
 
-#: gnome-panel/menu.c:1518
+#: gnome-panel/menu.c:1569
 msgid "Application"
 msgstr "Anwendung"
 
-#: gnome-panel/menu.c:1564
+#: gnome-panel/menu.c:1615
 msgid "Entire menu"
 msgstr "Vollständiges Menü"
 
-#: gnome-panel/menu.c:1573
+#: gnome-panel/menu.c:1624
 msgid "Add this as drawer to panel"
 msgstr "Dies als Schublade im Panel hinzufügen"
 
-#: gnome-panel/menu.c:1581
+#: gnome-panel/menu.c:1632
 msgid "Add this as menu to panel"
 msgstr "Dies als Menu im Panel hinzufügen"
 
-#: gnome-panel/menu.c:1589
+#: gnome-panel/menu.c:1640
 msgid "Add new item to this menu"
 msgstr "Neuen Eintrag zu diesem Menü hinzufügen"
 
-#: gnome-panel/menu.c:1615
+#: gnome-panel/menu.c:1666
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: gnome-panel/menu.c:2541 gnome-panel/menu.c:2596
+#: gnome-panel/menu.c:2592 gnome-panel/menu.c:2647
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "Die Anfrage gab die Ausnahme %s zurück\n"
 
-#: gnome-panel/menu.c:2782 gnome-panel/menu.c:2787 gnome-panel/menu.c:3306
+#: gnome-panel/menu.c:2833 gnome-panel/menu.c:2838 gnome-panel/menu.c:3357
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Anwendungen"
 
-#: gnome-panel/menu.c:2830 gnome-panel/menu.c:2836 gnome-panel/menu.c:3231
+#: gnome-panel/menu.c:2881 gnome-panel/menu.c:2887 gnome-panel/menu.c:3282
 msgid "KDE Menu"
 msgstr "KDE-Menü"
 
-#: gnome-panel/menu.c:2888
+#: gnome-panel/menu.c:2939
 msgid "You cannot remove your last panel."
 msgstr "Sie können das letzte Panel nicht entfernen."
 
-#: gnome-panel/menu.c:2944
+#: gnome-panel/menu.c:2995
 msgid "_Delete This Panel..."
 msgstr "Dieses Panel entfe_rnen..."
 
-#: gnome-panel/menu.c:2947 gnome-panel/menu.c:2977
+#: gnome-panel/menu.c:2998 gnome-panel/menu.c:3028
 msgid "_Delete This Panel"
 msgstr "Dieses Panel entfe_rnen"
 
-#: gnome-panel/menu.c:2961
+#: gnome-panel/menu.c:3012
 msgid "_Add to Panel"
 msgstr "Zum Panel _hinzufügen"
 
-#: gnome-panel/menu.c:3004
+#: gnome-panel/menu.c:3055
 msgid "_New Panel"
 msgstr "_Neues Panel"
 
-#: gnome-panel/menu.c:3047
+#: gnome-panel/menu.c:3098
 msgid "_About Panels"
 msgstr "_Info zu den Panels"
 
-#: gnome-panel/menu.c:3060
+#: gnome-panel/menu.c:3111
 msgid "About _GNOME"
 msgstr "Info zu _GNOME"
 
-#: gnome-panel/menu.c:3100
+#: gnome-panel/menu.c:3151
 msgid "Launcher..."
 msgstr "Starter..."
 
-#: gnome-panel/menu.c:3108
+#: gnome-panel/menu.c:3159
 msgid "Launcher from menu"
 msgstr "Starter aus Menü"
 
-#: gnome-panel/menu.c:3117
+#: gnome-panel/menu.c:3168
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
-#: gnome-panel/menu.c:3126
+#: gnome-panel/menu.c:3177
 #, fuzzy
 msgid "Menu Bar"
 msgstr "Menü"
 
-#: gnome-panel/menu.c:3156 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3207 gnome-panel/panel-menu-bar.c:152
 msgid "Lock Screen"
 msgstr "Bildschirm sperren"
 
-#: gnome-panel/menu.c:3162
+#: gnome-panel/menu.c:3213
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 "Den Bildschirm sperren, sodass Sie Ihren Computer vorübergehend verlassen "
 "können"
 
-#: gnome-panel/menu.c:3174
+#: gnome-panel/menu.c:3225
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1656,64 +1642,57 @@ msgstr ""
 "Diese Sitzung beenden, um sich als ein anderer Benutzer anzumelden oder um "
 "den Computer herunterzufahren"
 
-#: gnome-panel/menu.c:3331 gnome-panel/panel-menu-bar.c:110
+#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:110
 #, fuzzy
 msgid "Run Application..."
 msgstr "Anwendung"
 
-#: gnome-panel/menu.c:3338 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:112
 #, fuzzy
 msgid "Run an Application by entering a command"
 msgstr "Anwendungen ausführen; wenn Sie den korrekten Befehl wissen"
 
-#: gnome-panel/menu.c:3347 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3398 gnome-panel/panel-menu-bar.c:123
 msgid "Search for Files..."
 msgstr "Nach Dateien suchen..."
 
-#: gnome-panel/menu.c:3366 gnome-panel/panel-menu-bar.c:138
+#: gnome-panel/menu.c:3417 gnome-panel/panel-menu-bar.c:138
 msgid "Screenshot..."
 msgstr "Bildschirmfoto..."
 
-#: gnome-panel/menu.c:3384
+#: gnome-panel/menu.c:3435
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/menu-ditem.c:123
-#, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:122
+#, fuzzy
+msgid "Cannot save changes to launcher"
 msgstr ""
 "<b>Die Änderungen am Menüeintrag konnten nicht gespeichert werden</b>\n"
 "\n"
 "Details: %s"
 
-#: gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:297
 msgid "Menu"
 msgstr "Menü"
 
-#: gnome-panel/menu-ditem.c:447
+#: gnome-panel/menu-ditem.c:454
 msgid "You have to specify a name for the launcher."
 msgstr "Sie müssen einen Namen für den Starter angeben."
 
-#: gnome-panel/menu-ditem.c:463
+#: gnome-panel/menu-ditem.c:470
 msgid "You have to specify a valid URL or command."
 msgstr "Sie müssen eine gültige Adresse oder einen gültigen Befehl angeben."
 
-#. class
-#: gnome-panel/menu-ditem.c:494
-#, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:500
+#, fuzzy
+msgid "Cannot save menu item to disk"
 msgstr ""
 "<b>Der Menüeintrag konnte nicht gespeichert werden</b>\n"
 "\n"
 "Details: %s"
 
-#: gnome-panel/menu-ditem.c:519
+#: gnome-panel/menu-ditem.c:531
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -2223,7 +2202,6 @@ msgid "Background _image:"
 msgstr "Hintergrund"
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
-#: gnome-panel/panel-toplevel.c:1345
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "Unten"
@@ -2247,7 +2225,6 @@ msgid "Image Background Details"
 msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
-#: gnome-panel/panel-toplevel.c:1348
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Links"
@@ -2261,7 +2238,6 @@ msgid "Pick a color"
 msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:20
-#: gnome-panel/panel-toplevel.c:1351
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "Rechts"
@@ -2289,7 +2265,6 @@ msgid "St_retch"
 msgstr "st_recken"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#: gnome-panel/panel-toplevel.c:1342
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Oben"
@@ -2331,38 +2306,32 @@ msgstr "Beim Versuch, %s zu öffnen, ist ein unbekannter Fehler aufgetreten"
 msgid "Open Recent"
 msgstr "Zuletzt geöffnete Dateien"
 
-#: gnome-panel/panel-run-dialog.c:276
-#, fuzzy, c-format
-msgid ""
-"<b>Error launching command: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:277
+#, fuzzy
+msgid "Error launching command"
 msgstr ""
 "<b>Icon konnte nicht gestartet werden</b>\n"
 "\n"
 "Details: %s"
 
-#: gnome-panel/panel-run-dialog.c:305
-#, fuzzy, c-format
-msgid ""
-"<b>Error displaying location: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:311
+#, fuzzy
+msgid "Error displaying location"
 msgstr ""
 "<b>Das Hilfedokument konnte nicht dargestellt werden</b>\n"
 "\n"
 "Details: %s"
 
-#: gnome-panel/panel-run-dialog.c:1035
+#: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1214
+#: gnome-panel/panel-run-dialog.c:1224
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Wird Befehl »%s« ausgeführen"
 
-#: gnome-panel/panel-run-dialog.c:1220 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1230 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
 msgstr ""
 
@@ -2472,172 +2441,224 @@ msgstr "Panel-Icon »%s« konnte nicht aus dem Repertoire geladen werden\n"
 msgid "_Force quit"
 msgstr ""
 
+#: gnome-panel/panel-toplevel.c:1349
+#, fuzzy
+msgid "Top Expanded Edge Panel"
+msgstr "Expandergröße"
+
+#: gnome-panel/panel-toplevel.c:1350
+#, fuzzy
+msgid "Top Centered Panel"
+msgstr "Eckpanel"
+
+#: gnome-panel/panel-toplevel.c:1351
+#, fuzzy
+msgid "Top Floating Panel"
+msgstr "_Frei-schwebendes Panel"
+
+#: gnome-panel/panel-toplevel.c:1352
+#, fuzzy
+msgid "Top Edge Panel"
+msgstr "Kantenpanel"
+
+#: gnome-panel/panel-toplevel.c:1356
+#, fuzzy
+msgid "Bottom Expanded Edge Panel"
+msgstr "Expandergröße"
+
+#: gnome-panel/panel-toplevel.c:1357
+#, fuzzy
+msgid "Bottom Centered Panel"
+msgstr "Eckpanel"
+
+#: gnome-panel/panel-toplevel.c:1358
+#, fuzzy
+msgid "Bottom Floating Panel"
+msgstr "_Frei-schwebendes Panel"
+
 #: gnome-panel/panel-toplevel.c:1359
 #, fuzzy
-msgid "Floating"
-msgstr "Frei schwebendes Panel"
+msgid "Bottom Edge Panel"
+msgstr "Kantenpanel"
 
-#: gnome-panel/panel-toplevel.c:1362
+#: gnome-panel/panel-toplevel.c:1363
 #, fuzzy
-msgid "Centered"
-msgstr "Internet"
+msgid "Left Expanded Edge Panel"
+msgstr "Expandergröße"
 
 #: gnome-panel/panel-toplevel.c:1364
 #, fuzzy
-msgid "Expanded Edge"
-msgstr "Expandergröße"
+msgid "Left Centered Panel"
+msgstr "Eckpanel"
+
+#: gnome-panel/panel-toplevel.c:1365
+#, fuzzy
+msgid "Left Floating Panel"
+msgstr "_Frei-schwebendes Panel"
 
 #: gnome-panel/panel-toplevel.c:1366
-msgid "Edge"
-msgstr ""
+#, fuzzy
+msgid "Left Edge Panel"
+msgstr "Kantenpanel"
 
-#. Translators: the first argument is the current orientation
-#. * (Top, Bottom, Left or Right) and the second argument is the
-#. * type of panel (Expanded Edge, Edge, Floating or Centered).
-#.
+#: gnome-panel/panel-toplevel.c:1370
+#, fuzzy
+msgid "Right Expanded Edge Panel"
+msgstr "Expandergröße"
+
+#: gnome-panel/panel-toplevel.c:1371
+#, fuzzy
+msgid "Right Centered Panel"
+msgstr "Ausgerichtetes Panel"
+
 #: gnome-panel/panel-toplevel.c:1372
-#, fuzzy, c-format
-msgid "%s %s Panel"
-msgstr "Panel"
+#, fuzzy
+msgid "Right Floating Panel"
+msgstr "_Frei-schwebendes Panel"
 
-#: gnome-panel/panel-toplevel.c:3295
+#: gnome-panel/panel-toplevel.c:1373
+#, fuzzy
+msgid "Right Edge Panel"
+msgstr "Kantenpanel"
+
+#: gnome-panel/panel-toplevel.c:3417
 #, fuzzy
 msgid "Name"
 msgstr "Icon-Name"
 
-#: gnome-panel/panel-toplevel.c:3296
+#: gnome-panel/panel-toplevel.c:3418
 #, fuzzy
 msgid "The name of this panel"
 msgstr "Modus dieses Panels"
 
-#: gnome-panel/panel-toplevel.c:3305
+#: gnome-panel/panel-toplevel.c:3427
 #, fuzzy
 msgid "Expand"
 msgstr "Expandergröße"
 
-#: gnome-panel/panel-toplevel.c:3306
+#: gnome-panel/panel-toplevel.c:3428
 msgid "Expand to take up the full monitor width/height"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3316
+#: gnome-panel/panel-toplevel.c:3438
 #, fuzzy
 msgid "The orientation of the panel"
 msgstr "Momentaner Zustand dieses Panels"
 
-#: gnome-panel/panel-toplevel.c:3327
+#: gnome-panel/panel-toplevel.c:3449
 #, fuzzy
 msgid "The height (or width when vertical) of the panel"
 msgstr "Momentaner Zustand dieses Panels"
 
-#: gnome-panel/panel-toplevel.c:3339
+#: gnome-panel/panel-toplevel.c:3461
 #, fuzzy
 msgid "X position"
 msgstr "Position:"
 
-#: gnome-panel/panel-toplevel.c:3340
+#: gnome-panel/panel-toplevel.c:3462
 msgid "The X position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3351
+#: gnome-panel/panel-toplevel.c:3473
 msgid "X centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3352
+#: gnome-panel/panel-toplevel.c:3474
 msgid "The x co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3361
+#: gnome-panel/panel-toplevel.c:3483
 #, fuzzy
 msgid "Y position"
 msgstr "Position:"
 
-#: gnome-panel/panel-toplevel.c:3362
+#: gnome-panel/panel-toplevel.c:3484
 msgid "The Y position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3373
+#: gnome-panel/panel-toplevel.c:3495
 msgid "Y centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3374
+#: gnome-panel/panel-toplevel.c:3496
 msgid "The y co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3383
+#: gnome-panel/panel-toplevel.c:3505
 msgid "Xinerama monitor"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3384
+#: gnome-panel/panel-toplevel.c:3506
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3395
+#: gnome-panel/panel-toplevel.c:3517
 #, fuzzy
 msgid "Auto hide"
 msgstr "_Auto-Verbergen"
 
-#: gnome-panel/panel-toplevel.c:3396
+#: gnome-panel/panel-toplevel.c:3518
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3405
+#: gnome-panel/panel-toplevel.c:3527
 msgid "Hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3406
+#: gnome-panel/panel-toplevel.c:3528
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3417
+#: gnome-panel/panel-toplevel.c:3539
 msgid "Un-hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3418
+#: gnome-panel/panel-toplevel.c:3540
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3429
+#: gnome-panel/panel-toplevel.c:3551
 #, fuzzy
 msgid "Auto-hide size"
 msgstr "_Auto-Verbergen"
 
-#: gnome-panel/panel-toplevel.c:3430
+#: gnome-panel/panel-toplevel.c:3552
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3441
+#: gnome-panel/panel-toplevel.c:3563
 msgid "Animate"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3442
+#: gnome-panel/panel-toplevel.c:3564
 msgid "Enable hiding/showing animations"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3451
+#: gnome-panel/panel-toplevel.c:3573
 #, fuzzy
 msgid "Animation Speed"
 msgstr "Animations_geschwindigkeit:"
 
-#: gnome-panel/panel-toplevel.c:3452
+#: gnome-panel/panel-toplevel.c:3574
 msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3584
 #, fuzzy
 msgid "Buttons Enabled"
 msgstr "Versteckknöpfe _aktivieren"
 
-#: gnome-panel/panel-toplevel.c:3463
+#: gnome-panel/panel-toplevel.c:3585
 #, fuzzy
 msgid "Enable hide/show buttons"
 msgstr "Versteckknopf aktivieren"
 
-#: gnome-panel/panel-toplevel.c:3472
+#: gnome-panel/panel-toplevel.c:3594
 msgid "Arrows Enabled"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3595
 #, fuzzy
 msgid "Enable arrows on hide/show buttons"
 msgstr "_Pfeile auf Versteckknöpfen zeigen"
@@ -2921,20 +2942,23 @@ msgstr ""
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:102 gnome-panel/panel-util.c:132
-#: gnome-panel/panel-util.c:157
+#: gnome-panel/panel-util.c:107 gnome-panel/panel-util.c:137
+#: gnome-panel/panel-util.c:162
 msgid "Help document not found"
 msgstr "Hilfedokument nicht gefunden werden"
 
-#: gnome-panel/panel-util.c:171
+#: gnome-panel/panel-util.c:176
 msgid "No document to show"
 msgstr "Kein Dokument zum Anzeigen"
 
-#: gnome-panel/panel-util.c:928
-msgid ""
-"<b>Cannot execute xscreensaver</b>\n"
-"\n"
-"Details: xscreensaver-command not found"
+#: gnome-panel/panel-util.c:933
+#, fuzzy
+msgid "Cannot execute xscreensaver"
+msgstr "gnome-panel-screenshot konnte nicht ausgeführt werden"
+
+#: gnome-panel/panel-util.c:934
+#, fuzzy
+msgid "Details: xscreensaver-command not found"
 msgstr ""
 "<b>Der Bildschirmschoner konnte nicht ausgeführt werden</b>\n"
 "\n"
@@ -3049,6 +3073,54 @@ msgstr "Extrem Groß"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extrem Klein"
+
+#~ msgid ""
+#~ "<b>Cannot launch icon</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Icon konnte nicht gestartet werden</b>\n"
+#~ "\n"
+#~ "Details: %s"
+
+#~ msgid ""
+#~ "<b>Can't execute 'About GNOME'</b>\n"
+#~ "\n"
+#~ "Details: %s probably does not exist"
+#~ msgstr ""
+#~ "<b>»Info zu GNOME« konnte nicht ausgeführt werden</b>\n"
+#~ "\n"
+#~ "Details: %s existiert wahrscheinlich nicht"
+
+#~ msgid ""
+#~ "<b>Can't launch entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Eintrag konnte nicht gestartet werden</b>\n"
+#~ "\n"
+#~ "Details: %s"
+
+#~ msgid ""
+#~ "<b>Can't load entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Eintrag konnte nicht geladen werden</b>\n"
+#~ "\n"
+#~ "Details: %s"
+
+#, fuzzy
+#~ msgid "Floating"
+#~ msgstr "Frei schwebendes Panel"
+
+#, fuzzy
+#~ msgid "Centered"
+#~ msgstr "Internet"
+
+#, fuzzy
+#~ msgid "%s %s Panel"
+#~ msgstr "Panel"
 
 #~ msgid ""
 #~ "<b>Failed to run this program</b>\n"
@@ -3437,14 +3509,8 @@ msgstr "Extrem Klein"
 #~ msgid "No panel found\n"
 #~ msgstr "Kein Panel gefunden\n"
 
-#~ msgid "Aligned Panel"
-#~ msgstr "Ausgerichtetes Panel"
-
 #~ msgid "GNOME Aligned Panel"
 #~ msgstr "Ausgerichtetes GNOME-Panel"
-
-#~ msgid "Edge Panel"
-#~ msgstr "Kantenpanel"
 
 #~ msgid "GNOME Edge Panel"
 #~ msgstr "GNOME-Kantenpanel"
@@ -3472,9 +3538,6 @@ msgstr "Extrem Klein"
 
 #~ msgid "Create edge panel"
 #~ msgstr "Ein Kantenpanel erzeugen"
-
-#~ msgid "_Floating Panel"
-#~ msgstr "_Frei-schwebendes Panel"
 
 #~ msgid "Create floating panel"
 #~ msgstr "Ein frei schwebendes Panel erzeugen"
@@ -3563,9 +3626,6 @@ msgstr "Extrem Klein"
 
 #~ msgid "Floating panel"
 #~ msgstr "Frei schwebendes Panel"
-
-#~ msgid "Corner Panel"
-#~ msgstr "Eckpanel"
 
 #~ msgid "Show the program listing by default when opening the Run box"
 #~ msgstr ""

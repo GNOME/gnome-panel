@@ -321,6 +321,9 @@ rc_DATA = gnome-panelrc
 
 @INTLTOOL_SERVER_RULE@
 
+entriesdir = $(GCONF_SCHEMA_FILE_DIR)
+entries_DATA = panel-default-setup.entries
+
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files =				\
 	panel-global.schemas.in 		\

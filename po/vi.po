@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel for gnome v.2.1.x\n"
-"POT-Creation-Date: 2003-06-06 15:52+0100\n"
+"POT-Creation-Date: 2003-06-12 17:49+0100\n"
 "PO-Revision-Date: 2003-01-01 20:32+0700\n"
 "Last-Translator: pclouds <pclouds@gmx.net>\n"
 "Language-Team: Gnome-Vi <gnomevi-list@lists.sourceforge.net>\n"
@@ -280,7 +280,7 @@ msgstr "_Giới thiệu..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:742 gnome-panel/menu.c:3037
+#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:748 gnome-panel/menu.c:3088
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
@@ -411,7 +411,7 @@ msgstr "<b>Tùy chọn</b>"
 msgid "<b>General</b>"
 msgstr "Chung"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:267
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:272
 msgid "Browse"
 msgstr "Duyệt"
 
@@ -671,7 +671,7 @@ msgid "Show windows from a_ll workspaces"
 msgstr "Hiện các cửa sổ trên mọi workspace "
 
 #: applets/wncklet/window-list.glade.h:14 gnome-panel/button-widget.c:856
-#: gnome-panel/panel-toplevel.c:3326
+#: gnome-panel/panel-toplevel.c:3448
 msgid "Size"
 msgstr "Kích thước"
 
@@ -953,7 +953,7 @@ msgstr "Có mũi tên"
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Có hay không việc vẽ trình chỉ thị mũi tên"
 
-#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3315
+#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3437
 msgid "Orientation"
 msgstr "Định Hướng"
 
@@ -1039,12 +1039,12 @@ msgstr "Cho phép ẩn panel"
 msgid "Enable hidebutton arrow"
 msgstr "Hiện mũi tên"
 
-#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3134
+#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3185
 msgid "Drawer"
 msgstr "Ngăn kéo"
 
-#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:740 gnome-panel/menu.c:1545
-#: gnome-panel/menu.c:2991 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:746 gnome-panel/menu.c:1596
+#: gnome-panel/menu.c:3042 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "T_huộc tính"
 
@@ -1283,18 +1283,23 @@ msgstr ""
 "Không thể xem %s\n"
 "%s"
 
-#: gnome-panel/launcher.c:173
-#, c-format
-msgid ""
-"<b>Cannot launch icon</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:172
+#, fuzzy
+msgid "Cannot launch icon"
 msgstr ""
-"<b>Không thể phóng biểu tượng</b>\n"
-"\n"
-"Chi tiết: %s"
+"Không thể phóng biểu tượng\n"
+"%s"
 
-#: gnome-panel/launcher.c:218
+#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1092
+#: gnome-panel/menu.c:374 gnome-panel/menu.c:404 gnome-panel/menu.c:421
+#: gnome-panel/menu.c:1127 gnome-panel/menu.c:1236 gnome-panel/menu.c:1268
+#: gnome-panel/menu.c:1286 gnome-panel/menu-ditem.c:123
+#: gnome-panel/menu-ditem.c:501 gnome-panel/panel-run-dialog.c:278
+#: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:76
+msgid "Details"
+msgstr ""
+
+#: gnome-panel/launcher.c:224
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1303,41 +1308,38 @@ msgstr ""
 "Không thể phóng biểu tượng\n"
 "%s"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:415
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Không có URI cho tập tin desktop bộ phóng panel\n"
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:429
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Không thể mở tập tin desktop %s cho bộ phóng panel %s%s\n"
 
-#: gnome-panel/launcher.c:525
+#: gnome-panel/launcher.c:531
 #, c-format
 msgid "Help on %s _Application"
 msgstr "Trợ giúp cho _ứng dụng %s"
 
-#: gnome-panel/launcher.c:645 gnome-panel/menu-ditem.c:180
-#: gnome-panel/menu-ditem.c:257
+#: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:187
+#: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Thuộc tính Bộ phóng"
 
-#: gnome-panel/launcher.c:805
+#: gnome-panel/launcher.c:811
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Khóa %s chưa có, không thể nạp bộ phóng\n"
 
-#: gnome-panel/launcher.c:865 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:871 gnome-panel/menu-ditem.c:538
 msgid "Create Launcher"
 msgstr "Không thể tạo Bộ phóng"
 
-#: gnome-panel/launcher.c:1086 gnome-panel/menu.c:1230
-#: gnome-panel/panel-util.c:76
-#, c-format
-msgid ""
-"<b>Cannot display help document</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:1091 gnome-panel/menu.c:1267
+#: gnome-panel/panel-util.c:75
+#, fuzzy
+msgid "Cannot display help document"
 msgstr ""
 "<b>Không thể hiển thị tài liệu trợ giúp</b>\n"
 "\n"
@@ -1347,7 +1349,7 @@ msgstr ""
 msgid "Specify a profile name to load"
 msgstr "Xác định tên profile cần nạp"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3168
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3219
 #: gnome-panel/panel-menu-bar.c:161
 msgid "Log Out"
 msgstr "Thoát"
@@ -1378,7 +1380,7 @@ msgstr ""
 msgid "Screenshot"
 msgstr "Screenshot"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3369
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3420
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Lấy screenshot của desktop"
@@ -1387,7 +1389,7 @@ msgstr "Lấy screenshot của desktop"
 msgid "Search"
 msgstr "Tìm kiếm"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3350
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3401
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Tìm tập tin, thư mục, tài liệu trên máy tính"
@@ -1438,179 +1440,163 @@ msgid "End world hunger"
 msgstr "End world hunger"
 
 #: gnome-panel/menu.c:373
-#, c-format
-msgid ""
-"<b>Can't execute 'About GNOME'</b>\n"
-"\n"
-"Details: %s probably does not exist"
-msgstr ""
-"<b>Không thể thực hiện 'Giới thiệu GNOME'</b>\n"
-"\n"
-"Chi tiết: %s có lẽ không tồn tại"
+msgid "Can't execute 'About GNOME'"
+msgstr "Không thể thực hiện chương trình 'Giới thiệu GNOME'"
 
-#: gnome-panel/menu.c:397
-#, c-format
-msgid ""
-"<b>Can't launch entry</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu.c:375
+msgid "probably does not exist"
 msgstr ""
-"<b>Không thể thực hiện mục nhập</b>\n"
-"\n"
-"Chi tiết: %s"
 
-#: gnome-panel/menu.c:407 gnome-panel/menu.c:1204 gnome-panel/menu.c:1241
-#, c-format
-msgid ""
-"<b>Can't load entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Không thể nạp mục</b>\n"
-"\n"
-"Chi tiết: %s"
+#: gnome-panel/menu.c:403
+#, fuzzy
+msgid "Can't launch entry"
+msgstr "Không thể thực hiện Nautilus!"
 
-#: gnome-panel/menu.c:1108
-#, c-format
-msgid ""
-"<b>Could not remove the menu item %s</b>\n"
-"\n"
-"Details: %s\n"
+#: gnome-panel/menu.c:420 gnome-panel/menu.c:1235 gnome-panel/menu.c:1285
+#, fuzzy
+msgid "Can't load entry"
+msgstr "Ô nhập lệnh"
+
+#: gnome-panel/menu.c:1125
+#, fuzzy
+msgid "Could not remove the menu item"
 msgstr ""
 "<b>Không thể loại bỏ menu item %s </b>\n"
 "\n"
 "Chi tiết: %s\n"
 
-#: gnome-panel/menu.c:1118
+#: gnome-panel/menu.c:1142
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Không thể lấy tên tập tin từ đường dẫn: %s"
 
-#: gnome-panel/menu.c:1125
+#: gnome-panel/menu.c:1149
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Không thể lấy tên thư mục từ đường dẫn: %s"
 
-#: gnome-panel/menu.c:1195
-msgid ""
-"<b>Can't add to run box</b>\n"
-"\n"
-"Details: No 'Exec' or 'URL' field in entry"
+#: gnome-panel/menu.c:1218
+msgid "Can't add to run box"
+msgstr ""
+
+#: gnome-panel/menu.c:1219
+#, fuzzy
+msgid "Details: No 'Exec' or 'URL' field in entry"
 msgstr ""
 "<b>Không thể thêm vào hộp thoại Chạy</b>\n"
 "\n"
 "Chi tiết: Không có trường 'Exec' hoặc 'URL' trong mục nhập"
 
-#: gnome-panel/menu.c:1475
+#: gnome-panel/menu.c:1526
 msgid "Add this launcher to panel"
 msgstr "Thêm Bộ phóng này vào Panel"
 
-#: gnome-panel/menu.c:1483
+#: gnome-panel/menu.c:1534
 msgid "Remove this item"
 msgstr "Loại bỏ mục này"
 
-#: gnome-panel/menu.c:1499
+#: gnome-panel/menu.c:1550
 msgid "Put into run dialog"
 msgstr "Đặt nó vào hộp thoại chạy chương trình"
 
-#: gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:1568
 #, c-format
 msgid "Help on %s"
 msgstr "Giúp đỡ về %s"
 
-#: gnome-panel/menu.c:1518
+#: gnome-panel/menu.c:1569
 msgid "Application"
 msgstr "Ứng dụng"
 
-#: gnome-panel/menu.c:1564
+#: gnome-panel/menu.c:1615
 msgid "Entire menu"
 msgstr "Toàn bộ menu"
 
-#: gnome-panel/menu.c:1573
+#: gnome-panel/menu.c:1624
 msgid "Add this as drawer to panel"
 msgstr "Thêm cái này vào Panel như là một ngăn kéo"
 
-#: gnome-panel/menu.c:1581
+#: gnome-panel/menu.c:1632
 msgid "Add this as menu to panel"
 msgstr "Thêm cái này vào Panel như là một menu"
 
-#: gnome-panel/menu.c:1589
+#: gnome-panel/menu.c:1640
 msgid "Add new item to this menu"
 msgstr "Thêm mục mới vào menu này"
 
-#: gnome-panel/menu.c:1615
+#: gnome-panel/menu.c:1666
 msgid "Properties"
 msgstr "Thuộc tính"
 
-#: gnome-panel/menu.c:2541 gnome-panel/menu.c:2596
+#: gnome-panel/menu.c:2592 gnome-panel/menu.c:2647
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "truy vấn gây ra ngoại lệ %s\n"
 
-#: gnome-panel/menu.c:2782 gnome-panel/menu.c:2787 gnome-panel/menu.c:3306
+#: gnome-panel/menu.c:2833 gnome-panel/menu.c:2838 gnome-panel/menu.c:3357
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Ứng dụng"
 
-#: gnome-panel/menu.c:2830 gnome-panel/menu.c:2836 gnome-panel/menu.c:3231
+#: gnome-panel/menu.c:2881 gnome-panel/menu.c:2887 gnome-panel/menu.c:3282
 msgid "KDE Menu"
 msgstr "Menu KDE"
 
-#: gnome-panel/menu.c:2888
+#: gnome-panel/menu.c:2939
 msgid "You cannot remove your last panel."
 msgstr "Bạn không thể loại bỏ Panel cuối cùng của bạn."
 
-#: gnome-panel/menu.c:2944
+#: gnome-panel/menu.c:2995
 msgid "_Delete This Panel..."
 msgstr "_Loại bỏ Panel này..."
 
-#: gnome-panel/menu.c:2947 gnome-panel/menu.c:2977
+#: gnome-panel/menu.c:2998 gnome-panel/menu.c:3028
 msgid "_Delete This Panel"
 msgstr "_Loại bỏ Panel này"
 
-#: gnome-panel/menu.c:2961
+#: gnome-panel/menu.c:3012
 msgid "_Add to Panel"
 msgstr "_Thêm một Panel"
 
-#: gnome-panel/menu.c:3004
+#: gnome-panel/menu.c:3055
 msgid "_New Panel"
 msgstr "Panel mớ_i"
 
-#: gnome-panel/menu.c:3047
+#: gnome-panel/menu.c:3098
 msgid "_About Panels"
 msgstr "_Giới thiệu Panel"
 
-#: gnome-panel/menu.c:3060
+#: gnome-panel/menu.c:3111
 msgid "About _GNOME"
 msgstr "Giới thiệu _GNOME"
 
-#: gnome-panel/menu.c:3100
+#: gnome-panel/menu.c:3151
 msgid "Launcher..."
 msgstr "Bộ phóng..."
 
-#: gnome-panel/menu.c:3108
+#: gnome-panel/menu.c:3159
 msgid "Launcher from menu"
 msgstr "Bộ phóng từ menu"
 
-#: gnome-panel/menu.c:3117
+#: gnome-panel/menu.c:3168
 msgid "Main Menu"
 msgstr "Menu chính"
 
-#: gnome-panel/menu.c:3126
+#: gnome-panel/menu.c:3177
 #, fuzzy
 msgid "Menu Bar"
 msgstr "Đường dẫn menu"
 
-#: gnome-panel/menu.c:3156 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3207 gnome-panel/panel-menu-bar.c:152
 msgid "Lock Screen"
 msgstr "Khóa màn hình"
 
-#: gnome-panel/menu.c:3162
+#: gnome-panel/menu.c:3213
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Khóa màn hình, nhờ đó bạn có thể tạm thời rời xa máy tính"
 
-#: gnome-panel/menu.c:3174
+#: gnome-panel/menu.c:3225
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1618,64 +1604,57 @@ msgstr ""
 "Thoát khỏi session này để đăng nhập vào như là một người dùng khác hoặc "
 "shutdown"
 
-#: gnome-panel/menu.c:3331 gnome-panel/panel-menu-bar.c:110
+#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:110
 #, fuzzy
 msgid "Run Application..."
 msgstr "Ứng dụng"
 
-#: gnome-panel/menu.c:3338 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:112
 #, fuzzy
 msgid "Run an Application by entering a command"
 msgstr "Chạy ứng dụng, nếu bạn biết lệnh cần thiết phải nhập vào"
 
-#: gnome-panel/menu.c:3347 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3398 gnome-panel/panel-menu-bar.c:123
 msgid "Search for Files..."
 msgstr "Tìm tập tin..."
 
-#: gnome-panel/menu.c:3366 gnome-panel/panel-menu-bar.c:138
+#: gnome-panel/menu.c:3417 gnome-panel/panel-menu-bar.c:138
 msgid "Screenshot..."
 msgstr "Screenshot..."
 
-#: gnome-panel/menu.c:3384
+#: gnome-panel/menu.c:3435
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/menu-ditem.c:123
-#, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:122
+#, fuzzy
+msgid "Cannot save changes to launcher"
 msgstr ""
 "<b>Không thể lưu các thay đổi của Bộ phóng</b>\n"
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:297
 msgid "Menu"
 msgstr "Menu"
 
-#: gnome-panel/menu-ditem.c:447
+#: gnome-panel/menu-ditem.c:454
 msgid "You have to specify a name for the launcher."
 msgstr "Bạn phải đặt tên cho bộ phóng."
 
-#: gnome-panel/menu-ditem.c:463
+#: gnome-panel/menu-ditem.c:470
 msgid "You have to specify a valid URL or command."
 msgstr "Bạn phải nhập URL hoặc lệnh hợp lệ."
 
-#. class
-#: gnome-panel/menu-ditem.c:494
-#, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:500
+#, fuzzy
+msgid "Cannot save menu item to disk"
 msgstr ""
 "<b>Không thể lưu các thay đổi vào đĩa</b>\n"
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/menu-ditem.c:519
+#: gnome-panel/menu-ditem.c:531
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -2178,7 +2157,6 @@ msgid "Background _image:"
 msgstr "Kiểu _nền:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
-#: gnome-panel/panel-toplevel.c:1345
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "Đáy"
@@ -2202,7 +2180,6 @@ msgid "Image Background Details"
 msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
-#: gnome-panel/panel-toplevel.c:1348
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Trái"
@@ -2216,7 +2193,6 @@ msgid "Pick a color"
 msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:20
-#: gnome-panel/panel-toplevel.c:1351
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "Phải"
@@ -2244,7 +2220,6 @@ msgid "St_retch"
 msgstr "Kéo giãn"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#: gnome-panel/panel-toplevel.c:1342
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Đỉnh"
@@ -2285,38 +2260,32 @@ msgstr "Lỗi không xác định khi cố mở %s"
 msgid "Open Recent"
 msgstr "Mở Hiện Thời"
 
-#: gnome-panel/panel-run-dialog.c:276
-#, fuzzy, c-format
-msgid ""
-"<b>Error launching command: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:277
+#, fuzzy
+msgid "Error launching command"
 msgstr ""
 "<b>Không thể phóng biểu tượng</b>\n"
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/panel-run-dialog.c:305
-#, fuzzy, c-format
-msgid ""
-"<b>Error displaying location: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:311
+#, fuzzy
+msgid "Error displaying location"
 msgstr ""
 "<b>Không thể hiển thị tài liệu trợ giúp</b>\n"
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/panel-run-dialog.c:1035
+#: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1214
+#: gnome-panel/panel-run-dialog.c:1224
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Sẽ chạy lệnh: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1220 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1230 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
 msgstr ""
 
@@ -2425,174 +2394,226 @@ msgstr "Không thể nạp panel stock icon '%s'\n"
 msgid "_Force quit"
 msgstr ""
 
+#: gnome-panel/panel-toplevel.c:1349
+#, fuzzy
+msgid "Top Expanded Edge Panel"
+msgstr "Cỡ mũi tên bung"
+
+#: gnome-panel/panel-toplevel.c:1350
+#, fuzzy
+msgid "Top Centered Panel"
+msgstr "Panel góc"
+
+#: gnome-panel/panel-toplevel.c:1351
+#, fuzzy
+msgid "Top Floating Panel"
+msgstr "Panel t_rôi nổi"
+
+#: gnome-panel/panel-toplevel.c:1352
+#, fuzzy
+msgid "Top Edge Panel"
+msgstr "Panel cạnh"
+
+#: gnome-panel/panel-toplevel.c:1356
+#, fuzzy
+msgid "Bottom Expanded Edge Panel"
+msgstr "Cỡ mũi tên bung"
+
+#: gnome-panel/panel-toplevel.c:1357
+#, fuzzy
+msgid "Bottom Centered Panel"
+msgstr "Panel góc"
+
+#: gnome-panel/panel-toplevel.c:1358
+#, fuzzy
+msgid "Bottom Floating Panel"
+msgstr "Panel t_rôi nổi"
+
 #: gnome-panel/panel-toplevel.c:1359
 #, fuzzy
-msgid "Floating"
-msgstr "Panel trôi nổi"
+msgid "Bottom Edge Panel"
+msgstr "Panel cạnh"
 
-#: gnome-panel/panel-toplevel.c:1362
+#: gnome-panel/panel-toplevel.c:1363
 #, fuzzy
-msgid "Centered"
-msgstr "Internet"
+msgid "Left Expanded Edge Panel"
+msgstr "Cỡ mũi tên bung"
 
 #: gnome-panel/panel-toplevel.c:1364
 #, fuzzy
-msgid "Expanded Edge"
-msgstr "Cỡ mũi tên bung"
+msgid "Left Centered Panel"
+msgstr "Panel góc"
+
+#: gnome-panel/panel-toplevel.c:1365
+#, fuzzy
+msgid "Left Floating Panel"
+msgstr "Panel t_rôi nổi"
 
 #: gnome-panel/panel-toplevel.c:1366
-msgid "Edge"
-msgstr ""
+#, fuzzy
+msgid "Left Edge Panel"
+msgstr "Panel cạnh"
 
-#. Translators: the first argument is the current orientation
-#. * (Top, Bottom, Left or Right) and the second argument is the
-#. * type of panel (Expanded Edge, Edge, Floating or Centered).
-#.
+#: gnome-panel/panel-toplevel.c:1370
+#, fuzzy
+msgid "Right Expanded Edge Panel"
+msgstr "Cỡ mũi tên bung"
+
+#: gnome-panel/panel-toplevel.c:1371
+#, fuzzy
+msgid "Right Centered Panel"
+msgstr "Panel canh hàng"
+
 #: gnome-panel/panel-toplevel.c:1372
-#, fuzzy, c-format
-msgid "%s %s Panel"
-msgstr "Panel"
+#, fuzzy
+msgid "Right Floating Panel"
+msgstr "Panel t_rôi nổi"
 
-#: gnome-panel/panel-toplevel.c:3295
+#: gnome-panel/panel-toplevel.c:1373
+#, fuzzy
+msgid "Right Edge Panel"
+msgstr "Panel cạnh"
+
+#: gnome-panel/panel-toplevel.c:3417
 #, fuzzy
 msgid "Name"
 msgstr "Tên biêu tượng"
 
-#: gnome-panel/panel-toplevel.c:3296
+#: gnome-panel/panel-toplevel.c:3418
 #, fuzzy
 msgid "The name of this panel"
 msgstr "Chế độ panel này"
 
-#: gnome-panel/panel-toplevel.c:3305
+#: gnome-panel/panel-toplevel.c:3427
 #, fuzzy
 msgid "Expand"
 msgstr "Cỡ mũi tên bung"
 
-#: gnome-panel/panel-toplevel.c:3306
+#: gnome-panel/panel-toplevel.c:3428
 msgid "Expand to take up the full monitor width/height"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3316
+#: gnome-panel/panel-toplevel.c:3438
 #, fuzzy
 msgid "The orientation of the panel"
 msgstr "Trạng thái hiện thời của panel này"
 
-#: gnome-panel/panel-toplevel.c:3327
+#: gnome-panel/panel-toplevel.c:3449
 #, fuzzy
 msgid "The height (or width when vertical) of the panel"
 msgstr "Trạng thái hiện thời của panel này"
 
-#: gnome-panel/panel-toplevel.c:3339
+#: gnome-panel/panel-toplevel.c:3461
 #, fuzzy
 msgid "X position"
 msgstr "Vị trí:"
 
-#: gnome-panel/panel-toplevel.c:3340
+#: gnome-panel/panel-toplevel.c:3462
 msgid "The X position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3351
+#: gnome-panel/panel-toplevel.c:3473
 msgid "X centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3352
+#: gnome-panel/panel-toplevel.c:3474
 msgid "The x co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3361
+#: gnome-panel/panel-toplevel.c:3483
 #, fuzzy
 msgid "Y position"
 msgstr "Vị trí:"
 
-#: gnome-panel/panel-toplevel.c:3362
+#: gnome-panel/panel-toplevel.c:3484
 msgid "The Y position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3373
+#: gnome-panel/panel-toplevel.c:3495
 msgid "Y centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3374
+#: gnome-panel/panel-toplevel.c:3496
 msgid "The y co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3383
+#: gnome-panel/panel-toplevel.c:3505
 msgid "Xinerama monitor"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3384
+#: gnome-panel/panel-toplevel.c:3506
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3395
+#: gnome-panel/panel-toplevel.c:3517
 #, fuzzy
 msgid "Auto hide"
 msgstr "Tự động ẩ_n"
 
-#: gnome-panel/panel-toplevel.c:3396
+#: gnome-panel/panel-toplevel.c:3518
 #, fuzzy
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Hiện panel khi chuột di chuyển ngang qua"
 
-#: gnome-panel/panel-toplevel.c:3405
+#: gnome-panel/panel-toplevel.c:3527
 msgid "Hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3406
+#: gnome-panel/panel-toplevel.c:3528
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3417
+#: gnome-panel/panel-toplevel.c:3539
 msgid "Un-hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3418
+#: gnome-panel/panel-toplevel.c:3540
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3429
+#: gnome-panel/panel-toplevel.c:3551
 #, fuzzy
 msgid "Auto-hide size"
 msgstr "Tự động ẩ_n"
 
-#: gnome-panel/panel-toplevel.c:3430
+#: gnome-panel/panel-toplevel.c:3552
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3441
+#: gnome-panel/panel-toplevel.c:3563
 #, fuzzy
 msgid "Animate"
 msgstr "_Hoạt cảnh"
 
-#: gnome-panel/panel-toplevel.c:3442
+#: gnome-panel/panel-toplevel.c:3564
 msgid "Enable hiding/showing animations"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3451
+#: gnome-panel/panel-toplevel.c:3573
 #, fuzzy
 msgid "Animation Speed"
 msgstr "_Tốc độ hoạt cảnh:"
 
-#: gnome-panel/panel-toplevel.c:3452
+#: gnome-panel/panel-toplevel.c:3574
 msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3584
 #, fuzzy
 msgid "Buttons Enabled"
 msgstr "Đã bật nút ẩn"
 
-#: gnome-panel/panel-toplevel.c:3463
+#: gnome-panel/panel-toplevel.c:3585
 #, fuzzy
 msgid "Enable hide/show buttons"
 msgstr "Cho phép ẩn panel"
 
-#: gnome-panel/panel-toplevel.c:3472
+#: gnome-panel/panel-toplevel.c:3594
 msgid "Arrows Enabled"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3595
 #, fuzzy
 msgid "Enable arrows on hide/show buttons"
 msgstr "Hiện _mũi tên trên nút ẩn"
@@ -2878,20 +2899,23 @@ msgstr ""
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:102 gnome-panel/panel-util.c:132
-#: gnome-panel/panel-util.c:157
+#: gnome-panel/panel-util.c:107 gnome-panel/panel-util.c:137
+#: gnome-panel/panel-util.c:162
 msgid "Help document not found"
 msgstr "Không tìm thấy tài liệu trợ giúp"
 
-#: gnome-panel/panel-util.c:171
+#: gnome-panel/panel-util.c:176
 msgid "No document to show"
 msgstr "Không có tài liệu nào để xem"
 
-#: gnome-panel/panel-util.c:928
-msgid ""
-"<b>Cannot execute xscreensaver</b>\n"
-"\n"
-"Details: xscreensaver-command not found"
+#: gnome-panel/panel-util.c:933
+#, fuzzy
+msgid "Cannot execute xscreensaver"
+msgstr "Không thể thực hiện gnome-panel-screenshot"
+
+#: gnome-panel/panel-util.c:934
+#, fuzzy
+msgid "Details: xscreensaver-command not found"
 msgstr ""
 "<b>Không thể thực hiện xscreensaver</b>\n"
 "\n"
@@ -3006,6 +3030,54 @@ msgstr "XX Lớn"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XX Nhỏ"
+
+#~ msgid ""
+#~ "<b>Cannot launch icon</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Không thể phóng biểu tượng</b>\n"
+#~ "\n"
+#~ "Chi tiết: %s"
+
+#~ msgid ""
+#~ "<b>Can't execute 'About GNOME'</b>\n"
+#~ "\n"
+#~ "Details: %s probably does not exist"
+#~ msgstr ""
+#~ "<b>Không thể thực hiện 'Giới thiệu GNOME'</b>\n"
+#~ "\n"
+#~ "Chi tiết: %s có lẽ không tồn tại"
+
+#~ msgid ""
+#~ "<b>Can't launch entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Không thể thực hiện mục nhập</b>\n"
+#~ "\n"
+#~ "Chi tiết: %s"
+
+#~ msgid ""
+#~ "<b>Can't load entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Không thể nạp mục</b>\n"
+#~ "\n"
+#~ "Chi tiết: %s"
+
+#, fuzzy
+#~ msgid "Floating"
+#~ msgstr "Panel trôi nổi"
+
+#, fuzzy
+#~ msgid "Centered"
+#~ msgstr "Internet"
+
+#, fuzzy
+#~ msgid "%s %s Panel"
+#~ msgstr "Panel"
 
 #~ msgid ""
 #~ "<b>Failed to run this program</b>\n"
@@ -3378,14 +3450,8 @@ msgstr "XX Nhỏ"
 #~ msgid "No panel found\n"
 #~ msgstr "Không tìm thấy panel\n"
 
-#~ msgid "Aligned Panel"
-#~ msgstr "Panel canh hàng"
-
 #~ msgid "GNOME Aligned Panel"
 #~ msgstr "Panel canh hàng GNOME"
-
-#~ msgid "Edge Panel"
-#~ msgstr "Panel cạnh"
 
 #~ msgid "GNOME Edge Panel"
 #~ msgstr "Panel Cạnh GNOME"
@@ -3413,9 +3479,6 @@ msgstr "XX Nhỏ"
 
 #~ msgid "Create edge panel"
 #~ msgstr "Tạo Panel cạnh"
-
-#~ msgid "_Floating Panel"
-#~ msgstr "Panel t_rôi nổi"
 
 #~ msgid "Create floating panel"
 #~ msgstr "Tạo Panel trôi nổi"
@@ -3504,9 +3567,6 @@ msgstr "XX Nhỏ"
 
 #~ msgid "Floating panel"
 #~ msgstr "Panel trôi nổi"
-
-#~ msgid "Corner Panel"
-#~ msgstr "Panel góc"
 
 #~ msgid "Show the program listing by default when opening the Run box"
 #~ msgstr "Mặc định hiện danh sách chương trình khi mở hộp thoại Chạy"
@@ -3967,9 +4027,6 @@ msgstr "XX Nhỏ"
 #~ msgid "Create menu item"
 #~ msgstr "Tạo menu item"
 
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "Không thể thực hiện chương trình 'Giới thiệu GNOME'"
-
 #~ msgid "You already have a status dock on the panel. You can only have one"
 #~ msgstr "Bạn đã Status Dock trên Panel. Bạn chỉ có thể có một cái mà thôi"
 
@@ -3981,9 +4038,6 @@ msgstr "XX Nhỏ"
 
 #~ msgid "Status dock"
 #~ msgstr "Status dock"
-
-#~ msgid "Cannot launch nautilus!"
-#~ msgstr "Không thể thực hiện Nautilus!"
 
 #~ msgid "Reread all menus"
 #~ msgstr "Đọc lại toàn bộ menu"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core\n"
-"POT-Creation-Date: 2003-06-06 15:52+0100\n"
+"POT-Creation-Date: 2003-06-12 17:49+0100\n"
 "PO-Revision-Date: 2003-01-31 16:33+0200\n"
 "Last-Translator: Mehmet TARIMCI <mehmet.tarimci@gelecek.com.tr>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -279,7 +279,7 @@ msgstr "_Hakkında..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:742 gnome-panel/menu.c:3037
+#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:748 gnome-panel/menu.c:3088
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
@@ -410,7 +410,7 @@ msgstr "<b>Seçenekler</b>"
 msgid "<b>General</b>"
 msgstr "Genel"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:267
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:272
 msgid "Browse"
 msgstr "Göz At"
 
@@ -666,7 +666,7 @@ msgid "Show windows from a_ll workspaces"
 msgstr "_Bütün kullanım alanındaki pencereleri göster"
 
 #: applets/wncklet/window-list.glade.h:14 gnome-panel/button-widget.c:856
-#: gnome-panel/panel-toplevel.c:3326
+#: gnome-panel/panel-toplevel.c:3448
 msgid "Size"
 msgstr "Boyut"
 
@@ -946,7 +946,7 @@ msgstr "Oku var"
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Ok işaretleyicisi çizip çimemek için"
 
-#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3315
+#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3437
 msgid "Orientation"
 msgstr "Konumlandırma"
 
@@ -1032,12 +1032,12 @@ msgstr "Gizle düğmesini etkinleştir"
 msgid "Enable hidebutton arrow"
 msgstr "Gizle düğmesi okunu etkinleştir"
 
-#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3134
+#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3185
 msgid "Drawer"
 msgstr "Sürgü"
 
-#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:740 gnome-panel/menu.c:1545
-#: gnome-panel/menu.c:2991 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:746 gnome-panel/menu.c:1596
+#: gnome-panel/menu.c:3042 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "_Özellikler"
 
@@ -1279,18 +1279,23 @@ msgstr ""
 "%s gösterilemiyor\n"
 "%s"
 
-#: gnome-panel/launcher.c:173
-#, c-format
-msgid ""
-"<b>Cannot launch icon</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:172
+#, fuzzy
+msgid "Cannot launch icon"
 msgstr ""
-"<b> İkon başlatılamadı </b> \n"
-"\n"
-"Ayrıntılar: %s"
+"Simge başlatılamadı\n"
+"%s"
 
-#: gnome-panel/launcher.c:218
+#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1092
+#: gnome-panel/menu.c:374 gnome-panel/menu.c:404 gnome-panel/menu.c:421
+#: gnome-panel/menu.c:1127 gnome-panel/menu.c:1236 gnome-panel/menu.c:1268
+#: gnome-panel/menu.c:1286 gnome-panel/menu-ditem.c:123
+#: gnome-panel/menu-ditem.c:501 gnome-panel/panel-run-dialog.c:278
+#: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:76
+msgid "Details"
+msgstr ""
+
+#: gnome-panel/launcher.c:224
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1299,41 +1304,38 @@ msgstr ""
 "Simge başlatılamadı\n"
 "%s"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:415
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Panel başlatıcısı masaüstü dosyası için URL girilmemiş\n"
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:429
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Panel başlatıcısı için %s%s Masaüstü dosyası açılamadı %s\n"
 
-#: gnome-panel/launcher.c:525
+#: gnome-panel/launcher.c:531
 #, c-format
 msgid "Help on %s _Application"
 msgstr "%s_Program Hakkında Yardım"
 
-#: gnome-panel/launcher.c:645 gnome-panel/menu-ditem.c:180
-#: gnome-panel/menu-ditem.c:257
+#: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:187
+#: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Başlatıcı özellikleri"
 
-#: gnome-panel/launcher.c:805
+#: gnome-panel/launcher.c:811
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Anahtar & %s tanımlanmamış, başlatıcı yüklenemiyor\n"
 
-#: gnome-panel/launcher.c:865 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:871 gnome-panel/menu-ditem.c:538
 msgid "Create Launcher"
 msgstr "Başlatıcı Oluştur"
 
-#: gnome-panel/launcher.c:1086 gnome-panel/menu.c:1230
-#: gnome-panel/panel-util.c:76
-#, c-format
-msgid ""
-"<b>Cannot display help document</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:1091 gnome-panel/menu.c:1267
+#: gnome-panel/panel-util.c:75
+#, fuzzy
+msgid "Cannot display help document"
 msgstr ""
 "<b> Yardım dosyası görüntülenemiyor</b> \n"
 "\n"
@@ -1343,7 +1345,7 @@ msgstr ""
 msgid "Specify a profile name to load"
 msgstr "Yüklenecek oturum ismini belirtin"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3168
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3219
 #: gnome-panel/panel-menu-bar.c:161
 msgid "Log Out"
 msgstr "Çık"
@@ -1374,7 +1376,7 @@ msgstr ""
 msgid "Screenshot"
 msgstr "Ekran Görüntüsü"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3369
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3420
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Masaüstünün Ekran görüntüsünü al."
@@ -1383,7 +1385,7 @@ msgstr "Masaüstünün Ekran görüntüsünü al."
 msgid "Search"
 msgstr "Ara"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3350
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3401
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Bilgisayarınızda dosyaları ve dizinleri arar."
@@ -1434,178 +1436,162 @@ msgid "End world hunger"
 msgstr "Dünyadaki açlığı bitirelim"
 
 #: gnome-panel/menu.c:373
-#, c-format
-msgid ""
-"<b>Can't execute 'About GNOME'</b>\n"
-"\n"
-"Details: %s probably does not exist"
-msgstr ""
-"<b> GNOME Hakkında çalışamıyor</b>\n"
-"\n"
-"Ayrıntılar: %s bulunamıyor"
+msgid "Can't execute 'About GNOME'"
+msgstr "'GNOME Hakkında' çalıştırılamadı"
 
-#: gnome-panel/menu.c:397
-#, c-format
-msgid ""
-"<b>Can't launch entry</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu.c:375
+msgid "probably does not exist"
 msgstr ""
-"<b> Girdi yüklenemiyor </b>\n"
-"\n"
-"Ayrıntılar: %s "
 
-#: gnome-panel/menu.c:407 gnome-panel/menu.c:1204 gnome-panel/menu.c:1241
-#, c-format
-msgid ""
-"<b>Can't load entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Girdi yüklenemiyor</b>\n"
-"\n"
-"Ayrıntılar: %s "
+#: gnome-panel/menu.c:403
+#, fuzzy
+msgid "Can't launch entry"
+msgstr "Nautilus çalıştırılamadı!"
 
-#: gnome-panel/menu.c:1108
-#, c-format
-msgid ""
-"<b>Could not remove the menu item %s</b>\n"
-"\n"
-"Details: %s\n"
+#: gnome-panel/menu.c:420 gnome-panel/menu.c:1235 gnome-panel/menu.c:1285
+#, fuzzy
+msgid "Can't load entry"
+msgstr "Komut Giriş Kutusu"
+
+#: gnome-panel/menu.c:1125
+#, fuzzy
+msgid "Could not remove the menu item"
 msgstr ""
 "<b>menü öğesi silinemedi: %s/b>  \n"
 "\n"
 "Aytıntılar: %s\n"
 
-#: gnome-panel/menu.c:1118
+#: gnome-panel/menu.c:1142
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Dosya adı bu dosya yolundan alınamadı: %s"
 
-#: gnome-panel/menu.c:1125
+#: gnome-panel/menu.c:1149
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Dizin ismi bu dosya yolundan alınamadı: %s"
 
-#: gnome-panel/menu.c:1195
-msgid ""
-"<b>Can't add to run box</b>\n"
-"\n"
-"Details: No 'Exec' or 'URL' field in entry"
+#: gnome-panel/menu.c:1218
+msgid "Can't add to run box"
+msgstr ""
+
+#: gnome-panel/menu.c:1219
+#, fuzzy
+msgid "Details: No 'Exec' or 'URL' field in entry"
 msgstr ""
 "<b> Kutuyu açmak için eklenmiyor</b> \n"
 "\n"
 "Ayrıntılar: Girdide 'Exec' alanınde veya URL alanında yok"
 
-#: gnome-panel/menu.c:1475
+#: gnome-panel/menu.c:1526
 msgid "Add this launcher to panel"
 msgstr "Bu başlatıcıyı panele ekle"
 
-#: gnome-panel/menu.c:1483
+#: gnome-panel/menu.c:1534
 msgid "Remove this item"
 msgstr "Bu öğeyi sil"
 
-#: gnome-panel/menu.c:1499
+#: gnome-panel/menu.c:1550
 msgid "Put into run dialog"
 msgstr "Çalıştırma diyaloğuna koy"
 
-#: gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:1568
 #, c-format
 msgid "Help on %s"
 msgstr "%s için yardım"
 
-#: gnome-panel/menu.c:1518
+#: gnome-panel/menu.c:1569
 msgid "Application"
 msgstr "Uygulama"
 
-#: gnome-panel/menu.c:1564
+#: gnome-panel/menu.c:1615
 msgid "Entire menu"
 msgstr "Tüm Menü"
 
-#: gnome-panel/menu.c:1573
+#: gnome-panel/menu.c:1624
 msgid "Add this as drawer to panel"
 msgstr "Bunu sürgü olarak panele ekle"
 
-#: gnome-panel/menu.c:1581
+#: gnome-panel/menu.c:1632
 msgid "Add this as menu to panel"
 msgstr "Bunu menü olarak panele ekle"
 
-#: gnome-panel/menu.c:1589
+#: gnome-panel/menu.c:1640
 msgid "Add new item to this menu"
 msgstr "Bu menüye yeni öğe ekle"
 
-#: gnome-panel/menu.c:1615
+#: gnome-panel/menu.c:1666
 msgid "Properties"
 msgstr "Özellikler"
 
-#: gnome-panel/menu.c:2541 gnome-panel/menu.c:2596
+#: gnome-panel/menu.c:2592 gnome-panel/menu.c:2647
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "Sorgulama şunu döndürdü %s\n"
 
-#: gnome-panel/menu.c:2782 gnome-panel/menu.c:2787 gnome-panel/menu.c:3306
+#: gnome-panel/menu.c:2833 gnome-panel/menu.c:2838 gnome-panel/menu.c:3357
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Uygulamalar"
 
-#: gnome-panel/menu.c:2830 gnome-panel/menu.c:2836 gnome-panel/menu.c:3231
+#: gnome-panel/menu.c:2881 gnome-panel/menu.c:2887 gnome-panel/menu.c:3282
 msgid "KDE Menu"
 msgstr "KDE menüleri"
 
-#: gnome-panel/menu.c:2888
+#: gnome-panel/menu.c:2939
 msgid "You cannot remove your last panel."
 msgstr "Son paneli silemezsiniz."
 
-#: gnome-panel/menu.c:2944
+#: gnome-panel/menu.c:2995
 msgid "_Delete This Panel..."
 msgstr "Bu paneli _sil..."
 
-#: gnome-panel/menu.c:2947 gnome-panel/menu.c:2977
+#: gnome-panel/menu.c:2998 gnome-panel/menu.c:3028
 msgid "_Delete This Panel"
 msgstr "Bu paneli _sil"
 
-#: gnome-panel/menu.c:2961
+#: gnome-panel/menu.c:3012
 msgid "_Add to Panel"
 msgstr "Panele _Ekle"
 
-#: gnome-panel/menu.c:3004
+#: gnome-panel/menu.c:3055
 msgid "_New Panel"
 msgstr "_Yeni Panel"
 
-#: gnome-panel/menu.c:3047
+#: gnome-panel/menu.c:3098
 msgid "_About Panels"
 msgstr "Paneller _hakkında"
 
-#: gnome-panel/menu.c:3060
+#: gnome-panel/menu.c:3111
 msgid "About _GNOME"
 msgstr "_GNOME Hakkında"
 
-#: gnome-panel/menu.c:3100
+#: gnome-panel/menu.c:3151
 msgid "Launcher..."
 msgstr "Başlatıcı..."
 
-#: gnome-panel/menu.c:3108
+#: gnome-panel/menu.c:3159
 msgid "Launcher from menu"
 msgstr "Menüden başlatıcı"
 
-#: gnome-panel/menu.c:3117
+#: gnome-panel/menu.c:3168
 msgid "Main Menu"
 msgstr "Ana Menü"
 
-#: gnome-panel/menu.c:3126
+#: gnome-panel/menu.c:3177
 msgid "Menu Bar"
 msgstr "Menü çubuğu"
 
-#: gnome-panel/menu.c:3156 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3207 gnome-panel/panel-menu-bar.c:152
 msgid "Lock Screen"
 msgstr "Ekranı Kilitle"
 
-#: gnome-panel/menu.c:3162
+#: gnome-panel/menu.c:3213
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Bilgisayar başından geçici bir süre ayrılmak için ekranı kilitleyin"
 
-#: gnome-panel/menu.c:3174
+#: gnome-panel/menu.c:3225
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1613,64 +1599,57 @@ msgstr ""
 "Bilgisayarı kapatmak için veya farklı bir kullanıcı ile giriş yapmak için Bu "
 "oturumu kapat"
 
-#: gnome-panel/menu.c:3331 gnome-panel/panel-menu-bar.c:110
+#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:110
 #, fuzzy
 msgid "Run Application..."
 msgstr "Uygulama"
 
-#: gnome-panel/menu.c:3338 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:112
 #, fuzzy
 msgid "Run an Application by entering a command"
 msgstr "Eğer doğru komutu biliyorsanız buradan komut çalıştırabilirsiniz."
 
-#: gnome-panel/menu.c:3347 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3398 gnome-panel/panel-menu-bar.c:123
 msgid "Search for Files..."
 msgstr "Dosyaları Ara..."
 
-#: gnome-panel/menu.c:3366 gnome-panel/panel-menu-bar.c:138
+#: gnome-panel/menu.c:3417 gnome-panel/panel-menu-bar.c:138
 msgid "Screenshot..."
 msgstr "Ekran Görüntüsü..."
 
-#: gnome-panel/menu.c:3384
+#: gnome-panel/menu.c:3435
 msgid "Desktop"
 msgstr "Masaüstü"
 
-#: gnome-panel/menu-ditem.c:123
-#, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:122
+#, fuzzy
+msgid "Cannot save changes to launcher"
 msgstr ""
 "<b> Başlatıcıya ayarlar kaydedilemiyor </b> \n"
 "\n"
 "Ayrıntılar:%s "
 
-#: gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:297
 msgid "Menu"
 msgstr "Menü"
 
-#: gnome-panel/menu-ditem.c:447
+#: gnome-panel/menu-ditem.c:454
 msgid "You have to specify a name for the launcher."
 msgstr "Başlatıcı için bir isim vermelisiniz."
 
-#: gnome-panel/menu-ditem.c:463
+#: gnome-panel/menu-ditem.c:470
 msgid "You have to specify a valid URL or command."
 msgstr "Doğru bir URL veya komut girmelisiniz"
 
-#. class
-#: gnome-panel/menu-ditem.c:494
-#, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:500
+#, fuzzy
+msgid "Cannot save menu item to disk"
 msgstr ""
 "<b> Menü parçası diske kaydedilemiyor </b> \n"
 "\n"
 "Ayrıntılar: %s "
 
-#: gnome-panel/menu-ditem.c:519
+#: gnome-panel/menu-ditem.c:531
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -2175,7 +2154,6 @@ msgid "Background _image:"
 msgstr "Artalan türü"
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
-#: gnome-panel/panel-toplevel.c:1345
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "Alt"
@@ -2200,7 +2178,6 @@ msgid "Image Background Details"
 msgstr "Artalan Ayarları"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
-#: gnome-panel/panel-toplevel.c:1348
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Sol"
@@ -2214,7 +2191,6 @@ msgid "Pick a color"
 msgstr "Bir renk seçiniz"
 
 #: gnome-panel/panel-properties-dialog.glade.h:20
-#: gnome-panel/panel-toplevel.c:1351
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "Sağ"
@@ -2242,7 +2218,6 @@ msgid "St_retch"
 msgstr "U_zat"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#: gnome-panel/panel-toplevel.c:1342
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Üst"
@@ -2282,38 +2257,32 @@ msgstr "%s açılmaya çalışırken beklenmedik bir hata oluştu"
 msgid "Open Recent"
 msgstr "Son kullanılanı aç"
 
-#: gnome-panel/panel-run-dialog.c:276
-#, fuzzy, c-format
-msgid ""
-"<b>Error launching command: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:277
+#, fuzzy
+msgid "Error launching command"
 msgstr ""
 "<b> İkon başlatılamadı </b> \n"
 "\n"
 "Ayrıntılar: %s"
 
-#: gnome-panel/panel-run-dialog.c:305
-#, fuzzy, c-format
-msgid ""
-"<b>Error displaying location: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:311
+#, fuzzy
+msgid "Error displaying location"
 msgstr ""
 "<b> Yardım dosyası görüntülenemiyor</b> \n"
 "\n"
 "Ayrıntılar: %s"
 
-#: gnome-panel/panel-run-dialog.c:1035
+#: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1214
+#: gnome-panel/panel-run-dialog.c:1224
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "'%s' çalıştırılacak"
 
-#: gnome-panel/panel-run-dialog.c:1220 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1230 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
 msgstr ""
 
@@ -2423,175 +2392,227 @@ msgstr "Panel depo ikonu %s yüklenemedi\n"
 msgid "_Force quit"
 msgstr ""
 
+#: gnome-panel/panel-toplevel.c:1349
+#, fuzzy
+msgid "Top Expanded Edge Panel"
+msgstr "Büyültücü boyutu"
+
+#: gnome-panel/panel-toplevel.c:1350
+#, fuzzy
+msgid "Top Centered Panel"
+msgstr "Köşe Paneli"
+
+#: gnome-panel/panel-toplevel.c:1351
+#, fuzzy
+msgid "Top Floating Panel"
+msgstr "_Yüzen Panel"
+
+#: gnome-panel/panel-toplevel.c:1352
+#, fuzzy
+msgid "Top Edge Panel"
+msgstr "Kenar Paneli"
+
+#: gnome-panel/panel-toplevel.c:1356
+#, fuzzy
+msgid "Bottom Expanded Edge Panel"
+msgstr "Büyültücü boyutu"
+
+#: gnome-panel/panel-toplevel.c:1357
+#, fuzzy
+msgid "Bottom Centered Panel"
+msgstr "Köşe Paneli"
+
+#: gnome-panel/panel-toplevel.c:1358
+#, fuzzy
+msgid "Bottom Floating Panel"
+msgstr "Yüzen panel"
+
 #: gnome-panel/panel-toplevel.c:1359
 #, fuzzy
-msgid "Floating"
-msgstr "Yüzen Panel"
+msgid "Bottom Edge Panel"
+msgstr "Kenar Paneli"
 
-#: gnome-panel/panel-toplevel.c:1362
+#: gnome-panel/panel-toplevel.c:1363
 #, fuzzy
-msgid "Centered"
-msgstr "İnternet"
+msgid "Left Expanded Edge Panel"
+msgstr "Büyültücü boyutu"
 
 #: gnome-panel/panel-toplevel.c:1364
 #, fuzzy
-msgid "Expanded Edge"
-msgstr "Büyültücü boyutu"
+msgid "Left Centered Panel"
+msgstr "Köşe Paneli"
+
+#: gnome-panel/panel-toplevel.c:1365
+#, fuzzy
+msgid "Left Floating Panel"
+msgstr "_Yüzen Panel"
 
 #: gnome-panel/panel-toplevel.c:1366
-msgid "Edge"
-msgstr ""
+#, fuzzy
+msgid "Left Edge Panel"
+msgstr "Kenar Paneli"
 
-#. Translators: the first argument is the current orientation
-#. * (Top, Bottom, Left or Right) and the second argument is the
-#. * type of panel (Expanded Edge, Edge, Floating or Centered).
-#.
+#: gnome-panel/panel-toplevel.c:1370
+#, fuzzy
+msgid "Right Expanded Edge Panel"
+msgstr "Büyültücü boyutu"
+
+#: gnome-panel/panel-toplevel.c:1371
+#, fuzzy
+msgid "Right Centered Panel"
+msgstr "Hizalanmış Panel"
+
 #: gnome-panel/panel-toplevel.c:1372
-#, fuzzy, c-format
-msgid "%s %s Panel"
-msgstr "Panel"
+#, fuzzy
+msgid "Right Floating Panel"
+msgstr "_Yüzen Panel"
 
-#: gnome-panel/panel-toplevel.c:3295
+#: gnome-panel/panel-toplevel.c:1373
+#, fuzzy
+msgid "Right Edge Panel"
+msgstr "Kenar Paneli"
+
+#: gnome-panel/panel-toplevel.c:3417
 #, fuzzy
 msgid "Name"
 msgstr "İsmine Göre"
 
-#: gnome-panel/panel-toplevel.c:3296
+#: gnome-panel/panel-toplevel.c:3418
 #, fuzzy
 msgid "The name of this panel"
 msgstr "Bu panelin kipi"
 
-#: gnome-panel/panel-toplevel.c:3305
+#: gnome-panel/panel-toplevel.c:3427
 #, fuzzy
 msgid "Expand"
 msgstr "Büyültücü boyutu"
 
-#: gnome-panel/panel-toplevel.c:3306
+#: gnome-panel/panel-toplevel.c:3428
 msgid "Expand to take up the full monitor width/height"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3316
+#: gnome-panel/panel-toplevel.c:3438
 #, fuzzy
 msgid "The orientation of the panel"
 msgstr "Bu panelin şuanki durumu"
 
-#: gnome-panel/panel-toplevel.c:3327
+#: gnome-panel/panel-toplevel.c:3449
 #, fuzzy
 msgid "The height (or width when vertical) of the panel"
 msgstr "Bu panelin şuanki durumu"
 
-#: gnome-panel/panel-toplevel.c:3339
+#: gnome-panel/panel-toplevel.c:3461
 #, fuzzy
 msgid "X position"
 msgstr "Konum:"
 
-#: gnome-panel/panel-toplevel.c:3340
+#: gnome-panel/panel-toplevel.c:3462
 msgid "The X position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3351
+#: gnome-panel/panel-toplevel.c:3473
 msgid "X centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3352
+#: gnome-panel/panel-toplevel.c:3474
 msgid "The x co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3361
+#: gnome-panel/panel-toplevel.c:3483
 #, fuzzy
 msgid "Y position"
 msgstr "Konum:"
 
-#: gnome-panel/panel-toplevel.c:3362
+#: gnome-panel/panel-toplevel.c:3484
 msgid "The Y position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3373
+#: gnome-panel/panel-toplevel.c:3495
 msgid "Y centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3374
+#: gnome-panel/panel-toplevel.c:3496
 msgid "The y co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3383
+#: gnome-panel/panel-toplevel.c:3505
 msgid "Xinerama monitor"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3384
+#: gnome-panel/panel-toplevel.c:3506
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3395
+#: gnome-panel/panel-toplevel.c:3517
 #, fuzzy
 msgid "Auto hide"
 msgstr "Otomatik _gizle"
 
-#: gnome-panel/panel-toplevel.c:3396
+#: gnome-panel/panel-toplevel.c:3518
 #, fuzzy
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "İmleç üzerindeyken paneli yükselt"
 
-#: gnome-panel/panel-toplevel.c:3405
+#: gnome-panel/panel-toplevel.c:3527
 #, fuzzy
 msgid "Hide delay"
 msgstr "Gizli"
 
-#: gnome-panel/panel-toplevel.c:3406
+#: gnome-panel/panel-toplevel.c:3528
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3417
+#: gnome-panel/panel-toplevel.c:3539
 msgid "Un-hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3418
+#: gnome-panel/panel-toplevel.c:3540
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3429
+#: gnome-panel/panel-toplevel.c:3551
 #, fuzzy
 msgid "Auto-hide size"
 msgstr "Otomatik _gizle"
 
-#: gnome-panel/panel-toplevel.c:3430
+#: gnome-panel/panel-toplevel.c:3552
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3441
+#: gnome-panel/panel-toplevel.c:3563
 #, fuzzy
 msgid "Animate"
 msgstr "Canlandırma"
 
-#: gnome-panel/panel-toplevel.c:3442
+#: gnome-panel/panel-toplevel.c:3564
 msgid "Enable hiding/showing animations"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3451
+#: gnome-panel/panel-toplevel.c:3573
 #, fuzzy
 msgid "Animation Speed"
 msgstr "Canlandırma _Hızı:"
 
-#: gnome-panel/panel-toplevel.c:3452
+#: gnome-panel/panel-toplevel.c:3574
 msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3584
 #, fuzzy
 msgid "Buttons Enabled"
 msgstr "Gizleme düğmeleri açık"
 
-#: gnome-panel/panel-toplevel.c:3463
+#: gnome-panel/panel-toplevel.c:3585
 #, fuzzy
 msgid "Enable hide/show buttons"
 msgstr "Gizle düğmesini etkinleştir"
 
-#: gnome-panel/panel-toplevel.c:3472
+#: gnome-panel/panel-toplevel.c:3594
 msgid "Arrows Enabled"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3595
 #, fuzzy
 msgid "Enable arrows on hide/show buttons"
 msgstr "Gizli düğmelerde _oklar"
@@ -2881,20 +2902,22 @@ msgstr ""
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:102 gnome-panel/panel-util.c:132
-#: gnome-panel/panel-util.c:157
+#: gnome-panel/panel-util.c:107 gnome-panel/panel-util.c:137
+#: gnome-panel/panel-util.c:162
 msgid "Help document not found"
 msgstr "Yardım dosyası bulunamadı"
 
-#: gnome-panel/panel-util.c:171
+#: gnome-panel/panel-util.c:176
 msgid "No document to show"
 msgstr "Gösterilecek belge yok"
 
-#: gnome-panel/panel-util.c:928
-msgid ""
-"<b>Cannot execute xscreensaver</b>\n"
-"\n"
-"Details: xscreensaver-command not found"
+#: gnome-panel/panel-util.c:933
+msgid "Cannot execute xscreensaver"
+msgstr "xscreensaver çalıştırılamıyor"
+
+#: gnome-panel/panel-util.c:934
+#, fuzzy
+msgid "Details: xscreensaver-command not found"
 msgstr ""
 "<b>xscreensaver(ekran koruyucusu) başlatılamadı </b>\n"
 "\n"
@@ -3008,6 +3031,54 @@ msgstr "Kocaman"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Minicik"
+
+#~ msgid ""
+#~ "<b>Cannot launch icon</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b> İkon başlatılamadı </b> \n"
+#~ "\n"
+#~ "Ayrıntılar: %s"
+
+#~ msgid ""
+#~ "<b>Can't execute 'About GNOME'</b>\n"
+#~ "\n"
+#~ "Details: %s probably does not exist"
+#~ msgstr ""
+#~ "<b> GNOME Hakkında çalışamıyor</b>\n"
+#~ "\n"
+#~ "Ayrıntılar: %s bulunamıyor"
+
+#~ msgid ""
+#~ "<b>Can't launch entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b> Girdi yüklenemiyor </b>\n"
+#~ "\n"
+#~ "Ayrıntılar: %s "
+
+#~ msgid ""
+#~ "<b>Can't load entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Girdi yüklenemiyor</b>\n"
+#~ "\n"
+#~ "Ayrıntılar: %s "
+
+#, fuzzy
+#~ msgid "Floating"
+#~ msgstr "Yüzen Panel"
+
+#, fuzzy
+#~ msgid "Centered"
+#~ msgstr "İnternet"
+
+#, fuzzy
+#~ msgid "%s %s Panel"
+#~ msgstr "Panel"
 
 #~ msgid ""
 #~ "<b>Failed to run this program</b>\n"
@@ -3382,14 +3453,8 @@ msgstr "Minicik"
 #~ msgid "No panel found\n"
 #~ msgstr "Panel bulunamadı\n"
 
-#~ msgid "Aligned Panel"
-#~ msgstr "Hizalanmış Panel"
-
 #~ msgid "GNOME Aligned Panel"
 #~ msgstr "GNOME Hizalanmış Paneli"
-
-#~ msgid "Edge Panel"
-#~ msgstr "Kenar Paneli"
 
 #~ msgid "GNOME Edge Panel"
 #~ msgstr "GNOME Kenar Paneli"
@@ -3414,9 +3479,6 @@ msgstr "Minicik"
 
 #~ msgid "Create edge panel"
 #~ msgstr "Köşe paneli oluştur"
-
-#~ msgid "_Floating Panel"
-#~ msgstr "_Yüzen Panel"
 
 #~ msgid "Create floating panel"
 #~ msgstr "Yüzen panel oluştur"
@@ -3502,9 +3564,6 @@ msgstr "Minicik"
 
 #~ msgid "Floating panel"
 #~ msgstr "Yüzen panel"
-
-#~ msgid "Corner Panel"
-#~ msgstr "Köşe Paneli"
 
 #~ msgid "Show the program listing by default when opening the Run box"
 #~ msgstr "Çalıştır kutusu açılınca program listesini öntanımlı olarak göster"
@@ -3842,12 +3901,6 @@ msgstr "Minicik"
 #~ msgid "_Known Applications >>"
 #~ msgstr "Uygulamalar"
 
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "'GNOME Hakkında' çalıştırılamadı"
-
-#~ msgid "Cannot execute xscreensaver"
-#~ msgstr "xscreensaver çalıştırılamıyor"
-
 #~ msgid "Password:"
 #~ msgstr "Parola:"
 
@@ -3885,19 +3938,12 @@ msgstr "Minicik"
 #~ msgstr "Kayan panel"
 
 #, fuzzy
-#~ msgid "Gnome Floating Panel"
-#~ msgstr "Yüzen panel"
-
-#, fuzzy
 #~ msgid "Global Panel Properties"
 #~ msgstr "Panel özellikleri"
 
 #, fuzzy
 #~ msgid "Panel Settings"
 #~ msgstr "Ses Ayarları"
-
-#~ msgid "Cannot launch nautilus!"
-#~ msgstr "Nautilus çalıştırılamadı!"
 
 #~ msgid "Reread all menus"
 #~ msgstr "Tüm menüleri tekrar oku"

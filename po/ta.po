@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Tamil Gnome Translation v. 1.7\n"
-"POT-Creation-Date: 2003-06-06 15:52+0100\n"
+"POT-Creation-Date: 2003-06-12 17:49+0100\n"
 "PO-Revision-Date: 2001-10-10 00:04-0500\n"
 "Last-Translator: Dinesh Nadarajah <n_dinesh@yahoo.com>\n"
 "Language-Team: Tamil <tamilinux@yahoogroups.com>\n"
@@ -334,7 +334,7 @@ msgstr "பற்றி..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:742 gnome-panel/menu.c:3037
+#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:748 gnome-panel/menu.c:3088
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 #, fuzzy
@@ -483,7 +483,7 @@ msgstr "பொதுமை"
 # gnome-hint/gnome-hint-properties.c:146 panel/menu-properties.c:602
 # panel/menu-properties.c:640 panel/panel-util.c:204
 # panel/panel_config.c:1642 panel/swallow.c:265
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:267
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:272
 msgid "Browse"
 msgstr "மேலோடு..."
 
@@ -770,7 +770,7 @@ msgstr ""
 
 # applets/tasklist/tasklist_properties.c:276 panel/menu.c:4778
 #: applets/wncklet/window-list.glade.h:14 gnome-panel/button-widget.c:856
-#: gnome-panel/panel-toplevel.c:3326
+#: gnome-panel/panel-toplevel.c:3448
 #, fuzzy
 msgid "Size"
 msgstr "அளவு"
@@ -1057,7 +1057,7 @@ msgid "Whether or not to draw an arrow indicator"
 msgstr ""
 
 # panel/menu.c:4782
-#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3315
+#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3437
 #, fuzzy
 msgid "Orientation"
 msgstr "திசை அமைவு"
@@ -1168,13 +1168,13 @@ msgstr "மறைப்பு-பொத்தான் திசையை இய
 
 # panel/drawer.c:187 panel/drawer.c:321 panel/gnome-panel-properties.c:583
 # panel/menu.c:4886
-#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3134
+#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3185
 msgid "Drawer"
 msgstr "இழுப்பறை"
 
 # panel/menu.c:5103
-#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:740 gnome-panel/menu.c:1545
-#: gnome-panel/menu.c:2991 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:746 gnome-panel/menu.c:1596
+#: gnome-panel/menu.c:3042 gnome-panel/panel-action-button.c:91
 #, fuzzy
 msgid "_Properties"
 msgstr "பண்புகள்"
@@ -1469,18 +1469,24 @@ msgstr ""
 "%s"
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/launcher.c:173
-#, fuzzy, c-format
-msgid ""
-"<b>Cannot launch icon</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:172
+#, fuzzy
+msgid "Cannot launch icon"
 msgstr ""
 "குறும்படத்தை இயக்க முடியாது\n"
 "%s"
 
+#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1092
+#: gnome-panel/menu.c:374 gnome-panel/menu.c:404 gnome-panel/menu.c:421
+#: gnome-panel/menu.c:1127 gnome-panel/menu.c:1236 gnome-panel/menu.c:1268
+#: gnome-panel/menu.c:1286 gnome-panel/menu-ditem.c:123
+#: gnome-panel/menu-ditem.c:501 gnome-panel/panel-run-dialog.c:278
+#: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:76
+msgid "Details"
+msgstr ""
+
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/launcher.c:218
+#: gnome-panel/launcher.c:224
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1489,47 +1495,47 @@ msgstr ""
 "குறும்படத்தை இயக்க முடியாது\n"
 "%s"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:415
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:429
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: gnome-panel/launcher.c:525
+#: gnome-panel/launcher.c:531
 #, fuzzy, c-format
 msgid "Help on %s _Application"
 msgstr "செயல்பாடு"
 
 # panel/launcher.c:561
-#: gnome-panel/launcher.c:645 gnome-panel/menu-ditem.c:180
-#: gnome-panel/menu-ditem.c:257
+#: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:187
+#: gnome-panel/menu-ditem.c:264
 #, fuzzy
 msgid "Launcher Properties"
 msgstr "தொடங்கல் பண்புகள்"
 
-#: gnome-panel/launcher.c:805
+#: gnome-panel/launcher.c:811
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr ""
 
 # panel/launcher.c:709
-#: gnome-panel/launcher.c:865 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:871 gnome-panel/menu-ditem.c:538
 #, fuzzy
 msgid "Create Launcher"
 msgstr "தொடங்கல் குறும்பயனை படை"
 
-#: gnome-panel/launcher.c:1086 gnome-panel/menu.c:1230
-#: gnome-panel/panel-util.c:76
-#, c-format
-msgid ""
-"<b>Cannot display help document</b>\n"
-"\n"
-"Details: %s"
+# panel/launcher.c:77
+#: gnome-panel/launcher.c:1091 gnome-panel/menu.c:1267
+#: gnome-panel/panel-util.c:75
+#, fuzzy
+msgid "Cannot display help document"
 msgstr ""
+"%s காண்பிக்க முடியாது\n"
+"%s"
 
 # gsm/main.c:65
 #: gnome-panel/main.c:104
@@ -1538,7 +1544,7 @@ msgid "Specify a profile name to load"
 msgstr "ஏற்ற வேண்டிய அமர்வின் பெயரை குறிப்பிடு"
 
 # panel/foobar-widget.c:395
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3168
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3219
 #: gnome-panel/panel-menu-bar.c:161
 msgid "Log Out"
 msgstr "பயனர் முடித்தல்"
@@ -1575,7 +1581,7 @@ msgid "Screenshot"
 msgstr "திரையின்-படம்"
 
 # panel/gnome-panel-screenshot.glade.h:11
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3369
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3420
 #: gnome-panel/panel-menu-bar.c:140
 #, fuzzy
 msgid "Take a screenshot of your desktop"
@@ -1585,7 +1591,7 @@ msgstr "திரையின்-படத்தை கணிமேசையி�
 msgid "Search"
 msgstr ""
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3350
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3401
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
@@ -1646,208 +1652,202 @@ msgstr "கனோம் பலகை"
 msgid "End world hunger"
 msgstr "உலக பசியை நீக்கு"
 
+# panel/menu.c:286
 #: gnome-panel/menu.c:373
-#, c-format
-msgid ""
-"<b>Can't execute 'About GNOME'</b>\n"
-"\n"
-"Details: %s probably does not exist"
+msgid "Can't execute 'About GNOME'"
+msgstr "'கனோமை பற்றி' என்ற நிரலை செயல்படுத்த முடியாது"
+
+#: gnome-panel/menu.c:375
+msgid "probably does not exist"
 msgstr ""
 
-#: gnome-panel/menu.c:397
-#, c-format
-msgid ""
-"<b>Can't launch entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
+# panel/menu.c:5040
+#: gnome-panel/menu.c:403
+#, fuzzy
+msgid "Can't launch entry"
+msgstr "gmenu'வைப் படைக்க முடியவில்லை!"
 
-# panel/menu.c:307 panel/menu.c:1042 panel/menu.c:1066 panel/menu.c:2260
-#: gnome-panel/menu.c:407 gnome-panel/menu.c:1204 gnome-panel/menu.c:1241
-#, fuzzy, c-format
-msgid ""
-"<b>Can't load entry</b>\n"
-"\n"
-"Details: %s"
-msgstr "புலத்தை ஏற்றமுடியாது"
+# panel/swallow.c:263
+#: gnome-panel/menu.c:420 gnome-panel/menu.c:1235 gnome-panel/menu.c:1285
+#, fuzzy
+msgid "Can't load entry"
+msgstr "கட்டளை (கட்டாயமல்ல)"
 
 # panel/menu.c:937
-#: gnome-panel/menu.c:1108
-#, fuzzy, c-format
-msgid ""
-"<b>Could not remove the menu item %s</b>\n"
-"\n"
-"Details: %s\n"
+#: gnome-panel/menu.c:1125
+#, fuzzy
+msgid "Could not remove the menu item"
 msgstr "பட்டி உருப்படி %s: %s கழட்ட முடியவில்லை\n"
 
 # panel/menu.c:944
-#: gnome-panel/menu.c:1118
+#: gnome-panel/menu.c:1142
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "பாதையில் இருந்து கோப்பின் பெயரை கண்டுபிடிக்க முடியவில்லை: %s"
 
 # panel/menu.c:951
-#: gnome-panel/menu.c:1125
+#: gnome-panel/menu.c:1149
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "பாதையில் இருந்து அடைவின் பெயரை கண்டுபிடிக்க முடியவில்லை: %s"
 
+#: gnome-panel/menu.c:1218
+msgid "Can't add to run box"
+msgstr ""
+
 # panel/menu.c:1037
-#: gnome-panel/menu.c:1195
+#: gnome-panel/menu.c:1219
 #, fuzzy
-msgid ""
-"<b>Can't add to run box</b>\n"
-"\n"
-"Details: No 'Exec' or 'URL' field in entry"
+msgid "Details: No 'Exec' or 'URL' field in entry"
 msgstr "'Exec' அல்லது 'URL' புலத்தில் இல்லை"
 
 # panel/menu.c:1627
-#: gnome-panel/menu.c:1475
+#: gnome-panel/menu.c:1526
 msgid "Add this launcher to panel"
 msgstr "இந்த ஆரம்பியை பலகையிள் போடு"
 
 # panel/menu.c:1653
-#: gnome-panel/menu.c:1483
+#: gnome-panel/menu.c:1534
 msgid "Remove this item"
 msgstr "இந்த உருப்படியை நீக்கு"
 
 # panel/menu.c:1671
-#: gnome-panel/menu.c:1499
+#: gnome-panel/menu.c:1550
 msgid "Put into run dialog"
 msgstr "'run dialog' இல் போடு"
 
 # panel/launcher.c:482 panel/menu.c:1697
-#: gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:1568
 #, c-format
 msgid "Help on %s"
 msgstr "%s பற்றி உதவி"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: gnome-panel/menu.c:1518
+#: gnome-panel/menu.c:1569
 msgid "Application"
 msgstr "செயல்பாடு"
 
 # panel/menu.c:1750
-#: gnome-panel/menu.c:1564
+#: gnome-panel/menu.c:1615
 #, fuzzy
 msgid "Entire menu"
 msgstr "பட்டிகல் அனைத்தும்"
 
 # panel/menu.c:1760
-#: gnome-panel/menu.c:1573
+#: gnome-panel/menu.c:1624
 msgid "Add this as drawer to panel"
 msgstr "இதை ஓர் இழுப்பறையாக பலகையில் போடு"
 
 # panel/menu.c:1769
-#: gnome-panel/menu.c:1581
+#: gnome-panel/menu.c:1632
 msgid "Add this as menu to panel"
 msgstr "இதை ஓர் பட்டியாக பலகையில் போடு"
 
 # panel/menu.c:1789
-#: gnome-panel/menu.c:1589
+#: gnome-panel/menu.c:1640
 msgid "Add new item to this menu"
 msgstr "புதிய உருப்படியை பட்டியில் போடு"
 
 # panel/menu.c:5103
-#: gnome-panel/menu.c:1615
+#: gnome-panel/menu.c:1666
 msgid "Properties"
 msgstr "பண்புகள்"
 
-#: gnome-panel/menu.c:2541 gnome-panel/menu.c:2596
+#: gnome-panel/menu.c:2592 gnome-panel/menu.c:2647
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr ""
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: gnome-panel/menu.c:2782 gnome-panel/menu.c:2787 gnome-panel/menu.c:3306
+#: gnome-panel/menu.c:2833 gnome-panel/menu.c:2838 gnome-panel/menu.c:3357
 #: gnome-panel/panel-menu-bar.c:183
 #, fuzzy
 msgid "Applications"
 msgstr "செயல்பாடு"
 
 # panel/menu.c:3809 panel/menu.c:3818 panel/menu.c:5411
-#: gnome-panel/menu.c:2830 gnome-panel/menu.c:2836 gnome-panel/menu.c:3231
+#: gnome-panel/menu.c:2881 gnome-panel/menu.c:2887 gnome-panel/menu.c:3282
 #, fuzzy
 msgid "KDE Menu"
 msgstr "KDE பட்டிகள்"
 
 # panel/menu.c:3915
-#: gnome-panel/menu.c:2888
+#: gnome-panel/menu.c:2939
 msgid "You cannot remove your last panel."
 msgstr "உங்கள் கடைசிப் பலகையை நீக்க முடியாது"
 
 # panel/menu.c:5023
-#: gnome-panel/menu.c:2944
+#: gnome-panel/menu.c:2995
 #, fuzzy
 msgid "_Delete This Panel..."
 msgstr "இந்த பலகையை நீக்கு..."
 
 # panel/menu.c:5025 panel/menu.c:5086
-#: gnome-panel/menu.c:2947 gnome-panel/menu.c:2977
+#: gnome-panel/menu.c:2998 gnome-panel/menu.c:3028
 #, fuzzy
 msgid "_Delete This Panel"
 msgstr "இந்த பலகையை நீக்கு"
 
 # panel/menu.c:4962 panel/menu.c:4967 panel/menu.c:5053
-#: gnome-panel/menu.c:2961
+#: gnome-panel/menu.c:3012
 #, fuzzy
 msgid "_Add to Panel"
 msgstr "பலகையில் போடு"
 
 # gsm/splash.c:65
-#: gnome-panel/menu.c:3004
+#: gnome-panel/menu.c:3055
 #, fuzzy
 msgid "_New Panel"
 msgstr "பலகை"
 
 # panel/menu.c:5266
-#: gnome-panel/menu.c:3047
+#: gnome-panel/menu.c:3098
 #, fuzzy
 msgid "_About Panels"
 msgstr "பலகையைப் பற்றி..."
 
 # gnome-about/gnome-about.c:465 panel/foobar-widget.c:265
-#: gnome-panel/menu.c:3060
+#: gnome-panel/menu.c:3111
 #, fuzzy
 msgid "About _GNOME"
 msgstr "கனோமைப் பற்றி"
 
 # panel/menu.c:4866
-#: gnome-panel/menu.c:3100
+#: gnome-panel/menu.c:3151
 msgid "Launcher..."
 msgstr "தொடங்கர்..."
 
 # panel/menu.c:4875
-#: gnome-panel/menu.c:3108
+#: gnome-panel/menu.c:3159
 msgid "Launcher from menu"
 msgstr "பட்டியில் இருந்து தொடங்கர்"
 
 # panel/menu.c:3964 panel/menu.c:3969 panel/menu.c:5654 panel/menu.c:5681
 # panel/menu.c:5817
-#: gnome-panel/menu.c:3117
+#: gnome-panel/menu.c:3168
 msgid "Main Menu"
 msgstr "தலைப்புப் பட்டி"
 
 # panel/menu-properties.c:599
-#: gnome-panel/menu.c:3126
+#: gnome-panel/menu.c:3177
 #, fuzzy
 msgid "Menu Bar"
 msgstr "பட்டி பாதை"
 
 # panel/foobar-widget.c:385
-#: gnome-panel/menu.c:3156 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3207 gnome-panel/panel-menu-bar.c:152
 msgid "Lock Screen"
 msgstr "திரையை பூட்டு"
 
 # panel/menu.c:5330
-#: gnome-panel/menu.c:3162
+#: gnome-panel/menu.c:3213
 #, fuzzy
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Lock the screen so that you can temporairly leave your computer"
 
 # panel/menu.c:5345
-#: gnome-panel/menu.c:3174
+#: gnome-panel/menu.c:3225
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1856,37 +1856,34 @@ msgstr ""
 "computer"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: gnome-panel/menu.c:3331 gnome-panel/panel-menu-bar.c:110
+#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:110
 #, fuzzy
 msgid "Run Application..."
 msgstr "செயல்பாடு"
 
-#: gnome-panel/menu.c:3338 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
 msgstr ""
 
-#: gnome-panel/menu.c:3347 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3398 gnome-panel/panel-menu-bar.c:123
 msgid "Search for Files..."
 msgstr ""
 
 # panel/gnome-panel-screenshot.glade.h:7
-#: gnome-panel/menu.c:3366 gnome-panel/panel-menu-bar.c:138
+#: gnome-panel/menu.c:3417 gnome-panel/panel-menu-bar.c:138
 #, fuzzy
 msgid "Screenshot..."
 msgstr "திரையின்-படம்"
 
 # gsm/splash.c:68 panel/menu.c:5225 panel/menu.c:5230 panel/menu.c:5598
-#: gnome-panel/menu.c:3384
+#: gnome-panel/menu.c:3435
 msgid "Desktop"
 msgstr "கனிமேசை"
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/menu-ditem.c:123
-#, fuzzy, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:122
+#, fuzzy
+msgid "Cannot save changes to launcher"
 msgstr ""
 "குறும்படத்தை இயக்க முடியாது\n"
 "%s"
@@ -1895,31 +1892,27 @@ msgstr ""
 # panel/menu-properties.c:618 panel/menu.c:1524 panel/menu.c:3122
 # panel/menu.c:3197 panel/menu.c:3202 panel/menu.c:4824 panel/menu.c:5667
 # panel/menu.c:5801 panel/menu.c:5821
-#: gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:297
 msgid "Menu"
 msgstr "பட்டி"
 
-#: gnome-panel/menu-ditem.c:447
+#: gnome-panel/menu-ditem.c:454
 msgid "You have to specify a name for the launcher."
 msgstr ""
 
-#: gnome-panel/menu-ditem.c:463
+#: gnome-panel/menu-ditem.c:470
 msgid "You have to specify a valid URL or command."
 msgstr ""
 
 # panel/launcher.c:103 panel/launcher.c:148
-#. class
-#: gnome-panel/menu-ditem.c:494
-#, fuzzy, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:500
+#, fuzzy
+msgid "Cannot save menu item to disk"
 msgstr ""
 "குறும்படத்தை இயக்க முடியாது\n"
 "%s"
 
-#: gnome-panel/menu-ditem.c:519
+#: gnome-panel/menu-ditem.c:531
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -2477,7 +2470,6 @@ msgstr "பின்னணி வகை"
 
 # panel/gnome-panel-properties.c:1692
 #: gnome-panel/panel-properties-dialog.glade.h:12
-#: gnome-panel/panel-toplevel.c:1345
 #: libpanel-applet/panel-test-applets.glade.h:2
 #, fuzzy
 msgid "Bottom"
@@ -2506,7 +2498,6 @@ msgstr "பின்னணியின் அமைப்புகள்"
 
 # gnome-terminal/gnome-terminal.c:1084
 #: gnome-panel/panel-properties-dialog.glade.h:17
-#: gnome-panel/panel-toplevel.c:1348
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "இடது"
@@ -2541,7 +2532,6 @@ msgstr "ஒரு நிறத்தை தேர்ந்தெடு"
 
 # gnome-terminal/gnome-terminal.c:1085
 #: gnome-panel/panel-properties-dialog.glade.h:20
-#: gnome-panel/panel-toplevel.c:1351
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "வலது"
@@ -2575,7 +2565,6 @@ msgid "St_retch"
 msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#: gnome-panel/panel-toplevel.c:1342
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr ""
@@ -2623,38 +2612,32 @@ msgid "Open Recent"
 msgstr ""
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/panel-run-dialog.c:276
-#, fuzzy, c-format
-msgid ""
-"<b>Error launching command: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:277
+#, fuzzy
+msgid "Error launching command"
 msgstr ""
 "குறும்படத்தை இயக்க முடியாது\n"
 "%s"
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/panel-run-dialog.c:305
-#, fuzzy, c-format
-msgid ""
-"<b>Error displaying location: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:311
+#, fuzzy
+msgid "Error displaying location"
 msgstr ""
 "குறும்படத்தை இயக்க முடியாது\n"
 "%s"
 
-#: gnome-panel/panel-run-dialog.c:1035
+#: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
 msgstr ""
 
 # panel/gnome-run.c:881
-#: gnome-panel/panel-run-dialog.c:1214
+#: gnome-panel/panel-run-dialog.c:1224
 #, fuzzy, c-format
 msgid "Will run command: '%s'"
 msgstr "'%s' இயக்கும்"
 
-#: gnome-panel/panel-run-dialog.c:1220 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1230 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
 msgstr ""
 
@@ -2778,203 +2761,276 @@ msgstr ""
 msgid "_Force quit"
 msgstr ""
 
+# panel/menu.c:244
+#: gnome-panel/panel-toplevel.c:1349
+#, fuzzy
+msgid "Top Expanded Edge Panel"
+msgstr "கனோம் பலகை"
+
+# panel/menu.c:3562 panel/menu.c:3567 panel/menu.c:5076
+#: gnome-panel/panel-toplevel.c:1350
+#, fuzzy
+msgid "Top Centered Panel"
+msgstr "பலகையைப் படை"
+
 # panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
 # panel/panel_config.c:1920
-#: gnome-panel/panel-toplevel.c:1359
+#: gnome-panel/panel-toplevel.c:1351
 #, fuzzy
-msgid "Floating"
+msgid "Top Floating Panel"
 msgstr "மிதவை பலகை"
 
-# applets/gen_util/clock.c:869
-#: gnome-panel/panel-toplevel.c:1362
+# panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
+# panel/panel_config.c:1887
+#: gnome-panel/panel-toplevel.c:1352
 #, fuzzy
-msgid "Centered"
-msgstr "இணையக (Internet) நேரம்"
+msgid "Top Edge Panel"
+msgstr "ஓரப் பலகை"
 
+# panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
+# panel/panel_config.c:1887
+#: gnome-panel/panel-toplevel.c:1356
+#, fuzzy
+msgid "Bottom Expanded Edge Panel"
+msgstr "ஓரப் பலகை"
+
+# panel/menu.c:3562 panel/menu.c:3567 panel/menu.c:5076
+#: gnome-panel/panel-toplevel.c:1357
+#, fuzzy
+msgid "Bottom Centered Panel"
+msgstr "பலகையைப் படை"
+
+# panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
+# panel/panel_config.c:1920
+#: gnome-panel/panel-toplevel.c:1358
+#, fuzzy
+msgid "Bottom Floating Panel"
+msgstr "மிதவை பலகை"
+
+# panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
+# panel/panel_config.c:1887
+#: gnome-panel/panel-toplevel.c:1359
+#, fuzzy
+msgid "Bottom Edge Panel"
+msgstr "ஓரப் பலகை"
+
+# panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
+# panel/panel_config.c:1887
+#: gnome-panel/panel-toplevel.c:1363
+#, fuzzy
+msgid "Left Expanded Edge Panel"
+msgstr "ஓரப் பலகை"
+
+# panel/menu.c:3562 panel/menu.c:3567 panel/menu.c:5076
 #: gnome-panel/panel-toplevel.c:1364
-msgid "Expanded Edge"
-msgstr ""
+#, fuzzy
+msgid "Left Centered Panel"
+msgstr "பலகையைப் படை"
 
+# panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
+# panel/panel_config.c:1920
+#: gnome-panel/panel-toplevel.c:1365
+#, fuzzy
+msgid "Left Floating Panel"
+msgstr "மிதவை பலகை"
+
+# panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
+# panel/panel_config.c:1887
 #: gnome-panel/panel-toplevel.c:1366
-msgid "Edge"
+#, fuzzy
+msgid "Left Edge Panel"
+msgstr "ஓரப் பலகை"
+
+#: gnome-panel/panel-toplevel.c:1370
+msgid "Right Expanded Edge Panel"
 msgstr ""
 
-# panel/applet.c:500 panel/applet.c:504 panel/menu.c:5196 panel/menu.c:5201
-# panel/menu.c:5589
-#. Translators: the first argument is the current orientation
-#. * (Top, Bottom, Left or Right) and the second argument is the
-#. * type of panel (Expanded Edge, Edge, Floating or Centered).
-#.
+# panel/menu.c:3611 panel/menu.c:4709 panel/panel_config.c:1769
+# panel/panel_config.c:1898
+#: gnome-panel/panel-toplevel.c:1371
+#, fuzzy
+msgid "Right Centered Panel"
+msgstr "வரிசைப்படுத்தப்பட்ட பலகை"
+
+# panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
+# panel/panel_config.c:1920
 #: gnome-panel/panel-toplevel.c:1372
-#, fuzzy, c-format
-msgid "%s %s Panel"
-msgstr "பலகை"
+#, fuzzy
+msgid "Right Floating Panel"
+msgstr "மிதவை பலகை"
+
+# panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
+# panel/panel_config.c:1887
+#: gnome-panel/panel-toplevel.c:1373
+#, fuzzy
+msgid "Right Edge Panel"
+msgstr "ஓரப் பலகை"
 
 # panel/foobar-widget.c:345
-#: gnome-panel/panel-toplevel.c:3295
+#: gnome-panel/panel-toplevel.c:3417
 #, fuzzy
 msgid "Name"
 msgstr "`பெயர்ப்படி"
 
 # panel/basep-widget.c:884
-#: gnome-panel/panel-toplevel.c:3296
+#: gnome-panel/panel-toplevel.c:3418
 #, fuzzy
 msgid "The name of this panel"
 msgstr "இந்தப் பலகையை மறை"
 
-#: gnome-panel/panel-toplevel.c:3305
+#: gnome-panel/panel-toplevel.c:3427
 msgid "Expand"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3306
+#: gnome-panel/panel-toplevel.c:3428
 msgid "Expand to take up the full monitor width/height"
 msgstr ""
 
 # panel/gnome-panel-screenshot.glade.h:11
-#: gnome-panel/panel-toplevel.c:3316
+#: gnome-panel/panel-toplevel.c:3438
 #, fuzzy
 msgid "The orientation of the panel"
 msgstr "திரையின்-படத்தை கணிமேசையில் சேமி"
 
 # panel/gnome-panel-screenshot.glade.h:11
-#: gnome-panel/panel-toplevel.c:3327
+#: gnome-panel/panel-toplevel.c:3449
 #, fuzzy
 msgid "The height (or width when vertical) of the panel"
 msgstr "திரையின்-படத்தை கணிமேசையில் சேமி"
 
 # panel/panel_config.c:806
-#: gnome-panel/panel-toplevel.c:3339
+#: gnome-panel/panel-toplevel.c:3461
 #, fuzzy
 msgid "X position"
 msgstr "பலகையின் இடம்"
 
 # help-browser/gnome-help-browser.c:131
-#: gnome-panel/panel-toplevel.c:3340
+#: gnome-panel/panel-toplevel.c:3462
 #, fuzzy
 msgid "The X position of the panel"
 msgstr "சாளரத்தின் வாிசை(X) இடம்"
 
-#: gnome-panel/panel-toplevel.c:3351
+#: gnome-panel/panel-toplevel.c:3473
 msgid "X centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3352
+#: gnome-panel/panel-toplevel.c:3474
 msgid "The x co-ordinate is relative to center screen"
 msgstr ""
 
 # panel/panel_config.c:806
-#: gnome-panel/panel-toplevel.c:3361
+#: gnome-panel/panel-toplevel.c:3483
 #, fuzzy
 msgid "Y position"
 msgstr "பலகையின் இடம்"
 
 # help-browser/gnome-help-browser.c:132
-#: gnome-panel/panel-toplevel.c:3362
+#: gnome-panel/panel-toplevel.c:3484
 #, fuzzy
 msgid "The Y position of the panel"
 msgstr "சாளரத்தின் நெடுவாிசை(Y) இடம்"
 
-#: gnome-panel/panel-toplevel.c:3373
+#: gnome-panel/panel-toplevel.c:3495
 msgid "Y centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3374
+#: gnome-panel/panel-toplevel.c:3496
 msgid "The y co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3383
+#: gnome-panel/panel-toplevel.c:3505
 msgid "Xinerama monitor"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3384
+#: gnome-panel/panel-toplevel.c:3506
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr ""
 
 # panel/gnome-panel-properties.c:346 panel/gnome-panel-properties.c:364
 # panel/menu.c:4717
-#: gnome-panel/panel-toplevel.c:3395
+#: gnome-panel/panel-toplevel.c:3517
 #, fuzzy
 msgid "Auto hide"
 msgstr "தன்னியக்க மறை"
 
 # panel/gnome-panel-properties.c:1122
-#: gnome-panel/panel-toplevel.c:3396
+#: gnome-panel/panel-toplevel.c:3518
 #, fuzzy
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "சுண்டெலி மேல்லிருக்கும் போது பலகையை உயர்த்து"
 
 # panel/gnome-panel-properties.c:375
-#: gnome-panel/panel-toplevel.c:3405
+#: gnome-panel/panel-toplevel.c:3527
 #, fuzzy
 msgid "Hide delay"
 msgstr "Hide delay (ms)"
 
-#: gnome-panel/panel-toplevel.c:3406
+#: gnome-panel/panel-toplevel.c:3528
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr ""
 
 # panel/gnome-panel-properties.c:375
-#: gnome-panel/panel-toplevel.c:3417
+#: gnome-panel/panel-toplevel.c:3539
 #, fuzzy
 msgid "Un-hide delay"
 msgstr "Hide delay (ms)"
 
-#: gnome-panel/panel-toplevel.c:3418
+#: gnome-panel/panel-toplevel.c:3540
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 
 # panel/gnome-panel-properties.c:346 panel/gnome-panel-properties.c:364
 # panel/menu.c:4717
-#: gnome-panel/panel-toplevel.c:3429
+#: gnome-panel/panel-toplevel.c:3551
 #, fuzzy
 msgid "Auto-hide size"
 msgstr "தன்னியக்க மறை"
 
-#: gnome-panel/panel-toplevel.c:3430
+#: gnome-panel/panel-toplevel.c:3552
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 
 # panel/gnome-panel-properties.c:1687
-#: gnome-panel/panel-toplevel.c:3441
+#: gnome-panel/panel-toplevel.c:3563
 #, fuzzy
 msgid "Animate"
 msgstr "அசைவூட்டம்"
 
-#: gnome-panel/panel-toplevel.c:3442
+#: gnome-panel/panel-toplevel.c:3564
 msgid "Enable hiding/showing animations"
 msgstr ""
 
 # panel/gnome-panel-properties.c:336
-#: gnome-panel/panel-toplevel.c:3451
+#: gnome-panel/panel-toplevel.c:3573
 #, fuzzy
 msgid "Animation Speed"
 msgstr "அசைவூட்ட வேகம்"
 
-#: gnome-panel/panel-toplevel.c:3452
+#: gnome-panel/panel-toplevel.c:3574
 msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 
 # panel/menu.c:4774
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3584
 #, fuzzy
 msgid "Buttons Enabled"
 msgstr "பொத்தான்களை மறை"
 
 # panel/drawer.c:160
-#: gnome-panel/panel-toplevel.c:3463
+#: gnome-panel/panel-toplevel.c:3585
 #, fuzzy
 msgid "Enable hide/show buttons"
 msgstr "மறைப்பு-பொத்தானை இயலுமைப்படுத்து"
 
 # panel/gnome-panel-properties.c:1110
-#: gnome-panel/panel-toplevel.c:3472
+#: gnome-panel/panel-toplevel.c:3594
 #, fuzzy
 msgid "Arrows Enabled"
 msgstr "கருவித்துணைகள் இயலுமைப்படுத்தப்பட்டுள்ளன"
 
 # panel/panel_config.c:685
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3595
 #, fuzzy
 msgid "Enable arrows on hide/show buttons"
 msgstr "மறைவு பொத்தாகளிள் அம்பை காண்பி"
@@ -3279,20 +3335,22 @@ msgstr ""
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:102 gnome-panel/panel-util.c:132
-#: gnome-panel/panel-util.c:157
+#: gnome-panel/panel-util.c:107 gnome-panel/panel-util.c:137
+#: gnome-panel/panel-util.c:162
 msgid "Help document not found"
 msgstr ""
 
-#: gnome-panel/panel-util.c:171
+#: gnome-panel/panel-util.c:176
 msgid "No document to show"
 msgstr ""
 
-#: gnome-panel/panel-util.c:928
-msgid ""
-"<b>Cannot execute xscreensaver</b>\n"
-"\n"
-"Details: xscreensaver-command not found"
+# panel/menu.c:5178
+#: gnome-panel/panel-util.c:933
+msgid "Cannot execute xscreensaver"
+msgstr "'xscreensaver' செயல்படுத்த முடியாது"
+
+#: gnome-panel/panel-util.c:934
+msgid "Details: xscreensaver-command not found"
 msgstr ""
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
@@ -3418,6 +3476,41 @@ msgstr ""
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr ""
+
+# panel/launcher.c:103 panel/launcher.c:148
+#, fuzzy
+#~ msgid ""
+#~ "<b>Cannot launch icon</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "குறும்படத்தை இயக்க முடியாது\n"
+#~ "%s"
+
+# panel/menu.c:307 panel/menu.c:1042 panel/menu.c:1066 panel/menu.c:2260
+#, fuzzy
+#~ msgid ""
+#~ "<b>Can't load entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr "புலத்தை ஏற்றமுடியாது"
+
+# panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
+# panel/panel_config.c:1920
+#, fuzzy
+#~ msgid "Floating"
+#~ msgstr "மிதவை பலகை"
+
+# applets/gen_util/clock.c:869
+#, fuzzy
+#~ msgid "Centered"
+#~ msgstr "இணையக (Internet) நேரம்"
+
+# panel/applet.c:500 panel/applet.c:504 panel/menu.c:5196 panel/menu.c:5201
+# panel/menu.c:5589
+#, fuzzy
+#~ msgid "%s %s Panel"
+#~ msgstr "பலகை"
 
 # panel/gnome-run.c:236 panel/gnome-run.c:242
 #, fuzzy
@@ -3815,25 +3908,8 @@ msgstr ""
 # panel/menu.c:3611 panel/menu.c:4709 panel/panel_config.c:1769
 # panel/panel_config.c:1898
 #, fuzzy
-#~ msgid "Aligned Panel"
-#~ msgstr "வரிசைப்படுத்தப்பட்ட பலகை"
-
-# panel/menu.c:3611 panel/menu.c:4709 panel/panel_config.c:1769
-# panel/panel_config.c:1898
-#, fuzzy
 #~ msgid "GNOME Aligned Panel"
 #~ msgstr "வரிசைப்படுத்தப்பட்ட பலகை"
-
-# panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
-# panel/panel_config.c:1887
-#, fuzzy
-#~ msgid "Edge Panel"
-#~ msgstr "ஓரப் பலகை"
-
-# panel/menu.c:244
-#, fuzzy
-#~ msgid "GNOME Edge Panel"
-#~ msgstr "கனோம் பலகை"
 
 # panel/menu.c:3619 panel/menu.c:4710 panel/panel_config.c:1775
 # panel/panel_config.c:1909
@@ -3877,12 +3953,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Create edge panel"
 #~ msgstr "பலகையைப் படை"
-
-# panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
-# panel/panel_config.c:1920
-#, fuzzy
-#~ msgid "_Floating Panel"
-#~ msgstr "மிதவை பலகை"
 
 # panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
 # panel/panel_config.c:1920
@@ -4008,11 +4078,6 @@ msgstr ""
 # panel/panel_config.c:1920
 #~ msgid "Floating panel"
 #~ msgstr "மிதவை பலகை"
-
-# panel/menu.c:3562 panel/menu.c:3567 panel/menu.c:5076
-#, fuzzy
-#~ msgid "Corner Panel"
-#~ msgstr "பலகையைப் படை"
 
 # panel/gnome-panel-properties.c:1201 panel/gnome-panel-properties.c:1229
 # panel/gnome-panel-properties.c:1256 panel/gnome-panel-properties.c:1283
@@ -4502,14 +4567,6 @@ msgstr ""
 #~ msgid "_Known Applications >>"
 #~ msgstr "செயல்பாடு"
 
-# panel/menu.c:286
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "'கனோமை பற்றி' என்ற நிரலை செயல்படுத்த முடியாது"
-
-# panel/menu.c:5178
-#~ msgid "Cannot execute xscreensaver"
-#~ msgstr "'xscreensaver' செயல்படுத்த முடியாது"
-
 # applets/gen_util/mailcheck.c:206 applets/gen_util/mailcheck.c:1064
 #~ msgid "Password:"
 #~ msgstr "கடவுச்சொல்:"
@@ -4560,23 +4617,11 @@ msgstr ""
 #~ msgid "Gnome Aligned Panel"
 #~ msgstr "வரிசைப்படுத்தப்பட்ட பலகை"
 
-# panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
-# panel/panel_config.c:1887
-#, fuzzy
-#~ msgid "Gnome Egde Panel"
-#~ msgstr "ஓரப் பலகை"
-
 # panel/menu.c:3619 panel/menu.c:4710 panel/panel_config.c:1775
 # panel/panel_config.c:1909
 #, fuzzy
 #~ msgid "Gnome Sliding Panel"
 #~ msgstr "நழுவும் பலகை"
-
-# panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
-# panel/panel_config.c:1920
-#, fuzzy
-#~ msgid "Gnome Floating Panel"
-#~ msgstr "மிதவை பலகை"
 
 # panel/panel_config.c:1857
 #, fuzzy
@@ -4587,11 +4632,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Panel Settings"
 #~ msgstr "ஒலி அமைப்புகள்"
-
-# panel/menu.c:5040
-#, fuzzy
-#~ msgid "Cannot launch nautilus!"
-#~ msgstr "gmenu'வைப் படைக்க முடியவில்லை!"
 
 # panel/menu.c:5151
 #~ msgid "Reread all menus"
@@ -5928,16 +5968,6 @@ msgstr ""
 #~ "likely just plain not work.  Use at your own risk.\n"
 #~ "\n"
 #~ "Do you really want to run it?"
-
-# panel/launcher.c:77
-#, fuzzy
-#~ msgid ""
-#~ "Cannot load help on %s.\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "%s காண்பிக்க முடியாது\n"
-#~ "%s"
 
 # panel/menu.c:5578
 #~ msgid "Execute a command line"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-06-06 15:52+0100\n"
+"POT-Creation-Date: 2003-06-12 17:49+0100\n"
 "PO-Revision-Date: 2003-05-30 23:52+0100\n"
 "Last-Translator: Dafydd Harries <daf@parnassus.ath.cx>\n"
 "Language-Team: Welsh <gnome-cy@pengwyn.linux.org.uk>\n"
@@ -271,7 +271,7 @@ msgstr "_Ynghylch..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:742 gnome-panel/menu.c:3037
+#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:748 gnome-panel/menu.c:3088
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
@@ -402,7 +402,7 @@ msgstr "<b>Animeiddiad</b>"
 msgid "<b>General</b>"
 msgstr "<b>Cyffredinol</b>"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:267
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:272
 msgid "Browse"
 msgstr "Pori"
 
@@ -649,7 +649,7 @@ msgid "Show windows from a_ll workspaces"
 msgstr "Dangos ffenestri o _bob gweithfan"
 
 #: applets/wncklet/window-list.glade.h:14 gnome-panel/button-widget.c:856
-#: gnome-panel/panel-toplevel.c:3326
+#: gnome-panel/panel-toplevel.c:3448
 msgid "Size"
 msgstr "Maint"
 
@@ -919,7 +919,7 @@ msgstr "Mae Ganddi Saeth"
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Dylir dangos saeth ai peidio"
 
-#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3315
+#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3437
 msgid "Orientation"
 msgstr "Gogwydd"
 
@@ -1005,12 +1005,12 @@ msgstr "Galluogi botwm cuddio"
 msgid "Enable hidebutton arrow"
 msgstr "Galluogi saeth ar y botwm cuddio"
 
-#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3134
+#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3185
 msgid "Drawer"
 msgstr "Drôr"
 
-#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:740 gnome-panel/menu.c:1545
-#: gnome-panel/menu.c:2991 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:746 gnome-panel/menu.c:1596
+#: gnome-panel/menu.c:3042 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "_Priodoleddau"
 
@@ -1252,18 +1252,23 @@ msgstr ""
 "Methu dangos %s\n"
 "%s"
 
-#: gnome-panel/launcher.c:173
-#, c-format
-msgid ""
-"<b>Cannot launch icon</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:172
+#, fuzzy
+msgid "Cannot launch icon"
 msgstr ""
-"<b>Methu lansio eicon</b>\n"
-"\n"
-"Manylion: %s"
+"Methu lansio eicon\n"
+"%s"
 
-#: gnome-panel/launcher.c:218
+#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1092
+#: gnome-panel/menu.c:374 gnome-panel/menu.c:404 gnome-panel/menu.c:421
+#: gnome-panel/menu.c:1127 gnome-panel/menu.c:1236 gnome-panel/menu.c:1268
+#: gnome-panel/menu.c:1286 gnome-panel/menu-ditem.c:123
+#: gnome-panel/menu-ditem.c:501 gnome-panel/panel-run-dialog.c:278
+#: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:76
+msgid "Details"
+msgstr ""
+
+#: gnome-panel/launcher.c:224
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1272,41 +1277,38 @@ msgstr ""
 "Methu lansio eicon\n"
 "%s"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:415
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Dim URI wedi ei ddarparu ar gyfer ffeil bwrdd gwaith y lansiwr panel\n"
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:429
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Methu agor ffeil bwrdd gwaith %s ar gyfer lansiwr panel%s%s\n"
 
-#: gnome-panel/launcher.c:525
+#: gnome-panel/launcher.c:531
 #, c-format
 msgid "Help on %s _Application"
 msgstr "Cymorth ynghylch y _Rhaglen%s"
 
-#: gnome-panel/launcher.c:645 gnome-panel/menu-ditem.c:180
-#: gnome-panel/menu-ditem.c:257
+#: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:187
+#: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Priodoleddau'r Lansiwr"
 
-#: gnome-panel/launcher.c:805
+#: gnome-panel/launcher.c:811
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Nid yw'r allwedd %s wedi ei osod, ni ellir llwytho'r lansiwr\n"
 
-#: gnome-panel/launcher.c:865 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:871 gnome-panel/menu-ditem.c:538
 msgid "Create Launcher"
 msgstr "Creu Lansiwr"
 
-#: gnome-panel/launcher.c:1086 gnome-panel/menu.c:1230
-#: gnome-panel/panel-util.c:76
-#, c-format
-msgid ""
-"<b>Cannot display help document</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:1091 gnome-panel/menu.c:1267
+#: gnome-panel/panel-util.c:75
+#, fuzzy
+msgid "Cannot display help document"
 msgstr ""
 "<b>Methu dangos dogfen gymorth</b>\n"
 "\n"
@@ -1316,7 +1318,7 @@ msgstr ""
 msgid "Specify a profile name to load"
 msgstr "Penodwch enw proffeil i'w lwytho"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3168
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3219
 #: gnome-panel/panel-menu-bar.c:161
 msgid "Log Out"
 msgstr "Allgofnodi"
@@ -1345,7 +1347,7 @@ msgstr "Gorfodi Gadael"
 msgid "Screenshot"
 msgstr "Sgrîn-lun"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3369
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3420
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Tynnu sgrîn-lun o'ch bwrdd gwaith"
@@ -1354,7 +1356,7 @@ msgstr "Tynnu sgrîn-lun o'ch bwrdd gwaith"
 msgid "Search"
 msgstr "Chwilio"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3350
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3401
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Chwilio am ffeiliau, plygellau a dogfenni ar eich cyfrifiadur"
@@ -1405,178 +1407,163 @@ msgid "End world hunger"
 msgstr "Terfynu chwant bwyd byd-eang"
 
 #: gnome-panel/menu.c:373
-#, c-format
-msgid ""
-"<b>Can't execute 'About GNOME'</b>\n"
-"\n"
-"Details: %s probably does not exist"
+msgid "Can't execute 'About GNOME'"
 msgstr ""
-"<b>Methu gweithredu 'Ynghylch GNOME'</b>\n"
-"\n"
-"Manylion: mwy na thebyg, nid yw %s yn bodoli"
 
-#: gnome-panel/menu.c:397
-#, c-format
-msgid ""
-"<b>Can't launch entry</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu.c:375
+msgid "probably does not exist"
 msgstr ""
-"<b>Methu lansio cofnod</b>\n"
-"\n"
-"Manylion: %s"
 
-#: gnome-panel/menu.c:407 gnome-panel/menu.c:1204 gnome-panel/menu.c:1241
-#, c-format
-msgid ""
-"<b>Can't load entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Methu llwytho cofnod</b>\n"
-"\n"
-"Manylion: %s"
+#: gnome-panel/menu.c:403
+#, fuzzy
+msgid "Can't launch entry"
+msgstr "Creu Lansiwr"
 
-#: gnome-panel/menu.c:1108
-#, c-format
-msgid ""
-"<b>Could not remove the menu item %s</b>\n"
-"\n"
-"Details: %s\n"
+# EFALLAI
+#: gnome-panel/menu.c:420 gnome-panel/menu.c:1235 gnome-panel/menu.c:1285
+#, fuzzy
+msgid "Can't load entry"
+msgstr "Blwch gorchymyn"
+
+#: gnome-panel/menu.c:1125
+#, fuzzy
+msgid "Could not remove the menu item"
 msgstr ""
 "<b>Methu tynnu'r eitem dewislen %s</b>\n"
 "\n"
 "Manylion: %s\n"
 
-#: gnome-panel/menu.c:1118
+#: gnome-panel/menu.c:1142
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Methu cyrchu enw'r ffeil o'r llwybr: %s"
 
-#: gnome-panel/menu.c:1125
+#: gnome-panel/menu.c:1149
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Methu cyrchu enw'r cyfeiriadur o'r llwybr: %s"
 
-#: gnome-panel/menu.c:1195
-msgid ""
-"<b>Can't add to run box</b>\n"
-"\n"
-"Details: No 'Exec' or 'URL' field in entry"
+#: gnome-panel/menu.c:1218
+msgid "Can't add to run box"
+msgstr ""
+
+#: gnome-panel/menu.c:1219
+#, fuzzy
+msgid "Details: No 'Exec' or 'URL' field in entry"
 msgstr ""
 "<b>Methu ychwanegu at y blwch gweithredu</b>\n"
 "\n"
 "Manylion: Dim maes 'Exec' neu 'URL' yn y cofnod"
 
-#: gnome-panel/menu.c:1475
+#: gnome-panel/menu.c:1526
 msgid "Add this launcher to panel"
 msgstr "Ychwanegu'r lansiwr yma at y panel"
 
-#: gnome-panel/menu.c:1483
+#: gnome-panel/menu.c:1534
 msgid "Remove this item"
 msgstr "Tynnu'r eitem hwn"
 
-#: gnome-panel/menu.c:1499
+#: gnome-panel/menu.c:1550
 msgid "Put into run dialog"
 msgstr "Rhoi yn y deialog gweithredu"
 
-#: gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:1568
 #, c-format
 msgid "Help on %s"
 msgstr "Cymorth ynghylch %s"
 
-#: gnome-panel/menu.c:1518
+#: gnome-panel/menu.c:1569
 msgid "Application"
 msgstr "Rhaglen"
 
-#: gnome-panel/menu.c:1564
+#: gnome-panel/menu.c:1615
 msgid "Entire menu"
 msgstr "Dewislen gyfan"
 
-#: gnome-panel/menu.c:1573
+#: gnome-panel/menu.c:1624
 msgid "Add this as drawer to panel"
 msgstr "Ychwanegu hwn fel drôr i'r panel"
 
-#: gnome-panel/menu.c:1581
+#: gnome-panel/menu.c:1632
 msgid "Add this as menu to panel"
 msgstr "Ychwanegu hwn fel dewislen i'r panel"
 
-#: gnome-panel/menu.c:1589
+#: gnome-panel/menu.c:1640
 msgid "Add new item to this menu"
 msgstr "Ychwanegu eitem newydd i'r dewislen hwn"
 
-#: gnome-panel/menu.c:1615
+#: gnome-panel/menu.c:1666
 msgid "Properties"
 msgstr "Priodoleddau"
 
-#: gnome-panel/menu.c:2541 gnome-panel/menu.c:2596
+#: gnome-panel/menu.c:2592 gnome-panel/menu.c:2647
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "dychwelodd yr ymholiad eithriad %s\n"
 
-#: gnome-panel/menu.c:2782 gnome-panel/menu.c:2787 gnome-panel/menu.c:3306
+#: gnome-panel/menu.c:2833 gnome-panel/menu.c:2838 gnome-panel/menu.c:3357
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Rhaglenni"
 
-#: gnome-panel/menu.c:2830 gnome-panel/menu.c:2836 gnome-panel/menu.c:3231
+#: gnome-panel/menu.c:2881 gnome-panel/menu.c:2887 gnome-panel/menu.c:3282
 msgid "KDE Menu"
 msgstr "Dewislen KDE"
 
-#: gnome-panel/menu.c:2888
+#: gnome-panel/menu.c:2939
 msgid "You cannot remove your last panel."
 msgstr "Dydych chi ddim yn cael dileu eich panel olaf."
 
-#: gnome-panel/menu.c:2944
+#: gnome-panel/menu.c:2995
 msgid "_Delete This Panel..."
 msgstr "_Dileu'r Panel Hwn..."
 
-#: gnome-panel/menu.c:2947 gnome-panel/menu.c:2977
+#: gnome-panel/menu.c:2998 gnome-panel/menu.c:3028
 msgid "_Delete This Panel"
 msgstr "_Dileu'r Panel Hwn"
 
-#: gnome-panel/menu.c:2961
+#: gnome-panel/menu.c:3012
 msgid "_Add to Panel"
 msgstr "_Ychwanegu at y Panel"
 
-#: gnome-panel/menu.c:3004
+#: gnome-panel/menu.c:3055
 msgid "_New Panel"
 msgstr "Panel _Newydd"
 
-#: gnome-panel/menu.c:3047
+#: gnome-panel/menu.c:3098
 msgid "_About Panels"
 msgstr "_Ynghylch Paneli"
 
-#: gnome-panel/menu.c:3060
+#: gnome-panel/menu.c:3111
 msgid "About _GNOME"
 msgstr "Ynghylch _GNOME"
 
-#: gnome-panel/menu.c:3100
+#: gnome-panel/menu.c:3151
 msgid "Launcher..."
 msgstr "Lansiwr..."
 
-#: gnome-panel/menu.c:3108
+#: gnome-panel/menu.c:3159
 msgid "Launcher from menu"
 msgstr "Lansiwr o'r ddewislen"
 
-#: gnome-panel/menu.c:3117
+#: gnome-panel/menu.c:3168
 msgid "Main Menu"
 msgstr "Prif Ddewislen"
 
-#: gnome-panel/menu.c:3126
+#: gnome-panel/menu.c:3177
 msgid "Menu Bar"
 msgstr "Bar Dewislenni"
 
-#: gnome-panel/menu.c:3156 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3207 gnome-panel/panel-menu-bar.c:152
 msgid "Lock Screen"
 msgstr "Cloi'r Sgrîn"
 
-#: gnome-panel/menu.c:3162
+#: gnome-panel/menu.c:3213
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Cloi'r sgrîn fel y gallwch adael eich cyfrifiadur dros dro"
 
-#: gnome-panel/menu.c:3174
+#: gnome-panel/menu.c:3225
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1584,62 +1571,55 @@ msgstr ""
 "Allgofnodi o'r sesiwn cyfredol er mwyn mewngofnodi fel defnyddiwr arall neu "
 "troi'r cyfrifiadur bant"
 
-#: gnome-panel/menu.c:3331 gnome-panel/panel-menu-bar.c:110
+#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:110
 msgid "Run Application..."
 msgstr "Rhedeg Rhaglen..."
 
-#: gnome-panel/menu.c:3338 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
 msgstr "Gweithredu Rhaglen gan benodi gorchymyn"
 
-#: gnome-panel/menu.c:3347 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3398 gnome-panel/panel-menu-bar.c:123
 msgid "Search for Files..."
 msgstr "Chwilio am Ffeiliau..."
 
-#: gnome-panel/menu.c:3366 gnome-panel/panel-menu-bar.c:138
+#: gnome-panel/menu.c:3417 gnome-panel/panel-menu-bar.c:138
 msgid "Screenshot..."
 msgstr "Sgrîn-lun..."
 
-#: gnome-panel/menu.c:3384
+#: gnome-panel/menu.c:3435
 msgid "Desktop"
 msgstr "Bwrdd Gwaith"
 
-#: gnome-panel/menu-ditem.c:123
-#, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:122
+#, fuzzy
+msgid "Cannot save changes to launcher"
 msgstr ""
 "<b>Methu arbed newidiadau i lansiwr</b>\n"
 "\n"
 "Manylion: %s"
 
-#: gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:297
 msgid "Menu"
 msgstr "Dewislen"
 
-#: gnome-panel/menu-ditem.c:447
+#: gnome-panel/menu-ditem.c:454
 msgid "You have to specify a name for the launcher."
 msgstr "Mae'n rhaid i chi benodi enw ar gyfer y lansiwr."
 
-#: gnome-panel/menu-ditem.c:463
+#: gnome-panel/menu-ditem.c:470
 msgid "You have to specify a valid URL or command."
 msgstr "Mae'n rhaid i chi benodi LAU neu orchymyn dilys."
 
-#. class
-#: gnome-panel/menu-ditem.c:494
-#, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:500
+#, fuzzy
+msgid "Cannot save menu item to disk"
 msgstr ""
 "<b>Methu arbed eitem dewislen i ddisg</b>\n"
 "\n"
 "Manylion: %s"
 
-#: gnome-panel/menu-ditem.c:519
+#: gnome-panel/menu-ditem.c:531
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -2195,7 +2175,6 @@ msgid "Background _image:"
 msgstr "_Delwedd cefndir:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
-#: gnome-panel/panel-toplevel.c:1345
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "Gwaelod"
@@ -2217,7 +2196,6 @@ msgid "Image Background Details"
 msgstr "Manylion Delwedd Cefndir"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
-#: gnome-panel/panel-toplevel.c:1348
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Chwith"
@@ -2231,7 +2209,6 @@ msgid "Pick a color"
 msgstr "Dewiswch liw"
 
 #: gnome-panel/panel-properties-dialog.glade.h:20
-#: gnome-panel/panel-toplevel.c:1351
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "De"
@@ -2257,7 +2234,6 @@ msgid "St_retch"
 msgstr "_Ehangu"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#: gnome-panel/panel-toplevel.c:1342
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Brig"
@@ -2298,38 +2274,32 @@ msgstr "Digwyddodd gwall anhysbys wrth geisio agor %s"
 msgid "Open Recent"
 msgstr "Agor Diweddar"
 
-#: gnome-panel/panel-run-dialog.c:276
-#, c-format
-msgid ""
-"<b>Error launching command: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:277
+#, fuzzy
+msgid "Error launching command"
 msgstr ""
 "<b>Gwall wrth lansio gorchymyn: '%s'</b>\n"
 "\n"
 "Manylion: %s"
 
-#: gnome-panel/panel-run-dialog.c:305
-#, c-format
-msgid ""
-"<b>Error displaying location: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:311
+#, fuzzy
+msgid "Error displaying location"
 msgstr ""
 "<b>Gwall wrth dangos lleoliad: '%s'</b>\n"
 "\n"
 "Manylion: %s"
 
-#: gnome-panel/panel-run-dialog.c:1035
+#: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
 msgstr "Dewis ffeil i'w atodi i'r gorchymyn..."
 
-#: gnome-panel/panel-run-dialog.c:1214
+#: gnome-panel/panel-run-dialog.c:1224
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Caiff y gorchymyn '%s' ei weithredu"
 
-#: gnome-panel/panel-run-dialog.c:1220 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1230 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
 msgstr "Desiswch rhaglen er mwyn gweld ei ddisgrifiad."
 
@@ -2442,161 +2412,215 @@ msgstr "Methu canfod eicon stoc '%s' y panel\n"
 msgid "_Force quit"
 msgstr "_Gorfodi gadael"
 
-#: gnome-panel/panel-toplevel.c:1359
-msgid "Floating"
-msgstr "Arnof"
-
-#: gnome-panel/panel-toplevel.c:1362
-msgid "Centered"
-msgstr "Canoledig"
-
-#: gnome-panel/panel-toplevel.c:1364
-msgid "Expanded Edge"
+#: gnome-panel/panel-toplevel.c:1349
+#, fuzzy
+msgid "Top Expanded Edge Panel"
 msgstr "Ymylon wedi'i Ehandgu"
 
+#: gnome-panel/panel-toplevel.c:1350
+#, fuzzy
+msgid "Top Centered Panel"
+msgstr "Panel Cornel"
+
+#: gnome-panel/panel-toplevel.c:1351
+#, fuzzy
+msgid "Top Floating Panel"
+msgstr "Panel _Arnofio"
+
+#: gnome-panel/panel-toplevel.c:1352
+#, fuzzy
+msgid "Top Edge Panel"
+msgstr "Panel Ymylon"
+
+#: gnome-panel/panel-toplevel.c:1356
+#, fuzzy
+msgid "Bottom Expanded Edge Panel"
+msgstr "Ymylon wedi'i Ehandgu"
+
+#: gnome-panel/panel-toplevel.c:1357
+#, fuzzy
+msgid "Bottom Centered Panel"
+msgstr "Panel Cornel"
+
+#: gnome-panel/panel-toplevel.c:1358
+#, fuzzy
+msgid "Bottom Floating Panel"
+msgstr "Panel _Arnofio"
+
+#: gnome-panel/panel-toplevel.c:1359
+#, fuzzy
+msgid "Bottom Edge Panel"
+msgstr "Panel Ymylon"
+
+#: gnome-panel/panel-toplevel.c:1363
+#, fuzzy
+msgid "Left Expanded Edge Panel"
+msgstr "Ymylon wedi'i Ehandgu"
+
+#: gnome-panel/panel-toplevel.c:1364
+#, fuzzy
+msgid "Left Centered Panel"
+msgstr "Panel Cornel"
+
+#: gnome-panel/panel-toplevel.c:1365
+#, fuzzy
+msgid "Left Floating Panel"
+msgstr "Panel _Arnofio"
+
 #: gnome-panel/panel-toplevel.c:1366
-msgid "Edge"
-msgstr "Ymyl"
+#, fuzzy
+msgid "Left Edge Panel"
+msgstr "Panel Ymylon"
 
-# EFALLAI (need to check I've done this reordering right)
-#. Translators: the first argument is the current orientation
-#. * (Top, Bottom, Left or Right) and the second argument is the
-#. * type of panel (Expanded Edge, Edge, Floating or Centered).
-#.
+#: gnome-panel/panel-toplevel.c:1370
+#, fuzzy
+msgid "Right Expanded Edge Panel"
+msgstr "Ymylon wedi'i Ehandgu"
+
+#: gnome-panel/panel-toplevel.c:1371
+#, fuzzy
+msgid "Right Centered Panel"
+msgstr "Panel Aliniedig"
+
 #: gnome-panel/panel-toplevel.c:1372
-#, c-format
-msgid "%s %s Panel"
-msgstr "Panel %2$s %1$s"
+#, fuzzy
+msgid "Right Floating Panel"
+msgstr "Panel _Arnofio"
 
-#: gnome-panel/panel-toplevel.c:3295
+#: gnome-panel/panel-toplevel.c:1373
+#, fuzzy
+msgid "Right Edge Panel"
+msgstr "Panel Ymylon"
+
+#: gnome-panel/panel-toplevel.c:3417
 msgid "Name"
 msgstr "Enw"
 
-#: gnome-panel/panel-toplevel.c:3296
+#: gnome-panel/panel-toplevel.c:3418
 msgid "The name of this panel"
 msgstr "Enw'r panel hwn"
 
-#: gnome-panel/panel-toplevel.c:3305
+#: gnome-panel/panel-toplevel.c:3427
 msgid "Expand"
 msgstr "Ehangu"
 
-#: gnome-panel/panel-toplevel.c:3306
+#: gnome-panel/panel-toplevel.c:3428
 msgid "Expand to take up the full monitor width/height"
 msgstr "Ehangu er mwyn llenwi holl hyd/lled y monitr"
 
-#: gnome-panel/panel-toplevel.c:3316
+#: gnome-panel/panel-toplevel.c:3438
 msgid "The orientation of the panel"
 msgstr "Gogwydd y panel"
 
-#: gnome-panel/panel-toplevel.c:3327
+#: gnome-panel/panel-toplevel.c:3449
 msgid "The height (or width when vertical) of the panel"
 msgstr "Ucher (neu lled pan yn fertigol) y panel"
 
-#: gnome-panel/panel-toplevel.c:3339
+#: gnome-panel/panel-toplevel.c:3461
 msgid "X position"
 msgstr "Safle X"
 
-#: gnome-panel/panel-toplevel.c:3340
+#: gnome-panel/panel-toplevel.c:3462
 msgid "The X position of the panel"
 msgstr "Safle X y panel"
 
-#: gnome-panel/panel-toplevel.c:3351
+#: gnome-panel/panel-toplevel.c:3473
 msgid "X centered"
 msgstr "Canoledig yn X"
 
 # EFALLAI
-#: gnome-panel/panel-toplevel.c:3352
+#: gnome-panel/panel-toplevel.c:3474
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Mae'r cyfesurun x yn gymharol i'r sgrîn ganol"
 
-#: gnome-panel/panel-toplevel.c:3361
+#: gnome-panel/panel-toplevel.c:3483
 msgid "Y position"
 msgstr "Safle Y"
 
-#: gnome-panel/panel-toplevel.c:3362
+#: gnome-panel/panel-toplevel.c:3484
 msgid "The Y position of the panel"
 msgstr "Safle Y y panel"
 
-#: gnome-panel/panel-toplevel.c:3373
+#: gnome-panel/panel-toplevel.c:3495
 msgid "Y centered"
 msgstr "Canoledig yn Y"
 
-#: gnome-panel/panel-toplevel.c:3374
+#: gnome-panel/panel-toplevel.c:3496
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Mae'r cyfesurun y yn gymharol i'r sgrîn ganol"
 
-#: gnome-panel/panel-toplevel.c:3383
+#: gnome-panel/panel-toplevel.c:3505
 msgid "Xinerama monitor"
 msgstr "Monitr Xinerama"
 
-#: gnome-panel/panel-toplevel.c:3384
+#: gnome-panel/panel-toplevel.c:3506
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Y monitr (yn nhermau Xinerama) mae'r panel arni"
 
-#: gnome-panel/panel-toplevel.c:3395
+#: gnome-panel/panel-toplevel.c:3517
 msgid "Auto hide"
 msgstr "Cuddio'n Awtomatig"
 
-#: gnome-panel/panel-toplevel.c:3396
+#: gnome-panel/panel-toplevel.c:3518
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Cuddio'r panel yn awtomatig pan mae'r llygoden yn gadael y panel"
 
-#: gnome-panel/panel-toplevel.c:3405
+#: gnome-panel/panel-toplevel.c:3527
 msgid "Hide delay"
 msgstr "Saib cuddio"
 
-#: gnome-panel/panel-toplevel.c:3406
+#: gnome-panel/panel-toplevel.c:3528
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Nifer o filfedau eiliad i seibio cyn cuddio'n awtomatig"
 
-#: gnome-panel/panel-toplevel.c:3417
+#: gnome-panel/panel-toplevel.c:3539
 msgid "Un-hide delay"
 msgstr "Saib dat-guddio"
 
-#: gnome-panel/panel-toplevel.c:3418
+#: gnome-panel/panel-toplevel.c:3540
 #, fuzzy
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Nifer o filfedau eiliad i seibio cyn dat-guddio'n awtomatig"
 
-#: gnome-panel/panel-toplevel.c:3429
+#: gnome-panel/panel-toplevel.c:3551
 msgid "Auto-hide size"
 msgstr "Maint cuddio'n awtomatig"
 
-#: gnome-panel/panel-toplevel.c:3430
+#: gnome-panel/panel-toplevel.c:3552
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 "Y nifer o bicseli sy'n weladwy pan mae'r panel wedi ei guddio'n awtomatig"
 
-#: gnome-panel/panel-toplevel.c:3441
+#: gnome-panel/panel-toplevel.c:3563
 msgid "Animate"
 msgstr "Animeiddio"
 
-#: gnome-panel/panel-toplevel.c:3442
+#: gnome-panel/panel-toplevel.c:3564
 msgid "Enable hiding/showing animations"
 msgstr "Galluogi animeiddiadau cuddio/dangos"
 
-#: gnome-panel/panel-toplevel.c:3451
+#: gnome-panel/panel-toplevel.c:3573
 msgid "Animation Speed"
 msgstr "Cyflymder Animeiddiad"
 
-#: gnome-panel/panel-toplevel.c:3452
+#: gnome-panel/panel-toplevel.c:3574
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "Y cyflymder dylai animeiddiadau cuddio/dangos paneli ei ddefnyddio"
 
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3584
 msgid "Buttons Enabled"
 msgstr "Galluogi Botymau"
 
-#: gnome-panel/panel-toplevel.c:3463
+#: gnome-panel/panel-toplevel.c:3585
 msgid "Enable hide/show buttons"
 msgstr "Galluogi botymau cuddio/dangos"
 
-#: gnome-panel/panel-toplevel.c:3472
+#: gnome-panel/panel-toplevel.c:3594
 msgid "Arrows Enabled"
 msgstr "Galluogi Saethau"
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3595
 msgid "Enable arrows on hide/show buttons"
 msgstr "Galluogi saethau ar fotymau cuddio/dangos"
 
@@ -2941,20 +2965,23 @@ msgstr ""
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:102 gnome-panel/panel-util.c:132
-#: gnome-panel/panel-util.c:157
+#: gnome-panel/panel-util.c:107 gnome-panel/panel-util.c:137
+#: gnome-panel/panel-util.c:162
 msgid "Help document not found"
 msgstr "Dogfen gymorth heb ei ganfod"
 
-#: gnome-panel/panel-util.c:171
+#: gnome-panel/panel-util.c:176
 msgid "No document to show"
 msgstr "Dim dogfen i'w dangos"
 
-#: gnome-panel/panel-util.c:928
-msgid ""
-"<b>Cannot execute xscreensaver</b>\n"
-"\n"
-"Details: xscreensaver-command not found"
+#: gnome-panel/panel-util.c:933
+#, fuzzy
+msgid "Cannot execute xscreensaver"
+msgstr "Methu gweithredu gnome-panel-screenshot"
+
+#: gnome-panel/panel-util.c:934
+#, fuzzy
+msgid "Details: xscreensaver-command not found"
 msgstr ""
 "<b>Methu gweithredu xscreensaver</a>\n"
 "\n"
@@ -3070,6 +3097,55 @@ msgstr "Mawr iawn iawn"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Bach iawn iawn"
+
+#~ msgid ""
+#~ "<b>Cannot launch icon</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Methu lansio eicon</b>\n"
+#~ "\n"
+#~ "Manylion: %s"
+
+#~ msgid ""
+#~ "<b>Can't execute 'About GNOME'</b>\n"
+#~ "\n"
+#~ "Details: %s probably does not exist"
+#~ msgstr ""
+#~ "<b>Methu gweithredu 'Ynghylch GNOME'</b>\n"
+#~ "\n"
+#~ "Manylion: mwy na thebyg, nid yw %s yn bodoli"
+
+#~ msgid ""
+#~ "<b>Can't launch entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Methu lansio cofnod</b>\n"
+#~ "\n"
+#~ "Manylion: %s"
+
+#~ msgid ""
+#~ "<b>Can't load entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Methu llwytho cofnod</b>\n"
+#~ "\n"
+#~ "Manylion: %s"
+
+#~ msgid "Floating"
+#~ msgstr "Arnof"
+
+#~ msgid "Centered"
+#~ msgstr "Canoledig"
+
+#~ msgid "Edge"
+#~ msgstr "Ymyl"
+
+# EFALLAI (need to check I've done this reordering right)
+#~ msgid "%s %s Panel"
+#~ msgstr "Panel %2$s %1$s"
 
 #~ msgid ""
 #~ "<b>Failed to run this program</b>\n"
@@ -3451,14 +3527,8 @@ msgstr "Bach iawn iawn"
 #~ msgid "Run Program"
 #~ msgstr "Gweithredu Rhaglen"
 
-#~ msgid "Aligned Panel"
-#~ msgstr "Panel Aliniedig"
-
 #~ msgid "GNOME Aligned Panel"
 #~ msgstr "Panel Aliniedig GNOME"
-
-#~ msgid "Edge Panel"
-#~ msgstr "Panel Ymylon"
 
 #~ msgid "GNOME Edge Panel"
 #~ msgstr "Panel Ymylon GNOME"
@@ -3486,9 +3556,6 @@ msgstr "Bach iawn iawn"
 
 #~ msgid "Create edge panel"
 #~ msgstr "Creu panel ymylon"
-
-#~ msgid "_Floating Panel"
-#~ msgstr "Panel _Arnofio"
 
 #~ msgid "Create floating panel"
 #~ msgstr "Creu panel arnofio"
@@ -3589,9 +3656,6 @@ msgstr "Bach iawn iawn"
 
 #~ msgid "Floating panel"
 #~ msgstr "Panel arnofio"
-
-#~ msgid "Corner Panel"
-#~ msgstr "Panel Cornel"
 
 #~ msgid "Show the program listing by default when opening the Run box"
 #~ msgstr "Dangos y rhestr rhaglenni yn y blwch Gweithredu yn ddiofyn"

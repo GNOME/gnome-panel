@@ -13,7 +13,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3.3\n"
-"POT-Creation-Date: 2003-06-09 23:17+0800\n"
+"POT-Creation-Date: 2003-06-12 17:49+0100\n"
 "PO-Revision-Date: 2003-06-09 23:51+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -283,7 +283,7 @@ msgstr "關於(_A)..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:742 gnome-panel/menu.c:3037
+#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:748 gnome-panel/menu.c:3088
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
@@ -410,7 +410,7 @@ msgstr "<b>動畫</b>"
 msgid "<b>General</b>"
 msgstr "<b>一般設定</b>"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:267
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:272
 msgid "Browse"
 msgstr "瀏覽"
 
@@ -649,7 +649,7 @@ msgid "Show windows from a_ll workspaces"
 msgstr "顯示所有工作區中的視窗(_L)"
 
 #: applets/wncklet/window-list.glade.h:14 gnome-panel/button-widget.c:856
-#: gnome-panel/panel-toplevel.c:3358
+#: gnome-panel/panel-toplevel.c:3448
 msgid "Size"
 msgstr "大小"
 
@@ -909,7 +909,7 @@ msgstr "顯示箭頭"
 msgid "Whether or not to draw an arrow indicator"
 msgstr "是否繪畫箭頭"
 
-#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3347
+#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3437
 msgid "Orientation"
 msgstr "方向"
 
@@ -995,12 +995,12 @@ msgstr "顯示隱藏按鈕"
 msgid "Enable hidebutton arrow"
 msgstr "顯示隱藏按鈕箭頭"
 
-#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3134
+#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3185
 msgid "Drawer"
 msgstr "抽屜"
 
-#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:740 gnome-panel/menu.c:1545
-#: gnome-panel/menu.c:2991 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:746 gnome-panel/menu.c:1596
+#: gnome-panel/menu.c:3042 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "屬性(_P)"
 
@@ -1238,18 +1238,23 @@ msgstr ""
 "無法顯示 %s\n"
 "%s"
 
-#: gnome-panel/launcher.c:173
-#, c-format
-msgid ""
-"<b>Cannot launch icon</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:172
+#, fuzzy
+msgid "Cannot launch icon"
 msgstr ""
-"<b>無法啟動圖示</b>\n"
-"\n"
-"原因：%s"
+"無法啟動圖示\n"
+"%s"
 
-#: gnome-panel/launcher.c:218
+#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1092
+#: gnome-panel/menu.c:374 gnome-panel/menu.c:404 gnome-panel/menu.c:421
+#: gnome-panel/menu.c:1127 gnome-panel/menu.c:1236 gnome-panel/menu.c:1268
+#: gnome-panel/menu.c:1286 gnome-panel/menu-ditem.c:123
+#: gnome-panel/menu-ditem.c:501 gnome-panel/panel-run-dialog.c:278
+#: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:76
+msgid "Details"
+msgstr ""
+
+#: gnome-panel/launcher.c:224
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1258,41 +1263,38 @@ msgstr ""
 "無法啟動圖示\n"
 "%s"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:415
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "面板啟動圖示的 desktop 檔案中沒有提供任何 URI\n"
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:429
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "無法開啟面板啟動圖示中指定的 desktop 檔案 %s%s%s\n"
 
-#: gnome-panel/launcher.c:525
+#: gnome-panel/launcher.c:531
 #, c-format
 msgid "Help on %s _Application"
 msgstr "應用程式 %s 的說明(_A)"
 
-#: gnome-panel/launcher.c:645 gnome-panel/menu-ditem.c:180
-#: gnome-panel/menu-ditem.c:257
+#: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:187
+#: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "啟動圖示屬性"
 
-#: gnome-panel/launcher.c:805
+#: gnome-panel/launcher.c:811
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "設定鍵 %s 並未設定好，無法載入啟動圖示\n"
 
-#: gnome-panel/launcher.c:865 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:871 gnome-panel/menu-ditem.c:538
 msgid "Create Launcher"
 msgstr "建立啟動圖示"
 
-#: gnome-panel/launcher.c:1086 gnome-panel/menu.c:1230
-#: gnome-panel/panel-util.c:76
-#, c-format
-msgid ""
-"<b>Cannot display help document</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/launcher.c:1091 gnome-panel/menu.c:1267
+#: gnome-panel/panel-util.c:75
+#, fuzzy
+msgid "Cannot display help document"
 msgstr ""
 "<b>無法顯示說明文件</b>\n"
 "\n"
@@ -1302,7 +1304,7 @@ msgstr ""
 msgid "Specify a profile name to load"
 msgstr "指定準備載入的設定組合名稱"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3168
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3219
 #: gnome-panel/panel-menu-bar.c:161
 msgid "Log Out"
 msgstr "登出"
@@ -1329,7 +1331,7 @@ msgstr "強制離開"
 msgid "Screenshot"
 msgstr "畫面快照"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3369
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3420
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "擷取畫面"
@@ -1338,7 +1340,7 @@ msgstr "擷取畫面"
 msgid "Search"
 msgstr "搜尋"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3350
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3401
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "在電腦中搜尋檔案、資料夾及文件"
@@ -1388,239 +1390,216 @@ msgid "End world hunger"
 msgstr "結束世界飢荒"
 
 #: gnome-panel/menu.c:373
-#, c-format
-msgid ""
-"<b>Can't execute 'About GNOME'</b>\n"
-"\n"
-"Details: %s probably does not exist"
+msgid "Can't execute 'About GNOME'"
 msgstr ""
-"<b>無法執行「關於 GNOME」</b>\n"
-"\n"
-"原因：%s 可能不存在"
 
-#: gnome-panel/menu.c:397
-#, c-format
-msgid ""
-"<b>Can't launch entry</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu.c:375
+msgid "probably does not exist"
 msgstr ""
-"<b>無法啟動指定項目</b>\n"
-"\n"
-"原因：%s"
 
-#: gnome-panel/menu.c:407 gnome-panel/menu.c:1204 gnome-panel/menu.c:1241
-#, c-format
-msgid ""
-"<b>Can't load entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>無法載入項目</b>\n"
-"\n"
-"原因：%s"
+#: gnome-panel/menu.c:403
+#, fuzzy
+msgid "Can't launch entry"
+msgstr "建立啟動圖示"
 
-#: gnome-panel/menu.c:1108
-#, c-format
-msgid ""
-"<b>Could not remove the menu item %s</b>\n"
-"\n"
-"Details: %s\n"
+#: gnome-panel/menu.c:420 gnome-panel/menu.c:1235 gnome-panel/menu.c:1285
+#, fuzzy
+msgid "Can't load entry"
+msgstr "指令輸入欄位"
+
+#: gnome-panel/menu.c:1125
+#, fuzzy
+msgid "Could not remove the menu item"
 msgstr ""
 "<b>無法移除選單項目 %s</b>\n"
 "\n"
 "原因：%s\n"
 
-#: gnome-panel/menu.c:1118
+#: gnome-panel/menu.c:1142
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "無法從路徑決定檔案名稱：%s"
 
-#: gnome-panel/menu.c:1125
+#: gnome-panel/menu.c:1149
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "無法從路徑決定目錄名稱：%s"
 
-#: gnome-panel/menu.c:1195
-msgid ""
-"<b>Can't add to run box</b>\n"
-"\n"
-"Details: No 'Exec' or 'URL' field in entry"
+#: gnome-panel/menu.c:1218
+msgid "Can't add to run box"
+msgstr ""
+
+#: gnome-panel/menu.c:1219
+#, fuzzy
+msgid "Details: No 'Exec' or 'URL' field in entry"
 msgstr ""
 "<b>無法加入至執行對話方塊</b>\n"
 "\n"
 "原因：項目中沒有「Exec」或「URL」欄位"
 
-#: gnome-panel/menu.c:1475
+#: gnome-panel/menu.c:1526
 msgid "Add this launcher to panel"
 msgstr "將此啟動圖示加入面板"
 
-#: gnome-panel/menu.c:1483
+#: gnome-panel/menu.c:1534
 msgid "Remove this item"
 msgstr "移除本項目"
 
-#: gnome-panel/menu.c:1499
+#: gnome-panel/menu.c:1550
 msgid "Put into run dialog"
 msgstr "放進執行對話方塊"
 
-#: gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:1568
 #, c-format
 msgid "Help on %s"
 msgstr "%s 的說明"
 
-#: gnome-panel/menu.c:1518
+#: gnome-panel/menu.c:1569
 msgid "Application"
 msgstr "應用程式"
 
-#: gnome-panel/menu.c:1564
+#: gnome-panel/menu.c:1615
 msgid "Entire menu"
 msgstr "整個選單"
 
-#: gnome-panel/menu.c:1573
+#: gnome-panel/menu.c:1624
 msgid "Add this as drawer to panel"
 msgstr "以抽屜方式加入面板"
 
-#: gnome-panel/menu.c:1581
+#: gnome-panel/menu.c:1632
 msgid "Add this as menu to panel"
 msgstr "以選單方式加入面板"
 
-#: gnome-panel/menu.c:1589
+#: gnome-panel/menu.c:1640
 msgid "Add new item to this menu"
 msgstr "在本選單中新增項目"
 
-#: gnome-panel/menu.c:1615
+#: gnome-panel/menu.c:1666
 msgid "Properties"
 msgstr "屬性"
 
-#: gnome-panel/menu.c:2541 gnome-panel/menu.c:2596
+#: gnome-panel/menu.c:2592 gnome-panel/menu.c:2647
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "詢問時回傳了例外情況 %s\n"
 
-#: gnome-panel/menu.c:2782 gnome-panel/menu.c:2787 gnome-panel/menu.c:3306
+#: gnome-panel/menu.c:2833 gnome-panel/menu.c:2838 gnome-panel/menu.c:3357
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "應用程式"
 
-#: gnome-panel/menu.c:2830 gnome-panel/menu.c:2836 gnome-panel/menu.c:3231
+#: gnome-panel/menu.c:2881 gnome-panel/menu.c:2887 gnome-panel/menu.c:3282
 msgid "KDE Menu"
 msgstr "KDE 選單"
 
-#: gnome-panel/menu.c:2888
+#: gnome-panel/menu.c:2939
 msgid "You cannot remove your last panel."
 msgstr "不可以移除最後一個面板。"
 
-#: gnome-panel/menu.c:2944
+#: gnome-panel/menu.c:2995
 msgid "_Delete This Panel..."
 msgstr "刪除本面板(_D)..."
 
-#: gnome-panel/menu.c:2947 gnome-panel/menu.c:2977
+#: gnome-panel/menu.c:2998 gnome-panel/menu.c:3028
 msgid "_Delete This Panel"
 msgstr "刪除本面板(_D)"
 
-#: gnome-panel/menu.c:2961
+#: gnome-panel/menu.c:3012
 msgid "_Add to Panel"
 msgstr "加入至面板(_A)"
 
-#: gnome-panel/menu.c:3004
+#: gnome-panel/menu.c:3055
 msgid "_New Panel"
 msgstr "新增面板(_N)"
 
-#: gnome-panel/menu.c:3047
+#: gnome-panel/menu.c:3098
 msgid "_About Panels"
 msgstr "關於面板(_A)"
 
-#: gnome-panel/menu.c:3060
+#: gnome-panel/menu.c:3111
 msgid "About _GNOME"
 msgstr "關於 _GNOME"
 
-#: gnome-panel/menu.c:3100
+#: gnome-panel/menu.c:3151
 msgid "Launcher..."
 msgstr "啟動圖示..."
 
-#: gnome-panel/menu.c:3108
+#: gnome-panel/menu.c:3159
 msgid "Launcher from menu"
 msgstr "選單中的啟動圖示"
 
-#: gnome-panel/menu.c:3117
+#: gnome-panel/menu.c:3168
 msgid "Main Menu"
 msgstr "主選單"
 
-#: gnome-panel/menu.c:3126
+#: gnome-panel/menu.c:3177
 msgid "Menu Bar"
 msgstr "選單列"
 
-#: gnome-panel/menu.c:3156 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3207 gnome-panel/panel-menu-bar.c:152
 msgid "Lock Screen"
 msgstr "鎖定畫面"
 
-#: gnome-panel/menu.c:3162
+#: gnome-panel/menu.c:3213
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "鎖定畫面，讓使用者可暫時離開電腦"
 
-#: gnome-panel/menu.c:3174
+#: gnome-panel/menu.c:3225
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr "離開本作業階段，並以其它身分登入或關掉電腦"
 
-#: gnome-panel/menu.c:3331 gnome-panel/panel-menu-bar.c:110
+#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:110
 msgid "Run Application..."
 msgstr "執行程式..."
 
-#: gnome-panel/menu.c:3338 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
 msgstr "透過輸入指令來執行程式"
 
-#: gnome-panel/menu.c:3347 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3398 gnome-panel/panel-menu-bar.c:123
 msgid "Search for Files..."
 msgstr "搜尋檔案..."
 
-#: gnome-panel/menu.c:3366 gnome-panel/panel-menu-bar.c:138
+#: gnome-panel/menu.c:3417 gnome-panel/panel-menu-bar.c:138
 msgid "Screenshot..."
 msgstr "畫面快照..."
 
-#: gnome-panel/menu.c:3384
+#: gnome-panel/menu.c:3435
 msgid "Desktop"
 msgstr "桌面"
 
-#: gnome-panel/menu-ditem.c:123
-#, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:122
+#, fuzzy
+msgid "Cannot save changes to launcher"
 msgstr ""
 "<b>無法儲存已更改的啟動圖示</b>\n"
 "\n"
 "原因：%s"
 
-#: gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:297
 msgid "Menu"
 msgstr "選單"
 
-#: gnome-panel/menu-ditem.c:447
+#: gnome-panel/menu-ditem.c:454
 msgid "You have to specify a name for the launcher."
 msgstr "必須指定啟動圖示的名稱。"
 
-#: gnome-panel/menu-ditem.c:463
+#: gnome-panel/menu-ditem.c:470
 msgid "You have to specify a valid URL or command."
 msgstr "必須指定有效的 URL 或指令。"
 
-#. class
-#: gnome-panel/menu-ditem.c:494
-#, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/menu-ditem.c:500
+#, fuzzy
+msgid "Cannot save menu item to disk"
 msgstr ""
 "<b>無法儲存已更改的選單項目</b>\n"
 "\n"
 "原因：%s"
 
-#: gnome-panel/menu-ditem.c:519
+#: gnome-panel/menu-ditem.c:531
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -2234,38 +2213,32 @@ msgstr "當嘗試開啟 %s 時出現不明的錯誤"
 msgid "Open Recent"
 msgstr "最近使用的檔案"
 
-#: gnome-panel/panel-run-dialog.c:276
-#, c-format
-msgid ""
-"<b>Error launching command: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:277
+#, fuzzy
+msgid "Error launching command"
 msgstr ""
 "<b>啟動指令時發生錯誤：‘%s’</b>\n"
 "\n"
 "原因：%s"
 
-#: gnome-panel/panel-run-dialog.c:305
-#, c-format
-msgid ""
-"<b>Error displaying location: '%s'</b>\n"
-"\n"
-"Details: %s"
+#: gnome-panel/panel-run-dialog.c:311
+#, fuzzy
+msgid "Error displaying location"
 msgstr ""
 "<b>顯示指定位置時發生錯誤：‘%s’</b>\n"
 "\n"
 "原因：%s"
 
-#: gnome-panel/panel-run-dialog.c:1035
+#: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
 msgstr "在指令後附加檔案名稱..."
 
-#: gnome-panel/panel-run-dialog.c:1214
+#: gnome-panel/panel-run-dialog.c:1224
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "將會執行指令：‘%s’"
 
-#: gnome-panel/panel-run-dialog.c:1220 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1230 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
 msgstr "選取應用程式後可以顯示有關該程式的說明。"
 
@@ -2368,196 +2341,196 @@ msgstr "無法載入面板的內置圖示‘%s’\n"
 msgid "_Force quit"
 msgstr "強制離開(_F)"
 
-#: gnome-panel/panel-toplevel.c:1340
+#: gnome-panel/panel-toplevel.c:1349
 msgid "Top Expanded Edge Panel"
 msgstr "頂部擴大邊界面板"
 
-#: gnome-panel/panel-toplevel.c:1341
+#: gnome-panel/panel-toplevel.c:1350
 msgid "Top Centered Panel"
 msgstr "頂部置中面板"
 
-#: gnome-panel/panel-toplevel.c:1342
+#: gnome-panel/panel-toplevel.c:1351
 msgid "Top Floating Panel"
 msgstr "頂部浮動面板"
 
-#: gnome-panel/panel-toplevel.c:1343
+#: gnome-panel/panel-toplevel.c:1352
 msgid "Top Edge Panel"
 msgstr "頂部邊界面板"
 
-#: gnome-panel/panel-toplevel.c:1347
+#: gnome-panel/panel-toplevel.c:1356
 msgid "Bottom Expanded Edge Panel"
 msgstr "底部擴大邊界面板"
 
-#: gnome-panel/panel-toplevel.c:1348
+#: gnome-panel/panel-toplevel.c:1357
 msgid "Bottom Centered Panel"
 msgstr "底部置中面板"
 
-#: gnome-panel/panel-toplevel.c:1349
+#: gnome-panel/panel-toplevel.c:1358
 msgid "Bottom Floating Panel"
 msgstr "底部浮動面板"
 
-#: gnome-panel/panel-toplevel.c:1350
+#: gnome-panel/panel-toplevel.c:1359
 msgid "Bottom Edge Panel"
 msgstr "底部邊界面板"
 
-#: gnome-panel/panel-toplevel.c:1354
+#: gnome-panel/panel-toplevel.c:1363
 msgid "Left Expanded Edge Panel"
 msgstr "左邊擴大邊界面板"
 
-#: gnome-panel/panel-toplevel.c:1355
+#: gnome-panel/panel-toplevel.c:1364
 msgid "Left Centered Panel"
 msgstr "左邊置中面板"
 
-#: gnome-panel/panel-toplevel.c:1356
+#: gnome-panel/panel-toplevel.c:1365
 msgid "Left Floating Panel"
 msgstr "左邊浮動面板"
 
-#: gnome-panel/panel-toplevel.c:1357
+#: gnome-panel/panel-toplevel.c:1366
 msgid "Left Edge Panel"
 msgstr "左邊邊界面板"
 
-#: gnome-panel/panel-toplevel.c:1361
+#: gnome-panel/panel-toplevel.c:1370
 msgid "Right Expanded Edge Panel"
 msgstr "右邊擴大邊界面板"
 
-#: gnome-panel/panel-toplevel.c:1362
+#: gnome-panel/panel-toplevel.c:1371
 msgid "Right Centered Panel"
 msgstr "右邊置中面板"
 
-#: gnome-panel/panel-toplevel.c:1363
+#: gnome-panel/panel-toplevel.c:1372
 msgid "Right Floating Panel"
 msgstr "右邊浮動面板"
 
-#: gnome-panel/panel-toplevel.c:1364
+#: gnome-panel/panel-toplevel.c:1373
 msgid "Right Edge Panel"
 msgstr "右邊邊界面板"
 
-#: gnome-panel/panel-toplevel.c:3327
+#: gnome-panel/panel-toplevel.c:3417
 msgid "Name"
 msgstr "名稱"
 
-#: gnome-panel/panel-toplevel.c:3328
+#: gnome-panel/panel-toplevel.c:3418
 msgid "The name of this panel"
 msgstr "本面板的名稱"
 
-#: gnome-panel/panel-toplevel.c:3337
+#: gnome-panel/panel-toplevel.c:3427
 msgid "Expand"
 msgstr "擴展"
 
-#: gnome-panel/panel-toplevel.c:3338
+#: gnome-panel/panel-toplevel.c:3428
 msgid "Expand to take up the full monitor width/height"
 msgstr "擴展至佔用整個螢幕的寬度或高度"
 
-#: gnome-panel/panel-toplevel.c:3348
+#: gnome-panel/panel-toplevel.c:3438
 msgid "The orientation of the panel"
 msgstr "面板的方向"
 
-#: gnome-panel/panel-toplevel.c:3359
+#: gnome-panel/panel-toplevel.c:3449
 msgid "The height (or width when vertical) of the panel"
 msgstr "面板的高度 (或垂直面板的寬度)"
 
-#: gnome-panel/panel-toplevel.c:3371
+#: gnome-panel/panel-toplevel.c:3461
 msgid "X position"
 msgstr "水平位置"
 
-#: gnome-panel/panel-toplevel.c:3372
+#: gnome-panel/panel-toplevel.c:3462
 msgid "The X position of the panel"
 msgstr "面板的水平位置"
 
-#: gnome-panel/panel-toplevel.c:3383
+#: gnome-panel/panel-toplevel.c:3473
 msgid "X centered"
 msgstr "水平置中"
 
-#: gnome-panel/panel-toplevel.c:3384
+#: gnome-panel/panel-toplevel.c:3474
 msgid "The x co-ordinate is relative to center screen"
 msgstr "X 座標是從畫面中央開始計算"
 
-#: gnome-panel/panel-toplevel.c:3393
+#: gnome-panel/panel-toplevel.c:3483
 msgid "Y position"
 msgstr "垂直位置"
 
-#: gnome-panel/panel-toplevel.c:3394
+#: gnome-panel/panel-toplevel.c:3484
 msgid "The Y position of the panel"
 msgstr "面板的垂直位置"
 
-#: gnome-panel/panel-toplevel.c:3405
+#: gnome-panel/panel-toplevel.c:3495
 msgid "Y centered"
 msgstr "垂直置中"
 
-#: gnome-panel/panel-toplevel.c:3406
+#: gnome-panel/panel-toplevel.c:3496
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Y 座標是從畫面中央開始計算"
 
-#: gnome-panel/panel-toplevel.c:3415
+#: gnome-panel/panel-toplevel.c:3505
 msgid "Xinerama monitor"
 msgstr "Xinerama 螢幕"
 
-#: gnome-panel/panel-toplevel.c:3416
+#: gnome-panel/panel-toplevel.c:3506
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "面板所在的螢幕 (以 Xinerama 方式表示)"
 
-#: gnome-panel/panel-toplevel.c:3427
+#: gnome-panel/panel-toplevel.c:3517
 msgid "Auto hide"
 msgstr "自動隱藏"
 
-#: gnome-panel/panel-toplevel.c:3428
+#: gnome-panel/panel-toplevel.c:3518
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "當鼠標移離面板時自動隱藏面板"
 
-#: gnome-panel/panel-toplevel.c:3437
+#: gnome-panel/panel-toplevel.c:3527
 msgid "Hide delay"
 msgstr "隱藏面板的延遲時間"
 
-#: gnome-panel/panel-toplevel.c:3438
+#: gnome-panel/panel-toplevel.c:3528
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "自動隱藏前延遲的時間(毫秒)"
 
-#: gnome-panel/panel-toplevel.c:3449
+#: gnome-panel/panel-toplevel.c:3539
 msgid "Un-hide delay"
 msgstr "取消隱藏面板的延遲時間"
 
-#: gnome-panel/panel-toplevel.c:3450
+#: gnome-panel/panel-toplevel.c:3540
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "自動取消隱藏前延遲的時間(毫秒)"
 
-#: gnome-panel/panel-toplevel.c:3461
+#: gnome-panel/panel-toplevel.c:3551
 msgid "Auto-hide size"
 msgstr "自動隱藏後的大小"
 
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3552
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "面板自動隱藏後會在畫面中保留指定數目的像素"
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3563
 msgid "Animate"
 msgstr "平滑移動"
 
-#: gnome-panel/panel-toplevel.c:3474
+#: gnome-panel/panel-toplevel.c:3564
 msgid "Enable hiding/showing animations"
 msgstr "隱藏/顯示面板時會平滑移動"
 
-#: gnome-panel/panel-toplevel.c:3483
+#: gnome-panel/panel-toplevel.c:3573
 msgid "Animation Speed"
 msgstr "平滑移動速度"
 
-#: gnome-panel/panel-toplevel.c:3484
+#: gnome-panel/panel-toplevel.c:3574
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "隱藏/顯示面板時平滑移動的速度"
 
-#: gnome-panel/panel-toplevel.c:3494
+#: gnome-panel/panel-toplevel.c:3584
 msgid "Buttons Enabled"
 msgstr "啟用按鈕"
 
-#: gnome-panel/panel-toplevel.c:3495
+#: gnome-panel/panel-toplevel.c:3585
 msgid "Enable hide/show buttons"
 msgstr "啟用隱藏/顯示的按鈕"
 
-#: gnome-panel/panel-toplevel.c:3504
+#: gnome-panel/panel-toplevel.c:3594
 msgid "Arrows Enabled"
 msgstr "啟用箭頭"
 
-#: gnome-panel/panel-toplevel.c:3505
+#: gnome-panel/panel-toplevel.c:3595
 msgid "Enable arrows on hide/show buttons"
 msgstr "在隱藏/顯示的按鈕中顯示箭頭"
 
@@ -2874,20 +2847,23 @@ msgstr ""
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:102 gnome-panel/panel-util.c:132
-#: gnome-panel/panel-util.c:157
+#: gnome-panel/panel-util.c:107 gnome-panel/panel-util.c:137
+#: gnome-panel/panel-util.c:162
 msgid "Help document not found"
 msgstr "找不到說明文件"
 
-#: gnome-panel/panel-util.c:171
+#: gnome-panel/panel-util.c:176
 msgid "No document to show"
 msgstr "沒有可顯示的文件"
 
-#: gnome-panel/panel-util.c:928
-msgid ""
-"<b>Cannot execute xscreensaver</b>\n"
-"\n"
-"Details: xscreensaver-command not found"
+#: gnome-panel/panel-util.c:933
+#, fuzzy
+msgid "Cannot execute xscreensaver"
+msgstr "無法執行 gnome-panel-screenshot"
+
+#: gnome-panel/panel-util.c:934
+#, fuzzy
+msgid "Details: xscreensaver-command not found"
 msgstr ""
 "<b>無法執行 xscreensaver</b>\n"
 "\n"
@@ -3001,6 +2977,42 @@ msgstr "極巨型"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "極微型"
+
+#~ msgid ""
+#~ "<b>Cannot launch icon</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>無法啟動圖示</b>\n"
+#~ "\n"
+#~ "原因：%s"
+
+#~ msgid ""
+#~ "<b>Can't execute 'About GNOME'</b>\n"
+#~ "\n"
+#~ "Details: %s probably does not exist"
+#~ msgstr ""
+#~ "<b>無法執行「關於 GNOME」</b>\n"
+#~ "\n"
+#~ "原因：%s 可能不存在"
+
+#~ msgid ""
+#~ "<b>Can't launch entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>無法啟動指定項目</b>\n"
+#~ "\n"
+#~ "原因：%s"
+
+#~ msgid ""
+#~ "<b>Can't load entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>無法載入項目</b>\n"
+#~ "\n"
+#~ "原因：%s"
 
 #~ msgid ""
 #~ "<b>Failed to run this program</b>\n"
