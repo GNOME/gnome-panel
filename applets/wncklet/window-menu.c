@@ -44,9 +44,10 @@
 typedef struct {
 	GtkWidget    *applet;
 
-	GtkWidget    *frame;
 	GtkWidget    *image;
 	GtkWidget    *menu;
+	GtkWidget    *menu_bar;
+	GtkWidget    *menu_item;
 	GtkWidget    *no_windows_item;
 	GtkWidget    *about_dialog;
 
@@ -641,64 +642,29 @@ window_menu_menu_hidden (GtkWidget  *menu,
 }
 
 static void
-window_menu_position_menu (GtkMenu  *menu,
-			   int      *x,
-			   int      *y,
-			   gboolean *push_in,
-			   gpointer  user_data)
+window_menu_on_show (GtkWidget  *widget,
+		     WindowMenu *window_menu)
 {
-	GtkWidget *widget = GTK_WIDGET (user_data);
-	GtkRequisition requisition;
-	gint menu_xpos;
-	gint menu_ypos;
-
-	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
-
-	gdk_window_get_origin (widget->window, &menu_xpos, &menu_ypos);
-
-	menu_xpos += widget->allocation.x;
-	menu_ypos += widget->allocation.y;
-
-	if (menu_ypos > gdk_screen_get_height (gtk_widget_get_screen (widget)) / 2)
-		menu_ypos -= requisition.height;
-	else
-		menu_ypos += widget->allocation.height;
-
-	*x = menu_xpos;
-	*y = menu_ypos;
-	*push_in = TRUE;
-}
-
-static void
-window_menu_popup_menu (WindowMenu *window_menu,
-			guint       button,
-			guint32     activate_time)
-			
-{
-	GtkWidget  *seperator;
+	GtkWidget  *separator;
 	WnckScreen *screen;
 	GList      *windows;
-	GList      *l, *list;
+	GList      *l, *children;
 
-	if (!window_menu->menu) {
-		window_menu->menu = gtk_menu_new (); 
-		g_signal_connect (window_menu->menu, "hide",
-				  G_CALLBACK (window_menu_menu_hidden), window_menu);
-		g_signal_connect (window_menu->menu, "destroy",
-				  G_CALLBACK (window_menu_destroy_menu), window_menu);
-	}
-
-	list = gtk_container_get_children (GTK_CONTAINER (window_menu->menu));
-	for (l = list; l; l = l->next)
+	/* Remove existing items */
+	children = gtk_container_get_children (GTK_CONTAINER (window_menu->menu));
+	for (l = children; l; l = l->next)
 		gtk_container_remove (GTK_CONTAINER (window_menu->menu), l->data);
-	g_list_free (list);
+	g_list_free (children);
+	
 	window_menu->no_windows_item = NULL;
 
+	/* Add separator */
+	separator = gtk_separator_menu_item_new ();
+	gtk_widget_show (separator);
+	gtk_menu_shell_append (GTK_MENU_SHELL (window_menu->menu), separator);
 
-	seperator = gtk_separator_menu_item_new ();
-	gtk_widget_show (seperator);
-	gtk_menu_shell_append (GTK_MENU_SHELL (window_menu->menu), seperator);
 
+	/* Add windows */
 	screen = window_menu_get_screen (window_menu);
 	windows = wnck_screen_get_windows (screen);
 
@@ -712,13 +678,14 @@ window_menu_popup_menu (WindowMenu *window_menu,
 	for (l = windows; l; l = l->next)
 		window_menu_add_window (window_menu, l->data);
 
+	/* Remove separator if it is at the start or the end of the menu */
 	l = GTK_MENU_SHELL (window_menu->menu)->children;
-	if (l && seperator == l->data) {
-		gtk_widget_destroy (seperator);
-		l = GTK_MENU_SHELL (window_menu->menu)->children;
-	}
 
-	if (!l) {
+	if ((separator == l->data) || separator == g_list_last (l)->data)
+		gtk_widget_destroy (separator);
+
+	/* Check if a no-windows item is needed */
+	if (!GTK_MENU_SHELL (window_menu->menu)->children) {
 		window_menu->no_windows_item =
 			window_menu_item_new (window_menu,
 					      _("No Windows Open"),
@@ -729,31 +696,6 @@ window_menu_popup_menu (WindowMenu *window_menu,
 		gtk_menu_shell_append (GTK_MENU_SHELL (window_menu->menu),
 				       window_menu->no_windows_item);
 	}
-
-	gtk_widget_show (window_menu->menu);
-
-	gtk_menu_set_screen (GTK_MENU (window_menu->menu),
-			     gtk_widget_get_screen (window_menu->applet));
-
-	gtk_widget_set_state (GTK_WIDGET (window_menu->applet), GTK_STATE_SELECTED);
-
-	gtk_menu_popup (GTK_MENU (window_menu->menu),
-			NULL, NULL,
-			window_menu_position_menu, window_menu->applet,
-			button, activate_time);
-}
-
-static gboolean
-window_menu_button_press_event (GtkWidget      *widget,
-				GdkEventButton *event,
-				WindowMenu     *window_menu)
-{
-	if (event->button != 1)
-		return FALSE;
-
-	window_menu_popup_menu (window_menu, event->button, event->time);
-
-	return TRUE;
 }
 
 static gboolean
@@ -761,6 +703,8 @@ window_menu_key_press_event (GtkWidget   *widget,
 			     GdkEventKey *event,
 			     WindowMenu  *window_menu)
 {
+	GtkMenuShell *menu_shell;
+	
 	switch (event->keyval) {
 	case GDK_KP_Enter:
 	case GDK_ISO_Enter:
@@ -768,12 +712,25 @@ window_menu_key_press_event (GtkWidget   *widget,
 	case GDK_Return:
 	case GDK_space:
 	case GDK_KP_Space:
-		window_menu_popup_menu (window_menu, 0, event->time);
+		/* 
+		 * We need to call _gtk_menu_shell_activate() here as is done in 
+		 * window_key_press_handler in gtkmenubar.c which pops up menu
+		 * when F10 is pressed.
+		 *
+		 * As that function is private its code is replicated here.
+		 */
+		menu_shell = GTK_MENU_SHELL (window_menu->menu_item->parent);
+		if (!menu_shell->active) {
+			gtk_grab_add (GTK_WIDGET (menu_shell));
+			menu_shell->have_grab = TRUE;
+			menu_shell->active = TRUE;
+		}
+		gtk_menu_shell_select_item (menu_shell, window_menu->menu_item);
 		return TRUE;
 	default:
 		break;
 	}
-
+	
 	return FALSE;
 }
 
@@ -788,26 +745,44 @@ window_menu_change_background (PanelApplet               *applet,
 	GtkStyle   *style;
 
 	/* reset style */
-	gtk_widget_set_style (GTK_WIDGET (window_menu->applet), NULL);
+	gtk_widget_set_style (GTK_WIDGET (window_menu->menu_bar), NULL);
 	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (GTK_WIDGET (window_menu->applet), rc_style);
+	gtk_widget_modify_style (GTK_WIDGET (window_menu->menu_bar), rc_style);
 	g_object_unref (rc_style);
 
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
 		break;
 	case PANEL_COLOR_BACKGROUND:
-		gtk_widget_modify_bg (GTK_WIDGET (window_menu->applet),
+		gtk_widget_modify_bg (GTK_WIDGET (window_menu->menu_bar),
 				      GTK_STATE_NORMAL, color);
 		break;
 	case PANEL_PIXMAP_BACKGROUND:
-		style = gtk_style_copy (GTK_WIDGET (window_menu->applet)->style);
+		style = gtk_style_copy (GTK_WIDGET (window_menu->menu_bar)->style);
 		if (style->bg_pixmap[GTK_STATE_NORMAL])
 			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
 		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-		gtk_widget_set_style (GTK_WIDGET (window_menu->applet), style);
+		gtk_widget_set_style (GTK_WIDGET (window_menu->menu_bar), style);
 		break;
 	}
+}
+
+static gboolean
+window_menu_on_menu_bar_expose (GtkWidget *widget,
+				GdkEventExpose *event,
+				gpointer data)
+{
+	WindowMenu *window_menu = data;
+
+	if (GTK_WIDGET_HAS_FOCUS (window_menu->applet))
+		gtk_paint_focus (widget->style,
+				 widget->window, 
+				 GTK_WIDGET_STATE (window_menu->menu_item),
+				 NULL,
+				 widget,
+				 "menu-applet",
+				 0, 0, -1, -1);
+	return FALSE;
 }
 
 static void
@@ -870,11 +845,21 @@ force_no_focus_padding (GtkWidget *widget)
         gtk_widget_set_name (widget, "window-menu-applet-button");
 }
 
+static gboolean
+filter_button_press (GtkWidget *widget,
+		     GdkEventButton *event,
+		     gpointer data)
+{
+	if (event->button != 1)
+		g_signal_stop_emission_by_name (widget, "button_press_event");
+	
+	return FALSE;
+}
+
 gboolean
 window_menu_applet_fill (PanelApplet *applet)
 {
 	WindowMenu *window_menu;
-	GtkWidget  *alignment;
 	AtkObject  *atk_obj;
 
 	window_menu = g_new0 (WindowMenu, 1);
@@ -896,30 +881,61 @@ window_menu_applet_fill (PanelApplet *applet)
 		applet, NULL, "GNOME_WindowMenuApplet.xml",
 		NULL, window_menu_verbs, window_menu);
 
-	alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-	gtk_widget_show (alignment);
-	gtk_container_add (GTK_CONTAINER (window_menu->applet), alignment);
+
+	window_menu->menu_bar = gtk_menu_bar_new ();
+	window_menu->menu_item = gtk_menu_item_new ();
+
+	gtk_menu_shell_append (GTK_MENU_SHELL (window_menu->menu_bar), window_menu->menu_item);
+	
+	gtk_container_add (GTK_CONTAINER (window_menu->applet), window_menu->menu_bar);
 
 	window_menu->image = gtk_image_new ();
 	gtk_widget_show (window_menu->image);
 
-	gtk_container_add (GTK_CONTAINER (alignment), window_menu->image);
+	gtk_container_add (GTK_CONTAINER (window_menu->menu_item), window_menu->image);
 
 	window_menu->size = 1;
 
+	window_menu->menu = gtk_menu_new ();
+	g_signal_connect (window_menu->menu, "hide",
+			  G_CALLBACK (window_menu_menu_hidden), window_menu);
+	g_signal_connect (window_menu->menu, "destroy",
+			  G_CALLBACK (window_menu_destroy_menu), window_menu);
+
 	g_signal_connect (window_menu->image, "size_allocate",
 			  G_CALLBACK (window_menu_size_allocate), window_menu);
- 
+
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (window_menu->menu_item), window_menu->menu);
+	
 	window_menu_setup_menu (window_menu);
 
-	g_signal_connect (window_menu->applet, "button_press_event",
-			  G_CALLBACK (window_menu_button_press_event), window_menu);
-	g_signal_connect (window_menu->applet, "key_press_event",
-			  G_CALLBACK (window_menu_key_press_event), window_menu);
+	g_signal_connect (window_menu->menu, "show", G_CALLBACK (window_menu_on_show), window_menu);
+
 	g_signal_connect (G_OBJECT (window_menu->applet), "change_background",
 			  G_CALLBACK (window_menu_change_background), window_menu);
 
-    	gtk_widget_show (GTK_WIDGET (window_menu->applet));
+	g_signal_connect (G_OBJECT (window_menu->menu_bar), "button_press_event",
+			  G_CALLBACK (filter_button_press), window_menu);
+	g_signal_connect_after (G_OBJECT (window_menu->applet), "focus-in-event",
+				G_CALLBACK (gtk_widget_queue_draw), window_menu);
+	g_signal_connect_after (G_OBJECT (window_menu->applet), "focus-out-event",
+				G_CALLBACK (gtk_widget_queue_draw), window_menu);
+	g_signal_connect_after (G_OBJECT (window_menu->menu_bar), "expose-event",
+				G_CALLBACK (window_menu_on_menu_bar_expose), window_menu);
+
+	g_signal_connect (window_menu->applet, "key_press_event",
+			  G_CALLBACK (window_menu_key_press_event), window_menu);
+	
+	gtk_widget_set_name (window_menu->menu_bar, "gnome-panel-window-menu-menu-bar-style");
+	
+	gtk_rc_parse_string (
+		"style \"gnome-panel-window-menu-menu-bar-style\" {\n"
+		"        GtkMenuBar::shadow-type = none\n"
+		"        GtkMenuBar::internal-padding = 0\n"
+		"}\n"
+		"widget \"*gnome-panel-window-menu-menu-bar*\" style : highest \"gnome-panel-window-menu-menu-bar-style\"");
+
+    	gtk_widget_show_all (GTK_WIDGET (window_menu->applet));
 
 	return TRUE;
 }

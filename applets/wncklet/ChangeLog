@@ -1,3 +1,14 @@
+2005-01-04  Vincent Noel  <vnoel@cox.net>
+
+	Patch by Søren Sandmann and me. Fixes bug 160450.
+	
+	* window-menu.c: (window_menu_on_show),
+	(window_menu_key_press_event), (window_menu_change_background),
+	(window_menu_on_menu_bar_expose), (filter_button_press),
+	(window_menu_applet_fill): Make the window menu applet use a
+	GtkMenuBar. Looks more consistent with other menus and reduces the
+	code size.
+
 2005-01-03  Vincent Untz  <vincent@vuntz.net>
 
 	* workspace-switcher.c: (set_tooltip): killed
