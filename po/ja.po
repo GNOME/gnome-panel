@@ -3,7 +3,7 @@
 # Yukihiro Nakai <Nakai@abricot.co.jp>, 1998
 # Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>, 1999
 # Eiichiro ITANI <emu@ceres.dti.ne.jp>, 1999
-# Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>, 1999-2002
+# Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>, 1999-2003.
 # Yuusuke Tahara <tahara@gnome.gr.jp>, 2000
 # Shingo Akagaki <dora@kondara.org>, 2000
 # Akira TAGOH <tagoh@gnome.gr.jp>, 2001
@@ -13,9 +13,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"POT-Creation-Date: 2003-05-27 14:58+0100\n"
-"PO-Revision-Date: 2003-05-14 23:34+0900\n"
-"Last-Translator: KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
+"POT-Creation-Date: 2003-05-28 02:25+0900\n"
+"PO-Revision-Date: 2003-05-28 02:27+0900\n"
+"Last-Translator: Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -874,15 +874,13 @@ msgstr ""
 
 #: gnome-panel/applet.c:97 gnome-panel/applet.c:483
 #: gnome-panel/panel-applet-frame.c:88
-#, fuzzy
 msgid "Un_lock"
-msgstr "時計"
+msgstr "ロック解除(_L)"
 
 #: gnome-panel/applet.c:97 gnome-panel/applet.c:483
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:88
-#, fuzzy
 msgid "_Lock"
-msgstr "画面のロック"
+msgstr "ロック(_L)"
 
 #: gnome-panel/applet.c:410
 msgid "???"
@@ -1598,9 +1596,8 @@ msgstr ""
 "シャットダウンできます"
 
 #: gnome-panel/menu.c:3331 gnome-panel/panel-menu-bar.c:110
-#, fuzzy
 msgid "Run Application..."
-msgstr "アプリケーションの実行"
+msgstr "アプリケーションの実行..."
 
 #: gnome-panel/menu.c:3338 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
@@ -1712,12 +1709,11 @@ msgstr "このボタンのアクションの種類の実装"
 
 #: gnome-panel/panel-action-button.c:389 gnome-panel/panel-menu-button.c:463
 msgid "Drag N' Drop enabled"
-msgstr ""
+msgstr "ドラッグ アン ドロップを有効に"
 
 #: gnome-panel/panel-action-button.c:390 gnome-panel/panel-menu-button.c:464
-#, fuzzy
 msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "矢印を描画するかどうかです"
+msgstr "ウィジェットでドラッグ アンド ドロップを有効にするかどうかです"
 
 #: gnome-panel/panel-applet-frame.c:661
 #, c-format
@@ -1768,12 +1764,12 @@ msgid "Error watching gconf key '%s': %s"
 msgstr "GConf キー '%s' の監視でエラー: %s"
 
 #: gnome-panel/panel-bindings.c:185
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading gconf directory '%s': %s"
-msgstr "GConf のパス '%s' 読み込みでエラー: %s"
+msgstr "GConf のディレクトリ '%s' の読み込みでエラー: %s"
 
 #: gnome-panel/panel-bindings.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "'%s' の値の取得でエラー: %s"
 
@@ -1798,12 +1794,16 @@ msgstr "パネルの削除"
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
+"ウインドウ上でクリックすると、そのアプリケーションを強制終了させます。取り消"
+"すには <ESC> キーを押します。"
 
 #: gnome-panel/panel-force-quit.c:185
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
 msgstr ""
+"このアプリケーションを強制終了させますか?\n"
+"(開いている文書は失なわれます。)"
 
 #: gnome-panel/panel-frame.c:261
 msgid "Edges"
@@ -1828,7 +1828,6 @@ msgstr ""
 "されます。"
 
 #: gnome-panel/panel-general.schemas.in.h:3
-#, fuzzy
 msgid "A list of panel applet IDs"
 msgstr "パネル・アプレット ID の一覧"
 
@@ -1982,15 +1981,16 @@ msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
+"true ならば、「ロック解除」をメニューから選んでロックを解除しない限り、アプ"
+"レットを移動できません。"
 
 #: gnome-panel/panel-object.schemas.in.h:5
 msgid "Interpret the position relative to the bottom/right edge"
 msgstr "位置を下端/右端と解釈する"
 
 #: gnome-panel/panel-object.schemas.in.h:6
-#, fuzzy
 msgid "Lock the object to the panel"
-msgstr "パネルに配置するオブジェクトの位置"
+msgstr "オブジェクトをパネルに固定"
 
 #: gnome-panel/panel-object.schemas.in.h:7
 msgid "The Bonobo IID of the applet"
@@ -2294,30 +2294,30 @@ msgid "Open Recent"
 msgstr "最近開いたファイル"
 
 #: gnome-panel/panel-run-dialog.c:276
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Error launching command: '%s'</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>アイコンを起動できません</b>\n"
+"<b>コマンドを起動できません: '%s'</b>\n"
 "\n"
 "詳細: %s"
 
 #: gnome-panel/panel-run-dialog.c:305
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Error displaying location: '%s'</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>ヘルプ文書を表示できません</b>\n"
+"<b>場所の表示でエラー: '%s'</b>\n"
 "\n"
 "詳細: %s"
 
 #: gnome-panel/panel-run-dialog.c:1035
 msgid "Choose a file to append to the command..."
-msgstr ""
+msgstr "コマンドの後ろに続けるファイルを選んでください..."
 
 #: gnome-panel/panel-run-dialog.c:1214
 #, c-format
@@ -2326,44 +2326,44 @@ msgstr "実行するコマンド: '%s'"
 
 #: gnome-panel/panel-run-dialog.c:1220 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
-msgstr ""
+msgstr "説明を見たいアプリケーションを選んでください。"
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
 "A description of the currently selected application or information on the "
 "command that will be run."
-msgstr ""
+msgstr "選択しているアプリケーションの説明、あるいは実行するコマンドの情報。"
 
 #: gnome-panel/panel-run-dialog.glade.h:3
-#, fuzzy
 msgid "Application description"
-msgstr "アプリケーション"
+msgstr "アプリケーションの説明"
 
 #: gnome-panel/panel-run-dialog.glade.h:4
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
+"コマンドの文字列の後に続けるファイル名を選択するにはこのボタンを押します。"
 
 #: gnome-panel/panel-run-dialog.glade.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
+"選択したアプリケーション、あるいは、コマンド入力エントリに入力されたコマンド"
+"を実行するにはこのボタンを押します。"
 
 #: gnome-panel/panel-run-dialog.glade.h:6
-#, fuzzy
 msgid "Command entry"
-msgstr "実行するコマンド"
+msgstr "コマンドを入力する場所"
 
 #: gnome-panel/panel-run-dialog.glade.h:7
-#, fuzzy
 msgid "Command icon"
-msgstr "実行するコマンド"
+msgstr "コマンドのアイコン"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Enter a command string here to run it."
-msgstr ""
+msgstr "実行するコマンド文字列をここに入力してください。"
 
 #: gnome-panel/panel-run-dialog.glade.h:9
 msgid "List of known applications"
@@ -2374,32 +2374,28 @@ msgid "Run in _terminal"
 msgstr "端末内で起動する(_T)"
 
 #: gnome-panel/panel-run-dialog.glade.h:12
-#, fuzzy
 msgid "Run with _file..."
-msgstr "ファイルと実行(_F)..."
+msgstr "ファイルを引数として実行(_F)..."
 
 #: gnome-panel/panel-run-dialog.glade.h:13
-#, fuzzy
 msgid "Select an application from the list to run it"
 msgstr "実行するアプリケーションを一覧から選んで下さい"
 
 #: gnome-panel/panel-run-dialog.glade.h:15
 msgid "Select this box to run the command in a terminal window."
-msgstr ""
+msgstr "コマンドを端末内で実行するにはこのボックスを選んでください。"
 
 #: gnome-panel/panel-run-dialog.glade.h:16
-#, fuzzy
 msgid "Show list of known _applications"
-msgstr "既存のアプリケーション一覧"
+msgstr "既存のアプリケーション一覧(_A)"
 
 #: gnome-panel/panel-run-dialog.glade.h:17
-#, fuzzy
 msgid "The icon of the command to be run."
-msgstr "実行するコマンドの格納場所に移動できません"
+msgstr "実行するコマンドのアイコンです。"
 
 #: gnome-panel/panel-run-dialog.glade.h:18
 msgid "When this is selected the list of known applications is displayed."
-msgstr ""
+msgstr "これを選択すると、既存のアプリケーションの一覧が表示されます。"
 
 #: gnome-panel/panel-run-dialog.glade.h:19 gnome-panel/panel-stock-icons.c:147
 msgid "_Run"
@@ -2480,9 +2476,8 @@ msgid "The orientation of the panel"
 msgstr "このパネルの向き"
 
 #: gnome-panel/panel-toplevel.c:3327
-#, fuzzy
 msgid "The height (or width when vertical) of the panel"
-msgstr "パネルの高さ (または、縦向きの場合は幅)"
+msgstr "パネルの高さ (縦向きの場合は幅)"
 
 #: gnome-panel/panel-toplevel.c:3339
 msgid "X position"
@@ -2537,9 +2532,8 @@ msgid "Hide delay"
 msgstr "隠すまでの遅延時間"
 
 #: gnome-panel/panel-toplevel.c:3406
-#, fuzzy
 msgid "The number of milliseconds to delay before automatically hiding"
-msgstr "自動的に隠すまでの遅れ時間 (ミリ秒) です"
+msgstr "自動的に隠すまでの遅れ時間 (ミリ秒)"
 
 #: gnome-panel/panel-toplevel.c:3417
 msgid "Un-hide delay"
@@ -2802,9 +2796,8 @@ msgid "The Y co-ordinate of the panel."
 msgstr "パネルの Y 軸方向の座標"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:35
-#, fuzzy
 msgid "The background color opacity."
-msgstr "バックグラウンド色の透明度"
+msgstr "バックグラウンド色の透明度です。"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:36
 msgid "The background color."
@@ -2854,7 +2847,6 @@ msgid "The orientation of the panel."
 msgstr "パネルの向き"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:43
-#, fuzzy
 msgid ""
 "The orientation of the panel. There are four possible values; \"top\", "
 "\"bottom\", \"left\", \"right\". In expanded mode the value specifies which "
@@ -2865,13 +2857,13 @@ msgid ""
 "menu below the panel, whereas on a \"bottom\" panel the menu will be popped "
 "up above the panel."
 msgstr ""
-"パネルを配置する向きです。利用可能な値は \"top\", \"bottom\", \"left\", "
-"\"right\" です。パネルを広げたモードでは、パネルを配置するスクリーンの端を指"
-"定します。パネルを広げないモードでは、\"top\" と \"bottom\" の扱い方の違いが"
-"少しだけ重要です - それは水平方向のパネルにおける両者の違いです。しかし、パネ"
-"ル・オブジェクトが動作する方法について役に立つヒントを提示します。例えば、"
-"\"top\" パネル上のメニューはパネルの下側に向かってポップアップします。逆に "
-"\"bottom\" パネルのメニューはパネルの上側に向かってポップアップします。"
+"パネルを配置する向きです。利用可能な選択肢は 4 つ、\"top\", \"bottom\", "
+"\"left\", \"right\" です。パネルを広げたモードでは、パネルをスクリーンのどの"
+"端に配置するかを指定します。パネルを広げないモードでは、\"top\" と \"bottom"
+"\" の違いは重要ではありません …どちらも水平なパネルであることを示します。しか"
+"しパネル上のオブジェクトの振る舞いを規定する有用なヒントにはなります。例え"
+"ば、\"top\" パネルでは、メニューはパネルの下側に向かってポップアップします。"
+"逆に \"bottom\" パネルのメニューはパネルの上側に向かってポップアップします。"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "The size of the panel."
