@@ -161,6 +161,8 @@ get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
 	if (strcmp (ii->type, "PanelApplet") == 0) {
 		return g_strjoinv (" ", ii->exec);
 	} else {
+		if (ii->exec[0] == NULL)
+			return NULL;
 		/*this is here as a horrible hack since that's the way it
 		  used to work, but now one should make the .desktop type
 		  PanelApplet*/
