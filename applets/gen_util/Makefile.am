@@ -5,7 +5,7 @@ INCLUDES = -I. -I$(srcdir) 				\
 	-I$(srcdir)/../../panel				\
 	-I$(top_builddir)/panel				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-I$(includedir) $(GNOME_INCLUDEDIR)
+	$(GNOME_INCLUDEDIR) $(PIXBUF_CFLAGS) -I$(includedir)
 
 lib_LTLIBRARIES = libgen_util_applet.la
 
