@@ -17,7 +17,7 @@ libfish_applet_la_SOURCES = fish.c
 #		 	$(GNOME_LIBDIR) \
 #		     	$(GNOMEGNORBA_LIBS) $(INTLLIBS) 
 
-FISH_BITMAPS = fishanim.png oldwanda.png
+FISH_BITMAPS = fishanim.png oldwanda.png footguy.png
 
 EXTRA_DIST = \
 	fish_applet.desktop \
