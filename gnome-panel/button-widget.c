@@ -510,7 +510,7 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 		gtk_grab_add(widget);
 		button_widget_down (button);
 		button->pressed_timeout =
-			gtk_timeout_add(600,pressed_timeout_func,button);
+			gtk_timeout_add(400,pressed_timeout_func,button);
 	}
 	return TRUE;
 }
