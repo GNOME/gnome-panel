@@ -34,6 +34,7 @@ EGGFILES = \
 
 wnck_applet_SOURCES = \
 	wncklet.c \
+	wncklet.h \
 	window-menu.c \
 	window-menu.h \
 	window-list.c \
