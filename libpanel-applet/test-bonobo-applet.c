@@ -101,6 +101,30 @@ test_applet_handle_size_change (PanelApplet *applet,
 	}
 }
 
+static void
+test_applet_handle_background_change (PanelApplet         *applet,
+				      PanelBackgroundType  type,
+				      GdkColor            *colour,
+				      const gchar         *pixmap,
+				      GtkLabel            *label)
+{
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		g_message ("Setting background to default");
+		break;
+	case PANEL_COLOUR_BACKGROUND:
+		g_message ("Setting background to #%2x%2x%2x",
+			    colour->red, colour->green, colour->blue);
+		break;
+	case PANEL_PIXMAP_BACKGOUND:
+		g_message ("Setting background to '%s'", pixmap);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
 static BonoboObject *
 test_applet_new (const gchar *iid)
 {
@@ -125,6 +149,11 @@ test_applet_new (const gchar *iid)
 	g_signal_connect (G_OBJECT (applet),
 			  "change_size",
 			  (GCallback) test_applet_handle_size_change,
+			  label);
+
+	g_signal_connect (G_OBJECT (applet),
+			  "change_background",
+			  (GCallback) test_applet_handle_background_change,
 			  label);
 			  
 	return BONOBO_OBJECT (panel_applet_get_control (applet));

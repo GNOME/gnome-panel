@@ -20,6 +20,39 @@ struct _PanelAppletShellPrivate {
 static GObjectClass *parent_class = NULL;
 
 static void
+impl_GNOME_PanelAppletShell_changeBackground (PortableServer_Servant       servant,
+					      const GNOME_PanelBackground *background,
+					      CORBA_Environment           *ev)
+{
+	PanelAppletShell *shell;
+
+        shell = PANEL_APPLET_SHELL (bonobo_object (servant));
+
+	switch (background->_d) {
+	case GNOME_NONE:
+		panel_applet_clear_background (shell->priv->applet);
+		break;
+	case GNOME_COLOUR: {
+		GdkColor colour;
+
+		colour.red   = background->_u.colour.red;
+                colour.green = background->_u.colour.green;
+                colour.blue  = background->_u.colour.blue;
+
+		panel_applet_set_background_colour (shell->priv->applet, &colour);
+		}
+		break;
+	case GNOME_PIXMAP:
+		panel_applet_set_background_pixmap (shell->priv->applet,
+						    background->_u.pixmap);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static void
 impl_GNOME_PanelAppletShell_changeOrientation (PortableServer_Servant  servant,
 					       GNOME_PanelOrient       orient,
 					       CORBA_Environment      *ev)
@@ -63,6 +96,7 @@ panel_applet_shell_class_init (PanelAppletShellClass *klass)
 
 	klass->epv.changeOrientation = impl_GNOME_PanelAppletShell_changeOrientation;
 	klass->epv.changeSize        = impl_GNOME_PanelAppletShell_changeSize;
+	klass->epv.changeBackground  = impl_GNOME_PanelAppletShell_changeBackground;
 
 	object_class->finalize = panel_applet_shell_finalize;
 

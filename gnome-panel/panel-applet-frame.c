@@ -125,6 +125,62 @@ panel_applet_frame_change_size (PanelAppletFrame *frame,
 	CORBA_exception_free (&env);
 }
 
+static void
+panel_applet_frame_change_background (PanelAppletFrame      *frame,
+				      GNOME_PanelBackground *background)
+{
+	CORBA_Environment     env;
+
+	CORBA_exception_init (&env);
+
+	GNOME_PanelAppletShell_changeBackground (frame->priv->applet_shell,
+						 background,
+						 &env);
+	if (BONOBO_EX (&env))
+		g_warning (_("Exception from changeBackground: '%s'\n"),
+			   BONOBO_EX_REPOID (&env));
+
+	CORBA_exception_free (&env);
+}
+
+void
+panel_applet_frame_change_background_pixmap (PanelAppletFrame *frame,
+					     gchar            *pixmap)
+{
+	GNOME_PanelBackground background;
+
+	background._d        = GNOME_PIXMAP;
+	background._u.pixmap = pixmap;
+
+	panel_applet_frame_change_background (frame, &background);
+}
+
+void
+panel_applet_frame_change_background_colour (PanelAppletFrame *frame,
+					     guint16           red,
+					     guint16           green,
+					     guint16           blue)
+{
+	GNOME_PanelBackground background;
+
+	background._d             = GNOME_COLOUR;
+	background._u.colour.red   = red;
+	background._u.colour.green = green;
+	background._u.colour.blue  = blue;
+
+	panel_applet_frame_change_background (frame, &background);
+}
+
+void
+panel_applet_frame_clear_background (PanelAppletFrame *frame)
+{
+	GNOME_PanelBackground background;
+
+	background._d = GNOME_NONE;
+
+	panel_applet_frame_change_background (frame, &background);
+}
+
 void
 panel_applet_frame_set_info (PanelAppletFrame *frame,
 			     AppletInfo       *info)

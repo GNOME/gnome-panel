@@ -32,6 +32,7 @@ static GObjectClass *parent_class;
 enum {
         CHANGE_ORIENT,
         CHANGE_SIZE,
+        CHANGE_BACKGROUND,
         LAST_SIGNAL
 };
 
@@ -61,6 +62,33 @@ panel_applet_change_size (PanelApplet *applet,
 			       panel_applet_signals [CHANGE_SIZE],
 			       0, size);
 	}
+}
+
+void
+panel_applet_set_background_colour (PanelApplet *applet,
+				    GdkColor    *colour)
+{
+
+	g_signal_emit (G_OBJECT (applet),
+		       panel_applet_signals [CHANGE_BACKGROUND],
+                       0, PANEL_COLOUR_BACKGROUND, colour, NULL);
+}
+
+void
+panel_applet_set_background_pixmap (PanelApplet *applet,
+				    const gchar *pixmap)
+{
+	g_signal_emit (G_OBJECT (applet),
+		       panel_applet_signals [CHANGE_BACKGROUND],
+                       0, PANEL_PIXMAP_BACKGOUND, NULL, pixmap);
+}
+
+void
+panel_applet_clear_background (PanelApplet *applet)
+{
+	g_signal_emit (G_OBJECT (applet),
+		       panel_applet_signals [CHANGE_BACKGROUND],
+                       0, PANEL_NO_BACKGROUND, NULL, NULL);
 }
 
 void
@@ -188,6 +216,20 @@ panel_applet_class_init (PanelAppletClass *klass,
                               G_TYPE_NONE,
 			      1,
 			      G_TYPE_INT);
+
+	panel_applet_signals [CHANGE_BACKGROUND] =
+                g_signal_new ("change_background",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelAppletClass, change_background),
+                              NULL,
+			      NULL,
+                              panel_marshal_VOID__ENUM_POINTER_STRING,
+                              G_TYPE_NONE,
+			      3,
+			      PANEL_TYPE_G_NOME__PANEL_BACKGROUND_TYPE,
+			      G_TYPE_POINTER,
+			      G_TYPE_STRING);
 }
 
 static void

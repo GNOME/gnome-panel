@@ -27,6 +27,12 @@ typedef GNOME_PanelOrient PanelAppletOrient;
 #define PANEL_APPLET_ORIENT_LEFT  GNOME_ORIENT_UP
 #define PANEL_APPLET_ORIENT_RIGHT GNOME_ORIENT_UP
 
+typedef GNOME_PanelBackgroundType PanelBackgroundType;
+
+#define PANEL_NO_BACKGROUND     GNOME_NONE  
+#define PANEL_COLOUR_BACKGROUND GNOME_COLOUR
+#define PANEL_PIXMAP_BACKGOUND  GNOME_PIXMAP
+
  
 #define PANEL_TYPE_APPLET         (panel_applet_get_type ())
 #define PANEL_APPLET(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_APPLET, PanelApplet))
@@ -38,7 +44,6 @@ typedef GNOME_PanelOrient PanelAppletOrient;
 typedef struct _PanelApplet        PanelApplet;
 typedef struct _PanelAppletClass   PanelAppletClass;
 typedef struct _PanelAppletPrivate PanelAppletPrivate;
-
 
 struct _PanelApplet {
 	GtkEventBox          event_box;
@@ -54,6 +59,11 @@ struct _PanelAppletClass {
 
 	void (*change_size)   (PanelApplet       *applet,
 			       gint               size);
+
+	void (*change_background) (PanelApplet         *applet,
+				   PanelBackgroundType  type,
+				   GdkColor             colour,
+				   const gchar         *pixmap);
 };
 
 GType              panel_applet_get_type  (void) G_GNUC_CONST;

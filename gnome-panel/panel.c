@@ -315,19 +315,51 @@ panel_size_change(GtkWidget *widget,
 }
 
 void
-back_change (AppletInfo *info, PanelWidget *panel)
+back_change (AppletInfo *info,
+	     PanelWidget *panel)
 {
-	if (info->type == APPLET_EXTERN)
+	switch (info->type) {
+	case APPLET_EXTERN:
 		extern_handle_back_change ((Extern)info->data, panel);
+		break;
+	case APPLET_BONOBO: {
+		PanelAppletFrame *frame = PANEL_APPLET_FRAME (info->data);
+
+		switch (panel->back_type) {
+		case PANEL_BACK_PIXMAP:
+			panel_applet_frame_change_background_pixmap (frame,
+								     panel->back_pixmap);
+			break;
+		case PANEL_BACK_COLOR:
+			panel_applet_frame_change_background_colour (frame,
+								     panel->back_color.red,
+								     panel->back_color.green,
+								     panel->back_color.blue);
+			break;
+		case PANEL_BACK_NONE:
+			panel_applet_frame_clear_background (frame);
+			break;
+		default:
+			g_assert_not_reached ();
+			break;
+		}
+		}
+		
+		break;
+	default:
+		break;
+	}
 }
 
 static void
-back_change_foreach(GtkWidget *w, gpointer data)
+back_change_foreach (GtkWidget   *widget,
+		     PanelWidget *panel)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
-	PanelWidget *panel = data;
+	AppletInfo *info;
 
-	back_change(info,panel);
+	info = gtk_object_get_data (GTK_OBJECT (widget), "applet_info");
+
+	back_change (info, panel);
 }
 
 static void
@@ -336,7 +368,9 @@ panel_back_change(GtkWidget *widget,
 		  char *pixmap,
 		  GdkColor *color)
 {
-	gtk_container_foreach(GTK_CONTAINER(widget),back_change_foreach,widget);
+	gtk_container_foreach (GTK_CONTAINER (widget),
+			       (GtkCallback) back_change_foreach,
+			       widget);
 
 	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/

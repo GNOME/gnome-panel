@@ -1,5 +1,32 @@
 2001-11-19  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-frame.[ch]: 
+	(panel_applet_frame_change_background),
+	(panel_applet_frame_change_background_pixmap),
+	(panel_applet_frame_change_background_colour),
+	(panel_applet_frame_clear_background): impl.
+
+	* panel-applet-shell.c:
+	(impl_GNOME_PanelAppletShell_changeBackground): impl.
+	(panel_applet_shell_class_init): upd.
+
+	* panel-applet.[ch], panel-applet-private.h: 
+	(panel_applet_set_background_colour),
+	(panel_applet_set_background_pixmap),
+	(panel_applet_clear_background): impl.
+	(panel_applet_class_init): register "change_background"
+	signal.
+
+	* panel-marshal.list: add VOID:ENUM,POINTER,STRING.
+
+	* panel.c: (back_change): update for bonobo applets.
+
+	* test-bonobo-applet.c:
+	(test_applet_handle_background_change): impl - just print out
+	a message for now.
+
+2001-11-19  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-widget.c (panel_widget_class_init): give proper GType
 	instead of G_TYPE_ENUM. 
 
