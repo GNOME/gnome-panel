@@ -26,10 +26,9 @@
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
-#include <libgnomeui/gnome-help.h>
 #include <gtk/gtkmessagedialog.h>
 #include <gtk/gtkhbox.h>
-#include <libgnomeui/gnome-about.h>
+#include <libgnomeui/libgnomeui.h>
 
 #include <bonobo/bonobo-shlib-factory.h>
 

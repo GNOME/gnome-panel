@@ -29,9 +29,7 @@
 #include <gtk/gtkstock.h>
 #include <gtk/gtkmessagedialog.h>
 #include <libgnome/libgnome.h>
-#include <libgnomeui/gnome-about.h>
-#include <libgnomeui/gnome-help.h>
-#include <libgnomeui/gnome-icon-theme.h>
+#include <libgnomeui/libgnomeui.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/screen.h>
 #include "wncklet.h"

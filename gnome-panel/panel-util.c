@@ -25,7 +25,6 @@
 #include <sys/wait.h>
 
 #include <libgnomeui/libgnomeui.h>
-#include <libgnomeui/gnome-help.h>
 #include <libgnome/libgnome.h>
 
 #include <libgnomevfs/gnome-vfs-uri.h>

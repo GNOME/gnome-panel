@@ -45,7 +45,6 @@
 #include <gtk/gtk.h>
 #include <libbonobo.h>
 #include <libgnomeui/libgnomeui.h>
-#include <libgnomeui/gnome-help.h>
 #include <libgnome/libgnome.h>
 #include <gconf/gconf-client.h>
 

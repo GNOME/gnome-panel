@@ -34,7 +34,6 @@
 #include <panel-applet.h>
 #include <gdk/gdkkeysyms.h>
 #include <libgnomeui/libgnomeui.h>
-#include <libgnomeui/gnome-help.h>
 
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>

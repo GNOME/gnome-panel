@@ -25,7 +25,6 @@
 #include <libbonobo.h>
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
-#include <libgnomeui/gnome-help.h>
 #include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>

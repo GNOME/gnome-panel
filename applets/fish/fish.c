@@ -31,7 +31,6 @@
 #include <panel-applet-gconf.h>
 #include <gconf/gconf-client.h>
 #include <libgnomeui/libgnomeui.h>
-#include <libgnomeui/gnome-help.h>
 #include <libart_lgpl/libart.h>
 #include <glade/glade-xml.h>
 
