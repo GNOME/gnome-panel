@@ -31,6 +31,12 @@ to a bug, the panel might crash and restart itself.
 </para>
 
 <para>
+Note that you should use #gnome_CORBA_init rather then #gnome_init when you
+want to use the status docklet as corba has to be initialized for the status
+docklet to work.
+</para>
+
+<para>
 Here is a short example of how to use the status docklet
 
   <example>
