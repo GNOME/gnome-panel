@@ -1918,6 +1918,9 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel_widget_set_size(panel,panel->size);
 
+	if(panel->snapped==PANEL_DRAWER)
+		panel_widget_pack_applets(panel);
+
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[APPLET_REMOVED_SIGNAL]);
 
