@@ -85,6 +85,7 @@ apply_global_config(void)
 	else
 		gtk_tooltips_disable(panel_tooltips);
 	set_show_small_icons();
+	set_show_dot_buttons();
 	send_tooltips_state(global_config.tooltips_enabled);
 	button_widget_tile_enable(global_config.tiles_enabled);
 	for(i=0;i<LAST_TILE;i++) {
@@ -429,6 +430,8 @@ do_session_save(GnomeClient *client,
 				      global_config.tooltips_enabled);
 		gnome_config_set_bool("show_small_icons",
 				      global_config.show_small_icons);
+		gnome_config_set_bool("show_dot_buttons",
+				      global_config.show_dot_buttons);
 		gnome_config_set_bool("prompt_for_logout",
 				      global_config.prompt_for_logout);
 		gnome_config_set_bool("disable_animations",
@@ -878,6 +881,9 @@ load_up_globals(void)
 
 	global_config.show_small_icons =
 		gnome_config_get_bool("show_small_icons=TRUE");
+
+	global_config.show_dot_buttons =
+		gnome_config_get_bool("show_dot_buttons=TRUE");
 		
 	global_config.prompt_for_logout =
 		gnome_config_get_bool("prompt_for_logout=TRUE");

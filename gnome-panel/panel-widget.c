@@ -2037,7 +2037,7 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 	g_return_val_if_fail(applet!=NULL,-1);
 	g_return_val_if_fail(GTK_IS_WIDGET(applet),-1);
 	g_return_val_if_fail(pos>=0,-1);
-
+	
 	ad = gtk_object_get_data(GTK_OBJECT(applet),PANEL_APPLET_DATA);
 
 	if(ad)

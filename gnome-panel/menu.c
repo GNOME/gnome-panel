@@ -27,8 +27,9 @@
 
 static char *gnome_folder = NULL;
 
+/*thingies on menus*/
 GList *small_icons = NULL;
-int show_small_icons = TRUE;
+GList *dot_buttons = NULL;
 
 extern GArray *applets;
 extern int applet_count;
@@ -110,10 +111,10 @@ activate_app_def (GtkWidget *widget, void *data)
 }
 
 static void
-kill_small_icon(GtkWidget *widget, gpointer data)
+kill_widget_from_list(GtkWidget *widget, GList ** list)
 {
-	if(small_icons)
-		small_icons = g_list_remove(small_icons,widget);
+	if(list && *list)
+		*list = g_list_remove(*list,widget);
 }
 
 static void
@@ -294,7 +295,7 @@ restore_grabs(GtkWidget *w, gpointer data)
 					   NULL, cursor, 0) == 0);
 		gdk_cursor_destroy (cursor);
 	}
-
+	
 	gtk_grab_add (GTK_WIDGET (menu));
 }
 
@@ -397,30 +398,25 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	gtk_widget_show(dialog);
 }
 
-static int
-show_item_menu(GtkWidget *w, GdkEvent *event, gpointer data)
+static void
+show_item_menu(GtkWidget *item, GdkEventButton *bevent, int type)
 {
 	GtkWidget *menu, *menuitem, *prop_item;
-	GdkEventButton *bevent = (GdkEventButton *)event;
 	GnomeDesktopEntry *dentry;
 	MenuFinfo *mf;
-	int type = GPOINTER_TO_INT(data);
-
-	if(event->type!=GDK_BUTTON_PRESS)
-		return FALSE;
 	
-	dentry = gtk_object_get_data(GTK_OBJECT(w),"dentry");
-	mf = gtk_object_get_data(GTK_OBJECT(w),"mf");
-	menu = gtk_object_get_data(GTK_OBJECT(w),"menu");
-	prop_item = gtk_object_get_data(GTK_OBJECT(w),"prop_item");
+	dentry = gtk_object_get_data(GTK_OBJECT(item),"dentry");
+	mf = gtk_object_get_data(GTK_OBJECT(item),"mf");
+	menu = gtk_object_get_data(GTK_OBJECT(item),"item_menu");
+	prop_item = gtk_object_get_data(GTK_OBJECT(item),"prop_item");
 	
 	if(!menu) {
 		menu = gtk_menu_new ();
 		
-		gtk_object_set_data(GTK_OBJECT(w),"menu",menu);
+		gtk_object_set_data(GTK_OBJECT(item),"item_menu",menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"deactivate",
 				   GTK_SIGNAL_FUNC(restore_grabs),
-				   w->parent->parent);
+				   item);
 
 
 		if(type == 1) {
@@ -453,7 +449,7 @@ show_item_menu(GtkWidget *w, GdkEvent *event, gpointer data)
 		/*when activated we must pop down the first menu*/
 		gtk_signal_connect_object(GTK_OBJECT(prop_item), "activate",
 					  GTK_SIGNAL_FUNC(gtk_menu_shell_deactivate),
-					  GTK_OBJECT(w->parent->parent->parent));
+					  GTK_OBJECT(item->parent));
 		if(type == 1)
 			gtk_signal_connect(GTK_OBJECT(prop_item), "activate",
 					   GTK_SIGNAL_FUNC(edit_dentry),
@@ -462,7 +458,7 @@ show_item_menu(GtkWidget *w, GdkEvent *event, gpointer data)
 			gtk_signal_connect(GTK_OBJECT(prop_item), "activate",
 					   GTK_SIGNAL_FUNC(edit_direntry),
 					   mf);
-		gtk_object_set_data(GTK_OBJECT(w),"prop_item",prop_item);
+		gtk_object_set_data(GTK_OBJECT(item),"prop_item",prop_item);
 		setup_menuitem (prop_item, 0, _("Properties ..."));
 		gtk_menu_append (GTK_MENU (menu), prop_item);
 	}
@@ -485,8 +481,34 @@ show_item_menu(GtkWidget *w, GdkEvent *event, gpointer data)
 			NULL,
 			bevent->button,
 			0);
+}
+
+static int
+show_item_menu_b_cb(GtkWidget *w, GdkEvent *event, gpointer data)
+{
+	GdkEventButton *bevent = (GdkEventButton *)event;
+	GtkWidget *item;
+	int type = GPOINTER_TO_INT(data);
+	
+	if(event->type!=GDK_BUTTON_PRESS)
+		return FALSE;
+	
+	item = w->parent->parent;
+	show_item_menu(item,bevent,type);
 	
 	return TRUE;
+}
+
+static int
+show_item_menu_mi_cb(GtkWidget *w, GdkEvent *event, gpointer data)
+{
+	GdkEventButton *bevent = (GdkEventButton *)event;
+	int type = GPOINTER_TO_INT(data);
+	
+	if(event->type==GDK_BUTTON_PRESS && bevent->button==3)
+		show_item_menu(w,bevent,type);
+	
+	return FALSE;
 }
 
 static int
@@ -528,16 +550,24 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 
 	small_icons = g_list_prepend (small_icons, align);
 	gtk_signal_connect(GTK_OBJECT(align),"destroy",
-			   GTK_SIGNAL_FUNC(kill_small_icon),NULL);
+			   GTK_SIGNAL_FUNC(kill_widget_from_list),
+			   &small_icons);
 
 	gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
 
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(mf) {
 		GtkWidget *w = gtk_button_new_with_label(_("..."));
-		gtk_object_set_data(GTK_OBJECT(w),"mf",mf);
+		dot_buttons = g_list_prepend (dot_buttons, w);
+		gtk_signal_connect(GTK_OBJECT(w),"destroy",
+				   GTK_SIGNAL_FUNC(kill_widget_from_list),
+				   &dot_buttons);
+		gtk_object_set_data(GTK_OBJECT(menuitem),"mf",mf);
+		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
+				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
+				   GINT_TO_POINTER(0));
 		gtk_signal_connect(GTK_OBJECT(w),"event",
-				   GTK_SIGNAL_FUNC(show_item_menu),
+				   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
 				   GINT_TO_POINTER(0));
 		gtk_signal_connect(GTK_OBJECT(w),"destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
@@ -585,7 +615,8 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 
 	small_icons = g_list_prepend (small_icons, align);
 	gtk_signal_connect(GTK_OBJECT(align),"destroy",
-			   GTK_SIGNAL_FUNC(kill_small_icon),NULL);
+			   GTK_SIGNAL_FUNC(kill_widget_from_list),
+			   &small_icons);
 
 
 	gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
@@ -593,9 +624,16 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(dentry) {
 		GtkWidget *w = gtk_button_new_with_label(_("..."));
-		gtk_object_set_data(GTK_OBJECT(w),"dentry",dentry);
+		dot_buttons = g_list_prepend (dot_buttons, w);
+		gtk_signal_connect(GTK_OBJECT(w),"destroy",
+				   GTK_SIGNAL_FUNC(kill_widget_from_list),
+				   &dot_buttons);
+		gtk_object_set_data(GTK_OBJECT(menuitem),"dentry",dentry);
+		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
+				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
+				   GINT_TO_POINTER(1));
 		gtk_signal_connect(GTK_OBJECT(w),"event",
-				   GTK_SIGNAL_FUNC(show_item_menu),
+				   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
 				   GINT_TO_POINTER(1));
 		gtk_signal_connect(GTK_OBJECT(w),"destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
@@ -1721,11 +1759,13 @@ create_menu_applet(char *arguments, PanelOrientType orient,
 }
 
 static void
-set_show_small_icons_foreach(gpointer data, gpointer user_data)
+set_show_stuff_foreach(gpointer data, gpointer user_data)
 {
 	GtkWidget *w = data;
-	g_return_if_fail(w);
-	if (global_config.show_small_icons)
+
+	g_return_if_fail(w!=NULL);
+
+	if (GPOINTER_TO_INT(user_data))
 		gtk_widget_show(w);
 	else
 		gtk_widget_hide(w);
@@ -1734,7 +1774,14 @@ set_show_small_icons_foreach(gpointer data, gpointer user_data)
 void
 set_show_small_icons(void)
 {
-	g_list_foreach(small_icons,set_show_small_icons_foreach,NULL);
+	g_list_foreach(small_icons,set_show_stuff_foreach,
+		       GINT_TO_POINTER(global_config.show_small_icons));
+}
+void
+set_show_dot_buttons(void)
+{
+	g_list_foreach(dot_buttons,set_show_stuff_foreach,
+		       GINT_TO_POINTER(global_config.show_dot_buttons));
 }
 
 void

@@ -331,6 +331,7 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 		return 0;
 	}
 
+	printf("socket wid: %ld\n", GDK_WINDOW_XWINDOW(socket->window));
 	return GDK_WINDOW_XWINDOW(socket->window);
 }
 

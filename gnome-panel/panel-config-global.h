@@ -13,6 +13,7 @@ struct _GlobalConfig {
 	int minimize_delay;
 	int tooltips_enabled;
 	int show_small_icons;
+	int show_dot_buttons;
 	int prompt_for_logout;
 	PanelMovementType movement_type;
 	int disable_animations;
