@@ -32,11 +32,11 @@
 #include <libgnome/gnome-i18n.h>
 
 #include "egg-screen-exec.h"
-#include "gnome-run.h"
 #include "menu.h"
 #include "panel-globals.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
+#include "panel-run-dialog.h"
 
 static Atom atom_gnome_panel_action            = None;
 static Atom atom_gnome_panel_action_main_menu  = None;
@@ -62,7 +62,7 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 static void
 panel_action_protocol_run_dialog (GdkScreen *screen)
 {
-	show_run_dialog (screen);
+	panel_run_dialog_present (screen);
 }
 
 static GdkFilterReturn

@@ -78,67 +78,6 @@ panel_launcher_get_filename (const char *path)
 	return p;
 }
 
-static char *
-panel_launcher_make_full_path (const char *filename)
-{
-	char *tmp, *retval;
-
-	g_return_val_if_fail (filename != NULL, NULL);
-
-	tmp = gnome_util_home_file (PANEL_LAUNCHERS_PATH);
-
-	/* Make sure the launcher directory exists */
-	if (!g_file_test (tmp, G_FILE_TEST_EXISTS))
-		panel_ensure_dir (tmp);
-
-	retval = g_build_filename (tmp, filename, NULL);
-
-	g_free (tmp);
-
-	return retval;
-}
-
-static char *
-panel_launcher_make_unique_path (void)
-{
-#define NUM_OF_WORDS 12
-	char *words[] = {
-		"foo",
-		"bar",
-		"blah",
-		"gegl",
-		"frobate",
-		"hadjaha",
-		"greasy",
-		"hammer",
-		"eek",
-		"larry",
-		"curly",
-		"moe",
-		NULL};
-	char     *retval = NULL;
-	gboolean  exists = TRUE;
-
-	while (exists) {
-		char *filename;
-		int   rnd;
-		int   word;
-
-		rnd = rand ();
-		word = rand () % NUM_OF_WORDS;
-
-		filename = g_strdup_printf ("%s-%010x.desktop",
-					  words [word],
-					  (guint) rnd);
-
-		retval = panel_launcher_make_full_path (filename);
-		exists = g_file_test (retval, G_FILE_TEST_EXISTS);
-		g_free (filename);
-	}
-
-	return retval;
-}
-
 static void
 panel_launcher_save_ditem (GnomeDesktopItem *ditem,
 			   GdkScreen        *screen)
@@ -152,7 +91,7 @@ panel_launcher_save_ditem (GnomeDesktopItem *ditem,
 	if (!location) {
 		char *path;
 
-		path = panel_launcher_make_unique_path ();
+		path = panel_make_unique_path (NULL, ".desktop");
 		gnome_desktop_item_set_location (ditem, path);
 		g_free (path);
 	}
@@ -479,7 +418,7 @@ create_launcher (const char *location)
 	if (!strchr (location, G_DIR_SEPARATOR)) {
 		char *path;
 
-		path = panel_launcher_make_full_path (location);
+		path = panel_make_full_path (NULL, location);
 		ditem = gnome_desktop_item_new_from_file (path, 0, &error);
 		g_free (path);
 	} else
@@ -1082,7 +1021,7 @@ panel_launcher_create_copy (PanelToplevel *toplevel,
 	char        *new_location;
 	const char  *filename;
 
-	new_location = panel_launcher_make_unique_path ();
+	new_location = panel_make_unique_path (NULL, ".desktop");
 	
 	source_uri = gnome_vfs_uri_new (location);
 	dest_uri   = gnome_vfs_uri_new (new_location);

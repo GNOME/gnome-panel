@@ -162,6 +162,10 @@ void panel_set_atk_relation  (GtkWidget *widget,
 
 GdkPixbuf *	missing_pixbuf		(int size);
 
+char *panel_make_full_path   (const char *dir,
+			      const char *filename);
+char *panel_make_unique_path (const char *dir,
+			      const char *suffix);
 
 G_END_DECLS
 

@@ -1,5 +1,40 @@
 2003-05-19  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-run-dialog.[ch]:
+	Random re-formatting foo and:
+	(get_url_from_input): add from Frank's original libgnome
+	patch. Seems it never got in.
+	
+2003-05-19  Frank Worsley <fworsley@shaw.ca>
+
+	* panel-run-dialog.c
+	* panel-run-dialog.h
+	* panel-run-dialog.glade
+	the sweet new run program dialog
+
+	* Makefile.am:
+	added in the new files
+
+	* menu.c: (add_to_run_dialog):
+	* panel-action-button.c: (panel_action_run_program):
+	* panel-action-protocol.c: (panel_action_protocol_run_dialog):
+	moved to new run dialog function names
+
+	* panel-util.c: (panel_get_unique_uri):
+	copied from launcher.c, a function to get a unique uri
+	for a given location and file suffix
+	 
+	* launcher.c: (launcher_location), (panel_launcher_save_ditem):
+	now uses new util function to get unique uri
+	
+	* panel-util.h:
+	updated for new function
+	
+	* panel.c:
+	don't include gnome-run.h
+
+2003-05-19  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-run.c: (unset_selected): Remove bogus unsetting
 	of the pixmap. Fixes jitterines while typing - patch from
 	nix@go-nix.ca.

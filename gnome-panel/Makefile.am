@@ -113,7 +113,7 @@ panel_sources =			\
 	panel-gconf.c		\
 	panel-properties-dialog.c \
 	distribution.c		\
-	gnome-run.c  		\
+	panel-run-dialog.c	\
 	menu.c  		\
 	menu-util.c		\
 	menu-ditem.c		\
@@ -159,7 +159,7 @@ panel_headers =			\
 	panel-config-global.h  	\
 	panel-gconf.h		\
 	distribution.h		\
-	gnome-run.h  		\
+	panel-run-dialog.h	\
 	menu.h  		\
 	menu-util.h		\
 	menu-ditem.h		\
@@ -249,7 +249,8 @@ gladedir = $(datadir)/gnome/panel
 glade_DATA =					\
 	gnome-panel-preferences.glade		\
 	gnome-panel-screenshot.glade		\
-	panel-properties-dialog.glade
+	panel-properties-dialog.glade		\
+	panel-run-dialog.glade
 
 EXTRA_DIST =					\
 	GNOME_Panel.server.in			\

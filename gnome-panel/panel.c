@@ -32,7 +32,6 @@
 #include "drawer.h"
 #include "button-widget.h"
 #include "distribution.h"
-#include "gnome-run.h"
 #include "launcher.h"
 #include "menu-fentry.h"
 #include "menu-util.h"

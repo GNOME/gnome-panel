@@ -39,7 +39,6 @@
 
 #include "button-widget.h"
 #include "distribution.h"
-#include "gnome-run.h"
 #include "launcher.h"
 #include "nothing.h"
 #include "menu-fentry.h"
@@ -65,6 +64,7 @@
 #include "panel-menu-button.h"
 #include "panel-globals.h"
 #include "panel-properties-dialog.h"
+#include "panel-run-dialog.h"
 
 #undef MENU_DEBUG
 
@@ -1187,7 +1187,7 @@ add_to_run_dialog (GtkWidget    *widget,
 				item, GNOME_DESKTOP_ITEM_URL);
 
 		if (exec != NULL)
-			show_run_dialog_with_text (menuitem_to_screen (sim->menuitem), exec);
+			panel_run_dialog_present_with_text (menuitem_to_screen (sim->menuitem), exec);
 		else
 			panel_error_dialog (
 				menuitem_to_screen (sim->menuitem),

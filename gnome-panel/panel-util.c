@@ -43,6 +43,7 @@
 #include "egg-screen-help.h"
 #include "xstuff.h"
 #include "panel-globals.h"
+#include "launcher.h"
 
 GdkScreen *
 panel_screen_from_number (int screen)
@@ -1438,4 +1439,76 @@ panel_lock_screen (GdkScreen *screen)
 				    "cannot_exec_xscreensaver",
 				    _("<b>Cannot execute xscreensaver</b>\n\n"
 				    "Details: xscreensaver-command not found"));
+}
+
+
+char *
+panel_make_full_path (const char *dir,
+		      const char *filename)
+{
+	char *retval;
+	char *freeme = NULL;
+
+	g_return_val_if_fail (filename != NULL, NULL);
+
+	if (!dir) {
+		freeme = gnome_util_home_file (PANEL_LAUNCHERS_PATH);
+		dir = freeme;
+	}
+
+	/* Make sure the launcher directory exists */
+	if (!g_file_test (dir, G_FILE_TEST_EXISTS))
+		panel_ensure_dir (dir);
+
+	retval = g_build_filename (dir, filename, NULL);
+
+	g_free (freeme);
+
+	return retval;
+}
+
+char *
+panel_make_unique_path (const char *dir,
+			const char *suffix)
+{
+#define NUM_OF_WORDS 12
+	char *words[] = {
+		"foo",
+		"bar",
+		"blah",
+		"gegl",
+		"frobate",
+		"hadjaha",
+		"greasy",
+		"hammer",
+		"eek",
+		"larry",
+		"curly",
+		"moe",
+		NULL};
+	char     *retval = NULL;
+	gboolean  exists = TRUE;
+
+	while (exists) {
+		char *filename;
+		int   rnd;
+		int   word;
+
+		rnd = rand ();
+		word = rand () % NUM_OF_WORDS;
+
+		filename = g_strdup_printf ("%s-%010x%s",
+					    words [word],
+					    (guint) rnd,
+					    suffix);
+
+		g_free (retval);
+		retval = panel_make_full_path (dir, filename);
+		exists = g_file_test (retval, G_FILE_TEST_EXISTS);
+		g_free (filename);
+	}
+
+	return retval;
+
+#undef NUM_OF_WORDS
 }

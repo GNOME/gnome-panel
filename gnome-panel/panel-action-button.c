@@ -32,7 +32,6 @@
 
 #include "applet.h"
 #include "egg-screen-exec.h"
-#include "gnome-run.h"
 #include "menu.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
@@ -43,6 +42,7 @@
 #include "panel-util.h"
 #include "panel-session.h"
 #include "panel-globals.h"
+#include "panel-run-dialog.h"
 
 enum {
 	PROP_0,
@@ -135,7 +135,7 @@ panel_action_logout (GtkWidget *widget)
 void
 panel_action_run_program (GtkWidget *widget)
 {
-	show_run_dialog (gtk_widget_get_screen (widget));
+	panel_run_dialog_present (gtk_widget_get_screen (widget));
 }
 
 /* Search For Files
