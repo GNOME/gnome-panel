@@ -148,9 +148,17 @@ void
 back_change (AppletInfo  *info,
 	     PanelWidget *panel)
 {
-	if (info->type == PANEL_OBJECT_BONOBO)
+	switch (info->type) {
+	case PANEL_OBJECT_BONOBO:
 		panel_applet_frame_change_background (
 			PANEL_APPLET_FRAME (info->widget), panel->background.type);
+		break;
+	case PANEL_OBJECT_MENU_BAR:
+		panel_menu_bar_change_background (PANEL_MENU_BAR (info->widget));
+		break;
+	default:
+		break;
+	}
 }
 
 static void

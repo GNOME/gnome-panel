@@ -30,6 +30,7 @@
 #include <glib/gi18n.h>
 
 #include "panel-util.h"
+#include "panel-background.h"
 #include "panel-action-button.h"
 #include "panel-stock-icons.h"
 #include "panel-recent.h"
@@ -258,6 +259,18 @@ panel_menu_bar_parent_set (GtkWidget *widget,
 }
 
 static void
+panel_menu_bar_realized (GtkWidget     *widget,
+			 GtkAllocation *allocation,
+			 gpointer       user_data)
+{
+	g_signal_handlers_disconnect_by_func (widget,
+					      G_CALLBACK (panel_menu_bar_realized),
+					      NULL);
+
+	panel_menu_bar_change_background (PANEL_MENU_BAR (widget));
+}
+
+static void
 panel_menu_bar_class_init (PanelMenuBarClass *klass)
 {
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
@@ -332,6 +345,13 @@ panel_menu_bar_load (PanelWidget *panel,
 				   NULL);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
+	
+	/* FIXME: eeeeek, bad hack
+	 * If the panel background is an image (or translucent color), we
+	 * can't have the right image now because the menubar has no
+	 * size. So we wait for the first size-allocate signal... */
+	g_signal_connect (GTK_WIDGET (menubar), "size-allocate",
+			  G_CALLBACK (panel_menu_bar_realized), NULL);
 }
 
 void
@@ -398,4 +418,68 @@ panel_menu_bar_popup_menu (PanelMenuBar *menubar,
 	}
 	gtk_menu_shell_select_item (menu_shell,
 				    gtk_menu_get_attach_widget (menu));
+}
+
+void panel_menu_bar_change_background (PanelMenuBar *menubar)
+{
+	GtkRcStyle       *rc_style;
+	GtkStyle         *style;
+	const PanelColor *color;
+	GdkGC            *gc;
+	GdkPixmap        *pixmap;
+	const GdkPixmap  *bg_pixmap;
+
+	/* reset style */
+	gtk_widget_set_style (GTK_WIDGET (menubar), NULL);
+	rc_style = gtk_rc_style_new ();
+	gtk_widget_modify_style (GTK_WIDGET (menubar), rc_style);
+	g_object_unref (rc_style);
+
+	switch (panel_background_get_type (&menubar->priv->panel->background)) {
+	case PANEL_BACK_NONE:
+		break;
+	case PANEL_BACK_COLOR:
+		color = panel_background_get_color (&menubar->priv->panel->background);
+		if (color->alpha == 0xffff) {
+			gtk_widget_modify_bg (GTK_WIDGET (menubar),
+					      GTK_STATE_NORMAL, &(color->gdk));
+			break;
+		}
+		/* else, we have an image, so don't break */
+	case PANEL_BACK_IMAGE:
+		bg_pixmap = panel_background_get_pixmap (&menubar->priv->panel->background);
+		if (!bg_pixmap)
+			return;
+
+		gc = gdk_gc_new (GTK_WIDGET (menubar)->window);
+		g_return_if_fail (GDK_IS_GC (gc));
+
+		pixmap = gdk_pixmap_new (GTK_WIDGET (menubar)->window,
+					 GTK_WIDGET (menubar)->allocation.width,
+					 GTK_WIDGET (menubar)->allocation.height,
+					 -1);
+
+		gdk_draw_drawable (GDK_DRAWABLE (pixmap),
+				   gc, 
+				   GDK_DRAWABLE (bg_pixmap),
+				   GTK_WIDGET (menubar)->allocation.x,
+				   GTK_WIDGET (menubar)->allocation.y,
+				   0, 0,
+				   GTK_WIDGET (menubar)->allocation.width,
+				   GTK_WIDGET (menubar)->allocation.height);
+
+		g_object_unref (gc);
+
+		style = gtk_style_copy (GTK_WIDGET (menubar)->style);
+		if (style->bg_pixmap[GTK_STATE_NORMAL])
+			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
+		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
+		gtk_widget_set_style (GTK_WIDGET (menubar), style);
+
+		g_object_unref (pixmap);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
 }

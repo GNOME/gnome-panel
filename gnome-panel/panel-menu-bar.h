@@ -68,6 +68,8 @@ void       panel_menu_bar_invoke_menu      (PanelMenuBar *menubar,
 void       panel_menu_bar_popup_menu       (PanelMenuBar *menubar,
 					    guint32       activate_time);
 
+void       panel_menu_bar_change_background (PanelMenuBar *menubar);
+
 G_END_DECLS
 
 #endif /* __PANEL_MENU_BAR_H__ */

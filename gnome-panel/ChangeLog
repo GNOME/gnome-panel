@@ -1,3 +1,18 @@
+2004-12-04  Vincent Untz  <vincent@vuntz.net>
+
+	The menu bar now uses the panel background too.
+	Fix bug #152901
+
+	* panel-background.[ch]: (panel_background_get_type):
+	(panel_background_get_color):
+	(panel_background_get_pixmap): new functions to handle background
+	changes in internal applets
+	* panel-menu-bar.[ch]: (panel_menu_bar_realized):
+	(panel_menu_bar_load): hack so we get the right background when
+	the menu bar is added
+	(panel_menu_bar_change_background): new function
+	* panel.c: (back_change): update background for the menu bar
+
 2004-12-03  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-menu-bar.c: (panel_menu_bar_show_applications_menu): renamed

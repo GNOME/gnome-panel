@@ -931,6 +931,25 @@ panel_background_make_string (PanelBackground *background,
 
 }
 
+PanelBackgroundType
+panel_background_get_type (PanelBackground *background)
+{
+	return background->type;
+}
+
+const PanelColor *
+panel_background_get_color (PanelBackground *background)
+{
+	return &(background->color);
+}
+
+const GdkPixmap *
+panel_background_get_pixmap (PanelBackground *background)
+{
+	return background->pixmap;
+}
+
+
 /* What are we actually rendering - e.g. if we're supposed to
  * be rendering an image, but haven't got a valid image, then
  * we're rendering the default gtk background.
