@@ -160,29 +160,9 @@ gnome_panel_properties_capplet_LDADD = \
 	$(GNOME_CAPPLET_LIBS)	\
 	$(INTLLIBS) @PIXBUF_LIBS@
 
-## Why not just make this via configure?  Because @datadir@ will be
-## expanded incorrectly.
-
-# xpanel: xpanel.in Makefile
-# ## Why do a sed and then an mv?  To avoid problems if the user
-# ## interrupts.
-# 	sed -e 's,\@bindir\@,$(bindir),g' < $(srcdir)/xpanel.in \
-# 	> xpanel.tmp && chmod +x xpanel.tmp && mv -f xpanel.tmp xpanel
-
-# data_DATA = panelrc
-
-# panelrc: panelrc.in Makefile
-## Why do a sed and then an mv?  To avoid problems if the user
-## interrupts.
-#	sed -e 's,\@datadir\@,$(datadir),g' < $(srcdir)/panelrc.in \
-#	  > panelrc.tmp && mv -f panelrc.tmp panelrc
-
-# MOSTLYCLEANFILES = panelrc
-
 MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
 
 EXTRA_DIST = \
-	panel.in			\
 	appletsConf.sh.in		\
 	dockletsConf.sh.in		\
 	panel.gnorba			\
@@ -192,8 +172,6 @@ EXTRA_DIST = \
 	gnome-panel-properties.desktop	\
 	nothing.cP			\
 	title-item.gob
-
-# 	panelrc.in			\
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
