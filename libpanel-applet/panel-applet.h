@@ -54,7 +54,7 @@ typedef GNOME_Vertigo_PanelOrient PanelAppletOrient;
 typedef enum {
 	PANEL_NO_BACKGROUND,
 	PANEL_COLOR_BACKGROUND,
-	PANEL_PIXMAP_BACKGOUND
+	PANEL_PIXMAP_BACKGROUND
 } PanelAppletBackgroundType;
 
 typedef struct _PanelApplet        PanelApplet;

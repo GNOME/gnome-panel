@@ -619,7 +619,7 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 
 			g_signal_emit (G_OBJECT (applet),
 				       panel_applet_signals [CHANGE_BACKGROUND],
-				       0, PANEL_PIXMAP_BACKGOUND, NULL, pixmap);
+				       0, PANEL_PIXMAP_BACKGROUND, NULL, pixmap);
 
 			g_object_unref (G_OBJECT (pixmap));
 		} else {
