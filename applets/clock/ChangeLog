@@ -1,3 +1,12 @@
+2003-01-27  Mark McLoughlin  <mark@skynet.ie>
+
+	* GNOME_ClockApplet_Factory.server.in.in,
+	  Makefile.am: copy from gen_util and tweak.
+
+	* clock.c: don't include clock.h.
+	(clock_factory): add factory code to make this
+	a shlib factory.
+
 2003-01-23  Satyajit Kanungo  <satyajit.kanungo@wipro.com>
 
 	* mailcheck.c : Replaced g_spawn_command_line_async with

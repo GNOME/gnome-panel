@@ -25,8 +25,6 @@
 #include <libgnome/libgnome.h>
 #include <gconf/gconf-client.h>
 
-#include "clock.h"
-
 #include "egg-screen-help.h"
 
 #define INTERNETSECOND (864)
@@ -724,8 +722,8 @@ setup_gconf (ClockData *clock)
 	g_free (key);
 }
 
-gboolean
-fill_clock_applet(PanelApplet *applet)
+static gboolean
+fill_clock_applet (PanelApplet *applet)
 {
 	ClockData *cd;
 	GError *error;
@@ -1223,3 +1221,22 @@ display_about_dialog (BonoboUIComponent *uic,
 	
 	gtk_widget_show (about);
 }
+
+static gboolean
+clock_factory (PanelApplet *applet,
+	       const char  *iid,
+	       gpointer     data)
+{
+	gboolean retval = FALSE;
+
+	if (!strcmp (iid, "OAFIID:GNOME_ClockApplet"))
+		retval = fill_clock_applet (applet);
+
+	return retval;
+}
+
+PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_ClockApplet_Factory",
+				   PANEL_TYPE_APPLET,
+				   "Clock Applet factory",
+				   clock_factory, NULL);
+

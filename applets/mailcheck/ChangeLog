@@ -1,3 +1,12 @@
+2003-01-27  Mark McLoughlin  <mark@skynet.ie>
+
+	* GNOME_MailcheckApplet_Factory.server.in.in,
+	  Makefile.am: Copy from gen_util and tweak.
+
+	* mailcheck.c: don't include mailcheck.h.
+	(mailcheck_factory): add the code to make it
+	an oop factory.
+
 2003-01-23  Satyajit Kanungo  <satyajit.kanungo@wipro.com>
 
 	* mailcheck.c : Replaced g_spawn_command_line_async with

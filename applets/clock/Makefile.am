@@ -4,12 +4,11 @@ INCLUDES = 						\
 	$(DISABLE_DEPRECATED_CFLAGS)			\
 	$(GNOME_INCLUDEDIR) 				\
 	$(WARN_CFLAGS) 					\
-	$(GEN_UTIL_CFLAGS) 				\
+	$(CLOCK_CFLAGS) 				\
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBDIR=\""$(libdir)"\"			\
 	-DSYSCONFDIR=\""$(sysconfdir)"\"		\
 	-DPREFIX=\""$(prefix)"\"				\
-	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""		\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" 
 
 DISABLE_DEPRECATED_CFLAGS =			\
@@ -27,55 +26,33 @@ EGGFILES =                      \
 	egg-screen-url.h        \
 	egg-screen-url.c
 
-libgen_util_applet_2_la_SOURCES = \
-	main.c \
+libclock_applet_2_la_SOURCES = \
 	clock.c \
 	clock.h	\
-	mailcheck.c \
-	mailcheck.h \
-	popcheck.c \
-	popcheck.h \
-	remote-helper.c \
-	remote-helper.h \
 	$(EGGFILES)
 
-libgen_util_applet_2_la_LDFLAGS = -module -avoid-version
-libgen_util_applet_2_la_LIBADD =			\
+libclock_applet_2_la_LDFLAGS = -module -avoid-version
+libclock_applet_2_la_LIBADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
-	$(GEN_UTIL_LIBS)
+	$(CLOCK_LIBS)
 
 appletdir = $(libdir)
-applet_LTLIBRARIES = libgen_util_applet-2.la
+applet_LTLIBRARIES = libclock-applet-2.la
 
-GNOME_GenUtilApplet_Factory.server.in: GNOME_GenUtilApplet_Factory.server.in.in
+GNOME_ClockApplet_Factory.server.in: GNOME_ClockApplet_Factory.server.in.in
 	sed -e "s|\@APPLET_LIBDIR\@|$(appletdir)|" $< > $@
 
-MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png \
-                    email-tiny.png eclouds.png
-
-mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
-mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
-
-soundlistdir = $(sysconfdir)/sound/events
-soundlist_in_files = mailcheck.soundlist.in
-soundlist_DATA = $(soundlist_in_files:.soundlist.in=.soundlist)
-
-@INTLTOOL_SOUNDLIST_RULE@
-
-uidir 		= $(datadir)/gnome-2.0/ui
-ui_DATA		= \
-	GNOME_ClockApplet.xml		\
-	GNOME_MailCheckApplet.xml
+uidir 	= $(datadir)/gnome-2.0/ui
+ui_DATA	= GNOME_ClockApplet.xml	
 
 serverdir       = $(libdir)/bonobo/servers
-server_in_files = GNOME_GenUtilApplet_Factory.server.in
+server_in_files = GNOME_ClockApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
 @INTLTOOL_SERVER_RULE@
 
 schemasdir       = $(sysconfdir)/gconf/schemas
-schemas_in_files = mailcheck.schemas.in		\
-		   clock.schemas.in
+schemas_in_files = clock.schemas.in
 schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
 
 @INTLTOOL_SCHEMAS_RULE@
@@ -84,13 +61,12 @@ schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
 install-data-local:
 	if test -z "$(DESTDIR)" ; then \
 		for p in $(schemas_DATA) ; do \
-		        GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/gen_util/$$p ; \
+		        GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/clock/$$p ; \
 		done \
 	fi
 
-EXTRA_DIST = GNOME_GenUtilApplet_Factory.server.in.in	\
-	$(MAILCHECK_BITMAPS)				\
-	$(soundlist_in_files)				\
+EXTRA_DIST =						\
+	GNOME_ClockApplet_Factory.server.in.in		\
 	$(schemas_in_files)				\
 	$(ui_DATA)
 

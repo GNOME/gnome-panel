@@ -26,7 +26,6 @@
 
 #include "popcheck.h"
 #include "remote-helper.h"
-#include "mailcheck.h"
 
 #include "egg-screen-help.h"
 #include "egg-screen-exec.h"
@@ -1908,8 +1907,8 @@ static const BonoboUIVerb mailcheck_menu_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
-gboolean
-fill_mailcheck_applet(PanelApplet *applet)
+static gboolean
+mailcheck_applet_fill (PanelApplet *applet)
 {
 	GtkWidget *mailcheck;
 	MailCheck *mc;
@@ -1990,3 +1989,23 @@ fill_mailcheck_applet(PanelApplet *applet)
 
 	return(TRUE);
 }
+
+static gboolean
+mailcheck_factory (PanelApplet *applet,
+		   const char  *iid,
+		   gpointer     data)
+{
+	gboolean retval = FALSE;
+
+	if (!strcmp (iid, "OAFIID:GNOME_MailcheckApplet"))
+		retval = mailcheck_applet_fill (applet);
+
+	return retval;
+}
+
+PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_MailcheckApplet_Factory",
+			     PANEL_TYPE_APPLET,
+                             "InboxMonitor",
+                             "0",
+                             mailcheck_factory,
+                             NULL)

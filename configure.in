@@ -75,9 +75,13 @@ PKG_CHECK_MODULES(WNCKLET, ORBit-2.0 >= $ORBIT_REQUIRED gdk-pixbuf-2.0 >= $GDK_P
 AC_SUBST(WNCKLET_CFLAGS)
 AC_SUBST(WNCKLET_LIBS)
 
-PKG_CHECK_MODULES(GEN_UTIL, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED)
-AC_SUBST(GEN_UTIL_CFLAGS)
-AC_SUBST(GEN_UTIL_LIBS)
+PKG_CHECK_MODULES(CLOCK, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED)
+AC_SUBST(CLOCK_CFLAGS)
+AC_SUBST(CLOCK_LIBS)
+
+PKG_CHECK_MODULES(MAILCHECK, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED)
+AC_SUBST(MAILCHECK_CFLAGS)
+AC_SUBST(MAILCHECK_LIBS)
 
 PKG_CHECK_MODULES(FISH, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED libglade-2.0 >= $LIBGLADE_REQUIRED)
 AC_SUBST(FISH_CFLAGS)
@@ -281,8 +285,9 @@ libpanel-applet/libpanelapplet-2.0.pc
 libpanel-applet/Makefile
 po/Makefile.in
 applets/Makefile
+applets/clock/Makefile
+applets/mailcheck/Makefile
 applets/fish/Makefile
-applets/gen_util/Makefile
 applets/notification_area/Makefile
 applets/wncklet/Makefile
 doc/Makefile
