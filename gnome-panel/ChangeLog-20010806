@@ -4,7 +4,8 @@ Thu Jun 04 00:32:50 1998  George Lebl  <jirka@5z.com>
 	  color, pixmap and standard backgrounds, added a color selector
 
 	* panel-widget.[ch]: added a background type variable and support
-	  teh above changes, fix some some braindamages
+	  the above changes, fix some some braindamages , scale the back
+	  pixmap when needed (needs to be optimized but it works for now)
 
 	* main.c,panel.[ch]: support for the above
 
@@ -16,6 +17,8 @@ Thu Jun 04 00:32:50 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c, main.c: add a timeout to sync every 10 seconds if something
 	  has changed
+
+	* ChangeLog: :%s/\<teh\>/the/g (again:)
 
 1998-06-03  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
@@ -245,7 +248,7 @@ Fri May 15 23:47:35 1998  George Lebl  <jirka@5z.com>
 
 	* panel_config.c: killed the "panel likes the top position"
 	  bug, it was not the order of the binding of the signal
-	  (which just hid teh real problem) ... it was the fact
+	  (which just hid the real problem) ... it was the fact
 	  that radio buttons got toggled off, but the set routine
 	  still worked as if we said "on"
 
@@ -309,7 +312,7 @@ Sun May 10 19:33:23 1998  George Lebl  <jirka@5z.com>
 Fri May 08 02:36:04 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c: remove BAD HACK(tm) (since it's after the release and
-	  teh new gtk 1.0 is non-buggy), also general cleanup after -Wall
+	  the new gtk 1.0 is non-buggy), also general cleanup after -Wall
 
 Fri May 08 01:18:43 1998  George Lebl  <jirka@5z.com>
 
@@ -369,10 +372,10 @@ Tue May 05 12:17:38 1998  George Lebl  <jirka@5z.com>
 	  signal so that it doesn't get toggled on the set_state, but
 	  it doesn't amtter too much in this dialog since we set the
 	  propertybox later (I had to take it out into the main
-	  function) was tehre any particular reason someone changed
+	  function) was there any particular reason someone changed
 	  the set_state to go after the toggled connect? the values
-	  are set in teh function that inits the panel so we never
-	  need to go to teh toggled unless the user himself toggles
+	  are set in the function that inits the panel so we never
+	  need to go to the toggled unless the user himself toggles
 	  the thing.
 
 Mon May 04 22:31:06 1998  George Lebl  <jirka@5z.com>
@@ -422,7 +425,7 @@ Mon May 04 03:33:30 1998  George Lebl  <jirka@5z.com>
 Sun May 03 23:04:07 1998  George Lebl  <jirka@5z.com>
 
 	* applet-widget.[ch],applet-lib.(cc|h): a bit of reshuffling
-	  and cleanups and more also added most of teh corba
+	  and cleanups and more also added most of the corba
 	  fucntionality to the applet-widget
 
 	* applet-lib.c: fixed a leak, don't use hash table for callbacks
@@ -568,7 +571,7 @@ Fri May 01 01:55:38 1998  George Lebl  <jirka@5z.com>
 Fri May 01 01:30:26 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: a whole bunch of fixes to the new
-	  list storage, otehr small fixes, plus there now
+	  list storage, other small fixes, plus there now
 	  is some corruption recovery code in, in case it
 	  happens.
 
