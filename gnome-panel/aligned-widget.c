@@ -73,7 +73,7 @@ aligned_pos_class_init (AlignedPosClass *klass)
 				GTK_CLASS_TYPE (object_class),
 				GTK_SIGNAL_OFFSET (AlignedPosClass,
 						   align_change),
-				gtk_marshal_VOID__ENUM, */ FIXME:2 should this be NONE__ENUM ? */
+				gtk_marshal_VOID__ENUM,
 				GTK_TYPE_NONE,
 				1, GTK_TYPE_ENUM);
 
