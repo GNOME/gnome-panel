@@ -105,7 +105,6 @@ static GSList *image_menu_items = NULL;
 
 static GtkWidget * create_menu_at_fr (GtkWidget *menu,
 				      FileRec *fr,
-				      gboolean launcher_add,
 				      const char *dir_name,
 				      gboolean fake_submenus,
 				      gboolean force);
@@ -113,11 +112,7 @@ static GtkWidget * create_menu_at_fr (GtkWidget *menu,
 static GtkWidget * create_desktop_menu (GtkWidget *m);
 
 static void add_distribution_submenu (GtkWidget *root_menu,
-				      gboolean fake_submenus,
-				      gboolean launcher_add);
-
-static GtkWidget * create_add_launcher_menu (GtkWidget *menu,
-					     gboolean fake_submenus);
+				      gboolean fake_submenus);
 
 static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 					      GdkEventKey *event);
@@ -1773,24 +1768,6 @@ setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
 }
 
 static void
-add_launcher (GtkWidget  *item,
-	      const char *item_loc)
-{
-	PanelWidget   *panel_widget;
-	PanelToplevel *toplevel;
-	PanelData     *pd;
-	int            position;
-
-	panel_widget = menu_get_panel (item);
-	toplevel = panel_widget->toplevel;
-
-	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
-	position = pd ? pd->insertion_pos : -1;
-
-	panel_launcher_create (toplevel, position, item_loc);
-}
-
-static void
 destroy_mf(MenuFinfo *mf)
 {
 	if (mf->fr != NULL) {
@@ -1893,16 +1870,10 @@ static void
 submenu_to_display (GtkWidget *menuw, gpointer data)
 {
 	GSList *mfl, *list;
-	gboolean add_launcher_hack;
 
 	/*this no longer constitutes a bad hack, now it's purely cool :)*/
 	if( ! menu_need_reread(menuw))
 		return;
-
-	/* EEEEEK! hacks */
-	add_launcher_hack = 
-		GPOINTER_TO_INT (g_object_get_data (G_OBJECT (menuw),
-						    "_add_launcher_menu_hack_"));
 
 	/* Note this MUST be destroy and not unref, unref would fuck
 	 * up here, we don't hold a reference to them, so we must
@@ -1910,36 +1881,29 @@ submenu_to_display (GtkWidget *menuw, gpointer data)
 	while(GTK_MENU_SHELL(menuw)->children)
 		gtk_widget_destroy(GTK_MENU_SHELL(menuw)->children->data);
 
-	if (add_launcher_hack) {
-		create_add_launcher_menu (menuw, TRUE /* fake_submenus */);
-	} else {
+	mfl = g_object_get_data (G_OBJECT (menuw), "mf");
+	g_object_set_data (G_OBJECT (menuw), "mf", NULL);
 
-		mfl = g_object_get_data (G_OBJECT (menuw), "mf");
+	for(list = mfl;
+	    list != NULL;
+	    list = list->next) {
+		MenuFinfo *mf = list->data;
+		list->data = NULL;
 
-		g_object_set_data (G_OBJECT (menuw), "mf", NULL);
-		for(list = mfl;
-		    list != NULL;
-		    list = list->next) {
-			MenuFinfo *mf = list->data;
-			list->data = NULL;
-
-			menuw = create_menu_at_fr (menuw,
-						   mf->fr,
-						   mf->launcher_add,
-						   mf->dir_name,
-						   TRUE /*fake_submenus*/,
-						   FALSE /*force*/);
-			destroy_mf(mf);
-		}
-		g_slist_free(mfl);
+		menuw = create_menu_at_fr (menuw,
+					   mf->fr,
+					   mf->dir_name,
+					   TRUE /*fake_submenus*/,
+					   FALSE /*force*/);
+		destroy_mf(mf);
 	}
+	g_slist_free(mfl);
 
 	our_gtk_menu_position(GTK_MENU(menuw));
 }
 
 static GtkWidget *
 create_fake_menu_at (const char *menudir,
-		     gboolean launcher_add,
 		     const char *dir_name)
 {	
 	MenuFinfo *mf;
@@ -1950,7 +1914,6 @@ create_fake_menu_at (const char *menudir,
 
 	mf = g_new0 (MenuFinfo, 1);
 	mf->menudir = g_strdup (menudir);
-	mf->launcher_add = launcher_add;
 	mf->dir_name = g_strdup (dir_name);
 	mf->fake_menu = TRUE;
 	mf->fr = NULL;
@@ -1967,7 +1930,6 @@ create_fake_menu_at (const char *menudir,
 static gboolean
 create_menuitem (GtkWidget *menu,
 		 FileRec *fr,
-		 gboolean launcher_add,
 		 gboolean fake_submenus,
 		 gboolean *add_separator,
 		 int *first_item,
@@ -2009,12 +1971,10 @@ create_menuitem (GtkWidget *menu,
 
 		if(fake_submenus)
 			sub = create_fake_menu_at (fr->name,
-						   launcher_add,
 						   itemname);
 
 		else
 			sub = create_menu_at_fr (NULL, fr,
-						 launcher_add,
 						 itemname,
 						 fake_submenus,
 						 FALSE /*force*/);
@@ -2058,16 +2018,10 @@ create_menuitem (GtkWidget *menu,
 		gtk_tooltips_set_tip (panel_tooltips, menuitem, fr->comment, NULL);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
-	if(!sub) {
-		if (launcher_add)
-			g_signal_connect (G_OBJECT (menuitem), "activate",
-					    G_CALLBACK (add_launcher),
-					    fr->name);
-		else
-			g_signal_connect (G_OBJECT (menuitem), "activate",
-					    G_CALLBACK (activate_app_def),
-					    fr->name);
-	}
+	if(!sub)
+		g_signal_connect (menuitem, "activate",
+				  G_CALLBACK (activate_app_def),
+				  fr->name);
 
 	g_free (itemname);
 
@@ -2077,14 +2031,12 @@ create_menuitem (GtkWidget *menu,
 GtkWidget *
 create_menu_at (GtkWidget *menu,
 		const char *menudir,
-		gboolean launcher_add,
 		const char *dir_name,
 		gboolean fake_submenus,
 		gboolean force)
 {
 	return create_menu_at_fr (menu,
 				  fr_get_dir (menudir),
-				  launcher_add,
 				  dir_name,
 				  fake_submenus,
 				  force);
@@ -2093,7 +2045,6 @@ create_menu_at (GtkWidget *menu,
 static GtkWidget *
 create_menu_at_fr (GtkWidget *menu,
 		   FileRec *fr,
-		   gboolean launcher_add,
 		   const char *dir_name,
 		   gboolean fake_submenus,
 		   gboolean force)
@@ -2151,7 +2102,6 @@ create_menu_at_fr (GtkWidget *menu,
 			if (tfr->type == FILE_REC_SEP)
 				add_menu_separator (menu);				
 			else if (create_menuitem (menu, tfr,
-						  launcher_add,
 						  fake_submenus,
 						  &add_separator,
 						  &first_item,
@@ -2160,7 +2110,6 @@ create_menu_at_fr (GtkWidget *menu,
 		}
 	}
 
-	mf->launcher_add   = launcher_add;
 	mf->dir_name       = g_strdup (dir_name);
 	mf->fake_menu      = FALSE;
 	mf->fr             = fr;
@@ -2210,18 +2159,17 @@ setup_stock_menu_item (GtkWidget   *item,
 }
 	  
 static GtkWidget *
-create_system_menu (GtkWidget *menu, gboolean fake_submenus,
-		    gboolean fake, gboolean launcher_add)
+create_system_menu (GtkWidget *menu,
+		    gboolean fake_submenus,
+		    gboolean fake)
 {
 	if ( ! fake ||
 	     menu != NULL) {
 		menu = create_menu_at (menu, "applications:/",
-				       launcher_add,
 				       _("Applications"),
 				       fake_submenus, FALSE);
 	} else {
 		menu = create_fake_menu_at ("applications:/",
-					    launcher_add,
 					    _("Applications"));
 	}
 
@@ -2231,8 +2179,7 @@ create_system_menu (GtkWidget *menu, gboolean fake_submenus,
 static GtkWidget *
 create_distribution_menu (GtkWidget *menu,
 			  gboolean fake_submenus,
-			  gboolean fake,
-			  gboolean launcher_add)
+			  gboolean fake)
 {
 	const DistributionInfo *info = get_distribution_info ();
 
@@ -2241,44 +2188,15 @@ create_distribution_menu (GtkWidget *menu,
 
 	if (!fake || menu)
 		menu = create_menu_at (menu, info->menu_path,
-				       launcher_add,
 				       info->menu_name,
 				       fake_submenus, FALSE);
 	else
 		menu = create_fake_menu_at (info->menu_path,
-					    launcher_add,
 					    info->menu_name);
 
 	return menu;
 }
 
-static GtkWidget *
-create_add_launcher_menu (GtkWidget *menu, gboolean fake_submenus)
-{
-	if (menu == NULL)
-		menu = menu_new ();
-
-	/* Eeeek, a hack, if this is set then the reloading
-	 * function will use create_add_launcher_menu, rather then
-	 * the nomral way of reloading, as that would dump the
-	 * submenus */
-	g_object_set_data (G_OBJECT (menu),
-			   "_add_launcher_menu_hack_",
-			   GINT_TO_POINTER (TRUE));
-
-	create_system_menu (menu,
-			    fake_submenus,
-			    FALSE /* fake */,
-			    TRUE /* launcher_add */);
-
-	add_menu_separator (menu);
-
-	add_distribution_submenu (menu, fake_submenus,
-				  TRUE /*launcher_add */);
-
-	return menu;
-}
-		
 static void
 remove_panel (GtkWidget *menuitem,
               gpointer data)
@@ -2543,8 +2461,8 @@ create_desktop_menu (GtkWidget *menu)
 }
 
 static void
-add_distribution_submenu (GtkWidget *root_menu, gboolean fake_submenus,
-			  gboolean launcher_add)
+add_distribution_submenu (GtkWidget *root_menu,
+			  gboolean fake_submenus)
 {
 	GtkWidget *menu;
 	GtkWidget *menuitem;
@@ -2555,8 +2473,7 @@ add_distribution_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 
 	menu = create_distribution_menu (NULL /* menu */,
 					 fake_submenus,
-					 TRUE /* fake */,
-					 launcher_add);
+					 TRUE /* fake */);
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (menuitem,
@@ -2613,16 +2530,14 @@ create_root_menu (GtkWidget   *root_menu,
 
 	if (flags & MAIN_MENU_SYSTEM)
 		create_system_menu(root_menu, fake_submenus,
-				   FALSE /* fake */,
-				   FALSE /* launcher_add */);
+				   FALSE /* fake */);
 
 	if (flags & MAIN_MENU_DISTRIBUTION &&
 	    distribution_info != NULL) {
 		if (distribution_info->menu_show_func)
 			distribution_info->menu_show_func(NULL,NULL);
 
-		create_distribution_menu(root_menu, fake_submenus, FALSE,
-					 FALSE /* launcher_add */);
+		create_distribution_menu(root_menu, fake_submenus, FALSE);
 	}
 
 	/*others here*/
@@ -2632,8 +2547,7 @@ create_root_menu (GtkWidget   *root_menu,
 
 	
 	if (flags & MAIN_MENU_SYSTEM_SUB) {
-		menu = create_system_menu(NULL, fake_submenus, TRUE,
-					  FALSE /* launcher_add */);
+		menu = create_system_menu(NULL, fake_submenus, TRUE);
 		menuitem = gtk_image_menu_item_new ();
 		setup_stock_menu_item (
 			menuitem, panel_menu_icon_get_size (),
@@ -2649,8 +2563,7 @@ create_root_menu (GtkWidget   *root_menu,
 	}
 
 	if (flags & MAIN_MENU_DISTRIBUTION_SUB) {
-		add_distribution_submenu (root_menu, fake_submenus,
-					  FALSE /*launcher_add */);
+		add_distribution_submenu (root_menu, fake_submenus);
 	}
 
 	if (!panel_lockdown_get_disable_command_line () && extra_items) {

@@ -275,7 +275,6 @@ panel_menu_button_create_menu (PanelMenuButton *button)
 	if (button->priv->use_menu_path && button->priv->menu_path)
 		menu = create_menu_at (NULL,
 				       button->priv->menu_path,
-				       FALSE,
 				       NULL,
 				       TRUE,
 				       FALSE);

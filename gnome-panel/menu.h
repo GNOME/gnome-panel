@@ -30,7 +30,6 @@ void            setup_stock_menu_item   (GtkWidget        *item,
 
 GtkWidget      *create_menu_at          (GtkWidget     *menu,
 					 const char    *menudir,
-					 gboolean       launcher_add,
 					 const char    *dir_name,
 					 gboolean       fake_submenus,
 					 gboolean       force);

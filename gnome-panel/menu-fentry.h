@@ -14,7 +14,6 @@ typedef struct _MFile MFile;
 
 struct _MenuFinfo {
 	char *menudir;
-	gboolean launcher_add;
 	char *dir_name;
 	gboolean fake_menu;
 	FileRec *fr;
