@@ -249,10 +249,36 @@ setup_the_ui(GtkWidget *main_window)
 static void
 main_dialog_response(GtkWindow *window, int button, gpointer data)
 {
+	GError *error = NULL;
 	switch (button) {
 		case GTK_RESPONSE_CLOSE:
 			gtk_main_quit();
 			break;
+
+		case GTK_RESPONSE_HELP:
+			gnome_help_display_desktop (NULL, "user-guide",
+				"wgoscustlookandfeel.xml", "goscustdesk-10", &error);
+			if (error) {
+				GtkWidget *dialog;
+
+				dialog = gtk_message_dialog_new (window,
+								 GTK_DIALOG_DESTROY_WITH_PARENT,
+								 GTK_MESSAGE_ERROR,
+								 GTK_BUTTONS_CLOSE,
+								 ("There was an error displaying help: \n%s"),
+								 error->message);
+
+				g_signal_connect (G_OBJECT (dialog), "response",
+						  G_CALLBACK (gtk_widget_destroy),
+						  NULL);
+
+				gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+				gtk_widget_show (dialog);
+				g_error_free (error);
+			}
+
+			break;
+
 		default:
 			break;
 	}
@@ -275,8 +301,9 @@ main (int argc, char **argv)
 
   	main_window = gtk_dialog_new();
 	g_object_set (G_OBJECT (main_window), "has-separator", FALSE, NULL);
-	gtk_dialog_add_button (GTK_DIALOG(main_window),
-		GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+	gtk_dialog_add_buttons (GTK_DIALOG(main_window),
+		GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+		GTK_STOCK_HELP, GTK_RESPONSE_HELP,NULL);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (main_window), GTK_RESPONSE_CLOSE);
 	g_signal_connect (G_OBJECT(main_window), "response",
