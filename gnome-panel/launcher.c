@@ -970,6 +970,8 @@ launcher_get_unique_uri (void)
 			g_free (full);
 			return uri;
 		}
+		
+		g_free (full);
 	}
 
 	g_assert_not_reached ();
