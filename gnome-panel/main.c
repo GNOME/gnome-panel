@@ -1529,12 +1529,17 @@ sigchld_handler(int type)
 		AppletChild *child=list->data;
 		if(child->pid == pid) {
 			AppletInfo *info = get_applet_info(child->applet_id);
+			char *s;
+			int i;
 			if(!info) return;
-			if(info->type!=APPLET_EXTERN_RESERVED &&
-			   info->type!=APPLET_EXTERN_PENDING)
-			   	info->widget = NULL;
-
-			panel_clean_applet(child->applet_id);
+			s = g_strdup(info->id_str);
+			for(i=0,info=(AppletInfo *)applets->data;
+			    i<applet_count;
+			    i++,info++) {
+				if(strcmp(info->id_str,s)==0)
+					panel_clean_applet(info->applet_id);
+			}
+			g_free(s);
 
 			exec_queue_done(child->applet_id);
 

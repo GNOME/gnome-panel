@@ -274,8 +274,8 @@ panel_session_save (GnomeClient *client,
 	
 	printf("Saving to [%s]\n",panel_cfg_path);
 
-	/*take out the trailing / then call the clean_file function, otherwise it will make
-	  runaway directories*/
+	/*take out the trailing / then call the clean_file function,
+	  otherwise it will make runaway directories*/
 	buf = g_strdup(panel_cfg_path);
 	if(buf && *buf)
 		buf[strlen(buf)-1]='\0';
