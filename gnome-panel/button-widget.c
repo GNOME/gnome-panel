@@ -26,7 +26,8 @@ static GdkPixbuf *button_load_pixbuf (const char  *file,
 enum {
 	PROP_0,
 	PROP_HAS_ARROW,
-	PROP_ORIENT,
+	PROP_DND_HIGHLIGHT,
+	PROP_ORIENTATION,
 	PROP_ICON_NAME,
 	PROP_STOCK_ID,
 };
@@ -368,7 +369,10 @@ button_widget_get_property (GObject    *object,
 	case PROP_HAS_ARROW:
 		g_value_set_boolean (value, button->arrow);
 		break;
-	case PROP_ORIENT:
+	case PROP_DND_HIGHLIGHT:
+		g_value_set_boolean (value, button->dnd_highlight);
+		break;
+	case PROP_ORIENTATION:
 		g_value_set_enum (value, button->orientation);
 		break;
 	case PROP_ICON_NAME:
@@ -396,50 +400,21 @@ button_widget_set_property (GObject      *object,
 	button = BUTTON_WIDGET (object);
 
 	switch (prop_id) {
-		const char *icon_name;
-		const char *stock_id;
-
 	case PROP_HAS_ARROW:
-		button->arrow = g_value_get_boolean (value) ? 1 : 0;
-		gtk_widget_queue_draw (GTK_WIDGET (button));
+		button_widget_set_has_arrow (button, g_value_get_boolean (value));
 		break;
-	case PROP_ORIENT:
-		button->orientation = g_value_get_enum (value);
-		gtk_widget_queue_draw (GTK_WIDGET (button));
+	case PROP_DND_HIGHLIGHT:
+		button_widget_set_dnd_highlight (button, g_value_get_boolean (value));
+		break;
+	case PROP_ORIENTATION:
+		button_widget_set_orientation (button, g_value_get_enum (value));
 		break;
 	case PROP_ICON_NAME:
-		icon_name = g_value_get_string (value);
-
-		g_assert (!button->filename || !button->stock_id);
-
-		if (button->stock_id) {
-			g_free (button->stock_id);
-			button->stock_id = NULL;
-		}
-
-		if (button->filename)
-			g_free (button->filename);
-		button->filename = g_strdup (icon_name);
-
-		button_widget_reload_pixbuf (button);
+		button_widget_set_icon_name (button, g_value_get_string (value));
 		break;
 	case PROP_STOCK_ID:
-		stock_id = g_value_get_string (value);
-
-		g_assert (!button->filename || !button->stock_id);
-
-		if (button->filename) {
-			g_free (button->filename);
-			button->filename = NULL;
-		}
-
-		if (button->stock_id)
-			g_free (button->stock_id);
-		button->stock_id = g_strdup (stock_id);
-
-		button_widget_reload_pixbuf (button);
+		button_widget_set_stock_id (button, g_value_get_string (value));
 		break;
-
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -569,18 +544,6 @@ draw_arrow (GdkPoint         *points,
 		points [2].x = 3  * scale;
 		points [2].y = 8  * scale;
 		break;
-	}
-}
-
-void
-button_widget_set_dnd_highlight(ButtonWidget *button, gboolean highlight)
-{
-	g_return_if_fail (button != NULL);
-	g_return_if_fail (BUTTON_IS_WIDGET (button));
-
-	if(button->dnd_highlight != highlight) {
-		button->dnd_highlight = highlight;
-		gtk_widget_queue_draw (GTK_WIDGET (button));
 	}
 }
 
@@ -868,8 +831,17 @@ button_widget_class_init (ButtonWidgetClass *klass)
 
 	g_object_class_install_property (
 			gobject_class,
-			PROP_ORIENT,
-			g_param_spec_enum ("orient",
+			PROP_DND_HIGHLIGHT,
+			g_param_spec_boolean ("dnd-highlight",
+					      _("DnD Highlight"),
+					      _("Whether or not to highlight the icon during drag and drop"),
+					      FALSE,
+					      G_PARAM_READWRITE));
+
+	g_object_class_install_property (
+			gobject_class,
+			PROP_ORIENTATION,
+			g_param_spec_enum ("orientation",
 					   _("Orientation"),
 					   _("The ButtonWidget orientation"),
 					   PANEL_TYPE_ORIENTATION,
@@ -930,7 +902,7 @@ button_widget_new (const char       *filename,
 	retval = g_object_new (
 			BUTTON_TYPE_WIDGET,
 			"has-arrow", arrow,
-			"orient", orientation,
+			"orientation", orientation,
 			"icon-name", filename,
 			NULL);
 	
@@ -947,7 +919,7 @@ button_widget_new_from_stock (const char       *stock_id,
 	retval = g_object_new (
 			BUTTON_TYPE_WIDGET,
 			"has-arrow", arrow,
-			"orient", orientation,
+			"orientation", orientation,
 			"stock-id", stock_id,
 			NULL);
 	
@@ -955,12 +927,35 @@ button_widget_new_from_stock (const char       *stock_id,
 }
 
 void
-button_widget_set_pixmap (ButtonWidget *button,
-			  const char   *pixmap)
+button_widget_set_icon_name (ButtonWidget *button,
+			     const char   *icon_name)
 {
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
 
-	g_object_set (G_OBJECT (button), "icon-name", pixmap, NULL);
+	g_assert (!button->filename || !button->stock_id);
+
+	if (button->filename && icon_name && !strcmp (button->filename, icon_name))
+		return;
+
+	if (button->stock_id)
+		g_free (button->stock_id);
+	button->stock_id = NULL;
+
+	if (button->filename)
+		g_free (button->filename);
+	button->filename = g_strdup (icon_name);
+
+	button_widget_reload_pixbuf (button);
+
+	g_object_notify (G_OBJECT (button), "icon-name");
+}
+
+const char *
+button_widget_get_icon_name (ButtonWidget *button)
+{
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
+
+	return button->filename;
 }
 
 void
@@ -968,17 +963,108 @@ button_widget_set_stock_id (ButtonWidget *button,
 			    const char   *stock_id)
 {
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
+	
+	g_assert (!button->filename || !button->stock_id);
 
-	g_object_set (G_OBJECT (button), "stock-id", stock_id, NULL);
+	if (button->stock_id && stock_id && !strcmp (button->stock_id, stock_id))
+		return;
+
+	if (button->filename)
+		g_free (button->filename);
+	button->filename = NULL;
+
+	if (button->stock_id)
+		g_free (button->stock_id);
+	button->stock_id = g_strdup (stock_id);
+
+	button_widget_reload_pixbuf (button);
+
+	g_object_notify (G_OBJECT (button), "stock-id");
+}
+
+const char *
+button_widget_get_stock_id (ButtonWidget *button)
+{
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
+	
+	return button->stock_id;
 }
 
 void
-button_widget_set_params (ButtonWidget     *button,
-			  gboolean          arrow,
-			  PanelOrientation  orientation)
+button_widget_set_orientation (ButtonWidget     *button,
+			       PanelOrientation  orientation)
 {
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
 
-	g_object_set (G_OBJECT (button), "has-arrow", arrow, NULL);
-	g_object_set (G_OBJECT (button), "orient", orientation, NULL);
+	if (button->orientation == orientation)
+		return;
+
+	button->orientation = orientation;
+
+	/* Force a re-scale */
+	button->size = -1;
+
+	gtk_widget_queue_resize (GTK_WIDGET (button));
+
+	g_object_notify (G_OBJECT (button), "orientation");
+}
+
+PanelOrientation
+button_widget_get_orientation (ButtonWidget *button)
+{
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), 0);
+
+	return button->orientation;
+}
+
+void
+button_widget_set_has_arrow (ButtonWidget *button,
+			     gboolean      has_arrow)
+{
+	g_return_if_fail (BUTTON_IS_WIDGET (button));
+
+	has_arrow = has_arrow != FALSE;
+
+	if (button->arrow == has_arrow)
+		return;
+
+	button->arrow = has_arrow;
+
+	gtk_widget_queue_draw (GTK_WIDGET (button));
+
+	g_object_notify (G_OBJECT (button), "has-arrow");
+}
+
+gboolean
+button_widget_get_has_arrow (ButtonWidget *button)
+{
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
+
+	return button->arrow;
+}
+
+void
+button_widget_set_dnd_highlight (ButtonWidget *button,
+				 gboolean      dnd_highlight)
+{
+	g_return_if_fail (BUTTON_IS_WIDGET (button));
+
+	dnd_highlight = dnd_highlight != FALSE;
+
+	if (button->dnd_highlight == dnd_highlight)
+		return;
+
+	button->dnd_highlight = dnd_highlight;
+
+	gtk_widget_queue_draw (GTK_WIDGET (button));
+
+	g_object_notify (G_OBJECT (button), "dnd-highlight");
+}
+
+gboolean
+button_widget_get_dnd_highlight (ButtonWidget *button)
+{
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
+
+	return button->dnd_highlight;
 }

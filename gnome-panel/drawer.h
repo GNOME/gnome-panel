@@ -35,9 +35,6 @@ void    drawer_load_from_gconf (PanelWidget *panel_widget,
 				gint         position,
 				const char  *id);
 
-void set_drawer_applet_orientation (Drawer           *drawer,
-				    PanelOrientation  orientation);
-
 G_END_DECLS
 
 #endif

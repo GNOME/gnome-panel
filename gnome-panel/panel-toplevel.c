@@ -1836,6 +1836,9 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel,
 	    *y == toplevel->priv->animation_end_y) {
 		toplevel->priv->animating = FALSE;
 
+		if (toplevel->priv->attached && panel_toplevel_get_is_hidden (toplevel))
+			gtk_widget_unmap (GTK_WIDGET (toplevel));
+
 		if (toplevel->priv->state == PANEL_STATE_NORMAL)
 			g_signal_emit (toplevel, toplevel_signals [UNHIDE_SIGNAL], 0);
 
@@ -2943,6 +2946,14 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 		return;
 	}
 
+	if (toplevel->priv->attached) {
+		/* Re-map unmapped attached toplevels */
+		if (!GTK_WIDGET_MAPPED (toplevel))
+			gtk_widget_map (GTK_WIDGET (toplevel));
+
+		gtk_window_present (GTK_WINDOW (toplevel->priv->attach_toplevel));
+	}
+
 	g_get_current_time (&toplevel->priv->animation_start_time);
 
 	t1 = panel_toplevel_get_animation_time (toplevel, deltax);
@@ -2980,9 +2991,6 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 	if (auto_hide)
 		toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
 	else {
-		if (toplevel->priv->attached)
-			gtk_window_present (GTK_WINDOW (toplevel->priv->attach_toplevel));
-
 		if (direction == -1) {
 			if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
 				direction = GTK_DIR_UP;

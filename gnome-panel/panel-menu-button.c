@@ -623,7 +623,7 @@ panel_menu_button_set_icon (PanelMenuButton *button)
 		icon_path = panel_menu_button_get_icon_for_menu_path (button);
 
 	if (icon_path)
-		button_widget_set_pixmap (BUTTON_WIDGET (button), icon_path);
+		button_widget_set_icon_name (BUTTON_WIDGET (button), icon_path);
 	else
 		button_widget_set_stock_id (BUTTON_WIDGET (button), PANEL_STOCK_MAIN_MENU);
 }
@@ -798,15 +798,6 @@ panel_menu_button_invoke_menu (PanelMenuButton *button,
 	screen = gtk_widget_get_screen (GTK_WIDGET (button));
 
 	panel_show_help (screen, "wgospanel.xml", "gospanel-37");
-}
-
-void
-panel_menu_button_change_orientation (PanelMenuButton  *button,
-				      PanelOrientation  orientation)
-{
-	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
-
-	button_widget_set_params (BUTTON_WIDGET (button), TRUE, orientation);
 }
 
 void

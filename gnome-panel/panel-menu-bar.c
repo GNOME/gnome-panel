@@ -224,10 +224,7 @@ panel_menu_bar_parent_set (GtkWidget *widget,
 {
 	PanelMenuBar *menubar = PANEL_MENU_BAR (widget);
 
-	if (widget->parent && !PANEL_IS_WIDGET (widget->parent)) {
-		g_warning ("Hold it! Wait one second! This isn't a PanelWidget!");
-		return;
-	}
+	g_assert (!widget->parent || PANEL_IS_WIDGET (widget->parent));
 
 	menubar->priv->panel = (PanelWidget *) widget->parent;
 

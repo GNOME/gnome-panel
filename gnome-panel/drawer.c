@@ -406,15 +406,6 @@ create_drawer_toplevel (const char *drawer_id)
 	return toplevel;
 }
 
-void
-set_drawer_applet_orientation (Drawer           *drawer,
-			       PanelOrientation  orientation)
-{
-	g_return_if_fail (drawer != NULL);
-
-	button_widget_set_params (BUTTON_WIDGET (drawer->button), TRUE, orientation);
-}
-
 static void
 drawer_button_size_allocated (GtkWidget     *widget,
 			      GtkAllocation *alloc,
@@ -453,7 +444,7 @@ panel_drawer_use_custom_icon_changed (GConfClient *client,
 	}
 
 	if (custom_icon && custom_icon [0])
-		button_widget_set_pixmap (BUTTON_WIDGET (drawer->button), custom_icon);
+		button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
 	else
 		button_widget_set_stock_id (BUTTON_WIDGET (drawer->button), PANEL_STOCK_DRAWER);
 
@@ -484,7 +475,7 @@ panel_drawer_custom_icon_changed (GConfClient *client,
 		use_custom_icon = gconf_client_get_bool (client, key, NULL);
 		
 		if (use_custom_icon)
-			button_widget_set_pixmap (BUTTON_WIDGET (drawer->button), custom_icon);
+			button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
 		else
 			button_widget_set_stock_id (BUTTON_WIDGET (drawer->button), PANEL_STOCK_DRAWER);
 	}

@@ -40,23 +40,28 @@ struct _ButtonWidgetClass {
 	GtkButtonClass parent_class;
 };
 
-GType      button_widget_get_type          (void) G_GNUC_CONST;
-
-GtkWidget *button_widget_new               (const char        *pixmap,
-					    gboolean           arrow,
-					    PanelOrientation   orientation);
-GtkWidget *button_widget_new_from_stock    (const char        *stock_id,
-					    gboolean           arrow,
-					    PanelOrientation   orientation);
-void       button_widget_set_pixmap        (ButtonWidget      *button,
-					    const char        *pixmap);
-void       button_widget_set_stock_id      (ButtonWidget      *button,
-					    const char        *stock_id);
-void       button_widget_set_params        (ButtonWidget      *button,
-					    gboolean           arrow,
-					    PanelOrientation   orientation);
-void       button_widget_set_dnd_highlight (ButtonWidget      *button,
-					    gboolean           highlight);
+GType            button_widget_get_type          (void) G_GNUC_CONST;
+GtkWidget *      button_widget_new               (const char       *pixmap,
+						  gboolean          arrow,
+						  PanelOrientation  orientation);
+GtkWidget *      button_widget_new_from_stock    (const char       *stock_id,
+						  gboolean          arrow,
+						  PanelOrientation  orientation);
+void             button_widget_set_icon_name     (ButtonWidget     *button,
+						  const char       *icon_name);
+const char *     button_widget_get_icon_name     (ButtonWidget     *button);
+void             button_widget_set_stock_id      (ButtonWidget     *button,
+						  const char       *stock_id);
+const char *     button_widget_get_stock_id      (ButtonWidget     *button);
+void             button_widget_set_orientation   (ButtonWidget     *button,
+						  PanelOrientation  orientation);
+PanelOrientation button_widget_get_orientation   (ButtonWidget     *button);
+void             button_widget_set_has_arrow     (ButtonWidget     *button,
+						  gboolean          has_arrow);
+gboolean         button_widget_get_has_arrow     (ButtonWidget     *button);
+void             button_widget_set_dnd_highlight (ButtonWidget     *button,
+						  gboolean          dnd_highlight);
+gboolean         button_widget_get_dnd_highlight (ButtonWidget     *button);
 
 G_END_DECLS
 

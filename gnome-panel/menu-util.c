@@ -159,8 +159,10 @@ panel_position_applet_menu (GtkMenu   *menu,
 
 	gdk_window_get_origin (widget->window, &menu_x, &menu_y);
 
-	menu_x += widget->allocation.x;
-	menu_y += widget->allocation.y;
+	if (GTK_WIDGET_NO_WINDOW (widget)) {
+		menu_x += widget->allocation.x;
+		menu_y += widget->allocation.y;
+	}
 
 	if (PANEL_WIDGET (widget->parent)->orient == GTK_ORIENTATION_HORIZONTAL) {
 		if (menu_y > gdk_screen_get_height (screen) / 2)

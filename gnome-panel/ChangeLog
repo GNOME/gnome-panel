@@ -1,3 +1,76 @@
+2003-07-24  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix problem where the context menu for the menu bar pops
+	up in the wrong place. Based on a patch from Glynn in
+	bug #111313.
+
+	* menu-util.c: (panel_position_applet_menu): only position
+	the menu relative to the panel for NO_WINDOW widgets.
+
+	(panel_menu_bar_parent_set): replace stupid warning with
+	an assertion.
+	
+2003-07-24  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes weirdness where sometimes the drawer panel, when
+	it is hidden, is above the drawer button.
+	
+	* panel-toplevel.c:
+	(panel_toplevel_update_animating_position): unmap the
+	attached toplevel at the end of the animation.
+	(panel_toplevel_start_animation): re-map it here before
+	starting the animation.
+	(panel_toplevel_hide): move raising the parent toplevel
+	to just after re-mapping the attached toplevel.
+
+2003-07-24  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes drawers getting destroyed when you create
+	a new panel.
+	
+	* panel-profile.c:
+	(panel_profile_load_added_ids): s/toplevel_id/id/
+	(panel_profile_toplevel_id_list_notify): don't pass 
+	attached toplevels as being part of the existing
+	toplevel_id_list.
+	
+2003-07-24  Mark McLoughlin  <mark@skynet.ie>
+
+	* button-widget.c:
+	(button_widget_set_orientation): force a re-scale of the button.
+	Fixes rectangular buttons not re-scaling on vertical panels.
+	
+2003-07-24  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix launchers and action buttons not re-sizing when you move
+	them onto a vertical panel.
+	
+	* panel.c: (orientation_change): change the orientation
+	on launchers and action buttons too.
+
+	* drawer.[ch]: (panel_drawer_use_custom_icon_changed),
+	(panel_drawer_custom_icon_changed): upd.
+	(set_drawer_applet_orientation): kill.
+	
+	* panel-menu-button.[ch]:
+	(panel_menu_button_set_icon): upd.
+	(panel_menu_button_change_orientation): kill.
+
+	* launcher.c: (setup_button): upd.
+	
+	* button-widget.[ch]:
+	(button_widget_get_property),
+	(button_widget_set_property), (button_widget_class_init),
+	(button_widget_new), (button_widget_new_from_stock),
+	(button_widget_set_icon_name), (button_widget_get_icon_name),
+	(button_widget_set_stock_id), (button_widget_get_stock_id),
+	(button_widget_set_orientation), (button_widget_get_orientation),
+	(button_widget_set_has_arrow), (button_widget_get_has_arrow),
+	(button_widget_set_dnd_highlight),
+	(button_widget_get_dnd_highlight): re-implement properties for
+	ButtonWidget to make it much more sane. Say bye-bye to cruft
+	like button_widget_change_params().
+	
 2003-07-23  Mark McLoughlin  <mark@skynet.ie>
 
 	Implement a properties dialog for drawers based on the

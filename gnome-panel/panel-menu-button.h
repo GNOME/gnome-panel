@@ -85,9 +85,6 @@ void       panel_menu_button_popup_menu          (PanelMenuButton  *button,
 						  guint             n_button,
 						  guint32           activate_time);
 
-void       panel_menu_button_change_orientation  (PanelMenuButton  *button,
-						  PanelOrientation  orientation);
-
 void       panel_menu_button_set_dnd_enabled     (PanelMenuButton  *button,
 						  gboolean          dnd_enabled);
 

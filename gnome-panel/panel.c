@@ -78,8 +78,9 @@ orientation_change (AppletInfo  *info,
 				PANEL_APPLET_FRAME (info->widget), orientation);
 		break;
 	case PANEL_OBJECT_MENU:
-		panel_menu_button_change_orientation (PANEL_MENU_BUTTON (info->widget),
-						      orientation);
+	case PANEL_OBJECT_LAUNCHER:
+	case PANEL_OBJECT_ACTION:
+		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
 		break;
 	case PANEL_OBJECT_DRAWER: {
 		Drawer      *drawer = info->data;
@@ -87,7 +88,8 @@ orientation_change (AppletInfo  *info,
 
 		panel_widget = panel_toplevel_get_panel_widget (drawer->toplevel);
 
-		set_drawer_applet_orientation (drawer, orientation);
+		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
+
 		gtk_widget_queue_resize (GTK_WIDGET (drawer->toplevel));
 		gtk_container_foreach (GTK_CONTAINER (panel_widget),
 				       orient_change_foreach,

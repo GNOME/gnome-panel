@@ -1831,14 +1831,14 @@ panel_profile_load_added_ids (GConfClient            *client,
 	}
 
 	for (l = added_ids; l; l = l->next) {
-		char *toplevel_id = l->data;
+		char *id = l->data;
 
 		if (!profile_dir)
 			profile_dir = gconf_concat_dir_and_key (
-						PANEL_CONFIG_DIR, current_profile);
+				PANEL_CONFIG_DIR, current_profile);
 
-		/* takes ownership of toplevel_id */
-		load_handler (client, profile_dir, type, toplevel_id);
+		/* takes ownership of id */
+		load_handler (client, profile_dir, type, id);
 	}
 
 	g_slist_free (added_ids);
@@ -1883,7 +1883,7 @@ panel_profile_toplevel_id_list_notify (GConfClient *client,
 				       GConfEntry  *entry)
 {
 	GConfValue *value;
-	GSList     *existing_toplevels;
+	GSList     *l, *existing_toplevels;
 	GSList     *toplevel_ids;
 
 	if (!(value = gconf_entry_get_value (entry)))
@@ -1897,7 +1897,16 @@ panel_profile_toplevel_id_list_notify (GConfClient *client,
 
 	toplevel_ids = gconf_value_get_list (value);
 
-	existing_toplevels = panel_toplevel_list_toplevels ();
+	existing_toplevels = NULL;
+	for (l = panel_toplevel_list_toplevels (); l; l = l->next) {
+		PanelToplevel *toplevel = l->data;
+
+		/* Attached toplevels aren't on the id list */
+		if (panel_toplevel_get_is_attached (toplevel))
+			continue;
+
+		existing_toplevels = g_slist_prepend (existing_toplevels, toplevel);
+	}
 
 	panel_profile_load_added_ids (client,
 				      PANEL_GCONF_TOPLEVELS,
@@ -1913,6 +1922,8 @@ panel_profile_toplevel_id_list_notify (GConfClient *client,
 					  toplevel_ids,
 					  (PanelProfileGetIdFunc) panel_profile_get_toplevel_id,
 					  (PanelProfileDestroyFunc) panel_profile_destroy_toplevel);
+
+	g_slist_free (existing_toplevels);
 }
 
 static void
