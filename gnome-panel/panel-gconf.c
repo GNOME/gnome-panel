@@ -112,24 +112,6 @@ panel_gconf_full_key (PanelGConfKeyType  type,
 			profile, subdir, id, key);
 }
 
-gboolean
-panel_gconf_string_to_enum (GConfEnumStringPair  lookup_table [],
-			    const char          *str,
-			    int                 *enum_value_retloc,
-			    int                  fallback_value)
-{
-	g_return_val_if_fail (lookup_table != NULL, FALSE);
-	g_return_val_if_fail (enum_value_retloc != NULL, FALSE);
-
-	if (!str) {
-		*enum_value_retloc = fallback_value;
-		return FALSE;
-	}
-
-	return gconf_string_to_enum (lookup_table, str, enum_value_retloc);
-}
-
-
 GConfClient * 
 panel_gconf_get_client (void)
 {

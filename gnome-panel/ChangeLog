@@ -1,3 +1,17 @@
+2002-11-17  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel.c: (panel_load_panels_from_gconf):
+	s/no_background/no-background/. Fixes #98565.
+
+	* applet.c: (panel_applet_load_from_unique_id):
+	* gnome-panel-preferences.c: (load_animation_menu):
+	* panel-config-global.c: (panel_global_config_set_entry):
+	* panel.c: (panel_load_panels_from_gconf): Learn from that
+	lesson and audit all usage of gconf_string_to_enum to
+	not rely on the enum value being initialised.
+
+	* panel-gconf.[ch]: kill panel_gconf_string_to_enum().
+
 2002-11-15  Mark McLoughlin  <mark@skynet.ie>
 
 	* disclosure-widget.c: (finalize), (get_x_y),

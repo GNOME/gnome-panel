@@ -58,14 +58,16 @@ panel_global_config_set_entry (GConfEntry *entry)
 		global_config.show_delay =
 				gconf_value_get_int (value);
 
-	else if (strcmp (key, "panel_animation_speed") == 0)
-		panel_gconf_string_to_enum (
+	else if (strcmp (key, "panel_animation_speed") == 0) {
+		PanelSpeed speed = PANEL_SPEED_SLOW;
+
+		if (gconf_string_to_enum (
 			panel_speed_map,
 			gconf_value_get_string (value),
-			(int *) &global_config.animation_speed,
-			PANEL_SPEED_SLOW);
+			(int *) &speed))
+			global_config.animation_speed = speed;
 
-	else if (strcmp (key, "panel_hide_delay") == 0)
+	} else if (strcmp (key, "panel_hide_delay") == 0)
 		global_config.hide_delay =
 				gconf_value_get_int (value);
 
