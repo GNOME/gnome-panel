@@ -89,7 +89,11 @@ panel_realize(GtkWidget *widget, gpointer data)
 {
 	change_window_cursor(widget->window, GDK_LEFT_PTR);
 	
-	basep_widget_enable_buttons(BASEP_WIDGET(widget));
+	if (IS_BASEP_WIDGET (widget))
+		basep_widget_enable_buttons(BASEP_WIDGET(widget));
+	else if (IS_FOOBAR_WIDGET (widget))
+		foobar_widget_update_winhints (widget, NULL);
+
 	/*FIXME: this seems to fix the panel size problems on startup
 	  (from a report) but I don't think it's right*/
 	gtk_widget_queue_resize(GTK_WIDGET(widget));
@@ -167,13 +171,11 @@ get_applet_orient (PanelWidget *panel)
 	g_return_val_if_fail(IS_PANEL_WIDGET(panel),ORIENT_UP);
 	g_return_val_if_fail(panel->panel_parent,ORIENT_UP);
 	panelw = panel->panel_parent;
-	g_assert (IS_BASEP_WIDGET (panelw));
 
 	if (IS_BASEP_WIDGET(panelw))
 		return basep_widget_get_applet_orient (BASEP_WIDGET(panelw));
 	else
-		g_assert_not_reached ();
-	return ORIENT_UP;
+		return ORIENT_DOWN;
 }
 
 /*we call this recursively*/
@@ -522,9 +524,9 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	}
 
 	freeze_changes(info);
-	orientation_change(info,PANEL_WIDGET(BASEP_WIDGET(panelw)->panel));
-	size_change(info,PANEL_WIDGET(BASEP_WIDGET(panelw)->panel));
-	back_change(info,PANEL_WIDGET(BASEP_WIDGET(panelw)->panel));
+	orientation_change(info,PANEL_WIDGET(widget));
+	size_change(info,PANEL_WIDGET(widget));
+	back_change(info,PANEL_WIDGET(widget));
 	thaw_changes(info);
 
 	/*we will need to save this applet's config now*/
@@ -589,7 +591,12 @@ static void
 panel_destroy(GtkWidget *widget, gpointer data)
 {
 	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(widget));
-	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
+	PanelWidget *panel = NULL;
+
+	if (IS_BASEP_WIDGET (widget))
+		panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
+	else if (IS_FOOBAR_WIDGET (widget))
+		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 		
 	kill_config_dialog(widget);
 
@@ -601,8 +608,9 @@ panel_destroy(GtkWidget *widget, gpointer data)
 			drawer->drawer = NULL;
 			panel_clean_applet(info);
 		}
-	} else if(IS_BASEP_WIDGET(widget) &&
-		  !IS_DRAWER_WIDGET(widget)) {
+	} else if ((IS_BASEP_WIDGET(widget)
+		    && !IS_DRAWER_WIDGET(widget))
+		   || IS_FOOBAR_WIDGET (widget)) {
 		/*this is a base panel and we just lost it*/
 		base_panels--;
 	}
@@ -646,27 +654,41 @@ panel_menu_get(PanelWidget *panel, PanelData *pd)
 GtkWidget *
 make_popup_panel_menu (PanelWidget *panel)
 {
-	BasePWidget *basep;
+	GtkWidget *panelw;
 	PanelData *pd;
 	GtkWidget *menu;
 
 	if (!panel) {
-	        basep = BASEP_WIDGET (((PanelData *)panel_list->data)->panel);			
-		panel = PANEL_WIDGET (basep->panel);
+		panelw = ((PanelData *)panel_list->data)->panel;
+		if (IS_BASEP_WIDGET (panelw))
+			panel = PANEL_WIDGET (BASEP_WIDGET (panelw)->panel);
+		else if (IS_FOOBAR_WIDGET (panelw))
+			panel = PANEL_WIDGET (FOOBAR_WIDGET (panelw)->panel);
 	} else
-		basep = BASEP_WIDGET (panel->panel_parent);
-	
-	pd = gtk_object_get_user_data (GTK_OBJECT (basep));
+		panelw = panel->panel_parent;
+
+	pd = gtk_object_get_user_data (GTK_OBJECT (panelw));
 	menu = panel_menu_get (panel, pd);
+	gtk_object_set_data (GTK_OBJECT (menu), "menu_panel", panel);
+
 	pd->menu_age = 0;
 	return menu;
 }
-
+	
 static int
 panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 {
-	BasePWidget *basep = BASEP_WIDGET(widget);
+	PanelWidget *panel = NULL;
+	BasePWidget *basep = NULL;
 	GdkEventButton *bevent;
+
+	if (IS_BASEP_WIDGET (widget)) {
+		basep = BASEP_WIDGET (widget);
+		panel = PANEL_WIDGET (basep->panel);
+	} else if (IS_FOOBAR_WIDGET (widget)) {
+		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
+	}
+
 	switch (event->type) {
 	case GDK_BUTTON_PRESS:
 		bevent = (GdkEventButton *) event;
@@ -674,11 +696,13 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 		case 3: /* fall through */
 			if(!panel_applet_in_drag) {
 				GtkWidget *menu;
-				menu = make_popup_panel_menu (PANEL_WIDGET(basep->panel));
-				BASEP_WIDGET(basep)->autohide_inhibit 
-					= TRUE;
-				basep_widget_autohide (
-					BASEP_WIDGET (basep));
+
+				menu = make_popup_panel_menu (panel);
+				if (basep) {
+					basep->autohide_inhibit = TRUE;
+					basep_widget_autohide (basep);
+				}
+
 				gtk_menu_popup (GTK_MENU (menu), NULL, NULL, 
 						global_config.off_panel_popups
 						? panel_menu_position : NULL,
@@ -690,7 +714,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 		case 2:
 			/*this should probably be in snapped widget*/
 			if(!panel_dragged &&
-			   !IS_DRAWER_WIDGET (widget)) {
+			   !IS_DRAWER_WIDGET (widget) &&
+			   !IS_FOOBAR_WIDGET (widget)) {
 				GdkCursor *cursor = gdk_cursor_new (GDK_FLEUR);
 				gtk_grab_add(widget);
 				gdk_pointer_grab (widget->window,
@@ -700,18 +725,17 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 						  cursor,
 						  bevent->time);
 				gdk_cursor_destroy (cursor);
-				
-				basep->autohide_inhibit = TRUE;
+
+				if (basep)
+					basep->autohide_inhibit = TRUE;
 
 				panel_dragged = TRUE;
 				return TRUE;
-			}
-			if(IS_DRAWER_WIDGET(widget) &&
-			   !panel_applet_in_drag) {
-				BasePWidget *basep = BASEP_WIDGET(widget);
-				PanelWidget *pw = PANEL_WIDGET(basep->panel);
-				panel_widget_applet_drag_start(PANEL_WIDGET(pw->master_widget->parent),
-							       pw->master_widget);
+			} if(IS_DRAWER_WIDGET(widget) &&
+			     !panel_applet_in_drag) {
+				panel_widget_applet_drag_start (
+					PANEL_WIDGET(panel->master_widget->parent),
+					panel->master_widget);
 				return TRUE;
 			}
 			break;
@@ -722,7 +746,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 	case GDK_BUTTON_RELEASE:
 		bevent = (GdkEventButton *) event;
 		if(panel_dragged) {
-
+			if (!basep)
+				return TRUE;
 			basep_widget_set_pos(basep,
 					     (gint16)bevent->x_root, 
 					     (gint16)bevent->y_root);
@@ -954,12 +979,16 @@ is_this_drop_ok(GtkWidget *widget, GdkDragContext *context, guint *info,
 	GList *li;
 
 	g_return_val_if_fail(widget!=NULL, FALSE);
-	g_return_val_if_fail(IS_BASEP_WIDGET(widget), FALSE);
+	g_return_val_if_fail(IS_BASEP_WIDGET (widget) ||
+			     IS_FOOBAR_WIDGET (widget), FALSE);
 
 	if(!(context->actions & GDK_ACTION_COPY))
 		return FALSE;
 
-	panel = BASEP_WIDGET (widget)->panel;
+	if (IS_BASEP_WIDGET (widget))
+		panel = BASEP_WIDGET (widget)->panel;
+	else
+		panel = FOOBAR_WIDGET (widget)->panel;
 
 	source_widget = gtk_drag_get_source_widget (context);
 	/* if this is a drag from this panel to this panel of a launcher,
@@ -1024,8 +1053,10 @@ drag_motion_cb(GtkWidget	  *widget,
 
 	do_highlight(widget, TRUE);
 
-	basep_widget_autoshow(BASEP_WIDGET(widget));
-	basep_widget_queue_autohide(BASEP_WIDGET(widget));
+	if (IS_BASEP_WIDGET (widget)) {
+		basep_widget_autoshow(BASEP_WIDGET(widget));
+		basep_widget_queue_autohide(BASEP_WIDGET(widget));
+	}
 
 	return TRUE;
 }
@@ -1071,7 +1102,8 @@ drag_data_recieved_cb (GtkWidget	 *widget,
 	int pos;
 
 	g_return_if_fail(widget!=NULL);
-	g_return_if_fail(IS_BASEP_WIDGET(widget));
+	g_return_if_fail (IS_BASEP_WIDGET (widget) ||
+			  IS_FOOBAR_WIDGET (widget));
 
 	/* we use this only to really find out the info, we already
 	   know this is an ok drop site and the info that got passed
@@ -1081,7 +1113,10 @@ drag_data_recieved_cb (GtkWidget	 *widget,
 		return;
 	}
 
-	panel = PANEL_WIDGET (BASEP_WIDGET (widget)->panel);
+	if (IS_BASEP_WIDGET (widget))
+		panel = PANEL_WIDGET (BASEP_WIDGET (widget)->panel);
+	else
+		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 
 	pos = panel_widget_get_cursorloc(panel);
 	
@@ -1223,21 +1258,26 @@ void
 panel_setup(GtkWidget *panelw)
 {
 	PanelData *pd;
-	BasePWidget *basep; 
-	PanelWidget *panel;
+	BasePWidget *basep = NULL; 
+	PanelWidget *panel = NULL;
 
 	g_return_if_fail(panelw);
 
-	basep = BASEP_WIDGET(panelw);
-	panel = PANEL_WIDGET(basep->panel);
+	if (IS_BASEP_WIDGET (panelw)) {
+		basep = BASEP_WIDGET(panelw);
+		panel = PANEL_WIDGET(basep->panel);
+	} else if (IS_FOOBAR_WIDGET (panelw)) {
+		panel = PANEL_WIDGET (FOOBAR_WIDGET (panelw)->panel);
+	}
 
 	pd = g_new(PanelData,1);
 	pd->menu = NULL;
 	pd->menu_age = 0;
 	pd->panel = panelw;
 
-	if (IS_BASEP_WIDGET (panelw) &&
-	    !IS_DRAWER_WIDGET (panelw))
+	if (IS_FOOBAR_WIDGET (panelw) || 
+	    (IS_BASEP_WIDGET (panelw) &&
+	     !IS_DRAWER_WIDGET (panelw)))
 		base_panels++;
 	
 	if(IS_EDGE_WIDGET(panelw))
@@ -1250,6 +1290,8 @@ panel_setup(GtkWidget *panelw)
 		pd->type = SLIDING_PANEL;
 	else if(IS_FLOATING_WIDGET(panelw))
 		pd->type = FLOATING_PANEL;
+	else if(IS_FOOBAR_WIDGET(panelw))
+		pd->type = FOOBAR_PANEL;
 	else
 		g_warning("unknown panel type");
 	
@@ -1257,59 +1299,49 @@ panel_setup(GtkWidget *panelw)
 	
 	gtk_object_set_user_data(GTK_OBJECT(panelw),pd);
 
-	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_e), "event",
-			   (GtkSignalFunc) panel_sub_event_handler,
-			   panelw);
-	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_w), "event",
-			   (GtkSignalFunc) panel_sub_event_handler,
-			   panelw);
-	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_n), "event",
-			   (GtkSignalFunc) panel_sub_event_handler,
-			   panelw);
-	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_s), "event",
-			   (GtkSignalFunc) panel_sub_event_handler,
-			   panelw);
-
 	panel_widget_setup(panel);
 
-	gtk_signal_connect(GTK_OBJECT(basep),
+	if (basep) {
+		gtk_signal_connect(GTK_OBJECT(basep->hidebutton_e), "event",
+				   (GtkSignalFunc) panel_sub_event_handler,
+				   panelw);
+		gtk_signal_connect(GTK_OBJECT(basep->hidebutton_w), "event",
+				   (GtkSignalFunc) panel_sub_event_handler,
+				   panelw);
+		gtk_signal_connect(GTK_OBJECT(basep->hidebutton_n), "event",
+				   (GtkSignalFunc) panel_sub_event_handler,
+				   panelw);
+		gtk_signal_connect(GTK_OBJECT(basep->hidebutton_s), "event",
+				   (GtkSignalFunc) panel_sub_event_handler,
+				   panelw);
+		gtk_signal_connect (GTK_OBJECT (basep),
+				    "state_change",
+				    GTK_SIGNAL_FUNC (basep_state_change),
+				    NULL);
+		basep_pos_connect_signals (basep);
+		basep_widget_disable_buttons(basep);
+	}
+
+	gtk_signal_connect(GTK_OBJECT(panelw),
 			   "drag_data_received",
 			   GTK_SIGNAL_FUNC(drag_data_recieved_cb),
 			   NULL);
-	gtk_signal_connect(GTK_OBJECT(basep),
+	gtk_signal_connect(GTK_OBJECT(panelw),
 			   "drag_motion",
 			   GTK_SIGNAL_FUNC(drag_motion_cb),
 			   NULL);
-	gtk_signal_connect(GTK_OBJECT(basep),
+	gtk_signal_connect(GTK_OBJECT(panelw),
 			   "drag_leave",
 			   GTK_SIGNAL_FUNC(drag_leave_cb),
 			   NULL);
-	gtk_signal_connect(GTK_OBJECT(basep),
+	gtk_signal_connect(GTK_OBJECT(panelw),
 			   "drag_drop",
 			   GTK_SIGNAL_FUNC(drag_drop_cb),
 			   NULL);
 
-	/*gtk_drag_dest_set (GTK_WIDGET (basep),
-			   GTK_DEST_DEFAULT_MOTION |
-			   GTK_DEST_DEFAULT_HIGHLIGHT |
-			   GTK_DEST_DEFAULT_DROP,
-			   panel_drop_types, n_panel_drop_types,
-			   GDK_ACTION_COPY);*/
-	gtk_drag_dest_set (GTK_WIDGET (basep),
+	gtk_drag_dest_set (GTK_WIDGET (panelw),
 			   0, NULL, 0, 0);
 
-	gtk_signal_connect (GTK_OBJECT (basep),
-			    "state_change",
-			    GTK_SIGNAL_FUNC (basep_state_change),
-			    NULL);
-	/*gtk_signal_connect (GTK_OBJECT (basep),
-			    "type_change",
-			    GTK_SIGNAL_FUNC (basep_type_change),
-			    NULL);*/
-
-	basep_pos_connect_signals (basep);
-
-	basep_widget_disable_buttons(basep);
 	gtk_signal_connect(GTK_OBJECT(panelw), "event",
 			   GTK_SIGNAL_FUNC(panel_event),pd);
 	
@@ -1347,7 +1379,7 @@ send_state_change(void)
 	GSList *list;
 	for(list = panel_list; list != NULL; list = g_slist_next(list)) {
 		PanelData *pd = list->data;
-		if(!IS_DRAWER_WIDGET(pd->panel))
+		if(IS_BASEP_WIDGET (pd->panel) && !IS_DRAWER_WIDGET(pd->panel))
 			basep_state_change(BASEP_WIDGET(pd->panel),
 					   BASEP_WIDGET(pd->panel)->state,
 					   NULL);

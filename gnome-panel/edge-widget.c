@@ -7,6 +7,7 @@
 
 #include "edge-widget.h"
 #include "panel_config_global.h"
+#include "foobar-widget.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -120,11 +121,12 @@ edge_pos_get_pos (BasePWidget *basep, int *x, int *y,
 {
 	*x = *y = 0;
 	switch (BORDER_POS(basep->pos)->edge) {
-	case BORDER_LEFT:
-	case BORDER_TOP:
-		break;
 	case BORDER_RIGHT:
 		*x = gdk_screen_width() - w;
+		/* fall through */
+	case BORDER_LEFT:
+	case BORDER_TOP:
+		*y = foobar_widget_get_height ();
 		break;
 	case BORDER_BOTTOM:
 		*y = gdk_screen_height() - h;
@@ -139,7 +141,7 @@ edge_pos_get_size (BasePWidget *basep, int *w, int *h)
 	    PANEL_HORIZONTAL)
 		*w = gdk_screen_width();
 	else
-		*h = gdk_screen_height();
+		*h = gdk_screen_height() - foobar_widget_get_height ();
 }
 
 static void

@@ -7,6 +7,7 @@
 
 #include "sliding-widget.h"
 #include "panel_config_global.h"
+#include "foobar-widget.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -226,9 +227,10 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 
 	switch (BORDER_POS (basep->pos)->edge) {
 	case BORDER_BOTTOM:
-		*y = gdk_screen_height () - h;
+		*y = gdk_screen_height () - h - foobar_widget_get_height ();
 		/* fall through */
 	case BORDER_TOP:
+		(*y) += foobar_widget_get_height ();
 		*x = (pos->anchor == SLIDING_ANCHOR_LEFT)
 			? pos->offset
 			: gdk_screen_width () - pos->offset - w;
@@ -240,6 +242,7 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		*y = (pos->anchor == SLIDING_ANCHOR_LEFT)
 			? pos->offset
 			: gdk_screen_height () - pos->offset - h;
+		*y = MAX (*y, foobar_widget_get_height ());
 		break;
 	}
 }

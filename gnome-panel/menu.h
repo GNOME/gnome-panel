@@ -50,7 +50,7 @@ void add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
 
 void setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title);
-void make_panel_submenu (GtkWidget *menu, gboolean fake_submenus);
+void make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep);
 
 GtkWidget * create_panel_root_menu(PanelWidget *panel, gboolean tearoff);
 

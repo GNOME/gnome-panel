@@ -1,3 +1,64 @@
+2000-02-28  Jacob Berkman  <jacob@helixcode.com>
+
+	* foobar-widget.[ch]: implement george's idea of a panel with
+	menu items on it
+	
+	* sliding-widget.c (sliding_pos_get_pos): minimum Y is foobar
+	height
+
+	* session.c (save_panel_configuration): handle a foobar
+	(save_panel_configuration): only write basep stuff for
+	basep widgets
+	(init_user_panels): create a foobar
+
+	* panel.c (panel_realize): update foobar hints
+	(panel_destroy): get the right panel
+	(make_popup_panel_menu): find out if we are a foobar or not
+	(panel_event): handle the foobar
+	(panel_setup): ditto
+
+	* menu.[ch] (setup_internal_applet_drag): foobar needs this
+	(create_menu_at): same
+	(submenu_to_display): ditto
+	(create_fake_menu_at): again
+	(create_menu_at): one more time
+	(create_menu_at_fr): does this need to be done?
+	(find_empty_pos_array): 
+	(find_empty_pos_array): skip foobars
+	(create_new_panel): create a foobar if there isn't one
+	(create_add_panel_submenu): menu panel (foobar) item
+	(status_unparent): get the correct panel for foobar/basep
+	(remove_panel_query): get correct panel now that there are
+	foobar widgets
+	(panel_tearoff_new_menu): handle the foobar
+	(make_properties_submenu): add foobar support
+	(make_panel_submenu): add is_basp flag
+	(make_panel_submenu): only have a properties menu if we are a basep
+	(create_panel_submenu): is_basep flag
+	(panel_menu_tearoff_new_menu): pass is_basep
+	(create_root_menu): apply some fabric softener
+	... and so on
+
+	* menu-util.c (panel_menu_position): deal with foobar
+	(applet_menu_position): ditto
+
+	* floating-widget.c (floating_pos_get_pos): minimum y is
+	foobar height
+
+	* extern.c (s_panelspot_show_menu): deal with the foobar
+
+	* edge-widget.c (edge_pos_get_pos): if we are not on the bottom
+	set y to foobar height
+
+	* basep-widget.c (basep_widget_size_allocate): minimum y is height
+	of foobar
+
+	* applet.[ch] (create_applet_menu): take an 'is_basep' flag telling
+	us if the basep properties menu should be shown
+
+	* aligned-widget.c (aligned_pos_get_pos): minimum height is that
+	of the foobar
+
 Sat Feb 26 18:57:55 2000  George Lebl <jirka@5z.com>
 
 	* basep-widget.[ch],border-widget.c,aligned-widget.c,floating-widget.c:

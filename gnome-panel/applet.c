@@ -365,7 +365,7 @@ add_to_submenus(AppletInfo *info,
 }
 
 void
-create_applet_menu(AppletInfo *info)
+create_applet_menu(AppletInfo *info, gboolean is_basep)
 {
 	GtkWidget *menuitem, *panel_menu;
 	GList *user_menu = info->user_menu;
@@ -390,7 +390,7 @@ create_applet_menu(AppletInfo *info)
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
 
 	panel_menu = gtk_menu_new();
-	make_panel_submenu(panel_menu, TRUE);
+	make_panel_submenu (panel_menu, TRUE, is_basep);
 	menuitem = gtk_menu_item_new ();
 
 	pixmap = gnome_pixmap_file ("gnome-panel.png");
@@ -455,7 +455,7 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 	panel = get_panel_parent(info->widget);
 
 	if (!info->menu)
-		create_applet_menu(info);
+		create_applet_menu (info, IS_BASEP_WIDGET (panel));
 
 	if(IS_BASEP_WIDGET(panel)) {
 		BASEP_WIDGET(panel)->autohide_inhibit = TRUE;

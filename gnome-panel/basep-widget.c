@@ -14,7 +14,7 @@
 #include "basep-widget.h"
 #include "panel-util.h"
 #include "panel_config_global.h"
-
+#include "foobar-widget.h"
 #include "xstuff.h"
 
 extern int panel_applet_in_drag;
@@ -233,10 +233,10 @@ basep_widget_size_allocate (GtkWidget *widget,
 		allocation->x = CLAMP (allocation->x, 0, max);
 
 		max = gdk_screen_height () - allocation->height;
-		allocation->y = CLAMP (allocation->y, 0, max);
+		allocation->y = CLAMP (allocation->y, 
+				       foobar_widget_get_height (), max);
 				       
 	}
-
 	widget->allocation = *allocation;
 
 	if (GTK_WIDGET_REALIZED(widget)) {

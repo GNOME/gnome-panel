@@ -1050,14 +1050,16 @@ s_panelspot_show_menu(PortableServer_Servant servant,
 	g_assert(ext != NULL);
 	g_assert(ext->info != NULL);
 
-	if (!ext->info->menu)
-		create_applet_menu(ext->info);
-
 	panel = get_panel_parent(ext->info->widget);
 
-	BASEP_WIDGET(panel)->autohide_inhibit = TRUE;
-	basep_widget_queue_autohide(BASEP_WIDGET(panel));
-	
+	if (!ext->info->menu)
+		create_applet_menu(ext->info, IS_BASEP_WIDGET (panel));
+
+	if (IS_BASEP_WIDGET (panel)) {
+		BASEP_WIDGET(panel)->autohide_inhibit = TRUE;
+		basep_widget_queue_autohide(BASEP_WIDGET(panel));
+	}
+
 	ext->info->menu_age = 0;
 	gtk_menu_popup(GTK_MENU(ext->info->menu), NULL, NULL,
 		       global_config.off_panel_popups?applet_menu_position:NULL,

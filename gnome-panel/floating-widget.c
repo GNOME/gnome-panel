@@ -9,6 +9,7 @@
 #include "floating-widget.h"
 #include "border-widget.h"
 #include "panel_config_global.h"
+#include "foobar-widget.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -270,7 +271,9 @@ floating_pos_get_pos(BasePWidget *basep,
 		     int w, int h)
 {
 	*x = CLAMP (FLOATING_POS (basep->pos)->x, 0, gdk_screen_width () - w);
-	*y = CLAMP (FLOATING_POS (basep->pos)->y, 0, gdk_screen_height () - h);
+	*y = CLAMP (FLOATING_POS (basep->pos)->y,
+		    foobar_widget_get_height (),
+		    gdk_screen_height () - h);
 }
 
 static void

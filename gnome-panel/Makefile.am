@@ -134,7 +134,9 @@ panel_SOURCES=\
 	gnome-run.c		\
 	gnome-run.h		\
 	xstuff.c		\
-	xstuff.h
+	xstuff.h		\
+	foobar-widget.h		\
+	foobar-widget.c
 
 panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) \
 	$(GNOMEUI_LIBS) $(INTLLIBS) @PIXBUF_LIBS@

@@ -446,9 +446,16 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	GString       *buf;
 	int           *num = user_data;
 	PanelData     *pd = data;
-	BasePWidget   *basep = BASEP_WIDGET(pd->panel);
-	PanelWidget   *panel = PANEL_WIDGET(basep->panel);
-	
+	BasePWidget   *basep = NULL; 
+	PanelWidget   *panel = NULL;
+
+	if (IS_BASEP_WIDGET (pd->panel)) {
+		basep = BASEP_WIDGET (pd->panel);
+		panel = PANEL_WIDGET (basep->panel);
+	} else if (IS_FOOBAR_WIDGET (pd->panel)) {
+		panel = PANEL_WIDGET (FOOBAR_WIDGET(pd->panel)->panel);
+	}
+
 	buf = g_string_new(NULL);
 
 	gnome_config_push_prefix ("");
@@ -464,14 +471,15 @@ save_panel_configuration(gpointer data, gpointer user_data)
 
 	gnome_config_set_int("type",pd->type);
 
-	gnome_config_set_bool("hidebuttons_enabled",
-			      basep->hidebuttons_enabled);
-	gnome_config_set_bool("hidebutton_pixmaps_enabled",
-			      basep->hidebutton_pixmaps_enabled);
+	if (basep) {
+		gnome_config_set_bool("hidebuttons_enabled",
+				      basep->hidebuttons_enabled);
+		gnome_config_set_bool("hidebutton_pixmaps_enabled",
+				      basep->hidebutton_pixmaps_enabled);
 	
-
-	gnome_config_set_int ("mode", basep->mode);
-	gnome_config_set_int ("state", basep->state);
+		gnome_config_set_int ("mode", basep->mode);
+		gnome_config_set_int ("state", basep->state);
+	}
 
 	gnome_config_set_int("sz", panel->sz);
 
@@ -493,7 +501,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	g_string_free(buf,TRUE);
 
 	/* now do different types */
-	if (IS_BORDER_WIDGET(basep))
+	if (IS_BORDER_WIDGET(pd->panel))
 		gnome_config_set_int("edge", BORDER_POS(basep->pos)->edge);
 
 	switch (pd->type) {
@@ -1020,10 +1028,18 @@ init_user_panels(void)
 					   TRUE,
 					   NULL);
 		panel_setup(panel);
-		gtk_widget_show(panel);
+		gtk_widget_show(panel);	       
 
 		/*load up default applets on the second default panel*/
 		load_default_applets2(PANEL_WIDGET(BASEP_WIDGET(panel)->panel));
+
+#if 0 /* don't show the foobar by default yet */
+		panel = foobar_widget_new ();
+		panel_setup (panel);
+		gtk_widget_show (panel);
+#endif
+                /* load up default applets on menu panel */
+		/*add_default_applets3(PANEL_WIDGET(FOOBAR_WIDGET(panel)->panel));*/
 
 		/*we laoded default applets, so we didn't find the config
 		  or something else was wrong, so do complete save when
@@ -1203,6 +1219,9 @@ init_user_panels(void)
 						     &back_color);
 			break;
 		}
+		case FOOBAR_PANEL:
+			panel = foobar_widget_new ();
+			break;
 		default:
 			panel = NULL;
 			g_warning ("Unkown panel type: %d; ignoring.", type);
@@ -1589,7 +1608,9 @@ convert_read_old_config(void)
 
 	gnome_config_push_prefix("");
 
-	gnome_config_clean_section(PANEL_CONFIG_PATH "panel/Config");
+	g_string_sprintf(buf,"%spanel/Config",PANEL_CONFIG_PATH);
+
+	gnome_config_clean_section(buf->str);
 
 	gnome_config_set_int(PANEL_CONFIG_PATH "panel/Config/applet_count",
 			     applet_count);

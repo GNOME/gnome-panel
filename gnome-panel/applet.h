@@ -63,7 +63,7 @@ gboolean register_toy(GtkWidget *applet,
 void panel_clean_applet(AppletInfo *info);
 
 /*applet menu stuff*/
-void create_applet_menu(AppletInfo *info);
+void create_applet_menu(AppletInfo *info, gboolean is_basep);
 void applet_add_callback(AppletInfo *info,
 			 const char *callback_name,
 			 const char *stock_item,

@@ -7,6 +7,7 @@
 
 #include "aligned-widget.h"
 #include "panel_config_global.h"
+#include "foobar-widget.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -170,12 +171,13 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 	*x = *y = 0;
 	switch (BORDER_POS(basep->pos)->edge) {
 	case BORDER_BOTTOM:
-		*y = gdk_screen_height() - h;
+		*y = gdk_screen_height() - h - foobar_widget_get_height ();
                 /* fall through */
 	case BORDER_TOP:
 		/* if we wanted to be more hackish we could just do: 
 		 *x = (ALIGNED_POS(basep->pos)->align)/2.0) * (gdk_screen_width() - w) 
 		 */
+		(*y) += foobar_widget_get_height ();
 		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
 			break;
@@ -194,6 +196,7 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		/* could do same as above, with height */
 		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
+			*y = foobar_widget_get_height ();
 			break;
 		case ALIGNED_CENTER:
 			*y = (gdk_screen_height() - h) / 2;

@@ -45,6 +45,8 @@ panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 					  x,y,wx,wy,
 					  w->allocation.width,
 					  w->allocation.height);
+	else if (IS_FOOBAR_WIDGET (w))
+		*y = w->allocation.height;
 }
 
 void
@@ -68,13 +70,17 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 		wx += info->widget->allocation.x;
 		wy += info->widget->allocation.y;
 	}
-	*x = *y = 0;
-	if (IS_BASEP_WIDGET (w))
+	if (IS_BASEP_WIDGET (w)) {
+		*x = *y = 0;
 		basep_widget_get_menu_pos(BASEP_WIDGET(w),
 					  GTK_WIDGET(menu),
 					  x,y,wx,wy,
 					  info->widget->allocation.width,
 					  info->widget->allocation.height);
+       	} else if (IS_FOOBAR_WIDGET (w)) {
+		gtk_widget_get_pointer (w, x, y);	
+		*y = w->allocation.height;
+	}
 }
 
 int

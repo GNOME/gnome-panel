@@ -1496,7 +1496,7 @@ setup_directory_drag (GtkWidget *menuitem, char *directory)
 			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
 }
 
-static void
+void
 setup_internal_applet_drag (GtkWidget *menuitem, char *applet_type)
 {
         static GtkTargetEntry menu_item_targets[] = {
@@ -1633,10 +1633,11 @@ menu_destroy(GtkWidget *menu, gpointer data)
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",NULL);
 }
 
-static GtkWidget * create_menu_at (GtkWidget *menu, char *menudir, 
-				   gboolean applets, char *dir_name,
-				   char *pixmap_name, gboolean fake_submenus,
-				   gboolean force);
+GtkWidget * create_menu_at (GtkWidget *menu, char *menudir, 
+			    gboolean applets, char *dir_name,
+			    char *pixmap_name, gboolean fake_submenus,
+			    gboolean force);
+
 static GtkWidget * create_menu_at_fr (GtkWidget *menu, FileRec *fr,
 				      gboolean applets, char *dir_name,
 				      char *pixmap_name, gboolean fake_submenus,
@@ -1949,6 +1950,7 @@ add_tearoff(GtkMenu *menu)
 			   menu);
 }
 
+
 static void
 try_menu_reread(GtkWidget *menuw, gboolean position)
 {
@@ -2013,14 +2015,30 @@ try_menu_reread(GtkWidget *menuw, gboolean position)
 	}
 }
 
-
-static void
+void
 submenu_to_display(GtkWidget *menuw, gpointer data)
 {
 	try_menu_reread(menuw, TRUE);
 }
 
-static GtkWidget *
+#if 0
+static gboolean
+fake_menus_read(gpointer data)
+{
+	if(fake_menus) {
+		GSList *last = g_slist_last(fake_menus);
+		try_menu_reread(last->data, FALSE);
+	}
+
+	if(!fake_menus || !global_config.hungry_menus) {
+		fake_menus_reading_timeout = 0;
+		return FALSE;
+	}
+	return TRUE;
+}
+#endif
+
+GtkWidget *
 create_fake_menu_at (char *menudir,
 		     gboolean applets,
 		     char *dir_name,
@@ -2152,7 +2170,7 @@ create_menuitem(GtkWidget *menu,
 	g_free(itemname);
 }
 
-static GtkWidget *
+GtkWidget *
 create_menu_at (GtkWidget *menu,
 		char *menudir,
 		gboolean applets,
@@ -2238,6 +2256,14 @@ create_menu_at_fr (GtkWidget *menu,
 		dr->mfl = g_slist_prepend(dr->mfl,mf);
 	}
 
+	mfl = g_slist_append(mfl,mf);
+
+	gtk_object_set_data(GTK_OBJECT(menu),"mf",mfl);
+
+	return menu;
+
+	pixmap = NULL;
+
 	/*if we actually added anything*/
 	if(first_item < g_list_length(GTK_MENU_SHELL(menu)->children)) {
 		menuitem = gtk_menu_item_new();
@@ -2249,7 +2275,6 @@ create_menu_at_fr (GtkWidget *menu,
 	} else {
 		menu_name = g_strconcat(dir_name?dir_name:_("Menu"),_(" (empty)"),NULL);
 	}
-
 
 	pixmap = NULL;
 	if (gnome_preferences_get_menus_have_icons ()) {
@@ -2282,10 +2307,6 @@ create_menu_at_fr (GtkWidget *menu,
 		add_separator = FALSE;
 	}
 
-	mfl = g_slist_append(mfl,mf);
-
-	gtk_object_set_data(GTK_OBJECT(menu),"mf",mfl);
-	
 	return menu;
 }
 
@@ -2356,10 +2377,11 @@ find_empty_pos_array (int posscore[3][3])
 	
 	for(li=panel_list;li!=NULL;li=g_slist_next(li)) {
 		pd = li->data;
-		basep = BASEP_WIDGET (pd->panel);
 
-		if(IS_DRAWER_WIDGET(basep))
+		if(IS_DRAWER_WIDGET(pd->panel) || IS_FOOBAR_WIDGET (pd->panel))
 			continue;
+
+		basep = BASEP_WIDGET (pd->panel);
 
 		basep_widget_get_pos (basep, &tx, &ty);
 		basep_widget_get_size (basep, &w, &h);
@@ -2432,7 +2454,8 @@ create_new_panel(GtkWidget *w, gpointer data)
 	GdkColor bcolor = {0,0,0,1};
 	gint16 x, y;
 	GtkWidget *panel = NULL;
-    
+	char *s;
+
 	g_return_if_fail (type != DRAWER_PANEL);
 
 	switch(type) {
@@ -2497,6 +2520,24 @@ create_new_panel(GtkWidget *w, gpointer data)
 		gtk_widget_show (panel);
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		break;
+	case FOOBAR_PANEL: {
+		GtkWidget *dialog;
+		char *s;
+		if (!foobar_widget_exists ()) {
+			panel = foobar_widget_new ();
+			panel_setup (panel);
+			gtk_widget_show (panel);
+			break;
+		}
+		s = _("You can only have one menu panel at a time.");
+		
+		dialog = gnome_message_box_new (s, 
+						GNOME_MESSAGE_BOX_ERROR,
+						GNOME_STOCK_BUTTON_OK,
+						NULL);
+		gnome_dialog_run_and_close (GNOME_DIALOG (dialog));
+		break;
+	}
 	default: break;
 	}
 
@@ -2554,6 +2595,13 @@ create_add_panel_submenu (gboolean tearoff)
 				   GTK_SIGNAL_FUNC(add_panel_tearoff_new_menu),
 				   NULL);
 	}
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Menu panel"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   GTK_SIGNAL_FUNC(create_new_panel),
+			   GINT_TO_POINTER(FOOBAR_PANEL));
  	
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
@@ -2712,7 +2760,11 @@ static void
 status_unparent(GtkWidget *widget)
 {
 	GList *li;
-	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
+	PanelWidget *panel = NULL;
+	if (IS_BASEP_WIDGET (widget))
+		panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
+	else if (IS_FOOBAR_WIDGET (widget))
+		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 	for(li=panel->applet_list;li;li=li->next) {
 		AppletData *ad = li->data;
 		AppletInfo *info = gtk_object_get_data(GTK_OBJECT(ad->applet),
@@ -2743,28 +2795,20 @@ static void
 remove_panel_query (GtkWidget *w, gpointer data)
 {
 	GtkWidget *dialog;
-	BasePWidget *basep;
+	GtkWidget *panelw;
 	PanelWidget *panel;
 
 	panel = get_panel_from_menu_data(w);
+	panelw = panel->panel_parent;
 
-	/* if these ever we're in deep doodoo I guess */
-	g_return_if_fail (IS_PANEL_WIDGET (panel));
-	if(!IS_BASEP_WIDGET (panel->panel_parent))
-		return;
-
-	basep = BASEP_WIDGET (panel->panel_parent);
-	
-	/* drawer widgets are not base panels and can be removed because
-	 * they're not counted in base_panels */
-	if (!IS_DRAWER_WIDGET(basep) && base_panels == 1) {
+	if (!IS_DRAWER_WIDGET (panelw) && base_panels == 1) {
 		gnome_error_dialog (_("You cannot remove your last panel."));
 		return;
 	}
 
 	/* if there are no applets just remove the panel */
 	if(!global_config.confirm_panel_remove || !panel->applet_list) {
-		remove_panel(basep);
+		remove_panel (BASEP_WIDGET (panelw));
 		return;
 	}
 
@@ -2778,27 +2822,29 @@ remove_panel_query (GtkWidget *w, gpointer data)
 	
 	gnome_dialog_button_connect (GNOME_DIALOG(dialog), 0,
 				     GTK_SIGNAL_FUNC (remove_panel_accept),
-				     basep);
-	gtk_signal_connect_object_while_alive (GTK_OBJECT(basep), "destroy",
+				     panelw);
+	gtk_signal_connect_object_while_alive (GTK_OBJECT(panelw), "destroy",
 					       GTK_SIGNAL_FUNC(gtk_widget_destroy),
 					       GTK_OBJECT(dialog));
 	gtk_widget_show (dialog);
 }
 
-static GtkWidget *
-create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff);
+GtkWidget *
+create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff, gboolean is_basep);
 
 static void
 panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 {
 	TearoffMenu *tm;
 	char *wmclass = get_unique_tearoff_wmclass();
-	GtkWidget *menu;
+	GtkWidget *menu = NULL;
 	PanelWidget *menu_panel;
 
-	menu = create_root_menu (TRUE, global_config.menu_flags, FALSE);
-
 	menu_panel = get_panel_from_menu_data(w);
+
+	menu = create_root_menu (TRUE, global_config.menu_flags, FALSE,
+				 IS_BASEP_WIDGET (menu_panel->panel_parent));
+
 	gtk_object_set_data (GTK_OBJECT(menu), "menu_panel", menu_panel);
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
@@ -2823,7 +2869,8 @@ create_panel_root_menu(PanelWidget *panel, gboolean tearoff)
 {
 	GtkWidget *menu;
 
-	menu = create_root_menu (TRUE, global_config.menu_flags, tearoff);
+	menu = create_root_menu (TRUE, global_config.menu_flags, tearoff,
+				 IS_BASEP_WIDGET (panel->panel_parent));
 
 	gtk_object_set_data (GTK_OBJECT(menu), "menu_panel", panel);
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(panel),
@@ -3669,7 +3716,7 @@ show_panel_help (GtkWidget *w, gpointer data)
 
 
 void
-make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
+make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 {
 	GtkWidget *menuitem, *submenu, *submenuitem;
 
@@ -3696,7 +3743,6 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
 	}
 
 	make_add_submenu (submenu, fake_submenus);
-
 
         menuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
@@ -3725,32 +3771,33 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
 
 	add_menu_separator(menu);
 
-	menuitem = gtk_menu_item_new ();
-	gtk_widget_lock_accelerators (menuitem);
-	setup_menuitem (menuitem, 
-			gnome_stock_pixmap_widget (menu,
-						   GNOME_STOCK_MENU_PROP),
-			_("Properties"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-
-	submenu = menu_new ();
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
-
-	submenuitem = gtk_menu_item_new ();
-	gtk_widget_lock_accelerators (menuitem);
-	setup_menuitem (submenuitem,
-			gnome_stock_pixmap_widget(submenu,
-						  GNOME_STOCK_MENU_PROP),
-			_("All properties..."));
-
-	gtk_menu_append (GTK_MENU (submenu), submenuitem);
-	gtk_signal_connect (GTK_OBJECT (submenuitem), "activate",
-			    GTK_SIGNAL_FUNC(current_panel_config), 
-			    NULL);
-
-	/*add_menu_separator (submenu);*/
-	make_properties_submenu (submenu);
-	
+	if (is_basep) {
+		menuitem = gtk_menu_item_new ();
+		gtk_widget_lock_accelerators (menuitem);
+		setup_menuitem (menuitem, 
+				gnome_stock_pixmap_widget (menu,
+							   GNOME_STOCK_MENU_PROP),
+				_("Properties"));
+		gtk_menu_append (GTK_MENU (menu), menuitem);
+		
+		submenu = menu_new ();
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+		
+		submenuitem = gtk_menu_item_new ();
+		gtk_widget_lock_accelerators (menuitem);
+		setup_menuitem (submenuitem,
+				gnome_stock_pixmap_widget(submenu,
+							  GNOME_STOCK_MENU_PROP),
+				_("All properties..."));
+		
+		gtk_menu_append (GTK_MENU (submenu), submenuitem);
+		gtk_signal_connect (GTK_OBJECT (submenuitem), "activate",
+				    GTK_SIGNAL_FUNC(current_panel_config), 
+				    NULL);
+		
+		/*add_menu_separator (submenu);*/
+		make_properties_submenu (submenu);
+	}
 	
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
@@ -3794,7 +3841,7 @@ panel_lock (GtkWidget *widget, gpointer data)
 }
 
 static GtkWidget *create_panel_submenu (GtkWidget *m, gboolean fake_sub,
-					gboolean tearoff);
+					gboolean tearoff, gboolean is_base);
 static GtkWidget *create_desktop_menu (GtkWidget *m, gboolean fake_sub,
 				       gboolean tearoff);
 
@@ -3803,9 +3850,10 @@ panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 {
 	TearoffMenu *tm;
 	char *wmclass = get_unique_tearoff_wmclass();
-	GtkWidget *menu = create_panel_submenu (NULL, TRUE, FALSE);
 	PanelWidget *menu_panel = get_panel_from_menu_data(w);
-
+	GtkWidget *menu = create_panel_submenu (
+		NULL, TRUE, FALSE, IS_BASEP_WIDGET (menu_panel->panel_parent));
+		
 	/*set the panel to use as the data*/
 	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
@@ -3856,7 +3904,8 @@ desktop_menu_tearoff_new_menu (GtkWidget *w, gpointer data)
 }
 
 static GtkWidget *
-create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
+create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff, 
+		     gboolean is_basep)
 {
 	GtkWidget *menuitem;
 	char *char_tmp;
@@ -3875,7 +3924,7 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 				   NULL);
 	}
 
-	make_panel_submenu (menu, fake_submenus);
+	make_panel_submenu (menu, fake_submenus, is_basep);
 
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
@@ -3962,8 +4011,9 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 	return menu;
 }
 
-static GtkWidget *
-create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
+GtkWidget *
+create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff,
+		 gboolean is_basep)
 {
 	GtkWidget *root_menu;
 	GtkWidget *menu;
@@ -4142,7 +4192,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 		add_menu_separator (root_menu);
 
 	if (flags & MAIN_MENU_PANEL_SUB) {
-		menu = create_panel_submenu (NULL, fake_submenus, TRUE);
+		menu = create_panel_submenu (NULL, fake_submenus, TRUE, is_basep);
 		menuitem = gtk_menu_item_new ();
 		gtk_widget_lock_accelerators (menuitem);
 		setup_menuitem_try_pixmap (menuitem, "gnome-panel.png", 
@@ -4167,7 +4217,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 		add_menu_separator (root_menu);
 
 	if (flags & MAIN_MENU_PANEL) {
-		make_panel_submenu (root_menu, fake_submenus);
+		make_panel_submenu (root_menu, fake_submenus, is_basep);
 	}
 	
 	if (flags & MAIN_MENU_DESKTOP) {
@@ -4200,9 +4250,9 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 	}
 
 	if (main_menu)
-		menu->menu = create_root_menu(fake_subs, 
-					      menu->main_menu_flags,
-					      FALSE);
+		menu->menu = create_root_menu(
+			fake_subs, menu->main_menu_flags, FALSE,
+			IS_BASEP_WIDGET (panel->panel_parent));
 	else {
 		menu->menu = NULL;
 		for(li=menudirl;li!=NULL;li=g_slist_next(li))
@@ -4211,9 +4261,9 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 						     fake_subs, FALSE);
 		if(!menu->menu) {
 			g_warning(_("Can't create menu, using main menu!"));
-			menu->menu = create_root_menu(fake_subs,
-						      menu->main_menu_flags,
-						      FALSE);
+			menu->menu = create_root_menu(
+				fake_subs, menu->main_menu_flags, FALSE,
+				IS_BASEP_WIDGET (panel->panel_parent));
 		}
 	}
 	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
@@ -4467,15 +4517,17 @@ create_special_menu(char *special, PanelWidget *menu_panel_widget)
 	if(strcmp(special,"ADD_PANEL")==0) {
 		menu = create_add_panel_submenu(FALSE);
 	} else if(strcmp(special,"PANEL")==0) {
-		menu = create_root_menu (TRUE, global_config.menu_flags,
-					 FALSE);
+		menu = create_root_menu (TRUE, global_config.menu_flags, FALSE,
+					 IS_BASEP_WIDGET (menu_panel_widget->panel_parent));
 	} else if(strcmp(special,"DESKTOP")==0) {
 		menu = create_desktop_menu (NULL, TRUE, FALSE);
 	} else if(strcmp(special,"ADD_TO_PANEL")==0) {
 		menu = menu_new();
 		make_add_submenu(menu, TRUE);
 	} else if(strcmp(special,"PANEL_SUBMENU")==0) {
-		menu = create_panel_submenu (NULL, TRUE, FALSE);
+		menu = create_panel_submenu (
+			NULL, TRUE, FALSE,
+			IS_BASEP_WIDGET (menu_panel_widget->panel_parent));
 
 	}
 

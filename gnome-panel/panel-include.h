@@ -11,6 +11,7 @@
 #include "sliding-widget.h"
 #include "floating-widget.h"
 #include "drawer-widget.h"
+#include "foobar-widget.h"
 
 #include "button-widget.h"
 
