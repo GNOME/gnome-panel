@@ -605,8 +605,11 @@ panel_session_die (GnomeClient *client,
 void
 panel_quit(void)
 {
-  gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
-			     GNOME_INTERACT_ANY, 0, 1);
+  if(GNOME_CLIENT_CONNECTED(client))
+    gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
+			       GNOME_INTERACT_ANY, 0, 1);
+  else
+    gtk_main_quit(); /* If we're not session-managed, just exit right now */
 }
 
 static void
