@@ -24,7 +24,6 @@ libgtop_SUBDIRS =
 endif
 
 if HAVE_LIBGHTTP
-gticker = gticker
 slashapp = slashapp
 endif
 
@@ -46,9 +45,9 @@ endif
 
 SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
 	 $(cdplayer) $(mixer) $(modemlights) $(winlist) \
-         $(slashapp) $(esdmanager) $(gticker) $(fvwm)
+         $(slashapp) $(esdmanager) $(fvwm)
 
 DIST_SUBDIRS = $(always_built_SUBDIRS) esd-manager cpumemusage \
-	diskusage multiload netload gticker slashapp cdplayer \
+	diskusage multiload netload slashapp cdplayer \
 	 mixer modemlights winlist fvwm-pager
 
