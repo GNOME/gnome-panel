@@ -1202,7 +1202,7 @@ display_about_dialog (BonoboUIComponent *uic,
 		g_warning (G_STRLOC ": gnome-clock.png cannot be found");
 
 	about = gnome_about_new (_("Clock"), VERSION,
-				 _("(C) 1998-2002 the Free Software Foundation"),
+				 _("(C) 1998-2002 Free Software Foundation, Inc."),
 				 _("The Clock displays the current time and date"),
 				 authors,
 				 documenters,
