@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.0">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "2002年8月">
+  <!ENTITY applet "ワークスペース切り替え器">
+
+]>
+<!--
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+-->
+
+<!-- =============Document Header ============================= -->
+<article id="index" lang="ja">
+  <!-- please do not change the id; for translations, change lang to -->
+  <!-- appropriate code -->
+  <articleinfo>
+    <title>&applet;アプレットマニュアル V&manrevision;</title>
+    <copyright>
+      <year>2002</year>
+      <holder>Sun Microsystems</holder>
+    </copyright>
+    <copyright>
+      <year>2000</year>
+      <holder>John Fleck</holder>
+    </copyright>
+    <copyright>
+      <year>2003</year>
+      <holder>鎌ヶ迫正俊 (日本語訳)</holder>
+    </copyright>
+
+    <publisher>
+      <publishername>GNOMEドキュメンテーションプロジェクト</publishername>
+    </publisher>
+
+    &legal;
+    <!-- This file  contains link to license for the documentation (GNU FDL),
+    and other legal stuff such as "NO WARRANTY" statement. Please do not change
+    any of this. -->
+
+    <authorgroup>
+      <author>
+	<firstname>Sun</firstname>
+	<surname>GNOMEドキュメンテーションチーム</surname>
+	<affiliation>
+	  <orgname>Sun Microsystems</orgname>
+	  <address><email>gdocteam@sun.com</email></address>
+	</affiliation>
+      </author>
+      <author>
+	<firstname>John </firstname>
+	<surname>Fleck</surname>
+	<affiliation>
+	  <orgname>GNOMEドキュメンテーションプロジェクト</orgname>
+	  <address><email>jfleck@inkstain.net</email></address>
+	</affiliation>
+      </author>
+      <othercredit role="translator">
+	<firstname>Masatoshi</firstname>
+	<surname>KAMAGASAKO</surname>
+	<affiliation>
+	  <orgname>日本GNOMEユーザ会 翻訳チーム</orgname>
+	  <address><email>emerald@gnome.gr.jp</email></address>
+	</affiliation>
+	<contrib>日本語訳</contrib>
+      </othercredit>
+    </authorgroup>
+    <revhistory>
+      <revision>
+	<revnumber>&applet;アプレットマニュアル V&manrevision;</revnumber>
+	<date>&date;</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム
+	    <email>gdocteam@sun.com</email></para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>
+	  ワークスペース切り替え器アプレットマニュアル V2.1
+	</revnumber>
+	<date>2002年7月</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム
+	    <email>gdocteam@sun.com</email></para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>
+	  ワークスペース切り替え器アプレットマニュアル V&manrevision;
+	</revnumber>
+	<date>2002年3月</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム
+	    <email>gdocteam@sun.com</email></para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>デスクガイドアプレットマニュアル</revnumber>
+	<date>2000年</date>
+	<revdescription>
+	  <para role="author">John Fleck
+	    <email>jfleck@inkstain.net</email></para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+    </revhistory>
+    <releaseinfo>
+      このマニュアルは&applet;アプレット第&appletversion;版について
+      記述しています。
+    </releaseinfo>
+    <legalnotice>
+      <title>フィードバック</title>
+      <para>
+	この&applet;アプレットやマニュアルについてのバグレポートや提
+	案は、<ulink url="ghelp:gnome-feedback" type="help">GNOMEフィー
+	ドバックページ</ulink>を参照してください。
+      </para>
+      <para>
+        このマニュアルの日本語訳についての指摘や提案は
+        <email>emerald@gnome.gr.jp</email>
+        までお願いします。
+      </para>
+    </legalnotice>
+  </articleinfo>
+
+  <indexterm>
+    <primary>ワークスペース切り替え器</primary>
+  </indexterm>
+
+  <!-- ============= Document Body ============================= -->
+  <!-- ============= Introduction ============================== -->
+  <sect1 id="workspacelist-introduction">
+    <title>はじめに</title>
+
+    <!-- ==== Figure ============================================= -->
+    <figure id="workspacelist-fig">
+      <title>&applet;アプレット</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/workspace_switcher_applet.png"
+		       format="PNG"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>
+	      ワークスペース切り替え器を表示。
+	      各ワークスペースのためのボタンあり。
+	    </phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    <!-- ==== End of Figure ======================================= -->
+
+    <para>
+      <application>&applet;</application>アプレットはGNOMEデスクトップ上のワークスペースを表示します。ワークスペースとは、あなたが利用することのできるデスクトップ上の独立したエリアのことです。デスクトップ上のそれぞれのワークスペースには同じ壁紙、同じパネル、同じメニューがあります。しかしながら、それぞれのワークスペースで別々のアプリケーションを起動し、別々のウィンドウを開くことができます。同時には一つのワークスペースしか開くことができませんが、別のワークスペースにウィンドウを開くことができます。
+    </para>
+
+    <para>
+      デフォルトでは、<application>&applet;</application>アプレットは<xref linkend="workspacelist-fig"/>に示すようにデスクトップ上のワークスペースを視覚的に表示します。アプレットはワークスペース上に開かれているアプリケーションウィンドウやダイアログを表示します。アプレットは、現在作業中のワークスペースとフォーカスの当たっているウィンドウを強調して表示します。アプレットにワークスペースの名前だけを表示するようデフォルトの挙動を変更することができます。アプレットの設定の詳細については、<xref linkend="workspacelist-prefs"/>を参照してください。
+    </para>
+
+    <para>
+      <xref linkend="workspacelist-fig"/>はGNOMEセッションが4つのワークスペースを利用しているときの<application>&applet;</application>アプレットを示しています。アプレットは左から右へと列状にワークスペースを表示します。<xref linkend="workspacelist-fig"/>では、アプレットは一列にワークスペースを示しています。アプレットが表示する行数を設定する方法は<xref linkend="workspacelist-prefs"/>を参照してください。
+    </para>
+
+    <para>
+      <application>&applet;</application>アプレットをパネルに追加するには、パネルを右クリックし、
+      <menuchoice>
+	<guimenu>パネルに追加</guimenu>
+	<guisubmenu>ユーティリティ</guisubmenu>
+	<guimenuitem>ワークスペース切り替え器</guimenuitem>
+      </menuchoice>
+      と選択します。
+    </para>
+
+  </sect1>
+
+  <!-- ================ Usage ================================ -->
+  <sect1 id="workspacelist-usage">
+    <title>使い方</title>
+    <sect2 id="workspacelist-navigate">
+      <title>ワークスペースを操作する</title>
+      <para>
+	現在のワークスペースを示しているアプレット上のボタンの背景は強調表示されています。別なワークスペースに切り替えるには、切り替える先のワークスペースを示すボタンをクリックします。ワークスペースボタン上のウィンドウをクリックすると、<application>&applet;</application>アプレットはクリックされたワークスペースに切り替わり、そのウィンドウにフォーカスを当てます。元のワークスペースに戻るには、<application>&applet;</application>上の該当するワークスペースを示すボタンをクリックします。
+      </para>
+      <para>
+	別のワークスペースに切り替える場合、<application>ウィンドウ一覧</application>アプレットの内容にも新しいワークスペースで開かれているウィンドウが反映されます。
+      </para>
+    </sect2>
+
+    <sect2 id="workspacelist-move-window">
+      <title>ウィンドウを別のワークスペースへ移動する</title>
+      <para>
+	<application>&applet;</application>を利用してウィンドウを別のワークスペースへ移動するためには、アプレット上のウィンドウを元のワークスペースから別のウィンドウにドラッグします。
+      </para>
+    </sect2>
+  </sect1>
+
+  <!-- ============= Preferences ============================= -->
+  <sect1 id="workspacelist-prefs">
+    <title>設定</title>
+    <para>
+      <application>&applet;</application>アプレットを設定するには、
+      アプレットを右クリックし、<guimenuitem>設定</guimenuitem>を選択します。
+    </para>
+    <variablelist>
+      <varlistentry>
+	<term>
+	  <guilabel>切り替え器にワークスペース名を表示する</guilabel>
+	</term>
+	<listitem>
+	  <para>
+	    ワークスペースの視覚的な表示の代わりに、ワークスペース名を
+	    アプレット上に表示します。
+	  </para>
+	  <para>デフォルトでは 非選択 です。</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry><term>ワークスペース切り替え器の表示</term>
+	<listitem>
+	  <para>
+	    <application>&applet;</application>がどのワークスペースを
+	    表示するのかを決定する、以下のオプションを選択します:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<guilabel>現在のワークスペースのみ表示する</guilabel>
+	      </para>
+	      <para>
+		現在のワークスペースのみを
+		<application>&applet;</application>アプレットに表示し
+		ます。
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><guilabel>全てのワークスペースを表示する</guilabel></para>
+	      <para>
+		GNOMEデスクトップ上の全てのワークスペースを
+		<application>&applet;</application>アプレットに表示し
+		ます。<guilabel>行</guilabel>スピンボックスを利用して、
+		アプレット上に表示するワークスペースの行数を指定します。
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	  <para>
+	    デフォルトは
+	    <guilabel>全てのワークスペースを表示する</guilabel>、
+	    1行 です。
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>ワークスペース</guilabel></term>
+	<listitem>	
+	  <para>
+	    リストボックスを利用して、デスクトップ上のワークスペースの
+	    名前を編集します。ワークスペース名を編集するには、名前を選
+	    択し、新しい名前を入力してください。
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>ワークスペースの数</guilabel></term>
+	<listitem>
+	  <para>
+	    スピンボックスでGNOMEセッション上のワークスペースの数を設
+	    定します。
+	  </para>
+	  <para>デフォルトは 4 です。</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </sect1>
+
+</article>
