@@ -512,8 +512,8 @@ panel_session_die (GnomeClient *client,
 	    i<applet_count;
 	    i++,info++) {
 		if(info->type == APPLET_EXTERN) {
-			gtk_container_remove(GTK_CONTAINER(info->applet_widget->parent),
-					     info->applet_widget);
+			gtk_container_remove(GTK_CONTAINER(info->widget),
+					     GTK_BIN(info->widget)->child);
 		} else if(info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
 			XKillClient(GDK_DISPLAY(),

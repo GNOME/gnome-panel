@@ -267,7 +267,6 @@ snapped_set_pos (GtkWidget *widget, gpointer data)
 static void
 snapped_set_hidebuttons (GtkWidget *widget, gpointer data)
 {
-	SnappedPos pos = (SnappedPos) data;
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 
 	ppc->snapped_hidebuttons = !(GTK_TOGGLE_BUTTON(widget)->active);

@@ -211,11 +211,12 @@ applet_request_id (const char *path, const char *param,
 			   compare_params(param,ext->params)) {
 				/*we started this and already reserved a spot
 				  for it, including the socket widget*/
+				GtkWidget *socket = GTK_BIN(info->widget)->child;
 				*cfgpath = ext->cfg;
 				ext->cfg = NULL;
 				*globcfgpath = g_strdup(old_panel_cfg_path);
 				info->type = APPLET_EXTERN_RESERVED;
-				*winid=GDK_WINDOW_XWINDOW(info->applet_widget->window);
+				*winid=GDK_WINDOW_XWINDOW(socket->window);
 				if(!dorestart && !mulapp_is_in_list(path))
 					mulapp_add_to_list(path);
 
@@ -303,20 +304,29 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 		     AppletType type)
 {
 	GtkWidget *socket;
+	GtkWidget *ebox;
+
+	ebox = gtk_event_box_new();
+	gtk_widget_set_events(ebox, (gtk_widget_get_events(ebox) |
+				     APPLET_EVENT_MASK) &
+			      ~( GDK_POINTER_MOTION_MASK |
+				 GDK_POINTER_MOTION_HINT_MASK));
+	gtk_widget_show (ebox);
 
 	socket = gtk_socket_new();
 
 	g_return_val_if_fail(socket!=NULL,0);
 
 	gtk_widget_show (socket);
-	
+	gtk_container_add(GTK_CONTAINER(ebox),socket);
+
 	gtk_signal_connect_after(GTK_OBJECT(socket),"destroy",
 				 GTK_SIGNAL_FUNC(extern_socket_destroy),
 				 ext);
 	
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the path field*/
-	if(!register_toy(socket,ext,panel,pos,type)) {
+	if(!register_toy(ebox,ext,panel,pos,type)) {
 		g_warning("Couldn't add applet");
 		return 0;
 	}

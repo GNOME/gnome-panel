@@ -77,7 +77,6 @@ panel_clean_applet(int applet_id)
 			gtk_widget_destroy(w);
 		}
 	}
-	info->applet_widget = NULL;
 	if(type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		g_assert(drawer);
@@ -423,51 +422,36 @@ register_toy(GtkWidget *applet,
 	     int pos,
 	     AppletType type)
 {
-	GtkWidget     *eventbox;
 	AppletInfo    info;
-	int           bind_lower;
 	
 	g_return_val_if_fail(applet != NULL, FALSE);
 	g_return_val_if_fail(panel != NULL, FALSE);
 
-	if(/*GTK_WIDGET_NO_WINDOW(applet) || */GTK_IS_SOCKET(applet)) {
-		/* We wrap the applet in a GtkEventBox so that we can capture
-		   events over it */
-		eventbox = gtk_event_box_new();
-		gtk_widget_set_events(eventbox, (gtk_widget_get_events(eventbox) |
-						 APPLET_EVENT_MASK) &
+	if(!GTK_WIDGET_NO_WINDOW(applet))
+		gtk_widget_set_events(applet, (gtk_widget_get_events(applet) |
+					       APPLET_EVENT_MASK) &
 				      ~( GDK_POINTER_MOTION_MASK |
 					 GDK_POINTER_MOTION_HINT_MASK));
-		gtk_container_add(GTK_CONTAINER(eventbox), applet);
-	} else {
-		if(!GTK_WIDGET_NO_WINDOW(applet))
-			gtk_widget_set_events(applet, (gtk_widget_get_events(applet) |
-						       APPLET_EVENT_MASK) &
-					      ~( GDK_POINTER_MOTION_MASK |
-						 GDK_POINTER_MOTION_HINT_MASK));
-		eventbox = applet;
-	}
 
 	info.applet_id = applet_count;
 	info.type = type;
-	info.widget = eventbox;
-	info.applet_widget = applet;
+	info.widget = applet;
 	info.menu = NULL;
 	info.data = data;
 	info.user_menu = NULL;
 
-	gtk_object_set_data(GTK_OBJECT(eventbox),"applet_id",
+	gtk_object_set_data(GTK_OBJECT(applet),"applet_id",
 			    GINT_TO_POINTER(applet_count));
 
 	if(type == APPLET_DRAWER) {
 		Drawer *drawer = data;
 		PanelWidget *assoc_panel = PANEL_WIDGET(DRAWER_WIDGET(drawer->drawer)->panel);
 
-		gtk_object_set_data(GTK_OBJECT(eventbox),
+		gtk_object_set_data(GTK_OBJECT(applet),
 				    PANEL_APPLET_ASSOC_PANEL_KEY,assoc_panel);
-		assoc_panel->master_widget = eventbox;
+		assoc_panel->master_widget = applet;
 	}
-	gtk_object_set_data(GTK_OBJECT(eventbox),
+	gtk_object_set_data(GTK_OBJECT(applet),
 			    PANEL_APPLET_FORBIDDEN_PANELS,NULL);
 		
 	/*add to the array of applets*/
@@ -480,21 +464,16 @@ register_toy(GtkWidget *applet,
 			g_list_prepend(applets_to_sync,
 				       GINT_TO_POINTER(applet_count-1));
 
-	/*for a menu we don't bind other events except for the
-	  eventbox, the menu itself takes care of passing the relevant
-	  ones thrugh*/
-	bind_lower = (type == APPLET_MENU?FALSE:TRUE);
-	if(panel_widget_add_full(panel, eventbox, pos, bind_lower)==-1) {
+	if(panel_widget_add_full(panel, applet, pos, TRUE)==-1) {
 		GList *list;
 		for(list = panels; list != NULL; list = g_list_next(list))
-			if(panel_widget_add_full(panel, eventbox, pos, bind_lower)!=-1)
+			if(panel_widget_add_full(panel, applet, pos, TRUE)!=-1)
 				break;
 		if(!list) {
 			/*can't put it anywhere, clean up*/
 			AppletInfo *inf = get_applet_info(applet_count-1);
-			gtk_widget_unref(eventbox);
+			gtk_widget_unref(applet);
 			inf->widget = NULL;
-			inf->applet_widget = NULL;
 			panel_clean_applet(applet_count-1);
 			g_warning("Can't find an empty spot");
 			return FALSE;
@@ -503,24 +482,24 @@ register_toy(GtkWidget *applet,
 	}
 
 	if(!GTK_WIDGET_NO_WINDOW(applet))
-		gtk_signal_connect(GTK_OBJECT(eventbox),
+		gtk_signal_connect(GTK_OBJECT(applet),
 				   "button_press_event",
 				   GTK_SIGNAL_FUNC(applet_button_press),
 				   GINT_TO_POINTER(applet_count-1));
 
-	gtk_signal_connect(GTK_OBJECT(eventbox),
+	gtk_signal_connect(GTK_OBJECT(applet),
 			   "destroy",
 			   GTK_SIGNAL_FUNC(applet_destroy),
 			   GINT_TO_POINTER(applet_count-1));
 
-	gtk_widget_show_all(eventbox);
+	gtk_widget_show_all(applet);
 
-	/*gtk_signal_connect (GTK_OBJECT (eventbox), 
+	/*gtk_signal_connect (GTK_OBJECT (applet), 
 			    "drag_request_event",
 			    GTK_SIGNAL_FUNC(panel_dnd_drag_request),
 			    info);
 
-	gtk_widget_dnd_drag_set (GTK_WIDGET(eventbox), TRUE,
+	gtk_widget_dnd_drag_set (GTK_WIDGET(applet), TRUE,
 				 applet_drag_types, 1);*/
 
 	orientation_change(applet_count-1,panel);
