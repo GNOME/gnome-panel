@@ -15,6 +15,7 @@
 #include "panel-util.h"
 #include "panel_config_global.h"
 #include "foobar-widget.h"
+#include "drawer-widget.h"
 #include "xstuff.h"
 
 extern int panel_applet_in_drag;
@@ -1016,9 +1017,13 @@ basep_widget_update_winhints (BasePWidget *basep)
 	case BASEP_MOVING:
 		gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
 					   WIN_HINTS_DO_NOT_COVER);
-		gnome_win_hints_set_layer (w, global_config.keep_bottom
-					   ? WIN_LAYER_BELOW
-					   : WIN_LAYER_DOCK);
+		/* drawers are always in DOCK */
+		if(IS_DRAWER_WIDGET(w))
+			gnome_win_hints_set_layer (w, WIN_LAYER_DOCK);
+		else
+			gnome_win_hints_set_layer (w, global_config.keep_bottom
+						   ? WIN_LAYER_BELOW
+						   : WIN_LAYER_DOCK);
 		break;
 	default: /* all of the hidden states */
 		gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS);
