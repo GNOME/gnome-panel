@@ -1,3 +1,21 @@
+2001-10-11  Alex Larsson  <alexl@redhat.com>
+
+	* menu-fentry.c (fr_fill_dir, fr_read_dir,
+	fr_check_and_reread):
+	Move to new GnomeDesktopItem api
+
+	* menu-fentry.h (struct DirRect):
+	renams dentry* to ditem*
+
+	* menu.c (edit_direntry, add_applet):
+	Warn when running commented function.
+	(show_item_menu):
+	Update to new GnomeDesktopItem API
+
+	* panel.c (drop_urilist):
+	Warn when running commented function.
+	
+	
 2001-10-10  Alex Larsson  <alexl@redhat.com>
 
 	* menu.c (add_drawers_from_dir):

@@ -53,8 +53,8 @@ struct _FileRec {
 
 struct _DirRec {
 	FileRec frec;
-	time_t dentrymtime;
-	time_t dentrylast_stat;
+	time_t ditemmtime;
+	time_t ditemlast_stat;
 	time_t merge_mtime;
 	gboolean force_reread;
 	GSList *tryexecs;

@@ -1485,6 +1485,7 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 static void
 edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 {
+  g_warning ("FIXME: edit_direntry() is not implemented");
 #ifdef FIXME
 	GtkWidget *dialog, *notebook;
 	GtkWidget *dedit;
@@ -1617,10 +1618,9 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 static void
 show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 {
-#ifdef FIXME
 	GtkWidget *menuitem;
 	char *tmp;
-	GnomeDesktopEntry *ii;
+	GnomeDesktopItem *ii;
 
 	if (sim->menu == NULL) {
 		sim->menu = menu_new ();
@@ -1634,7 +1634,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 				   item);
 
 		if (sim->type == 1) {
-			ii = gnome_desktop_entry_load_unconditional (sim->item_loc);
+			ii = gnome_desktop_item_new_from_file (sim->item_loc, 0, NULL);
 
 			menuitem = gtk_menu_item_new ();
 			gtk_widget_lock_accelerators (menuitem);
@@ -1699,21 +1699,21 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			}
 
 			if (ii != NULL)
-				tmp = panel_gnome_kde_help_path (ii->docpath);
+				tmp = panel_gnome_kde_help_path (gnome_desktop_item_get_string (ii, "DocPath"));
 			else
 				tmp = NULL;
 
 			if (tmp != NULL) {
 				char *title;
+				const char *name;
 
 				g_free (tmp);
 
 				menuitem = gtk_menu_item_new ();
 				gtk_widget_lock_accelerators (menuitem);
+				name = gnome_desktop_item_get_localestring (ii, "Name");
 				title = g_strdup_printf (_("Help on %s"),
-							 ii->name != NULL ?
-							 ii->name :
-							 _("Application"));
+							 (name != NULL) ? name : _("Application"));
 				setup_menuitem (menuitem, 0, title);
 				g_free (title);
 				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu),
@@ -1744,7 +1744,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
 
 
-			gnome_desktop_entry_free (ii);
+			gnome_desktop_item_unref (ii);
 		}
 		
 		if (sim->mf != NULL) {
@@ -1839,7 +1839,6 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			NULL,
 			bevent->button,
 			bevent->time);
-#endif
 }
 
 static gboolean
@@ -2266,6 +2265,7 @@ try_add_status_to_panel (GtkWidget *widget, gpointer data)
 static void
 add_applet (GtkWidget *w, const char *item_loc)
 {
+  g_warning ("FIXME: add_applet() not implemented\n");
 #ifdef FIXME
 	GnomeDesktopEntry *ii;
 	char *goad_id;

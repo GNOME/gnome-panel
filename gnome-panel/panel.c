@@ -985,6 +985,7 @@ static void
 drop_urilist (PanelWidget *panel, int pos, char *urilist,
 	      gboolean background_drops)
 {
+  g_warning ("FIXME: drop_urilist() not implemented");
 #ifdef FIXME
 	GList *li, *files;
 	struct stat s;

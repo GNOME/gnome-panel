@@ -357,7 +357,6 @@ fr_free (FileRec *fr, gboolean free_fr)
 static void
 fr_fill_dir(FileRec *fr, int sublevels)
 {
-#ifdef FIXME
 	GSList *flist;
 	struct stat s;
 	DirRec *dr = (DirRec *)fr;
@@ -429,22 +428,25 @@ fr_fill_dir(FileRec *fr, int sublevels)
 
 			tryexec_path = NULL;
 
-			ditem = gnome_desktop_item_load_unconditional (name);
-			if (ditem != NULL &&
-			    ditem->tryexec != NULL) {
-				tryexec_path = gnome_is_program_in_path (ditem->tryexec);
-				if (tryexec_path == NULL) {
-					dr->tryexecs = g_slist_prepend (dr->tryexecs, ditem->tryexec);
-					ditem->tryexec = NULL;
-					gnome_desktop_item_free (ditem);
-					ditem = NULL;
+			ditem = gnome_desktop_item_new_from_file (name, GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS, NULL);
+			if (ditem != NULL)  {
+				const char *tryexec;
+				tryexec = gnome_desktop_item_get_string (ditem, "TryExec");
+				if (tryexec != NULL) {
+					tryexec_path = gnome_is_program_in_path (tryexec);
+					if (tryexec_path == NULL) {
+						dr->tryexecs = g_slist_prepend (dr->tryexecs, g_strdup (tryexec));
+						gnome_desktop_item_unref (ditem);
+						ditem = NULL;
+					}
 				}
 			}
 			if (ditem != NULL) {
+				const char *type;
 				ffr = g_chunk_new0 (FileRec, file_chunk);
-				if (ditem->type != NULL &&
-				    strcasecmp_no_locale (ditem->type,
-							  "separator") == 0)
+				type = gnome_desktop_item_get_string (ditem, "Type");
+				if (type != NULL &&
+				    strcasecmp_no_locale (type, "separator") == 0)
 					ffr->type = FILE_REC_SEP;
 				else
 					ffr->type = FILE_REC_FILE;
@@ -453,15 +455,13 @@ fr_fill_dir(FileRec *fr, int sublevels)
 				ffr->mtime = s.st_mtime;
 				ffr->last_stat = curtime;
 				ffr->parent = dr;
-				ffr->icon = ditem->icon;
-				ditem->icon = NULL;
-				ffr->fullname = ditem->name;
-				ffr->comment = g_strdup (ditem->comment);
-				ditem->name = NULL;
+				ffr->icon = gnome_desktop_item_get_icon (ditem);
+				ffr->fullname = g_strdup (gnome_desktop_item_get_localestring (ditem, "Name"));
+				ffr->comment = g_strdup (gnome_desktop_item_get_localestring (ditem, "Comment"));
 				ffr->tryexec_path = tryexec_path;
 				ffr->goad_id =
 					get_applet_goad_id_from_ditem (ditem);
-				gnome_desktop_item_free (ditem);
+				gnome_desktop_item_unref (ditem);
 
 				dr->recs = g_slist_prepend (dr->recs, ffr);
 			} else {
@@ -472,14 +472,12 @@ fr_fill_dir(FileRec *fr, int sublevels)
 	dr->recs = g_slist_reverse (dr->recs);
 
 	g_free (mergedir);
-#endif
 }
 
 FileRec *
 fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 	     struct stat *merge_dstat, int sublevels)
 {
-#ifdef FIXME
 	char *fname;
 	struct stat s;
 	FileRec *fr;
@@ -538,17 +536,17 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 	if (dr->ditemlast_stat >= curtime-STAT_EVERY ||
 	    stat (fname, &s) != -1) {
 		GnomeDesktopItem *ditem;
-		ditem = gnome_desktop_item_load(fname);
+		ditem = gnome_desktop_item_new_from_file(fname,
+							 GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS,
+							 NULL);
 		if (ditem != NULL) {
 			g_free (fr->icon);
-			fr->icon = ditem->icon;
-			ditem->icon = NULL;
+			fr->icon = gnome_desktop_item_get_icon (ditem);
 			g_free (fr->fullname);
-			fr->fullname = ditem->name;
+			fr->fullname = g_strdup (gnome_desktop_item_get_localestring (ditem, "Name"));
 			g_free (fr->comment);
-			fr->comment = g_strdup (ditem->comment);
-			ditem->name = NULL;
-			gnome_desktop_item_free (ditem);
+			fr->comment = g_strdup (gnome_desktop_item_get_localestring (ditem, "Comment"));
+			gnome_desktop_item_unref (ditem);
 		} else {
 			g_free (fr->icon);
 			fr->icon = NULL;
@@ -574,9 +572,6 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 		fr_fill_dir (fr, sublevels);
 
 	return fr;
-#else
-	return NULL;
-#endif
 }
 
 
@@ -610,7 +605,6 @@ fr_replace (FileRec *fr)
 FileRec *
 fr_check_and_reread (FileRec *fr)
 {
-#ifdef FIXME
 	DirRec *dr = (DirRec *)fr;
 	FileRec *ret = fr;
 	time_t curtime;
@@ -708,17 +702,15 @@ fr_check_and_reread (FileRec *fr)
 				}
 				if(ddr->ditemmtime != s.st_mtime) {
 					GnomeDesktopItem *ditem;
-					ditem = gnome_desktop_item_load(p);
+					ditem = gnome_desktop_item_new_from_file (p, GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS, NULL);
 					if(ditem) {
 						g_free(ffr->icon);
-						ffr->icon = ditem->icon;
-						ditem->icon = NULL;
+						ffr->icon = gnome_desktop_item_get_icon (ditem);
 						g_free(ffr->fullname);
-						ffr->fullname = ditem->name;
+						ffr->fullname = g_strdup (gnome_desktop_item_get_localestring (ditem, "Name"));
 						g_free(ffr->comment);
-						ffr->comment = g_strdup (ditem->comment);
-						ditem->name = NULL;
-						gnome_desktop_item_free(ditem);
+						ffr->comment = g_strdup (gnome_desktop_item_get_localestring (ditem, "Comment"));
+						gnome_desktop_item_unref (ditem);
 					} else {
 						g_free(ffr->icon);
 						ffr->icon = NULL;
@@ -742,24 +734,20 @@ fr_check_and_reread (FileRec *fr)
 				ffr->last_stat = curtime;
 				if(ffr->mtime != s.st_mtime) {
 					GnomeDesktopItem *ditem;
-					ditem = gnome_desktop_item_load(ffr->name);
+					ditem = gnome_desktop_item_new_from_file (ffr->name,
+										  GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS,
+										  NULL);
 					if (ditem != NULL) {
-						/* take over memory */
 						g_free (ffr->icon);
-						ffr->icon = ditem->icon;
-						ditem->icon = NULL;
+						ffr->icon = gnome_desktop_item_get_icon (ditem);
 
-						/* take over memory */
 						g_free (ffr->fullname);
-						ffr->fullname = ditem->name;
-						ditem->name = NULL;
+						ffr->fullname = g_strdup (gnome_desktop_item_get_localestring (ditem, "Name"));
 
-						/* take over memory */
 						g_free (ffr->comment);
-						ffr->comment = ditem->comment;
-						ditem->comment = NULL;
+						ffr->comment = g_strdup (gnome_desktop_item_get_localestring (ditem, "Comment"));
 
-						gnome_desktop_item_free (ditem);
+						gnome_desktop_item_unref (ditem);
 					} else {
 						reread = TRUE;
 						break;
@@ -798,9 +786,6 @@ fr_check_and_reread (FileRec *fr)
 		}
 	}
 	return ret;
-#else
-	return NULL;
-#endif
 }
 
 FileRec *
