@@ -5,6 +5,8 @@
  *           George Lebl
  */
 
+#include "config.h"
+
 #include "border-widget.h"
 #include "panel_config_global.h"
 
@@ -34,7 +36,7 @@ static void border_pos_pre_convert_hook (BasePWidget *basep);
 static BasePPosClass *parent_class;
 
 GtkType
-border_pos_get_type ()
+border_pos_get_type (void)
 {
 	static GtkType border_pos_type = 0;
 

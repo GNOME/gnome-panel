@@ -97,6 +97,8 @@ aligned_pos_set_pos (BasePWidget *basep,
 		     int w, int h)
 {
 	int minx, miny, maxx, maxy;
+	int innerx, innery;
+	int screen_width, screen_height;
 
 	BorderEdge newpos = BORDER_POS(basep->pos)->edge;
 	AlignedAlignment newalign = ALIGNED_POS(basep->pos)->align;
@@ -112,48 +114,55 @@ aligned_pos_set_pos (BasePWidget *basep,
 	    y <= maxy)
  	        return;
 
+	/* FIXME: screenchanging stuff */
+	
+	innerx = x - multiscreen_x (basep->screen);
+	innery = y - multiscreen_y (basep->screen);
+	screen_width = multiscreen_width (basep->screen);
+	screen_height = multiscreen_height (basep->screen);
+
 	/*if in the inner 1/3rd, don't change to avoid fast flickery
 	  movement*/
-	if ( x>(gdk_screen_width()/3) &&
-	     x<(2*gdk_screen_width()/3) &&
-	     y>(gdk_screen_height()/3) &&
-	     y<(2*gdk_screen_height()/3))
+	if ( innerx > (screen_width / 3) &&
+	     innerx < (2*screen_width / 3) &&
+	     innery > (screen_height / 3) &&
+	     innery < (2*screen_height / 3))
 		return;
 
-	if ((x) * gdk_screen_height() > y * gdk_screen_width() ) {
-		if(gdk_screen_height() * (gdk_screen_width()-(x)) >
-		   y * gdk_screen_width() ) {
+	if (innerx * screen_height > innery * screen_width ) {
+		if (screen_height * (screen_width-innerx) >
+		    innery * screen_width ) {
 			newpos = BORDER_TOP;
-			if(x<gdk_screen_width()/3)
+			if (innerx < screen_width/3)
 				newalign = ALIGNED_LEFT;
-			else if (x<2*gdk_screen_width()/3)
+			else if (innerx < 2*screen_width/3)
 				newalign = ALIGNED_CENTER;
 			else
 				newalign = ALIGNED_RIGHT;
 		} else {
 			newpos = BORDER_RIGHT;
-			if(y<gdk_screen_height()/3)
+			if (innery < screen_height/3)
 				newalign = ALIGNED_LEFT;
-			else if (y<2*gdk_screen_height()/3)
+			else if (innery < 2*screen_height/3)
 				newalign = ALIGNED_CENTER;
 			else
 				newalign = ALIGNED_RIGHT;
 		}
 	} else {
-		if(gdk_screen_height() * (gdk_screen_width()-(x)) >
-		   y * gdk_screen_width() ) {
+		if (screen_height * (screen_width-innerx) >
+		    innery * screen_width ) {
 			newpos = BORDER_LEFT;
-			if(y<gdk_screen_height()/3)
+			if (innery < screen_height/3)
 				newalign = ALIGNED_LEFT;
-			else if(y<2*gdk_screen_height()/3)
+			else if (innery < 2*screen_height/3)
 				newalign = ALIGNED_CENTER;
 			else
 				newalign = ALIGNED_RIGHT;
 		} else {
 			newpos = BORDER_BOTTOM;
-			if(x<gdk_screen_width()/3)
+			if (innerx < screen_width/3)
 				newalign = ALIGNED_LEFT;
-			else if(x<2*gdk_screen_width()/3)
+			else if (innerx < 2*screen_width/3)
 				newalign = ALIGNED_CENTER;
 			else
 				newalign = ALIGNED_RIGHT;

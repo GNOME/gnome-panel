@@ -89,6 +89,7 @@ enum {
 	/*TYPE_CHANGE_SIGNAL,*/
 	MODE_CHANGE_SIGNAL,
 	STATE_CHANGE_SIGNAL,
+	SCREEN_CHANGE_SIGNAL,
 	WIDGET_LAST_SIGNAL
 };
 
@@ -308,6 +309,12 @@ basep_widget_state_change (BasePWidget *basep, BasePState state)
 }
 
 static void
+basep_widget_screen_change (BasePWidget *basep, int screen)
+{
+	/* FIXME: do multiscreen kind of stuff here */
+}
+
+static void
 basep_widget_class_init (BasePWidgetClass *klass)
 {
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
@@ -345,12 +352,24 @@ basep_widget_class_init (BasePWidgetClass *klass)
 			       GTK_TYPE_NONE,
 			       1, GTK_TYPE_ENUM);
 
+	basep_widget_signals[SCREEN_CHANGE_SIGNAL] = 
+		gtk_signal_new("screen_change",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
+						 state_change),
+			       gtk_marshal_NONE__INT,
+			       GTK_TYPE_NONE,
+			       1,
+			       GTK_TYPE_INT);
+
 	gtk_object_class_add_signals(object_class, 
 				     basep_widget_signals,
 				     WIDGET_LAST_SIGNAL);
 
 	klass->mode_change = basep_widget_mode_change;
 	klass->state_change = basep_widget_state_change;
+	klass->screen_change = basep_widget_screen_change;
 
 	widget_class->size_request = basep_widget_size_request;
 	widget_class->size_allocate = basep_widget_size_allocate;
@@ -2137,6 +2156,9 @@ basep_border_recalc (void)
 	int i;
 	GSList *li;
 	Border old[4];
+
+	/* FIXME! */
+	/* SHIT!, this needs to be kept per screen! */
 
 	memcpy (old, borders, 4 * sizeof (Border));
 

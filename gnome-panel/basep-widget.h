@@ -106,11 +106,14 @@ struct _BasePWidgetClass
 	/*void (*type_change)  (BasePWidget *basep,
 			      PanelType type);*/
 
-	void (*mode_change)  (BasePWidget *basep,
-			      BasePMode mode);
+	void (* mode_change)  (BasePWidget *basep,
+			       BasePMode mode);
 
-	void (*state_change) (BasePWidget *basep,
-			      BasePState state);
+	void (* state_change) (BasePWidget *basep,
+			       BasePState state);
+
+	void (* screen_change) (BasePWidget *basep,
+				int screen);
 
 };
 
