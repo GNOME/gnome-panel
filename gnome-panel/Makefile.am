@@ -11,7 +11,8 @@ INCLUDES = -I. -I$(srcdir) \
 	-I$(top_builddir)/intl \
 	-I$(top_builddir)/panel \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
-	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS)
+	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS) \
+	@PIXBUF_CFLAGS@
 
 bin_PROGRAMS = panel gnome-panel-properties-capplet
 
@@ -127,7 +128,7 @@ panel_SOURCES = 		\
 
 #$(base_panel_SOURCES): $(CORBA_SRCLIST)
 
-panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
+panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS) @PIXBUF_LIBS@
 panel_LDFLAGS=-export-dynamic
 
 gnome_panel_properties_capplet_SOURCES = \
