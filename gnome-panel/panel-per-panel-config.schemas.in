@@ -1011,7 +1011,7 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_type</key>
         <owner>panel</owner>
         <type>string</type>
-        <default>menu-panel</default>
+        <default>edge-panel</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -1023,6 +1023,28 @@ FIXME: We need to change some of the ints into user visible strings
         <owner>panel</owner>
         <type>string</type>
         <default>panel-size-x-small</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_hide_mode</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_hide_state</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -1052,6 +1074,39 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/screen_edge</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>panel-edge-top</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/hide_buttons_enabled</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/hide_button_pixmaps_enabled</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
         <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_type</key>
         <owner>panel</owner>
         <type>string</type>
@@ -1066,7 +1121,7 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap</key>
         <owner>panel</owner>
         <type>string</type>
-        <default> </default>
+        <default></default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -1077,7 +1132,7 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap_fit</key>
         <owner>panel</owner>
         <type>bool</type>
-        <default>false</default>
+        <default>true</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -1099,7 +1154,7 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap_rotate</key>
         <owner>panel</owner>
         <type>bool</type>
-        <default>false</default>
+        <default>true</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -1110,7 +1165,7 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_color</key>
         <owner>panel</owner>
         <type>string</type>
-        <default>#000000</default>
+        <default>#ffffff</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -1118,17 +1173,16 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/clock_format</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_color_alpha</key>
         <owner>panel</owner>
-        <type>string</type>
-        <default>%I:%M %p</default>
+        <type>int</type>
+        <default>65535</default>
         <locale name="C">
           <short></short>
           <long></long>
         </locale>
       </schema>
 
-      
 <!-- **************************** -->
 <!-- Menu Panel Properties :: END -->
 <!-- **************************** -->
