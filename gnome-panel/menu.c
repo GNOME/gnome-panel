@@ -3378,7 +3378,11 @@ make_panel_submenu (GtkWidget *menu,
 	applet_list = instrument_add_submenu_for_reload (GTK_MENU_ITEM (menuitem), submenu);
 
 	make_add_submenu (submenu, applet_list);
-
+#ifndef FIXME
+	CORBA_free (applet_list); /* This should be removed when the applet
+				   * menu re-checking code is reenabled.
+				   */
+#endif	
 	menuitem = gtk_image_menu_item_new ();
 
 	setup_menuitem (menuitem, 

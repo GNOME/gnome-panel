@@ -1,3 +1,11 @@
+2003-02-18  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* gnome-run.c: (find_icon_timeout), (selection_changed),
+	(add_icon_idle): Fix leaks.
+	* menu.c: (make_panel_submenu): Don't leak the applet_list.
+	* panel-background.c: (free_composited_resources):Free the
+	background even if it's just a color
+		
 2003-02-17  Arvind Samptur <arvind.samptur@wipro.com>
 	* panel.c: (panel_delete_query): Centered the delete query dialog.
 

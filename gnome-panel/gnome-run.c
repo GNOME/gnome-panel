@@ -1184,9 +1184,11 @@ find_icon_timeout (gpointer data)
 		if (icon != NULL) {
 			pixbuf = gdk_pixbuf_new_from_file (icon, NULL);
 			g_free (icon);
-			if (pixbuf != NULL)
+			if (pixbuf != NULL) {
 				gtk_image_set_from_pixbuf (GTK_IMAGE (pixmap),
 							   pixbuf);
+				g_object_unref (pixbuf);
+			}
 		}
 		g_free (found_icon);
 	}
@@ -1238,6 +1240,7 @@ add_icon_idle (GtkListStore *list)
 			gtk_list_store_set (list, &iter, COLUMN_ICON, pixbuf, -1);
 			g_object_unref (pixbuf);
 		}
+		g_free (file);
 	/* don't go back into the main loop if this wasn't very hard to do */
 	} while (!long_operation);
 
@@ -1479,6 +1482,7 @@ selection_changed (GtkTreeSelection *selection,
                         
                         if (pixbuf != NULL) {
 				gtk_image_set_from_pixbuf (GTK_IMAGE (gpixmap), pixbuf);
+				g_object_unref (pixbuf);
                         } else {
                                 unset_pixmap (gpixmap);
                         }
