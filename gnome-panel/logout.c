@@ -25,7 +25,7 @@ logout(GtkWidget *widget)
 			GtkWidget *grandparentw =
 				PANEL_WIDGET(grandparent)->panel_parent;
 			drawer_widget_close_drawer (DRAWER_WIDGET (parent),
-						    BASEP_WIDGET (grandparentw));
+						    grandparentw);
 		}
 	}
 

@@ -84,9 +84,9 @@ void drawer_widget_restore_state (DrawerWidget *drawer);
 
 /*open and close drawers*/
 void		drawer_widget_open_drawer	(DrawerWidget *panel,
-						 BasePWidget *parentp);
+						 GtkWidget *parentp);
 void		drawer_widget_close_drawer	(DrawerWidget *panel,
-						 BasePWidget *parentp);
+						 GtkWidget *parentp);
 
 void            drawer_widget_restore_state     (DrawerWidget *drawer);
 

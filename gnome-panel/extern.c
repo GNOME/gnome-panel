@@ -290,7 +290,6 @@ extern_unref (Extern *ext)
 	ext->refcount--;
 	if (ext->refcount == 0)
 		g_free (ext);
-	return ext;
 }
 
 void

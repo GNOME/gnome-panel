@@ -1,5 +1,20 @@
 2000-09-29  Jacob "Ulysses" Berkman  <jacob@helixcode.com>
 
+	* logout.c (logout): 
+	* launcher.c (launch): pass a GtkWidget
+
+	* extern.c (extern_unref): this function returns void
+
+	* drawer.c (drawer_click): don't case to a BaseP
+	(load_drawer_applet): only autoshow if it is a BaseP
+
+	* drawer-widget.h: update API to use GtkWidgets
+
+	* drawer-widget.c (drawer_widget_open_drawer):
+	(drawer_widget_close_drawer): take a GtkWidget as the second
+	parameter since a foobar is not a basep
+	(drawer_pos_hidebutton_click): pass a GtkWidget and not a BaseP
+
 	* panel_config.c (update_config_edge):
 	(update_config_anchor):
 	(border_set_edge):

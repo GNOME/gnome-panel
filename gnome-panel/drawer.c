@@ -182,11 +182,11 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 	switch (BASEP_WIDGET (drawerw)->state) {
 	case BASEP_SHOWN:
 	case BASEP_AUTO_HIDDEN:
-		drawer_widget_close_drawer (drawerw, BASEP_WIDGET (panelw));
+		drawer_widget_close_drawer (drawerw, panelw);
 		break;
 	case BASEP_HIDDEN_LEFT:
 	case BASEP_HIDDEN_RIGHT:
-		drawer_widget_open_drawer (drawerw, BASEP_WIDGET (panelw));
+		drawer_widget_open_drawer (drawerw, panelw);
 		break;
 	case BASEP_MOVING:
 		g_assert_not_reached ();
@@ -396,7 +396,8 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 				 drawer);
 
 	/* this doesn't make sense anymore */
-	if(BASEP_WIDGET(drawer->drawer)->state == BASEP_SHOWN) {
+	if((BASEP_WIDGET(drawer->drawer)->state == BASEP_SHOWN) &&
+	   (IS_BASEP_WIDGET (panel->panel_parent))) {
 		/*pop up, if popped down, if it's not an autohidden
 		  widget then it will just ignore this next call */
 		basep_widget_autoshow(BASEP_WIDGET(panel->panel_parent));
