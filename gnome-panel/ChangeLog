@@ -1,3 +1,22 @@
+2001-11-07  Mark McLoughlin  <mark@skynet.ie>
+
+	* launcher.c: (is_this_drop_ok): use GDK_POINTER_TO_ATOM
+	instead of GPOINTER_TO_UINT.
+
+	* menu-fentry.c: (get_applet_goad_id_from_ditem) make static.
+
+	* panel.c: (get_target_list): impl.
+	(is_this_drop_ok): kill GPOINTER_TO_UINT atom usage.
+
+	* tasklist_icon.c: (tasklist_icon_check_mini): use GdkAtom.
+
+	* xstuff.[ch]: (xstuff_nautilus_desktop_present),
+	(xstuff_set_simple_hint), (status_event_filter),
+	(get_typed_property_data), (send_client_message_1L),
+	(xstuff_setup_global_desktop_area), (xstuff_setup_desktop_area),
+	(xstuff_unsetup_desktop_area): bunch of GdkAtom/Atom related
+	warnings fixage.
+
 2001-11-7   Glynn Foster  <glynn.foster@sun.com>
 
 	* basep-widget.c: Fix bug in set_property call.
@@ -21,6 +40,11 @@
 	  are now a keybinding only - according to usability happiness. Also moved
 	  basep, basepos over to gobject a little bit more. Added the startings of
 	  a wrapper around gconf stuff for panel config.
+
+2001-11-05  Mark McLoughlin  <mark@skynet.ie>
+
+	* gnome-run.c: (show_run_dialog): change order of buttons as
+	per usability recommendations.
 
 2001-11-05  Mark McLoughlin  <mark@skynet.ie>
 

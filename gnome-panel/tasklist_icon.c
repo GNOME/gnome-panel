@@ -39,7 +39,7 @@ tasklist_icon_check_mini (GwmhTask *task,  GtkWidget *widget)
 	GdkBitmap *mask;
 	GdkPixbuf *pixbuf, *pixbuf2;
 	gint size;
-	static gulong KWM_WIN_ICON = 0;
+	static GdkAtom KWM_WIN_ICON = GDK_NONE;
 	Display *xdisplay;
 	guchar *data;
 	

@@ -247,7 +247,7 @@ get_mfiles_from_menudir (const char *menudir)
 	return g_slist_reverse (list);
 }
 
-char *
+static char *
 get_applet_goad_id_from_ditem(GnomeDesktopItem *ii)
 {
   printf ("GET THAT GOAD OUT OF HERE...menu-fentry.c get_applet_gaod_id_from_ditem\n");

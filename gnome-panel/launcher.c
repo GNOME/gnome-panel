@@ -188,32 +188,30 @@ free_launcher (gpointer data)
 }
 
 static gboolean
-is_this_drop_ok (GtkWidget *widget, GdkDragContext *context)
+is_this_drop_ok (GtkWidget      *widget,
+		 GdkDragContext *context)
 {
-	static GdkAtom text_uri_list = 0;
-	GList *li;
-	GtkWidget *wid;
+	static GdkAtom  text_uri_list = GDK_NONE;
+	GList           *l;
+	GtkWidget       *source;
 
-	wid = gtk_drag_get_source_widget(context);
+	source = gtk_drag_get_source_widget (context);
 
-	if(wid == widget)
+	if (source == widget)
 		return FALSE;
 
-	if(!(context->actions & GDK_ACTION_COPY))
+	if (!(context->actions & GDK_ACTION_COPY))
 		return FALSE;
 
-	if (text_uri_list == 0)
+	if (!text_uri_list)
 		text_uri_list = gdk_atom_intern ("text/uri-list", FALSE);
 
-	for (li = context->targets; li; li = li->next) {
-		if (GPOINTER_TO_INT (li->data) == text_uri_list)
+	for (l = context->targets; l; l = l->next) {
+		if (GDK_POINTER_TO_ATOM (l->data) == text_uri_list)
 			break;
 	}
-	/* if we haven't found it */
-	if (li == NULL)
-		return FALSE;
 
-	return TRUE;
+	return l ? TRUE : FALSE;
 }
 
 static void  

@@ -16,15 +16,16 @@ gboolean xstuff_is_compliant_wm		(void);
 
 gpointer get_typed_property_data	(Display *xdisplay,
 					 Window   xwindow,
-					 Atom     property,
-					 Atom     requested_type,
+					 GdkAtom  property,
+					 GdkAtom  requested_type,
 					 gint    *size_p,
 					 guint    expected_format);
-gboolean send_client_message_1L		(Window recipient,
-					 Window event_window,
-					 Atom   message_type,
-					 long   event_mask,
-					 glong  long1);
+
+gboolean send_client_message_1L		(Window  recipient,
+					 Window  event_window,
+					 GdkAtom message_type,
+					 long    event_mask,
+					 glong   long1);
 
 void xstuff_go_through_client_list	(void);
 

@@ -84,25 +84,6 @@ enum {
 	TARGET_BGIMAGE
 };
 
-static GtkTargetEntry panel_drop_types[] = {
-	{ "text/uri-list",       0, TARGET_URL },
-	{ "x-url/http",          0, TARGET_NETSCAPE_URL },
-	{ "x-url/ftp",           0, TARGET_NETSCAPE_URL },
-	{ "_NETSCAPE_URL",       0, TARGET_NETSCAPE_URL },
-	{ "application/x-panel-directory", 0, TARGET_DIRECTORY },
-	{ "application/x-panel-applet", 0, TARGET_APPLET },
-	{ "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
-	{ "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
-	{ "application/x-color", 0, TARGET_COLOR },
-	{ "property/bgimage",    0, TARGET_BGIMAGE }
-};
-
-static gint n_panel_drop_types = 
-   sizeof(panel_drop_types) / sizeof(panel_drop_types[0]);
-
-static GtkTargetList *panel_target_list = NULL;
-
-
 static void
 change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 {
@@ -1203,18 +1184,47 @@ drop_color(PanelWidget *panel, int pos, guint16 *dropped)
 	panel_widget_set_back_color(panel, &c);
 }
 
-static gboolean
-is_this_drop_ok (GtkWidget *widget, GdkDragContext *context, guint *info,
-		 GdkAtom *ret_atom)
+static GtkTargetList *
+get_target_list (void)
 {
-	GtkWidget *panel; /*PanelWidget*/
-	GList *li;
+	static GtkTargetEntry drop_types [] = {
+		{ "text/uri-list",                       0, TARGET_URL },
+		{ "x-url/http",                          0, TARGET_NETSCAPE_URL },
+		{ "x-url/ftp",                           0, TARGET_NETSCAPE_URL },
+		{ "_NETSCAPE_URL",                       0, TARGET_NETSCAPE_URL },
+		{ "application/x-panel-directory",       0, TARGET_DIRECTORY },
+		{ "application/x-panel-applet",          0, TARGET_APPLET },
+		{ "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
+		{ "application/x-panel-icon-internal",   0, TARGET_ICON_INTERNAL },
+		{ "application/x-color",                 0, TARGET_COLOR },
+		{ "property/bgimage",                    0, TARGET_BGIMAGE }
+	};
+	static GtkTargetList *target_list = NULL;
 
-	g_return_val_if_fail (widget != NULL, FALSE);
-	g_return_val_if_fail (BASEP_IS_WIDGET (widget) ||
-			      IS_FOOBAR_WIDGET (widget), FALSE);
+	if (!target_list) {
+		gint length = sizeof (drop_types) / sizeof (drop_types [0]);
 
-	if(!(context->actions & (GDK_ACTION_COPY|GDK_ACTION_MOVE)))
+		target_list = gtk_target_list_new (drop_types, length);
+	}
+
+	return target_list;
+}
+
+static gboolean
+is_this_drop_ok (GtkWidget      *widget,
+		 GdkDragContext *context,
+		 guint          *ret_info,
+		 GdkAtom        *ret_atom)
+{
+	GtkWidget *panel;
+	GList     *l;
+
+	g_return_val_if_fail (widget, FALSE);
+
+	if (!BASEP_IS_WIDGET (widget) && !IS_FOOBAR_WIDGET (widget))
+		return FALSE;
+
+	if (!(context->actions & (GDK_ACTION_COPY|GDK_ACTION_MOVE)))
 		return FALSE;
 
 	if (BASEP_IS_WIDGET (widget))
@@ -1222,29 +1232,28 @@ is_this_drop_ok (GtkWidget *widget, GdkDragContext *context, guint *info,
 	else
 		panel = FOOBAR_WIDGET (widget)->panel;
 
-	if (panel_target_list == NULL)
-		panel_target_list = gtk_target_list_new (panel_drop_types,
-							 n_panel_drop_types);
-	for (li = context->targets; li; li = li->next) {
-		guint temp_info;
-		if (gtk_target_list_find (panel_target_list, 
-					  GPOINTER_TO_UINT(li->data),
-					  &temp_info)) {
-			if ((temp_info == TARGET_COLOR ||
-			     temp_info == TARGET_BGIMAGE) &&
-			    IS_FOOBAR_WIDGET (widget))
+	for (l = context->targets; l; l = l->next) {
+		GdkAtom atom;
+		guint   info;
+
+		atom = GDK_POINTER_TO_ATOM (l->data);
+
+		if (gtk_target_list_find (get_target_list (), atom, &info)) {
+
+			if (IS_FOOBAR_WIDGET (widget) &&
+			    (info == TARGET_COLOR || info == TARGET_BGIMAGE))
 				return FALSE;
-			if (info != NULL)
-				*info = temp_info;
-			if (ret_atom != NULL)
-				*ret_atom = GPOINTER_TO_UINT(li->data);
+
+			if (ret_info)
+				*ret_info = info;
+
+			if (ret_atom)
+				*ret_atom = atom;
 			break;
 		}
 	}
-	/* if we haven't found it */
-	if (li == NULL)
-		return FALSE;
-	return TRUE;
+
+	return l ? TRUE : FALSE;
 }
 
 static void
