@@ -241,6 +241,15 @@ add_all_move_bindings (PanelWidget *panel)
 	gtk_binding_entry_add_signal (binding_set,
                                       GDK_KP_Enter, 0,
                                       "end_move", 0);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Return, 0,
+                                      "end_move", 0);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_KP_Space, 0,
+                                      "end_move", 0);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_space, 0,
+                                      "end_move", 0);
 }
 
 static void
@@ -282,6 +291,9 @@ remove_all_move_bindings (PanelWidget *panel)
 
 	gtk_binding_entry_clear (binding_set, GDK_Escape, 0);
 	gtk_binding_entry_clear (binding_set, GDK_KP_Enter, 0);
+	gtk_binding_entry_clear (binding_set, GDK_Return, 0);
+	gtk_binding_entry_clear (binding_set, GDK_KP_Space, 0);
+	gtk_binding_entry_clear (binding_set, GDK_space, 0);
 }
 
 static void
