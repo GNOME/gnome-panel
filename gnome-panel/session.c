@@ -880,7 +880,7 @@ init_user_applets(void)
 						  MAIN_MENU_USER_SUB |
 						  MAIN_MENU_APPLETS_SUB |
 						  MAIN_MENU_PANEL_SUB |
-						  MAIN_MENU_DESKTOP_SUB));
+						  MAIN_MENU_DESKTOP));
 			flags = gnome_config_get_int(s);
 			g_free(s);
 
@@ -916,7 +916,7 @@ init_user_applets(void)
 					flags &=~ MAIN_MENU_USER;
 				if(flags&MAIN_MENU_REDHAT &&
 				   flags&MAIN_MENU_REDHAT_SUB)
-					flags &=~ MAIN_MENU_USER;
+					flags &=~ MAIN_MENU_REDHAT;
 				if(flags&MAIN_MENU_DEBIAN &&
 				   flags&MAIN_MENU_DEBIAN_SUB)
 					flags &=~ MAIN_MENU_DEBIAN;
@@ -925,7 +925,7 @@ init_user_applets(void)
 					flags &=~ MAIN_MENU_KDE;
 				flags |= MAIN_MENU_APPLETS_SUB |
 					MAIN_MENU_PANEL_SUB |
-					MAIN_MENU_DESKTOP_SUB;
+					MAIN_MENU_DESKTOP;
 			}
 
 			load_menu_applet(params, flags, panel, pos, TRUE);
