@@ -1,3 +1,178 @@
+=============
+Version 2.3.1
+=============
+
+Major Changes Since 2.2.0:
+
+ o Panel
+	* All the old panel types have been replaced with a single
+	  panel type which can be configured to behave like the old
+	  types: (Mark)
+	    + You can move and resize the panel using the keyboard
+	    + The panel can be any arbitrary size
+	    + Autohides to the corner of the screen
+	    + Grab handle on floating panels
+	    + No bevel at the screen edge
+
+	* The global keybindings for the panel are not handled by the
+	  panel anymore. It is expected that window managers will
+	  handle these keybindings and invoke the actions using the
+	  protocol described in doc/gnome-panel-action-protocol.txt.
+	  Metacity handles this currently (Mark)
+
+	* A new property dialog for panels (Mark)
+
+	* Substantially re-worked GConf setup. Notifications should
+	  work for most things, all keys should be documented and
+	  have schemas associated with them, no longer use silly
+	  identifiers for panels ... (Mark)
+
+  Note: much of this still requires work. Known issues:
+
+	http://makeashorterlink.com/?S253520B3
+
+ o Applets
+
+	* Mailcheck applet has moved to gnome-applets (Mark)
+	* New "Window Menu" and "Menu Bar" applets have been added (Mark)
+	* All window management related applets are now in their own
+	  out of process applet (Mark)
+	* The clock applet has a calender (Havoc)
+	* The Workspace Switcher is now flush against the screen edge (Mark)
+
+Bugfixes, tweaks etc.:
+
+ o Panel
+
+	* Remove the dependancy on libwnck (Mark)
+	* Half fix the "window list won't expand" issue (Mark)
+	* Make the "Add to Panel" menu much more sane (Frank Worsley)
+	* Fix issue with new properties dialog being always on top (Arvind)
+	* Fix the opacity slide in the new properties dialog (Arvind)
+
+ o Applets
+
+	* Error dialog to explain why the show desktop button doesn't
+	  work with non EWMH compliant WMs (Havoc)
+	* Sync the max number of workspaces with metacity (Mark)
+	* Move the "Show Desktop Button" into the "Actions" category
+							(Frank Worsley)
+	* Fix the version number in the Window List and Workspace Switcher
+							(Alex Duggan)
+
+ o Miscellanous
+
+	* Updated documentation (Irene, Breda, Takeshi)
+	* Build fixes (Dan Mills)
+
+Translations:
+
+	* az(Metin Amiroff), be(Dmitry G. Mastrukov), bg(Alexander Shopov),
+	  da(Ole Laursen), eo(Joël Brich), es(Pablo Gonzalo del Campo),
+	  et(Tõivo Leedjärv), fa(Roozbeh Pournader), fr(Christophe Merlet),
+	  ko(Kang Jeong-Hee), lt(Vaidotas Zemlys), ml(FSF-India), mn(Sukhochir),
+	  nl(Vincent van Adrighem), no(Kjartan Maraas), ro(Marius Andreiana),
+	  ru(Dmitry G. Mastrukov), sk(Stanislav Visnovsky), sq(Elian Myftiu),
+	  sv(Christian Rose), tr(Fatih Demir), zh_CN(Xiong Jiang) and
+	  zh_TW(Abel Cheung).
+
+=============
+Version 2.2.1
+=============
+
+Panel
+
+	* Make global keybindings work on multi-screen setups (Erwann, Mark)
+	* Destroy "Create Launcher" dialogs when the panel is destrored (Arvind)
+	* Allow the GNOME foot icon on the Main Menu to be themed (Raj)
+	* Support themeing of the action button icons (Raj)
+	* Query deletion of a drawer when it is deleted by removing the button (Arvind)
+	* Delete child drawer panels when deleting panels (Arvind)
+	* Fix various leaks (Kjartan)
+	* Fix typo with the launchers "zoom animation" (Paul Gammans)
+	* Do not query the deletion of a panel if there are no objects on it (Heeten, Arvind)
+	* Make the "Delete Panel?" dialog modal (Arvind)
+	* Avoid rare panel hang when moving applets (Sunil Mohan Adapa)
+	* Actually load the panel background color preference (Greg Hudson)
+	* Fix crash related to drawers (Arvind)
+	* Fix various issues with egg-recent-files (James)
+	* Don't save screenshot to UTF8 filenames in G_BROKEN_FILENAMES locales (Toshi)
+	* Fix crash when the panel background image can't be loaded (Mark, Heeten)
+	* Unescape the tooltip on launchers (Bala)
+	* Destroy the "Overwrite file?" warning dialog in gnome-panel-screenshot (Bala)
+	* Add support for icon theming icons with absolute paths (Mark, Havoc, Raj)
+	* Don't crash when clicking on a drawer panel with no parent panel (Mark)
+	* Don't load the GNOME 1.4 applet's .desktop files on startup (Mark)
+
+Applets
+
+	* Destroy Window List and Workspace Switcher properties dialog when
+	  the applets are destroyed (Arvind)
+	* Launch the mail received handler on the correct screen (Satyajit Kanungo)
+	* Ignore any leading and trailing whitespace in a workspace name (Arvind)
+	* Change the max number of workspaces to 36 in sync with metacity (Mark)
+	* Fix issue with the mailcheck animation on mutliscreen setups (Satyajit Kanungo)
+	* Fix notification area crasher (Havoc)
+
+Miscellanous
+
+	* Fix "po/Makefile.in.in not found" build breakage (Clifton Lockhart)
+	* Add a --with-html-dir configure option (Julio Merino)
+	* Window List docs updates (Irene Ryan)
+	* Japanese translations of docs (Takeshi AIHANA)
+	* Support --disable-schemas-install and --with-gconf-schema-file-dir (Mark, Julio Merino)
+	* Fix libpanel-applet crash on 64 bit platforms (Matt Wilson)
+
+Translations
+
+	* Alessio Frusciante, Christian Neumair, Christian Rose, Christophe Merlet,
+	  Dmitry G. Mastrukov, Gediminas Paulauskas, Gil "Dolfin" Osher, Joël Brich,
+	  Kenneth Christiansen, Kjartan Maraas, Luca Ferretti, Metin Amiroff,
+	  Miloslav Trmac, Ole Laursen, Roozbeh Pournader, Vaidotas Zemlys,
+	  Vincent van Adrighem and Zbigniew Chyla.  
+
+===============
+Version 2.2.0.1
+===============
+
+	* Fix notification area crasher (Havoc)
+	* Make applets show correct verion in about dialog (Alex Duggan)
+
+Help Documentation
+
+	* Notification area docs (John Fleck)
+	* Updated Clock, Window List and Fish docs (Breda McColgan, Irene Ryan)
+
+Translations
+
+	* Alessio Frusciante, Alexander Shopov, Christian Neumair, Christian Rose,
+	  Christophe Fergeau, Daniel Yacob, Duarte Loreto, Elian Myftiu,
+	  Kang Jeong-Hee, Maxim Dzumanenko, Ole Laursen, ostas Papadimas,
+	  Pablo Gonzalo del Campo, Stanislav Visnovsky, Sukhochir, Takeshi AIHANA
+	  and Xiong Jiang.
+
+=============
+Version 2.2.0
+=============
+
+Panel
+	* Make sure we don't break old lock/logout button configurations (Mark)
+	* Disable re-loading the applet menu because of crashing (Mark)
+	* Fix the permissions of screenshot files (George)
+
+Applets
+
+	* Fix typo in the mailcheck schemas (R.I.P. Deaddog)
+	* Fix some build issues with the notification area (Mark)
+
+Translations
+
+	* Abel Cheung, Andras Timar, Artis Trops, Christian Neumair,
+	  Christian Rose, Daniel Yacob, Dmitry G. Mastrukov, German Poo-Caaman~o,
+	  Gil "Dolfin" Osher, Juan Manuel Garc?­a Molina, Kjartan Maraas,
+	  Kostas Papadimas, Miloslav Trmac, Ole Laursen, Pablo Gonzalo del Campo,
+	  Pauli Virtanen and Reinout van Schouwen.
+
 ================
 Version 2.1.90.1
 ================

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.2.x\n"
-"POT-Creation-Date: 2003-03-10 05:06+0100\n"
+"POT-Creation-Date: 2003-03-14 16:47+1300\n"
 "PO-Revision-Date: 2003-03-05 10:29+0530\n"
 "Last-Translator: FSF-India <locale@gnu.org.in>\n"
 "Language-Team: Malayalam <locale@gnu.org.in>\n"
@@ -14,15 +14,277 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1645
-#: applets/gen_util/mailcheck.c:1853 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
-#: applets/notification_area/main.c:80
+#: applets/clock/clock.c:182
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#: applets/clock/clock.c:182
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
+
+#: applets/clock/clock.c:184 applets/clock/clock.c:676
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+#: applets/clock/clock.c:184 applets/clock/clock.c:678
+msgid "%H:%M"
+msgstr "%H:%M"
+
+#: applets/clock/clock.c:190
+msgid "%a %b %d"
+msgstr "%a %b %d"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/clock/clock.c:197
+#, c-format
+msgid ""
+"%s\n"
+"%s"
+msgstr ""
+"%s\n"
+"%s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/clock/clock.c:204
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#. Show date in tooltip
+#: applets/clock/clock.c:307
+msgid "%A %B %d"
+msgstr "%A %B %d"
+
+#: applets/clock/clock.c:422
+msgid "Calendar"
+msgstr ""
+
+#: applets/clock/clock.c:585
+msgid "Computer Clock"
+msgstr "കംപ്യ‍ൂട്ടര് ഘടികാരം"
+
+#: applets/clock/clock.c:671
+msgid "%I:%M:%S %p"
+msgstr "%I:%M:%S %p"
+
+#: applets/clock/clock.c:673
+msgid "%I:%M %p"
+msgstr "%I:%M %p"
+
+#: applets/clock/clock.c:712
+msgid "%A, %B %d %Y"
+msgstr "%A, %B %d %Y"
+
+#: applets/clock/clock.c:753
+#, fuzzy, c-format
+msgid "Failed to launch time configuration tool: %s"
+msgstr ""
+"ഈ പ്രക്രമം സഞ്ചരിക്കുന്നതില്‌ പരാജയപ്പെടുന്നു</b>\n"
+"\n"
+"വിശദീകരണം: %s"
+
+#: applets/clock/clock.c:790
+msgid ""
+"Failed to locate a program for configuring the date and time. Perhaps none "
+"is installed?"
+msgstr ""
+
+#: applets/clock/clock.c:1193 applets/clock/clock.c:1433
+#: applets/fish/fish.c:128 applets/notification_area/main.c:80
+#: applets/wncklet/showdesktop.c:414 applets/wncklet/window-list.c:123
+#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:82
+#: applets/wncklet/workspace-switcher.c:174
+#: applets/wncklet/workspace-switcher.c:469
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "സഹായം ലഭിക്കുന്നതില് തകരാറ്: %s"
+
+#: applets/clock/clock.c:1241
+msgid "Clock Preferences"
+msgstr "ഘടികാര മുന്ഗണനകള്"
+
+#: applets/clock/clock.c:1270
+msgid "Clock type"
+msgstr "ഘടികാര തരം"
+
+#: applets/clock/clock.c:1280
+msgid "_12 hour"
+msgstr "12 മണിക്കുര്"
+
+#: applets/clock/clock.c:1286
+msgid "_24 hour"
+msgstr "24 മണിക്കുര്"
+
+#: applets/clock/clock.c:1291
+msgid "UNI_X time"
+msgstr "യുണിക്സ് സമയം"
+
+#: applets/clock/clock.c:1295
+msgid "_Internet time"
+msgstr "വിവരമണ‍്ഡല സമയം"
+
+#: applets/clock/clock.c:1332
+msgid "Show _seconds"
+msgstr "സെക്കന്റുകള് കാണിക്കുക"
+
+#: applets/clock/clock.c:1342
+msgid "Show _date"
+msgstr "തിയ്യതി പക‍ര്ത്തുക"
+
+#: applets/clock/clock.c:1352
+msgid "Use _UTC"
+msgstr "UTC ഉപയോഗിക്കുക"
+
+#. Translator credits
+#: applets/clock/clock.c:1469 applets/notification_area/main.c:112
+#: applets/wncklet/showdesktop.c:445 applets/wncklet/window-list.c:797
+#: applets/wncklet/window-menu.c:109 applets/wncklet/workspace-switcher.c:502
+#: gnome-panel/menu.c:286
+msgid "translator_credits"
+msgstr "എഫ്.എസ്.എഫ് - ഇന്ത്യ <gnu@gnu.org.in>"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
+#: applets/clock/clock.c:1488
+msgid "Clock"
+msgstr "ഘടികാരം"
+
+#: applets/clock/clock.c:1490
+msgid "The Clock displays the current time and date"
+msgstr "ഘടികാരം ഇപ്പോഴത്തെ സമയവും തിയ്യതിയും കാണിക്കുന്നു"
+
+#: applets/clock/clock.schemas.in.h:1
+msgid "24"
+msgstr "24"
+
+#: applets/clock/clock.schemas.in.h:2
+msgid "Display Internet time, which is same all over the world"
+msgstr "ലോകത്തിലാകെ ഒന്നു തന്നെയായ വിവരമണ‍്ഡല സമയം പ്രദ‍ര്ശിപ്പിക്കുക"
+
+#: applets/clock/clock.schemas.in.h:3
+msgid "Display date in the Clock, in addition to time"
+msgstr "ഘടികാരത്തില് സമയത്തിനു പുറമെ തിയ്യതിയും കാണിക്കുക"
+
+#: applets/clock/clock.schemas.in.h:4
+msgid "Display seconds in time"
+msgstr "സെക്കന്റുകളും സമയത്തില് കാണിക്കുക"
+
+#: applets/clock/clock.schemas.in.h:5
+msgid "Display time in Universal Coordinated Time zone"
+msgstr "UCT മേഖലാ സമയം കാണിക്കുക"
+
+#: applets/clock/clock.schemas.in.h:6
+msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
+msgstr "Epoch മുതലുള്ള സമയം സെക്കന്റില് കാണിക്കുക,അതായത് 1970-01-01 മുതലുള്ളത്"
+
+#: applets/clock/clock.schemas.in.h:7
+msgid "Hour format"
+msgstr "സമയ രൂപം"
+
+#: applets/clock/clock.schemas.in.h:8
+msgid "Program to run in order to configure the time."
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:9
+msgid "Sets the hour format, may be either 12 or 24"
+msgstr "സമയ രൂപം നിശ്ചയിക്കുക, 12 അല്ലെങ്കില് 24 മണിക്കുര് അടിസ്ഥാനത്തില്"
+
+#: applets/clock/clock.schemas.in.h:10
+msgid "Show date in Clock"
+msgstr "ഘടികാരത്തില് തിയ്യതി കാണിക്കുക"
+
+#: applets/clock/clock.schemas.in.h:11
+msgid "Show date in a tooltip when a mouse is over the Clock"
+msgstr "ഘടികാരത്തിന‍് മുകളില് ചൂണ്ടുമ്പോള് തിയ്യതി ഉപകരണതന്തുവില് കാണിക്കുക"
+
+#: applets/clock/clock.schemas.in.h:12
+msgid "Show date in tooltip"
+msgstr "തിയ്യതി ഉപകരണതന്തുവില് കാണിക്കുക"
+
+#: applets/clock/clock.schemas.in.h:13
+msgid "Show time with seconds"
+msgstr "സെക്കന്റുകളോട് കൂടിയുള്ള സമയം കാണിക്കുക"
+
+#: applets/clock/clock.schemas.in.h:14
+msgid "Time configuration tool"
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:15
+msgid "Use Internet time"
+msgstr "വിവരമണ‍്ഡല സമയം ഉപയോഗിക്കുക"
+
+#: applets/clock/clock.schemas.in.h:16
+msgid "Use UNIX time"
+msgstr "യുണിക്സ് സമയം ഉപയോഗിക്കുക"
+
+#: applets/clock/clock.schemas.in.h:17
+msgid "Use UTC"
+msgstr "UTC സമയം ഉപയോഗിക്കുക"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
+msgid "Accessories"
+msgstr "സഹപ്രയോഗങ്ങള്"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+#, fuzzy
+msgid "Clock Applet Factory"
+msgstr "GenUtil ചെറുപ്രയോഗ ശാല"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+#, fuzzy
+msgid "Factory for creating clock applets."
+msgstr "സി.ഡി പ്ളേയര്‍ ക്രിയാജാലക ശാല"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
+msgid "Get the current time and date"
+msgstr "നിലവിലുള്ള സമയവും തിയ്യതിയും അറിയുക"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:1
+msgid "Ad_just Date & Time..."
+msgstr ""
+
+#: applets/clock/GNOME_ClockApplet.xml.h:2
+msgid "Copy _date"
+msgstr "തിയ്യതി പക‍ര്ത്തുക"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:3
+msgid "Copy _time"
+msgstr "സമയം പക‍ര്ത്തുക"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:4
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
+msgid "_About..."
+msgstr "കുറിപ്പ്..."
+
+#: applets/clock/GNOME_ClockApplet.xml.h:5
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
+#: gnome-panel/drawer.c:624 gnome-panel/launcher.c:801 gnome-panel/menu.c:3011
+#: gnome-panel/panel-action-button.c:500 gnome-panel/panel-menu-bar.c:306
+#: gnome-panel/panel-menu-button.c:541
+msgid "_Help"
+msgstr "സഹായം"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:6
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
+msgid "_Preferences..."
+msgstr "മുന്ഗണനകള്..."
 
 #: applets/fish/fish.c:194
 #, c-format
@@ -51,8 +313,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr ""
 
-#: applets/fish/fish.c:416
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "മത്സ്യകന്യക"
 
@@ -109,11 +371,11 @@ msgid "GNOME Fish, the fortune teller"
 msgstr "ഗ്നോം-മത്സ്യകന്യക, ഭാവി പ്രവചിനി"
 
 #: applets/fish/fish.glade.h:1 gnome-panel/gnome-panel-screenshot.glade.h:1
+#: gnome-panel/panel-properties-dialog.glade.h:2
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1341
-#: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
+#: applets/fish/fish.glade.h:2 gnome-panel/panel-util.c:271
 msgid "Browse"
 msgstr "അന്വോഷണം"
 
@@ -191,831 +453,6 @@ msgstr ""
 msgid "Wanda Factory"
 msgstr "Wanda ശാല"
 
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:3
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
-#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
-msgid "_About..."
-msgstr "കുറിപ്പ്..."
-
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/gen_util/GNOME_ClockApplet.xml.h:4
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:775 gnome-panel/launcher.c:788 gnome-panel/menu.c:3446
-#: gnome-panel/menu.c:4190 gnome-panel/panel-action-button.c:518
-msgid "_Help"
-msgstr "സഹായം"
-
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/gen_util/GNOME_ClockApplet.xml.h:5
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-msgid "_Preferences..."
-msgstr "മുന്ഗണനകള്..."
-
-#: applets/gen_util/clock.c:178
-msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %p"
-
-#: applets/gen_util/clock.c:178
-msgid "%l:%M %p"
-msgstr "%l:%M %p"
-
-#: applets/gen_util/clock.c:180 applets/gen_util/clock.c:499
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
-#: applets/gen_util/clock.c:180 applets/gen_util/clock.c:501
-msgid "%H:%M"
-msgstr "%H:%M"
-
-#: applets/gen_util/clock.c:186
-msgid "%a %b %d"
-msgstr "%a %b %d"
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: applets/gen_util/clock.c:193
-#, c-format
-msgid ""
-"%s\n"
-"%s"
-msgstr ""
-"%s\n"
-"%s"
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: applets/gen_util/clock.c:200
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
-
-#. Show date in tooltip
-#: applets/gen_util/clock.c:303
-msgid "%A %B %d"
-msgstr "%A %B %d"
-
-#: applets/gen_util/clock.c:409
-msgid "Computer Clock"
-msgstr "കംപ്യ‍ൂട്ടര് ഘടികാരം"
-
-#: applets/gen_util/clock.c:494
-msgid "%I:%M:%S %p"
-msgstr "%I:%M:%S %p"
-
-#: applets/gen_util/clock.c:496
-msgid "%I:%M %p"
-msgstr "%I:%M %p"
-
-#: applets/gen_util/clock.c:535
-msgid "%A, %B %d %Y"
-msgstr "%A, %B %d %Y"
-
-#: applets/gen_util/clock.c:957
-msgid "Clock Preferences"
-msgstr "ഘടികാര മുന്ഗണനകള്"
-
-#: applets/gen_util/clock.c:986
-msgid "Clock type"
-msgstr "ഘടികാര തരം"
-
-#: applets/gen_util/clock.c:996
-msgid "_12 hour"
-msgstr "12 മണിക്കുര്"
-
-#: applets/gen_util/clock.c:1002
-msgid "_24 hour"
-msgstr "24 മണിക്കുര്"
-
-#: applets/gen_util/clock.c:1007
-msgid "UNI_X time"
-msgstr "യുണിക്സ് സമയം"
-
-#: applets/gen_util/clock.c:1011
-msgid "_Internet time"
-msgstr "വിവരമണ‍്ഡല സമയം"
-
-#: applets/gen_util/clock.c:1048
-msgid "Show _seconds"
-msgstr "സെക്കന്റുകള് കാണിക്കുക"
-
-#: applets/gen_util/clock.c:1058
-msgid "Show _date"
-msgstr "തിയ്യതി പക‍ര്ത്തുക"
-
-#: applets/gen_util/clock.c:1068
-msgid "Use _UTC"
-msgstr "UTC ഉപയോഗിക്കുക"
-
-#. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1775
-#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:252
-msgid "translator_credits"
-msgstr "എഫ്.എസ്.എഫ് - ഇന്ത്യ <gnu@gnu.org.in>"
-
-#: applets/gen_util/clock.c:1204
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-msgid "Clock"
-msgstr "ഘടികാരം"
-
-#: applets/gen_util/clock.c:1206
-msgid "The Clock displays the current time and date"
-msgstr "ഘടികാരം ഇപ്പോഴത്തെ സമയവും തിയ്യതിയും കാണിക്കുന്നു"
-
-#: applets/gen_util/clock.schemas.in.h:1
-msgid "24"
-msgstr "24"
-
-#: applets/gen_util/clock.schemas.in.h:2
-msgid "Display Internet time, which is same all over the world"
-msgstr "ലോകത്തിലാകെ ഒന്നു തന്നെയായ വിവരമണ‍്ഡല സമയം പ്രദ‍ര്ശിപ്പിക്കുക"
-
-#: applets/gen_util/clock.schemas.in.h:3
-msgid "Display date in the Clock, in addition to time"
-msgstr "ഘടികാരത്തില് സമയത്തിനു പുറമെ തിയ്യതിയും കാണിക്കുക"
-
-#: applets/gen_util/clock.schemas.in.h:4
-msgid "Display seconds in time"
-msgstr "സെക്കന്റുകളും സമയത്തില് കാണിക്കുക"
-
-#: applets/gen_util/clock.schemas.in.h:5
-msgid "Display time in Universal Coordinated Time zone"
-msgstr "UCT മേഖലാ സമയം കാണിക്കുക"
-
-#: applets/gen_util/clock.schemas.in.h:6
-msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
-msgstr "Epoch മുതലുള്ള സമയം സെക്കന്റില് കാണിക്കുക,അതായത് 1970-01-01 മുതലുള്ളത്"
-
-#: applets/gen_util/clock.schemas.in.h:7
-msgid "Hour format"
-msgstr "സമയ രൂപം"
-
-#: applets/gen_util/clock.schemas.in.h:8
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "സമയ രൂപം നിശ്ചയിക്കുക, 12 അല്ലെങ്കില് 24 മണിക്കുര് അടിസ്ഥാനത്തില്"
-
-#: applets/gen_util/clock.schemas.in.h:9
-msgid "Show date in Clock"
-msgstr "ഘടികാരത്തില് തിയ്യതി കാണിക്കുക"
-
-#: applets/gen_util/clock.schemas.in.h:10
-msgid "Show date in a tooltip when a mouse is over the Clock"
-msgstr "ഘടികാരത്തിന‍് മുകളില് ചൂണ്ടുമ്പോള് തിയ്യതി ഉപകരണതന്തുവില് കാണിക്കുക"
-
-#: applets/gen_util/clock.schemas.in.h:11
-msgid "Show date in tooltip"
-msgstr "തിയ്യതി ഉപകരണതന്തുവില് കാണിക്കുക"
-
-#: applets/gen_util/clock.schemas.in.h:12
-msgid "Show time with seconds"
-msgstr "സെക്കന്റുകളോട് കൂടിയുള്ള സമയം കാണിക്കുക"
-
-#: applets/gen_util/clock.schemas.in.h:13
-msgid "Use Internet time"
-msgstr "വിവരമണ‍്ഡല സമയം ഉപയോഗിക്കുക"
-
-#: applets/gen_util/clock.schemas.in.h:14
-msgid "Use UNIX time"
-msgstr "യുണിക്സ് സമയം ഉപയോഗിക്കുക"
-
-#: applets/gen_util/clock.schemas.in.h:15
-msgid "Use UTC"
-msgstr "UTC സമയം ഉപയോഗിക്കുക"
-
-#: applets/gen_util/GNOME_ClockApplet.xml.h:1
-msgid "Copy _date"
-msgstr "തിയ്യതി പക‍ര്ത്തുക"
-
-#: applets/gen_util/GNOME_ClockApplet.xml.h:2
-msgid "Copy _time"
-msgstr "സമയം പക‍ര്ത്തുക"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "സഹപ്രയോഗങ്ങള്"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-msgid "Alert you when new mail arrives"
-msgstr "പുതിയ കത്തുകള് വരുമ്പോള് ശ്രദ്ദിപ്പിക്കുക"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "Button to hide application windows and show the desktop"
-msgstr "ജാലകങ്ങളെ മാറ്റി പണിയിടം കാണിക്കുക"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-msgid "GenUtil Applet Factory"
-msgstr "GenUtil ചെറുപ്രയോഗ ശാല"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-msgid "Get the current time and date"
-msgstr "നിലവിലുള്ള സമയവും തിയ്യതിയും അറിയുക"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1788
-msgid "Inbox Monitor"
-msgstr "എഴുത്ത് പെട്ടി സൂചകന്"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-msgid "Internet"
-msgstr "വിവരമണ്ഡലം"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
-msgid "Show Desktop Button"
-msgstr "പണിയിട മൊട്ട് കാണിക്കുക"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "തുറന്ന ജാലകങ്ങളില് മാറി മാറി കടക്കുക"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "പണിയറകള് തമ്മില് മാറി മാറി കടക്കുക"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-msgid "Utility"
-msgstr "ഉപകാരി"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:811
-msgid "Window List"
-msgstr "ജാലക നാമാവലി"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:880
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "പണിയറ തിരഞ്ഞെടുക്കുക"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
-#, fuzzy
-msgid "factory for creating some general applets"
-msgstr "സി.ഡി പ്ളേയര്‍ ക്രിയാജാലക ശാല"
-
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-msgid "_Check for mail"
-msgstr "കത്തുകള് ഉണ്ടോ എന്ന് പരിശോധിക്കുക"
-
-#: applets/gen_util/mailcheck.c:204
-#, c-format
-msgid "There was an error executing %s: %s"
-msgstr "%s പ്രവ‍ര്ത്തിക്കുന്നതില് തകരാറ്: %s"
-
-#: applets/gen_util/mailcheck.c:332
-msgid ""
-"You didn't set a password in the preferences for the Inbox Monitor,\n"
-"so you have to enter it each time it starts up."
-msgstr ""
-
-#: applets/gen_util/mailcheck.c:340
-msgid "Please enter your mailserver's _password:"
-msgstr "ദയവായി നിങ്ങളുടെ മെയില് സെ‍ര്‍വ്വറിന്റെ പാസ്‍വേ‍ര്ഡ് നല്കുക:"
-
-#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1401
-msgid "Password Entry box"
-msgstr "പാസ്‍വേ‍ര്ഡ് നല്കുന്ന പെട്ടി"
-
-#: applets/gen_util/mailcheck.c:386
-msgid ""
-"The Inbox Monitor failed to check your mails and thus automatic updating has "
-"been deactivated for now.\n"
-"Maybe you used a wrong server, username or password?"
-msgstr ""
-
-#: applets/gen_util/mailcheck.c:580
-msgid "You have new mail."
-msgstr "നിങ്ങള്ക്ക് ഒരു പുതിയ കത്തുണ്ട്"
-
-#: applets/gen_util/mailcheck.c:582
-msgid "You have mail."
-msgstr "നിങ്ങള്ക്ക് പുതിയ കത്തുണ്ട്."
-
-#: applets/gen_util/mailcheck.c:586
-#, c-format
-msgid "%d/%d messages"
-msgstr "%d/%d കത്തുകള്"
-
-#: applets/gen_util/mailcheck.c:588
-#, c-format
-msgid "%d messages"
-msgstr "%d കത്തുകള്"
-
-#: applets/gen_util/mailcheck.c:592
-msgid "No mail."
-msgstr "കത്ത് ഇല്ല."
-
-#: applets/gen_util/mailcheck.c:1112 applets/gen_util/mailcheck.c:1113
-#: applets/gen_util/mailcheck.c:1979 applets/gen_util/mailcheck.c:1980
-msgid "Status not updated"
-msgstr "അവസ്ഥ പുതുക്കിയില്ല"
-
-#: applets/gen_util/mailcheck.c:1285
-msgid "Mailbox _resides on:"
-msgstr "മെയില്-പെട്ടി നില്ക്കുന്നത്:"
-
-#: applets/gen_util/mailcheck.c:1293
-msgid "Local mailspool"
-msgstr "പ്രാദേശിക കത്ത് ശേഖരണസ്ഥലം"
-
-#: applets/gen_util/mailcheck.c:1301
-msgid "Local maildir"
-msgstr "പ്രാദേശിക കത്ത് ഡയറക്ടറി"
-
-#: applets/gen_util/mailcheck.c:1309
-msgid "Remote POP3-server"
-msgstr "വിദൂര POP3-സ‍ര്‍വ്വര്"
-
-#: applets/gen_util/mailcheck.c:1317
-msgid "Remote IMAP-server"
-msgstr "വിദൂര IMAP-സ‍ര്‍വ്വര്"
-
-#: applets/gen_util/mailcheck.c:1337
-msgid "Mail _spool file:"
-msgstr "കത്ത് ശേഖരണ രചന:"
-
-#: applets/gen_util/mailcheck.c:1356
-msgid "Mail s_erver:"
-msgstr "കത്ത് സ‍ര്‍വ്വര്:"
-
-#: applets/gen_util/mailcheck.c:1362
-msgid "Mail Server Entry box"
-msgstr "ഉപയോക്തൃനാമം നല്കുന്ന ഇടം"
-
-#: applets/gen_util/mailcheck.c:1376
-msgid "_Username:"
-msgstr "ഉപയോക്തൃ നാമം:"
-
-#: applets/gen_util/mailcheck.c:1384
-msgid "Username Entry box"
-msgstr "ഉപയോക്തൃനാമം നല്കുന്ന ഇടം"
-
-#: applets/gen_util/mailcheck.c:1393
-msgid "_Password:"
-msgstr "അടയാളവാക്ക്:"
-
-#: applets/gen_util/mailcheck.c:1414
-msgid "_Folder:"
-msgstr "കൂട്:"
-
-#: applets/gen_util/mailcheck.c:1422
-msgid "Folder Entry box"
-msgstr "പ്രവ‍ര്ത്തിപ്പിക്കാനുള്ള നിര്‍ദ്ദേശം നല്കുന്ന സ്ഥലം"
-
-#: applets/gen_util/mailcheck.c:1434
-msgid "C_ommand to run before checking for mail:"
-msgstr "എഴുത്ത് പരിശോധിക്കിനന്തിന‌് മുന്പ് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
-
-#: applets/gen_util/mailcheck.c:1442
-msgid "Command Entry box"
-msgstr "പ്രവ‍ര്ത്തിപ്പിക്കാനുള്ള നിര്‍ദ്ദേശം നല്കുന്ന സ്ഥലം"
-
-#: applets/gen_util/mailcheck.c:1467
-msgid "Execute"
-msgstr "നിര്‍വ്വഹിക്കുക"
-
-#: applets/gen_util/mailcheck.c:1478
-msgid "Before each _update:"
-msgstr ""
-
-#: applets/gen_util/mailcheck.c:1493
-msgid "Command to execute before each update"
-msgstr "ഓരോ പുതുക്കലിനും മുന്പ് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
-
-#: applets/gen_util/mailcheck.c:1503
-msgid "When new mail _arrives:"
-msgstr "പുതിയ കത്തുകള് വരുമ്പോള്:"
-
-#: applets/gen_util/mailcheck.c:1516 applets/gen_util/mailcheck.schemas.in.h:2
-msgid "Command to execute when new mail arrives"
-msgstr "പുതിയ കത്തുകള് വരുമ്പോള് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
-
-#: applets/gen_util/mailcheck.c:1526
-msgid "When clicke_d:"
-msgstr "കൊട്ടുമ്പോള്:"
-
-#: applets/gen_util/mailcheck.c:1539
-msgid "Command to execute when clicked"
-msgstr "കൊട്ടുമ്പോള് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
-
-#: applets/gen_util/mailcheck.c:1549
-msgid "Set the number of unread mails to _zero"
-msgstr ""
-
-#: applets/gen_util/mailcheck.c:1560
-msgid "Check for mail _every"
-msgstr "കത്തുകള് ഉണ്ടോ എന്ന് പരിശോധിക്കുക, എല്ലാ"
-
-#: applets/gen_util/mailcheck.c:1572 applets/gen_util/mailcheck.c:1576
-msgid "minutes"
-msgstr "മിനിട്ട്"
-
-#: applets/gen_util/mailcheck.c:1572
-msgid "Choose time interval in minutes to check mail"
-msgstr ""
-
-#: applets/gen_util/mailcheck.c:1586 applets/gen_util/mailcheck.c:1590
-msgid "seconds"
-msgstr "സെക്കന്റ്സ്"
-
-#: applets/gen_util/mailcheck.c:1586
-msgid "Choose time interval in seconds to check mail"
-msgstr ""
-
-#: applets/gen_util/mailcheck.c:1598
-msgid "Play a _sound when new mail arrives"
-msgstr "പുതിയ കത്തുകള് വരുമ്പോള് ശബ്ദം ഉണ്ടാക്കുക"
-
-#: applets/gen_util/mailcheck.c:1609
-msgid "Select a_nimation"
-msgstr "ചലനചിത്രം തിരഞ്ഞെടുക്കുക:"
-
-#: applets/gen_util/mailcheck.c:1686
-msgid "Inbox Monitor Preferences"
-msgstr "ജാലക നാമാവലി മുന്ഗണനകള്"
-
-#: applets/gen_util/mailcheck.c:1706
-msgid "_Mail check"
-msgstr "കത്തുനോക്കുക"
-
-#: applets/gen_util/mailcheck.c:1710
-msgid "Mail_box"
-msgstr "തപാല്‍പ്പെട്ടി"
-
-#: applets/gen_util/mailcheck.c:1790
-msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
-msgstr "പുതിയ കത്തുകള് വരുമ്പോള് എഴുത്ത് പെട്ടി സൂചകന് നിങ്ങളുടെ ശ്രദ്ധയില് പെടുത്തും"
-
-#: applets/gen_util/mailcheck.c:1955
-msgid "Text only"
-msgstr "വാചകം മാത്രം"
-
-#: applets/gen_util/mailcheck.c:1981
-msgid "Mail check"
-msgstr "കത്തുനോക്കുക"
-
-#: applets/gen_util/mailcheck.c:1982
-msgid "Mail check notifies you when new mail arrives in your mailbox"
-msgstr "കത്തുനോക്കുമ്പോള് പുതിയ കത്തുകള് വരുമ്പോള് ശ്രദ്ദിപ്പിക്കുക"
-
-#: applets/gen_util/mailcheck.schemas.in.h:1
-msgid "Command to execute when checking mail"
-msgstr "കൊട്ടുമ്പോള് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
-
-#: applets/gen_util/mailcheck.schemas.in.h:3
-msgid "Command to execute when you click on the Inbox Monitor"
-msgstr "എഴുത്ത് പെട്ടി സൂചകനെ ക്ളിക്ക് ചെയ്യുമ്പോള് പ്രവ‌ര്ത്തിക്കേണ്ട കല്പ്പന"
-
-#: applets/gen_util/mailcheck.schemas.in.h:4
-msgid "Command to run before checking mail"
-msgstr "എഴുത്ത് പരിശോധിക്കിനന്തിന‌് മുന്പ് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
-
-#: applets/gen_util/mailcheck.schemas.in.h:5
-msgid "Do we run the exec-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:6
-msgid "Do we run the newmail-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:7
-#, fuzzy
-msgid "How often (in milliseconds) we check the mail"
-msgstr "എഴുത്ത് പരിശോധിക്കിനന്തിന‌് മുന്പ് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
-
-#: applets/gen_util/mailcheck.schemas.in.h:8
-msgid "If mail should be checked automatically"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:9
-msgid "If this is set mail will be checked every update-freq milliseconds"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:10
-msgid "If this is set, we should run the exec-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:11
-msgid "If this is set, we should run the newmail-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:12
-msgid "Interval for checking mail"
-msgstr "തപാല്‌ പരിശോധിക്കുന്നതിനുള്ള ഇടവേള:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:13
-msgid "Path to the animation file"
-msgstr "ഛായാചിത്രസഞ്ചരണ രചനയിലേക്കുള്ള വഴി"
-
-#: applets/gen_util/mailcheck.schemas.in.h:14
-msgid "Play a sound when mail is recieved"
-msgstr "പുതിയ കത്തുകള് വരുമ്പോള് ശബ്ദം ഉണ്ടാക്കുക"
-
-#: applets/gen_util/mailcheck.schemas.in.h:15
-msgid "Remote folder for mail retrieval"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remote server to connect to for our mail"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:17
-msgid "Run this command before we check the mail"
-msgstr "എഴുത്ത് പരിശോധിക്കിനന്തിന‌് മുന്പ് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
-
-#: applets/gen_util/mailcheck.schemas.in.h:18
-msgid "The mail server"
-msgstr "കത്ത് സ‍ര്‍വ്വര്:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:19
-msgid "The user's password"
-msgstr "ഉപയോക്തൃ അടയാളവാക്ക് "
-
-#: applets/gen_util/mailcheck.schemas.in.h:20
-msgid "The user's password for the remote server"
-msgstr "വിദൂരസ‌‌ര്‌വറിനുവേണ്ടിയുള്ള ഉപയോക്തൃ അടയാളവാക്ക്"
-
-#: applets/gen_util/mailcheck.schemas.in.h:21
-msgid "This is how we check the mail, check the mail, check the mail..."
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:22
-msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:23
-msgid ""
-"This is the animation that will be displayed during normal Inbox Monitor "
-"usage"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:24
-msgid "Username on the remote server"
-msgstr "വിദൂരസ‌‌ര്‌വറിനുവേണ്ടിയുള്ള ഉപയോക്തൃ പേര‌്"
-
-#: applets/gen_util/mailcheck.schemas.in.h:25
-msgid "We run this command when the user clicks on Inbox Monitor"
-msgstr "എഴുത്ത് പെട്ടി സൂചകനെ ക്ളിക്ക് ചെയ്യുമ്പോള് പ്രവ‌ര്ത്തിക്കേണ്ട കല്പ്പന"
-
-#: applets/gen_util/mailcheck.schemas.in.h:26
-msgid "Whether to reset mail status when you click on Inbox Monitor"
-msgstr "എഴുത്ത് പെട്ടി സൂചകനെ ക്ളിക്ക് ചെയ്യുമ്പോള് എഴുത്തിന്റെ അവസ്ഥ പുനഃക്രമീകരിക്കണോ?"
-
-#: applets/gen_util/mailcheck.schemas.in.h:27
-msgid "You've got mail!"
-msgstr "നിങ്ങള്ക്ക് കത്തുണ്ട്!"
-
-#: applets/gen_util/mailcheck.soundlist.in.h:1
-msgid "Mailcheck"
-msgstr "കത്തുനോക്കുക"
-
-#: applets/gen_util/mailcheck.soundlist.in.h:2
-msgid "New Mail"
-msgstr "പുതിയ കത്ത്"
-
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "നിരകള്"
-
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
-msgid "Columns"
-msgstr "ഗ്രന്ഥങ്ങള്"
-
-#: applets/gen_util/pager.c:399
-#, c-format
-msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "പണിയറയുടെ മാറ്റുന്നതില് തകരാറ്: %s\n"
-
-#: applets/gen_util/pager.c:410
-#, fuzzy, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "പണിയറയുടെ മാറ്റുന്നതില് തകരാറ്: %s\n"
-
-#: applets/gen_util/pager.c:425
-#, c-format
-msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "പണിയറയുടെ മാറ്റുന്നതില് തകരാറ്: %s\n"
-
-#: applets/gen_util/pager.c:570
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
-
-#: applets/gen_util/pager.glade.h:1
-msgid "Number of _workspaces:"
-msgstr "പണിയറകളുടെ എണ്ണം:"
-
-#: applets/gen_util/pager.glade.h:3
-msgid "Show _all workspaces"
-msgstr "എല്ലാ പണിയറകളും കാണിക്കുക"
-
-#: applets/gen_util/pager.glade.h:4
-msgid "Show only the _current workspace"
-msgstr "സജീവ പണിയറ മാത്രം കാണിക്കുക"
-
-#: applets/gen_util/pager.glade.h:5
-msgid "Show workspace _names in the switcher"
-msgstr "ഇതിന്റെ വലതുവശത്തുള്ള പണിയറകളിേക്ക് മാറ്റൂ"
-
-#: applets/gen_util/pager.glade.h:6
-msgid "Workspace Names"
-msgstr "പണിയറ പേരുകള്"
-
-#: applets/gen_util/pager.glade.h:8
-msgid "Workspace Switcher Preferences"
-msgstr "പണിയറ മാറ്റല് ഉപകരണത്തിന്റെ മുന്ഗണനകള്"
-
-#: applets/gen_util/pager.glade.h:9
-msgid "Workspaces"
-msgstr "പണിയറകള്"
-
-#: applets/gen_util/pager.schemas.in.h:1
-msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:2
-msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:3
-msgid "Number of rows in the Workspace Switcher."
-msgstr "പണിയറ മാറ്റല് ഉപകരണത്തിലെ വരികളുടെ എണ്ണം"
-
-#: applets/gen_util/pager.schemas.in.h:4
-msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:5
-#, fuzzy
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr "പണിയറയുടെ മാറ്റുന്നതില് തകരാറ്: %s\n"
-
-#: applets/gen_util/pager.schemas.in.h:6
-#, fuzzy
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr "പണിയറ മാറ്റല് ഉപകരണത്തിലെ വരികളുടെ എണ്ണം"
-
-#: applets/gen_util/showdesktop.c:217
-msgid "Click here to restore hidden windows."
-msgstr " "
-
-#: applets/gen_util/showdesktop.c:220
-msgid "Click here to hide all windows and show the desktop."
-msgstr " "
-
-#: applets/gen_util/showdesktop.c:290
-#, c-format
-msgid "Failed to load %s: %s\n"
-msgstr "%s കൊണ്ട് വരാന് കഴിഞ്ഞില്ല: %s\n"
-
-#: applets/gen_util/showdesktop.c:291
-msgid "File not found"
-msgstr "രചന കണ്ടില്ല"
-
-#: applets/gen_util/showdesktop.c:454
-msgid "This button lets you hide all windows and show the desktop"
-msgstr "ജാലകങ്ങളെ മാറ്റി പണിയിടം കാണിക്കുക"
-
-#: applets/gen_util/tasklist.c:813
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
-msgstr ""
-
-#: applets/gen_util/tasklist.glade.h:1
-msgid "Group windows when _space is limited"
-msgstr ""
-
-#: applets/gen_util/tasklist.glade.h:2
-msgid "M_inimum size:"
-msgstr "കുറഞ്ഞ വലിപ്പം:"
-
-#: applets/gen_util/tasklist.glade.h:3
-msgid "Ma_ximum size:"
-msgstr "പരമാവധി വലിപ്പം:"
-
-#: applets/gen_util/tasklist.glade.h:4
-msgid "Restore to current _workspace"
-msgstr "സജീവ പണിയറ മാത്രം കാണിക്കുക"
-
-#: applets/gen_util/tasklist.glade.h:5
-msgid "Restore to na_tive workspace"
-msgstr "സ്വതേയുള്ള പണിയറ തിരിച്ചുകൊണ്ടുവരിക"
-
-#: applets/gen_util/tasklist.glade.h:6
-msgid "Show windows from _current workspace"
-msgstr "സജീവ പണിയറകളിലെ ജാലകങ്ങള് കാണിക്കുക"
-
-#: applets/gen_util/tasklist.glade.h:7
-msgid "Show windows from a_ll workspaces"
-msgstr "എല്ലാ പണിയറകളിലെയും ജാലകങ്ങള് കാണിക്കുക"
-
-#: applets/gen_util/tasklist.glade.h:8
-msgid "When restoring minimized windows"
-msgstr "ജാലകങ്ങള് കൂട്ടങ്ങളാക്കുമ്പോള്‌"
-
-#: applets/gen_util/tasklist.glade.h:9
-msgid "Window List Preferences"
-msgstr "ജാലക നാമാവലി മുന്ഗണനകള്"
-
-#: applets/gen_util/tasklist.glade.h:10
-msgid "Window List content"
-msgstr "ജാലക നാമാവലി ഉള്ളടക്കം"
-
-#: applets/gen_util/tasklist.glade.h:11
-msgid "Window List size"
-msgstr "ജാലക നാമാവലി വലിപ്പം"
-
-#: applets/gen_util/tasklist.glade.h:12
-msgid "Window grouping"
-msgstr "ജാലക കുട്ടങ്ങള്‌"
-
-#: applets/gen_util/tasklist.glade.h:13
-msgid "_Always group windows"
-msgstr "ജാലകങ്ങള് കൂട്ടങ്ങളാക്കരുത്"
-
-#: applets/gen_util/tasklist.glade.h:14
-msgid "_Never group windows"
-msgstr "ജാലകങ്ങള് കൂട്ടങ്ങളാക്കരുത്"
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-msgid "Maximum size that Window List requests"
-msgstr "ജാലക നാമാവലിക്കാവശ്യമായ കൂടിയ വലിപ്പം"
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-msgid "Minimum size that Window List requests"
-msgstr "ജാലക നാമാവലിക്കാവശ്യമായ കുറഞ്ഞ വലിപ്പം"
-
-#: applets/gen_util/tasklist.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
-msgstr "സജീവ പണിയറകളിലെ ജാലകങ്ങള് കാണിക്കുക"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "എല്ലാ പണിയറകളിലെയും ജാലകങ്ങള് കാണിക്കുക"
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:10
-msgid "When to group windows"
-msgstr "ജാലകങ്ങള് കൂട്ടങ്ങളാക്കുമ്പോള്‌"
-
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
 msgstr ""
@@ -1028,80 +465,334 @@ msgstr "സ്ഥാന നിര്ണ്ണയം"
 msgid "Notification Area Factory"
 msgstr "സ്ഥാന നിര്ണ്ണയശാല"
 
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+msgid "Utility"
+msgstr "ഉപകാരി"
+
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
 msgstr "പുതിയ കത്തുകള് വരുമ്പോള് അറിയിക്കുല്"
 
-#. Translators: Task with no name, should not really happen, so
-#. * this should signal that the panel is confused by this task
-#. * (thus question marks)
-#: gnome-panel/applet.c:433 gnome-panel/foobar-widget.c:393
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+#: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
+#: gnome-panel/menu.c:142 gnome-panel/menu.c:152
+#: gnome-panel/panel-menu-bar.c:166
+msgid "Actions"
+msgstr "പ്ര‌വ‍ര്ത്തനം"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+#, fuzzy
+msgid "Factory for the window navigation related applets"
+msgstr "സി.ഡി പ്ളേയര്‍ ക്രിയാജാലക ശാല"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#, fuzzy
+msgid "Hide application windows and show the desktop"
+msgstr "ജാലകങ്ങളെ മാറ്റി പണിയിടം കാണിക്കുക"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+#, fuzzy
+msgid "Show Desktop"
+msgstr "പണിയിട മൊട്ട് കാണിക്കുക"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between open windows"
+msgstr "തുറന്ന ജാലകങ്ങളില് മാറി മാറി കടക്കുക"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+msgid "Switch between workspaces"
+msgstr "പണിയറകള് തമ്മില് മാറി മാറി കടക്കുക"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-list.c:811
+msgid "Window List"
+msgstr "ജാലക നാമാവലി"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: applets/wncklet/window-menu.c:128
+#, fuzzy
+msgid "Window Menu"
+msgstr "പ്രധാന പട്ടിക"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#, fuzzy
+msgid "Window Navigation Applet Factory"
+msgstr "GenUtil ചെറുപ്രയോഗ ശാല"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
+#: applets/wncklet/workspace-switcher.c:515
+#: applets/wncklet/workspace-switcher.c:828
+#: applets/wncklet/workspace-switcher.glade.h:7
+msgid "Workspace Switcher"
+msgstr "പണിയറ തിരഞ്ഞെടുക്കുക"
+
+#: applets/wncklet/showdesktop.c:219
+msgid "Click here to restore hidden windows."
+msgstr " "
+
+#: applets/wncklet/showdesktop.c:222
+msgid "Click here to hide all windows and show the desktop."
+msgstr " "
+
+#: applets/wncklet/showdesktop.c:292
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "%s കൊണ്ട് വരാന് കഴിഞ്ഞില്ല: %s\n"
+
+#: applets/wncklet/showdesktop.c:293
+msgid "File not found"
+msgstr "രചന കണ്ടില്ല"
+
+#: applets/wncklet/showdesktop.c:454
+msgid "Show Desktop Button"
+msgstr "പണിയിട മൊട്ട് കാണിക്കുക"
+
+#: applets/wncklet/showdesktop.c:456
+msgid "This button lets you hide all windows and show the desktop"
+msgstr "ജാലകങ്ങളെ മാറ്റി പണിയിടം കാണിക്കുക"
+
+#: applets/wncklet/showdesktop.c:496
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+
+#: applets/wncklet/window-list.c:813 applets/wncklet/window-menu.c:132
+msgid ""
+"The Window List shows a list of all visible windows and lets you browse them."
+msgstr ""
+
+#: applets/wncklet/window-list.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr ""
+
+#: applets/wncklet/window-list.glade.h:2
+msgid "M_inimum size:"
+msgstr "കുറഞ്ഞ വലിപ്പം:"
+
+#: applets/wncklet/window-list.glade.h:3
+msgid "Ma_ximum size:"
+msgstr "പരമാവധി വലിപ്പം:"
+
+#: applets/wncklet/window-list.glade.h:4
+msgid "Restore to current _workspace"
+msgstr "സജീവ പണിയറ മാത്രം കാണിക്കുക"
+
+#: applets/wncklet/window-list.glade.h:5
+msgid "Restore to na_tive workspace"
+msgstr "സ്വതേയുള്ള പണിയറ തിരിച്ചുകൊണ്ടുവരിക"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Show windows from _current workspace"
+msgstr "സജീവ പണിയറകളിലെ ജാലകങ്ങള് കാണിക്കുക"
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Show windows from a_ll workspaces"
+msgstr "എല്ലാ പണിയറകളിലെയും ജാലകങ്ങള് കാണിക്കുക"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "When restoring minimized windows"
+msgstr "ജാലകങ്ങള് കൂട്ടങ്ങളാക്കുമ്പോള്‌"
+
+#: applets/wncklet/window-list.glade.h:9
+msgid "Window List Preferences"
+msgstr "ജാലക നാമാവലി മുന്ഗണനകള്"
+
+#: applets/wncklet/window-list.glade.h:10
+msgid "Window List content"
+msgstr "ജാലക നാമാവലി ഉള്ളടക്കം"
+
+#: applets/wncklet/window-list.glade.h:11
+msgid "Window List size"
+msgstr "ജാലക നാമാവലി വലിപ്പം"
+
+#: applets/wncklet/window-list.glade.h:12
+msgid "Window grouping"
+msgstr "ജാലക കുട്ടങ്ങള്‌"
+
+#: applets/wncklet/window-list.glade.h:13
+msgid "_Always group windows"
+msgstr "ജാലകങ്ങള് കൂട്ടങ്ങളാക്കരുത്"
+
+#: applets/wncklet/window-list.glade.h:14
+msgid "_Never group windows"
+msgstr "ജാലകങ്ങള് കൂട്ടങ്ങളാക്കരുത്"
+
+#: applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the Window List. "
+"Valid values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+
+#: applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If this is true, the Window List will show windows from all workspaces, "
+"otherwise it will display windows from the current workspace only."
+msgstr ""
+
+#: applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, bring it to the current workspace. "
+"Otherwise, change to the workspace of the window."
+msgstr ""
+
+#: applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum size that Window List requests"
+msgstr "ജാലക നാമാവലിക്കാവശ്യമായ കൂടിയ വലിപ്പം"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum size that Window List requests"
+msgstr "ജാലക നാമാവലിക്കാവശ്യമായ കുറഞ്ഞ വലിപ്പം"
+
+#: applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to the current workspace when unminimized"
+msgstr "സജീവ പണിയറകളിലെ ജാലകങ്ങള് കാണിക്കുക"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "എല്ലാ പണിയറകളിലെയും ജാലകങ്ങള് കാണിക്കുക"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
+msgstr ""
+
+#: applets/wncklet/window-list.schemas.in.h:9
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
+msgstr ""
+
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "ജാലകങ്ങള് കൂട്ടങ്ങളാക്കുമ്പോള്‌"
+
+#: applets/wncklet/window-menu.c:342
+msgid "Unknown Window"
+msgstr ""
+
+#: applets/wncklet/window-menu.c:538
+#, fuzzy
+msgid "No Windows Open"
+msgstr "ജാലകങ്ങളൊന്നും തുറന്നിട്ടില്ല"
+
+#: applets/wncklet/workspace-switcher.c:144
+#: applets/wncklet/workspace-switcher.c:737
+#: applets/wncklet/workspace-switcher.glade.h:2
+msgid "Rows"
+msgstr "നിരകള്"
+
+#: applets/wncklet/workspace-switcher.c:144
+#: applets/wncklet/workspace-switcher.c:737
+msgid "Columns"
+msgstr "ഗ്രന്ഥങ്ങള്"
+
+#: applets/wncklet/workspace-switcher.c:357
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr "പണിയറയുടെ മാറ്റുന്നതില് തകരാറ്: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:368
+#, fuzzy, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr "പണിയറയുടെ മാറ്റുന്നതില് തകരാറ്: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:383
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr "പണിയറയുടെ മാറ്റുന്നതില് തകരാറ്: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:517
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+
+#: applets/wncklet/workspace-switcher.glade.h:1
+msgid "Number of _workspaces:"
+msgstr "പണിയറകളുടെ എണ്ണം:"
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+msgid "Show _all workspaces"
+msgstr "എല്ലാ പണിയറകളും കാണിക്കുക"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Show only the _current workspace"
+msgstr "സജീവ പണിയറ മാത്രം കാണിക്കുക"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr "ഇതിന്റെ വലതുവശത്തുള്ള പണിയറകളിേക്ക് മാറ്റൂ"
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+msgid "Workspace Names"
+msgstr "പണിയറ പേരുകള്"
+
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Switcher Preferences"
+msgstr "പണിയറ മാറ്റല് ഉപകരണത്തിന്റെ മുന്ഗണനകള്"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspaces"
+msgstr "പണിയറകള്"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid ""
+"If this is true, the Workspace Switcher will show all workspaces, otherwise "
+"it will only show the current workspace."
+msgstr ""
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid ""
+"If this is true, the workspaces in the Workspace Switcher will display the "
+"names of the workspaces, otherwise they will display the contents of the "
+"workspace."
+msgstr ""
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid "Number of rows in the Workspace Switcher."
+msgstr "പണിയറ മാറ്റല് ഉപകരണത്തിലെ വരികളുടെ എണ്ണം"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
+"shows the workspaces in."
+msgstr ""
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+#, fuzzy
+msgid "Whether to display the all workspaces in the Workspace Switcher."
+msgstr "പണിയറയുടെ മാറ്റുന്നതില് തകരാറ്: %s\n"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+#, fuzzy
+msgid ""
+"Whether to display the names of the workspaces in the Workspace Switcher."
+msgstr "പണിയറ മാറ്റല് ഉപകരണത്തിലെ വരികളുടെ എണ്ണം"
+
+#: gnome-panel/applet.c:347
 msgid "???"
 msgstr ""
 
-#: gnome-panel/applet.c:497 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:411
 msgid "_Remove From Panel"
 msgstr "പാളിയില് നിന്നും നീക്കംചെയ്യ‍ുക"
 
-#: gnome-panel/applet.c:509 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:423
 msgid "_Move"
 msgstr "മാറ്റുക"
 
-#: gnome-panel/applet.c:798
-#, c-format
-msgid "No object_type set for panel object with ID %s\n"
-msgstr ""
-
-#: gnome-panel/applet.c:818 gnome-panel/applet.c:926
-#, c-format
-msgid "No panel_id set for panel object with ID %s\n"
-msgstr ""
-
-#: gnome-panel/applet.c:1263
+#: gnome-panel/applet.c:938
 msgid "Can't find an empty spot"
 msgstr ""
 
-#: gnome-panel/basep-widget.c:159
-msgid "Mode"
-msgstr "രീതി"
-
-#: gnome-panel/basep-widget.c:160
-msgid "Mode of this panel"
-msgstr "ഈ പാളിയുടെ രീതി"
-
-#: gnome-panel/basep-widget.c:167
-msgid "State"
-msgstr "അവസ്ഥ"
-
-#: gnome-panel/basep-widget.c:168
-msgid "Current state of this panel"
-msgstr "പാളിയുടെ ഇപ്പൊഴത്തെ അവസ്ഥ"
-
-#: gnome-panel/basep-widget.c:176
-msgid "Hidebuttons enabled"
-msgstr ""
-
-#: gnome-panel/basep-widget.c:177
-msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-msgstr ""
-
-#: gnome-panel/basep-widget.c:184
-msgid "Hidebutton pixmaps enabled"
-msgstr ""
-
-#: gnome-panel/basep-widget.c:185
-msgid "Hidebuttons have pixmaps"
-msgstr ""
-
-#: gnome-panel/basep-widget.c:584
-msgid "Hide this panel"
-msgstr "ഈ പാളിയെ ഒളിപ്പിക്കുക"
-
-#: gnome-panel/basep-widget.c:587
-msgid "Show this panel"
-msgstr "ഈ പാളി കാണിക്കുക"
-
-#: gnome-panel/button-widget.c:322
+#: gnome-panel/button-widget.c:275
 #, c-format
 msgid ""
 "Failed to load image %s\n"
@@ -1109,51 +800,51 @@ msgid ""
 "Details: %s"
 msgstr "%s ചിത്രം നിറയ്‌ക്കുന്നതില്‌ പരാജയം : %s"
 
-#: gnome-panel/button-widget.c:538
+#: gnome-panel/button-widget.c:491
 msgid "none"
 msgstr "ഒന്നും"
 
-#: gnome-panel/button-widget.c:543
+#: gnome-panel/button-widget.c:496
 msgid "file not found"
 msgstr "രചന കണ്ടില്ല"
 
-#: gnome-panel/button-widget.c:904
+#: gnome-panel/button-widget.c:860 gnome-panel/panel-toplevel.c:3224
 msgid "Size"
 msgstr "വലിപ്പം"
 
-#: gnome-panel/button-widget.c:905
+#: gnome-panel/button-widget.c:861
 msgid "The desired ButtonWidget size"
 msgstr "മൊട്ടിനായി തീരുമാനിച്ച വലിപ്പം"
 
-#: gnome-panel/button-widget.c:913
+#: gnome-panel/button-widget.c:869
 msgid "Has Arrow"
 msgstr "സൂചകം ഉണ്ട്"
 
-#: gnome-panel/button-widget.c:914
+#: gnome-panel/button-widget.c:870
 msgid "Whether or not to draw an arrow indicator"
 msgstr "ക്രമീകരണ സൂചകം ദൃശ്യമാക്കേണ്ടതു‌ണ്ടോ"
 
-#: gnome-panel/button-widget.c:922
+#: gnome-panel/button-widget.c:878 gnome-panel/panel-toplevel.c:3213
 msgid "Orientation"
 msgstr "സ്ഥാന നിര്ണ്ണയം"
 
-#: gnome-panel/button-widget.c:923
+#: gnome-panel/button-widget.c:879
 msgid "The ButtonWidget orientation"
 msgstr "മൊട്ടിന്റെ സ്ഥാനം"
 
-#: gnome-panel/button-widget.c:932
+#: gnome-panel/button-widget.c:888
 msgid "Icon Name"
 msgstr "ചിഹ്ന നാമം"
 
-#: gnome-panel/button-widget.c:933
+#: gnome-panel/button-widget.c:889
 msgid "The desired icon for the ButtonWidget"
 msgstr "മൊട്ടിനായി തീരുമാനിച്ച ചിഹ്നം"
 
-#: gnome-panel/button-widget.c:941
+#: gnome-panel/button-widget.c:897
 msgid "Stock Icon ID"
 msgstr "സംഭരണചിഹ്ന ID"
 
-#: gnome-panel/button-widget.c:942
+#: gnome-panel/button-widget.c:898
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "മൊട്ടിനായി തീരുമാനിച്ച സ്റ്റോക്ക് ചിഹ്നം"
 
@@ -1189,148 +880,51 @@ msgstr "സോളാരിസ്"
 msgid "CDE Menu"
 msgstr "സി.ഡി.ഇ പട്ടിക"
 
-#: gnome-panel/drawer.c:126
+#: gnome-panel/drawer.c:119
 msgid "Size and Position"
 msgstr "വലിപ്പവും സ്ഥാനവും"
 
-#: gnome-panel/drawer.c:134
+#: gnome-panel/drawer.c:127
 msgid "Tooltip/Name"
 msgstr ""
 
-#: gnome-panel/drawer.c:140
+#: gnome-panel/drawer.c:133
 msgid "Icon"
 msgstr "ചിഹ്നം"
 
-#: gnome-panel/drawer.c:146
+#: gnome-panel/drawer.c:139
 msgid "Applet appearance"
 msgstr "സൂക്ഷ്മ-പ്രയോഗ ദൃശ്യത"
 
-#: gnome-panel/drawer.c:151
+#: gnome-panel/drawer.c:144
 msgid "Drawer handle"
 msgstr "വലിപ്പ് കൈപ്പിടി"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:149
 msgid "Enable hidebutton"
 msgstr "സ്വയം വിടവുണ്ടാക്കല് സജീവമാക്കുക"
 
-#: gnome-panel/drawer.c:165
+#: gnome-panel/drawer.c:158
 msgid "Enable hidebutton arrow"
 msgstr "സ്വയം വിടവുണ്ടാക്കല് സജീവമാക്കുക"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3545
+#: gnome-panel/drawer.c:176 gnome-panel/menu.c:3108
 msgid "Drawer"
 msgstr "വലിപ്പ്"
 
-#: gnome-panel/drawer.c:772 gnome-panel/launcher.c:786 gnome-panel/menu.c:1533
-#: gnome-panel/menu.c:3400 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:621 gnome-panel/launcher.c:799 gnome-panel/menu.c:1534
+#: gnome-panel/menu.c:2965 gnome-panel/panel-action-button.c:86
 msgid "_Properties"
 msgstr "ഗുണഗണങ്ങള്‌"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3743
-msgid "Run Program..."
-msgstr "നിര്‍ദ്ദേശം പ്രവ‍ര്ത്തിപ്പിക്കുക..."
-
-#: gnome-panel/foobar-widget.c:180
-msgid "Run applications, if you know the correct command to type in"
-msgstr "നിങ്ങള്ക്ക് ശരിയായ കല്പ്പന അറിയാമെങ്കില്, പ്രയോഗത്തെ പ്രവ‍ര്ത്തിപ്പിക്കുക"
-
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3759
-msgid "Search for Files..."
-msgstr "രചനകള് കണ്ടെത്തുക..."
-
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3762
-msgid "Find files, folders, and documents on your computer"
-msgstr "നിങ്ങളുടെ കംപ്യ‍ൂട്ടറില് രചന,കൂട് എന്നിവ കണ്ടെത്തുക"
-
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3778
-msgid "Screenshot..."
-msgstr "തിരച്ചിത്രം..."
-
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3781
-msgid "Take a screenshot of your desktop"
-msgstr "നിങ്ങളുടെ പണിയിടത്തിന്റെ തിരച്ചിത്രം എടുക്കുക"
-
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3567
-msgid "Lock Screen"
-msgstr "താല്ക്കാലിക പൂട്ട്"
-
-#: gnome-panel/foobar-widget.c:233
-msgid "Protect your computer from unauthorized use"
-msgstr "നിങ്ങളുടെ കംപ്യ‍ൂട്ടര് അനുവാദമില്ലാതെ ഉപയോഗിക്കുന്നത് തടയുക"
-
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3224
-#: gnome-panel/menu.c:3579
-msgid "Log Out"
-msgstr "പുറത്ത് പോകുക"
-
-#: gnome-panel/foobar-widget.c:246
-msgid "Quit from the GNOME desktop"
-msgstr "പണിയിടത്തില്‌ നിന്നും പുറത്ത് കടക്കുക"
-
-#. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:255
-msgid "Actions"
-msgstr "പ്ര‌വ‍ര്ത്തനം"
-
-#: gnome-panel/foobar-widget.c:477
-msgid "No windows open"
-msgstr "ജാലകങ്ങളൊന്നും തുറന്നിട്ടില്ല"
-
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2984
-msgid "Menu Panel"
-msgstr "പട്ടിക പാളി"
-
-#: gnome-panel/foobar-widget.c:716
-msgid "GNOME Menu Panel"
-msgstr "ജിനോം പട്ടിക പാളി"
-
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3122
-#: gnome-panel/menu.c:3127 gnome-panel/menu.c:3718
-msgid "Applications"
-msgstr "പ്രയോഗങ്ങള്‌"
-
-#: gnome-panel/global-keys.c:327 gnome-panel/global-keys.c:356
-msgid "Can't find the screenshot program"
-msgstr "നിലവിലുള്ള കളി നിര്ത്തുക"
-
-#: gnome-panel/global-keys.c:336 gnome-panel/global-keys.c:366
-msgid "Can't execute the screenshot program"
-msgstr "തിരച്ചിത്ര പ്രയോഗം പ്രവ‌ര്ത്തിപ്പിക്കാന് കഴിയുന്നില്ല"
-
-#: gnome-panel/gnome-desktop-item-edit.c:27
+#: gnome-panel/gnome-desktop-item-edit.c:28
 msgid "Create new file in the given directory"
 msgstr "ഈ കൂടിന്റെ ഉള്ളില്‌ ഒരു പുതിയ കൂട് ഉണ്ടാക്കുക"
 
-#: gnome-panel/gnome-panel-add-launcher.c:34
-msgid "Panel to add the launcher to"
-msgstr "ഈ വലിപ്പ് പാനലില് ചേ‍ര്ക്കുക"
-
-#: gnome-panel/gnome-panel-add-launcher.c:34
-#: gnome-panel/gnome-panel-add-launcher.c:35
-msgid "NUMBER"
-msgstr "എണ്ണം"
-
-#: gnome-panel/gnome-panel-add-launcher.c:35
-msgid "Position to add the launcher to"
-msgstr "ഈ വലിപ്പ് പാനലില് ചേ‍ര്ക്കുക"
-
-#: gnome-panel/gnome-panel-add-launcher.c:36
-msgid "The argument is a url to add, not a .desktop file"
-msgstr ""
-
-#: gnome-panel/gnome-panel-add-launcher.c:67
-msgid ""
-"You must supply a single argument with the .desktop file or url to use\n"
-msgstr ""
-
-#: gnome-panel/gnome-panel-add-launcher.c:81
-msgid "No panel found\n"
-msgstr "പാളികള് കണ്ടെത്തിയില്ല\n"
-
 #: gnome-panel/gnome-panel-preferences.c:259
-#: gnome-panel/gnome-panel-screenshot.c:870
+#: gnome-panel/gnome-panel-screenshot.c:872
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1376,7 +970,6 @@ msgid "Fast"
 msgstr "വേഗം"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:5
-#: gnome-panel/panel-config.c:1221
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "Medium"
 msgstr "വേഗം"
@@ -1466,21 +1059,21 @@ msgstr "%s%cതിരച്ചിത്രം-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "%s രചന എഴുതാന് കഴിയുന്നില്ല."
 
-#: gnome-panel/gnome-panel-screenshot.c:1221
+#: gnome-panel/gnome-panel-screenshot.c:1223
 msgid "Grab a window instead of the entire screen"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1222
+#: gnome-panel/gnome-panel-screenshot.c:1224
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1274
+#: gnome-panel/gnome-panel-screenshot.c:1276
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1298
+#: gnome-panel/gnome-panel-screenshot.c:1300
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "ഈ പണിയിടത്തിന്റെ തിരച്ചിത്രം എടുക്കാനാവുന്നില്ല"
 
@@ -1526,7 +1119,7 @@ msgstr "പ്രവ‍ര്ത്തന വിവര സമാഹാരം"
 msgid "GNOME Panel Shell"
 msgstr "ജിനോം പ്രധാന ഇ-സ്ഥലം"
 
-#: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:265
+#: gnome-panel/gnome-run.c:242 gnome-panel/gnome-run.c:263
 #, c-format
 msgid ""
 "<b>Failed to run this program</b>\n"
@@ -1537,7 +1130,7 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: gnome-panel/gnome-run.c:388 gnome-panel/gnome-run.c:468
+#: gnome-panel/gnome-run.c:386 gnome-panel/gnome-run.c:466
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1548,7 +1141,7 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: gnome-panel/gnome-run.c:495
+#: gnome-panel/gnome-run.c:493
 #, fuzzy, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1556,7 +1149,7 @@ msgid ""
 "Details: no application available to open file"
 msgstr "%s ശേഖരം തുറക്കുന്നതില്‌‌ പരാജയം : %s"
 
-#: gnome-panel/gnome-run.c:510
+#: gnome-panel/gnome-run.c:508
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1564,52 +1157,60 @@ msgid ""
 "Details: %s"
 msgstr "%s ശേഖരം തുറക്കുന്നതില്‌‌ പരാജയം : %s"
 
-#: gnome-panel/gnome-run.c:599
+#: gnome-panel/gnome-run.c:597
 msgid "Choose a file"
 msgstr "ഒരു രചന തിരഞ്ഞെടുക്കുക"
 
-#: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
+#: gnome-panel/gnome-run.c:823 gnome-panel/gnome-run.c:824
 msgid "Known Applications"
 msgstr "ലഭ്യമായ പ്രയോഗങ്ങള്‌"
 
-#: gnome-panel/gnome-run.c:970
+#: gnome-panel/gnome-run.c:949
 msgid "Command to run"
 msgstr "പ്രവ‍ര്ത്തിപ്പിക്കാനുള്ള നിര്‍ദ്ദേശം"
 
-#: gnome-panel/gnome-run.c:1005
+#: gnome-panel/gnome-run.c:984
 msgid "Run in _terminal"
 msgstr "ടെ‍ര്മ്മിനലില് പ്രവ‍ര്ത്തിപ്പിക്കുക"
 
-#: gnome-panel/gnome-run.c:1010
+#: gnome-panel/gnome-run.c:989
 msgid "_Append File..."
 msgstr "രചന ഘടിപ്പിക്കുക..."
 
-#: gnome-panel/gnome-run.c:1396
+#: gnome-panel/gnome-run.c:1370
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "%s - നിര്‍ദ്ദേശം പ്രവ‍ര്ത്തിക്കും"
 
-#: gnome-panel/gnome-run.c:1405
+#: gnome-panel/gnome-run.c:1379
 msgid "No application selected"
 msgstr "പ്രയോഗമൊന്നും തെരഞ്ഞെടുത്തിട്ടില്ല"
 
-#: gnome-panel/gnome-run.c:1526
+#: gnome-panel/gnome-run.c:1500
 msgid "List of known applications"
 msgstr "അറിയാവുന്ന പ്രയോഗങ്ങളുടെ നാമാവലി"
 
-#: gnome-panel/gnome-run.c:1527
+#: gnome-panel/gnome-run.c:1501
 msgid "Choose an application to run from the list"
 msgstr "നാമാവലിയില് നിന്നും ഒരു പ്രയോഗം പ്രവ‍ര്ത്തിക്കാനായി തിരഞ്ഞെടുക്കുക"
 
-#: gnome-panel/gnome-run.c:1653 gnome-panel/panel-action-button.c:203
+#: gnome-panel/gnome-run.c:1619 gnome-panel/panel-action-button.c:200
 msgid "Run Program"
 msgstr "നിര്‍ദ്ദേശം നടപ്പിലാക്കുക"
 
-#: gnome-panel/launcher.c:100
+#: gnome-panel/launcher.c:157
+#, c-format
+msgid ""
+"Cannot save launcher to disk, the following error occured:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: gnome-panel/launcher.c:187
 msgid "This launch icon does not specify a url to show"
 msgstr ""
 
-#: gnome-panel/launcher.c:109
+#: gnome-panel/launcher.c:196
 #, c-format
 msgid ""
 "Cannot show %s\n"
@@ -1618,7 +1219,7 @@ msgstr ""
 "%s കാണിക്കാന് കഴിയുന്നില്ല\n"
 "%s"
 
-#: gnome-panel/launcher.c:141
+#: gnome-panel/launcher.c:228
 #, c-format
 msgid ""
 "<b>Cannot launch icon</b>\n"
@@ -1629,7 +1230,7 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: gnome-panel/launcher.c:194
+#: gnome-panel/launcher.c:273
 #, fuzzy, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1639,44 +1240,36 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: gnome-panel/launcher.c:375
+#: gnome-panel/launcher.c:452
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 
-#: gnome-panel/launcher.c:395
+#: gnome-panel/launcher.c:471
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 
-#: gnome-panel/launcher.c:509
+#: gnome-panel/launcher.c:585
 #, c-format
 msgid "Help on %s _Application"
 msgstr "%s അനുപ്രയോഗങ്ങളെ സഹായിക്കുക‌"
 
-#: gnome-panel/launcher.c:631 gnome-panel/menu-ditem.c:180
+#: gnome-panel/launcher.c:705 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
 msgid "Launcher Properties"
 msgstr "വിക്ഷേപിണിയുടെ ഗുണഗണങ്ങള്‌"
 
-#: gnome-panel/launcher.c:742
+#: gnome-panel/launcher.c:827
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr ""
 
-#: gnome-panel/launcher.c:842 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:879 gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
 msgstr "വിക്ഷേപിണി‌ നിര്മ്മിക്കുക"
 
-#: gnome-panel/launcher.c:1068
-#, c-format
-msgid ""
-"Cannot save launcher to disk, the following error occured:\n"
-"\n"
-"%s"
-msgstr ""
-
-#: gnome-panel/launcher.c:1155 gnome-panel/menu.c:1188
-#: gnome-panel/panel-util.c:96
+#: gnome-panel/launcher.c:1066 gnome-panel/menu.c:1220
+#: gnome-panel/panel-util.c:80
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -1687,26 +1280,70 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: gnome-panel/main.c:149
+#: gnome-panel/main.c:104
 msgid "Specify a profile name to load"
 msgstr "തുടങ്ങേണ്ട അവസ്ഥ ഏതെന്ന് വ്യക്തമാക്കുക"
 
-#: gnome-panel/menu.c:240
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3142
+#: gnome-panel/panel-menu-bar.c:160
+msgid "Log Out"
+msgstr "പുറത്ത് പോകുക"
+
+#: gnome-panel/menu.c:114
+msgid ""
+"Log out of this session to log in as a different user or to shut down the "
+"computer"
+msgstr ""
+
+#: gnome-panel/menu.c:121
+msgid "Lock"
+msgstr "പൂട്ട്"
+
+#: gnome-panel/menu.c:124
+msgid "Lock the screen so you can temporarily leave your computer"
+msgstr ""
+
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:210
+msgid "Screenshot"
+msgstr "തിരച്ചിത്രം"
+
+#: gnome-panel/menu.c:134 gnome-panel/menu.c:3343
+msgid "Take a screenshot of your desktop"
+msgstr "നിങ്ങളുടെ പണിയിടത്തിന്റെ തിരച്ചിത്രം എടുക്കുക"
+
+#: gnome-panel/menu.c:141
+msgid "Search"
+msgstr "തെരയുക"
+
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3324
+#: gnome-panel/panel-menu-bar.c:124
+msgid "Find files, folders, and documents on your computer"
+msgstr "നിങ്ങളുടെ കംപ്യ‍ൂട്ടറില് രചന,കൂട് എന്നിവ കണ്ടെത്തുക"
+
+#: gnome-panel/menu.c:151
+msgid "Run"
+msgstr "പ്രവ‍ര്ത്തിപ്പിക്കുക"
+
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3312
+msgid "Run a command"
+msgstr "ഒരു നിര്‌ദ്ദേശം പ്രവ‍ര്ത്തിക്കുക"
+
+#: gnome-panel/menu.c:274
 msgid "Many, many others..."
 msgstr "കുറെയധികം..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:242
+#: gnome-panel/menu.c:276
 msgid "and finally, The Knights Who Say... NI!"
 msgstr ""
 
-#: gnome-panel/menu.c:277
+#: gnome-panel/menu.c:311
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
 msgstr ""
 
-#: gnome-panel/menu.c:283
+#: gnome-panel/menu.c:317
 msgid ""
 "\n"
 "\n"
@@ -1714,15 +1351,15 @@ msgid ""
 "prohibited any changes to the panel's configuration to take place."
 msgstr ""
 
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:323
 msgid "The GNOME Panel"
 msgstr "ഗ്നോം പാളി"
 
-#: gnome-panel/menu.c:311
+#: gnome-panel/menu.c:345
 msgid "End world hunger"
 msgstr ""
 
-#: gnome-panel/menu.c:329
+#: gnome-panel/menu.c:363
 #, c-format
 msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
@@ -1730,7 +1367,7 @@ msgid ""
 "Details: %s probably does not exist"
 msgstr ""
 
-#: gnome-panel/menu.c:353
+#: gnome-panel/menu.c:387
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1741,7 +1378,7 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1162 gnome-panel/menu.c:1199
+#: gnome-panel/menu.c:397 gnome-panel/menu.c:1194 gnome-panel/menu.c:1231
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1752,7 +1389,7 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: gnome-panel/menu.c:1066
+#: gnome-panel/menu.c:1098
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1763,249 +1400,153 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s\n"
 
-#: gnome-panel/menu.c:1076
+#: gnome-panel/menu.c:1108
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "ശേഖരം \"%s\" തുറക്കാനായില്ല "
 
-#: gnome-panel/menu.c:1083
+#: gnome-panel/menu.c:1115
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "%s എന്ന കൂട് ഉണ്ടാക്കാന്‌ കഴിയുന്നില്ല:"
 
-#: gnome-panel/menu.c:1153
+#: gnome-panel/menu.c:1185
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
 "Details: No 'Exec' or 'URL' field in entry"
 msgstr ""
 
-#: gnome-panel/menu.c:1463
+#: gnome-panel/menu.c:1464
 msgid "Add this launcher to panel"
 msgstr "ഈ വലിപ്പ് പാനലില് ചേ‍ര്ക്കുക"
 
-#: gnome-panel/menu.c:1471
+#: gnome-panel/menu.c:1472
 msgid "Remove this item"
 msgstr "ഈ ഇനം നീക്കം ചെയ്യ‍ുക"
 
-#: gnome-panel/menu.c:1487
+#: gnome-panel/menu.c:1488
 msgid "Put into run dialog"
 msgstr "നിര്‌ദ്ദേശം പ്രവ‌ര്ത്തിപ്പിക്കല് ഉപകരണത്തില് ഇടുക"
 
-#: gnome-panel/menu.c:1505
+#: gnome-panel/menu.c:1506
 #, c-format
 msgid "Help on %s"
 msgstr "%s -ന‍് സഹായം"
 
-#: gnome-panel/menu.c:1506
+#: gnome-panel/menu.c:1507
 msgid "Application"
 msgstr "പ്രയോഗം"
 
-#: gnome-panel/menu.c:1552
+#: gnome-panel/menu.c:1553
 msgid "Entire menu"
 msgstr "പട്ടിക മുഴുവനും"
 
-#: gnome-panel/menu.c:1561
+#: gnome-panel/menu.c:1562
 msgid "Add this as drawer to panel"
 msgstr "ഈ വലിപ്പ് പാനലില് ചേ‍ര്ക്കുക"
 
-#: gnome-panel/menu.c:1569
+#: gnome-panel/menu.c:1570
 msgid "Add this as menu to panel"
 msgstr "ഈ പട്ടിക പാനലില് ചേ‍ര്ക്കുക"
 
-#: gnome-panel/menu.c:1577
+#: gnome-panel/menu.c:1578
 msgid "Add new item to this menu"
 msgstr "ഈ പട്ടികയില്‌ പുതിയ ഇനം കൂട്ടിച്ചേര്‌ക്കൂ"
 
-#: gnome-panel/menu.c:1603
+#: gnome-panel/menu.c:1604
 msgid "Properties"
 msgstr "ഗുണഗണങ്ങള്‌"
 
-#: gnome-panel/menu.c:2532 gnome-panel/menu.c:2587 gnome-panel/menu.c:2623
-#: libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2515 gnome-panel/menu.c:2570
+#: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr ""
 
-#: gnome-panel/menu.c:2894 gnome-panel/menu.c:2899
-msgid "Aligned Panel"
-msgstr "ക്രമീകരിച്ച പാളി"
+#: gnome-panel/menu.c:2756 gnome-panel/menu.c:2761 gnome-panel/menu.c:3280
+#: gnome-panel/panel-menu-bar.c:182
+msgid "Applications"
+msgstr "പ്രയോഗങ്ങള്‌"
 
-#: gnome-panel/menu.c:2900
-msgid "GNOME Aligned Panel"
-msgstr "ഗ്നോം ക്രമീകരിച്ച പാളി"
-
-#: gnome-panel/menu.c:2917 gnome-panel/menu.c:2921
-#: gnome-panel/panel-config.c:1727
-msgid "Edge Panel"
-msgstr "അഗ്ര പാളി"
-
-#: gnome-panel/menu.c:2922
-msgid "GNOME Edge Panel"
-msgstr "ഗ്നോം അഗ്ര പാളി"
-
-#: gnome-panel/menu.c:2943 gnome-panel/menu.c:2947
-#: gnome-panel/panel-config.c:1749
-msgid "Sliding Panel"
-msgstr "തെന്നി പാളി"
-
-#: gnome-panel/menu.c:2948
-msgid "GNOME Sliding Panel"
-msgstr "ഗ്നോം തെന്നി പാളി"
-
-#: gnome-panel/menu.c:2966 gnome-panel/menu.c:2971
-#: gnome-panel/panel-config.c:1760
-msgid "Floating Panel"
-msgstr "പ്ളവന പാളി"
-
-#: gnome-panel/menu.c:2972
-msgid "GNOME Floating Panel"
-msgstr "ഗ്നോം പ്ളവന പാളി"
-
-#: gnome-panel/menu.c:2992
-msgid "You can only have one menu panel at a time."
-msgstr "പട്ടിക പാളി ഒന്നിലധികം ഒരേ സമയം ഉപയോഗിക്കാനാവില്ല"
-
-#: gnome-panel/menu.c:3037
-msgid "C_orner Panel"
-msgstr "മൂല പാളി"
-
-#: gnome-panel/menu.c:3039
-msgid "Create corner panel"
-msgstr "മൂല പാളി ഉണ്ടാക്കുക"
-
-#: gnome-panel/menu.c:3047
-msgid "_Edge Panel"
-msgstr "അഗ്ര പാളി"
-
-#: gnome-panel/menu.c:3049
-msgid "Create edge panel"
-msgstr "അഗ്ര പാളി ഉണ്ടാക്കുക"
-
-#: gnome-panel/menu.c:3057
-msgid "_Floating Panel"
-msgstr "പ്ളവന പാളി"
-
-#: gnome-panel/menu.c:3059
-msgid "Create floating panel"
-msgstr "പ്ളവന പാളി ഉണ്ടാക്കുക"
-
-#: gnome-panel/menu.c:3067
-msgid "_Sliding Panel"
-msgstr "തെന്നി പാളി"
-
-#: gnome-panel/menu.c:3069
-msgid "Create sliding panel"
-msgstr "തെന്നി പാളി ഉണ്ടാക്കുക"
-
-#: gnome-panel/menu.c:3079
-msgid "_Menu Panel"
-msgstr "പട്ടിക പാളി"
-
-#: gnome-panel/menu.c:3081
-msgid "Create menu panel"
-msgstr "പട്ടിക പാളി ഉണ്ടാക്കുക"
-
-#: gnome-panel/menu.c:3170 gnome-panel/menu.c:3176 gnome-panel/menu.c:3642
+#: gnome-panel/menu.c:2804 gnome-panel/menu.c:2810 gnome-panel/menu.c:3205
 msgid "KDE Menu"
 msgstr "കെ.ഡി.ഇ പട്ടിക"
 
-#: gnome-panel/menu.c:3233
-msgid "Lock"
-msgstr "പൂട്ട്"
-
-#: gnome-panel/menu.c:3242 gnome-panel/panel-action-button.c:213
-msgid "Screenshot"
-msgstr "തിരച്ചിത്രം"
-
-#: gnome-panel/menu.c:3251
-msgid "Search"
-msgstr "തെരയുക"
-
-#: gnome-panel/menu.c:3260
-msgid "Run"
-msgstr "പ്രവ‍ര്ത്തിപ്പിക്കുക"
-
-#: gnome-panel/menu.c:3284
+#: gnome-panel/menu.c:2862
 msgid "You cannot remove your last panel."
 msgstr "അവസാന പാളി നിങ്ങള്‍ക്കൊഴിവാക്കനാവില്ല."
 
-#: gnome-panel/menu.c:3340
+#: gnome-panel/menu.c:2918
 msgid "_Delete This Panel..."
 msgstr "ഈ പാളി നീക്കം ചെയ്യ‍ുക..."
 
-#: gnome-panel/menu.c:3343 gnome-panel/menu.c:3385
+#: gnome-panel/menu.c:2921 gnome-panel/menu.c:2951
 msgid "_Delete This Panel"
 msgstr "ഈ പാളി നീക്കം ചെയ്യ‍ുക"
 
-#: gnome-panel/menu.c:3365
+#: gnome-panel/menu.c:2935
 msgid "_Add to Panel"
 msgstr "പാളിയിലേക്ക് കൂട്ടിച്ചേര്ക്കുക"
 
-#: gnome-panel/menu.c:3414
+#: gnome-panel/menu.c:2978
 msgid "_New Panel"
 msgstr "പുതിയ പാളി"
 
-#: gnome-panel/menu.c:3456
+#: gnome-panel/menu.c:3021
 msgid "_About Panels"
 msgstr "പാളിയെ കുറിച്ച്"
 
-#: gnome-panel/menu.c:3469
+#: gnome-panel/menu.c:3034
 msgid "About _GNOME"
 msgstr "ഗ്നോം-നെ കുറിച്ച്"
 
-#: gnome-panel/menu.c:3509
+#: gnome-panel/menu.c:3074
 msgid "Launcher..."
 msgstr "വിക്ഷേപിണി..."
 
-#: gnome-panel/menu.c:3517
+#: gnome-panel/menu.c:3082
 msgid "Launcher from menu"
 msgstr "വിക്ഷേപിണി-പട്ടികയില് നിന്നും"
 
-#: gnome-panel/menu.c:3526
-msgid "Button"
-msgstr "മൊട്ട്"
-
-#: gnome-panel/menu.c:3536 gnome-panel/menu.c:3866 gnome-panel/menu.c:3894
-#: gnome-panel/menu.c:4112
+#: gnome-panel/menu.c:3091
 msgid "Main Menu"
 msgstr "പ്രധാന പട്ടിക"
 
-#: gnome-panel/menu.c:3573
+#: gnome-panel/menu.c:3100
+#, fuzzy
+msgid "Menu Bar"
+msgstr "പട്ടിക"
+
+#: gnome-panel/menu.c:3130 gnome-panel/panel-menu-bar.c:151
+msgid "Lock Screen"
+msgstr "താല്ക്കാലിക പൂട്ട്"
+
+#: gnome-panel/menu.c:3136
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 
-#: gnome-panel/menu.c:3585
+#: gnome-panel/menu.c:3148
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr ""
 
-#: gnome-panel/menu.c:3750
-msgid "Run a command"
-msgstr "ഒരു നിര്‌ദ്ദേശം പ്രവ‍ര്ത്തിക്കുക"
+#: gnome-panel/menu.c:3305 gnome-panel/panel-menu-bar.c:109
+msgid "Run Program..."
+msgstr "നിര്‍ദ്ദേശം പ്രവ‍ര്ത്തിപ്പിക്കുക..."
 
-#: gnome-panel/menu.c:3796
+#: gnome-panel/menu.c:3321 gnome-panel/panel-menu-bar.c:122
+msgid "Search for Files..."
+msgstr "രചനകള് കണ്ടെത്തുക..."
+
+#: gnome-panel/menu.c:3340 gnome-panel/panel-menu-bar.c:137
+msgid "Screenshot..."
+msgstr "തിരച്ചിത്രം..."
+
+#: gnome-panel/menu.c:3358
 msgid "Desktop"
 msgstr "പണിയിടം"
-
-#: gnome-panel/menu.c:3814 gnome-panel/menu-ditem.c:290
-msgid "Menu"
-msgstr "പട്ടിക"
-
-#: gnome-panel/menu.c:3816
-msgid "Menu:"
-msgstr "പട്ടിക:"
-
-# പട്ടിക ഉണ്ടാക്കാന് കഴിയിന്നില്ല, പ്രധാന പട്ടിക ഉപയോഗിക്കുന്നു!
-#: gnome-panel/menu.c:3888
-msgid "Can't create menu, using main menu!"
-msgstr "പ്രധാന പട്ടിക ഉപയോഗിച്ച് പട്ടിക ഉണ്ടാക്കാന് കഴിയില്ല"
-
-#: gnome-panel/menu.c:4347
-#, c-format
-msgid "No path set at %s for panel menu object\n"
-msgstr ""
 
 #: gnome-panel/menu-ditem.c:123
 #, fuzzy, c-format
@@ -2017,6 +1558,10 @@ msgstr ""
 "ഈ പ്രക്രമം സഞ്ചരിക്കുന്നതില്‌ പരാജയപ്പെടുന്നു</b>\n"
 "\n"
 "വിശദീകരണം: %s"
+
+#: gnome-panel/menu-ditem.c:290
+msgid "Menu"
+msgstr "പട്ടിക"
 
 #: gnome-panel/menu-ditem.c:447
 msgid "You have to specify a name for the launcher."
@@ -2044,61 +1589,57 @@ msgid ""
 "writable."
 msgstr ""
 
-#: gnome-panel/panel-action-button.c:83
+#: gnome-panel/panel-action-button.c:80
 msgid "_Activate Screensaver"
 msgstr "തിരസംരക്ഷിണി സജീവമാക്കുക"
 
-#: gnome-panel/panel-action-button.c:84
+#: gnome-panel/panel-action-button.c:81
 msgid "_Lock Screen"
 msgstr "താല്ക്കാലിക പൂട്ട്"
 
-#: gnome-panel/panel-action-button.c:85
+#: gnome-panel/panel-action-button.c:82
 msgid "_Kill Screensaver Daemon"
 msgstr "തിരസംരക്ഷിണി സജീവമാക്കുക"
 
-#: gnome-panel/panel-action-button.c:86
+#: gnome-panel/panel-action-button.c:83
 msgid "Restart _Screensaver Daemon"
 msgstr "തിരസംക്ഷിണി സജീവമാക്കുക"
 
-#: gnome-panel/panel-action-button.c:155
+#: gnome-panel/panel-action-button.c:152
 #, fuzzy
 msgid "Cannot execute gnome-search-tool"
 msgstr "തിരച്ചിത്ര പ്രയോഗം പ്രവ‌ര്ത്തിപ്പിക്കാന് കഴിയുന്നില്ല"
 
-#: gnome-panel/panel-action-button.c:171
+#: gnome-panel/panel-action-button.c:168
 msgid "Cannot execute gnome-panel-screenshot"
 msgstr "തിരച്ചിത്ര പ്രയോഗം പ്രവ‌ര്ത്തിപ്പിക്കാന് കഴിയുന്നില്ല"
 
-#: gnome-panel/panel-action-button.c:191
+#: gnome-panel/panel-action-button.c:188
 msgid "Lock screen"
 msgstr "താല്ക്കാലിക പൂട്ട്"
 
-#: gnome-panel/panel-action-button.c:198
+#: gnome-panel/panel-action-button.c:195
 msgid "Log out of GNOME"
 msgstr "ഗ്നോം-ല് നിന്നും പുറത്ത് പോകുക"
 
-#: gnome-panel/panel-action-button.c:208
+#: gnome-panel/panel-action-button.c:205
 msgid "Search for Files"
 msgstr "രചനകള് തെരയുക"
 
-#: gnome-panel/panel-action-button.c:364
+#: gnome-panel/panel-action-button.c:350
 msgid "Action Type"
 msgstr "പ്ര‌വ‍ര്ത്തനതരം"
 
-#: gnome-panel/panel-action-button.c:365
+#: gnome-panel/panel-action-button.c:351
 msgid "The type of action this button implements"
 msgstr "ഈ മൊട്ടിലുള്ള പ്രവ‌ര്ത്തനത്തിന്റെ തരം"
 
-#: gnome-panel/panel-applet-frame.c:185
-msgid "Cannot register control widget\n"
-msgstr ""
-
-#: gnome-panel/panel-applet-frame.c:602
+#: gnome-panel/panel-applet-frame.c:622
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:711
+#: gnome-panel/panel-applet-frame.c:731
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2109,11 +1650,11 @@ msgid ""
 "clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:746
+#: gnome-panel/panel-applet-frame.c:766
 msgid "D_on't Delete"
 msgstr "നീക്കം ചെയ്യരുത്"
 
-#: gnome-panel/panel-applet-frame.c:780
+#: gnome-panel/panel-applet-frame.c:800
 #, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -2122,238 +1663,467 @@ msgid ""
 "Do you want to delete the applet from your configuration?"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:878
+#: gnome-panel/panel-applet-frame.c:898
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 
-#: gnome-panel/panel.c:891
+#: gnome-panel/panel-bindings.c:167
+#, c-format
+msgid "Error watching gconf key '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-bindings.c:185
+#, fuzzy, c-format
+msgid "Error loading gconf dir '%s': %s"
+msgstr "സൂചകം നിറയ‌്ക്കുന്നതില്‌ പരാജയം : %s"
+
+#: gnome-panel/panel-bindings.c:199
+#, c-format
+msgid "error getting value for '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel.c:455
 #, c-format
 msgid "Open URL: %s"
 msgstr "%s URL:തുറക്കുന്നതിനായി"
 
-#: gnome-panel/panel.c:2609
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
-msgstr ""
-
-#: gnome-panel/panel.c:2892
+#: gnome-panel/panel.c:1172
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
 msgstr ""
 
-#: gnome-panel/panel.c:2901
+#: gnome-panel/panel.c:1181
 msgid "Delete Panel"
 msgstr "പാളി നീക്കം ചെയ്യ‍ുക"
 
-#. Auto-hide
-#: gnome-panel/panel-config.c:546
-msgid "_Autohide"
-msgstr "സ്വയം ഒളിക്കുക"
-
-#. Hidebuttons enable
-#: gnome-panel/panel-config.c:557
-msgid "Show hide _buttons"
-msgstr "ഒളിപ്പിക്കല് മൊട്ടുകള് കാണിക്കുക"
-
-#. Arrow enable
-#: gnome-panel/panel-config.c:569
-msgid "Arro_ws on hide buttons"
-msgstr "ഒളിപ്പിക്കല് മൊട്ടുകള് കാണിക്കുക"
-
-#: gnome-panel/panel-config.c:624
-msgid "Miscellaneous:"
-msgstr "പലവക:"
-
-#: gnome-panel/panel-config.c:642
-msgid "Current screen:"
-msgstr "സജീവ തിരശ്ശീല:"
-
-#: gnome-panel/panel-config.c:658
-msgid "Current monitor:"
-msgstr "സജീവ ദൃശ്യം"
-
-#: gnome-panel/panel-config.c:750
-msgid "Indicates the panel position and orientation on screen"
+#: gnome-panel/panel-frame.c:261
+msgid "Edges"
 msgstr ""
 
-#: gnome-panel/panel-config.c:768
-msgid "_Position:"
-msgstr "സ്ഥാനം"
-
-#: gnome-panel/panel-config.c:993 libpanel-applet/panel-test-applets.glade.h:6
-msgid "Orientation:"
-msgstr "സ്ഥാന നിര്ണ്ണയം"
-
-#: gnome-panel/panel-config.c:1008
-msgid "Hori_zontal"
-msgstr "തിരശ്ചീനം"
-
-#: gnome-panel/panel-config.c:1020
-msgid "_Vertical"
-msgstr "ലംബം"
-
-#: gnome-panel/panel-config.c:1030
-msgid "Position:"
-msgstr "സ്ഥാനം:"
-
-#: gnome-panel/panel-config.c:1045
-msgid "H_orizontal:"
-msgstr "തിരശ്ചീനം:"
-
-#: gnome-panel/panel-config.c:1065
-msgid "Ver_tical:"
-msgstr "ലംബം:"
-
-#: gnome-panel/panel-config.c:1130
-msgid "_Distance from edge:"
-msgstr "അഗ്രത്തില് നിന്നുള്ള അകലം"
-
-#: gnome-panel/panel-config.c:1189
-msgid "_Size:"
-msgstr "വലിപ്പം:"
-
-#: gnome-panel/panel-config.c:1197
-#: libpanel-applet/panel-test-applets.glade.h:15
-msgid "XX Small"
-msgstr "XX ചെറിയ"
-
-#: gnome-panel/panel-config.c:1205
-#: libpanel-applet/panel-test-applets.glade.h:13
-msgid "X Small"
-msgstr "X ചെറിയ"
-
-#: gnome-panel/panel-config.c:1213
-#: libpanel-applet/panel-test-applets.glade.h:10
-msgid "Small"
-msgstr "ചെറിയ"
-
-#: gnome-panel/panel-config.c:1229
-#: libpanel-applet/panel-test-applets.glade.h:3
-msgid "Large"
-msgstr "വലിയ"
-
-#: gnome-panel/panel-config.c:1237
-#: libpanel-applet/panel-test-applets.glade.h:12
-msgid "X Large"
-msgstr "X വലിയ"
-
-#: gnome-panel/panel-config.c:1245
-#: libpanel-applet/panel-test-applets.glade.h:14
-msgid "XX Large"
-msgstr "XX വലിയ"
-
-#: gnome-panel/panel-config.c:1420
-msgid "_Type:"
-msgstr "തരം:"
-
-#: gnome-panel/panel-config.c:1429
-msgid "Default"
-msgstr "സ്വതേ"
-
-#: gnome-panel/panel-config.c:1431
-msgid "Color"
-msgstr "വ‍ര്ണ്ണങ്ങള്‌"
-
-#: gnome-panel/panel-config.c:1433
-msgid "Image"
-msgstr "ചിത്രം"
-
-#: gnome-panel/panel-config.c:1435
-msgid "Transparent"
-msgstr "സുതാര്യം"
-
-#: gnome-panel/panel-config.c:1450
-msgid "_Color:"
-msgstr "വ‍ര്ണ്ണ‍ങ്ങള്‌:"
-
-#. image frame
-#: gnome-panel/panel-config.c:1480
-msgid "Image:"
-msgstr "ചിത്രം:"
-
-#: gnome-panel/panel-config.c:1512
-msgid "T_ile"
-msgstr "ഓട്"
-
-#: gnome-panel/panel-config.c:1517
-msgid "_Scale"
-msgstr "തോത്"
-
-#: gnome-panel/panel-config.c:1521
-msgid "St_retch"
-msgstr "വലിക്കുക"
-
-#: gnome-panel/panel-config.c:1535
-msgid "Rotate image when panel is _vertical"
+#: gnome-panel/panel-frame.c:262
+msgid "Which edges to draw"
 msgstr ""
 
-#: gnome-panel/panel-config.c:1596
-msgid "Edge panel"
-msgstr "അഗ്ര പാളി"
+#: gnome-panel/panel-general.schemas.in.h:1
+msgid "A list of panel IDs"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1603
-msgid "Corner panel"
-msgstr "മൂല പാളി"
+#: gnome-panel/panel-general.schemas.in.h:2
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels is stored in /apps/panel/general/"
+"$(profile)/toplevels/$(id)."
+msgstr ""
 
-#: gnome-panel/panel-config.c:1609
-msgid "Sliding panel"
-msgstr "തെന്നി പാളി"
+#: gnome-panel/panel-general.schemas.in.h:3
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets is stored in /apps/panel/general/"
+"$(profiles)/applets/$(id)."
+msgstr ""
 
-#: gnome-panel/panel-config.c:1615
-msgid "Floating panel"
-msgstr "പ്ളവന പാളി"
+#: gnome-panel/panel-general.schemas.in.h:4
+msgid "A list of panel applet Ids"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1693
-msgid "Panel Properties"
-msgstr "‌പാളി-ഗുണഗണങ്ങള്‌"
+#: gnome-panel/panel-general.schemas.in.h:5
+msgid "A list of panel object IDs"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1738
-msgid "Corner Panel"
-msgstr "മൂല പാളി"
+#: gnome-panel/panel-general.schemas.in.h:6
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these applets is stored in /apps/panel/general/$(profiles)/objects/$(id)."
+msgstr ""
 
-#: gnome-panel/panel-config.c:1779
-msgid "Background"
-msgstr "പശ്ചാത്തലം"
+#: gnome-panel/panel-general.schemas.in.h:7
+#, fuzzy
+msgid "Enable the program list in the \"Run Program\" dialog."
+msgstr "അവസ്ഥാപ്പട്ടയില് സൂചികാ സ്ഥാനം കാണിക്കുക"
 
-#: gnome-panel/panel-global-config.schemas.in.h:1
+#: gnome-panel/panel-general.schemas.in.h:8
+#, fuzzy
+msgid "Expand the program list in the \"Run Program\" dialog"
+msgstr "അവസ്ഥാപ്പട്ടയില് സൂചികാ സ്ഥാനം കാണിക്കുക"
+
+#: gnome-panel/panel-general.schemas.in.h:9
+msgid ""
+"If true the \"Known Applications\" listing in the \"Run Program\" dialog is "
+"made available. Whether or not the listing is expanded when the dialog is "
+"shown is controlled by the show_program_list setting."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:10
+msgid ""
+"If true the \"Known Applications\" listing in the \"Run Program\" is "
+"expanded when the dialog is opened. This setting is only relevant if "
+"enable_program_list is true."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:1
 msgid "Display \"Run\" dialog"
 msgstr ""
 
-#: gnome-panel/panel-global-config.schemas.in.h:2
+#: gnome-panel/panel-global.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
 msgstr ""
 
-#: gnome-panel/panel-global-config.schemas.in.h:3
+#: gnome-panel/panel-global.schemas.in.h:3
 msgid "FIXME - need to define limits"
 msgstr ""
 
-#: gnome-panel/panel-global-config.schemas.in.h:4
+#: gnome-panel/panel-global.schemas.in.h:4
 msgid "Popup the panel menu"
 msgstr ""
 
-#: gnome-panel/panel-global-config.schemas.in.h:5
+#: gnome-panel/panel-global.schemas.in.h:5
 msgid "Take a screen shot"
 msgstr "തിരച്ചിത്രം എടുക്കുക"
 
-#: gnome-panel/panel-global-config.schemas.in.h:6
+#: gnome-panel/panel-global.schemas.in.h:6
 msgid "Take a screen shot of a window"
 msgstr "ഒരു ജാലകത്തിന്റെ തിരച്ചിത്രം എടുക്കുക"
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:1
-#, fuzzy
-msgid "Enable the program listing in the run box"
-msgstr "അവസ്ഥാപ്പട്ടയില് സൂചികാ സ്ഥാനം കാണിക്കുക"
+#: gnome-panel/panel-menu-bar.c:111
+msgid "Run applications, if you know the correct command to type in"
+msgstr "നിങ്ങള്ക്ക് ശരിയായ കല്പ്പന അറിയാമെങ്കില്, പ്രയോഗത്തെ പ്രവ‍ര്ത്തിപ്പിക്കുക"
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:2
+#: gnome-panel/panel-menu-bar.c:139
 #, fuzzy
-msgid "Show the program listing by default when opening the Run box"
-msgstr "അവസ്ഥാപ്പട്ടയില് സൂചികാ സ്ഥാനം കാണിക്കുക"
+msgid "Take a screenshot"
+msgstr "തിരച്ചിത്രം എടുക്കുക"
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
-msgid "Show the program listing in the Run box"
-msgstr "അവസ്ഥാപ്പട്ടയില് സൂചികാ സ്ഥാനം കാണിക്കുക"
+#: gnome-panel/panel-menu-bar.c:153
+msgid "Protect your computer from unauthorized use"
+msgstr "നിങ്ങളുടെ കംപ്യ‍ൂട്ടര് അനുവാദമില്ലാതെ ഉപയോഗിക്കുന്നത് തടയുക"
+
+#: gnome-panel/panel-menu-bar.c:162
+msgid "Quit from the GNOME desktop"
+msgstr "പണിയിടത്തില്‌ നിന്നും പുറത്ത് കടക്കുക"
+
+#: gnome-panel/panel-menu-button.c:400
+#, fuzzy
+msgid "Menu Path"
+msgstr "പട്ടിക പാളി"
+
+#: gnome-panel/panel-menu-button.c:401
+msgid "The path from which to construct the menu"
+msgstr ""
+
+#: gnome-panel/panel-menu-button.c:409
+msgid "Custom Icon"
+msgstr ""
+
+#: gnome-panel/panel-menu-button.c:410
+#, fuzzy
+msgid "The custom icon for the menu"
+msgstr "മൊട്ടിനായി തീരുമാനിച്ച സ്റ്റോക്ക് ചിഹ്നം"
+
+#: gnome-panel/panel-menu-button.c:418
+#, fuzzy
+msgid "Use Menu Path"
+msgstr "പട്ടിക പാളി"
+
+#: gnome-panel/panel-menu-button.c:419
+msgid "Use the path specified by the menu-path property"
+msgstr ""
+
+#: gnome-panel/panel-menu-button.c:427
+msgid "Use Custom Icon"
+msgstr ""
+
+#: gnome-panel/panel-menu-button.c:428
+msgid "Use the icon specified by the custom-icon property"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:1
+msgid ""
+"If true the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:2
+msgid ""
+"If true, the custom_icon setting is used as a custom icon for the button. If "
+"false, the custom_icon setting is ignored. This setting is only relevant if "
+"the object_type is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:3
+msgid ""
+"If true, the menu_path setting is used as the path from which the menu "
+"contents should be constructed. If false, the menu_path setting is ignored. "
+"This setting is only relevant if the object_type is \"menu-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:4
+msgid "Interpret the position relative to the bottom/right edge"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:5
+msgid "The Bonobo IID of the applet"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:6
+msgid ""
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This setting is only relevant if the object_type is \"bonobo-applet\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:7
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This setting is only "
+"relevant if the object_type is \"action-applet\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:8
+msgid "The icon used for the object's button"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:9
+msgid ""
+"The identifier of the panel attached to this drawer. This setting is only "
+"relevant if the object_type is \"drawer-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:10
+msgid "The identifier of the panel toplevel which contains this object."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:11
+msgid ""
+"The location of the .desktop file describing the launcher. This setting is "
+"only relevant if the object_type is \"launcher-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:12
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This setting is only relevant if the object_type is \"drawer-object\" or "
+"\"menu-object\" and use_custom_icon is true."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:13
+#, fuzzy
+msgid "The location of the launcher"
+msgstr "ഈ വലിപ്പ് പാനലില് ചേ‍ര്ക്കുക"
+
+#: gnome-panel/panel-object.schemas.in.h:14
+msgid "The object's position on the panel"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:15
+msgid "The panel attached to this drawer"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:16
+msgid "The panel toplevel which contains this object"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:17
+msgid "The path for the menu contents"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:18
+msgid ""
+"The path from which the menu contents is contructed. The setting is only "
+"relevant if use_menu_path is true and the object_type is \"menu-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:19
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:20
+msgid ""
+"The text to display in a tooltip for this drawer. This setting is only "
+"relevant if the object_type is \"drawer-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:21
+msgid "The tooltip displayed for this drawer"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:22
+#, fuzzy
+msgid "The type of action button"
+msgstr "ഈ മൊട്ടിലുള്ള പ്രവ‌ര്ത്തനത്തിന്റെ തരം"
+
+#: gnome-panel/panel-object.schemas.in.h:23
+msgid "The type of panel object"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:24
+msgid ""
+"The type of this panel object. There are several possible values - \"drawer-"
+"object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-"
+"applet\" and \"menu-bar\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:25
+msgid "Use a custom icon for the object's button"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:26
+msgid "Use a custom path for the menu contents"
+msgstr ""
+
+#: gnome-panel/panel-profile.c:621 gnome-panel/panel-profile.c:649
+#: gnome-panel/panel-profile.c:685 gnome-panel/panel-profile.c:1344
+#, c-format
+msgid "Error reading GConf string value '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-profile.c:664 gnome-panel/panel-profile.c:1248
+#: gnome-panel/panel-profile.c:1313 gnome-panel/panel-profile.c:1376
+#, c-format
+msgid "Error reading GConf integer value '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-profile.c:1258
+#, c-format
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr ""
+
+#: gnome-panel/panel-profile.c:1328
+#, c-format
+msgid "Error reading GConf boolean value '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-profile.c:1810
+#, c-format
+msgid "Error reading GConf list value '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:1
+msgid "      "
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:3
+msgid "Arro_ws on hide buttons"
+msgstr "ഒളിപ്പിക്കല് മൊട്ടുകള് കാണിക്കുക"
+
+#: gnome-panel/panel-properties-dialog.glade.h:4
+msgid "Background"
+msgstr "പശ്ചാത്തലം"
+
+#: gnome-panel/panel-properties-dialog.glade.h:5
+#, fuzzy
+msgid "Background _image:"
+msgstr "പശ്ചാത്തലം"
+
+#: gnome-panel/panel-properties-dialog.glade.h:6
+#: gnome-panel/panel-toplevel.c:1342
+#: libpanel-applet/panel-test-applets.glade.h:2
+msgid "Bottom"
+msgstr "താഴെ"
+
+#: gnome-panel/panel-properties-dialog.glade.h:7
+#, fuzzy
+msgid "E_xpand"
+msgstr "വികസിതരൂപം"
+
+#: gnome-panel/panel-properties-dialog.glade.h:8
+msgid "General"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:9
+msgid "Image Background Details"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:10
+#: gnome-panel/panel-toplevel.c:1345
+#: libpanel-applet/panel-test-applets.glade.h:4
+msgid "Left"
+msgstr "ഇടത്"
+
+#: gnome-panel/panel-properties-dialog.glade.h:11
+msgid "Opaque"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:12
+msgid "Panel Properties"
+msgstr "‌പാളി-ഗുണഗണങ്ങള്‌"
+
+#: gnome-panel/panel-properties-dialog.glade.h:13
+msgid "Pick a color"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:14
+#: gnome-panel/panel-toplevel.c:1348
+#: libpanel-applet/panel-test-applets.glade.h:8
+msgid "Right"
+msgstr "വലത്"
+
+#: gnome-panel/panel-properties-dialog.glade.h:15
+msgid "Rotate image when panel is _vertical"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:16
+msgid "Show hide _buttons"
+msgstr "ഒളിപ്പിക്കല് മൊട്ടുകള് കാണിക്കുക"
+
+#: gnome-panel/panel-properties-dialog.glade.h:17
+#, fuzzy
+msgid "Solid _Color:"
+msgstr "വ‍ര്ണ്ണ‍ങ്ങള്‌:"
+
+#: gnome-panel/panel-properties-dialog.glade.h:18
+msgid "St_retch"
+msgstr "വലിക്കുക"
+
+#: gnome-panel/panel-properties-dialog.glade.h:19
+#: gnome-panel/panel-toplevel.c:1339
+#: libpanel-applet/panel-test-applets.glade.h:11
+msgid "Top"
+msgstr "മുകളില്"
+
+#: gnome-panel/panel-properties-dialog.glade.h:20
+msgid "Transparent"
+msgstr "സുതാര്യം"
+
+#: gnome-panel/panel-properties-dialog.glade.h:21
+msgid "_Autohide"
+msgstr "സ്വയം ഒളിക്കുക"
+
+#: gnome-panel/panel-properties-dialog.glade.h:22
+#, fuzzy
+msgid "_Name:"
+msgstr "ഉപയോക്തൃ നാമം:"
+
+#: gnome-panel/panel-properties-dialog.glade.h:23
+msgid "_None (use system theme)"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:24
+#, fuzzy
+msgid "_Orientation:"
+msgstr "സ്ഥാന നിര്ണ്ണയം"
+
+#: gnome-panel/panel-properties-dialog.glade.h:25
+msgid "_Scale"
+msgstr "തോത്"
+
+#: gnome-panel/panel-properties-dialog.glade.h:26
+msgid "_Size:"
+msgstr "വലിപ്പം:"
+
+#: gnome-panel/panel-properties-dialog.glade.h:27
+#, fuzzy
+msgid "_Tile"
+msgstr "ഓട്"
+
+#: gnome-panel/panel-properties-dialog.glade.h:28
+#, fuzzy
+msgid "_Transparent background:"
+msgstr "സുതാര്യം"
 
 #: gnome-panel/panel-recent.c:57
 msgid "Couldn't find a suitable application"
@@ -2373,13 +2143,13 @@ msgstr "%s രചന അച്ചടിക്കുന്പോള്‌ ഒര�
 msgid "Open Recent"
 msgstr "പുതുതായവ തുറക്കുക"
 
-#: gnome-panel/panel-shell.c:43
+#: gnome-panel/panel-shell.c:67
 msgid ""
 "I've detected a panel already running,\n"
 "and will now exit."
 msgstr ""
 
-#: gnome-panel/panel-shell.c:47
+#: gnome-panel/panel-shell.c:71
 #, c-format
 msgid ""
 "There was a problem registering the panel with the bonobo-activation "
@@ -2388,31 +2158,471 @@ msgid ""
 "The panel will now exit."
 msgstr ""
 
-#: gnome-panel/panel-stock-icons.c:113
+#: gnome-panel/panel-stock-icons.c:117
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-stock-icons.c:142
+#: gnome-panel/panel-stock-icons.c:146
 msgid "_Run"
 msgstr "നടപ്പിലാക്കുക"
 
+#: gnome-panel/panel-toplevel.c:1356
+#, fuzzy
+msgid "Floating"
+msgstr "പ്ളവന പാളി"
+
+#: gnome-panel/panel-toplevel.c:1359
+#, fuzzy
+msgid "Centered"
+msgstr "വിവരമണ്ഡലം"
+
+#: gnome-panel/panel-toplevel.c:1361
+#, fuzzy
+msgid "Expanded Edge"
+msgstr "വികസിതരൂപം"
+
+#: gnome-panel/panel-toplevel.c:1363
+msgid "Edge"
+msgstr ""
+
+#. Translators: the first argument is the current orientation
+#. * (Top, Bottom, Left or Right) and the second argument is the
+#. * type of panel (Expanded Edge, Edge, Floating or Centered).
+#.
+#: gnome-panel/panel-toplevel.c:1369
+#, fuzzy, c-format
+msgid "%s %s Panel"
+msgstr "പാളി"
+
+#: gnome-panel/panel-toplevel.c:3193
+#, fuzzy
+msgid "Name"
+msgstr "ചിഹ്ന നാമം"
+
+#: gnome-panel/panel-toplevel.c:3194
+#, fuzzy
+msgid "The name of this panel"
+msgstr "ഈ പാളിയുടെ രീതി"
+
+#: gnome-panel/panel-toplevel.c:3203
+#, fuzzy
+msgid "Expand"
+msgstr "വികസിതരൂപം"
+
+#: gnome-panel/panel-toplevel.c:3204
+msgid "Expand to take up the full monitor width/height"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3214
+#, fuzzy
+msgid "The orientation of the panel"
+msgstr "പാളിയുടെ ഇപ്പൊഴത്തെ അവസ്ഥ"
+
+#: gnome-panel/panel-toplevel.c:3225
+msgid "The height (or width when vertivcal) of the panel"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3237
+#, fuzzy
+msgid "X position"
+msgstr "സ്ഥാനം:"
+
+#: gnome-panel/panel-toplevel.c:3238
+msgid "The X position of the panel"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3249
+msgid "X centered"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3250
+msgid "The x co-ordinate is relative to center screen"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3259
+#, fuzzy
+msgid "Y position"
+msgstr "സ്ഥാനം:"
+
+#: gnome-panel/panel-toplevel.c:3260
+msgid "The Y position of the panel"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3271
+msgid "Y centered"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3272
+msgid "The y co-ordinate is relative to center screen"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3281
+msgid "Xinerama monitor"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3282
+msgid "The monitor (in terms of Xinerama) which the panel is on"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3293
+#, fuzzy
+msgid "Auto hide"
+msgstr "സ്വയം ഒളിക്കുക"
+
+#: gnome-panel/panel-toplevel.c:3294
+msgid "Automatically hide the panel when the mouse leaves the panel"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3303
+msgid "Hide delay"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3304
+msgid "The number of miliseconds to delay before automatically hiding"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3315
+msgid "Un-hide delay"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3316
+msgid "The number of miliseconds to delay before automatically un-hiding"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3327
+#, fuzzy
+msgid "Auto-hide size"
+msgstr "സ്വയം ഒളിക്കുക"
+
+#: gnome-panel/panel-toplevel.c:3328
+msgid ""
+"The number of pixels visible when the panel has been automatically hidden"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3339
+msgid "Animate"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3340
+msgid "Enable hiding/showing animations"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3349
+#, fuzzy
+msgid "Animation Speed"
+msgstr "ചലനചിത്ര വേഗത"
+
+#: gnome-panel/panel-toplevel.c:3350
+msgid "The speed at which to animate panel hiding/showing"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3360
+msgid "Buttons Enabled"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3361
+#, fuzzy
+msgid "Enable hide/show buttons"
+msgstr "സ്വയം വിടവുണ്ടാക്കല് സജീവമാക്കുക"
+
+#: gnome-panel/panel-toplevel.c:3370
+msgid "Arrows Enabled"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:3371
+#, fuzzy
+msgid "Enable arrows on hide/show buttons"
+msgstr "ഒളിപ്പിക്കല് മൊട്ടുകള് കാണിക്കുക"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:1
+msgid "A name with which to identify this panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:2
+msgid "Automatically hide the panel into the corner."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:3
+msgid "Center the panel on the x-axis."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:4
+msgid "Center the panel on the y-axis."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:5
+msgid "Delay before automatically hiding the panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:6
+msgid "Delay before automatically un-hiding the panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:7
+#, fuzzy
+msgid "Enable animations."
+msgstr "ചലനചിത്രം തിരഞ്ഞെടുക്കുക:"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:8
+#, fuzzy
+msgid "Enable arrows on the hide buttons."
+msgstr "ഒളിപ്പിക്കല് മൊട്ടുകള് കാണിക്കുക"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:9
+#, fuzzy
+msgid "Enable hide buttons."
+msgstr "സ്വയം വിടവുണ്ടാക്കല് സജീവമാക്കുക"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:10
+msgid "Expand to occupy entire screen width."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:11
+msgid "Fit the image to the panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:12
+msgid ""
+"If true the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:13
+msgid ""
+"If true the x setting is ignored and the panel is placed at the center of "
+"the x-axis of the screen. If the panel is resized it will remain in that "
+"position - i.e. the panel will grow on both sides. If false the x setting "
+"determines the location of the panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:14
+msgid ""
+"If true, arrows will be place on the hide buttons. This preference only has "
+"meaning if enable_buttons is true."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:15
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:16
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantaneously."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:17
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:18
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:19
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this more the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:20
+msgid ""
+"If true, when the pointer leaves the panel area, it is automatically hidden "
+"into a corner of the screen. Moving the pointer to that corner will cause "
+"the panel to re-appear."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:21
+msgid ""
+"In a Xinerama setup, you may have panel's on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:22
+msgid "Number of visible pixels with a hidden panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:23
+#, fuzzy
+msgid "Rotate the image on vertical panels."
+msgstr "ലംബ പാളികളില് കറക്കുക"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:24
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:25
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:26
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This preference is "
+"only relevant if auto_hide is true."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:27
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This preference is only "
+"relevant if auto_hide is true."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:28
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This preference only has relevance when auto_hide is "
+"true."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:29
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535) and the color will be "
+"composited onto the desktop background image."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:30
+#, fuzzy
+msgid "Stretch the image to the panel."
+msgstr "പാളിയുടെ ഇപ്പൊഴത്തെ അവസ്ഥ"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:31
+#, fuzzy
+msgid "The X co-ordinate of the panel."
+msgstr "ഈ പാളിയുടെ രീതി"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:32
+msgid "The X screen the panel is on."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:33
+msgid "The Xinerama monitor the panel is on."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:34
+#, fuzzy
+msgid "The Y co-ordinate of the panel."
+msgstr "ഈ പാളിയുടെ രീതി"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:35
+msgid "The background color opactity."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:36
+msgid "The background color."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:37
+msgid "The background image."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:38
+#, fuzzy
+msgid "The background type."
+msgstr "പശ്ചാത്തലം"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:40
+msgid ""
+"The location of the panel along the x-axis. This value only has meaning in "
+"un-expanded mode. In expanded mode the value is ignored and the panel is "
+"placed at the screen edge indicated by the orientation."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:41
+msgid ""
+"The location of the panel along the y-axis. This value only has meaning in "
+"un-expanded mode. In expanded mode the value is ignored and the panel is "
+"placed at the screen edge indicated by the orientation."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:42
+#, fuzzy
+msgid "The orientation of the panel."
+msgstr "പാളിയുടെ ഇപ്പൊഴത്തെ അവസ്ഥ"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:43
+msgid ""
+"The orientation of the panel. There are for possible values; \"top\", "
+"\"bottom\", \"left\", \"right\". In expanded mode the value specifies which "
+"screen edge the panel is on. In un-expanded mode the difference between \"top"
+"\" and \"bottom\" is less important - both indicate that this is a "
+"horizontal panel - but still give a useful hint as to how some panel objects "
+"should behave. For example, on a \"top\" panel a menu button will pop up its "
+"menu below the panel, whereas on a \"bottom\" panel the menu will be popped "
+"up above the panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:44
+#, fuzzy
+msgid "The size of the panel."
+msgstr "പാളിയുടെ ഇപ്പൊഴത്തെ അവസ്ഥ"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:45
+msgid "The speed of animations."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:46
+msgid ""
+"The speed which animations should occur. There are three possible values; "
+"\"slow\", \"medium\" and \"fast\". This preference only has relevance is "
+"enable_animations is true."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:47
+msgid ""
+"This is a human readable name which you can use to indentify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:48
+msgid ""
+"Which type of background should be used for this panel. There are 3 possible "
+"values; \"gtk\", the default GTK+ widget background will be used, \"color\", "
+"the color preference will be used as the background color or \"image\", the "
+"image specified in the image preference will be used as the background."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:49
+msgid ""
+"With a multi-screen setup, you may have panel's on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:122 gnome-panel/panel-util.c:152
-#: gnome-panel/panel-util.c:177
+#: gnome-panel/panel-util.c:106 gnome-panel/panel-util.c:136
+#: gnome-panel/panel-util.c:161
 msgid "Help document not found"
 msgstr "സഹായ രചന കണ്ടില്ല"
 
-#: gnome-panel/panel-util.c:191
+#: gnome-panel/panel-util.c:175
 msgid "No document to show"
 msgstr "രചനയൊന്നും കാണിക്കാനില്ല"
 
-#: gnome-panel/panel-util.c:639 gnome-panel/panel-util.c:655
-msgid "Disabled"
-msgstr "അപ്രാപ്യം"
-
-#: gnome-panel/panel-util.c:1485
+#: gnome-panel/panel-util.c:1439
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2432,70 +2642,443 @@ msgstr ""
 msgid "Test Bonobo Applet Factory"
 msgstr "GenUtil ചെറുപ്രയോഗ ശാല"
 
-#: libpanel-applet/panel-applet.c:862
+#: libpanel-applet/panel-applet.c:865
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:876
+#: libpanel-applet/panel-applet.c:879
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:885
+#: libpanel-applet/panel-applet.c:888
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "%s ചിത്രം നിറയ്‌ക്കുന്നതില്‌ പരാജയം"
 
-#: libpanel-applet/panel-applet.c:892
+#: libpanel-applet/panel-applet.c:895
 msgid "Unknown background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1073
+#: libpanel-applet/panel-applet.c:1076
 #, fuzzy
 msgid "The Applet's containing Panel's orientation"
 msgstr "മൊട്ടിന്റെ സ്ഥാനം"
 
-#: libpanel-applet/panel-applet.c:1081
+#: libpanel-applet/panel-applet.c:1084
 msgid "The Applet's containing Panel's size in pixels"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1089
+#: libpanel-applet/panel-applet.c:1092
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1097
+#: libpanel-applet/panel-applet.c:1100
 msgid "The Applet's flags"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1105
+#: libpanel-applet/panel-applet.c:1108
 msgid "Ranges that hint what sizes are acceptable for the applet"
+msgstr ""
+
+#: libpanel-applet/panel-test-applets.c:33
+#, fuzzy
+msgid "Specify an applet IID to load"
+msgstr "തുടങ്ങേണ്ട അവസ്ഥ ഏതെന്ന് വ്യക്തമാക്കുക"
+
+#: libpanel-applet/panel-test-applets.c:34
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
+msgstr ""
+
+#: libpanel-applet/panel-test-applets.c:35
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr ""
+
+#: libpanel-applet/panel-test-applets.c:37
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 
 #: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
 msgstr "ക്രിയാജാലകം:"
 
-#: libpanel-applet/panel-test-applets.glade.h:2
-msgid "Bottom"
-msgstr "താഴെ"
+#: libpanel-applet/panel-test-applets.glade.h:3
+msgid "Large"
+msgstr "വലിയ"
 
-#: libpanel-applet/panel-test-applets.glade.h:4
-msgid "Left"
-msgstr "ഇടത്"
+#: libpanel-applet/panel-test-applets.glade.h:6
+msgid "Orientation:"
+msgstr "സ്ഥാന നിര്ണ്ണയം"
 
 #: libpanel-applet/panel-test-applets.glade.h:7
 msgid "Prefs Dir:"
 msgstr "പ്രവ‍ര്ത്തന ഐ.ഡി:"
 
-#: libpanel-applet/panel-test-applets.glade.h:8
-msgid "Right"
-msgstr "വലത്"
-
 #: libpanel-applet/panel-test-applets.glade.h:9
 msgid "Size:"
 msgstr "വലിപ്പം:"
 
-#: libpanel-applet/panel-test-applets.glade.h:11
-msgid "Top"
-msgstr "മുകളില്"
+#: libpanel-applet/panel-test-applets.glade.h:10
+msgid "Small"
+msgstr "ചെറിയ"
+
+#: libpanel-applet/panel-test-applets.glade.h:12
+msgid "X Large"
+msgstr "X വലിയ"
+
+#: libpanel-applet/panel-test-applets.glade.h:13
+msgid "X Small"
+msgstr "X ചെറിയ"
+
+#: libpanel-applet/panel-test-applets.glade.h:14
+msgid "XX Large"
+msgstr "XX വലിയ"
+
+#: libpanel-applet/panel-test-applets.glade.h:15
+msgid "XX Small"
+msgstr "XX ചെറിയ"
+
+#~ msgid "Alert you when new mail arrives"
+#~ msgstr "പുതിയ കത്തുകള് വരുമ്പോള് ശ്രദ്ദിപ്പിക്കുക"
+
+#~ msgid "Inbox Monitor"
+#~ msgstr "എഴുത്ത് പെട്ടി സൂചകന്"
+
+#~ msgid "_Check for mail"
+#~ msgstr "കത്തുകള് ഉണ്ടോ എന്ന് പരിശോധിക്കുക"
+
+#~ msgid "There was an error executing %s: %s"
+#~ msgstr "%s പ്രവ‍ര്ത്തിക്കുന്നതില് തകരാറ്: %s"
+
+#~ msgid "Please enter your mailserver's _password:"
+#~ msgstr "ദയവായി നിങ്ങളുടെ മെയില് സെ‍ര്‍വ്വറിന്റെ പാസ്‍വേ‍ര്ഡ് നല്കുക:"
+
+#~ msgid "Password Entry box"
+#~ msgstr "പാസ്‍വേ‍ര്ഡ് നല്കുന്ന പെട്ടി"
+
+#~ msgid "You have new mail."
+#~ msgstr "നിങ്ങള്ക്ക് ഒരു പുതിയ കത്തുണ്ട്"
+
+#~ msgid "You have mail."
+#~ msgstr "നിങ്ങള്ക്ക് പുതിയ കത്തുണ്ട്."
+
+#~ msgid "%d/%d messages"
+#~ msgstr "%d/%d കത്തുകള്"
+
+#~ msgid "%d messages"
+#~ msgstr "%d കത്തുകള്"
+
+#~ msgid "No mail."
+#~ msgstr "കത്ത് ഇല്ല."
+
+#~ msgid "Status not updated"
+#~ msgstr "അവസ്ഥ പുതുക്കിയില്ല"
+
+#~ msgid "Mailbox _resides on:"
+#~ msgstr "മെയില്-പെട്ടി നില്ക്കുന്നത്:"
+
+#~ msgid "Local mailspool"
+#~ msgstr "പ്രാദേശിക കത്ത് ശേഖരണസ്ഥലം"
+
+#~ msgid "Local maildir"
+#~ msgstr "പ്രാദേശിക കത്ത് ഡയറക്ടറി"
+
+#~ msgid "Remote POP3-server"
+#~ msgstr "വിദൂര POP3-സ‍ര്‍വ്വര്"
+
+#~ msgid "Remote IMAP-server"
+#~ msgstr "വിദൂര IMAP-സ‍ര്‍വ്വര്"
+
+#~ msgid "Mail _spool file:"
+#~ msgstr "കത്ത് ശേഖരണ രചന:"
+
+#~ msgid "Mail s_erver:"
+#~ msgstr "കത്ത് സ‍ര്‍വ്വര്:"
+
+#~ msgid "Mail Server Entry box"
+#~ msgstr "ഉപയോക്തൃനാമം നല്കുന്ന ഇടം"
+
+#~ msgid "Username Entry box"
+#~ msgstr "ഉപയോക്തൃനാമം നല്കുന്ന ഇടം"
+
+#~ msgid "_Password:"
+#~ msgstr "അടയാളവാക്ക്:"
+
+#~ msgid "_Folder:"
+#~ msgstr "കൂട്:"
+
+#~ msgid "Folder Entry box"
+#~ msgstr "പ്രവ‍ര്ത്തിപ്പിക്കാനുള്ള നിര്‍ദ്ദേശം നല്കുന്ന സ്ഥലം"
+
+#~ msgid "C_ommand to run before checking for mail:"
+#~ msgstr "എഴുത്ത് പരിശോധിക്കിനന്തിന‌് മുന്പ് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
+
+#~ msgid "Command Entry box"
+#~ msgstr "പ്രവ‍ര്ത്തിപ്പിക്കാനുള്ള നിര്‍ദ്ദേശം നല്കുന്ന സ്ഥലം"
+
+#~ msgid "Execute"
+#~ msgstr "നിര്‍വ്വഹിക്കുക"
+
+#~ msgid "Command to execute before each update"
+#~ msgstr "ഓരോ പുതുക്കലിനും മുന്പ് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
+
+#~ msgid "When new mail _arrives:"
+#~ msgstr "പുതിയ കത്തുകള് വരുമ്പോള്:"
+
+#~ msgid "Command to execute when new mail arrives"
+#~ msgstr "പുതിയ കത്തുകള് വരുമ്പോള് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
+
+#~ msgid "When clicke_d:"
+#~ msgstr "കൊട്ടുമ്പോള്:"
+
+#~ msgid "Command to execute when clicked"
+#~ msgstr "കൊട്ടുമ്പോള് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
+
+#~ msgid "Check for mail _every"
+#~ msgstr "കത്തുകള് ഉണ്ടോ എന്ന് പരിശോധിക്കുക, എല്ലാ"
+
+#~ msgid "minutes"
+#~ msgstr "മിനിട്ട്"
+
+#~ msgid "seconds"
+#~ msgstr "സെക്കന്റ്സ്"
+
+#~ msgid "Play a _sound when new mail arrives"
+#~ msgstr "പുതിയ കത്തുകള് വരുമ്പോള് ശബ്ദം ഉണ്ടാക്കുക"
+
+#~ msgid "Inbox Monitor Preferences"
+#~ msgstr "ജാലക നാമാവലി മുന്ഗണനകള്"
+
+#~ msgid "_Mail check"
+#~ msgstr "കത്തുനോക്കുക"
+
+#~ msgid "Mail_box"
+#~ msgstr "തപാല്‍പ്പെട്ടി"
+
+#~ msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
+#~ msgstr "പുതിയ കത്തുകള് വരുമ്പോള് എഴുത്ത് പെട്ടി സൂചകന് നിങ്ങളുടെ ശ്രദ്ധയില് പെടുത്തും"
+
+#~ msgid "Text only"
+#~ msgstr "വാചകം മാത്രം"
+
+#~ msgid "Mail check"
+#~ msgstr "കത്തുനോക്കുക"
+
+#~ msgid "Mail check notifies you when new mail arrives in your mailbox"
+#~ msgstr "കത്തുനോക്കുമ്പോള് പുതിയ കത്തുകള് വരുമ്പോള് ശ്രദ്ദിപ്പിക്കുക"
+
+#~ msgid "Command to execute when checking mail"
+#~ msgstr "കൊട്ടുമ്പോള് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
+
+#~ msgid "Command to execute when you click on the Inbox Monitor"
+#~ msgstr "എഴുത്ത് പെട്ടി സൂചകനെ ക്ളിക്ക് ചെയ്യുമ്പോള് പ്രവ‌ര്ത്തിക്കേണ്ട കല്പ്പന"
+
+#~ msgid "Command to run before checking mail"
+#~ msgstr "എഴുത്ത് പരിശോധിക്കിനന്തിന‌് മുന്പ് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
+
+#, fuzzy
+#~ msgid "How often (in milliseconds) we check the mail"
+#~ msgstr "എഴുത്ത് പരിശോധിക്കിനന്തിന‌് മുന്പ് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
+
+#~ msgid "Interval for checking mail"
+#~ msgstr "തപാല്‌ പരിശോധിക്കുന്നതിനുള്ള ഇടവേള:"
+
+#~ msgid "Path to the animation file"
+#~ msgstr "ഛായാചിത്രസഞ്ചരണ രചനയിലേക്കുള്ള വഴി"
+
+#~ msgid "Play a sound when mail is recieved"
+#~ msgstr "പുതിയ കത്തുകള് വരുമ്പോള് ശബ്ദം ഉണ്ടാക്കുക"
+
+#~ msgid "Run this command before we check the mail"
+#~ msgstr "എഴുത്ത് പരിശോധിക്കിനന്തിന‌് മുന്പ് പ്രവ‍ര്ത്തിക്കേണ്ട നിര്‍ദ്ദേശം"
+
+#~ msgid "The mail server"
+#~ msgstr "കത്ത് സ‍ര്‍വ്വര്:"
+
+#~ msgid "The user's password"
+#~ msgstr "ഉപയോക്തൃ അടയാളവാക്ക് "
+
+#~ msgid "The user's password for the remote server"
+#~ msgstr "വിദൂരസ‌‌ര്‌വറിനുവേണ്ടിയുള്ള ഉപയോക്തൃ അടയാളവാക്ക്"
+
+#~ msgid "Username on the remote server"
+#~ msgstr "വിദൂരസ‌‌ര്‌വറിനുവേണ്ടിയുള്ള ഉപയോക്തൃ പേര‌്"
+
+#~ msgid "We run this command when the user clicks on Inbox Monitor"
+#~ msgstr "എഴുത്ത് പെട്ടി സൂചകനെ ക്ളിക്ക് ചെയ്യുമ്പോള് പ്രവ‌ര്ത്തിക്കേണ്ട കല്പ്പന"
+
+#~ msgid "Whether to reset mail status when you click on Inbox Monitor"
+#~ msgstr "എഴുത്ത് പെട്ടി സൂചകനെ ക്ളിക്ക് ചെയ്യുമ്പോള് എഴുത്തിന്റെ അവസ്ഥ പുനഃക്രമീകരിക്കണോ?"
+
+#~ msgid "You've got mail!"
+#~ msgstr "നിങ്ങള്ക്ക് കത്തുണ്ട്!"
+
+#~ msgid "Mailcheck"
+#~ msgstr "കത്തുനോക്കുക"
+
+#~ msgid "New Mail"
+#~ msgstr "പുതിയ കത്ത്"
+
+#~ msgid "Mode"
+#~ msgstr "രീതി"
+
+#~ msgid "State"
+#~ msgstr "അവസ്ഥ"
+
+#~ msgid "Hide this panel"
+#~ msgstr "ഈ പാളിയെ ഒളിപ്പിക്കുക"
+
+#~ msgid "Show this panel"
+#~ msgstr "ഈ പാളി കാണിക്കുക"
+
+#~ msgid "GNOME Menu Panel"
+#~ msgstr "ജിനോം പട്ടിക പാളി"
+
+#~ msgid "Can't find the screenshot program"
+#~ msgstr "നിലവിലുള്ള കളി നിര്ത്തുക"
+
+#~ msgid "Can't execute the screenshot program"
+#~ msgstr "തിരച്ചിത്ര പ്രയോഗം പ്രവ‌ര്ത്തിപ്പിക്കാന് കഴിയുന്നില്ല"
+
+#~ msgid "Panel to add the launcher to"
+#~ msgstr "ഈ വലിപ്പ് പാനലില് ചേ‍ര്ക്കുക"
+
+#~ msgid "NUMBER"
+#~ msgstr "എണ്ണം"
+
+#~ msgid "No panel found\n"
+#~ msgstr "പാളികള് കണ്ടെത്തിയില്ല\n"
+
+#~ msgid "Aligned Panel"
+#~ msgstr "ക്രമീകരിച്ച പാളി"
+
+#~ msgid "GNOME Aligned Panel"
+#~ msgstr "ഗ്നോം ക്രമീകരിച്ച പാളി"
+
+#~ msgid "Edge Panel"
+#~ msgstr "അഗ്ര പാളി"
+
+#~ msgid "GNOME Edge Panel"
+#~ msgstr "ഗ്നോം അഗ്ര പാളി"
+
+#~ msgid "Sliding Panel"
+#~ msgstr "തെന്നി പാളി"
+
+#~ msgid "GNOME Sliding Panel"
+#~ msgstr "ഗ്നോം തെന്നി പാളി"
+
+#~ msgid "GNOME Floating Panel"
+#~ msgstr "ഗ്നോം പ്ളവന പാളി"
+
+#~ msgid "You can only have one menu panel at a time."
+#~ msgstr "പട്ടിക പാളി ഒന്നിലധികം ഒരേ സമയം ഉപയോഗിക്കാനാവില്ല"
+
+#~ msgid "C_orner Panel"
+#~ msgstr "മൂല പാളി"
+
+#~ msgid "Create corner panel"
+#~ msgstr "മൂല പാളി ഉണ്ടാക്കുക"
+
+#~ msgid "_Edge Panel"
+#~ msgstr "അഗ്ര പാളി"
+
+#~ msgid "Create edge panel"
+#~ msgstr "അഗ്ര പാളി ഉണ്ടാക്കുക"
+
+#~ msgid "_Floating Panel"
+#~ msgstr "പ്ളവന പാളി"
+
+#~ msgid "Create floating panel"
+#~ msgstr "പ്ളവന പാളി ഉണ്ടാക്കുക"
+
+#~ msgid "_Sliding Panel"
+#~ msgstr "തെന്നി പാളി"
+
+#~ msgid "Create sliding panel"
+#~ msgstr "തെന്നി പാളി ഉണ്ടാക്കുക"
+
+#~ msgid "_Menu Panel"
+#~ msgstr "പട്ടിക പാളി"
+
+#~ msgid "Create menu panel"
+#~ msgstr "പട്ടിക പാളി ഉണ്ടാക്കുക"
+
+#~ msgid "Button"
+#~ msgstr "മൊട്ട്"
+
+#~ msgid "Menu:"
+#~ msgstr "പട്ടിക:"
+
+# പട്ടിക ഉണ്ടാക്കാന് കഴിയിന്നില്ല, പ്രധാന പട്ടിക ഉപയോഗിക്കുന്നു!
+#~ msgid "Can't create menu, using main menu!"
+#~ msgstr "പ്രധാന പട്ടിക ഉപയോഗിച്ച് പട്ടിക ഉണ്ടാക്കാന് കഴിയില്ല"
+
+#~ msgid "Miscellaneous:"
+#~ msgstr "പലവക:"
+
+#~ msgid "Current screen:"
+#~ msgstr "സജീവ തിരശ്ശീല:"
+
+#~ msgid "Current monitor:"
+#~ msgstr "സജീവ ദൃശ്യം"
+
+#~ msgid "_Position:"
+#~ msgstr "സ്ഥാനം"
+
+#~ msgid "Hori_zontal"
+#~ msgstr "തിരശ്ചീനം"
+
+#~ msgid "_Vertical"
+#~ msgstr "ലംബം"
+
+#~ msgid "H_orizontal:"
+#~ msgstr "തിരശ്ചീനം:"
+
+#~ msgid "Ver_tical:"
+#~ msgstr "ലംബം:"
+
+#~ msgid "_Distance from edge:"
+#~ msgstr "അഗ്രത്തില് നിന്നുള്ള അകലം"
+
+#~ msgid "_Type:"
+#~ msgstr "തരം:"
+
+#~ msgid "Default"
+#~ msgstr "സ്വതേ"
+
+#~ msgid "Color"
+#~ msgstr "വ‍ര്ണ്ണങ്ങള്‌"
+
+#~ msgid "Image"
+#~ msgstr "ചിത്രം"
+
+#~ msgid "Image:"
+#~ msgstr "ചിത്രം:"
+
+#~ msgid "Edge panel"
+#~ msgstr "അഗ്ര പാളി"
+
+#~ msgid "Corner panel"
+#~ msgstr "മൂല പാളി"
+
+#~ msgid "Sliding panel"
+#~ msgstr "തെന്നി പാളി"
+
+#~ msgid "Floating panel"
+#~ msgstr "പ്ളവന പാളി"
+
+#~ msgid "Corner Panel"
+#~ msgstr "മൂല പാളി"
+
+#, fuzzy
+#~ msgid "Show the program listing by default when opening the Run box"
+#~ msgstr "അവസ്ഥാപ്പട്ടയില് സൂചികാ സ്ഥാനം കാണിക്കുക"
+
+#~ msgid "Show the program listing in the Run box"
+#~ msgstr "അവസ്ഥാപ്പട്ടയില് സൂചികാ സ്ഥാനം കാണിക്കുക"
+
+#~ msgid "Disabled"
+#~ msgstr "അപ്രാപ്യം"
