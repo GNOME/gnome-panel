@@ -1040,7 +1040,9 @@ foobar_widget_init (FoobarWidget *foo)
 
 	window->allow_shrink = TRUE;
 	window->allow_grow   = TRUE;
+#ifdef FIXME
 	window->auto_shrink  = TRUE;
+#endif
 
 	gtk_signal_connect (GTK_OBJECT (foo), "delete_event",
 			    GTK_SIGNAL_FUNC (gtk_true), NULL);

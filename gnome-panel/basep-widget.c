@@ -1019,7 +1019,9 @@ basep_widget_init (BasePWidget *basep)
 
 	GTK_WINDOW(basep)->allow_shrink = TRUE;
 	GTK_WINDOW(basep)->allow_grow = TRUE;
+#ifdef FIXME
 	GTK_WINDOW(basep)->auto_shrink = TRUE;
+#endif
 
 	/*don't let us close the window*/                                       
 	
