@@ -931,7 +931,7 @@ get_applet_types(void)
 }
 
 static void
-set_panel_position()
+set_panel_position(void)
 {
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
@@ -1004,39 +1004,6 @@ panel_init(void)
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,0,0);
 	gtk_widget_show(the_panel->fixed);
 
-	the_panel->showbutton=gtk_button_new_with_label(">");
-	gtk_signal_connect(GTK_OBJECT(the_panel->showbutton), "clicked",
-				  GTK_SIGNAL_FUNC(panel_show_hide),NULL);
-	gtk_box_pack_start(GTK_BOX(the_panel->box),the_panel->showbutton,
-		FALSE,FALSE,0);
-
-	gtk_container_add(GTK_CONTAINER(the_panel->window), the_panel->box);
-	gtk_widget_show(the_panel->box);
-
-	gtk_widget_set_usize(the_panel->window, gdk_screen_width(), DEFAULT_HEIGHT);
-	gtk_widget_set_uposition(the_panel->window, 0, gdk_screen_height() - DEFAULT_HEIGHT);
-#if 0
-	the_panel->pos   = PANEL_POS_TOP;
-	the_panel->state = PANEL_SHOWN;
-	the_panel->mode  = PANEL_GETS_HIDDEN;
-	gtk_widget_set_usize(the_panel->window, gdk_screen_width(), DEFAULT_HEIGHT);
-	gtk_widget_set_uposition(the_panel->window, 0, 0);
-#endif
-#if 0
-	the_panel->pos   = PANEL_POS_RIGHT;
-	the_panel->state = PANEL_SHOWN;
-	the_panel->mode  = PANEL_GETS_HIDDEN;
-	gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT, gdk_screen_height());
-	gtk_widget_set_uposition(the_panel->window, gdk_screen_width() - DEFAULT_HEIGHT, 0);
-#endif
-#if 0
-	the_panel->pos   = PANEL_POS_LEFT;
-	the_panel->state = PANEL_SHOWN;
-	the_panel->mode  = PANEL_GETS_HIDDEN;
-	gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT, gdk_screen_height());
-	gtk_widget_set_uposition(the_panel->window, 0, 0);
-#endif
-
 	/*show buttons (one for vertical one for horizontal)*/
 	the_panel->showbutton_h=gtk_button_new_with_label(">");
 	gtk_signal_connect(GTK_OBJECT(the_panel->showbutton_h), "clicked",
@@ -1056,7 +1023,7 @@ panel_init(void)
 	gtk_widget_show(the_panel->table);
 
 	/*set the position and size of the panel*/
-	set_panel_position(the_panel->pos);
+	set_panel_position();
 
 	the_panel->step_size            = DEFAULT_STEP_SIZE;
 	the_panel->delay                = DEFAULT_DELAY;
@@ -1409,19 +1376,19 @@ panel_reconfigure(Panel newconfig)
 				the_panel->pos=newconfig.pos;
 				if(newconfig.pos!=PANEL_POS_TOP)
 					panel_change_orient();
-				set_panel_position(newconfig.pos);
+				set_panel_position();
 				break;
 			case PANEL_POS_LEFT:
 				the_panel->pos=newconfig.pos;
 				if(newconfig.pos!=PANEL_POS_RIGHT)
 					panel_change_orient();
-				set_panel_position(newconfig.pos);
+				set_panel_position();
 				break;
 			case PANEL_POS_RIGHT:
 				the_panel->pos=newconfig.pos;
 				if(newconfig.pos!=PANEL_POS_LEFT)
 					panel_change_orient();
-				set_panel_position(newconfig.pos);
+				set_panel_position();
 				break;
 		}
 	}
