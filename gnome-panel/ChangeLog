@@ -1,3 +1,13 @@
+2004-02-20  Mark McLoughlin  <mark@skynet.ie>
+
+	Based on a patch from Bart Martens <info@bartmartens.be>
+
+	* panel-toplevel.c: (panel_toplevel_queue_auto_hide): unqueue
+	the unhide, even if the panel is already hidden. The actual
+	bug that this fix was for was masked by a change which makes
+	us refuse to unhide unless the panel contains the pointer.
+	This is a better way of handling this particular case, though.
+
 ==================== 2.5.5 ====================
 
 2004-02-16  Mark McLoughlin  <mark@skynet.ie>

@@ -3213,16 +3213,18 @@ panel_toplevel_queue_auto_hide (PanelToplevel *toplevel)
 {
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
-	if ( ! toplevel->priv->auto_hide ||
-	    toplevel->priv->hide_timeout ||
-	    toplevel->priv->state != PANEL_STATE_NORMAL ||
+	if (!toplevel->priv->auto_hide ||
 	    panel_toplevel_contains_pointer (toplevel) ||
 	    panel_toplevel_get_autohide_disabled (toplevel))
-		return;
+	  return;
 
 	if (toplevel->priv->unhide_timeout)
 		g_source_remove (toplevel->priv->unhide_timeout);
 	toplevel->priv->unhide_timeout = 0;
+
+	if (toplevel->priv->hide_timeout ||
+	    toplevel->priv->state != PANEL_STATE_NORMAL)
+		return;
 
 	if (toplevel->priv->block_auto_hide) {
 		/* Since this will continue to be called until
