@@ -55,6 +55,7 @@ static void basep_pos_instance_init (BasePPos *pos);
 static void basep_widget_mode_change (BasePWidget *basep, BasePMode mode);
 static void basep_widget_state_change (BasePWidget *basep, BasePState state);
 static void basep_widget_real_screen_change (BasePWidget *basep, int screen, int monitor);
+static gboolean basep_widget_popup_panel_menu (BasePWidget *basep);
 static void basep_widget_size_request (GtkWidget *widget, GtkRequisition *requisition);
 static void basep_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 static void basep_widget_realize (GtkWidget *w);
@@ -77,6 +78,7 @@ enum {
 	MODE_CHANGE_SIGNAL,
 	STATE_CHANGE_SIGNAL,
 	SCREEN_CHANGE_SIGNAL,
+	POPUP_PANEL_MENU_SIGNAL,
 	WIDGET_LAST_SIGNAL
 };
 
@@ -129,12 +131,16 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	GObjectClass   *object_class = (GObjectClass *) klass;
 	GtkObjectClass *gtk_object_class = (GtkObjectClass *) klass;
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
-	
+	GtkBindingSet  *binding_set;
+
+	binding_set = gtk_binding_set_by_class (klass);
+
 	basep_widget_parent_class = g_type_class_ref (gtk_window_get_type ());
 
 	klass->mode_change = basep_widget_mode_change;
 	klass->state_change = basep_widget_state_change;
 	klass->screen_change = basep_widget_real_screen_change;
+	klass->popup_panel_menu = basep_widget_popup_panel_menu;
 
 	widget_class->size_request = basep_widget_size_request;
 	widget_class->size_allocate = basep_widget_size_allocate;
@@ -231,6 +237,20 @@ basep_widget_class_init (BasePWidgetClass *klass)
 				2,
 				G_TYPE_INT,
 				G_TYPE_INT);
+
+	basep_widget_signals [POPUP_PANEL_MENU_SIGNAL] =
+		g_signal_new ("popup_panel_menu",
+			     G_TYPE_FROM_CLASS (object_class),
+			     G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			     G_STRUCT_OFFSET (BasePWidgetClass, popup_panel_menu),
+			     NULL,
+			     NULL,
+			     panel_marshal_BOOLEAN__VOID,
+			     G_TYPE_BOOLEAN,
+			     0);
+
+	gtk_binding_entry_add_signal (binding_set, GDK_F10, GDK_CONTROL_MASK,
+				     "popup_panel_menu", 0);
 }
 
 static void
@@ -2618,4 +2638,14 @@ basep_border_get (BasePWidget *basep,
 	if (right)
 		*right = sb->borders [edge].right;
 
+}
+
+static gboolean
+basep_widget_popup_panel_menu (BasePWidget *basep)
+{
+ 	gboolean retval;
+
+	g_signal_emit_by_name (basep->panel, "popup_menu", &retval);
+
+	return retval;
 }

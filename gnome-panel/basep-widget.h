@@ -117,6 +117,7 @@ struct _BasePWidgetClass
 				int          old_screen,
 				int          old_monitor);
 
+	gboolean (* popup_panel_menu) (BasePWidget *basep);
 };
 
 /* we mostly want the class for this */
