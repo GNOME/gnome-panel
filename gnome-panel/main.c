@@ -176,6 +176,8 @@ tell_user_Im_on_crack (void)
 	       "destroy configuration, cause another world war, and most\n"
 	       "likely just plain not work.  Use at your own risk.\n\n"
 	       "Do you really want to run it?"));
+	
+	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
 	if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_YES)
 		exit (0);
