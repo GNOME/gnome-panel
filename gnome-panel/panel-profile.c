@@ -1199,6 +1199,21 @@ panel_profile_remove_from_list (PanelGConfKeyType  type,
 	g_slist_free (list);
 }
 
+gboolean
+panel_profile_list_is_writable (PanelGConfKeyType type)
+{
+	GConfClient *client;
+	const char  *key;
+	const char  *id_list;
+
+	client = panel_gconf_get_client ();
+
+	id_list = panel_gconf_key_type_to_id_list (type);
+
+	key = panel_gconf_general_key (current_profile, id_list);
+	return gconf_client_key_is_writable (client, key, NULL);
+}
+
 void
 panel_profile_create_toplevel (void)
 {
@@ -2194,4 +2209,50 @@ panel_profile_set_show_program_list (gboolean show_program_list)
 
 	key = panel_gconf_general_key (current_profile, "show_program_list");
 	gconf_client_set_bool (client, key, show_program_list, NULL);
+}
+
+/* True if all the move keys are writable.  This is kind of
+   a blanket statement.  For example we may only lock one of them
+   down and that would prevent the user from moving the panel at
+   all, but really, making this truly fine grained is probably too
+   much crack */
+gboolean
+panel_profile_can_be_moved_freely (PanelToplevel *toplevel)
+{
+	const char *key;
+	GConfClient *client;
+	
+	if ( ! panel_profile_is_writable_toplevel_orientation (toplevel))
+		return FALSE;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "screen");
+	if ( ! gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+
+	key = panel_profile_get_toplevel_key (toplevel, "monitor");
+	if ( ! gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+
+	/* For expanded panels we don't really have to check 
+	   x and y */
+	if (panel_toplevel_get_expand (toplevel))
+		return TRUE;
+
+	key = panel_profile_get_toplevel_key (toplevel, "x");
+	if ( ! gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+	key = panel_profile_get_toplevel_key (toplevel, "x_centered");
+	if ( ! gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+
+	key = panel_profile_get_toplevel_key (toplevel, "y");
+	if ( ! gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+	key = panel_profile_get_toplevel_key (toplevel, "y_centered");
+	if ( ! gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+
+	return TRUE;
 }

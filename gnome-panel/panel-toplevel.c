@@ -413,9 +413,10 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	if (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
 		return;
 
-	/* If orientation is not writable, then we can't move */
+	/* If any of the position/orientation are not writable,
+	   then we can't really move freely */
 	if (op_type == PANEL_GRAB_OP_MOVE &&
-	    ! panel_profile_is_writable_toplevel_orientation (toplevel))
+	    ! panel_profile_can_be_moved_freely (toplevel))
 		return;
 
 	/* If size is not writable, then we can't resize */

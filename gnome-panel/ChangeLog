@@ -1,3 +1,27 @@
+Fri Jun 27 17:19:04 2003  George Lebl <jirka@5z.com>
+
+	* applet.c: (panel_applet_save_position) Only set things which are
+	  different.  This helps out if some of these are not writable,
+	  and some are.  Though we should have a dirty flag to handle this.
+
+	* menu.c, panel-profile.[ch]:  Add panel_profile_list_is_writable
+	  to check writability of one of the lists, When the applets and
+	  the object lists are not writable don't allow removing or adding
+	  of things.
+
+	* panel-applet-frame.c: for bonobo applets check the keys
+	  related to moving/removing/locking and disable those commands
+	  if those are not possible.  When applet dies and the user
+	  wants to not-reload it, but we can't write to the applets
+	  list, don't remove it, but don't reload it either.
+
+	* panel-toplevel.c, panel-profile.[ch]: add
+	  panel_profile_can_be_moved_freely which checks a bunch of
+	  keys for a toplevel to be able to move with the cursor.
+	  We could do this more finegrained, but for now this should
+	  at least work right without gconf errors from mandatory
+	  settings.
+
 Fri Jun 27 12:47:58 2003  George Lebl <jirka@5z.com>
 
 	* panel-toplevel.c: if orientation is not writable, then don't allow

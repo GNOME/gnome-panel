@@ -86,8 +86,30 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 {
 	PanelWidget *panel_widget;
 	gboolean     locked;
+	GConfClient *client;
+	const char  *profile;
+	const char  *key;
+	gboolean     lockable;
+	gboolean     movable;
+	gboolean     removable;
 
 	panel_widget = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
+
+	client = panel_gconf_get_client ();
+	profile = panel_profile_get_name ();
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, frame->priv->applet_info->id, "locked");
+	lockable = gconf_client_key_is_writable (client, key, NULL);
+
+	/* If any of these are not writable then we can't really freely move */
+	/* FIXME: make this a general function just like for toplevels */
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, frame->priv->applet_info->id, "position");
+	movable = gconf_client_key_is_writable (client, key, NULL);
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, frame->priv->applet_info->id, "toplevel_id");
+	movable = movable && gconf_client_key_is_writable (client, key, NULL);
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, frame->priv->applet_info->id, "panel_right_stick");
+	movable = movable && gconf_client_key_is_writable (client, key, NULL);
+
+	removable = panel_profile_list_is_writable (PANEL_GCONF_APPLETS);
 
 	locked = panel_widget_get_applet_locked (panel_widget, GTK_WIDGET (frame));
 
@@ -98,9 +120,21 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 				      NULL);
 
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
+				      "/commands/LockAppletToPanel",
+				      "sensitive",
+				      lockable ? "1" : "0",
+				      NULL);
+
+	bonobo_ui_component_set_prop (frame->priv->ui_component,
+				      "/commands/RemoveAppletFromPanel",
+				      "sensitive",
+				      removable ? "1" : "0",
+				      NULL);
+
+	bonobo_ui_component_set_prop (frame->priv->ui_component,
 				      "/commands/MoveApplet",
 				      "sensitive",
-				      locked ? "0" : "1",
+				      locked ? "0" : (movable ? "1" : "0"),
 				      NULL);
 }
 
@@ -727,8 +761,13 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 		g_free (iid);
 		g_free (id);
 
-	} else if (info)
-		panel_profile_delete_object (info);
+	} else if (info) {
+		/* if we can't write to applets list we can't really delete
+		   it, so we'll just ignore this.  FIXME: handle this
+		   more correctly I suppose. */
+		if (panel_profile_list_is_writable (PANEL_GCONF_APPLETS))
+			panel_profile_delete_object (info);
+	}
 
 	g_object_unref (frame);
 	gtk_widget_destroy (dialog);

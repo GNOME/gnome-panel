@@ -53,6 +53,7 @@ void           panel_profile_add_to_list            (PanelGConfKeyType  type,
 						     char              *id);
 void           panel_profile_remove_from_list       (PanelGConfKeyType  type,
 						     const char        *id);
+gboolean       panel_profile_list_is_writable       (PanelGConfKeyType  type);
 void           panel_profile_create_toplevel        (void);
 PanelToplevel *panel_profile_load_toplevel          (GConfClient       *client,
 						     const char        *profile_dir,
@@ -166,6 +167,9 @@ gboolean    panel_profile_map_background_type_string  (const char            *st
 						       PanelBackgroundType   *background_type);
 gboolean    panel_profile_map_object_type_string      (const char            *str,
 						       PanelObjectType       *object_type);
+
+/* all keys relevant to moving are writable */
+gboolean    panel_profile_can_be_moved_freely         (PanelToplevel *toplevel);
 
 G_END_DECLS
 
