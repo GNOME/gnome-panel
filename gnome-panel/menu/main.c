@@ -506,53 +506,42 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
 static GtkWidget *
 create_panel_menu (GtkWidget *window, char *menudir, int main_menu)
 {
-	GtkWidget *vbox;
 	GtkWidget *button;
 	GtkWidget *pixmap;
-	GtkWidget *button_pixmap;
 	GtkWidget *menu;
 	GtkWidget *app_menu;
-	GtkWidget *button_vbox;
 	
-	static char *button_pixmap_name;
 	char *pixmap_name;
 
 	if (main_menu)
-		pixmap_name = gnome_unconditional_pixmap_file ("panel-menu-main.xpm");
+		switch(panel_pos) {
+			case PANEL_POS_TOP:
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.xpm");
+				break;
+			case PANEL_POS_BOTTOM:
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.xpm");
+				break;
+			case PANEL_POS_LEFT:
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.xpm");
+				break;
+			case PANEL_POS_RIGHT:
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.xpm");
+				break;
+		}
 	else
+		/*FIXME: these guys need arrows as well*/
 		pixmap_name = gnome_unconditional_pixmap_file ("panel-folder.xpm");
 		
-	if (!button_pixmap_name)
-		button_pixmap_name = gnome_pixmap_file ("arrowup.xpm");
-
-	/* main vbox */
-	vbox   = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox);
-
 	/* main button */
 	button = gtk_button_new ();
+
+	/*make the pixmap*/
+	pixmap = gnome_create_pixmap_widget (window, button, pixmap_name);
+	gtk_widget_show(pixmap);
+
+	/* put pixmap in button */
+	gtk_container_add (GTK_CONTAINER(button), pixmap);
 	gtk_widget_show (button);
-
-	button_pixmap = gnome_create_pixmap_widget (window, button, button_pixmap_name);
-	pixmap        = gnome_create_pixmap_widget (window, button, pixmap_name);
-
-	/* box to put in button */
-	button_vbox = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (button_vbox);
-	gtk_container_add (GTK_CONTAINER (button), button_vbox);
-	
-	/* pack pixmaps into button_box */
-	gtk_box_pack_start (GTK_BOX (button_vbox), button_pixmap, 
-			    FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (button_vbox), pixmap, FALSE, FALSE, 0);
-	
-	/* pack button into main vbox */
-	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-
-	gtk_widget_show (button_pixmap);
-	gtk_widget_show (button);
-	gtk_widget_show (pixmap);
-	gtk_widget_show (vbox);
 
 	menu = create_menu_at (window, menudir, 0);
 	if (main_menu) {
@@ -562,7 +551,7 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", (GtkSignalFunc) activate_menu, menu);
 
 	g_free (pixmap_name);
-	return vbox;
+	return button;
 }
 
 static GtkWidget *
@@ -622,6 +611,47 @@ create_instance (Panel *panel, char *params, int xpos, int ypos)
 	(*panel_cmd_func) (&cmd);
 }
 
+static void
+set_orientation(GtkWidget *applet, Panel *panel)
+{
+	GtkWidget *pixmap;
+	char *pixmap_name;
+
+	if(panel_pos==panel->pos)
+		return;
+	panel_pos=panel->pos;
+
+	if (strcmp(gtk_object_get_data(GTK_OBJECT(applet),MENU_PATH),".")==0)
+		switch(panel_pos) {
+			case PANEL_POS_TOP:
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.xpm");
+				break;
+			case PANEL_POS_BOTTOM:
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.xpm");
+				break;
+			case PANEL_POS_LEFT:
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.xpm");
+				break;
+			case PANEL_POS_RIGHT:
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.xpm");
+				break;
+		}
+	else
+		/*FIXME: these guys need arrows as well*/
+		pixmap_name = gnome_unconditional_pixmap_file ("panel-folder.xpm");
+		
+	pixmap=GTK_BUTTON(applet)->child;
+	gtk_container_remove(GTK_CONTAINER(applet),pixmap);
+	gtk_widget_destroy(pixmap);
+
+	/*make the pixmap*/
+	pixmap = gnome_create_pixmap_widget (panel->fixed, applet, pixmap_name);
+
+	gtk_container_add (GTK_CONTAINER(applet), pixmap);
+	gtk_widget_show (pixmap);
+	
+	g_free(pixmap_name);
+}
 
 gpointer
 applet_cmd_func(AppletCommand *cmd)
@@ -655,7 +685,7 @@ applet_cmd_func(AppletCommand *cmd)
 			return g_strdup(gtk_object_get_data(GTK_OBJECT(cmd->applet), MENU_PATH));
 
 		case APPLET_CMD_ORIENTATION_CHANGE_NOTIFY:
-			panel_pos=cmd->panel->pos;
+			set_orientation(cmd->applet,cmd->panel);
 			break;
 
 		case APPLET_CMD_PROPERTIES:

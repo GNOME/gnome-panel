@@ -218,7 +218,7 @@ animation_notebook_page(void)
 
 
 	/* Animation step_size scale frame */
-	frame = gtk_frame_new ("Tooltips");
+	frame = gtk_frame_new ("Animation Speed");
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
