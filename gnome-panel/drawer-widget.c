@@ -288,7 +288,6 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 						allocation->width, 
 						allocation->height);
 			gdk_window_show(widget->window);
-			gdk_flush();
 			gdk_window_move_resize (widget->window,
 						0,
 						0,
@@ -625,9 +624,7 @@ drawer_widget_restore_state(DrawerWidget *drawer)
 {
 	gtk_widget_queue_resize(GTK_WIDGET(drawer));
 	gtk_widget_show_now(GTK_WIDGET(drawer));
-	if(BASEP_WIDGET(drawer)->fake) {
+	if(BASEP_WIDGET(drawer)->fake)
 		gdk_window_show(BASEP_WIDGET(drawer)->fake);
-		gdk_flush();
-	}
 }
 

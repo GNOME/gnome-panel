@@ -298,7 +298,6 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			basep_widget_add_fake(basep,hide_orient,FALSE,
 					      -1,-1,w,h,TRUE);
 			gdk_window_show(widget->window);
-			gdk_flush();
 			gdk_window_resize (widget->window,
 					   allocation->width, 
 					   allocation->height);
@@ -313,7 +312,6 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 						w,
 						h);
 			gdk_window_show(widget->window);
-			gdk_flush();
 			gdk_window_resize (widget->window,
 					   allocation->width, 
 					   allocation->height);

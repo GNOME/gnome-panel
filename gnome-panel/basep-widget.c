@@ -196,13 +196,11 @@ basep_widget_add_fake(BasePWidget *basep,
 
 		gdk_window_set_decorations(window, 0);
 	}
-	
+
 	basep_widget_set_fake_orient(basep,hide_orient);
 	
-	if(show) {
+	if(show)
 		gdk_window_show(window);
-		gdk_flush();
-	}
 	
 	get_position(basep, hide_orient, &rx, &ry,
 		     attributes.width,attributes.height);
@@ -231,7 +229,6 @@ basep_widget_set_infake_position(BasePWidget *basep,
 	get_position(basep, hide_orient, &x, &y, w, h);
 
 	gdk_window_show(GTK_WIDGET(basep)->window);
-	gdk_flush();
 	gdk_window_move(GTK_WIDGET(basep)->window,x,y);
 }
 
@@ -357,7 +354,6 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	if(!pw_disable_animations && step != 0) {
 		if(basep->fake && basep->fake_override) {
 			gdk_window_show(basep->fake);
-			gdk_flush();
 			basep_widget_set_fake_orient(basep,hide_orient);
 			basep_widget_set_infake_position(basep, hide_orient,
 							 -1,-1);
@@ -461,31 +457,27 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	}
 	
 	if(!pw_disable_animations && step != 0) {
-		//puts("1"); sleep(1);
 		if(basep->fake && basep->fake_override && ow && oh) {
-		//puts("2"); sleep(1);
 			gdk_window_hide(basep->fake);
-		//puts("3"); sleep(1);
 			basep_widget_set_fake_orient(basep,hide_orient);
 			basep_widget_set_infake_position(basep, hide_orient,
 							 ow,oh);
-		//puts("4"); sleep(1);
 			gdk_window_resize(basep->fake,ow,oh);
-		//puts("5"); sleep(1);
 		} else {
-		//puts("6"); sleep(1);
 			basep_widget_add_fake(basep, hide_orient,
 					      TRUE, -1,-1,ow,oh,FALSE);
-		//puts("7"); sleep(1);
 		}
-		//puts("8"); sleep(1);
 		/*make sure the window doesn't blink*/
-		//puts("9"); sleep(1);
-		gtk_widget_show_now(wid);
-		//puts("10"); sleep(1);
+		{
+			/*weird little hack to avoid flicker*/
+			int x,y,w,h;
+			gdk_window_get_geometry(basep->fake,
+						&x,&y,&w,&h,NULL);
+			gtk_widget_show_now(wid);
+			gdk_window_move_resize(basep->fake,
+					       x,y,w,h);
+		}
 		gdk_window_show(basep->fake);
-		gdk_flush();
-		//puts("11"); sleep(1);
 		while(x != dx ||
 		      y != dy ||
 		      w != dw ||

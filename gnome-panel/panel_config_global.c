@@ -63,6 +63,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	for(i=0;i<LAST_TILE;i++) {
 		global_config.tile_up[i] =
 			gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(entry_up[i]));
+		printf("TILE_UP[%d]=%s\n",i,global_config.tile_up[i]);
 		global_config.tile_down[i] =
 			gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(entry_down[i]));
 	}
