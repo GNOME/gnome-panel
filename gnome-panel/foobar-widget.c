@@ -274,7 +274,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
 }
 
-static void
+static GtkWidget *
 append_folder_menu (GtkWidget *menu_bar, const char *label,
 		    const char *pixmap, gboolean system, const char *path)
 {
@@ -285,17 +285,17 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 		? gnome_unconditional_datadir_file (path)
 		: gnome_util_home_file (path);
 
-	if (!real_path) {
+	if (real_path == NULL) {
 		g_warning (_("can't fine real path"));
-		return;
+		return NULL;
 	}
 
 	menu = create_fake_menu_at (real_path, FALSE, label, NULL, FALSE);
 	g_free (real_path);
 
-	if (!menu) {
+	if (menu == NULL) {
 		g_warning (_("menu wasn't created"));
-		return;
+		return NULL;
 	}
 
 	if (pixmap)
@@ -308,6 +308,8 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	gtk_signal_connect (GTK_OBJECT (menu), "show",
 			    GTK_SIGNAL_FUNC (submenu_to_display),
 			    NULL);
+
+	return menu;
 }
 
 static void
@@ -565,10 +567,14 @@ foobar_widget_init (FoobarWidget *foo)
 	gtk_signal_connect (GTK_OBJECT (menu), "show",
 			    GTK_SIGNAL_FUNC (programs_menu_to_display),
 			    NULL);
+	foo->programs = menu;
 
-	append_folder_menu  (menu_bar, _("Favorites"), NULL, FALSE, "apps/.");
-	append_folder_menu  (menu_bar, _("Settings"),  NULL, TRUE,
-			     "gnome/apps/Settings/.");
+	foo->favorites =
+		append_folder_menu(menu_bar, _("Favorites"), NULL,
+				   FALSE, "apps");
+	foo->settings =
+		append_folder_menu(menu_bar, _("Settings"),  NULL, TRUE,
+			           "gnome/apps/Settings");
 	append_desktop_menu (menu_bar);
 
 	gtk_box_pack_start (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
@@ -655,6 +661,26 @@ gboolean
 foobar_widget_exists (void)
 {
 	return (das_global_foobar != NULL);
+}
+
+void
+foobar_widget_force_menu_remake (void)
+{
+	FoobarWidget *foo;
+	if (das_global_foobar == NULL)
+		return;
+
+	foo = FOOBAR_WIDGET(das_global_foobar);
+
+	if(foo->programs != NULL)
+		gtk_object_set_data(GTK_OBJECT(foo->programs),
+				    "need_reread", GINT_TO_POINTER(1));
+	if(foo->settings != NULL)
+		gtk_object_set_data(GTK_OBJECT(foo->settings),
+				    "need_reread", GINT_TO_POINTER(1));
+	if(foo->favorites != NULL)
+		gtk_object_set_data(GTK_OBJECT(foo->favorites),
+				    "need_reread", GINT_TO_POINTER(1));
 }
 
 gint

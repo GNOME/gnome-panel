@@ -116,16 +116,16 @@ apply_global_config(void)
 	   old_use_large_icons != global_config.use_large_icons ||
 	   old_merge_menus != global_config.merge_menus) {
 		GSList *li;
-		for(li=applets;li!=NULL;li=g_slist_next(li)) {
+		for(li = applets; li != NULL; li = g_slist_next(li)) {
 			AppletInfo *info = li->data;
-			if(info->menu) {
+			if(info->menu != NULL) {
 				gtk_widget_unref(info->menu);
 				info->menu = NULL;
 				info->menu_age = 0;
 			}
 			if(info->type == APPLET_MENU) {
 				Menu *menu = info->data;
-				if(menu->menu) {
+				if(menu->menu != NULL) {
 					gtk_widget_unref(menu->menu);
 					menu->menu = NULL;
 					menu->age = 0;
@@ -134,12 +134,13 @@ apply_global_config(void)
 		}
 		for(li = panel_list; li != NULL; li = g_slist_next(li)) {
 			PanelData *pd = li->data;
-			if(pd->menu) {
+			if(pd->menu != NULL) {
 				gtk_widget_unref(pd->menu);
 				pd->menu = NULL;
 				pd->menu_age = 0;
 			}
 		}
+		foobar_widget_force_menu_remake();
 	}
 	dot_buttons_old = global_config.show_dot_buttons;
 	old_use_large_icons = global_config.use_large_icons;
@@ -162,7 +163,7 @@ apply_global_config(void)
 
 	for(i=0;i<LAST_TILE;i++) {
 		button_widget_set_flags(i, global_config.tiles_enabled[i],
-					1,0);
+					1, 0);
 		button_widget_load_tile(i, global_config.tile_up[i],
 					global_config.tile_down[i],
 					global_config.tile_border[i],

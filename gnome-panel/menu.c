@@ -2044,6 +2044,7 @@ add_tearoff(GtkMenu *menu)
 			   menu);
 }
 
+/*BTW, this also updates the fr entires */
 gboolean
 menu_need_reread(GtkWidget *menuw)
 {
@@ -2056,13 +2057,18 @@ menu_need_reread(GtkWidget *menuw)
 
 	if (GTK_MENU(menuw)->torn_off)
 		return FALSE;
+
+	if (gtk_object_get_data(GTK_OBJECT(menuw), "need_reread")) {
+		need_reread = TRUE;
+		gtk_object_remove_data(GTK_OBJECT(menuw), "need_reread");
+	}
 	
 	/*check if we need to reread this*/
 	for(list = mfl; list != NULL; list = g_slist_next(list)) {
 		MenuFinfo *mf = list->data;
 		if(mf->fake_menu ||
 		   mf->fr == NULL) {
-			if(mf->fr)
+			if(mf->fr != NULL)
 				mf->fr = fr_replace(mf->fr);
 			else
 				mf->fr = fr_get_dir(mf->menudir);
@@ -2070,7 +2076,7 @@ menu_need_reread(GtkWidget *menuw)
 		} else {
 			FileRec *fr;
 			fr = fr_check_and_reread(mf->fr);
-			if(fr!=mf->fr ||
+			if(fr != mf->fr ||
 			   fr == NULL) {
 				need_reread = TRUE;
 				mf->fr = fr;

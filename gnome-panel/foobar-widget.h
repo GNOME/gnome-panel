@@ -30,6 +30,10 @@ struct _FoobarWidget
 	GtkWidget *panel;
 	GtkWidget *clock_ebox;
 
+	GtkWidget *programs;
+	GtkWidget *favorites;
+	GtkWidget *settings;
+
 	gboolean compliant_wm;
 	char *clock_format;
 };
@@ -47,6 +51,8 @@ void		foobar_widget_redo_window	(FoobarWidget *foo);
 
 gboolean	foobar_widget_exists		(void);
 gint		foobar_widget_get_height	(void);
+
+void		foobar_widget_force_menu_remake	(void);
 
 END_GNOME_DECLS
 
