@@ -676,6 +676,27 @@ snapped_enter_notify(SnappedWidget *snapped,
 	return FALSE;
 }
 
+static int
+snapped_drag_motion (PanelWidget        *panel,
+		     GdkDragContext     *context,
+		     gint                x,
+		     gint                y,
+		     guint               time,
+		     SnappedWidget      *snapped)
+{
+	gdk_drag_status (context, context->suggested_action, time);
+
+	if ((snapped->mode == SNAPPED_EXPLICIT_HIDE) ||
+	    (snapped->state == SNAPPED_HIDDEN_LEFT) ||
+	    (snapped->state == SNAPPED_HIDDEN_RIGHT))
+		return TRUE;
+
+	snapped_widget_pop_up(snapped);
+	snapped_widget_queue_pop_down(snapped);
+
+	return TRUE;
+}
+
 void
 snapped_widget_queue_pop_down(SnappedWidget *snapped)
 {
@@ -843,6 +864,10 @@ snapped_widget_new (SnappedPos pos,
 
 	if(snapped->mode == SNAPPED_AUTO_HIDE)
 		snapped_widget_queue_pop_down(snapped);
+
+	gtk_signal_connect(GTK_OBJECT(basep->panel), "drag_motion",
+			   GTK_SIGNAL_FUNC(snapped_drag_motion),
+			   snapped);
 
 	return GTK_WIDGET(snapped);
 }

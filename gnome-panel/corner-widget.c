@@ -753,6 +753,31 @@ corner_enter_notify(CornerWidget *corner,
 	return FALSE;
 }
 
+static int
+corner_drag_motion (PanelWidget        *panel,
+		    GdkDragContext     *context,
+		    gint                x,
+		    gint                y,
+		    guint               time,
+		    CornerWidget       *corner)
+{
+	gdk_drag_status (context, context->suggested_action, time);
+
+        if ((corner->mode == CORNER_EXPLICIT_HIDE) ||
+	    (corner->state == CORNER_HIDDEN))
+	        return TRUE;
+
+	if (corner->leave_notify_timer_tag != 0) {
+	        gtk_timeout_remove (corner->leave_notify_timer_tag);
+		corner->leave_notify_timer_tag = 0;
+	}
+
+	corner_widget_pop_up(corner);
+	corner_widget_queue_pop_down(corner);
+
+	return TRUE;
+}
+
 void
 corner_widget_queue_pop_down(CornerWidget *corner)
 {
@@ -912,6 +937,10 @@ corner_widget_new (CornerPos pos,
 
 	if (corner->mode == CORNER_AUTO_HIDE)
   	        corner_widget_queue_pop_down(corner);
+
+	gtk_signal_connect(GTK_OBJECT(basep->panel), "drag_motion",
+			   GTK_SIGNAL_FUNC(corner_drag_motion),
+			   corner);
 
 	return GTK_WIDGET(corner);
 }
