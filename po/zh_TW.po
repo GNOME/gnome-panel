@@ -13,7 +13,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.5.23\n"
-"POT-Creation-Date: 2002-06-03 05:20+0800\n"
+"POT-Creation-Date: 2002-06-05 01:40+1200\n"
 "PO-Revision-Date: 2002-06-03 07:12+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -113,8 +113,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(還有 George 的幫忙)"
 
-#: applets/fish/fish.c:1184
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+#: applets/fish/fish.c:1184
 msgid "Fish"
 msgstr "小魚"
 
@@ -233,7 +233,7 @@ msgstr "%B %d %Y(%A)"
 
 #: applets/gen_util/clock.c:854 applets/gen_util/clock.c:1086
 #: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
-#: applets/gen_util/pager.c:155 applets/gen_util/pager.c:456
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -277,7 +277,7 @@ msgstr "使用 _UTC 時間"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1120 applets/gen_util/mailcheck.c:1667
-#: applets/gen_util/pager.c:487 applets/gen_util/tasklist.c:701
+#: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:240
 msgid "translator_credits"
 msgstr ""
@@ -286,8 +286,8 @@ msgstr ""
 "Jing-Jong SHYUE <shyue@sonoma.com.tw>, 2000\n"
 "Yuan-Chung Cheng <platin@linux.org.tw>, 1999"
 
-#: applets/gen_util/clock.c:1138
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+#: applets/gen_util/clock.c:1138
 msgid "Clock"
 msgstr "時鐘"
 
@@ -406,7 +406,8 @@ msgid "Window List"
 msgstr "視窗清單"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:499 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
+#: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "工作區切換程式"
 
@@ -705,21 +706,21 @@ msgstr "郵件檢查"
 msgid "New Mail"
 msgstr "新郵件"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "行"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 msgid "Columns"
 msgstr "列"
 
-#: applets/gen_util/pager.c:342
+#: applets/gen_util/pager.c:344
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr "啟動切換工作區面板程式途中，載入 num_rows 數值時出錯：%s\n"
 
-#: applets/gen_util/pager.c:353
+#: applets/gen_util/pager.c:355
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -727,7 +728,7 @@ msgid ""
 msgstr ""
 "啟動切換工作區面板程式途中，載入 display_workspace_names 數值時出錯：%s\n"
 
-#: applets/gen_util/pager.c:368
+#: applets/gen_util/pager.c:370
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -735,11 +736,11 @@ msgid ""
 msgstr ""
 "啟動切換工作區面板程式途中，載入 display_all_workspaces 數值時出錯：%s\n"
 
-#: applets/gen_util/pager.c:500
+#: applets/gen_util/pager.c:504
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:501
+#: applets/gen_util/pager.c:505
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -761,11 +762,16 @@ msgstr "只顯示目前的工作區(_C)"
 msgid "Show workspace _names in the switcher"
 msgstr "在切換程式中顯示工作區的名稱(_N)"
 
-#: applets/gen_util/pager.glade.h:7
+#: applets/gen_util/pager.glade.h:6
+#, fuzzy
+msgid "Workspace Names"
+msgstr "工作區"
+
+#: applets/gen_util/pager.glade.h:8
 msgid "Workspace Switcher Preferences"
 msgstr "工作區切換程式偏好設定"
 
-#: applets/gen_util/pager.glade.h:8
+#: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
 msgstr "工作區"
 
@@ -1007,13 +1013,13 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:535 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:535
 msgid "Remove From Panel"
 msgstr "從面板中移除"
 
 #. FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/applet.c:546 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:546
 msgid "Move"
 msgstr "移動"
 
@@ -1513,11 +1519,11 @@ msgstr "已知應用程式的清單"
 msgid "Choose an application to run from the list"
 msgstr "在清單中選擇要執行的應用程式"
 
-#: gnome-panel/gnome-run.c:1499
+#: gnome-panel/gnome-run.c:1497
 msgid "_Run"
 msgstr "執行(_R)"
 
-#: gnome-panel/gnome-run.c:1559
+#: gnome-panel/gnome-run.c:1557
 msgid "Run Program"
 msgstr "執行程式"
 
@@ -1917,8 +1923,8 @@ msgstr "執行指令"
 msgid "Desktop"
 msgstr "桌面"
 
-#: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
 #: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:514
+#: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
 msgid "Menu"
 msgstr "選單"
 
@@ -2342,42 +2348,42 @@ msgstr "Bonobo 面板測試程式"
 msgid "Test Bonobo Applet Factory"
 msgstr "Bonobo 面板測試程式工廠"
 
-#: libpanel-applet/panel-applet.c:749
+#: libpanel-applet/panel-applet.c:748
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "接收到不完整的背景圖案類型‘%s’"
 
-#: libpanel-applet/panel-applet.c:763
+#: libpanel-applet/panel-applet.c:762
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "接收到不完整的背景圖案類型‘%s’：%s"
 
-#: libpanel-applet/panel-applet.c:772
+#: libpanel-applet/panel-applet.c:771
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "無法取得 pixmap %s"
 
-#: libpanel-applet/panel-applet.c:779
+#: libpanel-applet/panel-applet.c:778
 msgid "Unknown background type received"
 msgstr "接收到不明的背景圖案類型"
 
-#: libpanel-applet/panel-applet.c:948
+#: libpanel-applet/panel-applet.c:947
 msgid "The Applet's containing Panel's orientation"
 msgstr "含有該面板程式的面板的方向"
 
-#: libpanel-applet/panel-applet.c:956
+#: libpanel-applet/panel-applet.c:955
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "含有該面板程式的面板的大小，以像素為單位"
 
-#: libpanel-applet/panel-applet.c:964
+#: libpanel-applet/panel-applet.c:963
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "含有該面板程式的面板的背景顏色或 pixmap"
 
-#: libpanel-applet/panel-applet.c:972
+#: libpanel-applet/panel-applet.c:971
 msgid "The Applet's flags"
 msgstr "面板程式的旗標"
 
-#: libpanel-applet/panel-applet.c:980
+#: libpanel-applet/panel-applet.c:979
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "提示該面板程式可接受的尺寸範圍"
 

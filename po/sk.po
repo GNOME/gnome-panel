@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sk\n"
-"POT-Creation-Date: 2002-06-01 16:29+0200\n"
+"POT-Creation-Date: 2002-06-05 01:40+1200\n"
 "PO-Revision-Date: 2002-06-01 16:30+0200\n"
 "Last-Translator: Stanislav Višňovský <visnovsky@nenya.ms.mff.cuni.cz>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -106,8 +106,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(s malou pomocou od Georgea)"
 
-#: applets/fish/fish.c:1184
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+#: applets/fish/fish.c:1184
 msgid "Fish"
 msgstr "Ryba"
 
@@ -228,7 +228,7 @@ msgstr "%A, %B %d %Y"
 
 #: applets/gen_util/clock.c:854 applets/gen_util/clock.c:1086
 #: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
-#: applets/gen_util/pager.c:155 applets/gen_util/pager.c:456
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -272,13 +272,14 @@ msgstr "Používať _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1120 applets/gen_util/mailcheck.c:1667
-#: applets/gen_util/pager.c:487 applets/gen_util/tasklist.c:701
+#: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:240
 msgid "translator_credits"
-msgstr "                      Stanislav Višňovský (visnovsky@nenya.ms.mff.cuni.cz)"
+msgstr ""
+"                      Stanislav Višňovský (visnovsky@nenya.ms.mff.cuni.cz)"
 
-#: applets/gen_util/clock.c:1138
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+#: applets/gen_util/clock.c:1138
 msgid "Clock"
 msgstr "Hodiny"
 
@@ -397,7 +398,8 @@ msgid "Window List"
 msgstr "Zoznam okien"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:499 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
+#: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Prepínanie plôch"
 
@@ -616,7 +618,8 @@ msgstr "Či sa má pošta kontrolovať automaticky"
 
 #: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "If this is set mail will be checked every update-freq milliseconds"
-msgstr "Ak je toto zapnuté, pošta sa bude kontrolovať podľa zadanej doby aktualizácie"
+msgstr ""
+"Ak je toto zapnuté, pošta sa bude kontrolovať podľa zadanej doby aktualizácie"
 
 #: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
@@ -702,21 +705,22 @@ msgstr "Kontrola pošty"
 msgid "New Mail"
 msgstr "Nová pošta"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Riadky"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 msgid "Columns"
 msgstr "Stĺpce"
 
-#: applets/gen_util/pager.c:342
+#: applets/gen_util/pager.c:344
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
-msgstr "Chyba pri načítavaní hodnoty num_rows pre applet prepínania plochy: %s\n"
+msgstr ""
+"Chyba pri načítavaní hodnoty num_rows pre applet prepínania plochy: %s\n"
 
-#: applets/gen_util/pager.c:353
+#: applets/gen_util/pager.c:355
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -725,7 +729,7 @@ msgstr ""
 "Chyba pri načítavaní hodnoty display_workspace_names pre applet prepínania "
 "plochy: %s\n"
 
-#: applets/gen_util/pager.c:368
+#: applets/gen_util/pager.c:370
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -734,11 +738,11 @@ msgstr ""
 "Chyba pri načítavaní hodnoty display_all_workspaces pre applet prepínania "
 "plochy: %s\n"
 
-#: applets/gen_util/pager.c:500
+#: applets/gen_util/pager.c:504
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:501
+#: applets/gen_util/pager.c:505
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -762,11 +766,16 @@ msgstr "Zobraziť iba _aktuálnu plochu"
 msgid "Show workspace _names in the switcher"
 msgstr "Zobraziť _mená plôch"
 
-#: applets/gen_util/pager.glade.h:7
+#: applets/gen_util/pager.glade.h:6
+#, fuzzy
+msgid "Workspace Names"
+msgstr "Pracovné plochy"
+
+#: applets/gen_util/pager.glade.h:8
 msgid "Workspace Switcher Preferences"
 msgstr "Nastavenie prepínania plôch"
 
-#: applets/gen_util/pager.glade.h:8
+#: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
 msgstr "Pracovné plochy"
 
@@ -868,7 +877,8 @@ msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
 #: applets/gen_util/tasklist.c:715
-msgid "The Window List shows a list of all visible windows and lets you browse them."
+msgid ""
+"The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
 "Zoznam okien zobrazuje zoznam všetkých viditeľných okien a umožňuje medzi "
 "nimi prechádzať."
@@ -1012,13 +1022,13 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:535 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:535
 msgid "Remove From Panel"
 msgstr "Odstrániť z panelu"
 
 #. FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/applet.c:546 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:546
 msgid "Move"
 msgstr "Presunúť"
 
@@ -1236,20 +1246,21 @@ msgid "The argument is a url to add, not a .desktop file"
 msgstr "Argument je url, ktoré sa má pridať, nie súbor .desktop"
 
 #: gnome-panel/gnome-panel-add-launcher.c:67
-msgid "You must supply a single argument with the .desktop file or url to use\n"
+msgid ""
+"You must supply a single argument with the .desktop file or url to use\n"
 msgstr "Musíte zadať jeden argument so súborom .desktop alebo url\n"
 
 #: gnome-panel/gnome-panel-add-launcher.c:81
 msgid "No panel found\n"
 msgstr "Panel nenájdený\n"
 
-#: gnome-panel/gnome-panel-preferences.c:300
+#: gnome-panel/gnome-panel-preferences.c:327
 msgid ""
 "The system administrator has disallowed\n"
 " modification of the panel configuration"
 msgstr "Administrátor systému zakázal zmenu nastavenia panelu"
 
-#: gnome-panel/gnome-panel-preferences.c:311
+#: gnome-panel/gnome-panel-preferences.c:338
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "Nastavenie panelu"
@@ -1518,11 +1529,11 @@ msgstr "Zoznam dostupných aplikácií"
 msgid "Choose an application to run from the list"
 msgstr "Vyberte aplikáciu, ktorú chcete spustiť, zo zoznamu"
 
-#: gnome-panel/gnome-run.c:1499
+#: gnome-panel/gnome-run.c:1497
 msgid "_Run"
 msgstr "_Spustiť"
 
-#: gnome-panel/gnome-run.c:1559
+#: gnome-panel/gnome-run.c:1557
 msgid "Run Program"
 msgstr "Spustiť program"
 
@@ -1909,7 +1920,8 @@ msgstr "Zamknúť obrazovku, takže môžete dočasne opustiť počítač."
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
-msgstr "Ukončiť toto sedenie a prihlásiť sa ako iný používateľ, alebo vypnúť počítač."
+msgstr ""
+"Ukončiť toto sedenie a prihlásiť sa ako iný používateľ, alebo vypnúť počítač."
 
 #: gnome-panel/menu.c:3574
 msgid "Applets"
@@ -1923,8 +1935,8 @@ msgstr "Vykonať príkaz"
 msgid "Desktop"
 msgstr "Plocha"
 
-#: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
 #: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:514
+#: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
 msgid "Menu"
 msgstr "Menu"
 
@@ -2101,7 +2113,8 @@ msgstr "Otvoriť URL: %s"
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
-msgstr "Vo vašom nastavení neboli nájdené žiadne panely. Vytvorím vám menu panel"
+msgstr ""
+"Vo vašom nastavení neboli nájdené žiadne panely. Vytvorím vám menu panel"
 
 #: gnome-panel/panel-config.c:537
 msgid "Hiding"
@@ -2348,42 +2361,42 @@ msgstr "Applet pre test Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Vytváracie rozhranie pre applet Test Bonobo"
 
-#: libpanel-applet/panel-applet.c:749
+#: libpanel-applet/panel-applet.c:748
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Prijatý neúplný typ pozadia '%s'"
 
-#: libpanel-applet/panel-applet.c:763
+#: libpanel-applet/panel-applet.c:762
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Prijatý neúplný typ pozadia '%s': %s"
 
-#: libpanel-applet/panel-applet.c:772
+#: libpanel-applet/panel-applet.c:771
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Nepodarilo sa získať obrázok %s"
 
-#: libpanel-applet/panel-applet.c:779
+#: libpanel-applet/panel-applet.c:778
 msgid "Unknown background type received"
 msgstr "Prijatý neznámy typ pozadia"
 
-#: libpanel-applet/panel-applet.c:948
+#: libpanel-applet/panel-applet.c:947
 msgid "The Applet's containing Panel's orientation"
 msgstr "Applet obsahujúci orientáciu panelu"
 
-#: libpanel-applet/panel-applet.c:956
+#: libpanel-applet/panel-applet.c:955
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Applet obsahujúci veľkosť panelu v oodoch"
 
-#: libpanel-applet/panel-applet.c:964
+#: libpanel-applet/panel-applet.c:963
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Applet obsahujúci farbu pozadia panelu alebo obrázok pozadia"
 
-#: libpanel-applet/panel-applet.c:972
+#: libpanel-applet/panel-applet.c:971
 msgid "The Applet's flags"
 msgstr "Príznaky appletu"
 
-#: libpanel-applet/panel-applet.c:980
+#: libpanel-applet/panel-applet.c:979
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Rozsahy ako rada pre akceptovateľnú veľkosť appletu"
 
@@ -2786,4 +2799,3 @@ msgstr "Extra extra malý"
 
 #~ msgid "Network"
 #~ msgstr "Sieť"
-

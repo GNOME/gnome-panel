@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.4.0.5\n"
-"POT-Creation-Date: 2002-05-29 03:08+1200\n"
+"POT-Creation-Date: 2002-06-05 01:40+1200\n"
 "PO-Revision-Date: 2002-05-15 01:25+0200\n"
 "Last-Translator: Huib Kleinhout <huib@stack.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -66,8 +66,8 @@ msgid "_Animation filename:"
 msgstr "Naam van het _animatiebestand:"
 
 #: applets/fish/fish.c:738 applets/gen_util/mailcheck.c:1245
-#: gnome-panel/menu-properties.c:501 gnome-panel/menu-properties.c:539
-#: gnome-panel/panel-config.c:1369 gnome-panel/panel-util.c:241
+#: gnome-panel/menu-properties.c:498 gnome-panel/menu-properties.c:536
+#: gnome-panel/panel-config.c:1437 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "Bladeren"
 
@@ -236,59 +236,67 @@ msgstr "Computerklok"
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/gen_util/clock.c:874
+#: applets/gen_util/clock.c:854 applets/gen_util/clock.c:1086
+#: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
+#: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr ""
+
+#: applets/gen_util/clock.c:898
 msgid "Clock Preferences"
 msgstr "Klok-voorkeuren"
 
-#: applets/gen_util/clock.c:901
+#: applets/gen_util/clock.c:925
 msgid "Clock type"
 msgstr "Kloktype"
 
-#: applets/gen_util/clock.c:911
+#: applets/gen_util/clock.c:935
 msgid "_12 hour"
 msgstr "_12 uur"
 
-#: applets/gen_util/clock.c:917
+#: applets/gen_util/clock.c:941
 msgid "_24 hour"
 msgstr "_24 uur"
 
-#: applets/gen_util/clock.c:922
+#: applets/gen_util/clock.c:946
 msgid "_UNIX time"
 msgstr "_UNIX tijd"
 
-#: applets/gen_util/clock.c:926
+#: applets/gen_util/clock.c:950
 msgid "_Internet time"
 msgstr "_Internet tijd"
 
-#: applets/gen_util/clock.c:963
+#: applets/gen_util/clock.c:987
 msgid "Show _seconds"
 msgstr "Toon _seconden"
 
-#: applets/gen_util/clock.c:973
+#: applets/gen_util/clock.c:997
 msgid "Show _date"
 msgstr "Toon _datum"
 
-#: applets/gen_util/clock.c:983
+#: applets/gen_util/clock.c:1007
 msgid "Use _UTC"
 msgstr "Gebruik _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1073 applets/gen_util/mailcheck.c:1640
-#: applets/gen_util/pager.c:422 applets/gen_util/tasklist.c:641
+#: applets/gen_util/clock.c:1120 applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:240
 msgid "translator_credits"
 msgstr "Huib Kleinhout, Reinout van Schouwen"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-#: applets/gen_util/clock.c:1091
+#: applets/gen_util/clock.c:1138
 msgid "Clock"
 msgstr "Klok"
 
-#: applets/gen_util/clock.c:1092
+#: applets/gen_util/clock.c:1139
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "(C) 1998-2002 the Free Software Foundation"
 
-#: applets/gen_util/clock.c:1093
+#: applets/gen_util/clock.c:1140
 #, fuzzy
 msgid "The Clock displays the current time and date"
 msgstr "Het Klok Applet toont de huidige tijd en datum"
@@ -382,7 +390,7 @@ msgid "Get the current time and date"
 msgstr "Verkrijg de huidige tijd en datum"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1653
+#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1680
 msgid "Inbox Monitor"
 msgstr "Postvak in Monitor"
 
@@ -403,12 +411,13 @@ msgid "Utility"
 msgstr "Hulpmiddelen"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:653
+#: applets/gen_util/tasklist.c:713
 msgid "Window List"
 msgstr "Vensterlijst"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:434 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
+#: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Werkblad Wisselaar"
 
@@ -466,7 +475,7 @@ msgid "No mail."
 msgstr "Geen berichten."
 
 #: applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
-#: applets/gen_util/mailcheck.c:1816 applets/gen_util/mailcheck.c:1818
+#: applets/gen_util/mailcheck.c:1865 applets/gen_util/mailcheck.c:1867
 msgid "Status not updated"
 msgstr "Status niet ververst"
 
@@ -560,36 +569,36 @@ msgstr "Geluid _afspelen wanneer nieuwe post binnenkomt"
 msgid "Select a_nimation"
 msgstr "Kies a_nimatie"
 
-#: applets/gen_util/mailcheck.c:1555
+#: applets/gen_util/mailcheck.c:1580
 msgid "Inbox Monitor Preferences"
 msgstr "Postvak in Monitor voorkeuren"
 
-#: applets/gen_util/mailcheck.c:1572
+#: applets/gen_util/mailcheck.c:1599
 msgid "_Mail check"
 msgstr "_Post controle"
 
-#: applets/gen_util/mailcheck.c:1576
+#: applets/gen_util/mailcheck.c:1603
 msgid "Mail_box"
 msgstr "Post_bus"
 
-#: applets/gen_util/mailcheck.c:1654
+#: applets/gen_util/mailcheck.c:1681
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 the Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1655
+#: applets/gen_util/mailcheck.c:1682
 #, fuzzy
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "'Post controleren' waarschuwt u wanneer er nieuwe e-mail is"
 
-#: applets/gen_util/mailcheck.c:1792
+#: applets/gen_util/mailcheck.c:1841
 msgid "Text only"
 msgstr "Alleen tekst"
 
-#: applets/gen_util/mailcheck.c:1819
+#: applets/gen_util/mailcheck.c:1868
 msgid "Mail check"
 msgstr "Postcontrole"
 
-#: applets/gen_util/mailcheck.c:1820
+#: applets/gen_util/mailcheck.c:1869
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "'Post controleren' waarschuwt u wanneer er nieuwe e-mail is"
 
@@ -723,21 +732,21 @@ msgstr "Postcontrole"
 msgid "New Mail"
 msgstr "Nieuwe e-mail"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:647
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Rijen"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:647
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 msgid "Columns"
 msgstr ""
 
-#: applets/gen_util/pager.c:301
+#: applets/gen_util/pager.c:344
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr "Fout bij laden van num_rows waarde voor de bureaubladwisselaar: %s\n"
 
-#: applets/gen_util/pager.c:312
+#: applets/gen_util/pager.c:355
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -746,7 +755,7 @@ msgstr ""
 "Fout bij laden van display_workspace_names waarde voor bureaubladwisselaar "
 "appletje: %s\n"
 
-#: applets/gen_util/pager.c:327
+#: applets/gen_util/pager.c:370
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -755,11 +764,11 @@ msgstr ""
 "Fout bij laden van display_all_workspaces waarde voor bureublad wisselaar "
 "applet: %s\n"
 
-#: applets/gen_util/pager.c:435
+#: applets/gen_util/pager.c:504
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/pager.c:436
+#: applets/gen_util/pager.c:505
 #, fuzzy
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
@@ -784,11 +793,16 @@ msgstr "Toon alleen het _huidige werkblad"
 msgid "Show workspace _names in the switcher"
 msgstr "Toon alle werkblad _namen in de wisselaar"
 
-#: applets/gen_util/pager.glade.h:7
+#: applets/gen_util/pager.glade.h:6
+#, fuzzy
+msgid "Workspace Names"
+msgstr "Werkbladen"
+
+#: applets/gen_util/pager.glade.h:8
 msgid "Workspace Switcher Preferences"
 msgstr "Werkbladwisselaar voorkeuren"
 
-#: applets/gen_util/pager.glade.h:8
+#: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
 msgstr "Werkbladen"
 
@@ -811,8 +825,9 @@ msgstr "Aantal _werkbladen:"
 
 #: applets/gen_util/pager.schemas.in.h:4
 msgid ""
-"When showing all the workspaces this determines how many rows(for horizontal "
-"layout) or columns (for vertical layout) the pager shows the workspaces in."
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the pager shows the "
+"workspaces in."
 msgstr ""
 
 #: applets/gen_util/pager.schemas.in.h:5
@@ -879,11 +894,11 @@ msgstr "Hulp"
 msgid "About..."
 msgstr "Info..."
 
-#: applets/gen_util/tasklist.c:654
+#: applets/gen_util/tasklist.c:714
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:655
+#: applets/gen_util/tasklist.c:715
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -949,7 +964,7 @@ msgstr "Vensters _nooit groeperen"
 #: applets/gen_util/tasklist.schemas.in.h:1
 msgid ""
 "Decides when to group windows from the same application on the tasklist. "
-"valid values are never, auto, and always."
+"Valid values are never, auto, and always."
 msgstr ""
 
 #: applets/gen_util/tasklist.schemas.in.h:2
@@ -1016,21 +1031,21 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:474 gnome-panel/foobar-widget.c:364
+#: gnome-panel/applet.c:471 gnome-panel/foobar-widget.c:364
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:538
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:535
 msgid "Remove From Panel"
 msgstr "Van paneel verwijderen"
 
 #. FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:549
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:546
 msgid "Move"
 msgstr "Verplaatsen"
 
-#: gnome-panel/applet.c:1150
+#: gnome-panel/applet.c:1147
 msgid "Can't find an empty spot"
 msgstr "Kan geen lege plaats vinden"
 
@@ -1113,9 +1128,9 @@ msgstr "Solaris"
 msgid "CDE Menus"
 msgstr "CDE-menu's"
 
-#: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:795
-#: gnome-panel/panel-config.c:830 gnome-panel/panel-config.c:901
-#: gnome-panel/panel-config.c:1009
+#: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:863
+#: gnome-panel/panel-config.c:898 gnome-panel/panel-config.c:969
+#: gnome-panel/panel-config.c:1077
 msgid "Size and Position"
 msgstr "Grootte en positie"
 
@@ -1123,8 +1138,8 @@ msgstr "Grootte en positie"
 msgid "Tooltip/Name"
 msgstr "Tooltip/Naam"
 
-#: gnome-panel/drawer.c:150 gnome-panel/menu-properties.c:522
-#: gnome-panel/menu-properties.c:556
+#: gnome-panel/drawer.c:150 gnome-panel/menu-properties.c:519
+#: gnome-panel/menu-properties.c:553
 msgid "Icon"
 msgstr "Pictogram"
 
@@ -1261,7 +1276,7 @@ msgstr ""
 msgid "No panel found\n"
 msgstr "Geen paneel gevonden\n"
 
-#: gnome-panel/gnome-panel-preferences.c:300
+#: gnome-panel/gnome-panel-preferences.c:327
 msgid ""
 "The system administrator has disallowed\n"
 " modification of the panel configuration"
@@ -1269,7 +1284,7 @@ msgstr ""
 "De systeem beheerder verbiedt veranderingen\n"
 " aan de configuratie van het paneel"
 
-#: gnome-panel/gnome-panel-preferences.c:311
+#: gnome-panel/gnome-panel-preferences.c:338
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "Paneel Voorkeuren"
@@ -1536,11 +1551,11 @@ msgstr "Lijst van bekende toepassingen"
 msgid "Choose an application to run from the list"
 msgstr "Kies uit de lijst een toepassing om te draaien"
 
-#: gnome-panel/gnome-run.c:1499
+#: gnome-panel/gnome-run.c:1497
 msgid "_Run"
 msgstr "_Uitvoeren"
 
-#: gnome-panel/gnome-run.c:1559
+#: gnome-panel/gnome-run.c:1557
 msgid "Run Program"
 msgstr "Programma uitvoeren"
 
@@ -1592,7 +1607,7 @@ msgstr "Help over %s Toepassing"
 msgid "Launcher Properties"
 msgstr "Snelkoppeling-eigenschappen"
 
-#: gnome-panel/launcher.c:762 gnome-panel/menu-ditem.c:508
+#: gnome-panel/launcher.c:762 gnome-panel/menu-ditem.c:521
 msgid "Create Launcher"
 msgstr "Snelkoppeling creëren"
 
@@ -1937,7 +1952,7 @@ msgstr "Opdracht uitvoeren"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
+#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:514
 #: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
 msgid "Menu"
 msgstr "Menu"
@@ -1965,16 +1980,16 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: gnome-panel/menu-ditem.c:439
+#: gnome-panel/menu-ditem.c:448
 msgid "You have to specify a name for the launcher."
 msgstr "U moet een naam opgeven voor de snelkoppeling."
 
-#: gnome-panel/menu-ditem.c:456
+#: gnome-panel/menu-ditem.c:464
 msgid "You have to specify a valid URL or command."
 msgstr "U moet een geldige URL of opdracht opgeven."
 
 #. class
-#: gnome-panel/menu-ditem.c:480
+#: gnome-panel/menu-ditem.c:493
 #, c-format
 msgid ""
 "<b>Cannot save menu item to disk</b>\n"
@@ -1985,7 +2000,7 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: gnome-panel/menu-ditem.c:503
+#: gnome-panel/menu-ditem.c:516
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -2013,55 +2028,55 @@ msgstr "In een submenu"
 msgid "On the main menu"
 msgstr "In het hoofdmenu"
 
-#: gnome-panel/menu-properties.c:367
+#: gnome-panel/menu-properties.c:364
 msgid "Menu properties"
 msgstr "Menu-eigenschappen"
 
-#: gnome-panel/menu-properties.c:390
+#: gnome-panel/menu-properties.c:387
 msgid "Menu type"
 msgstr "Menutype"
 
-#: gnome-panel/menu-properties.c:397
+#: gnome-panel/menu-properties.c:394
 msgid "Global main menu"
 msgstr "Globaal hoofd menu"
 
-#: gnome-panel/menu-properties.c:411 gnome-panel/menu-properties.c:434
+#: gnome-panel/menu-properties.c:408 gnome-panel/menu-properties.c:431
 msgid "Main menu"
 msgstr "Hoofdmenu"
 
-#: gnome-panel/menu-properties.c:425 gnome-panel/menu-properties.c:488
+#: gnome-panel/menu-properties.c:422 gnome-panel/menu-properties.c:485
 msgid "Normal menu"
 msgstr "Gewoon menu"
 
-#: gnome-panel/menu-properties.c:447
+#: gnome-panel/menu-properties.c:444
 msgid "Programs: "
 msgstr "Programma's:"
 
-#: gnome-panel/menu-properties.c:454
+#: gnome-panel/menu-properties.c:451
 msgid "Applets: "
 msgstr "Applets: "
 
-#: gnome-panel/menu-properties.c:461
+#: gnome-panel/menu-properties.c:458
 msgid "Distribution menu (if found): "
 msgstr "Distributie menu (indien gevonden): "
 
-#: gnome-panel/menu-properties.c:468
+#: gnome-panel/menu-properties.c:465
 msgid "KDE menu (if found): "
 msgstr "KDE menu (indien gevonden): "
 
-#: gnome-panel/menu-properties.c:475
+#: gnome-panel/menu-properties.c:472
 msgid "Panel menu: "
 msgstr "Paneel menu: "
 
-#: gnome-panel/menu-properties.c:482
+#: gnome-panel/menu-properties.c:479
 msgid "Desktop menu: "
 msgstr "Bureaublad menu: "
 
-#: gnome-panel/menu-properties.c:498
+#: gnome-panel/menu-properties.c:495
 msgid "Menu path"
 msgstr "Menu pad"
 
-#: gnome-panel/menu-properties.c:529
+#: gnome-panel/menu-properties.c:526
 msgid "Use custom icon for panel button"
 msgstr "Gebruik eigen pictogram voor paneelknoppen"
 
@@ -2102,12 +2117,12 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: gnome-panel/panel.c:937
+#: gnome-panel/panel.c:930
 #, c-format
 msgid "Open URL: %s"
 msgstr "Open URL: %s"
 
-#: gnome-panel/panel.c:2261
+#: gnome-panel/panel.c:2254
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2143,63 +2158,67 @@ msgstr "Diversen"
 msgid "Current screen:"
 msgstr "Huidige scherm:"
 
-#: gnome-panel/panel-config.c:674
+#: gnome-panel/panel-config.c:708
+msgid "Indicates the panel position and orientation on screen"
+msgstr ""
+
+#: gnome-panel/panel-config.c:726
 msgid "Panel Position"
 msgstr "Paneel Positie"
 
-#: gnome-panel/panel-config.c:920
+#: gnome-panel/panel-config.c:988
 msgid "Orient panel horizontally"
 msgstr "Plaats het paneel horizontaal"
 
-#: gnome-panel/panel-config.c:932
+#: gnome-panel/panel-config.c:1000
 msgid "Orient panel vertically"
 msgstr "Plaats het paneel verticaal"
 
-#: gnome-panel/panel-config.c:944
+#: gnome-panel/panel-config.c:1012
 msgid "Top left corner's position: X"
 msgstr "Positie Linker bovenkant: X"
 
-#: gnome-panel/panel-config.c:959
+#: gnome-panel/panel-config.c:1027
 msgid "Y"
 msgstr "Y"
 
-#: gnome-panel/panel-config.c:1034
+#: gnome-panel/panel-config.c:1102
 msgid "Offset from screen edge:"
 msgstr "Verwijderd van schermrand:"
 
-#: gnome-panel/panel-config.c:1096
+#: gnome-panel/panel-config.c:1164
 msgid "Panel size:"
 msgstr "Paneelgrootte:"
 
-#: gnome-panel/panel-config.c:1104
+#: gnome-panel/panel-config.c:1172
 msgid "XX Small (12 pixels)"
 msgstr "XXS, klein (12 pixels)"
 
-#: gnome-panel/panel-config.c:1112
+#: gnome-panel/panel-config.c:1180
 msgid "X Small (24 pixels)"
 msgstr "XS, klein (24 pixels)"
 
-#: gnome-panel/panel-config.c:1120
+#: gnome-panel/panel-config.c:1188
 msgid "Small (36 pixels)"
 msgstr "Klein (36 punten)"
 
-#: gnome-panel/panel-config.c:1128
+#: gnome-panel/panel-config.c:1196
 msgid "Medium (48 pixels)"
 msgstr "M, gemiddeld (48 pixels)"
 
-#: gnome-panel/panel-config.c:1136
+#: gnome-panel/panel-config.c:1204
 msgid "Large (64 pixels)"
 msgstr "Groot (64 punten)"
 
-#: gnome-panel/panel-config.c:1144
+#: gnome-panel/panel-config.c:1212
 msgid "X Large (80 pixels)"
 msgstr "XL, groot (80 pixels)"
 
-#: gnome-panel/panel-config.c:1152
+#: gnome-panel/panel-config.c:1220
 msgid "XX Large (128 pixels)"
 msgstr "XXL, zeer groot (128 pixels)"
 
-#: gnome-panel/panel-config.c:1168
+#: gnome-panel/panel-config.c:1236
 msgid ""
 "Note: The panel will size itself to the\n"
 "largest applet in the panel, and that\n"
@@ -2209,70 +2228,70 @@ msgstr ""
 "van het grootste appletje, en niet alle appletjes\n"
 "zullen dezelfde groote hebben."
 
-#: gnome-panel/panel-config.c:1302
+#: gnome-panel/panel-config.c:1370
 msgid "Background Type: "
 msgstr "Achtergrondtype :"
 
-#: gnome-panel/panel-config.c:1307
+#: gnome-panel/panel-config.c:1375
 msgid "Standard"
 msgstr "Standaard"
 
 #. color frame
-#: gnome-panel/panel-config.c:1311 gnome-panel/panel-config.c:1327
+#: gnome-panel/panel-config.c:1379 gnome-panel/panel-config.c:1395
 msgid "Color"
 msgstr "Kleur"
 
-#: gnome-panel/panel-config.c:1315
+#: gnome-panel/panel-config.c:1383
 msgid "Pixmap"
 msgstr "Afbeelding"
 
-#: gnome-panel/panel-config.c:1339
+#: gnome-panel/panel-config.c:1407
 msgid "Color to use:"
 msgstr "Kleur:"
 
 #. image frame
-#: gnome-panel/panel-config.c:1357
+#: gnome-panel/panel-config.c:1425
 msgid "Image"
 msgstr "Afbeelding"
 
-#: gnome-panel/panel-config.c:1383
+#: gnome-panel/panel-config.c:1451
 msgid "Don't scale image to fit"
 msgstr "Afbeelding niet schalen om te passen"
 
-#: gnome-panel/panel-config.c:1389
+#: gnome-panel/panel-config.c:1457
 msgid "Scale image (keep proportions)"
 msgstr "Schaal afbeelding (verhouding hetzelfde houden)"
 
-#: gnome-panel/panel-config.c:1394
+#: gnome-panel/panel-config.c:1462
 msgid "Stretch image (change proportions)"
 msgstr "Schaal afbeelding (verhouding mag veranderen)"
 
-#: gnome-panel/panel-config.c:1409
+#: gnome-panel/panel-config.c:1477
 msgid "Rotate image for vertical panels"
 msgstr "Afbeelding draaien bij verticaal paneel"
 
-#: gnome-panel/panel-config.c:1488 gnome-panel/panel-config.c:1610
+#: gnome-panel/panel-config.c:1556 gnome-panel/panel-config.c:1678
 msgid "Edge panel"
 msgstr "Randpaneel"
 
-#: gnome-panel/panel-config.c:1495 gnome-panel/panel-config.c:1621
+#: gnome-panel/panel-config.c:1563 gnome-panel/panel-config.c:1689
 msgid "Corner panel"
 msgstr "Hoek paneel"
 
-#: gnome-panel/panel-config.c:1501 gnome-panel/panel-config.c:1632
+#: gnome-panel/panel-config.c:1569 gnome-panel/panel-config.c:1700
 msgid "Sliding panel"
 msgstr "Schuivend paneel"
 
-#: gnome-panel/panel-config.c:1507 gnome-panel/panel-config.c:1643
+#: gnome-panel/panel-config.c:1575 gnome-panel/panel-config.c:1711
 msgid "Floating panel"
 msgstr "Zwevend paneel"
 
 #. main window
-#: gnome-panel/panel-config.c:1579
+#: gnome-panel/panel-config.c:1647
 msgid "Panel properties"
 msgstr "Paneeleigenschappen"
 
-#: gnome-panel/panel-config.c:1662
+#: gnome-panel/panel-config.c:1730
 msgid "Background"
 msgstr "Achtergrond"
 
@@ -2363,42 +2382,42 @@ msgstr "Test Bonobo Applet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test Bonobo Applet Fabriek"
 
-#: libpanel-applet/panel-applet.c:750
+#: libpanel-applet/panel-applet.c:748
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Niet-compleet achtergrond type '%s' ontvangen"
 
-#: libpanel-applet/panel-applet.c:764
+#: libpanel-applet/panel-applet.c:762
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Niet-compleet achtergrond type '%s' ontvangen:%s"
 
-#: libpanel-applet/panel-applet.c:773
+#: libpanel-applet/panel-applet.c:771
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Het is mislukt pictogram %s te verkrijgen"
 
-#: libpanel-applet/panel-applet.c:780
+#: libpanel-applet/panel-applet.c:778
 msgid "Unknown background type received"
 msgstr "Onbekend achtergrond type ontvangen"
 
-#: libpanel-applet/panel-applet.c:949
+#: libpanel-applet/panel-applet.c:947
 msgid "The Applet's containing Panel's orientation"
 msgstr "Paneel-oriëntatie van het appletje"
 
-#: libpanel-applet/panel-applet.c:957
+#: libpanel-applet/panel-applet.c:955
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Paneelgrootte in pixels van het Applet"
 
-#: libpanel-applet/panel-applet.c:965
+#: libpanel-applet/panel-applet.c:963
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Paneel achtergrondkleur of pictogram van het Applet"
 
-#: libpanel-applet/panel-applet.c:973
+#: libpanel-applet/panel-applet.c:971
 msgid "The Applet's flags"
 msgstr "Appletvlaggen"
 
-#: libpanel-applet/panel-applet.c:981
+#: libpanel-applet/panel-applet.c:979
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Bereiken die aangeven welke afmetingen voor het appletje acceptabel zijn"

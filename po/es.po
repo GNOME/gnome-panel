@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNOME 2.0\n"
-"POT-Creation-Date: 2002-06-01 17:20+0200\n"
+"POT-Creation-Date: 2002-06-05 01:40+1200\n"
 "PO-Revision-Date: 2002-06-03 16:38GMT\n"
 "Last-Translator: Juan Manuel García Molina <juanma_gm@wanadoo.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -135,7 +135,8 @@ msgstr ""
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr "Un pez sin nombre es un pez triste. Déle vida a su pez poniéndole un nombre."
+msgstr ""
+"Un pez sin nombre es un pez triste. Déle vida a su pez poniéndole un nombre."
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
@@ -236,7 +237,7 @@ msgstr "%A, %d de %B de %Y"
 
 #: applets/gen_util/clock.c:854 applets/gen_util/clock.c:1086
 #: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
-#: applets/gen_util/pager.c:155 applets/gen_util/pager.c:456
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -280,12 +281,12 @@ msgstr "Usar _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1120 applets/gen_util/mailcheck.c:1667
-#: applets/gen_util/pager.c:487 applets/gen_util/tasklist.c:701
+#: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:240
 msgid "translator_credits"
 msgstr ""
-"Juan Manuel García Molina <juanma_gm@wanadoo.es> "
-"Germán Poo Caamaño <gpoo@ubiobio.cl>"
+"Juan Manuel García Molina <juanma_gm@wanadoo.es> Germán Poo Caamaño "
+"<gpoo@ubiobio.cl>"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 #: applets/gen_util/clock.c:1138
@@ -407,7 +408,8 @@ msgid "Window List"
 msgstr "Lista de ventanas"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:499 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
+#: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Paginador de espacios de trabajo"
 
@@ -424,8 +426,8 @@ msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
-"Si no establece una clave en las preferencias para el monitor de la bandeja de "
-"entrada, tendrá que introducirla cada vez que inicie."
+"Si no establece una clave en las preferencias para el monitor de la bandeja "
+"de entrada, tendrá que introducirla cada vez que inicie."
 
 #: applets/gen_util/mailcheck.c:232
 msgid "Please enter your mailserver's _password:"
@@ -671,11 +673,13 @@ msgstr "La contraseña del usuario para el servidor remoto"
 
 #: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "This is how we check the mail, check the mail, check the mail..."
-msgstr "Así se comprueba el correo, se comprueba el correo, es comprueba el correo..."
+msgstr ""
+"Así se comprueba el correo, se comprueba el correo, es comprueba el correo..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr "Así se procesa el correo, se procesa el correo, se procesa el correo..."
+msgstr ""
+"Así se procesa el correo, se procesa el correo, se procesa el correo..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
@@ -709,23 +713,23 @@ msgstr "Buzón"
 msgid "New Mail"
 msgstr "Nuevos mensajes"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Filas"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 msgid "Columns"
 msgstr "Columnas"
 
-#: applets/gen_util/pager.c:342
+#: applets/gen_util/pager.c:344
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr ""
 "Error al cargar el valor de num_rows para el aplique paginador de espacio de "
 "trabajo: %s\n"
 
-#: applets/gen_util/pager.c:353
+#: applets/gen_util/pager.c:355
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -734,7 +738,7 @@ msgstr ""
 "Error al cargar el valor display_workspace_names para el aplique paginador: %"
 "s\n"
 
-#: applets/gen_util/pager.c:368
+#: applets/gen_util/pager.c:370
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -743,17 +747,17 @@ msgstr ""
 "Error al cargar el valor display_all_workspaces para el aplique paginador: %"
 "s\n"
 
-#: applets/gen_util/pager.c:500
+#: applets/gen_util/pager.c:504
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:501
+#: applets/gen_util/pager.c:505
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
 msgstr ""
-"El aplique paginador muestra una pequeña versión de sus espacios de "
-"trabajo que le permite gestionar sus ventanas."
+"El aplique paginador muestra una pequeña versión de sus espacios de trabajo "
+"que le permite gestionar sus ventanas."
 
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
@@ -771,11 +775,16 @@ msgstr "Mostrar sólo el espacio de trabajo _actual"
 msgid "Show workspace _names in the switcher"
 msgstr "Mostrar los _nombres de espacios de trabajo en el paginador"
 
-#: applets/gen_util/pager.glade.h:7
+#: applets/gen_util/pager.glade.h:6
+#, fuzzy
+msgid "Workspace Names"
+msgstr "Espacios de trabajo"
+
+#: applets/gen_util/pager.glade.h:8
 msgid "Workspace Switcher Preferences"
 msgstr "Propiedades del paginador de espacios de trabajo"
 
-#: applets/gen_util/pager.glade.h:8
+#: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
 msgstr "Espacios de trabajo"
 
@@ -879,7 +888,8 @@ msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
 #: applets/gen_util/tasklist.c:715
-msgid "The Window List shows a list of all visible windows and lets you browse them."
+msgid ""
+"The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
 "La lista de ventanas muestra una lista de todas las ventanas visibles y le "
 "permite navegar entre ellas."
@@ -1252,7 +1262,8 @@ msgid "The argument is a url to add, not a .desktop file"
 msgstr "El argumento es una url a añadir, no un archivo del escritorio"
 
 #: gnome-panel/gnome-panel-add-launcher.c:67
-msgid "You must supply a single argument with the .desktop file or url to use\n"
+msgid ""
+"You must supply a single argument with the .desktop file or url to use\n"
 msgstr ""
 "Debe proporcionar un sólo argunmento con el archivo .desktop o la url a "
 "utilizar\n"
@@ -1261,7 +1272,7 @@ msgstr ""
 msgid "No panel found\n"
 msgstr "No se encontró el panel\n"
 
-#: gnome-panel/gnome-panel-preferences.c:300
+#: gnome-panel/gnome-panel-preferences.c:327
 msgid ""
 "The system administrator has disallowed\n"
 " modification of the panel configuration"
@@ -1269,7 +1280,7 @@ msgstr ""
 "El administrador de sistemas ha desactivado la modificación de\n"
 "la configuración del panel"
 
-#: gnome-panel/gnome-panel-preferences.c:311
+#: gnome-panel/gnome-panel-preferences.c:338
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "Preferencias del panel"
@@ -1440,7 +1451,8 @@ msgstr "Guardar captura de pantalla en _escritorio"
 
 #: gnome-panel/gnome-panel-screenshot.glade2.h:4
 msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr "Guardar captura de pantalla como página _web (guarda en ~/public__html)"
+msgstr ""
+"Guardar captura de pantalla como página _web (guarda en ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.glade2.h:5
 msgid "Screenshot"
@@ -1539,11 +1551,11 @@ msgstr "Lista de aplicaciones conocidas"
 msgid "Choose an application to run from the list"
 msgstr "Seleccione una aplicación a ejecutar de la lista"
 
-#: gnome-panel/gnome-run.c:1499
+#: gnome-panel/gnome-run.c:1497
 msgid "_Run"
 msgstr "_Lanzar"
 
-#: gnome-panel/gnome-run.c:1559
+#: gnome-panel/gnome-run.c:1557
 msgid "Run Program"
 msgstr "Lanzar Programa"
 
@@ -1679,8 +1691,8 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Ejecutándose en modo «bloqueado».  Esto significa que el administrador de su sistema "
-"ha restringido los cambios a la configuración del panel."
+"Ejecutándose en modo «bloqueado».  Esto significa que el administrador de su "
+"sistema ha restringido los cambios a la configuración del panel."
 
 #: gnome-panel/menu.c:275
 msgid "The GNOME Panel"
@@ -2098,8 +2110,9 @@ msgstr ""
 "\n"
 "¿Recargar este aplique?\n"
 "\n"
-"(Si selecciona no recargarlo ahora siempre puede hacerlo añadiéndolo presionando "
-"el botón derecho del ratón sobre el panel y seleccionando el submenú «Añadir al panel»)"
+"(Si selecciona no recargarlo ahora siempre puede hacerlo añadiéndolo "
+"presionando el botón derecho del ratón sobre el panel y seleccionando el "
+"submenú «Añadir al panel»)"
 
 #: gnome-panel/panel-applet-frame.c:795
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -2125,7 +2138,8 @@ msgstr "Abrir URL: %s"
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
-msgstr "No se encontraron paneles en su configuración. Ahora se creará un panel."
+msgstr ""
+"No se encontraron paneles en su configuración. Ahora se creará un panel."
 
 #: gnome-panel/panel-config.c:537
 msgid "Hiding"
@@ -2321,7 +2335,8 @@ msgstr "Activar el listado de programas en la caja de ejecución"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
-msgstr "Mostrar el listado de programas predeterminado al abrir el diálogo «Lanzar»"
+msgstr ""
+"Mostrar el listado de programas predeterminado al abrir el diálogo «Lanzar»"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:3
 msgid "Show the program listing in the Run box"
@@ -2374,42 +2389,42 @@ msgstr "Aplique de prueba de bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Probar la fábrica de apliques de bonobo"
 
-#: libpanel-applet/panel-applet.c:749
+#: libpanel-applet/panel-applet.c:748
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Tipo de fondo '%s' recibido incompleto"
 
-#: libpanel-applet/panel-applet.c:763
+#: libpanel-applet/panel-applet.c:762
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Tipo de fondo '%s' recibido incompleto: %s"
 
-#: libpanel-applet/panel-applet.c:772
+#: libpanel-applet/panel-applet.c:771
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Ha ocurrido un error al obtener pixmap %s"
 
-#: libpanel-applet/panel-applet.c:779
+#: libpanel-applet/panel-applet.c:778
 msgid "Unknown background type received"
 msgstr "El Tipo de fondo recibido es desconocido"
 
-#: libpanel-applet/panel-applet.c:948
+#: libpanel-applet/panel-applet.c:947
 msgid "The Applet's containing Panel's orientation"
 msgstr "El aplique que contiene la orientación del panel"
 
-#: libpanel-applet/panel-applet.c:956
+#: libpanel-applet/panel-applet.c:955
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "El aplique que contiene el tamaño del panel en píxeles"
 
-#: libpanel-applet/panel-applet.c:964
+#: libpanel-applet/panel-applet.c:963
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "El aplique que contiene el color o pixmap de fondo del panel"
 
-#: libpanel-applet/panel-applet.c:972
+#: libpanel-applet/panel-applet.c:971
 msgid "The Applet's flags"
 msgstr "Los flags del aplique"
 
-#: libpanel-applet/panel-applet.c:980
+#: libpanel-applet/panel-applet.c:979
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Rangos que aconsejan los tamaños aceptables para el aplique"
 
@@ -2468,4 +2483,3 @@ msgstr "Muy grande"
 #: libpanel-applet/panel-test-applets.glade2.h:15
 msgid "XX Small"
 msgstr "Muy pequeño"
-
