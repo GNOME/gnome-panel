@@ -251,7 +251,7 @@ size_change(AppletInfo *info, PanelWidget *panel)
 		}
 	} else if(info->type == APPLET_STATUS) {
 		StatusApplet *status = info->data;
-		status->orient = panel->orient;
+		status->size = panel->sz;
 		status_applet_update(status);
 	}
 }

@@ -53,10 +53,10 @@ status_applet_update(StatusApplet *s)
 	if(nspots%rows == 0)
 		w = DOCKLET_SPOT*(nspots/rows);
 	else
-		w = DOCKLET_SPOT*(nspots/rows)+1;
+		w = DOCKLET_SPOT*((nspots/rows)+1);
 	
 	/*make minimum size*/
-	if(w==0) w = 10;	
+	if(w<10) w = 10;	
 
 	h = DOCKLET_SPOT*rows;
 
@@ -123,9 +123,6 @@ new_status_spot(void)
 			   GTK_SIGNAL_FUNC(status_socket_destroyed),
 			   ss);
 	
-	if(GTK_WIDGET_REALIZED(ss->socket))
-		g_warning("DEBUG: BLAHBLAHBLAH");
-
 	ss->wid = GDK_WINDOW_XWINDOW(ss->socket->window);
 	return ss;
 }
@@ -154,10 +151,12 @@ ignore_1st_click(GtkWidget *widget, GdkEvent *event)
 
 	if (event->type == GDK_BUTTON_PRESS &&
 	    buttonevent->button == 1) {
+		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget),"event");
 		return TRUE;
 	}
 	if (event->type == GDK_BUTTON_RELEASE &&
 	    buttonevent->button == 1) {
+		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget),"event");
 		return TRUE;
 	}
 	 
@@ -181,33 +180,39 @@ applet_destroy(GtkWidget *w, StatusApplet *s)
 int
 load_status_applet(PanelWidget *panel, int pos)
 {
+	GtkWidget *ebox;
+	GtkWidget *frame;
 	if(the_status)
 		return FALSE;
 	
 	the_status = g_new0(StatusApplet,1);
-	the_status->frame = gtk_frame_new(NULL);
+	frame = gtk_frame_new(NULL);
 	the_status->orient = panel->orient;
 	the_status->size = panel->sz;
-	gtk_frame_set_shadow_type(GTK_FRAME(the_status->frame),
+	gtk_frame_set_shadow_type(GTK_FRAME(frame),
 				  GTK_SHADOW_IN);
 	the_status->handle = gtk_handle_box_new();
 	gtk_signal_connect(GTK_OBJECT(the_status->handle), "event",
 			   GTK_SIGNAL_FUNC(ignore_1st_click), NULL);
 	gtk_container_add(GTK_CONTAINER(the_status->handle),
-			  the_status->frame);
-	gtk_signal_connect(GTK_OBJECT(the_status->handle), "destroy",
-			   GTK_SIGNAL_FUNC(applet_destroy), the_status);
+			  frame);
 	
 	if(!fixed) {
 		fixed = gtk_fixed_new();
-		gtk_container_add(GTK_CONTAINER(the_status->frame),fixed);
+		gtk_container_add(GTK_CONTAINER(frame),fixed);
 	} else {
-		gtk_widget_reparent(fixed,the_status->frame);
+		gtk_widget_reparent(fixed,frame);
 	}
 	
 	status_applet_update(the_status);
+	
+	ebox = gtk_event_box_new();
+	gtk_widget_show(ebox);
+	gtk_signal_connect(GTK_OBJECT(ebox), "destroy",
+			   GTK_SIGNAL_FUNC(applet_destroy), the_status);
+	gtk_container_add(GTK_CONTAINER(ebox),the_status->handle);
 
-	register_toy(the_status->handle,the_status, panel, pos, APPLET_STATUS);
+	register_toy(ebox,the_status, panel, pos, APPLET_STATUS);
 	the_status->info = applets_last->data;
 
 	return TRUE;

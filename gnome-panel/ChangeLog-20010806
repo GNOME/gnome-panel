@@ -1,3 +1,17 @@
+Wed Sep 29 23:23:02 1999  George Lebl  <jirka@5z.com>
+
+	* applet-widget.c: make panel_client a static so that it doesn't
+	  pollute namespace (and applets shouldn't access that directly
+	  anyway), and initialize it to CORBA_OBJECT_NIL explicitly.
+
+	* status-docklet.[ch]: a new library for use in apps that want
+	  to add the status docklets to the panel. It handles things such
+	  as panel crashing and restarting, or cases when the panel hasn't
+	  started yet, etc...
+
+	* status.c: fixes to make the status thing somewhat work, though
+	  there are still a lot of problems
+
 1999-09-29  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* menu.c: use gnome-favorites.png

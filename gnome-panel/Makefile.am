@@ -16,8 +16,9 @@ INCLUDES = -I. -I$(srcdir) \
 bin_PROGRAMS = panel
 
 libpanel_appletincludedir = $(includedir)
+libpanel_statusincludedir = $(includedir)
 
-lib_LTLIBRARIES = libpanel_applet.la
+lib_LTLIBRARIES = libpanel_applet.la libpanel_status.la
 
 CORBA_SRCLIST = gnome-panel-stubs.c gnome-panel-skels.c gnome-panel-common.c gnome-panel.h
 
@@ -44,6 +45,16 @@ libpanel_appletinclude_HEADERS = \
 
 libpanel_applet_la_LDFLAGS = -version-info 0:1:0 -rpath $(libdir)
 libpanel_applet_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
+
+libpanel_status_la_SOURCES = \
+	status-docklet.c \
+	$(CORBA_SRCLIST)
+
+libpanel_statusinclude_HEADERS = \
+	status-docklet.h
+
+libpanel_status_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
+libpanel_status_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
 
 BUILT_SOURCES = $(CORBA_SRCLIST)
 
@@ -142,6 +153,7 @@ EXTRA_DIST = \
 	panelrc.in		\
 	panel.in		\
 	appletsConf.sh.in	\
+	dockletsConf.sh.in	\
 	panel.gnorba		\
 	panel.soundlist		\
 	APPLET_WRITING		\
@@ -150,7 +162,7 @@ EXTRA_DIST = \
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
 confexecdir = $(libdir)
-confexec_DATA = appletsConf.sh
+confexec_DATA = appletsConf.sh dockletsConf.sh
 
 #
 # Create the appletsConf.sh file from the .sh.in file
@@ -162,6 +174,17 @@ appletsConf.sh: appletsConf.sh.in Makefile
 	    -e 's?\@VERSION\@?$(VERSION)?g' \
 	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
 	  && mv appletsConf.tmp appletsConf.sh
+
+#
+# Create the dockletsConf.sh file from the .sh.in file
+#
+dockletsConf.sh: dockletsConf.sh.in Makefile
+	sed -e 's?\@GNOME_LIBDIR\@?$(GNOME_LIBDIR)?g' \
+	    -e 's?\@GNOME_INCLUDEDIR\@?$(GNOME_INCLUDEDIR)?g' \
+	    -e 's?\@GNOMEGNORBA_LIBS\@?$(GNOMEGNORBA_LIBS)?g' \
+	    -e 's?\@VERSION\@?$(VERSION)?g' \
+	    < $(srcdir)/dockletsConf.sh.in > dockletsConf.tmp \
+	  && mv dockletsConf.tmp dockletsConf.sh
 
 panelgnorbadir  = $(sysconfdir)/CORBA/servers
 panelgnorba_DATA = panel.gnorba
