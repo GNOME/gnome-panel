@@ -688,13 +688,13 @@ really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 
 		dentry = gnome_dentry_get_dentry(dedit);
 
-		if(!dentry->name || !(*(dentry->name))) {
-			g_free(dentry->name);
-			dentry->name=g_strdup("???");
+		if (string_empty (dentry->name)) {
+			g_free (dentry->name);
+			dentry->name = g_strdup ("???");
 		}
 		launcher = load_launcher_applet_full (NULL, dentry, panel, pos, exactpos);
 		if (launcher != NULL)
-			launcher_save (launcher);
+			launcher_hoard (launcher);
 
 		panel_config_sync_schedule ();
 	} else if(button == 2/*help*/) {
@@ -703,7 +703,7 @@ really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 		return;
 	}
 
-	gtk_widget_destroy(dialog);
+	gtk_widget_destroy (dialog);
 }
 
 void
@@ -935,12 +935,12 @@ launcher_save (Launcher *launcher)
 	g_return_if_fail (launcher->dentry != NULL);
 
 	if (launcher->dentry->is_kde)
-		convert_dentry_to_gnome(launcher->dentry);
+		convert_dentry_to_gnome (launcher->dentry);
 
 	if (launcher->dentry->location == NULL)
 		launcher->dentry->location = launcher_get_unique_file ();
 
-	gnome_desktop_entry_save(launcher->dentry);
+	gnome_desktop_entry_save (launcher->dentry);
 }
 
 void

@@ -2178,9 +2178,13 @@ add_applet (GtkWidget *w, const char *item_loc)
 static void
 add_launcher (GtkWidget *w, const char *item_loc)
 {
-	load_launcher_applet (item_loc,
-			      get_panel_from_menu_data(w),
-			      0, FALSE);
+	Launcher *launcher;
+
+	launcher = load_launcher_applet
+		(item_loc, get_panel_from_menu_data (w), 0, FALSE);
+
+	if (launcher != NULL)
+		launcher_hoard (launcher);
 }
 
 static void

@@ -1,3 +1,11 @@
+Tue May 08 01:45:32 2001  George Lebl <jirka@5z.com>
+
+	* launcher.c: some cleanup, and be paranoid about dentry we get
+	  from dentry edit and rather hoard it
+
+	* menu.c: We were forgetting to hoard launchers when adding from
+	  the launcher adding menu.  DUH!  Fixes #53626
+
 Mon May 07 17:13:35 2001  George Lebl <jirka@5z.com>
 
 	* icon-entry-hack.c: fix selection dialog issues
