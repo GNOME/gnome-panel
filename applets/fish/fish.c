@@ -157,7 +157,7 @@ update_fortune_dialog()
     apply_properties();
   }
   if (!GTK_WIDGET_VISIBLE(fortune_dialog)) gtk_widget_show(fortune_dialog);  
-  gnome_less_show_command(GNOME_LESS(fortune_less), "fortune");
+  gnome_less_show_command(GNOME_LESS(fortune_less), g_file_exists("/usr/games/fortune")?"/usr/games/fortune":"fortune");
 }
 
 static gint
