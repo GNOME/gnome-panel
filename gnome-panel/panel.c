@@ -923,7 +923,6 @@ drag_motion_cb (GtkWidget	   *widget,
 	do_highlight (widget, TRUE);
 
 	panel_toplevel_unhide (toplevel);
-	panel_toplevel_queue_auto_hide (toplevel);
 
 	return TRUE;
 }
@@ -952,7 +951,12 @@ drag_leave_cb (GtkWidget	*widget,
 	       guint             time,
 	       Launcher         *launcher)
 {
+	PanelToplevel *toplevel;
+
 	do_highlight (widget, FALSE);
+
+	toplevel = PANEL_TOPLEVEL (widget);
+	panel_toplevel_queue_auto_hide (toplevel);
 }
 
 void
