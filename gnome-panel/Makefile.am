@@ -6,7 +6,9 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.3
 
-SUBDIRS = config doc help
+SUBDIRS =
+
+EXTRA_SUBDIRS = config help
 
 INCLUDES = \
 	-I.			\
@@ -19,11 +21,7 @@ INCLUDES = \
 	-DGLADEDIR=\""$(datadir)/gnome/panel"\" \
 	-DGLOBAL_CONFDIR=\""$(sysconfdir)/gnome/panel-config"\" \
 	-I$(includedir)		\
-	$(GNOME_INCLUDEDIR)	\
-	$(ORB_CFLAGS)		\
-	$(GNOME_PRINT_CFLAGS)	\
-	$(GLADE_CFLAGS)		\
-	$(PIXBUF_CFLAGS)
+	$(PANEL_CFLAGS)
 
 gwmh_dir = $(top_srcdir)/applets/desk-guide
 
@@ -47,12 +45,10 @@ CORBA_SRCLIST = \
 	gnome-panel.h
 
 # try to make these get cleaned properly
-CLEANFILES += $(CORBA_SRCLIST) my_gnome_panel_idl
+CLEANFILES += $(CORBA_SRCLIST)
 
-$(CORBA_SRCLIST): my_gnome_panel_idl
-
-my_gnome_panel_idl: $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
-	if $(ORBIT_IDL) `@GNOME_CONFIG@ --cflags idl` $< ; then touch my_gnome_panel_idl; else /bin/false; fi
+$(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
+	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) $(top_srcdir)/idl/gnome-panel.idl
 
 # We need explicit dependencies here for people building out
 # of the tarballs.
@@ -68,7 +64,7 @@ libpanel_appletinclude_HEADERS = \
 	gnome-panel.h
 
 libpanel_applet_la_LDFLAGS = -version-info 0:1:0 -rpath $(libdir)
-libpanel_applet_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
+libpanel_applet_la_LIBADD = $(PANEL_LIBS) -lm
 
 libpanel_status_la_SOURCES = \
 	status-docklet.c \
@@ -78,14 +74,13 @@ libpanel_statusinclude_HEADERS = \
 	status-docklet.h
 
 libpanel_status_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
-libpanel_status_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
+libpanel_status_la_LIBADD = $(PANEL_LIBS) -lm
 
 bad_applet_SOURCES = bad-applet.c
 
 bad_applet_LDADD = \
 	libpanel_applet.la	\
-	$(GNOME_LIBDIR) 	\
-	$(GNORBA_LIBS)		\
+	$(PANEL_LIBS)		\
 	$(INTLLIBS)
 
 GWMH_SRCLIST = \
@@ -189,12 +184,8 @@ panel_SOURCES=\
 
 panel_LDADD = \
 	libpanel_applet.la	\
-	$(GNOME_LIBDIR)		\
-	$(GNORBA_LIBS)		\
-	$(ORB_LIBS)		\
-	$(GNOMEUI_LIBS)		\
+	$(PANEL_LIBS)		\
 	$(INTLLIBS)		\
-	$(PIXBUF_LIBS)		\
 	$(XINERAMA_LIBS)
 
 panel_LDFLAGS=-export-dynamic
@@ -207,10 +198,8 @@ gnome_panel_properties_capplet_SOURCES = \
 	$(CORBA_SRCLIST)
 
 gnome_panel_properties_capplet_LDADD = \
-	$(GNOME_LIBDIR)		\
-	$(GNOME_CAPPLET_LIBS)	\
-	$(INTLLIBS)		\
-	$(PIXBUF_LIBS)
+	$(PANEL_LIBS)		\
+	$(INTLLIBS)
 
 gnome_panel_add_launcher_SOURCES = \
 	gnome-panel-add-launcher.c	\
@@ -220,21 +209,12 @@ gnome_panel_screenshot_SOURCES = \
 	gnome-panel-screenshot.c
 
 gnome_panel_add_launcher_LDADD = \
-	$(GNOME_LIBDIR)		\
-	$(GNOMEUI_LIBS)		\
-	$(GNORBA_LIBS)		\
-	$(ORB_LIBS)		\
-	$(INTLLIBS)		\
-	$(PIXBUF_LIBS)
+	$(PANEL_LIBS)		\
+	$(INTLLIBS)
 
 gnome_panel_screenshot_LDADD = \
-	$(GNOME_LIBDIR)		\
-	$(GNOMEUI_LIBS)		\
-	$(GLADE_LIBS)		\
-	$(GNOME_PRINT_LIBS)	\
-	$(INTLLIBS)		\
-	$(PNG_LIBS)		\
-	$(PIXBUF_LIBS)
+	$(PANEL_LIBS)		\
+	$(INTLLIBS)
 
 MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
 
@@ -251,32 +231,6 @@ EXTRA_DIST = \
 	gnome-panel-screenshot.glade	\
 	gnome-panel-screenshot.glade.h
 
-## Put `exec' in the name because this should be installed by
-## `install-exec', not `install-data'.
-confexecdir = $(libdir)
-confexec_DATA = appletsConf.sh dockletsConf.sh
-
-#
-# Create the appletsConf.sh file from the .sh.in file
-#
-appletsConf.sh: appletsConf.sh.in Makefile
-	sed -e 's?\@GNOME_LIBDIR\@?$(GNOME_LIBDIR)?g' \
-	    -e 's?\@GNOME_INCLUDEDIR\@?$(GNOME_INCLUDEDIR)?g' \
-	    -e 's?\@GNOMEGNORBA_LIBS\@?$(GNOMEGNORBA_LIBS)?g' \
-	    -e 's?\@VERSION\@?$(VERSION)?g' \
-	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
-	  && mv appletsConf.tmp appletsConf.sh
-
-#
-# Create the dockletsConf.sh file from the .sh.in file
-#
-dockletsConf.sh: dockletsConf.sh.in Makefile
-	sed -e 's?\@GNOME_LIBDIR\@?$(GNOME_LIBDIR)?g' \
-	    -e 's?\@GNOME_INCLUDEDIR\@?$(GNOME_INCLUDEDIR)?g' \
-	    -e 's?\@GNOMEGNORBA_LIBS\@?$(GNOMEGNORBA_LIBS)?g' \
-	    -e 's?\@VERSION\@?$(VERSION)?g' \
-	    < $(srcdir)/dockletsConf.sh.in > dockletsConf.tmp \
-	  && mv dockletsConf.tmp dockletsConf.sh
 
 panelgnorbadir  = $(sysconfdir)/CORBA/servers
 panelgnorba_DATA = panel.gnorba
