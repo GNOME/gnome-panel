@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in.
-CFLAGS += -Wall  \
-	            -Wpointer-arith  	\
-	-Wmissing-prototypes -Wmissing-declarations 
+# CFLAGS += -Wall  \
+# 	            -Wpointer-arith  	\
+# 	-Wmissing-prototypes -Wmissing-declarations 
 
 ## We require new-style dependency handling.
-AUTOMAKE_OPTIONS = 1.2f
+AUTOMAKE_OPTIONS = 1.3
 
 INCLUDES = -I. -I$(srcdir) \
 	-I$(top_srcdir)/intl -I$(top_builddir)/intl \
@@ -108,11 +108,11 @@ data_DATA = panelrc
 ## Why not just make this via configure?  Because @datadir@ will be
 ## expanded incorrectly.
 
-xpanel: xpanel.in Makefile
-## Why do a sed and then an mv?  To avoid problems if the user
-## interrupts.
-	sed -e 's,\@bindir\@,$(bindir),g' < $(srcdir)/xpanel.in \
-	> xpanel.tmp && chmod +x xpanel.tmp && mv -f xpanel.tmp xpanel
+# xpanel: xpanel.in Makefile
+# ## Why do a sed and then an mv?  To avoid problems if the user
+# ## interrupts.
+# 	sed -e 's,\@bindir\@,$(bindir),g' < $(srcdir)/xpanel.in \
+# 	> xpanel.tmp && chmod +x xpanel.tmp && mv -f xpanel.tmp xpanel
 
 panelrc: panelrc.in Makefile
 ## Why do a sed and then an mv?  To avoid problems if the user
@@ -140,4 +140,3 @@ appletsConf.sh: appletsConf.sh.in Makefile
 	    -e 's,\@ORB_LIBS\@,$(ORB_LIBS),g' \
 	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
 	  && mv appletsConf.tmp appletsConf.sh
-
