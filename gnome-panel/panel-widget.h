@@ -108,7 +108,8 @@ struct _PanelWidgetClass
 			      GtkWidget *applet);
 	void (* applet_added) (PanelWidget *panel,
 			       GtkWidget *applet);
-	void (* applet_removed) (PanelWidget *panel);
+	void (* applet_removed) (PanelWidget *panel,
+				 GtkWidget *applet);
 	void (* back_change) (PanelWidget *panel,
 			      PanelBackType type,
 			      char *pixmap,

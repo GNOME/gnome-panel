@@ -126,13 +126,13 @@ enum {
 	LAST_SIGNAL
 };
 
-static int panel_widget_signals[LAST_SIGNAL] = {0,0,0,0};
+static int panel_widget_signals[LAST_SIGNAL] = {0,0,0,0,0};
 
 static void
-panel_widget_marshal_signal_orient (GtkObject * object,
-				    GtkSignalFunc func,
-				    gpointer func_data,
-				    GtkArg * args)
+marshal_signal_orient (GtkObject * object,
+		       GtkSignalFunc func,
+		       gpointer func_data,
+		       GtkArg * args)
 {
 	OrientSignal rfunc;
 
@@ -143,10 +143,10 @@ panel_widget_marshal_signal_orient (GtkObject * object,
 }
 
 static void
-panel_widget_marshal_signal_applet (GtkObject * object,
-				    GtkSignalFunc func,
-				    gpointer func_data,
-				    GtkArg * args)
+marshal_signal_applet (GtkObject * object,
+		       GtkSignalFunc func,
+		       gpointer func_data,
+		       GtkArg * args)
 {
 	AppletSignal rfunc;
 
@@ -157,10 +157,10 @@ panel_widget_marshal_signal_applet (GtkObject * object,
 }
 
 static void
-panel_widget_marshal_signal_back (GtkObject * object,
-				  GtkSignalFunc func,
-				  gpointer func_data,
-				  GtkArg * args)
+marshal_signal_back (GtkObject * object,
+		     GtkSignalFunc func,
+		     gpointer func_data,
+		     GtkArg * args)
 {
 	BackSignal rfunc;
 
@@ -172,18 +172,6 @@ panel_widget_marshal_signal_back (GtkObject * object,
 		  func_data);
 }
 
-static void
-panel_widget_marshal_signal_void (GtkObject * object,
-				  GtkSignalFunc func,
-				  gpointer func_data,
-				  GtkArg * args)
-{
-	VoidSignal rfunc;
-
-	rfunc = (VoidSignal) func;
-
-	(*rfunc) (object, func_data);
-}
 
 static void
 panel_widget_class_init (PanelWidgetClass *class)
@@ -198,7 +186,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 orient_change),
-			       panel_widget_marshal_signal_orient,
+			       marshal_signal_orient,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);
@@ -208,7 +196,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_move),
-			       panel_widget_marshal_signal_applet,
+			       marshal_signal_applet,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_POINTER);
@@ -218,7 +206,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_added),
-			       panel_widget_marshal_signal_applet,
+			       marshal_signal_applet,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_POINTER);
@@ -228,16 +216,17 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_removed),
-			       panel_widget_marshal_signal_void,
+			       marshal_signal_applet,
 			       GTK_TYPE_NONE,
-			       0);
+			       1,
+			       GTK_TYPE_POINTER);
 	panel_widget_signals[BACK_CHANGE_SIGNAL] =
 		gtk_signal_new("back_change",
 			       GTK_RUN_LAST,
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 back_change),
-			       panel_widget_marshal_signal_back,
+			       marshal_signal_back,
 			       GTK_TYPE_NONE,
 			       3,
 			       GTK_TYPE_ENUM,
@@ -1873,9 +1862,10 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 			panel_widget_set_size(panel);
 		}
 	}
-
 	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_REMOVED_SIGNAL]);
+			panel_widget_signals[APPLET_REMOVED_SIGNAL],
+			applet);
+
 
 	return FALSE;
 }
@@ -2110,6 +2100,10 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 	if(pos==-1) return -1;
 
+	gtk_signal_emit(GTK_OBJECT(old_panel),
+			panel_widget_signals[APPLET_REMOVED_SIGNAL],
+			applet);
+
 	p = gtk_object_get_data(GTK_OBJECT(applet),
 				PANEL_APPLET_ASSOC_PANEL_KEY);
 	if(p)
@@ -2157,13 +2151,9 @@ panel_widget_reparent (PanelWidget *old_panel,
 		old_panel->thick = thick;
 	panel_widget_set_size(old_panel);
 
-	gtk_signal_emit(GTK_OBJECT(old_panel),
-			panel_widget_signals[APPLET_REMOVED_SIGNAL]);
-
 	gtk_signal_emit(GTK_OBJECT(new_panel),
 			panel_widget_signals[APPLET_ADDED_SIGNAL],
 			applet);
-
 	return pos;
 }
 
@@ -2224,6 +2214,7 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	p = gtk_object_get_data(GTK_OBJECT(applet),
 				PANEL_APPLET_ASSOC_PANEL_KEY);
 	/*remove applet*/
+	gtk_widget_ref(applet);
 	gtk_container_remove(GTK_CONTAINER(panel->fixed),applet);
 
 	if(!panel_widget_inhibit_allocates) {
@@ -2242,7 +2233,9 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	}
 
 	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_REMOVED_SIGNAL]);
+			panel_widget_signals[APPLET_REMOVED_SIGNAL],
+			applet);
+	gtk_widget_unref(applet);
 
 	return i;
 }

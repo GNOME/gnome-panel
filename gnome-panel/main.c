@@ -288,14 +288,17 @@ queue_load_applet(char *id_str, char *path, char *params,
 static void
 monitor_drawers(GtkWidget *w, gpointer data)
 {
-	PanelWidget **panel=data;
-	DrawerWidget *drawer = gtk_object_get_data(GTK_OBJECT(panel[0]),
+	PanelWidget *panel=data;
+	DrawerWidget *drawer = gtk_object_get_data(GTK_OBJECT(panel),
 						   PANEL_PARENT);
+	PanelWidget *parent =
+		gtk_object_get_data(GTK_OBJECT(panel->master_widget),
+				    PANEL_APPLET_PARENT_KEY);
 
 	if(drawer->state==DRAWER_SHOWN)
-		panel[1]->drawers_open++;
+		parent->drawers_open++;
 	else
-		panel[1]->drawers_open--;
+		parent->drawers_open--;
 }
 
 static PanelData *
@@ -514,7 +517,6 @@ load_applet(char *id_str, char *path, char *params,
 	} else if(strcmp(id_str,DRAWER_ID) == 0) {
 		Drawer *drawer;
 		PanelWidget *parent;
-		PanelWidget **panelarr;
 		PanelWidget *dr_panel;
 
 		parent = PANEL_WIDGET(g_list_nth(panels,panel)->data);
@@ -547,13 +549,9 @@ load_applet(char *id_str, char *path, char *params,
 		/*the panel of the drawer*/
 		dr_panel = PANEL_WIDGET(DRAWER_WIDGET(drawer->drawer)->panel);
 
-		panelarr = g_new(PanelWidget *,2);
-		panelarr[0] = dr_panel;
-		panelarr[1] = parent;
-
 		gtk_signal_connect(GTK_OBJECT(drawer->button), "clicked",
 				   GTK_SIGNAL_FUNC(monitor_drawers),
-				   panelarr);
+				   dr_panel);
 
 		if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN) {
 			GtkWidget *wparent;
@@ -954,19 +952,15 @@ panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 
 /*the following is slightly ugly .... but it works, I need to send the
   orient change in an idle handeler*/
-
-struct _added_info {
-	int applet_id;
-	PanelWidget *panel;
-};
-
 static int
 panel_applet_added_idle(gpointer data)
 {
-	struct _added_info *ai = data;
+	int applet_id = PTOI(data);
+	AppletInfo *info = get_applet_info(applet_id);
+	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+						 PANEL_APPLET_PARENT_KEY);
 
-	orientation_change(ai->applet_id,ai->panel);
-	g_free(ai);
+	orientation_change(applet_id,panel);
 
 	config_changed = TRUE;
 
@@ -977,20 +971,46 @@ static void
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
 	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(applet)));
+	AppletInfo *info = get_applet_info(applet_id);
 	PanelWidget *panel = PANEL_WIDGET(widget);
-	struct _added_info *ai = g_new(struct _added_info,1);
+	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(widget),
+						PANEL_PARENT);
+	
+	/*on a real add the info will be NULL as the only adding
+	  is done in register_toy and that doesn't add the info to the
+	  array until after the add, so we can be sure this was
+	  generated on a reparent*/
+	if(info && info->type == APPLET_DRAWER) {
+		PanelWidget *p = gtk_object_get_data(GTK_OBJECT(info->widget),
+						     PANEL_APPLET_ASSOC_PANEL_KEY);
+		DrawerWidget *dw = gtk_object_get_data(GTK_OBJECT(p),
+						       PANEL_PARENT);
+		if(dw->state == DRAWER_SHOWN)
+			panel->drawers_open++;
+	}
 
-	g_return_if_fail(ai != NULL);
+	/*pop the panel up on addition*/
+	if(IS_SNAPPED_WIDGET(panelw))
+		snapped_widget_pop_up(SNAPPED_WIDGET(panelw));
 
-	ai->applet_id = applet_id;
-	ai->panel = panel;
-
-	gtk_idle_add(panel_applet_added_idle,ai);
+	gtk_idle_add(panel_applet_added_idle,ITOP(applet_id));
 }
 
 static void
-panel_applet_removed(GtkWidget *widget, gpointer data)
+panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
+	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(applet)));
+	AppletInfo *info = get_applet_info(applet_id);
+
+	if(info->type == APPLET_DRAWER) {
+		PanelWidget *panel = PANEL_WIDGET(widget);
+		PanelWidget *p = gtk_object_get_data(GTK_OBJECT(info->widget),
+						     PANEL_APPLET_ASSOC_PANEL_KEY);
+		DrawerWidget *dw = gtk_object_get_data(GTK_OBJECT(p),
+						       PANEL_PARENT);
+		if(dw->state == DRAWER_SHOWN)
+			panel->drawers_open--;
+	}
 	config_changed = TRUE;
 }
 
