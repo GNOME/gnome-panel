@@ -1,3 +1,13 @@
+Sat Dec 01 21:21:17 2001  George Lebl <jirka@5z.com>
+
+	* menu.c: removed a bit of the jumpiness effect due to menu icons,
+	  there is a horizontal one left which I don't understand.  Make sure
+	  foldres without an icon get the folder icon.  Only load icons
+	  after the item has been shown, meaning that preloading menus won't
+	  start hogging the disk, also when an item is hidden it's no
+	  longer loaded.  Change behaviour to FILO so that most recently
+	  shown items get loaded first.
+
 2001-12-01  Seth Nickell  <snickell@stanford.edu>
 
 	* menu.c: (load_icons_handler), (show_item_menu),
