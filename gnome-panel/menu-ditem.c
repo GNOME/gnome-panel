@@ -29,6 +29,10 @@ ditem_properties_clicked (GtkWidget *w, int response, gpointer data)
 			gnome_ditem_edit_set_ditem (dee, ditem);
 		else
 			gnome_ditem_edit_clear (dee);
+
+		gtk_dialog_set_response_sensitive (GTK_DIALOG (w),
+						   REVERT_BUTTON,
+						   FALSE);
 	} else {
 		gtk_widget_destroy (w);
 	}
@@ -67,9 +71,11 @@ ditem_properties_apply_timeout (gpointer data)
  * Will save after 5 seconds of no changes.  If something is changed, the save
  * is postponed to another 5 seconds.  This seems to be a saner behaviour,
  * then just saving every N seconds.
+ * And update the sensitivity of the Revert button.
  */
 static void
-ditem_properties_changed (GtkWidget *dedit, gpointer data)
+ditem_properties_changed (GtkWidget *dedit,
+			  GtkWidget *dialog)
 {
 	gpointer timeout_data = g_object_get_data (G_OBJECT (dedit),
 						   "apply_timeout");
@@ -87,6 +93,10 @@ ditem_properties_changed (GtkWidget *dedit, gpointer data)
 
 	g_object_set_data (G_OBJECT (dedit), "apply_timeout",
 			   GUINT_TO_POINTER (timeout));
+
+	gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+					   REVERT_BUTTON,
+					   TRUE);
 }
 
 
@@ -144,8 +154,7 @@ is_item_writable (const char *loc, const char *dir)
 }
 
 static void
-set_ditem_sensitive (GtkDialog *dialog,
-		     GnomeDItemEdit *dedit,
+set_ditem_sensitive (GnomeDItemEdit *dedit,
 		     const char *loc,
 		     const char *dir)
 {
@@ -154,8 +163,6 @@ set_ditem_sensitive (GtkDialog *dialog,
 	sensitive = is_item_writable (loc, dir);
 
 	gnome_ditem_edit_set_editable (dedit, sensitive);
-
-	gtk_dialog_set_response_sensitive (dialog, REVERT_BUTTON, sensitive);
 }
 
 GtkWidget *
@@ -184,6 +191,9 @@ panel_edit_dentry (const char *loc,
 
 	gtk_dialog_set_default_response (
 			GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
+	gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+					   REVERT_BUTTON,
+					   FALSE);
 
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
 	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
@@ -207,12 +217,10 @@ panel_edit_dentry (const char *loc,
 	if (ditem != NULL)
 		gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (dedit), ditem);
 
-	set_ditem_sensitive (GTK_DIALOG (dialog),
-			     GNOME_DITEM_EDIT (dedit),
-			     loc, dir);
+	set_ditem_sensitive (GNOME_DITEM_EDIT (dedit), loc, dir);
 
 	g_signal_connect (dedit, "changed",
-			  G_CALLBACK (ditem_properties_changed), NULL);
+			  G_CALLBACK (ditem_properties_changed), dialog);
 
 	g_signal_connect (dialog, "destroy",
 			  G_CALLBACK (ditem_properties_close), dedit);
@@ -264,6 +272,12 @@ panel_edit_direntry (const char *dir,
 				GTK_RESPONSE_CLOSE,
 				NULL);
 
+	gtk_dialog_set_default_response (
+			GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
+	gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+					   REVERT_BUTTON,
+					   FALSE);
+
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
 	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
@@ -312,12 +326,10 @@ panel_edit_direntry (const char *dir,
 	gnome_ditem_edit_set_directory_only (GNOME_DITEM_EDIT (dedit),
 					     TRUE /* directory_only */);
 
-	set_ditem_sensitive (GTK_DIALOG (dialog),
-			     GNOME_DITEM_EDIT (dedit),
-			     dirfile, NULL);
+	set_ditem_sensitive (GNOME_DITEM_EDIT (dedit), dirfile, NULL);
 
 	g_signal_connect (dedit, "changed",
-			  G_CALLBACK (ditem_properties_changed), NULL);
+			  G_CALLBACK (ditem_properties_changed), dialog);
 
 	g_signal_connect (dialog, "destroy",
 			  G_CALLBACK (ditem_properties_close), dedit);
