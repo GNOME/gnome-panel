@@ -1,3 +1,10 @@
+2002-11-03  Havoc Pennington  <hp@pobox.com>
+
+	* pager.c (num_workspaces_value_changed): when changing number of
+	workspaces, ask WM to do it, don't set stuff in gconf
+	(workspace_name_edited): change workspace names on the X property, 
+	don't set stuff in gconf
+
 2002-11-01  Mark McLoughlin  <mark@skynet.ie>
 
 	* clock.c: (applet_change_background): this callback

@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 /*
  * libwnck based pager applet.
  * (C) 2001 Alexander Larsson 
@@ -649,12 +650,8 @@ static void
 num_workspaces_value_changed (GtkSpinButton *button,
 			      PagerData       *pager)
 {
-	GConfClient* client;
-	
-	client = gconf_client_get_default ();
-
-	gconf_client_set_int (client, "/desktop/gnome/applications/window_manager/number_of_workspaces",
-			      gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pager->num_workspaces_spin)), NULL);
+        wnck_screen_change_workspace_count (pager->screen,
+                                            gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pager->num_workspaces_spin)));
 }
 
 static void 
@@ -663,40 +660,22 @@ workspace_name_edited (GtkCellRendererText *cell_renderer_text,
 		       const gchar         *new_text,
 		       PagerData           *pager)
 {
-	GConfClient* client;
-	GtkTreeIter iter;
-	char *str;
-	GSList *list;
+        const gint *indices;
+        WnckWorkspace *workspace;
+        GtkTreePath *p;
 
-	if (gtk_tree_model_get_iter_from_string (GTK_TREE_MODEL (pager->workspaces_store),
-						 &iter, path)) {
-		gtk_list_store_set (pager->workspaces_store,
-				    &iter,
-				    0, new_text,
-				    -1);
-	}
+        p = gtk_tree_path_new_from_string (path);
+        indices = gtk_tree_path_get_indices (p);
+        workspace = wnck_screen_get_workspace (pager->screen,
+                                               indices[0]);
+        if (workspace != NULL)
+                wnck_workspace_change_name (workspace,
+                                            new_text);
+        else
+                g_warning ("Edited name of workspace %d which no longer exists",
+                           indices[0]);
 
-	
-	list = NULL;
-	gtk_tree_model_get_iter_root (GTK_TREE_MODEL (pager->workspaces_store), &iter);
-	do {
-		gtk_tree_model_get (GTK_TREE_MODEL (pager->workspaces_store),
-				    &iter,
-				    0, &str,
-				    -1);
-		list = g_slist_prepend (list, str);
-	} while (gtk_tree_model_iter_next (GTK_TREE_MODEL (pager->workspaces_store), &iter));
-	
-	list = g_slist_reverse (list);
-
-	client = gconf_client_get_default ();
-	gconf_client_set_list (client,  "/desktop/gnome/applications/window_manager/workspace_names",
-			       GCONF_VALUE_STRING,
-			       list,
-			       NULL);
-
-	g_slist_foreach (list, (GFunc)g_free, NULL);
-	g_slist_free (list);
+        gtk_tree_path_free (p);
 }
 
 static gboolean
