@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.gnome-2-4.hu\n"
-"POT-Creation-Date: 2003-11-11 15:09+0000\n"
-"PO-Revision-Date: 2003-10-08 13:23+0200\n"
+"POT-Creation-Date: 2003-12-01 14:23+0100\n"
+"PO-Revision-Date: 2003-12-01 14:22+0100\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -27,23 +27,29 @@ msgstr "%l.%M.%S %p"
 msgid "%l:%M %p"
 msgstr "%l.%M %p"
 
-#: applets/clock/clock.c:221 applets/clock/clock.c:778
+#: applets/clock/clock.c:221 applets/clock/clock.c:783
 msgid "%H:%M:%S"
 msgstr "%H.%M.%S"
 
-#: applets/clock/clock.c:221 applets/clock/clock.c:780
+#: applets/clock/clock.c:221 applets/clock/clock.c:785
 msgid "%H:%M"
 msgstr "%H.%M"
 
-#: applets/clock/clock.c:227
-msgid "%a %b %d"
-msgstr "%b. %-d., %A"
+#. translators: replace %e with %d if, when the day of the
+#. *              month as a decimal number is a single digit, it
+#. *              should begin with a 0 in your locale (e.g. "May
+#. *              01" instead of "May  1").
+#.
+#: applets/clock/clock.c:232
+#, fuzzy
+msgid "%a %b %e"
+msgstr "%b. %e., %A"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:234
+#: applets/clock/clock.c:239
 #, c-format
 msgid ""
 "%s\n"
@@ -56,42 +62,42 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:241
+#: applets/clock/clock.c:246
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:344
+#: applets/clock/clock.c:349
 msgid "%A %B %d"
-msgstr "%B %-d., %A"
+msgstr "%B %e., %A"
 
-#: applets/clock/clock.c:473
+#: applets/clock/clock.c:478
 msgid "Calendar"
 msgstr "Naptár"
 
-#: applets/clock/clock.c:687
+#: applets/clock/clock.c:692
 msgid "Computer Clock"
 msgstr "Számítógép óra"
 
-#: applets/clock/clock.c:773
+#: applets/clock/clock.c:778
 msgid "%I:%M:%S %p"
 msgstr "%l.%M.%S %p"
 
-#: applets/clock/clock.c:775
+#: applets/clock/clock.c:780
 msgid "%I:%M %p"
 msgstr "%l.%M %p"
 
-#: applets/clock/clock.c:814
+#: applets/clock/clock.c:819
 msgid "%A, %B %d %Y"
-msgstr "%Y. %B %-d., %A"
+msgstr "%Y. %B %e., %A"
 
-#: applets/clock/clock.c:855
+#: applets/clock/clock.c:860
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nem sikerült elindítani az időbeállító eszközt: %s"
 
-#: applets/clock/clock.c:896
+#: applets/clock/clock.c:901
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -100,56 +106,56 @@ msgstr ""
 "program. Lehet hogy nincs telepítve?"
 
 # gnome-terminal/gnome-terminal.c:2027
-#: applets/clock/clock.c:1359 applets/clock/clock.c:1631
+#: applets/clock/clock.c:1364 applets/clock/clock.c:1636
 #: applets/fish/fish.c:129 applets/notification_area/main.c:80
-#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:117
-#: applets/wncklet/window-list.c:774 applets/wncklet/window-menu.c:86
+#: applets/wncklet/showdesktop.c:419 applets/wncklet/window-list.c:117
+#: applets/wncklet/window-list.c:774 applets/wncklet/window-menu.c:87
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:472
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Hiba történt a súgó megjelenítése közben: %s"
 
-#: applets/clock/clock.c:1404
+#: applets/clock/clock.c:1409
 msgid "Clock Preferences"
 msgstr "Óra beállításai..."
 
-#: applets/clock/clock.c:1440
+#: applets/clock/clock.c:1445
 msgid "Clock _type:"
 msgstr "Óra _típusa:"
 
-#: applets/clock/clock.c:1451
+#: applets/clock/clock.c:1456
 msgid "12 hour"
 msgstr "12 órás"
 
-#: applets/clock/clock.c:1459
+#: applets/clock/clock.c:1464
 msgid "24 hour"
 msgstr "24 órás"
 
-#: applets/clock/clock.c:1467
+#: applets/clock/clock.c:1472
 msgid "UNIX time"
 msgstr "UNIX idő"
 
-#: applets/clock/clock.c:1474
+#: applets/clock/clock.c:1479
 msgid "Internet time"
 msgstr "Internet idő"
 
-#: applets/clock/clock.c:1487
+#: applets/clock/clock.c:1492
 msgid "Show _seconds"
 msgstr "_Másodpercek megjelenítése"
 
-#: applets/clock/clock.c:1496
+#: applets/clock/clock.c:1501
 msgid "Show _date"
 msgstr "_Dátum megjelenítése"
 
-#: applets/clock/clock.c:1505
+#: applets/clock/clock.c:1510
 msgid "Use _UTC"
 msgstr "_UTC használata"
 
 #. Translator credits
-#: applets/clock/clock.c:1666 applets/notification_area/main.c:112
-#: applets/wncklet/showdesktop.c:443 applets/wncklet/window-list.c:805
-#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
+#: applets/clock/clock.c:1671 applets/notification_area/main.c:112
+#: applets/wncklet/showdesktop.c:448 applets/wncklet/window-list.c:805
+#: applets/wncklet/window-menu.c:114 applets/wncklet/workspace-switcher.c:504
 #: gnome-panel/menu.c:284
 msgid "translator_credits"
 msgstr ""
@@ -159,12 +165,12 @@ msgstr ""
 "Tímár András <timar@gnome.hu>\n"
 "Vámosi Tamás <tvamosi@suselinux.hu>"
 
-#: applets/clock/clock.c:1685
+#: applets/clock/clock.c:1690
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock"
 msgstr "Óra"
 
-#: applets/clock/clock.c:1687
+#: applets/clock/clock.c:1692
 msgid "The Clock displays the current time and date"
 msgstr "Az óra az aktuális időt és a dátumot mutatja"
 
@@ -248,14 +254,12 @@ msgid "Accessories"
 msgstr "Kellékek"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
-#, fuzzy
 msgid "Clock Applet Factory"
-msgstr "GenUtil Applet Factory"
+msgstr "Óra applet Factory"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
-#, fuzzy
 msgid "Factory for creating clock applets."
-msgstr "factory for creating some general applets"
+msgstr "factory az Óra applet létrehozására."
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
@@ -290,9 +294,9 @@ msgstr "_Névjegy..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3070
-#: gnome-panel/panel-action-button.c:547 gnome-panel/panel-menu-bar.c:325
-#: gnome-panel/panel-menu-button.c:584
+#: gnome-panel/drawer.c:600 gnome-panel/menu.c:3085
+#: gnome-panel/panel-action-button.c:547 gnome-panel/panel-menu-bar.c:312
+#: gnome-panel/panel-menu-button.c:609
 msgid "_Help"
 msgstr "_Súgó"
 
@@ -556,7 +560,7 @@ msgstr "Panel figyelmeztető területe"
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 #: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
 #: gnome-panel/menu.c:142 gnome-panel/menu.c:152 gnome-panel/menu.c:162
-#: gnome-panel/panel-menu-bar.c:179
+#: gnome-panel/panel-menu-bar.c:181
 msgid "Actions"
 msgstr "Műveletek"
 
@@ -588,14 +592,15 @@ msgid "Window List"
 msgstr "Ablaklista"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:132 applets/wncklet/window-menu.c:701
-msgid "Window Menu"
-msgstr "Ablak menü"
-
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #, fuzzy
 msgid "Window Navigation Applet Factory"
 msgstr "GenUtil Applet Factory"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: applets/wncklet/window-menu.c:132 applets/wncklet/window-menu.c:706
+#, fuzzy
+msgid "Window Selector"
+msgstr "Ablaklista"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:517
@@ -603,33 +608,33 @@ msgstr "GenUtil Applet Factory"
 msgid "Workspace Switcher"
 msgstr "Munkaterület-váltó"
 
-#: applets/wncklet/showdesktop.c:222
+#: applets/wncklet/showdesktop.c:223
 msgid "Click here to restore hidden windows."
 msgstr "Az elrejtett ablakok helyreállítása."
 
-#: applets/wncklet/showdesktop.c:225
+#: applets/wncklet/showdesktop.c:226
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "A gomb elrejti az alkalmazások ablakait, és megjeleníti a munkaasztalt."
 
-#: applets/wncklet/showdesktop.c:301
+#: applets/wncklet/showdesktop.c:308
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s betöltése sikertelen: %s\n"
 
-#: applets/wncklet/showdesktop.c:302
+#: applets/wncklet/showdesktop.c:309
 msgid "File not found"
 msgstr "A fájl nem található"
 
-#: applets/wncklet/showdesktop.c:332 applets/wncklet/showdesktop.c:452
+#: applets/wncklet/showdesktop.c:339 applets/wncklet/showdesktop.c:457
 msgid "Show Desktop Button"
 msgstr "Munkaasztal megjelenítése gomb"
 
-#: applets/wncklet/showdesktop.c:454
+#: applets/wncklet/showdesktop.c:459
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "A gomb elrejti az alkalmazások ablakait, és megjeleníti a munkaasztalt"
 
-#: applets/wncklet/showdesktop.c:494
+#: applets/wncklet/showdesktop.c:499
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -692,7 +697,7 @@ msgstr "A je_lenlegi munkaterület ablakainak megjelenítése"
 msgid "Show windows from a_ll workspaces"
 msgstr "Az ö_sszes munkaterület ablakainak megjelenítése"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3619
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3622
 msgid "Size"
 msgstr "Méret"
 
@@ -774,20 +779,21 @@ msgstr "Mikor legyenek az ablakok csoportosítva"
 
 #: applets/wncklet/window-menu.c:136
 #, fuzzy
-msgid "The Window Menu shows a list of all windows and lets you browse them."
+msgid ""
+"The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Az ablaklista applet egy listát jelenít meg az ablakokról, segítségével "
 "könnyebb az ablakok kezelése."
 
-#: applets/wncklet/window-menu.c:411
+#: applets/wncklet/window-menu.c:416
 msgid "Unknown Window"
 msgstr "Ismeretlen ablak"
 
-#: applets/wncklet/window-menu.c:614
+#: applets/wncklet/window-menu.c:619
 msgid "No Windows Open"
 msgstr "Nincs nyitott ablak"
 
-#: applets/wncklet/window-menu.c:702
+#: applets/wncklet/window-menu.c:707
 #, fuzzy
 msgid "Tool to switch between windows"
 msgstr "Átváltás a nyitott ablakok között"
@@ -907,12 +913,12 @@ msgstr ""
 "jeleníti meg a munkaterületeket."
 
 #: gnome-panel/applet.c:104 gnome-panel/applet.c:498
-#: gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/panel-applet-frame.c:111
 msgid "Un_lock"
 msgstr "Fe_loldás"
 
 #: gnome-panel/applet.c:104 gnome-panel/applet.c:498
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:111
 msgid "_Lock"
 msgstr "_Zárolás"
 
@@ -962,7 +968,7 @@ msgstr "Húzd és ejtsd kiemelése"
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Legyen-e kiemelve az éppen vonszolt ikon"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3608
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3611
 msgid "Orientation"
 msgstr "Elhelyezkedés"
 
@@ -1010,8 +1016,12 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE menü"
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:743 gnome-panel/menu.c:1497
-#: gnome-panel/menu.c:3019 gnome-panel/panel-action-button.c:97
+#: gnome-panel/drawer.c:339 gnome-panel/menu.c:3197
+msgid "Drawer"
+msgstr "Fiók"
+
+#: gnome-panel/drawer.c:597 gnome-panel/launcher.c:743 gnome-panel/menu.c:1512
+#: gnome-panel/menu.c:3034 gnome-panel/panel-action-button.c:99
 msgid "_Properties"
 msgstr "_Tulajdonságok"
 
@@ -1021,7 +1031,7 @@ msgstr "Új fájl létrehozása az adott könyvtárban"
 
 # gnome-terminal/gnome-terminal.c:2027
 #: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:883
+#: gnome-panel/gnome-panel-screenshot.c:705
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1030,7 +1040,7 @@ msgstr ""
 "Hiba történt a súgó megjelenítése közben: \n"
 "%s"
 
-#: gnome-panel/gnome-panel-preferences.c:391
+#: gnome-panel/gnome-panel-preferences.c:390
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
@@ -1038,7 +1048,7 @@ msgstr ""
 "A rendszergazda letiltotta a panel\n"
 "beállításainak módosítását"
 
-#: gnome-panel/gnome-panel-preferences.c:422
+#: gnome-panel/gnome-panel-preferences.c:421
 #, c-format
 msgid "Error loading glade file %s"
 msgstr "Hiba a '%s' glade fájl beolvasása közben"
@@ -1080,7 +1090,7 @@ msgstr "Panel beállítások"
 msgid "Slow"
 msgstr "Lassú"
 
-#: gnome-panel/gnome-panel-screenshot.c:135
+#: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1088,7 +1098,7 @@ msgstr ""
 "Nem lehet png struktúrát inicializálni.\n"
 "Lehet, hogy nem a megfelelő verziójú libpng van a gépeden"
 
-#: gnome-panel/gnome-panel-screenshot.c:143
+#: gnome-panel/gnome-panel-screenshot.c:129
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1096,7 +1106,7 @@ msgstr ""
 "Nem lehet png info-t létrehozni.\n"
 "Lehet, hogy nem a megfelelő verziójú libpng van a gépeden"
 
-#: gnome-panel/gnome-panel-screenshot.c:150
+#: gnome-panel/gnome-panel-screenshot.c:136
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1104,7 +1114,7 @@ msgstr ""
 "Nem lehet png info-t beállítani.\n"
 "Lehet, hogy nem a megfelelő verziójú libpng van a gépeden"
 
-#: gnome-panel/gnome-panel-screenshot.c:168
+#: gnome-panel/gnome-panel-screenshot.c:154
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1112,13 +1122,13 @@ msgstr ""
 "Nincs elég memória a képernyőkép elkészítéséhez.\n"
 "Szabadíts fel egy kis memóriát és próbáld újra."
 
-#: gnome-panel/gnome-panel-screenshot.c:226
+#: gnome-panel/gnome-panel-screenshot.c:212
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "A %s fájl már létezik. Felülírjam?"
 
-#: gnome-panel/gnome-panel-screenshot.c:247
-#: gnome-panel/gnome-panel-screenshot.c:755
+#: gnome-panel/gnome-panel-screenshot.c:233
+#: gnome-panel/gnome-panel-screenshot.c:582
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1129,52 +1139,44 @@ msgstr ""
 "\"%s\"\n"
 "Kérlek ellenőrizd a jogosultságaidat a szülőkönyvtárban"
 
-#: gnome-panel/gnome-panel-screenshot.c:520
-msgid "Print Screenshot"
-msgstr "Képernyőkép nyomtatása"
-
-#: gnome-panel/gnome-panel-screenshot.c:568
-msgid "Screenshot Print Preview"
-msgstr "A képernyőkép nyomtatásának előnézete"
-
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:595
+#: gnome-panel/gnome-panel-screenshot.c:414
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cKepernyokep-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:602
+#: gnome-panel/gnome-panel-screenshot.c:421
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cKepernyokep.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:619
+#: gnome-panel/gnome-panel-screenshot.c:438
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cKepernyokep-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:626
+#: gnome-panel/gnome-panel-screenshot.c:445
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cKepernyokep-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:778
+#: gnome-panel/gnome-panel-screenshot.c:606
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Nincs elég hely, a következő fájl kiírásához: %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1239
+#: gnome-panel/gnome-panel-screenshot.c:1096
 msgid "Grab a window instead of the entire screen"
 msgstr "Ablak fotózása a teljes képernyő helyett"
 
-#: gnome-panel/gnome-panel-screenshot.c:1240
+#: gnome-panel/gnome-panel-screenshot.c:1097
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "A megadott késleltetéssel készít képet [másodpercben]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1292
+#: gnome-panel/gnome-panel-screenshot.c:1149
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1182,7 +1184,7 @@ msgstr ""
 "A képernyőkép készítő program glade fájlja hiányzik.\n"
 "Kérlek ellenőrizd a gnome-panel telepítését"
 
-#: gnome-panel/gnome-panel-screenshot.c:1316
+#: gnome-panel/gnome-panel-screenshot.c:1165
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nem lehet képernyőképet készíteni a jelenlegi munkaasztalról."
 
@@ -1209,10 +1211,6 @@ msgstr "Képernyőkép _mentése fájlba:"
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "A képernyőkép mentése _web lapra (a ~/public__html könyvtárba)"
-
-#: gnome-panel/gnome-panel-screenshot.glade.h:9
-msgid "_Print screenshot..."
-msgstr "Képernyőkép _nyomtatása..."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
@@ -1276,8 +1274,8 @@ msgstr "Indítóikon létrehozása"
 msgid "Specify a profile name to load"
 msgstr "Add meg a betöltendő profil nevét"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3217
-#: gnome-panel/panel-menu-bar.c:173
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3232
+#: gnome-panel/panel-menu-bar.c:175
 msgid "Log Out"
 msgstr "Kilépés"
 
@@ -1297,16 +1295,16 @@ msgstr "Lakat"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Lezárja a képernyőt, így egy időre magára hagyható a gép"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:248
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:250
 msgid "Force Quit"
 msgstr "Erőltetett kilépés"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:243
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:245
 msgid "Screenshot"
 msgstr "Képernyőkép"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3385
-#: gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3400
+#: gnome-panel/panel-menu-bar.c:154
 msgid "Take a screenshot of your desktop"
 msgstr "Képernyőképet készít a munkaasztalról"
 
@@ -1314,8 +1312,8 @@ msgstr "Képernyőképet készít a munkaasztalról"
 msgid "Search"
 msgstr "Keresés"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3366
-#: gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3381
+#: gnome-panel/panel-menu-bar.c:139
 msgid "Find files, folders, and documents on your computer"
 msgstr "Fájlok, mappák és dokumentumok felkutatása a számítógépeden"
 
@@ -1343,8 +1341,8 @@ msgstr ""
 "Ez a program felelős más programok indításáért és a kis appleteket "
 "futtatásáért saját magán belül."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:166
-#: gnome-panel/panel-action-button.c:184
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:168
+#: gnome-panel/panel-action-button.c:186
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "A(z) '%s' végrehajtása sikertelen"
@@ -1389,106 +1387,106 @@ msgstr "Nem sikerült hozzáadni a futtatás mezőhöz"
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Nincs 'Exec' vagy 'URL' mező a bejegyzésben"
 
-#: gnome-panel/menu.c:1444
+#: gnome-panel/menu.c:1316 gnome-panel/menu.c:3178
+msgid "Main Menu"
+msgstr "Főmenü"
+
+#: gnome-panel/menu.c:1321 gnome-panel/menu-ditem.c:309
+msgid "Menu"
+msgstr "Menü"
+
+#: gnome-panel/menu.c:1459
 msgid "Add this launcher to panel"
 msgstr "Indítóikon hozzáadása a panelhoz"
 
-#: gnome-panel/menu.c:1454
+#: gnome-panel/menu.c:1469
 msgid "Remove this item"
 msgstr "Menüelem törlése"
 
-#: gnome-panel/menu.c:1471
+#: gnome-panel/menu.c:1486
 msgid "Put into run dialog"
 msgstr "Futtató párbeszédablakba helyezés"
 
-#: gnome-panel/menu.c:1519
+#: gnome-panel/menu.c:1534
 msgid "Entire menu"
 msgstr "Teljes menü"
 
-#: gnome-panel/menu.c:1528
+#: gnome-panel/menu.c:1543
 msgid "Add this as drawer to panel"
 msgstr "Panelhez hozzáadás fiókként"
 
-#: gnome-panel/menu.c:1539
+#: gnome-panel/menu.c:1554
 msgid "Add this as menu to panel"
 msgstr "Panelhez hozzáadás menüként"
 
-#: gnome-panel/menu.c:1552
+#: gnome-panel/menu.c:1567
 msgid "Add new item to this menu"
 msgstr "Új menüelem hozzáadása"
 
-#: gnome-panel/menu.c:1579
+#: gnome-panel/menu.c:1594
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: gnome-panel/menu.c:2554 gnome-panel/menu.c:2609
+#: gnome-panel/menu.c:2569 gnome-panel/menu.c:2624
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "a lekérdezés kivétellel tért vissza: %s\n"
 
-#: gnome-panel/menu.c:2823 gnome-panel/menu.c:2828 gnome-panel/menu.c:3326
-#: gnome-panel/panel-menu-bar.c:195
+#: gnome-panel/menu.c:2838 gnome-panel/menu.c:2843 gnome-panel/menu.c:3341
+#: gnome-panel/panel-menu-bar.c:197
 msgid "Applications"
 msgstr "Alkalmazások"
 
-#: gnome-panel/menu.c:2898
+#: gnome-panel/menu.c:2913
 msgid "You cannot remove your last panel."
 msgstr "Az utolsó panelt nem lehet törölni."
 
-#: gnome-panel/menu.c:2961
+#: gnome-panel/menu.c:2976
 msgid "_Delete This Panel..."
 msgstr "Panel _törlése..."
 
-#: gnome-panel/menu.c:2964 gnome-panel/menu.c:3004
+#: gnome-panel/menu.c:2979 gnome-panel/menu.c:3019
 msgid "_Delete This Panel"
 msgstr "Panel _törlése"
 
-#: gnome-panel/menu.c:2979
+#: gnome-panel/menu.c:2994
 msgid "_Add to Panel"
 msgstr "Panelra _helyezés"
 
-#: gnome-panel/menu.c:3034
+#: gnome-panel/menu.c:3049
 msgid "_New Panel"
 msgstr "Új _panel"
 
-#: gnome-panel/menu.c:3081
+#: gnome-panel/menu.c:3096
 msgid "_About Panels"
 msgstr "A panel _névjegye"
 
-#: gnome-panel/menu.c:3095
+#: gnome-panel/menu.c:3110
 msgid "About _GNOME"
 msgstr "A _GNOME névjegye"
 
-#: gnome-panel/menu.c:3143
+#: gnome-panel/menu.c:3158
 msgid "Launcher..."
 msgstr "Indítóikon..."
 
-#: gnome-panel/menu.c:3153
+#: gnome-panel/menu.c:3168
 msgid "Launcher from menu"
 msgstr "Indítóikon a menüből"
 
-#: gnome-panel/menu.c:3163 gnome-panel/panel-menu-button.c:86
-msgid "Main Menu"
-msgstr "Főmenü"
-
-#: gnome-panel/menu.c:3173
+#: gnome-panel/menu.c:3188
 msgid "Menu Bar"
 msgstr "Menü"
 
-#: gnome-panel/menu.c:3182
-msgid "Drawer"
-msgstr "Fiók"
-
-#: gnome-panel/menu.c:3205 gnome-panel/panel-menu-bar.c:164
+#: gnome-panel/menu.c:3220 gnome-panel/panel-menu-bar.c:166
 msgid "Lock Screen"
 msgstr "Képernyőzár"
 
-#: gnome-panel/menu.c:3211
+#: gnome-panel/menu.c:3226
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Lezárja a képernyőt, így egy időre magára hagyhatod a gépet"
 
-#: gnome-panel/menu.c:3223
+#: gnome-panel/menu.c:3238
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1496,33 +1494,29 @@ msgstr ""
 "Kilépés a munkamenetből, más felhasználóként való belépéshez, vagy a "
 "számítógép leállításához"
 
-#: gnome-panel/menu.c:3347 gnome-panel/panel-menu-bar.c:121
+#: gnome-panel/menu.c:3362 gnome-panel/panel-menu-bar.c:123
 msgid "Run Application..."
 msgstr "Alkalmazás futtatása..."
 
-#: gnome-panel/menu.c:3354 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3369 gnome-panel/panel-menu-bar.c:125
 msgid "Run an Application by entering a command"
 msgstr "Ha tudod a parancs teljes nevét, ide beírva futtathatod"
 
-#: gnome-panel/menu.c:3363 gnome-panel/panel-menu-bar.c:135
+#: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:137
 msgid "Search for Files..."
 msgstr "Fájlok keresése..."
 
-#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:150
+#: gnome-panel/menu.c:3397 gnome-panel/panel-menu-bar.c:152
 msgid "Take Screenshot..."
 msgstr "Képernyőkép..."
 
-#: gnome-panel/menu.c:3400
+#: gnome-panel/menu.c:3415
 msgid "Desktop"
 msgstr "Munkaasztal"
 
 #: gnome-panel/menu-ditem.c:127
 msgid "Cannot save changes to launcher"
 msgstr "Az indítóikon változásainak mentése sikertelen"
-
-#: gnome-panel/menu-ditem.c:309
-msgid "Menu"
-msgstr "Menü"
 
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
@@ -1548,36 +1542,36 @@ msgid ""
 "writable."
 msgstr "Itt nem lehet új indítóikont létrehozni, mert a hely írásvédett."
 
-#: gnome-panel/panel-action-button.c:86
+#: gnome-panel/panel-action-button.c:88
 msgid "_Activate Screensaver"
 msgstr "Képernyővédő _bekapcsolása"
 
-#: gnome-panel/panel-action-button.c:87
+#: gnome-panel/panel-action-button.c:89
 msgid "_Lock Screen"
 msgstr "_Képernyőzár"
 
-#: gnome-panel/panel-action-button.c:91
+#: gnome-panel/panel-action-button.c:93
 msgid "_Kill Screensaver Daemon"
 msgstr "A képernyővédő-démon ki_lövése"
 
-#: gnome-panel/panel-action-button.c:93
+#: gnome-panel/panel-action-button.c:95
 msgid "Restart _Screensaver Daemon"
 msgstr "A képernyővédő-démon új_raindítása"
 
-#: gnome-panel/panel-action-button.c:221
+#: gnome-panel/panel-action-button.c:223
 msgid "Lock screen"
 msgstr "Képernyőzár"
 
-#: gnome-panel/panel-action-button.c:228
+#: gnome-panel/panel-action-button.c:230
 msgid "Log out of GNOME"
 msgstr "Kijelentkezés a GNOME-ból"
 
-#: gnome-panel/panel-action-button.c:233
+#: gnome-panel/panel-action-button.c:235
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Alkalmazás futtatása"
 
-#: gnome-panel/panel-action-button.c:238
+#: gnome-panel/panel-action-button.c:240
 msgid "Search for Files"
 msgstr "Fájlok keresése"
 
@@ -1589,16 +1583,16 @@ msgstr "Művelettípus"
 msgid "The type of action this button implements"
 msgstr "A művelet típusa, amelyet ez a gomb valósít meg"
 
-#: gnome-panel/panel-action-button.c:405 gnome-panel/panel-menu-button.c:467
+#: gnome-panel/panel-action-button.c:405 gnome-panel/panel-menu-button.c:486
 #, fuzzy
 msgid "Drag and drop enabled"
 msgstr "Húzd és ejtsd engedélyezve"
 
-#: gnome-panel/panel-action-button.c:406 gnome-panel/panel-menu-button.c:468
+#: gnome-panel/panel-action-button.c:406 gnome-panel/panel-menu-button.c:487
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Engedélyezve van-e a húzd és ejtsd az elemre"
 
-#: gnome-panel/panel-applet-frame.c:740
+#: gnome-panel/panel-applet-frame.c:739
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Kivétel a következő popup_menu-től: '%s'\n"
@@ -1606,12 +1600,12 @@ msgstr "Kivétel a következő popup_menu-től: '%s'\n"
 #: gnome-panel/panel-applet-frame.c:861
 #, c-format
 msgid ""
-"The %s applet appears to have died unexpectedly\n"
+"The \"%s\" applet appears to have died unexpectedly.\n"
 "\n"
-"Reload this applet?%s"
+"Do you want to reload this applet?"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:866
+#: gnome-panel/panel-applet-frame.c:867
 #, fuzzy
 msgid ""
 "\n"
@@ -1626,22 +1620,24 @@ msgstr ""
 "(Ha most nem tölti újra, később még mindig hozzáadhatod a panelen való jobb "
 "kattintással és a \"Panelra helyezés\" almenü használatával.)"
 
-#: gnome-panel/panel-applet-frame.c:901
+#: gnome-panel/panel-applet-frame.c:907
 msgid "D_on't Delete"
 msgstr "Ne _törölje"
 
-#: gnome-panel/panel-applet-frame.c:943
+#: gnome-panel/panel-applet-frame.c:944
 #, fuzzy, c-format
-msgid ""
-"The panel encountered a problem while loading \"%s\"\n"
-"Details: %s%s"
+msgid "The panel encountered a problem while loading \"%s\"."
 msgstr ""
-"A következő applet betöltése közben probléma történt: %s\n"
-"Részletek: %s\n"
+"A következő applet betöltése közben probléma történt: \"%s\"\n"
 "\n"
 "Törlöd ezt az appletet a beállításaidból?"
 
-#: gnome-panel/panel-applet-frame.c:947 gnome-panel/panel-applet-frame.c:958
+#: gnome-panel/panel-applet-frame.c:949 gnome-panel/panel-util.c:357
+#, c-format
+msgid "Details: %s"
+msgstr "Részletek: %s"
+
+#: gnome-panel/panel-applet-frame.c:959 gnome-panel/panel-applet-frame.c:972
 #, fuzzy
 msgid ""
 "\n"
@@ -1652,15 +1648,7 @@ msgstr ""
 "\n"
 "Törlöd ezt az appletet a beállításaidból?"
 
-#: gnome-panel/panel-applet-frame.c:955
-#, fuzzy, c-format
-msgid "The panel encountered a problem while loading \"%s\"%s"
-msgstr ""
-"A következő applet betöltése közben probléma történt: \"%s\"\n"
-"\n"
-"Törlöd ezt az appletet a beállításaidból?"
-
-#: gnome-panel/panel-applet-frame.c:1067
+#: gnome-panel/panel-applet-frame.c:1084
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Nem kapom meg az AppletShell interfészt a vezérlőtől\n"
 
@@ -1684,7 +1672,7 @@ msgstr "Hiba a '%s' glade fájl beolvasása közben"
 msgid "Open URL: %s"
 msgstr "URL megnyitása: %s"
 
-#: gnome-panel/panel.c:1227
+#: gnome-panel/panel.c:1228
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -1692,7 +1680,7 @@ msgstr ""
 "A panel törölésekor, a panel és az appletek\n"
 "beállításai elvesznek. Törlöd a panelt?"
 
-#: gnome-panel/panel.c:1236
+#: gnome-panel/panel.c:1237
 msgid "Delete Panel"
 msgstr "Panel törlése"
 
@@ -1881,43 +1869,52 @@ msgstr "Képernyőkép készítése"
 msgid "Take window screenshot"
 msgstr "Képernyőkép készítése ablakról"
 
-#: gnome-panel/panel-menu-bar.c:166
+#: gnome-panel/panel-menu-bar.c:168
 msgid "Protect your computer from unauthorized use"
 msgstr "A jogosulatlan hozzáféréstől védi géped"
 
-#: gnome-panel/panel-menu-bar.c:175
+#: gnome-panel/panel-menu-bar.c:177
 msgid "Quit from the GNOME desktop"
 msgstr "Kilépés a GNOME-munkakörnyezetből"
 
-#: gnome-panel/panel-menu-button.c:431
+#: gnome-panel/panel-menu-button.c:441
 msgid "Menu Path"
 msgstr "Útvonal a menüben"
 
-#: gnome-panel/panel-menu-button.c:432
+#: gnome-panel/panel-menu-button.c:442
 msgid "The path from which to construct the menu"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:440
+#: gnome-panel/panel-menu-button.c:450
 msgid "Custom Icon"
 msgstr "Egyéni ikon"
 
-#: gnome-panel/panel-menu-button.c:441
+#: gnome-panel/panel-menu-button.c:451
 msgid "The custom icon for the menu"
 msgstr "Egyéni ikon a menühöz"
 
-#: gnome-panel/panel-menu-button.c:449
+#: gnome-panel/panel-menu-button.c:459
+#, fuzzy
+msgid "Tooltip"
+msgstr "Fent"
+
+#: gnome-panel/panel-menu-button.c:460
+msgid "Tooltip displayed for the menu"
+msgstr ""
+
+#: gnome-panel/panel-menu-button.c:468
 msgid "Use Menu Path"
 msgstr "Menüútvonal használata"
 
-#: gnome-panel/panel-menu-button.c:450
+#: gnome-panel/panel-menu-button.c:469
 msgid "Use the path specified by the menu-path property"
 msgstr "A menu-path tulajdonság által megadott útvonal használata"
 
-#: gnome-panel/panel-menu-button.c:458
+#: gnome-panel/panel-menu-button.c:477
 msgid "Use Custom Icon"
 msgstr "Egyéni ikon használata"
 
-#: gnome-panel/panel-menu-button.c:459
+#: gnome-panel/panel-menu-button.c:478
 msgid "Use the icon specified by the custom-icon property"
 msgstr "A custom-icon tulajdonság által megadott ikon használata"
 
@@ -2039,8 +2036,8 @@ msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:23
 msgid ""
-"The text to display in a tooltip for this drawer. This key is only relevant "
-"if the object_type key is \"drawer-object\"."
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:24
@@ -2051,7 +2048,7 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:25
-msgid "Tooltip displayed for drawer"
+msgid "Tooltip displayed for drawer or menu"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:26
@@ -2091,7 +2088,7 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr ""
 
-#: gnome-panel/panel-profile.c:2137
+#: gnome-panel/panel-profile.c:2138
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
 msgstr ""
@@ -2241,8 +2238,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Ismeretlen hiba történt a következő megnyitása közben: %s"
 
 #: gnome-panel/panel-recent.c:175
-msgid "Open Recent"
-msgstr "Legutóbbi megnyitása"
+msgid "Recent Documents"
+msgstr ""
 
 #: gnome-panel/panel-run-dialog.c:293
 #, c-format
@@ -2315,7 +2312,7 @@ msgstr "A végrehajtandó parancs ikonja"
 msgid "_Run"
 msgstr "_Futtatás"
 
-#: gnome-panel/panel-shell.c:80
+#: gnome-panel/panel-shell.c:74
 msgid ""
 "I've detected a panel already running,\n"
 "and will now exit."
@@ -2323,7 +2320,7 @@ msgstr ""
 "Úgy vettem észre, fut egy másik panel,\n"
 "kilépek."
 
-#: gnome-panel/panel-shell.c:84
+#: gnome-panel/panel-shell.c:78
 #, c-format
 msgid ""
 "There was a problem registering the panel with the bonobo-activation "
@@ -2347,197 +2344,197 @@ msgstr "_Erőszakos bezárás"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1452
+#: gnome-panel/panel-toplevel.c:1454
 msgid "Top Expanded Edge Panel"
 msgstr "Fenti kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1453
+#: gnome-panel/panel-toplevel.c:1455
 msgid "Top Centered Panel"
 msgstr "Fenti középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1456
 msgid "Top Floating Panel"
 msgstr "Fenti úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1457
 msgid "Top Edge Panel"
 msgstr "Fenti élpanel"
 
-#: gnome-panel/panel-toplevel.c:1459
+#: gnome-panel/panel-toplevel.c:1461
 msgid "Bottom Expanded Edge Panel"
 msgstr "Lenti kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1460
+#: gnome-panel/panel-toplevel.c:1462
 msgid "Bottom Centered Panel"
 msgstr "Lenti középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1461
+#: gnome-panel/panel-toplevel.c:1463
 msgid "Bottom Floating Panel"
 msgstr "Lenti úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1462
+#: gnome-panel/panel-toplevel.c:1464
 msgid "Bottom Edge Panel"
 msgstr "Lenti élpanel"
 
-#: gnome-panel/panel-toplevel.c:1466
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Left Expanded Edge Panel"
 msgstr "Bal oldali kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Left Centered Panel"
 msgstr "Bal oldali középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Left Floating Panel"
 msgstr "Bal oldali úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Left Edge Panel"
 msgstr "Bal oldali élpanel"
 
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Right Expanded Edge Panel"
 msgstr "Jobb oldali kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Right Centered Panel"
 msgstr "Jobb oldali középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1475
+#: gnome-panel/panel-toplevel.c:1477
 msgid "Right Floating Panel"
 msgstr "Jobb oldali úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Right Edge Panel"
 msgstr "Jobb oldali élpanel"
 
-#: gnome-panel/panel-toplevel.c:3588
+#: gnome-panel/panel-toplevel.c:3591
 msgid "Name"
 msgstr "Név"
 
-#: gnome-panel/panel-toplevel.c:3589
+#: gnome-panel/panel-toplevel.c:3592
 msgid "The name of this panel"
 msgstr "A panel neve"
 
-#: gnome-panel/panel-toplevel.c:3598
+#: gnome-panel/panel-toplevel.c:3601
 msgid "Expand"
 msgstr "Kiterjesztés"
 
-#: gnome-panel/panel-toplevel.c:3599
+#: gnome-panel/panel-toplevel.c:3602
 msgid "Expand to take up the full monitor width/height"
 msgstr "Kiterjesztés a képernyő teljes szélességében, illetve magasságában"
 
-#: gnome-panel/panel-toplevel.c:3609
+#: gnome-panel/panel-toplevel.c:3612
 msgid "The orientation of the panel"
 msgstr "A panel iránya"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3623
 msgid "The height (or width when vertical) of the panel"
 msgstr "A panel magassága (függőlegesnél a szélessége)"
 
-#: gnome-panel/panel-toplevel.c:3632
+#: gnome-panel/panel-toplevel.c:3635
 msgid "X position"
 msgstr "X pozíció"
 
-#: gnome-panel/panel-toplevel.c:3633
+#: gnome-panel/panel-toplevel.c:3636
 msgid "The X position of the panel"
 msgstr "A panel X pozíciója"
 
-#: gnome-panel/panel-toplevel.c:3644
+#: gnome-panel/panel-toplevel.c:3647
 msgid "X centered"
 msgstr "X középről"
 
-#: gnome-panel/panel-toplevel.c:3645
+#: gnome-panel/panel-toplevel.c:3648
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Az X koordináta a képernyő közepétől számítva"
 
-#: gnome-panel/panel-toplevel.c:3654
+#: gnome-panel/panel-toplevel.c:3657
 msgid "Y position"
 msgstr "Y pozíció"
 
-#: gnome-panel/panel-toplevel.c:3655
+#: gnome-panel/panel-toplevel.c:3658
 msgid "The Y position of the panel"
 msgstr "A panel Y pozíciója"
 
-#: gnome-panel/panel-toplevel.c:3666
+#: gnome-panel/panel-toplevel.c:3669
 msgid "Y centered"
 msgstr "Y középről"
 
-#: gnome-panel/panel-toplevel.c:3667
+#: gnome-panel/panel-toplevel.c:3670
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Az Y koordináta a képernyő közepétől számítva"
 
-#: gnome-panel/panel-toplevel.c:3676
+#: gnome-panel/panel-toplevel.c:3679
 msgid "Xinerama monitor"
 msgstr "Xinerama monitor"
 
-#: gnome-panel/panel-toplevel.c:3677
+#: gnome-panel/panel-toplevel.c:3680
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "A monitor (a Xinerama szerint), amelyen a panel elhelyezkedik"
 
-#: gnome-panel/panel-toplevel.c:3688
+#: gnome-panel/panel-toplevel.c:3691
 msgid "Auto hide"
 msgstr "Automatikus elrejtés"
 
-#: gnome-panel/panel-toplevel.c:3689
+#: gnome-panel/panel-toplevel.c:3692
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "A panel automatikus elrejtése, ha az egér elhagyja a panelt."
 
-#: gnome-panel/panel-toplevel.c:3698
+#: gnome-panel/panel-toplevel.c:3701
 msgid "Hide delay"
 msgstr "Elrejtés késleltetése"
 
-#: gnome-panel/panel-toplevel.c:3699
+#: gnome-panel/panel-toplevel.c:3702
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr ""
 "Az ezredmásodpercek száma, ameddig késleltetni kell az automatikus elrejtést"
 
-#: gnome-panel/panel-toplevel.c:3710
+#: gnome-panel/panel-toplevel.c:3713
 msgid "Un-hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3711
+#: gnome-panel/panel-toplevel.c:3714
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3725
 msgid "Auto-hide size"
 msgstr "Automatikus elrejtés mérete"
 
-#: gnome-panel/panel-toplevel.c:3723
+#: gnome-panel/panel-toplevel.c:3726
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3734
+#: gnome-panel/panel-toplevel.c:3737
 msgid "Animate"
 msgstr "Animáció"
 
-#: gnome-panel/panel-toplevel.c:3735
+#: gnome-panel/panel-toplevel.c:3738
 msgid "Enable hiding/showing animations"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3744
+#: gnome-panel/panel-toplevel.c:3747
 msgid "Animation Speed"
 msgstr "Animáció sebessége:"
 
-#: gnome-panel/panel-toplevel.c:3745
+#: gnome-panel/panel-toplevel.c:3748
 msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3755
+#: gnome-panel/panel-toplevel.c:3758
 msgid "Buttons Enabled"
 msgstr "Gombok engedélyezve"
 
-#: gnome-panel/panel-toplevel.c:3756
+#: gnome-panel/panel-toplevel.c:3759
 msgid "Enable hide/show buttons"
 msgstr "Az elrejtőgomb engedélyezése"
 
-#: gnome-panel/panel-toplevel.c:3765
+#: gnome-panel/panel-toplevel.c:3768
 msgid "Arrows Enabled"
 msgstr "Nyilak engedélyezve"
 
-#: gnome-panel/panel-toplevel.c:3766
+#: gnome-panel/panel-toplevel.c:3769
 msgid "Enable arrows on hide/show buttons"
 msgstr "Nyilak megjelenítése az elrejtőgombokon"
 
@@ -2813,11 +2810,11 @@ msgid "X co-ordinate of panel"
 msgstr "A panel X koordinátája"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
-msgid "X screen panel is on"
+msgid "X screen where the panel is displayed"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:51
-msgid "Xinerama monitor panel is on"
+msgid "Xinerama monitor where the panel is displayed"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:52
@@ -2827,11 +2824,6 @@ msgstr "A panel Y koordinátája"
 #: gnome-panel/panel-util.c:72
 msgid "Cannot display help document"
 msgstr "A súgó megjelenítése sikertelen"
-
-#: gnome-panel/panel-util.c:357
-#, c-format
-msgid "Details: %s"
-msgstr "Részletek: %s"
 
 #: gnome-panel/panel-util.c:814
 #, c-format
@@ -2850,47 +2842,47 @@ msgstr "Próba Bonobo Applet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Próba Bonobo Applet Factory"
 
-#: libpanel-applet/panel-applet.c:848
+#: libpanel-applet/panel-applet.c:847
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Nem teljes '%s' háttértípust kaptam"
 
-#: libpanel-applet/panel-applet.c:862
+#: libpanel-applet/panel-applet.c:861
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Nem teljes '%s' háttértípust kaptam: %s"
 
-#: libpanel-applet/panel-applet.c:871
+#: libpanel-applet/panel-applet.c:870
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Nem sikerült a következő képet megkapni: %s"
 
-#: libpanel-applet/panel-applet.c:878
+#: libpanel-applet/panel-applet.c:877
 msgid "Unknown background type received"
 msgstr "Ismeretlen háttértípus érkezett"
 
-#: libpanel-applet/panel-applet.c:1063
+#: libpanel-applet/panel-applet.c:1062
 msgid "The Applet's containing Panel's orientation"
 msgstr "Az applet tartalmazza a panel elhelyezkedését"
 
-#: libpanel-applet/panel-applet.c:1071
+#: libpanel-applet/panel-applet.c:1070
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Az applet tartalmazza a panel méretét képpontban"
 
-#: libpanel-applet/panel-applet.c:1079
+#: libpanel-applet/panel-applet.c:1078
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Az applet tartalmazza a panel háttérszínét vagy mintázatát"
 
-#: libpanel-applet/panel-applet.c:1087
+#: libpanel-applet/panel-applet.c:1086
 msgid "The Applet's flags"
 msgstr "Az applet kapcsolói"
 
-#: libpanel-applet/panel-applet.c:1095
+#: libpanel-applet/panel-applet.c:1094
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Tartományok, amelyek azt mutatják, milyen méret elfogadható az appletnek"
 
-#: libpanel-applet/panel-applet.c:1103
+#: libpanel-applet/panel-applet.c:1102
 #, fuzzy
 msgid "The Applet's containing Panel is locked down"
 msgstr "Az applet tartalmazza a panel elhelyezkedését"
@@ -2961,11 +2953,23 @@ msgstr "XXS"
 #~ msgid "%s the GNOME Fish"
 #~ msgstr "%s a GNOME hal"
 
+#~ msgid "Window Menu"
+#~ msgstr "Ablak menü"
+
 #~ msgid "Expander Size"
 #~ msgstr "Expander mérete"
 
 #~ msgid "Size of the expander arrow"
 #~ msgstr "A széthúzó nyíl mérete"
+
+#~ msgid "Print Screenshot"
+#~ msgstr "Képernyőkép nyomtatása"
+
+#~ msgid "Screenshot Print Preview"
+#~ msgstr "A képernyőkép nyomtatásának előnézete"
+
+#~ msgid "_Print screenshot..."
+#~ msgstr "Képernyőkép _nyomtatása..."
 
 #~ msgid "Help on %s _Application"
 #~ msgstr "%s alkalmazás súgója"
@@ -2976,6 +2980,17 @@ msgstr "XXS"
 #~ msgid "Application"
 #~ msgstr "Alkalmazás"
 
+#~ msgid ""
+#~ "The panel encountered a problem while loading \"%s\"\n"
+#~ "Details: %s\n"
+#~ "\n"
+#~ "Do you want to delete the applet from your configuration?"
+#~ msgstr ""
+#~ "A következő applet betöltése közben probléma történt: %s\n"
+#~ "Részletek: %s\n"
+#~ "\n"
+#~ "Törlöd ezt az appletet a beállításaidból?"
+
 #~ msgid "<b>_Name:</b>"
 #~ msgstr "<b>_Név:</b>"
 
@@ -2984,6 +2999,9 @@ msgstr "XXS"
 
 #~ msgid "<b>_Size:</b>"
 #~ msgstr "<b>_Méret:</b>"
+
+#~ msgid "Open Recent"
+#~ msgstr "Legutóbbi megnyitása"
 
 #~ msgid "Application description"
 #~ msgstr "Alkalmazás leírása"
