@@ -519,6 +519,9 @@ load_background_file (PanelBackground *background)
 {
 	GError *error = NULL;
 
+	if (!g_file_test (background->image, G_FILE_TEST_IS_REGULAR))
+		return;
+
 	background->loaded_image = 
 		gdk_pixbuf_new_from_file (background->image, &error);
 	if (!background->loaded_image) {
