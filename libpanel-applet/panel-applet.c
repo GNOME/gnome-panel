@@ -485,10 +485,7 @@ panel_applet_parse_color (const gchar *color_str,
 
 	g_assert (color_str && color);
 
-	if (color_str [0] != '#')
-		return FALSE;
-
-	if (sscanf (color_str + 1, "%4x%4x%4x", &r, &g, &b) != 3)
+	if (sscanf (color_str, "%4x%4x%4x", &r, &g, &b) != 3)
 		return FALSE;
 
 	color->red   = r;

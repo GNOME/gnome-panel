@@ -1,3 +1,11 @@
+2002-03-11  Shivram U  <shivaram.upadhyayula@wipro.com>
+
+	reviewed by Mark McLoughlin <mark@skynet.ie>
+
+	* panel-applet-frame.c : (panel_applet_frame_get_background_string)
+	We will not be adding '#' to the color string. '#' is used as a
+	delimiter in parsing the moniker name. Fixes #73440.
+
 2002-03-18  Shivram U  <shivaram.upadhyayula@wipro.com>
 
 	reviewed by Mark McLoughlin <mark@skynet.ie>

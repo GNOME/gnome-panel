@@ -234,7 +234,7 @@ panel_applet_frame_get_background_string (PanelAppletFrame *frame,
 		break;
 	case PANEL_BACK_COLOR:
 		retval = g_strdup_printf (
-				"color:#%.4x%.4x%.4x", 
+				"color:%.4x%.4x%.4x", 
 				panel->back_color.red, 
 				panel->back_color.green, 
 				panel->back_color.blue);
