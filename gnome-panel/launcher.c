@@ -352,6 +352,7 @@ really_add_launcher(GtkWidget *d,int button, gpointer data)
 	
 	if(button == 0) {
 		dentry = gnome_dentry_get_dentry(dedit);
+
 		if(!dentry->name || !(*(dentry->name))) {
 			g_free(dentry->name);
 			dentry->name=g_strdup("???");

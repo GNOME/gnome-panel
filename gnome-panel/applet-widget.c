@@ -27,8 +27,8 @@ GNOME_Panel panel_client;
 
 #define APPLET_ID_KEY "applet_id_key"
 #define APPLET_WIDGET_KEY "applet_widget_key"
-#define pg_return_if_fail(x) if(!(x)) { g_print("type = %d exid = %s\n", ev._major, ev._repo_id); g_return_if_fail(x); }
-#define pg_return_val_if_fail(x,y) if(!(x)) { g_print("type = %d exid = %s\n", ev._major, ev._repo_id); g_return_val_if_fail(x, y); }
+#define pg_return_if_fail(x) if(!(x)) { g_print("type = %d exid = %s\n", ev._major, ev._repo_id); return; }
+#define pg_return_val_if_fail(x,y) if(!(x)) { g_print("type = %d exid = %s\n", ev._major, ev._repo_id); return y;}
 
 typedef struct {
 	POA_GNOME_Applet		servant;
@@ -622,12 +622,13 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 			     "server", &ev);
 	pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
 
-	if(!panel_client) {
+	if (!panel_client) {
 		panel_client =
 			goad_server_activate_with_repo_id(NULL,
 							  "IDL:GNOME/Panel:1.0",
 							  0, NULL);
-		pg_return_val_if_fail(panel_client != NULL, NULL);
+
+		pg_return_val_if_fail (panel_client != NULL, NULL);
 	}
 
 
@@ -766,7 +767,7 @@ applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
 	CORBA_exception_free(&ev);
 
 	if(bind_events)
-		bind_applet_events(GTK_WIDGET(applet),applet);
+		bind_applet_events(GTK_WIDGET(applet), applet);
 }
 
 void

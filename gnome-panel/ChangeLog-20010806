@@ -1,3 +1,11 @@
+1999-06-02  Nat Friedman  <nat@gnome-support.com>
+
+	* applet-widget.c (pg_return_val_if_fail): Do not use glib
+ 	g_return_val_if_fail, since that will compile to a NOP with
+ 	debugging turned off.
+	
+	(pg_return_if_fail): Do not use g_return_if_fail.
+
 1999-06-02  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* session.c (panel_session_save): check for a NULL pd->menu,
