@@ -1329,14 +1329,6 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		GtkRequisition chreq;
 		gtk_widget_size_request(ad->applet,&chreq);
 
-		if (ad->expand_major && PANEL_IS_APPLET_FRAME (ad->applet)) {
-			g_free (ad->size_hints);
-
-			ad->size_hints_len =
-				panel_applet_frame_get_size_hints (
-					PANEL_APPLET_FRAME (ad->applet), &ad->size_hints);
-		}
-		
 		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 			if (requisition->height < chreq.height)
 				requisition->height = chreq.height;
@@ -2780,11 +2772,34 @@ panel_widget_set_applet_expandable (PanelWidget *panel,
 	if (!ad)
 		return;
 
+	major = major != FALSE;
+	minor = minor != FALSE;
+
 	if (ad->expand_major == major && ad->expand_minor == minor)
 		return;
 
 	ad->expand_major = major;
 	ad->expand_minor = minor;
+
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
+}
+
+void
+panel_widget_set_applet_size_hints (PanelWidget *panel,
+				    GtkWidget   *applet,
+				    int         *size_hints,
+				    int          size_hints_len)
+{
+	AppletData *ad;
+
+	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
+	if (!ad)
+		return;
+
+	g_free (ad->size_hints);
+
+	ad->size_hints     = size_hints;
+	ad->size_hints_len = size_hints_len;
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 }

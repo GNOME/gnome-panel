@@ -39,11 +39,18 @@
 #include "panel-marshal.h"
 #include "panel-background.h"
 
+#undef PANEL_APPLET_FRAME_DEBUG
+
 #define HANDLE_SIZE 10
 
 #define PANEL_STOCK_DONT_DELETE "panel-dont-delete"
 
-#undef PANEL_APPLET_FRAME_DEBUG
+#define PROPERTY_ORIENT     "panel-applet-orient"
+#define PROPERTY_SIZE       "panel-applet-size"
+#define PROPERTY_BACKGROUND "panel-applet-background"
+#define PROPERTY_FLAGS      "panel-applet-flags"
+#define PROPERTY_SIZE_HINTS "panel-applet-size-hints"
+
 
 struct _PanelAppletFramePrivate {
 	GNOME_Vertigo_PanelAppletShell  applet_shell;
@@ -59,6 +66,8 @@ struct _PanelAppletFramePrivate {
 
 	GtkAllocation                   child_allocation;
 	GdkRectangle                    handle_rect;
+
+	guint                           has_handle : 1;
 };
 
 static GObjectClass *parent_class;
@@ -93,6 +102,75 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 				      "sensitive",
 				      locked ? "0" : "1",
 				      NULL);
+}
+
+static void
+panel_applet_frame_set_flags_from_any (PanelAppletFrame *frame,
+				       const CORBA_any  *any)
+{
+	gboolean major;
+	gboolean minor;
+	int      flags;
+	
+	flags = BONOBO_ARG_GET_SHORT (any);
+
+	major = flags & APPLET_EXPAND_MAJOR;
+	minor = flags & APPLET_EXPAND_MINOR;
+
+	panel_widget_set_applet_expandable (
+		frame->priv->panel, GTK_WIDGET (frame), major, minor);
+
+	frame->priv->has_handle = (flags & APPLET_HAS_HANDLE) != 0;
+}
+
+static void
+panel_applet_frame_set_size_hints_from_any (PanelAppletFrame *frame,
+					    const CORBA_any  *any)
+{
+	CORBA_sequence_CORBA_long *seq;
+	int                       *size_hints;
+	int                        extra_size;
+	int                        i;
+
+	seq = any->_value;
+
+	size_hints = g_new0 (int, seq->_length);
+
+	extra_size = 0;
+	if (frame->priv->has_handle)
+		extra_size = HANDLE_SIZE + 1;
+	
+	for (i = 0; i < seq->_length; i++)
+		size_hints [i] = seq->_buffer [i] + extra_size;
+	
+	panel_widget_set_applet_size_hints (frame->priv->panel,
+					    GTK_WIDGET (frame),
+					    size_hints,
+					    seq->_length);
+}
+
+static void
+panel_applet_frame_init_properties (PanelAppletFrame *frame)
+{
+	CORBA_any *any;
+
+	any = bonobo_pbclient_get_value (frame->priv->property_bag,
+					 PROPERTY_FLAGS,
+					 BONOBO_ARG_SHORT,
+					 NULL);
+	if (any) {
+		panel_applet_frame_set_flags_from_any (frame, any);
+		CORBA_free (any);
+	}
+	
+	any = bonobo_pbclient_get_value (frame->priv->property_bag,
+					 PROPERTY_SIZE_HINTS,
+					 TC_CORBA_sequence_CORBA_long,
+					 NULL);
+	if (any) {
+		panel_applet_frame_set_size_hints_from_any (frame, any);
+		CORBA_free (any);
+	}
 }
 
 static void
@@ -152,26 +230,31 @@ panel_applet_frame_load (const gchar *iid,
 			 gboolean     exactpos,
 			 const char  *id)
 {
-	GtkWidget  *frame = NULL;
-	AppletInfo *info;
+	PanelAppletFrame *frame;
+	GtkWidget        *widget;
+	AppletInfo       *info;
 
 	g_return_if_fail (iid != NULL);
 	g_return_if_fail (panel != NULL);
 	g_return_if_fail (id != NULL);
 
-	frame = panel_applet_frame_new (panel, iid, id);
-	if (!frame)
+	widget = panel_applet_frame_new (panel, iid, id);
+	if (!widget)
 		return;
 	
-	gtk_widget_show_all (frame);
+	gtk_widget_show_all (widget);
 
-	info = panel_applet_register (frame, frame, NULL,
+	info = panel_applet_register (widget, widget, NULL,
 				      panel, locked, position,
 				      exactpos, PANEL_OBJECT_BONOBO, id);
 
-	panel_applet_frame_set_info (PANEL_APPLET_FRAME (frame), info);
+	frame = PANEL_APPLET_FRAME (widget);
 
-	panel_applet_frame_sync_menu_state (PANEL_APPLET_FRAME (frame));
+	panel_applet_frame_set_info (frame, info);
+
+	panel_applet_frame_sync_menu_state (frame);
+
+	panel_applet_frame_init_properties (frame);
 }
 
 void
@@ -221,70 +304,6 @@ panel_applet_frame_create (PanelToplevel *toplevel,
 	panel_profile_add_to_list (PANEL_GCONF_APPLETS, id);
 }
 
-static int
-panel_applet_frame_get_flags (PanelAppletFrame *frame)
-{
-	return bonobo_pbclient_get_short (
-			frame->priv->property_bag, "panel-applet-flags", NULL);
-}
-
-static void
-panel_applet_frame_update_expand_flags (PanelAppletFrame *frame)
-{
-	gboolean major;
-	gboolean minor;
-	int      flags;
-
-	flags = panel_applet_frame_get_flags (frame);
-
-	major = flags & APPLET_EXPAND_MAJOR;
-	minor = flags & APPLET_EXPAND_MINOR;
-
-	panel_widget_set_applet_expandable (
-			frame->priv->panel, GTK_WIDGET (frame), major, minor);
-}
-
-int 
-panel_applet_frame_get_size_hints (PanelAppletFrame  *frame,
-				   int              **size_hints)
-{
-	CORBA_sequence_CORBA_long *seq;
-	CORBA_any                 *value;
-	int                        retval = 0;
-	int                        extra_size = 0;
-	int                        i;
-
-
-	g_return_val_if_fail (PANEL_IS_APPLET_FRAME (frame), 0);
-	g_return_val_if_fail (size_hints != NULL, 0);
-
-	*size_hints = NULL;
-
-	value = bonobo_pbclient_get_value (frame->priv->property_bag,
-					   "panel-applet-size-hints",
-					   TC_CORBA_sequence_CORBA_long,
-					   NULL);
-	
-	if (value == NULL)
-		return retval;
-
-	seq = value->_value;
-
-	retval = seq->_length;
-	*size_hints = g_new (int, seq->_length);
-
-	extra_size = 0;
-	if (panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE)
-		extra_size = HANDLE_SIZE + 1;
-	
-	for (i = 0; i < seq->_length; i++)
-		(*size_hints) [i] = seq->_buffer [i] + extra_size;
-	
-	CORBA_free (value);
-	
-	return retval;
-}
-
 void
 panel_applet_frame_change_orientation (PanelAppletFrame *frame,
 				       PanelOrientation  orientation)
@@ -315,7 +334,7 @@ panel_applet_frame_change_orientation (PanelAppletFrame *frame,
 	}
 
 	bonobo_pbclient_set_short (frame->priv->property_bag, 
-				   "panel-applet-orient",
+				   PROPERTY_ORIENT,
 				   orient,
 				   NULL);
 
@@ -327,7 +346,7 @@ panel_applet_frame_change_size (PanelAppletFrame *frame,
 				PanelSize         size)
 {
 	bonobo_pbclient_set_short (frame->priv->property_bag, 
-				   "panel-applet-size",
+				   PROPERTY_SIZE,
 				   size,
 				   NULL);
 }
@@ -356,7 +375,7 @@ panel_applet_frame_change_background (PanelAppletFrame    *frame,
 			frame, PANEL_WIDGET (GTK_WIDGET (frame)->parent), type);
 
 	bonobo_pbclient_set_string (frame->priv->property_bag,
-				    "panel-applet-background",
+				    PROPERTY_BACKGROUND,
 				    bg_str, NULL);
 
 	g_free (bg_str);
@@ -403,7 +422,7 @@ panel_applet_frame_paint (GtkWidget    *widget,
 
 	frame = PANEL_APPLET_FRAME (widget);
 
-	if (!(panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE))
+	if (!frame->priv->has_handle)
 		return;
   
 	if (GTK_WIDGET_DRAWABLE (widget)) {
@@ -475,8 +494,6 @@ panel_applet_frame_constrain_size (PanelAppletFrame *frame,
 		g_assert_not_reached ();
 		break;
 	}
-
-	panel_applet_frame_update_expand_flags (frame);
 }
 
 static void
@@ -490,7 +507,7 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
 
-	if (!(panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE)) {
+	if (!frame->priv->has_handle) {
 		GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
 		panel_applet_frame_constrain_size (frame, requisition);
 		return;
@@ -537,7 +554,7 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
 
-	if (!(panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE)) {
+	if (!frame->priv->has_handle) {
 		GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 		return;
 	}
@@ -622,7 +639,7 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 
 	frame = PANEL_APPLET_FRAME (widget);
 
-	if (!(panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE))
+	if (!frame->priv->has_handle)
 		return handled;
 
 	if (event->window != widget->window)
@@ -895,6 +912,7 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 	frame->priv->orientation      = PANEL_ORIENTATION_TOP;
 	frame->priv->applet_info      = NULL;
 	frame->priv->moving_focus_out = FALSE;
+	frame->priv->has_handle       = FALSE;
 }
 
 GType
@@ -1024,6 +1042,21 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	return retval;
 }
 
+static void
+panel_applet_frame_event_listener (BonoboListener    *listener,
+				   const char        *event,
+				   const CORBA_any   *any,
+				   CORBA_Environment *ev,
+				   PanelAppletFrame  *frame)
+{
+  g_print ("%s\n", event);
+	if (!strcmp (event, "Bonobo/Property:change:" PROPERTY_FLAGS))
+		panel_applet_frame_set_flags_from_any (frame, any);
+
+	else if (!strcmp (event, "Bonobo/Property:change:" PROPERTY_SIZE_HINTS))
+		panel_applet_frame_set_size_hints_from_any (frame, any);
+}
+
 GtkWidget *
 panel_applet_frame_construct (PanelAppletFrame *frame,
 			      PanelWidget      *panel,
@@ -1083,6 +1116,12 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	frame->priv->property_bag = 
 		bonobo_control_frame_get_control_property_bag (control_frame, NULL);
 
+	bonobo_event_source_client_add_listener (frame->priv->property_bag,
+						 (BonoboListenerCallbackFn) panel_applet_frame_event_listener,
+						 "Bonobo/Property:change:panel-applet",
+						 NULL,
+						 frame);
+	
 	frame->priv->ui_component =
 		bonobo_control_frame_get_popup_component (control_frame, NULL);
 	if (!frame->priv->ui_component)

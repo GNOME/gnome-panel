@@ -1,3 +1,42 @@
+2003-06-23  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix #114962 by delaying reading the size hints and flags
+	properties and by monitoring for changes on the property
+	bag. Also remove the many synchronous reads on the property
+	bag, which should speed up startup.
+
+	* panel-applet-frame.c:
+	(panel_applet_frame_set_flags_from_any),
+	(panel_applet_frame_set_size_hints_from_any),
+	(panel_applet_frame_init_properties): impl reading the
+	properties and setting them on the PanelWidget.
+	(panel_applet_frame_load): read the properties after
+	adding to the PanelWidget.
+	(panel_applet_frame_get_flags),
+	(panel_applet_frame_update_expand_flags),
+	(panel_applet_frame_get_size_hints): kill.
+	(panel_applet_frame_change_orientation),
+	(panel_applet_frame_change_size),
+	(panel_applet_frame_change_background): use macros for
+	property names.
+	(panel_applet_frame_paint): don't do a sync read on
+	the property.
+	(panel_applet_frame_constrain_size): don't update the
+	expand flags.
+	(panel_applet_frame_size_request),
+	(panel_applet_frame_size_allocate),
+	(panel_applet_frame_button_changed): no more sync reads.
+	(panel_applet_frame_instance_init),
+	(panel_applet_frame_event_listener),
+	(panel_applet_frame_construct): monitor for changes on
+	properties.
+	
+	* panel-widget.[ch]:
+	(panel_widget_size_request): don't read the size hints
+	here.
+	(panel_widget_set_applet_expandable): nomalize the bools.
+	(panel_widget_set_applet_size_hints): implement.
+	
 2003-06-19  Dennis Cranston <dennis_cranston at yahoo com>
 
 	* launcher.c: (ask_about_launcher)  Adjust padding

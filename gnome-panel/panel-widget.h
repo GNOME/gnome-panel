@@ -187,6 +187,10 @@ void         panel_widget_set_applet_expandable (PanelWidget *panel,
 						 GtkWidget   *applet,
 						 gboolean     major,
 						 gboolean     minor);
+void         panel_widget_set_applet_size_hints (PanelWidget *panel,
+						 GtkWidget   *applet,
+						 int         *size_hints,
+						 int          size_hints_len);
 
 void         panel_widget_set_applet_locked     (PanelWidget *panel,
 						 GtkWidget   *applet,
