@@ -6,59 +6,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-11-04 11:01+1300\n"
+"POT-Creation-Date: 2002-11-28 17:24+1300\n"
 "PO-Revision-Date: 2002-07-23 15:50+0400\n"
 "Last-Translator: Dmitry G. Mastrukov <dmitry@taurussoft.org>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:3
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
-msgid "_About..."
-msgstr "_Об апплете..."
-
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/gen_util/GNOME_ClockApplet.xml.h:4
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:681
-#: gnome-panel/launcher.c:791 gnome-panel/menu.c:3517 gnome-panel/menu.c:4194
-msgid "_Help"
-msgstr "Получить _справку"
-
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/gen_util/GNOME_ClockApplet.xml.h:5
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-msgid "_Preferences..."
-msgstr "_Настроить..."
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
-msgid "Amusements"
-msgstr "Развлечения"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-msgid "Display a swimming fish or another animated creature"
-msgstr "Показывает плавающую рыбку или другое мультипликационное создание"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:1274
-msgid "Fish"
-msgstr "Рыбка"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
-msgid "From Whence That Stupid Fish Came"
-msgstr "Откуда приплыла эта глупая рыбка"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
-msgid "Wanda Factory"
-msgstr "Фабрика Ванды"
 
 #: applets/fish/fish.c:79
 #, c-format
@@ -74,7 +28,7 @@ msgstr "Рыбка %s среды GNOME, современный оракул"
 msgid "GNOME Fish, the fortune teller"
 msgstr "Рыбка среды GNOME, гадалка"
 
-#: applets/fish/fish.c:502 applets/fish/fish.c:1239
+#: applets/fish/fish.c:502 applets/fish/fish.c:1248
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Рыбка %s"
@@ -84,11 +38,12 @@ msgstr "Рыбка %s"
 msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 msgstr "<big><big>Рыбка %s говорит:</big></big>"
 
-#: applets/fish/fish.c:598
+#: applets/fish/fish.c:596
+#, fuzzy, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
-"We strongly advise you against usage of wanda for anything\n"
+"We strongly advise you against usage of %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "ВНИМАНИЕ: Команда, кажется, будет делать действительно что-то полезное.\n"
@@ -96,48 +51,48 @@ msgstr ""
 "Мы настоятельно рекомендуем вам избегать использования Ванды для чего-либо,\n"
 "что может сделать этот апплет \"практичным\" или полезным."
 
-#: applets/fish/fish.c:737
+#: applets/fish/fish.c:746
 msgid "GNOME Fish Preferences"
 msgstr "Настроить рыбку среды GNOME"
 
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:756
 msgid "_Name of GNOME fish:"
 msgstr "_Имя рыбки среды GNOME:"
 
-#: applets/fish/fish.c:764
+#: applets/fish/fish.c:773
 msgid "_Animation filename:"
 msgstr "Имя файла с _мультипликацией:"
 
-#: applets/fish/fish.c:766 applets/gen_util/mailcheck.c:1298
-#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:281
+#: applets/fish/fish.c:775 applets/gen_util/mailcheck.c:1298
+#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Просмотреть"
 
-#: applets/fish/fish.c:782
+#: applets/fish/fish.c:791
 msgid "Command to _execute when fish is clicked:"
 msgstr "Команда, _выполняемая при щелчке на рыбке:"
 
-#: applets/fish/fish.c:799
+#: applets/fish/fish.c:808
 msgid "Frame_s in animation:"
 msgstr "Кадр_ов в мультипликации:"
 
-#: applets/fish/fish.c:817
+#: applets/fish/fish.c:826
 msgid "Pause _per frame (s):"
 msgstr "Задержка _кадра (сек):"
 
-#: applets/fish/fish.c:832
+#: applets/fish/fish.c:841
 msgid "_Rotate on vertical panels"
 msgstr "Поворачивать на в_ертикальных панелях"
 
-#: applets/fish/fish.c:891
+#: applets/fish/fish.c:900
 msgid "Unable to get the name of the command to execute"
 msgstr "Невозможно получить наименование команды для выполнения"
 
-#: applets/fish/fish.c:907
+#: applets/fish/fish.c:916
 msgid "Unable to locate the command to execute"
 msgstr "Невозможно обнаружить команду для выполнения"
 
-#: applets/fish/fish.c:1036
+#: applets/fish/fish.c:1045
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -148,7 +103,7 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: applets/fish/fish.c:1056
+#: applets/fish/fish.c:1065
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -159,7 +114,7 @@ msgstr ""
 "\n"
 "Пожалуйста, обратитесь к диалогу свойств рыбки."
 
-#: applets/fish/fish.c:1071
+#: applets/fish/fish.c:1080
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -167,21 +122,27 @@ msgstr ""
 "Воду надо менять!\n"
 "(Посмотри какое сегодня число)"
 
-#: applets/fish/fish.c:1256
-msgid "(with minor help from George)"
-msgstr "(с минимальной помощью George)"
-
-#: applets/fish/fish.c:1277
+#: applets/fish/fish.c:1249
+#, fuzzy, c-format
 msgid ""
-"This applet has no use what-so-ever. It only takes up disk space and "
-"compilation time, and if loaded it also takes up precious panel space and "
-"memory. If anyone is found using this applet, he should be promptly sent for "
-"a psychiatric evaluation."
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. If "
+"anyone is found using it, he should be promptly sent for a psychiatric "
+"evaluation."
 msgstr ""
 "Совершенно бесполезный апплет. Он только занимает место на диске и "
 "увеличивает время компиляции, а также, будучи загруженным, он занимает место "
 "на панели и в памяти. Если кто-нибудь нашёл применение этому апплету, то его "
 "нужно отправить на психиатрическое обследование"
+
+#: applets/fish/fish.c:1273
+msgid "(with minor help from George)"
+msgstr "(с минимальной помощью George)"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:1291
+msgid "Fish"
+msgstr "Рыбка"
 
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
@@ -213,83 +174,51 @@ msgstr "Имя рыбки"
 msgid "The number of frames in the fish's animation"
 msgstr "Число кадров в изображении рыбки"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:1
-msgid "Copy _date"
-msgstr "Скопировать _дату"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
+msgid "Amusements"
+msgstr "Развлечения"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:2
-msgid "Copy _time"
-msgstr "Скопировать _время"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
+msgid "Display a swimming fish or another animated creature"
+msgstr "Показывает плавающую рыбку или другое мультипликационное создание"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "Стандартные"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+msgid "From Whence That Stupid Fish Came"
+msgstr "Откуда приплыла эта глупая рыбка"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-msgid "Alert you when new mail arrives"
-msgstr "Предупреждает о приходе новой почты"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
+msgid "Wanda Factory"
+msgstr "Фабрика Ванды"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "Button to hide application windows and show the desktop"
-msgstr ""
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1
+#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+msgid "_About..."
+msgstr "_Об апплете..."
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-#: applets/gen_util/clock.c:1192
-msgid "Clock"
-msgstr "Часы"
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:4
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2
+#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:791 gnome-panel/menu.c:3517
+#: gnome-panel/menu.c:4194 gnome-panel/panel-action-button.c:500
+msgid "_Help"
+msgstr "Получить _справку"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-msgid "GenUtil Applet Factory"
-msgstr "Фабрика апплета GenUtil"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-msgid "Get the current time and date"
-msgstr "Выдаёт текущие дату и время"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
-msgid "Inbox Monitor"
-msgstr "Индикатор входящих писем"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-msgid "Internet"
-msgstr "Интернет"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#, fuzzy
-msgid "Show Desktop Button"
-msgstr "Показывать _кнопки сокрытия"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "Переключиться между открытыми окнами"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "Переключиться между рабочими местами"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-msgid "Utility"
-msgstr "Утилиты"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:767
-msgid "Window List"
-msgstr "Список окон"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "Переключатель рабочих мест"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
-msgid "factory for creating some general applets"
-msgstr "фабрика для создания некоторых общих апплетов"
-
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-msgid "_Check for mail"
-msgstr "_Проверить почту"
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/gen_util/GNOME_ClockApplet.xml.h:5
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+msgid "_Preferences..."
+msgstr "_Настроить..."
 
 #: applets/gen_util/clock.c:171
 #, fuzzy
@@ -337,7 +266,8 @@ msgstr "%A, %d %B %Y"
 #: applets/gen_util/clock.c:897 applets/gen_util/clock.c:1137
 #: applets/gen_util/mailcheck.c:1602 applets/gen_util/mailcheck.c:1810
 #: applets/gen_util/pager.c:187 applets/gen_util/pager.c:499
-#: applets/gen_util/tasklist.c:119 applets/gen_util/tasklist.c:721
+#: applets/gen_util/showdesktop.c:412 applets/gen_util/tasklist.c:119
+#: applets/gen_util/tasklist.c:721 applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Возникла ошибка при отображении справки: %s"
@@ -381,7 +311,8 @@ msgstr "Использовать U_TC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
-#: applets/gen_util/pager.c:532 applets/gen_util/tasklist.c:753
+#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/tasklist.c:753 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
@@ -389,6 +320,11 @@ msgstr ""
 "Сергей Панов\n"
 "Валек Филиппов\n"
 "Дмитрий Мастрюков"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1192
+msgid "Clock"
+msgstr "Часы"
 
 #: applets/gen_util/clock.c:1193
 msgid "(C) 1998-2002 the Free Software Foundation"
@@ -407,7 +343,8 @@ msgid "Display Internet time, which is same all over the world"
 msgstr "Отображать время Internet, которое одинаково по всему миру"
 
 #: applets/gen_util/clock.schemas.in.h:3
-msgid "Display date in applet, in addition to time"
+#, fuzzy
+msgid "Display date in the Clock, in addition to time"
 msgstr "Отображать в апплете время и дату"
 
 #: applets/gen_util/clock.schemas.in.h:4
@@ -431,12 +368,14 @@ msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Устанавливает вид часов, 12-ти или 24-часовые"
 
 #: applets/gen_util/clock.schemas.in.h:9
-msgid "Show date in a tooltip when a mouse is over applet"
-msgstr "Показывать подсказку, когда указатель мыши находится над апплетом"
+#, fuzzy
+msgid "Show date in Clock"
+msgstr "Показывать дату в апплете"
 
 #: applets/gen_util/clock.schemas.in.h:10
-msgid "Show date in applet"
-msgstr "Показывать дату в апплете"
+#, fuzzy
+msgid "Show date in a tooltip when a mouse is over the Clock"
+msgstr "Показывать подсказку, когда указатель мыши находится над апплетом"
 
 #: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in tooltip"
@@ -457,6 +396,81 @@ msgstr "Показывать в стиле Unix"
 #: applets/gen_util/clock.schemas.in.h:15
 msgid "Use UTC"
 msgstr "Использовать универсальное время (UTC)"
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+msgid "Copy _date"
+msgstr "Скопировать _дату"
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy _time"
+msgstr "Скопировать _время"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
+msgid "Accessories"
+msgstr "Стандартные"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
+msgid "Alert you when new mail arrives"
+msgstr "Предупреждает о приходе новой почты"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+msgid "Button to hide application windows and show the desktop"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+msgid "GenUtil Applet Factory"
+msgstr "Фабрика апплета GenUtil"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+msgid "Get the current time and date"
+msgstr "Выдаёт текущие дату и время"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
+msgid "Inbox Monitor"
+msgstr "Индикатор входящих писем"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+msgid "Internet"
+msgstr "Интернет"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
+#: applets/gen_util/showdesktop.c:452
+#, fuzzy
+msgid "Show Desktop Button"
+msgstr "Показывать _кнопки сокрытия"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
+msgid "Switch between open windows"
+msgstr "Переключиться между открытыми окнами"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
+msgid "Switch between workspaces"
+msgstr "Переключиться между рабочими местами"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+msgid "Utility"
+msgstr "Утилиты"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
+#: applets/gen_util/tasklist.c:767
+msgid "Window List"
+msgstr "Список окон"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
+#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
+#: applets/gen_util/pager.glade.h:7
+msgid "Workspace Switcher"
+msgstr "Переключатель рабочих мест"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
+msgid "factory for creating some general applets"
+msgstr "фабрика для создания некоторых общих апплетов"
+
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
+msgid "_Check for mail"
+msgstr "_Проверить почту"
 
 #: applets/gen_util/mailcheck.c:196
 #, c-format
@@ -673,8 +687,9 @@ msgid "Command to execute when checking mail"
 msgstr "Команда, выполняемая при проверке почты"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
-msgid "Command to execute when the applet is clicked"
-msgstr "Команда, выполняемая при щелчке на апплете"
+#, fuzzy
+msgid "Command to execute when you click on the Inbox Monitor"
+msgstr "Команда, выполняемая при щелчке"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
@@ -759,8 +774,8 @@ msgstr "Как обрабатывается почта"
 #: applets/gen_util/mailcheck.schemas.in.h:23
 #, fuzzy
 msgid ""
-"This is the animation that will be displayed during normal use of the Inbox "
-"Monitor applet"
+"This is the animation that will be displayed during normal Inbox Monitor "
+"usage"
 msgstr ""
 "Анимированное изображение, которое будет отображаться при использовании "
 "апплета"
@@ -770,11 +785,13 @@ msgid "Username on the remote server"
 msgstr "Имя пользователя на удалённом сервере"
 
 #: applets/gen_util/mailcheck.schemas.in.h:25
-msgid "We run this command when the user clicks on the applet"
+#, fuzzy
+msgid "We run this command when the user clicks on Inbox Monitor"
 msgstr "Эта команда будет запущена, если пользователь щёлкнет на апплете"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
-msgid "Whether to reset mail status when the applet is clicked"
+#, fuzzy
+msgid "Whether to reset mail status when you click on Inbox Monitor"
 msgstr "Сбрасывать ли статус, когда пользователь щёлкнет на апплете"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
@@ -799,26 +816,23 @@ msgid "Columns"
 msgstr "Столбцы"
 
 #: applets/gen_util/pager.c:376
-#, c-format
-msgid "Error loading num_rows value for workspace switcher applet: %s\n"
+#, fuzzy, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Ошибка при загрузке значения числа строк для апплета переключателя рабочих "
 "мест: %s\n"
 
 #: applets/gen_util/pager.c:387
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Error loading display_workspace_names value for workspace switcher applet: %"
-"s\n"
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Ошибка при загрузке значения display_workspace_names для апплета "
 "переключателя рабочих мест: %s\n"
 
 #: applets/gen_util/pager.c:402
-#, c-format
-msgid ""
-"Error loading display_all_workspaces value for workspace switcher applet: %"
-"s\n"
+#, fuzzy, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Ошибка при загрузке значения display_all_workspaces для апплета "
 "переключателя рабочих мест: %s\n"
@@ -961,6 +975,36 @@ msgstr "Справка"
 msgid "About..."
 msgstr "О программе..."
 
+#: applets/gen_util/showdesktop.c:217
+msgid "Click here to restore hidden windows."
+msgstr ""
+
+#: applets/gen_util/showdesktop.c:220
+msgid "Click here to hide all windows and show the desktop."
+msgstr ""
+
+#: applets/gen_util/showdesktop.c:290
+#, fuzzy, c-format
+msgid "Failed to load %s: %s\n"
+msgstr ""
+"Сбой при при загрузке изображения \"%s\"\n"
+"\n"
+"Подробности: %s"
+
+#: applets/gen_util/showdesktop.c:291
+#, fuzzy
+msgid "File not found"
+msgstr "файл не найден"
+
+#: applets/gen_util/showdesktop.c:453
+#, fuzzy
+msgid "(C) 2002 Red Hat, Inc."
+msgstr "(C) 2001 Red Hat, Inc."
+
+#: applets/gen_util/showdesktop.c:454
+msgid "This button lets you hide all windows and show the desktop"
+msgstr ""
+
 #: applets/gen_util/tasklist.c:768
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
@@ -1055,12 +1099,12 @@ msgstr ""
 
 #: applets/gen_util/tasklist.schemas.in.h:4
 #, fuzzy
-msgid "Maximum size the Window List applet will request"
+msgid "Maximum size that Window List requests"
 msgstr "Максимальный размер, который апплет запросит"
 
 #: applets/gen_util/tasklist.schemas.in.h:5
 #, fuzzy
-msgid "Minimum size the Window List applet will request"
+msgid "Minimum size that Window List requests"
 msgstr "Минимальный размер, который апплет запросит"
 
 #: applets/gen_util/tasklist.schemas.in.h:6
@@ -1074,39 +1118,49 @@ msgstr "Показывать окна всех рабочих мест"
 #: applets/gen_util/tasklist.schemas.in.h:8
 #, fuzzy
 msgid ""
-"The Window List applet needs a minimum width to be useful at all. This value "
-"is the minimum width the applet will request. This is useful for sliding and "
-"edge panels, which would otherwise ask for a very small default width."
-msgstr ""
-"Апплету необходим минимальный размер, чтобы быть полезным. Это значение - "
-"минимальное, которое апплет запросит.Это полезно для скользящих и краевых "
-"панелей, которые иначе могут запросить очень малую исходную ширину."
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-msgid ""
-"This value is the maximum width the applet will request. This is useful to "
-"limit the size used in big panels where this applet could otherwise fill the "
-"entire available space, like in edge panels."
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
 msgstr ""
 "Это значение - минимальное, которое апплет запросит.Это полезно для "
 "ограничения размера, используемого в больших панелях, таких как краевые, где "
 "иначе апплет может заполнить всё доступное место."
 
+#: applets/gen_util/tasklist.schemas.in.h:9
+#, fuzzy
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
+msgstr ""
+"Апплету необходим минимальный размер, чтобы быть полезным. Это значение - "
+"минимальное, которое апплет запросит.Это полезно для скользящих и краевых "
+"панелей, которые иначе могут запросить очень малую исходную ширину."
+
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
 msgstr "Группировать ли окна"
 
-#: gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "Оболочка панели среды GNOME"
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr ""
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
-msgid "_Move"
-msgstr "Пере_местить"
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
+msgid "Notification Area"
+msgstr ""
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
-msgid "_Remove From Panel"
-msgstr "У_брать с панели"
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
+msgid "Notification Area Factory"
+msgstr ""
+
+#: applets/notification_area/main.c:125
+msgid "Panel Notification Area"
+msgstr ""
+
+#: applets/notification_area/main.c:126
+#, fuzzy
+msgid "Copyright 2002 Red Hat Inc."
+msgstr "(C) 2001 Red Hat, Inc."
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1114,6 +1168,14 @@ msgstr "У_брать с панели"
 #: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
+msgid "_Remove From Panel"
+msgstr "У_брать с панели"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
+msgid "_Move"
+msgstr "Пере_местить"
 
 #: gnome-panel/applet.c:803
 #, c-format
@@ -1233,11 +1295,11 @@ msgstr ""
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "Использовать другую пиктограмму для кнопки панели"
 
-#: gnome-panel/disclosure-widget.c:260
+#: gnome-panel/disclosure-widget.c:251
 msgid "Expander Size"
 msgstr "Размер расширителя"
 
-#: gnome-panel/disclosure-widget.c:261
+#: gnome-panel/disclosure-widget.c:252
 msgid "Size of the expander arrow"
 msgstr "Размер стрелки расширения"
 
@@ -1300,9 +1362,13 @@ msgid "Drawer"
 msgstr "Ящик"
 
 #: gnome-panel/drawer.c:678 gnome-panel/launcher.c:789 gnome-panel/menu.c:1487
-#: gnome-panel/menu.c:3492
+#: gnome-panel/menu.c:3492 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Изменить свойства"
+
+#: gnome-panel/egg-recent-vfs-utils.c:90
+msgid " (invalid Unicode)"
+msgstr ""
 
 #: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3765
 msgid "Run Program..."
@@ -1591,6 +1657,7 @@ msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "Сохранить снимок экрана на _веб-странице (сохранить в ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:6
+#: gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Снимок экрана"
 
@@ -1612,7 +1679,11 @@ msgstr ""
 msgid "Web directory."
 msgstr ""
 
-#: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:264
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "Оболочка панели среды GNOME"
+
+#: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:265
 #, c-format
 msgid ""
 "<b>Failed to run this program</b>\n"
@@ -1623,7 +1694,7 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: gnome-panel/gnome-run.c:387 gnome-panel/gnome-run.c:466
+#: gnome-panel/gnome-run.c:388 gnome-panel/gnome-run.c:468
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1634,7 +1705,7 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: gnome-panel/gnome-run.c:491
+#: gnome-panel/gnome-run.c:495
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1645,7 +1716,7 @@ msgstr ""
 "\n"
 "Подробности: Нет приложений для открытия файла"
 
-#: gnome-panel/gnome-run.c:509
+#: gnome-panel/gnome-run.c:510
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1656,44 +1727,44 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: gnome-panel/gnome-run.c:598
+#: gnome-panel/gnome-run.c:599
 msgid "Choose a file"
 msgstr "Выбрать файл"
 
-#: gnome-panel/gnome-run.c:837 gnome-panel/gnome-run.c:838
+#: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
 msgid "Known Applications"
 msgstr "Известные приложения"
 
-#: gnome-panel/gnome-run.c:969
+#: gnome-panel/gnome-run.c:970
 msgid "Command to run"
 msgstr "Команда для выполнения"
 
-#: gnome-panel/gnome-run.c:1004
+#: gnome-panel/gnome-run.c:1005
 msgid "Run in _terminal"
 msgstr "Запустить в те_рминале"
 
-#: gnome-panel/gnome-run.c:1009
+#: gnome-panel/gnome-run.c:1010
 msgid "_Append File..."
 msgstr "Доб_авить файл..."
 
-#: gnome-panel/gnome-run.c:1392
+#: gnome-panel/gnome-run.c:1393
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Будет выполнена команда: \"%s\""
 
-#: gnome-panel/gnome-run.c:1401
+#: gnome-panel/gnome-run.c:1402
 msgid "No application selected"
 msgstr "Приложение не выбрано"
 
-#: gnome-panel/gnome-run.c:1521
+#: gnome-panel/gnome-run.c:1522
 msgid "List of known applications"
 msgstr "Список известных приложений"
 
-#: gnome-panel/gnome-run.c:1522
+#: gnome-panel/gnome-run.c:1523
 msgid "Choose an application to run from the list"
 msgstr "Выбрать приложение для запуска из этого списка"
 
-#: gnome-panel/gnome-run.c:1648
+#: gnome-panel/gnome-run.c:1649 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "Запустить программу"
 
@@ -1770,7 +1841,7 @@ msgstr ""
 "%s"
 
 #: gnome-panel/launcher.c:1150 gnome-panel/menu.c:1144
-#: gnome-panel/panel-util.c:90
+#: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -1784,48 +1855,6 @@ msgstr ""
 #: gnome-panel/main.c:149
 msgid "Specify a profile name to load"
 msgstr "Задать название профиля для загрузки"
-
-#: gnome-panel/menu-ditem.c:123
-#, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Невозможно сохранить изменения в кнопке запуска</b>\n"
-"\n"
-"Подробности: %s"
-
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
-msgid "Menu"
-msgstr "Меню"
-
-#: gnome-panel/menu-ditem.c:447
-msgid "You have to specify a name for the launcher."
-msgstr "Необходимо указать имя для кнопки запуска"
-
-#: gnome-panel/menu-ditem.c:463
-msgid "You have to specify a valid URL or command."
-msgstr "Необходимо указать допустимые URL или команду"
-
-#. class
-#: gnome-panel/menu-ditem.c:494
-#, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Невозможно сохранить пункт меню на диск</b>\n"
-"\n"
-"Подробности: %s"
-
-#: gnome-panel/menu-ditem.c:519
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
-"Невозможно создать новую кнопку запуска здесь, так как запись невозможна"
 
 #: gnome-panel/menu.c:240
 msgid "Many many others ..."
@@ -2158,6 +2187,10 @@ msgstr "Выполнить команду"
 msgid "Desktop"
 msgstr "Рабочий стол"
 
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
+msgid "Menu"
+msgstr "Меню"
+
 #: gnome-panel/menu.c:3842
 msgid "Menu:"
 msgstr "Меню:"
@@ -2166,10 +2199,94 @@ msgstr "Меню:"
 msgid "Can't create menu, using main menu!"
 msgstr "Невозможно создать меню, используется главное меню!"
 
-#: gnome-panel/menu.c:4432
+#: gnome-panel/menu.c:4439
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Путь не установлен в %s для объекта меню панели\n"
+
+#: gnome-panel/menu-ditem.c:123
+#, c-format
+msgid ""
+"<b>Cannot save changes to launcher</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Невозможно сохранить изменения в кнопке запуска</b>\n"
+"\n"
+"Подробности: %s"
+
+#: gnome-panel/menu-ditem.c:447
+msgid "You have to specify a name for the launcher."
+msgstr "Необходимо указать имя для кнопки запуска"
+
+#: gnome-panel/menu-ditem.c:463
+msgid "You have to specify a valid URL or command."
+msgstr "Необходимо указать допустимые URL или команду"
+
+#. class
+#: gnome-panel/menu-ditem.c:494
+#, c-format
+msgid ""
+"<b>Cannot save menu item to disk</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Невозможно сохранить пункт меню на диск</b>\n"
+"\n"
+"Подробности: %s"
+
+#: gnome-panel/menu-ditem.c:519
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
+"Невозможно создать новую кнопку запуска здесь, так как запись невозможна"
+
+#: gnome-panel/panel-action-button.c:83
+msgid "_Activate Screensaver"
+msgstr "_Активировать Хранитель экрана"
+
+#: gnome-panel/panel-action-button.c:84
+msgid "_Lock Screen"
+msgstr "За_блокировать экран"
+
+#: gnome-panel/panel-action-button.c:85
+msgid "_Kill Screensaver Daemon"
+msgstr "_Уничтожить демон Хранителя экрана"
+
+#: gnome-panel/panel-action-button.c:86
+msgid "Restart _Screensaver Daemon"
+msgstr "_Перезапустить демон Хранителя экрана"
+
+#: gnome-panel/panel-action-button.c:155
+msgid "Cannot execute gnome-search-tool"
+msgstr "Невозможно запустить gnome-search-tool"
+
+#: gnome-panel/panel-action-button.c:171
+msgid "Cannot execute gnome-panel-screenshot"
+msgstr "Невозможно запустить gnome-panel-screenshot"
+
+#: gnome-panel/panel-action-button.c:191
+msgid "Lock screen"
+msgstr "Заблокировать экран"
+
+#: gnome-panel/panel-action-button.c:198
+msgid "Log out of GNOME"
+msgstr "Завершить работу в среде GNOME"
+
+#: gnome-panel/panel-action-button.c:208
+#, fuzzy
+msgid "Search for Files"
+msgstr "Найти файлы..."
+
+#: gnome-panel/panel-action-button.c:364
+#, fuzzy
+msgid "Action Type"
+msgstr "Действия"
+
+#: gnome-panel/panel-action-button.c:365
+msgid "The type of action this button implements"
+msgstr ""
 
 #: gnome-panel/panel-applet-frame.c:184
 msgid "Cannot register control widget\n"
@@ -2205,10 +2322,10 @@ msgstr ""
 #: gnome-panel/panel-applet-frame.c:819
 #, fuzzy, c-format
 msgid ""
-"There was a problem loading applet '%s'\n"
+"The panel encountered a problem while loading \"%s\"\n"
 "Details: %s\n"
 "\n"
-"Delete this applet from your configuration?"
+"Do you want to delete the applet from your configuration?"
 msgstr ""
 "<b>При загрузке апплета \"%s\" возникла проблема</b>\n"
 "\n"
@@ -2217,6 +2334,17 @@ msgstr ""
 #: gnome-panel/panel-applet-frame.c:916
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Невозможно получить интерфейс AppletShell из управляющего элемента\n"
+
+#: gnome-panel/panel.c:876
+#, c-format
+msgid "Open URL: %s"
+msgstr "Открыть URL: %s"
+
+#: gnome-panel/panel.c:2232
+msgid ""
+"No panels were found in your configuration.  I will create a menu panel for "
+"you"
+msgstr "В настройках не найдены панели. Будет создана одна панель меню."
 
 #. Auto-hide
 #: gnome-panel/panel-config.c:545
@@ -2407,6 +2535,24 @@ msgstr "Показывать список программ при открыти
 msgid "Show the program listing in the Run box"
 msgstr "Показывать список программ в диалоге запуска"
 
+#: gnome-panel/panel-recent.c:55
+msgid "Couldn't find a suitable application"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:78
+msgid ""
+"The default application for this type of file cannot handle remote files"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:135
+#, c-format
+msgid "An unknown error occurred while trying to open %s"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:153
+msgid "Open Recent"
+msgstr ""
+
 #: gnome-panel/panel-shell.c:43
 msgid ""
 "I've detected a panel already running,\n"
@@ -2439,20 +2585,20 @@ msgstr "За_пустить"
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:116 gnome-panel/panel-util.c:146
-#: gnome-panel/panel-util.c:171
+#: gnome-panel/panel-util.c:122 gnome-panel/panel-util.c:152
+#: gnome-panel/panel-util.c:177
 msgid "Help document not found"
 msgstr "Не найден справочный документ"
 
-#: gnome-panel/panel-util.c:185
+#: gnome-panel/panel-util.c:191
 msgid "No document to show"
 msgstr "Нет документа для отображения"
 
-#: gnome-panel/panel-util.c:626 gnome-panel/panel-util.c:642
+#: gnome-panel/panel-util.c:632 gnome-panel/panel-util.c:648
 msgid "Disabled"
 msgstr "Отключено"
 
-#: gnome-panel/panel-util.c:1472
+#: gnome-panel/panel-util.c:1478
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2461,17 +2607,6 @@ msgstr ""
 "<b>Невозможно запустить хранитель экрана</b>\n"
 "\n"
 "Details: команда xscreensaver не найдена"
-
-#: gnome-panel/panel.c:876
-#, c-format
-msgid "Open URL: %s"
-msgstr "Открыть URL: %s"
-
-#: gnome-panel/panel.c:2232
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
-msgstr "В настройках не найдены панели. Будет создана одна панель меню."
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2580,6 +2715,9 @@ msgstr "Сверхбольшой"
 msgid "XX Small"
 msgstr "Сверхмаленький"
 
+#~ msgid "Command to execute when the applet is clicked"
+#~ msgstr "Команда, выполняемая при щелчке на апплете"
+
 #~ msgid "Wanda"
 #~ msgstr "Ванда"
 
@@ -2611,32 +2749,8 @@ msgstr "Сверхмаленький"
 #~ msgid "no-background"
 #~ msgstr "Фон"
 
-#~ msgid "Cannot execute gnome-panel-screenshot"
-#~ msgstr "Невозможно запустить gnome-panel-screenshot"
-
-#~ msgid "Cannot execute gnome-search-tool"
-#~ msgstr "Невозможно запустить gnome-search-tool"
-
 #~ msgid "Log out"
 #~ msgstr "Завершить работу"
-
-#~ msgid "Log out of GNOME"
-#~ msgstr "Завершить работу в среде GNOME"
-
-#~ msgid "Lock screen"
-#~ msgstr "Заблокировать экран"
-
-#~ msgid "_Activate Screensaver"
-#~ msgstr "_Активировать Хранитель экрана"
-
-#~ msgid "_Lock Screen"
-#~ msgstr "За_блокировать экран"
-
-#~ msgid "_Kill Screensaver Daemon"
-#~ msgstr "_Уничтожить демон Хранителя экрана"
-
-#~ msgid "Restart _Screensaver Daemon"
-#~ msgstr "_Перезапустить демон Хранителя экрана"
 
 #~ msgid "Use GMT"
 #~ msgstr "Использовать UTC"

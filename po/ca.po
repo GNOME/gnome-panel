@@ -7,59 +7,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.1.0\n"
-"POT-Creation-Date: 2002-11-04 11:01+1300\n"
+"POT-Creation-Date: 2002-11-28 17:24+1300\n"
 "PO-Revision-Date: 2002-08-28 02:59+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:3
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
-msgid "_About..."
-msgstr "_Quant a..."
-
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/gen_util/GNOME_ClockApplet.xml.h:4
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:681
-#: gnome-panel/launcher.c:791 gnome-panel/menu.c:3517 gnome-panel/menu.c:4194
-msgid "_Help"
-msgstr "A_juda"
-
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/gen_util/GNOME_ClockApplet.xml.h:5
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-msgid "_Preferences..."
-msgstr "_Preferències..."
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
-msgid "Amusements"
-msgstr "Divertiments"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-msgid "Display a swimming fish or another animated creature"
-msgstr "Mostra un peix nadant o un altra criatura animada"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:1274
-msgid "Fish"
-msgstr "Peix"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
-msgid "From Whence That Stupid Fish Came"
-msgstr "D'on ha sortit aquest peix estúpid"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
-msgid "Wanda Factory"
-msgstr "Factoria Wanda"
 
 #: applets/fish/fish.c:79
 #, c-format
@@ -75,7 +29,7 @@ msgstr "%s, el Peix del GNOME, un oràcul contemporani"
 msgid "GNOME Fish, the fortune teller"
 msgstr "El Peix del GNOME, el contacontes"
 
-#: applets/fish/fish.c:502 applets/fish/fish.c:1239
+#: applets/fish/fish.c:502 applets/fish/fish.c:1248
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s el Peix"
@@ -85,11 +39,12 @@ msgstr "%s el Peix"
 msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 msgstr "<big><big>%s, el Peix del GNOME, diu:</big></big>"
 
-#: applets/fish/fish.c:598
+#: applets/fish/fish.c:596
+#, fuzzy, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
-"We strongly advise you against usage of wanda for anything\n"
+"We strongly advise you against usage of %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "Avís: L'ordre pareix que és algo útil.\n"
@@ -97,48 +52,48 @@ msgstr ""
 "Vos recomanem que no feu servir wanda per a res que puga\n"
 "fer l'applet \"pràctica\" o útil."
 
-#: applets/fish/fish.c:737
+#: applets/fish/fish.c:746
 msgid "GNOME Fish Preferences"
 msgstr "Preferències del Peix del GNOME"
 
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:756
 msgid "_Name of GNOME fish:"
 msgstr "_Nom del peix del GNOME"
 
-#: applets/fish/fish.c:764
+#: applets/fish/fish.c:773
 msgid "_Animation filename:"
 msgstr "Nom del fitxer de l'_animació:"
 
-#: applets/fish/fish.c:766 applets/gen_util/mailcheck.c:1298
-#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:281
+#: applets/fish/fish.c:775 applets/gen_util/mailcheck.c:1298
+#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Navega"
 
-#: applets/fish/fish.c:782
+#: applets/fish/fish.c:791
 msgid "Command to _execute when fish is clicked:"
 msgstr "Ordre a _executar quan es polsa en el peix:"
 
-#: applets/fish/fish.c:799
+#: applets/fish/fish.c:808
 msgid "Frame_s in animation:"
 msgstr "Trame_s en l'animació:"
 
-#: applets/fish/fish.c:817
+#: applets/fish/fish.c:826
 msgid "Pause _per frame (s):"
 msgstr "Pausa _per trama (s):"
 
-#: applets/fish/fish.c:832
+#: applets/fish/fish.c:841
 msgid "_Rotate on vertical panels"
 msgstr "_Rota en els quadres verticals"
 
-#: applets/fish/fish.c:891
+#: applets/fish/fish.c:900
 msgid "Unable to get the name of the command to execute"
 msgstr "No s'ha pogut obtindre el nom de l'ordre a executar"
 
-#: applets/fish/fish.c:907
+#: applets/fish/fish.c:916
 msgid "Unable to locate the command to execute"
 msgstr "No s'ha pogut trobar l'ordre a executar"
 
-#: applets/fish/fish.c:1036
+#: applets/fish/fish.c:1045
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -149,7 +104,7 @@ msgstr ""
 "\n"
 "Detalls: %s"
 
-#: applets/fish/fish.c:1056
+#: applets/fish/fish.c:1065
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -161,7 +116,7 @@ msgstr ""
 "\n"
 "Aneu al diàleg de les propietats del peix."
 
-#: applets/fish/fish.c:1071
+#: applets/fish/fish.c:1080
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -169,21 +124,27 @@ msgstr ""
 "Cal canviar l'aigua!\n"
 "(Mireu la data d'avui)"
 
-#: applets/fish/fish.c:1256
-msgid "(with minor help from George)"
-msgstr "(amb una petita ajuda de George)"
-
-#: applets/fish/fish.c:1277
+#: applets/fish/fish.c:1249
+#, fuzzy, c-format
 msgid ""
-"This applet has no use what-so-ever. It only takes up disk space and "
-"compilation time, and if loaded it also takes up precious panel space and "
-"memory. If anyone is found using this applet, he should be promptly sent for "
-"a psychiatric evaluation."
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. If "
+"anyone is found using it, he should be promptly sent for a psychiatric "
+"evaluation."
 msgstr ""
 "Aquest applet no té cap utilitat.  Només ocupa espai al disc i temps de "
 "compilació, i si està carregat també ocupa un espai preciós al quadre i a la "
 "memòria.  Si algú és trobat utilitzant aquest applet, hauria de ser sotmés a "
 "avaluació psiquiàtrica el més aviat possible."
+
+#: applets/fish/fish.c:1273
+msgid "(with minor help from George)"
+msgstr "(amb una petita ajuda de George)"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:1291
+msgid "Fish"
+msgstr "Peix"
 
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
@@ -217,85 +178,51 @@ msgstr "El nom del peix"
 msgid "The number of frames in the fish's animation"
 msgstr "Número de trames en l'animació del peix"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:1
-msgid "Copy _date"
-msgstr "Copia la _data"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
+msgid "Amusements"
+msgstr "Divertiments"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:2
-msgid "Copy _time"
-msgstr "Copia l'_hora"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
+msgid "Display a swimming fish or another animated creature"
+msgstr "Mostra un peix nadant o un altra criatura animada"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "Accesoris"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+msgid "From Whence That Stupid Fish Came"
+msgstr "D'on ha sortit aquest peix estúpid"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-msgid "Alert you when new mail arrives"
-msgstr "Avisa quan arribi correu nou"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
+msgid "Wanda Factory"
+msgstr "Factoria Wanda"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-#, fuzzy
-msgid "Button to hide application windows and show the desktop"
-msgstr "Amaga totes les finestres i focalitza l'escriptori"
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1
+#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+msgid "_About..."
+msgstr "_Quant a..."
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-#: applets/gen_util/clock.c:1192
-msgid "Clock"
-msgstr "Rellotge"
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:4
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2
+#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:791 gnome-panel/menu.c:3517
+#: gnome-panel/menu.c:4194 gnome-panel/panel-action-button.c:500
+msgid "_Help"
+msgstr "A_juda"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-msgid "GenUtil Applet Factory"
-msgstr "Factoria d'applets GenUtil"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-msgid "Get the current time and date"
-msgstr "Dona la hora i data actual"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
-msgid "Inbox Monitor"
-msgstr "Comprovador del correu"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-msgid "Internet"
-msgstr "Internet"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#, fuzzy
-msgid "Show Desktop Button"
-msgstr "Mostra l'escriptori "
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "Canvia entre finestres obertes"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "Canvia entre espais de treball"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-msgid "Utility"
-msgstr "Utilitat"
-
-# Si deixem la F toparia amb la de Fitxer, s'haurà de quedar amb la _i
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:767
-msgid "Window List"
-msgstr "Llista de finestres"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "Canviador de espais de treball"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
-msgid "factory for creating some general applets"
-msgstr "factoria per a crear applets generals"
-
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-msgid "_Check for mail"
-msgstr "_Comprova si hi ha correu"
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/gen_util/GNOME_ClockApplet.xml.h:5
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+msgid "_Preferences..."
+msgstr "_Preferències..."
 
 #: applets/gen_util/clock.c:171
 msgid "%l:%M:%S %p"
@@ -341,7 +268,8 @@ msgstr "%A, %B %d de %B"
 #: applets/gen_util/clock.c:897 applets/gen_util/clock.c:1137
 #: applets/gen_util/mailcheck.c:1602 applets/gen_util/mailcheck.c:1810
 #: applets/gen_util/pager.c:187 applets/gen_util/pager.c:499
-#: applets/gen_util/tasklist.c:119 applets/gen_util/tasklist.c:721
+#: applets/gen_util/showdesktop.c:412 applets/gen_util/tasklist.c:119
+#: applets/gen_util/tasklist.c:721 applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "S'ha produït un error al mostrar l'ajuda: %s"
@@ -385,13 +313,19 @@ msgstr "Utilitza _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
-#: applets/gen_util/pager.c:532 applets/gen_util/tasklist.c:753
+#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/tasklist.c:753 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
 "Ivan Vilata i Balaguer <ivan@selidor.net>\n"
 "Quico Llach <quico@softcatala.org>\n"
 "Jordi Mallach <jordi@sindominio.net>"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1192
+msgid "Clock"
+msgstr "Rellotge"
 
 #: applets/gen_util/clock.c:1193
 msgid "(C) 1998-2002 the Free Software Foundation"
@@ -410,7 +344,8 @@ msgid "Display Internet time, which is same all over the world"
 msgstr "Mostra l'hora d'Internet, que és la mateixa en tot el mon"
 
 #: applets/gen_util/clock.schemas.in.h:3
-msgid "Display date in applet, in addition to time"
+#, fuzzy
+msgid "Display date in the Clock, in addition to time"
 msgstr "Mostra la data en l'applet, a més de l'hora"
 
 #: applets/gen_util/clock.schemas.in.h:4
@@ -434,12 +369,14 @@ msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Fixa el format de l'hora, pot ser 12 o 24"
 
 #: applets/gen_util/clock.schemas.in.h:9
-msgid "Show date in a tooltip when a mouse is over applet"
-msgstr "Mostra la data quan el punter pasa per damunt de l'applet"
+#, fuzzy
+msgid "Show date in Clock"
+msgstr "Mostra la data en l'applet"
 
 #: applets/gen_util/clock.schemas.in.h:10
-msgid "Show date in applet"
-msgstr "Mostra la data en l'applet"
+#, fuzzy
+msgid "Show date in a tooltip when a mouse is over the Clock"
+msgstr "Mostra la data quan el punter pasa per damunt de l'applet"
 
 #: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in tooltip"
@@ -461,6 +398,83 @@ msgstr "Utilitza l'hora de Unix"
 #: applets/gen_util/clock.schemas.in.h:15
 msgid "Use UTC"
 msgstr "Utilitza UTC"
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+msgid "Copy _date"
+msgstr "Copia la _data"
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy _time"
+msgstr "Copia l'_hora"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
+msgid "Accessories"
+msgstr "Accesoris"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
+msgid "Alert you when new mail arrives"
+msgstr "Avisa quan arribi correu nou"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+#, fuzzy
+msgid "Button to hide application windows and show the desktop"
+msgstr "Amaga totes les finestres i focalitza l'escriptori"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+msgid "GenUtil Applet Factory"
+msgstr "Factoria d'applets GenUtil"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+msgid "Get the current time and date"
+msgstr "Dona la hora i data actual"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
+msgid "Inbox Monitor"
+msgstr "Comprovador del correu"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+msgid "Internet"
+msgstr "Internet"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
+#: applets/gen_util/showdesktop.c:452
+#, fuzzy
+msgid "Show Desktop Button"
+msgstr "Mostra l'escriptori "
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
+msgid "Switch between open windows"
+msgstr "Canvia entre finestres obertes"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
+msgid "Switch between workspaces"
+msgstr "Canvia entre espais de treball"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+msgid "Utility"
+msgstr "Utilitat"
+
+# Si deixem la F toparia amb la de Fitxer, s'haurà de quedar amb la _i
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
+#: applets/gen_util/tasklist.c:767
+msgid "Window List"
+msgstr "Llista de finestres"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
+#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
+#: applets/gen_util/pager.glade.h:7
+msgid "Workspace Switcher"
+msgstr "Canviador de espais de treball"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
+msgid "factory for creating some general applets"
+msgstr "factoria per a crear applets generals"
+
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
+msgid "_Check for mail"
+msgstr "_Comprova si hi ha correu"
 
 #: applets/gen_util/mailcheck.c:196
 #, c-format
@@ -677,8 +691,9 @@ msgid "Command to execute when checking mail"
 msgstr "Ordre a executar quan es comprova el correu"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
-msgid "Command to execute when the applet is clicked"
-msgstr "Ordre a executar quan es polsa en l'applet"
+#, fuzzy
+msgid "Command to execute when you click on the Inbox Monitor"
+msgstr "Ordre a executar quan es fa clic"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
@@ -759,9 +774,10 @@ msgstr ""
 "Així és com processem el correu, processem el correu, processem el correu..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
+#, fuzzy
 msgid ""
-"This is the animation that will be displayed during normal use of the Inbox "
-"Monitor applet"
+"This is the animation that will be displayed during normal Inbox Monitor "
+"usage"
 msgstr ""
 "Aquesta és l'animació que es mostrarà durant l'ús normal de l'applet de "
 "comprovació de correu"
@@ -771,11 +787,13 @@ msgid "Username on the remote server"
 msgstr "Nom d'usuari en el servidor remot"
 
 #: applets/gen_util/mailcheck.schemas.in.h:25
-msgid "We run this command when the user clicks on the applet"
+#, fuzzy
+msgid "We run this command when the user clicks on Inbox Monitor"
 msgstr "S'executa aquesta ordre quan l'usuari fa clic en l'applet"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
-msgid "Whether to reset mail status when the applet is clicked"
+#, fuzzy
+msgid "Whether to reset mail status when you click on Inbox Monitor"
 msgstr "Reiniciar o no l'estat del correu quan es fa click en l'applet"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
@@ -800,26 +818,23 @@ msgid "Columns"
 msgstr "Columnes"
 
 #: applets/gen_util/pager.c:376
-#, c-format
-msgid "Error loading num_rows value for workspace switcher applet: %s\n"
+#, fuzzy, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Error al carregar el valor num_rows per a l'applet canviador d'espais de "
 "treball %s\n"
 
 #: applets/gen_util/pager.c:387
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Error loading display_workspace_names value for workspace switcher applet: %"
-"s\n"
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Error al carregar el valor display_workspace_names per a l'applet canviador "
 "d'espais de treball %s\n"
 
 #: applets/gen_util/pager.c:402
-#, c-format
-msgid ""
-"Error loading display_all_workspaces value for workspace switcher applet: %"
-"s\n"
+#, fuzzy, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Error al carregar el valor display_all_workspaces per a l'applet canviador "
 "d'espais de treball %s\n"
@@ -960,6 +975,38 @@ msgstr "Ajuda"
 msgid "About..."
 msgstr "Quant a..."
 
+#: applets/gen_util/showdesktop.c:217
+msgid "Click here to restore hidden windows."
+msgstr ""
+
+#: applets/gen_util/showdesktop.c:220
+#, fuzzy
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Amaga totes les finestres i focalitza l'escriptori"
+
+#: applets/gen_util/showdesktop.c:290
+#, fuzzy, c-format
+msgid "Failed to load %s: %s\n"
+msgstr ""
+"No s'ha pogut carregar l'imatge %s\n"
+"\n"
+"Detalls: %s"
+
+#: applets/gen_util/showdesktop.c:291
+#, fuzzy
+msgid "File not found"
+msgstr "no s'ha trobat el fitxer"
+
+#: applets/gen_util/showdesktop.c:453
+#, fuzzy
+msgid "(C) 2002 Red Hat, Inc."
+msgstr "© 2001 Red Hat, Inc."
+
+#: applets/gen_util/showdesktop.c:454
+#, fuzzy
+msgid "This button lets you hide all windows and show the desktop"
+msgstr "Amaga totes les finestres i focalitza l'escriptori"
+
 #: applets/gen_util/tasklist.c:768
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "© 2001 Red Hat, Inc"
@@ -1054,11 +1101,13 @@ msgstr ""
 "treball actual. D'altra forma, canvia a l'espai de treball de la finestra."
 
 #: applets/gen_util/tasklist.schemas.in.h:4
-msgid "Maximum size the Window List applet will request"
+#, fuzzy
+msgid "Maximum size that Window List requests"
 msgstr "Mida màxima que demanarà l'applet de llistat de finestres"
 
 #: applets/gen_util/tasklist.schemas.in.h:5
-msgid "Minimum size the Window List applet will request"
+#, fuzzy
+msgid "Minimum size that Window List requests"
 msgstr "Mida mínima que demanarà l'applet de llistat de finestres"
 
 #: applets/gen_util/tasklist.schemas.in.h:6
@@ -1070,41 +1119,52 @@ msgid "Show windows from all workspaces"
 msgstr "Mostra les finestres de tots els espais de treball"
 
 #: applets/gen_util/tasklist.schemas.in.h:8
+#, fuzzy
 msgid ""
-"The Window List applet needs a minimum width to be useful at all. This value "
-"is the minimum width the applet will request. This is useful for sliding and "
-"edge panels, which would otherwise ask for a very small default width."
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
+msgstr ""
+"Aquest valor és l'amplària màxima que l'applet demanarà. Açò és útil per a "
+"limitar la mida utilitzada en quadres grans, en els quals aquesta applet "
+"podria ocupar tot l'espai disponible, com en els quadres a un costat.\""
+
+#: applets/gen_util/tasklist.schemas.in.h:9
+#, fuzzy
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
 msgstr ""
 "L'applet de la llista de finestres necessita una amplària mínima per a que "
 "siga útil. Aquest valor és l'amplària mínima que l'applet demanarà. Açò és "
 "útil amb quadres lliscants i a un costat, que d'altra manera demanarien per "
 "una amplària molt petita per omisió."
 
-#: applets/gen_util/tasklist.schemas.in.h:9
-msgid ""
-"This value is the maximum width the applet will request. This is useful to "
-"limit the size used in big panels where this applet could otherwise fill the "
-"entire available space, like in edge panels."
-msgstr ""
-"Aquest valor és l'amplària màxima que l'applet demanarà. Açò és útil per a "
-"limitar la mida utilitzada en quadres grans, en els quals aquesta applet "
-"podria ocupar tot l'espai disponible, com en els quadres a un costat.\""
-
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
 msgstr "Quan agrupar les finestres"
 
-#: gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "Shell del quadre del GNOME"
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr ""
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
-msgid "_Move"
-msgstr "_Moure"
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
+msgid "Notification Area"
+msgstr ""
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
-msgid "_Remove From Panel"
-msgstr "_Elimina del quadre"
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
+msgid "Notification Area Factory"
+msgstr ""
+
+#: applets/notification_area/main.c:125
+msgid "Panel Notification Area"
+msgstr ""
+
+#: applets/notification_area/main.c:126
+#, fuzzy
+msgid "Copyright 2002 Red Hat Inc."
+msgstr "© 2001 Red Hat, Inc."
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1112,6 +1172,14 @@ msgstr "_Elimina del quadre"
 #: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
+msgid "_Remove From Panel"
+msgstr "_Elimina del quadre"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
+msgid "_Move"
+msgstr "_Moure"
 
 #: gnome-panel/applet.c:803
 #, c-format
@@ -1233,11 +1301,11 @@ msgstr ""
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "Utilitza una icona personalitzada per al botó del quadre"
 
-#: gnome-panel/disclosure-widget.c:260
+#: gnome-panel/disclosure-widget.c:251
 msgid "Expander Size"
 msgstr "Mida de l'expansionador"
 
-#: gnome-panel/disclosure-widget.c:261
+#: gnome-panel/disclosure-widget.c:252
 msgid "Size of the expander arrow"
 msgstr "Mida de la fletxa de l'expansionador"
 
@@ -1304,9 +1372,13 @@ msgid "Drawer"
 msgstr "Calaix"
 
 #: gnome-panel/drawer.c:678 gnome-panel/launcher.c:789 gnome-panel/menu.c:1487
-#: gnome-panel/menu.c:3492
+#: gnome-panel/menu.c:3492 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Propietats"
+
+#: gnome-panel/egg-recent-vfs-utils.c:90
+msgid " (invalid Unicode)"
+msgstr ""
 
 #: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3765
 msgid "Run Program..."
@@ -1597,6 +1669,7 @@ msgstr ""
 "Desar la captura de pantalla en una pàgina _web (desar en ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:6
+#: gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
@@ -1618,7 +1691,11 @@ msgstr ""
 msgid "Web directory."
 msgstr ""
 
-#: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:264
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "Shell del quadre del GNOME"
+
+#: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:265
 #, c-format
 msgid ""
 "<b>Failed to run this program</b>\n"
@@ -1629,7 +1706,7 @@ msgstr ""
 "\n"
 "Detalls: %s"
 
-#: gnome-panel/gnome-run.c:387 gnome-panel/gnome-run.c:466
+#: gnome-panel/gnome-run.c:388 gnome-panel/gnome-run.c:468
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1640,7 +1717,7 @@ msgstr ""
 "\n"
 "Detalls: %s"
 
-#: gnome-panel/gnome-run.c:491
+#: gnome-panel/gnome-run.c:495
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1651,7 +1728,7 @@ msgstr ""
 "\n"
 "Detalls: no hi ha cap aplicació disponible per a obrir el fitxer"
 
-#: gnome-panel/gnome-run.c:509
+#: gnome-panel/gnome-run.c:510
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1662,44 +1739,44 @@ msgstr ""
 "\n"
 "Detalls: %s"
 
-#: gnome-panel/gnome-run.c:598
+#: gnome-panel/gnome-run.c:599
 msgid "Choose a file"
 msgstr "Seleccioneu un fitxer"
 
-#: gnome-panel/gnome-run.c:837 gnome-panel/gnome-run.c:838
+#: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
 msgid "Known Applications"
 msgstr "Aplicacions conegudes"
 
-#: gnome-panel/gnome-run.c:969
+#: gnome-panel/gnome-run.c:970
 msgid "Command to run"
 msgstr "Ordre a executar"
 
-#: gnome-panel/gnome-run.c:1004
+#: gnome-panel/gnome-run.c:1005
 msgid "Run in _terminal"
 msgstr "Executa en un _terminal"
 
-#: gnome-panel/gnome-run.c:1009
+#: gnome-panel/gnome-run.c:1010
 msgid "_Append File..."
 msgstr "_Afegeix fitxer..."
 
-#: gnome-panel/gnome-run.c:1392
+#: gnome-panel/gnome-run.c:1393
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Executarà l'ordre: «%s»"
 
-#: gnome-panel/gnome-run.c:1401
+#: gnome-panel/gnome-run.c:1402
 msgid "No application selected"
 msgstr "No hi ha cap aplicació seleccionada"
 
-#: gnome-panel/gnome-run.c:1521
+#: gnome-panel/gnome-run.c:1522
 msgid "List of known applications"
 msgstr "Llista de aplicacions conegudes"
 
-#: gnome-panel/gnome-run.c:1522
+#: gnome-panel/gnome-run.c:1523
 msgid "Choose an application to run from the list"
 msgstr "Selecciona una aplicació a executar de la llista"
 
-#: gnome-panel/gnome-run.c:1648
+#: gnome-panel/gnome-run.c:1649 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "Executa el programa"
 
@@ -1778,7 +1855,7 @@ msgstr ""
 "%s"
 
 #: gnome-panel/launcher.c:1150 gnome-panel/menu.c:1144
-#: gnome-panel/panel-util.c:90
+#: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -1792,49 +1869,6 @@ msgstr ""
 #: gnome-panel/main.c:149
 msgid "Specify a profile name to load"
 msgstr "Especifica el nom del perfil a carregar"
-
-#: gnome-panel/menu-ditem.c:123
-#, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>No es pot desar els canvis del llançador</b>\n"
-"\n"
-"Detalls: %s"
-
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
-msgid "Menu"
-msgstr "Menú"
-
-#: gnome-panel/menu-ditem.c:447
-msgid "You have to specify a name for the launcher."
-msgstr "Heu d'especificar un nom per al llançador"
-
-#: gnome-panel/menu-ditem.c:463
-msgid "You have to specify a valid URL or command."
-msgstr "Heu d'especificar una URL o ordre vàlida."
-
-#. class
-#: gnome-panel/menu-ditem.c:494
-#, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>No es pot desar l'element del menú a disc</b>\n"
-"\n"
-"Detalls: %s"
-
-#: gnome-panel/menu-ditem.c:519
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
-"No podeu crear un llançador nou en aquest punt, ja que no es pot escriure en "
-"aquest lloc."
 
 #: gnome-panel/menu.c:240
 msgid "Many many others ..."
@@ -2169,6 +2203,10 @@ msgstr "Executa una ordre"
 msgid "Desktop"
 msgstr "Escriptori"
 
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
+msgid "Menu"
+msgstr "Menú"
+
 #: gnome-panel/menu.c:3842
 msgid "Menu:"
 msgstr "Menú:"
@@ -2178,10 +2216,95 @@ msgstr "Menú:"
 msgid "Can't create menu, using main menu!"
 msgstr "No es pot crear el menú, empreant el menú principal!"
 
-#: gnome-panel/menu.c:4432
+#: gnome-panel/menu.c:4439
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "No hi ha un camí fixat en %s per al objecte de menú de quadre\n"
+
+#: gnome-panel/menu-ditem.c:123
+#, c-format
+msgid ""
+"<b>Cannot save changes to launcher</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>No es pot desar els canvis del llançador</b>\n"
+"\n"
+"Detalls: %s"
+
+#: gnome-panel/menu-ditem.c:447
+msgid "You have to specify a name for the launcher."
+msgstr "Heu d'especificar un nom per al llançador"
+
+#: gnome-panel/menu-ditem.c:463
+msgid "You have to specify a valid URL or command."
+msgstr "Heu d'especificar una URL o ordre vàlida."
+
+#. class
+#: gnome-panel/menu-ditem.c:494
+#, c-format
+msgid ""
+"<b>Cannot save menu item to disk</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>No es pot desar l'element del menú a disc</b>\n"
+"\n"
+"Detalls: %s"
+
+#: gnome-panel/menu-ditem.c:519
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
+"No podeu crear un llançador nou en aquest punt, ja que no es pot escriure en "
+"aquest lloc."
+
+#: gnome-panel/panel-action-button.c:83
+msgid "_Activate Screensaver"
+msgstr "_Activa el protector de pantalla"
+
+#: gnome-panel/panel-action-button.c:84
+msgid "_Lock Screen"
+msgstr "B_loqueja la pantalla"
+
+#: gnome-panel/panel-action-button.c:85
+msgid "_Kill Screensaver Daemon"
+msgstr "Ma_ta el dimoni del protector de pantalla"
+
+#: gnome-panel/panel-action-button.c:86
+msgid "Restart _Screensaver Daemon"
+msgstr "Reinicia el dimoni del _protector de pantalla"
+
+#: gnome-panel/panel-action-button.c:155
+msgid "Cannot execute gnome-search-tool"
+msgstr "No es pot executar gnome-search-tool"
+
+#: gnome-panel/panel-action-button.c:171
+msgid "Cannot execute gnome-panel-screenshot"
+msgstr "No es pot executar gnome-panel-screenshot"
+
+#: gnome-panel/panel-action-button.c:191
+msgid "Lock screen"
+msgstr "Bloqueja la pantalla"
+
+#: gnome-panel/panel-action-button.c:198
+msgid "Log out of GNOME"
+msgstr "Surt de GNOME"
+
+#: gnome-panel/panel-action-button.c:208
+#, fuzzy
+msgid "Search for Files"
+msgstr "Cercar fitxers..."
+
+#: gnome-panel/panel-action-button.c:364
+#, fuzzy
+msgid "Action Type"
+msgstr "Acció"
+
+#: gnome-panel/panel-action-button.c:365
+msgid "The type of action this button implements"
+msgstr ""
 
 #: gnome-panel/panel-applet-frame.c:184
 msgid "Cannot register control widget\n"
@@ -2214,12 +2337,12 @@ msgid "D_on't Delete"
 msgstr "N_o suprimeix"
 
 #: gnome-panel/panel-applet-frame.c:819
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"There was a problem loading applet '%s'\n"
+"The panel encountered a problem while loading \"%s\"\n"
 "Details: %s\n"
 "\n"
-"Delete this applet from your configuration?"
+"Do you want to delete the applet from your configuration?"
 msgstr ""
 "Ha hagut un problema al carregar l'applet «%s»</b>\n"
 "Detalls: %s<\n"
@@ -2229,6 +2352,19 @@ msgstr ""
 #: gnome-panel/panel-applet-frame.c:916
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "No s'ha pogut obtindre la interfície AppletShell des del control\n"
+
+#: gnome-panel/panel.c:876
+#, c-format
+msgid "Open URL: %s"
+msgstr "Obrir URL: %s"
+
+#: gnome-panel/panel.c:2232
+msgid ""
+"No panels were found in your configuration.  I will create a menu panel for "
+"you"
+msgstr ""
+"No s'han trobat quadres en la vostra configuració. Es crearà un quadre de "
+"menú."
 
 #. Auto-hide
 #: gnome-panel/panel-config.c:545
@@ -2418,6 +2554,25 @@ msgstr "Mostra el llistat de programes per omisió al obrir el diàleg Executa"
 msgid "Show the program listing in the Run box"
 msgstr "Mostra el llistat de programes en el diàleg Executa"
 
+#: gnome-panel/panel-recent.c:55
+#, fuzzy
+msgid "Couldn't find a suitable application"
+msgstr "No puc afegir l'applet!"
+
+#: gnome-panel/panel-recent.c:78
+msgid ""
+"The default application for this type of file cannot handle remote files"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:135
+#, c-format
+msgid "An unknown error occurred while trying to open %s"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:153
+msgid "Open Recent"
+msgstr ""
+
 #: gnome-panel/panel-shell.c:43
 msgid ""
 "I've detected a panel already running,\n"
@@ -2450,20 +2605,20 @@ msgstr "_Executa"
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:116 gnome-panel/panel-util.c:146
-#: gnome-panel/panel-util.c:171
+#: gnome-panel/panel-util.c:122 gnome-panel/panel-util.c:152
+#: gnome-panel/panel-util.c:177
 msgid "Help document not found"
 msgstr "No s'ha trobat el document d'ajuda"
 
-#: gnome-panel/panel-util.c:185
+#: gnome-panel/panel-util.c:191
 msgid "No document to show"
 msgstr "No hi ha cap document per a mostrar"
 
-#: gnome-panel/panel-util.c:626 gnome-panel/panel-util.c:642
+#: gnome-panel/panel-util.c:632 gnome-panel/panel-util.c:648
 msgid "Disabled"
 msgstr "Deshabilitat"
 
-#: gnome-panel/panel-util.c:1472
+#: gnome-panel/panel-util.c:1478
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2472,19 +2627,6 @@ msgstr ""
 "<b>No es pot executar xscreensaver</b>\n"
 "\n"
 "Detalls: no s'ha trobat el xscreensaver-command"
-
-#: gnome-panel/panel.c:876
-#, c-format
-msgid "Open URL: %s"
-msgstr "Obrir URL: %s"
-
-#: gnome-panel/panel.c:2232
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
-msgstr ""
-"No s'han trobat quadres en la vostra configuració. Es crearà un quadre de "
-"menú."
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2594,6 +2736,9 @@ msgstr "Extra gran"
 msgid "XX Small"
 msgstr "Extra petit"
 
+#~ msgid "Command to execute when the applet is clicked"
+#~ msgstr "Ordre a executar quan es polsa en l'applet"
+
 #~ msgid "1.0"
 #~ msgstr "1.0"
 
@@ -2648,32 +2793,8 @@ msgstr "Extra petit"
 #~ msgid "no-background"
 #~ msgstr "Fons"
 
-#~ msgid "Cannot execute gnome-panel-screenshot"
-#~ msgstr "No es pot executar gnome-panel-screenshot"
-
-#~ msgid "Cannot execute gnome-search-tool"
-#~ msgstr "No es pot executar gnome-search-tool"
-
 #~ msgid "Log out"
 #~ msgstr "Surt"
-
-#~ msgid "Log out of GNOME"
-#~ msgstr "Surt de GNOME"
-
-#~ msgid "Lock screen"
-#~ msgstr "Bloqueja la pantalla"
-
-#~ msgid "_Activate Screensaver"
-#~ msgstr "_Activa el protector de pantalla"
-
-#~ msgid "_Lock Screen"
-#~ msgstr "B_loqueja la pantalla"
-
-#~ msgid "_Kill Screensaver Daemon"
-#~ msgstr "Ma_ta el dimoni del protector de pantalla"
-
-#~ msgid "Restart _Screensaver Daemon"
-#~ msgstr "Reinicia el dimoni del _protector de pantalla"
 
 #~ msgid "Command to execute"
 #~ msgstr "Ordre a executar"
@@ -3596,9 +3717,6 @@ msgstr "Extra petit"
 
 #~ msgid "Save current setup"
 #~ msgstr "Desa la configuració actual"
-
-#~ msgid "Action"
-#~ msgstr "Acció"
 
 #~ msgid "Logout"
 #~ msgstr "Surt"
@@ -4835,10 +4953,6 @@ msgstr "Extra petit"
 #, fuzzy
 #~ msgid "The Battery"
 #~ msgstr "La bateria està baixa."
-
-#, fuzzy
-#~ msgid "Couldn't register applet."
-#~ msgstr "No puc afegir l'applet!"
 
 #~ msgid "Whoops! for some reason we can't add to the panel"
 #~ msgstr "Ep! per alguna raó no el puc afegir al quadre"

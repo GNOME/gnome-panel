@@ -9,80 +9,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-11-04 11:01+1300\n"
+"POT-Creation-Date: 2002-11-28 17:24+1300\n"
 "PO-Revision-Date: 2002-10-02 22:27+0300\n"
 "Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-# applets/fish/GNOME_FishApplet.xml.h:1
-# applets/gen_util/GNOME_ClockApplet.xml.h:3
-# applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-# applets/gen_util/GNOME_PagerApplet.xml.h:1
-# applets/gen_util/GNOME_TasklistApplet.xml.h:1
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:3
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
-msgid "_About..."
-msgstr "_Tietoja..."
-
-# applets/fish/GNOME_FishApplet.xml.h:2
-# applets/gen_util/GNOME_ClockApplet.xml.h:4
-# applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-# applets/gen_util/GNOME_PagerApplet.xml.h:2
-# applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3376
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/gen_util/GNOME_ClockApplet.xml.h:4
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:681
-#: gnome-panel/launcher.c:791 gnome-panel/menu.c:3517 gnome-panel/menu.c:4194
-msgid "_Help"
-msgstr "_Ohje"
-
-# applets/fish/GNOME_FishApplet.xml.h:3
-# applets/gen_util/GNOME_ClockApplet.xml.h:5
-# applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-# applets/gen_util/GNOME_PagerApplet.xml.h:3
-# applets/gen_util/GNOME_TasklistApplet.xml.h:3
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/gen_util/GNOME_ClockApplet.xml.h:5
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-msgid "_Preferences..."
-msgstr "_Asetukset..."
-
-# applets/fish/GNOME_FishApplet_Factory.server.in.h:1
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
-msgid "Amusements"
-msgstr "Huvitukset"
-
-# applets/fish/GNOME_FishApplet_Factory.server.in.h:2
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-msgid "Display a swimming fish or another animated creature"
-msgstr "Näytä uiva kala tai jokin muu liikkuva eliö"
-
-# applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-# applets/fish/fish.c:1174
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:1274
-msgid "Fish"
-msgstr "Kala"
-
-# applets/fish/GNOME_FishApplet_Factory.server.in.h:4
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
-msgid "From Whence That Stupid Fish Came"
-msgstr "Mistä tuo tyhmä kala tuli"
-
-# applets/fish/GNOME_FishApplet_Factory.server.in.h:5
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
-msgid "Wanda Factory"
-msgstr "Wanda-tehdas"
 
 # applets/fish/fish.c:67
 #: applets/fish/fish.c:79
@@ -102,7 +35,7 @@ msgid "GNOME Fish, the fortune teller"
 msgstr "Gnome-kala - ennustaja"
 
 # applets/fish/fish.c:478 applets/fish/fish.c:1141
-#: applets/fish/fish.c:502 applets/fish/fish.c:1239
+#: applets/fish/fish.c:502 applets/fish/fish.c:1248
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s-kala"
@@ -114,11 +47,12 @@ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 msgstr "<big><big>Gnome-kala %s sanoo:</big></big>"
 
 # applets/fish/fish.c:572
-#: applets/fish/fish.c:598
+#: applets/fish/fish.c:596
+#, fuzzy, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
-"We strongly advise you against usage of wanda for anything\n"
+"We strongly advise you against usage of %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "Varoitus:  Komento vaikuttaa itse asiassa hyödylliseltä.\n"
@@ -127,57 +61,57 @@ msgstr ""
 "tästä sovelmasta \"käytännöllisen\" tai hyödyllisen."
 
 # applets/fish/fish.c:703
-#: applets/fish/fish.c:737
+#: applets/fish/fish.c:746
 msgid "GNOME Fish Preferences"
 msgstr "Gnome-kalan asetukset"
 
 # applets/fish/fish.c:713
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:756
 msgid "_Name of GNOME fish:"
 msgstr "Gnome-kalan _nimi:"
 
 # applets/fish/fish.c:730
-#: applets/fish/fish.c:764
+#: applets/fish/fish.c:773
 msgid "_Animation filename:"
 msgstr "Animaatio_tiedosto:"
 
 # applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1245
 # gnome-panel/panel-config.c:1427 gnome-panel/panel-util.c:241
-#: applets/fish/fish.c:766 applets/gen_util/mailcheck.c:1298
-#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:281
+#: applets/fish/fish.c:775 applets/gen_util/mailcheck.c:1298
+#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Selaa"
 
 # applets/fish/fish.c:748
-#: applets/fish/fish.c:782
+#: applets/fish/fish.c:791
 msgid "Command to _execute when fish is clicked:"
 msgstr "Kalaa napsautettaessa suoritettava _komento:"
 
 # applets/fish/fish.c:765
-#: applets/fish/fish.c:799
+#: applets/fish/fish.c:808
 msgid "Frame_s in animation:"
 msgstr "_Ruutuja animaatiossa:"
 
 # applets/fish/fish.c:783
-#: applets/fish/fish.c:817
+#: applets/fish/fish.c:826
 msgid "Pause _per frame (s):"
 msgstr "Odotus ruutua ko_hden (s):"
 
 # applets/fish/fish.c:798
-#: applets/fish/fish.c:832
+#: applets/fish/fish.c:841
 msgid "_Rotate on vertical panels"
 msgstr "Ki_errä pystypaneeleissa"
 
-#: applets/fish/fish.c:891
+#: applets/fish/fish.c:900
 msgid "Unable to get the name of the command to execute"
 msgstr "Suoritettavan komennon nimeä ei saatu"
 
-#: applets/fish/fish.c:907
+#: applets/fish/fish.c:916
 msgid "Unable to locate the command to execute"
 msgstr "Suoritettavan komennon paikannus epäonnistui"
 
 # gnome-panel/gnome-run.c:336 gnome-panel/gnome-run.c:410
-#: applets/fish/fish.c:1036
+#: applets/fish/fish.c:1045
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -189,7 +123,7 @@ msgstr ""
 "Lisätiedot: %s"
 
 # applets/fish/fish.c:971
-#: applets/fish/fish.c:1056
+#: applets/fish/fish.c:1065
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -201,7 +135,7 @@ msgstr ""
 "Katso lisää kalan asetusikkunasta."
 
 # applets/fish/fish.c:985
-#: applets/fish/fish.c:1071
+#: applets/fish/fish.c:1080
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -209,18 +143,14 @@ msgstr ""
 "Vesi kaipaisi vaihtamista!\n"
 "(Katso päiväystä)"
 
-# applets/fish/fish.c:1156
-#: applets/fish/fish.c:1256
-msgid "(with minor help from George)"
-msgstr "(Georgen pienoisella avustuksella)"
-
 # applets/fish/fish.c:1177
-#: applets/fish/fish.c:1277
+#: applets/fish/fish.c:1249
+#, fuzzy, c-format
 msgid ""
-"This applet has no use what-so-ever. It only takes up disk space and "
-"compilation time, and if loaded it also takes up precious panel space and "
-"memory. If anyone is found using this applet, he should be promptly sent for "
-"a psychiatric evaluation."
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. If "
+"anyone is found using it, he should be promptly sent for a psychiatric "
+"evaluation."
 msgstr ""
 "Tällä sovelmalla ei ole mitään käyttöä. Se vain käyttää levytilaa ja "
 "käännösaikaa. Jos se ladataan paneeliin, se voi myös viedä arvokasta muistia "
@@ -228,6 +158,18 @@ msgstr ""
 "pitäisi pikaisesti lähettää asiantuntevaan hoitoon.\n"
 "\n"
 "Suomennos: http://gnome-fi.sourceforge.net/"
+
+# applets/fish/fish.c:1156
+#: applets/fish/fish.c:1273
+msgid "(with minor help from George)"
+msgstr "(Georgen pienoisella avustuksella)"
+
+# applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+# applets/fish/fish.c:1174
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:1291
+msgid "Fish"
+msgstr "Kala"
 
 # applets/fish/fish.schemas.in.h:1
 #: applets/fish/fish.schemas.in.h:1
@@ -266,104 +208,70 @@ msgstr "Kalan nimi"
 msgid "The number of frames in the fish's animation"
 msgstr "Kalan animaation ruutujen määrä"
 
-# applets/gen_util/GNOME_ClockApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:1
-msgid "Copy _date"
-msgstr "Kopioi _päiväys"
+# applets/fish/GNOME_FishApplet_Factory.server.in.h:1
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
+msgid "Amusements"
+msgstr "Huvitukset"
 
-# applets/gen_util/GNOME_ClockApplet.xml.h:2
-#: applets/gen_util/GNOME_ClockApplet.xml.h:2
-msgid "Copy _time"
-msgstr "Kopioi _aika"
+# applets/fish/GNOME_FishApplet_Factory.server.in.h:2
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
+msgid "Display a swimming fish or another animated creature"
+msgstr "Näytä uiva kala tai jokin muu liikkuva eliö"
 
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "Apuohjelmat"
+# applets/fish/GNOME_FishApplet_Factory.server.in.h:4
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+msgid "From Whence That Stupid Fish Came"
+msgstr "Mistä tuo tyhmä kala tuli"
 
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-msgid "Alert you when new mail arrives"
-msgstr "Hälytä, kun postia saapuu"
+# applets/fish/GNOME_FishApplet_Factory.server.in.h:5
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
+msgid "Wanda Factory"
+msgstr "Wanda-tehdas"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "Button to hide application windows and show the desktop"
-msgstr "Painike, joka piilottaa kaikki ikkunat ja näyttää työpöydän"
+# applets/fish/GNOME_FishApplet.xml.h:1
+# applets/gen_util/GNOME_ClockApplet.xml.h:3
+# applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+# applets/gen_util/GNOME_PagerApplet.xml.h:1
+# applets/gen_util/GNOME_TasklistApplet.xml.h:1
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1
+#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+msgid "_About..."
+msgstr "_Tietoja..."
 
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-# applets/gen_util/clock.c:1156
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-#: applets/gen_util/clock.c:1192
-msgid "Clock"
-msgstr "Kello"
+# applets/fish/GNOME_FishApplet.xml.h:2
+# applets/gen_util/GNOME_ClockApplet.xml.h:4
+# applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+# applets/gen_util/GNOME_PagerApplet.xml.h:2
+# applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3376
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:4
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2
+#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:791 gnome-panel/menu.c:3517
+#: gnome-panel/menu.c:4194 gnome-panel/panel-action-button.c:500
+msgid "_Help"
+msgstr "_Ohje"
 
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-msgid "GenUtil Applet Factory"
-msgstr "GenUtil-sovelmatehdas"
-
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-msgid "Get the current time and date"
-msgstr "Hae nykyinen aika ja päiväys"
-
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-# applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1680
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
-msgid "Inbox Monitor"
-msgstr "Postilaatikon tarkkailija"
-
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-msgid "Internet"
-msgstr "Internet"
-
-# gnome-panel/menu.c:3710
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-msgid "Show Desktop Button"
-msgstr "Työpöydän näyttämispainike"
-
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "Siirry avoimien ikkunoiden välillä"
-
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "Siirry työtilojen välillä"
-
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-msgid "Utility"
-msgstr "Työkalut"
-
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-# applets/gen_util/tasklist.c:713
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:767
-msgid "Window List"
-msgstr "Ikkunaluettelo"
-
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-# applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
-# applets/gen_util/pager.glade.h:7
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "Työtilanvaihtaja"
-
-# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
-msgid "factory for creating some general applets"
-msgstr "tehdas joidenkin yleisten sovelmien luomiseen"
-
-# applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-msgid "_Check for mail"
-msgstr "_Tarkista posti"
+# applets/fish/GNOME_FishApplet.xml.h:3
+# applets/gen_util/GNOME_ClockApplet.xml.h:5
+# applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+# applets/gen_util/GNOME_PagerApplet.xml.h:3
+# applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/gen_util/GNOME_ClockApplet.xml.h:5
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+msgid "_Preferences..."
+msgstr "_Asetukset..."
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
 #: applets/gen_util/clock.c:171
@@ -423,7 +331,8 @@ msgstr "%A %d. %Bta %Y"
 #: applets/gen_util/clock.c:897 applets/gen_util/clock.c:1137
 #: applets/gen_util/mailcheck.c:1602 applets/gen_util/mailcheck.c:1810
 #: applets/gen_util/pager.c:187 applets/gen_util/pager.c:499
-#: applets/gen_util/tasklist.c:119 applets/gen_util/tasklist.c:721
+#: applets/gen_util/showdesktop.c:412 applets/gen_util/tasklist.c:119
+#: applets/gen_util/tasklist.c:721 applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Ohjetta näyttäessä tapahtui virhe: %s"
@@ -478,10 +387,18 @@ msgstr "Näytä _UTC-aikaa"
 # gnome-panel/menu.c:242
 #. Translator credits
 #: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
-#: applets/gen_util/pager.c:532 applets/gen_util/tasklist.c:753
+#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/tasklist.c:753 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr "Suomennos: http://gnome-fi.sourceforge.net/"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+# applets/gen_util/clock.c:1156
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1192
+msgid "Clock"
+msgstr "Kello"
 
 # applets/gen_util/clock.c:1157
 #: applets/gen_util/clock.c:1193
@@ -504,7 +421,8 @@ msgstr "Näytä Internet-aikaa, joka on sama kaikkialla"
 
 # applets/gen_util/clock.schemas.in.h:2
 #: applets/gen_util/clock.schemas.in.h:3
-msgid "Display date in applet, in addition to time"
+#, fuzzy
+msgid "Display date in the Clock, in addition to time"
 msgstr "Näytä päiväys sovelmassa ajan lisäksi"
 
 # applets/gen_util/clock.schemas.in.h:3
@@ -532,15 +450,17 @@ msgstr "Tuntimuoto"
 msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Asettaa tuntien näyttötavan, joka on joko 12 tai 24"
 
-# applets/gen_util/clock.schemas.in.h:8
-#: applets/gen_util/clock.schemas.in.h:9
-msgid "Show date in a tooltip when a mouse is over applet"
-msgstr "Näytä päiväys vinkissä, kun hiiri on sovelman yllä"
-
 # applets/gen_util/clock.schemas.in.h:9
-#: applets/gen_util/clock.schemas.in.h:10
-msgid "Show date in applet"
+#: applets/gen_util/clock.schemas.in.h:9
+#, fuzzy
+msgid "Show date in Clock"
 msgstr "Näytä päiväys sovelmassa"
+
+# applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:10
+#, fuzzy
+msgid "Show date in a tooltip when a mouse is over the Clock"
+msgstr "Näytä päiväys vinkissä, kun hiiri on sovelman yllä"
 
 # applets/gen_util/clock.schemas.in.h:10
 #: applets/gen_util/clock.schemas.in.h:11
@@ -566,6 +486,100 @@ msgstr "Näytä Unix-aikaa"
 #: applets/gen_util/clock.schemas.in.h:15
 msgid "Use UTC"
 msgstr "Näytä UTC-aikaa"
+
+# applets/gen_util/GNOME_ClockApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+msgid "Copy _date"
+msgstr "Kopioi _päiväys"
+
+# applets/gen_util/GNOME_ClockApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy _time"
+msgstr "Kopioi _aika"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
+msgid "Accessories"
+msgstr "Apuohjelmat"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
+msgid "Alert you when new mail arrives"
+msgstr "Hälytä, kun postia saapuu"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+msgid "Button to hide application windows and show the desktop"
+msgstr "Painike, joka piilottaa kaikki ikkunat ja näyttää työpöydän"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+msgid "GenUtil Applet Factory"
+msgstr "GenUtil-sovelmatehdas"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+msgid "Get the current time and date"
+msgstr "Hae nykyinen aika ja päiväys"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+# applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1680
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
+msgid "Inbox Monitor"
+msgstr "Postilaatikon tarkkailija"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+msgid "Internet"
+msgstr "Internet"
+
+# gnome-panel/menu.c:3710
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
+#: applets/gen_util/showdesktop.c:452
+msgid "Show Desktop Button"
+msgstr "Työpöydän näyttämispainike"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
+msgid "Switch between open windows"
+msgstr "Siirry avoimien ikkunoiden välillä"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
+msgid "Switch between workspaces"
+msgstr "Siirry työtilojen välillä"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+msgid "Utility"
+msgstr "Työkalut"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
+# applets/gen_util/tasklist.c:713
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
+#: applets/gen_util/tasklist.c:767
+msgid "Window List"
+msgstr "Ikkunaluettelo"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
+# applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
+# applets/gen_util/pager.glade.h:7
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
+#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
+#: applets/gen_util/pager.glade.h:7
+msgid "Workspace Switcher"
+msgstr "Työtilanvaihtaja"
+
+# applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
+msgid "factory for creating some general applets"
+msgstr "tehdas joidenkin yleisten sovelmien luomiseen"
+
+# applets/gen_util/GNOME_MailCheckApplet.xml.h:2
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
+msgid "_Check for mail"
+msgstr "_Tarkista posti"
 
 # applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
 # applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
@@ -830,10 +844,11 @@ msgstr "Postintarkistus ilmoittaa, kun uutta postia saapuu"
 msgid "Command to execute when checking mail"
 msgstr "Postia tarkistaessa suoritettava komento"
 
-# applets/gen_util/mailcheck.schemas.in.h:3
+# applets/fish/fish.c:748
 #: applets/gen_util/mailcheck.schemas.in.h:3
-msgid "Command to execute when the applet is clicked"
-msgstr "Sovelmaa napsautettaessa suoritettava komento"
+#, fuzzy
+msgid "Command to execute when you click on the Inbox Monitor"
+msgstr "Napsautettaessa käynnistyvä komento"
 
 # applets/gen_util/mailcheck.schemas.in.h:4
 #: applets/gen_util/mailcheck.schemas.in.h:4
@@ -933,9 +948,10 @@ msgstr "Tällä tavalla postia käsitellään, käsitellään, käsitellään...
 
 # applets/gen_util/mailcheck.schemas.in.h:23
 #: applets/gen_util/mailcheck.schemas.in.h:23
+#, fuzzy
 msgid ""
-"This is the animation that will be displayed during normal use of the Inbox "
-"Monitor applet"
+"This is the animation that will be displayed during normal Inbox Monitor "
+"usage"
 msgstr "Tämä animaatio näkyy postintarkistussovelman tavallisen käytön aikana"
 
 # applets/gen_util/mailcheck.schemas.in.h:24
@@ -945,12 +961,14 @@ msgstr "Käyttäjätunnus etäpalvelimella"
 
 # applets/gen_util/mailcheck.schemas.in.h:25
 #: applets/gen_util/mailcheck.schemas.in.h:25
-msgid "We run this command when the user clicks on the applet"
+#, fuzzy
+msgid "We run this command when the user clicks on Inbox Monitor"
 msgstr "Tämä komento suoritetaan kun käyttäjä napsauttaa sovelmaa"
 
 # applets/gen_util/mailcheck.schemas.in.h:26
 #: applets/gen_util/mailcheck.schemas.in.h:26
-msgid "Whether to reset mail status when the applet is clicked"
+#, fuzzy
+msgid "Whether to reset mail status when you click on Inbox Monitor"
 msgstr "Palautuuko postitilanne alkutilaan sovelmaa napsautettaessa"
 
 # applets/gen_util/mailcheck.schemas.in.h:27
@@ -982,26 +1000,23 @@ msgstr "Sarakkeita"
 
 # applets/gen_util/pager.c:344
 #: applets/gen_util/pager.c:376
-#, c-format
-msgid "Error loading num_rows value for workspace switcher applet: %s\n"
+#, fuzzy, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "Virhe ladatessa num_rows-arvoa työtilanvaihtajasovelmalle: %s\n"
 
 # applets/gen_util/pager.c:355
 #: applets/gen_util/pager.c:387
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Error loading display_workspace_names value for workspace switcher applet: %"
-"s\n"
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Virhe ladatessa display_workspace_names-arvoa työtilanvaihtajasovelmalle: %"
 "s\n"
 
 # applets/gen_util/pager.c:370
 #: applets/gen_util/pager.c:402
-#, c-format
-msgid ""
-"Error loading display_all_workspaces value for workspace switcher applet: %"
-"s\n"
+#, fuzzy, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Virhe ladatessa display_all_workspaces-arvoa työtilanvaihtajasovelmalle: %s\n"
 
@@ -1165,6 +1180,42 @@ msgstr "Ohje"
 msgid "About..."
 msgstr "Tietoja..."
 
+#: applets/gen_util/showdesktop.c:217
+msgid "Click here to restore hidden windows."
+msgstr ""
+
+#: applets/gen_util/showdesktop.c:220
+#, fuzzy
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Painike, joka piilottaa kaikki ikkunat ja näyttää työpöydän"
+
+# gnome-panel/gnome-run.c:447
+#: applets/gen_util/showdesktop.c:290
+#, fuzzy, c-format
+msgid "Failed to load %s: %s\n"
+msgstr ""
+"Kuvan \"%s\" latautuminen epäonnistui\n"
+"\n"
+"Lisätiedot: %s"
+
+# gnome-panel/panel-util.c:72 gnome-panel/panel-util.c:107
+# gnome-panel/panel-util.c:132
+#: applets/gen_util/showdesktop.c:291
+#, fuzzy
+msgid "File not found"
+msgstr "tiedostoa ei löydy"
+
+# applets/gen_util/pager.c:504
+#: applets/gen_util/showdesktop.c:453
+#, fuzzy
+msgid "(C) 2002 Red Hat, Inc."
+msgstr "© 2001 Red Hat, Inc."
+
+#: applets/gen_util/showdesktop.c:454
+#, fuzzy
+msgid "This button lets you hide all windows and show the desktop"
+msgstr "Painike, joka piilottaa kaikki ikkunat ja näyttää työpöydän"
+
 # applets/gen_util/tasklist.c:714
 #: applets/gen_util/tasklist.c:768
 msgid "(c) 2001 Red Hat, Inc"
@@ -1277,12 +1328,14 @@ msgstr ""
 
 # applets/gen_util/tasklist.schemas.in.h:4
 #: applets/gen_util/tasklist.schemas.in.h:4
-msgid "Maximum size the Window List applet will request"
+#, fuzzy
+msgid "Maximum size that Window List requests"
 msgstr "Suurin koko, jonka ikkunaluettelosovelma vaatii"
 
 # applets/gen_util/tasklist.schemas.in.h:5
 #: applets/gen_util/tasklist.schemas.in.h:5
-msgid "Minimum size the Window List applet will request"
+#, fuzzy
+msgid "Minimum size that Window List requests"
 msgstr "Pienin koko, jonka ikkunaluettelosovelma vaatii"
 
 # applets/gen_util/tasklist.schemas.in.h:6
@@ -1295,48 +1348,57 @@ msgstr "Siirrä ikkunan nykyiseen työtilaan pienennyksestä palautettaessa"
 msgid "Show windows from all workspaces"
 msgstr "Näytä kaikkien työtilojen ikkunat"
 
-# applets/gen_util/tasklist.schemas.in.h:8
+# applets/gen_util/tasklist.schemas.in.h:9
 #: applets/gen_util/tasklist.schemas.in.h:8
+#, fuzzy
 msgid ""
-"The Window List applet needs a minimum width to be useful at all. This value "
-"is the minimum width the applet will request. This is useful for sliding and "
-"edge panels, which would otherwise ask for a very small default width."
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
+msgstr ""
+"Tämä arvo on suurin leveys, jonka sovelma vaatii. Etenkin suurissa "
+"paneeleissa, esim. reunapaneeleissa, on hyödyllistä estää tällä sovelmaa "
+"viemästä kaikkea saatavilla olevaa tilaa."
+
+# applets/gen_util/tasklist.schemas.in.h:8
+#: applets/gen_util/tasklist.schemas.in.h:9
+#, fuzzy
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
 msgstr ""
 "Ikkunaluettelosovelma tarvitsee jonkin pienimmän leveyden, jotta se olisi "
 "hyödyllinen. Tämä arvo on pienin leveys, jonka ikkunaluettelo vaatii. "
 "Etenkin liuku- ja reunapaneeleissa tämä arvo on hyödyllinen, koska luettelo "
 "vaatisi muuten hyvin pientä oletusleveyttä."
 
-# applets/gen_util/tasklist.schemas.in.h:9
-#: applets/gen_util/tasklist.schemas.in.h:9
-msgid ""
-"This value is the maximum width the applet will request. This is useful to "
-"limit the size used in big panels where this applet could otherwise fill the "
-"entire available space, like in edge panels."
-msgstr ""
-"Tämä arvo on suurin leveys, jonka sovelma vaatii. Etenkin suurissa "
-"paneeleissa, esim. reunapaneeleissa, on hyödyllistä estää tällä sovelmaa "
-"viemästä kaikkea saatavilla olevaa tilaa."
-
 # applets/gen_util/tasklist.schemas.in.h:10
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
 msgstr "Milloin ikkunat ryhmitellään"
 
-# gnome-panel/GNOME_Panel.server.in.h:1
-#: gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "Gnomen paneeli-shell"
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr ""
 
-# gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
-msgid "_Move"
-msgstr "_Siirrä"
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
+msgid "Notification Area"
+msgstr ""
 
-# gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
-msgid "_Remove From Panel"
-msgstr "_Poista paneelista"
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
+msgid "Notification Area Factory"
+msgstr ""
+
+#: applets/notification_area/main.c:125
+msgid "Panel Notification Area"
+msgstr ""
+
+# applets/gen_util/pager.c:504
+#: applets/notification_area/main.c:126
+#, fuzzy
+msgid "Copyright 2002 Red Hat Inc."
+msgstr "© 2001 Red Hat, Inc."
 
 # gnome-panel/applet.c:449 gnome-panel/foobar-widget.c:359
 #. Translators: Task with no name, should not really happen, so
@@ -1345,6 +1407,16 @@ msgstr "_Poista paneelista"
 #: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
+
+# gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
+msgid "_Remove From Panel"
+msgstr "_Poista paneelista"
+
+# gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
+msgid "_Move"
+msgstr "_Siirrä"
 
 #: gnome-panel/applet.c:803
 #, c-format
@@ -1480,12 +1552,12 @@ msgid "The desired stock icon for the ButtonWidget"
 msgstr "Haluttu ButtonWidgetin oletuskuvake"
 
 # gnome-panel/disclosure-widget.c:260
-#: gnome-panel/disclosure-widget.c:260
+#: gnome-panel/disclosure-widget.c:251
 msgid "Expander Size"
 msgstr "Laajentimen koko"
 
 # gnome-panel/disclosure-widget.c:261
-#: gnome-panel/disclosure-widget.c:261
+#: gnome-panel/disclosure-widget.c:252
 msgid "Size of the expander arrow"
 msgstr "Laajenninnuolen koko"
 
@@ -1565,9 +1637,13 @@ msgstr "Vetolaatikko"
 
 # gnome-panel/menu.c:3351
 #: gnome-panel/drawer.c:678 gnome-panel/launcher.c:789 gnome-panel/menu.c:1487
-#: gnome-panel/menu.c:3492
+#: gnome-panel/menu.c:3492 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Ominaisuudet"
+
+#: gnome-panel/egg-recent-vfs-utils.c:90
+msgid " (invalid Unicode)"
+msgstr ""
 
 # gnome-panel/foobar-widget.c:161 gnome-panel/menu.c:3667
 #: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3765
@@ -1918,6 +1994,7 @@ msgstr "Tallenna kuvakaappaus _www-sivulle (hakemistoon ~/public_html)"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:6
 #: gnome-panel/gnome-panel-screenshot.glade.h:6
+#: gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Kuvakaappaus"
 
@@ -1941,8 +2018,13 @@ msgstr ""
 msgid "Web directory."
 msgstr ""
 
+# gnome-panel/GNOME_Panel.server.in.h:1
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "Gnomen paneeli-shell"
+
 # gnome-panel/gnome-run.c:229 gnome-panel/gnome-run.c:246
-#: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:264
+#: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:265
 #, c-format
 msgid ""
 "<b>Failed to run this program</b>\n"
@@ -1954,7 +2036,7 @@ msgstr ""
 "Lisätietoja: %s"
 
 # gnome-panel/gnome-run.c:336 gnome-panel/gnome-run.c:410
-#: gnome-panel/gnome-run.c:387 gnome-panel/gnome-run.c:466
+#: gnome-panel/gnome-run.c:388 gnome-panel/gnome-run.c:468
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1966,7 +2048,7 @@ msgstr ""
 "Lisätiedot: %s"
 
 # gnome-panel/gnome-run.c:433
-#: gnome-panel/gnome-run.c:491
+#: gnome-panel/gnome-run.c:495
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1978,7 +2060,7 @@ msgstr ""
 "Lisätietoja: tämän tiedoston avaamiseen ei ole ohjelmaa"
 
 # gnome-panel/gnome-run.c:447
-#: gnome-panel/gnome-run.c:509
+#: gnome-panel/gnome-run.c:510
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1990,53 +2072,53 @@ msgstr ""
 "Lisätiedot: %s"
 
 # gnome-panel/gnome-run.c:525
-#: gnome-panel/gnome-run.c:598
+#: gnome-panel/gnome-run.c:599
 msgid "Choose a file"
 msgstr "Valitse tiedosto"
 
 # gnome-panel/gnome-run.c:720 gnome-panel/gnome-run.c:721
-#: gnome-panel/gnome-run.c:837 gnome-panel/gnome-run.c:838
+#: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
 msgid "Known Applications"
 msgstr "Tunnetut sovellukset"
 
 # gnome-panel/gnome-run.c:849
-#: gnome-panel/gnome-run.c:969
+#: gnome-panel/gnome-run.c:970
 msgid "Command to run"
 msgstr "Suoritettava komento"
 
 # gnome-panel/gnome-run.c:883
-#: gnome-panel/gnome-run.c:1004
+#: gnome-panel/gnome-run.c:1005
 msgid "Run in _terminal"
 msgstr "Suorita _päätteessä"
 
 # gnome-panel/gnome-run.c:888
-#: gnome-panel/gnome-run.c:1009
+#: gnome-panel/gnome-run.c:1010
 msgid "_Append File..."
 msgstr "_Lisää tiedosto..."
 
 # gnome-panel/gnome-run.c:1268
-#: gnome-panel/gnome-run.c:1392
+#: gnome-panel/gnome-run.c:1393
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Suorittaa komennon \"%s\""
 
 # gnome-panel/gnome-run.c:1277
-#: gnome-panel/gnome-run.c:1401
+#: gnome-panel/gnome-run.c:1402
 msgid "No application selected"
 msgstr "Ohjelmaa ei valittu"
 
 # gnome-panel/gnome-run.c:1396
-#: gnome-panel/gnome-run.c:1521
+#: gnome-panel/gnome-run.c:1522
 msgid "List of known applications"
 msgstr "Luettelo tunnetuista sovelluksista"
 
 # gnome-panel/gnome-run.c:1397
-#: gnome-panel/gnome-run.c:1522
+#: gnome-panel/gnome-run.c:1523
 msgid "Choose an application to run from the list"
 msgstr "Valitse käynnistettävä sovellus luettelosta"
 
 # gnome-panel/gnome-run.c:1548
-#: gnome-panel/gnome-run.c:1648
+#: gnome-panel/gnome-run.c:1649 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "Suorita komento"
 
@@ -2125,7 +2207,7 @@ msgstr ""
 # gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
 # gnome-panel/panel-util.c:49
 #: gnome-panel/launcher.c:1150 gnome-panel/menu.c:1144
-#: gnome-panel/panel-util.c:90
+#: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -2140,55 +2222,6 @@ msgstr ""
 #: gnome-panel/main.c:149
 msgid "Specify a profile name to load"
 msgstr "Anna ladattavan profiilin nimi"
-
-# gnome-panel/menu-ditem.c:119
-#: gnome-panel/menu-ditem.c:123
-#, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Ei voi tallentaa käynnistimen muutoksia</b>\n"
-"\n"
-"Lisätiedot: %s"
-
-# gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3738
-# gnome-panel/menu.c:3967
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
-msgid "Menu"
-msgstr "Valikko"
-
-# gnome-panel/menu-ditem.c:439
-#: gnome-panel/menu-ditem.c:447
-msgid "You have to specify a name for the launcher."
-msgstr "Käynnistimen nimi täytyy antaa."
-
-# gnome-panel/menu-ditem.c:455
-#: gnome-panel/menu-ditem.c:463
-msgid "You have to specify a valid URL or command."
-msgstr "Kelvollinen URL tai komento täytyy antaa."
-
-# gnome-panel/menu-ditem.c:484
-#. class
-#: gnome-panel/menu-ditem.c:494
-#, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Ei voi tallentaa valikon kohtaa levylle</b>\n"
-"\n"
-"Lisätiedot: %s"
-
-# gnome-panel/menu-ditem.c:507
-#: gnome-panel/menu-ditem.c:519
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
-"Et voi luoda uutta käynnistintä tähän kohtaan, sillä tähän ei voi kirjoittaa."
 
 # gnome-panel/menu.c:230
 #: gnome-panel/menu.c:240
@@ -2593,6 +2626,12 @@ msgstr "Suorita komento"
 msgid "Desktop"
 msgstr "Työpöytä"
 
+# gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3738
+# gnome-panel/menu.c:3967
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
+msgid "Menu"
+msgstr "Valikko"
+
 # gnome-panel/menu.c:3740
 #: gnome-panel/menu.c:3842
 msgid "Menu:"
@@ -2603,10 +2642,110 @@ msgstr "Valikko:"
 msgid "Can't create menu, using main menu!"
 msgstr "Valikkoa ei voi luoda: käytetään päävalikkoa!"
 
-#: gnome-panel/menu.c:4432
+#: gnome-panel/menu.c:4439
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Paneelin valikko-oliota varten ei ole asetettu polkua kohdassa %s\n"
+
+# gnome-panel/menu-ditem.c:119
+#: gnome-panel/menu-ditem.c:123
+#, c-format
+msgid ""
+"<b>Cannot save changes to launcher</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Ei voi tallentaa käynnistimen muutoksia</b>\n"
+"\n"
+"Lisätiedot: %s"
+
+# gnome-panel/menu-ditem.c:439
+#: gnome-panel/menu-ditem.c:447
+msgid "You have to specify a name for the launcher."
+msgstr "Käynnistimen nimi täytyy antaa."
+
+# gnome-panel/menu-ditem.c:455
+#: gnome-panel/menu-ditem.c:463
+msgid "You have to specify a valid URL or command."
+msgstr "Kelvollinen URL tai komento täytyy antaa."
+
+# gnome-panel/menu-ditem.c:484
+#. class
+#: gnome-panel/menu-ditem.c:494
+#, c-format
+msgid ""
+"<b>Cannot save menu item to disk</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Ei voi tallentaa valikon kohtaa levylle</b>\n"
+"\n"
+"Lisätiedot: %s"
+
+# gnome-panel/menu-ditem.c:507
+#: gnome-panel/menu-ditem.c:519
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
+"Et voi luoda uutta käynnistintä tähän kohtaan, sillä tähän ei voi kirjoittaa."
+
+# gnome-panel/logout.c:211
+#: gnome-panel/panel-action-button.c:83
+msgid "_Activate Screensaver"
+msgstr "_Käynnistä näytönsäästäjä"
+
+# gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:212
+# gnome-panel/menu.c:3447
+#: gnome-panel/panel-action-button.c:84
+msgid "_Lock Screen"
+msgstr "_Lukitse näyttö"
+
+# gnome-panel/logout.c:213
+#: gnome-panel/panel-action-button.c:85
+msgid "_Kill Screensaver Daemon"
+msgstr "Sulje _näytönsäästäjädemoni"
+
+# gnome-panel/logout.c:214
+#: gnome-panel/panel-action-button.c:86
+msgid "Restart _Screensaver Daemon"
+msgstr "Käynnistä näytönsäästäjädemoni _uudelleen"
+
+# gnome-panel/foobar-widget.c:151 gnome-panel/menu.c:3544
+#: gnome-panel/panel-action-button.c:155
+msgid "Cannot execute gnome-search-tool"
+msgstr "Ei voinut käynnistää gnome-search-tool'ia"
+
+# gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3534
+#: gnome-panel/panel-action-button.c:171
+msgid "Cannot execute gnome-panel-screenshot"
+msgstr "Ei voi käynnistää gnome-panel-screenshot'ia"
+
+# gnome-panel/logout.c:151 gnome-panel/logout.c:170
+#: gnome-panel/panel-action-button.c:191
+msgid "Lock screen"
+msgstr "Lukitse näyttö"
+
+# gnome-panel/logout.c:103
+#: gnome-panel/panel-action-button.c:198
+msgid "Log out of GNOME"
+msgstr "Kirjaudu ulos"
+
+# gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3680
+#: gnome-panel/panel-action-button.c:208
+#, fuzzy
+msgid "Search for Files"
+msgstr "Etsi tiedostoja..."
+
+# gnome-panel/foobar-widget.c:224
+#: gnome-panel/panel-action-button.c:364
+#, fuzzy
+msgid "Action Type"
+msgstr "Toiminnot"
+
+#: gnome-panel/panel-action-button.c:365
+msgid "The type of action this button implements"
+msgstr ""
 
 # gnome-panel/panel-applet-frame.c:180
 #: gnome-panel/panel-applet-frame.c:184
@@ -2644,12 +2783,12 @@ msgstr "_Älä poista"
 
 # gnome-panel/panel-applet-frame.c:922
 #: gnome-panel/panel-applet-frame.c:819
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"There was a problem loading applet '%s'\n"
+"The panel encountered a problem while loading \"%s\"\n"
 "Details: %s\n"
 "\n"
-"Delete this applet from your configuration?"
+"Do you want to delete the applet from your configuration?"
 msgstr ""
 ">Sovelman \"%s\" lataamisessa tapahtui virhe.\n"
 "Lisätietoja: %s\n"
@@ -2660,6 +2799,19 @@ msgstr ""
 #: gnome-panel/panel-applet-frame.c:916
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Ei voi saada AppletShell-rajapintaa säätimeltä\n"
+
+# gnome-panel/panel.c:881
+#: gnome-panel/panel.c:876
+#, c-format
+msgid "Open URL: %s"
+msgstr "Avaa URL: %s"
+
+# gnome-panel/panel.c:2193
+#: gnome-panel/panel.c:2232
+msgid ""
+"No panels were found in your configuration.  I will create a menu panel for "
+"you"
+msgstr "Asetuksissasi ei ole paneelia. Luo siis uuden paneelin"
 
 # gnome-panel/panel-config.c:545
 #. Auto-hide
@@ -2890,6 +3042,24 @@ msgstr "Näytä ohjelmaluettelo oletuksena, kun suorita-laatikko avataan"
 msgid "Show the program listing in the Run box"
 msgstr "Näytä ohjelmaluettelo suorita-laatikossa"
 
+#: gnome-panel/panel-recent.c:55
+msgid "Couldn't find a suitable application"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:78
+msgid ""
+"The default application for this type of file cannot handle remote files"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:135
+#, c-format
+msgid "An unknown error occurred while trying to open %s"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:153
+msgid "Open Recent"
+msgstr ""
+
 # gnome-panel/panel-shell.c:43
 #: gnome-panel/panel-shell.c:43
 msgid ""
@@ -2926,23 +3096,23 @@ msgstr "_Suorita"
 # gnome-panel/panel-util.c:132
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:116 gnome-panel/panel-util.c:146
-#: gnome-panel/panel-util.c:171
+#: gnome-panel/panel-util.c:122 gnome-panel/panel-util.c:152
+#: gnome-panel/panel-util.c:177
 msgid "Help document not found"
 msgstr "Ohjeasiakirjaa ei löydy"
 
 # gnome-panel/panel-util.c:145
-#: gnome-panel/panel-util.c:185
+#: gnome-panel/panel-util.c:191
 msgid "No document to show"
 msgstr "Ei asiakirjaa näytettävänä"
 
 # gnome-panel/panel-util.c:582 gnome-panel/panel-util.c:598
-#: gnome-panel/panel-util.c:626 gnome-panel/panel-util.c:642
+#: gnome-panel/panel-util.c:632 gnome-panel/panel-util.c:648
 msgid "Disabled"
 msgstr "Ei käytössä"
 
 # gnome-panel/menu.c:3389
-#: gnome-panel/panel-util.c:1472
+#: gnome-panel/panel-util.c:1478
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2951,19 +3121,6 @@ msgstr ""
 "<b>Ei voi käynnistää xscreensaveria</b>\n"
 "\n"
 "Lisätiedot: xscreensaver-command ei löytynyt"
-
-# gnome-panel/panel.c:881
-#: gnome-panel/panel.c:876
-#, c-format
-msgid "Open URL: %s"
-msgstr "Avaa URL: %s"
-
-# gnome-panel/panel.c:2193
-#: gnome-panel/panel.c:2232
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
-msgstr "Asetuksissasi ei ole paneelia. Luo siis uuden paneelin"
 
 # libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
@@ -3097,6 +3254,10 @@ msgstr "Erikoissuuri"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Erikoispieni"
+
+# applets/gen_util/mailcheck.schemas.in.h:3
+#~ msgid "Command to execute when the applet is clicked"
+#~ msgstr "Sovelmaa napsautettaessa suoritettava komento"
 
 #~ msgid "1.0"
 #~ msgstr "1.0"
@@ -3245,39 +3406,6 @@ msgstr "Erikoispieni"
 #~ msgid "panel-size-x-small"
 #~ msgstr "panel-size-x-small"
 
-# gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3534
-#~ msgid "Cannot execute gnome-panel-screenshot"
-#~ msgstr "Ei voi käynnistää gnome-panel-screenshot'ia"
-
-# gnome-panel/foobar-widget.c:151 gnome-panel/menu.c:3544
-#~ msgid "Cannot execute gnome-search-tool"
-#~ msgstr "Ei voinut käynnistää gnome-search-tool'ia"
-
 # gnome-panel/logout.c:84
 #~ msgid "Log out"
 #~ msgstr "Kirjaudu ulos"
-
-# gnome-panel/logout.c:103
-#~ msgid "Log out of GNOME"
-#~ msgstr "Kirjaudu ulos"
-
-# gnome-panel/logout.c:151 gnome-panel/logout.c:170
-#~ msgid "Lock screen"
-#~ msgstr "Lukitse näyttö"
-
-# gnome-panel/logout.c:211
-#~ msgid "_Activate Screensaver"
-#~ msgstr "_Käynnistä näytönsäästäjä"
-
-# gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:212
-# gnome-panel/menu.c:3447
-#~ msgid "_Lock Screen"
-#~ msgstr "_Lukitse näyttö"
-
-# gnome-panel/logout.c:213
-#~ msgid "_Kill Screensaver Daemon"
-#~ msgstr "Sulje _näytönsäästäjädemoni"
-
-# gnome-panel/logout.c:214
-#~ msgid "Restart _Screensaver Daemon"
-#~ msgstr "Käynnistä näytönsäästäjädemoni _uudelleen"
