@@ -168,6 +168,9 @@ get_files_from_menudir(char *menudir)
 		if(!string_is_in_list(out,dent->d_name))
 			out = g_list_append(out,g_strdup(dent->d_name));
 	}
+
+	closedir(dir);
+
 	return out;
 }
 
