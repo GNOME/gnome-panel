@@ -969,6 +969,7 @@ init_user_panels(void)
 			case 2: sz = SIZE_LARGE; break;
 			case 3: sz = SIZE_HUGE; break;
 			default: break;
+			}
 		}
 		
 		/*now for type specific config*/
