@@ -515,6 +515,15 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 }
 
 static void
+applet_menu_deactivate(GtkWidget *w, gpointer data)
+{
+	GtkWidget *applet = data;
+	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(applet),
+						 PANEL_APPLET_PARENT_KEY);
+	panel->autohide_inhibit = FALSE;
+}
+
+static void
 create_applet_menu(AppletInfo *info)
 {
 	GtkWidget *menuitem;
@@ -552,6 +561,12 @@ create_applet_menu(AppletInfo *info)
 		gtk_menu_append(GTK_MENU(info->menu), menuitem);
 		gtk_widget_show(menuitem);
 	}
+
+	/*connect the deactivate signal, so that we can "re-allow" autohide
+	  when the menu is deactivated*/
+	gtk_signal_connect(GTK_OBJECT(info->menu),"deactivate",
+			   GTK_SIGNAL_FUNC(applet_menu_deactivate),
+			   info->widget);
 }
 
 static void
@@ -608,14 +623,16 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 }
 
 
-
-
 static void
 show_applet_menu(gint applet_id)
 {
 	AppletInfo *info = get_applet_info(applet_id);
+	PanelWidget *panel;
 
 	g_return_if_fail(info!=NULL);
+
+	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+				    PANEL_APPLET_PARENT_KEY);
 
 	if (!info->menu)
 		create_applet_menu(info);
@@ -630,6 +647,8 @@ show_applet_menu(gint applet_id)
 	else
 	   	gtk_widget_set_sensitive(info->remove_item,TRUE);
 
+	panel->autohide_inhibit = TRUE;
+	panel_widget_queue_pop_down(panel);
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
 		       ITOP(applet_id), 0/*3*/, time(NULL));
 }
@@ -680,15 +699,21 @@ applet_show_menu(gint applet_id)
 {
 	static GdkCursor *arrow = NULL;
 	AppletInfo *info = get_applet_info(applet_id);
+	PanelWidget *panel;
 
 	g_return_if_fail(info != NULL);
+
+	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+				    PANEL_APPLET_PARENT_KEY);
 
 	if (!info->menu)
 		create_applet_menu(info);
 
 	if(!arrow)
 		arrow = gdk_cursor_new(GDK_ARROW);
-
+	
+	panel->autohide_inhibit = TRUE;
+	panel_widget_queue_pop_down(panel);
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
 		       ITOP(applet_id), 0/*3*/, time(NULL));
 	gtk_grab_add(info->menu);

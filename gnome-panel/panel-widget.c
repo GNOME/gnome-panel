@@ -1187,6 +1187,25 @@ move_vert(PanelWidget *panel, gint src_y, gint dest_y, gint step)
 	move_window(GTK_WIDGET(panel), x, dest_y);
 }
 
+static gint
+panel_widget_is_cursor(PanelWidget *panel, int overlap)
+{
+	gint x,y;
+	gint w,h;
+
+	if(!GTK_WIDGET_VISIBLE(GTK_WIDGET(panel)))
+		return FALSE;
+
+	gtk_widget_get_pointer(GTK_WIDGET(panel), &x, &y);
+	gdk_window_get_size(GTK_WIDGET(panel)->window, &w, &h);
+
+	if((x+overlap)>=0 &&
+	   (x-overlap)<=w &&
+	   (y+overlap)>=0 &&
+	   (y-overlap)<=h)
+		return TRUE;
+	return FALSE;
+}
 
 
 void
@@ -1245,11 +1264,17 @@ panel_widget_pop_down(gpointer data)
 	int width, height;
 	int swidth, sheight;
 
+	if(panel->autohide_inhibit)
+		return TRUE;
+
 	if((panel->state != PANEL_SHOWN) ||
 	   (panel->snapped == PANEL_DRAWER) ||
 	   (panel->snapped == PANEL_FREE)) {
-		panel->leave_notify_timer_tag = 0;
-		return FALSE;
+		if(panel_widget_is_cursor(panel,0)) {
+			panel->leave_notify_timer_tag = 0;
+			return FALSE;
+		}
+		return TRUE;
 	}
 	/*we are moving, or have drawers open, so wait with the
 	  pop_down*/
@@ -1554,17 +1579,13 @@ panel_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	return FALSE;
 }
 
-
-static gint
-panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
+void
+panel_widget_queue_pop_down(PanelWidget *panel)
 {
-	PanelWidget *panel = data;
-
 	if ((panel->mode == PANEL_EXPLICIT_HIDE) ||
-	    (event->detail == GDK_NOTIFY_INFERIOR) ||
 	    (panel->state == PANEL_HIDDEN_LEFT) ||
 	    (panel->state == PANEL_HIDDEN_RIGHT))
-		return FALSE;
+		return;
 	
 	/* check if there's already a timeout set, and delete it if 
 	 * there was */
@@ -1575,7 +1596,19 @@ panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	panel->leave_notify_timer_tag =
 		gtk_timeout_add (pw_minimize_delay,
 				 panel_widget_pop_down, panel);
+}
 	
+
+
+static gint
+panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
+{
+	PanelWidget *panel = data;
+	if (event->detail == GDK_NOTIFY_INFERIOR)
+		return FALSE;
+
+	panel_widget_queue_pop_down(panel);
+
 	return FALSE;
 }
 
@@ -1973,6 +2006,8 @@ panel_widget_new (gint size,
 
 	panel->thick = PANEL_MINIMUM_WIDTH;
 
+	panel->autohide_inhibit = FALSE;
+
 	/*sanity sets, ignore settings that would/might cause bad behaviour*/
 	if(snapped == PANEL_FREE) {
 		panel->size = size;
@@ -2198,26 +2233,6 @@ artificial_drag_start (GtkWidget *widget, int x, int y)
 }
 
 #endif
-
-static gint
-panel_widget_is_cursor(PanelWidget *panel, int overlap)
-{
-	gint x,y;
-	gint w,h;
-
-	if(!GTK_WIDGET_VISIBLE(GTK_WIDGET(panel)))
-		return FALSE;
-
-	gtk_widget_get_pointer(GTK_WIDGET(panel), &x, &y);
-	gdk_window_get_size(GTK_WIDGET(panel)->window, &w, &h);
-
-	if((x+overlap)>=0 &&
-	   (x-overlap)<=w &&
-	   (y+overlap)>=0 &&
-	   (y-overlap)<=h)
-		return TRUE;
-	return FALSE;
-}
 
 /*calculates the value to move the applet by*/
 static gint

@@ -776,14 +776,24 @@ panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 	if(*y < 0) *y =0;
 }
 
+static void
+menu_deactivate(GtkWidget *w, gpointer data)
+{
+	PanelWidget *panel = data;
+	panel->autohide_inhibit = FALSE;
+}
+
 
 static int
 panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
+	PanelWidget *panel = PANEL_WIDGET(widget);
 	if((event->button==3 || event->button==1) &&
-	   !PANEL_WIDGET(widget)->currently_dragged_applet) {
+	   !panel->currently_dragged_applet) {
+		panel->autohide_inhibit = TRUE;
+		panel_widget_queue_pop_down(panel);
 		gtk_menu_popup(GTK_MENU(data), NULL, NULL, panel_menu_position,
-			       widget, event->button, time(NULL));
+			       widget, event->button, event->time);
 		return TRUE;
 	}
 	return FALSE;
@@ -861,6 +871,11 @@ panel_setup(PanelWidget *panel)
 			   "destroy",
 			   GTK_SIGNAL_FUNC(panel_destroy),
 			   panel_menu);
+
+	gtk_signal_connect(GTK_OBJECT(panel_menu),
+			   "deactivate",
+			   GTK_SIGNAL_FUNC(menu_deactivate),
+			   panel);
 
 	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panel)))
 		panel_realize(GTK_WIDGET(panel),NULL);

@@ -372,21 +372,45 @@ menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 	if(*y < 0) *y =0;
 }
 
-void
+static void
 destroy_menu (GtkWidget *widget, gpointer data)
 {
 	Menu *menu = data;
 
 	if(menu->menu != root_menu)
 		gtk_widget_unref(menu->menu);
+	else 
+		/*this will disconnect the "deactivate" signal*/
+		gtk_signal_disconnect_by_data(GTK_OBJECT(root_menu),menu);
 	g_free(menu);
 }
+
+static void
+menu_deactivate(GtkWidget *w, gpointer data)
+{
+	Menu *menu = data;
+	PanelWidget *panel =
+		gtk_object_get_data(GTK_OBJECT(menu->button->parent),
+				    PANEL_APPLET_PARENT_KEY);
+	/* allow the panel to hide again */
+	panel->autohide_inhibit = FALSE;
+}
+
+
 
 static gint
 menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
 	Menu *menu = data;
 	if(event->button==1) {
+		PanelWidget *panel =
+			gtk_object_get_data(GTK_OBJECT(menu->button->parent),
+					    PANEL_APPLET_PARENT_KEY);
+		/*so that the panel doesn't pop down until we're done with
+		  the menu */
+		panel->autohide_inhibit = TRUE;
+		panel_widget_queue_pop_down(panel);
+
 		gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
 			       data, event->button, event->time);
 		return TRUE;
@@ -675,6 +699,8 @@ create_panel_menu (char *menudir, int main_menu,
 			    GTK_SIGNAL_FUNC (menu_button_press), menu);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",
 			    GTK_SIGNAL_FUNC (destroy_menu), menu);
+	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
+			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
 
 	g_free (pixmap_name);
 	return menu;

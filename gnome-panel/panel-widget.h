@@ -117,6 +117,8 @@ struct _PanelWidget
 	char                    *back_pixmap;
 	gint			pixmap_enabled;
 	GdkColor		back_color;
+
+	gint			autohide_inhibit;
 };
 
 struct _PanelWidgetClass
@@ -231,6 +233,9 @@ void		panel_widget_change_global	(gint explicit_step,
 
 /*popup the widget if it's popped down (autohide)*/
 void		panel_widget_pop_up		(PanelWidget *panel);
+
+/*queue a pop_down in autohide mode*/
+void		panel_widget_queue_pop_down	(PanelWidget *panel);
 
 void		panel_widget_enable_buttons	(PanelWidget *panel);
 void		panel_widget_disable_buttons	(PanelWidget *panel);

@@ -1,3 +1,13 @@
+Sun May 24 16:45:37 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.[ch]: added que_pop_down and a way to inhibit
+	  the pop_down.
+
+	* main.c, menu.c: use the above to make the panel menu and
+	  "Menu" menus act sanely with autohide
+
+	* panel.c: made applet menus also play nice with autohide
+
 Sun May 24 01:19:50 1998  George Lebl  <jirka@5z.com>
 
 	* main.c, panel.c: if there is no config file, pass a dummy
