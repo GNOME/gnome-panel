@@ -8,6 +8,7 @@ BEGIN_GNOME_DECLS
 #define MENU_ID "Menu"
 #define DRAWER_ID "Drawer"
 #define LOGOUT_ID "Logout"
+#define SWALLOW_ID "Swallow"
 #define EXTERN_ID "Extern"
 
 #define DEFAULT_AUTO_HIDE_STEP_SIZE 10
@@ -40,6 +41,7 @@ typedef enum {
 	APPLET_DRAWER,
 	APPLET_MENU,
 	APPLET_LOGOUT,
+	APPLET_SWALLOW,
 	APPLET_EMPTY
 } AppletType;
 

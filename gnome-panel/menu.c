@@ -9,7 +9,6 @@
 #include <config.h>
 #include <stdio.h>
 #include <sys/stat.h>
-#include <dlfcn.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
