@@ -114,8 +114,6 @@ save_applet_configuration(AppletInfo *info, gint *num)
 
 	g_snprintf(path,256, "%sApplet_%d/", panel_cfg_path, (*num)++);
 
-	gnome_config_clean_section(path);
-
 	if(info->type==APPLET_EXTERN) {
 		/*sync before the applet does it's stuff*/
 		gnome_config_sync();
@@ -257,8 +255,16 @@ panel_session_save (GnomeClient *client,
 		new_args[2] = session_id;
 		gnome_client_set_discard_command (client, 3, new_args);
 	}
+	
+	printf("Saving to [%s]\n",panel_cfg_path);
 
-	gnome_config_clean_file(panel_cfg_path);
+	/*take out the trailing / then call the clean_file function, otherwise it will make
+	  runaway directories*/
+	buf = g_strdup(panel_cfg_path);
+	if(buf && *buf)
+		buf[strlen(buf)-1]='\0';
+	gnome_config_clean_file(buf);
+	g_free(buf);
 
 	/*DEBUG*/printf("Saving session: 1"); fflush(stdout);
 	for(num=1,i=0;i<applet_count;i++)
