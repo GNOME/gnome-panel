@@ -231,7 +231,7 @@ panel_gconf_add_dir (const gchar *key) {
 gboolean
 panel_gconf_dir_exists (const gchar *key) {
 	GError   *error = NULL;
-	gboolean  retval;
+	gboolean  retval = FALSE;
 
 	g_return_val_if_fail (key != NULL, FALSE);
 	

@@ -923,7 +923,7 @@ panel_applet_load_applets_from_gconf (void)
       	char     *profile_key;
 	gboolean  use_default = FALSE;
 
-	profile_key = g_strdup_printf ("/apps/panel/profiles/%s", session_get_current_profile ());
+	profile_key = g_strdup_printf ("/apps/panel/profiles/%s/objects", session_get_current_profile ());
 
 	if (panel_gconf_dir_exists (profile_key) == FALSE)
 		use_default = TRUE;

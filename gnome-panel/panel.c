@@ -2244,7 +2244,7 @@ panel_session_init_panels(void)
 	GSList *temp;
 	gchar *timestring;
 	
-	panel_profile_key = g_strdup_printf ("/apps/panel/profiles/%s", session_get_current_profile ());
+	panel_profile_key = g_strdup_printf ("/apps/panel/profiles/%s/panels", session_get_current_profile ());
 
 #ifdef PANEL_SESSION_DEBUG
 	printf ("Current profile is %s\n", session_get_current_profile ());
@@ -2786,7 +2786,7 @@ panel_session_remove_panel_from_config (PanelWidget *panel) {
 #ifdef PANEL_SESSION_DEBUG
 	printf ("We are removing the configuration for panel id : %s\n", panel->unique_id);
 #endif
-        panel_profile_key = g_strdup_printf ("/apps/panel/profiles/%s", session_get_current_profile ());
+        panel_profile_key = g_strdup_printf ("/apps/panel/profiles/%s/panels", session_get_current_profile ());
 
         if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
 #ifdef PANEL_SESSION_DEBUG
