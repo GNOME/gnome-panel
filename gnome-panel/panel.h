@@ -52,10 +52,10 @@ typedef struct _AppletUserMenu AppletUserMenu;
 typedef struct _AppletInfo AppletInfo;
 
 struct _AppletUserMenu {
-	gchar *name;
-	gchar *stock_item;
-	gchar *text;
-	gint applet_id;
+	char *name;
+	char *stock_item;
+	char *text;
+	int applet_id;
 	GtkWidget *menuitem;
 	GtkWidget *submenu;
 };
@@ -69,30 +69,30 @@ struct _AppletInfo {
 	GtkWidget *menu; /*the applet menu*/
 	GtkWidget *remove_item; /*remove item in the applet_menu*/
 	gpointer data;
-	gchar *id_str; /*used for IOR or string Id*/
-	gchar *cfg; /*used for passing around the per applet config path*/
-	gchar *path; /*used for path on external applets */
-	gchar *params; /*used for parameters to applets */
+	char *id_str; /*used for IOR or string Id*/
+	char *cfg; /*used for passing around the per applet config path*/
+	char *path; /*used for path on external applets */
+	char *params; /*used for parameters to applets */
 	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
-	gint destroy_callback;
+	int destroy_callback;
 };
 
 
 
-gint panel_session_save (GnomeClient *client,
-			 gint phase,
+int panel_session_save (GnomeClient *client,
+			 int phase,
 			 GnomeSaveStyle save_style,
-			 gint shutdown,
+			 int shutdown,
 			 GnomeInteractStyle interact_style,
-			 gint fast,
+			 int fast,
 			 gpointer client_data);
 
-gint panel_session_die (GnomeClient *client,
+int panel_session_die (GnomeClient *client,
 			gpointer client_data);
 
 GtkWidget * create_panel_root_menu(PanelWidget *panel);
 
-gint register_toy(GtkWidget *applet,
+int register_toy(GtkWidget *applet,
 		  GtkWidget *assoc,
 		  gpointer data,
 		  char *id_str,
@@ -109,11 +109,11 @@ void panel_sync_config(void);
 
 void apply_global_config(void);
 
-void panel_clean_applet(gint applet_id);
+void panel_clean_applet(int applet_id);
 
 /*stuff for corba*/
 int applet_request_id (const char *path, const char *param,
-		       gint dorestart, char **cfgpath,
+		       int dorestart, char **cfgpath,
 		       char **globcfgpath, guint32 *winid);
 void applet_register (const char * ior, int applet_id);
 void applet_request_glob_cfg (char **globcfgpath);
@@ -121,21 +121,21 @@ guint32 reserve_applet_spot (const char *id_str, const char *path,
 			     const char *param,
 			     int panel, int pos, char *cfgpath,
 			     AppletType type);
-void applet_abort_id(gint applet_id);
-int applet_get_panel(gint applet_id);
-int applet_get_pos(gint applet_id);
-PanelOrientType applet_get_panel_orient(gint applet_id);
-void applet_show_menu(gint applet_id);
-void applet_drag_start(gint applet_id);
-void applet_drag_stop(gint applet_id);
-void applet_add_callback(gint applet_id,
+void applet_abort_id(int applet_id);
+int applet_get_panel(int applet_id);
+int applet_get_pos(int applet_id);
+PanelOrientType applet_get_panel_orient(int applet_id);
+void applet_show_menu(int applet_id);
+void applet_drag_start(int applet_id);
+void applet_drag_stop(int applet_id);
+void applet_add_callback(int applet_id,
 			 char *callback_name,
 			 char *stock_item,
 			 char *menuitem_text);
-void applet_remove_callback(gint applet_id,
+void applet_remove_callback(int applet_id,
 			    char *callback_name);
-void applet_set_tooltip(gint applet_id, const char *tooltip);
-void applet_remove_from_panel(gint applet_id);
+void applet_set_tooltip(int applet_id, const char *tooltip);
+void applet_remove_from_panel(int applet_id);
 
 extern char *cookie;
 
@@ -145,15 +145,15 @@ extern char *cookie;
 
 /*a few macros to reduce compiler warnings*/
 #if (SIZEOF_INT == SIZEOF_VOID_P)
-#	define PTOI(p) (gint)((gpointer)p)
-#	define ITOP(i) (gpointer)((gint)i)
+#	define PTOI(p) (int)((gpointer)p)
+#	define ITOP(i) (gpointer)((int)i)
 #elif (SIZEOF_LONG == SIZEOF_VOID_P)
-#	define PTOI(p) (glong)((gpointer)p)
-#	define ITOP(i) (gpointer)((glong)i)
+#	define PTOI(p) (long)((gpointer)p)
+#	define ITOP(i) (gpointer)((long)i)
 /*I doubt there is a such a platform, but why not*/
 #elif (SIZEOF_SHORT == SIZEOF_VOID_P)
-#	define PTOI(p) (gshort)((gpointer)p)
-#	define ITOP(i) (gpointer)((gshort)i)
+#	define PTOI(p) (short)((gpointer)p)
+#	define ITOP(i) (gpointer)((short)i)
 #endif
 
 END_GNOME_DECLS
