@@ -1,3 +1,8 @@
+2002-10-01  Mark McLoughlin  <mark@skynet.ie>
+
+	* clock.c: (update_timeformat): don't use leading 0
+	for 12 hour timeformat. Fixes #94268.
+
 2002-09-23  Havoc Pennington  <hp@redhat.com>
 
 	* clock.c (destroy_clock): free the timeformat string

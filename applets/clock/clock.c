@@ -168,9 +168,9 @@ update_timeformat(ClockData *cd)
 
 	if (cd->hourformat == 12) {
 		if (cd->showseconds)
-			time = _("%I:%M:%S %p");
+			time = _("%l:%M:%S %p");
 		else
-			time = _("%I:%M %p");
+			time = _("%l:%M %p");
 	} else {
 		if (cd->showseconds)
 			time = _("%H:%M:%S");
