@@ -104,6 +104,8 @@ save_applet_configuration(AppletInfo *info, gint *num)
 
 	g_snprintf(path,256, "%sApplet_%d/", panel_cfg_path, (*num)++);
 
+	gnome_config_clean_section(path);
+
 	if(info->type==APPLET_EXTERN) {
 		/*sync before the applet does it's stuff*/
 		gnome_config_sync();

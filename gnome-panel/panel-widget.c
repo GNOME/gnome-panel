@@ -2604,6 +2604,9 @@ panel_widget_make_empty_pos(PanelWidget *panel, gint pos)
 		if(list)
 			rad = list->data;
 
+		if(ad->pos+ad->cells < rad->pos)
+			return ad->pos+ad->cells;
+
 		if(panel_widget_push_right(panel,rad))
 			return rad->pos-1;
 		if(panel_widget_push_left(panel,ad))
