@@ -1016,8 +1016,14 @@ add_to_run_dialog (GtkWidget *widget, const char *item_loc)
 	GnomeDesktopEntry *item =
 		gnome_desktop_entry_load_unconditional (item_loc);
 	if (item != NULL) {
-		if (item->exec != NULL) {
-			char *s = g_strjoinv (" ", item->exec);
+		if (item->exec != NULL &&
+		    item->exec[0] != NULL) {
+			char *s;
+			char **cmd = item->exec;
+			if (strcmp (cmd[0], "NO_XALF") == 0) {
+				cmd++;
+			}
+			s = g_strjoinv (" ", cmd);
 			show_run_dialog_with_text (s);
 			g_free (s);
 		} else {
