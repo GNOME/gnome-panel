@@ -1,0 +1,61 @@
+
+
+
+
+
+
+
+
+
+Things to do on the panel, in no particular order:
+
+1.4 items
+
+* Control nautilus from the foobar desktop menu.  Layout is in gconf, so
+  use gconf-tool there
+
+[ Hmmmm ... needs some thought ]
+* RootApplication dentry type support.  These would be items to run other apps
+  as root.  This would require pam support of course.  So for things like
+  GnoRPM you could have the normal Application dentry and a RootApplication
+  dentry which would launch it in a mode where it would ask for password and
+  run as root.  This would only be activated if "root application support"
+  was toggled on somewhere (global prefs I guess).  This is high priority
+
+* Perhaps the default folder icon should use the nautilus default folder icon,
+  if it is set, so that it matches the theme.  Low priority, but perhaps would
+  be nice.
+
+Vertigo/2.0 items
+
+* Make menu draggable, there is a problem, since the button grabs the pointer,
+  and thus makes the menu button non-dragable (the drag will never trigger),
+  This is a very low priority thing.
+
+* Tasklist panel that works sort of like BeOS deskbar or whatever that's called
+  or like win95 taskbar, with all the hiding etc... [ Probably NOT!,
+  the current tasklist applet can work this way sort of ona  vertical panel ]
+
+* Bonobo the whole bit, that is:  Make the whole thing bonobo components, to
+  allow even customization of the panel from outside.  Also the applets would
+  become bonobo controls.
+
+* GConf/PonG using configuration boxes
+
+* tabbed panels, these could be done in a variety of ways, such as a
+  rotating block, real tabs, scrolling
+
+* add a way to do drawers where it would be just a thin button on the side
+  of a launcher, like it is in say os/2 or cde (it would not be the default
+  mode, but an option)
+
+* stretch hint for applets so that the panel can optionally stretch applets if
+  it has the space and shrink em down again once it needs the space again
+
+* make vertical explicit hide with a thin long button along the edge of the
+  panel rather then on the sides. (the motion would be like it is in
+  autohide.) Though I guess the current should be default as it's less
+  wastefull for space.
+
+* full panel collision avoidance, allow multiple panels in the same location
+  on the edge and stack em, etc...
