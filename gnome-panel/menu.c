@@ -1291,9 +1291,6 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			if ( ! sim->applet)
 				setup_menuitem (menuitem, NULL,
 						_("Add this launcher to panel"));
-			else
-				setup_menuitem (menuitem, NULL,
-						_("Add this applet as a launcher to panel"));
 			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 					    G_CALLBACK(add_app_to_panel),
@@ -3095,40 +3092,11 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 static void
 make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 {
-	GtkWidget *menuitem, *submenu, *submenuitem, *m;
+	GtkWidget *menuitem, *m;
 
 	/* Add Menu */
 
 	m = create_applets_menu (menu);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (menuitem, 
-				   "gnome-gmenu.png",
-				   _("Menu"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-
-	submenu = menu_new ();
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
-
-	submenuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (submenuitem,
-				   "gnome-logo-icon-transparent.png",
-				   _("Main menu"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), submenuitem);
-	g_signal_connect (G_OBJECT(submenuitem), "activate",
-			   G_CALLBACK(add_menu_to_panel),
-			   NULL);
-	setup_internal_applet_drag(submenuitem, "MENU:MAIN");
-
-	submenuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (submenuitem, 
-				   "gnome-logo-icon-transparent.png",
-				   _("Programs menu"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), submenuitem);
-	g_signal_connect (G_OBJECT(submenuitem), "activate",
-			   G_CALLBACK(add_menu_to_panel),
-			   "applications:/");
-	setup_internal_applet_drag(submenuitem, "MENU:applications:/");
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
@@ -3147,6 +3115,16 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), m);
 	g_signal_connect (G_OBJECT (m),"show",
 			  G_CALLBACK (submenu_to_display), NULL);
+	
+  	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem_try_pixmap (menuitem,
+				   "gnome-logo-icon-transparent.png",
+				   _("GNOME menu"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (G_OBJECT(menuitem), "activate",
+			   G_CALLBACK(add_menu_to_panel),
+			   NULL);
+	setup_internal_applet_drag(menuitem, "MENU:MAIN");
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 

@@ -14,6 +14,7 @@
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
 #include <libgnome/gnome-macros.h>
+#include <libgnomeui/gnome-window-icon.h>
 #include "panel-marshal.h"
 #include "panel-widget.h"
 #include "basep-widget.h"
@@ -1624,7 +1625,16 @@ basep_widget_construct (gchar *panel_id,
 {
 	BasePPosClass *klass = basep_widget_get_pos_class (basep);
 	int x = 0, y = 0;
+	char *panel_icon;
 	GList *focus_chain = NULL;
+
+	panel_icon = panel_pixmap_discovery ("gnome-panel.png", 
+					     FALSE);
+
+	if (panel_icon) {
+		gnome_window_icon_set_default_from_file (panel_icon);
+		g_free (panel_icon);
+	}
 
 	basep->panel = panel_widget_new(panel_id,
 					packed,

@@ -44,12 +44,12 @@ STANDARD_PROPERTIES_CFLAGS = 					\
 	$(NULL)
 
 bin_PROGRAMS = \
-	gnome-panel-2 			\
+	gnome-panel 			\
 	gnome-panel-properties		\
 	gnome-panel-screenshot		\
 	gnome-desktop-item-edit
 
-$(gnome_panel_2_OBJECTS) $(gnome_panel_properties_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
+$(gnome_panel_OBJECTS) $(gnome_panel_properties_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
 
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
@@ -153,18 +153,18 @@ panel_headers =			\
 	panel-shell.h		\
 	$(NULL)
 
-gnome_panel_2_SOURCES =		\
+gnome_panel_SOURCES =		\
 	$(CORBA_SRCLIST)	\
 	$(panel_sources)	\
 	$(panel_headers)	\
 	$(NULL)
 
-gnome_panel_2_LDADD =		\
+gnome_panel_LDADD =		\
 	$(X_LIBS)		\
 	$(PANEL_LIBS)		\
 	$(XINERAMA_LIBS)
 
-gnome_panel_2_LDFLAGS = -export-dynamic
+gnome_panel_LDFLAGS = -export-dynamic
 
 gnome_panel_properties_SOURCES = gnome-panel-properties.c panel-util.c
 

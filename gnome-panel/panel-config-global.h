@@ -31,7 +31,7 @@ typedef struct {
  * run-key
  * window-screenshot-key
  *
- * autoraise-panel
+ * auto-raise-panel
  * panel-window-layer
  *
  * drawer-autoclose

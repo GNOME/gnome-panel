@@ -1,3 +1,36 @@
+2002-03-12  Glynn Foster <glynn.foster@sun.com>
+
+	* Makefile.am: s/gnome-panel-2/gnome-panel
+
+	* basep-widget.c: (basep_widget_construct): Add window icon
+	so that we show up nicely in gnome-system-monitor.
+	* foobar-widget.c: (foobar_widget_new): ditto
+
+	* gnome-desktop-item-edit.c: (main): fix warning
+
+	* gnome-panel-properties.c: (main): 
+	s/Panel Global Properties/Global Panel Properties/
+	* gnome-panel-properties.glade: Rename some strings according
+	to usability/doc wishes.
+
+	* main.c: (main): s/panel/gnome-panel/ so that we show up 
+	nicely in gnome-system-monitor
+	
+	* menu-util.[ch]: (got_distro_menus), (get_real_menu_path),
+	(get_pixmap): Remove these functions and put into menu-util.[ch]
+	with a view to EOL'ing menu-properties.[ch]
+
+	* menu.c: (show_item_menu), (make_add_submenu): 
+        
+	Remove the Add to Panel -> Menu layer so that we can
+        only add a 'GNOME Menu' now. We need to proceed to make sure
+        that we can't edit the preferences of this for the time being
+        until we get some plan sorted out. Part of #73511.
+
+	* panel-config-global.h, panel-global-config.schemas, panel.c: 
+	s/autoraise-panel/auto-raise-panel/ Fixes #74027. Also remove
+	duplicate entry from schema file.
+	
 2002-03-12  Michael Meeks  <michael@ximian.com>
 
 	* panel-util.c (panel_is_uri_writable): actually return

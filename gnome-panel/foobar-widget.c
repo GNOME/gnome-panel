@@ -1225,6 +1225,7 @@ GtkWidget *
 foobar_widget_new (const char *panel_id, int screen)
 {
 	FoobarWidget *foo;
+	char *panel_icon;
 
 	g_return_val_if_fail (screen >=0, NULL);
 
@@ -1232,6 +1233,14 @@ foobar_widget_new (const char *panel_id, int screen)
 		return NULL;
 
 	foo = g_object_new (FOOBAR_TYPE_WIDGET, NULL);
+
+        panel_icon = panel_pixmap_discovery ("gnome-panel.png",
+                                             FALSE);
+
+        if (panel_icon) { 
+                gnome_window_icon_set_default_from_file (panel_icon);
+                g_free (panel_icon);
+        }
 
 	/* Ugly hack to reset the unique id back to the original one */	
 	if (panel_id != NULL) 

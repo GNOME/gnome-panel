@@ -74,7 +74,7 @@ unset GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL
 %post
 /sbin/ldconfig
 export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-for SCHEMA in %{_sysconfdir}/gconf/schemas/{mailcheck,pager,panel-global-config.schemas,panel-per-panel-config,fish,tasklist}.schemas; do
+for SCHEMA in %{_sysconfdir}/gconf/schemas/{mailcheck,pager,panel-global-config,panel-per-panel-config,fish,tasklist}.schemas; do
 gconftool-2 --makefile-install-rule $SCHEMA > /dev/null 2>&1
 done
 
@@ -108,6 +108,9 @@ done
 
 
 %changelog
+* Tues Mar 12 2002 <glynn.foster@sun.com>
+- fix up gconf schema install
+
 * Mon Mar  4 2002  <gleblanc@linuxweasel.com>
 - made into a proper .spec.in, using the magic version numbers and such
 

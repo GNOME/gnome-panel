@@ -1971,7 +1971,7 @@ panel_save_global_config (void)
 	gconf_change_set_set_string (change_set, full_key, global_config.window_screenshot_key.str);
 	g_free (full_key);
 
-	full_key = panel_gconf_global_key ("autoraise-panel");
+	full_key = panel_gconf_global_key ("auto-raise-panel");
 	gconf_change_set_set_bool (change_set, full_key, global_config.autoraise);
 	g_free (full_key);
 

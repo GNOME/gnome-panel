@@ -414,7 +414,7 @@ main (int argc, char **argv)
 	}
 
 	gtk_window_set_title(GTK_WINDOW(main_window),
-		_("Panel Global Properties"));
+		_("Global Panel Properties"));
 
 	panel_icon = gnome_program_locate_file (
 			NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-panel.png", TRUE, NULL);

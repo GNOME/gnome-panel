@@ -180,7 +180,7 @@ main(int argc, char **argv)
 	 */
 	putenv ("BONOBO_ACTIVATION_DEBUG_OUTPUT=1");
 
-	gnome_program_init ("panel", VERSION,
+	gnome_program_init ("gnome-panel", VERSION,
 			    LIBGNOMEUI_MODULE,
 			    argc, argv,
 			    GNOME_PARAM_POPT_TABLE, options,

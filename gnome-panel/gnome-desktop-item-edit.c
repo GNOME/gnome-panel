@@ -69,7 +69,7 @@ main(int argc, char * argv[])
 
 	for (i = 0; desktops[i] != NULL; i++) {
 		char *uri = g_strdup (desktops[i]);
-		GtkWidget *dlg;
+		GtkWidget *dlg = NULL;
 
 		gnome_vfs_file_info_clear (info);
 
