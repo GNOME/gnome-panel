@@ -1,3 +1,15 @@
+2002-11-28  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-util.[ch]: (panel_ditem_launch):
+	use gnome_desktop_item_launch_on_screen so
+	that startup notification can work correctly.
+	Also change the order of the arguments to
+	reflect libgnome-desktop
+
+	* gnome-run.c: (launch_selected):
+	* launcher.c: (launch_cb):
+	* menu.c: (activate_app_def): upd.
+
 2002-11-27  Stanislav Brabec  <sbrabec@suse.cz>
 
 	* distribution.c: Updated path to SuSE distribution menu.

@@ -256,8 +256,9 @@ launch_selected (GtkTreeModel *model,
 					terminal->active);
 
 	if (!panel_ditem_launch (
+			ditem, NULL, 0,
 			gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-			ditem, NULL, 0, &error)) {
+			 &error)) {
 		panel_error_dialog (
 			gtk_window_get_screen (GTK_WINDOW (run_dialog)),
 			"failed_to_load_desktop",

@@ -344,8 +344,8 @@ activate_app_def (GtkWidget  *menuitem,
 			&error);
 
 	if (item) {
-		panel_ditem_launch (menuitem_to_screen (menuitem),
-				    item, NULL, 0, &error);
+		panel_ditem_launch (
+			item, NULL, 0, menuitem_to_screen (menuitem), &error);
 		if (error) {
 			panel_error_dialog (
 				menuitem_to_screen (menuitem),

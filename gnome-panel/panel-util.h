@@ -43,11 +43,11 @@ GtkWidget *	create_icon_entry	(GtkWidget *table,
 					 UpdateFunction func,
 					 gpointer data);
 
-int             panel_ditem_launch         (GdkScreen    *screen,
-					    const GnomeDesktopItem *item,
-					    GList        *file_list,
-					    GnomeDesktopItemLaunchFlags flags,
-					    GError      **error);
+int             panel_ditem_launch         (const GnomeDesktopItem       *item,
+					    GList                        *file_list,
+					    GnomeDesktopItemLaunchFlags   flags,
+					    GdkScreen                    *screen,
+					    GError                      **error);
 GdkScreen      *panel_screen_from_number   (int           screen);
 
 

@@ -131,8 +131,8 @@ launch_cb (GtkWidget *widget,
 	else {
 		GError *error = NULL;
 
-		panel_ditem_launch (launcher_get_screen (launcher),
-				    item, NULL, 0, &error);
+		panel_ditem_launch (
+			item, NULL, 0, launcher_get_screen (launcher), &error);
 		if (error) {
 			panel_error_dialog (
 				launcher_get_screen (launcher),

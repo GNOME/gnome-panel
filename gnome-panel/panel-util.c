@@ -32,6 +32,9 @@
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 
+#include <libwnck/screen.h>
+#include <libwnck/workspace.h>
+
 #include "panel-util.h"
 
 #include "applet.h"
@@ -56,24 +59,27 @@ panel_screen_from_number (int screen)
 }
 
 int
-panel_ditem_launch (GdkScreen                    *screen,
-		    const GnomeDesktopItem       *item,
+panel_ditem_launch (const GnomeDesktopItem       *item,
 		    GList                        *file_list,
 		    GnomeDesktopItemLaunchFlags   flags,
+		    GdkScreen                    *screen,
 		    GError                      **error)
 {
-	char **envp = NULL;
-	int    retval;
+	WnckScreen *wnck_screen = NULL;
+	int         workspace;
 
-	if (gdk_screen_get_default () != screen)
-		envp = egg_screen_exec_environment (screen);
+	if (screen)
+		wnck_screen = wnck_screen_get (
+				gdk_screen_get_number (screen));
 
-	retval = gnome_desktop_item_launch_with_env (
-			item, file_list, flags, envp, error);
+	if (!wnck_screen)
+		wnck_screen = wnck_screen_get_default ();
 
-	g_strfreev (envp);
+	workspace = wnck_workspace_get_number (
+			wnck_screen_get_active_workspace (wnck_screen));
 
-	return retval;
+	return gnome_desktop_item_launch_on_screen (
+			item, file_list, flags, screen, workspace, error);
 }
 
 void
