@@ -19,6 +19,13 @@ module GNOME {
 
 	typedef Bonobo::PropertySet ExtraAttributes;
 
+	enum Encoding {
+	    ENCODING_NONE,
+	    ENCODING_UNKNOWN,
+	    ENCODING_UTF8,
+	    ENCODING_LEGACY_MIXED
+	};
+
 	enum EntryType {
 	    ENTRY_TYPE_UNKNOWN,
 	    ENTRY_TYPE_APPLICATION,
