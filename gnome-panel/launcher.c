@@ -115,7 +115,11 @@ create_launcher (GtkWidget *window, char *parameters)
 	launcher = g_new(Launcher,1);
 
 	launcher->button = gtk_button_new ();
-	pixmap = gnome_pixmap_new_from_file (dentry->icon);
+	pixmap = NULL;
+	if(dentry->icon)
+		pixmap = gnome_pixmap_new_from_file (dentry->icon);
+	else
+		pixmap = NULL;
 	if (!pixmap) {
 		if (default_app_pixmap)
 			pixmap = gnome_pixmap_new_from_file (default_app_pixmap);
