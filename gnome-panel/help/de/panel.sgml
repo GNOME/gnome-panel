@@ -725,254 +725,265 @@
 
   <!-- ########### Menus  ############## -->
   <sect1 id="menus">
-    <title>Menus</title>
+    <title>Menüs</title>
     <para>
-   In addition to the <guimenu>Hauptmenü</guimenu>, discussed in <xref
-	linkend="mainmenu">, you can also add "normal menus" to a
-   <interface>Panel</interface>. An example menu, in this case a
-   <guimenu>Favoriten</guimenu> menu containing three application
-   launchers and one submenu titled <guisubmenu>Games</guisubmenu>, is
-   shown in <xref linkend = "example-menu-fig">. Unlike the
-   <guimenu>Hauptmenü</guimenu>, normal menus only contain whatever
-   launchers and submenus you place in them - no default submenus,
-   <guimenuitem>Run...</guimenuitem> command, etc. as the <guimenu>Main
-   Menu</guimenu> has.  You can also add any submenu of your
-   <guimenu>Favoriten</guimenu> menu or the
-   <guimenu>Programs</guimenu> menu as a separate menu to a
-   <interface>Panel</interface>; to do so, bring up this submenu from
-   the <guimenu>Hauptmenü</guimenu>,  right click on the submenu
-   title, and select <guimenuitem>Add this as menu to
-   panel</guimenuitem>.
-  </para>
+      Zusätzlich zum unter <xref linkend="mainmenu"> besprochenen
+      <guimenu>Hauptmenü</guimenu> können Sie auch "normale" Menüs in ein
+      <interface>Panel</interface> einfügen. Ein Beispiel-Menü, in diesem
+      Falle ein drei Applikationen und ein <guisubmenu>Spiele</guisubmenu>
+      Untermenü enthaltenes <guimenu>Favoriten</guimenu>-Menü, wird in
+      <xref linkend = "example-menu-fig"> gezeigt. Anders als das
+      <guimenu>Hauptmenü</guimenu> enthalten normale Menüs nur die Starter
+      und Untermenüs, die Sie in ihnen plazieren, also keine Standard-Untermenüs,
+      <guimenuitem>Ausführen...</guimenuitem>-Befehle etc., die das
+      <guimenu>Hauptmenü</guimenu> hat. Sie können außerdem jedes Untermenü
+      Ihres <guimenu>Favoriten</guimenu>-Menüs oder Ihres
+      <guimenu>Programe</guimenu>-Menüs als separates Menü in ein
+      <interface>Panel</interface> einfügen; wählen Sie dazu einfach das
+      gewünschte Untermenü aus, rechtsklicken Sie auf seinen Titel und
+      wählen <guimenuitem>Dies als Menu im Panel hinzufügen</guimenuitem>.
+    </para>
     <figure id="example-menu-fig">
-      <title>An Example Menu</title>
+      <title>Ein Beispiel-Menü</title>
       <screenshot>
-	<screeninfo>An Example Menu</screeninfo>
+	<screeninfo>Ein Beispiel-Menü</screeninfo>
 	<graphic fileref="./figures/example_menu" format="png"
-     srccredit="muet">
-     </graphic>
+	  srccredit="muet">
+	</graphic>
       </screenshot>
     </figure>
 
     <sect2 id="addingmenus">
-      <title>Adding a Menu to a Panel</title>  <para>     To learn how
-    to add a menu to a <interface>Panel</interface>, see <xref
-	  linkend="add">.
-    </para>
+      <title>Ein Menü zum Panel hinzufügen</title>
+
+      <para>
+	Um zu erfahren, wie man ein Menü zu einem
+	<interface>Panel</interface> hinzufügt, sehen Sie bitte
+	unter <xref linkend="add"> nach.
+      </para>
     </sect2>
 
     <sect2 id="tearoff">
-      <title>Tearing Off a Menu</title>
+      <title>Ein Menü Abreißen</title>
       <para>
-    All menus in GNOME have the tear-off feature: if you left-click on
-    the "perforation" (thin dashed line at the top of the menu, right
-    above the menu title), the menu will be turned into a separate
-    window on your desktop, which will stay there even after you move
-    the mouse cursor elsewhere. This is very convenient if you will be
-    using the same command from some deeply nested submenu
-    frequently. To remove a "torn-off" menu from your desktop, click
-    on the <guibutton>Close</guibutton> button in the window title
-    (its appearance and location depends on the window manager you are
-    using, but usually it is the rightmost button, labelled by an "x").
-   </para>
+	Alle Menüs in GNOME sind abreißbar: wenn Sie mit der linken
+	Maustaste auf die "Perforation" (dünne gestrichelte Linie oben
+	am Menü, oberhalb seines Titels) klicken, verwandelt sich das
+	Menü in ein eigenständiges Fenster auf dem Desktop, welches selbst
+	sichtabar und an Ort und Stelle bleibt, wenn Sie die Maus bewegen.
+	Dies ist sehr hilfreich, wenn Sie denselben Befehl von einem
+	tiefgeschachtelten Untermenü mehrmals verwenden möchten. Um ein
+	"abgerissenes" Menü wieder zu entfernen, klicken Sie auf den
+	<guibutton>Schließen</guibutton>-Knopf im Fenster-Titel (Position
+	und Aussehen hängen vom Fenstermanager ab, aber es ist meistens der
+	am meisten rechts befindliche Knopf, mit "X" beschriftet).
+      </para>
     </sect2>
 
     <sect2 id="menusconf">
-      <title> Configuring a Menu</title>
+      <title>Ein Menü konfigurieren</title>
       <para>
-     You can easily change a menu name and icon (for user menus
-     only, not for submenus taken from the <guimenu>Main
-     Menu</guimenu>). To do so, click on the menu, right-click
-     on the menu title (at the very top of the list, above all other
-     items), and select <guimenuitem>Eigenschaften&hellip;</guimenuitem>
-     from the pop-up menu. This will bring up the 
-     <interface>Desktop Entry Eigenschaften</interface> dialog, quite similar to
-     the <link linkend="launchers"><interface>Launcher
-     Eigenschaften</interface> dialog</link>. 
-    </para>
-      <para>  
-     To add a new item to the menu, click on the menu button,
-     right-click on the Menu name, and select <guimenuitem>Add new
-     item to this menu</guimenuitem>. This will bring  up
-     <interface>Create Menu Item</interface> dialog, in which you
-     can enter the menu item name, comment, command, and type (see <xref
-	  linkend="launchers"> for more information).  To remove an item
-     from the menu, right-click on the item and choose <guimenuitem>Remove
-     this item</guimenuitem>.
-    </para>
+	Name und Icon eines Menüs (nur für Benutzer-Menüs, nicht für
+	Untermenüs des <guimenu>Hauptmenüs</guimenu>) lassen sich leicht
+	ändern. Klicken Sie dazu zuerst auf das Menü, dann rechtsklicken Sie
+	auf den Menü-Titel (ganz oben im Menü, über all seinen Einträgen) und
+	wählen <guimenuitem>Eigenschaften&hellip;</guimenuitem> aus dem
+	<guimenu>Kontext-Menü</guimenu>. Dies bringt den
+	<interface>Desktopeintrags-Eigenschaften</interface>-Dialog zum
+	Vorschein, der dem <link linkend="launchers"><interface>Starter-Eigenschaften</interface>-Dialog</link> sehr ähnlich ist.
+      </para>
       <para>
-     Finally, a frequently asked question is "How I can change the
-     font and the background used by the menus?" The answer is that it
-     is determined by the current GTK Theme, which can be changed
-     using the <application>GNOME Control Center</application> by
-     selecting <menuchoice> <guimenu>Hauptmenü</guimenu>
-	  <guisubmenu>Settings</guisubmenu>
-	  <guisubmenu>User Interface</guisubmenu>
+	Um einen neuen Eintrag zu einem Menü hinzuzufügen, klicken Sie zunächst
+	auf dem Menü-Knopf, dann mit der rechten Maustaste auf den Menü-Namen
+	und wählen <guimenuitem>Neuen Eintrag zu persönlichem Menü hinzufügen</guimenuitem> im <guimenu>Kontext-Menü</guimenu>. Dies bringt den
+	<interface>Einen neuen Menüeintrag erzeugen</interface>-Dialog zum
+	Vorschein, in dem Sie Namen des Menüeintrags, einen Kommentar, den
+	auszuführenden Befehl und Typ des Menüeintrags (siehe
+	<xref linkend="launchers"> für nähere Informationen) eingeben können.
+	Um einen Eintrag aus einem Menü zu entfernen, rechtsklicken Sie darauf
+	und wählen Sie <guimenuitem>Diesen Eintrag entfernen</guimenuitem>.
+      </para>
+      <para>
+	Zum Schluß eine häufig gestellte Frage, nämlich wie man die
+	Schriftart und den Hintergrund eines Menüs ändert. Die Antwort darauf
+	ist, das dies vom gegenwärtigen GTK-Theme abhängt, welches sich im
+	<application>GNOME Kontrollzentrum</application> ändern läßt, und
+	zwar über <menuchoice> <guimenu>Hauptmenü</guimenu>
+	  <guisubmenu>Einstellungen</guisubmenu>
+	  <guisubmenu>Benutzerinterface</guisubmenu>
 	  <guimenuitem>Themes</guimenuitem> 
 	</menuchoice>.
-    </para>
+      </para>
     </sect2>
   </sect1>
 
 
   <!-- ###########  Launchers  ############## -->
   <sect1 id="launchers">
-    <title>Launchers</title>
+    <title>Starter</title>
     <para>
-   Launchers are essentially buttons which reside in your panel and
-   start an application or execute a command when clicked.  A launcher
-   can use any icon and has a customized tooltip to display a message
-   when the cursor is passed over the Launcher.
-  </para>
-    <para>  You can change a launcher properties, such as the icon it
-      uses and its name, by right-clicking on a launcher and selecting
-      <guimenuitem>Eigenschaften</guimenuitem> from the pop-up menu. This
-      brings up the <interface>Launcher properties dialog</interface>
-      shown in <xref linkend="launcherpropsfig">. The same dialog is
-      used when you create a new launcher (see <xref
-	linkend="add">). Also, internally GNOME makes no distinction
-      between menu items and launchers: these are just different
-      presentations of the same thing. You can place any menu item on
-      the panel, and it will show as a launcher. Therefore, all the
-      information below applies equally to launchers and menu items.
-      </para>
+      Starter sind im wesentlichen Knöpfe, die sich in Ihrem Panel
+      befinen und die eine Applikation starten oder einen Befehl ausführen,
+      wenn man auf sie klickt. Ein solcher Starter kann jedes beliebige
+      Icon verwenden und hat eine eigene Minihilfe, die angezeigt wird, wenn
+      mann den Cursor über den Starter bewegt.
+    </para>
+    <para>
+      Um die Eigenschaften eines Starters zu ändern, z.B. sein Icon oder seinen
+      Namen, rechtsklicken Sie auf ihn und wählen
+      <guimenuitem>Eigenschaften</guimenuitem> im
+      <guimenu>Kontext-Menü</guimenu>. Dies bringt den
+      <interface>Starter-Eigenschaften-Dialog</interface> zum Vorschein, der
+      in <xref linkend="launcherpropsfig"> gezeigt wird. Dieser Dialog wird
+      ebenfalls benutzt, wenn Sie einen neuen Starter hinzufügen (siehe
+      <xref linkend="add">). Darüberhinaus macht GNOME intern keinen Unterschied
+      zwischen Startern und Menüeinträge: beide sind einfach verschiedene
+      Darstellungsformen derselben Sache. Sie können jeden Menüeintrag auf dem
+      Panel plazieren und er erscheint als Starter. Daher sind alle unten
+      angegebenen Informationen für Starter und Menüeinträge gleich.
+    </para>
     <figure id="launcherpropsfig">
-      <title>Create Launcher/Launcher Eigenschaften Dialog</title>
+      <title>Dialog "Starter erzeugen/Starter-Eigenschaften"</title>
       <screenshot>
-	<screeninfo>Create Launcher/Launcher Eigenschaften Dialog</screeninfo>
+	<screeninfo>Dialog "Starter erzeugen/Starter-Eigenschaften"</screeninfo>
 	<graphic fileref="./figures/launcher_properties_basic" format="png"
-     srccredit="muet">
-     </graphic>
+	  srccredit="muet">
+	</graphic>
       </screenshot>
     </figure>
-    <para> This dialog has two tabs: <guilabel>Basic</guilabel> and
-    <guilabel>Advanced</guilabel>. In the <guilabel>Basic</guilabel>
-    tab, you can set:
+    <para>
+      Dieser Dialog hat zwei Reiter: <guilabel>Einfach</guilabel> und
+      <guilabel>Erweitert</guilabel>. Im <guilabel>Einfach</guilabel>-Reiter
+      können Sie folgendes angeben:
     </para>
     <itemizedlist>
       <listitem>
 	<para>
-	  <guilabel>Name</guilabel> &mdash; this is the application
-	  name, for example, <userinput>GNOME
-	  terminal</userinput>. This name will be used if you later
-	  put this launcher in a menu.
+	  <guilabel>Name</guilabel> &mdash; dies ist der Name der Applikation,
+	  zum Beispiel <userinput>GNOME-Terminal</userinput>. Dieser Name
+	  wird benutzt, wenn Sie den Starter später in ein Menü einfügen.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Comment</guilabel> &mdash; this is a brief
-	  explanation of what this application does, for example,
-	  <userinput>Terminal emulation program</userinput>. This will
-	  be used for tooltips.
+	  <guilabel>Kommentar</guilabel> &mdash; dies ist ein kurze
+	  Beschreibung, wozu die Applikation gut ist, zum Beispiel
+	  <userinput>GNOME-Terminalemulator</userinput>. Dies wird für
+	  die Minihilfe benutzt.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Command</guilabel> &mdash; the actual command that
-	  runs the application, for example,
+	  <guilabel>Befehl</guilabel> &mdash; der eigentliche Befehl, der
+	  die Applikation startet, zum Beispiel
 	  <userinput>gnome-terminal</userinput>.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Type</guilabel> &mdash; should be
-	  <guilabel>Application</guilabel>; do not change it unless
-	  you want to create something other than application launcher.
+	  <guilabel>Typ</guilabel> &mdash; sollte
+	  <guilabel>Applikation</guilabel> sein; ändern Sie ihn nicht,
+	  wenn Sie nicht etwas anderes als einen Applikations-Starter
+	  erzeugen wollen.
 	</para>
       </listitem>
     </itemizedlist>
     <para>
-      The <guilabel>Basic</guilabel> tab also shows the icon to be
-      used for the launcher; if no icon is specified, a default icon
-      will be used. To change the icon, just click on it to launch the
-      icon browser.  </para>
+      Der <guilabel>Einfach</guilabel>-Reiter zeigt außerdem das für den
+      Starter verwendete Icon an; wenn kein Icon angegeben wurde, wird ein
+      Standard-Icon verwendet. Um das Icon zu ändern, klicken Sie es einfach
+      an um den Icon-Browser zu starten.
+    </para>
     <para>
-      Finally, if the application can only run inside a terminal
-      &mdash; that is, if it doesn't create any windows on its own
-      &mdash; you should also check <guibutton>Run in
-      terminal</guibutton> button. If unsure, leave it unchecked.
+      Zum Schluß kann die Applikation auch noch ausschließlich innerhalb
+      eines Terminals ablaufen &mdash; das heißt, sie erzeugt keine eigenen
+      Fenster &mdash; in diesem Fall sollten Sie den
+      <guibutton>In Terminal starten</guibutton> Knopf anwählen. Falls
+      unsicher, lassen Sie ihn ausgeschaltet.
     </para>
     
     <para>
-      <guilabel>Advanced</guilabel> tab is shown below. It is intended
-      for advanced users; most of the time, you do not need to change
-      any of the settings here.
+      Der <guilabel>Erweitert</guilabel>-Reiter wird unten gezeigt. Er ist
+      für fortgeschrittene Benutzer gedacht; meistens brauchen Sie keine
+      dieser Einstellungen zu verändern.
     </para>
     <figure id="launcheradvpropsfig">
-      <title>Launcher Advanced Eigenschaften Dialog</title>
+      <title>Dialog "Erweiterte Starter-Eigenschaften"</title>
       <screenshot>
-	<screeninfo>Launcher Advanced Eigenschaften Dialog</screeninfo>
+	<screeninfo>Dialog "Erweiterte Starter-Eigenschaften"</screeninfo>
 	<graphic fileref="./figures/launcher_properties_advanced" format="png"
-     srccredit="muet">
-     </graphic>
+	  srccredit="muet">
+	</graphic>
       </screenshot>
     </figure>
-    <para> In this tab, you can set:
+    <para>
+      In diesem Reiter können Sie folgendes setzen:
     </para>
     <itemizedlist>
       <listitem>
 	<para>
-	  <guilabel>Try this before using</guilabel> &mdash; you can
-	  enter here a command, and GNOME will check if this command
-	  can be executed. If not, the launcher (or menu item) will
-	  not be shown even if you added it to the panel or menu. It
-	  is mostly used by people preparing GNOME distributions: for
-	  example, default GNOME <guimenu>Hauptmenü</guimenu> contains
-	  an item for <application>TkRat</application> e-mail program,
-	  but you will not see it unless you have
-	  <application>TkRat</application> installed on your system.
+	  <guilabel>Dies zuerst testen</guilabel> &mdash; hier können
+	  Sie einen Befehl eingeben, und GNOME überprüft zunächst, ob
+	  dieser Befehl ausgeführt werden kann. Andernfalls wird der
+	  Starter (oder der Menüeintrag) nicht angezeigt, selbst wenn Sie
+	  ihn zu einem Panel oder Menü hinzugefügt haben. Diese Option
+	  ist hauptsächlich für Leute gedacht, die GNOME-Distributionen
+	  vorbereiten: das standardmäßige GNOME-<guimenu>Hauptmenü</guimenu>
+	  enthält z.B. einen Eintrag für das <application>TkRat</application>
+	  Mailprogramm, aber er wird nicht angezeigt wenn Sie
+	  <application>TkRat</application> nicht installiert haben.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Documentation</guilabel> &mdash; currently not
-	  used.
+	  <guilabel>Dokumentation</guilabel> &mdash; zur Zeit unbenutzt.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Name/comment translations</guilabel> &mdash; here
-	  you can set translation of the <guilabel>Name</guilabel> and
-	  <guilabel>Comment</guilabel> to other languages. For
-	  example, for <application>GNOME Terminal</application>, the
-	  translations to Spanish (es) are name:  <userinput>Terminal
-	  UNIX de GNOME</userinput> and comment: <userinput>Emulador
-	  de terminal GNOME</userinput>. This means that if a user
-	  sets his language to Spanish during login (it can be done by
-	  selecting appropriate language from
-	  <guimenu>Languages</guimenu> menu of GNOME login manager
-	  (GDM)), he will see <guimenuitem>Terminal UNIX de
-	  GNOME</guimenuitem> in the menu and <userinput>Emulador de
-	  terminal GNOME</userinput> in the tooltips. Of course, the
-	  actual command that runs the terminal is unchanged.
+	  <guilabel>Name/Kommentarübersetzung</guilabel> &mdash; hier
+	  können Sie Übersetzungen von <guilabel>Name</guilabel> und
+	  <guilabel>Kommentar</guilabel> in andere Sprachen eingeben.
+	  Für das <application>GNOME-Terminal</application>, sind z.B.
+	  die spanischen Übersetzungen für den Namen
+	  <userinput>Terminal UNIX de GNOME</userinput> sowie
+	  <userinput>Emulador de terminal GNOME</userinput> für den
+	  Kommentar. Wenn ein Benutzer nun beim Anmelden als seine Sprache
+	  Spanisch einstellt (dies geschieht durch Wahl der jeweiligen
+	  Sprache im <guimenu>Sprachen</guimenu>-Menü in GNOME-Loginmanager
+	  (GDB)), erscheint <guimenuitem>Terminal UNIX de GNOME</guimenuitem>
+	  im Menü und <userinput>Emulador de terminal GNOME</userinput> als
+	  Minihilfe. Selbstverständlich bleibt der eigentliche Befehl, der
+	  das Terminal startet unverändert.
 	</para>
 	<para>
-	  To add a new translation, enter the language 2-letter code
-	  and translations of <guilabel>Name</guilabel> and
-	  <guilabel>Comment</guilabel>  fields in the empty fields
-	  under the list of current translations, and  press
-	  <guibutton>Add/Set</guibutton> button.  To change one of
-	  existing translations, select it in the list, edit the
-	  fields you want, and press <guibutton>Add/Set</guibutton>
-	  button. To remove one of existing translations, select it
-	  and press <guibutton>Remove</guibutton> button.
+	  Um eine neue Übersetzung hinzuzufügen, geben sie den 2-buchstabigen
+	  Sprachcode und die Übersetzungen von <guilabel>Name</guilabel> und
+	  <guilabel>Kommentar</guilabel> in die leeren Felder unterhalb der
+	  Liste der gegenwärtigen Übersetzungen ein und klicken Sie den
+	  <guibutton>Hinzufügen/Ändern</guibutton>-Knopf. Um eine bestehende
+	  Übersetzung zu ändern, wählen Sie sie in der Liste aus, ändern die
+	  gewünschten Felder und klicken den
+	  <guibutton>Hinzufügen/Ändern</guibutton>-Knopf. Um eine bestehende
+	  Übersetzung zu entfernen, wählen Sie sie aus und klicken Sie den
+	  <guibutton>Entfernen</guibutton>-Knopf.
 	</para>
-	<para>  You can find the list of all languages supported by
-	  GNOME along with their 2-letter codes  in  <ulink
-	  type="http"
-	  url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
-	  Frequently Asked Questions</ulink>.
+	<para>
+	  Sie finden eine Liste aller von GNOME unterstützter Sprachen zusammen
+	  mit ihrem 2-buchstabigen Sprachcode in 
+	  <ulink type="http"
+	    url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
+	    Frequently Asked Questions</ulink>.
 	</para>
       </listitem>
     </itemizedlist>
 
     <para>
-      All the changes you made in <interface>Launcher
-      Eigenschaften</interface> dialog will take effect when you press
-      <guibutton>Apply</guibutton> or
-      <guibutton>OK</guibutton>. Pressing <guibutton>OK</guibutton>
-      closes this dialog; pressing <guibutton>Apply</guibutton> will
-      allow you to continue editing.
+      Alle im <interface>Starter-Eigenschaften</interface>-Dialog werden
+      wirksam, wänn Sie den <guibutton>Übernehmen</guibutton> oder
+      <guibutton>OK</guibutton>-Knopf klicken. Mit <guibutton>OK</guibutton>
+      schließen Sie diesen Dialog, <guibutton>Übernehmen</guibutton> übernimmt
+      die Änderungen und erlaubt Ihnen das weitere Editieren.
     </para>
   </sect1>
 
