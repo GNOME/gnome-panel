@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.4.0.4\n"
-"POT-Creation-Date: 2003-02-06 12:05+0100\n"
-"PO-Revision-Date: 2003-02-07 04:49+0100\n"
+"POT-Creation-Date: 2003-02-21 12:07+0100\n"
+"PO-Revision-Date: 2003-02-23 00:23+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -226,8 +226,8 @@ msgstr "_O programu..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3536
-#: gnome-panel/menu.c:4258 gnome-panel/panel-action-button.c:510
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3452
+#: gnome-panel/menu.c:4196 gnome-panel/panel-action-button.c:518
 msgid "_Help"
 msgstr "_Nápověda"
 
@@ -1095,29 +1095,29 @@ msgstr "Oznamovací oblast na panelu"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:428 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:433 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:497 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
 msgstr "Od_stranit z panelu"
 
-#: gnome-panel/applet.c:504 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/applet.c:509 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "_Přesunout"
 
-#: gnome-panel/applet.c:793
+#: gnome-panel/applet.c:798
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Pro objekt panelu s ID %s není nastaven žádný object_type\n"
 
-#: gnome-panel/applet.c:813 gnome-panel/applet.c:921
+#: gnome-panel/applet.c:818 gnome-panel/applet.c:926
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Pro objekt panelu s ID %s není nastaven žádný panel_id\n"
 
-#: gnome-panel/applet.c:1258
+#: gnome-panel/applet.c:1263
 msgid "Can't find an empty spot"
 msgstr "Nelze najít volné místo"
 
@@ -1196,7 +1196,7 @@ msgstr "Má šipku"
 
 #: gnome-panel/button-widget.c:878
 msgid "Whether or not to draw an arrow indicator"
-msgstr "Zda-li se má kreslit indikátor šipky"
+msgstr "Jestli se má kreslit indikátor šipky"
 
 #: gnome-panel/button-widget.c:886
 msgid "Orientation"
@@ -1284,16 +1284,16 @@ msgstr "Povolit ukrývací tlačítko"
 msgid "Enable hidebutton arrow"
 msgstr "Povolit šipku na ukrývacím tlačítku"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3635
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3551
 msgid "Drawer"
 msgstr "Zásuvka"
 
 #: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
-#: gnome-panel/menu.c:3490 gnome-panel/panel-action-button.c:89
+#: gnome-panel/menu.c:3406 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3833
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3749
 msgid "Run Program..."
 msgstr "Spustit program..."
 
@@ -1301,23 +1301,23 @@ msgstr "Spustit program..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Spustit aplikaci, pokud víte správný příkaz"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3849
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3765
 msgid "Search for Files..."
 msgstr "Hledat soubory..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3852
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3768
 msgid "Find files, folders, and documents on your computer"
 msgstr "Hledat soubory, adresáře a dokumenty na vašem počítači"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3868
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3784
 msgid "Screenshot..."
 msgstr "Snímek obrazovky..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3871
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3787
 msgid "Take a screenshot of your desktop"
 msgstr "Zachytit obrázek vaší pracovní plochy"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3657
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3573
 msgid "Lock Screen"
 msgstr "Zamknout obrazovku"
 
@@ -1326,7 +1326,7 @@ msgid "Protect your computer from unauthorized use"
 msgstr "Chránit váš počítač před neautorizovaným použitím"
 
 #: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3224
-#: gnome-panel/menu.c:3669
+#: gnome-panel/menu.c:3585
 msgid "Log Out"
 msgstr "Odhlásit se"
 
@@ -1352,7 +1352,7 @@ msgid "GNOME Menu Panel"
 msgstr "Menu panel GNOME"
 
 #: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3122
-#: gnome-panel/menu.c:3127 gnome-panel/menu.c:3808
+#: gnome-panel/menu.c:3127 gnome-panel/menu.c:3724
 msgid "Applications"
 msgstr "Aplikace"
 
@@ -1587,7 +1587,7 @@ msgstr "_Tisknout obrazovku..."
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "_Save screenshot to file:"
-msgstr "_Zapsat obrazovku do souboru:"
+msgstr "Zapsat obrazovku do _souboru:"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
@@ -1669,24 +1669,24 @@ msgstr "Spustit v _terminálu"
 msgid "_Append File..."
 msgstr "_Přidat soubor..."
 
-#: gnome-panel/gnome-run.c:1393
+#: gnome-panel/gnome-run.c:1396
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Spustím příkaz: '%s'"
 
-#: gnome-panel/gnome-run.c:1402
+#: gnome-panel/gnome-run.c:1405
 msgid "No application selected"
 msgstr "Nevybrána žádná aplikace"
 
-#: gnome-panel/gnome-run.c:1522
+#: gnome-panel/gnome-run.c:1526
 msgid "List of known applications"
 msgstr "Seznam známých aplikací"
 
-#: gnome-panel/gnome-run.c:1523
+#: gnome-panel/gnome-run.c:1527
 msgid "Choose an application to run from the list"
 msgstr "Vyberte aplikaci ke spuštění ze seznamu"
 
-#: gnome-panel/gnome-run.c:1649 gnome-panel/panel-action-button.c:203
+#: gnome-panel/gnome-run.c:1653 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "Spustit program"
 
@@ -2005,7 +2005,7 @@ msgstr "_Menu panel"
 msgid "Create menu panel"
 msgstr "Vytvořit menu panel"
 
-#: gnome-panel/menu.c:3170 gnome-panel/menu.c:3176 gnome-panel/menu.c:3732
+#: gnome-panel/menu.c:3170 gnome-panel/menu.c:3176 gnome-panel/menu.c:3648
 msgid "KDE Menu"
 msgstr "Menu KDE"
 
@@ -2025,68 +2025,56 @@ msgstr "Hledat"
 msgid "Run"
 msgstr "Spustit"
 
-#: gnome-panel/menu.c:3338
+#: gnome-panel/menu.c:3284
 msgid "You cannot remove your last panel."
 msgstr "Nemůžete odstranit svůj poslední panel."
 
-#: gnome-panel/menu.c:3357
-msgid ""
-"When a panel is deleted, the panel and its\n"
-" settings are lost. Delete this panel?"
-msgstr ""
-"Když je panel odstraněn, je nastavení tohoto\n"
-"panelu ztraceno. Odstranit tento panel?"
-
-#: gnome-panel/menu.c:3366
-msgid "Delete Panel"
-msgstr "Odstranit panel"
-
-#: gnome-panel/menu.c:3434
+#: gnome-panel/menu.c:3346
 msgid "_Delete This Panel..."
 msgstr "_Odstranit tento panel..."
 
-#: gnome-panel/menu.c:3437 gnome-panel/menu.c:3475
+#: gnome-panel/menu.c:3349 gnome-panel/menu.c:3391
 msgid "_Delete This Panel"
 msgstr "_Odstranit tento panel"
 
-#: gnome-panel/menu.c:3459
+#: gnome-panel/menu.c:3371
 msgid "_Add to Panel"
 msgstr "_Přidat na panel"
 
-#: gnome-panel/menu.c:3504
+#: gnome-panel/menu.c:3420
 msgid "_New Panel"
 msgstr "_Nový Panel"
 
-#: gnome-panel/menu.c:3546
+#: gnome-panel/menu.c:3462
 msgid "_About Panels"
 msgstr "_O panelech"
 
-#: gnome-panel/menu.c:3559
+#: gnome-panel/menu.c:3475
 msgid "About _GNOME"
 msgstr "O _GNOME"
 
-#: gnome-panel/menu.c:3599
+#: gnome-panel/menu.c:3515
 msgid "Launcher..."
 msgstr "Spouštěč..."
 
-#: gnome-panel/menu.c:3607
+#: gnome-panel/menu.c:3523
 msgid "Launcher from menu"
 msgstr "Spouštěč z menu"
 
-#: gnome-panel/menu.c:3616
+#: gnome-panel/menu.c:3532
 msgid "Button"
 msgstr "Tlačítko"
 
-#: gnome-panel/menu.c:3626 gnome-panel/menu.c:3956 gnome-panel/menu.c:3984
-#: gnome-panel/menu.c:4180
+#: gnome-panel/menu.c:3542 gnome-panel/menu.c:3872 gnome-panel/menu.c:3900
+#: gnome-panel/menu.c:4118
 msgid "Main Menu"
 msgstr "Hlavní menu"
 
-#: gnome-panel/menu.c:3663
+#: gnome-panel/menu.c:3579
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Zamknout obrazovku, abyste mohli dočasně opustit svůj počítač"
 
-#: gnome-panel/menu.c:3675
+#: gnome-panel/menu.c:3591
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2094,27 +2082,27 @@ msgstr ""
 "Odhlásit se z tohoto sezení, aby bylo možno přihlásit se jako jiný uživatel "
 "nebo vypnout počítač"
 
-#: gnome-panel/menu.c:3840
+#: gnome-panel/menu.c:3756
 msgid "Run a command"
 msgstr "Spustit příkaz"
 
-#: gnome-panel/menu.c:3886
+#: gnome-panel/menu.c:3802
 msgid "Desktop"
 msgstr "Plocha"
 
-#: gnome-panel/menu.c:3904 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu.c:3820 gnome-panel/menu-ditem.c:290
 msgid "Menu"
 msgstr "Menu"
 
-#: gnome-panel/menu.c:3906
+#: gnome-panel/menu.c:3822
 msgid "Menu:"
 msgstr "Menu:"
 
-#: gnome-panel/menu.c:3978
+#: gnome-panel/menu.c:3894
 msgid "Can't create menu, using main menu!"
 msgstr "Nelze vytvořit menu, bude použito hlavní menu!"
 
-#: gnome-panel/menu.c:4415
+#: gnome-panel/menu.c:4353
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Pro objekt menu panelu není nastavena cesta v %s\n"
@@ -2260,6 +2248,18 @@ msgid ""
 "you"
 msgstr ""
 "Ve vašem nastavení nebyly nalezeny žádné panely. Vytvořím pro vás menu panel"
+
+#: gnome-panel/panel.c:2882
+msgid ""
+"When a panel is deleted, the panel and its\n"
+" settings are lost. Delete this panel?"
+msgstr ""
+"Když je panel odstraněn, je nastavení tohoto\n"
+"panelu ztraceno. Odstranit tento panel?"
+
+#: gnome-panel/panel.c:2891
+msgid "Delete Panel"
+msgstr "Odstranit panel"
 
 #. Auto-hide
 #: gnome-panel/panel-config.c:546
@@ -2435,7 +2435,7 @@ msgstr "Pozadí"
 
 #: gnome-panel/panel-global-config.schemas.in.h:1
 msgid "Display \"Run\" dialog"
-msgstr "Zobrazovat dialog \"Spustit\""
+msgstr "Zobrazit dialog \"Spustit\""
 
 #: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
@@ -2476,8 +2476,7 @@ msgstr "Nelze nalézt vhodnou aplikaci"
 #: gnome-panel/panel-recent.c:83
 msgid ""
 "The default application for this type of file cannot handle remote files"
-msgstr ""
-"Výchozí aplikace pro tento typ souboru neumí zpracovat vzdálené soubory"
+msgstr "Implicitní aplikace pro tento typ souboru neumí zpracovat vzdálené soubory"
 
 #: gnome-panel/panel-recent.c:147
 #, c-format
@@ -2620,9 +2619,6 @@ msgstr "Velikost:"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Nahoře"
-
-#~ msgid "Can't execute printer command"
-#~ msgstr "Nelze spustit příkaz tiskárny"
 
 #~ msgid "Printer properties"
 #~ msgstr "Vlastnosti tiskáren"
@@ -3773,9 +3769,6 @@ msgstr "Nahoře"
 #~ msgstr ""
 #~ "Nelze otevřít soubor .order: %s\n"
 #~ "%s"
-
-#~ msgid "Could not remove old order file %s: %s\n"
-#~ msgstr "Nelze smazat starý třídící soubor %s: %s\n"
 
 #~ msgid ""
 #~ "Could not rename tmp file: %s to %s\n"
@@ -5552,9 +5545,6 @@ msgstr "Nahoře"
 #~ msgid "Fifteen sliding pieces"
 #~ msgstr "Patnáct posunujících se čtverečků"
 
-#~ msgid "You win!"
-#~ msgstr "Vyhrál(a) jste!"
-
 #~ msgid "This does nothing useful"
 #~ msgstr "Neprovádí nic užitečného"
 
@@ -5768,9 +5758,6 @@ msgstr "Nahoře"
 #~ msgstr ""
 #~ "Tento applet monitoruje stav baterií vašeho laptopu. Klik na něj změní "
 #~ "režim zobrazování."
-
-#~ msgid " (C) 1997-1998 The Free Software Foundation"
-#~ msgstr " (C) 1997-1998 Free Software Foundation"
 
 #~ msgid "The GNOME Battery Monitor Applet"
 #~ msgstr "Applet pro sledování stavu baterií pro desktop GNOME"
