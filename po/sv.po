@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-06-01 20:21+0200\n"
-"PO-Revision-Date: 2002-06-01 20:22+0200\n"
+"POT-Creation-Date: 2002-06-03 11:27+0200\n"
+"PO-Revision-Date: 2002-06-03 11:27+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -239,7 +239,7 @@ msgstr "%A %d %B %Y"
 
 #: applets/gen_util/clock.c:854 applets/gen_util/clock.c:1086
 #: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
-#: applets/gen_util/pager.c:155 applets/gen_util/pager.c:456
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -283,7 +283,7 @@ msgstr "Använd _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1120 applets/gen_util/mailcheck.c:1667
-#: applets/gen_util/pager.c:487 applets/gen_util/tasklist.c:701
+#: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:240
 msgid "translator_credits"
 msgstr ""
@@ -415,7 +415,8 @@ msgid "Window List"
 msgstr "Fönsterlista"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:499 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
+#: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Arbetsytebytare"
 
@@ -740,21 +741,21 @@ msgstr "Kontrollera post"
 msgid "New Mail"
 msgstr "Ny post"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Rader"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 msgid "Columns"
 msgstr "Kolumner"
 
-#: applets/gen_util/pager.c:342
+#: applets/gen_util/pager.c:344
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr "Fel vid inläsning av num_rows-värde för arbetsytebytaren: %s\n"
 
-#: applets/gen_util/pager.c:353
+#: applets/gen_util/pager.c:355
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -762,7 +763,7 @@ msgid ""
 msgstr ""
 "Fel vid inläsning av display_workspace_names-värde för arbetsytebytaren: %s\n"
 
-#: applets/gen_util/pager.c:368
+#: applets/gen_util/pager.c:370
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -770,11 +771,11 @@ msgid ""
 msgstr ""
 "Fel vid inläsning av display_all_workspaces-värde för arbetsytebytaren: %s\n"
 
-#: applets/gen_util/pager.c:500
+#: applets/gen_util/pager.c:504
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "© 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:501
+#: applets/gen_util/pager.c:505
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -798,11 +799,15 @@ msgstr "Visa endast a_ktuell arbetsyta"
 msgid "Show workspace _names in the switcher"
 msgstr "Visa _namn på arbetsytor i bytaren"
 
-#: applets/gen_util/pager.glade.h:7
+#: applets/gen_util/pager.glade.h:6
+msgid "Workspace Names"
+msgstr "Namn på arbetsytor"
+
+#: applets/gen_util/pager.glade.h:8
 msgid "Workspace Switcher Preferences"
 msgstr "Inställningar för arbetsytebytare"
 
-#: applets/gen_util/pager.glade.h:8
+#: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
 msgstr "Arbetsytor"
 
@@ -1289,7 +1294,7 @@ msgstr ""
 msgid "No panel found\n"
 msgstr "Hittade ingen panel\n"
 
-#: gnome-panel/gnome-panel-preferences.c:300
+#: gnome-panel/gnome-panel-preferences.c:327
 msgid ""
 "The system administrator has disallowed\n"
 " modification of the panel configuration"
@@ -1298,7 +1303,7 @@ msgstr ""
 " ändringar i panelkonfigurationen"
 
 # SUN CHANGED MESSAGE
-#: gnome-panel/gnome-panel-preferences.c:311
+#: gnome-panel/gnome-panel-preferences.c:338
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "Panelinställningar"
@@ -1574,11 +1579,11 @@ msgstr "Lista med kända program"
 msgid "Choose an application to run from the list"
 msgstr "Välj ett program som ska köras från listan"
 
-#: gnome-panel/gnome-run.c:1499
+#: gnome-panel/gnome-run.c:1497
 msgid "_Run"
 msgstr "_Kör"
 
-#: gnome-panel/gnome-run.c:1559
+#: gnome-panel/gnome-run.c:1557
 msgid "Run Program"
 msgstr "Kör program"
 
