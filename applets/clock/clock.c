@@ -85,7 +85,8 @@ static const char *clock_config_tools [] = {
 
 /* Needs to match the indices in the combo */
 typedef enum {
-	CLOCK_FORMAT_12 = 0,
+        CLOCK_FORMAT_INVALID = 0,
+	CLOCK_FORMAT_12,
 	CLOCK_FORMAT_24,
 	CLOCK_FORMAT_UNIX,
 	CLOCK_FORMAT_INTERNET,
@@ -1876,8 +1877,8 @@ fill_clock_applet (PanelApplet *applet)
 	ClockData         *cd;
 	BonoboUIComponent *popup_component;
 	GError            *error;
+        int                format;
 	char              *format_str;
-	int                format_int;
 	char              *config_tool;
 	
 	panel_applet_add_preferences (applet, "/schemas/apps/clock_applet/prefs", NULL);
@@ -1891,23 +1892,19 @@ fill_clock_applet (PanelApplet *applet)
 
 	setup_gconf (cd);
 
-	format_str = panel_applet_gconf_get_string (applet, KEY_FORMAT, NULL);
-	if (format_str) {
-		format_int = -1;
-		gconf_string_to_enum (format_type_enum_map,
-				      format_str,
-				      &format_int);
-		cd->format = format_int;
-		g_free (format_str);
-	} else {
-		cd->format = -1;
-		clock_migrate_to_26 (cd);
-	}
+        cd->format = CLOCK_FORMAT_INVALID;
 
-	if (cd->format < 0) {
-		/* if value is not set, set it according to locale */
+	format_str = panel_applet_gconf_get_string (applet, KEY_FORMAT, NULL);
+	if (format_str &&
+            gconf_string_to_enum (format_type_enum_map, format_str, &format))
+                cd->format = format;
+	else
+		clock_migrate_to_26 (cd);
+
+        g_free (format_str);
+
+	if (cd->format == CLOCK_FORMAT_INVALID)
 		cd->format = clock_locale_format ();
-	}
 
 	cd->custom_format = panel_applet_gconf_get_string (applet, KEY_CUSTOM_FORMAT, NULL);
 	cd->showseconds = panel_applet_gconf_get_bool (applet, KEY_SHOW_SECONDS, NULL);
