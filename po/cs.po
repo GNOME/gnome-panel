@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.4.0.4\n"
-"POT-Creation-Date: 2003-05-04 18:25+0530\n"
-"PO-Revision-Date: 2003-04-29 18:17+0200\n"
+"POT-Creation-Date: 2003-05-08 12:31+0200\n"
+"PO-Revision-Date: 2003-05-08 15:07+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -155,8 +155,8 @@ msgstr ""
 "Stanislav Brabec <utx@penguin.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 #: applets/clock/clock.c:1527
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock"
 msgstr "Hodiny"
 
@@ -325,8 +325,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(s malou nápomocí Jirky [George])"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 #: applets/fish/fish.c:417
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
 msgstr "Ryba"
 
@@ -861,11 +861,11 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:411
+#: gnome-panel/applet.c:411 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
 msgstr "Od_stranit z panelu"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:423
+#: gnome-panel/applet.c:423 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "_Přesunout"
 
@@ -1870,12 +1870,11 @@ msgstr "Seznam ID apletů panelu"
 msgid "A list of panel object IDs"
 msgstr "Seznam ID objektů panelu"
 
-# FIXME: applets
 #: gnome-panel/panel-general.schemas.in.h:6
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
-"these applets is stored in /apps/panel/general/$(profiles)/objects/$(id)."
+"these objects is stored in /apps/panel/general/$(profiles)/objects/$(id)."
 msgstr ""
 "Seznam ID objektů panelu. Každé ID identifikuje jeden objekt panelu (např. "
 "spouštěč, tlačítko akce nebo tlačítko/pruh menu). Nastavení každého takového "
@@ -2555,10 +2554,9 @@ msgstr ""
 "obrazovky. Je-li změněna velikost panelu, zůstane na stejné pozici - tj. "
 "zvětší se na obou stranách. Je-li false, určuje umístění panelu nastavení x."
 
-# FIXME: "be place "
 #: gnome-panel/panel-toplevel.schemas.in.h:14
 msgid ""
-"If true, arrows will be place on the hide buttons. This preference only has "
+"If true, arrows will be placed on the hide buttons. This preference only has "
 "meaning if enable_buttons is true."
 msgstr ""
 "Je-li true, budou na skrývacích tlačítkách umístěny šipky. TOto nastavení má "
@@ -2596,11 +2594,10 @@ msgstr ""
 "Je-li true, bude velikost obrázku změněna (se zachováním poměru stran) na "
 "výšku panelu (je-li horizontální)."
 
-# FIXME: s/more/mode/
 #: gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
-"vertical panel). In this more the panel can only be placed at a screen edge. "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
@@ -2618,10 +2615,9 @@ msgstr ""
 "je-li true a kurzor opustí oblast panelu, je panel automaticky skryt do rohu "
 "obrazovky. Přesun kurzoru do tohoto rozhu způsobí, že panel se znovu objeví."
 
-# FIXME: s/'//
 #: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
-"In a Xinerama setup, you may have panel's on each individual monitor. This "
+"In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr ""
 "V nastavení Xinerama můžete mít panely na každém monitoru. Tento klíč "
@@ -2677,12 +2673,11 @@ msgstr ""
 "Určuje počet viditelných pixelů, když je panel automaticky skryt do rohu. "
 "Toto nastavení má vliv, jen pokud auto_hide je true."
 
-# FIXME: s/ and the/, the/
 #: gnome-panel/panel-toplevel.schemas.in.h:29
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
-"completely opaque (a value of less than 65535) and the color will be "
-"composited onto the desktop background image."
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
 msgstr ""
 "Určuje krytí formátu barvy na pozadí. Pokud barva úplně nekryje (hodnota "
 "menší než 65535), bude barva složena s obrázkem na pozadí pracovní plochy."
@@ -2785,11 +2780,10 @@ msgstr "Velikost panelu."
 msgid "The speed of animations."
 msgstr "Rychlost animací."
 
-# FIXME: s/is/if/
 #: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
 "The speed which animations should occur. There are three possible values; "
-"\"slow\", \"medium\" and \"fast\". This preference only has relevance is "
+"\"slow\", \"medium\" and \"fast\". This preference only has relevance if "
 "enable_animations is true."
 msgstr ""
 "Rychlost, kterou mají probíhat animace. Existují tři možné hodnoty; \"slow"
@@ -2818,10 +2812,9 @@ msgstr ""
 "pozadí bude použito nastavení color, nebo \"image\", jako pozadí bude použit "
 "obrázek určen v nastavení image."
 
-# FIXME: s/'//
 #: gnome-panel/panel-toplevel.schemas.in.h:49
 msgid ""
-"With a multi-screen setup, you may have panel's on each individual screen. "
+"With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
 "V systému s více obrazovkami můžete mít panely na na každé obrovce. Tento "
