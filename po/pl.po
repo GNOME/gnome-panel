@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-04-05 23:07+0200\n"
-"PO-Revision-Date: 2002-04-05 23:15+0200\n"
+"POT-Creation-Date: 2002-04-09 23:42+0200\n"
+"PO-Revision-Date: 2002-04-09 23:44+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -246,42 +246,27 @@ msgstr "Generator tworzący ogólne aplety"
 msgid "Check for mail"
 msgstr "Sprawdzanie poczty"
 
-#: applets/gen_util/clock.c:1
-msgid ""
-"%I:%M\n"
-"%p"
-msgstr "%H:%M"
+#: applets/gen_util/clock.c:1 applets/gen_util/clock.c:1
+msgid "%I:%M:%S %p"
+msgstr "%H:%M:%S"
 
-#. This format string is used, to display the actual time in
-#. 12 hour format.
 #: applets/gen_util/clock.c:1 applets/gen_util/clock.c:1
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#. This format string is used, to display the actual time in
-#. 24 hour format.
+#: applets/gen_util/clock.c:1 applets/gen_util/clock.c:1
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
 #: applets/gen_util/clock.c:1 applets/gen_util/clock.c:1
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#. This format string is used, to display the actual day,
-#. when showing a vertical panel.  For an explanation of
-#. this format string type 'man strftime'.
-#: applets/gen_util/clock.c:1
-msgid ""
-"%a\n"
-"%b %d"
-msgstr ""
-"%a\n"
-"%d %b"
-
-#. This format string is used, to display the actual day,
-#. when showing a horizontal panel.
-#: applets/gen_util/clock.c:1
+#: applets/gen_util/clock.c:1 applets/gen_util/clock.c:1
 msgid "%a %b %d"
 msgstr "%a %d %b"
 
-#. Set the applet's tooltip
+#. Show date in tooltip
 #: applets/gen_util/clock.c:1
 msgid "%A %B %d"
 msgstr "%A %d %B"
@@ -299,8 +284,8 @@ msgid "Clock Preferences"
 msgstr "Preferencje zegara"
 
 #: applets/gen_util/clock.c:1
-msgid "Time Format"
-msgstr "Format Czasu"
+msgid "Clock type"
+msgstr "Typ zegara"
 
 #: applets/gen_util/clock.c:1
 msgid "_12 hour"
@@ -311,20 +296,24 @@ msgid "_24 hour"
 msgstr "_24-godzinny"
 
 #: applets/gen_util/clock.c:1
-msgid "Show _date"
-msgstr "Wyświetlanie _daty"
-
-#: applets/gen_util/clock.c:1
-msgid "Use _GMT"
-msgstr "Czas _GMT"
-
-#: applets/gen_util/clock.c:1
 msgid "_UNIX time"
 msgstr "Czas _uniksowy"
 
 #: applets/gen_util/clock.c:1
 msgid "_Internet time"
 msgstr "Czas _internetowy"
+
+#: applets/gen_util/clock.c:1
+msgid "Show _seconds"
+msgstr "Wyświetlanie _sekund"
+
+#: applets/gen_util/clock.c:1
+msgid "Show _date"
+msgstr "Wyświetlanie _daty"
+
+#: applets/gen_util/clock.c:1
+msgid "Use _GMT"
+msgstr "Czas _GMT"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1 applets/gen_util/mailcheck.c:1
@@ -1123,6 +1112,14 @@ msgstr ""
 #: gnome-panel/gnome-panel-screenshot.c:1
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nie można pobrać zrzutu zawartości bieżącego biurka."
+
+#: gnome-panel/gnome-panel-screenshot.desktop.in.h:1
+msgid "Gnome Screenshot"
+msgstr "Zrzut ekranu"
+
+#: gnome-panel/gnome-panel-screenshot.desktop.in.h:1
+msgid "Screen Capture Tool"
+msgstr "Narzędzie do tworzenia zrzutów ekranu"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:1
 msgid "Options"
