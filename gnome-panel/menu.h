@@ -52,6 +52,7 @@ void menu_properties(Menu *menu);
 void applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data);
 void panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data);
 
+void panel_lock (GtkWidget *widget, void *data);
 
 /*to be called on startup to load in some of the directories*/
 void init_menus(void);

@@ -1337,6 +1337,12 @@ add_logout_to_panel (GtkWidget *widget, void *data)
 }
 
 static void
+add_lock_to_panel (GtkWidget *widget, void *data)
+{
+	load_lock_applet(current_panel, 0);
+}
+
+static void
 add_applet (GtkWidget *w, char *item_loc)
 {
 	GnomeDesktopEntry *ii;
@@ -2403,6 +2409,16 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 			   NULL);
 	setup_internal_applet_drag(menuitem, "LOGOUT:NEW");
 
+	
+	
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Add lock button"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   GTK_SIGNAL_FUNC(add_lock_to_panel),
+			   NULL);
+	setup_internal_applet_drag(menuitem, "LOCK:NEW");
+
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add swallowed app"));
@@ -2465,7 +2481,7 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 				   create_add_panel_submenu());
 }
 
-static void
+void
 panel_lock (GtkWidget *widget, void *data)
 {
 	gboolean lock = gnome_config_get_bool_with_default ("Screensaver/Default/password", FALSE);

@@ -568,7 +568,7 @@ panel_config_global(void)
 		N_("Launcher icon"),
 		N_("Drawer icon"),
 		N_("Menu icon"),
-		N_("Logout icon")};
+		N_("Miscellaneous icon")};
 	int i;
 	
 	/* return if the window is already up. */

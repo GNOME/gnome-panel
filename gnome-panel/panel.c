@@ -1035,6 +1035,8 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 			load_drawer_applet(-1,NULL,NULL, panel, pos);
 		} else if(strcmp(applet_type,"LOGOUT:NEW")==0) {
 			load_logout_applet(panel, pos);
+		} else if(strcmp(applet_type,"LOCK:NEW")==0) {
+			load_lock_applet(panel, pos);
 		} else if(strcmp(applet_type,"SWALLOW:ASK")==0) {
 			ask_about_swallowing(panel,pos);
 		} else if(strcmp(applet_type,"LAUNCHER:ASK")==0) {
