@@ -1,3 +1,11 @@
+2002-04-16  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* panel-applet-frame.[ch]
+	Remove action signal move_focus_out_of_applet to move focus from 
+	applet to next or previous object on panel. This signal is being moved
+	to PanelApplet so it will work for applets in a different process to
+	the panel.
+
 Mon Apr 15 10:16:13 2002  George Lebl <jirka@5z.com>
 
 	* gnome-run.c: fix crash reported in #78559 by just using the
