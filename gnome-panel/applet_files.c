@@ -52,7 +52,7 @@ static void *
 get_dl_func(void *handle, char *name)
 {
 	void *func;
-	char *error;
+	const char *error;
 	char *funcname;
 
 #       ifdef __FreeBSD__
@@ -78,7 +78,7 @@ static void
 init_applet_file(char *filename)
 {
 	void          *handle;
-	char          *error;
+	const char    *error;
 	char          *id;
 	AppletCmdFunc  cmd_func;
 	AppletCommand  cmd;
