@@ -1,3 +1,11 @@
+2002-02-22  Mark McLoughlin  <mark@skynet.ie>
+
+	* tasklist.c: (display_all_workspaces_changed),
+	(get_grouping_type), (group_windows_changed),
+	(move_unminimized_windows_changed), (fill_tasklist_applet):
+	some sanity check on gconf notify handlers to prevent core
+	dumps when removing the applet.
+
 2002-02-21  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* GNOME_GenUtilApplet_Factory.server.in: Mark category names

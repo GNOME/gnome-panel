@@ -193,12 +193,12 @@ display_all_workspaces_changed (GConfClient  *client,
 				GConfEntry   *entry,
 				TasklistData *tasklist)
 {
-	gboolean value = FALSE; /* Default value */
+	gboolean value;
+
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
 	
-	if (entry->value != NULL &&
-	    entry->value->type == GCONF_VALUE_BOOL) {
-		value = gconf_value_get_bool (entry->value);
-	}
+	value = gconf_value_get_bool (entry->value);
 	
 	tasklist->include_all_workspaces = (value != 0);
 	tasklist_update (tasklist);
@@ -212,21 +212,23 @@ get_grouping_type (GConfValue *value)
 	WnckTasklistGroupingType type = -1;
 	const char *str;
 
-	if (value != NULL) {
-		/* Backwards compat for old type: */
-		if (value->type == GCONF_VALUE_BOOL) {
-			type = (gconf_value_get_bool (value))?WNCK_TASKLIST_AUTO_GROUP:WNCK_TASKLIST_NEVER_GROUP;
-		} else if (value->type == GCONF_VALUE_STRING) {
-			str = gconf_value_get_string (value);
-			if (g_ascii_strcasecmp (str, "never") == 0) {
-				type = WNCK_TASKLIST_NEVER_GROUP;
-			} else if (g_ascii_strcasecmp (str, "auto") == 0) {
-				type = WNCK_TASKLIST_AUTO_GROUP;
-			} else if (g_ascii_strcasecmp (str, "always") == 0) {
-				type = WNCK_TASKLIST_ALWAYS_GROUP;
-			}
+	g_assert (value != NULL);
+
+	/* Backwards compat for old type: */
+	if (value->type == GCONF_VALUE_BOOL) {
+		type = (gconf_value_get_bool (value)) ? WNCK_TASKLIST_AUTO_GROUP:WNCK_TASKLIST_NEVER_GROUP;
+
+	} else if (value->type == GCONF_VALUE_STRING) {
+		str = gconf_value_get_string (value);
+		if (g_ascii_strcasecmp (str, "never") == 0) {
+			type = WNCK_TASKLIST_NEVER_GROUP;
+		} else if (g_ascii_strcasecmp (str, "auto") == 0) {
+			type = WNCK_TASKLIST_AUTO_GROUP;
+		} else if (g_ascii_strcasecmp (str, "always") == 0) {
+			type = WNCK_TASKLIST_ALWAYS_GROUP;
 		}
 	}
+
 	return type;
 }
 
@@ -257,10 +259,14 @@ group_windows_changed (GConfClient  *client,
 	WnckTasklistGroupingType type;
 	GtkWidget *button;
 
-	type = get_grouping_type (entry->value);
+	if (!entry->value ||
+	    (entry->value->type != GCONF_VALUE_BOOL &&
+	     entry->value->type != GCONF_VALUE_STRING))
+		return;
 
+	type = get_grouping_type (entry->value);
 	if (type == -1) {
-		g_warning ("Unknown type/value for GConf key /apps/tasklist-applet/prefs/group_windows");
+		g_warning ("tasklist: Unknown value for GConf key 'group_windows'");
 		return;
 	}
 		
@@ -299,12 +305,12 @@ move_unminimized_windows_changed (GConfClient  *client,
 				  GConfEntry   *entry,
 				  TasklistData *tasklist)
 {
-	gboolean value = FALSE; /* Default value */
+	gboolean value;
 	
-	if (entry->value != NULL &&
-	    entry->value->type == GCONF_VALUE_BOOL) {
-		value = gconf_value_get_bool (entry->value);
-	}
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
 	
 	tasklist->move_unminimized_windows = (value != 0);
 	tasklist_update (tasklist);
@@ -373,7 +379,7 @@ fill_tasklist_applet(PanelApplet *applet)
 	value = panel_applet_gconf_get_value (applet, "group_windows", &error);
 	if (error) {
 		g_error_free (error);
-	} else {
+	} else if (value) {
 		tasklist->grouping = get_grouping_type (value);
 		gconf_value_free (value);
 	}
