@@ -62,6 +62,31 @@ panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
 	g_free (temp_key);
 }
 
+void
+panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
+				    gint         position,
+				    const char  *gconf_key)
+{
+	GConfClient *client;
+	char        *profile;
+	char        *temp_key;
+	char        *applet_iid;
+
+	g_return_if_fail (panel_widget);
+	g_return_if_fail (gconf_key);
+
+	client  = panel_gconf_get_client ();
+	profile = session_get_current_profile ();
+
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, gconf_key, "bonobo-iid");
+	applet_iid = gconf_client_get_string (client, temp_key, NULL);
+	g_free (temp_key);
+
+	panel_applet_frame_load (applet_iid, panel_widget, position, gconf_key);
+
+	g_free (applet_iid);
+}
+
 static void
 popup_handle_remove (BonoboUIComponent *uic,
 		     PanelAppletFrame  *frame,

@@ -72,8 +72,6 @@ void       panel_applet_frame_load      (const gchar *iid,
 
 void       panel_applet_frame_load_applets  (void);
 
-void       panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
-					     const char       *gconf_key);
 
 void       panel_applet_frame_change_orient (PanelAppletFrame *frame,
 					     PanelOrient       orient);
@@ -94,6 +92,13 @@ void       panel_applet_frame_clear_background         (PanelAppletFrame *frame)
 void       panel_applet_frame_get_expand_flags         (PanelAppletFrame *frame,
 							gboolean         *expand_major,
 							gboolean         *expand_minor);
+
+void       panel_applet_frame_save_to_gconf   (PanelAppletFrame *frame,
+					       const char       *gconf_key);
+
+void       panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
+					       gint         position,
+					       const char  *gconf_key);
 
 G_END_DECLS
 

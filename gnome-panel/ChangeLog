@@ -1,5 +1,30 @@
 2002-01-07  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet.c: (panel_applet_get_full_gconf_key): fix silly.
+	(panel_applet_load_from_unique_id): use
+	panel_applet_frame_load_from_gconf and load launchers.
+	(panel_applet_load_list): replace list_key arg with type arg.
+	(panel_applet_load_applets_from_gconf): upd.
+	(panel_applet_save_position): suggest a sync.
+	(panel_applet_save_to_gconf): save launchers.
+
+	* launcher.[ch]:
+	(launcher_save_to_gconf), (launcher_load_from_gconf): impl.
+	(load_launcher_applet_full), (load_launcher_applet): add a
+	gconf_key arg.
+	(really_add_launcher), (load_launcher_applet_from_info),
+	(load_launcher_applet_from_info_url): upd.
+
+	* menu.c: (add_app_to_panel), (add_drawers_from_dir),
+	(add_launcher): upd for launcher change.
+
+	* panel.c: (drop_urilist), (drop_internal_icon): ditto.
+
+	* panel-applet-frame.[ch]:
+	(panel_applet_frame_load_from_gconf): impl.
+
+2002-01-07  Mark McLoughlin  <mark@skynet.ie>
+
 	Move applet loading/saving to/from gconf into applet.c where
 	it can be used by all type of panel objects.
 

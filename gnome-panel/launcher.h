@@ -33,15 +33,19 @@ typedef struct {
  * otherwise things may be removed from disk when they shouldn't
  * etc.  Also always hoard if an applet which owns a desktop already
  * exists.*/
-Launcher *	load_launcher_applet_full	(const char *params,
+Launcher *	load_launcher_applet_full	(const char       *params,
 						 GnomeDesktopItem *ditem,
-						 PanelWidget *panel,
-						 int pos,
-						 gboolean exactpos);
-Launcher *	load_launcher_applet		(const char *params,
-						 PanelWidget *panel,
-						 int pos,
-						 gboolean exactpos);
+						 PanelWidget      *panel,
+						 int               pos,
+						 gboolean          exactpos,
+						 const char       *gconf_key);
+
+Launcher *	load_launcher_applet		(const char       *params,
+						 PanelWidget      *panel,
+						 int              pos,
+						 gboolean         exactpos,
+						 const char      *gconf_key);
+
 Launcher *	load_launcher_applet_from_info	(const char *name,
 						 const char *comment,
 						 const char *exec,
@@ -57,6 +61,13 @@ Launcher *	load_launcher_applet_from_info_url(const char *name,
 						   int pos,
 						   gboolean exactpos);
 void		launcher_properties		(Launcher *launcher);
+
+void            launcher_save_to_gconf          (Launcher   *launcher,
+						 const char *gconf_key);
+
+void            launcher_load_from_gconf        (PanelWidget *panel_widget,
+						 gint         position,
+						 const char  *gconf_key);
 
 void		ask_about_launcher		(const char *file,
 						 PanelWidget *panel,

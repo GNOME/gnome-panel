@@ -30,6 +30,7 @@
 #include "menu.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
+#include "panel-gconf.h"
 #include "session.h"
 #include "xstuff.h"
 
@@ -596,9 +597,57 @@ launcher_properties (Launcher *launcher)
 	gtk_widget_show_all (launcher->prop_dialog);
 }
 
+void
+launcher_save_to_gconf (Launcher  *launcher,
+			const char *gconf_key)
+{
+	GConfClient *client;
+	char        *profile;
+	char        *temp_key;
+	const char  *location;
+
+	client  = panel_gconf_get_client ();
+	profile = session_get_current_profile ();
+
+	location = gnome_desktop_item_get_location (launcher->ditem);
+
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, gconf_key, "base-location");
+	gconf_client_set_string (client, temp_key, location, NULL);
+	g_free (temp_key);
+}
+
+void
+launcher_load_from_gconf (PanelWidget *panel_widget,
+			  gint         position,
+			  const char  *gconf_key)
+{
+        GConfClient *client;
+        char        *profile;
+        char        *temp_key;
+        char        *base_location;
+
+        g_return_if_fail (panel_widget);
+        g_return_if_fail (gconf_key);
+
+        client  = panel_gconf_get_client ();
+        profile = session_get_current_profile ();
+
+        temp_key = panel_gconf_applets_default_profile_get_full_key (profile, gconf_key, "base-location");
+        base_location = gconf_client_get_string (client, temp_key, NULL);
+        g_free (temp_key);
+
+	load_launcher_applet (base_location, panel_widget, position, TRUE, gconf_key);
+
+        g_free (base_location);
+}
+
 Launcher *
-load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
-			   PanelWidget *panel, int pos, gboolean exactpos)
+load_launcher_applet_full (const char       *params,
+			   GnomeDesktopItem *ditem,
+			   PanelWidget      *panel,
+			   int               pos,
+			   gboolean          exactpos,
+			   const char       *gconf_key)
 {
 	Launcher   *launcher;
 
@@ -610,7 +659,7 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 	launcher->info = panel_applet_register (launcher->button, launcher,
 						free_launcher, panel, pos, 
 						exactpos, APPLET_LAUNCHER,
-						NULL);
+						gconf_key);
 	if (!launcher->info) {
 		/* 
 		 * Don't free launcher here, the button has 
@@ -649,7 +698,7 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 		ditem = gnome_ditem_edit_get_ditem (dedit);
 		ditem = gnome_desktop_item_copy (ditem);
 
-		launcher = load_launcher_applet_full (NULL, ditem, panel, pos, exactpos);
+		launcher = load_launcher_applet_full (NULL, ditem, panel, pos, exactpos, NULL);
 		if (launcher != NULL)
 			launcher_hoard (launcher);
 
@@ -760,7 +809,7 @@ load_launcher_applet_from_info (const char *name, const char *comment,
 	gnome_desktop_item_set_entry_type (ditem,
 					   GNOME_DESKTOP_ITEM_TYPE_APPLICATION);
 
-	launcher = load_launcher_applet_full (NULL, ditem, panel, pos, exactpos);
+	launcher = load_launcher_applet_full (NULL, ditem, panel, pos, exactpos, NULL);
 	if (launcher != NULL)
 		launcher_save (launcher);
 
@@ -791,7 +840,7 @@ load_launcher_applet_from_info_url (const char *name, const char *comment,
 	gnome_desktop_item_set_entry_type (ditem,
 					   GNOME_DESKTOP_ITEM_TYPE_LINK);
 
-	launcher = load_launcher_applet_full (NULL, ditem, panel, pos, exactpos);
+	launcher = load_launcher_applet_full (NULL, ditem, panel, pos, exactpos, NULL);
 	if (launcher != NULL)
 		launcher_save (launcher);
 
@@ -801,10 +850,13 @@ load_launcher_applet_from_info_url (const char *name, const char *comment,
 }
 
 Launcher *
-load_launcher_applet (const char *params, PanelWidget *panel, int pos,
-		      gboolean exactpos)
+load_launcher_applet (const char  *params,
+		      PanelWidget *panel,
+		      int          pos,
+		      gboolean     exactpos,
+		      const char  *gconf_key)
 {
-	return load_launcher_applet_full (params, NULL, panel, pos, exactpos);
+	return load_launcher_applet_full (params, NULL, panel, pos, exactpos, gconf_key);
 }
 
 static char *

@@ -979,7 +979,7 @@ add_app_to_panel (GtkWidget *widget, const char *item_loc)
 	PanelWidget *panel = get_panel_from_menu_data (widget, TRUE);
 	Launcher *launcher;
 
-	launcher = load_launcher_applet (item_loc, panel, 0, FALSE);
+	launcher = load_launcher_applet (item_loc, panel, 0, FALSE, NULL);
 
 	if (launcher != NULL)
 		launcher_hoard (launcher);
@@ -1053,7 +1053,8 @@ add_drawers_from_dir (const char *dirname, const char *name,
 								   dentry,
 								   newpanel,
 								   G_MAXINT/2,
-								   FALSE);
+								   FALSE,
+								   NULL);
 
 				if (launcher != NULL)
 					launcher_hoard (launcher);
@@ -1941,7 +1942,7 @@ add_launcher (GtkWidget *w, const char *item_loc)
 	Launcher *launcher;
 
 	launcher = load_launcher_applet
-		(item_loc, get_panel_from_menu_data (w, TRUE), 0, FALSE);
+		(item_loc, get_panel_from_menu_data (w, TRUE), 0, FALSE, NULL);
 
 	if (launcher != NULL)
 		launcher_hoard (launcher);

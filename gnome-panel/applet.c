@@ -830,15 +830,16 @@ panel_applet_get_full_gconf_key (AppletType   type,
 	char *retval = NULL;
 
 	if (type == APPLET_BONOBO)
-		retval = panel_gconf_applets_default_profile_get_full_key (profile, object_id, key);
+		retval = panel_gconf_applets_profile_get_full_key (profile, object_id, key);
 	else
-		retval = panel_gconf_objects_default_profile_get_full_key (profile, object_id, key);
+		retval = panel_gconf_objects_profile_get_full_key (profile, object_id, key);
 
 	return retval;
 }
 
 static void
-panel_applet_load_from_unique_id (GConfClient *gconf_client,
+panel_applet_load_from_unique_id (AppletType   type,
+				  GConfClient *gconf_client,
 				  const char  *profile,
 				  const char  *unique_id)
 {
@@ -850,7 +851,7 @@ panel_applet_load_from_unique_id (GConfClient *gconf_client,
 	int          position;
 	gboolean     right_stick;
 
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "object-type");
+	temp_key = panel_applet_get_full_gconf_key (type, profile, unique_id, "object-type");
 	type_string = gconf_client_get_string (gconf_client, temp_key, NULL);
 
 	if (!gconf_string_to_enum (object_type_enum_map, type_string, (int *) &applet_type)) {
@@ -861,15 +862,15 @@ panel_applet_load_from_unique_id (GConfClient *gconf_client,
 	g_free (temp_key);
 	g_free (type_string);
 
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "position");
+	temp_key = panel_applet_get_full_gconf_key (type, profile, unique_id, "position");
 	position = gconf_client_get_int (gconf_client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "panel-id");
+	temp_key = panel_applet_get_full_gconf_key (type, profile, unique_id, "panel-id");
 	panel_id = gconf_client_get_string (gconf_client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "right-stick");
+	temp_key = panel_applet_get_full_gconf_key (type, profile, unique_id, "right-stick");
 	right_stick = gconf_client_get_bool (gconf_client, temp_key, NULL);
 	g_free (temp_key);
 
@@ -882,17 +883,25 @@ panel_applet_load_from_unique_id (GConfClient *gconf_client,
 	position += right_stick ? G_MAXINT/2 : 0;
 
 	switch (applet_type) {
-	case APPLET_BONOBO: {
-		char *applet_iid;
-
-		temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "bonobo-iid");
-		applet_iid = gconf_client_get_string (gconf_client, temp_key, NULL);
-		g_free (temp_key);
-
-		panel_applet_frame_load (applet_iid, panel_widget, position, unique_id);
-
-		g_free (applet_iid);
-		}
+	case APPLET_BONOBO:
+		panel_applet_frame_load_from_gconf (panel_widget, position, unique_id);
+		break;
+	case APPLET_DRAWER:
+		break;
+	case APPLET_SWALLOW:
+		break;
+	case APPLET_MENU:
+		break;
+	case APPLET_LAUNCHER:
+		launcher_load_from_gconf (panel_widget, position, unique_id);
+		break;
+	case APPLET_LOGOUT:
+		break;
+	case APPLET_LOCK:
+		break;
+	case APPLET_STATUS:
+		break;
+	case APPLET_RUN:
 		break;
 	default:
 		break;
@@ -900,19 +909,22 @@ panel_applet_load_from_unique_id (GConfClient *gconf_client,
 }
 
 static void
-panel_applet_load_list (GConfClient *client,
-			const char  *profile,
-			const char *list_key)
+panel_applet_load_list (AppletType   type,
+			GConfClient *client,
+			const char  *profile)
 {
 	GSList *id_list, *l;
-	char   *temp_key;
+	char   *temp_key = NULL;
 
-        temp_key = panel_gconf_general_profile_get_full_key (profile, list_key);
+	if (type == APPLET_BONOBO)
+        	temp_key = panel_gconf_general_profile_get_full_key (profile, "applet-id-list");
+	else
+        	temp_key = panel_gconf_general_profile_get_full_key (profile, "object-id-list");
 
         id_list = gconf_client_get_list (panel_gconf_get_client (), temp_key, GCONF_VALUE_STRING, NULL);
 
         for (l = id_list; l; l = l->next)
-		panel_applet_load_from_unique_id (client, profile, (char *) l->data);
+		panel_applet_load_from_unique_id (type, client, profile, (char *) l->data);
 
         g_free (temp_key);
         g_slist_foreach (id_list, (GFunc) g_free, NULL);
@@ -928,8 +940,8 @@ panel_applet_load_applets_from_gconf (void)
         client  = panel_gconf_get_client ();
 	profile = session_get_current_profile ();
 
-	panel_applet_load_list (client, profile, "applet-id-list");
-	panel_applet_load_list (client, profile, "object-id-list");
+	panel_applet_load_list (APPLET_BONOBO, client, profile);
+	panel_applet_load_list (APPLET_EMPTY, client, profile);
 }
 
 void
@@ -954,6 +966,8 @@ panel_applet_save_position (AppletInfo *applet_info,
 	temp_key = panel_applet_get_full_gconf_key (applet_info->type, profile, gconf_key, "right-stick");
 	gconf_client_set_bool (client, temp_key, panel_applet_get_right_stick (applet_info), NULL);
 	g_free (temp_key);
+
+	gconf_client_suggest_sync (client, NULL);
 }
 
 void
@@ -1005,9 +1019,26 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 		panel_applet_frame_save_to_gconf (PANEL_APPLET_FRAME (applet_info->data),
 						  applet_info->gconf_key);
 		break;
+	case APPLET_DRAWER:
+		break;
+	case APPLET_SWALLOW:
+		break;
+	case APPLET_MENU:
+		break;
+	case APPLET_LAUNCHER:
+		launcher_save_to_gconf ((Launcher *) applet_info->data,
+					applet_info->gconf_key);
+		break;
+	case APPLET_LOGOUT: /* no object specific stuff to save */
+	case APPLET_LOCK:
+	case APPLET_STATUS:
+	case APPLET_RUN:
+		break;
 	default:
 		break;
 	}
+
+	gconf_client_suggest_sync (client, NULL);
 }
 
 AppletInfo *

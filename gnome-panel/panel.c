@@ -1036,7 +1036,7 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 			    strcmp(mimetype, "application/x-kde-app-info") == 0)) {
 			Launcher *launcher;
 			
-			launcher = load_launcher_applet (uri, panel, pos, TRUE);
+			launcher = load_launcher_applet (uri, panel, pos, TRUE, NULL);
 			
 			if (launcher != NULL)
 				launcher_hoard (launcher);
@@ -1118,7 +1118,7 @@ drop_internal_icon (PanelWidget *panel, int pos, const char *icon_name,
 		old_launcher = NULL;
 	}
 
-	launcher = load_launcher_applet (icon_name, panel, pos, TRUE);
+	launcher = load_launcher_applet (icon_name, panel, pos, TRUE, NULL);
 
 	if (launcher != NULL) {
 		launcher_hoard (launcher);
