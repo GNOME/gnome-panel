@@ -225,9 +225,13 @@ main(int argc, char **argv)
 
 	aw = applet_widget_new ();
 
-	mypath = getcwd(NULL,0);
-	myinvoc = g_copy_strings(mypath,"/",argv[0],NULL);
-	free(mypath);
+	if(argv[0][0] == '/')
+		myinvoc = g_strdup(argv[0]);
+	else {
+		mypath = getcwd(NULL,0);
+		myinvoc = g_copy_strings(mypath,"/",argv[0],NULL);
+		free(mypath);
+	}
 	result = gnome_panel_applet_request_id(aw,myinvoc,&applet_id,&cfgpath);
 	g_free(myinvoc);
 	if (result){
