@@ -17,12 +17,12 @@
       <schema>
         <key>/schemas/apps/tasklist-applet/prefs/group_windows</key>
         <owner>tasklist-applet</owner>
-        <type>bool</type>
-        <default>true</default>
+        <type>string</type>
+        <default>auto</default>
         <locale name="C">
-          <short>Enable grouping of windows</short>
-          <long>Group windows from the same application on the tasklist when there
-	        is not enough space to show all window.
+          <short>When to group windows</short>
+          <long>Decides when to group windows from the same application on the tasklist.
+	        valid values are never, auto, and always.
 	  </long>
         </locale>
       </schema>
