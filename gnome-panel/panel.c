@@ -55,7 +55,19 @@ extern GlobalConfig global_config;
 extern PanelWidget *current_panel;
 
 /*the types of stuff we accept*/
-static char *panel_drop_types[] = {"url:ALL", "application/x-color"};
+
+enum {
+	TARGET_URL,
+	TARGET_COLOR
+};
+
+static GtkTargetEntry panel_drop_types[] = {
+	{ "text/uri-list",       0, TARGET_URL },
+	{ "application/x-color", 0, TARGET_COLOR }
+};
+
+static gint n_panel_drop_types = 
+   sizeof(panel_drop_types) / sizeof(panel_drop_types[0]);
 
 /*get the default panel widget if the panel has more then one or
   just get the that one*/
@@ -851,25 +863,30 @@ bind_panel_events(GtkWidget *widget, gpointer data)
 }
 
 static void
-panel_widget_dnd_drop_internal(GtkWidget *widget,
-			       GdkEventDropDataAvailable *event,
-			       gpointer data)
+panel_widget_dnd_drop_internal (GtkWidget *widget,
+				GdkDragContext   *context,
+				gint              x,
+				gint              y,
+				GtkSelectionData *selection_data,
+				guint             info,
+				guint             time)
 {
 	PanelWidget *panel;
 
 	g_return_if_fail(widget!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(widget));
-	g_return_if_fail(event!=NULL);
 
-	panel = PANEL_WIDGET(widget);
+	panel = PANEL_WIDGET (widget);
 
-	/* Test for the type that was dropped */
-	if (strcmp (event->data_type, "url:ALL") == 0) {
-		char *file = event->data;
+	switch (info) {
+	case TARGET_URL: {
+		GList *files = 
+			gnome_uri_list_extract_filenames ((char *)selection_data->data);
 		struct stat s;
-
+		
 		/*if we can't stat this file don't even bother loading it*/
-		if(stat(file,&s)==0) {
+		if(files && stat((char *)files->data,&s)==0) {
+			char *file = (char *)files->data;
 			char *p = strrchr(file,'.');
 			int pos = panel_widget_get_cursorloc(panel);
 			if(S_ISDIR(s.st_mode)) /*add a menu*/
@@ -882,31 +899,24 @@ panel_widget_dnd_drop_internal(GtkWidget *widget,
 			else /*if all else fails it might be a pixmap*/
 				panel_widget_set_back_pixmap (panel, file);
 		}
-	} else if(!strcmp(event->data_type, "application/x-color")) {
-		gdouble *dropped;
+		gnome_uri_list_free_strings (files);
+		break;
+	}
+	case TARGET_COLOR: {
+		guint16 *dropped;
 		GdkColor c;
 
-		dropped = (gdouble *)event->data;
+		dropped = (guint16 *)selection_data->data;
 
-		c.red = (dropped[1]*65535);
-		c.green = (dropped[2]*65535);
-		c.blue = (dropped[3]*65535);
+		c.red = dropped[0];
+		c.green = dropped[1];
+		c.blue = dropped[2];
 		c.pixel = 0;
 
 		panel_widget_set_back_color(panel, &c);
+		break;
 	}
-}
-
-static void
-panelw_realize(PanelWidget *panel, gpointer data)
-{
-	g_return_if_fail(panel!=NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(panel));
-
-	gtk_widget_dnd_drop_set (GTK_WIDGET(panel), TRUE,
-				 panel_drop_types,
-				 sizeof(panel_drop_types)/sizeof(char *),
-				 FALSE);
+	}
 }
 
 static void
@@ -928,16 +938,17 @@ panel_widget_setup(PanelWidget *panel)
 			   "back_change",
 			   GTK_SIGNAL_FUNC(panel_back_change),
 			   NULL);
-	gtk_signal_connect_after(GTK_OBJECT(panel),
-				 "realize",
-				 GTK_SIGNAL_FUNC(panelw_realize),
-				 NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "drag_data_received",
+			   GTK_SIGNAL_FUNC(panel_widget_dnd_drop_internal),
+			   NULL);
 
-	/* Ok, cool hack begins: drop image files on the panel */
-	gtk_signal_connect (GTK_OBJECT (panel),
-			    "drop_data_available_event",
-			    GTK_SIGNAL_FUNC (panel_widget_dnd_drop_internal),
-			    NULL);
+	gtk_drag_dest_set (GTK_WIDGET (panel),
+			   GTK_DEST_DEFAULT_MOTION |
+			   GTK_DEST_DEFAULT_HIGHLIGHT |
+			   GTK_DEST_DEFAULT_DROP,
+			   panel_drop_types, n_panel_drop_types,
+			   GDK_ACTION_COPY);
 }
 
 void
