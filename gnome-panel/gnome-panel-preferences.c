@@ -281,37 +281,6 @@ load_option_menus (void)
 }
 
 static void
-load_spin_buttons (void)
-{
-	/* keep the spin buttons and their associated adjustment in sync */
-	gchar *spinbuttons[] = {"panel-hide-delay", "panel-show-delay", NULL };
-	GtkAdjustment *adjustments[] = {GTK_ADJUSTMENT(gtk_adjustment_new(30.0,
-						30.0,3000.0,10.0,10.0,0.0)),
-				        GTK_ADJUSTMENT(gtk_adjustment_new(0.0,
-						0.0, 3000.0,10.0,10.0,0.0))
-					};
-        int i = 0;
-
-        while(spinbuttons[i]!=NULL){
-		GtkWidget *spin_button;
-		gchar* key;
-
-        	spin_button = glade_xml_get_widget(glade_gui,spinbuttons[i]);
-        	gtk_spin_button_configure(GTK_SPIN_BUTTON(spin_button),
-                	adjustments[i],10.0,0);
-		key = g_strdup_printf("/apps/panel/global/%s",spinbuttons[i]);
-        	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_button),
-                	(double)gconf_client_get_int(gconf_client, key, NULL));
-        	g_signal_connect_data (G_OBJECT (spin_button), "value-changed",
-				       G_CALLBACK (spin_button_changed),
-				       key,
-				       (GClosureNotify)g_free,
-				       0 /* connect_flags */);
-		i++;
-        }
-}
-
-static void
 load_key_bindings()
 {
         gchar *entries[] = {"menu-key", "run-key", NULL };
@@ -344,7 +313,6 @@ load_config_into_gui()
 {
 	load_checkboxes();
 	load_option_menus();
-	load_spin_buttons();
 	load_key_bindings();
 }
 
