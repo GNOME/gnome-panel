@@ -425,7 +425,7 @@ panel_applet_button_press (GtkWidget      *widget,
 	return FALSE;
 }
 
-static void
+static gboolean
 panel_applet_popup_menu (GtkWidget *widget)
 {
 	PanelApplet *applet = PANEL_APPLET (widget);
@@ -589,6 +589,62 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 	return retval;
 }
 
+static PanelAppletBackgroundType
+panel_applet_handle_background_string (PanelApplet  *applet,
+				       GdkColor     *color,
+				       GdkPixmap   **pixmap)
+{
+	gchar **elements;
+
+	if (!applet->priv->background)
+		return PANEL_NO_BACKGROUND;
+
+	elements = g_strsplit (applet->priv->background, ":", -1);
+
+	if (elements [0] && !strcmp (elements [0], "none" )) {
+		return PANEL_NO_BACKGROUND;
+		
+	} else if (elements [0] && !strcmp (elements [0], "color")) {
+		g_return_val_if_fail (color != NULL, PANEL_NO_BACKGROUND);
+
+		if (!elements [1] || !panel_applet_parse_color (elements [1], color)) {
+
+			g_warning (_("Incomplete '%s' background type received"), elements [0]);
+			g_strfreev (elements);
+			return PANEL_NO_BACKGROUND;
+		}
+
+		return PANEL_COLOR_BACKGROUND;
+
+	} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
+		GdkNativeWindow pixmap_id;
+		int             x, y;
+
+		g_return_val_if_fail (pixmap != NULL, PANEL_NO_BACKGROUND);
+
+		if (!panel_applet_parse_pixmap_str (elements [1], &pixmap_id, &x, &y)) {
+			g_warning (_("Incomplete '%s' background type received: %s"),
+				   elements [0], elements [1]);
+
+			g_strfreev (elements);
+			return PANEL_NO_BACKGROUND;
+		}
+
+		*pixmap = panel_applet_get_pixmap (applet, pixmap_id, x, y);
+		if (!*pixmap) {
+			g_warning (_("Failed to get pixmap %s"), elements [1]);
+			g_strfreev (elements);
+			return PANEL_NO_BACKGROUND;
+		}
+
+		return PANEL_PIXMAP_BACKGROUND;
+	} else
+		g_warning (_("Unknown background type received"));
+
+	return PANEL_NO_BACKGROUND;
+}
+
+
 /**
  * panel_applet_get_background
  * @applet: A #PanelApplet.
@@ -597,7 +653,6 @@ panel_applet_get_pixmap (PanelApplet     *applet,
  *
  * Returns the current background type and fills in the relevant
  * 
- *
  * Return value: a #PanelAppletOrient value.
  */
 PanelAppletBackgroundType
@@ -605,7 +660,7 @@ panel_applet_get_background (PanelApplet *applet,
 			     GdkColor *color,
 			     GdkPixmap **pixmap)
 {
-	gchar **elements;
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), PANEL_NO_BACKGROUND);
 
 	/* initial sanity */
 	if (pixmap != NULL)
@@ -613,66 +668,7 @@ panel_applet_get_background (PanelApplet *applet,
 	if (color != NULL)
 		memset (color, 0, sizeof (GdkColor));
 
-	if (applet->priv->background == NULL) {
-		return PANEL_NO_BACKGROUND;
-	}
-
-	elements = g_strsplit (applet->priv->background, ":", -1);
-
-	if (elements [0] && !strcmp (elements [0], "color")) {
-		if (color == NULL) {
-			g_strfreev (elements);
-			return PANEL_COLOR_BACKGROUND;
-		}
-
-		if (!elements [1] || !panel_applet_parse_color (elements [1], color)) {
-
-			g_warning (_("%s: Incomplete '%s'"
-				     " background type received"),
-				   "panel_applet_get_background", elements [0]);
-
-		}
-
-		g_strfreev (elements);
-
-		return PANEL_COLOR_BACKGROUND;
-	} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
-		GdkNativeWindow  pixmap_id;
-		int              x, y;
-
-		if (pixmap == NULL) {
-			g_strfreev (elements);
-			return PANEL_PIXMAP_BACKGROUND;
-		}
-
-		if (!panel_applet_parse_pixmap_str (elements [1], &pixmap_id, &x, &y)) {
-			g_warning (_("%s: Incomplete '%s'"
-				     " background type received: %s"),
-				   "panel_applet_get_background",
-				   elements [0], elements [1]);
-
-			g_strfreev (elements);
-			return PANEL_PIXMAP_BACKGROUND;
-		}
-
-		*pixmap = panel_applet_get_pixmap (applet, pixmap_id, x, y);
-		if (*pixmap == NULL) {
-			g_warning (_("%s: Failed to get pixmap"
-				     " %s"), "panel_spplet_get_background",
-				   elements [1]);
-
-			g_strfreev (elements);
-			return PANEL_PIXMAP_BACKGROUND;
-		}
-
-		return PANEL_PIXMAP_BACKGROUND;
-	} else {
-		g_warning (_("panel_applet_set_prop: Unknown background type received"));
-	}
-
-	g_strfreev (elements);
-
-	return PANEL_NO_BACKGROUND;
+	return panel_applet_handle_background_string (applet, color, pixmap);
 }
 
 static void
@@ -742,82 +738,40 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 		}
 		break;
 	case PROPERTY_BACKGROUND_IDX: {
-		gchar  *bg_str;
-		gchar **elements;
+		PanelAppletBackgroundType  type;
+		GdkColor                   color;
+		GdkPixmap                 *pixmap = NULL;
 
-		bg_str = BONOBO_ARG_GET_STRING (arg);
 
-		elements = g_strsplit (bg_str, ":", -1);
+		if (applet->priv->background)
+			g_free (applet->priv->background);
 
-		if (elements [0] && !strcmp (elements [0], "none" )) {
-			if (applet->priv->background)
-				g_free (applet->priv->background);
-			applet->priv->background = NULL;
+		applet->priv->background = g_strdup (BONOBO_ARG_GET_STRING (arg));
 
+		type = panel_applet_handle_background_string (applet, &color, &pixmap);
+
+		switch (type) {
+		case PANEL_NO_BACKGROUND:
 			g_signal_emit (G_OBJECT (applet),
 				       panel_applet_signals [CHANGE_BACKGROUND],
 				       0, PANEL_NO_BACKGROUND, NULL, NULL);
-		
-		} else if (elements [0] && !strcmp (elements [0], "color")) {
-			GdkColor color;
-
-			if (!elements [1] || !panel_applet_parse_color (elements [1], &color)) {
-
-				g_warning (_("%s: Incomplete '%s'"
-					     " background type received"),
-					   "panel_applet_set_prop", elements [0]);
-
-				g_strfreev (elements);
-				return;
-			}
-
-			if (applet->priv->background)
-				g_free (applet->priv->background);
-			applet->priv->background = g_strdup (bg_str);
-
+			break;
+		case PANEL_COLOR_BACKGROUND:
 			g_signal_emit (G_OBJECT (applet),
 				       panel_applet_signals [CHANGE_BACKGROUND],
 				       0, PANEL_COLOR_BACKGROUND, &color, NULL);
-
-		} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
-			GdkNativeWindow  pixmap_id;
-			GdkPixmap       *pixmap;
-			int              x, y;
-
-			if (!panel_applet_parse_pixmap_str (elements [1], &pixmap_id, &x, &y)) {
-				g_warning (_("%s: Incomplete '%s'"
-					     " background type received: %s"),
-					   "panel_applet_set_prop",
-					   elements [0], elements [1]);
-
-				g_strfreev (elements);
-				return;
-			}
-
-			pixmap = panel_applet_get_pixmap (applet, pixmap_id, x, y);
-			if (!pixmap) {
-				g_warning (_("%s: Failed to get pixmap"
-					     " %s"), "panel_applet_set_prop",
-					   elements [1]);
-
-				g_strfreev (elements);
-				return;
-			}
-
-			if (applet->priv->background)
-				g_free (applet->priv->background);
-			applet->priv->background = g_strdup (bg_str);
-
+			break;
+		case PANEL_PIXMAP_BACKGROUND:
 			g_signal_emit (G_OBJECT (applet),
 				       panel_applet_signals [CHANGE_BACKGROUND],
 				       0, PANEL_PIXMAP_BACKGROUND, NULL, pixmap);
 
 			g_object_unref (G_OBJECT (pixmap));
-		} else {
-			g_warning (_("panel_applet_set_prop: Unknown background type received"));
+			break;
+		default:
+			g_assert_not_reached ();
+			break;
 		}
-
-		g_strfreev (elements);
 		}
 		break;
 	default:
