@@ -13,14 +13,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3.x\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-03 19:51+0100\n"
+"POT-Creation-Date: 2003-11-11 15:09+0000\n"
 "PO-Revision-Date: 2003-08-04 11:39+0100\n"
 "Last-Translator: Reinout van Schouwen <reinout@cs.vu.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/clock.c:219
 msgid "%l:%M:%S %p"
@@ -103,7 +103,7 @@ msgstr ""
 "is er geen geïnstalleerd?"
 
 #: applets/clock/clock.c:1359 applets/clock/clock.c:1631
-#: applets/fish/fish.c:128 applets/notification_area/main.c:80
+#: applets/fish/fish.c:129 applets/notification_area/main.c:80
 #: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:117
 #: applets/wncklet/window-list.c:774 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -297,7 +297,7 @@ msgstr "_Info..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3132
+#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3070
 #: gnome-panel/panel-action-button.c:547 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:584
 msgid "_Help"
@@ -310,7 +310,7 @@ msgstr "_Hulp"
 msgid "_Preferences..."
 msgstr "_Voorkeuren..."
 
-#: applets/fish/fish.c:195
+#: applets/fish/fish.c:196
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -323,13 +323,13 @@ msgstr ""
 "We raden u ten zeerste af om %s te gebruiken voor iets dat het applet\n"
 "nuttig of \"praktisch\" zou maken."
 
-#: applets/fish/fish.c:456 applets/fish/fish.c:614
+#: applets/fish/fish.c:457 applets/fish/fish.c:527 applets/fish/fish.c:615
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s de vis"
 
 # Ik denk dat hier processor time ipv compilation time bedoeld wordt. Het applet is namelijk gecompileerd!
-#: applets/fish/fish.c:457
+#: applets/fish/fish.c:458
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -342,39 +342,34 @@ msgstr ""
 "iemand betrapt wordt op het gebruiken ervan, dient hij ogenblikkelijk een "
 "psychiatrisch onderzoek te ondergaan."
 
-#: applets/fish/fish.c:478
+#: applets/fish/fish.c:479
 msgid "(with minor help from George)"
 msgstr "(met enige hulp van George)"
 
-#: applets/fish/fish.c:494
+#: applets/fish/fish.c:495
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
 msgstr "Vis"
 
-#: applets/fish/fish.c:526
-#, c-format
-msgid "%s the GNOME Fish"
-msgstr "%s de GNOME vis"
-
-#: applets/fish/fish.c:527
-#, c-format
-msgid "%s the GNOME Fish, a contemporary oracle"
+#: applets/fish/fish.c:528
+#, fuzzy, c-format
+msgid "%s the Fish, a contemporary oracle"
 msgstr "%s de GNOME vis, een eigentijds orakel"
 
-#: applets/fish/fish.c:574
+#: applets/fish/fish.c:575
 msgid "Unable to get the name of the command to execute"
 msgstr "Niet in staat om de naam op te halen van de uit te voeren opdracht"
 
-#: applets/fish/fish.c:591
+#: applets/fish/fish.c:592
 msgid "Unable to locate the command to execute"
 msgstr "Niet in staat de uit te voeren opdracht te vinden"
 
-#: applets/fish/fish.c:619
-#, no-c-format
-msgid "%s the GNOME Fish Says:"
+#: applets/fish/fish.c:620
+#, fuzzy, no-c-format
+msgid "%s the Fish Says:"
 msgstr "%s de GNOME vis zegt:"
 
-#: applets/fish/fish.c:744
+#: applets/fish/fish.c:745
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -385,7 +380,7 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: applets/fish/fish.c:765
+#: applets/fish/fish.c:766
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -397,7 +392,7 @@ msgstr ""
 "\n"
 "Wij verwijzen u naar het eigenschappenvenster van de vis"
 
-#: applets/fish/fish.c:1367
+#: applets/fish/fish.c:1369
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -405,8 +400,9 @@ msgstr ""
 "Het water moet ververst worden!\n"
 "(kijk naar de datum)"
 
-#: applets/fish/fish.c:1435
-msgid "GNOME Fish, the fortune teller"
+#: applets/fish/fish.c:1429
+#, fuzzy, c-format
+msgid "%s the Fish, the fortune teller"
 msgstr "GNOME vis, de waarzegster"
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
@@ -430,7 +426,7 @@ msgstr "<b>Animatie</b>"
 msgid "<b>General</b>"
 msgstr "<b>Algemeen</b>"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:281
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:152
 msgid "Browse"
 msgstr "Bladeren"
 
@@ -715,7 +711,7 @@ msgstr "Vensters van _huidige werkblad tonen"
 msgid "Show windows from a_ll workspaces"
 msgstr "Vensters van a_lle werkbladen tonen"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3614
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3619
 msgid "Size"
 msgstr "Afmetingen"
 
@@ -932,29 +928,29 @@ msgstr ""
 "weergeeft. Deze sleutel is slechts relevant als de sleutel "
 "display_all_workspaces waar is."
 
-#: gnome-panel/applet.c:104 gnome-panel/applet.c:501
+#: gnome-panel/applet.c:104 gnome-panel/applet.c:498
 #: gnome-panel/panel-applet-frame.c:109
 msgid "Un_lock"
 msgstr "_Losmaken"
 
-#: gnome-panel/applet.c:104 gnome-panel/applet.c:501
+#: gnome-panel/applet.c:104 gnome-panel/applet.c:498
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:109
 msgid "_Lock"
 msgstr "Vast_zetten"
 
-#: gnome-panel/applet.c:410
+#: gnome-panel/applet.c:407
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:487 gnome-panel/GNOME_Panel_Popup.xml.h:3
+#: gnome-panel/applet.c:484 gnome-panel/GNOME_Panel_Popup.xml.h:3
 msgid "_Remove From Panel"
 msgstr "Ve_rwijderen van paneel"
 
-#: gnome-panel/applet.c:509 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:506 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Move"
 msgstr "_Verplaatsen"
 
-#: gnome-panel/applet.c:1119
+#: gnome-panel/applet.c:1116
 msgid "Can't find an empty spot"
 msgstr "Kan geen lege plaats vinden"
 
@@ -988,7 +984,7 @@ msgstr "Oplichten bij slepen"
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Of het pictogram al of niet oplicht tijdens het slepen en neerzetten"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3603
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3608
 msgid "Orientation"
 msgstr "Oriëntatie"
 
@@ -1036,8 +1032,8 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE-menu"
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:762 gnome-panel/menu.c:1559
-#: gnome-panel/menu.c:3081 gnome-panel/panel-action-button.c:97
+#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:743 gnome-panel/menu.c:1497
+#: gnome-panel/menu.c:3019 gnome-panel/panel-action-button.c:97
 msgid "_Properties"
 msgstr "_Eigenschappen"
 
@@ -1286,35 +1282,25 @@ msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Niet in staat om bureaublad-bestand %s voor paneelstarter %s%s te openen\n"
 
-#: gnome-panel/launcher.c:528
-#, c-format
-msgid "Help on %s _Application"
-msgstr "Hulp over %s-toep_assing"
-
-#: gnome-panel/launcher.c:652 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:633 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "Starter-eigenschappen"
 
-#: gnome-panel/launcher.c:836
+#: gnome-panel/launcher.c:817
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Sleutel %s is niet ingesteld, kan starter niet laden\n"
 
-#: gnome-panel/launcher.c:920 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:901 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "Starter aanmaken"
-
-#: gnome-panel/launcher.c:1127 gnome-panel/menu.c:1194
-#: gnome-panel/panel-util.c:74
-msgid "Cannot display help document"
-msgstr "Niet in staat het hulpdocument weer te geven"
 
 #: gnome-panel/main.c:48
 msgid "Specify a profile name to load"
 msgstr "Specificeer een profiel naam om te laden"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3279
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3217
 #: gnome-panel/panel-menu-bar.c:173
 msgid "Log Out"
 msgstr "Afmelden"
@@ -1343,7 +1329,7 @@ msgstr "Afsluiten forceren"
 msgid "Screenshot"
 msgstr "Schermafdruk"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3447
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3385
 #: gnome-panel/panel-menu-bar.c:152
 msgid "Take a screenshot of your desktop"
 msgstr "Schermafdruk van uw bureaublad maken"
@@ -1352,7 +1338,7 @@ msgstr "Schermafdruk van uw bureaublad maken"
 msgid "Search"
 msgstr "Zoeken"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3428
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3366
 #: gnome-panel/panel-menu-bar.c:137
 msgid "Find files, folders, and documents on your computer"
 msgstr "Bestanden, mappen en documenten vinden op uw computer"
@@ -1387,7 +1373,7 @@ msgstr ""
 msgid "Cannot execute '%s'"
 msgstr "Kan '%s' niet uitvoeren"
 
-#: gnome-panel/menu.c:329 gnome-panel/panel-util.c:962
+#: gnome-panel/menu.c:329 gnome-panel/panel-util.c:815
 #, c-format
 msgid "%s - command not found"
 msgstr "%s - opdracht niet gevonden"
@@ -1400,7 +1386,7 @@ msgstr "GNOME-info"
 msgid "Cannot launch entry"
 msgstr "Kan item niet starten"
 
-#: gnome-panel/menu.c:364 gnome-panel/menu.c:1167 gnome-panel/menu.c:1207
+#: gnome-panel/menu.c:364 gnome-panel/menu.c:1167
 msgid "Cannot load entry"
 msgstr "Kan item niet laden"
 
@@ -1427,115 +1413,106 @@ msgstr "Kan niet toevoegen aan uitvoeren-veld"
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Geen 'Exec' of 'URL'-veld in invoer"
 
-#: gnome-panel/menu.c:1484
+#: gnome-panel/menu.c:1444
 msgid "Add this launcher to panel"
 msgstr "Deze starter toevoegen aan het paneel"
 
-#: gnome-panel/menu.c:1494
+#: gnome-panel/menu.c:1454
 msgid "Remove this item"
 msgstr "Dit item verwijderen"
 
-#: gnome-panel/menu.c:1511
+#: gnome-panel/menu.c:1471
 msgid "Put into run dialog"
 msgstr "In uitvoeren-dialoog zetten"
 
-#: gnome-panel/menu.c:1530
-#, c-format
-msgid "Help on %s"
-msgstr "Hulp bij %s"
-
-#: gnome-panel/menu.c:1531
-msgid "Application"
-msgstr "Toepassing"
-
-#: gnome-panel/menu.c:1581
+#: gnome-panel/menu.c:1519
 msgid "Entire menu"
 msgstr "Hele menu"
 
-#: gnome-panel/menu.c:1590
+#: gnome-panel/menu.c:1528
 msgid "Add this as drawer to panel"
 msgstr "Als opberglade aan paneel toevoegen"
 
-#: gnome-panel/menu.c:1601
+#: gnome-panel/menu.c:1539
 msgid "Add this as menu to panel"
 msgstr "Als menu aan paneel toevoegen"
 
-#: gnome-panel/menu.c:1614
+#: gnome-panel/menu.c:1552
 msgid "Add new item to this menu"
 msgstr "Nieuw item toevoegen aan dit menu"
 
-#: gnome-panel/menu.c:1641
+#: gnome-panel/menu.c:1579
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: gnome-panel/menu.c:2616 gnome-panel/menu.c:2671
+#: gnome-panel/menu.c:2554 gnome-panel/menu.c:2609
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "query resulteerde in uitzondering %s\n"
 
-#: gnome-panel/menu.c:2885 gnome-panel/menu.c:2890 gnome-panel/menu.c:3388
+#: gnome-panel/menu.c:2823 gnome-panel/menu.c:2828 gnome-panel/menu.c:3326
 #: gnome-panel/panel-menu-bar.c:195
 msgid "Applications"
 msgstr "Toepassingen"
 
-#: gnome-panel/menu.c:2960
+#: gnome-panel/menu.c:2898
 msgid "You cannot remove your last panel."
 msgstr "Het laatste paneel kan niet verwijderd worden."
 
-#: gnome-panel/menu.c:3023
+#: gnome-panel/menu.c:2961
 msgid "_Delete This Panel..."
 msgstr "Dit paneel _verwijderen..."
 
-#: gnome-panel/menu.c:3026 gnome-panel/menu.c:3066
+#: gnome-panel/menu.c:2964 gnome-panel/menu.c:3004
 msgid "_Delete This Panel"
 msgstr "Dit paneel _verwijderen"
 
-#: gnome-panel/menu.c:3041
+#: gnome-panel/menu.c:2979
 msgid "_Add to Panel"
 msgstr "_Toevoegen aan paneel"
 
-#: gnome-panel/menu.c:3096
+#: gnome-panel/menu.c:3034
 msgid "_New Panel"
 msgstr "_Nieuw paneel"
 
-#: gnome-panel/menu.c:3143
+#: gnome-panel/menu.c:3081
 msgid "_About Panels"
 msgstr "_Paneel-info"
 
-#: gnome-panel/menu.c:3157
+#: gnome-panel/menu.c:3095
 msgid "About _GNOME"
 msgstr "_GNOME-info"
 
-#: gnome-panel/menu.c:3205
+#: gnome-panel/menu.c:3143
 msgid "Launcher..."
 msgstr "Starter..."
 
-#: gnome-panel/menu.c:3215
+#: gnome-panel/menu.c:3153
 msgid "Launcher from menu"
 msgstr "Starter vanuit menu"
 
-#: gnome-panel/menu.c:3225 gnome-panel/panel-menu-button.c:86
+#: gnome-panel/menu.c:3163 gnome-panel/panel-menu-button.c:86
 msgid "Main Menu"
 msgstr "Hoofdmenu"
 
-#: gnome-panel/menu.c:3235
+#: gnome-panel/menu.c:3173
 msgid "Menu Bar"
 msgstr "Menubalk"
 
-#: gnome-panel/menu.c:3244
+#: gnome-panel/menu.c:3182
 msgid "Drawer"
 msgstr "Opberglade"
 
-#: gnome-panel/menu.c:3267 gnome-panel/panel-menu-bar.c:164
+#: gnome-panel/menu.c:3205 gnome-panel/panel-menu-bar.c:164
 msgid "Lock Screen"
 msgstr "Beeldscherm vergrendelen"
 
-#: gnome-panel/menu.c:3273
+#: gnome-panel/menu.c:3211
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Het scherm vergrendelen zodat u uw computer tijdelijk kunt verlaten"
 
-#: gnome-panel/menu.c:3285
+#: gnome-panel/menu.c:3223
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1543,23 +1520,23 @@ msgstr ""
 "Deze sessie afsluiten zodat u zich aan kunt melden als een andere gebruiker, "
 "of uw computer uitzetten"
 
-#: gnome-panel/menu.c:3409 gnome-panel/panel-menu-bar.c:121
+#: gnome-panel/menu.c:3347 gnome-panel/panel-menu-bar.c:121
 msgid "Run Application..."
 msgstr "Toepassing uitvoeren..."
 
-#: gnome-panel/menu.c:3416 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3354 gnome-panel/panel-menu-bar.c:123
 msgid "Run an Application by entering a command"
 msgstr "Een toepassing uitvoeren door het ingeven van een opdracht"
 
-#: gnome-panel/menu.c:3425 gnome-panel/panel-menu-bar.c:135
+#: gnome-panel/menu.c:3363 gnome-panel/panel-menu-bar.c:135
 msgid "Search for Files..."
 msgstr "Zoeken naar bestanden..."
 
-#: gnome-panel/menu.c:3444 gnome-panel/panel-menu-bar.c:150
+#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:150
 msgid "Take Screenshot..."
 msgstr "Schermafdruk maken..."
 
-#: gnome-panel/menu.c:3462
+#: gnome-panel/menu.c:3400
 msgid "Desktop"
 msgstr "Bureaublad"
 
@@ -1736,7 +1713,7 @@ msgstr ""
 msgid "Open URL: %s"
 msgstr "Open URL: %s"
 
-#: gnome-panel/panel.c:1226
+#: gnome-panel/panel.c:1227
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -1744,7 +1721,7 @@ msgstr ""
 "Wanneer een paneel verwijderd wordt, gaan alle\n"
 "instellingen hiervan verloren. Paneel toch verwijderen?"
 
-#: gnome-panel/panel.c:1235
+#: gnome-panel/panel.c:1236
 msgid "Delete Panel"
 msgstr "Paneel verwijderen"
 
@@ -2212,101 +2189,102 @@ msgid "Error reading GConf list value '%s': %s"
 msgstr "Er is een fout opgetreden bij het lezen van GConf lijstwaarde '%s': %s"
 
 #: gnome-panel/panel-properties-dialog.glade.h:3
-msgid "<b>_Icon:</b>"
-msgstr "<b>_Pictogram:</b>"
-
-#: gnome-panel/panel-properties-dialog.glade.h:4
 msgid "<small>Opaque</small>"
 msgstr "<small>Ondoorzichtig</small>"
 
-#: gnome-panel/panel-properties-dialog.glade.h:5
+#: gnome-panel/panel-properties-dialog.glade.h:4
 msgid "<small>Transparent</small>"
 msgstr "<small>Transparant</small>"
 
-#: gnome-panel/panel-properties-dialog.glade.h:6
+#: gnome-panel/panel-properties-dialog.glade.h:5
 msgid "Arro_ws on hide buttons"
 msgstr "P_ijltjes op verbergknoppen tonen"
 
-#: gnome-panel/panel-properties-dialog.glade.h:7
+#: gnome-panel/panel-properties-dialog.glade.h:6
 msgid "Background"
 msgstr "Achtergrond"
 
-#: gnome-panel/panel-properties-dialog.glade.h:8
+#: gnome-panel/panel-properties-dialog.glade.h:7
 msgid "Background _image:"
 msgstr "Achter_grondafbeelding:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:9
+#: gnome-panel/panel-properties-dialog.glade.h:8
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "Onder"
 
-#: gnome-panel/panel-properties-dialog.glade.h:10
+#: gnome-panel/panel-properties-dialog.glade.h:9
 msgid "Co_lor:"
 msgstr "_Kleur:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:11
+#: gnome-panel/panel-properties-dialog.glade.h:10
 msgid "E_xpand"
 msgstr "Ui_tschuiven"
 
-#: gnome-panel/panel-properties-dialog.glade.h:12
+#: gnome-panel/panel-properties-dialog.glade.h:11
 msgid "General"
 msgstr "Algemeen"
 
-#: gnome-panel/panel-properties-dialog.glade.h:13
+#: gnome-panel/panel-properties-dialog.glade.h:12
 msgid "Image Background Details"
 msgstr "Details over achtergrondafbeelding"
 
-#: gnome-panel/panel-properties-dialog.glade.h:14
+#: gnome-panel/panel-properties-dialog.glade.h:13
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Links"
 
-#: gnome-panel/panel-properties-dialog.glade.h:15
+#: gnome-panel/panel-properties-dialog.glade.h:14
 msgid "Panel Properties"
 msgstr "Paneeleigenschappen"
 
-#: gnome-panel/panel-properties-dialog.glade.h:16
+#: gnome-panel/panel-properties-dialog.glade.h:15
 msgid "Pick a color"
 msgstr "Kies een kleur"
 
-#: gnome-panel/panel-properties-dialog.glade.h:17
+#: gnome-panel/panel-properties-dialog.glade.h:16
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "Rechts"
 
-#: gnome-panel/panel-properties-dialog.glade.h:18
+#: gnome-panel/panel-properties-dialog.glade.h:17
 msgid "Rotate image when panel is _vertical"
 msgstr "Afbeelding kantelen bij _verticale panelen"
 
-#: gnome-panel/panel-properties-dialog.glade.h:19
+#: gnome-panel/panel-properties-dialog.glade.h:18
 msgid "S_tyle:"
 msgstr "S_tijl:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:20
+#: gnome-panel/panel-properties-dialog.glade.h:19
 msgid "Show hide _buttons"
 msgstr "Ver_bergknoppen tonen"
 
 # http://home.o2w.net/~ivo/wiki.pl?Solid_Color
-#: gnome-panel/panel-properties-dialog.glade.h:21
+#: gnome-panel/panel-properties-dialog.glade.h:20
 msgid "Solid c_olor"
 msgstr "E_ffen kleur:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:22
+#: gnome-panel/panel-properties-dialog.glade.h:21
 msgid "Some of these properties are locked down"
 msgstr "Enkele van deze eigenschappen zijn onveranderbaar"
 
-#: gnome-panel/panel-properties-dialog.glade.h:23
+#: gnome-panel/panel-properties-dialog.glade.h:22
 msgid "St_retch"
 msgstr "Uit_rekken"
 
-#: gnome-panel/panel-properties-dialog.glade.h:24
+#: gnome-panel/panel-properties-dialog.glade.h:23
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Boven"
 
-#: gnome-panel/panel-properties-dialog.glade.h:25
+#: gnome-panel/panel-properties-dialog.glade.h:24
 msgid "_Autohide"
 msgstr "_Automatisch verbergen"
+
+#: gnome-panel/panel-properties-dialog.glade.h:25
+#, fuzzy
+msgid "_Icon:"
+msgstr "Pictogram"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
 #, fuzzy
@@ -2532,135 +2510,135 @@ msgstr "Rechts zwevend paneel"
 msgid "Right Edge Panel"
 msgstr "Rechterrandpaneel"
 
-#: gnome-panel/panel-toplevel.c:3583
+#: gnome-panel/panel-toplevel.c:3588
 msgid "Name"
 msgstr "Naam"
 
-#: gnome-panel/panel-toplevel.c:3584
+#: gnome-panel/panel-toplevel.c:3589
 msgid "The name of this panel"
 msgstr "De naam van dit paneel"
 
-#: gnome-panel/panel-toplevel.c:3593
+#: gnome-panel/panel-toplevel.c:3598
 msgid "Expand"
 msgstr "Uitschuiven"
 
-#: gnome-panel/panel-toplevel.c:3594
+#: gnome-panel/panel-toplevel.c:3599
 msgid "Expand to take up the full monitor width/height"
 msgstr "Uitschuiven zodat de hele monitorbreedte/-hoogte gebruikt wordt"
 
-#: gnome-panel/panel-toplevel.c:3604
+#: gnome-panel/panel-toplevel.c:3609
 msgid "The orientation of the panel"
 msgstr "De oriëntatie van dit paneel"
 
-#: gnome-panel/panel-toplevel.c:3615
+#: gnome-panel/panel-toplevel.c:3620
 msgid "The height (or width when vertical) of the panel"
 msgstr "De hoogte (of breedte als verticaal) van het paneel"
 
-#: gnome-panel/panel-toplevel.c:3627
+#: gnome-panel/panel-toplevel.c:3632
 msgid "X position"
 msgstr "X-positie"
 
-#: gnome-panel/panel-toplevel.c:3628
+#: gnome-panel/panel-toplevel.c:3633
 msgid "The X position of the panel"
 msgstr "De X-positie van het paneel"
 
-#: gnome-panel/panel-toplevel.c:3639
+#: gnome-panel/panel-toplevel.c:3644
 msgid "X centered"
 msgstr "X-gecentreerd"
 
-#: gnome-panel/panel-toplevel.c:3640
+#: gnome-panel/panel-toplevel.c:3645
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Het x-coördinaat is relatief aan het schermmidden"
 
-#: gnome-panel/panel-toplevel.c:3649
+#: gnome-panel/panel-toplevel.c:3654
 msgid "Y position"
 msgstr "Y-positie"
 
-#: gnome-panel/panel-toplevel.c:3650
+#: gnome-panel/panel-toplevel.c:3655
 msgid "The Y position of the panel"
 msgstr "De Y-positie van het paneel"
 
-#: gnome-panel/panel-toplevel.c:3661
+#: gnome-panel/panel-toplevel.c:3666
 msgid "Y centered"
 msgstr "Y-gecentreerd"
 
-#: gnome-panel/panel-toplevel.c:3662
+#: gnome-panel/panel-toplevel.c:3667
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Het y-coördinaat is relatief aan het schermmidden"
 
-#: gnome-panel/panel-toplevel.c:3671
+#: gnome-panel/panel-toplevel.c:3676
 msgid "Xinerama monitor"
 msgstr "Xinerama-monitor"
 
-#: gnome-panel/panel-toplevel.c:3672
+#: gnome-panel/panel-toplevel.c:3677
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "De monitor (in Xinerama-termen) waarop het paneel zich bevindt"
 
-#: gnome-panel/panel-toplevel.c:3683
+#: gnome-panel/panel-toplevel.c:3688
 msgid "Auto hide"
 msgstr "Automatisch verbergen"
 
-#: gnome-panel/panel-toplevel.c:3684
+#: gnome-panel/panel-toplevel.c:3689
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Het paneel automatisch verbergen wanneer de muis het paneel verlaat"
 
-#: gnome-panel/panel-toplevel.c:3693
+#: gnome-panel/panel-toplevel.c:3698
 msgid "Hide delay"
 msgstr "Verbergvertraging"
 
-#: gnome-panel/panel-toplevel.c:3694
+#: gnome-panel/panel-toplevel.c:3699
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Het aantal milliseconden vertraging voor automatisch verbergen"
 
-#: gnome-panel/panel-toplevel.c:3705
+#: gnome-panel/panel-toplevel.c:3710
 msgid "Un-hide delay"
 msgstr "Vertraging tot weer zichtbaar maken"
 
-#: gnome-panel/panel-toplevel.c:3706
+#: gnome-panel/panel-toplevel.c:3711
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 "Het aantal te wachten milliseconden voor automatisch weer zichtbaar maken"
 
 # Waar staat dit voor?
-#: gnome-panel/panel-toplevel.c:3717
+#: gnome-panel/panel-toplevel.c:3722
 msgid "Auto-hide size"
 msgstr "Automatisch verbergen-grootte"
 
-#: gnome-panel/panel-toplevel.c:3718
+#: gnome-panel/panel-toplevel.c:3723
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 "Het aantal zichtbare pixels wanneer het paneel automatisch verborgen is"
 
-#: gnome-panel/panel-toplevel.c:3729
+#: gnome-panel/panel-toplevel.c:3734
 msgid "Animate"
 msgstr "Animeren"
 
-#: gnome-panel/panel-toplevel.c:3730
+#: gnome-panel/panel-toplevel.c:3735
 msgid "Enable hiding/showing animations"
 msgstr "Verbergen/tonen van animaties inschakelen"
 
-#: gnome-panel/panel-toplevel.c:3739
+#: gnome-panel/panel-toplevel.c:3744
 msgid "Animation Speed"
 msgstr "Animatiesnelheid"
 
-#: gnome-panel/panel-toplevel.c:3740
+#: gnome-panel/panel-toplevel.c:3745
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "De snelheid waarmee paneel verborgen/getoond wordt"
 
-#: gnome-panel/panel-toplevel.c:3750
+#: gnome-panel/panel-toplevel.c:3755
 msgid "Buttons Enabled"
 msgstr "Knoppen ingeschakeld"
 
-#: gnome-panel/panel-toplevel.c:3751
+#: gnome-panel/panel-toplevel.c:3756
 msgid "Enable hide/show buttons"
 msgstr "Verbergen/tonen-knoppen inschakelen"
 
-#: gnome-panel/panel-toplevel.c:3760
+#: gnome-panel/panel-toplevel.c:3765
 msgid "Arrows Enabled"
 msgstr "Pijltjes ingeschakeld"
 
-#: gnome-panel/panel-toplevel.c:3761
+#: gnome-panel/panel-toplevel.c:3766
 msgid "Enable arrows on hide/show buttons"
 msgstr "Pijltjes op verbergen/tonen-knoppen inschakelen"
 
@@ -3005,23 +2983,16 @@ msgstr "De Xinerama-monitor waarop het paneel zich bevindt."
 msgid "Y co-ordinate of panel"
 msgstr "Y-coördinaat van het paneel"
 
-#. XXX: Not really a correct error,
-#. * but just somewhat correct
-#: gnome-panel/panel-util.c:101 gnome-panel/panel-util.c:137
-#: gnome-panel/panel-util.c:162
-msgid "Help document not found"
-msgstr "Hulpdocument niet gevonden"
+#: gnome-panel/panel-util.c:72
+msgid "Cannot display help document"
+msgstr "Niet in staat het hulpdocument weer te geven"
 
-#: gnome-panel/panel-util.c:176
-msgid "No document to show"
-msgstr "Er is geen document om te tonen"
-
-#: gnome-panel/panel-util.c:486
+#: gnome-panel/panel-util.c:357
 #, c-format
 msgid "Details: %s"
 msgstr "Details: %s"
 
-#: gnome-panel/panel-util.c:961
+#: gnome-panel/panel-util.c:814
 #, c-format
 msgid "Cannot execute %s"
 msgstr "Kan %s niet uitvoeren"
@@ -3145,6 +3116,27 @@ msgstr "Gigantisch"
 msgid "XX Small"
 msgstr "Miniem"
 
+#~ msgid "%s the GNOME Fish"
+#~ msgstr "%s de GNOME vis"
+
+#~ msgid "Help on %s _Application"
+#~ msgstr "Hulp over %s-toep_assing"
+
+#~ msgid "Help on %s"
+#~ msgstr "Hulp bij %s"
+
+#~ msgid "Application"
+#~ msgstr "Toepassing"
+
+#~ msgid "<b>_Icon:</b>"
+#~ msgstr "<b>_Pictogram:</b>"
+
+#~ msgid "Help document not found"
+#~ msgstr "Hulpdocument niet gevonden"
+
+#~ msgid "No document to show"
+#~ msgstr "Er is geen document om te tonen"
+
 #~ msgid "If true, display internet time, which is same all over the world."
 #~ msgstr ""
 #~ "Indien waar, Internet-tijd tonen. Deze is over de gehele wereld hetzelfde."
@@ -3199,9 +3191,6 @@ msgstr "Miniem"
 
 #~ msgid "Tooltip/Name"
 #~ msgstr "Zwevende tip/Naam"
-
-#~ msgid "Icon"
-#~ msgstr "Pictogram"
 
 #~ msgid "Applet appearance"
 #~ msgstr "Applet-uiterlijk"
