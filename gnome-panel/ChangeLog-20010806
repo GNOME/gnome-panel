@@ -1,3 +1,8 @@
+1998-12-13  Martin Baulig  <martin@home-of-linux.org>
+
+	* applet-widget.c (applet_widget_add): Don't free the data of the
+	goad_ids_list to avoid a core dump with multi applets.
+
 1998-12-08  Michael Lausch  <mla@gams.at>
 
 	* applet-widget.c (gnome_panel_applet_reinit_corba): change the

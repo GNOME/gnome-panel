@@ -715,11 +715,11 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 	if(goad_ids_list) {
 		GList *li;
 		g_string_append(str,goad_ids_list->data);
-		g_free(goad_ids_list->data);
+		/* g_free(goad_ids_list->data); */
 		for(li=goad_ids_list->next;li!=NULL;li=g_list_next(li)) {
 			g_string_append_c(str,',');
 			g_string_append(str,li->data);
-			g_free(li->data);
+			/* g_free(li->data); */
 		}
 	}
 
