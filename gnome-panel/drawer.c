@@ -47,16 +47,14 @@ drawer_click(GtkWidget *widget, gpointer data)
 				break;
 			case DRAWER_DOWN:
 				x = wx;
-				y = wy + drawer->drawer->allocation.height +
-				    widget->allocation.height;
+				y = wy + widget->allocation.height;
 				break;
 			case DRAWER_LEFT:
 				x = wx - drawer->drawer->allocation.width;
 				y = wy;
 				break;
 			case DRAWER_RIGHT:
-				x = wx + drawer->drawer->allocation.width +
-				    widget->allocation.width;
+				x = wx + widget->allocation.width;
 				y = wy;
 				break;
 		}
