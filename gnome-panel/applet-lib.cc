@@ -177,12 +177,12 @@ gnome_panel_applet_reinit_corba (void)
 }
 
 static CallbackInfo *
-get_callback_info(gchar *name)
+get_callback_info(gint applet_id, gchar *name)
 {
 	GList *list;
 	for(list=applet_callbacks;list!=NULL;list=g_list_next(list)) {
 		CallbackInfo *info = (CallbackInfo *)list->data;
-		if(strcmp(name,info->name)==0)
+		if(applet_id == info->applet_id && strcmp(name,info->name)==0)
 			return info;
 	}
 	return NULL;
@@ -214,7 +214,7 @@ gnome_panel_applet_register_callback(int applet_id,
 
 	g_return_if_fail(name!=NULL);
 	
-	info = get_callback_info(name);
+	info = get_callback_info(applet_id,name);
 	if(!info) {
 		info = g_new(CallbackInfo,1);
 		applet_callbacks = g_list_prepend(applet_callbacks,info);
