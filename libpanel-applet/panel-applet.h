@@ -96,6 +96,12 @@ PanelAppletOrient  panel_applet_get_orient           (PanelApplet *applet);
 
 guint              panel_applet_get_size             (PanelApplet *applet);
 
+PanelAppletBackgroundType
+                   panel_applet_get_background       (PanelApplet *applet,
+						      /* return values */
+						      GdkColor    *color,
+						      GdkPixmap  **pixmap);
+
 gchar             *panel_applet_get_preferences_key  (PanelApplet *applet);
 
 void               panel_applet_add_preferences      (PanelApplet  *applet,
