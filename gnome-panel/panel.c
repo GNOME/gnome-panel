@@ -351,6 +351,7 @@ panel_really_logout(GtkWidget *w, gint button, gpointer data)
 		if (! GNOME_CLIENT_CONNECTED (client)) {
 			panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 					    GNOME_INTERACT_NONE, 0, NULL);
+			gtk_exit(0);
 		} else {
 			/* We request a completely interactive, full,
 			   slow shutdown.  */
