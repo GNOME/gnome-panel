@@ -1,0 +1,46 @@
+<gconfschemafile>
+    <schemalist>    
+
+      <schema>
+        <key>/schemas/apps/pager-applet/prefs/display_workspace_names</key>
+        <owner>pager-applet</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short>Whether to display the names of the workspaces in the pager.</short>
+          <long>If this is true, the workspaces in the pager will display the names
+		of the workspaces, otherwise they will display the contents of the
+		workspace.
+	  </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/pager-applet/prefs/display_all_workspaces</key>
+        <owner>pager-applet</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short>Whether to display the all workspaces in the pager.</short>
+          <long>If this is true, the pager will show all workspaces, otherwise it will
+		only show the current workspace.
+	  </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/pager-applet/prefs/num_rows</key>
+        <owner>pager-applet</owner>
+        <type>int</type>
+        <default>2</default>
+        <locale name="C">
+          <short>Number of rows in the pager</short>
+          <long>When showing all the workspaces this determines how many rows
+	        the pager shows the workspaces in.
+	  </long>
+        </locale>
+      </schema>
+                 
+  </schemalist>
+  
+</gconfschemafile>

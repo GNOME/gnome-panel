@@ -10,12 +10,15 @@
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
 
 #include <panel-applet.h>
+#include <panel-applet-gconf.h>
 
 #include <gtk/gtk.h>
 #include <libbonobo.h>
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+#include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
+#include <gconf/gconf-client.h>
 
 #include "pager.h"
 
@@ -26,6 +29,13 @@ typedef struct {
 	GtkWidget *pager;
 	
 	WnckScreen *screen;
+
+	/* Properties: */
+	GtkWidget *properties_dialog;
+	GtkWidget *display_workspaces_toggle;
+	GtkWidget *all_workspaces_radio;
+	GtkWidget *current_only_radio;
+	GtkWidget *num_rows_spin;
 	
 	GtkOrientation orientation;
 	int n_rows;
@@ -127,17 +137,65 @@ static const char pager_menu_xml [] =
 	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
 	"</popup>\n";
 
+
+static void
+num_rows_changed (GConfClient *client,
+		  guint        cnxn_id,
+		  GConfEntry  *entry,
+		  PagerData   *pager)
+{
+	int n_rows = 2; /* Default value */
+	
+	if (entry->value != NULL &&
+	    entry->value->type == GCONF_VALUE_INT) {
+		n_rows = gconf_value_get_int (entry->value);
+	}
+	
+	pager->n_rows = n_rows;
+	pager_update (pager);
+
+	if (pager->num_rows_spin &&
+	    gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pager->num_rows_spin)) != n_rows)
+		gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_rows_spin), pager->n_rows);
+}
+
+
+static void
+setup_gconf (PagerData *pager)
+{
+	GConfClient *client;
+	char *key;
+
+	client = gconf_client_get_default ();
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
+					       "num_rows");
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)num_rows_changed,
+				pager,
+				NULL, NULL);
+		
+	g_free (key);
+}
+
 gboolean
 fill_pager_applet(PanelApplet *applet)
 {
 	PagerData *pager;
+	GError *error;
+	
+	panel_applet_add_preferences (applet, "/schemas/apps/pager-applet/prefs", NULL);
 	
 	pager = g_new0 (PagerData, 1);
 
 	pager->applet = GTK_WIDGET (applet);
 
-	/* FIXME: Default value, should be from gconf? */
-	pager->n_rows = 2;
+	error = NULL;
+	pager->n_rows = panel_applet_gconf_get_int (applet, "num_rows", &error);
+	if (error) {
+		g_error_free (error);
+		pager->n_rows = 2; /* Default value */
+	}
 	
 	/* FIXME: We need to get the real initial panel data here */
 	pager->size = 48;
@@ -179,18 +237,12 @@ fill_pager_applet(PanelApplet *applet)
 			  pager);
 	
 	panel_applet_setup_menu (PANEL_APPLET (pager->applet), pager_menu_xml, pager_menu_verbs, pager);
+
+	setup_gconf (pager);
 	
 	return TRUE;
 }
 
-
-static void 
-display_properties_dialog (BonoboUIComponent *uic,
-			   PagerData         *pager,
-			   const gchar       *verbname)
-{
-	/* FIXME: Implement this. Should only need n_rows */ 
-}
 
 static void
 display_help_dialog (BonoboUIComponent *uic,
@@ -249,4 +301,184 @@ display_about_dialog (BonoboUIComponent *uic,
 			  (GCallback)gtk_widget_destroyed, &about);
 	
 	gtk_widget_show (about);
+}
+
+
+#define WID(s) glade_xml_get_widget (xml, s)
+
+static void
+display_workspace_names_toggled (GtkToggleButton *button,
+				 PagerData       *pager)
+{
+	g_print ("display_workspace_names_toggled, widget state:%d\n", gtk_toggle_button_get_active (button));
+	panel_applet_gconf_set_bool (PANEL_APPLET (pager->applet),
+				     "display_workspace_names",
+				     gtk_toggle_button_get_active (button),
+				     NULL);
+}
+
+static void
+display_workspace_names_changed (GConfClient *client,
+				 guint        cnxn_id,
+				 GConfEntry  *entry,
+				 PagerData   *pager)
+{
+	gboolean value = FALSE; /* Default value */
+	
+	if (entry->value != NULL &&
+	    entry->value->type == GCONF_VALUE_BOOL) {
+		value = gconf_value_get_bool (entry->value);
+	}
+
+	g_print ("display_workspace_names_changed, value=%d\n", value);
+	
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->display_workspaces_toggle),
+				     value);
+
+	/* TODO: Actually change whether workspace names are shown or not */
+	
+}
+
+static void
+all_workspaces_toggled (GtkToggleButton *button,
+			PagerData       *pager)
+{
+	panel_applet_gconf_set_bool (PANEL_APPLET (pager->applet),
+				     "display_all_workspaces",
+				     gtk_toggle_button_get_active (button),
+				     NULL);
+}
+
+static void
+num_rows_value_changed (GtkSpinButton *button,
+			PagerData       *pager)
+{
+	panel_applet_gconf_set_int (PANEL_APPLET (pager->applet),
+				    "num_rows",
+				    gtk_spin_button_get_value_as_int (button),
+				    NULL);
+}
+
+static void
+all_workspaces_changed (GConfClient *client,
+			guint        cnxn_id,
+			GConfEntry  *entry,
+			PagerData   *pager)
+{
+	gboolean value = TRUE; /* Default value */
+	
+	if (entry->value != NULL &&
+	    entry->value->type == GCONF_VALUE_BOOL) {
+		value = gconf_value_get_bool (entry->value);
+	}
+
+	g_print ("all_workspaces_changed, value=%d\n", value);
+	
+	if (value) {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->all_workspaces_radio), TRUE);
+		gtk_widget_set_sensitive (pager->num_rows_spin, TRUE);
+	} else {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->current_only_radio), TRUE);
+		gtk_widget_set_sensitive (pager->num_rows_spin, FALSE);
+	}
+
+	/* TODO: Actually change whether ... */
+	
+}
+
+
+static void
+setup_dialog (GladeXML  *xml,
+	      PagerData *pager)
+{
+	gchar *key;
+	gboolean value;
+	GError *error;
+	GConfClient *client;
+
+	client = gconf_client_get_default ();
+
+	pager->display_workspaces_toggle = WID ("workspace_name_toggle");
+	pager->all_workspaces_radio = WID ("all_workspaces_radio");
+	pager->current_only_radio = WID ("current_only_radio");
+	pager->num_rows_spin = WID ("num_rows_spin");
+
+	/* Display workspace names: */
+	
+	g_signal_connect (G_OBJECT (pager->display_workspaces_toggle), "toggled",
+			  (GCallback) display_workspace_names_toggled, pager);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
+					       "display_workspace_names");
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)display_workspace_names_changed,
+				pager,
+				NULL, NULL);
+
+	error = NULL;
+	value = gconf_client_get_bool (client, key, &error);
+	if (error) {
+		g_error_free (error);
+		value = FALSE; /* Default value */
+	}
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->display_workspaces_toggle),
+				      value);
+	g_free (key);
+
+
+	/* Display all workspaces: */
+	g_signal_connect (G_OBJECT (pager->all_workspaces_radio), "toggled",
+			  (GCallback) all_workspaces_toggled, pager);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
+					       "display_all_workspaces");
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)all_workspaces_changed,
+				pager,
+				NULL, NULL);
+
+	error = NULL;
+	value = gconf_client_get_bool (client, key, &error);
+	if (error) {
+		g_error_free (error);
+		value = TRUE; /* Default value */
+	}
+	if (value) {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->all_workspaces_radio), TRUE);
+		gtk_widget_set_sensitive (pager->num_rows_spin, TRUE);
+	} else {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->current_only_radio), TRUE);
+		gtk_widget_set_sensitive (pager->num_rows_spin, FALSE);
+	}
+		
+	g_free (key);
+
+	/* Num rows: */
+	g_signal_connect (G_OBJECT (pager->num_rows_spin), "value_changed",
+			  (GCallback) num_rows_value_changed, pager);
+
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_rows_spin), pager->n_rows);
+}
+
+static void 
+display_properties_dialog (BonoboUIComponent *uic,
+			   PagerData         *pager,
+			   const gchar       *verbname)
+{
+	if (pager->properties_dialog == NULL) {
+		GladeXML  *xml;
+
+		xml = glade_xml_new (PAGER_GLADEDIR "/pager.glade", NULL, NULL);
+		pager->properties_dialog = glade_xml_get_widget (xml, "pager_properties_dialog");
+
+		setup_dialog (xml, pager);
+		
+
+		
+		g_object_unref (G_OBJECT (xml));
+	}
+
+	gtk_window_present (GTK_WINDOW (pager->properties_dialog));
+	
+	/* FIXME: Implement this. Should only need n_rows */
 }
