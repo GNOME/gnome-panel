@@ -23,15 +23,13 @@
 
 #define DRAWER_PANEL "drawer_panel"
 
-static char *gnome_folder = NULL;
-
 extern GlobalConfig global_config;
 
 void
 reposition_drawer(Drawer *drawer)
 {
 	if(PANEL_WIDGET(drawer->drawer)->state == PANEL_SHOWN) {
-		gint x,y;
+		gint x=0,y=0;
 		gint wx, wy;
 
 		gdk_window_get_origin (drawer->button->window, &wx, &wy);
@@ -88,7 +86,7 @@ create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
 	GtkWidget *pixmap;
 	Drawer *drawer;
 	
-	char *pixmap_name;
+	char *pixmap_name=NULL;
 
 	drawer = g_new(Drawer,1);
 
@@ -147,7 +145,8 @@ create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
 Drawer *
 create_empty_drawer_applet(DrawerOrient orient)
 {
-	if(orient == DRAWER_UP)
+	switch(orient) {
+	case DRAWER_UP:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_VERTICAL,
 						PANEL_DRAWER,
@@ -157,7 +156,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						0, 0, 0, 0, 
 						DROP_ZONE_LEFT),
 					    orient);
-	else if(orient == DRAWER_DOWN)
+	case DRAWER_DOWN:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_VERTICAL,
 						PANEL_DRAWER,
@@ -167,7 +166,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						0, 0, 0, 0, 
 						DROP_ZONE_RIGHT),
 					    orient);
-	else if(orient == DRAWER_LEFT)
+	case DRAWER_LEFT:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_HORIZONTAL,
 						PANEL_DRAWER,
@@ -177,7 +176,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						0, 0, 0, 0, 
 						DROP_ZONE_LEFT),
 					    orient);
-	else if(orient == DRAWER_RIGHT)
+	case DRAWER_RIGHT:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_HORIZONTAL,
 						PANEL_DRAWER,
@@ -187,14 +186,15 @@ create_empty_drawer_applet(DrawerOrient orient)
 						0, 0, 0, 0, 
 						DROP_ZONE_RIGHT),
 					    orient);
-
+	}
+	return NULL;
 }
 
 void
 set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 {
 	GtkWidget *pixmap;
-	char *pixmap_name;
+	char *pixmap_name=NULL;
 
 	g_return_if_fail(drawer!=NULL);
 

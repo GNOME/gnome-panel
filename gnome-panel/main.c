@@ -42,7 +42,6 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 {
 	if(strcmp(id,EXTERN_ID) == 0) {
 		gchar *command;
-		AppletInfo * info;
 
 		/*start nothing, applet is taking care of everything*/
 		if(params == NULL ||
@@ -75,7 +74,7 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 	} else if(strcmp(id,DRAWER_ID) == 0) {
 		Drawer *drawer;
 		PanelWidget *parent;
-		DrawerOrient orient;
+		DrawerOrient orient=DRAWER_UP;
 
 		parent = PANEL_WIDGET(g_list_nth(panels,panel)->data);
 
@@ -190,7 +189,7 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 		/*FIXME: call corba*/
 	} else if(info->type == APPLET_MENU) {
 		Menu *menu = info->data;
-		MenuOrient orient;
+		MenuOrient orient=MENU_UP;
 
 		printf("[orient:menu:%ld]\n",(long)menu);
 
@@ -216,7 +215,7 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 		set_menu_applet_orient(menu,orient);
 	} else if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
-		DrawerOrient orient;
+		DrawerOrient orient = DRAWER_UP;
 
 		switch(panel->snapped) {
 			case PANEL_FREE:
@@ -257,7 +256,7 @@ orient_change_foreach(gpointer data, gpointer user_data)
 }
 
 
-static int
+static gint
 panel_orient_change(GtkWidget *widget,
 		    PanelOrientation orient,
 		    PanelSnapped snapped,
@@ -265,13 +264,13 @@ panel_orient_change(GtkWidget *widget,
 {
 	panel_widget_foreach(PANEL_WIDGET(widget),orient_change_foreach,
 			     (gpointer)widget);
+	return TRUE;
 }
 
 static void
 state_restore_foreach(gpointer data, gpointer user_data)
 {
 	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
-	PanelWidget *panel = user_data;
 
 	if(!info) return;
 
@@ -280,7 +279,7 @@ state_restore_foreach(gpointer data, gpointer user_data)
 			panel_widget_restore_state(PANEL_WIDGET(info->assoc));
 			panel_widget_foreach(PANEL_WIDGET(info->assoc),
 					     state_restore_foreach,
-					     (gpointer)info->assoc);
+					     NULL);
 		}
 	}
 }
@@ -289,7 +288,6 @@ static void
 state_hide_foreach(gpointer data, gpointer user_data)
 {
 	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
-	PanelWidget *panel = user_data;
 
 	if(!info) return;
 
@@ -297,13 +295,13 @@ state_hide_foreach(gpointer data, gpointer user_data)
 		if(PANEL_WIDGET(info->assoc)->state == PANEL_SHOWN) {
 			gtk_widget_hide(info->assoc);
 			panel_widget_foreach(PANEL_WIDGET(info->assoc),
-					     state_restore_foreach,
-					     (gpointer)info->assoc);
+					     state_hide_foreach,
+					     NULL);
 		}
 	}
 }
 
-static int
+static gint
 panel_state_change(GtkWidget *widget,
 		    PanelState state,
 		    gpointer data)
@@ -314,13 +312,14 @@ panel_state_change(GtkWidget *widget,
 	else
 		panel_widget_foreach(PANEL_WIDGET(widget),state_hide_foreach,
 				     (gpointer)widget);
+
+	return TRUE;
 }
 
 static void
 applet_move_foreach(gpointer data, gpointer user_data)
 {
 	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
-	PanelWidget *panel = user_data;
 
 	if(!info) return;
 
@@ -330,7 +329,7 @@ applet_move_foreach(gpointer data, gpointer user_data)
 			reposition_drawer(drawer);
 			panel_widget_foreach(PANEL_WIDGET(info->assoc),
 					     state_restore_foreach,
-					     (gpointer)info->assoc);
+					     NULL);
 		}
 	}
 }
@@ -338,7 +337,7 @@ applet_move_foreach(gpointer data, gpointer user_data)
 static void
 panel_applet_move(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	applet_move_foreach(applet,widget);
+	applet_move_foreach(applet,NULL);
 }
 
 static void
@@ -514,7 +513,6 @@ call_launcher_timeout(gpointer data)
 int
 main(int argc, char **argv)
 {
-	GtkWidget *base_panel;
 	char buf[256];
 
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);

@@ -16,6 +16,7 @@
 #include <string.h>
 #include "gnome.h"
 #include "panel.h"
+#include "mico-parse.h"
 #include "applet-lib.h"
 #include "launcher-lib.h"
 
@@ -439,9 +440,7 @@ start_new_launcher(const char *path)
 {
 	GtkWidget         *plug;
 	Launcher          *launcher;
-	GnomeDesktopEntry *dentry;
 
-	GtkWidget         *clock;
 	char              *result;
 	char              *cfgpath;
 	char              *globcfgpath;

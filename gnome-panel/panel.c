@@ -13,6 +13,7 @@
 #include "gdkextra.h"
 #include "panel.h"
 #include "menu.h"
+#include "mico-glue.h"
 #include "panel_config.h"
 #include "panel_config_global.h"
 #include <gdk/gdkx.h>
@@ -38,7 +39,7 @@ extern GlobalConfig global_config;
 
 extern char *panel_cfg_path;
 
-static void
+/*static void
 get_applet_geometry(GtkWidget *applet, int *x, int *y, int *width, int *height)
 {
 	if (x)
@@ -52,7 +53,7 @@ get_applet_geometry(GtkWidget *applet, int *x, int *y, int *width, int *height)
 
 	if (height)
 		*height = applet->allocation.height;
-}
+}*/
 
 static void
 apply_global_config_to_panel(gpointer data, gpointer user_data)
@@ -259,7 +260,6 @@ panel_session_save (GnomeClient *client,
 		    gpointer client_data)
 {
 	gint num;
-	gint drawernum;
 	char buf[256];
 
 	for(num=gnome_config_get_int("/panel/Config/applet_count=0");
@@ -705,8 +705,6 @@ int
 applet_request_id (const char *path, char **cfgpath,
 		   char **globcfgpath, guint32 * winid)
 {
-	GtkWidget *eb;
-	GdkWindow *win;
 	GList *list;
 	AppletInfo *info;
 	int i;
@@ -762,8 +760,6 @@ reserve_applet_spot (const char *id, const char *path, int panel, int pos,
 		     char *cfgpath, AppletType type)
 {
 	GtkWidget *socket;
-	GdkWindow *win;
-	GList *list;
 
 	/*printf ("entering reserve spot\n");*/
 	

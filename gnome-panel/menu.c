@@ -346,12 +346,6 @@ add_applet_to_panel_data(GtkWidget *widget, gpointer data)
 	add_to_panel((char *)data, NULL);
 }
 
-static void
-add_applet_to_panel(GtkWidget *widget, gpointer data)
-{
-	add_to_panel(gtk_object_get_user_data(GTK_OBJECT(widget)), NULL);
-}
-
 static GtkWidget *
 create_applets_menu(void)
 {
@@ -463,7 +457,7 @@ create_panel_menu (char *menudir, int main_menu,
 	Menu *menu;
 	GtkWidget *app_menu;
 	
-	char *pixmap_name;
+	char *pixmap_name = NULL;
 
 	menu = g_new(Menu,1);
 
@@ -608,10 +602,10 @@ void
 set_menu_applet_orient(Menu *menu, MenuOrient orient)
 {
 	GtkWidget *pixmap;
-	char *pixmap_name;
+	char *pixmap_name = NULL;
 
 	g_return_if_fail(menu!=NULL);
-	//g_return_if_fail(menu->path!=NULL);
+	g_return_if_fail(menu->path!=NULL);
 
 	menu->orient = orient;
 

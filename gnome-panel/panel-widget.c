@@ -1681,6 +1681,9 @@ panel_widget_change_params(PanelWidget *panel,
 	/*so that there are no shifts necessary before size_allocate*/
 	panel->snapped = snapped;
 	switch(panel->snapped) {
+		case PANEL_DRAWER:
+			/*fallthrough, so orient MUST be right, can we
+			  assume that???*/
 		case PANEL_FREE:
 			panel->orient = orient;
 			break;
