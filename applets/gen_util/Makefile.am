@@ -16,8 +16,10 @@ bin_PROGRAMS = gen_util_applet
 gen_util_applet_SOURCES = \
 	main.c		\
 	mailcheck.c	\
+	mailcheck.h	\
 	printer.c	\
-	clock.c
+	clock.c		\
+	clock.h
 
 MICO_VERS = 2.0.5
 MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
