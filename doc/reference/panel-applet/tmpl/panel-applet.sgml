@@ -27,6 +27,52 @@ The #PanelApplet struct contains private data only.
 </para>
 
 
+<!-- ##### SIGNAL PanelApplet::change-background ##### -->
+<para>
+Emitted when the background of the panel changes. Use @type to
+determine which, if any, of @color and @pimxap is valid.
+</para>
+
+@panelapplet: The object which received the signal.
+@arg1: 
+@arg2: 
+@arg3: 
+<!-- # Unused Parameters # -->
+@type: The #PanelAppletBackgroundType.
+@color: The #GdkColor if @type is #PANEL_COLOR_BACKGROUND.
+@pixmap: The pixmap file name if @type is #PANEL_PIXMAP_BACKGROUND
+
+<!-- ##### SIGNAL PanelApplet::change-orient ##### -->
+<para>
+Emitted when the orientation of the panel changes.
+</para>
+
+@panelapplet: The object which received the signal.
+@orient: The new #PanelAppletOrient of the applet.
+
+<!-- ##### SIGNAL PanelApplet::change-size ##### -->
+<para>
+Emitted when the size of the panel changes.
+</para>
+
+<para>
+Note: this is different for size negotiation which is handled by
+size_request() and size_allocate() as usual. This signal should
+be used to determine what font size or widget layout to use 
+depending on the size of the panel. See panel_applet_get_size().
+</para>
+
+@panelapplet: The object which received the signal.
+@size: The size hint of the panel.
+
+<!-- ##### SIGNAL PanelApplet::move-focus-out-of-applet ##### -->
+<para>
+
+</para>
+
+@panelapplet: the object which received the signal.
+@arg1: 
+
 <!-- ##### TYPEDEF PanelAppletOrient ##### -->
 <para>
 The #PanelAppletOrient type specifies the orientation of the applet. The
@@ -173,7 +219,7 @@ portion of the panel's background pixmap.
 Returns the GConf path to the directory containing the applet's
 per-instance preference keys. Using this you may construct the
 full path for the applet's preference keys. See 
-<xref linkend="panel-applet-Panel-Applet-GConf-Utilities"> for
+<xref linkend="panel-applet-Panel-Applet-GConf-Utilities" /> for
 more information.
 </para>
 
@@ -262,7 +308,7 @@ with @applet.
 <!-- ##### FUNCTION panel_applet_setup_menu ##### -->
 <para>
 Sets up a popup menu for @applet described by the xml
-string, @xml. See <xref linkend="applet-writing"> section
+string, @xml. See <xref linkend="applet-writing" /> section
 for a description of the format of the xml.
 </para>
 
@@ -275,7 +321,7 @@ for a description of the format of the xml.
 <!-- ##### FUNCTION panel_applet_setup_menu_from_file ##### -->
 <para>
 Sets up a popup menu for @applet described by the xml
-file, @file. See <xref linkend="applet-writing"> for a description of
+file, @file. See <xref linkend="applet-writing" /> for a description of
 the format of the xml.
 </para>
 
@@ -372,50 +418,4 @@ factory callback.
 @callback: The factory callback.
 @data: The factory user data pointer.
 
-
-<!-- ##### SIGNAL PanelApplet::change-background ##### -->
-<para>
-Emitted when the background of the panel changes. Use @type to
-determine which, if any, of @color and @pimxap is valid.
-</para>
-
-@panelapplet: The object which received the signal.
-@arg1: 
-@arg2: 
-@arg3: 
-<!-- # Unused Parameters # -->
-@type: The #PanelAppletBackgroundType.
-@color: The #GdkColor if @type is #PANEL_COLOR_BACKGROUND.
-@pixmap: The pixmap file name if @type is #PANEL_PIXMAP_BACKGROUND
-
-<!-- ##### SIGNAL PanelApplet::change-orient ##### -->
-<para>
-Emitted when the orientation of the panel changes.
-</para>
-
-@panelapplet: The object which received the signal.
-@orient: The new #PanelAppletOrient of the applet.
-
-<!-- ##### SIGNAL PanelApplet::change-size ##### -->
-<para>
-Emitted when the size of the panel changes.
-</para>
-
-<para>
-Note: this is different for size negotiation which is handled by
-size_request() and size_allocate() as usual. This signal should
-be used to determine what font size or widget layout to use 
-depending on the size of the panel. See panel_applet_get_size().
-</para>
-
-@panelapplet: The object which received the signal.
-@size: The size hint of the panel.
-
-<!-- ##### SIGNAL PanelApplet::move-focus-out-of-applet ##### -->
-<para>
-
-</para>
-
-@panelapplet: the object which received the signal.
-@arg1: 
 
