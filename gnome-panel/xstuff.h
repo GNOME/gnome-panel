@@ -49,13 +49,10 @@ void xstuff_set_pos_size		(GdkWindow *window,
 					 int w, int h);
 void xstuff_set_wmspec_dock_hints       (GdkWindow *window,
 					 gboolean autohide);
-void xstuff_set_wmspec_state_hints      (GdkWindow *window);
 void xstuff_set_wmspec_strut		(GdkWindow *window,
 					 int left,
 					 int right,
 					 int top,
 					 int bottom);
-
-void xstuff_window_raise_on_current_wspace (GtkWidget *window);
 
 #endif

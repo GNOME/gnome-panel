@@ -616,9 +616,8 @@ xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
 
        /* Do not add USPosition / USSize here, fix the damn WM */
        size_hints.flags = PPosition | PSize | PMaxSize | PMinSize;
-       size_hints.x = 0; /* window managers aren't supposed to and 
-       size_hints.y = 0;  * don't use these fields
-                          */
+       size_hints.x = 0; /* window managers aren't supposed to and  */
+       size_hints.y = 0; /* don't use these fields */
        size_hints.width = w;
        size_hints.height = h;
        size_hints.min_width = w;
@@ -685,11 +684,3 @@ xstuff_delete_property (GdkWindow *window, const char *name)
                          GDK_WINDOW_XWINDOW (window),
 			 ATOMGDK (window, name));
 }
-
-void
-xstuff_window_raise_on_current_wspace (GtkWidget *window)
-{
-        gtk_window_present (GTK_WINDOW (window));
-}
-
-

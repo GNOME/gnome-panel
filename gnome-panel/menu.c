@@ -338,7 +338,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	  };
 
 	if (about) {
-		xstuff_window_raise_on_current_wspace (about);
+		gtk_window_present (GTK_WINDOW (about));
 		return;
 	}
 
@@ -3212,7 +3212,7 @@ create_distribution_menu (GtkWidget *menu,
 			  gboolean launcher_add)
 {
 	const DistributionInfo *info = get_distribution_info ();
-	gchar *pixmap_file, *menu_path;
+	gchar *pixmap_file;
 
 	if (!info)
 		return NULL;
@@ -3223,26 +3223,20 @@ create_distribution_menu (GtkWidget *menu,
 	else
 		pixmap_file = NULL;
 
-	if (info->menu_path [0] != '/')
-		menu_path = gnome_util_home_file (info->menu_path);
-	else
-		menu_path = g_strdup (info->menu_path);
-
 	if (!fake || menu) {
-		menu = create_menu_at (menu, menu_path,
+		menu = create_menu_at (menu, info->menu_path,
 				       FALSE /* applets */,
 				       launcher_add,
 				       info->menu_name, pixmap_file,
 				       fake_submenus, FALSE);
 	} else {
-		menu = create_fake_menu_at (menu_path,
+		menu = create_fake_menu_at (info->menu_path,
 					    FALSE /* applets */,
 					    launcher_add,
 					    info->menu_name, pixmap_file);
 	}
 
 	g_free (pixmap_file);
-	g_free (menu_path);
 
 	return menu;
 }

@@ -1,3 +1,12 @@
+Wed Dec 19 16:48:41 2001  George Lebl <jirka@5z.com>
+
+	* xstuff.[ch], gnome-run.c, launcher.c, menu-properties.c,
+	  panel-config.c: remove the raise function and just replace
+	  it with gtk_window_present, remove some other cruft left around
+
+	* menu.c: don't prepend home dir to distro menu paths, these
+	  are uris now
+
 2001-12-19  Seth Nickell  <snickell@stanford.edu>
 
 	* panel-global-config.schemas:

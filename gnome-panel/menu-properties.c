@@ -620,7 +620,7 @@ menu_properties (Menu *menu)
 	g_return_if_fail (menu != NULL);
 
 	if (menu->prop_dialog != NULL) {
-		xstuff_window_raise_on_current_wspace (menu->prop_dialog);
+		gtk_window_present (GTK_WINDOW (menu->prop_dialog));
 		return;
 	}
 

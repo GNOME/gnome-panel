@@ -591,7 +591,7 @@ void
 launcher_properties (Launcher *launcher)
 {
 	if (launcher->prop_dialog != NULL) {
-		xstuff_window_raise_on_current_wspace (launcher->prop_dialog);
+		gtk_window_present (GTK_WINDOW (launcher->prop_dialog));
 		return;
 	}
 

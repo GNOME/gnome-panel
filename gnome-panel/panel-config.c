@@ -1608,7 +1608,7 @@ panel_config (GtkWidget *panel)
 	if (ppc != NULL) {
 		g_assert (ppc->config_window != NULL);
 
-		xstuff_window_raise_on_current_wspace (ppc->config_window);
+		gtk_window_present (GTK_WINDOW (ppc->config_window));
 		return;
 	}
 	

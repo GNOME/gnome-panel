@@ -409,7 +409,7 @@ browse(GtkWidget *w, GtkWidget *entry)
 
 	gtk_window_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
 
-	xstuff_window_raise_on_current_wspace (GTK_WIDGET (fsel));
+	gtk_window_present (GTK_WINDOW (fsel));
 }
 
 static gboolean
@@ -1125,7 +1125,7 @@ show_run_dialog (void)
 		return;
 
 	if(run_dialog != NULL) {
-		xstuff_window_raise_on_current_wspace (run_dialog);
+		gtk_window_present (GTK_WINDOW (run_dialog));
 		return;
 	}
 
