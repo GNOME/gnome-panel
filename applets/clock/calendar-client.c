@@ -174,24 +174,24 @@ calendar_client_class_init (CalendarClientClass *klass)
   g_object_class_install_property (gobject_class,
 				   PROP_DAY,
 				   g_param_spec_uint ("day",
-						      _("Day"),
-						      _("The currently monitored day between 1 and 31 (0 denotes unset)"),
+						      "Day",
+						      "The currently monitored day between 1 and 31 (0 denotes unset)",
 						      0, G_MAXUINT, 0,
 						      G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
 				   PROP_MONTH,
 				   g_param_spec_uint ("month",
-						      _("Month"),
-						      _("The currently monitored month between 0 and 11"),
+						      "Month",
+						      "The currently monitored month between 0 and 11",
 						      0, G_MAXUINT, 0,
 						      G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
 				   PROP_YEAR,
 				   g_param_spec_uint ("year",
-						      _("Year"),
-						      _("The currently monitored year"),
+						      "Year",
+						      "The currently monitored year",
 						      0, G_MAXUINT, 0,
 						      G_PARAM_READWRITE));
 

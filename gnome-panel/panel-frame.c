@@ -265,8 +265,8 @@ panel_frame_class_init (PanelFrameClass *klass)
 		PROP_EDGES,
 		g_param_spec_enum (
 			"edges",
-			_("Edges"),
-			_("Which edges to draw"),
+			"Edges",
+			"Which edges to draw",
 			PANEL_TYPE_FRAME_EDGE,
 			PANEL_EDGE_NONE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));

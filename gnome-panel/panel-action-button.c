@@ -436,8 +436,8 @@ panel_action_button_class_init (PanelActionButtonClass *klass)
 			gobject_class,
 			PROP_ACTION_TYPE,
 			g_param_spec_enum ("action-type",
-					   _("Action Type"),
-					   _("The type of action this button implements"),
+					   "Action Type",
+					   "The type of action this button implements",
 					   PANEL_TYPE_ACTION_BUTTON_TYPE,
 					   PANEL_ORIENTATION_TOP,
 					   G_PARAM_READWRITE));
@@ -446,8 +446,8 @@ panel_action_button_class_init (PanelActionButtonClass *klass)
 			gobject_class,
 			PROP_DND_ENABLED,
 			g_param_spec_boolean ("dnd-enabled",
-					      _("Drag and drop enabled"),
-					      _("Whether or not drag and drop is enabled on the widget"),
+					      "Drag and drop enabled",
+					      "Whether or not drag and drop is enabled on the widget",
 					      TRUE,
 					      G_PARAM_READWRITE));
 }

@@ -751,8 +751,8 @@ button_widget_class_init (ButtonWidgetClass *klass)
 			gobject_class,
 			PROP_ACTIVATABLE,
 			g_param_spec_boolean ("activatable",
-					      _("Activatable"),
-					      _("Whether the button is activatable"),
+					      "Activatable",
+					      "Whether the button is activatable",
 					      TRUE,
 					      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
@@ -760,8 +760,8 @@ button_widget_class_init (ButtonWidgetClass *klass)
 			gobject_class,
 			PROP_HAS_ARROW,
 			g_param_spec_boolean ("has-arrow",
-					      _("Has Arrow"),
-					      _("Whether or not to draw an arrow indicator"),
+					      "Has Arrow",
+					      "Whether or not to draw an arrow indicator",
 					      FALSE,
 					      G_PARAM_READWRITE));
 
@@ -769,8 +769,8 @@ button_widget_class_init (ButtonWidgetClass *klass)
 			gobject_class,
 			PROP_DND_HIGHLIGHT,
 			g_param_spec_boolean ("dnd-highlight",
-					      _("Drag and drop Highlight"),
-					      _("Whether or not to highlight the icon during drag and drop"),
+					      "Drag and drop Highlight",
+					      "Whether or not to highlight the icon during drag and drop",
 					      FALSE,
 					      G_PARAM_READWRITE));
 
@@ -778,8 +778,8 @@ button_widget_class_init (ButtonWidgetClass *klass)
 			gobject_class,
 			PROP_ORIENTATION,
 			g_param_spec_enum ("orientation",
-					   _("Orientation"),
-					   _("The ButtonWidget orientation"),
+					   "Orientation",
+					   "The ButtonWidget orientation",
 					   PANEL_TYPE_ORIENTATION,
 					   PANEL_ORIENTATION_TOP,
 					   G_PARAM_READWRITE));
@@ -788,8 +788,8 @@ button_widget_class_init (ButtonWidgetClass *klass)
 			gobject_class,
 			PROP_ICON_NAME,
 			g_param_spec_string ("icon-name",
-					     _("Icon Name"),
-					     _("The desired icon for the ButtonWidget"),
+					     "Icon Name",
+					     "The desired icon for the ButtonWidget",
 					     NULL,
 					     G_PARAM_READWRITE));
 
@@ -797,8 +797,8 @@ button_widget_class_init (ButtonWidgetClass *klass)
 			gobject_class,
 			PROP_STOCK_ID,
 			g_param_spec_string ("stock-id",
-					     _("Stock Icon ID"),
-					     _("The desired stock icon for the ButtonWidget"),
+					     "Stock Icon ID",
+					     "The desired stock icon for the ButtonWidget",
 					     NULL,
 					     G_PARAM_READWRITE));
 }

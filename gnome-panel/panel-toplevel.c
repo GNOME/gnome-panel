@@ -3584,8 +3584,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_NAME,
 		g_param_spec_string (
 			"name",
-			_("Name"),
-			_("The name of this panel"),
+			"Name",
+			"The name of this panel",
 			NULL,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
@@ -3594,8 +3594,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_EXPAND,
 		g_param_spec_boolean (
 			"expand",
-			_("Expand"),
-			_("Expand to take up the full monitor width/height"),
+			"Expand",
+			"Expand to take up the full monitor width/height",
 			TRUE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
@@ -3604,8 +3604,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_ORIENTATION,
 		g_param_spec_enum (
 			"orientation",
-			_("Orientation"),
-			_("The orientation of the panel"),
+			"Orientation",
+			"The orientation of the panel",
 			PANEL_TYPE_ORIENTATION,
 			PANEL_ORIENTATION_TOP,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
@@ -3615,8 +3615,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_SIZE,
 		g_param_spec_int (
 			"size",
-			_("Size"),
-			_("The height (or width when vertical) of the panel"),
+			"Size",
+			"The height (or width when vertical) of the panel",
 			0,
 			G_MAXINT,
 			DEFAULT_SIZE,
@@ -3628,8 +3628,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_X,
 		g_param_spec_int (
 			"x",
-			_("X position"),
-			_("The X position of the panel"),
+			"X position",
+			"The X position of the panel",
 			0,
 			G_MAXINT,
 			0,
@@ -3640,8 +3640,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_X_CENTERED,
 		g_param_spec_boolean (
 			"x-centered",
-			_("X centered"),
-			_("The x co-ordinate is relative to center screen"),
+			"X centered",
+			"The x co-ordinate is relative to center screen",
 			FALSE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
@@ -3650,8 +3650,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_Y,
 		g_param_spec_int (
 			"y",
-			_("Y position"),
-			_("The Y position of the panel"),
+			"Y position",
+			"The Y position of the panel",
 			0,
 			G_MAXINT,
 			0,
@@ -3662,8 +3662,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_Y_CENTERED,
 		g_param_spec_boolean (
 			"y-centered",
-			_("Y centered"),
-			_("The y co-ordinate is relative to center screen"),
+			"Y centered",
+			"The y co-ordinate is relative to center screen",
 			FALSE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
@@ -3672,8 +3672,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_MONITOR,
 		g_param_spec_int (
 			"monitor",
-			_("Xinerama monitor"),
-			_("The monitor (in terms of Xinerama) which the panel is on"),
+			"Xinerama monitor",
+			"The monitor (in terms of Xinerama) which the panel is on",
 			0,
 			G_MAXINT,
 			0,
@@ -3684,8 +3684,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_AUTOHIDE,
 		g_param_spec_boolean (
 			"auto-hide",
-			_("Auto hide"),
-			_("Automatically hide the panel when the mouse leaves the panel"),
+			"Auto hide",
+			"Automatically hide the panel when the mouse leaves the panel",
 			FALSE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
@@ -3694,8 +3694,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_HIDE_DELAY,
 		g_param_spec_int (
 			"hide-delay",
-			_("Hide delay"),
-			_("The number of milliseconds to delay before automatically hiding"),
+			"Hide delay",
+			"The number of milliseconds to delay before automatically hiding",
 			0,
 			G_MAXINT,
 			DEFAULT_HIDE_DELAY,
@@ -3706,8 +3706,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_UNHIDE_DELAY,
 		g_param_spec_int (
 			"unhide-delay",
-			_("Un-hide delay"),
-			_("The number of milliseconds to delay before automatically un-hiding"),
+			"Un-hide delay",
+			"The number of milliseconds to delay before automatically un-hiding",
 			0,
 			G_MAXINT,
 			DEFAULT_UNHIDE_DELAY,
@@ -3718,8 +3718,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_AUTOHIDE_SIZE,
 		g_param_spec_int (
 			"auto-hide-size",
-			_("Auto-hide size"),
-			_("The number of pixels visible when the panel has been automatically hidden"),
+			"Auto-hide size",
+			"The number of pixels visible when the panel has been automatically hidden",
 			1,
 			G_MAXINT,
 			DEFAULT_AUTO_HIDE_SIZE,
@@ -3730,8 +3730,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_ANIMATE,
 		g_param_spec_boolean (
 			"animate",
-			_("Animate"),
-			_("Enable hiding/showing animations"),
+			"Animate",
+			"Enable hiding/showing animations",
 			TRUE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
@@ -3740,8 +3740,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_ANIMATION_SPEED,
 		g_param_spec_enum (
 			"animation-speed",
-			_("Animation Speed"),
-			_("The speed at which to animate panel hiding/showing"),
+			"Animation Speed",
+			"The speed at which to animate panel hiding/showing",
 			PANEL_TYPE_ANIMATION_SPEED,
 			PANEL_ANIMATION_MEDIUM,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
@@ -3751,8 +3751,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_BUTTONS_ENABLED,
 		g_param_spec_boolean (
 			"buttons-enabled",
-			_("Buttons Enabled"),
-			_("Enable hide/show buttons"),
+			"Buttons Enabled",
+			"Enable hide/show buttons",
 			TRUE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
@@ -3761,8 +3761,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		PROP_ARROWS_ENABLED,
 		g_param_spec_boolean (
 			"arrows-enabled",
-			_("Arrows Enabled"),
-			_("Enable arrows on hide/show buttons"),
+			"Arrows Enabled",
+			"Enable arrows on hide/show buttons",
 			TRUE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 

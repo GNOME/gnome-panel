@@ -426,8 +426,8 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 			gobject_class,
 			PROP_MENU_PATH,
                         g_param_spec_string ("menu-path",
-					     _("Menu Path"),
-					     _("The path from which to construct the menu"),
+					     "Menu Path",
+					     "The path from which to construct the menu",
 					     NULL,
 					     G_PARAM_READWRITE));
 
@@ -435,8 +435,8 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 			gobject_class,
 			PROP_CUSTOM_ICON,
                         g_param_spec_string ("custom-icon",
-					     _("Custom Icon"),
-					     _("The custom icon for the menu"),
+					     "Custom Icon",
+					     "The custom icon for the menu",
 					     NULL,
 					     G_PARAM_READWRITE));
 
@@ -444,8 +444,8 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 			gobject_class,
 			PROP_TOOLTIP,
 			g_param_spec_string ("tooltip",
-					     _("Tooltip"),
-					     _("Tooltip displayed for the menu"),
+					     "Tooltip",
+					     "Tooltip displayed for the menu",
 					     NULL,
 					     G_PARAM_READWRITE));
 
@@ -453,17 +453,17 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 			gobject_class,
 			PROP_USE_MENU_PATH,
                         g_param_spec_boolean ("use-menu-path",
-					      _("Use Menu Path"),
-					     _("Use the path specified by the menu-path property"),
-					     FALSE,
-					     G_PARAM_READWRITE));
+					      "Use Menu Path",
+					      "Use the path specified by the menu-path property",
+					      FALSE,
+					      G_PARAM_READWRITE));
 
 	g_object_class_install_property (
 			gobject_class,
 			PROP_USE_CUSTOM_ICON,
                         g_param_spec_boolean ("use-custom-icon",
-					      _("Use Custom Icon"),
-					      _("Use the icon specified by the custom-icon property"),
+					      "Use Custom Icon",
+					      "Use the icon specified by the custom-icon property",
 					      FALSE,
 					      G_PARAM_READWRITE));
 
@@ -471,8 +471,8 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 			gobject_class,
 			PROP_DND_ENABLED,
                         g_param_spec_boolean ("dnd-enabled",
-					      _("Drag and drop enabled"),
-					      _("Whether or not drag and drop is enabled on the widget"),
+					      "Drag and drop enabled",
+					      "Whether or not drag and drop is enabled on the widget",
 					      FALSE,
 					      G_PARAM_READWRITE));
 }
