@@ -231,7 +231,7 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	w = gtk_label_new(_("Frames In Animation:"));
 	gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
 	adj = (GtkAdjustment *) gtk_adjustment_new (properties.frames,
-						    0.0, 255.0, 1.0, 5.0, 0.0);
+						    1.0, 255.0, 1.0, 5.0, 0.0);
 	w = gtk_spin_button_new(adj,0,0);
 	gtk_widget_set_usize(w,70,0);
 	gtk_box_pack_start(GTK_BOX(hbox),w,FALSE,FALSE,0);
