@@ -120,7 +120,7 @@ add_tearoff (GtkMenu *menu)
 static void
 url_show (GtkWidget *w, const char *url)
 {
-	gnome_url_show (url);
+	gnome_url_show (_(url));
 }
 
 static GtkWidget *
@@ -170,25 +170,13 @@ append_gnome_menu (GtkWidget *menu_bar)
 	GtkWidget *menu;
 	int i;
 	char *url[][3] = {
-		{ N_("News (www)"),
-		  "http://gnotices.gnome.org/gnome-news/",
-		  "gnome-news.png" },
-		{ N_("FAQ (www)"),
-		  "http://www.gnome.org/gnomefaq/html/",
-		  GNOME_STOCK_PIXMAP_HELP },
-		{ N_("Mailing Lists (www)"),
-		  "http://www.gnome.org/mailing-lists/archives/",
-		  GNOME_STOCK_PIXMAP_MAIL },
+		{ N_("News (www)"),                N_("http://gnotices.gnome.org/gnome-news/"),          "gnome-news.png" },
+		{ N_("FAQ (www)"),                 N_("http://www.gnome.org/gnomefaq/html/"),            GNOME_STOCK_PIXMAP_HELP },
+		{ N_("Mailing Lists (www)"),       N_("http://mail.gnome.org/mailman/listinfo/"),        GNOME_STOCK_PIXMAP_MAIL },
 		{ NULL, "" },
-		{ N_("Software (www)"),
-		  "http://www.gnome.org/applist/list-martin.phtml",
-		  GNOME_STOCK_PIXMAP_SAVE },
-		{ N_("Development (www)"),
-		  "http://developer.gnome.org/",
-		  "gnome-devel.png" },
-		{ N_("Bug Tracking System (www)"),
-		  "http://bugs.gnome.org/",
-		  "bug-buddy.png" },
+		{ N_("Software (www)"),            N_("http://www.gnome.org/applist/list-martin.phtml"), GNOME_STOCK_PIXMAP_SAVE },
+		{ N_("Development (www)"),         N_("http://developer.gnome.org/"),                    "gnome-devel.png" },
+		{ N_("Bug Tracking System (www)"), N_("http://bugs.gnome.org/"),                         "bug-buddy.png" },
 		{ NULL }
 	};
 	
