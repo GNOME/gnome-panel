@@ -818,7 +818,7 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 			  g_object_ref (frame));
 
 	frame->priv->panel->open_dialogs 
-				= g_list_append (
+				= g_slist_append (
 					frame->priv->panel->open_dialogs,
 					dialog);
 	gtk_widget_show (dialog);

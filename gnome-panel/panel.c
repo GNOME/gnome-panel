@@ -257,14 +257,19 @@ panel_remove_applets (PanelWidget *panel)
 static void
 panel_remove_open_create_launcher_dialogs (PanelWidget *panel)
 {
+	GSList *list;
 	GSList *l;
 
-	for (l = panel->open_dialogs; l ; l = l->next) {
+	list = panel->open_dialogs;
+	panel->open_dialogs = NULL;
+
+	for (l = list; l ; l = l->next) {
 		GtkWidget *dialog = l->data;
 
 		if (GTK_IS_WIDGET (dialog))
 			gtk_widget_destroy (dialog);
 	}
+	g_slist_free (list);
 }
 
 static void

@@ -1,3 +1,13 @@
+Thu Aug 28 10:07:02 2003  George Lebl <jirka@5z.com>
+
+	* panel.c: Fix a leak and be safe in destroying the
+	  open_dialogs list.  The destruction of dialogs could
+	  perhaps have side effects (though I'm not aware of any)
+	  so steal the list so that no one modifies it.
+
+	* panel-applet-frame.c: The open_dialogs are GSList's not
+	  GList, so avoid crashes by using the correct function.
+
 Thu Aug 28 08:59:58 2003  George Lebl <jirka@5z.com>
 
 	* panel-util.c: don't free the format if we didn't allocate
