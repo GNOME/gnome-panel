@@ -21,8 +21,7 @@
 
 #include <gtk/gtk.h>
 #include <libbonobo.h>
-#include <libgnome/libgnome.h>
-#include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-help.h>
 #include <libgnome/gnome-desktop-item.h>
 #include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>

@@ -1,3 +1,15 @@
+2004-11-01  Vincent Untz  <vincent@vuntz.net>
+
+	* showdesktop.c: stop including everything from libgnome and
+	libgnomeui
+	(display_about_dialog): use icon_name so we update with theme here
+
+	* window-list.c: stop including everything from libgnome and
+	libgnomeui
+
+	* workspace-switcher.c: stop including everything from libgnome and
+	libgnomeui
+
 2004-10-30  Vincent Untz  <vincent@vuntz.net>
 
 	* Makefile.am: no need to define GNOME_ICONDIR, install glade files

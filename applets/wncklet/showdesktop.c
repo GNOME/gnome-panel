@@ -23,13 +23,14 @@
 
 #include <config.h>
 #include "showdesktop.h"
+#include <gtk/gtkaboutdialog.h>
 #include <gtk/gtktogglebutton.h>
 #include <gtk/gtktooltips.h>
 #include <gtk/gtkimage.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtkmessagedialog.h>
-#include <libgnome/libgnome.h>
-#include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-help.h>
+#include <libgnomeui/gnome-icon-theme.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/screen.h>
 #include "wncklet.h"
@@ -471,15 +472,15 @@ display_about_dialog (BonoboUIComponent *uic,
                       "authors", authors,
                       "documenters", documenters,
                       "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-                      "logo", sdd->icon,
+                      "logo_icon_name", "gnome-fs-desktop",
                       NULL);
 
         gtk_window_set_wmclass (GTK_WINDOW (sdd->about_dialog), "show-desktop", "show-desktop");
         gtk_window_set_screen (GTK_WINDOW (sdd->about_dialog),
                                gtk_widget_get_screen (sdd->applet));
 
-        if (sdd->icon)
-                gtk_window_set_icon (GTK_WINDOW (sdd->about_dialog), sdd->icon);
+	gtk_window_set_icon_name (GTK_WINDOW (sdd->about_dialog),
+				  "gnome-fs-desktop"); 
 
         g_signal_connect (G_OBJECT(sdd->about_dialog), "destroy",
                           (GCallback)gtk_widget_destroyed, &sdd->about_dialog);
