@@ -88,10 +88,6 @@ static PanelStockIcon stock_icons [] = {
 	{ PANEL_STOCK_APPLETS,             "gnome-applets" },
 	{ PANEL_STOCK_DESKTOP,             "gnome-ccdesktop" },
 	{ PANEL_STOCK_KDE,                 "go" },
-	{ PANEL_STOCK_ARROW_RIGHT,         "panel-arrow-right" },
-	{ PANEL_STOCK_ARROW_LEFT,          "panel-arrow-left" },
-	{ PANEL_STOCK_ARROW_UP,            "panel-arrow-up" },
-	{ PANEL_STOCK_ARROW_DOWN,          "panel-arrow-down" },
 };
 
 static void
