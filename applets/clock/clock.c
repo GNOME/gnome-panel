@@ -1051,7 +1051,7 @@ display_about_dialog (BonoboUIComponent *uic,
 		      const gchar       *verbname)
 {
 	static GtkWidget *about = NULL;
-	GdkPixbuf *pixbuf;
+	GdkPixbuf *pixbuf = NULL;
 	gchar *file;
 	
 	static const gchar *authors[] =
@@ -1063,6 +1063,10 @@ display_about_dialog (BonoboUIComponent *uic,
 		"Alexander Larsson <alla@lysator.liu.se>",
 		NULL
 	};
+	const char *documenters [] = {
+	  NULL
+	};
+	const char *translator_credits = _("translator_credits");
 
 	if (about != NULL)
 	{
@@ -1070,20 +1074,16 @@ display_about_dialog (BonoboUIComponent *uic,
 		return;
 	}
 
-	pixbuf = NULL;
-	
 	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-clock.png", TRUE, NULL);
-	if (!file) {
-		g_warning (G_STRLOC ": gnome-clock.png cannot be found");
-		pixbuf = gdk_pixbuf_new_from_file (file, NULL);
-	}
+	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
+	g_free (file);
 
 	about = gnome_about_new (_("Clock Applet"), "1.0",
 				 _("(c) 1998-2001 the Free Software Foundation"),
 				 _("The clock applet gives your panel a lightweight and simple display of the date and time"),
 				 authors,
-				 NULL, /* documenters */
-				 NULL, /* translator_credits */
+				 documenters,
+				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 				 pixbuf);
 	
 	gtk_window_set_wmclass (GTK_WINDOW (about), "clock", "Clock");

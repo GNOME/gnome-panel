@@ -34,6 +34,7 @@ typedef enum {
 	MAILBOX_IMAP
 } MailboxType;
 
+extern GtkTooltips *panel_tooltips;
 
 typedef struct _MailCheck MailCheck;
 struct _MailCheck {
@@ -440,6 +441,24 @@ static void
 after_mail_check (MailCheck *mc)
 {
 	static const char *supinfo[] = {"mailcheck", "new-mail", NULL};
+	char *text;
+	
+	if (mc->anymail){
+		if(mc->mailbox_type == MAILBOX_LOCAL) {
+			if(mc->newmail)
+				text = g_strdup(_("You have new mail."));
+			else
+				text = g_strdup(_("You have mail."));
+		}
+		else {
+			if(mc->unreadmail)
+				text = g_strdup_printf(_("%d/%d messages"), mc->unreadmail, mc->totalmail);
+			else
+				text = g_strdup_printf(_("%d messages"), mc->totalmail);
+		} 
+	}
+	else
+		text = g_strdup_printf(_("No mail."));
 
 	if(mc->newmail) {
 		if(mc->play_sound)
@@ -489,30 +508,14 @@ after_mail_check (MailCheck *mc)
 		gtk_widget_queue_draw (mc->da);
 
 		break;
-	case REPORT_MAIL_USE_TEXT: {
-		char *text;
-
-		if (mc->anymail){
-			if(mc->mailbox_type == MAILBOX_LOCAL) {
-				if(mc->newmail)
-					text = g_strdup(_("You have new mail."));
-				else
-					text = g_strdup(_("You have mail."));
-			}
-			else {
-				if(mc->unreadmail)
-					text = g_strdup_printf(_("%d/%d messages"), mc->unreadmail, mc->totalmail);
-				else
-					text = g_strdup_printf(_("%d messages"), mc->totalmail);
-			} 
-		}
-		else
-			text = g_strdup_printf(_("No mail."));
+	case REPORT_MAIL_USE_TEXT:
 		gtk_label_set_text (GTK_LABEL (mc->label), text);
-		g_free(text);
 		break;
 	}
-	}
+
+	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (mc->applet),
+			      text, NULL);
+	g_free(text);
 }
 
 static gboolean
@@ -1495,6 +1498,9 @@ static void
 mailcheck_about(BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 {
 	MailCheck *mc = data;
+	GdkPixbuf *pixbuf = NULL;
+	gchar *file;
+
 	static const gchar     *authors [] =
 	{
 		"Miguel de Icaza <miguel@kernel.org>",
@@ -1503,6 +1509,10 @@ mailcheck_about(BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 		"Lennart Poettering <poettering@gmx.net>",
 		NULL
 	};
+	const char *documenters [] = {
+	  NULL
+	};
+	const char *translator_credits = _("translator_credits");
 
 	if (mc->about != NULL)
 	{
@@ -1511,15 +1521,20 @@ mailcheck_about(BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 		return;
 	}
 	
+	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-mailcheck.png", TRUE, NULL);
+	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
+	g_free (file);
+	
 	mc->about = gnome_about_new (_("Mail check Applet"), "1.1",
 				     _("(c) 1998-2000 the Free Software Foundation"),
 				     _("Mail check notifies you when new mail arrives in your mailbox"),
 				     authors,
-				     NULL,
-				     NULL,
-				     NULL);
-	gtk_window_set_wmclass (GTK_WINDOW (mc->about),
-				"mailcheck", "Mailcheck");
+				     documenters,
+   				     strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
+				     pixbuf);
+				     
+	gtk_window_set_wmclass (GTK_WINDOW (mc->about), "mailcheck", "Mailcheck");
+	
 #ifdef FIXME
 	gnome_window_icon_set_from_file (GTK_WINDOW (mc->about),
 					 GNOME_ICONDIR"/gnome-mailcheck.png");
