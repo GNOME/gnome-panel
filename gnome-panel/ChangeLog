@@ -1,3 +1,9 @@
+Mon Jan 24 15:11:05 2000  George Lebl <jirka@5z.com>
+
+	* menu.c: set menu_panel for each menu when shown.  Also correctly
+	  get the current_panel for the item menus.  If the current_menu
+	  is NULL, use panels->data and give warning.
+
 Mon Jan 24 13:28:34 2000  George Lebl <jirka@5z.com>
 
 	* menu.[ch],session.[ch],main.c: do tornoff menu saving in a nicer

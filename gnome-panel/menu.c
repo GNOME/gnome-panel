@@ -484,10 +484,31 @@ get_panel_from_menu_data(GtkWidget *menu)
 	while(menu) {
 		PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(menu),
 							 "menu_panel");
-		if(panel) return panel;
+		if(panel) {
+			if(IS_PANEL_WIDGET(panel))
+				return panel;
+			else
+				g_warning("Menu is on crack");
+		}
 		menu = GTK_MENU_SHELL(menu)->parent_menu_shell;
 	}
-	return current_panel;
+	if(!current_panel) {
+		g_warning("Something went quite terribly wrong and we can't "
+			  "find where this menu belongs");
+		return panels->data;
+	} else
+		return current_panel;
+}
+
+static void
+setup_menu_panel(GtkWidget *menu)
+{
+	PanelWidget *menu_panel = gtk_object_get_data(GTK_OBJECT(menu),
+						      "menu_panel");
+	if(!menu_panel) {
+		menu_panel = get_panel_from_menu_data(menu);
+		gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
+	}
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
@@ -672,6 +693,7 @@ struct _ShowItemMenu {
 	MenuFinfo *mf;
 	GtkWidget *menu;
 	GtkWidget *prop_item;
+	GtkWidget *menuitem;
 	int applet;
 };
 
@@ -688,6 +710,8 @@ static void
 show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 {
 	GtkWidget *menuitem;
+
+	current_panel = get_panel_from_menu_data(sim->menuitem->parent);
 	
 	if(!sim->menu) {
 		sim->menu = gtk_menu_new ();
@@ -992,6 +1016,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		sim->mf = mf;/*make sure you don't free this,
 			       it's not ours!*/
 		sim->type = 0;
+		sim->menuitem = menuitem;
 		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
 				   sim);
@@ -1535,6 +1560,8 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 		return;
 
 	menu = gtk_menu_new();
+	gtk_signal_connect(GTK_OBJECT(menu), "show",
+			   setup_menu_panel, NULL);
 	
 	title = g_string_new("");
 
@@ -1660,6 +1687,8 @@ create_fake_menu_at (char *menudir,
 	GSList *list;
 	
 	menu = gtk_menu_new ();
+	gtk_signal_connect(GTK_OBJECT(menu), "show",
+			   setup_menu_panel, NULL);
 	
 	mf = g_new0(MenuFinfo,1);
 	mf->menudir = g_strdup(menudir);
@@ -1828,6 +1857,8 @@ create_menu_at_fr (GtkWidget *menu,
 	
 	if(!menu) {
 		menu = gtk_menu_new ();
+		gtk_signal_connect(GTK_OBJECT(menu), "show",
+				   setup_menu_panel, NULL);
 #ifdef TEAROFF_MENUS
 		add_tearoff(GTK_MENU(menu));
 #endif
@@ -2157,6 +2188,8 @@ create_add_panel_submenu (int tearoff)
 	GtkWidget *menu, *menuitem;
 
 	menu = gtk_menu_new ();
+	gtk_signal_connect(GTK_OBJECT(menu), "show",
+			   setup_menu_panel, NULL);
 	
 	if(tearoff) {
 		menuitem = tearoff_item_new();
@@ -2934,6 +2967,8 @@ add_radio_menu (GtkWidget *menu, char *menutext,
 	gtk_object_set_data (GTK_OBJECT (menu), menu_key, menuitem);
 
 	submenu = gtk_menu_new ();
+	gtk_signal_connect(GTK_OBJECT(submenu), "show",
+			   setup_menu_panel, NULL);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 	add_radios_to_menu (submenu, items, change_func);
 	gtk_signal_connect (GTK_OBJECT (submenu), "show",
@@ -3025,6 +3060,8 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 
 	submenu = gtk_menu_new ();
+	gtk_signal_connect(GTK_OBJECT(submenu), "show",
+			   setup_menu_panel, NULL);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 
 	submenuitem = gtk_menu_item_new ();
@@ -3101,10 +3138,12 @@ add_to_panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 	char *wmclass = get_unique_tearoff_wmclass();
 
 	menu = gtk_menu_new();
+	gtk_signal_connect(GTK_OBJECT(menu), "show",
+			   setup_menu_panel, NULL);
 	make_add_submenu(menu, TRUE);
 	
 	/*set the panel to use as the data*/
-	gtk_object_set_data(GTK_OBJECT(menu),"menu_panel",current_panel);
+	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", current_panel);
 
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(current_panel),
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
@@ -3145,6 +3184,8 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 
 	submenu = gtk_menu_new ();
+	gtk_signal_connect(GTK_OBJECT(submenu), "show",
+			   setup_menu_panel, NULL);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 				   submenu);
 	
@@ -3188,6 +3229,8 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 
 	submenu = gtk_menu_new ();
+	gtk_signal_connect(GTK_OBJECT(submenu), "show",
+			   setup_menu_panel, NULL);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 
 	submenuitem = gtk_menu_item_new ();
@@ -3243,7 +3286,7 @@ panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 	GtkWidget *menu = create_panel_submenu (NULL, TRUE, FALSE);
 
 	/*set the panel to use as the data*/
-	gtk_object_set_data(GTK_OBJECT(menu),"menu_panel",current_panel);
+	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", current_panel);
 
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(current_panel),
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
@@ -3289,8 +3332,11 @@ create_panel_submenu(GtkWidget *menu, int fake_submenus, int tearoff)
 	GtkWidget *menuitem;
 	char *char_tmp;
 
-	if (!menu)
+	if (!menu) {
 		menu = gtk_menu_new();
+		gtk_signal_connect(GTK_OBJECT(menu), "show",
+				   setup_menu_panel, NULL);
+	}
 
 	if(tearoff) {
 		menuitem = tearoff_item_new();
@@ -3348,8 +3394,11 @@ create_desktop_menu (GtkWidget *menu, int fake_submenus, int tearoff)
 	char *char_tmp;
 	/* Panel entry */
 
-	if (!menu)
+	if (!menu) {
 		menu = gtk_menu_new ();
+		gtk_signal_connect(GTK_OBJECT(menu), "show",
+				   setup_menu_panel, NULL);
+	}
 
 	if(tearoff) {
 		menuitem = tearoff_item_new();
@@ -3408,8 +3457,9 @@ create_root_menu(int fake_submenus, int flags, int tearoff)
 		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
 
 	root_menu = gtk_menu_new ();
-	if (tearoff)
-	{
+	gtk_signal_connect(GTK_OBJECT(root_menu), "show",
+			   setup_menu_panel, NULL);
+	if (tearoff) {
 		GtkWidget *menuitem = tearoff_item_new ();
 		gtk_widget_show (menuitem);
 		gtk_menu_prepend (GTK_MENU (root_menu), menuitem);
@@ -3874,6 +3924,8 @@ create_special_menu(char *special, PanelWidget *menu_panel_widget)
 		menu = create_desktop_menu (NULL, TRUE, FALSE);
 	} else if(strcmp(special,"ADD_TO_PANEL")==0) {
 		menu = gtk_menu_new();
+		gtk_signal_connect(GTK_OBJECT(menu), "show",
+				   setup_menu_panel, NULL);
 		make_add_submenu(menu, TRUE);
 
 		gtk_signal_connect_object_while_alive(
@@ -3921,9 +3973,11 @@ load_tearoff_menu(void)
 
 	i = gnome_config_get_int("menu_panel=0");
 	if(i<0) i = 0;
-	menu_panel_widget = g_slist_nth_data(panels,i);
+	menu_panel_widget = g_slist_nth_data(panels, i);
 	if(!menu_panel_widget)
 		menu_panel_widget = panels->data;
+	if(!IS_PANEL_WIDGET(menu_panel_widget))
+		g_warning("panels list is on crack");
 
 	mfl_count = gnome_config_get_int("mfl_count=0");
 
