@@ -174,7 +174,6 @@ void		panel_widget_applet_drag_end	(PanelWidget *panel);
 void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
 						       GtkWidget *applet);
 void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
-int		panel_widget_applet_move_to_cursor(PanelWidget *panel);
 
 /* changing parameters */
 void		panel_widget_change_params	(PanelWidget *panel,
@@ -225,7 +224,7 @@ int		panel_widget_is_applet_stuck	(PanelWidget *panel,
 int		panel_widget_get_cursorloc	(PanelWidget *panel);
 
 /*needed for other panel types*/
-int		panel_widget_is_cursor		(PanelWidget *panel,
+gboolean	panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
 
 /* when we get color_only, we also optionally set r, g, b to the
