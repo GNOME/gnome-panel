@@ -53,7 +53,7 @@ finalize (GObject *object)
 		return;
 	}
 
-	if (disclosure->priv->expand_id > 0)
+ 	if (disclosure->priv->expand_id > 0)
 		g_source_remove (disclosure->priv->expand_id);
 
 	if (disclosure->priv->container != NULL) {
@@ -64,6 +64,19 @@ finalize (GObject *object)
 	disclosure->priv = NULL;
 
 	G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+unrealize (GtkWidget *widget)
+{
+	CDDBDisclosure *disclosure;
+
+	disclosure = CDDB_DISCLOSURE (widget);
+
+	if (disclosure->priv->expand_id > 0) {
+		g_source_remove (disclosure->priv->expand_id);
+		disclosure->priv->expand_id = 0;
+	}
 }
 
 static void
@@ -180,9 +193,10 @@ static void
 do_animation (CDDBDisclosure *disclosure,
 	      gboolean opening)
 {
-	if (disclosure->priv->expand_id > 0)
+	if (disclosure->priv->expand_id > 0) {
 		g_source_remove (disclosure->priv->expand_id);
-
+		disclosure->priv->expand_id = 0;
+	}
 	disclosure->priv->direction = opening ? 1 : -1;
 	disclosure->priv->expand_id = g_timeout_add (50, expand_collapse_timeout, disclosure);
 }
@@ -238,6 +252,7 @@ class_init (CDDBDisclosureClass *klass)
 
 	object_class->finalize = finalize;
 
+	widget_class->unrealize = unrealize;
 	parent_class = g_type_class_peek_parent (klass);
 
 	gtk_widget_class_install_style_property (widget_class,

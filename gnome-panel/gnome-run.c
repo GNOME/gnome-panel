@@ -461,7 +461,9 @@ return_and_close:
 	g_strfreev (envv);
 	g_free (s);
 	g_free (escaped);
+
 	gtk_widget_destroy (w);
+        
 }
 
 static char *
@@ -612,13 +614,13 @@ sync_entry_to_list (GtkWidget *dialog)
 			/* already a timeout registered so delay it for another half-second. */
 			g_source_remove (find_icon_timeout_id);
 			find_icon_timeout_id =
-				g_timeout_add_full (G_PRIORITY_LOW, 250, find_icon_timeout,
-				 		    entry, NULL);		
+				g_idle_add_full (G_PRIORITY_LOW, find_icon_timeout,
+                                                 entry, NULL);		
 		} else {
 			/* no timeout registered so start a new one. */
 			find_icon_timeout_id =
-				g_timeout_add_full (G_PRIORITY_LOW, 250, find_icon_timeout,
-			 			    entry, NULL);	
+				g_idle_add_full (G_PRIORITY_LOW, find_icon_timeout,
+                                                 entry, NULL);	
 		}
 	}
 }
@@ -1505,7 +1507,6 @@ static void
 run_dialog_destroyed (GtkWidget *widget)
 {
 	run_dialog = NULL;
-
 	g_slist_foreach (add_icon_paths, (GFunc)gtk_tree_path_free, NULL);
 	g_slist_free (add_icon_paths);
 	add_icon_paths = NULL;

@@ -1,3 +1,12 @@
+Mon Jul  1 16:44:35 2002  Jonathan Blandford  <jrb@gnome.org>
+
+	* gnome-run.c (sync_entry_to_list): do the icon finding in an idle
+	instead of a timeout.  There's no reason to be so slow here.
+
+	* disclosure-widget.c (unrealize): We should really remove the
+	timeout in an unrealize handler instead of finalize.  Doesn't hurt
+	to keep the finalize one around.
+
 2002-07-01  Glynn Foster  <glynn.foster@sun.com>
 
 	* menu.c: Set default response to delete your panel.
