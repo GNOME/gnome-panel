@@ -9,8 +9,8 @@ module GNOME {
 	};
 	interface control_center {
 		/* requests an ID on the panel */
-                void state_change (in short id);
-		void quit (in short id);
+                void state_saved (in long id);
+                void state_changed (in long id);
 	};
 };
 
