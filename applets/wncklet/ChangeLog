@@ -1,5 +1,11 @@
 2004-10-30  Vincent Untz  <vincent@vuntz.net>
 
+	* window-menu.c: (window_menu_window_state_changed): new
+	(window_menu_active_window_changed): connect to the good callback
+	for "state_changed"...
+
+2004-10-30  Vincent Untz  <vincent@vuntz.net>
+
 	* window-menu.c: (window_menu_make_label_bold): kill
 	(window_menu_get_window_name): make the name bold here if the window
 	demands attention (we now use pango markup)

@@ -370,6 +370,41 @@ window_menu_window_name_changed (WnckWindow *window,
 }
 
 static void
+window_menu_window_state_changed (WnckWindow *window,
+				  WnckWindowState changed_mask,
+				  WnckWindowState new_state,
+				  WindowMenu *window_menu)
+{
+	window_hash_item *item;
+	char *window_name;
+
+	if (!(changed_mask & (WNCK_WINDOW_STATE_MINIMIZED|WNCK_WINDOW_STATE_SHADED|WNCK_WINDOW_STATE_SKIP_TASKLIST|WNCK_WINDOW_STATE_DEMANDS_ATTENTION)))
+			return;
+
+	item = NULL;
+	window_name = NULL;
+
+	item = g_hash_table_lookup (window_menu->window_hash, window);
+	if (item == NULL)
+		return;
+
+	if (changed_mask & WNCK_WINDOW_STATE_SKIP_TASKLIST) {
+		if (wnck_window_is_skip_tasklist (window)) {
+			gtk_widget_hide (item->item);
+		} else {
+			gtk_widget_show (item->item);
+		}
+	}
+
+	if (changed_mask & (WNCK_WINDOW_STATE_MINIMIZED|WNCK_WINDOW_STATE_SHADED|WNCK_WINDOW_STATE_DEMANDS_ATTENTION)) {
+		window_name = window_menu_get_window_name (window);
+		gtk_label_set_text (GTK_LABEL (item->label), window_name);
+		if (window_name != NULL)
+			g_free (window_name);
+	}
+}
+
+static void
 window_menu_active_window_changed (WnckScreen *screen,
 				   WindowMenu *window_menu)
 {
@@ -561,7 +596,7 @@ window_menu_connect_to_window (WindowMenu *window_menu,
 				     window_menu,
 				     window_menu->applet);
 	wncklet_connect_while_alive (window, "state_changed",
-				     G_CALLBACK (window_menu_window_name_changed),
+				     G_CALLBACK (window_menu_window_state_changed),
 				     window_menu,
 				     window_menu->applet);
 }
