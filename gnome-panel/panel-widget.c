@@ -2060,7 +2060,7 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 				  NULL,
 				  fleur_cursor,
 				  GDK_CURRENT_TIME);
-		g_object_unref (G_OBJECT (fleur_cursor));
+		gdk_cursor_unref (fleur_cursor);
 		gdk_flush ();
 	}
 }

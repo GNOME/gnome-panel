@@ -89,9 +89,9 @@ enum {
 static void
 change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 {
-	GdkCursor *cursor = gdk_cursor_new(cursor_type);
-	gdk_window_set_cursor(window, cursor);
-	g_object_unref (G_OBJECT (cursor));
+	GdkCursor *cursor = gdk_cursor_new (cursor_type);
+	gdk_window_set_cursor (window, cursor);
+	gdk_cursor_unref (cursor);
 }
 
 static void
@@ -661,7 +661,7 @@ panel_initiate_move (GtkWidget *widget, guint32 event_time)
 				  NULL,
 				  cursor,
 				  event_time);
-		g_object_unref (G_OBJECT (cursor));
+		gdk_cursor_unref (cursor);
 
 		if (basep) {
 			basep->autohide_inhibit = TRUE;

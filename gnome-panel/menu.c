@@ -1153,7 +1153,7 @@ restore_grabs(GtkWidget *w, gpointer data)
 					   GDK_ENTER_NOTIFY_MASK |
 					   GDK_LEAVE_NOTIFY_MASK,
 					   NULL, cursor, 0) == 0);
-		g_object_unref (G_OBJECT (cursor));
+		gdk_cursor_unref (cursor);
 	}
 	
 	gtk_grab_add (GTK_WIDGET (menu));
@@ -1746,7 +1746,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 	    }
 	}
 
-      g_object_unref (G_OBJECT (cursor));
+      gdk_cursor_unref (cursor);
     }
 }
 

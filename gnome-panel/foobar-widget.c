@@ -339,7 +339,7 @@ update_clock (FoobarWidget *foo)
 		}
 		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
-		str_utf8 = g_locale_to_utf8((const gchar *)hour, strlen(hour), NULL, NULL, NULL);
+		str_utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
 
 		gtk_tooltips_set_tip (panel_tooltips, foo->clock_ebox,
 				      sure_string (str_utf8), NULL);
@@ -356,7 +356,7 @@ update_clock (FoobarWidget *foo)
 	}
 	hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
-	str_utf8 = g_locale_to_utf8((const gchar *)hour, strlen(hour), NULL, NULL, NULL);
+	str_utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
 
 	if (str_utf8 != NULL) {
 		layout = gtk_widget_create_pango_layout (foo->clock_label, str_utf8);
@@ -433,7 +433,7 @@ append_format_items (GtkWidget *menu)
 		}
 		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
-		str_utf8 = g_locale_to_utf8((const gchar *)hour, strlen(hour), NULL, NULL, NULL);
+		str_utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
 		item = gtk_radio_menu_item_new_with_label (group, sure_string (str_utf8));
 		g_free (str_utf8);
 
@@ -559,7 +559,7 @@ foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 		}
 		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
-		str_utf8 = g_locale_to_utf8((const gchar *)hour, strlen(hour), NULL, NULL, NULL);
+		str_utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
 		if (str_utf8 != NULL) {
 			layout = gtk_widget_create_pango_layout (foo->clock_label, str_utf8);
 			pango_layout_get_pixel_size (layout, &width, NULL);
