@@ -675,7 +675,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gint           frames;
 	gdouble        speed;
 	gboolean       rotate;
-	GtkWidget     *notebook;
 	GtkWidget     *apply_button;
 
 	if (fish->pb != NULL) {
@@ -710,9 +709,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gnome_window_icon_set_from_file (GTK_WINDOW (fish->pb),
 					 GNOME_ICONDIR "/gnome-fish.png");
 
-	notebook = gtk_notebook_new ();
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->pb)->vbox), 
-				notebook, TRUE, TRUE, 0);
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD);
 
@@ -814,9 +810,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_object_set_data (GTK_OBJECT (fish->pb), "rotate", w);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
-	gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-					vbox,
-					gtk_label_new (_("Fish")));
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->pb)->vbox), 
+	                    vbox, TRUE, TRUE, 0);
 
 	gtk_signal_connect (GTK_OBJECT(fish->pb),
 			    "destroy",
