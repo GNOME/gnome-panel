@@ -878,11 +878,14 @@ ask_about_launcher (const char  *file,
 				NULL);
 
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"create_launcher", "Panel");
 	
 	dee = GNOME_DITEM_EDIT (gnome_ditem_edit_new ());
+	gtk_container_set_border_width (GTK_CONTAINER (dee), 5);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    GTK_WIDGET (dee),
 			    TRUE, TRUE, GNOME_PAD_SMALL);
