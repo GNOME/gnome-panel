@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-12-19 11:28+0100\n"
-"PO-Revision-Date: 2002-12-19 11:29+0100\n"
+"POT-Creation-Date: 2002-12-22 11:23+0100\n"
+"PO-Revision-Date: 2002-12-22 11:23+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -231,7 +231,7 @@ msgstr "_Om..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:814 gnome-panel/launcher.c:804 gnome-panel/menu.c:3577
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3577
 #: gnome-panel/menu.c:4253 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_Hjälp"
@@ -364,8 +364,8 @@ msgid "Clock"
 msgstr "Klocka"
 
 #: applets/gen_util/clock.c:1205
-msgid "(C) 1998-2002 the Free Software Foundation"
-msgstr "© 1998-2002 Free Software Foundation"
+msgid "Copyright  1998-2002 Free Software Foundation. Inc."
+msgstr "Copyright  1998-2002 Free Software Foundation, Inc."
 
 #: applets/gen_util/clock.c:1206
 msgid "The Clock displays the current time and date"
@@ -696,8 +696,8 @@ msgid "Mail_box"
 msgstr "_Brevlåda"
 
 #: applets/gen_util/mailcheck.c:1746
-msgid "(c) 1998-2000 the Free Software Foundation"
-msgstr "© 1998-2000 Free Software Foundation"
+msgid "Copyright  1998-2002 Free Software Foundation, Inc."
+msgstr "Copyright  1998-2002 Free Software Foundation, Inc."
 
 #: applets/gen_util/mailcheck.c:1747
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
@@ -861,10 +861,6 @@ msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Fel vid inläsning av display_all_workspaces-värde för arbetsytebytaren: %s\n"
 
-#: applets/gen_util/pager.c:546
-msgid "(c) 2001 Red Hat, Inc."
-msgstr "© 2001 Red Hat, Inc."
-
 #: applets/gen_util/pager.c:547
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
@@ -941,58 +937,6 @@ msgid ""
 "Whether to display the names of the workspaces in the Workspace Switcher."
 msgstr "Huruvida namnen på arbetsytorna ska visas i arbetsytebytaren."
 
-#: applets/gen_util/printer.c:120
-msgid "Can't execute printer command"
-msgstr "Kan inte köra skrivarkommando"
-
-#: applets/gen_util/printer.c:306
-msgid "Printer properties"
-msgstr "Skrivaregenskaper"
-
-#: applets/gen_util/printer.c:315
-msgid "Printer name:"
-msgstr "Skrivarnamn:"
-
-#: applets/gen_util/printer.c:319
-msgid "Print command:"
-msgstr "Utskriftskommando:"
-
-#: applets/gen_util/printer.c:325
-msgid "Printer"
-msgstr "Skrivare"
-
-#: applets/gen_util/printer.c:353
-msgid "Printer Applet"
-msgstr "Skrivarpanelprogram"
-
-#: applets/gen_util/printer.c:354
-msgid "(c) 1998 the Free Software Foundation"
-msgstr "© 1998 Free Software Foundation"
-
-#: applets/gen_util/printer.c:356
-msgid ""
-"The printer applet lets you easily drag files to be printed via a print "
-"command"
-msgstr ""
-"Skrivarpanelprogrammet låter dig på ett enkelt sätt dra filer som ska "
-"skrivas ut via ett utskriftskommando"
-
-#: applets/gen_util/printer.c:423
-msgid "Can't create applet!\n"
-msgstr "Kan inte skapa panelprogram!\n"
-
-#: applets/gen_util/printer.c:466
-msgid "Properties..."
-msgstr "Egenskaper..."
-
-#: applets/gen_util/printer.c:473
-msgid "Help"
-msgstr "Hjälp"
-
-#: applets/gen_util/printer.c:479
-msgid "About..."
-msgstr "Om..."
-
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
 msgstr "Klicka här för att återställa dolda fönster."
@@ -1010,17 +954,9 @@ msgstr "Misslyckades med att läsa in %s: %s\n"
 msgid "File not found"
 msgstr "Filen hittades inte"
 
-#: applets/gen_util/showdesktop.c:453
-msgid "(C) 2002 Red Hat, Inc."
-msgstr "© 2002 Red Hat, Inc."
-
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Denna knapp låter dig dölja alla fönster och visa skrivbordet"
-
-#: applets/gen_util/tasklist.c:809
-msgid "(c) 2001 Red Hat, Inc"
-msgstr "© 2001 Red Hat, Inc"
 
 #: applets/gen_util/tasklist.c:810
 msgid ""
@@ -1167,77 +1103,73 @@ msgstr "Fabrik för notifieringsyta"
 msgid "Panel Notification Area"
 msgstr "Panelnotifieringsyta"
 
-#: applets/notification_area/main.c:126
-msgid "Copyright 2002 Red Hat Inc."
-msgstr "Copyright 2002 Red Hat Inc."
-
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:428 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:493 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
 msgstr "_Ta bort från panelen"
 
-#: gnome-panel/applet.c:505 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/applet.c:504 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "_Flytta"
 
-#: gnome-panel/applet.c:809
+#: gnome-panel/applet.c:791
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Ingen object_type inställd för panelobjektet med ID %s\n"
 
-#: gnome-panel/applet.c:831
+#: gnome-panel/applet.c:811 gnome-panel/applet.c:919
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Inget panel_id inställt för panelobjektet med ID %s\n"
 
-#: gnome-panel/applet.c:1157
+#: gnome-panel/applet.c:1258
 msgid "Can't find an empty spot"
 msgstr "Kan inte hitta ett ledigt ställe"
 
-#: gnome-panel/basep-widget.c:161
+#: gnome-panel/basep-widget.c:159
 msgid "Mode"
 msgstr "Läge"
 
-#: gnome-panel/basep-widget.c:162
+#: gnome-panel/basep-widget.c:160
 msgid "Mode of this panel"
 msgstr "Denna panels läge"
 
-#: gnome-panel/basep-widget.c:169
+#: gnome-panel/basep-widget.c:167
 msgid "State"
 msgstr "Tillstånd"
 
-#: gnome-panel/basep-widget.c:170
+#: gnome-panel/basep-widget.c:168
 msgid "Current state of this panel"
 msgstr "Denna panels aktuella tillstånd"
 
-#: gnome-panel/basep-widget.c:178
+#: gnome-panel/basep-widget.c:176
 msgid "Hidebuttons enabled"
 msgstr "Döljandeknappar aktiverade"
 
-#: gnome-panel/basep-widget.c:179
+#: gnome-panel/basep-widget.c:177
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr ""
 "Är döljandeknappar (knappar som döljer eller visar panelen) aktiverade?"
 
-#: gnome-panel/basep-widget.c:186
+#: gnome-panel/basep-widget.c:184
 msgid "Hidebutton pixmaps enabled"
 msgstr "Bilder på döljandeknappar aktiverade"
 
-#: gnome-panel/basep-widget.c:187
+#: gnome-panel/basep-widget.c:185
 msgid "Hidebuttons have pixmaps"
 msgstr "Döljandeknappar har bilder"
 
-#: gnome-panel/basep-widget.c:591
+#: gnome-panel/basep-widget.c:584
 msgid "Hide this panel"
 msgstr "Dölj denna panel"
 
-#: gnome-panel/basep-widget.c:594
+#: gnome-panel/basep-widget.c:587
 msgid "Show this panel"
 msgstr "Visa denna panel"
 
@@ -1366,7 +1298,7 @@ msgstr "Visa pil på döljknappen"
 msgid "Drawer"
 msgstr "Låda"
 
-#: gnome-panel/drawer.c:811 gnome-panel/launcher.c:802 gnome-panel/menu.c:1521
+#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1521
 #: gnome-panel/menu.c:3552 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Egenskaper"
@@ -1901,8 +1833,8 @@ msgid "The GNOME Panel"
 msgstr "GNOME-panelen"
 
 #: gnome-panel/menu.c:290
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "© 1997-2002 Free Software Foundation"
+msgid "Copyright  1997-2002 Free Software Foundation, Inc."
+msgstr "Copyright  1997-2002 Free Software Foundation, Inc."
 
 #: gnome-panel/menu.c:311
 msgid "End world hunger"
@@ -2373,7 +2305,7 @@ msgstr "Kan inte få AppletShell-gränssnitt från kontroll\n"
 msgid "Open URL: %s"
 msgstr "Öppna URL: %s"
 
-#: gnome-panel/panel.c:2401
+#: gnome-panel/panel.c:2594
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2742,8 +2674,75 @@ msgstr "Storlek:"
 msgid "Top"
 msgstr "Överkant"
 
-#~ msgid "(C) 1998-2002 Free Software Foundation, Inc."
-#~ msgstr "© 1998-2002 Free Software Foundation, Inc."
+#~ msgid "Copyright (C) 1998-2002 Free Software Foundation. Inc."
+#~ msgstr "Copyright © 1998-2002 Free Software Foundation, Inc."
+
+#~ msgid "Copyright (C) 1998-2002 Free Software Foundation, Inc."
+#~ msgstr "Copyright © 1998-2002 Free Software Foundation, Inc."
+
+#~ msgid "Copyright (C) 1997-2002 Free Software Foundation, Inc."
+#~ msgstr "Copyright © 1997-2002 Free Software Foundation, Inc."
+
+#~ msgid "(C) 1998-2002 the Free Software Foundation"
+#~ msgstr "© 1998-2002 Free Software Foundation"
+
+#~ msgid "(c) 1998-2000 the Free Software Foundation"
+#~ msgstr "© 1998-2000 Free Software Foundation"
+
+#~ msgid "(c) 2001 Red Hat, Inc."
+#~ msgstr "© 2001 Red Hat, Inc."
+
+#~ msgid "Can't execute printer command"
+#~ msgstr "Kan inte köra skrivarkommando"
+
+#~ msgid "Printer properties"
+#~ msgstr "Skrivaregenskaper"
+
+#~ msgid "Printer name:"
+#~ msgstr "Skrivarnamn:"
+
+#~ msgid "Print command:"
+#~ msgstr "Utskriftskommando:"
+
+#~ msgid "Printer"
+#~ msgstr "Skrivare"
+
+#~ msgid "Printer Applet"
+#~ msgstr "Skrivarpanelprogram"
+
+#~ msgid "(c) 1998 the Free Software Foundation"
+#~ msgstr "© 1998 Free Software Foundation"
+
+#~ msgid ""
+#~ "The printer applet lets you easily drag files to be printed via a print "
+#~ "command"
+#~ msgstr ""
+#~ "Skrivarpanelprogrammet låter dig på ett enkelt sätt dra filer som ska "
+#~ "skrivas ut via ett utskriftskommando"
+
+#~ msgid "Can't create applet!\n"
+#~ msgstr "Kan inte skapa panelprogram!\n"
+
+#~ msgid "Properties..."
+#~ msgstr "Egenskaper..."
+
+#~ msgid "Help"
+#~ msgstr "Hjälp"
+
+#~ msgid "About..."
+#~ msgstr "Om..."
+
+#~ msgid "(C) 2002 Red Hat, Inc."
+#~ msgstr "© 2002 Red Hat, Inc."
+
+#~ msgid "(c) 2001 Red Hat, Inc"
+#~ msgstr "© 2001 Red Hat, Inc"
+
+#~ msgid "Copyright 2002 Red Hat Inc."
+#~ msgstr "Copyright 2002 Red Hat Inc."
+
+#~ msgid "(C) 1997-2002 the Free Software Foundation"
+#~ msgstr "© 1997-2002 Free Software Foundation"
 
 #~ msgid "(c) 1998-2000 Free Software Foundation, Inc."
 #~ msgstr "© 1998-2000 Free Software Foundation"
@@ -2762,9 +2761,6 @@ msgstr "Överkant"
 
 #~ msgid "Preview"
 #~ msgstr "Förhandsgranskning"
-
-#~ msgid "(C) 1997-2002 Free Software Foundation, Inc."
-#~ msgstr "© 1997-2002 Free Software Foundation, Inc."
 
 #~ msgid "(C) 1997 Free Software Foundation, Inc."
 #~ msgstr "© 1997 Free Software Foundation, Inc."
