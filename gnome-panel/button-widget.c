@@ -365,7 +365,7 @@ loadup_file(char *file)
 {
 	GdkPixbuf *pb = NULL;
 	
-	if(!file && !strlen (file))
+	if(!file || !*file)
 		return NULL;
 
 	if(!g_path_is_absolute(file)) {

@@ -1,3 +1,9 @@
+Tue May 30 03:11:45 2000  George Lebl <jirka@5z.com>
+
+	* button-widget.c: fix a check for an empty file in load_pixmap
+	  which would segfault on a NULL filename.  Dunno when this would
+	  happen but it definately happened in bug #12600
+
 Tue May 30 03:01:43 2000  George Lebl <jirka@5z.com>
 
 	* basep-widget.c: drawers are always in the "DOCK" layer.  even if
