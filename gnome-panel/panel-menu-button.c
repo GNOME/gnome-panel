@@ -774,8 +774,8 @@ panel_menu_button_create (PanelToplevel *toplevel,
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_menu_path");
 	gconf_client_set_bool (client, key, use_menu_path, NULL);
 
-	if (menu_path) {
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_menu_path");
+	if (use_menu_path && menu_path && menu_path [0]) {
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "menu_path");
 		gconf_client_set_string (client, key, menu_path, NULL);
 	}
 
