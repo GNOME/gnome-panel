@@ -2102,8 +2102,8 @@ create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 }
 
 static GtkWidget *
-create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus,
-		 int force, int fake)
+create_user_menu(char *title, char *dir, GtkWidget *menu, char *pixmap,
+		 int fake_submenus, int force, int fake)
 {
 	char *menu_base = gnome_util_home_file (dir);
 	char *menudir = g_concat_dir_and_file (menu_base, ".");
@@ -2113,12 +2113,12 @@ create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus,
 	g_free (menu_base);
 	if(!fake || menu) {
 		menu = create_menu_at (menu,menudir, FALSE,
-				       title,
-				       NULL,fake_submenus,
+				       title, pixmap,
+				       fake_submenus,
 				       force);
 	} else {
 		menu = create_fake_menu_at (menudir, FALSE,
-					    title,NULL);
+					    title, pixmap);
 	}
 	g_free (menudir); 
 	return menu;
@@ -2174,6 +2174,7 @@ create_panel_root_menu(GtkWidget *panel)
 	GtkWidget *menuitem;
 	GtkWidget *panel_menu;
 	GtkWidget *menu;
+	char *pixmap;
 
 	panel_menu = gtk_menu_new();
 
@@ -2190,10 +2191,13 @@ create_panel_root_menu(GtkWidget *panel)
 				   menuitem);
 	}
 
-	menu = create_user_menu(_("User menus"),"apps",NULL,TRUE,TRUE,TRUE);
+	pixmap = gnome_pixmap_file ("gnome-favorites.png");
+	menu = create_user_menu(_("User menus"),"apps",NULL,pixmap,TRUE,TRUE,TRUE);
+	g_free (pixmap);
 	if(menu) {
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 0, _("User menus"));
+		setup_menuitem_try_pixmap (menuitem, "gnome-favorites.png", 
+					   _("User menus"));
 		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
@@ -2203,7 +2207,7 @@ create_panel_root_menu(GtkWidget *panel)
 
 	if(g_file_exists("/etc/X11/wmconfig")) {
 		menu = create_user_menu(_("AnotherLevel menus"),"apps-redhat",
-					NULL,TRUE,TRUE,TRUE);
+					NULL,NULL,TRUE,TRUE,TRUE);
 		if(menu) {
 			menuitem = gtk_menu_item_new ();
 			setup_menuitem (menuitem, 0, _("AnotherLevel menus"));
@@ -2946,7 +2950,8 @@ create_root_menu(int fake_submenus, int flags)
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	int need_separ = FALSE;
-	
+	char *pixmap;
+
 	root_menu = NULL;
 	
 	if(flags&MAIN_MENU_SYSTEM && !(flags&MAIN_MENU_SYSTEM_SUB)) {
@@ -2954,15 +2959,18 @@ create_root_menu(int fake_submenus, int flags)
 		need_separ = TRUE;
 	}
 	if(flags&MAIN_MENU_USER && !(flags&MAIN_MENU_USER_SUB)) {
-		root_menu = create_user_menu(_("User menus"), "apps",
-					     root_menu, fake_submenus, FALSE,
+		pixmap = gnome_pixmap_file ("gnome-favorites.png");
+		root_menu = create_user_menu(_("User menus"), "apps", 
+					     root_menu, pixmap,
+					     fake_submenus, FALSE,
 					     FALSE);
+		g_free (pixmap);
 		need_separ = TRUE;
 	}
 	if(flags&MAIN_MENU_REDHAT && !(flags&MAIN_MENU_REDHAT_SUB)) {
 		rh_submenu_to_display(NULL,NULL);
 		root_menu = create_user_menu(_("AnotherLevel menus"), "apps-redhat",
-					     root_menu, fake_submenus, FALSE,
+					     root_menu, NULL, fake_submenus, FALSE,
 					     FALSE);
 		need_separ = TRUE;
 	}
@@ -3001,10 +3009,14 @@ create_root_menu(int fake_submenus, int flags)
 		if(need_separ)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
+		pixmap = gnome_pixmap_file ("gnome-favorites.png");
 		menu = create_user_menu(_("User menus"), "apps", 
-					NULL, fake_submenus, TRUE, TRUE);
+					NULL, pixmap,
+					fake_submenus, TRUE, TRUE);
+		g_free (pixmap);
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 0, _("User menus"));
+		setup_menuitem_try_pixmap (menuitem, "gnome-favorites.png", 
+					   _("User menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
@@ -3012,14 +3024,13 @@ create_root_menu(int fake_submenus, int flags)
 				   menuitem);
 	}
 	if(flags&MAIN_MENU_REDHAT && flags&MAIN_MENU_REDHAT_SUB) {
-		GtkWidget *pixmap = NULL;
 		if(need_separ)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
 		menu = create_user_menu(_("AnotherLevel menus"), "apps-redhat", 
-					NULL, fake_submenus, TRUE, TRUE);
+					NULL, NULL, fake_submenus, TRUE, TRUE);
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, pixmap, _("AnotherLevel menus"));
+		setup_menuitem (menuitem, NULL, _("AnotherLevel menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
