@@ -286,10 +286,16 @@ panel_session_save (GnomeClient *client,
 
 		/*don't catch these either*/
 		for(i=0,info=(AppletInfo *)applets->data;i<applet_count;
-		    i++,info++)
+		    i++,info++) {
 		    	if(info->widget)
 				gtk_signal_disconnect(GTK_OBJECT(info->widget),
 						      info->destroy_callback);
+			/*FIXME: VERY BAD HACK*/
+			if(GTK_IS_SOCKET(info->applet_widget))
+				((GdkWindowPrivate *)
+					GTK_SOCKET(info->applet_widget)->
+						plug_window)->colormap = NULL;
+		}
 
 		puts("2");
 
