@@ -378,6 +378,36 @@ panel_applet_finalize (GObject *object)
 	parent_class->finalize (object);
 }
 
+
+static void panel_applet_menu_position (GtkMenu  *menu,
+					gint     *x,
+					gint	 *y,
+					gboolean *push_in,
+					gpointer  data)
+{
+	GtkWidget *w = data;
+	gint wx, wy;
+
+	g_return_if_fail (w != NULL);
+
+	gdk_window_get_origin (w->window, &wx, &wy);
+	/*
+         * Make sure that the popup position is in the panel
+	 * as the menu may be popped up by a keystroke
+	 */
+	if (*x < wx)
+		*x = wx;
+	else if (*x > wx + w->allocation.width)
+		*x = wx + w->allocation.width;
+
+	if (*y < wy)
+		*y = wy;
+	 else if (*y > wy + w->allocation.height)
+		*y = wy + w->allocation.height;
+
+	*push_in = TRUE;
+}
+
 static gboolean
 panel_applet_button_press (GtkWidget      *widget,
 			   GdkEventButton *event)
@@ -385,7 +415,7 @@ panel_applet_button_press (GtkWidget      *widget,
 	PanelApplet *applet = PANEL_APPLET (widget);
 
 	if (event->button == 3) {
-		bonobo_control_do_popup (applet->priv->control,
+		bonobo_control_do_popup (applet->priv->control, 
 					 event->button,
 					 event->time);
 		return TRUE;
@@ -395,8 +425,41 @@ panel_applet_button_press (GtkWidget      *widget,
 }
 
 static gboolean
+panel_applet_popup_menu (GtkWidget *widget)
+{
+	PanelApplet *applet = PANEL_APPLET (widget);
+
+	bonobo_control_do_popup_full (applet->priv->control, NULL, NULL,
+				      panel_applet_menu_position, widget,
+				      3,
+				      GDK_CURRENT_TIME);
+	
+}
+
+static gboolean
+panel_applet_expose (GtkWidget      *widget,
+		     GdkEventExpose *event) 
+{
+	g_return_val_if_fail (PANEL_IS_APPLET (widget), FALSE);
+	g_return_val_if_fail (event != NULL, FALSE);
+
+	GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+
+        if (GTK_WIDGET_HAS_FOCUS (widget)) {
+		gtk_paint_focus (widget->style, widget->window,
+                                 GTK_WIDGET_STATE (widget),
+                                 &event->area, widget, "panel_applet",
+                                 widget->allocation.x + 1,
+                                 widget->allocation.y + 1,
+                                 widget->allocation.width - 3,
+                                 widget->allocation.height - 3);
+	}
+	return FALSE;
+}                
+
+static gboolean
 panel_applet_parse_color (const gchar *color_str,
-			   GdkColor    *color)
+			  GdkColor    *color)
 {
 	int r, g, b;
 
@@ -751,6 +814,7 @@ panel_applet_class_init (PanelAppletClass *klass,
 	parent_class = g_type_class_peek_parent (klass);
 
 	widget_class->button_press_event = panel_applet_button_press;
+	widget_class->expose_event = panel_applet_expose;
 
 	gobject_class->finalize = panel_applet_finalize;
 
@@ -809,6 +873,8 @@ panel_applet_instance_init (PanelApplet      *applet,
 
 	gtk_widget_set_events (GTK_WIDGET (applet), 
 			       GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
+
+	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (applet), GTK_CAN_FOCUS);
 }
 
 GType
@@ -866,6 +932,9 @@ panel_applet_construct (PanelApplet *applet)
 
 	bonobo_object_add_interface (BONOBO_OBJECT (priv->control),
 				     BONOBO_OBJECT (priv->item_handler));
+
+	g_signal_connect (G_OBJECT (applet), "popup_menu",
+			  G_CALLBACK (panel_applet_popup_menu), NULL);
 }
 
 /**

@@ -1,3 +1,12 @@
+2002-02-04  Padraig O'Briain <padraig.obriain@sun.com>
+
+	* panel-applet.c: Set GTK_CAN_FOCUS flag for PanelApplet; add
+	panel_applet_expose() to draw focus indicator when PanelApplet has
+	focus; connect to popup_menu_signal to display context menu when
+	Shift+F10 is pressed. Call bonobo_control_do_popup_menu() when 
+	popping up context menu from keyboard to allow its position to be
+	corrected from pointer position to applet position. 
+	
 2002-01-28  Glynn Foster <glynn.foster@sun.com>
 
 	* Makefile.am: Change to use different CFLAGS so we don't 
