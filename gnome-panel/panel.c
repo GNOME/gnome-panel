@@ -20,10 +20,6 @@
 #include "panel_config_global.h"
 #include <gdk/gdkx.h>
 
-#undef GTK_OBJECT
-#define GTK_OBJECT(obj)  (printf("func: %s line: %d\n", __FILE__, __LINE__)!=123? GTK_CHECK_CAST ((obj), gtk_object_get_type (), GtkObject):0)
-
-
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
