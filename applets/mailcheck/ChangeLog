@@ -1,3 +1,49 @@
+1999-03-25  Nat Friedman  <nat@nat.org>
+
+	* battery/properties.h: Added copyright statement.
+
+	* battery/session.h: Added copyright statement.
+
+	* battery/session.c (battery_session_defaults): Handle low-battery
+ 	settings and warning settings.
+	(battery_session_save): Likewise.
+	(battery_session_load): Likewise.
+	Added copyright statement.
+
+	* battery/properties.c (prop_apply): i18n'd the notebook tab
+ 	titles.  Added update interval stuff to main notebook tab.  Added
+ 	low-battery color options.  Added "warning" notebook tab.  Added
+ 	copyright statement.
+
+	* battery/battery.h: Changed the (default) battery size to 48x48.
+  	graph_timeout_id changed to update_timeout_id.  Likewise with
+ 	graph_timeout_interval.  Added the low-battery color fields.
+  	Added low-battery warning variables.  Added copyright statement.
+
+	* battery/battery.c: Added copyright statement.
+	(battery_update): Keep track of whether or not the ac-online
+ 	status changes, and use this to determine when to update the
+ 	picture as well.
+	(battery_update): Pop up a warning dialog if (a) warnings are
+ 	enabled (b) the battery charge has dipped below a threshold value
+ 	as specified by the user.
+	(battery_update): Set the graph color to graph_color_low if the
+ 	battery charge is below a threshold value.
+	(battery_update): Likewise for the readout color.  Fill the
+ 	battery chamber white to distinguish it from its surroundings.
+	(battery_update): Left justify the percentage label.  Blank the
+ 	time-remaining label if it is meaningless data.
+	(make_new_battery_applet): Readjusted the paddings.  Removed the
+ 	readout picture bevel.  Set the label font to 6x10.  Use a table
+ 	to store the labels.  Connect to the button click signal of the
+ 	whole applet.  
+	(battery_setup_picture): Now generates a better-proportioned
+ 	picture.
+	(battery_set_size): Allocate only 25% of the applet's width for
+ 	the readout picture.
+	(battery_setup_colors): Allocate the low-battery colors.
+	(battery_warn): New function to pop up the warning dialog.
+
 1999-03-24  Nat Friedman  <nat@nat.org>
 
 	* battery/battery.h (BATTERY_DEFAULT_HEIGHT): Changed the default
