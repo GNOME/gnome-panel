@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "1.5.17">
-  <!ENTITY manrevision "2.1">
-  <!ENTITY date "August 2002">
+  <!ENTITY appletversion "3.4.7.4ac19">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "January 2003">
   <!ENTITY applet "Fish">
 ]>
 
@@ -23,7 +23,7 @@
   <articleinfo> 
 	 <title>&applet; Applet Manual V&manrevision;</title> 
 	 <copyright> 
-		<year>2002</year>  
+		<year>2003</year>  
 		<holder>Sun Microsystems</holder> 
 	 </copyright> 
 	 <copyright> 
@@ -87,6 +87,15 @@
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision>
+		<revision> 
+		  <revnumber>Fish Applet Manual V2.1</revnumber> 
+		  <date>August 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
 		<revision> 
 		  <revnumber>Fish Applet Manual V2.0</revnumber> 
 		  <date>May 2002</date> 
@@ -161,42 +170,36 @@
 <term><guilabel>Name of GNOME fish</guilabel> </term>
 <listitem>
 <para>Use this text box to specify the name of the fish.</para>
-<para>Default: Wanda.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Animation filename</guilabel> </term>
 <listitem>
 <para>Use this field to select the image to display in the applet. You can select an image that is supplied with the applet or a personal image.</para>
-<para>Default: <filename>fish/fishanim.png</filename>.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Command to execute when fish is clicked</guilabel> </term>
 <listitem>
 <para>By default, <application>&applet;</application> runs the fortune command when you click on the applet. Use this text box to specify an alternative command to run. </para>
-<para>Default: fortune.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Frames in animation</guilabel> </term>
 <listitem>
 <para>Use this spin box to specify the number of frames in the animation. </para>
-<para>Default: 3.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Pause per frame</guilabel> </term>
 <listitem>
 <para>Use this spin box to specify the pause in seconds between each frame in the animation.</para>
-<para>Default: 1.00.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Rotate on vertical panels</guilabel> </term>
 <listitem>
 <para>Select this option to rotate the applet image when you add the applet to a vertical panel.</para>
-<para>Default: selected.</para>
 </listitem>
 </varlistentry>
 </variablelist>
