@@ -567,10 +567,12 @@ make_mailcheck_applet(const gchar *param)
 
 	if(APPLET_WIDGET(applet)->cfgpath &&
            *(APPLET_WIDGET(applet)->cfgpath)) {
+		char *emailfile = gnome_unconditional_pixmap_file("mailcheck/email.xpm");
 		char *query = g_copy_strings(APPLET_WIDGET(applet)->cfgpath,
-					     "animation_file=",NULL);
+					     "animation_file=",emailfile,NULL);
 		mc->animation_file = gnome_config_get_string(query);
 		g_free(query);
+		if(emailfile) g_free(emailfile);
 	} else 
 		mc->animation_file = NULL;
 
