@@ -286,6 +286,8 @@ drawer_resize_drop_zone(PanelWidget *panel)
 static void
 panel_widget_set_size(PanelWidget *panel, gint size)
 {
+	printf("set_size size: %d\n",size);
+	
 	if(size == 0)
 		size = panel->size;
 	switch(panel->snapped) {
@@ -341,11 +343,12 @@ panel_widget_pack_applets(PanelWidget *panel)
 	gint i;
 	gint x;
 
-	for(i=0,x=0;i<PANEL_MAX;i++) {
-		panel->applets[x].applet = panel->applets[i].applet;
-		panel->applets[x].cells = panel->applets[i].cells;
-		if(panel->applets[i].applet!=NULL)
+	for(i=0,x=0;i<panel->size;i++) {
+		if(panel->applets[i].applet!=NULL) {
+			panel->applets[x].applet = panel->applets[i].applet;
+			panel->applets[x].cells = panel->applets[i].cells;
 			x++;
+		}
 	}
 	panel->size = x;
 	for(;x<PANEL_MAX;x++) {
@@ -354,7 +357,6 @@ panel_widget_pack_applets(PanelWidget *panel)
 	}
 	for(i=0;i<panel->size;i+=panel->applets[i].cells)
 		panel_widget_applet_put(panel,i);
-	panel_widget_set_size(panel,panel->size);
 }
 
 
@@ -1518,7 +1520,8 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 			    		PANEL_WIDGET(list->data);
 
 			    	if(panel != new_panel &&
-			    	   panel_widget_is_cursor(new_panel,20) &&
+			    	   panel_widget_is_cursor(new_panel,
+					panel->snapped==PANEL_DRAWER?20:0) &&
 				   new_panel != assoc) {
 					pos = panel_widget_get_moveby(panel,0);
 					panel_widget_reparent(panel,
@@ -1851,13 +1854,14 @@ panel_widget_reparent (PanelWidget *old_panel,
 	/*reparent applet*/
 	gtk_widget_reparent(applet,new_panel->fixed);
 
+	if(old_panel->snapped==PANEL_DRAWER)
+		panel_widget_pack_applets(old_panel);
+
 	/*this will trigger size_allocate of all applets and thus the
 	  panel will again be set to the largest thickness*/
 	old_panel->thick = PANEL_MINIMUM_WIDTH;
 	panel_widget_set_size(old_panel,old_panel->size);
-
-	if(old_panel->snapped==PANEL_DRAWER)
-		panel_widget_pack_applets(old_panel);
+	//gtk_widget_queue_resize(GTK_WIDGET(old_panel));
 
 	/*it will get moved to the right position on size_allocate*/
 	gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,0,0);
@@ -1876,6 +1880,12 @@ panel_widget_reparent (PanelWidget *old_panel,
 			panel_widget_signals[APPLET_ADDED_SIGNAL],
 			applet);
 
+	/*if(old_panel->snapped==PANEL_DRAWER) {
+		puts("HERE");
+		gtk_widget_set_usize(GTK_WIDGET(old_panel),
+				     old_panel->thick+1,
+				     old_panel->size*PANEL_CELL_SIZE-1);
+	}*/
 	return pos;
 }
 
@@ -1947,13 +1957,13 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	/*remove applet*/
 	gtk_container_remove(GTK_CONTAINER(panel->fixed),applet);
 
+	if(panel->snapped==PANEL_DRAWER)
+		panel_widget_pack_applets(panel);
+
 	/*this will trigger size_Allocate of all applets and thus the
 	  panel will again be set to the largest thickness*/
 	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel_widget_set_size(panel,panel->size);
-
-	if(panel->snapped==PANEL_DRAWER)
-		panel_widget_pack_applets(panel);
 
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[APPLET_REMOVED_SIGNAL]);

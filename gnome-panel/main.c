@@ -423,6 +423,9 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	g_return_val_if_fail(info != NULL, FALSE);
 	g_return_val_if_fail(ai != NULL, FALSE);
 
+	ai->info = info;
+	ai->panel = panel;
+
 	gtk_idle_add(panel_applet_added_idle,ai);
 
 	return TRUE;
