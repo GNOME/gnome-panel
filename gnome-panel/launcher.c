@@ -257,6 +257,12 @@ free_launcher (gpointer data)
 		gnome_desktop_item_unref (launcher->revert_ditem);
 	launcher->revert_ditem = NULL;
 
+	g_free (launcher->old_icon_item);
+	launcher->old_icon_item = NULL;
+
+	g_free (launcher->old_icon_full_path);
+	launcher->old_icon_full_path = NULL;
+
 	g_free (launcher);
 }
 
@@ -540,6 +546,7 @@ static void
 properties_apply (Launcher *launcher)
 {
 	char *location;
+	const char *newicon;
 
 	/* save location */
 	location = g_strdup (gnome_desktop_item_get_location (launcher->ditem));
@@ -549,6 +556,40 @@ properties_apply (Launcher *launcher)
 	launcher->ditem =
 		gnome_ditem_edit_get_ditem (GNOME_DITEM_EDIT (launcher->dedit));
 	launcher->ditem = gnome_desktop_item_copy (launcher->ditem);
+
+	newicon = gnome_desktop_item_get_string (launcher->ditem,
+						 GNOME_DESKTOP_ITEM_ICON);
+	if (newicon != NULL &&
+	    launcher->old_icon_full_path != NULL &&
+	    strcmp (newicon, launcher->old_icon_full_path) == 0) {
+		/* if icon has not changed, the user twiddled it but
+		 * left the same path, then use the old icon entry,
+		 * which was likely a basename rather then a full path
+		 * which is then themable */
+		gnome_desktop_item_set_string (launcher->ditem,
+					       GNOME_DESKTOP_ITEM_ICON,
+					       launcher->old_icon_item);
+	} else if (newicon != NULL &&
+		   g_path_is_absolute (newicon) &&
+		   launcher->old_icon_full_path != NULL &&
+		   launcher->old_icon_item != NULL &&
+		   ! g_path_is_absolute (launcher->old_icon_item)) {
+		/* another hack.   If the old icon is a basename (and thus
+		 * themed) and if the dirname is the same, then we picked from
+		 * the same directory which means that we want to just use
+		 * the basename really. */
+		char *new_dirname = g_path_get_dirname (newicon);
+		char *old_dirname = g_path_get_dirname (launcher->old_icon_full_path);
+		if (strcmp (new_dirname, old_dirname) == 0) {
+			char *icon = g_path_get_basename (newicon);
+			gnome_desktop_item_set_string (launcher->ditem,
+						       GNOME_DESKTOP_ITEM_ICON,
+						       icon);
+			g_free (icon);
+		}
+		g_free (new_dirname);
+		g_free (old_dirname);
+	}
 
 	/* restore location */
 	gnome_desktop_item_set_location (launcher->ditem, location);
@@ -573,6 +614,12 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 	if (launcher->revert_ditem != NULL)
 		gnome_desktop_item_unref (launcher->revert_ditem);
 	launcher->revert_ditem = NULL;
+
+	g_free (launcher->old_icon_item);
+	launcher->old_icon_item = NULL;
+
+	g_free (launcher->old_icon_full_path);
+	launcher->old_icon_full_path = NULL;
 }
 
 static void
@@ -610,6 +657,9 @@ window_response (GtkWidget *w, int response, gpointer data)
 		if (launcher->ditem != NULL)
 			gnome_desktop_item_unref (launcher->ditem);
 		launcher->ditem = gnome_desktop_item_copy (launcher->revert_ditem);
+		gnome_desktop_item_set_string (launcher->ditem,
+					       GNOME_DESKTOP_ITEM_ICON,
+					       launcher->old_icon_item);
 
 		/* We want to ignore the "changed" signal first */ 
 		g_signal_handlers_disconnect_by_func (
@@ -624,10 +674,14 @@ window_response (GtkWidget *w, int response, gpointer data)
 		 * signal again
 		 */
 		g_signal_connect (G_OBJECT (launcher->dedit), "changed",
-				    G_CALLBACK (launcher_changed),
-				    launcher);
+				  G_CALLBACK (launcher_changed),
+				  launcher);
 
-		properties_apply (launcher);
+		/* resave launcher */
+		launcher_save (launcher);
+
+		/* Setup the button look */
+		setup_button (launcher);
 
 	} else {
 		gtk_widget_destroy (w);
@@ -673,8 +727,22 @@ create_properties_dialog (Launcher  *launcher,
 		gnome_desktop_item_unref (launcher->revert_ditem);
 	launcher->revert_ditem = gnome_desktop_item_copy (launcher->ditem);
 
+	/* make sure the icon is according to the theme */
+	/* FIXME: Hack, should be handled by the ditem editor! */
+	g_free (launcher->old_icon_item);
+	g_free (launcher->old_icon_full_path);
+	launcher->old_icon_item =
+		g_strdup (gnome_desktop_item_get_string (launcher->revert_ditem,
+							 GNOME_DESKTOP_ITEM_ICON));
+	launcher->old_icon_full_path =
+		gnome_desktop_item_get_icon (launcher->revert_ditem,
+					     panel_icon_theme);
+	gnome_desktop_item_set_string (launcher->revert_ditem,
+				       GNOME_DESKTOP_ITEM_ICON,
+				       launcher->old_icon_full_path);
+
 	gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (launcher->dedit),
-				    launcher->ditem);
+				    launcher->revert_ditem);
 
 	g_signal_connect (launcher->dedit, "changed",
 			  G_CALLBACK (launcher_changed),
@@ -936,31 +1004,6 @@ ask_about_launcher (const char  *file,
 	gnome_ditem_edit_grab_focus (dee);
 }
 
-static void
-ditem_set_icon (GnomeDesktopItem *ditem, const char *icon)
-{
-	if (icon != NULL &&
-	    icon[0] != G_DIR_SEPARATOR) {
-		char *full = gnome_desktop_item_find_icon (panel_icon_theme,
-							   icon,
-							   48 /* desired size */,
-							   0 /* flags */);
-		if (full != NULL) {
-			gnome_desktop_item_set_string (ditem,
-						       GNOME_DESKTOP_ITEM_ICON,
-						       full);
-			g_free (full);
-		} else {
-			gnome_desktop_item_set_string (ditem,
-						       GNOME_DESKTOP_ITEM_ICON,
-						       icon);
-		}
-	} else {
-		gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_ICON,
-					       icon);
-	}
-}
-
 void
 panel_launcher_create_from_info (PanelToplevel *toplevel,
 				 int            position,
@@ -982,7 +1025,7 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 	gnome_desktop_item_set_localestring (ditem, GNOME_DESKTOP_ITEM_NAME, name);
 	gnome_desktop_item_set_localestring (ditem, GNOME_DESKTOP_ITEM_COMMENT, comment);
 
-	ditem_set_icon (ditem, icon);
+	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_ICON, icon);
 
 	if (exec_info) {
 		gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_EXEC, exec_or_uri);

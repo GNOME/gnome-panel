@@ -22,6 +22,7 @@
 
 static GdkPixbuf *button_load_pixbuf (const char  *file,
 				      char       **error);
+static GdkPixbuf * get_missing (int preffered_size);
 
 enum {
 	PROP_0,
@@ -248,19 +249,14 @@ button_widget_load_pixbuf_and_scale (ButtonWidget *button)
 	int    width;
 	int    height;
 
-	if (!button->pixbuf) {
-		g_assert (!button->filename || !button->stock_id);
+	if (button->size <= 1)
+		return;
 
+	if (button->pixbuf == NULL) {
 		if (!button->filename && !button->stock_id)
 			return;
 
-		if (button->stock_id)
-			button->pixbuf = gtk_widget_render_icon (
-						GTK_WIDGET (button),
-						button->stock_id,
-						(GtkIconSize) -1,
-						NULL);
-		else {
+		if (button->filename != NULL) {
 			char *error = NULL;
 
 			button->pixbuf = button_load_pixbuf (button->filename, &error);
@@ -275,12 +271,23 @@ button_widget_load_pixbuf_and_scale (ButtonWidget *button)
 			}
 		}
 
+		if (button->pixbuf == NULL &&
+		    button->stock_id != NULL)
+			button->pixbuf = gtk_widget_render_icon (
+						GTK_WIDGET (button),
+						button->stock_id,
+						(GtkIconSize) -1,
+						NULL);
+
+/* FIXME: this should be based on the panel size */
+#define PREFERRED_SIZE 48
+		if (button->pixbuf == NULL)
+			button->pixbuf = get_missing (PREFERRED_SIZE);
+#undef PREFERRED_SIZE
+
 		if (!button->pixbuf)
 			return;
 	}
-
-	if (button->size <= 1)
-		return;
 
 	width  = gdk_pixbuf_get_width  (button->pixbuf);
 	height = gdk_pixbuf_get_height (button->pixbuf);
@@ -322,14 +329,14 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 static void
 button_widget_icon_theme_changed (ButtonWidget *button)
 {
-	if (!button->stock_id)
+	if (button->filename != NULL)
 		button_widget_reload_pixbuf (button);
 }
 
 static void
 button_widget_gtk_theme_changed (ButtonWidget *button)
 {
-	if (button->stock_id)
+	if (button->stock_id != NULL)
 		button_widget_reload_pixbuf (button);
 }
 
@@ -429,8 +436,8 @@ get_missing (int preffered_size)
 	GdkPixbuf *retval = NULL;
 
 	if (default_pixmap == NULL)
-		default_pixmap = panel_pixmap_discovery ("gnome-unknown.png",
-							 FALSE /* fallback */);
+		default_pixmap = gnome_desktop_item_find_icon (panel_icon_theme, "gnome-unknown.png",
+							       preffered_size, 0);
 	if (default_pixmap != NULL)
 		retval = gdk_pixbuf_new_from_file (default_pixmap,
 						   NULL);
@@ -449,7 +456,10 @@ load_pixbuf (const char  *file,
 	GdkPixbuf *retval = NULL;
 	char      *full;
 
-	full = gnome_desktop_item_find_icon (panel_icon_theme, file, preffered_size, 0);
+	if (g_path_is_absolute (file))
+		full = g_strdup (file);
+	else
+		full = gnome_desktop_item_find_icon (panel_icon_theme, file, preffered_size, 0);
 
 	if (full) {
 		retval = gdk_pixbuf_new_from_file (full, &error);
@@ -475,26 +485,25 @@ button_load_pixbuf (const char  *file,
 #define PREFERRED_SIZE 48
 
 	GdkPixbuf *retval = NULL;
-	char *tmp;
 
 	if (string_empty (file))
-		return get_missing (PREFERRED_SIZE);
+		return NULL;
 
-	tmp = g_path_get_basename (file);
-	retval = load_pixbuf (tmp, PREFERRED_SIZE, error);
-	g_free (tmp);
+	if (g_path_is_absolute (file))
+		retval = load_pixbuf (file, PREFERRED_SIZE, error);
 
-	if (!retval && g_path_is_absolute (file)) {
+	if (retval == NULL) {
+		char *tmp;
+
 		if (error && *error) {
 			g_free (*error);
 			*error = NULL;
 		}
 
-		retval = load_pixbuf (file, PREFERRED_SIZE, error);
+		tmp = g_path_get_basename (file);
+		retval = load_pixbuf (tmp, PREFERRED_SIZE, error);
+		g_free (tmp);
 	}
-
-	if (!retval)
-		retval = get_missing (PREFERRED_SIZE);
 
 	return retval;
 
@@ -932,14 +941,8 @@ button_widget_set_icon_name (ButtonWidget *button,
 {
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
 
-	g_assert (!button->filename || !button->stock_id);
-
 	if (button->filename && icon_name && !strcmp (button->filename, icon_name))
 		return;
-
-	if (button->stock_id)
-		g_free (button->stock_id);
-	button->stock_id = NULL;
 
 	if (button->filename)
 		g_free (button->filename);
@@ -964,14 +967,8 @@ button_widget_set_stock_id (ButtonWidget *button,
 {
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
 	
-	g_assert (!button->filename || !button->stock_id);
-
 	if (button->stock_id && stock_id && !strcmp (button->stock_id, stock_id))
 		return;
-
-	if (button->filename)
-		g_free (button->filename);
-	button->filename = NULL;
 
 	if (button->stock_id)
 		g_free (button->stock_id);

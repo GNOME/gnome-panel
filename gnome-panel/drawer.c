@@ -320,11 +320,15 @@ create_drawer_applet (PanelToplevel    *toplevel,
 	
 	drawer = g_new0 (Drawer, 1);
 
-	if (!use_custom_icon || !custom_icon || !custom_icon [0])
+	if (!use_custom_icon || !custom_icon || !custom_icon [0]) {
 		drawer->button = button_widget_new_from_stock (PANEL_STOCK_DRAWER,
 							       TRUE, orientation);
-	else
+	} else {
 		drawer->button = button_widget_new (custom_icon, TRUE, orientation);
+		/* make sure there is a backup stock id */
+		button_widget_set_stock_id (BUTTON_WIDGET (drawer->button),
+					    PANEL_STOCK_DRAWER);
+	}
 
 	if (!drawer->button) {
 		g_free (drawer);
@@ -443,10 +447,7 @@ panel_drawer_use_custom_icon_changed (GConfClient *client,
 		custom_icon = gconf_client_get_string (client, key, NULL);
 	}
 
-	if (custom_icon && custom_icon [0])
-		button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
-	else
-		button_widget_set_stock_id (BUTTON_WIDGET (drawer->button), PANEL_STOCK_DRAWER);
+	button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
 
 	g_free (custom_icon);
 }
@@ -474,10 +475,7 @@ panel_drawer_custom_icon_changed (GConfClient *client,
 		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "use_custom_icon");
 		use_custom_icon = gconf_client_get_bool (client, key, NULL);
 		
-		if (use_custom_icon)
-			button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
-		else
-			button_widget_set_stock_id (BUTTON_WIDGET (drawer->button), PANEL_STOCK_DRAWER);
+		button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
 	}
 }
 

@@ -26,6 +26,9 @@ typedef struct {
 	GtkWidget	  *dedit;
 	GnomeDesktopItem *ditem;
 	GnomeDesktopItem *revert_ditem;
+	/* used for editting icon hack to work with themes */
+	char             *old_icon_item;
+	char             *old_icon_full_path;
 
 	GtkWidget         *prop_dialog;
 

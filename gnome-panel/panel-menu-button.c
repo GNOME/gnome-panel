@@ -609,7 +609,7 @@ panel_menu_button_get_icon_for_menu_path (PanelMenuButton *button)
 	if (!item)
 		return NULL;
                                                                                                              
-	retval = gnome_desktop_item_find_icon (panel_icon_theme, item->icon, 20, 0);
+	retval = g_strdup (item->icon);
                                                                                                              
 	quick_desktop_item_destroy (item);
 
@@ -622,15 +622,14 @@ panel_menu_button_set_icon (PanelMenuButton *button)
 	char *icon_path = NULL;
 
 	if (button->priv->use_custom_icon)
-		icon_path = button->priv->custom_icon;
+		icon_path = g_strdup (button->priv->custom_icon);
 
 	if (!icon_path)
 		icon_path = panel_menu_button_get_icon_for_menu_path (button);
 
-	if (icon_path)
-		button_widget_set_icon_name (BUTTON_WIDGET (button), icon_path);
-	else
-		button_widget_set_stock_id (BUTTON_WIDGET (button), PANEL_STOCK_MAIN_MENU);
+	button_widget_set_icon_name (BUTTON_WIDGET (button), icon_path);
+
+	g_free (icon_path);
 }
                                                                                                              
 void

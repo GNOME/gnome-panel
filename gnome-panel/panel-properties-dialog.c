@@ -35,6 +35,7 @@
 #include "panel-profile.h"
 #include "panel-gconf.h"
 #include "panel-util.h"
+#include "panel-globals.h"
 
 typedef struct {
 	PanelToplevel *toplevel;
@@ -75,6 +76,10 @@ typedef struct {
 
 	guint          toplevel_notify;
 	guint          background_notify;
+
+	/* Hack: if we find this icon_dirname, then we remove it
+	   because it must be themed */
+	char          *icon_dirname;
 } PanelPropertiesDialog;
 
 static GQuark panel_properties_dialog_quark = 0;
@@ -97,6 +102,9 @@ panel_properties_dialog_free (PanelPropertiesDialog *dialog)
 	if (dialog->properties_dialog)
 		gtk_widget_destroy (dialog->properties_dialog);
 	dialog->properties_dialog = NULL;
+
+	g_free (dialog->icon_dirname);
+	dialog->icon_dirname = NULL;
 
 	g_free (dialog);
 }
@@ -288,8 +296,26 @@ static void
 panel_properties_dialog_icon_changed (PanelPropertiesDialog *dialog,
 				      GnomeIconEntry        *entry)
 {
-	panel_profile_set_attached_custom_icon (dialog->toplevel,
-						gnome_icon_entry_get_filename (entry));
+	const char *icon = gnome_icon_entry_get_filename (entry);
+	/* Hack:  If the icon dirname is the same as the one we got
+	   from the theme, then don't include that dirname in
+	   the path of the icon and just use the basename since
+	   that icon was from a theme */
+	if (dialog->icon_dirname != NULL &&
+	    icon != NULL &&
+	    g_path_is_absolute (icon)) {
+		char *dir = g_path_get_dirname (icon);
+		if (strcmp (dir, dialog->icon_dirname) == 0) {
+			char *base = g_path_get_basename (icon);
+			panel_profile_set_attached_custom_icon (dialog->toplevel, base);
+			g_free (base);
+		} else {
+			panel_profile_set_attached_custom_icon (dialog->toplevel, icon);
+		}
+		g_free (dir);
+	} else {
+		panel_profile_set_attached_custom_icon (dialog->toplevel, icon);
+	}
 }
 
 static void
@@ -307,9 +333,32 @@ panel_properties_dialog_setup_icon_entry (PanelPropertiesDialog *dialog,
 	dialog->icon_label = glade_xml_get_widget (gui, "icon_label");
 	g_return_if_fail (dialog->icon_label != NULL);
 
+	dialog->icon_dirname = NULL;
 	custom_icon = panel_profile_get_attached_custom_icon (dialog->toplevel);
-	gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), custom_icon);
-	g_free (custom_icon);
+	if (custom_icon != NULL) {
+		if ( ! g_path_is_absolute (custom_icon)) {
+			/* Hack: if the icon is from a theme store the icon's
+			 * dirname and if the user didn't change this whack it
+			 * from the new path */
+			char *icon = gnome_desktop_item_find_icon (panel_icon_theme,
+								   custom_icon,
+								   48 /* FIXME: preffered_size */,
+								   0 /* flags */);
+			if (icon != NULL) {
+				dialog->icon_dirname = g_path_get_dirname (icon);
+				gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), icon);
+				g_free (icon);
+			} else {
+				/* FIXME: what to do if we can't find this */
+				gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), custom_icon);
+			}
+		} else {
+			gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), custom_icon);
+		}
+		g_free (custom_icon);
+	} else {
+		gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), NULL);
+	}
 
 	g_signal_connect_swapped (dialog->icon_entry, "changed",
 				  G_CALLBACK (panel_properties_dialog_icon_changed), dialog);
@@ -858,7 +907,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 {
 	PanelPropertiesDialog *dialog;
 
-	dialog = g_new (PanelPropertiesDialog, 1);
+	dialog = g_new0 (PanelPropertiesDialog, 1);
 
 	g_object_set_qdata_full (G_OBJECT (toplevel),
 				 panel_properties_dialog_quark,

@@ -22,7 +22,8 @@ struct _ButtonWidget {
 	GdkPixbuf        *scaled;
 	GdkPixbuf        *scaled_hc;
 
-	/* Invariant: assert (!filename || !stock_id) */
+	/* if filename doesn't lead to a findable icon,
+	   try stock_id */
 	char             *filename;
 	char             *stock_id;
 

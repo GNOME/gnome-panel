@@ -1,3 +1,29 @@
+Fri Aug 01 18:00:51 2003  George Lebl <jirka@5z.com>
+
+	Changes to fix bugs: rh #101304, gnome #116586
+
+	* button-widget.[ch], drawer.c, launcher.c, panel-menu-button.c:
+	  The button-widget now can have both stock id and a filename set,
+	  using the stock id in case the filename is not found, makes the
+	  missing icon logic much simpler and don't need to look up icons
+	  everywhere.
+
+	* button-widget.c, drawer.c, launcher.c, panel-menu-button.c:
+	  don't resolve the icon names if not needed (and it's not needed
+	  for button-widget).  Only lookup the icon in the theme by
+	  basename if the icon is not an absolute pathname (or as a backup).
+
+	* panel-properties-dialog.c, launcher.[ch]: When letting the user
+	  change the icon resolve the icon name against the current theme,
+	  then if the user picked an icon in the same directory as the 
+	  resolved icon, assume that we really want the themed icon so only
+	  store the basename, otherwise store the full path.
+
+	* panel-profile.c: make sure not to call a gconf set_string with
+	  a NULL argument as gconf would complain
+
+	* panel-menu-button.c: fix minor memleak
+
 Fri Aug 01 15:37:02 2003  George Lebl <jirka@5z.com>
 
 	* panel-menu-bar.c: catch and intercept all button_press_events on

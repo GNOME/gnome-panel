@@ -35,6 +35,7 @@
 #include "panel-gconf.h"
 #include "panel.h"
 #include "panel-widget.h"
+#include "panel-util.h"
 
 typedef struct {
 	GdkScreen       *screen;
@@ -666,7 +667,7 @@ panel_profile_set_attached_custom_icon (PanelToplevel *toplevel,
 
 	key = panel_profile_get_attached_object_key (toplevel, "custom_icon");
 	if (key)
-		gconf_client_set_string (client, key, custom_icon, NULL);
+		gconf_client_set_string (client, key, sure_string (custom_icon), NULL);
 }
 
 char *
