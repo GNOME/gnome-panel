@@ -20,14 +20,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-29 20:35+0100\n"
-"PO-Revision-Date: 2004-11-29 20:35+0100\n"
+"POT-Creation-Date: 2004-12-04 13:02+0100\n"
+"PO-Revision-Date: 2004-12-04 13:03+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
+"X-Generator: KBabel 1.9.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
@@ -60,7 +60,7 @@ msgstr "A_cerca de"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:605 gnome-panel/menu.c:1647
-#: gnome-panel/panel-action-button.c:675 gnome-panel/panel-menu-bar.c:313
+#: gnome-panel/panel-action-button.c:675 gnome-panel/panel-menu-bar.c:331
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "A_yuda"
@@ -198,7 +198,7 @@ msgid "Custom format"
 msgstr "Formato personalizado"
 
 #: applets/clock/clock.c:2375 applets/clock/clock.c:2552
-#: applets/fish/fish.c:137 applets/notification_area/main.c:83
+#: applets/fish/fish.c:137 applets/notification_area/main.c:81
 #: applets/wncklet/showdesktop.c:436 applets/wncklet/window-list.c:114
 #: applets/wncklet/window-list.c:780 applets/wncklet/window-menu.c:88
 #: applets/wncklet/workspace-switcher.c:202
@@ -249,7 +249,7 @@ msgstr "Usar _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2584 applets/fish/fish.c:480
-#: applets/notification_area/main.c:117 applets/wncklet/showdesktop.c:466
+#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:466
 #: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
 #: applets/wncklet/workspace-switcher.c:539 gnome-panel/menu.c:164
 msgid "translator-credits"
@@ -653,7 +653,7 @@ msgstr "Orientación"
 msgid "The orientation of the tray."
 msgstr "La orientación del panel de notificación."
 
-#: applets/notification_area/main.c:130 applets/notification_area/main.c:358
+#: applets/notification_area/main.c:128 applets/notification_area/main.c:341
 msgid "Panel Notification Area"
 msgstr "Área del panel de notificación"
 
@@ -1008,7 +1008,7 @@ msgid "GNOME Panel Shell"
 msgstr "Shell del panel de GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:101
-#: gnome-panel/applet.c:460 gnome-panel/panel-applet-frame.c:113
+#: gnome-panel/applet.c:460 gnome-panel/panel-applet-frame.c:130
 msgid "_Lock"
 msgstr "B_loquear"
 
@@ -1021,7 +1021,7 @@ msgid "_Remove From Panel"
 msgstr "_Quitar del panel"
 
 #: gnome-panel/applet.c:101 gnome-panel/applet.c:460
-#: gnome-panel/panel-applet-frame.c:113
+#: gnome-panel/panel-applet-frame.c:130
 msgid "Un_lock"
 msgstr "De_sbloquear"
 
@@ -1051,7 +1051,7 @@ msgstr "archivo no encontrado"
 msgid "Drawer"
 msgstr "Cajón"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:820 gnome-panel/menu.c:1597
+#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:822 gnome-panel/menu.c:1597
 #: gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "_Propiedades"
@@ -1064,8 +1064,8 @@ msgstr "Crea un archivo nuevo en el directorio dado"
 msgid "Cannot save launcher to disk"
 msgstr "No se puede guardar el lanzador en el disco"
 
-#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:213
-#: gnome-panel/launcher.c:258
+#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:215
+#: gnome-panel/launcher.c:260
 msgid "Cannot launch icon"
 msgstr "No se puede lanzar el icono"
 
@@ -1073,49 +1073,49 @@ msgstr "No se puede lanzar el icono"
 msgid "This launch icon does not specify a url to show."
 msgstr "Este icono de lanzamiento no especifica qué URL mostrar."
 
-#: gnome-panel/launcher.c:177
+#: gnome-panel/launcher.c:178
 #, c-format
 msgid "Cannot show %s"
 msgstr "No se puede mostrar %s"
 
-#: gnome-panel/launcher.c:452
+#: gnome-panel/launcher.c:454
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "No se proporcionó una URI para el archivo de escritorio del lanzador del "
 "panel\n"
 
-#: gnome-panel/launcher.c:466
+#: gnome-panel/launcher.c:468
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "No se puede abrir el archivo de escritorio %s para el lanzador del panel%s%"
 "s\n"
 
-#: gnome-panel/launcher.c:708 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:710 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Propiedades del lanzador"
 
-#: gnome-panel/launcher.c:891
+#: gnome-panel/launcher.c:893
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "La clave %s no está definida, no se puede cargar el lanzador\n"
 
-#: gnome-panel/launcher.c:945 gnome-panel/launcher.c:962
+#: gnome-panel/launcher.c:948 gnome-panel/launcher.c:966
 #: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
 #: gnome-panel/menu-ditem.c:535
 msgid "Cannot create launcher"
 msgstr "No se puede crear el lanzador"
 
-#: gnome-panel/launcher.c:946 gnome-panel/menu-ditem.c:463
+#: gnome-panel/launcher.c:949 gnome-panel/menu-ditem.c:463
 msgid "You have to specify a name."
 msgstr "Tiene que especificar un nombre."
 
-#: gnome-panel/launcher.c:963 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:967 gnome-panel/menu-ditem.c:480
 msgid "You have to specify a valid URL or command."
 msgstr "Tiene que especificar un URL válido o un comando."
 
-#: gnome-panel/launcher.c:1006 gnome-panel/menu-ditem.c:543
+#: gnome-panel/launcher.c:1010 gnome-panel/menu-ditem.c:543
 msgid "Create Launcher"
 msgstr "Crear lanzador"
 
@@ -1157,7 +1157,7 @@ msgstr ""
 "miniaplicaciones dentro de sí mismo."
 
 #: gnome-panel/menu.c:212 gnome-panel/panel-action-button.c:201
-#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:539
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:542
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "No se puede ejecutar «%s»"
@@ -1223,7 +1223,7 @@ msgstr "_Acerca de los paneles"
 msgid "About _GNOME"
 msgstr "Acerca de _Gnome"
 
-#: gnome-panel/menu.c:1749 gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/menu.c:1749 gnome-panel/panel-menu-bar.c:223
 msgid "Applications"
 msgstr "Aplicaciones"
 
@@ -1358,59 +1358,48 @@ msgstr "Seleccione un _elemento para añadirlo a %s:"
 msgid "Select an _item to add to the panel:"
 msgstr "Seleccione un _elemento para añadirlo al panel:"
 
-#: gnome-panel/panel-applet-frame.c:752
+#: gnome-panel/panel-applet-frame.c:766
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Excepción de popup_menu «%s»\n"
 
-#: gnome-panel/panel-applet-frame.c:871
+#: gnome-panel/panel-applet-frame.c:885
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "«%s» ha terminado de forma inesperada"
 
-#: gnome-panel/panel-applet-frame.c:873
+#: gnome-panel/panel-applet-frame.c:887
 msgid "Panel object has quit unexpectedly"
 msgstr "El objeto del panel ha terminado de forma inesperada"
 
-#: gnome-panel/panel-applet-frame.c:880
+#: gnome-panel/panel-applet-frame.c:894
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Si recarga un objeto del panel, se añadirá automáticamente otra vez al panel."
 
-#: gnome-panel/panel-applet-frame.c:886
+#: gnome-panel/panel-applet-frame.c:900
 msgid "_Don't Reload"
 msgstr "_No recargar"
 
-#: gnome-panel/panel-applet-frame.c:887
+#: gnome-panel/panel-applet-frame.c:901
 msgid "_Reload"
 msgstr "_Recargar"
 
-#: gnome-panel/panel-applet-frame.c:913
+#: gnome-panel/panel-applet-frame.c:927
 msgid "D_on't Delete"
 msgstr "_No borrar"
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:975
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "El panel ha encontrado un problema mientras cargaba «%s»."
 
-#: gnome-panel/panel-applet-frame.c:954 gnome-panel/panel-util.c:251
-#, c-format
-msgid "Details: %s"
-msgstr "Detalles: %s"
+#: gnome-panel/panel-applet-frame.c:992
+msgid "Do you want to delete the applet from your configuration?"
+msgstr "¿Desea borrar la miniaplicación de su configuración?"
 
-#: gnome-panel/panel-applet-frame.c:964 gnome-panel/panel-applet-frame.c:977
-msgid ""
-"\n"
-"\n"
-"Do you want to delete the applet from your configuration?"
-msgstr ""
-"\n"
-"\n"
-"¿Desea borrar la miniaplicación de su configuración?"
-
-#: gnome-panel/panel-applet-frame.c:1085
+#: gnome-panel/panel-applet-frame.c:1089
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "No se puede obtener la interfaz AppletShell del control\n"
 
@@ -1685,7 +1674,7 @@ msgstr "Capturar la pantalla"
 msgid "Take window screenshot"
 msgstr "Captura una imagen de una ventana"
 
-#: gnome-panel/panel-menu-bar.c:173
+#: gnome-panel/panel-menu-bar.c:232
 msgid "Actions"
 msgstr "Acciones"
 
@@ -1999,20 +1988,20 @@ msgstr "Mosa_ico"
 msgid "Couldn't find a suitable application"
 msgstr "No se puede encontrar una aplicación adecuada"
 
-#: gnome-panel/panel-recent.c:93 gnome-panel/panel-recent.c:100
+#: gnome-panel/panel-recent.c:93 gnome-panel/panel-recent.c:101
 msgid "Cannot open recently used document"
 msgstr "No se puede abrir el documento usado recientemente"
 
-#: gnome-panel/panel-recent.c:101
+#: gnome-panel/panel-recent.c:102
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Ocurrió un error desconocido al intentar abrir %s"
 
-#: gnome-panel/panel-recent.c:154
+#: gnome-panel/panel-recent.c:155
 msgid "Clear the Recent Documents list?"
 msgstr "¿Desea vaciar la lista de documentos recientes?"
 
-#: gnome-panel/panel-recent.c:156
+#: gnome-panel/panel-recent.c:157
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
@@ -2027,20 +2016,20 @@ msgstr ""
 "aplicaciones."
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-recent.c:199
+#: gnome-panel/panel-recent.c:200
 #, c-format
 msgid "Open '%s'"
 msgstr "Abrir «%s»"
 
-#: gnome-panel/panel-recent.c:220
+#: gnome-panel/panel-recent.c:221
 msgid "Recent Documents"
 msgstr "Documentos recientes"
 
-#: gnome-panel/panel-recent.c:249
+#: gnome-panel/panel-recent.c:250
 msgid "Clear Recent Documents"
 msgstr "Vaciar documentos recientes"
 
-#: gnome-panel/panel-recent.c:253
+#: gnome-panel/panel-recent.c:254
 msgid "Clear all items from the recent documents list"
 msgstr "Vaciar todos los elementos de la lista de documentos recientes"
 
@@ -2063,14 +2052,19 @@ msgstr "No se puede convertir «%s» desde UTF-8"
 msgid "Choose a file to append to the command..."
 msgstr "Seleccione un archivo para agregar al comando…"
 
-#: gnome-panel/panel-run-dialog.c:1366
+#: gnome-panel/panel-run-dialog.c:1365
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Se ejecutará el comando: «%s»"
 
-#: gnome-panel/panel-run-dialog.c:1372 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1371 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Seleccione una aplicación para ver su descripción."
+
+#: gnome-panel/panel-run-dialog.c:1406
+#, c-format
+msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
+msgstr "La lista de URIs que cae del diálogo de ejecución tiene un formato erróneo (%d) o una longitud errónea (%d)\n"
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
@@ -2572,16 +2566,21 @@ msgstr "El monitor Xinerama donde se muestra el panel"
 msgid "Y co-ordinate of panel"
 msgstr "Coordenada Y del panel"
 
-#: gnome-panel/panel-util.c:62
+#: gnome-panel/panel-util.c:63
 msgid "Cannot display help document"
 msgstr "No se puede mostrar el documento de ayuda"
 
-#: gnome-panel/panel.c:451
+#: gnome-panel/panel-util.c:253
+#, c-format
+msgid "Details: %s"
+msgstr "Detalles: %s"
+
+#: gnome-panel/panel.c:452
 #, c-format
 msgid "Open URL: %s"
 msgstr "Abrir URL: %s"
 
-#: gnome-panel/panel.c:1205
+#: gnome-panel/panel.c:1211
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost. Delete this drawer?"
@@ -2589,11 +2588,11 @@ msgstr ""
 "Cuando se borra un cajón, el cajón y sus valores de\n"
 "preferencias se pierden. ¿Desea borrar este cajón?"
 
-#: gnome-panel/panel.c:1207
+#: gnome-panel/panel.c:1213
 msgid "Delete Drawer"
 msgstr "Borrar cajón"
 
-#: gnome-panel/panel.c:1209
+#: gnome-panel/panel.c:1215
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost. Delete this panel?"
@@ -2601,7 +2600,7 @@ msgstr ""
 "Cuando se borra un panel, el panel y los valores de sus\n"
 "preferencias se pierden. ¿Desea borrar este panel?"
 
-#: gnome-panel/panel.c:1211
+#: gnome-panel/panel.c:1217
 msgid "Delete Panel"
 msgstr "Borrar panel"
 
