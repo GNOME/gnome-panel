@@ -191,7 +191,7 @@ hints_DATA = panel.hints
 sysdir = $(datadir)/control-center/Desktop/
 sys_DATA = gnome-panel-properties.desktop
 
-deskdir = $(datadir)/gnome/apps/Settings/Desktop/
+deskdir = $(datadir)/applications
 desk_DATA = gnome-panel-properties.desktop
 
 panel_enum_headers =				\
