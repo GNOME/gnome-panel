@@ -428,6 +428,41 @@ kill_free_drawers (void)
 	}
 }
 
+static void
+do_the_roswell_check (void)
+{
+	GtkWidget *dialog;
+
+	/*
+	 * Even if this warning sounds funny - do NOT turn this
+	 * startup protection off unless you know exactly what
+	 * you're doing - you have been warned.
+	 */
+
+	if (g_getenv ("GNOME_WATCHED_ROSWELL_IN_TV"))
+	    return;
+
+	dialog = gtk_message_dialog_new
+	    (NULL, 0, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+	     "Hi there,\n\n"
+	     "I'm the GNOME 2 version of the panel.\n\n"
+	     "Unfortunately, I'm still very unstable and clumsy - and most\n"
+	     "likely I'll ruin your whole desktop if you try to run me.\n\n"
+	     "However, as a well-behaving child I'm following my creator's\n"
+	     "advice and won't go anywhere without his guidance.\n\n"
+	     "So, I suggest you just lean back in your chair, have a cool\n"
+	     "Koelsch and watch Roswell in your TV, it's really a cool\n"
+	     "series :-)\n\n"
+	     "Hopefully I will be grown-up soon and I promise - we'll still\n"
+	     "have a lot of fun ....");
+
+	gtk_dialog_run (GTK_DIALOG (dialog));
+
+	gtk_widget_destroy (dialog);
+
+	exit (0);
+}
+
 int
 main(int argc, char **argv)
 {
@@ -439,6 +474,9 @@ main(int argc, char **argv)
 	textdomain (PACKAGE);
 
 	bonobo_ui_init ("panel", VERSION, &argc, argv);
+
+	do_the_roswell_check ();
+
 	orb = bonobo_orb ();
 #ifdef FIXME
 	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-panel.png");
