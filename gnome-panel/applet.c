@@ -86,7 +86,6 @@ panel_clean_applet(int applet_id)
 	if(info->menu)
 		gtk_widget_unref(info->menu);
 	info->menu=NULL;
-	info->remove_item = NULL;
 
 	info->data=NULL;
 
@@ -329,7 +328,6 @@ create_applet_menu(AppletInfo *info)
 			   (GtkSignalFunc) remove_applet_callback,
 			   GINT_TO_POINTER(info->applet_id));
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
-	info->remove_item = menuitem;
 	
 	menuitem = gtk_menu_item_new();
 	setup_menuitem(menuitem,NULL,_("Move applet"));
@@ -457,19 +455,6 @@ show_applet_menu(int applet_id, GdkEventButton *event)
 	if (!info->menu)
 		create_applet_menu(info);
 
-	if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		DrawerWidget *dw;
-		g_assert(drawer);
-		dw = DRAWER_WIDGET(drawer->drawer);
-		g_assert(dw);
-		if(panel_widget_get_applet_count(PANEL_WIDGET(dw->panel)) > 0)
-			gtk_widget_set_sensitive(info->remove_item,FALSE);
-		else
-			gtk_widget_set_sensitive(info->remove_item,TRUE);
-	} else
-	   	gtk_widget_set_sensitive(info->remove_item,TRUE);
-
 	if(IS_SNAPPED_WIDGET(panel)) {
 		SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
@@ -490,69 +475,6 @@ applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 	/*stop all button press events here so that they don't get to the
 	  panel*/
 	return TRUE;
-}
-
-static void
-panel_add_main_menu(GtkWidget *w, gpointer data)
-{
-	PanelWidget *panel = get_def_panel_widget(data);
-
-	load_menu_applet(NULL,0, 0, panel);
-}	
-
-GtkWidget *
-create_panel_root_menu(GtkWidget *panel)
-{
-	GtkWidget *menuitem;
-	GtkWidget *panel_menu;
-
-	panel_menu = gtk_menu_new();
-
-	menuitem = gtk_menu_item_new_with_label(_("This panel properties..."));
-	gtk_signal_connect_object(GTK_OBJECT(menuitem), "activate",
-				  GTK_SIGNAL_FUNC(panel_config),
-				  GTK_OBJECT(panel));
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-
-	menuitem = gtk_menu_item_new_with_label(_("Global properties..."));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   GTK_SIGNAL_FUNC(panel_config_global),
-			   NULL);
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-
-	menuitem = gtk_menu_item_new_with_label(_("Remove this panel"));
-	gtk_signal_connect_object(GTK_OBJECT(menuitem), "activate",
-				  GTK_SIGNAL_FUNC(gtk_widget_destroy),
-				  GTK_OBJECT(panel));
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-	gtk_object_set_data(GTK_OBJECT(panel),"remove_item",menuitem);
-
-	menuitem = gtk_menu_item_new();
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-
-	menuitem = gtk_menu_item_new_with_label(_("Add main menu applet"));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   GTK_SIGNAL_FUNC(panel_add_main_menu),
-			   panel);
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-
-	menuitem = gtk_menu_item_new();
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-	
-	menuitem = gtk_menu_item_new_with_label(_("Log out"));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   GTK_SIGNAL_FUNC(panel_quit),
-			   NULL);
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-
-	return panel_menu;
 }
 
 static int

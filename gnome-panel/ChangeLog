@@ -1,3 +1,16 @@
+Fri Jul 24 02:15:03 1998  George Lebl  <jirka@5z.com>
+
+	* applet.[ch],panel.[ch]: moved panel menu creation to panel.c
+
+	* applet.c,panel.c: allow removing of panel with some applets
+	  in it (this was there because desctruction was not handeled
+	  properly before, but it is ok now, it will remove all applets
+	  inside a panel/drawer)
+
+	* menu.c: changes to the "add to panel" code, a bit of cleanup,
+	  ability to add a clean root menu, ability to add drawers instead
+	  of just a menu
+
 Thu Jul 23 00:59:03 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c,applet.c: added better support for case by case session

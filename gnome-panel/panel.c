@@ -50,6 +50,70 @@ extern GlobalConfig global_config;
 /*a list of started extern applet child processes*/
 extern GList * children;
 
+static void
+panel_add_main_menu(GtkWidget *w, gpointer data)
+{
+	PanelWidget *panel = get_def_panel_widget(data);
+
+	load_menu_applet(NULL,0, 0, panel);
+}	
+
+GtkWidget *
+create_panel_root_menu(GtkWidget *panel)
+{
+	GtkWidget *menuitem;
+	GtkWidget *panel_menu;
+
+	panel_menu = gtk_menu_new();
+
+	menuitem = gtk_menu_item_new_with_label(_("This panel properties..."));
+	gtk_signal_connect_object(GTK_OBJECT(menuitem), "activate",
+				  GTK_SIGNAL_FUNC(panel_config),
+				  GTK_OBJECT(panel));
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	menuitem = gtk_menu_item_new_with_label(_("Global properties..."));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   GTK_SIGNAL_FUNC(panel_config_global),
+			   NULL);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	menuitem = gtk_menu_item_new_with_label(_("Remove this panel"));
+	gtk_signal_connect_object(GTK_OBJECT(menuitem), "activate",
+				  GTK_SIGNAL_FUNC(gtk_widget_destroy),
+				  GTK_OBJECT(panel));
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+	gtk_object_set_data(GTK_OBJECT(panel),"remove_item",menuitem);
+
+	menuitem = gtk_menu_item_new();
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	menuitem = gtk_menu_item_new_with_label(_("Add main menu applet"));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   GTK_SIGNAL_FUNC(panel_add_main_menu),
+			   panel);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	menuitem = gtk_menu_item_new();
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+	
+	menuitem = gtk_menu_item_new_with_label(_("Log out"));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   GTK_SIGNAL_FUNC(panel_quit),
+			   NULL);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	return panel_menu;
+}
+
+
 /*get the default panel widget if the panel has more then one or
   just get the that one*/
 PanelWidget *
@@ -797,43 +861,35 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 		case 3: /* fall through */
 		case 1:
 			if(!panel_applet_in_drag) {
-				if(IS_DRAWER_WIDGET(widget)) {
-					PanelWidget *panel =
-						PANEL_WIDGET(DRAWER_WIDGET(widget)->panel);
-					GtkWidget *rem = 
-						gtk_object_get_data(GTK_OBJECT(widget),
-								    "remove_item");
-					if(panel_widget_get_applet_count(panel)>0)
-						gtk_widget_set_sensitive(rem,FALSE);
-					else
-						gtk_widget_set_sensitive(rem,TRUE);
-				} else if(IS_SNAPPED_WIDGET(widget)) {
+				GtkWidget *rem = 
+					gtk_object_get_data(GTK_OBJECT(widget),
+							    "remove_item");
+				if(IS_SNAPPED_WIDGET(widget)) {
 					SnappedWidget *snapped =
 						SNAPPED_WIDGET(widget);
-					PanelWidget *panel = PANEL_WIDGET(snapped->panel);
-					GtkWidget *rem = 
-						gtk_object_get_data(GTK_OBJECT(widget),
-								    "remove_item");
-					if(panel_widget_get_applet_count(panel)>0 ||
-					   base_panels <= 1)
-						gtk_widget_set_sensitive(rem,FALSE);
+					PanelWidget *panel =
+						PANEL_WIDGET(snapped->panel);
+					if(base_panels <= 1)
+						gtk_widget_set_sensitive(rem,
+									 FALSE);
 					else
-						gtk_widget_set_sensitive(rem,TRUE);
+						gtk_widget_set_sensitive(rem,
+									 TRUE);
 					snapped->autohide_inhibit = TRUE;
 					snapped_widget_queue_pop_down(snapped);
 				} else if(IS_CORNER_WIDGET(widget)) {
 					CornerWidget *corner =
 						CORNER_WIDGET(widget);
 					PanelWidget *panel = PANEL_WIDGET(corner->panel);
-					GtkWidget *rem = 
-						gtk_object_get_data(GTK_OBJECT(widget),
-								    "remove_item");
-					if(panel_widget_get_applet_count(panel)>0 ||
-					   base_panels <= 1)
-						gtk_widget_set_sensitive(rem,FALSE);
+					if(base_panels <= 1)
+						gtk_widget_set_sensitive(rem,
+									 FALSE);
 					else
-						gtk_widget_set_sensitive(rem,TRUE);
-				}
+						gtk_widget_set_sensitive(rem,
+									 TRUE);
+				} else
+						gtk_widget_set_sensitive(rem,
+									 TRUE);
 				gtk_menu_popup(GTK_MENU(data), NULL, NULL,
 					       panel_menu_position,
 					       widget, bevent->button,

@@ -51,12 +51,9 @@ struct _AppletInfo {
 	GtkWidget *widget; /*an event box*/
 	GtkWidget *applet_widget; /*the actual applet widget*/
 	GtkWidget *menu; /*the applet menu*/
-	GtkWidget *remove_item; /*remove item in the applet_menu*/
 	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
 	gpointer data; /*the per applet structure, if it exists*/
 };
-
-GtkWidget * create_panel_root_menu(GtkWidget *panel);
 
 int register_toy(GtkWidget *applet,
 		 gpointer data,
