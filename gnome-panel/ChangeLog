@@ -1,5 +1,13 @@
 2005-02-01  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-properties-dialog.c:
+	(panel_properties_dialog_setup_size_spin): set minimum for the spin to
+	the minimum we calculate in panel-toplevel.c
+	* panel-toplevel.[ch]: (panel_toplevel_get_minimum_size): new
+	Fix bug #164341
+
+2005-02-01  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-run-dialog.c: (panel_run_dialog_set_icon): clean up, don't
 	change the icon if the new one is the same as the old one
 

@@ -4832,3 +4832,10 @@ panel_toplevel_get_is_hidden (PanelToplevel *toplevel)
 
 	return FALSE;
 }
+
+int
+panel_toplevel_get_minimum_size (PanelToplevel *toplevel)
+{
+	return calculate_minimum_height (GTK_WIDGET (toplevel),
+					 toplevel->priv->orientation);
+}

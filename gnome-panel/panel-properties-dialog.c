@@ -205,6 +205,7 @@ panel_properties_dialog_size_changed (PanelPropertiesDialog *dialog,
 					 gtk_spin_button_get_value_as_int (spin_button));
 }
 
+#define TOPLEVEL_MAX_SIZE 120
 static void
 panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 					 GladeXML              *gui)
@@ -217,6 +218,10 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 	g_return_if_fail (dialog->size_label != NULL);
 	dialog->size_label_pixels = glade_xml_get_widget (gui, "size_label_pixels");
 	g_return_if_fail (dialog->size_label_pixels != NULL);
+
+	gtk_spin_button_set_range (GTK_SPIN_BUTTON (dialog->size_spin),
+				   panel_toplevel_get_minimum_size (dialog->toplevel),
+				   TOPLEVEL_MAX_SIZE);
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->size_spin),
 				   panel_profile_get_toplevel_size (dialog->toplevel));
