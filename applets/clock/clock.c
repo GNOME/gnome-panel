@@ -399,6 +399,8 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 		gconf_client_notify_remove (
 				client, cd->listeners [i]);
 
+	g_object_unref (G_OBJECT (client));
+
 	if (cd->timeout > 0) {
 		g_source_remove (cd->timeout);
 		cd->timeout = 0;
@@ -1044,6 +1046,8 @@ setup_gconf (ClockData *clock)
 				(GConfClientNotifyFunc) config_tool_changed,
 				clock, NULL, NULL);
 	g_free (key);
+
+	g_object_unref (G_OBJECT (client));
 }
 
 static gboolean
@@ -1154,6 +1158,8 @@ setup_writability_sensitivity (ClockData *clock, GtkWidget *w, GtkWidget *label,
 	}
 
 	g_free (fullkey);
+
+	g_object_unref (G_OBJECT (client));
 }
 
 static void
