@@ -95,7 +95,9 @@ base_panel_SOURCES=\
 	panel-util.c		\
 	panel-util.h		\
 	hints.c			\
-	hints.h
+	hints.h			\
+	tearoffitem.c		\
+	tearoffitem.h
 
 panel_SOURCES = 		\
 	$(base_panel_SOURCES)	\
