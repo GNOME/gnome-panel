@@ -211,6 +211,7 @@ panel_addto_append_internal_applets (GSList *list)
 
 		info              = g_new0 (PanelAddtoItemInfo, 1);
 		info->type        = PANEL_ADDTO_ACTION;
+		info->action_type = i;
 		info->name        = (char *) panel_action_get_text (i);
 		info->description = (char *) panel_action_get_tooltip (i);
 		info->stock_icon  = (char *) panel_action_get_stock_icon (i);
