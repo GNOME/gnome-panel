@@ -28,6 +28,7 @@
 #include "panel-util.h"
 #include "xstuff.h"
 #include "panel-globals.h"
+#include "panel-stock-icons.h"
 
 #undef DRAWER_DEBUG
 
@@ -486,14 +487,16 @@ create_drawer_applet (PanelToplevel    *toplevel,
 	else
 		drawer->tooltip = g_strdup (tooltip);
 
-	if (!pixmap || !pixmap [0])
-		drawer->pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-							    "panel-drawer.png", TRUE, NULL);
-	else
+	if (!pixmap || !pixmap [0]) {
+		drawer->pixmap = NULL;
+		drawer->button = button_widget_new_from_stock (PANEL_STOCK_DRAWER, -1,
+							       TRUE, orientation);
+	} else {
 		drawer->pixmap = g_strdup (pixmap);
+		drawer->button = button_widget_new (drawer->pixmap, -1,
+						    TRUE, orientation);
+	}
 
-	drawer->button = button_widget_new (drawer->pixmap, -1,
-					    TRUE, orientation);
 	if (!drawer->button) {
 		free_drawer (drawer);
 		return NULL;
