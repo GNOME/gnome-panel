@@ -59,7 +59,7 @@ panel_gconf_get_client (void)
  *
  * Return Value: a pointer to the static string buffer.
  */
-G_CONST_RETURN char *
+const char *
 panel_gconf_sprintf (const char *format,
 		     ...)
 {
@@ -97,20 +97,44 @@ panel_gconf_sprintf (const char *format,
 	return buffer;
 }
 
-G_CONST_RETURN char * 
+const char *
+panel_gconf_key_type_to_id_list (PanelGConfKeyType type)
+{
+	char *retval;
+
+	switch (type) {
+	case PANEL_GCONF_TOPLEVELS:
+		retval = "toplevel_id_list";
+		break;
+	case PANEL_GCONF_APPLETS:
+		retval = "applet_id_list";
+		break;
+	case PANEL_GCONF_OBJECTS:
+		retval = "object_id_list";
+		break;
+	default:
+		retval = NULL;
+		g_assert_not_reached ();
+		break;
+	}
+
+	return retval;
+}
+
+const char * 
 panel_gconf_global_key (const char *key)
 {
 	return panel_gconf_sprintf ("/apps/panel/global/%s", key);
 }
 
-G_CONST_RETURN char *
+const char *
 panel_gconf_general_key (const char *profile,
 			 const char *key)
 {
 	return panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/general/%s", profile, key);
 }
 
-G_CONST_RETURN char *
+const char *
 panel_gconf_full_key (PanelGConfKeyType  type,
 		      const char        *profile,
 		      const char        *id,

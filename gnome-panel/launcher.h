@@ -33,44 +33,19 @@ typedef struct {
 	gulong             destroy_handler;
 } Launcher;
 
-/* If launchers are loaded from ANYWHERE but the normal panel
- * launcher location, do HOARD the file (with launcher_hoard),
- * otherwise things may be removed from disk when they shouldn't
- * etc.  Also always hoard if an applet which owns a desktop already
- * exists.*/
-Launcher *	load_launcher_applet_full	(const char       *params,
-						 GnomeDesktopItem *ditem,
-						 PanelWidget      *panel,
-						 int               pos,
-						 gboolean          exactpos,
-						 const char       *id);
-
-Launcher *	load_launcher_applet		(const char       *params,
-						 PanelWidget      *panel,
-						 int              pos,
-						 gboolean         exactpos,
-						 const char      *id);
-
-Launcher *	load_launcher_applet_from_info	(const char *name,
-						 const char *comment,
-						 const char *exec,
-						 const char *icon,
-						 PanelWidget *panel,
-						 int pos,
-						 gboolean exactpos);
-Launcher *	load_launcher_applet_from_info_url(const char *name,
-						   const char *comment,
-						   const char *url,
-						   const char *icon,
-						   PanelWidget *panel,
-						   int pos,
-						   gboolean exactpos);
+void panel_launcher_create           (PanelToplevel *toplevel,
+				      int            position,
+				      const char    *location);
+void panel_launcher_create_from_info (PanelToplevel *toplevel,
+				      int            position,
+				      gboolean       exec_info,
+				      const char    *exec_or_uri,
+				      const char    *name,
+				      const char    *comment,
+				      const char    *icon);
 
 void		launcher_properties		(Launcher  *launcher,
 						 GdkScreen *screen);
-
-void            launcher_save_to_gconf          (Launcher   *launcher,
-						 const char *id);
 
 void            launcher_load_from_gconf        (PanelWidget *panel_widget,
 						 gint         position,
@@ -80,9 +55,6 @@ void		ask_about_launcher		(const char *file,
 						 PanelWidget *panel,
 						 int pos,
 						 gboolean exactpos);
-
-/* always make a new unique filename, useful for converting OLD configs */
-void		launcher_hoard			(Launcher *launcher);
 
 Launcher *	find_launcher			(const char *path);
 

@@ -74,6 +74,29 @@ typedef enum {
 	PANEL_GCONF_APPLETS
 } PanelGConfKeyType;
 
+typedef enum {
+	PANEL_OBJECT_DRAWER,
+	PANEL_OBJECT_MENU,
+	PANEL_OBJECT_LAUNCHER,
+	PANEL_OBJECT_BONOBO,
+	PANEL_OBJECT_ACTION,
+	PANEL_OBJECT_MENU_BAR,
+	/* The following two are for backwards compatibility with 2.0.x */
+	PANEL_OBJECT_LOGOUT,
+	PANEL_OBJECT_LOCK
+} PanelObjectType;
+
+typedef enum {
+        PANEL_ACTION_NONE = 0,
+        PANEL_ACTION_LOCK,
+        PANEL_ACTION_LOGOUT,
+        PANEL_ACTION_RUN,
+        PANEL_ACTION_SEARCH,
+        PANEL_ACTION_SCREENSHOT,
+        PANEL_ACTION_SHOW_DESKTOP,
+        PANEL_ACTION_LAST
+} PanelActionButtonType;
+
 G_END_DECLS
 
 #endif /* __PANEL_ENUMS_H__ */

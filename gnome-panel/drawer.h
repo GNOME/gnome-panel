@@ -19,16 +19,11 @@ typedef struct {
 	AppletInfo    *info;
 } Drawer;
 
-Drawer *load_drawer_applet (char          *toplevel_id,
-			    const char    *pixmap,
-			    const char    *tooltip,
-			    PanelToplevel *parent_toplevel,
-			    int            pos,
-			    gboolean       exactpos,
-			    const char    *id);
-
-void    drawer_save_to_gconf   (Drawer     *drawer,
-				const char *id);
+void    panel_drawer_create (PanelToplevel *toplevel,
+			     int            position,
+			     const char    *custom_icon,
+			     gboolean       use_custom_icon,
+			     const char    *tooltip);
 
 void    drawer_load_from_gconf (PanelWidget *panel_widget,
 				gint         position,

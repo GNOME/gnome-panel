@@ -269,9 +269,6 @@ sys_DATA = $(sys_in_files:.desktop.in=.desktop)
 panel_enum_headers =					\
 	$(top_srcdir)/gnome-panel/panel-enums.h		\
 	$(top_srcdir)/gnome-panel/panel-types.h		\
-	$(top_srcdir)/gnome-panel/panel-widget.h	\
-	$(top_srcdir)/gnome-panel/panel-action-button.h	\
-	$(top_srcdir)/gnome-panel/panel-toplevel.h	\
 	$(top_builddir)/gnome-panel/GNOME_Panel.h
 
 panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)

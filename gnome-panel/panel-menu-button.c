@@ -226,7 +226,7 @@ panel_menu_button_drag_data_get (GtkWidget        *widget,
 
 	button = PANEL_MENU_BUTTON (widget);
 
-	drag_data = g_strdup_printf ("MENU:%d", panel_find_applet (widget));
+	drag_data = g_strdup_printf ("MENU:%d", panel_find_applet_index (widget));
 
 	gtk_selection_data_set (
 		selection_data, selection_data->target,
@@ -508,7 +508,7 @@ panel_menu_button_connect_to_gconf (PanelMenuButton *button)
 					 button, NULL, NULL);
 }
 
-GtkWidget *
+static void
 panel_menu_button_load (const char  *menu_path,
 			gboolean     use_menu_path,
 			const char  *custom_icon,
@@ -520,7 +520,7 @@ panel_menu_button_load (const char  *menu_path,
 {
 	PanelMenuButton *button;
 
-	g_return_val_if_fail (panel != NULL, NULL);
+	g_return_if_fail (panel != NULL);
 
 	button = g_object_new (PANEL_TYPE_MENU_BUTTON,
 			       "menu-path", menu_path,
@@ -531,18 +531,16 @@ panel_menu_button_load (const char  *menu_path,
 
 	button->priv->info = panel_applet_register (
 					GTK_WIDGET (button), NULL, NULL, panel,
-					position, exactpos, APPLET_MENU, id);
+					position, exactpos, PANEL_OBJECT_MENU, id);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
-		return NULL;
+		return;
 	}
 
 	panel_applet_add_callback (
 		button->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
 
 	panel_menu_button_connect_to_gconf (button);
-
-	return GTK_WIDGET (button);
 }
 
 static char *
@@ -661,13 +659,12 @@ panel_menu_button_set_use_custom_icon (PanelMenuButton *button,
 	panel_menu_button_set_icon (button);
 }
 
-GtkWidget *
+void
 panel_menu_button_load_from_gconf (PanelWidget *panel,
 				   int          position,
 				   gboolean     exactpos,
 				   const char  *id)
 {
-	GtkWidget   *retval;
 	GConfClient *client;
 	const char  *profile;
 	const char  *key;
@@ -694,49 +691,47 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_custom_icon");
 	use_custom_icon = gconf_client_get_bool (client, key, NULL);
 
-	retval = panel_menu_button_load (menu_path,
-					 use_menu_path,
-					 custom_icon,
-					 use_custom_icon,
-					 panel,
-					 position,
-					 exactpos,
-					 id);
+	panel_menu_button_load (menu_path,
+				use_menu_path,
+				custom_icon,
+				use_custom_icon,
+				panel,
+				position,
+				exactpos,
+				id);
 
 	g_free (menu_path);
 	g_free (custom_icon);
-
-	return retval;
 }
 
 void
-panel_menu_button_save_to_gconf (PanelMenuButton *button,
-				 const char      *id)
+panel_menu_button_create (PanelToplevel *toplevel,
+			  int            position,
+			  const char    *menu_path,
+			  gboolean       use_menu_path)
 {
 	GConfClient *client;
 	const char  *profile;
 	const char  *key;
+	char        *id;
 
 	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
-	if (button->priv->menu_path) {
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "menu_path");
-		gconf_client_set_string (client, key, button->priv->menu_path, NULL);
-	}
-
-	if (button->priv->custom_icon) {
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "custom_icon");
-		gconf_client_set_string (client, key, button->priv->custom_icon, NULL);
-	}
+	id = panel_profile_prepare_object (PANEL_GCONF_OBJECTS, toplevel, position);
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_menu_path");
-	gconf_client_set_bool (client, key, button->priv->use_menu_path, NULL);
+	gconf_client_set_bool (client, key, use_menu_path, NULL);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_custom_icon");
-	gconf_client_set_bool (client, key, button->priv->use_custom_icon, NULL);
+	if (menu_path) {
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_menu_path");
+		gconf_client_set_string (client, key, menu_path, NULL);
+	}
+
+	/* frees id */
+	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
 }
-
+			  
 void
 panel_menu_button_invoke_menu (PanelMenuButton *button,
 			       const char   *callback_name)

@@ -67,13 +67,9 @@ GtkWidget *panel_applet_frame_construct (PanelAppletFrame *frame,
 void       panel_applet_frame_set_info  (PanelAppletFrame *frame,
 					 AppletInfo       *info);
 					
-void       panel_applet_frame_load      (const gchar *iid,
-					 PanelWidget *panel,
-					 int          position,
-					 gboolean     exactpos,
-					 const char  *id);
-
-void       panel_applet_frame_load_applets  (void);
+void       panel_applet_frame_create    (PanelToplevel    *toplevel,
+					 int               position,
+					 const char       *iid);
 
 void       panel_applet_frame_change_orientation (PanelAppletFrame *frame,
 						  PanelOrientation  orientation);
@@ -83,9 +79,6 @@ void       panel_applet_frame_change_size   (PanelAppletFrame *frame,
 
 void       panel_applet_frame_change_background (PanelAppletFrame    *frame,
 						 PanelBackgroundType  type);
-
-void       panel_applet_frame_save_to_gconf     (PanelAppletFrame *frame,
-						 const char       *id);
 
 void       panel_applet_frame_load_from_gconf   (PanelWidget *panel_widget,
 						 int          position,

@@ -31,7 +31,6 @@
 G_BEGIN_DECLS
 
 extern GSList         *panels;
-extern GSList         *applets;
 extern GSList         *panel_list;
 
 extern GtkTooltips    *panel_tooltips;

@@ -725,13 +725,15 @@ is_ext2 (const char *file,
 }
 
 int
-panel_find_applet (GtkWidget *widget)
+panel_find_applet_index (GtkWidget *widget)
 {
-	int i;
-	GSList *li;
+	GSList *applet_list, *l;
+	int     i;
 
-	for (i = 0, li = applets; li != NULL; i++, li = li->next) {
-		AppletInfo *info = li->data;
+	applet_list = panel_applet_list_applets ();
+
+	for (i = 0, l = applet_list; l; i++, l = l->next) {
+		AppletInfo *info = l->data;
 
 		if (info->widget == widget)
 			return i;

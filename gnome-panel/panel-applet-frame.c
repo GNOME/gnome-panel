@@ -72,41 +72,6 @@ typedef enum {
 	APPLET_HAS_HANDLE   = 1 << 2,
 } PanelAppletFlags;
 
-void
-panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
-				  const char       *id)
-{
-	const char  *profile;
-	const char  *key;
-
-	profile = panel_profile_get_name ();
-
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
-	gconf_client_set_string (panel_gconf_get_client (), key, frame->priv->iid, NULL);
-}
-
-void
-panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
-				    int          position,
-				    const char  *id)
-{
-	const char  *profile;
-	const char  *key;
-	char        *applet_iid;
-
-	g_return_if_fail (panel_widget != NULL);
-	g_return_if_fail (id != NULL);
-
-	profile = panel_profile_get_name ();
-
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
-	applet_iid = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
-
-	panel_applet_frame_load (applet_iid, panel_widget, position, TRUE, id);
-
-	g_free (applet_iid);
-}
-
 static void
 popup_handle_remove (BonoboUIComponent *uic,
 		     PanelAppletFrame  *frame,
@@ -117,7 +82,7 @@ popup_handle_remove (BonoboUIComponent *uic,
 	info = frame->priv->applet_info;
 	frame->priv->applet_info = NULL;
 
-	panel_applet_clean (info, TRUE);
+	panel_profile_delete_object (info);
 }
 
 static void
@@ -145,7 +110,7 @@ static BonoboUIVerb popup_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
-void
+static void
 panel_applet_frame_load (const gchar *iid,
 			 PanelWidget *panel,
 			 int          position,
@@ -171,14 +136,57 @@ panel_applet_frame_load (const gchar *iid,
 	gtk_widget_show_all (frame);
 
 	info = panel_applet_register (frame, frame, NULL, panel, position,
-				      exactpos, APPLET_BONOBO, real_id);
-
-	if (!info)
-		g_warning (_("Cannot register control widget\n"));
+				      exactpos, PANEL_OBJECT_BONOBO, real_id);
 
 	g_free (real_id);
 
 	panel_applet_frame_set_info (PANEL_APPLET_FRAME (frame), info);
+}
+
+void
+panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
+				    int          position,
+				    const char  *id)
+{
+	const char  *profile;
+	const char  *key;
+	char        *applet_iid;
+
+	g_return_if_fail (panel_widget != NULL);
+	g_return_if_fail (id != NULL);
+
+	profile = panel_profile_get_name ();
+
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
+	applet_iid = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
+
+	panel_applet_frame_load (applet_iid, panel_widget, position, TRUE, id);
+
+	g_free (applet_iid);
+}
+
+void
+panel_applet_frame_create (PanelToplevel *toplevel,
+			   int            position,
+			   const char    *iid)
+{
+	GConfClient *client;
+	const char  *profile;
+	const char  *key;
+	char        *id;
+
+	g_return_if_fail (iid != NULL);
+
+	client  = panel_gconf_get_client ();
+	profile = panel_profile_get_name ();
+
+	id = panel_profile_prepare_object (PANEL_GCONF_APPLETS, toplevel, position);
+
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
+	gconf_client_set_string (client, key, iid, NULL);
+
+	/* frees id */
+	panel_profile_add_to_list (PANEL_GCONF_APPLETS, id);
 }
 
 static int
@@ -660,7 +668,7 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 		if (info) {
 			id = g_strdup (info->id);
 			position  = panel_applet_get_position (info);
-			panel_applet_clean (info, FALSE);
+			panel_applet_clean (info);
 		}
 
 		panel_applet_frame_load (iid, panel, position, TRUE, id);
@@ -669,7 +677,7 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 		g_free (id);
 
 	} else if (info)
-		panel_applet_clean (info, TRUE);
+		panel_profile_delete_object (info);
 
 	g_object_unref (frame);
 	gtk_widget_destroy (dialog);
@@ -819,7 +827,7 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	gtk_widget_destroy (dialog);
 
 	if (response == GTK_RESPONSE_OK)
-		panel_applet_clean_gconf (APPLET_BONOBO, id, TRUE);
+		panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
 }
 
 static void

@@ -16,8 +16,9 @@
 
 #include "nothing.cP"
 
-/* Just so we can link with panel-util.c for the convert keys stuff*/
-GSList *applets;
+/* Symbol needed by panel-util.c - sucky */
+#include "applet.h"
+GSList *panel_applet_list_applets (void) { return NULL; }
 
 static int dialogs = 0;
 static gboolean create_new = FALSE;

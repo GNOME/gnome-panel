@@ -1943,24 +1943,6 @@ panel_toplevel_attach_widget_configure (PanelToplevel *toplevel)
 }
 
 static void
-panel_toplevel_attach_widget_parent_set (PanelToplevel *toplevel,
-					 GtkWidget     *previous_parent,
-					 GtkWidget     *attach_widget)
-{
-	GtkWidget *panel_widget;
-
-	panel_widget = GTK_WIDGET (attach_widget)->parent;
-	if (!panel_widget)
-		return;
-
-	g_assert (PANEL_IS_WIDGET (panel_widget));
-
-	toplevel->priv->attach_toplevel = PANEL_WIDGET (panel_widget)->toplevel;
-	panel_toplevel_update_attach_orientation (toplevel);
-	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
-}
-
-static void
 panel_toplevel_update_attach_orientation (PanelToplevel *toplevel)
 {
 	PanelOrientation attach_orientation;
@@ -1990,6 +1972,24 @@ panel_toplevel_update_attach_orientation (PanelToplevel *toplevel)
 	}
 
 	panel_toplevel_set_orientation (toplevel, orientation);
+}
+
+static void
+panel_toplevel_attach_widget_parent_set (PanelToplevel *toplevel,
+					 GtkWidget     *previous_parent,
+					 GtkWidget     *attach_widget)
+{
+	GtkWidget *panel_widget;
+
+	panel_widget = GTK_WIDGET (attach_widget)->parent;
+	if (!panel_widget)
+		return;
+
+	g_assert (PANEL_IS_WIDGET (panel_widget));
+
+	toplevel->priv->attach_toplevel = PANEL_WIDGET (panel_widget)->toplevel;
+	panel_toplevel_update_attach_orientation (toplevel);
+	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 }
 
 static void

@@ -133,11 +133,10 @@ panel_compatibility_load_applets (void)
 		/* A menu panel contained a menu bar on the far left
 	         * and a window menu on the far right.
 		 */
-		panel_menu_bar_load (panel, 0, TRUE, NULL);
+		/* FIXME_FOR_NEW_CONFIG : panel_menu_bar_load (panel, 0, TRUE, NULL); */
 
-		panel_applet_frame_load ("OAFIID:GNOME_WindowMenuApplet",
-					 panel,
-					 panel->size - 10,
-					 TRUE, NULL);
+		panel_applet_frame_create (panel->toplevel,
+					   panel->size - 10,
+					   "OAFIID:GNOME_WindowMenuApplet");
 	}
 }

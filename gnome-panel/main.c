@@ -35,7 +35,6 @@
 
 /* globals */
 GSList *panels = NULL;
-GSList *applets = NULL;
 GSList *panel_list = NULL;
 
 GtkTooltips *panel_tooltips = NULL;

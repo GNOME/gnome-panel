@@ -53,17 +53,12 @@ struct _PanelMenuBarClass {
 
 GType      panel_menu_bar_get_type  (void) G_GNUC_CONST;
 
-GtkWidget *panel_menu_bar_load             (PanelWidget  *panel,
+void       panel_menu_bar_create           (PanelToplevel *toplevel,
+					    int            position);
+
+void       panel_menu_bar_load_from_gconf  (PanelWidget  *panel,
 					    int           position,
 					    gboolean      exactpos,
-					    const char   *id);
-
-GtkWidget *panel_menu_bar_load_from_gconf  (PanelWidget  *panel,
-					    int           position,
-					    gboolean      exactpos,
-					    const char   *id);
-
-void       panel_menu_bar_save_to_gconf    (PanelMenuBar *menubar,
 					    const char   *id);
 
 void       panel_menu_bar_invoke_menu      (PanelMenuBar *menubar,

@@ -91,7 +91,7 @@ gboolean	is_ext2			(const char *file,
 					 const char *ext1,
 					 const char *ext2);
 
-int		panel_find_applet	(GtkWidget *widget);
+int		panel_find_applet_index	(GtkWidget *widget);
 
 int		get_requisition_width	(GtkWidget *widget);
 int		get_requisition_height	(GtkWidget *widget);

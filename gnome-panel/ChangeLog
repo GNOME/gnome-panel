@@ -1,3 +1,124 @@
+2003-03-02  Mark McLoughlin  <mark@skynet.ie>
+
+	Pretty broken patch - just a safety sync. Makes the panel object
+	gconf code a lot more sane and also share code with (and behave
+	similarily to) the toplevel code.
+
+	* new-toplevel-todo: update
+
+	* Makefile.am: don't gen enums from panel-widget.h,
+	panel-action-button.h and panel-toplevel.h.
+
+	* applet.[ch]:
+	(panel_applet_clean_gconf): kill.
+	(panel_applet_clean): do not do any gconf related stuff here.
+	(applet_idle_remove): kill the remove in idle stuff.
+	(applet_remove_callback): delete the object via gconf.
+	(applet_callback_callback), (applet_do_popup_menu),
+	(panel_applet_destroy), (panel_applet_load_idle_handler): various
+	random updates.
+	(panel_applet_queue_applet_to_load): split out the code that
+	reads the object's config into panel-profile.o
+	(panel_applet_load_queued_applets): rename and remove the gconf
+	loading code.
+	(panel_applet_save_position): upd.
+	(panel_applet_get_id), (panel_applet_get_by_id),
+	(panel_applet_list_applets): impl so we don't have to use global
+	variables and poke in structures everywhere.
+	(panel_applet_register): kill the applet count/id thing - unused.
+	
+	* drawer.[ch]:
+	(properties_apply_callback): disable saving change for now.
+	(drag_data_get_cb): upd.
+	(load_drawer_applet): make static, don't return anything.
+	(panel_drawer_create): new function for creating new drawers.
+
+	* gnome-desktop-item-edit.c: (panel_applet_list_applets): hack
+	so that this thing links.
+
+	* launcher.[ch]: 
+	(panel_launcher_save_ditem): split out from launcher_save() so we
+	can save a ditem before loading a launcher.
+	(free_launcher): upd.
+	(create_launcher): don't allow a ditem to be passed in.
+	(properties_apply): disable saving prefs changes for now.
+	(load_launcher_applet): don't return anything, kill _full() variant.
+	(launcher_load_from_gconf): don't hoard all launchers - may want to
+	change this back again, we'll see.
+	(really_add_launcher): save the ditem before creating the launcher.
+	(panel_launcher_create_from_info), (panel_launcher_create): new
+	functions for creating a new launcher object.
+	(launcher_save), (find_launcher): upd.
+
+	* main.c: kill the applets global list - its static in applet.c now.
+
+	* menu.c: (add_app_to_panel), (add_drawers_from_dir),
+	(add_menu_to_panel), (add_drawer_to_panel),
+	(add_action_button_to_panel), (add_menu_bar_to_panel),
+	(add_launcher), (add_bonobo_applet): use the new object creation
+	functions instead of the old loading ones.
+	(remove_panel_accept): delete the object via gconf.
+
+	* panel-action-button.[ch]:
+	(panel_action_button_load): don't return anything.
+	(panel_action_button_create): new function for creating new action
+	buttons.
+	(panel_action_button_load_compatible): impl.
+	(panel_action_button_load_from_gconf): don't return anything.
+	(panel_actoin_button_save_to_gconf): kill.
+	(panel_action_button_load_from_drag): upd.
+
+	* panel-applet-frame.[ch]:
+	(popup_handle_remove): delete the applet via gconf.
+	(panel_applet_frame_load): make static, don't return anything.
+	(panel_applet_frame_create): implement.
+	(panel_applet_frame_reload_response),
+	(panel_applet_frame_loading_failed): update.
+
+	* panel-compatibility.c: (panel_compatibility_load_applets): use
+	new applet creation functions.
+
+	* panel-enums.h: move some enums into here.
+
+	* panel-gconf.[ch]: (panel_gconf_key_type_to_id_list): impl.
+
+	* panel-globals.h: kill the applets list.
+
+	* panel-menu-bar.[ch]:
+	(panel_menu_bar_load): make static, don't return anything.
+	(panel_menu_bar_create): implement.
+
+	* panel-menu-button.[ch]: ditto.
+
+	* panel-profile.[ch]:
+	(panel_profile_map_object_type_string): impl object type mapping
+	utility method.
+	(panel_profile_add_to_list), (panel_profile_remove_from_list),
+	(panel_profile_create_toplevel), (panel_profile_delete_toplevel),
+	(panel_profile_destroy_toplevel), (panel_profile_prepare_object),
+	(panel_profile_delete_object), (panel_profile_load_object),
+	(panel_profile_destroy_object), (panel_profile_delete_dir),
+	(panel_profile_object_exists), (panel_profile_id_exists),
+	(panel_profile_load_added_ids), (panel_profile_delete_removed_ids),
+	(panel_profile_toplevel_id_list_notify),
+	(panel_profile_object_id_list_notify), (panel_profile_load_list),
+	(panel_profile_copy_default_objects_for_screen): move all the
+	applets loading code into here, merge it with the toplevel loading
+	and notification handling code ... make it all perfect :)
+
+	* panel-toplevel.c: (panel_toplevel_update_attach_orientation),
+	(panel_toplevel_attach_widget_parent_set): move some code around
+	to fix warning.
+
+	* panel-util.c: (panel_find_applet_index): rename.
+
+	* panel.[ch]: (orientation_change), (size_change), (back_change),
+	(panel_applet_removed), (panel_remove_applets), (drop_url),
+	(drop_menu), (drop_nautilus_uri), (drop_directory), (drop_urilist),
+	(drop_internal_icon), (move_applet), (drop_internal_applet),
+	(panel_receive_dnd_data), (panel_screen_from_panel_widget): various
+	update for the changes above.
+
 2003-02-28  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-profile.c: (panel_profile_copy_defaults): rename from

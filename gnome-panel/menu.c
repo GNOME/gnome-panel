@@ -1169,22 +1169,21 @@ show_help_on (GtkWidget    *widget,
 }
 
 static void
-add_app_to_panel (GtkWidget    *widget,
+add_app_to_panel (GtkWidget    *item,
 		  ShowItemMenu *sim)
 {
-	Launcher *launcher;
-	PanelWidget *panel = menu_get_panel (widget);
-	PanelData *pd;
-	int insertion_pos = -1;
+	PanelWidget   *panel_widget;
+	PanelToplevel *toplevel;
+	PanelData     *pd;
+	int            position;
 
-	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
+	panel_widget = menu_get_panel (item);
+	toplevel = panel_widget->toplevel;
 
-	launcher = load_launcher_applet (sim->item_loc, panel, insertion_pos, FALSE, NULL);
+	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
+	position = pd ?  pd->insertion_pos : -1;
 
-	if (launcher != NULL)
-		launcher_hoard (launcher);
+	panel_launcher_create (toplevel, position, sim->item_loc);
 }
 
 
@@ -1192,14 +1191,10 @@ static void
 add_drawers_from_dir (const char *dirname, const char *name,
 		      int pos, PanelWidget *panel)
 {
-	Drawer *drawer;
-	PanelWidget *newpanel;
 	QuickDesktopItem *item_info;
 	char *dentry_name;
 	const char *subdir_name;
 	char *pixmap_name;
-	char *filename = NULL;
-	GSList *list, *li;
 
 	dentry_name = g_build_path ("/",
 				    dirname,
@@ -1216,19 +1211,23 @@ add_drawers_from_dir (const char *dirname, const char *name,
 		subdir_name = name;
 	pixmap_name = item_info != NULL ? item_info->icon : NULL;
 
-	drawer = load_drawer_applet (NULL, pixmap_name, subdir_name,
-				     panel->toplevel, pos, FALSE, NULL);
-	if (!drawer) {
-		g_warning("Can't load a drawer");
-		return;
-	}
+	panel_drawer_create (panel->toplevel,
+			     pos,
+			     pixmap_name,
+			     pixmap_name != NULL,
+			     subdir_name);
+
+#ifdef FIXME_FOR_NEW_CONFIG
+	Drawer *drawer;
+	PanelWidget *newpanel;
+	char *filename = NULL;
+	GSList *list, *li;
 
 	newpanel = panel_toplevel_get_panel_widget (drawer->toplevel);
 
 	list = get_mfiles_from_menudir (dirname, NULL /* sorted */);
 	for(li = list; li!= NULL; li = li->next) {
 		MFile *mfile = li->data;
-		GnomeDesktopItem *dentry;
 
 		g_free (filename);
 		filename = g_build_filename (dirname, mfile->name, NULL);
@@ -1243,30 +1242,14 @@ add_drawers_from_dir (const char *dirname, const char *name,
 			continue;
 		}
 			
-		if (is_ext2 (mfile->name, ".desktop", ".kdelnk")) {
-			/*we load the applet at the right
-			  side, that is end of the drawer*/
-			dentry = gnome_desktop_item_new_from_uri (filename,
-								  GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS, NULL);
-			if (dentry) {
-				Launcher *launcher;
-
-				launcher =
-					load_launcher_applet_full (filename,
-								   dentry,
-								   newpanel,
-								   G_MAXINT/2,
-								   FALSE,
-								   NULL);
-
-				if (launcher != NULL)
-					launcher_hoard (launcher);
-			}
-		}
+		if (is_ext2 (mfile->name, ".desktop", ".kdelnk") &&
+		    g_file_test (filename, G_FILE_TEST_EXISTS))
+			panel_launcher_create (newpanel->toplevel, G_MAXINT/2, filename);
 	}
 	g_free (filename);
 
 	free_mfile_list (list);
+#endif
 }
 
 /*add a drawer with the contents of a menu to the panel*/
@@ -1291,23 +1274,18 @@ static void
 add_menu_to_panel (GtkWidget  *widget,
 		   const char *menu_path)
 {
-	PanelWidget *panel;
-	PanelData   *pd;
-	int         insertion_pos = -1;
+	PanelWidget   *panel_widget;
+	PanelToplevel *toplevel;
+	PanelData     *pd;
+	int            position;
 
-	panel = menu_get_panel (widget);
+	panel_widget = menu_get_panel (widget);
+	toplevel = panel_widget->toplevel;
 
-	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	insertion_pos = pd ? pd->insertion_pos : -1;
+	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
+	position = pd ? pd->insertion_pos : -1;
 
-	panel_menu_button_load (menu_path,
-				menu_path != NULL,
-				NULL,
-				FALSE,
-				panel,
-				insertion_pos,
-				FALSE,
-				NULL);
+	panel_menu_button_create (toplevel, position, menu_path, menu_path != NULL);
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
@@ -1845,69 +1823,73 @@ setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
 }
 
 static void
-add_drawer_to_panel (GtkWidget *widget, gpointer data)
+add_drawer_to_panel (GtkWidget *item)
 {
-	PanelWidget *panel = menu_get_panel (widget);
-	PanelData *pd;
-	int insertion_pos = -1;
+	PanelWidget   *panel_widget;
+	PanelToplevel *toplevel;
+	PanelData     *pd;
+	int            position;
 
-	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
-	
-	load_drawer_applet (NULL, NULL, NULL, panel->toplevel,
-			    insertion_pos, FALSE, NULL);
+	panel_widget = menu_get_panel (item);
+	toplevel = panel_widget->toplevel;
+
+	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
+	position = pd ? pd->insertion_pos : -1;
+
+	panel_drawer_create (toplevel, position, NULL, FALSE, NULL);
 }
 
 static void
 add_action_button_to_panel (GtkWidget *widget,
 			    gpointer   data)
 {
-	PanelWidget *panel = menu_get_panel (widget);
-	PanelData *pd;
-	int insertion_pos = -1;
+	PanelActionButtonType  action_type = GPOINTER_TO_INT (data);
+	PanelWidget           *panel_widget;
+	PanelToplevel         *toplevel;
+	PanelData             *pd;
+	int                    position;
 
-	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
-	
-	panel_action_button_load (
-		GPOINTER_TO_INT (data), panel, insertion_pos, FALSE, NULL, FALSE);
+	panel_widget = menu_get_panel (widget);
+	toplevel = panel_widget->toplevel;
+
+	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
+	position = pd ? pd->insertion_pos : -1;
+
+	panel_action_button_create (toplevel, position, action_type);
 }
 
 static void
-add_menu_bar_to_panel (GtkWidget *widget,
-		       gpointer   data)
+add_menu_bar_to_panel (GtkWidget *item)
 {
-	PanelWidget *panel = menu_get_panel (widget);
-	PanelData *pd;
-	int insertion_pos = -1;
+	PanelWidget *panel_widget;
+	PanelData   *pd;
+	int          position = -1;
 
-	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
-	
-	panel_menu_bar_load (panel, insertion_pos, FALSE, NULL);
+	panel_widget = menu_get_panel (item);
+
+	pd = g_object_get_data (G_OBJECT (panel_widget->toplevel), "PanelData");
+	if (pd)
+		position = pd->insertion_pos;
+
+	panel_menu_bar_create (panel_widget->toplevel, position);
 }
 
 static void
-add_launcher (GtkWidget *widget, const char *item_loc)
+add_launcher (GtkWidget  *item,
+	      const char *item_loc)
 {
-	Launcher *launcher;
-	PanelWidget *panel;
-	PanelData *pd;
-	int insertion_pos = -1;
+	PanelWidget   *panel_widget;
+	PanelToplevel *toplevel;
+	PanelData     *pd;
+	int            position;
 
-	panel = menu_get_panel (widget);
+	panel_widget = menu_get_panel (item);
+	toplevel = panel_widget->toplevel;
 
-	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
+	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
+	position = pd ? pd->insertion_pos : -1;
 
-	launcher = load_launcher_applet (item_loc, panel, insertion_pos, FALSE, NULL);
-
-	if (launcher != NULL)
-		launcher_hoard (launcher);
+	panel_launcher_create (toplevel, position, item_loc);
 }
 
 static void
@@ -2353,20 +2335,21 @@ applet_menu_append (GtkWidget  *menu,
 }
 
 static void
-add_bonobo_applet (GtkWidget  *widget,
+add_bonobo_applet (GtkWidget  *item,
 		   const char *iid)
 {
-	PanelWidget *panel;
-	PanelData *pd;
-	int insertion_pos = -1;
+	PanelWidget   *panel_widget;
+	PanelToplevel *toplevel;
+	PanelData     *pd;
+	int            position;
 
-	panel = menu_get_panel (widget);
+	panel_widget = menu_get_panel (item);
+	toplevel = panel_widget->toplevel;
 
-	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
+	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
+	position = pd ? pd->insertion_pos : -1;
 
-	panel_applet_frame_load (iid, panel, insertion_pos, FALSE, NULL);
+	panel_applet_frame_create (toplevel, position, iid);
 }
 
 static const char applet_requirements [] = 
@@ -2387,6 +2370,7 @@ typedef struct {
 	int                    timeout_id;
 } ReloadData;
 
+#ifdef FIXME
 static gboolean
 Bonobo_ServerInfoList_equals (Bonobo_ServerInfoList *l1,
 			      Bonobo_ServerInfoList *l2)
@@ -2414,6 +2398,7 @@ Bonobo_ServerInfoList_equals (Bonobo_ServerInfoList *l1,
 
 	return retval;
 }
+#endif
 
 static gboolean
 recheck_applet_list (ReloadData *reload_data)
@@ -2786,7 +2771,7 @@ remove_panel_accept (GtkWidget     *w,
 					G_OBJECT (panel_widget->master_widget),
 					"applet_info");
 			((Drawer *) info->data)->toplevel = NULL;
-			panel_applet_clean (info, TRUE);
+			panel_profile_delete_object (info);
 
 			g_assert (panel_widget->master_widget == NULL);
 		}

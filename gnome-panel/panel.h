@@ -20,27 +20,13 @@ void orientation_change(AppletInfo *info, PanelWidget *panel);
 void size_change(AppletInfo *info, PanelWidget *panel);
 void back_change(AppletInfo *info, PanelWidget *panel);
 
-/*send state change to all the panels*/
-void send_state_change(void);
-
 PanelData *panel_setup (PanelToplevel *toplevel);
-PanelData *panel_data_by_id (const char *id);
 
 GtkWidget *make_popup_panel_menu (PanelWidget *panel);
-
-void panel_load_global_config  (void);
-void panel_save_global_config  (void);
-void panel_apply_global_config (void);
-
-void panel_load_panels_from_gconf (void);
-
-void panel_remove_from_gconf (PanelWidget *panel);
-void panel_save_to_gconf     (PanelData *pd);
 
 void panel_register_window_icon (void);
 
 GdkScreen *panel_screen_from_panel_widget  (PanelWidget *panel);
-int        panel_monitor_from_panel_widget (PanelWidget *panel);
 
 gboolean panel_is_applet_right_stick (GtkWidget *applet);
 

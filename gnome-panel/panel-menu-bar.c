@@ -37,6 +37,7 @@
 #include "menu.h"
 #include "menu-util.h"
 #include "panel-globals.h"
+#include "panel-profile.h"
 
 #define MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_KDE_SUB | MAIN_MENU_DISTRIBUTION_SUB)
 
@@ -281,7 +282,7 @@ panel_menu_bar_get_type (void)
 	return type;
 }
 
-GtkWidget *
+static void
 panel_menu_bar_load (PanelWidget *panel,
 		     int          position,
 		     gboolean     exactpos,
@@ -289,38 +290,41 @@ panel_menu_bar_load (PanelWidget *panel,
 {
 	PanelMenuBar *menubar;
 
-	g_return_val_if_fail (panel != NULL, NULL);
+	g_return_if_fail (panel != NULL);
 
 	menubar = g_object_new (PANEL_TYPE_MENU_BAR, NULL);
 
 	menubar->priv->info = panel_applet_register (
 					GTK_WIDGET (menubar), NULL, NULL, panel,
-					position, exactpos, APPLET_MENU_BAR, id);
+					position, exactpos, PANEL_OBJECT_MENU_BAR, id);
 	if (!menubar->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (menubar));
-		return NULL;
+		return;
 	}
 
 	panel_applet_add_callback (
 		menubar->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
-
-	return GTK_WIDGET (menubar);
 }
 
-GtkWidget *
+void
 panel_menu_bar_load_from_gconf (PanelWidget *panel,
 				int          position,
 				gboolean     exactpos,
 				const char  *id)
 {
-	return panel_menu_bar_load (panel, position, exactpos, id);
+	panel_menu_bar_load (panel, position, exactpos, id);
 }
 
 void
-panel_menu_bar_save_to_gconf (PanelMenuBar *menubar,
-			      const char   *id)
+panel_menu_bar_create (PanelToplevel *toplevel,
+		       int            position)
 {
-	/* Nothing */
+	char *id;
+
+	id = panel_profile_prepare_object (PANEL_GCONF_OBJECTS, toplevel, position);
+
+	/* frees id */
+	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
 }
 
 void

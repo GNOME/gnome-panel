@@ -52,39 +52,35 @@ struct _PanelMenuButtonClass {
 	ButtonWidgetClass       button_class;
 };
 
-GType      panel_menu_button_get_type  (void) G_GNUC_CONST;
+GType      panel_menu_button_get_type            (void) G_GNUC_CONST;
 
-GtkWidget *panel_menu_button_load            (const char      *menu_path,
-					      gboolean         use_menu_path,
-					      const char      *custom_icon,
-					      gboolean         use_custom_icon,
-					      PanelWidget     *panel,
-					      int              position,
-					      gboolean         exactpos,
-					      const char      *id);
+void       panel_menu_button_create              (PanelToplevel    *toplevel,
+						  int               position,
+						  const char       *menu_path,
+						  gboolean          use_menu_path);
 
-void       panel_menu_button_set_menu_path       (PanelMenuButton *button,
-						  const char      *menu_path);
-void       panel_menu_button_set_custom_icon     (PanelMenuButton *button,
-						  const char      *custom_icon);
-void       panel_menu_button_set_use_menu_path   (PanelMenuButton *button,
-						  gboolean         use_menu_path);
-void       panel_menu_button_set_use_custom_icon (PanelMenuButton *button,
-						  gboolean         use_custom_icon);
+void       panel_menu_button_set_menu_path       (PanelMenuButton  *button,
+						  const char       *menu_path);
+void       panel_menu_button_set_custom_icon     (PanelMenuButton  *button,
+						  const char       *custom_icon);
+void       panel_menu_button_set_use_menu_path   (PanelMenuButton  *button,
+						  gboolean          use_menu_path);
+void       panel_menu_button_set_use_custom_icon (PanelMenuButton  *button,
+						  gboolean          use_custom_icon);
 
-GtkWidget *panel_menu_button_load_from_gconf (PanelWidget     *panel,
-					      int              position,
-					      gboolean         exactpos,
-					      const char      *id);
+void       panel_menu_button_load_from_gconf     (PanelWidget      *panel,
+						  int               position,
+						  gboolean          exactpos,
+						  const char       *id);
 
-void       panel_menu_button_save_to_gconf   (PanelMenuButton *button,
-					      const char      *id);
+void       panel_menu_button_save_to_gconf       (PanelMenuButton  *button,
+						  const char       *id);
 
-void       panel_menu_button_invoke_menu     (PanelMenuButton  *button,
-					      const char      *callback_name);
+void       panel_menu_button_invoke_menu         (PanelMenuButton  *button,
+						  const char       *callback_name);
 
-void       panel_menu_button_change_orientation (PanelMenuButton  *button,
-						 PanelOrientation  orientation);
+void       panel_menu_button_change_orientation  (PanelMenuButton  *button,
+						  PanelOrientation  orientation);
 
 G_END_DECLS
 

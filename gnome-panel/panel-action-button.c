@@ -291,7 +291,7 @@ panel_action_button_drag_data_get (GtkWidget          *widget,
 
 	drag_data = g_strdup_printf ("ACTION:%s:%d", 
 				     gconf_enum_to_string (panel_action_type_map, button->priv->type),
-				     panel_find_applet (widget));
+				     panel_find_applet_index (widget));
 
 	gtk_selection_data_set (
 		selection_data, selection_data->target,
@@ -459,7 +459,7 @@ panel_action_button_connect_to_gconf (PanelActionButton *button)
 					 button, NULL, NULL);
 }
 
-GtkWidget *
+static void
 panel_action_button_load (PanelActionButtonType  type,
 			  PanelWidget           *panel,
 			  int                    position,
@@ -468,26 +468,26 @@ panel_action_button_load (PanelActionButtonType  type,
 			  gboolean               compatibility)
 {
 	PanelActionButton *button;
-	AppletType         applet_type;
+	PanelObjectType    object_type;
 
-	g_return_val_if_fail (panel != NULL, NULL);
+	g_return_if_fail (panel != NULL);
 
 	button = g_object_new (PANEL_TYPE_ACTION_BUTTON, "action-type", type, NULL);
 
-	applet_type = APPLET_ACTION;
+	object_type = PANEL_OBJECT_ACTION;
 	if (compatibility) { /* Backward compatibility with GNOME 2.0.x */
 		if (type == PANEL_ACTION_LOCK)
-			applet_type = APPLET_LOCK;
+			object_type = PANEL_OBJECT_LOCK;
 		else if (type == PANEL_ACTION_LOGOUT)
-			applet_type = APPLET_LOGOUT;
+			object_type = PANEL_OBJECT_LOGOUT;
 	}
 
 	button->priv->info = panel_applet_register (
 				GTK_WIDGET (button), NULL, NULL, panel,
-				position, exactpos, applet_type, id);
+				position, exactpos, object_type, id);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
-		return NULL;
+		return;
 	}
 
 	panel_applet_add_callback (
@@ -497,11 +497,55 @@ panel_action_button_load (PanelActionButtonType  type,
 		actions [button->priv->type].setup_menu (button);
 
 	panel_action_button_connect_to_gconf (button);
-
-	return GTK_WIDGET (button);
 }
 
-GtkWidget *
+void
+panel_action_button_create (PanelToplevel         *toplevel,
+			    int                    position,
+			    PanelActionButtonType  type)
+{
+	GConfClient *client;
+	const char  *profile;
+	const char  *key;
+	char        *id;
+
+	client  = panel_gconf_get_client ();
+	profile = panel_profile_get_name ();
+
+	id = panel_profile_prepare_object (PANEL_GCONF_OBJECTS, toplevel, position);
+
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "action_type");
+	gconf_client_set_string (client,
+				 key,
+				 gconf_enum_to_string (panel_action_type_map, type),
+				 NULL);
+
+	/* frees id */
+	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+}
+
+/* This is only for backwards compatibility with 2.0.x
+ * We load an old-style lock/logout button as an action
+ * button but make sure to retain the lock/logout configuration
+ * so logging back into 2.0.x still works.
+ */
+void
+panel_action_button_load_compatible (PanelObjectType  object_type,
+				     PanelWidget     *panel,
+				     int              position,
+				     gboolean         exactpos,
+				     const char      *id)
+{
+	PanelActionButtonType action_type;
+
+	g_assert (object_type == PANEL_OBJECT_LOGOUT || object_type == PANEL_OBJECT_LOCK);
+
+	action_type = object_type == PANEL_OBJECT_LOGOUT ? PANEL_ACTION_LOGOUT : PANEL_ACTION_LOCK;
+
+	panel_action_button_load (action_type, panel, position, exactpos, id, TRUE);
+}
+
+void
 panel_action_button_load_from_gconf (PanelWidget *panel,
 				     int          position,
 				     gboolean     exactpos,
@@ -520,33 +564,12 @@ panel_action_button_load_from_gconf (PanelWidget *panel,
 	if (!gconf_string_to_enum (panel_action_type_map, action_type, &type)) {
 		g_warning ("Unkown action type '%s' from %s", action_type, key);
 		g_free (action_type);
-		return NULL;
+		return;
 	}
 
 	g_free (action_type);
 
-	return panel_action_button_load (type, panel, position, exactpos, id, FALSE);
-}
-
-void
-panel_action_button_save_to_gconf (PanelActionButton *button,
-				   const char        *id)
-{
-	const char  *key;
-	const char  *profile;
-	const char  *action_type;
-
-	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
-
-	profile = panel_profile_get_name ();
-
-	key = panel_gconf_sprintf ("/apps/panel/profiles/%s/objects/%s", profile, id);
-	panel_gconf_add_dir (key);
-
-	action_type = gconf_enum_to_string (panel_action_type_map, button->priv->type);
-
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "action_type");
-	gconf_client_set_string (panel_gconf_get_client (), key, action_type, NULL);
+	panel_action_button_load (type, panel, position, exactpos, id, FALSE);
 }
 
 void
@@ -577,12 +600,10 @@ panel_action_button_invoke_menu (PanelActionButton *button,
 }
 
 gboolean
-panel_action_button_load_from_drag (const char  *drag_string,
-				    PanelWidget *panel,
-				    int          position,
-				    gboolean     exactpos,
-				    const char  *id,
-				    int         *old_applet)
+panel_action_button_load_from_drag (PanelToplevel *toplevel,
+				    int            position,
+				    const char    *drag_string,
+				    int           *old_applet_idx)
 {
 	PanelActionButtonType   type = PANEL_ACTION_NONE;
 	gboolean                retval = FALSE;
@@ -608,13 +629,13 @@ panel_action_button_load_from_drag (const char  *drag_string,
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, FALSE);
 
 	if (strcmp (elements [2], "NEW")) {
-		*old_applet = strtol (elements [2], NULL, 10);
+		*old_applet_idx = strtol (elements [2], NULL, 10);
 		retval = TRUE; /* Remove the old applet */
 	}
 
 	g_strfreev (elements);
 
-	panel_action_button_load (type, panel, position, exactpos, id, FALSE);
+	panel_action_button_create (toplevel, position, type);
 
 	return retval;
 }

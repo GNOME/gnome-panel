@@ -28,6 +28,7 @@
 #include <gtk/gtkbutton.h>
 #include "button-widget.h"
 #include "panel-widget.h"
+#include "panel-enums.h"
 
 G_BEGIN_DECLS
 
@@ -42,17 +43,6 @@ typedef struct _PanelActionButton        PanelActionButton;
 typedef struct _PanelActionButtonClass   PanelActionButtonClass;
 typedef struct _PanelActionButtonPrivate PanelActionButtonPrivate;
 
-typedef enum {
-	PANEL_ACTION_NONE = 0,
-	PANEL_ACTION_LOCK,
-	PANEL_ACTION_LOGOUT,
-	PANEL_ACTION_RUN,
-	PANEL_ACTION_SEARCH,
-	PANEL_ACTION_SCREENSHOT,
-	PANEL_ACTION_SHOW_DESKTOP,
-	PANEL_ACTION_LAST
-} PanelActionButtonType;
-
 struct _PanelActionButton{
 	ButtonWidget               button;
 
@@ -65,33 +55,31 @@ struct _PanelActionButtonClass {
 
 GType      panel_action_button_get_type  (void) G_GNUC_CONST;
 
-GtkWidget *panel_action_button_load             (PanelActionButtonType   type,
-						 PanelWidget            *panel,
-						 int                     position,
-						 gboolean                exactpos,
-						 const char             *id,
-						 gboolean                compatibility);
+void       panel_action_button_create           (PanelToplevel         *toplevel,
+						 int                    position,
+						 PanelActionButtonType  type);
 
 void       panel_action_button_set_type         (PanelActionButton     *button,
 						 PanelActionButtonType  type);
 
-GtkWidget *panel_action_button_load_from_gconf  (PanelWidget            *panel,
+void       panel_action_button_load_from_gconf  (PanelWidget            *panel,
 						 int                     position,
 						 gboolean                exactpos,
 						 const char             *id);
-void       panel_action_button_save_to_gconf    (PanelActionButton      *button,
-						 const char             *id);
 
+void       panel_action_button_load_compatible  (PanelObjectType         object_type,
+						 PanelWidget            *panel,
+						 int                     position,
+						 gboolean                exactpos,
+						 const char             *id);
 
 void       panel_action_button_invoke_menu      (PanelActionButton      *button,
 						 const char             *callback_name);
 
-gboolean   panel_action_button_load_from_drag   (const char             *drag_string,
-						 PanelWidget            *panel,
+gboolean   panel_action_button_load_from_drag   (PanelToplevel          *toplevel,
 						 int                     position,
-						 gboolean                exactpos,
-						 const char             *id,
-						 int                    *old_applet);
+						 const char             *drag_string,
+						 int                    *old_applet_idx);
 
 void       panel_action_lock_screen (GtkWidget *widget);
 void       panel_action_logout      (GtkWidget *widget);

@@ -6,8 +6,6 @@
 
 * GConf stuff
     + detect read-only keys (+)
-    + same defaults for all screens
-    + use schemas for applets
     + use our own keybindings directory for toplevel bindings (+)
     + use_custom_key setting for drawers
 
@@ -20,3 +18,7 @@
    + Need to implement everything in the comment at the top of panel-compatibility.c
 
 * Fix everything in FIXME_FOR_NEW_CONFIG and FIXME_FOR_NEW_TOPLEVEL
+
+* I've messed up launchers methinks. Not all launchers are "hoarded" now,
+  so if you remove a launcher it will delete the .desktop file. Prolly should
+  only delete hoarded launchers.
