@@ -45,10 +45,11 @@ applet_widget_get_type ()
 enum {
 	CHANGE_ORIENT_SIGNAL,
 	SESSION_SAVE_SIGNAL,
+	START_NEW_APPLET_SIGNAL,
 	LAST_SIGNAL
 };
 
-static gint applet_widget_signals[LAST_SIGNAL] = {0,0};
+static gint applet_widget_signals[LAST_SIGNAL] = {0,0,0};
 
 static void
 gtk_applet_widget_marshal_signal_orient (GtkObject * object,
@@ -112,12 +113,23 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       2,
 			       GTK_TYPE_STRING,
 			       GTK_TYPE_STRING);
+	applet_widget_signals[START_NEW_APPLET_SIGNAL] =
+		gtk_signal_new("start_new_applet",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
+			       			 start_new_applet),
+			       gtk_applet_widget_marshal_signal_orient,
+			       GTK_TYPE_NONE,
+			       1,
+			       GTK_TYPE_STRING);
 
 	gtk_object_class_add_signals(object_class,applet_widget_signals,
 				     LAST_SIGNAL);
 
 	class->change_orient = NULL;
 	class->session_save = NULL;
+	class->start_new_applet = NULL;
 }
 
 static void
@@ -314,4 +326,22 @@ _gnome_applet_session_save(int applet_id, const char *cfgpath, const char *globc
 	  session saving itself, therefore we pass the reverse to the
 	  corba function*/
 	return !return_val;
+}
+
+void
+_gnome_applet_start_new_applet(const char *param)
+{
+	AppletWidget *applet;
+
+	if(!applet_widgets)
+		return;
+
+	/*the first one*/
+	applet = applet_widgets->data;
+
+	if(applet) {
+		gtk_signal_emit(GTK_OBJECT(applet),
+				applet_widget_signals[SESSION_SAVE_SIGNAL],
+				param);
+	}
 }

@@ -62,8 +62,12 @@ struct _AppletWidgetClass
 	/*bind this signal if you want to manage multiple applets, the
 	  panel will signal you the next applet to start with the same
 	  pathname instead of launching the executable, you have to create
-	  your widget with _new_multi_ in order to use this*/
-	gint (* start_new_applet) (AppletWidget *applet,
+	  your widget with _new_multi_ in order to use this,
+	  NOTE!: this signal is passed to only one applet (which is most
+	  likely the first applet-widget, but if that one was removed it
+	  might be ANY so bind this signal for every applet-widget you 
+	  create!!!!*/
+	void (* start_new_applet) (AppletWidget *applet,
 			           gchar *param);
 };
 

@@ -54,6 +54,7 @@ BEGIN_GNOME_DECLS
 void _gnome_applet_change_orient(int applet_id, int orient);
 int _gnome_applet_session_save(int applet_id, const char *cfgpath,
 			       const char *globcfgpath);
+int _gnome_applet_start_new_applet(const char *params);
 END_GNOME_DECLS
 
 class Applet_impl : virtual public GNOME::Applet_skel {
@@ -97,7 +98,7 @@ public:
 			       const char *param)
 	{
 		CHECK_COOKIE ();
-		/*FIXME: start new applet*/
+		::_gnome_applet_start_new_applet(param);
 	}
 };
 
