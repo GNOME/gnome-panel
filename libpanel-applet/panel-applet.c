@@ -652,8 +652,14 @@ panel_applet_focus (GtkWidget        *widget,
 	g_return_val_if_fail (PANEL_IS_APPLET (widget), FALSE);
 
 	applet = PANEL_APPLET (widget);
-	if (applet->priv->moving_focus_out)
+	if (applet->priv->moving_focus_out) {
+		/*
+		 * Applet will retain focus if there is nothing else on the
+		 * panel to get focus
+		 */
+		applet->priv->moving_focus_out = FALSE;
 		return FALSE;
+	}
 
 	previous_focus_child = GTK_CONTAINER (widget)->focus_child;
 	 if (!previous_focus_child && !GTK_WIDGET_HAS_FOCUS (widget)) {
