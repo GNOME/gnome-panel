@@ -858,7 +858,7 @@ push_correct_global_prefix (void)
 }
 
 static void
-init_user_applets (void)
+session_init_user_applets (void)
 {
 	GString *buf;
 	int count, num;	
@@ -1041,7 +1041,7 @@ init_user_applets (void)
 }
 
 static void
-init_user_panels(void)
+session_init_user_panels(void)
 {
 	GString *buf;
 	int count, num;	
@@ -1415,7 +1415,7 @@ load_system_wide (void)
 
 
 void
-session_load_global_config (void)
+session_read_global_config (void)
 {
 	global_config.animation_speed = 
 		panel_gconf_global_config_get_int ("panel-animation-speed");
@@ -1449,6 +1449,8 @@ session_load_global_config (void)
 
 	global_config.highlight_when_over =
 		panel_gconf_global_config_get_bool ("highlight-launchers-on-mouseover");
+
+	printf ("loading HIGHLIGHT! %s\n", global_config.highlight_when_over? "TRUE" : "FALSE");
 	
 	global_config.confirm_panel_remove =
 		panel_gconf_global_config_get_bool ("confirm-panel-remove");
@@ -1496,67 +1498,45 @@ session_load_global_config (void)
 	global_config.menu_check = TRUE;
 	global_config.menu_flags = get_default_menu_flags();
 
-	gnome_config_sync ();
-
 	apply_global_config ();
 	
 }
 
 void
-write_global_config (void)
+session_write_global_config (void)
 {
-	gnome_config_push_prefix ("/panel/Config/");
-/* FIXME
-	gnome_config_set_int ("animation_speed",
-			      global_config.animation_speed);
-	gnome_config_set_int ("minimized_size",
-			      global_config.minimized_size);
-	gnome_config_set_int ("hide_delay",
-			      global_config.hide_delay);
-	gnome_config_set_int ("show_delay",
-			      global_config.show_delay);
-	gnome_config_set_bool ("tooltips_enabled",
-			       global_config.tooltips_enabled);
-	gnome_config_set_bool ("use_large_icons",
-			       global_config.use_large_icons);
-	gnome_config_set_bool ("merge_menus",
-			       global_config.merge_menus);
-	gnome_config_set_bool ("menu_check",
-			       global_config.menu_check);
-	gnome_config_set_bool ("off_panel_popups",
-			       global_config.off_panel_popups);
-	gnome_config_set_bool ("disable_animations",
-			       global_config.disable_animations);
-	gnome_config_set_bool ("autoraise",
-			       global_config.autoraise);
-	gnome_config_set_bool ("keep_bottom",
-			       global_config.keep_bottom);
-	gnome_config_set_bool ("normal_layer",
-			       global_config.normal_layer);
-	gnome_config_set_bool ("drawer_auto_close",
-			       global_config.drawer_auto_close);
-	gnome_config_set_bool ("saturate_when_over",
-			       global_config.saturate_when_over);
-	gnome_config_set_bool ("confirm_panel_remove",
-			       global_config.confirm_panel_remove);
-	gnome_config_set_int ("menu_flags", global_config.menu_flags);
-	gnome_config_set_bool ("keys_enabled", global_config.keys_enabled);
-	gnome_config_set_string ("menu_key", global_config.menu_key);
-	gnome_config_set_string ("run_key", global_config.run_key);
-	gnome_config_set_string ("screenshot_key",
-				 global_config.screenshot_key);
-	gnome_config_set_string ("window_screenshot_key",
-				 global_config.window_screenshot_key);
-	gnome_config_set_bool ("avoid_collisions",
-			       global_config.avoid_collisions);
-			     
-*/	
-	gnome_config_pop_prefix();
-	gnome_config_sync();
+	/* FIXME - I promise I will use a GConfChangeSet for this stuff */
 	
+	/* FIXME STUFF THAT IS BORKED 
+	panel_gconf_global_config_set_int ("menu-flags", global_config.menu_flags);
+	panel_gconf_global_config_set_bool ("merge-menus", global_config.merge_menus);
+	panel_gconf_global_config_set_bool ("menu-check", global_config.menu_check);
+	*/
+
+	panel_gconf_global_config_set_int ("panel-animation-speed", global_config.animation_speed);
+	panel_gconf_global_config_set_int ("panel-minimized-speed", global_config.minimized_size);
+	panel_gconf_global_config_set_int ("panel-hide-delay", global_config.hide_delay);
+	panel_gconf_global_config_set_int ("panel-show-delay", global_config.show_delay);
+	panel_gconf_global_config_set_int  ("panel-window-layer", global_config.layer);
+
+	panel_gconf_global_config_set_bool ("tooltips-enabled", global_config.tooltips_enabled);
+	panel_gconf_global_config_set_bool ("use-large-icons", global_config.use_large_icons);
+	panel_gconf_global_config_set_bool ("disable-animations", global_config.disable_animations);
+	panel_gconf_global_config_set_bool ("autoraise-panel", global_config.autoraise);
+	panel_gconf_global_config_set_bool ("drawer-autoclose", global_config.drawer_auto_close);
+	panel_gconf_global_config_set_bool ("highlight-launchers-on-mouseover", global_config.highlight_when_over);
+	panel_gconf_global_config_set_bool ("confirm-panel-remove", global_config.confirm_panel_remove);
+	panel_gconf_global_config_set_bool ("keep-menus-in-memory", global_config.keep_menus_in_memory);
+	panel_gconf_global_config_set_bool ("avoid-panel-overlap", global_config.avoid_collisions);
+	
+	panel_gconf_global_config_set_string ("menu-key", global_config.menu_key);
+	panel_gconf_global_config_set_string ("run-key", global_config.run_key);
+	panel_gconf_global_config_set_string ("screenshot_key", global_config.screenshot_key);
+	panel_gconf_global_config_set_string ("window_screenshot_key", global_config.window_screenshot_key);
+			     
 }
 
-void load_session (void) {
-  init_user_panels ();
-  init_user_applets ();
+void session_load (void) {
+  session_init_user_panels ();
+  session_init_user_applets ();
 }

@@ -8,7 +8,7 @@
 #include "panel-gconf.h"
 
 static gchar * panel_gconf_global_config_get_full_key (const gchar *key) {
-	return g_strdup_printf ("/apps/panel/%s", key);
+	return g_strdup_printf ("/apps/panel/global/%s", key);
 }
 
 GConfClient * panel_gconf_get_client (void) {

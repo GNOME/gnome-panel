@@ -504,11 +504,11 @@ main(int argc, char **argv)
 
 	/* set the globals, it is important this is before
 	 * init_user_applets */
-	session_load_global_config ();
+	session_read_global_config ();
 
 	/* this is so the capplet gets the right defaults */
 	if ( ! commie_mode)
-		write_global_config ();
+		session_write_global_config ();
 
 #ifdef FIXME
 	gwmh_init ();
@@ -516,7 +516,7 @@ main(int argc, char **argv)
 	
 	init_menus ();
 
-	load_session ();	
+	session_load ();	
 
 	kill_free_drawers ();
 
