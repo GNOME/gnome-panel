@@ -15,6 +15,7 @@ typedef enum {
 	APPLET_STATUS,
 	APPLET_BONOBO,
 	APPLET_ACTION,
+	APPLET_MENU_BAR,
 	APPLET_LOGOUT, /* FIXME:                          */
 	APPLET_LOCK,   /*  Both only for backwards compat */
 

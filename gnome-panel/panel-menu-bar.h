@@ -1,0 +1,74 @@
+/*
+ * panel-menu-bar.h:
+ *
+ * Copyright (C) 2003 Sun Microsystems, Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ * Authors:
+ *	Mark McLoughlin <mark@skynet.ie>
+ */
+
+#ifndef __PANEL_MENU_BAR_H__
+#define __PANEL_MENU_BAR_H__
+
+#include <gtk/gtkmenubar.h>
+#include "panel-widget.h"
+
+G_BEGIN_DECLS
+
+#define PANEL_TYPE_MENU_BAR         (panel_menu_bar_get_type ())
+#define PANEL_MENU_BAR(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_MENU_BAR, PanelMenuBar))
+#define PANEL_MENU_BAR_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), PANEL_TYPE_MENU_BAR, PanelMenuBarClass))
+#define PANEL_IS_MENU_BAR(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), PANEL_TYPE_MENU_BAR))
+#define PANEL_IS_MENU_BAR_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), PANEL_TYPE_MENU_BAR))
+#define PANEL_MENU_BAR_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), PANEL_TYPE_MENU_BAR, PanelMenuBarClass))
+
+typedef struct _PanelMenuBar        PanelMenuBar;
+typedef struct _PanelMenuBarClass   PanelMenuBarClass;
+typedef struct _PanelMenuBarPrivate PanelMenuBarPrivate;
+
+struct _PanelMenuBar{
+	GtkMenuBar            menubar;
+
+	PanelMenuBarPrivate  *priv;
+};
+
+struct _PanelMenuBarClass {
+	GtkMenuBarClass       menubar_class;
+};
+
+GType      panel_menu_bar_get_type  (void) G_GNUC_CONST;
+
+GtkWidget *panel_menu_bar_load             (PanelWidget  *panel,
+					    int           position,
+					    gboolean      exactpos,
+					    const char   *gconf_key);
+
+GtkWidget *panel_menu_bar_load_from_gconf  (PanelWidget  *panel,
+					    int           position,
+					    gboolean      exactpos,
+					    const char   *gconf_key);
+
+void       panel_menu_bar_save_to_gconf    (PanelMenuBar *menubar,
+					    const char   *gconf_key);
+
+void       panel_menu_bar_invoke_menu      (PanelMenuBar *menubar,
+					    const char   *callback_name);
+
+G_END_DECLS
+
+#endif /* __PANEL_MENU_BAR_H__ */

@@ -310,7 +310,7 @@ FIXME: We need to change some of the ints into user visible strings
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
-        <default>[00000001,00000002]</default>
+        <default>[00000001,00000002,menu_bar]</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -544,7 +544,7 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/position</key>
         <owner>panel</owner>
         <type>int</type>
-        <default>20</default>
+        <default>2</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -599,7 +599,7 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/position</key>
         <owner>panel</owner>
         <type>int</type>
-        <default>25</default>
+        <default>3</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -608,6 +608,50 @@ FIXME: We need to change some of the ints into user visible strings
      
       <schema>
         <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/panel_stick</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/menu_bar/object_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>menu-bar</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/menu_bar/panel_id</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000002</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/menu_bar/position</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>1</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/menu_bar/panel_right_stick</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -949,7 +993,7 @@ FIXME: We need to change some of the ints into user visible strings
           <long></long>
         </locale>
       </schema>
-      
+
       
 <!-- *********************************** -->
 <!-- Panel Items for Edge Panel :: END -->

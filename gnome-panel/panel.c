@@ -49,6 +49,7 @@
 #include "panel-applet-frame.h"
 #include "global-keys.h"
 #include "panel-action-button.h"
+#include "panel-menu-bar.h"
 
 #define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -1196,6 +1197,9 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		remove_applet = panel_action_button_load_from_drag (
 					applet_type, panel, pos,
 					TRUE, NULL, &applet_num);
+
+	else if (!strcmp (applet_type, "MENUBAR:NEW"))
+		remove_applet = panel_menu_bar_load (panel, pos, TRUE, NULL) != NULL;
 
 	else if (!strcmp(applet_type,"LAUNCHER:ASK"))
 		ask_about_launcher (NULL, panel, pos, TRUE);

@@ -1,5 +1,40 @@
 2003-01-10  Mark McLoughlin  <mark@skynet.ie>
 
+	Move the menu bar out of foobar-widget as a seperate
+	internal applet. The default panel configuration looks
+	identical to before, but if you have a menu panel in
+	your saved configuration its going to be missing the
+	menu bar and the window menu. I'll be removing the
+	menu panel completely and adding some compatibility
+	code to load an edge panel set up like a menu panel
+	when it sees a menu panel in your configuration.
+
+	* panel-menu-bar.[ch]: new internal applet identical
+	to the menu bar formerly on the left of menu panel.
+
+	* Makefile.am: add panel-menu-bar.[ch] to the build.
+
+	* applet.[ch]:
+	(applet_callback_callback), (panel_applet_load_idle_handler),
+	(panel_applet_save_to_gconf): handle loading/saving the
+	menu bar.
+
+	* foobar-widget.c: (foobar_widget_class_init),
+	(foobar_widget_instance_init), (foobar_widget_exists):
+	Remove the old menu bar.
+
+	* menu.c: (add_menu_bar_to_panel), (make_add_submenu):
+	Add it to the menus.
+
+	* panel-per-panel-config.schemas.in: add the menu bar
+	to the left hand side of the menu panel in the default
+	configuration.
+
+	* panel.c: (drop_internal_applet): handle dnd-ing the
+	menu bar.
+
+2003-01-10  Mark McLoughlin  <mark@skynet.ie>
+
 	Fix a race with applets that use expand flags. Applet
 	filling happens asynchronously, so you can never be sure
 	that the flags have been set by the time you add it to

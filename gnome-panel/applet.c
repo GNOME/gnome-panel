@@ -26,6 +26,7 @@
 #include "panel-applet-frame.h"
 #include "egg-screen-exec.h"
 #include "panel-action-button.h"
+#include "panel-menu-bar.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -47,6 +48,7 @@ static GConfEnumStringPair object_type_enum_map [] = {
 	{ APPLET_LAUNCHER, "launcher-object" }, 
 	{ APPLET_BONOBO,   "bonobo-applet" },
 	{ APPLET_ACTION,   "action-applet" },
+	{ APPLET_MENU_BAR, "menu-bar" },
 	{ APPLET_LOCK,     "lock-object" },   /* FIXME:                           */
 	{ APPLET_LOGOUT,   "logout-object" }, /*   Both only for backwards compat */
 };
@@ -223,6 +225,11 @@ applet_callback_callback (GtkWidget      *widget,
 		panel_action_button_invoke_menu (
 			PANEL_ACTION_BUTTON (menu->info->widget), menu->name);
 		break;
+	case APPLET_MENU_BAR:
+		panel_menu_bar_invoke_menu (
+			PANEL_MENU_BAR (menu->info->widget), menu->name);
+		break;
+
 	case APPLET_BONOBO:
 		/*
 		 * Applet's menu's are handled differently
@@ -746,6 +753,14 @@ panel_applet_load_idle_handler (gpointer dummy)
 				applet->position,
 				TRUE,
 				applet->unique_id);
+		break;
+	case APPLET_MENU_BAR:
+		panel_menu_bar_load_from_gconf (
+				applet->panel_widget,
+				applet->position,
+				TRUE,
+				applet->unique_id);
+		break;
 	default:
 		break;
 	}
@@ -1157,6 +1172,11 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 	case APPLET_ACTION:
 		panel_action_button_save_to_gconf (
 			PANEL_ACTION_BUTTON (applet_info->widget),
+			applet_info->gconf_key);
+		break;
+	case APPLET_MENU_BAR:
+		panel_menu_bar_save_to_gconf (
+			PANEL_MENU_BAR (applet_info->widget),
 			applet_info->gconf_key);
 		break;
 	case APPLET_LOGOUT:

@@ -65,6 +65,7 @@
 #include "panel-stock-icons.h"
 #include "panel-action-button.h"
 #include "panel-recent.h"
+#include "panel-menu-bar.h"
 
 #undef MENU_DEBUG
 
@@ -1919,6 +1920,21 @@ add_action_button_to_panel (GtkWidget *widget,
 }
 
 static void
+add_menu_bar_to_panel (GtkWidget *widget,
+		       gpointer   data)
+{
+	PanelWidget *panel = menu_get_panel (widget);
+	PanelData *pd;
+	int insertion_pos = -1;
+
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
+	
+	panel_menu_bar_load (panel, insertion_pos, FALSE, NULL);
+}
+
+static void
 add_launcher (GtkWidget *widget, const char *item_loc)
 {
 	Launcher *launcher;
@@ -3586,6 +3602,14 @@ make_add_submenu (GtkWidget             *menu,
 			   G_CALLBACK(add_menu_to_panel),
 			   NULL);
 	setup_internal_applet_drag(menuitem, "MENU:MAIN");
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_GNOME_LOGO, _("Menu Bar"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_menu_bar_to_panel), NULL);
+	setup_internal_applet_drag (menuitem, "MENUBAR:NEW");
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (

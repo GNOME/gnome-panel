@@ -19,8 +19,6 @@
 #include <libgnome/libgnome.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "menu.h"
-#include "menu-util.h"
 #include "session.h"
 #include "panel-widget.h"
 #include "xstuff.h"
@@ -36,12 +34,8 @@
 #include "panel-action-button.h"
 #include "panel-recent.h"
 
-#define FOOBAR_MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_KDE_SUB | MAIN_MENU_DISTRIBUTION_SUB)
-
 extern GlobalConfig global_config;
 extern GSList *panel_list;
-
-extern GtkTooltips *panel_tooltips;
 
 static void foobar_widget_class_init	(FoobarWidgetClass *klass);
 static void foobar_widget_instance_init (FoobarWidget *foo);
@@ -51,10 +45,6 @@ static void foobar_widget_size_allocate	(GtkWidget *toplevel,
 					 GtkAllocation *allocation);
 static void foobar_widget_size_request	(GtkWidget *toplevel,
 					 GtkRequisition *requisition);
-static gboolean foobar_leave_notify	(GtkWidget *widget,
-					 GdkEventCrossing *event);
-static gboolean foobar_enter_notify	(GtkWidget *widget,
-					 GdkEventCrossing *event);
 static gboolean foobar_widget_popup_panel_menu (FoobarWidget *foobar);
 
 static GList *foobars = NULL;
@@ -107,18 +97,9 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 
 	object_class->destroy = foobar_widget_destroy;
 
-	widget_class->realize            = foobar_widget_realize;
-	widget_class->size_allocate      = foobar_widget_size_allocate;
-	widget_class->size_request       = foobar_widget_size_request;
-	widget_class->enter_notify_event = foobar_enter_notify;
-	widget_class->leave_notify_event = foobar_leave_notify;
-
-	gtk_rc_parse_string ("style \"panel-foobar-menubar-style\"\n"
-			     "{\n"
-			     "GtkMenuBar::shadow-type = none\n"
-			     "GtkMenuBar::internal-padding = 0\n"
-			     "}\n"
-			     "widget \"*.panel-foobar-menubar\" style \"panel-foobar-menubar-style\"");
+	widget_class->realize       = foobar_widget_realize;
+	widget_class->size_allocate = foobar_widget_size_allocate;
+	widget_class->size_request  = foobar_widget_size_request;
 
 	foobar_widget_signals [POPUP_PANEL_MENU_SIGNAL] =
 		g_signal_new ("popup_panel_menu",
@@ -133,122 +114,6 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 
 	gtk_binding_entry_add_signal (binding_set, GDK_F10, GDK_CONTROL_MASK,
 				     "popup_panel_menu", 0);
-}
-
-static gboolean
-foobar_leave_notify (GtkWidget *widget,
-		     GdkEventCrossing *event)
-{
-	if (GTK_WIDGET_CLASS (foobar_widget_parent_class)->leave_notify_event)
-		GTK_WIDGET_CLASS (foobar_widget_parent_class)->leave_notify_event (widget,
-								     event);
-
-	return FALSE;
-}
-
-static gboolean
-foobar_enter_notify (GtkWidget *widget,
-		     GdkEventCrossing *event)
-{
-	if (GTK_WIDGET_CLASS (foobar_widget_parent_class)->enter_notify_event)
-		GTK_WIDGET_CLASS (foobar_widget_parent_class)->enter_notify_event (widget,
-								     event);
-
-	return FALSE;
-}
-
-static void
-append_actions_menu (FoobarWidget *foo,
-		     GtkWidget    *menu_bar)
-{
-	GtkWidget *menu, *item;
-
-	menu = panel_menu_new ();
-
-	item = stock_menu_item_new (_("Run Program..."),
-				    PANEL_STOCK_RUN,
-				    FALSE);
-	gtk_tooltips_set_tip (panel_tooltips, item,
-			      _("Run applications, if you know the "
-				"correct command to type in"),
-			      NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	g_signal_connect (item, "activate",
-			  G_CALLBACK (panel_action_run_program), NULL);
-	setup_internal_applet_drag (item, "ACTION:run:NEW");
-
-	item = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
-	if (panel_is_program_in_path  ("gnome-search-tool")) {
-		item = stock_menu_item_new (
-				_("Search for Files..."),
-				PANEL_STOCK_SEARCHTOOL,
-				FALSE);
-
-		gtk_tooltips_set_tip (panel_tooltips, item,
-				      _("Find files, folders, and documents "
-				        "on your computer"),
-				      NULL);
-
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (item, "activate",
-				  G_CALLBACK (panel_action_search), NULL);
-		setup_internal_applet_drag (item, "ACTION:search:NEW");
-	}
-
-	panel_recent_append_documents_menu (menu);
-	item = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
-	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
-		item = stock_menu_item_new (_("Screenshot..."),
-					    PANEL_STOCK_SCREENSHOT,
-					    FALSE);
-		gtk_tooltips_set_tip (panel_tooltips, item,
-			      	      _("Take a screenshot of your desktop"),
-			              NULL);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-        	g_signal_connect (item, "activate",
-			  	  G_CALLBACK (panel_action_screenshot), NULL);	 
-		setup_internal_applet_drag (item, "ACTION:screenshot:NEW");
-	}
-
-	item = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
-	if (panel_is_program_in_path  ("xscreensaver")) {
-		item = stock_menu_item_new (_("Lock Screen"), 
-					    PANEL_STOCK_LOCKSCREEN, 
-					    FALSE);
-		gtk_tooltips_set_tip (panel_tooltips, item,
-				      _("Protect your computer from "
-					"unauthorized use"),
-				      NULL);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (item, "activate",
-				  G_CALLBACK (panel_action_lock_screen), NULL);
-		setup_internal_applet_drag (item, "ACTION:lock:NEW");
-	}
-
-	item = stock_menu_item_new (_("Log Out"),
-				    PANEL_STOCK_LOGOUT,
-				    FALSE);
-	gtk_tooltips_set_tip (panel_tooltips, item,
-			      _("Quit from the GNOME desktop"),
-			      NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	g_signal_connect (G_OBJECT (item), "activate",
-			  G_CALLBACK (panel_action_logout), 0);
-	setup_internal_applet_drag  (item, "ACTION:logout:NEW");
-
-	/* FIXME: shutdown or reboot */
-
-	item = gtk_menu_item_new_with_label (_("Actions"));
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
-
-	panel_stretch_events_to_toplevel (item, PANEL_STRETCH_TOP);
 }
 
 void
@@ -282,29 +147,11 @@ foobar_widget_realize (GtkWidget *w)
 }
 
 static void
-programs_menu_to_display (GtkWidget    *menu,
-			  FoobarWidget *foo)
-{
-	if (menu_need_reread (menu)) {
-		while (GTK_MENU_SHELL (menu)->children)
-			gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
-
-		create_root_menu (
-			menu, PANEL_WIDGET (foo->panel),
-			TRUE, FOOBAR_MENU_FLAGS, FALSE, FALSE);
-	}
-}
-
-static void
 foobar_widget_instance_init (FoobarWidget *foo)
 {
 	GtkWindow *window;
 	GtkWidget *bufmap;
-	GtkWidget *menu_bar;
-	GtkWidget *menu;
-	GtkWidget *menuitem;
 	GtkWidget *align;
-	GtkWidget *image;
 	char      *path;
 
 	window = GTK_WINDOW (foo);
@@ -346,34 +193,6 @@ foobar_widget_instance_init (FoobarWidget *foo)
 		gtk_box_pack_start (GTK_BOX (foo->hbox), align, FALSE, FALSE, 0);
 	}
 
-	menu_bar = gtk_menu_bar_new ();	
-	gtk_widget_set_name (menu_bar,
-			     "panel-foobar-menubar");
-
-	menuitem = gtk_image_menu_item_new_with_label (_("Applications"));
-	image = gtk_image_new_from_stock (
-			PANEL_STOCK_GNOME_LOGO,
-			panel_foobar_icon_get_size ()),
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
-
-	menu = create_root_menu (
-			NULL, PANEL_WIDGET (foo->panel),
-			TRUE, FOOBAR_MENU_FLAGS, FALSE, FALSE);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), menuitem);
-	g_signal_connect (G_OBJECT (menu), "show",
-			  G_CALLBACK (programs_menu_to_display),
-			  foo);
-	foo->programs = menu;
-
-	/* Strech the applications menu to the corner */
-	panel_stretch_events_to_toplevel (
-		menuitem, PANEL_STRETCH_TOP | PANEL_STRETCH_LEFT);
-
-	append_actions_menu (foo, menu_bar);
-
-	gtk_box_pack_start (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
-	
 	gtk_container_add (GTK_CONTAINER (foo->hbox), foo->panel);
 
 	path = panel_pixmap_discovery ("panel-corner-right.png", FALSE /* fallback */);
@@ -539,22 +358,6 @@ foobar_widget_exists (int screen, int monitor)
 	}
 
 	return FALSE;
-}
-
-void
-foobar_widget_force_menu_remake (void)
-{
-	FoobarWidget *foo;
-	GList *li;
-
-	for (li = foobars; li != NULL; li = li->next) {
-		foo = FOOBAR_WIDGET(li->data);
-
-		if (foo->programs != NULL)
-			g_object_set_data (G_OBJECT (foo->programs),
-					   "need_reread",
-					   GINT_TO_POINTER (TRUE));
-	}
 }
 
 int

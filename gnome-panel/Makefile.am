@@ -136,6 +136,7 @@ panel_sources =			\
 	panel-background-monitor.c \
 	panel-stock-icons.c	\
 	panel-action-button.c	\
+	panel-menu-bar.c        \
 	panel-recent.c		\
 	panel-gdk-pixbuf-extensions.c \
 	$(EGG_RECENT_FILES_C)	\
@@ -180,6 +181,7 @@ panel_headers =			\
 	panel-background-monitor.h \
 	panel-stock-icons.h	\
 	panel-action-button.h	\
+	panel-menu-bar.h        \
 	panel-recent.h		\
 	panel-gdk-pixbuf-extensions.h \
 	$(EGG_RECENT_FILES_H)	\
