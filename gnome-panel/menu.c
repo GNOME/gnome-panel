@@ -885,7 +885,7 @@ remove_menuitem (GtkWidget *widget, const char *item_loc)
 	order_in_name = g_concat_dir_and_file(dir, ".order");
 	order_in_file = fopen(order_in_name, "r");
 
-	if (order_in_file != NULL) {
+	if (order_in_file == NULL) {
 		/*no .order file so we can just leave*/
 		g_free (order_in_name);
 		g_free (dir);
@@ -897,7 +897,7 @@ remove_menuitem (GtkWidget *widget, const char *item_loc)
 
 	g_free (dir);
 
-	if (order_out_file != NULL) {
+	if (order_out_file == NULL) {
 		panel_error_dialog(_("Could not open .order file: %s\n%s"),
 				   order_out_name,
 				   g_unix_error_string(errno));
