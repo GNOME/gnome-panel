@@ -695,14 +695,16 @@ panel_toplevel_move_to (PanelToplevel *toplevel,
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		y_centered = FALSE;
-		if (new_y == 0 || new_y == (screen_height - height))
+		if (new_y <= SNAP_TOLERANCE ||
+		    new_y + height >= screen_height - SNAP_TOLERANCE)
 			x_centered = abs (x - ((monitor_width - width) / 2))
 								<= SNAP_TOLERANCE;
 		else
 			x_centered = FALSE;
 	} else {
 		x_centered = FALSE;
-		if (new_x == 0 || new_x == (screen_width - width))
+		if (new_x <= SNAP_TOLERANCE ||
+		    new_x + width >= screen_width - SNAP_TOLERANCE)
 			y_centered = abs (y - ((monitor_height - height) / 2))
 								<= SNAP_TOLERANCE;
 		else
@@ -1677,15 +1679,25 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 	*x = CLAMP (*x, 0, monitor_width  - width);
 	*y = CLAMP (*y, 0, monitor_height - height);
 
-	if (*x <= SNAP_TOLERANCE)
+	if (*x <= SNAP_TOLERANCE) {
 		*x = 0;
-	else if ((*x + width) >= (monitor_width - SNAP_TOLERANCE))
+		panel_toplevel_set_x (toplevel, 0, toplevel->priv->x_centered);
+	}
+	else if ((*x + width) >= (monitor_width - SNAP_TOLERANCE)) {
 		*x = monitor_width - width;
+		panel_toplevel_set_x (toplevel, monitor_width - width,
+				      toplevel->priv->x_centered);
+	}
 
-	if (*y <= SNAP_TOLERANCE)
+	if (*y <= SNAP_TOLERANCE) {
 		*y = 0;
-	else if ((*y + height) >= (monitor_height - SNAP_TOLERANCE))
+		panel_toplevel_set_y (toplevel, 0, toplevel->priv->y_centered);
+	}
+	else if ((*y + height) >= (monitor_height - SNAP_TOLERANCE)) {
 		*y = monitor_height - height;
+		panel_toplevel_set_y (toplevel, monitor_height - height,
+				      toplevel->priv->y_centered);
+	}
 }
 
 static void
@@ -1742,15 +1754,27 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	}
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-		if (*x <= SNAP_TOLERANCE)
+		if (*x <= SNAP_TOLERANCE) {
 			*x = 0;
-		else if ((*x + width) >= (monitor_width - SNAP_TOLERANCE))
+			panel_toplevel_set_x (toplevel, 0,
+					      toplevel->priv->x_centered);
+		}
+		else if ((*x + width) >= (monitor_width - SNAP_TOLERANCE)) {
 			*x = monitor_width - width;
+			panel_toplevel_set_x (toplevel, monitor_width - width,
+					      toplevel->priv->x_centered);
+		}
 	} else /* if (toplevel->priv->orientation & PANEL_VERTICAL_MASK) */ {
-		if (*y <= SNAP_TOLERANCE)
+		if (*y <= SNAP_TOLERANCE) {
 			*y = 0;
-		else if ((*y + height) >= (monitor_height - SNAP_TOLERANCE))
+			panel_toplevel_set_y (toplevel, 0,
+					      toplevel->priv->y_centered);
+		}
+		else if ((*y + height) >= (monitor_height - SNAP_TOLERANCE)) {
 			*y = monitor_height - height;
+			panel_toplevel_set_y (toplevel, monitor_height - height,
+					      toplevel->priv->y_centered);
+		}
 	}
 }
 
@@ -2037,7 +2061,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	}
 
 	panel_toplevel_update_expanded_position (toplevel);
-	panel_toplevel_calc_floating (toplevel);
+	panel_toplevel_calc_floating (toplevel); //FIXME should probably be done after panel_toplevel_update_normal_position() too
 
 	x = toplevel->priv->x;
 	y = toplevel->priv->y;
@@ -2059,12 +2083,6 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 
 	else 
 		panel_toplevel_update_hidden_position (toplevel, &x, &y, &w, &h);
-
-	x += panel_multiscreen_x (screen, toplevel->priv->monitor);
-	y += panel_multiscreen_y (screen, toplevel->priv->monitor);
-
-	toplevel->priv->geometry.x = x;
-	toplevel->priv->geometry.y = y;
 
 	if (w != -1)
 		toplevel->priv->geometry.width = w;
@@ -2088,22 +2106,26 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		style = GTK_WIDGET (toplevel->priv->inner_frame)->style;
 		geometry = &toplevel->priv->geometry;
 
-		if (geometry->x <= style->xthickness && geometry->x > 0)
-			geometry->x = 0;
+		if (x <= style->xthickness && x > 0)
+			x = 0;
 
-		if (geometry->y <= style->ythickness && geometry->y > 0)
-			geometry->y = 0;
+		if (y <= style->ythickness && y > 0)
+			y = 0;
 
 		max_size = monitor_width - geometry->width - style->xthickness;
-		if (geometry->x + style->xthickness >= max_size &&
-		    geometry->x < max_size)
-			geometry->x = max_size;
+		if (x + style->xthickness >= max_size && x < max_size)
+			x = max_size;
 
 		max_size = monitor_height - geometry->height - style->ythickness;
-		if (geometry->y + style->ythickness >= max_size &&
-		    geometry->y < max_size)
-			geometry->y = max_size;
+		if (y + style->ythickness >= max_size && y < max_size)
+			y = max_size;
 	}
+
+	x += panel_multiscreen_x (screen, toplevel->priv->monitor);
+	y += panel_multiscreen_y (screen, toplevel->priv->monitor);
+
+	toplevel->priv->geometry.x = x;
+	toplevel->priv->geometry.y = y;
 
 	panel_toplevel_update_struts (toplevel, FALSE);
 	if (toplevel->priv->state == PANEL_STATE_NORMAL ||

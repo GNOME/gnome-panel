@@ -1,3 +1,14 @@
+2004-12-21  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-toplevel.c: (panel_toplevel_move_to): make it easier to center
+	a toplevel by using SNAP_TOLERANCE in the tests and better tests
+	(panel_toplevel_update_normal_position): when snapping a toplevel to
+	an edge, update its x/y settings. It makes sense and we can avoid loops
+	like the one in bug #156522.
+	(panel_toplevel_update_auto_hide_position): ditto
+	(panel_toplevel_update_position): upgraded my brain again. And fix
+	probable multiscreen brokenness I introduced yesterday.
+
 2004-12-20  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-toplevel.c: (panel_toplevel_update_position): I've bought a
