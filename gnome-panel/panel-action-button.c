@@ -475,6 +475,14 @@ panel_action_button_connect_to_gconf (PanelActionButton *button)
 					 button, NULL, NULL);
 }
 
+static void
+panel_action_button_style_event_cb (GtkWidget		*widget,
+				    GtkStyle		*prev_style, 
+				    PanelActionButton	*button)
+{
+	button_widget_set_stock_id (BUTTON_WIDGET (button), actions [button->priv->type].stock_icon);
+}
+
 GtkWidget *
 panel_action_button_load (PanelActionButtonType  type,
 			  PanelWidget           *panel,
@@ -513,6 +521,9 @@ panel_action_button_load (PanelActionButtonType  type,
 		actions [button->priv->type].setup_menu (button);
 
 	panel_action_button_connect_to_gconf (button);
+
+	g_signal_connect (BUTTON_WIDGET (button), "style-set",
+			  G_CALLBACK (panel_action_button_style_event_cb), button);
 
 	return GTK_WIDGET (button);
 }
