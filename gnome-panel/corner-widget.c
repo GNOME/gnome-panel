@@ -164,8 +164,8 @@ corner_widget_size_request(GtkWidget *widget,
 	CornerWidget *corner = CORNER_WIDGET(widget);
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	if(corner_widget_request_cube) {
-		requisition->width = 48;
-		requisition->height = 48;
+		requisition->width = PANEL_MINIMUM_WIDTH;
+		requisition->height = PANEL_MINIMUM_WIDTH;
 		corner_widget_request_cube = FALSE;
 		return;
 	}
@@ -323,7 +323,7 @@ static void
 corner_widget_set_initial_pos(CornerWidget *corner)
 {
 	gint16 x,y;
-	corner_widget_get_pos(corner, &x, &y, 48, 48);
+	corner_widget_get_pos(corner, &x, &y, PANEL_MINIMUM_WIDTH, PANEL_MINIMUM_WIDTH);
 	gtk_widget_set_uposition(GTK_WIDGET(corner),x,y);
 }
 

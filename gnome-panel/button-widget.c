@@ -7,7 +7,7 @@
 
 /*FIXME: make this global, and use it everywhere*/
 #define SMALL_ICON_SIZE 20
-#define BIG_ICON_SIZE   48
+#define BIG_ICON_SIZE   PANEL_MINIMUM_WIDTH
 
 static void button_widget_class_init	(ButtonWidgetClass *klass);
 static void button_widget_init		(ButtonWidget      *button);

@@ -177,8 +177,8 @@ snapped_widget_size_request(GtkWidget *widget,
 	BasePWidget *basep = BASEP_WIDGET(widget);
 
 	if(snapped_widget_request_cube) {
-		requisition->width = 48;
-		requisition->height = 48;
+		requisition->width = PANEL_MINIMUM_WIDTH;
+		requisition->height = PANEL_MINIMUM_WIDTH;
 		snapped_widget_request_cube = FALSE;
 		return;
 	}
@@ -357,14 +357,14 @@ snapped_widget_set_initial_pos(SnappedWidget *snapped)
 					       &x,
 					       &y,
 					       gdk_screen_width(),
-					       48);
+					       PANEL_MINIMUM_WIDTH);
 			break;
 		case SNAPPED_LEFT:
 		case SNAPPED_RIGHT:
 			snapped_widget_get_pos(snapped,
 					       &x,
 					       &y,
-					       48,
+					       PANEL_MINIMUM_WIDTH,
 					       gdk_screen_height());
 			break;
 	}

@@ -153,8 +153,8 @@ drawer_widget_size_request(GtkWidget *widget,
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	int w,h;
 	if(drawer_widget_request_cube) {
-		requisition->width = 48;
-		requisition->height = 48;
+		requisition->width = PANEL_MINIMUM_WIDTH;
+		requisition->height = PANEL_MINIMUM_WIDTH;
 		drawer_widget_request_cube = FALSE;
 		return;
 	}
@@ -166,9 +166,9 @@ drawer_widget_size_request(GtkWidget *widget,
 
 	/* do a minimal 48 size*/
 	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
-		if(w<48) w=48;
+		if(w<PANEL_MINIMUM_WIDTH) w=PANEL_MINIMUM_WIDTH;
 	} else {
-		if(h<48) h=48;
+		if(h<PANEL_MINIMUM_WIDTH) h=PANEL_MINIMUM_WIDTH;
 	}
 	requisition->width = w;
 	requisition->height = h;
@@ -261,9 +261,9 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	/* do a minimal 48 size*/
 	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
-		if(w<48) w=48;
+		if(w<PANEL_MINIMUM_WIDTH) w=PANEL_MINIMUM_WIDTH;
 	} else {
-		if(h<48) h=48;
+		if(h<PANEL_MINIMUM_WIDTH) h=PANEL_MINIMUM_WIDTH;
 	}
 	allocation->width = w;
 	allocation->height = h;
