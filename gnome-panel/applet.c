@@ -574,6 +574,12 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 			PANEL_WIDGET(BASEP_WIDGET(dw)->panel)->master_widget = NULL;
 			gtk_widget_destroy(dw);
 		}
+
+		/* HACK!, there is a cleaner solution in the 1.4 version, but
+		 * This is a minimal intrusive change for the stable branch, basically
+		 * the drawer's destroy handler has already run, and we need to free
+		 * the drawer structure here, and not there */
+		g_free (drawer);
 	}
 	if(info->menu) {
 		gtk_widget_unref(info->menu);

@@ -198,9 +198,15 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 	Drawer *drawer = data;
 	GtkWidget *prop_dialog = drawer->properties;
 
+	drawer->properties = NULL;
+
 	if(prop_dialog)
 		gtk_widget_destroy(prop_dialog);
-	g_free(drawer);
+
+	/* HACK!, we don't free drawer structure here like other applets.
+	 * it is freed in applet_destroyed in applet.c.  There is a cleaner
+	 * solution in the 1.4 version, but for the stable version this is
+	 * GoodEnough(tm) */
 }
 
 static int
