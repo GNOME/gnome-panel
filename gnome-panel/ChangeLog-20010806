@@ -1,3 +1,26 @@
+2000-04-03  Jacob Berkman  <jacob@helixcode.com>
+
+	* help/*/Makefile.am: use new makefile stuff
+
+	* logout.c (load_lock_applet): 
+	* applet.c (applet_callback_callback): add some things jwz requested
+
+2000-03-31  Jacob Berkman  <jacob@helixcode.com>
+
+	* panel_config.c (panel_config): add links for other panel
+	types
+
+	* menu.c (add_menu_to_panel): remove some dumb code
+
+	* menu-properties.c (phelp_cb):	
+	* applet.c: (applet_callback_callback): show main menu or
+	normal menu depending what this menu is
+
+	* gnome-panel-properties.c (help): hook into new help
+
+	* swallow.c (really_add_swallow): show swallowed window help
+	(ask_about_swallowing): add help button
+
 2000-04-03  Alastair McKinstry  <mckinstry@computer.org>
 
 	* gnome-panel-properties.desktop: Added Irish translation

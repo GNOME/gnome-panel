@@ -1281,6 +1281,7 @@ panel_config(GtkWidget *panel)
 					 ppc->type_tab_label);
 	} else if(IS_ALIGNED_WIDGET(panel)) {
 		/* aligned notebook page */
+		help_path = "panelproperties.html#EDGETAB";
 		page = aligned_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1290,6 +1291,7 @@ panel_config(GtkWidget *panel)
 					 ppc->type_tab_label);
 	} else if(IS_SLIDING_WIDGET(panel)) {
 		/* sliding notebook page */
+		help_path = "panelproperties.html#EDGETAB";
 		page = sliding_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1299,6 +1301,7 @@ panel_config(GtkWidget *panel)
 					 ppc->type_tab_label);
 	} else if(IS_FLOATING_WIDGET(panel)) {
 		/* floating notebook page */
+		help_path = "panelproperties.html#EDGETAB";
 		page = floating_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);

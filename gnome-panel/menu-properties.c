@@ -288,7 +288,15 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 			    GTK_SIGNAL_FUNC (toggle_prop), 
 			    dialog);
 }
-	
+
+static void
+phelp_cb (GtkWidget *w, gint tab, gpointer data)
+{
+	char *page = GTK_TOGGLE_BUTTON (data)->active
+		? "mainmenu.html#MAINMENUCONFIG"
+		: "menus.html";
+	panel_pbox_help_cb (NULL, 0, page);
+}      
 
 static GtkWidget *
 create_properties_dialog(Menu *menu)
@@ -300,6 +308,7 @@ create_properties_dialog(Menu *menu)
 	GtkWidget *w,*w2;
 	GtkWidget *f;
 	GtkWidget *t;
+	GtkWidget *the_toggle;
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
@@ -319,6 +328,7 @@ create_properties_dialog(Menu *menu)
 	gtk_container_add(GTK_CONTAINER(f),box);
 	
 	w = gtk_radio_button_new_with_label (NULL, _("Main menu"));
+	the_toggle = w;
 	gtk_object_set_data(GTK_OBJECT(dialog),"main_menu",w);
 	if(!menu->path || strcmp(menu->path,".")==0)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
@@ -420,8 +430,7 @@ create_properties_dialog(Menu *menu)
 			   GTK_SIGNAL_FUNC(properties_apply_callback),
 			   menu);
 	gtk_signal_connect(GTK_OBJECT(dialog), "help",
-			   GTK_SIGNAL_FUNC(panel_pbox_help_cb),
-			   "mainmenu.html#MAINMENUCONFIG");
+			   GTK_SIGNAL_FUNC(phelp_cb), the_toggle);
 
 	return dialog;
 }

@@ -345,7 +345,7 @@ static void
 phelp_cb (GtkWidget *w, gint tab, gpointer data)
 {
 	GnomeHelpMenuEntry help_entry = { "fish_applet",
-					  "index.html#wanda-prefs" };
+					  "index.html#WANDA-PREFS" };
 	gnome_help_display(NULL, &help_entry);
 }
 

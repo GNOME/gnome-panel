@@ -126,13 +126,45 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 				gnome_execute_async(NULL, 1, &tmp);
 				g_free(tmp);
 			}
-		} else if (strcmp (menu->name, "help") == 0)
-			panel_pbox_help_cb (NULL, 0, "menus.html");
+		} else if (strcmp (menu->name, "help") == 0) {
+			Menu *menu2 = menu->info->data;
+			char *page;
+			page = (menu2->path && strcmp (menu2->path,"."))
+				? "menus.html" : "mainmenu.html";
+			panel_pbox_help_cb (NULL, 0, page);
+		}
 		break;
-	case APPLET_LOCK:
+	case APPLET_LOCK: {
+                /*
+		  <jwz> Blank Screen Now
+		  <jwz> Lock Screen Now
+		  <jwz> Kill Daemon
+		  <jwz> Restart Daemon
+		  <jwz> Preferences
+		  <jwz> (or "configuration" instead?  whatever word you use)
+		  <jwz> those should do xscreensaver-command -activate, -lock, -exit...
+		  <jwz> and "xscreensaver-command -exit ; xscreensaver &"
+		  <jwz> and "xscreensaver-demo"
+		*/
+		char *command = NULL;
+		gboolean freeit = FALSE;
 		if (strcmp (menu->name, "help") == 0)
 			panel_pbox_help_cb (NULL, 0, "specialobjects.html#LOCKBUTTON");
+		else if (!strcmp (menu->name, "restart")) {
+			command = "xscreensaver-command -exit ; xscreensaver &";
+		} else if (!strcmp (menu->name, "prefs")) {
+			command = "xscreensaver-demo";
+		} else {
+			command = g_strdup_printf ("xscreensaver-command -%s",
+						   menu->name);
+			freeit = TRUE;
+		}
+		if (command)
+			gnome_execute_shell (NULL, command);
+		if (freeit)
+			g_free (command);
 		break;
+	}
 	case APPLET_LOGOUT:
 		if (strcmp (menu->name, "help") == 0)
 			panel_pbox_help_cb (NULL, 0, "specialobjects.html#LOGOUTBUTTON");

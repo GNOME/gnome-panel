@@ -835,10 +835,7 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 
 	panel = get_panel_from_menu_data (widget);
 
-	if(menudir)
-		load_menu_applet(menudir, flags, panel, 0, FALSE);
-	else
-		load_menu_applet(NULL, flags, panel, 0, FALSE);
+	load_menu_applet (menudir, flags, panel, 0, FALSE);
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/

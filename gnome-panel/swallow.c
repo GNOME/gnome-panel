@@ -127,9 +127,15 @@ really_add_swallow(GtkWidget *d,int button, gpointer data)
 	gboolean exactpos =
 		GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"exactpos"));
 
-	if(button!=0) {
+	switch (button) {
+	case 1: /* cancel */
 		gtk_widget_destroy(d);
 		return;
+	case 2: /* help */
+		panel_pbox_help_cb (NULL, 0, "specialobjects.html#SWALLOWEDAPPS");
+		return;
+	default:
+		break;
 	}
 	
 	load_swallow_applet(gtk_entry_get_text(GTK_ENTRY(exec_e)),
@@ -168,6 +174,7 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	d = gnome_dialog_new(_("Create swallow applet"),
 			     GNOME_STOCK_BUTTON_OK,
 			     GNOME_STOCK_BUTTON_CANCEL,
+			     GNOME_STOCK_BUTTON_HELP,
 			     NULL);
 	gtk_window_set_wmclass(GTK_WINDOW(d),
 			       "create_swallow","Panel");

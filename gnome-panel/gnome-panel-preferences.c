@@ -997,21 +997,7 @@ misc_notebook_page(void)
 static void
 help(GtkWidget *capplet)
 {
-	gchar *tmp;
-
-	tmp = gnome_help_file_find_file ("users-guide", "confglobal.html");
-	if (tmp) {
-		gnome_help_goto(0, tmp);
-		g_free(tmp);
-	} else {
-		GtkWidget *mbox;
-
-		mbox = gnome_message_box_new(_("No help is available/installed for these settings. Please make sure you\nhave the GNOME User's Guide installed on your system."),
-					     GNOME_MESSAGE_BOX_ERROR,
-					     _("Close"), NULL);
-
-		gtk_widget_show(mbox);
-	}
+	panel_pbox_help_cb (NULL, 0, "globalpanelprefs.html");
 }
 
 static void
