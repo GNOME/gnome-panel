@@ -8,6 +8,7 @@
 
 #include <applet-widget.h>
 #include <libgnorba/gnorba.h>
+#include <libgnorba/gnome-factory.h>
 
 #include "gnome-panel.h"
 
