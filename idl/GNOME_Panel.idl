@@ -103,14 +103,15 @@ module GNOME {
 					  in string menuitem_text);
 		oneway void remove_callback (in string callback_name);
 		oneway void sync_config ();
+		oneway void done_session_save(in boolean ret);
 	};
 
 	interface Applet {
 		oneway void change_orient (in Panel::OrientType orient);
 		oneway void change_size (in Panel::SizeType size);
 		oneway void do_callback (in string callback_name);
-		boolean session_save (in string cfgpath,
-				      in string global_cfgpath);
+		oneway void session_save (in string cfgpath,
+					  in string global_cfgpath);
 		oneway void back_change (in Panel::BackInfoType backing);
 		oneway void set_tooltips_state (in boolean enabled);
 		readonly attribute string goad_id;
