@@ -406,6 +406,9 @@ panel_run_dialog_response (PanelRunDialog *dialog,
 			   int             response,
 			   GtkWidget      *run_dialog)
 {
+
+	dialog->completion_started = FALSE;
+
 	switch (response) {
 	case GTK_RESPONSE_OK:
 		panel_run_dialog_execute (dialog);
@@ -1154,7 +1157,6 @@ entry_event (GtkEditable    *entry,
 	if (event->type == GDK_KEY_PRESS)
 		dialog->use_program_list = FALSE;
 
-	dialog->completion_started = FALSE;
 
 	/* tab completion */
 	if (event->type == GDK_KEY_PRESS &&
@@ -1201,10 +1203,11 @@ entry_event (GtkEditable    *entry,
 
 			g_free (nprefix);
 			g_free (prefix);
+			return TRUE;
 		}
 	}
 	
-	return dialog->completion_started;
+	return FALSE;
 }
 
 static void

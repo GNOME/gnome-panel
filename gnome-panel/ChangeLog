@@ -1,3 +1,10 @@
+2003-08-11  Arvind Samptur <arvind.samptur@wipro.com>
+
+	* panel-run-dialog.c: (panel_run_dialog_response): Reset the 
+	completion_started flag.
+	(event_key): Use the completion_started flag in the right way.  
+	Fixes bug #115259
+
 2003-08-11  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* panel-menu-bar.c (panel_menu_bar_popup_menu): Activate menu bar when
