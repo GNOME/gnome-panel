@@ -5,6 +5,7 @@ srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
 PKG_NAME="GNOME 2.5 Panel"
+REQUIRED_AUTOMAKE_VERSION=1.6
 
 (test -f $srcdir/configure.in \
   && test -f $srcdir/HACKING \
