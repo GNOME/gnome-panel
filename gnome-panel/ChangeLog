@@ -1,5 +1,12 @@
 2003-11-13  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-toplevel.c: (panel_toplevel_realize): Make
+	sure PPosition WM_NORMAL_HINT is set to keep some
+	WMs happy. Patch from olivier.chapuis@free.fr in
+	bug #121987.
+
+2003-11-13  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-run-dialog.glade: make the expander label
 	use the mnemonic. Fixes #126283.
 

@@ -2536,6 +2536,8 @@ panel_toplevel_realize (GtkWidget *widget)
 	panel_xutils_set_window_type (widget->window, PANEL_XUTILS_TYPE_DOCK);
 	xstuff_set_no_group (widget->window);
 
+	gdk_window_set_geometry_hints (widget->window, NULL, GDK_HINT_POS);
+
 	panel_toplevel_move_resize_window (toplevel, TRUE, TRUE);
 }
 
