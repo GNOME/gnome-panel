@@ -3316,7 +3316,7 @@ panel_toplevel_focus_in_event (GtkWidget     *widget,
 	   but just a focus in/out, so queue the autohide in that case.
 	   If the pointer is inside the panel then obviously we won't hide */
 	if (toplevel->priv->auto_hide)
-		panel_toplevel_queue_auto_unhide (toplevel);
+		panel_toplevel_queue_auto_hide (toplevel);
 
 	if (GTK_WIDGET_CLASS (parent_class)->focus_in_event)
 		return GTK_WIDGET_CLASS (parent_class)->focus_in_event (widget, event);
