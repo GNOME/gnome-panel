@@ -1213,7 +1213,6 @@ create_menu_at (GtkWidget *menu,
 		GtkWidget     *sub, *pixmap;
 		char          *pixmap_name;
 		char          *menuitem_name;
-		char          *item_loc = NULL;;
 		
 		thisfile = flist->data;
 		filename = g_concat_dir_and_file(menudir,thisfile);
@@ -1308,19 +1307,13 @@ create_menu_at (GtkWidget *menu,
 				gtk_widget_show (pixmap);
 		}
 		
+		if(!sub && applets)
+			setup_applet_drag (menuitem, item_info);
 		/*setup the menuitem, pass item_loc if this is not
-		  a submenu or an applet, so that the item can be added*/
-		if(!sub) {
-			item_loc = g_strdup(item_info->location);
-			gtk_signal_connect_object(GTK_OBJECT(menuitem),
-						  "destroy",
-						  GTK_SIGNAL_FUNC(g_free),
-						  (GtkObject *)item_loc);
-			if (applets)
-				setup_applet_drag (menuitem, item_info);
-		}
+		  a submenu or an applet, so that the item can be added,
+		  we can be sure that the finfo will live that long*/
  		setup_full_menuitem (menuitem, pixmap, menuitem_name,
-				     applets?NULL:item_loc);
+				     (applets||sub)?NULL:fi->name);
 
 		if(add_separator) {
 			add_menu_separator(menu);
@@ -1334,7 +1327,7 @@ create_menu_at (GtkWidget *menu,
 					    applets?
 					     GTK_SIGNAL_FUNC(add_applet):
 					     GTK_SIGNAL_FUNC(activate_app_def),
-					    item_loc);
+					    fi->name);
 		}
 		if(item_info)
 			gnome_desktop_entry_free(item_info);
