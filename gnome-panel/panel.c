@@ -313,8 +313,13 @@ back_change(int applet_id,
 			send_applet_change_back(ext->ior, info->applet_id,
 						panel->back_type,panel->back_pixmap,
 						&panel->back_color);
-	}
-	/*FIXME: probably set other backgrounds as well*/
+	} /*else if(IS_BUTTON_WIDGET(info->widget)) {
+		GtkStyle *ns = gtk_style_copy(GTK_WIDGET(panel)->style);
+		gtk_style_ref(ns);
+		gtk_widget_set_style(info->widget, ns);
+		gtk_style_unref(ns);
+		gtk_widget_queue_draw(info->widget);
+	}*/
 }
 
 
@@ -335,6 +340,7 @@ panel_back_change(GtkWidget *widget,
 		  GdkColor *color)
 {
 	gtk_container_foreach(GTK_CONTAINER(widget),back_change_foreach,widget);
+
 	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_back(PANEL_WIDGET(widget));
@@ -784,6 +790,38 @@ panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 						 GINT_TO_POINTER(applet_id));
 }
 
+static int
+is_in_widget(GdkEventButton *bevent, GtkWidget *widget)
+{
+	if(bevent->x >= widget->allocation.x &&
+	   bevent->x < (widget->allocation.x + widget->allocation.width) &&
+	   bevent->y >= widget->allocation.y &&
+	   bevent->y < (widget->allocation.y + widget->allocation.height))
+		return TRUE;
+	return FALSE;
+}
+
+static int
+if_on_button_widget_show_menu(GtkWidget *widget, GdkEventButton *bevent)
+{
+	PanelWidget *panel = get_def_panel_widget(widget);
+	GList *list;
+	if(!is_in_widget(bevent,GTK_WIDGET(panel)))
+		return FALSE;
+	for(list = panel->no_window_applet_list; 
+	    list!=NULL;
+	    list = g_list_next(list)) {
+		AppletData *ad = list->data;
+		if(is_in_widget(bevent,ad->applet)) {
+			if(IS_BUTTON_WIDGET(ad->applet) &&
+			   !panel_applet_in_drag)
+				show_applet_menu(GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(ad->applet),
+										     "applet_id")),bevent);
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
 
 static int
 panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
@@ -795,6 +833,11 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 		bevent = (GdkEventButton *) event;
 		switch(bevent->button) {
 		case 3: /* fall through */
+			/*this might be a right click on an applet,
+			  we trap that*/
+			if(if_on_button_widget_show_menu(widget,bevent))
+				return TRUE;
+			/*fall through*/
 		case 1:
 			if(!panel_applet_in_drag) {
 				GtkWidget *rem = 
@@ -896,7 +939,6 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 	return FALSE;
 }
-
 
 static int
 panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)

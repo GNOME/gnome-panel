@@ -121,6 +121,8 @@ panel_SOURCES = 		\
 	drawer-widget.h		\
 	corner-widget.c  	\
 	corner-widget.h		\
+	button-widget.c  	\
+	button-widget.h		\
 	exec-queue.c		\
 	exec-queue.h		\
 	mulapp.c		\

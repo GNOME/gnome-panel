@@ -2,10 +2,14 @@
 #ifndef PANEL_INCLUDE_H
 #define PANEL_INCLUDE_H
 
+#include "panel-types.h"
+
 #include "panel-widget.h"
 #include "snapped-widget.h"
 #include "drawer-widget.h"
 #include "corner-widget.h"
+
+#include "button-widget.h"
 
 #include "panel.h"
 #include "applet.h"

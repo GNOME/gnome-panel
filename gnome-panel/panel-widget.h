@@ -12,6 +12,7 @@
 
 
 #include <gtk/gtk.h>
+#include "button-widget.h"
 
 BEGIN_GNOME_DECLS
 
@@ -57,6 +58,10 @@ struct _AppletData
 struct _PanelWidget
 {
 	GtkFixed		fixed;
+	
+	
+	GdkPixmap		*pixmap;
+	int			pixw,pixh;
 
 	GList			*applet_list;
 	GList			*no_window_applet_list;
@@ -112,7 +117,6 @@ GtkWidget *	panel_widget_new		(int packed,
 						 char *back_pixmap,
 						 int fit_pixmap_bg,
 						 GdkColor *back_color);
-
 /*add an applet to the panel, preferably at position pos*/
 int		panel_widget_add_full		(PanelWidget *panel,
 						 GtkWidget *applet,
@@ -170,6 +174,13 @@ void		panel_widget_change_global	(int explicit_step,
 						 PanelMovementType move_type,
 						 int disable_animations,
 						 int applet_padding);
+
+/*draw EVERYTHING (meaning icons)*/
+void		panel_widget_draw_all		(PanelWidget *panel);
+/*draw just one icon (applet has to be an icon of course)*/
+void		panel_widget_draw_icon		(PanelWidget *panel,
+						 ButtonWidget *applet);
+
 
 /*get the number of applets*/
 int		panel_widget_get_applet_count	(PanelWidget *panel);

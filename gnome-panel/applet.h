@@ -26,13 +26,6 @@ typedef enum {
 	APPLET_EMPTY
 } AppletType;
 
-typedef enum {
-	ORIENT_UP,
-	ORIENT_DOWN,
-	ORIENT_LEFT,
-	ORIENT_RIGHT
-} PanelOrientType;
-
 typedef struct _AppletUserMenu AppletUserMenu;
 typedef struct _AppletInfo AppletInfo;
 
@@ -73,6 +66,7 @@ void applet_remove_callback(int applet_id,
 			    char *callback_name);
 void applet_menu_position (GtkMenu *menu, int *x, int *y,
 			   gpointer data);
+void show_applet_menu(int applet_id, GdkEventButton *event);
 
 #define get_applet_info(applet_id) \
 	((applet_id>=0 && applet_id<applet_count) ? \

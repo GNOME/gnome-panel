@@ -1,3 +1,19 @@
+Wed Aug 26 02:14:11 1998  George Lebl  <jirka@5z.com>
+
+	* button-widget.[ch],panel-widget.[ch]: redid the icon stuff, now
+	  icons are windowless widgets which don't even draw themselves,
+	  the panel is aware of them and draws them itself, this will in
+	  the very near future have support for tiles.
+
+	* launcher.c: using the new button-widget as the widget instead of
+	  gnome-pixmap
+
+	* panel-types.h: new file for global types
+
+	* panel.c: support rightclick menus for no_window applets
+
+	* applet.[ch]: export the show_applet_menu function
+
 1998-08-20  Martin Baulig  <martin@home-of-linux.org>
 
 	* orbit-applet-lib.c (gnome_panel_applet_register): Don't

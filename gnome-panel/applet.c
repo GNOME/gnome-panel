@@ -385,6 +385,10 @@ applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 	w = gtk_object_get_data(GTK_OBJECT(panel), PANEL_PARENT);
 
 	gdk_window_get_origin (info->widget->window, &wx, &wy);
+	if(GTK_WIDGET_NO_WINDOW(info->widget)) {
+		wx += info->widget->allocation.x;
+		wy += info->widget->allocation.y;
+	}
 
 	if(IS_DRAWER_WIDGET(w)) {
 		if(panel->orient==PANEL_VERTICAL) {
@@ -453,7 +457,7 @@ applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 }
 
 
-static void
+void
 show_applet_menu(int applet_id, GdkEventButton *event)
 {
 	AppletInfo *info = get_applet_info(applet_id);
@@ -517,7 +521,7 @@ register_toy(GtkWidget *applet,
 	g_return_val_if_fail(applet != NULL, FALSE);
 	g_return_val_if_fail(panel != NULL, FALSE);
 
-	if(GTK_WIDGET_NO_WINDOW(applet) || GTK_IS_SOCKET(applet)) {
+	if(/*GTK_WIDGET_NO_WINDOW(applet) || */GTK_IS_SOCKET(applet)) {
 		/* We wrap the applet in a GtkEventBox so that we can capture
 		   events over it */
 		eventbox = gtk_event_box_new();
@@ -527,10 +531,11 @@ register_toy(GtkWidget *applet,
 					 GDK_POINTER_MOTION_HINT_MASK));
 		gtk_container_add(GTK_CONTAINER(eventbox), applet);
 	} else {
-		gtk_widget_set_events(applet, (gtk_widget_get_events(applet) |
-					       APPLET_EVENT_MASK) &
-				      ~( GDK_POINTER_MOTION_MASK |
-					 GDK_POINTER_MOTION_HINT_MASK));
+		if(!GTK_WIDGET_NO_WINDOW(applet))
+			gtk_widget_set_events(applet, (gtk_widget_get_events(applet) |
+						       APPLET_EVENT_MASK) &
+					      ~( GDK_POINTER_MOTION_MASK |
+						 GDK_POINTER_MOTION_HINT_MASK));
 		eventbox = applet;
 	}
 
@@ -588,10 +593,11 @@ register_toy(GtkWidget *applet,
 		panel = PANEL_WIDGET(list->data);
 	}
 
-	gtk_signal_connect(GTK_OBJECT(eventbox),
-			   "button_press_event",
-			   GTK_SIGNAL_FUNC(applet_button_press),
-			   GINT_TO_POINTER(applet_count-1));
+	if(!GTK_WIDGET_NO_WINDOW(applet))
+		gtk_signal_connect(GTK_OBJECT(eventbox),
+				   "button_press_event",
+				   GTK_SIGNAL_FUNC(applet_button_press),
+				   GINT_TO_POINTER(applet_count-1));
 
 	gtk_signal_connect(GTK_OBJECT(eventbox),
 			   "destroy",
