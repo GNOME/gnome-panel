@@ -68,6 +68,7 @@ G_BEGIN_DECLS
  * for the stock item.
  */
 #define PANEL_STOCK_EXECUTE             "panel-execute"
+#define PANEL_STOCK_CLEAR               "panel-clear"
 
 void        panel_init_stock_icons_and_items (void);
 GtkIconSize panel_menu_icon_get_size         (void);

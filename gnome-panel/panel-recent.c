@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /*
  * panel-recent.c
  *
@@ -163,6 +164,72 @@ recent_documents_activate_cb (EggRecentViewGtk *view, EggRecentItem *item,
 	g_free (mime_type);
 }
 
+static void
+panel_recent_model_changed_cb (EggRecentModel *model,
+                               GList          *list,
+                               GtkWidget      *menu_item)
+{
+	GList *recent_list = NULL;
+
+	recent_list = egg_recent_model_get_list (model);
+	if (recent_list)
+		gtk_widget_set_sensitive (menu_item, TRUE);
+	else
+		gtk_widget_set_sensitive (menu_item, FALSE);
+}
+
+static GtkWidget *clear_recent_dialog = NULL;
+
+static void
+clear_dialog_response (GtkWidget      *widget,
+		       int             response,
+		       EggRecentModel *model)
+{
+        if (response == GTK_RESPONSE_ACCEPT)
+		egg_recent_model_clear (model);
+
+	gtk_widget_destroy (widget);
+}
+
+static void
+recent_documents_clear_cb (GtkMenuItem    *menuitem,
+                           EggRecentModel *model)
+{
+	if (clear_recent_dialog != NULL) {
+		gtk_window_set_screen (GTK_WINDOW (clear_recent_dialog),
+				       gtk_widget_get_screen (GTK_WIDGET (menuitem)));
+		gtk_window_present (GTK_WINDOW (clear_recent_dialog));
+		return;
+	}
+
+	clear_recent_dialog = gtk_message_dialog_new_with_markup (NULL,
+								  0 /* flags */,
+								  GTK_MESSAGE_QUESTION,
+								  GTK_BUTTONS_NONE,
+								  "<big><b>%s</b></big>\n\n%s",
+								  _("Clear recent document history?"),
+								  _("This will clear the contents of the Recent Documents menu."));
+
+	gtk_dialog_add_buttons (GTK_DIALOG (clear_recent_dialog),
+				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				PANEL_STOCK_CLEAR, GTK_RESPONSE_ACCEPT,
+				NULL);
+
+	gtk_container_set_border_width (GTK_CONTAINER (clear_recent_dialog), 6);
+
+	gtk_dialog_set_default_response (GTK_DIALOG (clear_recent_dialog), GTK_RESPONSE_ACCEPT);
+
+	g_signal_connect (clear_recent_dialog, "response",
+			  G_CALLBACK (clear_dialog_response), model);
+
+	g_object_add_weak_pointer (G_OBJECT (clear_recent_dialog),
+				   (gpointer *) &clear_recent_dialog);
+
+	gtk_window_set_screen (GTK_WINDOW (clear_recent_dialog),
+			       gtk_widget_get_screen (GTK_WIDGET (menuitem)));
+	gtk_widget_show (clear_recent_dialog);
+}
+
 void
 panel_recent_append_documents_menu (GtkWidget *top_menu)
 {
@@ -188,8 +255,26 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	
 	/* a model that shows the global recent doc list */
 	model = egg_recent_model_new (EGG_RECENT_MODEL_SORT_MRU);
+	g_signal_connect (model, "changed",
+			  G_CALLBACK (panel_recent_model_changed_cb),
+			  menu_item);
 
 	view = egg_recent_view_gtk_new (menu, NULL);
+
+	menu_item = gtk_separator_menu_item_new ();
+	gtk_menu_append (menu, menu_item);
+
+	menu_item = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menu_item,
+			       panel_menu_icon_get_size (),
+			       GTK_STOCK_CLEAR,
+			       _("Clear Recent Documents"),
+			       TRUE);
+	gtk_menu_append (menu, menu_item);
+
+	g_signal_connect (menu_item, "activate",
+			  G_CALLBACK (recent_documents_clear_cb),
+			  model);
 
 	g_signal_connect (view, "activate",
 			  G_CALLBACK (recent_documents_activate_cb),

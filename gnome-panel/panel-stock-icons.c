@@ -144,6 +144,7 @@ typedef struct {
 static PanelStockItem stock_items [] = {
 	{ PANEL_STOCK_EXECUTE,    GTK_STOCK_EXECUTE,       N_("_Run") },
 	{ PANEL_STOCK_FORCE_QUIT, PANEL_STOCK_FORCE_QUIT,  N_("_Force quit") },
+	{ PANEL_STOCK_CLEAR,      GTK_STOCK_CLEAR,         N_("C_lear") }
 };
 
 static void

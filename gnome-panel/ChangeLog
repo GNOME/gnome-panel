@@ -1,3 +1,18 @@
+2004-07-20  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch from William Jon McCann <mccann@jhu.edu> in bug #105639.
+
+	* panel-recent.c (clear_dialog_response): 
+	(clear_dialog_destroy): 
+	(recent_documents_clear_cb):
+	(panel_recent_append_documents_menu): 
+	Add item to Recent Documents menu to clear the history.
+	(panel_recent_model_changed_cb): Make the menu insensitive
+	if no recent items are available.
+	
+	* panel-stock-icons.[ch]: add a new "clear" stock icon just so
+	we can have a different mnemonic from GTK_STOCK_CLEAR. Suck.
+
 ==================== 2.7.4 ====================
 
 ==================== 2.7.3 ====================
