@@ -22,6 +22,7 @@
 #include <libgnomevfs/gnome-vfs-mime.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <libgnomevfs/gnome-vfs-file-info.h>
+#include <libgnomeui/gnome-window-icon.h>
 
 #include "panel.h"
 
@@ -1920,61 +1921,61 @@ panel_save_global_config (void)
 	 * panel-global-config.schemas
 	 */
 
-	full_key = panel_gconf_global_key ("tooltips-enabled");
+	full_key = panel_gconf_global_key ("tooltips_enabled");
 	gconf_change_set_set_bool (change_set, full_key, global_config.tooltips_enabled);
 
-	full_key = panel_gconf_global_key ("keep-menus-in-memory");
+	full_key = panel_gconf_global_key ("keep_menus_in_memory");
 	gconf_change_set_set_bool (change_set, full_key, global_config.keep_menus_in_memory);
 
-	full_key = panel_gconf_global_key ("enable-animations");
+	full_key = panel_gconf_global_key ("enable_animations");
 	gconf_change_set_set_bool (change_set, full_key, global_config.enable_animations);
 
-	full_key = panel_gconf_global_key ("panel-minimized-size");
+	full_key = panel_gconf_global_key ("panel_minimized_size");
 	gconf_change_set_set_int (change_set, full_key, global_config.minimized_size);
 
-	full_key = panel_gconf_global_key ("panel-show-delay");
+	full_key = panel_gconf_global_key ("panel_show_delay");
 	gconf_change_set_set_int (change_set, full_key, global_config.show_delay);
 
-	full_key = panel_gconf_global_key ("panel-animation-speed");
+	full_key = panel_gconf_global_key ("panel_animation_speed");
 	gconf_change_set_set_string (
 			change_set, full_key ,
 			gconf_enum_to_string (panel_speed_type_enum_map,
 					      global_config.animation_speed));
 
-	full_key = panel_gconf_global_key ("panel-hide-delay");
+	full_key = panel_gconf_global_key ("panel_hide_delay");
 	gconf_change_set_set_int (change_set, full_key, global_config.hide_delay);
 
-	full_key = panel_gconf_global_key ("enable-key-bindings");
+	full_key = panel_gconf_global_key ("enable_key_bindings");
 	gconf_change_set_set_bool (change_set, full_key, global_config.keys_enabled);
 
-	full_key = panel_gconf_global_key ("menu-key");
+	full_key = panel_gconf_global_key ("menu_key");
 	gconf_change_set_set_string (change_set, full_key, global_config.menu_key.str);
 
-	full_key = panel_gconf_global_key ("run-key");
+	full_key = panel_gconf_global_key ("run_key");
 	gconf_change_set_set_string (change_set, full_key, global_config.run_key.str);
 
 	full_key = panel_gconf_global_key ("screenshot-key");
 	gconf_change_set_set_string (change_set, full_key, global_config.screenshot_key.str);
 	
-	full_key = panel_gconf_global_key ("window-screenshot-key");
+	full_key = panel_gconf_global_key ("window_screenshot_key");
 	gconf_change_set_set_string (change_set, full_key, global_config.window_screenshot_key.str);
 
-	full_key = panel_gconf_global_key ("auto-raise-panel");
+	full_key = panel_gconf_global_key ("auto_raise_panel");
 	gconf_change_set_set_bool (change_set, full_key, global_config.autoraise);
 
-	full_key = panel_gconf_global_key ("panel-window-layer");
+	full_key = panel_gconf_global_key ("panel_window_layer");
 	gconf_change_set_set_string (
 			change_set, full_key,
 			gconf_enum_to_string (panel_layer_type_enum_map, global_config.layer));
 
 
-	full_key = panel_gconf_global_key ("drawer-autoclose");
+	full_key = panel_gconf_global_key ("drawer_autoclose");
 	gconf_change_set_set_bool (change_set, full_key, global_config.drawer_auto_close);
 
-	full_key = panel_gconf_global_key ("confirm-panel-remove");
+	full_key = panel_gconf_global_key ("confirm_panel_remove");
 	gconf_change_set_set_bool (change_set, full_key, global_config.confirm_panel_remove);
 
-	full_key = panel_gconf_global_key ("highlight-launchers-on-mouseover");
+	full_key = panel_gconf_global_key ("highlight_launchers_on_mouseover");
 	gconf_change_set_set_bool (change_set, full_key, global_config.highlight_when_over);
 
 	gconf_client_commit_change_set (panel_gconf_get_client (), change_set, FALSE, NULL);
@@ -2177,7 +2178,7 @@ panel_load_panels_from_gconf (void)
 
 	profile = panel_gconf_get_profile ();
 	
-	key = panel_gconf_general_key (profile, "panel-id-list");
+	key = panel_gconf_general_key (profile, "panel_id_list");
 
 	panels = gconf_client_get_list (
 			panel_gconf_get_client (), key, GCONF_VALUE_STRING, NULL);
@@ -2206,46 +2207,46 @@ panel_load_panels_from_gconf (void)
 		printf ("Loading panel id %s\n", panel_id);
 #endif
 		back_pixmap = panel_get_string (profile, panel_id,
-						"panel-background-pixmap", NULL);
+						"panel_background_pixmap", NULL);
 		if (string_empty (back_pixmap)) {
 			g_free (back_pixmap);
 			back_pixmap = NULL;
 		}
 
-		tmp_str = panel_get_string (profile, panel_id, "panel-background-color", NULL);
+		tmp_str = panel_get_string (profile, panel_id, "panel_background_color", NULL);
 		if (!string_empty (tmp_str))
 			gdk_color_parse (tmp_str, &back_color);
 		g_free (tmp_str);
 
 		tmp_str = panel_get_string (
-				profile, panel_id, "panel-background-type", "no-background");
+				profile, panel_id, "panel_background_type", "no_background");
 		gconf_string_to_enum (background_type_enum_map, tmp_str, (gint *) &back_type);
 		g_free (tmp_str);
 		
 		fit_pixmap_bg = panel_get_bool (profile, panel_id,
-						"panel-background-pixmap-fit", FALSE);
+						"panel_background_pixmap_fit", FALSE);
 
 		stretch_pixmap_bg = panel_get_bool (profile, panel_id,
-						    "panel-background-pixmap-stretch", FALSE);
+						    "panel_background_pixmap_stretch", FALSE);
 
 		rotate_pixmap_bg = panel_get_bool (profile, panel_id,
-						   "panel-background-pixmap-rotate", FALSE);
+						   "panel_background_pixmap_rotate", FALSE);
 	
-		tmp_str = panel_get_string (profile, panel_id, "panel-size", "panel-size-small");
+		tmp_str = panel_get_string (profile, panel_id, "panel_size", "panel-size-small");
 		gconf_string_to_enum (panel_size_type_enum_map, tmp_str, &size);
 		g_free (tmp_str);
 		
 		hidebuttons_enabled =
-			panel_get_bool (profile, panel_id, "hide-buttons-enabled", TRUE);
+			panel_get_bool (profile, panel_id, "hide_buttons_enabled", TRUE);
 		
 		hidebutton_pixmaps_enabled =
-			panel_get_bool (profile, panel_id, "hide-button-pixmaps-enabled", TRUE);
+			panel_get_bool (profile, panel_id, "hide_button_pixmaps_enabled", TRUE);
 
-		state  = panel_get_int (profile, panel_id, "panel-hide-state", 0);
-		mode   = panel_get_int (profile, panel_id, "panel-hide-mode", 0);
-		screen = panel_get_int (profile, panel_id, "screen-id", 0);
+		state  = panel_get_int (profile, panel_id, "panel_hide_state", 0);
+		mode   = panel_get_int (profile, panel_id, "panel_hide_mode", 0);
+		screen = panel_get_int (profile, panel_id, "screen_id", 0);
 
-		tmp_str = panel_get_string (profile, panel_id, "panel-type", "edge-panel");
+		tmp_str = panel_get_string (profile, panel_id, "panel_type", "edge-panel");
 		gconf_string_to_enum (panel_type_type_enum_map, tmp_str, (gint *) &type);
 		g_free (tmp_str);
 
@@ -2254,7 +2255,7 @@ panel_load_panels_from_gconf (void)
 			BorderEdge edge;
 
 			tmp_str = panel_get_string (profile, panel_id,
-						    "screen-edge", "panel-edge-bottom");
+						    "screen_edge", "panel-edge-bottom");
 			gconf_string_to_enum (
 				panel_edge_type_enum_map, tmp_str, (gint *) &edge);
 			g_free (tmp_str);
@@ -2278,7 +2279,7 @@ panel_load_panels_from_gconf (void)
 			BorderEdge       edge;
 
 			tmp_str = panel_get_string (profile, panel_id,
-						    "screen-edge", "panel-edge-bottom");
+						    "screen_edge", "panel-edge-bottom");
 			gconf_string_to_enum (
 				panel_edge_type_enum_map, tmp_str, (gint *) &edge);
 			g_free (tmp_str);
@@ -2311,7 +2312,7 @@ panel_load_panels_from_gconf (void)
 			gint16        offset;
 
 			tmp_str = panel_get_string (profile, panel_id,
-						    "screen-edge", "panel-edge_bottom");
+						    "screen_edge", "panel-edge-bottom");
 			gconf_string_to_enum (
 				panel_edge_type_enum_map, tmp_str, (gint *) &edge);
 			g_free (tmp_str);
@@ -2400,7 +2401,7 @@ panel_load_panels_from_gconf (void)
 			panel = foobar_widget_new (panel_id, screen);
 
 			timestring = panel_get_string (profile, panel_id,
-						       "clock-format", _("%I:%M:%S %p"));
+						       "clock_format", _("%I:%M:%S %p"));
 			if (timestring) {
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), timestring);
 				g_free (timestring);
@@ -2463,7 +2464,7 @@ panel_save_to_gconf (PanelData *pd)
 	profile = panel_gconf_get_profile ();
 	client  = panel_gconf_get_client ();
 
-	key = panel_gconf_general_key (profile, "panel-id-list");
+	key = panel_gconf_general_key (profile, "panel_id_list");
 	panel_id_list = gconf_client_get_list (
 				client, key, GCONF_VALUE_STRING, NULL);
 
@@ -2482,45 +2483,45 @@ panel_save_to_gconf (PanelData *pd)
 
 	panel_g_slist_deep_free (panel_id_list);
 
-	panel_set_string (profile, panel->unique_id, "panel-type", 
+	panel_set_string (profile, panel->unique_id, "panel_type", 
 			  gconf_enum_to_string (panel_type_type_enum_map, pd->type));
 
 	if (basep) {
 		panel_set_bool (profile, panel->unique_id,
-				"hide-buttons-enabled",
+				"hide_buttons_enabled",
 				basep->hidebuttons_enabled);
 
 		panel_set_bool (profile, panel->unique_id,
-				"hide-button-pixmaps-enabled",
+				"hide_button_pixmaps_enabled",
 				basep->hidebutton_pixmaps_enabled);
 
 		panel_set_int (profile, panel->unique_id,
-			       "panel-hide-mode", basep->mode);
+			       "panel_hide_mode", basep->mode);
 
 		panel_set_int (profile, panel->unique_id,
-			       "panel-hide-state", basep->state);
+			       "panel_hide_state", basep->state);
 
 		panel_set_int (profile, panel->unique_id,
-			       "screen-id", basep->screen);
+			       "screen_id", basep->screen);
 	}
 
-	panel_set_string (profile, panel->unique_id, "panel-size", 
+	panel_set_string (profile, panel->unique_id, "panel_size", 
 			  gconf_enum_to_string (panel_size_type_enum_map, panel->sz));
 
 	panel_set_bool (profile, panel->unique_id,
-			"panel-background-pixmap-fit",
+			"panel_background_pixmap_fit",
 			panel->fit_pixmap_bg);
 
 	panel_set_bool (profile, panel->unique_id,
-			"panel-background-pixmap-stretch",
+			"panel_background_pixmap_stretch",
 			panel->stretch_pixmap_bg);
 
 	panel_set_bool (profile, panel->unique_id,
-			"panel-background-pixmap-rotate",
+			"panel_background_pixmap_rotate",
 			panel->rotate_pixmap_bg);
 
 	panel_set_string (profile, panel->unique_id,
-			  "panel-background-pixmap",
+			  "panel_background_pixmap",
 			  sure_string (panel->back_pixmap));
 
 	color = g_strdup_printf ("#%02x%02x%02x",
@@ -2529,16 +2530,16 @@ panel_save_to_gconf (PanelData *pd)
 			 (guint) panel->back_color.blue / 256);
 	
 	panel_set_string (profile, panel->unique_id,
-			  "panel-background-color", color);
+			  "panel_background_color", color);
 	g_free (color);
 
 	panel_set_string (profile, panel->unique_id,
-			  "panel-background-type", 
+			  "panel_background_type", 
 			  gconf_enum_to_string (background_type_enum_map, panel->back_type));
 	
 	if (BORDER_IS_WIDGET (pd->panel))
 		panel_set_string (profile, panel->unique_id,
-				  "screen-edge", 
+				  "screen_edge", 
 				  gconf_enum_to_string (panel_edge_type_enum_map,
 							BORDER_POS (basep->pos)->edge));
 
@@ -2578,7 +2579,7 @@ panel_save_to_gconf (PanelData *pd)
 		break;
 	case FOOBAR_PANEL:
 		panel_set_string (profile, panel->unique_id,
-				  "clock-format", FOOBAR_WIDGET (pd->panel)->clock_format);
+				  "clock_format", FOOBAR_WIDGET (pd->panel)->clock_format);
 
 		panel_set_int (profile, panel->unique_id, 
 			       "screen_id", FOOBAR_WIDGET (pd->panel)->screen);
@@ -2596,7 +2597,7 @@ panel_remove_from_gconf (PanelWidget *panel)
 	GSList     *panels;
 	GSList     *l;
 
-	key = panel_gconf_general_key (panel_gconf_get_profile (), "panel-id-list");
+	key = panel_gconf_general_key (panel_gconf_get_profile (), "panel_id_list");
 
 	panels = gconf_client_get_list (
 			panel_gconf_get_client (), key, GCONF_VALUE_STRING, NULL);

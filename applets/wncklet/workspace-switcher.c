@@ -13,6 +13,8 @@
 #include <config.h>
 #endif
 
+#include <string.h>
+
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
@@ -282,7 +284,7 @@ fill_pager_applet(PanelApplet *applet)
 	GError *error;
 	gboolean display_names;
 	
-	panel_applet_add_preferences (applet, "/schemas/apps/pager-applet/prefs", NULL);
+	panel_applet_add_preferences (applet, "/schemas/apps/pager_applet/prefs", NULL);
 	
 	pager = g_new0 (PagerData, 1);
 

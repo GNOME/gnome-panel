@@ -401,7 +401,7 @@ panel_gconf_setup_profile (const char *profile)
 	/*
 	 * FIXME: work out what set of defaults we want to use
 	 */
-	schema_dir = g_strconcat ("/schemas/apps/panel/default-profiles/", "medium", NULL);
+	schema_dir = g_strconcat ("/schemas/apps/panel/default_profiles/", "medium", NULL);
 
 	panel_gconf_associate_schemas_in_dir (
 		panel_gconf_client, profile_dir, schema_dir, &error);

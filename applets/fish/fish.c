@@ -137,7 +137,7 @@ set_wanda_day(void)
 static void
 load_image_file (Fish *fish)
 {
-	GdkPixbuf *pixbuf;
+	GdkPixbuf *pixbuf = NULL;
 	GError    *error = NULL;
 	double     affine [6];
 	guchar    *rgb;
@@ -1135,7 +1135,7 @@ fish_applet_fill (PanelApplet *applet)
 			  G_CALLBACK (applet_change_size),
 			  fish);
 
-	panel_applet_add_preferences (applet, "/schemas/apps/fish-applet/prefs", NULL);
+	panel_applet_add_preferences (applet, "/schemas/apps/fish_applet/prefs", NULL);
 
 	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 

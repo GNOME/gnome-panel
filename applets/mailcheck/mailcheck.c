@@ -734,7 +734,7 @@ animation_selected (GtkMenuItem *item, gpointer data)
 	mc->selected_pixmap_name = data;
 	
 	load_new_pixmap (mc);
-	panel_applet_gconf_set_string(mc->applet, "animation-file", 
+	panel_applet_gconf_set_string(mc->applet, "animation_file", 
 				      mc->animation_file ? mc->animation_file : "", NULL);
 }
 
@@ -852,7 +852,7 @@ mail_file_changed (GtkEntry *entry, gpointer data)
 		g_free (mc->mail_file);
 		
 	mc->mail_file = text;
-	panel_applet_gconf_set_string(mc->applet, "mail-file", mc->mail_file, NULL);
+	panel_applet_gconf_set_string(mc->applet, "mail_file", mc->mail_file, NULL);
 }
 
 static void
@@ -869,7 +869,7 @@ remote_server_changed (GtkEntry *entry, gpointer data)
 		g_free (mc->remote_server);
 		
 	mc->remote_server = text;
-	panel_applet_gconf_set_string(mc->applet, "remote-server", 
+	panel_applet_gconf_set_string(mc->applet, "remote_server", 
 				      mc->remote_server, NULL);
 }
 
@@ -887,7 +887,7 @@ remote_username_changed (GtkEntry *entry, gpointer data)
 		g_free (mc->remote_username);
 		
 	mc->remote_username = text;
-	panel_applet_gconf_set_string(mc->applet, "remote-username", 
+	panel_applet_gconf_set_string(mc->applet, "remote_username", 
 				      mc->remote_username, NULL);
 }
 
@@ -905,7 +905,7 @@ remote_password_changed (GtkEntry *entry, gpointer data)
 		g_free (mc->remote_password);
 		
 	mc->remote_password = text;
-	panel_applet_gconf_set_string(mc->applet, "remote-password", 
+	panel_applet_gconf_set_string(mc->applet, "remote_password", 
 				      mc->remote_password, NULL);
 }
 
@@ -923,7 +923,7 @@ remote_folder_changed (GtkEntry *entry, gpointer data)
 		g_free (mc->remote_folder);
 		
 	mc->remote_folder = text;
-	panel_applet_gconf_set_string(mc->applet, "remote-folder", 
+	panel_applet_gconf_set_string(mc->applet, "remote_folder", 
 				      mc->remote_folder, NULL);
 }
 
@@ -941,7 +941,7 @@ pre_remote_command_changed (GtkEntry *entry, gpointer data)
 		g_free (mc->pre_remote_command);
 		
 	mc->pre_remote_command = text;
-	panel_applet_gconf_set_string(mc->applet, "pre-remote-command", 
+	panel_applet_gconf_set_string(mc->applet, "pre_remote_command", 
 				      mc->pre_remote_command, NULL);
 }	
 
@@ -950,7 +950,7 @@ set_mailbox_selection (GtkWidget *widget, gpointer data)
 {
 	MailCheck *mc = g_object_get_data(G_OBJECT(widget), "MailCheck");
 	mc->mailbox_type = GPOINTER_TO_INT(data);
-        panel_applet_gconf_set_int(mc->applet, "mailbox-type", 
+        panel_applet_gconf_set_int(mc->applet, "mailbox_type", 
         			  (gint)mc->mailbox_type, NULL);
         make_remote_widgets_sensitive(mc);
         
@@ -968,7 +968,7 @@ pre_check_toggled (GtkToggleButton *button, gpointer data)
 	MailCheck *mc = data;
 	
 	mc->pre_check_enabled = gtk_toggle_button_get_active (button);
-	panel_applet_gconf_set_bool(mc->applet, "exec-enabled", 
+	panel_applet_gconf_set_bool(mc->applet, "exec_enabled", 
 				    mc->pre_check_enabled, NULL);
 				    
 }
@@ -986,7 +986,7 @@ pre_check_changed (GtkEntry *entry, gpointer data)
 	if (mc->pre_check_cmd)
 		g_free (mc->pre_check_cmd);	
 	mc->pre_check_cmd = g_strdup (text);
-	panel_applet_gconf_set_string(mc->applet, "exec-command", 
+	panel_applet_gconf_set_string(mc->applet, "exec_command", 
 				      mc->pre_check_cmd, NULL);
 	g_free (text);
 	
@@ -998,7 +998,7 @@ newmail_toggled (GtkToggleButton *button, gpointer data)
 	MailCheck *mc = data;
 	
 	mc->newmail_enabled = gtk_toggle_button_get_active (button);
-	panel_applet_gconf_set_bool(mc->applet, "newmail-enabled", 
+	panel_applet_gconf_set_bool(mc->applet, "newmail_enabled", 
 				    mc->newmail_enabled, NULL);
 				    
 }
@@ -1016,7 +1016,7 @@ newmail_changed (GtkEntry *entry, gpointer data)
 	if (mc->newmail_cmd)
 		g_free (mc->newmail_cmd);	
 	mc->newmail_cmd = g_strdup (text);
-	panel_applet_gconf_set_string(mc->applet, "newmail-command", 
+	panel_applet_gconf_set_string(mc->applet, "newmail_command", 
 				      mc->newmail_cmd, NULL);
 	g_free (text);
 	
@@ -1028,7 +1028,7 @@ clicked_toggled (GtkToggleButton *button, gpointer data)
 	MailCheck *mc = data;
 	
 	mc->clicked_enabled = gtk_toggle_button_get_active (button);
-	panel_applet_gconf_set_bool(mc->applet, "clicked-enabled", 
+	panel_applet_gconf_set_bool(mc->applet, "clicked_enabled", 
 				    mc->clicked_enabled, NULL);
 				    
 }
@@ -1046,7 +1046,7 @@ clicked_changed (GtkEntry *entry, gpointer data)
 	if (mc->clicked_cmd)
 		g_free (mc->clicked_cmd);	
 	mc->clicked_cmd = g_strdup (text);
-	panel_applet_gconf_set_string(mc->applet, "clicked-command", mc->clicked_cmd, NULL);
+	panel_applet_gconf_set_string(mc->applet, "clicked_command", mc->clicked_cmd, NULL);
 	g_free (text);
 	
 }
@@ -1066,7 +1066,7 @@ update_spin_changed (GtkSpinButton *spin, gpointer data)
 	if(mc->mail_timeout != 0)
 		gtk_timeout_remove (mc->mail_timeout);
 	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
-	panel_applet_gconf_set_int(mc->applet, "update-frequency", mc->update_freq, NULL);
+	panel_applet_gconf_set_int(mc->applet, "update_frequency", mc->update_freq, NULL);
 }
 
 static void
@@ -1075,7 +1075,7 @@ sound_toggled (GtkToggleButton *button, gpointer data)
 	MailCheck *mc = data;
 	
 	mc->play_sound = gtk_toggle_button_get_active (button);
-	panel_applet_gconf_set_bool(mc->applet, "play-sound", mc->play_sound, NULL);
+	panel_applet_gconf_set_bool(mc->applet, "play_sound", mc->play_sound, NULL);
 }
 
 static GtkWidget *
@@ -1463,29 +1463,29 @@ check_callback (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 static void
 applet_load_prefs(MailCheck *mc)
 {
-	mc->animation_file = panel_applet_gconf_get_string(mc->applet, "animation-file", NULL);
+	mc->animation_file = panel_applet_gconf_get_string(mc->applet, "animation_file", NULL);
 	if(!mc->animation_file) {
 		g_free(mc->animation_file);
 		mc->animation_file = NULL;
 	}
-	mc->update_freq = panel_applet_gconf_get_int(mc->applet, "update-frequency", NULL);
-	mc->pre_check_cmd = panel_applet_gconf_get_string(mc->applet, "exec-command", NULL);
-	mc->pre_check_enabled = panel_applet_gconf_get_bool(mc->applet, "exec-enabled", NULL);
-	mc->newmail_cmd = panel_applet_gconf_get_string(mc->applet, "newmail-command", NULL);
-	mc->newmail_enabled = panel_applet_gconf_get_bool(mc->applet, "newmail-enabled", NULL);
-	mc->clicked_cmd = panel_applet_gconf_get_string(mc->applet, "clicked-command", NULL);
-	mc->clicked_enabled = panel_applet_gconf_get_bool(mc->applet, "clicked-enabled", NULL);
-	mc->remote_server = panel_applet_gconf_get_string(mc->applet, "remote-server", NULL);
-	mc->pre_remote_command = panel_applet_gconf_get_string(mc->applet, "pre-remote-command", NULL);
-	mc->remote_username = panel_applet_gconf_get_string(mc->applet, "remote-username", NULL);
+	mc->update_freq = panel_applet_gconf_get_int(mc->applet, "update_frequency", NULL);
+	mc->pre_check_cmd = panel_applet_gconf_get_string(mc->applet, "exec_command", NULL);
+	mc->pre_check_enabled = panel_applet_gconf_get_bool(mc->applet, "exec_enabled", NULL);
+	mc->newmail_cmd = panel_applet_gconf_get_string(mc->applet, "newmail_command", NULL);
+	mc->newmail_enabled = panel_applet_gconf_get_bool(mc->applet, "newmail_enabled", NULL);
+	mc->clicked_cmd = panel_applet_gconf_get_string(mc->applet, "clicked_command", NULL);
+	mc->clicked_enabled = panel_applet_gconf_get_bool(mc->applet, "clicked_enabled", NULL);
+	mc->remote_server = panel_applet_gconf_get_string(mc->applet, "remote_server", NULL);
+	mc->pre_remote_command = panel_applet_gconf_get_string(mc->applet, "pre_remote_command", NULL);
+	mc->remote_username = panel_applet_gconf_get_string(mc->applet, "remote_username", NULL);
 	if(!mc->remote_username) {
 		g_free(mc->remote_username);
 		mc->remote_username = g_strdup(g_getenv("USER"));
 	}
-	mc->remote_password = panel_applet_gconf_get_string(mc->applet, "remote-password", NULL);
-	mc->remote_folder = panel_applet_gconf_get_string(mc->applet, "remote-folder", NULL);
-	mc->mailbox_type = panel_applet_gconf_get_int(mc->applet, "mailbox-type", NULL);
-	mc->play_sound = panel_applet_gconf_get_bool(mc->applet, "play-sound", NULL);
+	mc->remote_password = panel_applet_gconf_get_string(mc->applet, "remote_password", NULL);
+	mc->remote_folder = panel_applet_gconf_get_string(mc->applet, "remote_folder", NULL);
+	mc->mailbox_type = panel_applet_gconf_get_int(mc->applet, "mailbox_type", NULL);
+	mc->play_sound = panel_applet_gconf_get_bool(mc->applet, "play_sound", NULL);
 }
 
 static void
@@ -1613,7 +1613,7 @@ fill_mailcheck_applet(PanelApplet *applet)
 			mc->mail_file = g_strdup (mail_file);
 	}
 
-	panel_applet_add_preferences (applet, "/schemas/apps/mailcheck-applet/prefs", NULL);
+	panel_applet_add_preferences (applet, "/schemas/apps/mailcheck_applet/prefs", NULL);
 	applet_load_prefs(mc);
 
 	mc->mailcheck_text_only = _("Text only");

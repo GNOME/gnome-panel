@@ -14,7 +14,6 @@
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
 #include <libgnome/gnome-macros.h>
-#include <libgnomeui/gnome-window-icon.h>
 #include "panel-marshal.h"
 #include "panel-widget.h"
 #include "basep-widget.h"

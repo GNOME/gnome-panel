@@ -46,8 +46,7 @@
 #include "menu.h"
 #include "multiscreen-stuff.h"
 #include "panel-util.h"
-
-#define ADVANCED_DIALOG_KEY "advanced_run_dialog"
+#include "panel-gconf.h"
 
 #define ICON_SIZE 20
 
@@ -213,8 +212,12 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 	int envc;
         gboolean use_advanced;
         
-        use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
-        
+	use_advanced = gconf_client_get_bool (
+				panel_gconf_get_client (),
+				panel_gconf_general_key (
+					panel_gconf_get_profile (), "advanced_run_dialog"),
+				NULL);
+
 	if (response == GTK_RESPONSE_HELP) {
 		panel_show_help ("specialobjects", "RUNBUTTON");
 		/* just return as we don't want to close */
@@ -577,10 +580,18 @@ toggle_contents (GtkWidget *button,
 {
         gboolean use_advanced;
         
-        use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
+	use_advanced = gconf_client_get_bool (
+				panel_gconf_get_client (),
+				panel_gconf_general_key (
+					panel_gconf_get_profile (), "advanced_run_dialog"),
+				NULL);
 
-        gnome_config_set_bool ("/panel/State/"ADVANCED_DIALOG_KEY, !use_advanced);
-        gnome_config_sync ();
+	gconf_client_set_bool (
+		panel_gconf_get_client (),
+		panel_gconf_general_key (
+			panel_gconf_get_profile (), "advanced_run_dialog"),
+		!use_advanced,
+		NULL);
 
         update_contents (dialog);
 }
@@ -1107,7 +1118,12 @@ update_contents (GtkWidget *dialog)
         gboolean use_advanced;
         GtkWidget *clist;
         
-        use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");        
+	use_advanced = gconf_client_get_bool (
+				panel_gconf_get_client (),
+				panel_gconf_general_key (
+					panel_gconf_get_profile (), "advanced_run_dialog"),
+				NULL);
+
         advanced_toggle = g_object_get_data (G_OBJECT (dialog),
 					     "advanced_toggle_label");
 
@@ -1215,7 +1231,11 @@ show_run_dialog (void)
 
 	register_run_stock_item ();
 
-        use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
+	use_advanced = gconf_client_get_bool (
+				panel_gconf_get_client (),
+				panel_gconf_general_key (
+					panel_gconf_get_profile (), "advanced_run_dialog"),
+				NULL);
         
 	run_dialog = gtk_dialog_new_with_buttons (_("Run Program"),
 						  NULL /* parent */,

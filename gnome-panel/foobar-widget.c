@@ -16,7 +16,6 @@
 #include <time.h>
 
 #include <libgnome/libgnome.h>
-#include <libgnomeui/gnome-window-icon.h>
 #include <gconf/gconf-client.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -440,7 +439,7 @@ append_format_items (FoobarWidget *foo,
 			PANEL_GCONF_PANELS,
 			panel_gconf_get_profile (),
 			PANEL_WIDGET (foo->panel)->unique_id,
-			"clock-format");
+			"clock_format");
 	s = panel_gconf_get_string (key, _("%I:%M:%S %p"));
 	
 	for (i = 0; i < FORMAT_ITEM_NUM; i++) {

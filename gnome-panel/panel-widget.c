@@ -2925,21 +2925,24 @@ panel_widget_end_move (PanelWidget *panel)
 static gboolean
 panel_widget_focus_in_event (GtkWidget *widget, GdkEventFocus *event)
 {
-	gtk_widget_set_state (widget, GTK_STATE_PRELIGHT);
+	/*
+	 * FIXME: we need to figure out something sensible
+	 *        to do to indicate focus
+	 */
 
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->focus_in_event (widget, event);
+
 	return FALSE;
 }
 
 static gboolean
 panel_widget_focus_out_event (GtkWidget *widget, GdkEventFocus *event)
 {
-	gtk_widget_set_state (widget, GTK_STATE_NORMAL);
-
-	if (GTK_WINDOW (PANEL_WIDGET (widget)->panel_parent)->has_focus) {
+	if (GTK_WINDOW (PANEL_WIDGET (widget)->panel_parent)->has_focus)
 		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
-	}
+
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->focus_out_event (widget, event);
+
 	return FALSE;
 }
 

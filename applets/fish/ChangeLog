@@ -1,3 +1,12 @@
+2002-03-22  Mark McLoughlin  <mark@skynet.ie>
+
+	* fish.schemas: use underscore instead of hypen
+	for all gconf keys ... this the gconf convention.
+
+	* fish.c:
+	(load_image_file): initialise pixbuf.
+	(fish_applet_fill): upd for gconf key changes.
+
 Wed Feb 27 20:41:24 2002  George Lebl <jirka@5z.com>
 
 	* fish.c: fix possible crash if image not present, also look in our

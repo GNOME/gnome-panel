@@ -72,7 +72,7 @@ panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
 	client  = panel_gconf_get_client ();
 	profile = panel_gconf_get_profile ();
 
-	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo-iid");
+	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo_iid");
 	gconf_client_set_string (client, temp_key, frame->priv->iid, NULL);
 }
 
@@ -92,7 +92,7 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	client  = panel_gconf_get_client ();
 	profile = panel_gconf_get_profile ();
 
-	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo-iid");
+	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo_iid");
 	applet_iid = gconf_client_get_string (client, temp_key, NULL);
 
 	panel_applet_frame_load (applet_iid, panel_widget, position, gconf_key);

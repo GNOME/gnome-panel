@@ -1,3 +1,46 @@
+2002-03-22  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-global-config.schemas:
+	* panel-per-panel-config.schemas: change all gconf keys to
+	use underscore instead of hypen. This is the gconf convention.
+
+	* applet.[ch]: (panel_applet_create_menu): kill panel submenu
+	from the applet popup menu. Also make static.
+	Update for gconf key changes.
+
+	* basep-widget.c: don't include gnome-windo-icon.h
+
+	* foobar-widget.c: ditto.
+	(append_format_items): upd for gconf key change.
+
+	* gnome-panel-properties.c: ditto.
+
+	* gnome-panel-properties.glade2: keep widget names in sync
+	with gconf keys.
+
+	* gnome-run.c: (run_dialog_response), (toggle_contents),
+	(update_contents), (show_run_dialog): store the 'advanced' flag
+	in gconf.
+
+	* launcher.c: (launcher_save_to_gconf), (launcher_load_from_gconf):
+	gconf key changes.
+
+	* menu.[ch]: (make_panel_submenu): make static
+
+	* panel-applet-frame.c: (panel_applet_frame_save_to_gconf),
+	(panel_applet_frame_load_from_gconf): gconf key changes.
+
+	* panel-config-global.c: (panel_global_config_set_entry): ditto.
+
+	* panel-gconf.c: (panel_gconf_setup_profile): ditto.
+
+	* panel-widget.c: (panel_widget_focus_in_event),
+	(panel_widget_focus_out_event): kill prelight.
+
+	* panel.c: (panel_save_global_config),
+	(panel_load_panels_from_gconf), (panel_save_to_gconf),
+	(panel_remove_from_gconf): gconf key changes.
+
 2002-03-21  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: kill glade conversion, we're going with

@@ -43,41 +43,41 @@ panel_global_config_set_entry (GConfEntry *entry)
 	if (!value || !key)
 		return;
 
-	if (!strcmp (key, "tooltips-enabled"))
+	if (!strcmp (key, "tooltips_enabled"))
 		global_config.tooltips_enabled =
 				gconf_value_get_bool (value);
 
-	else if (!strcmp (key, "keep-menus-in-memory"))
+	else if (!strcmp (key, "keep_menus_in_memory"))
 		global_config.keep_menus_in_memory =
 				gconf_value_get_bool (value);
 
-	else if (!strcmp (key, "enable-animations"))
+	else if (!strcmp (key, "enable_animations"))
 		global_config.enable_animations =
 				gconf_value_get_bool (value);
 
-	else if (!strcmp (key, "panel-minimized-size"))
+	else if (!strcmp (key, "panel_minimized_size"))
 		global_config.minimized_size =
 				gconf_value_get_int (value);
 
-	else if (!strcmp (key, "panel-show-delay"))
+	else if (!strcmp (key, "panel_show_delay"))
 		global_config.show_delay =
 				gconf_value_get_int (value);
 
-	else if (!strcmp (key, "panel-animation-speed"))
+	else if (!strcmp (key, "panel_animation_speed"))
 		gconf_string_to_enum (
 			panel_speed_map,
 			gconf_value_get_string (value),
 			(gint *) &global_config.animation_speed);
 
-	else if (!strcmp (key, "panel-hide-delay"))
+	else if (!strcmp (key, "panel_hide_delay"))
 		global_config.hide_delay =
 				gconf_value_get_int (value);
 
-	else if (!strcmp (key, "enable-key-bindings"))
+	else if (!strcmp (key, "enable_key_bindings"))
 		global_config.keys_enabled =
 				gconf_value_get_bool (value);
 
-	else if (!strcmp (key, "menu-key")) { 
+	else if (!strcmp (key, "menu_key")) { 
 		if (global_config.menu_key.str)
 			g_free (global_config.menu_key.str);
 
@@ -86,7 +86,7 @@ panel_global_config_set_entry (GConfEntry *entry)
 
 		panel_parse_accelerator (&global_config.menu_key);
 
-	} else if (!strcmp (key, "run-key")) {
+	} else if (!strcmp (key, "run_key")) {
 		if (global_config.run_key.str)
 			g_free (global_config.run_key.str);
 
@@ -104,7 +104,7 @@ panel_global_config_set_entry (GConfEntry *entry)
 
 		panel_parse_accelerator (&global_config.screenshot_key);
 
-	} else if (!strcmp (key, "window-screenshot-key")) {
+	} else if (!strcmp (key, "window_screenshot_key")) {
 		if (global_config.window_screenshot_key.str)
 			g_free (global_config.window_screenshot_key.str);
 
@@ -113,25 +113,25 @@ panel_global_config_set_entry (GConfEntry *entry)
 
 		panel_parse_accelerator (&global_config.window_screenshot_key);
 
-	} else if (!strcmp (key, "auto-raise-panel"))
+	} else if (!strcmp (key, "auto_raise_panel"))
 		global_config.autoraise =
 			gconf_value_get_bool (value);
 
-	else if (!strcmp (key, "panel-window-layer"))
+	else if (!strcmp (key, "panel_window_layer"))
 		gconf_string_to_enum (
 			panel_layer_map,
   			gconf_value_get_string (value),
 			(gint *) &global_config.layer);
 
-	else if (!strcmp (key, "drawer-autoclose"))
+	else if (!strcmp (key, "drawer_autoclose"))
 		global_config.drawer_auto_close =
 			gconf_value_get_bool (value);
 
-	else if (!strcmp (key, "confirm-panel-remove"))
+	else if (!strcmp (key, "confirm_panel_remove"))
 		global_config.confirm_panel_remove =
 			gconf_value_get_bool (value);
 
-	else if (!strcmp (key, "highlight-launchers-on-mouseover"))
+	else if (!strcmp (key, "highlight_launchers_on_mouseover"))
 		global_config.highlight_when_over =
 			gconf_value_get_bool (value);
 

@@ -13,6 +13,8 @@
 #include <config.h>
 #endif
 
+#include <string.h>
+
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
@@ -358,7 +360,7 @@ fill_tasklist_applet(PanelApplet *applet)
 	GError *error;
 	GConfValue *value;
 
-	panel_applet_add_preferences (applet, "/schemas/apps/tasklist-applet/prefs", NULL);
+	panel_applet_add_preferences (applet, "/schemas/apps/tasklist_applet/prefs", NULL);
 	
 	tasklist = g_new0 (TasklistData, 1);
 

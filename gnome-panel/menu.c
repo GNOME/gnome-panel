@@ -3244,7 +3244,7 @@ panel_launch_nautilus (GtkWidget *widget, gpointer data)
 				       _("Cannot launch nautilus!"));
 }
 
-void
+static void
 make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 {
 	GtkWidget *menuitem, *submenu;

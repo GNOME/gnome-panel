@@ -573,7 +573,7 @@ fill_clock_applet(PanelApplet *applet)
 	ClockData *cd;
 	GError *error;
 	
-	panel_applet_add_preferences (applet, "/schemas/apps/clock-applet/prefs", NULL);
+	panel_applet_add_preferences (applet, "/schemas/apps/clock_applet/prefs", NULL);
 	
 	cd = g_new0 (ClockData, 1);
 

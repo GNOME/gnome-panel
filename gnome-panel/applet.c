@@ -86,9 +86,9 @@ panel_applet_clean_gconf (AppletInfo *info)
 	profile = panel_gconf_get_profile ();
 
 	if (info->type == APPLET_BONOBO)
-		temp_key = panel_gconf_general_key (profile, "applet-id-list");
+		temp_key = panel_gconf_general_key (profile, "applet_id_list");
 	else
-		temp_key = panel_gconf_general_key (profile, "object-id-list");
+		temp_key = panel_gconf_general_key (profile, "object_id_list");
 
         id_list = gconf_client_get_list (
 			panel_gconf_get_client (), temp_key,
@@ -520,52 +520,14 @@ add_to_submenus (AppletInfo *info,
 }
 
 static GtkWidget *
-applet_setup_panel_menu (gboolean is_basep)
+panel_applet_create_menu (AppletInfo *info)
 {
-	GtkWidget *menuitem;
-	GtkWidget *panel_menu;
-	GdkPixbuf *pixbuf;
-
-	menuitem = gtk_image_menu_item_new ();
-
-	pixbuf = panel_make_menu_icon ("gnome-panel.png",
-				       NULL /* fallback */,
-				       SMALL_ICON_SIZE /* size */,
-				       NULL /* long_operation */);
-
-	if (pixbuf != NULL) {
-		GtkWidget *image = NULL;
-		
-		image = gtk_image_new_from_pixbuf (pixbuf);
-		g_object_unref (pixbuf);
-		
-		setup_menuitem (menuitem, 
-				image,
-				_("Panel"));
-	} else {
-		g_message (_("Cannot find pixmap file %s"), "gnome-panel.png");
-
-		setup_menuitem (menuitem, NULL, _("Panel"));
-	}
-
-	panel_menu = panel_menu_new ();
-
-	make_panel_submenu (panel_menu, TRUE, is_basep);
-
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), panel_menu);
-
-	return menuitem;
-}
-
-void
-panel_applet_create_menu (AppletInfo *info,
-			  gboolean    is_basep)
-{
+	GtkWidget *retval;
 	GtkWidget *menuitem;
 	GList     *l;
 
-	info->menu = g_object_ref (panel_menu_new ());
-	gtk_object_sink (GTK_OBJECT (info->menu));
+	retval = g_object_ref (panel_menu_new ());
+	gtk_object_sink (GTK_OBJECT (retval));
 
 	if (!commie_mode) {
 		GtkWidget *image;
@@ -577,36 +539,28 @@ panel_applet_create_menu (AppletInfo *info,
 
 		setup_menuitem (menuitem, image , _("Remove from panel"));
 
-		g_signal_connect (G_OBJECT (menuitem),
-				  "activate",
-				  G_CALLBACK (applet_remove_callback),
-				  info);
+		g_signal_connect (menuitem, "activate",
+				  G_CALLBACK (applet_remove_callback), info);
 
-		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
+		gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
 
-		menuitem = gtk_image_menu_item_new();
+		menuitem = gtk_image_menu_item_new ();
 
 		/*
 		 * FIXME: should have a "Move" pixmap.
 		 */
 		setup_menuitem (menuitem, NULL, _("Move"));
 
-		g_signal_connect (G_OBJECT (menuitem),
-				  "activate",
-				  G_CALLBACK (move_applet_callback),
-				  info);
+		g_signal_connect (menuitem, "activate",
+				  G_CALLBACK (move_applet_callback), info);
 
-		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
+		gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
 	}
-
-	menuitem = applet_setup_panel_menu (is_basep);
-
-	gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
 
 	if (info->user_menu) {
 		menuitem = gtk_image_menu_item_new ();
 
-		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
+		gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
 
 		gtk_widget_set_sensitive (menuitem, FALSE);
 
@@ -617,17 +571,17 @@ panel_applet_create_menu (AppletInfo *info,
 		AppletUserMenu *menu = (AppletUserMenu *)l->data;
 
 		add_to_submenus (info, "", menu->name, menu, 
-				 info->menu, info->user_menu);
+				 retval, info->user_menu);
 	}
 
 	/*
 	 * connect the deactivate signal, so that we can "re-allow" 
 	 * autohide when the menu is deactivated.
 	 */
-	g_signal_connect (G_OBJECT (info->menu),
-			    "deactivate",
-			     G_CALLBACK (applet_menu_deactivate),
-			     info);
+	g_signal_connect (retval, "deactivate",
+			  G_CALLBACK (applet_menu_deactivate), info);
+
+	return retval;
 }
 
 static void
@@ -663,7 +617,7 @@ applet_show_menu (AppletInfo     *info,
 	panel = get_panel_parent (info->widget);
 
 	if (!info->menu)
-		panel_applet_create_menu (info, BASEP_IS_WIDGET (panel));
+		info->menu = panel_applet_create_menu (info);
 
 	g_assert (info->menu);
 
@@ -872,7 +826,7 @@ panel_applet_load_from_unique_id (AppletType   type,
 	gboolean     right_stick;
 
 	temp_key = panel_applet_get_full_gconf_key (
-			type, profile, unique_id, "object-type");
+			type, profile, unique_id, "object_type");
 	type_string = gconf_client_get_string (gconf_client, temp_key, NULL);
 
 	if (!gconf_string_to_enum (object_type_enum_map,
@@ -890,11 +844,11 @@ panel_applet_load_from_unique_id (AppletType   type,
 	position = gconf_client_get_int (gconf_client, temp_key, NULL);
 	
 	temp_key = panel_applet_get_full_gconf_key (
-			type, profile, unique_id, "panel-id");
+			type, profile, unique_id, "panel_id");
 	panel_id = gconf_client_get_string (gconf_client, temp_key, NULL);
 
 	temp_key = panel_applet_get_full_gconf_key (
-			type, profile, unique_id, "panel-right-stick");
+			type, profile, unique_id, "panel_right_stick");
 	right_stick = gconf_client_get_bool (gconf_client, temp_key, NULL);
 
 	panel_widget = panel_widget_get_by_id (panel_id);
@@ -959,9 +913,9 @@ panel_applet_load_list (AppletType type)
 	profile = panel_gconf_get_profile ();
 
 	if (type == APPLET_BONOBO)
-		temp_key = panel_gconf_general_key (profile, "applet-id-list");
+		temp_key = panel_gconf_general_key (profile, "applet_id_list");
 	else
-        	temp_key = panel_gconf_general_key (profile, "object-id-list");
+        	temp_key = panel_gconf_general_key (profile, "object_id_list");
 
         id_list = gconf_client_get_list (
 			panel_gconf_get_client (), temp_key,
@@ -1035,11 +989,11 @@ panel_applet_save_position (AppletInfo *applet_info,
 	gconf_client_set_int (client, temp_key, panel_applet_get_position (applet_info), NULL);
 
 	temp_key = panel_applet_get_full_gconf_key (
-			applet_info->type, profile, gconf_key, "panel-id");
+			applet_info->type, profile, gconf_key, "panel_id");
 	gconf_client_set_string (client, temp_key, panel_applet_get_panel_id (applet_info), NULL);
 
 	temp_key = panel_applet_get_full_gconf_key (
-			applet_info->type, profile, gconf_key, "panel-right-stick");
+			applet_info->type, profile, gconf_key, "panel_right_stick");
 	gconf_client_set_bool (client, temp_key, panel_applet_get_right_stick (applet_info), NULL);
 
 	gconf_client_suggest_sync (client, NULL);
@@ -1057,9 +1011,9 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 	profile = panel_gconf_get_profile ();
 
 	if (applet_info->type == APPLET_BONOBO)
-		temp_key = panel_gconf_general_key (profile, "applet-id-list");
+		temp_key = panel_gconf_general_key (profile, "applet_id_list");
 	else
-		temp_key = panel_gconf_general_key (profile, "object-id-list");
+		temp_key = panel_gconf_general_key (profile, "object_id_list");
 
 	id_list = gconf_client_get_list (client, temp_key, GCONF_VALUE_STRING, NULL);
 
@@ -1080,7 +1034,7 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 
 	temp_key = panel_applet_get_full_gconf_key (applet_info->type, profile,
 						    applet_info->gconf_key,
-						    "object-type");
+						    "object_type");
 	gconf_client_set_string (client, temp_key,
 				 gconf_enum_to_string (object_type_enum_map, applet_info->type),
 				 NULL);

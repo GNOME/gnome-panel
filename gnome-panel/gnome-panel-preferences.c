@@ -199,10 +199,10 @@ update_sensitive_for_checkbox (char *key,
 {
 	GtkWidget *associate = NULL;
 
-	if (!strcmp (key, "enable-animations"))
+	if (!strcmp (key, "enable_animations"))
                 associate = glade_xml_get_widget (glade_gui, "animation-vbox");
 
-	else if (!strcmp (key, "enable-key-bindings"))
+	else if (!strcmp (key, "enable_key_bindings"))
                 associate = glade_xml_get_widget (glade_gui,"kb-table");
 
         if (associate)
@@ -233,13 +233,13 @@ option_menu_changed (GtkWidget *widget,
 
 	full_key = panel_gconf_global_key (key);
 
-	if (!strcmp (key, "panel-animation-speed"))
+	if (!strcmp (key, "panel_animation_speed"))
 		gconf_client_set_string (gconf_client, full_key,
 				         gconf_enum_to_string (global_properties_speed_type_enum_map,
 			       		 		       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
 				 	 NULL);	
 
-	else if (!strcmp (key, "panel-window-layer"))
+	else if (!strcmp (key, "panel_window_layer"))
 		gconf_client_set_string (gconf_client, full_key,
 				         gconf_enum_to_string (global_properties_layer_type_enum_map,
 			       		 		       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
@@ -262,10 +262,10 @@ static void
 load_checkboxes (void)
 {
 	static char *checkboxes [] = {
-		"drawer-autoclose",
-		"auto-raise-panel",
-        	"enable-animations",
-		"enable-key-bindings",
+		"drawer_autoclose",
+		"auto_raise_panel",
+        	"enable_animations",
+		"enable_key_bindings",
 		NULL
 	};
 	int i;
@@ -293,8 +293,8 @@ static void
 load_option_menus (void)
 {
 	char *optionmenus[] = {
-		"panel-animation-speed",
-		"panel-window-layer",
+		"panel_animation_speed",
+		"panel_window_layer",
 		NULL
 	};
 	int i;
@@ -307,12 +307,12 @@ load_option_menus (void)
         	option = glade_xml_get_widget (glade_gui ,optionmenus [i]);
         	key = panel_gconf_global_key (optionmenus [i]);
 		
-		if (!strcmp (optionmenus[i], "panel-animation-speed"))
+		if (!strcmp (optionmenus[i], "panel_animation_speed"))
 			gconf_string_to_enum (global_properties_speed_type_enum_map,
 			      		      gconf_client_get_string (gconf_client, key, NULL),
 			                      &retval);
 
-		else if (!strcmp (optionmenus[i], "panel-window-layer"))
+		else if (!strcmp (optionmenus[i], "panel_window_layer"))
 			gconf_string_to_enum (global_properties_layer_type_enum_map,
 			      		      gconf_client_get_string (gconf_client, key, NULL),
 			                      &retval);
@@ -327,8 +327,8 @@ static void
 load_key_bindings (void)
 {
         char *entries [] = {
-		"menu-key",
-		"run-key",
+		"menu_key",
+		"run_key",
 		NULL
 	};
         int i;

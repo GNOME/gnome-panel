@@ -21,7 +21,18 @@ FIXME: We need to change some of the ints into user visible strings
 <!-- ********************************* -->
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/general/panel-id-list</key>
+        <key>/schemas/apps/panel/default_profiles/small/general/advanced_run_dialog</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/small/general/panel_id_list</key>
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
@@ -33,7 +44,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/general/applet-id-list</key>
+        <key>/schemas/apps/panel/default_profiles/small/general/applet_id_list</key>
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
@@ -45,7 +56,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/general/object-id-list</key>
+        <key>/schemas/apps/panel/default_profiles/small/general/object_id_list</key>
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
@@ -65,7 +76,7 @@ FIXME: We need to change some of the ints into user visible strings
 <!-- ****************************** -->
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-type</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/panel_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>edge-panel</default>
@@ -76,7 +87,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-size</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/panel_size</key>
         <owner>panel</owner>
         <type>string</type>
         <default>panel-size-x-small</default>
@@ -87,7 +98,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-hide-mode</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/panel_hide_mode</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -98,7 +109,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-hide-state</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/panel_hide_state</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -109,7 +120,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/screen-id</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/screen_id</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -120,7 +131,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/screen-edge</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/screen_edge</key>
         <owner>panel</owner>
         <type>string</type>
         <default>panel-edge-bottom</default>
@@ -131,7 +142,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/hide-buttons-enabled</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/hide_buttons_enabled</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -142,7 +153,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/hide-button-pixmaps-enabled</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/hide_button_pixmaps_enabled</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -153,7 +164,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-type</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/panel_background_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>no-background</default>
@@ -164,7 +175,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/panel_background_pixmap</key>
         <owner>panel</owner>
         <type>string</type>
         <default></default>
@@ -175,7 +186,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap-fit</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/panel_background_pixmap_fit</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -186,7 +197,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap-stretch</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/panel_background_pixmap_stretch</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -197,7 +208,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-pixmap-rotate</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/panel_background_pixmap_rotate</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -208,7 +219,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-background-color</key>
+        <key>/schemas/apps/panel/default_profiles/small/panels/00000001/panel_background_color</key>
         <owner>panel</owner>
         <type>string</type>
         <default>#000000</default>
@@ -238,7 +249,18 @@ FIXME: We need to change some of the ints into user visible strings
 <!-- ********************************* -->
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/general/panel-id-list</key>
+        <key>/schemas/apps/panel/default_profiles/medium/general/advanced_run_dialog</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/general/panel_id_list</key>
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
@@ -250,7 +272,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>     
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/general/applet-id-list</key>
+        <key>/schemas/apps/panel/default_profiles/medium/general/applet_id_list</key>
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
@@ -262,7 +284,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>     
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/general/object-id-list</key>
+        <key>/schemas/apps/panel/default_profiles/medium/general/object_id_list</key>
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
@@ -282,7 +304,7 @@ FIXME: We need to change some of the ints into user visible strings
 <!-- ****************************** -->
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-type</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>edge-panel</default>
@@ -293,7 +315,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-size</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_size</key>
         <owner>panel</owner>
         <type>string</type>
         <default>panel-size-x-small</default>
@@ -304,7 +326,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-hide-mode</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_hide_mode</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -315,7 +337,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-hide-state</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_hide_state</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -326,7 +348,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/screen-id</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/screen_id</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -337,7 +359,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/screen-edge</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/screen_edge</key>
         <owner>panel</owner>
         <type>string</type>
         <default>panel-edge-bottom</default>
@@ -348,7 +370,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/hide-buttons-enabled</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/hide_buttons_enabled</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -359,7 +381,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/hide-button-pixmaps-enabled</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/hide_button_pixmaps_enabled</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -370,7 +392,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-background-type</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>no-background</default>
@@ -381,7 +403,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-background-pixmap</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_pixmap</key>
         <owner>panel</owner>
         <type>string</type>
         <default></default>
@@ -392,7 +414,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-background-pixmap-fit</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_pixmap_fit</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -403,7 +425,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-background-pixmap-stretch</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_pixmap_stretch</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -414,7 +436,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-background-pixmap-rotate</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_pixmap_rotate</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -425,7 +447,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-background-color</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_color</key>
         <owner>panel</owner>
         <type>string</type>
         <default>#000000</default>
@@ -442,7 +464,7 @@ FIXME: We need to change some of the ints into user visible strings
       <!-- Launchers -->
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/objects/00000001/object-type</key>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/object_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>launcher-object</default>
@@ -453,7 +475,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/objects/00000001/launcher-location</key>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/launcher_location</key>
         <owner>panel</owner>
         <type>string</type>
         <default>applications:Netscape.desktop</default>
@@ -464,7 +486,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/objects/00000001/panel-id</key>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/panel_id</key>
         <owner>panel</owner>
         <type>string</type>
         <default>00000002</default>
@@ -475,7 +497,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/objects/00000001/position</key>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/position</key>
         <owner>panel</owner>
         <type>int</type>
         <default>20</default>
@@ -486,7 +508,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/objects/00000001/panel-right-stick</key>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000001/panel_right_stick</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -497,7 +519,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/objects/00000002/object-type</key>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/object_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>launcher-object</default>
@@ -508,7 +530,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/objects/00000002/launcher-location</key>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/launcher_location</key>
         <owner>panel</owner>
         <type>string</type>
         <default>applications:gnome-terminal.desktop</default>
@@ -519,7 +541,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/objects/00000002/panel-id</key>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/panel_id</key>
         <owner>panel</owner>
         <type>string</type>
         <default>00000002</default>
@@ -530,7 +552,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/objects/00000002/position</key>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/position</key>
         <owner>panel</owner>
         <type>int</type>
         <default>25</default>
@@ -541,7 +563,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/objects/00000002/panel-stick</key>
+        <key>/schemas/apps/panel/default_profiles/medium/objects/00000002/panel_stick</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -554,7 +576,7 @@ FIXME: We need to change some of the ints into user visible strings
       <!-- Applets -->
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/applets/00000001/object-type</key>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/object_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>bonobo-applet</default>
@@ -565,7 +587,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/applets/00000001/panel-id</key>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/panel_id</key>
         <owner>panel</owner>
         <type>string</type>
         <default>00000001</default>
@@ -576,7 +598,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/applets/00000001/position</key>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/position</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -587,7 +609,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/applets/00000001/bonobo-iid</key>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/bonobo_iid</key>
         <owner>panel</owner>
         <type>string</type>
         <default>OAFIID:GNOME_TasklistApplet</default>
@@ -598,7 +620,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/applets/00000001/panel-right-stick</key>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/panel_right_stick</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -621,7 +643,7 @@ FIXME: We need to change some of the ints into user visible strings
 <!-- ****************************** -->
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/panel-type</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>menu-panel</default>
@@ -632,7 +654,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/panel-size</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_size</key>
         <owner>panel</owner>
         <type>string</type>
         <default>panel-size-x-small</default>
@@ -643,7 +665,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/screen-id</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/screen_id</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -654,7 +676,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/panel-background-type</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>no-background</default>
@@ -665,7 +687,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/panel-background-pixmap</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap</key>
         <owner>panel</owner>
         <type>string</type>
         <default> </default>
@@ -676,7 +698,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/panel-background-pixmap-fit</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap_fit</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -687,7 +709,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/panel-background-pixmap-stretch</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap_stretch</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -698,7 +720,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/panel-background-pixmap-rotate</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_pixmap_rotate</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -709,7 +731,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/panel-background-color</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/panel_background_color</key>
         <owner>panel</owner>
         <type>string</type>
         <default>#000000</default>
@@ -720,7 +742,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/clock-format</key>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000002/clock_format</key>
         <owner>panel</owner>
         <type>string</type>
         <default>%I:%M %p</default>
@@ -731,7 +753,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/applets/00000002/object-type</key>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000002/object_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>bonobo-applet</default>
@@ -742,7 +764,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/applets/00000002/panel-id</key>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000002/panel_id</key>
         <owner>panel</owner>
         <type>string</type>
         <default>00000001</default>
@@ -753,7 +775,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/applets/00000002/position</key>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000002/position</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -764,7 +786,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/applets/00000002/bonobo-iid</key>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000002/bonobo_iid</key>
         <owner>panel</owner>
         <type>string</type>
         <default>OAFIID:GNOME_PagerApplet</default>
@@ -775,7 +797,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/medium/applets/00000002/panel-right-stick</key>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000002/panel_right_stick</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -807,7 +829,18 @@ FIXME: We need to change some of the ints into user visible strings
 <!-- ********************************* -->
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/general/panel-id-list</key>
+        <key>/schemas/apps/panel/default_profiles/large/general/advanced_run_dialog</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/large/general/panel_id_list</key>
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
@@ -819,7 +852,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/general/applet-id-list</key>
+        <key>/schemas/apps/panel/default_profiles/large/general/applet_id_list</key>
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
@@ -831,7 +864,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/general/object-id-list</key>
+        <key>/schemas/apps/panel/default_profiles/large/general/object_id_list</key>
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
@@ -851,7 +884,7 @@ FIXME: We need to change some of the ints into user visible strings
 <!-- ****************************** -->
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-type</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/panel_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>edge-panel</default>
@@ -862,7 +895,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-size</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/panel_size</key>
         <owner>panel</owner>
         <type>string</type>
         <default>panel-size-medium</default>
@@ -873,7 +906,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-hide-mode</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/panel_hide_mode</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -884,7 +917,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-hide-state</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/panel_hide_state</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -895,7 +928,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/screen-id</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/screen_id</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -906,7 +939,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/screen-edge</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/screen_edge</key>
         <owner>panel</owner>
         <type>string</type>
         <default>panel-edge-bottom</default>
@@ -917,7 +950,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/hide-buttons-enabled</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/hide_buttons_enabled</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -928,7 +961,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/hide-button-pixmaps-enabled</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/hide_button_pixmaps_enabled</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -939,7 +972,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-background-type</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/panel_background_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>no-background</default>
@@ -950,7 +983,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-background-pixmap</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/panel_background_pixmap</key>
         <owner>panel</owner>
         <type>string</type>
         <default> </default>
@@ -961,7 +994,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-background-pixmap-fit</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/panel_background_pixmap_fit</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -972,7 +1005,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-background-pixmap-stretch</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/panel_background_pixmap_stretch</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -983,7 +1016,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-background-pixmap-rotate</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/panel_background_pixmap_rotate</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -994,7 +1027,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-background-color</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000001/panel_background_color</key>
         <owner>panel</owner>
         <type>string</type>
         <default>#000000</default>
@@ -1013,7 +1046,7 @@ FIXME: We need to change some of the ints into user visible strings
 <!-- ****************************** -->
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000002/panel-type</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000002/panel_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>menu-panel</default>
@@ -1024,7 +1057,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000002/panel-size</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000002/panel_size</key>
         <owner>panel</owner>
         <type>string</type>
         <default>panel-size-small</default>
@@ -1035,7 +1068,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000002/screen-id</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000002/screen_id</key>
         <owner>panel</owner>
         <type>int</type>
         <default>0</default>
@@ -1046,7 +1079,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000002/panel-background-type</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000002/panel_background_type</key>
         <owner>panel</owner>
         <type>string</type>
         <default>no-background</default>
@@ -1057,7 +1090,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000002/panel-background-pixmap</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000002/panel_background_pixmap</key>
         <owner>panel</owner>
         <type>string</type>
         <default> </default>
@@ -1068,7 +1101,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000002/panel-background-pixmap-fit</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000002/panel_background_pixmap_fit</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -1079,7 +1112,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
  
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000002/panel-background-pixmap-stretch</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000002/panel_background_pixmap_stretch</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -1090,7 +1123,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
       
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000002/panel-background-pixmap-rotate</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000002/panel_background_pixmap_rotate</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -1101,7 +1134,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
      
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000002/panel-background-color</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000002/panel_background_color</key>
         <owner>panel</owner>
         <type>string</type>
         <default>#000000</default>
@@ -1112,7 +1145,7 @@ FIXME: We need to change some of the ints into user visible strings
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/default-profiles/large/panels/00000002/clock-format</key>
+        <key>/schemas/apps/panel/default_profiles/large/panels/00000002/clock_format</key>
         <owner>panel</owner>
         <type>string</type>
         <default>%I:%M:%S %p</default>

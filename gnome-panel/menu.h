@@ -69,9 +69,6 @@ void		set_menu_applet_orient	(Menu *menu,
 void		setup_menuitem		(GtkWidget *menuitem,
 					 GtkWidget *pixmap,
 					 const char *title);
-void		make_panel_submenu	(GtkWidget *menu,
-					 gboolean fake_submenus,
-					 gboolean is_basep);
 
 GtkWidget *	create_panel_root_menu	(PanelWidget *panel);
 GtkWidget *     create_panel_context_menu (PanelWidget *panel);
