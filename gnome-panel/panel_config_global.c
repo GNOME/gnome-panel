@@ -334,7 +334,7 @@ icon_notebook_page(int i, GtkWidget *config_box)
                 N_("Launcher icon"),
                 N_("Drawer icon"),
                 N_("Menu icon"),
-                N_("Logout icon")};
+                N_("Special icon")};
 
 	/* Image frame */
 	frame = gtk_frame_new (_(icon_titles[i]));
