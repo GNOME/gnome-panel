@@ -1,6 +1,17 @@
 2001-08-09  Martin Baulig  <baulig@suse.de>
 
 	* Makefile.am (panel_temp_SOURCES): Added
+	rgb-stuff.[ch],	tearoffitem.[ch], title-item.[ch],
+	title-item-private.h, panel.[ch].
+
+	* panel.c: Ported to GTK+ 2.0.
+	[FIXME: There's gnome_uri_list #ifdef FIXME'ed].
+
+	* main.c: Forgot a GnomeDialog -> GtkDialog.
+
+2001-08-09  Martin Baulig  <baulig@suse.de>
+
+	* Makefile.am (panel_temp_SOURCES): Added
  	border-widget.[ch], edge-widget.[ch], aligned-widget.[ch],
 	drawer-widget.[ch], sliding-widget.[ch], floating-widget.[ch].
 

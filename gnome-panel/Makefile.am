@@ -23,7 +23,7 @@ INCLUDES = \
 	-DGLADEDIR=\""$(datadir)/gnome/panel"\" \
 	-DGLOBAL_CONFDIR=\""$(sysconfdir)/gnome/panel-config"\" \
 	-I$(includedir)		\
-	$(PANEL_CFLAGS)
+	$(PANEL_CFLAGS) -Werror
 
 gwmh_dir = $(top_srcdir)/applets/desk-guide
 
@@ -150,6 +150,15 @@ panel_temp_SOURCES=\
 	sliding-widget.h	\
 	floating-widget.c	\
 	floating-widget.h	\
+	rgb-stuff.h		\
+	rgb-stuff.c		\
+	tearoffitem.c		\
+	tearoffitem.h		\
+	title-item.h		\
+	title-item.c		\
+	title-item-private.h	\
+	panel.c			\
+	panel.h         	\
 	$(NULL)
 
 panel_temp_LDADD=\
@@ -161,8 +170,6 @@ panel_SOURCES=\
 	things-will-not-compile-below-this-line		\
 	applet.c		\
 	applet.h         	\
-	panel.c			\
-	panel.h         	\
 	panel_config.c  	\
 	panel_config.h		\
 	panel_config_global.h  	\
@@ -192,17 +199,10 @@ panel_SOURCES=\
 	drawer.h  		\
 	panel-util.c		\
 	panel-util.h		\
-	tearoffitem.c		\
-	tearoffitem.h		\
-	rgb-stuff.h		\
-	rgb-stuff.c		\
 	global-keys.c		\
 	global-keys.h		\
 	gnome-run.c		\
 	gnome-run.h		\
-	title-item.h		\
-	title-item.c		\
-	title-item-private.h	\
 	scroll-menu.h		\
 	scroll-menu.c		\
 	icon-entry-hack.c	\

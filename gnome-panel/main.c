@@ -451,13 +451,18 @@ main(int argc, char **argv)
 		duplicate = FALSE;
 		break; /* success */
 	case -4: {
-		GtkWidget* box = gnome_question_dialog
-			(_("I've detected a panel already running.\n"
-			   "Start another panel as well?\n" 
-			   "(The new panel will not be restarted.)"), NULL, NULL);
-		panel_set_dialog_layer (box);
-		if (gnome_dialog_run_and_close (GNOME_DIALOG (box)))
+		GtkWidget* box = gtk_message_dialog_new
+			(NULL, 0,
+			 GTK_MESSAGE_QUESTION,
+			 GTK_BUTTONS_YES_NO,
+			 (_("I've detected a panel already running.\n"
+			    "Start another panel as well?\n" 
+			    "(The new panel will not be restarted.)")));
+		if (gtk_dialog_run (GTK_DIALOG (box)) != GTK_RESPONSE_YES) {
+			gtk_widget_destroy (box);
 			return 0;
+		}
+		gtk_widget_destroy (box);
 		duplicate = TRUE;
 		break;
 	}

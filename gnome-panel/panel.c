@@ -14,6 +14,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <libgnome/gnome-i18n.h>
+#include <libgnome/gnome-util.h>
 #include <libgnomeui.h>
 
 #include "panel-include.h"
@@ -795,10 +797,10 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 					basep_widget_autohide (basep);
 				}
 
-				gtk_menu_popup (GTK_MENU (menu), NULL, NULL, 
-						panel_menu_position,
-						widget, bevent->button,
-						bevent->time);
+				gtk_menu_shell_popup (GTK_MENU_SHELL (menu), NULL, NULL, 
+						      panel_menu_position,
+						      widget, bevent->button,
+						      bevent->time);
 				return TRUE;
 			}
 			break;
@@ -1037,6 +1039,7 @@ static void
 drop_urilist (PanelWidget *panel, int pos, char *urilist,
 	      gboolean background_drops)
 {
+#ifdef FIXME
 	GList *li, *files;
 	struct stat s;
 
@@ -1092,6 +1095,7 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 	}
 
 	gnome_uri_list_free_strings (files);
+#endif
 }
 
 static void
