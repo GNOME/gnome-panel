@@ -1,3 +1,10 @@
+Sun May 30 21:58:42 1999  George Lebl  <jirka@5z.com>
+
+	* panel.c: minor fix to send initial size_change's
+
+	* panel-widget.c: check ->sz not ->size, so that we don't
+	  send size changes all the time
+
 Sun May 30 14:04:54 1999  George Lebl  <jirka@5z.com>
 
 	* APPLET_WRITING: update for the current applet interface state

@@ -2222,10 +2222,10 @@ panel_widget_change_params(PanelWidget *panel,
 	   			panel_widget_signals[ORIENT_CHANGE_SIGNAL],
 	   			panel->orient);
 	}
-	if(oldsz != panel->size) {
+	if(oldsz != panel->sz) {
 	   	gtk_signal_emit(GTK_OBJECT(panel),
 	   			panel_widget_signals[SIZE_CHANGE_SIGNAL],
-	   			panel->size);
+	   			panel->sz);
 	}
 	if(back_color) {
 		/*this will allways trigger, but so what*/
