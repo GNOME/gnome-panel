@@ -334,6 +334,8 @@ set_show_date_cb(GtkWidget * w, gpointer data)
 static void
 clock_properties(AppletWidget * applet, gpointer data)
 {
+        static GnomeHelpMenuEntry help_entry = { "genutil_applet",
+						 "properties-clock" };
         GtkWidget *hbox;
         GtkWidget *frame;
 	GtkWidget *table;
@@ -429,6 +431,9 @@ clock_properties(AppletWidget * applet, gpointer data)
 			   GTK_SIGNAL_FUNC(close_properties), data);
 	gtk_signal_connect(GTK_OBJECT(cd->props), "destroy",
 			   GTK_SIGNAL_FUNC(close_properties), data);
+	gtk_signal_connect(GTK_OBJECT(cd->props), "help",
+			   GTK_SIGNAL_FUNC(gnome_help_pbox_display),
+			   &help_entry);
 
 	gtk_widget_show(cd->props);
 }

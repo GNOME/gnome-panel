@@ -329,6 +329,8 @@ build_label_and_entry (Printer *pr, GtkTable *table, int row, char *label,
 static void
 printer_properties (AppletWidget *applet, gpointer data)
 {
+        static GnomeHelpMenuEntry help_entry = { "genutil_applet",
+						 "properties-printer" };
 	GtkWidget *table;
 	Printer *pr = data;
 
@@ -364,6 +366,9 @@ printer_properties (AppletWidget *applet, gpointer data)
 			    GTK_SIGNAL_FUNC(close_properties), pr);
 	gtk_signal_connect (GTK_OBJECT (pr->printer_prop), "destroy",
 			    GTK_SIGNAL_FUNC(close_properties), pr);
+	gtk_signal_connect (GTK_OBJECT (pr->printer_prop), "help",
+			    GTK_SIGNAL_FUNC(gnome_help_pbox_display),
+			    &help_entry);
 			    
 	gtk_widget_show (pr->printer_prop);
 }
