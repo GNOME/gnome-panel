@@ -214,13 +214,23 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 		for(j=-(offy%scale_h);j<dh;j+=scale_h) {
 			art_affine_translate(affine,i,j);
 			art_affine_multiply(affine,scaleaff,affine);
-			art_rgb_affine(dest,
-				       0,0,dw,dh,drs,
-				       gdk_pixbuf_get_pixels(pbuf),
-				       gdk_pixbuf_get_width(pbuf),
-				       gdk_pixbuf_get_height(pbuf),
-				       gdk_pixbuf_get_rowstride(pbuf),
-				       affine,ART_FILTER_NEAREST,NULL);
+			if(gdk_pixbuf_get_has_alpha(pbuf))
+				art_rgb_rgba_affine(dest,
+					       0,0,dw,dh,drs,
+					       gdk_pixbuf_get_pixels(pbuf),
+					       gdk_pixbuf_get_width(pbuf),
+					       gdk_pixbuf_get_height(pbuf),
+					       gdk_pixbuf_get_rowstride(pbuf),
+					       affine,ART_FILTER_NEAREST,NULL);
+			else
+				art_rgb_affine(dest,
+					       0,0,dw,dh,drs,
+					       gdk_pixbuf_get_pixels(pbuf),
+					       gdk_pixbuf_get_width(pbuf),
+					       gdk_pixbuf_get_height(pbuf),
+					       gdk_pixbuf_get_rowstride(pbuf),
+					       affine,ART_FILTER_NEAREST,NULL);
+
 		}
 	}
 }
