@@ -20,12 +20,14 @@
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
-extern GList *applets;
-extern GList *applets_last;
+extern GSList *panels;
+
+extern GSList *applets;
+extern GSList *applets_last;
 extern int applet_count;
 
 extern int config_sync_timeout;
-extern GList *applets_to_sync;
+extern GSList *applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
@@ -330,14 +332,14 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 			CORBA_unsigned_long* wid,
 			CORBA_Environment *ev)
 {
-	GList *li;
+	GSList *li;
 	int i;
 	Extern *ext;
 	char *p;
 	POA_GNOME_PanelSpot *panelspot_servant;
 	GNOME_PanelSpot acc;
 	
-	for(li=applets;li!=NULL;li=g_list_next(li)) {
+	for(li=applets;li!=NULL;li=g_slist_next(li)) {
 		AppletInfo *info = li->data;
 		if(info && info->type == APPLET_EXTERN_PENDING) {
 			Extern *ext = info->data;
@@ -398,7 +400,7 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 
 	/*select the nth panel*/
 	if(panel)
-		li = g_list_nth(panels,panel);
+		li = g_slist_nth(panels,panel);
 	else
 		li = NULL;
 	if(!li)
@@ -461,7 +463,7 @@ s_panelspot_get_parent_panel(POA_GNOME_PanelSpot *servant,
 			     CORBA_Environment *ev)
 {
 	int panel;
-	GList *list;
+	GSList *list;
 	gpointer p;
 	Extern *ext = (Extern *)servant;
 
@@ -470,7 +472,7 @@ s_panelspot_get_parent_panel(POA_GNOME_PanelSpot *servant,
 
 	p = PANEL_WIDGET(ext->info->widget->parent);
 
-	for(panel=0,list=panels;list!=NULL;list=g_list_next(list),panel++)
+	for(panel=0,list=panels;list!=NULL;list=g_slist_next(list),panel++)
 		if(list->data == p)
 			return panel;
 	return -1;
@@ -667,8 +669,8 @@ s_panelspot_sync_config(POA_GNOME_PanelSpot *servant,
 
 	g_return_if_fail(ext != NULL);
 	g_return_if_fail(ext->info != NULL);
-	if(g_list_find(applets_to_sync, ext->info)==NULL)
-		applets_to_sync = g_list_prepend(applets_to_sync,ext->info);
+	if(g_slist_find(applets_to_sync, ext->info)==NULL)
+		applets_to_sync = g_slist_prepend(applets_to_sync,ext->info);
 	panel_config_sync();
 }
 

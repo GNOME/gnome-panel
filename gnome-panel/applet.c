@@ -20,13 +20,15 @@
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
-GList *applets = NULL;
-GList *applets_last = NULL;
+extern GSList *panels;
+
+GSList *applets = NULL;
+GSList *applets_last = NULL;
 int applet_count = 0;
 
 /*config sync stuff*/
 extern int config_sync_timeout;
-extern GList *applets_to_sync;
+extern GSList *applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
@@ -454,28 +456,21 @@ register_toy(GtkWidget *applet,
 	gtk_object_set_data(GTK_OBJECT(applet),
 			    PANEL_APPLET_FORBIDDEN_PANELS,NULL);
 		
-	/*add to the array of applets*/
-	/*if(applets_last != applets) {
-		applets_last = g_list_append(applets_last,info);
+	if(!applets) {
+		applets_last = applets = g_slist_append(NULL,info);
 	} else {
-		applets_last = applets = g_list_append(applets,info);
-	}
-	if(applets_last->next)
+		applets_last = g_slist_append(applets_last,info);
 		applets_last = applets_last->next;
-		*/
-	/*cheap fix for broken logic above I guess, I just want to make
-	 sure this was the problem*/
-	applets = g_list_append(applets,info);
-	applets_last = g_list_last(applets);
+	}
 	applet_count++;
 
 	/*we will need to save this applet's config now*/
-	if(g_list_find(applets_to_sync, info)==NULL)
-		applets_to_sync = g_list_prepend(applets_to_sync,info);
+	if(g_slist_find(applets_to_sync, info)==NULL)
+		applets_to_sync = g_slist_prepend(applets_to_sync,info);
 
 	if(panel_widget_add_full(panel, applet, pos, TRUE)==-1) {
-		GList *list;
-		for(list = panels; list != NULL; list = g_list_next(list))
+		GSList *list;
+		for(list = panels; list != NULL; list = g_slist_next(list))
 			if(panel_widget_add_full(panel, applet, pos, TRUE)!=-1)
 				break;
 		if(!list) {

@@ -16,14 +16,12 @@
 #include "panel-include.h"
 
 extern int config_sync_timeout;
-extern GList *applets_to_sync;
+extern GSList *applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
 
-extern GList *applets;
-extern GList *applets_last;
-extern int applet_count;
+extern GSList *panels;
 
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
@@ -135,8 +133,6 @@ main(int argc, char **argv)
 	gnome_client_set_clone_command (client, 1, argv);
 	gnome_client_set_restart_command (client, 1, argv);
 
-	applet_count = 0;
-
 	panel_tooltips = gtk_tooltips_new();
 
 	/*set the globals*/
@@ -147,7 +143,7 @@ main(int argc, char **argv)
 	init_user_applets();
 
 	/*add forbidden lists to ALL panels*/
-	g_list_foreach(panels,(GFunc)panel_widget_add_forbidden,NULL);
+	g_slist_foreach(panels,(GFunc)panel_widget_add_forbidden,NULL);
 
 	/*this will make the drawers be hidden for closed panels etc ...*/
 	send_state_change();

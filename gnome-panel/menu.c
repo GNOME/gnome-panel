@@ -28,25 +28,21 @@
 
 static char *gnome_folder = NULL;
 
-/*thingies on menus*/
-GSList *small_icons = NULL;
-GSList *dot_buttons = NULL;
-
 /*for redhat menus to trigger rereading on directory writes*/
 GSList *redhat_check = NULL;
 
-extern GList *applets;
-extern GList *applets_last;
+extern GSList *applets;
+extern GSList *applets_last;
 extern int applet_count;
 
 /*list of all panel widgets created*/
-extern GList *panel_list;
+extern GSList *panel_list;
 
 extern GlobalConfig global_config;
 
 extern int config_sync_timeout;
 extern int panels_to_sync;
-extern GList *applets_to_sync;
+extern GSList *applets_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
 
@@ -102,7 +98,7 @@ about_cb (GtkWidget *widget, gpointer data)
 static void
 about_gnome_cb(GtkObject *object, char *program_path)
 {
-  gnome_execute_async(NULL, 1, &program_path);
+	gnome_execute_async(NULL, 1, &program_path);
 }
 
 static void
@@ -111,13 +107,6 @@ activate_app_def (GtkWidget *widget, char *item_loc)
 	GnomeDesktopEntry *item = gnome_desktop_entry_load(item_loc);
 	gnome_desktop_entry_launch (item);
 	gnome_desktop_entry_free(item);
-}
-
-static void
-kill_widget_from_list(GtkWidget *widget, GSList ** list)
-{
-	if(list && *list)
-		*list = g_slist_remove(*list,widget);
 }
 
 static void
@@ -201,7 +190,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		subdir_name = name;
 	pixmap_name = item_info?item_info->icon:NULL;
 
-	load_drawer_applet(NULL,pixmap_name,subdir_name,
+	load_drawer_applet(-1,pixmap_name,subdir_name,
 			   panel,pos);
 	
 	g_return_if_fail(applets_last!=NULL);
@@ -623,62 +612,61 @@ static void
 setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		      MenuFinfo *mf)
 {
-	GtkWidget *label, *hbox, *align;
+	GtkWidget *label, *hbox=NULL, *align;
 
 	label = gtk_label_new (title);
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
-	
-	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_widget_show (hbox);
-	
-	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-	gtk_widget_show (align);
-	gtk_container_set_border_width (GTK_CONTAINER (align), 1);
 
-	if (pixmap) {
-		gtk_container_add (GTK_CONTAINER (align), pixmap);
-		gtk_widget_set_usize (align, 22, 16);
-		gtk_widget_show (pixmap);
+	if(global_config.show_small_icons ||
+	   global_config.show_dot_buttons) {
+		hbox = gtk_hbox_new (FALSE, 0);
+		gtk_widget_show (hbox);
+		gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 	} else
-		gtk_widget_set_usize (align, 22, 16);
+		gtk_container_add (GTK_CONTAINER (menuitem), label);
+	
+	if(global_config.show_small_icons) {
+		align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+		gtk_widget_show (align);
+		gtk_container_set_border_width (GTK_CONTAINER (align), 1);
 
-	small_icons = g_slist_prepend (small_icons, align);
-	gtk_signal_connect(GTK_OBJECT(align),"destroy",
-			   GTK_SIGNAL_FUNC(kill_widget_from_list),
-			   &small_icons);
+		if (pixmap) {
+			gtk_container_add (GTK_CONTAINER (align), pixmap);
+			gtk_widget_set_usize (align, 22, 16);
+			gtk_widget_show (pixmap);
+		} else
+			gtk_widget_set_usize (align, 22, 16);
 
-	gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
+		gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
+	}
 
-	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
+	if(global_config.show_small_icons ||
+	   global_config.show_dot_buttons)
+		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(mf) {
-		GtkWidget *w = gtk_button_new_with_label(_("..."));
 		ShowItemMenu *sim = g_new0(ShowItemMenu,1);
 		sim->mf = mf;
 		sim->type = 0;
-		dot_buttons = g_slist_prepend (dot_buttons, w);
-		gtk_signal_connect(GTK_OBJECT(w),"destroy",
-				   GTK_SIGNAL_FUNC(kill_widget_from_list),
-				   &dot_buttons);
 		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
 				   sim);
-		gtk_signal_connect(GTK_OBJECT(w),"event",
-				   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
-				   sim);
-		gtk_signal_connect(GTK_OBJECT(w),"destroy",
+		gtk_signal_connect(GTK_OBJECT(menuitem),"destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
 				   sim);
-		if(global_config.show_dot_buttons)
+		if(global_config.show_dot_buttons) {
+			GtkWidget *w = gtk_button_new_with_label(_("..."));
+			gtk_signal_connect(GTK_OBJECT(w),"event",
+					   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
+					   sim);
 			gtk_widget_show(w);
-		gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
-		/*this is not really a problem for large fonts but it
-		  makes the button smaller*/
-		gtk_widget_set_usize(w,0,16);
+			gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 
+			/*this is not really a problem for large fonts but it
+			  makes the button smaller*/
+			gtk_widget_set_usize(w,0,16);
+		}
 	}
-	gtk_container_add (GTK_CONTAINER (menuitem), hbox);
-
 
 	gtk_widget_show (menuitem);
 
@@ -695,59 +683,59 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		{ "text/uri-list", 0, 0 }
 	};
 
-	GtkWidget *label, *hbox, *align;
+	GtkWidget *label, *hbox=NULL, *align;
 
 	label = gtk_label_new (title);
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
 	
-	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_widget_show (hbox);
-	
-	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-	gtk_widget_show (align);
-	gtk_container_set_border_width (GTK_CONTAINER (align), 1);
-
-	if (pixmap) {
-		gtk_container_add (GTK_CONTAINER (align), pixmap);
-		gtk_widget_set_usize (align, 22, 16);
-		gtk_widget_show (pixmap);
+	if(global_config.show_small_icons ||
+	   global_config.show_dot_buttons) {
+		hbox = gtk_hbox_new (FALSE, 0);
+		gtk_widget_show (hbox);
+		gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 	} else
-		gtk_widget_set_usize (align, 22, 16);
+		gtk_container_add (GTK_CONTAINER (menuitem), label);
+	
+	if(global_config.show_small_icons) {
+		align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+		gtk_widget_show (align);
+		gtk_container_set_border_width (GTK_CONTAINER (align), 1);
 
-	small_icons = g_slist_prepend (small_icons, align);
-	gtk_signal_connect(GTK_OBJECT(align),"destroy",
-			   GTK_SIGNAL_FUNC(kill_widget_from_list),
-			   &small_icons);
+		if (pixmap) {
+			gtk_container_add (GTK_CONTAINER (align), pixmap);
+			gtk_widget_set_usize (align, 22, 16);
+			gtk_widget_show (pixmap);
+		} else
+			gtk_widget_set_usize (align, 22, 16);
 
+		gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
+	}
 
-	gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
-
-	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
+	if(global_config.show_small_icons ||
+	   global_config.show_dot_buttons)
+		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(item_loc) {
-		GtkWidget *w = gtk_button_new_with_label(_("..."));
 		ShowItemMenu *sim = g_new0(ShowItemMenu,1);
 		sim->item_loc = item_loc;
 		sim->type = 1;
-		dot_buttons = g_slist_prepend (dot_buttons, w);
-		gtk_signal_connect(GTK_OBJECT(w),"destroy",
-				   GTK_SIGNAL_FUNC(kill_widget_from_list),
-				   &dot_buttons);
 		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
 				   sim);
-		gtk_signal_connect(GTK_OBJECT(w),"event",
-				   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
-				   sim);
-		gtk_signal_connect(GTK_OBJECT(w),"destroy",
+		gtk_signal_connect(GTK_OBJECT(menuitem),"destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
 				   sim);
-		if(global_config.show_dot_buttons)
+		if(global_config.show_dot_buttons) {
+			GtkWidget *w = gtk_button_new_with_label(_("..."));
+			gtk_signal_connect(GTK_OBJECT(w),"event",
+					   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
+					   sim);
 			gtk_widget_show(w);
-		gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
-		/*this is not really a problem for large fonts but it
-		  makes the button smaller*/
-		gtk_widget_set_usize(w,0,16);
+			gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+			/*this is not really a problem for large fonts but it
+			  makes the button smaller*/
+			gtk_widget_set_usize(w,0,16);
+		}
 
 		gtk_drag_source_set(menuitem,
 				    GDK_BUTTON1_MASK,
@@ -759,7 +747,6 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
 				   drag_end_menu_cb, NULL);
 	}
-	gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 
 	gtk_widget_show (menuitem);
 }
@@ -849,7 +836,7 @@ add_menu_separator (GtkWidget *menu)
 static int
 add_drawer_to_panel (GtkWidget *widget, void *data)
 {
-	load_drawer_applet(NULL,NULL,NULL,
+	load_drawer_applet(-1,NULL,NULL,
 			   current_panel, 0);
 	return TRUE;
 }
@@ -987,12 +974,18 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 		/*if(!mfl)
 			g_warning("Weird menu doesn't have mf entry");*/
 
-		/*check if we need to reread this*/
-		for(list = mfl; list != NULL; list = g_slist_next(list)) {
-			MenuFinfo *mf = list->data;
-			if(mf->fake_menu || !check_finfo_list(mf->finfo)) {
-				need_reread = TRUE;
-				break;
+		if(menu->dirty) {
+			need_reread = TRUE;
+			menu->dirty = FALSE;
+		} else {
+			/*check if we need to reread this*/
+			for(list = mfl; list != NULL; list = g_slist_next(list)) {
+				MenuFinfo *mf = list->data;
+				if(mf->fake_menu ||
+				   !check_finfo_list(mf->finfo)) {
+					need_reread = TRUE;
+					break;
+				}
 			}
 		}
 
@@ -1472,11 +1465,11 @@ create_applets_menu(int fake_submenus)
 static SnappedPos
 find_empty_spos(void)
 {
-	GList *li;
+	GSList *li;
 	int i;
 	int low = 0;
 	int posscore[4]={0,0,0,0};
-	for(li=panel_list;li!=NULL;li=g_list_next(li)) {
+	for(li=panel_list;li!=NULL;li=g_slist_next(li)) {
 		PanelData *pd = li->data;
 		if(IS_DRAWER_WIDGET(pd->panel))
 			continue;
@@ -1505,11 +1498,11 @@ find_empty_spos(void)
 static void
 find_empty_cpos_cori(CornerPos *cpos, PanelOrientation *cori)
 {
-	GList *li;
+	GSList *li;
 	int i;
 	int low = 0;
 	int posscore[8]={0,0,0,0,0,0,0,0};
-	for(li=panel_list;li!=NULL;li=g_list_next(li)) {
+	for(li=panel_list;li!=NULL;li=g_slist_next(li)) {
 		PanelData *pd = li->data;
 		if(IS_DRAWER_WIDGET(pd->panel))
 			continue;
@@ -1694,7 +1687,7 @@ create_panel_root_menu(GtkWidget *panel)
 	gtk_signal_connect_object (GTK_OBJECT (menuitem), "activate",
 				   GTK_SIGNAL_FUNC(gtk_widget_destroy),
 				   GTK_OBJECT(panel));
-	gtk_object_set_data(GTK_OBJECT(panel),"remove_item",menuitem);
+	gtk_object_set_data(GTK_OBJECT(panel_menu),"remove_item",menuitem);
 
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
@@ -2503,6 +2496,7 @@ create_panel_menu (char *menudir, int main_menu,
 	char *pixmap_name;
 
 	menu = g_new(Menu,1);
+	menu->dirty = FALSE;
 
 	pixmap_name = get_pixmap(menudir,main_menu);
 
@@ -2566,32 +2560,6 @@ create_menu_applet(char *arguments, PanelOrientType orient,
 	g_free(menu_base);
 	g_free (this_menu);
 	return menu;
-}
-
-static void
-set_show_stuff_foreach(gpointer data, gpointer user_data)
-{
-	GtkWidget *w = data;
-
-	g_return_if_fail(w!=NULL);
-
-	if (GPOINTER_TO_INT(user_data))
-		gtk_widget_show(w);
-	else
-		gtk_widget_hide(w);
-}
-
-void
-set_show_small_icons(void)
-{
-	g_slist_foreach(small_icons,set_show_stuff_foreach,
-			GINT_TO_POINTER(global_config.show_small_icons));
-}
-void
-set_show_dot_buttons(void)
-{
-	g_slist_foreach(dot_buttons,set_show_stuff_foreach,
-			GINT_TO_POINTER(global_config.show_dot_buttons));
 }
 
 void

@@ -22,8 +22,8 @@
 
 extern GtkTooltips *panel_tooltips;
 
-extern GList *applets;
-extern GList *applets_last;
+extern GSList *applets;
+extern GSList *applets_last;
 extern int applet_count;
 
 static char *default_app_pixmap=NULL;

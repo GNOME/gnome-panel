@@ -1,3 +1,17 @@
+Thu Dec 24 03:37:05 1998  George Lebl  <jirka@5z.com>
+
+	* drawer.[ch],session.c,menu.c: cleaned up params argument to be
+	  an int, this is some old old cruft from about a year ago
+
+	* *.[ch]: minor cleanups, changed a bunch of GList's to GSList's
+
+	* panel.c: don't load the panel menu by default, load it when needed
+
+	* menu.[ch],session.c: got rid of the dot buttons and icons list,
+	  now we just mark all menus as dirty, ready for rereading, this
+	  saves us tuns of memory when the user doesn't use pixmaps or
+	  dot_buttons .. and we also don't load all menus at startup
+
 Wed Dec 23 22:53:40 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: completely change how redhat menus are read, now they

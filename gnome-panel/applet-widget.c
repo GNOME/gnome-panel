@@ -115,7 +115,6 @@ typedef void (*AppletWidgetTooltipSignal) (GtkObject * object,
 					   int enabled,
 					   gpointer data);
 
-static GList *applet_widgets = NULL;
 static int applet_count = 0;
 
 static int do_multi = FALSE;

@@ -29,17 +29,13 @@ struct _Menu {
 	GtkWidget *menu;
 	char *path;
 	int main_menu_flags;
+	int dirty;
 };
 
 void load_menu_applet(char *params, int main_menu_flags,
 		      PanelWidget *panel, int pos);
 
 void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
-
-/*used to set unset visibility of small_icons*/
-void set_show_small_icons(void);
-/*used to set unset visibility of dot_buttons*/
-void set_show_dot_buttons(void);
 
 void setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title);
 void make_panel_submenu (GtkWidget *menu, int fake_submenus);

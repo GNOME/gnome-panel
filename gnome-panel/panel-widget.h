@@ -191,12 +191,10 @@ int		panel_widget_is_applet_stuck	(PanelWidget *panel,
 int		panel_widget_get_cursorloc	(PanelWidget *panel);
 
 /*needed for other panel types*/
-AppletData	*get_applet_data_pos		(PanelWidget *panel,
-						 int pos);
 int		panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
 
-extern GList *panels;
+/*extern GSList *panels;*/
 
 extern int panel_applet_in_drag;
 
