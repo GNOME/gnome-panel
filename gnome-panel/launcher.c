@@ -417,7 +417,7 @@ setup_button (Launcher *launcher)
 						       GNOME_DESKTOP_ITEM_COMMENT);
 
 	/* Setup tooltip */
-	if (comment != NULL)
+	if ( ! string_empty (comment))
 		str = g_strdup_printf ("%s\n%s", name, comment);
 	else
 		str = g_strdup (name);
