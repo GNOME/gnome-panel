@@ -1,3 +1,10 @@
+Mon Feb 07 18:43:42 2000  George Lebl <jirka@5z.com>
+
+	* session.c,extern.c: make the session saving check for non existent
+	  call and fall back to old style session saving if that's the case
+	  this should very theoretically make 1.0 applets work even if they
+	  have the old applet library linked in.
+
 Mon Feb 07 16:48:34 2000  George Lebl <jirka@5z.com>
 
 	* applet-widget.[ch]: add a new call, applet_widget_queue_resize

@@ -1165,56 +1165,14 @@ save_next_idle(gpointer data)
 	return FALSE;
 }
 
-static void
-s_panelspot_done_session_save(PortableServer_Servant servant,
-			      CORBA_boolean ret,
-			      CORBA_unsigned_long cookie,
-			      CORBA_Environment *ev)
+void
+save_applet(AppletInfo *info, gboolean ret)
 {
-	GSList *cur;
-	AppletInfo *info;
 	char *buf;
 	PanelWidget *panel;
 	AppletData *ad;
 	Extern *ext;
 	int panel_num;
-	
-	/*ignore bad cookies*/
-	if(cookie != ss_cookie)
-		return;
-
-	/*increment cookie to kill the timeout warning*/
-	ss_cookie++;
-	
-	if(ss_timeout_dlg) {
-		gtk_widget_destroy(ss_timeout_dlg);
-		ss_timeout_dlg = NULL;
-	}
-
-	if(g_slist_length(applets)<=ss_cur_applet) {
-		ss_done_save = TRUE;
-		return;
-	}
-	
-	cur = g_slist_nth(applets,ss_cur_applet);
-	
-	if(!cur) {
-		ss_done_save = TRUE;
-		return;
-	}
-	
-	info = cur->data;
-
-	/*hmm, this came from a different applet?, we are
-	  getting seriously confused*/
-	if(info->type!=APPLET_EXTERN ||
-	   (gpointer)servant!=(gpointer)info->data) {
-		applets_to_sync = TRUE; /*we need to redo this yet again*/
-		/*save next applet, but from an idle handler, so that
-		  this call returns*/
-		gtk_idle_add(save_next_idle,NULL);
-		return;
-	}
 	
 	ext = info->data;
 	
@@ -1261,6 +1219,55 @@ s_panelspot_done_session_save(PortableServer_Servant servant,
 	/*save next applet, but from an idle handler, so that
 	  this call returns*/
 	gtk_idle_add(save_next_idle,NULL);
+}
+
+static void
+s_panelspot_done_session_save(PortableServer_Servant servant,
+			      CORBA_boolean ret,
+			      CORBA_unsigned_long cookie,
+			      CORBA_Environment *ev)
+{
+	GSList *cur;
+	AppletInfo *info;
+	
+	/*ignore bad cookies*/
+	if(cookie != ss_cookie)
+		return;
+
+	/*increment cookie to kill the timeout warning*/
+	ss_cookie++;
+	
+	if(ss_timeout_dlg) {
+		gtk_widget_destroy(ss_timeout_dlg);
+		ss_timeout_dlg = NULL;
+	}
+
+	if(g_slist_length(applets)<=ss_cur_applet) {
+		ss_done_save = TRUE;
+		return;
+	}
+	
+	cur = g_slist_nth(applets,ss_cur_applet);
+	
+	if(!cur) {
+		ss_done_save = TRUE;
+		return;
+	}
+	
+	info = cur->data;
+
+	/*hmm, this came from a different applet?, we are
+	  getting seriously confused*/
+	if(info->type!=APPLET_EXTERN ||
+	   (gpointer)servant!=(gpointer)info->data) {
+		applets_to_sync = TRUE; /*we need to redo this yet again*/
+		/*save next applet, but from an idle handler, so that
+		  this call returns*/
+		gtk_idle_add(save_next_idle,NULL);
+		return;
+	}
+
+	save_applet(info, ret);
 }
 
 /*** StatusSpot stuff ***/

@@ -43,6 +43,8 @@ gint panel_corba_gtk_init(CORBA_ORB panel_orb);
 /* to be called when we want to send a draw signal to an applet */
 void extern_send_draw(Extern *ext);
 
+void save_applet(AppletInfo *info, gboolean ret);
+
 END_GNOME_DECLS
 
 

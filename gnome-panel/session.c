@@ -229,23 +229,42 @@ send_applet_session_save (AppletInfo *info,
 			  const char *cfgpath,
 			  const char *globcfgpath)
 {
+	guint timeout;
 	CORBA_Environment ev;
 	
 	/*new unique cookie*/
 	ss_cookie++;
 	
 #ifdef PANEL_DEBUG	
-	printf("SENDING_SESSION_SAVE (%u)\n",ss_cookie);
+	printf("SENDING_SESSION_SAVE (%u)\n", ss_cookie);
 #endif
 
-	gtk_timeout_add(ss_timeout,session_save_timeout,GINT_TO_POINTER((int)ss_cookie));
+	timeout = gtk_timeout_add(ss_timeout, session_save_timeout,
+				  GINT_TO_POINTER((int)ss_cookie));
 
 	CORBA_exception_init(&ev);
 	GNOME_Applet_save_session(obj,
 				  (CORBA_char *)cfgpath,
 				  (CORBA_char *)globcfgpath,
 				  ss_cookie, &ev);
-	if(ev._major) {
+	if(ev._major == CORBA_SYSTEM_EXCEPTION) {
+		CORBA_SystemException *exc =
+			CORBA_exception_value(&ev);
+		if(exc &&
+		   (exc->minor == ex_CORBA_BAD_OPERATION ||
+		    exc->minor == ex_CORBA_NO_IMPLEMENT)) {
+			gboolean ret;
+			gtk_timeout_remove(timeout);
+			CORBA_exception_free(&ev);
+			CORBA_exception_init(&ev);
+			ret = GNOME_Applet_session_save(obj,
+						(CORBA_char *)cfgpath,
+						(CORBA_char *)globcfgpath,
+						&ev);
+			save_applet(info, ret);
+		}
+	} else if(ev._major) {
+		gtk_timeout_remove(timeout);
 		panel_clean_applet(info);
 		CORBA_exception_free(&ev);
 		save_next_applet();
