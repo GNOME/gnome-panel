@@ -1,5 +1,10 @@
 2005-02-26  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-menu-bar.c: (panel_menu_bar_change_background): don't leak the
+	style
+
+2005-02-26  Vincent Untz  <vincent@vuntz.net>
+
 	Fix leak of pixbufs and models in "Add to panel" dialog.
 
 	* panel-addto.c: (panel_addto_append_item): unref the pixbuf

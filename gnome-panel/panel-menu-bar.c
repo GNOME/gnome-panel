@@ -390,7 +390,7 @@ void panel_menu_bar_change_background (PanelMenuBar *menubar)
 	gtk_widget_set_style (GTK_WIDGET (menubar), NULL);
 	rc_style = gtk_rc_style_new ();
 	gtk_widget_modify_style (GTK_WIDGET (menubar), rc_style);
-	g_object_unref (rc_style);
+	gtk_rc_style_unref (rc_style);
 
 	switch (panel_background_get_type (&menubar->priv->panel->background)) {
 	case PANEL_BACK_NONE:
@@ -432,6 +432,7 @@ void panel_menu_bar_change_background (PanelMenuBar *menubar)
 			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
 		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
 		gtk_widget_set_style (GTK_WIDGET (menubar), style);
+		g_object_unref (style);
 
 		g_object_unref (pixmap);
 		break;
