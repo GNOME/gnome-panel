@@ -759,6 +759,23 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 }
 
 static void
+add_to_run_dialog (GtkWidget *widget, char *item_loc)
+{
+	GnomeDesktopEntry *item = gnome_desktop_entry_load(item_loc);
+	if(item) {
+		if(item->exec) {
+			char *s = g_strjoinv(" ", item->exec);
+			show_run_dialog_with_text(s);
+			g_free(s);
+		} else
+			panel_error_dialog(_("No 'Exec' field in entry"));
+		gnome_desktop_entry_free(item);
+	} else {
+		panel_error_dialog(_("Can't load entry"));
+	}
+}
+
+static void
 add_app_to_panel (GtkWidget *widget, char *item_loc)
 {
 	PanelWidget *panel = get_panel_from_menu_data (widget);
@@ -1150,6 +1167,24 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 						  "activate",
 						  GTK_SIGNAL_FUNC(gtk_menu_shell_deactivate),
 						  GTK_OBJECT(item->parent));
+
+			if( ! sim->applet) {
+				menuitem = gtk_menu_item_new ();
+				gtk_widget_lock_accelerators (menuitem);
+				setup_menuitem (menuitem, 0,
+						_("Put into run dialog"));
+				gtk_menu_append (GTK_MENU (sim->menu),
+						 menuitem);
+				gtk_signal_connect
+					(GTK_OBJECT(menuitem), "activate",
+					 GTK_SIGNAL_FUNC(add_to_run_dialog),
+					 sim->item_loc);
+				gtk_signal_connect_object
+					(GTK_OBJECT(menuitem),
+					 "activate",
+					 GTK_SIGNAL_FUNC(gtk_menu_shell_deactivate),
+					 GTK_OBJECT(item->parent));
+			}
 		} else {
 			menuitem = gtk_menu_item_new ();
 			gtk_widget_lock_accelerators (menuitem);

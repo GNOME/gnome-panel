@@ -181,10 +181,11 @@ browse(GtkWidget *w, GtkWidget *entry)
 	gdk_window_raise (GTK_WIDGET (fsel)->window);
 }
 
+static GtkWidget *dialog = NULL;
+
 void
-show_run_dialog ()
+show_run_dialog (void)
 {
-	static GtkWidget *dialog = NULL;
 	GtkWidget *entry;
 	GtkWidget *gentry;
 	GtkWidget *hbox;
@@ -248,6 +249,26 @@ show_run_dialog ()
 
 	gtk_widget_show_all (dialog);
 	panel_set_dialog_layer (dialog);
+}
+
+void
+show_run_dialog_with_text (const char *text)
+{
+	GtkWidget *entry;
+
+	g_return_if_fail(text != NULL);
+
+	show_run_dialog();
+
+	if( ! dialog) {
+		/* this should NEVER happen, but I'm paranoid */
+		g_warning("Eeeeeeek!");
+		return;
+	}
+
+	entry = gtk_object_get_data(GTK_OBJECT(dialog), "entry");
+
+	gtk_entry_set_text(GTK_ENTRY(entry), text);
 }
 
 static GtkWidget *
