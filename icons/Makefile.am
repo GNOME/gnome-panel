@@ -1,6 +1,6 @@
 NULL =
 
-icondir   = $(datadir)/icons
+icondir   = $(datadir)/pixmaps
 icon_DATA =				\
 	panel-force-quit.png		\
 	cdeappmenu.png			\
