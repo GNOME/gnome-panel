@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-07-11 00:26+0200\n"
-"PO-Revision-Date: 2002-07-11 00:27+0200\n"
+"POT-Creation-Date: 2002-07-11 12:39+0200\n"
+"PO-Revision-Date: 2002-07-11 12:40+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -909,8 +909,8 @@ msgstr "Kan inte skapa panelprogram!\n"
 msgid "Properties..."
 msgstr "Egenskaper..."
 
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:636
-#: gnome-panel/logout.c:134 gnome-panel/logout.c:222 gnome-panel/menu.c:4102
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
+#: gnome-panel/logout.c:134 gnome-panel/logout.c:221 gnome-panel/menu.c:4102
 msgid "Help"
 msgstr "Hjälp"
 
@@ -1117,7 +1117,15 @@ msgstr "Dölj denna panel"
 msgid "Show this panel"
 msgstr "Visa denna panel"
 
-#: gnome-panel/button-widget.c:717 gnome-panel/button-widget.c:750
+#: gnome-panel/button-widget.c:341
+msgid "none"
+msgstr "inga"
+
+#: gnome-panel/button-widget.c:346
+msgid "file not found"
+msgstr "filen hittades inte"
+
+#: gnome-panel/button-widget.c:747 gnome-panel/button-widget.c:785
 #, c-format
 msgid ""
 "Failed to load image %s\n"
@@ -1127,10 +1135,6 @@ msgstr ""
 "Misslyckades med att öppna bilden %s\n"
 "\n"
 "Detaljer: %s"
-
-#: gnome-panel/button-widget.c:720 gnome-panel/button-widget.c:753
-msgid "none"
-msgstr "inga"
 
 #: gnome-panel/disclosure-widget.c:260
 msgid "Expander Size"
@@ -1164,42 +1168,42 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE-meny"
 
-#: gnome-panel/drawer.c:136
+#: gnome-panel/drawer.c:126
 msgid "Size and Position"
 msgstr "Storlek och position"
 
-#: gnome-panel/drawer.c:144
+#: gnome-panel/drawer.c:134
 msgid "Tooltip/Name"
 msgstr "Verktygstips/Namn"
 
-#: gnome-panel/drawer.c:150
+#: gnome-panel/drawer.c:140
 msgid "Icon"
 msgstr "Ikon"
 
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:146
 msgid "Applet appearance"
 msgstr "Utseende på panelprogram"
 
-#: gnome-panel/drawer.c:161
+#: gnome-panel/drawer.c:151
 msgid "Drawer handle"
 msgstr "Lådhandtag"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:166
+#: gnome-panel/drawer.c:156
 msgid "Enable hidebutton"
 msgstr "Visa döljknapp"
 
-#: gnome-panel/drawer.c:175
+#: gnome-panel/drawer.c:165
 msgid "Enable hidebutton arrow"
 msgstr "Visa pil på döljknappen"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:446 gnome-panel/menu.c:3252
+#: gnome-panel/drawer.c:183 gnome-panel/drawer.c:436 gnome-panel/menu.c:3252
 msgid "Drawer"
 msgstr "Låda"
 
-#: gnome-panel/drawer.c:633 gnome-panel/launcher.c:720
-#: gnome-panel/logout.c:220 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
+#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:711
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
 msgid "Properties"
 msgstr "Egenskaper"
 
@@ -1235,7 +1239,7 @@ msgstr "Skärmdump..."
 msgid "Take a screenshot of your desktop"
 msgstr "Ta en skärmdump av ditt skrivbord"
 
-#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:215
+#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
 #: gnome-panel/menu.c:3460
 msgid "Lock Screen"
 msgstr "Lås skärmen"
@@ -1608,11 +1612,11 @@ msgstr "_Kör"
 msgid "Run Program"
 msgstr "Kör program"
 
-#: gnome-panel/launcher.c:77
+#: gnome-panel/launcher.c:75
 msgid "This launch icon does not specify a url to show"
 msgstr "Denna programstartare anger ingen url att visa"
 
-#: gnome-panel/launcher.c:85
+#: gnome-panel/launcher.c:83
 #, c-format
 msgid ""
 "Cannot show %s\n"
@@ -1621,7 +1625,7 @@ msgstr ""
 "Kan inte visa %s\n"
 "%s"
 
-#: gnome-panel/launcher.c:112
+#: gnome-panel/launcher.c:110
 #, c-format
 msgid ""
 "<b>Cannot launch icon</b>\n"
@@ -1632,7 +1636,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: gnome-panel/launcher.c:154
+#: gnome-panel/launcher.c:152
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1641,22 +1645,22 @@ msgstr ""
 "Kan inte starta ikon\n"
 "%s"
 
-#: gnome-panel/launcher.c:458
+#: gnome-panel/launcher.c:449
 #, c-format
 msgid "Help on %s Application"
 msgstr "Hjälp med programmet %s"
 
-#: gnome-panel/launcher.c:577 gnome-panel/menu-ditem.c:176
+#: gnome-panel/launcher.c:568 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
 msgstr "Egenskaper för programstartaren"
 
-#: gnome-panel/launcher.c:768 gnome-panel/menu-ditem.c:514
+#: gnome-panel/launcher.c:759 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "Skapa programstartare"
 
 #. class
-#: gnome-panel/launcher.c:986
+#: gnome-panel/launcher.c:977
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1667,7 +1671,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1072 gnome-panel/menu.c:1059
+#: gnome-panel/launcher.c:1063 gnome-panel/menu.c:1059
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -1687,7 +1691,7 @@ msgstr "Logga ut"
 msgid "Log out of GNOME"
 msgstr "Logga ut ur GNOME"
 
-#: gnome-panel/logout.c:153 gnome-panel/logout.c:174
+#: gnome-panel/logout.c:152 gnome-panel/logout.c:173
 msgid "Lock screen"
 msgstr "Lås skärmen"
 
@@ -1702,15 +1706,15 @@ msgstr "Lås skärmen"
 #. <jwz> and "xscreensaver-command -exit ; xscreensaver &"
 #. <jwz> and "xscreensaver-demo"
 #.
-#: gnome-panel/logout.c:214
+#: gnome-panel/logout.c:213
 msgid "Activate Screensaver"
 msgstr "Aktivera skärmsläckare"
 
-#: gnome-panel/logout.c:216
+#: gnome-panel/logout.c:215
 msgid "Kill Screensaver Daemon"
 msgstr "Döda skärmsläckardemon"
 
-#: gnome-panel/logout.c:217
+#: gnome-panel/logout.c:216
 msgid "Restart Screensaver Daemon"
 msgstr "Starta om skärmsläckardemon"
 
