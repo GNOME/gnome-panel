@@ -1,3 +1,11 @@
+2004-11-04  Vincent Untz  <vincent@vuntz.net>
+
+	* clock.c: (create_task_list): stop using egg_cell_renderer_text since
+	we can ellipsize the GtkCellRendererText now
+	(create_appointment_list): ditto
+	* Makefile.am:
+	* cut-n-paste/: kill
+
 2004-11-01  Vincent Untz  <vincent@vuntz.net>
 
 	* clock.c: stop including everything from libgnome and libgnomeui

@@ -62,7 +62,6 @@
 
 #ifdef HAVE_LIBECAL
 #include "calendar-client.h"
-#include "cut-n-paste/eggcellrenderertext.h"
 #endif
 
 #define INTERNETSECOND (864)
@@ -973,8 +972,8 @@ create_task_list (ClockData  *cd,
 
         /* Summary */
         column = gtk_tree_view_column_new ();
-        cell = egg_cell_renderer_text_new ();
-        egg_cell_renderer_text_set_ellipsize (EGG_CELL_RENDERER_TEXT (cell), TRUE);
+        cell = gtk_cell_renderer_text_new ();
+        g_object_set (cell, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
         gtk_tree_view_column_pack_start (column, cell, TRUE);
         gtk_tree_view_column_set_attributes (column, cell,
                                              "text", TASK_COLUMN_SUMMARY,
@@ -1116,8 +1115,8 @@ create_appointment_list (ClockData  *cd,
   
         /* Summary */
         column = gtk_tree_view_column_new ();
-        cell = egg_cell_renderer_text_new ();
-        egg_cell_renderer_text_set_ellipsize (EGG_CELL_RENDERER_TEXT (cell), TRUE);
+        cell = gtk_cell_renderer_text_new ();
+        g_object_set (cell, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
         gtk_tree_view_column_pack_start (column, cell, TRUE);
         gtk_tree_view_column_add_attribute (column, cell,
                                             "text", APPOINTMENT_COLUMN_SUMMARY);

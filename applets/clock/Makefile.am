@@ -1,5 +1,3 @@
-SUBDIRS = cut-n-paste
-
 INCLUDES = 						\
 	-I$(srcdir)/../../libpanel-applet 		\
 	-I$(top_builddir)/libpanel-applet 		\
@@ -26,7 +24,6 @@ clock_applet_SOURCES = clock.c $(CALENDAR_SOURCES)
 
 clock_applet_LDADD =					\
 	../../libpanel-applet/libpanel-applet-2.la	\
-	cut-n-paste/libclockcnp.la 				\
 	$(CLOCK_LIBS)
 
 libexec_PROGRAMS = clock-applet
