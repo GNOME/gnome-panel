@@ -316,10 +316,8 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	case DRAWER_PANEL:
 		{
 		DrawerWidget *drawer = DRAWER_WIDGET(pd->panel);
-		gnome_config_set_int("orient",panel->orient);
+		gnome_config_set_int("orient",drawer->orient);
 		gnome_config_set_int("state", drawer->state);
-		gnome_config_set_int("drop_zone_pos",
-				     drawer->drop_zone_pos);
 		break;
 		}
 	default:
@@ -781,23 +779,16 @@ init_user_panels(void)
 		case DRAWER_PANEL:
 			{
 				DrawerState state;
-				PanelOrientation orient;
-				DrawerDropZonePos drop_pos;
+				PanelOrientType orient;
 
 				g_snprintf(buf,256,"state=%d", DRAWER_SHOWN);
 				state=gnome_config_get_int(buf);
 
-				g_snprintf(buf,256,"orient=%d", PANEL_HORIZONTAL);
+				g_snprintf(buf,256,"orient=%d", ORIENT_UP);
 				orient=gnome_config_get_int(buf);
-
-				g_snprintf(buf,256,
-					   "drop_zone_pos=%d",
-					   DROP_ZONE_LEFT);
-				drop_pos=gnome_config_get_int(buf);
 
 				panel = drawer_widget_new(orient,
 							  state,
-							  drop_pos,
 							  back_type,
 							  back_pixmap,
 							  fit_pixmap_bg,

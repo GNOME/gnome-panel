@@ -8,6 +8,7 @@
 
 
 #include <gtk/gtk.h>
+#include "applet.h"
 #include "panel-widget.h"
 
 BEGIN_GNOME_DECLS
@@ -24,10 +25,6 @@ typedef enum {
 	DRAWER_MOVING,
 	DRAWER_HIDDEN
 } DrawerState;
-typedef enum {
-	DROP_ZONE_LEFT,
-	DROP_ZONE_RIGHT
-} DrawerDropZonePos;
 
 struct _DrawerWidget
 {
@@ -41,10 +38,7 @@ struct _DrawerWidget
 	GtkWidget		*handle_s;
 
 	DrawerState		state;
-
-	DrawerDropZonePos	drop_zone_pos;
-	int			x;
-	int			y;
+	PanelOrientType		orient;
 };
 
 struct _DrawerWidgetClass
@@ -56,10 +50,8 @@ struct _DrawerWidgetClass
 };
 
 guint		drawer_widget_get_type		(void);
-GtkWidget*	drawer_widget_new		(PanelOrientation orient,
+GtkWidget*	drawer_widget_new		(PanelOrientType orient,
 						 DrawerState state,
-						 DrawerDropZonePos
-						 	drop_zone_pos,
 						 PanelBackType back_type,
 						 char *back_pixmap,
 						 int fit_pixmap_bg,
@@ -71,10 +63,8 @@ void		drawer_widget_close_drawer	(DrawerWidget *panel);
 
 /* changing parameters */
 void		drawer_widget_change_params	(DrawerWidget *drawer,
-						 PanelOrientation orient,
+						 PanelOrientType orient,
 						 DrawerState state,
-						 DrawerDropZonePos
-						 	drop_zone_pos,
 						 PanelBackType back_type,
 						 char *pixmap_name,
 						 int fit_pixmap_bg,
@@ -82,17 +72,9 @@ void		drawer_widget_change_params	(DrawerWidget *drawer,
 
 /* changing parameters (orient only) */
 void		drawer_widget_change_orient	(DrawerWidget *drawer,
-						 PanelOrientation orient);
-/*changing parameters (dropzonepos only)*/
-void		drawer_widget_change_drop_zone_pos(DrawerWidget *drawer,
-						   DrawerDropZonePos
-						 	drop_zone_pos);
+						 PanelOrientType orient);
 
 void		drawer_widget_restore_state	(DrawerWidget *drawer);
-
-void		drawer_widget_set_pos		(DrawerWidget *panel,
-						 int x,
-						 int y);
 
 END_GNOME_DECLS
 

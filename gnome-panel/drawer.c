@@ -123,51 +123,6 @@ add_drawer_properties_page(GtkWidget *dialog, Drawer *drawer)
 			    DRAWER_PROPERTIES,dialog);
 }
 
-void
-reposition_drawer(Drawer *drawer)
-{
-	int x=0,y=0;
-	int bx, by, bw, bh;
-	int dw, dh;
-	int px, py, pw, ph;
-	PanelWidget *panel; /*parent panel*/
-
-	/*get's the panel data from the event box that is the applet's
-	  parent*/
-	panel = gtk_object_get_data(GTK_OBJECT(drawer->button),
-				    PANEL_APPLET_PARENT_KEY);
-
-	gdk_window_get_origin (drawer->button->window, &bx, &by);
-	gdk_window_get_size (drawer->button->window, &bw, &bh);
-	if(drawer->drawer->window)
-		gdk_window_get_size (drawer->drawer->window, &dw, &dh);
-	else
-		dw = dh = 48;
-	gdk_window_get_origin (GTK_WIDGET(panel)->window, &px, &py);
-	gdk_window_get_size (GTK_WIDGET(panel)->window, &pw, &ph);
-	
-	switch(drawer->orient) {
-		case ORIENT_UP:
-			x = bx+(bw-dw)/2;
-			y = py - dh;
-			break;
-		case ORIENT_DOWN:
-			x = bx+(bw-dw)/2;
-			y = py + ph;
-			break;
-		case ORIENT_LEFT:
-			x = px - dw;
-			y = by+(bh-dh)/2;
-			break;
-		case ORIENT_RIGHT:
-			x = px + pw;
-			y = by+(bh-dh)/2;
-			break;
-	}
-	
-	drawer_widget_set_pos(DRAWER_WIDGET(drawer->drawer),x,y);
-}
-
 static void
 drawer_click(Drawer *drawer)
 {
@@ -178,7 +133,7 @@ drawer_click(Drawer *drawer)
 	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(parent),
 						PANEL_PARENT);
 	
-	reposition_drawer(drawer);
+	gtk_widget_queue_resize(drawer->drawer);
 
 	if(drawerw->state == DRAWER_SHOWN) {
 		drawer_widget_close_drawer(DRAWER_WIDGET(drawer->drawer));
@@ -245,8 +200,7 @@ enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 }
 
 static Drawer *
-create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
-		     PanelOrientType orient)
+create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap)
 {
 	Drawer *drawer;
 	
@@ -279,8 +233,6 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.png");
 			break;
 	}*/
-		
-	drawer->orient = orient;
 
 	/*make the pixmap*/
 	drawer->button = gnome_pixmap_new_from_file (drawer->pixmap);
@@ -303,6 +255,7 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 
 	gtk_object_set_user_data(GTK_OBJECT(drawer->button),drawer);
 	gtk_object_set_data(GTK_OBJECT(drawer_panel),DRAWER_PANEL_KEY,drawer);
+	gtk_widget_queue_resize(GTK_WIDGET(drawer_panel));
 
 	return drawer;
 }
@@ -311,74 +264,24 @@ static Drawer *
 create_empty_drawer_applet(char *tooltip, char *pixmap,
 			   PanelOrientType orient)
 {
-	PanelOrientation porient;
-	DrawerDropZonePos drop_pos;
-	switch(orient) {
-	case ORIENT_UP:
-		porient = PANEL_VERTICAL;
-		drop_pos = DROP_ZONE_LEFT;
-		break;
-	case ORIENT_DOWN:
-		porient = PANEL_VERTICAL;
-		drop_pos = DROP_ZONE_RIGHT;
-		break;
-	case ORIENT_LEFT:
-		porient = PANEL_HORIZONTAL;
-		drop_pos = DROP_ZONE_LEFT;
-		break;
-	case ORIENT_RIGHT:
-		porient = PANEL_HORIZONTAL;
-		drop_pos = DROP_ZONE_RIGHT;
-		break;
-	default:
-		return NULL;
-	}
-	return create_drawer_applet(drawer_widget_new(PANEL_HORIZONTAL,
+	return create_drawer_applet(drawer_widget_new(orient,
 						      DRAWER_SHOWN,
-						      DROP_ZONE_RIGHT,
 						      PANEL_BACK_NONE, NULL,
 						      TRUE, NULL),
-				    tooltip,pixmap,
-				    orient);
+				    tooltip,pixmap);
 }
 
 void
 set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
 {
-	PanelOrientation porient;
-	DrawerDropZonePos drop_pos;
-
 	g_return_if_fail(drawer!=NULL);
 	
 	/*ignore orient events until we are realized, this will only
 	  be the initial one and we have already set the orientation*/
 	if(!GTK_WIDGET_REALIZED(drawer->drawer))
 		return;
-
-	drawer->orient = orient;
-
-	switch(drawer->orient) {
-	case ORIENT_UP:
-		porient = PANEL_VERTICAL;
-		drop_pos = DROP_ZONE_LEFT;
-		break;
-	case ORIENT_DOWN:
-		porient = PANEL_VERTICAL;
-		drop_pos = DROP_ZONE_RIGHT;
-		break;
-	case ORIENT_LEFT:
-		porient = PANEL_HORIZONTAL;
-		drop_pos = DROP_ZONE_LEFT;
-		break;
-	case ORIENT_RIGHT:
-		porient = PANEL_HORIZONTAL;
-		drop_pos = DROP_ZONE_RIGHT;
-		break;
-	}
-	drawer_widget_change_orient(DRAWER_WIDGET(drawer->drawer),
-				    porient);
-	drawer_widget_change_drop_zone_pos(DRAWER_WIDGET(drawer->drawer),
-					   drop_pos);
+	
+	drawer_widget_change_orient(DRAWER_WIDGET(drawer->drawer), orient);
 	
 	/*this was when we were chaning the pixmap on the fly*/
 
@@ -398,7 +301,7 @@ set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
 static void
 drawer_realize_cb(GtkWidget *button, Drawer *drawer)
 {
-	reposition_drawer(drawer);
+	gtk_widget_queue_resize(drawer->drawer);
 	if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN)
 		gtk_widget_show(drawer->drawer);
 	else {
@@ -418,7 +321,7 @@ drawer_move_foreach(GtkWidget *w, gpointer user_data)
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
-		reposition_drawer(drawer);
+		gtk_widget_queue_resize(drawer->drawer);
 		gtk_container_foreach(GTK_CONTAINER(dw->panel),
 				      drawer_move_foreach,
 				      NULL);
@@ -450,8 +353,9 @@ load_drawer_applet(char *params, char *pixmap, char *tooltip,
 		sscanf(params,"%d",&i);
 		dr_pd = g_list_nth(panel_list,i)->data;
 
-		drawer=create_drawer_applet(dr_pd->panel,
-					    tooltip,pixmap,
+		drawer=create_drawer_applet(dr_pd->panel, tooltip,pixmap);
+
+		drawer_widget_change_orient(DRAWER_WIDGET(dr_pd->panel),
 					    get_applet_orient(panel));
 	}
 
@@ -479,7 +383,7 @@ load_drawer_applet(char *params, char *pixmap, char *tooltip,
 	gtk_tooltips_set_tip (panel_tooltips,drawer->button,
 			      drawer->tooltip,NULL);
 	if(GTK_WIDGET_REALIZED(drawer->button)) {
-		reposition_drawer(drawer);
+		gtk_widget_queue_resize(drawer->drawer);
 		if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN)
 			gtk_widget_show(drawer->drawer);
 		else {

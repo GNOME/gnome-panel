@@ -232,8 +232,8 @@ orientation_change(int applet_id, PanelWidget *panel)
 	} else if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
-		reposition_drawer(drawer);
 		set_drawer_applet_orient(drawer,get_applet_orient(panel));
+		gtk_widget_queue_resize(drawer->drawer);
 		gtk_container_foreach(GTK_CONTAINER(dw->panel),
 				      orient_change_foreach,
 				      (gpointer)dw->panel);
@@ -445,13 +445,8 @@ static int
 panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 {
 	if(IS_DRAWER_WIDGET(widget)) {
-		Drawer *drawer = gtk_object_get_data(GTK_OBJECT(widget),
-						     DRAWER_PANEL_KEY);
-		if(!drawer)
-			return FALSE;
-
 		if(DRAWER_WIDGET(widget)->state == DRAWER_SHOWN)
-			reposition_drawer(drawer);
+			gtk_widget_queue_resize(widget);
 		panels_to_sync = TRUE;
 	}
 	return FALSE;

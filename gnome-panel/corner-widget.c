@@ -692,7 +692,6 @@ corner_widget_change_params(CornerWidget *corner,
 			    int fit_pixmap_bg,
 			    GdkColor *back_color)
 {
-	PanelOrientation oldorient;
 	CornerPos oldpos;
 	CornerState oldstate;
 	
@@ -704,10 +703,8 @@ corner_widget_change_params(CornerWidget *corner,
 	oldstate = corner->state;
 	corner->state = state;
 
-	oldorient = PANEL_WIDGET(corner->panel)->orient;
-
 	/*avoid flicker during size_request*/
-	if(oldorient != orient)
+	if(PANEL_WIDGET(corner->panel)->orient != orient)
 		corner_widget_request_cube = TRUE;
 	
 	panel_widget_change_params(PANEL_WIDGET(corner->panel),
