@@ -969,7 +969,7 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	
-	freq_a = gtk_adjustment_new((float)((mc->update_freq/1000)%60), 0, 60, 1, 5, 5);
+	freq_a = gtk_adjustment_new((float)((mc->update_freq/1000)%60), 0, 59, 1, 5, 5);
 	mc->sec_spin  = gtk_spin_button_new (GTK_ADJUSTMENT (freq_a), 1, 0);
 	gtk_signal_connect(GTK_OBJECT(freq_a), "value_changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
