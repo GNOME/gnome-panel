@@ -18,9 +18,8 @@
     Version 1.1 or any later version published by the Free Software
     Foundation; with no Invariant Sections, with no  Front-Cover
     Texts, and with no Back-Cover Texts.  A copy of the license is
-    available from the Free Software Foundation and can be viewed <ulink
-									 url="http://www.gnu.org/copyleft/fdl.html"
-									 type="http">online</ulink>.
+    available from the Free Software Foundation and can be viewed 
+    <ulink url="http://www.gnu.org/copyleft/fdl.html"type="http">online</ulink>.
    </para>
    
    <para>
@@ -49,7 +48,7 @@
    </indexterm>
    Il <interface>pannello</interface> è il cuore dell'interfaccia utente di
    GNOME e agisce come contenitore per il <link linkend="mainmenu">Menu
-    Principale</link>, i <link linkend="menus">menu utente</link>, <link
+   Principale</link>, i <link linkend="menus">menu utente</link>, <link
    linkend="launchers">pulsanti di avvio</link> per le applicazioni, <link
    linkend="applets">applet</link> (applicazioni che vengono eseguite
    interamente all'interno del pannello), <link
@@ -63,7 +62,7 @@
    inoltre possibile avere <link linkend="paneladd">molteplici pannelli</link>
    in esecuzione, ciascuno con il proprio aspetto, proprietà e contenuto. Questa
    flessibilità permette di creare, in modo molto semplice e comodo un ambiete
-   di lavoro personalizzato e completo.
+   di lavoro personalizzato e completo. 
   </para>
   <para>Questo documento descrive la versione 1.2 del
    <interface>pannello</interface> di GNOME.
@@ -71,7 +70,7 @@
  </sect1>
  
  
-<!-- ########### Panel Basics  ############## -->  
+ <!-- ########### Panel Basics  ############## -->  
  <sect1 id="panelbasics">   
   <title>Fondamenti</title>
   <para>
@@ -87,8 +86,9 @@
    <para>
     Un <interface>pannello</interface> può contenere svariati tipi di
     oggetti. Il <interface>pannello</interface> di esempio mostrato nella <xref
-    linkend="examplepanelfig"> mostra ciascun tipo di oggetto possibile.
+    linkend="examplepanelfig"> mostra ciascun tipo di oggetto possibile. 
    </para>
+
    <figure id="examplepanelfig">
     <title>Un esempio di pannello</title>
     <screenshot>
@@ -106,23 +106,23 @@
       <formalpara>
        <title>Menu</title>
        <para>
-	I menu sono un elenco di voci, ciascuna delle quali
-	avvia una applicazione, esegue un comando, oppure è un sotto-menu. Nel
+	I menu sono un elenco di voci, ciascuna delle quali avvia una
+	applicazione, esegue un comando, oppure è un sottomenu. Nel
 	<interface>pannello</interface> di esempio mostrato nella <xref
-									linkend="examplepanelfig">, l'icona sulla estrema sinistra, a fianco
-	 della freccia, è un piede stilizzato (il logo di GNOME). Questa
+	linkend="examplepanelfig">, l'icona sulla estrema sinistra, a fiaco
+ 	 della freccia, è un piede stilizzato (il logo di GNOME). Questa
 	 rappresenta un un <guimenu>Menu Principale</guimenu>, uno dei più
 	 importanti oggetti del <interface>pannello</interface>. Questo menu
 	 fornisce accesso alla maggior parte della applicazioni, comandi e
 	 opzioni di configurazione disponibili in GNOME. Il <guimenu>Menu
-	  Principale</guimenu> è descritto in dettaglio nel<xref
-								 linkend="mainmenu">. La seconda icona mostrata è una cartella, l'icona
-	  predefinita per rappresentare i menu degli utenti. GNOME permette agli
-	  utenti di creare i proprio menu dai contenuti personalizzati, in
-	  aggiunta al <guimenu>Menu Principale</guimenu>. Per aprire un menu,
-	  cliccate semplicemente sull'icona che lo rappresenta con il pulsante
-	  sinistro del mouse. Per maggiori informazioni sui menu, fate riferimento
-	  al<xref linkend="menus">.
+	  Principale</guimenu> è descritto in dettaglio
+	 nel<xref linkend="mainmenu">. La seconda icona mostrata è una cartella,
+	  l'icona predefinita per rappresentare i menu degli utenti. GNOME
+	  permette agli utenti di creare i proprio menu dai contenuti
+	  personalizzati, in aggiunta al <guimenu>Menu Principale</guimenu>. Per
+	  aprire un menu, cliccate semplicemente sull'icona che lo rappresenta con
+	  il pulsante sinistro del mouse. Per maggiori informazioni sui menu, fate
+	  riferimento al<xref linkend="menus">.
        </para>
       </formalpara>
      </listitem>
@@ -494,206 +494,206 @@
    </itemizedlist>
    <para>    
     In aggiunta al sottomenu <guisubmenu>Programi</guisubmenu>, il <guimenu>Menu
-    Principale</guimenu> contiene inoltre una serie di sottomenu e alcuni comodi
+     Principale</guimenu> contiene inoltre una serie di sottomenu e alcuni comodi
     comandi. A seconda della configurazione, è possibile che non tutte le scelte
     siano presenti. Inoltre, alcune di queste possono essere sottoforma di
     sottomenu, mentre altre direttamente incluse nel <guimenu>Menu
-    Principale</guimenu>, separate da linee orizzontali. Questi sottomenu o
+     Principale</guimenu>, separate da linee orizzontali. Questi sottomenu o
     comandi addizionali sono:
    </para>
    <itemizedlist>
     <listitem>
      <para>
-      <guisubmenu>Preferiti</guisubmenu>. Questo sottomenu
-This submenu, which is
-      originally empty, is a place where you can put your favorite
-      applications for quick access. You can edit this menu using
-      the <application>Menu Editor</application>, which can be
-      accessed from the <guimenu>Main Menu</guimenu> by choosing
-      <menuchoice><guisubmenu>Settings</guisubmenu>
-       <guimenuitem>Menu editor</guimenuitem> </menuchoice>. You can
-      also add any item from any other menu (in particular, from the
-      <guimenu>Programs</guimenu> menu) to the
-      <guisubmenu>Favorites</guisubmenu> menu by clicking on the
-      item with the right mouse button and selecting
-      <guimenuitem>Add this to Favorites menu</guimenuitem>.
+      <guisubmenu>Preferiti</guisubmenu>. Questo sottomenu, che all'inizio
+      trovate vuoto, è il posto dove potete inserire le vostre applicazioni
+      preferite per accedere a queste in modo più rapido. È possibile modificare
+      questo menu utilizzando l'<application>Editor dei Menu</application>, che
+      è reperibile dal <guimenu>Menu Principale</guimenu> selezionando
+      <menuchoice><guisubmenu>Impostazioni</guisubmenu><guimenuitem>Editor dei
+	Menu</guimenuitem></menuchoice>. È inoltre possbile aggiunge qualunque
+      oggetto da qualunque altro menu (in particolare, dal menu
+      <guimenu>Programmi</guimenu>) al menu <guisubmenu>Preferiti</guisubmenu>
+      cliccando l'oggetto con il tasto destro del mouse e selezionando
+      <guimenuitem>Aggiungi al menu Preferiti</guimenuitem>.
      </para>
     </listitem>
     
     <listitem>
      <para>
-      <guisubmenu>Applets</guisubmenu>. This submenu contains all
-      the applets installed on your system. Selecting an applet will
-      add it to your <interface>Panel</interface>.
+      <guisubmenu>Applet</guisubmenu>. Questo sottomenu contiene tutte le applet
+      installate sul vostro sistema. Selezionando una applet questa verrà
+      inserita nel vostro <interface>Pannello</interface>.
      </para>
     </listitem>
     
-      <listitem>
-       <para>
-        <guisubmenu>KDE menus</guisubmenu>. This shows the menus of
-        the K Desktop Environment (KDE) if you have it installed on
-        your system.
-       </para>
-      </listitem>
-
-      <listitem>
-       <para>
-        <guisubmenu>AnotherLevel menus</guisubmenu> and
-        <guisubmenu>Debian menus</guisubmenu>. These submenus show the
-        default application menus for Red Hat Linux and Debian
-        GNU/Linux, respectively. These will only appear for users of
-        the particular distributions.
-       </para>
-      </listitem>
-
-      <listitem>
-       <para>
-        <guimenuitem>Panel</guimenuitem>. This submenu can be used to
-        change <interface>Panel</interface> properties (both for <link
-        linkend="panelproperties">
-        <interface>individual Panels</interface></link> and <link
-        linkend="globalpanelprefs">global</link>, i.e. for all
-        <interface>Panels</interface>), <link linkend="add">add an
-        object</link> to the <interface>Panel</interface>, <link
-        linkend="panelremoving">remove the whole
-        <interface>Panel</interface></link>, <link
-        linkend="paneladd">create a new
-        <interface>Panel</interface></link>, or view the
-        <citetitle>Panel Manual</citetitle>.
-       </para>
-      </listitem>
-
-      <listitem>
-       <para>
-        <guimenuitem>Desktop</guimenuitem>&mdash; This submenu contains
-        <guimenuitem>Log out</guimenuitem>, which ends your GNOME
-        session (see <xref linkend="loggingout">), and
-        <guimenuitem>Lock screen</guimenuitem> (see <xref
-        linkend="lockscreen">). 
-       </para>
-      </listitem>
-
-      <listitem id="runcommand">
-       <para>
-        <guimenuitem>Run &hellip;</guimenuitem> &mdash; This menu item
-        opens the <interface>Run Program</interface> dialog for
-        executing shell commands (see <xref
-        linkend="runbutton">). 
-       </para>
-      </listitem>
-     </itemizedlist>
-    </sect2>
-
-    <sect2 id="mainmenuconfig">
-     <title>Configuring the Main Menu</title>
+    <listitem>
      <para>
-      To change the configuration of the <guimenu>Main Menu</guimenu>,
-      right-click on the <guibutton>Main Menu</guibutton> button
-      (shown in <xref linkend="main-menu-button-fig">) and select
-      <guimenuitem>Properties &hellip;</guimenuitem>  from the pop-up
-      menu. This will show the <interface>Menu Properties</interface>
-      dialog. In this dialog, for each of the submenus of the
-      <guimenu>Main Menu</guimenu> listed above
-      (<guisubmenu>Programs</guisubmenu>,
-      <guisubmenu>Favorites</guisubmenu>, &hellip;) you can choose
-      whether you want it  to be shown as part of the <guimenu>Main
-      Menu</guimenu>, as a submenu, or not at all.
+      <guisubmenu>Menu KDE</guisubmenu>. Questo mostra i menu del K Desktop
+      Environment (KDE) se lo avete installato sul vostro sistema.
      </para>
-
-
-     <figure>
-      <title>Menu Properties Dialog</title>
-      <screenshot>
-       <screeninfo>Menu Properties Dialog</screeninfo>
-       <graphic fileref="./figures/mainmenu_properties" format="png"
-       srccredit="muet">
-       </graphic>
-      </screenshot>
-     </figure>
-
+    </listitem>
+    
+    <listitem>
      <para>
-      You can also edit the contents of the
-      <guisubmenu>Favorites</guisubmenu> submenu (or, if you are the
-      system administrator, also of the
-      <guisubmenu>Programs</guisubmenu> submenu) using the
-      <application>GNOME Menu Editor</application>. To start it,
-      right-click on the <guibutton>Main Menu</guibutton> button and
-      select <guimenuitem>Edit Menus
-      &hellip;</guimenuitem>. Alternatively, you can start
-      <application>GNOME Menu Editor</application> by selecting
-      <menuchoice> <guisubmenu>Programs</guisubmenu>
-      <guisubmenu>Settings</guisubmenu> <guimenuitem>Menu
-      editor</guimenuitem> </menuchoice> from the <guimenu>Main
-      Menu</guimenu> itself.
+      <guisubmenu>Menu AnotherLevel</guisubmenu> e <guisubmenu>Menu
+       Debian</guisubmenu>. Questi sottomenu mostrano i menu standard della
+      applicazioni per Red Hat Linux e Debian GNU/Linux,
+      rispettivamente. Appariranno solo agli utenti di queste particolari
+      distribuzioni.
      </para>
-    </sect2>
-
-<!-- Do we need it now that we have information about Global menu?
-    <sect2 id="kbdnav">
-     <title>Keyboard Navigation in the Main Menu</title>
+    </listitem>
+    
+    <listitem>
+     <para>
+      <guimenuitem>Pannello</guimenuitem>. Questo sottomenu può essere
+      utilizzato per modificare le proprietà del <interface>Pannello</interface>
+      (sia per <link linkend="panelproperties">individuali</link> che <link
+									    linkend="globalpanelprefs">globali</link>, cioè per tutti i
+      <interface>pannelli</interface>), <link linkend="add">aggiungere un
+       oggetto</link> al <interface>pannello</interface>, <link
+								linkend="panelremoving">rimuoverlo interamente</link>, <link
+															     linkend="paneladd">crearne uno nuovo</link>, oppure visualizzare questo
+      manale.
+     </para>
+    </listitem>
+    
+    <listitem>
+     <para>
+      <guimenuitem>Scrivania</guimenuitem>&mdash; Questo sottomenu contiene
+      <guimenuitem>Esci</guimenuitem>, che termina la vostra sessione GNOME
+      (vedi <xref linkend="loggingout">), e <guimenuitem>Blocca lo
+	schermo</guimenuitem> (vedi <xref linkend="lockscreen">).
+     </para>
+    </listitem>
+    
+    <listitem id="runcommand">
+     <para>
+      <guimenuitem>Avvia &hellip;</guimenuitem> &mdash; Questa voce del menu
+      apre la finestra di dialogo <interface>Avvia programma</interface> per
+      eseguire comandi di shell (vedi <xref linkend="runbutton">).
+     </para>
+    </listitem>
+   </itemizedlist>
+  </sect2>
+  
+  <sect2 id="mainmenuconfig">
+   <title>Configurare il Menu Principale</title>
+   <para>
+    Per modificare la configurazione del <guimenu>Menu Principale</guimenu>
+    cliccate con il tasto destro sul pulsante del <guibutton>Menu
+     Principale</guibutton> (mostrato in <xref linkend="main-menu-button-fig">) e
+     selezionate la voce <guimenuitem>Proprietà &hellip;</guimenuitem> dal menu a
+     tendina. Verrà mostrata la finestra di dialogo <interface>Proprietà
+      Menu</interface>. In questa finestra, per ciascuno dei sotto menu del
+     <guimenu>Menu Principale</guimenu> elencato sopra
+     (<guisubmenu>Programmi</guisubmenu>, <guisubmenu>Preferiti</guisubmenu>,
+     &hellip;) è possibile scegliere se mostrarlo come parte del <guimenu>Menu
+      Principale</guimenu>, come sottomenu oppure non mostrarlo affatto.
+   </para>
+   
+   
+   <figure>
+    <title>Finestra di dialgo Proprietà Menu</title>
+    <screenshot>
+     <screeninfo>Finestra di dialgo Proprietà Menu</screeninfo>
+     <graphic fileref="./figures/mainmenu_properties" format="png"
+	      srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+   
+   <para>
+    È inoltre possibile modificare il contenuto del sottomenu
+    <guisubmenu>Preferiti</guisubmenu> (o, se siete l'amministratore di sistema,
+    anche del menu <guisubmenu>Programmi</guisubmenu>) utilizzando
+    l'<application>Editor dei Menu</application>. Per avviarlo, cliccate con il
+    tasto destro sul <guibutton>Menu Principale</guibutton> e selezionate la
+    voce <guimenuitem>Modifica menu...</guimenuitem>. In alternativa, è
+    possibile avviare l'<application>Editor dei menu</application> selezionando
+    <menuchoice><guisubmenu>Programmi</guisubmenu>
+     <guisubmenu>Impostazioni</guisubmenu> <guimenuitem>Editor dei
+      menu</guimenuitem> </menuchoice> dallo stesso <guimenu>Menu
+     Principale</guimenu>.
+   </para>
+  </sect2>
+  
+  <!-- Do we need it now that we have information about Global menu?
+ <sect2 id="kbdnav">
+ <title>Keyboard Navigation in the Main Menu</title>
      
-     <para>   
-      If you prefer, you can use the keyboard instead of the
-      mouse to navigate the <guimenu>Main Menu</guimenu>. To activate
-      the <guimenu>Main Menu</guimenu>, press the
-      <keycap>Menu</keycap> key on your keyboard (if you are using a
-      standard PC keyboard, this key usually is located to the left of
-      the space bar and labelled with a picture of a menu); you can
-      change the default key for activating the <guimenu>Main
-      Menu</guimenu> in the <link
-      linkend="misctab"><guilabel>Miscellaneous</guilabel></link> tab
-      of the <interface><link linkend="globalpanelprefs">Global Panel
-      Preferences</link> dialog</interface>. Use the
-      <keycap>Up</keycap> and <keycap>Down</keycap> arrow keys  to
-      move inside the menu, <keycap>Right</keycap> arrow to go to a
-      submenu, and <keycap>Enter</keycap> to select an item. To exit
-      the menu, just press the <keycap>Esc</keycap> key.
-     </para>
-    </sect2> -->
-   </sect1>
-
-
+ <para>   
+  If you prefer, you can use the keyboard instead of the
+  mouse to navigate the <guimenu>Main Menu</guimenu>. To activate
+  the <guimenu>Main Menu</guimenu>, press the
+ <keycap>Menu</keycap> key on your keyboard (if you are using a
+  standard PC keyboard, this key usually is located to the left
+  the space bar and labelled with a picture of a menu); you can
+  change the default key for activating the <guimenu>Main
+  Menu</guimenu> in the <link
+  linkend="misctab"><guilabel>Miscellaneous</guilabel></link> tab
+  of the <interface><link linkend="globalpanelprefs">Global Panel
+  Preferences</link> dialog</interface>. Use the
+ <keycap>Up</keycap> and <keycap>Down</keycap> arrow keys  to
+  move inside the menu, <keycap>Right</keycap> arrow to go to 
+  submenu, and <keycap>Enter</keycap> to select an item. To exit
+  the menu, just press the <keycap>Esc</keycap> key.
+ </para>
+ </sect2> -->
+ </sect1>
+ 
+ 
  <!-- ########### Menus  ############## -->
  <sect1 id="menus">
-  <title>Menus</title>
+  <title>Menu</title>
   <para>
-   In addition to the <guimenu>Main Menu</guimenu>, discussed in <xref
-   linkend="mainmenu">, you can also add "normal menus" to a
-   <interface>Panel</interface>. An example menu, in this case a
-   <guimenu>Favorites</guimenu> menu containing three application
-   launchers and one submenu titled <guisubmenu>Games</guisubmenu>, is
-   shown in <xref linkend = "example-menu-fig">. Unlike the
-   <guimenu>Main Menu</guimenu>, normal menus only contain whatever
-   launchers and submenus you place in them - no default submenus,
-   <guimenuitem>Run...</guimenuitem> command, etc. as the <guimenu>Main
-   Menu</guimenu> has.  You can also add any submenu of your
-   <guimenu>Favorites</guimenu> menu or the
-   <guimenu>Programs</guimenu> menu as a separate menu to a
-   <interface>Panel</interface>; to do so, bring up this submenu from
-   the <guimenu>Main Menu</guimenu>,  right click on the submenu
-   title, and select <guimenuitem>Add this as menu to
-   panel</guimenuitem>.
+   In aggiunta al <guimenu>Menu Principale</guimenu>, discusso in  <xref							 linkend="mainmenu">, è inoltre possibile aggiungere "menu normali" ad un
+    <interface>pannello</interface>.  Un menu di esempio, in questo caso un menu
+    <guimenu>Preferiti</guimenu> contenente tre pulsanti di avvio e un sottomenu
+    con titolo <guisubmenu>Games</guisubmenu>, è mostrato in <xref
+    linkend="example-menu-fig">. Diversamente da <guimenu>Menu
+      Principale</guimenu>, i menu normali possono contenere unicamente pulsanti
+    di avvio e sottmenu che voi stessi inserirete al loro interno - nessun
+    sottomenu predefinito, il comando <guimenuitem>Avvia...</guimenuitem>,
+    etc. come invece accade per il <guimenu>Menu Principale</guimenu>. È inoltre
+    possibile aggiungere qualunqune sottomenu del menu
+    <guimenu>Preferiti</guimenu> o del menu <guimenu>Programmi</guimenu> come
+    menu separato ad un <interface>pannello</interface>. Per fare questo,
+    visualizzate il sottomenu da <guimenu>Menu Principale</guimenu>, cliccate
+    con il tasto destro del mouse sul titolo del sottomenu e selezionate
+    <guimenuitem>Aggiungi come menu al pannello</guimenuitem>.
   </para>
+
   <figure id="example-menu-fig">
-   <title>An Example Menu</title>
+   <title>Un menu di esempio</title>
    <screenshot>
-    <screeninfo>An Example Menu</screeninfo>
-     <graphic fileref="./figures/example_menu" format="png"
-     srccredit="muet">
-     </graphic>
+    <screeninfo>Un menu di esempio</screeninfo>
+    <graphic fileref="./figures/example_menu" format="png"
+	     srccredit="muet">
+    </graphic>
    </screenshot>
   </figure>
-
-   <sect2 id="addingmenus">
-    <title>Adding a Menu to a Panel</title>  <para>     To learn how
-    to add a menu to a <interface>Panel</interface>, see <xref
-    linkend="add">.
-    </para>
-   </sect2>
-
-  <sect2 id="tearoff">
-   <title>Tearing Off a Menu</title>
+  
+  <sect2 id="addingmenus">
+   <title>
+    Aggiungere un menu ad un pannello
+   </title>  
    <para>
+    Per imparare come aggiungere un menu ad un <interface>pannello</interface>,
+    vedere la <xref linkend="add">.
+   </para>
+  </sect2>
+  
+  <sect2 id="tearoff">
+   <title>Sganciare un menu</title>
+   <para>
+    Tutti i menu in Gnome hanno la possibilità di sganciarsi: se cliccate con il
+    tasto sinistra sulla "perforazione" (la sottile linea tratteggiata
+    all'inizio del menu, appena sopra il titolo di questo), il menu verrà
+    trasformato in una finestra a se stante sul vostro desktop, e resterà
+    staccato anche spostando altrove il puntatore del mouse. Questo risulta
+    molto conveniente quando è necessario utilizzare lo stesso comando più volte
+    che si trova in un sottomenu molto annidato
+
     All menus in GNOME have the tear-off feature: if you left-click on
     the "perforation" (thin dashed line at the top of the menu, right
     above the menu title), the menu will be turned into a separate
