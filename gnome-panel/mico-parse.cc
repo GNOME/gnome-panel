@@ -69,10 +69,10 @@ parse_mico_arg (int key, char *arg, struct argp_state *state)
     {
       /* We defined this argument.  Handle it by pushing the flag and
 	 possibly the argument onto our saved argument vector.  */
-      /* NOTE: For now we assume that MICO needs "-" and not "--"
-	 arguments.  */
+      /* NOTE: this requires the Gnome-modified MICO.  The stock MICO
+	 uses "-" and not "--" arguments.  */
       our_mico_argv[our_mico_argc++]
-	= g_strconcat ("-", our_mico_options[- key - 1].name, NULL);
+	= g_strconcat ("--", our_mico_options[- key - 1].name, NULL);
       if (arg)
 	our_mico_argv[our_mico_argc++] = strdup (arg);
     }
