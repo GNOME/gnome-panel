@@ -1397,12 +1397,15 @@ session_read_global_config (void)
 	l = panel_gconf_all_global_entries ();
 
 	for (; l ; l = l->next) {
+		GConfEntry *entry;
 		GConfValue *value;
 		gchar      *key;
 
-		value = gconf_entry_get_value (l->data);
+		entry = (GConfEntry *)l->data;
 
-		key = g_path_get_basename (gconf_entry_get_key (l->data));
+		value = gconf_entry_get_value (entry);
+
+		key = g_path_get_basename (gconf_entry_get_key (entry));
 
 		if (!strcmp (key, "panel-animation-speed"))
 			global_config.animation_speed =
