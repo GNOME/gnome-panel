@@ -140,6 +140,19 @@ basep_widget_realize (GtkWidget *w)
 }
 
 static void
+basep_widget_map (GtkWidget *w)
+{
+        BasePWidget *basep = BASEP_WIDGET (w);
+
+        g_return_if_fail (IS_BASEP_WIDGET (basep));
+
+        if (GTK_WIDGET_CLASS (basep_widget_parent_class)->map != NULL)
+		GTK_WIDGET_CLASS (basep_widget_parent_class)->map (w);
+
+        basep_widget_update_winhints (basep);
+}
+
+static void
 basep_widget_size_request (GtkWidget *widget,
 			   GtkRequisition *requisition)
 {
@@ -378,6 +391,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	widget_class->size_request = basep_widget_size_request;
 	widget_class->size_allocate = basep_widget_size_allocate;
 	widget_class->realize = basep_widget_realize;
+	widget_class->map = basep_widget_map;
 	widget_class->enter_notify_event = basep_enter_notify;
 	widget_class->leave_notify_event = basep_leave_notify;
 	widget_class->style_set = basep_style_set;
