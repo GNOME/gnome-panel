@@ -510,7 +510,7 @@ panel_applet_create_menu (AppletInfo *info)
 		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
 						  GTK_ICON_SIZE_MENU);
 
-		setup_menuitem (menuitem, image , _("Remove From Panel"));
+		setup_menuitem (menuitem, image , _("_Remove From Panel"));
 
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
@@ -521,7 +521,7 @@ panel_applet_create_menu (AppletInfo *info)
 
 		/* FIXME: should have a "Move" pixmap.
 		 */
-		setup_menuitem (menuitem, NULL, _("Move"));
+		setup_menuitem (menuitem, NULL, _("_Move"));
 
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (move_applet_callback), info);

@@ -1419,7 +1419,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					   "activate",
 					   G_CALLBACK(edit_dentry),
 					   sim);
-			setup_menuitem (menuitem, NULL, _("Properties"));
+			setup_menuitem (menuitem, NULL, _("_Properties"));
 			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
 #endif /* FIXME */
 
@@ -4099,7 +4099,7 @@ load_menu_applet (const char  *params,
 
 		menu->info = info;
 
-		panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
+		panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("_Help"));
 	}
 }
 

@@ -620,10 +620,10 @@ load_drawer_applet (gchar       *mypanel_id,
 		panel_applet_add_callback (drawer->info,
 					   "properties",
 					   GTK_STOCK_PROPERTIES,
-					   _("Properties"));
+					   _("_Properties"));
 
 	panel_applet_add_callback (
-		drawer->info, "help", GTK_STOCK_HELP, _("Help"));
+		drawer->info, "help", GTK_STOCK_HELP, _("_Help"));
 
 	return drawer;
 }

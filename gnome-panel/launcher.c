@@ -727,9 +727,9 @@ load_launcher_applet_full (const char       *params,
 		panel_applet_add_callback (launcher->info,
 					   "properties",
 					   GTK_STOCK_PROPERTIES,
-					   _("Properties"));
+					   _("_Properties"));
 
-	panel_applet_add_callback (launcher->info, "help", GTK_STOCK_HELP, _("Help"));
+	panel_applet_add_callback (launcher->info, "help", GTK_STOCK_HELP, _("_Help"));
 
 	/* setup button according to ditem */
 	setup_button (launcher);
