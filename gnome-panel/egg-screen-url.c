@@ -41,8 +41,22 @@
 /* This needs to be exposed from libgnome and
  * removed from here.
  */
+
+/**
+ * egg_url_show_with_env:
+ * @url: The url to display. Should begin with the protocol to use (e.g.
+ * "http:", "ghelp:", etc)
+ * @envp: child's environment, or %NULL to inherit parent's.
+ * @error: Used to store any errors that result from trying to display the @url.
+ *
+ * Description: Like gnome_url_show(), except that the viewer application
+ * is launched with its environment set to the contents of @envp.
+ *
+ * Returns: %TRUE if everything went fine, %FALSE otherwise (in which case
+ * @error will contain the actual error).
+ **/
 gboolean
-_egg_url_show_with_env (const char  *url,
+egg_url_show_with_env (const char  *url,
 		       char       **envp,
 		       GError     **error)
 {
@@ -138,6 +152,19 @@ _egg_url_show_with_env (const char  *url,
 }
 /******* END COPIED + PASTED CODE TO GO AWAY ******/
 
+/**
+ * egg_screen_url_show:
+ * @screen: a #GdkScreen.
+ * @url: The url to display. Should begin with the protocol to use (e.g.
+ * "http:", "ghelp:", etc)
+ * @error: Used to store any errors that result from trying to display the @url.
+ *
+ * Description: Like gnome_url_show(), but ensures that the viewer application
+ * appears on @screen.
+ *
+ * Returns: %TRUE if everything went fine, %FALSE otherwise (in which case
+ * @error will contain the actual error).
+ **/
 gboolean
 egg_screen_url_show (GdkScreen   *screen,
 		     const char  *url,
@@ -148,7 +175,7 @@ egg_screen_url_show (GdkScreen   *screen,
 
 	env = egg_screen_exec_environment (screen);
 
-	retval = _egg_url_show_with_env (url, env, error);
+	retval = egg_url_show_with_env (url, env, error);
 
 	g_strfreev (env);
 

@@ -27,13 +27,17 @@
 
 G_BEGIN_DECLS
 
-gboolean egg_screen_url_show    (GdkScreen   *screen,
-			         const char  *url,
-			         GError     **error);
+/* Destined for libgnome.
+ */
+gboolean egg_url_show_with_env (const char  *url,
+				char       **envp,
+				GError     **error);
 
-gboolean _egg_url_show_with_env (const char  *url,
-				 char       **envp,
-				 GError     **error);
+/* Destined for libgnomeui.
+ */
+gboolean egg_screen_url_show   (GdkScreen   *screen,
+				const char  *url,
+				GError     **error);
 
 G_END_DECLS
 

@@ -43,7 +43,21 @@
  * be exposed from libgnome. They can then be
  * removed from here.
  */
-static gboolean
+
+/**
+ * egg_help_display_uri_with_env:
+ * @help_uri: The URI to display.
+ * @envp: child's environment, or %NULL to inherit parent's.
+ * @error: return location for errors.
+ *
+ * Description: Like gnome_help_display_uri, except that the help viewer
+ * application is launched with its environment set to the contents of
+ * @envp.
+ *
+ * Returns: %TRUE on success, %FALSE otherwise (in which case @error will
+ * contain the actual error).
+ **/
+gboolean
 egg_help_display_uri_with_env (const char    *help_uri,
 			       char         **envp,
 			       GError       **error)
@@ -52,7 +66,7 @@ egg_help_display_uri_with_env (const char    *help_uri,
 	gboolean retval;
 
 	real_error = NULL;
-	retval = _egg_url_show_with_env (help_uri, envp, &real_error);
+	retval = egg_url_show_with_env (help_uri, envp, &real_error);
 
 	if (real_error != NULL)
 		g_propagate_error (error, real_error);
@@ -95,7 +109,26 @@ locate_help_file (const char *path, const char *doc_name)
 	return NULL;
 }
 
-static gboolean
+/**
+ * egg_help_display_with_doc_id_with_env:
+ * @program: The current application object, or %NULL for the default one.
+ * @doc_id: The document identifier, or %NULL to default to the application ID
+ * (app_id) of the specified @program.
+ * @file_name: The name of the help document to display.
+ * @link_id: Can be %NULL. If set, refers to an anchor or section id within the
+ * requested document.
+ * @envp: child's environment, or %NULL to inherit parent's.
+ * @error: A #GError instance that will hold the specifics of any error which
+ * occurs during processing, or %NULL
+ *
+ * Description: Like gnome_help_display_with_doc_id(), except that the help
+ * viewer application is launched with its environment set to the contents
+ * of @envp.
+ *
+ * Returns: %TRUE on success, %FALSE otherwise (in which case @error will
+ * contain the actual error).
+ **/
+gboolean
 egg_help_display_with_doc_id_with_env (GnomeProgram  *program,
 				       const char    *doc_id,
 				       const char    *file_name,
@@ -230,7 +263,26 @@ egg_help_display_with_doc_id_with_env (GnomeProgram  *program,
 	return retval;
 }
 
-static gboolean
+/**
+ * egg_help_display_desktop_with_env:
+ * @program: The current application object, or %NULL for the default one.
+ * @doc_id: The name of the help file relative to the system's help domain
+ * (#GNOME_FILE_DOMAIN_HELP).
+ * @file_name: The name of the help document to display.
+ * @link_id: Can be %NULL. If set, refers to an anchor or section id within the
+ * requested document.
+ * @envp: child's environment, or %NULL to inherit parent's.
+ * @error: A #GError instance that will hold the specifics of any error which
+ * occurs during processing, or %NULL
+ *
+ * Description: Like gnome_help_display_desktop(), except that the help
+ * viewer application is launched with its environment set to the contents
+ * of @envp.
+ *
+ * Returns: %TRUE on success, %FALSE otherwise (in which case @error will
+ * contain the actual error).
+ **/
+gboolean
 egg_help_display_desktop_with_env (GnomeProgram  *program,
 				   const char    *doc_id,
 				   const char    *file_name,
@@ -301,6 +353,21 @@ egg_help_display_desktop_with_env (GnomeProgram  *program,
 }
 /******* END COPIED + PASTED CODE TO GO AWAY ******/
 
+/**
+ * egg_screen_help_display:
+ * @screen: a #GdkScreen.
+ * @file_name: The name of the help document to display.
+ * @link_id: Can be %NULL. If set, refers to an anchor or section id within the
+ * requested document.
+ * @error: A #GError instance that will hold the specifics of any error which
+ * occurs during processing, or %NULL
+ *
+ * Description: Like gnome_help_display(), but ensures that the help viewer
+ * application appears on @screen.
+ *
+ * Returns: %TRUE on success, %FALSE otherwise (in which case @error will
+ * contain the actual error).
+ **/
 gboolean
 egg_screen_help_display (GdkScreen   *screen,
 			 const char  *file_name,
@@ -311,6 +378,24 @@ egg_screen_help_display (GdkScreen   *screen,
 			screen, NULL, NULL, file_name, link_id, error);
 }
 
+/**
+ * egg_screen_help_display_with_doc_id
+ * @screen: a #GdkScreen.
+ * @program: The current application object, or %NULL for the default one.
+ * @doc_id: The document identifier, or %NULL to default to the application ID
+ * (app_id) of the specified @program.
+ * @file_name: The name of the help document to display.
+ * @link_id: Can be %NULL. If set, refers to an anchor or section id within the
+ * requested document.
+ * @error: A #GError instance that will hold the specifics of any error which
+ * occurs during processing, or %NULL
+ *
+ * Description: Like gnome_help_display_with_doc_id(), but ensures that the help
+ * viewer application appears on @screen.
+ *
+ * Returns: %TRUE on success, %FALSE otherwise (in which case @error will
+ * contain the actual error).
+ **/
 gboolean
 egg_screen_help_display_with_doc_id (GdkScreen     *screen,
 				     GnomeProgram  *program,
@@ -332,6 +417,24 @@ egg_screen_help_display_with_doc_id (GdkScreen     *screen,
 	return retval;
 }
 
+/**
+ * egg_screen_help_display_desktop
+ * @screen: a #GdkScreen.
+ * @program: The current application object, or %NULL for the default one.
+ * @doc_id: The name of the help file relative to the system's help domain
+ * (#GNOME_FILE_DOMAIN_HELP).
+ * @file_name: The name of the help document to display.
+ * @link_id: Can be %NULL. If set, refers to an anchor or section id within the
+ * requested document.
+ * @error: A #GError instance that will hold the specifics of any error which
+ * occurs during processing, or %NULL
+ *
+ * Description: Like gnome_help_display_desktop(), but ensures that the help
+ * viewer application appears on @screen.
+ *
+ * Returns: %TRUE on success, %FALSE otherwise (in which case @error will
+ * contain the actual error).
+ **/
 gboolean
 egg_screen_help_display_desktop (GdkScreen     *screen,
 				 GnomeProgram  *program,
@@ -353,6 +456,19 @@ egg_screen_help_display_desktop (GdkScreen     *screen,
 	return retval;
 }
 
+/**
+ * egg_screen_help_display_uri
+ * @screen: a #GdkScreen.
+ * @help_uri: The URI to display.
+ * @error: A #GError instance that will hold the specifics of any error which
+ * occurs during processing, or %NULL
+ *
+ * Description: Like gnome_help_display_uri(), but ensures that the help viewer
+ * application appears on @screen.
+ *
+ * Returns: %TRUE on success, %FALSE otherwise (in which case @error will
+ * contain the actual error).
+ **/
 gboolean
 egg_screen_help_display_uri (GdkScreen   *screen,
 			     const char  *help_uri,
