@@ -1379,6 +1379,7 @@ basep_widget_instance_init (BasePWidget *basep)
 	gtk_widget_show(basep->ebox);
 
 	basep->table = gtk_table_new(3,3,FALSE);
+	gtk_widget_set_direction (basep->table, GTK_TEXT_DIR_LTR);
 	gtk_container_add(GTK_CONTAINER(basep->ebox),basep->table);
 	gtk_widget_show(basep->table);
 

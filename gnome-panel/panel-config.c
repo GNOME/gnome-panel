@@ -728,6 +728,7 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 	gtk_box_pack_start (GTK_BOX (pos_box), w, FALSE, FALSE, 0);
 
 	table = gtk_table_new (2 + aligns, 2 + aligns, FALSE);
+	gtk_widget_set_direction (table, GTK_TEXT_DIR_LTR);
 	gtk_container_add (GTK_CONTAINER (w), table);
 
 	set_relation (table, GTK_LABEL (label), 1);
