@@ -12,7 +12,7 @@ fish_applet_LDADD = ../../panel/libpanel_applet.la \
 		     $(GNOME_LIBDIR) $(ORB_LIBS) \
 		     $(GNOMEUI_LIBS) $(INTLLIBS) 
 
-FISH_BITMAPS = fishanim.png
+FISH_BITMAPS = fishanim.png oldwanda.png
 
 EXTRA_DIST = \
 	fish_applet.desktop \
