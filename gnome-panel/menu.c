@@ -2299,7 +2299,7 @@ add_test_bonobo_applet (GtkWidget *widget,
 
 	panel = get_panel_from_menu_data (widget, TRUE);
 
-	panel_applet_load ("OAFIID:GNOME_Panel_TestBonoboApplet", panel, -1);
+	panel_bonobo_applet_load ("OAFIID:GNOME_Panel_TestBonoboApplet", panel, -1);
 }
 
 static void

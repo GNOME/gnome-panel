@@ -5,9 +5,9 @@
 
 G_BEGIN_DECLS
 
-void panel_applet_load (const gchar *iid,
-			PanelWidget *panel,
-			gint         pos);
+void panel_bonobo_applet_load (const gchar *iid,
+			       PanelWidget *panel,
+			       gint         pos);
 
 G_END_DECLS
 

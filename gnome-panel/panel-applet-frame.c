@@ -4,17 +4,37 @@
 
 #include "applet.h"
 
-void
-panel_applet_load (const gchar *iid,
-		   PanelWidget *panel,
-		   gint         pos)
+static GtkWidget *
+panel_bonobo_applet_widget (const gchar *iid)
 {
 	GtkWidget *control;
-	gboolean   success;
+	GtkWidget *event_box;
+
+	event_box = gtk_event_box_new ();
+
+	gtk_widget_set_events (event_box, 
+			       GDK_BUTTON_PRESS_MASK|GDK_BUTTON_RELEASE_MASK);
 
 	control = bonobo_widget_new_control (iid, NULL);
 
-	success = register_toy (control, 
+	gtk_container_add (GTK_CONTAINER (event_box), control);
+
+	gtk_widget_show_all (event_box);
+
+	return event_box;
+}
+
+void
+panel_bonobo_applet_load (const gchar *iid,
+			  PanelWidget *panel,
+			  gint         pos)
+{
+	GtkWidget *widget;
+	gboolean   success;
+
+	widget = panel_bonobo_applet_widget (iid);
+
+	success = register_toy (widget, 
 				NULL,     /* FIXME: data */
 				NULL,     /* FIXME: data_destroy */
 				panel,

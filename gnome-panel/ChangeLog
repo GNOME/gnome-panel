@@ -1,5 +1,16 @@
 2001-11-05  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-frame.c: 
+	(panel_bonobo_applet_widget): impl. Wrap the windowless 
+	BonoboWidget in a GtkEventBox so we can catch events.
+	(panel_applet_load): rename to panel_bonobo_applet_load.
+
+	* panel-applet-frame.h: upd.
+
+	* menu.c: (add_test_bonobo_applet): upd.
+
+2001-11-05  Mark McLoughlin  <mark@skynet.ie>
+
 	* applet.c: (applet_button_press): only propagate event to
 	button widgets.
 
