@@ -1,3 +1,9 @@
+2003-12-08  Padraig O'Briain <padraig.obriain@sun.com>
+
+	* Makefile.am:
+	Add CLEANFILES so that make clean deletes $(server_DATA) and
+	$(server_DATA).in. Fixes bug #128795.
+
 2003-12-03  Vincent Untz  <vincent@vuntz.net>
 
 	Don't use deprecated functions.
