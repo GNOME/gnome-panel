@@ -69,7 +69,7 @@ panel_menu_bar_show_applications_menu (PanelMenuBar *menubar,
 	while (GTK_MENU_SHELL (menu)->children)
 		gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
 
-	create_root_menu (menu, NULL, TRUE, MENU_FLAGS, FALSE);
+	create_root_menu (menu, menubar->priv->panel, TRUE, MENU_FLAGS, FALSE);
 }
 
 static void
