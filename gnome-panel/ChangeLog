@@ -1,3 +1,47 @@
+2003-01-31  Mark McLoughlin  <mark@skynet.ie>
+
+	Make drawers work more or less and implement resizing the
+	panel using the pointer.
+
+	* button-widget.c: (draw_arrow): hmm, I think the semantics
+	of the orientation has been reversed. Fix this bug, but there
+	is probably more.
+
+	* drawer.c:
+	(create_empty_drawer_applet): actually create the toplevel.
+	(set_drawer_applet_orientation): don't set the toplevel
+	orienation.
+
+	* panel-toplevel.c:
+	(panel_toplevel_update_buttons_showing): if this is a drawer,
+	then hide one of the buttons.
+	(panel_toplevel_update_attached_position): snap to the edge
+	of the attach toplevel, not the attach widget.
+	(panel_toplevel_reverse_arrow), (panel_toplevel_reverse_arrows),
+	(panel_toplevel_disconnect_attached),
+	(panel_toplevel_connect_attached): reverse the arrows on the
+	buttons when attached.
+	(panel_toplevel_get_resize_edge): function to get the edge, if
+	any, which we would resize on from this position.
+	(panel_toplevel_edge_to_cursor): return the resize cursor type
+	for a given edge.
+	(panel_toplevel_button_press_event): if we're within a few pixels
+	from the panel edge start a resize drag.
+	(panel_toplevel_button_release_event): unset all drag flags.
+	(panel_toplevel_update_cursor_for_resize): set the resize cursor.
+	(panel_toplevel_resize_to_pointer): resize based on pointer
+	location.
+	(panel_toplevel_motion_notify_event): handle resizing and setting
+	the resize cursor from here.
+	(panel_toplevel_set_size): don't try and maintain the current
+	position on a resize here. We do that in resize_to_pointer().
+
+	* panel.c:
+	(panel_widget_setup): don't connect to the PanelWidget orientation
+	change signal - that only notifies of changes between horiz/vert.
+	(panel_setup): connect to notify::orientation on the toplevel
+	instead.
+
 2003-01-29  Mark McLoughlin  <mark@skynet.ie>
 
 	Replace BasePWidget and co. with a single widget written

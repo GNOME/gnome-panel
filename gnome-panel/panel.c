@@ -1154,10 +1154,6 @@ panel_widget_setup(PanelWidget *panel)
 			  "size_change",
 			  G_CALLBACK (panel_size_change),
 			  NULL);
-	g_signal_connect (G_OBJECT (panel),
-			  "orient_change",
-			  G_CALLBACK (panel_orient_change),
-			  NULL);
 }
 
 PanelData *
@@ -1200,6 +1196,9 @@ panel_setup (PanelToplevel *toplevel)
 			  G_CALLBACK (panel_button_press_event), NULL);
 	g_signal_connect (toplevel, "popup-menu",
 			  G_CALLBACK (panel_popup_menu_signal), NULL);
+
+	g_signal_connect_swapped (toplevel, "notify::orientation",
+				  G_CALLBACK (panel_orient_change), panel_widget);
  
 	g_signal_connect (toplevel, "destroy", G_CALLBACK (panel_destroy), pd);
 

@@ -528,28 +528,18 @@ create_empty_drawer_applet (PanelWidget      *container,
 	PanelToplevel *toplevel;
 	GdkScreen     *screen;
 	int            monitor;
+	int            screen_width, screen_height;
 
 	screen  = panel_screen_from_panel_widget (container);
 	monitor = panel_monitor_from_panel_widget (container);
 
-	/* FIXME_FOR_NEW_TOPLEVEL:
-	 *    need to create a PanelToplevel here
-	 *    make sure its initially offscreen by setting
-	 *    x = screen_width + 10 and y = screen_height + 10
-	 */
+	screen_width  = gdk_screen_get_width  (screen);
+	screen_height = gdk_screen_get_height (screen);
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-	drawer_widget = drawer_widget_new (NULL, screen,
-					   monitor, orientation,
-					   BASEP_NA_EXPLICIT_HIDE,
-					   BASEP_NA_SHOWN,
-					   PANEL_SIZE_MEDIUM,
-					   TRUE, TRUE,
-					   PANEL_BACK_NONE, NULL,
-					   TRUE, FALSE, TRUE, NULL);
-#else
-	toplevel = NULL;
-#endif
+	toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
+				 "x", screen_width  + 10,
+				 "y", screen_height + 10,
+				 NULL);
 
 	return create_drawer_applet (toplevel, parent_toplevel,
 				     tooltip, pixmap, orientation);
@@ -562,8 +552,6 @@ set_drawer_applet_orientation (Drawer           *drawer,
 	g_return_if_fail (drawer != NULL);
 
 	button_widget_set_params (BUTTON_WIDGET (drawer->button), TRUE, orientation);
-	
-	panel_toplevel_set_orientation (drawer->toplevel, orientation);
 }
 
 static void

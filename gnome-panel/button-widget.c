@@ -512,14 +512,6 @@ draw_arrow (GdkPoint         *points,
 {
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:
-		points[0].x = SCALE(48-12);
-		points[0].y = SCALE(10);
-		points[1].x = SCALE(48-4);
-		points[1].y = SCALE(10);
-		points[2].x = SCALE(48-8);
-		points[2].y = SCALE(3);
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
 		points[0].x = SCALE(4);
 		points[0].y = SCALE(48 - 10);
 		points[1].x = SCALE(12);
@@ -527,21 +519,29 @@ draw_arrow (GdkPoint         *points,
 		points[2].x = SCALE(8);
 		points[2].y = SCALE(48 - 3);
 		break;
-	case PANEL_ORIENTATION_LEFT:
-		points[0].x = SCALE(10);
-		points[0].y = SCALE(4);
-		points[1].x = SCALE(10);
-		points[1].y = SCALE(12);
-		points[2].x = SCALE(3);
-		points[2].y = SCALE(8);
+	case PANEL_ORIENTATION_BOTTOM:
+		points[0].x = SCALE(48-12);
+		points[0].y = SCALE(10);
+		points[1].x = SCALE(48-4);
+		points[1].y = SCALE(10);
+		points[2].x = SCALE(48-8);
+		points[2].y = SCALE(3);
 		break;
-	case PANEL_ORIENTATION_RIGHT:
+	case PANEL_ORIENTATION_LEFT:
 		points[0].x = SCALE(48 - 10);
 		points[0].y = SCALE(48 - 12);
 		points[1].x = SCALE(48 - 10);
 		points[1].y = SCALE(48 - 4);
 		points[2].x = SCALE(48 - 3);
 		points[2].y = SCALE(48 - 8);
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		points[0].x = SCALE(10);
+		points[0].y = SCALE(4);
+		points[1].x = SCALE(10);
+		points[1].y = SCALE(12);
+		points[2].x = SCALE(3);
+		points[2].y = SCALE(8);
 		break;
 	}
 }
