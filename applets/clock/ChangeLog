@@ -1,3 +1,25 @@
+2004-07-27  William Jon McCann  <mccann@jhu.edu>
+
+	Fix for bug #148137.
+	
+	* calendar-client.c (calendar_client_config_get_timezone)
+	(calendar_client_config_get_icaltimezone, calendar_client_set_timezone)
+	(calendar_client_timezone_changed_cb):
+	New functions to get and set the default timezone from the
+	Evolution GConf configuration.
+	(calendar_client_init, calendar_client_finalize):
+	Add and remove GConf listeners for timezone changes.
+	(difftm, get_utc_offset, adjust_all_day): Removed functions.
+	(get_time_from_property, get_ical_start_time, get_ical_end_time)
+	(get_ical_is_all_day, get_ical_due_time)
+	(get_ical_completed_time, calendar_appointment_init)
+	(calendar_appointment_generate_ocurrences, calendar_task_init)
+	(calendar_event_new, calendar_event_generate_ocurrences)
+	(calendar_client_handle_query_result, calendar_client_set_task_completed):
+	Use default time zone for floating times and dates.
+	(filter_appointment, calendar_client_foreach_appointment_day):
+	Removed unneed adjust_all_day() call.
+
 Mon Jul 19 17:18:17 2004  Jonathan Blandford  <jrb@gnome.org>
 
 	* clock.c (create_appointment_list): use SHADOW_IN

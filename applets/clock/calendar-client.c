@@ -38,6 +38,9 @@
 #undef CALENDAR_ENABLE_DEBUG
 #include "calendar-debug.h"
 
+#define CALENDAR_CONFIG_PREFIX   "/apps/evolution/calendar"
+#define CALENDAR_CONFIG_TIMEZONE CALENDAR_CONFIG_PREFIX "/display/timezone"
+
 #ifndef _
 #define _(x) gettext(x)
 #endif
@@ -77,6 +80,11 @@ struct _CalendarClientPrivate
 
   GSList              *appointment_sources;
   GSList              *task_sources;
+
+  icaltimezone        *zone;
+
+  guint                zone_listener;
+  GConfClient         *gconf_client;
 
   guint                day;
   guint                month;
@@ -218,6 +226,66 @@ calendar_client_class_init (CalendarClientClass *klass)
 		  0);
 }
 
+/* Timezone code adapted from evolution/calendar/gui/calendar-config.c */
+/* The current timezone, e.g. "Europe/London". It may be NULL, in which case
+   you should assume UTC. */
+static gchar *
+calendar_client_config_get_timezone (GConfClient *gconf_client)
+{
+  char *location;
+
+  location = gconf_client_get_string (gconf_client,
+                                      CALENDAR_CONFIG_TIMEZONE,
+                                      NULL);
+
+  return location;
+}
+
+static icaltimezone *
+calendar_client_config_get_icaltimezone (GConfClient *gconf_client)
+{
+  char         *location;
+  icaltimezone *zone = NULL;
+	
+  location = calendar_client_config_get_timezone (gconf_client);
+  if (!location)
+    return icaltimezone_get_utc_timezone ();
+
+  zone = icaltimezone_get_builtin_timezone (location);
+  g_free (location);
+	
+  return zone;
+}
+
+static void
+calendar_client_set_timezone (CalendarClient *client) 
+{
+  GSList *l;
+  GSList *esources;
+
+  client->priv->zone = calendar_client_config_get_icaltimezone (client->priv->gconf_client);
+
+  esources = calendar_sources_get_appointment_sources (client->priv->calendar_sources);
+  for (l = esources; l; l = l->next) {
+    ECal *source = l->data;
+			
+    if (e_cal_get_load_state (source) != E_CAL_LOAD_LOADED)
+      continue;
+
+    e_cal_set_default_timezone (source, client->priv->zone, NULL);
+  }
+}
+
+static void
+calendar_client_timezone_changed_cb (GConfClient    *gconf_client,
+                                     guint           id,
+                                     GConfEntry     *entry,
+                                     CalendarClient *client)
+{
+  calendar_client_set_timezone (client);
+}
+
+
 static void
 calendar_client_init (CalendarClient *client)
 {
@@ -244,6 +312,19 @@ calendar_client_init (CalendarClient *client)
 			    G_CALLBACK (calendar_client_task_sources_changed),
 			    client);
 
+  client->priv->gconf_client = gconf_client_get_default ();
+
+  gconf_client_add_dir (client->priv->gconf_client,
+			CALENDAR_CONFIG_PREFIX,
+			GCONF_CLIENT_PRELOAD_NONE,
+			NULL);
+
+  calendar_client_set_timezone (client);
+  client->priv->zone_listener = gconf_client_notify_add (client->priv->gconf_client,
+                                                         CALENDAR_CONFIG_TIMEZONE,
+                                                         (GConfClientNotifyFunc) calendar_client_timezone_changed_cb,
+                                                         client, NULL, NULL);
+
   client->priv->day   = -1;
   client->priv->month = -1;
   client->priv->year  = -1;
@@ -254,6 +335,21 @@ calendar_client_finalize (GObject *object)
 {
   CalendarClient *client = CALENDAR_CLIENT (object);
   GSList         *l;
+
+  if (client->priv->zone_listener)
+    {
+      gconf_client_notify_remove (client->priv->gconf_client,
+                                  client->priv->zone_listener);
+      client->priv->zone_listener = 0;
+    }
+
+  gconf_client_remove_dir (client->priv->gconf_client,
+                           CALENDAR_CONFIG_PREFIX,
+                           NULL);
+
+  if (client->priv->gconf_client)
+    g_object_unref (client->priv->gconf_client);
+  client->priv->gconf_client = NULL;
 
   for (l = client->priv->appointment_sources; l; l = l->next)
     {
@@ -375,63 +471,11 @@ make_isodate_for_day_begin (int day,
   return utctime != -1 ? isodate_from_time_t (utctime) : NULL;
 }
 
-/* copied from 
-   http://www.mit.edu:8001/afs/athena.mit.edu/project/gnu/src/p/patch-2.5/maketime.c 
-*/
-static time_t
-difftm (struct tm const *a,
-        struct tm const *b)
-{
-#define DIV(a, b) ((a) / (b) - ((a) % (b) < 0))
-#define TM_YEAR_ORIGIN 1900
-  int ay = a->tm_year + (TM_YEAR_ORIGIN - 1);
-  int by = b->tm_year + (TM_YEAR_ORIGIN - 1);
-  int ac = DIV (ay, 100);
-  int bc = DIV (by, 100);
-  int difference_in_day_of_year = a->tm_yday - b->tm_yday;
-  int intervening_leap_days = (((ay >> 2) - (by >> 2))
-			       - (ac - bc)
-			       + ((ac >> 2) - (bc >> 2)));
-  time_t difference_in_years = ay - by;
-  time_t difference_in_days
-    = (difference_in_years * 365
-       + (intervening_leap_days + difference_in_day_of_year));
-  return (((((difference_in_days * 24
-	      + (a->tm_hour - b->tm_hour))
-	     * 60)
-	    + (a->tm_min - b->tm_min))
-	   * 60)
-	  + (a->tm_sec - b->tm_sec));
-}
-
-static long
-get_utc_offset (const time_t t1)
-{
-  struct tm gm_tm, local_tm;
-  long      offset;
-
-  local_tm = *localtime (&t1);
-  gm_tm    = *gmtime (&t1);
-
-  offset = (long) difftm (&local_tm, &gm_tm);
-
-  dprintf ("calculated UTC offset = %ld, real UTC offset = %ld\n",
-           offset, local_tm.tm_gmtoff);
-
-  return offset;
-}
-
-static time_t
-adjust_all_day (const time_t t1,
-                gboolean     is_all_day)
-{
-  return is_all_day ? t1 - get_utc_offset (t1) : t1;
-}
-
 static GTime
 get_time_from_property (icalcomponent         *ical,
 			icalproperty_kind      prop_kind,
-			struct icaltimetype (* get_prop_func) (const icalproperty *prop))
+			struct icaltimetype (* get_prop_func) (const icalproperty *prop),
+                        icaltimezone          *default_zone)
 {
   icalproperty        *prop;
   struct icaltimetype  ical_time;
@@ -446,13 +490,11 @@ get_time_from_property (icalcomponent         *ical,
 
   param = icalproperty_get_first_parameter (prop, ICAL_TZID_PARAMETER);
   if (param)
-    {
-      timezone = icaltimezone_get_builtin_timezone_from_tzid (icalparameter_get_tzid (param));
-    }
+    timezone = icaltimezone_get_builtin_timezone_from_tzid (icalparameter_get_tzid (param));
   else if (icaltime_is_utc (ical_time))
-    {
-      timezone = icaltimezone_get_utc_timezone ();
-    }
+    timezone = icaltimezone_get_utc_timezone ();
+  else 
+    timezone = default_zone;
 
   return icaltime_as_timet_with_zone (ical_time, timezone);
 }
@@ -500,24 +542,29 @@ get_ical_url (icalcomponent *ical)
 }
 
 static inline GTime
-get_ical_start_time (icalcomponent *ical)
+get_ical_start_time (icalcomponent *ical,
+                     icaltimezone  *default_zone)
 {
   return get_time_from_property (ical,
 				 ICAL_DTSTART_PROPERTY,
-				 icalproperty_get_dtstart);
+				 icalproperty_get_dtstart,
+                                 default_zone);
 }
 
 static inline GTime
-get_ical_end_time (icalcomponent *ical)
+get_ical_end_time (icalcomponent *ical,
+                   icaltimezone  *default_zone)
 {
   return get_time_from_property (ical,
 				 ICAL_DTEND_PROPERTY,
-				 icalproperty_get_dtend);
+				 icalproperty_get_dtend,
+                                 default_zone);
 }
 
 static gboolean
 get_ical_is_all_day (icalcomponent *ical,
-		     GTime          start_time)
+                     GTime          start_time,
+                     icaltimezone  *default_zone)
 {
   icalproperty            *prop;
   struct tm               *start_tm;
@@ -535,7 +582,7 @@ get_ical_is_all_day (icalcomponent *ical,
       start_tm->tm_hour != 0)
     return FALSE;
 
-  if ((end_time = get_ical_end_time (ical)))
+  if ((end_time = get_ical_end_time (ical, default_zone)))
     return (end_time - start_time) % 86400 == 0;
 
   prop = icalcomponent_get_first_property (ical, ICAL_DURATION_PROPERTY);
@@ -548,12 +595,15 @@ get_ical_is_all_day (icalcomponent *ical,
 }
 
 static inline GTime
-get_ical_due_time (icalcomponent *ical)
+get_ical_due_time (icalcomponent *ical,
+                   icaltimezone  *default_zone)
 {
   return get_time_from_property (ical,
 				 ICAL_DUE_PROPERTY,
-				 icalproperty_get_due);
+				 icalproperty_get_due,
+                                 default_zone);
 }
+
 static guint
 get_ical_percent_complete (icalcomponent *ical)
 {
@@ -574,11 +624,13 @@ get_ical_percent_complete (icalcomponent *ical)
 }
 
 static inline GTime
-get_ical_completed_time (icalcomponent *ical)
+get_ical_completed_time (icalcomponent *ical,
+                         icaltimezone  *default_zone)
 {
   return get_time_from_property (ical,
 				 ICAL_COMPLETED_PROPERTY,
-				 icalproperty_get_completed);
+				 icalproperty_get_completed,
+                                 default_zone);
 }
 
 static char *
@@ -693,16 +745,18 @@ calendar_appointment_finalize (CalendarAppointment *appointment)
 static void
 calendar_appointment_init (CalendarAppointment  *appointment,
 			   icalcomponent        *ical,
-                           CalendarClientSource *source)
+                           CalendarClientSource *source,
+                           icaltimezone         *default_zone)
 {
   appointment->uid          = get_ical_uid (ical);
   appointment->summary      = get_ical_summary (ical);
   appointment->description  = get_ical_description (ical);
   appointment->color_string = get_source_color (source->source);
-  appointment->start_time   = get_ical_start_time (ical);
-  appointment->end_time     = get_ical_end_time (ical);
+  appointment->start_time   = get_ical_start_time (ical, default_zone);
+  appointment->end_time     = get_ical_end_time (ical, default_zone);
   appointment->is_all_day   = get_ical_is_all_day (ical,
-                                                   appointment->start_time);
+                                                   appointment->start_time,
+                                                   default_zone);
 }
 
 static icaltimezone *
@@ -742,7 +796,8 @@ calendar_appointment_generate_ocurrences (CalendarAppointment *appointment,
 					  icalcomponent       *ical,
 					  ECal                *source,
 					  GTime                start,
-					  GTime                end)
+					  GTime                end,
+                                          icaltimezone        *default_zone)
 {
   ECalComponent *ecal;
 
@@ -759,7 +814,7 @@ calendar_appointment_generate_ocurrences (CalendarAppointment *appointment,
 				  &appointment->occurrences,
 				  (ECalRecurResolveTimezoneFn) resolve_timezone_id,
 				  source,
-				  NULL);
+				  default_zone);
 
   g_object_unref (ecal);
 
@@ -824,17 +879,18 @@ calendar_task_finalize (CalendarTask *task)
 static void
 calendar_task_init (CalendarTask         *task,
 		    icalcomponent        *ical,
-                    CalendarClientSource *source)
+                    CalendarClientSource *source,
+                    icaltimezone         *default_zone)
 {
   task->uid              = get_ical_uid (ical);
   task->summary          = get_ical_summary (ical);
   task->description      = get_ical_description (ical);
   task->color_string     = get_source_color (source->source);
   task->url              = get_ical_url (ical);
-  task->start_time       = get_ical_start_time (ical);
-  task->due_time         = get_ical_due_time (ical);
+  task->start_time       = get_ical_start_time (ical, default_zone);
+  task->due_time         = get_ical_due_time (ical, default_zone);
   task->percent_complete = get_ical_percent_complete (ical);
-  task->completed_time   = get_ical_completed_time (ical);
+  task->completed_time   = get_ical_completed_time (ical, default_zone);
 }
 
 void
@@ -858,7 +914,8 @@ calendar_event_free (CalendarEvent *event)
 
 static CalendarEvent *
 calendar_event_new (icalcomponent        *ical,
-                    CalendarClientSource *source)
+                    CalendarClientSource *source,
+                    icaltimezone         *default_zone)
 {
   CalendarEvent *event;
 
@@ -868,11 +925,17 @@ calendar_event_new (icalcomponent        *ical,
     {
     case ICAL_VEVENT_COMPONENT:
       event->type = CALENDAR_EVENT_APPOINTMENT;
-      calendar_appointment_init (CALENDAR_APPOINTMENT (event), ical, source);
+      calendar_appointment_init (CALENDAR_APPOINTMENT (event),
+                                 ical,
+                                 source,
+                                 default_zone);
       break;
     case ICAL_VTODO_COMPONENT:
       event->type = CALENDAR_EVENT_TASK;
-      calendar_task_init (CALENDAR_TASK (event), ical, source);
+      calendar_task_init (CALENDAR_TASK (event),
+                          ical,
+                          source,
+                          default_zone);
       break;
     default:
       g_warning ("Unknown calendar component type\n");
@@ -967,7 +1030,8 @@ calendar_event_generate_ocurrences (CalendarEvent *event,
 				    icalcomponent *ical,
 				    ECal          *source,
 				    GTime          start,
-				    GTime          end)
+				    GTime          end,
+                                    icaltimezone  *default_zone)
 {
   if (event->type != CALENDAR_EVENT_APPOINTMENT)
     return;
@@ -976,7 +1040,8 @@ calendar_event_generate_ocurrences (CalendarEvent *event,
 					    ical,
 					    source,
 					    start,
-					    end);
+					    end,
+                                            default_zone);
 }
 
 static inline void
@@ -1161,12 +1226,13 @@ calendar_client_handle_query_result (CalendarClientSource *source,
       CalendarEvent *old_event;
       icalcomponent *ical = l->data;
 
-      event = calendar_event_new (ical, source);
+      event = calendar_event_new (ical, source, client->priv->zone);
       calendar_event_generate_ocurrences (event,
 					  ical,
 					  source->source,
 					  month_begin,
-					  month_end);
+					  month_end,
+                                          client->priv->zone);
 
       old_event = g_hash_table_lookup (query->events,
 				       icalcomponent_get_uid (ical));
@@ -1616,10 +1682,8 @@ filter_appointment (const char    *uid,
   for (l = occurrences; l; l = l->next)
     {
       CalendarOccurrence *occurrence = l->data;
-      GTime start_time = adjust_all_day (occurrence->start_time,
-                                         CALENDAR_APPOINTMENT (event)->is_all_day);
-      GTime end_time   = adjust_all_day (occurrence->end_time,
-                                         CALENDAR_APPOINTMENT (event)->is_all_day);
+      GTime start_time = occurrence->start_time;
+      GTime end_time   = occurrence->end_time;
 
       if ((start_time >= filter_data->start_time &&
            start_time < filter_data->end_time) ||
@@ -1794,8 +1858,8 @@ calendar_client_foreach_appointment_day (CalendarClient  *client,
 
       if (appointment->start_time)
         {
-          GTime day_time = adjust_all_day (appointment->start_time,
-                                           appointment->is_all_day);
+          GTime day_time = appointment->start_time;
+
           if (day_time >= month_begin)
             marked_days [day_from_time_t (day_time)] = TRUE;
       
@@ -1805,9 +1869,8 @@ calendar_client_foreach_appointment_day (CalendarClient  *client,
               int duration = appointment->end_time - appointment->start_time;
               for (day_offset = 1; day_offset < duration / 86400; day_offset++)
                 {
-                  GTime day_time = adjust_all_day (appointment->start_time
-                                                   + day_offset * 86400,
-                                                   appointment->is_all_day);
+                  GTime day_time = appointment->start_time + day_offset * 86400;
+
                   if (day_time > month_end)
                     break;
                   if (day_time >= month_begin)
@@ -1870,7 +1933,7 @@ calendar_client_set_task_completed (CalendarClient *client,
     {
       struct icaltimetype  completed_time;
 
-      completed_time = icaltime_current_time_with_zone (NULL);
+      completed_time = icaltime_current_time_with_zone (client->priv->zone);
       if (!prop)
 	{
 	  icalcomponent_add_property (ical,
