@@ -977,7 +977,7 @@ session_init_panels(void)
 	GSList *panel_ids;
 	GSList *temp;
 	char *s;
-	
+
 	panel_profile_key = panel_gconf_general_profile_get_full_key (panel_profile_name, "panel-id-list");
 
 	if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
@@ -995,36 +995,6 @@ session_init_panels(void)
 					   NULL);
 	g_free (panel_profile_key);
 					  
-	/* Eeeeeeeek! no default config, no user config, this is
-	   bad bad bad, load a single panel
-	if (panel_ids == NULL)  {
-		panel = edge_widget_new (0,
-					 BORDER_BOTTOM,
-					 BASEP_EXPLICIT_HIDE, 
-					 BASEP_SHOWN,
-					 PANEL_SIZE_MEDIUM,
-					 TRUE,
-					 TRUE,
-					 PANEL_BACK_NONE,
-					 NULL,
-					 TRUE,
-					 FALSE,
-					 TRUE,
-					 NULL);
-		panel_setup(panel);
-		gtk_widget_show(panel);
-	*/
-		/* FIXME : load up the foot menu 
-		load_menu_applet ("applications:/",
-				  TRUE, 
-				  get_default_menu_flags (),
-				  TRUE, FALSE, NULL,
-				  PANEL_WIDGET(BASEP_WIDGET(panel)->panel),
-				  0, TRUE);
-		
-		return;
-	} */
-
 	for (temp = panel_ids; temp; temp = temp->next) {
 		PanelType type;
 		PanelBackType back_type;

@@ -193,13 +193,9 @@ gchar *
 panel_gconf_panel_profile_get_conditional_key (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default) {
 	/* FIXME: Make this check screen sizes and stuff */
                 if (use_default) {
-                        return panel_gconf_panel_default_profile_get_full_key ("small",
-                                                                               panel_id,
-                                                                               key);
+                        return panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
 		}
                 else {
-                        return panel_gconf_panel_profile_get_full_key (profile,
-                                                                       panel_id,
-                                                                       key);
+                        return panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
 		}
 }
