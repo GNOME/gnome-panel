@@ -851,12 +851,18 @@ find_non_drawer_parent_panel (BasePWidget *basep)
 {
 	BasePWidget *retval;
 	Drawer      *drawer;
+	GtkWidget   *panel_parent;
 
 	g_assert (DRAWER_IS_WIDGET (basep));
 
 	drawer = drawer_widget_get_drawer (DRAWER_WIDGET (basep));
 
-	retval = BASEP_WIDGET (PANEL_WIDGET (drawer->button->parent)->panel_parent);
+	panel_parent = PANEL_WIDGET (drawer->button->parent)->panel_parent;
+
+	if (BASEP_IS_WIDGET (panel_parent))
+		retval = BASEP_WIDGET (panel_parent);
+	else if (FOOBAR_IS_WIDGET (panel_parent))
+		return NULL;
 
 	if (DRAWER_IS_WIDGET (retval))
 		retval = find_non_drawer_parent_panel (retval);
@@ -876,7 +882,8 @@ basep_leave_notify (GtkWidget *widget,
 	if (DRAWER_IS_WIDGET (basep))
 		basep = find_non_drawer_parent_panel (basep);
 	
-	basep_widget_queue_autohide (basep);
+	if (basep)
+		basep_widget_queue_autohide (basep);
 
 	if (GTK_WIDGET_CLASS (basep_widget_parent_class)->leave_notify_event)
 		return GTK_WIDGET_CLASS (basep_widget_parent_class)->leave_notify_event (widget, event);

@@ -1,3 +1,11 @@
+2003-03-04  Arvind Samptur <arvind.samptur@wipro.com>
+	* basep-widget.c : (find_non_drawer_parent_panel):
+	Since we don't have autohiding on menu panel, return NULL
+	when drawer is embedded in a foobar(menu) panel.
+	Fixes #106768. 
+
+	Thanks to Karl <h4ptgrg902@sneakemail.com> for tracking it.
+
 2003-03-03  Mark McLoughlin  <mark@skynet.ie>
                                                                                                              
 	* panel.c: (panel_load_panel_from_gconf): load the background
