@@ -18,8 +18,6 @@
 #include "panel.h"
 #include "menu.h"
 
-#include "libgnomeui/gnome-session.h"
-
 
 #define MENU_PATH "menu_path"
 
