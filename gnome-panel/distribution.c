@@ -97,7 +97,7 @@ get_distribution_info (void)
 	cache = internal_get_distribution_info (type);
 	cached = TRUE;
 
-	if (cache->menu_path && !g_path_is_absolute (cache->menu_path)) {
+	if (cache && cache->menu_path && !g_path_is_absolute (cache->menu_path)) {
 		char *full_path;
 
 		full_path = gnome_program_locate_file (
