@@ -31,7 +31,6 @@
 #include "menu.h"
 
 #include "launcher.h"
-#include "menu-fentry.h"
 #include "menu-ditem.h"
 #include "panel.h"
 #include "drawer.h"
@@ -57,6 +56,8 @@ typedef struct {
 	GtkWidget    *tree_view;
 	GtkTreeModel *applet_model;
 	GtkTreeModel *application_model;
+
+	MenuTree     *menu_tree;
 
 	GSList       *applet_list;
 	GSList       *application_list;
@@ -86,7 +87,7 @@ typedef struct {
 	const char            *icon;
 	const char            *stock_icon;
 	PanelActionButtonType  action_type;
-	const char            *launcher_name;
+	const char            *launcher_path;
 	const char            *menu_path;
 	const char            *iid;
 	gboolean               static_data;
@@ -527,57 +528,66 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 }
 
 static void
-panel_addto_make_application_list_r (GSList **parent,
-				     DirRec *dr)
+panel_addto_make_application_list (GSList            **parent_list,
+				   MenuTreeDirectory  *directory)
 {
-	PanelAddtoAppList *data;
-	FileRec *tfr;
-	GSList *li;
+	GSList *subdirs;
+	GSList *entries;
+	GSList *l;
 
-	if (dr == NULL)
-		return;
+	subdirs = menu_tree_directory_get_subdirs (directory);
+	for (l = subdirs; l; l = l->next) {
+		MenuTreeDirectory *subdir = l->data;
+		PanelAddtoAppList *data;
 
-	for (li = dr->recs; li != NULL; li = li->next) {
-		tfr = li->data;
+		data = g_new0 (PanelAddtoAppList, 1);
 
-		switch (tfr->type) {
-		case FILE_REC_DIR:
-			data = g_new0 (PanelAddtoAppList, 1);
-			data->item_info.type = PANEL_ADDTO_MENU;
-			data->item_info.name = tfr->fullname;
-			data->item_info.description = tfr->comment;
-			data->item_info.icon = tfr->icon;
-			data->item_info.menu_path = tfr->name;
-			/* We should set the iid here to something and do
-			 * iid = g_strdup_printf ("MENU:%s", tfr->name)
-			 * but this means we'd have to free the iid later
-			 * and this would complexify too much the free
-			 * function.
-			 * So the iid is built when we select the row. */
-			tfr = fr_check_and_reread (tfr);
-			panel_addto_make_application_list_r (&(data->children),
-							     (DirRec *) tfr);
-			*parent = g_slist_append (*parent, data);
-			break;
-		case FILE_REC_FILE:
-			data = g_new0 (PanelAddtoAppList, 1);
-			data->item_info.type = PANEL_ADDTO_LAUNCHER;
-			data->item_info.name = tfr->fullname;
-			data->item_info.description = tfr->comment;
-			data->item_info.icon = tfr->icon;
-			data->item_info.launcher_name = tfr->name;
-			*parent = g_slist_append (*parent, data);
-			break;
-		default:
-			break;
-		}
+		data->item_info.type        = PANEL_ADDTO_MENU;
+		data->item_info.name        = g_strdup (menu_tree_directory_get_name (subdir));
+		data->item_info.description = g_strdup (menu_tree_directory_get_comment (subdir));
+		data->item_info.icon        = g_strdup (menu_tree_directory_get_icon (subdir));
+		data->item_info.menu_path   = menu_tree_directory_make_path (subdir, NULL);
+
+		/* We should set the iid here to something and do
+		 * iid = g_strdup_printf ("MENU:%s", tfr->name)
+		 * but this means we'd have to free the iid later
+		 * and this would complexify too much the free
+		 * function.
+		 * So the iid is built when we select the row.
+		 */
+
+		*parent_list = g_slist_append (*parent_list, data);
+
+		panel_addto_make_application_list (&data->children, subdir);
+
+		menu_tree_directory_unref (subdir);
 	}
+	g_slist_free (subdirs);
+
+	entries = menu_tree_directory_get_entries (directory);
+	for (l = entries; l; l = l->next) {
+		MenuTreeEntry     *entry = l->data;
+		PanelAddtoAppList *data;
+
+		data = g_new0 (PanelAddtoAppList, 1);
+
+		data->item_info.type          = PANEL_ADDTO_LAUNCHER;
+		data->item_info.name          = g_strdup (menu_tree_entry_get_name (entry));
+		data->item_info.description   = g_strdup (menu_tree_entry_get_comment (entry));
+		data->item_info.icon          = g_strdup (menu_tree_entry_get_icon (entry));
+		data->item_info.launcher_path = g_strdup (menu_tree_entry_get_desktop_file_path (entry));
+
+		*parent_list = g_slist_append (*parent_list, data);
+
+		menu_tree_entry_unref (entry);
+	}
+	g_slist_free (entries);
 }
 
 static void
-panel_addto_make_application_model_r (GtkTreeStore *store,
-				      GtkTreeIter  *parent,
-				      GSList       *app_list)
+panel_addto_populate_application_model (GtkTreeStore *store,
+					GtkTreeIter  *parent,
+					GSList       *app_list)
 {
 	PanelAddtoAppList *data;
 	GtkTreeIter        iter;
@@ -606,16 +616,18 @@ panel_addto_make_application_model_r (GtkTreeStore *store,
 		g_free (text);
 
 		if (data->children != NULL) 
-			panel_addto_make_application_model_r (store, &iter,
-							      data->children);
+			panel_addto_populate_application_model (store,
+								&iter,
+								data->children);
 	}
 }
 
 static GtkTreeModel *
 panel_addto_make_application_model (PanelAddtoDialog *dialog)
 {
-	GtkTreeStore *store;
-	DirRec *root;
+	GtkTreeStore      *store;
+	MenuTree          *tree;
+	MenuTreeDirectory *root;
 
 	store = gtk_tree_store_new (NUMBER_COLUMNS,
 				    GDK_TYPE_PIXBUF,
@@ -623,11 +635,16 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 				    G_TYPE_POINTER,
 				    G_TYPE_STRING);
 
-	root = (DirRec *) fr_get_dir ("applications:/");
-	panel_addto_make_application_list_r (&(dialog->application_list),
-					     root);
-	panel_addto_make_application_model_r (store, NULL,
-					      dialog->application_list);
+	tree = menu_tree_lookup ("applications.menu");
+
+	if ((root = menu_tree_get_root_directory (tree))) {
+		panel_addto_make_application_list (&dialog->application_list, root);
+		panel_addto_populate_application_model (store, NULL, dialog->application_list);
+
+		menu_tree_directory_unref (root);
+	}
+
+	menu_tree_unref (tree);
 
 	return GTK_TREE_MODEL (store);
 }
@@ -660,7 +677,7 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 	case PANEL_ADDTO_LAUNCHER:
 		panel_launcher_create (dialog->panel_widget->toplevel,
 				       dialog->insertion_position,
-				       item_info->launcher_name);
+				       item_info->launcher_path);
 		break;
 	case PANEL_ADDTO_LAUNCHER_NEW:
 		ask_about_launcher (NULL, dialog->panel_widget,
@@ -815,6 +832,10 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 
 	panel_addto_dialog_free_application_list (dialog->application_list);
 
+	if (dialog->menu_tree)
+		menu_tree_unref (dialog->menu_tree);
+	dialog->menu_tree = NULL;
+
 	g_free (dialog);
 }
 
@@ -912,7 +933,7 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 		switch (data->type) {
 		case PANEL_ADDTO_LAUNCHER:
 			panel_addto_setup_launcher_drag (GTK_TREE_VIEW (dialog->tree_view),
-							 data->launcher_name);
+							 data->launcher_path);
 			break;
 		case PANEL_ADDTO_APPLET:
 			panel_addto_setup_applet_drag (GTK_TREE_VIEW (dialog->tree_view),

@@ -27,7 +27,6 @@
 #include "launcher.h"
 
 #include "button-widget.h"
-#include "menu-fentry.h"
 #include "menu.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
@@ -39,8 +38,6 @@
 #include "panel-globals.h"
 #include "panel-multiscreen.h"
 #include "panel-lockdown.h"
-
-#include "quick-desktop-reader.h"
 
 #undef LAUNCHER_DEBUG
 

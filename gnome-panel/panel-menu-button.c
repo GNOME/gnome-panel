@@ -35,9 +35,7 @@
 #include "panel-util.h"
 #include "panel-profile.h"
 #include "panel-globals.h"
-#include "menu-util.h"
 #include "menu.h"
-#include "quick-desktop-reader.h"
 #include "panel-lockdown.h"
 #include "panel-a11y.h"
 
@@ -71,6 +69,7 @@ struct _PanelMenuButtonPrivate {
 
 static void panel_menu_button_disconnect_from_gconf (PanelMenuButton *button);
 static void panel_menu_button_recreate_menu         (PanelMenuButton *button);
+static void panel_menu_button_set_icon              (PanelMenuButton *button);
 
 static AtkObject *panel_menu_button_get_accessible  (GtkWidget       *widget);
 
@@ -229,6 +228,7 @@ panel_menu_button_parent_set (GtkWidget *widget,
 		button->priv->toplevel = NULL;
 
 	panel_menu_button_associate_panel (button);
+	panel_menu_button_set_icon (button);
 
 	if (GTK_WIDGET_CLASS (parent_class)->parent_set)
 		GTK_WIDGET_CLASS (parent_class)->parent_set (widget, previous_parent);
@@ -286,25 +286,19 @@ panel_menu_button_create_menu (PanelMenuButton *button)
 {
 	PanelWidget *panel_widget;
 
-	if (button->priv->menu) {
-		if (!menu_need_reread (button->priv->menu))
-			return button->priv->menu;
+	if (button->priv->menu)
+		return button->priv->menu;
 
-		gtk_menu_detach (GTK_MENU (button->priv->menu));
-		button->priv->menu = NULL;
-	}
+	if (!button->priv->toplevel)
+		return NULL;
 
 	panel_widget = panel_toplevel_get_panel_widget (button->priv->toplevel);
 
 	if (button->priv->use_menu_path && button->priv->menu_path)
-		button->priv->menu = create_menu_at (NULL,
-						     button->priv->menu_path,
-						     NULL,
-						     TRUE,
-						     FALSE);
-
-	if (!button->priv->menu)
-		button->priv->menu = create_panel_root_menu (panel_widget);
+		button->priv->menu = create_applications_menu ("applications.menu",
+							       button->priv->menu_path);
+	else
+		button->priv->menu = create_main_menu (panel_widget);
 
 	gtk_menu_attach_to_widget (GTK_MENU (button->priv->menu),
 				   GTK_WIDGET (button),
@@ -348,7 +342,7 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	gtk_menu_popup (GTK_MENU (button->priv->menu),
 			NULL,
 			NULL,
-			(GtkMenuPositionFunc) panel_position_applet_menu,
+			(GtkMenuPositionFunc) panel_applet_position_menu,
 			GTK_WIDGET (button),
 			n_button,
 			activate_time);
@@ -622,28 +616,25 @@ panel_menu_button_load (const char  *menu_path,
 }
 
 static char *
-panel_menu_button_get_icon_for_menu_path (PanelMenuButton *button)
+panel_menu_button_get_icon (PanelMenuButton *button)
 {
-	QuickDesktopItem *item;
-        char             *retval;
-	char             *dentry_path;
+	MenuTreeDirectory *directory;
+        char              *retval;
 
 	if (!button->priv->use_menu_path || !button->priv->menu_path)
 		return NULL;
-                                                                                                             
-	dentry_path = g_build_path (G_DIR_SEPARATOR_S,
-				    button->priv->menu_path,
-				    ".directory",
-				    NULL);
-	item = quick_desktop_item_load_uri (dentry_path, FALSE);
-	g_free (dentry_path);
 
-	if (!item)
+	if (!panel_menu_button_create_menu (button))
 		return NULL;
+
+	directory = g_object_get_data (G_OBJECT (button->priv->menu),
+				       "panel-menu-tree-directory");
+	if (!directory)
+		return NULL;
+
+	retval = g_strdup (menu_tree_directory_get_icon (directory));
                                                                                                              
-	retval = g_strdup (item->icon);
-                                                                                                             
-	quick_desktop_item_destroy (item);
+	menu_tree_directory_unref (directory);
 
 	return retval;
 }
@@ -657,18 +648,47 @@ panel_menu_button_set_icon (PanelMenuButton *button)
 		icon_path = g_strdup (button->priv->custom_icon);
 
 	if (!icon_path)
-		icon_path = panel_menu_button_get_icon_for_menu_path (button);
+		icon_path = panel_menu_button_get_icon (button);
 
 	button_widget_set_icon_name (BUTTON_WIDGET (button), icon_path);
 
 	g_free (icon_path);
 }
+
+static const char *
+split_menu_uri (const char  *menu_uri,
+		char       **menu_scheme)
+{
+	char *p;
+
+	p = strchr (menu_uri, ':');
+
+	if (!p || p == menu_uri)
+		return NULL;
+
+	if (menu_scheme)
+		*menu_scheme = g_strndup (menu_uri, p - menu_uri);
+
+	if (*(++p) != '/')
+		return NULL;
+
+	while (*p != '\0' && *(p + 1) == '/') p++;
+
+	return p;
+}
                                                                                                              
 void
 panel_menu_button_set_menu_path (PanelMenuButton *button,
-				 const char      *menu_path)
+				 const char      *menu_uri)
 {
+	const char *menu_path;
+
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
+
+	/*
+	 * Bah, lets just ignore the scheme
+	 */
+	menu_path = split_menu_uri (menu_uri, NULL);
 
 	if (!button->priv->menu_path && (!menu_path || !menu_path [0]))
 		return;
@@ -831,8 +851,14 @@ panel_menu_button_create (PanelToplevel *toplevel,
 	gconf_client_set_bool (client, key, use_menu_path, NULL);
 
 	if (use_menu_path && menu_path && menu_path [0]) {
+		char *menu_uri;
+
+		menu_uri = g_strconcat ("applications:", menu_path, NULL);
+
 		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "menu_path");
-		gconf_client_set_string (client, key, menu_path, NULL);
+		gconf_client_set_string (client, key, menu_uri, NULL);
+
+		g_free (menu_uri);
 	}
 
 	if (tooltip && tooltip [0]) {

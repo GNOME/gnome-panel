@@ -30,8 +30,6 @@
 #include "drawer.h"
 #include "button-widget.h"
 #include "launcher.h"
-#include "menu-fentry.h"
-#include "menu-util.h"
 #include "menu.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
@@ -341,8 +339,7 @@ panel_popup_menu (PanelToplevel *toplevel,
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
-			panel_menu_position, toplevel, button, activate_time);
+	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, button, activate_time);
 
 	return TRUE;
 }
@@ -458,8 +455,11 @@ drop_menu (PanelWidget *panel,
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
 
-	panel_menu_button_create (panel->toplevel, position, menu_path,
-				  menu_path != NULL, menu_path);
+	panel_menu_button_create (panel->toplevel,
+				  position,
+				  menu_path,
+				  menu_path != NULL,
+				  NULL);
 
 	return TRUE;
 }
@@ -498,30 +498,10 @@ drop_nautilus_uri (PanelWidget *panel,
 static gboolean
 drop_directory (PanelWidget *panel, int pos, const char *dir)
 {
-	char *tmp;
-
-	/* not filename, but path, these are uris, not local
-	 * files */
-	tmp = g_build_path ("/", dir, ".directory", NULL);
-	if (panel_uri_exists (tmp)) {
-		g_free (tmp);
-		return drop_menu (panel, pos, dir);
-	}
-	g_free (tmp);
-
-	tmp = g_build_path ("/", dir, ".order", NULL);
-	if (panel_uri_exists (tmp)) {
-		g_free (tmp);
-		return drop_menu (panel, pos, dir);
-	}
-	g_free (tmp);
-
-	if (panel_is_program_in_path ("nautilus")) {
-		/* nautilus */
-		return drop_nautilus_uri (panel, pos, dir, "gnome-fs-directory.png");
-	} else {
-		return drop_menu (panel, pos, dir);
-	}
+	if (panel_is_program_in_path ("nautilus"))
+		return FALSE;
+	  
+	return drop_nautilus_uri (panel, pos, dir, "gnome-fs-directory.png");
 }
 
 static gboolean
@@ -571,15 +551,6 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist)
 		    !strncmp (mimetype, "image", sizeof ("image") - 1)) {
 			if ( ! set_background_image_from_uri (panel->toplevel, uri))
 				success = FALSE;
-		} else if (basename != NULL &&
-			   strcmp (basename, ".directory") == 0 &&
-			   dirname != NULL) {
-			/* This is definately a menu */
-			char *menu_uri = g_strconcat (vfs_uri->method_string, ":",
-						      dirname, NULL);
-			if ( ! drop_menu (panel, pos, menu_uri))
-				success = FALSE;
-			g_free (menu_uri);
 		} else if (mimetype != NULL &&
 			   (strcmp(mimetype, "application/x-gnome-app-info") == 0 ||
 			    strcmp(mimetype, "application/x-desktop") == 0 ||
@@ -1259,6 +1230,7 @@ panel_deletion_dialog (PanelToplevel *toplevel)
                            toplevel);
 
 	g_object_set_data (G_OBJECT (toplevel), "panel-delete-dialog", dialog);
+	panel_toplevel_push_autohide_disabler (toplevel);
 
 	return dialog;
 }

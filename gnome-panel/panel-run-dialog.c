@@ -35,6 +35,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
@@ -56,7 +57,6 @@
 #include "panel-stock-icons.h"
 #include "panel-multiscreen.h"
 #include "menu.h"
-#include "menu-fentry.h"
 #include "panel-lockdown.h"
 #include "panel-xutils.h"
 
@@ -100,7 +100,7 @@ enum {
 	COLUMN_ICON_FILE,
 	COLUMN_NAME,
 	COLUMN_COMMENT,
-	COLUMN_URI,
+	COLUMN_PATH,
 	COLUMN_EXEC,
 	NUM_COLUMNS
 };
@@ -551,12 +551,9 @@ panel_run_dialog_find_command_icon_idle (PanelRunDialog *dialog)
 	GtkTreeIter   iter;
 	GtkTreeModel *model;
 	GtkTreePath  *path;
-	GValue        value = {0};
 	const char   *text;
-	char         *exec;
-	char         *icon, *found_icon;
-	char         *name, *found_name;
-	gboolean      fuzzy;
+	char         *found_icon;
+	char         *found_name;
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (dialog->program_list));
 	path = gtk_tree_path_new_first ();
@@ -575,31 +572,35 @@ panel_run_dialog_find_command_icon_idle (PanelRunDialog *dialog)
 	}
 
 	do {
-		gtk_tree_model_get_value (model, &iter,
-					  COLUMN_EXEC,
-					  &value);
-				  
-		exec = g_strdup (g_value_get_string (&value));
-		g_value_unset (&value);
+		char *exec = NULL;
+		char *icon = NULL;
+		char *name = NULL;
+		char *path = NULL;
 
-		gtk_tree_model_get_value (model, &iter,
-					  COLUMN_ICON_FILE,
-					  &value);
-				  
-		icon = g_strdup (g_value_get_string (&value));
-		g_value_unset (&value);
+		gtk_tree_model_get (model, &iter,
+				    COLUMN_EXEC,      &exec,
+				    COLUMN_ICON_FILE, &icon,
+				    COLUMN_NAME,      &name,
+				    COLUMN_PATH,      &path,
+				    -1);
 
-		gtk_tree_model_get_value (model, &iter,
-					  COLUMN_NAME,
-					  &value);
-				  
-		name = g_strdup (g_value_get_string (&value));
-		g_value_unset (&value);
+		if (!exec) {
+			GnomeDesktopItem *item;
+
+			if ((item = gnome_desktop_item_new_from_file (path, 0, NULL))) {
+				exec = g_strdup (gnome_desktop_item_get_string (item, GNOME_DESKTOP_ITEM_EXEC));
+				gnome_desktop_item_unref (item);
+			}
+
+			gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+					    COLUMN_EXEC, exec ? exec : "",
+					    -1);
+		}
 
         	if (exec && icon) {
-			fuzzy = FALSE;
+			gboolean fuzzy = FALSE;
+
 			if (fuzzy_command_match (sure_string (text), exec, &fuzzy)) {
-			
 				g_free (found_icon);
 				g_free (found_name);
 				
@@ -607,12 +608,15 @@ panel_run_dialog_find_command_icon_idle (PanelRunDialog *dialog)
 				found_name = g_strdup (name);
 				
 				if (!fuzzy) {
-					/* if not fuzzy then we have a precise
+					/*
+					 * if not fuzzy then we have a precise
 					 * match and we can quit, else keep
-					 * searching for a better match */
+					 * searching for a better match
+					 */
 					g_free (exec);
 					g_free (icon);
 					g_free (name);
+					g_free (path);
 					break;
 				}
 			}
@@ -621,6 +625,7 @@ panel_run_dialog_find_command_icon_idle (PanelRunDialog *dialog)
 		g_free (exec);
 		g_free (icon);
 		g_free (name);
+		g_free (path);
 	
         } while (gtk_tree_model_iter_next (model, &iter));
 
@@ -687,17 +692,69 @@ panel_run_dialog_add_icon_idle (PanelRunDialog *dialog)
 	return TRUE;
 }
 
+static int
+compare_applications (MenuTreeEntry *a,
+		      MenuTreeEntry *b)
+{
+	return g_utf8_collate (menu_tree_entry_get_name (a),
+			       menu_tree_entry_get_name (b));
+}
+
+static GSList *
+get_all_applications_from_dir (MenuTreeDirectory *directory,
+			       GSList            *list)
+{
+	GSList *subdirs;
+	GSList *l;
+
+	list = g_slist_concat (list,
+			       menu_tree_directory_get_entries (directory));
+
+	subdirs = menu_tree_directory_get_subdirs (directory);
+	for (l = subdirs; l; l = l->next) {
+		MenuTreeDirectory *subdir = l->data;
+
+		list = get_all_applications_from_dir (subdir, list);
+
+		menu_tree_directory_unref (subdir);
+	}
+	g_slist_free (subdirs);
+
+	return list;
+}
+
+static GSList *
+get_all_applications (void)
+{
+	MenuTree          *tree;
+	MenuTreeDirectory *root;
+	GSList            *retval;
+
+	tree = menu_tree_lookup ("applications.menu");
+
+	root = menu_tree_get_root_directory (tree);
+
+	retval = get_all_applications_from_dir (root, NULL);
+
+	menu_tree_directory_unref (root);
+	menu_tree_unref (tree);
+
+	retval = g_slist_sort (retval,
+			       (GCompareFunc) compare_applications);
+
+	return retval;
+}
+
 static gboolean
 panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 {
 	GtkCellRenderer   *renderer;
 	GtkTreeViewColumn *column;
-	FileRec           *all_dir;
-	GSList            *tmp;
-	GSList            *files;
-	GSList            *prev;
-	char              *prev_name;
-        
+	GSList            *all_applications;
+	GSList            *l;
+	GSList            *next;
+	const char        *prev_name;
+
 	/* create list store */
 	dialog->program_list_store = gtk_list_store_new (NUM_COLUMNS,
 							 GDK_TYPE_PIXBUF,
@@ -707,61 +764,45 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 							 G_TYPE_STRING,
 							 G_TYPE_STRING);
 
-	all_dir = fr_get_dir ("all-applications:/");
-	if (!all_dir)
-		return FALSE;
+	all_applications = get_all_applications ();
 	
-	/* Collate */
-	files = g_slist_copy (((DirRec *) all_dir)->recs);
-	files = g_slist_sort (files, (GCompareFunc) fr_compare);
-
 	/* Strip duplicates */
-	tmp = files;
-	prev = NULL;
 	prev_name = NULL;
-	while (tmp) {
-		FileRec *fr;
+	for (l = all_applications; l; l = next) {
+		MenuTreeEntry *entry = l->data;
 
-		fr = tmp->data;
-		if (prev_name && strcmp (fr->fullname, prev_name) == 0) {
-			prev->next = tmp->next;
-			tmp->data = NULL;
-			g_slist_free_1 (tmp);
-			tmp = prev->next;
+		next = l->next;
+
+		if (prev_name && strcmp (menu_tree_entry_get_name (entry), prev_name) == 0) {
+			menu_tree_entry_unref (entry);
+
+			all_applications = g_slist_delete_link (all_applications, l);
 		} else {
-			prev = tmp;
-			prev_name = fr->fullname;
-			tmp = tmp->next;
+			prev_name = menu_tree_entry_get_name (entry);
 		}
 	}
 
-	tmp = files;
-	while (tmp != NULL) {
-		GtkTreeIter iter;
-		FileRec *fr;
-		GtkTreePath *path;
-
-		fr = tmp->data;
+	for (l = all_applications; l; l = l->next) {
+		MenuTreeEntry *entry = l->data;
+		GtkTreeIter    iter;
+		GtkTreePath   *path;
 
 		gtk_list_store_append (dialog->program_list_store, &iter);
 		gtk_list_store_set (dialog->program_list_store, &iter,
 				    COLUMN_ICON,      NULL,
-				    COLUMN_ICON_FILE, (fr->icon) ? fr->icon : "",
-				    COLUMN_NAME,  (fr->fullname) ? fr->fullname : "",
-				    COLUMN_COMMENT,   (fr->comment) ? fr->comment : "",
-				    COLUMN_URI,       (fr->name) ? fr->name : "",
-				    COLUMN_EXEC,      (fr->exec) ? fr->exec : "",
+				    COLUMN_ICON_FILE, menu_tree_entry_get_icon (entry),
+				    COLUMN_NAME,      menu_tree_entry_get_name (entry),
+				    COLUMN_COMMENT,   menu_tree_entry_get_comment (entry),
+				    COLUMN_PATH,      menu_tree_entry_get_desktop_file_path (entry),
 				    -1);
 
 		path = gtk_tree_model_get_path (GTK_TREE_MODEL (dialog->program_list_store), &iter);
-
 		if (path != NULL)
 			dialog->add_icon_paths = g_slist_prepend (dialog->add_icon_paths, path);
 
-		tmp = tmp->next;
+		menu_tree_entry_unref (entry);
 	}
-
-	g_slist_free (files);
+	g_slist_free (all_applications);
 
 	gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->program_list), 
 				 GTK_TREE_MODEL (dialog->program_list_store));
@@ -838,25 +879,22 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	GnomeDesktopItem *ditem;
 	GtkTreeModel     *model;
 	GtkTreeIter       iter;
-	GValue            value = { 0, };
 	const char       *temp;
-	char             *uri, *stripped;
+	char             *path, *stripped;
 	gboolean          terminal;
 		
 	if (!gtk_tree_selection_get_selected (selection, &model, &iter))
 		return;
 
-	gtk_tree_model_get_value (model, &iter,
-				  COLUMN_URI,
-				  &value);
+	path = NULL;
+	gtk_tree_model_get (model, &iter,
+			    COLUMN_PATH, &path,
+			    -1);
 				  
-	uri = g_strdup (g_value_get_string (&value));
-	g_value_unset (&value);
-
-	if (uri) {
-		ditem = gnome_desktop_item_new_from_uri (uri,
-							 GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS,
-							 NULL /* error */);
+	if (path) {
+		ditem = gnome_desktop_item_new_from_file (path,
+							  GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS,
+							  NULL /* error */);
 		if (ditem) {
 			dialog->use_program_list = TRUE;
 			
@@ -894,7 +932,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 			gnome_desktop_item_unref (ditem);
                 }
 
-		g_free (uri);
+		g_free (path);
         }
 }
 

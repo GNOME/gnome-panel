@@ -1,3 +1,32 @@
+2004-11-09  Mark McLoughlin  <mark@skynet.ie>
+
+	Use libgnome-menu to generate menus so that we now use the
+	freekdestop.org Desktop Menu Specification.
+
+	* menu.[ch]: major hackfest to make it use libgnome-menu and
+	clean things up in the process.
+
+	* panel-addto.c: generate the launcher list using libgnome-menu.
+	
+	* panel-run-dialog.c: generate the launcher list using libgnome-menu.
+
+	* panel-menu-bar.c,
+	panel-menu-button.c: update for menu.[ch] changes
+
+	* panel.c: update drag and drop stuff for menu changes.
+
+	* panel-util.[ch]: cull a bunch of crap which was only
+	used by quick-desktop-reader.[ch].
+
+	* applet.[ch]:
+	(panel_applet_position_menu): move here from menu-util.[ch].
+	
+	* Makefile.am: remove menu-util.[ch], menu-fentry.[ch]
+	and quick-desktop-reader.[ch] from the build.
+	
+	* menu-fentry.[ch], menu-util.[ch],
+	quick-desktop-reader.[ch]: remove.
+
 ==================== 2.9.1 ====================
 
 2004-11-08  Vincent Untz  <vincent@vuntz.net>

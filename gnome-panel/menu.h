@@ -1,16 +1,33 @@
-#ifndef MENU_H
-#define MENU_H
+/*
+ * Copyright (C) 1997 - 2000 The Free Software Foundation
+ * Copyright (C) 2000 Helix Code, Inc.
+ * Copyright (C) 2000 Eazel, Inc.
+ * Copyright (C) 2004 Red Hat Inc.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ */
 
-#include <panel-widget.h>
+#ifndef __MENU_H__
+#define __MENU_H__
+
+#include "panel-widget.h"
 #include "applet.h"
+#include <menu-tree.h>
 
 G_BEGIN_DECLS
-
-enum {
-	MAIN_MENU_SYSTEM = 1<<2,
-	MAIN_MENU_SYSTEM_SUB = 1<<3,
-	MAIN_MENU_DESKTOP = 1<<14
-};
 
 void		setup_menuitem		(GtkWidget        *menuitem,
 					 GtkIconSize       icon_size,
@@ -24,54 +41,28 @@ void            setup_stock_menu_item   (GtkWidget        *item,
 					 gboolean          invisible_mnemonic);
 
 
-GtkWidget      *create_menu_at          (GtkWidget     *menu,
-					 const char    *menudir,
-					 const char    *dir_name,
-					 gboolean       fake_submenus,
-					 gboolean       force);
-
+GtkWidget      *create_empty_menu         (void);
+GtkWidget      *create_applications_menu  (const char  *menu_file,
+					   const char  *menu_path);
+GtkWidget      *create_main_menu          (PanelWidget *panel);
 GtkWidget      *create_panel_context_menu (PanelWidget *panel);
-GtkWidget      *create_panel_root_menu    (PanelWidget *panel);
 
 void		panel_menuitem_lock_screen (GtkWidget *widget);
 
-/*to be called on startup to load in some of the directories*/
-void		init_menus		(void);
-
-gboolean	menu_need_reread	(GtkWidget *menuw);
-
 void		setup_internal_applet_drag (GtkWidget *menuitem,
 					    const char *applet_type);
-GtkWidget *	create_root_menu	(GtkWidget   *root_menu,
-					 PanelWidget *panel,
-					 gboolean     fake_submenus,
-					 int          flags,
-					 gboolean     extra_items);
-
-/* some gtk code cut-n-paste action */
-void		our_gtk_menu_position	(GtkMenu *menu);
 
 GtkWidget *	panel_create_menu              (void);
-void		panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
-						GtkIconSize  icon_size,
-						const char  *stock_id,
-						const char  *image_filename,
-						const char  *fallback_image_filename,
-						gboolean     force_image);
-/* Note, bind the following on 'show' or some such */
-void		panel_make_sure_menu_within_screen (GtkMenu *menu);
 
 GdkPixbuf *	panel_make_menu_icon (const char *icon,
 				      const char *fallback,
 				      int size,
 				      gboolean *long_operation);
 
-gboolean
-menu_dummy_button_press_event (GtkWidget      *menuitem,
-			       GdkEventButton *event,
-			       gpointer       data);
+gboolean menu_dummy_button_press_event (GtkWidget      *menuitem,
+					GdkEventButton *event);
 
 
 G_END_DECLS
 
-#endif
+#endif /* __MENU_H__ */

@@ -66,7 +66,7 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	}
 
 	panel_widget = panels->data;
-	menu = create_panel_root_menu (panel_widget);
+	menu = create_main_menu (panel_widget);
 
 	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
 

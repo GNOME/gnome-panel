@@ -16,7 +16,6 @@
 #include "button-widget.h"
 #include "drawer.h"
 #include "launcher.h"
-#include "menu-util.h"
 #include "menu.h"
 #include "panel-gconf.h"
 #include "panel-config-global.h"
@@ -512,6 +511,48 @@ panel_applet_menu_set_recurse (GtkMenu     *menu,
 	g_list_free (children);
 }
 
+void
+panel_applet_position_menu (GtkMenu   *menu,
+			    int       *x,
+			    int       *y,
+			    gboolean  *push_in,
+			    GtkWidget *applet)
+{
+	GtkRequisition  requisition;
+	GdkScreen      *screen;
+	int             menu_x = 0;
+	int             menu_y = 0;
+
+	g_return_if_fail (PANEL_IS_WIDGET (applet->parent));
+
+	screen = gtk_widget_get_screen (applet);
+
+	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+
+	gdk_window_get_origin (applet->window, &menu_x, &menu_y);
+
+	if (GTK_WIDGET_NO_WINDOW (applet)) {
+		menu_x += applet->allocation.x;
+		menu_y += applet->allocation.y;
+	}
+
+	if (PANEL_WIDGET (applet->parent)->orient == GTK_ORIENTATION_HORIZONTAL) {
+		if (menu_y > gdk_screen_get_height (screen) / 2)
+			menu_y -= requisition.height;
+		else
+			menu_y += applet->allocation.height;
+	} else {
+		if (menu_x > gdk_screen_get_width (screen) / 2)
+			menu_x -= requisition.width;
+		else
+			menu_x += applet->allocation.width;
+	}
+
+	*x = menu_x;
+	*y = menu_y;
+	*push_in = TRUE;
+}
+
 static void
 applet_show_menu (AppletInfo     *info,
 		  GdkEventButton *event)
@@ -543,7 +584,7 @@ applet_show_menu (AppletInfo     *info,
 	gtk_menu_popup (GTK_MENU (info->menu),
 			NULL,
 			NULL,
-			(GtkMenuPositionFunc) panel_position_applet_menu,
+			(GtkMenuPositionFunc) panel_applet_position_menu,
 			info->widget,
 			event->button,
 			event->time);

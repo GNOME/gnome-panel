@@ -9,8 +9,9 @@ INCLUDES =							\
 	-I$(top_builddir)/gnome-panel				\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DGLADEDIR=\""$(gladedir)"\"			\
+	-DGLADEDIR=\""$(gladedir)"\"				\
 	-DICONDIR=\""$(datadir)/gnome/panel/pixmaps"\"		\
+	-DMENU_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(STANDARD_PROPERTIES_CFLAGS)				\
 	$(ALLOW_CRACKPOT_MENU_CODE)				\
@@ -94,13 +95,10 @@ panel_sources =			\
 	panel-properties-dialog.c \
 	panel-run-dialog.c	\
 	menu.c  		\
-	menu-util.c		\
 	menu-ditem.c		\
-	menu-fentry.c  		\
 	launcher.c		\
 	panel-applet-frame.c	\
 	panel-shell.c		\
-	quick-desktop-reader.c	\
 	panel-background.c	\
 	panel-background-monitor.c \
 	panel-stock-icons.c	\
@@ -141,12 +139,9 @@ panel_headers =			\
 	panel-gconf.h		\
 	panel-run-dialog.h	\
 	menu.h  		\
-	menu-util.h		\
 	menu-ditem.h		\
-	menu-fentry.h  		\
 	launcher.h		\
 	panel-applet-frame.h	\
-	quick-desktop-reader.h	\
 	panel-shell.h		\
 	panel-background.h	\
 	panel-background-monitor.h \

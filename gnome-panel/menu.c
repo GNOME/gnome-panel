@@ -1,59 +1,46 @@
 /*
- * GNOME panel menu module.
- * (C) 1997, 1998, 1999, 2000 The Free Software Foundation
- * Copyright 2000 Helix Code, Inc.
- * Copyright 2000 Eazel, Inc.
+ * Copyright (C) 1997 - 2000 The Free Software Foundation
+ * Copyright (C) 2000 Helix Code, Inc.
+ * Copyright (C) 2000 Eazel, Inc.
+ * Copyright (C) 2004 Red Hat Inc.
  *
- * Authors: Miguel de Icaza
- *          Federico Mena
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  */
 
 #include <config.h>
-#include <ctype.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <string.h>
-#include <limits.h>
-#include <errno.h>
-#include <math.h>
-
-#include <gdk/gdkkeysyms.h>
-#include <gtk/gtkenums.h>
-#include <libgnome/gnome-desktop-item.h>
-#include <gconf/gconf-client.h>
-#include <libbonobo.h>
-
-#include <libgnomevfs/gnome-vfs-mime.h>
-#include <libgnomevfs/gnome-vfs-uri.h>
-#include <libgnomevfs/gnome-vfs-ops.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
 
 #include "menu.h"
 
-#include "button-widget.h"
+#include <string.h>
+
+#include <glib/gi18n.h>
+#include <gdk/gdkkeysyms.h>
+#include <libgnome/gnome-desktop-item.h>
+#include <gconf/gconf-client.h>
+
 #include "launcher.h"
 #include "nothing.h"
-#include "menu-fentry.h"
-#include "menu-util.h"
-#include "menu-ditem.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
 #include "panel.h"
 #include "drawer.h"
 #include "panel-config-global.h"
-#include "panel-applet-frame.h"
-#include "quick-desktop-reader.h"
-#include "xstuff.h"
 #include "panel-stock-icons.h"
 #include "panel-action-button.h"
 #include "panel-recent.h"
-#include "panel-menu-bar.h"
-#include "panel-compatibility.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 #include "panel-profile.h"
@@ -64,25 +51,11 @@
 #include "panel-lockdown.h"
 #include "panel-addto.h"
 
-#undef MENU_DEBUG
-
-static char *gnome_folder = NULL;
-
-typedef struct _ShowItemMenu ShowItemMenu;
-struct _ShowItemMenu {
-	int type;
-	const char *item_loc;
-	MenuFinfo *mf;
-	GtkWidget *menu;
-	GtkWidget *menuitem;
-};
-
 typedef struct {
 	GtkWidget   *pixmap;
 	const char  *stock_id;
 	char        *image;
 	char        *fallback_image;
-	gboolean     force_image;
 	GtkIconSize  icon_size;
 } IconToLoad;
 
@@ -100,13 +73,14 @@ static GList *icons_to_add = NULL;
 
 static GSList *image_menu_items = NULL;
 
-static GtkWidget * create_menu_at_fr (GtkWidget *menu,
-				      FileRec *fr,
-				      const char *dir_name,
-				      gboolean fake_submenus,
-				      gboolean force);
+static GtkWidget *populate_menu_from_directory (GtkWidget         *menu,
+						MenuTreeDirectory *directory);
 
-static GtkWidget * create_desktop_menu (GtkWidget *m);
+static void panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
+					    GtkIconSize  icon_size,
+					    const char  *stock_id,
+					    const char  *image_filename,
+					    const char  *fallback_image_filename);
 
 static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 					      GdkEventKey *event);
@@ -122,16 +96,17 @@ panel_menu_have_icons (void)
 			NULL);
 }
 
-/*to be called on startup to load in some of the directories,
-  this makes the startup a little bit slower, and take up slightly
-  more ram, but it also speeds up later operation*/
-void
-init_menus (void)
+static GtkWidget *
+add_menu_separator (GtkWidget *menu)
 {
-	/*just load the menus from disk, don't make the widgets
-	  this just reads the .desktops of the top most directory
-	  and a level down*/
-	fr_read_dir (NULL, "applications:/", 0, 2);
+	GtkWidget *menuitem;
+	
+	menuitem = gtk_separator_menu_item_new ();
+	gtk_widget_set_sensitive (menuitem, FALSE);
+	gtk_widget_show (menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+	return menuitem;
 }
 
 static gboolean
@@ -243,18 +218,20 @@ about_gnome_cb (GtkWidget *menuitem,
 }
 
 static void
-activate_app_def (GtkWidget  *menuitem,
-		  const char *item_loc)
+activate_app_def (GtkWidget     *menuitem,
+		  MenuTreeEntry *entry)
 {
-	GError           *error = NULL;
 	GnomeDesktopItem *item;
+	GError           *error;
+	const char       *path;
 
-	item = gnome_desktop_item_new_from_uri (
-			item_loc,
-			0,
-			&error);
+	path = menu_tree_entry_get_desktop_file_path (entry);
 
+	error = NULL;
+	item = gnome_desktop_item_new_from_file (path, 0, &error);
 	if (item) {
+		g_assert (error == NULL);
+
 		panel_ditem_launch (
 			item, NULL, 0, menuitem_to_screen (menuitem), &error);
 		if (error) {
@@ -264,7 +241,7 @@ activate_app_def (GtkWidget  *menuitem,
 					    "%s",
 					    error->message);
 
-			g_clear_error (&error);
+			g_error_free (error);
 		}
 		gnome_desktop_item_unref (item);
 	} else {
@@ -275,8 +252,7 @@ activate_app_def (GtkWidget  *menuitem,
 				    _("Cannot load entry"),
 				    "%s",
 				    error->message);
-
-		g_clear_error (&error);
+		g_error_free (error);
 	}
 }
 
@@ -387,208 +363,6 @@ menus_have_icons_changed (GConfClient *client,
 	g_list_free (list);
 }
 
-typedef struct
-{
-	GtkMenuPositionFunc orig_func;
-	gpointer orig_data;
-} MenuReposition;
-
-/* FIXME:
- * Stolen mostly from GTK+ and modified for our purposes of multiscreen
- * things.  Kind of evil, but oh well
- *
- * This is deprecated in gtk now, that's why we need the GTK_MENU_INTERNALS
- * define in Makefile.am
- */
-static void
-our_menu_item_position_menu (GtkMenu  *menu,
-			     int       monitor_width,
-			     int       monitor_height,
-			     int       monitor_basex,
-			     int       monitor_basey,
-			     int      *x,
-			     int      *y)
-{
-	GtkMenuItem *menu_item;
-	GtkWidget *widget;
-	GtkWidget *parent_menu_item;
-	int twidth, theight;
-	int tx, ty;
-
-	g_return_if_fail (menu != NULL);
-	g_return_if_fail (x != NULL);
-	g_return_if_fail (y != NULL);
-
-	menu_item = GTK_MENU_ITEM (menu->parent_menu_item);
-	widget = GTK_WIDGET (menu_item);
-
-	twidth = GTK_WIDGET (menu)->requisition.width;
-	theight = GTK_WIDGET (menu)->requisition.height;
-
-	if ( ! gdk_window_get_origin (widget->window, &tx, &ty)) {
-		g_warning ("Menu not on screen");
-		return;
-	}
-
-	tx -= monitor_basex;
-	ty -= monitor_basey;
-
-	tx += widget->allocation.x;
-	ty += widget->allocation.y;
-
-	switch (menu_item->submenu_placement)
-	{
-	case GTK_TOP_BOTTOM:
-		if ((ty + widget->allocation.height + theight) <= monitor_height)
-			ty += widget->allocation.height;
-		else if ((ty - theight) >= 0)
-			ty -= theight;
-		else if (monitor_height - (ty + widget->allocation.height) > ty)
-			ty += widget->allocation.height;
-		else
-			ty -= theight;
-		break;
-
-	case GTK_LEFT_RIGHT:
-		menu_item->submenu_direction = GTK_DIRECTION_RIGHT;
-		parent_menu_item = GTK_MENU (widget->parent)->parent_menu_item;
-		if (parent_menu_item)
-			menu_item->submenu_direction = GTK_MENU_ITEM (parent_menu_item)->submenu_direction;
-
-		switch (menu_item->submenu_direction)
-		{
-		case GTK_DIRECTION_LEFT:
-			if ((tx - twidth) >= 0)
-				tx -= twidth;
-			else
-			{
-				menu_item->submenu_direction = GTK_DIRECTION_RIGHT;
-				tx += widget->allocation.width - 5;
-			}
-			break;
-
-		case GTK_DIRECTION_RIGHT:
-			if ((tx + widget->allocation.width + twidth - 5) <= monitor_width)
-				tx += widget->allocation.width - 5;
-			else
-			{
-				menu_item->submenu_direction = GTK_DIRECTION_LEFT;
-				tx -= twidth;
-			}
-			break;
-		}
-
-		ty += widget->allocation.height / 4;
-
-		/* If the height of the menu doesn't fit we move it upward. */
-		ty = CLAMP (ty, 0, MAX (0, monitor_height - theight));
-		break;
-	}
-
-	/* If we have negative, tx, here it is because we can't get
-	 * the menu all the way on screen. Favor the left portion.
-	 */
-	tx = CLAMP (tx, 0, MAX (0, monitor_width - twidth));
-
-	*x = tx + monitor_basex;
-	*y = ty + monitor_basey;
-}
-
-static void
-menu_on_screen (GtkMenu  *menu,
-		gint     *x,
-		gint     *y,
-		gboolean *push_in,
-		gpointer  data)
-{
-	MenuReposition *repo = data;
-	GtkRequisition  req;
-	GdkScreen      *screen;
-	int             monitor;
-	int             monitor_width;
-	int             monitor_height;
-	int             monitor_basex;
-	int             monitor_basey;
-
-	gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
-
-	screen  = gtk_widget_get_screen (GTK_WIDGET (menu));
-	monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
-
-	monitor_width  = panel_multiscreen_width (screen, monitor);
-	monitor_height = panel_multiscreen_height (screen, monitor);
-	monitor_basex  = panel_multiscreen_x (screen, monitor);
-	monitor_basey  = panel_multiscreen_y (screen, monitor);
-
-	if (repo->orig_func != NULL) {
-		repo->orig_func (menu, x, y, push_in, repo->orig_data);
-
-		if (menu->parent_menu_item != NULL) {
-			/* This is a submenu so behave submenuish */
-			if (*x < monitor_basex ||
-			    *x + req.width > monitor_basex + monitor_width ||
-			    *y < monitor_basey ||
-			    *y + req.height > monitor_basey + monitor_height) {
-				/* Offscreen! EVIL, ignore the position
-				 * and recalculate using our hack */
-				our_menu_item_position_menu (menu,
-							     monitor_width,
-							     monitor_height,
-							     monitor_basex,
-							     monitor_basey,
-							     x,
-							     y);
-			}
-		} else {
-			/* just make sure the menu is within screen */
-			*x -= monitor_basex;
-			*y -= monitor_basey;
-
-			if ((*x + req.width) > monitor_width)
-				*x -= ((*x + req.width) - monitor_width);
-			if (*x < 0)
-				*x = 0;
-			if ((*y + req.height) > monitor_height)
-				*y -= ((*y + req.height) - monitor_height);
-			if (*y < 0)
-				*y = 0;
-
-			*x += monitor_basex;
-			*y += monitor_basey;
-		}
-	} else {
-		*x -= monitor_basex;
-		*y -= monitor_basey;
-		*x = CLAMP (*x - 2, 0, MAX (0, monitor_width - req.width));
-		*y = CLAMP (*y - 2, 0, MAX (0, monitor_height - req.height));
-		*x += monitor_basex;
-		*y += monitor_basey;
-		*push_in = TRUE;
-	}
-}
-
-void
-panel_make_sure_menu_within_screen (GtkMenu *menu)
-{
-	MenuReposition *repo;
-
-	/* if already set to a standard pos func, just ignore */
-	if (menu->position_func == menu_on_screen ||
-	    menu->position_func == panel_menu_position)
-		return;
-
-	repo = g_new0 (MenuReposition, 1);
-	g_object_weak_ref (G_OBJECT (menu),
-			   (GWeakNotify) g_free,
-			   repo);
-
-	repo->orig_func = menu->position_func;
-	repo->orig_data = menu->position_func_data;
-
-	menu->position_func = menu_on_screen;
-	menu->position_func_data = repo;
-}
-
 static void
 reload_image_menu_items (void)
 {
@@ -637,10 +411,6 @@ panel_create_menu (void)
 					    (GConfClientNotifyFunc) menus_have_icons_changed,
 					    G_OBJECT (retval));
 
-	g_signal_connect_after (retval, "show",
-				G_CALLBACK (panel_make_sure_menu_within_screen),
-				NULL);
-
 	g_signal_connect (retval, "key_press_event",
 			  G_CALLBACK (panel_menu_key_press_handler),
 			  NULL);
@@ -648,8 +418,8 @@ panel_create_menu (void)
 	return retval;
 }
 
-static GtkWidget *
-menu_new (void)
+GtkWidget *
+create_empty_menu (void)
 {
 	GtkWidget *retval;
 
@@ -686,7 +456,6 @@ icon_to_load_copy (IconToLoad *icon)
 	retval->pixmap         = g_object_ref (icon->pixmap);
 	retval->image          = g_strdup (icon->image);
 	retval->fallback_image = g_strdup (icon->fallback_image);
-	retval->force_image    = icon->force_image;
 	retval->stock_id       = icon->stock_id;
 	retval->icon_size      = icon->icon_size;
 
@@ -716,25 +485,23 @@ panel_make_menu_icon (const char *icon,
 
 	g_return_val_if_fail (size > 0, NULL);
 
-	if (long_operation != NULL)
-		*long_operation = TRUE;
-
-	file = gnome_desktop_item_find_icon (panel_icon_theme,
-					     icon,
-					     size /* desired size */,
-					     0 /* flags */);
+	file = NULL;
+	if (icon != NULL)
+		file = gnome_desktop_item_find_icon (panel_icon_theme,
+						     icon,
+						     size /* desired size */,
+						     0 /* flags */);
 	if (file == NULL && fallback != NULL)
 		file = gnome_desktop_item_find_icon (panel_icon_theme,
 						     fallback,
 						     size /* desired size */,
 						     0 /* flags */);
 
-	if (file == NULL) {
-		/* we didn't do anything long/hard */
-		if (long_operation != NULL)
-			*long_operation = FALSE;
+	if (file == NULL)
 		return NULL;
-	}
+
+	if (long_operation != NULL)
+		*long_operation = TRUE;
 
 	pb = NULL;
 
@@ -941,110 +708,8 @@ load_icons_handler_again:
 }
 
 static void
-add_new_app_to_menu (GtkWidget    *widget,
-		     ShowItemMenu *sim)
-{
-	GtkWidget *dialog;
-	PanelWidget *panel;
-
-	g_return_if_fail (sim->mf != NULL);
-
-	panel = menu_get_panel (sim->menuitem);
-
-	dialog = panel_new_launcher (sim->mf->menudir,
-			    	     menuitem_to_screen (sim->menuitem));
-
-	panel_widget_register_open_dialog (panel, dialog);
-}
-
-static void
-remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
-{
-	char *file;
-	char *dir, *directory_file;
-	GnomeDesktopItem *ditem;
-	GnomeVFSResult result;
-
-	g_return_if_fail (sim->item_loc != NULL);
-	g_return_if_fail (sim->menuitem != NULL);
-
-	gtk_widget_hide (sim->menuitem);
-
-	result = gnome_vfs_unlink (sim->item_loc);
-
-	if (result != GNOME_VFS_OK) {
-		char *esc;
-
-		esc = g_markup_escape_text (sim->item_loc, -1);
-
-		panel_error_dialog (menuitem_to_screen (sim->menuitem),
-				    "cannot_remove_menu_item",
-				    _("Cannot remove menu item %s"),
-				    "%s",
-				    esc,
-				    gnome_vfs_result_to_string (result));
-
-		g_free (esc);
-		return;
-	}
-
-	file = g_path_get_basename (sim->item_loc);
-	if (file == NULL) {
-		g_warning (_("Could not get file name from path: %s"),
-			  sim->item_loc);
-		return;
-	}
-
-	dir = g_path_get_dirname (sim->item_loc);
-	if (dir == NULL) {
-		g_warning (_("Could not get directory name from path: %s"),
-			  sim->item_loc);
-		g_free (file);
-		return;
-	}
-
-	directory_file = g_build_path ("/", dir, ".directory", NULL);
-	ditem = gnome_desktop_item_new_from_uri (directory_file,
-						 0 /* flags */,
-						 NULL /* error */);
-	g_free (directory_file);
-
-	if (ditem != NULL) {
-		char **sort_order = gnome_desktop_item_get_strings (ditem,
-								    GNOME_DESKTOP_ITEM_SORT_ORDER);
-		if (sort_order != NULL) {
-			int i, j;
-			j = 0;
-			for (i = 0; sort_order[i] != NULL; i++) {
-				if (strcmp (file, sort_order[i]) != 0) {
-					sort_order[j++] = sort_order[i];
-				} else {
-					g_free (sort_order[i]);
-					sort_order[i] = NULL;
-				}
-			}
-			sort_order[j++] = NULL;
-			gnome_desktop_item_set_strings (ditem,
-							GNOME_DESKTOP_ITEM_SORT_ORDER,
-							sort_order);
-			g_strfreev (sort_order);
-
-			gnome_desktop_item_save (ditem,
-						 NULL /* under */,
-						 TRUE /* force */,
-						 NULL /* error */);
-
-			/* ignore errors, it's not at all important if we failed,
-			 * no point bothering the user with it. */
-
-		}
-		gnome_desktop_item_unref (ditem);
-	}
-}
-
-static void
-add_app_to_panel (GtkWidget    *item,
-		  ShowItemMenu *sim)
+add_app_to_panel (GtkWidget     *item,
+		  MenuTreeEntry *entry)
 {
 	PanelWidget   *panel_widget;
 	PanelToplevel *toplevel;
@@ -1057,140 +722,108 @@ add_app_to_panel (GtkWidget    *item,
 	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
 	position = pd ?  pd->insertion_pos : -1;
 
-	panel_launcher_create (toplevel, position, sim->item_loc);
+	panel_launcher_create (toplevel,
+			       position,
+			       menu_tree_entry_get_desktop_file_path (entry));
 }
 
-
-static inline gboolean
-vfs_text_uri_exists (const char *text_uri)
-{
-	GnomeVFSURI *uri;
-	gboolean     retval;
-
-	uri = gnome_vfs_uri_new (text_uri);
-	retval = gnome_vfs_uri_exists (uri);
-	gnome_vfs_uri_unref (uri);
-
-	return retval;
-}
 
 static void
-add_drawers_from_dir (const char  *dirname,
-		      const char  *name,
-		      int          pos,
-		      const char  *toplevel_id)
+add_drawers_from_dir (MenuTreeDirectory *directory,
+		      int                pos,
+		      const char        *toplevel_id)
 {
-	QuickDesktopItem *item_info;
-	GSList           *mfiles, *l;
-	const char       *subdir_name;
-	char             *dentry_name;
-	char             *pixmap_name;
-	char             *uri;
-	char             *attached_toplevel_id;
+	const char *name;
+	const char *icon;
+	GSList     *entries;
+	GSList     *subdirs;
+	GSList     *l;
+	char       *attached_toplevel_id;
 
-	dentry_name = g_build_path ("/", dirname, ".directory", NULL);
-	item_info = quick_desktop_item_load_uri (dentry_name, FALSE);
-	g_free (dentry_name);
-
-	subdir_name = name ? name : (item_info ? item_info->name : NULL);
-	pixmap_name = item_info ? item_info->icon : NULL;
+	name = menu_tree_directory_get_name (directory);
+	icon = menu_tree_directory_get_icon (directory);
 
 	attached_toplevel_id = panel_drawer_create_with_id (toplevel_id,
 							    pos,
-							    pixmap_name,
-							    pixmap_name != NULL,
-							    subdir_name);
+							    icon,
+							    icon != NULL,
+							    name);
 	if (!attached_toplevel_id)
 		return;
 
-	mfiles = get_mfiles_from_menudir (dirname, NULL);
-	for (l = mfiles; l; l = l->next) {
-		MFile *mfile = l->data;
+	entries = menu_tree_directory_get_entries (directory);
+	for (l = entries; l; l = l->next) {
+		MenuTreeEntry *entry = l->data;
 
-		uri = g_build_filename (dirname, mfile->name, NULL);
+		panel_launcher_create_with_id (attached_toplevel_id,
+					       G_MAXINT/2,
+					       menu_tree_entry_get_desktop_file_path (entry));
 
-		if (mfile->verified) {
-			if (mfile->is_dir)
-				add_drawers_from_dir (uri, NULL, G_MAXINT/2, attached_toplevel_id);
-
-			else if ((g_str_has_suffix (mfile->name, ".desktop") ||
-				  g_str_has_suffix (mfile->name, ".kdelnk")) &&
-				 vfs_text_uri_exists (uri)) {
-					
-					QuickDesktopItem *qitem;
-
-					qitem = quick_desktop_item_load_uri (uri, TRUE);
-
-					/* Don't add the desktop entry if TryExec fails */
-					if (qitem != NULL) {
-						panel_launcher_create_with_id (
-									   attached_toplevel_id, 
-									   G_MAXINT/2, uri);
-						quick_desktop_item_destroy (qitem);
-					}
-			}
-		}
-
-		g_free (uri);
+		menu_tree_entry_unref (entry);
 	}
+	g_slist_free (entries);
 
-	free_mfile_list (mfiles);
+	subdirs = menu_tree_directory_get_subdirs (directory);
+	for (l = subdirs; l; l = l->next) {
+		MenuTreeDirectory *subdir = l->data;
+
+		add_drawers_from_dir (subdir, G_MAXINT/2, attached_toplevel_id);
+
+		menu_tree_directory_unref (subdir);
+	}
+	g_slist_free (subdirs);
+
 	g_free (attached_toplevel_id);
 }
 
 static void
-add_menudrawer_to_panel (GtkWidget *menuitem,
-			 MenuFinfo *mf)
+add_menudrawer_to_panel (GtkWidget     *menuitem,
+			 MenuTreeEntry *entry)
 
 {
-	PanelWidget *panel;
-	PanelData   *pd;
-	int          insertion_pos;
+	MenuTreeDirectory *directory;
+	PanelWidget       *panel;
+	PanelData         *pd;
+	int                insertion_pos;
 
-	g_return_if_fail (mf != NULL);
-	
+	directory = menu_tree_entry_get_parent (entry);
+
 	panel = menu_get_panel (menuitem);
 
 	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
 	insertion_pos = pd ? pd->insertion_pos : -1;
 
-	add_drawers_from_dir (mf->menudir,
-			      mf->dir_name,
+	add_drawers_from_dir (directory,
 			      insertion_pos,
 			      panel_profile_get_toplevel_id (panel->toplevel));
 }
 
 static void
-add_menu_to_panel (GtkWidget  *widget,
-		   MenuFinfo  *menu_info)
+add_menu_to_panel (GtkWidget     *menuitem,
+		   MenuTreeEntry *entry)
 {
-	PanelWidget   *panel_widget;
-	PanelToplevel *toplevel;
-	PanelData     *pd;
-	int            position;
-	char          *menu_path;
-	gboolean       use_menu_path;
-	char          *tooltip;
+	MenuTreeDirectory *directory;
+	PanelWidget       *panel;
+	PanelData         *pd;
+	int                insertion_pos;
+	char              *menu_path;
 
-	panel_widget = menu_get_panel (widget);
-	toplevel = panel_widget->toplevel;
+	directory = menu_tree_entry_get_parent (entry);
 
-	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
-	position = pd ? pd->insertion_pos : -1;
+	panel = menu_get_panel (menuitem);
 
-	if (!menu_info) {
-		menu_path     = NULL;
-		use_menu_path = FALSE;
-		tooltip       = _("Main Menu");
-	} else {
-		menu_path     = menu_info->menudir;
-		use_menu_path = TRUE;
-		tooltip       = menu_info->dir_name ? menu_info->dir_name :
-						      _("Menu");
-	}
+	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
+	insertion_pos = pd ? pd->insertion_pos : -1;
 
-	panel_menu_button_create (toplevel, position, menu_path,
-				  use_menu_path, tooltip);
+	menu_path = menu_tree_directory_make_path (directory, NULL);
+
+	panel_menu_button_create (panel->toplevel,
+				  insertion_pos,
+				  menu_path,
+				  TRUE,
+				  menu_tree_directory_get_name (directory));
+
+	g_free (menu_path);
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
@@ -1245,214 +878,110 @@ restore_grabs(GtkWidget *w, gpointer data)
 	gtk_grab_add (GTK_WIDGET (menu));
 }
 
-static void
-edit_dentry (GtkWidget    *widget,
-	     ShowItemMenu *sim)
+static GtkWidget *
+create_item_context_menu (GtkWidget   *item,
+			  PanelWidget *panel_widget)
 {
-	GtkWidget *dialog;
-	PanelWidget *panel;
-	char *dir = NULL;
+	MenuTreeEntry *entry;
+	GtkWidget     *menu;
+	GtkWidget     *submenu;
+	GtkWidget     *menuitem;
+	gboolean       id_lists_writable;
 
-	g_return_if_fail (sim != NULL);
-	g_return_if_fail (sim->item_loc != NULL);
+	id_lists_writable = panel_profile_id_lists_are_writable ();
 
-	if (sim->mf)
-		dir = sim->mf->menudir;
+	entry = g_object_get_data (G_OBJECT (item), "panel-menu-tree-entry");
+	g_assert (entry != NULL);
 
-	panel = menu_get_panel (sim->menuitem);
 
-	dialog = panel_edit_dentry (sim->item_loc, dir,
-			   	    menuitem_to_screen (sim->menuitem));
+	menu = create_empty_menu ();
+	g_object_set_data_full (G_OBJECT (item),
+				"panel-item-context-menu",
+				g_object_ref (menu),
+				(GDestroyNotify) g_object_unref);
+	gtk_object_sink (GTK_OBJECT (menu));
 
-	panel_widget_register_open_dialog (panel, dialog);
-}
+	g_object_set_data (G_OBJECT (menu), "menu_panel", panel_widget);
 
-static void
-edit_direntry (GtkWidget    *widget,
-	       ShowItemMenu *sim)
-{
-	GtkWidget *dialog;
-	PanelWidget *panel;
 
-	g_return_if_fail (sim != NULL);
-	g_return_if_fail (sim->mf != NULL);
+	g_signal_connect (menu, "deactivate",
+			  G_CALLBACK (restore_grabs), item);
 
-	panel = menu_get_panel (sim->menuitem);
+	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem (menuitem,
+			panel_menu_icon_get_size (),
+			NULL,
+			_("Add this launcher to panel"),
+			FALSE);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_app_to_panel), entry);
+	gtk_widget_set_sensitive (menuitem, id_lists_writable);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
-	dialog = panel_edit_direntry (sim->mf->menudir,
-			     	      sim->mf->dir_name,
-				      menuitem_to_screen (sim->menuitem));
 
-	panel_widget_register_open_dialog (panel, dialog);
-	
+	submenu = create_empty_menu ();
+
+	g_object_set_data (G_OBJECT (submenu), "menu_panel", panel_widget);
+
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem (menuitem,
+			panel_menu_icon_get_size (),
+			NULL,
+			_("Entire menu"),
+			FALSE);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem (menuitem,
+			panel_menu_icon_get_size (),
+			NULL,
+			_("Add this as drawer to panel"),
+			FALSE);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_menudrawer_to_panel), entry);
+	gtk_widget_set_sensitive (menuitem, id_lists_writable);
+	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
+
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem (menuitem,
+			panel_menu_icon_get_size (),
+			NULL,
+			_("Add this as menu to panel"),
+			FALSE);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_menu_to_panel), entry);
+	gtk_widget_set_sensitive (menuitem, id_lists_writable);
+	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
+
+	return menu;
 }
 
 static gboolean
 show_item_menu (GtkWidget      *item,
-		GdkEventButton *bevent,
-		ShowItemMenu   *sim)
+		GdkEventButton *bevent)
 {
-	GtkWidget        *menuitem;
-	GnomeDesktopItem *ii;
-	PanelWidget      *panel_widget;
+	PanelWidget *panel_widget;
+	GtkWidget   *menu;
 
 	if (panel_lockdown_get_locked_down ())
 		return FALSE;
 
-	panel_widget = menu_get_panel (sim->menuitem);
+	panel_widget = menu_get_panel (item);
 
-	if (!sim->menu) {
-		sim->menu = menu_new ();
-		g_object_ref (sim->menu);
-		gtk_object_sink (GTK_OBJECT (sim->menu));
+	menu = g_object_get_data (G_OBJECT (item), "panel-item-context-menu");
 
-		g_object_set_data (
-			G_OBJECT (sim->menu), "menu_panel", panel_widget);
-		
-		g_signal_connect (G_OBJECT (sim->menu), "deactivate",
-				  G_CALLBACK (restore_grabs),
-				  item);
+	if (!menu)
+		menu = create_item_context_menu (item, panel_widget);
 
-		if (sim->type == 1) {
-			char *tmp;
-			gboolean id_lists_writable = panel_profile_id_lists_are_writable ();
+	gtk_menu_set_screen (GTK_MENU (menu),
+			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
 
-			ii = gnome_desktop_item_new_from_uri (sim->item_loc, 0, NULL);
-
-			/* eek */
-			if (ii == NULL) {
-				g_object_unref (G_OBJECT (sim->menu));
-				sim->menu = NULL;
-				return TRUE;
-			}
-
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem, panel_menu_icon_get_size (),
-					NULL, _("Add this launcher to panel"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
-			g_signal_connect (menuitem, "activate",
-					  G_CALLBACK (add_app_to_panel),
-					  sim);
-			gtk_widget_set_sensitive (menuitem, id_lists_writable);
-
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem, panel_menu_icon_get_size (),
-					NULL, _("Remove this item"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
-			g_signal_connect (G_OBJECT(menuitem), "activate",
-					    G_CALLBACK (remove_menuitem),
-					    sim);
-			tmp = g_path_get_dirname(sim->item_loc);
-			if ( ! panel_is_uri_writable (tmp))
-				gtk_widget_set_sensitive(menuitem,FALSE);
-			g_free (tmp);
-			g_signal_connect_swapped (G_OBJECT (menuitem),
-						   "activate",
-						   G_CALLBACK (gtk_menu_shell_deactivate),
-						   G_OBJECT (item->parent));
-
-			if (!panel_lockdown_get_disable_command_line ()) {
-				menuitem = gtk_image_menu_item_new ();
-				/*when activated we must pop down the first menu*/
-				g_signal_connect_swapped (G_OBJECT (menuitem),
-							  "activate",
-							  G_CALLBACK (gtk_menu_shell_deactivate),
-							  G_OBJECT (item->parent));
-
-				g_signal_connect (G_OBJECT(menuitem),
-						  "activate",
-						  G_CALLBACK(edit_dentry),
-						  sim);
-				setup_menuitem (menuitem, panel_menu_icon_get_size (),
-						NULL, _("_Properties"), FALSE);
-				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
-			}
-
-			gnome_desktop_item_unref (ii);
-		}
-		
-		if (sim->mf != NULL) {
-			GtkWidget *submenu;
-			gboolean id_lists_writable = panel_profile_id_lists_are_writable ();
-
-			if (sim->type == 0) {
-				submenu = sim->menu;
-			} else {
-				submenu = menu_new ();
-
-				g_object_set_data (
-					G_OBJECT (submenu), "menu_panel", panel_widget);
-
-				menuitem = gtk_image_menu_item_new ();
-				setup_menuitem (menuitem, panel_menu_icon_get_size (),
-						NULL, _("Entire menu"), FALSE);
-				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
-				gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-							   submenu);
-			}
-
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem, panel_menu_icon_get_size (), NULL,
-					_("Add this as drawer to panel"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
-			g_signal_connect (G_OBJECT(menuitem), "activate",
-					  G_CALLBACK(add_menudrawer_to_panel),
-						  sim->mf);
-			gtk_widget_set_sensitive (menuitem, id_lists_writable);
-
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem, panel_menu_icon_get_size (),
-					NULL, _("Add this as menu to panel"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
-			g_signal_connect (G_OBJECT(menuitem), "activate",
-					  G_CALLBACK(add_menu_to_panel),
-					  sim->mf);
-			gtk_widget_set_sensitive (menuitem, id_lists_writable);
-
-			if (!panel_lockdown_get_disable_command_line ()) {
-				menuitem = gtk_image_menu_item_new ();
-				setup_menuitem (menuitem, panel_menu_icon_get_size (),
-						NULL, _("Add new item to this menu"), FALSE);
-				gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
-				/*when activated we must pop down the first menu*/
-				g_signal_connect_swapped (G_OBJECT (menuitem),
-							  "activate",
-							  G_CALLBACK (gtk_menu_shell_deactivate),
-							  G_OBJECT (item->parent));
-
-				g_signal_connect (menuitem, "activate",
-						  G_CALLBACK (add_new_app_to_menu),
-						  sim);
-				if (!panel_is_uri_writable (sim->mf->menudir))
-					gtk_widget_set_sensitive (menuitem, FALSE);
-			}
-
-			menuitem = gtk_image_menu_item_new ();
-			/*when activated we must pop down the first menu*/
-			g_signal_connect_swapped (G_OBJECT (menuitem),
-						 "activate",
-						 G_CALLBACK (gtk_menu_shell_deactivate),
-						 G_OBJECT (item->parent));
-
-			g_signal_connect (G_OBJECT (menuitem),
-					    "activate",
-					    G_CALLBACK (edit_direntry),
-					    sim);
-			setup_menuitem (menuitem, panel_menu_icon_get_size (),
-					NULL, _("Properties"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
-		}
-	}
-
-	gtk_menu_set_screen (
-		GTK_MENU (sim->menu),
-		gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
-
-	gtk_menu_popup (GTK_MENU (sim->menu),
-			NULL,
-			NULL,
-			menu_item_menu_position,
-			item,
+	gtk_menu_popup (GTK_MENU (menu),
+			NULL, NULL, NULL, NULL,
 			bevent->button,
 			bevent->time);
 
@@ -1461,8 +990,7 @@ show_item_menu (GtkWidget      *item,
 
 gboolean
 menu_dummy_button_press_event (GtkWidget      *menuitem,
-				   GdkEventButton *event,
-				   gpointer	 data)
+			       GdkEventButton *event)
 {
 	if (event->button == 3)
 		return TRUE;
@@ -1472,24 +1000,12 @@ menu_dummy_button_press_event (GtkWidget      *menuitem,
 
 static gboolean
 menuitem_button_press_event (GtkWidget      *menuitem,
-			     GdkEventButton *event,
-			     ShowItemMenu   *sim)
+			     GdkEventButton *event)
 {
 	if (event->button == 3)
-		return show_item_menu (menuitem, event, sim);
+		return show_item_menu (menuitem, event);
 	
 	return FALSE;
-}
-
-static void
-destroy_item_menu(GtkWidget *w, ShowItemMenu *sim)
-{
-	/*NOTE: don't free item_loc or mf.. it's not ours and will be free'd
-	  elsewhere*/
-	if (sim->menu != NULL)
-		g_object_unref (G_OBJECT (sim->menu));
-	sim->menu = NULL;
-	g_free (sim);
 }
 
 /* This is a _horrible_ hack to have this here. This needs to be added to the
@@ -1562,11 +1078,13 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 		       GtkSelectionData *selection_data,
 		       guint             info,
 		       guint             time,
-		       char             *item_loc)
+		       MenuTreeEntry    *entry)
 {
 	char *uri_list;
 
-	uri_list = g_strconcat (item_loc, "\r\n", NULL);
+	uri_list = g_strconcat (menu_tree_entry_get_desktop_file_path (entry),
+				"\r\n",
+				NULL);
 
 	gtk_selection_data_set (selection_data,
 				selection_data->target, 8, (guchar *)uri_list,
@@ -1634,20 +1152,14 @@ setup_invisible_mnemonic (GtkWidget *menuitem,
 	setup_mnemonic (menuitem, NULL, GUINT_TO_POINTER (accel_key));
 }
 
-static void
-setup_full_menuitem (GtkWidget   *menuitem,
-		     GtkIconSize  icon_size,
-		     GtkWidget   *image,
-		     const char  *title,
-		     gboolean     invisible_mnemonic,
-		     const char  *item_loc,
-		     MenuFinfo   *mf)
+void
+setup_menuitem (GtkWidget   *menuitem,
+		GtkIconSize  icon_size,
+		GtkWidget   *image,
+		const char  *title,
+		gboolean     invisible_mnemonic)
 			       
 {
-        static GtkTargetEntry menu_item_targets[] = {
-		{ "text/uri-list", 0, 0 }
-	};
-
 	GtkWidget *label;
 
 	if (invisible_mnemonic)
@@ -1676,46 +1188,7 @@ setup_full_menuitem (GtkWidget   *menuitem,
 				  G_CALLBACK (image_menuitem_size_request),
 				  GINT_TO_POINTER (icon_size));
 
-	if (item_loc != NULL) {
-		ShowItemMenu *sim = g_new0 (ShowItemMenu, 1);
-		sim->type = 1;
-		sim->item_loc = item_loc; /*make sure you don't free this,
-					    it's not ours!*/
-		sim->mf = mf;
-		sim->menuitem = menuitem;
-                g_object_set_data (G_OBJECT (menuitem), "sim", sim);
-		g_signal_connect (menuitem, "button_press_event",
-				  G_CALLBACK (menuitem_button_press_event),
-				  sim);
-		g_signal_connect (G_OBJECT (menuitem), "destroy",
-				  G_CALLBACK (destroy_item_menu),
-				  sim);
-
-		if (!panel_lockdown_get_locked_down ()) {
-			gtk_drag_source_set(menuitem,
-					    GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
-					    menu_item_targets, 1,
-					    GDK_ACTION_COPY);
-
-			g_signal_connect (G_OBJECT(menuitem), "drag_data_get",
-					   G_CALLBACK(drag_data_get_menu_cb),
-					   (gpointer)item_loc);
-			g_signal_connect (G_OBJECT(menuitem), "drag_end",
-					   G_CALLBACK(drag_end_menu_cb), NULL);
-		}
-	}
-
 	gtk_widget_show (menuitem);
-}
-
-void
-setup_menuitem (GtkWidget   *menuitem,
-		GtkIconSize  icon_size,
-		GtkWidget   *image,
-		const char  *title,
-		gboolean     invisible_mnemonic)
-{
-	setup_full_menuitem (menuitem, icon_size, image, title, invisible_mnemonic, NULL, NULL);
 }
 
 static void
@@ -1727,7 +1200,6 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 				selection_data->target, 8, (guchar *)string,
 				strlen(string));
 }
-
 
 void
 setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
@@ -1754,372 +1226,243 @@ setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
 }
 
 static void
-destroy_mf(MenuFinfo *mf)
+submenu_to_display (GtkWidget *menu)
 {
-	if (mf->fr != NULL) {
-		DirRec *dr = (DirRec *)mf->fr;
-		mf->fr = NULL;
-		dr->mfl = g_slist_remove(dr->mfl, mf);
+	if (g_object_get_data (G_OBJECT (menu), "panel-menu-needs-loading")) {
+		MenuTreeDirectory *directory;
+
+		directory = g_object_get_data (G_OBJECT (menu), "panel-menu-tree-directory");
+
+		if (directory)
+			populate_menu_from_directory (menu, directory);
+
+		g_object_set_data (G_OBJECT (menu), "panel-menu-needs-loading", NULL);
 	}
-	g_free(mf->menudir);
-	mf->menudir = NULL;
-	g_free(mf->dir_name);
-	mf->dir_name = NULL;
-	g_free(mf);
-}
-
-
-static void
-menu_destroy(GtkWidget *menu, gpointer data)
-{
-	GSList *mfl = g_object_get_data (G_OBJECT (menu), "mf");
-	GSList *li;
-
-	g_object_set_data (G_OBJECT (menu), "mf", NULL);
-
-	for (li = mfl; li != NULL; li = li->next) {
-		MenuFinfo *mf = li->data;
-		li->data = NULL;
-
-		destroy_mf (mf);
-	}
-	g_slist_free (mfl);
-}
-
-/* XXX: hmmm the gtk_menu_reposition only calls
-   gtk_menu_position if the widget is drawable, but that's not the
-   case when we want to do it*/
-void
-our_gtk_menu_position (GtkMenu *menu)
-{
-	GtkWidget *window = GTK_MENU_SHELL (menu)->active ?
-		menu->toplevel : menu->tearoff_hbox;
-
-	if (window != NULL) {
-		/* HACK! reposition works even when not
-		 * yet visible/mapped, as long as we have a window
-		 * since is uses gtk_window_move.  Yes, we
-		 * depend on how gtk works internally, but hey,
-		 * who cares. */
-		gboolean old_visible = GTK_WIDGET_VISIBLE (menu);
-		gboolean old_mapped = GTK_WIDGET_MAPPED (menu);
-		GTK_WIDGET_SET_FLAGS (menu, GTK_VISIBLE | GTK_MAPPED);
-		gtk_menu_reposition (menu);
-		if ( ! old_visible)
-			GTK_WIDGET_UNSET_FLAGS (menu, GTK_VISIBLE);
-		if ( ! old_mapped)
-			GTK_WIDGET_UNSET_FLAGS (menu, GTK_MAPPED);
-	}
-}
-
-/*BTW, this also updates the fr entires */
-gboolean
-menu_need_reread(GtkWidget *menuw)
-{
-	GSList *mfl = g_object_get_data (G_OBJECT (menuw), "mf");
-	GSList *list;
-	gboolean need_reread = FALSE;
-
-	/*if(!mfl)
-	  g_warning("Weird menu doesn't have mf entry");*/
-
-	if (g_object_get_data (G_OBJECT (menuw), "need_reread")) {
-		need_reread = TRUE;
-		g_object_set_data (G_OBJECT(menuw), "need_reread", NULL);
-	}
-	
-	/*check if we need to reread this*/
-	for(list = mfl; list != NULL; list = list->next) {
-		MenuFinfo *mf = list->data;
-		if(mf->fake_menu ||
-		   mf->fr == NULL) {
-			if(mf->fr != NULL)
-				mf->fr = fr_replace(mf->fr);
-			else
-				mf->fr = fr_get_dir(mf->menudir);
-			need_reread = TRUE;
-		} else {
-			FileRec *fr;
-			fr = fr_check_and_reread(mf->fr);
-			if(fr != mf->fr ||
-			   fr == NULL) {
-				need_reread = TRUE;
-				mf->fr = fr;
-			}
-		}
-	}
-
-	return need_reread;
-}
-
-static void
-submenu_to_display (GtkWidget *menuw, gpointer data)
-{
-	GSList *mfl, *list;
-
-	/*this no longer constitutes a bad hack, now it's purely cool :)*/
-	if( ! menu_need_reread(menuw))
-		return;
-
-	/* Note this MUST be destroy and not unref, unref would fuck
-	 * up here, we don't hold a reference to them, so we must
-	 * destroy them, menu shell will unref these */
-	while(GTK_MENU_SHELL(menuw)->children)
-		gtk_widget_destroy(GTK_MENU_SHELL(menuw)->children->data);
-
-	mfl = g_object_get_data (G_OBJECT (menuw), "mf");
-	g_object_set_data (G_OBJECT (menuw), "mf", NULL);
-
-	for(list = mfl;
-	    list != NULL;
-	    list = list->next) {
-		MenuFinfo *mf = list->data;
-		list->data = NULL;
-
-		menuw = create_menu_at_fr (menuw,
-					   mf->fr,
-					   mf->dir_name,
-					   TRUE /*fake_submenus*/,
-					   FALSE /*force*/);
-		destroy_mf(mf);
-	}
-	g_slist_free(mfl);
-
-	our_gtk_menu_position(GTK_MENU(menuw));
 }
 
 static GtkWidget *
-create_fake_menu_at (const char *menudir,
-		     const char *dir_name)
+create_fake_menu (MenuTreeDirectory *directory)
 {	
-	MenuFinfo *mf;
 	GtkWidget *menu;
-	GSList *list;
 	
-	menu = menu_new ();
+	menu = create_empty_menu ();
 
-	mf = g_new0 (MenuFinfo, 1);
-	mf->menudir = g_strdup (menudir);
-	mf->dir_name = g_strdup (dir_name);
-	mf->fake_menu = TRUE;
-	mf->fr = NULL;
+	g_object_set_data_full (G_OBJECT (menu),
+				"panel-menu-tree-directory",
+				menu_tree_directory_ref (directory),
+				(GDestroyNotify) menu_tree_directory_unref);
 	
-	list = g_slist_prepend(NULL, mf);
-	g_object_set_data (G_OBJECT (menu), "mf", list);
-	
-	g_signal_connect (G_OBJECT(menu), "destroy",
-			   G_CALLBACK(menu_destroy), NULL);
-	
+	g_object_set_data (G_OBJECT (menu),
+			   "panel-menu-needs-loading",
+			   GUINT_TO_POINTER (TRUE));
+
+	g_signal_connect (menu, "show",
+			  G_CALLBACK (submenu_to_display), NULL);
+	g_signal_connect (menu, "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+
 	return menu;
 }
 
-static gboolean
-create_menuitem (GtkWidget *menu,
-		 FileRec *fr,
-		 gboolean fake_submenus,
-		 gboolean *add_separator,
-		 int *first_item,
-		 MenuFinfo *mf)
+static void
+create_submenu (GtkWidget         *menu,
+		MenuTreeDirectory *directory)
 {
-	GtkWidget  *menuitem, *sub;
-	const char *icon, *fallback;
-	char       *itemname;
-	
-	g_return_val_if_fail (fr != NULL, FALSE);
-
-	if(fr->type == FILE_REC_EXTRA)
-		return FALSE;
-
-	sub = NULL;
-	if(fr->fullname) {
-		itemname = g_strdup(fr->fullname);
-	} else {
-		char *p;
-		itemname = g_path_get_basename (fr->name);
-		p = strrchr(itemname, '.');
-		if(p) *p = '\0';
-	}
-
-	icon = fr->icon;
-	fallback = NULL;
-
-	if (fr->type == FILE_REC_DIR) {
-		if (!gnome_folder)
-			gnome_folder = gnome_icon_theme_lookup_icon (
-						panel_icon_theme,
-                                               "gnome-fs-directory",
-                                               48, NULL, NULL);
-
-		if (!icon)
-			icon = gnome_folder;
-		else
-			fallback = gnome_folder;
-
-		if(fake_submenus)
-			sub = create_fake_menu_at (fr->name,
-						   itemname);
-
-		else
-			sub = create_menu_at_fr (NULL, fr,
-						 itemname,
-						 fake_submenus,
-						 FALSE /*force*/);
-
-		if (!sub) {
-			g_free(itemname);
-			return FALSE;
-		}
-	}
+	GtkWidget *menuitem;
+	GtkWidget *submenu;
 
 	menuitem = gtk_image_menu_item_new ();
-	if (sub) {
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
-		g_signal_connect (G_OBJECT(sub), "show",
-				  G_CALLBACK(submenu_to_display), NULL);
-		g_signal_connect (sub, "button_press_event",
-				  G_CALLBACK (menu_dummy_button_press_event), NULL);
-	}
 
-	if (icon)
-		panel_load_menu_image_deferred (
-			menuitem, panel_menu_icon_get_size(), NULL, icon, fallback, FALSE);
+	g_object_set_data_full (G_OBJECT (menuitem),
+				"panel-menu-tree-directory",
+				menu_tree_directory_ref (directory),
+				(GDestroyNotify) menu_tree_directory_unref);
 
-	if (sub)
-	        setup_full_menuitem (
-			menuitem, panel_menu_icon_get_size (),
-			NULL, itemname, TRUE, NULL, mf);
+	panel_load_menu_image_deferred (menuitem,
+					panel_menu_icon_get_size (),
+					NULL,
+					menu_tree_directory_get_icon (directory),
+					"gnome-fs-directory");
 
-	else 
-	        setup_full_menuitem (
-			menuitem, panel_menu_icon_get_size(),
-			NULL, itemname, TRUE, fr->name, mf);
+	setup_menuitem (menuitem,
+			panel_menu_icon_get_size (),
+			NULL,
+			menu_tree_directory_get_name (directory),
+			TRUE);
 
-	if(*add_separator) {
-		add_menu_separator(menu);
-		(*first_item)++;
-		*add_separator = FALSE;
-	}
-	
-	if (fr->comment && fr->comment [0])
-		gtk_tooltips_set_tip (panel_tooltips, menuitem, fr->comment, NULL);
+	if (menu_tree_directory_get_comment (directory))
+		gtk_tooltips_set_tip (panel_tooltips,
+				      menuitem,
+				      menu_tree_directory_get_comment (directory),
+				      NULL);
+
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
-	if(!sub)
-		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (activate_app_def),
-				  fr->name);
+	submenu = create_fake_menu (directory);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+}
 
-	g_free (itemname);
+static void
+create_menuitem (GtkWidget     *menu,
+		 MenuTreeEntry *entry)
+{
+	GtkWidget  *menuitem;
+	
+	menuitem = gtk_image_menu_item_new ();
 
-	return TRUE;
+	g_object_set_data_full (G_OBJECT (menuitem),
+				"panel-menu-tree-entry",
+				menu_tree_entry_ref (entry),
+				(GDestroyNotify) menu_tree_entry_unref);
+
+	panel_load_menu_image_deferred (menuitem,
+					panel_menu_icon_get_size (),
+					NULL,
+					menu_tree_entry_get_icon (entry),
+					NULL);
+
+	setup_menuitem (menuitem,
+			panel_menu_icon_get_size (),
+			NULL,
+			menu_tree_entry_get_name (entry),
+			TRUE);
+
+	if (menu_tree_entry_get_comment (entry))
+		gtk_tooltips_set_tip (panel_tooltips,
+				      menuitem,
+				      menu_tree_entry_get_comment (entry),
+				      NULL);
+
+	g_signal_connect (menuitem, "button_press_event",
+			  G_CALLBACK (menuitem_button_press_event), NULL);
+
+	if (!panel_lockdown_get_locked_down ()) {
+		static GtkTargetEntry menu_item_targets[] = {
+			{ "text/uri-list", 0, 0 }
+		};
+
+		gtk_drag_source_set (menuitem,
+				     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+				     menu_item_targets, 1,
+				     GDK_ACTION_COPY);
+
+		g_signal_connect (menuitem, "drag_data_get",
+				  G_CALLBACK (drag_data_get_menu_cb), entry);
+		g_signal_connect (menuitem, "drag_end",
+				  G_CALLBACK (drag_end_menu_cb), NULL);
+	}
+
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (activate_app_def), entry);
+}
+
+static void
+handle_menu_tree_changed (MenuTree  *tree,
+			  GtkWidget *menu)
+{
+	while (GTK_MENU_SHELL (menu)->children)
+                gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
+
+	g_object_set_data_full (G_OBJECT (menu),
+				"panel-menu-tree-directory",
+				menu_tree_get_root_directory (tree),
+				(GDestroyNotify) menu_tree_directory_unref);
+
+	g_object_set_data (G_OBJECT (menu),
+			   "panel-menu-needs-loading",
+			   GUINT_TO_POINTER (TRUE));
+}
+
+static void
+remove_menu_tree_monitor (GtkWidget *menu,
+			  MenuTree  *tree)
+{
+	menu_tree_remove_monitor (tree,
+				  (MenuTreeChangedFunc) handle_menu_tree_changed,
+				  menu);
 }
 
 GtkWidget *
-create_menu_at (GtkWidget *menu,
-		const char *menudir,
-		const char *dir_name,
-		gboolean fake_submenus,
-		gboolean force)
+create_applications_menu (const char *menu_file,
+			  const char *menu_path)
 {
-	return create_menu_at_fr (menu,
-				  fr_get_dir (menudir),
-				  dir_name,
-				  fake_submenus,
-				  force);
+	MenuTree          *tree;
+	MenuTreeDirectory *root;
+	GtkWidget         *menu;
+
+	tree = menu_tree_lookup (menu_file);
+
+	if (!menu_path)
+		root = menu_tree_get_root_directory (tree);
+	else
+		root = menu_tree_get_directory_from_path (tree, menu_path);
+
+	if (root) {
+		menu = create_fake_menu (root);
+
+		menu_tree_directory_unref (root);
+	} else {
+		menu = create_empty_menu ();
+	}
+
+	g_object_set_data_full (G_OBJECT (menu),
+				"panel-menu-tree",
+				menu_tree_ref (tree),
+				(GDestroyNotify) menu_tree_unref);
+
+	menu_tree_add_monitor (tree,
+			       (MenuTreeChangedFunc) handle_menu_tree_changed,
+			       menu);
+	g_signal_connect (menu, "destroy",
+			  G_CALLBACK (remove_menu_tree_monitor), tree);
+
+	menu_tree_unref (tree);
+
+	return menu;
 }
 
 static GtkWidget *
-create_menu_at_fr (GtkWidget *menu,
-		   FileRec *fr,
-		   const char *dir_name,
-		   gboolean fake_submenus,
-		   gboolean force)
+populate_menu_from_directory (GtkWidget         *menu,
+			      MenuTreeDirectory *directory)
 {	
-	GSList *li;
-	GSList *mfl = NULL;
-	gboolean add_separator = FALSE;
-	int first_item = 0;
-	GtkWidget *menuitem;
-	MenuFinfo *mf = NULL;
-	DirRec *dr = (DirRec *)fr;
-	char *menubase;
+	GSList   *subdirs;
+	GSList   *entries;
+	GSList   *l;
+	gboolean  add_separator;
 
-	g_return_val_if_fail(!(fr&&fr->type!=FILE_REC_DIR),menu);
-	
-	if( ! force &&
-	   fr == NULL)
-		return menu;
+	add_separator = (GTK_MENU_SHELL (menu)->children != NULL);
 
-	/* unfilled out, but the pointer will be correct */
-	mf = g_new0 (MenuFinfo, 1);
+	subdirs = menu_tree_directory_get_subdirs (directory);
+	for (l = subdirs; l; l = l->next) {
+		MenuTreeDirectory *subdir = l->data;
 
-	menubase = g_path_get_basename (fr->name);
-	
-	/*get this info ONLY if we haven't gotten it already*/
-	if (dir_name == NULL)
-		dir_name = (fr != NULL && fr->fullname != NULL)
-			? fr->fullname
-			: menubase;
-	
-	if (menu == NULL) {
-		menu = menu_new ();
-
-		g_signal_connect (G_OBJECT(menu), "destroy",
-				    G_CALLBACK (menu_destroy), NULL);
-	} else {
-		first_item = g_list_length(GTK_MENU_SHELL(menu)->children);
-		mfl = g_object_get_data (G_OBJECT (menu), "mf");
-		if (GTK_MENU_SHELL(menu)->children != NULL)
-			add_separator = TRUE;
-	}
-
-	if (fr != NULL) {
-		/* Last added points to the last fr list item that was successfuly
-		 * added as a menu item */
-		GSList *last_added = NULL;
-
-		for(li = dr->recs; li != NULL; li = li->next) {
-			FileRec *tfr = li->data;
-
-#ifdef MENU_DEBUG
-			g_print ("FileRec: '%s'\n", tfr->name);
-#endif /* MENU_DEBUG */
-
-			if (tfr->type == FILE_REC_SEP)
-				add_menu_separator (menu);				
-			else if (create_menuitem (menu, tfr,
-						  fake_submenus,
-						  &add_separator,
-						  &first_item,
-						  mf))
-				last_added = li;
+		if (add_separator) {
+			add_menu_separator (menu);
+			add_separator = FALSE;
 		}
+
+		create_submenu (menu, subdir);
+
+		menu_tree_directory_unref (subdir);
 	}
+	g_slist_free (subdirs);
 
-	mf->dir_name       = g_strdup (dir_name);
-	mf->fake_menu      = FALSE;
-	mf->fr             = fr;
+	entries = menu_tree_directory_get_entries (directory);
+	for (l = entries; l; l = l->next) {
+		MenuTreeEntry *entry = l->data;
 
-	if (fr) {
-		dr->mfl = g_slist_prepend (dr->mfl, mf);
+		if (add_separator) {
+			add_menu_separator (menu);
+			add_separator = FALSE;
+		}
 
-		mf->menudir = g_strdup (fr->name);
+		create_menuitem (menu, entry);
+
+		menu_tree_entry_unref (entry);
 	}
-
-	/*add separator*/
-	if (add_separator) {
-		menuitem = gtk_image_menu_item_new();	
-		gtk_menu_shell_insert(GTK_MENU_SHELL(menu), menuitem, first_item);
-		gtk_widget_show(menuitem);
-		gtk_widget_set_sensitive(menuitem, FALSE);
-		add_separator = FALSE;
-	}
-
-	mfl = g_slist_append (mfl, mf);
-
-	g_object_set_data (G_OBJECT (menu), "mf", mfl);
-
-	g_free (menubase);
+	g_slist_free (entries);
 
 	return menu;
 }
@@ -2138,30 +1481,11 @@ setup_stock_menu_item (GtkWidget   *item,
 		       gboolean     invisible_mnemonic)
 {
 	if (stock_id)
-		panel_load_menu_image_deferred (
-			item, icon_size, stock_id, NULL, NULL, FALSE);
+		panel_load_menu_image_deferred (item, icon_size, stock_id, NULL, NULL);
 
 	setup_menuitem (item, icon_size, NULL, title, invisible_mnemonic);
 }
 	  
-static GtkWidget *
-create_system_menu (GtkWidget *menu,
-		    gboolean fake_submenus,
-		    gboolean fake)
-{
-	if ( ! fake ||
-	     menu != NULL) {
-		menu = create_menu_at (menu, "applications:/",
-				       _("Applications"),
-				       fake_submenus, FALSE);
-	} else {
-		menu = create_fake_menu_at ("applications:/",
-					    _("Applications"));
-	}
-
-	return menu;
-}
-
 static void
 remove_panel (GtkWidget *menuitem,
               gpointer data)
@@ -2181,17 +1505,6 @@ remove_panel (GtkWidget *menuitem,
 	}
 
         panel_delete (toplevel);
-}
-
-GtkWidget *
-create_panel_root_menu (PanelWidget *panel)
-{
-	GtkWidget *menu;
-
-	menu = create_root_menu (
-			NULL, panel, TRUE, get_default_menu_flags (), TRUE);
-
-	return menu;
 }
 
 static void
@@ -2321,7 +1634,7 @@ create_panel_context_menu (PanelWidget *panel)
 	GtkWidget *menuitem;
 	char      *gnome_about;
 
-	retval = menu_new ();
+	retval = create_empty_menu ();
 
 	if (!panel_lockdown_get_locked_down ())
 		make_panel_submenu (panel, retval);
@@ -2396,7 +1709,7 @@ append_lock_screen (GtkWidget *menu)
 static void
 append_log_out (GtkWidget *menu)
 {
-	GtkWidget  *menuitem;
+	GtkWidget *menuitem;
 
 	if (panel_lockdown_get_disable_log_out ())
 		return;
@@ -2419,133 +1732,93 @@ append_log_out (GtkWidget *menu)
 			      NULL);
 }
 
-static GtkWidget *
-create_desktop_menu (GtkWidget *menu)
-{
-	if (!menu)
-		menu = menu_new ();
-
-	append_lock_screen (menu);
-	append_log_out (menu);
-
-	return menu;
-}
-
 GtkWidget *
-create_root_menu (GtkWidget   *root_menu,
-		  PanelWidget *panel,
-		  gboolean     fake_submenus,
-		  int          flags,
-		  gboolean     extra_items)
+create_main_menu (PanelWidget *panel)
 {
-	GtkWidget              *menu;
-	GtkWidget              *menuitem;
-	gboolean                has_inline;
-	gboolean                has_subs;
-	gboolean                has_inline2;
+	GtkWidget *main_menu;
+	GtkWidget *applications_menu;
+	GtkWidget *menuitem;
 
-	has_inline = (flags & MAIN_MENU_SYSTEM);
+	main_menu = create_empty_menu ();
+	g_object_set_data (G_OBJECT (main_menu), "menu_panel", panel);
 
-	has_subs = (flags & MAIN_MENU_SYSTEM_SUB);
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menuitem,
+			       panel_menu_icon_get_size (),
+			       PANEL_STOCK_APPLICATIONS,
+			       _("Applications"),
+			       TRUE);
+	gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
 
-	has_inline2 = (flags & MAIN_MENU_DESKTOP);
+	applications_menu = create_applications_menu ("applications.menu", NULL);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), applications_menu);
 
-	if (!root_menu)
-		root_menu = menu_new ();
+	add_menu_separator (main_menu);
 
-	g_object_set_data (G_OBJECT (root_menu), "menu_panel", panel);
-
-	if (flags & MAIN_MENU_SYSTEM)
-		create_system_menu(root_menu, fake_submenus,
-				   FALSE /* fake */);
-
-	/*others here*/
-
-	if (has_subs && has_inline)
-		add_menu_separator (root_menu);
-
-	
-	if (flags & MAIN_MENU_SYSTEM_SUB) {
-		menu = create_system_menu(NULL, fake_submenus, TRUE);
+	if (!panel_lockdown_get_disable_command_line ()) {
 		menuitem = gtk_image_menu_item_new ();
-		setup_stock_menu_item (
-			menuitem, panel_menu_icon_get_size (),
-			PANEL_STOCK_APPLICATIONS, _("Applications"), TRUE);
-		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
-		if(menu) {
-			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-						   menu);
-			g_signal_connect (G_OBJECT (menu),"show",
-					  G_CALLBACK (submenu_to_display),
-					  NULL);
-		}
-	}
-
-	if (!panel_lockdown_get_disable_command_line () && extra_items) {
-		add_menu_separator (root_menu);
-		menuitem = gtk_image_menu_item_new ();
-		setup_stock_menu_item (
-			menuitem, panel_menu_icon_get_size (),
-			panel_action_get_stock_icon (PANEL_ACTION_RUN),
-			panel_action_get_text (PANEL_ACTION_RUN),
-			TRUE);
+		setup_stock_menu_item (menuitem,
+				       panel_menu_icon_get_size (),
+				       panel_action_get_stock_icon (PANEL_ACTION_RUN),
+				       panel_action_get_text (PANEL_ACTION_RUN),
+				       TRUE);
 		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (panel_action_run_program),
-				  NULL);
-		setup_internal_applet_drag (menuitem,
-					    panel_action_get_drag_id (PANEL_ACTION_RUN));
-		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
-		gtk_tooltips_set_tip (panel_tooltips, menuitem,
+				  G_CALLBACK (panel_action_run_program), NULL);
+		gtk_tooltips_set_tip (panel_tooltips,
+				      menuitem,
 				      panel_action_get_tooltip (PANEL_ACTION_RUN),
 				      NULL);
+		setup_internal_applet_drag (menuitem,
+					    panel_action_get_drag_id (PANEL_ACTION_RUN));
+		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
 	}
 
-	if (extra_items &&
-	    panel_is_program_in_path  ("gnome-search-tool")) {
+	if (panel_is_program_in_path  ("gnome-search-tool")) {
 		menuitem = gtk_image_menu_item_new ();
-		setup_stock_menu_item (
-			menuitem, panel_menu_icon_get_size (),
-			panel_action_get_stock_icon (PANEL_ACTION_SEARCH),
-			panel_action_get_text (PANEL_ACTION_SEARCH),
-			TRUE);
-		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
-		gtk_tooltips_set_tip (panel_tooltips, menuitem,
-				      panel_action_get_tooltip (PANEL_ACTION_SEARCH),
-				      NULL);
+		setup_stock_menu_item (menuitem,
+				       panel_menu_icon_get_size (),
+				       panel_action_get_stock_icon (PANEL_ACTION_SEARCH),
+				       panel_action_get_text (PANEL_ACTION_SEARCH),
+				       TRUE);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_action_search), NULL);
+		gtk_tooltips_set_tip (panel_tooltips,
+				      menuitem,
+				      panel_action_get_tooltip (PANEL_ACTION_SEARCH),
+				      NULL);
 		setup_internal_applet_drag (menuitem,
 					    panel_action_get_drag_id (PANEL_ACTION_SEARCH));
-
-		panel_recent_append_documents_menu (root_menu);
-		add_menu_separator (root_menu);
+		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
 	}
 
-	if (extra_items &&
-	    panel_is_program_in_path ("gnome-screenshot")) {
+	panel_recent_append_documents_menu (main_menu);
+
+	add_menu_separator (main_menu);
+
+	if (panel_is_program_in_path ("gnome-screenshot")) {
 		menuitem = gtk_image_menu_item_new ();
-		setup_stock_menu_item (
-			menuitem, panel_menu_icon_get_size (),
-			panel_action_get_stock_icon (PANEL_ACTION_SCREENSHOT),
-			panel_action_get_text (PANEL_ACTION_SCREENSHOT),
-			TRUE);
-		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
-		gtk_tooltips_set_tip (panel_tooltips, menuitem,
-				      panel_action_get_tooltip (PANEL_ACTION_SCREENSHOT),
-				      NULL);
+		setup_stock_menu_item (menuitem,
+				       panel_menu_icon_get_size (),
+				       panel_action_get_stock_icon (PANEL_ACTION_SCREENSHOT),
+				       panel_action_get_text (PANEL_ACTION_SCREENSHOT),
+				       TRUE);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_action_screenshot), NULL);
+		gtk_tooltips_set_tip (panel_tooltips,
+				      menuitem,
+				      panel_action_get_tooltip (PANEL_ACTION_SCREENSHOT),
+				      NULL);
 		setup_internal_applet_drag (menuitem,
 					    panel_action_get_drag_id (PANEL_ACTION_SCREENSHOT));
+		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
+
+		add_menu_separator (main_menu);
 	}
 
-	if (((has_inline && !has_subs) || has_subs) && has_inline2)
-		add_menu_separator (root_menu);
-	
-	if (flags & MAIN_MENU_DESKTOP)
-		create_desktop_menu (root_menu);
+	append_lock_screen (main_menu);
+	append_log_out (main_menu);
 
-	return root_menu;
+	return main_menu;
 }
 
 static GList *
@@ -2583,13 +1856,12 @@ image_menu_destroy (GtkWidget *image, gpointer data)
 	image_menu_items = g_slist_remove (image_menu_items, image);
 }
 
-void
+static void
 panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 				GtkIconSize  icon_size,
 				const char  *stock_id,
 				const char  *image_filename,
-				const char  *fallback_image_filename,
-				gboolean     force_image)
+				const char  *fallback_image_filename)
 {
 	IconToLoad *icon;
 	GtkWidget *image;
@@ -2610,7 +1882,6 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 	icon->stock_id       = stock_id;
 	icon->image          = g_strdup (image_filename);
 	icon->fallback_image = g_strdup (fallback_image_filename);
-	icon->force_image    = force_image;
 	icon->icon_size      = icon_size;
 
 	gtk_widget_show (image);
@@ -2619,12 +1890,8 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 				"Panel:Image",
 				g_object_ref (image),
 				(GDestroyNotify) g_object_unref);
-	if (force_image)
-		g_object_set_data (G_OBJECT (image_menu_item),
-				   "Panel:ForceImage",
-				   GINT_TO_POINTER (TRUE));
  
-	if (force_image || panel_menu_have_icons ())
+	if (panel_menu_have_icons ())
 		gtk_image_menu_item_set_image (
 			GTK_IMAGE_MENU_ITEM (image_menu_item), image);
 
@@ -2652,17 +1919,11 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 		retval = TRUE;
 		if (menu_shell->active_menu_item &&
 		    GTK_MENU_ITEM (menu_shell->active_menu_item)->submenu == NULL) {
-			ShowItemMenu* sim;
-			GtkWidget *menu_item = menu_shell->active_menu_item;
- 
-			sim = 	g_object_get_data (G_OBJECT (menu_item), "sim");
-			if (sim) {
-				GdkEventButton bevent;
+			GdkEventButton bevent;
 
-				bevent.button = 3;
-				bevent.time = GDK_CURRENT_TIME;
-				show_item_menu (menu_item, &bevent, sim);
-			}
+			bevent.button = 3;
+			bevent.time = GDK_CURRENT_TIME;
+			show_item_menu (menu_shell->active_menu_item, &bevent);
 		}
 		
 	}

@@ -35,14 +35,11 @@
 #include "panel-recent.h"
 #include "applet.h"
 #include "menu.h"
-#include "menu-util.h"
 #include "panel-globals.h"
 #include "panel-profile.h"
 #include "panel-lockdown.h"
 
 #define PANEL_MENU_BAR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BAR, PanelMenuBarPrivate))
-
-#define MENU_FLAGS (MAIN_MENU_SYSTEM)
 
 struct _PanelMenuBarPrivate {
 	AppletInfo            *info;
@@ -62,14 +59,6 @@ panel_menu_bar_show_applications_menu (PanelMenuBar *menubar,
 {
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_widget_get_screen (GTK_WIDGET (menubar)));
-
-	if (!menu_need_reread (menu))
-		return;
-
-	while (GTK_MENU_SHELL (menu)->children)
-		gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
-
-	create_root_menu (menu, menubar->priv->panel, TRUE, MENU_FLAGS, FALSE);
 }
 
 static void
@@ -205,8 +194,7 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 			panel_menu_bar_icon_get_size ());
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
 
-	menubar->priv->applications_menu =
-		create_root_menu (NULL, NULL, TRUE, MENU_FLAGS, FALSE);
+	menubar->priv->applications_menu = create_applications_menu ("applications.menu", NULL);
 
 	/* intercept all right button clicks makes sure they don't
 	   go to the object itself */
@@ -254,7 +242,7 @@ panel_menu_bar_parent_set (GtkWidget *widget,
 static void
 panel_menu_bar_class_init (PanelMenuBarClass *klass)
 {
-	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
+	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 
 	parent_class = g_type_class_peek_parent (klass);
 

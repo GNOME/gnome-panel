@@ -2,12 +2,7 @@
 #define PANEL_UTIL_H
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-
 #include <libgnome/gnome-desktop-item.h>
-
-#include "panel-widget.h"
-#include "panel-config-global.h"
 
 G_BEGIN_DECLS
 
@@ -41,8 +36,6 @@ GList *panel_g_list_swap_prev     (GList        *list,
 GList *panel_g_list_resort_item   (GList        *list,
 				   gpointer      data,
 				   GCompareFunc  func);
-void   panel_g_slist_deep_free    (GSList       *list);
-
 
 GtkWidget      *panel_error_dialog      (GdkScreen  *screen,
 					 const char *class,
@@ -61,20 +54,6 @@ gboolean	panel_is_uri_writable	(const char *uri);
 gboolean	panel_uri_exists	(const char *uri);
 
 void            panel_lock_screen       (GdkScreen *screen);
-
-
-/* GnomeVFS reading utils */
-
-typedef struct _ReadBuf ReadBuf;
-
-/* Note, does not include the trailing \n */
-char *		readbuf_gets		(char *buf, 
-					 gsize bufsize,
-					 ReadBuf *rb);
-ReadBuf *	readbuf_open		(const char *uri);
-/* unused for now */
-gboolean	readbuf_rewind		(ReadBuf *rb);
-void		readbuf_close		(ReadBuf *rb);
 
 GdkPixbuf *	missing_pixbuf		(int size);
 

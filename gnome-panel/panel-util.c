@@ -12,17 +12,12 @@
  */
 
 #include <config.h>
-#include <string.h>
-#include <glib.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <dirent.h>
 
-/* includes for the battery stuff */
-#include <signal.h>
-#include <limits.h>
+#include "panel-util.h"
+
+#include <string.h>
 #include <unistd.h>
-#include <sys/wait.h>
+#include <sys/types.h>
 
 #include <glib/gi18n.h>
 #include <libgnome/gnome-util.h>
@@ -32,12 +27,8 @@
 #include <libgnomevfs/gnome-vfs-uri.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
 
-#include "panel-util.h"
-
 #include "applet.h"
 #include "nothing.h"
-#include "panel.h"
-#include "panel-a11y.h"
 #include "xstuff.h"
 #include "panel-globals.h"
 #include "launcher.h"
@@ -338,127 +329,6 @@ panel_pop_window_busy (GtkWidget *window)
 	}
 }
 
-/*
- * GnomeVFS reading utils, that look like the libc buffered io stuff
- */
-struct _ReadBuf {
-	GnomeVFSHandle *handle;
-	char *uri;
-	gboolean eof;
-	char buf[BUFSIZ];
-	gsize size;
-	gsize pos;
-};
-
-static int
-readbuf_getc (ReadBuf *rb)
-{
-	if (rb->eof)
-		return EOF;
-
-	if (rb->size == 0 ||
-	    rb->pos == rb->size) {
-		GnomeVFSFileSize bytes_read;
-		/* FIXME: handle other errors */
-		if (gnome_vfs_read (rb->handle,
-				    rb->buf,
-				    BUFSIZ,
-				    &bytes_read) != GNOME_VFS_OK) {
-			rb->eof = TRUE;
-			return EOF;
-		}
-		rb->size = bytes_read;
-		rb->pos = 0;
-
-		if (rb->size == 0) {
-			rb->eof = TRUE;
-			return EOF;
-		}
-	}
-
-	return (int)rb->buf[rb->pos++];
-}
-
-/* Note, does not include the trailing \n */
-char *
-readbuf_gets (char *buf, gsize bufsize, ReadBuf *rb)
-{
-	int c;
-	gsize pos;
-
-	g_return_val_if_fail (rb != NULL, NULL);
-
-	pos = 0;
-	buf[0] = '\0';
-
-	do {
-		c = readbuf_getc (rb);
-		if (c == EOF ||
-		    c == '\n')
-			break;
-		buf[pos++] = c;
-	} while (pos < bufsize-1);
-
-	if (c == EOF &&
-	    pos == 0)
-		return NULL;
-
-	buf[pos++] = '\0';
-
-	return buf;
-}
-
-ReadBuf *
-readbuf_open (const char *uri)
-{
-	GnomeVFSHandle *handle;
-	ReadBuf *rb;
-
-	g_return_val_if_fail (uri != NULL, NULL);
-
-	if (gnome_vfs_open (&handle, uri,
-			    GNOME_VFS_OPEN_READ) != GNOME_VFS_OK)
-		return NULL;
-
-	rb = g_new0 (ReadBuf, 1);
-	rb->handle = handle;
-	rb->uri = g_strdup (uri);
-	rb->eof = FALSE;
-	rb->size = 0;
-	rb->pos = 0;
-
-	return rb;
-}
-
-/* unused for now */
-gboolean
-readbuf_rewind (ReadBuf *rb)
-{
-	if (gnome_vfs_seek (rb->handle,
-			    GNOME_VFS_SEEK_START, 0) == GNOME_VFS_OK)
-		return TRUE;
-
-	gnome_vfs_close (rb->handle);
-	rb->handle = NULL;
-	if (gnome_vfs_open (&rb->handle, rb->uri,
-			    GNOME_VFS_OPEN_READ) == GNOME_VFS_OK)
-		return TRUE;
-
-	return FALSE;
-}
-
-void
-readbuf_close (ReadBuf *rb)
-{
-	if (rb->handle != NULL)
-		gnome_vfs_close (rb->handle);
-	rb->handle = NULL;
-	g_free (rb->uri);
-	rb->uri = NULL;
-
-	g_free (rb);
-}
-
 gboolean
 panel_is_program_in_path (const char *program)
 {
@@ -509,17 +379,6 @@ panel_ensure_dir (const char *dirname)
 
 	g_free (parsed);
 	return TRUE;
-}
-
-void
-panel_g_slist_deep_free	(GSList *list)
-{
-	GSList *li;
-	for (li = list; li != NULL; li = li->next) {
-		g_free (li->data);
-		li->data = NULL;
-	}
-	g_slist_free (list);
 }
 
 static gboolean

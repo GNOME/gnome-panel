@@ -18,7 +18,6 @@
 #include <libbonoboui.h>
 #include <bonobo-activation/bonobo-activation.h>
 
-#include "menu-fentry.h"
 #include "menu.h"
 #include "panel.h"
 #include "panel-util.h"
@@ -77,8 +76,6 @@ main (int argc, char **argv)
 	panel_action_protocol_init ();
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
-
-        init_menus ();
 
 	gconf_client_add_dir (panel_gconf_get_client (),
 			      "/desktop/gnome/interface",

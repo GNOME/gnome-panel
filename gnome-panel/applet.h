@@ -102,6 +102,11 @@ void        panel_applet_menu_set_recurse (GtkMenu     *menu,
 
 gboolean    panel_applet_toggle_locked  (AppletInfo *info);
 
+void panel_applet_position_menu (GtkMenu   *menu,
+				 int       *x,
+				 int       *y,
+				 gboolean  *push_in,
+				 GtkWidget *applet);
 G_END_DECLS
 
 #endif

@@ -34,7 +34,6 @@
 #include "egg-recent-view-gtk.h"
 #include "egg-recent-item.h"
 #include "menu.h"
-#include "menu-util.h"
 #include "panel-util.h"
 #include "panel-globals.h"
 #include "panel-recent.h"
