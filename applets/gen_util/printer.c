@@ -111,7 +111,7 @@ printer_widget (Printer *pr)
 	GtkWidget *printer;
 	int height;
 	static GtkTargetEntry drop_types [] = { 
-		{ "text/uri-list", 0, TARGET_URI_LIST },
+		{ "text/uri-list", 0, TARGET_URI_LIST }
 	};
 	static gint n_drop_types = sizeof (drop_types) / sizeof(drop_types[0]);
 	
