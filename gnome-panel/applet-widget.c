@@ -929,7 +929,8 @@ applet_widget_init(const char *app_id,
 
 	gnome_client_disable_master_connection ();
 	CORBA_exception_init(&ev);
-	orb = gnome_CORBA_init_with_popt_table(app_id, VERSION, &argc, argv,
+	orb = gnome_CORBA_init_with_popt_table(app_id, app_version,
+					       &argc, argv,
 					       options, flags, return_ctx,
 					       GNORBA_INIT_SERVER_FUNC, &ev);
 
