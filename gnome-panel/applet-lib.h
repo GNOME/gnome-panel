@@ -30,12 +30,14 @@ int gnome_panel_applet_init_corba (void);
 int gnome_panel_applet_reinit_corba (void);
 void gnome_panel_applet_register_callback (gint applet_id,
 					   char *name,
+					   char *stock_item,
 					   char *menutext,
 					   AppletCallbackFunc func,
 					   gpointer data);
 void gnome_panel_applet_unregister_callback(int applet_id, char *name);
 void gnome_panel_applet_register_callback_dir (gint applet_id,
 					       char *name,
+					       char *stock_item,
 					       char *menutext);
 void gnome_panel_applet_unregister_callback_dir(int applet_id, char *name);
 

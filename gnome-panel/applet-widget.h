@@ -122,16 +122,26 @@ void		applet_widget_register_callback	(AppletWidget *applet,
 						 gchar *menutext,
 						 AppletCallbackFunc func,
 						 gpointer data);
+void		applet_widget_register_stock_callback	(AppletWidget *applet,
+							 gchar *name,
+							 gchar *stock_type,
+							 gchar *menutext,
+							 AppletCallbackFunc func,
+							 gpointer data);
 /*remove a menuitem*/
 void		applet_widget_unregister_callback (AppletWidget *applet,
 						   gchar *name);
 /*add a submenu*/
 void		applet_widget_register_callback_dir (AppletWidget *applet,
-						     char *name,
-						     char *menutext);
+						     gchar *name,
+						     gchar *menutext);
+void		applet_widget_register_stock_callback_dir (AppletWidget *applet,
+							   gchar *name,
+							   gchar *stock_type,
+							   gchar *menutext);
 /*remove a submenu*/
 void		applet_widget_unregister_callback_dir (AppletWidget *applet,
-						       char *name);
+						       gchar *name);
 
 
 /* get the applet widget with the id of applet_id */

@@ -134,6 +134,49 @@ Note that the second argument to the register_callback is just a string
 identifier of this callback, and can really be whatever you want. But it
 should NOT be translated as the label (the 3rd argument) should be.
 
+Advanced Menu Stuff:
+====================
+
+It is also possible to have submenus, remove menus and use
+gnome-stock icons on the menus.
+
+Submenus:
+
+To do submenus, you have to first call applet_widget_register_callback_dir,
+which only takes the callback name and the menu text. The callback name should
+end with '/'.  The callback name works as a "path" for the submenus.
+
+So to add a submenu "Foo" and in item "Bar" (into the submenu "Foo")
+you would do
+
+	applet_widget_register_callback_dir(APPLET_WIDGET(applet),
+					    "foo/",
+					    _("Foo"));
+	applet_widget_register_callback(APPLET_WIDGET(applet),
+					"foo/bar",
+					_("Bar"),
+					bar_callback,
+					NULL);
+
+Deleting:
+
+To delete a menu item, just call applet_widget_unregister_callback or
+applet_widget_unregister_callback_dir, with the proper callback name.
+
+Stock Icons:
+
+You use the _stock derivatives of the callback functions and pass an
+extra argument with the GNOME_STOCK_MENU_* type. For example to add an
+about menu item:
+
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "about",
+					      GNOME_STOCK_MENU_ABOUT,
+					      _("About..."),
+					      about_cb,
+					      NULL);
+
+
 Session Saving:
 ===============
 

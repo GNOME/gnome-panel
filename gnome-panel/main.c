@@ -428,6 +428,7 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 				      launcher->dentry->comment,NULL);
 
 		applet_add_callback(applet_count-1,"properties",
+				    GNOME_STOCK_MENU_PROP,
 				    _("Properties..."));
 	} else if(strcmp(id_str,DRAWER_ID) == 0) {
 		Drawer *drawer;

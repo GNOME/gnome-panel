@@ -53,6 +53,7 @@ typedef struct _AppletInfo AppletInfo;
 
 struct _AppletUserMenu {
 	gchar *name;
+	gchar *stock_item;
 	gchar *text;
 	gint applet_id;
 	GtkWidget *menuitem;
@@ -129,6 +130,7 @@ void applet_drag_start(gint applet_id);
 void applet_drag_stop(gint applet_id);
 void applet_add_callback(gint applet_id,
 			 char *callback_name,
+			 char *stock_item,
 			 char *menuitem_text);
 void applet_remove_callback(gint applet_id,
 			    char *callback_name);

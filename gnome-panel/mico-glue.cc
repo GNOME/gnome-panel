@@ -104,10 +104,12 @@ public:
         void applet_add_callback (const char *ccookie, 
 				  CORBA::Short applet_id,
 				  const char *callback_name,
+				  const char *stock_item,
 				  const char *menuitem_text) {
 		CHECK_COOKIE ();
 		::applet_add_callback(applet_id,
 				      (char *)callback_name,
+				      (char *)stock_item,
 				      (char *)menuitem_text);
 	}
         void applet_remove_callback (const char *ccookie, 

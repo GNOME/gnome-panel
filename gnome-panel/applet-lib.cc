@@ -232,6 +232,7 @@ make_sane_name(gchar *name)
 void
 gnome_panel_applet_register_callback(int applet_id,
 				     char *name,
+				     char *stock_item,
 				     char *menutext,
 				     AppletCallbackFunc func,
 				     gpointer data)
@@ -255,7 +256,8 @@ gnome_panel_applet_register_callback(int applet_id,
 	info->data = data;
 
 	/*register the callback with the panel*/
-	panel_client->applet_add_callback(cookie,applet_id,name,menutext);
+	panel_client->applet_add_callback(cookie,applet_id,name,
+					  stock_item,menutext);
 }
 
 /*removes a callback from the callback hash*/
@@ -275,6 +277,7 @@ gnome_panel_applet_unregister_callback(int applet_id,
 void
 gnome_panel_applet_register_callback_dir(int applet_id,
 					 char *name,
+					 char *stock_item,
 					 char *menutext)
 {
 	gchar *n;
@@ -287,7 +290,7 @@ gnome_panel_applet_register_callback_dir(int applet_id,
 	else
 		n = g_strdup(name);
 	/*unregister the dir with the panel*/
-	panel_client->applet_add_callback(cookie,applet_id,n,menutext);
+	panel_client->applet_add_callback(cookie,applet_id,n,stock_item,menutext);
 	g_free(n);
 }
 

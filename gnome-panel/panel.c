@@ -538,6 +538,8 @@ panel_clean_applet(gint applet_id)
 		AppletUserMenu *umenu = info->user_menu->data;
 		if(umenu->name)
 			g_free(umenu->name);
+		if(umenu->stock_item)
+			g_free(umenu->stock_item);
 		if(umenu->text)
 			g_free(umenu->text);
 		g_free(umenu);
@@ -593,7 +595,10 @@ applet_get_callback(GList *user_menu, gchar *name)
 }
 
 void
-applet_add_callback(gint applet_id, char *callback_name, char *menuitem_text)
+applet_add_callback(gint applet_id,
+		    char *callback_name,
+		    char *stock_item,
+		    char *menuitem_text)
 {
 	AppletUserMenu *menu;
 	AppletInfo *info = get_applet_info(applet_id);
@@ -603,15 +608,19 @@ applet_add_callback(gint applet_id, char *callback_name, char *menuitem_text)
 	if((menu=applet_get_callback(info->user_menu,callback_name))==NULL) {
 		menu = g_new(AppletUserMenu,1);
 		menu->name = g_strdup(callback_name);
+		menu->stock_item = g_strdup(stock_item);
 		menu->text = g_strdup(menuitem_text);
 		menu->applet_id = applet_id;
 		menu->menuitem = NULL;
 		menu->submenu = NULL;
 		info->user_menu = g_list_append(info->user_menu,menu);
 	} else {
+		if(menu->stock_item)
+			g_free(menu->stock_item);
 		if(menu->text)
 			g_free(menu->text);
 		menu->text = g_strdup(menuitem_text);
+		menu->stock_item = g_strdup(stock_item);
 	}
 
 	/*make sure the menu is rebuilt*/
@@ -639,6 +648,8 @@ applet_remove_callback(gint applet_id, char *callback_name)
 		info->user_menu = g_list_remove(info->user_menu,menu);
 		if(menu->name)
 			g_free(menu->name);
+		if(menu->stock_item)
+			g_free(menu->stock_item);
 		if(menu->text)
 			g_free(menu->text);
 		g_free(menu);
@@ -684,7 +695,11 @@ add_to_submenus(gint applet_id,char *path,char *name, AppletUserMenu *menu, GtkW
 	   p==(n + strlen(n) - 1)) {
 		g_free(n);
 
-		menu->menuitem = gtk_menu_item_new_with_label(menu->text);
+		if(menu->stock_item && *(menu->stock_item))
+			menu->menuitem = gnome_stock_menu_item(menu->stock_item,
+							       menu->text);
+		else
+			menu->menuitem = gtk_menu_item_new_with_label(menu->text);
 		gtk_widget_show(menu->menuitem);
 		if(menu->submenu)
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menu->menuitem), menu->submenu);
@@ -715,6 +730,7 @@ add_to_submenus(gint applet_id,char *path,char *name, AppletUserMenu *menu, GtkW
 		s_menu = g_new(AppletUserMenu,1);
 		s_menu->name = g_strdup(t);
 		s_menu->text = g_strdup(_("???"));
+		s_menu->stock_item = NULL;
 		s_menu->applet_id = applet_id;
 		s_menu->menuitem = NULL;
 		s_menu->submenu = NULL;
@@ -762,7 +778,8 @@ create_applet_menu(AppletInfo *info)
 
 	for(;user_menu!=NULL;user_menu = g_list_next(user_menu)) {
 		AppletUserMenu *menu=user_menu->data;
-		add_to_submenus(info->applet_id,"",menu->name,menu,info->menu,info->user_menu);
+		add_to_submenus(info->applet_id,"",menu->name,menu,info->menu,
+				info->user_menu);
 	}
 
 	/*connect the deactivate signal, so that we can "re-allow" autohide

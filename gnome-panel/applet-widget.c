@@ -238,30 +238,53 @@ applet_widget_sync_config(void)
 
 void
 applet_widget_register_callback(AppletWidget *applet,
-				char *name,
-				char *menutext,
+				gchar *name,
+				gchar *menutext,
 				AppletCallbackFunc func,
 				gpointer data)
 {
 	gnome_panel_applet_register_callback (applet->applet_id,name,
-					      menutext,func,data);
+					      "",menutext,func,data);
+}
+void
+applet_widget_register_stock_callback(AppletWidget *applet,
+				      gchar *name,
+				      gchar *stock_type,
+				      gchar *menutext,
+				      AppletCallbackFunc func,
+				      gpointer data)
+{
+	gnome_panel_applet_register_callback (applet->applet_id,name,
+					      stock_type,menutext,func,data);
 }
 
 void
 applet_widget_unregister_callback(AppletWidget *applet,
-				  char *name)
+				  gchar *name)
 {
 	gnome_panel_applet_unregister_callback (applet->applet_id,name);
 }
 
 void
-applet_widget_register_callback_dir(AppletWidget *applet, char *name, char *menutext)
+applet_widget_register_callback_dir(AppletWidget *applet,
+				    gchar *name,
+				    gchar *menutext)
 {
-	gnome_panel_applet_register_callback_dir (applet->applet_id,name,menutext);
+	gnome_panel_applet_register_callback_dir (applet->applet_id,name,
+						  "",menutext);
+}
+void
+applet_widget_register_stock_callback_dir(AppletWidget *applet,
+					  gchar *name,
+					  gchar *stock_type,
+					  gchar *menutext)
+{
+	gnome_panel_applet_register_callback_dir (applet->applet_id,name,
+						  stock_type,menutext);
 }
 
 void
-applet_widget_unregister_callback_dir(AppletWidget *applet, char *name)
+applet_widget_unregister_callback_dir(AppletWidget *applet, gchar *name)
 {
 	gnome_panel_applet_unregister_callback_dir (applet->applet_id,name);
 }
