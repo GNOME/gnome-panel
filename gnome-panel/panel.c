@@ -445,7 +445,7 @@ panel_quit(void)
 static void
 move_applet_callback(GtkWidget *widget, gpointer data)
 {
-	AppletInfo     *info = get_applet_info(PTOI(data));
+	AppletInfo     *info = get_applet_info(GPOINTER_TO_INT(data));
 	PanelWidget    *panel;
 
 	g_return_if_fail(info != NULL);
@@ -531,7 +531,7 @@ panel_clean_applet(int applet_id)
 static void
 remove_applet_callback(GtkWidget *widget, gpointer data)
 {
-	panel_clean_applet(PTOI(data));
+	panel_clean_applet(GPOINTER_TO_INT(data));
 }
 
 static void
@@ -745,7 +745,7 @@ create_applet_menu(AppletInfo *info)
 	setup_menuitem(menuitem,NULL,_("Remove from panel"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) remove_applet_callback,
-			   ITOP(info->applet_id));
+			   GINT_TO_POINTER(info->applet_id));
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
 	info->remove_item = menuitem;
 	
@@ -753,7 +753,7 @@ create_applet_menu(AppletInfo *info)
 	setup_menuitem(menuitem,NULL,_("Move applet"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) move_applet_callback,
-			   ITOP(info->applet_id));
+			   GINT_TO_POINTER(info->applet_id));
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
 	
 	if(user_menu) {
@@ -779,7 +779,7 @@ static void
 applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 {
 	int wx, wy;
-	AppletInfo *info = get_applet_info(PTOI(data));
+	AppletInfo *info = get_applet_info(GPOINTER_TO_INT(data));
 	PanelWidget *panel;
 	GtkWidget *w; /*the panel window widget*/
 
@@ -887,7 +887,7 @@ show_applet_menu(int applet_id, GdkEventButton *event)
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
 	}
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
-		       ITOP(applet_id), event->button, event->time);
+		       GINT_TO_POINTER(applet_id), event->button, event->time);
 }
 
 
@@ -897,7 +897,7 @@ applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 {
 	if(event->button==3) {
 		if(!panel_applet_in_drag)
-			show_applet_menu(PTOI(data), event);
+			show_applet_menu(GPOINTER_TO_INT(data), event);
 		return TRUE;
 	}
 	return FALSE;
@@ -925,7 +925,7 @@ applet_show_menu(int applet_id)
 	}
 
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
-		       ITOP(applet_id), 0/*3*/, time(NULL));
+		       GINT_TO_POINTER(applet_id), 0/*3*/, time(NULL));
 	gtk_grab_add(info->menu);
 	gdk_pointer_grab(info->menu->window,
 			 TRUE,
@@ -1246,7 +1246,7 @@ applet_set_tooltip(int applet_id, const char *tooltip)
 static int
 applet_destroy(GtkWidget *w, gpointer data)
 {
-	int applet_id = PTOI(data);
+	int applet_id = GPOINTER_TO_INT(data);
 	AppletInfo *info = get_applet_info(applet_id);
 
 	g_return_val_if_fail(info!=NULL,FALSE);
@@ -1308,7 +1308,7 @@ register_toy(GtkWidget *applet,
 		info.cfg = NULL;
 	info.user_menu = NULL;
 
-	gtk_object_set_user_data(GTK_OBJECT(eventbox),ITOP(applet_count));
+	gtk_object_set_user_data(GTK_OBJECT(eventbox),GINT_TO_POINTER(applet_count));
 
 
 	if(type == APPLET_DRAWER) {
@@ -1353,13 +1353,13 @@ register_toy(GtkWidget *applet,
 	gtk_signal_connect(GTK_OBJECT(eventbox),
 			   "button_press_event",
 			   GTK_SIGNAL_FUNC(applet_button_press),
-			   ITOP(applet_count-1));
+			   GINT_TO_POINTER(applet_count-1));
 
 	info.destroy_callback = gtk_signal_connect(GTK_OBJECT(eventbox),
 			   			   "destroy",
 			   			   GTK_SIGNAL_FUNC(
 			   			   	applet_destroy),
-			   			   ITOP(applet_count-1));
+			   			   GINT_TO_POINTER(applet_count-1));
 
 	gtk_widget_show_all(eventbox);
 

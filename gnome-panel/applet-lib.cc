@@ -319,7 +319,7 @@ gnome_panel_applet_unregister_callback_dir(int applet_id,
 static int
 applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
-	int ourid = PTOI(data);
+	int ourid = GPOINTER_TO_INT(data);
 	GdkEventButton *bevent;
 	int in_drag;
 
@@ -405,7 +405,7 @@ bind_top_applet_events(GtkWidget *widget, int applet_id)
 	gtk_signal_connect(GTK_OBJECT(widget),
 			   "event",
 			   GTK_SIGNAL_FUNC(applet_event),
-			   ITOP(applet_id));
+			   GINT_TO_POINTER(applet_id));
 
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),

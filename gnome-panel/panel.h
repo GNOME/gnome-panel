@@ -141,19 +141,6 @@ extern char *cookie;
 	((applet_id>=0 && applet_id<applet_count) ? \
 	 (&g_array_index(applets,AppletInfo,applet_id)):NULL)
 
-/*a few macros to reduce compiler warnings*/
-#if (SIZEOF_INT == SIZEOF_VOID_P)
-#	define PTOI(p) (int)((gpointer)p)
-#	define ITOP(i) (gpointer)((int)i)
-#elif (SIZEOF_LONG == SIZEOF_VOID_P)
-#	define PTOI(p) (long)((gpointer)p)
-#	define ITOP(i) (gpointer)((long)i)
-/*I doubt there is a such a platform, but why not*/
-#elif (SIZEOF_SHORT == SIZEOF_VOID_P)
-#	define PTOI(p) (short)((gpointer)p)
-#	define ITOP(i) (gpointer)((short)i)
-#endif
-
 END_GNOME_DECLS
 
 #endif

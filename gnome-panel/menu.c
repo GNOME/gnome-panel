@@ -754,7 +754,7 @@ create_applets_menu(int fake_submenus)
 static void
 create_new_panel(GtkWidget *w,gpointer data)
 {
-	PanelType type = PTOI(data);
+	PanelType type = GPOINTER_TO_INT(data);
 	GdkColor bcolor = {0,0,0,1};
 	GtkWidget *panel;
 	

@@ -555,7 +555,7 @@ set_back (GtkWidget *widget, gpointer data)
 {
 	GtkWidget *pixf,*colf;
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-	PanelBackType back_type = PTOI(data);
+	PanelBackType back_type = GPOINTER_TO_INT(data);
 
 	if(!GTK_TOGGLE_BUTTON(widget)->active)
 		return FALSE;
@@ -699,13 +699,13 @@ background_page (PerPanelConfig *ppc)
 
 	gtk_signal_connect (GTK_OBJECT (ppc->non), "toggled", 
 			    GTK_SIGNAL_FUNC (set_back), 
-			    ITOP(PANEL_BACK_NONE));
+			    GINT_TO_POINTER(PANEL_BACK_NONE));
 	gtk_signal_connect (GTK_OBJECT (ppc->pix), "toggled", 
 			    GTK_SIGNAL_FUNC (set_back), 
-			    ITOP(PANEL_BACK_PIXMAP));
+			    GINT_TO_POINTER(PANEL_BACK_PIXMAP));
 	gtk_signal_connect (GTK_OBJECT (ppc->col), "toggled", 
 			    GTK_SIGNAL_FUNC (set_back), 
-			    ITOP(PANEL_BACK_COLOR));
+			    GINT_TO_POINTER(PANEL_BACK_COLOR));
 	
 	if(ppc->back_type == PANEL_BACK_NONE)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (ppc->non), TRUE);
