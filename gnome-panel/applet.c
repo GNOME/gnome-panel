@@ -456,7 +456,7 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 
 
 static gboolean
-applet_button_press (GtkWidget *widget,GdkEventButton *event, AppletInfo *info)
+applet_button_press (GtkWidget *widget, GdkEventButton *event, AppletInfo *info)
 {
 	if(event->button==3) {
 		if(!panel_applet_in_drag) {
@@ -467,11 +467,10 @@ applet_button_press (GtkWidget *widget,GdkEventButton *event, AppletInfo *info)
 					show_applet_menu(info, event);
 			} else
 				show_applet_menu(info, event);
+			return TRUE;
 		}
 	}
-	/*stop all button press events here so that they don't get to the
-	  panel*/
-	return TRUE;
+	return FALSE;
 }
 
 static void
