@@ -274,6 +274,8 @@ main(int argc, char **argv)
 	/* this is so the capplet gets the right defaults */
 	write_global_config();
 
+	gwmh_init ();
+
 	init_fr_chunks ();
 	
 	init_menus();

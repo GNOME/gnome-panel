@@ -17,6 +17,8 @@ INCLUDES = -I. -I$(srcdir) \
 	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS) \
 	@PIXBUF_CFLAGS@
 
+gwmh_dir = $(top_srcdir)/applets/desk-guide
+
 bin_PROGRAMS = panel gnome-panel-properties-capplet
 noinst_PROGRAMS = bad-applet
 
@@ -61,15 +63,34 @@ libpanel_statusinclude_HEADERS = \
 libpanel_status_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
 libpanel_status_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
 
-BUILT_SOURCES = $(CORBA_SRCLIST)
-
 bad_applet_SOURCES = bad-applet.c
 
 bad_applet_LDADD = libpanel_applet.la \
 	$(GNOME_LIBDIR) 	\
 	$(GNORBA_LIBS) $(INTLLIBS)
 
+GWMH_SRCLIST = \
+	gwmh.c		\
+	gwmh.h		\
+	gwmdesktop.c	\
+	gwmdesktop.h	\
+	gstc.c		\
+	gstc.h		\
+	gwmthumbnail.h
+
+# thumbnail we have to fork for now
+
+$(GWMH_SRCLIST):
+	for file in $(GWMH_SRCLIST); do \
+		echo $$file ; \
+		ln -sf $(gwmh_dir)/$$file . ; \
+	done
+
+BUILT_SOURCES = $(CORBA_SRCLIST) $(GWMH_SRCLIST)
+
 panel_SOURCES=\
+	$(GWMH_SRCLIST)		\
+	gwmthumbnail.c		\
 	panel-include.h		\
 	panel-types.h		\
 	main.c			\
@@ -139,8 +160,11 @@ panel_SOURCES=\
 	xstuff.h		\
 	foobar-widget.h		\
 	foobar-widget.c		\
+	tasklist_icon.c		\
+	tasklist_icon.h		\
 	title-item.h		\
 	title-item.c		\
+	title-item-private.h	\
 	scroll-menu.h		\
 	scroll-menu.c
 

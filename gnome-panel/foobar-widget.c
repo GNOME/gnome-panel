@@ -25,6 +25,7 @@
 #include "drawer-widget.h"
 #include "gnome-run.h"
 #include "scroll-menu.h"
+#include "gwmh.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -44,6 +45,8 @@ static GtkWidget *das_global_foobar = NULL;
 static GtkWidget *clock_ebox = NULL;
 
 static GtkWindowClass *parent_class = NULL;
+
+
 
 GtkType
 foobar_widget_get_type (void)
@@ -536,12 +539,196 @@ programs_menu_to_display(GtkWidget *menu)
 }
 
 static void
+set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
+{
+	foo->task_menu = gtk_menu_new ();
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), foo->task_menu);
+	/*g_message ("setting...");*/
+}
+
+static void
+focus_task (GtkWidget *w, GwmhTask *task)
+{
+	gwmh_desk_set_current_area (task->desktop, task->harea, task->varea);
+	gwmh_task_show  (task);
+	gwmh_task_raise (task);
+	gwmh_task_focus (task);
+}
+
+static void
+append_task (GwmhTask *task, FoobarWidget *foo)
+{
+	GtkWidget *item, *label;
+	char *title = NULL;
+	int slen;
+	GtkPixmap *pixmap  = NULL;
+
+	g_assert (foo->tasks);
+
+	if (GWMH_TASK_SKIP_WINLIST (task))
+		return;
+	/*g_message ("task: %s", task->name);*/
+	slen = strlen (task->name);
+	if (slen > 43)
+		title = g_strdup_printf ("%.20s...%s", task->name, task->name+slen-20);
+	item = gtk_pixmap_menu_item_new ();
+	pixmap = get_task_icon (task, foo);
+	if (pixmap) {
+		gtk_widget_show (GTK_WIDGET (pixmap));
+		gtk_pixmap_menu_item_set_pixmap (GTK_PIXMAP_MENU_ITEM (item),
+						 pixmap);
+	}
+
+	label = gtk_label_new (title ? title : task->name);
+	g_free (title);
+
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_container_add (GTK_CONTAINER (item), label);
+	g_hash_table_insert (foo->tasks, task, item);
+	gtk_signal_connect (GTK_OBJECT (item), "activate", 
+			    GTK_SIGNAL_FUNC (focus_task),
+			    task);
+	gtk_widget_show_all (item);
+	gtk_menu_append (GTK_MENU (foo->task_menu), item);
+}
+
+static void
+create_task_menu (GtkWidget *w, gpointer data)
+{
+	FoobarWidget *foo = FOOBAR_WIDGET (data);
+	GtkWidget *menu;
+	GList *tasks = gwmh_task_list_get ();
+	/*g_message ("creating...");*/
+	foo->tasks = g_hash_table_new (g_direct_hash, g_direct_equal);
+	g_list_foreach (tasks, append_task, foo);
+	/* Owen: don't read the next line */
+	GTK_MENU_SHELL (GTK_MENU_ITEM (w)->submenu)->active = 1;
+	gtk_menu_position (GTK_MENU (GTK_MENU_ITEM (w)->submenu));
+}
+
+static void
+destroy_task_menu (GtkWidget *w, gpointer data)
+{
+	FoobarWidget *foo = FOOBAR_WIDGET (data);
+	/*g_message ("removing...");*/
+	gtk_menu_item_remove_submenu (GTK_MENU_ITEM (w));
+	g_hash_table_destroy (foo->tasks);
+	foo->tasks = NULL;
+	set_the_task_submenu (foo, w);
+}
+
+static void
+set_das_pixmap (FoobarWidget *foo, GwmhTask *task)
+{
+	static GdkPixmap *pixmap = NULL;
+	static GdkBitmap *mask   = NULL;
+	if (foo->task_pixmap)
+		gtk_widget_destroy (foo->task_pixmap);
+	foo->task_pixmap = NULL;
+
+	if (task)
+		foo->task_pixmap = get_task_icon (task, foo);
+
+	if (!foo->task_pixmap) {
+		if (!pixmap) {
+			GdkPixbuf *pb = NULL, *scaled = NULL;
+			pb = gdk_pixbuf_new_from_file (GNOME_ICONDIR"/gnome-tasklist.png");
+			
+			if (pb) {
+				scaled = gdk_pixbuf_scale_simple (pb, 20, 20, 
+								  GDK_INTERP_BILINEAR);
+				gdk_pixbuf_unref (pb);
+			}
+
+			if (scaled) {
+				gdk_pixbuf_render_pixmap_and_mask (scaled,
+								   &pixmap, &mask, 128);
+				gdk_pixbuf_unref (scaled);
+				
+				if (pixmap)
+					gdk_pixmap_ref (pixmap);
+
+				if (mask)
+					gdk_bitmap_ref (mask);
+			}
+		}
+		foo->task_pixmap = gtk_pixmap_new (pixmap, mask);
+		gtk_widget_show (foo->task_pixmap);
+	}
+
+	if (foo->task_pixmap) {
+		gtk_container_add (GTK_CONTAINER (foo->task_bin),
+				   foo->task_pixmap);
+	}
+}
+
+static gboolean
+task_notify (gpointer data, GwmhTask *task,
+	     GwmhTaskNotifyType ntype,
+	     GwmhTaskInfoMask imask)
+{
+	FoobarWidget *foo = FOOBAR_WIDGET (data);
+	GtkWidget *item;
+
+	switch (ntype) {
+	case GWMH_NOTIFY_INFO_CHANGED:
+		if (imask & GWMH_TASK_INFO_FOCUSED &&
+		    GWMH_TASK_FOCUSED (task) &&
+		    !GWMH_TASK_SKIP_WINLIST (task)) {
+			set_das_pixmap (foo, task);
+		}
+		if (imask & GWMH_TASK_INFO_WM_HINTS &&
+		    GWMH_TASK_FOCUSED (task))
+			set_das_pixmap (foo, task);
+		break;
+	case GWMH_NOTIFY_NEW:
+		if (foo->tasks)
+			append_task (task, foo);
+		break;
+	case GWMH_NOTIFY_DESTROY:
+		if (foo->tasks) {
+			item = GTK_WIDGET (g_hash_table_lookup (foo->tasks, task));
+			if (item) 
+				gtk_widget_hide (item);
+			else
+				g_warning ("Could not find item for task '%s'",
+					   task->name);
+		}
+		break;
+	default:
+		break;
+	}
+	return TRUE;
+}
+
+static void
+append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar)
+{
+	foo->task_item = gtk_pixmap_menu_item_new ();
+	gtk_container_add (GTK_CONTAINER (foo->task_item),
+			   gtk_label_new (" "));
+	foo->task_bin = gtk_hbox_new (FALSE, 0);
+	gtk_pixmap_menu_item_set_pixmap (GTK_PIXMAP_MENU_ITEM (foo->task_item),
+					 foo->task_bin);
+	gtk_signal_connect (GTK_OBJECT (foo->task_item), "select",
+			    GTK_SIGNAL_FUNC (create_task_menu), foo);
+	gtk_signal_connect (GTK_OBJECT (foo->task_item), "deselect",
+			    GTK_SIGNAL_FUNC (destroy_task_menu), foo);
+
+	set_the_task_submenu (foo, foo->task_item);
+
+	foo->notify = gwmh_task_notifier_add (task_notify, foo);
+
+	gtk_menu_bar_append (GTK_WIDGET (menu_bar), foo->task_item);
+}
+
+static void
 foobar_widget_init (FoobarWidget *foo)
 {
 	/*gchar *path;*/
 	GtkWindow *window = GTK_WINDOW (foo);
 	/*GtkWidget *bufmap;*/
-	GtkWidget *menu_bar;
+	GtkWidget *menu_bar, *bar;
 	GtkWidget *menu, *menuitem;
 	/*GtkWidget *align;*/
 	gint flags;
@@ -628,11 +815,15 @@ foobar_widget_init (FoobarWidget *foo)
 	gtk_box_pack_end (GTK_BOX (foo->hbox), align, FALSE, FALSE, 0);
 #endif
 
-	menu_bar = gtk_menu_bar_new ();
+	bar = menu_bar = gtk_menu_bar_new ();
 	gtk_menu_bar_set_shadow_type (GTK_MENU_BAR (menu_bar),
 				      GTK_SHADOW_NONE);
 	append_clock_menu (foo, menu_bar);
+#if 0
+	/* TODO: use the gnome menu if no gnome compliant WM or tasklist disabled */
 	append_gnome_menu (foo, menu_bar);
+#endif
+	append_task_menu (foo, bar);
 
 
 	gtk_box_pack_end (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
@@ -675,6 +866,10 @@ foobar_widget_destroy (GtkObject *o)
 	foo->clock_format = NULL;
 
 	g_list_foreach (panel_list, queue_panel_resize, NULL);
+
+	if (foo->tasks)
+		g_hash_table_destroy (foo->tasks);
+	gwmh_task_notifier_remove (foo->notify);
 
 	if (GTK_OBJECT_CLASS (parent_class)->destroy)
 		GTK_OBJECT_CLASS (parent_class)->destroy (o);

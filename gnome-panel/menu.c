@@ -1873,7 +1873,7 @@ check_and_reread_applet(Menu *menu, gboolean main_menu)
 /* XXX: hmmm stolen GTK code, the gtk_menu_reposition only calls
    gtk_menu_position if the widget is drawable, but that's not the
    case when we want to do it*/
-static void
+void
 gtk_menu_position (GtkMenu *menu)
 {
   GtkWidget *widget;

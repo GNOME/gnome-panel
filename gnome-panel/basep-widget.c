@@ -1448,7 +1448,7 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 void
 basep_widget_explicit_show (BasePWidget *basep)
 {
-	static const char *supinfo[] = {"panel", "collapse", NULL};
+	static const char *supinfo[] = {"panel", "expand", NULL};
 
 	if ( (basep->state != BASEP_HIDDEN_LEFT &&
 	      basep->state != BASEP_HIDDEN_RIGHT))

@@ -38,8 +38,16 @@ struct _FoobarWidget
 	GtkWidget *favorites;
 	GtkWidget *settings;
 
+	GHashTable *tasks;
+	GtkWidget *task_item;
+	GtkWidget *task_menu;
+	GtkWidget *task_pixmap;
+	GtkWidget *task_bin;
+
 	gboolean compliant_wm;
 	char *clock_format;
+
+	guint notify;
 };
 
 struct _FoobarWidgetClass

@@ -1,3 +1,21 @@
+2000-09-27  Jacob "Ulysses" Berkman  <jacob@helixcode.com>
+
+	* gwmthumbnail.c (gdk_image_get): the visual seems to be NULL for
+	tasklist icons, so comment out part of a check in here for now
+
+	* menu.c (gtk_menu_position): make it non-static since the new
+	foobar code needs this
+	
+	* main.c (main): call gwmh_init()
+
+	* basep-widget.c (basep_widget_explicit_show): use the expand sound
+
+	* foobar-widget.[ch]: mac-style tasklist in the upper right corner
+	instead of the lame gnome menu.  not finished but good enough for
+	unstable gnome
+
+	* Makefile.am (GWMH_SRCLIST): symlink in stuff from desk-guide for now
+
 Mon Sep 25 18:43:05 2000  George Lebl <jirka@5z.com>
 
 	* button-widget.c: fix the black squares problem and a bunch
