@@ -429,6 +429,33 @@ panel_applet_frame_expose (GtkWidget      *widget,
 }
 
 static void
+panel_applet_frame_constrain_size (PanelAppletFrame *frame,
+				   GtkRequisition   *requisition)
+{
+	PanelWidget *panel;
+
+	g_return_if_fail (PANEL_IS_WIDGET (GTK_WIDGET (frame)->parent));
+
+	panel = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
+
+	switch (frame->priv->orient) {
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_DOWN:
+		if (requisition->height > panel->sz)
+			requisition->height = panel->sz;
+		break;
+	case PANEL_ORIENT_LEFT:
+	case PANEL_ORIENT_RIGHT:
+		if (requisition->width > panel->sz)
+			requisition->width = panel->sz;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static void
 panel_applet_frame_size_request (GtkWidget      *widget,
 				 GtkRequisition *requisition)
 {
@@ -441,6 +468,7 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 
 	if (!(panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE)) {
 		GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+		panel_applet_frame_constrain_size (frame, requisition);
 		return;
 	}
   
@@ -470,6 +498,8 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 		g_assert_not_reached ();
 		break;
 	}
+
+	panel_applet_frame_constrain_size (frame, requisition);
 }
 
 static void
