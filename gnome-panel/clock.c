@@ -235,8 +235,8 @@ main(int argc, char **argv)
 	result = gnome_panel_applet_request_id(aw,myinvoc,&applet_id,&cfgpath);
 	g_free(myinvoc);
 	if (result){
-		printf ("Could not talk to the Panel: %s\n", result);
-		exit (1);
+		g_error ("Could not talk to the Panel: %s\n", result);
+		/*exit (1);*/
 	}
 
 	/*use cfg path for loading up data!*/
@@ -255,8 +255,6 @@ main(int argc, char **argv)
 	applet_widget_add (APPLET_WIDGET (aw), clock);
 	gtk_widget_show (aw);
 
-	/*FIXME: do session saving, find out panel and pos from the panel
-		 so we can restore them on the next startup*/
 	result = gnome_panel_prepare_and_transfer(aw,applet_id);
 	/*printf ("Done\n");*/
 	if (result){

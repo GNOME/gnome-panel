@@ -308,9 +308,9 @@ panel_session_save (GnomeClient *client,
 
 		gtk_object_unref(GTK_OBJECT (panel_tooltips));
 
+		/*prevent searches through the g_list to speed
+		  up this thing*/
 		small_icons = NULL;
-			/*prevent searches through the g_list to speed
-					up this thing*/
 
 		/*puts("unreffing root menu");*/
 		gtk_widget_unref(root_menu);
@@ -335,11 +335,6 @@ panel_quit(void)
 		/*puts("BEFORE_GTK_MAIN_QUIT");*/
 		gtk_main_quit ();
 		/*puts("AFTER_GTK_MAIN_QUIT");*/
-		/* We don't want to return, because we've probably been
-		   called from an applet which has since been dlclose()'d,
-		   and we'd end up with a SEGV when we tried to return to
-		   the now-nonexistent code page. */
-		exit(0);
 	} else {
 		/* We request a completely interactive, full, slow shutdown.  */
 		gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
@@ -505,11 +500,24 @@ panel_log_out_callback(GtkWidget *widget, gpointer data)
 	panel_quit();
 }
 
+static AppletInfo*
+get_applet_by_id(int id)
+{
+	GList *l = g_list_nth(applets,id);
+
+	g_return_val_if_fail(l != NULL,NULL);
+
+	return (AppletInfo *)(l->data);
+}
+
 void
 applet_show_menu(int id)
 {
 	static GdkCursor *arrow = NULL;
-	AppletInfo *info = g_list_nth(applets,id)->data;
+	AppletInfo *info = get_applet_by_id(id);
+
+	if(!info)
+		return;
 
 	if (!info->menu)
 		info->menu = create_applet_menu(info,info->user_menu);
@@ -531,20 +539,48 @@ applet_show_menu(int id)
 int
 applet_get_panel(int id)
 {
-	return 0; /*FIXME*/
+	int pos = -1;
+	int panel;
+	GList *list;
+	AppletInfo *info = get_applet_by_id(id);
+
+	if(!info)
+		return -1;
+
+	for(panel=0,list=panels;list!=NULL;list=g_list_next(list),panel++)
+	    	if((pos=panel_widget_get_pos(PANEL_WIDGET(list->data),
+	    				     info->widget))!=-1)
+			return panel;
+	return -1;
 }
 
 int
 applet_get_pos(int id)
 {
-	return 0; /*FIXME*/
+	int pos = -1;
+	int panel;
+	GList *list;
+	AppletInfo *info = get_applet_by_id(id);
+
+	if(!info)
+		return -1;
+
+	for(panel=0,list=panels;list!=NULL;list=g_list_next(list),panel++)
+	    	if((pos=panel_widget_get_pos(PANEL_WIDGET(list->data),
+	    				     info->widget))!=-1)
+			return pos;
+	return -1;
 }
 
 void
 applet_drag_start(int id)
 {
-	AppletInfo *info = g_list_nth(applets,id)->data;
-	PanelWidget *panel = find_applet_panel(info->widget);
+	PanelWidget *panel;
+	AppletInfo *info = get_applet_by_id(id);
+
+	if(!info)
+		return;
+	panel = find_applet_panel(info->widget);
 
 	panel_widget_applet_drag_start_no_grab(panel,info->widget);
 	panel_widget_applet_move_use_idle(panel);
@@ -553,8 +589,12 @@ applet_drag_start(int id)
 void
 applet_drag_stop(int id)
 {
-	AppletInfo *info = g_list_nth(applets,id)->data;
-	PanelWidget *panel = find_applet_panel(info->widget);
+	PanelWidget *panel;
+	AppletInfo *info = get_applet_by_id(id);
+
+	if(!info)
+		return;
+	panel = find_applet_panel(info->widget);
 
 	panel_widget_applet_drag_end_no_grab(panel);
 }
@@ -563,7 +603,10 @@ void
 applet_add_callback(short id, char *callback_name, char *menuitem_text)
 {
 	AppletUserMenu *menu = g_new(AppletUserMenu,1);
-	AppletInfo *info = g_list_nth(applets,id)->data;
+	AppletInfo *info = get_applet_by_id(id);
+
+	if(!info)
+		return;
 
 	menu->name = g_strdup(callback_name);
 	menu->text = g_strdup(menuitem_text);
@@ -611,11 +654,12 @@ reparent_window_id (unsigned long winid, int id)
 	GtkWidget *eb;
 	GdkWindow *win;
 	int w,h;
-	AppletInfo *info;
+	AppletInfo *info = get_applet_by_id(id);
+
+	if(!info)
+		return;
 
 	/*printf ("I got this window ID to reparent: %d\n", winid);*/
-	/*FIXME: check for NULLS!*/
-	info = (AppletInfo *)(g_list_nth(applets,id)->data);
 
 	/*no longer pending*/
 	info->type = APPLET_EXTERN;
@@ -744,12 +788,16 @@ register_toy(GtkWidget *applet,
 	GList         *list;
 	int            i;
 	
-	g_assert(applet != NULL);
-	g_assert(id != NULL);
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(id != NULL);
 
-	panelw = PANEL_WIDGET(g_list_nth(panels,panel)->data);
+	list = g_list_nth(panels,panel);
 
-	g_assert(panelw != NULL);
+	g_return_if_fail(list != NULL);
+
+	panelw = PANEL_WIDGET(list->data);
+
+	g_return_if_fail(panelw != NULL);
 	/* We wrap the applet in a GtkEventBox so that we can capture events over it */
 
 	eventbox = gtk_event_box_new();
