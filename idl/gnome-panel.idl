@@ -1,65 +1,107 @@
 module GNOME {
+	struct Color {
+		unsigned short red, green, blue;
+	};
+
+	typedef short AppletId;
+	typedef short PanelId;
+
+	interface PanelSpot;
+	interface Applet;
+
 	interface Panel {
-		/* requests an ID on the panel */
-		short applet_request_id(in string goad_id,
-					out string cfgpath,
-					out string globcfgpath,
-					out unsigned long wid);
+		enum OrientType {
+		        ORIENT_UP,
+	        	ORIENT_DOWN,
+		        ORIENT_LEFT,
+		        ORIENT_RIGHT	
+		};
+
+		enum BackType {
+			BACK_NONE,
+			BACK_COLOR,
+			BACK_PIXMAP
+		};
+
+		union BackInfoType switch(BackType) {
+			case BACK_COLOR: Color c;
+			case BACK_PIXMAP: string pmap;
+		};
+
+		/* XXX do activation stuff here - the applet side of it
+		   will be via a GNOME::GenericFactory (ask elliot) */
 		
-		/* Sends the object identifier for the Applet server that
-		   contacts the Panel, goad_ids is a comma separated list
-		   of the goad_id's this applet can handle, this call also
-		   serves as basically a signal for the panel to start
-		   a new applet, since it tries to start extern applets
-		   synchroniously to make it faster on X and make
-		   multiapplets possible */
-		void applet_register(in Object obj,
-				     in short applet_id,
+		/*this inits a panelspot, it's called by the applet */
+		PanelSpot add_applet(in Applet panel_applet,
 				     in string goad_id,
-				     in string goad_ids);
-
-		/*abort the applet load (before we register)*/
-		oneway void applet_abort_id(in short applet_id);
-
-		oneway void applet_remove_from_panel(in short applet_id);
-		short applet_get_panel (in short applet_id);
-		short applet_get_pos (in short applet_id);
-		short applet_get_panel_orient (in short applet_id);
-		oneway void applet_show_menu (in short applet_id);
-		oneway void applet_drag_start (in short applet_id);
-		oneway void applet_drag_stop (in short applet_id);
-		oneway void applet_add_callback (in short applet_id,
-						 in string callback_name,
-						 in string stock_item,
-						 in string menuitem_text);
-		oneway void applet_remove_callback (in short applet_id,
-						    in string callback_name);
-		oneway void applet_add_tooltip (in short applet_id,
-						in string tooltip);
-		oneway void applet_remove_tooltip (in short applet_id);
-		short applet_in_drag ();
-		oneway void sync_config (in short applet_id);
+				     out string cfgpath,
+				     out string globcfgpath,
+				     out unsigned long winid);
+		/*same as above but this is usefull if we know onto
+		  which panel we want to add, this is only to be called
+		  from an applet which was NOT started by the panel as
+		  those get the position from the panel itself*/
+		PanelSpot add_applet_full(in Applet panel_applet,
+					  in string goad_id,
+					  in short panel,
+					  in short pos,
+					  out string cfgpath,
+					  out string globcfgpath,
+					  out unsigned long winid);
 		oneway void quit ();
+
+		readonly attribute boolean in_drag;
+	};
+
+	interface PanelSpot { /* panel half of applets */
+		/*accessors*/
+		attribute string tooltip;
+		
+		/*accessors for certain flags*/
+		/*the number of the panel which this is on,
+		  this is for those rare applets that want to save
+		  their prefs in a different way*/
+		readonly attribute short parent_panel;
+		/*similiar to the above, but it's the position*/
+		readonly attribute short spot_pos;
+
+		/*the orient of the panel on which this applet resides*/
+		readonly attribute Panel::OrientType parent_orient;
+
+		/* the applet is all done with building itself
+		   so it just tells us that it's all ready, this
+		   makes the panel start the next applet (otherwise,
+		   panel would stop launching applets, it's launching
+		   them synchroniously for speed) also it makes this
+		   applet "savable" otherwise the panel wouldn't save
+		   it's state*/
+		oneway void register_us();
+
+		oneway void unregister_us();
+
+		/* if the applet didn't call "register" yet, and wants
+		   to abort itself (the panel will free up it's spot
+		   and start he next applet), it should do this before
+		   it exits */
+		oneway void abort_load();
+		
+		oneway void show_menu ();
+		oneway void drag_start ();
+		oneway void drag_stop ();
+		oneway void add_callback (in string callback_name,
+					  in string stock_item,
+					  in string menuitem_text);
+		oneway void remove_callback (in string callback_name);
+		oneway void sync_config ();
 	};
 
 	interface Applet {
-		oneway void change_orient (in short applet_id,
-					   in short orient);
-		oneway void do_callback (in short applet_id,
-					 in string callback_name);
-		short session_save (in short applet_id,
-				    in string cfgpath,
-				    in string globcfgpath);
-		/* start new applet of goad_id type */
-		oneway void start_new_applet (in string goad_id);
-		oneway void back_change (in short applet_id,
-					 in short back_type,
-					 in string pixmap,
-					 in short c_red,
-					 in short c_green,
-					 in short c_blue);
-		oneway void tooltips_state (in short applet_id,
-					    in short enabled);
+		oneway void change_orient (in Panel::OrientType orient);
+		oneway void do_callback (in string callback_name);
+		boolean session_save (in string cfgpath,
+				      in string global_cfgpath);
+		oneway void back_change (in Panel::BackInfoType backing);
+		oneway void set_tooltips_state (in boolean enabled);
+		readonly attribute string goad_id;
 	};
 };
-
