@@ -787,6 +787,9 @@ get_background_color (GConfClient *client,
 	error = NULL;
 	key = panel_gconf_sprintf ("%s/background/color", toplevel_dir);
 	color_str = gconf_client_get_string (client, key, &error);
+	color->gdk.red   = 0;
+	color->gdk.green = 0;
+	color->gdk.blue  = 0;
 	if (error) {
 		g_warning (_("Error reading GConf string value '%s': %s"),
 			   key, error->message);
