@@ -569,6 +569,8 @@ do_session_save(GnomeClient *client,
 				      global_config.hide_panel_frame);
 		gnome_config_set_bool("tile_when_over",
 				      global_config.tile_when_over);
+		gnome_config_set_bool("show_startup_hints",
+				      global_config.show_startup_hints);
 		buf = g_string_new(NULL);
 		for(i=0;i<LAST_TILE;i++) {
 			g_string_sprintf(buf,"tiles_enabled_%d",i);
@@ -1113,6 +1115,7 @@ load_up_globals(void)
 	global_config.simple_movement = gnome_config_get_bool("simple_movement=FALSE");
 	global_config.hide_panel_frame = gnome_config_get_bool("hide_panel_frame=FALSE");
 	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
+	global_config.show_startup_hints = gnome_config_get_bool("show_startup_hints=TRUE");
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"tiles_enabled_%d=TRUE",i);
 		global_config.tiles_enabled[i] =

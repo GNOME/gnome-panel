@@ -91,7 +91,9 @@ base_panel_SOURCES=\
 	button-widget.c  	\
 	button-widget.h		\
 	panel-util.c		\
-	panel-util.h
+	panel-util.h		\
+	hints.c			\
+	hints.h
 
 panel_SOURCES = 		\
 	$(base_panel_SOURCES)	\
@@ -128,7 +130,8 @@ EXTRA_DIST = \
 	appletsConf.sh.in	\
 	panel.gnorba		\
 	panel.soundlist		\
-	APPLET_WRITING
+	APPLET_WRITING		\
+	hintsdata.c
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.

@@ -182,6 +182,7 @@ main(int argc, char **argv)
 	CORBA_ORB orb;
 	CORBA_Environment ev;
 	gint duplicate;
+	int is_first = FALSE; /*is this the first time we start*/
 	
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
@@ -231,9 +232,14 @@ main(int argc, char **argv)
 	else
 		old_panel_cfg_path = g_strdup ("/panel.d/default/");
 #endif
+
+	/*let's figure out if we were started before*/
+	is_first = ! gnome_config_get_bool("/panel/Misc/restarted=FALSE");
+	gnome_config_set_bool("/panel/Misc/restarted",TRUE);
+	gnome_config_sync();
 	
 	gnome_client_set_global_config_prefix (client, PANEL_CONFIG_PATH);
-
+	
 	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
 			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
 	gtk_signal_connect (GTK_OBJECT (client), "die",
@@ -273,6 +279,9 @@ main(int argc, char **argv)
 	/* set up a filter on the root window to get map requests */
 	/* we will select the events later when we actually need them */
 	gdk_window_add_filter(GDK_ROOT_PARENT(), event_filter, NULL);
+	
+	if(global_config.show_startup_hints)
+		show_hint(is_first);
 	
 	/* I use the glue code to avoid making this a C++ file */
 	gtk_main ();

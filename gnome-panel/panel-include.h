@@ -30,4 +30,6 @@
 
 #include "panel-util.h"
 
+#include "hints.h"
+
 #endif
