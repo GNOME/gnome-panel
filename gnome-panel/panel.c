@@ -107,7 +107,7 @@ panel_realize (GtkWidget *widget, gpointer data)
 	gtk_widget_queue_resize (GTK_WIDGET (widget));
 }
 
-static void
+void
 freeze_changes (AppletInfo *info)
 {
 	if(info->type == APPLET_EXTERN) {
@@ -127,7 +127,7 @@ freeze_changes (AppletInfo *info)
 	}
 }
 
-static void
+void
 thaw_changes(AppletInfo *info)
 {
 	if(info->type == APPLET_EXTERN) {

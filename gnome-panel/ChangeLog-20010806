@@ -1,3 +1,11 @@
+Tue Dec 05 20:03:09 2000  George Lebl <jirka@5z.com>
+
+	* applet-widget.c: initialize frozen stuff, just being fussy, that
+	  it worked before, but it's not more explicit.
+
+	* extern.c, panel.[ch]: freeze change info on initial send, to
+	  make things not jump around so much.
+
 Sun Dec 03 15:41:33 2000  George Lebl <jirka@5z.com>
 
 	* menu-fentry.c, menu.c, drawer.[ch]:  Fix leak pointed out by

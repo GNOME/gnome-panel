@@ -15,6 +15,9 @@ struct _PanelData {
 	int menu_age;
 };
 
+void freeze_changes (AppletInfo *info);
+void thaw_changes (AppletInfo *info);
+
 void orientation_change(AppletInfo *info, PanelWidget *panel);
 void size_change(AppletInfo *info, PanelWidget *panel);
 void back_change(AppletInfo *info, PanelWidget *panel);

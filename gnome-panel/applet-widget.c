@@ -380,6 +380,11 @@ wapplet_widget_init (AppletWidget *applet)
 	applet->_priv = g_new0(AppletWidgetPrivate, 1);
 	applet->_priv->corbadat = NULL;
 	applet->_priv->added_child = FALSE;
+	applet->_priv->frozen_level = 0;
+	applet->_priv->frozen_got_orient = FALSE;
+	applet->_priv->frozen_got_size = FALSE;
+	applet->_priv->frozen_got_back = FALSE;
+	applet->_priv->frozen_got_position = FALSE;
 }
 
 static void
@@ -1626,7 +1631,7 @@ server_applet_change_orient(PortableServer_Servant _servant,
 {
 	CustomAppletServant *servant = (CustomAppletServant *)_servant;
 	servant->appwidget->orient = orient;
-	if(servant->appwidget->_priv->frozen_level>0) {
+	if (servant->appwidget->_priv->frozen_level > 0) {
 		servant->appwidget->_priv->frozen_got_orient = TRUE;
 		servant->appwidget->_priv->frozen_orient = (GNOME_Panel_OrientType)orient;
 	} else {
@@ -1637,13 +1642,13 @@ server_applet_change_orient(PortableServer_Servant _servant,
 }
 
 static void
-server_applet_change_size(PortableServer_Servant _servant,
-			  const CORBA_short size,
-			  CORBA_Environment *ev)
+server_applet_change_size (PortableServer_Servant _servant,
+			   const CORBA_short size,
+			   CORBA_Environment *ev)
 {
 	CustomAppletServant *servant = (CustomAppletServant *)_servant;
 	servant->appwidget->size = size;
-	if(servant->appwidget->_priv->frozen_level>0) {
+	if (servant->appwidget->_priv->frozen_level > 0) {
 		servant->appwidget->_priv->frozen_got_size = TRUE;
 		servant->appwidget->_priv->frozen_size = size;
 	} else {

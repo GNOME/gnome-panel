@@ -1283,11 +1283,13 @@ s_panelspot_register_us(PortableServer_Servant servant,
 	/* from now on warn on unclean removal */
 	ext->clean_remove = FALSE;
 
+	freeze_changes (ext->info);
 	orientation_change (ext->info, panel);
 	size_change (ext->info, panel);
 	back_change (ext->info, panel);
 	if (ext->send_position)
 		send_position_change(ext);
+	thaw_changes (ext->info);
 
 	GNOME_Applet_set_tooltips_state (ext->applet,
 					 global_config.tooltips_enabled, ev);
