@@ -67,6 +67,8 @@ int panel_session_save (gpointer client_data,
 			GnomeInteractStyle interact_style,
 			int is_fast);
 
+void panel_reconfigure(Panel *newconfig);
+
 
 END_GNOME_DECLS
 
