@@ -1187,6 +1187,11 @@ panel_applet_register (GtkWidget      *applet,
 
 	panel_applet_save_to_gconf (info);
 
+	if (type != APPLET_BONOBO)
+		gtk_widget_grab_focus (applet);
+	else
+		gtk_widget_child_focus (applet, GTK_DIR_TAB_FORWARD);
+
 	return info;
 }
 
