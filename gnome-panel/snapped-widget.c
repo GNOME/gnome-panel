@@ -488,6 +488,8 @@ static int
 snapped_show_hide_right(GtkWidget *widget, gpointer data)
 {
 	SnappedWidget *snapped = data;
+	gtk_widget_set_state(widget,GTK_STATE_NORMAL);
+	gtk_widget_queue_draw(widget);
 	if(snapped->state == SNAPPED_MOVING) 
 		return FALSE;
 	else if(snapped->state == SNAPPED_SHOWN)
@@ -501,6 +503,8 @@ static int
 snapped_show_hide_left(GtkWidget *widget, gpointer data)
 {
 	SnappedWidget *snapped = data;
+	gtk_widget_set_state(widget,GTK_STATE_NORMAL);
+	gtk_widget_queue_draw(widget);
 	if(snapped->state == SNAPPED_MOVING) 
 		return FALSE;
 	else if(snapped->state == SNAPPED_SHOWN)
@@ -592,11 +596,14 @@ make_hidebutton(SnappedWidget *snapped,
 	char *pixmap_name;
 
 	w=gtk_button_new();
+	GTK_WIDGET_UNSET_FLAGS(w,GTK_CAN_DEFAULT|GTK_CAN_FOCUS);
+
 	pixmap_name=gnome_unconditional_pixmap_file(pixmaparrow);
 	pixmap = gnome_pixmap_new_from_file(pixmap_name);
 	g_free(pixmap_name);
-	gtk_container_add(GTK_CONTAINER(w),pixmap);
 	gtk_widget_show(pixmap);
+
+	gtk_container_add(GTK_CONTAINER(w),pixmap);
 	gtk_signal_connect(GTK_OBJECT(w), "clicked",
 			   GTK_SIGNAL_FUNC(hidefunc),
 			   snapped);

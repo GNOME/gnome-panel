@@ -1125,6 +1125,130 @@ panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 	config_changed = TRUE;
 }
 
+
+static int
+panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+	GdkEventButton *bevent;
+
+	switch (event->type) {
+	case GDK_BUTTON_PRESS:
+		bevent = (GdkEventButton *) event;
+		switch(bevent->button) {
+		case 3: /* fall through */
+		case 1:
+			if(!panel_applet_in_drag) {
+				if(IS_SNAPPED_WIDGET(widget)) {
+					SnappedWidget *snapped =
+						SNAPPED_WIDGET(widget);
+					snapped->autohide_inhibit = TRUE;
+					snapped_widget_queue_pop_down(snapped);
+				}
+				gtk_menu_popup(GTK_MENU(data), NULL, NULL,
+					       panel_menu_position,
+					       widget, bevent->button,
+					       bevent->time);
+				return TRUE;
+			}
+			break;
+		case 2:
+			/*this should probably be in snapped widget*/
+			if(!panel_dragged &&
+			   IS_SNAPPED_WIDGET(widget)) {
+				GdkCursor *cursor = gdk_cursor_new (GDK_FLEUR);
+				gtk_grab_add(widget);
+				gdk_pointer_grab (widget->window,
+						  FALSE,
+						  PANEL_EVENT_MASK,
+						  NULL,
+						  cursor,
+						  bevent->time);
+				gdk_cursor_destroy (cursor);
+				SNAPPED_WIDGET(widget)->autohide_inhibit = TRUE;
+				panel_dragged =
+					gtk_timeout_add(30,
+							panel_move_timeout,
+							widget);
+				return TRUE;
+			}
+			break;
+		}
+		break;
+
+	case GDK_BUTTON_RELEASE:
+		bevent = (GdkEventButton *) event;
+		if(panel_dragged) {
+			panel_move(SNAPPED_WIDGET(widget),
+				   bevent->x_root, bevent->y_root);
+			gdk_pointer_ungrab(bevent->time);
+			gtk_grab_remove(widget);
+			gtk_timeout_remove(panel_dragged);
+			SNAPPED_WIDGET(widget)->autohide_inhibit = FALSE;
+			snapped_widget_queue_pop_down(SNAPPED_WIDGET(widget));
+			panel_dragged = 0;
+			return TRUE;
+		}
+
+		break;
+
+	default:
+		break;
+	}
+
+	return FALSE;
+}
+
+
+static GtkWidget *
+listening_parent(GtkWidget *widget)
+{
+	if (GTK_WIDGET_NO_WINDOW(widget))
+		return listening_parent(widget->parent);
+
+	return widget;
+}
+
+static int
+panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+	GdkEventButton *bevent;
+	switch (event->type) {
+		/*pass these to the parent!*/
+		case GDK_BUTTON_PRESS:
+		case GDK_BUTTON_RELEASE:
+			bevent = (GdkEventButton *) event;
+			/*if the widget is a button we want to keep the
+			  button 1 events*/
+			if(!GTK_IS_BUTTON(widget) || bevent->button!=1)
+				return gtk_widget_event(
+					listening_parent(widget->parent),
+							 event);
+
+			break;
+
+		default:
+			break;
+	}
+
+	return FALSE;
+}
+
+
+static void
+bind_panel_events(GtkWidget *widget, gpointer data)
+{
+	if (!GTK_WIDGET_NO_WINDOW(widget))
+		gtk_signal_connect(GTK_OBJECT(widget), "event",
+				   (GtkSignalFunc) panel_sub_event_handler,
+				   NULL);
+	
+	if (GTK_IS_CONTAINER(widget))
+		gtk_container_foreach (GTK_CONTAINER (widget),
+				       bind_panel_events, NULL);
+}
+
+
+
 static void
 panel_widget_setup(PanelWidget *panel)
 {
@@ -1193,23 +1317,37 @@ panel_setup(GtkWidget *panelw)
 				   NULL);
 	} else
 		g_warning("unknown panel type");
+	
+	gtk_widget_set_events(panelw,
+			      gtk_widget_get_events(panelw) |
+			      PANEL_EVENT_MASK);
 
 	gtk_signal_connect(GTK_OBJECT(panelw),
 			   "size_allocate",
 			   GTK_SIGNAL_FUNC(panel_size_allocate),
 			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panelw),
+	/*gtk_signal_connect(GTK_OBJECT(panelw),
 			   "button_press_event",
 			   GTK_SIGNAL_FUNC(panel_button_press),
-			   panel_menu);
+			   panel_menu);*/
 	gtk_signal_connect(GTK_OBJECT(panelw),
 			   "destroy",
 			   GTK_SIGNAL_FUNC(panel_destroy),
 			   panel_menu);
-	gtk_signal_connect(GTK_OBJECT(panelw),
+	/*gtk_signal_connect(GTK_OBJECT(panelw),
 			   "button_release_event",
 			   GTK_SIGNAL_FUNC(panel_button_release_callback),
-			   NULL);
+			   NULL);*/
+
+	/*with this we capture button presses throughout all the widgets of the
+	  panel*/
+	gtk_signal_connect(GTK_OBJECT(panelw),
+			   "event",
+			   GTK_SIGNAL_FUNC(panel_event),
+			   panel_menu);
+	if (GTK_IS_CONTAINER(panelw))
+		gtk_container_foreach (GTK_CONTAINER (panelw),
+				       bind_panel_events, NULL);
 
 	/* DOES NOT WORK!
 	gtk_signal_connect(GTK_OBJECT(panel),
