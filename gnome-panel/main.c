@@ -179,7 +179,6 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 		if(params[0]!='#') {
 			/*this applet is dumb and wants us to start it :)*/
 			AppletChild *child;
-			GList *list;
 
 			child = g_new(AppletChild,1);
 			
@@ -547,28 +546,6 @@ panel_state_change(GtkWidget *widget,
 	return TRUE;
 }
 
-static void
-applet_move_foreach(gpointer data, gpointer user_data)
-{
-	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
-	AppletInfo *info = get_applet_info(applet_id);
-
-	if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		reposition_drawer(drawer);
-		panel_widget_foreach(PANEL_WIDGET(info->assoc),
-				     applet_move_foreach,
-				     NULL);
-	}
-}
-
-static gint
-panel_applet_move(GtkWidget *widget, GtkWidget *applet, gpointer data)
-{
-	applet_move_foreach(applet,NULL);
-	return TRUE;
-}
-
 static gint
 panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 {
@@ -712,10 +689,6 @@ panel_setup(PanelWidget *panel)
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "state_change",
 			   GTK_SIGNAL_FUNC(panel_state_change),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "applet_move",
-			   GTK_SIGNAL_FUNC(panel_applet_move),
 			   NULL);
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "size_allocate",
@@ -907,7 +880,6 @@ main(int argc, char **argv)
 {
 	char buf[256];
 	struct sigaction sa;
-	char *new_args[3];
 	
 	panel_cfg_path = g_strdup("/panel/");
 	old_panel_cfg_path = g_strdup("/panel/");

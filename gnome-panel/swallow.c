@@ -20,16 +20,16 @@
 #include "mico-glue.h"
 
 
-static gulong
-get_window_id(Window win, char *title)
+static gint
+get_window_id(Window win, char *title, guint32 *wid)
 {
 	Window root_return;
 	Window parent_return;
 	Window *children;
 	unsigned int nchildren;
-	int i;
+	unsigned int i;
 	char *tit;
-	gulong wid=-1;
+	gint ret = FALSE;
 
 	XQueryTree(GDK_DISPLAY(),
 		   win,
@@ -45,25 +45,25 @@ get_window_id(Window win, char *title)
 		if(tit) {
 			if(strcmp(tit,title)==0) {
 				XFree(tit);
-				wid = children[i];
+				*wid = children[i];
+				ret = TRUE;
 				break;
 			}
 			XFree(tit);
 		}
 	}
-	for(i=0;wid==-1 && i<nchildren;i++)
-		wid = get_window_id(children[i],title);
+	for(i=0;!ret && i<nchildren;i++)
+		ret=get_window_id(children[i],title,wid);
 	if(children)
 		XFree(children);
-	return wid;
+	return ret;
 }
 
 /*we should really do this differently but for now this is good enough*/
 static gint
 socket_getwindow_timeout(Swallow *swallow)
 {
-	swallow->wid = get_window_id(GDK_ROOT_WINDOW(),swallow->title);
-	if(swallow->wid==-1)
+	if(!get_window_id(GDK_ROOT_WINDOW(),swallow->title, &(swallow->wid)))
 		return TRUE;
 	gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
 	return FALSE;
@@ -87,8 +87,7 @@ socket_realized(GtkWidget *w, gpointer data)
 	if(swallow->title==NULL)
 		return FALSE;
 
-	swallow->wid = get_window_id(GDK_ROOT_WINDOW(),swallow->title);
-	if(swallow->wid==-1)
+	if(!get_window_id(GDK_ROOT_WINDOW(),swallow->title, &swallow->wid))
 		gtk_timeout_add(500,(GtkFunction)socket_getwindow_timeout,
 				swallow);
 	else

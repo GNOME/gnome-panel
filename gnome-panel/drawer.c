@@ -21,7 +21,31 @@
 #include "drawer.h"
 
 
+extern GArray *applets;
+extern gint applet_count;
 extern GlobalConfig global_config;
+
+static void
+applet_move_foreach(gpointer data, gpointer user_data)
+{
+	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
+	AppletInfo *info = get_applet_info(applet_id);
+
+	if(info->type == APPLET_DRAWER) {
+		Drawer *drawer = info->data;
+		reposition_drawer(drawer);
+		panel_widget_foreach(PANEL_WIDGET(info->assoc),
+				     applet_move_foreach,
+				     NULL);
+	}
+}
+
+static gint
+panel_applet_move(GtkWidget *widget, GtkAllocation *allocation, gpointer data)
+{
+	applet_move_foreach(widget->parent,NULL);
+	return TRUE;
+}
 
 void
 reposition_drawer(Drawer *drawer)
@@ -146,6 +170,8 @@ create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
 			    GTK_SIGNAL_FUNC (drawer_click), drawer);
 	gtk_signal_connect (GTK_OBJECT (drawer->button), "destroy",
 			    GTK_SIGNAL_FUNC (destroy_drawer), drawer);
+	gtk_signal_connect (GTK_OBJECT (drawer->button), "size_allocate",
+			    GTK_SIGNAL_FUNC (panel_applet_move),NULL);
 	gtk_signal_connect (GTK_OBJECT (drawer->button), "enter_notify_event",
 			    GTK_SIGNAL_FUNC (enter_notify_drawer), drawer);
 
