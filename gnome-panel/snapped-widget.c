@@ -28,8 +28,6 @@ extern int pw_minimize_delay;
 extern int pw_disable_animations;
 extern PanelMovementType pw_movement_type;
 
-extern int panel_widget_inhibit_allocates;
-
 /************************
  widget core
  ************************/

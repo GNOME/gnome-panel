@@ -51,8 +51,6 @@ extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
-extern int panel_widget_inhibit_allocates;
-
 /*list of started applets*/
 extern GList * children;
 
@@ -318,49 +316,29 @@ panel_session_save (GnomeClient *client,
 	return TRUE;
 }
 
+static  int
+do_exit(gpointer data)
+{
+	gtk_exit(0);
+	return FALSE;
+}
+
 int
 panel_session_die (GnomeClient *client,
 		   gpointer client_data)
 {
-	int i;
-	AppletInfo *info;
-	
 	gtk_timeout_remove(config_sync_timeout);
   
-	/*we don't need to do any gemotery stuff now, plus it might
-	  actually hurt us*/
-	panel_widget_inhibit_allocates = TRUE;
-	
 	/*don't catch these any more*/
 	signal(SIGCHLD, SIG_DFL);
-	
-	puts("1");
-	
-	/*don't catch these either*/
-	for(i=0,info=(AppletInfo *)applets->data;
-	    i<applet_count;
-	    i++,info++) {
-		if(info->widget)
-			gtk_signal_disconnect(GTK_OBJECT(info->widget),
-					      info->destroy_callback);
-	}
-	
-	puts("2");
-	
-	while(panel_list) {
-		PanelData *pd = panel_list->data;
-		panel_list = g_list_remove_link(panel_list,panel_list);
-		gtk_signal_disconnect(GTK_OBJECT(pd->panel),
-				      pd->destroy_callback);
-		gtk_widget_destroy(pd->panel);
-	}
-	
-	puts("3");
 	
 	/*clean up corba stuff*/
 	panel_corba_clean_up();
 	
-	gtk_main_quit ();
+	/*FIXME: MICO BUG!!!!! the mico main will go on forever!!!!
+	  this is a problem, so we'll do gtk_exit in an idle handler*/
+	/*gtk_main_quit ();*/
+	gtk_idle_add(do_exit,NULL);
 	return TRUE;
 }
 
@@ -390,7 +368,6 @@ panel_really_logout(GtkWidget *w, int button, gpointer data)
 			panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 					    GNOME_INTERACT_NONE, 0, NULL);
 			panel_session_die (client, NULL);
-			gtk_exit (0);
 		} else {
 			/* We request a completely interactive, full,
 			   slow shutdown.  */

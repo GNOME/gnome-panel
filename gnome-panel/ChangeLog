@@ -1,3 +1,17 @@
+Sun Jul 12 02:53:55 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.c: got rid of the ugly inhibit allocates
+	  hack.
+
+	* panel.c: we can just do gtk_main_quit in _die and we don't
+	  need the slow destruction of everything.
+
+	* panel.c: MICO BUG! well the gtk bindings one anyhow, basically
+	  gtk_main_quit() won't work here since ->run goes in an infinite
+	  loop as it seems and doesn't care about return value as it
+	  it should ... so what I do is to put gtk_exit in an idle handler
+	  so that I  don't quit right away but soon ....
+
 Sun Jul 12 02:07:52 1998  George Lebl  <jirka@5z.com>
 
 	* main.[ch],panel.[ch],menu.c: cleanups, plus we no longer

@@ -28,8 +28,6 @@ extern int pw_minimize_delay;
 extern int pw_disable_animations;
 extern PanelMovementType pw_movement_type;
 
-extern int panel_widget_inhibit_allocates;
-
 /************************
  widget core
  ************************/
@@ -123,8 +121,6 @@ corner_widget_class_init (CornerWidgetClass *class)
 static void
 corner_widget_set_position(CornerWidget *corner)
 {
-	int xcor = 0;
-	int ycor = 0;
 	int x,y;
 	int newx,newy;
 	int width,height;

@@ -35,8 +35,6 @@ int pw_minimize_delay = 300;
 int pw_disable_animations = FALSE;
 PanelMovementType pw_movement_type = PANEL_SWITCH_MOVE;
 
-int panel_widget_inhibit_allocates = FALSE;
-
 static char *image_drop_types[] = {"url:ALL", "application/x-color"};
 
 /*this is a queue of panels we want to send applet_move to all it's applets,
@@ -245,9 +243,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 void
 panel_widget_set_size(PanelWidget *panel)
 {
-	if(panel_widget_inhibit_allocates)
-		return;
-
 	if(panel->packed) {
 		int w,h;
 		if(panel->orient == PANEL_HORIZONTAL) {
@@ -297,9 +292,6 @@ panel_widget_put_all(PanelWidget *panel,int force)
 {
 	GList *list;
 
-	if(panel_widget_inhibit_allocates)
-		return;
-
 	for(list=panel->applet_list;list!=NULL;list=g_list_next(list))
 		panel_widget_applet_put(panel,list->data,force);
 }
@@ -347,9 +339,6 @@ panel_widget_pack_applets(PanelWidget *panel)
 {
 	int i;
 	GList *list;
-
-	if(panel_widget_inhibit_allocates)
-		return;
 
 	for(list=panel->applet_list,i=0;list!=NULL;list=g_list_next(list)) {
 		AppletData *ad = list->data;
@@ -512,9 +501,6 @@ panel_widget_get_thick(PanelWidget *panel)
 	int thick=0;
 
 	g_return_val_if_fail(panel,PANEL_MINIMUM_WIDTH);
-
-	if(panel_widget_inhibit_allocates)
-		return panel->thick;
 
 	if(panel->orient==PANEL_HORIZONTAL) {
 		for(list=panel->applet_list;list!=NULL;list=g_list_next(list)) {
@@ -779,9 +765,6 @@ panel_widget_apply_size_limit(PanelWidget *panel)
 	int old_size;
 	GList *list;
 
-	if(panel_widget_inhibit_allocates)
-		return;
-
 	g_return_if_fail(panel);
 
 	old_size = panel->size;
@@ -817,8 +800,7 @@ panel_widget_adjust_applet(PanelWidget *panel, AppletData *ad)
 {
 	int width, height;
 
-	if(panel_widget_inhibit_allocates ||
-	   panel->postpone_adjust)
+	if(panel->postpone_adjust)
 		return;
 	
 	g_return_if_fail(ad!=NULL);
@@ -887,9 +869,6 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 	PanelWidget *panel;
 	AppletData *ad;
 	
-	if(panel_widget_inhibit_allocates)
-		return FALSE;
-
 	panel = gtk_object_get_data(GTK_OBJECT(widget),PANEL_APPLET_PARENT_KEY);
 	ad = gtk_object_get_data(GTK_OBJECT(widget),PANEL_APPLET_DATA);
 
@@ -938,11 +917,6 @@ adjust_applets_idle(gpointer data)
 static int
 send_move_idle(gpointer data)
 {
-	if(panel_widget_inhibit_allocates) {
-		send_move_idle_id = 0;
-		return FALSE;
-	}
-
 	while(send_panels) {
 		GList *list;
 		PanelWidget *panel = send_panels->data;
@@ -966,8 +940,7 @@ void
 panel_widget_send_move(PanelWidget *panel)
 {
 	int x,y,w,h;
-	if(panel_widget_inhibit_allocates ||
-	   !GTK_WIDGET_REALIZED(GTK_WIDGET(panel)))
+	if(!GTK_WIDGET_REALIZED(GTK_WIDGET(panel)))
 		return;
 	
 	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
@@ -995,8 +968,7 @@ panel_widget_fixed_size_allocate(GtkWidget *widget,
 {
 	PanelWidget *panel = data;
 	
-	if(panel_widget_inhibit_allocates ||
-	   !GTK_WIDGET_REALIZED(widget))
+	if(!GTK_WIDGET_REALIZED(widget))
 		return FALSE;
 
 	if(!panel->packed)
@@ -1027,9 +999,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
 	if(!panel->packed)
 		panel_widget_apply_size_limit(panel);*/
 	/*GList *list;
-
-	if(panel_widget_inhibit_allocates)
-		return FALSE;
 
 	if(!GTK_WIDGET_REALIZED(widget))
 		return FALSE;
@@ -1848,18 +1817,16 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 	panel->applet_list = g_list_remove(panel->applet_list,ad);
 	g_free(ad);
 
-	if(!panel_widget_inhibit_allocates) {
-		if(p)
-			remove_panel_from_forbidden(panel,p);
-		
-		if(panel->packed)
-			panel_widget_pack_applets(panel);
+	if(p)
+		remove_panel_from_forbidden(panel,p);
 
-		thick = panel_widget_get_thick(panel);
-		if(panel->thick != thick || panel->packed) {
-			panel->thick = thick;
-			panel_widget_set_size(panel);
-		}
+	if(panel->packed)
+		panel_widget_pack_applets(panel);
+
+	thick = panel_widget_get_thick(panel);
+	if(panel->thick != thick || panel->packed) {
+		panel->thick = thick;
+		panel_widget_set_size(panel);
 	}
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[APPLET_REMOVED_SIGNAL],
@@ -2233,19 +2200,17 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	gtk_widget_ref(applet);
 	gtk_container_remove(GTK_CONTAINER(panel->fixed),applet);
 
-	if(!panel_widget_inhibit_allocates) {
-		if(p)
-			remove_panel_from_forbidden(panel,p);
+	if(p)
+		remove_panel_from_forbidden(panel,p);
 
-		if(panel->packed)
-			panel_widget_pack_applets(panel);
+	if(panel->packed)
+		panel_widget_pack_applets(panel);
 
 
-		thick = panel_widget_get_thick(panel);
-		if(panel->thick != thick || panel->packed) {
-			panel->thick = thick;
-			panel_widget_set_size(panel);
-		}
+	thick = panel_widget_get_thick(panel);
+	if(panel->thick != thick || panel->packed) {
+		panel->thick = thick;
+		panel_widget_set_size(panel);
 	}
 
 	gtk_signal_emit(GTK_OBJECT(panel),

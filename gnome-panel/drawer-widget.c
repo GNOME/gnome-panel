@@ -30,8 +30,6 @@ extern int pw_minimize_delay;
 extern int pw_disable_animations;
 extern PanelMovementType pw_movement_type;
 
-extern int panel_widget_inhibit_allocates;
-
 typedef void (*StateSignal) (GtkObject * object,
 			     DrawerState state,
 			     gpointer data);
@@ -594,7 +592,6 @@ drawer_widget_set_pos(DrawerWidget *drawer, int x, int y)
 void
 drawer_widget_restore_state(DrawerWidget *drawer)
 {
-	PanelWidget *panel = PANEL_WIDGET(drawer->panel);
 	gtk_widget_set_uposition(GTK_WIDGET(drawer),drawer->x,drawer->y);
 	gtk_widget_show(GTK_WIDGET(drawer));
 }

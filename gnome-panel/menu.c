@@ -703,6 +703,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 		panel_setup(panel);
 		gtk_widget_show(panel);
 		break;
+	default: break;
 	}
 }
 
@@ -934,8 +935,9 @@ menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 		}
 		
 		/*this HAS to be set everytime we popup the menu*/
-		current_panel = gtk_object_get_data(menu->button->parent,
-						    PANEL_APPLET_PARENT_KEY);
+		current_panel =
+			gtk_object_get_data(GTK_OBJECT(menu->button->parent),
+					    PANEL_APPLET_PARENT_KEY);
 
 		gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
 			       data, event->button, event->time);

@@ -62,9 +62,6 @@ GtkTooltips *panel_tooltips = NULL;
 
 GnomeClient *client = NULL;
 
-/*we'll use this as an indivation that we're shutting down*/
-extern int panel_widget_inhibit_allocates;
-
 GlobalConfig global_config = {
 		DEFAULT_AUTO_HIDE_STEP_SIZE,
 		DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
@@ -982,7 +979,6 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
 	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(applet)));
 	AppletInfo *info = get_applet_info(applet_id);
-	PanelWidget *panel = PANEL_WIDGET(widget);
 	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(widget),
 						PANEL_PARENT);
 	
@@ -1020,22 +1016,19 @@ count_open_drawers(gpointer data, gpointer user_data)
 		DrawerWidget *dw = gtk_object_get_data(GTK_OBJECT(info->assoc),
 						       PANEL_PARENT);
 		if(dw->state == DRAWER_SHOWN)
-			*count ++;
+			(*count)++;
 	}
 }
 
 static void
 panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	PanelWidget *panel = PANEL_WIDGET(widget);
-	GtkWidget *parentw = gtk_object_get_data(GTK_OBJECT(panel),
+	GtkWidget *parentw = gtk_object_get_data(GTK_OBJECT(widget),
 						 PANEL_PARENT);
-	if(panel_widget_inhibit_allocates)
-		return;
 	if(IS_SNAPPED_WIDGET(parentw)) {
 		int drawers_open = 0;
 
-		panel_widget_foreach(panel,
+		panel_widget_foreach(PANEL_WIDGET(widget),
 				     count_open_drawers,
 				     &drawers_open);
 		SNAPPED_WIDGET(parentw)->drawers_open = drawers_open;
@@ -1296,8 +1289,6 @@ applet_move_foreach(gpointer data, gpointer user_data)
 static void
 panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 {
-	if(panel_widget_inhibit_allocates)
-		return;
 	applet_move_foreach(widget,NULL);
 	config_changed = TRUE;
 }
@@ -1571,11 +1562,10 @@ panel_setup(GtkWidget *panelw)
 			   "size_allocate",
 			   GTK_SIGNAL_FUNC(panel_size_allocate),
 			   NULL);
-	pd->destroy_callback =
-		gtk_signal_connect(GTK_OBJECT(panelw),
-				   "destroy",
-				   GTK_SIGNAL_FUNC(panel_destroy),
-				   panel_menu);
+	gtk_signal_connect(GTK_OBJECT(panelw),
+			   "destroy",
+			   GTK_SIGNAL_FUNC(panel_destroy),
+			   panel_menu);
 
 	/*with this we capture button presses throughout all the widgets of the
 	  panel*/
