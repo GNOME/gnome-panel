@@ -852,9 +852,7 @@ basep_enter_notify (GtkWidget *widget,
 	    event->detail != GDK_NOTIFY_INFERIOR) {
 
 		g_assert (basep->mode == BASEP_AUTO_HIDE);
-#ifdef BASEP_WIDGET_DEBUG
-		g_print ("detail: %d\n", event->detail);
-#endif
+
 		if (basep->leave_notify_timer_tag != 0) {
 			g_source_remove (basep->leave_notify_timer_tag);
 			basep->leave_notify_timer_tag = 0;
@@ -2076,12 +2074,8 @@ basep_widget_queue_autoshow (BasePWidget *basep)
         /* check if there's already a timeout set, and delete it if 
          * there was */
 
-	if (basep->moving) {
-#ifdef BASEP_WIDGET_DEBUG
-		g_print ("basep_widget_queue_autoshow: return 2");
-#endif
+	if (basep->moving)
 		return; 
-	}
 
         if (basep->leave_notify_timer_tag != 0) {
                 g_source_remove (basep->leave_notify_timer_tag);
@@ -2090,19 +2084,11 @@ basep_widget_queue_autoshow (BasePWidget *basep)
 
         if (basep->enter_notify_timer_tag != 0) {
                 g_source_remove (basep->enter_notify_timer_tag);
-#ifdef BASEP_WIDGET_DEBUG
-		g_print ("basep_widget_queue_autoshow: <timeout removed>\n");
-#endif
 	}
 
         if ((basep->mode != BASEP_AUTO_HIDE) ||
-            (basep->state == BASEP_SHOWN)) {
-#ifdef BASEP_WIDGET_DEBUG
-		g_print ("basep_widget_queue_autoshow: return 1\n");
-#endif
+            (basep->state == BASEP_SHOWN))
                 return;
-	}
-
 
 	if (global_config.hide_delay == 0) {
 		/* set up our idle for popup. */
@@ -2467,7 +2453,6 @@ basep_calculate_borders (int screen, int monitor)
 
 		if (EDGE_IS_WIDGET (basep)) {
 			BasePState state = basep->state;
-			int        size = 0;
 
 			switch (state) {
 			case BASEP_HIDDEN_RIGHT:
