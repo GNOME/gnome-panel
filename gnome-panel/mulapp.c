@@ -132,7 +132,6 @@ mulapp_add_ior_and_free_queue(const char *path, const char *ior)
 		MultiLoadQueue *mq = list->data;
 		if(strcmp(mq->path,path)==0) {
 			GList *li;
-			GList *list;
 			if(mq->ior && strcmp(mq->ior,ior)!=0)
 				g_warning("What? there already was an applet "
 					  "before with different IOR?");
@@ -140,14 +139,13 @@ mulapp_add_ior_and_free_queue(const char *path, const char *ior)
 				mq->ior = g_strdup(ior);
 			if(!mq->params)
 				return;
-			list = mq->params;
+			li = mq->params;
 			mq->params = NULL;
-			for(li=list;li!=NULL;li=g_list_next(li)) {
-				char *param = li->data;
-				send_applet_start_new_applet(mq->ior,param);
-				g_free(param);
+			while(li) {
+				send_applet_start_new_applet(mq->ior,li->data);
+				g_free(li->data);
+				li = g_list_remove_link(li,li);
 			}
-			g_list_free(list);
 			return;
 		}
 	}

@@ -116,7 +116,6 @@ int applet_request_id (const char *path, const char *param,
 		       int dorestart, char **cfgpath,
 		       char **globcfgpath, guint32 *winid);
 void applet_register (const char * ior, int applet_id);
-void applet_request_glob_cfg (char **globcfgpath);
 guint32 reserve_applet_spot (const char *id_str, const char *path,
 			     const char *param,
 			     int panel, int pos, char *cfgpath,
@@ -135,7 +134,6 @@ void applet_add_callback(int applet_id,
 void applet_remove_callback(int applet_id,
 			    char *callback_name);
 void applet_set_tooltip(int applet_id, const char *tooltip);
-void applet_remove_from_panel(int applet_id);
 
 extern char *cookie;
 

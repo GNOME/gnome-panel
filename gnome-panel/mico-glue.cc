@@ -11,6 +11,9 @@
 
 #include "cookie.h"
 
+extern char *panel_cfg_path;
+extern char *old_panel_cfg_path;
+
 /* This implements the server-side of the gnome-panel.idl
  * specification Currently there is no way to create new CORBA
  * "instances" of the panel, as there is only one panel running on the
@@ -59,15 +62,8 @@ public:
 	}
 	void applet_request_glob_cfg (const char *ccookie,
 				      char *&globcfgpath) {
-		char *globcfg=NULL;
-
 		CHECK_COOKIE ();
-		::applet_request_glob_cfg (&globcfg);
-		if(globcfg) {
-			globcfgpath = CORBA::string_dup(globcfg);
-			g_free(globcfg);
-		} else
-			globcfgpath = CORBA::string_dup("");
+		globcfgpath = CORBA::string_dup(old_panel_cfg_path);
 	}
 	CORBA::Short applet_get_panel (const char *ccookie,
 				       CORBA::Short applet_id) {
@@ -99,7 +95,7 @@ public:
 	void applet_remove_from_panel (const char *ccookie,
 				       CORBA::Short applet_id) {
 		CHECK_COOKIE ();
-		::applet_remove_from_panel(applet_id);
+		::panel_clean_applet(applet_id);
 	}
         void applet_add_callback (const char *ccookie, 
 				  CORBA::Short applet_id,

@@ -289,9 +289,8 @@ queue_load_applet(char *id_str, char *path, char *params,
 }
 
 static void
-monitor_drawers(GtkWidget *w, gpointer data)
+monitor_drawers(GtkWidget *w, PanelWidget *panel)
 {
-	PanelWidget *panel=data;
 	DrawerWidget *drawer = gtk_object_get_data(GTK_OBJECT(panel),
 						   PANEL_PARENT);
 	PanelWidget *parent =
@@ -645,18 +644,6 @@ load_queued_applets(void)
 }
 
 static void
-add_forbidden_to_panels(void)
-{
-	GList *list;
-
-	for(list = panels;list!=NULL;list=g_list_next(list)) {
-		PanelWidget *panel = list->data;
-		panel_widget_add_forbidden(panel);
-	}
-}
-
-
-static void
 load_default_applets(void)
 {
 	queue_load_applet(MENU_ID, NULL, ".", NULL, NULL,
@@ -668,12 +655,6 @@ load_default_applets(void)
 static void
 init_user_applets(void)
 {
-	char *applet_name;
-	char *applet_params;
-	char *applet_pixmap;
-	char *applet_tooltip;
-	char *applet_path;
-	int   pos=0,panel;
 	char  buf[256];
 	int   count,num;	
 
@@ -682,6 +663,13 @@ init_user_applets(void)
 	if(count<=0)
 		load_default_applets();
 	for(num=1;num<=count;num++) {
+		char *applet_name;
+		char *applet_params;
+		char *applet_pixmap;
+		char *applet_tooltip;
+		char *applet_path;
+		int   pos=0,panel;
+
 		g_snprintf(buf,256,"%sApplet_%d/config/", old_panel_cfg_path, num);
 		gnome_config_push_prefix(buf);
 		applet_name = gnome_config_get_string("id=Unknown");
@@ -720,9 +708,7 @@ init_user_applets(void)
 void
 change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 {
-	GdkCursor *cursor;
-
-	cursor = gdk_cursor_new(cursor_type);
+	GdkCursor *cursor = gdk_cursor_new(cursor_type);
 	gdk_window_set_cursor(window, cursor);
 	gdk_cursor_destroy(cursor);
 }
@@ -1253,16 +1239,6 @@ corner_panel_move_timeout(gpointer data)
 	return TRUE;
 }
 
-/* DOES NOT WORK!
-static int
-panel_move_callback(GtkWidget *w, GdkEventMotion *event, gpointer data)
-{
-	puts("TEST");
-	if(panel_dragged)
-		panel_move(PANEL_WIDGET(w), event->x_root, event->y_root);
-	return FALSE;
-}*/
-
 static int
 panel_destroy(GtkWidget *widget, gpointer data)
 {
@@ -1602,12 +1578,6 @@ panel_setup(GtkWidget *panelw)
 	if (GTK_IS_CONTAINER(panelw))
 		gtk_container_foreach (GTK_CONTAINER (panelw),
 				       bind_panel_events, NULL);
-
-	/* DOES NOT WORK!
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "motion_notify_event",
-			   GTK_SIGNAL_FUNC(panel_move_callback),
-			   panel);*/
 
 	gtk_signal_connect(GTK_OBJECT(panel_menu),
 			   "deactivate",
@@ -1999,7 +1969,8 @@ main(int argc, char **argv)
 	/*everything is ready ... load up the applets*/
 	load_queued_applets();
 
-	add_forbidden_to_panels();
+	/*add forbidden lists to ALL panels*/
+	g_list_foreach(panels,panel_widget_add_forbidden,NULL);
 
 	/*this will make the drawers be hidden for closed panels etc ...*/
 	send_state_change();
