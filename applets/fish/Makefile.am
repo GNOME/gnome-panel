@@ -28,7 +28,7 @@ EXTRA_DIST =					\
 	$(FISH_BITMAPS)				\
 	GNOME_FishApplet_Factory.server.in	\
 	gnome-fish.png				\
-	fish.schemas				\
+	fish.schemas.in				\
 	$(ui_DATA)
 
 fishbitmapsdir = $(datadir)/pixmaps/fish
@@ -36,9 +36,6 @@ fishbitmaps_DATA = $(FISH_BITMAPS)
 
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = gnome-fish.png
-
-schemadir   = $(sysconfdir)/gconf/schemas
-schema_DATA = fish.schemas
 
 uidir		= $(datadir)/gnome-2.0/ui
 ui_DATA		= GNOME_FishApplet.xml
@@ -49,5 +46,16 @@ server_DATA     = $(server_in_files:.server.in=.server)
 
 @INTLTOOL_SERVER_RULE@
 
+schemasdir       = $(sysconfdir)/gconf/schemas
+schemas_in_files = fish.schemas.in
+schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
+
+@INTLTOOL_SCHEMAS_RULE@
+
+# don't do this if we are building in eg. rpm
 install-data-local:
-	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
+        if test -z "$(DESTDIR)" ; then \
+	   for p in $(schemas_DATA) ; do \
+	      GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/fish/$$p ; \
+	   done \
+	fi

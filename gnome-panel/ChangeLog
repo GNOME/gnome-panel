@@ -1,3 +1,17 @@
+2002-05-20  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: generate the .schemas file from the
+	.schemas.in files.
+
+	* panel-global-config.schemas.in:
+	* panel-per-panel-config.schemas.in: renamed these from
+	the .schema version - preserving cvs history.
+
+2002-05-19  Mark McLoughlin  <mark@skynet.ie>
+
+	* foobar-widget (set_das_pixmap): don't destroy the GtkImage
+	every time the icon needs to be changed. Should fix #81690.
+
 Fri May 17 21:34:44 2002  George Lebl <jirka@5z.com>
 
 	* panel-shell.c: fix #81437 by disconnecting the destroy

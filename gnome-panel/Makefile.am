@@ -214,7 +214,7 @@ EXTRA_DIST =					\
 	$(glade_DATA)				\
 	nothing.cP				\
 	nothing.h				\
-	$(schema_DATA)				\
+	$(schemas_in_files)			\
 	$(ui_DATA)				\
 	panel-marshal.list
 
@@ -268,19 +268,22 @@ panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
 uidir   = $(datadir)/gnome-2.0/ui
 ui_DATA = GNOME_Panel_Popup.xml
 
-schemadir   = $(sysconfdir)/gconf/schemas
-schema_DATA = panel-global-config.schemas panel-per-panel-config.schemas
-
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_Panel.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
 @INTLTOOL_SERVER_RULE@
 
+schemasdir       = $(sysconfdir)/gconf/schemas
+schemas_in_files = panel-global-config.schemas.in panel-per-panel-config.schemas.in
+schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
+
+@INTLTOOL_SCHEMAS_RULE@
+
 install-data-local:
 	if test -z "$(DESTDIR)" ; then \
-		for p in $(schema_DATA) ; do \
-			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$$p ; \
+		for p in $(schemas_DATA) ; do \
+			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/gnome-panel/$$p ; \
 		done \
 	fi
 

@@ -61,9 +61,6 @@ soundlist_DATA = $(soundlist_in_files:.soundlist.in=.soundlist)
 
 @INTLTOOL_SOUNDLIST_RULE@
 
-schemadir   = $(sysconfdir)/gconf/schemas
-schema_DATA = mailcheck.schemas pager.schemas tasklist.schemas clock.schemas
-
 uidir 		= $(datadir)/gnome-2.0/ui
 ui_DATA		= \
 	GNOME_ClockApplet.xml		\
@@ -77,11 +74,20 @@ server_DATA     = $(server_in_files:.server.in=.server)
 
 @INTLTOOL_SERVER_RULE@
 
+schemasdir       = $(sysconfdir)/gconf/schemas
+schemas_in_files = mailcheck.schemas.in		\
+		   pager.schemas.in		\
+		   tasklist.schemas.in		\
+		   clock.schemas.in
+schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
+
+@INTLTOOL_SCHEMAS_RULE@
+
 # don't do this if we are building in eg. rpm
 install-data-local:
 	if test -z "$(DESTDIR)" ; then \
-		for p in $(schema_DATA) ; do \
-		        GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$$p ; \
+		for p in $(schemas_DATA) ; do \
+		        GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/gen_util/$$p ; \
 		done \
 	fi
 
@@ -89,6 +95,6 @@ EXTRA_DIST = GNOME_GenUtilApplet_Factory.server.in.in	\
 	$(PRINTER_BITMAPS)				\
 	$(MAILCHECK_BITMAPS)				\
 	$(soundlist_in_files)				\
-	$(schema_DATA)					\
+	$(schemas_in_files)				\
 	$(glade_DATA)					\
 	$(ui_DATA)

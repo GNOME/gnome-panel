@@ -513,46 +513,45 @@ destroy_task_menu (GtkWidget *w, gpointer data)
 }
 
 static void
-set_das_pixmap (FoobarWidget *foo, WnckWindow *window)
+set_das_pixmap (FoobarWidget *foo,
+		WnckWindow   *window)
 {
-	GdkPixbuf *pb;
-	if ( ! GTK_WIDGET_REALIZED (foo))
-		return;
+	GdkPixbuf *pixbuf = NULL;
 
-	if (foo->task_image != NULL)
-		gtk_widget_destroy (GTK_WIDGET (foo->task_image));
-	foo->task_image = NULL;
+	if (!GTK_WIDGET_REALIZED (foo))
+		return;
 
 	foo->icon_window = window;
 
-	pb = NULL;
-	if (window != NULL)
-		pb = wnck_window_get_mini_icon (window);
-	if (pb == NULL)
-		pb = get_default_image ();
+	if (window)
+		pixbuf = wnck_window_get_mini_icon (window);
 
-	if (pb != NULL) {
+	if (!pixbuf)
+		pixbuf = get_default_image ();
+
+	if (pixbuf) {
 		double pix_x, pix_y;
-		pix_x = gdk_pixbuf_get_width (pb);
-		pix_y = gdk_pixbuf_get_height (pb);
-		if (pix_x > ICON_SIZE || pix_y > ICON_SIZE) {
-			double greatest;
+
+		pix_x = gdk_pixbuf_get_width (pixbuf);
+		pix_y = gdk_pixbuf_get_height (pixbuf);
+
+		if (pix_x <= ICON_SIZE && pix_y <= ICON_SIZE) 
+			gtk_image_set_from_pixbuf (
+				GTK_IMAGE (foo->task_image), pixbuf);
+		else {
 			GdkPixbuf *scaled;
+			double     greatest;
 
 			greatest = pix_x > pix_y ? pix_x : pix_y;
-			scaled = gdk_pixbuf_scale_simple (pb,
-							  (ICON_SIZE / greatest) * pix_x,
-							  (ICON_SIZE / greatest) * pix_y,
-							  GDK_INTERP_BILINEAR);
-			foo->task_image = gtk_image_new_from_pixbuf (scaled);
-			g_object_unref (G_OBJECT (scaled));
-		} else {
-			foo->task_image = gtk_image_new_from_pixbuf (pb);
+			scaled = gdk_pixbuf_scale_simple (
+					pixbuf,
+					(ICON_SIZE / greatest) * pix_x,
+					(ICON_SIZE / greatest) * pix_y,
+					GDK_INTERP_BILINEAR);
+			gtk_image_set_from_pixbuf (
+				GTK_IMAGE (foo->task_image), scaled);
+			g_object_unref (scaled);
 		}
-		gtk_widget_show (foo->task_image);
-
-		gtk_container_add (GTK_CONTAINER (foo->task_bin),
-				   GTK_WIDGET (foo->task_image));
 	}
 }
 
@@ -566,6 +565,10 @@ append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar)
 	gtk_widget_set_size_request (foo->task_bin, 25, 20);
 	gtk_widget_show (foo->task_bin);
 	gtk_container_add (GTK_CONTAINER (foo->task_item), foo->task_bin);
+
+	foo->task_image = gtk_image_new ();
+	gtk_widget_show (foo->task_image);
+	gtk_container_add (GTK_CONTAINER (foo->task_bin), foo->task_image);
 
 	gtk_menu_shell_append (menu_bar, foo->task_item);
 
