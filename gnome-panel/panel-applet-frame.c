@@ -843,7 +843,8 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 	GtkWidget *dialog;
 	GdkScreen *screen;
 	char      *applet_name = NULL;
-	char      *txt;
+	char      *applet_txt;
+	char      *dialog_txt;
 	gboolean   locked;
 
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
@@ -856,24 +857,30 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 	locked = panel_profile_get_locked_down () ||
 		panel_toplevel_get_locked_down (frame->priv->panel->toplevel);
 
-	txt = g_strdup_printf (
-			_("The %s applet appears to have died "
-			  "unexpectedly\n\n"
-			  "Reload this applet?%s"),
-			  applet_name ? applet_name : "",
-			  locked ? "" :
-			  _("\n\n"
-			  "(If you choose not to reload it at this time"
-			  " you can always add it by right clicking on "
-			  "the panel and clicking on the \"Add to Panel\""
-			  " submenu)"));
+	applet_txt = g_strdup_printf (
+			_("The \"%s\" applet appears to have died "
+			  "unexpectedly.\n\n"
+			  "Do you want to reload this applet?"),
+			applet_name ? applet_name : "");
+	if (!locked) {
+		dialog_txt = g_strconcat(applet_txt,
+				_("\n\n"
+				  "(If you choose not to reload it at this time"
+				  " you can always add it by right clicking on "
+				  "the panel and clicking on the "
+				  "\"Add to Panel\" submenu)"),
+				NULL);
+		g_free (applet_txt);
+	} else {
+		dialog_txt = applet_txt;
+	}
 
 	dialog = gtk_message_dialog_new (
 				NULL,
 				GTK_DIALOG_DESTROY_WITH_PARENT,
 				GTK_MESSAGE_QUESTION,
 				GTK_BUTTONS_YES_NO,
-				txt);
+				dialog_txt);
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
 	g_signal_connect (dialog, "response",
@@ -884,7 +891,7 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 
 	gtk_widget_show (dialog);
 	g_free (applet_name);
-	g_free (txt);
+	g_free (dialog_txt);
 }
 
 static inline void
@@ -928,34 +935,43 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 {
 	GtkWidget *dialog;
 	int        response;
+	char      *problem_txt;
 	gboolean   locked;
 
 	locked = panel_profile_get_locked_down () ||
 		panel_toplevel_get_locked_down (frame->priv->panel->toplevel);
 
+	problem_txt = g_strdup_printf (_("The panel encountered a problem "
+					 "while loading \"%s\"."), iid);
+
 	if (ev != NULL) {
 		char *error = bonobo_exception_get_text (ev);
+		char *detail_txt = g_strdup_printf (_("Details: %s"), error);
+
 		dialog = gtk_message_dialog_new (
 					NULL, 0,
 					locked ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
 					GTK_BUTTONS_NONE,
-					_("The panel encountered a problem while loading \"%s\"\n"
-					  "Details: %s%s"),
-					iid, error,
+					"%s\n%s%s",
+					problem_txt,
+					detail_txt,
 					locked ? "" :
 					_("\n\n"
-					  "Do you want to delete the applet from your configuration?"));
+					  "Do you want to delete the applet "
+					  "from your configuration?"));
 		g_free (error);
+		g_free (detail_txt);
 	} else {
 		dialog = gtk_message_dialog_new (
 					NULL, 0,
 					locked ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
 					GTK_BUTTONS_NONE,
-					_("The panel encountered a problem while loading \"%s\"%s"),
-					iid,
+					"%s%s",
+					problem_txt,
 					locked ? "" :
 					_("\n\n"
-					  "Do you want to delete the applet from your configuration?"));
+					  "Do you want to delete the applet "
+					  "from your configuration?"));
 	}
 
 	register_stock_item ();
