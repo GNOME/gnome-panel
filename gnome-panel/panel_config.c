@@ -21,8 +21,8 @@
 #include "multiscreen-stuff.h"
 #include "nothing.cP"
 
-#include <libgnome.h>
-#include <libgnomeui.h>
+#include <libgnome/libgnome.h>
+#include <libgnomeui/libgnomeui.h>
 
 static void config_apply (PerPanelConfig *ppc);
 

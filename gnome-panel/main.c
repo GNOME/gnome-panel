@@ -11,8 +11,8 @@
 #include <string.h>
 #include <signal.h>
 #include <sys/wait.h>
-#include <libgnome.h>
-#include <libgnomeui.h>
+#include <libgnome/libgnome.h>
+#include <libgnomeui/libgnomeui.h>
 #include <bonobo-activation/bonobo-activation.h>
 #include <bonobo/bonobo-ui-main.h>
 

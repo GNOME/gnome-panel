@@ -4,7 +4,7 @@
 #include <X11/Xlib.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
-#include <libgnomeui.h>
+#include <libgnomeui/libgnomeui.h>
 
 #include <applet-widget.h>
 #include <bonobo-activation/bonobo-activation.h>

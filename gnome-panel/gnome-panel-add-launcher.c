@@ -20,7 +20,7 @@
  */
 
 #include <config.h>
-#include <libgnomeui.h>
+#include <libgnomeui/libgnomeui.h>
 #include <bonobo-activation/bonobo-activation.h>
 #include <libgnomeui/gnome-window-icon.h>
 #include <gdk/gdkx.h>

@@ -22,8 +22,8 @@
 #include <errno.h>
 #include <math.h>
 #include <gdk/gdkkeysyms.h>
-#include <libgnome.h>
-#include <libgnomeui.h>
+#include <libgnome/libgnome.h>
+#include <libgnomeui/libgnomeui.h>
 
 #include "panel-include.h"
 #include "panel-widget.h"
