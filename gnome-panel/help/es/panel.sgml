@@ -1,4 +1,29 @@
 <!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
+
+ <!ENTITY name "panel">
+ <!ENTITY aplication  "panel">
+
+ <!ENTITY authors SYSTEM "authors.sgml">
+ <!ENTITY license SYSTEM "license.sgml">
+
+ <!ENTITY licencia-nota-es SYSTEM "licencia-nota-es.sgml">
+ <!ENTITY license-es SYSTEM "licencia-es.sgml">
+
+ <!ENTITY authors SYSTEM "authors.sgml">
+ <!ENTITY license SYSTEM "license.sgml">
+
+ <!ENTITY licencia-nota-es SYSTEM "licencia-nota-es.sgml">
+ <!ENTITY license-es SYSTEM "licencia-es.sgml">
+
+ <!ENTITY programer "varios programadores de Gnome">
+ <!ENTITY programer-email "<email>kodis@jagunet.com</email>">
+
+ <!ENTITY writer "Dave Mason, Dan Mueth y Alexander Kirillov">
+ <!ENTITY writer-email "<email>dcm@redhat.com</email>,<email>d-mueth@uchicago.edu</email>,<email>kirillov@math.sunysb.edu</email>">
+
+ <!ENTITY traductor "Miquel Jordana">
+ <!ENTITY traductor-email "<email>jjvmjv@mundomail.net</email>">
+
 ]>
 
  <article id="index" lang="es">
@@ -14,7 +39,7 @@
 
 <copyright>
 <year>2001</year>
-<holder>Miquel Jordana (traducción al Castellano)</holder>
+<holder>&traductor; (traducción al Castellano)</holder>
 </copyright>
 
   <legalnotice id="legalnotice">
@@ -28,18 +53,6 @@
    the license can be found <ulink type="help"
    url="gnome-help:fdl">here</ulink>.</para>
 
-           <para>
-       Se permite la copia, distribución y/o modificación de este
-       documento bajo los términos de la licencia de documentación libre
-       de GNU, versión 1.1 o cualquier versión posterior publicada por la
-       fundación para el software libre; sin secciones invariantes, sin
-       portada, y sin contraportada.
-       Una copia de esta licencia esta disponible en la fundación para el
-       software libre y puede leerse en
-       <ulink type="help" url="gnome-help:fdl">linea</ulink>.
-       </para>
-
-
    <para>Many of the names used by companies to distinguish their
    products and services are claimed as trademarks. Where those names
    appear in any GNOME documentation, and those trademarks are made
@@ -47,15 +60,7 @@
    have been printed in caps or initial caps.
    </para>
 
-      <para>
-        Muchos de los nombres usados por las compañías para diferencias sus
-        productos y servicios son reclamados como marcas registradas. Allí
-        donde estos nombres aparezcan en la documentación de Gnome, y cuando
-        los miembros del proyecto de documentación Gnome hayan sido informados
-        de esas marcas registradas, los nombres estarán impresos en mayúsculas
-        o como nombres propios.
-      </para>
-
+&licencia-nota-es;
 
   </legalnotice>
 
@@ -2287,111 +2292,12 @@
    </para>
   </sect1>
 
-<!-- ###############  Authors  ################## -->
-  <sect1 id="panel-authors">
-   <title>Autores</title>
-    <para>
-     El <application>Panel de GNOME</application> fue escrito por
-     muchos desarrolladores de GNOME; puede encontrar una lista parcial
-     en el formulario <interface>Acerca de...</interface>. De todas formas:
-     se sorprenderá que el nombre del animal que se muestra en el
-     formulario <interface>Acerca de...</interface>, se llama "Gegl" y
-     tiene su propia <ulink type="http" url="http://www.gegl.org/">
-     página Web</ulink>.
-    </para>
-    <para>
-     Por favor envíe todos los comentarios, sugerencias, y errores
-     encontrados a la <ulink url="http://bugs.gnome.org/" type="http">
-     base de datos de seguimiento de errores GNOME</ulink>. Las
-     instrucciones para introducir los errores encontrados las puede
-     encontrar en línea en <ulink url="http://bugs.gnome.org/Reporting.html"
-     type="http">http://bugs.gnome.org/Reporting.html</ulink>.
-     También puede utilizar la <application>Herramienta de Reportar
-     Errores</application> (<command>bug-buddy</command>), disponible en
-     el submenú <guisubmenu>Utilidades</guisubmenu> del <guimenu>
-     Menú Principal</guimenu>, para introducir los errores encontrados.
-    </para>
-
-    <para>
-     Este manual fue escrito por Dave Mason
-     (<email>dcm@redhat.com</email>), Dan Mueth
-     (<email>d-mueth@uchicago.edu</email>), y Alexander Kirillov
-     (<email>kirillov@math.sunysb.edu</email>). Por favor envíe todos
-     los comentarios y sugerencias referentes a este manual al
-     Proyecto de Documentación GNOME a <email>docs@gnome.org</email> o
-     entre sus comentarios en línea utilizando la <ulink type="http"
-     url="http://developer.gnome.org/projects/gdp/doctable/">Tabla de
-     estado de la Documentación GNOME</ulink>.
-    </para>
-
-<para>Miquel Jordana (<email>jjvmjv@mundomail.net</email>)
-es el traductor de este manual al Castellano.
-Por favor envíe todos los comentarios y sugerencias acerca de este traducción
-al proyecto de traducción de gnome-es en  <email>traductores@es.gnome.org</email>.
-</para>
-<para>Puede encontrar mas documentación de Gnome en Castellano en las páginas
- del grupo de traducción al Castellano
-<ulink type="http" url="http://www.croftj.net/~barreiro/spanish/gnome-es">
-gnome-es</ulink>,
-o en las de
-<ulink type="http" url="http://www.es.gnome.org">Gnome España</ulink>.
-</para>
-
-
-   </sect1> 
-
-
-  <sect1 id="license">
-  <title>Licencia</title>
-  <para>
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the <ulink type="help"
-   url="gnome-help:gpl"><citetitle>GNU General Public
-   License</citetitle></ulink> as published by the Free Software
-   Foundation; either version 2 of the License, or (at your option)
-   any later version.
-  </para>
-   <para>
-Este programa es software libre; puede distribuirlo y/o modificarlo 
-bajo los términos de
-<ulink url="gnome-help:gpl">la licencia pública GNU</ulink>, tal y como 
-fue publicada
-por la Fundación para el software libre, ya sea la versión 2, o (a su elección) cualquier
-versión posterior.
-</para>
-
-  <para>
-   This program is distributed in the hope that it will be useful, but
-   WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   <ulink type="help" url="gnome-help:gpl"><citetitle>GNU General
-   Public License</citetitle></ulink> for more details.
-  </para>
-    <para>
-Este programa se distribuye con la esperanza de que sea útil, pero sin garantía alguna;
-incluso sin la garantía implícita de mercancía o conveniencia para determinados propósitos.
-véase la licencia publica general GNU para mayores detalles.
-</para>
-
-
-  <para>
-En la documentación de Gnome se incluye una copia de la 
-<ulink type="help" url="gnome-help:gpl">
-<citetitle>licencia píblica GNU </citetitle></ulink>.
-También puede obtener un copia de 
-<ulink type="help" url="gnome-help:gpl">
-<citetitle>licencia píblica GNU </citetitle></ulink> en la
-fundación para el software libre, visitando su 
-<ulink type="http" url="http://www.fsf.org/">página web</ulink>
-o escribiendo a 
-   <address>
-    Free Software Foundation, Inc.
-    <street>59 Temple Place</street> - Suite 330
-    <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
-    <country>USA</country>
-   </address>
-  </para>
-
+ <sect1>
+<title></title>
+&authors;
+&license;
+&license-es;
  </sect1>
+
 
 </article>

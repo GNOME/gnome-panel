@@ -21,6 +21,9 @@ figs = \
 docname = panel
 lang = es
 omffile = panel-es.omf
-sgml_ents =
+sgml_ents = authors.sgml \
+	licencia-es.sgml \
+	licencia-nota-es.sgml \
+	license.sgml
 include $(top_srcdir)/sgmldocs.make
 dist-hook: app-dist-hook
