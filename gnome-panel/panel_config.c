@@ -658,6 +658,8 @@ floating_notebook_page (PerPanelConfig *ppc)
 
 	ppc->h_orient = button = gtk_radio_button_new_with_label (
 		NULL, _("Orient panel horizontally"));
+	if(ppc->orient == PANEL_HORIZONTAL)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			    GTK_SIGNAL_FUNC (floating_set_orient),
@@ -670,6 +672,8 @@ floating_notebook_page (PerPanelConfig *ppc)
 		gtk_radio_button_new_with_label_from_widget (
 			GTK_RADIO_BUTTON (ppc->h_orient), 
 			_("Orient panel vertically"));
+	if(ppc->orient == PANEL_VERTICAL)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			    GTK_SIGNAL_FUNC (floating_set_orient),
