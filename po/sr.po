@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-08 23:23+0200\n"
-"PO-Revision-Date: 2003-10-08 23:41+0200\n"
+"POT-Creation-Date: 2003-10-14 22:12+0200\n"
+"PO-Revision-Date: 2003-10-14 22:37+0200\n"
 "Last-Translator: Данило Шеган <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <serbiagnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -89,7 +89,7 @@ msgstr "%A, %d. %B %Y."
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Не може да покрене алат за подешавање: %s"
 
-#: applets/clock/clock.c:890
+#: applets/clock/clock.c:891
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -97,68 +97,69 @@ msgstr ""
 "Не може да пронађе програм за подешавање датума и времена. Можда ниједан "
 "није инсталиран?"
 
-#: applets/clock/clock.c:1353 applets/clock/clock.c:1625
+#: applets/clock/clock.c:1354 applets/clock/clock.c:1626
 #: applets/fish/fish.c:128 applets/notification_area/main.c:80
-#: applets/wncklet/showdesktop.c:406 applets/wncklet/window-list.c:116
-#: applets/wncklet/window-list.c:766 applets/wncklet/window-menu.c:82
+#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:117
+#: applets/wncklet/window-list.c:774 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:472
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Дошло је до грешке при приказивању помоћи: %s"
 
-#: applets/clock/clock.c:1398
+#: applets/clock/clock.c:1399
 msgid "Clock Preferences"
 msgstr "Поставке часовника"
 
-#: applets/clock/clock.c:1434
+#: applets/clock/clock.c:1435
 msgid "Clock _type:"
 msgstr "_Врста часовника:"
 
-#: applets/clock/clock.c:1445
+#: applets/clock/clock.c:1446
 msgid "12 hour"
 msgstr "12-точасовни"
 
-#: applets/clock/clock.c:1453
+#: applets/clock/clock.c:1454
 msgid "24 hour"
 msgstr "24-очасовни"
 
-#: applets/clock/clock.c:1461
+#: applets/clock/clock.c:1462
 msgid "UNIX time"
 msgstr "UNIX време"
 
-#: applets/clock/clock.c:1468
+#: applets/clock/clock.c:1469
 msgid "Internet time"
 msgstr "Интернет време"
 
-#: applets/clock/clock.c:1481
+#: applets/clock/clock.c:1482
 msgid "Show _seconds"
 msgstr "Прикажи _секунде"
 
-#: applets/clock/clock.c:1490
+#: applets/clock/clock.c:1491
 msgid "Show _date"
 msgstr "Прикажи _датум"
 
-#: applets/clock/clock.c:1499
+#: applets/clock/clock.c:1500
 msgid "Use _UTC"
 msgstr "Користи _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:1660 applets/notification_area/main.c:112
-#: applets/wncklet/showdesktop.c:437 applets/wncklet/window-list.c:797
-#: applets/wncklet/window-menu.c:109 applets/wncklet/workspace-switcher.c:504
+#: applets/clock/clock.c:1661 applets/notification_area/main.c:112
+#: applets/wncklet/showdesktop.c:443 applets/wncklet/window-list.c:805
+#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
 #: gnome-panel/menu.c:282
 msgid "translator_credits"
 msgstr ""
 "Данило Шеган <dsegan@gmx.net>\n"
-"Томислав Јанковић <tomaja@net.yu>"
+"\n"
+"Prevod.org — превод на српски језик"
 
-#: applets/clock/clock.c:1679
+#: applets/clock/clock.c:1680
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock"
 msgstr "Часовник"
 
-#: applets/clock/clock.c:1681
+#: applets/clock/clock.c:1682
 msgid "The Clock displays the current time and date"
 msgstr "Часовник приказује тренутно време и датум"
 
@@ -175,9 +176,11 @@ msgid "If true, display date in the clock, in addition to time."
 msgstr "Уколико је постављено, прикажи датум у часовнику, поред времена"
 
 #: applets/clock/clock.schemas.in.h:4
-msgid "If true, display internet time, which is same all over the world."
-msgstr ""
-"Уколико је постављено, прикажи Интернет време, које је исто свуда у свету."
+msgid ""
+"If true, display internet time. The internet time system divides the day "
+"into 1000 \".beats\". There is no time zones in this system, so time is the "
+"same all over the world."
+msgstr "Уколико је постављено, прикажи Интернет време. Систем Интернет времена дели дан на 100 „откуцаја“. У овом систему нема временских зона, па је време исто широм света."
 
 #: applets/clock/clock.schemas.in.h:5
 msgid "If true, display seconds in time."
@@ -284,8 +287,8 @@ msgstr "_О програму..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3129
-#: gnome-panel/panel-action-button.c:545 gnome-panel/panel-menu-bar.c:325
+#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3130
+#: gnome-panel/panel-action-button.c:547 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:584
 msgid "_Help"
 msgstr "_Помоћ"
@@ -584,12 +587,12 @@ msgid "Switch between workspaces"
 msgstr "Следећа радна површина"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-list.c:811
+#: applets/wncklet/window-list.c:821
 msgid "Window List"
 msgstr "Списак прозора"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:128 applets/wncklet/window-menu.c:624
+#: applets/wncklet/window-menu.c:132 applets/wncklet/window-menu.c:667
 msgid "Window Menu"
 msgstr "Мени прозора"
 
@@ -603,32 +606,32 @@ msgstr "Производња програмчета за избор прозор
 msgid "Workspace Switcher"
 msgstr "Измена радних површина"
 
-#: applets/wncklet/showdesktop.c:219
+#: applets/wncklet/showdesktop.c:222
 msgid "Click here to restore hidden windows."
 msgstr "Кликните овде да прикажете прикривене прозоре."
 
-#: applets/wncklet/showdesktop.c:222
+#: applets/wncklet/showdesktop.c:225
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Кликните овде да прикријете све прозоре и видите радну површину."
 
-#: applets/wncklet/showdesktop.c:295
+#: applets/wncklet/showdesktop.c:301
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Неуспело учитавање „%s“: %s\n"
 
-#: applets/wncklet/showdesktop.c:296
+#: applets/wncklet/showdesktop.c:302
 msgid "File not found"
 msgstr "Датотека није нађена"
 
-#: applets/wncklet/showdesktop.c:326 applets/wncklet/showdesktop.c:446
+#: applets/wncklet/showdesktop.c:332 applets/wncklet/showdesktop.c:452
 msgid "Show Desktop Button"
 msgstr "Дугме за приказивање радне површине"
 
-#: applets/wncklet/showdesktop.c:448
+#: applets/wncklet/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Ово дугме омогућава да прикријете све прозоре и видите радну површину."
 
-#: applets/wncklet/showdesktop.c:488
+#: applets/wncklet/showdesktop.c:494
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -636,7 +639,7 @@ msgstr ""
 "Ваш управник прозорима не подржава приказивање радне површине, или не "
 "користите управника прозора."
 
-#: applets/wncklet/window-list.c:813
+#: applets/wncklet/window-list.c:823
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
 "Списак прозора приказује списак свих прозора и омогућава да их прегледате."
@@ -689,7 +692,7 @@ msgstr "Прикажи прозоре са _текуће радне површи
 msgid "Show windows from a_ll workspaces"
 msgstr "Прикажи прозоре са _свих радних површина"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3576
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3612
 msgid "Size"
 msgstr "Величина"
 
@@ -769,20 +772,20 @@ msgstr "Овај кључ наводи најмању величину коју 
 msgid "When to group windows"
 msgstr "Када груписати прозоре"
 
-#: applets/wncklet/window-menu.c:132
+#: applets/wncklet/window-menu.c:136
 msgid "The Window Menu shows a list of all windows and lets you browse them."
 msgstr ""
 "Списак прозора приказује списак свих прозора и омогућава да их прегледате."
 
-#: applets/wncklet/window-menu.c:342
+#: applets/wncklet/window-menu.c:377
 msgid "Unknown Window"
 msgstr "Непознати прозор"
 
-#: applets/wncklet/window-menu.c:538
+#: applets/wncklet/window-menu.c:580
 msgid "No Windows Open"
 msgstr "Нема отворених прозора"
 
-#: applets/wncklet/window-menu.c:625
+#: applets/wncklet/window-menu.c:668
 msgid "Tool to switch between windows"
 msgstr "Алат за пребацивање између прозора"
 
@@ -947,14 +950,14 @@ msgid "Whether or not to draw an arrow indicator"
 msgstr "Да ли да прикаже стрелицу"
 
 #: gnome-panel/button-widget.c:778
-msgid "DnD Highlight"
-msgstr "ПиП истицање"
+msgid "Drag N' Drop Highlight"
+msgstr "Превуци и пусти истицање"
 
 #: gnome-panel/button-widget.c:779
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Да ли се икона истиче приликом превлачења и пуштања"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3565
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3601
 msgid "Orientation"
 msgstr "Оријентација"
 
@@ -1011,7 +1014,7 @@ msgid "CDE Menu"
 msgstr "CDE мени"
 
 #: gnome-panel/drawer.c:594 gnome-panel/launcher.c:762 gnome-panel/menu.c:1557
-#: gnome-panel/menu.c:3078 gnome-panel/panel-action-button.c:96
+#: gnome-panel/menu.c:3079 gnome-panel/panel-action-button.c:97
 msgid "_Properties"
 msgstr "_Поставке"
 
@@ -1285,7 +1288,7 @@ msgstr "Не може да прикаже помоћ"
 msgid "Specify a profile name to load"
 msgstr "Наведите име профила који учитавате"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3276
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3277
 #: gnome-panel/panel-menu-bar.c:173
 msgid "Log Out"
 msgstr "Одјава"
@@ -1306,15 +1309,15 @@ msgstr "Закључај"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Закључај екран како би могли да се привремено удаљите од рачунара"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:247
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:248
 msgid "Force Quit"
 msgstr "Обавезно затварање"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:242
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:243
 msgid "Screenshot"
 msgstr "Снимак екрана"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3444
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3445
 #: gnome-panel/panel-menu-bar.c:152
 msgid "Take a screenshot of your desktop"
 msgstr "Сачувај снимак екрана вашег десктопа"
@@ -1323,7 +1326,7 @@ msgstr "Сачувај снимак екрана вашег десктопа"
 msgid "Search"
 msgstr "Тражи"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3425
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3426
 #: gnome-panel/panel-menu-bar.c:137
 msgid "Find files, folders, and documents on your computer"
 msgstr "Пронађите датотеке, директоријуме и документе на вашем рачунару"
@@ -1352,8 +1355,8 @@ msgstr ""
 "Овај програм је задужен за покретање других програма и уметање малих "
 "програмчета у њих саме."
 
-#: gnome-panel/menu.c:326 gnome-panel/panel-action-button.c:165
-#: gnome-panel/panel-action-button.c:183
+#: gnome-panel/menu.c:326 gnome-panel/panel-action-button.c:166
+#: gnome-panel/panel-action-button.c:184
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Не може да покрене „%s“"
@@ -1439,74 +1442,74 @@ msgstr "Додај нову ставу у овај мени"
 msgid "Properties"
 msgstr "Поставке"
 
-#: gnome-panel/menu.c:2613 gnome-panel/menu.c:2668
+#: gnome-panel/menu.c:2614 gnome-panel/menu.c:2669
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "испитај враћену грешку „%s“\n"
 
-#: gnome-panel/menu.c:2882 gnome-panel/menu.c:2887 gnome-panel/menu.c:3385
+#: gnome-panel/menu.c:2883 gnome-panel/menu.c:2888 gnome-panel/menu.c:3386
 #: gnome-panel/panel-menu-bar.c:195
 msgid "Applications"
 msgstr "Програми"
 
-#: gnome-panel/menu.c:2957
+#: gnome-panel/menu.c:2958
 msgid "You cannot remove your last panel."
 msgstr "Не можете уклонити једини преостали панел"
 
-#: gnome-panel/menu.c:3020
+#: gnome-panel/menu.c:3021
 msgid "_Delete This Panel..."
 msgstr "_Уклони овај панел..."
 
-#: gnome-panel/menu.c:3023 gnome-panel/menu.c:3063
+#: gnome-panel/menu.c:3024 gnome-panel/menu.c:3064
 msgid "_Delete This Panel"
 msgstr "_Уклони овај панел"
 
-#: gnome-panel/menu.c:3038
+#: gnome-panel/menu.c:3039
 msgid "_Add to Panel"
 msgstr "_Додај на панел"
 
-#: gnome-panel/menu.c:3093
+#: gnome-panel/menu.c:3094
 msgid "_New Panel"
 msgstr "_Нови панел"
 
-#: gnome-panel/menu.c:3140
+#: gnome-panel/menu.c:3141
 msgid "_About Panels"
 msgstr "_О панелима"
 
-#: gnome-panel/menu.c:3154
+#: gnome-panel/menu.c:3155
 msgid "About _GNOME"
 msgstr "О Гному"
 
-#: gnome-panel/menu.c:3202
+#: gnome-panel/menu.c:3203
 msgid "Launcher..."
 msgstr "Покретач..."
 
-#: gnome-panel/menu.c:3212
+#: gnome-panel/menu.c:3213
 msgid "Launcher from menu"
 msgstr "Покретач из менија"
 
-#: gnome-panel/menu.c:3222 gnome-panel/panel-menu-button.c:86
+#: gnome-panel/menu.c:3223 gnome-panel/panel-menu-button.c:86
 msgid "Main Menu"
 msgstr "Главни мени"
 
-#: gnome-panel/menu.c:3232
+#: gnome-panel/menu.c:3233
 msgid "Menu Bar"
 msgstr "Линија менија"
 
-#: gnome-panel/menu.c:3241
+#: gnome-panel/menu.c:3242
 msgid "Drawer"
 msgstr "Фиока"
 
-#: gnome-panel/menu.c:3264 gnome-panel/panel-menu-bar.c:164
+#: gnome-panel/menu.c:3265 gnome-panel/panel-menu-bar.c:164
 msgid "Lock Screen"
 msgstr "Закључајте екран"
 
-#: gnome-panel/menu.c:3270
+#: gnome-panel/menu.c:3271
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Закључај екран како би могли да се привремено удаљите од рачунара"
 
-#: gnome-panel/menu.c:3282
+#: gnome-panel/menu.c:3283
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1514,23 +1517,23 @@ msgstr ""
 "Окончајте ову сесију како бисте се улоговали као неки други корисник, или да "
 "искључите ваш рачунар."
 
-#: gnome-panel/menu.c:3406 gnome-panel/panel-menu-bar.c:121
+#: gnome-panel/menu.c:3407 gnome-panel/panel-menu-bar.c:121
 msgid "Run Application..."
 msgstr "Покрени програм..."
 
-#: gnome-panel/menu.c:3413 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3414 gnome-panel/panel-menu-bar.c:123
 msgid "Run an Application by entering a command"
 msgstr "Покрените програм уносом наредбе"
 
-#: gnome-panel/menu.c:3422 gnome-panel/panel-menu-bar.c:135
+#: gnome-panel/menu.c:3423 gnome-panel/panel-menu-bar.c:135
 msgid "Search for Files..."
 msgstr "Тражите датотеке..."
 
-#: gnome-panel/menu.c:3441 gnome-panel/panel-menu-bar.c:150
+#: gnome-panel/menu.c:3442 gnome-panel/panel-menu-bar.c:150
 msgid "Take Screenshot..."
 msgstr "Снимак екрана..."
 
-#: gnome-panel/menu.c:3459
+#: gnome-panel/menu.c:3460
 msgid "Desktop"
 msgstr "Радна површина"
 
@@ -1569,52 +1572,52 @@ msgstr ""
 "забрањено."
 
 # Zar nije dobar prevod, a?
-#: gnome-panel/panel-action-button.c:85
+#: gnome-panel/panel-action-button.c:86
 msgid "_Activate Screensaver"
 msgstr "_Покрени чување екрана"
 
-#: gnome-panel/panel-action-button.c:86
+#: gnome-panel/panel-action-button.c:87
 msgid "_Lock Screen"
 msgstr "_Закључај екран"
 
-#: gnome-panel/panel-action-button.c:90
+#: gnome-panel/panel-action-button.c:91
 msgid "_Kill Screensaver Daemon"
 msgstr "_Угаси сервис за чување екрана"
 
-#: gnome-panel/panel-action-button.c:92
+#: gnome-panel/panel-action-button.c:93
 msgid "Restart _Screensaver Daemon"
 msgstr "Изнова покрени сервис за _чување екрана"
 
-#: gnome-panel/panel-action-button.c:220
+#: gnome-panel/panel-action-button.c:221
 msgid "Lock screen"
 msgstr "Закључај екран"
 
-#: gnome-panel/panel-action-button.c:227
+#: gnome-panel/panel-action-button.c:228
 msgid "Log out of GNOME"
 msgstr "Напуштање Гнома"
 
-#: gnome-panel/panel-action-button.c:232
+#: gnome-panel/panel-action-button.c:233
 #: gnome-panel/panel-run-dialog.glade.h:10
 msgid "Run Application"
 msgstr "Покрени програм"
 
-#: gnome-panel/panel-action-button.c:237
+#: gnome-panel/panel-action-button.c:238
 msgid "Search for Files"
 msgstr "Потражи датотеке"
 
-#: gnome-panel/panel-action-button.c:394
+#: gnome-panel/panel-action-button.c:395
 msgid "Action Type"
 msgstr "Врста акције"
 
-#: gnome-panel/panel-action-button.c:395
+#: gnome-panel/panel-action-button.c:396
 msgid "The type of action this button implements"
 msgstr "Врста акције коју ово дугме изводи"
 
-#: gnome-panel/panel-action-button.c:404 gnome-panel/panel-menu-button.c:467
+#: gnome-panel/panel-action-button.c:405 gnome-panel/panel-menu-button.c:467
 msgid "Drag N' Drop enabled"
 msgstr "„Превуци и пусти“ је укључено"
 
-#: gnome-panel/panel-action-button.c:405 gnome-panel/panel-menu-button.c:468
+#: gnome-panel/panel-action-button.c:406 gnome-panel/panel-menu-button.c:468
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Да ли је омогућено превлачење и пуштање на елемент"
 
@@ -2404,7 +2407,7 @@ msgstr "Икона наредбе коју треба извршити."
 msgid "When this is selected the list of known applications is displayed."
 msgstr "Када се ово изабере, приказује се списак познатих програма."
 
-#: gnome-panel/panel-run-dialog.glade.h:19 gnome-panel/panel-stock-icons.c:143
+#: gnome-panel/panel-run-dialog.glade.h:19 gnome-panel/panel-stock-icons.c:144
 msgid "_Run"
 msgstr "Пок_рени"
 
@@ -2429,207 +2432,207 @@ msgstr ""
 "Код грешке је „%d“.\n"
 "Панел се сада затвара."
 
-#: gnome-panel/panel-stock-icons.c:114
+#: gnome-panel/panel-stock-icons.c:115
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr "Не може учитати испоручену сличицу „%s“ за панел\n"
 
-#: gnome-panel/panel-stock-icons.c:144
+#: gnome-panel/panel-stock-icons.c:145
 msgid "_Force quit"
 msgstr "_Обавезно угаси"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1425
+#: gnome-panel/panel-toplevel.c:1452
 msgid "Top Expanded Edge Panel"
 msgstr "Раширени ивични панел у врху"
 
-#: gnome-panel/panel-toplevel.c:1426
+#: gnome-panel/panel-toplevel.c:1453
 msgid "Top Centered Panel"
 msgstr "Центрирани панел у врху"
 
-#: gnome-panel/panel-toplevel.c:1427
+#: gnome-panel/panel-toplevel.c:1454
 msgid "Top Floating Panel"
 msgstr "Плутајући панел у врху"
 
-#: gnome-panel/panel-toplevel.c:1428
+#: gnome-panel/panel-toplevel.c:1455
 msgid "Top Edge Panel"
 msgstr "Ивични панел у врху"
 
-#: gnome-panel/panel-toplevel.c:1432
+#: gnome-panel/panel-toplevel.c:1459
 msgid "Bottom Expanded Edge Panel"
 msgstr "Раширени ивични панел при дну"
 
-#: gnome-panel/panel-toplevel.c:1433
+#: gnome-panel/panel-toplevel.c:1460
 msgid "Bottom Centered Panel"
 msgstr "Центрирани панел при дну"
 
-#: gnome-panel/panel-toplevel.c:1434
+#: gnome-panel/panel-toplevel.c:1461
 msgid "Bottom Floating Panel"
 msgstr "Плутајући панел при дну"
 
-#: gnome-panel/panel-toplevel.c:1435
+#: gnome-panel/panel-toplevel.c:1462
 msgid "Bottom Edge Panel"
 msgstr "Ивични панел при дну"
 
-#: gnome-panel/panel-toplevel.c:1439
+#: gnome-panel/panel-toplevel.c:1466
 msgid "Left Expanded Edge Panel"
 msgstr "Раширени ивични панел лево"
 
-#: gnome-panel/panel-toplevel.c:1440
+#: gnome-panel/panel-toplevel.c:1467
 msgid "Left Centered Panel"
 msgstr "Центрирани панел лево"
 
-#: gnome-panel/panel-toplevel.c:1441
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Left Floating Panel"
 msgstr "Плутајући панел лево"
 
-#: gnome-panel/panel-toplevel.c:1442
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Left Edge Panel"
 msgstr "Ивични панел лево"
 
-#: gnome-panel/panel-toplevel.c:1446
+#: gnome-panel/panel-toplevel.c:1473
 msgid "Right Expanded Edge Panel"
 msgstr "Раширени ивични панел десно"
 
-#: gnome-panel/panel-toplevel.c:1447
+#: gnome-panel/panel-toplevel.c:1474
 msgid "Right Centered Panel"
 msgstr "Центрирани панел десно"
 
-#: gnome-panel/panel-toplevel.c:1448
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Right Floating Panel"
 msgstr "Плутајући панел десно"
 
-#: gnome-panel/panel-toplevel.c:1449
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Right Edge Panel"
 msgstr "Ивични панел десно"
 
-#: gnome-panel/panel-toplevel.c:3545
+#: gnome-panel/panel-toplevel.c:3581
 msgid "Name"
 msgstr "Име"
 
-#: gnome-panel/panel-toplevel.c:3546
+#: gnome-panel/panel-toplevel.c:3582
 msgid "The name of this panel"
 msgstr "Име овог панела"
 
-#: gnome-panel/panel-toplevel.c:3555
+#: gnome-panel/panel-toplevel.c:3591
 msgid "Expand"
 msgstr "Рашири"
 
-#: gnome-panel/panel-toplevel.c:3556
+#: gnome-panel/panel-toplevel.c:3592
 msgid "Expand to take up the full monitor width/height"
 msgstr "Рашири тако да заузме пуну ширину/висину екрана"
 
-#: gnome-panel/panel-toplevel.c:3566
+#: gnome-panel/panel-toplevel.c:3602
 msgid "The orientation of the panel"
 msgstr "Усмерење овог панела"
 
-#: gnome-panel/panel-toplevel.c:3577
+#: gnome-panel/panel-toplevel.c:3613
 msgid "The height (or width when vertical) of the panel"
 msgstr "Висина (или ширина када је усправан) панела"
 
-#: gnome-panel/panel-toplevel.c:3589
+#: gnome-panel/panel-toplevel.c:3625
 msgid "X position"
 msgstr "Водоравна позиција"
 
-#: gnome-panel/panel-toplevel.c:3590
+#: gnome-panel/panel-toplevel.c:3626
 msgid "The X position of the panel"
 msgstr "Водоравна позиција панела"
 
-#: gnome-panel/panel-toplevel.c:3601
+#: gnome-panel/panel-toplevel.c:3637
 msgid "X centered"
 msgstr "Водоравно центриран"
 
-#: gnome-panel/panel-toplevel.c:3602
+#: gnome-panel/panel-toplevel.c:3638
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Водоравна координата је дата у односу на средиште екрана"
 
-#: gnome-panel/panel-toplevel.c:3611
+#: gnome-panel/panel-toplevel.c:3647
 msgid "Y position"
 msgstr "Усправна позиција"
 
-#: gnome-panel/panel-toplevel.c:3612
+#: gnome-panel/panel-toplevel.c:3648
 msgid "The Y position of the panel"
 msgstr "Усправна позиција панела"
 
-#: gnome-panel/panel-toplevel.c:3623
+#: gnome-panel/panel-toplevel.c:3659
 msgid "Y centered"
 msgstr "Усправно центриран"
 
-#: gnome-panel/panel-toplevel.c:3624
+#: gnome-panel/panel-toplevel.c:3660
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Усправна координата је дата у односу на средиште екрана"
 
-#: gnome-panel/panel-toplevel.c:3633
+#: gnome-panel/panel-toplevel.c:3669
 msgid "Xinerama monitor"
 msgstr "Ксинерама екран"
 
-#: gnome-panel/panel-toplevel.c:3634
+#: gnome-panel/panel-toplevel.c:3670
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Екран (како је назван у Ксинерами) на ком је панел"
 
-#: gnome-panel/panel-toplevel.c:3645
+#: gnome-panel/panel-toplevel.c:3681
 msgid "Auto hide"
 msgstr "Самоскривање"
 
-#: gnome-panel/panel-toplevel.c:3646
+#: gnome-panel/panel-toplevel.c:3682
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Када миш напусти панел, сам га сакриј"
 
-#: gnome-panel/panel-toplevel.c:3655
+#: gnome-panel/panel-toplevel.c:3691
 msgid "Hide delay"
 msgstr "Време скривања"
 
-#: gnome-panel/panel-toplevel.c:3656
+#: gnome-panel/panel-toplevel.c:3692
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Колико милисекунди се чека пре него што се сакрије"
 
-#: gnome-panel/panel-toplevel.c:3667
+#: gnome-panel/panel-toplevel.c:3703
 msgid "Un-hide delay"
 msgstr "Време откривања"
 
-#: gnome-panel/panel-toplevel.c:3668
+#: gnome-panel/panel-toplevel.c:3704
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Колико милисекунди се чека пре него што се открије"
 
-#: gnome-panel/panel-toplevel.c:3679
+#: gnome-panel/panel-toplevel.c:3715
 msgid "Auto-hide size"
 msgstr "Величина за самоскривање"
 
-#: gnome-panel/panel-toplevel.c:3680
+#: gnome-panel/panel-toplevel.c:3716
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "Колико тачака се види када је панел самоскривен"
 
-#: gnome-panel/panel-toplevel.c:3691
+#: gnome-panel/panel-toplevel.c:3727
 msgid "Animate"
 msgstr "Анимирај"
 
-#: gnome-panel/panel-toplevel.c:3692
+#: gnome-panel/panel-toplevel.c:3728
 msgid "Enable hiding/showing animations"
 msgstr "Укључи анимацију при скривању/откривању"
 
-#: gnome-panel/panel-toplevel.c:3701
+#: gnome-panel/panel-toplevel.c:3737
 msgid "Animation Speed"
 msgstr "Брзина анимације"
 
-#: gnome-panel/panel-toplevel.c:3702
+#: gnome-panel/panel-toplevel.c:3738
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "Брзина којом се анимира сакривање/откривање панела"
 
-#: gnome-panel/panel-toplevel.c:3712
+#: gnome-panel/panel-toplevel.c:3748
 msgid "Buttons Enabled"
 msgstr "Омогућени дугмићи"
 
-#: gnome-panel/panel-toplevel.c:3713
+#: gnome-panel/panel-toplevel.c:3749
 msgid "Enable hide/show buttons"
 msgstr "Омогући дугмиће за скривање/откривање"
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3758
 msgid "Arrows Enabled"
 msgstr "Стрелице укључене"
 
-#: gnome-panel/panel-toplevel.c:3723
+#: gnome-panel/panel-toplevel.c:3759
 msgid "Enable arrows on hide/show buttons"
 msgstr "Прикажи стрелице на дугмићима за скривање и откривање"
 
@@ -3120,6 +3123,10 @@ msgstr "Гигантски"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Патуљасти"
+
+#~ msgid "If true, display internet time, which is same all over the world."
+#~ msgstr ""
+#~ "Уколико је постављено, прикажи Интернет време, које је исто свуда у свету."
 
 #~ msgid ""
 #~ "Failed to load image %s\n"
