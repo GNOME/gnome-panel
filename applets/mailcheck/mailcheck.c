@@ -17,7 +17,6 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
-#include <config.h>
 #include <gnome.h>
 #include <applet-widget.h>
 #include <libgnomeui/gnome-window-icon.h>
@@ -1374,11 +1373,11 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 		return;
 	}
 	
-	mc->about = gnome_about_new ( _("Mail check Applet"), "1.1",
-				      _("(c) 1998-2000 the Free Software Foundation"),
-				      authors,
-				      _("Mail check notifies you when new mail arrives in your mailbox"),
-				      NULL);
+	mc->about = gnome_about_new (_("Mail check Applet"), "1.1",
+				     _("(c) 1998-2000 the Free Software Foundation"),
+				     authors,
+				     _("Mail check notifies you when new mail arrives in your mailbox"),
+				     NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (mc->about),
 				"mailcheck", "Mailcheck");
 	gnome_window_icon_set_from_file (GTK_WINDOW (mc->about),

@@ -8,15 +8,14 @@
  * Feel free to implement new look and feels :-)
  */
 
-#include <stdio.h>
 #include <config.h>
+#include <stdio.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <signal.h>
 #include <dirent.h>
 #include <string.h>
 #include <time.h>
-#include <config.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>
 #include <applet-widget.h>
