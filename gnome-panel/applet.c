@@ -575,28 +575,33 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 
 
 static gboolean
-applet_button_press (GtkWidget *widget, GdkEventButton *event, AppletInfo *info)
+applet_button_press (GtkWidget      *widget,
+		     GdkEventButton *event,
+		     AppletInfo     *info)
 {
 	if (event->button == 3) {
-		if ( ! panel_applet_in_drag) {
-			if(info->type == APPLET_SWALLOW) {
-				Swallow *swallow = info->data;
-				GtkWidget *handle_box = swallow->handle_box;
-				if(!GTK_HANDLE_BOX(handle_box)->child_detached)
-					show_applet_menu(info, event);
-			} else {
+		if (panel_applet_in_drag)
+			return FALSE;
+
+		if (info->type != APPLET_SWALLOW) 
+			show_applet_menu (info, event);
+
+		else {
+			GtkHandleBox *handle_box;
+
+			handle_box = GTK_HANDLE_BOX (((Swallow *)info->data)->handle_box);
+				
+			if (handle_box->child_detached)
 				show_applet_menu (info, event);
-			}
 		}
+
+		return TRUE;
 	}
 
-#if FIXME /* ALEX: I had to remove this, because by returning TRUE we stopped button presses from reaching buttonwidgets */
-	/* don't let any button click events to the panel or moving the applets
-	 * would move the panel */
-	return TRUE;
-#else
-	return FALSE;
-#endif
+	if (IS_BUTTON_WIDGET (widget))
+		return FALSE;
+	else
+		return TRUE;
 }
 
 static GList *launchers_to_kill = NULL;
