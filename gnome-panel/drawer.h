@@ -21,20 +21,25 @@ typedef struct {
 	guint          listeners [PANEL_DRAWER_N_LISTENERS];
 } Drawer;
 
-void    panel_drawer_create (PanelToplevel *toplevel,
-			     int            position,
-			     const char    *custom_icon,
-			     gboolean       use_custom_icon,
-			     const char    *tooltip,
-			     char         **idreturn /*optional*/);
+void  panel_drawer_create          (PanelToplevel *toplevel,
+				    int            position,
+				    const char    *custom_icon,
+				    gboolean       use_custom_icon,
+				    const char    *tooltip);
 
-void    panel_drawer_set_dnd_enabled (Drawer   *drawer,
-				      gboolean  dnd_enabled);
+char *panel_drawer_create_with_id  (const char    *toplevel_id,
+				    int            position,
+				    const char    *custom_icon,
+				    gboolean       use_custom_icon,
+				    const char    *tooltip);
 
-void    drawer_load_from_gconf (PanelWidget *panel_widget,
-				gboolean     locked,
-				gint         position,
-				const char  *id);
+void  panel_drawer_set_dnd_enabled (Drawer        *drawer,
+				    gboolean       dnd_enabled);
+
+void  drawer_load_from_gconf       (PanelWidget   *panel_widget,
+				    gboolean       locked,
+				    gint           position,
+				    const char    *id);
 
 G_END_DECLS
 

@@ -201,10 +201,6 @@ static void         make_add_submenu   (GtkWidget             *menu,
 				        Bonobo_ServerInfoList *applet_list);
 static PanelWidget *menu_get_panel     (GtkWidget *menu);
 static GdkScreen   *menuitem_to_screen (GtkWidget *menuitem);
-static void add_drawers_from_dir	(const char *dirname,
-					 const char *name,
-					 int pos,
-					 PanelWidget *panel);
 
 static inline gboolean
 panel_menu_have_icons (void)
@@ -1226,128 +1222,91 @@ add_app_to_panel (GtkWidget    *item,
 }
 
 
-static void
-applet_added_add_launchers (PanelWidget *panel, GtkWidget *applet, gpointer data)
+static inline gboolean
+vfs_text_uri_exists (const char *text_uri)
 {
-	const char *data_string = data;
-	const char *dirname;
-	char *id;
-	AppletInfo    *info;
+	GnomeVFSURI *uri;
+	gboolean     retval;
 
-	info = g_object_get_data (G_OBJECT (applet), "applet_info");
-	if (info->type == PANEL_OBJECT_DRAWER ) {
-		Drawer *drawer = info->data;
-		PanelWidget *newpanel;
-		char *filename = NULL;
-		GSList *list, *li;
+	uri = gnome_vfs_uri_new (text_uri);
+	retval = gnome_vfs_uri_exists (uri);
+	gnome_vfs_uri_unref (uri);
 
-		if (drawer->toplevel == NULL)
-			return;
-
-		dirname = strchr (data_string, '%');
-		g_return_if_fail (dirname != NULL);
-		id = g_strndup (data_string, (dirname - data_string));
-		dirname++;
-
-		if (strcmp (info->id, id) != 0) {
-			g_free (id);
-			return;
-		}
-		g_free (id);
-
-		newpanel = panel_toplevel_get_panel_widget (drawer->toplevel);
-
-		list = get_mfiles_from_menudir (dirname, NULL /* sorted */);
-		for(li = list; li!= NULL; li = li->next) {
-			MFile *mfile = li->data;
-
-			g_free (filename);
-			filename = g_build_filename (dirname, mfile->name, NULL);
-
-			if ( ! mfile->verified) {
-				continue;
-			}
-
-			if (mfile->is_dir) {
-				add_drawers_from_dir (filename, NULL, G_MAXINT/2,
-						      newpanel);
-				continue;
-			}
-
-			if (g_str_has_suffix (mfile->name, ".desktop") ||
-			    g_str_has_suffix (mfile->name, ".kdelnk"))
-				panel_launcher_create (newpanel->toplevel, G_MAXINT/2, filename);
-		}
-		g_free (filename);
-
-		free_mfile_list (list);
-
-		/* No longer need to add these items */
-		g_signal_handlers_disconnect_by_func (panel,
-						      G_CALLBACK (applet_added_add_launchers),
-						      data);
-	}
+	return retval;
 }
 
 static void
-add_drawers_from_dir (const char *dirname, const char *name,
-		      int pos, PanelWidget *panel)
+add_drawers_from_dir (const char  *dirname,
+		      const char  *name,
+		      int          pos,
+		      const char  *toplevel_id)
 {
 	QuickDesktopItem *item_info;
-	char *dentry_name;
-	const char *subdir_name;
-	char *pixmap_name;
-	char *id;
-	char *data;
+	GSList           *mfiles, *l;
+	const char       *subdir_name;
+	char             *dentry_name;
+	char             *pixmap_name;
+	char             *uri;
+	char             *attached_toplevel_id;
 
-	dentry_name = g_build_path ("/",
-				    dirname,
-				    ".directory",
-				    NULL);
-	item_info = quick_desktop_item_load_uri (dentry_name,
-						 NULL /* expected_type */,
-						 FALSE /* run_tryexec */);
+	dentry_name = g_build_path ("/", dirname, ".directory", NULL);
+	item_info = quick_desktop_item_load_uri (dentry_name, NULL, FALSE);
 	g_free (dentry_name);
 
-	if (name == NULL)
-		subdir_name = item_info != NULL ? item_info->name : NULL;
-	else
-		subdir_name = name;
-	pixmap_name = item_info != NULL ? item_info->icon : NULL;
+	subdir_name = name ? name : (item_info ? item_info->name : NULL);
+	pixmap_name = item_info ? item_info->icon : NULL;
 
-	panel_drawer_create (panel->toplevel,
-			     pos,
-			     pixmap_name,
-			     pixmap_name != NULL,
-			     subdir_name,
-			     &id);
+	attached_toplevel_id = panel_drawer_create_with_id (toplevel_id,
+							    pos,
+							    pixmap_name,
+							    pixmap_name != NULL,
+							    subdir_name);
+	if (!attached_toplevel_id)
+		return;
 
-	data = g_strconcat (id, "%", dirname, NULL);
-	g_free (id);
+	mfiles = get_mfiles_from_menudir (dirname, NULL);
+	for (l = mfiles; l; l = l->next) {
+		MFile *mfile = l->data;
 
-	g_signal_connect_data (panel, "applet_added",
-			       G_CALLBACK (applet_added_add_launchers),
-			       data,
-			       (GClosureNotify)g_free,
-			       0 /* connect_flags */);
+		uri = g_build_filename (dirname, mfile->name, NULL);
+
+		if (mfile->verified) {
+			if (mfile->is_dir)
+				add_drawers_from_dir (uri, NULL, G_MAXINT/2, attached_toplevel_id);
+
+			else if ((g_str_has_suffix (mfile->name, ".desktop") ||
+				  g_str_has_suffix (mfile->name, ".kdelnk")) &&
+				 vfs_text_uri_exists (uri))
+				panel_launcher_create_with_id (attached_toplevel_id, G_MAXINT/2, uri);
+		}
+
+		g_free (uri);
+	}
+
+	free_mfile_list (mfiles);
+	g_free (attached_toplevel_id);
 }
 
-/*add a drawer with the contents of a menu to the panel*/
 static void
-add_menudrawer_to_panel(GtkWidget *widget, gpointer data)
-{
-	MenuFinfo *mf = data;
-	PanelWidget *panel = menu_get_panel (widget);
-	PanelData *pd;
-	int insertion_pos = -1;
+add_menudrawer_to_panel (GtkWidget *menuitem,
+			 MenuFinfo *mf)
 
-	g_return_if_fail (mf != 0);
+{
+	PanelWidget *panel;
+	PanelData   *pd;
+	int          insertion_pos;
+
+	g_return_if_fail (mf != NULL);
+	
+	panel = menu_get_panel (menuitem);
 
 	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
+	insertion_pos = pd ? pd->insertion_pos : -1;
 
-	add_drawers_from_dir (mf->menudir, mf->dir_name, insertion_pos, panel);
+	add_drawers_from_dir (mf->menudir,
+			      mf->dir_name,
+			      insertion_pos,
+			      panel_profile_get_toplevel_id (panel->toplevel));
 }
 
 static void
@@ -1977,7 +1936,7 @@ add_drawer_to_panel (GtkWidget *item)
 	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
 	position = pd ? pd->insertion_pos : -1;
 
-	panel_drawer_create (toplevel, position, NULL, FALSE, NULL, NULL);
+	panel_drawer_create (toplevel, position, NULL, FALSE, NULL);
 }
 
 static void

@@ -1001,9 +1001,9 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 }
 
 void
-panel_launcher_create (PanelToplevel *toplevel,
-		       int            position,
-		       const char    *location)
+panel_launcher_create_with_id (const char    *toplevel_id,
+			       int            position,
+			       const char    *location)
 {
 	GConfClient *client;
 	const char  *profile;
@@ -1015,14 +1015,23 @@ panel_launcher_create (PanelToplevel *toplevel,
 	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
-	id = panel_profile_prepare_object (PANEL_OBJECT_LAUNCHER, toplevel, position, FALSE);
+	id = panel_profile_prepare_object_with_id (PANEL_OBJECT_LAUNCHER, toplevel_id, position, FALSE);
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
 	gconf_client_set_string (client, key, location, NULL);
 
 	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+}
 
+void
+panel_launcher_create (PanelToplevel *toplevel,
+		       int            position,
+		       const char    *location)
+{
+	panel_launcher_create_with_id (panel_profile_get_toplevel_id (toplevel),
+				       position,
+				       location);
 }
 
 void

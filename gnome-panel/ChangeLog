@@ -1,5 +1,35 @@
 2003-07-31  Mark McLoughlin  <mark@skynet.ie>
 
+	Evil duplication of effort happening here. This reverts George's
+	fix for #117710 (add entire menu as drawer) and uses a nicer fix
+	I happened to be working on at the same time. No, I'm not a nice
+	person.
+
+	* drawer.[ch]:
+	(panel_drawer_prepare): split out from panel_drawer_create()
+	and allow preparing the attached toplevel before loading.
+	(panel_drawer_create): upd.
+	(panel_drawer_create_with_id): impl loading onto a toplevel
+	with only the toplevels id.
+	
+	* launcher.[ch]:
+	(panel_launcher_create_with_id): allow loading onto a toplevel
+	with only its id.
+	(panel_launcher_create): use with_id().
+	
+	* menu.c:
+	(vfs_text_uri_exists): impl.
+	(add_drawers_from_dir),
+	(add_menudrawer_to_panel): re-implement to allow prepare the
+	drawer, launchers and all sub-drawers and then load them all
+	in one go.
+	
+	* panel.c: (drop_internal_applet): upd.
+	
+	* applet.c: (panel_applet_register): g_strdup is NULL tolerant.
+
+2003-07-31  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-profile.[ch]: (panel_profile_create_toplevel):
 	Add a GdkScreen * argument and create the toplevel on
 	that screen.

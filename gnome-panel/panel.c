@@ -747,7 +747,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 	} else if (!strcmp (applet_type, "DRAWER:NEW")) {
 		if (panel_profile_list_is_writable (PANEL_GCONF_OBJECTS) &&
 		    panel_profile_list_is_writable (PANEL_GCONF_TOPLEVELS)) {
-			panel_drawer_create (panel->toplevel, pos, NULL, FALSE, NULL, NULL);
+			panel_drawer_create (panel->toplevel, pos, NULL, FALSE, NULL);
 			success = TRUE;
 		} else {
 			success = FALSE;

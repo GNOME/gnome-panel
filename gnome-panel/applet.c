@@ -1046,14 +1046,14 @@ panel_applet_register (GtkWidget       *applet,
 					  GDK_POINTER_MOTION_HINT_MASK));
 
 	info = g_new0 (AppletInfo, 1);
-	info->type = type;
-	info->widget = applet;
-	info->menu = NULL;
-	info->data = data;
+	info->type         = type;
+	info->widget       = applet;
+	info->menu         = NULL;
+	info->data         = data;
 	info->data_destroy = data_destroy;
-	info->user_menu = NULL;
-	info->move_item = NULL;
-	if (id) info->id = g_strdup (id);
+	info->user_menu    = NULL;
+	info->move_item    = NULL;
+	info->id           = g_strdup (id);
 
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);
 
