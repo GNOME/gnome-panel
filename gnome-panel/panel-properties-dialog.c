@@ -650,9 +650,6 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	gtk_window_set_screen (GTK_WINDOW (dialog->properties_dialog),
 			       gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
-	gtk_window_set_transient_for (GTK_WINDOW (dialog->properties_dialog),
-				      GTK_WINDOW (toplevel));
-
 	panel_properties_dialog_setup_name_entry         (dialog, gui);
 	panel_properties_dialog_setup_orientation_menu   (dialog, gui);
 	panel_properties_dialog_setup_size_spin          (dialog, gui);

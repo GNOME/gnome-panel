@@ -184,7 +184,7 @@ xstuff_net_wm_supports (const char *hint)
 }
 
 void
-xstuff_set_no_group_and_no_input (GdkWindow *win)
+xstuff_set_no_group (GdkWindow *win)
 {
 	XWMHints *old_wmhints;
 	XWMHints wmhints = {0};
@@ -201,14 +201,11 @@ xstuff_set_no_group_and_no_input (GdkWindow *win)
 		XFree (old_wmhints);
 
 		wmhints.flags &= ~WindowGroupHint;
-		wmhints.flags |= InputHint;
-		wmhints.input = False;
 		wmhints.window_group = 0;
 	} else {
 		/* General paranoia */
-		wmhints.flags = InputHint | StateHint;
+		wmhints.flags = StateHint;
 		wmhints.window_group = 0;
-		wmhints.input = False;
 		wmhints.initial_state = NormalState;
 	}
 

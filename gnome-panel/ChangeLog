@@ -1,3 +1,17 @@
+2003-03-07  Arvind Samptur <arvind.samptur@wipro.com>
+	* panel-toplevel.c : (panel_toplevel_realize) : Remove the
+	panel window from the window group. Else the WM will stack
+	all the child windows of the panel above all apps.
+
+	* xstuff.c : (xstuff_set_no_group) Remove the part 
+	of disabling input.
+
+	* panel-properties-dialog.c : (panel_properties_dialog_new):
+	Revert the changes made on 2003-03-05 of setting the transient 
+	parent for the dialog. It's no longer required.
+
+	Fixes #107616
+
 2003-03-07  Mark McLoughlin  <mark@skynet.ie>
 
 	Fix #107775 - panel "forgets" it on the top and goes back

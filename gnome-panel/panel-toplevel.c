@@ -2249,6 +2249,7 @@ panel_toplevel_realize (GtkWidget *widget)
 
 	panel_toplevel_update_struts (toplevel);
 	panel_xutils_set_window_type (widget->window, PANEL_XUTILS_TYPE_DOCK);
+	xstuff_set_no_group (widget->window);
 
 	panel_toplevel_move_resize_window (toplevel, TRUE, TRUE);
 }
