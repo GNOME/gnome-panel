@@ -17,6 +17,8 @@ static void scroll_menu_size_allocate   (GtkWidget        *widget,
 static void scroll_menu_map             (GtkWidget        *widget);
 static void scroll_menu_unmap           (GtkWidget        *widget);
 static void scroll_menu_destroy         (GtkObject        *object);
+static void scroll_menu_move_current    (GtkMenuShell     *menu_shell,
+					 GtkMenuDirectionType direction);
 static void scroll_menu_remove          (GtkContainer     *container,
 					 GtkWidget        *widget);
 static gboolean scroll_menu_enter_notify(GtkWidget        *widget,
@@ -64,11 +66,12 @@ scroll_menu_get_type (void)
 }
 
 static void
-scroll_menu_class_init (ScrollMenuClass *class)
+scroll_menu_class_init (ScrollMenuClass *klass)
 {
-	GtkObjectClass *object_class = (GtkObjectClass*) class;
-	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
-	GtkContainerClass *container_class = (GtkContainerClass*) class;
+	GtkObjectClass *object_class = (GtkObjectClass*) klass;
+	GtkWidgetClass *widget_class = (GtkWidgetClass*) klass;
+	GtkContainerClass *container_class = (GtkContainerClass*) klass;
+	GtkMenuShellClass *menushell_class = (GtkMenuShellClass*) klass;
 	
 	widget_class->size_request = scroll_menu_size_request;
 	widget_class->size_allocate = scroll_menu_size_allocate;
@@ -76,27 +79,20 @@ scroll_menu_class_init (ScrollMenuClass *class)
 	widget_class->unmap = scroll_menu_unmap;
 	widget_class->enter_notify_event = scroll_menu_enter_notify;
 
+	menushell_class->move_current = scroll_menu_move_current;
+
 	container_class->remove = scroll_menu_remove;
 
 	object_class->destroy = scroll_menu_destroy;
 }
 
-static gboolean
-scroll_timeout (gpointer data)
+static void
+scroll_by (ScrollMenu *self, int move)
 {
-	ScrollMenu *self = SCROLL_MENU (data);
 	GtkMenuShell *menu_shell = GTK_MENU_SHELL (self);
 	GtkAllocation allocation;
-	int move;
 	GList *children;
 	GtkWidget *child;
-
-	if (self->scroll_by == 0 ||
-	    menu_shell->children == NULL) {
-		return TRUE;
-	}
-
-	move = self->scroll_by;
 
 	if (self->offset + move < 0) {
 		move = - self->offset;
@@ -105,7 +101,7 @@ scroll_timeout (gpointer data)
 	}
 
 	if (move == 0)
-		return TRUE;
+		return;
 
 	self->offset += move;
 
@@ -122,6 +118,20 @@ scroll_timeout (gpointer data)
 			gtk_widget_queue_draw (child);
 		}
 	}
+}
+
+static gboolean
+scroll_timeout (gpointer data)
+{
+	ScrollMenu *self = SCROLL_MENU (data);
+	GtkMenuShell *menu_shell = GTK_MENU_SHELL (self);
+
+	if (self->scroll_by == 0 ||
+	    menu_shell->children == NULL) {
+		return TRUE;
+	}
+
+	scroll_by (self, self->scroll_by);
 
 	return TRUE;
 }
@@ -146,15 +156,6 @@ scroll_draw (GtkWidget *scroll, gboolean active, int direction)
 			 0, 0,
 			 scroll->allocation.width,
 			 scroll->allocation.height);
-
-	/*if (active) {
-		gdk_draw_rectangle (scroll->window,
-				    scroll->style->black_gc,
-				    FALSE,
-				    0, 0,
-				    scroll->allocation.width - 1,
-				    scroll->allocation.height - 1);
-	}*/
 
 	if (direction == SCROLL_UP) {
 		arrow_type = GTK_ARROW_UP;
@@ -498,6 +499,58 @@ scroll_menu_unmap (GtkWidget *widget)
 		gtk_widget_unmap (self->up_scroll);
 	if (GTK_WIDGET_MAPPED (self->down_scroll))
 		gtk_widget_unmap (self->down_scroll);
+}
+
+static void
+adjust_item (ScrollMenu *self, GtkWidget *widget)
+{
+	GtkWidget *menu = GTK_WIDGET (self);
+	GtkRequisition requisition;
+	int top;
+	int bottom;
+	int move;
+
+	if ( ! self->scroll)
+		return;
+
+	top = (GTK_CONTAINER (self)->border_width +
+	       menu->style->klass->ythickness);
+
+	bottom = menu->allocation.height -
+		(GTK_CONTAINER (self)->border_width +
+		 menu->style->klass->ythickness);
+
+	gtk_widget_get_child_requisition (self->up_scroll, &requisition);
+	top += requisition.height;
+
+	gtk_widget_get_child_requisition (self->down_scroll, &requisition);
+	bottom -= requisition.height;
+
+	move = 0;
+
+	if (widget->allocation.y < top) {
+		move = - (top - widget->allocation.y);
+	} else if (widget->allocation.y + widget->allocation.height > bottom) {
+		move = (widget->allocation.y +
+			widget->allocation.height -
+			bottom);
+	}
+
+	if (move != 0)
+		scroll_by (self, move);
+}
+
+static void
+scroll_menu_move_current (GtkMenuShell *menu_shell, GtkMenuDirectionType direction)
+{
+	GtkWidget *current_active = menu_shell->active_menu_item;
+
+	if (GTK_MENU_SHELL_CLASS (parent_class)->move_current)
+		GTK_MENU_SHELL_CLASS (parent_class)->move_current (menu_shell, direction);
+
+	if (menu_shell->active_menu_item != NULL &&
+	    menu_shell->active_menu_item != current_active)
+		adjust_item (SCROLL_MENU (menu_shell), menu_shell->active_menu_item);
 }
 
 static void
