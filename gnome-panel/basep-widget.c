@@ -987,15 +987,13 @@ basep_widget_init (BasePWidget *basep)
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);
 
-#if 0
-/* these are all 0... */
 	basep->mode = BASEP_EXPLICIT_HIDE;
 	basep->state = BASEP_SHOWN;
-	basep->leave_notify_event = 0;
+	basep->level = BASEP_LEVEL_DEFAULT;
+	basep->avoid_on_maximize = TRUE;
+	basep->leave_notify_timer_tag = 0;
 	basep->autohide_inhibit = FALSE;
 	basep->drawers_open = 0;
-	basep->moving = FALSE;
-#endif /*0*/
 
 	basep->hidebuttons_enabled = TRUE;
 	basep->hidebutton_pixmaps_enabled = TRUE;
@@ -1031,38 +1029,50 @@ basep_widget_update_winhints (BasePWidget *basep)
 {
 	GtkWidget *w = GTK_WIDGET (basep);
 	GnomeWinLayer layer;
+	guint coverhint;
 
 	if ( ! basep->compliant_wm)
 		return;
 
 	gnome_win_hints_set_expanded_size (w, 0, 0, 0, 0);
-	gdk_window_set_decorations(w->window, 0);
+	gdk_window_set_decorations (w->window, 0);
 	gnome_win_hints_set_state (w, WIN_STATE_STICKY |
 				   WIN_STATE_FIXED_POSITION);
-	
+
+	if (basep->avoid_on_maximize) {
+		coverhint = WIN_HINTS_DO_NOT_COVER;
+	} else {
+		coverhint = 0;
+	}
+
+	if (basep->level == BASEP_LEVEL_DEFAULT) {
+		if (global_config.normal_layer) {
+			layer = WIN_LAYER_NORMAL;
+		} else if (global_config.keep_bottom) {
+			layer = WIN_LAYER_BELOW;
+		} else {
+			layer = WIN_LAYER_DOCK;
+		}
+	} else if (basep->level == BASEP_LEVEL_BELOW) {
+		layer = WIN_LAYER_BELOW;
+	} else if (basep->level == BASEP_LEVEL_NORMAL) {
+		layer = WIN_LAYER_NORMAL;
+	} else /* if (basep->level == BASEP_LEVEL_ABOVE) */ {
+		layer = WIN_LAYER_DOCK;
+	} 
+
 	switch (basep->state) {
 	case BASEP_SHOWN:
 	case BASEP_MOVING:
-		/* drawers are always in DOCK */
-		if(IS_DRAWER_WIDGET(w)) {
-			if (global_config.normal_layer)
-				layer = WIN_LAYER_NORMAL;
-			else
-				layer = WIN_LAYER_DOCK;
-			gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS);
-			gnome_win_hints_set_layer (w, layer);
-		} else {
-			if (global_config.normal_layer) {
-				layer = WIN_LAYER_NORMAL;
-			} else if (global_config.keep_bottom) {
-				layer = WIN_LAYER_BELOW;
-			} else {
-				layer = WIN_LAYER_DOCK;
-			}
-			gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
-						   WIN_HINTS_DO_NOT_COVER);
-			gnome_win_hints_set_layer (w, layer);
-		}
+		/* drawers are always in DOCK, or NORMAL */
+		if( IS_DRAWER_WIDGET(w) &&
+		    basep->level == BASEP_LEVEL_DEFAULT &&
+		    ! global_config.normal_layer)
+			layer = WIN_LAYER_DOCK;
+
+		gnome_win_hints_set_layer (w, layer);
+		gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
+					   coverhint);
 		break;
 	default: /* all of the hidden states */
 		gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS);
@@ -1172,6 +1182,8 @@ basep_widget_construct (BasePWidget *basep,
 			int sz,
 			BasePMode mode,
 			BasePState state,
+			BasePLevel level,
+			gboolean avoid_on_maximize,
 			gboolean hidebuttons_enabled,
 			gboolean hidebutton_pixmaps_enabled,
 			PanelBackType back_type,
@@ -1259,6 +1271,9 @@ basep_widget_construct (BasePWidget *basep,
 			    GTK_SIGNAL_FUNC (basep_widget_south_clicked),
 			    basep);
 
+	basep->level = level;
+	basep->avoid_on_maximize = avoid_on_maximize;
+
 	basep->hidebuttons_enabled = hidebuttons_enabled;
 	basep->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 
@@ -1289,6 +1304,8 @@ basep_widget_change_params (BasePWidget *basep,
 			    int sz,
 			    BasePMode mode,
 			    BasePState state,
+			    BasePLevel level,
+			    gboolean avoid_on_maximize,
 			    gboolean hidebuttons_enabled,
 			    gboolean hidebutton_pixmaps_enabled,
 			    PanelBackType back_type,
@@ -1346,6 +1363,14 @@ basep_widget_change_params (BasePWidget *basep,
 				     do no padding on the sides */
 				   !hidebuttons_enabled,
 				   back_color);
+
+	if (basep->level != level ||
+	    basep->avoid_on_maximize != avoid_on_maximize) {
+		basep->level = level;
+		basep->avoid_on_maximize = avoid_on_maximize;
+		basep_widget_update_winhints (basep);
+	}
+
 
 	basep_widget_set_hidebuttons(basep);
 	basep_widget_show_hidebutton_pixmaps(basep);

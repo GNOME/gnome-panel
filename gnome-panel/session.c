@@ -556,6 +556,10 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	
 		gnome_config_set_int ("mode", basep->mode);
 		gnome_config_set_int ("state", basep->state);
+
+		gnome_config_set_int ("level", basep->level);
+		gnome_config_set_bool ("avoid_on_maximize",
+				       basep->avoid_on_maximize);
 	}
 
 	gnome_config_set_int("sz", panel->sz);
@@ -1271,18 +1275,20 @@ init_user_panels(void)
 			hidebutton_pixmaps = TRUE;
 		}
 
-		panel = edge_widget_new(BORDER_BOTTOM,
-					BASEP_EXPLICIT_HIDE,
-					BASEP_SHOWN,
-					sz,
-					TRUE,
-					hidebutton_pixmaps,
-					PANEL_BACK_NONE,
-					NULL,
-					TRUE,
-					FALSE,
-					TRUE,
-					NULL);
+		panel = edge_widget_new (BORDER_BOTTOM,
+					 BASEP_EXPLICIT_HIDE /* mode */,
+					 BASEP_SHOWN /* state */,
+					 BASEP_LEVEL_DEFAULT /* level */,
+					 TRUE /* avoid_on_maximize */,
+					 sz /* size */,
+					 TRUE /* hidebuttons_enabled */,
+					 hidebutton_pixmaps,
+					 PANEL_BACK_NONE /* back type */,
+					 NULL,
+					 TRUE,
+					 FALSE,
+					 TRUE,
+					 NULL);
 		panel_setup(panel);
 		gtk_widget_show(panel);
 
@@ -1308,6 +1314,8 @@ init_user_panels(void)
 					   BORDER_RIGHT,
 					   BASEP_EXPLICIT_HIDE,
 					   BASEP_SHOWN,
+					   BASEP_LEVEL_DEFAULT,
+					   TRUE,
 					   sz,
 					   TRUE,
 					   hidebutton_pixmaps,
@@ -1347,6 +1355,8 @@ init_user_panels(void)
 		int sz;
 		BasePState state;
 		BasePMode mode;
+		BasePLevel level;
+		gboolean avoid_on_maximize;
 		BorderEdge edge;
 		char *back_pixmap, *color;
 		GdkColor back_color = {0,0,0,1};
@@ -1405,6 +1415,7 @@ init_user_panels(void)
 
 		state = gnome_config_get_int("state=0");
 		mode = gnome_config_get_int("mode=0");
+		level = gnome_config_get_int("level=0");
 #if 0 /* i guess we can't easily do this for now */
 		pos = basep_widget_load_pos_settings();
 #endif
@@ -1413,8 +1424,14 @@ init_user_panels(void)
 		case EDGE_PANEL:
 			g_string_sprintf (buf, "edge=%d", BORDER_BOTTOM);
 			edge = gnome_config_get_int (buf->str);
+
+			avoid_on_maximize = gnome_config_get_bool
+				("avoid_on_maximize=TRUE");
+
 			panel = edge_widget_new (edge, 
-						 mode, state, sz,
+						 mode, state,
+						 level, avoid_on_maximize,
+						 sz,
 						 hidebuttons_enabled,
 						 hidebutton_pixmaps_enabled,
 						 back_type, back_pixmap,
@@ -1431,8 +1448,13 @@ init_user_panels(void)
 			g_string_sprintf (buf, "align=%d", ALIGNED_LEFT);
 			align = gnome_config_get_int (buf->str);
 
+			avoid_on_maximize = gnome_config_get_bool
+				("avoid_on_maximize=TRUE");
+
 			panel = aligned_widget_new (align, edge,
-						    mode, state, sz,
+						    mode, state,
+						    level, avoid_on_maximize,
+						    sz,
 						    hidebuttons_enabled,
 						    hidebutton_pixmaps_enabled,
 						    back_type, back_pixmap,
@@ -1453,8 +1475,13 @@ init_user_panels(void)
 
 			offset = gnome_config_get_int ("offset=0");
 
+			avoid_on_maximize = gnome_config_get_bool
+				("avoid_on_maximize=TRUE");
+
 			panel = sliding_widget_new (anchor, offset, edge,
-						    mode, state, sz,
+						    mode, state,
+						    level, avoid_on_maximize,
+						    sz,
 						    hidebuttons_enabled,
 						    hidebutton_pixmaps_enabled,
 						    back_type, back_pixmap,
@@ -1472,9 +1499,15 @@ init_user_panels(void)
 			orient = gnome_config_get_int (buf->str);
 
 #warning FIXME: there are some issues with auto hiding drawers
+
+			avoid_on_maximize = gnome_config_get_bool
+				("avoid_on_maximize=FALSE");
+
 			panel = drawer_widget_new (orient,
 						   BASEP_EXPLICIT_HIDE, 
-						   state, sz,
+						   state,
+						   level, avoid_on_maximize,
+						   sz,
 						   hidebuttons_enabled,
 						   hidebutton_pixmaps_enabled,
 						   back_type, back_pixmap,
@@ -1499,8 +1532,13 @@ init_user_panels(void)
 			x = gnome_config_get_int ("x=0");
 			y = gnome_config_get_int ("y=0");
 
+			avoid_on_maximize = gnome_config_get_bool
+				("avoid_on_maximize=FALSE");
+
 			panel = floating_widget_new (x, y, orient,
-						     mode, state, sz,
+						     mode, state,
+						     level, avoid_on_maximize,
+						     sz,
 						     hidebuttons_enabled,
 						     hidebutton_pixmaps_enabled,
 						     back_type, back_pixmap,
@@ -1734,6 +1772,8 @@ write_global_config (void)
 			      global_config.autoraise);
 	gnome_config_set_bool("keep_bottom",
 			      global_config.keep_bottom);
+	gnome_config_set_bool("normal_layer",
+			      global_config.normal_layer);
 	gnome_config_set_bool("drawer_auto_close",
 			      global_config.drawer_auto_close);
 	gnome_config_set_bool("simple_movement",

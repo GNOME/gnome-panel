@@ -24,6 +24,7 @@
 static void config_apply (PerPanelConfig *ppc);
 
 static GtkWidget *make_size_widget (PerPanelConfig *ppc);
+static GtkWidget *make_level_widget (PerPanelConfig *ppc);
 
 static GList *ppconfigs = NULL;
 
@@ -71,7 +72,8 @@ void
 update_config_edge (BasePWidget *panel)
 {
 	PerPanelConfig *ppc = get_config_struct(GTK_WIDGET (panel));
-	if(!ppc)
+
+	if (ppc == NULL)
 		return;
 
 	g_return_if_fail (IS_BORDER_WIDGET (panel));
@@ -87,7 +89,8 @@ void
 update_config_floating_pos (BasePWidget *panel)
 {
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
-	if(!ppc)
+
+	if (ppc == NULL)
 		return;
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->x_spin),
@@ -105,7 +108,8 @@ update_config_floating_pos_limits (BasePWidget *panel)
 	int xlimit, ylimit;
 	int val;
 	GtkAdjustment *adj;
-	if(!ppc)
+
+	if (ppc == NULL)
 		return;
 
 	xlimit = gdk_screen_width() - widget->allocation.width;
@@ -139,7 +143,8 @@ update_config_floating_orient (BasePWidget *panel)
 {
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
 	GtkWidget *toggle;
-	if(!ppc)
+
+	if (ppc == NULL)
 		return;
 
 	toggle = (PANEL_WIDGET (panel->panel)->orient == PANEL_HORIZONTAL)
@@ -150,14 +155,88 @@ update_config_floating_orient (BasePWidget *panel)
 }
 
 void
-update_config_size(GtkWidget *panel)
+update_config_avoid_on_maximize (BasePWidget *panel)
+{
+	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
+	GtkWidget *toggle;
+
+	if (ppc == NULL)
+		return;
+
+	toggle = ppc->avoid_on_maximize_button;
+
+	if (panel->avoid_on_maximize &&
+	    ! GTK_TOGGLE_BUTTON (toggle)->active)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+					      TRUE);
+	else if ( ! panel->avoid_on_maximize &&
+		 GTK_TOGGLE_BUTTON (toggle)->active)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+					      FALSE);
+}
+
+void
+update_config_mode (BasePWidget *panel)
+{
+	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
+	GtkWidget *toggle;
+
+	if (ppc == NULL)
+		return;
+
+	toggle = ppc->autohide_button;
+
+	if (panel->mode == BASEP_AUTO_HIDE &&
+	    ! GTK_TOGGLE_BUTTON (toggle)->active)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+					      TRUE);
+	else if (panel->mode == BASEP_EXPLICIT_HIDE &&
+		 GTK_TOGGLE_BUTTON (toggle)->active)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+					      FALSE);
+}
+
+void
+update_config_hidebuttons (BasePWidget *panel)
+{
+	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
+	GtkWidget *toggle;
+
+	if (ppc == NULL)
+		return;
+
+	toggle = ppc->hidebuttons_button;
+
+	if (panel->hidebuttons_enabled &&
+	    ! GTK_TOGGLE_BUTTON (toggle)->active)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+					      TRUE);
+	else if ( ! panel->hidebuttons_enabled &&
+		 GTK_TOGGLE_BUTTON (toggle)->active)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+					      FALSE);
+
+	toggle = ppc->hidebutton_pixmaps_button;
+
+	if (panel->hidebutton_pixmaps_enabled &&
+	    ! GTK_TOGGLE_BUTTON (toggle)->active)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+					      TRUE);
+	else if ( ! panel->hidebutton_pixmaps_enabled &&
+		 GTK_TOGGLE_BUTTON (toggle)->active)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+					      FALSE);
+}
+
+void
+update_config_size (GtkWidget *panel)
 {
 	PerPanelConfig *ppc = get_config_struct(panel);
 	int i;
 	PanelWidget *p;
 	GtkWidget *menuitem;
 
-	if(!ppc)
+	if (ppc == NULL)
 		return;
 	p = PANEL_WIDGET(BASEP_WIDGET(panel)->panel);
 	switch(p->sz) {
@@ -191,17 +270,48 @@ update_config_size(GtkWidget *panel)
 }
 
 void
-update_config_back(PanelWidget *pw)
+update_config_level (BasePWidget *panel)
+{
+	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
+	int i;
+	GtkWidget *menuitem;
+
+	if (ppc == NULL)
+		return;
+
+	switch (panel->level) {
+	default:
+	case BASEP_LEVEL_DEFAULT:
+		i = 0;
+		break;
+	case BASEP_LEVEL_ABOVE:
+		i = 1;
+		break;
+	case BASEP_LEVEL_NORMAL:
+		i = 2;
+		break;
+	case BASEP_LEVEL_BELOW:
+		i = 3;
+		break;
+	}
+	
+	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->level_menu), i);
+	menuitem = g_list_nth_data(GTK_MENU_SHELL(GTK_OPTION_MENU(ppc->level_menu)->menu)->children, i);
+	gtk_menu_item_activate(GTK_MENU_ITEM(menuitem));
+}
+
+void
+update_config_back (PanelWidget *pw)
 {
 	GtkWidget *t, *item = NULL;
 	int history = 0;
 	PerPanelConfig *ppc;
 	
-	g_return_if_fail(pw);
-	g_return_if_fail(IS_PANEL_WIDGET(pw));
-	g_return_if_fail(pw->panel_parent);
+	g_return_if_fail (pw);
+	g_return_if_fail (IS_PANEL_WIDGET(pw));
+	g_return_if_fail (pw->panel_parent);
 
-	ppc = get_config_struct(pw->panel_parent);
+	ppc = get_config_struct (pw->panel_parent);
 
 	if(!ppc)
 		return;
@@ -327,6 +437,8 @@ config_apply (PerPanelConfig *ppc)
 					    ppc->sz,
 					    ppc->mode,
 					    BASEP_WIDGET(ppc->panel)->state,
+					    ppc->level,
+					    ppc->avoid_on_maximize,
 					    ppc->hidebuttons,
 					    ppc->hidebutton_pixmaps,
 					    ppc->back_type,
@@ -343,6 +455,8 @@ config_apply (PerPanelConfig *ppc)
 					     ppc->sz,
 					     ppc->mode,
 					     BASEP_WIDGET(ppc->panel)->state,
+					     ppc->level,
+					     ppc->avoid_on_maximize,
 					     ppc->hidebuttons,
 					     ppc->hidebutton_pixmaps,
 					     ppc->back_type,
@@ -358,6 +472,8 @@ config_apply (PerPanelConfig *ppc)
 					      ppc->sz,
 					      ppc->mode,
 					      BASEP_WIDGET(ppc->panel)->state,
+					      ppc->level,
+					      ppc->avoid_on_maximize,
 					      ppc->hidebuttons,
 					      ppc->hidebutton_pixmaps,
 					      ppc->back_type,
@@ -372,6 +488,8 @@ config_apply (PerPanelConfig *ppc)
 					       ppc->orient,
 					       ppc->mode,
 					       BASEP_WIDGET (ppc->panel)->state,
+					       ppc->level,
+					       ppc->avoid_on_maximize,
 					       ppc->sz,
 					       ppc->hidebuttons,
 					       ppc->hidebutton_pixmaps,
@@ -387,6 +505,8 @@ config_apply (PerPanelConfig *ppc)
 					    dp->orient,
 					    ppc->mode,
 					    BASEP_WIDGET (ppc->panel)->state, 
+					    ppc->level,
+					    ppc->avoid_on_maximize,
 					    ppc->sz,
 					    ppc->hidebuttons,
 					    ppc->hidebutton_pixmaps,
@@ -420,6 +540,16 @@ set_sensitive_toggle (GtkWidget *widget, GtkWidget *widget2)
 }
 
 static void
+basep_set_avoid (GtkWidget *widget, gpointer data)
+{
+	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+	
+	ppc->avoid_on_maximize = GTK_TOGGLE_BUTTON (widget)->active ? TRUE : FALSE;
+
+	panel_config_register_changes (ppc);
+}
+
+static void
 basep_set_auto_hide (GtkWidget *widget, gpointer data)
 {
 	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -449,6 +579,7 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 	
 	/* Auto-hide */
 	button = gtk_check_button_new_with_label(_("Enable Auto-hide"));
+	ppc->autohide_button = button;
 	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
 	if (ppc->mode == BASEP_AUTO_HIDE)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
@@ -459,6 +590,7 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 
 	/* Hidebuttons enable */
 	w = button = gtk_check_button_new_with_label (_("Show hide buttons"));
+	ppc->hidebuttons_button = button;
 	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
 	if (ppc->hidebuttons)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
@@ -469,6 +601,7 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 
 	/* Arrow enable */
 	button = gtk_check_button_new_with_label (_("Show arrows on hide button"));
+	ppc->hidebutton_pixmaps_button = button;
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (set_sensitive_toggle),
 			    button);
@@ -481,6 +614,35 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->hidebutton_pixmaps);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);	
+
+	return frame;
+}
+
+static GtkWidget *
+make_misc_widget (PerPanelConfig *ppc)
+{
+	GtkWidget *frame;
+	GtkWidget *box;
+	GtkWidget *button;
+
+	frame = gtk_frame_new (_("Miscellaneous"));
+	gtk_container_set_border_width (GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+
+	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+	
+	/* Avoid */
+	button = gtk_check_button_new_with_label
+		(_("Avoid this panel when maximizing windows"));
+	ppc->avoid_on_maximize_button = button;
+	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
+	if (ppc->avoid_on_maximize)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (basep_set_avoid), 
+			    NULL);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	return frame;
 }
@@ -639,17 +801,21 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 static GtkWidget *
 edge_notebook_page (PerPanelConfig *ppc)
 {
-	GtkWidget *vbox, *box;
+	GtkWidget *vbox, *box, *vvbox;
 	GtkWidget *w, *f;
 
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	
 	f = gtk_frame_new (_("Size and Position"));
+	gtk_container_set_border_width (GTK_CONTAINER (f), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), f, TRUE, TRUE, 0);
+
+	vvbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (vvbox), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (f), vvbox);
 	
 	box = gtk_hbox_new (TRUE, GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (f), box);
-	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vvbox), box, TRUE, TRUE, 0);
 	
 	w = make_size_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (box), w, TRUE, TRUE, 0);
@@ -657,7 +823,13 @@ edge_notebook_page (PerPanelConfig *ppc)
 	w = make_position_widget (ppc, 1);
 	gtk_box_pack_start (GTK_BOX (box), w,  TRUE, TRUE, 0);
 
+	w = make_level_widget (ppc);
+	gtk_box_pack_start (GTK_BOX (vvbox), w,  FALSE, FALSE, 0);
+
 	w = make_hidebuttons_widget (ppc);
+	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+
+	w = make_misc_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
 	return vbox;
@@ -1022,6 +1194,100 @@ make_size_widget (PerPanelConfig *ppc)
 	gtk_menu_item_activate(GTK_MENU_ITEM(menuitem));
 
 	return vbox;
+}
+
+static void
+level_set_level (GtkWidget *widget, gpointer data)
+{
+	BasePLevel level = GPOINTER_TO_INT (data);
+	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+
+	if(ppc->level == level)
+		return;
+
+	ppc->level = level;
+	
+	panel_config_register_changes (ppc);
+}
+
+static GtkWidget *
+make_level_widget (PerPanelConfig *ppc)
+{
+	GtkWidget *box;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	int i;
+
+	box = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+
+	gtk_box_pack_start (GTK_BOX (box),
+			    gtk_label_new (_("Panel window level:")),
+			    FALSE, FALSE, 0);
+
+	menu = gtk_menu_new ();
+	gtk_signal_connect (GTK_OBJECT (menu), "deactivate", 
+			    GTK_SIGNAL_FUNC (activate_proper_item), 
+			    NULL);
+
+	menuitem = gtk_menu_item_new_with_label (_("Default (from global preferences)"));
+	gtk_widget_show(menuitem);
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC (level_set_level),
+			    GINT_TO_POINTER (BASEP_LEVEL_DEFAULT));
+
+	menuitem = gtk_menu_item_new_with_label (_("Above other windows"));
+	gtk_widget_show(menuitem);
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC (level_set_level),
+			    GINT_TO_POINTER (BASEP_LEVEL_ABOVE));
+
+	menuitem = gtk_menu_item_new_with_label (_("Normal"));
+	gtk_widget_show(menuitem);
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC (level_set_level),
+			    GINT_TO_POINTER (BASEP_LEVEL_NORMAL));
+
+	menuitem = gtk_menu_item_new_with_label (_("Below other windows"));
+	gtk_widget_show(menuitem);
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC (level_set_level),
+			    GINT_TO_POINTER (BASEP_LEVEL_BELOW));
+
+	ppc->level_menu = gtk_option_menu_new ();
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->level_menu), menu);
+	
+	gtk_box_pack_start (GTK_BOX (box), ppc->level_menu,
+			    FALSE, FALSE, 0);
+	
+	switch (ppc->level) {
+	default:
+	case BASEP_LEVEL_DEFAULT:
+		i = 0;
+		break;
+	case BASEP_LEVEL_ABOVE:
+		i = 1;
+		break;
+	case BASEP_LEVEL_NORMAL:
+		i = 2;
+		break;
+	case BASEP_LEVEL_BELOW:
+		i = 3;
+		break;
+	}
+
+	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->level_menu), i);
+	menuitem = g_list_nth_data (GTK_MENU_SHELL (GTK_OPTION_MENU (ppc->level_menu)->menu)->children, i);
+	gtk_menu_item_activate (GTK_MENU_ITEM (menuitem));
+
+	return box;
 }
 
 static void
@@ -1398,6 +1664,8 @@ panel_config(GtkWidget *panel)
 					 until everything is all set up*/
 
 	ppc->sz = pw->sz;
+	ppc->level = basep->level;
+	ppc->avoid_on_maximize = basep->avoid_on_maximize;
 	ppc->hidebuttons = basep->hidebuttons_enabled;
 	ppc->hidebutton_pixmaps = basep->hidebutton_pixmaps_enabled;
 	ppc->fit_pixmap_bg = pw->fit_pixmap_bg;

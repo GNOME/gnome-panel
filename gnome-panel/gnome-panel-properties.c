@@ -125,6 +125,7 @@ static GtkWidget *tooltips_enabled_cb;
 static GtkWidget *drawer_auto_close_cb;
 static GtkWidget *autoraise_cb;
 static GtkWidget *keep_bottom_cb;
+static GtkWidget *above_cb;
 static GtkWidget *normal_layer_cb;
 static GtkWidget *keys_enabled_cb;
 static GtkWidget *menu_key_entry;
@@ -895,6 +896,9 @@ sync_misc_page_with_config(GlobalConfig *conf)
 				     conf->keep_bottom);
 	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (normal_layer_cb),
 				     conf->normal_layer);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (above_cb),
+				     ! conf->normal_layer && ! conf->keep_bottom);
+
 	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (confirm_panel_remove_cb),
 				     conf->confirm_panel_remove);
 	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (avoid_collisions_cb),
@@ -937,16 +941,11 @@ sync_config_with_misc_page(GlobalConfig *conf)
 static GtkWidget *grab_dialog;
 
 static GdkFilterReturn
-grab_key_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
+grab_key_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 {
 	XEvent *xevent = (XEvent *)gdk_xevent;
 	GtkEntry *entry;
 	char *key;
-
-	if (xevent->type != KeyPress && xevent->type != KeyRelease)
-		puts("EXIT X");
-	if (event->type != GDK_KEY_PRESS && event->type != GDK_KEY_RELEASE)
-		puts("EXIT GDK");
 
 	if (xevent->type != KeyPress && xevent->type != KeyRelease)
 	/*if (event->type != GDK_KEY_PRESS && event->type != GDK_KEY_RELEASE)*/
@@ -960,12 +959,12 @@ grab_key_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 
 	key = convert_keysym_state_to_string (event->key.keyval,
 					      event->key.state);
-	gtk_entry_set_text (entry, key?key:"");
-	g_free(key);
+	gtk_entry_set_text (entry, key != NULL ? key : "");
+	g_free (key);
 
 	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
 	gtk_widget_destroy (grab_dialog);
-	gdk_window_remove_filter (GDK_ROOT_PARENT(),
+	gdk_window_remove_filter (GDK_ROOT_PARENT (),
 				  grab_key_filter, data);
 
 	return GDK_FILTER_REMOVE;
@@ -1057,7 +1056,7 @@ misc_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (box), avoid_collisions_cb, FALSE, FALSE, 0);
 
 	/* Layer frame */
-	frame = gtk_frame_new (_("Keep panels (GNOME compliant window managers only)"));
+	frame = gtk_frame_new (_("Panel treatment (GNOME compliant window managers only)"));
 	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
@@ -1067,24 +1066,24 @@ misc_notebook_page(void)
 	gtk_container_add (GTK_CONTAINER (frame), box);
 
 	/* Keep on bottom */
-	keep_bottom_cb = gtk_radio_button_new_with_label (NULL, _("Below other windows"));
+	keep_bottom_cb = gtk_radio_button_new_with_label (NULL, _("Keep panels below other windows"));
 	gtk_signal_connect (GTK_OBJECT (keep_bottom_cb), "toggled", 
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), keep_bottom_cb, FALSE, FALSE, 0);
 
 	/* Normal */
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (keep_bottom_cb));
-	normal_layer_cb = gtk_radio_button_new_with_label (group, _("On the same level as other windows"));
+	normal_layer_cb = gtk_radio_button_new_with_label (group, _("Keep panels on the same level as other windows"));
 	gtk_signal_connect (GTK_OBJECT (normal_layer_cb), "toggled", 
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), normal_layer_cb, FALSE, FALSE, 0);
 
 	/* Above */
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (keep_bottom_cb));
-	w = gtk_radio_button_new_with_label (group, _("Above other windows"));
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+	above_cb = gtk_radio_button_new_with_label (group, _("Keep panels above other windows"));
+	gtk_signal_connect (GTK_OBJECT (above_cb), "toggled", 
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
-	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (box), above_cb, FALSE, FALSE, 0);
 
 	/* Key Bindings frame */
 	frame = gtk_frame_new (_("Key Bindings"));
@@ -1108,7 +1107,9 @@ misc_notebook_page(void)
 	
 	/* menu key */
 	w = gtk_label_new (_("Popup menu key"));
-	gtk_table_attach_defaults (GTK_TABLE (table), w, 0, 1, 1, 2);
+	gtk_misc_set_alignment (GTK_MISC (w), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), w, 0, 1, 1, 2,
+			  GTK_FILL, GTK_FILL, 0, 0);
 	
 
 	list = g_list_append(NULL, "Mod1-F1");
@@ -1128,14 +1129,17 @@ misc_notebook_page(void)
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 1, 2, 1, 2);
 
 	w = gtk_button_new_with_label (_("Grab key..."));
-	gtk_table_attach_defaults (GTK_TABLE (table), w, 2, 3, 1, 2);
+	gtk_table_attach (GTK_TABLE (table), w, 2, 3, 1, 2,
+			  GTK_FILL, GTK_FILL, 0, 0);
 	gtk_signal_connect (GTK_OBJECT (w), "clicked",
 			    GTK_SIGNAL_FUNC (grab_button_pressed),
 			    menu_key_entry);
 
 	/* run key...*/
 	w = gtk_label_new (_("Run dialog key"));
-	gtk_table_attach_defaults (GTK_TABLE (table), w, 0, 1, 2, 3);
+	gtk_misc_set_alignment (GTK_MISC (w), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), w, 0, 1, 2, 3,
+			  GTK_FILL, GTK_FILL, 0, 0);
 	
 	list = g_list_append(NULL, "Mod1-F2");
 	list = g_list_append(list, "Control-Mod1-r");
@@ -1153,7 +1157,8 @@ misc_notebook_page(void)
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 1, 2, 2, 3);
 
 	w = gtk_button_new_with_label (_("Grab key..."));
-	gtk_table_attach_defaults (GTK_TABLE (table), w, 2, 3, 2, 3);
+	gtk_table_attach (GTK_TABLE (table), w, 2, 3, 2, 3,
+			  GTK_FILL, GTK_FILL, 0, 0);
 	gtk_signal_connect (GTK_OBJECT (w), "clicked",
 			    GTK_SIGNAL_FUNC (grab_button_pressed),
 			    run_key_entry);

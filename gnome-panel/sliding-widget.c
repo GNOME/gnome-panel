@@ -249,20 +249,23 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 	}
 }
 
-GtkWidget *sliding_widget_new (SlidingAnchor anchor,
-			       gint16 offset,
-			       BorderEdge edge,
-			       BasePMode mode,
-			       BasePState state,
-			       int sz,
-			       int hidebuttons_enabled,
-			       int hidebutton_pixmaps_enabled,
-			       PanelBackType back_type,
-			       char *back_pixmap,
-			       gboolean fit_pixmap_bg,
-			       gboolean strech_pixmap_bg,
-			       gboolean rotate_pixmap_bg,
-			       GdkColor *back_color)
+GtkWidget *
+sliding_widget_new (SlidingAnchor anchor,
+		    gint16 offset,
+		    BorderEdge edge,
+		    BasePMode mode,
+		    BasePState state,
+		    BasePLevel level,
+		    gboolean avoid_on_maximize,
+		    int sz,
+		    gboolean hidebuttons_enabled,
+		    gboolean hidebutton_pixmaps_enabled,
+		    PanelBackType back_type,
+		    char *back_pixmap,
+		    gboolean fit_pixmap_bg,
+		    gboolean strech_pixmap_bg,
+		    gboolean rotate_pixmap_bg,
+		    GdkColor *back_color)
 {
 	SlidingWidget *sliding = gtk_type_new (TYPE_SLIDING_WIDGET);
 	SlidingPos *pos = gtk_type_new (TYPE_SLIDING_POS);
@@ -275,6 +278,8 @@ GtkWidget *sliding_widget_new (SlidingAnchor anchor,
 	border_widget_construct (BORDER_WIDGET (sliding),
 				 edge, TRUE, FALSE,
 				 sz, mode, state,
+				 level,
+				 avoid_on_maximize,
 				 hidebuttons_enabled,
 				 hidebutton_pixmaps_enabled,
 				 back_type, back_pixmap,
@@ -293,8 +298,10 @@ sliding_widget_change_params (SlidingWidget *sliding,
 			      int sz,
 			      BasePMode mode,
 			      BasePState state,
-			      int hidebuttons_enabled,
-			      int hidebutton_pixmaps_enabled,
+			      BasePLevel level,
+			      gboolean avoid_on_maximize,
+			      gboolean hidebuttons_enabled,
+			      gboolean hidebutton_pixmaps_enabled,
 			      PanelBackType back_type,
 			      char *pixmap_name,
 			      gboolean fit_pixmap_bg,
@@ -321,6 +328,7 @@ sliding_widget_change_params (SlidingWidget *sliding,
 
 	border_widget_change_params (BORDER_WIDGET (sliding),
 				     edge, sz, mode, state,
+				     level, avoid_on_maximize,
 				     hidebuttons_enabled,
 				     hidebutton_pixmaps_enabled,
 				     back_type, pixmap_name,
@@ -330,7 +338,8 @@ sliding_widget_change_params (SlidingWidget *sliding,
 }
 
 void
-sliding_widget_change_offset (SlidingWidget *sliding, gint16 offset) {
+sliding_widget_change_offset (SlidingWidget *sliding, gint16 offset)
+{
 	BasePWidget *basep = BASEP_WIDGET (sliding);
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
 	SlidingPos *pos = SLIDING_POS (basep->pos);
@@ -342,6 +351,8 @@ sliding_widget_change_offset (SlidingWidget *sliding, gint16 offset) {
 				      BORDER_POS (pos)->edge,
 				      panel->sz, basep->mode,
 				      basep->state,
+				      basep->level,
+				      basep->avoid_on_maximize,
 				      basep->hidebuttons_enabled,
 				      basep->hidebutton_pixmaps_enabled,
 				      panel->back_type,
@@ -366,6 +377,8 @@ sliding_widget_change_anchor (SlidingWidget *sliding, SlidingAnchor anchor)
 				      BORDER_POS (pos)->edge,
 				      panel->sz, basep->mode,
 				      basep->state,
+				      basep->level,
+				      basep->avoid_on_maximize,
 				      basep->hidebuttons_enabled,
 				      basep->hidebutton_pixmaps_enabled,
 				      panel->back_type,
@@ -388,6 +401,8 @@ sliding_widget_change_anchor_offset_edge (SlidingWidget *sliding,
 	sliding_widget_change_params (sliding, anchor, offset, edge,
 				      panel->sz, basep->mode,
 				      basep->state,
+				      basep->level,
+				      basep->avoid_on_maximize,
 				      basep->hidebuttons_enabled,
 				      basep->hidebutton_pixmaps_enabled,
 				      panel->back_type,

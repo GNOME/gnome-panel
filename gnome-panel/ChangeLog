@@ -1,3 +1,18 @@
+Tue Dec 19 01:32:56 2000  George Lebl <jirka@5z.com>
+
+	* aligned-widget.[ch], basep-widget.[ch], border-widget.[ch],
+	  drawer-widget.[ch], drawer.c, edge-widget.[ch],
+	  floating-widget.[ch], menu.c, panel.c, panel_config.[ch],
+	  session.c, sliding-widget.[ch]:  Implement avoid on maximize
+	  thing as a property of a panel, and implement per panel ability
+	  to set layering (or use the default).  Also fix updating of
+	  hidebutton properties on the dialog if they are changed from
+	  the menu.
+
+	* gnome-panel-properties.c, session.c:  Fix default layering
+	  properties.  Also fix some fragmented senteces and layout
+	  issues as pointed out by Karl Eichwalder <keichwa@gmx.net>
+
 Mon Dec 18 15:08:07 2000  George Lebl <jirka@5z.com>
 
 	* extern.c: when an applet is being loaded, put in a small pic

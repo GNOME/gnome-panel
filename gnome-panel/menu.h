@@ -163,6 +163,16 @@ enum {
 #define MENU_ORIENT_HORIZONTAL "orient-horizontal"
 #define MENU_ORIENT_VERTICAL "orient-vertical"
 
+#define MENU_MAXIMIZE_MODE "maximize_mode_menu"
+#define MENU_AVOID_ON_MAX "avoid-on-max"
+#define MENU_NO_AVOID_ON_MAX "no-avoid-on-max"
+
+#define MENU_LEVELS "levels_menu"
+#define MENU_LEVEL_DEFAULT "level-default"
+#define MENU_LEVEL_ABOVE "level-above"
+#define MENU_LEVEL_NORMAL "level-normal"
+#define MENU_LEVEL_BELOW "level-below"
+
 END_GNOME_DECLS
 
 #endif

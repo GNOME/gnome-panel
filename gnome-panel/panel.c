@@ -334,11 +334,11 @@ panel_size_change(GtkWidget *widget,
 			      widget);
 	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
-	update_config_size(PANEL_WIDGET(widget)->panel_parent);
+	update_config_size (PANEL_WIDGET (widget)->panel_parent);
 }
 
 void
-back_change(AppletInfo *info, PanelWidget *panel)
+back_change (AppletInfo *info, PanelWidget *panel)
 {
 	if(info->type == APPLET_EXTERN) {
 		Extern *ext = info->data;

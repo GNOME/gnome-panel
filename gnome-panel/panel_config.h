@@ -21,9 +21,11 @@ struct _PerPanelConfig {
 	gpointer		update_data;
 
 	/*basep types*/
-	int			hidebuttons;
-	int			hidebutton_pixmaps;
+	gboolean		hidebuttons;
+	gboolean		hidebutton_pixmaps;
 	BasePMode               mode;
+	BasePLevel		level;
+	gboolean		avoid_on_maximize;
 
 	/*floating widget*/
 	PanelOrientation        orient;
@@ -56,6 +58,17 @@ struct _PerPanelConfig {
 
 	GtkWidget		*pix_entry;
 
+	/*levels*/
+	GtkWidget               *level_menu;
+
+	/*avoid_on_maximize*/
+	GtkWidget               *avoid_on_maximize_button;
+
+	/*hiding stuff*/
+	GtkWidget               *autohide_button;
+	GtkWidget               *hidebuttons_button;
+	GtkWidget               *hidebutton_pixmaps_button;
+
 	/*size*/
 	GtkWidget               *size_menu;
 
@@ -85,6 +98,10 @@ void panel_config_register_changes (PerPanelConfig *ppc);
 
 void panel_config (GtkWidget *panel);
 void update_config_size (GtkWidget *panel);
+void update_config_level (BasePWidget *panel);
+void update_config_avoid_on_maximize (BasePWidget *panel);
+void update_config_mode (BasePWidget *panel);
+void update_config_hidebuttons (BasePWidget *panel);
 void update_config_back (PanelWidget *panel);
 void update_config_edge (BasePWidget *w);
 void update_config_anchor (BasePWidget *w);

@@ -3074,6 +3074,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
 					    BASEP_SHOWN,
+					    BASEP_LEVEL_DEFAULT,
+					    TRUE,
 					    SIZE_STANDARD,
 					    TRUE,
 					    TRUE,
@@ -3089,6 +3091,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 		panel = edge_widget_new(find_empty_edge (),
 					BASEP_EXPLICIT_HIDE,
 					BASEP_SHOWN,
+					BASEP_LEVEL_DEFAULT,
+					TRUE,
 					SIZE_STANDARD,
 					TRUE,
 					TRUE,
@@ -3105,6 +3109,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
 					    BASEP_SHOWN,
+					    BASEP_LEVEL_DEFAULT,
+					    TRUE,
 					    SIZE_STANDARD,
 					    TRUE, TRUE,
 					    PANEL_BACK_NONE,
@@ -3120,6 +3126,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 					     PANEL_VERTICAL,
 					     BASEP_EXPLICIT_HIDE,
 					     BASEP_SHOWN,
+					     BASEP_LEVEL_DEFAULT,
+					     FALSE,
 					     SIZE_STANDARD,
 					     TRUE, TRUE,
 					     PANEL_BACK_NONE,
@@ -3718,6 +3726,8 @@ change_hiding_mode (GtkWidget *widget, gpointer data)
 				    cur_panel->sz,
 				    GPOINTER_TO_INT (data),
 				    basep->state,
+				    basep->level,
+				    basep->avoid_on_maximize,
 				    basep->hidebuttons_enabled,
 				    basep->hidebutton_pixmaps_enabled,
 				    cur_panel->back_type,
@@ -3726,6 +3736,80 @@ change_hiding_mode (GtkWidget *widget, gpointer data)
 				    cur_panel->strech_pixmap_bg,
 				    cur_panel->rotate_pixmap_bg,
 				    &cur_panel->back_color);
+
+	update_config_mode (basep);
+}
+
+static void
+change_level (GtkWidget *widget, gpointer data)
+{
+	BasePWidget *basep;
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget);
+
+	g_return_if_fail(cur_panel != NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+
+	if (!GTK_CHECK_MENU_ITEM (widget)->active)
+		return;
+
+	g_assert (cur_panel->panel_parent);
+	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+
+	basep = BASEP_WIDGET(cur_panel->panel_parent);
+	
+	basep_widget_change_params (basep,
+				    cur_panel->orient,
+				    cur_panel->sz,
+				    basep->mode,
+				    basep->state,
+				    GPOINTER_TO_INT (data),
+				    basep->avoid_on_maximize,
+				    basep->hidebuttons_enabled,
+				    basep->hidebutton_pixmaps_enabled,
+				    cur_panel->back_type,
+				    cur_panel->back_pixmap,
+				    cur_panel->fit_pixmap_bg,
+				    cur_panel->strech_pixmap_bg,
+				    cur_panel->rotate_pixmap_bg,
+				    &cur_panel->back_color);
+	
+	update_config_level (basep);
+}
+
+static void
+change_avoid_on_maximize (GtkWidget *widget, gpointer data)
+{
+	BasePWidget *basep;
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget);
+
+	g_return_if_fail(cur_panel != NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+
+	if (!GTK_CHECK_MENU_ITEM (widget)->active)
+		return;
+
+	g_assert (cur_panel->panel_parent);
+	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+
+	basep = BASEP_WIDGET(cur_panel->panel_parent);
+	
+	basep_widget_change_params (basep,
+				    cur_panel->orient,
+				    cur_panel->sz,
+				    basep->mode,
+				    basep->state,
+				    basep->level,
+				    GPOINTER_TO_INT (data),
+				    basep->hidebuttons_enabled,
+				    basep->hidebutton_pixmaps_enabled,
+				    cur_panel->back_type,
+				    cur_panel->back_pixmap,
+				    cur_panel->fit_pixmap_bg,
+				    cur_panel->strech_pixmap_bg,
+				    cur_panel->rotate_pixmap_bg,
+				    &cur_panel->back_color);
+
+	update_config_avoid_on_maximize (basep);
 }
 
 static void
@@ -3771,6 +3855,8 @@ change_orient (GtkWidget *widget, gpointer data)
 				    cur_panel->sz,
 				    basep->mode,
 				    basep->state,
+				    basep->level,
+				    basep->avoid_on_maximize,
 				    basep->hidebuttons_enabled,
 				    basep->hidebutton_pixmaps_enabled,
 				    cur_panel->back_type,
@@ -3842,6 +3928,8 @@ change_hidebuttons (GtkWidget *widget, gpointer data)
 				    cur_panel->sz,
 				    basep->mode,
 				    basep->state,
+				    basep->level,
+				    basep->avoid_on_maximize,
 				    hidebuttons_enabled,
 				    hidebutton_pixmaps_enabled,
 				    cur_panel->back_type,
@@ -3850,6 +3938,8 @@ change_hidebuttons (GtkWidget *widget, gpointer data)
 				    cur_panel->strech_pixmap_bg,
 				    cur_panel->rotate_pixmap_bg,
 				    &cur_panel->back_color);
+
+	update_config_hidebuttons (basep);
 }
 
 static void
@@ -3903,6 +3993,67 @@ update_type_menu (GtkWidget *menu, gpointer data)
 	menuitem = gtk_object_get_data (GTK_OBJECT (menu), s);				 
 	
 	if (menuitem)
+		gtk_check_menu_item_set_active (
+			GTK_CHECK_MENU_ITEM (menuitem), TRUE);
+}
+
+static void
+update_level_menu (GtkWidget *menu, gpointer data)
+{
+	char *s = NULL;
+	GtkWidget *menuitem = NULL;
+	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
+	GtkWidget *basep = cur_panel->panel_parent;
+
+	/* sanity */
+	if ( ! BASEP_WIDGET (basep))
+		return;
+
+	switch (BASEP_WIDGET (basep)->level) {
+	case BASEP_LEVEL_DEFAULT:
+		s = MENU_LEVEL_DEFAULT;
+		break;
+	case BASEP_LEVEL_ABOVE:
+		s = MENU_LEVEL_ABOVE;
+		break;
+	case BASEP_LEVEL_NORMAL:
+		s = MENU_LEVEL_NORMAL;
+		break;
+	case BASEP_LEVEL_BELOW:
+		s = MENU_LEVEL_BELOW;
+		break;
+	default:
+		return;
+	}
+	
+	menuitem = gtk_object_get_data (GTK_OBJECT (menu), s);				 
+	
+	if (menuitem != NULL)
+		gtk_check_menu_item_set_active (
+			GTK_CHECK_MENU_ITEM (menuitem), TRUE);
+}
+
+static void
+update_avoid_on_maximize_menu (GtkWidget *menu, gpointer data)
+{
+	char *s = NULL;
+	GtkWidget *menuitem = NULL;
+	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
+	GtkWidget *basep = cur_panel->panel_parent;
+
+	/* sanity */
+	if ( ! BASEP_WIDGET (basep))
+		return;
+
+	if (BASEP_WIDGET (basep)->avoid_on_maximize) {
+		s = MENU_AVOID_ON_MAX;
+	} else {
+		s = MENU_NO_AVOID_ON_MAX;
+	}
+	
+	menuitem = gtk_object_get_data (GTK_OBJECT (menu), s);				 
+	
+	if (menuitem != NULL)
 		gtk_check_menu_item_set_active (
 			GTK_CHECK_MENU_ITEM (menuitem), TRUE);
 }
@@ -4130,6 +4281,20 @@ make_properties_submenu (GtkWidget *menu)
 		{ NULL, NULL, -1 }
 	};
 
+	NameIdEnum levels[] = {
+		{ N_("Default"), MENU_LEVEL_DEFAULT, BASEP_LEVEL_DEFAULT },
+		{ N_("Below"), MENU_LEVEL_BELOW, BASEP_LEVEL_BELOW },
+		{ N_("Normal"), MENU_LEVEL_NORMAL, BASEP_LEVEL_NORMAL },
+		{ N_("Above"), MENU_LEVEL_ABOVE, BASEP_LEVEL_ABOVE },
+		{ NULL, NULL, -1 }
+	};
+
+	NameIdEnum avoid_on_maximize[] = {
+		{ N_("Avoid on maximize"), MENU_AVOID_ON_MAX, TRUE },
+		{ N_("Don't avoid on maximize"), MENU_NO_AVOID_ON_MAX, FALSE },
+		{ NULL, NULL, -1 }
+	};
+
 	add_radio_menu (menu, _("Type"), types, MENU_TYPES,
 			convert_to_panel, update_type_menu);
 
@@ -4147,6 +4312,12 @@ make_properties_submenu (GtkWidget *menu)
 
 	add_radio_menu (menu, _("Background type"), backgrounds, MENU_BACKS,
 			change_background, update_back_menu);
+
+	add_radio_menu (menu, _("Level"), levels, MENU_LEVELS,
+			change_level, update_level_menu);
+
+	add_radio_menu (menu, _("Maximize mode"), avoid_on_maximize, MENU_MAXIMIZE_MODE,
+			change_avoid_on_maximize, update_avoid_on_maximize_menu);
 	
 	gtk_signal_connect (GTK_OBJECT (menu), "show",
 			    GTK_SIGNAL_FUNC (show_x_on_panels),
