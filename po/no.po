@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.3.2\n"
-"POT-Creation-Date: 2002-06-01 12:27+0200\n"
-"PO-Revision-Date: 2002-06-01 12:31+0200\n"
+"POT-Creation-Date: 2002-06-03 16:51+0200\n"
+"PO-Revision-Date: 2002-06-03 16:52+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -231,7 +231,7 @@ msgstr "%A, %B %d %Y"
 
 #: applets/gen_util/clock.c:854 applets/gen_util/clock.c:1086
 #: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
-#: applets/gen_util/pager.c:155 applets/gen_util/pager.c:456
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -275,7 +275,7 @@ msgstr "Bruk _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1120 applets/gen_util/mailcheck.c:1667
-#: applets/gen_util/pager.c:487 applets/gen_util/tasklist.c:701
+#: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:240
 msgid "translator_credits"
 msgstr "Kjartan Maraas"
@@ -400,7 +400,8 @@ msgid "Window List"
 msgstr "Vinduliste"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:499 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
+#: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Bytt arbeidsområde"
 
@@ -705,23 +706,23 @@ msgstr "E-postsjekk"
 msgid "New Mail"
 msgstr "Ny e-post"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Rader"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 msgid "Columns"
 msgstr "Kolonner"
 
-#: applets/gen_util/pager.c:342
+#: applets/gen_util/pager.c:344
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr ""
 "Feil ved lasting av num_rows verdi for applet for bytte av arbeidsområde: %"
 "s\n"
 
-#: applets/gen_util/pager.c:353
+#: applets/gen_util/pager.c:355
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -730,7 +731,7 @@ msgstr ""
 "Feil ved lasting av display_workspace_names verdi for applet for bytte av "
 "arbeidsområde: %s\n"
 
-#: applets/gen_util/pager.c:368
+#: applets/gen_util/pager.c:370
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -739,11 +740,11 @@ msgstr ""
 "Feil ved lasting av display_all_workspaces verdi for applet for bytte av "
 "arbeidsområde: %s\n"
 
-#: applets/gen_util/pager.c:500
+#: applets/gen_util/pager.c:504
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "© 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:501
+#: applets/gen_util/pager.c:505
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -767,11 +768,15 @@ msgstr "Vis kun _aktivt arbeidsområde"
 msgid "Show workspace _names in the switcher"
 msgstr "Vis arbeidsområde_navn i bytteren"
 
-#: applets/gen_util/pager.glade.h:7
+#: applets/gen_util/pager.glade.h:6
+msgid "Workspace Names"
+msgstr "Navn på arbeidsområder"
+
+#: applets/gen_util/pager.glade.h:8
 msgid "Workspace Switcher Preferences"
 msgstr "Brukervalg for arbeidsområdebytter"
 
-#: applets/gen_util/pager.glade.h:8
+#: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
 msgstr "Arbeidsområder"
 
@@ -948,13 +953,17 @@ msgstr ""
 msgid ""
 "If this is true, the tasklist will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
-msgstr "Hvis denne settes til sann vil oppgavelisten vise vinduer fra alle arbeidsområder. Ellers vil kun vinduer fra aktivt arbeidsområde vises."
+msgstr ""
+"Hvis denne settes til sann vil oppgavelisten vise vinduer fra alle "
+"arbeidsområder. Ellers vil kun vinduer fra aktivt arbeidsområde vises."
 
 #: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
-msgstr "Hvis sann hent vinduer til aktivt arbeidsområde ved gjenoppretting. Ellers bytt til vinduets arbeidsområde."
+msgstr ""
+"Hvis sann hent vinduer til aktivt arbeidsområde ved gjenoppretting. Ellers "
+"bytt til vinduets arbeidsområde."
 
 #: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size the tasklist applet will request"
@@ -977,14 +986,20 @@ msgid ""
 "The tasklist applet needs a minimum width to be useful at all. This value is "
 "the minimum width the applet will request. This is useful for sliding and "
 "edge panels, which would otherwise ask for a very small default width."
-msgstr "Oppgavelisten trenger en minste bredde for å fungere. Denne verdien er minimumsbredden appleten vil be om. Dette er nyttig for glidende paneler og kantpaneler som ellers ville bedt om en meget liten forvalgt bredde."
+msgstr ""
+"Oppgavelisten trenger en minste bredde for å fungere. Denne verdien er "
+"minimumsbredden appleten vil be om. Dette er nyttig for glidende paneler og "
+"kantpaneler som ellers ville bedt om en meget liten forvalgt bredde."
 
 #: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
 "This value is the maximum width the applet will request. This is useful to "
 "limit the size used in big panels where this applet could otherwise fill the "
 "entire available space, like in edge panels."
-msgstr "Denne verdien er maksimal bredde appleten vil be om. Dette er nyttig for å begrense størrelsen som brukes i store paneler hvor appleten ellers ville fylt all tilgjengelig plass. For eksempel kantpaneler."
+msgstr ""
+"Denne verdien er maksimal bredde appleten vil be om. Dette er nyttig for å "
+"begrense størrelsen som brukes i store paneler hvor appleten ellers ville "
+"fylt all tilgjengelig plass. For eksempel kantpaneler."
 
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
@@ -1244,7 +1259,7 @@ msgstr ""
 msgid "No panel found\n"
 msgstr "Ingen paneler funnet\n"
 
-#: gnome-panel/gnome-panel-preferences.c:300
+#: gnome-panel/gnome-panel-preferences.c:327
 msgid ""
 "The system administrator has disallowed\n"
 " modification of the panel configuration"
@@ -1252,7 +1267,7 @@ msgstr ""
 "Systemadministrator tillater ikke\n"
 " endring av panelets konfigurasjon"
 
-#: gnome-panel/gnome-panel-preferences.c:311
+#: gnome-panel/gnome-panel-preferences.c:338
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "Brukervalg for panel"
@@ -1521,11 +1536,11 @@ msgstr "Liste over kjente applikasjoner"
 msgid "Choose an application to run from the list"
 msgstr "Velg en applikasjon som skal kjøres fra listen"
 
-#: gnome-panel/gnome-run.c:1499
+#: gnome-panel/gnome-run.c:1497
 msgid "_Run"
 msgstr "Kjø_r"
 
-#: gnome-panel/gnome-run.c:1559
+#: gnome-panel/gnome-run.c:1557
 msgid "Run Program"
 msgstr "Kjør program"
 
