@@ -527,6 +527,8 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 static void
 show_applet_menu(AppletInfo *info)
 {
+	g_return_if_fail(info!=NULL);
+
 	if (!info->menu)
 		info->menu = create_applet_menu(info,info->user_menu);
 
@@ -828,6 +830,22 @@ set_tooltip(GtkWidget *applet, char *tooltip)
 	gtk_tooltips_set_tip (panel_tooltips,applet,tooltip,NULL);
 }
 
+static gint
+panel_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+	AppletInfo *info = data;
+	PanelWidget *panel = find_applet_panel(info->widget);
+
+	gtk_widget_dnd_data_set (widget, event, &info->widget,
+				 sizeof(GtkWidget *));
+	/*gtk_widget_ref(info->widget);
+	panel_widget_remove(panel,info->widget);*/
+
+	return TRUE;
+}
+
+static char *applet_drag_types[]={"internal/applet-widget-pointer"};
+
 void
 register_toy(GtkWidget *applet,
 	     GtkWidget * assoc,
@@ -894,6 +912,15 @@ register_toy(GtkWidget *applet,
 	gtk_widget_show(eventbox);
 
 	applets = g_list_append(applets,info);
+
+	gtk_signal_connect (GTK_OBJECT (eventbox), 
+			    "drag_request_event",
+			    GTK_SIGNAL_FUNC(panel_dnd_drag_request),
+			    info);
+
+	gtk_widget_dnd_drag_set (GTK_WIDGET(eventbox), TRUE,
+				 applet_drag_types, 1);
+
 
 	gtk_signal_connect(GTK_OBJECT(eventbox),
 			   "button_press_event",
