@@ -1208,11 +1208,7 @@ init_user_applets(void)
 				gnome_config_get_string ("custom_icon_file=");
 
 			s = g_strdup_printf("main_menu_flags=%d",
-					    (int)(MAIN_MENU_SYSTEM_SUB |
-						  MAIN_MENU_USER_SUB |
-						  MAIN_MENU_APPLETS_SUB |
-						  MAIN_MENU_PANEL_SUB |
-						  MAIN_MENU_DESKTOP));
+					    get_default_menu_flags ());
 			flags = gnome_config_get_int(s);
 			g_free(s);
 			
