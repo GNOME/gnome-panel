@@ -854,7 +854,8 @@ drop_menu(PanelWidget *panel, int pos, char *dir)
 }
 
 static void
-drop_urilist(PanelWidget *panel, int pos, char *urilist)
+drop_urilist(PanelWidget *panel, int pos, char *urilist,
+	     gboolean background_drops)
 {
 	GList *li, *files;
 	struct stat s;
@@ -884,7 +885,8 @@ drop_urilist(PanelWidget *panel, int pos, char *urilist)
 
 		mimetype = gnome_mime_type(filename);
 
-		if(mimetype && !strncmp(mimetype, "image", sizeof("image")-1))
+		if(background_drops &&
+		   mimetype && !strncmp(mimetype, "image", sizeof("image")-1))
 			panel_widget_set_back_pixmap (panel, filename);
 		else if(mimetype &&
 			(strcmp(mimetype, "application/x-gnome-app-info")==0 ||
@@ -979,6 +981,9 @@ is_this_drop_ok(GtkWidget *widget, GdkDragContext *context, guint *info,
 		if(gtk_target_list_find(panel_target_list, 
 					GPOINTER_TO_UINT(li->data),
 					&temp_info)) {
+			if(temp_info == TARGET_COLOR &&
+			   IS_FOOBAR_WIDGET(widget))
+				return FALSE;
 			if(info) *info = temp_info;
 			if(ret_atom) *ret_atom = GPOINTER_TO_UINT(li->data);
 			break;
@@ -1107,7 +1112,8 @@ drag_data_recieved_cb (GtkWidget	 *widget,
 
 	switch (info) {
 	case TARGET_URL:
-		drop_urilist(panel, pos, (char *)selection_data->data);
+		drop_urilist(panel, pos, (char *)selection_data->data,
+			     IS_FOOBAR_WIDGET(widget) ? FALSE : TRUE);
 		break;
 	case TARGET_NETSCAPE_URL:
 		drop_url(panel, pos, (char *)selection_data->data);
