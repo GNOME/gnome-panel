@@ -49,7 +49,7 @@
 #include "multiscreen-stuff.h"
 #include "conditional.h"
 
-/*#define PANEL_DEBUG 1*/
+#undef SESSION_DEBUG
 
 int config_sync_timeout = 0;
 int applets_to_sync = FALSE;
@@ -253,7 +253,7 @@ session_save_timeout (gpointer data)
 	if (cookie != ss_cookie)
 		return FALSE;
 
-#ifdef PANEL_DEBUG	
+#ifdef SESSION_DEBUG	
 	printf("SAVE TIMEOUT (%u)\n",ss_cookie);
 #endif
 	if ( ! ss_interactive) {
@@ -306,7 +306,7 @@ send_applet_session_save (AppletInfo *info,
 	/*new unique cookie*/
 	ss_cookie++;
 	
-#ifdef PANEL_DEBUG	
+#ifdef SESSION_DEBUG	
 	printf("SENDING_SESSION_SAVE (%u)\n", ss_cookie);
 #endif
 
@@ -696,7 +696,7 @@ do_session_save(GnomeClient *client,
 	gnome_client_set_discard_command (client, 3, new_args);
 #endif /* PER_SESSION_CONFIGURATION */
 
-#ifdef PANEL_DEBUG	
+#ifdef SESSION_DEBUG	
 	printf("Saving to [%s]\n",PANEL_CONFIG_PATH);
 
 	printf("Saving session: 1"); fflush(stdout);
@@ -708,7 +708,7 @@ do_session_save(GnomeClient *client,
 
 	if(complete_sync || sync_applets)
 		gnome_config_set_int ("applet_count", applet_count);
-#ifdef PANEL_DEBUG
+#ifdef SESSION_DEBUG
 	printf(" 3"); fflush(stdout);
 #endif
 	if(complete_sync || sync_panels) {
@@ -716,7 +716,7 @@ do_session_save(GnomeClient *client,
 		g_slist_foreach(panel_list, save_panel_configuration, &num);
 		gnome_config_set_int("panel_count",num-1);
 	}
-#ifdef PANEL_DEBUG
+#ifdef SESSION_DEBUG
 	printf(" 4\n"); fflush(stdout);
 #endif
 	gnome_config_pop_prefix ();
@@ -736,11 +736,6 @@ do_session_save(GnomeClient *client,
 		/* start saving applets */
 		save_next_applet ();
 	}
-
-
-#if 0 /*PANEL_DEBUG*/
-	puts("");
-#endif
 }
 
 static guint sync_handler = 0;

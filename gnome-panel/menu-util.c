@@ -17,7 +17,7 @@
 #include "panel_config_global.h"
 #include "menu.h"
 
-/*#define PANEL_DEBUG 1*/
+#undef MENU_UTIL_DEBUG
 
 extern char *kde_menudir;
 

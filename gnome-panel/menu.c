@@ -59,7 +59,7 @@
 #include "title-item.h"
 #include "panel-applet-frame.h"
 
-/*#define PANEL_DEBUG 1*/
+#undef MENU_DEBUG
 
 typedef enum {
 	SMALL_ICON_SIZE  = 20,
@@ -1389,7 +1389,7 @@ is_item_writable (const ShowItemMenu *sim)
 	    /*if it's a kdelnk file, don't let it be editted*/
 	    ! is_ext (sim->item_loc, ".kdelnk") &&
 	    access (sim->item_loc, W_OK) == 0) {
-#ifdef PANEL_DEBUG
+#ifdef MENU_DEBUG
 		puts (sim->item_loc);
 #endif
 		/*file exists and is writable, we're in bussines*/

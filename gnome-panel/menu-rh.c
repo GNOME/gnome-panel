@@ -22,7 +22,7 @@
 #include "menu-rh.h"
 #include "panel-util.h"
 
-/*#define PANEL_DEBUG 1*/
+#undef MENU_RH_DEBUG
 
 /*for AnotherLevel menus to trigger rereading on directory writes*/
 static time_t rhsysdir_mtime = 0;

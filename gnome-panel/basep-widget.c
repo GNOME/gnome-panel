@@ -27,6 +27,8 @@
 #include "panel-typebuiltins.h"
 #include "panel-gconf.h"
 
+#undef BASEP_WIDGET_DEBUG
+
 extern gboolean panel_applet_in_drag;
 extern GSList *panel_list;
 
@@ -359,7 +361,7 @@ basep_widget_size_allocate (GtkWidget *widget,
 	
 	/*we actually want to ignore the size_reqeusts since they
 	  are sometimes a cube for the flicker prevention*/
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 	if (basep->state == BASEP_MOVING)
 		g_warning ("size_allocate whilst moving");
 #endif
@@ -590,7 +592,7 @@ basep_leave_notify (GtkWidget *widget,
 {
 	BasePWidget *basep = BASEP_WIDGET (widget);
 
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 	if (basep->state == BASEP_MOVING)
 		g_warning ("moving in leave_notify");
 
@@ -618,7 +620,7 @@ basep_enter_notify (GtkWidget *widget,
 	    event->detail != GDK_NOTIFY_INFERIOR) {
 
 		g_assert (basep->mode == BASEP_AUTO_HIDE);
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_print ("detail: %d\n", event->detail);
 #endif
 		if (basep->leave_notify_timer_tag != 0) {
@@ -721,11 +723,11 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	g_return_if_fail(basep != NULL);
 	g_return_if_fail(BASEP_IS_WIDGET(basep));
 
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 	g_warning ("do_hiding with step %d", step);
 #endif
 	if (basep->state != BASEP_MOVING) {
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_warning ("do_hiding whilst not moving");
 #endif
 		return;
@@ -830,12 +832,12 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	g_return_if_fail(basep != NULL);
 	g_return_if_fail(BASEP_IS_WIDGET(basep));
 
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_warning ("do_showing with step %d", step);
 #endif
 
 	if (basep->state != BASEP_MOVING) {
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_warning ("do_showing whilst not moving");
 #endif
 		return;
@@ -1680,7 +1682,7 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 		return;
 
 	if (basep->state == BASEP_MOVING) {
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_warning ("explicit_hide whilst moving");
 #endif
 		return;
@@ -1730,7 +1732,7 @@ basep_widget_explicit_show (BasePWidget *basep)
 		return;
  
 	if (basep->state == BASEP_MOVING) {
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_warning ("explicit_show whilst moving");
 #endif
 		return;
@@ -1775,7 +1777,7 @@ basep_widget_autoshow (gpointer data)
 	g_return_val_if_fail (BASEP_IS_WIDGET(basep), FALSE);
 
 	if (basep->state == BASEP_MOVING) {
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_warning ("autoshow whilst moving");
 #endif
 		return TRUE;
@@ -1825,7 +1827,7 @@ basep_widget_queue_autoshow (BasePWidget *basep)
         /* check if there's already a timeout set, and delete it if 
          * there was */
 	if (basep->state == BASEP_MOVING) {
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_print ("return 2");
 #endif
 		return; 
@@ -1838,14 +1840,14 @@ basep_widget_queue_autoshow (BasePWidget *basep)
 
         if (basep->enter_notify_timer_tag != 0) {
                 gtk_timeout_remove (basep->enter_notify_timer_tag);
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_print ("<timeout removed>\n");
 #endif
 	}
 
         if ((basep->mode != BASEP_AUTO_HIDE) ||
             (basep->state == BASEP_SHOWN)) {
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_print ("return 1\n");
 #endif
                 return;
@@ -1872,7 +1874,7 @@ basep_widget_autohide (gpointer data)
 		return TRUE;
 	
 	if (basep->state == BASEP_MOVING) {
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_warning ("autohide whilst moving");
 #endif
 		return TRUE;
@@ -1942,7 +1944,7 @@ basep_widget_queue_autohide(BasePWidget *basep)
         /* check if there's already a timeout set, and delete it if 
          * there was */
 	if (basep->state == BASEP_MOVING) {
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_print ("return 2");
 #endif
 		return; 
@@ -1955,14 +1957,14 @@ basep_widget_queue_autohide(BasePWidget *basep)
 
         if (basep->leave_notify_timer_tag != 0) {
                 gtk_timeout_remove (basep->leave_notify_timer_tag);
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_print ("<timeout removed>\n");
 #endif
 	}
 
         if ((basep->mode != BASEP_AUTO_HIDE) ||
             (basep->state != BASEP_SHOWN)) {
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 		g_print ("return 1\n");
 #endif
                 return;
@@ -2345,7 +2347,7 @@ basep_border_recalc (int screen)
 		foobar_widget_get_height (screen);
 	sb->bottom = border_max (sb, BORDER_BOTTOM);
 
-#ifdef PANEL_DEBUG
+#ifdef BASEP_WIDGET_DEBUG
 	g_print ("[basep_border_recalc] SCREEN %d (%d %d %d %d)\n", screen,
 		 sb->left, sb->right, sb->top, sb->bottom);
 #endif

@@ -15,6 +15,8 @@
 #include "panel_config_global.h"
 #include "rgb-stuff.h"
 
+#undef BUTTON_WIDGET_DEBUG
+
 #define BUTTON_WIDGET_DISPLACEMENT 5
 
 extern GlobalConfig global_config;
@@ -568,7 +570,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 	if(!global_config.saturate_when_over || !button->in_button) {
 		pb = button->pixbuf;
 	} else {
-#ifdef PANEL_DEBUG
+#ifdef BUTTON_WIDGET_DEBUG
 	printf ("Using highlighted pixbuf\n");
 #endif
 		pb = button->pixbuf_hc;
@@ -882,7 +884,7 @@ make_hc_pixbuf(GdkPixbuf *pb)
 	GdkPixbuf *new;
 	if(!pb)
 		return NULL;
-#ifdef PANEL_DEBUG
+#ifdef BUTTON_WIDGET_DEBUG
 	printf ("Creating highlight pixbuf\n");
 #endif
 	new = gdk_pixbuf_new(gdk_pixbuf_get_colorspace(pb),

@@ -27,7 +27,7 @@
 #include "panel_config_global.h"
 #include "session.h"
 
-/*#define PANEL_DEBUG 1*/
+#undef MENU_FENTRY_DEBUG
 
 /* the minimum number of seconds between stats of files */
 #define STAT_EVERY 3

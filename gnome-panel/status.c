@@ -42,9 +42,9 @@ extern PortableServer_POA thepoa;
 
 /*this will show debug output and put the offscreen window on 10 10 to
   view it*/
-/*#define DEBUG_STATUS 1*/
+#undef STATUS_DEBUG
 
-#ifdef DEBUG_STATUS
+#ifdef STATUS_DEBUG
 #define DPUTS(x) puts(x)
 #define DPRINTD(d) printf("%s: %d\n",#d,d)
 #else
@@ -274,7 +274,7 @@ status_applet_create_offscreen(void)
 {
 	DPUTS("CREATE OFFSCREEN");
 	offscreen = gtk_window_new(GTK_WINDOW_POPUP);
-#ifdef DEBUG_STATUS
+#ifdef STATUS_DEBUG
 	gtk_widget_set_uposition(offscreen,10,10);
 #else
 	gtk_widget_set_uposition(offscreen, gdk_screen_width()+10,

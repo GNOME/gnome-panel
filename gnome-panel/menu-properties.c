@@ -27,7 +27,7 @@
 
 #include "panel-util.h"
 
-/*#define PANEL_DEBUG 1*/
+#undef MENU_PROPERTIES_DEBUG
 
 struct _MenuDialogInfo {
 	GtkWidget *main_menu;

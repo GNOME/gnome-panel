@@ -27,7 +27,7 @@
 GSList *panels = NULL; /*other panels we might want to move the applet to*/
 
 /*define for some debug output*/
-/*#define PANEL_DEBUG 1*/
+#undef PANEL_WIDGET_DEBUG
 
 /*there  can universally be only one applet being dragged since we assume
 we only have one mouse :) */
@@ -987,7 +987,7 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 
 	widget = GTK_WIDGET(panel);
 
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	puts("PANEL_WIDGET_DRAW_ALL");
 #endif
 
@@ -1097,7 +1097,7 @@ panel_widget_draw_icon(PanelWidget *panel, ButtonWidget *button)
 	g_return_if_fail(panel != NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 	
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	puts("PANEL_WIDGET_DRAW_ICON");
 #endif
 
@@ -1126,7 +1126,7 @@ panel_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 	if(!GTK_WIDGET_DRAWABLE(widget))
 		return FALSE;
 	
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	puts("PANEL_WIDGET_EXPOSE");
 #endif
 
@@ -1166,7 +1166,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	
 	panel = PANEL_WIDGET(widget);
 
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	puts("PANEL_WIDGET_SIZE_ALLOCATE");
 	printf("allocation %d x %d\n",
 	       allocation->width,
@@ -1355,7 +1355,7 @@ panel_widget_set_back_pixmap (PanelWidget *panel, char *file)
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 	g_return_if_fail(file!=NULL);
 
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	puts("PANEL_WIDGET_SET_BACK_PIXMAP");
 #endif
 
@@ -1440,7 +1440,7 @@ get_pixmap_from_pixbuf(GtkWidget *w, GdkPixbuf *pb, int scale_w, int scale_h,
 	}
 	
 	rgb = g_new0(guchar,scale_h*scale_w*3);
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	printf("scale_w %d scale_h %d\n",scale_w,scale_h);
 #endif
 	transform_pixbuf(rgb,
@@ -1571,7 +1571,7 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 		panel_try_to_set_back_color(panel, &panel->back_color);
 	}
 
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	puts("PANEL_WIDGET_REALIZE");
 #endif
 	panel_widget_draw_all(panel,NULL);
@@ -1785,7 +1785,7 @@ panel_widget_new (gboolean packed,
 	panel->orient = orient;
 	panel->sz = sz;
 
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	printf("GOT SIZE OF %d\n",sz);
 #endif
 
@@ -1828,7 +1828,7 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 		been_moved = FALSE;
 	}
 
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	g_message("Starting drag on a %s at %p\n",
 		  g_type_name(G_TYPE_FROM_INSTANCE (applet)), applet);
 #endif
@@ -1850,7 +1850,7 @@ panel_widget_applet_drag_end_no_grab (PanelWidget *panel)
 	g_return_if_fail (panel != NULL);
 	g_return_if_fail (IS_PANEL_WIDGET (panel));
 
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	g_message("Ending drag\n");
 #endif
 	panel->currently_dragged_applet = NULL;
@@ -1873,7 +1873,7 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 	g_return_if_fail (applet != NULL);
 	g_return_if_fail (GTK_IS_WIDGET (panel));
 
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	g_message("Starting drag [grabbed] on a %s at %p\n",
 		  g_type_name(G_TYPE_FROM_INSTANCE(applet)), applet);
 #endif
@@ -2290,7 +2290,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	switch (event->type) {
 		case GDK_BUTTON_PRESS:
 			bevent = (GdkEventButton *) event;
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 			printf("the appwidget %lX\n",(long)widget);
 #endif
 
@@ -2717,7 +2717,7 @@ panel_widget_change_params(PanelWidget *panel,
 	oldsz = panel->sz;
 	panel->sz = sz;
 	
-#ifdef PANEL_DEBUG
+#ifdef PANEL_WIDGET_DEBUG
 	printf("GOT SIZE OF %d\n",sz);
 #endif
 
