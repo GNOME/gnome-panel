@@ -364,6 +364,13 @@ set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
 static void
 focus_window (GtkWidget *w, WnckWindow *window)
 {
+	WnckWorkspace* space;
+
+	/* Make sure that the current workspace is the same as the app'
+	 * Same behaviour as GNOME 1.4 */
+	space = wnck_window_get_workspace (window);
+	wnck_workspace_activate (space);
+
 	if (wnck_window_is_minimized (window)) 
 		wnck_window_unminimize (window);
 
@@ -380,7 +387,7 @@ get_default_image (void)
 	if ( ! looked) {
 		pixbuf = panel_make_menu_icon ("gnome-tasklist.png",
 					       /* evil fallback huh? */
-					       "apple-red.png",
+					       "gnome-gmenu.png",
 					       20 /* size */,
 					       NULL /* long_operation */);
 
