@@ -3826,17 +3826,6 @@ menu_button_pressed (GtkWidget *widget, gpointer data)
 	gdk_event_free((GdkEvent *)bevent);
 }
 
-#if 0
-static void
-menu_button_notify (GtkWidget *widget, GParamSpec *pspec,gpointer data)
-{
-	Menu *menu = data;
-
-	if (strcmp (pspec->name, "has-focus") == 0) 
-		menu_button_menu_popup (menu, 1, GDK_CURRENT_TIME);
-}
-#endif
-
 static void  
 drag_data_get_cb (GtkWidget          *widget,
 		  GdkDragContext     *context,
@@ -3854,6 +3843,17 @@ drag_data_get_cb (GtkWidget          *widget,
 				strlen (foo));
 
 	g_free (foo);
+}
+
+static void
+menu_applet_reparented (GtkWidget *applet,
+			GtkWidget *previous_panel,
+			Menu      *menu)
+{
+	g_return_if_fail (menu != NULL && GTK_IS_MENU (menu->menu));
+
+	panel_applet_menu_set_recurse (
+		GTK_MENU (menu->menu), "menu_panel", applet->parent);
 }
 
 static Menu *
@@ -3912,17 +3912,17 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 			    G_CALLBACK (drag_data_get_cb),
 			    NULL);
 
-	g_signal_connect_after (G_OBJECT (menu->button), "pressed",
+	g_signal_connect_after (menu->button, "pressed",
 				G_CALLBACK (menu_button_pressed), menu);
-#if 0
-	g_signal_connect (G_OBJECT (menu->button), "notify",
-			    G_CALLBACK (menu_button_notify), menu);
-#endif
-	g_signal_connect (G_OBJECT (menu->button), "clicked",
-			    G_CALLBACK (menu_button_pressed), menu);
-	g_signal_connect (G_OBJECT (menu->button), "destroy",
-			    G_CALLBACK (destroy_menu), menu);
-	gtk_widget_show(menu->button);
+
+	g_signal_connect (menu->button, "clicked",
+			  G_CALLBACK (menu_button_pressed), menu);
+	g_signal_connect (menu->button, "destroy",
+			  G_CALLBACK (destroy_menu), menu);
+	g_signal_connect (menu->button, "parent_set",
+			  G_CALLBACK (menu_applet_reparented), menu);
+
+	gtk_widget_show (menu->button);
 
 	/*if we are allowed to be pigs and load all the menus to increase
 	  speed, load them*/

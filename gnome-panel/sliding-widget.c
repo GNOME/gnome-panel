@@ -72,24 +72,18 @@ sliding_pos_class_init (SlidingPosClass *klass)
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (SlidingPosClass, anchor_change),
-                              NULL,
-                              NULL, 
-                              g_cclosure_marshal_VOID__ENUM,
-                              G_TYPE_NONE,
-                              1,
-                              PANEL_TYPE_SLIDING_ANCHOR);
+                              NULL, NULL, 
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE, 0);
 
 	sliding_pos_signals[OFFSET_CHANGE_SIGNAL] =
                 g_signal_new ("offset_change",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (SlidingPosClass, offset_change),
-                              NULL,
-                              NULL, 
-                              g_cclosure_marshal_VOID__ENUM,
-                              G_TYPE_NONE,
-                              2,
-                              G_TYPE_INT, G_TYPE_INT); 
+                              NULL, NULL, 
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE, 0);
 
 	pos_class->set_pos = sliding_pos_set_pos;
 	pos_class->get_pos = sliding_pos_get_pos;
@@ -345,17 +339,15 @@ sliding_widget_change_params (SlidingWidget *sliding,
 
 	if (anchor != pos->anchor) {
 		pos->anchor = anchor;
-		g_signal_emit (G_OBJECT (pos),
-			       sliding_pos_signals[ANCHOR_CHANGE_SIGNAL],
-			       0, anchor);
+		g_signal_emit (
+			pos, sliding_pos_signals [ANCHOR_CHANGE_SIGNAL], 0);
 		
 	}
 
 	if (offset != pos->offset) {
 		pos->offset = offset;
-		g_signal_emit (G_OBJECT (pos),
-			       sliding_pos_signals[OFFSET_CHANGE_SIGNAL],
-			       0, offset);
+		g_signal_emit (
+			pos, sliding_pos_signals [OFFSET_CHANGE_SIGNAL], 0);
 	}
 
 	border_widget_change_params (BORDER_WIDGET (sliding),

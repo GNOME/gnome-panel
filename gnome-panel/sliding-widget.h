@@ -47,11 +47,8 @@ struct _SlidingPosClass {
 	BorderPosClass parent_class;
 
 	/* signal */
-	void (*anchor_change) (SlidingPos *sliding,
-			       SlidingAnchor anchor);
-
-	void (*offset_change) (SlidingPos *sliding,
-			       gint16 offset);
+	void (*anchor_change) (SlidingPos *sliding);
+	void (*offset_change) (SlidingPos *sliding);
 };
 
 GType sliding_pos_get_type (void) G_GNUC_CONST;

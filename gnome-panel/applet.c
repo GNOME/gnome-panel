@@ -557,10 +557,10 @@ panel_applet_create_menu (AppletInfo *info)
 	return menu;
 }
 
-static void
-applet_menu_set_data_recursively (GtkMenu     *menu,
-				  const gchar *key,
-				  gpointer     data)
+void
+panel_applet_menu_set_recurse (GtkMenu     *menu,
+			       const gchar *key,
+			       gpointer     data)
 {
 	GList *children;
 	GList *l;
@@ -573,7 +573,8 @@ applet_menu_set_data_recursively (GtkMenu     *menu,
 		GtkWidget *submenu = GTK_MENU_ITEM (l->data)->submenu;
 
 		if (submenu)
-			applet_menu_set_data_recursively (GTK_MENU (submenu), key, data);
+			panel_applet_menu_set_recurse (
+				GTK_MENU (submenu), key, data);
 	}
 
 	g_list_free (children);
@@ -601,9 +602,9 @@ applet_show_menu (AppletInfo     *info,
 
 	info->menu_age = 0;
 
-	applet_menu_set_data_recursively (GTK_MENU (info->menu),
-					  "menu_panel",
-					  info->widget->parent);
+	panel_applet_menu_set_recurse (GTK_MENU (info->menu),
+				       "menu_panel",
+				       info->widget->parent);
 
 	if (!GTK_WIDGET_REALIZED (info->menu))
 		gtk_widget_show (info->menu);

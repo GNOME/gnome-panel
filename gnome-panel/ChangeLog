@@ -1,3 +1,19 @@
+2002-05-25  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.[ch]: (panel_applet_menu_set_recurse): rename and
+	export this function.
+	(applet_show_menu): upd.
+
+	* menu.c:
+	(menu_applet_reparented): impl to reset the menu data
+	when the applet is reparented. Fixes #79719.
+	(create_panel_menu): hook up to the reparent signal.
+
+	* sliding-widget.[ch]: (sliding_pos_class_init),
+	(sliding_widget_change_params): change the signatures
+	of the offset_change and anchor_change signals. We don't
+	use the params, we just need the notification.
+
 2002-05-23  Alex Larsson  <alexl@redhat.com>
 
 	reviewed by: mark@skynet.ie
