@@ -808,7 +808,7 @@ applet_widget_set_tooltip(AppletWidget *applet, char *text)
 	CORBA_exception_free(&ev);
 }
 
-/* Get the oprientation the applet should use */
+/* Get the orientation the applet should use */
 GNOME_Panel_OrientType
 applet_widget_get_panel_orient(AppletWidget *applet)
 {
@@ -819,6 +819,21 @@ applet_widget_get_panel_orient(AppletWidget *applet)
 	
 	CORBA_exception_init(&ev);
 	r = GNOME_PanelSpot__get_parent_orient(CD(applet)->pspot, &ev);
+	CORBA_exception_free(&ev);
+	return r;
+}
+
+/* Get the size the applet should use */
+GNOME_Panel_SizeType
+applet_widget_get_panel_size(AppletWidget *applet)
+{
+	CORBA_Environment ev;
+	GNOME_Panel_SizeType r;
+	g_return_val_if_fail(applet != NULL,SIZE_STANDARD);
+	g_return_val_if_fail(IS_APPLET_WIDGET(applet), SIZE_STANDARD);
+	
+	CORBA_exception_init(&ev);
+	r = GNOME_PanelSpot__get_parent_size(CD(applet)->pspot, &ev);
 	CORBA_exception_free(&ev);
 	return r;
 }

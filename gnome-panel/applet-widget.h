@@ -25,6 +25,12 @@ typedef GNOME_Panel_OrientType PanelOrientType;
 #define ORIENT_LEFT GNOME_Panel_ORIENT_LEFT
 #define ORIENT_RIGHT GNOME_Panel_ORIENT_RIGHT
 
+typedef GNOME_Panel_SizeType PanelSizeType;
+#define SIZE_TINY GNOME_Panel_SIZE_TINY
+#define SIZE_STANDARD GNOME_Panel_SIZE_STANDARD
+#define SIZE_LARGE GNOME_Panel_SIZE_LARGE
+#define SIZE_HUGE GNOME_Panel_SIZE_HUGE
+
 typedef GNOME_Panel_BackType PanelBackType;
 #define PANEL_BACK_NONE GNOME_Panel_BACK_NONE
 #define PANEL_BACK_COLOR GNOME_Panel_BACK_COLOR
@@ -171,8 +177,11 @@ int		applet_widget_get_applet_count	(void);
   session_save handler as it will result in a locked panel*/
 void		applet_widget_sync_config	(AppletWidget *applet);
 
-/* Get the oprientation the applet should use */
+/* Get the orientation the applet should use */
 GNOME_Panel_OrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
+
+/* Get the size the applet should use */
+GNOME_Panel_SizeType	applet_widget_get_panel_size	(AppletWidget *applet);
 
 /*use this instead of gnome init, if you want multi applet, you also
   have to specify a "start new applet" function which will launch a new

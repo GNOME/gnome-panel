@@ -1,3 +1,10 @@
+Sun May 30 11:10:35 1999  George Lebl  <jirka@5z.com>
+
+	* extern.c: forgot to implement a get_parent_size call, this fixes
+	  segfault with extern applets
+
+	* applet-widget.[ch]: implement the get_panel_size method
+
 Sun May 30 00:53:21 1999  George Lebl  <jirka@5z.com>
 
 	* menu.c: WRT remove item patch: check for the item_loc as the

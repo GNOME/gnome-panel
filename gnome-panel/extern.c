@@ -97,6 +97,10 @@ static GNOME_Panel_OrientType
 s_panelspot_get_parent_orient(POA_GNOME_PanelSpot *servant,
 			      CORBA_Environment *ev);
 
+static GNOME_Panel_SizeType
+s_panelspot_get_parent_size(POA_GNOME_PanelSpot *servant,
+			    CORBA_Environment *ev);
+
 static void
 s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
 		     CORBA_Environment *ev);
@@ -167,6 +171,7 @@ static POA_GNOME_PanelSpot__epv panelspot_epv = {
   (gpointer)&s_panelspot_get_parent_panel,
   (gpointer)&s_panelspot_get_spot_pos,
   (gpointer)&s_panelspot_get_parent_orient,
+  (gpointer)&s_panelspot_get_parent_size,
   (gpointer)&s_panelspot_register_us,
   (gpointer)&s_panelspot_unregister_us,
   (gpointer)&s_panelspot_abort_load,
@@ -557,6 +562,23 @@ s_panelspot_get_parent_orient(POA_GNOME_PanelSpot *servant,
 	g_return_val_if_fail(panel != NULL,ORIENT_UP);
 
 	return get_applet_orient(panel);
+}
+
+static GNOME_Panel_SizeType
+s_panelspot_get_parent_size(POA_GNOME_PanelSpot *servant,
+			    CORBA_Environment *ev)
+{
+	Extern *ext = (Extern *)servant;
+	PanelWidget *panel;
+
+	g_assert(ext);
+	g_assert(ext->info);
+
+	panel = PANEL_WIDGET(ext->info->widget->parent);
+
+	g_return_val_if_fail(panel != NULL,SIZE_STANDARD);
+
+	return panel->sz;
 }
 
 static void
