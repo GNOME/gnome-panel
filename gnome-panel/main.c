@@ -82,7 +82,7 @@ struct _LoadApplet {
 	char *pixmap;
 	char *tooltip;
 	int pos;
-	int panel;
+	PanelWidget *panel;
 	char *cfgpath;
 };
 
@@ -270,7 +270,7 @@ get_def_panel_widget(GtkWidget *panel)
 static void
 queue_load_applet(char *id_str, char *path, char *params,
 		  char *pixmap, char *tooltip,
-		  int pos, int panel, char *cfgpath)
+		  int pos, PanelWidget *panel, char *cfgpath)
 {
 	LoadApplet *l;
 	l = g_new(LoadApplet,1);
@@ -446,7 +446,7 @@ drawer_realize_cb(GtkWidget *button, Drawer *drawer)
 void
 load_applet(char *id_str, char *path, char *params,
 	    char *pixmap, char *tooltip,
-	    int pos, int panel, char *cfgpath)
+	    int pos, PanelWidget *panel, char *cfgpath)
 {
 	if(strcmp(id_str,EXTERN_ID) == 0) {
 		char *fullpath;
@@ -522,15 +522,12 @@ load_applet(char *id_str, char *path, char *params,
 		}
 	} else if(strcmp(id_str,DRAWER_ID) == 0) {
 		Drawer *drawer;
-		PanelWidget *parent;
 		PanelWidget *dr_panel;
-
-		parent = PANEL_WIDGET(g_list_nth(panels,panel)->data);
 
 		if(!params) {
 			drawer = create_empty_drawer_applet(
 				tooltip,pixmap,
-				get_applet_orient(parent));
+				get_applet_orient(panel));
 			if(drawer) panel_setup(drawer->drawer);
 		} else {
 			int i;
@@ -541,7 +538,7 @@ load_applet(char *id_str, char *path, char *params,
 
 			drawer=create_drawer_applet(dr_pd->panel,
 						    tooltip,pixmap,
-						    get_applet_orient(parent));
+						    get_applet_orient(panel));
 		}
 		
 		if(!drawer)
@@ -560,14 +557,14 @@ load_applet(char *id_str, char *path, char *params,
 				   dr_panel);
 
 		if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN) {
-			GtkWidget *wparent;
+			GtkWidget *wpanel;
 			/*pop up, if popped down*/
-			wparent = gtk_object_get_data(GTK_OBJECT(parent),
+			wpanel = gtk_object_get_data(GTK_OBJECT(panel),
 						      PANEL_PARENT);
-			if(IS_SNAPPED_WIDGET(wparent)) {
+			if(IS_SNAPPED_WIDGET(wpanel)) {
 				/*drawer is open so we track it*/
-				SNAPPED_WIDGET(wparent)->drawers_open++;
-				snapped_widget_pop_up(SNAPPED_WIDGET(wparent));
+				SNAPPED_WIDGET(wpanel)->drawers_open++;
+				snapped_widget_pop_up(SNAPPED_WIDGET(wpanel));
 			}
 		} 
 
@@ -668,7 +665,8 @@ init_user_applets(void)
 		char *applet_pixmap;
 		char *applet_tooltip;
 		char *applet_path;
-		int   pos=0,panel;
+		int   pos=0,panel_num;
+		PanelWidget *panel;
 
 		g_snprintf(buf,256,"%sApplet_%d/config/", old_panel_cfg_path, num);
 		gnome_config_push_prefix(buf);
@@ -682,7 +680,17 @@ init_user_applets(void)
 		g_snprintf(buf,256,"position=%d",
 			   PANEL_UNKNOWN_APPLET_POSITION);
 		pos = gnome_config_get_int(buf);
-		panel = gnome_config_get_int("panel=0");
+		panel_num = gnome_config_get_int("panel=0");
+		{
+			GList *list = g_list_nth(panels,panel_num);
+			if(!list)  {
+				g_warning("Can't find panel, "
+					  "putting applet on the first one");
+				panel = panels->data;
+			} else
+				panel = list->data;
+		}
+			
 		
 		/*if we are to right stick this, make the number large, 
 		 INT_MAX/2 should allways be large enough */
@@ -1970,7 +1978,7 @@ main(int argc, char **argv)
 	load_queued_applets();
 
 	/*add forbidden lists to ALL panels*/
-	g_list_foreach(panels,panel_widget_add_forbidden,NULL);
+	g_list_foreach(panels,(GFunc)panel_widget_add_forbidden,NULL);
 
 	/*this will make the drawers be hidden for closed panels etc ...*/
 	send_state_change();

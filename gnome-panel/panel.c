@@ -895,7 +895,7 @@ show_applet_menu(int applet_id, GdkEventButton *event)
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
 	}
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
-		       ITOP(applet_id), 0/*3*/, event->time);
+		       ITOP(applet_id), event->button, event->time);
 }
 
 
@@ -1088,7 +1088,7 @@ applet_request_id (const char *path, const char *param,
 		}
 	}
 
-	*winid = reserve_applet_spot (EXTERN_ID, path, param, 0, 0,
+	*winid = reserve_applet_spot (EXTERN_ID, path, param, panels->data, 0,
 				      NULL, APPLET_EXTERN_RESERVED);
 	if(*winid == 0) {
 		*globcfgpath = NULL;
@@ -1146,7 +1146,7 @@ applet_register (const char * ior, int applet_id)
   only*/
 guint32
 reserve_applet_spot (const char *id_str, const char *path, const char *param,
-		     int panel, int pos, char *cfgpath,
+		     PanelWidget *panel, int pos, char *cfgpath,
 		     AppletType type)
 {
 	GtkWidget *socket;
@@ -1173,10 +1173,9 @@ static void
 panel_add_main_menu(GtkWidget *w, gpointer data)
 {
 	PanelWidget *panel = get_def_panel_widget(data);
-	int panel_num = g_list_index(panels,panel);
 
 	load_applet(MENU_ID,NULL,NULL,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
-		    panel_num!=-1?panel_num:0,NULL);
+		    panel,NULL);
 }	
 
 GtkWidget *
@@ -1274,26 +1273,16 @@ register_toy(GtkWidget *applet,
 	     char *path,
 	     char *params,
 	     int pos,
-	     int panel,
+	     PanelWidget *panel,
 	     char *cfgpath,
 	     AppletType type)
 {
 	GtkWidget     *eventbox;
 	AppletInfo    info;
-	PanelWidget   *panelw;
-	GList         *list;
 	
 	g_return_val_if_fail(applet != NULL, FALSE);
 	g_return_val_if_fail(id_str != NULL, FALSE);
 
-	list = g_list_nth(panels,panel);
-
-	g_return_val_if_fail(list != NULL, FALSE);
-
-	panelw = PANEL_WIDGET(list->data);
-
-	g_return_val_if_fail(panelw != NULL, FALSE);
-	
 	/* We wrap the applet in a GtkEventBox so that we can capture
 	   events over it */
 	eventbox = gtk_event_box_new();
@@ -1340,8 +1329,11 @@ register_toy(GtkWidget *applet,
 		
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
-	while(panel_widget_add(panelw, eventbox, pos)==-1) {
-		list = g_list_next(list);
+	if(panel_widget_add(panel, eventbox, pos)==-1) {
+		GList *list;
+		for(list = panels; list != NULL; list = g_list_next(list))
+			if(panel_widget_add(panel, eventbox, pos)!=-1)
+				break;
 		if(!list) {
 			gtk_widget_unref(eventbox);
 			if(info.cfg)
@@ -1354,7 +1346,7 @@ register_toy(GtkWidget *applet,
 			g_warning("Can't find an empty spot");
 			return FALSE;
 		}
-		panelw = PANEL_WIDGET(list->data);
+		panel = PANEL_WIDGET(list->data);
 	}
 
 	gtk_signal_connect(GTK_OBJECT(eventbox),
@@ -1382,7 +1374,7 @@ register_toy(GtkWidget *applet,
 	gtk_widget_dnd_drag_set (GTK_WIDGET(eventbox), TRUE,
 				 applet_drag_types, 1);*/
 
-	orientation_change(applet_count-1,panelw);
+	orientation_change(applet_count-1,panel);
 
 	return TRUE;
 }

@@ -99,7 +99,7 @@ int register_toy(GtkWidget *applet,
 		  char *path,
 		  char *params,
 		  int pos,
-		  int panel,
+		  PanelWidget *panel,
 		  char *cfgpath,
 		  AppletType type);
 
@@ -118,7 +118,7 @@ int applet_request_id (const char *path, const char *param,
 void applet_register (const char * ior, int applet_id);
 guint32 reserve_applet_spot (const char *id_str, const char *path,
 			     const char *param,
-			     int panel, int pos, char *cfgpath,
+			     PanelWidget *panel, int pos, char *cfgpath,
 			     AppletType type);
 void applet_abort_id(int applet_id);
 int applet_get_panel(int applet_id);

@@ -45,6 +45,11 @@ struct _FileInfo {
 	time_t ctime;
 };
 
+/*???? this might be ugly, but I guess we can safely assume that we can only have
+  one menu open and that nothing weird will happen to the panel that opened that
+  menu whilethe user is looking over the choices*/
+static PanelWidget *current_panel = NULL;
+
 /*the most important dialog in the whole application*/
 void
 about_cb (GtkWidget *widget, gpointer data)
@@ -153,8 +158,8 @@ free_string (GtkWidget *widget, void *data)
 static int
 add_to_panel (char *applet, char *path, char *arg)
 {
-	load_applet(applet,path,arg,NULL,NULL,
-		    PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
+	load_applet(applet,path,arg,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
+		    current_panel,NULL);
 	return TRUE;
 }
 
@@ -883,7 +888,8 @@ menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
 	Menu *menu = data;
 	if(event->button==1) {
-		GtkWidget *panel = get_panel_parent(menu->button->parent);
+		GtkWidget *wpanel = get_panel_parent(menu->button->parent);
+			
 		GList *finfo = gtk_object_get_data(GTK_OBJECT(menu->menu),
 						   "finfo");
 		
@@ -922,10 +928,14 @@ menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 
 		/*so that the panel doesn't pop down until we're done with
 		  the menu */
-		if(IS_SNAPPED_WIDGET(panel)) {
-			SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
-			snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
+		if(IS_SNAPPED_WIDGET(wpanel)) {
+			SNAPPED_WIDGET(wpanel)->autohide_inhibit = TRUE;
+			snapped_widget_queue_pop_down(SNAPPED_WIDGET(wpanel));
 		}
+		
+		/*this HAS to be set everytime we popup the menu*/
+		current_panel = gtk_object_get_data(menu->button->parent,
+						    PANEL_APPLET_PARENT_KEY);
 
 		gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
 			       data, event->button, event->time);

@@ -28,7 +28,7 @@ PanelWidget * get_def_panel_widget(GtkWidget *panel);
 
 void load_applet(char *id, char *path, char *params,
 		 char *pixmap, char *tooltip,
-		 int pos, int panel, char *cfgpath);
+		 int pos, PanelWidget *panel, char *cfgpath);
 void orientation_change(int applet_id, PanelWidget *panel);
 void back_change(int applet_id, PanelWidget *panel);
 

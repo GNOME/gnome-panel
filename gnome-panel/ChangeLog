@@ -1,3 +1,14 @@
+Sun Jul 12 02:07:52 1998  George Lebl  <jirka@5z.com>
+
+	* main.[ch],panel.[ch],menu.c: cleanups, plus we no longer
+	  refer to panels by their count as that is not clean any more
+	  (although this is done during startup and depends on the fact
+	  that all paneltypes init all their PanelWidgets in their _new
+	  functions which might not be the case in the future, so this
+	  will also need cleaning) ... plus now adding something to a panel
+	  adds it to the one on which the menu resides instead of the
+	  first one loaded
+
 Sat Jul 11 04:01:38 1998  George Lebl  <jirka@5z.com>
 
 	* main.c,mulapp.c,panel.c: general cleanup, I thought that
