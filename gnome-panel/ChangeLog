@@ -1,3 +1,16 @@
+2004-04-05  Vijaykumar Patwari <vijaykumar.patwari@wipro.com>
+
+	* launcher.h: Add a GSList to the Launcher struct to
+	hold all the error dialogs.
+	* launcher.c (launcher_register_error_dialog): populate
+	the error dialog list and connect the dialog to the destroy
+	signal.
+	(launcher_widget_open_dialog_destroyed): on destroying an
+	error dialog, remove it from the error dialog list.
+	(launcher_widget_destroy_open_dialogs): on destroying
+	the launcher, destroy any open error dialogs.
+	Fixes bug #132272.
+
 2004-04-02  Mark McLoughlin  <mark@skynet.ie>
 
 	Some work on making things relatively sane for people trying

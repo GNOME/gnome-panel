@@ -66,6 +66,43 @@ launcher_get_screen (Launcher *launcher)
 	return gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel));
 }
 
+static void
+launcher_widget_open_dialog_destroyed (GtkWidget *dialog,
+				       Launcher *launcher)
+{
+	g_return_if_fail (launcher->error_dialogs != NULL);
+
+	launcher->error_dialogs = g_slist_remove (launcher->error_dialogs, dialog);
+}
+                                                                                                                            
+static void
+launcher_widget_destroy_open_dialogs (Launcher *launcher)
+{
+	GSList *l, *list;
+
+	list = launcher->error_dialogs;
+	launcher->error_dialogs = NULL;
+
+	for (l = list; l; l = l->next) {
+		g_signal_handlers_disconnect_by_func (G_OBJECT (l->data),
+						      G_CALLBACK (launcher_widget_open_dialog_destroyed),
+						      launcher);
+		gtk_widget_destroy (l->data);
+	}
+	g_slist_free (list);
+}
+
+static void
+launcher_register_error_dialog (Launcher *launcher, 
+				GtkWidget *dialog)
+{
+	launcher->error_dialogs = g_slist_append (launcher->error_dialogs,
+						  dialog);
+	g_signal_connect (dialog, "destroy",
+			  G_CALLBACK (launcher_widget_open_dialog_destroyed),
+			  launcher);
+}
+
 static const char *
 panel_launcher_get_filename (const char *path)
 {
@@ -125,22 +162,27 @@ launch_url (Launcher *launcher)
 	screen = launcher_get_screen (launcher);
 
 	if (!url) {
-		panel_error_dialog (screen,
-				    "no_url_dialog",
-				    _("Cannot launch icon"),
-				    _("This launch icon does not specify a url to show."));
+		GtkWidget *error_dialog;
+
+		error_dialog = panel_error_dialog (screen,
+						   "no_url_dialog",
+						   _("Cannot launch icon"),
+						   _("This launch icon does not specify a url to show."));
+		launcher_register_error_dialog (launcher, error_dialog);
 		return;
 	}
 
 	gnome_url_show_on_screen (url, screen, &error);
 	if (error) {
-		panel_error_dialog (screen,
-				    "cannot_show_url_dialog",
-				    _("Cannot show %s"),
-				    "%s",
-				    url,
-				    error->message);
-
+		GtkWidget *error_dialog;
+	
+		error_dialog = panel_error_dialog (screen,
+						   "cannot_show_url_dialog",
+						   _("Cannot show %s"),
+						   "%s",
+						   url,
+						   error->message);
+		launcher_register_error_dialog (launcher, error_dialog);
 		g_clear_error (&error);
 	}
 }
@@ -168,12 +210,14 @@ launch_cb (GtkWidget *widget,
 		panel_ditem_launch (
 			item, NULL, 0, launcher_get_screen (launcher), &error);
 		if (error) {
-			panel_error_dialog (launcher_get_screen (launcher),
-					    "cannot_launch_icon",
-					    _("Cannot launch icon"),
-					    "%s",
-					    error->message);
+			GtkWidget *error_dialog;
 
+			error_dialog = panel_error_dialog (launcher_get_screen (launcher),
+							   "cannot_launch_icon",
+							   _("Cannot launch icon"),
+							   "%s",
+							   error->message);
+			launcher_register_error_dialog (launcher, error_dialog);
 			g_clear_error (&error);
 		}
 	}
@@ -212,11 +256,13 @@ drag_data_received_cb (GtkWidget        *widget,
 	g_strfreev (envp);
 
 	if (error) {
-		panel_error_dialog (launcher_get_screen (launcher),
-				    "cannot_launch_icon",
-				    _("Cannot launch icon"),
-				    "%s",
-				    error->message);
+		GtkWidget *error_dialog;
+		error_dialog = panel_error_dialog (launcher_get_screen (launcher),
+						   "cannot_launch_icon",
+						   _("Cannot launch icon"),
+						   "%s",
+						   error->message);
+		launcher_register_error_dialog (launcher, error_dialog);
 		g_clear_error (&error);
 	}
 
@@ -228,6 +274,7 @@ destroy_launcher (GtkWidget *widget,
 		  Launcher  *launcher)
 {
 	launcher_properties_destroy (launcher);
+	launcher_widget_destroy_open_dialogs (launcher);
 }
 
 void

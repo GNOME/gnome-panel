@@ -28,6 +28,7 @@ typedef struct {
 	GnomeDesktopItem *revert_ditem;
 
 	GtkWidget         *prop_dialog;
+	GSList 		  *error_dialogs;
 
 	gulong             destroy_handler;
 
