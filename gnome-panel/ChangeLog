@@ -1,3 +1,24 @@
+2002-05-23  Alex Larsson  <alexl@redhat.com>
+
+	reviewed by: mark@skynet.ie
+
+	* main.c: (main):
+	Create a global panel_icon_loader to handle icon theming.
+	
+	* button-widget.c: (loadup_file):
+	* gnome-run.c: (find_icon_timeout), (selection_changed):
+	* launcher.c: (setup_button), (ditem_set_icon):
+	* menu-util.c: (get_pixmap):
+	Use panel_icon_loader
+	
+	* menu.c: (icon_theme_changed), (panel_menu_new),
+	(panel_make_menu_icon), (create_kde_menu), (image_menu_destroy),
+	(panel_load_menu_image_deferred_with_size):
+	Use panel_icon_loader, handle icon loader changes.
+	
+	* panel-main.h:
+	Export panel_icon_loader
+
 2002-05-23  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* gnome-panelrc:

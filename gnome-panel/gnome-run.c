@@ -52,6 +52,7 @@
 #include "menu-fentry.h"
 #include "menu.h"
 #include "multiscreen-stuff.h"
+#include "panel-main.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
 
@@ -1062,7 +1063,8 @@ find_icon_timeout (gpointer data)
 
 	pixbuf = NULL;
 	if (found_icon != NULL) {
-		icon = gnome_desktop_item_find_icon (found_icon,
+		icon = gnome_desktop_item_find_icon (panel_icon_loader,
+                                                     found_icon,
 						     48 /* desired size */,
 						     0 /* flags */);
 		if (icon != NULL) {
@@ -1347,7 +1349,8 @@ selection_changed (GtkTreeSelection *selection,
 				gtk_label_set_text (GTK_LABEL (desc_label),
 						    sure_string (qitem->comment));
 
-			icon = gnome_desktop_item_find_icon (qitem->icon,
+			icon = gnome_desktop_item_find_icon (panel_icon_loader,
+                                                             qitem->icon,
 							     48 /* desired size */,
 							     0 /* flags */);
 			if (icon != NULL) {

@@ -33,6 +33,7 @@
 #include "panel-util.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
+#include "panel-main.h"
 #include "session.h"
 
 #include "quick-desktop-reader.h"
@@ -433,7 +434,7 @@ setup_button (Launcher *launcher)
 	button_widget_set_text (BUTTON_WIDGET (launcher->button), name);
 
 	/* Setup icon */
-	icon = gnome_desktop_item_get_icon (launcher->ditem);
+	icon = gnome_desktop_item_get_icon (launcher->ditem, panel_icon_loader);
 	if (icon == NULL ||
 	    ! button_widget_set_pixmap (BUTTON_WIDGET (launcher->button),
 					icon, -1))
@@ -806,7 +807,8 @@ ditem_set_icon (GnomeDesktopItem *ditem, const char *icon)
 {
 	if (icon != NULL &&
 	    icon[0] != G_DIR_SEPARATOR) {
-		char *full = gnome_desktop_item_find_icon (icon,
+		char *full = gnome_desktop_item_find_icon (panel_icon_loader,
+							   icon,
 							   48 /* desired size */,
 							   0 /* flags */);
 		if (full != NULL) {

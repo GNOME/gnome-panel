@@ -20,6 +20,7 @@
 #include "multiscreen-stuff.h"
 #include "distribution.h"
 #include "panel-config-global.h"
+#include "panel-main.h"
 #include "panel-util.h"
 #include "menu.h"
 
@@ -339,7 +340,8 @@ get_pixmap (const char *menudir, gboolean main_menu)
                 g_free (dentry_name);
 
                 if (qitem != NULL)
-                        pixmap_name = gnome_desktop_item_find_icon (qitem->icon,
+			pixmap_name = gnome_desktop_item_find_icon (panel_icon_loader,
+								    qitem->icon,
                                                                     20 /* desired size */,
                                                                     0 /* flags */);
 

@@ -10,6 +10,7 @@
 #include "button-widget.h"
 #include "panel-widget.h"
 #include "basep-widget.h"
+#include "panel-main.h"
 #include "panel-types.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
@@ -307,7 +308,8 @@ loadup_file(const char *file)
 		return NULL;
 
 	if ( ! g_path_is_absolute (file)) {
-		char *full = gnome_desktop_item_find_icon (file,
+		char *full = gnome_desktop_item_find_icon (panel_icon_loader,
+							   file,
 							   48 /* desired size */,
 							   0 /* flags */);
 

@@ -75,6 +75,7 @@ extern GSList *panel_list;
 /*list of all PanelWidgets created*/
 extern GSList *panels;
 
+
 extern gboolean commie_mode;
 extern gboolean no_run_box;
 extern GlobalConfig global_config;
@@ -86,7 +87,6 @@ extern int base_panels;
 
 extern char *kde_menudir;
 extern char *kde_icondir;
-
 
 extern GtkTooltips *panel_tooltips;
 
@@ -110,6 +110,8 @@ typedef struct {
 static guint load_icons_id = 0;
 static GHashTable *loaded_icons = NULL;
 static GList *icons_to_load = NULL;
+
+static GSList *image_menu_items = NULL;
 
 static GtkWidget * create_menu_at_fr (GtkWidget *menu,
 				      FileRec *fr,
@@ -647,11 +649,48 @@ panel_make_sure_menu_within_screen (GtkMenu *menu)
 	our_gtk_menu_position (menu);
 }
 
+static void
+icon_theme_changed (GnomeIconLoader *icon_loader,
+		    gpointer data)
+{
+  GtkWidget *image;
+  gboolean is_mapped;
+  GSList *l;
+
+  l = image_menu_items;
+
+  while (l != NULL) {
+    image = l->data;
+      
+    is_mapped = GTK_WIDGET_MAPPED(image);
+
+    if (is_mapped)
+      gtk_widget_unmap (image);
+
+    /* Make sure we reload the icon */
+    gtk_image_set_from_pixbuf (GTK_IMAGE (image), NULL);
+    
+    if (is_mapped)
+      gtk_widget_map (image);
+
+    l = l->next;
+  }
+}
+
+
 GtkWidget *
 panel_menu_new (void)
 {
 	GtkWidget *menu;
+	static gboolean registred_icon_theme_changer = FALSE;
 
+	if (!registred_icon_theme_changer) {
+	  registred_icon_theme_changer = TRUE;
+
+	  g_signal_connect (panel_icon_loader, "changed",
+			    G_CALLBACK (icon_theme_changed), NULL);
+	}
+	
 	menu = gtk_menu_new ();
 
 	panel_gconf_notify_add_while_alive ("/desktop/gnome/interface/menus_have_icons",
@@ -733,11 +772,13 @@ panel_make_menu_icon (const char *icon,
 	if (long_operation != NULL)
 		*long_operation = TRUE;
 
-	file = gnome_desktop_item_find_icon (icon,
+	file = gnome_desktop_item_find_icon (panel_icon_loader,
+					     icon,
 					     size /* desired size */,
 					     0 /* flags */);
 	if (file == NULL && fallback != NULL)
-		file = gnome_desktop_item_find_icon (fallback,
+		file = gnome_desktop_item_find_icon (panel_icon_loader,
+						     fallback,
 						     size /* desired size */,
 						     0 /* flags */);
 
@@ -2759,7 +2800,8 @@ create_kde_menu (GtkWidget *menu, gboolean fake_submenus,
 	char *pixmap_name;
 	char *uri;
 
-	pixmap_name = gnome_desktop_item_find_icon ("go.png",
+	pixmap_name = gnome_desktop_item_find_icon (panel_icon_loader,
+						    "go.png",
 						    ICON_SIZE /* desired_size */,
 						    0 /* flags */);
 	if (pixmap_name == NULL) {
@@ -4011,6 +4053,12 @@ image_menu_shown (GtkWidget *image, gpointer data)
 }
 
 static void
+image_menu_destroy (GtkWidget *image, gpointer data)
+{
+  image_menu_items = g_slist_remove (image_menu_items, image);
+}
+
+static void
 panel_load_menu_image_deferred_with_size (GtkWidget *image_menu_item,
 					  const char *image_filename,
 					  const char *fallback_image_filename,
@@ -4054,6 +4102,12 @@ panel_load_menu_image_deferred_with_size (GtkWidget *image_menu_item,
 			 icon,
 			 (GClosureNotify) icon_to_load_free,
 			 0 /* connect_flags */);
+
+  g_signal_connect (G_OBJECT (image), "destroy",
+		    G_CALLBACK (image_menu_destroy),
+		    NULL);
+
+  image_menu_items = g_slist_prepend (image_menu_items, image);
 }
 
 void
