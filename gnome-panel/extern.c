@@ -717,6 +717,14 @@ socket_unset_loading (GtkWidget *socket)
 	/* sanity */
 	if (socket->window != NULL)
 		gdk_window_set_back_pixmap (socket->window, NULL, FALSE);
+
+	/* sanity */
+	if (socket->parent != NULL) {
+		gtk_widget_set_usize (socket->parent, -1, -1);
+		gtk_signal_connect_after
+			(GTK_OBJECT (socket),"size_allocate",
+			 GTK_SIGNAL_FUNC (socket_size_allocate), NULL);
+	}
 }
 
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
@@ -736,8 +744,7 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 
 	size = panel->sz < 24 ? panel->sz : 24;
 
-	ext->ebox->requisition.width = size;
-	ext->ebox->requisition.height = size;
+	gtk_widget_set_usize (ext->ebox, size, size);
 
 	gtk_signal_connect_after (GTK_OBJECT (ext->ebox),"size_allocate",
 				  GTK_SIGNAL_FUNC (ebox_size_allocate),
@@ -749,10 +756,6 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 		g_warning("Can't create a socket");
 		return 0;
 	}
-
-	gtk_signal_connect_after (GTK_OBJECT (socket),"size_allocate",
-				  GTK_SIGNAL_FUNC (socket_size_allocate),
-				  NULL);
 
 	/* here for debugging purposes */
 	/*gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
