@@ -48,6 +48,15 @@ GSList *applets;
 GladeXML *glade_gui;
 GConfClient *gconf_client;
 
+static GConfEnumStringPair global_properties_type_enum_map [] = {
+	{ PANEL_SPEED_MEDIUM, "panel-speed-medium" },
+	{ PANEL_SPEED_SLOW,   "panel-speed-slow" },
+	{ PANEL_SPEED_FAST,   "panel-speed-fast" },	
+	{ LAYER_NORMAL, "panel-normal-layer" },
+	{ LAYER_BELOW, "panel-below-layer" },
+	{ LAYER_ABOVE, "panel-above-layer" },
+};
+
 /*
  * GEGL Wants Winners,
  * GEGL Wants Solutions,
@@ -211,8 +220,10 @@ option_menu_changed (GtkWidget *widget, gpointer data)
 {
 	gchar *key = (gchar *)data;
 
-	gconf_client_set_int(gconf_client,key,
-		gtk_option_menu_get_history(GTK_OPTION_MENU(widget)),NULL);	
+	gconf_client_set_string (gconf_client,key,
+				 gconf_enum_to_string (global_properties_type_enum_map,
+						       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
+				 NULL);	
 }
 
 static void
@@ -260,11 +271,17 @@ load_option_menus (void)
 	while(optionmenus[i]!=NULL){
 		GtkWidget *option;
 		gchar *key;
+		gint retval;
 
         	option = glade_xml_get_widget(glade_gui,optionmenus[i]);
         	key = g_strdup_printf("/apps/panel/global/%s",optionmenus[i]);
+		gconf_string_to_enum (global_properties_type_enum_map,
+				      gconf_client_get_string (gconf_client, key, NULL),
+				      &retval);
+
         	gtk_option_menu_set_history(GTK_OPTION_MENU(option),
-                	gconf_client_get_int(gconf_client,key,NULL));
+					    retval);
+
         	g_signal_connect_data (G_OBJECT (option), "changed",
 				       G_CALLBACK (option_menu_changed),
 				       key,
