@@ -1,3 +1,13 @@
+2004-07-30  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-widget.c: (bind_top_applet_events): For the
+	button-press-event do a g_signal_connect () 
+	instead of a g_signal_connect_after ().
+	This event was not going through PanelWidget 
+	because of which the actual widgets were getting 
+	the events. Thus exhibiting strange behaviours.
+	Fixes #147623, #143908,#145288 etc
+
 ==================== 2.7.4.1 ====================
 
 2004-07-20  Mark McLoughlin  <mark@skynet.ie>
