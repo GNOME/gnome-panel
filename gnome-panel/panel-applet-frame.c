@@ -436,10 +436,29 @@ panel_applet_frame_get_background_string (PanelAppletFrame    *frame,
 					  PanelWidget         *panel,
 					  PanelBackgroundType  type)
 {
-	return panel_background_make_string (
-			&panel->background,
-			GTK_WIDGET (frame)->allocation.x,
-			GTK_WIDGET (frame)->allocation.y);
+	int x;
+	int y;
+
+	x = GTK_WIDGET (frame)->allocation.x;
+	y = GTK_WIDGET (frame)->allocation.y;
+
+	if (frame->priv->has_handle) {
+		switch (frame->priv->orientation) {
+		case PANEL_ORIENTATION_TOP:
+		case PANEL_ORIENTATION_BOTTOM:
+			x += HANDLE_SIZE;
+			break;
+		case PANEL_ORIENTATION_LEFT:
+		case PANEL_ORIENTATION_RIGHT:
+			y += HANDLE_SIZE;
+			break;
+		default:
+			g_assert_not_reached ();
+			break;
+		}
+	}
+
+	return panel_background_make_string (&panel->background, x, y);
 }
 
 void
