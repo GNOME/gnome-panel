@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.1.0\n"
-"POT-Creation-Date: 2002-09-28 12:13+1200\n"
+"POT-Creation-Date: 2002-10-14 14:35+1300\n"
 "PO-Revision-Date: 2002-08-28 02:59+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -28,7 +28,7 @@ msgstr "_Quant a..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:681
-#: gnome-panel/launcher.c:791 gnome-panel/menu.c:3517 gnome-panel/menu.c:4189
+#: gnome-panel/launcher.c:791 gnome-panel/menu.c:3517 gnome-panel/menu.c:4194
 msgid "_Help"
 msgstr "A_juda"
 
@@ -328,17 +328,13 @@ msgstr "factoria per a crear applets generals"
 msgid "_Check for mail"
 msgstr "_Comprova si hi ha correu"
 
-#: applets/gen_util/clock.c:171 applets/gen_util/clock.c:482
-#: gnome-panel/panel-per-panel-config.schemas.in.h:5
-#, no-c-format
-msgid "%I:%M:%S %p"
-msgstr "%I:%M:%S %p"
+#: applets/gen_util/clock.c:171
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
 
-#: applets/gen_util/clock.c:173 applets/gen_util/clock.c:484
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
-#, no-c-format
-msgid "%I:%M %p"
-msgstr "%I:%M %p"
+#: applets/gen_util/clock.c:173
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
 
 #: applets/gen_util/clock.c:176 applets/gen_util/clock.c:487
 msgid "%H:%M:%S"
@@ -360,6 +356,18 @@ msgstr "%A %B %d"
 #: applets/gen_util/clock.c:397
 msgid "Computer Clock"
 msgstr "Rellotge del sistema"
+
+#: applets/gen_util/clock.c:482
+#: gnome-panel/panel-per-panel-config.schemas.in.h:5
+#, no-c-format
+msgid "%I:%M:%S %p"
+msgstr "%I:%M:%S %p"
+
+#: applets/gen_util/clock.c:484
+#: gnome-panel/panel-per-panel-config.schemas.in.h:3
+#, no-c-format
+msgid "%I:%M %p"
+msgstr "%I:%M %p"
 
 #: applets/gen_util/clock.c:523
 msgid "%A, %B %d %Y"
@@ -413,7 +421,7 @@ msgstr "Utilitza _UTC"
 #. Translator credits
 #: applets/gen_util/clock.c:1171 applets/gen_util/mailcheck.c:1731
 #: applets/gen_util/pager.c:529 applets/gen_util/tasklist.c:751
-#: gnome-panel/menu.c:251
+#: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
 "Ivan Vilata i Balaguer <ivan@selidor.net>\n"
@@ -1180,7 +1188,7 @@ msgstr "_Elimina del quadre"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:382
+#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:390
 msgid "???"
 msgstr "???"
 
@@ -1232,11 +1240,11 @@ msgstr "Pixmaps dels botons d'amagar habilitats"
 msgid "Hidebuttons have pixmaps"
 msgstr "Els botons d'amagar tenen pixmaps"
 
-#: gnome-panel/basep-widget.c:570
+#: gnome-panel/basep-widget.c:590
 msgid "Hide this panel"
 msgstr "Amaga aquest quadre"
 
-#: gnome-panel/basep-widget.c:573
+#: gnome-panel/basep-widget.c:593
 msgid "Show this panel"
 msgstr "Mostra aquest quadre"
 
@@ -1379,73 +1387,73 @@ msgstr "Calaix"
 msgid "_Properties"
 msgstr "_Propietats"
 
-#: gnome-panel/foobar-widget.c:172 gnome-panel/menu.c:3764
+#: gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3765
 msgid "Run Program..."
 msgstr "Executa un programa..."
 
-#: gnome-panel/foobar-widget.c:176
+#: gnome-panel/foobar-widget.c:177
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Executa aplicacions, si sabeu l'ordre correcta a introduir"
 
-#: gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3777
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3779
 msgid "Search for Files..."
 msgstr "Cercar fitxers..."
 
-#: gnome-panel/foobar-widget.c:191 gnome-panel/menu.c:3780
+#: gnome-panel/foobar-widget.c:195 gnome-panel/menu.c:3782
 msgid "Find files, folders, and documents on your computer"
 msgstr "Cerca fitxers, carpetes i documents en el vostre ordinador"
 
-#: gnome-panel/foobar-widget.c:202 gnome-panel/menu.c:3791
+#: gnome-panel/foobar-widget.c:210 gnome-panel/menu.c:3796
 msgid "Screenshot..."
 msgstr "Captura de pantalla..."
 
-#: gnome-panel/foobar-widget.c:206 gnome-panel/menu.c:3794
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3799
 msgid "Take a screenshot of your desktop"
 msgstr "Fa una captura del vostre escriptori"
 
-#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3575
+#: gnome-panel/foobar-widget.c:226 gnome-panel/menu.c:3575
 msgid "Lock Screen"
 msgstr "Bloqueja la pantalla"
 
-#: gnome-panel/foobar-widget.c:222
+#: gnome-panel/foobar-widget.c:230
 msgid "Protect your computer from unauthorized use"
 msgstr "Protegeix el vostre ordinador d'usos no autoritzats"
 
-#: gnome-panel/foobar-widget.c:231 gnome-panel/menu.c:3586
+#: gnome-panel/foobar-widget.c:239 gnome-panel/menu.c:3586
 msgid "Log Out"
 msgstr "Surt"
 
-#: gnome-panel/foobar-widget.c:235
+#: gnome-panel/foobar-widget.c:243
 msgid "Quit from the GNOME desktop"
 msgstr "Surt de l'escriptori GNOME"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:244
+#: gnome-panel/foobar-widget.c:252
 msgid "Actions"
 msgstr "Accions"
 
-#: gnome-panel/foobar-widget.c:466
+#: gnome-panel/foobar-widget.c:474
 msgid "No windows open"
 msgstr "No hi ha finestres obertes"
 
-#: gnome-panel/foobar-widget.c:705 gnome-panel/menu.c:2791
+#: gnome-panel/foobar-widget.c:713 gnome-panel/menu.c:2791
 msgid "Menu Panel"
 msgstr "Quadre de menú"
 
-#: gnome-panel/foobar-widget.c:705
+#: gnome-panel/foobar-widget.c:713
 msgid "GNOME Menu Panel"
 msgstr "Quadre de menú del GNOME"
 
-#: gnome-panel/foobar-widget.c:725 gnome-panel/menu.c:2922
+#: gnome-panel/foobar-widget.c:733 gnome-panel/menu.c:2922
 #: gnome-panel/menu.c:2927 gnome-panel/menu.c:3732
 msgid "Applications"
 msgstr "Aplicacions"
 
-#: gnome-panel/global-keys.c:335 gnome-panel/global-keys.c:367
+#: gnome-panel/global-keys.c:328 gnome-panel/global-keys.c:357
 msgid "Can't find the screenshot program"
 msgstr "No es troba el el programa de captures de pantalla"
 
-#: gnome-panel/global-keys.c:346 gnome-panel/global-keys.c:379
+#: gnome-panel/global-keys.c:337 gnome-panel/global-keys.c:367
 msgid "Can't execute the screenshot program"
 msgstr "No es pot executar el programa de captures de pantalla"
 
@@ -1865,7 +1873,7 @@ msgstr ""
 "\n"
 "Detalls: %s"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3835
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
 msgid "Menu"
 msgstr "Menú"
 
@@ -1897,16 +1905,16 @@ msgstr ""
 "No podeu crear un llançador nou en aquest punt, ja que no es pot escriure en "
 "aquest lloc."
 
-#: gnome-panel/menu.c:239
+#: gnome-panel/menu.c:240
 msgid "Many many others ..."
 msgstr "Molts, molts altres..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:241
+#: gnome-panel/menu.c:242
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr "i finalment, els cavallers que diuen ... NI!"
 
-#: gnome-panel/menu.c:276
+#: gnome-panel/menu.c:277
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -1915,7 +1923,7 @@ msgstr ""
 "applets petits a ell mateix, de la pau al món, i d'alguna petada aleatòria "
 "d'X."
 
-#: gnome-panel/menu.c:282
+#: gnome-panel/menu.c:283
 msgid ""
 "\n"
 "\n"
@@ -1928,19 +1936,19 @@ msgstr ""
 "vostre sistema ha prohibit que es faci qualsevol canvi a la configuració del "
 "quadre."
 
-#: gnome-panel/menu.c:288
+#: gnome-panel/menu.c:289
 msgid "The GNOME Panel"
 msgstr "El quadre de GNOME"
 
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:290
 msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "© 1997-2002 the Free Software Foundation"
 
-#: gnome-panel/menu.c:310
+#: gnome-panel/menu.c:311
 msgid "End world hunger"
 msgstr "Aturar la fam al món"
 
-#: gnome-panel/menu.c:328
+#: gnome-panel/menu.c:329
 #, c-format
 msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
@@ -1951,7 +1959,7 @@ msgstr ""
 "\n"
 "Detalls: probablement %s no existeix"
 
-#: gnome-panel/menu.c:352
+#: gnome-panel/menu.c:353
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1962,7 +1970,7 @@ msgstr ""
 "\n"
 "Detalls: %s"
 
-#: gnome-panel/menu.c:362 gnome-panel/menu.c:1118 gnome-panel/menu.c:1155
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1118 gnome-panel/menu.c:1155
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -2153,8 +2161,8 @@ msgstr "Llançador..."
 msgid "Launcher from menu"
 msgstr "Llançador des del menú"
 
-#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3887 gnome-panel/menu.c:3915
-#: gnome-panel/menu.c:4111
+#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3892 gnome-panel/menu.c:3920
+#: gnome-panel/menu.c:4116
 msgid "GNOME Menu"
 msgstr "Menú del GNOME"
 
@@ -2222,24 +2230,24 @@ msgstr ""
 msgid "Applets"
 msgstr "Applets"
 
-#: gnome-panel/menu.c:3771
+#: gnome-panel/menu.c:3772
 msgid "Run a command"
 msgstr "Executa una ordre"
 
-#: gnome-panel/menu.c:3807
+#: gnome-panel/menu.c:3812
 msgid "Desktop"
 msgstr "Escriptori"
 
-#: gnome-panel/menu.c:3837
+#: gnome-panel/menu.c:3842
 msgid "Menu:"
 msgstr "Menú:"
 
 # De veres aquesta gent parla així? iv
-#: gnome-panel/menu.c:3909
+#: gnome-panel/menu.c:3914
 msgid "Can't create menu, using main menu!"
 msgstr "No es pot crear el menú, empreant el menú principal!"
 
-#: gnome-panel/menu.c:4427
+#: gnome-panel/menu.c:4432
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "No hi ha un camí fixat en %s per al objecte de menú de quadre\n"
@@ -2695,42 +2703,42 @@ msgstr "Prova l'applet de Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Prova la factoría d'applets de Bonobo"
 
-#: libpanel-applet/panel-applet.c:822
+#: libpanel-applet/panel-applet.c:831
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "S'ha rebut un tipus de fons «%s» incomplet"
 
-#: libpanel-applet/panel-applet.c:836
+#: libpanel-applet/panel-applet.c:845
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "S'ha rebut un tipus de fons «%s» incomplet: %s"
 
-#: libpanel-applet/panel-applet.c:845
+#: libpanel-applet/panel-applet.c:854
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "No s'ha trobat el pixmap %s"
 
-#: libpanel-applet/panel-applet.c:852
+#: libpanel-applet/panel-applet.c:861
 msgid "Unknown background type received"
 msgstr "S'ha rebut un tipus de fons desconegut"
 
-#: libpanel-applet/panel-applet.c:1029
+#: libpanel-applet/panel-applet.c:1038
 msgid "The Applet's containing Panel's orientation"
 msgstr "L'applet que conté l'orientació del Quadre"
 
-#: libpanel-applet/panel-applet.c:1037
+#: libpanel-applet/panel-applet.c:1046
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "L'applet que conté la mida del Quadre en píxels"
 
-#: libpanel-applet/panel-applet.c:1045
+#: libpanel-applet/panel-applet.c:1054
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "L'applet que conté el color o pixmap de fons o del Quadre"
 
-#: libpanel-applet/panel-applet.c:1053
+#: libpanel-applet/panel-applet.c:1062
 msgid "The Applet's flags"
 msgstr "Les opcions de l'applet"
 
-#: libpanel-applet/panel-applet.c:1061
+#: libpanel-applet/panel-applet.c:1070
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Rangs que donen una idea de les mides que són acceptables per a l'applet"
@@ -3104,12 +3112,6 @@ msgstr "Extra petit"
 
 #~ msgid "This Month"
 #~ msgstr "Aquest mes"
-
-#~ msgid "%l:%M %p"
-#~ msgstr "%l:%M %p"
-
-#~ msgid "%l:%M:%S %p"
-#~ msgstr "%l:%M:%S %p"
 
 #~ msgid "Add Appointment..."
 #~ msgstr "Afegeix una cita..."

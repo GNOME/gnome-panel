@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Tamil Gnome Translation v. 1.7\n"
-"POT-Creation-Date: 2002-09-28 12:13+1200\n"
+"POT-Creation-Date: 2002-10-14 14:35+1300\n"
 "PO-Revision-Date: 2001-10-10 00:04-0500\n"
 "Last-Translator: Dinesh Nadarajah <n_dinesh@yahoo.com>\n"
 "Language-Team: Tamil <tamilinux@yahoogroups.com>\n"
@@ -36,7 +36,7 @@ msgstr "ÀüÈ¢..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:681
-#: gnome-panel/launcher.c:791 gnome-panel/menu.c:3517 gnome-panel/menu.c:4189
+#: gnome-panel/launcher.c:791 gnome-panel/menu.c:3517 gnome-panel/menu.c:4194
 #, fuzzy
 msgid "_Help"
 msgstr "¯¾Å¢"
@@ -383,19 +383,15 @@ msgstr ""
 msgid "_Check for mail"
 msgstr "Ò¾¢Â Á¢ý-«ïºø À¡÷ôÒ"
 
-# panel/menu.c:3516 panel/session.c:1549
-#: applets/gen_util/clock.c:171 applets/gen_util/clock.c:482
-#: gnome-panel/panel-per-panel-config.schemas.in.h:5
-#, no-c-format
-msgid "%I:%M:%S %p"
-msgstr "%I:%M:%S %p"
+# panel/foobar-widget.c:590
+#: applets/gen_util/clock.c:171
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
 
-# applets/gen_util/clock.c:191 applets/gen_util/clock.c:395
-#: applets/gen_util/clock.c:173 applets/gen_util/clock.c:484
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
-#, no-c-format
-msgid "%I:%M %p"
-msgstr "%I:%M %p"
+# panel/foobar-widget.c:589
+#: applets/gen_util/clock.c:173
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
 
 # panel/foobar-widget.c:588
 #: applets/gen_util/clock.c:176 applets/gen_util/clock.c:487
@@ -422,6 +418,20 @@ msgstr "%A %B %d"
 #: applets/gen_util/clock.c:397
 msgid "Computer Clock"
 msgstr ""
+
+# panel/menu.c:3516 panel/session.c:1549
+#: applets/gen_util/clock.c:482
+#: gnome-panel/panel-per-panel-config.schemas.in.h:5
+#, no-c-format
+msgid "%I:%M:%S %p"
+msgstr "%I:%M:%S %p"
+
+# applets/gen_util/clock.c:191 applets/gen_util/clock.c:395
+#: applets/gen_util/clock.c:484
+#: gnome-panel/panel-per-panel-config.schemas.in.h:3
+#, no-c-format
+msgid "%I:%M %p"
+msgstr "%I:%M %p"
 
 # applets/gen_util/clock.c:425
 #: applets/gen_util/clock.c:523
@@ -497,7 +507,7 @@ msgstr "ìÈ£¿¢î (GMT) §¿Ãõ ¯À§Â¡¸¢"
 #. Translator credits
 #: applets/gen_util/clock.c:1171 applets/gen_util/mailcheck.c:1731
 #: applets/gen_util/pager.c:529 applets/gen_util/tasklist.c:751
-#: gnome-panel/menu.c:251
+#: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
 
@@ -1386,7 +1396,7 @@ msgstr "ÀÄ¨¸Â¢ø ­ÕóÐ ¿£ìÌ"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:382
+#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:390
 msgid "???"
 msgstr "???"
 
@@ -1449,12 +1459,12 @@ msgid "Hidebuttons have pixmaps"
 msgstr ""
 
 # panel/basep-widget.c:884
-#: gnome-panel/basep-widget.c:570
+#: gnome-panel/basep-widget.c:590
 msgid "Hide this panel"
 msgstr "­ó¾ô ÀÄ¨¸¨Â Á¨È"
 
 # panel/menu.c:5025 panel/menu.c:5086
-#: gnome-panel/basep-widget.c:573
+#: gnome-panel/basep-widget.c:593
 #, fuzzy
 msgid "Show this panel"
 msgstr "­ó¾ ÀÄ¨¸¨Â ¿£ìÌ"
@@ -1623,90 +1633,90 @@ msgid "_Properties"
 msgstr "ÀñÒ¸û"
 
 # panel/gnome-run.c:1170
-#: gnome-panel/foobar-widget.c:172 gnome-panel/menu.c:3764
+#: gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3765
 #, fuzzy
 msgid "Run Program..."
 msgstr "¿¢Ã¨Ä ¦ºÂøÀÎòÐ"
 
-#: gnome-panel/foobar-widget.c:176
+#: gnome-panel/foobar-widget.c:177
 msgid "Run applications, if you know the correct command to type in"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3777
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3779
 msgid "Search for Files..."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:191 gnome-panel/menu.c:3780
+#: gnome-panel/foobar-widget.c:195 gnome-panel/menu.c:3782
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
 
 # panel/gnome-panel-screenshot.glade.h:7
-#: gnome-panel/foobar-widget.c:202 gnome-panel/menu.c:3791
+#: gnome-panel/foobar-widget.c:210 gnome-panel/menu.c:3796
 #, fuzzy
 msgid "Screenshot..."
 msgstr "¾¢¨ÃÂ¢ý-À¼õ"
 
 # panel/gnome-panel-screenshot.glade.h:11
-#: gnome-panel/foobar-widget.c:206 gnome-panel/menu.c:3794
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3799
 #, fuzzy
 msgid "Take a screenshot of your desktop"
 msgstr "¾¢¨ÃÂ¢ý-À¼ò¨¾ ¸½¢§Á¨ºÂ¢ø §ºÁ¢"
 
 # panel/foobar-widget.c:385
-#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3575
+#: gnome-panel/foobar-widget.c:226 gnome-panel/menu.c:3575
 msgid "Lock Screen"
 msgstr "¾¢¨Ã¨Â âðÎ"
 
-#: gnome-panel/foobar-widget.c:222
+#: gnome-panel/foobar-widget.c:230
 msgid "Protect your computer from unauthorized use"
 msgstr ""
 
 # panel/foobar-widget.c:395
-#: gnome-panel/foobar-widget.c:231 gnome-panel/menu.c:3586
+#: gnome-panel/foobar-widget.c:239 gnome-panel/menu.c:3586
 msgid "Log Out"
 msgstr "ÀÂÉ÷ ÓÊò¾ø"
 
-#: gnome-panel/foobar-widget.c:235
+#: gnome-panel/foobar-widget.c:243
 msgid "Quit from the GNOME desktop"
 msgstr ""
 
 # gsm/logout.c:240
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:244
+#: gnome-panel/foobar-widget.c:252
 #, fuzzy
 msgid "Actions"
 msgstr "¦ºÂø"
 
-#: gnome-panel/foobar-widget.c:466
+#: gnome-panel/foobar-widget.c:474
 msgid "No windows open"
 msgstr ""
 
 # panel/menu.c:3595
-#: gnome-panel/foobar-widget.c:705 gnome-panel/menu.c:2791
+#: gnome-panel/foobar-widget.c:713 gnome-panel/menu.c:2791
 #, fuzzy
 msgid "Menu Panel"
 msgstr "ÀðÊô ÀÄ¨¸"
 
 # panel/menu.c:244
-#: gnome-panel/foobar-widget.c:705
+#: gnome-panel/foobar-widget.c:713
 #, fuzzy
 msgid "GNOME Menu Panel"
 msgstr "¸§É¡õ ÀÄ¨¸"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: gnome-panel/foobar-widget.c:725 gnome-panel/menu.c:2922
+#: gnome-panel/foobar-widget.c:733 gnome-panel/menu.c:2922
 #: gnome-panel/menu.c:2927 gnome-panel/menu.c:3732
 #, fuzzy
 msgid "Applications"
 msgstr "¦ºÂøÀ¡Î"
 
 # panel/global-keys.c:288 panel/global-keys.c:316
-#: gnome-panel/global-keys.c:335 gnome-panel/global-keys.c:367
+#: gnome-panel/global-keys.c:328 gnome-panel/global-keys.c:357
 msgid "Can't find the screenshot program"
 msgstr "screenshot ¿¢Ã¨Äì ¸ñÎÀ¢Êì¸ ÓÊÂÅ¢ø¨Ä"
 
 # panel/global-keys.c:297 panel/global-keys.c:326
-#: gnome-panel/global-keys.c:346 gnome-panel/global-keys.c:379
+#: gnome-panel/global-keys.c:337 gnome-panel/global-keys.c:367
 msgid "Can't execute the screenshot program"
 msgstr "'screenshot' ¦ºÂøÀÎò¾ ÓÊÂ¡Ð"
 
@@ -2200,7 +2210,7 @@ msgstr ""
 # panel/menu-properties.c:618 panel/menu.c:1524 panel/menu.c:3122
 # panel/menu.c:3197 panel/menu.c:3202 panel/menu.c:4824 panel/menu.c:5667
 # panel/menu.c:5801 panel/menu.c:5821
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3835
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
 msgid "Menu"
 msgstr "ÀðÊ"
 
@@ -2231,18 +2241,18 @@ msgid ""
 msgstr ""
 
 # panel/menu.c:217
-#: gnome-panel/menu.c:239
+#: gnome-panel/menu.c:240
 msgid "Many many others ..."
 msgstr "Àø §ÅÕ ..."
 
 # panel/menu.c:219
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:241
+#: gnome-panel/menu.c:242
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr "and finally, The Knights Who Say ... NI!"
 
 # panel/menu.c:246
-#: gnome-panel/menu.c:276
+#: gnome-panel/menu.c:277
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -2251,7 +2261,7 @@ msgstr ""
 "small applets within itself, world peace, and random X crashes."
 
 # panel/menu.c:269
-#: gnome-panel/menu.c:282
+#: gnome-panel/menu.c:283
 #, fuzzy
 msgid ""
 "\n"
@@ -2263,22 +2273,22 @@ msgstr ""
 "prohibited any changes to the panel's configuration to take place."
 
 # panel/menu.c:244
-#: gnome-panel/menu.c:288
+#: gnome-panel/menu.c:289
 msgid "The GNOME Panel"
 msgstr "¸§É¡õ ÀÄ¨¸"
 
 # panel/menu.c:245
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:290
 #, fuzzy
 msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "(C) 1997-2000 the Free Software Foundation"
 
 # panel/menu.c:262
-#: gnome-panel/menu.c:310
+#: gnome-panel/menu.c:311
 msgid "End world hunger"
 msgstr "¯Ä¸ Àº¢¨Â ¿£ìÌ"
 
-#: gnome-panel/menu.c:328
+#: gnome-panel/menu.c:329
 #, c-format
 msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
@@ -2286,7 +2296,7 @@ msgid ""
 "Details: %s probably does not exist"
 msgstr ""
 
-#: gnome-panel/menu.c:352
+#: gnome-panel/menu.c:353
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -2295,7 +2305,7 @@ msgid ""
 msgstr ""
 
 # panel/menu.c:307 panel/menu.c:1042 panel/menu.c:1066 panel/menu.c:2260
-#: gnome-panel/menu.c:362 gnome-panel/menu.c:1118 gnome-panel/menu.c:1155
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1118 gnome-panel/menu.c:1155
 #, fuzzy, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -2549,8 +2559,8 @@ msgid "Launcher from menu"
 msgstr "ÀðÊÂ¢ø ­ÕóÐ ¦¾¡¼í¸÷"
 
 # help-browser/toc.c:160
-#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3887 gnome-panel/menu.c:3915
-#: gnome-panel/menu.c:4111
+#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3892 gnome-panel/menu.c:3920
+#: gnome-panel/menu.c:4116
 #, fuzzy
 msgid "GNOME Menu"
 msgstr "¸§É¡õ ¯¾Å¢"
@@ -2640,13 +2650,13 @@ msgid "Applets"
 msgstr "ÌÚõÀÂý¸û"
 
 # applets/gen_util/printer.c:321
-#: gnome-panel/menu.c:3771
+#: gnome-panel/menu.c:3772
 #, fuzzy
 msgid "Run a command"
 msgstr "«îÍ ¸ð¼¨Ç:"
 
 # gsm/splash.c:68 panel/menu.c:5225 panel/menu.c:5230 panel/menu.c:5598
-#: gnome-panel/menu.c:3807
+#: gnome-panel/menu.c:3812
 msgid "Desktop"
 msgstr "¸É¢§Á¨º"
 
@@ -2654,17 +2664,17 @@ msgstr "¸É¢§Á¨º"
 # panel/menu-properties.c:618 panel/menu.c:1524 panel/menu.c:3122
 # panel/menu.c:3197 panel/menu.c:3202 panel/menu.c:4824 panel/menu.c:5667
 # panel/menu.c:5801 panel/menu.c:5821
-#: gnome-panel/menu.c:3837
+#: gnome-panel/menu.c:3842
 #, fuzzy
 msgid "Menu:"
 msgstr "ÀðÊ"
 
 # panel/menu.c:5675
-#: gnome-panel/menu.c:3909
+#: gnome-panel/menu.c:3914
 msgid "Can't create menu, using main menu!"
 msgstr "ÀðÊ¨Â À¨¼ì¸ ÓÊÂ¡Ð, Ó¾ý¨Á ÀðÊ¨Â ÀÂýÀÎòÐõ"
 
-#: gnome-panel/menu.c:4427
+#: gnome-panel/menu.c:4432
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr ""
@@ -3210,45 +3220,45 @@ msgstr "ÌÚõÀÂý"
 msgid "Test Bonobo Applet Factory"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:822
+#: libpanel-applet/panel-applet.c:831
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:836
+#: libpanel-applet/panel-applet.c:845
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr ""
 
 # panel/gnome-run.c:293
-#: libpanel-applet/panel-applet.c:845
+#: libpanel-applet/panel-applet.c:854
 #, fuzzy, c-format
 msgid "Failed to get pixmap %s"
 msgstr ""
 "¸ð¼¨Ç¨Â ¦ºÂøÀÎò¾ ÓÊÂÅ¢ø¨Ä:\n"
 "%s"
 
-#: libpanel-applet/panel-applet.c:852
+#: libpanel-applet/panel-applet.c:861
 msgid "Unknown background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1029
+#: libpanel-applet/panel-applet.c:1038
 msgid "The Applet's containing Panel's orientation"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1037
+#: libpanel-applet/panel-applet.c:1046
 msgid "The Applet's containing Panel's size in pixels"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1045
+#: libpanel-applet/panel-applet.c:1054
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1053
+#: libpanel-applet/panel-applet.c:1062
 msgid "The Applet's flags"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1061
+#: libpanel-applet/panel-applet.c:1070
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 
@@ -3801,14 +3811,6 @@ msgstr ""
 # panel/foobar-widget.c:582
 #~ msgid "This Month"
 #~ msgstr "­ó¾ Á¡¾õ"
-
-# panel/foobar-widget.c:589
-#~ msgid "%l:%M %p"
-#~ msgstr "%l:%M %p"
-
-# panel/foobar-widget.c:590
-#~ msgid "%l:%M:%S %p"
-#~ msgstr "%l:%M:%S %p"
 
 # panel/foobar-widget.c:569
 #~ msgid ""

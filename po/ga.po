@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core CVS\n"
-"POT-Creation-Date: 2002-09-28 12:13+1200\n"
+"POT-Creation-Date: 2002-10-14 14:35+1300\n"
 "PO-Revision-Date: 2000-08-26 19:11+0000\n"
 "Last-Translator:  Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>\n"
 "Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
@@ -27,7 +27,7 @@ msgstr "Faoi..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:681
-#: gnome-panel/launcher.c:791 gnome-panel/menu.c:3517 gnome-panel/menu.c:4189
+#: gnome-panel/launcher.c:791 gnome-panel/menu.c:3517 gnome-panel/menu.c:4194
 #, fuzzy
 msgid "_Help"
 msgstr "Cabhair"
@@ -316,16 +316,14 @@ msgstr ""
 msgid "_Check for mail"
 msgstr ""
 
-#: applets/gen_util/clock.c:171 applets/gen_util/clock.c:482
-#: gnome-panel/panel-per-panel-config.schemas.in.h:5
-#, fuzzy, no-c-format
-msgid "%I:%M:%S %p"
+#: applets/gen_util/clock.c:171
+#, fuzzy
+msgid "%l:%M:%S %p"
 msgstr "%I:%M %p"
 
-#: applets/gen_util/clock.c:173 applets/gen_util/clock.c:484
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
-#, no-c-format
-msgid "%I:%M %p"
+#: applets/gen_util/clock.c:173
+#, fuzzy
+msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
 #: applets/gen_util/clock.c:176 applets/gen_util/clock.c:487
@@ -350,6 +348,18 @@ msgstr "%a, %b %d"
 #: applets/gen_util/clock.c:397
 msgid "Computer Clock"
 msgstr ""
+
+#: applets/gen_util/clock.c:482
+#: gnome-panel/panel-per-panel-config.schemas.in.h:5
+#, fuzzy, no-c-format
+msgid "%I:%M:%S %p"
+msgstr "%I:%M %p"
+
+#: applets/gen_util/clock.c:484
+#: gnome-panel/panel-per-panel-config.schemas.in.h:3
+#, no-c-format
+msgid "%I:%M %p"
+msgstr "%I:%M %p"
 
 #: applets/gen_util/clock.c:523
 #, fuzzy
@@ -412,7 +422,7 @@ msgstr " (IST)"
 #. Translator credits
 #: applets/gen_util/clock.c:1171 applets/gen_util/mailcheck.c:1731
 #: applets/gen_util/pager.c:529 applets/gen_util/tasklist.c:751
-#: gnome-panel/menu.c:251
+#: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
 
@@ -1178,7 +1188,7 @@ msgstr "Cuir as Painéal"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:382
+#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:390
 msgid "???"
 msgstr "???"
 
@@ -1234,12 +1244,12 @@ msgstr "Folaigh cnaipí"
 msgid "Hidebuttons have pixmaps"
 msgstr ""
 
-#: gnome-panel/basep-widget.c:570
+#: gnome-panel/basep-widget.c:590
 #, fuzzy
 msgid "Hide this panel"
 msgstr "Scríos an paineál seo"
 
-#: gnome-panel/basep-widget.c:573
+#: gnome-panel/basep-widget.c:593
 #, fuzzy
 msgid "Show this panel"
 msgstr "Scríos an paineál seo"
@@ -1382,80 +1392,80 @@ msgstr "Taisceadán"
 msgid "_Properties"
 msgstr "Ábaltachtaí"
 
-#: gnome-panel/foobar-widget.c:172 gnome-panel/menu.c:3764
+#: gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3765
 #, fuzzy
 msgid "Run Program..."
 msgstr "Ríomhchlar"
 
-#: gnome-panel/foobar-widget.c:176
+#: gnome-panel/foobar-widget.c:177
 msgid "Run applications, if you know the correct command to type in"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3777
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3779
 msgid "Search for Files..."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:191 gnome-panel/menu.c:3780
+#: gnome-panel/foobar-widget.c:195 gnome-panel/menu.c:3782
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:202 gnome-panel/menu.c:3791
+#: gnome-panel/foobar-widget.c:210 gnome-panel/menu.c:3796
 msgid "Screenshot..."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:206 gnome-panel/menu.c:3794
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3799
 msgid "Take a screenshot of your desktop"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3575
+#: gnome-panel/foobar-widget.c:226 gnome-panel/menu.c:3575
 #, fuzzy
 msgid "Lock Screen"
 msgstr "Glasál an scathán"
 
-#: gnome-panel/foobar-widget.c:222
+#: gnome-panel/foobar-widget.c:230
 msgid "Protect your computer from unauthorized use"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:231 gnome-panel/menu.c:3586
+#: gnome-panel/foobar-widget.c:239 gnome-panel/menu.c:3586
 #, fuzzy
 msgid "Log Out"
 msgstr "Éirigh as"
 
-#: gnome-panel/foobar-widget.c:235
+#: gnome-panel/foobar-widget.c:243
 msgid "Quit from the GNOME desktop"
 msgstr ""
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:244
+#: gnome-panel/foobar-widget.c:252
 #, fuzzy
 msgid "Actions"
 msgstr "Beochan"
 
-#: gnome-panel/foobar-widget.c:466
+#: gnome-panel/foobar-widget.c:474
 msgid "No windows open"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:705 gnome-panel/menu.c:2791
+#: gnome-panel/foobar-widget.c:713 gnome-panel/menu.c:2791
 #, fuzzy
 msgid "Menu Panel"
 msgstr "Rang Chlar"
 
-#: gnome-panel/foobar-widget.c:705
+#: gnome-panel/foobar-widget.c:713
 #, fuzzy
 msgid "GNOME Menu Panel"
 msgstr "An Painéal GNOME"
 
-#: gnome-panel/foobar-widget.c:725 gnome-panel/menu.c:2922
+#: gnome-panel/foobar-widget.c:733 gnome-panel/menu.c:2922
 #: gnome-panel/menu.c:2927 gnome-panel/menu.c:3732
 #, fuzzy
 msgid "Applications"
 msgstr "Beochan"
 
-#: gnome-panel/global-keys.c:335 gnome-panel/global-keys.c:367
+#: gnome-panel/global-keys.c:328 gnome-panel/global-keys.c:357
 msgid "Can't find the screenshot program"
 msgstr ""
 
-#: gnome-panel/global-keys.c:346 gnome-panel/global-keys.c:379
+#: gnome-panel/global-keys.c:337 gnome-panel/global-keys.c:367
 #, fuzzy
 msgid "Can't execute the screenshot program"
 msgstr "ag cruthaigh fillteán 'sáidtheoir: %s\n"
@@ -1843,7 +1853,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3835
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
 msgid "Menu"
 msgstr "Clár"
 
@@ -1870,22 +1880,22 @@ msgid ""
 "writable."
 msgstr ""
 
-#: gnome-panel/menu.c:239
+#: gnome-panel/menu.c:240
 msgid "Many many others ..."
 msgstr ""
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:241
+#: gnome-panel/menu.c:242
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr "agus ansin, Na Fianna a deireann .. NI!"
 
-#: gnome-panel/menu.c:276
+#: gnome-panel/menu.c:277
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
 msgstr ""
 
-#: gnome-panel/menu.c:282
+#: gnome-panel/menu.c:283
 msgid ""
 "\n"
 "\n"
@@ -1893,20 +1903,20 @@ msgid ""
 "prohibited any changes to the panel's configuration to take place."
 msgstr ""
 
-#: gnome-panel/menu.c:288
+#: gnome-panel/menu.c:289
 msgid "The GNOME Panel"
 msgstr "An Painéal GNOME"
 
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:290
 #, fuzzy
 msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "(c) 1998 the Free Software Foundation"
 
-#: gnome-panel/menu.c:310
+#: gnome-panel/menu.c:311
 msgid "End world hunger"
 msgstr ""
 
-#: gnome-panel/menu.c:328
+#: gnome-panel/menu.c:329
 #, c-format
 msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
@@ -1914,7 +1924,7 @@ msgid ""
 "Details: %s probably does not exist"
 msgstr ""
 
-#: gnome-panel/menu.c:352
+#: gnome-panel/menu.c:353
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1922,7 +1932,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu.c:362 gnome-panel/menu.c:1118 gnome-panel/menu.c:1155
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1118 gnome-panel/menu.c:1155
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -2123,8 +2133,8 @@ msgstr "Dealbh Seoltóra"
 msgid "Launcher from menu"
 msgstr "Dealbh Seoltóra"
 
-#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3887 gnome-panel/menu.c:3915
-#: gnome-panel/menu.c:4111
+#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3892 gnome-panel/menu.c:3920
+#: gnome-panel/menu.c:4116
 #, fuzzy
 msgid "GNOME Menu"
 msgstr "Cabhair GNOME"
@@ -2196,25 +2206,25 @@ msgstr ""
 msgid "Applets"
 msgstr "Feidhmchláríní"
 
-#: gnome-panel/menu.c:3771
+#: gnome-panel/menu.c:3772
 #, fuzzy
 msgid "Run a command"
 msgstr "Ordú Printéir:"
 
-#: gnome-panel/menu.c:3807
+#: gnome-panel/menu.c:3812
 msgid "Desktop"
 msgstr ""
 
-#: gnome-panel/menu.c:3837
+#: gnome-panel/menu.c:3842
 #, fuzzy
 msgid "Menu:"
 msgstr "Clár"
 
-#: gnome-panel/menu.c:3909
+#: gnome-panel/menu.c:3914
 msgid "Can't create menu, using main menu!"
 msgstr ""
 
-#: gnome-panel/menu.c:4427
+#: gnome-panel/menu.c:4432
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr ""
@@ -2671,42 +2681,42 @@ msgstr "Feidhmchláirín"
 msgid "Test Bonobo Applet Factory"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:822
+#: libpanel-applet/panel-applet.c:831
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:836
+#: libpanel-applet/panel-applet.c:845
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:845
+#: libpanel-applet/panel-applet.c:854
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:852
+#: libpanel-applet/panel-applet.c:861
 msgid "Unknown background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1029
+#: libpanel-applet/panel-applet.c:1038
 msgid "The Applet's containing Panel's orientation"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1037
+#: libpanel-applet/panel-applet.c:1046
 msgid "The Applet's containing Panel's size in pixels"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1045
+#: libpanel-applet/panel-applet.c:1054
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1053
+#: libpanel-applet/panel-applet.c:1062
 msgid "The Applet's flags"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1061
+#: libpanel-applet/panel-applet.c:1070
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 
@@ -2992,14 +3002,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Clock Properties"
 #~ msgstr "Ábaltachtaí Chlog"
-
-#, fuzzy
-#~ msgid "%l:%M %p"
-#~ msgstr "%I:%M %p"
-
-#, fuzzy
-#~ msgid "%l:%M:%S %p"
-#~ msgstr "%I:%M %p"
 
 #, fuzzy
 #~ msgid "Format"
