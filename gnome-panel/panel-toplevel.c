@@ -3403,7 +3403,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		g_param_spec_int (
 			"hide-delay",
 			_("Hide delay"),
-			_("The number of miliseconds to delay before automatically hiding"),
+			_("The number of milliseconds to delay before automatically hiding"),
 			0,
 			G_MAXINT,
 			DEFAULT_HIDE_DELAY,
