@@ -14,12 +14,11 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <dirent.h>
+#include <time.h>
 #include <unistd.h>
 #include <string.h>
 #include <limits.h>
 #include <errno.h>
-
-#include <libgnome/libgnome.h>
 
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-directory.h>

@@ -1,3 +1,44 @@
+2004-11-01  Vincent Untz  <vincent@vuntz.net>
+
+	* *.[ch]: stop including everything from libgnome and libgnomeui, use
+	glib/gi18n.h
+
+	* menu.c: (create_panel_context_menu): use GTK_STOCK_ABOUT instead of
+	GNOME_STOCK_ABOUT
+	* panel-background.[ch]: (panel_background_set_pango_color): killed
+	(panel_background_set_gdk_color): new
+	(panel_background_set_color): update for panel_background_set_gdk_color
+	* panel-profile.[ch]: (panel_profile_set_background_color): update
+	for panel_profile_set_background_gdk_color
+	(panel_profile_get_background_color): update for
+	panel_profile_get_background_gdk_color
+	(panel_profile_{set,get}_background_pango_color: kill
+	(panel_profile_{set,get}_background_gdk_color): new
+	(get_background_color): use GdkColor instead of PangoColor
+	(panel_profile_background_change_notify): ditto
+	* panel-properties-dialog.c: port to GtkComboBox and GtkColorButton
+	(orientation_to_history):
+	(history_to_orientation):
+	(panel_properties_dialog_setup_orientation_menu):
+	(panel_properties_dialog_remove_orientation_menu): kill
+	(panel_properties_dialog_setup_orientation_combo):
+	(panel_properties_dialog_remove_orientation_combo): new
+	(panel_properties_dialog_orientation_changed):
+	(panel_properties_dialog_update_orientation):
+	(panel_properties_dialog_update_for_attach): update for the combo box
+	(panel_properties_dialog_color_changed):
+	(panel_properties_dialog_update_background_color): update for the
+	color button
+	(panel_properties_dialog_setup_color_picker): kill
+	(panel_properties_dialog_setup_color_button): new
+	(panel_properties_dialog_new): updated
+	* panel-properties-dialog.glade: port to GtkComboBox and GtkColorButton
+	* panel-recent.c: (panel_recent_append_documents_menu): use
+	gtk_menu_shell_append() instead of deprecated gtk_menu_append()
+	* panel-run-dialog.c: (panel_run_dialog_find_command_icon_idle): use
+	gtk_tree_path_new_first() instead of deprecated
+	gtk_tree_path_new_root()
+
 2004-10-31  Vincent Untz  <vincent@vuntz.net>
 
 	* Makefile.am: seems like ALLOW_CRACKPOT_MENU_CODE was useful...

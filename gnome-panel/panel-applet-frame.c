@@ -27,7 +27,7 @@
 
 #include <libbonoboui.h>
 #include <gconf/gconf.h>
-#include <libgnome/libgnome.h>
+#include <libgnome/gnome-i18n.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 

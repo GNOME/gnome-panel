@@ -28,7 +28,7 @@
 
 #include <string.h>
 #include <glade/glade-xml.h>
-#include <libgnomeui/gnome-color-picker.h>
+#include <glib/gi18n.h>
 #include <libgnomeui/gnome-file-entry.h>
 #include <libgnomeui/gnome-icon-entry.h>
 
@@ -46,7 +46,7 @@ typedef struct {
 	GtkWidget     *general_vbox;
 	GtkWidget     *name_entry;
 	GtkWidget     *name_label;
-	GtkWidget     *orientation_menu;
+	GtkWidget     *orientation_combo;
 	GtkWidget     *orientation_label;
 	GtkWidget     *size_widgets;
 	GtkWidget     *size_spin;
@@ -64,7 +64,7 @@ typedef struct {
 	GtkWidget     *image_radio;
 	GtkWidget     *color_widgets;
 	GtkWidget     *image_widgets;
-	GtkWidget     *color_picker;
+	GtkWidget     *color_button;
 	GtkWidget     *color_label;
 	GtkWidget     *image_entry;
 	GtkWidget     *opacity_scale;
@@ -171,85 +171,93 @@ panel_properties_dialog_setup_name_entry (PanelPropertiesDialog *dialog,
 	}
 }
 
-/* Sucky: menu order is Top, Bottom, Left, Right */
-typedef enum {
-	HISTORY_TOP = 0,
-	HISTORY_BOTTOM,
-	HISTORY_LEFT,
-	HISTORY_RIGHT
-} OrientationMenuOrder;
+enum {
+	COLUMN_TEXT,
+	COLUMN_ITEM,
+	NUMBER_COLUMNS
+};
 
-static int
-orientation_to_history (PanelOrientation orientation)
-{
-	switch (orientation) {
-	case PANEL_ORIENTATION_TOP:
-		return HISTORY_TOP;
-	case PANEL_ORIENTATION_BOTTOM:
-		return HISTORY_BOTTOM;
-	case PANEL_ORIENTATION_LEFT:
-		return HISTORY_LEFT;
-	case PANEL_ORIENTATION_RIGHT:
-		return HISTORY_RIGHT;
-	}
+typedef struct {
+	const char       *name;
+	PanelOrientation  orientation;
+} OrientationComboItem;
 
-	g_assert_not_reached ();
-
-	return 0;
-}
-
-static PanelOrientation
-history_to_orientation (int history)
-{
-	switch (history) {
-	case HISTORY_TOP:
-		return PANEL_ORIENTATION_TOP;
-	case HISTORY_BOTTOM:
-		return PANEL_ORIENTATION_BOTTOM;
-	case HISTORY_LEFT:
-		return PANEL_ORIENTATION_LEFT;
-	case HISTORY_RIGHT:
-		return PANEL_ORIENTATION_RIGHT;
-	}
-
-	g_assert_not_reached ();
-
-	return 0;
-
-}
+static OrientationComboItem orientation_items [] = {
+	{ N_("Top"),    PANEL_ORIENTATION_TOP    },
+	{ N_("Bottom"), PANEL_ORIENTATION_BOTTOM },
+	{ N_("Left"),   PANEL_ORIENTATION_LEFT   },
+	{ N_("Right"),  PANEL_ORIENTATION_RIGHT  },
+};
 
 static void
 panel_properties_dialog_orientation_changed (PanelPropertiesDialog *dialog,
-					     GtkOptionMenu         *option_menu)
+					     GtkComboBox           *combo_box)
 {
-	PanelOrientation orientation;
+	GtkTreeIter           iter;
+	GtkTreeModel         *model;
+	OrientationComboItem *item;
 
-	orientation = history_to_orientation (gtk_option_menu_get_history (option_menu));
+	g_assert (dialog->orientation_combo == GTK_WIDGET (combo_box));
 
-	panel_profile_set_toplevel_orientation (dialog->toplevel, orientation);
+	if (!gtk_combo_box_get_active_iter (combo_box, &iter))
+		return;
+
+	model = gtk_combo_box_get_model (combo_box);
+	gtk_tree_model_get (model, &iter, COLUMN_ITEM, &item, -1);
+	if (item == NULL)
+		return;
+
+	panel_profile_set_toplevel_orientation (dialog->toplevel,
+						item->orientation);
 }
 
 static void
-panel_properties_dialog_setup_orientation_menu (PanelPropertiesDialog *dialog,
-						GladeXML              *gui)
+panel_properties_dialog_setup_orientation_combo (PanelPropertiesDialog *dialog,
+						 GladeXML              *gui)
 {
-	PanelOrientation orientation;
+	PanelOrientation  orientation;
+	GtkListStore     *model;
+	GtkTreeIter       iter;
+	GtkCellRenderer  *renderer;
+	int               i;
 
-	dialog->orientation_menu = glade_xml_get_widget (gui, "orientation_menu");
-	g_return_if_fail (dialog->orientation_menu != NULL);
+	dialog->orientation_combo = glade_xml_get_widget (gui, "orientation_combo");
+	g_return_if_fail (dialog->orientation_combo != NULL);
 	dialog->orientation_label = glade_xml_get_widget (gui, "orientation_label");
 	g_return_if_fail (dialog->orientation_label != NULL);
 
 	orientation = panel_profile_get_toplevel_orientation (dialog->toplevel);
-	gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->orientation_menu),
-				     orientation_to_history (orientation));
 
-	g_signal_connect_swapped (dialog->orientation_menu, "changed",
+	model = gtk_list_store_new (NUMBER_COLUMNS,
+				    G_TYPE_STRING,
+				    G_TYPE_POINTER);
+
+	gtk_combo_box_set_model (GTK_COMBO_BOX (dialog->orientation_combo),
+				 GTK_TREE_MODEL (model));
+
+	for (i = 0; i < G_N_ELEMENTS (orientation_items); i++) {
+		gtk_list_store_append (model, &iter);
+		gtk_list_store_set (model, &iter,
+				    COLUMN_TEXT, _(orientation_items [i].name),
+				    COLUMN_ITEM, &(orientation_items [i]),
+				    -1);
+		if (orientation == orientation_items [i].orientation)
+			gtk_combo_box_set_active_iter (GTK_COMBO_BOX (dialog->orientation_combo),
+						       &iter);
+	}
+
+	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (dialog->orientation_combo),
+				    renderer, TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (dialog->orientation_combo),
+					renderer, "text", COLUMN_TEXT, NULL);
+
+	g_signal_connect_swapped (dialog->orientation_combo, "changed",
 				  G_CALLBACK (panel_properties_dialog_orientation_changed),
 				  dialog);
 
-	if ( ! panel_profile_is_writable_toplevel_orientation (dialog->toplevel)) {
-		gtk_widget_set_sensitive (dialog->orientation_menu, FALSE);
+	if (! panel_profile_is_writable_toplevel_orientation (dialog->toplevel)) {
+		gtk_widget_set_sensitive (dialog->orientation_combo, FALSE);
 		gtk_widget_set_sensitive (dialog->orientation_label, FALSE);
 		gtk_widget_show (dialog->writability_warn_general);
 	}
@@ -402,44 +410,38 @@ SETUP_TOGGLE_BUTTON ("arrows_toggle",      arrows_toggle,      enable_arrows)
 
 static void
 panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
-				       guint16                red,
-				       guint16                green,
-				       guint16                blue)
+				       GtkColorButton        *color_button)
 {
-	PangoColor pango_color;
+	GdkColor color;
 
-	pango_color.red   = red;
-	pango_color.green = green;
-	pango_color.blue  = blue;
+	g_assert (dialog->color_button == GTK_WIDGET (color_button));
 
-	panel_profile_set_background_pango_color (dialog->toplevel, &pango_color);
+	gtk_color_button_get_color (color_button, &color);
+	panel_profile_set_background_gdk_color (dialog->toplevel, &color);
 }
 
 static void
-panel_properties_dialog_setup_color_picker (PanelPropertiesDialog *dialog,
+panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 					    GladeXML              *gui)
 {
 	PanelColor color;
 
-	dialog->color_picker = glade_xml_get_widget (gui, "color_picker");
-	g_return_if_fail (dialog->color_picker != NULL);
+	dialog->color_button = glade_xml_get_widget (gui, "color_button");
+	g_return_if_fail (dialog->color_button != NULL);
 	dialog->color_label = glade_xml_get_widget (gui, "color_label");
 	g_return_if_fail (dialog->color_label != NULL);
 
 	panel_profile_get_background_color (dialog->toplevel, &color);
 
-	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (dialog->color_picker),
-				    color.gdk.red,
-				    color.gdk.green,
-				    color.gdk.blue,
-				    65535);
+	gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
+				    &(color.gdk));
 
-	g_signal_connect_swapped (dialog->color_picker, "color_set",
+	g_signal_connect_swapped (dialog->color_button, "color_set",
 				  G_CALLBACK (panel_properties_dialog_color_changed),
 				  dialog);
 
 	if ( ! panel_profile_is_writable_background_color (dialog->toplevel)) {
-		gtk_widget_set_sensitive (dialog->color_picker, FALSE);
+		gtk_widget_set_sensitive (dialog->color_button, FALSE);
 		gtk_widget_set_sensitive (dialog->color_label, FALSE);
 		gtk_widget_show (dialog->writability_warn_background);
 	}
@@ -680,7 +682,10 @@ static void
 panel_properties_dialog_update_orientation (PanelPropertiesDialog *dialog,
 					    GConfValue            *value)
 {
-	PanelOrientation orientation;
+	PanelOrientation      orientation;
+	GtkTreeModel         *model;
+	GtkTreeIter           iter;
+	OrientationComboItem *item;
 
 	if (!value || value->type != GCONF_VALUE_STRING)
 		return;
@@ -688,8 +693,19 @@ panel_properties_dialog_update_orientation (PanelPropertiesDialog *dialog,
 	if (!panel_profile_map_orientation_string (gconf_value_get_string (value), &orientation))
 		return;
 
-	gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->orientation_menu),
-				     orientation_to_history (orientation));
+	model = gtk_combo_box_get_model (GTK_COMBO_BOX (dialog->orientation_combo));
+
+	if (!gtk_tree_model_get_iter_first (model, &iter))
+		return;
+
+	do {
+		gtk_tree_model_get (model, &iter, COLUMN_ITEM, &item, -1);
+		if (item != NULL && item->orientation == orientation) {
+			gtk_combo_box_set_active_iter (GTK_COMBO_BOX (dialog->orientation_combo),
+						       &iter);
+			return;
+		}
+	} while (gtk_tree_model_iter_next (model, &iter));
 }
 
 static void
@@ -774,22 +790,23 @@ static void
 panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
 						 GConfValue            *value)
 {
-	PangoColor color = { 0, };
-	guint16    red, green, blue;
+	GdkColor new_color = { 0, };
+	GdkColor old_color;
 
 	if (!value || value->type != GCONF_VALUE_STRING)
 		return;
 	
-	pango_color_parse (&color, gconf_value_get_string (value));
+	if (!gdk_color_parse (gconf_value_get_string (value), &new_color))
+		return;
 
-	gnome_color_picker_get_i16 (GNOME_COLOR_PICKER (dialog->color_picker),
-				    &red, &green, &blue, NULL);
-	if (red != color.red || green != color.green || blue != color.blue)
-		gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (dialog->color_picker),
-					    color.red,
-					    color.green,
-					    color.blue,	
-					    65535);
+	gtk_color_button_get_color (GTK_COLOR_BUTTON (dialog->color_button),
+				    &old_color);
+
+	if (old_color.red   != new_color.red ||
+	    old_color.green != new_color.green ||
+	    old_color.blue  != new_color.blue)
+		gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
+					    &new_color);
 }
 
 static void
@@ -851,7 +868,7 @@ panel_properties_dialog_background_notify (GConfClient           *client,
 }
 
 static void
-panel_properties_dialog_remove_orientation_menu (PanelPropertiesDialog *dialog)
+panel_properties_dialog_remove_orientation_combo (PanelPropertiesDialog *dialog)
 {
 	GtkContainer *container = GTK_CONTAINER (dialog->general_table);
 	GtkTable     *table     = GTK_TABLE (dialog->general_table);
@@ -862,7 +879,7 @@ panel_properties_dialog_remove_orientation_menu (PanelPropertiesDialog *dialog)
 	g_object_ref (dialog->icon_align);
 
 	gtk_container_remove (container, dialog->orientation_label);
-	gtk_container_remove (container, dialog->orientation_menu);
+	gtk_container_remove (container, dialog->orientation_combo);
 	gtk_container_remove (container, dialog->size_label);
 	gtk_container_remove (container, dialog->size_widgets);
 	gtk_container_remove (container, dialog->icon_label);
@@ -874,7 +891,7 @@ panel_properties_dialog_remove_orientation_menu (PanelPropertiesDialog *dialog)
 	gtk_table_attach_defaults (table, dialog->icon_align,   1, 2, 2, 3);
 
 	dialog->orientation_label = NULL;
-	dialog->orientation_menu = NULL;
+	dialog->orientation_combo = NULL;
 	g_object_unref (dialog->size_label);
 	g_object_unref (dialog->size_widgets);
 	g_object_unref (dialog->icon_label);
@@ -918,7 +935,7 @@ panel_properties_dialog_update_for_attached (PanelPropertiesDialog *dialog,
 		panel_properties_dialog_remove_icon_entry (dialog);
 	else {
 		panel_properties_dialog_remove_toggles (dialog);
-		panel_properties_dialog_remove_orientation_menu (dialog);
+		panel_properties_dialog_remove_orientation_combo (dialog);
 	}
 }
 
@@ -953,7 +970,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	dialog->general_table = glade_xml_get_widget (gui, "general_table");
 
 	panel_properties_dialog_setup_name_entry         (dialog, gui);
-	panel_properties_dialog_setup_orientation_menu   (dialog, gui);
+	panel_properties_dialog_setup_orientation_combo  (dialog, gui);
 	panel_properties_dialog_setup_size_spin          (dialog, gui);
 	panel_properties_dialog_setup_icon_entry         (dialog, gui);
 	panel_properties_dialog_setup_expand_toggle      (dialog, gui);
@@ -974,7 +991,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 			(GConfClientNotifyFunc) panel_properties_dialog_toplevel_notify,
 			dialog);
 
-	panel_properties_dialog_setup_color_picker      (dialog, gui);
+	panel_properties_dialog_setup_color_button      (dialog, gui);
 	panel_properties_dialog_setup_image_entry       (dialog, gui);
 	panel_properties_dialog_setup_opacity_scale     (dialog, gui);
 	panel_properties_dialog_setup_background_radios (dialog, gui);

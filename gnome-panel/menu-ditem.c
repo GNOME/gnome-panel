@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <libgnome/libgnome.h>
-#include <libgnomeui/libgnomeui.h>
+#include <glib/gi18n.h>
 #include <libgnomeui/gnome-ditem-edit.h>
 
 #include "menu-ditem.h"

@@ -27,7 +27,7 @@
 #include "panel-menu-bar.h"
 
 #include <string.h>
-#include <libgnome/gnome-i18n.h>
+#include <glib/gi18n.h>
 
 #include "panel-util.h"
 #include "panel-action-button.h"

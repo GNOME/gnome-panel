@@ -24,6 +24,7 @@
 
 #include <config.h>
 
+#include <libgnomeui/gnome-client.h>
 #include "panel-session.h"
 
 #include <stdlib.h>

@@ -2,11 +2,9 @@
 #include <math.h>
 #include <string.h>
 
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
-#include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-util.h>
-#include <libgnome/gnome-desktop-item.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "button-widget.h"

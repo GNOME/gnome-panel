@@ -42,9 +42,6 @@
 #include <string.h>
 #include <glib-object.h>
 #include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-util.h>
-#include <libgnome/gnome-exec.h>
-#include <libgnome/gnome-url.h>
 #include <locale.h>
 #include <popt.h>
 

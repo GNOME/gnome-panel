@@ -27,8 +27,7 @@
 #include "panel-profile.h"
 
 #include <string.h>
-#include <libgnome/gnome-i18n.h>
-#include <pango/pango-attributes.h>
+#include <glib/gi18n.h>
 
 #include "applet.h"
 #include "panel-compatibility.h"
@@ -402,13 +401,7 @@ void
 panel_profile_set_background_color (PanelToplevel *toplevel,
 				    PanelColor    *color)
 {
-	PangoColor pango_color;
-
-	pango_color.red   = color->gdk.red;
-	pango_color.green = color->gdk.green;
-	pango_color.blue  = color->gdk.blue;
-
-	panel_profile_set_background_pango_color (toplevel, &pango_color);
+	panel_profile_set_background_gdk_color (toplevel, &color->gdk);
 	panel_profile_set_background_opacity (toplevel, color->alpha);
 }
 
@@ -416,23 +409,15 @@ void
 panel_profile_get_background_color (PanelToplevel *toplevel,
 				    PanelColor    *color)
 {
-	PangoColor pango_color;
-	guint16    opacity;
-
-	panel_profile_get_background_pango_color (toplevel, &pango_color);
-	opacity = panel_profile_get_background_opacity (toplevel);
-
-	color->gdk.red   = pango_color.red;
-	color->gdk.green = pango_color.green;
-	color->gdk.blue  = pango_color.blue;
-	color->alpha     = opacity;
+	panel_profile_get_background_gdk_color (toplevel, &(color->gdk));
+	color->alpha = panel_profile_get_background_opacity (toplevel);
 }
 
 TOPLEVEL_IS_WRITABLE_FUNC ("background/color", background, color)
 
 void
-panel_profile_set_background_pango_color (PanelToplevel *toplevel,
-					  PangoColor    *pango_color)
+panel_profile_set_background_gdk_color (PanelToplevel *toplevel,
+					GdkColor      *gdk_color)
 {
 	GConfClient *client;
 	const char  *key;
@@ -441,9 +426,9 @@ panel_profile_set_background_pango_color (PanelToplevel *toplevel,
 	client = panel_gconf_get_client ();
 
 	color_str = g_strdup_printf ("#%02x%02x%02x",
-				     pango_color->red   / 256,
-				     pango_color->green / 256,
-				     pango_color->blue  / 256);
+				     gdk_color->red   / 256,
+				     gdk_color->green / 256,
+				     gdk_color->blue  / 256);
 
 	key = panel_profile_get_toplevel_key (toplevel, "background/color");
 	gconf_client_set_string (client, key, color_str, NULL);
@@ -452,8 +437,8 @@ panel_profile_set_background_pango_color (PanelToplevel *toplevel,
 }
 
 void
-panel_profile_get_background_pango_color (PanelToplevel *toplevel,
-					  PangoColor    *pango_color)
+panel_profile_get_background_gdk_color (PanelToplevel *toplevel,
+					GdkColor      *gdk_color)
 {
 	GConfClient *client;
 	const char  *key;
@@ -463,10 +448,10 @@ panel_profile_get_background_pango_color (PanelToplevel *toplevel,
 
 	key = panel_profile_get_toplevel_key (toplevel, "background/color");
 	color_str = gconf_client_get_string (client, key, NULL);
-	if (!color_str || !pango_color_parse (pango_color, color_str)) {
-		pango_color->red   = 0;
-		pango_color->green = 0;
-		pango_color->blue  = 0;
+	if (!color_str || !gdk_color_parse (color_str, gdk_color)) {
+		gdk_color->red   = 0;
+		gdk_color->green = 0;
+		gdk_color->blue  = 0;
 	}
 
 	g_free (color_str);
@@ -784,7 +769,6 @@ get_background_color (GConfClient *client,
 		      const char  *toplevel_dir,
 		      PanelColor  *color)
 {
-	PangoColor  pango_color;
 	GError     *error;
 	const char *key;
 	char       *color_str;
@@ -792,17 +776,14 @@ get_background_color (GConfClient *client,
 	error = NULL;
 	key = panel_gconf_sprintf ("%s/background/color", toplevel_dir);
 	color_str = gconf_client_get_string (client, key, &error);
-	color->gdk.red   = 0;
-	color->gdk.green = 0;
-	color->gdk.blue  = 0;
 	if (error) {
 		g_warning (_("Error reading GConf string value '%s': %s"),
 			   key, error->message);
 		g_error_free (error);
-	} else if (color_str && pango_color_parse (&pango_color, color_str)) {
-		color->gdk.red   = pango_color.red;
-		color->gdk.green = pango_color.green;
-		color->gdk.blue  = pango_color.blue;
+	} else if (!color_str || !gdk_color_parse (color_str, &(color->gdk))) {
+		color->gdk.red   = 0;
+		color->gdk.green = 0;
+		color->gdk.blue  = 0;
 	}
 
 	g_free (color_str);
@@ -1194,13 +1175,13 @@ panel_profile_background_change_notify (GConfClient   *client,
 		}
 	} else if (!strcmp (key, "color")) {
 		if (value->type == GCONF_VALUE_STRING) {
-			PangoColor  pango_color;
+			GdkColor    gdk_color;
 			const char *str;
 
 			str = gconf_value_get_string (value);
 
-			if (pango_color_parse (&pango_color, str))
-				panel_background_set_pango_color (background, &pango_color);
+			if (gdk_color_parse (str, &gdk_color))
+				panel_background_set_gdk_color (background, &gdk_color);
 		}
 	} else if (!strcmp (key, "opacity")) {
 		if (value->type == GCONF_VALUE_INT)

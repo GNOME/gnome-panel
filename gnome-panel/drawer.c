@@ -15,8 +15,8 @@
 #include <dirent.h>
 #include <string.h>
 
-#include <libgnomeui/libgnomeui.h>
-#include <libgnome/libgnome.h>
+#include <glib/gi18n.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "drawer.h"
 

@@ -25,8 +25,6 @@
 
 #include "panel-compatibility.h"
 
-#include <libgnome/gnome-i18n.h>
-
 #include "panel-profile.h"
 #include "panel-menu-bar.h"
 #include "panel-applet-frame.h"

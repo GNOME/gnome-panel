@@ -122,10 +122,10 @@ void        panel_profile_get_background_color        (PanelToplevel       *topl
 						       PanelColor          *color);
 gboolean    panel_profile_is_writable_background_color (PanelToplevel       *toplevel);
 
-void        panel_profile_set_background_pango_color  (PanelToplevel       *toplevel,
-						       PangoColor          *pango_color);
-void        panel_profile_get_background_pango_color  (PanelToplevel       *toplevel,
-						       PangoColor          *pango_color);
+void        panel_profile_set_background_gdk_color    (PanelToplevel       *toplevel,
+						       GdkColor            *gdk_color);
+void        panel_profile_get_background_gdk_color    (PanelToplevel       *toplevel,
+						       GdkColor            *gdk_color);
 
 void        panel_profile_set_background_opacity      (PanelToplevel       *toplevel,
 						       guint16              opacity);

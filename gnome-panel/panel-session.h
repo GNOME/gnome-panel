@@ -25,8 +25,6 @@
 #ifndef __PANEL_SESSION_H__
 #define __PANEL_SESSION_H__
 
-#include <libgnomeui/gnome-client.h>
-
 G_BEGIN_DECLS
 
 void panel_session_init           (const char *argv0);

@@ -25,7 +25,7 @@
 #include <config.h>
 #include <string.h>
 
-#include <libgnome/libgnome.h>
+#include <libgnome/gnome-i18n.h>
 #include <libbonobo.h>
 
 #include "menu.h"

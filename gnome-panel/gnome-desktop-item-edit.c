@@ -1,10 +1,11 @@
 #include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-#include <libgnome/libgnome.h>
-#include <libgnomeui/libgnomeui.h>
-
+#include <glib/gi18n.h>
+#include <gtk/gtk.h>
+#include <libgnomeui/gnome-ui-init.h>
 #include <libgnomevfs/gnome-vfs-uri.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-utils.h>

@@ -23,10 +23,8 @@
 #include <math.h>
 
 #include <gdk/gdkkeysyms.h>
-#include <libgnome/libgnome.h>
+#include <gtk/gtkenums.h>
 #include <libgnome/gnome-desktop-item.h>
-#include <libgnomeui/libgnomeui.h>
-#include <libgnomeui/gnome-ditem-edit.h>
 #include <gconf/gconf-client.h>
 #include <libbonobo.h>
 
@@ -2343,7 +2341,7 @@ create_panel_context_menu (PanelWidget *panel)
 	setup_menuitem (menuitem,
 			GTK_ICON_SIZE_MENU,
 			gtk_image_new_from_stock (
-				GNOME_STOCK_ABOUT, GTK_ICON_SIZE_MENU),
+				GTK_STOCK_ABOUT, GTK_ICON_SIZE_MENU),
 				_("A_bout Panels"),
 				FALSE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
@@ -2357,7 +2355,7 @@ create_panel_context_menu (PanelWidget *panel)
 		setup_menuitem (menuitem,
 				GTK_ICON_SIZE_MENU,
 				gtk_image_new_from_stock (
-					GNOME_STOCK_ABOUT, GTK_ICON_SIZE_MENU),
+					GTK_STOCK_ABOUT, GTK_ICON_SIZE_MENU),
 					_("About _GNOME"),
 					FALSE);
 		gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);

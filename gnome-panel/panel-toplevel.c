@@ -32,8 +32,7 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-program.h>
+#include <glib/gi18n.h>
 
 #include "panel-profile.h"
 #include "panel-frame.h"

@@ -90,8 +90,8 @@ void  panel_background_set               (PanelBackground     *background,
 					  gboolean             rotate_image); 
 void  panel_background_set_type          (PanelBackground     *background,
 					  PanelBackgroundType  type);
-void  panel_background_set_pango_color   (PanelBackground     *background,
-					  PangoColor          *pango_color);
+void  panel_background_set_gdk_color     (PanelBackground     *background,
+					  GdkColor            *gdk_color);
 void  panel_background_set_opacity       (PanelBackground     *background,
 					  guint16              opacity);
 void  panel_background_set_color         (PanelBackground     *background,

@@ -2,8 +2,8 @@
 #define MENU_FENTRY_H
 
 #include <sys/stat.h>
+#include <time.h>
 #include <unistd.h>
-#include <libgnome/gnome-desktop-item.h>
 
 G_BEGIN_DECLS
 

@@ -27,7 +27,7 @@
 #include "panel-menu-button.h"
 
 #include <string.h>
-#include <libgnome/gnome-i18n.h>
+#include <glib/gi18n.h>
 
 #include "applet.h"
 #include "panel-widget.h"

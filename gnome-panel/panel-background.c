@@ -540,21 +540,21 @@ panel_background_set_type (PanelBackground     *background,
 }
 
 void
-panel_background_set_pango_color (PanelBackground *background,
-				  PangoColor      *pango_color)
+panel_background_set_gdk_color (PanelBackground *background,
+				GdkColor        *gdk_color)
 {
-	g_return_if_fail (pango_color != NULL);
+	g_return_if_fail (gdk_color != NULL);
 
-	if (background->color.gdk.red   == pango_color->red &&
-	    background->color.gdk.green == pango_color->green &&
-	    background->color.gdk.blue  == pango_color->blue)
+	if (background->color.gdk.red   == gdk_color->red &&
+	    background->color.gdk.green == gdk_color->green &&
+	    background->color.gdk.blue  == gdk_color->blue)
 		return;
 
 	free_transformed_resources (background);
 
-	background->color.gdk.red   = pango_color->red;
-	background->color.gdk.green = pango_color->green;
-	background->color.gdk.blue  = pango_color->blue;
+	background->color.gdk.red   = gdk_color->red;
+	background->color.gdk.green = gdk_color->green;
+	background->color.gdk.blue  = gdk_color->blue;
 
 	panel_background_transform (background);
 }
@@ -579,15 +579,9 @@ void
 panel_background_set_color (PanelBackground *background,
 			    PanelColor      *color)
 {
-	PangoColor pango_color;
-
 	g_return_if_fail (color != NULL);
 
-	pango_color.red   = color->gdk.red;
-	pango_color.green = color->gdk.green;
-	pango_color.blue  = color->gdk.blue;
-
-	panel_background_set_pango_color (background, &pango_color);
+	panel_background_set_gdk_color (background, &(color->gdk));
 	panel_background_set_opacity (background, color->alpha);
 }
 

@@ -10,7 +10,6 @@
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
-#include <libgnome/libgnome.h>
 #include <libbonobo.h>
 #include <gdk/gdkx.h>
 

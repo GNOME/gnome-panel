@@ -35,11 +35,15 @@
 #include <dirent.h>
 #include <errno.h>
 #include <sys/types.h>
+
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <glade/glade-xml.h>
 #include <libgnome/gnome-desktop-item.h>
-#include <libgnome/libgnome.h>
-#include <libgnomeui/libgnomeui.h>
+#include <libgnome/gnome-exec.h>
+#include <libgnome/gnome-util.h>
+#include <libgnomeui/gnome-entry.h>
+#include <libgnomeui/gnome-url.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <gconf/gconf-client.h>
 
@@ -555,7 +559,7 @@ panel_run_dialog_find_command_icon_idle (PanelRunDialog *dialog)
 	gboolean      fuzzy;
 	
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (dialog->program_list));
-	path = gtk_tree_path_new_root ();
+	path = gtk_tree_path_new_first ();
 	text = gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry));
 	found_icon = NULL;
 	found_name = NULL;

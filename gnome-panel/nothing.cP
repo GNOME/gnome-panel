@@ -8,7 +8,9 @@
 #include <libart_lgpl/art_rgb_affine.h>
 #include <libart_lgpl/art_rgb_rgba_affine.h>
 #include <libart_lgpl/art_filterlevel.h>
-#include <libgnome/libgnome.h>
+#include <gdk/gdkkeysyms.h>
+#include <libgnome/gnome-program.h>
+#include <libgnome/gnome-sound.h>
 
 #include "panel-util.h"
 #include "nothing.h"

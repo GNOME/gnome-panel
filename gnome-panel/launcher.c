@@ -18,10 +18,9 @@
 #include <dirent.h>
 #include <string.h>
 
-#include <libgnome/libgnome.h>
-#include <libgnome/gnome-desktop-item.h>
-#include <libgnomeui/libgnomeui.h>
+#include <glib/gi18n.h>
 #include <libgnomeui/gnome-ditem-edit.h>
+#include <libgnomeui/gnome-url.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <gdk/gdkx.h>
 

@@ -17,14 +17,12 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#include <libgnome/libgnome.h>
 #include <libbonobo.h>
 #include <libgnomevfs/gnome-vfs-uri.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-mime.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <libgnomevfs/gnome-vfs-file-info.h>
-#include <libgnomeui/gnome-window-icon.h>
 
 #include "panel.h"
 

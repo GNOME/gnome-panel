@@ -27,7 +27,7 @@
 #include "panel-bindings.h"
 
 #include <string.h>
-#include <libgnome/gnome-i18n.h>
+#include <glib/gi18n.h>
 
 #include "panel-gconf.h"
 #include "panel-profile.h"

@@ -26,7 +26,7 @@
 #include <config.h>
 
 #include <string.h>
-#include <libgnome/libgnome.h>
+#include <glib/gi18n.h>
 #include <libgnomevfs/gnome-vfs-application-registry.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include "egg-recent-model.h"
@@ -299,7 +299,7 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 					      recent_documents_tooltip_func,
 					      NULL);
 	menu_item = gtk_separator_menu_item_new ();
-	gtk_menu_append (menu, menu_item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
 	menu_item = gtk_image_menu_item_new ();
 	setup_stock_menu_item (menu_item,
@@ -311,7 +311,7 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 			      menu_item,
 			      _("Clear all items from the recent documents list"),
 			      NULL);
-	gtk_menu_append (menu, menu_item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
 	g_signal_connect (menu_item, "activate",
 			  G_CALLBACK (recent_documents_clear_cb),

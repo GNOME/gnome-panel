@@ -26,8 +26,6 @@
 
 #include "panel-frame.h"
 
-#include <libgnome/gnome-i18n.h>
-
 #include "panel-typebuiltins.h"
 
 static GObjectClass *parent_class;

@@ -8,10 +8,6 @@
 
 #include <config.h>
 
-#include <libgnome/gnome-desktop-item.h>
-#include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-exec.h>
-
 #include "menu-util.h"
 #include "quick-desktop-reader.h"
 

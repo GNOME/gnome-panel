@@ -24,8 +24,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-#include <libgnomeui/libgnomeui.h>
-#include <libgnome/libgnome.h>
+#include <glib/gi18n.h>
+#include <libgnome/gnome-util.h>
+#include <libgnomeui/gnome-help.h>
 
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <libgnomevfs/gnome-vfs-uri.h>

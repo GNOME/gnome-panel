@@ -30,7 +30,6 @@
 #include <string.h>
 #include <glib.h>
 #include <gconf/gconf-client.h>
-#include <libgnomeui/gnome-client.h>
 
 #undef PANEL_GCONF_DEBUG
 

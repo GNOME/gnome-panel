@@ -26,7 +26,7 @@
 
 #include "panel-force-quit.h"
 
-#include <libgnome/gnome-i18n.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>

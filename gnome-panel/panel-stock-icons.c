@@ -28,7 +28,7 @@
 
 #include <gtk/gtkstock.h>
 #include <gtk/gtkiconfactory.h>
-#include <libgnome/gnome-i18n.h>
+#include <glib/gi18n.h>
 #include <libgnome/gnome-desktop-item.h>
 
 #include "panel-globals.h"
