@@ -41,7 +41,16 @@ load_applet(char *id, char *params, int pos, int panel)
 	  thing has to exec the applet or if it is a local applet then it
 	  just calls a function to create the appropriate widget and use
 	  register_toy*/
-	if(strcmp(id,MENU_ID) == 0) {
+	if(strcmp(id,EXTERN_ID) == 0) {
+		gchar *command;
+
+		g_return_if_fail (params != NULL);
+
+		command = g_copy_strings ("(true;", params, ") &", NULL);
+
+		system (command);
+		g_free (command);
+	} else if(strcmp(id,MENU_ID) == 0) {
 		Menu *menu;
 
 		menu = create_menu_applet(GTK_WIDGET(panels->data),

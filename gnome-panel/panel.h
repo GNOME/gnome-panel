@@ -10,6 +10,7 @@ BEGIN_GNOME_DECLS
   filemanager*/
 /*#define LAUNCHER_ID "Launcher"*/
 #define DRAWER_ID "Drawer"
+#define EXTERN_ID "Extern"
 
 #define DEFAULT_AUTO_HIDE_STEP_SIZE 10
 #define DEFAULT_EXPLICIT_HIDE_STEP_SIZE 50

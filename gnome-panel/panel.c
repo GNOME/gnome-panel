@@ -123,17 +123,21 @@ save_applet_configuration(gpointer data, gpointer user_data)
 	sprintf(buf, "_%d/", (*num)++);
 	path = g_copy_strings("/panel/Applet", buf, NULL);
 
-	fullpath = g_copy_strings(path,"id",NULL);
-	gnome_config_set_string(fullpath, info->id);
-	g_free(fullpath);
-
 	if(info->type==APPLET_EXTERN) {
+		fullpath = g_copy_strings(path,"id",NULL);
+		gnome_config_set_string(fullpath, EXTERN_ID);
+		g_free(fullpath);
+
 		/*have the applet do it's own session saving*/
 		send_applet_session_save(info->id,(*num)-2,panel,pos);
-		fullpath = g_copy_strings(path,"path",NULL);
+		fullpath = g_copy_strings(path,"parameters",NULL);
 		gnome_config_set_string(fullpath, info->params);
 		g_free(fullpath);
 	} else {
+		fullpath = g_copy_strings(path,"id",NULL);
+		gnome_config_set_string(fullpath, info->id);
+		g_free(fullpath);
+
 		fullpath = g_copy_strings(path,"position",NULL);
 		gnome_config_set_int(fullpath, pos);
 		g_free(fullpath);
@@ -384,7 +388,7 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 
 	info = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
 
-	/*FIXME: this will go*/
+	/*FIXME: this will have to go menu can be accessed from right click*/
 	if(strcmp(info->id,"Menu")==0) {
 		if(menu_count<=1)
 			return;
