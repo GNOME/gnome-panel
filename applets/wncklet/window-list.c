@@ -248,6 +248,8 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 	gconf_client_notify_remove (client, tasklist->listeners[2]);
 	gconf_client_notify_remove (client, tasklist->listeners[3]);
 	gconf_client_notify_remove (client, tasklist->listeners[4]);
+
+	g_object_unref (G_OBJECT (client));
 	
 	tasklist->listeners[0] = 0;
 	tasklist->listeners[1] = 0;
@@ -513,7 +515,10 @@ setup_gconf (TasklistData *tasklist)
 				(GConfClientNotifyFunc)maximum_size_changed,
 				tasklist,
 				NULL, NULL);
-	g_free (key);}
+	g_free (key);
+
+	g_object_unref (G_OBJECT (client));
+}
 
 static void
 applet_size_request (GtkWidget      *widget,
@@ -1027,7 +1032,7 @@ setup_dialog (GladeXML     *xml,
 			  G_CALLBACK (response_cb),
 			  tasklist);
 
-
+	g_object_unref (G_OBJECT (client));
 }
 
 

@@ -193,6 +193,8 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 	gconf_client_notify_remove (client, pager->listeners[1]);
 	gconf_client_notify_remove (client, pager->listeners[2]);
 
+	g_object_unref (G_OBJECT (client));
+
 	pager->listeners[0] = 0;
 	pager->listeners[1] = 0;
 	pager->listeners[2] = 0;
@@ -328,6 +330,8 @@ setup_gconf (PagerData *pager)
 				NULL, NULL);
 		
 	g_free (key);
+
+	g_object_unref (G_OBJECT (client));
 
 }
 
@@ -690,9 +694,11 @@ setup_sensitivity (PagerData *pager,
 	fullkey = panel_applet_gconf_get_full_key (applet, key);
 
 	if (gconf_client_key_is_writable (client, fullkey, NULL)) {
+		g_object_unref (G_OBJECT (client));
 		g_free (fullkey);
 		return;
 	}
+	g_object_unref (G_OBJECT (client));
 	g_free (fullkey);
 
 	w = glade_xml_get_widget (xml, wid1);
