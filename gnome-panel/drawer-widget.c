@@ -471,7 +471,7 @@ static void
 drawer_widget_init (DrawerWidget *drawer)
 {
 	drawer->state = DRAWER_SHOWN;
-	drawer->temp_hidden = TRUE;
+	drawer->temp_hidden = FALSE;
 }
 
 GtkWidget*

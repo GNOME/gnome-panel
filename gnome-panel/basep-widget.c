@@ -241,7 +241,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	int ox,oy,ow,oh;
 	int x,y,w,h;
 	int dx,dy,dw,dh;
-
+	
 	g_return_if_fail(basep != NULL);
 	g_return_if_fail(IS_BASEP_WIDGET(basep));
 
@@ -285,6 +285,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 
 	if(!pw_disable_animations && step != 0) {
 		GdkWindow * win = NULL;
+		int i;
 		if (gnome_win_hints_wm_exists()) {
 			win = basep_widget_add_fake(basep, hide_orient,
 						    -1,-1,-1,-1,TRUE);
@@ -303,7 +304,8 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 			basep_widget_set_ebox_orient(basep, hide_orient);
 			win = wid->window;
 		}
-
+		
+		i = 0;
 		while(x != dx ||
 		      y != dy ||
 		      w != dw ||
@@ -313,8 +315,31 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 			w += move_step(ow,dw,w,step);
 			h += move_step(oh,dh,h,step);
 			gdk_window_move_resize(win, x,y,w,h);
-			gtk_widget_draw(basep->table, NULL);
+			/*drawing the entire table flickers, so don't do it
+			  often*/
+			if(i++%10)
+				gtk_widget_draw(basep->panel, NULL);
+			else
+				gtk_widget_draw(basep->table, NULL);
 		}
+		
+		/*a hack to remove all the expose events that we generated
+		  above*/
+		{
+			GdkEvent *event;
+			GSList *list = NULL;
+			while((event=gdk_event_get())) {
+				if(event->type == GDK_EXPOSE &&
+				   gdk_window_get_toplevel(event->expose.window) == win) {
+					gdk_event_free(event);
+				} else 
+					list = g_slist_prepend(list,event);
+			}
+			g_slist_foreach(list,(GFunc)gdk_event_put,NULL);
+			g_slist_free(list);
+		}
+		
+
 		if (gnome_win_hints_wm_exists()) {
 			if(dw == 0 || dh == 0) {
 				gdk_window_reparent(basep->ebox->window,
@@ -344,6 +369,8 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	
 	wid->allocation.x = dx;
 	wid->allocation.y = dy;
+
+	gtk_widget_draw(basep->table, NULL);
 }
 
 void
@@ -398,6 +425,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	
 	if(!pw_disable_animations && step != 0) {
 		GdkWindow *win = NULL;
+		int i;
 		if (gnome_win_hints_wm_exists()) {
 			win = basep_widget_add_fake(basep, hide_orient,
 						    ox,oy,ow,oh,FALSE);
@@ -422,19 +450,8 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 
 		gtk_widget_show_now(wid);
 
-#if 0
-		/*make sure the window doesn't blink*/
-		{
-			/*weird little hack to avoid flicker*/
-			int x,y,w,h;
-			gdk_window_get_geometry(basep->fake,
-						&x,&y,&w,&h,NULL);
-			gtk_widget_show_now(wid);
-			gdk_window_move_resize(basep->fake,
-					       x,y,w,h);
-		}
-#endif
 		gdk_window_show(win);
+		i = 0;
 		while(x != dx ||
 		      y != dy ||
 		      w != dw ||
@@ -444,7 +461,27 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			w += move_step(ow,dw,w,step);
 			h += move_step(oh,dh,h,step);
 			gdk_window_move_resize(win, x,y,w,h);
-			gtk_widget_draw(basep->table, NULL);
+			/*drawing the entire table flickers, so don't do it
+			  often*/
+			if(i++%10)
+				gtk_widget_draw(basep->panel, NULL);
+			else
+				gtk_widget_draw(basep->table, NULL);
+		}
+		/*a hack to remove all the expose events that we generated
+		  above*/
+		{
+			GdkEvent *event;
+			GSList *list = NULL;
+			while((event=gdk_event_get())) {
+				if(event->type == GDK_EXPOSE &&
+				   gdk_window_get_toplevel(event->expose.window) == win) {
+					gdk_event_free(event);
+				} else 
+					list = g_slist_prepend(list,event);
+			}
+			g_slist_foreach(list,(GFunc)gdk_event_put,NULL);
+			g_slist_free(list);
 		}
 		if (gnome_win_hints_wm_exists()) {
 			gdk_window_reparent(basep->ebox->window,wid->window,0,0);
@@ -466,6 +503,8 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	
 	wid->allocation.x = dx;
 	wid->allocation.y = dy;
+
+	gtk_widget_draw(basep->table, NULL);
 }
 
 
