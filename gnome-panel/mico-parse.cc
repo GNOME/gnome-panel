@@ -79,8 +79,11 @@ parse_mico_arg (int key, char *arg, struct argp_state *state)
     }
   else if (key == ARGP_KEY_INIT)
     {
-      /* Allocate enough space.  */
-      our_mico_argv = (char **) malloc ((state->argc + 1) * sizeof (char *));
+      /* Allocate enough space.  We allocate twice as much as you'd
+	 think we need -- the user might write `--ORBId=FOO', but
+	 we always expand that into two arguments: `--ORBId FOO'.  */
+      our_mico_argv = (char **) malloc (2 * (state->argc + 1)
+					* sizeof (char *));
       our_mico_argc = 0;
       our_mico_argv[our_mico_argc++] = strdup (state->argv[0]);
     }
