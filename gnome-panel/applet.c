@@ -97,15 +97,15 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			panel_config(drawer->drawer);
 		}
 		break;
-      /*
+#if 0
 	case APPLET_SWALLOW: 
 		if(strcmp(menu->name,"properties")==0) {
 			Swallow *swallow = info->data;
 			g_assert(swallow);
-			swallow_properties(swallow); // doesn't exist yet
+			swallow_properties(swallow); /* doesn't exist yet*/
 		} 
 		break; 
-      */
+#endif
 	case APPLET_MENU:
 		if(strcmp(menu->name,"properties")==0)
 			menu_properties(menu->info->data);
