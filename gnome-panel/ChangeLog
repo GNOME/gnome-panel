@@ -1,3 +1,20 @@
+Fri Nov 16 22:13:22 2001  George Lebl <jirka@5z.com>
+
+	* quick-desktop-reader.[ch], Makefile.am, gnome-run.c, menu-fentry.c:
+	  Implement a quick no-frills .desktop reader to make reading
+	  .desktop files quicker and less memory heavy.
+
+	* gnome-run.c, menu.c: use the NO_TRANSLATIONS flag of gnome-desktop
+	  where appropriate
+
+	* applet.c, foobar-widget.c, global-keys.c, gnome-run.c,
+	  menu-fentry.c, menu-properties.c, menu.c, panel.c, 
+	  session.c, panel-util.[ch]: move to g_path_is_absolute,
+	  g_find_program_in_path, g_shell_parse_argv and
+	  g_ascii_strcasecmp
+
+	* gnome-run.c: whack the usage of gnome-pixmap
+
 Fri Nov 16 13:47:27 2001  George Lebl <jirka@5z.com>
 
 	* Makefile.am: remove $(includedir) from includes to prevent old

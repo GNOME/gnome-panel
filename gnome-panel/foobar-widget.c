@@ -340,7 +340,7 @@ display_gmc_menu (void)
 
 	if ( ! checked_path) {
 		char *gmc_client;
-		gmc_client = gnome_is_program_in_path ("gmc-client");
+		gmc_client = g_find_program_in_path  ("gmc-client");
 
 		if (gmc_client == NULL)
 			got_gmc = FALSE;
@@ -426,7 +426,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 	item = add_menu_separator (menu);
 	gmc_menu_items = g_list_prepend (gmc_menu_items, item);
 	
-	char_tmp = gnome_is_program_in_path ("xscreensaver");
+	char_tmp = g_find_program_in_path  ("xscreensaver");
 	if (char_tmp) {	
 		item = pixmap_menu_item_new (_("Lock Screen"), 
 					       "gnome-lockscreen.png");
@@ -661,7 +661,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	add_menu_separator (menu);
 #endif
 
-	time_admin_path = gnome_is_program_in_path ("time-admin");
+	time_admin_path = g_find_program_in_path  ("time-admin");
 	if (time_admin_path) {
 		item = gtk_menu_item_new_with_label (_("Set Time"));
 		gtk_signal_connect (GTK_OBJECT (item), "activate",

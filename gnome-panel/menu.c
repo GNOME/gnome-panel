@@ -319,7 +319,7 @@ activate_app_def (GtkWidget *widget, const char *item_loc)
 {
 	GnomeDesktopItem *item = gnome_desktop_item_new_from_file
 		(item_loc,
-		 0 /* flags */,
+		 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
 		 NULL /* error */);
 	if (item != NULL) {
 		char *curdir = g_get_current_dir ();
@@ -1046,7 +1046,7 @@ add_to_run_dialog (GtkWidget *widget, const char *item_loc)
 {
 	GnomeDesktopItem *item =
 		gnome_desktop_item_new_from_file (item_loc,
-						  0 /* flags */,
+						  GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
 						  NULL /* error */);
 	if (item != NULL) {
 		const char *exec;
@@ -1075,7 +1075,7 @@ show_help_on (GtkWidget *widget, const char *item_loc)
 {
 	GnomeDesktopItem *item =
 		gnome_desktop_item_new_from_file (item_loc,
-						  0 /* flags */,
+						  GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
 						  NULL /* error */);
 	if (item != NULL) {
 		const char *docpath = gnome_desktop_item_get_string
@@ -1134,7 +1134,7 @@ add_drawers_from_dir (const char *dirname, const char *name,
 	g_free (dentry_name);
 
 	if(!name)
-		subdir_name = item_info ? gnome_desktop_item_get_string (item_info, "name") : NULL;
+		subdir_name = item_info ? gnome_desktop_item_get_localestring (item_info, GNOME_DESKTOP_ITEM_NAME) : NULL;
 	else
 		subdir_name = name;
 	pixmap_name = item_info?gnome_desktop_item_get_icon (item_info):NULL;
@@ -1707,10 +1707,12 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					 GTK_OBJECT(item->parent));
 			}
 
-			if (ii != NULL)
-				tmp = panel_gnome_kde_help_path (gnome_desktop_item_get_string (ii, "DocPath"));
-			else
+			if (ii != NULL) {
+				const char *doc_path = gnome_desktop_item_get_string (ii, "DocPath");
+				tmp = panel_gnome_kde_help_path (doc_path);
+			} else {
 				tmp = NULL;
+			}
 
 			if (tmp != NULL) {
 				char *title;
@@ -1722,7 +1724,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 				/* FIXME 
 				gtk_widget_lock_accelerators (menuitem);
 				*/ 
-				name = gnome_desktop_item_get_localestring (ii, "Name");
+				name = gnome_desktop_item_get_localestring (ii, GNOME_DESKTOP_ITEM_NAME);
 				title = g_strdup_printf (_("Help on %s"),
 							 (name != NULL) ? name : _("Application"));
 				setup_menuitem (menuitem, 0, title);
@@ -1755,7 +1757,6 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					   sim);
 			setup_menuitem (menuitem, 0, _("Properties..."));
 			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
-
 
 			gnome_desktop_item_unref (ii);
 		}
@@ -5407,9 +5408,9 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff,
 			    GTK_SIGNAL_FUNC(about_cb),
 			    NULL);
 	
-	char_tmp = gnome_is_program_in_path("gnome-about");
+	char_tmp = g_find_program_in_path ("gnome-about");
 	if(!char_tmp)
-		char_tmp = gnome_is_program_in_path ("guname");
+		char_tmp = g_find_program_in_path ("guname");
 
 	if (char_tmp) {
 		menuitem = gtk_menu_item_new ();
@@ -5450,7 +5451,7 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 				  GTK_SIGNAL_FUNC (desktop_menu_tearoff_new_menu),
 				  NULL);
 
-	char_tmp = gnome_is_program_in_path ("xscreensaver");
+	char_tmp = g_find_program_in_path ("xscreensaver");
 	if (char_tmp) {	
 		menuitem = gtk_menu_item_new ();
 		/* FIXME
@@ -6075,7 +6076,7 @@ load_menu_applet(const char *params, int main_menu_flags, gboolean global_main,
 						   _("Properties..."));
 
 			if(params && strcmp(params, ".")==0 &&
-			   (tmp = gnome_is_program_in_path("gmenu")))  {
+			   (tmp = g_find_program_in_path ("gmenu")))  {
 				g_free(tmp);
 				panel_applet_add_callback (info,
 							   "edit_menus",

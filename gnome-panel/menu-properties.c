@@ -133,7 +133,7 @@ got_gmenu (void)
 	if (checked)
 		return got_it;
 
-	tmp = gnome_is_program_in_path ("gmenu");
+	tmp = g_find_program_in_path  ("gmenu");
 	if (tmp != NULL)
 		got_it = TRUE;
 	else

@@ -284,7 +284,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 			return GDK_FILTER_CONTINUE;
 		}
 
-		proggie = gnome_is_program_in_path ("gnome-panel-screenshot");
+		proggie = g_find_program_in_path  ("gnome-panel-screenshot");
 		if (proggie == NULL) {
 			panel_error_dialog ("cannot_find_ss_program",
 					    _("Can't find the screenshot "
@@ -312,7 +312,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 			return GDK_FILTER_CONTINUE;
 		}
 
-		proggie = gnome_is_program_in_path ("gnome-panel-screenshot");
+		proggie = g_find_program_in_path  ("gnome-panel-screenshot");
 		if (proggie == NULL) {
 			panel_error_dialog ("cannot_find_ss_program",
 					    _("Can't find the screenshot "

@@ -84,8 +84,6 @@ GtkWidget *	panel_error_dialog	(const char *class,
 
 gboolean	is_ext			(const char *file,
 					 const char *ext);
-int		strcasecmp_no_locale	(const char *s1,
-					 const char *s2);
 
 int		find_applet		(GtkWidget *widget);
 

@@ -844,8 +844,8 @@ extract_filename (const gchar* uri)
 		*p = '\0';
 
 		/* if really local */
-		if (strcasecmp_no_locale (hostname, "localhost") == 0 ||
-		    strcasecmp_no_locale (hostname, "localhost.localdomain") == 0) {
+		if (g_ascii_strcasecmp (hostname, "localhost") == 0 ||
+		    g_ascii_strcasecmp (hostname, "localhost.localdomain") == 0) {
 			g_free (hostname);
 			return path;
 		}
@@ -858,7 +858,7 @@ extract_filename (const gchar* uri)
 
 		/* if really local */
 		if (localhostname[0] &&
-		    strcasecmp_no_locale (hostname, localhostname) == 0) {
+		    g_ascii_strcasecmp (hostname, localhostname) == 0) {
 			g_free (hostname);
 			return path;
 		}
@@ -927,7 +927,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 	}
 	g_free (tmp);
 
-	tmp = gnome_is_program_in_path ("nautilus");
+	tmp = g_find_program_in_path  ("nautilus");
 	if (tmp != NULL) {
 		/* nautilus */
 		char *exec = g_strdup_printf ("nautilus %s",
@@ -947,7 +947,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 		g_free (exec);
 		g_free (base);
 	} else {
-		tmp = gnome_is_program_in_path ("gmc-client");
+		tmp = g_find_program_in_path  ("gmc-client");
 		if (tmp != NULL) {
 			/* gmc */
 			char *exec = g_strdup_printf ("gmc-client "

@@ -162,6 +162,7 @@ panel_sources = \
 	extern.c  		\
 	panel-applet-frame.c	\
 	panel-shell.c		\
+	quick-desktop-reader.c	\
 	$(NULL)
 
 panel_headers = \
@@ -207,6 +208,7 @@ panel_headers = \
 	launcher.h		\
 	extern.h  		\
 	panel-applet-frame.h	\
+	quick-desktop-reader.h	\
 	$(NULL)
 
 panel_2_SOURCES = \

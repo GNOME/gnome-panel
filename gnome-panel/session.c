@@ -919,7 +919,7 @@ try_evil_config_hacks (const char *goad_id, PanelWidget *panel, int pos)
 
 		if(first_time) {
 			char *tmp;
-			tmp = gnome_is_program_in_path("gnomepager_applet");
+			tmp = g_find_program_in_path ("gnomepager_applet");
 			in_path = tmp != NULL;
 			first_time = FALSE;
 			g_free(tmp);
@@ -1612,7 +1612,7 @@ is_among_users (const char *username, const char *users)
 
 	p = strtok (copy, ", \t;:");
 	while (p != NULL) {
-		if (strcasecmp_no_locale (username, p) == 0) {
+		if (g_ascii_strcasecmp (username, p) == 0) {
 			g_free (copy);
 			return TRUE;
 		}

@@ -36,6 +36,7 @@
 #include "menu.h"
 #include "main.h"
 #include "multiscreen-stuff.h"
+#include "quick-desktop-reader.h"
 
 #include "applet.h"
 #include "button-widget.h"
@@ -133,8 +134,6 @@ kill_completion (void)
 	}
 }
 
-/* Note, this expects a vector allocated by popt, where we can 
- * just forget about entries as they are part of the same buffer */
 static void
 get_environment (int *argc, char ***argv, int *envc, char ***envv)
 {
@@ -163,10 +162,13 @@ get_environment (int *argc, char ***argv, int *envc, char ***envv)
 		return;
 
 	for (i = 0; i < *argc; i++) {
-		if (i + moveby < *argc)
+		g_free ((*argv)[i]);
+		if (i + moveby < *argc) {
 			(*argv)[i] = (*argv)[i+moveby];
-		else
+			(*argv)[i+moveby] = NULL;
+		} else {
 			(*argv)[i] = NULL;
+		}
 	}
 	*argc -= moveby;
 
@@ -186,11 +188,10 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	GtkEntry *entry;
         GtkWidget *clist;
 	GtkToggleButton *terminal;
-	char **argv;
+	char **argv = NULL;
 	char **temp_argv = NULL;
 	int argc, temp_argc;
 	const char *s;
-	GSList *tofree = NULL;
 	char **envv = NULL;
 	int envc;
         gboolean use_advanced;
@@ -206,8 +207,6 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	} else if (button_num == 1/*cancel*/) {
 		goto return_and_close;
 	}
-
-        
         
         clist = gtk_object_get_data (GTK_OBJECT (run_dialog), "dentry_list");
         terminal = GTK_TOGGLE_BUTTON (gtk_object_get_data(GTK_OBJECT(w),
@@ -229,7 +228,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                         GnomeDesktopItem *ditem;
                         
                         ditem = gnome_desktop_item_new_from_file (name,
-								  0 /* flags */,
+								  GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
 								  &error);
 			if (ditem != NULL) {
                                 /* Honor "run in terminal" button */
@@ -294,9 +293,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                         goto return_and_close;
                 }
 
-                /* we use a popt function as it does exactly what we want to do and
-                   gnome already uses popt */
-                if (poptParseArgvString (s, &temp_argc, (const char ***)&temp_argv) != 0) {
+                if ( ! g_shell_parse_argv (s, &temp_argc, &temp_argv, NULL)) {
                         panel_error_dialog (_("Failed to execute command:\n"
                                               "%s"), s);
                         goto return_and_close;
@@ -312,37 +309,39 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                         if (term_argv) {
                                 int i;
                                 argv = g_new(char *, term_argc + temp_argc + 1);
-                                tofree = g_slist_prepend(tofree, argv);
                                 argc = term_argc + temp_argc;
                                 for(i = 0; i < term_argc; i++) {
                                         argv[i] = term_argv[i];
-                                        tofree = g_slist_prepend(tofree, argv[i]);
+                                        term_argv[i] = NULL;
                                 }
-                                for(i = term_argc; i < term_argc+temp_argc; i++)
+                                for(i = term_argc; i < term_argc+temp_argc; i++) {
                                         argv[i] = temp_argv[i-term_argc];
+                                        temp_argv[i-term_argc] = NULL;
+				}
                                 argv[i] = NULL;
-                                g_free(argv);
+				g_free (term_argv);
                         } else {
                                 char *check;
                                 int i;
-                                check = gnome_is_program_in_path("gnome-terminal");
+                                check = g_find_program_in_path ("gnome-terminal");
                                 argv = g_new(char *, 2 + temp_argc + 1);
-                                tofree = g_slist_prepend(tofree, argv);
                                 argc = 2 + temp_argc;
                                 if(!check) {
-                                        argv[0] = "xterm";
-                                        argv[1] = "-e";
+                                        argv[0] = g_strdup ("xterm");
+                                        argv[1] = g_strdup ("-e");
                                 } else {
                                         argv[0] = check;
-                                        tofree = g_slist_prepend(tofree, check);
-                                        argv[1] = "-x";
+                                        argv[1] = g_strdup ("-x");
                                 }
-                                for(i = 2; i < 2+temp_argc; i++)
+                                for(i = 2; i < 2+temp_argc; i++) {
                                         argv[i] = temp_argv[i-2];
+                                        temp_argv[i-2] = NULL;
+				}
                                 argv[i] = NULL;
                         }
                 } else {
                         argv = temp_argv;
+                        temp_argv = NULL;
                         argc = temp_argc;
                 }
 
@@ -357,12 +356,8 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
         }
         
 return_and_close:
-	g_slist_foreach (tofree, (GFunc)g_free, NULL);
-	g_slist_free (tofree);
-	/* this was obtained from the popt function and thus free and not
-	 * g_free */
-	if (temp_argv)
-		free (temp_argv);
+	g_strfreev (argv);
+	g_strfreev (temp_argv);
 	g_strfreev (envv);
 	gnome_dialog_close (GNOME_DIALOG (w));
 }
@@ -502,7 +497,7 @@ sync_list_to_entry (GtkWidget *dialog)
                         GnomeDesktopItem *ditem;
 
                         ditem = gnome_desktop_item_new_from_file (name,
-								  0 /* flags */,
+								  GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
 								  NULL /* error */);
                         if (ditem != NULL) {
 				gboolean terminal;
@@ -841,23 +836,18 @@ simple_contents_shown (GtkWidget *vbox,
 static void
 unset_pixmap (GtkWidget *gpixmap)
 {
-       
         gchar *file;
 
         file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
 					  DEFAULT_ICON, TRUE, NULL);
 
-        if (!file)
+        if (file == NULL)
                 file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
 						  FALLBACK_DEFAULT_ICON, TRUE, NULL);
         
-        if (file)
-                gnome_pixmap_load_file (GNOME_PIXMAP (gpixmap),
-                                        file);
-        else
-                /* Clear the pixmap, yay GnomePixmap rules */
-                gnome_pixmap_load_file (GNOME_PIXMAP (gpixmap),
-                                        "I do not exist anywhere 3413hjrneljghlkjflkjf");
+	gtk_image_set_from_file (GTK_IMAGE (gpixmap), file);
+
+	g_free (file);
 }
 
 static void
@@ -947,31 +937,24 @@ select_row_handler (GtkCList *clist,
                                        row);
 
         if (name) {
-                GnomeDesktopItem *ditem;
-                
-		ditem = gnome_desktop_item_new_from_file (name,
-							  0 /* flags */,
-							  NULL /* error */);
-		if (ditem != NULL) {
-                        GdkPixbuf *pixbuf;
-			const char *name;
-			const char *comment;
-			char *icon;
+                QuickDesktopItem *qitem;
 
-			name = gnome_desktop_item_get_string
-				(ditem, GNOME_DESKTOP_ITEM_NAME);
-			comment = gnome_desktop_item_get_string
-				(ditem, GNOME_DESKTOP_ITEM_COMMENT);
+		qitem = quick_desktop_item_load_file (name /*file */,
+						      "Application" /* expected type */,
+						      TRUE /* run tryexec */);
+		if (qitem != NULL) {
+                        GdkPixbuf *pixbuf;
+			char *icon;
 
 			if (label != NULL)
 				gtk_label_set_text (GTK_LABEL (label),
-						    name);
+						    qitem->name);
 
 			if (desc_label != NULL)
 				gtk_label_set_text (GTK_LABEL (desc_label),
-						    sure_string (comment));
+						    sure_string (qitem->comment));
 
-			icon = gnome_desktop_item_get_icon (ditem);
+			icon = quick_desktop_item_find_icon (qitem);
 			if (icon != NULL) {
 				pixbuf = gdk_pixbuf_new_from_file (icon, NULL);
 			} else {
@@ -979,26 +962,12 @@ select_row_handler (GtkCList *clist,
 			}
                         
                         if (pixbuf != NULL) {
-#ifdef FIXME
-                                GdkPixmap *pixmap;
-                                GdkBitmap *mask;
-
-                                gdk_pixbuf_render_pixmap_and_mask (pixbuf,
-                                                                   &pixmap, &mask, 128);
-
-                                /* GnomePixmap bites me */
-                                gdk_pixmap_unref (GNOME_PIXMAP (gpixmap)->pixmap);
-                                gdk_pixmap_unref (GNOME_PIXMAP (gpixmap)->mask);
-                                GNOME_PIXMAP (gpixmap)->pixmap = pixmap;
-                                GNOME_PIXMAP (gpixmap)->mask = mask;
-                                gtk_widget_queue_resize (gpixmap);
-                                gdk_pixbuf_unref (pixbuf);
-#endif
+				gtk_image_set_from_pixbuf (GTK_IMAGE (gpixmap), pixbuf);
                         } else {
                                 unset_pixmap (gpixmap);
                         }
                         
-			gnome_desktop_item_unref (ditem);
+			quick_desktop_item_destroy (qitem);
                 }
         }
 
@@ -1062,7 +1031,7 @@ create_simple_contents (void)
         hbox = gtk_hbox_new (FALSE, 3);
         gtk_container_add (GTK_CONTAINER (w), hbox);
         
-        pixmap = gtk_type_new (GNOME_TYPE_PIXMAP);
+        pixmap = gtk_image_new ();
         gtk_box_pack_start (GTK_BOX (hbox), pixmap, FALSE, FALSE, 0);
         gtk_object_set_data (GTK_OBJECT (run_dialog), "pixmap", pixmap);
         

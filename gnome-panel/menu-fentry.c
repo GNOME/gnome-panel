@@ -22,6 +22,7 @@
 #include <libgnome/libgnome.h>
 
 #include "menu-fentry.h"
+#include "quick-desktop-reader.h"
 
 #include "panel-util.h"
 #include "panel_config_global.h"
@@ -248,7 +249,7 @@ get_mfiles_from_menudir (const char *menudir)
 }
 
 static char *
-get_applet_goad_id_from_ditem(GnomeDesktopItem *ii)
+get_applet_goad_id_from_ditem(QuickDesktopItem *ii)
 {
   printf ("GET THAT GOAD OUT OF HERE...menu-fentry.c get_applet_gaod_id_from_ditem\n");
   return NULL;
@@ -416,7 +417,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 				dr->recs = g_slist_prepend(dr->recs,ffr);
 			}
 		} else {
-			GnomeDesktopItem *ditem;
+			QuickDesktopItem *qitem;
 			char *tryexec_path;
 			char *p = strrchr(name,'.');
 			if (p == NULL ||
@@ -428,25 +429,24 @@ fr_fill_dir(FileRec *fr, int sublevels)
 
 			tryexec_path = NULL;
 
-			ditem = gnome_desktop_item_new_from_file (name, GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS, NULL);
-			if (ditem != NULL)  {
-				const char *tryexec;
-				tryexec = gnome_desktop_item_get_string (ditem, "TryExec");
-				if (tryexec != NULL) {
-					tryexec_path = gnome_is_program_in_path (tryexec);
+			qitem = quick_desktop_item_load_file (name /* file */,
+							      NULL /* expected_type */,
+							      FALSE /* run_tryexec */);
+			if (qitem != NULL)  {
+				if (qitem->tryexec != NULL) {
+					tryexec_path = g_find_program_in_path (qitem->tryexec);
 					if (tryexec_path == NULL) {
-						dr->tryexecs = g_slist_prepend (dr->tryexecs, g_strdup (tryexec));
-						gnome_desktop_item_unref (ditem);
-						ditem = NULL;
+						dr->tryexecs = g_slist_prepend (dr->tryexecs,
+										g_strdup (qitem->tryexec));
+						quick_desktop_item_destroy (qitem);
+						qitem = NULL;
 					}
 				}
 			}
-			if (ditem != NULL) {
-				const char *type;
+			if (qitem != NULL) {
 				ffr = g_chunk_new0 (FileRec, file_chunk);
-				type = gnome_desktop_item_get_string (ditem, "Type");
-				if (type != NULL &&
-				    strcasecmp_no_locale (type, "separator") == 0)
+				if (qitem->type != NULL &&
+				    g_ascii_strcasecmp (qitem->type, "separator") == 0)
 					ffr->type = FILE_REC_SEP;
 				else
 					ffr->type = FILE_REC_FILE;
@@ -455,13 +455,13 @@ fr_fill_dir(FileRec *fr, int sublevels)
 				ffr->mtime = s.st_mtime;
 				ffr->last_stat = curtime;
 				ffr->parent = dr;
-				ffr->icon = gnome_desktop_item_get_icon (ditem);
-				ffr->fullname = g_strdup (gnome_desktop_item_get_localestring (ditem, "Name"));
-				ffr->comment = g_strdup (gnome_desktop_item_get_localestring (ditem, "Comment"));
+				ffr->icon = quick_desktop_item_find_icon (qitem);
+				ffr->fullname = g_strdup (qitem->name);
+				ffr->comment = g_strdup (qitem->comment);
 				ffr->tryexec_path = tryexec_path;
 				ffr->goad_id =
-					get_applet_goad_id_from_ditem (ditem);
-				gnome_desktop_item_unref (ditem);
+					get_applet_goad_id_from_ditem (qitem);
+				quick_desktop_item_destroy (qitem);
 
 				dr->recs = g_slist_prepend (dr->recs, ffr);
 			} else {
@@ -535,18 +535,18 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 	fname = g_build_filename (mdir, ".directory", NULL);
 	if (dr->ditemlast_stat >= curtime-STAT_EVERY ||
 	    stat (fname, &s) != -1) {
-		GnomeDesktopItem *ditem;
-		ditem = gnome_desktop_item_new_from_file(fname,
-							 GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS,
-							 NULL);
-		if (ditem != NULL) {
+		QuickDesktopItem *qitem;
+		qitem = quick_desktop_item_load_file (fname /* file */,
+						      NULL /* expected_type */,
+						      TRUE /* run_tryexec */);
+		if (qitem != NULL) {
 			g_free (fr->icon);
-			fr->icon = gnome_desktop_item_get_icon (ditem);
+			fr->icon = quick_desktop_item_find_icon (qitem);
 			g_free (fr->fullname);
-			fr->fullname = g_strdup (gnome_desktop_item_get_localestring (ditem, "Name"));
+			fr->fullname = g_strdup (qitem->name);
 			g_free (fr->comment);
-			fr->comment = g_strdup (gnome_desktop_item_get_localestring (ditem, "Comment"));
-			gnome_desktop_item_unref (ditem);
+			fr->comment = g_strdup (qitem->comment);
+			quick_desktop_item_destroy (qitem);
 		} else {
 			g_free (fr->icon);
 			fr->icon = NULL;
@@ -630,7 +630,7 @@ fr_check_and_reread (FileRec *fr)
 		/* recheck tryexecs */
 		for (li = dr->tryexecs; ! reread && li != NULL; li = li->next) {
 			char *tryexec = li->data;
-			char *p = gnome_is_program_in_path (tryexec);
+			char *p = g_find_program_in_path  (tryexec);
 
 			if (p != NULL) {
 				reread = TRUE;
@@ -701,16 +701,18 @@ fr_check_and_reread (FileRec *fr)
 					break;
 				}
 				if(ddr->ditemmtime != s.st_mtime) {
-					GnomeDesktopItem *ditem;
-					ditem = gnome_desktop_item_new_from_file (p, GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS, NULL);
-					if(ditem) {
+					QuickDesktopItem *qitem;
+					qitem = quick_desktop_item_load_file (p /* file */,
+									      NULL /* expected_type */,
+									      TRUE /* run_tryexec */);
+					if(qitem) {
 						g_free(ffr->icon);
-						ffr->icon = gnome_desktop_item_get_icon (ditem);
+						ffr->icon = quick_desktop_item_find_icon (qitem);
 						g_free(ffr->fullname);
-						ffr->fullname = g_strdup (gnome_desktop_item_get_localestring (ditem, "Name"));
+						ffr->fullname = g_strdup (qitem->name);
 						g_free(ffr->comment);
-						ffr->comment = g_strdup (gnome_desktop_item_get_localestring (ditem, "Comment"));
-						gnome_desktop_item_unref (ditem);
+						ffr->comment = g_strdup (qitem->comment);
+						quick_desktop_item_destroy (qitem);
 					} else {
 						g_free(ffr->icon);
 						ffr->icon = NULL;
@@ -733,21 +735,21 @@ fr_check_and_reread (FileRec *fr)
 				}
 				ffr->last_stat = curtime;
 				if(ffr->mtime != s.st_mtime) {
-					GnomeDesktopItem *ditem;
-					ditem = gnome_desktop_item_new_from_file (ffr->name,
-										  GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS,
-										  NULL);
-					if (ditem != NULL) {
+					QuickDesktopItem *qitem;
+					qitem = quick_desktop_item_load_file (ffr->name /* file */,
+									      NULL /* expected_type */,
+									      TRUE /* run_tryexec */);
+					if (qitem != NULL) {
 						g_free (ffr->icon);
-						ffr->icon = gnome_desktop_item_get_icon (ditem);
+						ffr->icon = quick_desktop_item_find_icon (qitem);
 
 						g_free (ffr->fullname);
-						ffr->fullname = g_strdup (gnome_desktop_item_get_localestring (ditem, "Name"));
+						ffr->fullname = g_strdup (qitem->name);
 
 						g_free (ffr->comment);
-						ffr->comment = g_strdup (gnome_desktop_item_get_localestring (ditem, "Comment"));
+						ffr->comment = g_strdup (qitem->comment);
 
-						gnome_desktop_item_unref (ditem);
+						quick_desktop_item_destroy (qitem);
 					} else {
 						reread = TRUE;
 						break;

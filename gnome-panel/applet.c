@@ -157,7 +157,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			menu_properties(menu->info->data);
 		else if(strcmp(menu->name,"edit_menus")==0) {
 			char *tmp;
-			if((tmp = gnome_is_program_in_path("gmenu")))  {
+			if((tmp = g_find_program_in_path ("gmenu")))  {
 				gnome_execute_async (g_get_home_dir (), 1, &tmp);
 				g_free(tmp);
 			}
