@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-01-07 18:31+1300\n"
+"POT-Creation-Date: 2003-01-21 18:37+1300\n"
 "PO-Revision-Date: 2002-06-11 12:13+0200\n"
 "Last-Translator: Jesús Bravo Álvarez <suso@trasno.net>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
 #: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
 #, c-format
@@ -228,8 +228,8 @@ msgstr "_Acerca..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
-#: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3521
+#: gnome-panel/menu.c:4243 gnome-panel/panel-action-button.c:510
 msgid "_Help"
 msgstr "A_xuda"
 
@@ -343,7 +343,7 @@ msgstr "Usar _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
@@ -487,7 +487,7 @@ msgid "Window List"
 msgstr "Lista de fiestras"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:840
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Selector de escritorio"
@@ -768,7 +768,8 @@ msgid "Remote folder for mail retrieval"
 msgstr "Cartafol remoto para recepción de correo"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
+#, fuzzy
+msgid "Remote server to connect to for our mail"
 msgstr "Servidor remoto onde conectar para o correo"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
@@ -830,23 +831,23 @@ msgstr "Comprobación de correo"
 msgid "New Mail"
 msgstr "Novo correo"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Fileiras"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 msgid "Columns"
 msgstr "Columnas"
 
-#: applets/gen_util/pager.c:376
+#: applets/gen_util/pager.c:378
 #, fuzzy, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Erro ao cargar o valor de num_rows para a applet de selección de escritorio: "
 "%s\n"
 
-#: applets/gen_util/pager.c:387
+#: applets/gen_util/pager.c:389
 #, fuzzy, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -854,14 +855,14 @@ msgstr ""
 "Erro ao cargar o valor de display_workspace_names para a applet de selección "
 "de escritorio: %s\n"
 
-#: applets/gen_util/pager.c:402
+#: applets/gen_util/pager.c:404
 #, fuzzy, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Erro ao cargar o valor de display_all_workspaces para a applet de selección "
 "de escritorio: %s\n"
 
-#: applets/gen_util/pager.c:547
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1118,31 +1119,31 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:428 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:490
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:492
 #, fuzzy
 msgid "_Remove From Panel"
 msgstr "Quitar do panel"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:502
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:504
 #, fuzzy
 msgid "_Move"
 msgstr "Mover"
 
-#: gnome-panel/applet.c:789
+#: gnome-panel/applet.c:793
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr ""
 
-#: gnome-panel/applet.c:809 gnome-panel/applet.c:917
+#: gnome-panel/applet.c:813 gnome-panel/applet.c:921
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr ""
 
-#: gnome-panel/applet.c:1256
+#: gnome-panel/applet.c:1258
 msgid "Can't find an empty spot"
 msgstr "Non se atopa un sitio baleiro"
 
@@ -1318,17 +1319,17 @@ msgstr "Mostrar os botóns de agochamento"
 msgid "Enable hidebutton arrow"
 msgstr "Mostrar as frechas nos botóns de agochamento"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3592
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3620
 msgid "Drawer"
 msgstr "Caixón"
 
 #: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
-#: gnome-panel/menu.c:3447 gnome-panel/panel-action-button.c:89
+#: gnome-panel/menu.c:3475 gnome-panel/panel-action-button.c:89
 #, fuzzy
 msgid "_Properties"
 msgstr "Propiedades"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3818
 msgid "Run Program..."
 msgstr "Executar programa..."
 
@@ -1336,25 +1337,25 @@ msgstr "Executar programa..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Executar aplicacións, se coñece o comando correcto que ten que usar"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3834
 msgid "Search for Files..."
 msgstr "Procurar ficheiros..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3837
 msgid "Find files, folders, and documents on your computer"
 msgstr "Procurar ficheiros, cartafoles e documentos no seu ordenador"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3853
 #, fuzzy
 msgid "Screenshot..."
 msgstr "Captura de pantalla"
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3856
 #, fuzzy
 msgid "Take a screenshot of your desktop"
 msgstr "Facer unha captura de pantalla do escritorio"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3642
 msgid "Lock Screen"
 msgstr "Bloquear pantalla"
 
@@ -1362,8 +1363,8 @@ msgstr "Bloquear pantalla"
 msgid "Protect your computer from unauthorized use"
 msgstr "Protexer o ordenador dun uso non autorizado"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
-#: gnome-panel/menu.c:3626
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3224
+#: gnome-panel/menu.c:3654
 msgid "Log Out"
 msgstr "Terminar sesión"
 
@@ -1380,7 +1381,7 @@ msgstr "Accións"
 msgid "No windows open"
 msgstr "Non hai fiestras abertas"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2984
 msgid "Menu Panel"
 msgstr "Panel de menú"
 
@@ -1388,8 +1389,8 @@ msgstr "Panel de menú"
 msgid "GNOME Menu Panel"
 msgstr "Panel de menú de GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
-#: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3122
+#: gnome-panel/menu.c:3127 gnome-panel/menu.c:3793
 msgid "Applications"
 msgstr "Aplicacións"
 
@@ -1964,129 +1965,129 @@ msgstr "Engadir un novo elemento a este menú"
 msgid "Properties"
 msgstr "Propiedades"
 
-#: gnome-panel/menu.c:2531 gnome-panel/menu.c:2586
+#: gnome-panel/menu.c:2532 gnome-panel/menu.c:2587 gnome-panel/menu.c:2623
 #: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "a consulta devolveu a excepción %s\n"
 
-#: gnome-panel/menu.c:2866 gnome-panel/menu.c:2871
+#: gnome-panel/menu.c:2894 gnome-panel/menu.c:2899
 msgid "Aligned Panel"
 msgstr "Panel aliñado"
 
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:2900
 msgid "GNOME Aligned Panel"
 msgstr "Panel aliñado de GNOME"
 
-#: gnome-panel/menu.c:2889 gnome-panel/menu.c:2893
+#: gnome-panel/menu.c:2917 gnome-panel/menu.c:2921
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Panel lateral"
 
-#: gnome-panel/menu.c:2894
+#: gnome-panel/menu.c:2922
 msgid "GNOME Edge Panel"
 msgstr "Panel lateral de GNOME"
 
-#: gnome-panel/menu.c:2915 gnome-panel/menu.c:2919
+#: gnome-panel/menu.c:2943 gnome-panel/menu.c:2947
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Panel deslizante"
 
-#: gnome-panel/menu.c:2920
+#: gnome-panel/menu.c:2948
 msgid "GNOME Sliding Panel"
 msgstr "Panel deslizante de GNOME"
 
-#: gnome-panel/menu.c:2938 gnome-panel/menu.c:2943
+#: gnome-panel/menu.c:2966 gnome-panel/menu.c:2971
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Panel flotante"
 
-#: gnome-panel/menu.c:2944
+#: gnome-panel/menu.c:2972
 msgid "GNOME Floating Panel"
 msgstr "Panel flotante de GNOME"
 
-#: gnome-panel/menu.c:2964
+#: gnome-panel/menu.c:2992
 msgid "You can only have one menu panel at a time."
 msgstr "Só pode ter un panel de menú ao mesmo tempo."
 
-#: gnome-panel/menu.c:3009
+#: gnome-panel/menu.c:3037
 #, fuzzy
 msgid "C_orner Panel"
 msgstr "Panel de canto"
 
-#: gnome-panel/menu.c:3011
+#: gnome-panel/menu.c:3039
 #, fuzzy
 msgid "Create corner panel"
 msgstr "Panel de canto"
 
-#: gnome-panel/menu.c:3019
+#: gnome-panel/menu.c:3047
 #, fuzzy
 msgid "_Edge Panel"
 msgstr "Panel lateral"
 
-#: gnome-panel/menu.c:3021
+#: gnome-panel/menu.c:3049
 #, fuzzy
 msgid "Create edge panel"
 msgstr "Crear panel"
 
-#: gnome-panel/menu.c:3029
+#: gnome-panel/menu.c:3057
 #, fuzzy
 msgid "_Floating Panel"
 msgstr "Panel flotante"
 
-#: gnome-panel/menu.c:3031
+#: gnome-panel/menu.c:3059
 #, fuzzy
 msgid "Create floating panel"
 msgstr "Panel flotante"
 
-#: gnome-panel/menu.c:3039
+#: gnome-panel/menu.c:3067
 #, fuzzy
 msgid "_Sliding Panel"
 msgstr "Panel deslizante"
 
-#: gnome-panel/menu.c:3041
+#: gnome-panel/menu.c:3069
 #, fuzzy
 msgid "Create sliding panel"
 msgstr "Crear panel"
 
-#: gnome-panel/menu.c:3051
+#: gnome-panel/menu.c:3079
 #, fuzzy
 msgid "_Menu Panel"
 msgstr "Panel de menú"
 
-#: gnome-panel/menu.c:3053
+#: gnome-panel/menu.c:3081
 #, fuzzy
 msgid "Create menu panel"
 msgstr "Crear panel"
 
-#: gnome-panel/menu.c:3142 gnome-panel/menu.c:3148 gnome-panel/menu.c:3689
+#: gnome-panel/menu.c:3170 gnome-panel/menu.c:3176 gnome-panel/menu.c:3717
 #, fuzzy
 msgid "KDE Menu"
 msgstr "Menús de KDE"
 
-#: gnome-panel/menu.c:3205
+#: gnome-panel/menu.c:3233
 #, fuzzy
 msgid "Lock"
 msgstr "Reloxo"
 
-#: gnome-panel/menu.c:3214 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3242 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
-#: gnome-panel/menu.c:3223
+#: gnome-panel/menu.c:3251
 msgid "Search"
 msgstr ""
 
-#: gnome-panel/menu.c:3232
+#: gnome-panel/menu.c:3260
 #, fuzzy
 msgid "Run"
 msgstr "_Executar"
 
-#: gnome-panel/menu.c:3304
+#: gnome-panel/menu.c:3332
 msgid "You cannot remove your last panel."
 msgstr "Non se pode eliminar o último panel."
 
-#: gnome-panel/menu.c:3317
+#: gnome-panel/menu.c:3345
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2095,65 +2096,65 @@ msgstr ""
 "Cando se elimina un panel, a súa configuración\n"
 "e a das applets pérdese. ¿Quere eliminalo?"
 
-#: gnome-panel/menu.c:3325
+#: gnome-panel/menu.c:3353
 #, fuzzy
 msgid "Delete Panel"
 msgstr "Eliminar este panel"
 
-#: gnome-panel/menu.c:3391
+#: gnome-panel/menu.c:3419
 #, fuzzy
 msgid "_Delete This Panel..."
 msgstr "Eliminar este panel..."
 
-#: gnome-panel/menu.c:3394 gnome-panel/menu.c:3432
+#: gnome-panel/menu.c:3422 gnome-panel/menu.c:3460
 #, fuzzy
 msgid "_Delete This Panel"
 msgstr "Eliminar este panel"
 
-#: gnome-panel/menu.c:3416
+#: gnome-panel/menu.c:3444
 #, fuzzy
 msgid "_Add to Panel"
 msgstr "Engadir ao panel"
 
-#: gnome-panel/menu.c:3461
+#: gnome-panel/menu.c:3489
 #, fuzzy
 msgid "_New Panel"
 msgstr "Panel lateral"
 
-#: gnome-panel/menu.c:3503
+#: gnome-panel/menu.c:3531
 #, fuzzy
 msgid "_About Panels"
 msgstr "Acerca do panel..."
 
-#: gnome-panel/menu.c:3516
+#: gnome-panel/menu.c:3544
 #, fuzzy
 msgid "About _GNOME"
 msgstr "Acerca de GNOME..."
 
-#: gnome-panel/menu.c:3556
+#: gnome-panel/menu.c:3584
 msgid "Launcher..."
 msgstr "Lanzador..."
 
-#: gnome-panel/menu.c:3564
+#: gnome-panel/menu.c:3592
 msgid "Launcher from menu"
 msgstr "Lanzador dende o menú"
 
-#: gnome-panel/menu.c:3573
+#: gnome-panel/menu.c:3601
 #, fuzzy
 msgid "Button"
 msgstr "Botón de saída de sesión"
 
-#: gnome-panel/menu.c:3583 gnome-panel/menu.c:3913 gnome-panel/menu.c:3941
-#: gnome-panel/menu.c:4137
+#: gnome-panel/menu.c:3611 gnome-panel/menu.c:3941 gnome-panel/menu.c:3969
+#: gnome-panel/menu.c:4165
 msgid "Main Menu"
 msgstr "Menú principal"
 
-#: gnome-panel/menu.c:3620
+#: gnome-panel/menu.c:3648
 #, fuzzy
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Bloquear a pantalla para poder abandonar temporalmente o ordenador"
 
-#: gnome-panel/menu.c:3632
+#: gnome-panel/menu.c:3660
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2161,27 +2162,27 @@ msgstr ""
 "Saír desta sesión para entrar como un usuario distinto ou para apagar o "
 "ordenador"
 
-#: gnome-panel/menu.c:3797
+#: gnome-panel/menu.c:3825
 msgid "Run a command"
 msgstr "Executar un comando"
 
-#: gnome-panel/menu.c:3843
+#: gnome-panel/menu.c:3871
 msgid "Desktop"
 msgstr "Escritorio"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3861
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3889
 msgid "Menu"
 msgstr "Menú"
 
-#: gnome-panel/menu.c:3863
+#: gnome-panel/menu.c:3891
 msgid "Menu:"
 msgstr "Menú:"
 
-#: gnome-panel/menu.c:3935
+#: gnome-panel/menu.c:3963
 msgid "Can't create menu, using main menu!"
 msgstr "¡Non se pode crear o menú, usando o principal!"
 
-#: gnome-panel/menu.c:4372
+#: gnome-panel/menu.c:4400
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr ""

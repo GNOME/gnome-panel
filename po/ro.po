@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.2\n"
-"POT-Creation-Date: 2003-01-07 18:31+1300\n"
+"POT-Creation-Date: 2003-01-21 18:37+1300\n"
 "PO-Revision-Date: 2003-01-15 17:16+0200\n"
 "Last-Translator: Marius Andreiana <marius galuna.ro>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
 #: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
 #, c-format
@@ -224,8 +224,8 @@ msgstr "_Despre..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
-#: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3521
+#: gnome-panel/menu.c:4243 gnome-panel/panel-action-button.c:510
 msgid "_Help"
 msgstr "_Ajutor"
 
@@ -338,7 +338,7 @@ msgstr "Foloseşte _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
@@ -474,7 +474,7 @@ msgid "Window List"
 msgstr "Listă ferestre"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:840
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Schimbător ecrane"
@@ -723,7 +723,8 @@ msgstr "Dacă poşta ar trebui verificată automat"
 
 #: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "If this is set mail will be checked every update-freq milliseconds"
-msgstr "Dacă acesta este activat, poşta va fi verificată la invervalul specificat"
+msgstr ""
+"Dacă acesta este activat, poşta va fi verificată la invervalul specificat"
 
 #: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
@@ -750,7 +751,8 @@ msgid "Remote folder for mail retrieval"
 msgstr "Dosarul la distanţă pentru primirea poştei"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
+#, fuzzy
+msgid "Remote server to connect to for our mail"
 msgstr "Serverul la distanţă pentru poştă"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
@@ -781,7 +783,8 @@ msgstr "Aşa procesăm poşta..."
 msgid ""
 "This is the animation that will be displayed during normal Inbox Monitor "
 "usage"
-msgstr "Aceasta este animaţia care va fi afişată în timpul folosirii cutiei poştale"
+msgstr ""
+"Aceasta este animaţia care va fi afişată în timpul folosirii cutiei poştale"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
@@ -789,11 +792,13 @@ msgstr "Numele utilizator pe serverul la distanţă"
 
 #: applets/gen_util/mailcheck.schemas.in.h:25
 msgid "We run this command when the user clicks on Inbox Monitor"
-msgstr "Rulez această comandă când utilizatorul face clic pe Monitorul cutiei poştale"
+msgstr ""
+"Rulez această comandă când utilizatorul face clic pe Monitorul cutiei poştale"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
 msgid "Whether to reset mail status when you click on Inbox Monitor"
-msgstr "Dacă să reseteze starea poştei când utilizatorul face clic pe Monitorul "
+msgstr ""
+"Dacă să reseteze starea poştei când utilizatorul face clic pe Monitorul "
 "cutiei poştale"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
@@ -808,40 +813,43 @@ msgstr "Verifică poştă"
 msgid "New Mail"
 msgstr "Mesaje noi"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Linii"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 msgid "Columns"
 msgstr "Coloane"
 
-#: applets/gen_util/pager.c:376
+#: applets/gen_util/pager.c:378
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Eroare la încărcarea valorii num_rows pentru Schimbătorul spaţiilor de "
 "lucru: %s\n"
 
-#: applets/gen_util/pager.c:387
+#: applets/gen_util/pager.c:389
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "Eroare la încărcarea valorii display_workspace_names pentru Schimbătorul "
+msgstr ""
+"Eroare la încărcarea valorii display_workspace_names pentru Schimbătorul "
 "spaţiilor de lucru: %s\n"
 
-#: applets/gen_util/pager.c:402
+#: applets/gen_util/pager.c:404
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "Eroare la încărcarea valorii display_all_workspace pentru Schimbătorul "
+msgstr ""
+"Eroare la încărcarea valorii display_all_workspace pentru Schimbătorul "
 "spaţiilor de lucru: %s\n"
 
-#: applets/gen_util/pager.c:547
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "Schimbătorul de ecrane vă arată o versiune în miniatură a ecranelor care vă "
+msgstr ""
+"Schimbătorul de ecrane vă arată o versiune în miniatură a ecranelor care vă "
 "permite să administraţi ferestrele."
 
 #: applets/gen_util/pager.glade.h:1
@@ -876,7 +884,8 @@ msgstr "Ecrane"
 msgid ""
 "If this is true, the Workspace Switcher will show all workspaces, otherwise "
 "it will only show the current workspace."
-msgstr "Dacă acesta este setat, schimbătorul spaţiilor de lucru va arăta toate "
+msgstr ""
+"Dacă acesta este setat, schimbătorul spaţiilor de lucru va arăta toate "
 "spaţiile, altfel va arăta doar spaţiul curent."
 
 #: applets/gen_util/pager.schemas.in.h:2
@@ -884,7 +893,8 @@ msgid ""
 "If this is true, the workspaces in the Workspace Switcher will display the "
 "names of the workspaces, otherwise they will display the contents of the "
 "workspace."
-msgstr "Dacă acesta este setat, schimbătorul spaţiilor de lucru va arăta numele "
+msgstr ""
+"Dacă acesta este setat, schimbătorul spaţiilor de lucru va arăta numele "
 "spaţiilor, altfel va arăta conţinutul acestora."
 
 #: applets/gen_util/pager.schemas.in.h:3
@@ -896,7 +906,8 @@ msgid ""
 "When showing all the workspaces this determines how many rows (for "
 "horizontal layout) or columns (for vertical layout) the Workspace Switcher "
 "shows the workspaces in."
-msgstr "Când arată toate spaţiile de lucru, aceasta determină câte rânduri ( pentru "
+msgstr ""
+"Când arată toate spaţiile de lucru, aceasta determină câte rânduri ( pentru "
 "layout orizontal ) sau coloane ( pentru layout vertical ) foloseşte "
 "Schimbătorul spaţiilor de lucru."
 
@@ -928,12 +939,14 @@ msgstr "Fişierul nu a fost găsit"
 
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
-msgstr "Acest buton vă permite să ascundeţi toate ferestrele şi să arătaţi desktopul"
+msgstr ""
+"Acest buton vă permite să ascundeţi toate ferestrele şi să arătaţi desktopul"
 
 #: applets/gen_util/tasklist.c:810
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
-msgstr "Apletul Listă ferestre arată o listă cu toate ferestrele vizibile şi vă "
+msgstr ""
+"Apletul Listă ferestre arată o listă cu toate ferestrele vizibile şi vă "
 "permite să le răsfoiţi."
 
 #: applets/gen_util/tasklist.glade.h:1
@@ -996,14 +1009,16 @@ msgstr "_Niciodată nu grupa ferestrele"
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
-msgstr "Decide unde să grupeze ferestrele din aceeaşi aplicaţie în Lista "
+msgstr ""
+"Decide unde să grupeze ferestrele din aceeaşi aplicaţie în Lista "
 "ferestrelor. Valori valide sunt\"niciodată\", \"auto\" şi \"întotdeauna\"."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
 "If this is true, the Window List will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
-msgstr "Dacă este setat, Lista ferestrelor va arăta ferestrele din toate spaţiile de "
+msgstr ""
+"Dacă este setat, Lista ferestrelor va arăta ferestrele din toate spaţiile de "
 "lucru, altfel va arăta ferestre doar din spaţiul curent."
 
 #: applets/gen_util/tasklist.schemas.in.h:3
@@ -1040,7 +1055,8 @@ msgid ""
 "To be usable, Window List requires a minimum width. Window List requests "
 "this minimum width. The minimum width setting is useful for sliding and edge "
 "panels, which usually request a small default width."
-msgstr "Această valoare este lăţimea minimă pe care o poate lua Lista ferestrelor."
+msgstr ""
+"Această valoare este lăţimea minimă pe care o poate lua Lista ferestrelor."
 
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
@@ -1065,29 +1081,29 @@ msgstr "Zonă panou pentru notificare"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:428 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:490
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:492
 msgid "_Remove From Panel"
 msgstr "_Elimină din panou"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:502
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:504
 msgid "_Move"
 msgstr "_Mută"
 
-#: gnome-panel/applet.c:789
+#: gnome-panel/applet.c:793
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Nici un object_type setat pentru panoul obiect cu ID-ul %s\n"
 
-#: gnome-panel/applet.c:809 gnome-panel/applet.c:917
+#: gnome-panel/applet.c:813 gnome-panel/applet.c:921
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Nici un panel_id setat pentru obiectul panou cu ID-ul %s\n"
 
-#: gnome-panel/applet.c:1256
+#: gnome-panel/applet.c:1258
 msgid "Can't find an empty spot"
 msgstr "Nu pot găsi un loc liber"
 
@@ -1252,16 +1268,16 @@ msgstr "Activează buton ascundere"
 msgid "Enable hidebutton arrow"
 msgstr "Activează săgeată buton ascundere"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3592
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3620
 msgid "Drawer"
 msgstr "Dulap"
 
 #: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
-#: gnome-panel/menu.c:3447 gnome-panel/panel-action-button.c:89
+#: gnome-panel/menu.c:3475 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Proprietăţi"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3818
 msgid "Run Program..."
 msgstr "Rulează program..."
 
@@ -1269,23 +1285,23 @@ msgstr "Rulează program..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Rulează aplicaţii, dacă ştiţi comanda corectă de introdus"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3834
 msgid "Search for Files..."
 msgstr "Caută fişiere..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3837
 msgid "Find files, folders, and documents on your computer"
 msgstr "Găseşte fişiere şi dosare pe calculatorul dvs."
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3853
 msgid "Screenshot..."
 msgstr "Captură ecran..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3856
 msgid "Take a screenshot of your desktop"
 msgstr "Capturează ecranul desktop-ului"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3642
 msgid "Lock Screen"
 msgstr "Închide ecran"
 
@@ -1293,8 +1309,8 @@ msgstr "Închide ecran"
 msgid "Protect your computer from unauthorized use"
 msgstr "Protejaţi-vă calculatorul dvs. de utilizare neautorizată"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
-#: gnome-panel/menu.c:3626
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3224
+#: gnome-panel/menu.c:3654
 msgid "Log Out"
 msgstr "Ieşire"
 
@@ -1311,7 +1327,7 @@ msgstr "Acţiuni"
 msgid "No windows open"
 msgstr "Nici o fereastră deschisă"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2984
 msgid "Menu Panel"
 msgstr "Panou Meniu"
 
@@ -1319,8 +1335,8 @@ msgstr "Panou Meniu"
 msgid "GNOME Menu Panel"
 msgstr "Panou Meniu GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
-#: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3122
+#: gnome-panel/menu.c:3127 gnome-panel/menu.c:3793
 msgid "Applications"
 msgstr "Aplicaţii"
 
@@ -1430,28 +1446,32 @@ msgstr "Încet"
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
-msgstr "Nu pot iniţializa structura png.\n"
+msgstr ""
+"Nu pot iniţializa structura png.\n"
 "Probabil aveţi o versiune libpng greşită."
 
 #: gnome-panel/gnome-panel-screenshot.c:143
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
-msgstr "Nu pot crea informaţia png.\n"
+msgstr ""
+"Nu pot crea informaţia png.\n"
 "Probabil aveţi o versiune libpng greşită"
 
 #: gnome-panel/gnome-panel-screenshot.c:150
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
-msgstr "Nu pot seta informaţia png.\n"
+msgstr ""
+"Nu pot seta informaţia png.\n"
 "Probabil aveţi o versiune libpng greşită"
 
 #: gnome-panel/gnome-panel-screenshot.c:168
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
-msgstr "Memorie insuficientă pentru a salva captura ecran.\n"
+msgstr ""
+"Memorie insuficientă pentru a salva captura ecran.\n"
 "Vă rog să eliberaţi nişte resurse şi încercaţi din nou."
 
 #: gnome-panel/gnome-panel-screenshot.c:220
@@ -1466,7 +1486,8 @@ msgid ""
 "Unable to create the file:\n"
 "\"%s\"\n"
 "Please check your permissions of the parent directory"
-msgstr "Nu pot crea fişierul:\n"
+msgstr ""
+"Nu pot crea fişierul:\n"
 "\"%s\"\n"
 "Vă rog să vă verificaţi permisiunile directorului părinte."
 
@@ -1519,7 +1540,8 @@ msgstr "Capturează ecranul după pauza specificată ( în secunde )"
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
-msgstr "Fişieul Glade pentru programul screenshot lipseşte.\n"
+msgstr ""
+"Fişieul Glade pentru programul screenshot lipseşte.\n"
 "Verificaţi intalarea gnome-panel"
 
 #: gnome-panel/gnome-panel-screenshot.c:1290
@@ -1558,7 +1580,8 @@ msgstr "_Salvează captura ecran în fişier:"
 msgid ""
 "The user's directory in which screenshots should be saved so as to appear on "
 "the web."
-msgstr "Dosarul utilizatorului în care capturile de ecran ar trebui salvate pentru a "
+msgstr ""
+"Dosarul utilizatorului în care capturile de ecran ar trebui salvate pentru a "
 "apare pe web."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
@@ -1575,7 +1598,8 @@ msgid ""
 "<b>Failed to run this program</b>\n"
 "\n"
 "Details: %s"
-msgstr "<b>Eşec la rularea acestui program<b>\n"
+msgstr ""
+"<b>Eşec la rularea acestui program<b>\n"
 "\n"
 "Detalii: %s"
 
@@ -1585,7 +1609,8 @@ msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
 "\n"
 "Details: %s"
-msgstr "<b>Eşec la execuţia comenzii:</b> '%s'\n"
+msgstr ""
+"<b>Eşec la execuţia comenzii:</b> '%s'\n"
 "\n"
 "Detalii: %s"
 
@@ -1595,7 +1620,8 @@ msgid ""
 "<b>Failed to open file:</b> '%s'\n"
 "\n"
 "Details: no application available to open file"
-msgstr "<b>Eşec la deschiderea fişierului:</b> '%s'\n"
+msgstr ""
+"<b>Eşec la deschiderea fişierului:</b> '%s'\n"
 "\n"
 "Detalii: nici o aplicaţie disponibilă pentru a-l deschide"
 
@@ -1605,7 +1631,8 @@ msgid ""
 "<b>Failed to open file:</b> '%s'\n"
 "\n"
 "Details: %s"
-msgstr "<b>Eşec la deschiderea fişierului:</b> '%s'\n"
+msgstr ""
+"<b>Eşec la deschiderea fişierului:</b> '%s'\n"
 "\n"
 "Detalii: %s"
 
@@ -1659,7 +1686,8 @@ msgstr "Aceast icon de lansare nu specifică un URL care să fie afişat"
 msgid ""
 "Cannot show %s\n"
 "%s"
-msgstr "Nu pot afişa %s\n"
+msgstr ""
+"Nu pot afişa %s\n"
 "%s"
 
 #: gnome-panel/launcher.c:141
@@ -1668,7 +1696,8 @@ msgid ""
 "<b>Cannot launch icon</b>\n"
 "\n"
 "Details: %s"
-msgstr "<b>Nu pot lansa icon</b>\n"
+msgstr ""
+"<b>Nu pot lansa icon</b>\n"
 "\n"
 "Detalii: %s"
 
@@ -1677,12 +1706,15 @@ msgstr "<b>Nu pot lansa icon</b>\n"
 msgid ""
 "Cannot launch icon\n"
 "%s"
-msgstr "Nu pot lansa icon\n"
+msgstr ""
+"Nu pot lansa icon\n"
 "%s"
 
 #: gnome-panel/launcher.c:391
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr "Nici un URI nu a fost specificat pentru fişierul desktop al lansatorului din panou\n"
+msgstr ""
+"Nici un URI nu a fost specificat pentru fişierul desktop al lansatorului din "
+"panou\n"
 
 #: gnome-panel/launcher.c:411
 #, c-format
@@ -1714,7 +1746,8 @@ msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
 "\n"
 "%s"
-msgstr "Nu pot salva lansatorul pe disc, următoarea eroare s-a întâmplat:\n"
+msgstr ""
+"Nu pot salva lansatorul pe disc, următoarea eroare s-a întâmplat:\n"
 "\n"
 "%s"
 
@@ -1725,10 +1758,10 @@ msgid ""
 "<b>Cannot display help document</b>\n"
 "\n"
 "Details: %s"
-msgstr "<b>Nu pot afişa documentul de ajutor</b>\n"
+msgstr ""
+"<b>Nu pot afişa documentul de ajutor</b>\n"
 "\n"
 "Detalii %s"
-
 
 #: gnome-panel/main.c:149
 msgid "Specify a profile name to load"
@@ -1747,7 +1780,8 @@ msgstr "şi în sfârşit, Cavelerii care spun... NI!"
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
-msgstr "Acest program este responsabil pentru a lansa alte aplicaţii, înglobarea de "
+msgstr ""
+"Acest program este responsabil pentru a lansa alte aplicaţii, înglobarea de "
 "mici apleturi în el, pacea lumii şi prăbuşiri aleatoare ale X-ului."
 
 #: gnome-panel/menu.c:283
@@ -1756,7 +1790,8 @@ msgid ""
 "\n"
 "Running in \"Lockdown\" mode.  This means your system administrator has "
 "prohibited any changes to the panel's configuration to take place."
-msgstr "\n"
+msgstr ""
+"\n"
 "\n"
 "Rulez în modul \"Închis\". Aceasta înseamnă că administratorul sistemului "
 "dvs. a interzis orice schimbări în configuraţia panoului."
@@ -1775,10 +1810,10 @@ msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
 "\n"
 "Details: %s probably does not exist"
-msgstr "<b>Nu pot executa 'Despre GNOME'</b>\n"
+msgstr ""
+"<b>Nu pot executa 'Despre GNOME'</b>\n"
 "\n"
 "Detalii: %s probabil că nu există"
-
 
 #: gnome-panel/menu.c:353
 #, c-format
@@ -1786,10 +1821,10 @@ msgid ""
 "<b>Can't launch entry</b>\n"
 "\n"
 "Details: %s"
-msgstr "<b>Nu pot lansa intrarea</b>\n"
+msgstr ""
+"<b>Nu pot lansa intrarea</b>\n"
 "\n"
 "Detalii: %s"
-
 
 #: gnome-panel/menu.c:363 gnome-panel/menu.c:1162 gnome-panel/menu.c:1199
 #, c-format
@@ -1797,7 +1832,8 @@ msgid ""
 "<b>Can't load entry</b>\n"
 "\n"
 "Details: %s"
-msgstr "<b>Nu pot încărca intrarea</b>\n"
+msgstr ""
+"<b>Nu pot încărca intrarea</b>\n"
 "\n"
 "Detalii: %s"
 
@@ -1807,7 +1843,8 @@ msgid ""
 "<b>Could not remove the menu item %s</b>\n"
 "\n"
 "Details: %s\n"
-msgstr "<b>Nu am putut elimina elementul meniu %s</b>\n"
+msgstr ""
+"<b>Nu am putut elimina elementul meniu %s</b>\n"
 "\n"
 "Detalii: %s\n"
 
@@ -1826,7 +1863,8 @@ msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
 "Details: No 'Exec' or 'URL' field in entry"
-msgstr "<b>Nu pot adăuga la cutia de rulare</b>\n"
+msgstr ""
+"<b>Nu pot adăuga la cutia de rulare</b>\n"
 "\n"
 "Detalii: Nici un câmp 'Exec' sau 'URL' în intrare"
 
@@ -1871,199 +1909,202 @@ msgstr "Adaugă element nou la acest meniu"
 msgid "Properties"
 msgstr "Proprietăţi"
 
-#: gnome-panel/menu.c:2531 gnome-panel/menu.c:2586
+#: gnome-panel/menu.c:2532 gnome-panel/menu.c:2587 gnome-panel/menu.c:2623
 #: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "cererea a întors excepţia %s\n"
 
-#: gnome-panel/menu.c:2866 gnome-panel/menu.c:2871
+#: gnome-panel/menu.c:2894 gnome-panel/menu.c:2899
 msgid "Aligned Panel"
 msgstr "Panou aliniat"
 
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:2900
 msgid "GNOME Aligned Panel"
 msgstr "Panou GNOME aliniat"
 
-#: gnome-panel/menu.c:2889 gnome-panel/menu.c:2893
+#: gnome-panel/menu.c:2917 gnome-panel/menu.c:2921
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Panou margine"
 
-#: gnome-panel/menu.c:2894
+#: gnome-panel/menu.c:2922
 msgid "GNOME Edge Panel"
 msgstr "Panou GNOME margine"
 
-#: gnome-panel/menu.c:2915 gnome-panel/menu.c:2919
+#: gnome-panel/menu.c:2943 gnome-panel/menu.c:2947
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Panou alunecător"
 
-#: gnome-panel/menu.c:2920
+#: gnome-panel/menu.c:2948
 msgid "GNOME Sliding Panel"
 msgstr "Panou GNOME alunecător"
 
-#: gnome-panel/menu.c:2938 gnome-panel/menu.c:2943
+#: gnome-panel/menu.c:2966 gnome-panel/menu.c:2971
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Panou flotant"
 
-#: gnome-panel/menu.c:2944
+#: gnome-panel/menu.c:2972
 msgid "GNOME Floating Panel"
 msgstr "Panou GNOME flotant"
 
-#: gnome-panel/menu.c:2964
+#: gnome-panel/menu.c:2992
 msgid "You can only have one menu panel at a time."
 msgstr "Puteţi avea doar un panou meniu la un moment dat."
 
-#: gnome-panel/menu.c:3009
+#: gnome-panel/menu.c:3037
 msgid "C_orner Panel"
 msgstr "Panou c_olţ"
 
-#: gnome-panel/menu.c:3011
+#: gnome-panel/menu.c:3039
 msgid "Create corner panel"
 msgstr "Creează panou colţ"
 
-#: gnome-panel/menu.c:3019
+#: gnome-panel/menu.c:3047
 msgid "_Edge Panel"
 msgstr "Panou margin_e"
 
-#: gnome-panel/menu.c:3021
+#: gnome-panel/menu.c:3049
 msgid "Create edge panel"
 msgstr "Creează panou margine"
 
-#: gnome-panel/menu.c:3029
+#: gnome-panel/menu.c:3057
 msgid "_Floating Panel"
 msgstr "Panou _flotant"
 
-#: gnome-panel/menu.c:3031
+#: gnome-panel/menu.c:3059
 msgid "Create floating panel"
 msgstr "Creează panou flotant"
 
-#: gnome-panel/menu.c:3039
+#: gnome-panel/menu.c:3067
 msgid "_Sliding Panel"
 msgstr "Panou _alunecător"
 
-#: gnome-panel/menu.c:3041
+#: gnome-panel/menu.c:3069
 msgid "Create sliding panel"
 msgstr "Creează panou alunecător"
 
-#: gnome-panel/menu.c:3051
+#: gnome-panel/menu.c:3079
 msgid "_Menu Panel"
 msgstr "Panou _meniu"
 
-#: gnome-panel/menu.c:3053
+#: gnome-panel/menu.c:3081
 msgid "Create menu panel"
 msgstr "Creează panou meniu"
 
-#: gnome-panel/menu.c:3142 gnome-panel/menu.c:3148 gnome-panel/menu.c:3689
+#: gnome-panel/menu.c:3170 gnome-panel/menu.c:3176 gnome-panel/menu.c:3717
 msgid "KDE Menu"
 msgstr "Meniu KDE"
 
-#: gnome-panel/menu.c:3205
+#: gnome-panel/menu.c:3233
 msgid "Lock"
 msgstr "Închide"
 
-#: gnome-panel/menu.c:3214 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3242 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Captură ecran"
 
-#: gnome-panel/menu.c:3223
+#: gnome-panel/menu.c:3251
 msgid "Search"
 msgstr "Caută"
 
-#: gnome-panel/menu.c:3232
+#: gnome-panel/menu.c:3260
 msgid "Run"
 msgstr "Rulează"
 
-#: gnome-panel/menu.c:3304
+#: gnome-panel/menu.c:3332
 msgid "You cannot remove your last panel."
 msgstr "Nu vă puteţi elimina ultimul panou."
 
-#: gnome-panel/menu.c:3317
+#: gnome-panel/menu.c:3345
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
-msgstr "Când un panou este eliminat, panoul şi setările\n"
+msgstr ""
+"Când un panou este eliminat, panoul şi setările\n"
 "sale sunt pierdute. Elimin acest panou?"
 
-#: gnome-panel/menu.c:3325
+#: gnome-panel/menu.c:3353
 msgid "Delete Panel"
 msgstr "_Elimină panoul"
 
-#: gnome-panel/menu.c:3391
+#: gnome-panel/menu.c:3419
 msgid "_Delete This Panel..."
 msgstr "_Elimină acest panou..."
 
-#: gnome-panel/menu.c:3394 gnome-panel/menu.c:3432
+#: gnome-panel/menu.c:3422 gnome-panel/menu.c:3460
 msgid "_Delete This Panel"
 msgstr "_Elimină acest panou"
 
-#: gnome-panel/menu.c:3416
+#: gnome-panel/menu.c:3444
 msgid "_Add to Panel"
 msgstr "_Adaugă la panou"
 
-#: gnome-panel/menu.c:3461
+#: gnome-panel/menu.c:3489
 msgid "_New Panel"
 msgstr "_Panou nou"
 
-#: gnome-panel/menu.c:3503
+#: gnome-panel/menu.c:3531
 msgid "_About Panels"
 msgstr "_Despre panouri"
 
-#: gnome-panel/menu.c:3516
+#: gnome-panel/menu.c:3544
 msgid "About _GNOME"
 msgstr "Despre _GNOME"
 
-#: gnome-panel/menu.c:3556
+#: gnome-panel/menu.c:3584
 msgid "Launcher..."
 msgstr "Lansator..."
 
-#: gnome-panel/menu.c:3564
+#: gnome-panel/menu.c:3592
 msgid "Launcher from menu"
 msgstr "Lansator din meniu"
 
-#: gnome-panel/menu.c:3573
+#: gnome-panel/menu.c:3601
 msgid "Button"
 msgstr "Buton"
 
-#: gnome-panel/menu.c:3583 gnome-panel/menu.c:3913 gnome-panel/menu.c:3941
-#: gnome-panel/menu.c:4137
+#: gnome-panel/menu.c:3611 gnome-panel/menu.c:3941 gnome-panel/menu.c:3969
+#: gnome-panel/menu.c:4165
 msgid "Main Menu"
 msgstr "Meniu principal"
 
-#: gnome-panel/menu.c:3620
+#: gnome-panel/menu.c:3648
 msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr "Blochează ecranul astfel încât să vă puteţi părăsi temporar calculatorul"
+msgstr ""
+"Blochează ecranul astfel încât să vă puteţi părăsi temporar calculatorul"
 
-#: gnome-panel/menu.c:3632
+#: gnome-panel/menu.c:3660
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
-msgstr "Ieşire din această sesiune pentru a vă loga ca un utilizator diferit sau să "
+msgstr ""
+"Ieşire din această sesiune pentru a vă loga ca un utilizator diferit sau să "
 "vă opriţi calculatorul"
 
-#: gnome-panel/menu.c:3797
+#: gnome-panel/menu.c:3825
 msgid "Run a command"
 msgstr "Rulează o comandă"
 
-#: gnome-panel/menu.c:3843
+#: gnome-panel/menu.c:3871
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3861
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3889
 msgid "Menu"
 msgstr "Meniu"
 
-#: gnome-panel/menu.c:3863
+#: gnome-panel/menu.c:3891
 msgid "Menu:"
 msgstr "Meniu:"
 
-#: gnome-panel/menu.c:3935
+#: gnome-panel/menu.c:3963
 msgid "Can't create menu, using main menu!"
 msgstr "Nu pot crea meniul, folosesc meniul principal!"
 
-#: gnome-panel/menu.c:4372
+#: gnome-panel/menu.c:4400
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Nici o cale setată la %s pentru obiectul meniu panou\n"
@@ -2074,7 +2115,8 @@ msgid ""
 "<b>Cannot save changes to launcher</b>\n"
 "\n"
 "Details: %s"
-msgstr "<b>Nu pot salva schimbările lansatorului</b>\n"
+msgstr ""
+"<b>Nu pot salva schimbările lansatorului</b>\n"
 "\n"
 "Detalii: %s"
 
@@ -2093,7 +2135,8 @@ msgid ""
 "<b>Cannot save menu item to disk</b>\n"
 "\n"
 "Details: %s"
-msgstr "<b>Nu pot salva elementul de meniu</b>\n"
+msgstr ""
+"<b>Nu pot salva elementul de meniu</b>\n"
 "\n"
 "Detalii: %s"
 
@@ -2185,7 +2228,8 @@ msgid ""
 "Details: %s\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
-msgstr "A fost o problemă la încârcarea apletului \"%s\"\n"
+msgstr ""
+"A fost o problemă la încârcarea apletului \"%s\"\n"
 "Detalii: %s\n"
 "\n"
 "Doriţi să eliminaţi apletul din configuraţia dumneavoastră?"
@@ -2203,7 +2247,8 @@ msgstr "Deschide URL: %s"
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
-msgstr "Nici un panou nu a fost găsit în configuraţia dvs. O să va creez un panou "
+msgstr ""
+"Nici un panou nu a fost găsit în configuraţia dvs. O să va creez un panou "
 "meniu."
 
 #. Auto-hide
@@ -2419,7 +2464,8 @@ msgstr "Nu s-a putut găsi o aplicaţie potrivită"
 #: gnome-panel/panel-recent.c:79
 msgid ""
 "The default application for this type of file cannot handle remote files"
-msgstr "Aplicaţia implicită pentru acest tip de fişiere nu poate lucra cu fişiere la "
+msgstr ""
+"Aplicaţia implicită pentru acest tip de fişiere nu poate lucra cu fişiere la "
 "distanţă"
 
 #: gnome-panel/panel-recent.c:136
@@ -2435,7 +2481,8 @@ msgstr "Deschide recente"
 msgid ""
 "I've detected a panel already running,\n"
 "and will now exit."
-msgstr "Am detectat un panou care rulează deja,\n"
+msgstr ""
+"Am detectat un panou care rulează deja,\n"
 "şi acum voi ieşi."
 
 #: gnome-panel/panel-shell.c:47
@@ -2445,7 +2492,8 @@ msgid ""
 "server.\n"
 "The error code is: %d\n"
 "The panel will now exit."
-msgstr "A fost o problemă la înregistrarea panoului cu serverul bonobo-activation.\n"
+msgstr ""
+"A fost o problemă la înregistrarea panoului cu serverul bonobo-activation.\n"
 "Codul de eroare este: %d\n"
 "Panoul va ieşi acum."
 
@@ -2478,10 +2526,10 @@ msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
 "Details: xscreensaver-command not found"
-msgstr "<b>Nu pot executa xscreensaver</b>\n"
+msgstr ""
+"<b>Nu pot executa xscreensaver</b>\n"
 "\n"
 "Detalii: xscreensaver-command nu a fost găsită"
-
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"

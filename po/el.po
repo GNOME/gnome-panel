@@ -27,7 +27,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.10\n"
-"POT-Creation-Date: 2003-01-07 14:28+0200\n"
+"POT-Creation-Date: 2003-01-21 18:37+1300\n"
 "PO-Revision-Date: 2003-01-07 14:19+0200\n"
 "Last-Translator: Kostas Papadimas <pkst@gmx.net>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -39,7 +39,7 @@ msgstr ""
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
 #: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
 #, c-format
@@ -81,8 +81,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(με λίγη βοήθεια από το George)"
 
-#: applets/fish/fish.c:416
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "Ψάρι"
 
@@ -246,8 +246,8 @@ msgstr "_Περί..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
-#: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3521
+#: gnome-panel/menu.c:4243 gnome-panel/panel-action-button.c:510
 msgid "_Help"
 msgstr "_Βοήθεια"
 
@@ -360,7 +360,7 @@ msgstr "Χρήση _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
@@ -370,8 +370,8 @@ msgstr ""
 "Σαράντης Πασχάλης <paskalis@di.uoa.gr>, 2000\n"
 "Σπύρος Παπαδημητρίου <spapadim+@cs.cmu.edu>, 1999"
 
-#: applets/gen_util/clock.c:1204
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Ρολόι"
 
@@ -380,59 +380,63 @@ msgid "The Clock displays the current time and date"
 msgstr "Το Ρολόϊ προβάλλει την τρέχουσα ημερομηνία και ώρα"
 
 #: applets/gen_util/clock.schemas.in.h:1
+msgid "24"
+msgstr "24"
+
+#: applets/gen_util/clock.schemas.in.h:2
 msgid "Display Internet time, which is same all over the world"
 msgstr "Προβολή ώρας διαδικτύου, η οποία είναι ίδια σε όλο τον κόσμο"
 
-#: applets/gen_util/clock.schemas.in.h:2
+#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display date in the Clock, in addition to time"
 msgstr "Εμφανίζει εκτός από την ώρα και  την ημερομηνία στο Ρολόϊ"
 
-#: applets/gen_util/clock.schemas.in.h:3
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display seconds in time"
 msgstr "Εμφάνιση δευτερολέπτων στην ώρα"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Προβάλλει την ώρα σε ζώνη UTC"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:6
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Εμφανίζει την ώρα σε δευτερόλεπτα από την Epoch, π.χ. 1970-01-01"
 
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Hour format"
 msgstr "Τύπος ώρας"
 
-#: applets/gen_util/clock.schemas.in.h:7
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Ορίζει το τύπο της ώρας, που μπορεί να είναι είτε 12 ή 24"
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in Clock"
 msgstr "Εμφάνιση ημερομηνίας στο Ρολόϊ"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Show date in a tooltip when a mouse is over the Clock"
 msgstr ""
 "Προβάλλει την ώρα σαν συμβουλή όταν περνάει το ποντίκι πάνω από το Ρολόϊ"
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in tooltip"
 msgstr "Εμφάνιση ημερομηνίας στο βοήθημα"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Show time with seconds"
 msgstr "Εμφάνιση  ώρας με δευτερόλεπτα"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use Internet time"
 msgstr "Χρήση ώρας Διαδικτύου"
 
-#: applets/gen_util/clock.schemas.in.h:13
+#: applets/gen_util/clock.schemas.in.h:14
 msgid "Use UNIX time"
 msgstr "Χρήση ώρας Unix"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:15
 msgid "Use UTC"
 msgstr "Χρήση UTC"
 
@@ -499,7 +503,7 @@ msgid "Window List"
 msgstr "Λίστα παραθύρων"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:840
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Εναλλάκτης χώρων εργασίας"
@@ -784,7 +788,8 @@ msgid "Remote folder for mail retrieval"
 msgstr "Απομακρυσμένος φάκελος για αλληλογραφία"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
+#, fuzzy
+msgid "Remote server to connect to for our mail"
 msgstr "Απομακρυσμένος διακομιστής για σύνδεση για την αλληλογραφία σας"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
@@ -847,23 +852,23 @@ msgstr "Έλεγχος Αλληλογραφίας"
 msgid "New Mail"
 msgstr "Νέα αλληλογραφία"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Γραμμές"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 msgid "Columns"
 msgstr "Στήλες"
 
-#: applets/gen_util/pager.c:376
+#: applets/gen_util/pager.c:378
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Σφάλμα φόρτωσης τιμής αριθμού γραμμών για το εφαρμογίδιο εναλλαγής χώρων "
 "εργασίας : %s\n"
 
-#: applets/gen_util/pager.c:387
+#: applets/gen_util/pager.c:389
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -871,14 +876,14 @@ msgstr ""
 "Σφάλμα φόρτωσης τιμής προβολής_όλων_των ονομάτων_χώρων_εργασίας για το "
 "εφαρμογίδιο εναλλαγής χώρων εργασίας : %s\n"
 
-#: applets/gen_util/pager.c:402
+#: applets/gen_util/pager.c:404
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Σφάλμα φόρτωσης τιμής προβολής_όλων_των_χώρων_εργασίας για το εφαρμογίδιο "
 "εναλλαγής χώρων εργασίας : %s\n"
 
-#: applets/gen_util/pager.c:547
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1130,29 +1135,29 @@ msgstr "Περιοχή ειδοποίησης ταμπλώ"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:428 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr ";;;"
 
-#: gnome-panel/applet.c:490 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:492
 msgid "_Remove From Panel"
 msgstr "_Αφαίρεση από το ταμπλώ"
 
-#: gnome-panel/applet.c:502 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:504
 msgid "_Move"
 msgstr "_Μετακίνηση"
 
-#: gnome-panel/applet.c:789
+#: gnome-panel/applet.c:793
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Δεν ορίσθηκε τύπος_αντικειμένου για το αντικείμενο ταμπλώ με  ID %s\n"
 
-#: gnome-panel/applet.c:809 gnome-panel/applet.c:917
+#: gnome-panel/applet.c:813 gnome-panel/applet.c:921
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Δεν ορίσθηκε panel_id για το αντικείμενο ταμπλώ με  ID %s\n"
 
-#: gnome-panel/applet.c:1256
+#: gnome-panel/applet.c:1258
 msgid "Can't find an empty spot"
 msgstr "Δεν βρέθηκε ελεύθερη τοποθεσία"
 
@@ -1319,16 +1324,16 @@ msgstr "Ενεργοποίηση κουμπιού απόκρυψης"
 msgid "Enable hidebutton arrow"
 msgstr "Ενεργοποίηση βέλους κουμπιού απόκρυψης"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3592
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3620
 msgid "Drawer"
 msgstr "Συρτάρι"
 
 #: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
-#: gnome-panel/menu.c:3447 gnome-panel/panel-action-button.c:89
+#: gnome-panel/menu.c:3475 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Ιδιότητες"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3818
 msgid "Run Program..."
 msgstr "Εκτέλεση Προγράμματος..."
 
@@ -1336,23 +1341,23 @@ msgstr "Εκτέλεση Προγράμματος..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Εκτελεί προγράμματα, αν γνωρίζετε το ακριβές όνομα εντολής"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3834
 msgid "Search for Files..."
 msgstr "Αναζήτηση Αρχείων..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3837
 msgid "Find files, folders, and documents on your computer"
 msgstr "Εύρεση αρχείων, φακέλων και εγγράφων στον υπολογιστή σας"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3853
 msgid "Screenshot..."
 msgstr "Αρπαγή οθόνης..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3856
 msgid "Take a screenshot of your desktop"
 msgstr "Αρπαγή οθόνης της επιφάνειας εργασίας σας"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3642
 msgid "Lock Screen"
 msgstr "Κλείδωμα Οθόνης"
 
@@ -1360,8 +1365,8 @@ msgstr "Κλείδωμα Οθόνης"
 msgid "Protect your computer from unauthorized use"
 msgstr "Προστασία του υπολογιστή από μη εξουσιοδοτημένη χρήση"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
-#: gnome-panel/menu.c:3626
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3224
+#: gnome-panel/menu.c:3654
 msgid "Log Out"
 msgstr "Αποσύνδεση Χρήστη"
 
@@ -1378,7 +1383,7 @@ msgstr "Ενέργειες"
 msgid "No windows open"
 msgstr "Δεν υπάρχουν ανοιχτά παράθυρα"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2984
 msgid "Menu Panel"
 msgstr "Μενού Ταμπλώ"
 
@@ -1386,8 +1391,8 @@ msgstr "Μενού Ταμπλώ"
 msgid "GNOME Menu Panel"
 msgstr "Το Ταμπλώ του GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
-#: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3122
+#: gnome-panel/menu.c:3127 gnome-panel/menu.c:3793
 msgid "Applications"
 msgstr "Εφαρμογές"
 
@@ -1962,116 +1967,116 @@ msgstr "Προσθήκη νέου στοιχείου στο μενού"
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: gnome-panel/menu.c:2531 gnome-panel/menu.c:2586
+#: gnome-panel/menu.c:2532 gnome-panel/menu.c:2587 gnome-panel/menu.c:2623
 #: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "η επερώτηση επέστρεψε την εξαίρεση %s\n"
 
-#: gnome-panel/menu.c:2866 gnome-panel/menu.c:2871
+#: gnome-panel/menu.c:2894 gnome-panel/menu.c:2899
 msgid "Aligned Panel"
 msgstr "Ισοζυγισμένο ταμπλώ"
 
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:2900
 msgid "GNOME Aligned Panel"
 msgstr "Ισοζυγισμένο ταμπλώ GNOME "
 
-#: gnome-panel/menu.c:2889 gnome-panel/menu.c:2893
+#: gnome-panel/menu.c:2917 gnome-panel/menu.c:2921
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Ακραίο ταμπλώ"
 
-#: gnome-panel/menu.c:2894
+#: gnome-panel/menu.c:2922
 msgid "GNOME Edge Panel"
 msgstr "Ακραίο ταμπλώ GNOME"
 
-#: gnome-panel/menu.c:2915 gnome-panel/menu.c:2919
+#: gnome-panel/menu.c:2943 gnome-panel/menu.c:2947
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Συρρόμενο ταμπλώ"
 
-#: gnome-panel/menu.c:2920
+#: gnome-panel/menu.c:2948
 msgid "GNOME Sliding Panel"
 msgstr "Συρόμενο ταμπλώ GNOME "
 
-#: gnome-panel/menu.c:2938 gnome-panel/menu.c:2943
+#: gnome-panel/menu.c:2966 gnome-panel/menu.c:2971
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Πλωτό ταμπλώ"
 
-#: gnome-panel/menu.c:2944
+#: gnome-panel/menu.c:2972
 msgid "GNOME Floating Panel"
 msgstr "Πλωτό ταμπλώ GNOME"
 
-#: gnome-panel/menu.c:2964
+#: gnome-panel/menu.c:2992
 msgid "You can only have one menu panel at a time."
 msgstr "Μπορείτε να έχετε μόνο ένα μενού ταμπλώ κάθε φορά."
 
-#: gnome-panel/menu.c:3009
+#: gnome-panel/menu.c:3037
 msgid "C_orner Panel"
 msgstr "Γω_νιακό ταμπλώ"
 
-#: gnome-panel/menu.c:3011
+#: gnome-panel/menu.c:3039
 msgid "Create corner panel"
 msgstr "Δημιουργία γωνιακού ταμπλώ"
 
-#: gnome-panel/menu.c:3019
+#: gnome-panel/menu.c:3047
 msgid "_Edge Panel"
 msgstr "_Ακραίο ταμπλώ"
 
-#: gnome-panel/menu.c:3021
+#: gnome-panel/menu.c:3049
 msgid "Create edge panel"
 msgstr "Δημιουργία ακραίου ταμπλώ"
 
-#: gnome-panel/menu.c:3029
+#: gnome-panel/menu.c:3057
 msgid "_Floating Panel"
 msgstr "_Πλωτό ταμπλώ"
 
-#: gnome-panel/menu.c:3031
+#: gnome-panel/menu.c:3059
 msgid "Create floating panel"
 msgstr "Δημιουργία πλωτού ταμπλώ"
 
-#: gnome-panel/menu.c:3039
+#: gnome-panel/menu.c:3067
 msgid "_Sliding Panel"
 msgstr "_Συρόμενο ταμπλώ"
 
-#: gnome-panel/menu.c:3041
+#: gnome-panel/menu.c:3069
 msgid "Create sliding panel"
 msgstr "Δημιουργία συρόμενου ταμπλώ"
 
-#: gnome-panel/menu.c:3051
+#: gnome-panel/menu.c:3079
 msgid "_Menu Panel"
 msgstr "_Μενού ταμπλώ"
 
-#: gnome-panel/menu.c:3053
+#: gnome-panel/menu.c:3081
 msgid "Create menu panel"
 msgstr "Δημιουργία ταμπλώ μενού"
 
-#: gnome-panel/menu.c:3142 gnome-panel/menu.c:3148 gnome-panel/menu.c:3689
+#: gnome-panel/menu.c:3170 gnome-panel/menu.c:3176 gnome-panel/menu.c:3717
 msgid "KDE Menu"
 msgstr "Μενού KDE"
 
-#: gnome-panel/menu.c:3205
+#: gnome-panel/menu.c:3233
 msgid "Lock"
 msgstr "Κλείδωμα"
 
-#: gnome-panel/menu.c:3214 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3242 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Αρπαγή οθόνης"
 
-#: gnome-panel/menu.c:3223
+#: gnome-panel/menu.c:3251
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: gnome-panel/menu.c:3232
+#: gnome-panel/menu.c:3260
 msgid "Run"
 msgstr "Εκτέλεση"
 
-#: gnome-panel/menu.c:3304
+#: gnome-panel/menu.c:3332
 msgid "You cannot remove your last panel."
 msgstr "Δεν μπορείτε να αφαιρέσετε το τελευταίο σας ταμπλώ."
 
-#: gnome-panel/menu.c:3317
+#: gnome-panel/menu.c:3345
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2079,58 +2084,58 @@ msgstr ""
 "Όταν ένα ταμπλώ αφαιρείται, οι ρυθμίσεις του\n"
 "και το ταμπλώ χάνονται. Αφαίρεση του ταμπλώ αυτού;"
 
-#: gnome-panel/menu.c:3325
+#: gnome-panel/menu.c:3353
 msgid "Delete Panel"
 msgstr "Αφαίρεση ταμπλώ"
 
-#: gnome-panel/menu.c:3391
+#: gnome-panel/menu.c:3419
 msgid "_Delete This Panel..."
 msgstr "_Αφαίρεση παρόντος ταμπλώ..."
 
-#: gnome-panel/menu.c:3394 gnome-panel/menu.c:3432
+#: gnome-panel/menu.c:3422 gnome-panel/menu.c:3460
 msgid "_Delete This Panel"
 msgstr "_Αφαίρεση παρόντος ταμπλώ"
 
-#: gnome-panel/menu.c:3416
+#: gnome-panel/menu.c:3444
 msgid "_Add to Panel"
 msgstr "_Προσθήκη στο ταμπλώ"
 
-#: gnome-panel/menu.c:3461
+#: gnome-panel/menu.c:3489
 msgid "_New Panel"
 msgstr "_Νέο Ταμπλώ"
 
-#: gnome-panel/menu.c:3503
+#: gnome-panel/menu.c:3531
 msgid "_About Panels"
 msgstr "_Περί ταμπλώ..."
 
-#: gnome-panel/menu.c:3516
+#: gnome-panel/menu.c:3544
 msgid "About _GNOME"
 msgstr "Περί_GNOME"
 
-#: gnome-panel/menu.c:3556
+#: gnome-panel/menu.c:3584
 msgid "Launcher..."
 msgstr "Εκκινητής..."
 
-#: gnome-panel/menu.c:3564
+#: gnome-panel/menu.c:3592
 msgid "Launcher from menu"
 msgstr "Εκκινητής από μενού"
 
-#: gnome-panel/menu.c:3573
+#: gnome-panel/menu.c:3601
 msgid "Button"
 msgstr "Kουμπί"
 
-#: gnome-panel/menu.c:3583 gnome-panel/menu.c:3913 gnome-panel/menu.c:3941
-#: gnome-panel/menu.c:4137
+#: gnome-panel/menu.c:3611 gnome-panel/menu.c:3941 gnome-panel/menu.c:3969
+#: gnome-panel/menu.c:4165
 msgid "Main Menu"
 msgstr "Κύριο Μενού"
 
-#: gnome-panel/menu.c:3620
+#: gnome-panel/menu.c:3648
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 "Κλείδωμα της οθόνης ούτως ώστε να μπορέσετε να φύγετε προσωρινά από τον "
 "υπολογιστή σας"
 
-#: gnome-panel/menu.c:3632
+#: gnome-panel/menu.c:3660
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2138,27 +2143,27 @@ msgstr ""
 "Αποσυνδεθείτε από αυτή τη συνεδρία για να συνδεθείτε ως διαφορετικος χρήστης "
 "ή για να κλείσετε τον υπολογιστή σας"
 
-#: gnome-panel/menu.c:3797
+#: gnome-panel/menu.c:3825
 msgid "Run a command"
 msgstr "Εκτέλεση εντολής"
 
-#: gnome-panel/menu.c:3843
+#: gnome-panel/menu.c:3871
 msgid "Desktop"
 msgstr "Επιφάνεια εργασίας"
 
-#: gnome-panel/menu.c:3861 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3889
 msgid "Menu"
 msgstr "Μενού"
 
-#: gnome-panel/menu.c:3863
+#: gnome-panel/menu.c:3891
 msgid "Menu:"
 msgstr "Μενού:"
 
-#: gnome-panel/menu.c:3935
+#: gnome-panel/menu.c:3963
 msgid "Can't create menu, using main menu!"
 msgstr "Αδύνατη η δημιουργία μενού, χρήση του κυρίως μενού!"
 
-#: gnome-panel/menu.c:4372
+#: gnome-panel/menu.c:4400
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Δεν έχει ορισθεί διαδρομή σε  %s για το αντικείμενο μενού ταμπλώ\n"
@@ -2669,9 +2674,6 @@ msgstr "Μέγεθος:"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Πάνω"
-
-#~ msgid "24"
-#~ msgstr "24"
 
 #~ msgid "(C) 1998-2002 the Free Software Foundation"
 #~ msgstr "(C) 1997-2002 το Free Software Foundation"
