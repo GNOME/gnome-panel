@@ -26,12 +26,12 @@ gchar * panel_gconf_get_session_key (void) {
 		const gchar *panel_client_id;
 
 		panel_client_id = gnome_client_get_id (gnome_master_client ());	
-		if (panel_client_id) {
+		if (!panel_client_id) {
 			g_warning (G_STRLOC " : gnome_client_get_id returned NULL");
 			return NULL;
 		}
 
-		session_key =  g_strdup_printf ("/apps/panel/sessions/%s/", panel_client_id);
+		session_key =  g_strdup_printf ("/apps/panel/sessions/%s", panel_client_id);
 	}
 	return session_key;
 }
