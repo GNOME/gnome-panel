@@ -70,7 +70,7 @@ public:
 		list = (GList *)g_hash_table_lookup(applet_callbacks,
 						    (char *)callback_name);
 
-		for(;list!=NULL;list = g_list_next(list)) {
+		for(;list!=NULL;list = (GList *) g_list_next (list)) {
 			CallbackInfo *info = (CallbackInfo *)list->data;
 			if(info->applet_id == id) {
 				(*(info->func))(id,info->data);
