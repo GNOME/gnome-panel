@@ -206,24 +206,37 @@ set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 				"gnome-menu-down.xpm");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
 						   PANEL_VERTICAL);
+			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
+								       drawer),
+							  DROP_ZONE_RIGHT);
+
 			break;
 		case DRAWER_UP:
 			pixmap_name = gnome_unconditional_pixmap_file(
 				"gnome-menu-up.xpm");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
 						   PANEL_VERTICAL);
+			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
+								       drawer),
+							  DROP_ZONE_LEFT);
 			break;
 		case DRAWER_RIGHT:
 			pixmap_name = gnome_unconditional_pixmap_file(
 				"gnome-menu-right.xpm");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
 						   PANEL_HORIZONTAL);
+			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
+								       drawer),
+							  DROP_ZONE_RIGHT);
 			break;
 		case DRAWER_LEFT:
 			pixmap_name = gnome_unconditional_pixmap_file(
 				"gnome-menu-left.xpm");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
 						   PANEL_HORIZONTAL);
+			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
+								       drawer),
+							  DROP_ZONE_LEFT);
 			break;
 	}
 		

@@ -2348,6 +2348,18 @@ panel_widget_change_orient(PanelWidget *panel,
 				   panel->drawer_drop_zone_pos);
 }
 
+void
+panel_widget_change_drop_zone_pos(PanelWidget *panel,
+				  DrawerDropZonePos drop_zone_pos)
+{
+	panel_widget_change_params(panel,
+				   panel->orient,
+				   panel->snapped,
+				   panel->mode,
+				   panel->state,
+				   drop_zone_pos);
+}
+
 
 void
 panel_widget_restore_state(PanelWidget *panel)

@@ -202,6 +202,10 @@ void		panel_widget_change_params	(PanelWidget *panel,
 /*changing parameters (orient only)*/
 void		panel_widget_change_orient	(PanelWidget *panel,
 						 PanelOrientation orient);
+/*changing parameters (dropzonepos only)*/
+void		panel_widget_change_drop_zone_pos(PanelWidget *panel,
+						  DrawerDropZonePos
+						 	drop_zone_pos);
 
 /*change global params*/
 void		panel_widget_change_global	(gint explicit_step,
