@@ -796,8 +796,6 @@ applet_widget_construct(AppletWidget* applet, const char *goad_id)
 	
 	g_return_if_fail(goad_id != NULL);
 
-	applet = APPLET_WIDGET (gtk_type_new (applet_widget_get_type ()));
-
 	CD(applet) = corbadat = gnome_panel_applet_corba_init(applet,goad_id);
 
 	g_return_if_fail(corbadat!=NULL);
