@@ -639,6 +639,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	GtkWidget *table;
 	GtkObject *range;
 	GtkWidget *f, *w;
+	GtkWidget *hbox;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	
@@ -653,7 +654,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
 
 	/****** bleh ********/
-	table = gtk_table_new (3, 4, FALSE);
+	table = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (box), table, FALSE, FALSE, 0);
 
 	ppc->h_orient = button = gtk_radio_button_new_with_label (
@@ -664,9 +665,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			    GTK_SIGNAL_FUNC (floating_set_orient),
 			    GINT_TO_POINTER (PANEL_HORIZONTAL));
-	gtk_table_attach (GTK_TABLE (table), button, 0, 2, 0, 1,
-			  GTK_FILL | GTK_SHRINK,
-			  GTK_EXPAND | GTK_SHRINK, 0, 0);
+	gtk_box_pack_start (GTK_BOX (table), button, FALSE, FALSE, 0);
 
 	ppc->v_orient = button = 
 		gtk_radio_button_new_with_label_from_widget (
@@ -678,46 +677,40 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			    GTK_SIGNAL_FUNC (floating_set_orient),
 			    GINT_TO_POINTER (PANEL_VERTICAL));
-	gtk_table_attach (GTK_TABLE (table), button, 0, 2, 1, 2,
-			  GTK_FILL | GTK_SHRINK,
-			  GTK_EXPAND | GTK_SHRINK, 0, 0);
-	
+	gtk_box_pack_start (GTK_BOX (table), button, FALSE, FALSE, 0);
 
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (table), hbox, FALSE, FALSE, 0);
+	
 	button = gtk_label_new (_("Top left corner's position: X"));
-	gtk_table_attach (GTK_TABLE (table), button, 0, 1, 2, 3,
-			  GTK_FILL | GTK_SHRINK,
-			  GTK_EXPAND | GTK_SHRINK, 0, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
 	range = gtk_adjustment_new (ppc->x, 0, gdk_screen_width (),
 				    1, 10, 10);
 	ppc->x_spin = button =
 		gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
+	gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->x);
 	gtk_signal_connect (GTK_OBJECT (button), "changed",
 			    GTK_SIGNAL_FUNC (floating_set_xy),
 			    &ppc->x);
-	gtk_table_attach (GTK_TABLE (table), button, 1, 2, 2, 3,
-			  GTK_FILL | GTK_SHRINK,
-			  GTK_EXPAND | GTK_SHRINK, 0, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
 	button = gtk_label_new (_("Y"));
-	gtk_table_attach (GTK_TABLE (table), button, 2, 3, 2, 3,
-			  GTK_FILL | GTK_SHRINK,
-			  GTK_EXPAND | GTK_SHRINK, 0, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 	
 	range = gtk_adjustment_new (ppc->y, 0, gdk_screen_height (),
 				    1, 10, 10);
 	ppc->y_spin = button =
 		gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
+	gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->y);
 	gtk_signal_connect (GTK_OBJECT (button), "changed",
 			    GTK_SIGNAL_FUNC (floating_set_xy),
 			    &ppc->y);
-	gtk_table_attach (GTK_TABLE (table), button, 3, 4, 2, 3,
-			  GTK_FILL | GTK_SHRINK,
-			  GTK_EXPAND | GTK_SHRINK, 0, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
@@ -1277,8 +1270,6 @@ panel_config(GtkWidget *panel)
 			   GTK_SIGNAL_FUNC (config_destroy), ppc);
 	gtk_window_set_title (GTK_WINDOW(ppc->config_window),
 			      _("Panel properties"));
-	gtk_container_set_border_width (GTK_CONTAINER(ppc->config_window),
-					GNOME_PAD_SMALL);
 	
 	prop_nbook = GNOME_PROPERTY_BOX (ppc->config_window)->notebook;
 
