@@ -67,11 +67,11 @@ depending on the size of the panel. See panel_applet_get_size().
 
 <!-- ##### SIGNAL PanelApplet::move-focus-out-of-applet ##### -->
 <para>
-
+Emitted when the applet has lost focus. This signal is used internally and is not meant to be used by applets themselves.
 </para>
 
-@panelapplet: the object which received the signal.
-@arg1: 
+@panelapplet: The object which received the signal.
+@direction: The direction of focus movement.
 
 <!-- ##### TYPEDEF PanelAppletOrient ##### -->
 <para>
@@ -284,6 +284,15 @@ in one of the (@base + max, @base + min) ranges.
 @n_elements: Number of elements in the array. <emphasis>
 Not</emphasis> the number of pairs.
 @base_size: The base size of the applet.
+
+
+<!-- ##### FUNCTION panel_applet_get_locked_down ##### -->
+<para>
+Check if the @applet is locked down. A locked down applet should not allow any change to its configuration.
+</para>
+
+@applet: The #PanelApplet.
+@Returns: %TRUE if the @applet is locked down, %FALSE otherwise.
 
 
 <!-- ##### FUNCTION panel_applet_get_control ##### -->
