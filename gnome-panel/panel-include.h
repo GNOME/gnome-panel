@@ -34,8 +34,6 @@
 #include "panel-util.h"
 #include "gdkextra.h"
 
-#include "cookie.h"
-
 /* Gross backward compatibility hack.  */
 #ifndef GPOINTER_TO_INT
 # if SIZEOF_INT == SIZEOF_VOID_P

@@ -77,7 +77,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		{
 			Extern *ext = info->data;
 			g_assert(ext);
-			send_applet_do_callback(ext->ior,
+			send_applet_do_callback(ext->obj,
 						info->applet_id,
 						menu->name);
 			break;

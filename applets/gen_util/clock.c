@@ -220,13 +220,15 @@ applet_change_orient(GtkWidget * w, PanelOrientType o, gpointer data)
 	(*cd->update_func) (cd, current_time);
 }
 
+GtkWidget * make_clock_applet(const gchar * param);
+
 GtkWidget *
 make_clock_applet(const gchar * param)
 {
 	ClockData *cd;
 	GtkWidget *applet;
 
-	applet = applet_widget_new_with_param(param);
+	applet = applet_widget_new_with_param(param, "gen_util_clock");
 	if (!applet)
 		g_error(_("Can't create applet!\n"));
 

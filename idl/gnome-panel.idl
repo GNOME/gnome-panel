@@ -5,8 +5,7 @@
 module GNOME {
 	interface Panel {
 		/* requests an ID on the panel */
-		short applet_request_id(in string cookie,
-					in string path,
+		short applet_request_id(in string path,
 					in string param,
 					in short dorestart,
 					out string cfgpath,
@@ -15,65 +14,53 @@ module GNOME {
 
 		/* Sends the object identifier for the Applet server that
 		   contacts the Panel */
-		void applet_register(in string cookie, in string ior,
-				     in short applet_id);
+		void applet_register(in object obj,
+				     in short applet_id,
+				     in string goad_id);
 
 		/*abort the applet load (before we register)*/
-		void applet_abort_id(in string cookie, in short applet_id);
+		void applet_abort_id(in short applet_id);
 		
-		void applet_request_glob_cfg(in string cookie,
-					     out string globcfgpath);
-		void applet_remove_from_panel (in string cookie,
-					       in short applet_id);
-		short applet_get_panel (in string cookie, in short applet_id);
-		short applet_get_pos (in string cookie, in short applet_id);
-		short applet_get_panel_orient (in string cookie,
-					       in short applet_id);
-		void applet_show_menu (in string cookie, in short applet_id);
-		void applet_drag_start (in string cookie, in short applet_id);
-		void applet_drag_stop (in string cookie, in short applet_id);
-		void applet_add_callback (in string cookie, 
-					  in short applet_id,
+		void applet_request_glob_cfg(out string globcfgpath);
+		void applet_remove_from_panel(in short applet_id);
+		short applet_get_panel (in short applet_id);
+		short applet_get_pos (in short applet_id);
+		short applet_get_panel_orient (in short applet_id);
+		void applet_show_menu (in short applet_id);
+		void applet_drag_start (in short applet_id);
+		void applet_drag_stop (in short applet_id);
+		void applet_add_callback (in short applet_id,
 					  in string callback_name,
 					  in string stock_item,
 					  in string menuitem_text);
-		void applet_remove_callback (in string cookie,
-					     in short applet_id,
+		void applet_remove_callback (in short applet_id,
 					     in string callback_name);
-		void applet_add_tooltip (in string cookie, in short applet_id,
+		void applet_add_tooltip (in short applet_id,
 					 in string tooltip);
-		void applet_remove_tooltip (in string cookie,
-					    in short applet_id);
-		short applet_in_drag (in string cookie);
-		void sync_config (in string cookie,
-				  in short applet_id);
-		void quit (in string cookie);
+		void applet_remove_tooltip (in short applet_id);
+		short applet_in_drag ();
+		void sync_config (in short applet_id);
+		void quit ();
 	};
 
 	interface Applet {
-		void change_orient (in string cookie,
-				    in short applet_id,
+		void change_orient (in short applet_id,
 				    in short orient);
-		void do_callback (in string cookie,
-				  in short applet_id,
+		void do_callback (in short applet_id,
 				  in string callback_name);
-		short session_save (in string cookie,
-				    in short applet_id,
+		short session_save (in short applet_id,
 				    in string cfgpath,
 				    in string globcfgpath);
 		/* params is only used if the applet process handeles more
 		   applet types */
-		void start_new_applet (in string cookie,
-				       in string param);
-		void back_change (in string cookie,
-				  in short applet_id,
+		void start_new_applet (in string param);
+		void back_change (in short applet_id,
 				  in short back_type,
 				  in string pixmap,
 				  in short c_red,
 				  in short c_green,
 				  in short c_blue);
-		void tooltips_state (in string cookie,
-				     in short applet_id,
+		void tooltips_state (in short applet_id,
 				     in short enabled);
 	};
 };

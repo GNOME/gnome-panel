@@ -4,12 +4,14 @@
 #include <glib.h>
 #include "panel.h"
 #include "panel-widget.h"
+#include <libgnorba/gnorba.h>
 
 BEGIN_GNOME_DECLS
 
 typedef struct _Extern Extern;
 struct _Extern {
-	char *ior;
+        CORBA_Object obj;
+
 	char *path;
 	char *params;
 	char *cfg;
@@ -24,7 +26,7 @@ void load_extern_applet(char *path, char *params, char *cfgpath,
 int applet_request_id (const char *path, const char *param,
 		       int dorestart, char **cfgpath,
 		       char **globcfgpath, guint32 *winid);
-void applet_register (const char * ior, int applet_id);
+void applet_register (CORBA_Object obj, int applet_id, const char *goad_id);
 guint32 reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 			     AppletType type);
 void applet_abort_id(int applet_id);

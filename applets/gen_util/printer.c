@@ -35,6 +35,8 @@ enum {
   TARGET_URI_LIST,
 };
 
+void position_label (GtkWidget *label, gpointer data);
+
 void
 position_label (GtkWidget *label, gpointer data)
 {
@@ -98,6 +100,8 @@ drag_data_received (GtkWidget        *widget,
 		  break;
 	  }
 }
+
+GtkWidget * printer_widget (Printer *pr);
 
 GtkWidget *
 printer_widget (Printer *pr)
@@ -363,13 +367,15 @@ printer_properties (AppletWidget *applet, gpointer data)
 	gtk_widget_show (pr->printer_prop);
 }
 
+GtkWidget *make_printer_applet(const gchar *param);
+
 GtkWidget *
 make_printer_applet(const gchar *param)
 {
 	GtkWidget *applet;
 	Printer *pr;
 
-	applet = applet_widget_new_with_param (param);
+	applet = applet_widget_new_with_param (param, "gen_util_printer");
 	if (!applet)
 		g_error(_("Can't create applet!\n"));
 

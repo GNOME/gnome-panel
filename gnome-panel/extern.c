@@ -32,7 +32,11 @@ extern char *old_panel_cfg_path;
 void
 extern_clean(Extern *ext)
 {
-	g_free(ext->ior);
+        CORBA_Environment ev;
+	CORBA_exception_init(&ev);
+        CORBA_Object_release(ext->obj, &ev);
+	CORBA_exception_free(&ev);
+
 	g_free(ext->path);
 	g_free(ext->params);
 	g_free(ext->cfg);
@@ -214,7 +218,7 @@ applet_request_id (const char *path, const char *param,
 	/*this is an applet that was started from outside, otherwise we would
 	  have already reserved a spot for it*/
 	ext = g_new(Extern,1);
-	ext->ior = NULL;
+	ext->obj = CORBA_OBJECT_NIL;
 	ext->path = g_strdup(path);
 	ext->params = g_strdup(param);
 	ext->cfg = NULL;
@@ -237,11 +241,12 @@ applet_request_id (const char *path, const char *param,
 }
 
 void
-applet_register (const char * ior, int applet_id)
+applet_register (CORBA_Object obj, int applet_id, const char *goad_id)
 {
 	AppletInfo *info = get_applet_info(applet_id);
 	PanelWidget *panel;
 	Extern *ext;
+	CORBA_Environment ev;
 
 	/*start the next applet in queue*/
 	exec_queue_done(applet_id);
@@ -257,15 +262,17 @@ applet_register (const char * ior, int applet_id)
 	/*no longer pending*/
 	info->type = APPLET_EXTERN;
 
-	/*set the ior*/
-	g_free(ext->ior);
-	ext->ior = g_strdup(ior);
+	/*set the obj*/
+	CORBA_exception_init(&ev);
+	CORBA_Object_release(ext->obj, &ev);
+	ext->obj = CORBA_Object_duplicate(obj, &ev);
+	CORBA_exception_free(&ev);
 
-	mulapp_add_ior_and_free_queue(ext->path, ext->ior);
+	mulapp_add_obj_and_free_queue(ext->path, ext->obj);
 
 	orientation_change(applet_id,panel);
 	back_change(applet_id,panel);
-	send_applet_tooltips_state(ext->ior,applet_id,
+	send_applet_tooltips_state(ext->obj, applet_id,
 				   global_config.tooltips_enabled);
 }
 
@@ -304,8 +311,8 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 
 	gtk_widget_show_all (ext->ebox);
 	
-	/*we save the ior in the id field of the appletinfo and the 
-	  path in the path field*/
+	/*we save the obj in the id field of the appletinfo and the 
+	  path in the path field */
 	if(!register_toy(ext->ebox,ext,panel,pos,type)) {
 		g_warning("Couldn't add applet");
 		return 0;
@@ -360,7 +367,7 @@ load_extern_applet(char *path, char *params, char *cfgpath,
 		fullpath = g_strdup(path);
 	
 	ext = g_new(Extern,1);
-	ext->ior = NULL;
+	ext->obj = CORBA_OBJECT_NIL;
 	ext->path = fullpath;
 	ext->params = g_strdup(params);
 	ext->cfg = cfgpath;

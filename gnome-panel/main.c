@@ -11,6 +11,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <gnome.h>
+#include <libgnorba/gnorba.h>
 
 #include "panel-include.h"
 
@@ -35,10 +36,6 @@ extern GList * children;
 
 /* True if parsing determined that all the work is already done.  */
 char *just_exit = NULL;
-
-/* The security cookie */
-char *cookie = NULL;
-
 
 /*I guess this should be called after we load up, but the problem is
   we never know when all the applets are going to finish loading and
@@ -66,7 +63,7 @@ parse_an_arg (poptContext state,
               const char *arg, void *data)
 {
   if(opt->val == 0) {
-    *((char **)data) = arg;
+    *((char **)data) = (char *)arg;
   }
 }
 
@@ -89,6 +86,8 @@ int
 main(int argc, char **argv)
 {
 	char buf[256];
+	CORBA_ORB orb;
+	CORBA_Environment ev;
 	
 	panel_cfg_path = g_strdup("/panel.d/default/");
 	old_panel_cfg_path = g_strdup("/panel.d/default/");
@@ -96,18 +95,13 @@ main(int argc, char **argv)
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
 
-	panel_corba_register_arguments ();
+	CORBA_exception_init(&ev);
+	orb = gnome_CORBA_init_with_popt_table("panel", VERSION,
+					       &argc, argv, options, 0, NULL,
+					       GNORBA_INIT_SERVER_FUNC, &ev);
+	CORBA_exception_free(&ev);
 
-	gnome_init_with_popt_table("panel", VERSION,
-				   argc, argv, options, 0, NULL);
-
-	/* Setup the cookie */
-	cookie = create_cookie ();
-	g_snprintf(buf,256,"/panel/Secret/cookie-DISPLAY-%s",getenv("DISPLAY"));
-	gnome_config_private_set_string (buf, cookie);
-	gnome_config_sync();
-	
-	panel_corba_gtk_init();
+	panel_corba_gtk_init(orb);
 
 	if (just_exit) {
 	  gnome_client_disable_master_connection ();
@@ -115,7 +109,7 @@ main(int argc, char **argv)
 	  return 0;
 	}
 
-	client= gnome_master_client ();
+	client = gnome_master_client ();
 
 	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
 			    GTK_SIGNAL_FUNC (panel_session_save), NULL);

@@ -7,6 +7,7 @@
 #define APPLET_LIB_H
 
 #include <applet-widget.h>
+#include <libgnorba/gnorba.h>
 
 /*this file contains the more private parts of the applet communications
   applets should not use these functions directly, in time applet-lib and
@@ -23,15 +24,16 @@ char *gnome_panel_applet_request_id (const char *path, const char *param,
 				     int dorestart,
 				     int *applet_id, char **cfgpath,
 				     char **globcfgpath, guint32 *winid);
-char *gnome_panel_applet_register (GtkWidget *widget, int applet_id);
+char *gnome_panel_applet_register (GtkWidget *widget, int applet_id,
+				   const char *goad_id);
 char *gnome_panel_applet_abort_id (int applet_id);
-char *gnome_panel_applet_remove_from_panel (int applet_id);
+char *gnome_panel_applet_remove_from_panel (int applet_id, const char *goad_id);
 char *gnome_panel_applet_request_glob_cfg (char **globcfgpath);
 int gnome_panel_applet_get_panel_orient (int applet_id);
 char *gnome_panel_quit (void);
 char *gnome_panel_sync_config (int applet_id);
-int gnome_panel_applet_init_corba (void);
-int gnome_panel_applet_reinit_corba (void);
+int gnome_panel_applet_init_corba (CORBA_ORB panel_orb);
+int gnome_panel_applet_reinit_corba (CORBA_ORB panel_orb);
 void gnome_panel_applet_register_callback (int applet_id,
 					   char *name,
 					   char *stock_item,

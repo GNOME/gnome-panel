@@ -430,7 +430,7 @@ main(int argc, char *argv[])
 	applet_widget_init_defaults("fish_applet", VERSION, argc, argv, NULL, 0,
 				    NULL);
 
-	applet = applet_widget_new();
+	applet = applet_widget_new("fish_applet");
 	if (!applet)
 		g_error(_("Can't create applet!\n"));
 

@@ -1,11 +1,6 @@
 #include <string.h>
 #include "applet-lib.h"
 
-#include <orb/orbit.h>
-
-static void orb_add_connection(GIOPConnection *cnx);
-static void orb_remove_connection(GIOPConnection *cnx);
-
 /*
  *
  * there is a lot of functionality in this file that is then slightly
@@ -15,7 +10,6 @@ static void orb_remove_connection(GIOPConnection *cnx);
  *
  */
 
-#include "cookie.h"
 #include "gnome-panel.h"
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
@@ -42,23 +36,21 @@ GList *applet_callbacks = NULL;
 CORBA_ORB orb;
 CORBA_Environment ev;
 
-char *cookie;
-
 static PortableServer_ServantBase__epv base_epv = {
   NULL, NULL, NULL
 };
 
-void server_change_orient(POA_GNOME_Applet *servant, CORBA_char * cookie, CORBA_short applet_id, CORBA_short orient, CORBA_Environment *ev);
+void server_change_orient(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_short orient, CORBA_Environment *ev);
 
-void server_do_callback(POA_GNOME_Applet *servant, CORBA_char * cookie, CORBA_short applet_id, CORBA_char * callback_name, CORBA_Environment *ev);
+void server_do_callback(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_char * callback_name, CORBA_Environment *ev);
 
-CORBA_short server_session_save(POA_GNOME_Applet *servant, CORBA_char * cookie, CORBA_short applet_id, CORBA_char * cfgpath, CORBA_char * globcfgpath, CORBA_Environment *ev);
+CORBA_short server_session_save(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_char * cfgpath, CORBA_char * globcfgpath, CORBA_Environment *ev);
 
-void server_start_new_applet(POA_GNOME_Applet *servant, CORBA_char * cookie, CORBA_char * param, CORBA_Environment *ev);
+void server_start_new_applet(POA_GNOME_Applet *servant, CORBA_char * param, CORBA_Environment *ev);
 
-void server_back_change(POA_GNOME_Applet *servant, CORBA_char * cookie, CORBA_short applet_id, CORBA_short back_type, CORBA_char * pixmap, CORBA_short c_red, CORBA_short c_green, CORBA_short c_blue, CORBA_Environment *ev);
+void server_back_change(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_short back_type, CORBA_char * pixmap, CORBA_short c_red, CORBA_short c_green, CORBA_short c_blue, CORBA_Environment *ev);
 
-void server_tooltips_state(POA_GNOME_Applet *servant, CORBA_char * cookie, CORBA_short applet_id, CORBA_short enabled, CORBA_Environment *ev);
+void server_tooltips_state(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_short enabled, CORBA_Environment *ev);
 
 static POA_GNOME_Applet__epv applet_epv = {
   NULL, /* _private */
@@ -73,18 +65,14 @@ static POA_GNOME_Applet__vepv vepv = { &base_epv, &applet_epv };
 static POA_GNOME_Applet applet_servant = { NULL, &vepv };
 
 
-void server_change_orient(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_short applet_id, CORBA_short orient, CORBA_Environment *ev)
+void server_change_orient(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_short orient, CORBA_Environment *ev)
 {
-  CHECK_COOKIE();
-
   _gnome_applet_change_orient(applet_id, orient);
 }
 
-void server_do_callback(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_short applet_id, CORBA_char * callback_name, CORBA_Environment *ev)
+void server_do_callback(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_char * callback_name, CORBA_Environment *ev)
 {
   GList *list;
-
-  CHECK_COOKIE ();
 
   for(list = applet_callbacks;
       list!=NULL;list = (GList *) g_list_next (list)) {
@@ -99,93 +87,56 @@ void server_do_callback(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_s
   }
 }
 
-CORBA_short server_session_save(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_short applet_id, CORBA_char * cfgpath, CORBA_char * globcfgpath, CORBA_Environment *ev)
+CORBA_short server_session_save(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_char * cfgpath, CORBA_char * globcfgpath, CORBA_Environment *ev)
 {
-  CHECK_COOKIE_V(0);
-
   return _gnome_applet_session_save(applet_id, cfgpath, globcfgpath);
 }
 
-void server_start_new_applet(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_char * param, CORBA_Environment *ev)
+void server_start_new_applet(POA_GNOME_Applet *servant, CORBA_char * param, CORBA_Environment *ev)
 {
-  CHECK_COOKIE();
-
   _gnome_applet_start_new_applet(param);
 }
 
-void server_back_change(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_short applet_id, CORBA_short back_type, CORBA_char * pixmap, CORBA_short c_red, CORBA_short c_green, CORBA_short c_blue, CORBA_Environment *ev)
+void server_back_change(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_short back_type, CORBA_char * pixmap, CORBA_short c_red, CORBA_short c_green, CORBA_short c_blue, CORBA_Environment *ev)
 {
   GdkColor color = {1, c_red, c_green, c_blue};
-
-  CHECK_COOKIE();
 
   _gnome_applet_back_change(applet_id, back_type, pixmap, &color);
 }
 
-void server_tooltips_state(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_short applet_id, CORBA_short enabled, CORBA_Environment *ev)
+void server_tooltips_state(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_short enabled, CORBA_Environment *ev)
 {
-  CHECK_COOKIE();
-
   _gnome_applet_tooltips_state(applet_id, enabled);
 }
 
-int gnome_panel_applet_reinit_corba(void)
+int gnome_panel_applet_reinit_corba(CORBA_ORB panel_orb)
 {
   char *name;
-  char *iior;
   char hostname [1024];
   char buf[256];
   int i;
 	
-  gethostname (hostname, sizeof (hostname));
-  if (hostname [0] == 0)
-    strcpy (hostname, "unknown-host");
-
-  /*do a 30 second timeout until we get the iior*/
-  for(i=0;i<30;i++) {
-    name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
-			   "/DISPLAY-", getenv ("DISPLAY"), NULL);
-
-    iior = gnome_config_get_string (name);
-    g_free (name);
-
-    if(iior)
-      break;
-    sleep(1);
-  }
-  if(!iior)
-    return 0;
-
-  g_snprintf(buf,256,"/panel/Secret/cookie-DISPLAY-%s=",getenv("DISPLAY"));
-  cookie = gnome_config_private_get_string (buf);
-
   if(panel_client)
     CORBA_Object_release(panel_client, &ev);
 
-  panel_client = CORBA_ORB_string_to_object(orb, iior, &ev);
+  panel_client = goad_server_activate_with_repo_id(NULL, "IDL:GNOME/Panel:1.0", 0);
 
-  g_return_val_if_fail(panel_client, 0);
+  g_return_val_if_fail(!CORBA_Object_is_nil(panel_client, &ev), 0);
 	
   return 1;
 }
 
 int
-gnome_panel_applet_init_corba (void)
+gnome_panel_applet_init_corba (CORBA_ORB applet_orb)
 {
   int n = 1;
   char *foo = NULL;
 
-  g_message("Initializing CORBA for applet\n");
-
   CORBA_exception_init(&ev);
 
-  IIOPAddConnectionHandler = orb_add_connection;
-  IIOPRemoveConnectionHandler = orb_remove_connection;
+  orb = applet_orb;
 
-  orb = CORBA_ORB_init(&n, &foo, "mico-local-orb", &ev);
-  ORBit_custom_run_setup(orb, &ev);
-
-  n = gnome_panel_applet_reinit_corba();
+  n = gnome_panel_applet_reinit_corba(orb);
 
   return n;
 }
@@ -243,7 +194,7 @@ gnome_panel_applet_register_callback(int applet_id,
 	info->data = data;
 
 	/*register the callback with the panel*/
-	GNOME_Panel_applet_add_callback(panel_client, cookie,
+	GNOME_Panel_applet_add_callback(panel_client,
 					applet_id, name, stock_item,
 					menutext, &ev);
 }
@@ -259,7 +210,7 @@ gnome_panel_applet_unregister_callback(int applet_id,
 	g_return_if_fail(name!=NULL);
 
 	/*unregister the callback with the panel*/
-	GNOME_Panel_applet_remove_callback(panel_client, cookie, applet_id, name, &ev);
+	GNOME_Panel_applet_remove_callback(panel_client, applet_id, name, &ev);
 }
 
 void
@@ -278,7 +229,9 @@ gnome_panel_applet_register_callback_dir(int applet_id,
 	else
 		n = g_strdup(name);
 	/*unregister the dir with the panel*/
-	GNOME_Panel_applet_add_callback(panel_client,cookie,applet_id,n,stock_item,menutext, &ev);
+	GNOME_Panel_applet_add_callback(panel_client,
+					applet_id,
+					n,stock_item,menutext, &ev);
 	g_free(n);
 }
 
@@ -299,7 +252,7 @@ gnome_panel_applet_unregister_callback_dir(int applet_id,
 	g_return_if_fail(name!=NULL);
 
 	/*unregister the callback with the panel*/
-	GNOME_Panel_applet_remove_callback(panel_client,cookie,applet_id,n, &ev);
+	GNOME_Panel_applet_remove_callback(panel_client,applet_id,n, &ev);
 	g_free(n);
 }
 
@@ -344,7 +297,7 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	switch (event->type) {
 		case GDK_BUTTON_PRESS:
 			bevent = (GdkEventButton *) event;
-			in_drag = GNOME_Panel_applet_in_drag(panel_client, cookie, &ev);
+			in_drag = GNOME_Panel_applet_in_drag(panel_client, &ev);
 			/*check to see if there is an applet being dragged*/
 			if(in_drag) {
 				GNOME_Panel_applet_drag_stop(panel_client,
@@ -372,7 +325,7 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 							 GDK_CURRENT_TIME);
 				}
 				GNOME_Panel_applet_drag_start(panel_client,
-							      cookie, ourid, &ev);
+							      ourid, &ev);
 				gdk_cursor_destroy(fleur_cursor);
 				return TRUE;
 			} else if(bevent->button == 3) {
@@ -381,14 +334,14 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				gdk_pointer_ungrab(GDK_CURRENT_TIME);
 				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
 				GNOME_Panel_applet_show_menu(panel_client,
-							     cookie, ourid, &ev);
+							     ourid, &ev);
 				return TRUE;
 			}
 			break;
 		case GDK_BUTTON_RELEASE:
-			if(GNOME_Panel_applet_in_drag(panel_client, cookie, &ev)) {
+			if(GNOME_Panel_applet_in_drag(panel_client, &ev)) {
 				GNOME_Panel_applet_drag_stop(panel_client,
-							     cookie, ourid, &ev);
+							     ourid, &ev);
 				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
 				gdk_pointer_ungrab(GDK_CURRENT_TIME);
 				gtk_grab_remove(widget);
@@ -477,7 +430,6 @@ gnome_panel_applet_request_id (const char *path,
 	for(i=0;i<30;i++) {
 		  /*reserve a spot and get an id for this applet*/
 	  *applet_id = GNOME_Panel_applet_request_id(panel_client,
-						     cookie,
 						     (CORBA_char *)path,
 						     (CORBA_char *)param,
 						     dorestart,
@@ -487,7 +439,7 @@ gnome_panel_applet_request_id (const char *path,
 	  if(*applet_id!=-1)
 	    break;
 	  sleep(1);
-	  gnome_panel_applet_reinit_corba ();
+	  gnome_panel_applet_reinit_corba (orb);
 	}
 	/*if the request_id never completed*/
 	if(*applet_id == -1)
@@ -519,10 +471,9 @@ gnome_panel_applet_request_id (const char *path,
 
 /* this function will register the ior with the panel so it can call us */
 char *
-gnome_panel_applet_register (GtkWidget *widget, int applet_id)
+gnome_panel_applet_register (GtkWidget *widget, int applet_id,
+			     const char *goad_id)
 {
-	static char *ior=NULL;
-
 	/*the applet implementation, it's only created once*/
 	static GNOME_Applet applet = NULL;
 
@@ -552,19 +503,27 @@ gnome_panel_applet_register (GtkWidget *widget, int applet_id)
 
 	/* Now a way to find out the CORBA impl from the widget */
 
-	  ior = CORBA_ORB_object_to_string(orb, applet, &ev);
 	  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
 	}
 
 	gtk_object_set_data (GTK_OBJECT (widget), "CORBA_object", applet);
 
-	GNOME_Panel_applet_register(panel_client, cookie, ior, applet_id, &ev);
+	GNOME_Panel_applet_register(panel_client, applet, applet_id, (char *)goad_id, &ev);
 
-#if 0
-	CORBA_free(ior);
+	{
+	  CORBA_Object ns;
+	  CORBA_char *ior;
+	  
+	  ns = gnome_name_service_get();
+	  goad_server_register(ns, applet, goad_id, "server", &ev);
+	  CORBA_Object_release(ns, &ev);
 
-	ior = NULL;
-#endif
+	  ior = CORBA_ORB_object_to_string(orb, applet, &ev);
+
+	  printf("%s\n", ior); fflush(stdout);
+
+	  CORBA_free(ior);
+	}
 
 	bind_top_applet_events(widget, applet_id);
 
@@ -574,7 +533,7 @@ gnome_panel_applet_register (GtkWidget *widget, int applet_id)
 char *
 gnome_panel_applet_abort_id (int applet_id)
 {
-  GNOME_Panel_applet_abort_id(panel_client, cookie, applet_id, &ev);
+  GNOME_Panel_applet_abort_id(panel_client, applet_id, &ev);
 
   return 0;
 }
@@ -582,13 +541,19 @@ gnome_panel_applet_abort_id (int applet_id)
 int
 gnome_panel_applet_get_panel_orient (int applet_id)
 {
-  return GNOME_Panel_applet_get_panel_orient(panel_client, cookie, applet_id, &ev);
+  return GNOME_Panel_applet_get_panel_orient(panel_client, applet_id, &ev);
 }
 
 char *
-gnome_panel_applet_remove_from_panel (int applet_id)
+gnome_panel_applet_remove_from_panel (int applet_id, const char *goad_id)
 {
-  GNOME_Panel_applet_remove_from_panel(panel_client, cookie, applet_id, &ev);
+  CORBA_Object ns;
+  
+  ns = gnome_name_service_get();
+  goad_server_unregister(ns, goad_id, "server", &ev);
+  CORBA_Object_release(ns, &ev);
+
+  GNOME_Panel_applet_remove_from_panel(panel_client, applet_id, &ev);
 
   return 0;
 }
@@ -596,7 +561,7 @@ gnome_panel_applet_remove_from_panel (int applet_id)
 char *
 gnome_panel_applet_add_tooltip (int applet_id, char *tooltip)
 {
-  GNOME_Panel_applet_add_tooltip(panel_client, cookie, applet_id,tooltip, &ev);
+  GNOME_Panel_applet_add_tooltip(panel_client, applet_id,tooltip, &ev);
 
   return 0;
 }
@@ -604,7 +569,7 @@ gnome_panel_applet_add_tooltip (int applet_id, char *tooltip)
 char *
 gnome_panel_applet_remove_tooltip (int applet_id)
 {
-  GNOME_Panel_applet_remove_tooltip(panel_client, cookie, applet_id, &ev);
+  GNOME_Panel_applet_remove_tooltip(panel_client, applet_id, &ev);
   
   return 0;
 }
@@ -618,7 +583,7 @@ gnome_panel_applet_request_glob_cfg (char **globcfgpath)
 
   g_return_val_if_fail(globcfgpath!=NULL,0);
 
-  GNOME_Panel_applet_request_glob_cfg(panel_client, cookie, &globcfg, &ev);
+  GNOME_Panel_applet_request_glob_cfg(panel_client, &globcfg, &ev);
 
   if(globcfg!= NULL) {
     *globcfgpath = g_strdup(globcfg);
@@ -653,14 +618,14 @@ gnome_panel_applet_cleanup(int applet_id)
 char *
 gnome_panel_sync_config (int applet_id)
 {
-  GNOME_Panel_sync_config(panel_client, cookie, (CORBA_short)applet_id, &ev);
+  GNOME_Panel_sync_config(panel_client, (CORBA_short)applet_id, &ev);
   return 0;
 }
 
 char *
 gnome_panel_quit (void)
 {
-  GNOME_Panel_quit(panel_client, cookie, &ev);
+  GNOME_Panel_quit(panel_client, &ev);
   return 0;
 }
 

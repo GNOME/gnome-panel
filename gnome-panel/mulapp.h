@@ -20,7 +20,7 @@ void mulapp_add_to_list(const char *path);
 
 /*we know the ior so let's store that and start all the applets that have
   accumulated in the queue for this executable*/
-void mulapp_add_ior_and_free_queue(const char *path, const char *ior);
+void mulapp_add_obj_and_free_queue(const char *path, CORBA_Object obj);
 
 /* remove applets which are no longer on the panel from the list of multi
    applets */

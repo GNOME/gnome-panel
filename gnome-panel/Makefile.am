@@ -97,12 +97,10 @@ panel_SOURCES = 		\
 	panel-util.h		\
 	gdkextra.c		\
 	gdkextra.h		\
-	cookie.h		\
-	cookie.c		\
 	$(PANEL_ORB_SRCLIST)	\
 	$(CORBA_SRCLIST)
 
-panel_LDADD = $(GNOME_LIBDIR) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
+panel_LDADD = $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
 
@@ -127,7 +125,8 @@ MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
 EXTRA_DIST = \
 	panelrc.in		\
 	panel.in		\
-	appletsConf.sh.in
+	appletsConf.sh.in	\
+	panel.gnorba
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
@@ -144,3 +143,6 @@ appletsConf.sh: appletsConf.sh.in Makefile
 	    -e 's?\@ORB_LIBS\@?$(ORB_LIBS)?g' \
 	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
 	  && mv appletsConf.tmp appletsConf.sh
+
+panelgnorbadir  = $(sysconfdir)/CORBA/servers
+panelgnorba_DATA = panel.gnorba

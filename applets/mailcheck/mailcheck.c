@@ -603,9 +603,10 @@ static void
 mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 {
 	GtkWidget *about = NULL;
-	gchar     *authors [] = { "Miguel de Icaza <miguel@kernel.org>",
-                            "Jaka Mocnik <jaka.mocnik@kiss.uni-lj.si>",
-                            NULL };
+	static const gchar     *authors [] =
+	{ "Miguel de Icaza <miguel@kernel.org>",
+	  "Jaka Mocnik <jaka.mocnik@kiss.uni-lj.si>",
+	  NULL };
 	
 	about = gnome_about_new ( _("Mail check Applet"), "1.0",
 				    _("(c) 1998 the Free Software Foundation"),
@@ -614,6 +615,8 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 				    NULL);
 	gtk_widget_show(about);
 }
+
+GtkWidget *make_mailcheck_applet(const gchar *param);
 
 GtkWidget *
 make_mailcheck_applet(const gchar *param)
@@ -646,7 +649,7 @@ make_mailcheck_applet(const gchar *param)
 		}
 	}
 
-	applet = applet_widget_new_with_param(param);
+	applet = applet_widget_new_with_param(param, "gen_util_mailcheck");
 	if (!applet)
 		g_error(_("Can't create applet!\n"));
 

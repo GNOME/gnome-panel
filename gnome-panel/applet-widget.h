@@ -49,6 +49,8 @@ struct _AppletWidget
 
 	int			applet_id;
 
+        char                    *goad_id;
+
 	/* use these as prefixes when loading saving data */
 	char			*cfgpath; /*source compatibility SHOULD BE REMOVED
 					    when session_save signal is removed*/
@@ -98,12 +100,12 @@ guint		applet_widget_get_type		(void);
 
 /*start one but add a parameter that the panel should use next time
   to start us*/
-GtkWidget*	applet_widget_new_with_param	(const char *param);
-
+GtkWidget*	applet_widget_new_with_param	(const char *param,
+						 const char *goad_id);
 
 /*start a normal applet*/
-#define applet_widget_new()	\
-	applet_widget_new_with_param("")
+#define applet_widget_new(goad_id)	\
+	applet_widget_new_with_param("", goad_id)
 
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,

@@ -285,7 +285,7 @@ applet_widget_remove_from_panel(AppletWidget *applet)
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
 
-	gnome_panel_applet_remove_from_panel(applet->applet_id);
+	gnome_panel_applet_remove_from_panel(applet->applet_id, applet->goad_id);
 }
 
 void
@@ -370,7 +370,8 @@ applet_widget_unregister_callback_dir(AppletWidget *applet, char *name)
 
 
 GtkWidget *
-applet_widget_new_with_param(const char *param)
+applet_widget_new_with_param(const char *param,
+			     const char *goad_id)
 {
 	AppletWidget *applet;
 	char *result;
@@ -398,6 +399,7 @@ applet_widget_new_with_param(const char *param)
 	applet->privcfgpath = privcfgpath;
 	applet->globcfgpath = globcfgpath;
 	applet->cfgpath = g_copy_strings(privcfgpath,"dummy_section/",NULL);
+	applet->goad_id = (char *)goad_id;
 
 	gtk_signal_connect(GTK_OBJECT(applet),"destroy",
 			   GTK_SIGNAL_FUNC(applet_widget_destroy),
@@ -429,9 +431,10 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 	gtk_container_add(GTK_CONTAINER(applet),widget);
 
 	result = gnome_panel_applet_register(GTK_WIDGET(applet),
-					     applet->applet_id);
+					     applet->applet_id, applet->goad_id);
+
 	if (result)
-		g_error("Could not talk to the Panel: %s\n", result);
+	  g_error("Could not talk to the Panel: %s\n", result);
 }
 
 void
@@ -494,6 +497,8 @@ int		applet_widget_init		(const char *app_id,
 						 gpointer new_func_data)
 {
 	int ret;
+	CORBA_Environment ev;
+	CORBA_ORB orb;
 
 	if(argv[0][0] != '#')
 		myinvoc = get_full_path(argv[0]);
@@ -508,10 +513,13 @@ int		applet_widget_init		(const char *app_id,
 	die_on_last = last_die;
 
 	gnome_client_disable_master_connection ();
-	ret = gnome_init_with_popt_table(app_id,VERSION,argc,argv,
-					 options,flags,return_ctx);
+	CORBA_exception_init(&ev);
+	orb = gnome_CORBA_init_with_popt_table(app_id, VERSION, &argc, argv,
+					       options, flags, return_ctx,
+					       GNORBA_INIT_SERVER_FUNC, &ev);
+	CORBA_exception_free(&ev);
 
-	if (!gnome_panel_applet_init_corba())
+	if (!gnome_panel_applet_init_corba(orb))
 		g_error("Could not communicate with the panel\n");
 	
 	applet_tooltips = gtk_tooltips_new();

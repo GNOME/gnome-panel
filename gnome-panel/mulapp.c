@@ -17,7 +17,7 @@ extern int applet_count;
 typedef struct _MultiLoadQueue MultiLoadQueue;
 struct _MultiLoadQueue {
 	char *path;
-	char *ior;
+        CORBA_Object obj;
 	GList *params; /*this is a list of parameters, each parameter
 			 represents one applet to start with that
 			 parameter, or an empty string to start an
@@ -53,6 +53,7 @@ mulapp_remove_empty_from_list(void)
 	for(list=multiple_applet_load_list;list!=NULL;list=g_list_next(list)){
 		MultiLoadQueue *mq = list->data;
 		if(!is_applet_running(mq->path)) {
+		        CORBA_Environment ev;
 			multiple_applet_load_list =
 				g_list_remove_link(multiple_applet_load_list,
 						   list);
@@ -64,7 +65,9 @@ mulapp_remove_empty_from_list(void)
 						 "most likely indicates a bug");
 
 			g_free(mq->path);
-			if(mq->ior) g_free(mq->ior);
+			CORBA_exception_init(&ev);
+			CORBA_Object_release(mq->obj, &ev);
+			CORBA_exception_free(&ev);
 			g_free(mq);
 			/*since we should restart the loop now*/
 			mulapp_remove_empty_from_list();
@@ -98,8 +101,8 @@ mulapp_load_or_add_to_queue(const char *path,const char *param)
 	for(list=multiple_applet_load_list;list!=NULL;list=g_list_next(list)){
 		MultiLoadQueue *mq = list->data;
 		if(strcmp(mq->path,path)==0) {
-			if(mq->ior)
-				send_applet_start_new_applet(mq->ior,param);
+			if(mq->obj)
+				send_applet_start_new_applet(mq->obj, param);
 			else
 				mq->params = g_list_prepend(mq->params,
 							    g_strdup(param));
@@ -116,16 +119,16 @@ mulapp_add_to_list(const char *path)
 
 	mq = g_new(MultiLoadQueue,1);
 	mq->path = g_strdup(path);
-	mq->ior = NULL;
+	mq->obj = CORBA_OBJECT_NIL;
 	mq->params = NULL;
 	multiple_applet_load_list = g_list_prepend(multiple_applet_load_list,
 				                   mq);
 }
 
-/*we know the ior so let's store that and start all the applets that have
-  accumulated in the queue for this executable*/
+/*we know the obj so let's store that and start all the applets that have
+  accumulated in the queue for this executable */
 void
-mulapp_add_ior_and_free_queue(const char *path, const char *ior)
+mulapp_add_obj_and_free_queue(const char *path, CORBA_Object obj)
 {
 	GList *list;
 	mulapp_remove_empty_from_list();
@@ -133,17 +136,21 @@ mulapp_add_ior_and_free_queue(const char *path, const char *ior)
 		MultiLoadQueue *mq = list->data;
 		if(strcmp(mq->path,path)==0) {
 			GList *li;
-			if(mq->ior && strcmp(mq->ior,ior)!=0)
+			CORBA_Environment ev;
+			CORBA_exception_init(&ev);
+			if(mq->obj
+			   && !CORBA_Object_is_equivalent(mq->obj, obj, &ev))
 				g_warning("What? there already was an applet "
-					  "before with different IOR?");
+					  "before with different objref?");
 			else
-				mq->ior = g_strdup(ior);
+			        mq->obj = CORBA_Object_duplicate(obj, &ev);
+			CORBA_exception_free(&ev);
 			if(!mq->params)
 				return;
 			li = mq->params;
 			mq->params = NULL;
 			while(li) {
-				send_applet_start_new_applet(mq->ior,li->data);
+				send_applet_start_new_applet(mq->obj,li->data);
 				g_free(li->data);
 				li = my_g_list_pop_first(li);
 			}

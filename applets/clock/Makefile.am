@@ -17,8 +17,7 @@ gen_util_applet_SOURCES = \
 
 
 gen_util_applet_LDADD = ../../panel/libpanel_applet.la \
-		     $(GNOME_LIBDIR) $(ORB_LIBS)      \
-		     $(GNOMEUI_LIBS) $(INTLLIBS) 
+		$(GNOME_LIBDIR) $(GNOMEGNORBA_LIBS) $(INTLLIBS) 
 
 PRINTER_BITMAPS = print.xpm
 MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png
@@ -27,7 +26,8 @@ EXTRA_DIST = clock_applet.desktop	\
              mailcheck_applet.desktop	\
              printer.desktop		\
              $(PRINTER_BITMAPS)		\
-             $(MAILCHECK_BITMAPS)
+             $(MAILCHECK_BITMAPS)	\
+	     gen_util.gnorba
 
 mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
 mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
@@ -40,3 +40,6 @@ malchecksys_DATA = mailcheck_applet.desktop
 
 printersysdir = $(datadir)/applets/Utility
 printersys_DATA = printer.desktop
+
+genutilgnorbadir  = $(sysconfdir)/CORBA/servers
+genutilgnorba_DATA = gen_util.gnorba

@@ -1,0 +1,7 @@
+module help_browser {
+	interface simple_browser {
+		void           fetch_url(in string URL); // show URL in same browser
+		simple_browser show_url (in string URL); // make new browser and show URL
+	};
+};
+

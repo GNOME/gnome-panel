@@ -240,9 +240,9 @@ orientation_change(int applet_id, PanelWidget *panel)
 		Extern *ext = info->data;
 		g_assert(ext);
 		/*ingore this until we get an ior*/
-		if(ext->ior)
-			send_applet_change_orient(ext->ior,info->applet_id,
-						  get_applet_orient(panel));
+		if(ext->obj)
+		  send_applet_change_orient(ext->obj, info->applet_id,
+					    get_applet_orient(panel));
 	} else if(info->type == APPLET_MENU) {
 		Menu *menu = info->data;
 		set_menu_applet_orient(menu,get_applet_orient(panel));
@@ -326,8 +326,8 @@ back_change(int applet_id,
 		Extern *ext = info->data;
 		g_assert(ext);
 		/*ignore until we have a valid IOR*/
-		if(ext->ior)
-			send_applet_change_back(ext->ior, info->applet_id,
+		if(ext->obj)
+			send_applet_change_back(ext->obj, info->applet_id,
 						panel->back_type,panel->back_pixmap,
 						&panel->back_color);
 	} 
@@ -883,26 +883,32 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 
 	switch (info) {
 	case TARGET_URL: {
-		GList *files = 
-			gnome_uri_list_extract_filenames ((char *)selection_data->data);
+		GList *ltmp, *files;
 		struct stat s;
-		
-		/*if we can't stat this file don't even bother loading it*/
-		if(files && stat((char *)files->data,&s)==0) {
-			char *file = (char *)files->data;
-			char *p = strrchr(file,'.');
-			int pos = panel_widget_get_cursorloc(panel);
-			
-			if(S_ISDIR(s.st_mode)) /*add a menu*/
-				load_menu_applet(file,MAIN_MENU_BOTH,
-						 panel,pos);
-			else if(p && strcmp(p,".desktop")==0)
-				load_launcher_applet(file,panel,pos);
-			else if(S_IEXEC & s.st_mode) /*executable?*/
-				ask_about_launcher(file,panel,pos);
-			else /*if all else fails it might be a pixmap*/
-				panel_widget_set_back_pixmap (panel, file);
+		int pos = panel_widget_get_cursorloc(panel);
+
+		files =
+		  gnome_uri_list_extract_filenames(selection_data->data);
+
+		for(ltmp = files; ltmp; ltmp = g_list_next(ltmp)) {
+		  char *mimetype, *p;
+
+		  if(stat(ltmp->data, &s) != 0)
+		    continue;
+
+		  mimetype = gnome_mime_type(ltmp->data);
+		  if(mimetype && !strncmp(mimetype, "image", sizeof("image")-1))
+		    panel_widget_set_back_pixmap (panel, ltmp->data);
+		  else if(mimetype
+			  && !strcmp(mimetype, "application/x-gnome-app-info"))
+		    load_launcher_applet(ltmp->data, panel, pos);
+		  else if(S_ISDIR(s.st_mode))
+		    load_menu_applet(ltmp->data, MAIN_MENU_BOTH,
+				     panel, pos);
+		  else if(S_IEXEC & s.st_mode) /*executable?*/
+		    ask_about_launcher(ltmp->data,panel,pos);
 		}
+		
 		gnome_uri_list_free_strings (files);
 		break;
 	}
