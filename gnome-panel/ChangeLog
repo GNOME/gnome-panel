@@ -1,3 +1,12 @@
+Sat Oct 23 20:59:24 2004  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-panel-screenshot.c: escape '/' in file names.
+
+	* screenshot-save.c (screenshot_sanitize_filename): New function
+
+	* screenshot-utils.c: Rewrite Window walking code to be correct.
+	We now find both the window manager window and the app toplevel.
+
 Fri Oct 22 15:32:15 2004  Jonathan Blandford  <jrb@redhat.com>
 
 	* gnome-panel-screenshot.c: Big refactor of the code.  Split out
