@@ -275,8 +275,7 @@ back_change (AppletInfo  *info,
 
 		switch (panel->back_type) {
 		case PANEL_BACK_PIXMAP:
-			panel_applet_frame_change_background_pixmap (frame,
-								     panel->back_pixmap);
+			panel_applet_frame_change_background_pixmap (frame);
 			break;
 		case PANEL_BACK_COLOR:
 			panel_applet_frame_change_background_color (frame,

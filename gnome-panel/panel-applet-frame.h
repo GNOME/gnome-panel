@@ -79,8 +79,7 @@ void       panel_applet_frame_change_orient (PanelAppletFrame *frame,
 void       panel_applet_frame_change_size   (PanelAppletFrame *frame,
 					     PanelSize         size);
 
-void       panel_applet_frame_change_background_pixmap (PanelAppletFrame *frame,
-							gchar            *pixmap);
+void       panel_applet_frame_change_background_pixmap (PanelAppletFrame *frame);
 
 void       panel_applet_frame_change_background_color  (PanelAppletFrame *frame,
 							guint16           red,

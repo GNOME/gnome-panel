@@ -27,6 +27,8 @@
 
 #include <libbonoboui.h>
 #include <gconf/gconf.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
 
 #include "panel-applet-frame.h"
 #include "panel-gconf.h"
@@ -231,12 +233,23 @@ panel_applet_frame_change_size (PanelAppletFrame *frame,
 }
 
 void
-panel_applet_frame_change_background_pixmap (PanelAppletFrame *frame,
-					     gchar            *pixmap)
+panel_applet_frame_change_background_pixmap (PanelAppletFrame *frame)
 {
-	gchar *bg_str;
+	GdkNativeWindow  pixmap_xid;
+	PanelWidget     *panel_widget;
+	gchar           *bg_str;
 
-	bg_str = g_strdup_printf ("pixmap:%s", pixmap);
+	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
+	g_return_if_fail (PANEL_IS_WIDGET (GTK_WIDGET (frame)->parent));
+
+	panel_widget = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
+
+	pixmap_xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (GTK_WIDGET (panel_widget)->window));
+
+	bg_str = g_strdup_printf ("pixmap:%d,%d,%d",
+				  pixmap_xid,
+				  GTK_WIDGET (frame)->allocation.x,
+				  GTK_WIDGET (frame)->allocation.y);
 
 	bonobo_pbclient_set_string (frame->priv->property_bag, 
 				    "panel-applet-background",
