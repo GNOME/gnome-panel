@@ -239,7 +239,7 @@ static int is_imap_answer_ok(char *p)
 static char *wait_for_imap_answer(int s, char *tag)
  {
   char *p;
-  int i = 10; // read not more than 10 lines
+  int i = 10; /* read not more than 10 lines */
   
   while (i--)
    {
@@ -265,7 +265,7 @@ int imap_check(char *h, char* n, char* e)
   if (s > 0)
    {
     x = read_line(s);
-    if (is_imap_answer_untagged(x))  // The greeting us untagged
+    if (is_imap_answer_untagged(x))  /* The greeting us untagged */
      if (is_imap_answer_ok(x))
       {
        c = g_malloc(9+strlen(n)+1+strlen(e)+1);
