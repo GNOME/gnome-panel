@@ -19,6 +19,8 @@ static void button_widget_realize	(GtkWidget         *widget);
 static void button_widget_unrealize     (GtkWidget         *widget);
 static void button_widget_map           (GtkWidget         *widget);
 static void button_widget_unmap         (GtkWidget         *widget);
+static void button_widget_real_draw     (GtkWidget         *widget,
+					 GdkRectangle      *area);
 
 static int  button_widget_button_press	(GtkWidget         *widget,
 					 GdkEventButton    *event);
@@ -143,6 +145,7 @@ button_widget_class_init (ButtonWidgetClass *class)
 
 	widget_class->realize = button_widget_realize;
 	widget_class->unrealize = button_widget_unrealize;
+	widget_class->draw = button_widget_real_draw;
 	widget_class->map = button_widget_map;
 	widget_class->unmap = button_widget_unmap;
 	widget_class->size_allocate = button_widget_size_allocate;
@@ -291,8 +294,15 @@ draw_arrow(GdkPoint *points, PanelOrientType orient)
 	}
 }
 
+static void
+button_widget_real_draw(GtkWidget *widget, GdkRectangle *area)
+{
+	if(widget->parent && IS_PANEL_WIDGET(widget->parent))
+		panel_widget_draw_icon(PANEL_WIDGET(widget->parent), BUTTON_WIDGET(widget));
+}
+
 void
-button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
+button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap, int offx, int offy)
 {
 	GtkWidget *widget = GTK_WIDGET(button);
 	GtkWidget *pwidget;
@@ -325,12 +335,12 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 	if(tiles_enabled[button->tile] && tile) {
 		if (tile_mask) {
 			gdk_gc_set_clip_mask (gc, tile_mask);
-			gdk_gc_set_clip_origin (gc, widget->allocation.x,
-						widget->allocation.y);
+			gdk_gc_set_clip_origin (gc, widget->allocation.x-offx,
+						widget->allocation.y-offy);
 		}
 		gdk_draw_pixmap(pixmap, gc, tile, 0,0,
-				widget->allocation.x,
-				widget->allocation.y,
+				widget->allocation.x-offx,
+				widget->allocation.y-offy,
 				BIG_ICON_SIZE, BIG_ICON_SIZE);
 		if (tile_mask) {
 			gdk_gc_set_clip_mask (gc, NULL);
@@ -342,8 +352,8 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 		if (button->mask) {
 			gdk_gc_set_clip_mask (gc, button->mask);
 			gdk_gc_set_clip_origin (gc,
-						widget->allocation.x+off,
-						widget->allocation.y+off);
+						widget->allocation.x+off-offx,
+						widget->allocation.y+off-offy);
 		}
 
 
@@ -351,8 +361,8 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 		if(button->pixmap) {
 			gdk_draw_pixmap (pixmap, gc, button->pixmap,
 					 i, i,
-					 widget->allocation.x+i+off,
-					 widget->allocation.y+i+off,
+					 widget->allocation.x+i+off-offx,
+					 widget->allocation.y+i+off-offy,
 					 BIG_ICON_SIZE-i-off-border,
 					 BIG_ICON_SIZE-i-off-border);
 		}
@@ -372,8 +382,8 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 		GdkFont *font;
 		GdkRectangle rect;
 	         
-	        rect.x = widget->allocation.x;
-	        rect.y = widget->allocation.y;
+	        rect.x = widget->allocation.x-offx;
+	        rect.y = widget->allocation.y-offy;
 	        rect.width = widget->allocation.width;
 	        rect.height = widget->allocation.height;
 
@@ -395,14 +405,14 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 		
 		gdk_gc_set_foreground(gc,&widget->style->black);
 		gdk_draw_rectangle(pixmap,gc,TRUE,
-				   widget->allocation.x+(widget->allocation.width/2)-(twidth/2)+off-1,
-				   widget->allocation.y+(widget->allocation.height/2)-(theight/2)-1+off,
+				   widget->allocation.x+(widget->allocation.width/2)-(twidth/2)+off-1-offx,
+				   widget->allocation.y+(widget->allocation.height/2)-(theight/2)-1+off-offy,
 				   twidth+2,
 				   theight+2);
 		gdk_gc_set_foreground(gc,&widget->style->white);
 		gdk_draw_string(pixmap,font,gc,
-				widget->allocation.x+(widget->allocation.width/2)-(twidth/2)+off,
-				widget->allocation.y+(widget->allocation.height/2)+(theight/2)+off,
+				widget->allocation.x+(widget->allocation.width/2)-(twidth/2)+off-offx,
+				widget->allocation.y+(widget->allocation.height/2)+(theight/2)+off-offy,
 				text);
 		gdk_gc_set_foreground(gc,&widget->style->black);
 		gdk_gc_set_clip_rectangle (gc, NULL);
@@ -417,8 +427,8 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 		GdkPoint points[3];
 		draw_arrow(points,button->orient);
 		for(i=0;i<3;i++) {
-			points[i].x+=widget->allocation.x+off;
-			points[i].y+=widget->allocation.y+off;
+			points[i].x+=widget->allocation.x+off-offx;
+			points[i].y+=widget->allocation.y+off-offy;
 		}
 		gdk_gc_set_foreground(gc,&pwidget->style->white);
 		gdk_draw_polygon(pixmap,gc,TRUE,points,3);

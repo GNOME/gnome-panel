@@ -67,7 +67,9 @@ GtkWidget*	button_widget_new_from_file	(char *pixmap,
 						 char *text);
 
 void		button_widget_draw		(ButtonWidget *button,
-						 GdkPixmap *pixmap);
+						 GdkPixmap *pixmap,
+						 int offx,
+						 int offy);
 
 void		button_widget_set_pixmap	(ButtonWidget *button,
 						 GdkPixmap *pixmap,

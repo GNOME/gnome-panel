@@ -739,20 +739,31 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	GtkWidget *widget;
 	GdkGC *gc;
 	GdkPixmap *pixmap;
+	GdkRectangle da;
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
-	
+
 	widget = GTK_WIDGET(panel);
 
-	if(widget->allocation.width <= 0 ||
-	   widget->allocation.height <= 0 ||
-	   !GTK_WIDGET_DRAWABLE(widget))
+	if(!GTK_WIDGET_DRAWABLE(widget) ||
+	   widget->allocation.width <= 0 ||
+	   widget->allocation.height <= 0)
 		return;
-
+	
+	if(area) {
+		if(area->width==0 || area->height==0)
+			return;
+		da = *area;
+	} else {
+		da.x = 0;
+		da.y = 0;
+		da.width = widget->allocation.width;
+		da.height = widget->allocation.height;
+	}
+	
 	pixmap = gdk_pixmap_new(widget->window,
-				widget->allocation.width,
-				widget->allocation.height,
+				da.width,da.height,
 				gtk_widget_get_visual(widget)->depth);
 	
 	gc = gdk_gc_new(pixmap);
@@ -761,13 +772,10 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	if(widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]) {
 		gdk_gc_set_fill(gc, GDK_TILED);
 		gdk_gc_set_tile(gc, widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]);
+		gdk_gc_set_ts_origin(gc,-da.x,-da.y);
 	}
 				
-	if(!area)
-		gdk_draw_rectangle(pixmap,gc, TRUE, 0, 0,-1,-1);
-	else
-		gdk_draw_rectangle(pixmap,gc, TRUE, area->x, area->y,
-				   area->width, area->height);
+	gdk_draw_rectangle(pixmap,gc, TRUE, 0,0,-1,-1);
 
 	gdk_gc_unref(gc);
 
@@ -776,21 +784,13 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 		AppletData *ad = li->data;
 		if(IS_BUTTON_WIDGET(ad->applet) &&
 		   (!area || gtk_widget_intersect(ad->applet, area, NULL)))
-				button_widget_draw(BUTTON_WIDGET(ad->applet),
-						   pixmap);
+			button_widget_draw(BUTTON_WIDGET(ad->applet),
+					   pixmap,da.x,da.y);
 	}
-	if(!area)
-		gdk_draw_pixmap(widget->window,
-				widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
-				pixmap,
-				0,0,0,0,-1,-1);
-	else
-		gdk_draw_pixmap(widget->window,
-				widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
-				pixmap,
-				area->x,area->y,
-				area->x,area->y,
-				area->width,area->height);
+	gdk_draw_pixmap(widget->window,
+			widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
+			pixmap,
+			0,0,da.x,da.y,da.width,da.height);
 	gdk_pixmap_unref(pixmap);
 }
 
