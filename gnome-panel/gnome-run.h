@@ -25,4 +25,6 @@
 
 void show_run_dialog (void);
 
+void load_run_applet(PanelWidget *panel, int pos, gboolean exactpos);
+
 #endif /*__GNOME_RUN_H__*/

@@ -141,6 +141,10 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		if (strcmp (menu->name, "help") == 0)
 			panel_pbox_help_cb (NULL, 0, "specialobjects.html#STATUSDOC");
 		break;
+	case APPLET_RUN:
+		if (strcmp (menu->name, "help") == 0)
+			panel_pbox_help_cb (NULL, 0, "specialobjects.html#RUN");
+		break;
 	default: break;
 	}
 }

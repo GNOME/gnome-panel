@@ -24,11 +24,12 @@
 #include <gnome.h>
 #include <errno.h>
 
+#include "panel-include.h"
+
 #include "gnome-run.h"
 
-#include "panel_config_global.h"
-#include "panel-util.h"
-
+extern GSList *applets_last;
+extern GtkTooltips *panel_tooltips;
 extern GlobalConfig global_config;
 
 static void 
@@ -231,4 +232,44 @@ show_run_dialog ()
 
 	gtk_widget_show_all (dialog);
 	panel_set_dialog_layer (dialog);
+}
+
+static GtkWidget *
+create_run_widget(void)
+{
+	GtkWidget *button;
+	char *pixmap_name;
+
+	pixmap_name = gnome_pixmap_file("gnome-run.png");
+
+	button = button_widget_new(pixmap_name,-1,
+				   MISC_TILE,
+				   FALSE,
+				   ORIENT_UP,
+				   _("Run..."));
+	g_free(pixmap_name);
+	gtk_tooltips_set_tip (panel_tooltips, button, _("Run..."), NULL);
+
+	gtk_signal_connect(GTK_OBJECT(button), "clicked",
+			   GTK_SIGNAL_FUNC(show_run_dialog), NULL);
+
+	return button;
+}
+
+void
+load_run_applet(PanelWidget *panel, int pos, gboolean exactpos)
+{
+	GtkWidget *run;
+
+	run = create_run_widget();
+	if(!run)
+		return;
+
+	if (!register_toy(run, NULL, panel,
+			  pos, exactpos, APPLET_RUN))
+		return;
+
+	applet_add_callback(applets_last->data, "help",
+			    GNOME_STOCK_PIXMAP_HELP,
+			    _("Help"));
 }

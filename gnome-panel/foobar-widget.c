@@ -14,7 +14,6 @@
 
 #include "foobar-widget.h"
 
-#include "gnome-run.h"
 #include "menu.h"
 #include "menu-util.h"
 #include "session.h"
@@ -24,6 +23,7 @@
 #include "panel_config_global.h"
 #include "panel-util.h"
 #include "drawer-widget.h"
+#include "gnome-run.h"
 
 #define SMALL_ICON_SIZE 20
 

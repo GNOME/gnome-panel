@@ -15,6 +15,7 @@
 #include <gdk/gdkx.h>
 #include <X11/keysym.h>
 #include "panel-include.h"
+#include "gnome-run.h"
 #include "global-keys.h"
 
 /*#define PANEL_DEBUG 1*/
@@ -437,6 +438,9 @@ save_applet_configuration(AppletInfo *info)
 		break;
 	case APPLET_STATUS:
 		gnome_config_set_string("id", STATUS_ID);
+		break;
+	case APPLET_RUN:
+		gnome_config_set_string("id", RUN_ID);
 		break;
 	default:
 		g_warning ("Unknown applet type encountered: %d; ignoring.",
@@ -881,6 +885,8 @@ init_user_applets(void)
 			load_lock_applet(panel, pos, TRUE);
 		} else if(strcmp(applet_name, STATUS_ID) == 0) {
 			load_status_applet(panel, pos, TRUE);
+		} else if(strcmp(applet_name, RUN_ID) == 0) {
+			load_run_applet(panel, pos, TRUE);
 		} else if(strcmp(applet_name, SWALLOW_ID) == 0) {
 			char *path = gnome_config_get_string("execpath=");
 			char *params = gnome_config_get_string("parameters=");

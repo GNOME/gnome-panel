@@ -17,6 +17,7 @@
 #include <gnome.h>
 
 #include "panel-include.h"
+#include "gnome-run.h"
 #include "gnome-panel.h"
 
 #define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
@@ -955,6 +956,8 @@ drop_internal_applet(PanelWidget *panel, int pos, char *applet_type)
 		ask_about_launcher(NULL, panel, pos, TRUE);
 	} else if(strcmp(applet_type,"STATUS:TRY")==0) {
 		load_status_applet(panel, pos, TRUE);
+	} else if(strcmp(applet_type,"RUN:NEW")==0) {
+		load_run_applet(panel, pos, TRUE);
 	}
 }
 

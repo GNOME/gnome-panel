@@ -1581,6 +1581,13 @@ add_lock_to_panel (GtkWidget *widget, gpointer data)
 {
 	load_lock_applet(get_panel_from_menu_data(widget), 0, FALSE);
 }
+
+static void
+add_run_to_panel (GtkWidget *widget, gpointer data)
+{
+	load_run_applet(get_panel_from_menu_data(widget), 0, FALSE);
+}
+
 static void
 try_add_status_to_panel (GtkWidget *widget, gpointer data)
 {
@@ -3614,6 +3621,17 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
+	setup_menuitem_try_pixmap (menuitem,
+				   "gnome-run.png",
+				   _("Run button"), SMALL_ICON_SIZE);
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   GTK_SIGNAL_FUNC(add_run_to_panel),
+			   NULL);
+	setup_internal_applet_drag(menuitem, "RUN:NEW");
+
+	menuitem = gtk_menu_item_new ();
+	gtk_widget_lock_accelerators (menuitem);
 	setup_menuitem (menuitem, 
 			gnome_stock_pixmap_widget (menu,
 						   GNOME_STOCK_PIXMAP_ADD),
@@ -4194,7 +4212,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff,
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (run_cb), NULL);
 	gtk_menu_append (GTK_MENU (root_menu), menuitem);
-
+	setup_internal_applet_drag(menuitem, "RUN:NEW");
 
 	if (((has_inline && !has_subs) || has_subs) && has_subs2)
 		add_menu_separator (root_menu);
