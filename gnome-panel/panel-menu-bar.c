@@ -42,7 +42,7 @@
 
 #define PANEL_MENU_BAR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BAR, PanelMenuBarPrivate))
 
-#define MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_DISTRIBUTION_SUB)
+#define MENU_FLAGS (MAIN_MENU_SYSTEM)
 
 struct _PanelMenuBarPrivate {
 	AppletInfo            *info;

@@ -92,7 +92,6 @@ panel_sources =			\
 	panel-util.c		\
 	panel-gconf.c		\
 	panel-properties-dialog.c \
-	distribution.c		\
 	panel-run-dialog.c	\
 	menu.c  		\
 	menu-util.c		\
@@ -140,7 +139,6 @@ panel_headers =			\
 	panel-properties-dialog.h \
 	panel-config-global.h  	\
 	panel-gconf.h		\
-	distribution.h		\
 	panel-run-dialog.h	\
 	menu.h  		\
 	menu-util.h		\

@@ -15,7 +15,6 @@
 #include "menu-util.h"
 #include "quick-desktop-reader.h"
 
-#include "distribution.h"
 #include "panel-config-global.h"
 #include "panel-util.h"
 #include "menu.h"
@@ -184,24 +183,5 @@ panel_position_applet_menu (GtkMenu   *menu,
 int
 get_default_menu_flags (void)
 {
-	DistributionType distribution = get_distribution_type();
-
-	int flags = MAIN_MENU_SYSTEM_SUB |
-		MAIN_MENU_PANEL_SUB | MAIN_MENU_DESKTOP;
-	
-	/*guess distribution menus*/
-	if (distribution != DISTRIBUTION_UNKNOWN)
-		flags |= MAIN_MENU_DISTRIBUTION_SUB;
-
-	return flags;
-}
-
-gboolean
-got_distro_menus (void)
-{
-	/*guess distribution menus*/
-	if (get_distribution_type () != DISTRIBUTION_UNKNOWN)
-		return TRUE;
-	else
-		return FALSE;
+	return MAIN_MENU_SYSTEM_SUB | MAIN_MENU_PANEL_SUB | MAIN_MENU_DESKTOP;
 }

@@ -38,7 +38,6 @@
 #include "menu.h"
 
 #include "button-widget.h"
-#include "distribution.h"
 #include "launcher.h"
 #include "nothing.h"
 #include "menu-fentry.h"
@@ -111,9 +110,6 @@ static GtkWidget * create_menu_at_fr (GtkWidget *menu,
 
 static GtkWidget * create_desktop_menu (GtkWidget *m);
 
-static void add_distribution_submenu (GtkWidget *root_menu,
-				      gboolean fake_submenus);
-
 static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 					      GdkEventKey *event);
 static PanelWidget *menu_get_panel     (GtkWidget *menu);
@@ -134,16 +130,10 @@ panel_menu_have_icons (void)
 void
 init_menus (void)
 {
-	const DistributionInfo *distribution_info = get_distribution_info ();
-
 	/*just load the menus from disk, don't make the widgets
 	  this just reads the .desktops of the top most directory
 	  and a level down*/
 	fr_read_dir (NULL, "applications:/", 0, 2);
-
-	if (distribution_info != NULL &&
-	    distribution_info->menu_init_func != NULL)
-		distribution_info->menu_init_func ();
 }
 
 static gboolean
@@ -2171,27 +2161,6 @@ create_system_menu (GtkWidget *menu,
 	return menu;
 }
 
-static GtkWidget *
-create_distribution_menu (GtkWidget *menu,
-			  gboolean fake_submenus,
-			  gboolean fake)
-{
-	const DistributionInfo *info = get_distribution_info ();
-
-	if (!info)
-		return NULL;
-
-	if (!fake || menu)
-		menu = create_menu_at (menu, info->menu_path,
-				       info->menu_name,
-				       fake_submenus, FALSE);
-	else
-		menu = create_fake_menu_at (info->menu_path,
-					    info->menu_name);
-
-	return menu;
-}
-
 static void
 remove_panel (GtkWidget *menuitem,
               gpointer data)
@@ -2461,40 +2430,6 @@ create_desktop_menu (GtkWidget *menu)
 	return menu;
 }
 
-static void
-add_distribution_submenu (GtkWidget *root_menu,
-			  gboolean fake_submenus)
-{
-	GtkWidget *menu;
-	GtkWidget *menuitem;
-	const DistributionInfo *distribution_info = get_distribution_info ();
-
-	if (distribution_info == NULL)
-		return;
-
-	menu = create_distribution_menu (NULL /* menu */,
-					 fake_submenus,
-					 TRUE /* fake */);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menuitem,
-			       panel_menu_icon_get_size (),
-			       distribution_info->stock_icon,
-			       _(distribution_info->menu_name),
-			       TRUE);
-
-	gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-				   menu);
-	if (distribution_info->menu_show_func)
-		g_signal_connect (G_OBJECT(menu),"show",
-				   G_CALLBACK(distribution_info->menu_show_func),
-				   menuitem);
-	g_signal_connect (G_OBJECT(menu),"show",
-			  G_CALLBACK(submenu_to_display),
-			  NULL);
-}
-
 GtkWidget *
 create_root_menu (GtkWidget   *root_menu,
 		  PanelWidget *panel,
@@ -2502,15 +2437,11 @@ create_root_menu (GtkWidget   *root_menu,
 		  int          flags,
 		  gboolean     extra_items)
 {
-	const DistributionInfo *distribution_info;
 	GtkWidget              *menu;
 	GtkWidget              *menuitem;
 	gboolean                has_inline;
 	gboolean                has_subs;
 	gboolean                has_subs2;
-
-	if ((flags & MAIN_MENU_DISTRIBUTION_SUB) && !got_distro_menus ())
-		flags &= ~MAIN_MENU_DISTRIBUTION_SUB;
 
 	has_inline = (flags & MAIN_MENU_SYSTEM);
 
@@ -2518,11 +2449,6 @@ create_root_menu (GtkWidget   *root_menu,
 
 	has_subs2 = (flags & (MAIN_MENU_DESKTOP_SUB |
 			      MAIN_MENU_PANEL_SUB));
-
-	if ((distribution_info = get_distribution_info ())) {
-		has_inline |= (flags & (MAIN_MENU_DISTRIBUTION));
-		has_subs |= (flags & (MAIN_MENU_DISTRIBUTION_SUB));
-	}
 
 	if (!root_menu)
 		root_menu = menu_new ();
@@ -2532,14 +2458,6 @@ create_root_menu (GtkWidget   *root_menu,
 	if (flags & MAIN_MENU_SYSTEM)
 		create_system_menu(root_menu, fake_submenus,
 				   FALSE /* fake */);
-
-	if (flags & MAIN_MENU_DISTRIBUTION &&
-	    distribution_info != NULL) {
-		if (distribution_info->menu_show_func)
-			distribution_info->menu_show_func(NULL,NULL);
-
-		create_distribution_menu(root_menu, fake_submenus, FALSE);
-	}
 
 	/*others here*/
 
@@ -2561,10 +2479,6 @@ create_root_menu (GtkWidget   *root_menu,
 					  G_CALLBACK (submenu_to_display),
 					  NULL);
 		}
-	}
-
-	if (flags & MAIN_MENU_DISTRIBUTION_SUB) {
-		add_distribution_submenu (root_menu, fake_submenus);
 	}
 
 	if (!panel_lockdown_get_disable_command_line () && extra_items) {
