@@ -363,7 +363,7 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (menubar));
 
-	panel_show_help (screen, "wgospanel.xml", NULL);
+	panel_show_help (screen, "wgospanel.xml", "gospanel-37");
 }
 
 void
