@@ -1,4 +1,12 @@
+Tue Aug 19 13:18:20 2003  George Lebl <jirka@5z.com>
+
+	* panel-toplevel.c: Fix #119984 and RH #102631 by properly
+	  calculating the "floating" flag of non-expanded panels.  The
+	  floating flag needs to take into account the SNAP_TOLERANCE
+	  otherwise it will in fact be wrong.
+
 Mon Aug 18 17:04:39 2003  Brian Cameron <Brian.Cameron@Sun.Com>
+
 	* menu.c:  Changed restore_grabs to use a technique similar to
 	  drag_end_menu_cb (also in menu.c) to grab the keyboard as
 	  well as the pointer.

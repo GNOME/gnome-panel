@@ -1001,10 +1001,10 @@ panel_toplevel_calc_floating (PanelToplevel *toplevel)
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		toplevel->priv->floating =
-			(y > 0) && (y < (screen_height - toplevel->priv->geometry.height));
+			(y > SNAP_TOLERANCE) && (y < (screen_height - toplevel->priv->geometry.height - SNAP_TOLERANCE));
 	else
 		toplevel->priv->floating =
-			(x > 0) && (x < (screen_width - toplevel->priv->geometry.width));
+			(x > SNAP_TOLERANCE) && (x < (screen_width - toplevel->priv->geometry.width - SNAP_TOLERANCE));
 }
 
 static gboolean
@@ -2951,7 +2951,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 						       &toplevel->priv->animation_end_y,
 						       &toplevel->priv->animation_end_width,
 						       &toplevel->priv->animation_end_height);
-
+	
 	panel_toplevel_update_struts (toplevel, TRUE);
 	panel_struts_update_toplevel_geometry (toplevel,
 					       &toplevel->priv->animation_end_x,
