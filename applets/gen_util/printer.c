@@ -23,6 +23,7 @@ typedef struct _Printer Printer;
 struct _Printer {
 	GtkWidget *printer;
 	GtkWidget *prop_name, *prop_command;
+	GtkWidget *ev;
 	GtkWidget *label;
 	GtkWidget *printer_prop;
 
@@ -34,11 +35,12 @@ void
 position_label (GtkWidget *label, gpointer data)
 {
 	int height;
-	GtkWidget *parent = label->parent;
+	GtkWidget *ev = data;
+	GtkWidget *parent = ev->parent;
 	
 	height = (label->style->font->ascent +
 		  label->style->font->descent + 2);
-	gtk_fixed_move (GTK_FIXED (parent), label,
+	gtk_fixed_move (GTK_FIXED (parent), ev,
 		       (48 - gdk_string_width (label->style->font,
 					       GTK_LABEL(label)->label)) / 2,
 		        48 - height);
@@ -108,11 +110,15 @@ printer_widget (Printer *pr)
 	fixed   = gtk_fixed_new ();
 	printer = gnome_pixmap_new_from_xpm_d (print_xpm);
 	pr->label   = gtk_label_new (pr->print_title);
+	/*this will make a grey background so that we can allways read
+	  the printer label*/
+	pr->ev = gtk_event_box_new();
+	gtk_container_add(GTK_CONTAINER(pr->ev),pr->label);
 
 	gtk_fixed_put (GTK_FIXED (fixed), printer, 0, 0);
-	gtk_fixed_put (GTK_FIXED (fixed), pr->label, 0, 0);
+	gtk_fixed_put (GTK_FIXED (fixed), pr->ev, 0, 0);
 	gtk_signal_connect (GTK_OBJECT (pr->label), "realize",
-			    GTK_SIGNAL_FUNC (position_label), NULL);
+			    GTK_SIGNAL_FUNC (position_label), pr->ev);
 	gtk_signal_connect (GTK_OBJECT (printer), "realize",
 			    GTK_SIGNAL_FUNC (configure_dnd), pr);
 	gtk_signal_connect (GTK_OBJECT (fixed), "realize",
@@ -120,6 +126,105 @@ printer_widget (Printer *pr)
 	gtk_widget_set_usize (fixed, 48, 48);
 	gtk_widget_show_all (fixed);
 	return fixed;
+}
+
+static void
+applet_set_default_back(Printer *pr)
+{
+	GtkStyle *ns;
+
+	ns = gtk_style_new();
+
+	gtk_style_ref(ns);
+	gtk_widget_set_style(pr->printer, ns);
+	gtk_style_unref(ns);
+
+	gtk_widget_queue_draw(GTK_WIDGET(pr->printer));
+}
+
+static void
+applet_set_back_color(Printer *pr, GdkColor *color)
+{
+	GtkStyle *ns;
+
+	ns = gtk_style_copy(pr->printer->style);
+	gtk_style_ref(ns);
+
+	ns->bg[GTK_STATE_NORMAL] = *color;
+	ns->bg[GTK_STATE_NORMAL].pixel = 1; /* bogus */
+
+	if(ns->bg_pixmap[GTK_STATE_NORMAL]) {
+		gdk_imlib_free_pixmap(ns->bg_pixmap[GTK_STATE_NORMAL]);
+		ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
+	}
+
+	gtk_widget_set_style(pr->printer, ns);
+
+	gtk_style_unref(ns);
+
+	gtk_widget_queue_draw(GTK_WIDGET(pr->printer));
+}
+
+static void
+applet_set_back_pixmap(Printer *pr, gchar *pixmap)
+{
+	GdkImlibImage *im;
+	GdkPixmap *p;
+	GtkStyle *ns;
+
+	if(!pixmap || strcmp(pixmap,"")==0) {
+		ns = gtk_style_copy(pr->printer->style);
+		gtk_style_ref(ns);
+
+		p = ns->bg_pixmap[GTK_STATE_NORMAL];
+		if(p)
+			gdk_imlib_free_pixmap (p);
+		ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
+
+		gtk_widget_set_style(pr->printer, ns);
+
+		gtk_style_unref(ns);
+		return;
+	}
+
+	if (!g_file_exists (pixmap))
+		return;
+
+	im = gdk_imlib_load_image (pixmap);
+	if (!im)
+		return;
+
+	gdk_imlib_render (im, im->rgb_width, im->rgb_height);
+
+	p = gdk_imlib_move_image (im);
+
+	ns = gtk_style_copy(pr->printer->style);
+	gtk_style_ref(ns);
+
+	if(ns->bg_pixmap[GTK_STATE_NORMAL])
+		gdk_imlib_free_pixmap (ns->bg_pixmap[GTK_STATE_NORMAL]);
+	ns->bg_pixmap[GTK_STATE_NORMAL] = p;
+
+	gtk_widget_set_style(pr->printer, ns);
+
+	gtk_style_unref(ns);
+	gdk_imlib_destroy_image (im);
+}
+
+static void
+applet_back_change(GtkWidget *w,
+		   PanelBackType type,
+		   gchar *pixmap,
+		   GdkColor *color,
+		   gpointer data)
+{
+	Printer *pr = data;
+	if(type == PANEL_BACK_PIXMAP)
+		applet_set_back_pixmap(pr,pixmap);
+	else if(type == PANEL_BACK_COLOR)
+		applet_set_back_color(pr,color);
+	else
+		applet_set_default_back(pr);
 }
 
 static gint
@@ -166,7 +271,7 @@ apply_properties (GtkWidget *widget, gint button_num, gpointer data)
 	apply_one (pr->prop_name, &pr->print_title);
 	apply_one (pr->prop_command, &pr->print_command);
 	gtk_label_set (GTK_LABEL (pr->label), pr->print_title);
-	position_label (pr->label, pr->label);
+	position_label (pr->label, pr->ev);
 }
 
 static int
@@ -260,9 +365,11 @@ make_printer_applet(const gchar *param)
 	pr = g_new(Printer,1);
 	pr->printer_prop = NULL;
 
-	if(APPLET_WIDGET(applet)->cfgpath && *(APPLET_WIDGET(applet)->cfgpath)) {
+	if(APPLET_WIDGET(applet)->cfgpath &&
+	   *(APPLET_WIDGET(applet)->cfgpath)) {
 		gnome_config_push_prefix (APPLET_WIDGET(applet)->cfgpath);
-		pr->print_command = gnome_config_get_string ("print_command=lpr");
+		pr->print_command =
+			gnome_config_get_string ("print_command=lpr");
 		pr->print_title   = gnome_config_get_string ("title=Print");
 		gnome_config_pop_prefix ();
 	} else {
@@ -272,11 +379,14 @@ make_printer_applet(const gchar *param)
 	
 	pr->printer = printer_widget (pr);
 	gtk_widget_show (pr->printer);
-	applet_widget_add (APPLET_WIDGET (applet), pr->printer);
-	gtk_widget_show (applet);
+	gtk_signal_connect(GTK_OBJECT(applet),"back_change",
+			   GTK_SIGNAL_FUNC(applet_back_change),
+			   pr);
 	gtk_signal_connect(GTK_OBJECT(applet),"session_save",
 			   GTK_SIGNAL_FUNC(applet_session_save),
 			   pr);
+	applet_widget_add (APPLET_WIDGET (applet), pr->printer);
+	gtk_widget_show (applet);
 
 	applet_widget_register_callback(APPLET_WIDGET(applet),
 					"properties",
