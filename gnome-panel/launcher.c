@@ -435,6 +435,8 @@ create_properties_dialog(Launcher *launcher)
 	launcher->dedit =
 		gnome_dentry_edit_new_notebook(
 		      GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+	gtk_object_ref(launcher->dedit);
+	gtk_object_sink(launcher->dedit);
 	
 	types = g_list_append(types, "Application");
 	types = g_list_append(types, "URL");
@@ -469,6 +471,8 @@ create_properties_dialog(Launcher *launcher)
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 			   GTK_SIGNAL_FUNC(properties_close_callback),
 			   launcher);
+	gtk_signal_connect(GTK_OBJECT(launcher->dedit), "destroy",
+			   GTK_SIGNAL_FUNC(gtk_object_unref), NULL);
 
 	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
 			   GTK_SIGNAL_FUNC(properties_apply_callback),
@@ -578,6 +582,8 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),notebook,
 			   TRUE,TRUE,GNOME_PAD_SMALL);
 	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook)));
+	gtk_object_ref(GTK_OBJECT(dee));
+	gtk_object_sink(GTK_OBJECT(dee));
 
 	types = g_list_append(types, "Application");
 	types = g_list_append(types, "URL");
@@ -599,6 +605,8 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_signal_connect(GTK_OBJECT(d),"clicked",
 			   GTK_SIGNAL_FUNC(really_add_launcher),
 			   dee);
+	gtk_signal_connect(GTK_OBJECT(dee), "destroy",
+			   GTK_SIGNAL_FUNC(gtk_object_unref), NULL);
 
 	gnome_dialog_close_hides(GNOME_DIALOG(d),FALSE);
 

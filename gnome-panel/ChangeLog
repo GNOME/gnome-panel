@@ -1,3 +1,11 @@
+Thu May 18 20:13:00 2000  George Lebl <jirka@5z.com>
+
+	* launcher.c, menu.c: on "destroy" of gnome-dentry-edit, unref it,
+	  on _new sink/ref it.  This is really ugly.  The problem is that
+	  gnome-dentry-edit destroys itself when it's notebook is destroyed.
+	  it should really unref self.  But we can't do that now to keep
+	  compat.  This works, but is ugly.  gnome-ditem-edit must be fixed!
+
 Thu May 18 19:23:43 2000  George Lebl <jirka@5z.com>
 
 	* panel-widget.c: use the checking cast AFTER preconditions.

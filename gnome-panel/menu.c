@@ -665,6 +665,8 @@ add_new_app_to_menu (GtkWidget *widget, char *item_loc)
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),notebook,
 			   TRUE,TRUE,GNOME_PAD_SMALL);
 	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook)));
+	gtk_object_ref(GTK_OBJECT(dee));
+	gtk_object_sink(GTK_OBJECT(dee));
 	types = g_list_append(types, "Application");
 	types = g_list_append(types, "URL");
 	types = g_list_append(types, "PanelApplet");
@@ -679,6 +681,8 @@ add_new_app_to_menu (GtkWidget *widget, char *item_loc)
 	gtk_signal_connect(GTK_OBJECT(d), "clicked",
 			   GTK_SIGNAL_FUNC(really_add_new_menu_item),
 			   dee);
+	gtk_signal_connect(GTK_OBJECT(dee), "destroy",
+			   GTK_SIGNAL_FUNC(gtk_object_unref), NULL);
 
 	gnome_dialog_close_hides(GNOME_DIALOG(d), FALSE);
 
@@ -964,6 +968,8 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	o = gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+	gtk_object_ref(o);
+	gtk_object_sink(o);
 	types = g_list_append(types, "Application");
 	types = g_list_append(types, "URL");
 	types = g_list_append(types, "PanelApplet");
@@ -983,8 +989,9 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 				  GTK_OBJECT(dialog));
 
 	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
-			   GTK_SIGNAL_FUNC(dentry_apply_callback),
-			   o);
+			   GTK_SIGNAL_FUNC(dentry_apply_callback), o);
+	gtk_signal_connect(GTK_OBJECT(o), "destroy",
+			   GTK_SIGNAL_FUNC(gtk_object_unref), NULL);
 	gtk_signal_connect(GTK_OBJECT(dialog), "help",
 			   GTK_SIGNAL_FUNC(panel_pbox_help_cb),
 			   "launchers.html");
@@ -1014,6 +1021,8 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	o = gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+	gtk_object_ref(o);
+	gtk_object_sink(o);
 	types = g_list_append(types, "Directory");
 	gtk_combo_set_popdown_strings(GTK_COMBO(GNOME_DENTRY_EDIT(o)->type_combo), types);
 	g_list_free(types);
@@ -1049,8 +1058,9 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 				  GTK_OBJECT(dialog));
 
 	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
-			   GTK_SIGNAL_FUNC(dentry_apply_callback),
-			   o);
+			   GTK_SIGNAL_FUNC(dentry_apply_callback), o);
+	gtk_signal_connect(GTK_OBJECT(o), "destroy",
+			   GTK_SIGNAL_FUNC(gtk_object_unref), NULL);
 	gtk_signal_connect (GTK_OBJECT(dialog), "apply",
 			    GTK_SIGNAL_FUNC (panel_pbox_help_cb),
 			    "launchers.html");
