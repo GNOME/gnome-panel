@@ -1522,6 +1522,13 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
    */
   parent = widget->parent;
   xgrab_shell = NULL;
+
+  /* FIXME: workaround for a possible gtk+ bug
+   *    See bugs #92085(gtk+) and #91184(panel) for details.
+   */
+  if (global_config.tooltips_enabled)
+    gtk_tooltips_enable (panel_tooltips);
+
   while (parent)
     {
       gboolean viewable = TRUE;
@@ -1567,15 +1574,26 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 }
 
 static void  
-drag_data_get_menu_cb (GtkWidget *widget, GdkDragContext     *context,
-		       GtkSelectionData   *selection_data, guint info,
-		       guint time, char *item_loc)
+drag_data_get_menu_cb (GtkWidget        *widget,
+		       GdkDragContext   *context,
+		       GtkSelectionData *selection_data,
+		       guint             info,
+		       guint             time,
+		       char             *item_loc)
 {
-	gchar *uri_list = g_strconcat (item_loc, "\r\n", NULL);
+	char *uri_list;
+
+	uri_list = g_strconcat (item_loc, "\r\n", NULL);
+
 	gtk_selection_data_set (selection_data,
 				selection_data->target, 8, (guchar *)uri_list,
 				strlen (uri_list));
 	g_free (uri_list);
+
+	/* FIXME: workaround for a possible gtk+ bug
+	 *    See bugs #92085(gtk+) and #91184(panel) for details.
+	 */
+	gtk_tooltips_disable (panel_tooltips);
 }
 
 static void  
