@@ -857,7 +857,37 @@ panel_widget_adjust_applet(PanelWidget *panel, AppletData *ad)
 	panel_widget_applet_put(panel,ad,FALSE);
 }
 
+static void
+send_applet_move(PanelWidget *panel, AppletData *ad)
+{
+	int x,y,w,h;
+	if(!ad->applet->window)
+		return;
+	gdk_window_get_origin(ad->applet->window,&x,&y);
+	gdk_window_get_size(ad->applet->window,&w,&h);
+	
+	if(ad->prevwidth!=w ||
+	   ad->prevheight!=h) {
+		int thick;
 
+		ad->prevwidth = w;
+		ad->prevheight = h;
+		thick = panel_widget_get_thick(panel);
+		if(panel->thick != thick) {
+			panel->thick = thick;
+			panel_widget_set_size(panel);
+		}
+		panel_widget_adjust_applet(panel,ad);
+	}
+	if(ad->prevx!=x ||
+	   ad->prevy!=y) {
+		ad->prevx = x;
+		ad->prevy = y;
+		gtk_signal_emit(GTK_OBJECT(panel),
+				panel_widget_signals[APPLET_MOVE_SIGNAL],
+				ad->applet);
+	}
+}
 
 
 static int
@@ -867,7 +897,6 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 {
 	PanelWidget *panel;
 	AppletData *ad;
-	int thick;
 	
 	if(panel_widget_inhibit_allocates)
 		return FALSE;
@@ -878,29 +907,7 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 	if(ad->pos == -1)
 		return FALSE;
 
-	if(ad->prevwidth!=allocation->width ||
-	   ad->prevheight!=allocation->height||
-	   ad->prevx!=allocation->x ||
-	   ad->prevy!=allocation->y) {
-		thick = panel_widget_get_thick(panel);
-		if(panel->thick != thick) {
-			panel->thick = thick;
-			panel_widget_set_size(panel);
-		}
-		
-		panel_widget_adjust_applet(panel,ad);
-
-		/*if a mass send move is not queued then send a move signal*/
-		if(g_list_find(send_panels,panel)==NULL)
-			gtk_signal_emit(GTK_OBJECT(panel),
-					panel_widget_signals[APPLET_MOVE_SIGNAL],
-					widget);
-
-		ad->prevwidth = allocation->width;
-		ad->prevheight = allocation->height;
-		ad->prevx = allocation->x;
-		ad->prevy = allocation->y;
-	}
+	send_applet_move(panel,ad);
 
 	return FALSE;
 }
@@ -951,11 +958,11 @@ send_move_idle(gpointer data)
 		GList *list;
 		PanelWidget *panel = send_panels->data;
 
-		for(list = panel->applet_list;list != NULL;list = g_list_next(list)) {
+		for(list = panel->applet_list;
+		    list != NULL;
+		    list = g_list_next(list)) {
 			AppletData *ad = list->data;
-			gtk_signal_emit(GTK_OBJECT(panel),
-					panel_widget_signals[APPLET_MOVE_SIGNAL],
-					ad->applet);
+			send_applet_move(panel,ad);
 		}
 		send_panels = g_list_remove_link(send_panels,send_panels);
 	}
