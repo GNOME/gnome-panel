@@ -24,13 +24,13 @@ INCLUDES =							\
 ALLOW_CRACKPOT_MENU_CODE=-DGTK_MENU_INTERNALS
 
 # Flags to make sure we're not using any deprecated functions
-DISABLE_DEPRECATED_CFLAGS = 					\
-	-DG_DISABLE_DEPRECATED					\
-	-DGDK_DISABLE_DEPRECATED				\
-	-DGTK_DISABLE_DEPRECATED				\
-	-DGDK_PIXBUF_DISABLE_DEPRECATED				\
-	-DGNOME_DISABLE_DEPRECATED				\
-	$(NULL)
+#DISABLE_DEPRECATED_CFLAGS = 					\
+#	-DG_DISABLE_DEPRECATED					\
+#	-DGDK_DISABLE_DEPRECATED				\
+#	-DGTK_DISABLE_DEPRECATED				\
+#	-DGDK_PIXBUF_DISABLE_DEPRECATED				\
+#	-DGNOME_DISABLE_DEPRECATED				\
+#	$(NULL)
 
 # Used by the GNOME_PROGRAM_STANDARD_PROPERTIES macros
 STANDARD_PROPERTIES_CFLAGS = 					\
@@ -104,7 +104,6 @@ panel_sources =			\
 	xstuff.c		\
 	panel-session.c		\
 	panel-compatibility.c   \
-	disclosure-widget.c	\
 	panel.c			\
 	applet.c		\
 	drawer.c  		\
@@ -151,7 +150,6 @@ panel_headers =			\
 	xstuff.h		\
 	panel-session.h		\
 	panel-compatibility.h   \
-	disclosure-widget.h	\
 	panel.h         	\
 	applet.h         	\
 	drawer.h  		\
@@ -202,7 +200,6 @@ gnome_panel_SOURCES =			\
 gnome_panel_LDADD =		\
 	$(X_LIBS)		\
 	$(PANEL_LIBS)		\
-	$(XINERAMA_LIBS)	\
 	-lpopt
 
 gnome_panel_LDFLAGS = -export-dynamic
