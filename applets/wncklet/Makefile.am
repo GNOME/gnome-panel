@@ -59,7 +59,6 @@ BUILT_SOURCES = inlinepixbufs.h
 EXTRA_DIST = \
 	GNOME_Wncklet_Factory.server.in.in \
 	$(IMAGES) \
-	$(pixmap_DATA) \
 	$(ui_DATA) \
 	$(schemas_in_files) \
 	$(glade_DATA)
@@ -74,9 +73,6 @@ $(server_in_files): $(server_in_files).in
 @INTLTOOL_SERVER_RULE@
 
 CLEANFILES = $(server_in_files) $(server_DATA) $(BUILT_SOURCES)
-
-pixmapdir = $(datadir)/pixmaps
-pixmap_DATA = gnome-show-desktop.png
 
 uidir    = $(datadir)/gnome-2.0/ui
 ui_DATA  = \
