@@ -1,10 +1,10 @@
 <?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "1.0">
-  <!ENTITY manrevision "2.2">
-  <!ENTITY date "Agosto 2002">
-  <!ENTITY applet "Conmutador de &aacute;reas de trabajo">
+  <!ENTITY appletversion "2.4.0">
+  <!ENTITY manrevision "2.4">
+  <!ENTITY date "Septiembre 2003">
+  <!ENTITY applet "Intercambiador de espacios de trabajo">
 
 ]>
 <!--
@@ -20,7 +20,7 @@
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
   <articleinfo>
-	 <title>Manual del aplique &applet; V&manrevision;</title>
+	 <title>Manual de la miniaplicación &applet; V&manrevision;</title>
 	 <copyright>
 		<year>2003</year>
 		<holder>Sun Microsystems</holder>
@@ -30,16 +30,15 @@
 		<year>2000</year>
 		<holder>John Fleck</holder>
 	 </copyright>
-<!-- translators: uncomment this:
 
   <copyright>
-   <year>2002</year>
-   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+   <year>2003</year>
+   <holder>Francisco Javier F. Serrador (es)</holder>
   </copyright>
 
-   -->
+
 	 <publisher>
-		<publishername> Proyecto de documentaci&oacute;n de GNOME </publishername>
+		<publishername> Proyecto de documentación de GNOME </publishername>
 	 </publisher>
 
 &legal;
@@ -49,7 +48,7 @@
 
 	 <authorgroup>
 		<author>
-		  <firstname>Equipo de documentaci&oacute;n de</firstname>
+		  <firstname>Equipo de documentación de</firstname>
 		  <surname>Sun GNOME</surname>
 		  <affiliation>
 			 <orgname>Sun Microsystems</orgname>
@@ -60,154 +59,198 @@
 		  <firstname>John</firstname>
 		  <surname>Fleck</surname>
 		  <affiliation>
-			 <orgname>Proyecto de documentaci&oacute;n de GNOME</orgname>
+			 <orgname>Proyecto de documentación de GNOME</orgname>
 			 <address> <email>jfleck@inkstain.net</email> </address>
 		  </affiliation>
 		</author>
       <!-- This is appropriate place for other contributors: translators,
-           maintainers,  etc. Commented out by default.
+           maintainers,  etc. Commented out by default.-->
            <othercredit role="translator">
-	     <firstname>Latin</firstname>
-	     <surname>Translator 1</surname>
+	     <firstname>Francisco Javier</firstname>
+	     <surname>F. Serrador</surname>
 	     <affiliation>
-	       <orgname>Latin Translation Team</orgname>
-	       <address> <email>translator@gnome.org</email> </address>
+	       <orgname>Gnome Hispano</orgname>
+	       <address> <email>traductores@es.gnome.org</email> </address>
 	     </affiliation>
-	     <contrib>Latin translation</contrib>
+	     <contrib>Traducción al español</contrib>
            </othercredit>
 -->
 	 </authorgroup>
 	 <revhistory>
 		<revision>
-		  <revnumber>Manual del aplique &applet; V&manrevision;</revnumber>
+		  <revnumber>Manual de la miniaplicación &applet; V&manrevision;</revnumber>
 		  <date>&date;</date>
 		  <revdescription>
-			 <para role="author">Equipo de documentaci&oacute;n de Sun GNOME				<email>gdocteam@sun.com</email></para>
-			 <para role="publisher">Proyecto de documentaci&oacute;n de GNOME</para>
+			 <para role="author">Equipo de documentación de Sun GNOME				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Proyecto de documentación de GNOME</para>
 		  </revdescription>
 		</revision>
 		<revision>
-		  <revnumber>Manual del aplique Conmutador de &aacute;reas de trabajo V2.1</revnumber>
+		  <revnumber>Manual de la miniaplicación &applet; V2.3</revnumber>
+		  <date>Agosto 2003</date>
+		  <revdescription>
+			 <para role="author">Equipo de documentación de Sun GNOME				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Proyecto de documentación de GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision>
+		  <revnumber>Manual de la miniaplicación &applet; V2.2</revnumber>
+		  <date>Agosto 2002</date>
+		  <revdescription>
+			 <para role="author">Equipo de documentación de Sun GNOME				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Proyecto de documentación de GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision>
+		  <revnumber>Manual de la miniaplicación &applet; V2.1</revnumber>
 		  <date>Julio 2002</date>
 		  <revdescription>
-			 <para role="author">Equipo de documentaci&oacute;n de Sun GNOME				<email>gdocteam@sun.com</email></para>
-			 <para role="publisher">Proyecto de documentaci&oacute;n de GNOME</para>
+			 <para role="author">Equipo de documentación de Sun GNOME				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Proyecto de documentación de GNOME</para>
 		  </revdescription>
 		</revision>
 		<revision>
-		  <revnumber>Manual del aplique Conmutador de &aacute;reas de trabajo V&manrevision;</revnumber>
+		  <revnumber>Manual de la miniaplicación &applet; V2.0</revnumber>
 		  <date>Marzo 2002</date>
 		  <revdescription>
-			 <para role="author">Equipo de documentaci&oacute;n de Sun GNOME				<email>gdocteam@sun.com</email></para>
-			 <para role="publisher">Proyecto de documentaci&oacute;n de GNOME</para>
+			 <para role="author">Equipo de documentación de Sun GNOME				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Proyecto de documentación de GNOME</para>
 		  </revdescription>
 		</revision>
 		<revision>
-		  <revnumber>Manual del aplique Desk Guide</revnumber>
+		  <revnumber>Manual de la miniaplicación Desk Guide</revnumber>
 		  <date>2000</date>
 		  <revdescription>
 			 <para role="author">John Fleck
 				<email>jfleck@inkstain.net</email></para>
-			 <para role="publisher">Proyecto de documentaci&oacute;n de GNOME</para>
+			 <para role="publisher">Proyecto de documentación de GNOME</para>
 		  </revdescription>
 		</revision>
 	 </revhistory>
-	 <releaseinfo> Este manual describe la versi&oacute;n &appletversion; de &applet;.
-		</releaseinfo>
+	 <releaseinfo> Este manual describe la versión &appletversion; de &applet;.</releaseinfo>
 	 <legalnotice>
 		<title>Comentarios</title>
-		<para> Para informar de un defecto o hacer una sugerencia sobre el aplique &applet; o el presente manual, siga las indicaciones que aparecen en la
+		<para> Para informar de un defecto o hacer una sugerencia sobre la miniaplicación &applet; o el presente manual, siga las indicaciones que aparecen en la página 
 		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
 
 	 </legalnotice>
   </articleinfo>
   <indexterm>
-	 <primary>Conmutador de &aacute;reas de trabajo</primary>
+	 <primary>Intercambiador de espacios de trabajo</primary>
   </indexterm>
 <!-- ============= Document Body ============================= -->
 <!-- ============= Introduction ============================== -->
   <sect1 id="workspacelist-introduction">
-	 <title>Introducci&oacute;n</title>
+	 <title>Introducción</title>
 	<!-- ==== Figure ============================================= -->
 	 <figure id="workspacelist-fig">
-		<title>Aplique de &applet; </title>
+		<title>Miniaplicación &applet; </title>
 		<screenshot>
 		  <mediaobject>
-			 <imageobject><imagedata fileref="figures/workspace_switcher_applet.png"  				format="PNG"/>
+			 <imageobject><imagedata fileref="figures/workspace_switcher_applet.png" format="PNG"/>
 			 </imageobject>
 			 <textobject>
-				<phrase>Muestra el aplique Conmutador de &aacute;reas de trabajo. Contiene un bot&oacute;n por cada &aacute;rea.</phrase>
+				<phrase>Muestra la miniaplicación Intercambiador de espacios de trabajo. Contiene un botón por cada espacio.</phrase>
 			 </textobject>
 		  </mediaobject>
 		</screenshot>
 	 </figure>
     	<!-- ==== End of Figure ======================================= -->
-	<para>El aplique <application>&applet;</application> muestra las &aacute;reas de trabajo existentes en el escritorio de GNOME.
-	Un &aacute;rea de trabajo es un &aacute;rea definida del escritorio en la que se trabaja. Todas las &aacute;reas de trabajo del escritorio contienen los mismos fondos, paneles y men&uacute;s. Sin embargo, pueden ejecutarse aplicaciones distintas y abrir ventanas distintas en cada &aacute;rea de trabajo. En el escritorio s&oacute;lo puede mostrarse un &aacute;rea de trabajo, pero se pueden tener ventanas abiertas en otras &aacute;reas. </para>
+	<para>La miniaplicación <application>&applet;</application> muestra los espacios de trabajo existentes en el escritorio de Gnome.
+	Un espacio de trabajo es un área discreta en el escritorio Gnome en la que puede trabajar. Cada espacio de trabajo en escritorio 
+        Gnome contiene los mismos fondos, paneles y menús. Sin embargo puede ejecutar aplicaciones distintas y abrir ventanas distintas 
+        en cada espacio de trabajo. Sólo puede mostrarse un espacio de trabajo en un momento dado, pero se pueden tener ventanas abiertas
+         en otras espacios. </para>
 
-	<para>De forma predeterminada el aplique <application>&applet;</application> muestra una representaci&oacute;n visual de las &aacute;reas de trabajo del escritorio, tal como se muestra en la <xref linkend="workspacelist-fig"/>. El aplique muestra las ventanas de la aplicaci&oacute;n y los cuadros de di&aacute;logo abiertos en un &aacute;rea de trabajo. El aplique resalta el fondo del &aacute;rea de trabajo actual y la ventana que est&aacute; activa.
-	La conducta predeterminada del aplique puede cambiarse, de manera que s&oacute;lo muestre los nombres de las &aacute;reas de trabajo. Consulte <xref linkend="workspacelist-prefs"/> para obtener m&aacute;s informaci&oacute;n sobre c&oacute;mo configurar el aplique.</para>
+	<para>De forma predeterminada la miniaplicación <application>&applet;</application> muestra una representación visual de los 
+        espacios de trabajo del Escritorio Gnome, tal como se muestra en la <xref linkend="workspacelist-fig"/>. La miniaplicación muestra 
+        las ventanas de la aplicación y los diálogos en un espacio de trabajo. La miniaplicación resalta el fondo del espacio de trabajo 
+        actual y la ventana que tiene el foco. Puede cambiar el comportamiento predeterminado de la miniaplicación, de manera que sólo 
+        muestre los nombres de los espacios de trabajo. Consulte <xref linkend="workspacelist-prefs"/> para obtener más información sobre 
+        cómo configurar la miniaplicación.</para>
 
-	<para>La <xref linkend="workspacelist-fig"/> muestra el aplique <application>&applet;</application> cuando la sesi&oacute;n de GNOME tiene cuatro &aacute;reas de trabajo. El aplique muestra las &aacute;reas de trabajo ordenadas de izquierda a derecha y a lo largo de las filas del aplique.
-	En la <xref linkend="workspacelist-fig"/> el aplique est&aacute; configurado para mostrar las &aacute;reas de trabajo en una fila.
-	Consulte <xref linkend="workspacelist-prefs"/> para obtener informaci&oacute;n sobre c&oacute;mo cambiar el n&uacute;mero de filas del aplique. </para>
+	<para>La <xref linkend="workspacelist-fig"/> muestra la miniaplicación <application>&applet;</application> cuando una sesión de 
+        contiene cuatro espacios de trabajo. La miniaplicación muestra los espacios de trabajo ordenados de izquierda a derecha y a lo 
+        largo de las filas de la miniaplicación.
+	En la <xref linkend="workspacelist-fig"/> la miniaplicación está configurada para mostrar los espacios de trabajo en una fila.
+	Consulte <xref linkend="workspacelist-prefs"/> para obtener información sobre cómo cambiar el número de filas de la 
+        miniaplicación. </para>
 
-	<para>Para a&ntilde;adir <application>&applet;</application> a un panel, haga clic con el bot&oacute;n derecho del rat&oacute;n en el panel y luego seleccione <menuchoice>
-	<guimenu>A&ntilde;adir al panel</guimenu>
+	<para>Para añadir <application>&applet;</application> a un panel, pulse con el botón derecho del ratón en el panel y luego 
+        seleccione <menuchoice>
+	<guimenu>Añadir al panel</guimenu>
 	<guisubmenu>Utilidades</guisubmenu>
-	<guimenuitem>Conmutador de &aacute;reas de trabajo</guimenuitem>
+	<guimenuitem>Intercambiador de espacios de trabajo</guimenuitem>
 	</menuchoice>.
 	</para>
   </sect1>
 <!-- ================ Usage ================================ -->
-  <sect1 id="workspacelist-usage"><title>Uso</title>
-	<sect2 id="workspacelist-navigate"><title>Cambiar de &aacute;reas de trabajo</title>
-	<para>El fondo del bot&oacute;n del aplique que representa el &aacute;rea de trabajo actual aparece resaltado. Para cambiar a otra &aacute;rea de trabajo, haga clic en el bot&oacute;n que representa la nueva &aacute;rea de trabajo. Si hace clic en un bot&oacute;n de &aacute;rea de trabajo de una ventana espec&iacute;fica, <application>&applet;</application> cambia a la nueva &aacute;rea de trabajo y activa esta ventana. Para volver al &aacute;rea de trabajo original, haga clic en el bot&oacute;n que representa el &aacute;rea de trabajo en <application>&applet;</application>.</para>
-	<para>Cuando se cambia a un &aacute;rea de trabajo diferente, el contenido del aplique
-	<application>Lista de ventanas</application> tambi&eacute;n cambia, mostr&aacute;ndose las ventanas que est&aacute;n abiertas en la nueva &aacute;rea de trabajo.</para>
+  <sect1 id="workspacelist-usage">
+        <title>Uso</title>
+	<sect2 id="workspacelist-navigate">
+        <title>Para cambiar entre los espacios de trabajo</title>
+	<para>El fondo del botón de la miniaplicación que representa el espacio de trabajo actual aparece resaltado. 
+        Para cambiar a otro espacio de trabajo, pulse en el botón que representa el espacio de trabajo nuevo. Si pulsa 
+        en una ventana específica dentro de un botón de espacio de trabajo, <application>&applet;</application> cambia 
+        al espacio de trabajo nuevo y da el foco a dicha ventana. Para volver al espacio de trabajo original, pulse en
+        el botón que representa al espacio de trabajo en <application>&applet;</application>.</para>
+
+	<para>Cuando cambia a un espacio de trabajo diferente, el contenido de la miniaplicación
+	<application>Lista de ventanas</application> también cambia, mostrándose las ventanas que están abiertas en el 
+        espacio de trabajo nuevo.</para>
 	</sect2>
-	<sect2 id="workspacelist-move-window"><title>Desplazar una ventana de un &aacute;rea de trabajo a otra</title>
-	<para>Si desea usar el <application>&applet;</application> para desplazar una ventana de un &aacute;rea de trabajo a otra, arrastre la ventana del &aacute;rea en uso a la nueva. </para>
+	
+        <sect2 id="workspacelist-move-window">
+        <title>Desplazar una ventana de un espacio de trabajo a otro</title>
+	<para>Si desea usar el <application>&applet;</application> para desplazar una ventana desde un espacio de trabajo 
+        a otro, arrastre la ventana del espacio de trabajo actual al nuevo. </para>
 	</sect2>
   </sect1>
 <!-- ============= Preferences ============================= -->
 
   <sect1 id="workspacelist-prefs">
 	 <title>Preferencias</title>
-	 <para>Si desea configurar <application>&applet;</application>, haga clic con el bot&oacute;n derecho del rat&oacute;n encima del aplique y, a continuaci&oacute;n, elija <guimenuitem>Preferencias</guimenuitem>. </para>
+	 <para>Si desea configurar <application>&applet;</application>, pulse con el botón derecho del ratón 
+         encima de la miniaplicación y, a continuación, elija <guimenuitem>Preferencias</guimenuitem>. </para>
 	 <variablelist>
-	 <varlistentry><term><guilabel>Mostrar los nombres de las &aacute;reas de trabajo en el conmutador</guilabel> </term>
-	 	<listitem>
-	 	<para>Seleccione esta opci&oacute;n para que se muestren los nombres de las &aacute;reas de trabajo en el aplique en lugar de una representaci&oacute;n visual de &eacute;stas.</para>
-	 	<para>Valor predeterminado:  no seleccionado.</para>
-	 	</listitem>
+	 <varlistentry><term><guilabel>Intercambiador</guilabel></term>
+	    <listitem>
+	     <para>Seleccione una de estas opciones para determinar qué espacios de trabajo desea que 
+                   muestre el <application>&applet;</application>:</para>
+		<itemizedlist>
+                   <listitem><para><guilabel>Mostrar sólo el espacio de trabajo actual</guilabel></para>
+	 		<para>Seleccione esta opción para que sólo se muestre el espacio de trabajo actual 
+                              en la miniaplicación <application>&applet;</application>. </para>
+	 	   </listitem>
+	 	   <listitem><para><guilabel>Mostrar todos los espacios de trabajo en X filas</guilabel></para>
+	 		<para>Seleccione esta opción para que la miniaplicación <application>&applet;</application> 
+                              muestre todos los espacios de trabajo del escritorio de Gnome. Use el cuadro de 
+                              incremento para de especificar el número de filas que desea usar para mostrar los 
+                              espacios de trabajo en la miniaplicación. </para>
+	 	  </listitem>
+	 	</itemizedlist>
+	    </listitem>
 	 </varlistentry>
-	 <varlistentry><term>Contenido del conmutador de &aacute;reas de trabajo</term>
-	 	<listitem>
-	 	<para>Seleccione una de estas opciones para determinar qu&eacute; &aacute;reas de trabajo desea que muestre el <application>&applet;</application>:</para>
-	 		<itemizedlist>
-	 		<listitem><para><guilabel>Mostrar s&oacute;lo el &aacute;rea de trabajo actual</guilabel></para>
-	 		<para>Seleccione esta opci&oacute;n para que s&oacute;lo se muestre el &aacute;rea de trabajo actual en el aplique <application>&applet;</application>. </para>
-	 		</listitem>
-	 		<listitem><para><guilabel>Mostrar todas las &aacute;reas de trabajo</guilabel></para>
-	 		<para>Seleccione esta opci&oacute;n para que el aplique <application>&applet;</application> muestre todas las &aacute;reas de trabajo del escritorio de GNOME. Use el cuadro de incremento <guilabel>Filas</guilabel> con el fin de especificar el n&uacute;mero de filas que desea usar para mostrar las &aacute;reas de trabajo en el aplique. </para>
-	 		</listitem>
-	 		</itemizedlist>
-	 	<para>Valor predeterminado:   <guilabel>Mostrar todas las &aacute;reas de trabajo</guilabel>, 1 fila.</para>
-		</listitem>
-	 </varlistentry>
-	 <varlistentry><term><guilabel>&Aacute;reas de trabajo</guilabel> </term>
-	 	<listitem>
-	 	<para>Use el cuadro de lista para editar los nombres de las &aacute;reas de trabajo del escritorio. Para editar un nombre de &aacute;rea de trabajo, selecci&oacute;nelo y escriba el nuevo. </para>
-	 	</listitem>
-	 </varlistentry>
-	 <varlistentry><term><guilabel>N&uacute;mero de &aacute;reas de trabajo</guilabel> </term>
-	 	<listitem>
-	 	<para>Use este cuadro de incremento para aumentar o disminuir el n&uacute;mero de &aacute;reas de trabajo de la sesi&oacute;n de GNOME.</para>
-	 	<para>Valor predeterminado:   4.</para>
-	 	</listitem>
+	 <varlistentry><term><guilabel>Espacios de trabajo</guilabel></term>
+	 	<listitem><para>Use las siguientes opciones para determinar cómo mostrará la miniaplicación los escritorios: </para>
+                  <itemizedlist>
+	 	    <listitem><para><guilabel>Número de espacios de trabajo</guilabel></para>
+                      <para>Use este cuadro de incremento para aumentar o disminuir el número de espacios de trabajo en una sesión.</para>
+                    </listitem>
+                    <listitem><para><guilabel>Nombres de los espacios de trabajo</guilabel></para>
+                      <para>Use este cuadro de lista para editar los nombres de los espacios de trabajo en el Escritorio Gnome. Para
+                      editar un nombre de espacio de trabajo,  pulse dos veces en el nombre y después escriba el nombre nuevo.</para>
+                    </listitem>
+	            <listitem><para><guilabel> Mostrar nombres del espacio de trabajo en el intercambiador</guilabel></para>
+	            <para>Seleccione esta opción para mostrar los nombres de los espacios de trabajo en la miniaplicación en 
+                          vez de una representación visual de los espacios de trabajo.</para>
+	            </listitem>
+	          </itemizedlist>
+	       </listitem>
 	 </varlistentry>
 	 </variablelist>
   </sect1>
 
 </article>
+
+
