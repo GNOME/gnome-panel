@@ -214,14 +214,14 @@ main(int argc, char **argv)
 	applets = g_array_new(FALSE);
 	applet_count = 0;
 
-	init_user_panels();
-
 	panel_tooltips = gtk_tooltips_new();
-
-	init_user_applets();
 
 	/*set the globals*/
 	load_up_globals();
+
+	init_user_panels();
+
+	init_user_applets();
 
 	/*add forbidden lists to ALL panels*/
 	g_list_foreach(panels,(GFunc)panel_widget_add_forbidden,NULL);

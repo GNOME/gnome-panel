@@ -15,6 +15,7 @@ struct _GlobalConfig {
 	int prompt_for_logout;
 	PanelMovementType movement_type;
 	int disable_animations;
+	int applet_padding;
 };
 
 

@@ -168,7 +168,8 @@ void		panel_widget_change_global	(int explicit_step,
 						 int minimized_size,
 						 int minimize_delay,
 						 PanelMovementType move_type,
-						 int disable_animations);
+						 int disable_animations,
+						 int applet_padding);
 
 /*get the number of applets*/
 int		panel_widget_get_applet_count	(PanelWidget *panel);

@@ -33,7 +33,11 @@ GlobalConfig global_config = {
 		DEFAULT_MINIMIZED_SIZE,
 		DEFAULT_MINIMIZE_DELAY,
 		TRUE, /*tooltips*/
-		TRUE /*show small icons*/
+		TRUE, /*show small icons*/
+		TRUE, /*logout question*/
+		PANEL_SWITCH_MOVE,
+		FALSE, /*disable anims*/
+		3 /*applet padding*/
 	};
 
 char *panel_cfg_path=NULL;
@@ -73,7 +77,8 @@ apply_global_config(void)
 				   global_config.minimized_size,
 				   global_config.minimize_delay,
 				   global_config.movement_type,
-				   global_config.disable_animations);
+				   global_config.disable_animations,
+				   global_config.applet_padding);
 	if(global_config.tooltips_enabled)
 		gtk_tooltips_enable(panel_tooltips);
 	else
@@ -422,6 +427,8 @@ do_session_save(GnomeClient *client,
 				      global_config.prompt_for_logout);
 		gnome_config_set_bool("disable_animations",
 				      global_config.disable_animations);
+		gnome_config_set_int("applet_padding",
+				     global_config.applet_padding);
 	}
 
 	gnome_config_pop_prefix ();
@@ -880,6 +887,8 @@ load_up_globals(void)
 		
 	g_snprintf(buf,256,"movement_type=%d", PANEL_SWITCH_MOVE);
 	global_config.movement_type=gnome_config_get_int(buf);
+
+	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
 		
 	gnome_config_pop_prefix();
 

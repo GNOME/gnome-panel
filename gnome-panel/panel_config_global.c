@@ -310,6 +310,13 @@ misc_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
+	/* Minimize Delay scale frame */
+	frame = make_int_scale_frame(_("Applet Padding"),
+				      &(temp_config.applet_padding),
+				      0.0,10.0);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+
 	return (vbox);
 }
 
