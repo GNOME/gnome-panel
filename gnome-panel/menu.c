@@ -2955,8 +2955,6 @@ remove_panel_query (GtkWidget *menuitem,
 			"Delete this panel?"));
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"panel_remove_query", "Panel");
-	gtk_window_set_screen (GTK_WINDOW (dialog),
-			       gtk_window_get_screen (GTK_WINDOW (panel)));
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (remove_panel_accept),
