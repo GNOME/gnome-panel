@@ -3,8 +3,8 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appletversion "1.0">
-  <!ENTITY manrevision "2.3">
-  <!ENTITY date "January 2003">
+  <!ENTITY manrevision "2.4">
+  <!ENTITY date "February 2003">
   <!ENTITY applet "Window List">
 
 ]>
@@ -53,7 +53,7 @@
 		  <surname>GNOME Documentation Team</surname> 
 		  <affiliation> 
 			 <orgname>Sun Microsystems</orgname> 
-			 <address> <email>gdocteam@sun.com</email> </address> 
+			 <!-- <address> <email>gdocteam@sun.com</email> </address> -->
 		  </affiliation> 
 		</author> 
 		<author> 
@@ -82,8 +82,15 @@
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
 		  <date>&date;</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Window List Applet Manual V2.3</revnumber> 
+		  <date>January 2003</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision>
@@ -91,8 +98,7 @@
 		  <revnumber>Window List Applet Manual V2.2</revnumber> 
 		  <date>August 2002</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision>
@@ -100,8 +106,7 @@
 		  <revnumber>Window List Applet Manual V2.1</revnumber> 
 		  <date>July 2002</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision>
@@ -109,8 +114,7 @@
 		  <revnumber>Window List Applet Manual V2.0</revnumber> 
 		  <date>March 2002</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision> 
@@ -207,7 +211,7 @@
 	<sect2 id="window-groups">
 	<title>Grouping Buttons</title>
 	<para>If the space on a panel is limited, <application>&applet;</application> can group the 
-	buttons that represent windows of the same class under one <application>&applet;</application> 
+	buttons that represent windows that belong to the same process under one <application>&applet;</application> 
 	button. To open a list of the buttons in a button group, click on the 
 	<application>&applet;</application> button that represents the button group. The 
 	<guibutton>Gnome-terminal</guibutton> button in <xref linkend="windowlist-applet-fig"/> 
@@ -240,7 +244,7 @@
 	does not have focus, the applet gives focus to the window. </para>
 	</listitem>
 	<listitem>
-	<para>To minimize to a window</para>
+	<para>To minimize a window</para>
 	<para>If you click on the <application>&applet;</application> button that represents the window that has focus, the applet 
 	minimizes the window. </para>
 	</listitem>
@@ -270,7 +274,6 @@
 	 	<para>Select this option to show the windows that are open in all workspaces.</para>
 	 	</listitem>
 	 	</itemizedlist>
-	 <para>Default: <guilabel>Show windows from current workspace</guilabel>.</para>
 	 </listitem>
 	 </varlistentry>
 	 <varlistentry><term><guilabel>When restoring minimized windows</guilabel> </term>
@@ -287,29 +290,26 @@
 	 	from the applet. </para>
 	 	</listitem>
 	 	</itemizedlist>
-
-	 <para>Default: <guilabel>Restore to current workspace</guilabel>.</para>
 	 </listitem>
 	 </varlistentry>
 	 <varlistentry><term><guilabel>Window grouping</guilabel> </term>
 	 <listitem>
-	 <para>To specify when <application>&applet;</application> groups windows of the same class, select one of the following options: </para>
+	 <para>To specify when <application>&applet;</application> groups windows that belong to the same process, select one of the following options: </para>
 		<itemizedlist>
 	 	<listitem>
 	 	<para><guilabel>Never group windows</guilabel></para>
-	 	<para>Select this option to never group windows of the same class under one <application>&applet;</application> button.</para>
+	 	<para>Select this option to never group windows of the same process under one <application>&applet;</application> button.</para>
 		</listitem>
 	 	<listitem>
 	 	<para><guilabel>Group windows when space is limited</guilabel></para>
-	 	<para>Select this option to group windows of the same class under one <application>&applet;</application> button when
+	 	<para>Select this option to group windows of the same process under one <application>&applet;</application> button when
 	 	the space on the panel is restricted.</para>
 		</listitem>
 	 	<listitem>
 	 	<para><guilabel>Always group windows</guilabel></para>
-	 	<para>Select this option to always group windows of the same class under one <application>&applet;</application> button.</para>
+	 	<para>Select this option to always group windows of the same process under one <application>&applet;</application> button.</para>
 		</listitem>
 		</itemizedlist>
-	 <para>Default: <guilabel>Group windows when space is limited</guilabel>.</para>
 	 </listitem>
 	 </varlistentry>
 	 <varlistentry><term><guilabel>Window List size</guilabel> </term>
@@ -321,12 +321,10 @@
 	 	<para><guilabel>Minimum size</guilabel></para>
 	 	<para>Specify the minimum size of the applet. If the panel is smaller than the minimum size specified, the panel
 	 	adjusts in size to fit the applet.</para>
-		<para>Default: 50 pixels.</para>
 		</listitem>
 	 	<listitem>
 	 	<para><guilabel>Maximum size</guilabel></para>
 	 	<para>Specify the maximum size of the applet.</para>
-		<para>Default: 4096 pixels.</para>
 		</listitem>
 		</itemizedlist>
 	 </listitem>
