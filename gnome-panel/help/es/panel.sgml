@@ -1,0 +1,2397 @@
+<!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
+]>
+
+ <article id="index" lang="es">
+
+  <artheader>
+    <title>Manual del panel de Gnome</title>
+    <copyright>
+      <year>2000</year>
+      <holder>Red Hat, Inc.</holder>
+      <holder>Dan Mueth</holder>
+      <holder>Alexander Kirillov</holder>
+    </copyright>
+
+<copyright>
+<year>2001</year>
+<holder>Miquel Jordana (traducción al Castellano)</holder>
+</copyright>
+
+  <legalnotice id="legalnotice">
+
+   <para>Permission is granted to copy, distribute and/or modify this
+   document under the terms of the <ulink type="help"
+   url="gnome-help:fdl"><citetitle>GNU Free Documentation
+   License</citetitle></ulink>, Version 1.1 or any later version
+   published by the Free Software Foundation with no Invariant
+   Sections, no Front-Cover Texts, and no Back-Cover Texts.  A copy of
+   the license can be found <ulink type="help"
+   url="gnome-help:fdl">here</ulink>.</para>
+
+           <para>
+       Se permite la copia, distribución y/o modificación de este
+       documento bajo los términos de la licencia de documentación libre
+       de GNU, versión 1.1 o cualquier versión posterior publicada por la
+       fundación para el software libre; sin secciones invariantes, sin
+       portada, y sin contraportada.
+       Una copia de esta licencia esta disponible en la fundación para el
+       software libre y puede leerse en
+       <ulink type="help" url="gnome-help:fdl">linea</ulink>.
+       </para>
+
+
+   <para>Many of the names used by companies to distinguish their
+   products and services are claimed as trademarks. Where those names
+   appear in any GNOME documentation, and those trademarks are made
+   aware to the members of the GNOME Documentation Project, the names
+   have been printed in caps or initial caps.
+   </para>
+
+      <para>
+        Muchos de los nombres usados por las compañías para diferencias sus
+        productos y servicios son reclamados como marcas registradas. Allí
+        donde estos nombres aparezcan en la documentación de Gnome, y cuando
+        los miembros del proyecto de documentación Gnome hayan sido informados
+        de esas marcas registradas, los nombres estarán impresos en mayúsculas
+        o como nombres propios.
+      </para>
+
+
+  </legalnotice>
+
+
+    <releaseinfo>
+     Esta es la versión 1.0 del manual del panel de Gnome.
+    </releaseinfo>
+  </artheader>
+
+  <sect1 id="introduction">
+   <title>Introducción</title>
+   <para>
+    <indexterm id="idx-a2">
+      <primary>Panel</primary>
+    </indexterm>
+    El <interface>Panel</interface> Gnome es el corazón de la interfaz
+    GNOME y actúa como un depósito para el <link linkend="mainmenu">Menú
+    principal</link>, los <link linkend="menus">menús</link> de usuario,
+    <link linkend="launchers">lanzadores</link> de aplicaciones, <link
+    linkend="applets">apliques</link> (aplicaciones que se ejecutan 
+    enteramente dentro del panel),<link linkend="drawers">cajones</link>
+    , y numerosos <link linkend="specialobjects">objetos especiales</link>.
+    El <interface>Panel</interface> se diseño para ser altamente
+    configurable. Puede <link linkend="panelproperties">
+    personalizar su aspecto y apariencia</link> fácilmente y
+    <link linkend="appletadd">añadir y quitar objetos</link> para
+    adaptarse a sus necesidades y preferencias personales. Puede incluso
+    tener <link linkend="paneladd">múltiples paneles</link>, cada uno
+    con su propia apariencia, propiedades, y contenidos. Esta flexibilidad 
+    le permite crear fácilmente un confortable y eficiente entorno
+    de escritorio personalizado.
+   </para>
+   <para>
+    Este manual describe la versión 1.4 del <interface>Panel</interface>
+    Gnome.
+   </para>
+  </sect1>
+
+  <!-- ########### Panel Basics ############## -->
+  <sect1 id="panelbasics">
+   <title>Lo básico</title>
+   <para>
+    El uso del <interface>panel</interface> de Gnome es muy simple y
+    es fácil de usar para todo aquel que haya usado un entorno de
+    escritorio gráfico. Esta sección le dará instrucciones básicas
+    que le ayudaran en sus comienzos, y las siguientes secciones
+    presentaran los distintos objetos y funciones en mayor detalle.
+   </para>
+
+   <sect2 id="intropanel">
+    <title>Introducción a los objetos del panel</title>
+    <para>
+     Un <interface>panel</interface> puede contener muchos tipos de
+     objetos. El <interface>panel</interface>de ejemplo en 
+     <xref linkend="examplepanelfig"> muestra cada uno de los tipos
+     de objetos de panel.
+    </para>
+    <figure id="examplepanelfig">
+     <title>Un ejemplo de panel</title>
+     <screenshot>
+     <screeninfo>Un ejemplo de panel.</screeninfo>
+      <graphic fileref="./figures/example_panel" format="png"
+         srccredit="muet">
+      </graphic>
+     </screenshot>
+    </figure>
+
+    <para>
+     Este ejemplo de <interface>panel</interface> contiene los siguientes
+     objetos:
+     <itemizedlist>
+      <listitem>
+       <formalpara>
+        <title>Menús</title>
+        <para>
+         Los menús son listas de ítem, cada uno de los cuales puede
+         arrancar una aplicación, ejecutar un comando, o ser un submenú.
+         En el ejemplo de <interface>panel</interface> en <xref
+         linkend="examplepanelfig"> , el icono mas a la izquierda
+         después de la flecha es un estilizado icono de una huella
+         de un pie (el logo de Gnome). Este es el <guimenu>Menú
+         principal </guimenu>, uno de los objetos mas importantes en el
+         <interface>panel</interface>. Este menú proporciona acceso a
+         la mayoría de las aplicaciones, comandos, y opciones de
+         configuración disponibles en Gnome. El <guimenu>menú
+         principal</guimenu> se describe en detalle en <xref
+         linkend="mainmenu">. el segundo icono mostrado es un carpeta,
+         el icono usado por omisión para los menús de usuario. Gnome
+         permite a los usuarios crear sus propios menús con contenidos
+         personalizados para usarlos en unión del <guimenu>menú
+         principal</guimenu>. Para abrir un menú, simplemente pulse
+         sobre el icono con el botón izquierdo del ratón. Para obtener
+         más información sobre los menús, véase <xref linkend="menus">.
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>Lanzadores</title>
+        <para>
+         Los lanzadores son botones que o bien arrancan una aplicación
+         o bien ejecutan un comando cuando se pulsan (pulsar con
+         el botón izquierdo del ratón). el tercer icono en el 
+         <interface>panel</interface> de ejemplo es un lanzador que
+         arranca la hoja de cálculo <application>Gnumeric</application>.
+         Para obtener más información sobre lanzadores, véase <xref
+         linkend="launchers">.
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>Apliques</title>
+        <para>
+         Los apliques son aplicaciones que se ejecutan ocupando una
+         pequeña parte del <interface>Panel</interface>. Los iconos del
+         cuarto al octavo en el <interface>Panel</interface> de ejemplo
+         son apliques. El primer aplique mostrado es el aplique 
+         <application>el tiempo de Gnome </application>,
+<!-- en España de dice el tiempo (antiguamente el hombre del tiempo) -->
+         que periódicamente descarga la actuales condiciones atmosféricas
+         de la Web y muestra la información. El segundo aplique
+         mostrado es el <application>montador de dispositivos</application>,
+         que muestra cuando un disco (en este caso, un disquete) está
+         montado y permite montar y desmontar el dispositivo con una
+         simple pulsación de ratón. El tercer aplique mostrado es el
+         <application>lanzador rápido</application>, que actúa como un
+         contenedor para lanzadores, pero ahorra espacio al no situar
+         los lanzadores directamente en el <interface>Panel</interface>.
+         En el ejemplo mostrado el aplique <application>lanzador
+         rápido</application> contiene seis lanzadores de aplicaciones.
+         Después está el <application>paginador de escritorio Gnome</application>,
+         que permite controlar múltiples escritorios virtuales, cada
+         uno de los cuales puede tener múltiples pantallas. Puede
+         moverse entre escritorios y pantallas pulsando con el botón
+         izquierdo del ratón. El ultimo aplique mostrado es la
+         <application>lista de tareas</application>, que permite controlar
+         las ventanas de aplicaciones de distintas maneras, incluyendo
+         cambiar del foco, iconificar ventanas, cerrar ventanas, y matar
+         ventanas. La <application>lista de tareas</application> mostrada
+         corresponde a una pantalla con dos ventanas, ambas con la aplicación
+         <application>Ojos eléctricos (Electric Eyes)</application>. Para
+         obtener más información sobre apliques, véase <xref linkend="applets">.
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>Cajones</title>
+        <para>
+         Los cajones son esencialmente extensiones del
+         <interface>Panel</interface> que pueden abrirse o cerrarse. Puede
+         contener cualquier cosa que pueda contener el 
+         <interface>Panel</interface>. El icono marrón de un cajón en
+         el <interface>Panel</interface> de ejemplo es el icono por
+         omisión para los cajones, pero se puede usar cualquier icono.
+         Pulse en el icono del <guiicon>cajón</guiicon> con el botón
+         izquierdo del ratón para abrirlo y cerrarlo. Para obtener más
+         información sobre los cajones, véase <xref linkend="drawers">.
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>Objetos especiales</title>
+        <para>
+         Los objetos especiales son elementos que puede añadir en el
+         <interface>Panel</interface> para realizar funciones que no
+         están generalmente disponibles a través de otros objetos del
+         <interface>Panel</interface>. El ultimo ítem en el 
+         <interface>Panel</interface> de ejemplo es un objeto especial
+         llamado <guibutton>Botón de salida</guibutton>. Al pulsar el
+         botón izquierdo sobre él, comienza la secuencia de salida de la
+         sesión Gnome. Para obtener más información acerca de los
+         objetos especiales, véase <xref linkend="specialobjects">.
+        </para>
+       </formalpara>
+      </listitem>
+     </itemizedlist>
+    </para>
+    <para>
+     Cada uno de estos tipos de objetos se describe en detalle en las
+     siguientes secciones. Puede añadir, mover, o quitar fácilmente
+     objetos del Panel (véase <xref linkend="appletadd">).
+    </para>
+   </sect2>
+
+   <sect2 id="rightclick">
+    <title>Menú del botón derecho</title>
+    <para>
+     Al pulsar con el botón derecho del ratón sobre cualquier objeto
+     del Panel se abre el menú del <guimenu>botón derecho</guimenu>.
+     Este menú contiene los ítem <guimenuitem>Quitar del panel</guimenuitem>
+     para eliminar objetos del <interface>Panel</interface>, 
+     <guimenuitem>Mover</guimenuitem> para mover objetos dentro del
+     <interface>Panel</interface> o entre dos <interface>Paneles</interface>,
+     el submenú de <guisubmenu>Panel</guisubmenu> descrito más abajo,
+     y generalmente uno o mas menús específicos al objeto. Para los
+     cajones, menús, y lanzadores el único ítem especifico al objeto es
+     <guimenuitem>Propiedades...</guimenuitem> que permite personalizar
+     las propiedades y parámetros del objeto. Para los apliques, el menú
+     <guimenu>botón derecho</guimenu> contiene a menudo el ítem 
+     <guimenuitem>Acerca...</guimenuitem> para mostrar información sobre el 
+     aplique como el nombre del autor y la versión del aplique,
+     <guimenuitem>Ayuda</guimenuitem> para ver la documentación del aplique,
+     y <guimenuitem>Propiedades...</guimenuitem> para configurar las
+     preferencias y parámetros del aplique. Los apliques tienen a menudo
+     otros controles específicos en su menú de <guimenu>botón derecho</guimenu>.
+    </para>
+    <para>
+     El submenú <guisubmenu>Panel</guisubmenu> permite <link 
+     linkend="panelmove"> crear y eliminar <interface>Paneles</interface></link>
+     y <link linkend="appletadd">añadir objetos</link> al
+     <interface>Panel</interface>. Permite también modificar las
+     propiedades del <interface>Panel</interface> en que se esté
+     particularmente interesado, usando el ítem de menú 
+     <guimenuitem>Propiedades</guimenuitem> (véase <xref linkend="panelproperties">)
+     o las propiedades de todos los <interface>Paneles</interface> usando
+     el ítem de menú <guimenuitem>Propiedades globales...</guimenuitem>
+     (véase <xref linkend="globalpanelprefs">).
+    </para>
+    <para>
+     Puede también pulsar con el botón derecho en el 
+     <interface>Panel</interface> mismo. Esto abrirá el <link linkend="mainmenu">
+     <guimenu>Menú principal</guimenu></link>. Más concretamente, este
+     menú también contiene el submenú <guisubmenu>Panel</guisubmenu> 
+     descrito anteriormente.
+    </para>
+   </sect2>
+
+   <sect2 id="panelhide">
+    <title>Ocultando el panel</title>
+    <para>
+     <indexterm id="idx-a4">
+      <primary>Panel</primary> <secondary>Botones para ocultar</secondary>
+     </indexterm>
+     <indexterm id="idx-a5">
+      <primary>Panel</primary> <secondary>Ocultar</secondary>
+     </indexterm>
+     Los iconos representado flechas que pueden verse en los extremos
+     izquierdo y derecho del <interface>Panel</interface> y en
+     <xref linkend="fig2"> se usan para ocultar el <interface>Panel</interface>.
+     <figure id="fig2">
+      <title>Botón de ocultar</title>
+      <screenshot>
+       <screeninfo>Botón de ocultar</screeninfo>
+       <graphic fileref="./figures/hide-button" format="png"
+            srccredit="dcm">
+       </graphic>
+      </screenshot>
+     </figure>
+    </para>
+    <para>
+     Pulsando una de estas flechas ocultara el <interface>Panel</interface>
+     deslizándolo en la dirección de la flecha pulsada, de forma que la 
+     única parte del <interface>Panel</interface> que permanecerá visible 
+     será el botón de <guibutton>Ocultar</guibutton> mismo. Pulsándolo
+     una segunda vez expandirá el <interface>Panel</interface>.
+    </para>
+    <para>
+     Los <interface>Paneles</interface> pueden configurarse para que se 
+     oculten automáticamente cuando no se están usando, y reaparecer
+     cuando se mueva el ratón a la parte visible del 
+     <interface>panel</interface> en la pantalla. Esta es una característica
+     muy útil si no puede utilizar su sistema con en una pantalla de
+     alta resolución. Podrá aprender como hacer que el 
+     <interface>Panel</interface> se auto-oculte en <xref
+     linkend="panelproperties">.
+    </para>
+   </sect2>
+
+   <sect2 id="loggingout">
+    <title>Terminar la sesión</title>
+    <para>
+     Para terminar la sesión Gnome, pulse el botón derecho sobre el
+     <interface>Panel</interface> y elija la opción 
+     <guimenuitem>Terminar sesión</guimenuitem>. Se abrirá el formulario
+     <interface>Terminar</interface>, mostrado en <xref
+     linkend="logoutdialog-fig">.
+    </para>
+    <figure id="logoutdialog-fig">
+     <title>Formulario terminar</title>
+     <screenshot>
+      <screeninfo>Terminar</screeninfo>
+      <graphic fileref="./figures/logout-screen" format="png"
+ 		   srccredit="dcm">
+      </graphic>
+     </screenshot>
+    </figure>
+    <para>
+     Si quiere salvar la configuración actual, marque la casilla
+     <guilabel>Guardar la configuración actual</guilabel>. Se salvará
+     cualquier aplicación Gnome que tenga abierta y los cambios
+     realizados en el <application>Centro de control</application>.
+    </para>
+    <para>
+     La forma habitual de terminar la sesión es usando la opción 
+     <guilabel>Terminar sesión</guilabel>, que termina la sesión Gnome
+     pero no apaga el ordenador. Dependiendo de la configuración de
+     su sistema, dispondrá también de la opción
+     <guilabel>Apagar el equipo</guilabel>, que apaga el ordenador,
+     y de la opción <guilabel>Reiniciar el equipo</guilabel>, que
+     reiniciará el ordenador.
+    </para>
+    <note>
+        <title>Nota para usuarios avanzados</title>
+        <para>
+         Las opciones <guilabel>Apagar</guilabel> y <guilabel>Reiniciar</guilabel>
+         sólo se mostrarán si dispone de permisos para ejecutar el comando
+         <command>/usr/bin/shutdown</command>.
+        </para>
+    </note>
+    <para>
+     Si no quiere terminar la sesión, pulse el botón
+     <guibutton>No</guibutton> y volverá a la sesión Gnome.
+     En caso contrario pulse el botón <guibutton>Sí</guibutton> para
+     terminar la sesión.
+    </para>
+    <note>
+        <title>Opción terminar la sesión y los gestores de ventanas</title>
+        <para>
+         Si se esta ejecutando un gestor de ventanas compatible con
+         Gnome, la función terminar sesión, cerrará tanto el gestor de
+         ventanas como Gnome. Si se está ejecutando un gestor de ventanas
+         no compatible, deberá cerrar el gestor de ventanas usted mismo.
+        </para>
+    </note>
+    <para>
+     Puede deshabilitar el formulario <interface>Terminar sesión</interface>
+     de forma que al seleccionar el ítem de menú
+     <guimenuitem>Terminar sesión</guimenuitem> se terminará la sesión Gnome
+     sin realizar pregunta alguna. Para conseguirlo, arranque el 
+     <application>Centro de control</application> seleccionando
+     <menuchoice><guimenu>Menú principal</guimenu><guisubmenu>Configuración
+     </guisubmenu> <guisubmenu>Programas de inicio</guisubmenu></menuchoice>
+     y desactivando el botón <guilabel>Preguntar al salir de la 
+     sesión</guilabel>.
+
+     <!-- Comentado - como sugiere Drake, puede también controlar cuando se salvan
+     automaticamente los cambios de la sesión usando el botón 
+     <guilabel>Guardar automáticamente los cambios de la sesión</guilabel>.
+     -->
+    </para>
+   </sect2>
+
+   <sect2 id="lockscreen">
+    <title>Bloquear la pantalla</title>
+    <para>
+     Algunas veces se quiere dejar su ordenador ejecutando Gnome y no
+     permitir a terceros usar o ver la sesión Gnome. Gnome permite
+     hacerlo bloqueando la pantalla, y pidiendo una clave para
+     desbloquearla. Para bloquear la sesión Gnome, pulse el botón
+     derecho del ratón sobre cualquiera de los extremos del 
+     <interface>Panel</interface> y elija 
+     <guimenuitem>Bloquear la pantalla</guimenuitem>. Alternativamente,
+     si tiene el <guibutton>Icono de bloqueo</guibutton> (véase 
+     <xref linkend="lockbutton">) en uno de los 
+     <interface>Paneles</interface>, puede simplemente pulsar este
+     icono para bloquear la pantalla. Para desbloquear la pantalla,
+     teclee simplemente su clave de acceso.
+    </para>
+    <note>
+        <title>Salva pantallas y icono de bloqueo</title>
+        <para>
+         El icono <guibutton>bloqueo de pantalla</guibutton> usa una de
+         las funcionalidades del programa <application>xscreensaver
+         </application>. Este es el mismo programa que usa el <application>
+         Centro de control</application> para activar el salva pantallas.
+         Con el fin de que el icono <guibutton>bloqueo de pantalla </guibutton>
+         funcione de forma correcta, debe habilitar un salva pantallas
+         en el <application>Centro de control</application>.
+        </para>
+    </note>
+   </sect2>
+  </sect1>
+
+  <!-- ########### Main Menu ############## -->
+  <sect1 id="mainmenu">
+   <title>El menú principal</title>
+   <para>
+    <indexterm id="idx-a3">
+     <primary>El menú principal</primary>
+    </indexterm>
+    El icono huella de pie situado en la parte izquierda del 
+    <interface>Panel</interface> de ejemplo (véase <xref
+    linkend="examplepanelfig">) y en <xref linkend="main-menu-button-fig">
+    tenemos el <guibutton>Menú principal</guibutton> (si, tiene razón,
+    es la huella de pie de Gnome). Este menú nos da acceso a casi
+    todas las funciones de Gnome &mdash; todas las aplicaciones,
+    herramientas de configuración, indicador de linea de comandos, 
+    comandos para <guimenuitem>Terminar sesión</guimenuitem> y
+    <guimenuitem>Bloquear de pantalla</guimenuitem>, y mucho mas.
+    Para acceder a cualquiera de estos ítem, pulse con el ratón en el
+    <guibutton>Menú principal</guibutton>. Debe soltar el botón del
+    ratón después de pulsar en el botón <guibutton>Menú principal</guibutton>
+    para disfrutar así del resto de las funcionalidades activadas
+    a través del ratón en el <guimenu>Menú principal</guimenu> como
+    los menús desplegables activados con el botón derecho y las
+    funciones arrastrar y soltar desde el menú hacia el escritorio
+    o hacia el <interface>Panel</interface>.
+   </para>
+   <figure id="main-menu-button-fig">
+    <title>El botón menú principal</title>
+    <screenshot>
+     <screeninfo>El botón menú principal</screeninfo>
+     <graphic fileref="./figures/mm-button" format="png"
+	  srccredit="dcm">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+    También puede acceder al <guimenu>Menú principal</guimenu> haciendo
+    clic en el <interface>Panel</interface> con el botón derecho del ratón.
+    Si lo desea, puede tener varios botones <guibutton>menú principal</guibutton>
+    en diferentes <interface>Paneles</interface>.
+   </para>
+
+   <sect2 id="globalmenu">
+    <title>Menú Globales</title>
+    <para>
+     Además del <guimenu>Menú principal</guimenu> que tiene al apretar
+     el icono de la huella, GNOME también le proporciona un <guimenu>Menú
+     Global</guimenu>, que contiene los mismos comandos pero que no es
+     atado a ningún botón. Para acceder al <guimenu>Menú Global</guimenu>,
+     apriete el botón derecho del ratón en un lugar vacío del
+     <interface>Panel</interface>. También puede acceder al
+     <guimenu>Menú Global</guimenu> apretando
+     <keycombo action=simul> <keycap>Alt</keycap> <keycap>F1</keycap>
+     </keycombo>. (Puede cambiar esta tecla por defecto para activar
+     <guimenu>Menú Global</guimenu> en la pestaña <link
+     linkend="misctab"><guilabel>Miscelánea</guilabel></link> del
+     <interface>diálogo <link linkend="globalpanelprefs">Preferencias
+     Globales del Panel</link></interface>.)
+    </para>
+    <para>
+     Observe que el <guimenu>Menú Global</guimenu> se configura
+     independientemente del <guimenu>Menú Principal</guimenu>,
+     mediante la pestaña <guilabel>Menú</guilabel> en el
+     <interface>diálogo <link linkend="globalpanelprefs">Preferencias
+     Globales del Panel</link></interface>.
+    </para>
+   </sect2>
+
+   <sect2 id="submenus">
+    <title>Componentes del menú principal</title>
+    <para>
+     El componente primario del <guimenu>Menú principal</guimenu> es
+     el submenú <guisubmenu>Programas</guisubmenu>, que contiene una
+     lista de elementos de menús y submenús preconfigurados. Encontrará
+     aquí todas las aplicaciones Gnome, desde la hoja de calculo 
+     <application>Gnumeric</application> hasta el juego
+     <application>Free Cell</application>, así como un buen número de
+     otras aplicaciones no de Gnome, como el navegador
+     <application>Netscape</application> y el editor de textos 
+     <application>emacs</application>. Además, el submenú 
+     <guisubmenu>Programas</guisubmenu> también contiene los siguientes
+     comandos:
+    </para>
+    <itemizedlist>
+     <listitem>
+      <para>
+       <guimenuitem>Gestor de ficheros</guimenuitem> &mdash; Arranca el
+       gestor gráfico de ficheros Gnome.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guimenuitem>Sistema de ayuda</guimenuitem> &mdash; arranca el
+       <application>Visualizador de ayudas Gnome</application>. El
+       <application>Visualizador de ayudas Gnome</application> proporciona
+       acceso a la mayoría de la documentación instalada en su sistema &mdash;
+       no solo la documentación Gnome (la guia de usuario Gnome, los
+       manuales de aplicaciones, &hellip;), si no también otros tipos
+       de documentos (paginas de manual, paginas info, &hellip:).
+      </para>
+     </listitem>
+    </itemizedlist>
+    <para>
+     Ademas del submenu <guisubmenu>Programas</guisubmenu>, el
+     <guimenu>Menú principal</guimenu> contiene también un buen número
+     de submenús y utiles comandos. Dependiendo de su configuracion,
+     puede que no aparezca nada de esto. Además, algunos de ellos
+     pueden mostrarse como submenus, y otros incluidos como parte del 
+     <guimenu>Menú principal</guimenu>, separados por lineas horizontales
+     de las demás partes. Estos submenus y comandos adicionales son:
+    </para>
+    <itemizedlist>
+     <listitem>
+      <para>
+       <guisubmenu>Favoritos</guisubmenu>. Este submenu, que está
+       originalmente vacio, es el lugar donde puede poner sus
+       aplicaciones favoritos para un acceso rapido. Puede editar este
+       menú usando el <application>Editor de menus</application>, al que
+       puede acceder desde el <guimenu>Menú principal</guimenu> eligiendo
+       <menuchoice><guisubmenu>propiedades</guisubmenu><guimenuitem>Editor
+       de menús</guimenuitem></menuchoice>. Puede además añadir cualquier
+       ítem desde cualquier otro menu (en particular, desde el menu
+       <guimenu>Programas</guimenu>) al menu <guisubmenu>Favoritos</guisubmenu>
+       pulsando con el boton derecho del ratón sobre un ítem y
+       seleccionando <guimenuitem>Añadir al menu personal</guimenuitem>.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guisubmenu>Apliques</guisubmenu>. Este submenú contiene todos
+       los apliques instalados en su sistema. Al seleccionar un aplique,
+       este se añadira a su <interface>Panel</interface>.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guisubmenu>Menus Kde</guisubmenu>. Muestra los menús del entorno
+       de escritorio K (Kde) si lo tiene instalado en su sistema.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guisubmenu>Menús "Anotherlevel"</guisubmenu> y <guisubmenu>Menús
+       Debian</guisubmenu>. Estos submenús muestran los menús de
+       aplicaciones por defecto de Red Hat Linux y Debian Gnu/Linux,
+       respectivamnete. Solo se presentarán a los usuarios de estas
+       distribuciones concretas.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guimenuitem>Panel</guimenuitem>. Este submenú puede usarse para
+       cambiar las propiedades del <interface>Panel</interface> (tanto
+       para <link linkend="panelproperties"><interface>Paneles individuales
+       </interface></link> como para<link linkend="globalpanelprefs">
+       globales</link>, o sea para todos los <interface>Paneles</interface>),
+       <link linkend="add">añadir un objeto</link> al <interface>Panel</interface>,
+       <link linkend="panelremoving">Quitar este <interface>Panel</interface>
+       </link>,<link linkend="paneladd">Crear un nuevo<interface>Panel</interface>
+       </link>, o ver el <citetitle>Manual del panel</citetitle>.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guimenuitem>Escritorio</guimenuitem> &mdash; Este submenú contiene
+       <guimenuitem>Terminar sesión</guimenuitem>, que termina su sesión
+       Gnome (véase <xref linkend="loggingout">), y <guimenuitem>Bloquear
+       la pantalla</guimenuitem> (véase <xref linkend="lockscreen">).
+      </para>
+     </listitem>
+     <listitem id="runcommand">
+      <para>
+       <guimenuitem>lanzar &hellip;</guimenuitem> &mdash; Este submenú
+       abre el diálogo <interface>lanzar programa</interface> para ejecutar
+       comandos de la línea de comandos (véase <xref linkend="runbutton">).
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+
+   <sect2 id="mainmenuconfig">
+    <title>Configurar el menú principal</title>
+    <para>
+     Para cambiar la configuración del <guimenu>Menú principal</guimenu>,
+     pulse el botón del <guibutton>Menú principal</guibutton> con el botón
+     derecho (mostrado en <xref linkend="main-menu-button-fig">) y elija 
+     <guimenuitem>Propiedades &hellip;</guimenuitem> del menú desplegable.
+     Se mostrará el formulario <interface>Propiedades del menú</interface>.
+     En este formulario, para cada uno de los submenús del
+     <guimenu>Menú principal</guimenu> listado mas abajo 
+     (<guisubmenu>Programas</guisubmenu>, <guisubmenu>Favoritos</guisubmenu>,
+     &hellip;) puede escoger si quiere que se muestre como parte del
+     <guimenu>Menú principal</guimenu>, como un submenú, o que no se
+     muestre en modo alguno.
+    </para>
+
+    <figure>
+     <title>Formulario de propiedades de menú</title>
+     <screenshot>
+      <screeninfo>Formulario de propiedades de menú</screeninfo>
+      <graphic fileref="./figures/menu_properties" format="png"
+		   srccredit="muet">
+      </graphic>
+     </screenshot>
+    </figure>
+
+    <para>
+     Puede también editar el contenido del submenú <guisubmenu>
+     Favoritos</guisubmenu> (o, si es el administrador de sistemas,
+     también el submenú <guisubmenu>Programas</guisubmenu>) usando el
+     <application>Editor de menús Gnome</application>. Para arrancarlo,
+     pulse el botón derecho del ratón sobre el icono del
+     <guibutton>Menú principal</guibutton> y elija <guimenuitem>Editar
+     menús &hellip;</guimenuitem>. Alternativamente, puede arrancar el
+     <application>Editor de menús Gnome</application> seleccionando
+     <menuchoice><guisubmenu>Programas</guisubmenu> <guisubmenu>Propiedades
+     </guisubmenu> <guimenuitem>Editor de menús</guimenuitem></menuchoice>
+     en el mismo <guimenu>Menú principal</guimenu>.
+    </para>
+   </sect2>
+
+<!-- ¿Necesitamos ahora tener información acerca del Menú Global?
+   <sect2 id="kbdnav">
+    <title>Navegación por el menú principal usando el teclado</title>
+    <para>
+     Si lo prefiere, puede usar el teclado en lugar del ratón para
+     navegar por el <guimenu>Menú principal</guimenu>. Para activar el 
+     <guimenu>Menú principal</guimenu>, pulse la tecla <keycap>Menú</keycap>
+     en su teclado (si está usando un teclado Pc estándar, esta tecla
+     está situada a la izquierda de la barra espaciadora y etiquetada con
+     el dibujo de un menú); puede cambiar la tecla por defecto que
+     activa el <guimenu>Menú principal</guimenu> en la carpeta
+     <link linkend="misctab"><guilabel>varios</guilabel></link> del
+     formulario <interface><link linkend="globalpanelprefs">Propiedades
+     globales del panel</link></interface>. Use las flechas <keycap>Arriba
+     </keycap> y <keycap>Abajo</keycap> para moverse por el menú, <keycap>Derecha
+     </keycap> para entrar en uno de los submenús, y <keycap>Enter</keycap>
+     para seleccionar un ítem. Para abandonar el menú, pulse simplemente
+     la tecla <keycap>Esc</keycap>.
+    </para>
+   </sect2> -->
+  </sect1>
+
+  <!-- ########### Menus  ############## -->
+  <sect1 id="menus">
+   <title>Menús</title>
+   <para>
+    Además del <guimenu>Menú principal</guimenu>, presentado en <xref
+    linkend="mainmenu">, puede también añadir "menús normales" al
+    <interface>Panel</interface>. Un ejemplo de menú, en este caso el menú
+    <guimenu>Favoritos</guimenu> contiene tres lanzadores de aplicaciones y
+    un submenú llamado <guisubmenu>Juegos</guisubmenu>, se muestra en 
+    <xref linkend = "example-menu-fig">. A diferencia del <guimenu>Menú
+    principal</guimenu>, los menús normales solo contienen cualquier
+    lanzador o submenú que ponga en ellos - no hay submenús por omisión,
+    comando <guimenuitem>Lanzar...</guimenuitem>, etc., como los
+    que hay en el menú principal. Puede también añadir cualquier submenú al
+    menú <guimenu>Favoritos</guimenu> o al menú <guimenu>Programas</guimenu>
+    como un menú separado en el <interface>Panel</interface>; para conseguirlo,
+    abra este submenú en el <guimenu>Menú principal</guimenu>, pulse sobre
+    el título del submenú con el botón derecho del ratón, y elija 
+    <guimenuitem>Añadir este menú al panel</guimenuitem>.
+   </para>
+   <figure id="example-menu-fig">
+    <title>Un ejemplo de menú</title>
+    <screenshot>
+     <screeninfo>Un ejemplo de menú</screeninfo>
+     <graphic fileref="./figures/example_menu" format="png"
+	 srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+
+   <sect2 id="addingmenus">
+    <title>Añadir un menú en el panel</title>
+    <para>
+     Para aprender como añadir un menú en el <interface>Panel</interface>,
+     véase <xref	linkend="add">.
+    </para>
+   </sect2>
+
+   <sect2 id="tearoff">
+    <title>Extraer un menú</title>
+    <para>
+     Todos los menús de Gnome incluyen la funcionalidad de extracción:
+     si pulsa con el botón izquierdo en la línea perforada (fina línea
+     de guiones en la parte superior del menú, justo encima del título
+     del menú), el menú se convertirá en una ventana separada en su 
+     escritorio, la cual permanecerá allí incluso después de que se
+     mueva el ratón a otro cualquier otro sitio. Esto es muy práctico
+     si va a usar el mismo comando de un profundo menú anidado
+     frecuentemente. Para eliminar este menú extraído de su escritorio,
+     pulse el botón <guibutton>Cerrar</guibutton> en el título de la
+     ventana (su apariencia y situación depende del gestor de ventanas que
+     esté usando, pero usualmente el botón mas a la derecha, etiquetada
+     con una "x"). 
+    </para>
+   </sect2>
+
+   <sect2 id="menusconf">
+    <title>Configurar un menú</title>
+    <para>
+     Puede cambiar fácilmente el nombre y el icono de un menú (solo
+     para algunos menús de usuario, no para los submenú del
+     <guimenu>Menú principal</guimenu>). Para hacerlo, pulse con el botón
+     derecho en el menú (en la parte superior de la lista, encima del
+     resto de elementos), y seleccione <guimenuitem>Propiedades&hellip;</guimenuitem>
+     del menú desplegable. Esto abrirá el formulario <interface>Propiedades
+     del ítem de escritorio</interface>, muy similar al formulario de
+     <link linkend="launchers"> <interface>Propiedades del lanzador</interface>
+     </link>.
+    </para>
+    <para>
+     Para añadir un nuevo ítem en el menú, pulse el botón derecho en el
+     nombre del menú, y seleccione <guimenuitem>Añadir un nuevo ítem en
+     este menú</guimenuitem>. Esto abrirá el formulario 
+     <interface>Crear un ítem de menú</interface>, en el que podrá
+     introducir el nombre del ítem, comentario, comando, y tipo (véase
+     <xref linkend="launchers"> para mayor información). Para eliminar 
+     un elemento del menú, pulse el botón derecho sobre el elemento y
+     seleccione <guimenuitem>Eliminar este elemento</guimenuitem>.
+    </para>
+    <para>
+     Finalmente, una pregunta frecuentemente planteada es:
+     "¿Como puedo cambiar el tipo de letra y al fondo usado por los menús?"
+     La respuesta es que vienen dada por el actual tema Gtk, que puede
+     cambiarse en el <application>Centro de control Gnome</application>
+     seleccionando <menuchoice><guimenu>Menú principal</guimenu>
+     <guisubmenu>Parámetros</guisubmenu>
+     <guisubmenu>interfaz de usuario</guisubmenu>
+     <guimenuitem>Temas</guimenuitem></menuchoice>.
+    </para>
+   </sect2>
+  </sect1>
+
+  <!-- ###########  Launchers  ############## -->
+  <sect1 id="launchers">
+   <title>Lanzadores</title>
+   <para>
+    Los lanzadores son básicamente botones que residen en el panel y
+    arrancan una aplicación o ejecutan un comando cuando se pulsan.
+    Un lanzador puede usar cualquier icono y tiene un consejo
+    personalizado que muestra un mensaje cuando el cursor sobrevuela
+    el lanzador.
+   </para>
+   <para> 
+    Puede cambiar propiedades del lanzador, como el icono que usa y
+    su nombre, pulsando sobre él con el botón derecho y eligiendo
+    <guimenuitem>Propiedades</guimenuitem> del menú desplegable. Se abrirá
+    el formulario <interface>propiedades del lanzador</interface> mostrado
+    en <xref linkend="launcherpropsfig">. El mismo formulario se usa al
+    crear un lanzador (véase <xref linkend="add">). Tenga también en
+    cuenta que, internamente, Gnome no diferencia los ítem de menú y
+    los lanzadores: son dos caras de la misma moneda. Puede poner
+    cualquier ítem de menú en el <interface>panel</interface> y se
+    presentará como un lanzador. Así pues, toda la información a
+    continuación se aplica de igual modo a los ítem de menú y a los
+    lanzadores.
+   </para>
+   <figure id="launcherpropsfig">
+    <title>Diálogo crear un lanzador/propiedades del lanzador</title>
+    <screenshot>
+     <screeninfo>Diálogo crear un lanzador/propiedades del lanzador</screeninfo>
+	<graphic fileref="./figures/launcher_properties_basic" format="png"
+		 srccredit="muet">
+	</graphic>
+     </screenshot>
+   </figure>
+   <para> 
+    Este diálogo tiene dos carpetas <guilabel>Básico</guilabel> y
+    <guilabel>Avanzado</guilabel>. En la carpeta <guilabel>Básico</guilabel>,
+    puede indicar lo siguiente:
+   </para>
+    <itemizedlist>
+      <listitem>
+	<para>
+	  <guilabel>Nombre</guilabel> &mdash; 
+          Es el nombre de la aplicación, por ejemplo, 
+          <userinput>Terminal Gnome</userinput>. Este nombre se usará
+          posteriormente si pone el lanzador en un menú.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Comentario</guilabel> &mdash; 
+          Es una breve explicación de lo que hace la aplicación,
+          por ejemplo,<userinput>Programa de emulación de terminal</userinput>.
+          Se usará para los consejos. 
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Comando</guilabel> &mdash; 
+          El comando que se usa para ejecutar la aplicación, por ejemplo,
+          <userinput>gnome-terminal</userinput>.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Tipo</guilabel> &mdash; 
+          Debería ser <guilabel>Application</guilabel>; no lo cambie a
+          no ser que quiera crear algo que no sea un lanzador de
+          aplicaciones.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Icono</guilabel> &mdash; 
+          Este es el icono que se utilizará para identificar al lanzador
+          en el <interface>Panel</interface>. Si no se especifica un icono,
+          se utilizará el icono por defecto. Para cambiar el icono
+          simplemente apriete en él para ejecutar el navegador de iconos.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Ejecutar en terminal</guilabel> &mdash; 
+          Esta opción indica que una aplicación se debe ejecutar desde
+          un terminal. Si la aplicación no abre ninguna ventana marque
+          esta opción. Si no está seguro déjelo desmarcado.
+	</para>
+      </listitem>
+    </itemizedlist>
+
+   <para>
+    La carpeta <guilabel>Avanzado</guilabel> se muestra a continuación.
+    Está destinada a usuarios avanzados; la mayoría de las veces,
+    no necesitará realizar ningún cambio en estas opciones.
+   </para>
+   <figure id="launcheradvpropsfig">
+     <title>Diálogo propiedades avanzadas del lanzador</title>
+     <screenshot>
+	<screeninfo>Diálogo propiedades avanzadas del lanzador</screeninfo>
+	<graphic fileref="./figures/launcher_properties_advanced" format="png"
+		 srccredit="muet">
+	</graphic>
+     </screenshot>
+   </figure>
+   <para> 
+    En esta carpeta, puede activar las siguientes características:
+   </para>
+    <itemizedlist>
+      <listitem>
+	<para>
+          <guilabel>Probar esto antes de usar</guilabel> &mdash;
+          Puede teclear un comando, y Gnome comprobará si este comando
+          puede ejecutarse. Si no puede, el lanzador (o el ítem de menú)
+          no se mostrará aunque los añada en un panel o en un menú.
+          Está destinado a la gente que prepara distribuciones Gnome: por 
+          ejemplo, el <guimenu>menú principal</guimenu> por defecto de
+          Gnome contiene un ítem para el programa de correo electrónico
+          <application>TkRat</application>, pero no se mostrará a no ser
+          que <application>TkRat</application> esté instalado en su sistema.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Documentación</guilabel> &mdash;
+          Sin uso en la actualidad.
+	</para>
+      </listitem>
+       <listitem>
+	<para>
+	  <guilabel>Traducción para el nombre/comentario</guilabel> &mdash;
+          Puede introducir aquí la traducción del
+          <guilabel>nombre</guilabel> y del <guilabel>comentario</guilabel>
+          a otros idiomas. Por ejemplo, para el <application>GNOME
+          Terminal</application>, la traducción al Español (es) del
+          nombre es:  <userinput>Terminal UNIX de GNOME</userinput> y
+          del comentario es: <userinput>Emulador de terminal GNOME</userinput>.
+          De esta forma si el usuario escoge como idioma el Español
+          al identificarse en el sistema (puede hacerlo seleccionando
+          el idioma apropiado en el menú <guimenu>idiomas</guimenu> del
+          gestor de presentación Gnome (GDM)), verá <guimenuitem>Terminal
+          UNIX de GNOME</guimenuitem> en el menú y <userinput>Emulador de
+          terminal GNOME</userinput> en los consejos. Por supuesto,
+          el comando utilizado para ejecutar el terminal permanecerá
+          inalterado.
+	</para>
+	<para>
+          Para añadir una nueva traducción, tecleé el código de dos
+          letras del idioma y las traducciones del <guilabel>nombre</guilabel>
+          y del comentario <guilabel>comentario</guilabel> en los campos
+          vacíos debajo de la lista de las traducciones actuales, y pulse
+          el botón <guibutton>Añadir/Definir</guibutton>. Para cambiar una
+          de las traducciones existentes, selecciónela en la lista, edite
+          los campos deseados, y pulse el botón <guibutton>Añadir/Definir
+          </guibutton>. Para eliminar una las traducciones existentes,
+          selecciónela y pulse el botón <guibutton>Borrar</guibutton>.
+	</para>
+	<para> 
+          Puede encontrar una lista con todos los idiomas soportados por
+          Gnome con sus códigos de 2 letras en las <ulink type="http"
+          url="http://www.gnome.org/gnomefaq/html/x867.html">Preguntas más
+          frecuentes acerca de Gnome</ulink>.
+	</para>
+      </listitem>
+    </itemizedlist>
+
+   <para>
+    Todos los cambios realizados en el formulario <interface>Propiedades
+    del lanzador</interface> surtirán efecto cuando pulse
+    <guibutton>Aplicar</guibutton> o <guibutton>Aceptar</guibutton>. Al
+    pulsar <guibutton>Aceptar</guibutton> se cerrará el formulario; pulsar 
+    <guibutton>Aplicar</guibutton> permitirá continuar modificando las 
+    propiedades.
+   </para>
+  </sect1>
+
+<!-- ###########  Applets  ############## -->
+  <sect1 id="applets">
+   <title>Apliques</title>
+   <para>
+    Los apliques son aplicaciones Gnome que residen en el
+    <interface>Panel</interface>. El aspecto de un aplique indica 
+    generalmente el estado del aplique u otra información, Los apliques
+    disponen a menudo de botones, mandos deslizantes, campos, y otros 
+    métodos que le permitirán controlar su comportamiento.
+   </para>
+   <figure>
+    <title>Ejemplo de apliques</title>
+    <screenshot>
+     <screeninfo>Ejemplo de apliques</screeninfo>
+       <graphic fileref="./figures/panel_applets" format="png"
+            srccredit="muet">
+       </graphic>
+     </screenshot>
+   </figure>
+   <para>
+    Más abajo se muestran varios ejemplos de apliques. A la izquierda
+    del todo tenemos el <application>aplique mesa de mezclas</application>
+    que permite cambiar el nivel del volumen y enmudecer el sonido.
+    A continuación tenemos el <application>aplique monitor de sonido
+    </application>, que muestra el volumen de sonido actual y permite
+    controlar varias características del sonido. el tercer aplique es el
+    <application>aplique GTCD</application>, un lector de Cd con todos sus
+    controles disponibles en el aplique y que muestra la pista y el tiempo
+    de ejecución. El siguiente aplique es el <application>aplique montador
+    de dispositivos</application>, usado para montar y desmontar 
+    dispositivos con una simple pulsación de ratón. Le sigue el
+    <application>aplique guia del escritorio</application> que muestra el
+    escritorio y las aplicaciones que se están ejecutando en el. El
+    último aplique mostrado es el <application>aplique lista de tareas
+    </application> que le permite controlar ciertos aspectos de cada
+    aplicación o que ventana tiene abierta.
+   </para>
+   <para>
+    Gnome dispone de muchos aplique útiles. Pulse simplemente con el
+    botón derecho sobre el <interface>Panel</interface> y añada alguno de
+    los apliques a su panel para conocer los disponibles y cuáles son
+    los mejores para usted. Apriete el botón derecho en cada aplique
+    para ver el menú desplegable con la lista de comandos y operaciones
+    que el aplique puede hacer y tener acceso a la documentación del
+    aplique.
+   </para>
+  </sect1>
+
+
+<!-- ###########  Drawers  ############## -->
+  <sect1 id="drawers">
+   <title>Cajones</title>
+   <para>
+    La forma más sencilla de ver los <interface>cajones</interface> es
+    como contenedores que puede almacenar cosas. Generalmente se usan
+    los cajones para recoger múltiples lanzadores relacionados entre sí
+    de alguna manera, como la diversas aplicaciones de la oficina Gnome. 
+    Los cajones en el <interface>Panel</interface> Gnome dan un paso mas
+    allá al hacer del cajón una extensión del mismo <interface>Panel</interface>.
+    De esta forma, un cajón es una rama colapsable de un
+    <interface>Panel</interface> existente. Puede contener cualquier cosa
+    que puede contener un <interface>Panel</interface>, incluyendo lanzadores,
+    apliques, y otros cajones.
+   </para>
+   <figure>
+    <title>Un cajón abierto</title>
+    <screenshot>
+     <screeninfo>Un cajón abierto</screeninfo>
+       <graphic fileref="./figures/drawer_open" format="png"
+              srccredit="dcm">
+       </graphic>
+     </screenshot>
+   </figure>
+   <para>
+    Una vez colocado un cajón en el <interface>Panel</interface>, puede
+    pulsar sobre el para abrirlo, apareciendo su contenido. Puede
+    entonces añadir elementos en el cajón de la misma forma en que añadiría
+    elementos en el panel, pulse el botón derecho en la parte final del cajón,
+    adornada con una flecha. Puede cerrar el cajón pulsando en su icono
+    de nuevo o pulsando en la flecha al final del mismo.
+   </para>
+   <para>
+    Puede configurar las propiedades del cajón pulsando con el botón
+    derecho sobre el icono del cajón y seleccionando
+    <guimenuitem>Propiedades</guimenuitem>. Esto abrirá el formulario
+    <interface>Propiedades del cajón</interface>. Allí podrá elegir el
+    icono usado por el cajón pulsando sobre el icono. Se puede teclear
+    un consejo el campo <guilabel>Consejo/Nombre</guilabel>. Este consejo
+    se mostrará cada vez que el ratón sobre-vuela el cajón para recordarnos
+    su contenido. también se puede elegir si debe mostrarse un
+    <guibutton>botón para ocultar</guibutton> y una flecha al final del cajón.
+   </para>
+   <figure>
+    <title>Formulario propiedades del cajón</title>
+    <screenshot>
+     <screeninfo>Formulario propiedades del cajón</screeninfo>
+      <graphic fileref="./figures/drawer_properties" format="png"
+              srccredit="dcm">
+      </graphic>
+    </screenshot>
+   </figure>
+   <para>
+    Puede también controlar el color o la imagen del fondo del cajón.
+    Pulse simplemente con el botón derecho sobre el cajón y seleccione
+    <guimenuitem>Propiedades...</guimenuitem> para abrir el formulario
+    estándar <interface>Propiedades del cajón</interface>. Entonces
+    seleccione la pestaña <guilabel>fondo</guilabel> para abrir el formulario
+    estándar <interface>fondo del panel</interface>
+    (véase <xref linkend="panelbacktab">).  
+   </para>
+  </sect1>
+
+<!-- ###########  Special Panel Objects  ############## -->
+  <sect1 id="specialobjects">
+   <title>Objetos especiales del panel</title>
+   <para>
+    Existen varios objetos especiales del panel que no pueden
+    considerarse menús, apliques, o lanzadores. Estos objetos especiales
+    se describen a continuación.
+   </para>
+   <sect2 id="lockbutton">
+    <title>Botón bloquear pantalla</title>
+    <figure>
+     <title>Botón bloquear pantalla</title>
+     <screenshot>
+      <screeninfo>Botón bloquear pantalla</screeninfo>
+       <graphic fileref="./figures/panel_lockbut" format="png"
+               srccredit="muet">
+       </graphic>
+     </screenshot>
+    </figure>
+    <para>
+     El <guibutton>botón bloquear pantalla</guibutton> es un botón del
+     <interface>Panel</interface> que arranca el salva-pantallas para
+     bloquear la pantalla. Para cerrar el salva-pantallas y acceder de
+     nuevo a la sesión Gnome, debe introducir su clave. Para más
+     información sobre el bloqueo de la pantalla, véase
+     <xref linkend="lockscreen">.
+    </para>
+   </sect2>
+   <sect2 id="logoutbutton">
+    <title>Botón cerrar sesión</title>
+    <figure id="logoutbuttonfig">
+     <title>Botón cerrar sesión</title>
+     <screenshot>
+      <screeninfo>Botón cerrar sesión</screeninfo>
+       <graphic fileref="./figures/panel_logoutbut"
+               format="png" srccredit="muet">
+       </graphic>
+     </screenshot>
+    </figure>
+    <para>
+     El botón <guibutton>cerrar sesión</guibutton> se usa para abandonar
+     el entorno de escritorio Gnome. Inicia la secuencia de apagado,
+     abriendo el formulario <interface>terminar sesión</interface>, tal
+     y como se describe en <xref linkend="loggingout">.
+    </para>
+   </sect2>
+   <sect2 id="runbutton">
+    <title>Botón ejecutar</title>
+    <figure id="runbuttonfig">
+     <title>Botón ejecutar</title>
+     <screenshot>
+      <screeninfo>Botón ejecutar</screeninfo>
+       <graphic fileref="./figures/panel_runbutton"
+               format="png" srccredit="muet">
+       </graphic>
+     </screenshot>
+    </figure>
+    <para>
+     El botón <guibutton>Ejecutar</guibutton> abre el formulario
+     <interface>Ejecutar programa</interface>, mostrado en <xref
+     linkend="runprogramdialog-fig">. Este le permite acceder a la
+     línea de comandos. No es una "shell" completa, por l o que no
+     es un sustituto del <application>Terminal de GNOME</application>,
+     pero es útil cuando necesita introducir un sólo comando
+     rápidamente. También puede abrir el formulario <interface>Ejecutar
+     programa</interface> utilizando el acelerador de teclado. Que
+     por defecto es 
+     <keycombo action=simul>
+      <keycap>Alt</keycap> <keycap>F2</keycap>
+     </keycombo>
+     pero puede cambiarlo en la pestaña <link linkend="misctab">
+     <guilabel>Miscelánea</guilabel></link> del formulario
+     <interface><link linkend="globalpanelprefs">Preferencias globales
+     del Panel</link></interface>.
+    </para>
+    <figure id="runprogramdialog-fig">
+     <title>Formulario del programa ejecutar</title>
+     <screenshot>
+      <screeninfo>Formulario del programa ejecutar</screeninfo>
+       <graphic fileref="./figures/panel_runprogram"
+               format="png" srccredit="muet">
+       </graphic>
+     </screenshot>
+    </figure>
+    <para>
+     La entrada de comandos tiene un histórico que le permite ejecutar
+     una orden ejecutada previamente apretando el icono <guiicon>flecha
+     hacia abajo</guiicon> localizado a la derecha del campo texto y
+     seleccionando el comando deseado. También tiene un botón <guibutton>
+     Buscar&hellip;</guibutton>, que le permite seleccionar un archivo &mdash;
+     este archivo se añadirá al final de su comando. Por ejemplo, puede
+     escribir <userinput>emacs</userinput> (un editor de textos
+     extremadamente potente) en la línea de comandos y luego utilizar
+     el botón <guibutton>Buscar&hellip;</guibutton> para seleccionar
+     el archivo a editar.
+    </para>
+   </sect2>
+   <sect2 id="swallowedapps">
+    <title>Aplicaciones miniaturizadas</title>
+    <para>
+     El <interface>Panel</interface> Gnome permite ejecutar aplicaciones
+     que no sean apliques dentro del <interface>Panel</interface> como si
+     fueran apliques. Las aplicaciones que se ponen dentro del
+     <interface>Panel</interface>, aun en el caso de que no sean apliques
+     Gnome, se conocen como aplicaciones miniaturizadas. Las aplicaciones
+     no tienen que se compatibles con Gnome para miniaturizarse. En general,
+     la única limitación para miniaturizar una aplicación es que la
+     aplicación debe ser lo suficientemente pequeña para caber en el
+     <interface>Panel</interface> y debe conocerse el titulo de la ventana
+     que desea miniaturizar. En muchos casos, la aplicación puede reducirse
+     hasta que quepa en el <interface>Panel</interface>, tal y como se
+     especifica en el <interface>formulario crear una aplicación
+     miniaturizada</interface>. Si la aplicación no es suficientemente
+     pequeña para caber en el <interface>Panel</interface>, el
+     <interface>Panel</interface> generalmente crecerá para permitir a la
+     aplicación caber.
+    </para>
+    <figure id="swallappfig">
+     <title>formulario crear una aplicación miniaturizada</title>
+     <screenshot>
+      <screeninfo>formulario crear una aplicación miniaturizada</screeninfo>
+       <graphic fileref="./figures/panel_swallow" format="png"
+	   srccredit="muet">
+       </graphic>
+     </screenshot>
+    </figure>
+    <para>
+     El <guilabel>título de la aplicación a miniaturizar</guilabel> es el
+     título de la ventana, normalmente mostrado en la parte superior
+     izquierda de la ventana. (Observe que en el título de la ventana
+     se distinguen la mayúsculas y minúsculas). El ancho y el alto
+     determina el tamaño en puntos de la aplicación miniaturizada en
+     el panel. 
+    </para>
+    <para>
+     Si deja el campo <guilabel>comando</guilabel> vació, el formulario
+     creará una ventana vacía en el panel del tamaño indicado, que
+     permanecerá a la espera de la aparición de una aplicación con el
+     título indicado en su escritorio. Tan pronto como aparezca esa
+     ventana (por ejemplo, cuando elija el elemento apropiado en el menú),
+     será miniaturizada. 
+    </para>
+    <para> 
+     Puede también teclear cualquier comando en el campo
+     <guilabel>Comando</guilabel>; Este comando se ejecutará antes de 
+     añadir la ventana miniaturizada al <interface>Panel</interface>
+     (y cada vez que se rearranque nuevamente el panel). Esto se usa
+     normalmente para arrancar una aplicación que quiere tener
+     miniaturizada en el <interface>Panel</interface>.
+    </para>
+   </sect2>
+   <sect2 id="statusdock">
+    <title>Tablón de estado</title>
+    <para>
+     El <interface>tablón de estado</interface> es un objeto del 
+     <interface>Panel</interface> que puede contener notas de estado 
+     &mdash; pequeñas ventanas que las aplicaciones ponen en el 
+     <interface>tablón de estado</interface> para suministrar información
+     de su estado. Las notas de estado pueden también usarse para
+     controlar la aplicación. Esencialmente, los "enganchables" son 
+     pequeños (tanto en tamaño como en complejidad) apliques.
+     Actualmente Gnome no dispone de demasiadas aplicaciones
+     que puede poner "enganchables" en el <interface>tablón de estado</interface>.
+     Sin embargo, el tablón de estado Gnome es compatible con el del
+     entorno de escritorio K (KDE), así que las aplicaciones Kde,
+     como <application>kscd</application>, pueden poner sus "enganchables"
+     de estado en el <interface>tablón de estado</interface> Gnome.
+     Futuras versiones de las aplicaciones Gnome harán uso de este recién 
+     incorporado objeto del <interface>Panel</interface>.
+    </para>
+    <figure id="statusdockfig">
+     <title>Ejemplo de tablón de estado con un "enganchable"</title>
+     <screenshot>
+      <screeninfo>Ejemplo de tablón de estado con un "enganchable"</screeninfo>
+       <graphic fileref="./figures/status_dock" format="png"
+	      srccredit="lebl">
+       </graphic>
+     </screenshot>
+    </figure>
+    <para>
+     El ejemplo anterior muestra el <interface>tablón de estado</interface>
+     con el "enganchable" de estado del programa lector de CD
+     <application>kscd</application>. Este "enganchable" concreto se usa
+     para abrir y cerrar la ventana principal de 
+     <application>kscd</application> sin cerrar el programa.
+    </para>
+   </sect2>
+  </sect1>
+  
+<!-- ########### Adding, Moving, and Removing Panel Objects ############## -->
+  <sect1 id="appletadd">
+   <title>Añadir, mover, y eliminar objetos al panel</title>
+   <sect2 id="moving">
+    <title>Mover objetos</title>
+    <para>
+     Para mover cualquier objeto en el <interface>Panel</interface> a una
+     posición diferente, simplemente arrástrelo con el botón central del
+     ratón hasta la posición deseada.O, puede pulsar el botón derecho y
+     elegir <guimenuitem>Mover</guimenuitem>. Puede moverlo a una posición
+     diferente en el mismo <interface>Panel</interface>, o a un
+     <interface>Panel</interface> diferente. Si durante este desplazamiento
+     toca otros objetos, el comportamiento dependerá de las propiedades
+     globales activas (véase <xref linkend="appletstab">): El objeto que
+     está moviendo puede intercambiar su posición con otros objetos,
+     "empujar" todos los objetos que encuentre, o "saltar" sobre todos
+     los demás objetos sin molestarlos. Puede también no seguir la
+     conducta por defecto manteniendo pulsada la tecla <keycap>Shift</keycap>
+     (para "empujar"), <keycap>Ctrl</keycap> (para el modo "intercambio"),
+     o <keycap>Alt</keycap> (para el modo "libre", esto es saltar sobre
+     los demás objetos sin molestarlos) mientras lo arrastra.
+    </para>
+   </sect2>
+
+   <sect2 id="remove">
+    <title>Eliminar objetos del panel</title>   
+    <para>
+     Para eliminar un objeto del <interface>Panel</interface>, pulse el botón
+     derecho sobre él y elija <guimenuitem>Quitar del panel</guimenuitem> en
+     el menú desplegable.  
+    </para>
+   </sect2>
+    
+   <sect2 id="add">    <title>Añadir objetos al panel</title>
+    <para>
+     Por omisión, el <interface>Panel</interface> Gnome contiene unos pocos
+     objetos básicos, como el <guimenu>Menú principal</guimenu>. Sin embargo,
+     hay unas muchos objetos que puede añadirle. Por ejemplo, cada uno de
+     los elementos del <guimenu>Menú principal</guimenu> o sus submenús
+     pueden añadirse al panel como un lanzador de aplicaciones. Gnome
+     también tiene un buen numero de apliques que pueden añadirse al panel,
+     desde el <application>aplique imprimir</application>, que imprime un
+     fichero cuando se arrastrar y suelta sobre este aplique, hasta el 
+     <application>pez Wanda</application>. Si estos no fueran suficientes,
+     en Internet hay también un buen numero de apliques Gnome disponibles. 
+    </para>
+     <variablelist>
+       <varlistentry>
+	<term> <emphasis>Apliques</emphasis></term>
+	<listitem>
+	 <para>
+          Para añadir un aplique, pulse el botón derecho sobre el
+          <interface>Panel</interface> y seleccione <menuchoice>
+          <guisubmenu>Añadir al panel</guisubmenu><guisubmenu>Aplique
+          </guisubmenu></menuchoice> en menú del <guimenu>Panel</guimenu>.
+          Se presentará un menú con todos los apliques de su sistema,
+          divididos en categorías; al elegir cualquier aplique de este
+          menú se añadirá al <interface>Panel</interface>.
+	 </para>
+	</listitem>
+       </varlistentry>
+
+       <varlistentry>
+        <term> <emphasis>Lanzador de aplicaciones</emphasis></term>
+        <listitem>
+	 <para>
+          Para crear un nuevo lanzador de aplicaciones, seleccione
+          <menuchoice><guisubmenu>Añadir al panel</guisubmenu>
+          <guimenuitem>Lanzador</guimenuitem> </menuchoice> del menú
+          <guimenu>Panel</guimenu>. Se abrirá el formulario 
+          <interface>Crear lanzador</interface>, mostrado mas abajo. 
+          En este formulario debe teclear un nombre para el lanzador,
+          un comentario, y la linea de comando que arranca la aplicación.
+          Este formulario es virtualmente idéntico al formulario
+          <interface>propiedades del lanzador</interface>, así que
+          remitimos al lector a <xref linkend="launchers"> para una
+          descripción detallada.
+	 </para>
+	 <figure>
+	  <title>Formulario crear lanzador</title>
+	  <screenshot>
+	   <screeninfo>Formulario crear lanzador</screeninfo>
+	     <graphic fileref="./figures/create_launcher" format="png"
+		     srccredit="muet">
+	     </graphic>
+	   </screenshot>
+         </figure>
+         <para>
+          También puede añadir al <interface>Panel</interface> cualquier
+          elemento de menú o cualquier lanzador situado en su escritorio:
+          simplemente arrástrelo hasta el panel y suéltelo allí. Tenga
+          cuidado de soltarlo sobre un espacio vació en el panel y no sobre
+          un objeto existente: por ejemplo, si lo suelta sobre el aplique
+          imprimir, se imprimirá. Para los elementos de menú, puede
+          también pulsar el botón derecho sobre el elemento y seleccionar
+          <guimenuitem>Añadir este lanzador al panel</guimenuitem>. Después
+          de esta operación, puede cambiar cualquier opción de este lanzador
+          pulsando el botón derecho del ratón sobre él y seleccionando
+          el elemento de menú <guimenuitem>Propiedades</guimenuitem>.
+	 </para>
+        </listitem>
+       </varlistentry>
+
+       <varlistentry>
+	<term> <emphasis>Menús</emphasis></term>
+	<listitem>
+         <para>
+          Para añadir un menú, seleccione <menuchoice><guisubmenu>Añadir
+          al panel</guisubmenu><guimenuitem>Menú</guimenuitem></menuchoice>
+          del menú <guimenu>Panel</guimenu>. Se ofrece las opciones  
+          <guimenu>menú principal</guimenu>, <guimenu>menú de programas
+          </guimenu>, y <guimenu>menú de favoritos</guimenu>.
+	 </para>
+	 <para>
+          Puede también añadir el <guimenu>menú principal</guimenu> o
+          cualquiera de sus submenús como un nuevo menú en el panel
+          pulsando el botón derecho en el título del menú (la línea
+          superior del menú, separada de los ítem de menú por una fina
+          línea) y seleccionando <guimenuitem>añadir este menú al
+          panel</guimenuitem>.
+	 </para>
+	 <para>
+          Los usuarios avanzados pueden también crear menús manualmente.
+          Para hacerlo, deben saber que internamente, Gnome representa
+          un menú como un directorio, con los elementos de menú
+          representados por ficheros de tipo especial (ficheros 
+          <filename>.desktop</filename> &mdash; estos ficheros también
+          representan a los lanzadores de aplicaciones), y los submenús
+          representados por subdirectorios. Por ejemplo, el menú
+          <guimenu>Favoritos</guimenu> se corresponde con el directorio
+          <filename>~/.gnome/apps</filename> (donde <filename>~</filename>
+          representa nuestro directorio inicial), y el menú
+          <guimenu>Programas</guimenu> se corresponde con el directorio
+          <filename>/usr/share/gnome/apps</filename>. Así, puede crear un
+          nuevo directorio, usando el gestor de ficheros Gnome, arrastrar y
+          soltar cualquier fichero <filename>.desktop</filename> desde
+          cualquier otro de los directorios que tenga (por ejemplo, de
+          <filename>/usr/share/gnome/apps</filename>) o desde el escritorio,
+          y entonces arrastrar y soltar este directorio desde el gestor
+          de ficheros hasta el <interface>Panel</interface>. Esto añadirá
+          este directorio como un menú en el <interface>Panel</interface>.
+	 </para>
+	 <para>
+          Después de añadir un menú en el <interface>Panel</interface>
+          usando cualquiera de los métodos descritos previamente, puede
+          modificar sus propiedades (por ejemplo, añadir nuevos elementos
+          a este menú o cambiar el icono usado por el menú), como se
+          describe en <xref linkend="menus">.
+	 </para>
+        </listitem>
+       </varlistentry>
+
+       <varlistentry>
+	<term> <emphasis>Cajones</emphasis></term>
+	<listitem>
+	 <para>
+          Para añadir un cajón vació, seleccione <menuchoice><guisubmenu>
+          añadir al panel</guisubmenu> <guisubmenu>canon</guisubmenu> 
+          </menuchoice> en el menú <guimenu>Panel</guimenu>. Después de
+          hacerlo, puede pulsar el botón derecho sobre el cajón y
+          seleccionar <guimenuitem>Propiedades</guimenuitem> para cambiar
+          sus propiedades (por ejemplo, el icono que usa). Puede añadir
+          nuevos elementos a este cajón de la misma forma que añade
+          elementos al <interface>panel</interface>: todos los métodos
+          para añadir nuevos objetos al <interface>panel</interface>
+          descritos en esta sección funcionan también para añadir nuevos
+          elementos al cajón.
+	 </para>
+	 <para>
+          Puede también añadir el <guimenu>menú principal</guimenu> o
+          cualquiera de sus submenús como un nuevo cajón en el panel
+          pulsando con el botón derecho sobre el título del menú y
+          seleccionando <guimenuitem>Añadir este cajón al panel</guimenuitem>.
+         </para>
+        </listitem>
+       </varlistentry>
+
+       <varlistentry>
+	<term><emphasis>Aplicaciones miniaturizadas</emphasis></term>
+	<listitem>
+	 <para>
+          Para añadir una nueva aplicación miniaturizada, seleccione
+          <menuchoice><guisubmenu>Añadir al panel</guisubmenu>
+          <guisubmenu>aplicación miniaturizada</guisubmenu></menuchoice>
+          en el menú <guimenu>Panel</guimenu>. Se abrirá un formulario
+          <interface>crear aplicación miniaturizada</interface>, como el
+          mostrado en <xref linkend="swallappfig">. Para mas detalles,
+          véase <xref linkend="swallowedapps">.
+	 </para>
+	</listitem>
+       </varlistentry>
+     </variablelist>
+     
+   </sect2>
+  </sect1>
+
+<!-- ########### Creating, Moving, and Removing Panels ############## -->
+  <sect1 id="panelmove">
+   <title>Crear, mover, y eliminar paneles</title>
+   <sect2 id="paneladd">
+    <title>Crear nuevos paneles</title>
+    <para>
+     Para añadir un nuevo <interface>Panel</interface> en su escritorio,
+     elija el comando <guimenuitem>Crear un panel</guimenuitem> del menú
+     <guisubmenu>Panel</guisubmenu>. Puede elegir entre los siguientes tipos:
+    </para>
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>Panel de Menú</guilabel> &mdash; el <interface>Panel de
+       Menú</interface> es un panel <interface>Panel</interface> especial
+       que siempre se sitúa en la parte superior de la pantalla y contiene 
+       varios menús desplegables. Estos son <guimenu>Programas</guimenu>,
+       <guimenu>Favoritos</guimenu>, <guimenu>Configuración</guimenu>,
+       <guimenu>Escritorio</guimenu>, y un menú especial que proporciona
+       acceso rápido a los recursos de GNOME relacionados con Internet
+       (mirar al icono de agujero de bala). Este <interface>Panel</interface>
+       también puede contener otros objetos del mismo modo que hace cualquier
+       otro <interface>Panel</interface>, pero no tiene las propiedades de
+       configuración que tienen otros <interface>Panel</interface>es. Observe
+       que el <interface>Panel de Menú</interface> es más restrictivo que
+       otros <interface>Panel</interface>es, y algunas operaciones normales
+       de <interface>Panel</interface>, como mover el <interface>Panel
+       </interface>, no se pueden realizar con él.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Panel de lado</guilabel> &mdash; Un panel de lado es
+       exactamente igual que el <interface>Panel</interface> principal
+       que arranca con Gnome; se extiende a lo largo de uno de los lados
+       de la pantalla. Si elige este tipo de <interface>Panel</interface>,
+       puede añadir un nuevo <interface>Panel</interface> en otro de los
+       lados de su pantalla para disponer de más funcionalidad.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Panel alineado</guilabel> &mdash; un <interface>Panel
+       alineado</interface> se sitúa también en uno de los lados de la
+       pantalla. Pero a diferencia del <interface>Panel de lado</interface>,
+       el <interface>Panel alineado</interface> no se extiende a lo largo de
+       toda la pantalla donde este situado: se extenderá únicamente lo
+       necesario para mostrar los iconos y apliques que contenga.
+       Puede situarse bien en una de las esquinas (en este caso, se
+       extenderá hacia la esquina opuesta), o bien en el centro del
+       lateral (en este caso, se extenderá en ambas direcciones,
+       centrándose automáticamente cuando se añadan nuevos objetos).
+      </para>
+      <para>
+       Si el <interface>panel alineado</interface> está alineado con una
+       de las esquinas, los botones de ocultación funcionarán de forma
+       ligeramente diferente que en el <interface>panel de lado</interface>.
+       El botón de ocultación más cercano a la esquina de la pantalla
+       ocultará el <interface>Panel</interface> de la forma habitual, pero
+       el otro botón de ocultación enviará el <interface>Panel</interface>
+       entero a la esquina opuesta. Cuando se realice este último
+       movimiento, no se ocultará el <interface>Panel</interface> ya que se
+       está cambiando el lado de la pantalla donde está situado. Si quiere
+       ocultar el panel deberá pulsar de nuevo el botón de ocultación. 
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Panel deslizante</guilabel> &mdash;  Este tipo de panel es
+       muy similar al <interface>Panel alineado</interface>, pero puede
+       colocarse en cualquier lugar a lo largo del lateral de la pantalla,
+       no necesariamente en una de las esquinas o en el centro. Según se
+       añadan objetos, crecerá únicamente en una de las direcciones &mdash;
+       no se centrará de forma automática.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Panel flotante</guilabel> &mdash; Este tipo de panel puede
+       situarse en cualquier parte de la pantalla, no necesariamente a lo
+       largo de uno de los lados.
+      </para>
+     </listitem>
+    </itemizedlist>
+    
+    <tip>
+     <title>Cambiar el tipo de panel</title>
+     <para>
+      Puede también cambiar el tipo de los paneles existentes &mdash; por
+      ejemplo, convertir un panel de lado en un panel flotante, véase
+      <xref linkend="panelproperties">.
+     </para>
+    </tip>
+   </sect2>
+
+   <sect2 id="panelmoving">
+    <title>Mover paneles</title>
+    <para>
+     Cualquier <interface>Panel</interface> que tenga en su escritorio puede
+     moverse usando el botón central del ratón, o pulsando simultáneamente
+     los botones izquierdo y derecho del ratón, para arrastrar el panel al
+     lado deseado en la pantalla. Si no dispone de un ratón de tres botones
+     y no configuro el ratón para emular el botón central puede también
+     mover un panel <interface>Panel</interface> cambiando su situación en el
+     formulario <interface>Propiedades del panel</interface>. Puede leer más
+     sobre este tema en <xref linkend="panelproperties"> de la documentación.
+    </para>
+   </sect2>
+
+   <sect2 id="panelremoving">
+    <title>Eliminar paneles</title>
+    <para>
+     Para eliminar un panel existente, pulse el botón derecho sobre el y
+     elija el comando <guimenuitem>Quitar este panel</guimenuitem> del menú
+     del <guisubmenu>Panel</guisubmenu>. Si el <interface>Panel</interface>
+     no está vacío se le pedirá confirmación.
+    </para>
+    <note>
+     <title>Eliminar el último panel</title>
+     <para>
+      En todo momento, debe tener al menos un <interface>Panel</interface>.
+      Gnome no le permitirá eliminar el último panel.
+     </para>
+    </note>
+   </sect2>
+  </sect1>
+
+<!-- ############### Global Panel Preferences ################## -->
+  <sect1 id="globalpanelprefs">
+   <title>Propiedades globales del panel</title>
+   <para>
+    Para comenzar la configuración del panel Gnome, elija 
+    <guimenuitem>Propiedades globales</guimenuitem> en el submenú
+    <guisubmenu>Panel</guisubmenu> del <guimenu>Menú principal</guimenu>.
+   </para>
+   <para>
+    Esto abrirá el formulario de <interface>Configuración global del panel
+    </interface>. (este formulario es uno de los componentes del centro
+    de control Gnome). Con esta ventana de diálogo podrá fijar las
+    propiedades compartidas por todos los <interface>Panel</interface>es .
+    <figure>
+     <title>El formulario de configuración global del panel</title>
+     <screenshot>
+      <screeninfo>El formulario de configuración global del panel</screeninfo>
+         <graphic fileref="./figures/glob_pref_anim"
+                 format="png" srccredit="muet">
+         </graphic>
+     </screenshot>
+    </figure>
+   </para>
+   <para>
+    El formulario de <interface>Configuración global del panel</interface>
+    contiene las siguientes cinco carpetas («tabs»):
+    <guilabel>animación</guilabel>, <guilabel>botones</guilabel>,
+    <guilabel>apliques</guilabel>, <guilabel>menú</guilabel>, y
+    <guilabel>varios</guilabel>.Cada una de estas carpetas se describe a
+    continuación.
+   </para>
+
+   <sect2 id="animtab">
+    <title>Carpeta de animación</title>
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>Activar las animaciones</guilabel> &mdash;
+       Permite la animación en los <interface>Panel</interface>es y
+       cajones como el ocultarse o aparecer.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Animaciones con velocidad constante</guilabel> &mdash;
+       Por omisión, la animaciones empiezan despacio, pero van
+       acelerándose. Si activa esta opción, las animaciones no usarán
+       ninguna aceleración.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>[Velocidad de la animación] auto-escondido</guilabel> &mdash; 
+       Controla cuanto tarda en ocultarse el panel si tiene activada
+       su ocultación automática. El menor valor posible es 1, el mayor, 100.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>[Velocidad de la animación] ocultación explicita</guilabel> 
+       &mdash; Controla la velocidad de ocultación cuando se pulsa
+       el botón <guibutton>Ocultación</guibutton> del <interface>Panel
+       </interface>. El menor valor posible es 1, el mayor, 100.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>[Velocidad de la animación] cajón</guilabel> &mdash; 
+       Controla la velocidad de aparición del menú de cajón cuando se
+       pulsa un botón de cajón en el panel. El menor valor posible es 1,
+       el mayor, 100.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>[Auto escondido] Demora (ms)</guilabel> &mdash; 
+       Si tiene un <interface>Panel</interface> que se minimiza
+       automáticamente después de perder el foco esto le
+       permite controlar cuanto tiempo pasa antes que se oculte.
+       El <interface>Panel</interface> empezará a contar el tiempo
+       cuando el cursor salga de él. Y aparecerá de nuevo cuando el
+       ratón pase por encima de la porción de <interface>Panel</interface>
+       que resta visible. El tiempo se mide en milisegundos.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>[Auto escondido] Tamaño (puntos, «pixels»)</guilabel>
+       &mdash; Determina el numero de puntos que se mostrarán mientras
+       el <interface>Panel</interface> para cualquier <interface>Panel
+       </interface> configurado para ocultarse automáticamente. Para
+       volver a mostrar el <interface>Panel</interface> el puntero deberá
+       situarse sobre este área.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+
+   <sect2 id="launchtab">
+    <title>Carpeta botones</title>
+    <para>
+     Esta carpeta controla la apariencia de varios tipos de botones
+     del panel: botones de lanzadores, botones de menús, botones de
+     cajoneras, y botones especiales (p.e., <link linkend="logoutbutton">
+     Salida de sesión</link> y <link linkend="lockbutton">Bloqueo de
+     pantalla</link>).
+    </para>
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>Tipo de botón</guilabel> &mdash;
+       Selecciona el tipo de botón que va a configurar
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Mosaico activado</guilabel> &mdash;
+       Este conmutador activará el dibujo de fondo para todos los iconos 
+       del <interface>Panel</interface>.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Mosaico normal</guilabel> &mdash; 
+       Muestra la imagen usada como fondo en posición sin pulsar (inactivo).
+       Para elegir otro fichero de imagen, pulse sobre la imagen, y se
+       abrirá el buscador de iconos. Los mosaicos deben estar activados
+       para acceder a esta opción.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Mosaico en posición pulsado</guilabel> &mdash;
+       Este es el nombre y el camino del fichero con el dibujo que se
+       usará en el fondo en posición pulsado (activo). Para elegir otro
+       fichero de imagen, pulse sobre la imagen, y se abrirá el buscador
+       de iconos. Los mosaicos deben estar activados  para acceder a esta
+       opción.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Espesor del borde (solo fondo)</guilabel> &mdash;
+       Determina el ancho del borde alrededor del icono. Por ejemplo, si
+       pone 5 como ancho del borde, se asegura que al menos se mostrarán
+       5 puntos del mosaico en cada lado del icono; si fuera necesario,
+       se recortará el icono. Es muy útil si tienes un icono que normalmente
+       tapa todo el dibujo del fondo. Los mosaicos deben estar activados
+       para acceder a esta opción.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Profundidad (desplazamiento al pulsar)</guilabel> &mdash;
+       Determina la profundidad en el desplazamiento del icono cuando
+       se pulsa. Los dibujos de fondo deben estar activos para acceder 
+       a esta opción.
+      </para>
+     </listitem>
+    </itemizedlist>
+    <para>
+     Esta carpeta contiene también 3 opciones que afectan 
+     simultáneamente a todos los tipos de botones:
+    </para>
+    <itemizedlist>
+     <listitem>
+      <para>
+       <guilabel>Hacer que los botones alinear con el lateral del
+       panel.</guilabel> &mdash;
+       Permite alinear los botones con el lateral del <interface>Panel
+       </interface>. Si esta opción no está activa se ignorarán el ancho
+       del borde. Por defecto esta opción está desactivada.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Mostrar el mosaico del botón solo cuando el cursor
+       este sobre él</guilabel> &mdash; Si esta opción esta activa,
+       el mosaico solo aparecerá cuando el cursor del ratón esté
+       sobre el botón.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>oscurecer los botones cuando el ratón no este sobre
+       ellos</guilabel> &mdash; Esta opción oscurece los botones del panel;
+       los botones se iluminarán cuando los sobrevuele el cursor del ratón.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+
+   <sect2 id="appletstab">
+    <title>Carpeta de apliques</title>
+    <para>
+     Esta carpeta controla algunas opciones relacionadas con la posición
+     de los objetos en el <interface>panel</interface>.
+    </para>
+    <itemizedlist>
+     <listitem>
+      <para>
+       <guilabel>Modos de movimiento por defecto</guilabel> &mdash;
+       Aquí se puede elegir el modo de movimiento de los objetos en el
+       <interface>Panel</interface>. Las posibles variantes son:
+      </para>
+      <itemizedlist>
+       <listitem>
+        <para>
+         <emphasis>Alternado</emphasis> &mdash;
+         Cuando un objeto en movimiento toca otro objeto, intercambian
+         sus posiciones.
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <emphasis>Libre</emphasis> &mdash;
+         Cuando un objeto en movimiento toca otro objeto, salta sobre
+         él, de forma que no se alteran los otros objetos. Esta es una
+         buena opción si le gusta la disposición actual de los objetos
+         en el <interface>panel</interface> y quiere conservarla.
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <emphasis>Presionado</emphasis> &mdash;
+         El objeto en movimiento empuja todos los demás objetos delante
+         de él, como una bola de nieve.
+        </para>
+       </listitem>
+      </itemizedlist>
+      <para>
+       Puede saltarse el método de movimiento por defecto arrastrando
+       los objetos mientras mantiene pulsada la tecla <keycap>Ctrl</keycap>
+       (para los movimientos alternados), <keycap>Alt</keycap> (para los
+       movimientos libres), o <keycap>Shift</keycap> (para los movimientos
+       presionados).
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Separación de apliques</guilabel> &mdash;
+       cambia el espacio (separación) entre objetos en el <interface>
+       Panel</interface>. Se mide en puntos.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+
+   <sect2 id="menutab">
+    <title>Carpeta de menús</title>
+    <para>
+     En esta carpeta se controla la apariencia de los menús del
+     <interface>Panel</interface>.
+    </para>
+    <itemizedlist>
+     <listitem>
+      <para>
+       <guilabel>Usar iconos grandes</guilabel> &mdash;
+       Se usarán iconos grandes (mayores que el tamaño por defecto) en
+       los menús. Solo resulta práctico para que dispongan de monitores
+       de alta resolución (1280x1024 y superiores).
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>mostrar botones con "..."</guilabel> &mdash;
+       Activa la opción que muestra tres pequeños puntos (...) en los
+       elementos del <guimenu>Menú principal</guimenu>. Apretando en
+       ese botón con el botón izquierdo del ratón aparecerá el menú
+       <guimenu>desplegable</guimenu> para ese elemento, es decir, el
+       mismo menú que se obtiene apretando en el elemento del menú
+       con el botón derecho del ratón. 
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Mostrar menús desplegables fuera de los
+       paneles.</guilabel> &mdash;
+       Cuando este conmutador está activo, permite que los menús
+       desplegables aparezcan fuera del <interface>Panel</interface>.
+       Cuando está desactivado, los menús desplegables aparecerán sobre
+       el <interface>panel</interface>. Esto puede resultar útil para
+       las pantallas pequeñas y escritorios abarrotados. 
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Mantener los menús en memoria</guilabel> &mdash; 
+       Permite mantener los menús en memoria de forma que no se examinan
+       de nuevo en busca de nuevos elementos. Esto puede incrementar
+       la velocidad de GNOME pero puede también provocar que no aparezcan
+       los nuevos elementos añadidos a su menú. 
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Menú principal</guilabel> &mdash;
+       Permite configurar el <link linkend="globalmenu"><guimenu>Menú 
+       principal</guimenu></link> que se obtiene pulsando el botón derecho
+       sobre el <interface>Panel</interface>, o usando el atajo de teclado.
+       Para cada uno de los posibles submenús
+       (<guisubmenu>Programas</guisubmenu>, <guisubmenu>Favoritos</guisubmenu>,
+       etc.), puede decidir cuando se incluirán como parte del
+       <guimenu>Menú principal</guimenu>, como un submenú, o no se incluirán.
+       una descripción de estos submenús puede encontrarse en <xref
+       linkend="submenus">.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+
+   <sect2 id="misctab">
+    <title>Carpeta varios</title>
+    <para>
+     La carpeta <guilabel>Varios</guilabel> contiene opciones para varios
+     formatos visuales (apariencia) que no encajan en otro sitio.
+    </para>
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>Consejos activos</guilabel> &mdash;
+       Esta opción determina cuando debe Gnome mostrar un consejo al
+       situar el puntero del ratón sobre un elemento del 
+       <interface>Panel</interface>.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Cerrar un cajón al accionar uno de sus
+       lanzadores</guilabel> &mdash;
+       Por defecto los cajones permanecerán abiertos cuando elige uno
+       de sus elementos. Esto puede resultar incómodo ya que el cajón
+       permanecerá abierto hasta que lo cierre con una pulsación de ratón.
+       Con esta opción los cajones indicados se cerrarán automáticamente
+       cuando elija uno de sus elementos.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Alzar los paneles al sobrevolarlos el cursor</guilabel> &mdash;
+       Si está usando un gestor de ventanas no compatible con Gnome
+       puede que no se entienda con él <interface>Panel</interface>.
+       Esto puede ocasionar las aplicaciones tapen el 
+       <interface>Panel</interface>. Si habilita esta funcionalidad el
+       <interface>Panel</interface> pasará al primer plano automáticamente
+       cuando el ratón esté sobre él.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Mantener el panel detrás de las ventanas</guilabel> &mdash;
+       Si está usando un gestor de ventanas compatible con Gnome, el
+       gestor de ventanas se entenderá con el <interface>Panel</interface>.
+       Si habilita esta funcionalidad el gestor de ventanas y Gnome
+       permitirán que las aplicaciones aparezcan sobre el 
+       <interface>panel</interface>. Esto puede ser útil en las pantallas
+       más pequeñas.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Confirmar la eliminación de paneles con un 
+       diálogo</guilabel> &mdash;
+       Si se habilita esta opción, Gnome pedirá confirmación antes de
+       eliminar un <interface>Panel</interface>.
+      </para>
+     </listitem>
+    </itemizedlist>
+    <para>
+     Esta carpeta permite también configurar algunos aceleradores de
+     teclado. Puede definir aceleradores para el <link
+     linkend="globalmenu"><guimenu>Menú principal</guimenu></link>
+     (en concreto <guimenu>Menú desplegable</guimenu> y para el
+     formulario de <link linkend="runbutton"><interface>Ejecución de
+     comandos</interface></link>. (Las teclas aceleradoras para
+     estas acciones son
+     <keycombo action=simul>
+      <keycap>Alt</keycap>
+      <keycap>F1</keycap>
+     </keycombo>
+     y
+     <keycombo action=simul>
+      <keycap>Alt</keycap>
+      <keycap>F2</keycap>
+     </keycombo>
+     respectivamente.) Para cambiar estas teclas aceleradoras,
+     seleccione una tecla de la lista desplegable o presione el 
+     botón <guibutton>Grabar tecla&hellip; </guibutton> y entonces
+     presione la tecla deseada.
+    </para>
+      <note>
+       <title>Utilizando las teclas de Menú y de Windows</title>
+       <para>
+        Si tiene problemas usando las teclas <keycap>Menú</keycap> o
+        <keycap>Windows</keycap>, la explicación mas probable es que el
+        servidor X esta mal configurado: el tipo de teclado escogido
+        durante la instalación no corresponde con su tipo de teclado.
+        Si está utilizando el servidor <application>XFree86</application>,
+        puede corregirlo a mano editando el fichero de configuración.
+        Este fichero, llamado <filename>XF86Config</filename>, está
+        normalmente situado en los directorios <filename>/etc</filename>
+        o <filename>/etc/X11</filename>. Abra este fichero con cualquier
+        editor de textos (¡no con un procesador de textos!), busque la
+        línea que contiene la palabra <literal>XkbModel</literal> y 
+        cámbiela por <programlisting>XkbModel "pc104"</programlisting>.
+        Debe ser root (administrador de sistema) para hacerlo. Ahora,
+        salga de Gnome y rearranque el servidor de X pulsando de forma
+        simultanea las teclas
+        <keycombo>
+         <keycap>Ctrl</keycap>
+         <keycap>Alt</keycap>
+         <keycap>Delete</keycap>
+        </keycombo>.
+       </para>
+      </note>
+      <warning>
+       <title>Vigile cuando edite el archivo XF86Config</title>
+       <para>
+        Si cometemos un error el editar el fichero 
+        <filename>XF86Config</filename> podemos terminar con un teclado o
+        una pantalla no utilizable desde las ventanas X. Así que, por
+        favor tenga cuidado, haga una copia de seguridad de este fichero
+        y asegúrese que sabe como restaurarlo del la copia de 
+        seguridad sin usar las ventanas X, por ejemplo, desde un terminal.
+        Si tiene dudas, no lo edite en ningún caso.
+       </para>
+      </warning>
+   </sect2>
+  </sect1>
+
+<!-- ############### Individual Panel Properties ################ -->
+  <sect1 id="panelproperties">
+   <title>Propiedades individuales de los paneles</title>
+   <para>
+    <indexterm id="idx-a62"> <primary>Panel</primary>
+     <secondary>Propiedades individuales de los paneles</secondary>
+    </indexterm>
+    <indexterm id="idx-a63"> <primary>Panel</primary>
+     <secondary>propiedades</secondary>
+    </indexterm>
+    Además de las propiedades globales de los paneles, descritas en
+    <xref linkend="globalpanelprefs">, algunas propiedades pueden
+    configurarse de forma individual para cada <interface>Panel</interface>.
+    Estas propiedades son el tipo de <interface>Panel</interface> (de lado,
+    alineado, deslizante, flotante), tamaño, posición, color de fondo,
+    y política de escondido. Para cambiar estas propiedades en un
+    <interface>Panel</interface>, pulse el botón derecho del ratón sobre
+    él y seleccione <menuchoice><guimenu>Panel</guimenu>
+    <guisubmenu>propiedades</guisubmenu></menuchoice>. También puede pulsar
+    el botón <guibutton>Menú principal</guibutton> y elegir 
+    <menuchoice><guimenu>Panel</guimenu><guisubmenu>propiedades</guisubmenu>
+    </menuchoice>.
+   </para>
+   <para>
+    Del submenú <guisubmenu>Propiedades</guisubmenu>, puede elegir
+    <guimenuitem>Todas propiedades</guimenuitem>, que abrirá el formulario
+    <interface>Propiedades del panel</interface>. Si ya está familiarizado
+    con este formulario, puede también cambiar rápidamente
+    algunas de las propiedades &mdash; como el tamaño del panel o el tipo
+    del <interface>Panel</interface>  &mdash; seleccionando el elemento 
+    apropiado en el menú de <guisubmenu>Propiedades</guisubmenu>.
+   </para>
+   <para>
+    El formulario de <interface>Propiedades de panel</interface> contiene
+    dos carpetas para ayudarle a configurar las propiedades del
+    <interface>Panel</interface> activo: <guilabel>Panel de lado</guilabel>
+    (o <guilabel>Alineado</guilabel>, &hellip - dependiendo del tipo de panel)
+    y <guilabel>Fondo</guilabel>. Estas dos carpetas se describen a
+    continuación.
+   </para>
+
+   <sect2 id="edgetab">
+    <title>Carpeta panel de lado</title>
+    <figure>
+     <title>Formulario propiedades de panel de lado</title>
+     <screenshot>
+      <screeninfo>Formulario propieades de panel de lado</screeninfo>
+       <graphic fileref="./figures/panel_props_edge"
+                format="png" srccredit="muet">
+       </graphic>
+     </screenshot>
+    </figure>
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>Posición del panel</guilabel> &mdash;
+       Cambia la posición del <interface>Panel</interface> en la pantalla.
+       Para los <interface>Paneles de lado</interface>, debe especificar
+       un lado (<guilabel>superior</guilabel>, <guilabel>derecho</guilabel>,
+       <guilabel>izquierdo</guilabel>, o <guilabel>inferior</guilabel>.
+       Para los <interface>Paneles alineados</interface>, debe especificar
+       un lado y uno de los extremos o el centro. Para los 
+       <interface>Paneles deslizantes</interface>, debe indicar el lado y
+       el desplazamiento ("offset") desde una de las esquinas (en pixels).
+       Finalmente, para los <interface>Paneles flotantes</interface> debe 
+       indicar la orientación (horizontal o vertical) y la posición de
+       la esquina superior izquierda  del <interface>Panel</interface>
+       (relativa a la esquina superior izquierda de la pantalla y medida
+       en pixels).
+      </para>
+      <para>
+       El <interface>Panel</interface> cambiará de posición una vez
+       pulsado el botón <guibutton>Aplicar</guibutton> o el botón
+       <guibutton>Aceptar</guibutton>.
+      </para>
+      <tip>
+       <title>Mover el panel manualmente</title>
+       <para>
+        También puede cambiar la posición de un <interface>Panel</interface>
+        Gnome arrastrándolo con el botón central del ratón a la nueva
+        posición.
+       </para>
+      </tip>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guilabel>Tamaño del panel</guilabel> &mdash;
+       Permite elegir el ancho del <interface>Panel</interface>. El tamaño
+       por omisión es 48 pixels, que es también el tamaño por omisión
+       de los iconos usados en Gnome. Los usuarios con pantallas de baja
+       resolución pueden disminuir el tamaño del <interface>Panel</interface>
+       para liberar espacio en la pantalla; por contra, los usuarios con
+       pantallas de alta resolución pueden probar usando
+       <interface>Panel</interface>es de mayor tamaño. 
+      </para>
+      <para>
+       El cambio de tamaño del <interface>Panel</interface> redimensiona
+       automáticamente todos los iconos del <interface>Panel</interface>,
+       lo que puede provocar cierta perdida de calidad. También, el
+       <interface>Panel</interface> pedirá a todos los apliques que
+       ellos mismos adecuen su tamaño. La mayoría de los apliques
+       responderán a la petición; en cualquier caso, si algunos apliques
+       no atienden a la petición, entonces el <interface>Panel</interface>
+       adecuará su tamaño para acoger todos los apliques.  
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <indexterm id="idx-a64"><primary>Panel</primary>
+          <secondary>Auto ocultación</secondary>
+       </indexterm>
+       <guilabel>Ocultar</guilabel>&mdash;
+       En esta sección, puede decidir si quiere que el 
+       <interface>panel</interface> se auto-oculte&mdash;
+       esto es, que el <interface>panel</interface> se oculte de forma
+       automática cuando el ratón no esté sobre el. Los parámetros
+       del auto-escondido se pueden configurar en el 
+       <link linkend="animtab">Formulario de propiedades globales</link>.
+       Si escoge la auto-ocultación puede deshabilitar los botones de 
+       escondido aquí mismo. Puede también desactivar las flechas de
+       ocultación de los paneles. 
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+
+   <sect2 id="panelbacktab">
+    <title>Carpeta de fondo</title>
+     <indexterm id="idx-a65"><primary>Panel</primary>
+        <secondary>Fondo</secondary>
+     </indexterm>
+    <figure>
+     <title>Formulario de propiedades del fondo del panel</title>
+     <screenshot>
+      <screeninfo>Formulario de propiedades del fondo del panel</screeninfo>
+       <graphic fileref="./figures/panel_props_back"
+   		   format="png" srccredit="muet">
+       </graphic>
+     </screenshot>
+    </figure>
+
+    <para>
+     Estas opciones le permiten cambiar el fondo del <interface>Panel
+     </interface> mismo. Puede elegir, si lo desea, tener el fondo
+     <guilabel>Estándar</guilabel>, <guilabel>Mapa de puntos</guilabel>, o 
+     <guilabel>de Color</guilabel>. La imagen estándar para el 
+     <interface>Panel</interface> la determina el tema GTK que esté
+     ejecutando en ese momento. (pude configurar el tema Gtk usando el
+     <application>Centro de control Gnome</application>). La opción 
+     <guilabel>Mapa de puntos</guilabel> permite escoger una imagen
+     de fondo o escalada para el <interface>Panel</interface>. La opción
+     de <guilabel>Color</guilabel> permite especificar un determinado color
+     para el <interface>Panel</interface>. 
+    </para>
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>Color a utilizar:</guilabel> &mdash;
+       Si elige usar un color de fondo en el <interface>Panel</interface>
+       este botón desplegará un formulario para permitirle elegir el
+       color a utilizar.
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guilabel>Imagen</guilabel> &mdash;
+       Si desea utilizar un <guilabel>Mapa de puntos</guilabel> para el fondo
+       de su <interface>Panel</interface>, aquí se le permitirá elegir que
+       imagen utilizar. Si pulsa el botón <guibutton>Buscar</guibutton> podrá
+       buscar el fichero que desee utilizar. El fichero utilizado en este
+       momento se muestra a la derecha del botón. la ventana inferior es
+       una muestra del fondo.
+      </para>
+     </listitem>
+    </itemizedlist>
+
+    <tip>
+     <title>Arrastrar y soltar imágenes</title>
+     <para>
+      Una forma sencilla de cambiar el fondo de su 
+      <interface>Panel</interface> es arrastrar y soltar un fichero de
+      imagen desde el <application>gestor de ficheros GNOME</application>
+      hasta el <interface>Panel</interface>. Esto cambiará automáticamente
+      el fondo del <interface>Panel</interface> a esta imagen.
+     </para>
+    </tip>
+
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>No Redimensionar imagen</guilabel>&mdash;
+       Si esta casilla está marcada, la imagen de fondo formará un
+       mosaico para cubrir todo el <interface>Panel</interface>, en
+       lugar de redimensionarse.
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guilabel>Redimensionar imagen (conservar aspecto)</guilabel> &mdash;
+       Si esta casilla está marcada, la imagen de fondo se redimensionará
+       conservando en la medida de lo posible las proporciones de la imagen,
+       y después se utilizará la imagen redimensionada como mosaico en el
+       <interface>Panel</interface>.
+      </para>
+     </listitem>
+ 
+     <listitem>
+      <para>
+       <guilabel>Estirar la imagen (cambia los proporciones)</guilabel> &mdash;
+       Si esta casilla está marcada, la imagen de fondo será estirada en 
+       ambas direcciones hasta el tamaño del <interface>Panel</interface>.
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guilabel>Rotar la imagen para paneles verticales</guilabel> &mdash;
+       Si esta casilla está marcada, se rotará la imagen cuando cambie la
+       orientación del <interface>Panel</interface> (horizontal/vertical).
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+  </sect1>
+
+<!-- ############### Current Bugs and Limitations ############### -->
+  <sect1 id="panelbugs">
+   <title>Actuales errores y limitaciones</title>
+   <para>
+    La mayoría de las cosas aquí mencionadas no son realmente errores;
+    por el contrario describen situaciones en las que el comportamiento
+    del <interface>Panel</interface> no es el esperado.
+   </para>
+
+   <para>
+    No puede colocar ficheros ordinarios ni directorio en el 
+    <interface>Panel</interface>. Si arrastra y suelta un fichero desde
+    la ventana del gestor de ficheros hasta el <interface>Panel</interface>,
+    no funcionará. El único tipo de fichero que puede colocar en el
+    <interface>Panel</interface> es el tipo <filename>.desktop</filename>,
+    que describe a los lanzadores (y archivos <filename>.kdelnk</filename>,
+    que describen lanzadores en el formato utilizado por el entorno de
+    escritorio K, KDE); cualquier directorio soltado en el
+    <interface>Panel</interface> será interpretado como un menú &mdash;
+    esto es, todos los ficheros que no sean del tipo 
+    <filename>.desktop</filename> serán ignorados.
+   </para>
+
+   <para>
+    Editar menús distintos del <guimenu>Menú principal</guimenu> es mas
+    bien confuso. El <application>Editor de Menús</application> no puede
+    usarse por el momento para ello, y el elemento 
+    <guimenuitem>Propiedades</guimenuitem> en el menú de botón derecho
+    tampoco ayuda demasiado - por ejemplo, no le permite cambiar los
+    iconos de los menús (vea las instrucciones para hacerlo en   
+    <xref linkend="menusconf">) Esto mejorará en la siguiente versión.
+   </para>
+
+   <para>
+    El <guimenu>Menú Global</guimenu> (que se obtiene la pulsar la tecla 
+    <keycombo><keycap>Alt</keycap><keycap>F1</keycap></keycombo> en el teclado o,
+    pulsando el botón derecho sobre el propio <interface>Panel</interface>,
+    y el <guimenu>Menú Principal</guimenu> (que se obtiene al pulsar el
+    icono con un pie) se configuran de forma separada. La razón es que
+    puede tener varios botones <guimenu>Menús principales</guimenu>
+    en diferentes paneles.
+   </para>
+
+   <para>
+    El botón <guibutton>de bloqueo de pantalla</guibutton> no bloquea la
+    pantalla si la opción <guilabel>"sin salva pantallas"</guilabel>
+    está activa en el <application>Centro de control GNOME</application>.
+   </para>
+
+   <para>
+    La única forma de cambiar el tipo de <interface>Panel</interface>
+    (de lado, aliñado, etc.) es seleccionando 
+    <menuchoice><guisubmenu>Panel</guisubmenu><guisubmenu>Propiedades
+    </guisubmenu><guisubmenu>Tipo</guisubmenu></menuchoice> desde el 
+    <guimenu>Menú Principal</guimenu> o del <guimenu>Menú Global</guimenu>:
+    no puede cambiar el tipo de <interface>Panel</interface> en el formulario
+    <interface>Propiedades del panel</interface>. Por el contrario,
+    <menuchoice><guisubmenu>Propiedades</guisubmenu><guisubmenu>Tipo de fondo
+    </guisubmenu></menuchoice> permite cambiar el tipo de fondo
+    (mapa de puntos/color/estandar), pero no elegir el color
+    actual o la imagen que se usará.
+   </para>
+  </sect1>
+
+<!-- ###############  Authors  ################## -->
+  <sect1 id="panel-authors">
+   <title>Autores</title>
+    <para>
+     El <application>Panel de GNOME</application> fue escrito por
+     muchos desarrolladores de GNOME; puede encontrar una lista parcial
+     en el formulario <interface>Acerca de...</interface>. De todas formas:
+     se sorprenderá que el nombre del animal que se muestra en el
+     formulario <interface>Acerca de...</interface>, se llama "Gegl" y
+     tiene su propia <ulink type="http" url="http://www.gegl.org/">
+     página Web</ulink>.
+    </para>
+    <para>
+     Por favor envíe todos los comentarios, sugerencias, y errores
+     encontrados a la <ulink url="http://bugs.gnome.org/" type="http">
+     base de datos de seguimiento de errores GNOME</ulink>. Las
+     instrucciones para introducir los errores encontrados las puede
+     encontrar en línea en <ulink url="http://bugs.gnome.org/Reporting.html"
+     type="http">http://bugs.gnome.org/Reporting.html</ulink>.
+     También puede utilizar la <application>Herramienta de Reportar
+     Errores</application> (<command>bug-buddy</command>), disponible en
+     el submenú <guisubmenu>Utilidades</guisubmenu> del <guimenu>
+     Menú Principal</guimenu>, para introducir los errores encontrados.
+    </para>
+
+    <para>
+     Este manual fue escrito por Dave Mason
+     (<email>dcm@redhat.com</email>), Dan Mueth
+     (<email>d-mueth@uchicago.edu</email>), y Alexander Kirillov
+     (<email>kirillov@math.sunysb.edu</email>). Por favor envíe todos
+     los comentarios y sugerencias referentes a este manual al
+     Proyecto de Documentación GNOME a <email>docs@gnome.org</email> o
+     entre sus comentarios en línea utilizando la <ulink type="http"
+     url="http://developer.gnome.org/projects/gdp/doctable/">Tabla de
+     estado de la Documentación GNOME</ulink>.
+    </para>
+
+<para>Miquel Jordana (<email>jjvmjv@mundomail.net</email>)
+es el traductor de este manual al Castellano.
+Por favor envíe todos los comentarios y sugerencias acerca de este traducción
+al proyecto de traducción de gnome-es en  <email>traductores@es.gnome.org</email>.
+</para>
+<para>Puede encontrar mas documentación de Gnome en Castellano en las páginas
+ del grupo de traducción al Castellano
+<ulink type="http" url="http://www.croftj.net/~barreiro/spanish/gnome-es">
+gnome-es</ulink>,
+o en las de
+<ulink type="http" url="http://www.es.gnome.org">Gnome España</ulink>.
+</para>
+
+
+   </sect1> 
+
+
+  <sect1 id="license">
+  <title>Licencia</title>
+  <para>
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the <ulink type="help"
+   url="gnome-help:gpl"><citetitle>GNU General Public
+   License</citetitle></ulink> as published by the Free Software
+   Foundation; either version 2 of the License, or (at your option)
+   any later version.
+  </para>
+   <para>
+Este programa es software libre; puede distribuirlo y/o modificarlo 
+bajo los términos de
+<ulink url="gnome-help:gpl">la licencia pública GNU</ulink>, tal y como 
+fue publicada
+por la Fundación para el software libre, ya sea la versión 2, o (a su elección) cualquier
+versión posterior.
+</para>
+
+  <para>
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   <ulink type="help" url="gnome-help:gpl"><citetitle>GNU General
+   Public License</citetitle></ulink> for more details.
+  </para>
+    <para>
+Este programa se distribuye con la esperanza de que sea útil, pero sin garantía alguna;
+incluso sin la garantía implícita de mercancía o conveniencia para determinados propósitos.
+véase la licencia publica general GNU para mayores detalles.
+</para>
+
+
+  <para>
+En la documentación de Gnome se incluye una copia de la 
+<ulink type="help" url="gnome-help:gpl">
+<citetitle>licencia píblica GNU </citetitle></ulink>.
+También puede obtener un copia de 
+<ulink type="help" url="gnome-help:gpl">
+<citetitle>licencia píblica GNU </citetitle></ulink> en la
+fundación para el software libre, visitando su 
+<ulink type="http" url="http://www.fsf.org/">página web</ulink>
+o escribiendo a 
+   <address>
+    Free Software Foundation, Inc.
+    <street>59 Temple Place</street> - Suite 330
+    <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+    <country>USA</country>
+   </address>
+  </para>
+
+ </sect1>
+
+</article>
