@@ -450,7 +450,9 @@ panel_applet_button_press (GtkWidget      *widget,
 {
 	PanelApplet *applet = PANEL_APPLET (widget);
 
-	if (event->button == 3) {
+	if (event->button == 1)
+		return TRUE;
+	else if (event->button == 3) {
 		bonobo_control_do_popup (applet->priv->control, 
 					 event->button,
 					 event->time);
