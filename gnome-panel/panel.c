@@ -852,8 +852,8 @@ register_toy(GtkWidget *applet,
 
 	g_return_val_if_fail(panelw != NULL, FALSE);
 	
-	/* We wrap the applet in a GtkEventBox so that we can capture events over it */
-
+	/* We wrap the applet in a GtkEventBox so that we can capture
+	   events over it */
 	eventbox = gtk_event_box_new();
 	gtk_widget_set_events(eventbox, gtk_widget_get_events(eventbox) |
 			      APPLET_EVENT_MASK);

@@ -22,11 +22,13 @@ extern "C" {
 
 #define PANEL_APPLET_PARENT_KEY "panel_applet_parent_key"
 #define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
+#define PANEL_APPLET_DATA "panel_applet_data"
 
 typedef struct _PanelWidget		PanelWidget;
 typedef struct _PanelWidgetClass	PanelWidgetClass;
 
 typedef struct _AppletRecord		AppletRecord;
+typedef struct _AppletData		AppletData;
 typedef struct _DNDRecord		DNDRecord;
 typedef enum {
 	PANEL_HORIZONTAL,
@@ -60,6 +62,14 @@ struct _AppletRecord
 {
 	GtkWidget		*applet;
 	gint			cells;
+};
+
+struct _AppletData
+{
+	gint prevx;
+	gint prevy;
+	gint prevwidth;
+	gint prevheight;
 };
 
 struct _DNDRecord
