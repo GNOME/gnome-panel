@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
-"POT-Creation-Date: 2002-09-18 05:04+0200\n"
+"POT-Creation-Date: 2002-11-15 16:46+1300\n"
 "PO-Revision-Date: 2002-10-20 19:02+0700\n"
 "Last-Translator: pclouds <pclouds@gmx.net>\n"
 "Language-Team: GnomeVI <gnomevi-list@lists.sourceforge.net>\n"
@@ -26,7 +26,7 @@ msgstr "_Giới thiệu..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:672
-#: gnome-panel/launcher.c:736 gnome-panel/logout.c:134
+#: gnome-panel/launcher.c:756 gnome-panel/logout.c:134
 #: gnome-panel/logout.c:221 gnome-panel/menu.c:3447 gnome-panel/menu.c:4150
 msgid "_Help"
 msgstr "Trợ _giúp"
@@ -383,50 +383,49 @@ msgid "Display date in applet, in addition to time"
 msgstr "Hiện ngày trong applet (cùng với giờ)"
 
 #: applets/gen_util/clock.schemas.in.h:3
-msgid "Display seconds in time"
-msgstr "Hiện giây"
-
-#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Hiện thời gian theo Universal Coordinated Time zone"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Hiện giờ theo giây kể từ 1/1/1970"
 
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Hour format"
 msgstr "Dạng thức giờ"
 
-#: applets/gen_util/clock.schemas.in.h:7
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "Đặt dạng thức giờ, có thể là 12 hoặc 24"
+#: applets/gen_util/clock.schemas.in.h:6
+msgid ""
+"Sets the hour format, may be either 12 or 24</long> <default>24</default> </"
+"locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets the "
+"hour format, may be either 12 or 24</long> <default>12</default> </locale> </"
+"schema> <schema> <key>/schemas/apps/clock_applet/prefs/show_seconds</key> "
+"<owner>clock-applet</owner> <type>bool</type> <default>true</default> "
+"<locale name=\"C\"> <short>Show time with seconds</short> <long>Display "
+"seconds in time"
+msgstr ""
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr "Hiện ngày trong tooltip khi chuột di chuyển qua applet"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Show date in applet"
 msgstr "Hiện ngày trong applet"
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in tooltip"
 msgstr "Hiện ngày trong tooltip"
 
-#: applets/gen_util/clock.schemas.in.h:11
-msgid "Show time with seconds"
-msgstr "Hiện thời gian theo giây"
-
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Use Internet time"
 msgstr "Dùng giờ Internet"
 
-#: applets/gen_util/clock.schemas.in.h:13
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Use UNIX time"
 msgstr "Dùng giờ UNIX"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Use UTC"
 msgstr "Dùng UTC"
 
@@ -1058,7 +1057,7 @@ msgstr "_Loại bỏ khỏi panel"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:441 gnome-panel/foobar-widget.c:394
+#: gnome-panel/applet.c:441 gnome-panel/foobar-widget.c:397
 msgid "???"
 msgstr "???"
 
@@ -1072,7 +1071,7 @@ msgstr "Không đặt object_type cho đối tượng panel với ID %s\n"
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Không đặt panel_id cho đối tượng panel với ID %s\n"
 
-#: gnome-panel/applet.c:1142
+#: gnome-panel/applet.c:1137
 msgid "Can't find an empty spot"
 msgstr "Không thể tìm thấy chỗ trống"
 
@@ -1135,11 +1134,11 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/disclosure-widget.c:260
+#: gnome-panel/disclosure-widget.c:251
 msgid "Expander Size"
 msgstr "Cỡ mũi tên bung"
 
-#: gnome-panel/disclosure-widget.c:261
+#: gnome-panel/disclosure-widget.c:252
 msgid "Size of the expander arrow"
 msgstr "Kích thước của mũi tên bung"
 
@@ -1201,77 +1200,77 @@ msgstr "Hiện mũi tên"
 msgid "Drawer"
 msgstr "Ngăn kéo"
 
-#: gnome-panel/drawer.c:669 gnome-panel/launcher.c:734
+#: gnome-panel/drawer.c:669 gnome-panel/launcher.c:754
 #: gnome-panel/logout.c:219 gnome-panel/menu.c:1447 gnome-panel/menu.c:3422
 msgid "_Properties"
 msgstr "T_huộc tính"
 
-#: gnome-panel/foobar-widget.c:169 gnome-panel/menu.c:3602
+#: gnome-panel/foobar-widget.c:172 gnome-panel/menu.c:3602
 msgid "Cannot execute gnome-panel-screenshot"
 msgstr "Không thể thực hiện gnome-panel-screenshot"
 
-#: gnome-panel/foobar-widget.c:180 gnome-panel/menu.c:3612
+#: gnome-panel/foobar-widget.c:183 gnome-panel/menu.c:3612
 msgid "Cannot execute gnome-search-tool"
 msgstr "Không thể thực hiện gnome-search-tool"
 
-#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3731
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3731
 msgid "Run Program..."
 msgstr "Chạy chương trình..."
 
-#: gnome-panel/foobar-widget.c:194
+#: gnome-panel/foobar-widget.c:197
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Chạy ứng dụng, nếu bạn biết lệnh cần thiết phải nhập vào"
 
-#: gnome-panel/foobar-widget.c:203 gnome-panel/menu.c:3743
+#: gnome-panel/foobar-widget.c:206 gnome-panel/menu.c:3743
 msgid "Search for Files..."
 msgstr "Tìm tập tin..."
 
-#: gnome-panel/foobar-widget.c:208 gnome-panel/menu.c:3746
+#: gnome-panel/foobar-widget.c:211 gnome-panel/menu.c:3746
 msgid "Find files, folders, and documents on your computer"
 msgstr "Tìm tập tin, thư mục, tài liệu trên máy tính"
 
-#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3756
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3756
 msgid "Screenshot..."
 msgstr "Screenshot..."
 
-#: gnome-panel/foobar-widget.c:222 gnome-panel/menu.c:3759
+#: gnome-panel/foobar-widget.c:225 gnome-panel/menu.c:3759
 msgid "Take a screenshot of your desktop"
 msgstr "Lấy screenshot của desktop"
 
-#: gnome-panel/foobar-widget.c:233 gnome-panel/menu.c:3516
+#: gnome-panel/foobar-widget.c:236 gnome-panel/menu.c:3516
 msgid "Lock Screen"
 msgstr "Khóa màn hình"
 
-#: gnome-panel/foobar-widget.c:237
+#: gnome-panel/foobar-widget.c:240
 msgid "Protect your computer from unauthorized use"
 msgstr "Tránh sự quấy nhiễu máy tính của những người dùng không được phép"
 
-#: gnome-panel/foobar-widget.c:246 gnome-panel/menu.c:3527
+#: gnome-panel/foobar-widget.c:249 gnome-panel/menu.c:3527
 msgid "Log Out"
 msgstr "Thoát"
 
-#: gnome-panel/foobar-widget.c:250
+#: gnome-panel/foobar-widget.c:253
 msgid "Quit from the GNOME desktop"
 msgstr "Thoát khỏi GNOME Desktop"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:259
+#: gnome-panel/foobar-widget.c:262
 msgid "Actions"
 msgstr "Hành động"
 
-#: gnome-panel/foobar-widget.c:476
+#: gnome-panel/foobar-widget.c:479
 msgid "No windows open"
 msgstr "Không có cửa sổ nào"
 
-#: gnome-panel/foobar-widget.c:714 gnome-panel/menu.c:2744
+#: gnome-panel/foobar-widget.c:717 gnome-panel/menu.c:2744
 msgid "Menu Panel"
 msgstr "Panel menu"
 
-#: gnome-panel/foobar-widget.c:714
+#: gnome-panel/foobar-widget.c:717
 msgid "GNOME Menu Panel"
 msgstr "Panel Menu GNOME"
 
-#: gnome-panel/foobar-widget.c:734 gnome-panel/menu.c:2880
+#: gnome-panel/foobar-widget.c:737 gnome-panel/menu.c:2880
 #: gnome-panel/menu.c:2885 gnome-panel/menu.c:3699
 msgid "Applications"
 msgstr "Ứng dụng"
@@ -1521,7 +1520,7 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/gnome-run.c:347 gnome-panel/gnome-run.c:421
+#: gnome-panel/gnome-run.c:356 gnome-panel/gnome-run.c:432
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1532,7 +1531,7 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/gnome-run.c:444
+#: gnome-panel/gnome-run.c:457
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1543,7 +1542,7 @@ msgstr ""
 "\n"
 "Chi tiết: không có ứng dụng nào để mở tập tin"
 
-#: gnome-panel/gnome-run.c:458
+#: gnome-panel/gnome-run.c:468
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1554,44 +1553,44 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/gnome-run.c:536
+#: gnome-panel/gnome-run.c:557
 msgid "Choose a file"
 msgstr "Chọn tập tin"
 
-#: gnome-panel/gnome-run.c:775 gnome-panel/gnome-run.c:776
+#: gnome-panel/gnome-run.c:796 gnome-panel/gnome-run.c:797
 msgid "Known Applications"
 msgstr "Ứng dụng đã biết"
 
-#: gnome-panel/gnome-run.c:904
+#: gnome-panel/gnome-run.c:927
 msgid "Command to run"
 msgstr "Lệnh cần chạy"
 
-#: gnome-panel/gnome-run.c:939
+#: gnome-panel/gnome-run.c:962
 msgid "Run in _terminal"
 msgstr "Chạy trong _terminal"
 
-#: gnome-panel/gnome-run.c:944
+#: gnome-panel/gnome-run.c:967
 msgid "_Append File..."
 msgstr "_Mở rộng tập tin..."
 
-#: gnome-panel/gnome-run.c:1327
+#: gnome-panel/gnome-run.c:1350
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Sẽ chạy lệnh: '%s'"
 
-#: gnome-panel/gnome-run.c:1336
+#: gnome-panel/gnome-run.c:1359
 msgid "No application selected"
 msgstr "Không có ứng dụng nào được chọn"
 
-#: gnome-panel/gnome-run.c:1456
+#: gnome-panel/gnome-run.c:1479
 msgid "List of known applications"
 msgstr "Danh sách các ứng dụng đã biết"
 
-#: gnome-panel/gnome-run.c:1457
+#: gnome-panel/gnome-run.c:1480
 msgid "Choose an application to run from the list"
 msgstr "Chọn ứng dụng cần chạy từ danh sách"
 
-#: gnome-panel/gnome-run.c:1581
+#: gnome-panel/gnome-run.c:1604
 msgid "Run Program"
 msgstr "Thực hiện chương trình"
 
@@ -1628,36 +1627,36 @@ msgstr ""
 "Không thể phóng biểu tượng\n"
 "%s"
 
-#: gnome-panel/launcher.c:333
+#: gnome-panel/launcher.c:349
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Không có URI cho tập tin desktop bộ phóng panel\n"
 
-#: gnome-panel/launcher.c:353
+#: gnome-panel/launcher.c:369
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Không thể mở tập tin desktop %s cho bộ phóng panel %s%s\n"
 
-#: gnome-panel/launcher.c:464
+#: gnome-panel/launcher.c:484
 #, c-format
 msgid "Help on %s Application"
 msgstr "Trợ giúp cho ứng dụng %s"
 
-#: gnome-panel/launcher.c:583 gnome-panel/menu-ditem.c:176
+#: gnome-panel/launcher.c:603 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
 msgstr "Thuộc tính Bộ phóng"
 
-#: gnome-panel/launcher.c:690
+#: gnome-panel/launcher.c:710
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Khóa %s chưa có, không thể nạp bộ phóng\n"
 
-#: gnome-panel/launcher.c:784 gnome-panel/menu-ditem.c:514
+#: gnome-panel/launcher.c:804 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "Không thể tạo Bộ phóng"
 
 #. class
-#: gnome-panel/launcher.c:1004
+#: gnome-panel/launcher.c:1024
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1668,7 +1667,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1090 gnome-panel/menu.c:1107
+#: gnome-panel/launcher.c:1110 gnome-panel/menu.c:1107
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -2349,6 +2348,10 @@ msgstr ""
 "Mã lỗi là: %d\n"
 "Panel sẽ thoát ngay."
 
+#: gnome-panel/panel-stock-icons.c:130
+msgid "_Run"
+msgstr "_Thực hiện"
+
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
 #: gnome-panel/panel-util.c:72 gnome-panel/panel-util.c:107
@@ -2484,8 +2487,14 @@ msgstr "XX Lớn"
 msgid "XX Small"
 msgstr "XX Nhỏ"
 
-#~ msgid "_Run"
-#~ msgstr "_Thực hiện"
+#~ msgid "Display seconds in time"
+#~ msgstr "Hiện giây"
+
+#~ msgid "Sets the hour format, may be either 12 or 24"
+#~ msgstr "Đặt dạng thức giờ, có thể là 12 hoặc 24"
+
+#~ msgid "Show time with seconds"
+#~ msgstr "Hiện thời gian theo giây"
 
 #~ msgid "Use GMT"
 #~ msgstr "Dùng GMT"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.10\n"
-"POT-Creation-Date: 2002-10-28 01:45+0900\n"
+"POT-Creation-Date: 2002-11-15 16:46+1300\n"
 "PO-Revision-Date: 2002-10-28 02:01+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -392,50 +392,49 @@ msgid "Display date in applet, in addition to time"
 msgstr "애플릿에 시간과 더불어 날짜를 보여줍니다"
 
 #: applets/gen_util/clock.schemas.in.h:3
-msgid "Display seconds in time"
-msgstr "시간에 초를 보여줍니다"
-
-#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "협정 세계시(UTC) 시간대의 시각을 보여줍니다"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "기준점, 1970-01-01부터 지난 초로 시간을 보여줍니다"
 
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Hour format"
 msgstr "시간 형식"
 
-#: applets/gen_util/clock.schemas.in.h:7
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "시간 형식을 설정합니다.  12 혹은 24를 쓸 수 있습니다"
+#: applets/gen_util/clock.schemas.in.h:6
+msgid ""
+"Sets the hour format, may be either 12 or 24</long> <default>24</default> </"
+"locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets the "
+"hour format, may be either 12 or 24</long> <default>12</default> </locale> </"
+"schema> <schema> <key>/schemas/apps/clock_applet/prefs/show_seconds</key> "
+"<owner>clock-applet</owner> <type>bool</type> <default>true</default> "
+"<locale name=\"C\"> <short>Show time with seconds</short> <long>Display "
+"seconds in time"
+msgstr ""
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr "마우스가 애플릿 위에 있을 때 나오는 설명에 날짜를 표시합니다"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Show date in applet"
 msgstr "애플릿에 날짜 표시"
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in tooltip"
 msgstr "설명에 날짜 표시"
 
-#: applets/gen_util/clock.schemas.in.h:11
-msgid "Show time with seconds"
-msgstr "시간에 초 표시"
-
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Use Internet time"
 msgstr "인터넷 시각 사용"
 
-#: applets/gen_util/clock.schemas.in.h:13
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Use UNIX time"
 msgstr "유닉스 시각 사용"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Use UTC"
 msgstr "UTC 사용"
 
@@ -850,7 +849,9 @@ msgstr ""
 msgid ""
 "If this is true, the workspaces in the pager will display the names of the "
 "workspaces, otherwise they will display the contents of the workspace."
-msgstr "참이면, 페이저의 작업 공간에서 작업 공간의 이름을 보여줍니다. 거짓이면 작업 공간의 내용을 보여줍니다."
+msgstr ""
+"참이면, 페이저의 작업 공간에서 작업 공간의 이름을 보여줍니다. 거짓이면 작업 "
+"공간의 내용을 보여줍니다."
 
 #: applets/gen_util/pager.schemas.in.h:3
 msgid "Number of rows in the pager"
@@ -932,7 +933,8 @@ msgstr "(c) 2001 Red Hat, Inc"
 #: applets/gen_util/tasklist.c:727
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
-msgstr "창 목록은 표시되는 모든 창의 목록을 보여주고 창을 찾을 수 있도록 해 줍니다"
+msgstr ""
+"창 목록은 표시되는 모든 창의 목록을 보여주고 창을 찾을 수 있도록 해 줍니다"
 
 #: applets/gen_util/tasklist.glade.h:1
 msgid "Group windows when _space is limited"
@@ -1002,7 +1004,9 @@ msgstr ""
 msgid ""
 "If this is true, the tasklist will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
-msgstr "참이면, 작업 목록이 모든 작업 공간의 창을 보여줍니다. 거짓이면 현재 작업 공간에 있는 창만 보여줍니다."
+msgstr ""
+"참이면, 작업 목록이 모든 작업 공간의 창을 보여줍니다. 거짓이면 현재 작업 공간"
+"에 있는 창만 보여줍니다."
 
 #: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
@@ -1146,11 +1150,11 @@ msgstr ""
 "\n"
 "자세한 정보: %s"
 
-#: gnome-panel/disclosure-widget.c:260
+#: gnome-panel/disclosure-widget.c:251
 msgid "Expander Size"
 msgstr "확장자 크기"
 
-#: gnome-panel/disclosure-widget.c:261
+#: gnome-panel/disclosure-widget.c:252
 msgid "Size of the expander arrow"
 msgstr "확장자 화살표의 크기"
 
@@ -1534,7 +1538,7 @@ msgstr ""
 "\n"
 "자세한 정보: '%s'"
 
-#: gnome-panel/gnome-run.c:356 gnome-panel/gnome-run.c:431
+#: gnome-panel/gnome-run.c:356 gnome-panel/gnome-run.c:432
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1545,7 +1549,7 @@ msgstr ""
 "\n"
 "자세한 정보: %s"
 
-#: gnome-panel/gnome-run.c:454
+#: gnome-panel/gnome-run.c:457
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1801,7 +1805,11 @@ msgid ""
 "\n"
 "Running in \"Lockdown\" mode.  This means your system administrator has "
 "prohibited any changes to the panel's configuration to take place."
-msgstr "\n\n\"잠금\"모드로 실행중입니다. 즉 시스템관리자가 패널의 설정을 바꾸지 못하도록 하였습니다."
+msgstr ""
+"\n"
+"\n"
+"\"잠금\"모드로 실행중입니다. 즉 시스템관리자가 패널의 설정을 바꾸지 못하도록 "
+"하였습니다."
 
 #: gnome-panel/menu.c:284
 msgid "The GNOME Panel"
@@ -2135,7 +2143,9 @@ msgstr ""
 "\n"
 "이 애플릿을 다시 읽어들일까요?\n"
 "\n"
-"(지금 다시 읽어들이지 않는다고 선택하더라도, 언제든지 패널에서 오른쪽 클릭하고 \"패널에 덧붙이기\" 서브메뉴에서 애플릿을 클릭해 애플릿을 덧붙일 수 있습니다)"
+"(지금 다시 읽어들이지 않는다고 선택하더라도, 언제든지 패널에서 오른쪽 클릭하"
+"고 \"패널에 덧붙이기\" 서브메뉴에서 애플릿을 클릭해 애플릿을 덧붙일 수 있습니"
+"다)"
 
 #: gnome-panel/panel-applet-frame.c:805
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -2492,3 +2502,12 @@ msgstr "정말 아주 크게"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "정말 아주 작게"
+
+#~ msgid "Display seconds in time"
+#~ msgstr "시간에 초를 보여줍니다"
+
+#~ msgid "Sets the hour format, may be either 12 or 24"
+#~ msgstr "시간 형식을 설정합니다.  12 혹은 24를 쓸 수 있습니다"
+
+#~ msgid "Show time with seconds"
+#~ msgstr "시간에 초 표시"
