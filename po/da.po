@@ -16,13 +16,10 @@
 #
 # Se i øvrigt po-filen til gnome-applets.
 #
-#: applets/gen_util/mailcheck.c:1389 applets/gen_util/mailcheck.c:1412
-#: applets/gen_util/mailcheck.c:1435 applets/gen_util/mailcheck.c:1468
-#: applets/gen_util/mailcheck.c:1482
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core\n"
-"POT-Creation-Date: 2002-05-11 12:58+0200\n"
+"POT-Creation-Date: 2002-05-13 23:33+0100\n"
 "PO-Revision-Date: 2002-05-11 12:57+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -44,9 +41,9 @@ msgstr "Om..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:632
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:628
 #: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:4001 gnome-panel/status.c:377
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:4006 gnome-panel/status.c:377
 msgid "Help"
 msgstr "Hjælp"
 
@@ -238,12 +235,12 @@ msgid "Utility"
 msgstr "Værktøj"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:522
+#: applets/gen_util/tasklist.c:626
 msgid "Window List"
 msgstr "Vinduesliste"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:432 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:435 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "Arbejdsområdeskifter"
 
@@ -326,7 +323,7 @@ msgstr "Benyt _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1640
-#: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:510
+#: applets/gen_util/pager.c:423 applets/gen_util/tasklist.c:614
 #: gnome-panel/menu.c:239
 msgid "translator_credits"
 msgstr "Ole Laursen <olau@hardworking.dk>"
@@ -521,13 +518,22 @@ msgstr "Posttjek"
 msgid "New Mail"
 msgstr "Ny post"
 
-#: applets/gen_util/pager.c:298
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:648
+#: applets/gen_util/pager.glade.h:2
+msgid "Rows"
+msgstr "Rækker"
+
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:648
+msgid "Columns"
+msgstr ""
+
+#: applets/gen_util/pager.c:301
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr ""
 "Fejl ved indlæsning af num_rows-værdien for arbejdsområdeomskifteren: %s\n"
 
-#: applets/gen_util/pager.c:309
+#: applets/gen_util/pager.c:312
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -536,7 +542,7 @@ msgstr ""
 "Fejl ved indlæsning af display_workspace_names-værdien for "
 "arbejdsområdeomskifteren: %s\n"
 
-#: applets/gen_util/pager.c:324
+#: applets/gen_util/pager.c:327
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -545,11 +551,11 @@ msgstr ""
 "Fejl ved indlæsning af display_all_workspaces-værdien for "
 "arbejdsområdeomskifteren: %s\n"
 
-#: applets/gen_util/pager.c:433
+#: applets/gen_util/pager.c:436
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "© 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:434
+#: applets/gen_util/pager.c:437
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage the windows."
@@ -560,10 +566,6 @@ msgstr ""
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
 msgstr "Antal arbejds_områder:"
-
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "Rækker"
 
 #: applets/gen_util/pager.glade.h:3
 msgid "Show _all workspaces"
@@ -623,17 +625,17 @@ msgstr "Udskrivningspanelprogrammet lader dig trække filer til udskrivning"
 msgid "Can't create applet!\n"
 msgstr "Kan ikke oprette panelprogram!\n"
 
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:629
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:625
 #: gnome-panel/launcher.c:715 gnome-panel/menu.c:1326 gnome-panel/menu.c:1397
-#: gnome-panel/menu.c:3277 gnome-panel/menu.c:3999
+#: gnome-panel/menu.c:3277 gnome-panel/menu.c:4004
 msgid "Properties..."
 msgstr "Indstillinger..."
 
-#: applets/gen_util/tasklist.c:523
+#: applets/gen_util/tasklist.c:627
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "© 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:524
+#: applets/gen_util/tasklist.c:628
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -645,42 +647,54 @@ msgid "Group windows when _space is limited"
 msgstr "Gruppér vinduer når _pladsen er begrænset"
 
 #: applets/gen_util/tasklist.glade.h:2
+msgid "M_inimum size:"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:3
+msgid "Ma_ximum size:"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:4
 msgid "Restore to current _workspace"
 msgstr "Gendan til aktivt _arbejdsområde"
 
-#: applets/gen_util/tasklist.glade.h:3
+#: applets/gen_util/tasklist.glade.h:5
 msgid "Restore to na_tive workspace"
 msgstr "Gendan til _oprindeligt arbejdsområde"
 
-#: applets/gen_util/tasklist.glade.h:4
+#: applets/gen_util/tasklist.glade.h:6
 msgid "Show windows from _current workspace"
 msgstr "Vis vinduer fra a_ktivt arbejdsområde"
 
-#: applets/gen_util/tasklist.glade.h:5
+#: applets/gen_util/tasklist.glade.h:7
 msgid "Show windows from a_ll workspaces"
 msgstr "Vis vinduer fra a_lle arbejdsområder"
 
-#: applets/gen_util/tasklist.glade.h:6
+#: applets/gen_util/tasklist.glade.h:8
+msgid "Tasklist size"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:9
 msgid "When restoring minimized windows"
 msgstr "Ved gendannelse af minimerede vinduer"
 
-#: applets/gen_util/tasklist.glade.h:7
+#: applets/gen_util/tasklist.glade.h:10
 msgid "Window List Preferences"
 msgstr "Indstillinger for vinduesliste"
 
-#: applets/gen_util/tasklist.glade.h:8
+#: applets/gen_util/tasklist.glade.h:11
 msgid "Window List content"
 msgstr "Vindueslisteindhold"
 
-#: applets/gen_util/tasklist.glade.h:9
+#: applets/gen_util/tasklist.glade.h:12
 msgid "Window grouping"
 msgstr "Vindueslistegruppering"
 
-#: applets/gen_util/tasklist.glade.h:10
+#: applets/gen_util/tasklist.glade.h:13
 msgid "_Always group windows"
 msgstr "Gruppér _altid vinduer"
 
-#: applets/gen_util/tasklist.glade.h:11
+#: applets/gen_util/tasklist.glade.h:14
 msgid "_Never group windows"
 msgstr "Gruppér al_drig vinduer"
 
@@ -802,7 +816,7 @@ msgstr "Benyt skjuleknap"
 msgid "Enable hidebutton arrow"
 msgstr "Benyt skjuleknapspil"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:446 gnome-panel/menu.c:3140
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3140
 msgid "Drawer"
 msgstr "Skuffe"
 
@@ -822,19 +836,19 @@ msgstr "Kør program..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Kør programmer hvis du kender den rigtige kommando til dem"
 
-#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3581
+#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3893
 msgid "Search for Files..."
 msgstr "Søg efter filer..."
 
-#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3584
+#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3896
 msgid "Find files, folders, and documents on your computer"
 msgstr "Find filer, mapper og dokumenter på systemet"
 
-#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3594
+#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3906
 msgid "Take a Screen Shot..."
 msgstr "Gem skærmbilledet..."
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3597
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3909
 msgid "Take a screen shot of your desktop"
 msgstr "Gem et billede af skrivebordet"
 
@@ -917,7 +931,7 @@ msgstr ""
 msgid "No panel found\n"
 msgstr "Intet panel fundet\n"
 
-#: gnome-panel/gnome-panel-preferences.c:299
+#: gnome-panel/gnome-panel-preferences.c:300
 msgid ""
 "The system administrator has disallowed\n"
 " modification of the panel configuration"
@@ -925,7 +939,7 @@ msgstr ""
 "Systemadministratoren har forbudt\n"
 "ændringer i panelets opsætning"
 
-#: gnome-panel/gnome-panel-preferences.c:310
+#: gnome-panel/gnome-panel-preferences.c:311
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "Indstillinger for panel"
@@ -934,7 +948,7 @@ msgstr "Indstillinger for panel"
 msgid "Modify the global panel preferences"
 msgstr "Redigér globale panelindstillinger"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3611
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3585
 msgid "Panel"
 msgstr "Panel"
 
@@ -1307,7 +1321,7 @@ msgstr ""
 "Detaljer: %s"
 
 #: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3650 gnome-panel/menu.c:3875
+#: gnome-panel/menu.c:3624 gnome-panel/menu.c:3849
 msgid "Menu"
 msgstr "Menu"
 
@@ -1691,19 +1705,19 @@ msgstr "Panelprogrammer"
 msgid "Run a command"
 msgstr "Kør en kommando"
 
-#: gnome-panel/menu.c:3619
+#: gnome-panel/menu.c:3593
 msgid "Desktop"
 msgstr "Skrivebord"
 
-#: gnome-panel/menu.c:3652
+#: gnome-panel/menu.c:3626
 msgid "Menu:"
 msgstr "Menu:"
 
-#: gnome-panel/menu.c:3702 gnome-panel/menu.c:3730 gnome-panel/menu.c:3915
+#: gnome-panel/menu.c:3676 gnome-panel/menu.c:3704 gnome-panel/menu.c:3920
 msgid "Main Menu"
 msgstr "Hovedmenu"
 
-#: gnome-panel/menu.c:3724
+#: gnome-panel/menu.c:3698
 msgid "Can't create menu, using main menu!"
 msgstr "Kan ikke oprette menu, bruger hovedmenu!"
 
@@ -1711,16 +1725,16 @@ msgstr "Kan ikke oprette menu, bruger hovedmenu!"
 msgid "Cannot register control widget\n"
 msgstr "Kan ikke registrere kontrollerende kontrol\n"
 
-#: gnome-panel/panel-applet-frame.c:599
+#: gnome-panel/panel-applet-frame.c:605
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Undtagelse fra popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:687
+#: gnome-panel/panel-applet-frame.c:693
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Kan ikke skaffe AppletShell-grænseflade fra kontrol\n"
 
-#: gnome-panel/panel-applet-frame.c:812
+#: gnome-panel/panel-applet-frame.c:818
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -1953,44 +1967,44 @@ msgstr "Bonobo-testpanelprogram"
 msgid "Test Bonobo Applet Factory"
 msgstr "Fabrik til Bonobo-testpanelprogram"
 
-#: libpanel-applet/panel-applet.c:659
+#: libpanel-applet/panel-applet.c:661
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Ufuldstændig baggrundstype '%s' modtaget"
 
-#: libpanel-applet/panel-applet.c:673
+#: libpanel-applet/panel-applet.c:675
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Ufuldstændig baggrundstype '%s' modtaget: %s"
 
-#: libpanel-applet/panel-applet.c:682
+#: libpanel-applet/panel-applet.c:684
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Det mislykkedes at skaffe billedet %s"
 
-#: libpanel-applet/panel-applet.c:689
+#: libpanel-applet/panel-applet.c:691
 msgid "Unknown background type received"
 msgstr "Ukendt baggrundstype modtaget"
 
 # lidt kryptisk, men dette skulle være betydningen
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:860
 msgid "The Applet's containing Panel's orientation"
 msgstr "Orienteringen af det panel som indeholder panelprogrammet"
 
-#: libpanel-applet/panel-applet.c:866
+#: libpanel-applet/panel-applet.c:868
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Størrelsen i skærmpunkter af det panel som indeholder panelprogrammet"
 
-#: libpanel-applet/panel-applet.c:874
+#: libpanel-applet/panel-applet.c:876
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 "Baggrundsfarven eller -billedet for det panel som indeholder panelprogrammet"
 
-#: libpanel-applet/panel-applet.c:882
+#: libpanel-applet/panel-applet.c:884
 msgid "The Applet's flags"
 msgstr "Panelprogrammets tilvalg"
 
-#: libpanel-applet/panel-applet.c:890
+#: libpanel-applet/panel-applet.c:892
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Intervaller der angiver hvilke størelser der er acceptable for "

@@ -289,8 +289,6 @@ focus_in_drawer (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	Drawer *drawer = data;
 	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
-	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
-	GtkWidget *panelw = parent->panel_parent;
 
 	switch (BASEP_WIDGET (drawerw)->state) {
 	case BASEP_HIDDEN_LEFT:
@@ -311,8 +309,6 @@ focus_out_drawer (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	Drawer *drawer = data;
 	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
-	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
-	GtkWidget *panelw = parent->panel_parent;
 
 	switch (BASEP_WIDGET (drawerw)->state) {
 	case BASEP_SHOWN:

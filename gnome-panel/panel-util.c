@@ -607,7 +607,7 @@ panel_dialog (GtkWidget *parent,
 {
 	GtkWidget *w;
 
-	w = gtk_message_dialog_new (parent, 0, type,
+	w = gtk_message_dialog_new (GTK_WINDOW (parent), 0, type,
 				    GTK_BUTTONS_OK, "foo");
 	gtk_widget_add_events (w, GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (w), "event",
@@ -691,7 +691,7 @@ panel_error_dialog_with_parent (GtkWindow *parent,
 		va_end (ap);
 	}
 
-	w = panel_dialog (parent, GTK_MESSAGE_ERROR, class, s);
+	w = panel_dialog (GTK_WIDGET (parent), GTK_MESSAGE_ERROR, class, s);
 	g_free (s);
 	return w;
 }
@@ -715,7 +715,7 @@ panel_info_dialog_with_parent (GtkWindow *parent,
 		va_end (ap);
 	}
 
-	w = panel_dialog (parent, GTK_MESSAGE_INFO, class, s);
+	w = panel_dialog (GTK_WIDGET (parent), GTK_MESSAGE_INFO, class, s);
 	g_free (s);
 	return w;
 }

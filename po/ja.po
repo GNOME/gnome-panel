@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.5.14\n"
-"POT-Creation-Date: 2002-05-07 16:18+0100\n"
+"POT-Creation-Date: 2002-05-13 23:33+0100\n"
 "PO-Revision-Date: 2002-04-30 00:46+0900\n"
 "Last-Translator: Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -33,9 +33,9 @@ msgstr "情報..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:632
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:628
 #: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:4001 gnome-panel/status.c:377
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:4006 gnome-panel/status.c:377
 msgid "Help"
 msgstr "ヘルプ"
 
@@ -115,7 +115,7 @@ msgstr "GNOME さかな君の名前(_N)"
 msgid "_Animation filename:"
 msgstr "アニメーションファイルの名前(_A):"
 
-#: applets/fish/fish.c:737 applets/gen_util/mailcheck.c:1236
+#: applets/fish/fish.c:737 applets/gen_util/mailcheck.c:1245
 #: gnome-panel/menu-properties.c:501 gnome-panel/menu-properties.c:539
 #: gnome-panel/panel-config.c:1369 gnome-panel/panel-util.c:241
 msgid "Browse"
@@ -204,7 +204,7 @@ msgid "Get the current time and date"
 msgstr "現在の時間と日付を得る"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:214
+#: applets/gen_util/mailcheck.c:218
 msgid "Inbox Monitor"
 msgstr "Inbox モニタ"
 
@@ -225,12 +225,12 @@ msgid "Utility"
 msgstr "ユーティリティ"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:522
+#: applets/gen_util/tasklist.c:626
 msgid "Window List"
 msgstr "ウインドウリスト"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:432 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:435 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "ワークスペース切り換え器"
 
@@ -312,8 +312,8 @@ msgid "Use _UTC"
 msgstr "UTC を使用(_U)"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1600
-#: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:510
+#: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1640
+#: applets/gen_util/pager.c:423 applets/gen_util/tasklist.c:614
 #: gnome-panel/menu.c:239
 msgid "translator_credits"
 msgstr ""
@@ -337,7 +337,7 @@ msgstr "(c) 1998-2002 the Free Software Foundation"
 msgid "The Clock Applet displays current time and date"
 msgstr "現在の時間と日付を表示する時計アプレット"
 
-#: applets/gen_util/mailcheck.c:220
+#: applets/gen_util/mailcheck.c:224
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -345,11 +345,11 @@ msgstr ""
 "Inbox モニタの設定でパスワードを設定していません、\n"
 "なので、起動するたびに入力する必要があります。"
 
-#: applets/gen_util/mailcheck.c:228
+#: applets/gen_util/mailcheck.c:232
 msgid "Please enter your mailserver's _password:"
 msgstr "メールサーバのパスワードを入力してください(_P):"
 
-#: applets/gen_util/mailcheck.c:273
+#: applets/gen_util/mailcheck.c:278
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -359,144 +359,168 @@ msgstr ""
 "す。\n"
 "サーバやユーザ名、パスワードが間違ってませんか?"
 
-#: applets/gen_util/mailcheck.c:478
+#: applets/gen_util/mailcheck.c:483
 msgid "You have new mail."
 msgstr "新しくメールが届きました。"
 
-#: applets/gen_util/mailcheck.c:480
+#: applets/gen_util/mailcheck.c:485
 msgid "You have mail."
 msgstr "メールが届いています。"
 
-#: applets/gen_util/mailcheck.c:484
+#: applets/gen_util/mailcheck.c:489
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d 通の未読のメッセージ (全 %d 通)"
 
-#: applets/gen_util/mailcheck.c:486
+#: applets/gen_util/mailcheck.c:491
 #, c-format
 msgid "%d messages"
 msgstr "%d 通のメッセージ"
 
-#: applets/gen_util/mailcheck.c:490
+#: applets/gen_util/mailcheck.c:495
 msgid "No mail."
 msgstr "メールがありません"
 
-#: applets/gen_util/mailcheck.c:1010 applets/gen_util/mailcheck.c:1012
-#: applets/gen_util/mailcheck.c:1734 applets/gen_util/mailcheck.c:1736
+#: applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
+#: applets/gen_util/mailcheck.c:1816 applets/gen_util/mailcheck.c:1818
 msgid "Status not updated"
 msgstr "ステータスが更新されていません"
 
-#: applets/gen_util/mailcheck.c:1181
-msgid "Mailbox resides on:"
+#: applets/gen_util/mailcheck.c:1189
+#, fuzzy
+msgid "Mailbox _resides on:"
 msgstr "メールボックスの場所:"
 
-#: applets/gen_util/mailcheck.c:1188
+#: applets/gen_util/mailcheck.c:1197
 msgid "Local mailspool"
 msgstr "ローカルのメールスプール"
 
-#: applets/gen_util/mailcheck.c:1196
+#: applets/gen_util/mailcheck.c:1205
 msgid "Local maildir"
 msgstr "ローカルのメールディレクトリ"
 
-#: applets/gen_util/mailcheck.c:1204
+#: applets/gen_util/mailcheck.c:1213
 msgid "Remote POP3-server"
 msgstr "リモートのPOP3サーバー"
 
-#: applets/gen_util/mailcheck.c:1212
+#: applets/gen_util/mailcheck.c:1221
 msgid "Remote IMAP-server"
 msgstr "リモートのIMAPサーバー"
 
-#: applets/gen_util/mailcheck.c:1232
-msgid "Mail spool file:"
+#: applets/gen_util/mailcheck.c:1241
+#, fuzzy
+msgid "Mail _spool file:"
 msgstr "メールスプールファイル:"
 
-#: applets/gen_util/mailcheck.c:1249
-msgid "Mail server:"
+#: applets/gen_util/mailcheck.c:1260
+#, fuzzy
+msgid "Mail s_erver:"
 msgstr "メールサーバー:"
 
-#: applets/gen_util/mailcheck.c:1266
-msgid "Username:"
+#: applets/gen_util/mailcheck.c:1278
+#, fuzzy
+msgid "_Username:"
 msgstr "ユーザ名:"
 
-#: applets/gen_util/mailcheck.c:1280
-msgid "Password:"
-msgstr "パスワード:"
+#: applets/gen_util/mailcheck.c:1294
+msgid "_Password:"
+msgstr "パスワード(_P):"
 
-#: applets/gen_util/mailcheck.c:1298
-msgid "Folder:"
+#: applets/gen_util/mailcheck.c:1313
+#, fuzzy
+msgid "_Folder:"
 msgstr " フォルダ:"
 
-#: applets/gen_util/mailcheck.c:1316
-msgid "Command to run before checking for mail:"
+#: applets/gen_util/mailcheck.c:1332
+#, fuzzy
+msgid "C_ommand to run before checking for mail:"
 msgstr "メールのチェックの前に実行するコマンド:"
 
-#: applets/gen_util/mailcheck.c:1346
+#: applets/gen_util/mailcheck.c:1363
 msgid "Execute"
 msgstr "この命令を"
 
-#: applets/gen_util/mailcheck.c:1357
-msgid "Before each update:"
+#: applets/gen_util/mailcheck.c:1374
+#, fuzzy
+msgid "Before each _update:"
 msgstr "更新の直前に実行:"
 
-#: applets/gen_util/mailcheck.c:1378
-msgid "When new mail arrives:"
+#: applets/gen_util/mailcheck.c:1389 applets/gen_util/mailcheck.c:1412
+#: applets/gen_util/mailcheck.c:1435
+#, fuzzy
+msgid "Command to execute"
+msgstr "コマンド (オプション)"
+
+#: applets/gen_util/mailcheck.c:1399
+#, fuzzy
+msgid "When new mail _arrives:"
 msgstr "新着メール時に実行:"
 
-#: applets/gen_util/mailcheck.c:1397
-msgid "When clicked:"
+#: applets/gen_util/mailcheck.c:1422
+#, fuzzy
+msgid "When clicke_d:"
 msgstr "クリック時に実行:"
 
-#: applets/gen_util/mailcheck.c:1416
-msgid "Set the number of unread mails to zero"
+#: applets/gen_util/mailcheck.c:1445
+#, fuzzy
+msgid "Set the number of unread mails to _zero"
 msgstr "メールの未読数をゼロにする"
 
-#: applets/gen_util/mailcheck.c:1427
-msgid "Check for mail every"
+#: applets/gen_util/mailcheck.c:1456
+#, fuzzy
+msgid "Check for mail _every"
 msgstr "メールのチェックを"
 
-#: applets/gen_util/mailcheck.c:1441
+#: applets/gen_util/mailcheck.c:1468 applets/gen_util/mailcheck.c:1472
 msgid "minutes"
 msgstr "分"
 
-#: applets/gen_util/mailcheck.c:1452
+#: applets/gen_util/mailcheck.c:1482 applets/gen_util/mailcheck.c:1486
 msgid "seconds"
 msgstr "秒"
 
-#: applets/gen_util/mailcheck.c:1456
-msgid "Play a sound when new mail arrives"
+#: applets/gen_util/mailcheck.c:1494
+#, fuzzy
+msgid "Play a _sound when new mail arrives"
 msgstr "新しいメールが届いた時に音を鳴らす"
 
-#: applets/gen_util/mailcheck.c:1467
-msgid "Select animation"
+#: applets/gen_util/mailcheck.c:1505
+#, fuzzy
+msgid "Select a_nimation"
 msgstr "アニメーションの選択"
 
-#: applets/gen_util/mailcheck.c:1516
+#: applets/gen_util/mailcheck.c:1555
 msgid "Inbox Monitor Preferences"
 msgstr "Inbox モニタ設定"
 
-#: applets/gen_util/mailcheck.c:1532
+#: applets/gen_util/mailcheck.c:1572
 msgid "_Mail check"
 msgstr "メールチェック(_M)"
 
-#: applets/gen_util/mailcheck.c:1536
+#: applets/gen_util/mailcheck.c:1576
 msgid "Mail_box"
 msgstr "メールボックス(_B)"
 
-#: applets/gen_util/mailcheck.c:1613
+#: applets/gen_util/mailcheck.c:1653
 msgid "Mail check Applet"
 msgstr "メールチェックアプレット"
 
-#: applets/gen_util/mailcheck.c:1614
+#: applets/gen_util/mailcheck.c:1654
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 the Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1615
+#: applets/gen_util/mailcheck.c:1655 applets/gen_util/mailcheck.c:1820
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "メールチェックはメールボックスに新しいメールが届くと知らせてくれます"
 
-#: applets/gen_util/mailcheck.c:1710
+#: applets/gen_util/mailcheck.c:1792
 msgid "Text only"
 msgstr "文字のみ"
+
+#: applets/gen_util/mailcheck.c:1819
+#, fuzzy
+msgid "Mail check"
+msgstr "メールチェック(_M)"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -506,13 +530,23 @@ msgstr "メールチェック"
 msgid "New Mail"
 msgstr "新しいメールがあります"
 
-#: applets/gen_util/pager.c:298
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:648
+#: applets/gen_util/pager.glade.h:2
+msgid "Rows"
+msgstr "行"
+
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:648
+#, fuzzy
+msgid "Columns"
+msgstr "参照数"
+
+#: applets/gen_util/pager.c:301
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr ""
 "ワークスペース切り替えアプレットの num_rows の値の読みこみでエラー: %s\n"
 
-#: applets/gen_util/pager.c:309
+#: applets/gen_util/pager.c:312
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -521,7 +555,7 @@ msgstr ""
 "ワークスペース切り替えアプレットの display_workspace_names の値の読みこみでエ"
 "ラー: %s\n"
 
-#: applets/gen_util/pager.c:324
+#: applets/gen_util/pager.c:327
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -530,11 +564,11 @@ msgstr ""
 "ワークスペース切り替えアプレットの display_all_workspaces の値の読みこみでエ"
 "ラー: %s\n"
 
-#: applets/gen_util/pager.c:433
+#: applets/gen_util/pager.c:436
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:434
+#: applets/gen_util/pager.c:437
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage the windows."
@@ -545,10 +579,6 @@ msgstr ""
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
 msgstr "ワークスペースの数(_W):"
-
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "行"
 
 #: applets/gen_util/pager.glade.h:3
 msgid "Show _all workspaces"
@@ -610,19 +640,20 @@ msgstr ""
 msgid "Can't create applet!\n"
 msgstr "アプレットが生成できませんでした\n"
 
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:629
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:625
 #: gnome-panel/launcher.c:715 gnome-panel/menu.c:1326 gnome-panel/menu.c:1397
-#: gnome-panel/menu.c:3277 gnome-panel/menu.c:3999
+#: gnome-panel/menu.c:3277 gnome-panel/menu.c:4004
 msgid "Properties..."
 msgstr "プロパティ..."
 
-#: applets/gen_util/tasklist.c:523
+#: applets/gen_util/tasklist.c:627
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:524
+#: applets/gen_util/tasklist.c:628
+#, fuzzy
 msgid ""
-"The Window List shows a list of all visible windows and let you browse them."
+"The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
 "ウインドウリストは表示されているウインドウの一覧を表示して閲覧できます。"
 
@@ -631,42 +662,55 @@ msgid "Group windows when _space is limited"
 msgstr "狭い時にウインドウをグループ化(_S)"
 
 #: applets/gen_util/tasklist.glade.h:2
+msgid "M_inimum size:"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:3
+msgid "Ma_ximum size:"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:4
 msgid "Restore to current _workspace"
 msgstr "現在のワークスペースに復元(_W)"
 
-#: applets/gen_util/tasklist.glade.h:3
+#: applets/gen_util/tasklist.glade.h:5
 msgid "Restore to na_tive workspace"
 msgstr "元のワークスペースに復元(_T)"
 
-#: applets/gen_util/tasklist.glade.h:4
+#: applets/gen_util/tasklist.glade.h:6
 msgid "Show windows from _current workspace"
 msgstr "現在のワークスペースのウインドウを表示(_C)"
 
-#: applets/gen_util/tasklist.glade.h:5
+#: applets/gen_util/tasklist.glade.h:7
 msgid "Show windows from a_ll workspaces"
 msgstr "すべてのワークスペースのウインドウを表示(_L)"
 
-#: applets/gen_util/tasklist.glade.h:6
+#: applets/gen_util/tasklist.glade.h:8
+#, fuzzy
+msgid "Tasklist size"
+msgstr "タスクリスト"
+
+#: applets/gen_util/tasklist.glade.h:9
 msgid "When restoring minimized windows"
 msgstr "最小化したウインドウを復元した時"
 
-#: applets/gen_util/tasklist.glade.h:7
+#: applets/gen_util/tasklist.glade.h:10
 msgid "Window List Preferences"
 msgstr "ウインドウリスト設定"
 
-#: applets/gen_util/tasklist.glade.h:8
+#: applets/gen_util/tasklist.glade.h:11
 msgid "Window List content"
 msgstr "ウインドウリスト内容"
 
-#: applets/gen_util/tasklist.glade.h:9
+#: applets/gen_util/tasklist.glade.h:12
 msgid "Window grouping"
 msgstr "ウインドウ グループ化"
 
-#: applets/gen_util/tasklist.glade.h:10
+#: applets/gen_util/tasklist.glade.h:13
 msgid "_Always group windows"
 msgstr "つねにウインドウをグループ化(_A)"
 
-#: applets/gen_util/tasklist.glade.h:11
+#: applets/gen_util/tasklist.glade.h:14
 msgid "_Never group windows"
 msgstr "ウインドウをグループ化しない(_N)"
 
@@ -751,8 +795,8 @@ msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:36
-msgid "CDE Applications"
-msgstr "CDE アプリケーション"
+msgid "CDE Menus"
+msgstr "CDE メニュー"
 
 #: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:795
 #: gnome-panel/panel-config.c:830 gnome-panel/panel-config.c:901
@@ -787,7 +831,7 @@ msgstr "隠蔽ボタンを使う"
 msgid "Enable hidebutton arrow"
 msgstr "隠蔽ボタンに矢印ボタンを使う"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:446 gnome-panel/menu.c:3140
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3140
 msgid "Drawer"
 msgstr "引き出し"
 
@@ -808,20 +852,20 @@ msgstr "プログラムの実行..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "正確にタイプできるコマンドを知っていれば、コマンドを実行します"
 
-#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3581
+#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3893
 msgid "Search for Files..."
 msgstr "ファイルを検索..."
 
-#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3584
+#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3896
 msgid "Find files, folders, and documents on your computer"
 msgstr "コンピュータのファイル、フォルダ、文書を検索"
 
-#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3594
+#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3906
 #, fuzzy
 msgid "Take a Screen Shot..."
 msgstr "スクリーンショットのキーを取得"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3597
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3909
 #, fuzzy
 msgid "Take a screen shot of your desktop"
 msgstr "スクリーンショットをデスクトップに保存(_D)"
@@ -903,7 +947,7 @@ msgstr "引数には使用する .desktop ファイルか URL を一つ指定し
 msgid "No panel found\n"
 msgstr "パネルがみつかりません\n"
 
-#: gnome-panel/gnome-panel-preferences.c:299
+#: gnome-panel/gnome-panel-preferences.c:300
 msgid ""
 "The system administrator has disallowed\n"
 " modification of the panel configuration"
@@ -911,7 +955,7 @@ msgstr ""
 "システム管理者がパネルの設定の\n"
 "変更を許可していません"
 
-#: gnome-panel/gnome-panel-preferences.c:310
+#: gnome-panel/gnome-panel-preferences.c:311
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "パネルの設定"
@@ -920,7 +964,7 @@ msgstr "パネルの設定"
 msgid "Modify the global panel preferences"
 msgstr "パネル全般の設定を変更"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3611
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3585
 msgid "Panel"
 msgstr "パネル"
 
@@ -1304,7 +1348,7 @@ msgstr ""
 "詳細: %s"
 
 #: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3650 gnome-panel/menu.c:3875
+#: gnome-panel/menu.c:3624 gnome-panel/menu.c:3849
 msgid "Menu"
 msgstr "メニュー"
 
@@ -1688,19 +1732,19 @@ msgstr "アプレット"
 msgid "Run a command"
 msgstr "コマンドを実行"
 
-#: gnome-panel/menu.c:3619
+#: gnome-panel/menu.c:3593
 msgid "Desktop"
 msgstr "デスクトップ"
 
-#: gnome-panel/menu.c:3652
+#: gnome-panel/menu.c:3626
 msgid "Menu:"
 msgstr "メニュー:"
 
-#: gnome-panel/menu.c:3702 gnome-panel/menu.c:3730 gnome-panel/menu.c:3915
+#: gnome-panel/menu.c:3676 gnome-panel/menu.c:3704 gnome-panel/menu.c:3920
 msgid "Main Menu"
 msgstr "メインメニュー"
 
-#: gnome-panel/menu.c:3724
+#: gnome-panel/menu.c:3698
 msgid "Can't create menu, using main menu!"
 msgstr "メニューを作成できません。メインメニューを使います!"
 
@@ -1708,16 +1752,16 @@ msgstr "メニューを作成できません。メインメニューを使いま
 msgid "Cannot register control widget\n"
 msgstr "コントロールウィジェットを登録できませんでした\n"
 
-#: gnome-panel/panel-applet-frame.c:599
+#: gnome-panel/panel-applet-frame.c:605
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "popup_menu '%s' から例外\n"
 
-#: gnome-panel/panel-applet-frame.c:687
+#: gnome-panel/panel-applet-frame.c:693
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "コントロールから AppletShell インターフェイスを取得できません\n"
 
-#: gnome-panel/panel-applet-frame.c:812
+#: gnome-panel/panel-applet-frame.c:818
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -1946,44 +1990,50 @@ msgstr "テスト Bonobo アプレット"
 msgid "Test Bonobo Applet Factory"
 msgstr "テスト Bonobo アプレットファクトリ"
 
-#: libpanel-applet/panel-applet.c:654
+#: libpanel-applet/panel-applet.c:661
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "背景の種類として不完全な '%s' を受信しました"
 
-#: libpanel-applet/panel-applet.c:668
+#: libpanel-applet/panel-applet.c:675
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "背景の種類として不完全な '%s' を受信しました: %s"
 
-#: libpanel-applet/panel-applet.c:677
+#: libpanel-applet/panel-applet.c:684
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "画像 %s の取得に失敗しました"
 
-#: libpanel-applet/panel-applet.c:684
+#: libpanel-applet/panel-applet.c:691
 msgid "Unknown background type received"
 msgstr "不明な背景の種類を受信しました"
 
-#: libpanel-applet/panel-applet.c:853
+#: libpanel-applet/panel-applet.c:860
 msgid "The Applet's containing Panel's orientation"
 msgstr "アプレットを含むパネルの向き"
 
-#: libpanel-applet/panel-applet.c:861
+#: libpanel-applet/panel-applet.c:868
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "アプレットを含むパネルの大きさ(ピクセル単位)"
 
-#: libpanel-applet/panel-applet.c:869
+#: libpanel-applet/panel-applet.c:876
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "アプレットを含むパネルの背景色、あるいは画像"
 
-#: libpanel-applet/panel-applet.c:877
+#: libpanel-applet/panel-applet.c:884
 msgid "The Applet's flags"
 msgstr "アプレットのフラグ"
 
-#: libpanel-applet/panel-applet.c:885
+#: libpanel-applet/panel-applet.c:892
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "アプレットの大きさのヒントとして指定可能な範囲"
+
+#~ msgid "Password:"
+#~ msgstr "パスワード:"
+
+#~ msgid "CDE Applications"
+#~ msgstr "CDE アプリケーション"
 
 #~ msgid "Screenshot Capture"
 #~ msgstr "スクリーンショット キャプチャ"
@@ -2092,9 +2142,6 @@ msgstr "アプレットの大きさのヒントとして指定可能な範囲"
 #~ msgid "Remove from panel"
 #~ msgstr "パネルから取り除く"
 
-#~ msgid "CDE Menus"
-#~ msgstr "CDE メニュー"
-
 #~ msgid "&lt;Alt&gt;F1"
 #~ msgstr "&lt;Alt&gt;F1"
 
@@ -2142,9 +2189,6 @@ msgstr "アプレットの大きさのヒントとして指定可能な範囲"
 
 #~ msgid "Clock Properties"
 #~ msgstr "時計のプロパティ"
-
-#~ msgid "_Password:"
-#~ msgstr "パスワード(_P):"
 
 #~ msgid ""
 #~ "Cannot execute the gnome calendar,\n"
@@ -4129,9 +4173,6 @@ msgstr "アプレットの大きさのヒントとして指定可能な範囲"
 #~ msgid "%b %d, %Y %H:%M"
 #~ msgstr "%Y/%m/%d %H:%M"
 
-#~ msgid "Count"
-#~ msgstr "参照数"
-
 #~ msgid "Gnome Help History"
 #~ msgstr "Gnomeヘルプ履歴"
 
@@ -4915,9 +4956,6 @@ msgstr "アプレットの大きさのヒントとして指定可能な範囲"
 
 #~ msgid "Integrated help system (Info, man, HTML)"
 #~ msgstr "ヘルプシステム(Info, man, HTML)"
-
-#~ msgid "Tasklist"
-#~ msgstr "タスクリスト"
 
 #~ msgid "GNOME Tasklist"
 #~ msgstr "ウインドウ一覧"

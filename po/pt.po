@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.0\n"
-"POT-Creation-Date: 2002-05-07 16:18+0100\n"
+"POT-Creation-Date: 2002-05-13 23:33+0100\n"
 "PO-Revision-Date: 2002-05-05 00:15+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Português <happyguy_pt@hotmail.com>\n"
@@ -28,9 +28,9 @@ msgstr "Sobre..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:632
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:628
 #: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:4001 gnome-panel/status.c:377
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:4006 gnome-panel/status.c:377
 msgid "Help"
 msgstr "Ajuda"
 
@@ -110,7 +110,7 @@ msgstr "Nome do peixe GNOME:"
 msgid "_Animation filename:"
 msgstr "Nome do ficheiro de _animação:"
 
-#: applets/fish/fish.c:737 applets/gen_util/mailcheck.c:1236
+#: applets/fish/fish.c:737 applets/gen_util/mailcheck.c:1245
 #: gnome-panel/menu-properties.c:501 gnome-panel/menu-properties.c:539
 #: gnome-panel/panel-config.c:1369 gnome-panel/panel-util.c:241
 msgid "Browse"
@@ -201,7 +201,7 @@ msgid "Get the current time and date"
 msgstr "Obter data e hora actuais"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:214
+#: applets/gen_util/mailcheck.c:218
 msgid "Inbox Monitor"
 msgstr "Monitor Caixa Correio"
 
@@ -222,12 +222,12 @@ msgid "Utility"
 msgstr "Utilitário"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:522
+#: applets/gen_util/tasklist.c:626
 msgid "Window List"
 msgstr "Lista Janelas"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:432 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:435 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "Alternador Ambientes"
 
@@ -309,8 +309,8 @@ msgid "Use _UTC"
 msgstr "Utilizar _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1600
-#: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:510
+#: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1640
+#: applets/gen_util/pager.c:423 applets/gen_util/tasklist.c:614
 #: gnome-panel/menu.c:239
 msgid "translator_credits"
 msgstr "Duarte Loreto (happyguy_pt@hotmail.com)"
@@ -327,7 +327,7 @@ msgstr "(C) 1998-2002 the Free Software Foundation"
 msgid "The Clock Applet displays current time and date"
 msgstr "A Applet Relógio mostra a data e hora actuais"
 
-#: applets/gen_util/mailcheck.c:220
+#: applets/gen_util/mailcheck.c:224
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -335,11 +335,11 @@ msgstr ""
 "Não definiu nas preferências uma senha para o Monitor de Caixa do Correio,\n"
 "pelo que terá de a inserir sempre que ele arrancar."
 
-#: applets/gen_util/mailcheck.c:228
+#: applets/gen_util/mailcheck.c:232
 msgid "Please enter your mailserver's _password:"
 msgstr "Introduza a sua _senha do servidor de mail:"
 
-#: applets/gen_util/mailcheck.c:273
+#: applets/gen_util/mailcheck.c:278
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -349,145 +349,169 @@ msgstr ""
 "a actualização automática foi temporariamente desactivada.\n"
 "Talvez tenha indicado um servidor, utilizador ou senha incorrectos?"
 
-#: applets/gen_util/mailcheck.c:478
+#: applets/gen_util/mailcheck.c:483
 msgid "You have new mail."
 msgstr "Tem correio novo."
 
-#: applets/gen_util/mailcheck.c:480
+#: applets/gen_util/mailcheck.c:485
 msgid "You have mail."
 msgstr "Tem correio."
 
-#: applets/gen_util/mailcheck.c:484
+#: applets/gen_util/mailcheck.c:489
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d mensagens"
 
-#: applets/gen_util/mailcheck.c:486
+#: applets/gen_util/mailcheck.c:491
 #, c-format
 msgid "%d messages"
 msgstr "%d mensagens"
 
-#: applets/gen_util/mailcheck.c:490
+#: applets/gen_util/mailcheck.c:495
 msgid "No mail."
 msgstr "Não tem correio."
 
-#: applets/gen_util/mailcheck.c:1010 applets/gen_util/mailcheck.c:1012
-#: applets/gen_util/mailcheck.c:1734 applets/gen_util/mailcheck.c:1736
+#: applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
+#: applets/gen_util/mailcheck.c:1816 applets/gen_util/mailcheck.c:1818
 msgid "Status not updated"
 msgstr "Estado não actualizado"
 
-#: applets/gen_util/mailcheck.c:1181
-msgid "Mailbox resides on:"
+#: applets/gen_util/mailcheck.c:1189
+#, fuzzy
+msgid "Mailbox _resides on:"
 msgstr "Caixa de correio em:"
 
-#: applets/gen_util/mailcheck.c:1188
+#: applets/gen_util/mailcheck.c:1197
 msgid "Local mailspool"
 msgstr "Caixa de correio local"
 
-#: applets/gen_util/mailcheck.c:1196
+#: applets/gen_util/mailcheck.c:1205
 msgid "Local maildir"
 msgstr "Directório de correio local"
 
-#: applets/gen_util/mailcheck.c:1204
+#: applets/gen_util/mailcheck.c:1213
 msgid "Remote POP3-server"
 msgstr "Servidor POP3 remoto"
 
-#: applets/gen_util/mailcheck.c:1212
+#: applets/gen_util/mailcheck.c:1221
 msgid "Remote IMAP-server"
 msgstr "Servidor IMAP remoto"
 
-#: applets/gen_util/mailcheck.c:1232
-msgid "Mail spool file:"
+#: applets/gen_util/mailcheck.c:1241
+#, fuzzy
+msgid "Mail _spool file:"
 msgstr "Ficheiro de correio local:"
 
-#: applets/gen_util/mailcheck.c:1249
-msgid "Mail server:"
+#: applets/gen_util/mailcheck.c:1260
+#, fuzzy
+msgid "Mail s_erver:"
 msgstr "Servidor de correio:"
 
-#: applets/gen_util/mailcheck.c:1266
-msgid "Username:"
+#: applets/gen_util/mailcheck.c:1278
+#, fuzzy
+msgid "_Username:"
 msgstr "Utilizador:"
 
-#: applets/gen_util/mailcheck.c:1280
-msgid "Password:"
-msgstr "Senha:"
+#: applets/gen_util/mailcheck.c:1294
+msgid "_Password:"
+msgstr "Sen_ha:"
 
-#: applets/gen_util/mailcheck.c:1298
-msgid "Folder:"
+#: applets/gen_util/mailcheck.c:1313
+#, fuzzy
+msgid "_Folder:"
 msgstr "Pasta:"
 
-#: applets/gen_util/mailcheck.c:1316
-msgid "Command to run before checking for mail:"
+#: applets/gen_util/mailcheck.c:1332
+#, fuzzy
+msgid "C_ommand to run before checking for mail:"
 msgstr "Comando a executar antes de verificar o correio:"
 
-#: applets/gen_util/mailcheck.c:1346
+#: applets/gen_util/mailcheck.c:1363
 msgid "Execute"
 msgstr "Executar"
 
-#: applets/gen_util/mailcheck.c:1357
-msgid "Before each update:"
+#: applets/gen_util/mailcheck.c:1374
+#, fuzzy
+msgid "Before each _update:"
 msgstr "Antes de cada actualização:"
 
-#: applets/gen_util/mailcheck.c:1378
-msgid "When new mail arrives:"
+#: applets/gen_util/mailcheck.c:1389 applets/gen_util/mailcheck.c:1412
+#: applets/gen_util/mailcheck.c:1435
+#, fuzzy
+msgid "Command to execute"
+msgstr "Comando a executar"
+
+#: applets/gen_util/mailcheck.c:1399
+#, fuzzy
+msgid "When new mail _arrives:"
 msgstr "Quando correio novo é recebido:"
 
-#: applets/gen_util/mailcheck.c:1397
-msgid "When clicked:"
+#: applets/gen_util/mailcheck.c:1422
+#, fuzzy
+msgid "When clicke_d:"
 msgstr "Quando clicado:"
 
-#: applets/gen_util/mailcheck.c:1416
-msgid "Set the number of unread mails to zero"
+#: applets/gen_util/mailcheck.c:1445
+#, fuzzy
+msgid "Set the number of unread mails to _zero"
 msgstr "Colocar o número de mails por ler a zero"
 
-#: applets/gen_util/mailcheck.c:1427
-msgid "Check for mail every"
+#: applets/gen_util/mailcheck.c:1456
+#, fuzzy
+msgid "Check for mail _every"
 msgstr "Verificar correio a cada"
 
-#: applets/gen_util/mailcheck.c:1441
+#: applets/gen_util/mailcheck.c:1468 applets/gen_util/mailcheck.c:1472
 msgid "minutes"
 msgstr "minutos"
 
-#: applets/gen_util/mailcheck.c:1452
+#: applets/gen_util/mailcheck.c:1482 applets/gen_util/mailcheck.c:1486
 msgid "seconds"
 msgstr "segundos"
 
-#: applets/gen_util/mailcheck.c:1456
-msgid "Play a sound when new mail arrives"
+#: applets/gen_util/mailcheck.c:1494
+#, fuzzy
+msgid "Play a _sound when new mail arrives"
 msgstr "Tocar som quando chega correio novo"
 
-#: applets/gen_util/mailcheck.c:1467
-msgid "Select animation"
+#: applets/gen_util/mailcheck.c:1505
+#, fuzzy
+msgid "Select a_nimation"
 msgstr "Seleccionar animação"
 
-#: applets/gen_util/mailcheck.c:1516
+#: applets/gen_util/mailcheck.c:1555
 msgid "Inbox Monitor Preferences"
 msgstr "Preferências Monitor de Caixa Correio"
 
-#: applets/gen_util/mailcheck.c:1532
+#: applets/gen_util/mailcheck.c:1572
 msgid "_Mail check"
 msgstr "_Verificador de Correio"
 
-#: applets/gen_util/mailcheck.c:1536
+#: applets/gen_util/mailcheck.c:1576
 msgid "Mail_box"
 msgstr "Cai_xa de Correio"
 
-#: applets/gen_util/mailcheck.c:1613
+#: applets/gen_util/mailcheck.c:1653
 msgid "Mail check Applet"
 msgstr "Applet de verificação de correio"
 
-#: applets/gen_util/mailcheck.c:1614
+#: applets/gen_util/mailcheck.c:1654
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 the Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1615
+#: applets/gen_util/mailcheck.c:1655 applets/gen_util/mailcheck.c:1820
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr ""
 "Verificador de correio notifica-o quando chega correio novo à sua caixa"
 
-#: applets/gen_util/mailcheck.c:1710
+#: applets/gen_util/mailcheck.c:1792
 msgid "Text only"
 msgstr "Apenas texto"
+
+#: applets/gen_util/mailcheck.c:1819
+#, fuzzy
+msgid "Mail check"
+msgstr "_Verificador de Correio"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -497,12 +521,22 @@ msgstr "Caixa Correio"
 msgid "New Mail"
 msgstr "Novo Correio"
 
-#: applets/gen_util/pager.c:298
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:648
+#: applets/gen_util/pager.glade.h:2
+msgid "Rows"
+msgstr "Linhas"
+
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:648
+#, fuzzy
+msgid "Columns"
+msgstr "Nº visitas"
+
+#: applets/gen_util/pager.c:301
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr "Erro ao ler valor row_num para a applet alternador de ambientes: %s\n"
 
-#: applets/gen_util/pager.c:309
+#: applets/gen_util/pager.c:312
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -511,7 +545,7 @@ msgstr ""
 "Erro ao ler valor display_workspace_names para a applet alternador de "
 "ambientes: %s\n"
 
-#: applets/gen_util/pager.c:324
+#: applets/gen_util/pager.c:327
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -520,11 +554,11 @@ msgstr ""
 "Erro ao ler valor display_all_workspaces para a applet alternador de "
 "ambientes: %s\n"
 
-#: applets/gen_util/pager.c:433
+#: applets/gen_util/pager.c:436
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:434
+#: applets/gen_util/pager.c:437
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage the windows."
@@ -535,10 +569,6 @@ msgstr ""
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
 msgstr "Número de a_mbientes:"
-
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "Linhas"
 
 #: applets/gen_util/pager.glade.h:3
 msgid "Show _all workspaces"
@@ -600,19 +630,20 @@ msgstr ""
 msgid "Can't create applet!\n"
 msgstr "Impossível criar applet!\n"
 
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:629
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:625
 #: gnome-panel/launcher.c:715 gnome-panel/menu.c:1326 gnome-panel/menu.c:1397
-#: gnome-panel/menu.c:3277 gnome-panel/menu.c:3999
+#: gnome-panel/menu.c:3277 gnome-panel/menu.c:4004
 msgid "Properties..."
 msgstr "Propriedades..."
 
-#: applets/gen_util/tasklist.c:523
+#: applets/gen_util/tasklist.c:627
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:524
+#: applets/gen_util/tasklist.c:628
+#, fuzzy
 msgid ""
-"The Window List shows a list of all visible windows and let you browse them."
+"The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
 "A Lista de Janelas mostra uma lista de todas as janelas visíveis e permite-"
 "lhe pesquisa-las."
@@ -622,42 +653,55 @@ msgid "Group windows when _space is limited"
 msgstr "Agrupar janelas quando o e_spaço é limitado"
 
 #: applets/gen_util/tasklist.glade.h:2
+msgid "M_inimum size:"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:3
+msgid "Ma_ximum size:"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:4
 msgid "Restore to current _workspace"
 msgstr "Repor a_mbiente actual"
 
-#: applets/gen_util/tasklist.glade.h:3
+#: applets/gen_util/tasklist.glade.h:5
 msgid "Restore to na_tive workspace"
 msgstr "Repor para ambiente na_tivo"
 
-#: applets/gen_util/tasklist.glade.h:4
+#: applets/gen_util/tasklist.glade.h:6
 msgid "Show windows from _current workspace"
 msgstr "Mostrar janelas do ambiente a_ctual"
 
-#: applets/gen_util/tasklist.glade.h:5
+#: applets/gen_util/tasklist.glade.h:7
 msgid "Show windows from a_ll workspaces"
 msgstr "Mostrar jane_las de todos os ambientes"
 
-#: applets/gen_util/tasklist.glade.h:6
+#: applets/gen_util/tasklist.glade.h:8
+#, fuzzy
+msgid "Tasklist size"
+msgstr "Lista de Aplicações"
+
+#: applets/gen_util/tasklist.glade.h:9
 msgid "When restoring minimized windows"
 msgstr "Ao repor janelas minimizadas"
 
-#: applets/gen_util/tasklist.glade.h:7
+#: applets/gen_util/tasklist.glade.h:10
 msgid "Window List Preferences"
 msgstr "Preferências Lista Janelas"
 
-#: applets/gen_util/tasklist.glade.h:8
+#: applets/gen_util/tasklist.glade.h:11
 msgid "Window List content"
 msgstr "Conteudo Lista Janela"
 
-#: applets/gen_util/tasklist.glade.h:9
+#: applets/gen_util/tasklist.glade.h:12
 msgid "Window grouping"
 msgstr "Agrupamento janelas"
 
-#: applets/gen_util/tasklist.glade.h:10
+#: applets/gen_util/tasklist.glade.h:13
 msgid "_Always group windows"
 msgstr "_Agrupar sempre janelas"
 
-#: applets/gen_util/tasklist.glade.h:11
+#: applets/gen_util/tasklist.glade.h:14
 msgid "_Never group windows"
 msgstr "_Nunca agrupar janelas"
 
@@ -742,8 +786,8 @@ msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:36
-msgid "CDE Applications"
-msgstr "Aplicações CDE"
+msgid "CDE Menus"
+msgstr "Menus CDE"
 
 #: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:795
 #: gnome-panel/panel-config.c:830 gnome-panel/panel-config.c:901
@@ -778,7 +822,7 @@ msgstr "Mostrar botão de esconder"
 msgid "Enable hidebutton arrow"
 msgstr "Mostrar seta no botão de esconder"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:446 gnome-panel/menu.c:3140
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3140
 msgid "Drawer"
 msgstr "Gaveta"
 
@@ -798,19 +842,19 @@ msgstr "Executar Aplicação..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Executar aplicações, se conhecer o comando correcto a inserir"
 
-#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3581
+#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3893
 msgid "Search for Files..."
 msgstr "Procurar Ficheiros..."
 
-#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3584
+#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3896
 msgid "Find files, folders, and documents on your computer"
 msgstr "Procurar ficheiros, directórios e documentos no seu computador"
 
-#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3594
+#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3906
 msgid "Take a Screen Shot..."
 msgstr "Capturar uma Imagem de Ecrã..."
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3597
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3909
 msgid "Take a screen shot of your desktop"
 msgstr "Capturar uma imagem do seu ambiente de trabalho"
 
@@ -893,7 +937,7 @@ msgstr ""
 msgid "No panel found\n"
 msgstr "Nenhum painel encontrado\n"
 
-#: gnome-panel/gnome-panel-preferences.c:299
+#: gnome-panel/gnome-panel-preferences.c:300
 msgid ""
 "The system administrator has disallowed\n"
 " modification of the panel configuration"
@@ -901,7 +945,7 @@ msgstr ""
 "O administrador do sistema impediu\n"
 "modificações à configuração deste painel"
 
-#: gnome-panel/gnome-panel-preferences.c:310
+#: gnome-panel/gnome-panel-preferences.c:311
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "Preferências Painel"
@@ -910,7 +954,7 @@ msgstr "Preferências Painel"
 msgid "Modify the global panel preferences"
 msgstr "Alterar as preferências globais do painel"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3611
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3585
 msgid "Panel"
 msgstr "Painel"
 
@@ -1283,7 +1327,7 @@ msgstr ""
 "Detalhes: %s"
 
 #: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3650 gnome-panel/menu.c:3875
+#: gnome-panel/menu.c:3624 gnome-panel/menu.c:3849
 msgid "Menu"
 msgstr "Menu"
 
@@ -1668,19 +1712,19 @@ msgstr "Applets"
 msgid "Run a command"
 msgstr "Executar um comando"
 
-#: gnome-panel/menu.c:3619
+#: gnome-panel/menu.c:3593
 msgid "Desktop"
 msgstr "Ambiente"
 
-#: gnome-panel/menu.c:3652
+#: gnome-panel/menu.c:3626
 msgid "Menu:"
 msgstr "Menu:"
 
-#: gnome-panel/menu.c:3702 gnome-panel/menu.c:3730 gnome-panel/menu.c:3915
+#: gnome-panel/menu.c:3676 gnome-panel/menu.c:3704 gnome-panel/menu.c:3920
 msgid "Main Menu"
 msgstr "Menu Principal"
 
-#: gnome-panel/menu.c:3724
+#: gnome-panel/menu.c:3698
 msgid "Can't create menu, using main menu!"
 msgstr "Incapaz de criar menu, a utilizar o menu principal!"
 
@@ -1688,16 +1732,16 @@ msgstr "Incapaz de criar menu, a utilizar o menu principal!"
 msgid "Cannot register control widget\n"
 msgstr "Incapaz de registar widget de controlo\n"
 
-#: gnome-panel/panel-applet-frame.c:599
+#: gnome-panel/panel-applet-frame.c:605
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Excepção do menu de contexto '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:687
+#: gnome-panel/panel-applet-frame.c:693
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Incapaz de obter interface AppletShell do controlo\n"
 
-#: gnome-panel/panel-applet-frame.c:812
+#: gnome-panel/panel-applet-frame.c:818
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -1928,44 +1972,50 @@ msgstr "Tetsar Applet Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Testar Fábrica Applets Bonobo"
 
-#: libpanel-applet/panel-applet.c:654
+#: libpanel-applet/panel-applet.c:661
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Recebido tipo de fundo '%s' incompleto"
 
-#: libpanel-applet/panel-applet.c:668
+#: libpanel-applet/panel-applet.c:675
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Recebido tipo de fundo '%s' incompleto: %s"
 
-#: libpanel-applet/panel-applet.c:677
+#: libpanel-applet/panel-applet.c:684
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Falha ao obter pixmap %s"
 
-#: libpanel-applet/panel-applet.c:684
+#: libpanel-applet/panel-applet.c:691
 msgid "Unknown background type received"
 msgstr "Recebido tipo de fundo desconhecido"
 
-#: libpanel-applet/panel-applet.c:853
+#: libpanel-applet/panel-applet.c:860
 msgid "The Applet's containing Panel's orientation"
 msgstr "A Applet que contém a orientação do Painel"
 
-#: libpanel-applet/panel-applet.c:861
+#: libpanel-applet/panel-applet.c:868
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "A Applet que contém o tamanho do Painel em pixels"
 
-#: libpanel-applet/panel-applet.c:869
+#: libpanel-applet/panel-applet.c:876
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "A Applet que contém a cor ou imagem de fundo do Painel"
 
-#: libpanel-applet/panel-applet.c:877
+#: libpanel-applet/panel-applet.c:884
 msgid "The Applet's flags"
 msgstr "As bandeiras da Applet"
 
-#: libpanel-applet/panel-applet.c:885
+#: libpanel-applet/panel-applet.c:892
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Intrevalos que indicam que tamanhos são aceitáveis para a applet"
+
+#~ msgid "Password:"
+#~ msgstr "Senha:"
+
+#~ msgid "CDE Applications"
+#~ msgstr "Aplicações CDE"
 
 #~ msgid "Screenshot Capture"
 #~ msgstr "Captura de Ecrã"
@@ -2066,9 +2116,6 @@ msgstr "Intrevalos que indicam que tamanhos são aceitáveis para a applet"
 #~ msgid "Remove from panel"
 #~ msgstr "Remover do painel"
 
-#~ msgid "CDE Menus"
-#~ msgstr "Menus CDE"
-
 #~ msgid "&lt;Alt&gt;F1"
 #~ msgstr "&lt;Alt&gt;F1"
 
@@ -2114,9 +2161,6 @@ msgstr "Intrevalos que indicam que tamanhos são aceitáveis para a applet"
 
 #~ msgid "Clock Properties"
 #~ msgstr "Propriedades do Relógio"
-
-#~ msgid "_Password:"
-#~ msgstr "Sen_ha:"
 
 #~ msgid ""
 #~ "Cannot execute the gnome calendar,\n"
@@ -4286,9 +4330,6 @@ msgstr "Intrevalos que indicam que tamanhos são aceitáveis para a applet"
 #~ msgid "%b %d, %Y %H:%M"
 #~ msgstr "%b %d, %Y %H:%M"
 
-#~ msgid "Count"
-#~ msgstr "Nº visitas"
-
 #~ msgid "Gnome Help History"
 #~ msgstr "Histórico da Ajuda Gnome"
 
@@ -4480,9 +4521,6 @@ msgstr "Intrevalos que indicam que tamanhos são aceitáveis para a applet"
 
 #~ msgid "Deskguide (the desktop pager)"
 #~ msgstr "Guia de Ambiente (o pager de ambiente)"
-
-#~ msgid "Tasklist"
-#~ msgstr "Lista de Aplicações"
 
 #~ msgid "The Battery"
 #~ msgstr "A Bateria"
