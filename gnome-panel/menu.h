@@ -120,6 +120,10 @@ GtkWidget *	create_root_menu	(GtkWidget *root_menu,
 /* some gtk code cut-n-paste action */
 void		our_gtk_menu_position	(GtkMenu *menu);
 
+/* Why the hell do we have a "hack", when we have scroll-menu in
+ * our own codebase?  Well cuz I don't want to require panel code in
+ * scroll-menu, since people copy it around */
+GtkWidget *	hack_scroll_menu_new	(void);
 
 
 #define MENU_PATH "menu_path"

@@ -3,6 +3,7 @@
  * (C) 1997, 1998, 1999, 2000 The Free Software Foundation
  * Copyright 2000 Helix Code, Inc.
  * Copyright 2000,2001 Eazel, Inc.
+ * Copyright 2001 George Lebl
  *
  * Authors: George Lebl
  *          Jacob Berkman
@@ -915,7 +916,7 @@ panel_is_program_in_path (const char *program)
 
 	for (p = paths; *p != NULL; p++){
 		char *f = g_strconcat (*p, "/", program, NULL);
-		if (panel_file_exists (f))
+		if (access (f, X_OK) == 0)
 			return f;
 		g_free (f);
 	}

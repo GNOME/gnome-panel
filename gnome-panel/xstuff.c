@@ -193,9 +193,14 @@ xstuff_init (void)
 			       panel_global_keys_filter,
 			       NULL);
 
+	gdk_error_trap_push ();
+
 	xstuff_setup_global_desktop_area (0, 0, 0, 0);
 
 	xstuff_go_through_client_list ();
+
+	/* there is a flush in xstuff_go_through_client_list */
+	gdk_error_trap_pop ();
 }
 
 gboolean
@@ -450,6 +455,11 @@ xstuff_setup_global_desktop_area (int left, int right, int top, int bottom)
 	long vals[4];
 	static int old_left = -1, old_right = -1, old_top = -1, old_bottom = -1;
 
+	left = left >= 0 ? left : old_left;
+	right = right >= 0 ? right : old_right;
+	top = top >= 0 ? top : old_top;
+	bottom = bottom >= 0 ? bottom : old_bottom;
+
 	if (old_left == left &&
 	    old_right == right &&
 	    old_top == top &&
@@ -464,6 +474,11 @@ xstuff_setup_global_desktop_area (int left, int right, int top, int bottom)
 	XChangeProperty (GDK_DISPLAY (), GDK_ROOT_WINDOW (), 
 			 GNOME_PANEL_DESKTOP_AREA, XA_CARDINAL,
 			 32, PropModeReplace, (unsigned char*)vals, 4);
+
+	old_left = left;
+	old_right = right;
+	old_top = top;
+	old_bottom = bottom;
 }
 
 void
@@ -498,10 +513,12 @@ xstuff_setup_desktop_area (int screen, int left, int right, int top, int bottom)
 			 32, PropModeReplace, (unsigned char*)vals, 4);
 
 	xstuff_setup_global_desktop_area
-		((multiscreen_x (screen)      == 0)             ? left   : 0,
-		 (multiscreen_width (screen)  == screen_width)  ? right  : 0,
-		 (multiscreen_y (screen)      == 0)             ? top    : 0,
-		 (multiscreen_height (screen) == screen_height) ? bottom : 0);
+		((multiscreen_x (screen)      == 0)             ? left   : -1,
+		 (multiscreen_x (screen) +
+		  multiscreen_width (screen)  == screen_width)  ? right  : -1,
+		 (multiscreen_y (screen)      == 0)             ? top    : -1,
+		 (multiscreen_y (screen) +
+		  multiscreen_height (screen) == screen_height) ? bottom : -1);
 
 	gdk_flush ();
 	gdk_error_trap_pop ();

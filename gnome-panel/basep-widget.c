@@ -312,7 +312,9 @@ static void
 basep_widget_real_screen_change (BasePWidget *basep, int screen)
 {
 	if (basep->screen != screen) {
+		basep_border_queue_recalc (basep->screen);
 		basep->screen = screen;
+		/* this will queue border recalc in the new screen */
 		gtk_widget_queue_resize (GTK_WIDGET (basep));
 		panels_to_sync = TRUE;
 
@@ -2252,6 +2254,11 @@ basep_border_recalc (int screen)
 		foobar_widget_get_height (screen);
 	sb->bottom = border_max (sb, BORDER_BOTTOM);
 
+#ifdef PANEL_DEBUG
+	g_print ("[basep_border_recalc] SCREEN %d (%d %d %d %d)\n", screen,
+		 sb->left, sb->right, sb->top, sb->bottom);
+#endif
+
 	if (memcmp (&old, sb, sizeof (ScreenBorders)) != 0) {
 		for (li = panel_list; li != NULL; li = li->next) {
 			PanelData *pd = li->data;
@@ -2280,14 +2287,24 @@ basep_border_recalc (int screen)
 }
 
 static guint queue_recalc_id = 0;
+static GList *recalc_list = NULL;
 
 static gboolean
 queue_recalc_handler (gpointer data)
 {
-	int screen = GPOINTER_TO_INT (data);
+	GList *list, *li;
+
 	queue_recalc_id = 0;
 
-	basep_border_recalc (screen);
+	list = recalc_list;
+	recalc_list = NULL;
+
+	for (li = list; li != NULL; li = li->next) {
+		int screen = GPOINTER_TO_INT (li->data);
+		basep_border_recalc (screen);
+	}
+
+	g_list_free (recalc_list);
 
 	return FALSE;
 }
@@ -2295,9 +2312,12 @@ queue_recalc_handler (gpointer data)
 void
 basep_border_queue_recalc (int screen)
 {
+	if (g_list_find (recalc_list,
+			 GINT_TO_POINTER (screen)) == NULL)
+		recalc_list = g_list_prepend (recalc_list,
+					      GINT_TO_POINTER (screen));
 	if (queue_recalc_id == 0) {
-		queue_recalc_id = gtk_idle_add (queue_recalc_handler, 
-						GINT_TO_POINTER (screen));
+		queue_recalc_id = gtk_idle_add (queue_recalc_handler, NULL);
 	}
 }
 

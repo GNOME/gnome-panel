@@ -1,3 +1,16 @@
+Sun May 20 00:26:47 2001  George Lebl <jirka@5z.com>
+
+	* applet.c, menu.[ch], foobar-widget.c, scroll-menu.c:  Display menus
+	  on their respective screens
+
+	* basep-widget.c, xstuff.c: Fix border recalculation and the root
+	  property setting
+
+	* sliding-widget.c: Fix moving on offset screens
+
+	* panel-util.c: when finding things in path, use access with X_OK
+	  rather then the exists function which uses F_OK
+
 Sat May 19 18:49:00 2001  George Lebl <jirka@5z.com>
 
 	* multiscreen-stuff.c: fix dranbamage from cut and paste

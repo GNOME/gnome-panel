@@ -491,6 +491,11 @@ scroll_menu_map (GtkWidget *widget)
 			gtk_widget_map (self->up_scroll);
 		if ( ! GTK_WIDGET_MAPPED (self->down_scroll))
 			gtk_widget_map (self->down_scroll);
+
+		if (self->up_scroll->window)
+			gdk_window_raise (self->up_scroll->window);
+		if (self->down_scroll->window)
+			gdk_window_raise (self->down_scroll->window);
 	}
 
 }
@@ -652,6 +657,10 @@ scroll_menu_set_screen_size (ScrollMenu *self,
 	g_return_if_fail (self != NULL);
 	g_return_if_fail (IS_SCROLL_MENU (self));
 
-	self->screen_top = screen_top;
-	self->screen_bottom = screen_bottom;
+	if (self->screen_top != screen_top ||
+	    self->screen_bottom != screen_bottom) {
+		self->screen_top = screen_top;
+		self->screen_bottom = screen_bottom;
+		gtk_widget_queue_resize (GTK_WIDGET (self));
+	}
 }

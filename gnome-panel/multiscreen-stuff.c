@@ -60,8 +60,8 @@ multiscreen_init (void)
 		rectangles[1].height = gdk_screen_height () / 2;
 		rectangles[0].x = gdk_screen_width () / 2;
 		rectangles[0].y = gdk_screen_height () / 2;
-		rectangles[0].width = gdk_screen_width () / 2;
-		rectangles[0].height = gdk_screen_height () / 2;
+		rectangles[0].width = gdk_screen_width () - rectangles[0].x;
+		rectangles[0].height = gdk_screen_height () - rectangles[0].y;
 
 		initialized = TRUE;
 

@@ -142,16 +142,16 @@ sliding_pos_set_pos (BasePWidget *basep,
 	   the corners */
 	switch (BORDER_POS (pos)->edge) {
 	case BORDER_TOP:
-		check_pos = (innery > maxy);
+		check_pos = (y > maxy);
 		break;
 	case BORDER_BOTTOM:
-		check_pos = (innery < miny);
+		check_pos = (y < miny);
 		break;
 	case BORDER_LEFT:
-		check_pos = (innerx > maxx);
+		check_pos = (x > maxx);
 		break;
 	case BORDER_RIGHT:
-		check_pos = (innerx < minx);
+		check_pos = (x < minx);
 		break;
 	}
 
