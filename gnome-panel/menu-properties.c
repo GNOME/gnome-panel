@@ -21,8 +21,6 @@
 
 #include "panel-include.h"
 
-#include "icon-entry-hack.h"
-
 /*#define PANEL_DEBUG 1*/
 
 extern GlobalConfig global_config;
