@@ -129,7 +129,8 @@ int_scale_update (GtkAdjustment *adjustment, gpointer data)
 }
 
 static GtkWidget *
-make_int_scale_frame(char *title, int *data, double min, double max)
+make_int_scale_frame(char *title, int *data,
+		     double min, double max, double step)
 {
 	GtkWidget *frame;
 	GtkWidget *box;
@@ -148,7 +149,7 @@ make_int_scale_frame(char *title, int *data, double min, double max)
 
 	/* Animation step_size scale */
 	scale_data = gtk_adjustment_new((double) (*data),
-					min, max, 1.0, 1.0, 0.0);
+					min, max, step, step, 0.0);
 	scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
 	gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 	gtk_scale_set_digits (GTK_SCALE (scale), 0);
@@ -201,7 +202,7 @@ animation_notebook_page(void)
 	/* AutoHide Animation step_size scale frame */
 	frame = make_int_scale_frame(_("Auto-Hide Animation Speed"),
 				      &(temp_config.auto_hide_step_size),
-				      1.0,100.0);
+				      1.0, 100.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -210,7 +211,7 @@ animation_notebook_page(void)
 	/* ExplicitHide Animation step_size scale frame */
 	frame = make_int_scale_frame(_("Explicit-Hide Animation Speed"),
 				      &(temp_config.explicit_hide_step_size),
-				      1.0,100.0);
+				      1.0, 100.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -219,7 +220,7 @@ animation_notebook_page(void)
 	/* DrawerHide Animation step_size scale frame */
 	frame = make_int_scale_frame(_("Drawer Animation Speed"),
 				      &(temp_config.drawer_step_size),
-				      1.0,100.0);
+				      1.0, 100.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -228,14 +229,14 @@ animation_notebook_page(void)
 	/* Minimize Delay scale frame */
 	frame = make_int_scale_frame(_("Auto-Hide Minimize Delay (ms)"),
 				      &(temp_config.minimize_delay),
-				      30.0,1000.0);
+				      30.0, 10000.0, 10.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
 	/* Minimized size scale frame */
 	frame = make_int_scale_frame(_("Auto-Hide Minimized Size (pixels)"),
 				      &(temp_config.minimized_size),
-				      1.0,10.0);
+				      1.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -353,7 +354,7 @@ icon_notebook_page(int i, GtkWidget *config_box)
 	/* Minimized size scale frame */
 	tileborder[i] = w = make_int_scale_frame(_("Border width (tile only)"),
 						 &(temp_config.tile_border[i]),
-						 0.0,10.0);
+						 0.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 	gtk_widget_set_sensitive(w,temp_config.tiles_enabled);
@@ -361,7 +362,7 @@ icon_notebook_page(int i, GtkWidget *config_box)
 	/* Minimized size scale frame */
 	w = make_int_scale_frame(_("Depth (displacement when pressed)"),
 				 &(temp_config.tile_depth[i]),
-				 0.0,10.0);
+				 0.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
@@ -489,7 +490,7 @@ misc_notebook_page(void)
 	/* Minimize Delay scale frame */
 	frame = make_int_scale_frame(_("Applet Padding"),
 				      &(temp_config.applet_padding),
-				      0.0,10.0);
+				      0.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
