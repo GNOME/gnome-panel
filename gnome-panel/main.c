@@ -45,7 +45,9 @@ extern GSList *panel_list;
 
 GtkTooltips *panel_tooltips = NULL;
 
+#ifdef FIXME
 GnomeClient *client = NULL;
+#endif
 
 char *kde_menudir = NULL;
 char *kde_icondir = NULL;
@@ -468,7 +470,9 @@ main(int argc, char **argv)
 {
 	CORBA_ORB orb;
 	gboolean duplicate;
+#ifdef FIXME
 	gchar *real_global_path;
+#endif
 	
 	bindtextdomain (PACKAGE, GNOMELOCALEDIR);
 	textdomain (PACKAGE);
@@ -520,6 +524,7 @@ main(int argc, char **argv)
 
 	find_kde_directory();
 
+#ifdef FIXME
 	client = gnome_master_client ();
 
 	gnome_client_set_restart_style (client, duplicate 
@@ -551,6 +556,7 @@ main(int argc, char **argv)
 			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
 	gtk_signal_connect (GTK_OBJECT (client), "die",
 			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
+#endif
 
 	panel_tooltips = gtk_tooltips_new ();
 

@@ -760,6 +760,7 @@ static gboolean sync_handler_needed = FALSE;
 void
 panel_config_sync(void)
 {
+#ifdef FIXME
 	int ncs = need_complete_save;
 	int ats = applets_to_sync;
 	int pts = panels_to_sync;
@@ -794,6 +795,7 @@ panel_config_sync(void)
 		}
 #endif /* PER_SESSION_CONFIGURATION */
 	}
+#endif
 }
 
 static gboolean
@@ -895,8 +897,10 @@ panel_session_die (GnomeClient *client,
 void
 panel_quit (void)
 {
+#ifdef FIXME
 	gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
 				   GNOME_INTERACT_ANY, 0, 1);
+#endif
 }
 
 /* try evil hacks to rewrite panel config from old applets (gnomepager for
