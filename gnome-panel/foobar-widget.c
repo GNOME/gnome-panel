@@ -38,6 +38,8 @@ extern GtkTooltips *panel_tooltips;
 static void foobar_widget_class_init	(FoobarWidgetClass	*klass);
 static void foobar_widget_init		(FoobarWidget		*foo);
 static void foobar_widget_realize	(GtkWidget		*w);
+static gboolean foobar_widget_configure_event (GtkWidget        *w,
+					       GdkEventConfigure *event);
 static void foobar_widget_destroy	(GtkObject		*o);
 static void foobar_widget_size_allocate	(GtkWidget		*w,
 					 GtkAllocation		*alloc);
@@ -90,6 +92,7 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 	object_class->destroy = foobar_widget_destroy;
 
 	widget_class->realize = foobar_widget_realize;
+	widget_class->configure_event = foobar_widget_configure_event;
 	widget_class->size_allocate = foobar_widget_size_allocate;
 	widget_class->enter_notify_event = foobar_enter_notify;
 	widget_class->leave_notify_event = foobar_leave_notify;
@@ -646,10 +649,21 @@ foobar_widget_realize (GtkWidget *w)
 	xstuff_set_no_group_and_no_input (w->window);
 
 	setup_task_menu (FOOBAR_WIDGET (w));
+}
 
-	/* make sure we reset our position, so that if the wm misplaces us
-	 * we jump back */
-	gtk_widget_queue_resize (w);
+static gboolean
+foobar_widget_configure_event (GtkWidget *w, GdkEventConfigure *event)
+{
+	g_return_if_fail (IS_FOOBAR_WIDGET (w));
+
+	if (event->x != 0 ||
+	    event->y != 0)
+		gdk_window_move (w->window, 0, 0);
+
+	if (GTK_WIDGET_CLASS (parent_class)->configure_event != NULL)
+		return GTK_WIDGET_CLASS (parent_class)->configure_event (w, event);
+	else
+		return FALSE;
 }
 
 static void
@@ -940,6 +954,7 @@ foobar_widget_init (FoobarWidget *foo)
 	gtk_signal_connect (GTK_OBJECT (foo), "delete_event",
 			    GTK_SIGNAL_FUNC (gtk_true), NULL);
 
+	gtk_widget_set_uposition (GTK_WIDGET (foo), 0, 0);
 	gtk_widget_set_usize (GTK_WIDGET (foo),
 			      gdk_screen_width (), -2);
 
