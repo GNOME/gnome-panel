@@ -24,6 +24,8 @@
 #include <gnome.h>
 #include <libgnomeui/gnome-window-icon.h>
 #include <errno.h>
+#include <sys/types.h>
+#include <dirent.h>
 
 #include "panel-include.h"
 #include "foobar-widget.h"
@@ -36,15 +38,140 @@ extern GlobalConfig global_config;
 
 static GtkWidget *run_dialog = NULL;
 
+static GList *executables = NULL;
+static GCompletion *exe_completion = NULL;
+
+static void
+fill_executables_from (const char *dirname)
+{
+	struct dirent *dent;
+	DIR *dir;
+
+	dir = opendir (dirname);
+
+	if (dir == NULL)
+		return;
+
+	while ( (dent = readdir (dir)) != NULL) {
+		char *file = g_strconcat (dirname, "/", dent->d_name, NULL);
+
+		if (access (file, X_OK) == 0)
+			executables = g_list_prepend (executables,
+						      g_strdup (dent->d_name));
+	}
+
+	closedir (dir);
+}
+
+static void
+fill_executables (void)
+{
+	int i;
+	char *path;
+	char **pathv;
+
+	g_list_foreach (executables, (GFunc) g_free, NULL);
+	g_list_free (executables);
+	executables = NULL;
+
+	path = g_getenv ("PATH");
+
+	if (path == NULL ||
+	    path[0] == '\0')
+		return;
+
+	pathv = g_strsplit (path, ":", 0);
+
+	for (i = 0; pathv[i] != NULL; i++)
+		fill_executables_from (pathv[i]);
+
+	g_strfreev (pathv);
+}
+
+static void
+ensure_completion (void)
+{
+	if (exe_completion == NULL) {
+		exe_completion = g_completion_new (NULL);
+		fill_executables ();
+
+		g_completion_add_items (exe_completion, executables);
+	}
+}
+
+static void
+kill_completion (void)
+{
+	if (executables != NULL) {
+		g_list_foreach (executables, (GFunc) g_free, NULL);
+		g_list_free (executables);
+		executables = NULL;
+	}
+
+	if (exe_completion != NULL) {
+		g_completion_free (exe_completion);
+		exe_completion = NULL;
+	}
+}
+
+/* Note, this expects a vector allocated by popt, where we can 
+ * just forget about entries as they are part of the same buffer */
+static void
+get_environment (int *argc, char ***argv, int *envc, char ***envv)
+{
+	GList *envar = NULL, *li;
+	int i, moveby;
+
+	*envv = NULL;
+	*envc = 0;
+
+	moveby = 0;
+	for (i = 0; i < *argc; i++) {
+		if (strchr ((*argv)[i], '=') == NULL) {
+			break;
+		}
+		envar = g_list_append (envar, g_strdup ((*argv)[i]));
+		moveby ++;
+	}
+
+	if (moveby == *argc) {
+		g_list_foreach (envar, (GFunc) g_free, NULL);
+		g_list_free (envar);
+		return;
+	}
+
+	if (envar == NULL)
+		return;
+
+	for (i = 0; i < *argc; i++) {
+		if (i + moveby < *argc)
+			(*argv)[i] = (*argv)[i+moveby];
+		else
+			(*argv)[i] = NULL;
+	}
+	*argc -= moveby;
+
+	*envc = g_list_length (envar);
+	*envv = g_new0 (char *, *envc + 1);
+	for (i = 0, li = envar; li != NULL; li = li->next, i++) {
+		(*envv)[i] = li->data;
+		li->data = NULL;
+	}	
+	(*envv)[i] = NULL;
+	g_list_free (envar);
+}
+
 static void 
 string_callback (GtkWidget *w, int button_num, gpointer data)
 {
 	GtkEntry *entry;
 	GtkToggleButton *terminal;
-	char **argv, **temp_argv;
+	char **argv, **temp_argv = NULL;
 	int argc, temp_argc;
 	char *s;
 	GSList *tofree = NULL;
+	char **envv = NULL;
+	int envc;
 
 	if (button_num == 2/*help*/) {
 		panel_show_help ("specialobjects.html#RUNBUTTON");
@@ -104,8 +231,9 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 		goto return_and_close;
 	}
 
+	get_environment (&temp_argc, &temp_argv, &envc, &envv);
 
-	if(terminal->active) {
+	if (terminal->active) {
 		char **term_argv;
 		int term_argc;
 		gnome_config_get_vector ("/Gnome/Applications/Terminal",
@@ -147,19 +275,23 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 		argc = temp_argc;
 	}
 
-	if (gnome_execute_async (g_get_home_dir (), argc, argv) >= 0) {
-		g_slist_foreach(tofree, (GFunc)g_free, NULL);
-		g_slist_free(tofree);
-		goto return_and_close;
+	if (gnome_execute_async_with_env (g_get_home_dir (),
+					  argc, argv,
+					  envc, envv) < 0) {
+		panel_error_dialog(_("Failed to execute command:\n"
+				     "%s\n"
+				     "%s"),
+				   s, g_unix_error_string(errno));
 	}
-	g_slist_foreach(tofree, (GFunc)g_free, NULL);
-	g_slist_free(tofree);
-	
-	panel_error_dialog(_("Failed to execute command:\n"
-			     "%s\n"
-			     "%s"),
-			   s, g_unix_error_string(errno));
+
 return_and_close:
+	g_slist_foreach (tofree, (GFunc)g_free, NULL);
+	g_slist_free (tofree);
+	/* this was obtained from the popt function and thus free and not
+	 * g_free */
+	if (temp_argv)
+		free (temp_argv);
+	g_strfreev (envv);
 	gnome_dialog_close (GNOME_DIALOG (w));
 }
 
@@ -203,9 +335,10 @@ browse(GtkWidget *w, GtkWidget *entry)
 		(GTK_OBJECT (fsel->cancel_button), "clicked",
 		 GTK_SIGNAL_FUNC (gtk_widget_destroy), 
 		 GTK_OBJECT(fsel));
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(entry), "destroy",
-					      GTK_SIGNAL_FUNC(gtk_widget_destroy),
-					      GTK_OBJECT(fsel));
+	gtk_signal_connect_object_while_alive
+		(GTK_OBJECT (entry), "destroy",
+		 GTK_SIGNAL_FUNC (gtk_widget_destroy),
+		 GTK_OBJECT (fsel));
 
 	gtk_window_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
 	/* we must do show_now so that we can raise the window in the next
@@ -213,6 +346,45 @@ browse(GtkWidget *w, GtkWidget *entry)
 	gtk_widget_show_now (GTK_WIDGET (fsel));
 	panel_set_dialog_layer (GTK_WIDGET (fsel));
 	gdk_window_raise (GTK_WIDGET (fsel)->window);
+}
+
+static gboolean
+entry_event (GtkEntry * entry, GdkEventKey * event, gpointer data)
+{
+	if (event->type != GDK_KEY_PRESS)
+		return FALSE;
+
+	/* completion */
+	if ((event->keyval == GDK_Tab) &&
+	    (event->state & GDK_CONTROL_MASK)) {
+		gchar* prefix;
+		gchar* nprefix = NULL;
+		gint pos;
+
+		ensure_completion ();
+
+		pos = GTK_EDITABLE (entry)->current_pos;
+		prefix = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, pos);
+
+		g_completion_complete (exe_completion, prefix, &nprefix);
+
+		if (nprefix != NULL &&
+		    strlen (nprefix) > strlen (prefix)) {
+			gtk_editable_insert_text (GTK_EDITABLE (entry),
+						  nprefix + pos, 
+						  strlen (nprefix) -
+						    strlen (prefix),
+						  &pos);
+			GTK_EDITABLE (entry)->current_pos = pos;
+		}
+
+		g_free (nprefix);
+		g_free (prefix);
+
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 void
@@ -256,6 +428,13 @@ show_run_dialog (void)
 
 	entry = gnome_entry_gtk_entry (GNOME_ENTRY (gentry));
 
+	gtk_signal_connect (GTK_OBJECT (entry), "event",
+			    GTK_SIGNAL_FUNC (entry_event),
+			    NULL);
+	gtk_signal_connect (GTK_OBJECT (entry), "destroy",
+			    GTK_SIGNAL_FUNC (kill_completion),
+			    NULL);
+ 
 	gtk_window_set_focus (GTK_WINDOW (run_dialog), entry);
 	gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
 	gtk_signal_connect (GTK_OBJECT (run_dialog), "clicked", 
