@@ -1,0 +1,24 @@
+module GNOME {
+	interface Panel {
+		/* Sends the object identifier for the Applet server that contacts the Panel */
+		void reparent_window_id (in unsigned long wid, in short id);
+		short reserve_applet_spot (in string ior, in string path, in short panel,in short pos);
+		void applet_remove_from_panel (in short id);
+		short applet_get_panel (in short id);
+		short applet_get_pos (in short id);
+		void applet_drag_start (in short id);
+		void applet_drag_stop (in short id);
+		void applet_add_callback (in short id,
+					  in string callback_name,
+					  in string menuitem_text);
+		void quit();
+	};
+
+	interface Applet {
+		void change_orient (in short id, in short orient);
+		void do_callback (in short id, in string callback_name);
+		void session_save (in short id, in short panel, in short pos);
+		void shutdown_applet (in short id);
+	};
+};
+
