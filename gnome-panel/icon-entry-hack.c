@@ -160,7 +160,7 @@ delete_event (GtkWidget *w, GdkEvent *event, gpointer data)
 
 	gtk_object_set_data (GTK_OBJECT (ientry->pick_dialog),
 			     "IconEntryHackCanceled",
-			     GINT_TO_POINTER(1));
+			     GINT_TO_POINTER (1));
 
 	sync_orig_to_new (ientry);
 
@@ -174,7 +174,7 @@ cancel (GtkWidget *w, gpointer data)
 
 	gtk_object_set_data (GTK_OBJECT (ientry->pick_dialog),
 			     "IconEntryHackCanceled",
-			     GINT_TO_POINTER(1));
+			     GINT_TO_POINTER (1));
 
 	sync_orig_to_new (ientry);
 }
@@ -198,12 +198,12 @@ shown_icon_selection (GtkWidget *w, gpointer data)
 	if (ientry->pick_dialog == NULL)
 		return;
 
+	gtk_object_remove_data (GTK_OBJECT (ientry->pick_dialog),
+				"IconEntryHackCanceled");
+
 	if ( ! gtk_object_get_data
 	     (GTK_OBJECT (ientry->pick_dialog), "IconHackDidConnect")) {
 		GtkWidget *iconsel;
-
-		gtk_object_remove_data (GTK_OBJECT (ientry->pick_dialog),
-				        "IconEntryHackCanceled");
 
 		gnome_dialog_button_connect_object
 			(GNOME_DIALOG (ientry->pick_dialog),
