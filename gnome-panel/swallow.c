@@ -22,6 +22,8 @@
 
 extern PanelWidget *current_panel;
 
+extern GList *check_swallows;
+
 static int
 ignore_x_error(Display* d, XErrorEvent* e)
 {
@@ -75,17 +77,6 @@ get_window_id(Window win, char *title, guint32 *wid)
 	return ret;
 }
 
-/*we should really do this differently but for now this is good enough*/
-static int
-socket_getwindow_timeout(Swallow *swallow)
-{
-	if(!get_window_id(GDK_ROOT_WINDOW(),swallow->title, &(swallow->wid)))
-		return TRUE;
-	swallow->timeout = -1;
-	gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
-	return FALSE;
-}
-
 static int
 socket_realized(GtkWidget *w, gpointer data)
 {
@@ -94,10 +85,7 @@ socket_realized(GtkWidget *w, gpointer data)
 	g_return_val_if_fail(swallow->title!=NULL,FALSE);
 
 	if(!get_window_id(GDK_ROOT_WINDOW(),swallow->title, &swallow->wid))
-		swallow->timeout = 
-			gtk_timeout_add(500,
-					(GtkFunction)socket_getwindow_timeout,
-					swallow);
+		check_swallows = g_list_prepend(check_swallows,swallow);
 	else
 		gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
 
@@ -109,12 +97,9 @@ socket_destroyed(GtkWidget *w, gpointer data)
 {
 	Swallow *swallow = data;
 	
-	if(swallow->timeout!=-1) {
-		gtk_timeout_remove(swallow->timeout);
-		swallow->timeout = -1;
-	}
-	
 	gtk_widget_destroy(swallow->ebox);
+
+	check_swallows = g_list_remove(check_swallows,swallow);
 
 	g_free(swallow->title);
 	g_free(swallow->path);
@@ -347,7 +332,6 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 	swallow->width = width;
 	swallow->height = height;
 	swallow->wid = -1;
-	swallow->timeout = -1;
 
 	set_swallow_applet_orient(swallow, orient);
 

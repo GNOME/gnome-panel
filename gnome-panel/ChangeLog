@@ -1,3 +1,9 @@
+Tue Jun 01 10:30:18 1999  George Lebl  <jirka@5z.com>
+
+	* main.c,swallow.c: implement the waiting for window to swallow
+	  correctly by selecting on the root window, instead of XQueryTree
+	  in a timeout
+
 Mon May 31 20:34:49 1999  George Lebl  <jirka@5z.com>
 
 	* session.c: took out debugging printf's and make extern applet
