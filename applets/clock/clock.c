@@ -2089,7 +2089,8 @@ set_format_cb (GtkComboBox *combo,
 {
         ClockFormat format;
 
-        format = gtk_combo_box_get_active (combo);
+	/* valid values begin from 1 */
+        format = gtk_combo_box_get_active (combo) + 1;
 
         update_properties_for_format (cd, combo, format);
 
@@ -2309,7 +2310,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 
         update_properties_for_format (cd, GTK_COMBO_BOX (combo), cd->format);
 
-	gtk_combo_box_set_active (GTK_COMBO_BOX (combo), cd->format);
+	/* valid values begin from 1 */
+	gtk_combo_box_set_active (GTK_COMBO_BOX (combo), cd->format - 1);
         g_signal_connect (combo, "changed",
                           G_CALLBACK (set_format_cb), cd);
 
