@@ -1572,40 +1572,53 @@ create_program_list_contents (void)
 static void
 update_contents (GtkWidget *dialog)
 {
-        GtkWidget *program_list_box = NULL;
+	GtkWidget *program_list_box = NULL;
+	GtkWidget *entry;
 
-        if (panel_profile_get_show_program_list ()) {
-                program_list_box = g_object_get_data (G_OBJECT (dialog), "program_list_box");
+	if (panel_profile_get_show_program_list ()) {
+		program_list_box = g_object_get_data (G_OBJECT (dialog), 
+						      "program_list_box");
 
-                if (program_list_box && program_list_box->parent == NULL) {
+		if (program_list_box && program_list_box->parent == NULL) {
 			GtkWidget *list;
-			
+			GtkTreeSelection *selection;
+			GtkTreeModel *model;
+			GtkTreeIter iter;
+
 			gtk_window_resize (GTK_WINDOW (dialog), 100, 300);
 			gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
 			
-                        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-                                            program_list_box,
-                                            TRUE, TRUE, GNOME_PAD_SMALL);
-                
+			gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+					    program_list_box,
+					    TRUE, TRUE, GNOME_PAD_SMALL);
 
-                        gtk_widget_show_all (GTK_WIDGET (GTK_DIALOG (dialog)->vbox));
+			gtk_widget_show_all (GTK_WIDGET (GTK_DIALOG (dialog)->vbox));
 
 			list = g_object_get_data (G_OBJECT (dialog), "program_list");
-			gtk_widget_grab_focus (list);
-		}
-        } else {    
-		GtkWidget *entry;           
+			selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
 
-                program_list_box = g_object_get_data (G_OBJECT (dialog), "program_list_box");
+			if (gtk_tree_view_get_model (GTK_TREE_VIEW (list)) &&
+			    !gtk_tree_selection_get_selected (selection,&model, &iter)) {
+			
+				entry = g_object_get_data (G_OBJECT (dialog), "entry");
+				gtk_widget_grab_focus (entry);
+			} else
+				gtk_widget_grab_focus (list);
+		}
+	} else {    
+
+		program_list_box = g_object_get_data (G_OBJECT (dialog), 
+						      "program_list_box");
                 
-                if (program_list_box && program_list_box->parent != NULL) {
-                        gtk_container_remove (GTK_CONTAINER (program_list_box->parent), program_list_box);
+		if (program_list_box && program_list_box->parent != NULL) {
+			gtk_container_remove (GTK_CONTAINER (program_list_box->parent), 
+					      program_list_box);
 			gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 		}
 
 		entry = g_object_get_data (G_OBJECT (dialog), "entry");
-                gtk_widget_grab_focus (entry);
-        }
+		gtk_widget_grab_focus (entry);
+	}
 }
 
 static void
@@ -1693,11 +1706,13 @@ show_run_dialog (GdkScreen *screen)
 			g_idle_add_full (G_PRIORITY_LOW, add_items_idle,
 			 		 w, NULL);
 
-		gtk_widget_grab_focus (w);
-	} else {
-		w = g_object_get_data (G_OBJECT (run_dialog), "entry");
-		gtk_widget_grab_focus (w);
-	}
+	} 
+
+	/* None of the apps in the list are selected when the dialog is launched.
+	   Hence entry can be safely grabbed
+	*/
+	w = g_object_get_data (G_OBJECT (run_dialog), "entry");
+	gtk_widget_grab_focus (w);
 	
 	gtk_widget_show_all (run_dialog);
 }
