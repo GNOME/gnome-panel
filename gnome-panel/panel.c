@@ -824,12 +824,15 @@ create_panel_menu(void)
 }
 
 
-static void
+static int
 panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
-	if(event->button==3)
+	if(event->button==3) {
 		gtk_menu_popup(GTK_MENU(panel_menu), NULL, NULL, NULL,
-		NULL, 3, time(NULL));
+			NULL, event->button, time(NULL));
+		return TRUE;
+	}
+	return FALSE;
 }
 
 typedef struct _applet_pos {
@@ -1442,7 +1445,8 @@ panel_init(void)
 	gdk_window_set_events(the_panel->window->window,
 			      GDK_VISIBILITY_NOTIFY_MASK |
 			      GDK_ENTER_NOTIFY_MASK |
-			      GDK_LEAVE_NOTIFY_MASK);
+			      GDK_LEAVE_NOTIFY_MASK |
+			      GDK_BUTTON_RELEASE_MASK);
 
 	fleur_cursor = gdk_cursor_new(GDK_FLEUR);
 
