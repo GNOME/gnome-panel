@@ -1,3 +1,14 @@
+Fri Dec 28 03:00:03 2001  George Lebl <jirka@5z.com>
+
+	* foobar-widget.c: correctly handle icon changing
+
+	* menu.c: Fix some ugliness around the applets menu, still
+	  much ugliness prevails
+
+	* session.c: fix a few leaks.  When we find no panels install
+	  a menu panel and tell the user.  Else the user would have no
+	  interface to fix his configuration.
+
 Wed Dec 26 17:45:49 2001  George Lebl <jirka@5z.com>
 
 	* gnome-panel-screenshot.c, menu.c, panel.c, panel-util.c,

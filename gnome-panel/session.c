@@ -347,6 +347,7 @@ panel_session_save_panel (PanelData *pd)
 			       NULL);
 
 	g_free (panel_id_key);
+	g_slist_foreach (panel_id_list, (GFunc)g_free, NULL);
 	g_slist_free (panel_id_list);
 
 #ifdef SESSION_DEBUG
@@ -1215,6 +1216,21 @@ session_init_panels(void)
 			gtk_widget_show (panel);
 		}
 	}
+
+	/* Failsafe! */
+	if (panel_ids == NULL) {
+		panel_error_dialog ("no_panels_found",
+				    _("No panels were found in your "
+				      "configuration.  I will create "
+				      "a menu panel for you"));
+
+		panel = foobar_widget_new (NULL, 0);
+		panel_setup (panel);
+		gtk_widget_show (panel);
+	}
+
+	g_slist_foreach (panel_ids, (GFunc)g_free, NULL);
+	g_slist_free (panel_ids);
 }
 
 static gboolean

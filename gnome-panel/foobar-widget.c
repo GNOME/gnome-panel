@@ -884,7 +884,8 @@ append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar)
 static void
 icon_changed (WnckWindow *window, FoobarWidget *foo)
 {
-	set_das_pixmap (foo, window);
+	if (foo->icon_window == window)
+		set_das_pixmap (foo, window);
 }
 
 static void
@@ -944,7 +945,7 @@ window_closed (WnckScreen *screen,
 static void
 setup_task_menu (FoobarWidget *foo)
 {
-	GList *windows;
+	GList *windows, *li;
 	WnckScreen *screen;
 	g_assert (foo->task_item != NULL);
 
@@ -959,16 +960,15 @@ setup_task_menu (FoobarWidget *foo)
 
 	/* setup the pixmap to the focused task */
 	windows = wnck_screen_get_windows (screen);
-	while (windows != NULL) {
-		if (wnck_window_is_active (windows->data)) {
-			set_das_pixmap  (foo, windows->data);
+	for (li = windows; li != NULL; li = li->next) {
+		if (wnck_window_is_active (li->data)) {
+			set_das_pixmap  (foo, li->data);
 			break;
 		}
-		windows = windows->next;
 	}
 
 	/* if no focused task found, then just set it to default */
-	if (windows == NULL)
+	if (li == NULL)
 		set_das_pixmap  (foo, NULL);
 
 	g_list_foreach (windows, (GFunc)bind_window_changes, foo);

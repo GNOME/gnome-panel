@@ -2812,7 +2812,7 @@ applet_menu_append (GtkWidget   *menu,
 
 	setup_full_menuitem (menuitem, NULL, name, NULL, FALSE, NULL);
 
-	gtk_widget_show (menuitem);
+	gtk_widget_show_all (menuitem);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
@@ -2843,7 +2843,7 @@ static gchar *applet_sort_criteria [] = {
 	};
 
 static GtkWidget *
-create_applets_menu ()
+create_applets_menu (void)
 {
 	CORBA_Environment      env;
 	Bonobo_ServerInfoList *list;
@@ -2877,7 +2877,7 @@ create_applets_menu ()
 		const gchar       *name;
 		const gchar       *icon;
 		const gchar       *category;
-		gchar             *iid;
+		const gchar       *iid;
 
 		info = &list->_buffer [i];
 
@@ -2887,19 +2887,24 @@ create_applets_menu ()
 		icon     = bonobo_server_info_prop_lookup (info, "panel:icon", NULL);
 		category = bonobo_server_info_prop_lookup (info, "panel:category", NULL);
 
-		if (!name)
+		if (string_empty (name)) {
 			continue;
+		}
 
-		if (!category || !category [0]) {
+		if (string_empty (category)) {
 			applet_menu_append (menu, name, icon);
 			continue;
 		}
 
-		if (!prev_category || strcmp (prev_category, category)) {
+		if (prev_category == NULL ||
+		    strcmp (prev_category, category) != 0) {
 			const gchar *cat_icon;
 
 			prev_category = category;
 			prev_menu = menu_new ();
+			/* FIXME: EEK! WHY DO WE NEED THIS! THIS SHOULD NOT BE NEEDED! */
+			g_signal_connect (G_OBJECT (prev_menu), "show",
+					  G_CALLBACK (our_gtk_menu_position), NULL);
 
 			cat_icon = applet_menu_get_category_icon (category);
 
@@ -3424,8 +3429,8 @@ remove_panel_query (GtkWidget *w, gpointer data)
 				"panel_remove_query", "Panel");
 
 	g_signal_connect (G_OBJECT (dialog), "response",
-			    G_CALLBACK (remove_panel_accept),
-			    panelw);
+			  G_CALLBACK (remove_panel_accept),
+			  panelw);
 	panel_signal_connect_object_while_alive (G_OBJECT (panelw), "destroy",
 						 G_CALLBACK (gtk_widget_destroy),
 						 G_OBJECT (dialog));
@@ -3672,7 +3677,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 
 	/* Add Menu */
 
-	m = create_applets_menu(NULL, fake_submenus, TRUE);
+	m = create_applets_menu ();
 	if (m) {
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
@@ -3680,10 +3685,6 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),m);
-
-		g_signal_connect (G_OBJECT (m), "show",
-				    G_CALLBACK (submenu_to_display),
-				    NULL);
 	}
 
 	menuitem = gtk_image_menu_item_new ();
@@ -3731,7 +3732,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	m = create_add_launcher_menu (NULL, fake_submenus);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), m);
 	g_signal_connect (G_OBJECT (m),"show",
-			   G_CALLBACK (submenu_to_display), NULL);
+			  G_CALLBACK (submenu_to_display), NULL);
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
@@ -4242,8 +4243,10 @@ create_root_menu (GtkWidget *root_menu,
 				   FALSE /* launcher_add */);
 	/* in commie mode the applets menu doesn't make sense */
 	if ( ! commie_mode &&
-	    flags & MAIN_MENU_APPLETS)
-		create_applets_menu(root_menu, fake_submenus /* FIXME: what the fuck */); 
+	    flags & MAIN_MENU_APPLETS) {
+		/* FIXME: this doesn't work! */
+		/*create_applets_menu (); */
+	}
 
 	if (flags & MAIN_MENU_DISTRIBUTION &&
 	    distribution_info != NULL) {
@@ -4282,16 +4285,13 @@ create_root_menu (GtkWidget *root_menu,
 
 	/* in commie mode the applets menu doesn't make sense */
 	if (!commie_mode && (flags & MAIN_MENU_APPLETS_SUB)) {
-		menu = create_applets_menu(NULL, fake_submenus, FALSE);
+		menu = create_applets_menu ();
 		if (menu) {
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
 			                           _("Applets"));
 			gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-			g_signal_connect (G_OBJECT (menu),"show",
-					    G_CALLBACK (submenu_to_display),
-					    NULL);
 		}
 	}
 	if (flags & MAIN_MENU_DISTRIBUTION_SUB) {
