@@ -214,6 +214,7 @@ floating_pos_set_pos (BasePWidget *basep,
 
 	if (x < minx || x > maxx) {
 		int w2=w;
+		int x2=x;
 		if (PANEL_WIDGET (basep->panel)->orient == PANEL_HORIZONTAL) {
 			switch (basep->state) {
 			case BASEP_SHOWN:
@@ -225,15 +226,16 @@ floating_pos_set_pos (BasePWidget *basep,
 				break;
 			case BASEP_HIDDEN_RIGHT:
 				w2 = basep->hidebutton_e->allocation.width;
-				x -= w - w2;
+				x2 -= w - w2;
 				break;
 			}
 		}
-		newx = CLAMP (x < minx ? x : x - w2, 0, gdk_screen_width () - w);
+		newx = CLAMP (x < minx ? x2 : x2 - w, 0, gdk_screen_width () - w);
 	}
 
 	if (y < miny || y > maxy) {
 		int h2=h;
+		int y2=y;
 		if (PANEL_WIDGET (basep->panel)->orient == PANEL_VERTICAL) {
 			switch (basep->state) {
 			case BASEP_SHOWN:
@@ -245,11 +247,11 @@ floating_pos_set_pos (BasePWidget *basep,
 				break;
 			case BASEP_HIDDEN_RIGHT:
 				h2 = basep->hidebutton_s->allocation.height;
-				y -= h - h2;
+				y2 -= h - h2;
 				break;
 			}
 		}
-		newy = CLAMP (y < miny ? y : y - h2, 0, gdk_screen_height () - h);
+		newy = CLAMP (y < miny ? y2 : y2 - h2, 0, gdk_screen_height () - h);
 	}
 
 	if (newy != pos->y || newx != pos->x) {
