@@ -1,3 +1,14 @@
+1999-02-03  Jonathan Blandford  <jrb@redhat.com>
+
+	* mixer/vslider.c (vslider_class_init): now we no longer draw the
+	trough, and let mixer.c handle that.  VOILA! no more flashes. (:
+	* mixer/hslider.c (hslider_class_init):ditto
+	
+1999-02-02  Jonathan Blandford  <jrb@redhat.com>
+
+	* mixer/mixer.c (create_computer_mixer_widget): make the
+	adjustments page size bigger.
+
 1999-01-24  Anders Carlsson <anders.carlsson@tordata.se>
 
 	* gnome-pager/gnomepager_applet.c: Fixed a bug with the task list
