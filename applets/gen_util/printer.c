@@ -33,7 +33,7 @@ struct _Printer {
 };
 
 enum {
-  TARGET_URI_LIST,
+  TARGET_URI_LIST
 };
 
 void position_label (GtkWidget *label, gpointer data);
