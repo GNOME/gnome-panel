@@ -54,6 +54,8 @@ char *merge_merge_dir = NULL;
 int merge_main_dir_len = 0;
 char *merge_main_dir = NULL;
 
+gboolean panel_in_startup = TRUE;
+
 static gboolean
 menu_age_timeout(gpointer data)
 {
@@ -553,6 +555,8 @@ main(int argc, char **argv)
 
 	/* add some timeouts */
 	gtk_timeout_add (10*1000, menu_age_timeout, NULL);
+
+	panel_in_startup = FALSE;
 	
 	/*load these as the last thing to prevent some races any races from
 	  starting multiple goad_id's at once are libgnorba's problem*/
