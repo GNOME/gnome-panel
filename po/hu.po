@@ -165,7 +165,7 @@ msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
 msgstr ""
-"A vizet cserélni kéne!\n"
+"A vizet cserélni kellene!\n"
 "(Nézd meg a mai dátumot)"
 
 #: applets/fish/fish.c:1256
@@ -180,16 +180,17 @@ msgid ""
 "a psychiatric evaluation."
 msgstr ""
 "Ez az applet az idődet rabolja, a lemezterületet pocsékolja, valamint a "
-"fordítási időt növeli, elindítva a panelről lop helyet, és memóriát pazarol. "
-"Ha valakit meglátsz, hogy ezt az appletet használja, hívd a mentőket, hogy "
-"zárják diliházba."
+"fordítási időt növeli. Elindítva a panelen helyet foglal, és memóriát "
+"pazarol. Ha valakit meglátsz, hogy ezt az appletet használja, hívd a "
+"mentőket, hogy zárják diliházba."
 
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr ""
-"Egy név nélküli hal nagyon unalmas hal. Hívd életre a haladat névadással."
+"Egy név nélküli hal nagyon unalmas hal. Adj életet a haladnak, adj neki "
+"nevet!"
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
@@ -205,7 +206,7 @@ msgstr "Függőleges panelon forgatás"
 
 #: applets/fish/fish.schemas.in.h:5
 msgid "The fish's animation pixmap"
-msgstr "Hal animáció pixmap"
+msgstr "A hal animációja"
 
 #: applets/fish/fish.schemas.in.h:6
 msgid "The fish's name"
@@ -264,7 +265,7 @@ msgstr "Munkaasztal gomb megjelenítése"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
 msgid "Switch between open windows"
-msgstr "A nyitott ablakok között kapcsol"
+msgstr "Átváltás a nyitott ablakok között"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
 msgid "Switch between workspaces"
@@ -387,7 +388,8 @@ msgid "translator_credits"
 msgstr ""
 "Bán Szabolcs <shooby@gnome.hu>\n"
 "Kovács Emese <emese@gnome.hu>\n"
-"Tímár András <timar@gnome.hu>"
+"Tímár András <timar@gnome.hu>\n"
+"Vámosi Tamás <tvamosi@suselinux.hu>"
 
 #: applets/gen_util/clock.c:1193
 msgid "(C) 1998-2002 the Free Software Foundation"
@@ -464,7 +466,7 @@ msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
-"Nem adtál meg jelszót a beállításoknál a levélfigyelőben,\n"
+"Nem adtál meg jelszót a levélfigyelő beállításában,\n"
 "így minden indításnál be kell majd azt írnod."
 
 #: applets/gen_util/mailcheck.c:282
@@ -483,7 +485,7 @@ msgid ""
 msgstr ""
 "A Levélfigyelő nem tudta elérni a leveleidet, így az automatikus frissítést "
 "egyelőre kikapcsolta.\n"
-"Lehet, hogy nem volt jó a megadott kiszolgáló, felhasználó vagy jelszó?"
+"Lehet, hogy nem volt jó a megadott kiszolgáló, felhasználónév vagy jelszó?"
 
 #: applets/gen_util/mailcheck.c:537
 msgid "You have new mail."
@@ -491,7 +493,7 @@ msgstr "Új leveled érkezett."
 
 #: applets/gen_util/mailcheck.c:539
 msgid "You have mail."
-msgstr "Leveled van."
+msgstr "Van olvasatlan leveled."
 
 #: applets/gen_util/mailcheck.c:543
 #, c-format
@@ -526,11 +528,11 @@ msgstr "Helyi levélkönyvtár"
 
 #: applets/gen_util/mailcheck.c:1266
 msgid "Remote POP3-server"
-msgstr "Távoli POP3 kiszolgáló"
+msgstr "Távoli POP3-kiszolgáló"
 
 #: applets/gen_util/mailcheck.c:1274
 msgid "Remote IMAP-server"
-msgstr "Távoli IMAP kiszolgáló"
+msgstr "Távoli IMAP-kiszolgáló"
 
 #: applets/gen_util/mailcheck.c:1294
 msgid "Mail _spool file:"
@@ -630,7 +632,7 @@ msgstr "_Hang lejátszása levél érkezésekor"
 
 #: applets/gen_util/mailcheck.c:1566
 msgid "Select a_nimation"
-msgstr "_Animációk kiválasztása"
+msgstr "_Animáció kiválasztása"
 
 #: applets/gen_util/mailcheck.c:1643
 msgid "Inbox Monitor Preferences"
@@ -638,7 +640,7 @@ msgstr "Postaládafigyelő beállításai"
 
 #: applets/gen_util/mailcheck.c:1663
 msgid "_Mail check"
-msgstr "_Levélfigyelés"
+msgstr "_Levélellenőrzés"
 
 #: applets/gen_util/mailcheck.c:1667
 msgid "Mail_box"
@@ -700,11 +702,11 @@ msgstr ""
 
 #: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
-msgstr "Ha ez ben van állítva, futtatjuk az exec parancsot"
+msgstr "Ha ez be van állítva, futtathatjuk az exec parancsot"
 
 #: applets/gen_util/mailcheck.schemas.in.h:11
 msgid "If this is set, we should run the newmail-command"
-msgstr "Ha ez be van kapcsolva, futtatjuk a newmail parancsot"
+msgstr "Ha ez be van kapcsolva, futtathatjuk a newmail parancsot"
 
 #: applets/gen_util/mailcheck.schemas.in.h:12
 msgid "Interval for checking mail"
@@ -712,7 +714,7 @@ msgstr "Várakozás a postaláda ellenőrzései között"
 
 #: applets/gen_util/mailcheck.schemas.in.h:13
 msgid "Path to the animation file"
-msgstr "Animációs fájl elérési útvonala"
+msgstr "Az animáció elérési útvonala"
 
 #: applets/gen_util/mailcheck.schemas.in.h:14
 msgid "Play a sound when mail is recieved"
@@ -750,9 +752,7 @@ msgstr ""
 
 #: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr ""
-"Így dolgozzuk fel a leveleket, dolgozzuk fel a leveleket, dolgozzuk fel a "
-"leveleket..."
+msgstr "Így dolgozzuk fel a leveleket, és feldolgozzuk, és feldolgozzuk..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
@@ -913,7 +913,7 @@ msgstr "Nyomtató neve:"
 
 #: applets/gen_util/printer.c:319
 msgid "Print command:"
-msgstr "Nyomtató parancs:"
+msgstr "Nyomtatás parancs:"
 
 #: applets/gen_util/printer.c:325
 msgid "Printer"
@@ -1024,7 +1024,8 @@ msgid ""
 "Valid values are never, auto, and always."
 msgstr ""
 "Azt határozza meg, mikor csoportosítsa az Ablaklista applet egyazon "
-"alkalmazás ablakait. Érvényes értékek never (soha), auto, és always (mindig)."
+"alkalmazás ablakait. Lehetséges értékek never (soha), auto, és always "
+"(mindig)."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
@@ -1134,11 +1135,11 @@ msgstr "A panel állapota"
 
 #: gnome-panel/basep-widget.c:177
 msgid "Hidebuttons enabled"
-msgstr "Elrejtőgombok bekapcsolva"
+msgstr "Elrejtőgombok engedélyezve"
 
 #: gnome-panel/basep-widget.c:178
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-msgstr "Be vannak-e kapcsolva az elrejtőgombok?"
+msgstr "Engedélyezve vannak-e az elrejtőgombok?"
 
 #: gnome-panel/basep-widget.c:185
 msgid "Hidebutton pixmaps enabled"
@@ -1237,7 +1238,7 @@ msgstr "SuSE Linux"
 
 #: gnome-panel/distribution.c:32
 msgid "SuSE Menu"
-msgstr "SuSE menük"
+msgstr "SuSE menü"
 
 #: gnome-panel/distribution.c:37
 msgid "Solaris"
@@ -1245,7 +1246,7 @@ msgstr "Solaris"
 
 #: gnome-panel/distribution.c:37
 msgid "CDE Menu"
-msgstr "CDE menük"
+msgstr "CDE menü"
 
 #: gnome-panel/drawer.c:126
 msgid "Size and Position"
@@ -1261,11 +1262,11 @@ msgstr "Ikon"
 
 #: gnome-panel/drawer.c:146
 msgid "Applet appearance"
-msgstr "Applet megjelenés"
+msgstr "Applet megjelenése"
 
 #: gnome-panel/drawer.c:151
 msgid "Drawer handle"
-msgstr "Fiók fogantyú"
+msgstr "Fiók fogantyúja"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
@@ -1324,7 +1325,7 @@ msgstr "Kilépés"
 
 #: gnome-panel/foobar-widget.c:246
 msgid "Quit from the GNOME desktop"
-msgstr "Kilépés a GNOME munkaasztalból"
+msgstr "Kilépés a GNOME-munkakörnyezetből"
 
 #. FIXME: shutdown or reboot
 #: gnome-panel/foobar-widget.c:255
@@ -1341,7 +1342,7 @@ msgstr "Menüpanel"
 
 #: gnome-panel/foobar-widget.c:716
 msgid "GNOME Menu Panel"
-msgstr "GNOME Menüpanel"
+msgstr "GNOME menüpanel"
 
 #: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2922
 #: gnome-panel/menu.c:2927 gnome-panel/menu.c:3732
@@ -1479,7 +1480,7 @@ msgid ""
 "Please free up some resources and try again."
 msgstr ""
 "Nincs elég memória a képernyőkép elkészítéséhez.\n"
-"Kérlek szabadíts fel egy kis erőforrást és próbáld újra."
+"Szabadíts fel egy kis memóriát és próbáld újra."
 
 #: gnome-panel/gnome-panel-screenshot.c:211
 #, c-format
@@ -1666,7 +1667,7 @@ msgstr "Ismert alkalmazások listája"
 
 #: gnome-panel/gnome-run.c:1522
 msgid "Choose an application to run from the list"
-msgstr "Válaszd ki a futtatandó alkalmazást a listából"
+msgstr "Válaszd ki a listából a futtatandó alkalmazást"
 
 #: gnome-panel/gnome-run.c:1648
 msgid "Run Program"
@@ -1800,11 +1801,11 @@ msgstr ""
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
-msgstr "Itt nem lehet új indítóikont létrehozni, mert a hely nem írható."
+msgstr "Itt nem lehet új indítóikont létrehozni, mert a hely írásvédett."
 
 #: gnome-panel/menu.c:240
 msgid "Many many others ..."
-msgstr "Sokan, sokan mások..."
+msgstr "Sokan mások..."
 
 #. ... from the Monty Pythons show...
 #: gnome-panel/menu.c:242
@@ -1850,7 +1851,7 @@ msgid ""
 "\n"
 "Details: %s probably does not exist"
 msgstr ""
-"<b>'About GNOME' futtatása sikertelen</b>\n"
+"<b>Az 'About GNOME' futtatása sikertelen</b>\n"
 "\n"
 "Részletek: %s valószínűleg nem létezik"
 
@@ -1905,7 +1906,7 @@ msgid ""
 msgstr ""
 "<b>A futtatódobozhoz hozzáadás sikertelen</b>\n"
 "\n"
-"Details: Nincs 'Exec' vagy 'URL' mező a bejegyzésben"
+"Részletek: Nincs 'Exec' vagy 'URL' mező a bejegyzésben"
 
 #: gnome-panel/menu.c:1419
 msgid "Add this launcher to panel"
@@ -1934,11 +1935,11 @@ msgstr "Teljes menü"
 
 #: gnome-panel/menu.c:1515
 msgid "Add this as drawer to panel"
-msgstr "Add ezt, mint fiókot a panelhoz"
+msgstr "Panelhez hozzáadás fiókként"
 
 #: gnome-panel/menu.c:1523
 msgid "Add this as menu to panel"
-msgstr "Add ezt, mint menüt a panelhoz"
+msgstr "Panelhez hozzáadás menüként"
 
 #: gnome-panel/menu.c:1531
 msgid "Add new item to this menu"
@@ -1955,11 +1956,11 @@ msgstr "a lekérdezés kivétellel tért vissza: %s\n"
 
 #: gnome-panel/menu.c:2701 gnome-panel/menu.c:2706
 msgid "Aligned Panel"
-msgstr "Elhelyezett panel"
+msgstr "Illesztett panel"
 
 #: gnome-panel/menu.c:2707
 msgid "GNOME Aligned Panel"
-msgstr "GNOME elhelyezett panel"
+msgstr "GNOME illesztett panel"
 
 #: gnome-panel/menu.c:2724 gnome-panel/menu.c:2728
 #: gnome-panel/panel-config.c:1658
@@ -2034,7 +2035,7 @@ msgstr "Menüpanel létrehozása"
 
 #: gnome-panel/menu.c:2970 gnome-panel/menu.c:2976 gnome-panel/menu.c:3647
 msgid "KDE Menu"
-msgstr "KDE menük"
+msgstr "KDE menü"
 
 #: gnome-panel/menu.c:3076
 msgid "You cannot remove your last panel."
@@ -2114,7 +2115,7 @@ msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr ""
-"Kilépés a munkamenetből, más felhasználóval való belépéshez, vagy a "
+"Kilépés a munkamenetből, más felhasználóként való belépéshez, vagy a "
 "számítógép leállításához"
 
 #: gnome-panel/menu.c:3748
@@ -2300,11 +2301,11 @@ msgstr "Háttér szí_ne:"
 
 #: gnome-panel/panel-config.c:1443
 msgid "_Do not scale image to fit"
-msgstr "_Ne feszítse a képet"
+msgstr "_Ne méretezze át a képet"
 
 #: gnome-panel/panel-config.c:1448
 msgid "Sc_ale image"
-msgstr "Kép _feszítése"
+msgstr "Kép _átméretezése"
 
 #: gnome-panel/panel-config.c:1452
 msgid "St_retch image"
@@ -2312,7 +2313,7 @@ msgstr "Kép _nyújtása"
 
 #: gnome-panel/panel-config.c:1466
 msgid "Rotate image for _vertical panels"
-msgstr "_Függőleges panelon a kép forgatása"
+msgstr "_Függőleges panelen a kép forgatása"
 
 #: gnome-panel/panel-config.c:1527
 msgid "Edge panel"
@@ -2346,7 +2347,7 @@ msgstr "Háttér"
 
 #: gnome-panel/panel-global-config.schemas.in.h:1
 msgid "Display \"Run\" dialog"
-msgstr "\"Futtatás\" párbeszéd megjelenítése"
+msgstr "\"Futtatás\" párbeszédablak megjelenítése"
 
 #: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
@@ -2375,7 +2376,7 @@ msgstr "Programlista bekapcsolása a Futtatás párbeszédablakban"
 #: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
 msgstr ""
-"Programlista megjelenítése alapértelmezésben a Futtatás párbeszéd "
+"Programlista megjelenítése alapértelmezésben a Futtatás párbeszédablak "
 "megnyitásakor"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:3
@@ -2425,17 +2426,7 @@ msgstr "Nincs megjelenítendő dokumentum"
 
 #: gnome-panel/panel-util.c:622 gnome-panel/panel-util.c:638
 msgid "Disabled"
-msgstr "Kikapcsolva"
-
-#: gnome-panel/panel-util.c:1468
-msgid ""
-"<b>Cannot execute xscreensaver</b>\n"
-"\n"
-"Details: xscreensaver-command not found"
-msgstr ""
-"<b>xscreensaver végrehajtása sikertelen</b>\n"
-"\n"
-"Részletek: xscreensaver-command nem található"
+msgstr "Tiltva"
 
 #: gnome-panel/panel.c:876
 #, c-format
