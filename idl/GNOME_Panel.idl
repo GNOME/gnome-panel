@@ -137,6 +137,12 @@ module GNOME {
 		oneway void set_tooltips_state (in boolean enabled);
 		oneway void change_position (in short x, in short y);
 		readonly attribute string goad_id;
+		
+		/* freeze any changes notification, usefull for en masse
+		   changes only affects change_orient, change_size,
+		   back_change and change_position */
+		oneway void freeze_changes ();
+		oneway void thaw_changes ();
 	};
 	
 	interface StatusSpot {
