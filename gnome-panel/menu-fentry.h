@@ -16,7 +16,6 @@ struct _MenuFinfo {
 	char *menudir;
 	gboolean launcher_add;
 	char *dir_name;
-	char *pixmap_name;	
 	gboolean fake_menu;
 	FileRec *fr;
 };

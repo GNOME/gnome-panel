@@ -35,7 +35,9 @@ char *     get_pixmap              (const char *menudir,
 
 GtkWidget *add_menu_separator     (GtkWidget *menu);
 
-GtkWidget * pixmap_menu_item_new (const char *text, const char *try_file, gboolean force_image);
+GtkWidget *stock_menu_item_new (const char *text,
+				const char *stock_id,
+				gboolean    force_image);
 
 int        get_default_menu_flags (void);
 gboolean   got_kde_menus (void);

@@ -36,8 +36,8 @@
 #include "multiscreen-stuff.h"
 #include "panel-marshal.h"
 #include "egg-screen-exec.h"
-
 #include "multihead-hacks.h"
+#include "panel-stock-icons.h"
 
 #define ICON_SIZE 20
 #define FOOBAR_MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_KDE_SUB | MAIN_MENU_DISTRIBUTION_SUB)
@@ -178,8 +178,9 @@ append_actions_menu (FoobarWidget *foo,
 
 	menu = panel_menu_new ();
 
-	item = pixmap_menu_item_new (_("Run Program..."), "gnome-run.png",
-				     FALSE /* force_image */);
+	item = stock_menu_item_new (_("Run Program..."),
+				    PANEL_STOCK_RUN,
+				    FALSE);
 	gtk_tooltips_set_tip (panel_tooltips, item,
 			      _("Run applications, if you know the "
 				"correct command to type in"),
@@ -190,8 +191,10 @@ append_actions_menu (FoobarWidget *foo,
 			  foo);
 
 	if (panel_is_program_in_path  ("gnome-search-tool")) {
-		item = pixmap_menu_item_new (
-				_("Search for Files..."), "gnome-searchtool.png", FALSE);
+		item = stock_menu_item_new (
+				_("Search for Files..."),
+				PANEL_STOCK_SEARCHTOOL,
+				FALSE);
 
 		gtk_tooltips_set_tip (panel_tooltips, item,
 				      _("Find files, folders, and documents "
@@ -204,7 +207,9 @@ append_actions_menu (FoobarWidget *foo,
 	}
 
 	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
-		item = pixmap_menu_item_new (_("Screenshot..."), "gnome-screenshot.png", FALSE);
+		item = stock_menu_item_new (_("Screenshot..."),
+					    PANEL_STOCK_SCREENSHOT,
+					    FALSE);
 		gtk_tooltips_set_tip (panel_tooltips, item,
 			      	      _("Take a screenshot of your desktop"),
 			              NULL);
@@ -217,7 +222,9 @@ append_actions_menu (FoobarWidget *foo,
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
 	if (xstuff_net_wm_supports ("_NET_SHOW_DESKTOP")) {
-		item = pixmap_menu_item_new (_("Show Desktop"), "gnome-ccdesktop.png", FALSE);
+		item = stock_menu_item_new (_("Show Desktop"),
+					    PANEL_STOCK_DESKTOP,
+					    FALSE);
 		gtk_tooltips_set_tip (panel_tooltips, item,
 			      	      _("Hide all windows and focus the desktop"),
 			              NULL);
@@ -227,9 +234,9 @@ append_actions_menu (FoobarWidget *foo,
 	}
 
 	if (panel_is_program_in_path  ("xscreensaver")) {
-		item = pixmap_menu_item_new (_("Lock Screen"), 
-					     "gnome-lockscreen.png",
-					     FALSE /* force_image */);
+		item = stock_menu_item_new (_("Lock Screen"), 
+					    PANEL_STOCK_LOCKSCREEN, 
+					    FALSE);
 		gtk_tooltips_set_tip (panel_tooltips, item,
 				      _("Protect your computer from "
 					"unauthorized use"),
@@ -240,8 +247,9 @@ append_actions_menu (FoobarWidget *foo,
 		setup_internal_applet_drag(item, "LOCK:NEW");
 	}
 
-	item = pixmap_menu_item_new (_("Log Out"), "gnome-term-night.png",
-				     FALSE /* force_image */);
+	item = stock_menu_item_new (_("Log Out"),
+				    PANEL_STOCK_LOGOUT,
+				    FALSE);
 	gtk_tooltips_set_tip (panel_tooltips, item,
 			      _("Quit from the GNOME desktop"),
 			      NULL);
@@ -680,6 +688,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	GtkWidget *align;
+	GtkWidget *image;
 	char      *path;
 
 	window = GTK_WINDOW (foo);
@@ -731,10 +740,12 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	menu_bar = gtk_menu_bar_new ();	
 	gtk_widget_set_name (menu_bar,
 			     "panel-foobar-menubar");
-	
-	menuitem = pixmap_menu_item_new (_("Applications"),
-					 "gnome-logo-icon-transparent.png",
-					 TRUE /* force_image */);
+
+	menuitem = gtk_image_menu_item_new_with_label (_("Applications"));
+	image = gtk_image_new_from_stock (
+			PANEL_STOCK_GNOME_LOGO,
+			panel_foobar_icon_get_size ()),
+	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
 
 	menu = create_root_menu (
 			NULL, PANEL_WIDGET (foo->panel),

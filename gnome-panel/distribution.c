@@ -12,6 +12,7 @@
 #include "distribution.h"
 #include "menu.h"
 #include "menu-fentry.h"
+#include "panel-stock-icons.h"
 
 /* Note for distribution vendors:
  *
@@ -24,16 +25,17 @@
 static DistributionInfo distribution_info [] = {
 	{ DISTRIBUTION_DEBIAN, "/etc/debian_version",
 	  N_("Debian GNU/Linux"), N_("Debian Menu"),
-	  "gnome-debian.png", "/var/lib/gnome/Debian/.",
+	  PANEL_STOCK_DEBIAN, "/var/lib/gnome/Debian/.",
 	  NULL, NULL
 	},
 	{ DISTRIBUTION_SUSE, "/etc/SuSE-release",
-	  N_("SuSE Linux"), N_("SuSE Menu"), "gnome-suse.png",
-	  "gnome/distribution-menus/SuSE/.",
+	  N_("SuSE Linux"), N_("SuSE Menu"),
+	  PANEL_STOCK_CDE, "gnome/distribution-menus/SuSE/.",
 	  NULL, NULL
 	},
 	{ DISTRIBUTION_SOLARIS, "/var/sadm/pkg/SUNWdtcor",
-	 N_("Solaris"), N_("CDE Menu"), "cdeappmenu.png", "cdemenu:/",
+	 N_("Solaris"), N_("CDE Menu"),
+	 PANEL_STOCK_CDE, "cdemenu:/",
 	 NULL, NULL
 	},
 	{ DISTRIBUTION_UNKNOWN, NULL, NULL, NULL, NULL }

@@ -1,3 +1,72 @@
+2002-08-13  Mark McLoughlin  <mark@skynet.ie>
+
+	Register all panel icons with GtkIconFacory and
+	use stock ids when rendering icons. Also register
+	two named icon sizes to allow future icon size
+	theming. Fixes #89063.
+
+	* panel-stock-icons.h: list of stock ids.
+
+	* panel-stock-icons.c:
+	(panel_menu_icon_get_size), (panel_foobar_icon_get_size):
+	accessors for our named GtkIconSizes.
+	(panel_init_stock_icons): register stock icons here. Default
+	to GTK_STOCK_MISSING_IMAGE if we can't find the icon. Note,
+	that GnomeIconLoader is still used to lookup the icon path
+	first, so you can still theme these icons using GnomeIconLoader,
+	except the gtk theme will override it. Not sure how much sense
+	that really makes.
+	(panel_init_stock_items): register our modified stock gtk items
+	here (only the run button currently).
+	(panel_init_stock_icons_and_items): call both of the above but
+	also register our named icon sizes.
+
+	* Makefile.am: add panel-stock-icons.[ch] to the
+	build.
+
+	* distribution.c: use stock icons.
+
+	* distribution.h: s/menu_icon/stock_icon/
+
+	* foobar-widget.c: (append_actions_menu),
+	(foobar_widget_instance_init): use stock icons. Also
+	use special icon size for foobar icon. I don't think
+	it makes sense for that to be the same size as the menu
+	icons.
+
+	* gnome-run.c:
+	(add_icon_idle): look up actual icon size.
+	(register_run_stock_item): moved into panel-stock-icons.c.
+	(show_run_dialog): s/PANEL_STOCK_RUN/PANEL_STOCK_EXECUTE/.
+
+	* main.c: (main): init stock icons.
+
+	* menu-fentry.h: kill MenuFinfo::pixmap_name. Seems to have been
+	totally unused. Also removed a pile of related code from menu.c.
+
+	* menu-util.[ch]: (stock_menu_item_new): rename pixmap_menu_item_new
+	and use stock ids instead of filenames.
+
+	* menu.c:
+	(load_icons_handler): render a stock icon if requested.
+	(image_menuitem_size_request): actually lookup the icon size.
+	(applet_menu_get_category_icon): use a hash of stock ids instead
+	of filenames.
+	(create_applet_menu): use stock icons for categories. Applet icons
+	should be themed with GnomeIconLoader.
+	(create_add_panel_submenu): use stock icons.
+	(setup_stock_menu_item): rename from setup_menuitem_try_pixmap.
+	(make_add_submenu): use stock icons.
+	(make_panel_submenu), (create_panel_submenu): use panel icon size,
+	instead of gtk icon size.
+	(create_desktop_menu): (add_distribution_submenu),
+	(add_kde_submenu), (create_root_menu): use stock icons.
+	(panel_load_menu_image_deferred_with_size): allow the use of 
+	stock icons and filenames.
+	(panel_load_menu_image_deferred): actually lookup the icon size.
+
+	* menu.h: remove create_menu*, they're static now.
+
 2002-08-11  Mark McLoughlin  <mark@skynet.ie>
 
 	* drawer.c: (drawer_save_to_gconf): save the

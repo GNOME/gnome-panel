@@ -48,10 +48,8 @@
 #include "nothing.h"
 #include "egg-screen-exec.h"
 #include "egg-screen-url.h"
-
 #include "multihead-hacks.h"
-
-#define ICON_SIZE 20
+#include "panel-stock-icons.h"
 
 enum {
 	COLUMN_ICON,
@@ -66,8 +64,6 @@ enum {
 typedef enum {
 	PANEL_RESPONSE_RUN
 } PanelResponseType;
-
-#define PANEL_STOCK_RUN "panel-run"
 
 #define ENABLE_LIST_DEFAULT TRUE
 #define SHOW_LIST_DEFAULT FALSE
@@ -1189,6 +1185,7 @@ add_icon_idle (GtkListStore *list)
 	gboolean     long_operation = FALSE;
 	GdkPixbuf   *pixbuf;
 	char        *file;
+	int          icon_height;
 
 	do {
 		if (add_icon_paths == NULL) {
@@ -1212,8 +1209,10 @@ add_icon_idle (GtkListStore *list)
 		gtk_tree_model_get (GTK_TREE_MODEL (list), &iter,
 				    COLUMN_ICON_FILE, &file, -1);
 
-		pixbuf = panel_make_menu_icon (file, NULL /* fallback */,
-					       ICON_SIZE, &long_operation);
+		if (!gtk_icon_size_lookup (panel_menu_icon_get_size (), NULL, &icon_height))
+			icon_height = PANEL_DEFAULT_MENU_ICON_SIZE;
+
+		pixbuf = panel_make_menu_icon (file, NULL, icon_height, &long_operation);
 		if (pixbuf) {
 			gtk_list_store_set (list, &iter, COLUMN_ICON, pixbuf, -1);
 			g_object_unref (pixbuf);
@@ -1583,33 +1582,6 @@ update_contents (GtkWidget *dialog)
         }
 }
 
-static inline void
-register_run_stock_item (void)
-{
-	static gboolean registered = FALSE;
-
-	if (!registered) {
-		GtkIconFactory      *factory;
-		GtkIconSet          *execute_icons;
-
-		static GtkStockItem  run_item [] = {
-			{ PANEL_STOCK_RUN, N_("_Run"), 0, 0, GETTEXT_PACKAGE },
-		};
-
-		execute_icons = gtk_icon_factory_lookup_default (GTK_STOCK_EXECUTE);
-
-		factory = gtk_icon_factory_new ();
-
-		gtk_icon_factory_add (factory, PANEL_STOCK_RUN, execute_icons);
-
-		gtk_icon_factory_add_default (factory);
-
-		gtk_stock_add_static (run_item, 1);
-
-		registered = TRUE;
-	}
-}
-
 static void
 run_dialog_destroyed (GtkWidget *widget)
 {
@@ -1651,8 +1623,6 @@ show_run_dialog (GdkScreen *screen)
 		return;
 	}
 
-	register_run_stock_item ();
-
 	run_dialog = gtk_dialog_new_with_buttons (
 				_("Run Program"),
 				NULL, 0 /* flags */,
@@ -1664,7 +1634,7 @@ show_run_dialog (GdkScreen *screen)
 	gtk_window_set_screen (GTK_WINDOW (run_dialog), screen);
 
 	w = gtk_dialog_add_button (GTK_DIALOG (run_dialog),
-				   PANEL_STOCK_RUN, PANEL_RESPONSE_RUN);
+				   PANEL_STOCK_EXECUTE, PANEL_RESPONSE_RUN);
 	gtk_widget_set_sensitive (w, FALSE);
 	g_object_set_data (G_OBJECT (run_dialog), "run_button", w);
 

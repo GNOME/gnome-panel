@@ -264,15 +264,16 @@ got_distro_menus (void)
 }
 
 GtkWidget *
-pixmap_menu_item_new (const char *text, const char *try_file, gboolean force_image)
+stock_menu_item_new (const char *text,
+		     const char *stock_id,
+		     gboolean    force_image)
 {
         GtkWidget *item;
         GtkWidget *label;
 
         item = gtk_image_menu_item_new ();
 
-        panel_load_menu_image_deferred (item, try_file, NULL /* fallback */,
-                                        force_image);
+        panel_load_menu_image_deferred (item, stock_id, NULL, NULL, force_image);
 
         if (text) {
                 label = gtk_label_new (text);
