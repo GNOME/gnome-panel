@@ -209,6 +209,8 @@ save_applet_configuration(int num)
 	case APPLET_LOGOUT:
 		gnome_config_set_string("config/id", LOGOUT_ID);
 		break;
+	default:
+		g_assert_not_reached();
 	}
 	gnome_config_set_int("config/position", ad->pos);
 	gnome_config_set_int("config/panel", panel_num);
@@ -260,6 +262,8 @@ save_panel_configuration(gpointer data, gpointer user_data)
 				     drawer->drop_zone_pos);
 		break;
 		}
+	default:
+		g_assert_not_reached();
 	}
 	gnome_config_set_bool("fit_pixmap_bg", panel->fit_pixmap_bg);
 

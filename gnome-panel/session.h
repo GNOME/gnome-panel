@@ -39,6 +39,8 @@ void load_up_globals(void);
 void init_user_applets(void);
 void init_user_panels(void);
 
+void apply_global_config(void);
+
 END_GNOME_DECLS
 
 #endif

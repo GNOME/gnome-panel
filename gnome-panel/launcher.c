@@ -228,7 +228,6 @@ void
 launcher_properties(Launcher *launcher)
 {
 	GnomeDesktopEntry *dentry;
-	char              *path;
 	GtkWidget         *dialog;
 
 	dialog = gtk_object_get_data(GTK_OBJECT(launcher->button),

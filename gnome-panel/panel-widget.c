@@ -1447,7 +1447,6 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 	PanelWidget *panel;
 	PanelWidget *p;
 	AppletData *ad;
-	int thick;
 
 	panel = gtk_object_get_data(GTK_OBJECT(applet),PANEL_APPLET_PARENT_KEY);
 
@@ -1626,7 +1625,6 @@ panel_widget_reparent (PanelWidget *old_panel,
 		       GtkWidget *applet,
 		       int pos)
 {
-	int thick;
 	AppletData *ad;
 	PanelWidget *p;
 
@@ -1737,7 +1735,7 @@ int
 panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 {
 	AppletData *ad;
-	int i,thick;
+	int i;
 	PanelWidget *p;
 
 	g_return_val_if_fail(panel!=NULL,FALSE);

@@ -737,7 +737,6 @@ create_menu_at (GtkWidget *menu,
 	
 	while (flist) {
 		GtkWidget     *sub, *pixmap;
-		GtkSignalFunc  activate_func;
 		char          *pixmap_name;
 		char          *menuitem_name;
 		

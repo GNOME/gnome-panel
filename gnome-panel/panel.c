@@ -55,15 +55,6 @@ extern PanelWidget *current_panel;
 /*a list of started extern applet child processes*/
 extern GList * children;
 
-static void
-panel_add_main_menu(GtkWidget *w, gpointer data)
-{
-	PanelWidget *panel = get_def_panel_widget(data);
-
-	load_menu_applet(NULL,0, 0, panel);
-}	
-
-
 /*get the default panel widget if the panel has more then one or
   just get the that one*/
 PanelWidget *
@@ -777,7 +768,6 @@ static void
 panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 {
 	int applet_id = GPOINTER_TO_INT(gtk_object_get_user_data(GTK_OBJECT(widget)));
-	AppletInfo *info = get_applet_info(applet_id);
 	
 	if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_id))==NULL)
 		applets_to_sync = g_list_prepend(applets_to_sync,
