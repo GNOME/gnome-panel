@@ -122,23 +122,10 @@ struct _MailCheck {
 
 	gboolean play_sound;
 	
-	PanelSizeType size;
+	int size;
 };
 
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
-
-static int
-get_pixel_size(PanelSizeType s)
-{
-	switch(s) {
-	case SIZE_TINY: return 24;
-	case SIZE_STANDARD: return 48;
-	case SIZE_LARGE: return 64;
-	case SIZE_HUGE: return 80;
-	default: return 48;
-	}
-}
-
 
 static void close_callback (GtkWidget *widget, void *data);
 
@@ -267,7 +254,7 @@ mailcheck_load_animation (MailCheck *mc, char *fname)
 
 	im = gdk_imlib_load_image (fname);
 
-	height = get_pixel_size(mc->size);
+	height = mc->size;
 	width = im->rgb_width*((double)height/im->rgb_height);
 
 	gdk_imlib_render (im, width, height);
@@ -389,7 +376,7 @@ static gint
 icon_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 {
 	MailCheck *mc = data;
-	int h = get_pixel_size(mc->size);
+	int h = mc->size;
 	gdk_draw_pixmap (mc->da->window, mc->da->style->black_gc,
 			 mc->email_pixmap, mc->nframe * h,
 			 0, 0, 0, h, h);
@@ -455,7 +442,7 @@ create_mail_widgets (MailCheck *mc)
 	gtk_widget_pop_visual ();
 	gtk_widget_ref (mc->da);
 	gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),
-			       get_pixel_size(mc->size), get_pixel_size(mc->size));
+			       mc->size, mc->size);
 	gtk_signal_connect (GTK_OBJECT(mc->da), "expose_event", (GtkSignalFunc)icon_expose, mc);
 	gtk_widget_set_events(GTK_WIDGET(mc->da),GDK_EXPOSURE_MASK);
 	gtk_widget_show (mc->da);
@@ -1104,15 +1091,15 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 
 /*this is when the panel size changes */
 static void
-applet_change_size(GtkWidget * w, PanelSizeType o, gpointer data)
+applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 {
 	MailCheck *mc = data;
 	
-	mc->size = o;
+	mc->size = size;
 
 	if(mc->report_mail_mode != REPORT_MAIL_USE_TEXT) {
 		char *fname = mail_animation_filename (mc);
-		int size = get_pixel_size(mc->size);
+		int size = mc->size;
 
 		gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),size,size);
 		gtk_widget_set_usize (GTK_WIDGET(mc->da), size, size);
@@ -1196,10 +1183,10 @@ make_mailcheck_applet(const gchar *goad_id)
 
 	mc->mailcheck_text_only = _("Text only");
 	
-	mc->size = SIZE_STANDARD;
+	mc->size = PIXEL_SIZE_STANDARD;
 
-	gtk_signal_connect(GTK_OBJECT(applet), "change_size",
-			   GTK_SIGNAL_FUNC(applet_change_size),
+	gtk_signal_connect(GTK_OBJECT(applet), "change_pixel_size",
+			   GTK_SIGNAL_FUNC(applet_change_pixel_size),
 			   mc);
 
 	mailcheck = create_mail_widgets (mc);

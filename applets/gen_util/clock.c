@@ -35,7 +35,7 @@ struct _ClockData {
 	int showtooltip;
 	ClockUpdateFunc update_func;
 	PanelOrientType orient;
-	PanelSizeType size;
+	int size;
 
 	GtkWidget *props;
 	int prop_hourformat;
@@ -123,7 +123,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 
 	if (cd->unixtime) {
 		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
-		    cd->size != SIZE_TINY) {
+		    cd->size >= PIXEL_SIZE_STANDARD) {
 			g_snprintf(hour,20,"%lu\n%lu",
 				   (unsigned long)(current_time/100000L),
 				   (unsigned long)(current_time%100000L));
@@ -135,7 +135,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 		/* This format string is used, to display the actual time in
 		   12 hour format.  */
 		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
-		    cd->size != SIZE_TINY) {
+		    cd->size >= PIXEL_SIZE_STANDARD) {
 			if (strftime(hour, 20, _("%I:%M\n%p"), tm) == 20)
 				hour[19] = '\0';
 		} else {
@@ -153,7 +153,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 
 	if (cd->showdate && !cd->unixtime) {
 		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
-		    cd->size != SIZE_TINY) {
+		    cd->size >= PIXEL_SIZE_STANDARD) {
 			/* This format string is used, to display the actual day,
 			   when showing a vertical panel.  For an explanation of
 			   this format string type 'man strftime'.  */
@@ -165,7 +165,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 			if (strftime(date, 20, _("%a %b %d"), tm) == 20)
 				date[19] = '\0';
 		}
-		if(cd->size == SIZE_TINY)
+		if(cd->size <= PIXEL_SIZE_STANDARD)
 			g_string_append_c(gs,' ');
 		else
 			g_string_append_c(gs,'\n');
@@ -181,7 +181,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	
 	/*if we are vertical, just make it char per line*/
 	if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
-	    cd->size == SIZE_TINY) {
+	    cd->size <= PIXEL_SIZE_STANDARD) {
 		char *p;
 		GString *gst = g_string_new("");
 		for(p=gs->str;*p;p++) {
@@ -257,7 +257,7 @@ create_clock_widget(ClockData *cd, GtkWidget * applet)
 	cd->props = NULL;
 
 	cd->orient = ORIENT_UP;
-	cd->size = SIZE_STANDARD;
+	cd->size = PIXEL_SIZE_STANDARD;
 
 	gtk_signal_connect(GTK_OBJECT(clock), "destroy",
 			   (GtkSignalFunc) destroy_clock,
@@ -292,13 +292,13 @@ applet_change_orient(GtkWidget * w, PanelOrientType o, gpointer data)
 }
 /*this is when the panel size changes */
 static void
-applet_change_size(GtkWidget * w, PanelSizeType o, gpointer data)
+applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 {
 	ClockData *cd = data;
 	time_t current_time;
 
 	time(&current_time);
-	cd->size = o;
+	cd->size = size;
 	(*cd->update_func) (cd, current_time);
 }
 
@@ -330,8 +330,8 @@ make_clock_applet(const gchar * goad_id)
 			   GTK_SIGNAL_FUNC(applet_change_orient),
 			   cd);
 	/*similiar to the above in semantics*/
-	gtk_signal_connect(GTK_OBJECT(applet), "change_size",
-			   GTK_SIGNAL_FUNC(applet_change_size),
+	gtk_signal_connect(GTK_OBJECT(applet), "change_pixel_size",
+			   GTK_SIGNAL_FUNC(applet_change_pixel_size),
 			   cd);
 
 	gtk_widget_show(cd->clockw);
