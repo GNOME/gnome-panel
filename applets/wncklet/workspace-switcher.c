@@ -436,6 +436,17 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 					   pager_menu_verbs,
 					   pager);
 
+	if (panel_applet_get_locked_down (PANEL_APPLET (pager->applet))) {
+		BonoboUIComponent *popup_component;
+
+		popup_component = panel_applet_get_popup_component (PANEL_APPLET (pager->applet));
+
+		bonobo_ui_component_set_prop (popup_component,
+					      "/commands/PagerPreferences",
+					      "hidden", "1",
+					      NULL);
+	}
+
 	return TRUE;
 }
 

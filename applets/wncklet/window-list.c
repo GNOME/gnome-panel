@@ -730,6 +730,17 @@ window_list_applet_fill (PanelApplet *applet)
 					   NULL,
 					   tasklist_menu_verbs, 
 					   tasklist);
+
+	if (panel_applet_get_locked_down (PANEL_APPLET (tasklist->applet))) {
+		BonoboUIComponent *popup_component;
+
+		popup_component = panel_applet_get_popup_component (PANEL_APPLET (tasklist->applet));
+
+		bonobo_ui_component_set_prop (popup_component,
+					      "/commands/TasklistPreferences",
+					      "hidden", "1",
+					      NULL);
+	}
 	
 	return TRUE;
 }
