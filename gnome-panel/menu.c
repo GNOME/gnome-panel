@@ -1195,7 +1195,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		}
 
 		gtk_drag_source_set(menuitem,
-				    GDK_BUTTON1_MASK,
+				    GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 				    menu_item_targets, 1,
 				    GDK_ACTION_COPY);
 
@@ -1222,7 +1222,7 @@ setup_directory_drag (GtkWidget *menuitem, char *directory)
 	};
 
 	gtk_drag_source_set(menuitem,
-			    GDK_BUTTON1_MASK,
+			    GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 			    menu_item_targets, 1,
 			    GDK_ACTION_COPY);
 	
@@ -1245,7 +1245,7 @@ setup_internal_applet_drag (GtkWidget *menuitem, char *applet_type)
 		return;
 	
 	gtk_drag_source_set(menuitem,
-			    GDK_BUTTON1_MASK,
+			    GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 			    menu_item_targets, 1,
 			    GDK_ACTION_COPY);
 	
@@ -1269,7 +1269,7 @@ setup_applet_drag (GtkWidget *menuitem, char *goad_id)
 		return;
 	
 	gtk_drag_source_set(menuitem,
-			    GDK_BUTTON1_MASK,
+			    GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 			    menu_item_targets, 1,
 			    GDK_ACTION_COPY);
 	
