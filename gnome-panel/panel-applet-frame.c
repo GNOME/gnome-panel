@@ -11,6 +11,7 @@
 #include <gconf/gconf.h>
 
 #include "panel-applet-frame.h"
+#include "panel-gconf.h"
 #include "applet.h"
 
 #undef PANEL_APPLET_FRAME_DEBUG
@@ -100,26 +101,41 @@ panel_applet_frame_load (const gchar *iid,
 }
 
 void
-panel_applet_frame_save_position (PanelAppletFrame *frame,
-				  const gchar      *base_key)
+panel_applet_frame_save_position (PanelAppletFrame *frame)
 {
-	/*
-	 * FIXME: implement
-	 */
+	gchar *session_key;
+	gchar *temp_key;
+	gint   position = 0, panel_id = 0;
+
+	session_key = panel_gconf_get_session_key ();
+	if (!session_key)
+		return;
+
+	temp_key = g_strdup_printf ("%s/applets/%s/position", session_key, frame->priv->unique_key);
+	gconf_client_set_int (panel_gconf_get_client (), temp_key, position, NULL);
+	g_free (temp_key);
+
+	temp_key = g_strdup_printf ("%s/applets/%s/panel-id", session_key, frame->priv->unique_key);
+	gconf_client_set_int (panel_gconf_get_client (), temp_key, panel_id, NULL);
+	g_free (temp_key);
 }
 
 void
-panel_applet_frame_save_session (PanelAppletFrame *frame,
-				 const gchar      *base_key)
+panel_applet_frame_save_session (PanelAppletFrame *frame)
 {
 	CORBA_Environment  env;
+	gchar             *session_key;
 	gchar             *global_key;
 	gchar             *private_key;
 
 	CORBA_exception_init (&env);
 
-	global_key  = g_strdup_printf ("%s/%s", base_key, frame->priv->iid);
-	private_key = g_strdup_printf ("%s/%s", base_key, frame->priv->unique_key);
+	session_key = panel_gconf_get_session_key ();
+	if (!session_key)
+		return;
+
+	global_key  = g_strdup_printf ("%s/applets/%s", session_key, frame->priv->iid);
+	private_key = g_strdup_printf ("%s/applets/%s", session_key, frame->priv->unique_key);
 
 	GNOME_PanelAppletShell_saveYourself (frame->priv->applet_shell,
 					     global_key,

@@ -1,5 +1,18 @@
 2001-11-30  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-frame.[ch]:
+	(panel_applet_frame_save_position): remove base_key arg.
+	(panel_applet_frame_save_session): ditto.
+
+	* panel.c: (panel_remove_applets): upd.
+
+	* applet.c: (applet_idle_remove): upd.
+	* session.c:
+	(save_applet_configuration),
+	(panel_session_die): upd.
+
+2001-11-30  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-gconf.c: (panel_gconf_get_session_key): fix silly.
 
 2001-11-30  Mark McLoughlin  <mark@skynet.ie>

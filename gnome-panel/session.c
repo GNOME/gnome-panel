@@ -315,20 +315,8 @@ save_applet_configuration(AppletInfo *info)
 	panel_id = panel->unique_id;
 
 	switch(info->type) {
-	case APPLET_BONOBO: {
-		gchar *session_key;
-		gchar *base_key;
-
-		session_key = panel_gconf_get_session_key ();
-		if (!session_key)
-			break;
-
-		base_key = g_strdup_printf ("%s/applets", session_key);
-
-		panel_applet_frame_save_session (PANEL_APPLET_FRAME (info->data), base_key);
-
-		g_free (base_key);
-		}
+	case APPLET_BONOBO:
+		panel_applet_frame_save_session (PANEL_APPLET_FRAME (info->data));
 		break;
 	case APPLET_DRAWER: 
 		{
@@ -771,8 +759,7 @@ panel_session_die (GnomeClient *client,
 		switch (info->type) {
 		case APPLET_BONOBO:
 			panel_applet_frame_save_position (
-				PANEL_APPLET_FRAME (info->data),
-				NULL);
+				PANEL_APPLET_FRAME (info->data));
 			break;
 		case APPLET_SWALLOW: {
 			Swallow   *swallow = info->data;
