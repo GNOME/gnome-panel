@@ -1,0 +1,142 @@
+This is a little document that describes the "art" of applet writing.
+
+Introduction:
+=============
+
+Applets are basically gtk applications with one major difference, they
+have a window which sits inside the panel. Also the panel "takes care"
+of the applets by providing them with stuff such as sessions saving, and
+taking care of their space on the panel, taking care of restarting them,
+etc ... etc ... etc ...
+
+
+The Hello World of applets:
+===========================
+
+The simplest applet one can write would be along the lines of:
+
+#include <config.h>
+#include <gnome.h>
+#include <applet-widget.h>
+
+int
+main(int argc, char **argv)
+{
+	GtkWidget *applet;
+	GtkWidget *label;
+
+	/* intialize, this will basicallys et up the applet, corba and
+	   call gnome_init */
+	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
+				    NULL, argv[0]);
+
+	/* create a new applet_widget */
+	applet = applet_widget_new();
+	/* in the rare case that the communication with the panel
+	   failed, error out */
+	if (!applet)
+		g_error("Can't create applet!\n");
+
+	/* create the widget we are going to put on the applet */
+	label = gtk_label_new(_("Hello There!"));
+	gtk_widget_show(label);
+
+	/* add the widget to the applet-widget, and thereby actually
+	   putting it "onto" the panel */
+	applet_widget_add (APPLET_WIDGET (applet), label);
+	gtk_widget_show (applet);
+
+	/* special corba main loop */
+	applet_widget_gtk_main ();
+
+	return 0;
+}
+
+This creates an applet which just sits on the panel, not really doing
+anything, in real life the label would be substituted by something which
+actually does something useful. as you can see the applet doesn't really
+take care of restarting itself, it just passes the argv[0] parameter to 
+the panel, in the applet_widget_init_defaults call and that's the way
+the panel will restart it next time.
+
+Now to the more interesting stuff.
+
+Applet Menu:
+============
+
+When the user right clicks on the applet, a menu appears, this is all
+handeled by the panel, so in order to add items to it you sue a special
+interface to "add callbacks" to the menu. A very simple example would
+be (making our hello applet even more feature full):
+
+#include <config.h>
+#include <gnome.h>
+#include <applet-widget.h>
+
+static void
+hello_there(AppletWidget *applet, gpointer data)
+{
+	g_print(_("Hello There"));
+}
+
+int
+main(int argc, char **argv)
+{
+	GtkWidget *applet;
+	GtkWidget *label;
+
+	/* intialize, this will basicallys et up the applet, corba and
+	   call gnome_init */
+	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
+				    NULL, argv[0]);
+
+	/* create a new applet_widget */
+	applet = applet_widget_new();
+	/* in the rare case that the communication with the panel
+	   failed, error out */
+	if (!applet)
+		g_error("Can't create applet!\n");
+
+	/* create the widget we are going to put on the applet */
+	label = gtk_label_new(_("Hello There!"));
+	gtk_widget_show(label);
+
+	/* add the widget to the applet-widget, and thereby actually
+	   putting it "onto" the panel */
+	applet_widget_add (APPLET_WIDGET (applet), label);
+	gtk_widget_show (applet);
+
+	/* add an item to the applet menu */
+	applet_widget_register_callback(APPLET_WIDGET(applet),
+					"hello",
+					_("Hello There"),
+					hello_there,
+					NULL);
+
+	/* special corba main loop */
+	applet_widget_gtk_main ();
+
+	return 0;
+}
+
+Now the user will see a "Hello There" menu item on the applet menu, and
+when selected, the applet will print "Hello There". Useful huh?
+
+Note that the second argument to the register_callback is just a string
+identifier of this callback, and can really be whatever you want. But it
+should NOT be translated as the label (the 3rd argument) should be.
+
+Session Saving:
+===============
+
+FIXME: do this
+
+Panel Orientation:
+==================
+
+FIXME: do this
+
+Multiple Applet Support:
+========================
+
+FIXME: do this
