@@ -1,5 +1,5 @@
 <gconfschemafile>
-    <schemalist>    
+    <schemalist>
 
       <schema>
         <key>/schemas/apps/workspace_switcher_applet/prefs/display_workspace_names</key>
@@ -7,11 +7,12 @@
         <type>bool</type>
         <default>false</default>
         <locale name="C">
-          <short>Whether to display the names of the workspaces in the Workspace Switcher.</short>
-          <long>If this is true, the workspaces in the Workspace Switcher will display
-		the names of the workspaces, otherwise they will display the contents of the
-		workspace.
-	  </long>
+          <short>Display workspace names</short>
+          <long>
+            If true, the workspaces in the workspace switcher will display
+            the names of the workspaces. Otherwise they will display the
+            windows on the workspace.
+          </long>
         </locale>
       </schema>
 
@@ -21,10 +22,11 @@
         <type>bool</type>
         <default>true</default>
         <locale name="C">
-          <short>Whether to display the all workspaces in the Workspace Switcher.</short>
-          <long>If this is true, the Workspace Switcher will show all workspaces,
-		otherwise it will only show the current workspace.
-	  </long>
+          <short>Display all workspaces</short>
+          <long>
+            If true, the workspace switcher will show all workspaces. Otherwise
+            it will only show the current workspace.
+          </long>
         </locale>
       </schema>
 
@@ -34,14 +36,16 @@
         <type>int</type>
         <default>1</default>
         <locale name="C">
-          <short>Number of rows in the Workspace Switcher.</short>
-          <long>When showing all the workspaces this determines how many rows (for horizontal
-		layout) or columns (for vertical layout) the Workspace Switcher shows the
-		workspaces in.
-	  </long>
+          <short>Rows in workspace switcher</short>
+          <long>
+            This key specifies how many how many rows (for horizontal layout)
+            or columns (for vertical layout) the workspace switcher shows the
+            workspaces in. This key is only relevant if the
+            display_all_workspaces key is true.
+          </long>
         </locale>
       </schema>
-                 
+
   </schemalist>
-  
+
 </gconfschemafile>

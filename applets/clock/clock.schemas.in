@@ -1,5 +1,5 @@
 <gconfschemafile>
-    <schemalist>    
+    <schemalist>
 
       <schema>
         <key>/schemas/apps/clock_applet/prefs/hour_format</key>
@@ -8,15 +8,16 @@
         <locale name="C">
           <default>24</default>
           <short>Hour format</short>
-          <long>Sets the hour format, may be either 12 or 24</long>
+          <long>
+            This key specifies the hour format used by the clock applet.
+            Possible values are 12 and 24.
+          </long>
         </locale>
-        <locale name="en_US">
-          <default>12</default>
-          <short>Hour format</short>
-          <long>Sets the hour format, may be either 12 or 24</long>
-        </locale>
+	<locale name="en_US">
+	  <default>12</default>
+	</locale>
       </schema>
-                 
+
       <schema>
         <key>/schemas/apps/clock_applet/prefs/show_seconds</key>
         <owner>clock-applet</owner>
@@ -24,7 +25,7 @@
         <default>false</default>
         <locale name="C">
           <short>Show time with seconds</short>
-          <long>Display seconds in time</long>
+          <long>If true, display seconds in time.</long>
         </locale>
       </schema>
 
@@ -34,8 +35,8 @@
         <type>bool</type>
         <default>true</default>
         <locale name="C">
-          <short>Show date in Clock</short>
-          <long>Display date in the Clock, in addition to time</long>
+          <short>Show date in clock</short>
+          <long>If true, display date in the clock, in addition to time.</long>
         </locale>
       </schema>
 
@@ -46,10 +47,12 @@
         <default>true</default>
         <locale name="C">
           <short>Show date in tooltip</short>
-          <long>Show date in a tooltip when a mouse is over the Clock</long>
+          <long>
+            If true, show date in a tooltip when the pointer is over the clock.
+          </long>
         </locale>
       </schema>
-                 
+
       <schema>
         <key>/schemas/apps/clock_applet/prefs/gmt_time</key>
         <owner>clock-applet</owner>
@@ -57,10 +60,12 @@
         <default>false</default>
         <locale name="C">
           <short>Use UTC</short>
-          <long>Display time in Universal Coordinated Time zone</long>
+          <long>
+            If true, display time in Universal Coordinated Time zone.
+          </long>
         </locale>
       </schema>
-                 
+
       <schema>
         <key>/schemas/apps/clock_applet/prefs/unix_time</key>
         <owner>clock-applet</owner>
@@ -68,18 +73,22 @@
         <default>false</default>
         <locale name="C">
           <short>Use UNIX time</short>
-          <long>Display time in seconds since Epoch, i.e. 1970-01-01</long>
+          <long>
+            If true, display time in seconds since Epoch, i.e. 1970-01-01.
+          </long>
         </locale>
       </schema>
-                 
+
       <schema>
         <key>/schemas/apps/clock_applet/prefs/internet_time</key>
         <owner>clock-applet</owner>
         <type>bool</type>
         <default>false</default>
         <locale name="C">
-          <short>Use Internet time</short>
-          <long>Display Internet time, which is same all over the world</long>
+          <short>Use internet time</short>
+          <long>
+            If true, display internet time, which is same all over the world.
+          </long>
         </locale>
       </schema>
 
@@ -90,10 +99,13 @@
         <default> </default>
         <locale name="C">
           <short>Time configuration tool</short>
-          <long>Program to run in order to configure the time.</long>
+          <long>
+            This key specifies the program to run in order to configure the
+            time.
+          </long>
         </locale>
       </schema>
-                 
+
   </schemalist>
-  
+
 </gconfschemafile>

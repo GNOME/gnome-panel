@@ -1,5 +1,5 @@
 <gconfschemafile>
-    <schemalist>    
+    <schemalist>
 
       <schema>
         <key>/schemas/apps/fish_applet/prefs/name</key>
@@ -8,7 +8,10 @@
         <default>Wanda</default>
         <locale name="C">
           <short>The fish's name</short>
-          <long> A fish without a name is a pretty dull fish. Bring your fish to life by naming him.</long>
+          <long>
+            A fish without a name is a pretty dull fish. Bring your fish to
+            life by naming him.
+          </long>
         </locale>
       </schema>
 
@@ -19,18 +22,25 @@
         <default>fish/fishanim.png</default>
         <locale name="C">
           <short>The fish's animation pixmap</short>
-          <long>The fish's animation pixmap</long>
+          <long>
+            This key specifies the filename of the pixmap which will be used
+            for the animation displayed in the fish applet relative to the
+            pixmap directory.
+          </long>
         </locale>
       </schema>
-      
+
       <schema>
         <key>/schemas/apps/fish_applet/prefs/command</key>
         <owner>fish-applet</owner>
         <type>string</type>
         <default>fortune</default>
         <locale name="C">
-          <short>Command to execute when the fish is clicked</short>
-          <long>Command to execute when the fish is clicked</long>
+          <short>Command to execute on click</short>
+          <long>
+            This key specifies the command that will be tried to execute when
+            the fish is clicked.
+          </long>
         </locale>
       </schema>
 
@@ -40,8 +50,11 @@
         <type>int</type>
         <default>3</default>
         <locale name="C">
-          <short>The number of frames in the fish's animation</short>
-          <long>The number of frames in the fish's animation</long>
+          <short>Frames in fish's animation</short>
+          <long>
+            This key specifies the number of frames that will be displayed in
+            the fish's animation.
+          </long>
         </locale>
       </schema>
 
@@ -52,10 +65,13 @@
         <default>1.0</default>
         <locale name="C">
           <short>Pause per frame</short>
-          <long>Pause per frame</long>
+          <long>
+            This key specifies the number of seconds each frame will be
+            displayed.
+          </long>
         </locale>
       </schema>
-      
+
       <schema>
         <key>/schemas/apps/fish_applet/prefs/rotate</key>
         <owner>fish-applet</owner>
@@ -63,10 +79,13 @@
         <default>true</default>
         <locale name="C">
           <short>Rotate on vertical panels</short>
-          <long>Rotate on vertical panels</long>
+          <long>
+            If true, the fish's animation will be displayed rotated on vertical
+            panels.
+          </long>
         </locale>
       </schema>
-           
+
   </schemalist>
-  
+
 </gconfschemafile>

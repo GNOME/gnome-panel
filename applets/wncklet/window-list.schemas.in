@@ -1,5 +1,5 @@
 <gconfschemafile>
-    <schemalist>    
+    <schemalist>
 
       <schema>
         <key>/schemas/apps/window_list_applet/prefs/display_all_workspaces</key>
@@ -8,9 +8,10 @@
         <default>false</default>
         <locale name="C">
           <short>Show windows from all workspaces</short>
-          <long>If this is true, the Window List will show windows from all workspaces,
-	         otherwise it will display windows from the current workspace only.
-	  </long>
+          <long>
+            If true, the window list will show windows from all workspaces.
+            Otherwise it will only display windows from the current workspace.
+          </long>
         </locale>
       </schema>
 
@@ -21,37 +22,38 @@
         <default>auto</default>
         <locale name="C">
           <short>When to group windows</short>
-          <long>Decides when to group windows from the same application on the Window List.
-	        Valid values are "never", "auto" and "always".
-	  </long>
+          <long>
+            Decides when to group windows from the same application on the
+            window list. Possible values are "never", "auto" and "always".
+          </long>
         </locale>
       </schema>
-                 
+
       <schema>
         <key>/schemas/apps/window_list_applet/prefs/move_unminimized_windows</key>
         <owner>window-list-applet</owner>
         <type>bool</type>
         <default>true</default>
         <locale name="C">
-          <short>Move windows to the current workspace when unminimized</short>
-          <long>If true, then when unminimizing a window, bring it to the current workspace.
-	        Otherwise, change to the workspace of the window.
-	  </long>
+          <short>Move windows to current workspace when unminimized</short>
+          <long>
+            If true, then when unminimizing a window, move it to the
+            current workspace. Otherwise, switch to the workspace of
+            the window.
+          </long>
         </locale>
       </schema>
-                 
+
       <schema>
         <key>/schemas/apps/window_list_applet/prefs/minimum_size</key>
         <owner>window-list-applet</owner>
         <type>int</type>
         <default>50</default>
         <locale name="C">
-          <short>Minimum size that Window List requests</short>
-          <long>To be usable, Window List requires a minimum width. Window List
-		requests this minimum width. The minimum width setting is useful
-		for sliding and edge panels, which usually request a small
-		default width.
-	  </long>
+          <short>Minimum window list size</short>
+          <long>
+            This key specifies the minimum width that the window list requests.
+          </long>
         </locale>
       </schema>
 
@@ -61,15 +63,16 @@
         <type>int</type>
         <default>4096</default>
         <locale name="C">
-          <short>Maximum size that Window List requests</short>
-          <long>This value is the maximum width that Window List requests. The
-		maximum width setting is useful to limit the size of Window
-		List in large panels such as edge panels, where Window List
-		could fill the entire space available.
-	  </long>
+          <short>Maximum window list size</short>
+          <long>
+            This key specifies the maximum width that the window list
+            requests. The maximum width setting is useful to limit the
+            size of the window list in large panels, where the window list
+            could fill the entire space available.
+         </long>
         </locale>
       </schema>
 
     </schemalist>
-  
+
 </gconfschemafile>
