@@ -4219,6 +4219,8 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 {
 	GtkWidget *widget;
 	gboolean   rotate;
+	int        monitor_width;
+	int        monitor_height;
 
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
@@ -4226,6 +4228,28 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 		return;
 
 	widget = GTK_WIDGET (toplevel);
+
+	g_object_freeze_notify (G_OBJECT (toplevel));
+
+	panel_toplevel_get_monitor_geometry (
+		toplevel, NULL, NULL, &monitor_width, &monitor_height);
+
+	/* Un-snap from center if no longer along screen edge */
+	if (toplevel->priv->x_centered &&
+	    (orientation & PANEL_VERTICAL_MASK)) {
+		toplevel->priv->x_centered = FALSE;
+		toplevel->priv->x += (monitor_width - toplevel->priv->geometry.width) / 2;
+		g_object_notify (G_OBJECT (toplevel), "x");
+		g_object_notify (G_OBJECT (toplevel), "x-centered");
+	}
+
+	if (toplevel->priv->y_centered &&
+	    (orientation & PANEL_HORIZONTAL_MASK)) {
+		toplevel->priv->y_centered = FALSE;
+		toplevel->priv->y += (monitor_height - toplevel->priv->geometry.height) / 2;
+		g_object_notify (G_OBJECT (toplevel), "y");
+		g_object_notify (G_OBJECT (toplevel), "y-centered");
+	}
 
 	rotate = FALSE;
 	if ((orientation & PANEL_HORIZONTAL_MASK) &&
@@ -4240,8 +4264,6 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	    toplevel->priv->updated_geometry_initial) {
 		toplevel->priv->position_centered = TRUE;
 
-		g_object_freeze_notify (G_OBJECT (toplevel));
-
 		if (!toplevel->priv->x_centered) {
 			toplevel->priv->x += toplevel->priv->geometry.width  / 2;
 			g_object_notify (G_OBJECT (toplevel), "x");
@@ -4252,7 +4274,6 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 			g_object_notify (G_OBJECT (toplevel), "y");
 		}
 
-		g_object_thaw_notify (G_OBJECT (toplevel));
 	}
 
 	toplevel->priv->orientation = orientation;
@@ -4268,6 +4289,8 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
 	g_object_notify (G_OBJECT (toplevel), "orientation");
+
+	g_object_thaw_notify (G_OBJECT (toplevel));
 }
 
 PanelOrientation

@@ -1,5 +1,13 @@
 2004-09-14  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix for bug #136074 - weird autohiding behaviour when
+	you change the orientation of an unexpanded panel.
+
+	* panel-toplevel.c: (panel_toplevel_set_orientation): un-snap
+	from the center of the screen if we rotate the panel.
+
+2004-09-14  Mark McLoughlin  <mark@skynet.ie>
+
 	Based on a patch from Arvind in bug #128412.
 
 	* panel-toplevel.c:
