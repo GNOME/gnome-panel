@@ -984,7 +984,7 @@ session_init_panels(void)
 		/* FIXME: We need to resort to another fallback default panel config 
 		          and do some sort of check for screen sizes */
 		use_default = TRUE;
-		panel_default_profile = "small";
+		panel_default_profile = "medium";
 		g_free (panel_profile_key);
 		panel_profile_key = panel_gconf_general_default_profile_get_full_key (panel_default_profile, "panel-id-list");
 	}
@@ -995,17 +995,17 @@ session_init_panels(void)
 					   NULL);
 	g_free (panel_profile_key);
 					  
+	/* Eeeeeeeek! no default config, no user config, this is
+	   bad bad bad, load a single panel
 	if (panel_ids == NULL)  {
-		/* Eeeeeeeek! no default config, no user config, this is
-		 * bad bad bad, load a single panel */
-		panel = edge_widget_new (0 /* screen */,
+		panel = edge_widget_new (0,
 					 BORDER_BOTTOM,
-					 BASEP_EXPLICIT_HIDE /* mode */,
-					 BASEP_SHOWN /* state */,
+					 BASEP_EXPLICIT_HIDE, 
+					 BASEP_SHOWN,
 					 PANEL_SIZE_MEDIUM,
-					 TRUE /* hidebuttons_enabled */,
-					 TRUE /* hidebutton_pixmaps */,
-					 PANEL_BACK_NONE /* back type */,
+					 TRUE,
+					 TRUE,
+					 PANEL_BACK_NONE,
 					 NULL,
 					 TRUE,
 					 FALSE,
@@ -1013,7 +1013,7 @@ session_init_panels(void)
 					 NULL);
 		panel_setup(panel);
 		gtk_widget_show(panel);
-
+	*/
 		/* FIXME : load up the foot menu 
 		load_menu_applet ("applications:/",
 				  TRUE, 
@@ -1021,9 +1021,9 @@ session_init_panels(void)
 				  TRUE, FALSE, NULL,
 				  PANEL_WIDGET(BASEP_WIDGET(panel)->panel),
 				  0, TRUE);
-		*/
+		
 		return;
-	}
+	} */
 
 	for (temp = panel_ids; temp; temp = temp->next) {
 		PanelType type;
