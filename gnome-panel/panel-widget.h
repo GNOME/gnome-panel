@@ -103,7 +103,6 @@ struct _PanelWidget
 	GtkWidget		*currently_dragged_applet;
 	gint			currently_dragged_applet_pos;
 
-	GtkWidget		*drawer_drop_zone;
 	DrawerDropZonePos	drawer_drop_zone_pos;
 
 	gint			thick;

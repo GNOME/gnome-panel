@@ -35,26 +35,29 @@ void
 reposition_drawer(Drawer *drawer)
 {
 	gint x=0,y=0;
-	gint wx, wy;
+	gint bx, by, bw, bh;
+	gint dw, dh;
 
-	gdk_window_get_origin (drawer->button->window, &wx, &wy);
+	gdk_window_get_origin (drawer->button->window, &bx, &by);
+	gdk_window_get_size (drawer->button->window, &bw, &bh);
+	gdk_window_get_size (drawer->drawer->window, &dw, &dh);
 
 	switch(drawer->orient) {
 		case DRAWER_UP:
-			x = wx;
-			y = wy - drawer->drawer->allocation.height;
+			x = bx+(bw-dw)/2;
+			y = by - dh;
 			break;
 		case DRAWER_DOWN:
-			x = wx;
-			y = wy + drawer->button->allocation.height;
+			x = bx+(bw-dw)/2;
+			y = by - bh;
 			break;
 		case DRAWER_LEFT:
-			x = wx - drawer->drawer->allocation.width;
-			y = wy;
+			x = bx - dw;
+			y = by+(bh-dh)/2;
 			break;
 		case DRAWER_RIGHT:
-			x = wx + drawer->button->allocation.width;
-			y = wy;
+			x = bx + bw;
+			y = by+(bh-dh)/2;
 			break;
 	}
 
@@ -75,11 +78,21 @@ drawer_click(GtkWidget *widget, gpointer data)
 	return TRUE;
 }
 
-static void
+static gint
 destroy_drawer(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
 	g_free(drawer);
+	return FALSE;
+}
+
+static gint
+enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
+{
+	Drawer *drawer = data;
+	/*FIXME: do we want this autoraise piece?*/
+	gdk_window_raise(drawer->drawer->window);
+	return TRUE;
 }
 
 Drawer *
@@ -132,6 +145,8 @@ create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
 			    GTK_SIGNAL_FUNC (drawer_click), drawer);
 	gtk_signal_connect (GTK_OBJECT (drawer->button), "destroy",
 			    GTK_SIGNAL_FUNC (destroy_drawer), drawer);
+	gtk_signal_connect (GTK_OBJECT (drawer->button), "enter_notify_event",
+			    GTK_SIGNAL_FUNC (enter_notify_drawer), drawer);
 
 	gtk_object_set_user_data(GTK_OBJECT(drawer->button),drawer);
 
