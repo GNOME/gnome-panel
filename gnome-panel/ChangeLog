@@ -1,3 +1,17 @@
+2004-05-13  Mark McLoughlin  <mark@skynet.ie>
+
+	Based on a patch from Vincent Berger <vincent.berger@ext.bull.net>
+	in bug #137380.
+	
+	* panel-util.[ch]: (panel_make_unique_uri): return a uri rather than
+	a path.
+
+	* launcher.c:
+	(panel_launcher_save_ditem),
+	(panel_launcher_create_copy): update.
+	
+	* panel-run-dialog.c: (pixmap_drag_data_get): update.
+
 2004-04-21  Kaushal Kumar  <kaushal.kumar@wipro.com>
 
 	* menu.c (show_panel_help): Set the help link id for

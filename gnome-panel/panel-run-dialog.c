@@ -1342,7 +1342,6 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 	gboolean          exec = FALSE;
 	const char       *text;
 	char             *uri;
-	char             *path;
 	char             *disk;
 	char             *scheme;
 	
@@ -1387,11 +1386,9 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 	
 	g_free (uri);
 
-	path = panel_make_unique_path (g_get_tmp_dir (), ".desktop");
-	gnome_desktop_item_set_location (ditem, path);
+	uri = panel_make_unique_uri (g_get_tmp_dir (), ".desktop");
+	gnome_desktop_item_set_location (ditem, uri);
 
-	uri = gnome_vfs_get_uri_from_local_path (path);
-		
 	if (gnome_desktop_item_save (ditem, NULL, FALSE, NULL))
 		gtk_selection_data_set (selection_data,
 					selection_data->target, 8,
@@ -1399,7 +1396,6 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 	gnome_desktop_item_unref (ditem);
 
 	g_free (uri);
-	g_free (path);
 	g_free (disk);
 	g_free (scheme);
 }

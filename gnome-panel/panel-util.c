@@ -27,6 +27,7 @@
 #include <libgnomeui/libgnomeui.h>
 #include <libgnome/libgnome.h>
 
+#include <libgnomevfs/gnome-vfs-utils.h>
 #include <libgnomevfs/gnome-vfs-uri.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
 
@@ -735,8 +736,8 @@ panel_make_full_path (const char *dir,
 }
 
 char *
-panel_make_unique_path (const char *dir,
-			const char *suffix)
+panel_make_unique_uri (const char *dir,
+		       const char *suffix)
 {
 #define NUM_OF_WORDS 12
 	char *words[] = {
@@ -753,7 +754,8 @@ panel_make_unique_path (const char *dir,
 		"curly",
 		"moe",
 		NULL};
-	char     *retval = NULL;
+	char     *uri;
+	char     *path = NULL;
 	gboolean  exists = TRUE;
 
 	while (exists) {
@@ -769,13 +771,16 @@ panel_make_unique_path (const char *dir,
 					    (guint) rnd,
 					    suffix);
 
-		g_free (retval);
-		retval = panel_make_full_path (dir, filename);
-		exists = g_file_test (retval, G_FILE_TEST_EXISTS);
+		g_free (path);
+		path = panel_make_full_path (dir, filename);
+		exists = g_file_test (path, G_FILE_TEST_EXISTS);
 		g_free (filename);
 	}
 
-	return retval;
+	uri = gnome_vfs_get_uri_from_local_path (path);
+	g_free (path);
+
+	return uri;
 
 #undef NUM_OF_WORDS
 }
