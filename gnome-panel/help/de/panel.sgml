@@ -65,141 +65,172 @@
 
 
   <!-- ########### Panel Basics  ############## -->  <sect1
-    id="panelbasics">   <title>Panel Basics</title>
+    id="panelbasics">   <title>Panel Grundlagen</title>
     <para>
-    Using the GNOME <interface>Panel</interface> is very simple and
-    will come easily to anyone who has used a graphical desktop
-    environment.  This section will give you a basic introduction to
-    help you get started, and the following sections will discuss the
-    various Panel objects and features in more detail.
-   </para>
+      Die Benutzung des GNOME <interface>Panel</interface>s ist sehr
+      einfach und wird jedem leichtfallen, der schon einmal mit einer
+      grafische Benutzeroberfl&auml; gearbeitet hat. Dieser Abschnitt
+      gibt eine erste Einf&uuml;hrung um Ihnen den Anfang zu erleichtern
+      und die nachfolgenden besprechen die verschiedenen Panel-Objekte und
+      Features detailierter.
+    </para>
 
     <sect2 id="intropanel">
-      <title>Introduction to Panel Objects</title>
+      <title>Einf&uuml;hrung in Panel-Objekte</title>
       <para>
-     A <interface>Panel</interface> can hold several types of objects.
-     The example <interface>Panel</interface>  in  <xref
-	  linkend="examplepanelfig"> shows each type of Panel object.
-    </para>
+	Das <interface>Panel</interface> kann verschiedene Arten von Objekten
+	beherbeiten. Das Beispiel in <xref linkend="examplepanelfig"> zeigt
+	alle m&ouml;glichen Arten von Objekten.
+      </para>
       <figure id="examplepanelfig">
-	<title>An Example Panel</title>
+	<title>Ein Beispiel-Panel</title>
 	<screenshot>
-	  <screeninfo>An Example Panel.</screeninfo>
+	  <screeninfo>Ein Beispiel-Panel</screeninfo>
 	  <graphic fileref="./figures/example_panel" format="png"
-       srccredit="muet">
-       </graphic>
+	    srccredit="muet">
+	  </graphic>
 	</screenshot>
       </figure>
 
       <para>
-     This example <interface>Panel</interface> contains the following
-     objects:  <itemizedlist>    <listitem>
+	Dieses Beispiel-<interface>Panel</interface> enth&auml;lt die
+	folgenden Objekte:
+
+	<itemizedlist>
+	  <listitem>
 	    <formalpara>
-	      <title>Menus</title>
+	      <title>Men&uuml;s</title>
 	      <para>
-         Menus are lists of items, each of which either starts an
-         application, executes a command, or is a submenu.  In the
-         example <interface>Panel</interface> in <xref
-		  linkend="examplepanelfig"> , the left-most  icon  after the
-         arrow is a stylized footprint icon (the GNOME logo). This is
-         the <guimenu>Main Menu</guimenu>, one of the most important
-         objects in the <interface>Panel</interface>.  This menu
-         provides access to almost all the applications, commands, and
-         configuration options available in GNOME. The <guimenu>Main
-         Menu</guimenu> is described in detail in <xref
-		  linkend="mainmenu">. The second icon shown is a folder, the
-         default icon used for user menus.  GNOME allows users to
-         create their own menus with personalized contents to use in
-         addition to the <guimenu>Main Menu</guimenu>.  To open a
-         menu, just click on the icon with the left mouse button.  For
-         more information on menus, see <xref linkend="menus">.
-        </para>
+		Men&uuml;s bestehen aus einer Reihe von Men&uuml;eintr&auml;gen,
+		von denen jeder entweder ein Programm startet bzw. einen Befehl
+		ausf&auml;hrt oder ein Submen&uuml; ist. Im
+		Beispiel-<interface>Panel</interface> in <xref
+		  linkend="examplepanelfig"> , ist das sich am weitesten
+		links befindliche Icon nach dem Pfeil ein symbolisierter
+		B&auml;renfu&szlig (das GNOME-Logo). Dies ist das
+		<guimenu>Hauptmen&uuml;</guimenu>, eines der wichtigsten
+		Objekte im <interface>Panel</interface>.  Dieses Men&uuml;
+		bietet Zugang zu nahezu allen Applikationen, Befehlen und
+		Konfigurationsm&ouml;glichkeiten, die GNOME bietet. Das
+		<guimenu>Hauptmen&uuml;</guimenu> ist im Detail in <xref
+		  linkend="mainmenu"> beschrieben.
+
+		Das zweite Icon zeigt einen Ordner, das Standard-Icon f&uuml;r
+		Benutzer-Men&uuml;s. GNOME erlaubt Benutzern, ihre eigenen
+		Men&uuml;s mit ihrem individuell festgelegten Inhalt
+		zus&auml;tzlich zum <guimenu>Hauptmen&uuml;</guimenu> zu
+		erzeugen.
+
+		Klicken Sie einfach auf das Icon mit der linken Maustaste,
+		um ein Men&uuml; zu &ouml;ffnen. Weitere Informationen
+		&uuml;ber Men&uuml;s finden Sie unter <xref linkend="menus">.
+	      </para>
 	    </formalpara>
 	  </listitem>
 	  <listitem>
 	    <formalpara>
-	      <title>Launchers</title>
+	      <title>Starter</title>
 	      <para>
-         Launchers are buttons which either start an application or
-         execute a command when you press them (click with the left
-         mouse button). The third icon in the example
-         <interface>Panel</interface> is a launcher which starts the
-         <application>Gnumeric</application> spreadsheet.  For more
-         information on launchers, see <xref linkend="launchers">.
-        </para>
+		Starter sind Kn&ouml;pfe, die entweder eine Applikation
+		starten oder ein Kommando ausf&auml;hren, wenn Sie sie
+		anklicken (mit der linken Maustaste). Das dritte Icon im
+		Beispiel-<interface>Panel</interface> ist ein Starter, der
+		die <application>Gnumeric</application> Tabellenkalkulation
+		startet. Weitere Informationen &uuml;ber Starter finden Sie
+		unter <xref linkend="launchers">.
+	      </para>
 	    </formalpara>
 	  </listitem>
 	  <listitem>
 	    <formalpara>
-	      <title>Applets</title> <para>  Applets are applications which
-        run inside a small part of the
-        <interface>Panel</interface>. The fourth through eighth icons
-        in the example <interface>Panel</interface> are applets. The
-        first applet shown is the <application>GNOME
-        Weather</application> applet, which periodically downloads the
-        current weather conditions off the Web and displays the
-        information. The second applet shown is the <application>Drive
-        Mount</application> applet, which shows whether a disk (in
-        this case, the floppy drive) is mounted and allows you to
-        mount and unmount the drive with a single click of the mouse.
-        The third applet shown is the <application>Quick
-        Launch</application> applet, which acts as a container for
-        launchers, but saves more space than placing your launchers
-        directly on the <interface>Panel</interface>. In the example
-        shown the <application>Quick Launch</application> applet
-        contains six application launchers.  Next is the
-        <application>GNOME Desk Guide</application>, which allows you
-        to control multiple virtual desktops, each of which can have
-        multiple screens.  You can move between desktops and screens
-        by clicking with your left mouse button.  The final  applet
-        shown is the <application>Tasklist</application>, which allows
-        you to control your application windows in various ways,
-        including changing the focus,  iconifying windows, closing
-        windows, and killing applications.  The
-        <application>Tasklist</application> shown is for a screen with
-        only two windows, both of which are <application>Electric
-        Eyes</application>.  For more information on applets, see
-        <xref linkend="applets">.
-        </para>
-	    </formalpara>
-	  </listitem>
-	  <listitem>
-	    <formalpara>
-	      <title>Drawers</title>  <para>   Drawers are essentially
-        extensions of a <interface>Panel</interface> which can be
-        opened or closed.  They can hold anything the
-        <interface>Panel</interface> can.  The brown icon of a drawer
-        in the example  <interface>Panel</interface> is the default
-        icon for drawers, although any icon can be used. Click on the
-        <guiicon>Drawer</guiicon> icon with the left mouse button to
-        open or close it.  For more information on drawers, see <xref
-		  linkend="drawers">.
-        </para>
-	    </formalpara>
-	  </listitem>
-	  <listitem>
-	    <formalpara>
-	      <title>Special Objects</title>
+	      <title>Applets</title>
+
 	      <para>
-         Special objects are items you can add to a
-         <interface>Panel</interface> which perform functions which
-         are generally not available through the other
-         <interface>Panel</interface> objects. The last item in the
-         example <interface>Panel</interface> is a special object
-         called the <guibutton>Logout Button</guibutton>. Pressing
-         this with the left mouse button  begins the logout sequence
-         to end your GNOME session. For more information on special
-         objects, see <xref linkend="specialobjects">.
-        </para>
+		Applets sind kleine Applikationen, die innerhalb das
+		<interface>Panel</interface>s laufen. Das vierte bis
+		achte Icon im Beispiel-<interface>Panel</interface> sind
+		Applets. Das erste dieser Applets ist das
+		<application>GNOME Wetter-Applet</application>, das
+		periodisch das gegenw&auml;rtige Wetter aus dem Web
+		herunterl&auml;dt und anzeigt. Das zweite der Applets ist
+		das <application>Laufwerks-Einh&auml;nge-Applet</application>,
+		das anzeigt, ob eine Platte (in diesem Fall das
+		Diskettenlaufwerk) eingeh&auml;ngt ist und erlaubt Ihnen
+		zudem das Ein- und Aush&auml;ngen mit einem einzigen
+		Mausklick. Das dritte Applet ist das
+		<application>QuickLaunch-Applet</application>, das als
+		Beh&auml;lter f&uuml;r Starter dient, aber gegen&uuml;ber
+		dem direkten Plazieren dieser Starter auf dem Panel Platz
+		spart.
+		Danach kommt das
+		<application>Desktop-&Uuml;berblick-Applet</application>,
+		das Ihnen die Verwaltung mehrerer virtueller Desktops
+		erm&ouuml;glicht, von denen jeder zus&auml;tzlich noch
+		mehrere virtuelle Bildschirme haben kann. Sie k&ouml;nnen
+		mit der linken Maustaste zwischen virtuellen Desktops und
+		Bildschirmen hin-und-her wandern.
+		Das letzte Applet ist die <application>Task-Liste</application>,
+		die Ihnen die Verwaltung Ihrer Applikations-Fenster
+		erm&ouml;glicht, darunter u.a. die &Auml;nderung des Fokus,
+		Iconifizierung sowie das Schlie&szlig;en und T&ouml;ten von
+		Applikationen. Die gezeigte <application>Task-Liste</application>
+		geh&ouml;rt zu einem Bildschirm mit zwei Fenstern, beide
+		jeweils <application>Electric Eyes</application>.
+
+		Weitere Informationen &uuml;ber Applets finden Sie unter
+		<xref linkend="applets">.
+	      </para>
+	    </formalpara>
+	  </listitem>
+	  <listitem>
+	    <formalpara>
+	      <title>Schubladen</title>
+
+	      <para>
+		Schubladen sind im wesentlichen Erweiterungen des
+		<interface>Panel</interface>s, die ge&ouml;ffnen und
+		geschlossen werden k&ouml;nnen. Sie k&ouml;nnen alles
+		enthalten, was das <interface>Panel</interface> enthalten
+		kann. Das braune Schubladen-Icon im
+		Beispiel-<interface>Panel</interface> ist das Standard-Icon
+		f&uuml;r Schubladen - Sie k&ouml;nnen jedoch jedes beliebige
+		Icon hierf&uuml;r verwenden. Klicken Sie einfach mit der
+		linken Maustaste auf die <guiicon>Schublade</guiicon>, um
+		sie zu &ouml;ffnen oder zu schlie&szlig;en.
+
+		Weitere Informationen &uuml;ber Schubladen finden Sie unter
+		<xref linkend="drawers">.
+	      </para>
+	    </formalpara>
+	  </listitem>
+	  <listitem>
+	    <formalpara>
+	      <title>Sonder-Objekte</title>
+	      <para>
+		Sonder-Objekte sind Elemente, die Sie im
+		<interface>Panel</interface> einf&uuml;gen k&ouml;nnen,
+		die Funktionen bieten, die keine der bislang besprochenen
+		Objekte bieten. Das letzte Element im
+		Beispiel-<interface>Panel</interface> ist ein
+		<guibutton>Abmelde-Knopf</guibutton>.
+
+		Wenn Sie mit der linken Maustaste auf ihn klicken, beginnen
+		Sie die Abmelde-Prozedur, mit der Sie Ihre GNOME-Sitzung
+		beenden.
+
+		Weitere Informationen zu Sonder-Objekten finden Sie unter
+		<xref linkend="specialobjects">.
+	      </para>
 	    </formalpara>
 	  </listitem>
 	</itemizedlist>
-    </para>
+      </para>
       <para>
-     Each of these object types is described in detail in the
-     following sections. You can easily add, move, or remove Panel
-     objects (see <xref linkend="appletadd">).
-    </para>
+	Jeder dieser Objekt-Typen wird in den nachfolgenden Abschnitten
+	detailierter besprochen. Sie k&ouml;nnen Panel-Objekte sehr einfach
+	ins Panel einf&uuml;gen, im Panel verschieben oder aus dem Panel
+	entfernen (siehe <xref linkend="appletadd">).
+      </para>
     </sect2>
 
     
