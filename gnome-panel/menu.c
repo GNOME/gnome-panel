@@ -2087,7 +2087,7 @@ my_gtk_menu_window_event (GtkWidget *window,
 	gboolean handled = FALSE;
 
 	g_object_ref (G_OBJECT (window));
-	g_widget_ref (G_OBJECT (menu));
+	g_object_ref (G_OBJECT (menu));
 
 	switch (event->type) {
 		static int foo = 0;
