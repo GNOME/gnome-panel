@@ -648,8 +648,9 @@ insert_fortune_text (FishApplet *fish,
 
 	gtk_text_buffer_get_iter_at_offset (fish->fortune_buffer, &iter, -1);
 
-	gtk_text_buffer_insert (fish->fortune_buffer, &iter,
-				text, -1);
+	gtk_text_buffer_insert_with_tags_by_name (fish->fortune_buffer, &iter,
+						  text, -1, "monospace_tag",
+						  NULL);
 }
 
 static void
@@ -661,6 +662,8 @@ clear_fortune_text (FishApplet *fish)
 	gtk_text_buffer_get_iter_at_offset (fish->fortune_buffer, &end, -1);
 
 	gtk_text_buffer_delete (fish->fortune_buffer, &begin, &end);
+	gtk_text_buffer_remove_tag_by_name (fish->fortune_buffer,
+					    "monospace_tag", &begin, &end);
 
 	/* insert an empty line */
 	insert_fortune_text (fish, "\n");
@@ -724,6 +727,10 @@ display_fortune_dialog (FishApplet *fish)
 		gtk_text_view_set_right_margin (GTK_TEXT_VIEW (fish->fortune_view), 10);
 		fish->fortune_buffer =
 			gtk_text_view_get_buffer (GTK_TEXT_VIEW (fish->fortune_view));
+
+		gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (fish->fortune_buffer),
+					    "monospace_tag", "family",
+					    "Monospace", NULL);
 
 		scrolled = gtk_scrolled_window_new (NULL, NULL);
 		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
