@@ -1,5 +1,14 @@
 1998-05-22  Martin Baulig  <baulig@merkur.uni-trier.de>
 
+	* diskusage/Makefile.am (diskusage_applet_SOURCES): added
+	mountlist.c, mountlist.h, fsusage.c and fsusage.h
+
+	* diskusage/diskusage_read.c: using read_filesystem_list and
+	get_fs_usage defined in mountlist.c and fsusage.c instead of
+	reading output of df.
+
+	* diskusage/mountlist.c: using g_malloc, g_realloc and g_strdup.
+
 	* Makefile.am (SUBDIRS): Add diskusage.
 
 1998-05-22  Carsten Schaar  <nhadcasc@fs-maphy.uni-hannover.de>
