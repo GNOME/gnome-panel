@@ -583,16 +583,18 @@ make_mailcheck_applet(const gchar *param)
 			   GTK_SIGNAL_FUNC(applet_session_save),
 			   mc);
 
-	applet_widget_register_callback(APPLET_WIDGET(applet),
-					"properties",
-					_("Properties..."),
-					mailcheck_properties,
-					mc);
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "properties",
+					      GNOME_STOCK_MENU_PROP,
+					      _("Properties..."),
+					      mailcheck_properties,
+					      mc);
 
-	applet_widget_register_callback(APPLET_WIDGET(applet),
-					"about",
-					_("About..."),
-					mailcheck_about,
-					NULL);
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "about",
+					      GNOME_STOCK_MENU_ABOUT,
+					      _("About..."),
+					      mailcheck_about,
+					      NULL);
 	return applet;
 }

@@ -388,10 +388,11 @@ make_printer_applet(const gchar *param)
 	applet_widget_add (APPLET_WIDGET (applet), pr->printer);
 	gtk_widget_show (applet);
 
-	applet_widget_register_callback(APPLET_WIDGET(applet),
-					"properties",
-					_("Properties..."),
-					printer_properties,
-					pr);
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "properties",
+					      GNOME_STOCK_MENU_PROP,
+					      _("Properties..."),
+					      printer_properties,
+					      pr);
 	return applet;
 }

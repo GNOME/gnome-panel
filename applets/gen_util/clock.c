@@ -257,11 +257,12 @@ make_clock_applet(const gchar * param)
 			   GTK_SIGNAL_FUNC(applet_session_save),
 			   cd);
 
-	applet_widget_register_callback(APPLET_WIDGET(applet),
-					"properties",
-					_("Properties..."),
-					clock_properties,
-					cd);
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "properties",
+					      GNOME_STOCK_MENU_PROP,
+					      _("Properties..."),
+					      clock_properties,
+					      cd);
 
 	return applet;
 }
