@@ -17,6 +17,8 @@
 #include "gnome.h"
 #include "panel.h"
 
+#define LAUNCHER_PROPERTIES "launcher_properties"
+
 extern GtkTooltips *panel_tooltips;
 
 static char *default_app_pixmap;
@@ -117,6 +119,9 @@ create_launcher (char *parameters)
 	launcher->dentry = dentry;
 
 	launcher->applet_id = -1;
+
+	gtk_object_set_data(GTK_OBJECT(launcher->button),
+			    LAUNCHER_PROPERTIES,NULL);
 
 	return launcher;
 }
@@ -289,7 +294,10 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 static gint
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
-	g_free (data);
+	Properties *prop = data;
+	gtk_object_set_data(GTK_OBJECT(prop->launcher->button),
+			    LAUNCHER_PROPERTIES,NULL);
+	g_free (prop);
 	return FALSE;
 }
 
@@ -359,6 +367,13 @@ launcher_properties(Launcher *launcher)
 	char              *path;
 	GtkWidget         *dialog;
 
+	dialog = gtk_object_get_data(GTK_OBJECT(launcher->button),
+				     LAUNCHER_PROPERTIES);
+	if(dialog) {
+		gdk_window_raise(dialog->window);
+		return;
+	}
+
 	path = launcher->dentry->location;
 
 	dentry = gnome_desktop_entry_load(path);
@@ -370,5 +385,7 @@ launcher_properties(Launcher *launcher)
 	}
 
 	dialog = create_properties_dialog(dentry,launcher);
+	gtk_object_set_data(GTK_OBJECT(launcher->button),
+			    LAUNCHER_PROPERTIES,dialog);
 	gtk_widget_show_all (dialog);
 }
