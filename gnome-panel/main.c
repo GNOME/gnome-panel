@@ -97,74 +97,72 @@ menu_age_timeout(gpointer data)
 }
 
 /* Some important code copied from PonG */
-/* some evilness follows */
-typedef struct _Fish Fish;
-struct _Fish {
+typedef struct _AppletContainer AppletContainer;
+struct _AppletContainer {
+	GdkWindow *win;
+	gboolean hide_mode;
 	int state;
 	int x, y, xs, ys;
-	GdkPixmap *fish[4];
-	GdkBitmap *fish_mask[4];
 	int handler;
-	GdkWindow *win;
-	gboolean scared;
+	GdkPixmap *phsh[4];
+	GdkBitmap *phsh_mask[4];
 };
-Fish fish = {0};
+AppletContainer phsh = {0};
 
 static void
-fish_kill (void)
+phsh_kill (void)
 {
 	int i;
 	for (i = 0; i < 4; i++) {
-		gdk_pixmap_unref (fish.fish[i]);
-		gdk_bitmap_unref (fish.fish_mask[i]);
+		gdk_pixmap_unref (phsh.phsh[i]);
+		gdk_bitmap_unref (phsh.phsh_mask[i]);
 	}
-	gdk_window_destroy (fish.win);
-	gtk_timeout_remove (fish.handler);
-	memset (&fish, 0, sizeof (Fish));
+	gdk_window_destroy (phsh.win);
+	gtk_timeout_remove (phsh.handler);
+	memset (&phsh, 0, sizeof (AppletContainer));
 }
 
-/* I AAAAAM YOUUUUUUR FAAAAAAATTTTTHHHHHHHEEEEERRRRRR */
 static gboolean
-fish_move (gpointer data)
+phsh_move (gpointer data)
 {
 	int orient, state;
 	gboolean change = TRUE;
 
-	fish.x += fish.xs;
-	fish.y += fish.ys;
-	if (fish.x <= -60 ||
-	    fish.x >= gdk_screen_width ()) {
-		fish_kill ();
+	phsh.x += phsh.xs;
+	phsh.y += phsh.ys;
+	if (phsh.x <= -60 ||
+	    phsh.x >= gdk_screen_width ()) {
+		phsh_kill ();
 		return FALSE;
 	}
-	if (fish.y <= 0 ||
-	    fish.y >= gdk_screen_height () - 40 ||
-	    rand() % (fish.scared?10:50) == 0)
-		fish.ys = -fish.ys;
+	if (phsh.y <= 0 ||
+	    phsh.y >= gdk_screen_height () - 40 ||
+	    rand() % (phsh.hide_mode?10:50) == 0)
+		phsh.ys = -phsh.ys;
 
-	fish.state ++;
-	if (fish.state % (fish.scared?2:4) == 0)
+	phsh.state ++;
+	if (phsh.state % (phsh.hide_mode?2:4) == 0)
 		change = TRUE;
-	if (fish.state >= (fish.scared?4:8))
-		fish.state = 0;
+	if (phsh.state >= (phsh.hide_mode?4:8))
+		phsh.state = 0;
 
-	state = fish.state >= (fish.scared?2:4) ? 1 : 0;
-	orient = fish.xs >= 0 ? 0 : 2;
+	state = phsh.state >= (phsh.hide_mode?2:4) ? 1 : 0;
+	orient = phsh.xs >= 0 ? 0 : 2;
 
 	if (change) {
-		gdk_window_set_back_pixmap (fish.win, fish.fish[orient + state], FALSE);
-		gdk_window_shape_combine_mask (fish.win, fish.fish_mask[orient + state], 0, 0);
-		gdk_window_clear (fish.win);
+		gdk_window_set_back_pixmap (phsh.win, phsh.phsh[orient + state], FALSE);
+		gdk_window_shape_combine_mask (phsh.win, phsh.phsh_mask[orient + state], 0, 0);
+		gdk_window_clear (phsh.win);
 	}
 
-	gdk_window_move (fish.win, fish.x, fish.y);
-	gdk_window_raise (fish.win);
+	gdk_window_move (phsh.win, phsh.x, phsh.y);
+	gdk_window_raise (phsh.win);
 
 	return TRUE;
 }
 
 static void
-fish_reverse (GdkPixbuf *gp)
+phsh_reverse (GdkPixbuf *gp)
 {
 	guchar *pixels = gdk_pixbuf_get_pixels (gp);
 	int x, y;
@@ -184,8 +182,9 @@ fish_reverse (GdkPixbuf *gp)
 #undef DOSWAP
 }
 
+/* This dered's the phsh */
 static void
-fish_unwater(GdkPixbuf *gp)
+phsh_dered(GdkPixbuf *gp)
 {
 	guchar *pixels = gdk_pixbuf_get_pixels (gp);
 	int x, y;
@@ -200,43 +199,47 @@ fish_unwater(GdkPixbuf *gp)
 }
 
 static GdkFilterReturn
-fish_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
+phsh_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 {
 	XEvent *xevent = (XEvent *)gdk_xevent;
 
 	if (xevent->type == ButtonPress &&
-	    ! fish.scared) {
-		gtk_timeout_remove (fish.handler);
-		fish.handler = gtk_timeout_add (90, fish_move, NULL);
-		fish.xs *= 2.0;
-		fish.ys *= 2.5;
-		fish.scared = TRUE;
-		if (fish.x < (gdk_screen_width () / 2))
-			fish.xs *= -1;
+	    ! phsh.hide_mode) {
+		gtk_timeout_remove (phsh.handler);
+		phsh.handler = gtk_timeout_add (90, phsh_move, NULL);
+		phsh.xs *= 2.0;
+		phsh.ys *= 2.5;
+		phsh.hide_mode = TRUE;
+		if (phsh.x < (gdk_screen_width () / 2))
+			phsh.xs *= -1;
 	}
 	return GDK_FILTER_CONTINUE;
 }
 
-/* the incredibly evil function */
+/* this checks the screen */
 static void
 check_screen (void)
 {
 	GdkWindowAttr attributes;
-	char *fish_file;
+	char *phsh_file;
+	char *name;
 	GdkPixbuf *gp, *tmp;
 
-	if (fish.win != NULL)
+	if (phsh.win != NULL)
 		return;
 
-	fish_file = gnome_pixmap_file ("fish/fishanim.png");
-	if (fish_file == NULL)
+	name = g_strdup_printf ("%cish/%cishanim.png",
+				'f', 'f');
+	phsh_file = gnome_pixmap_file (name);
+	g_free (name);
+	if (phsh_file == NULL)
 		return;
 
-	tmp = gdk_pixbuf_new_from_file (fish_file);
+	tmp = gdk_pixbuf_new_from_file (phsh_file);
 	if (tmp == NULL)
 		return;
 
-	g_free (fish_file);
+	g_free (phsh_file);
 
 	if (gdk_pixbuf_get_width (tmp) != 180 ||
 	    gdk_pixbuf_get_height (tmp) != 40) {
@@ -244,35 +247,35 @@ check_screen (void)
 		return;
 	}
 
-	fish.state = 0;
-	fish.scared = FALSE;
+	phsh.state = 0;
+	phsh.hide_mode = FALSE;
 
 	gp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 60, 40);
 	gdk_pixbuf_copy_area (tmp, 60, 0, 60, 40, gp, 0, 0);
 
-	fish_unwater (gp);
-	gdk_pixbuf_render_pixmap_and_mask (gp, &fish.fish[2], &fish.fish_mask[2], 128);
-	fish_reverse (gp);
-	gdk_pixbuf_render_pixmap_and_mask (gp, &fish.fish[0], &fish.fish_mask[0], 128);
+	phsh_dered (gp);
+	gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[2], &phsh.phsh_mask[2], 128);
+	phsh_reverse (gp);
+	gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[0], &phsh.phsh_mask[0], 128);
 
 	gdk_pixbuf_copy_area (tmp, 120, 0, 60, 40, gp, 0, 0);
 
-	fish_unwater (gp);
-	gdk_pixbuf_render_pixmap_and_mask (gp, &fish.fish[3], &fish.fish_mask[3], 128);
-	fish_reverse (gp);
-	gdk_pixbuf_render_pixmap_and_mask (gp, &fish.fish[1], &fish.fish_mask[1], 128);
+	phsh_dered (gp);
+	gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[3], &phsh.phsh_mask[3], 128);
+	phsh_reverse (gp);
+	gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[1], &phsh.phsh_mask[1], 128);
 	gdk_pixbuf_unref (gp);
 
 	gdk_pixbuf_unref (tmp);
 	
-	fish.x = -60;
-	fish.y = (rand() % (gdk_screen_height () - 40 - 2)) + 1;
-	fish.xs = 8;
-	fish.ys = (rand() % 2) + 1;
+	phsh.x = -60;
+	phsh.y = (rand() % (gdk_screen_height () - 40 - 2)) + 1;
+	phsh.xs = 8;
+	phsh.ys = (rand() % 2) + 1;
 
 	attributes.window_type = GDK_WINDOW_TEMP;
-	attributes.x = fish.x;
-	attributes.y = fish.y;
+	attributes.x = phsh.x;
+	attributes.y = phsh.y;
 	attributes.width = 60;
 	attributes.height = 40;
 	attributes.wclass = GDK_INPUT_OUTPUT;
@@ -280,28 +283,45 @@ check_screen (void)
 	attributes.colormap = gdk_rgb_get_cmap();
 	attributes.event_mask = GDK_BUTTON_PRESS_MASK;
 
-	fish.win = gdk_window_new (NULL, &attributes,
+	phsh.win = gdk_window_new (NULL, &attributes,
 				   GDK_WA_X | GDK_WA_Y |
 				   GDK_WA_VISUAL | GDK_WA_COLORMAP);
-	gdk_window_set_back_pixmap (fish.win, fish.fish[0], FALSE);
-	gdk_window_shape_combine_mask (fish.win, fish.fish_mask[0], 0, 0);
+	gdk_window_set_back_pixmap (phsh.win, phsh.phsh[0], FALSE);
+	gdk_window_shape_combine_mask (phsh.win, phsh.phsh_mask[0], 0, 0);
 
 	/* setup the keys filter */
-	gdk_window_add_filter (fish.win,
-			       fish_filter,
+	gdk_window_add_filter (phsh.win,
+			       phsh_filter,
 			       NULL);
 
-	gdk_window_show (fish.win);
-	fish.handler = gtk_timeout_add (150, fish_move, NULL);
+	gdk_window_show (phsh.win);
+	phsh.handler = gtk_timeout_add (150, phsh_move, NULL);
 }
+
+static guint screen_check_id = 0;
 
 static gboolean
 check_screen_timeout (gpointer data)
 {
-	if (((rand () >> 3) % 4000) == 666) {
-		check_screen ();
-	}
-	return TRUE;
+	screen_check_id = 0;
+
+	check_screen ();
+
+	screen_check_id = gtk_timeout_add (rand()%120*1000,
+					   check_screen_timeout, NULL);
+	return FALSE;
+}
+
+void
+start_screen_check (void)
+{
+	if (screen_check_id > 0)
+		gtk_timeout_remove (screen_check_id);
+
+	screen_check_id = 0;
+	check_screen ();
+
+	screen_check_id = gtk_timeout_add (rand()%120*1000, check_screen_timeout, NULL);
 }
 
 static int
@@ -533,7 +553,6 @@ main(int argc, char **argv)
 
 	/* add some timeouts */
 	gtk_timeout_add (10*1000, menu_age_timeout, NULL);
-	gtk_timeout_add (10*60*1000, check_screen_timeout, NULL);
 	
 	/*load these as the last thing to prevent some races any races from
 	  starting multiple goad_id's at once are libgnorba's problem*/

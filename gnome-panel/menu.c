@@ -178,6 +178,23 @@ init_menus (void)
 		distribution_info->menu_init_func ();
 }
 
+static gboolean
+check_for_screen (GtkWidget *w, GdkEvent *ev, gpointer data)
+{
+	static int times = 0;
+	if (ev->type != GDK_KEY_PRESS)
+		return FALSE;
+	if (ev->key.keyval == GDK_f ||
+	    ev->key.keyval == GDK_F) {
+		times++;
+		if (times == 3) {
+			times = 0;
+			start_screen_check ();
+		}
+	}
+	return FALSE;
+}
+
 /*the most important dialog in the whole application*/
 static void
 about_cb (GtkWidget *widget, gpointer data)
@@ -226,6 +243,8 @@ about_cb (GtkWidget *widget, gpointer data)
 	gtk_signal_connect (GTK_OBJECT (about), "destroy",
 			    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
 			    &about);
+	gtk_signal_connect (GTK_OBJECT (about), "event",
+			    GTK_SIGNAL_FUNC (check_for_screen), NULL);
 
 	hbox = gtk_hbox_new (TRUE, 0);
 	l = gnome_href_new ("http://www.wfp.org/",

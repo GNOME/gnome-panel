@@ -32,6 +32,7 @@
 #include "foobar-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
+#include "main.h"
 #include "multiscreen-stuff.h"
 
 #include "gnome-run.h"
@@ -258,6 +259,10 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                                          "some farcical aquatic ceremony!");
                         goto return_and_close;
                 }
+                if (strcmp (s, "free the fish") == 0) {
+			start_screen_check ();
+                        goto return_and_close;
+		}
 
                 /* Somewhat of a hack I suppose */
                 if (panel_is_url (s)) {
