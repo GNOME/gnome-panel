@@ -1,3 +1,22 @@
+2003-07-08  Mark McLoughlin  <mark@skynet.ie>
+
+	Modified version of excellant patch from
+	Rob Adams <robadams@ucla.edu> in bug #116025.
+
+	* panel-xutils.[ch]: (panel_xutils_set_strut): support
+	new EWMH hint _NET_WM_STRUT_PARTIAL.
+
+	* panel-multiscreen.[ch]:
+	(panel_multiscreen_is_at_visible_extreme): new function
+	determines whether a given monitor is along the visible
+	edge of the logical screen.
+	
+	* panel-toplevel.c (panel_toplevel_update_struts):
+	support new panel_xutils_set_strut().
+	(panel_toplevel_get_monitor_geometry): Change function to
+	also get origin of monitor so we can do a more accurate
+	heuristic for "on the edge"
+
 2003-07-09  Christian Neumair  <chris@gnome-de.org>
 
 	* panel-general.schemas.in:

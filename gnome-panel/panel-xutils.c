@@ -36,6 +36,7 @@ static Atom net_wm_window_type        = None;
 static Atom net_wm_window_type_dock   = None;
 static Atom net_wm_window_type_normal = None;
 static Atom net_wm_strut              = None;
+static Atom net_wm_strut_partial      = None;
 
 void
 panel_xutils_set_window_type (GdkWindow             *gdk_window,	
@@ -83,16 +84,31 @@ panel_xutils_set_window_type (GdkWindow             *gdk_window,
 	gdk_error_trap_pop ();
 }
 
+enum {
+	STRUT_LEFT = 0,
+	STRUT_RIGHT = 1,
+	STRUT_TOP = 2,
+	STRUT_BOTTOM = 3,
+	STRUT_LEFT_START = 4,
+	STRUT_LEFT_END = 5,
+	STRUT_RIGHT_START = 6,
+	STRUT_RIGHT_END = 7,
+	STRUT_TOP_START = 8,
+	STRUT_TOP_END = 9,
+	STRUT_BOTTOM_START = 10,
+	STRUT_BOTTOM_END = 11
+};
+
 void
-panel_xutils_set_strut (GdkWindow *gdk_window,
-			guint32    left,
-			guint32    right,
-			guint32    bottom,
-			guint32    top)
-{
+panel_xutils_set_strut (GdkWindow        *gdk_window,
+			PanelOrientation  orientation,
+			guint32           strut,
+			guint32           strut_start,
+			guint32           strut_end)
+ {
 	Display *display;
 	Window   window;
-	gulong   struts [4];
+	gulong   struts [12] = { 0, };
 
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
 
@@ -101,16 +117,39 @@ panel_xutils_set_strut (GdkWindow *gdk_window,
 
 	if (net_wm_strut == None)
 		net_wm_strut = XInternAtom (display, "_NET_WM_STRUT", False);
+	if (net_wm_strut_partial == None)
+		net_wm_strut_partial = XInternAtom (display, "_NET_WM_STRUT_PARTIAL", False);
 
-        struts [0] = left;
-        struts [1] = right;
-        struts [2] = top;
-        struts [3] = bottom;
+	switch (orientation) {
+	case PANEL_ORIENTATION_LEFT:
+		struts [STRUT_LEFT] = strut;
+		struts [STRUT_LEFT_START] = strut_start;
+		struts [STRUT_LEFT_END] = strut_end;
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		struts [STRUT_RIGHT] = strut;
+		struts [STRUT_RIGHT_START] = strut_start;
+		struts [STRUT_RIGHT_END] = strut_end;
+		break;
+	case PANEL_ORIENTATION_TOP:
+		struts [STRUT_TOP] = strut;
+		struts [STRUT_TOP_START] = strut_start;
+		struts [STRUT_TOP_END] = strut_end;
+		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		struts [STRUT_BOTTOM] = strut;
+		struts [STRUT_BOTTOM_START] = strut_start;
+		struts [STRUT_BOTTOM_END] = strut_end;
+		break;
+	}
 
 	gdk_error_trap_push ();
 	XChangeProperty (display, window, net_wm_strut,
 			 XA_CARDINAL, 32, PropModeReplace,
 			 (guchar *) &struts, 4);
+	XChangeProperty (display, window, net_wm_strut_partial,
+			 XA_CARDINAL, 32, PropModeReplace,
+			 (guchar *) &struts, 12);
 	gdk_error_trap_pop ();
 }
 

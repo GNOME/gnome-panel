@@ -238,3 +238,80 @@ panel_multiscreen_locate_widget_monitor (GtkWidget *widget)
 
 	return retval;
 }
+
+typedef struct {
+	int x0;
+	int y0;
+	int x1;
+	int y1;
+} MonitorBounds;
+
+static inline void
+get_monitor_bounds (int            n_screen,
+		    int            n_monitor,
+		    MonitorBounds *bounds)
+{
+	g_assert (n_screen >= 0 && n_screen < screens);
+	g_assert (n_monitor >= 0 || n_monitor < monitors [n_screen]);
+	g_assert (bounds != NULL);
+
+	bounds->x0 = geometries [n_screen][n_monitor].x;
+	bounds->y0 = geometries [n_screen][n_monitor].y;
+	bounds->x1 = bounds->x0 + geometries [n_screen][n_monitor].width;
+	bounds->y1 = bounds->y0 + geometries [n_screen][n_monitor].height;
+}
+
+/* determines whether a given monitor is along the visible
+ * edge of the logical screen.
+ */
+void
+panel_multiscreen_is_at_visible_extreme (GdkScreen *screen,
+					 int        n_monitor,
+					 gboolean  *leftmost,
+					 gboolean  *rightmost,
+					 gboolean  *topmost,
+					 gboolean  *bottommost)
+{
+	MonitorBounds monitor;
+	int           n_screen, i;
+
+	n_screen = gdk_screen_get_number (screen);
+
+	*leftmost   = TRUE;
+	*rightmost  = TRUE;
+	*topmost    = TRUE;
+	*bottommost = TRUE;
+
+	g_return_if_fail (n_screen >= 0 && n_screen < screens);
+	g_return_if_fail (n_monitor >= 0 || n_monitor < monitors [n_screen]);
+
+	get_monitor_bounds (n_screen, n_monitor, &monitor);
+	
+	/* go through each monitor and try to find one either right,
+	 * below, above, or left of the specified monitor
+	 */
+
+	for (i = 0; i < monitors [n_screen]; i++) {
+		MonitorBounds iter;
+
+		if (i == n_monitor) continue;
+
+		get_monitor_bounds (n_screen, n_monitor, &iter);
+
+		if ((iter.y0 >= monitor.y0 && iter.y0 <= monitor.y1) ||
+		    (iter.y1 >  monitor.y0 && iter.y1 <  monitor.y1)) {
+			if (iter.x0 < monitor.x0)
+				*leftmost = FALSE;
+			if (iter.x1 > monitor.x1)
+				*rightmost = FALSE;
+		}
+
+		if ((iter.x0 >= monitor.x0 && iter.x0 <= monitor.x1) ||
+		    (iter.x1 >  monitor.x0 && iter.x1 <  monitor.x1)) {
+			if (iter.y0 < monitor.y0)
+				*topmost = FALSE;
+			if (iter.y1 > monitor.y1)
+				*bottommost = FALSE;
+		}
+	}
+}

@@ -32,6 +32,8 @@
 
 #include <X11/Xlib.h>
 
+#include "panel-enums.h"
+
 G_BEGIN_DECLS
 
 typedef enum {
@@ -43,10 +45,10 @@ void panel_xutils_set_window_type (GdkWindow             *gdk_window,
 				   PanelXUtilsWindowType  type);
 
 void panel_xutils_set_strut       (GdkWindow             *gdk_window,
-				   guint32                left,
-				   guint32                right,
-				   guint32                bottom,
-				   guint32                top);
+				   PanelOrientation       orientation,
+				   guint32                strut,
+				   guint32                strut_start,
+				   guint32                strut_end);
 
 void panel_warp_pointer           (GdkWindow             *gdk_window,
 				   int                    x,

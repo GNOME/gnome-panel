@@ -258,6 +258,8 @@ panel_toplevel_get_screen_geometry (PanelToplevel *toplevel,
 
 static GdkScreen *
 panel_toplevel_get_monitor_geometry (PanelToplevel *toplevel,
+				     int           *x,
+				     int           *y,
 				     int           *width,
 				     int           *height)
 {
@@ -268,8 +270,11 @@ panel_toplevel_get_monitor_geometry (PanelToplevel *toplevel,
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 
-	*width  = panel_multiscreen_width (screen, toplevel->priv->monitor);
-	*height = panel_multiscreen_height (screen, toplevel->priv->monitor);
+	if (x) *x = panel_multiscreen_x (screen, toplevel->priv->monitor);
+	if (y) *y = panel_multiscreen_y (screen, toplevel->priv->monitor);
+
+	if (width)  *width  = panel_multiscreen_width  (screen, toplevel->priv->monitor);
+	if (height) *height = panel_multiscreen_height (screen, toplevel->priv->monitor);
 
 	return screen;
 }
@@ -514,7 +519,7 @@ panel_toplevel_resize_to_pointer (PanelToplevel *toplevel,
 	new_x_centered = toplevel->priv->x_centered;
 	new_y_centered = toplevel->priv->y_centered;
 
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor_width, &monitor_height);
+	panel_toplevel_get_monitor_geometry (toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	switch (toplevel->priv->grab_op) {
 	case PANEL_GRAB_OP_RESIZE_UP:
@@ -673,7 +678,7 @@ panel_toplevel_move_to (PanelToplevel *toplevel,
 	new_monitor = panel_multiscreen_locate_coords (screen, new_x, new_y);
 
 	panel_toplevel_get_monitor_geometry (
-			toplevel, &monitor_width, &monitor_height);
+			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	x_centered = toplevel->priv->x_centered;
 	y_centered = toplevel->priv->y_centered;
@@ -1231,9 +1236,14 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 {
 	GtkWidget        *widget;
 	PanelOrientation  orientation;
-	int               left = 0, right = 0, bottom = 0, top = 0;
+	GdkScreen        *screen;
+	gboolean          topmost, bottommost, leftmost, rightmost;
+	int               strut, strut_start, strut_end;
+	int               x, y, width, height;
 	int               screen_width, screen_height;
-	int               width, height;
+	int               monitor_x, monitor_y;
+	int               monitor_width, monitor_height;
+	int               auto_hide_size;
 
 	widget = GTK_WIDGET (toplevel);
 
@@ -1245,29 +1255,57 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 		return;
 	}
 
-	panel_toplevel_get_screen_geometry (
-			toplevel, &screen_width, &screen_height);
+	screen = panel_toplevel_get_screen_geometry (
+			toplevel,
+			&screen_width, &screen_height);
 
+	panel_toplevel_get_monitor_geometry (
+			toplevel,
+			&monitor_x, &monitor_y,
+			&monitor_width, &monitor_height);
+
+	panel_multiscreen_is_at_visible_extreme (screen,
+						 toplevel->priv->monitor,
+						 &leftmost,
+						 &rightmost,
+						 &topmost,
+						 &bottommost);
+
+	x      = toplevel->priv->geometry.x;
+	y      = toplevel->priv->geometry.y;
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
+	
+	orientation    = toplevel->priv->orientation;
+	auto_hide_size = toplevel->priv->auto_hide_size;
 
-	orientation = toplevel->priv->orientation;
+	strut = strut_start = strut_end = 0;
 
 	if (orientation & PANEL_HORIZONTAL_MASK) {
-		if (toplevel->priv->geometry.y <= 0) {
+		if (topmost && y <= 0) {
 			orientation = PANEL_ORIENTATION_TOP;
-			top = height;
-		} else if (toplevel->priv->geometry.y >= (screen_height - height)) {
+			strut = y + height;
+		} else if (bottommost && y >= monitor_y + monitor_height - height) {
 			orientation = PANEL_ORIENTATION_BOTTOM;
-			bottom = height;
+			strut = screen_height - y;
+		}
+
+		if (strut) {
+			strut_start = x;
+			strut_end = x + width;
 		}
 	} else {
-		if (toplevel->priv->geometry.x <= 0) {
+		if (leftmost && toplevel->priv->geometry.x <= 0) {
 			orientation = PANEL_ORIENTATION_LEFT;
-			left = width;
-		} else if (toplevel->priv->geometry.x >= (screen_width - width)) {
+			strut = x + width;
+		} else if (rightmost && x >= monitor_x + monitor_width - width) {
 			orientation = PANEL_ORIENTATION_RIGHT;
-			right = width;
+			strut = screen_width - x;
+		}
+
+		if (strut) {
+			strut_start = y;
+			strut_end = y + height;
 		}
 	}
 
@@ -1279,13 +1317,27 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 	if (toplevel->priv->auto_hide) {
 		g_assert (toplevel->priv->auto_hide_size > 0);
 
-		top    = CLAMP (top,    0, toplevel->priv->auto_hide_size);
-		bottom = CLAMP (bottom, 0, toplevel->priv->auto_hide_size);
-		left   = CLAMP (left,   0, toplevel->priv->auto_hide_size);
-		right  = CLAMP (right,  0, toplevel->priv->auto_hide_size);
+		switch (orientation) {
+		case PANEL_ORIENTATION_TOP:
+			strut = CLAMP (strut, 0, auto_hide_size + y);
+			break;
+		case PANEL_ORIENTATION_BOTTOM:
+			strut = CLAMP (strut, 0, auto_hide_size + screen_height - y - height);
+			break;
+		case PANEL_ORIENTATION_LEFT:
+			strut = CLAMP (strut, 0, auto_hide_size + x);
+			break;
+		case PANEL_ORIENTATION_RIGHT:
+			strut = CLAMP (strut, 0, auto_hide_size + screen_width - x - width);
+			break;
+		}
 	}
 
-	panel_xutils_set_strut (widget->window, left, right, bottom, top);
+	panel_xutils_set_strut (widget->window,
+				orientation,
+				strut,
+				strut_start,
+				strut_end);
 }
 
 void
@@ -1303,7 +1355,7 @@ panel_toplevel_update_edges (PanelToplevel *toplevel)
 	widget = GTK_WIDGET (toplevel);
 
 	panel_toplevel_get_monitor_geometry (
-			toplevel, &monitor_width, &monitor_height);
+			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
@@ -1554,7 +1606,7 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 	widget = GTK_WIDGET (toplevel);
 
 	panel_toplevel_get_monitor_geometry (
-			toplevel, &monitor_width, &monitor_height);
+			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
@@ -1602,7 +1654,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 			toplevel, &screen_width, &screen_height);
 
 	panel_toplevel_get_monitor_geometry (
-			toplevel, &monitor_width, &monitor_height);
+			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	monitor_x = panel_multiscreen_x (screen, toplevel->priv->monitor);
 	monitor_y = panel_multiscreen_y (screen, toplevel->priv->monitor);
@@ -1708,7 +1760,7 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 	}
 
 	panel_toplevel_get_monitor_geometry (
-			toplevel, &monitor_width, &monitor_height);
+			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
@@ -1867,7 +1919,7 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 			toplevel, &screen_width, &screen_height);
 
 	panel_toplevel_get_monitor_geometry (
-		toplevel, &monitor_width, &monitor_height);
+		toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	monitor_x = panel_multiscreen_x (screen, toplevel->priv->monitor);
 	monitor_y = panel_multiscreen_y (screen, toplevel->priv->monitor);
@@ -1935,7 +1987,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 			toplevel, &screen_width, &screen_height);
 
 	panel_toplevel_get_monitor_geometry (
-			toplevel, &monitor_width, &monitor_height);
+			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	if (toplevel->priv->position_centered) {
 		toplevel->priv->position_centered = FALSE;
@@ -2047,7 +2099,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	widget = GTK_WIDGET (toplevel);
 
 	panel_toplevel_get_monitor_geometry (
-			toplevel, &monitor_width, &monitor_height);
+			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	width  = requisition->width;
 	height = requisition->height;
@@ -2868,7 +2920,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	long       t;
 
 	screen = panel_toplevel_get_monitor_geometry (
-				toplevel, &monitor_width, &monitor_height);
+				toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	toplevel->priv->animation_end_x      = toplevel->priv->x;
 	toplevel->priv->animation_end_y      = toplevel->priv->y;
