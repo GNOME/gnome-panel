@@ -542,7 +542,6 @@ panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 static int
 panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
-	/* FIXME: display main menu instead! */
 	if(event->button==3 || event->button==1) {
 		gtk_menu_popup(GTK_MENU(data), NULL, NULL, panel_menu_position,
 			widget, event->button, time(NULL));
