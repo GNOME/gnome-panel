@@ -1606,7 +1606,7 @@ panel_profile_id_exists (GSList     *id_list,
 	return FALSE;
 }
 
-static GSList *
+static void
 panel_profile_load_added_ids (GConfClient           *client,
 			      PanelGConfKeyType      type,
 			      GSList                *list,
@@ -1639,11 +1639,9 @@ panel_profile_load_added_ids (GConfClient           *client,
 	g_slist_free (added_ids);
 
 	g_free (profile_dir);
-
-	return added_ids;
 }
 
-static GSList *
+static void
 panel_profile_delete_removed_ids (GConfClient             *client,
 				  PanelGConfKeyType        type,
 				  GSList                  *list,

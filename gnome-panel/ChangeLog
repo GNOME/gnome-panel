@@ -1,5 +1,13 @@
 2003-03-10  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-profile.c:
+	(panel_profile_load_added_ids):
+	(panel_profile_delete_removed_ids): both of these
+	should return void. Thanks to Arvind for pointing
+	it out.
+
+2003-03-10  Mark McLoughlin  <mark@skynet.ie>
+
 	* button-widget.c:
 	(button_widget_theme_changed): reload the icon when the
 	icon theme changes.
