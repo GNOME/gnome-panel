@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-07-19 17:16+0400\n"
-"PO-Revision-Date: 2002-07-19 17:17+0400\n"
+"POT-Creation-Date: 2002-07-23 15:46+0400\n"
+"PO-Revision-Date: 2002-07-23 15:50+0400\n"
 "Last-Translator: Dmitry G. Mastrukov <dmitry@taurussoft.org>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,9 @@ msgstr "_Об апплете..."
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3389
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:626
+#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:3389 gnome-panel/menu.c:4102
 msgid "_Help"
 msgstr "Получить _справку"
 
@@ -919,9 +921,7 @@ msgstr "Невозможно создать апплет!\n"
 msgid "Properties..."
 msgstr "Настроить..."
 
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
-#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
-#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
+#: applets/gen_util/printer.c:473
 msgid "Help"
 msgstr "Справка"
 
@@ -1066,12 +1066,12 @@ msgstr "Оболочка панели среды GNOME"
 #. FIXME: should have a "Move" pixmap.
 #.
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-msgid "Move"
-msgstr "Переместить"
+msgid "_Move"
+msgstr "Пере_местить"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-msgid "Remove From Panel"
-msgstr "Убрать с панели"
+msgid "_Remove From Panel"
+msgstr "У_брать с панели"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1220,9 +1220,9 @@ msgid "Drawer"
 msgstr "Ящик"
 
 #: gnome-panel/drawer.c:623 gnome-panel/launcher.c:730
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
-msgid "Properties"
-msgstr "Изменить свойства"
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:3364
+msgid "_Properties"
+msgstr "_Изменить свойства"
 
 #: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3547
 msgid "Cannot execute gnome-panel-screenshot"
@@ -1256,8 +1256,7 @@ msgstr "Сделать снимок..."
 msgid "Take a screenshot of your desktop"
 msgstr "Сделать снимок вашего рабочего стола"
 
-#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
-#: gnome-panel/menu.c:3460
+#: gnome-panel/foobar-widget.c:199 gnome-panel/menu.c:3460
 msgid "Lock Screen"
 msgstr "Заблокировать экран"
 
@@ -1729,16 +1728,20 @@ msgstr "Заблокировать экран"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:213
-msgid "Activate Screensaver"
-msgstr "Активировать Хранитель экрана"
+msgid "_Activate Screensaver"
+msgstr "_Активировать Хранитель экрана"
+
+#: gnome-panel/logout.c:214
+msgid "_Lock Screen"
+msgstr "За_блокировать экран"
 
 #: gnome-panel/logout.c:215
-msgid "Kill Screensaver Daemon"
-msgstr "Уничтожить демон Хранителя экрана"
+msgid "_Kill Screensaver Daemon"
+msgstr "_Уничтожить демон Хранителя экрана"
 
 #: gnome-panel/logout.c:216
-msgid "Restart Screensaver Daemon"
-msgstr "Перезапустить демон Хранителя экрана"
+msgid "Restart _Screensaver Daemon"
+msgstr "_Перезапустить демон Хранителя экрана"
 
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
@@ -1929,6 +1932,10 @@ msgstr "Добавить это как меню на панель"
 msgid "Add new item to this menu"
 msgstr "Добавить новый элемент к этому меню"
 
+#: gnome-panel/menu.c:1497
+msgid "Properties"
+msgstr "Изменить свойства"
+
 #: gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
@@ -2063,10 +2070,6 @@ msgstr "У_далить эту панель"
 msgid "_Add to Panel"
 msgstr "Доб_авить на панель"
 
-#: gnome-panel/menu.c:3364
-msgid "_Properties"
-msgstr "_Изменить свойства"
-
 #: gnome-panel/menu.c:3377
 msgid "_New Panel"
 msgstr "Со_здать панель"
@@ -2135,7 +2138,7 @@ msgstr "Невозможно зарегистрировать управляющ
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Исключение из всплывающего меню \"%s\"\n"
 
-#: gnome-panel/panel-applet-frame.c:700
+#: gnome-panel/panel-applet-frame.c:710
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2153,11 +2156,11 @@ msgstr ""
 "путём щелчка правой клавишей мыши на панели и выбором в появившемся меню "
 "пункта \"Добавить на панель\")"
 
-#: gnome-panel/panel-applet-frame.c:796
+#: gnome-panel/panel-applet-frame.c:806
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Невозможно получить интерфейс AppletShell из управляющего элемента\n"
 
-#: gnome-panel/panel-applet-frame.c:922
+#: gnome-panel/panel-applet-frame.c:932
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -2393,7 +2396,7 @@ msgstr "Отключено"
 msgid "Open URL: %s"
 msgstr "Открыть URL: %s"
 
-#: gnome-panel/panel.c:2196
+#: gnome-panel/panel.c:2197
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
