@@ -1,3 +1,12 @@
+2003-01-23  Satyajit Kanungo  <satyajit.kanungo@wipro.com>
+
+        * mailcheck.c : Replaced g_spawn_command_line_async with
+          egg_screen_execute_command_line_async() to execute the 
+	  application in the correct screen.
+          Added a new function applet_realized_cb() which will call 
+	  the function to check the mails only after the applet is 
+	  realized.  Fixes bug #104032.
+
 2003-01-21  Arvind Samptur <arvind.samptur@wipro.com>
         * pager.c: (pager_connect_while_alive) :Get rid
         of signal emissions occuring on libwnck data after the
