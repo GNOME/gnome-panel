@@ -1736,22 +1736,18 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 	switch (toplevel->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
 		x = monitor_x;
-		if (toplevel->priv->state != PANEL_STATE_AUTO_HIDDEN)
-			y = 0;
+		y = 0;
 		break;
 	case PANEL_ORIENTATION_LEFT:
-		if (toplevel->priv->state != PANEL_STATE_AUTO_HIDDEN)
-			x = 0;
+		x = 0;
 		y = monitor_y;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		x = monitor_x;
-		if (toplevel->priv->state != PANEL_STATE_AUTO_HIDDEN)
-			y = screen_height - toplevel->priv->geometry.height;
+		y = screen_height - toplevel->priv->geometry.height;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		if (toplevel->priv->state != PANEL_STATE_AUTO_HIDDEN)
-			x = screen_width - toplevel->priv->geometry.width;
+		x = screen_width - toplevel->priv->geometry.width;
 		y = monitor_y;
 		break;
 	default:

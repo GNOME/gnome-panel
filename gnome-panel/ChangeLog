@@ -1,5 +1,15 @@
 2003-03-07  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix #107775 - panel "forgets" it on the top and goes back
+	to the bottom.
+
+	* panel-toplevel.c: (panel_toplevel_update_expanded_position):
+	Set toplevel->priv->x/y to the location the panel should be
+	in when not hidden. These co-ordinates are not transient
+	location of the panel.
+
+2003-03-07  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-profile.c: (panel_profile_add_to_list): fix bug with
 	"New Panel". Another bug caused by my stupid "sprintf to
 	static buffer" function.
