@@ -19,8 +19,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core\n"
-"POT-Creation-Date: 2002-05-21 01:37+1200\n"
-"PO-Revision-Date: 2002-05-18 12:33+0200\n"
+"POT-Creation-Date: 2002-05-21 22:31+0200\n"
+"PO-Revision-Date: 2002-05-21 22:31+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -229,7 +229,7 @@ msgid "Utility"
 msgstr "Værktøj"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:625
+#: applets/gen_util/tasklist.c:653
 msgid "Window List"
 msgstr "Vinduesliste"
 
@@ -317,8 +317,8 @@ msgstr "Benyt _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1640
-#: applets/gen_util/pager.c:422 applets/gen_util/tasklist.c:613
-#: gnome-panel/menu.c:239
+#: applets/gen_util/pager.c:422 applets/gen_util/tasklist.c:641
+#: gnome-panel/menu.c:238
 msgid "translator_credits"
 msgstr "Ole Laursen <olau@hardworking.dk>"
 
@@ -617,14 +617,14 @@ msgid "Can't create applet!\n"
 msgstr "Kan ikke oprette panelprogram!\n"
 
 #: applets/gen_util/printer.c:466 gnome-panel/drawer.c:625
-#: gnome-panel/launcher.c:715 gnome-panel/menu.c:1333 gnome-panel/menu.c:1404
-#: gnome-panel/menu.c:3283 gnome-panel/menu.c:4007
+#: gnome-panel/launcher.c:715 gnome-panel/menu.c:1332 gnome-panel/menu.c:1403
+#: gnome-panel/menu.c:3254 gnome-panel/menu.c:3978
 msgid "Properties..."
 msgstr "Indstillinger..."
 
 #: applets/gen_util/printer.c:473 gnome-panel/drawer.c:628
 #: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:4009 gnome-panel/status.c:377
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:3980
 msgid "Help"
 msgstr "Hjælp"
 
@@ -632,11 +632,11 @@ msgstr "Hjælp"
 msgid "About..."
 msgstr "Om..."
 
-#: applets/gen_util/tasklist.c:626
+#: applets/gen_util/tasklist.c:654
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "© 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:627
+#: applets/gen_util/tasklist.c:655
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -705,15 +705,15 @@ msgstr "Gnome-panelskal"
 
 #. FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:559
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:549
 msgid "Move"
 msgstr "Flyt"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:548
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:538
 msgid "Remove From Panel"
 msgstr "Fjern fra panel"
 
-#: gnome-panel/applet.c:210 gnome-panel/menu.c:1003
+#: gnome-panel/applet.c:204 gnome-panel/menu.c:1002
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -728,30 +728,46 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:484 gnome-panel/foobar-widget.c:411
+#: gnome-panel/applet.c:474 gnome-panel/foobar-widget.c:411
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1155
+#: gnome-panel/applet.c:1149
 msgid "Can't find an empty spot"
 msgstr "Kan ikke finde en tom plads"
 
-#: gnome-panel/basep-widget.c:156 gnome-panel/basep-widget.c:157
-msgid "mode"
-msgstr "tilstand"
+#: gnome-panel/basep-widget.c:156
+msgid "Mode"
+msgstr "Tilstand"
 
-#: gnome-panel/basep-widget.c:164 gnome-panel/basep-widget.c:165
-msgid "state"
-msgstr "status"
+#: gnome-panel/basep-widget.c:157
+msgid "Mode of this panel"
+msgstr "Tilstand for dette panel"
+
+#: gnome-panel/basep-widget.c:164
+msgid "State"
+msgstr "Status"
+
+#: gnome-panel/basep-widget.c:165
+msgid "Current state of this panel"
+msgstr "Aktuel status for dette panel"
 
 # RETMIG: et eller andet er galt her
-#: gnome-panel/basep-widget.c:173 gnome-panel/basep-widget.c:174
-msgid "hidebuttons_enabled"
-msgstr "skjuleknapper aktiveret"
+#: gnome-panel/basep-widget.c:173
+msgid "Hidebuttons enabled"
+msgstr "Skjuleknapper aktiveret"
 
-#: gnome-panel/basep-widget.c:181 gnome-panel/basep-widget.c:182
-msgid "hidebutton_pixmaps_enabled"
-msgstr "skjuleknappebilleder aktiveret"
+#: gnome-panel/basep-widget.c:174
+msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
+msgstr "Om skjuleknapper (knapper der skjuler og viser panelet igen) aktiveret"
+
+#: gnome-panel/basep-widget.c:181
+msgid "Hidebutton pixmaps enabled"
+msgstr "Skjuleknappebilleder aktiveret"
+
+#: gnome-panel/basep-widget.c:182
+msgid "Hidebuttons have pixmaps"
+msgstr "Skjuleknapper har billeder"
 
 #: gnome-panel/basep-widget.c:590
 msgid "Hide this panel"
@@ -760,6 +776,14 @@ msgstr "Skjul dette panel"
 #: gnome-panel/basep-widget.c:593
 msgid "Show this panel"
 msgstr "Vis dette panel"
+
+#: gnome-panel/disclosure-widget.c:242
+msgid "Expander Size"
+msgstr "Pilstørrelse"
+
+#: gnome-panel/disclosure-widget.c:243
+msgid "Size of the expander arrow"
+msgstr "Størrelse af udvidelsespilen"
 
 #: gnome-panel/distribution.c:26
 msgid "Debian GNU/Linux"
@@ -818,7 +842,7 @@ msgstr "Benyt skjuleknap"
 msgid "Enable hidebutton arrow"
 msgstr "Benyt skjuleknapspil"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3146
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3124
 msgid "Drawer"
 msgstr "Skuffe"
 
@@ -830,7 +854,7 @@ msgstr "Kan ikke køre gnome-panel-screenshot"
 msgid "Cannot execute gnome-search-tool"
 msgstr "Kan ikke køre gnome-search-tool"
 
-#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3576
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3547
 msgid "Run Program..."
 msgstr "Kør program..."
 
@@ -838,19 +862,19 @@ msgstr "Kør program..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Kør programmer hvis du kender den rigtige kommando til dem"
 
-#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3589
+#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3560
 msgid "Search for Files..."
 msgstr "Søg efter filer..."
 
-#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3592
+#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3563
 msgid "Find files, folders, and documents on your computer"
 msgstr "Find filer, mapper og dokumenter på systemet"
 
-#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3603
+#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3574
 msgid "Take a Screen Shot..."
 msgstr "Gem skærmbilledet..."
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3606
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3577
 msgid "Take a screen shot of your desktop"
 msgstr "Gem et billede af skrivebordet"
 
@@ -879,13 +903,13 @@ msgstr "Handlinger"
 msgid "No windows open"
 msgstr "Ingen vinduer åbne"
 
-#: gnome-panel/foobar-widget.c:748 gnome-panel/menu.c:2720
-#: gnome-panel/menu.c:2726 gnome-panel/menu.c:3542
+#: gnome-panel/foobar-widget.c:748 gnome-panel/menu.c:2705
+#: gnome-panel/menu.c:2711 gnome-panel/menu.c:3513
 msgid "Applications"
 msgstr "Programmer"
 
-#: gnome-panel/foobar-widget.c:781 gnome-panel/menu.c:2605
-#: gnome-panel/menu.c:2649
+#: gnome-panel/foobar-widget.c:781 gnome-panel/menu.c:2590
+#: gnome-panel/menu.c:2634
 msgid "Menu Panel"
 msgstr "Menupanel"
 
@@ -950,7 +974,7 @@ msgstr "Indstillinger for panel"
 msgid "Modify the global panel preferences"
 msgstr "Redigér globale panelindstillinger"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3619
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3590
 msgid "Panel"
 msgstr "Panel"
 
@@ -967,6 +991,7 @@ msgid "General"
 msgstr "Generelt"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:4
+#: libpanel-applet/panel-test-applets.glade2.h:5
 msgid "Medium"
 msgstr "Mellem"
 
@@ -1188,28 +1213,28 @@ msgstr "Kør i _terminal"
 msgid "_Append File..."
 msgstr "_Tilføj fil..."
 
-#: gnome-panel/gnome-run.c:1264
+#: gnome-panel/gnome-run.c:1273
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Vil køre kommando: '%s'"
 
-#: gnome-panel/gnome-run.c:1273
+#: gnome-panel/gnome-run.c:1282
 msgid "No application selected"
 msgstr "Intet program valgt"
 
-#: gnome-panel/gnome-run.c:1390
+#: gnome-panel/gnome-run.c:1399
 msgid "List of known applications"
 msgstr "Liste over kendte programmer"
 
-#: gnome-panel/gnome-run.c:1391
+#: gnome-panel/gnome-run.c:1400
 msgid "Choose an application to run from the list"
 msgstr "Vælg et program at køre fra listen"
 
-#: gnome-panel/gnome-run.c:1485
+#: gnome-panel/gnome-run.c:1494
 msgid "_Run"
 msgstr "_Kør"
 
-#: gnome-panel/gnome-run.c:1542
+#: gnome-panel/gnome-run.c:1551
 msgid "Run Program"
 msgstr "Kør program"
 
@@ -1275,7 +1300,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3398
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3369
 msgid "Log out"
 msgstr "Log ud"
 
@@ -1283,7 +1308,7 @@ msgstr "Log ud"
 msgid "Log out of GNOME"
 msgstr "Log ud af Gnome"
 
-#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3385
+#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3356
 msgid "Lock screen"
 msgstr "Lås skærm"
 
@@ -1314,7 +1339,7 @@ msgstr "Dræb pauseskærmsdæmon"
 msgid "Restart Screensaver Daemon"
 msgstr "Genstart pauseskærmsdæmon"
 
-#: gnome-panel/main.c:166
+#: gnome-panel/main.c:164
 msgid "Specify a profile name to load"
 msgstr "Angiv et profilnavn som skal indlæses"
 
@@ -1330,7 +1355,7 @@ msgstr ""
 "Detaljer: %s"
 
 #: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3658 gnome-panel/menu.c:3883
+#: gnome-panel/menu.c:3629 gnome-panel/menu.c:3854
 msgid "Menu"
 msgstr "Menu"
 
@@ -1434,16 +1459,16 @@ msgstr "Menusti"
 msgid "Use custom icon for panel button"
 msgstr "Brug eget ikon til panelknap"
 
-#: gnome-panel/menu.c:227
+#: gnome-panel/menu.c:226
 msgid "Many many others ..."
 msgstr "Mange, mange andre ..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:229
+#: gnome-panel/menu.c:228
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr "og endelig, ridderne som siger ... NI!"
 
-#: gnome-panel/menu.c:262
+#: gnome-panel/menu.c:261
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -1451,7 +1476,7 @@ msgstr ""
 "Dette program er ansvarlig for at starte andre programmer, indlemme små "
 "panelprogrammer i sig selv, verdensfreden og vilkårlige X-nedbrud."
 
-#: gnome-panel/menu.c:268
+#: gnome-panel/menu.c:267
 msgid ""
 "\n"
 "\n"
@@ -1463,19 +1488,19 @@ msgstr ""
 "Kører i nedlåst tilstand. Dette betyder at din systemadministrator har "
 "forbudt alle ændringer i panelets opsætning."
 
-#: gnome-panel/menu.c:274
+#: gnome-panel/menu.c:273
 msgid "The GNOME Panel"
 msgstr "Gnome-panelet"
 
-#: gnome-panel/menu.c:275
+#: gnome-panel/menu.c:274
 msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "© 1997-2002 Free Software Fundation"
 
-#: gnome-panel/menu.c:294
+#: gnome-panel/menu.c:293
 msgid "End world hunger"
 msgstr "Stop verdenshungersnøden"
 
-#: gnome-panel/menu.c:308
+#: gnome-panel/menu.c:307
 #, c-format
 msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
@@ -1486,7 +1511,7 @@ msgstr ""
 "\n"
 "Details: %s eksisterer sandsynligvis ikke"
 
-#: gnome-panel/menu.c:328
+#: gnome-panel/menu.c:327
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1497,7 +1522,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: gnome-panel/menu.c:336 gnome-panel/menu.c:984 gnome-panel/menu.c:1012
+#: gnome-panel/menu.c:335 gnome-panel/menu.c:983 gnome-panel/menu.c:1011
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1508,7 +1533,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: gnome-panel/menu.c:894
+#: gnome-panel/menu.c:893
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1519,17 +1544,17 @@ msgstr ""
 "\n"
 "Detaljer: %s\n"
 
-#: gnome-panel/menu.c:904
+#: gnome-panel/menu.c:903
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Kunne ikke finde filnavn i sti: %s"
 
-#: gnome-panel/menu.c:911
+#: gnome-panel/menu.c:910
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Kunne ikke finde mappenavn i sti: %s"
 
-#: gnome-panel/menu.c:977
+#: gnome-panel/menu.c:976
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -1539,102 +1564,98 @@ msgstr ""
 "\n"
 "Detaljer: Intet 'Exec'- eller 'URL'-felt i punktet"
 
-#: gnome-panel/menu.c:1265
+#: gnome-panel/menu.c:1264
 msgid "Add this launcher to panel"
 msgstr "Tilføj denne genvej til panelet"
 
-#: gnome-panel/menu.c:1273
+#: gnome-panel/menu.c:1272
 msgid "Remove this item"
 msgstr "Fjern dette punkt"
 
-#: gnome-panel/menu.c:1289
+#: gnome-panel/menu.c:1288
 msgid "Put into run dialog"
 msgstr "Put ind i \"Kør\"-vinduet"
 
-#: gnome-panel/menu.c:1307
+#: gnome-panel/menu.c:1306
 #, c-format
 msgid "Help on %s"
 msgstr "Hjælp til %s"
 
-#: gnome-panel/menu.c:1308
+#: gnome-panel/menu.c:1307
 msgid "Application"
 msgstr "Program"
 
-#: gnome-panel/menu.c:1354
+#: gnome-panel/menu.c:1353
 msgid "Entire menu"
 msgstr "Hele menuen"
 
-#: gnome-panel/menu.c:1363
+#: gnome-panel/menu.c:1362
 msgid "Add this as drawer to panel"
 msgstr "Tilføj som skuffe på panelet"
 
-#: gnome-panel/menu.c:1371
+#: gnome-panel/menu.c:1370
 msgid "Add this as menu to panel"
 msgstr "Tilføj som menu på panelet"
 
-#: gnome-panel/menu.c:1379
+#: gnome-panel/menu.c:1378
 msgid "Add new item to this menu"
 msgstr "Tilføj nyt punkt i denne menu"
 
-#: gnome-panel/menu.c:1714
-msgid "You already have a status dock on the panel. You can only have one"
-msgstr "Der er allerede en statusdok på panelet. Du kan kun have én."
-
-#: gnome-panel/menu.c:2309 libpanel-applet/panel-test-applets.c:107
+#: gnome-panel/menu.c:2294 libpanel-applet/panel-test-applets.c:107
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "forespørgsel returnerede undtagelsen %s\n"
 
-#: gnome-panel/menu.c:2527 gnome-panel/menu.c:2531
+#: gnome-panel/menu.c:2512 gnome-panel/menu.c:2516
 msgid "Aligned Panel"
 msgstr "Justeret panel"
 
-#: gnome-panel/menu.c:2532
+#: gnome-panel/menu.c:2517
 msgid "GNOME Aligned Panel"
 msgstr "Justeret Gnome-panel"
 
-#: gnome-panel/menu.c:2548 gnome-panel/menu.c:2551 gnome-panel/menu.c:2668
+#: gnome-panel/menu.c:2533 gnome-panel/menu.c:2536 gnome-panel/menu.c:2653
 msgid "Edge Panel"
 msgstr "Kantpanel"
 
-#: gnome-panel/menu.c:2552
+#: gnome-panel/menu.c:2537
 msgid "GNOME Edge Panel"
 msgstr "Gnome-kantpanel"
 
-#: gnome-panel/menu.c:2568 gnome-panel/menu.c:2572 gnome-panel/menu.c:2684
+#: gnome-panel/menu.c:2553 gnome-panel/menu.c:2557 gnome-panel/menu.c:2669
 msgid "Sliding Panel"
 msgstr "Glidende panel"
 
-#: gnome-panel/menu.c:2573
+#: gnome-panel/menu.c:2558
 msgid "GNOME Sliding Panel"
 msgstr "Glidende Gnome-panel"
 
-#: gnome-panel/menu.c:2589 gnome-panel/menu.c:2593 gnome-panel/menu.c:2692
+#: gnome-panel/menu.c:2574 gnome-panel/menu.c:2578 gnome-panel/menu.c:2677
 msgid "Floating Panel"
 msgstr "Flydende panel"
 
-#: gnome-panel/menu.c:2594
+#: gnome-panel/menu.c:2579
 msgid "GNOME Floating Panel"
 msgstr "Flydende Gnome-panel"
 
-#: gnome-panel/menu.c:2610
+#: gnome-panel/menu.c:2595
 msgid "You can only have one menu panel at a time."
 msgstr "Du kan kun have ét menupanel ad gangen."
 
-#: gnome-panel/menu.c:2676
+#: gnome-panel/menu.c:2661
 msgid "Corner Panel"
 msgstr "Hjørnepanel"
 
 #. force_image
-#: gnome-panel/menu.c:2789 gnome-panel/menu.c:2796 gnome-panel/menu.c:3458
+#: gnome-panel/menu.c:2774 gnome-panel/menu.c:2781 gnome-panel/menu.c:3429
 msgid "KDE menus"
 msgstr "KDE-menuer"
 
-#: gnome-panel/menu.c:2866
+#: gnome-panel/menu.c:2844
 msgid "You cannot remove your last panel."
 msgstr "Du kan ikke fjerne dit sidste panel."
 
-#: gnome-panel/menu.c:2878
+#: gnome-panel/menu.c:2856
 msgid ""
 "When a panel is removed, the panel and its\n"
 "applet settings are lost. Delete this panel?"
@@ -1643,59 +1664,55 @@ msgstr ""
 "og indstillingerne for dets panelprogrammer.\n"
 "Fjern dette panel?"
 
-#: gnome-panel/menu.c:3118
+#: gnome-panel/menu.c:3096
 msgid "Launcher..."
 msgstr "Genvej..."
 
-#: gnome-panel/menu.c:3126
+#: gnome-panel/menu.c:3104
 msgid "Launcher from menu"
 msgstr "Genvej fra menu"
 
-#: gnome-panel/menu.c:3136
+#: gnome-panel/menu.c:3114
 msgid "GNOME Menu"
 msgstr "Gnome-menu"
 
-#: gnome-panel/menu.c:3156
+#: gnome-panel/menu.c:3134
 msgid "Log out button"
 msgstr "Logudknap"
 
-#: gnome-panel/menu.c:3166
+#: gnome-panel/menu.c:3144
 msgid "Lock button"
 msgstr "Låseknap"
 
-#: gnome-panel/menu.c:3174
-msgid "Status dock"
-msgstr "Statusdok"
-
-#: gnome-panel/menu.c:3188
+#: gnome-panel/menu.c:3159
 msgid "Cannot execute panel global preferences"
 msgstr "Kan ikke starte panelets globale indstillinger"
 
-#: gnome-panel/menu.c:3226
+#: gnome-panel/menu.c:3197
 msgid "Delete this panel..."
 msgstr "Fjern dette panel..."
 
-#: gnome-panel/menu.c:3228 gnome-panel/menu.c:3267
+#: gnome-panel/menu.c:3199 gnome-panel/menu.c:3238
 msgid "Delete this panel"
 msgstr "Fjern dette panel"
 
-#: gnome-panel/menu.c:3246
+#: gnome-panel/menu.c:3217
 msgid "Add to panel"
 msgstr "Tilføj til panel"
 
-#: gnome-panel/menu.c:3258
+#: gnome-panel/menu.c:3229
 msgid "Create panel"
 msgstr "Opret panel"
 
-#: gnome-panel/menu.c:3295
+#: gnome-panel/menu.c:3266
 msgid "Global Preferences..."
 msgstr "Globale indstillinger..."
 
-#: gnome-panel/menu.c:3308
+#: gnome-panel/menu.c:3279
 msgid "Panel Manual..."
 msgstr "Panelmanual..."
 
-#: gnome-panel/menu.c:3320
+#: gnome-panel/menu.c:3291
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -1705,19 +1722,19 @@ msgstr ""
 "\n"
 "Detaljer: xscreensaver-command ikke fundet"
 
-#: gnome-panel/menu.c:3340
+#: gnome-panel/menu.c:3311
 msgid "About the panel..."
 msgstr "Om panelet..."
 
-#: gnome-panel/menu.c:3354
+#: gnome-panel/menu.c:3325
 msgid "About GNOME..."
 msgstr "Om Gnome..."
 
-#: gnome-panel/menu.c:3391
+#: gnome-panel/menu.c:3362
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr "Lås skærmen så du kan forlade maskinen midlertidigt"
 
-#: gnome-panel/menu.c:3404
+#: gnome-panel/menu.c:3375
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1725,27 +1742,27 @@ msgstr ""
 "Log ud af denne session for at logge på som en anden bruger eller lukke "
 "maskinen ned"
 
-#: gnome-panel/menu.c:3559
+#: gnome-panel/menu.c:3530
 msgid "Applets"
 msgstr "Panelprogrammer"
 
-#: gnome-panel/menu.c:3582
+#: gnome-panel/menu.c:3553
 msgid "Run a command"
 msgstr "Kør en kommando"
 
-#: gnome-panel/menu.c:3627
+#: gnome-panel/menu.c:3598
 msgid "Desktop"
 msgstr "Skrivebord"
 
-#: gnome-panel/menu.c:3660
+#: gnome-panel/menu.c:3631
 msgid "Menu:"
 msgstr "Menu:"
 
-#: gnome-panel/menu.c:3710 gnome-panel/menu.c:3738 gnome-panel/menu.c:3923
+#: gnome-panel/menu.c:3681 gnome-panel/menu.c:3709 gnome-panel/menu.c:3894
 msgid "Main Menu"
 msgstr "Hovedmenu"
 
-#: gnome-panel/menu.c:3732
+#: gnome-panel/menu.c:3703
 msgid "Can't create menu, using main menu!"
 msgstr "Kan ikke oprette menu, bruger hovedmenu!"
 
@@ -1768,6 +1785,12 @@ msgid ""
 "(If you choose not to reload it at this time you can always add it by right "
 "clicking on the panel and clicking on the \"Add to panel\" submenu)"
 msgstr ""
+"Panelprogrammet %s ser ud til at være død uforudset.\n"
+"\n"
+"Genindlæs panelprogrammet?\n"
+"\n"
+"(Hvis du vælger ikke at genindlæse det nu, kan du altid senere tilføje det "
+"ved at højreklikke på panelet og vælge \"Tilføj til panel\"-undermenuen)"
 
 #: gnome-panel/panel-applet-frame.c:795
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -1977,16 +2000,16 @@ msgstr "Hjælpedokument ikke fundet"
 msgid "No document to show"
 msgstr "Intet dokument at vise"
 
-#: gnome-panel/panel-util.c:581 gnome-panel/panel-util.c:597
+#: gnome-panel/panel-util.c:582 gnome-panel/panel-util.c:598
 msgid "Disabled"
 msgstr "Deaktiveret"
 
-#: gnome-panel/panel.c:948
+#: gnome-panel/panel.c:923
 #, c-format
 msgid "Open URL: %s"
 msgstr "Åbn adresse: %s"
 
-#: gnome-panel/panel.c:2294
+#: gnome-panel/panel.c:2247
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2048,6 +2071,71 @@ msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Intervaller der angiver hvilke størelser der er acceptable for "
 "panelprogrammet"
+
+#: libpanel-applet/panel-test-applets.glade2.h:1
+msgid "Applet:"
+msgstr "Panelprogram:"
+
+#: libpanel-applet/panel-test-applets.glade2.h:2
+msgid "Bottom"
+msgstr "Bund"
+
+#: libpanel-applet/panel-test-applets.glade2.h:3
+msgid "Large"
+msgstr "Stor"
+
+#: libpanel-applet/panel-test-applets.glade2.h:4
+msgid "Left"
+msgstr "Venstre"
+
+#: libpanel-applet/panel-test-applets.glade2.h:6
+msgid "Orientation:"
+msgstr "Orientering:"
+
+#: libpanel-applet/panel-test-applets.glade2.h:7
+msgid "Prefs Dir:"
+msgstr "Indstillingsmappe:"
+
+#: libpanel-applet/panel-test-applets.glade2.h:8
+msgid "Right"
+msgstr "Højre"
+
+#: libpanel-applet/panel-test-applets.glade2.h:9
+msgid "Size:"
+msgstr "Størrelse:"
+
+#: libpanel-applet/panel-test-applets.glade2.h:10
+msgid "Small"
+msgstr "Lille"
+
+#: libpanel-applet/panel-test-applets.glade2.h:11
+msgid "Top"
+msgstr "Top"
+
+#: libpanel-applet/panel-test-applets.glade2.h:12
+msgid "X Large"
+msgstr "Meget stor"
+
+#: libpanel-applet/panel-test-applets.glade2.h:13
+msgid "X Small"
+msgstr "Meget lille"
+
+#: libpanel-applet/panel-test-applets.glade2.h:14
+msgid "XX Large"
+msgstr "Enorm"
+
+#: libpanel-applet/panel-test-applets.glade2.h:15
+msgid "XX Small"
+msgstr "Mikroskopisk"
+
+#~ msgid "mode"
+#~ msgstr "tilstand"
+
+#~ msgid "You already have a status dock on the panel. You can only have one"
+#~ msgstr "Der er allerede en statusdok på panelet. Du kan kun have én."
+
+#~ msgid "Status dock"
+#~ msgstr "Statusdok"
 
 #~ msgid "The GNOME Fish Applet"
 #~ msgstr "Gnome fisk-panelprogrammet"
@@ -2271,9 +2359,6 @@ msgstr ""
 
 #~ msgid "Width"
 #~ msgstr "Bredde"
-
-#~ msgid "Height"
-#~ msgstr "Højde"
 
 #~ msgid "Cannot find pixmap file %s"
 #~ msgstr "Kunne ikke finde billedfilen %s"
