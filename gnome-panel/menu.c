@@ -3166,7 +3166,9 @@ create_menu_at_fr (GtkWidget *menu,
 	if(!menu) {
 		menu = menu_new ();
 
-		if (!menu_add_tearoff (GTK_MENU (menu), GTK_SIGNAL_FUNC (tearoff_new_menu), menu))
+		if (menu_add_tearoff (GTK_MENU (menu), 
+				      GTK_SIGNAL_FUNC (tearoff_new_menu),
+				      menu))
 			first_item++;
 
 		gtk_signal_connect (GTK_OBJECT(menu), "destroy",
@@ -5341,9 +5343,10 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 		menu = menu_new ();
 	}
 
-	menu_add_tearoff (GTK_MENU (menu),
-			  GTK_SIGNAL_FUNC (desktop_menu_tearoff_new_menu),
-			  NULL);
+	if (tearoff)
+		menu_add_tearoff (GTK_MENU (menu),
+				  GTK_SIGNAL_FUNC (desktop_menu_tearoff_new_menu),
+				  NULL);
 
 	char_tmp = gnome_is_program_in_path ("xscreensaver");
 	if (char_tmp) {	
@@ -5486,9 +5489,10 @@ create_root_menu (GtkWidget *root_menu,
 	if(!root_menu)
 		root_menu = menu_new ();
 
-	menu_add_tearoff (GTK_MENU (root_menu),
-			  GTK_SIGNAL_FUNC (panel_tearoff_new_menu),
-			  GINT_TO_POINTER(flags));
+	if (tearoff)
+		menu_add_tearoff (GTK_MENU (root_menu),
+				  GTK_SIGNAL_FUNC (panel_tearoff_new_menu),
+				  GINT_TO_POINTER(flags));
 
 	if (flags & MAIN_MENU_SYSTEM)
 		create_system_menu(root_menu, fake_submenus,
