@@ -157,20 +157,8 @@ panel_applet_frame_load (const gchar *iid,
 
 	frame = panel_applet_frame_new (panel, iid, real_key);
 
-	if (!frame) {
-		GtkWidget *dialog;
-
-		dialog = gtk_message_dialog_new (NULL,
-						 0,
-						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_OK,
-						 _("There was a problem loading the applet."));
-		
-		gtk_dialog_run (GTK_DIALOG (dialog));
-		gtk_widget_destroy (dialog);
-		
+	if (!frame)
 		return;
-	}
 	
 	gtk_widget_show_all (frame);
 
@@ -557,15 +545,54 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	BonoboControlFrame *control_frame;
 	Bonobo_Control      control;
 	BonoboUIComponent  *ui_component;
+	CORBA_Environment   ev;
 	GtkWidget          *widget;
 	char               *moniker;
 
 	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, gconf_key);
-	widget = bonobo_widget_new_control (moniker, NULL);
+
+	/* FIXME: this should really use bonobo_get_object_async */
+	CORBA_exception_init (&ev);
+
+	control = bonobo_get_object (
+		moniker, "IDL:Bonobo/Control:1.0", &ev);
+
 	g_free (moniker);
 
+	if (BONOBO_EX (&ev)) {
+		GtkWidget *dialog;
+		char *err = bonobo_exception_get_text (&ev);
+		char *txt = g_strdup_printf (
+			_("There was a problem loading applet '%s': %s"),
+			  iid, err);
+	
+		dialog = gtk_message_dialog_new (
+			NULL,
+			GTK_DIALOG_DESTROY_WITH_PARENT,
+			GTK_MESSAGE_ERROR,
+			GTK_BUTTONS_OK,
+			txt);
+		g_signal_connect (dialog, "response",
+				  G_CALLBACK (gtk_widget_destroy), NULL);
+	
+		gtk_widget_show (dialog);
+
+		CORBA_exception_free (&ev);
+
+		g_free (txt);
+		g_free (err);
+
+		return NULL;
+	}
+	
+	CORBA_exception_free (&ev);
+
+	widget = bonobo_widget_new_control_from_objref (control, CORBA_OBJECT_NIL);
+
+	bonobo_object_release_unref (control, NULL);
+
 	if (!widget) {
-		g_warning (G_STRLOC ": failed to load %s", iid);
+		g_warning (G_STRLOC ": failed to load applet %s", iid);
 		return NULL;
 	}
 
@@ -600,8 +627,8 @@ panel_applet_frame_new (PanelWidget *panel,
 
 	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 
-	if (!panel_applet_frame_construct (frame, panel ,iid, gconf_key)) {
-		g_object_unref (frame);
+	if (!panel_applet_frame_construct (frame, panel, iid, gconf_key)) {
+		gtk_object_sink (GTK_OBJECT (frame));
 		return NULL;
 	}
 

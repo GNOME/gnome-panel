@@ -1351,7 +1351,7 @@ panel_is_uri_writable (const char *uri)
 {
 	g_return_val_if_fail (uri != NULL, FALSE);
 
-	internal_panel_is_uri_writable (uri, TRUE /* recurse */);
+	return internal_panel_is_uri_writable (uri, TRUE /* recurse */);
 }
 
 gboolean

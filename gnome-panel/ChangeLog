@@ -1,3 +1,17 @@
+2002-03-12  Michael Meeks  <michael@ximian.com>
+
+	* panel-util.c (panel_is_uri_writable): actually return
+	the value.
+
+2002-03-08  Michael Meeks  <michael@ximian.com>
+
+	* panel-applet-frame.c (panel_applet_frame_new):
+	sink that ref down the plug hole on error,
+	squash warning.
+	(panel_applet_frame_construct): improve exception handling, and
+	throw up descriptive dialogs ourself.
+	(panel_applet_frame_load): don't throw up the warning here, do it
+
 Mon Mar 11 19:55:21 2002  George Lebl <jirka@5z.com>
 
 	* gnome-desktop-item-edit.c, menu-ditem.[ch], menu.c,
