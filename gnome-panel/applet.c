@@ -984,7 +984,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 	gconf_client_set_string (client, temp_key, panel_applet_get_panel_id (applet_info), NULL);
 	g_free (temp_key);
 
-	temp_key = panel_applet_get_full_gconf_key (applet_info->type, profile, gconf_key, "right-stick", FALSE);
+	temp_key = panel_applet_get_full_gconf_key (applet_info->type, profile, gconf_key, "panel-right-stick", FALSE);
 	gconf_client_set_bool (client, temp_key, panel_applet_get_right_stick (applet_info), NULL);
 	g_free (temp_key);
 
