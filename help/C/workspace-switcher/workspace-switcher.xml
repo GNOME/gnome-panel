@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "2.5.3.1">
-  <!ENTITY manrevision "2.5">
-  <!ENTITY date "February 2004">
+  <!ENTITY appletversion "2.7.92">
+  <!ENTITY manrevision "2.6">
+  <!ENTITY date "August 2004">
   <!ENTITY applet "Workspace Switcher">
 
 ]>
@@ -84,10 +84,18 @@
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
 		  <date>&date;</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team</para> 
+			 <para role="author">Sun Java Desktop System Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision> 
+		<revision> 
+		  <revnumber>Workspace Switcher Applet Manual V2.5</revnumber> 
+		  <date>February 2004</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
 		<revision> 
 		  <revnumber>Workspace Switcher Applet Manual V2.4</revnumber> 
 		  <date>September 2003</date> 
@@ -174,7 +182,29 @@
                                                                                
     <sect2 id="workspacelist-introduction-add">
       <title>To Add &applet; to a Panel</title>
-	<para>To add <application>&applet;</application> to a panel, right-click on the panel, then choose <menuchoice><guimenu>Add to Panel</guimenu><guisubmenu>Utility</guisubmenu><guimenuitem>Workspace Switcher</guimenuitem></menuchoice>.</para>
+	 <para>Perform the following steps:</para>
+         <orderedlist>
+           <listitem>
+             <para>
+               Right-click on the panel.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Choose <guimenuitem>Add to Panel</guimenuitem>.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Scroll down the list of items in the <guilabel>Add to Top Panel</guilabel> dialog, then select <guilabel>Workspace Switcher</guilabel>.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Click <guibutton>Add</guibutton>.
+             </para>
+           </listitem>
+         </orderedlist>
     </sect2>
   </sect1>
 <!-- ================ Usage ================================ -->

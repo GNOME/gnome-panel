@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "2.5.3.1">
-  <!ENTITY manrevision "2.7">
-  <!ENTITY date "February 2004">
+  <!ENTITY appletversion "2.7.92">
+  <!ENTITY manrevision "2.8">
+  <!ENTITY date "August 2004">
   <!ENTITY applet "Window List">
 
 ]>
@@ -83,6 +83,14 @@
 		<revision> 
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
 		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun Java Desktop System Documentation Team</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Window List Applet Manual V2.7</revnumber> 
+		  <date>February 2004</date> 
 		  <revdescription> 
 			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
@@ -217,7 +225,30 @@
                                                                                
     <sect2 id="windowlist-introduction-add">
       <title>To Add &applet; to a Panel</title>
-	 <para>To add <application>&applet;</application> to a panel, right-click on the panel, then choose <menuchoice><guimenu>Add to Panel</guimenu><guisubmenu>Utility</guisubmenu><guimenuitem>Window List</guimenuitem></menuchoice>. The number of rows that <application>&applet;</application> uses to display the buttons depends on the size of the panel in which the applet resides.</para> 
+	 <para>Perform the following steps:</para>
+         <orderedlist>
+           <listitem>
+             <para>
+               Right-click on the panel.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Choose <guimenuitem>Add to Panel</guimenuitem>.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Scroll down the list of items in the <guilabel>Add to Top Panel</guilabel> dialog, then select <guilabel>Window List</guilabel>.
+             </para>
+           </listitem>
+           <listitem>
+             <para>
+               Click <guibutton>Add</guibutton>.
+             </para>
+           </listitem>
+         </orderedlist>
+         <para>The number of rows that <application>&applet;</application> uses to display the buttons depends on the size of the panel in which the applet resides.</para> 
     </sect2>
 	
 	<sect2 id="window-groups">
