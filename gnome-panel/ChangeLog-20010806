@@ -1,3 +1,10 @@
+Fri Oct 29 22:53:23 1999  George Lebl  <jirka@5z.com>
+
+	* extern.[ch],panel-widget.[ch],applet-widget.[ch],panel.c: create
+	  a do_draw signal on the applet-widget which can be optionaly
+	  requested so that the applet can render itself onto an rgb
+	  buffer which can be requested from the panel.
+
 Wed Oct 27 19:47:30 1999  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c,rgb-stuff.c: remove the homegrown rotating, and

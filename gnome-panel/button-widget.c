@@ -37,9 +37,6 @@ static int  button_widget_leave_notify	(GtkWidget         *widget,
 static void button_widget_pressed	(ButtonWidget *button);
 static void button_widget_unpressed	(ButtonWidget *button);
 
-typedef void (*VoidSignal) (GtkObject * object,
-			    gpointer data);
-
 /*list of all the button widgets*/
 static GList *buttons=NULL;
 
@@ -93,20 +90,6 @@ enum {
 static int button_widget_signals[LAST_SIGNAL] = {0};
 
 static void
-marshal_signal_void (GtkObject * object,
-		     GtkSignalFunc func,
-		     gpointer func_data,
-		     GtkArg * args)
-{
-	VoidSignal rfunc;
-
-	rfunc = (VoidSignal) func;
-
-	(*rfunc) (object, func_data);
-}
-
-
-static void
 button_widget_class_init (ButtonWidgetClass *class)
 {
 	GtkObjectClass *object_class = (GtkObjectClass*) class;
@@ -120,7 +103,7 @@ button_widget_class_init (ButtonWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(ButtonWidgetClass,
 			       			 clicked),
-			       marshal_signal_void,
+			       gtk_signal_default_marshaller,
 			       GTK_TYPE_NONE,
 			       0);
 	button_widget_signals[PRESSED_SIGNAL] =
@@ -129,7 +112,7 @@ button_widget_class_init (ButtonWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(ButtonWidgetClass,
 			       			 pressed),
-			       marshal_signal_void,
+			       gtk_signal_default_marshaller,
 			       GTK_TYPE_NONE,
 			       0);
 	button_widget_signals[UNPRESSED_SIGNAL] =
@@ -138,7 +121,7 @@ button_widget_class_init (ButtonWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(ButtonWidgetClass,
 			       			 unpressed),
-			       marshal_signal_void,
+			       gtk_signal_default_marshaller,
 			       GTK_TYPE_NONE,
 			       0);
 	gtk_object_class_add_signals(object_class,button_widget_signals,

@@ -76,6 +76,10 @@ server_applet_back_change(CustomAppletServant *servant,
 			  CORBA_Environment *ev);
 
 static void
+server_applet_draw(CustomAppletServant *servant,
+		   CORBA_Environment *ev);
+
+static void
 server_applet_set_tooltips_state(CustomAppletServant *servant,
 				 CORBA_boolean enabled,
 				 CORBA_Environment *ev);
@@ -105,6 +109,7 @@ static POA_GNOME_Applet__epv applet_epv = {
   (gpointer)&server_applet_do_callback,
   (gpointer)&server_applet_session_save,
   (gpointer)&server_applet_back_change,
+  (gpointer)&server_applet_draw,
   (gpointer)&server_applet_set_tooltips_state,
   (gpointer)&server_applet_change_position,
   (gpointer)&server_applet__get_goad_id,
@@ -175,6 +180,7 @@ enum {
 	CHANGE_SIZE_SIGNAL,
 	SAVE_SESSION_SIGNAL,
 	BACK_CHANGE_SIGNAL,
+	DO_DRAW_SIGNAL,
 	TOOLTIP_STATE_SIGNAL,
 	CHANGE_POSITION_SIGNAL,
 	LAST_SIGNAL
@@ -298,6 +304,15 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       GTK_TYPE_ENUM,
 			       GTK_TYPE_POINTER,
 			       GTK_TYPE_POINTER);
+	applet_widget_signals[DO_DRAW_SIGNAL] =
+		gtk_signal_new("do_draw",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
+			       			 do_draw),
+			       gtk_signal_default_marshaller,
+			       GTK_TYPE_NONE,
+			       0);
 	applet_widget_signals[TOOLTIP_STATE_SIGNAL] =
 		gtk_signal_new("tooltip_state",
 			       GTK_RUN_LAST,
@@ -327,6 +342,7 @@ applet_widget_class_init (AppletWidgetClass *class)
 	class->change_size = NULL;
 	class->save_session = NULL;
 	class->back_change = NULL;
+	class->do_draw = NULL;
 	class->tooltip_state = NULL;
 	class->change_position = NULL;
 }
@@ -972,6 +988,53 @@ applet_widget_send_position(AppletWidget *applet, int enable)
 	CORBA_exception_free(&ev);
 }
 
+/* sets if the do_draw signal is sent*/
+void
+applet_widget_send_draw(AppletWidget *applet, int enable)
+{
+	CORBA_Environment ev;
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	
+	CORBA_exception_init(&ev);
+	GNOME_PanelSpot__set_send_draw(CD(applet)->pspot, enable, &ev);
+	CORBA_exception_free(&ev);
+}
+
+/* gets the rgb background, useful in conjunction with the draw signal */
+void
+applet_widget_get_rgb_bg(AppletWidget *applet, guchar **rgb,
+			 int *w, int *h, int *rowstride)
+{
+	CORBA_Environment ev;
+	GNOME_Panel_RgbImage *image;
+
+	g_return_if_fail(applet!=NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	g_return_if_fail(rgb!=NULL);
+	g_return_if_fail(w!=NULL);
+	g_return_if_fail(h!=NULL);
+	g_return_if_fail(rowstride!=NULL);
+	
+	CORBA_exception_init(&ev);
+	image = GNOME_PanelSpot__get_rgb_background(CD(applet)->pspot, &ev);
+	if(ev._major) {
+		g_warning("CORBA Exception");
+		CORBA_exception_free(&ev);
+		return;
+	}
+	CORBA_exception_free(&ev);
+
+	*w = image->width;
+	*h = image->width;
+	*rowstride = image->rowstride;
+	
+	*rgb = g_new(guchar, (*h)*(*rowstride));
+	memcpy(*rgb,image->data._buffer,sizeof(guchar)*(*h)*(*rowstride));
+	
+	CORBA_free(image);
+}
+
 int	
 applet_widget_init(const char *app_id,
 		   const char *app_version,
@@ -1165,6 +1228,14 @@ server_applet_back_change(CustomAppletServant *servant,
 				pptr,
 				cptr);
 	}
+}
+
+static void
+server_applet_draw(CustomAppletServant *servant,
+		   CORBA_Environment *ev)
+{
+	gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+			applet_widget_signals[DO_DRAW_SIGNAL]);
 }
 
 static void

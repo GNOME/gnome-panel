@@ -592,6 +592,17 @@ panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 	applets_to_sync = TRUE;
 }
 
+static void
+panel_applet_draw(GtkWidget *panel, GtkWidget *widget, gpointer data)
+{
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(widget), "applet_info");
+
+	g_return_if_fail(info!=NULL);
+
+	if(info->type == APPLET_EXTERN)
+		extern_send_draw(info->data);
+}
+
 static GtkWidget *
 panel_menu_get(PanelData *pd)
 {
@@ -903,6 +914,10 @@ panel_widget_setup(PanelWidget *panel)
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "applet_move",
 			   GTK_SIGNAL_FUNC(panel_applet_move),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "applet_draw",
+			   GTK_SIGNAL_FUNC(panel_applet_draw),
 			   NULL);
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "back_change",

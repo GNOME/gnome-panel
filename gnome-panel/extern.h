@@ -20,7 +20,11 @@ struct _Extern {
 	char *cfg;
 	GtkWidget *ebox;
 	int started;
-	int send_position;
+	gboolean send_position;
+	gboolean send_draw;
+	
+	int send_draw_timeout;
+	gboolean send_draw_queued;
 
 	AppletInfo *info;
 };
@@ -31,6 +35,9 @@ void load_queued_externs(void);
 
 void panel_corba_clean_up(void);
 gint panel_corba_gtk_init(CORBA_ORB panel_orb);
+
+/* to be called when we want to send a draw signal to an applet */
+void extern_send_draw(Extern *ext);
 
 END_GNOME_DECLS
 

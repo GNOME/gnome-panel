@@ -117,6 +117,8 @@ struct _PanelWidgetClass
 			      PanelBackType type,
 			      char *pixmap,
 			      GdkColor *color);
+	void (* applet_draw) (PanelWidget *panel,
+			      GtkWidget *applet);
 };
 
 guint		panel_widget_get_type		(void);
@@ -221,6 +223,12 @@ int		panel_widget_get_cursorloc	(PanelWidget *panel);
 /*needed for other panel types*/
 int		panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
+
+void		panel_widget_get_applet_rgb_bg	(PanelWidget *panel,
+						 GtkWidget *applet,
+						 guchar **rgb,
+						 int *w, int *h,
+						 int *rowstride);
 
 /*extern GSList *panels;*/
 

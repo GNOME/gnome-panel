@@ -125,6 +125,18 @@ s_panelspot_set_send_position(POA_GNOME_PanelSpot *servant,
 			      CORBA_boolean,
 			      CORBA_Environment *ev);
 
+static CORBA_boolean
+s_panelspot_get_send_draw(POA_GNOME_PanelSpot *servant,
+			  CORBA_Environment *ev);
+static void
+s_panelspot_set_send_draw(POA_GNOME_PanelSpot *servant,
+			  CORBA_boolean,
+			  CORBA_Environment *ev);
+
+static GNOME_Panel_RgbImage *
+s_panelspot_get_rgb_background(POA_GNOME_PanelSpot *servant,
+			       CORBA_Environment *ev);
+
 static void
 s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
 		     CORBA_Environment *ev);
@@ -221,6 +233,9 @@ static POA_GNOME_PanelSpot__epv panelspot_epv = {
   (gpointer)&s_panelspot_get_free_space,
   (gpointer)&s_panelspot_get_send_position,
   (gpointer)&s_panelspot_set_send_position,
+  (gpointer)&s_panelspot_get_send_draw,
+  (gpointer)&s_panelspot_set_send_draw,
+  (gpointer)&s_panelspot_get_rgb_background,
   (gpointer)&s_panelspot_register_us,
   (gpointer)&s_panelspot_unregister_us,
   (gpointer)&s_panelspot_abort_load,
@@ -274,6 +289,11 @@ extern_clean(Extern *ext)
 	PortableServer_POA_deactivate_object(thepoa, id, &ev);
 	CORBA_free (id);
 	POA_GNOME_PanelSpot__fini((PortableServer_Servant) ext, &ev);
+	
+	if(ext->send_draw_timeout) {
+		gtk_timeout_remove(ext->send_draw_timeout);
+		ext->send_draw_timeout = 0;
+	}
 
 	g_free(ext);
 
@@ -312,7 +332,7 @@ send_position_change(Extern *ext)
 		
 		CORBA_Environment ev;
 		CORBA_exception_init(&ev);
-		g_warning ("Crazy function!\n");
+		/*g_warning ("Crazy function!\n");*/
 		/*go the the toplevel panel widget*/
 		for(;;) {
 			if(!GTK_WIDGET_NO_WINDOW(wid)) {
@@ -417,6 +437,10 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos, in
 	ext = g_new0(Extern,1);
 	ext->started = FALSE;
 	ext->send_position = FALSE;
+	ext->send_draw = FALSE;
+
+	ext->send_draw_timeout = 0;
+	ext->send_draw_queued = FALSE;
 
 	panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 	panelspot_servant->_private = NULL;
@@ -536,6 +560,7 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 	ext = g_new0(Extern,1);
 	ext->started = FALSE;
 	ext->send_position = FALSE;
+	ext->send_draw = FALSE;
 
 	panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 	panelspot_servant->_private = NULL;
@@ -769,6 +794,56 @@ s_panelspot_set_send_position(POA_GNOME_PanelSpot *servant,
 	g_assert(ext);
 	
 	ext->send_position = enable?TRUE:FALSE;
+}
+
+static CORBA_boolean
+s_panelspot_get_send_draw(POA_GNOME_PanelSpot *servant,
+			  CORBA_Environment *ev)
+{
+	Extern *ext = (Extern *)servant;
+
+	g_assert(ext);
+	
+	return ext->send_draw;
+}
+
+static void
+s_panelspot_set_send_draw(POA_GNOME_PanelSpot *servant,
+			  CORBA_boolean enable,
+			  CORBA_Environment *ev)
+{
+	Extern *ext = (Extern *)servant;
+
+	g_assert(ext);
+	
+	ext->send_draw = enable?TRUE:FALSE;
+}
+
+static GNOME_Panel_RgbImage *
+s_panelspot_get_rgb_background(POA_GNOME_PanelSpot *servant,
+			       CORBA_Environment *ev)
+{
+	Extern *ext = (Extern *)servant;
+	PanelWidget *panel;
+	GNOME_Panel_RgbImage *image;
+	int w, h, rowstride;
+	guchar *rgb;
+
+	g_assert(ext);
+	g_assert(ext->info);
+
+	panel = PANEL_WIDGET(ext->info->widget->parent);
+
+	panel_widget_get_applet_rgb_bg(panel, ext->ebox,
+				       &rgb,&w,&h,&rowstride);
+		
+	image = GNOME_Panel_RgbImage__alloc();
+	image->data._buffer = CORBA_sequence_CORBA_octet_allocbuf(h*rowstride);
+	memcpy(image->data._buffer,rgb,sizeof(guchar)*h*rowstride);
+	image->width = w;
+	image->height = h;
+	image->rowstride = rowstride;
+	return image;
 }
 
 static void
@@ -1121,4 +1196,43 @@ panel_corba_gtk_init(CORBA_ORB panel_orb)
   g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
 
   return status;
+}
+
+static void
+send_draw(Extern *ext)
+{
+	CORBA_Environment ev;
+
+	CORBA_exception_init(&ev);
+	GNOME_Applet_draw(ext->applet, &ev);
+	if(ev._major)
+		panel_clean_applet(ext->info);
+	CORBA_exception_free(&ev);
+}
+
+static int
+send_draw_timeout(gpointer data)
+{
+	Extern *ext = data;
+	if(ext->send_draw_queued == TRUE) {
+		ext->send_draw_queued = FALSE;
+		send_draw(ext);
+		return TRUE;
+	}
+	ext->send_draw_timeout = 0;
+	return FALSE;
+}
+
+void
+extern_send_draw(Extern *ext)
+{
+	if(!ext || !ext->applet || !ext->send_draw)
+		return;
+	if(!ext->send_draw_timeout) {
+		ext->send_draw_queued = FALSE;
+		send_draw(ext);
+		ext->send_draw_timeout =
+			gtk_timeout_add(1000,send_draw_timeout,ext);
+	} else 
+		ext->send_draw_queued = TRUE;
 }

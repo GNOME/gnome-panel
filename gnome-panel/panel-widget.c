@@ -131,10 +131,11 @@ enum {
 	APPLET_ADDED_SIGNAL,
 	APPLET_REMOVED_SIGNAL,
 	BACK_CHANGE_SIGNAL,
+	APPLET_DRAW_SIGNAL,
 	LAST_SIGNAL
 };
 
-static int panel_widget_signals[LAST_SIGNAL] = {0,0,0,0,0};
+static int panel_widget_signals[LAST_SIGNAL] = {0};
 static GtkFixedClass *parent_class = NULL;
 
 
@@ -224,6 +225,16 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       3,
 			       GTK_TYPE_ENUM,
 			       GTK_TYPE_POINTER,
+			       GTK_TYPE_POINTER);
+	panel_widget_signals[APPLET_DRAW_SIGNAL] =
+		gtk_signal_new("applet_draw",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
+			       			 applet_draw),
+			       gtk_marshal_NONE__POINTER,
+			       GTK_TYPE_NONE,
+			       1,
 			       GTK_TYPE_POINTER);
 	gtk_object_class_add_signals(object_class,panel_widget_signals,
 				     LAST_SIGNAL);
@@ -895,6 +906,57 @@ kill_cache_on_all_buttons(PanelWidget *panel, int even_no_alpha)
 	}
 }
 
+static void
+setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
+		 gboolean *rotate)
+{
+	GtkWidget *widget = GTK_WIDGET(panel);
+	GdkPixmap *bg_pixmap;
+	
+	*pb = NULL;
+	*scale_w = *scale_h = 0;
+	*rotate = FALSE;
+
+	bg_pixmap = widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)];
+
+	if(panel->back_type == PANEL_BACK_NONE) {
+		if(bg_pixmap && !panel->backpix) {
+			if(panel->backpix)
+				gdk_pixbuf_unref(panel->backpix);
+			panel->backpix = my_gdk_pixbuf_rgb_from_drawable(bg_pixmap);
+			kill_cache_on_all_buttons(panel, FALSE);
+		} else if(!bg_pixmap && panel->backpix) {
+			if(panel->backpix)
+				gdk_pixbuf_unref(panel->backpix);
+			panel->backpix = NULL;
+			kill_cache_on_all_buttons(panel, FALSE);
+		}
+		*pb = panel->backpix;
+	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
+		if(!panel->backpixmap)
+			panel_resize_pixmap(panel);
+
+		*pb = panel->backpix;
+
+		if(panel->fit_pixmap_bg ||
+		   panel->strech_pixmap_bg) {
+			*scale_w = panel->scale_w;
+			*scale_h = panel->scale_h;
+			if(panel->orient == PANEL_VERTICAL &&
+			   panel->rotate_pixmap_bg)
+				*rotate = TRUE;
+		} else {
+			if(panel->orient == PANEL_VERTICAL &&
+			   panel->rotate_pixmap_bg) {
+				/* we need to set scales to rotate*/
+				*scale_w = (*pb)->art_pixbuf->width;
+				*scale_h = (*pb)->art_pixbuf->height;
+				*rotate = TRUE;
+			}
+		}
+	} 
+}
+
 void
 panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 {
@@ -902,7 +964,6 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	GtkWidget *widget;
 	GdkGC *gc;
 	GdkPixmap *pixmap;
-	GdkPixmap *bg_pixmap;
 	GdkRectangle da;
 	GdkPixbuf *pb = NULL;
 	int size;
@@ -933,45 +994,8 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 		da.width = widget->allocation.width;
 		da.height = widget->allocation.height;
 	}
-	
-	bg_pixmap = widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)];
 
-	if(panel->back_type == PANEL_BACK_NONE) {
-		if(bg_pixmap && !panel->backpix) {
-			if(panel->backpix)
-				gdk_pixbuf_unref(panel->backpix);
-			panel->backpix = my_gdk_pixbuf_rgb_from_drawable(bg_pixmap);
-			kill_cache_on_all_buttons(panel, FALSE);
-		} else if(!bg_pixmap && panel->backpix) {
-			if(panel->backpix)
-				gdk_pixbuf_unref(panel->backpix);
-			panel->backpix = NULL;
-			kill_cache_on_all_buttons(panel, FALSE);
-		}
-		pb = panel->backpix;
-	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
-		if(!panel->backpixmap)
-			panel_resize_pixmap(panel);
-
-		pb = panel->backpix;
-
-		if(panel->fit_pixmap_bg ||
-		   panel->strech_pixmap_bg) {
-			scale_w = panel->scale_w;
-			scale_h = panel->scale_h;
-			if(panel->orient == PANEL_VERTICAL &&
-			   panel->rotate_pixmap_bg)
-				rotate = TRUE;
-		} else {
-			if(panel->orient == PANEL_VERTICAL &&
-			   panel->rotate_pixmap_bg) {
-				/* we need to set scales to rotate*/
-				scale_w = pb->art_pixbuf->width;
-				scale_h = pb->art_pixbuf->height;
-				rotate = TRUE;
-			}
-		}
-	} 
+	setup_background(panel, &pb, &scale_w, &scale_h, &rotate);
 	
 	pixmap = gdk_pixmap_new(widget->window,
 				da.width,da.height,
@@ -1006,6 +1030,9 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	for(li = panel->applet_list; li != NULL;
 	    li = g_list_next(li)) {
 		AppletData *ad = li->data;
+		gtk_signal_emit(GTK_OBJECT(panel),
+				panel_widget_signals[APPLET_DRAW_SIGNAL],
+				ad->applet);
 		if(IS_BUTTON_WIDGET(ad->applet) &&
 		   ad->applet->allocation.x>=0 &&
 		   (!area || gtk_widget_intersect(ad->applet, area, NULL))) {
@@ -2715,3 +2742,47 @@ panel_widget_change_global(int explicit_step,
 			gtk_widget_queue_resize(li->data);
 	}
 }
+
+void
+panel_widget_get_applet_rgb_bg(PanelWidget *panel,
+			       GtkWidget *applet,
+			       guchar **rgb,
+			       int *w, int *h,
+			       int *rowstride)
+{
+	GtkWidget *widget;
+
+	GdkPixbuf *pb = NULL;
+
+	int scale_w = 0,scale_h = 0;
+	int rotate = FALSE;
+	
+	*rgb = NULL;
+	*w = *h = *rowstride = 0;
+
+	g_return_if_fail(panel!=NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(panel));
+	g_return_if_fail(applet!=NULL);
+	g_return_if_fail(GTK_IS_WIDGET(applet));
+
+	widget = GTK_WIDGET(panel);
+
+	if(!GTK_WIDGET_DRAWABLE(widget) ||
+	   widget->allocation.width <= 0 ||
+	   widget->allocation.height <= 0)
+		return;
+
+	setup_background(panel, &pb, &scale_w, &scale_h, &rotate);
+	
+	*w = applet->allocation.width;
+	*h = applet->allocation.height;
+	*rowstride = applet->allocation.width*3;
+
+	*rgb = g_new0(guchar, (*h)*(*rowstride));
+
+	make_background(panel, *rgb,
+			applet->allocation.x,
+			applet->allocation.y,
+			*w,*h, pb, scale_w, scale_h, rotate);
+}
+

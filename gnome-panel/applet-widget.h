@@ -17,6 +17,7 @@
 #define HAVE_APPLET_BIND_EVENTS 1
 #define HAVE_PANEL_SIZE 1
 #define HAVE_PANEL_PIXEL_SIZE 1
+#define HAVE_PANEL_DRAW_SIGNAL 1
 
 BEGIN_GNOME_DECLS
 
@@ -131,6 +132,15 @@ struct _AppletWidgetClass
 	/* when the panel size changes, semantics are the same as above */
 	void (* change_pixel_size) (AppletWidget *applet,
 				    int size);
+	
+	/* done when we are requesting draws, only useful if you want
+	   to get rgb data of the background to draw yourself on, this
+	   signal is called when that data would be different and you
+	   should reget it and redraw, you should use the
+	   applet_widget_get_rgb_bg function to get rgb background for
+	   you to render on, you need to use applet_widget_send_draw 
+	   to enable this signal */
+	void (* do_draw) (AppletWidget *applet);
 };
 
 typedef GtkWidget *(*AppletFactoryActivator)(const char *goad_id, const char **params, int nparams);
@@ -241,6 +251,16 @@ int		applet_widget_get_free_space	(AppletWidget *applet);
 /* sets if the change_position signal is sent*/
 void		applet_widget_send_position	(AppletWidget *applet,
 						 int enable);
+
+/* sets if the do_draw signal is sent*/
+void		applet_widget_send_draw		(AppletWidget *applet,
+						 int enable);
+
+/* gets the rgb background, useful in conjunction with the do_draw signal */
+void		applet_widget_get_rgb_bg	(AppletWidget *applet,
+						 guchar **rgb,
+						 int *w, int *h,
+						 int *rowstride);
 
 /*use this instead of gnome init, if you want multi applet, you also
   have to specify a "start new applet" function which will launch a new
