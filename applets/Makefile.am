@@ -1,6 +1,6 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon asclock \
 	 fish netload dialer webcontrol icewm-pager \
-	 drivemount clockmail fifteen battery charpick @FVWM_PAGER@
+	 drivemount clockmail fifteen battery charpick 
 
 if HAVE_LIBGTOP
 libgtop_SUBDIRS = cpuload cpumemusage diskusage multiload
@@ -24,6 +24,10 @@ if APPLET_MODEMLIGHTS
 modemlights = modemlights
 endif
 
+if APPLET_FVWM_PAGER
+fvwm_pager = fvwm-pager
+endif
+
 if FALSE
 # not yet ready for primetime?
 winlist = winlist
@@ -31,4 +35,4 @@ endif
 
 SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
 	 $(cdplayer) $(mixer) $(modemlights) $(winlist) \
-         $(bussign)
+         $(bussign) $(fvwm_pager)
