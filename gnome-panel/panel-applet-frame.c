@@ -209,41 +209,45 @@ panel_applet_frame_get_expand_flags (PanelAppletFrame *frame,
 	*expand_minor = flags & APPLET_EXPAND_MINOR;
 }
 
-int *
-panel_applet_frame_get_size_hints (PanelAppletFrame *frame,
-				   int              *n_elements)
+int 
+panel_applet_frame_get_size_hints (PanelAppletFrame  *frame,
+				   int              **size_hints)
 {
-	CORBA_any *value;
 	CORBA_sequence_CORBA_long *seq;
-	int *size_hints;
-	int extra_size;
-	int i;
+	CORBA_any                 *value;
+	int                        retval = 0;
+	int                        extra_size = 0;
+	int                        i;
 
-	*n_elements = 0;
+
+	g_return_val_if_fail (PANEL_IS_APPLET_FRAME (frame), 0);
+	g_return_val_if_fail (size_hints != NULL, 0);
+
+	*size_hints = NULL;
+
 	value = bonobo_pbclient_get_value (frame->priv->property_bag,
 					   "panel-applet-size-hints",
 					   TC_CORBA_sequence_CORBA_long,
 					   NULL);
 	
 	if (value == NULL)
-		return NULL;
+		return retval;
 
 	seq = value->_value;
 
-	*n_elements = seq->_length;
-	size_hints = g_new (int, seq->_length);
+	retval = seq->_length;
+	*size_hints = g_new (int, seq->_length);
 
 	extra_size = 0;
 	if (panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE)
 		extra_size = HANDLE_SIZE + 1;
 	
-	for (i = 0; i < seq->_length; i++) {
-		size_hints[i] = seq->_buffer[i] + extra_size;
-	}
+	for (i = 0; i < seq->_length; i++)
+		(*size_hints) [i] = seq->_buffer [i] + extra_size;
 	
 	CORBA_free (value);
 	
-	return size_hints;
+	return retval;
 }
 
 void

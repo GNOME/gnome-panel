@@ -678,20 +678,23 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 
 /*get the list item of the data on the position pos*/
 static GList *
-get_applet_list_pos(PanelWidget *panel, int pos)
+get_applet_list_pos (PanelWidget *panel,
+		     int          pos)
 {
-	GList *list;
+	GList *l;
 
-	g_return_val_if_fail(PANEL_IS_WIDGET(panel),NULL);
+	g_return_val_if_fail (PANEL_IS_WIDGET (panel), NULL);
 	
-	for(list=panel->applet_list;list!=NULL;list=g_list_next(list)) {
-		AppletData *ad = list->data;
-		if(ad->pos <= pos) {
-		       if(ad->pos+ad->cells > pos)
-			       return list;
+	for (l = panel->applet_list; l; l = l->next) {
+		AppletData *ad = l->data;
+
+		if (ad->pos <= pos) {
+		       if (ad->pos + ad->cells > pos)
+			       return l;
 		} else
 			return NULL;
 	}
+
 	return NULL;
 }
 
@@ -770,18 +773,28 @@ allocate_dirty_child(gpointer data)
 	challoc.width = chreq.width;
 	challoc.height = chreq.height;
 	if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-		if (ad->expand_minor) {
+		if (ad->expand_minor)
 			challoc.height = GTK_WIDGET (panel)->allocation.height;
-		}
-		ad->cells = chreq.width; 
+
+		if (panel->packed && ad->expand_major && ad->size_hints)
+			challoc.width = CLAMP (MAX (ad->size_hints [0], chreq.width),
+					       chreq.width,
+					       GTK_WIDGET (panel)->allocation.width - ad->pos);
+
+		ad->cells = challoc.width; 
 		challoc.x = ad->pos;
 		challoc.y = GTK_WIDGET(panel)->allocation.height / 2 -
 			     challoc.height / 2;
 	} else {
-		if (ad->expand_minor) {
+		if (ad->expand_minor)
 			challoc.width = GTK_WIDGET (panel)->allocation.width;
-		}
-		ad->cells = chreq.height;
+
+		if (panel->packed && ad->expand_major && ad->size_hints)
+			challoc.height = CLAMP (MAX (ad->size_hints [0], chreq.height),
+						chreq.height,
+						GTK_WIDGET (panel)->allocation.height - ad->pos);
+
+		ad->cells = challoc.height;
 		challoc.x = GTK_WIDGET(panel)->allocation.width / 2 -
 			    challoc.width / 2;
 		challoc.y = ad->pos;
@@ -1158,22 +1171,31 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		gtk_widget_size_request(ad->applet,&chreq);
 
 		if (ad->expand_major && PANEL_IS_APPLET_FRAME (ad->applet)) {
-			if (ad->size_hints != NULL)
-				g_free (ad->size_hints);
-			ad->size_hints = panel_applet_frame_get_size_hints (PANEL_APPLET_FRAME (ad->applet),
-									    &ad->size_hints_len);
+			g_free (ad->size_hints);
+
+			ad->size_hints_len =
+				panel_applet_frame_get_size_hints (
+					PANEL_APPLET_FRAME (ad->applet), &ad->size_hints);
 		}
 		
-		if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-			if(requisition->height < chreq.height)
+		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
+			if (requisition->height < chreq.height)
 				requisition->height = chreq.height;
-			if(panel->packed)
-				requisition->width += chreq.width; 
+
+			if (panel->packed && ad->expand_major && ad->size_hints)
+				requisition->width += MAX (ad->size_hints [0], chreq.width); 
+
+			else if (panel->packed)
+				requisition->width += chreq.width;
 		} else {
-			if(requisition->width < chreq.width)
+			if (requisition->width < chreq.width)
 				requisition->width = chreq.width;
-			if(panel->packed)
-				requisition->height += chreq.height; 
+
+			if (panel->packed && ad->expand_major && ad->size_hints)
+				requisition->height += MAX (ad->size_hints [0], chreq.height);
+
+			else if (panel->packed)
+				requisition->height += chreq.height;
 		}
 	}
 
@@ -1319,13 +1341,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	
 	panel = PANEL_WIDGET(widget);
 
-#ifdef PANEL_WIDGET_DEBUG
-	puts("PANEL_WIDGET_SIZE_ALLOCATE");
-	printf("allocation %d x %d\n",
-	       allocation->width,
-	       allocation->height);
-#endif
-
 	/* allow drawing if it was inhibited */
 	panel->inhibit_draw = FALSE;
 	
@@ -1366,17 +1381,27 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			challoc.width = chreq.width;
 			challoc.height = chreq.height;
 			if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-				if (ad->expand_minor) {
+				if (ad->expand_minor)
 					challoc.height = allocation->height;
-				}
-				ad->cells = chreq.width;
+
+				if (ad->expand_major && ad->size_hints)
+					challoc.width = CLAMP (MAX (ad->size_hints [0], chreq.width),
+							       chreq.width,
+							       allocation->width - i);
+
+				ad->cells = challoc.width;
 				challoc.x = ad->pos;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
-				if (ad->expand_minor) {
+				if (ad->expand_minor)
 					challoc.width = allocation->width;
-				}
-				ad->cells = chreq.height;
+
+				if (ad->expand_major && ad->size_hints)
+					challoc.height = CLAMP (MAX (ad->size_hints [0], chreq.height),
+								chreq.height,
+								allocation->height - i);
+
+				ad->cells = challoc.height;
 				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->pos;
 			}

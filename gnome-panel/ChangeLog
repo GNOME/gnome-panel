@@ -1,3 +1,17 @@
+2002-08-11  Mark McLoughlin  <mark@skynet.ie>
+
+	* edge-widget.c: (edge_widget_new): hey ! edge widgets
+	shouldn't have packed PanelWidgets should they? Well,
+	they have since Aug99 ... very, very confused.
+
+	* panel-applet-frame.[ch]: (panel_applet_frame_get_size_hints):
+	return the number of hints, not the hints themselves.
+
+	* panel-widget.c:
+	(allocate_dirty_child), (panel_widget_size_request),
+	(panel_widget_size_allocate): handle expanding applets
+	on 'packed' panels. Fixes #89266.
+
 2002-08-07 Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* menu.c (create_new_panel): Call gtk_window_present() to give
