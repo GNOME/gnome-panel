@@ -942,12 +942,16 @@ extract_filename (const gchar* uri)
 }
 
 static void
-drop_url(PanelWidget *panel, int pos, char *url)
+drop_url(PanelWidget *panel, int pos, const char *url)
 {
-	char *p = g_strdup_printf (_("Open URL: %s"), url);
+	char *p;
+
+	g_return_if_fail (url != NULL);
+
+	p = g_strdup_printf (_("Open URL: %s"), url);
 	load_launcher_applet_from_info_url (url, p, url, "gnome-globe.png",
 					    panel, pos, TRUE);
-	g_free(p);
+	g_free (p);
 }
 
 static void

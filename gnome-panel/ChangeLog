@@ -1,3 +1,17 @@
+Tue May 08 12:41:41 2001  George Lebl <jirka@5z.com>
+
+	* extern.c, foobar-widget.c, gnome-panel-properties.c, launcher.c,
+	  logout.c, menu-rh.c, menu.c, panel-util.c, panel.c:  Increase
+	  the paranoia level when dealing with strings.  Add an assload of
+	  checks for NULLs some preconditions asserts and warnings, possibly
+	  fixing some cornercase crashes.
+
+	* foobar-widget.c: Fix the "clicked on foobar tasklist and things
+	  crashed" bug
+
+	* menu-fentry.c:  Fix the crashes on startup bug (the /tmp/languages
+	  bug).  I should be publically flogged for this one.
+
 Tue May 08 01:45:32 2001  George Lebl <jirka@5z.com>
 
 	* launcher.c: some cleanup, and be paranoid about dentry we get

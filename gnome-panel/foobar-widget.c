@@ -695,6 +695,7 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 	char *title = NULL;
 	int slen;
 	GtkWidget *pixmap  = NULL;
+	char *name;
 
 	static GwmhDesk *desk = NULL;
 
@@ -702,16 +703,23 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 
 	if (GWMH_TASK_SKIP_WINLIST (task))
 		return;
-	/*g_message ("task: %s", task->name);*/
-	slen = strlen (task->name);
-	if (slen > 443)
-		title = g_strdup_printf ("%.420s...%s", task->name, task->name+slen-20);
+	if (task->name != NULL) {
+		slen = strlen (task->name);
+		if (slen > 443)
+			title = g_strdup_printf ("%.420s...%s", task->name, task->name+slen-20);
+		else
+			title = g_strdup (task->name);
+	} else {
+		/* Translators: Task with no name, should not really happen, so
+		 * this should signal that the panel is confused by this task
+		 * (thus question marks) */
+		title = g_strdup (_("???"));
+	}
 
 	if (GWMH_TASK_ICONIFIED (task)) {
 		char *tmp = title;
-		title = g_strdup_printf ("[%s]", title ? title : task->name);
-		if (tmp)
-			g_free (tmp);
+		title = g_strdup_printf ("[%s]", title);
+		g_free (tmp);
 	}
 	
 	item = gtk_pixmap_menu_item_new ();
@@ -722,7 +730,7 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 						 pixmap);
 	}
 
-	label = gtk_label_new (title ? title : task->name);
+	label = gtk_label_new (title);
 	g_free (title);
 
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -868,7 +876,7 @@ task_notify (gpointer data, GwmhTask *task,
 				gtk_widget_hide (item);
 			} else {
 				g_warning ("Could not find item for task '%s'",
-					   task->name);
+					   sure_string (task->name));
 			}
 		}
 		break;

@@ -38,20 +38,6 @@ extern char *merge_merge_dir;
 
 extern GlobalConfig global_config;
 
-static void
-print_languages (void)
-{
-	FILE *out = fopen ("/tmp/languages", "a");
-	GList *list = gnome_i18n_get_language_list ("LC_MESSAGES");
-		fprintf (out, "START\n");
-	while (list) {
-		fprintf (out, "%s\n", (char *)list->data);
-		list = list->next;
-	}
-		fprintf (out, "END\n");
-	fclose (out);
-}
-
 void
 init_fr_chunks (void)
 {
@@ -434,7 +420,6 @@ fr_fill_dir(FileRec *fr, int sublevels)
 			tryexec_path = NULL;
 
 			dentry = gnome_desktop_entry_load_unconditional (name);
-			print_languages ();
 			if (dentry != NULL &&
 			    dentry->tryexec != NULL) {
 				tryexec_path = panel_is_program_in_path (dentry->tryexec);
@@ -542,7 +527,6 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 	    stat (fname, &s) != -1) {
 		GnomeDesktopEntry *dentry;
 		dentry = gnome_desktop_entry_load(fname);
-		print_languages ();
 		if (dentry != NULL) {
 			g_free (fr->icon);
 			fr->icon = dentry->icon;
@@ -707,7 +691,6 @@ fr_check_and_reread (FileRec *fr)
 				if(ddr->dentrymtime != s.st_mtime) {
 					GnomeDesktopEntry *dentry;
 					dentry = gnome_desktop_entry_load(p);
-					print_languages ();
 					if(dentry) {
 						g_free(ffr->icon);
 						ffr->icon = dentry->icon;
@@ -742,7 +725,6 @@ fr_check_and_reread (FileRec *fr)
 				if(ffr->mtime != s.st_mtime) {
 					GnomeDesktopEntry *dentry;
 					dentry = gnome_desktop_entry_load(ffr->name);
-					print_languages ();
 					if (dentry != NULL) {
 						/* take over memory */
 						g_free (ffr->icon);

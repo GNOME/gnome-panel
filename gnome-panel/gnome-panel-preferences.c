@@ -1237,6 +1237,9 @@ loadup_vals (void)
 	};
 	int i;
 	gboolean def;
+
+	/* look at tile_def, this asserts 4 */
+	g_assert (LAST_TILE == 4);
 	
 	buf = g_string_new(NULL);
 

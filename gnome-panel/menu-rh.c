@@ -298,7 +298,7 @@ make_rh_submenu(char *dir, GSList *rhlist)
 
 			p = g_concat_dir_and_file(dir,s);
 			g_free(s);
-			if(fp) fprintf(fp,"%s\n",g_basename(p));
+			if(fp) fprintf(fp,"%s\n",sure_string(g_basename(p)));
 			mkdir(p,0755);
 			dentry.location = g_concat_dir_and_file(p,".directory");
 			

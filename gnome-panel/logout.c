@@ -44,6 +44,8 @@ drag_data_get_cb (GtkWidget          *widget,
 	char *type = data;
 	char *foo;
 
+	g_return_if_fail (type != NULL);
+
 	foo = g_strdup_printf ("%s:%d", type, find_applet (widget));
 
 	gtk_selection_data_set (selection_data,

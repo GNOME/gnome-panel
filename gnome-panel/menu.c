@@ -318,7 +318,8 @@ copy_fr_dir (DirRec *dr, const char *to)
 			continue;
 		}
 
-		if (order_file != NULL)
+		if (order_file != NULL &&
+		    g_basename (fr->name) != NULL)
 			fprintf (order_file, "%s\n", g_basename (fr->name));
 	}
 
@@ -721,11 +722,13 @@ really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 	char *file, *dir = gtk_object_get_data(GTK_OBJECT(d), "dir");
 	GnomeDesktopEntry *dentry;
 	FILE *fp;
-	
+
 	if (button != 0) {
 		gtk_widget_destroy (d);
 		return;
 	}
+
+	g_return_if_fail (dir != NULL);
 
 	dentry = gnome_dentry_get_dentry (dedit);
 
@@ -747,6 +750,11 @@ really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 		int i = 2;
 		char *name = g_strdup (dentry->name);
 
+		if (string_empty (name)) {
+			g_free (name);
+			name = g_strdup ("huh-no-name");
+		}
+
 		validate_for_filename (name);
 
 		dentry->location = g_strdup_printf ("%s/%s.desktop",
@@ -761,7 +769,7 @@ really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 		g_free (name);
 	}
 
-	g_print ("location: %s\n", dentry->location);
+	g_assert (dentry->location != NULL);
 
 	file = g_concat_dir_and_file (dir, ".order");
 	fp = fopen (file, "a");
@@ -1644,7 +1652,9 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 				menuitem = gtk_menu_item_new ();
 				gtk_widget_lock_accelerators (menuitem);
 				title = g_strdup_printf (_("Help on %s"),
-							 ii->name);
+							 ii->name != NULL ?
+							 ii->name :
+							 _("Application"));
 				setup_menuitem (menuitem, 0, title);
 				g_free (title);
 				gtk_menu_append (GTK_MENU (sim->menu),

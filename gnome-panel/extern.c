@@ -800,6 +800,12 @@ get_us_position (const int panel, const int pos, const char *goad_id, int *newpo
 
 	*newpos = pos;
 
+	/* Sanity? can this ever happen? */
+	if (goad_id == NULL) {
+		g_warning ("get_us_position: goad_id == NULL, bad bad");
+		goad_id = "foo";
+	}
+
 	if (panel < 0 || pos < 0) {
 		char *key = g_strdup_printf ("%sApplet_Position_Memory/%s/",
 					     PANEL_CONFIG_PATH,
@@ -1990,6 +1996,9 @@ extern_save_last_position (Extern *ext, gboolean sync)
 	char *key;
 	int panel_num;
 	AppletData *ad;
+
+	if (ext->goad_id == NULL)
+		return;
 
 	/* Here comes a hack.  We probably want the next applet to load at
 	 * a similar location.  If none is given.  Think xchat, or any

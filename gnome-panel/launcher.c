@@ -472,7 +472,9 @@ properties_apply (Launcher *launcher)
 		g_free (docpath);
 
 		title = g_strdup_printf (_("Help on %s"),
-					 launcher->dentry->name);
+					 launcher->dentry->name != NULL ?
+					 launcher->dentry->name :
+					 _("Application"));
 
 		applet_add_callback (launcher->info, "help_on_app",
 				     GNOME_STOCK_PIXMAP_HELP,
@@ -663,7 +665,9 @@ load_launcher_applet_full (const char *params, GnomeDesktopEntry *dentry,
 		g_free (docpath);
 
 		title = g_strdup_printf (_("Help on %s"),
-					 launcher->dentry->name);
+					 launcher->dentry->name != NULL ?
+					 launcher->dentry->name :
+					 _("Application"));
 
 		applet_add_callback (applets_last->data, "help_on_app",
 				     GNOME_STOCK_PIXMAP_HELP,
@@ -863,9 +867,10 @@ convert_dentry_to_gnome (GnomeDesktopEntry *dentry)
 		if (strcmp (dentry->exec[i], "\"%c\"") == 0 ||
 		    strcmp (dentry->exec[i], "%c") == 0) {
 			g_free (dentry->exec[i]);
-			dentry->exec[i] = g_strdup_printf ("'%s'", dentry->name);
+			dentry->exec[i] = g_strdup_printf ("'%s'",
+							   sure_string (dentry->name));
 		} else if (dentry->exec[i][0] == '%' &&
-		    strlen(dentry->exec[i]) == 2) {
+			   strlen(dentry->exec[i]) == 2) {
 			g_free (dentry->exec[i]);
 			dentry->exec[i] = g_strdup ("");
 		}
@@ -921,6 +926,7 @@ launcher_file_name (const char *base)
 #warning FIXME: per session config must be done for launchers
 #endif
 #else
+	g_return_val_if_fail (base != NULL, NULL);
 	return g_strdup_printf ("%s/.gnome/panel.d/default/launchers/%s",
 				g_get_home_dir (),
 				base);

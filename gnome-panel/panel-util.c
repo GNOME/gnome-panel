@@ -822,9 +822,14 @@ panel_error_dialog (const char *format, ...)
 	char *s;
 	va_list ap;
 
-	va_start (ap, format);
-	s = g_strdup_vprintf (format, ap);
-	va_end (ap);
+	if (format == NULL) {
+		g_warning ("NULL error dialog");
+		s = g_strdup ("(null)");
+	} else {
+		va_start (ap, format);
+		s = g_strdup_vprintf (format, ap);
+		va_end (ap);
+	}
 
 	w = gnome_error_dialog (s);
 	g_free (s);
