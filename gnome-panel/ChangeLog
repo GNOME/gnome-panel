@@ -1,3 +1,16 @@
+2001-06-06  Anders Carlsson  <andersca@codefactory.se>
+
+	* gnome-panel-screenshot.c (add_file_to_path): If we have a
+	class_name that is not NULL, append it to the file name.
+	(find_toplevel_window): New function to find a toplevel window,
+	ie the window that stores the WM_CLASS hint that we want
+	to use.
+	(take_window_shot): Check if the window being captured has
+	got a toplevel that has a WM_CLASS hint defined and get the
+	window class name from it in that case.
+	(drag_begin): Add the screenshot preview as a drag icon
+	pixmap.
+
 Mon Jun  4 22:49:13 2001  Jonathan Blandford  <jrb@webwynk.net>
 
 	* gnome-panel-screenshot.c (print_pixbuf): Small change to set
