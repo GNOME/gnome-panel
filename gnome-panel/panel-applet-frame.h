@@ -55,18 +55,6 @@ struct _PanelAppletFrameClass {
 
 GType      panel_applet_frame_get_type  (void) G_GNUC_CONST;
 
-GtkWidget *panel_applet_frame_new       (PanelWidget *panel,
-					 const char  *iid,
-					 const char  *id);
-
-GtkWidget *panel_applet_frame_construct (PanelAppletFrame *frame,
-					 PanelWidget      *panel,
-					 const char       *iid,
-					 const char       *id);
-
-void       panel_applet_frame_set_info  (PanelAppletFrame *frame,
-					 AppletInfo       *info);
-					
 void       panel_applet_frame_create    (PanelToplevel    *toplevel,
 					 int               position,
 					 const char       *iid);
@@ -85,13 +73,8 @@ void       panel_applet_frame_load_from_gconf   (PanelWidget *panel_widget,
 						 int          position,
 						 const char  *id);
 
-int        panel_applet_frame_get_size_hints    (PanelAppletFrame  *frame,
-						 int              **size_hints);
-
 void            panel_applet_frame_set_panel (PanelAppletFrame *frame,
 					      PanelWidget      *panel);
-PanelWidget    *panel_applet_frame_get_panel (PanelAppletFrame *frame);
-
 
 G_END_DECLS
 

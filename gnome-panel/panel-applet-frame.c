@@ -75,6 +75,14 @@ struct _PanelAppletFramePrivate {
 	guint                           has_handle : 1;
 };
 
+typedef struct {
+	PanelAppletFrame *frame;
+	gboolean          locked;
+	int               position;
+	gboolean          exactpos;
+	char             *id;
+} PanelAppletFrameActivating;
+
 static GObjectClass *parent_class;
 
 /* Keep in sync with panel-applet.h. Uggh.
@@ -88,6 +96,15 @@ typedef enum {
 
 static void panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 					   PanelAppletFrame *frame);
+
+static char *panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
+						   PanelWidget      *panel,
+						   const char       *iid,
+						   const char       *id);
+
+static void panel_applet_frame_activated (Bonobo_Unknown     object,
+					  CORBA_Environment *ev,
+					  gpointer          *data);
 
 static void
 panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
@@ -280,34 +297,38 @@ panel_applet_frame_load (const gchar *iid,
 			 gboolean     exactpos,
 			 const char  *id)
 {
-	PanelAppletFrame *frame;
-	GtkWidget        *widget;
-	AppletInfo       *info;
+	PanelAppletFrame           *frame;
+	CORBA_Environment           ev;
+	char                       *moniker;
+	PanelAppletFrameActivating *frame_act;
 
 	g_return_if_fail (iid != NULL);
 	g_return_if_fail (panel != NULL);
 	g_return_if_fail (id != NULL);
 
-	widget = panel_applet_frame_new (panel, iid, id);
-	if (!widget)
+	if (panel_lockdown_is_applet_disabled (iid))
 		return;
-	
-	gtk_widget_show_all (widget);
 
-	info = panel_applet_register (widget, widget, NULL,
-				      panel, locked, position,
-				      exactpos, PANEL_OBJECT_BONOBO, id);
+	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
+	frame->priv->panel = panel;
+	frame->priv->iid   = g_strdup (iid);
 
-	panel_widget_set_applet_size_constrained (panel, widget, TRUE);
+	frame_act = g_new (PanelAppletFrameActivating, 1);
+	frame_act->frame    = frame;
+	frame_act->locked   = locked;
+	frame_act->position = position;
+	frame_act->exactpos = exactpos;
+	frame_act->id       = g_strdup (id);
 
-	frame = PANEL_APPLET_FRAME (widget);
+	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, id);
 
-	panel_applet_frame_set_info (frame, info);
-	panel_applet_frame_sync_menu_state (frame);
-	panel_applet_frame_init_properties (frame);
+	CORBA_exception_init (&ev);
 
-	panel_lockdown_notify_add (G_CALLBACK (panel_applet_frame_sync_menu_state),
-				   frame);
+	bonobo_get_object_async (moniker, "IDL:Bonobo/Control:1.0", &ev,
+				 (BonoboMonikerAsyncFn) panel_applet_frame_activated,
+				 frame_act);
+
+	g_free (moniker);
 }
 
 void
@@ -440,13 +461,6 @@ panel_applet_frame_change_background (PanelAppletFrame    *frame,
 
 		g_free (bg_str);
 	}
-}
-
-void
-panel_applet_frame_set_info (PanelAppletFrame *frame,
-			     AppletInfo       *info)
-{
-	frame->priv->applet_info = info;
 }
 
 static void
@@ -931,55 +945,42 @@ enum {
 	LOADING_FAILED_RESPONSE_DONT_DELETE,
 	LOADING_FAILED_RESPONSE_DELETE
 };
+ 
+static void
+panel_applet_frame_loading_failed_response (GtkWidget *dialog,
+					    guint      response,
+					    char      *id)
+{
+	gtk_widget_destroy (dialog);
+
+	if (response == LOADING_FAILED_RESPONSE_DELETE &&
+	    !panel_lockdown_get_locked_down () &&
+	    panel_profile_id_lists_are_writable ())
+		panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
+
+	g_free (id);
+}
 
 static void
 panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
-				   CORBA_Environment *ev,
-				   const char        *iid,
-				   const char        *id,
-				   GtkWindow         *panel)
+				   const char        *id)
 {
 	GtkWidget *dialog;
-	int        response;
 	char      *problem_txt;
 	gboolean   locked_down;
 
 	locked_down = panel_lockdown_get_locked_down ();
+	register_stock_item ();
 
 	problem_txt = g_strdup_printf (_("The panel encountered a problem "
-					 "while loading \"%s\"."), iid);
+					 "while loading \"%s\"."),
+				       frame->priv->iid);
 
-	if (ev != NULL) {
-		char *error = bonobo_exception_get_text (ev);
-		char *detail_txt = g_strdup_printf (_("Details: %s"), error);
-
-		dialog = gtk_message_dialog_new (
-					NULL, 0,
-					locked_down ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
-					GTK_BUTTONS_NONE,
-					"%s\n%s%s",
-					problem_txt,
-					detail_txt,
-					locked_down ? "" :
-					_("\n\n"
-					  "Do you want to delete the applet "
-					  "from your configuration?"));
-		g_free (error);
-		g_free (detail_txt);
-	} else {
-		dialog = gtk_message_dialog_new (
-					NULL, 0,
-					locked_down ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
-					GTK_BUTTONS_NONE,
-					"%s%s",
-					problem_txt,
-					locked_down ? "" :
-					_("\n\n"
-					  "Do you want to delete the applet "
-					  "from your configuration?"));
-	}
-
-	register_stock_item ();
+	dialog = gtk_message_dialog_new (NULL, 0,
+					 locked_down ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
+					 GTK_BUTTONS_NONE,
+					 problem_txt);
+	g_free (problem_txt);
 
 	if (locked_down) {
 		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
@@ -987,6 +988,9 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 					NULL);
 		gtk_dialog_set_default_response (GTK_DIALOG (dialog), LOADING_FAILED_RESPONSE_DONT_DELETE);
 	} else {
+		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+					_("Do you want to delete the applet "
+					  "from your configuration?"));
 		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 					PANEL_STOCK_DONT_DELETE, LOADING_FAILED_RESPONSE_DONT_DELETE,
 					GTK_STOCK_DELETE, LOADING_FAILED_RESPONSE_DELETE,
@@ -995,16 +999,16 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	}
 
 	gtk_window_set_screen (GTK_WINDOW (dialog),
-			       gtk_window_get_screen (panel));
+			       gtk_window_get_screen (GTK_WINDOW (frame->priv->panel)));
 
-        response = gtk_dialog_run (GTK_DIALOG (dialog));
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (panel_applet_frame_loading_failed_response),
+			  g_strdup (id));
 
-	gtk_widget_destroy (dialog);
+	gtk_widget_show_all (dialog);
 
-	if (response == LOADING_FAILED_RESPONSE_DELETE &&
-	    !locked_down &&
-	    panel_profile_id_lists_are_writable ())
-		panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
+	g_free (frame->priv->iid);
+	g_free (frame);
 }
 
 static void
@@ -1191,80 +1195,81 @@ panel_applet_frame_event_listener (BonoboListener    *listener,
 		panel_applet_frame_set_size_hints_from_any (frame, any);
 }
 
-GtkWidget *
-panel_applet_frame_construct (PanelAppletFrame *frame,
-			      PanelWidget      *panel,
-			      const char       *iid,
-			      const char       *id)
+static void
+panel_applet_frame_activated (Bonobo_Unknown     object,
+			      CORBA_Environment *ev,
+			      gpointer          *data)
 {
+	PanelAppletFrameActivating *frame_act;
+	PanelAppletFrame   *frame;
+	GtkWidget          *widget;
 	BonoboControlFrame *control_frame;
 	Bonobo_Control      control;
-	CORBA_Environment   ev;
-	GtkWidget          *widget;
-	char               *moniker;
+	CORBA_Environment   corba_ev;
+	AppletInfo         *info;
+	char               *error;
 
-	frame->priv->panel = panel;
-
-	if (panel_lockdown_is_applet_disabled (iid))
-		return NULL;
-
-	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, id);
-
-	/* FIXME: this should really use bonobo_get_object_async */
-	CORBA_exception_init (&ev);
-
-	control = bonobo_get_object (
-		moniker, "IDL:Bonobo/Control:1.0", &ev);
-
-	g_free (moniker);
+	frame_act = (PanelAppletFrameActivating *) data;
+	frame = frame_act->frame;
 
 	/* according to the source of bonobo control == NULL && no
 	   exception can happen, so handle it */
-	if (BONOBO_EX (&ev) || control == CORBA_OBJECT_NIL) {
-		panel_applet_frame_loading_failed (
-			frame, &ev, iid, id, GTK_WINDOW (panel->toplevel));
-		CORBA_exception_free (&ev);
-		return NULL;
+	if (BONOBO_EX (ev) || object == CORBA_OBJECT_NIL) {
+		error = bonobo_exception_get_text (ev);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
+		g_warning (G_STRLOC ": failed to load applet %s:\n%s",
+			   frame->priv->iid, error);
+		g_free (frame_act->id);
+		g_free (frame_act);
+		g_free (error);
+		return;
 	}
 
-	frame->priv->iid = g_strdup (iid);
-
-	frame->priv->control = CORBA_Object_duplicate (control, NULL);
-	ORBit_small_listen_for_broken (control,
+	frame->priv->control = CORBA_Object_duplicate (object, NULL);
+	ORBit_small_listen_for_broken (object,
 				       G_CALLBACK (panel_applet_frame_cnx_broken),
 				       frame);
 
-	widget = bonobo_widget_new_control_from_objref (control, CORBA_OBJECT_NIL);
+	widget = bonobo_widget_new_control_from_objref (object,
+							CORBA_OBJECT_NIL);
 
-	bonobo_object_release_unref (control, NULL);
+	bonobo_object_release_unref (object, NULL);
 
 	if (!widget) {
-		CORBA_exception_free (&ev);
-		panel_applet_frame_loading_failed (
-			frame, NULL, iid, id, GTK_WINDOW (panel->toplevel));
-		g_warning (G_STRLOC ": failed to load applet %s", iid);
-		return NULL;
+		panel_applet_frame_loading_failed (frame, frame_act->id);
+		g_warning (G_STRLOC ": failed to load applet %s",
+			   frame->priv->iid);
+		g_free (frame_act->id);
+		g_free (frame_act);
+		return;
 	}
 
 	control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
 	if (control_frame == NULL) {
-		CORBA_exception_free (&ev);
-		panel_applet_frame_loading_failed (
-			frame, NULL, iid, id, GTK_WINDOW (panel->toplevel));
-		g_warning (G_STRLOC ": failed to load applet %s (can't get control frame)", iid);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
+		g_warning (G_STRLOC ": failed to load applet %s "
+			   "(can't get control frame)", frame->priv->iid);
 		gtk_object_sink (GTK_OBJECT (widget));
-		return NULL;
+		g_free (frame_act->id);
+		g_free (frame_act);
+		return;
 	}
 
 	frame->priv->property_bag = 
-		bonobo_control_frame_get_control_property_bag (control_frame, &ev);
-	if (frame->priv->property_bag == NULL || BONOBO_EX (&ev)) {
-		panel_applet_frame_loading_failed (
-			frame, &ev, iid, id, GTK_WINDOW (panel->toplevel));
-		CORBA_exception_free (&ev);
-		g_warning (G_STRLOC ": failed to load applet %s (can't get property bag)", iid);
+		bonobo_control_frame_get_control_property_bag (control_frame,
+							       &corba_ev);
+	if (frame->priv->property_bag == NULL || BONOBO_EX (&corba_ev)) {
+		error = bonobo_exception_get_text (&corba_ev);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
+		CORBA_exception_free (&corba_ev);
+		g_warning (G_STRLOC ": failed to load applet %s "
+			   "(can't get property bag):\n%s",
+			   frame->priv->iid, error);
 		gtk_object_sink (GTK_OBJECT (widget));
-		return NULL;
+		g_free (frame_act->id);
+		g_free (frame_act);
+		g_free (error);
+		return;
 	}
 
 	bonobo_event_source_client_add_listener (frame->priv->property_bag,
@@ -1274,14 +1279,20 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 						 frame);
 	
 	frame->priv->ui_component =
-		bonobo_control_frame_get_popup_component (control_frame, &ev);
-	if (frame->priv->ui_component == NULL || BONOBO_EX (&ev)) {
-		panel_applet_frame_loading_failed (
-			frame, &ev, iid, id, GTK_WINDOW (panel->toplevel));
-		CORBA_exception_free (&ev);
-		g_warning (G_STRLOC ": failed to load applet %s (can't get popup component)", iid);
+		bonobo_control_frame_get_popup_component (control_frame,
+							  &corba_ev);
+	if (frame->priv->ui_component == NULL || BONOBO_EX (&corba_ev)) {
+		error = bonobo_exception_get_text (&corba_ev);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
+		CORBA_exception_free (&corba_ev);
+		g_warning (G_STRLOC ": failed to load applet %s "
+			   "(can't get popup component):\n%s",
+			   frame->priv->iid, error);
 		gtk_object_sink (GTK_OBJECT (widget));
-		return NULL;
+		g_free (frame_act->id);
+		g_free (frame_act);
+		g_free (error);
+		return;
 	}
 
 	bonobo_ui_util_set_ui (frame->priv->ui_component, DATADIR,
@@ -1292,54 +1303,52 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	control = bonobo_control_frame_get_control (control_frame);
 	if (!control) {
-		CORBA_exception_free (&ev);
-		panel_applet_frame_loading_failed (
-			frame, NULL, iid, id, GTK_WINDOW (panel->toplevel));
-		g_warning (G_STRLOC ": failed to load applet %s (can't get control)", iid);
+		CORBA_exception_free (&corba_ev);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
+		g_warning (G_STRLOC ": failed to load applet %s "
+			   "(can't get control)", frame->priv->iid);
 		gtk_object_sink (GTK_OBJECT (widget));
-		return NULL;
+		g_free (frame_act->id);
+		g_free (frame_act);
+		return;
 	}
 
 	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
 	if (frame->priv->applet_shell == CORBA_OBJECT_NIL) {
-		CORBA_exception_free (&ev);
-		panel_applet_frame_loading_failed (
-			frame, NULL, iid, id, GTK_WINDOW (panel->toplevel));
-		g_warning (G_STRLOC ": failed to load applet %s (can't get applet shell)", iid);
+		CORBA_exception_free (&corba_ev);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
+		g_warning (G_STRLOC ": failed to load applet %s "
+			   "(can't get applet shell)", frame->priv->iid);
 		gtk_object_sink (GTK_OBJECT (widget));
-		return NULL;
+		g_free (frame_act->id);
+		g_free (frame_act);
+		return;
 	}
 
-	CORBA_exception_free (&ev);
+	CORBA_exception_free (&corba_ev);
 
 	gtk_container_add (GTK_CONTAINER (frame), widget);
 
-	return widget;
-}
+	gtk_widget_show_all (GTK_WIDGET (frame));
 
-GtkWidget *
-panel_applet_frame_new (PanelWidget *panel,
-			const char  *iid,
-			const char  *id)
-{
-	PanelAppletFrame *frame;
+	info = panel_applet_register (GTK_WIDGET (frame), GTK_WIDGET (frame),
+				      NULL, frame->priv->panel,
+				      frame_act->locked, frame_act->position,
+				      frame_act->exactpos, PANEL_OBJECT_BONOBO,
+				      frame_act->id);
+	frame->priv->applet_info = info;
 
-	g_return_val_if_fail (iid != NULL && id != NULL, NULL);
+	panel_widget_set_applet_size_constrained (frame->priv->panel,
+						  GTK_WIDGET (frame), TRUE);
 
-	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
+	panel_applet_frame_sync_menu_state (frame);
+	panel_applet_frame_init_properties (frame);
 
-	if (!panel_applet_frame_construct (frame, panel, iid, id))
-		return NULL;
+	panel_lockdown_notify_add (G_CALLBACK (panel_applet_frame_sync_menu_state),
+				   frame);
 
-	return GTK_WIDGET (frame);
-}
-
-PanelWidget *
-panel_applet_frame_get_panel (PanelAppletFrame *frame)
-{
-	g_return_val_if_fail (PANEL_IS_APPLET_FRAME (frame), NULL);
-
-	return frame->priv->panel;
+	g_free (frame_act->id);
+	g_free (frame_act);
 }
 
 void

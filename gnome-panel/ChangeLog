@@ -1,5 +1,27 @@
 2004-11-29  Vincent Untz  <vincent@vuntz.net>
 
+	Fix gnome-panel part of bug #148171, and rework the code
+
+	* panel-applet-frame.[ch]: (panel_applet_frame_new): killed
+	(panel_applet_frame_construct): killed
+	(panel_applet_frame_load): move some code of the old
+	panel_applet_frame_new() and panel_applet_frame_construct() here, use
+	bonobo_get_object_async instead of bonobo_get_object so we don't block
+	during the creation of the bonobo object (that's the fix for bug
+	#148171)
+	(panel_applet_frame_set_info): killed
+	(panel_applet_frame_loading_failed_response): new function, to handle
+	the response of the dialog
+	(panel_applet_frame_loading_failed): simplified, don't block with
+	gtk_dialog_run, make the error dialog more HIG compliant
+	(panel_applet_frame_activated): new, with code from the old
+	panel_applet_frame_construct()
+	(panel_applet_frame_get_panel): killed
+	(panel_applet_frame_get_size_hints): remove from header since it does
+	not exist any more
+
+2004-11-29  Vincent Untz  <vincent@vuntz.net>
+
 	I don't like FIXMEs. Let's try to fix most of them.
 
 	* panel-addto.c: (panel_addto_selection_changed): remove FIXME I added
