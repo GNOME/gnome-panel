@@ -650,6 +650,7 @@ panel_quit(void)
 				     GNOME_STOCK_BUTTON_YES,
 				     GNOME_STOCK_BUTTON_NO,
 				     NULL);
+	gnome_dialog_set_default(GNOME_DIALOG(box), 0);
 	/*gtk_window_position(GTK_WINDOW(box), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(box), FALSE, FALSE, TRUE);
 
