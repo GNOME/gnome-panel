@@ -66,16 +66,15 @@ static void window_menu_connect_to_window (WindowMenu *window_menu,
 static void
 window_menu_make_label_bold (GtkLabel *label)
 {
-  PangoFontDescription *font_desc;
+	PangoFontDescription *font_desc;
 
-  font_desc = pango_font_description_new ();
+	font_desc = pango_font_description_new ();
 
-  pango_font_description_set_weight (font_desc,
-                                     PANGO_WEIGHT_BOLD);
+	pango_font_description_set_weight (font_desc, PANGO_WEIGHT_BOLD);
 
-  gtk_widget_modify_font (GTK_WIDGET (label), font_desc);
+	gtk_widget_modify_font (GTK_WIDGET (label), font_desc);
 
-  pango_font_description_free (font_desc);
+	pango_font_description_free (font_desc);
 }
 
 static void
@@ -406,7 +405,7 @@ window_menu_item_new (WindowMenu  *window_menu,
 	ellipsizing_label = eel_ellipsizing_label_new (label);
 	gtk_misc_set_alignment (GTK_MISC (ellipsizing_label), 0.0, 0.5);
 	if (make_bold)
-		window_menu_make_label_bold (ellipsizing_label);
+		window_menu_make_label_bold (GTK_LABEL (ellipsizing_label));
 
 	gtk_container_add (GTK_CONTAINER (item), ellipsizing_label);
 
