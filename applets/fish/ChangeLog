@@ -1,3 +1,17 @@
+2004-10-30  Vincent Untz  <vincent@vuntz.net>
+
+	* Makefile.am: install stuff in $(datadir)/gnome/panel/{glade,pixmaps}
+	* fish.c: (display_preferences_dialog): set default directory for the
+	pixmap entry
+	(load_fish_image): don't use gnome_program_locate_file to load the
+	pixmap since we know it's in $(datadir)/gnome/panel/pixmaps
+	(fish_migrate_to_210): new function to migrate the image setting from
+	older GNOME
+	(fish_applet_fill): update fallback and migrate the settings if
+	necessary
+	* fish.glade: use the filechooser for the pixmap entry!
+	* fish.schemas.in: new default for image key
+
 2004-10-28  Vincent Untz  <vincent@vuntz.net>
 
 	* fish.c: (locate_fortune_command): changed so that it builds an

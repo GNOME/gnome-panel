@@ -9,7 +9,6 @@ INCLUDES = \
 	$(DISABLE_DEPRECATED_CFLAGS) \
 	$(WARN_CFLAGS) \
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
-	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\"" \
 	-DPAGER_GLADEDIR=\""$(gladedir)"\" \
 	-DTASKLIST_GLADEDIR=\""$(gladedir)"\" \
 	-DPREFIX=\"$(prefix)\" \
@@ -88,6 +87,6 @@ else
 install-data-local:
 endif
 
-gladedir   = $(datadir)/gnome-panel/glade
+gladedir   = $(datadir)/gnome/panel/glade
 glade_DATA = workspace-switcher.glade window-list.glade
 

@@ -3,7 +3,7 @@ INCLUDES =							\
 	-I$(srcdir)/../../libpanel-applet			\
 	-I$(top_builddir)/libpanel-applet			\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""		\
+	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\"			\
 	-DFISH_GLADEDIR=\""$(gladedir)"\"			\
 	$(WARN_CFLAGS)						\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
@@ -31,10 +31,10 @@ EXTRA_DIST =					\
 	$(ui_DATA)				\
 	$(glade_DATA)
 
-gladedir   = $(datadir)/gnome-panel/glade
+gladedir   = $(datadir)/gnome/panel/glade
 glade_DATA = fish.glade
 
-fishbitmapsdir = $(datadir)/pixmaps/fish
+fishbitmapsdir = $(datadir)/gnome/panel/pixmaps
 fishbitmaps_DATA = $(FISH_BITMAPS)
 
 pixmapdir = $(datadir)/icons/hicolor/48x48/apps

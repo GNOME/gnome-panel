@@ -349,6 +349,8 @@ display_preferences_dialog (BonoboUIComponent *uic,
 			   "name" /* key */);
 
 	fish->pixmap_entry = glade_xml_get_widget (xml, "image_entry");
+	gnome_pixmap_entry_set_pixmap_subdir (GNOME_PIXMAP_ENTRY (fish->pixmap_entry),
+					    FISH_ICONDIR);
 	fish->image_entry = gnome_file_entry_gtk_entry (
 				GNOME_FILE_ENTRY (fish->pixmap_entry));
 	gtk_entry_set_text (GTK_ENTRY (fish->image_entry), fish->image);
@@ -1256,21 +1258,8 @@ load_fish_image (FishApplet *fish)
 
 	if (g_path_is_absolute (fish->image))
 		path = g_strdup (fish->image);
-
-	else {
-		path = gnome_program_locate_file (
-					NULL, GNOME_FILE_DOMAIN_PIXMAP,
-					fish->image, FALSE, NULL);
-		if (!path)
-			path = gnome_program_locate_file (
-					NULL, GNOME_FILE_DOMAIN_APP_PIXMAP,
-					fish->image, FALSE, NULL);
-	}
-
-	if (!path) {
-		g_warning ("Cannot locate '%s'", fish->image);
-		return FALSE;
-	}
+	else
+		path = g_strdup_printf ("%s/%s", FISH_ICONDIR, fish->image);
 
 	pixbuf = gdk_pixbuf_new_from_file (path, &error);
 	if (error) {
@@ -1642,6 +1631,22 @@ static const BonoboUIVerb fish_menu_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
+static void
+fish_migrate_to_210 (FishApplet *fish)
+{
+	char *new_image;
+
+	g_assert (fish->image);
+
+	if (!strncmp (fish->image, "fish/", 5)) {
+		new_image = g_strdup (fish->image + 5);
+		g_free (fish->image);
+		fish->image = new_image;
+		panel_applet_gconf_set_string (PANEL_APPLET (fish), "image",
+					       fish->image, NULL);
+	}
+}
+
 static gboolean
 fish_applet_fill (FishApplet *fish)
 {
@@ -1671,7 +1676,8 @@ fish_applet_fill (FishApplet *fish)
 		error = NULL;
 	}
 	if (!fish->image)
-		fish->image = g_strdup ("fish/fishanim.png"); /* Fallback */
+		fish->image = g_strdup ("fishanim.png"); /* Fallback */
+	fish_migrate_to_210 (fish);
 
 	fish->command = panel_applet_gconf_get_string (applet, "command", &error);
 	if (error) {

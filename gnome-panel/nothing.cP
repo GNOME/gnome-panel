@@ -48,28 +48,6 @@ transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
 	}
 }
 
-static char *
-find_me_the_damn_pixmap (const char *name, gboolean fallback)
-{
-	char *pixmap;
-	pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-					    name,
-					    TRUE /* only_if_exists */,
-					    NULL /* ret_locations */);
-	if (pixmap == NULL)
-		pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_APP_PIXMAP, 
-						    name,
-						    TRUE /* only_if_exists */,
-						    NULL /* ret_locations */);
-	/* just as a fallback return something */
-	if (pixmap == NULL && fallback)
-		pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-						    name,
-						    FALSE /* only_if_exists */,
-						    NULL /* ret_locations */);
-	return pixmap;
-}
-
 static void
 destroy_egg(GtkWidget *widget, gpointer data)
 {
@@ -173,13 +151,16 @@ goat_realize(GtkWidget *widget)
 		gdouble affine[6];
 		char *file;
 
-		file = find_me_the_damn_pixmap (files[frame], FALSE /* fallback */);
-		if(!file || 
-		   !(pb=gdk_pixbuf_new_from_file (file, NULL))) {
+		file = g_strdup_printf ("%s/%s", ICONDIR, files[frame]);
+		if(!file)
+			return;
+		pb=gdk_pixbuf_new_from_file (file, NULL);
+		g_free(file);
+		 
+		if(!pb) {
 			g_warning("Goat is not available!");
 			return;
 		}
-		g_free(file);
 
 		goat_width = gdk_pixbuf_get_width(pb)+12;
 		goat_height = gdk_pixbuf_get_height(pb)+12;
@@ -409,16 +390,9 @@ phsh_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 static char *
 get_phsh_file (void)
 {
-        char *name;
         char *phsh_file;
 
-        name = g_strdup_printf ("%cish/%cishanim.png",
-                                'f', 'f');
-
-        phsh_file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
-                                               name, TRUE, NULL);
-
-        g_free (name);
+        phsh_file = g_strdup_printf ("%s/%cishanim.png", ICONDIR, 'f');
 
 	return phsh_file;
 }
@@ -1224,8 +1198,7 @@ ensure_creatures (void)
 
 	g_object_unref (G_OBJECT (pb));
 
-	goat_file = find_me_the_damn_pixmap ("gnome-gegl2.png",
-					    FALSE /* fallback */);
+	goat_file = g_strdup_printf ("%s/gnome-gegl2.png", ICONDIR);
 	if (goat_file == NULL) {
 		g_object_unref (G_OBJECT (phsh1));
 		g_object_unref (G_OBJECT (phsh2));
@@ -1243,8 +1216,7 @@ ensure_creatures (void)
 	goat1 = pb_scale (pb, inv_factor * 0.66);
 	g_object_unref (pb);
 
-	goat_file = find_me_the_damn_pixmap ("gnome-gegl2-2.png",
-					    FALSE /* fallback */);
+	goat_file = g_strdup_printf ("%s/gnome-gegl2-2.png", ICONDIR);
 	if (goat_file == NULL) {
 		g_object_unref (G_OBJECT (goat1));
 		g_object_unref (G_OBJECT (phsh1));

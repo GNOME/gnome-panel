@@ -9,19 +9,14 @@ INCLUDES =							\
 	-I$(top_builddir)/gnome-panel				\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DGLADEDIR=\""$(datadir)/gnome/panel"\"			\
+	-DGLADEDIR=\""$(gladedir)"\"			\
+	-DICONDIR=\""$(datadir)/gnome/panel/pixmaps"\"			\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(STANDARD_PROPERTIES_CFLAGS)				\
-	$(ALLOW_CRACKPOT_MENU_CODE)				\
 	$(PANEL_CFLAGS)						\
 	$(PANELCONFIG_CFLAGS)					\
 	$(WARN_CFLAGS)						\
 	$(NULL)
-
-# FIXME:
-# this define is to allow menu.c to continue
-# using deprecated gtk+ internals
-ALLOW_CRACKPOT_MENU_CODE=-DGTK_MENU_INTERNALS
 
 # Used by the GNOME_PROGRAM_STANDARD_PROPERTIES macros
 STANDARD_PROPERTIES_CFLAGS = 					\
@@ -218,7 +213,7 @@ gnome_panel_screenshot_LDADD = 	\
 	$(PANEL_SCREENSHOT_LIBS) \
 	$(PNG_LIBS)
 
-gladedir = $(datadir)/gnome/panel
+gladedir = $(datadir)/gnome/panel/glade
 glade_DATA =					\
 	gnome-panel-screenshot.glade		\
 	panel-properties-dialog.glade		\
