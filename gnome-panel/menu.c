@@ -83,13 +83,13 @@ about_cb (GtkWidget *widget, gpointer data)
 	GtkWidget *about;
 	char *authors[] = {
 	  "George Lebl (jirka@5z.com)",
+	  "Jacob Berkman (jberkman@andrew.cmu.edu)",
 	  "Miguel de Icaza (miguel@kernel.org)",
 	  "Federico Mena (quartic@gimp.org)",
 	  "Tom Tromey (tromey@cygnus.com)",
 	  "Ian Main (slow@intergate.bc.ca)",
 	  "Elliot Lee (sopwith@redhat.com)",
 	  "Owen Taylor (otaylor@redhat.com)",
-	  "Jacob Berkman (jberkman@andrew.cmu.edu)",
 	  "Many others ...",
 	  "and finally, The Knights Who Say ... NI!",
 	  NULL
@@ -3112,7 +3112,7 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 	
 	add_menu_separator (menu);
 
-	char_tmp = gnome_is_program_in_path("guname");
+	char_tmp = gnome_is_program_in_path("gnome-about");
 	if(char_tmp) {
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem,
