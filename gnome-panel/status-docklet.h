@@ -60,7 +60,7 @@ struct _StatusDockletClass
 			     GtkWidget     *plug);
 };
 
-guint		status_docklet_get_type		(void) G_GNUC_CONST;
+GType		status_docklet_get_type		(void) G_GNUC_CONST;
 
 /*just creates a new object, but doesn't yet try to connect to a panel, you
   need to bind the build_plug signal which will make your widget, and then

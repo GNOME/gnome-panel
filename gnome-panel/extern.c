@@ -1239,9 +1239,7 @@ s_panel_add_launcher_from_info (PortableServer_Servant _servant,
 	if (panel_widget == NULL)
 		panel_widget = panels->data;
 
-	/* ugly but works because of the way this actually works */
-	exec_argv[0] = (char *)exec;
-	load_launcher_applet_from_info (name, comment, exec_argv, 1,
+	load_launcher_applet_from_info (name, comment, exec,
 					icon, panel_widget, pos, FALSE);
 }
 

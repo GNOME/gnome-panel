@@ -29,10 +29,10 @@ static void aligned_pos_show_hide_left (BasePWidget *basep);
 static void aligned_pos_show_hide_right (BasePWidget *basep);
 static BorderPosClass *parent_class;
 
-GtkType
+GType
 aligned_pos_get_type (void)
 {
-	static GtkType aligned_pos_type = 0;
+	static GType aligned_pos_type = 0;
 
 	if (aligned_pos_type == 0) {
 		GtkTypeInfo aligned_pos_info = {

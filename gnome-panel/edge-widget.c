@@ -32,10 +32,10 @@ static void edge_pos_pre_convert_hook (BasePWidget *basep);
 
 static BorderPosClass *parent_class;
 
-GtkType
-edge_pos_get_type ()
+GType
+edge_pos_get_type (void)
 {
-	static GtkType edge_pos_type = 0;
+	static GType edge_pos_type = 0;
 
 	if (edge_pos_type == 0) {
 		GtkTypeInfo edge_pos_info = {

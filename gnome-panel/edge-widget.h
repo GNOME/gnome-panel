@@ -44,7 +44,7 @@ struct _EdgePosClass {
 	BorderPosClass parent_class;
 };
 
-GtkType edge_pos_get_type (void) G_GNUC_CONST;
+GType edge_pos_get_type (void) G_GNUC_CONST;
 GtkWidget *edge_widget_new (int screen,
 			    BorderEdge edge,
 			    BasePMode mode,

@@ -61,10 +61,10 @@ static GtkWindowClass *parent_class = NULL;
 
 
 
-GtkType
+GType
 foobar_widget_get_type (void)
 {
-	static GtkType foobar_widget_type = 0;
+	static GType foobar_widget_type = 0;
 
 	if (!foobar_widget_type) {
 		GtkTypeInfo foobar_widget_info = {

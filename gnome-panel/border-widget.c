@@ -36,10 +36,10 @@ static void border_pos_pre_convert_hook (BasePWidget *basep);
 
 static BasePPosClass *parent_class;
 
-GtkType
+GType
 border_pos_get_type (void)
 {
-	static GtkType border_pos_type = 0;
+	static GType border_pos_type = 0;
 
 	if (!border_pos_type) {
 		GtkTypeInfo border_pos_info = {

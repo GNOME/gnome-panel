@@ -64,10 +64,10 @@ static GtkObjectClass *basep_pos_parent_class = NULL;
  widget core
  ************************/
 
-GtkType
+GType
 basep_widget_get_type (void)
 {
-	static GtkType basep_widget_type = 0;
+	static GType basep_widget_type = 0;
 
 	if (!basep_widget_type) {
 		GtkTypeInfo basep_widget_info = {
@@ -399,10 +399,10 @@ basep_widget_class_init (BasePWidgetClass *klass)
 }
 
 /* pos core */
-GtkType
+GType
 basep_pos_get_type (void)
 {
-	static GtkType basep_pos_type = 0;
+	static GType basep_pos_type = 0;
 	
 	if (!basep_pos_type) {
 		GtkTypeInfo basep_pos_info = {

@@ -134,7 +134,7 @@ struct _PanelWidgetClass
 				      GtkWidget *applet);
 };
 
-guint		panel_widget_get_type		(void) G_GNUC_CONST;
+GType		panel_widget_get_type		(void) G_GNUC_CONST;
 GtkWidget *	panel_widget_new		(gboolean packed,
 						 PanelOrientation orient,
 						 int sz,

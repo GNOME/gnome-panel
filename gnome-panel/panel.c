@@ -998,38 +998,36 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 	tmp = gnome_is_program_in_path ("nautilus");
 	if (tmp != NULL) {
 		/* nautilus */
-		char *exec[] = { "nautilus", (char *)dir, NULL };
-
+		char *exec = g_string_printf ("nautilus %s",
+					      panel_quote_string (dir));
 		g_free (tmp);
 
 		load_launcher_applet_from_info (g_basename (dir),
 						dir,
 						exec,
-						2,
 						"gnome-folder.png",
 						panel,
 						pos,
 						TRUE);
+		g_free (exec);
 	} else {
 		tmp = gnome_is_program_in_path ("gmc-client");
 		if (tmp != NULL) {
 			/* gmc */
-			char *exec[] = {
-				"gmc-client",
-				"--create-directory",
-				(char *)dir,
-				NULL };
+			char *exec = g_string_printf ("gmc-client "
+						      "--create-window=%s",
+						      panel_quote_string (dir));
 
 			g_free (tmp);
 
 			load_launcher_applet_from_info (g_basename (dir),
 							dir,
 							exec,
-							3,
 							"gnome-folder.png",
 							panel,
 							pos,
 							TRUE);
+			g_free (exec);
 		} else {
 			drop_menu (panel, pos, dir);
 		}
@@ -1227,15 +1225,11 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		load_status_applet(panel, pos, TRUE);
 
 	} else if(strcmp(applet_type,"RUN:NEW")==0) {
-#ifdef FIXME
 		load_run_applet(panel, pos, TRUE);
-#endif
 
 	} else if (sscanf (applet_type, "RUN:%d", &applet_num) == 1) {
-#ifdef FIXME
 		load_run_applet(panel, pos, TRUE);
 		remove_applet = TRUE;
-#endif
 	}
 
 	if (remove_applet &&

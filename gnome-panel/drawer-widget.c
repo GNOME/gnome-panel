@@ -49,10 +49,10 @@ static void drawer_pos_pre_convert_hook (BasePWidget *basep);
 
 static BasePPosClass *parent_class;
 
-GtkType
+GType
 drawer_pos_get_type (void)
 {
-	static GtkType drawer_pos_type = 0;
+	static GType drawer_pos_type = 0;
 
 	if (drawer_pos_type == 0) {
 		GtkTypeInfo drawer_pos_info = {

@@ -51,7 +51,7 @@ struct _BorderPosClass {
 #endif
 };
 	
-GtkType border_pos_get_type (void) G_GNUC_CONST;
+GType border_pos_get_type (void) G_GNUC_CONST;
 GtkWidget *border_widget_construct (BorderWidget *border,
 				    int screen,
 				    BorderEdge edge,

@@ -61,7 +61,7 @@ struct _FoobarWidgetClass
 	GtkWindowClass panel_class;
 };
 
-GtkType		foobar_widget_get_type		(void) G_GNUC_CONST;
+GType		foobar_widget_get_type		(void) G_GNUC_CONST;
 GtkWidget *	foobar_widget_new		(int screen);
 
 void		foobar_widget_update_winhints	(FoobarWidget *foo);

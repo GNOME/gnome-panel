@@ -981,3 +981,49 @@ panel_is_url (const char *url)
 	else
 		return FALSE;
 }
+
+static gboolean
+no_need_to_quote (const char *str)
+{
+	const char *p;
+	
+	/* empty string needs quoting */
+	if (string_empty (str))
+		return TRUE;
+
+	for (p = str; *p != '\0'; p++) {
+		if ((*p >= 'a' && *p <= 'z') ||
+		    (*p >= 'A' && *p <= 'Z') ||
+		    strchr ("_-./", *p) != NULL)
+			continue;
+
+		return FALSE;
+	}
+	return TRUE;
+}
+
+/* Quote string so that it could be on a shell like
+ * quoted line as an argument */
+char *
+panel_quote_string (const char *str)
+{
+	GString *gs;
+	const char *p;
+
+	if (string_empty (str))
+		return g_strdup ("''");
+
+	if (no_need_to_quote (str))
+		return g_strdup (str);
+
+	gs = g_string_new ("'");
+	for (p = str; *p != '\0'; p++) {
+		if (*p == '\'')
+			g_string_append (gs, "'\\''");
+		else
+			g_string_append_c (gs, *p);
+	}
+	g_string_append_c (gs, '\'');
+
+	return g_string_free (gs, FALSE);
+}

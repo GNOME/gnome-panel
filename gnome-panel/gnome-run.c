@@ -217,24 +217,38 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
         
                 name = gtk_clist_get_row_data (GTK_CLIST (clist),
                                                GPOINTER_TO_INT (GTK_CLIST (clist)->selection->data));
-                if (name) {
-#if FIXME
-                        GnomeDesktopEntry *dentry;
+                if (name != NULL) {
+			GError *error = NULL;
+                        GnomeDesktopItem *ditem;
                         
-                        dentry = gnome_desktop_entry_load (name);
-                        if (dentry && dentry->exec) {
+                        ditem = gnome_desktop_item_new_from_file (name,
+								  0 /* flags */,
+								  &error);
+			if (ditem != NULL) {
                                 /* Honor "run in terminal" button */
-                                dentry->terminal = terminal->active;
-                                
-                                gnome_desktop_entry_launch (dentry);
-                                gnome_desktop_entry_free (dentry);
+				gnome_desktop_item_set_boolean (ditem,
+								GNOME_DESKTOP_ITEM_TERMINAL,
+								terminal->active);
+			}
 
+                        if (ditem == NULL) {
+                                panel_error_dialog ("failed_to_load_desktop",
+						    _("Failed to load this program!\n%s"),
+						    error->message);
+				g_error_clear (&error);
+			} else if ( ! gnome_desktop_item_launch (name, 0, NULL,
+								 &error)) {
+                                panel_error_dialog ("failed_to_load_desktop",
+						    _("Failed to load this program!\n%s"),
+						    error->message);
+				g_error_clear (&error);
+			}
+
+			if (ditem != NULL) {
                                 if (add_to_favourites)
                                         panel_add_favourite (name);
-                        } else {
-                                panel_error_dialog (_("Failed to load this program!\n"));
-                        }
-#endif
+				gnome_desktop_item_unref (ditem);
+			}
                 }
         } else {
                 entry = GTK_ENTRY (gtk_object_get_data(GTK_OBJECT(w), "entry"));
@@ -478,25 +492,32 @@ sync_list_to_entry (GtkWidget *dialog)
                 name = gtk_clist_get_row_data (GTK_CLIST (clist),
                                                GPOINTER_TO_INT (GTK_CLIST (clist)->selection->data));
                 if (name) {
-#if FIXME
-                        GnomeDesktopEntry *dentry;
+                        GnomeDesktopItem *ditem;
 
-                        dentry = gnome_desktop_entry_load (name);
-                        if (dentry && dentry->exec) {
-                                char *command;
+                        ditem = gnome_desktop_item_new_from_file (name,
+								  0 /* flags */,
+								  NULL /* error */);
+                        if (ditem != NULL) {
+				gboolean terminal;
+                                const char *exec;
 
-                                command = g_strjoinv (" ", dentry->exec);
-                                
+				exec = gnome_desktop_item_get_string
+					(ditem, GNOME_DESKTOP_ITEM_EXEC);
+				if (exec == NULL)
+					exec = gnome_desktop_item_get_string
+						(ditem, GNOME_DESKTOP_ITEM_URL);
+				terminal = gnome_desktop_item_get_boolean
+					(ditem, GNOME_DESKTOP_ITEM_TERMINAL);
+
                                 gtk_entry_set_text (GTK_ENTRY (entry),
-                                                    command);
+						    sure_string (exec));
 
-                                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (terminal_toggle),
-                                                              dentry->terminal);
+                                gtk_toggle_button_set_active
+					(GTK_TOGGLE_BUTTON (terminal_toggle),
+					 terminal);
                                 
-                                gnome_desktop_entry_free (dentry);
-                                g_free (command);
+                                gnome_desktop_item_unref (ditem);
                         }
-#endif
                 }
         }
 
@@ -919,34 +940,38 @@ select_row_handler (GtkCList *clist,
                                        row);
 
         if (name) {
-#if FIXME
-                GnomeDesktopEntry *dentry;
+                GnomeDesktopItem *ditem;
                 
-                dentry = gnome_desktop_entry_load (name);
-		if (dentry != NULL) {
+		ditem = gnome_desktop_item_new_from_file (name,
+							  0 /* flags */,
+							  NULL /* error */);
+		if (ditem != NULL) {
                         GdkPixbuf *pixbuf;
+			const char *name;
+			const char *comment;
+			char *icon;
+
+			name = gnome_desktop_item_get_string
+				(ditem, GNOME_DESKTOP_ITEM_NAME);
+			comment = gnome_desktop_item_get_string
+				(ditem, GNOME_DESKTOP_ITEM_COMMENT);
 
 			if (label != NULL)
 				gtk_label_set_text (GTK_LABEL (label),
-						    dentry->name);
+						    name);
 
 			if (desc_label != NULL)
 				gtk_label_set_text (GTK_LABEL (desc_label),
-						    dentry->comment);
+						    sure_string (comment));
 
-			if (dentry->icon != NULL) {
-				pixbuf = gdk_pixbuf_new_from_file (dentry->icon);
-				if (pixbuf == NULL) {
-					char *file = gnome_pixmap_file (dentry->icon);
-					if (file != NULL)
-						pixbuf = gdk_pixbuf_new_from_file (file);
-					g_free (file);
-				}
+			icon = gnome_desktop_item_get_icon (ditem);
+			if (icon != NULL) {
+				pixbuf = gdk_pixbuf_new_from_file (icon, NULL);
 			} else {
 				pixbuf = NULL;
 			}
                         
-                        if (pixbuf) {
+                        if (pixbuf != NULL) {
                                 GdkPixmap *pixmap;
                                 GdkBitmap *mask;
 
@@ -964,9 +989,8 @@ select_row_handler (GtkCList *clist,
                                 unset_pixmap (gpixmap);
                         }
                         
-			gnome_desktop_entry_free (dentry);
+			gnome_desktop_item_unref (ditem);
                 }
-#endif
         }
 
         sync_list_to_entry (dialog);

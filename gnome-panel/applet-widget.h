@@ -124,7 +124,7 @@ typedef GtkWidget *(*AppletFactoryActivator)(const char *goad_id, const char **p
 /* Returns TRUE if the factory can activate this applet */
 typedef gboolean (*AppletFactoryQuerier)(const char *goad_id);
 
-guint		applet_widget_get_type		(void) G_GNUC_CONST;
+GType		applet_widget_get_type		(void) G_GNUC_CONST;
 
 void            applet_factory_new(const char *goad_id,
 				   AppletFactoryQuerier qfunc,

@@ -54,7 +54,7 @@ struct _SlidingPosClass {
 			       gint16 offset);
 };
 
-GtkType sliding_pos_get_type (void) G_GNUC_CONST;
+GType sliding_pos_get_type (void) G_GNUC_CONST;
 GtkWidget *sliding_widget_new (int screen,
 			       SlidingAnchor anchor,
 			       gint16 offset,

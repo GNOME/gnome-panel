@@ -178,8 +178,8 @@ struct _BasePPosClass {
 	void (*pre_convert_hook)          (BasePWidget *basep);
 };
 
-GtkType         basep_pos_get_type              (void) G_GNUC_CONST;
-GtkType		basep_widget_get_type		(void) G_GNUC_CONST;
+GType           basep_pos_get_type              (void) G_GNUC_CONST;
+GType		basep_widget_get_type		(void) G_GNUC_CONST;
 GtkWidget*	basep_widget_construct		(BasePWidget *basep,
 						 gboolean packed,
 						 gboolean reverse_arrows,

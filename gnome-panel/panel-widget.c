@@ -102,10 +102,10 @@ applet_data_compare (AppletData *ad1, AppletData *ad2)
  widget core
  ************************/
 
-guint
+GType
 panel_widget_get_type (void)
 {
-	static guint panel_widget_type = 0;
+	static GType panel_widget_type = 0;
 
 	if (!panel_widget_type) {
 		GtkTypeInfo panel_widget_info = {

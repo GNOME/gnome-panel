@@ -29,10 +29,10 @@ static void sliding_pos_get_pos (BasePWidget *basep,
 
 static BorderPosClass *parent_class;
 
-GtkType
+GType
 sliding_pos_get_type (void)
 {
-	static GtkType sliding_pos_type = 0;
+	static GType sliding_pos_type = 0;
 
 	if (sliding_pos_type == 0) {
 		GtkTypeInfo sliding_pos_info = {

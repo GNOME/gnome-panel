@@ -90,6 +90,10 @@ char *		panel_gnome_kde_help_path (const char *docpath);
 
 gboolean	panel_is_url		(const char *url);
 
+/* Quote string so that it could be on a shell like
+ * quoted line as an argument */
+char *		panel_quote_string	(const char *str);
+
 G_END_DECLS
 
 #endif /* PANEL_UTIL_H */

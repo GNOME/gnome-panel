@@ -57,10 +57,10 @@ static void floating_pos_show_hide_right (BasePWidget *basep);
 
 static BasePPosClass *parent_class;
 
-GtkType
+GType
 floating_pos_get_type (void)
 {
-	static GtkType floating_pos_type = 0;
+	static GType floating_pos_type = 0;
 
 	if (floating_pos_type == 0) {
 		GtkTypeInfo floating_pos_info = {

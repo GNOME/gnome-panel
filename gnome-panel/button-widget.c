@@ -61,10 +61,10 @@ static gboolean always_text[LAST_TILE] = {FALSE,FALSE,FALSE,FALSE}; /*text alway
 
 static GtkWidgetClass *parent_class;
 
-guint
+GType
 button_widget_get_type (void)
 {
-	static guint button_widget_type = 0;
+	static GType button_widget_type = 0;
 
 	if (!button_widget_type) {
 		GtkTypeInfo button_widget_info = {

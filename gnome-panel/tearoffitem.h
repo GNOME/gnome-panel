@@ -29,7 +29,7 @@ struct _TearoffItemClass
 };
 
 
-GtkType		tearoff_item_get_type	(void);
+GType		tearoff_item_get_type	(void);
 GtkWidget*	tearoff_item_new	(void);
 
 #ifdef __cplusplus

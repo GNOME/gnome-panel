@@ -6,10 +6,10 @@
 static void tearoff_item_class_init	(TearoffItemClass	*klass);
 static void tearoff_item_init		(TearoffItem	*tearoff_menu_item);
 
-GtkType
-tearoff_item_get_type(void)
+GType
+tearoff_item_get_type (void)
 {
-	static GtkType tearoff_menu_item_type = 0;
+	static GType tearoff_menu_item_type = 0;
 
 	if (!tearoff_menu_item_type) {
 		static const GtkTypeInfo tearoff_menu_item_info = {

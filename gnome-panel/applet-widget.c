@@ -184,10 +184,10 @@ static GtkTooltips *applet_tooltips = NULL;
 
 #define CD(applet) ((CustomAppletServant *)APPLET_WIDGET(applet)->_priv->corbadat)
 
-guint
+GType
 applet_widget_get_type (void)
 {
-	static guint applet_widget_type = 0;
+	static GType applet_widget_type = 0;
 
 	if (!applet_widget_type) {
 		static const GtkTypeInfo applet_widget_info = {

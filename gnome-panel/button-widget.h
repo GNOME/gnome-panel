@@ -64,7 +64,7 @@ struct _ButtonWidgetClass
 	void (* unpressed) (ButtonWidget *button);
 };
 
-guint		button_widget_get_type		(void) G_GNUC_CONST;
+GType		button_widget_get_type		(void) G_GNUC_CONST;
 
 GtkWidget*	button_widget_new		(const char *pixmap,
 						 int size,

@@ -117,31 +117,34 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			break;
 		}
 	case APPLET_LAUNCHER:
-		if(strcmp(menu->name,"properties")==0)
-			launcher_properties(menu->info->data);
-		else if (strcmp (menu->name, "help") == 0)
+		if (strcmp (menu->name, "properties") == 0) {
+			launcher_properties (menu->info->data);
+		} else if (strcmp (menu->name, "help") == 0) {
 			panel_show_help ("launchers.html");
-		else if (strcmp (menu->name, "help_on_app") == 0) {
-#ifdef FIXME
+		} else if (strcmp (menu->name, "help_on_app") == 0) {
 			Launcher * launcher = menu->info->data;
 			if (launcher->ditem != NULL) {
-				char *path = panel_gnome_kde_help_path
-					(launcher->ditem->docpath);
+				const char *docpath =
+					gnome_desktop_item_get_string
+					    (launcher->ditem, "DocPath");
+				char *path =
+					panel_gnome_kde_help_path (docpath);
 				if (path != NULL) {
-					gnome_url_show (path);
+					gnome_url_show (path, NULL);
+					/* FIXME: handle errors */
 					g_free (path);
 				}
 			}
-#endif
 		}
 		break;
 	case APPLET_DRAWER: 
-		if(strcmp(menu->name,"properties")==0) {
+		if (strcmp (menu->name, "properties")==0) {
 			Drawer *drawer = menu->info->data;
 			g_assert(drawer);
 			panel_config(drawer->drawer);
-		} else if (strcmp (menu->name, "help") == 0)
+		} else if (strcmp (menu->name, "help") == 0) {
 			panel_show_help ("drawers.html");
+		}
 		break;
 	case APPLET_SWALLOW:
  		if (strcmp (menu->name, "help") == 0)
