@@ -1,3 +1,21 @@
+1998-11-21  Federico Mena Quintero  <federico@nuclecu.unam.mx>
+
+	* cpuload/cpuload.c (main): Nice the process.  Also, fixed
+	compiler warnings.
+
+	* cpumemusage/cpumemusage.c (update_mem_values): New function to
+	update the memory/swap values.
+	(cpumemusage_widget): Now the memory/swap values are updated at a
+	different rate than the CPU one.  Walking the kernel page table to
+	gather memory information is expensive, so we only do it once a
+	second instead of every 200 milliseconds.
+	(main): Nice the process.
+
+	* cpumemusage/procbar.c (procbar_configure): Now the GC is created
+	here, instead of in procbar_set_values(), to save a bit of time.
+
+	* cpumemusage/procbar.h (ProcBar): Added a gc field.
+
 1998-11-14  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
 
 	* multiload/properties-*.c, drivemount/properties.c,
