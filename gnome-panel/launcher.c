@@ -20,6 +20,8 @@
 #include <libgnome/gnome-util.h>
 #include <libgnomeui.h>
 
+#include <gnome-desktop/gnome-ditem.h>
+
 #include "panel-include.h"
 
 static void properties_apply (Launcher *launcher);
@@ -49,6 +51,7 @@ enum {
 static void
 launch (Launcher *launcher, int argc, char *argv[])
 {
+#ifdef FIXME
 	GnomeDesktopItem *item;
 	GNOME_DesktopEntryType type;
 	gchar *command;
@@ -79,7 +82,7 @@ launch (Launcher *launcher, int argc, char *argv[])
 	} else if (type == GNOME_DESKTOP_ENTRY_TYPE_PANEL_APPLET) {
 		char *goad_id;
 
-		goad_id = get_applet_goad_id_from_ditem (item);
+		goad_id = get_applet_goad_id_from_dentry (item);
 
 		if (goad_id != NULL) {
 			load_extern_applet (goad_id, NULL,
@@ -115,6 +118,7 @@ launch (Launcher *launcher, int argc, char *argv[])
 	}
 
 	g_free (command);
+#endif
 }
 
 static void
@@ -133,7 +137,7 @@ drag_data_received_cb (GtkWidget        *widget,
 		       guint             time,
 		       Launcher         *launcher)
 {
-
+#ifdef FIXME
 	GList *li, *files;
 	int argc;
 	char **argv;
@@ -152,6 +156,7 @@ drag_data_received_cb (GtkWidget        *widget,
 	launch(launcher,argc,argv);
 	gnome_uri_list_free_strings (files);
 	g_free(argv);
+#endif
 
 	gtk_drag_finish(context,TRUE,FALSE,time);
 }
@@ -173,11 +178,15 @@ free_launcher(gpointer data)
 {
 	Launcher *launcher = data;
 
-	gnome_desktop_entry_free(launcher->ditem);
+#ifdef FIXME
+	gnome_desktop_item_free(launcher->ditem);
+#endif
 	launcher->ditem = NULL;
 
+#ifdef FIXME
 	if (launcher->revert_ditem != NULL)
-		gnome_desktop_entry_free(launcher->revert_ditem);
+		gnome_desktop_item_free(launcher->revert_ditem);
+#endif
 	launcher->revert_ditem = NULL;
 
 	g_free(launcher);
@@ -316,7 +325,8 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	if (default_app_pixmap == NULL)
 		default_app_pixmap = gnome_pixmap_file ("gnome-unknown.png");
 
-	if(dentry == NULL) {
+	if(ditem == NULL) {
+#ifdef FIXME
 		if (parameters == NULL) {
 			return NULL;
 		} else if (*parameters == '/') {
@@ -358,6 +368,7 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 			ditem = gnome_desktop_entry_load_unconditional (entry);
 			g_free (entry);
 		}
+#endif
 	}
 	if (ditem == NULL)
 		return NULL; /*button is null*/
@@ -369,7 +380,7 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	launcher->dedit = NULL;
 	launcher->prop_dialog = NULL;
 
-	icon = gnome_desktop_item_get_icon(ditem);
+	icon = gnome_desktop_item_get_icon_path(ditem);
 	if (icon) {
 		gchar *name;
 
@@ -519,8 +530,10 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 	launcher->prop_dialog = NULL;
 	launcher->dedit = NULL;
 
+#ifdef FIXME
 	if (launcher->revert_ditem != NULL)
-		gnome_desktop_ditem_free (launcher->revert_ditem);
+		gnome_desktop_item_free (launcher->revert_ditem);
+#endif
 	launcher->revert_ditem = NULL;
 
 	panel_config_sync_schedule ();
@@ -529,6 +542,7 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 static void
 window_clicked (GtkWidget *w, int button, gpointer data)
 {
+#ifdef FIXME
 	Launcher *launcher = data;
 
 	if (button == HELP_BUTTON) {
@@ -539,6 +553,7 @@ window_clicked (GtkWidget *w, int button, gpointer data)
 	} else {
 		gnome_dialog_close (GNOME_DIALOG (w));
 	}
+#endif
 }
 
 static void
@@ -552,6 +567,7 @@ launcher_changed (GtkObject *dedit, gpointer data)
 static GtkWidget *
 create_properties_dialog (Launcher *launcher)
 {
+#ifdef FIXME
 	GtkWidget *dialog;
 	GtkWidget *notebook;
 	GList *types;
@@ -635,6 +651,9 @@ create_properties_dialog (Launcher *launcher)
 		 (GNOME_DITEM_EDIT (launcher->dedit)));
 
 	return dialog;
+#else
+	return NULL;
+#endif
 }
 
 void
@@ -674,19 +693,22 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 
 	launcher->info = applets_last->data;
 
+#ifdef FIXME
 	gtk_tooltips_set_tip (panel_tooltips,
 			      launcher->button,
 			      launcher->ditem->comment,
 			      NULL);
+#endif
 
 	if ( ! commie_mode)
 		applet_add_callback (applets_last->data,"properties",
-				     GNOME_STOCK_MENU_PROP,
+				     GTK_STOCK_PROPERTIES,
 				     _("Properties..."));
 	applet_add_callback (applets_last->data, "help",
-			     GNOME_STOCK_PIXMAP_HELP,
+			     GTK_STOCK_HELP,
 			     _("Help"));
 
+#ifdef FIXME
 	docpath = panel_gnome_kde_help_path (launcher->ditem->docpath);
 	if (docpath != NULL) {
 		char *title;
@@ -699,10 +721,11 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 					 _("Application"));
 
 		applet_add_callback (applets_last->data, "help_on_app",
-				     GNOME_STOCK_PIXMAP_HELP,
+				     GTK_STOCK_HELP,
 				     title);
 		g_free (title);
 	}
+#endif
 
 	return launcher;
 }
@@ -710,6 +733,7 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 static void
 really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 {
+#ifdef FIXME
 	GnomeDitemEdit *dedit = GNOME_DITEM_EDIT(data);
 	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(dialog),"pos"));
 	gboolean exactpos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(dialog),"exactpos"));
@@ -737,11 +761,13 @@ really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 	}
 
 	gtk_widget_destroy (dialog);
+#endif
 }
 
 void
 ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exactpos)
 {
+#ifdef FIXME
 	GtkWidget *dialog;
 	GtkWidget *notebook;
 	GnomeDitemEdit *dee;
@@ -812,6 +838,7 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 	panel_set_dialog_layer (dialog);
 
 	gtk_widget_grab_focus (gnome_ditem_get_name_entry (dee));
+#endif
 }
 
 Launcher *
@@ -820,6 +847,7 @@ load_launcher_applet_from_info (const char *name, const char *comment,
 				PanelWidget *panel, int pos,
 				gboolean exactpos)
 {
+#ifdef FIXME
 	GnomeDesktopItem *ditem = g_new0 (GnomeDesktopItem, 1);
 	Launcher *launcher;
 
@@ -843,6 +871,9 @@ load_launcher_applet_from_info (const char *name, const char *comment,
 	panel_config_sync_schedule ();
 
 	return launcher;
+#else
+	return NULL;
+#endif
 }
 
 Launcher *
@@ -851,6 +882,7 @@ load_launcher_applet_from_info_url (const char *name, const char *comment,
 				    PanelWidget *panel, int pos,
 				    gboolean exactpos)
 {
+#ifdef FIXME
 	char *exec[] = { NULL, NULL };
 	GnomeDesktopItem *ditem = g_new0 (GnomeDesktopItem, 1);
 	Launcher *launcher;
@@ -875,6 +907,9 @@ load_launcher_applet_from_info_url (const char *name, const char *comment,
 	panel_config_sync_schedule ();
 
 	return launcher;
+#else
+	return NULL;
+#endif
 }
 
 Launcher *
@@ -889,6 +924,7 @@ load_launcher_applet (const char *params, PanelWidget *panel, int pos,
 static void
 convert_ditem_to_gnome (GnomeDesktopItem *ditem)
 {
+#ifdef FIXME
 	int i;
 
 	ditem->is_kde = FALSE;
@@ -911,6 +947,7 @@ convert_ditem_to_gnome (GnomeDesktopItem *ditem)
 		ditem->type = g_strdup ("Application");
 		ditem->terminal = 1;
 	}
+#endif
 }
 
 static char *
@@ -972,6 +1009,7 @@ launcher_file_name (const char *base)
 void
 launcher_save (Launcher *launcher)
 {
+#ifdef FIXME
 	g_return_if_fail (launcher != NULL);
 	g_return_if_fail (launcher->ditem != NULL);
 
@@ -982,11 +1020,13 @@ launcher_save (Launcher *launcher)
 		launcher->ditem->location = launcher_get_unique_file ();
 
 	gnome_desktop_entry_save (launcher->ditem);
+#endif
 }
 
 void
 launcher_hoard (Launcher *launcher)
 {
+#ifdef FIXME
 	g_return_if_fail (launcher != NULL);
 	g_return_if_fail (launcher->ditem != NULL);
 
@@ -996,11 +1036,13 @@ launcher_hoard (Launcher *launcher)
 	}
 
 	launcher_save (launcher);
+#endif
 }
 
 Launcher *
 find_launcher (const char *path)
 {
+#ifdef FIXME
 	GSList *li;
 
 	g_return_val_if_fail (path != NULL, NULL);
@@ -1017,5 +1059,6 @@ find_launcher (const char *path)
 		}
 	}
 
+#endif
 	return NULL;
 }

@@ -175,6 +175,8 @@ panel_temp_SOURCES=\
 	scroll-menu.c		\
 	menu-properties.c	\
 	menu-properties.h	\
+	launcher.c		\
+	launcher.h		\
 	$(NULL)
 
 panel_temp_LDADD=\
@@ -183,8 +185,6 @@ panel_temp_LDADD=\
 
 panel_SOURCES=\
 	things-will-not-compile-below-this-line		\
-	launcher.c		\
-	launcher.h		\
 	extern.c  		\
 	extern.h  		\
 	gnome-run.c		\
