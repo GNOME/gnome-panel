@@ -1601,7 +1601,7 @@ server_applet_change_orient(PortableServer_Servant _servant,
 	servant->appwidget->orient = orient;
 	if(servant->appwidget->_priv->frozen_level>0) {
 		servant->appwidget->_priv->frozen_got_orient = TRUE;
-		servant->appwidget->_priv->frozen_size = (GNOME_Panel_OrientType)orient;
+		servant->appwidget->_priv->frozen_orient = (GNOME_Panel_OrientType)orient;
 	} else {
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[CHANGE_ORIENT_SIGNAL],
