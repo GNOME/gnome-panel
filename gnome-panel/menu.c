@@ -2743,7 +2743,7 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	p = g_strconcat(ident,"_off",NULL);
 	gtk_object_set_data(dialog,p,w);
 	if(!on)
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_prop), 
 			    dialog);
@@ -2756,7 +2756,7 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	p = g_strconcat(ident,"_sub",NULL);
 	gtk_object_set_data(dialog,p,w);
 	if(sub)
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_prop), 
 			    dialog);
@@ -2765,7 +2765,7 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 					     _("On the main menu"));
 	gtk_table_attach_defaults(table,w,1,2,row,row+1);
 	if(on && !sub)
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_prop), 
 			    dialog);
@@ -2803,7 +2803,7 @@ create_properties_dialog(Menu *menu)
 	w = gtk_radio_button_new_with_label (NULL, _("Main menu"));
 	gtk_object_set_data(GTK_OBJECT(dialog),"main_menu",w);
 	if(!menu->path || strcmp(menu->path,".")==0)
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w), TRUE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_main_menu), 
 			    dialog);
@@ -2813,7 +2813,7 @@ create_properties_dialog(Menu *menu)
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (w)),
 			  _("Normal menu"));
 	if(menu->path && strcmp(menu->path,".")!=0)
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w2), TRUE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w2), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_normal_menu), 
 			    dialog);

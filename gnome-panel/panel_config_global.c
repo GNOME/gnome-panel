@@ -245,7 +245,7 @@ animation_notebook_page(void)
 
 	/*we have to do this after everything we need aniframe varaibles set*/
 	if (!temp_config.disable_animations)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
 	return (vbox);
 }
@@ -307,7 +307,7 @@ genicon_notebook_page(void)
 	  /* Enable tiles frame */
 	  w = gtk_check_button_new_with_label (_("Tiles enabled"));
 	  if (temp_config.tiles_enabled[0])
-		  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (w), TRUE);
+		  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w), TRUE);
 	  gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			      GTK_SIGNAL_FUNC (set_icon_button_value), 
 			      &(temp_config.tiles_enabled[0]));
@@ -335,7 +335,7 @@ icon_notebook_page(int i, GtkWidget *config_box)
 	/* toggle button */
  	toggle = gtk_check_button_new_with_label (_("Tiles enabled"));
 	if (temp_config.tiles_enabled[i])
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
 	gtk_signal_connect (GTK_OBJECT (toggle), "toggled", 
 			    GTK_SIGNAL_FUNC (set_icon_button_value), 
 			    GINT_TO_POINTER(i));
@@ -410,7 +410,7 @@ misc_notebook_page(void)
 	/* Tooltips enable */
 	button = gtk_check_button_new_with_label (_("Tooltips enabled"));
 	if (temp_config.tooltips_enabled)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.tooltips_enabled));
@@ -431,7 +431,7 @@ misc_notebook_page(void)
 	/* Small Icons */
 	button = gtk_check_button_new_with_label (_("Show small icons"));
 	if (temp_config.show_small_icons)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.show_small_icons));
@@ -441,7 +441,7 @@ misc_notebook_page(void)
 	/* Dot Buttons */
 	button = gtk_check_button_new_with_label (_("Show ... buttons"));
 	if (temp_config.show_dot_buttons)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.show_dot_buttons));
@@ -451,7 +451,7 @@ misc_notebook_page(void)
 	/* Off Panel Popup menus */
 	button = gtk_check_button_new_with_label (_("Show popup menus outside of panels"));
 	if (temp_config.off_panel_popups)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.off_panel_popups));
@@ -472,7 +472,7 @@ misc_notebook_page(void)
 	/* Switched */
 	button = gtk_radio_button_new_with_label (NULL, _("Switched movement"));
 	if (temp_config.movement_type == PANEL_SWITCH_MOVE)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_movement), 
 			    (gpointer)PANEL_SWITCH_MOVE);
@@ -484,7 +484,7 @@ misc_notebook_page(void)
 		gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 		_("Free movement (doesn't disturb other applets)"));
 	if (temp_config.movement_type == PANEL_FREE_MOVE)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_movement), 
 			    (gpointer)PANEL_FREE_MOVE);
@@ -505,7 +505,7 @@ misc_notebook_page(void)
 	/* Prompt before log out */
 	button = gtk_check_button_new_with_label (_("Prompt before logout"));
 	if (temp_config.prompt_for_logout)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.prompt_for_logout));

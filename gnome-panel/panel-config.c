@@ -39,38 +39,38 @@ update_config_orient(GtkWidget *panel)
 	if(IS_SNAPPED_WIDGET(panel)) {
 		switch(SNAPPED_WIDGET(panel)->pos) {
 		case SNAPPED_TOP:
-			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->t_button),
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->t_button),
 						    TRUE);
 			break;
 		case SNAPPED_BOTTOM:
-			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->b_button),
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->b_button),
 						    TRUE);
 			break;
 		case SNAPPED_LEFT:
-			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->l_button),
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->l_button),
 						    TRUE);
 			break;
 		case SNAPPED_RIGHT:
-			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->r_button),
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->r_button),
 						    TRUE);
 			break;
 		}
 	} else if(IS_CORNER_WIDGET(panel)) {
 		switch(CORNER_WIDGET(panel)->pos) {
 		case CORNER_NE:
-			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->t_button),
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->t_button),
 						    TRUE);
 			break;
 		case CORNER_SW:
-			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->b_button),
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->b_button),
 						    TRUE);
 			break;
 		case CORNER_NW:
-			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->l_button),
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->l_button),
 						    TRUE);
 			break;
 		case CORNER_SE:
-			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->r_button),
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->r_button),
 						    TRUE);
 			break;
 		}
@@ -88,7 +88,7 @@ update_config_back(PanelWidget *pw)
 		return;
 	switch(pw->back_type) {
 	case PANEL_BACK_NONE:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->non),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->non),
 					    TRUE);
 		break;
 	case PANEL_BACK_COLOR:
@@ -97,13 +97,13 @@ update_config_back(PanelWidget *pw)
 					   pw->back_color.green,
 					   pw->back_color.blue,
 					   65535);
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->col),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->col),
 					    TRUE);
 		break;
 	case PANEL_BACK_PIXMAP:
 		t=gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
 		gtk_entry_set_text(GTK_ENTRY(t),pw->back_pixmap);
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->pix),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->pix),
 					    TRUE);
 		break;
 	}
@@ -324,19 +324,19 @@ snapped_notebook_page(PerPanelConfig *ppc)
 
 	switch(ppc->snapped_pos) {
 	case SNAPPED_TOP:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->t_button),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->t_button),
 					    TRUE);
 		break;
 	case SNAPPED_BOTTOM:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->b_button),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->b_button),
 					    TRUE);
 		break;
 	case SNAPPED_LEFT:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->l_button),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->l_button),
 					    TRUE);
 		break;
 	case SNAPPED_RIGHT:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->r_button),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->r_button),
 					    TRUE);
 		break;
 	}
@@ -356,7 +356,7 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	button = gtk_check_button_new_with_label(_("Auto hide"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->snapped_mode == SNAPPED_AUTO_HIDE)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (snapped_set_auto_hide), 
 			    NULL);
@@ -367,7 +367,7 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	w = button = gtk_check_button_new_with_label (_("Enable hidebuttons"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->snapped_hidebuttons)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->snapped_hidebuttons);
@@ -383,7 +383,7 @@ snapped_notebook_page(PerPanelConfig *ppc)
 		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->snapped_hidebutton_pixmaps)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->snapped_hidebutton_pixmaps);
@@ -496,19 +496,19 @@ corner_notebook_page(PerPanelConfig *ppc)
 
 	switch(ppc->corner_pos) {
 	case CORNER_NE:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->t_button),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->t_button),
 					    TRUE);
 		break;
 	case CORNER_SW:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->b_button),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->b_button),
 					    TRUE);
 		break;
 	case CORNER_NW:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->l_button),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->l_button),
 					    TRUE);
 		break;
 	case CORNER_SE:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->r_button),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->r_button),
 					    TRUE);
 		break;
 	}
@@ -532,7 +532,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	button = gtk_radio_button_new_with_label (NULL, _("Horizontal"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->corner_orient == PANEL_HORIZONTAL)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (corner_set_orient), 
 			    (gpointer)PANEL_HORIZONTAL);
@@ -545,7 +545,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 			  _("Vertical"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->corner_orient == PANEL_VERTICAL)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (corner_set_orient), 
 			    (gpointer)PANEL_VERTICAL);
@@ -568,7 +568,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	w = button = gtk_check_button_new_with_label (_("Enable hidebuttons"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->corner_hidebuttons)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->corner_hidebuttons);
@@ -584,7 +584,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->corner_hidebutton_pixmaps)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->corner_hidebutton_pixmaps);
@@ -735,7 +735,7 @@ background_page (PerPanelConfig *ppc)
 			    ppc->back_pixmap?ppc->back_pixmap:"");
 
 	w = gtk_check_button_new_with_label (_("Scale image to fit panel"));
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (w),
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w),
 				     ppc->fit_pixmap_bg);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled",
 			    GTK_SIGNAL_FUNC (set_fit_pixmap_bg),
@@ -788,11 +788,11 @@ background_page (PerPanelConfig *ppc)
 			    GINT_TO_POINTER(PANEL_BACK_COLOR));
 	
 	if(ppc->back_type == PANEL_BACK_NONE)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (ppc->non), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ppc->non), TRUE);
 	else if(ppc->back_type == PANEL_BACK_COLOR)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (ppc->col), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ppc->col), TRUE);
 	else
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (ppc->pix), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ppc->pix), TRUE);
 
 	return vbox;
 }

@@ -383,12 +383,12 @@ clock_properties(AppletWidget * applet, gpointer data)
 
 	switch (cd->hourformat) {
 	case 0:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(twelvehour),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(twelvehour),
 					    TRUE);
 		break;
 
 	case 1:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(twentyfourhour),
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(twentyfourhour),
 					    TRUE);
 		break;
 	}
@@ -409,7 +409,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_widget_show(showdate);
 	
 	if (cd->showdate)
-	  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(showdate),
+	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(showdate),
 				      TRUE);
 	cd->prop_showdate = cd->showdate;
 	

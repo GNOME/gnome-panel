@@ -138,7 +138,7 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	w = button = gtk_check_button_new_with_label (_("Enable hidebutton"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->drawer_hidebutton)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->drawer_hidebutton);
@@ -153,7 +153,7 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->drawer_hidebutton_pixmap)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->drawer_hidebutton_pixmap);

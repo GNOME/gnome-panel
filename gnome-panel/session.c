@@ -680,7 +680,7 @@ panel_quit(void)
 	gtk_widget_show(but);
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(box)->vbox),but,
 		           FALSE, TRUE, GNOME_PAD_SMALL);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(but),TRUE);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(but),TRUE);
 	gtk_signal_connect(GTK_OBJECT(but),"toggled",
 			   GTK_SIGNAL_FUNC(ask_next_time),NULL);
 
