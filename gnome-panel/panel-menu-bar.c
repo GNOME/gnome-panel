@@ -195,28 +195,13 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 			G_CALLBACK (panel_action_lock_screen));
 
 	if (enable_log_out) {
-		const char *user_name;
-		char       *logout_string;
-		char       *logout_tooltip;
-
-		user_name = g_get_real_name ();
-		if (!user_name || !user_name [0])
-			user_name = g_get_user_name ();
-
-		logout_string  = g_strdup_printf (_("Log Out %s"), g_get_user_name ());
-		logout_tooltip = g_strdup_printf (_("Quit from %s's desktop"),
-					  user_name);
-
 		panel_menu_bar_append_action_item (menubar,
 						   menubar->priv->actions_menu,
-						   logout_string,
+						   _("Log Out"),
 						   PANEL_STOCK_LOGOUT,
-						   logout_tooltip,
+						   _("Log out of GNOME"),
 						   "ACTION:logout:NEW",
 						   G_CALLBACK (panel_action_logout));
-		
-		g_free (logout_string);
-		g_free (logout_tooltip);
 	}
 
 	if (!menubar->priv->actions_item) {

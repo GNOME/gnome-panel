@@ -3220,35 +3220,21 @@ static void
 append_log_out (GtkWidget *menu)
 {
 	GtkWidget  *menuitem;
-	char       *logout_string;
-	char       *logout_tooltip;
-	const char *user_name;
 
 	if (panel_lockdown_get_disable_log_out ())
 		return;
 
 	menuitem = gtk_image_menu_item_new ();
 
-	logout_string = g_strdup_printf (_("Log Out %s"), g_get_user_name ());
 	setup_stock_menu_item (menuitem, panel_menu_icon_get_size (),
-			       PANEL_STOCK_LOGOUT, logout_string, TRUE);
-	g_free (logout_string);
+			       PANEL_STOCK_LOGOUT, _("Log Out"), TRUE);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (panel_action_logout), 0);
 	setup_internal_applet_drag (menuitem, "ACTION:logout:NEW");
 
-	user_name = g_get_real_name ();
-	if (!user_name || !user_name [0])
-		user_name = g_get_user_name ();
-	
-	logout_tooltip = g_strdup_printf (_("Log out %s of this session to "
-					    "log in as a different user or to "
-					    "shut down your computer"),
-					  user_name);
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, logout_tooltip, NULL);
-	g_free (logout_tooltip);
+	gtk_tooltips_set_tip (panel_tooltips, menuitem, _("Log out of this session to log in as a different user or to shut down the computer"), NULL);
 }
 
 static GtkWidget *
