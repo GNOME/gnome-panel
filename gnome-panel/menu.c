@@ -1383,6 +1383,12 @@ current_panel_config(GtkWidget *w, gpointer data)
 	panel_config(parent);
 }
 
+static void
+ask_about_launcher_cb(GtkWidget *w, gpointer data)
+{
+	ask_about_launcher(NULL,current_panel,0);
+}
+
 void
 make_panel_submenu (GtkWidget *menu, int fake_submenus)
 {
@@ -1430,7 +1436,7 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	setup_menuitem (menuitem, 0, _("Add new launcher"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   GTK_SIGNAL_FUNC(ask_about_launcher),NULL);
+			   GTK_SIGNAL_FUNC(ask_about_launcher_cb),NULL);
 
 	add_menu_separator(menu);
 

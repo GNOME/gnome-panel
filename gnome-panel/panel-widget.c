@@ -55,8 +55,6 @@ int pw_disable_animations = FALSE;
 PanelMovementType pw_movement_type = PANEL_SWITCH_MOVE;
 int pw_applet_padding = 3;
 
-static char *image_drop_types[] = {"url:ALL", "application/x-color"};
-
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -1052,19 +1050,17 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	return FALSE;
 }
 
-static void
-panel_widget_dnd_dropped_filename (PanelWidget *panel,
-				   GdkEventDropDataAvailable *event)
+void
+panel_widget_set_back_pixmap (PanelWidget *panel, char *file)
 {
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
-	g_return_if_fail(event!=NULL);
+	g_return_if_fail(file!=NULL);
 
-	if (panel_try_to_set_pixmap (panel, event->data)) {
+	if (panel_try_to_set_pixmap (panel, file)) {
 		if (panel->back_pixmap)
 			g_free (panel->back_pixmap);
-		panel->back_pixmap = g_strdup (event->data);
-		gtk_widget_queue_draw (GTK_WIDGET(panel));
+		panel->back_pixmap = g_strdup (file);
 		panel->back_type = PANEL_BACK_PIXMAP;
 		gtk_signal_emit(GTK_OBJECT(panel),
 				panel_widget_signals[BACK_CHANGE_SIGNAL],
@@ -1088,7 +1084,7 @@ panel_try_to_set_default_back(PanelWidget *panel)
 	gtk_widget_set_style(GTK_WIDGET(panel), ns);
 	gtk_style_unref(ns);
 
-	gtk_widget_queue_draw(GTK_WIDGET(panel));
+	panel_widget_draw_all(panel);
 }
 
 static void
@@ -1116,56 +1112,24 @@ panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
 
 	gtk_style_unref(ns);
 
-	gtk_widget_queue_draw(GTK_WIDGET(panel));
+	panel_widget_draw_all(panel);
 }
 
-static void
-panel_widget_dnd_dropped_color (PanelWidget *panel,
-				GdkEventDropDataAvailable *event)
+void
+panel_widget_set_back_color(PanelWidget *panel, GdkColor *color)
 {
-	gdouble *dropped;
-	GdkColor c;
-
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
-	g_return_if_fail(event!=NULL);
+	g_return_if_fail(color!=NULL);
 
-	dropped = (gdouble *)event->data;
+	panel_try_to_set_back_color(panel, color);
 
-	c.red = (dropped[1]*65535);
-	c.green = (dropped[2]*65535);
-	c.blue = (dropped[3]*65535);
-	c.pixel = 0;
-
-	panel_try_to_set_back_color(panel, &c);
-}
-
-static void
-panel_widget_dnd_drop_internal(GtkWidget *widget,
-			       GdkEventDropDataAvailable *event,
-			       gpointer data)
-{
-	PanelWidget *panel;
-	
-	g_return_if_fail(widget!=NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(widget));
-	g_return_if_fail(event!=NULL);
-	
-	panel = PANEL_WIDGET(widget);
-
-	/* Test for the type that was dropped */
-	if (strcmp (event->data_type, "url:ALL") == 0) {
-		panel_widget_dnd_dropped_filename (panel, event);
-	} else if(!strcmp(event->data_type, "application/x-color")) {
-		panel_widget_dnd_dropped_color(panel, event);
-		panel->back_type = PANEL_BACK_COLOR;
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[BACK_CHANGE_SIGNAL],
-				panel->back_type,
-				panel->back_pixmap,
-				&panel->back_color);
-	}
-	return;
+	panel->back_type = PANEL_BACK_COLOR;
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[BACK_CHANGE_SIGNAL],
+			panel->back_type,
+			panel->back_pixmap,
+			&panel->back_color);
 }
 
 static void
@@ -1235,6 +1199,8 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 		gtk_widget_set_style(GTK_WIDGET(panel), ns);
 	
 		gtk_style_unref(ns);
+
+		panel_widget_draw_all(panel);
 		return TRUE;
 	}
 
@@ -1282,6 +1248,8 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	
 	gtk_style_unref(ns);
 	gtk_object_set_data(GTK_OBJECT(panel),"gdk_image",im);
+	
+	panel_widget_draw_all(panel);
 	return TRUE;
 }
 
@@ -1312,11 +1280,6 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 				       gtk_widget_get_visual(w)->depth);
 
 	panel_widget_draw_all(panel);
-
-	gtk_widget_dnd_drop_set (GTK_WIDGET(panel), TRUE,
-				 image_drop_types,
-				 sizeof(image_drop_types)/sizeof(char *),
-				 FALSE);
 }
 
 static int
@@ -1426,12 +1389,6 @@ panel_widget_init (PanelWidget *panel)
 			   GTK_SIGNAL_FUNC(panel_widget_event),
 			   NULL);
 
-	/* Ok, cool hack begins: drop image files on the panel */
-	gtk_signal_connect (GTK_OBJECT (panel),
-			    "drop_data_available_event",
-			    GTK_SIGNAL_FUNC (panel_widget_dnd_drop_internal),
-			    NULL);
-	
 	panels = g_list_append(panels,panel);
 }
 
@@ -1578,6 +1535,23 @@ panel_widget_applet_drag_end(PanelWidget *panel)
 
 	_panel_widget_applet_drag_end(panel);
 	panel_applet_in_drag = FALSE;
+}
+
+/*get pos of the cursor location*/
+int
+panel_widget_get_cursorloc(PanelWidget *panel)
+{
+	int x,y;
+
+	g_return_val_if_fail(panel!=NULL,-1);
+	g_return_val_if_fail(IS_PANEL_WIDGET(panel),-1);
+
+	gtk_widget_get_pointer(GTK_WIDGET(panel), &x, &y);
+
+	if(panel->orient == PANEL_HORIZONTAL)
+		return x;
+	else
+		return y;
 }
 
 /*calculates the value to move the applet by*/

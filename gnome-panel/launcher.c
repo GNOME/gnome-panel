@@ -25,8 +25,6 @@ extern int applet_count;
 
 static char *default_app_pixmap=NULL;
 
-extern PanelWidget *current_panel;
-
 
 
 static void
@@ -262,18 +260,20 @@ static void
 really_add_launcher(GtkWidget *d,int button, gpointer data)
 {
 	GnomeDEntryEdit *dedit = GNOME_DENTRY_EDIT(data);
+	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"pos"));
+	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(d),"panel");
 	if(button==0)
 		_load_launcher_applet(NULL, gnome_dentry_get_dentry(dedit),
-				      current_panel, 0);
+				      panel, pos);
 	gtk_widget_destroy(d);
 }
 
 void
-ask_about_launcher(void)
+ask_about_launcher(char *file, PanelWidget *panel, int pos)
 {
 	GtkWidget *d;
 	GtkWidget *notebook;
-	GtkObject *dedit;
+	GnomeDEntryEdit *dee;
 
 	d = gnome_dialog_new(_("Create launcher applet"),
 			     GNOME_STOCK_BUTTON_OK,
@@ -285,10 +285,20 @@ ask_about_launcher(void)
 	notebook = gtk_notebook_new();
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),notebook,
 			   TRUE,TRUE,5);
-	dedit = gnome_dentry_edit_new(GTK_NOTEBOOK(notebook));
+	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new(GTK_NOTEBOOK(notebook)));
+	
+	if(file)
+		gtk_entry_set_text(GTK_ENTRY(dee->exec_entry), file);
+	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(dee->type_combo)->entry),
+			   "Application");
+	
+	
+	gtk_object_set_data(GTK_OBJECT(d),"pos", GINT_TO_POINTER(pos));
+	gtk_object_set_data(GTK_OBJECT(d),"panel",panel);
+
 	gtk_signal_connect(GTK_OBJECT(d),"clicked",
 			   GTK_SIGNAL_FUNC(really_add_launcher),
-			   dedit);
+			   dee);
 
 	gnome_dialog_close_hides(GNOME_DIALOG(d),FALSE);
 

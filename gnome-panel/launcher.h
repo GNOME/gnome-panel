@@ -25,7 +25,7 @@ typedef struct {
 void load_launcher_applet(char *params, PanelWidget *panel, int pos);
 void launcher_properties(Launcher *launcher);
 
-void ask_about_launcher(void);
+void ask_about_launcher(char *file, PanelWidget *panel, int pos);
 
 END_GNOME_DECLS
 

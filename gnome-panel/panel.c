@@ -9,6 +9,8 @@
 #include <config.h>
 #include <string.h>
 #include <signal.h>
+#include <unistd.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <gnome.h>
 
@@ -54,6 +56,9 @@ extern PanelWidget *current_panel;
 
 /*a list of started extern applet child processes*/
 extern GList * children;
+
+/*the types of stuff we accept*/
+static char *panel_drop_types[] = {"url:ALL", "application/x-color"};
 
 /*get the default panel widget if the panel has more then one or
   just get the that one*/
@@ -894,6 +899,64 @@ bind_panel_events(GtkWidget *widget, gpointer data)
 				       bind_panel_events, NULL);
 }
 
+static void
+panel_widget_dnd_drop_internal(GtkWidget *widget,
+			       GdkEventDropDataAvailable *event,
+			       gpointer data)
+{
+	PanelWidget *panel;
+
+	g_return_if_fail(widget!=NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(widget));
+	g_return_if_fail(event!=NULL);
+
+	panel = PANEL_WIDGET(widget);
+
+	/* Test for the type that was dropped */
+	if (strcmp (event->data_type, "url:ALL") == 0) {
+		char *file = event->data;
+		struct stat s;
+
+		/*if we can't stat this file don't even bother loading it*/
+		if(stat(file,&s)==0) {
+			char *p = strrchr(file,'.');
+			int pos = panel_widget_get_cursorloc(panel);
+			if(S_ISDIR(s.st_mode)) /*add a menu*/
+				load_menu_applet(file,MAIN_MENU_BOTH,
+						 panel,pos);
+			else if(p && strcmp(p,".desktop")==0)
+				load_launcher_applet(file,panel,pos);
+			else if(S_IEXEC & s.st_mode) /*executable?*/
+				ask_about_launcher(file,panel,pos);
+			else /*if all else fails it might be a pixmap*/
+				panel_widget_set_back_pixmap (panel, file);
+		}
+	} else if(!strcmp(event->data_type, "application/x-color")) {
+		gdouble *dropped;
+		GdkColor c;
+
+		dropped = (gdouble *)event->data;
+
+		c.red = (dropped[1]*65535);
+		c.green = (dropped[2]*65535);
+		c.blue = (dropped[3]*65535);
+		c.pixel = 0;
+
+		panel_widget_set_back_color(panel, &c);
+	}
+}
+
+static void
+panelw_realize(PanelWidget *panel, gpointer data)
+{
+	g_return_if_fail(panel!=NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(panel));
+
+	gtk_widget_dnd_drop_set (GTK_WIDGET(panel), TRUE,
+				 panel_drop_types,
+				 sizeof(panel_drop_types)/sizeof(char *),
+				 FALSE);
+}
 
 static void
 panel_widget_setup(PanelWidget *panel)
@@ -914,6 +977,16 @@ panel_widget_setup(PanelWidget *panel)
 			   "back_change",
 			   GTK_SIGNAL_FUNC(panel_back_change),
 			   NULL);
+	gtk_signal_connect_after(GTK_OBJECT(panel),
+				 "realize",
+				 GTK_SIGNAL_FUNC(panelw_realize),
+				 NULL);
+
+	/* Ok, cool hack begins: drop image files on the panel */
+	gtk_signal_connect (GTK_OBJECT (panel),
+			    "drop_data_available_event",
+			    GTK_SIGNAL_FUNC (panel_widget_dnd_drop_internal),
+			    NULL);
 }
 
 void

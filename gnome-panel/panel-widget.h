@@ -171,6 +171,11 @@ void		panel_widget_change_global	(int explicit_step,
 						 int disable_animations,
 						 int applet_padding);
 
+void		panel_widget_set_back_pixmap	(PanelWidget *panel,
+						 char *file);
+void		panel_widget_set_back_color	(PanelWidget *panel,
+						 GdkColor *color);
+
 /*draw EVERYTHING (meaning icons)*/
 void		panel_widget_draw_all		(PanelWidget *panel);
 /*draw just one icon (applet has to be an icon of course)*/
@@ -184,6 +189,8 @@ int		panel_widget_get_applet_count	(PanelWidget *panel);
 /*tells us if an applet is "stuck" on the right side*/
 int		panel_widget_is_applet_stuck	(PanelWidget *panel,
 						 GtkWidget *applet);
+/*get pos of the cursor location*/
+int		panel_widget_get_cursorloc	(PanelWidget *panel);
 
 /*needed for other panel types*/
 AppletData	*get_applet_data_pos		(PanelWidget *panel,
