@@ -93,3 +93,16 @@ get_full_path(char *argv0)
 #endif
 	return g_strdup(buf);
 }
+
+/*this is used to do an immediate move instead of set_uposition, which
+queues one*/
+void
+move_window(GtkWidget *widget, int x, int y)
+{
+	gdk_window_set_hints(widget->window, x, y, 0, 0, 0, 0, GDK_HINT_POS);
+	gdk_window_move(widget->window, x, y);
+	gtk_widget_draw(widget, NULL); /* FIXME: this should draw only the newly exposed area! */
+}
+
+
+

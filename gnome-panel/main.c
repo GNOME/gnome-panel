@@ -21,6 +21,8 @@
 #include "mico-parse.h"
 #include "panel-util.h"
 
+#include "cookie.h"
+
 #ifdef USE_INTERNAL_LAUNCHER
 int launcher_pid=0;
 #endif
@@ -237,7 +239,6 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 		register_toy(drawer->button,drawer->drawer,drawer,DRAWER_ID,
 			     params, pos, panel, NULL, APPLET_DRAWER);
 
-
 		panelarr = g_new(PanelWidget *,2);
 		panelarr[0] = PANEL_WIDGET(drawer->drawer);
 		panelarr[1] = g_list_nth(panels,panel)->data;
@@ -248,7 +249,8 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 		panelarr[1]->drawers_open++;
 		/*pop up, if popped down*/
 		panel_widget_pop_up(panelarr[1]);
-			   	
+
+		reposition_drawer(drawer);
 	} else if(strcmp(id_str,SWALLOW_ID) == 0) {
 		Swallow *swallow;
 
@@ -762,7 +764,6 @@ init_user_panels(void)
 		panel_setup(PANEL_WIDGET(panel));
 
 		gtk_widget_show(panel);
-
 
 		panels = g_list_append(panels,panel);
 	}

@@ -316,7 +316,6 @@ gnome_panel_applet_request_id (char *path,
 							             globcfg,
 								     wid);
 		} catch (...) {
-			puts("T");
 			sleep(1);
 			gnome_panel_applet_reinit_corba ();
 			continue;

@@ -15,21 +15,13 @@
 #include <string.h>
 #include "gnome.h"
 #include "panel-widget.h"
+#include "panel-util.h"
 #include "panel.h"
 #include "panel_config_global.h"
 #include "drawer.h"
 
 
 extern GlobalConfig global_config;
-
-/*taken from panel-widget*/
-static void
-move_window(GtkWidget *widget, int x, int y)
-{
-	gdk_window_set_hints(widget->window, x, y, 0, 0, 0, 0, GDK_HINT_POS);
-	gdk_window_move(widget->window, x, y);
-	gtk_widget_draw(widget, NULL); /* FIXME: this should draw only the newly exposed area! */
-}
 
 void
 reposition_drawer(Drawer *drawer)

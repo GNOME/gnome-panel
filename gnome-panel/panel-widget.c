@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 #include <gnome.h>
 #include "panel-widget.h"
+#include "panel-util.h"
 #include "gdkextra.h"
 
 GList *panels=NULL; /*other panels we might want to move the applet to*/
@@ -201,17 +202,6 @@ panel_widget_init (PanelWidget *panel_widget)
 	panel_widget->drawer_drop_zone_pos = DROP_ZONE_LEFT;
 	panel_widget->drawers_open = 0;
 }
-
-/*this is used to do an immediate move instead of set_uposition, which
-queues one*/
-static void
-move_window(GtkWidget *widget, int x, int y)
-{
-	gdk_window_set_hints(widget->window, x, y, 0, 0, 0, 0, GDK_HINT_POS);
-	gdk_window_move(widget->window, x, y);
-	gtk_widget_draw(widget, NULL); /* FIXME: this should draw only the newly exposed area! */
-}
-
 
 
 /*this is only for snapped panels! it sets their position, the positions
@@ -1583,6 +1573,10 @@ panel_widget_new (gint size,
 
 	if(snapped == PANEL_FREE)
 		move_window(GTK_WIDGET(panel),pos_x,pos_y);
+
+	/*FIXME: slightly ugly hack to avoid flashing the drawer*/
+	if(snapped == PANEL_DRAWER)
+		move_window(GTK_WIDGET(panel),-100,-100);
 
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
