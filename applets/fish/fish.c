@@ -617,17 +617,17 @@ handle_fortune_response (GtkWidget  *widget,
 			 int         id,
 			 FishApplet *fish)
 {
-	/* if there is still a pipe, close it: speak again will open a new pipe
-	 * and if we hide the widget, the output can't be seen */
-	if (fish->source_id)
-		g_source_remove (fish->source_id);
-	fish->source_id = 0;
-	fish_close_channel (fish);
-
 	if (id == FISH_RESPONSE_SPEAK)
 		display_fortune_dialog (fish);
-	else
+	else {
+		/* if there is still a pipe, close it: if we hide the widget,
+		 * the * output can't be seen */
+		if (fish->source_id)
+			g_source_remove (fish->source_id);
+		fish->source_id = 0;
+		fish_close_channel (fish);
 		gtk_widget_hide (fish->fortune_dialog);
+	}
 }
 
 static void
@@ -760,8 +760,11 @@ display_fortune_dialog (FishApplet *fish)
 	int          argc;
 	char       **argv;
 
-	g_assert (!fish->io_channel);
-	g_assert (!fish->source_id);
+	/* if there is still a pipe, close it */
+	if (fish->source_id)
+		g_source_remove (fish->source_id);
+	fish->source_id = 0;
+	fish_close_channel (fish);
 
 	user_command = locate_fortune_command (fish, &argc, &argv);
 	if (!argv)
@@ -1491,6 +1494,41 @@ fish_applet_change_orient (PanelApplet       *applet,
 }
 
 static void
+fish_applet_change_background (PanelApplet               *panel_applet,
+			       PanelAppletBackgroundType  type,
+			       GdkColor                  *color,
+			       GdkPixmap                 *pixmap)
+{
+	FishApplet *applet;
+	GtkRcStyle *rc_style;
+	GtkStyle   *style;
+
+	applet = (FishApplet *) panel_applet;
+
+	/* reset style */
+	gtk_widget_set_style (GTK_WIDGET (applet), NULL);
+	rc_style = gtk_rc_style_new ();
+	gtk_widget_modify_style (GTK_WIDGET (applet), rc_style);
+	g_object_unref (rc_style);
+
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		break;
+	case PANEL_COLOR_BACKGROUND:
+		gtk_widget_modify_bg (GTK_WIDGET (applet),
+				      GTK_STATE_NORMAL, color);
+		break;
+	case PANEL_PIXMAP_BACKGROUND:
+		style = gtk_style_copy (GTK_WIDGET (applet)->style);
+		if (style->bg_pixmap[GTK_STATE_NORMAL])
+			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
+		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
+		gtk_widget_set_style (GTK_WIDGET (applet), style);
+		break;
+	}
+}
+
+static void
 change_water (FishApplet *fish)
 {
 	GtkWidget *dialog;
@@ -1886,6 +1924,7 @@ fish_applet_class_init (FishAppletClass *klass)
 	parent_class = g_type_class_peek_parent (klass);
 
 	applet_class->change_orient = fish_applet_change_orient;
+	applet_class->change_background = fish_applet_change_background;
 
 	gtkobject_class->destroy = fish_applet_destroy;
 

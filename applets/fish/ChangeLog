@@ -1,3 +1,12 @@
+2004-11-06  Vincent Untz  <vincent@vuntz.net>
+
+	* fish.c: (handle_fortune_response): close the pipe only if we hide
+	the window
+	(display_fortune_dialog): always close the pipe
+	(fish_applet_change_background): background support, code is
+	shamelessly stolen from the trash applet
+	(fish_applet_class_init): handle background changes
+
 2004-11-01  Vincent Untz  <vincent@vuntz.net>
 
 	* fish.c: stop including everything from libgnomeui
