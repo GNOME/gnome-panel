@@ -44,7 +44,7 @@ Panel Global Config Schema File -  work in progress
 
       <schema>
         <key>/schemas/apps/panel/auto-update-menus</key>
-        <applyto>/apps/panel/</applyto>
+        <applyto>/apps/panel/auto-update-menus</applyto>
         <owner>panel</owner>
         <type>bool</type>
         <default>true</default>
@@ -56,7 +56,7 @@ Panel Global Config Schema File -  work in progress
 
       <schema>
         <key>/schemas/apps/panel/disable-animations</key>
-        <applyto>/apps/panel/</applyto>
+        <applyto>/apps/panel/disable-animations</applyto>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
@@ -68,7 +68,7 @@ Panel Global Config Schema File -  work in progress
       
       <schema>
         <key>/schemas/apps/panel/panel-minimized-size</key>
-        <applyto>/apps/panel/panel_minimized_size</applyto>
+        <applyto>/apps/panel/panel-minimized-size</applyto>
         <owner>panel</owner>
         <type>int</type>
         <default>3</default>
@@ -80,13 +80,10 @@ Panel Global Config Schema File -  work in progress
 
       <schema>
         <key>/schemas/apps/panel/panel-show-delay</key>
-
-      <schema>
-        <key>/schemas/apps/panel/panel-hide-speed</key>
-        <applyto>/apps/panel/panel_hide_speed</applyto>
+        <applyto>/apps/panel/panel-show-delay</applyto>
         <owner>panel</owner>
         <type>int</type>
-        <default>80</default>
+        <default>0</default>
         <locale name="C">
           <short>FIXME - need to define limits</short>
           <long></long>
@@ -94,11 +91,11 @@ Panel Global Config Schema File -  work in progress
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/panel-show-delay</key>
-        <applyto>/apps/panel/panel-show-delay</applyto>
+        <key>/schemas/apps/panel/panel-hide-speed</key>
+        <applyto>/apps/panel/panel-hide-speed</applyto>
         <owner>panel</owner>
         <type>int</type>
-        <default>300</default>
+        <default>80</default>
         <locale name="C">
           <short>FIXME - need to define limits</short>
           <long></long>
