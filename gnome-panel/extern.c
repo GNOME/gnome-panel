@@ -716,7 +716,7 @@ panel_corba_gtk_init(CORBA_ORB panel_orb)
   GNOME_Panel acc;
   char hostname [4096];
   char *name;
-  CORBA_Object ns;
+  CORBA_Object ns, old_server;
   gint status;
 
   CORBA_exception_init(&ev);
@@ -739,6 +739,15 @@ panel_corba_gtk_init(CORBA_ORB panel_orb)
 
   acc = PortableServer_POA_servant_to_reference(thepoa, &panel_servant, &ev);
   g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
+
+  old_server = goad_server_activate_with_repo_id (NULL, "IDL:GNOME/Panel:1.0", 
+						  GOAD_ACTIVATE_EXISTING_ONLY,
+						  NULL);
+
+  if(! CORBA_Object_is_nil(old_server, &ev)) {
+    CORBA_Object_release(old_server, &ev);
+    return -4;
+  }
 
   status = goad_server_register(CORBA_OBJECT_NIL, acc, "gnome_panel", "server", &ev);
 

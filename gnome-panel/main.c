@@ -106,7 +106,7 @@ main(int argc, char **argv)
 			       GNORBA_INIT_SERVER_FUNC, &ev);
 	CORBA_exception_free(&ev);
 
-	duplicate = (panel_corba_gtk_init(orb) == -2);
+	duplicate = (panel_corba_gtk_init(orb) == -4);
 
 	client = gnome_master_client ();
 
