@@ -1,4 +1,4 @@
-always_built_SUBDIRS = applet-dirs gen_util batmon asclock \
+always_built_SUBDIRS = applet-dirs gen_util asclock \
 	 fish dialer webcontrol icewm-pager \
 	 drivemount clockmail fifteen battery charpick \
 	 gnome-pager mini-commander 
