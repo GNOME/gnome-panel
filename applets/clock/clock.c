@@ -2104,6 +2104,7 @@ fill_clock_applet (PanelApplet *applet)
 	gtk_container_set_border_width (GTK_CONTAINER (cd->toggle), 0);
 	gtk_container_add (GTK_CONTAINER (cd->applet), cd->toggle);
 
+	gtk_window_set_default_icon_name ("gnome-clock");
 	gtk_widget_show (cd->applet);
 
 	/* FIXME: Update this comment. */
@@ -2362,7 +2363,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 	GtkWidget *vbox;
 	GtkWidget *combo;
 	GtkWidget *label;
-	char      *file;
 
 	if (cd->props) {
 		gtk_window_set_screen (GTK_WINDOW (cd->props),
@@ -2386,18 +2386,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_container_set_border_width (GTK_CONTAINER (cd->props), 5);
 	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (cd->props)->vbox), 2);
 		
-	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
-	                                  "gnome-clock.png", TRUE, NULL);
-	if (file) {
-		GdkPixbuf *pixbuf;
-		pixbuf = gdk_pixbuf_new_from_file (file, NULL);
-		gtk_window_set_icon (GTK_WINDOW (cd->props), pixbuf);
-		g_object_unref (pixbuf);
-		g_free (file);
-	}
-	else
-		g_warning (G_STRLOC ": gnome-clock.png cannot be found");
-
 	vbox = gtk_vbox_new (FALSE, 6);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->props)->vbox), vbox, FALSE, FALSE, 0);
@@ -2545,9 +2533,6 @@ display_about_dialog (BonoboUIComponent *uic,
 		      ClockData         *cd,
 		      const gchar       *verbname)
 {
-	GdkPixbuf *pixbuf = NULL;
-	gchar *file;
-	
 	static const gchar *authors[] =
 	{
 		"George Lebl <jirka@5z.com>",
@@ -2560,7 +2545,7 @@ display_about_dialog (BonoboUIComponent *uic,
 		NULL
 	};
 	/* Translator credits */
-	const char *translator_credits = _("translator_credits");
+	const char *translator_credits = _("translator-credits");
 
 	if (cd->about) {
 		gtk_window_set_screen (GTK_WINDOW (cd->about),
@@ -2569,33 +2554,22 @@ display_about_dialog (BonoboUIComponent *uic,
 		return;
 	}
 
-	pixbuf = NULL;
-	
-	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
-	                                  "gnome-clock.png", TRUE, NULL);
-	if (file) {
-		pixbuf = gdk_pixbuf_new_from_file (file, NULL);
-		g_free (file);
-	} else
-		g_warning (G_STRLOC ": gnome-clock.png cannot be found");
-
-	cd->about = gnome_about_new (_("Clock"), VERSION,
-				 "Copyright \xc2\xa9 1998-2002 Free Software Foundation. Inc.",
-				 _("The Clock displays the current time and date"),
-				 authors,
-				 documenters,
-				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-				 pixbuf);
+	cd->about = gtk_about_dialog_new ();
+	g_object_set (cd->about,
+		      "name",  _("Clock"),
+		      "version", VERSION,
+		      "copyright", "Copyright \xc2\xa9 1998-2004 Free Software Foundation, Inc.",
+		      "comments", _("The Clock displays the current time and date"),
+		      "authors", authors,
+		      "documenters", documenters,
+		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+		      "logo_icon_name", "gnome-clock",
+		      NULL);
 	
 	gtk_window_set_wmclass (GTK_WINDOW (cd->about), "clock", "Clock");
 	gtk_window_set_screen (GTK_WINDOW (cd->about),
 			       gtk_widget_get_screen (cd->applet));
 
-	if (pixbuf) {
-		gtk_window_set_icon (GTK_WINDOW (cd->about), pixbuf);
-		g_object_unref (pixbuf);
-	}
-	
 	g_signal_connect (G_OBJECT(cd->about), "destroy",
 			  (GCallback)gtk_widget_destroyed, &cd->about);
 	
