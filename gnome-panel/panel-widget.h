@@ -1,5 +1,5 @@
 /* Gnome panel: panel widget
- * (C) 1997 the Free Software Foundation
+ * (C) 1997-1998 the Free Software Foundation
  *
  * Authors:  George Lebl
  */

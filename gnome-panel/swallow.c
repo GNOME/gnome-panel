@@ -96,6 +96,7 @@ socket_realized(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
+#if 0
 /*FIXME: I dunno how I should handle the destruction of the applet itself,
   the problem is that the socket doesn't get destroyed nor does it get a
   delete_event when it's child dies ...*/
@@ -106,6 +107,7 @@ socket_delete_event(GtkWidget *w, gpointer data)
 	gtk_widget_destroy(swallow->ebox);
 	return TRUE;
 }
+#endif
 
 static int
 do_the_destroy(gpointer data)

@@ -51,7 +51,7 @@ destroy_launcher(GtkWidget *widget, gpointer data)
 }
 
 
-Launcher *
+static Launcher *
 create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 {
 	char *icon;

@@ -62,7 +62,7 @@ struct _MenuFinfo {
 PanelWidget *current_panel = NULL;
 
 /*the most important dialog in the whole application*/
-void
+static void
 about_cb (GtkWidget *widget, gpointer data)
 {
 	GtkWidget *about;
@@ -88,7 +88,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	return;
 }
 
-void
+static void
 about_gnome_cb(GtkObject *object, char *program_path)
 {
   if(!fork()) {
@@ -100,7 +100,7 @@ about_gnome_cb(GtkObject *object, char *program_path)
   }
 }
 
-void
+static void
 activate_app_def (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *item = data;
@@ -499,7 +499,7 @@ setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title)
 	setup_full_menuitem(menuitem,pixmap,title,NULL);
 }
 
-void
+static void
 free_app_def (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *item = data;
@@ -508,7 +508,7 @@ free_app_def (GtkWidget *widget, void *data)
 		gnome_desktop_entry_free (item);
 }
 
-void
+static void
 add_menu_separator (GtkWidget *menu)
 {
 	GtkWidget *menuitem;
@@ -516,12 +516,6 @@ add_menu_separator (GtkWidget *menu)
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_show (menuitem);
 	gtk_container_add (GTK_CONTAINER (menu), menuitem);
-}
-
-void
-free_string (GtkWidget *widget, void *data)
-{
-	g_free (data);
 }
 
 static int
@@ -1075,14 +1069,6 @@ get_real_menu_path(char *arguments, char *menu_base)
 	return this_menu;
 }
 
-
-
-void
-panel_configure (GtkWidget *widget, void *data)
-{
-	panel_config_global();
-}
-
 static GtkWidget *
 create_applets_menu(int fake_submenus)
 {
@@ -1347,7 +1333,7 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 			_("Global properties..."));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC(panel_configure), 
+			    GTK_SIGNAL_FUNC(panel_config_global), 
 			    NULL);
 
 }

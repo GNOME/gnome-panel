@@ -72,18 +72,6 @@ static POA_GNOME_Applet__epv applet_epv = {
 static POA_GNOME_Applet__vepv vepv = { &base_epv, &applet_epv };
 static POA_GNOME_Applet applet_servant = { NULL, &vepv };
 
-BEGIN_GNOME_DECLS
-
-void _gnome_applet_change_orient(int applet_id, int orient);
-int _gnome_applet_session_save(int applet_id, const char *cfgpath,
-			       const char *globcfgpath);
-int _gnome_applet_start_new_applet(const char *params);
-void _gnome_applet_back_change(int applet_id, int back_type,
-			       const char *pixmap, GdkColor *color);
-void _gnome_applet_tooltips_state(int enabled);
-
-END_GNOME_DECLS
-
 
 void server_change_orient(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_short applet_id, CORBA_short orient, CORBA_Environment *ev)
 {

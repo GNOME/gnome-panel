@@ -70,7 +70,7 @@ static struct argp parser =
   we never know when all the applets are going to finish loading and
   we don't want to clean the file before they load up, so now we
   only call it on the discard cmdline argument*/
-void
+static void
 discard_session (char *id)
 {
 	char *sess;
@@ -100,7 +100,7 @@ parse_an_arg (int key, char *arg, struct argp_state *state)
 	return ARGP_ERR_UNKNOWN;
 }
 
-void
+static void
 sigchld_handler(int type)
 {
 	GList *list;

@@ -750,7 +750,8 @@ init_user_panels(void)
 		GdkColor back_color = {0,0,0,1};
 		int fit_pixmap_bg;
 
-		g_snprintf(buf,256,"%spanel/Panel_%d/", old_panel_cfg_path, num);
+		g_snprintf(buf,256,"%spanel/Panel_%d/",
+			   old_panel_cfg_path, num);
 		gnome_config_push_prefix (buf);
 		
 		back_pixmap = gnome_config_get_string ("backpixmap=");
@@ -846,7 +847,7 @@ init_user_panels(void)
 							  &back_color);
 				break;
 			}
-		default: break;
+		default: panel=NULL; break; /*fix warning*/
 		}
 
 		gnome_config_pop_prefix ();

@@ -1,3 +1,9 @@
+/* applet-widget: the interface for the applets, these are the functions
+ * that applets need
+ * (C) 1998 the Free Software Foundation
+ *
+ * Author:  George Lebl
+ */
 #ifndef __APPLET_WIDGET_H__
 #define __APPLET_WIDGET_H__
 
@@ -6,9 +12,7 @@
 
 #define HAVE_SAVE_SESSION_SIGNAL 1
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+BEGIN_GNOME_DECLS
 
 #ifndef PANEL_TYPES_H
 /*from panel-types.h*/
@@ -199,9 +203,11 @@ void		applet_widget_gtk_main		(void);
 /* convenience function for multi applets */
 char *		make_param_string		(int argc, char *argv[]);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+#ifndef PANEL_UTIL_H
+/*from panel-util.h*/
+char *get_full_path(char *argv0);
+#endif
 
+END_GNOME_DECLS
 
 #endif /* __APPLET_WIDGET_H__ */

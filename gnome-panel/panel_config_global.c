@@ -128,7 +128,7 @@ int_scale_update (GtkAdjustment *adjustment, gpointer data)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
 }
 
-GtkWidget *
+static GtkWidget *
 make_int_scale_frame(char *title, int *data, double min, double max)
 {
 	GtkWidget *frame;
@@ -179,7 +179,7 @@ set_anim_button_value(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
-GtkWidget *
+static GtkWidget *
 animation_notebook_page(void)
 {
 	GtkWidget *frame;
@@ -278,7 +278,7 @@ set_icon_button_value(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
-GtkWidget *
+static GtkWidget *
 genicon_notebook_page(void)
 {
 	GtkWidget *frame;
@@ -314,7 +314,7 @@ genicon_notebook_page(void)
 	return (vbox);
 }
 
-GtkWidget *
+static GtkWidget *
 icon_notebook_page(int i, GtkWidget *config_box)
 {
 	GtkWidget *frame;
@@ -368,7 +368,7 @@ icon_notebook_page(int i, GtkWidget *config_box)
 	return (vbox);
 }
 
-GtkWidget *
+static GtkWidget *
 misc_notebook_page(void)
 {
 	GtkWidget *frame;

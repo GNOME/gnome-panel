@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include "cookie.h"
 
 #define COOKIE_SIZE 12
 

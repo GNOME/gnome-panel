@@ -193,7 +193,7 @@ get_applet_orient(PanelWidget *panel)
 	return orient;
 }
 
-void
+static void
 change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 {
 	GdkCursor *cursor = gdk_cursor_new(cursor_type);

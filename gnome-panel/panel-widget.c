@@ -1352,11 +1352,11 @@ panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
 	_panel_widget_applet_drag_start_no_grab(panel,applet);
 }
 
-void
+static void
 _panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
 {
 #ifdef DEBUG
-  g_message("Ending drag\n");
+	g_message("Ending drag\n");
 #endif
 	panel->currently_dragged_applet = NULL;
 }

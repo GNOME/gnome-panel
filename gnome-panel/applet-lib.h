@@ -1,14 +1,18 @@
+/* applet-lib: low level interface glue to the applet<->panel communication
+ * (C) 1998 the Free Software Foundation
+ *
+ * Author:  George Lebl
+ */
 #ifndef APPLET_LIB_H
 #define APPLET_LIB_H
 
 #include <applet-widget.h>
 
-BEGIN_GNOME_DECLS
+/*this file contains the more private parts of the applet communications
+  applets should not use these functions directly, in time applet-lib and
+  applet-widget might be merged to avoid code bloat*/
 
-#ifndef PANEL_UTIL_H
-/*from panel-util.h*/
-char *get_full_path(char *argv0);
-#endif
+BEGIN_GNOME_DECLS
 
 /*all the cfgpaths in this interface are load paths (might be an old
   session different from current) ... except the save_session which gets
@@ -49,6 +53,17 @@ void gnome_panel_applet_cleanup (int applet_id);
 
 char * gnome_panel_applet_add_tooltip (int applet_id, char *tooltip);
 char * gnome_panel_applet_remove_tooltip (int applet_id);
+
+/*these functions need to be implemented in the applet, applet-widget
+  takes care of them*/
+void _gnome_applet_change_orient(int applet_id, int orient);
+int _gnome_applet_session_save(int applet_id, const char *cfgpath,
+			       const char *globcfgpath);
+void _gnome_applet_start_new_applet(const char *params);
+void _gnome_applet_back_change(int applet_id, int back_type,
+			       const char *pixmap, GdkColor *color);
+void _gnome_applet_tooltips_state(int enabled);
+
 
 /*this is currently not used, it's an empty function for now, but it
   should register the orbit arguments*/
