@@ -1,3 +1,12 @@
+2004-10-21  Christian Neumair  <chris@gnome-de.org>
+
+	Fixes bug #154072.
+
+	* gnome-panel-screenshot.c (display_help): New function.
+	(on_toplevel_key_press_event): Handle F1 keypress.
+	* gnome-panel-screenshot.glade: Connect to
+	key-press-event signal to on_toplevel_key_press_event.
+
 2004-10-18  William Jon McCann  <mccann@jhu.edu>
 
 	Fixes bug #150661.
