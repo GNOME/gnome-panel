@@ -43,7 +43,7 @@ extern GlobalConfig global_config;
  ************************/
 
 GtkType
-basep_widget_get_type ()
+basep_widget_get_type (void)
 {
 	static GtkType basep_widget_type = 0;
 
@@ -98,6 +98,7 @@ basep_widget_realize(GtkWidget *w)
 	GTK_WIDGET_CLASS(basep_widget_parent_class)->realize(w);
 
 	basep_widget_update_winhints (basep);
+	xstuff_set_no_group(w->window);
 
 	set_frame_colors(PANEL_WIDGET(basep->panel),
 			 basep->frame,
@@ -859,6 +860,8 @@ basep_widget_redo_window(BasePWidget *basep)
 
 	newwin = gdk_window_new(NULL, &attributes, attributes_mask);
 	gdk_window_set_user_data(newwin, window);
+
+	xstuff_set_no_group(newwin);
 
 	/* reparent our main panel window */
 	gdk_window_reparent(basep->ebox->window, newwin, 0, 0);

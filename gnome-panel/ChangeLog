@@ -1,3 +1,21 @@
+Sat Apr 29 13:30:11 2000  George Lebl <jirka@5z.com>
+
+	* basep-widget.c (basep_widget_realize) (basep_widget_redo_window):
+	  call xstuff_set_no_group when realized
+
+	* foobar-widget.c (foobar_widget_get_type) (timeout_cb)
+	  (set_fooclock_format) (append_format_item)
+	  (foobar_widget_update_winhints) (foobar_widget_init)
+	  (foobar_widget_redo_window):  fix a warning, don't make tooltips
+	  until neccessary, override the realize method and after realization
+	  call the update_winhints and xstuff_set_no_group (also called in
+	  redo_window)
+
+	* xstuff.[ch] (xstuff_set_no_group):  Add this call, it unsets the
+	  group hint for a window.  This makes the panels not part of the
+	  same group as the dialogs meaning they won't get minimized with
+	  the "group"
+
 Tue Apr 25 20:13:45 2000  George Lebl <jirka@5z.com>
 
 	* gnome-panel-properties.c (loadup_vals):

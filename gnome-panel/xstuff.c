@@ -556,3 +556,24 @@ xstuff_is_compliant_wm(void)
 
 	return compliant_wm;
 }
+
+void
+xstuff_set_no_group(GdkWindow *win)
+{
+	XWMHints *wmhints;
+	static GdkAtom wm_client_leader_atom = GDK_NONE;
+
+	if (!wm_client_leader_atom)
+		wm_client_leader_atom = gdk_atom_intern ("WM_CLIENT_LEADER",
+							 FALSE);
+
+	gdk_property_delete(win, wm_client_leader_atom);
+
+	wmhints = XGetWMHints(GDK_DISPLAY(), GDK_WINDOW_XWINDOW(win));
+	wmhints->flags &= ~WindowGroupHint;
+	wmhints->window_group = 0;
+	XSetWMHints(GDK_DISPLAY(),
+		    GDK_WINDOW_XWINDOW(win),
+		    wmhints);
+	XFree(wmhints);
+}

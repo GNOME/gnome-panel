@@ -30,14 +30,15 @@
 extern GlobalConfig global_config;
 extern GList *panel_list;
 
-static GtkWindowClass *foobar_widget_parent_class = NULL;
-
 static void foobar_widget_class_init (FoobarWidgetClass *klass);
 static void foobar_widget_init (FoobarWidget *foo);
+static void foobar_widget_realize (GtkWidget *w);
 
 static GtkWidget *das_global_foobar = NULL;
 static GtkWidget *clock_ebox = NULL;
 static GtkTooltips *tooltips = NULL;
+
+static GtkWindowClass *parent_class = NULL;
 
 GtkType
 foobar_widget_get_type (void)
@@ -66,9 +67,11 @@ foobar_widget_get_type (void)
 static void
 foobar_widget_class_init (FoobarWidgetClass *klass)
 {
-	foobar_widget_parent_class = gtk_type_class (FOOBAR_WIDGET_TYPE);
-	tooltips = gtk_tooltips_new ();
-	gtk_tooltips_enable (tooltips);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+        parent_class = gtk_type_class (gtk_window_get_type ());
+
+	widget_class->realize = foobar_widget_realize;
 }
 
 static GtkWidget *
@@ -326,6 +329,10 @@ timeout_cb (gpointer data)
 	if (das_tm->tm_mday != day) {
 		if (strftime (hour, 20, _("%A %B %d"), das_tm) == 20)
 			hour[19] = '\0';
+		if(!tooltips) {
+			tooltips = gtk_tooltips_new ();
+			gtk_tooltips_enable (tooltips);
+		}
 		gtk_tooltips_set_tip (tooltips, clock_ebox, hour, NULL);
 
 		day = das_tm->tm_mday;
@@ -356,7 +363,7 @@ set_fooclock_format (GtkWidget *w, char *format)
 }
 
 static void
-append_format_item (GtkWidget *menu, char *format)
+append_format_item (GtkWidget *menu, const char *format)
 {
 	char hour[20];
 	GtkWidget *item;
@@ -371,7 +378,7 @@ append_format_item (GtkWidget *menu, char *format)
 	gtk_menu_append (GTK_MENU (menu), item);
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC (set_fooclock_format),
-			    format);
+			    (gpointer)format);
 }
 
 static GtkWidget *
@@ -456,6 +463,16 @@ foobar_widget_update_winhints (FoobarWidget *foo)
 }
 
 static void
+foobar_widget_realize (GtkWidget *w)
+{
+	if(GTK_WIDGET_CLASS(parent_class)->realize)
+		GTK_WIDGET_CLASS(parent_class)->realize(w);
+
+	foobar_widget_update_winhints(FOOBAR_WIDGET(w));
+	xstuff_set_no_group(w->window);
+}
+
+static void
 programs_menu_to_display(GtkWidget *menu)
 {
 	if(menu_need_reread(menu)) {
@@ -496,9 +513,6 @@ foobar_widget_init (FoobarWidget *foo)
 
 	gtk_signal_connect (GTK_OBJECT (foo), "delete_event",
 			    GTK_SIGNAL_FUNC (gtk_true), NULL);
-	gtk_signal_connect (GTK_OBJECT (foo), "realize",
-			    GTK_SIGNAL_FUNC (foobar_widget_update_winhints),
-			    NULL);
 
 	gtk_widget_set_usize (GTK_WIDGET (foo),
 			      gdk_screen_width (), -2);
@@ -699,6 +713,8 @@ foobar_widget_redo_window(FoobarWidget *foo)
 
 	newwin = gdk_window_new(NULL, &attributes, attributes_mask);
 	gdk_window_set_user_data(newwin, window);
+
+	xstuff_set_no_group(newwin);
 
 	/* reparent our main panel window */
 	gdk_window_reparent(foo->ebox->window, newwin, 0, 0);
