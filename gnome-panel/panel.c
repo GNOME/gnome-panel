@@ -29,7 +29,8 @@ static int panel_dragged = FALSE;
 static int panel_dragged_timeout = -1;
 static int panel_been_moved = FALSE;
 
-/*the number of base panels out there, never let it go below 1*/
+/*the number of base panels (corner/snapped) out there, never let it
+  go below 1*/
 int base_panels = 0;
 
 extern int config_sync_timeout;
