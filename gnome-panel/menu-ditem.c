@@ -544,11 +544,14 @@ panel_new_launcher (const char *item_loc,
 				GTK_STOCK_OK, GTK_RESPONSE_OK,
 				NULL);
 
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 			       "create_menu_item", "Panel");
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 	
 	dee = gnome_ditem_edit_new ();
+	gtk_container_set_border_width (GTK_CONTAINER (dee), 5);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), dee,
 			    TRUE, TRUE, GNOME_PAD_SMALL);
 
