@@ -29,11 +29,6 @@
 
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
-/*
- * FIXME: remove when this starts getting installed
- *        by libgnomeui
- */
-#include <libgnomeui/gnome-window-icon.h>
 
 #include "gnome-run.h"
 
