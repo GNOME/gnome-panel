@@ -152,6 +152,47 @@ panel_widget_shrink_wrap(PanelWidget *panel,
 	}
 }
 
+static gint
+panel_widget_push_left(PanelWidget *panel,gint pos)
+{
+	gint i;
+	gint freepos;
+
+	for(i=0;pos-i>=0 && panel->applets[pos-i].applet;i++)
+		;
+	if(pos-i < 0)
+		return FALSE;
+
+	freepos=i;
+
+	for(;i>0;i--) {
+		panel->applets[pos-i].applet=
+			panel->applets[pos-i+1].applet;
+		panel->applets[pos-i].drawer =
+			panel->applets[pos-i+1].drawer;
+		panel->applets[pos-i].cells =
+			panel->applets[pos-i+1].cells;
+	}
+
+	for(i=pos-freepos;i<pos;i+=panel->applets[i].cells) {
+		if(panel->orient == PANEL_HORIZONTAL)
+			gtk_fixed_move(GTK_FIXED(panel->fixed),
+				       panel->applets[i].applet,
+				       panel->applets[i].applet->
+				       	allocation.x-PANEL_CELL_SIZE,
+				       panel->applets[i].applet->
+				       	allocation.y);
+		else
+			gtk_fixed_move(GTK_FIXED(panel->fixed),
+				       panel->applets[i].applet,
+				       panel->applets[i].applet->
+				       	allocation.x,
+				       panel->applets[i].applet->
+				       	allocation.y-PANEL_CELL_SIZE);
+	}
+	return TRUE;
+}
+
 
 static gint
 panel_widget_push_right(PanelWidget *panel,gint pos)
@@ -227,6 +268,11 @@ panel_widget_seize_space(PanelWidget *panel,
 		while(allocated < width &&
 		      panel_widget_push_right(panel,pos+allocated))
 			allocated++;
+		while(allocated < width &&
+		      panel_widget_push_left(panel,pos-1)) {
+		      	pos--;
+			allocated++;
+		}
 	}
 
 	for(i=0;i<allocated;i++) {
@@ -250,6 +296,11 @@ panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
 	oldx = applet->allocation.x;
 	oldy = applet->allocation.y;
 	pos = panel_widget_get_pos(panel,applet);
+
+	/*don't adjust applets out of range, wait for
+	  then to be pushed into range*/
+	if(pos>=panel->size)
+		return;
 
 	g_return_if_fail(pos>=0 && pos<PANEL_MAX);
 	
@@ -716,8 +767,6 @@ panel_widget_apply_size_limit(PanelWidget *panel)
 {
 	gint i;
 	gint length;
-
-	puts("APPLY_SIZE_LIMIT");
 
 	g_return_if_fail(panel);
 	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(panel)));
@@ -1199,12 +1248,14 @@ panel_widget_get_pos(PanelWidget *panel, GtkWidget *applet)
 	g_return_val_if_fail(panel,-1);
 	g_return_val_if_fail(applet,-1);
 
-	for(i=0;i<panel->size;i++)
+	/*there should never be anything left over panel->size except when
+	  doing a resize*/
+	for(i=0;i<PANEL_MAX;i++)
 		if(panel->applets[i].applet == applet)
 			break;
 
 	/*applet not found*/
-	if(i==panel->size)
+	if(i==PANEL_MAX)
 		return -1;
 
 	return i;
