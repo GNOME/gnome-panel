@@ -1,3 +1,18 @@
+2001-10-10  Mark McLoughlin <mark@skynet.ie>
+
+	* extern.h, extern.c (extern_ref, extern_unref, 
+	  extern_clean): privatise.
+	  (extern_set_info, extern_(get|set)_orient, ): kill.
+	  (extern_handle_*): impl. Privatise the handling of
+	this stuff.
+	  (socket_set_loading): remove ifdef FIXMEs and port
+	usage of gdk_pixbuf_new_from_file.
+
+	* applet.c (applet_callback_callback):
+	  panel.c (freeze_changes, thaw_changes, size_change,
+	  orientation_change, back_change):
+	  session.c (send_tooltips_state):
+
 2001-10-09  Mark McLoughlin <mark@skynet.ie>
 
 	* panel-include.h: remove.

@@ -448,13 +448,6 @@ extern_get_applet (Extern ext)
 }
 
 void
-extern_set_info (Extern      ext,
-		 AppletInfo *info)
-{
-	ext->info = info;
-}
-
-void
 extern_set_config_string (Extern  ext,
 			  gchar  *config_string)
 {
@@ -464,17 +457,216 @@ extern_set_config_string (Extern  ext,
 	ext->config_string = config_string;
 }
 
-PanelOrientation 
-extern_get_orient (Extern ext)
+/*
+ * FIXME: is this all really needed ?
+ *        I think the whole purpose of the ref/unref is
+ *        to make sure we can set ext->info
+ */
+static void
+extern_remove_applet (Extern ext)
 {
-	return ext->orient;
+	g_assert (ext->info);
+
+	extern_ref (ext);
+
+	panel_clean_applet (ext->info);
+	ext->info = NULL;
+
+	extern_unref (ext);
 }
 
-void
-extern_set_orient (Extern           ext,
-		   PanelOrientation orient)
+gboolean
+extern_handle_back_change (Extern       ext,
+			   PanelWidget *panel)
 {
+	GNOME_Panel_BackInfoType backing;
+	CORBA_Environment        env;
+	GNOME_Applet             applet = ext->applet;
+
+	g_assert (ext);
+
+	if (applet == CORBA_OBJECT_NIL)
+		return TRUE;
+
+	CORBA_exception_init (&env);
+
+	backing._d = panel->back_type;
+
+	if (panel->back_type == PANEL_BACK_PIXMAP)
+		backing._u.pmap = panel->back_pixmap;
+
+	else if (panel->back_type == PANEL_BACK_COLOR) {
+		backing._u.c.red   = panel->back_color.red;
+		backing._u.c.green = panel->back_color.green;
+		backing._u.c.blue  = panel->back_color.blue;
+	}
+
+	GNOME_Applet_back_change (applet, &backing, &env);
+	if (BONOBO_EX (&env)) {
+		extern_remove_applet (ext);
+
+		CORBA_exception_free (&env);
+
+		return FALSE;
+		}
+
+	return TRUE;
+}
+
+gboolean
+extern_handle_freeze_changes (Extern ext)
+{
+	CORBA_Environment env;
+	GNOME_Applet      applet = ext->applet;
+
+	g_assert (ext);
+
+	if (applet == CORBA_OBJECT_NIL)
+		return TRUE;
+
+	CORBA_exception_init (&env);
+
+	GNOME_Applet_freeze_changes (applet, &env);
+	if (BONOBO_EX (&env)) {
+		extern_remove_applet (ext);
+
+		CORBA_exception_free (&env);
+
+		return FALSE;
+		}
+
+	return TRUE;
+}
+
+gboolean
+extern_handle_thaw_changes (Extern ext)
+{
+	CORBA_Environment env;
+	GNOME_Applet      applet = ext->applet;
+
+	g_assert (ext);
+
+	if (applet == CORBA_OBJECT_NIL)
+		return TRUE;
+
+	CORBA_exception_init (&env);
+
+	GNOME_Applet_thaw_changes (applet, &env);
+	if (BONOBO_EX (&env)) {
+		extern_remove_applet (ext);
+
+		CORBA_exception_free (&env);
+
+		return FALSE;
+		}
+
+	return TRUE;
+}
+
+gboolean
+extern_handle_change_orient (Extern ext,
+			     int    orient)
+{
+	CORBA_Environment env;
+	GNOME_Applet      applet = ext->applet;
+
+	g_assert (ext);
+
+	if (applet == CORBA_OBJECT_NIL || ext->orient == orient)
+		return TRUE;
+
+	CORBA_exception_init (&env);
+
+	GNOME_Applet_change_orient (applet, orient, &env);
+	if (BONOBO_EX (&env)) {
+		extern_remove_applet (ext);
+
+		CORBA_exception_free (&env);
+
+		return FALSE;
+		}
+
 	ext->orient = orient;
+
+	return TRUE;
+}
+
+gboolean
+extern_handle_change_size (Extern ext,
+			   int    size)
+{
+	CORBA_Environment env;
+	GNOME_Applet      applet = ext->applet;
+
+	g_assert (ext);
+
+	if (applet == CORBA_OBJECT_NIL)
+		return TRUE;
+
+	CORBA_exception_init (&env);
+
+	GNOME_Applet_change_size (applet, size, &env);
+	if (BONOBO_EX (&env)) {
+		extern_remove_applet (ext);
+
+		CORBA_exception_free (&env);
+
+		return FALSE;
+		}
+
+	return TRUE;
+}
+
+gboolean
+extern_handle_do_callback (Extern  ext,
+			   char   *name)
+{
+	CORBA_Environment env;
+	GNOME_Applet      applet = ext->applet;
+
+	g_assert (ext);
+
+	if (applet == CORBA_OBJECT_NIL)
+		return TRUE;
+
+	CORBA_exception_init (&env);
+
+	GNOME_Applet_do_callback (applet, name, &env);
+	if (BONOBO_EX (&env)) {
+		extern_remove_applet (ext);
+
+		CORBA_exception_free (&env);
+
+		return FALSE;
+		}
+
+	return TRUE;
+}
+
+gboolean
+extern_handle_set_tooltips_state (Extern   ext,
+				  gboolean enabled)
+{
+	CORBA_Environment env;
+	GNOME_Applet      applet = ext->applet;
+
+	g_assert (ext);
+
+	if (applet == CORBA_OBJECT_NIL)
+		return TRUE;
+
+	CORBA_exception_init (&env);
+
+	GNOME_Applet_set_tooltips_state (applet, enabled, &env);
+	if (BONOBO_EX (&env)) {
+		extern_remove_applet (ext);
+
+		CORBA_exception_free (&env);
+
+		return FALSE;
+		}
+
+	return TRUE;
 }
 
 typedef struct {
@@ -742,7 +934,6 @@ socket_size_allocate (GtkWidget *applet, GtkAllocation *alloc)
 static void
 socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 {
-#ifdef FIXME
 	static gboolean tried_loading = FALSE;
 	static GdkPixbuf *pb = NULL;
 	int size;
@@ -759,7 +950,7 @@ socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 		file = gnome_pixmap_file ("gnome-unknown.png");
 
 		if (file != NULL) {
-			pb = gdk_pixbuf_new_from_file (file);
+			pb = gdk_pixbuf_new_from_file (file, NULL);
 
 			g_free (file);
 		}
@@ -767,7 +958,7 @@ socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 	tried_loading = TRUE;
 
 	if (pb != NULL) {
-		GdkPixmap *pm;
+		GdkPixmap *pm = NULL;
 		GdkPixbuf *scaled;
 
 		if (gdk_pixbuf_get_width (pb) != size ||
@@ -778,8 +969,6 @@ socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 			scaled = gdk_pixbuf_ref (pb);
 		}
 
-
-		pm = NULL;
 		gdk_pixbuf_render_pixmap_and_mask (scaled, &pm, NULL, 127);
 
 		gdk_pixbuf_unref (scaled);
@@ -790,7 +979,6 @@ socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 			gdk_pixmap_unref (pm);
 		}
 	}
-#endif
 }
 
 static void

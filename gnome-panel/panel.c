@@ -129,63 +129,15 @@ panel_realize (GtkWidget *widget, gpointer data)
 void
 freeze_changes (AppletInfo *info)
 {
-	if (info->type == APPLET_EXTERN) {
-		GNOME_Applet applet;
-		Extern       ext;
-
-		g_assert (info->data);
-
-		ext    = info->data;
-		applet = extern_get_applet (ext);
-
-		/* ingore this until we get an ior */
-		if (applet != CORBA_OBJECT_NIL) {
-			CORBA_Environment env;
-
-			CORBA_exception_init (&env);
-
-			GNOME_Applet_freeze_changes (applet, &env);
-			if (BONOBO_EX (&env)) {
-				extern_ref (ext);
-				panel_clean_applet (info);
-				extern_set_info (ext, NULL);
-				extern_unref (ext);
-			}
-
-			CORBA_exception_free (&env);
-		}
-	}
+	if (info->type == APPLET_EXTERN)
+		extern_handle_freeze_changes ((Extern)info->data);
 }
 
 void
 thaw_changes(AppletInfo *info)
 {
-	if (info->type == APPLET_EXTERN) {
-		GNOME_Applet applet;
-		Extern       ext;
-
-		g_assert (info->data);
-
-		ext    = info->data;
-		applet = extern_get_applet (ext);
-
-		/* ignore this until we get an ior */
-		if (applet != CORBA_OBJECT_NIL) {
-			CORBA_Environment env;
-
-			CORBA_exception_init (&env);
-
-			GNOME_Applet_thaw_changes (applet, &env);
-			if(BONOBO_EX (&env)) {
-				extern_ref (ext);
-				panel_clean_applet (info);
-				extern_set_info (ext, NULL);
-				extern_unref (ext);
-			}
-
-			CORBA_exception_free (&env);
-		}
-	}
+	if (info->type == APPLET_EXTERN)
+		extern_handle_thaw_changes ((Extern)info->data);
 }
 
 static void
@@ -235,60 +187,53 @@ get_applet_orient (PanelWidget *panel)
 static void orient_change_foreach(GtkWidget *w, gpointer data);
 
 void
-orientation_change(AppletInfo *info, PanelWidget *panel)
+orientation_change (AppletInfo  *info,
+		    PanelWidget *panel)
 {
-	if (info->type == APPLET_EXTERN) {
-		GNOME_Applet applet;
-		Extern       ext;
-		int          orient = get_applet_orient (panel);
 
-		g_assert (info->data);
+	switch (info->type) {
+	case APPLET_EXTERN:
+		extern_handle_change_orient ((Extern)info->data,
+					     get_applet_orient (panel));
+		break;
+	case APPLET_MENU:
+		set_menu_applet_orient ((Menu *)info->data,
+					get_applet_orient (panel));
+		break;
+	case APPLET_DRAWER: {
+		Drawer      *drawer = info->data;
+		BasePWidget *basep = BASEP_WIDGET (drawer->drawer);
 
-		ext    = info->data;
-		applet = extern_get_applet (ext);
-
-		/* ignore this until we get an ior */
-		if (applet && (extern_get_orient (ext) != orient)) {
-			CORBA_Environment env;
-
-			CORBA_exception_init (&env);
-
-			GNOME_Applet_change_orient (applet, orient, &env);
-			if (BONOBO_EX(&env)) {
-				extern_ref (ext);
-				panel_clean_applet (info);
-				extern_set_info (ext, NULL);
-				extern_unref (ext);
-			}
-
-			extern_set_orient (ext, orient);
-
-			CORBA_exception_free (&env);
+		set_drawer_applet_orient (drawer,
+					  get_applet_orient (panel));
+		gtk_widget_queue_resize (drawer->drawer);
+		gtk_container_foreach (GTK_CONTAINER (basep->panel),
+				       orient_change_foreach,
+				       (gpointer)basep->panel);
 		}
-	} else if(info->type == APPLET_MENU) {
-		Menu *menu = info->data;
-		set_menu_applet_orient(menu,get_applet_orient(panel));
-	} else if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
-		set_drawer_applet_orient(drawer, get_applet_orient(panel));
-		gtk_widget_queue_resize(drawer->drawer);
-		gtk_container_foreach(GTK_CONTAINER(basep->panel),
-				      orient_change_foreach,
-				      (gpointer)basep->panel);
-	} else if(info->type == APPLET_SWALLOW) {
+		break;
+	case APPLET_SWALLOW: {
 		Swallow *swallow = info->data;
 
-		if(panel->orient == PANEL_VERTICAL)
-			set_swallow_applet_orient(swallow,SWALLOW_VERTICAL);
+		if (panel->orient == PANEL_VERTICAL)
+			set_swallow_applet_orient (swallow,
+						   SWALLOW_VERTICAL);
 		else
-			set_swallow_applet_orient(swallow,SWALLOW_HORIZONTAL);
-	} else if(info->type == APPLET_STATUS) {
-		StatusApplet *status = info->data;
-		if(status->orient != panel->orient) {
-			status->orient = panel->orient;
-			status_applet_update(status);
+			set_swallow_applet_orient (swallow,
+						   SWALLOW_HORIZONTAL);
 		}
+		break;
+	case APPLET_STATUS: {
+		StatusApplet *status = info->data;
+
+		if (status->orient != panel->orient) {
+			status->orient = panel->orient;
+			status_applet_update (status);
+		}
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -337,32 +282,11 @@ static void size_change_foreach(GtkWidget *w, gpointer data);
 void
 size_change(AppletInfo *info, PanelWidget *panel)
 {
-	if (info->type == APPLET_EXTERN) {
-		GNOME_Applet applet;
-		Extern       ext;
+	if (info->type == APPLET_EXTERN)
+		extern_handle_change_size ((Extern)info->data,
+					   panel->sz);
 
-		g_assert (info->data);
-
-		ext    = info->data;
-		applet = extern_get_applet (ext);
-
-		/* ignore this until we get an ior */
-		if (applet != CORBA_OBJECT_NIL) {
-			CORBA_Environment env;
-
-			CORBA_exception_init (&env);
-
-			GNOME_Applet_change_size (applet, panel->sz, &env);
-			if (BONOBO_EX (&env)) {
-				extern_ref (ext);
-				panel_clean_applet (info);
-				extern_set_info (ext, NULL);
-				extern_unref (ext);
-			}
-
-			CORBA_exception_free (&env);
-		}
-	} else if(info->type == APPLET_STATUS) {
+	else if(info->type == APPLET_STATUS) {
 		StatusApplet *status = info->data;
 		status->size = panel->sz;
 		status_applet_update(status);
@@ -394,45 +318,9 @@ panel_size_change(GtkWidget *widget,
 void
 back_change (AppletInfo *info, PanelWidget *panel)
 {
-	if (info->type == APPLET_EXTERN) {
-		GNOME_Applet applet;
-		Extern       ext;
-
-		g_assert (info->data);
-
-		ext    = info->data;
-		applet = extern_get_applet (ext);
-
-		/* ignore until we have a valid IOR */
-		if (applet != CORBA_OBJECT_NIL) {
-			GNOME_Panel_BackInfoType backing;
-			CORBA_Environment        env;
-
-			CORBA_exception_init (&env);
-
-			backing._d = panel->back_type;
-
-			if (panel->back_type == PANEL_BACK_PIXMAP)
-				backing._u.pmap = panel->back_pixmap;
-			else if (panel->back_type == PANEL_BACK_COLOR) {
-				backing._u.c.red   = panel->back_color.red;
-				backing._u.c.green = panel->back_color.green;
-				backing._u.c.blue  = panel->back_color.blue;
-			}
-
-			GNOME_Applet_back_change (applet, &backing, &env);
-			if (BONOBO_EX (&env)) {
-				extern_ref (ext);
-				panel_clean_applet (info);
-				extern_set_info (ext, NULL);
-				extern_unref (ext);
-			}
-
-			CORBA_exception_free (&env);
-		}
-	} 
+	if (info->type == APPLET_EXTERN)
+		extern_handle_back_change ((Extern)info->data, panel);
 }
-
 
 static void
 back_change_foreach(GtkWidget *w, gpointer data)

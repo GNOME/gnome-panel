@@ -114,23 +114,9 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 
 	switch(menu->info->type) {
 	case APPLET_EXTERN:
-		{
-			CORBA_Environment env;
-			GNOME_Applet      applet;
-
-			g_assert (menu->info->data);
-
-			applet = extern_get_applet ((Extern)menu->info->data);
-
-			CORBA_exception_init (&env);
-
-			GNOME_Applet_do_callback (applet, menu->name, &env);
-			if (BONOBO_EX (&env))
-				panel_clean_applet (menu->info);
-
-			CORBA_exception_free (&env);
-			break;
-		}
+		extern_handle_do_callback ((Extern)menu->info->data,
+					   menu->name);
+		break;
 	case APPLET_LAUNCHER:
 		if (strcmp (menu->name, "properties") == 0) {
 			launcher_properties (menu->info->data);

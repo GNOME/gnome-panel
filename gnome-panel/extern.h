@@ -12,48 +12,54 @@ G_BEGIN_DECLS
 
 typedef struct Extern_struct *Extern;
 
-Extern  extern_ref		(Extern ext);
-void	extern_unref		(Extern ext);
-void	extern_clean		(Extern ext);
+GNOME_Applet extern_get_applet            (Extern ext);
 
-GNOME_Applet 
-        extern_get_applet       (Extern ext);
+void         extern_set_config_string     (Extern  ext,
+					   gchar  *config_string);
 
-void    extern_set_info         (Extern      ext,
-				 AppletInfo *info);
-void    extern_set_config_string
-				(Extern  ext,
-				 gchar  *config_string);
+gboolean     extern_handle_back_change    (Extern       ext,
+					   PanelWidget *panel);
 
-PanelOrientation 
-        extern_get_orient       (Extern           ext);
-void    extern_set_orient       (Extern           ext,
-				 PanelOrientation orient);
+gboolean     extern_handle_freeze_changes (Extern ext);
 
-void	extern_before_remove	(Extern ext);
+gboolean     extern_handle_thaw_changes   (Extern ext);
 
-void	load_extern_applet	(const char  *goad_id,
-				 const char  *cfgpath,
-				 PanelWidget *panel,
-				 int          pos,
-				 gboolean     exactpos,
-				 gboolean     queue);
+gboolean     extern_handle_change_orient  (Extern ext,
+					   int    orient);
 
-void	load_queued_externs	(void);
+gboolean     extern_handle_change_size    (Extern ext,
+					   int    size);
 
-void	panel_corba_clean_up	(void);
+gboolean     extern_handle_do_callback    (Extern  ext,
+					   char   *name);
 
-gint	panel_corba_gtk_init	(CORBA_ORB panel_orb);
+gboolean     extern_handle_set_tooltips_state
+					  (Extern   ext,
+					   gboolean enabled);
+
+void	     extern_before_remove         (Extern ext);
+
+void         load_extern_applet           (const char  *goad_id,
+					   const char  *cfgpath,
+					   PanelWidget *panel,
+					   int          pos,
+					   gboolean     exactpos,
+					   gboolean     queue);
+
+void	     load_queued_externs          (void);
+
+void         panel_corba_clean_up         (void);
+
+gint	     panel_corba_gtk_init         (CORBA_ORB panel_orb);
 
 /* to be called when we want to send a draw signal to an applet */
-void	extern_send_draw 	(Extern ext);
+void	     extern_send_draw             (Extern ext);
 
-void	save_applet		(AppletInfo *info,
-				 gboolean    ret);
+void         save_applet                  (AppletInfo *info,
+					   gboolean    ret);
 
-void	extern_save_last_position 
-				(Extern   ext,
-				 gboolean sync);
+void         extern_save_last_position    (Extern   ext,
+					  gboolean sync);
 
 G_END_DECLS
 

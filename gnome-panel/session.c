@@ -93,27 +93,9 @@ send_tooltips_state(gboolean enabled)
 	for(li = applets; li != NULL; li = li->next) {
 		AppletInfo *info = li->data;
 
-		if (info->type == APPLET_EXTERN) {
-			GNOME_Applet applet;
-			Extern       ext;
-
-			g_assert (info->data);
-
-			ext    = info->data;
-			applet = extern_get_applet (ext);
-
-			if (applet != CORBA_OBJECT_NIL) {
-				CORBA_Environment env;
-
-				CORBA_exception_init (&env);
-
-				GNOME_Applet_set_tooltips_state (applet, enabled, &env);
-				if(BONOBO_EX (&env))
-					panel_clean_applet (info);
-
-				CORBA_exception_free (&env);
-			}
-		}
+		if (info->type == APPLET_EXTERN)
+			extern_handle_set_tooltips_state ((Extern)info->data,
+							  enabled);
 	}
 }
 
