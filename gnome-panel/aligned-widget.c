@@ -69,8 +69,8 @@ aligned_pos_class_init (AlignedPosClass *klass)
 	
 	aligned_pos_signals[ALIGN_CHANGE_SIGNAL] =
 		g_signal_new ("align_change",
-			      G_SIGNAL_RUN_LAST,
 			      G_TYPE_FROM_CLASS (object_class),
+			      G_SIGNAL_RUN_LAST,
 			      G_STRUCT_OFFSET (AlignedPosClass, align_change),
 			      NULL,
 			      NULL,
