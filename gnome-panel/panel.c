@@ -1070,14 +1070,14 @@ drag_motion_cb(GtkWidget	  *widget,
 	       gint                y,
 	       guint               time)
 {
+	if(!is_this_drop_ok(widget, context, NULL, NULL))
+		return FALSE;
+
 	/* always prefer copy */
 	if(context->actions & GDK_ACTION_COPY)
 		gdk_drag_status (context, GDK_ACTION_COPY, time);
 	else
 		gdk_drag_status (context, context->suggested_action, time);
-
-	if(!is_this_drop_ok(widget, context, NULL, NULL))
-		return FALSE;
 
 	do_highlight(widget, TRUE);
 

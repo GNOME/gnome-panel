@@ -1,3 +1,9 @@
+Thu Nov 02 02:37:27 2000  George Lebl <jirka@5z.com>
+
+	* panel.c, launcher.c:  move the drag status call during motion below
+	  the is_drag_ok to avoid some "race" like problems, suggested by
+	  Eric BRAYEUR <eb@ibelgique.com>
+
 Tue Oct 17 18:40:38 2000  George Lebl <jirka@5z.com>
 
 	* menu.c: Fix cast to BaseP for FooBar on panel removal

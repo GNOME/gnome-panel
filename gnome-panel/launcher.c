@@ -216,10 +216,10 @@ drag_motion_cb(GtkWidget *widget,
 	       guint time,
 	       Launcher *launcher)
 {
-	gdk_drag_status (context, GDK_ACTION_COPY, time);
-
 	if(!is_this_drop_ok(widget, context))
 		return FALSE;
+
+	gdk_drag_status (context, GDK_ACTION_COPY, time);
 
 	button_widget_set_dnd_highlight(BUTTON_WIDGET(widget), TRUE);
 
