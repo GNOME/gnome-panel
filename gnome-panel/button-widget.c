@@ -246,6 +246,7 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 	int off = button->in_button&&button->pressed?tile_depth[button->tile]:0;
 	/*border to not draw when drawing a tile*/
 	int border = tiles_enabled?tile_border[button->tile]:0;
+	int i;
 	 
 	if(!GTK_WIDGET_REALIZED(button))
 		return;
@@ -290,30 +291,19 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 
 	if (button->mask) {
 		gdk_gc_set_clip_mask (gc, button->mask);
-		gdk_gc_set_clip_origin (gc, widget->allocation.x+off,
+		gdk_gc_set_clip_origin (gc,
+					widget->allocation.x+off,
 					widget->allocation.y+off);
 	}
 
-	gdk_draw_pixmap (pixmap, gc, button->pixmap, border, border,
-			 widget->allocation.x+off+border,
-			 widget->allocation.y+off+border,
-			 BIG_ICON_SIZE-off-(border*2),
-			 BIG_ICON_SIZE-off-(border*2));
 
-#if 0
-	/*stripe a pressed button if we have no tiles, to provide some sort of
-	  feedback*/
-	if(!tiles_enabled && button->pressed && button->in_button) {
-		int i;
-		gdk_gc_set_foreground(gc,&pwidget->style->black);
-		for(i=0;i<BIG_ICON_SIZE;i+=2)
-			gdk_draw_line(pixmap,gc,
-				      widget->allocation.x,
-				      widget->allocation.y+i,
-				      widget->allocation.x+BIG_ICON_SIZE,
-				      widget->allocation.y+i);
-	}
-#endif
+	i = MAX(border-off,0);
+	gdk_draw_pixmap (pixmap, gc, button->pixmap,
+			 i, i,
+			 widget->allocation.x+i+off,
+			 widget->allocation.y+i+off,
+			 BIG_ICON_SIZE-i-off-border,
+			 BIG_ICON_SIZE-i-off-border);
 
 	if (button->mask) {
 		gdk_gc_set_clip_mask (gc, NULL);

@@ -77,6 +77,9 @@ void		button_widget_clicked		(ButtonWidget *button);
 void		button_widget_down		(ButtonWidget *button);
 void		button_widget_up		(ButtonWidget *button);
 
+/*load a tile of a given type/class, note that depth applies to a class
+  wheather or not there is a tile or not, so this is basically a class
+  initialization function*/
 void		button_widget_load_tile		(int tile,
 						 char *tile_up,
 						 char *tile_down,
