@@ -1,3 +1,27 @@
+1998-11-28  Mark Galassi  <rosalia@cygnus.com>
+
+	* netload: replaced gnome_color_selector() with
+	gnome_color_picker().  Worked on making the properties and the
+	level bars in the graph work.  Also removed some compiler
+	warnings.
+
+	* netload/properties.c (create_general_frame): the properties
+	dialog is now set up with gnome_color_picker_new() instead of the
+	old gnome_color_selector_new() stuff.
+
+	* netload/properties.c, netload/netload.c: removed the rescaling
+	of the line_spacing by 1024.
+
+	* netload/properties.c (load_properties): changed some default
+	values: gcolor and bcolor are now such that you can see the bars
+	on the graph.  line_spacing never used to give any line spacing on
+	dialup connections, so I rescaled the whole thing and set the
+	default to be 2, which works well for a modem line.
+	(gcolor_changed_cb, bcolor_changed_cb): replaced the previous
+	color_changed-cb() function with these two, one per color.  The
+	previous one did not work and had a memory leak; this approach
+	seems to work and is like the one in the multiload applet.
+
 1998-11-22  Martin Baulig  <martin@home-of-linux.org>
 
 	* netload: This applet now requires LibGTop >= 0.26.5.
