@@ -1,14 +1,14 @@
 # Copyright (C) 2002 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
-# pclouds <pclouds@gmx.net> 2002.
+# pclouds <pclouds@vnlinux.org> 2002-2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel for gnome v.2.1.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-06-14 17:47+0100\n"
-"PO-Revision-Date: 2003-09-07 01:00+0700\n"
-"Last-Translator: pclouds <pclouds@gmx.net>\n"
+"PO-Revision-Date: 2004-06-25 05:37+0700\n"
+"Last-Translator: pclouds <pclouds@vnlinux.org>\n"
 "Language-Team: Gnome-Vi <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
-msgstr "Chỉnh ngày giờ..."
+msgstr "_Chỉnh ngày giờ..."
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -54,11 +54,11 @@ msgstr "Trợ _giúp"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences..."
-msgstr "_Thông số..."
+msgstr "_Tuỳ thích..."
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 msgid "Accessories"
-msgstr "Phụ tùng"
+msgstr "Bổ sung"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 #: applets/clock/clock.c:2419
@@ -100,7 +100,6 @@ msgstr "%H:%M"
 #. *              01" instead of "May  1").
 #.
 #: applets/clock/clock.c:295
-#, fuzzy
 msgid "%a %b %e"
 msgstr "%a %d %b"
 
@@ -109,22 +108,22 @@ msgstr "%a %d %b"
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:302
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
 msgstr ""
-"%s\n"
-"%s"
+"%2$s\n"
+"%1$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:309
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s, %2$s"
-msgstr "%s, %s"
+msgstr "%2$s, %1$s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:393
@@ -133,16 +132,15 @@ msgstr "%A %d %B"
 
 #: applets/clock/clock.c:827
 msgid "Tasks"
-msgstr ""
+msgstr "Công việc"
 
 #: applets/clock/clock.c:959
 msgid "All Day"
-msgstr ""
+msgstr "Mọi ngày"
 
 #: applets/clock/clock.c:993
-#, fuzzy
 msgid "Appointments"
-msgstr "Đặt cuộc hẹn..."
+msgstr "Cuộc hẹn"
 
 #: applets/clock/clock.c:1214
 msgid "Calendar"
@@ -167,7 +165,7 @@ msgstr "%A, %d %B %Y"
 #: applets/clock/clock.c:1613
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr "Lỗi nạp công cụ cấu hình thời gian: %s"
+msgstr "Lỗi khởi động công cụ cấu hình thời gian: %s"
 
 #: applets/clock/clock.c:1652
 msgid ""
@@ -178,9 +176,8 @@ msgstr ""
 "trình cấu hình này?"
 
 #: applets/clock/clock.c:2054
-#, fuzzy
 msgid "Custom format"
-msgstr "Biểu tượng tự chọn"
+msgstr "Dạng thức riêng"
 
 #: applets/clock/clock.c:2175 applets/clock/clock.c:2365
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
@@ -217,9 +214,8 @@ msgid "Internet time"
 msgstr "Giờ Internet"
 
 #: applets/clock/clock.c:2268
-#, fuzzy
 msgid "Custom _format:"
-msgstr "Dạng thức giờ"
+msgstr "Dạng thức _riêng:"
 
 #: applets/clock/clock.c:2287
 msgid "Show _seconds"
@@ -239,7 +235,7 @@ msgstr "Dùng _UTC"
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
-msgstr "Nguyễn Thái Ngọc Duy"
+msgstr "Nhóm Việt hoá GNOME (http://gnomevi.sourceforge.net)"
 
 #: applets/clock/clock.c:2421
 msgid "The Clock displays the current time and date"
@@ -250,13 +246,12 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-#, fuzzy
 msgid "24-hour"
-msgstr "24-hour"
+msgstr "24 giờ"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Dạng thức riêng cho đồng hồ"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -295,6 +290,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
+"Khoá này đã lỗi thời trong GNOME 2.6 vì có khoá 'format'. Schema vẫn được "
+"giữ nguyên để tương thích với các phiên bản cũ."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid ""
@@ -302,6 +299,9 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Khoá xác định dạng thức được dùng bởi applet đồng hồ khi khoá format được "
+"đặt là \"custom\". Bạn có thể dùng toán tử chuyển đổi được dùng bởi strftime"
+"() để xác định dạng thức."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -314,6 +314,13 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
+"Khoá xác định dạng thức giờ dùng bởi applet đồng hồ. Giá trị có thể là \"12-"
+"hour\", \"24-hour\", \"internet\", \"unix\" và \"custom\". Nếu đặt là "
+"\"internet\", đồng hồ sẽ hiển thị giờ internet. Giờ internet chia ngày thành "
+"1000 phần. Không có múi giờ trong hế thống này, vì thế nên đồng nhất trên "
+"toàn thế giới. Nếu đặt là \"unix\", đồng hồ sẽ hiển thị số giây từ Epich (01-"
+"01-1970). Nếu đặt là \"custom\", đồng hồ sẽ hiển thị tùy thuộc vào dạng thức "
+"xác định trong khoá custom_format."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -391,9 +398,9 @@ msgid "(with minor help from George)"
 msgstr "(với một tí trợ giúp nhỏ George)"
 
 #: applets/fish/fish.c:534
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, a contemporary oracle"
-msgstr "Cá GNOME %s, lời sấm đương thời"
+msgstr "Cá %s, nhà tiên tri đương thời"
 
 #: applets/fish/fish.c:581
 msgid "Unable to get the name of the command to execute"
@@ -404,9 +411,9 @@ msgid "Unable to locate the command to execute"
 msgstr "Không thể định vị trí lệnh cần thực hiện"
 
 #: applets/fish/fish.c:626
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the Fish Says:"
-msgstr "Cá GNOME %s nói:"
+msgstr "Cá %s phán rằng:"
 
 #: applets/fish/fish.c:752
 #, c-format
@@ -439,9 +446,9 @@ msgstr ""
 "(Xem ngày tháng của hôm nay)"
 
 #: applets/fish/fish.c:1437
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, the fortune teller"
-msgstr "Cá GNOME, nhà tiên tri"
+msgstr "Cá %s, nhà tiên tri"
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
@@ -486,7 +493,7 @@ msgstr "_Tên cá:"
 
 #: applets/fish/fish.glade.h:10
 msgid "_Pause per frame:"
-msgstr "Khoảng chờ mỗi khung hình:"
+msgstr "Khoảng _chờ mỗi khung hình:"
 
 #: applets/fish/fish.glade.h:11
 msgid "_Rotate on vertical panels"
@@ -628,15 +635,14 @@ msgstr "Window Navigation Applet Factory"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
-#, fuzzy
 msgid "Window Selector"
-msgstr "Danh sách cửa sổ"
+msgstr "Bộ chọn cửa sổ"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:519
 #: applets/wncklet/workspace-switcher.c:928
 msgid "Workspace Switcher"
-msgstr "Bộ chuyển vùng làm việc"
+msgstr "Bộ chuyển Vùng làm việc"
 
 #: applets/wncklet/showdesktop.c:221
 msgid "Click here to restore hidden windows."
@@ -653,7 +659,7 @@ msgstr "Không nạp được %s: %s\n"
 
 #: applets/wncklet/showdesktop.c:307
 msgid "File not found"
-msgstr "không thấy tập tin"
+msgstr "Không tìm thấy tập tin"
 
 #: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:456
 msgid "Show Desktop Button"
@@ -672,11 +678,10 @@ msgstr ""
 "chạy trình quản lý cửa sổ."
 
 #: applets/wncklet/window-list.c:822
-#, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
 "Danh sách cửa sổ hiển thị danh sách tất cả các cửa sổ và cho phép bạn duyệt "
-"chúng."
+"qua chúng."
 
 #: applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -696,7 +701,7 @@ msgstr "<b>Kích thước danh sách cửa sổ</b>"
 
 #: applets/wncklet/window-list.glade.h:6
 msgid "Behavior"
-msgstr "Hành vi"
+msgstr "Ứng xử"
 
 #: applets/wncklet/window-list.glade.h:7
 msgid "Group windows when _space is limited"
@@ -740,7 +745,7 @@ msgstr "_Luôn nhóm các cửa sổ"
 
 #: applets/wncklet/window-list.glade.h:17
 msgid "_Never group windows"
-msgstr "Không bao giờ nhóm các cửa sổ"
+msgstr "_Không bao giờ nhóm các cửa sổ"
 
 #: applets/wncklet/window-list.glade.h:18
 #: gnome-panel/panel-properties-dialog.glade.h:32
@@ -807,11 +812,10 @@ msgid "When to group windows"
 msgstr "Khi nhóm cửa sổ"
 
 #: applets/wncklet/window-menu.c:138
-#, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
-"Danh sách cửa sổ hiển thị danh sách tất cả các cửa sổ và cho phép bạn duyệt "
+"Bộ chọn sổ hiển thị danh sách tất cả các cửa sổ và cho phép bạn duyệt qua "
 "chúng."
 
 #: applets/wncklet/window-menu.c:418
@@ -823,9 +827,8 @@ msgid "No Windows Open"
 msgstr "Không có cửa sổ nào mở"
 
 #: applets/wncklet/window-menu.c:709
-#, fuzzy
 msgid "Tool to switch between windows"
-msgstr "Chuyển cửa sổ"
+msgstr "Công cụ để chuyển qua lại giữa các cửa sổ"
 
 #: applets/wncklet/workspace-switcher.c:147
 #: applets/wncklet/workspace-switcher.c:832
@@ -1012,7 +1015,7 @@ msgstr "Ngăn kéo"
 #: gnome-panel/drawer.c:612 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
 #: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
-msgstr "T_huộc tính"
+msgstr "_Thuộc tính"
 
 #: gnome-panel/gnome-desktop-item-edit.c:26
 msgid "Create new file in the given directory"
@@ -1128,32 +1131,31 @@ msgstr ""
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:420
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s.png"
-msgstr "%s%cScreenshot-%s.png"
+msgstr "Screenshot-%s.png"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:424
-#, fuzzy
 msgid "Screenshot.png"
-msgstr "%s%cScreenshot.png"
+msgstr "Screenshot.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if a specific window is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "%s%cScreenshot-%s-%d.png"
+msgstr "Screenshot-%s-%d.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%d.png"
-msgstr "%s%cScreenshot-%d.png"
+msgstr "Screenshot-%d.png"
 
 #: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
@@ -1305,8 +1307,8 @@ msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr ""
-"Thoát khỏi session này để đăng nhập vào như là một người dùng khác hoặc tắt "
-"máy"
+"Thoát khỏi phiên làm việc này để đăng nhập vào như là một người dùng khác "
+"hoặc tắt máy"
 
 #: gnome-panel/menu.c:121
 msgid "Lock"
@@ -1322,7 +1324,7 @@ msgstr "Buộc thoát"
 
 #: gnome-panel/menu.c:134
 msgid "Force a misbehaving application to quit"
-msgstr ""
+msgstr "Buộc ứng dụng hành xử kỳ lạ phải thoát"
 
 #: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
@@ -1331,11 +1333,11 @@ msgstr "Screenshot"
 #: gnome-panel/menu.c:144 gnome-panel/menu.c:3405
 #: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
-msgstr "Lấy screenshot của desktop"
+msgstr "Chụp hình desktop"
 
 #: gnome-panel/menu.c:151
 msgid "Search"
-msgstr "Tìm kiếm"
+msgstr "Tìm"
 
 #: gnome-panel/menu.c:154 gnome-panel/menu.c:3386
 #: gnome-panel/panel-menu-bar.c:154
@@ -1348,7 +1350,7 @@ msgstr "Chạy"
 
 #: gnome-panel/menu.c:164
 msgid "Run a command"
-msgstr "Thực hiện lệnh"
+msgstr "Chạy lệnh"
 
 #: gnome-panel/menu.c:273
 msgid "And many, many others..."
@@ -1373,9 +1375,9 @@ msgid "Cannot execute '%s'"
 msgstr "Không thể thực hiện '%s'"
 
 #: gnome-panel/menu.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%s, %s"
+msgstr "%s: %s"
 
 #: gnome-panel/menu.c:330
 msgid "About GNOME"
@@ -1501,7 +1503,7 @@ msgstr "Thanh menu"
 
 #: gnome-panel/menu.c:3208 gnome-panel/panel-menu-bar.c:191
 msgid "Lock Screen"
-msgstr "Khóa màn hình"
+msgstr "Khoá màn hình"
 
 #: gnome-panel/menu.c:3214
 msgid "Lock the screen so that you can temporarily leave your computer"
@@ -1566,42 +1568,37 @@ msgid "Exception from popup_menu '%s'\n"
 msgstr "Lỗi ngoại lệ từ popup_menu '%s'\n"
 
 #: gnome-panel/panel-applet-frame.c:866
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
 "\n"
 "Do you want to reload this applet?"
 msgstr ""
-"Có lẽ một ứng dụng bao đã chết.\n"
-"Thử nạp nó lại?"
+"Applet \"%s\" có lẽ đã kết thúc bất thường.\n"
+"\n"
+"Bạn có muốn nạp lại applet này không?"
 
 #: gnome-panel/panel-applet-frame.c:872
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "(If you choose not to reload it at this time you can always add it by right "
 "clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
-"Applet %s có vẻ đã kết thúc một các bất thường\n"
 "\n"
-"Nạp lại applet này chứ?\n"
 "\n"
 "(Nếu bạn chọn không nạp lại lúc này, bạn vẫn có thể thêm nó vào bằng cách "
-"nhấn phím phải chuột trên Bảng điều khiển và nhấn vào \"Thêm vào Bảng điều "
-"khiển\")"
+"nhấn phím phải chuột trên Bảng điều khiển và nhấn vào menu con \"Thêm vào "
+"Bảng điều khiển\")"
 
 #: gnome-panel/panel-applet-frame.c:912
 msgid "D_on't Delete"
-msgstr "Đừng xóa"
+msgstr "Đừn_g xóa"
 
 #: gnome-panel/panel-applet-frame.c:948
-#, fuzzy, c-format
+#, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
-msgstr ""
-"Bảng điều khiển phát hiện vấn đề khi nạp \"%s\"\n"
-"\n"
-"Có muốn xóa applet khỏi cấu hình của bạn không?"
+msgstr "Bảng điều khiển phát hiện vấn đề khi nạp \"%s\"."
 
 #: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:260
 #, c-format
@@ -1609,13 +1606,12 @@ msgid "Details: %s"
 msgstr "Chi tiết: %s"
 
 #: gnome-panel/panel-applet-frame.c:963 gnome-panel/panel-applet-frame.c:976
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"Bảng điều khiển phát hiện vấn đề khi nạp \"%s\"\n"
+"\n"
 "\n"
 "Có muốn xóa applet khỏi cấu hình của bạn không?"
 
@@ -1745,25 +1741,23 @@ msgstr "Ngăn kéo tự đóng"
 
 #: gnome-panel/panel-global.schemas.in.h:5
 msgid "Complete panel lockdown"
-msgstr ""
+msgstr "Hoàn tất Khoá bảng điều khiển"
 
 #: gnome-panel/panel-global.schemas.in.h:6
 msgid "Confirm panel removal"
 msgstr "Xác nhận loại bỏ Bảng điều khiển"
 
 #: gnome-panel/panel-global.schemas.in.h:7
-#, fuzzy
 msgid "Disable Force Quit"
-msgstr "Buộc thoát"
+msgstr "Tắt Buộc thoát"
 
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "Disable Lock Screen"
-msgstr "Khóa màn hình"
+msgstr "Tắt Khóa màn hình"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr ""
+msgstr "Tắt Đăng xuất"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
@@ -1825,18 +1819,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"Nếu true, bảng điều khiển sẽ không cho phép người dùng buộc ứng dụng chấm "
+"dứt bằng cách loại bỏ quyền truy cập nút \"buột thoát\"."
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"Nếu true, bảng điều khiển sẽ không cho phép người dùng khoá màn hình bằng "
+"cách loại bỏ quyền truy cập mục khoá màn hình trên menu."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
+"Nếu true, bảng điều khiển sẽ không cho phép người dùng đăng xuất bằng cách "
+"loại bỏ quyền truy cập mục đăng xuất."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -1844,6 +1844,9 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
+"Nếu true, bảng điều khiển sẽ không cho phép người dùng thay đổi cấu hình "
+"bảng điều khiển. Tuy nhiên các applet riêng lẻ sẽ cần bị khoá riêng từng "
+"cái. Phải khởi động lại bảng điều khiển để tùy chọn này có tác dụng."
 
 #: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
@@ -1919,7 +1922,7 @@ msgstr "Hiểu vị trí tương đối so với cạnh đáy/phải"
 
 #: gnome-panel/panel-object.schemas.in.h:9
 msgid "Launcher location"
-msgstr "Vị trí Bộ kích hoạt"
+msgstr "Địa chỉ Bộ kích hoạt"
 
 #: gnome-panel/panel-object.schemas.in.h:10
 msgid "Lock the object to the panel"
@@ -2007,13 +2010,12 @@ msgstr ""
 "tính từ cạnh trái (hoặc cạnh trên nếu nằm dọc) của Bảng điểu khiển."
 
 #: gnome-panel/panel-object.schemas.in.h:23
-#, fuzzy
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
 "Chuỗi để hiển thị trong tooltip cho Ngăn kéo này. Khóa này chỉ cần thiết nếu "
-"khóa object_type là \"drawer-object\"."
+"khóa object_type là \"drawer-object\" hoặc \"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -2026,9 +2028,8 @@ msgstr ""
 "\"menu-bar\"."
 
 #: gnome-panel/panel-object.schemas.in.h:25
-#, fuzzy
 msgid "Tooltip displayed for drawer or menu"
-msgstr "Tooltip cho Ngăn kéo"
+msgstr "Tooltip cho Ngăn kéo hoặc menu"
 
 #: gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
@@ -2149,7 +2150,7 @@ msgstr "Vài trong số thuộc tính này đã bị khóa"
 
 #: gnome-panel/panel-properties-dialog.glade.h:22
 msgid "St_retch"
-msgstr "Kéo giãn"
+msgstr "_Kéo giãn"
 
 #: gnome-panel/panel-properties-dialog.glade.h:23
 #: libpanel-applet/panel-test-applets.glade.h:11
@@ -2161,27 +2162,24 @@ msgid "_Autohide"
 msgstr "Tự động ẩ_n"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
-#, fuzzy
 msgid "_Icon:"
-msgstr "Icon"
+msgstr "_Biểu tượng:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#, fuzzy
 msgid "_Name:"
-msgstr "Tên"
+msgstr "_Tên:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_None (use system theme)"
-msgstr "_Không (dùng theme hệ thống)"
+msgstr "_Không (dùng Sắc thái Hệ thống)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:28
-#, fuzzy
 msgid "_Orientation:"
-msgstr "Hướng:"
+msgstr "_Hướng:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
-msgstr "C_ân chỉnh"
+msgstr "_Cân chỉnh"
 
 #: gnome-panel/panel-properties-dialog.glade.h:30
 msgid "_Size:"
@@ -2212,7 +2210,7 @@ msgstr "Lỗi không xác định khi cố mở %s"
 
 #: gnome-panel/panel-recent.c:178
 msgid "Recent Documents"
-msgstr ""
+msgstr "Tài liệu gần đây"
 
 #: gnome-panel/panel-run-dialog.c:288
 #, c-format
@@ -2222,12 +2220,12 @@ msgstr "Không thể kích hoạt lệnh '%s'"
 #: gnome-panel/panel-run-dialog.c:314
 #, c-format
 msgid "Cannot display location '%s'"
-msgstr "Không thể hiển thị vị tr1 '%s'"
+msgstr "Không thể hiển thị địa chỉ '%s'"
 
 #: gnome-panel/panel-run-dialog.c:366
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
-msgstr ""
+msgstr "Không thể chuyển '%s' từ UTF-8"
 
 #: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
@@ -2290,7 +2288,7 @@ msgstr "Biểu tượng của lệnh cần chạy."
 
 #: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:145
 msgid "_Run"
-msgstr "_Thực hiện"
+msgstr "_Chạy"
 
 #: gnome-panel/panel-shell.c:74
 msgid ""
@@ -2308,7 +2306,7 @@ msgid ""
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
-"Xảy ra vấn đề khi đăng ký panel với server Bonobo-Activatio.\n"
+"Xảy ra vấn đề khi đăng ký panel với máy chủ Bonobo-Activation.\n"
 "Mã lỗi là: %d\n"
 "Bảng điều khiển sẽ thoát ngay."
 
@@ -2322,9 +2320,8 @@ msgid "_Force quit"
 msgstr "_Buộc thoát"
 
 #: gnome-panel/panel-toplevel.c:1111
-#, fuzzy
 msgid "Hide Panel"
-msgstr "Bảng điều khiển _cạnh"
+msgstr "Ẩn Bảng điều khiển"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
@@ -2410,7 +2407,7 @@ msgstr "Ảnh nền"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:6
 msgid "Background type"
-msgstr "Loại nền"
+msgstr "Kiểu nền"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:7
 msgid "Center panel on x-axis"
@@ -2471,7 +2468,7 @@ msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"Nếu đúng, ảnh được co tỉ lệcho vừa chiều cao Bảng điều khiển (nếu nằm ngang)"
+"Nếu đúng, ảnh được co tỉ lệcho vừa chiều cao Bảng điều khiển (nếu nằm ngang)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
@@ -2710,14 +2707,12 @@ msgid "X co-ordinate of panel"
 msgstr "Toạ độ X của Bảng điều khiển"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
-#, fuzzy
 msgid "X screen where the panel is displayed"
-msgstr "Bảng điều khiển màn hình X đang bật"
+msgstr "X screen nơi hiển thị bảng điều khiển"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
-#, fuzzy
 msgid "Xinerama monitor where the panel is displayed"
-msgstr "Bảng điều khiển màn hình Xinerama đang bật"
+msgstr "Màn hình Xinerama nơi hiển thị bảng điều khiển"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "Y co-ordinate of panel"
@@ -2797,9 +2792,8 @@ msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Phạm vi mà gợi ý kích thước nào chấp nhận được đối với applet"
 
 #: libpanel-applet/panel-applet.c:1132
-#, fuzzy
 msgid "The Applet's containing Panel is locked down"
-msgstr "Applet chứa hướng Panel"
+msgstr ""
 
 #: libpanel-applet/panel-test-applets.c:33
 msgid "Specify an applet IID to load"
@@ -2859,1474 +2853,1447 @@ msgstr "XX Lớn"
 msgid "XX Small"
 msgstr "XX Nhỏ"
 
-#~ msgid "Error reading GConf list value '%s': %s"
-#~ msgstr "Lỗi đọc giá trị danh sách GConf '%s': %s"
+msgid "Error reading GConf list value '%s': %s"
+msgstr "Lỗi đọc giá trị danh sách GConf '%s': %s"
+
+msgid "Log Out %s"
+msgstr "Đăng xuất %s"
+
+msgid ""
+"Log out %s of this session to log in as a different user or to shut down "
+"your computer"
+msgstr "Thoát khỏip phiên làm việc của %s để đăng nhập vào một người dùng khác hoặc tắt máy"
+
+msgid "Quit from %s's desktop"
+msgstr "Thoát khỏi Desktop của %s"
+
+msgid "Month"
+msgstr "Tháng"
+
+msgid "Year"
+msgstr "Năm"
+
+msgid "The currently monitored year"
+msgstr "Năm theo dõi hiện thời"
+
+msgid "Activatable"
+msgstr "Có thể kích hoạt"
+
+msgid "Has Arrow"
+msgstr "Có mũi tên"
+
+msgid "Whether or not to draw an arrow indicator"
+msgstr "Có hay không việc vẽ trình chỉ thị mũi tên"
+
+msgid "Drag and drop Highlight"
+msgstr "Tô sáng Kéo Thả"
+
+msgid "Whether or not to highlight the icon during drag and drop"
+msgstr "Có tô sáng biểu tượng trong quá trình kéo và thả hay không"
+
+msgid "Orientation"
+msgstr "Định Hướng"
+
+msgid "The ButtonWidget orientation"
+msgstr "Định hướng của ButtonWidget"
+
+msgid "Icon Name"
+msgstr "Tên biêu tượng"
+
+msgid "The desired icon for the ButtonWidget"
+msgstr "Biểu tượng mong muốn cho ButtonWidget"
+
+msgid "Stock Icon ID"
+msgstr "Stock Icon ID"
+
+msgid "The desired stock icon for the ButtonWidget"
+msgstr "Dùng icon riêng cho ButtonWidget"
+
+msgid "Action Type"
+msgstr "Kiểu Hành Động"
+
+msgid "The type of action this button implements"
+msgstr "Kiểu hành động gán cho nút này"
+
+msgid "Drag and drop enabled"
+msgstr "Đã bật Kéo Thả"
+
+msgid "Whether or not drag and drop is enabled on the widget"
+msgstr "Có cho phép kéo thả trên Widget hay không"
+
+msgid "Edges"
+msgstr "Cạnh"
+
+msgid "Which edges to draw"
+msgstr "Cạnh nào cần vẽ"
+
+msgid "Menu Path"
+msgstr "Đường dẫn menu"
+
+msgid "The path from which to construct the menu"
+msgstr "Đường dẫn từ đó xây dựng menu"
+
+msgid "Custom Icon"
+msgstr "Biểu tượng tự chọn"
+
+msgid "The custom icon for the menu"
+msgstr "Dùng biểu tượng tự chọn cho menu"
+
+msgid "Tooltip"
+msgstr ""
+
+msgid "Tooltip displayed for the menu"
+msgstr ""
+
+msgid "Use Menu Path"
+msgstr "Dùng Đường dẫn menu"
+
+msgid "Use the path specified by the menu-path property"
+msgstr "Dùng đường dẫn xác định bởi thuộc tính menu-path"
+
+msgid "Use Custom Icon"
+msgstr "Dùng Biểu tượng tự chọn"
+
+msgid "Use the icon specified by the custom-icon property"
+msgstr "Dùng biểu tượng xác định bởi thuộc tính custom-icon"
+
+msgid "Name"
+msgstr "Tên"
+
+msgid "The name of this panel"
+msgstr "Tên Bảng điều khiển này"
+
+msgid "Expand"
+msgstr "Bung"
+
+msgid "Expand to take up the full monitor width/height"
+msgstr "Bung chiếm hết chiều rộng/cao màn hình"
+
+msgid "The orientation of the panel"
+msgstr "Hướng Bảng điều khiển"
+
+msgid "The height (or width when vertical) of the panel"
+msgstr "Chiều cao (hoặc rông nếu nằm dọc) của Bảng điều khiển"
+
+msgid "X position"
+msgstr "Vị trí X"
+
+msgid "The X position of the panel"
+msgstr "Vị trí X của Bảng điều khiển"
+
+msgid "X centered"
+msgstr "X giữa"
+
+msgid "The x co-ordinate is relative to center screen"
+msgstr "Tọa độ X so với tâm màn hình"
+
+msgid "Y position"
+msgstr "Vị trí Y"
+
+msgid "The Y position of the panel"
+msgstr "Vị trí Y của Bảng điều khiển"
+
+msgid "Y centered"
+msgstr "Y giữa"
+
+msgid "The y co-ordinate is relative to center screen"
+msgstr "Tọa độ Y so với tâm màn hình"
+
+msgid "Xinerama monitor"
+msgstr "Màn hình Xinerama"
+
+msgid "The monitor (in terms of Xinerama) which the panel is on"
+msgstr "Màh hình (theo thuật ngữ Xinerama) đặt Bảng điều khiển"
+
+msgid "Auto hide"
+msgstr "Tự động ẩ_n"
+
+msgid "Automatically hide the panel when the mouse leaves the panel"
+msgstr "Tự động ẩn bảng điều khiển khi đẩy chuột ra ngoài"
+
+msgid "Hide delay"
+msgstr "Khoảng chờ ẩn"
+
+msgid "The number of milliseconds to delay before automatically hiding"
+msgstr "Số mili giây chờ trước khi tự động ẩn"
+
+msgid "Un-hide delay"
+msgstr "Khoảng chờ ngừng-ẩn"
+
+msgid "The number of milliseconds to delay before automatically un-hiding"
+msgstr "Số mili giây chờ trước khi tự động ngừng ẩn"
+
+msgid "Auto-hide size"
+msgstr "Kích thước Tự động ẩn"
+
+msgid ""
+"The number of pixels visible when the panel has been automatically hidden"
+msgstr "Số pixel nhìn thấy của Bảng điều khiển sau khi tự động ẩn"
+
+msgid "Animate"
+msgstr "Hoạt cảnh"
+
+msgid "Enable hiding/showing animations"
+msgstr "Bật hoạt cảnh ẩn/hiện"
+
+msgid "Animation Speed"
+msgstr "Tốc độ hoạt cảnh"
+
+msgid "The speed at which to animate panel hiding/showing"
+msgstr "Tốc độ chơi hoạt cảnh ẩn/hiện"
+
+msgid "Buttons Enabled"
+msgstr "Nút đã bật"
+
+msgid "Enable hide/show buttons"
+msgstr "Bật nút hiện/ẩn"
+
+msgid "Arrows Enabled"
+msgstr "Mũi tên đã bật"
+
+msgid "Enable arrows on hide/show buttons"
+msgstr "Bật mũi tên trên nút hiện/ẩn"
+
+msgid "Text"
+msgstr "Chữ"
+
+msgid "Text to render"
+msgstr "Chữ hiển thị"
+
+msgid "Background color name"
+msgstr "Tên màu nền"
+
+msgid "Background color as a string"
+msgstr "Tên màu nền dạng chuỗi"
+
+msgid "Background color as a GdkColor"
+msgstr "Tên màu nền dạng GdkColor"
+
+msgid "Foreground color name"
+msgstr ""
+
+msgid "Foreground color"
+msgstr ""
+
+msgid "Font"
+msgstr "Phông"
+
+msgid "Font stretch"
+msgstr ""
+
+msgid "Font size"
+msgstr "Kích thước Phông"
+
+msgid "Background set"
+msgstr ""
 
 #, fuzzy
-#~ msgid "Log Out %s"
-#~ msgstr "Thoát"
+msgid "Font scale set"
+msgstr "Đừ_ng co dãn ảnh cho vừa"
 
 #, fuzzy
-#~ msgid ""
-#~ "Log out %s of this session to log in as a different user or to shut down "
-#~ "your computer"
-#~ msgstr ""
-#~ "Thoát khỏi session này để đăng nhập vào như là một người dùng khác hoặc "
-#~ "shutdown"
+msgid "Lock down the panel"
+msgstr "Khóa đối tượng vào Bảng điều khiển"
+
+msgid "%s - command not found"
+msgstr "%s - lệnh không tìm thấy"
+
+msgid "Cannot execute %s"
+msgstr "Không thể thực hiện %s"
+
+msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
+msgstr "Nếu đúng, hiển thị thời gian theo giây tính từ Epoch, vd 01-01-1970."
+
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are 12 and 24."
+msgstr ""
+"Khoá này xác định dạng thức giờ được dùng bởi Applet Đồng hồ. Giá trị có thể "
+"là 12 và 24."
+
+msgid "Window Menu"
+msgstr "Menu Cửa sổ"
+
+msgid "Print Screenshot"
+msgstr "In Screenshot"
+
+msgid "Screenshot Print Preview"
+msgstr "Xem trước Screenshot cần in"
+
+msgid "_Print screenshot..."
+msgstr "_In screenshot..."
 
 #, fuzzy
-#~ msgid "Quit from %s's desktop"
-#~ msgstr "Thoát khỏi GNOME Desktop"
+msgid ""
+"The panel encountered a problem while loading \"%s\"\n"
+"Details: %s%s"
+msgstr ""
+"Bảng điều khiển ghi nhận vấn đề khi nạp \"%s\"\n"
+"Chi tiết: %s\n"
+"\n"
+"Có muốn xóa applet khỏi cấu hình của bạn không?"
 
-#, fuzzy
-#~ msgid "Month"
-#~ msgstr "Tháng này"
+msgid "Open Recent"
+msgstr "Mở Hiện Thời"
 
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "Tìm kiếm"
+msgid "If true, display internet time, which is same all over the world."
+msgstr "Nếu đúng, hiển thị giờ internet, giống nhau trên toàn thế giới."
 
-#, fuzzy
-#~ msgid "The currently monitored year"
-#~ msgstr "Monitor hiện thời:"
+msgid "%s the GNOME Fish"
+msgstr "Cá GNOME %s"
 
-#, fuzzy
-#~ msgid "Activatable"
-#~ msgstr "Tắt"
+msgid "Expander Size"
+msgstr "Cỡ mũi tên bung"
 
-#~ msgid "Has Arrow"
-#~ msgstr "Có mũi tên"
+msgid "Size of the expander arrow"
+msgstr "Kích thước của mũi tên bung"
 
-#~ msgid "Whether or not to draw an arrow indicator"
-#~ msgstr "Có hay không việc vẽ trình chỉ thị mũi tên"
+msgid "Help on %s _Application"
+msgstr "Trợ giúp cho ứng _dụng %s"
 
-#, fuzzy
-#~ msgid "Drag and drop Highlight"
-#~ msgstr "Tô sáng Kéo Thả"
+msgid "Help on %s"
+msgstr "Giúp đỡ về %s"
 
-#~ msgid "Whether or not to highlight the icon during drag and drop"
-#~ msgstr "Có tô sáng biểu tượng trong quá trình kéo và thả hay không"
+msgid "Application"
+msgstr "Ứng dụng"
 
-#~ msgid "Orientation"
-#~ msgstr "Định Hướng"
+msgid "<b>_Icon:</b>"
+msgstr "<b>_Biểu tượng:</b>"
 
-#~ msgid "The ButtonWidget orientation"
-#~ msgstr "Định hướng của ButtonWidget"
+msgid "<b>_Name:</b>"
+msgstr "<b>_Tên:</b>"
 
-#~ msgid "Icon Name"
-#~ msgstr "Tên biêu tượng"
+msgid "<b>_Orientation:</b>"
+msgstr "<b>_Chiều:</b>"
 
-#~ msgid "The desired icon for the ButtonWidget"
-#~ msgstr "Biểu tượng mong muốn cho ButtonWidget"
+msgid "<b>_Size:</b>"
+msgstr "<b>_Kích thước:</b>"
 
-#~ msgid "Stock Icon ID"
-#~ msgstr "Stock Icon ID"
+msgid ""
+"A description of the currently selected application or information on the "
+"command that will be run."
+msgstr ""
+"Mô tảcủa ứng dụng được chọn hiện thời hoặc thông tin về lệnh sẽ được chạy."
 
-#~ msgid "The desired stock icon for the ButtonWidget"
-#~ msgstr "Dùng icon riêng cho ButtonWidget"
+msgid "Application description"
+msgstr "Mô tả Ứng dụng"
 
-#~ msgid "Action Type"
-#~ msgstr "Kiểu Hành Động"
+msgid "List of known applications"
+msgstr "Danh sách các ứng dụng đã biết"
 
-#~ msgid "The type of action this button implements"
-#~ msgstr "Kiểu hành động gán cho nút này"
+msgid "Select an application from the list to run it"
+msgstr "Chọn ứng dụng cần chạy từ danh sách"
 
-#, fuzzy
-#~ msgid "Drag and drop enabled"
-#~ msgstr "Đã bật Kéo Thả"
+msgid "When this is selected the list of known applications is displayed."
+msgstr "Khi chọn mục này, danh sách ứng dụng đã biết sẽ được hiển thị."
 
-#~ msgid "Whether or not drag and drop is enabled on the widget"
-#~ msgstr "Có cho phép kéo thả trên Widget hay không"
+msgid "Help document not found"
+msgstr "Không tìm thấy tài liệu trợ giúp"
 
-#~ msgid "Edges"
-#~ msgstr "Cạnh"
+msgid "No document to show"
+msgstr "Không có tài liệu nào để xem"
 
-#~ msgid "Which edges to draw"
-#~ msgstr "Cạnh nào cần vẽ"
+msgid ""
+"Failed to load image %s\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Lỗi nạp ảnh %s\n"
+"\n"
+"Chi tiết: %s"
 
-#~ msgid "Menu Path"
-#~ msgstr "Đường dẫn menu"
+msgid "Size and Position"
+msgstr "Vị trí và kích thước"
 
-#~ msgid "The path from which to construct the menu"
-#~ msgstr "Đường dẫn từ đó xây dựng menu"
+msgid "Applet appearance"
+msgstr "Diện mạo applet"
 
-#~ msgid "Custom Icon"
-#~ msgstr "Biểu tượng tự chọn"
+msgid "Drawer handle"
+msgstr "Handle ngăn kéo"
 
-#~ msgid "The custom icon for the menu"
-#~ msgstr "Dùng biểu tượng tự chọn cho menu"
+msgid "Enable hidebutton"
+msgstr "Cho phép ẩn panel"
 
-#, fuzzy
-#~ msgid "Tooltip"
-#~ msgstr "Mẹo/Tên"
+msgid "Enable hidebutton arrow"
+msgstr "Hiện mũi tên"
 
-#, fuzzy
-#~ msgid "Tooltip displayed for the menu"
-#~ msgstr "Tooltip cho Ngăn kéo"
+msgid "KDE Menu"
+msgstr "Menu KDE"
 
-#~ msgid "Use Menu Path"
-#~ msgstr "Dùng Đường dẫn menu"
+msgid "_Drawer"
+msgstr "_Ngăn kéo"
 
-#~ msgid "Use the path specified by the menu-path property"
-#~ msgstr "Dùng đường dẫn xác định bởi thuộc tính menu-path"
+msgid "_Run Application..."
+msgstr "_Chạy Ứng dụng..."
 
-#~ msgid "Use Custom Icon"
-#~ msgstr "Dùng Biểu tượng tự chọn"
+msgid "_Search for Files..."
+msgstr "_Tìm tập tin..."
 
-#~ msgid "Use the icon specified by the custom-icon property"
-#~ msgstr "Dùng biểu tượng xác định bởi thuộc tính custom-icon"
+msgid "_Take Screenshot..."
+msgstr "_Chụp hình..."
 
-#~ msgid "Name"
-#~ msgstr "Tên"
+msgid "_Log Out"
+msgstr "Đăng _xuất"
 
-#~ msgid "The name of this panel"
-#~ msgstr "Tên Bảng điều khiển này"
+msgid "Sets the hour format, may be either 12 or 24"
+msgstr "Đặt dạng thức giờ, có thể là 12 hoặc 24"
 
-#~ msgid "Expand"
-#~ msgstr "Bung"
+msgid "Maximum size that Window List requests"
+msgstr "Kích thước tối đa mà danh sách cửa sổ yêu cầu"
 
-#~ msgid "Expand to take up the full monitor width/height"
-#~ msgstr "Bung chiếm hết chiều rộng/cao màn hình"
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
+msgstr ""
+"Để dùng được, danh sách cửa sổ yêu cầu độ rộng tối thiểu. Danh sách cửa sổ "
+"yêu cầu độ rộng tối thiểu này. Lập độ rộng tối thiểu hữu dụng cho các panel "
+"trượt và panel cạnh, là những panel yêu cầu độ rộng mặc định nhỏ."
+
+msgid "Number of rows in the Workspace Switcher."
+msgstr "Số hàng trong bộ chuyển vùng làm việc."
+
+msgid "Whether to display the all workspaces in the Workspace Switcher."
+msgstr "Có hiển thị mọi vùng làm việc trong bộ chuyển vùng làm việc không."
+
+msgid ""
+"Whether to display the names of the workspaces in the Workspace Switcher."
+msgstr "Có hiển thị tên vùng làm việc trong bộ chuyển vùng làm việc không."
+
+msgid ""
+"Cannot save launcher to disk, the following error occured:\n"
+"\n"
+"%s"
+msgstr ""
+"Không thể lưu bộ kích hoạt vào đĩa, xảy ra lỗi:\n"
+"\n"
+"%s"
+
+msgid "Can't execute 'About GNOME'"
+msgstr "Không thể thực hiện chương trình 'Giới thiệu GNOME'"
+
+msgid "Could not remove the menu item"
+msgstr "Không thể loại bỏ menu item"
+
+msgid "Cannot execute gnome-search-tool"
+msgstr "Không thể thực hiện gnome-search-tool"
+
+msgid "Cannot execute gnome-panel-screenshot"
+msgstr "Không thể thực hiện gnome-panel-screenshot"
+
+msgid "Take a screen shot"
+msgstr "Chụp hình"
+
+msgid "Take a screen shot of a window"
+msgstr "Lấy ảnh toàn màn hình"
+
+msgid "The Bonobo IID of the applet"
+msgstr "Bonobo IID của Applet"
+
+msgid "The location of the launcher"
+msgstr "Vị trí bộ kích hoạt"
+
+msgid "The type of action button"
+msgstr "Loại nút hành động"
+
+msgid "Error launching command"
+msgstr "Lỗi kích hoạt lệnh"
+
+msgid "The background type."
+msgstr "Kiểu nền"
+
+msgid "The orientation of the panel."
+msgstr "Hướng của Bảng điều khiển."
+
+msgid "The size of the panel."
+msgstr "Kích thước Bảng điều khiển."
+
+msgid "and finally, The Knights Who Say... NI!"
+msgstr "và cuối cùng, Hiệp Sĩ Nói ... NI!"
+
+msgid ""
+"\n"
+"\n"
+"Running in \"Lockdown\" mode.  This means your system administrator has "
+"prohibited any changes to the panel's configuration to take place."
+msgstr ""
+"\n"
+"\n"
+"Đang chạy trong chế độ \"Lockdown\". Có nghĩa là system administrator của "
+"bạn ngăn cấm bất kỳ thay đổi nào trong cấu hình Bảng điều khiển."
+
+msgid "End world hunger"
+msgstr "End world hunger"
+
+msgid "The desired ButtonWidget size"
+msgstr "Kích thước ButtonWidget mong muốn"
+
+msgid "Screenshot..."
+msgstr "Screenshot..."
+
+msgid ""
+"<b>Cannot launch icon</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Không thể phóng biểu tượng</b>\n"
+"\n"
+"Chi tiết: %s"
+
+msgid ""
+"<b>Can't execute 'About GNOME'</b>\n"
+"\n"
+"Details: %s probably does not exist"
+msgstr ""
+"<b>Không thể thực hiện 'Giới thiệu GNOME'</b>\n"
+"\n"
+"Chi tiết: %s có lẽ không tồn tại"
+
+msgid ""
+"<b>Can't launch entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Không thể thực hiện mục nhập</b>\n"
+"\n"
+"Chi tiết: %s"
+
+msgid ""
+"<b>Can't load entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Không thể nạp mục</b>\n"
+"\n"
+"Chi tiết: %s"
+
+msgid "Floating"
+msgstr "Trôi nổi"
+
+msgid "Centered"
+msgstr "Giữa"
+
+msgid "%s %s Panel"
+msgstr "%s %s Bảng điều khiển"
+
+msgid ""
+"<b>Failed to run this program</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Lỗi khi nạp chương trình này</b>\n"
+"\n"
+"Chi tiết: %s"
+
+msgid ""
+"<b>Failed to execute command:</b> '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Lỗi khi thực hiện lệnh:</b> '%s'\n"
+"\n"
+"Chi tiết: %s"
+
+msgid ""
+"<b>Failed to open file:</b> '%s'\n"
+"\n"
+"Details: no application available to open file"
+msgstr ""
+"<bLỗi mở tập tin:</b> '%s'\n"
+"\n"
+"Chi tiết: không có ứng dụng nào để mở tập tin"
+
+msgid ""
+"<b>Failed to open file:</b> '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Không thể nạp mục:</b> '%s'\n"
+"\n"
+"Chi tiết: %s"
+
+msgid "Choose a file"
+msgstr "Chọn tập tin"
+
+msgid "Known Applications"
+msgstr "Ứng dụng đã biết"
+
+msgid "No application selected"
+msgstr "Không có ứng dụng nào được chọn"
+
+msgid "Command to _execute when fish is clicked:"
+msgstr "_Lệnh thực hiện khi con cá được nhấn:"
+
+msgid "Pause _per frame (s):"
+msgstr "Khoảng chờ _giữa mỗi khung hình (giây):"
+
+msgid "_Animation filename:"
+msgstr "_Tên tập tin hoạt cảnh:"
+
+msgid "Rows"
+msgstr "Hàng"
+
+msgid "_Append File..."
+msgstr "_Mở rộng tập tin..."
+
+msgid "Run Program"
+msgstr "Thực hiện chương trình"
+
+msgid "Run Program..."
+msgstr "Chạy chương trình..."
+
+msgid "Transparent"
+msgstr "Trong suốt"
 
-#~ msgid "The orientation of the panel"
-#~ msgstr "Hướng Bảng điều khiển"
+msgid "_Transparent background:"
+msgstr "Nền _trong suốt:"
 
-#~ msgid "The height (or width when vertical) of the panel"
-#~ msgstr "Chiều cao (hoặc rông nếu nằm dọc) của Bảng điều khiển"
+msgid "Alert you when new mail arrives"
+msgstr "Báo động khi có thư mới"
 
-#~ msgid "X position"
-#~ msgstr "Vị trí X"
+msgid "Inbox Monitor"
+msgstr "Bộ theo dõi thư"
 
-#~ msgid "The X position of the panel"
-#~ msgstr "Vị trí X của Bảng điều khiển"
+msgid "_Check for mail"
+msgstr "_Check mail"
 
-#~ msgid "X centered"
-#~ msgstr "X giữa"
+msgid "There was an error executing %s: %s"
+msgstr "Lỗi khi thực thi %s : %s"
 
-#~ msgid "The x co-ordinate is relative to center screen"
-#~ msgstr "Tọa độ X so với tâm màn hình"
+msgid ""
+"You didn't set a password in the preferences for the Inbox Monitor,\n"
+"so you have to enter it each time it starts up."
+msgstr ""
+"Bạn chưa thiết lập mật khẩu cho Bộ theo dõi thư,\n"
+"vì thế bạn phải nhập mật khẩu mỗi lần Bộ theo dõi thư khởi động."
 
-#~ msgid "Y position"
-#~ msgstr "Vị trí Y"
+msgid "Please enter your mailserver's _password:"
+msgstr "Vui lòng nhập _mật khẩu mailserver:"
 
-#~ msgid "The Y position of the panel"
-#~ msgstr "Vị trí Y của Bảng điều khiển"
+msgid "Password Entry box"
+msgstr "Ô nhập mật khẩu"
 
-#~ msgid "Y centered"
-#~ msgstr "Y giữa"
+msgid ""
+"The Inbox Monitor failed to check your mails and thus automatic updating has "
+"been deactivated for now.\n"
+"Maybe you used a wrong server, username or password?"
+msgstr ""
+"Bộ theo dõi thư gặp lỗi khi check mail và vì thế tính năng tự động cập nhật "
+"sẽ bị tắt từ bây giờ.\n"
+"Có lẽ bạn nhập sai server, tên người dùng, hay mật khẩu?"
 
-#~ msgid "The y co-ordinate is relative to center screen"
-#~ msgstr "Tọa độ Y so với tâm màn hình"
+msgid "You have new mail."
+msgstr "Bạn có thư mới."
 
-#~ msgid "Xinerama monitor"
-#~ msgstr "Màn hình Xinerama"
+msgid "You have mail."
+msgstr "Bạn có thư."
 
-#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
-#~ msgstr "Màh hình (theo thuật ngữ Xinerama) đặt Bảng điều khiển"
+msgid "%d/%d messages"
+msgstr "%d/%d thư"
 
-#~ msgid "Auto hide"
-#~ msgstr "Tự động ẩ_n"
+msgid "%d messages"
+msgstr "%d thư"
 
-#~ msgid "Automatically hide the panel when the mouse leaves the panel"
-#~ msgstr "Tự động ẩn bảng điều khiển khi đẩy chuột ra ngoài"
+msgid "No mail."
+msgstr "Không có thư."
 
-#~ msgid "Hide delay"
-#~ msgstr "Khoảng chờ ẩn"
+msgid "Status not updated"
+msgstr "Trạng thái chưa được cập nhật"
 
-#~ msgid "The number of milliseconds to delay before automatically hiding"
-#~ msgstr "Số mili giây chờ trước khi tự động ẩn"
+msgid "Mailbox _resides on:"
+msgstr "Hộp _thư nằm ở:"
 
-#~ msgid "Un-hide delay"
-#~ msgstr "Khoảng chờ ngừng-ẩn"
+msgid "Local mailspool"
+msgstr "Mailspool cục bộ"
 
-#~ msgid "The number of milliseconds to delay before automatically un-hiding"
-#~ msgstr "Số mili giây chờ trước khi tự động ngừng ẩn"
+msgid "Local maildir"
+msgstr "Maildir cục bộ"
 
-#~ msgid "Auto-hide size"
-#~ msgstr "Kích thước Tự động ẩn"
+msgid "Remote POP3-server"
+msgstr "Remote POP3-server"
 
-#~ msgid ""
-#~ "The number of pixels visible when the panel has been automatically hidden"
-#~ msgstr "Số pixel nhìn thấy của Bảng điều khiển sau khi tự động ẩn"
+msgid "Remote IMAP-server"
+msgstr "Remote IMAP-server"
 
-#~ msgid "Animate"
-#~ msgstr "Hoạt cảnh"
+msgid "Mail _spool file:"
+msgstr "Tên file mail _spool:"
 
-#~ msgid "Enable hiding/showing animations"
-#~ msgstr "Bật hoạt cảnh ẩn/hiện"
+msgid "Mail s_erver:"
+msgstr "Mail _server:"
 
-#~ msgid "Animation Speed"
-#~ msgstr "Tốc độ hoạt cảnh"
+msgid "Mail Server Entry box"
+msgstr "Ô nhập mail server"
 
-#~ msgid "The speed at which to animate panel hiding/showing"
-#~ msgstr "Tốc độ chơi hoạt cảnh ẩn/hiện"
+msgid "Username Entry box"
+msgstr "Ô nhập tên người dùng"
 
-#~ msgid "Buttons Enabled"
-#~ msgstr "Nút đã bật"
+msgid "_Password:"
+msgstr "_Mật khẩu:"
 
-#~ msgid "Enable hide/show buttons"
-#~ msgstr "Bật nút hiện/ẩn"
+msgid "_Folder:"
+msgstr "_Thư mục:"
 
-#~ msgid "Arrows Enabled"
-#~ msgstr "Mũi tên đã bật"
+msgid "Folder Entry box"
+msgstr "Ô nhập thư mục"
 
-#~ msgid "Enable arrows on hide/show buttons"
-#~ msgstr "Bật mũi tên trên nút hiện/ẩn"
+msgid "C_ommand to run before checking for mail:"
+msgstr "_Lệnh cần thực hiện trước khi check mail:"
 
-#, fuzzy
-#~ msgid "Text"
-#~ msgstr "Chỉ có text."
+msgid "Execute"
+msgstr "Thực hiện"
 
-#, fuzzy
-#~ msgid "Text to render"
-#~ msgstr "Chỉ có text."
+msgid "Before each _update:"
+msgstr "Trước mỗi lần _cập nhật:"
 
-#, fuzzy
-#~ msgid "Background color name"
-#~ msgstr "Màu nền"
+msgid "Command to execute before each update"
+msgstr "Lệnh cần thực hiện trước mỗi lần cập nhật"
 
-#, fuzzy
-#~ msgid "Background color as a string"
-#~ msgstr "Độ đục màu nền"
+msgid "When new mail _arrives:"
+msgstr "Khi có thư _mới:"
 
-#, fuzzy
-#~ msgid "Background color as a GdkColor"
-#~ msgstr "Màu nền"
+msgid "Command to execute when new mail arrives"
+msgstr "Lệnh thực hiện khi có thư mới"
 
-#, fuzzy
-#~ msgid "Foreground color name"
-#~ msgstr "Màu nền"
+msgid "When clicke_d:"
+msgstr "Khi được _nhấn:"
 
-#, fuzzy
-#~ msgid "Foreground color"
-#~ msgstr "Màu nền"
+msgid "Set the number of unread mails to _zero"
+msgstr "Đặt số thư chưa đọc là 0"
 
-#, fuzzy
-#~ msgid "Font"
-#~ msgstr "Dạng thức"
+msgid "Check for mail _every"
+msgstr "Check mail mỗ_i"
 
-#, fuzzy
-#~ msgid "Font stretch"
-#~ msgstr "Kéo giãn"
+msgid "minutes"
+msgstr "phút"
 
-#, fuzzy
-#~ msgid "Font size"
-#~ msgstr "Kích thước Bảng điều khiển"
+msgid "Choose time interval in minutes to check mail"
+msgstr "Chọn khoảng thời gian check mail (phút)"
 
-#, fuzzy
-#~ msgid "Background set"
-#~ msgstr "Nền"
+msgid "Choose time interval in seconds to check mail"
+msgstr "Chọn thời khoản check mail (giây)"
 
-#, fuzzy
-#~ msgid "Font scale set"
-#~ msgstr "Đừ_ng co dãn ảnh cho vừa"
+msgid "Play a _sound when new mail arrives"
+msgstr "Chơi _nhạc khi có thư mới"
 
-#, fuzzy
-#~ msgid "Lock down the panel"
-#~ msgstr "Khóa đối tượng vào Bảng điều khiển"
+msgid "Inbox Monitor Preferences"
+msgstr "Thuộc tính Bộ theo dõi thư"
 
-#~ msgid "%s - command not found"
-#~ msgstr "%s - lệnh không tìm thấy"
+msgid "_Mail check"
+msgstr "_Kiểm tra thư"
 
-#~ msgid "Cannot execute %s"
-#~ msgstr "Không thể thực hiện %s"
+msgid "Mail_box"
+msgstr "_Hộp thư"
 
-#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-#~ msgstr ""
-#~ "Nếu đúng, hiển thị thời gian theo giây tính từ Epoch, vd 01-01-1970."
+msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
+msgstr "Bộ theo dõi thư thông báo cho bạn mỗi khi có thư mới."
 
-#~ msgid ""
-#~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are 12 and 24."
-#~ msgstr ""
-#~ "Khoá này xác định dạng thức giờ được dùng bởi Applet Đồng hồ. Giá trị có "
-#~ "thể là 12 và 24."
+msgid "Mail check"
+msgstr "_Kiểm tra thư"
 
-#~ msgid "Window Menu"
-#~ msgstr "Menu Cửa sổ"
+msgid "Mail check notifies you when new mail arrives in your mailbox"
+msgstr "Trình kiểm tra thư thông báo cho bạn mỗi khi có thư mới."
 
-#~ msgid "Print Screenshot"
-#~ msgstr "In Screenshot"
+msgid "Command to execute when checking mail"
+msgstr "Lệnh thực hiện khi check mail"
 
-#~ msgid "Screenshot Print Preview"
-#~ msgstr "Xem trước Screenshot cần in"
+msgid "Command to execute when you click on the Inbox Monitor"
+msgstr "Lệnh cần thực thi khi nhấn chuột lên trình theo dõi hộp thư"
 
-#~ msgid "_Print screenshot..."
-#~ msgstr "_In screenshot..."
+msgid "Command to run before checking mail"
+msgstr "Lệnh cần thực hiện trước khi check mail"
 
-#, fuzzy
-#~ msgid ""
-#~ "The panel encountered a problem while loading \"%s\"\n"
-#~ "Details: %s%s"
-#~ msgstr ""
-#~ "Bảng điều khiển ghi nhận vấn đề khi nạp \"%s\"\n"
-#~ "Chi tiết: %s\n"
-#~ "\n"
-#~ "Có muốn xóa applet khỏi cấu hình của bạn không?"
+msgid "Do we run the exec-command"
+msgstr "Chạy exec-command"
 
-#~ msgid "Open Recent"
-#~ msgstr "Mở Hiện Thời"
+msgid "Do we run the newmail-command"
+msgstr "Chạy newmail-command"
 
-#~ msgid "If true, display internet time, which is same all over the world."
-#~ msgstr "Nếu đúng, hiển thị giờ internet, giống nhau trên toàn thế giới."
+msgid "How often (in milliseconds) we check the mail"
+msgstr "Cách bao nhiêu mili giây thì check mail lại"
 
-#~ msgid "%s the GNOME Fish"
-#~ msgstr "Cá GNOME %s"
+msgid "If mail should be checked automatically"
+msgstr "Check mail một các tự động"
 
-#~ msgid "Expander Size"
-#~ msgstr "Cỡ mũi tên bung"
+msgid "If this is set mail will be checked every update-freq milliseconds"
+msgstr "Check mail tự động mỗi xx mili giây"
 
-#~ msgid "Size of the expander arrow"
-#~ msgstr "Kích thước của mũi tên bung"
+msgid "If this is set, we should run the exec-command"
+msgstr "Chạy lệnh exec-command"
 
-#~ msgid "Help on %s _Application"
-#~ msgstr "Trợ giúp cho _ứng dụng %s"
+msgid "If this is set, we should run the newmail-command"
+msgstr "Chạy lệnh newmail-command"
 
-#~ msgid "Help on %s"
-#~ msgstr "Giúp đỡ về %s"
+msgid "Interval for checking mail"
+msgstr "Khoảng nghỉ giữa những lần checkmail"
 
-#~ msgid "Application"
-#~ msgstr "Ứng dụng"
+msgid "Path to the animation file"
+msgstr "Đường dẫn tập tin hoạt cảnh"
 
-#~ msgid "<b>_Icon:</b>"
-#~ msgstr "<b>_Biểu tượng:</b>"
+msgid "Play a sound when mail is recieved"
+msgstr "Chơi nhạc khi nhận thư"
 
-#~ msgid "<b>_Name:</b>"
-#~ msgstr "<b>_Tên:</b>"
+msgid "Remote folder for mail retrieval"
+msgstr "Thư mục từ xa để nhận thư"
 
-#~ msgid "<b>_Orientation:</b>"
-#~ msgstr "<b>_Chiều:</b>"
+msgid "Remote server to connect to for our mail"
+msgstr "Server ở xa cần kết nối để nhận thư"
 
-#~ msgid "<b>_Size:</b>"
-#~ msgstr "<b>_Kích thước:</b>"
+msgid "Run this command before we check the mail"
+msgstr "Lệnh cần thực hiện trước khi check mail"
 
-#~ msgid ""
-#~ "A description of the currently selected application or information on the "
-#~ "command that will be run."
-#~ msgstr ""
-#~ "Mô tảcủa ứng dụng được chọn hiện thời hoặc thông tin về lệnh sẽ được chạy."
+msgid "The mail server"
+msgstr "Mail server"
 
-#~ msgid "Application description"
-#~ msgstr "Mô tả Ứng dụng"
+msgid "The user's password"
+msgstr "Mật khẩu người dùng"
 
-#~ msgid "List of known applications"
-#~ msgstr "Danh sách các ứng dụng đã biết"
+msgid "The user's password for the remote server"
+msgstr "Mật khẩu của người dùng cho server"
 
-#~ msgid "Select an application from the list to run it"
-#~ msgstr "Chọn ứng dụng cần chạy từ danh sách"
+msgid "This is how we check the mail, check the mail, check the mail..."
+msgstr "Check mail thường xuyên đến cỡ nào..."
 
-#~ msgid "When this is selected the list of known applications is displayed."
-#~ msgstr "Khi chọn mục này, danh sách ứng dụng đã biết sẽ được hiển thị."
+msgid "This is how we process the mail, process the mail, process the mail..."
+msgstr "Xử lý thư như thế nào..."
 
-#~ msgid "Help document not found"
-#~ msgstr "Không tìm thấy tài liệu trợ giúp"
+msgid ""
+"This is the animation that will be displayed during normal Inbox Monitor "
+"usage"
+msgstr ""
+"Đây là hoạt cảnh được hiển thị trong quá trình sử dụng trình theo dõi hộp "
+"thư bình thường"
 
-#~ msgid "No document to show"
-#~ msgstr "Không có tài liệu nào để xem"
+msgid "Username on the remote server"
+msgstr "Tên người dùng trên server"
 
-#~ msgid ""
-#~ "Failed to load image %s\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Lỗi nạp ảnh %s\n"
-#~ "\n"
-#~ "Chi tiết: %s"
+msgid "We run this command when the user clicks on Inbox Monitor"
+msgstr "Chạy lệnh này khi người dùng nhấn lên trình theo dõi hộp thư"
 
-#~ msgid "Size and Position"
-#~ msgstr "Vị trí và kích thước"
+msgid "Whether to reset mail status when you click on Inbox Monitor"
+msgstr ""
+"Có nên đặt lại trạng thái thư khi nhấn lên trình theo dõi hộp thư không"
 
-#~ msgid "Applet appearance"
-#~ msgstr "Diện mạo applet"
+msgid "You've got mail!"
+msgstr "Bạn có thư!"
 
-#~ msgid "Drawer handle"
-#~ msgstr "Handle ngăn kéo"
+msgid "Mailcheck"
+msgstr "Mailcheck"
 
-#~ msgid "Enable hidebutton"
-#~ msgstr "Cho phép ẩn panel"
+msgid "New Mail"
+msgstr "Thư mới"
 
-#~ msgid "Enable hidebutton arrow"
-#~ msgstr "Hiện mũi tên"
+msgid "No object_type set for panel object with ID %s\n"
+msgstr "Không đặt object_type cho đối tượng Bảng điều khiển với ID %s\n"
 
-#~ msgid "KDE Menu"
-#~ msgstr "Menu KDE"
+msgid "Mode"
+msgstr "Chế độ"
 
-#~ msgid "_Drawer"
-#~ msgstr "_Ngăn kéo"
+msgid "State"
+msgstr "Trạng thái"
 
-#~ msgid "_Run Application..."
-#~ msgstr "_Chạy Ứng dụng..."
+msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
+msgstr ""
+"Nút ẩn (nút cho phép ẩn hoặc hiện Bảng điều khiển) có được bật hay không?"
 
-#~ msgid "_Search for Files..."
-#~ msgstr "_Tìm tập tin..."
+msgid "Hidebutton pixmaps enabled"
+msgstr "Đã bật ảnh nút ẩn"
 
-#~ msgid "_Take Screenshot..."
-#~ msgstr "_Chụp hình..."
+msgid "Hidebuttons have pixmaps"
+msgstr "Nút ẩn có ảnh"
 
-#~ msgid "_Log Out"
-#~ msgstr "Đăng _xuất"
+msgid "Hide this panel"
+msgstr "Ẩn Bảng điều khiển này"
 
-#~ msgid "Sets the hour format, may be either 12 or 24"
-#~ msgstr "Đặt dạng thức giờ, có thể là 12 hoặc 24"
+msgid "Show this panel"
+msgstr "Hiện Bảng điều khiển này"
 
-#~ msgid "Maximum size that Window List requests"
-#~ msgstr "Kích thước tối đa mà danh sách cửa sổ yêu cầu"
+msgid "Menu Panel"
+msgstr "Bảng điều khiển menu"
 
-#~ msgid ""
-#~ "To be usable, Window List requires a minimum width. Window List requests "
-#~ "this minimum width. The minimum width setting is useful for sliding and "
-#~ "edge panels, which usually request a small default width."
-#~ msgstr ""
-#~ "Để dùng được, danh sách cửa sổ yêu cầu độ rộng tối thiểu. Danh sách cửa "
-#~ "sổ yêu cầu độ rộng tối thiểu này. Lập độ rộng tối thiểu hữu dụng cho các "
-#~ "panel trượt và panel cạnh, là những panel yêu cầu độ rộng mặc định nhỏ."
+msgid "GNOME Menu Panel"
+msgstr "Bảng điều khiển Menu GNOME"
 
-#~ msgid "Number of rows in the Workspace Switcher."
-#~ msgstr "Số hàng trong bộ chuyển vùng làm việc."
+msgid "Can't find the screenshot program"
+msgstr "Không thể tìm thấy chương trình screenshot"
 
-#~ msgid "Whether to display the all workspaces in the Workspace Switcher."
-#~ msgstr "Có hiển thị mọi vùng làm việc trong bộ chuyển vùng làm việc không."
+msgid "Can't execute the screenshot program"
+msgstr "Không thể thực hiện chương trình screenshot"
 
-#~ msgid ""
-#~ "Whether to display the names of the workspaces in the Workspace Switcher."
-#~ msgstr "Có hiển thị tên vùng làm việc trong bộ chuyển vùng làm việc không."
+msgid "Panel to add the launcher to"
+msgstr "Bảng điều khiển để thêm Bộ kích hoạt"
 
-#~ msgid ""
-#~ "Cannot save launcher to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Không thể lưu bộ kích hoạt vào đĩa, xảy ra lỗi:\n"
-#~ "\n"
-#~ "%s"
+msgid "NUMBER"
+msgstr "SỐ"
 
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "Không thể thực hiện chương trình 'Giới thiệu GNOME'"
+msgid "The argument is a url to add, not a .desktop file"
+msgstr "Đối số là một URL, không phải tập tin .desktop"
 
-#~ msgid "Could not remove the menu item"
-#~ msgstr "Không thể loại bỏ menu item"
+msgid ""
+"You must supply a single argument with the .desktop file or url to use\n"
+msgstr "Bạn phải cung cấp một đối số đơn với tập tin .desktop hoặc URL\n"
 
-#~ msgid "Cannot execute gnome-search-tool"
-#~ msgstr "Không thể thực hiện gnome-search-tool"
+msgid "No panel found\n"
+msgstr "Không tìm thấy Bảng điều khiển\n"
 
-#~ msgid "Cannot execute gnome-panel-screenshot"
-#~ msgstr "Không thể thực hiện gnome-panel-screenshot"
+msgid "GNOME Aligned Panel"
+msgstr "Bảng điều khiển canh hàng GNOME"
 
-#~ msgid "Take a screen shot"
-#~ msgstr "Chụp hình"
+msgid "GNOME Edge Panel"
+msgstr "Bảng điều khiển Cạnh GNOME"
 
-#~ msgid "Take a screen shot of a window"
-#~ msgstr "Lấy ảnh toàn màn hình"
+msgid "Sliding Panel"
+msgstr "Bảng điều khiển cuốn"
 
-#~ msgid "The Bonobo IID of the applet"
-#~ msgstr "Bonobo IID của Applet"
+msgid "GNOME Sliding Panel"
+msgstr "Bảng điều khiển cuốn Gnome"
 
-#~ msgid "The location of the launcher"
-#~ msgstr "Vị trí bộ kích hoạt"
+msgid "GNOME Floating Panel"
+msgstr "Bảng điều khiển lơ lửng GNOME"
 
-#~ msgid "The type of action button"
-#~ msgstr "Loại nút hành động"
+msgid "You can only have one menu panel at a time."
+msgstr "Bạn chỉ có thể có một Bảng điều khiển menu tại cùng thời điểm."
 
-#~ msgid "Error launching command"
-#~ msgstr "Lỗi kích hoạt lệnh"
+msgid "C_orner Panel"
+msgstr "Bảng điều khiển _góc"
 
-#~ msgid "The background type."
-#~ msgstr "Kiểu nền"
+msgid "Create corner panel"
+msgstr "Tạo Bảng điều khiển góc"
 
-#~ msgid "The orientation of the panel."
-#~ msgstr "Hướng của Bảng điều khiển."
+msgid "Create edge panel"
+msgstr "Tạo Bảng điều khiển cạnh"
 
-#~ msgid "The size of the panel."
-#~ msgstr "Kích thước Bảng điều khiển."
+msgid "Create floating panel"
+msgstr "Tạo Bảng điều khiển lơ lửng"
 
-#~ msgid "and finally, The Knights Who Say... NI!"
-#~ msgstr "và cuối cùng, Hiệp Sĩ Nói ... NI!"
+msgid "_Sliding Panel"
+msgstr "Bảng điều khiển c_uốn"
 
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "Running in \"Lockdown\" mode.  This means your system administrator has "
-#~ "prohibited any changes to the panel's configuration to take place."
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Đang chạy trong chế độ \"Lockdown\". Có nghĩa là system administrator của "
-#~ "bạn ngăn cấm bất kỳ thay đổi nào trong cấu hình Bảng điều khiển."
+msgid "Create sliding panel"
+msgstr "Tạo Bảng điều khiển Cuốn"
 
-#~ msgid "End world hunger"
-#~ msgstr "End world hunger"
+msgid "_Menu Panel"
+msgstr "Bảng điều khiển _Menu"
 
-#~ msgid "The desired ButtonWidget size"
-#~ msgstr "Kích thước ButtonWidget mong muốn"
+msgid "Create menu panel"
+msgstr "Tạo Bảng điều khiển Menu"
 
-#~ msgid "Screenshot..."
-#~ msgstr "Screenshot..."
+msgid "Button"
+msgstr "Nút"
 
-#~ msgid ""
-#~ "<b>Cannot launch icon</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Không thể phóng biểu tượng</b>\n"
-#~ "\n"
-#~ "Chi tiết: %s"
+msgid "Menu:"
+msgstr "Menu:"
 
-#~ msgid ""
-#~ "<b>Can't execute 'About GNOME'</b>\n"
-#~ "\n"
-#~ "Details: %s probably does not exist"
-#~ msgstr ""
-#~ "<b>Không thể thực hiện 'Giới thiệu GNOME'</b>\n"
-#~ "\n"
-#~ "Chi tiết: %s có lẽ không tồn tại"
+msgid "Can't create menu, using main menu!"
+msgstr "Không thể tạo menu, dùng menu chính!"
 
-#~ msgid ""
-#~ "<b>Can't launch entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Không thể thực hiện mục nhập</b>\n"
-#~ "\n"
-#~ "Chi tiết: %s"
+msgid "No path set at %s for panel menu object\n"
+msgstr "Chưa đặt đường dẫn tại %s cho đối tượng menu Bảng điều khiển\n"
 
-#~ msgid ""
-#~ "<b>Can't load entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Không thể nạp mục</b>\n"
-#~ "\n"
-#~ "Chi tiết: %s"
+msgid "Cannot register control widget\n"
+msgstr "Không thể đăng ký ô điều khiển Control\n"
 
-#~ msgid "Floating"
-#~ msgstr "Trôi nổi"
+msgid ""
+"No panels were found in your configuration.  I will create a menu panel for "
+"you"
+msgstr ""
+"Không tìm thấy Bảng điều khiển nào trong cấu hình của bạn. Sẽ tạo một Bảng "
+"điều khiển menu cho bạn"
 
-#~ msgid "Centered"
-#~ msgstr "Giữa"
+msgid "Miscellaneous:"
+msgstr "Linh tinh:"
 
-#~ msgid "%s %s Panel"
-#~ msgstr "%s %s Bảng điều khiển"
+msgid "Current screen:"
+msgstr "Màn hình hiện thời:"
 
-#~ msgid ""
-#~ "<b>Failed to run this program</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Lỗi khi nạp chương trình này</b>\n"
-#~ "\n"
-#~ "Chi tiết: %s"
+msgid "Indicates the panel position and orientation on screen"
+msgstr "Chỉ thị vị trí và hướng Bảng điều khiển trên màn hình"
 
-#~ msgid ""
-#~ "<b>Failed to execute command:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Lỗi khi thực hiện lệnh:</b> '%s'\n"
-#~ "\n"
-#~ "Chi tiết: %s"
+msgid "_Position:"
+msgstr "_Vị trí:"
 
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: no application available to open file"
-#~ msgstr ""
-#~ "<bLỗi mở tập tin:</b> '%s'\n"
-#~ "\n"
-#~ "Chi tiết: không có ứng dụng nào để mở tập tin"
+msgid "Hori_zontal"
+msgstr "_Ngang:"
 
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Không thể nạp mục:</b> '%s'\n"
-#~ "\n"
-#~ "Chi tiết: %s"
+msgid "_Vertical"
+msgstr "_Dọc"
 
-#~ msgid "Choose a file"
-#~ msgstr "Chọn tập tin"
+msgid "H_orizontal:"
+msgstr "N_gang:"
 
-#~ msgid "Known Applications"
-#~ msgstr "Ứng dụng đã biết"
+msgid "Ver_tical:"
+msgstr "_Dọc:"
 
-#~ msgid "No application selected"
-#~ msgstr "Không có ứng dụng nào được chọn"
+msgid "_Distance from edge:"
+msgstr "Kh_oảng cách từ viền:"
 
-#~ msgid "Command to _execute when fish is clicked:"
-#~ msgstr "_Lệnh thực hiện khi con cá được nhấn:"
+msgid "Default"
+msgstr "Mặc định"
 
-#~ msgid "Pause _per frame (s):"
-#~ msgstr "Khoảng chờ _giữa mỗi khung hình (giây):"
+msgid "Image"
+msgstr "Ảnh"
 
-#~ msgid "_Animation filename:"
-#~ msgstr "_Tên tập tin hoạt cảnh:"
+msgid "Image:"
+msgstr "Ảnh:"
 
-#~ msgid "Rows"
-#~ msgstr "Hàng"
+msgid "Edge panel"
+msgstr "Bảng điều khiển cạnh"
 
-#~ msgid "_Append File..."
-#~ msgstr "_Mở rộng tập tin..."
+msgid "Sliding panel"
+msgstr "Bảng điều khiển cuốn"
 
-#~ msgid "Run Program"
-#~ msgstr "Thực hiện chương trình"
+msgid "Floating panel"
+msgstr "Bảng điều khiển lơ lửng"
 
-#~ msgid "Run Program..."
-#~ msgstr "Chạy chương trình..."
+msgid "Show the program listing by default when opening the Run box"
+msgstr "Mặc định hiện danh sách chương trình khi mở hộp thoại Chạy"
 
-#~ msgid "Transparent"
-#~ msgstr "Trong suốt"
+msgid "Show the program listing in the Run box"
+msgstr "Hiện danh sách chương trình trong hộp thoại Chạy"
 
-#~ msgid "_Transparent background:"
-#~ msgstr "Nền _trong suốt:"
+msgid " (invalid Unicode)"
+msgstr " (Unicode không hợp lệ)"
 
-#~ msgid "Alert you when new mail arrives"
-#~ msgstr "Báo động khi có thư mới"
+msgid "Applets"
+msgstr "Applet"
 
-#~ msgid "Inbox Monitor"
-#~ msgstr "Bộ theo dõi thư"
+msgid "(C) 1998-2002 the Free Software Foundation"
+msgstr "(C) 1998-2002 the Free Software Foundation"
 
-#~ msgid "_Check for mail"
-#~ msgstr "_Check mail"
+msgid "(c) 1998-2000 the Free Software Foundation"
+msgstr "(c) 1998-2000 the Free Software Foundation"
 
-#~ msgid "There was an error executing %s: %s"
-#~ msgstr "Lỗi khi thực thi %s : %s"
+msgid "(c) 2001 Red Hat, Inc."
+msgstr "(c) 2001 Red Hat, Inc."
 
-#~ msgid ""
-#~ "You didn't set a password in the preferences for the Inbox Monitor,\n"
-#~ "so you have to enter it each time it starts up."
-#~ msgstr ""
-#~ "Bạn chưa thiết lập mật khẩu cho Bộ theo dõi thư,\n"
-#~ "vì thế bạn phải nhập mật khẩu mỗi lần Bộ theo dõi thư khởi động."
+msgid "Can't execute printer command"
+msgstr "Không thể thực hiện lệnh in"
 
-#~ msgid "Please enter your mailserver's _password:"
-#~ msgstr "Vui lòng nhập _mật khẩu mailserver:"
+msgid "Printer properties"
+msgstr "Thuộc tính máy in"
 
-#~ msgid "Password Entry box"
-#~ msgstr "Ô nhập mật khẩu"
+msgid "Printer name:"
+msgstr "Tên máy in:"
 
-#~ msgid ""
-#~ "The Inbox Monitor failed to check your mails and thus automatic updating "
-#~ "has been deactivated for now.\n"
-#~ "Maybe you used a wrong server, username or password?"
-#~ msgstr ""
-#~ "Bộ theo dõi thư gặp lỗi khi check mail và vì thế tính năng tự động cập "
-#~ "nhật sẽ bị tắt từ bây giờ.\n"
-#~ "Có lẽ bạn nhập sai server, tên người dùng, hay mật khẩu?"
+msgid "Print command:"
+msgstr "Lệnh in:"
 
-#~ msgid "You have new mail."
-#~ msgstr "Bạn có thư mới."
+msgid "Printer"
+msgstr "Máy in"
 
-#~ msgid "You have mail."
-#~ msgstr "Bạn có thư."
+msgid "Printer Applet"
+msgstr "Applet máy in"
 
-#~ msgid "%d/%d messages"
-#~ msgstr "%d/%d thư"
+msgid "(c) 1998 the Free Software Foundation"
+msgstr "(c) 1998 the Free Software Foundation"
 
-#~ msgid "%d messages"
-#~ msgstr "%d thư"
+msgid ""
+"The printer applet lets you easily drag files to be printed via a print "
+"command"
+msgstr ""
+"Applet máy in cho phép bạn kéo các tập tin cần in vào để in một cách dễ dàng"
 
-#~ msgid "No mail."
-#~ msgstr "Không có thư."
+msgid "Can't create applet!\n"
+msgstr "Không thể tạo applet!\n"
 
-#~ msgid "Status not updated"
-#~ msgstr "Trạng thái chưa được cập nhật"
+msgid "Properties..."
+msgstr "Thuộc tính..."
 
-#~ msgid "Mailbox _resides on:"
-#~ msgstr "Hộp _thư nằm ở:"
+msgid "Help"
+msgstr "Trợ giúp"
 
-#~ msgid "Local mailspool"
-#~ msgstr "Mailspool cục bộ"
+msgid "About..."
+msgstr "Giới thiệu..."
 
-#~ msgid "Local maildir"
-#~ msgstr "Maildir cục bộ"
+msgid "(C) 2002 Red Hat, Inc."
+msgstr "(C) 2002 Red Hat, Inc."
 
-#~ msgid "Remote POP3-server"
-#~ msgstr "Remote POP3-server"
+msgid "(c) 2001 Red Hat, Inc"
+msgstr "(c) 2001 Red Hat, Inc"
 
-#~ msgid "Remote IMAP-server"
-#~ msgstr "Remote IMAP-server"
+msgid "Copyright 2002 Red Hat Inc."
+msgstr "Copyright 2002 Red Hat Inc."
 
-#~ msgid "Mail _spool file:"
-#~ msgstr "Tên file mail _spool:"
+msgid "(C) 1997-2002 the Free Software Foundation"
+msgstr "(C) 1997-2002 the Free Software Foundation"
 
-#~ msgid "Mail s_erver:"
-#~ msgstr "Mail _server:"
+msgid "<big><big>%s the GNOME Fish Says:</big></big>"
+msgstr "<big><big>Cá GNOME %s nói rằng:</big></big>"
 
-#~ msgid "Mail Server Entry box"
-#~ msgstr "Ô nhập mail server"
+msgid "GNOME Menu"
+msgstr "Menu GNOME"
 
-#~ msgid "Username Entry box"
-#~ msgstr "Ô nhập tên người dùng"
+msgid "Log Out Button"
+msgstr "Nút đăng xuất"
 
-#~ msgid "_Password:"
-#~ msgstr "_Mật khẩu:"
+msgid "Lock Button"
+msgstr "Nút khóa"
 
-#~ msgid "_Folder:"
-#~ msgstr "_Thư mục:"
+msgid "Screenshot Button"
+msgstr "Nút Screenshot"
 
-#~ msgid "Folder Entry box"
-#~ msgstr "Ô nhập thư mục"
+msgid "Orient hori_zontally"
+msgstr "Hướng _ngang"
 
-#~ msgid "C_ommand to run before checking for mail:"
-#~ msgstr "_Lệnh cần thực hiện trước khi check mail:"
+msgid "Orient _vertically"
+msgstr "Hướng _dọc"
 
-#~ msgid "Execute"
-#~ msgstr "Thực hiện"
+msgid "Screen edge _offset:"
+msgstr "Độ dịch _cạnh màn hình:"
 
-#~ msgid "Before each _update:"
-#~ msgstr "Trước mỗi lần _cập nhật:"
+msgid "XX Small (12 pixels)"
+msgstr "XX Nhỏ (12 pixel)"
 
-#~ msgid "Command to execute before each update"
-#~ msgstr "Lệnh cần thực hiện trước mỗi lần cập nhật"
+msgid "X Small (24 pixels)"
+msgstr "X Nhỏ (24 pixel)"
 
-#~ msgid "When new mail _arrives:"
-#~ msgstr "Khi có thư _mới:"
+msgid "Small (36 pixels)"
+msgstr "Nhỏ (36 pixel)"
 
-#~ msgid "Command to execute when new mail arrives"
-#~ msgstr "Lệnh thực hiện khi có thư mới"
+msgid "Medium (48 pixels)"
+msgstr "Vừa (48 pixel)"
 
-#~ msgid "When clicke_d:"
-#~ msgstr "Khi được _nhấn:"
+msgid "Large (64 pixels)"
+msgstr "Lớn (64 pixel)"
 
-#~ msgid "Set the number of unread mails to _zero"
-#~ msgstr "Đặt số thư chưa đọc là 0"
+msgid "X Large (80 pixels)"
+msgstr "X Lớn (80 pixel)"
 
-#~ msgid "Check for mail _every"
-#~ msgstr "Check mail mỗ_i"
+msgid "XX Large (128 pixels)"
+msgstr "XX Lớn (128 pixel)"
 
-#~ msgid "minutes"
-#~ msgstr "phút"
+msgid "Sc_ale image"
+msgstr "Co _dãn ảnh"
 
-#~ msgid "Choose time interval in minutes to check mail"
-#~ msgstr "Chọn khoảng thời gian check mail (phút)"
+msgid "Command to execute when the applet is clicked"
+msgstr "Lệnh thực hiện khi applet được nhấn"
 
-#~ msgid "Choose time interval in seconds to check mail"
-#~ msgstr "Chọn thời khoản check mail (giây)"
+msgid "Wanda"
+msgstr "Wanda"
 
-#~ msgid "Play a _sound when new mail arrives"
-#~ msgstr "Chơi _nhạc khi có thư mới"
+msgid "mail"
+msgstr "thư"
 
-#~ msgid "Inbox Monitor Preferences"
-#~ msgstr "Thuộc tính Bộ theo dõi thư"
+msgid "&lt;Alt&gt;F1"
+msgstr "&lt;Alt&gt;F1"
 
-#~ msgid "_Mail check"
-#~ msgstr "_Kiểm tra thư"
+msgid "&lt;Alt&gt;F2"
+msgstr "&lt;Alt&gt;F2"
 
-#~ msgid "Mail_box"
-#~ msgstr "_Hộp thư"
+msgid "&lt;Alt&gt;Print"
+msgstr "&lt;Alt&gt;Print"
 
-#~ msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
-#~ msgstr "Bộ theo dõi thư thông báo cho bạn mỗi khi có thư mới."
+msgid "Print"
+msgstr "In"
 
-#~ msgid "Mail check"
-#~ msgstr "_Kiểm tra thư"
+msgid "bonobo-applet"
+msgstr "bonobo-applet"
 
-#~ msgid "Mail check notifies you when new mail arrives in your mailbox"
-#~ msgstr "Trình kiểm tra thư thông báo cho bạn mỗi khi có thư mới."
+msgid "edge-panel"
+msgstr "edge-panel"
 
-#~ msgid "Command to execute when checking mail"
-#~ msgstr "Lệnh thực hiện khi check mail"
+msgid "menu-panel"
+msgstr "menu-panel"
 
-#~ msgid "Command to execute when you click on the Inbox Monitor"
-#~ msgstr "Lệnh cần thực thi khi nhấn chuột lên trình theo dõi hộp thư"
+msgid "no-background"
+msgstr "no-background"
 
-#~ msgid "Command to run before checking mail"
-#~ msgstr "Lệnh cần thực hiện trước khi check mail"
+msgid "Log out"
+msgstr "Đăng xuất"
 
-#~ msgid "Do we run the exec-command"
-#~ msgstr "Chạy exec-command"
+msgid "Use GMT"
+msgstr "Dùng GMT"
 
-#~ msgid "Do we run the newmail-command"
-#~ msgstr "Chạy newmail-command"
+msgid "Tasklist size"
+msgstr "Kích thước tasklist"
 
-#~ msgid "How often (in milliseconds) we check the mail"
-#~ msgstr "Cách bao nhiêu mili giây thì check mail lại"
+msgid "Lock Display"
+msgstr "Khóa màn hình"
 
-#~ msgid "If mail should be checked automatically"
-#~ msgstr "Check mail một các tự động"
+msgid "Modify the global panel preferences"
+msgstr "Sửa thuộc tính của Bảng điều khiển toàn cục"
 
-#~ msgid "If this is set mail will be checked every update-freq milliseconds"
-#~ msgstr "Check mail tự động mỗi xx mili giây"
+msgid "Cannot execute panel global preferences"
+msgstr "Không thể xử lý các thuộc tính của Bảng điều khiển toàn cục"
 
-#~ msgid "If this is set, we should run the exec-command"
-#~ msgstr "Chạy lệnh exec-command"
+msgid "Global Preferences..."
+msgstr "Thông số toàn cục..."
 
-#~ msgid "If this is set, we should run the newmail-command"
-#~ msgstr "Chạy lệnh newmail-command"
+msgid "Panel Manual..."
+msgstr "Sổ tay Bảng điều khiển..."
 
-#~ msgid "Interval for checking mail"
-#~ msgstr "Khoảng nghỉ giữa những lần checkmail"
+msgid "Can't open directory, using main menu!"
+msgstr "Không thể mở thư mục, sử dụng menu chính!"
 
-#~ msgid "Path to the animation file"
-#~ msgstr "Đường dẫn tập tin hoạt cảnh"
+msgid "Edit menus..."
+msgstr "Sửa menu..."
 
-#~ msgid "Play a sound when mail is recieved"
-#~ msgstr "Chơi nhạc khi nhận thư"
+msgid "Off"
+msgstr "Tắt"
 
-#~ msgid "Remote folder for mail retrieval"
-#~ msgstr "Thư mục từ xa để nhận thư"
+msgid "In a submenu"
+msgstr "Trong menu con"
 
-#~ msgid "Remote server to connect to for our mail"
-#~ msgstr "Server ở xa cần kết nối để nhận thư"
+msgid "On the main menu"
+msgstr "Trong menu chính"
 
-#~ msgid "Run this command before we check the mail"
-#~ msgstr "Lệnh cần thực hiện trước khi check mail"
+msgid "Menu properties"
+msgstr "Thuộc tính menu"
 
-#~ msgid "The mail server"
-#~ msgstr "Mail server"
+msgid "Menu type"
+msgstr "Kiểu menu"
 
-#~ msgid "The user's password"
-#~ msgstr "Mật khẩu người dùng"
+msgid "Global main menu"
+msgstr "Menu chính, toàn cục"
 
-#~ msgid "The user's password for the remote server"
-#~ msgstr "Mật khẩu của người dùng cho server"
+msgid "Main menu"
+msgstr "Menu chính"
 
-#~ msgid "This is how we check the mail, check the mail, check the mail..."
-#~ msgstr "Check mail thường xuyên đến cỡ nào..."
+msgid "Normal menu"
+msgstr "Menu bình thường"
 
-#~ msgid ""
-#~ "This is how we process the mail, process the mail, process the mail..."
-#~ msgstr "Xử lý thư như thế nào..."
+msgid "Programs: "
+msgstr "Chương trình:"
 
-#~ msgid ""
-#~ "This is the animation that will be displayed during normal Inbox Monitor "
-#~ "usage"
-#~ msgstr ""
-#~ "Đây là hoạt cảnh được hiển thị trong quá trình sử dụng trình theo dõi hộp "
-#~ "thư bình thường"
+msgid "Applets: "
+msgstr "Applet:"
 
-#~ msgid "Username on the remote server"
-#~ msgstr "Tên người dùng trên server"
+msgid "Distribution menu (if found): "
+msgstr "Menu phân tán (nếu có): "
 
-#~ msgid "We run this command when the user clicks on Inbox Monitor"
-#~ msgstr "Chạy lệnh này khi người dùng nhấn lên trình theo dõi hộp thư"
+msgid "KDE menu (if found): "
+msgstr "Menu KDE (nếu có): "
 
-#~ msgid "Whether to reset mail status when you click on Inbox Monitor"
-#~ msgstr ""
-#~ "Có nên đặt lại trạng thái thư khi nhấn lên trình theo dõi hộp thư không"
+msgid "Panel menu: "
+msgstr "Menu Bảng điều khiển: "
 
-#~ msgid "You've got mail!"
-#~ msgstr "Bạn có thư!"
+msgid "Desktop menu: "
+msgstr "Menu Desktop: "
 
-#~ msgid "Mailcheck"
-#~ msgstr "Mailcheck"
+msgid "Hiding"
+msgstr "Đang ẩn"
 
-#~ msgid "New Mail"
-#~ msgstr "Thư mới"
+msgid "Top left corner's position: X"
+msgstr "Vị trí góc trên-trái: X"
 
-#~ msgid "No object_type set for panel object with ID %s\n"
-#~ msgstr "Không đặt object_type cho đối tượng Bảng điều khiển với ID %s\n"
+msgid "Y"
+msgstr "Y"
 
-#~ msgid "Mode"
-#~ msgstr "Chế độ"
+msgid "Offset from screen edge:"
+msgstr "Độ dịch chuyển từ góc màn hình:"
 
-#~ msgid "State"
-#~ msgstr "Trạng thái"
+msgid ""
+"Note: The panel will size itself to the\n"
+"largest applet in the panel, and that\n"
+"not all applets obey these sizes."
+msgstr ""
+"Chú ý: Bảng điều khiển sẽ tự điều chỉnh kích thước cho\n"
+"vừa với applet lớn nhất, và không phải mọi\n"
+"applet khác đều chấp nhận kích thước này."
 
-#~ msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-#~ msgstr ""
-#~ "Nút ẩn (nút cho phép ẩn hoặc hiện Bảng điều khiển) có được bật hay không?"
+msgid "Pixmap"
+msgstr "Pixmap"
 
-#~ msgid "Hidebutton pixmaps enabled"
-#~ msgstr "Đã bật ảnh nút ẩn"
+msgid "Color to use:"
+msgstr "Màu được dùng:"
 
-#~ msgid "Hidebuttons have pixmaps"
-#~ msgstr "Nút ẩn có ảnh"
+msgid "Scale image (keep proportions)"
+msgstr "Phóng to/thu nhỏ ảnh (giữ cân đối)"
 
-#~ msgid "Hide this panel"
-#~ msgstr "Ẩn Bảng điều khiển này"
+msgid "Stretch image (change proportions)"
+msgstr "Kéo dãn ảnh (không cân đối)"
 
-#~ msgid "Show this panel"
-#~ msgstr "Hiện Bảng điều khiển này"
+msgid "Your GNOME Fish's Name:"
+msgstr "Tên con cá GNOME của bạn:"
 
-#~ msgid "Menu Panel"
-#~ msgstr "Bảng điều khiển menu"
+msgid "The GNOME Fish Applet"
+msgstr "Applet cá GNOME"
 
-#~ msgid "GNOME Menu Panel"
-#~ msgstr "Bảng điều khiển Menu GNOME"
+msgid ""
+"%I:%M\n"
+"%p"
+msgstr ""
+"%I:%M\n"
+"%p"
 
-#~ msgid "Can't find the screenshot program"
-#~ msgstr "Không thể tìm thấy chương trình screenshot"
+msgid ""
+"%a\n"
+"%b %d"
+msgstr ""
+"%a\n"
+"%b %d"
 
-#~ msgid "Can't execute the screenshot program"
-#~ msgstr "Không thể thực hiện chương trình screenshot"
+msgid "Clock Properties"
+msgstr "Thuộc tính đồng hồ"
 
-#~ msgid "Panel to add the launcher to"
-#~ msgstr "Bảng điều khiển để thêm Bộ kích hoạt"
+msgid "Time Format"
+msgstr "Dạng thức thời gian"
 
-#~ msgid "NUMBER"
-#~ msgstr "SỐ"
+msgid "Mail check Applet"
+msgstr "Applet kiểm tra thư"
 
-#~ msgid "The argument is a url to add, not a .desktop file"
-#~ msgstr "Đối số là một URL, không phải tập tin .desktop"
+msgid "Remove from panel"
+msgstr "Loại bỏ khỏi Bảng điều khiển"
 
-#~ msgid ""
-#~ "You must supply a single argument with the .desktop file or url to use\n"
-#~ msgstr "Bạn phải cung cấp một đối số đơn với tập tin .desktop hoặc URL\n"
+msgid "mode"
+msgstr "chế độ"
 
-#~ msgid "No panel found\n"
-#~ msgstr "Không tìm thấy Bảng điều khiển\n"
+msgid ""
+"Cannot execute the gnome calendar,\n"
+"perhaps it's not installed.\n"
+"It is in the gnome-pim package."
+msgstr ""
+"Không thể thực hiện Lịch GNOME,\n"
+"có lẽ nó chưa được cài đặt.\n"
+"Nó nằm trong gói gnome-pim."
 
-#~ msgid "GNOME Aligned Panel"
-#~ msgstr "Bảng điều khiển canh hàng GNOME"
+msgid "menu wasn't created"
+msgstr "menu không được tạo"
 
-#~ msgid "GNOME Edge Panel"
-#~ msgstr "Bảng điều khiển Cạnh GNOME"
+msgid "Today"
+msgstr "Hôm nay"
 
-#~ msgid "Sliding Panel"
-#~ msgstr "Bảng điều khiển cuốn"
+msgid "View the calendar for today."
+msgstr "Xem lịch ngày hôm nay."
 
-#~ msgid "GNOME Sliding Panel"
-#~ msgstr "Bảng điều khiển cuốn Gnome"
+msgid "This Week"
+msgstr "Tuần này"
 
-#~ msgid "GNOME Floating Panel"
-#~ msgstr "Bảng điều khiển lơ lửng GNOME"
+msgid "View the calendar for this week."
+msgstr "Xem lịch tuần này"
 
-#~ msgid "You can only have one menu panel at a time."
-#~ msgstr "Bạn chỉ có thể có một Bảng điều khiển menu tại cùng thời điểm."
+msgid "View the calendar for this month."
+msgstr "Xem lịch tháng này"
 
-#~ msgid "C_orner Panel"
-#~ msgstr "Bảng điều khiển _góc"
+msgid ""
+"Could not call time-admin\n"
+"Perhaps time-admin is not installed"
+msgstr ""
+"Không thể thực hiện chương trình time-admin\n"
+"Có lẽ time-admin chưa được cài đặt"
 
-#~ msgid "Create corner panel"
-#~ msgstr "Tạo Bảng điều khiển góc"
+msgid "Set Time..."
+msgstr "Chỉnh giờ..."
 
-#~ msgid "Create edge panel"
-#~ msgstr "Tạo Bảng điều khiển cạnh"
+msgid "Global Panel Properties"
+msgstr "Thuộc tính Bảng điều khiển toàn cục"
 
-#~ msgid "Create floating panel"
-#~ msgstr "Tạo Bảng điều khiển lơ lửng"
+msgid "&lt;Alt&gt;F1F1"
+msgstr "&lt;Alt&gt;F1F1"
 
-#~ msgid "_Sliding Panel"
-#~ msgstr "Bảng điều khiển c_uốn"
+msgid "&lt;Control&gt;&lt;Alt&gt;m"
+msgstr "&lt;Control&gt;&lt;Alt&gt;m"
 
-#~ msgid "Create sliding panel"
-#~ msgstr "Tạo Bảng điều khiển Cuốn"
+msgid "&lt;Control&gt;&lt;Alt&gt;r"
+msgstr "&lt;Control&gt;&lt;Alt&gt;r"
 
-#~ msgid "_Menu Panel"
-#~ msgstr "Bảng điều khiển _Menu"
+msgid "GNOME Menu:"
+msgstr "Menu GNOME:"
 
-#~ msgid "Create menu panel"
-#~ msgstr "Tạo Bảng điều khiển Menu"
+msgid "Grab key..."
+msgstr "Bắt lấy phím..."
 
-#~ msgid "Button"
-#~ msgstr "Nút"
+msgid "Keep panels above other windows"
+msgstr "Giữ Bảng điều khiển ở trên các cửa sổ khác"
 
-#~ msgid "Menu:"
-#~ msgstr "Menu:"
+msgid "Keep panels below other windows"
+msgstr "Giữ Bảng điều khiển ở dưới các cửa sổ khác"
 
-#~ msgid "Can't create menu, using main menu!"
-#~ msgstr "Không thể tạo menu, dùng menu chính!"
+msgid "Keep panels on same level as other windows"
+msgstr "Giữ Bảng điều khiển ở cùng mức với các cửa sổ khác"
 
-#~ msgid "No path set at %s for panel menu object\n"
-#~ msgstr "Chưa đặt đường dẫn tại %s cho đối tượng menu Bảng điều khiển\n"
+msgid "Panel Settings"
+msgstr "Thông số Bảng điều khiển"
 
-#~ msgid "Cannot register control widget\n"
-#~ msgstr "Không thể đăng ký ô điều khiển Control\n"
+msgid "Run Program dialog:"
+msgstr "Chạy hộp thoại Chương trình:"
 
-#~ msgid ""
-#~ "No panels were found in your configuration.  I will create a menu panel "
-#~ "for you"
-#~ msgstr ""
-#~ "Không tìm thấy Bảng điều khiển nào trong cấu hình của bạn. Sẽ tạo một "
-#~ "Bảng điều khiển menu cho bạn"
+msgid "Shortcut keys"
+msgstr "Phím tắt"
 
-#~ msgid "Miscellaneous:"
-#~ msgstr "Linh tinh:"
+msgid "_Enable shortcut keys"
+msgstr "Bật phím tắt"
 
-#~ msgid "Current screen:"
-#~ msgstr "Màn hình hiện thời:"
+msgid ""
+"Failed to execute command:\n"
+"%s"
+msgstr ""
+"Lỗi khi thực hiện lệnh:\n"
+"%s"
 
-#~ msgid "Indicates the panel position and orientation on screen"
-#~ msgstr "Chỉ thị vị trí và hướng Bảng điều khiển trên màn hình"
+msgid "Choose a program to run"
+msgstr "Chọn chương trình cần thực hiện"
 
-#~ msgid "_Position:"
-#~ msgstr "_Vị trí:"
+msgid "_Browse..."
+msgstr "_Duyệt..."
 
-#~ msgid "Hori_zontal"
-#~ msgstr "_Ngang:"
+msgid "A_pplications:"
+msgstr "Ứng _dụng:"
 
-#~ msgid "_Vertical"
-#~ msgstr "_Dọc"
+msgid "_Advanced <<"
+msgstr "_Nâng cao <<"
 
-#~ msgid "H_orizontal:"
-#~ msgstr "N_gang:"
+msgid "Hide the advanced controls below this button."
+msgstr "Ẩ các điều khiển nâng cao ở dưới nút này."
 
-#~ msgid "Ver_tical:"
-#~ msgstr "_Dọc:"
+msgid "_Advanced >>"
+msgstr "_Nâng cao >>"
 
-#~ msgid "_Distance from edge:"
-#~ msgstr "Kho_ảng cách từ viền:"
+msgid ""
+"Allow typing in a command line instead of choosing an application from the "
+"list"
+msgstr "Cho phép gõ một dòng lệnh thay vì chọn một ứng dụng từ danh sách"
 
-#~ msgid "Default"
-#~ msgstr "Mặc định"
+msgid "Desktop entry properties"
+msgstr "Thuộc tính Desktop"
 
-#~ msgid "Image"
-#~ msgstr "Ảnh"
+msgid ""
+"Cannot create the launcher.\n"
+"\n"
+"No command or url specified."
+msgstr ""
+"Không thể tạo Bộ kích hoạt.\n"
+"\n"
+"Không thấy lệnh nào hoặc URL nào."
 
-#~ msgid "Image:"
-#~ msgstr "Ảnh:"
+msgid ""
+"Cannot save menu item to disk, the following error occured:\n"
+"\n"
+"%s"
+msgstr ""
+"Không thể lưu menu item vào đĩa, xảy ra lỗi:\n"
+"\n"
+"%s"
 
-#~ msgid "Edge panel"
-#~ msgstr "Bảng điều khiển cạnh"
+msgid "Create menu item"
+msgstr "Tạo menu item"
 
-#~ msgid "Sliding panel"
-#~ msgstr "Bảng điều khiển cuốn"
+msgid "You already have a status dock on the panel. You can only have one"
+msgstr ""
+"Bạn đã Status Dock trên Bảng điều khiển. Bạn chỉ có thể có một cái mà thôi"
 
-#~ msgid "Floating panel"
-#~ msgstr "Bảng điều khiển lơ lửng"
+msgid "%I: %M: %S: %p"
+msgstr "%I: %M: %S: %p"
 
-#~ msgid "Show the program listing by default when opening the Run box"
-#~ msgstr "Mặc định hiện danh sách chương trình khi mở hộp thoại Chạy"
+msgid "Swallowed app..."
+msgstr "Ứng dụng bao..."
 
-#~ msgid "Show the program listing in the Run box"
-#~ msgstr "Hiện danh sách chương trình trong hộp thoại Chạy"
+msgid "Status dock"
+msgstr "Status dock"
 
-#~ msgid " (invalid Unicode)"
-#~ msgstr " (Unicode không hợp lệ)"
+msgid "Reread all menus"
+msgstr "Đọc lại toàn bộ menu"
 
-#~ msgid "Applets"
-#~ msgstr "Applet"
+msgid "XX Small Tiny (12 pixels)"
+msgstr "XX Small Tiny (12 pixels)"
 
-#~ msgid "(C) 1998-2002 the Free Software Foundation"
-#~ msgstr "(C) 1998-2002 the Free Software Foundation"
+msgid "Reload"
+msgstr "Nạp lại"
 
-#~ msgid "(c) 1998-2000 the Free Software Foundation"
-#~ msgstr "(c) 1998-2000 the Free Software Foundation"
+msgid "Create swallow applet"
+msgstr "Tạo applet bao"
 
-#~ msgid "(c) 2001 Red Hat, Inc."
-#~ msgstr "(c) 2001 Red Hat, Inc."
+msgid "Width"
+msgstr "Độ rộng"
 
-#~ msgid "Can't execute printer command"
-#~ msgstr "Không thể thực hiện lệnh in"
-
-#~ msgid "Printer properties"
-#~ msgstr "Thuộc tính máy in"
-
-#~ msgid "Printer name:"
-#~ msgstr "Tên máy in:"
-
-#~ msgid "Print command:"
-#~ msgstr "Lệnh in:"
-
-#~ msgid "Printer"
-#~ msgstr "Máy in"
-
-#~ msgid "Printer Applet"
-#~ msgstr "Applet máy in"
-
-#~ msgid "(c) 1998 the Free Software Foundation"
-#~ msgstr "(c) 1998 the Free Software Foundation"
-
-#~ msgid ""
-#~ "The printer applet lets you easily drag files to be printed via a print "
-#~ "command"
-#~ msgstr ""
-#~ "Applet máy in cho phép bạn kéo các tập tin cần in vào để in một cách dễ "
-#~ "dàng"
-
-#~ msgid "Can't create applet!\n"
-#~ msgstr "Không thể tạo applet!\n"
-
-#~ msgid "Properties..."
-#~ msgstr "Thuộc tính..."
-
-#~ msgid "Help"
-#~ msgstr "Trợ giúp"
-
-#~ msgid "About..."
-#~ msgstr "Giới thiệu..."
-
-#~ msgid "(C) 2002 Red Hat, Inc."
-#~ msgstr "(C) 2002 Red Hat, Inc."
-
-#~ msgid "(c) 2001 Red Hat, Inc"
-#~ msgstr "(c) 2001 Red Hat, Inc"
-
-#~ msgid "Copyright 2002 Red Hat Inc."
-#~ msgstr "Copyright 2002 Red Hat Inc."
-
-#~ msgid "(C) 1997-2002 the Free Software Foundation"
-#~ msgstr "(C) 1997-2002 the Free Software Foundation"
-
-#~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-#~ msgstr "<big><big>Cá GNOME %s nói rằng:</big></big>"
-
-#~ msgid "GNOME Menu"
-#~ msgstr "Menu GNOME"
-
-#~ msgid "Log Out Button"
-#~ msgstr "Nút đăng xuất"
-
-#~ msgid "Lock Button"
-#~ msgstr "Nút khóa"
-
-#~ msgid "Screenshot Button"
-#~ msgstr "Nút Screenshot"
-
-#~ msgid "Orient hori_zontally"
-#~ msgstr "Hướng _ngang"
-
-#~ msgid "Orient _vertically"
-#~ msgstr "Hướng _dọc"
-
-#~ msgid "Screen edge _offset:"
-#~ msgstr "Độ dịch _cạnh màn hình:"
-
-#~ msgid "XX Small (12 pixels)"
-#~ msgstr "XX Nhỏ (12 pixel)"
-
-#~ msgid "X Small (24 pixels)"
-#~ msgstr "X Nhỏ (24 pixel)"
-
-#~ msgid "Small (36 pixels)"
-#~ msgstr "Nhỏ (36 pixel)"
-
-#~ msgid "Medium (48 pixels)"
-#~ msgstr "Vừa (48 pixel)"
-
-#~ msgid "Large (64 pixels)"
-#~ msgstr "Lớn (64 pixel)"
-
-#~ msgid "X Large (80 pixels)"
-#~ msgstr "X Lớn (80 pixel)"
-
-#~ msgid "XX Large (128 pixels)"
-#~ msgstr "XX Lớn (128 pixel)"
-
-#~ msgid "Sc_ale image"
-#~ msgstr "Co _dãn ảnh"
-
-#~ msgid "Command to execute when the applet is clicked"
-#~ msgstr "Lệnh thực hiện khi applet được nhấn"
-
-#~ msgid "Wanda"
-#~ msgstr "Wanda"
-
-#~ msgid "mail"
-#~ msgstr "thư"
-
-#~ msgid "&lt;Alt&gt;F1"
-#~ msgstr "&lt;Alt&gt;F1"
-
-#~ msgid "&lt;Alt&gt;F2"
-#~ msgstr "&lt;Alt&gt;F2"
-
-#~ msgid "&lt;Alt&gt;Print"
-#~ msgstr "&lt;Alt&gt;Print"
-
-#~ msgid "Print"
-#~ msgstr "In"
-
-#~ msgid "bonobo-applet"
-#~ msgstr "bonobo-applet"
-
-#~ msgid "edge-panel"
-#~ msgstr "edge-panel"
-
-#~ msgid "menu-panel"
-#~ msgstr "menu-panel"
-
-#~ msgid "no-background"
-#~ msgstr "no-background"
-
-#~ msgid "Log out"
-#~ msgstr "Đăng xuất"
-
-#~ msgid "Use GMT"
-#~ msgstr "Dùng GMT"
-
-#~ msgid "Tasklist size"
-#~ msgstr "Kích thước tasklist"
-
-#~ msgid "Lock Display"
-#~ msgstr "Khóa màn hình"
-
-#~ msgid "Modify the global panel preferences"
-#~ msgstr "Sửa thuộc tính của Bảng điều khiển toàn cục"
-
-#~ msgid "Cannot execute panel global preferences"
-#~ msgstr "Không thể xử lý các thuộc tính của Bảng điều khiển toàn cục"
-
-#~ msgid "Global Preferences..."
-#~ msgstr "Thông số toàn cục..."
-
-#~ msgid "Panel Manual..."
-#~ msgstr "Sổ tay Bảng điều khiển..."
-
-#~ msgid "Can't open directory, using main menu!"
-#~ msgstr "Không thể mở thư mục, sử dụng menu chính!"
-
-#~ msgid "Edit menus..."
-#~ msgstr "Sửa menu..."
-
-#~ msgid "Off"
-#~ msgstr "Tắt"
-
-#~ msgid "In a submenu"
-#~ msgstr "Trong menu con"
-
-#~ msgid "On the main menu"
-#~ msgstr "Trong menu chính"
-
-#~ msgid "Menu properties"
-#~ msgstr "Thuộc tính menu"
-
-#~ msgid "Menu type"
-#~ msgstr "Kiểu menu"
-
-#~ msgid "Global main menu"
-#~ msgstr "Menu chính, toàn cục"
-
-#~ msgid "Main menu"
-#~ msgstr "Menu chính"
-
-#~ msgid "Normal menu"
-#~ msgstr "Menu bình thường"
-
-#~ msgid "Programs: "
-#~ msgstr "Chương trình:"
-
-#~ msgid "Applets: "
-#~ msgstr "Applet:"
-
-#~ msgid "Distribution menu (if found): "
-#~ msgstr "Menu phân tán (nếu có): "
-
-#~ msgid "KDE menu (if found): "
-#~ msgstr "Menu KDE (nếu có): "
-
-#~ msgid "Panel menu: "
-#~ msgstr "Menu Bảng điều khiển: "
-
-#~ msgid "Desktop menu: "
-#~ msgstr "Menu Desktop: "
-
-#~ msgid "Hiding"
-#~ msgstr "Đang ẩn"
-
-#~ msgid "Top left corner's position: X"
-#~ msgstr "Vị trí góc trên-trái: X"
-
-#~ msgid "Y"
-#~ msgstr "Y"
-
-#~ msgid "Offset from screen edge:"
-#~ msgstr "Độ dịch chuyển từ góc màn hình:"
-
-#~ msgid ""
-#~ "Note: The panel will size itself to the\n"
-#~ "largest applet in the panel, and that\n"
-#~ "not all applets obey these sizes."
-#~ msgstr ""
-#~ "Chú ý: Bảng điều khiển sẽ tự điều chỉnh kích thước cho\n"
-#~ "vừa với applet lớn nhất, và không phải mọi\n"
-#~ "applet khác đều chấp nhận kích thước này."
-
-#~ msgid "Pixmap"
-#~ msgstr "Pixmap"
-
-#~ msgid "Color to use:"
-#~ msgstr "Màu được dùng:"
-
-#~ msgid "Scale image (keep proportions)"
-#~ msgstr "Phóng to/thu nhỏ ảnh (giữ cân đối)"
-
-#~ msgid "Stretch image (change proportions)"
-#~ msgstr "Kéo dãn ảnh (không cân đối)"
-
-#~ msgid "Your GNOME Fish's Name:"
-#~ msgstr "Tên con cá GNOME của bạn:"
-
-#~ msgid "The GNOME Fish Applet"
-#~ msgstr "Applet cá GNOME"
-
-#~ msgid ""
-#~ "%I:%M\n"
-#~ "%p"
-#~ msgstr ""
-#~ "%I:%M\n"
-#~ "%p"
-
-#~ msgid ""
-#~ "%a\n"
-#~ "%b %d"
-#~ msgstr ""
-#~ "%a\n"
-#~ "%b %d"
-
-#~ msgid "Clock Properties"
-#~ msgstr "Thuộc tính đồng hồ"
-
-#~ msgid "Time Format"
-#~ msgstr "Dạng thức thời gian"
-
-#~ msgid "Mail check Applet"
-#~ msgstr "Applet kiểm tra thư"
-
-#~ msgid "Remove from panel"
-#~ msgstr "Loại bỏ khỏi Bảng điều khiển"
-
-#~ msgid "mode"
-#~ msgstr "chế độ"
-
-#~ msgid ""
-#~ "Cannot execute the gnome calendar,\n"
-#~ "perhaps it's not installed.\n"
-#~ "It is in the gnome-pim package."
-#~ msgstr ""
-#~ "Không thể thực hiện Lịch GNOME,\n"
-#~ "có lẽ nó chưa được cài đặt.\n"
-#~ "Nó nằm trong gói gnome-pim."
-
-#~ msgid "menu wasn't created"
-#~ msgstr "menu không được tạo"
-
-#~ msgid "Today"
-#~ msgstr "Hôm nay"
-
-#~ msgid "View the calendar for today."
-#~ msgstr "Xem lịch ngày hôm nay."
-
-#~ msgid "This Week"
-#~ msgstr "Tuần này"
-
-#~ msgid "View the calendar for this week."
-#~ msgstr "Xem lịch tuần này"
-
-#~ msgid "View the calendar for this month."
-#~ msgstr "Xem lịch tháng này"
-
-#~ msgid ""
-#~ "Could not call time-admin\n"
-#~ "Perhaps time-admin is not installed"
-#~ msgstr ""
-#~ "Không thể thực hiện chương trình time-admin\n"
-#~ "Có lẽ time-admin chưa được cài đặt"
-
-#~ msgid "Set Time..."
-#~ msgstr "Chỉnh giờ..."
-
-#~ msgid "Global Panel Properties"
-#~ msgstr "Thuộc tính Bảng điều khiển toàn cục"
-
-#~ msgid "&lt;Alt&gt;F1F1"
-#~ msgstr "&lt;Alt&gt;F1F1"
-
-#~ msgid "&lt;Control&gt;&lt;Alt&gt;m"
-#~ msgstr "&lt;Control&gt;&lt;Alt&gt;m"
-
-#~ msgid "&lt;Control&gt;&lt;Alt&gt;r"
-#~ msgstr "&lt;Control&gt;&lt;Alt&gt;r"
-
-#~ msgid "GNOME Menu:"
-#~ msgstr "Menu GNOME:"
-
-#~ msgid "Grab key..."
-#~ msgstr "Bắt lấy phím..."
-
-#~ msgid "Keep panels above other windows"
-#~ msgstr "Giữ Bảng điều khiển ở trên các cửa sổ khác"
-
-#~ msgid "Keep panels below other windows"
-#~ msgstr "Giữ Bảng điều khiển ở dưới các cửa sổ khác"
-
-#~ msgid "Keep panels on same level as other windows"
-#~ msgstr "Giữ Bảng điều khiển ở cùng mức với các cửa sổ khác"
-
-#~ msgid "Panel Settings"
-#~ msgstr "Thông số Bảng điều khiển"
-
-#~ msgid "Run Program dialog:"
-#~ msgstr "Chạy hộp thoại Chương trình:"
-
-#~ msgid "Shortcut keys"
-#~ msgstr "Phím tắt"
-
-#~ msgid "_Enable shortcut keys"
-#~ msgstr "Bật phím tắt"
-
-#~ msgid ""
-#~ "Failed to execute command:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Lỗi khi thực hiện lệnh:\n"
-#~ "%s"
-
-#~ msgid "Choose a program to run"
-#~ msgstr "Chọn chương trình cần thực hiện"
-
-#~ msgid "_Browse..."
-#~ msgstr "_Duyệt..."
-
-#~ msgid "A_pplications:"
-#~ msgstr "Ứng _dụng:"
-
-#~ msgid "_Advanced <<"
-#~ msgstr "_Nâng cao <<"
-
-#~ msgid "Hide the advanced controls below this button."
-#~ msgstr "Ẩ các điều khiển nâng cao ở dưới nút này."
-
-#~ msgid "_Advanced >>"
-#~ msgstr "_Nâng cao >>"
-
-#~ msgid ""
-#~ "Allow typing in a command line instead of choosing an application from "
-#~ "the list"
-#~ msgstr "Cho phép gõ một dòng lệnh thay vì chọn một ứng dụng từ danh sách"
-
-#~ msgid "Desktop entry properties"
-#~ msgstr "Thuộc tính Desktop"
-
-#~ msgid ""
-#~ "Cannot create the launcher.\n"
-#~ "\n"
-#~ "No command or url specified."
-#~ msgstr ""
-#~ "Không thể tạo Bộ kích hoạt.\n"
-#~ "\n"
-#~ "Không thấy lệnh nào hoặc URL nào."
-
-#~ msgid ""
-#~ "Cannot save menu item to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Không thể lưu menu item vào đĩa, xảy ra lỗi:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Create menu item"
-#~ msgstr "Tạo menu item"
-
-#~ msgid "You already have a status dock on the panel. You can only have one"
-#~ msgstr ""
-#~ "Bạn đã Status Dock trên Bảng điều khiển. Bạn chỉ có thể có một cái mà thôi"
-
-#~ msgid "%I: %M: %S: %p"
-#~ msgstr "%I: %M: %S: %p"
-
-#~ msgid "Swallowed app..."
-#~ msgstr "Ứng dụng bao..."
-
-#~ msgid "Status dock"
-#~ msgstr "Status dock"
-
-#~ msgid "Reread all menus"
-#~ msgstr "Đọc lại toàn bộ menu"
-
-#~ msgid "XX Small Tiny (12 pixels)"
-#~ msgstr "XX Small Tiny (12 pixels)"
-
-#~ msgid "Reload"
-#~ msgstr "Nạp lại"
-
-#~ msgid "Create swallow applet"
-#~ msgstr "Tạo applet bao"
-
-#~ msgid "Width"
-#~ msgstr "Độ rộng"
-
-#~ msgid "probably does not exist"
-#~ msgstr "có lẽ không tồn tại"
+msgid "probably does not exist"
+msgstr "có lẽ không tồn tại"
