@@ -169,11 +169,11 @@ static int
 set_anim_button_value(GtkWidget *w, gpointer data)
 {
 	int i;
-	int active = GTK_TOGGLE_BUTTON(w)->active;
+	int disable = !(GTK_TOGGLE_BUTTON(w)->active);
 
 	for(i=0;i<3;i++)
-		gtk_widget_set_sensitive(aniframe[i],!active);
-	temp_config.disable_animations = active;
+		gtk_widget_set_sensitive(aniframe[i],!disable);
+	temp_config.disable_animations = disable;
 
 	if(config_window)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
@@ -191,8 +191,8 @@ animation_notebook_page(void)
 	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
 
-	/* Animation disable */
-	button = gtk_check_button_new_with_label (_("Disable animations"));
+	/* Animation enable */
+	button = gtk_check_button_new_with_label (_("Enable animations"));
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_anim_button_value),NULL); 
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE,
@@ -203,6 +203,8 @@ animation_notebook_page(void)
 	frame = make_int_scale_frame(_("Auto-Hide Animation Speed"),
 				      &(temp_config.auto_hide_step_size),
 				      1.0, 100.0, 1.0);
+	if (temp_config.disable_animations)
+		gtk_widget_set_sensitive(frame,FALSE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -212,6 +214,8 @@ animation_notebook_page(void)
 	frame = make_int_scale_frame(_("Explicit-Hide Animation Speed"),
 				      &(temp_config.explicit_hide_step_size),
 				      1.0, 100.0, 1.0);
+	if (temp_config.disable_animations)
+		gtk_widget_set_sensitive(frame,FALSE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -221,6 +225,8 @@ animation_notebook_page(void)
 	frame = make_int_scale_frame(_("Drawer Animation Speed"),
 				      &(temp_config.drawer_step_size),
 				      1.0, 100.0, 1.0);
+	if (temp_config.disable_animations)
+		gtk_widget_set_sensitive(frame,FALSE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -241,7 +247,7 @@ animation_notebook_page(void)
 			    CONFIG_PADDING_SIZE);
 
 	/*we have to do this after everything we need aniframe varaibles set*/
-	if (temp_config.disable_animations)
+	if (!temp_config.disable_animations)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 
 	return (vbox);
@@ -277,41 +283,43 @@ set_icon_button_value(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
-//static GtkWidget *
-//genicon_notebook_page(void)
-//{
-//	  GtkWidget *frame;
-//	  GtkWidget *w;
-//	  GtkWidget *box;
-//	  GtkWidget *vbox;
-//	  
-//	  /* main vbox */
-//	  vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-//	  gtk_container_set_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
-//	  
-//	  /* General frame */
-//	  frame = gtk_frame_new (_("General"));
-//	  gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-//	  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
-//			      CONFIG_PADDING_SIZE);
-//	  
-//	  /* vbox for frame */
-//	  box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-//	  gtk_container_set_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
-//	  gtk_container_add (GTK_CONTAINER (frame), box);
-//	  
-//	  /* Enable tiles frame */
-//	  w = gtk_check_button_new_with_label (_("Tiles enabled"));
-//	  if (temp_config.tiles_enabled[0])
-//		  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (w), TRUE);
-//	  gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-//			      GTK_SIGNAL_FUNC (set_icon_button_value), 
-//			      &(temp_config.tiles_enabled[0]));
-//	  gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,
-//			      CONFIG_PADDING_SIZE);
-//
-//	  return (vbox);
-//}
+#if 0
+static GtkWidget *
+genicon_notebook_page(void)
+{
+	  GtkWidget *frame;
+	  GtkWidget *w;
+	  GtkWidget *box;
+	  GtkWidget *vbox;
+	  
+	  /* main vbox */
+	  vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	  gtk_container_set_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
+	  
+	  /* General frame */
+	  frame = gtk_frame_new (_("General"));
+	  gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
+	  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
+			      CONFIG_PADDING_SIZE);
+	  
+	  /* vbox for frame */
+	  box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	  gtk_container_set_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	  gtk_container_add (GTK_CONTAINER (frame), box);
+	  
+	  /* Enable tiles frame */
+	  w = gtk_check_button_new_with_label (_("Tiles enabled"));
+	  if (temp_config.tiles_enabled[0])
+		  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (w), TRUE);
+	  gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			      GTK_SIGNAL_FUNC (set_icon_button_value), 
+			      &(temp_config.tiles_enabled[0]));
+	  gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,
+			      CONFIG_PADDING_SIZE);
+
+	  return (vbox);
+}
+#endif
 
 
 static GtkWidget *
@@ -547,11 +555,13 @@ panel_config_global(void)
 	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 				  page, gtk_label_new (_("Animation")));
 
-//	  /* General icon notebook page */
-//	  page = genicon_notebook_page ();
-//	  gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
-//				    page, gtk_label_new (_("General icon settings")));
-//
+#if 0
+	  /* General icon notebook page */
+	  page = genicon_notebook_page ();
+	  gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
+				    page, gtk_label_new (_("General icon settings")));
+
+#endif
 	/* Specific icon notebook pages */
 	for(i = 0; i<LAST_TILE; i++) {
 		page = icon_notebook_page (i,box);
