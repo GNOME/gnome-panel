@@ -2,7 +2,6 @@
 #define APPLET_FILE_H
 
 #include "gnome.h"
-#include "libgnome/gnome-dl.h"
 #include "applet_cmds.h"
 
 BEGIN_GNOME_DECLS

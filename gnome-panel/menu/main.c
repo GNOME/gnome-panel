@@ -86,13 +86,13 @@ setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 
-	if (pixmap){
+	if (pixmap) {
 		gtk_container_add (GTK_CONTAINER (align), pixmap);
 		gtk_widget_set_usize (align, 22, 16);
 	} else
 		gtk_widget_set_usize (align, 22, 16);
 
-	(*small_icons)=g_list_prepend(*small_icons,align);
+	(*small_icons) = g_list_prepend (*small_icons,align);
 
 	gtk_widget_show (align);
 	gtk_widget_show (hbox);
@@ -168,7 +168,7 @@ add_drawer (GtkWidget *widget, void *data)
 
 GtkWidget *
 create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
-	GList ** small_icons)
+		GList ** small_icons)
 {	
 	GnomeDesktopEntry *item_info;
 	GtkWidget *menu;
@@ -184,9 +184,9 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 
 	menu = gtk_menu_new ();
 	
-	while ((dent = readdir (dir)) != NULL){
+	while ((dent = readdir (dir)) != NULL) {
 		GtkWidget     *menuitem, *sub, *pixmap;
-		GtkSignalFunc activate_func;
+		GtkSignalFunc  activate_func;
 		char          *thisfile, *pixmap_name;
 		char          *p;
 
@@ -197,26 +197,31 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 			continue;
 
 		filename = g_concat_dir_and_file (menudir, thisfile);
-		if (stat (filename, &s) == -1){
+		if (stat (filename, &s) == -1) {
 			g_free (filename);
 			continue;
 		}
 
 		sub = 0;
 		item_info = 0;
-		if (S_ISDIR (s.st_mode)){
+		if (S_ISDIR (s.st_mode)) {
 			sub = create_menu_at (window, filename,
 					      create_app_menu, small_icons);
-			if (!sub){
+			if (!sub) {
 				g_free (filename);
 				continue;
 			}
 			/* just for now */
 			pixmap_name = NULL;
 
-			if (create_app_menu){
+			if (create_app_menu) {
 				GtkWidget *pixmap = NULL;
 				char *text;
+
+				/* FIXME: this shouldn't use thisfile, rather it should read a
+				 * desktop-entry called .directory and use the name field from
+				 * that.
+				 */
 
 				text = g_copy_strings ("Menu: ", thisfile, NULL);
 
@@ -225,8 +230,8 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 				gtk_widget_show (menuitem);
 				
 				menuitem = gtk_menu_item_new ();
-				if (gnome_folder){
-					pixmap =gnome_create_pixmap_widget (window, menuitem, gnome_folder);
+				if (gnome_folder) {
+					pixmap = gnome_create_pixmap_widget (window, menuitem, gnome_folder);
 					gtk_widget_show (pixmap);
 				}
 				setup_menuitem (menuitem, pixmap, text,
@@ -242,12 +247,14 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 						    text);
 			}
 		} else {
-			if (strstr (filename, ".desktop") == 0){
+			/* FIXME: this should use the name field from the desktop-entry */
+
+			if (strstr (filename, ".desktop") == 0) {
 				g_free (filename);
 				continue;
 			}
 			item_info = gnome_desktop_entry_load (filename);
-			if (!item_info){
+			if (!item_info) {
 				g_free (filename);
 				continue;
 			}
@@ -260,7 +267,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
 
 		pixmap = NULL;
-		if (pixmap_name && g_file_exists (pixmap_name)){
+		if (pixmap_name && g_file_exists (pixmap_name)) {
 			pixmap = gnome_create_pixmap_widget (window, menuitem,
 							     pixmap_name);
 			if (pixmap)
@@ -285,7 +292,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 	}
 	closedir (dir);
 
-	if (items == 0){
+	if (items == 0) {
 		gtk_widget_destroy (menu);
 		return 0;
 	}
@@ -627,11 +634,11 @@ static void
 set_show_small_icons(gpointer data, gpointer user_data)
 {
 	GtkWidget *w = data;
-	if(!w) {
+	if (!w) {
 		g_warning("Internal error in set_show_small_icons (!w)");
 		return;
 	}
-	if(*(int *)user_data)
+	if (*(int *)user_data)
 		gtk_widget_show(w);
 	else
 		gtk_widget_hide(w);
@@ -657,7 +664,7 @@ create_instance (Panel *panel, char *params, int pos)
 	/*parse up the params*/
 	p = strchr(params,':');
 	show_small_icons = TRUE;
-	if(p) {
+	if (p) {
 		*(p++)='\0';
 		if(*(p++)=='0')
 			show_small_icons = FALSE;
@@ -668,14 +675,14 @@ create_instance (Panel *panel, char *params, int pos)
 	else 
 		this_menu = g_concat_dir_and_file (menu_base, params);
 
-	if (!g_file_exists (this_menu)){
+	if (!g_file_exists (this_menu)) {
 		g_free (menu_base);
 		g_free (this_menu);
 		return;
 	}
 
 	gnome_folder = gnome_unconditional_pixmap_file ("gnome-folder-small.xpm");
-	if (!g_file_exists (gnome_folder)){
+	if (!g_file_exists (gnome_folder)) {
 		free (gnome_folder);
 		gnome_folder = NULL;
 	}
@@ -714,8 +721,8 @@ set_orientation(GtkWidget *applet, Panel *panel, PanelPos pos)
 	if(!menu || !menu->path)
 		return;
 
-	if (strcmp(menu->path,".")==0)
-		switch(panel_pos) {
+	if (strcmp (menu->path, ".") == 0)
+		switch (panel_pos) {
 			case PANEL_POS_TOP:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-down.xpm");
@@ -909,33 +916,3 @@ applet_cmd_func(AppletCommand *cmd)
 	}
 	return NULL;
 }
-
-
-#if 0
-main (int argc, char *argv [])
-{
-	GtkWidget *window;
-	GtkWidget *thing;
-	void *lib_handle;
-	char *f;
-	void *(*init_ptr)(GtkWidget *, char *);
-
-	gtk_init (&argc, &argv);
-	gnome_init (&argc, &argv);
-
-	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-
-	thing = init (window, ".");
-	if (!thing)
-		return printf ("Module was not initialized\n");
-	
-	gtk_container_add (GTK_CONTAINER (window), (GtkWidget *) thing);
-	gtk_widget_set_usize (window, 48, 48);
-	gtk_window_set_policy (window, 0, 0, 1);
-	gtk_widget_show (window);
-	gtk_widget_realize (window);
-	gtk_main ();
-	
-	return 0;
-}
-#endif
