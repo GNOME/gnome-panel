@@ -1,4 +1,4 @@
-/* window-menu.c: Window Menu applet
+/* window-menu.c: Window Selector applet
  *
  * Copyright (C) 2003 Sun Microsystems, Inc.
  * Copyright (C) 2001 Free Software Foundation, Inc.
@@ -129,11 +129,11 @@ window_menu_about (BonoboUIComponent *uic,
 	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	g_free (file);
 
-	window_menu->about_dialog = gnome_about_new (_("Window Menu"), VERSION,
+	window_menu->about_dialog = gnome_about_new (_("Window Selector"), VERSION,
 				 "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
 				 "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
 				 "Copyright \xc2\xa9 2000 Helix Code, Inc.",
-				 _("The Window Menu shows a list of all windows and lets you browse them."),
+				 _("The Window Selector shows a list of all windows and lets you browse them."),
 				 authors,
 				 documenters,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
@@ -703,7 +703,7 @@ window_menu_applet_fill (PanelApplet *applet)
 
 	window_menu->applet = GTK_WIDGET (applet);
 	atk_obj = gtk_widget_get_accessible (window_menu->applet);
-	atk_object_set_name (atk_obj, _("Window Menu"));
+	atk_object_set_name (atk_obj, _("Window Selector"));
 	atk_object_set_description (atk_obj, _("Tool to switch between windows"));
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
