@@ -1278,12 +1278,12 @@ panel_widget_new (gint size,
 		panel_widget_pop_down(panel);
 
 	/*set up drag'n'drop (the drop)*/
-	/*gtk_signal_connect (GTK_OBJECT (panel), 
+	gtk_signal_connect (GTK_OBJECT (panel), 
 			    "drop_data_available_event",
 			    GTK_SIGNAL_FUNC(panel_widget_dnd_drop),
 			    NULL);
 	gtk_widget_dnd_drop_set (GTK_WIDGET(panel), TRUE,
-				 applet_drop_types, 1, FALSE);*/
+				 applet_drop_types, 1, FALSE);
 
 	return GTK_WIDGET(panel);
 }
@@ -1354,6 +1354,10 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 		/*gtk_signal_emit_by_name(
 			GTK_OBJECT(panel->currently_dragged_applet),
 			"drag_request_event");*/
+		/*we have to figure out when and how to start drag,
+		  rigth now this just doesn't work*/
+		/*gdk_dnd_drag_addwindow(
+			panel->currently_dragged_applet->window);*/
 		return TRUE;
 	}
 	return FALSE;
@@ -1581,12 +1585,13 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	bind_top_applet_events(panel,applet);
 
 	/*set up drag'n'drop (the drag)*/
-	/*gtk_signal_connect (GTK_OBJECT (panel), 
+	gtk_signal_connect (GTK_OBJECT (applet), 
 			    "drag_request_event",
 			    GTK_SIGNAL_FUNC(panel_widget_dnd_drag_request),
 			    NULL);
-	gtk_widget_dnd_drag_set (GTK_WIDGET(panel), TRUE,
-				 applet_drag_types, 1);*/
+
+	gtk_widget_dnd_drag_set (GTK_WIDGET(applet), TRUE,
+				 applet_drag_types, 1);
 
 	return i;
 }
