@@ -26,7 +26,8 @@ FISH_BITMAPS =		\
 EXTRA_DIST =					\
 	$(FISH_BITMAPS)				\
 	GNOME_FishApplet_Factory.server.in	\
-	gnome-fish.png
+	gnome-fish.png				\
+	fish.schemas
 
 fishbitmapsdir = $(datadir)/pixmaps/fish
 fishbitmaps_DATA = $(FISH_BITMAPS)
