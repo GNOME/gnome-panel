@@ -20,8 +20,10 @@ tmpl_sources =
 
 panel_docdir = $(HTML_DIR)
 panel_doc_DATA = \
+	panel.sgml		\
 	panel.html		\
 	panel.hierarchy		\
+	panel.signals		\
 	panel.types		\
 	panel-decl.txt		\
 	panel-sections.txt

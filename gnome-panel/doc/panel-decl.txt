@@ -66,20 +66,17 @@ typedef GNOME_Panel_BackType PanelBackType;
 <NAME>IS_APPLET_WIDGET</NAME>
 #define IS_APPLET_WIDGET(obj)       GTK_CHECK_TYPE (obj, applet_widget_get_type ())
 </MACRO>
-<STRUCT>
-<NAME>AppletWidget</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>AppletWidgetPrivate</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>AppletWidgetClass</NAME>
-</STRUCT>
 <USER_FUNCTION>
 <NAME>AppletCallbackFunc</NAME>
 <RETURNS>void </RETURNS>
 AppletWidget *applet, gpointer data
 </USER_FUNCTION>
+<STRUCT>
+<NAME>AppletWidgetPrivate</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>AppletWidget</NAME>
+</STRUCT>
 <STRUCT>
 <NAME>AppletWidget</NAME>
 struct AppletWidget
@@ -97,6 +94,9 @@ struct AppletWidget
 	/*< private >*/
 	AppletWidgetPrivate	*_priv;
 };
+</STRUCT>
+<STRUCT>
+<NAME>AppletWidgetClass</NAME>
 </STRUCT>
 <USER_FUNCTION>
 <NAME>AppletFactoryActivator</NAME>
@@ -320,8 +320,11 @@ struct StatusDocklet
 {
 	GtkObject		object;
 	
-	GtkWidget		*plug;
+	/*< public >*/
+	GtkWidget		*plug; /* a pointer to the current GtkPlug
+					  holding the docklet */
 	
+	/*< private >*/
 	GNOME_StatusSpot	sspot;
 	
 	int			tries; /*if we are set to trying to find the panel,

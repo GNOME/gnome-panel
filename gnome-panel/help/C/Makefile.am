@@ -35,7 +35,7 @@ panel_help_DATA = \
 	topic.dat	\
 	$(figs)
 
-EXTRA_DIST = panel.sgml topic.dat $(figs)
+EXTRA_DIST = panel.sgml topic.dat index.html $(figs)
 
 all: index.html
 

@@ -1,25 +1,28 @@
-<SECTION>
 <INCLUDE>applet-widget.h</INCLUDE>
-<FILE>Initialization</FILE>
+
+<SECTION>
+<FILE>applet-widget</FILE>
 AppletWidget
+AppletWidgetClass
+<TITLE>AppletWidget</TITLE>
 applet_factory_new
 applet_widget_new
 applet_widget_construct
 applet_widget_init
-applet_widget_abort_load
-applet_widget_remove
 applet_widget_corba_activate
 applet_widget_corba_deactivate
-applet_widget_add
-applet_widget_add_full
-applet_widget_bind_events
 applet_widget_gtk_main
 applet_widget_gtk_main_quit
 </SECTION>
 
 <SECTION>
-<INCLUDE>applet-widget.h</INCLUDE>
-<FILE>Properties</FILE>
+<FILE>interact</FILE>
+<TITLE>Panel Interaction</TITLE>
+applet_widget_add
+applet_widget_add_full
+applet_widget_abort_load
+applet_widget_remove
+applet_widget_bind_events
 applet_widget_set_tooltip
 applet_widget_set_widget_tooltip
 GNOME_Panel_OrientType
@@ -33,8 +36,8 @@ applet_widget_get_rgb_bg
 </SECTION>
 
 <SECTION>
-<INCLUDE>applet-widget.h</INCLUDE>
-<FILE>Menus</FILE>
+<FILE>menu</FILE>
+<TITLE>Context Menu</TITLE>
 applet_widget_register_callback
 applet_widget_register_stock_callback
 applet_widget_unregister_callback
@@ -45,17 +48,20 @@ applet_widget_callback_set_sensitive
 </SECTION>
 
 <SECTION>
-<INCLUDE>applet-widget.h</INCLUDE>
-<FILE>Miscellaneous</FILE>
+<FILE>misc</FILE>
+<TITLE>Miscellaneous</TITLE>
 applet_widget_get_applet_count
 applet_widget_sync_config
 applet_widget_queue_resize
 applet_widget_panel_quit
 </SECTION>
 
-<SECTION>
 <INCLUDE>status-docklet.h</INCLUDE>
+
+<SECTION>
 <FILE>status-docklet</FILE>
+<TITLE>StatusDocklet</TITLE>
+StatusDocklet
 status_docklet_new
 status_docklet_new_full
 status_docklet_run

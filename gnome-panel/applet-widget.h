@@ -45,12 +45,11 @@ typedef GNOME_Panel_BackType PanelBackType;
 #define APPLET_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, applet_widget_get_type (), AppletWidgetClass)
 #define IS_APPLET_WIDGET(obj)       GTK_CHECK_TYPE (obj, applet_widget_get_type ())
 
-typedef struct _AppletWidget		AppletWidget;
-typedef struct _AppletWidgetPrivate	AppletWidgetPrivate;
-typedef struct _AppletWidgetClass	AppletWidgetClass;
-
 typedef void (*AppletCallbackFunc)(AppletWidget *applet, gpointer data);
 
+typedef struct _AppletWidgetPrivate	AppletWidgetPrivate;
+
+typedef struct _AppletWidget		AppletWidget;
 struct _AppletWidget
 {
 	GtkPlug			window;
@@ -67,6 +66,7 @@ struct _AppletWidget
 	AppletWidgetPrivate	*_priv;
 };
 
+typedef struct _AppletWidgetClass	AppletWidgetClass;
 struct _AppletWidgetClass
 {
 	GtkPlugClass parent_class;
