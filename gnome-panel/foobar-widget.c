@@ -225,7 +225,7 @@ append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 		{ NULL, "" },
 		{ N_("Software (www)"),            N_("http://www.gnome.org/applist/list-martin.phtml"), GNOME_STOCK_PIXMAP_SAVE },
 		{ N_("Development (www)"),         N_("http://developer.gnome.org/"),                    "gnome-devel.png" },
-		{ N_("Bug Tracking System (www)"), N_("http://bugs.gnome.org/"),                         "bug-buddy.png" },
+		{ N_("Bug Tracking System (www)"), N_("http://bugzilla.gnome.org/"),                         "bug-buddy.png" },
 		{ NULL }
 	};
 	
@@ -402,7 +402,7 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 		: gnome_util_home_file (path);
 
 	if (real_path == NULL) {
-		g_warning (_("can't fine real path"));
+		g_warning (_("can't find real path"));
 		return NULL;
 	}
 
