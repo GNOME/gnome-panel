@@ -1126,8 +1126,14 @@ drop_internal_icon (PanelWidget *panel, int pos, const char *icon_name,
 		launcher_hoard (launcher);
 
 		if (old_launcher != NULL &&
-		    old_launcher->button != NULL)
+		    old_launcher->button != NULL) {
+			if (old_launcher->prop_dialog != NULL) {
+				g_signal_handler_disconnect ( old_launcher->button,
+						old_launcher->destroy_handler);
+				launcher_properties_destroy(old_launcher);
+			}
 			gtk_widget_destroy (old_launcher->button);
+		}
 	}
 }
 

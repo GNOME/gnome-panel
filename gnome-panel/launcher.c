@@ -423,6 +423,7 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	launcher->button = NULL;
 	launcher->dedit = NULL;
 	launcher->prop_dialog = NULL;
+	launcher->destroy_handler = 0;
 
 	/* Icon will be setup later */
 	launcher->button = button_widget_new (NULL /* icon */,
@@ -466,6 +467,10 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	g_signal_connect (launcher->button, "destroy",
 			  G_CALLBACK (destroy_launcher), launcher);
 
+	launcher->destroy_handler =
+			g_signal_connect (launcher->button, "destroy",
+					  G_CALLBACK (destroy_launcher),
+					  launcher);
 	launcher->ditem = ditem;
 
 	return launcher;

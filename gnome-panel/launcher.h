@@ -30,6 +30,7 @@ typedef struct {
 	GtkWidget         *prop_dialog;
 
 	gulong             icon_changed_signal;
+	gulong             destroy_handler;
 } Launcher;
 
 /* If launchers are loaded from ANYWHERE but the normal panel

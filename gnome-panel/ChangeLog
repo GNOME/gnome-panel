@@ -1,3 +1,12 @@
+2002-12-03  Arvind Samptur <arvind.samptur@wipro.com>
+	* launcher.[ch]: add a destroy_handler to the 
+	launcher structure. Helps in the destroying the
+	properties dialog when launchers are dragged and
+	dropped.
+	* panel.c (drop_internal_icon) disconnect the 
+	destroy handler on the properties dialog and
+	explicitly destroy it. Fixes #97112.
+
 2002-12-02  Christian Neumair  <chris@gnome-de.org>
 
 	* menu.c: Changed copyright string, made "Delete Panel" translatable.
