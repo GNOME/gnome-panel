@@ -32,9 +32,9 @@
 /*list of all panel widgets created*/
 GSList *panel_list = NULL;
 
-static int panel_dragged = FALSE;
+static gboolean panel_dragged = FALSE;
 static int panel_dragged_timeout = -1;
-static int panel_been_moved = FALSE;
+static gboolean panel_been_moved = FALSE;
 
 /*the number of base panels (corner/snapped) out there, never let it
   go below 1*/
@@ -565,7 +565,7 @@ move_panel_to_cursor(GtkWidget *w)
 		basep_widget_set_pos(BASEP_WIDGET(w),x,y);
 }
 
-static int
+static gboolean
 panel_move_timeout(gpointer data)
 {
 	if(panel_dragged && panel_been_moved)
@@ -707,8 +707,52 @@ make_popup_panel_menu (PanelWidget *panel)
 	pd->menu_age = 0;
 	return menu;
 }
+
+static gboolean
+panel_initiate_move (GtkWidget *widget, guint32 event_time)
+{
+	PanelWidget *panel = NULL;
+	BasePWidget *basep = NULL;
+
+	if (IS_BASEP_WIDGET (widget)) {
+		basep = BASEP_WIDGET (widget);
+		panel = PANEL_WIDGET (basep->panel);
+	} else if (IS_FOOBAR_WIDGET (widget)) {
+		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
+	}
+
+	/*this should probably be in snapped widget*/
+	if(!panel_dragged &&
+	   !IS_DRAWER_WIDGET (widget) &&
+	   !IS_FOOBAR_WIDGET (widget)) {
+		GdkCursor *cursor = gdk_cursor_new (GDK_FLEUR);
+		gtk_grab_add(widget);
+		gdk_pointer_grab (widget->window,
+				  FALSE,
+				  PANEL_EVENT_MASK,
+				  NULL,
+				  cursor,
+				  event_time);
+		gdk_cursor_destroy (cursor);
+
+		if (basep)
+			basep->autohide_inhibit = TRUE;
+
+		panel_dragged = TRUE;
+		return TRUE;
+	} if(IS_DRAWER_WIDGET(widget) &&
+	     !panel_applet_in_drag) {
+		panel_widget_applet_drag_start (
+						PANEL_WIDGET(panel->master_widget->parent),
+						panel->master_widget,
+						PW_DRAG_OFF_CURSOR);
+		return TRUE;
+	}
+
+	return FALSE;
+}
 	
-static int
+static gboolean
 panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 {
 	PanelWidget *panel = NULL;
@@ -745,33 +789,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 			}
 			break;
 		case 2:
-			/*this should probably be in snapped widget*/
-			if(!panel_dragged &&
-			   !IS_DRAWER_WIDGET (widget) &&
-			   !IS_FOOBAR_WIDGET (widget)) {
-				GdkCursor *cursor = gdk_cursor_new (GDK_FLEUR);
-				gtk_grab_add(widget);
-				gdk_pointer_grab (widget->window,
-						  FALSE,
-						  PANEL_EVENT_MASK,
-						  NULL,
-						  cursor,
-						  bevent->time);
-				gdk_cursor_destroy (cursor);
-
-				if (basep)
-					basep->autohide_inhibit = TRUE;
-
-				panel_dragged = TRUE;
-				return TRUE;
-			} if(IS_DRAWER_WIDGET(widget) &&
-			     !panel_applet_in_drag) {
-				panel_widget_applet_drag_start (
-					PANEL_WIDGET(panel->master_widget->parent),
-					panel->master_widget,
-					PW_DRAG_OFF_CURSOR);
-				return TRUE;
-			}
+			return panel_initiate_move (widget, bevent->time);
 			break;
 		default: break;
 		}
@@ -815,7 +833,19 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 	return FALSE;
 }
 
-static int
+static gboolean
+panel_widget_event (GtkWidget *widget, GdkEvent *event, GtkWidget *panelw)
+{
+	if (event->type == GDK_BUTTON_PRESS) {
+		GdkEventButton *bevent = (GdkEventButton *) event;
+
+		return panel_initiate_move (panelw, bevent->time);
+	}
+
+	return FALSE;
+}
+
+static gboolean
 panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	GdkEventButton *bevent;
@@ -1574,8 +1604,10 @@ panel_setup(GtkWidget *panelw)
 	gtk_drag_dest_set (GTK_WIDGET (panelw),
 			   0, NULL, 0, 0);
 
-	gtk_signal_connect(GTK_OBJECT(panelw), "event",
-			   GTK_SIGNAL_FUNC(panel_event),pd);
+	gtk_signal_connect (GTK_OBJECT (panelw), "event",
+			   GTK_SIGNAL_FUNC (panel_event), pd);
+	gtk_signal_connect (GTK_OBJECT (panel), "event",
+			   GTK_SIGNAL_FUNC (panel_widget_event), panelw);
 	
 	gtk_widget_set_events(panelw,
 			      gtk_widget_get_events(panelw) |
