@@ -709,15 +709,15 @@ allocate_dirty_child(gpointer data)
 		}
 		ad->cells = chreq.width; 
 		challoc.x = ad->pos;
-		challoc.y = (GTK_WIDGET(panel)->allocation.height -
-			     challoc.height) / 2;
+		challoc.y = GTK_WIDGET(panel)->allocation.height / 2 -
+			     challoc.height / 2;
 	} else {
 		if (ad->expand_minor) {
 			challoc.width = GTK_WIDGET (panel)->allocation.width;
 		}
 		ad->cells = chreq.height;
-		challoc.x = (GTK_WIDGET(panel)->allocation.width -
-			     challoc.width) / 2;
+		challoc.x = GTK_WIDGET(panel)->allocation.width / 2 -
+			    challoc.width / 2;
 		challoc.y = ad->pos;
 	}
 
@@ -1305,13 +1305,13 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				}
 				ad->cells = chreq.width;
 				challoc.x = ad->pos;
-				challoc.y = (allocation->height - challoc.height) / 2;
+				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
 				if (ad->expand_minor) {
 					challoc.width = allocation->width;
 				}
 				ad->cells = chreq.height;
-				challoc.x = (allocation->width - challoc.width) / 2;
+				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->pos;
 			}
 			ad->min_cells  = ad->cells;
@@ -1385,13 +1385,13 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 					challoc.height = allocation->height;
 				}
 				challoc.x = ad->pos;
-				challoc.y = (allocation->height - challoc.height) / 2;
+				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
 				challoc.height = ad->cells;
 				if (ad->expand_minor) {
 					challoc.width = allocation->width;
 				}
-				challoc.x = (allocation->width - challoc.width) / 2;
+				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->pos;
 			}
 			ad->dirty = FALSE;
