@@ -152,20 +152,26 @@ module GNOME {
 
 	interface Applet {
 		oneway void change_orient (in Panel::OrientType orient);
-		oneway void change_size (in short size);
 		oneway void do_callback (in string callback_name);
-		oneway void session_save (in string cfgpath,
-					  in string global_cfgpath,
-					  in unsigned long cookie);
+
+		/* just kept for compatibility, don't use */
+		boolean session_save (in string cfgpath,
+				      in string global_cfgpath);
+
 		oneway void back_change (in Panel::BackInfoType backing);
+		oneway void set_tooltips_state (in boolean enabled);
+		readonly attribute string goad_id;
+
 		/* the draw signal, the applet doesn't get the rgb here
 		   becase it may not want it every time, it has to
 		   request the rgb of the background explicitly with
 		   rgb_background attribute of PanelSpot */
 		oneway void draw ();
-		oneway void set_tooltips_state (in boolean enabled);
+		oneway void save_session (in string cfgpath,
+					  in string global_cfgpath,
+					  in unsigned long cookie);
+		oneway void change_size (in short size);
 		oneway void change_position (in short x, in short y);
-		readonly attribute string goad_id;
 		
 		/* freeze any changes notification, usefull for en masse
 		   changes only affects change_orient, change_size,
