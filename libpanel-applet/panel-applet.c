@@ -110,6 +110,10 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 
 		tmp = g_path_get_basename (gconf_entry_get_key (entry));
 
+		if (strchr (tmp, '-'))
+			g_warning ("Applet key '%s' contains a hyphen. Please "
+				   "use underscores in gconf keys\n", tmp);
+
 		key = g_strdup_printf ("%s/%s", prefs_key, tmp);
 
 		g_free (tmp);
