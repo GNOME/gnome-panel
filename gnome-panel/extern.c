@@ -377,14 +377,14 @@ extern_start_new_goad_id(Extern *e)
 	CORBA_exception_free(&ev);
 }
 
-static Extern *
+Extern *
 extern_ref (Extern *ext)
 {
 	ext->refcount++;
 	return ext;
 }
 
-static void
+void
 extern_unref (Extern *ext)
 {
 	ext->refcount--;
@@ -1481,13 +1481,21 @@ s_panelspot_register_us(PortableServer_Servant servant,
 	if (ext->ebox != NULL)
 		socket_unset_loading (GTK_BIN (ext->ebox)->child);
 
+	/* make sure things don't screw up */
+	extern_ref (ext);
+
 	freeze_changes (ext->info);
-	orientation_change (ext->info, panel);
-	size_change (ext->info, panel);
-	back_change (ext->info, panel);
-	if (ext->send_position)
+	if (ext->info != NULL)
+		orientation_change (ext->info, panel);
+	if (ext->info != NULL)
+		size_change (ext->info, panel);
+	if (ext->info != NULL)
+		back_change (ext->info, panel);
+	if (ext->info != NULL &&
+	    ext->send_position)
 		send_position_change(ext);
-	thaw_changes (ext->info);
+	if (ext->info != NULL)
+		thaw_changes (ext->info);
 
 	/* just sanity */
 	if (ext->applet != NULL)
@@ -1501,7 +1509,7 @@ s_panelspot_register_us(PortableServer_Servant servant,
 		panel_clean_applet (ext->info);
 	}
 
-
+	extern_unref (ext);
 }
 
 static void

@@ -44,6 +44,8 @@ struct _Extern {
 	AppletInfo *info;
 };
 
+Extern *extern_ref		(Extern *ext);
+void	extern_unref		(Extern *ext);
 void	extern_clean		(Extern *ext);
 
 void	extern_before_remove	(Extern *ext);

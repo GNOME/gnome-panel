@@ -124,8 +124,10 @@ freeze_changes (AppletInfo *info)
 			CORBA_exception_init(&ev);
 			GNOME_Applet_freeze_changes(ext->applet, &ev);
 			if(ev._major) {
-				panel_clean_applet(ext->info);
+				extern_ref (ext);
+				panel_clean_applet(info);
 				ext->info = NULL;
+				extern_unref (ext);
 			}
 			CORBA_exception_free(&ev);
 		}
@@ -144,8 +146,10 @@ thaw_changes(AppletInfo *info)
 			CORBA_exception_init (&ev);
 			GNOME_Applet_thaw_changes (ext->applet, &ev);
 			if(ev._major) {
-				panel_clean_applet (ext->info);
+				extern_ref (ext);
+				panel_clean_applet (info);
 				ext->info = NULL;
+				extern_unref (ext);
 			}
 			CORBA_exception_free (&ev);
 		}
@@ -214,8 +218,10 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 						   orient,
 						   &ev);
 			if(ev._major) {
-				panel_clean_applet(ext->info);
+				extern_ref (ext);
+				panel_clean_applet(info);
 				ext->info = NULL;
+				extern_unref (ext);
 			}
 			CORBA_exception_free(&ev);
 
@@ -308,8 +314,10 @@ size_change(AppletInfo *info, PanelWidget *panel)
 						 panel->sz,
 						 &ev);
 			if(ev._major) {
-				panel_clean_applet(ext->info);
+				extern_ref (ext);
+				panel_clean_applet(info);
 				ext->info = NULL;
+				extern_unref (ext);
 			}
 			CORBA_exception_free(&ev);
 		}
@@ -363,8 +371,10 @@ back_change (AppletInfo *info, PanelWidget *panel)
 			}
 			GNOME_Applet_back_change(ext->applet, &backing, &ev);
 			if (ev._major) {
-				panel_clean_applet (ext->info);
+				extern_ref (ext);
+				panel_clean_applet (info);
 				ext->info = NULL;
+				extern_unref (ext);
 			}
 			CORBA_exception_free(&ev);
 		}
