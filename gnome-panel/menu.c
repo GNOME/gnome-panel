@@ -1360,13 +1360,21 @@ restore_grabs(GtkWidget *w, gpointer data)
 
 	/*only grab if this HAD a grab before*/
 	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->have_xgrab))
-		GTK_MENU_SHELL (xgrab_shell)->have_xgrab = 
-			(gdk_pointer_grab (xgrab_shell->window, TRUE,
-					   GDK_BUTTON_PRESS_MASK |
-					   GDK_BUTTON_RELEASE_MASK |
-					   GDK_ENTER_NOTIFY_MASK |
-					   GDK_LEAVE_NOTIFY_MASK,
-					   NULL, NULL, 0) == 0);
+          {
+	    if (gdk_pointer_grab (xgrab_shell->window, TRUE,
+				  GDK_BUTTON_PRESS_MASK |
+				  GDK_BUTTON_RELEASE_MASK |
+				  GDK_ENTER_NOTIFY_MASK |
+				  GDK_LEAVE_NOTIFY_MASK,
+				  NULL, NULL, 0) == 0)
+              {
+		if (gdk_keyboard_grab (xgrab_shell->window, TRUE,
+				       GDK_CURRENT_TIME) == 0)
+		  GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
+		else
+		  gdk_pointer_ungrab (GDK_CURRENT_TIME);
+	      }
+         }
 	
 	gtk_grab_add (GTK_WIDGET (menu));
 }
