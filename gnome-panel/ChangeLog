@@ -1,3 +1,19 @@
+2005-02-06  Vincent Untz  <vincent@vuntz.net>
+
+	Don't snap an non-expanded toplevel to a screen edge if the toplevel
+	is centered. Keep the bevels if the toplevel is centered too to avoid
+	a loop (and it feels consistent because this not an expanded toplevel)
+	Fix bug #164259.
+
+	* panel-toplevel.c: (panel_toplevel_update_edges): keep bevels if the
+	non-expanded toplevel is centered
+	(panel_toplevel_update_normal_position): don't snap to an edge if the
+	toplevel is centered
+	(panel_toplevel_update_auto_hide_position): ditto
+	(panel_toplevel_update_position): ditto, move stuff that shouldn't be
+	here to...
+	(panel_toplevel_update_geometry): ... this function
+
 2005-02-04  Vincent Untz  <vincent@vuntz.net>
 
 	Recreate the applications menu when the disable_command_line gconf key

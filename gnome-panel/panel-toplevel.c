@@ -1446,6 +1446,21 @@ panel_toplevel_update_edges (PanelToplevel *toplevel)
 		if (toplevel->priv->geometry.x < (monitor_width - width))
 			edges |= PANEL_EDGE_RIGHT;
 
+		/* There is a conflict in the position algorithm when a
+		 * non-expanded centered panel is nearly the size of the
+		 * screen. This is similar to the one we have in
+		 * panel_toplevel_update_position(). A simple solution is
+		 * to keep the bevels in this case. */
+		if (!toplevel->priv->expand &&
+		    toplevel->priv->orientation & PANEL_HORIZONTAL_MASK &&
+		    toplevel->priv->x_centered)
+			edges |= PANEL_EDGE_LEFT | PANEL_EDGE_RIGHT;
+
+		if (!toplevel->priv->expand &&
+		    toplevel->priv->orientation & PANEL_VERTICAL_MASK &&
+		    toplevel->priv->y_centered)
+			edges |= PANEL_EDGE_TOP | PANEL_EDGE_BOTTOM;
+
 		if (GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_left) ||
 		    GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_right)) {
 			inner_frame = TRUE;
@@ -1700,21 +1715,23 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 	*x = CLAMP (*x, 0, monitor_width  - width);
 	*y = CLAMP (*y, 0, monitor_height - height);
 
-	if (*x <= snap_tolerance) {
+	if (*x <= snap_tolerance &&
+	    !toplevel->priv->x_centered) {
 		*x = 0;
 		panel_toplevel_set_x (toplevel, 0, toplevel->priv->x_centered);
-	}
-	else if ((*x + width) >= (monitor_width - snap_tolerance)) {
+	} else if ((*x + width) >= (monitor_width - snap_tolerance) &&
+		   !toplevel->priv->x_centered) {
 		*x = monitor_width - width;
 		panel_toplevel_set_x (toplevel, monitor_width - width,
 				      toplevel->priv->x_centered);
 	}
 
-	if (*y <= snap_tolerance) {
+	if (*y <= snap_tolerance &&
+	    !toplevel->priv->y_centered) {
 		*y = 0;
 		panel_toplevel_set_y (toplevel, 0, toplevel->priv->y_centered);
-	}
-	else if ((*y + height) >= (monitor_height - snap_tolerance)) {
+	} else if ((*y + height) >= (monitor_height - snap_tolerance) &&
+		   !toplevel->priv->y_centered) {
 		*y = monitor_height - height;
 		panel_toplevel_set_y (toplevel, monitor_height - height,
 				      toplevel->priv->y_centered);
@@ -1777,23 +1794,26 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	}
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-		if (*x <= snap_tolerance) {
+		if (*x <= snap_tolerance &&
+		    !toplevel->priv->x_centered) {
 			*x = 0;
 			panel_toplevel_set_x (toplevel, 0,
 					      toplevel->priv->x_centered);
-		}
-		else if ((*x + width) >= (monitor_width - snap_tolerance)) {
+		} else if ((*x + width) >= (monitor_width - snap_tolerance) &&
+			   !toplevel->priv->x_centered) {
 			*x = monitor_width - width;
 			panel_toplevel_set_x (toplevel, monitor_width - width,
 					      toplevel->priv->x_centered);
 		}
 	} else /* if (toplevel->priv->orientation & PANEL_VERTICAL_MASK) */ {
-		if (*y <= snap_tolerance) {
+		if (*y <= snap_tolerance &&
+		    !toplevel->priv->y_centered) {
 			*y = 0;
 			panel_toplevel_set_y (toplevel, 0,
 					      toplevel->priv->y_centered);
 		}
-		else if ((*y + height) >= (monitor_height - snap_tolerance)) {
+		else if ((*y + height) >= (monitor_height - snap_tolerance) &&
+			 !toplevel->priv->y_centered) {
 			*y = monitor_height - height;
 			panel_toplevel_set_y (toplevel, monitor_height - height,
 					      toplevel->priv->y_centered);
@@ -2129,18 +2149,22 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		style = GTK_WIDGET (toplevel->priv->inner_frame)->style;
 		geometry = &toplevel->priv->geometry;
 
-		if (x <= style->xthickness && x > 0)
+		if (x <= style->xthickness && x > 0 &&
+		    !toplevel->priv->x_centered)
 			x = 0;
 
-		if (y <= style->ythickness && y > 0)
+		if (y <= style->ythickness && y > 0 &&
+		    !toplevel->priv->y_centered)
 			y = 0;
 
 		max_size = monitor_width - geometry->width - style->xthickness;
-		if (x + style->xthickness >= max_size && x < max_size)
+		if (x + style->xthickness >= max_size && x < max_size &&
+		    !toplevel->priv->x_centered)
 			x = max_size;
 
 		max_size = monitor_height - geometry->height - style->ythickness;
-		if (y + style->ythickness >= max_size && y < max_size)
+		if (y + style->ythickness >= max_size && y < max_size &&
+		    !toplevel->priv->y_centered)
 			y = max_size;
 	}
 
@@ -2149,24 +2173,6 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 
 	toplevel->priv->geometry.x = x;
 	toplevel->priv->geometry.y = y;
-
-	panel_toplevel_update_struts (toplevel, FALSE);
-	if (toplevel->priv->state == PANEL_STATE_NORMAL ||
-	    toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
-		panel_struts_update_toplevel_geometry (toplevel,
-						       &toplevel->priv->geometry.x,
-						       &toplevel->priv->geometry.y,
-						       &toplevel->priv->geometry.width,
-						       &toplevel->priv->geometry.height);
-	} else {
-		panel_struts_update_toplevel_geometry (toplevel,
-						       &toplevel->priv->geometry.x,
-						       &toplevel->priv->geometry.y,
-						       NULL, NULL);
-	}
-
-	panel_toplevel_update_edges (toplevel);
-	panel_toplevel_update_description (toplevel);
 }
 
 static int
@@ -2270,6 +2276,24 @@ panel_toplevel_update_geometry (PanelToplevel  *toplevel,
 	toplevel->priv->updated_geometry_initial = TRUE;
 	panel_toplevel_update_size (toplevel, requisition);
 	panel_toplevel_update_position (toplevel);
+
+	panel_toplevel_update_struts (toplevel, FALSE);
+	if (toplevel->priv->state == PANEL_STATE_NORMAL ||
+	    toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
+		panel_struts_update_toplevel_geometry (toplevel,
+						       &toplevel->priv->geometry.x,
+						       &toplevel->priv->geometry.y,
+						       &toplevel->priv->geometry.width,
+						       &toplevel->priv->geometry.height);
+	} else {
+		panel_struts_update_toplevel_geometry (toplevel,
+						       &toplevel->priv->geometry.x,
+						       &toplevel->priv->geometry.y,
+						       NULL, NULL);
+	}
+
+	panel_toplevel_update_edges (toplevel);
+	panel_toplevel_update_description (toplevel);
 }
 
 static void
