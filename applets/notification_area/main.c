@@ -59,15 +59,16 @@ typedef struct
 } SystemTray;
 
 static void
-help_cb (PanelApplet *applet,
-         void        *data)
+help_cb (BonoboUIComponent *uic,
+	 SystemTray        *tray,	  
+	 const gchar       *verbname)   
 {
   GError *err;
 
   err = NULL;  
   gnome_help_display_desktop_on_screen (NULL, "user-guide",
                                         "user-guide.xml", "gospanel-567",
-					gtk_widget_get_screen (GTK_WIDGET (applet)),
+					gtk_widget_get_screen (GTK_WIDGET (tray->applet)),
 					&err);
 
   if (err != NULL)
@@ -87,7 +88,7 @@ help_cb (PanelApplet *applet,
       
       gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
       gtk_window_set_screen (GTK_WINDOW (dialog),
-                             gtk_widget_get_screen (GTK_WIDGET (applet)));
+                             gtk_widget_get_screen (GTK_WIDGET (tray->applet)));
       
       gtk_widget_show (dialog);
 
