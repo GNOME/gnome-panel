@@ -146,6 +146,8 @@ struct _MailCheck {
 
 	int type; /*mailcheck = 0; mailbox = 1 */
 	
+	off_t oldsize;
+	
 	int size;
 
 	gulong applet_realized_signal;
@@ -430,7 +432,6 @@ null_remote_handle (gpointer data)
 static void
 check_mail_file_status (MailCheck *mc)
 {
-	static off_t oldsize = 0;
 	off_t newsize;
 	struct stat s;
 	int status;
@@ -454,7 +455,7 @@ check_mail_file_status (MailCheck *mc)
 	else if (mc->mailbox_type == MAILBOX_LOCAL) {
 		status = stat (mc->mail_file, &s);
 		if (status < 0) {
-			oldsize = 0;
+			mc->oldsize = 0;
 			mc->anymail = mc->newmail = mc->unreadmail = 0;
 			after_mail_check (mc);
 			return;
@@ -464,12 +465,12 @@ check_mail_file_status (MailCheck *mc)
 		mc->anymail = newsize > 0;
 		mc->unreadmail = (s.st_mtime >= s.st_atime && newsize > 0);
 		
-		if (newsize != oldsize && mc->unreadmail)
+		if (newsize != mc->oldsize && mc->unreadmail)
 			mc->newmail = 1;
 		else
 			mc->newmail = 0;
 		
-		oldsize = newsize;
+		mc->oldsize = newsize;
 
 		after_mail_check (mc);
 	}
@@ -480,9 +481,9 @@ check_mail_file_status (MailCheck *mc)
 		newmail = calc_dir_contents(tmp);
 		g_snprintf(tmp, sizeof (tmp), "%s/cur", mc->mail_file);
 		oldmail = calc_dir_contents(tmp);
-		mc->newmail = newmail > oldsize;
+		mc->newmail = newmail > mc->oldsize;
 		mc->unreadmail = newmail;
-		oldsize = newmail;
+		mc->oldsize = newmail;
 		mc->anymail = newmail || oldmail;
 		mc->totalmail = newmail + oldmail;
 
@@ -1930,6 +1931,7 @@ fill_mailcheck_applet(PanelApplet *applet)
 	mc->mail_timeout = 0;
 	mc->animation_tag = 0;
 	mc->password_dialog = NULL;
+	mc->oldsize = 0;
 
 	/*initial state*/
 	mc->report_mail_mode = REPORT_MAIL_USE_ANIMATION;
