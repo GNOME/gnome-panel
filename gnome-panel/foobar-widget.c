@@ -315,10 +315,10 @@ append_gnomecal_items (GtkWidget *menu)
 	};
 	
 	for (i=0; cals[i]; i+=4) {
-		item = pixmap_menu_item_new (cals[i], cals[i+2],
+		item = pixmap_menu_item_new (_(cals[i]), cals[i+2],
 					     FALSE /* force_image */);
 		gtk_tooltips_set_tip (panel_tooltips, item,
-			      	      cals[i+1],
+			      	      _(cals[i+1]),
 			      	      NULL);
 	
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
