@@ -53,6 +53,25 @@ int        panel_monitor_from_panel_widget (PanelWidget *panel);
 
 gboolean panel_is_applet_right_stick (GtkWidget *applet);
 
+
+gboolean panel_check_dnd_target_data (GtkWidget      *widget,
+				      GdkDragContext *context,
+				      guint          *ret_info,
+				      GdkAtom        *ret_atom);
+
+void panel_receive_dnd_data (PanelWidget      *panel,
+			     guint             info,
+			     int               pos,
+			     GtkSelectionData *selection_data,
+			     GdkDragContext   *context,
+			     guint             time_,
+			     gboolean          is_foobar);
+
+gboolean panel_check_drop_forbidden (PanelWidget    *panel,
+				     GdkDragContext *context,
+				     guint           info,
+				     guint           time_);
+
 G_END_DECLS
 
 #endif

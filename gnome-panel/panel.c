@@ -1257,27 +1257,23 @@ get_target_list (void)
 	return target_list;
 }
 
-static gboolean
-is_this_drop_ok (GtkWidget      *widget,
-		 GdkDragContext *context,
-		 guint          *ret_info,
-		 GdkAtom        *ret_atom)
+gboolean
+panel_check_dnd_target_data (GtkWidget      *widget,
+			     GdkDragContext *context,
+			     guint          *ret_info,
+			     GdkAtom        *ret_atom)
 {
-	GtkWidget *panel;
-	GList     *l;
+	GList *l;
 
 	g_return_val_if_fail (widget, FALSE);
 
-	if (!BASEP_IS_WIDGET (widget) && !FOOBAR_IS_WIDGET (widget))
+	if (!BASEP_IS_WIDGET  (widget) &&
+	    !FOOBAR_IS_WIDGET (widget) &&
+	    !BUTTON_IS_WIDGET (widget))
 		return FALSE;
 
 	if (!(context->actions & (GDK_ACTION_COPY|GDK_ACTION_MOVE)))
 		return FALSE;
-
-	if (BASEP_IS_WIDGET (widget))
-		panel = BASEP_WIDGET (widget)->panel;
-	else
-		panel = FOOBAR_WIDGET (widget)->panel;
 
 	for (l = context->targets; l; l = l->next) {
 		GdkAtom atom;
@@ -1324,6 +1320,46 @@ do_highlight (GtkWidget *widget, gboolean highlight)
 	}
 }
 
+gboolean
+panel_check_drop_forbidden (PanelWidget    *panel,
+			    GdkDragContext *context,
+			    guint           info,
+			    guint           time_)
+{
+	if (!panel)
+		return FALSE;
+
+	if (info == TARGET_APPLET_INTERNAL) {
+		GtkWidget *source_widget;
+
+		source_widget = gtk_drag_get_source_widget (context);
+
+		if (BUTTON_IS_WIDGET (source_widget)) {
+			GSList *forb;
+
+			forb = g_object_get_data (G_OBJECT (source_widget),
+						  PANEL_APPLET_FORBIDDEN_PANELS);
+
+			if (g_slist_find (forb, panel))
+				return FALSE;
+		}
+	}
+
+	if (info == TARGET_ICON_INTERNAL ||
+	    info == TARGET_APPLET_INTERNAL) {
+		if (context->actions & GDK_ACTION_MOVE)
+			gdk_drag_status (context, GDK_ACTION_MOVE, time_);
+		else
+			gdk_drag_status (context, context->suggested_action, time_);
+
+	} else if (context->actions & GDK_ACTION_COPY)
+		gdk_drag_status (context, GDK_ACTION_COPY, time_);
+	else
+		gdk_drag_status (context, context->suggested_action, time_);
+
+	return TRUE;
+
+}
 
 static gboolean
 drag_motion_cb (GtkWidget	   *widget,
@@ -1332,50 +1368,22 @@ drag_motion_cb (GtkWidget	   *widget,
 		gint                y,
 		guint               time)
 {
-	guint info;
+	PanelWidget *panel = NULL;
+	guint        info;
 
-	if ( ! is_this_drop_ok (widget, context, &info, NULL))
+	if (!panel_check_dnd_target_data (widget, context, &info, NULL))
 		return FALSE;
 
-	/* check forbiddenness */
-	if (info == TARGET_APPLET_INTERNAL) {
-		GtkWidget *source_widget;
+	if (BASEP_IS_WIDGET (widget)) {
+		BasePWidget *basep = BASEP_WIDGET (widget);
 
-		source_widget = gtk_drag_get_source_widget (context);
-		if (source_widget != NULL &&
-		    BUTTON_IS_WIDGET (source_widget)) {
-			GSList *forb;
-			PanelWidget *panel = NULL;
+		panel = PANEL_WIDGET (basep->panel);
 
-			if (BASEP_IS_WIDGET (widget)) {
-				BasePWidget *basep =
-					BASEP_WIDGET (widget);
-				panel = PANEL_WIDGET (basep->panel);
-			} else if (FOOBAR_IS_WIDGET (widget)) {
-				panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
-			}
-			forb = g_object_get_data (G_OBJECT (source_widget),
-						  PANEL_APPLET_FORBIDDEN_PANELS);
-			if (panel != NULL &&
-			    g_slist_find (forb, panel) != NULL)
-				return FALSE;
-		}
-	}
+	} else if (FOOBAR_IS_WIDGET (widget))
+		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 
-	/* always prefer copy, except for internal icons/applets,
-	 * where we prefer move */
-	if (info == TARGET_ICON_INTERNAL ||
-	    info == TARGET_APPLET_INTERNAL) {
-		if (context->actions & GDK_ACTION_MOVE) {
-			gdk_drag_status (context, GDK_ACTION_MOVE, time);
-		} else {
-			gdk_drag_status (context, context->suggested_action, time);
-		}
-	} else if (context->actions & GDK_ACTION_COPY) {
-		gdk_drag_status (context, GDK_ACTION_COPY, time);
-	} else {
-		gdk_drag_status (context, context->suggested_action, time);
-	}
+	if (!panel_check_drop_forbidden (panel, context, info, time))
+		return FALSE;
 
 	do_highlight (widget, TRUE);
 
@@ -1397,7 +1405,7 @@ drag_drop_cb (GtkWidget	        *widget,
 {
 	GdkAtom ret_atom = 0;
 
-	if ( ! is_this_drop_ok (widget, context, NULL, &ret_atom))
+	if (!panel_check_dnd_target_data (widget, context, NULL, &ret_atom))
 		return FALSE;
 
 	gtk_drag_get_data(widget, context,
@@ -1413,6 +1421,60 @@ drag_leave_cb (GtkWidget	*widget,
 	       Launcher         *launcher)
 {
 	do_highlight (widget, FALSE);
+}
+
+void
+panel_receive_dnd_data (PanelWidget      *panel,
+			guint             info,
+			int               pos,
+			GtkSelectionData *selection_data,
+			GdkDragContext   *context,
+			guint             time_,
+			gboolean          is_foobar)
+{
+	switch (info) {
+	case TARGET_URL:
+		drop_urilist (panel, pos, (char *)selection_data->data, !is_foobar);
+		break;
+	case TARGET_NETSCAPE_URL:
+		drop_url (panel, pos, (char *)selection_data->data);
+		break;
+	case TARGET_COLOR:
+		drop_color (panel, pos, (guint16 *)selection_data->data);
+		break;
+	case TARGET_BGIMAGE:
+		if (is_foobar)
+			drop_bgimage (panel, (char *)selection_data->data);
+		break;
+	case TARGET_BACKGROUND_RESET:
+		if (is_foobar)
+			drop_background_reset (panel);
+		break;
+	case TARGET_DIRECTORY:
+		drop_directory (panel, pos, (char *)selection_data->data);
+		break;
+	case TARGET_APPLET:
+		if (!selection_data->data) {
+			gtk_drag_finish (context, FALSE, FALSE, time_);
+			return;
+		}
+		panel_applet_frame_load ((char *)selection_data->data,
+					 panel, pos, TRUE, NULL);
+		break;
+	case TARGET_APPLET_INTERNAL:
+		drop_internal_applet (panel, pos, (char *)selection_data->data,
+				      context->action);
+		break;
+	case TARGET_ICON_INTERNAL:
+		drop_internal_icon (panel, pos, (char *)selection_data->data,
+				    context->action);
+		break;
+	default:
+		gtk_drag_finish (context, FALSE, FALSE, time_);
+		return;
+	}
+
+	gtk_drag_finish (context, TRUE, FALSE, time_);
 }
 
 static void
@@ -1434,7 +1496,7 @@ drag_data_recieved_cb (GtkWidget	*widget,
 	/* we use this only to really find out the info, we already
 	   know this is an ok drop site and the info that got passed
 	   to us is bogus (it's always 0 in fact) */
-	if ( ! is_this_drop_ok (widget, context, &info, NULL)) {
+	if (!panel_check_dnd_target_data (widget, context, &info, NULL)) {
 		gtk_drag_finish (context, FALSE, FALSE, time);
 		return;
 	}
@@ -1456,50 +1518,9 @@ drag_data_recieved_cb (GtkWidget	*widget,
 	else if(pos > panel->size)
 		pos = panel->size;
 
-	switch (info) {
-	case TARGET_URL:
-		drop_urilist (panel, pos, (char *)selection_data->data,
-			      FOOBAR_IS_WIDGET(widget) ? FALSE : TRUE);
-		break;
-	case TARGET_NETSCAPE_URL:
-		drop_url (panel, pos, (char *)selection_data->data);
-		break;
-	case TARGET_COLOR:
-		drop_color (panel, pos, (guint16 *)selection_data->data);
-		break;
-	case TARGET_BGIMAGE:
-		if ( ! FOOBAR_IS_WIDGET(widget))
-			drop_bgimage (panel, (char *)selection_data->data);
-		break;
-	case TARGET_BACKGROUND_RESET:
-		if ( ! FOOBAR_IS_WIDGET(widget))
-			drop_background_reset (panel);
-		break;
-	case TARGET_DIRECTORY:
-		drop_directory (panel, pos, (char *)selection_data->data);
-		break;
-	case TARGET_APPLET:
-		if ( ! selection_data->data) {
-			gtk_drag_finish (context, FALSE, FALSE, time);
-			return;
-		}
-		panel_applet_frame_load ((char *)selection_data->data,
-					 panel, pos, TRUE, NULL);
-		break;
-	case TARGET_APPLET_INTERNAL:
-		drop_internal_applet (panel, pos, (char *)selection_data->data,
-				      context->action);
-		break;
-	case TARGET_ICON_INTERNAL:
-		drop_internal_icon (panel, pos, (char *)selection_data->data,
-				    context->action);
-		break;
-	default:
-		gtk_drag_finish (context, FALSE, FALSE, time);
-		return;
-	}
-
-	gtk_drag_finish (context, TRUE, FALSE, time);
+	panel_receive_dnd_data (
+		panel, info, pos, selection_data, context,
+		time, FOOBAR_IS_WIDGET (widget));
 }
 
 static void

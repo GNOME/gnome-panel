@@ -17,6 +17,8 @@ typedef struct {
 	GtkWidget    *properties;
 
 	gboolean      moving_focus;
+	gboolean      opened_for_drag;
+	guint         close_timeout_id;
 
 	AppletInfo   *info;
 } Drawer;

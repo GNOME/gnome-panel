@@ -1,3 +1,25 @@
+2002-12-16  Mark McLoughlin  <mark@skynet.ie>
+
+	Make it possible to perform all relevant drops
+	for a panel on the drawer button. Fixes #100965.
+
+	* drawer.[ch]:
+	(destroy_drawer): remove close timeout.
+	(drag_data_received_cb),
+	(drag_motion_cb), (close_drawer_in_idle),
+	(queue_drawer_close_for_drag), (drag_leave_cb),
+	(drag_drop_cb): impl.
+	(create_drawer_applet): hook up dnd signals.
+
+	* panel.[ch]:
+	(panel_check_dnd_target_data),
+	(panel_check_drop_forbidden),
+	(panel_receive_dnd_data): split out parts of the
+	panel dnd implementation so that the drawer can
+	use it.
+	(drag_data_recieved_cb), (drag_motion_cb),
+	(drag_drop_cb): use it here also.
+
 2002-12-16  Arvind Samptur <arvind.samptur@wipro.com>
 	* disclosure-widget.c (class_init): attach a 
 	destroy handler. 
