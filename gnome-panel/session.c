@@ -717,37 +717,41 @@ load_default_applets1(PanelWidget *panel)
 		NULL };
 	int i;
 	char *p;
+	int sz;
+
+	if(gdk_screen_width()<800)
+		sz = SIZE_TINY;
+	else if(gdk_screen_width()<1024)
+		sz = SIZE_SMALL;
+	else
+		sz = SIZE_STANDARD;
 
 	load_menu_applet(NULL, get_default_menu_flags (), 
 			 panels->data, 0, FALSE);
 
-	/* if bigger then 640+50+50 add a logout button */
-	if(gdk_screen_width()>640+50)
-		load_logout_applet(panel, 48, FALSE);
-	/* if bigger then 640+100+50 add a lock button */
-	if(gdk_screen_width()>640+100+50)
-		load_lock_applet(panel, 48*2, FALSE);
-	
-	if(gdk_screen_width()>639) {
-		/*load up some launchers, but only if screen larger then 639*/
+	/*load up some buttons, but only if screen larger then 639*/
+	if(gdk_screen_width()>=640) {
+		load_logout_applet(panel, sz, FALSE);
+		load_lock_applet(panel, sz*2, FALSE);
+
 		for(i=0;def_launchers[i]!=NULL;i++) {
 			p = gnome_datadir_file (def_launchers[i]);
 			/*int center = gdk_screen_width()/2;*/
 			if(p) {
 				load_launcher_applet(p, panel,
-						     48*4+i*48, FALSE);
+						     sz*4+i*sz, FALSE);
 				g_free(p);
 			}
 		}
 	}
-
+	/* for small panel stick the on the main panel */
+	if(gdk_screen_width()<1024)
+		load_extern_applet("gen_util_clock", NULL,
+				   panel, INT_MAX/2 + 2000, FALSE, TRUE);
+	load_status_applet(panel,
+			   INT_MAX/2 + 1000/*flush right*/, FALSE);
 	load_extern_applet("tasklist_applet", NULL,
 			   panel, INT_MAX/2/*flush right*/, FALSE, TRUE);
-	/* if we are larger then 640, put the status dock on the main
-	   panel, otherwise on the auxiliaray below */
-	if(gdk_screen_width()>640)
-		load_status_applet(panel,
-				   INT_MAX/2 + 1000/*flush right*/, FALSE);
 }
 
 static void
@@ -755,14 +759,15 @@ load_default_applets2(PanelWidget *panel)
 {
 	load_extern_applet("deskguide_applet", NULL,
 			   panel, 0, FALSE, TRUE);
-	load_extern_applet("gen_util_clock", NULL,
-			   panel, 1000, FALSE, TRUE);
+	/* for small panel stick the on the main panel not this one */
+	if(gdk_screen_width()>=1024)
+		load_extern_applet("gen_util_clock", NULL,
+				   panel, 1000, FALSE, TRUE);
 	load_extern_applet("gen_util_mailcheck",NULL,
 			   panel, 2000, FALSE, TRUE);
-	/* if we are smaller or equal to 640, put the status dock on the
-	   auxiliary and not the main panel */
-	if(gdk_screen_width()<=640)
-		load_status_applet(panel, 3000, FALSE);
+	if(g_file_exists("/proc/apm"))
+		load_extern_applet("battery_applet",NULL,
+				   panel, 4000, FALSE, TRUE);
 }
 
 void
@@ -937,12 +942,26 @@ init_user_panels(void)
 	  to work, so this is the way we find out if there was no
 	  config from last time*/
 	if(count<=0)  {
+		int sz;
+		gboolean hidebutton_pixmaps;
+
+		if(gdk_screen_width()<800) {
+			sz = SIZE_TINY;
+			hidebutton_pixmaps = FALSE;
+		} else if(gdk_screen_width()<1024) {
+			sz = SIZE_SMALL;
+			hidebutton_pixmaps = TRUE;
+		} else {
+			sz = SIZE_STANDARD;
+			hidebutton_pixmaps = TRUE;
+		}
+
 		panel = edge_widget_new(BORDER_BOTTOM,
 					BASEP_EXPLICIT_HIDE,
 					BASEP_SHOWN,
-					SIZE_STANDARD,
+					sz,
 					TRUE,
-					TRUE,
+					hidebutton_pixmaps,
 					PANEL_BACK_NONE,
 					NULL,
 					TRUE,
@@ -955,13 +974,24 @@ init_user_panels(void)
 		/*load up default applets on the default panel*/
 		load_default_applets1(PANEL_WIDGET(BASEP_WIDGET(panel)->panel));
 
+		if(gdk_screen_height()<600) {
+			sz = SIZE_TINY;
+			hidebutton_pixmaps = FALSE;
+		} else if(gdk_screen_height()<768) {
+			sz = SIZE_SMALL;
+			hidebutton_pixmaps = TRUE;
+		} else {
+			sz = SIZE_STANDARD;
+			hidebutton_pixmaps = TRUE;
+		}
+
 		panel = aligned_widget_new(ALIGNED_LEFT,
 					   BORDER_RIGHT,
 					   BASEP_EXPLICIT_HIDE,
 					   BASEP_SHOWN,
-					   SIZE_STANDARD,
+					   sz,
 					   TRUE,
-					   TRUE,
+					   hidebutton_pixmaps,
 					   PANEL_BACK_NONE,
 					   NULL,
 					   TRUE,
