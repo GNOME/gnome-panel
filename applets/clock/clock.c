@@ -462,6 +462,7 @@ create_calendar (ClockData *cd,
 {
 	GtkWindow *window;
 	GtkWidget *calendar;
+	GtkCalendarDisplayOptions options;
 
 	window = GTK_WINDOW (gtk_window_new (GTK_WINDOW_TOPLEVEL));
 
@@ -478,6 +479,10 @@ create_calendar (ClockData *cd,
 			  G_CALLBACK (close_on_escape), cd);
 			
 	calendar = gtk_calendar_new ();
+
+	options = gtk_calendar_get_display_options (GTK_CALENDAR (calendar));
+	options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
+	gtk_calendar_set_display_options (GTK_CALENDAR (calendar), options);
 
 	gtk_container_add (GTK_CONTAINER (window), calendar);
 
