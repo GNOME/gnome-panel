@@ -432,10 +432,10 @@ setup_button (Launcher *launcher)
 	
 	g_return_if_fail (launcher != NULL);
 
-	name = gnome_desktop_item_get_string (launcher->ditem,
-					      GNOME_DESKTOP_ITEM_NAME);
-	comment = gnome_desktop_item_get_string (launcher->ditem,
-						 GNOME_DESKTOP_ITEM_COMMENT);
+	name = gnome_desktop_item_get_localestring (launcher->ditem,
+						    GNOME_DESKTOP_ITEM_NAME);
+	comment = gnome_desktop_item_get_localestring (launcher->ditem,
+						       GNOME_DESKTOP_ITEM_COMMENT);
 
 	/* Setup tooltip */
 	if (comment != NULL)
@@ -789,8 +789,13 @@ load_launcher_applet_from_info (const char *name, const char *comment,
 	Launcher *launcher;
 
 	ditem = gnome_desktop_item_new ();
+	/* set current language and the "C" locale to this name,
+	 * this is kind of evil... */
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_NAME, name);
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_COMMENT, comment);
+	gnome_desktop_item_set_localestring (ditem, GNOME_DESKTOP_ITEM_NAME, name);
+	gnome_desktop_item_set_localestring (ditem, GNOME_DESKTOP_ITEM_COMMENT, comment);
+
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_EXEC, exec);
 	ditem_set_icon (ditem, icon);
 	gnome_desktop_item_set_entry_type (ditem,
@@ -815,9 +820,13 @@ load_launcher_applet_from_info_url (const char *name, const char *comment,
 	Launcher *launcher;
 
 	ditem = gnome_desktop_item_new ();
+	/* set current language and the "C" locale to this name,
+	 * this is kind of evil... */
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_NAME, name);
-	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_COMMENT,
-				       comment);
+	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_COMMENT, comment);
+	gnome_desktop_item_set_localestring (ditem, GNOME_DESKTOP_ITEM_NAME, name);
+	gnome_desktop_item_set_localestring (ditem, GNOME_DESKTOP_ITEM_COMMENT, comment);
+
 	ditem_set_icon (ditem, icon);
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_URL, url);
 	gnome_desktop_item_set_entry_type (ditem,
