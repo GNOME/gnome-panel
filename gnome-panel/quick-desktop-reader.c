@@ -447,6 +447,12 @@ quick_desktop_item_load_uri (const char *uri,
 		retval = NULL;
 	}
 
+	/* Failsafe */
+	if (!name_lang)
+		name_lang = g_strdup (setlocale (LC_CTYPE, NULL));
+	if (!comment_lang)
+		comment_lang = g_strdup (setlocale (LC_CTYPE, NULL));
+
 	/* Convert encodings */
 
 	/* Make sure we have some encoding type */
