@@ -582,7 +582,7 @@ drop_urilist (PanelWidget *panel,
 					success = FALSE;
 				g_free (filename);
 			} else {
-				const char *icon;
+				char *icon;
 
 				icon = gnome_icon_lookup (panel_icon_theme,
 							  NULL, NULL, NULL,
