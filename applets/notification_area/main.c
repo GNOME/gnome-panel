@@ -28,7 +28,7 @@
 
 #include <gtk/gtkmessagedialog.h>
 #include <gtk/gtkhbox.h>
-#include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-help.h>
 
 #include <bonobo/bonobo-shlib-factory.h>
 
