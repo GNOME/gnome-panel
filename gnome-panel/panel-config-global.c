@@ -5,7 +5,7 @@
 
 #include "panel-util.h"
 
-#define PANEL_GLOBAL_CONFIG_DEBUG
+#undef PANEL_GLOBAL_CONFIG_DEBUG
 
 extern GlobalConfig global_config;
 
