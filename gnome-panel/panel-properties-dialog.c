@@ -492,6 +492,11 @@ panel_properties_dialog_opacity_changed (PanelPropertiesDialog *dialog)
 
 	percentage = gtk_range_get_value (GTK_RANGE (dialog->opacity_scale));
 
+	if (percentage >= 98)
+		percentage = 100;
+	else if (percentage <= 2)
+		percentage = 0;
+
 	opacity = (percentage / 100) * 65535;
 
 	panel_profile_set_background_opacity (dialog->toplevel, opacity);

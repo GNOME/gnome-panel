@@ -1,3 +1,13 @@
+2003-11-17  Mark McLoughlin  <mark@skynet.ie>
+
+	Backport from HEAD patch a by Vincent.
+	
+	* panel-properties-dialog.c: (panel_properties_dialog_opacity_changed):
+	Set opacity to 0% or 100% when the value from the scale is something
+	between 0% and 2% or between 98% and 100%. Thus we can really reach
+	100%.
+	Fix bug #123095.
+		
 2003-11-13  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* drawer.c (create_drawer_applet): Add accessible name for drawer.
@@ -35,6 +45,7 @@
 	(panel_widget_applet_drag_end): enable autohide when dragging
 	is done. Fix bug #122863
 
+>>>>>>> 1.2222.2.23
 2003-10-28  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-toplevel.c: (panel_toplevel_attach_toplevel_hiding):
