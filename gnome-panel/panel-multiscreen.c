@@ -32,11 +32,14 @@ static int           *monitors    = NULL;
 static GdkRectangle **geometries  = NULL;
 static gboolean	      initialized = FALSE;
 
-static void
-panel_multiscreen_support_init (void)
+void
+panel_multiscreen_init (void)
 {
 	GdkDisplay *display;
 	int         i;
+
+	if (initialized)
+		return;
 
 	display = gdk_display_get_default ();
 	screens = gdk_display_get_n_screens (display);
@@ -60,45 +63,6 @@ panel_multiscreen_support_init (void)
 			gdk_screen_get_monitor_geometry (
 				screen, j, &geometries [i][j]);
 	}
-}
-
-void
-panel_multiscreen_init (void)
-{
-	if (initialized)
-		return;
-
-	if (g_getenv ("PANEL_FAKE_XINERAMA")) {
-		GdkScreen *screen;
-		int        width, height;
-
-		screen = gdk_screen_get_default ();
-
-		width  = gdk_screen_get_width  (screen);
-		height = gdk_screen_get_height (screen);
-
-		screens = 1;
-		monitors = g_new0 (int, screens);
-		geometries = g_new0 (GdkRectangle *, screens);
-		monitors [0] = 2;
-		geometries [0] = g_new0 (GdkRectangle, monitors [0]);
-
-		geometries [0][0].x      = 0;
-		geometries [0][0].y      = 0;
-		geometries [0][0].width  = width / 2;
-		geometries [0][0].height = height;
-
-		geometries [0][1].x      = width / 2;
-		geometries [0][1].y      = 0;
-		geometries [0][1].width  = width - geometries [0][1].x;
-		geometries [0][1].height = height;
-
-		initialized = TRUE;
-
-		return;
-	}
-
-	panel_multiscreen_support_init ();
 
 	initialized = TRUE;
 }
