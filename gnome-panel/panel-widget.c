@@ -2250,7 +2250,7 @@ move_timeout_handler(gpointer data)
 		int w,h;
 		GtkWidget *widget;
 
-		widget = panel->currently_dragged_applet;
+		widget = panel->currently_dragged_applet->applet;
 
 		gtk_widget_get_pointer(widget, &x, &y);
 		w = widget->allocation.width;
@@ -2271,17 +2271,16 @@ move_timeout_handler(gpointer data)
 static void
 schedule_try_move(PanelWidget *panel, gboolean repeater)
 {
+	if (!panel->currently_dragged_applet)
+		return;
 	repeat_if_outside = repeater;
-	if (panel->currently_dragged_applet) {
-		if(moving_timeout == 0) {
-			been_moved = FALSE;
-			panel_widget_applet_move_to_cursor(panel);
-			moving_timeout =
-				gtk_timeout_add (50, move_timeout_handler,
-						 panel);
-		} else
-			been_moved = TRUE;
-	}
+	if(moving_timeout == 0) {
+		been_moved = FALSE;
+		panel_widget_applet_move_to_cursor(panel);
+		moving_timeout =
+			gtk_timeout_add (50, move_timeout_handler, panel);
+	} else
+		been_moved = TRUE;
 }
 
 static gboolean

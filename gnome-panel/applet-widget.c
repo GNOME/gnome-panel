@@ -12,6 +12,33 @@
 
 #include "gnome-panel.h"
 
+struct _AppletWidgetPrivate
+{
+	/* CORBA stuff */
+        gpointer                corbadat;
+	
+	/*change freezing*/
+	int			frozen_level;
+
+	gboolean		frozen_got_orient;
+	PanelOrientType		frozen_orient;			
+
+	gboolean		frozen_got_size;
+	int			frozen_size;			
+	
+	gboolean		frozen_got_back;
+	PanelBackType		frozen_back_type;			
+	char 			*frozen_back_pixmap;			
+	GdkColor		frozen_back_color;			
+	
+	gboolean		frozen_got_position;
+	int			frozen_position_x;
+	int			frozen_position_y;
+
+	/* for local case */
+	GtkWidget		*ebox;
+};
+
 /*****************************************************************************
   CORBA STUFF
  *****************************************************************************/
@@ -153,7 +180,7 @@ static gboolean die_on_last = FALSE;
 static GtkPlugClass *parent_class;
 static GtkTooltips *applet_tooltips = NULL;
 
-#define CD(applet) ((CustomAppletServant *)APPLET_WIDGET(applet)->corbadat)
+#define CD(applet) ((CustomAppletServant *)APPLET_WIDGET(applet)->_priv->corbadat)
 
 guint
 applet_widget_get_type ()
@@ -344,9 +371,10 @@ wapplet_widget_init (AppletWidget *applet)
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
 	
-	applet->corbadat = NULL;
 	applet->orient = ORIENT_UP;
 	applet->size = PIXEL_SIZE_STANDARD;
+	applet->_priv = g_new0(AppletWidgetPrivate, 1);
+	applet->_priv->corbadat = NULL;
 }
 
 static void
@@ -413,6 +441,14 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 		}
 	}
 
+	if(applet->_priv->ebox && GTK_BIN(applet->_priv->ebox)->child) {
+		GtkWidget *child = GTK_BIN(applet->_priv->ebox)->child;
+		/* disconnect the destroy handler */
+		gtk_signal_disconnect_by_data(GTK_OBJECT(child), applet);
+		gtk_widget_destroy(child);
+	}
+
+
 	if(applet->privcfgpath) {
 		g_free(applet->privcfgpath);
 		g_free(applet->globcfgpath);
@@ -429,14 +465,26 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 		CORBA_exception_free(&ev);
 	}
 
-	applet_servant_destroy(applet->corbadat);
+	applet_servant_destroy(applet->_priv->corbadat);
 
 	applet_count--;
 
 	if(die_on_last && applet_count == 0)
 		applet_widget_gtk_main_quit();
+
+	g_free(applet->_priv);
 }
 
+/**
+ * applet_widget_abort_load:
+ * @applet: #AppletWidget to work on
+ *
+ * Description: abort the applet loading, once applet has been created, this is
+ * a way to tell the panel to forget about us if we decide we want to quit
+ * before we add the actual applet to the applet-widget
+ *
+ * Returns:
+ **/
 void
 applet_widget_abort_load(AppletWidget *applet)
 {
@@ -446,6 +494,14 @@ applet_widget_abort_load(AppletWidget *applet)
 	CORBA_exception_free(&ev);
 }
 
+/**
+ * applet_widget_remove:
+ * @applet: #AppletWidget to work on
+ *
+ * Description: remove the plug from the panel, this will destroy the applet
+ *
+ * Returns:
+ **/
 void
 applet_widget_remove(AppletWidget *applet)
 {
@@ -455,13 +511,25 @@ applet_widget_remove(AppletWidget *applet)
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
 
 	CORBA_exception_init(&ev);
-	servant = applet->corbadat;
-	goad_server_unregister(CORBA_OBJECT_NIL, servant->goad_id, "server", &ev);
+	servant = applet->_priv->corbadat;
+	goad_server_unregister(CORBA_OBJECT_NIL, servant->goad_id,
+			       "server", &ev);
 
 	GNOME_PanelSpot_unregister_us(CD(applet)->pspot, &ev);
 	CORBA_exception_free(&ev);
 }
 
+/**
+ * applet_widget_sync_config:
+ * @applet: #AppletWidget to work on
+ *
+ * Description: tell the panel to save our session here (just saves no
+ * shutdown), this should be done when you change some of your config and want
+ * the panel to save it's config, you should NOT call this in the session_save
+ * handler as it will result in a locked panel
+ *
+ * Returns:
+ **/
 void
 applet_widget_sync_config(AppletWidget *applet)
 {
@@ -690,7 +758,7 @@ applet_widget_unregister_callback_dir(AppletWidget *applet, const char *name)
 void
 applet_widget_callback_set_sensitive(AppletWidget *applet,
 				     const char *name,
-				     int sensitive)
+				     gboolean sensitive)
 {
 	CORBA_Environment ev;
 
@@ -851,17 +919,65 @@ void
 applet_widget_construct(AppletWidget* applet, const char *goad_id)
 {
 	CustomAppletServant *corbadat;
+	GdkWindow *win;
 	
 	g_return_if_fail(goad_id != NULL);
 
-	applet->corbadat = corbadat = gnome_panel_applet_corba_init(applet,goad_id);
+	applet->_priv->corbadat = corbadat = gnome_panel_applet_corba_init(applet,goad_id);
 
 	if(!corbadat) {
 		g_warning(_("Cannot start CORBA"));
 		return;
 	}
 
+	win = gdk_window_lookup(corbadat->winid);
+
+#if 0
+	/* if local case */
+	if(win) {
+		GdkWindow *temp_window;
+		GdkWindowAttr attributes;
+		gint attributes_mask;
+
+		attributes.window_type = GDK_WINDOW_TEMP;
+
+		attributes.width = 10;
+		attributes.height = 10;
+		attributes.wclass = GDK_INPUT_OUTPUT;
+		attributes.visual = gtk_widget_get_visual (GTK_WIDGET(applet));
+		attributes.colormap = gtk_widget_get_colormap (GTK_WIDGET(applet));
+		attributes.event_mask = 0;
+
+		attributes_mask = GDK_WA_VISUAL | GDK_WA_COLORMAP;
+   
+		temp_window = gdk_window_new(NULL, &attributes,
+					     attributes_mask);
+
+		corbadat->winid = GDK_WINDOW_XWINDOW(temp_window);
+	}
+#endif
 	gtk_plug_construct(GTK_PLUG(applet), corbadat->winid);
+
+	/* after doing all that we just take the socket and put it in limbo */
+	if(win) {
+		GtkWidget *socket;
+		gdk_window_get_user_data (win, (gpointer *)&socket);
+		if(socket) {
+			GtkWidget *temp_window =
+				gtk_window_new(GTK_WINDOW_TOPLEVEL);
+			applet->_priv->ebox = socket->parent;
+			gtk_widget_set_uposition(GTK_WIDGET(temp_window),
+						 gdk_screen_width()+1,
+						 gdk_screen_height()+1);
+			gtk_widget_realize(temp_window);
+			gtk_widget_reparent(GTK_WIDGET(socket),
+					    temp_window);
+			gtk_signal_connect_object(GTK_OBJECT(applet->_priv->ebox),
+						  "destroy",
+						  GTK_SIGNAL_FUNC(gtk_widget_destroy),
+						  GTK_OBJECT(temp_window));
+		}
+	}
 	
 	gtk_signal_connect(GTK_OBJECT(applet),"destroy",
 			   GTK_SIGNAL_FUNC(applet_widget_destroy),
@@ -886,13 +1002,19 @@ applet_widget_get_applet_count(void)
 }
 
 static gboolean
-applet_event(GtkWidget *w,GdkEvent *event,GtkPlug *aw)
+applet_event(GtkWidget *w, GdkEvent *event, AppletWidget *aw)
 {
 	GdkEventButton *bevent = (GdkEventButton *)event;
 	if(event->type == GDK_BUTTON_PRESS && 
 	   (bevent->button == 3 || bevent->button == 2)) {
 		XButtonEvent ev;
 		GtkWidget *wi;
+		GtkPlug *plug = GTK_PLUG(aw);
+
+		/* on local case */
+		if(aw->_priv->ebox)
+			return gtk_widget_event(aw->_priv->ebox, event);
+
 		if((wi = gtk_grab_get_current()))
 			gtk_grab_remove(wi);
 		gdk_pointer_ungrab(GDK_CURRENT_TIME);
@@ -903,7 +1025,7 @@ applet_event(GtkWidget *w,GdkEvent *event,GtkPlug *aw)
 		ev.type = ButtonPress;
 		ev.send_event = True;
 		ev.display = GDK_DISPLAY();
-		ev.window = GDK_WINDOW_XWINDOW(aw->socket_window);
+		ev.window = GDK_WINDOW_XWINDOW(plug->socket_window);
 		ev.subwindow = None;
 		ev.time = bevent->time;
 		ev.x = bevent->x;
@@ -913,9 +1035,16 @@ applet_event(GtkWidget *w,GdkEvent *event,GtkPlug *aw)
 		ev.state = bevent->state;
 		ev.button = bevent->button;
 		ev.same_screen = True;
-		XSendEvent(GDK_DISPLAY(),
-			   GDK_WINDOW_XWINDOW(aw->socket_window),
-			   True,NoEventMask,(XEvent *)&ev);
+		/* in the local case send it to our ebox */
+		if(aw->_priv->ebox && aw->_priv->ebox->window) {
+			XSendEvent(GDK_DISPLAY(),
+				   GDK_WINDOW_XWINDOW(aw->_priv->ebox->window),
+				   True,NoEventMask,(XEvent *)&ev);
+		} else if(plug->socket_window)
+			XSendEvent(GDK_DISPLAY(),
+				   GDK_WINDOW_XWINDOW(plug->socket_window),
+				   True,NoEventMask,(XEvent *)&ev);
+		
 		return TRUE;
 	}
 	return FALSE;
@@ -933,6 +1062,13 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
 				       bind_applet_events, data);
+}
+
+static void
+destroy_the_applet(GtkWidget *w, AppletWidget *applet)
+{
+	applet->_priv->ebox = NULL;
+	gtk_widget_destroy(GTK_WIDGET(applet));
 }
 
 /**
@@ -964,15 +1100,26 @@ applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(GTK_IS_WIDGET(widget));
 
-	gtk_container_add(GTK_CONTAINER(applet),widget);
+	if(applet->_priv->ebox) {
+		gtk_container_add(GTK_CONTAINER(applet->_priv->ebox),widget);
+		gtk_signal_connect(GTK_OBJECT(widget), "destroy",
+				   GTK_SIGNAL_FUNC(destroy_the_applet),
+				   applet);
+	} else
+		gtk_container_add(GTK_CONTAINER(applet),widget);
+
 
 	CORBA_exception_init(&ev);
   
 	GNOME_PanelSpot_register_us(CD(applet)->pspot, &ev);
 	CORBA_exception_free(&ev);
 
-	if(bind_events)
-		bind_applet_events(GTK_WIDGET(applet), applet);
+	if(bind_events) {
+		if(applet->_priv->ebox)
+			bind_applet_events(widget, applet);
+		else
+			bind_applet_events(GTK_WIDGET(applet), applet);
+	}
 }
 
 /**
@@ -1009,7 +1156,16 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 void
 applet_widget_bind_events(AppletWidget *applet, GtkWidget *widget)
 {
-	bind_applet_events(GTK_WIDGET(applet),widget);
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	g_return_if_fail(widget != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(widget));
+	
+	if(applet->_priv->ebox && GTK_WIDGET(applet) == widget) {
+		GtkWidget *child = GTK_BIN(applet->_priv->ebox)->child;
+		if(child) bind_applet_events(child, applet);
+	} else
+		bind_applet_events(GTK_WIDGET(widget), applet);
 }
 
 /**
@@ -1348,10 +1504,10 @@ applet_widget_panel_quit (void)
  * applet_widget_queue_resize:
  * @applet: #AppletWidget to work on
  *
- * Description:  For shared library applets this calls
- * #gtk_widget_queue_resize on the socket, for external applets this
- * just calls this on the #AppletWidget itself, but in both cases
- * it forces a resize of the socket on the panel
+ * Description:  For shared library applets this calls #gtk_widget_queue_resize
+ * on the internal panel eventbox, for external applets this just calls this on
+ * the #AppletWidget itself, but in both cases it forces a resize of the socket
+ * on the panel
  *
  * Returns:
  **/
@@ -1365,17 +1521,10 @@ applet_widget_queue_resize(AppletWidget *applet)
 
 	plug = GTK_PLUG(applet);
 
-	/* XXX: hackaround to broken gtkplug/gtksocket, we must manually
-	   queue resize on the socket as the plug does not have a parent */
-	if(plug->same_app && plug->socket_window) {
-		GtkWidget *socket;
-		gdk_window_get_user_data (plug->socket_window,
-					  (gpointer *)&socket);
-		if(socket)
-			gtk_widget_queue_resize(socket);
-	} else {
+	if(applet->_priv->ebox)
+		gtk_widget_queue_resize(applet->_priv->ebox);
+	else
 		gtk_widget_queue_resize(GTK_WIDGET(applet));
-	}
 }
 
 static void
@@ -1385,9 +1534,9 @@ server_applet_change_orient(PortableServer_Servant _servant,
 {
 	CustomAppletServant *servant = (CustomAppletServant *)_servant;
 	servant->appwidget->orient = orient;
-	if(servant->appwidget->frozen_level>0) {
-		servant->appwidget->frozen_got_orient = TRUE;
-		servant->appwidget->frozen_size = (GNOME_Panel_OrientType)orient;
+	if(servant->appwidget->_priv->frozen_level>0) {
+		servant->appwidget->_priv->frozen_got_orient = TRUE;
+		servant->appwidget->_priv->frozen_size = (GNOME_Panel_OrientType)orient;
 	} else {
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[CHANGE_ORIENT_SIGNAL],
@@ -1402,9 +1551,9 @@ server_applet_change_size(PortableServer_Servant _servant,
 {
 	CustomAppletServant *servant = (CustomAppletServant *)_servant;
 	servant->appwidget->size = size;
-	if(servant->appwidget->frozen_level>0) {
-		servant->appwidget->frozen_got_size = TRUE;
-		servant->appwidget->frozen_size = size;
+	if(servant->appwidget->_priv->frozen_level>0) {
+		servant->appwidget->_priv->frozen_got_size = TRUE;
+		servant->appwidget->_priv->frozen_size = size;
 	} else {
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[CHANGE_PIXEL_SIZE_SIGNAL],
@@ -1509,15 +1658,15 @@ server_applet_back_change(PortableServer_Servant _servant,
 		break;
 	}
 
-	if(servant->appwidget->frozen_level>0) {
-		servant->appwidget->frozen_got_back = TRUE;
-		servant->appwidget->frozen_back_type = (GNOME_Panel_BackType)backing->_d;
-		g_free(servant->appwidget->frozen_back_pixmap);
-		if(servant->appwidget->frozen_back_pixmap)
-			servant->appwidget->frozen_back_pixmap = g_strdup(pptr);
+	if(servant->appwidget->_priv->frozen_level>0) {
+		servant->appwidget->_priv->frozen_got_back = TRUE;
+		servant->appwidget->_priv->frozen_back_type = (GNOME_Panel_BackType)backing->_d;
+		g_free(servant->appwidget->_priv->frozen_back_pixmap);
+		if(servant->appwidget->_priv->frozen_back_pixmap)
+			servant->appwidget->_priv->frozen_back_pixmap = g_strdup(pptr);
 		else
-			servant->appwidget->frozen_back_pixmap = NULL;
-		servant->appwidget->frozen_back_color = color;
+			servant->appwidget->_priv->frozen_back_pixmap = NULL;
+		servant->appwidget->_priv->frozen_back_color = color;
 	} else {
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[BACK_CHANGE_SIGNAL],
@@ -1562,10 +1711,10 @@ server_applet_change_position(PortableServer_Servant _servant,
 			      CORBA_Environment *ev)
 {
 	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	if(servant->appwidget->frozen_level>0) {
-		servant->appwidget->frozen_got_position = TRUE;
-		servant->appwidget->frozen_position_x = x;
-		servant->appwidget->frozen_position_y = y;
+	if(servant->appwidget->_priv->frozen_level>0) {
+		servant->appwidget->_priv->frozen_got_position = TRUE;
+		servant->appwidget->_priv->frozen_position_x = x;
+		servant->appwidget->_priv->frozen_position_y = y;
 	} else {
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[CHANGE_POSITION_SIGNAL],
@@ -1587,7 +1736,7 @@ server_applet_freeze_changes(PortableServer_Servant _servant,
 			     CORBA_Environment *ev)
 {
 	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	servant->appwidget->frozen_level++;
+	servant->appwidget->_priv->frozen_level++;
 }
 
 static void
@@ -1595,39 +1744,39 @@ server_applet_thaw_changes(PortableServer_Servant _servant,
 			   CORBA_Environment *ev)
 {
 	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	if(servant->appwidget->frozen_level>0)
-		servant->appwidget->frozen_level--;
+	if(servant->appwidget->_priv->frozen_level>0)
+		servant->appwidget->_priv->frozen_level--;
 	
-	if(servant->appwidget->frozen_level>0)
+	if(servant->appwidget->_priv->frozen_level>0)
 		return;
 
-	if(servant->appwidget->frozen_got_orient) {
-		servant->appwidget->frozen_got_orient = FALSE;
+	if(servant->appwidget->_priv->frozen_got_orient) {
+		servant->appwidget->_priv->frozen_got_orient = FALSE;
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[CHANGE_ORIENT_SIGNAL],
-				servant->appwidget->frozen_orient);
+				servant->appwidget->_priv->frozen_orient);
 	}
-	if(servant->appwidget->frozen_got_size) {
-		servant->appwidget->frozen_got_size = FALSE;
+	if(servant->appwidget->_priv->frozen_got_size) {
+		servant->appwidget->_priv->frozen_got_size = FALSE;
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[CHANGE_PIXEL_SIZE_SIGNAL],
-				servant->appwidget->frozen_size);
+				servant->appwidget->_priv->frozen_size);
 	}
-	if(servant->appwidget->frozen_got_back) {
-		servant->appwidget->frozen_got_back = FALSE;
+	if(servant->appwidget->_priv->frozen_got_back) {
+		servant->appwidget->_priv->frozen_got_back = FALSE;
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[BACK_CHANGE_SIGNAL],
-				servant->appwidget->frozen_back_type,
-				servant->appwidget->frozen_back_pixmap,
-				&servant->appwidget->frozen_back_color);
-		g_free(servant->appwidget->frozen_back_pixmap);
+				servant->appwidget->_priv->frozen_back_type,
+				servant->appwidget->_priv->frozen_back_pixmap,
+				&servant->appwidget->_priv->frozen_back_color);
+		g_free(servant->appwidget->_priv->frozen_back_pixmap);
 	}
-	if(servant->appwidget->frozen_got_position) {
-		servant->appwidget->frozen_got_position = FALSE;
+	if(servant->appwidget->_priv->frozen_got_position) {
+		servant->appwidget->_priv->frozen_got_position = FALSE;
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[CHANGE_POSITION_SIGNAL],
-				servant->appwidget->frozen_position_x,
-				servant->appwidget->frozen_position_y);
+				servant->appwidget->_priv->frozen_position_x,
+				servant->appwidget->_priv->frozen_position_y);
 	}
 }
 

@@ -455,7 +455,7 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 
 
 
-static int
+static gboolean
 applet_button_press (GtkWidget *widget,GdkEventButton *event, AppletInfo *info)
 {
 	if(event->button==3) {
@@ -558,19 +558,20 @@ register_toy(GtkWidget *applet,
 
 	if(type == APPLET_DRAWER) {
 		Drawer *drawer = data;
-		PanelWidget *assoc_panel = PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
+		PanelWidget *assoc_panel =
+			PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
 
 		gtk_object_set_data(GTK_OBJECT(applet),
-				    PANEL_APPLET_ASSOC_PANEL_KEY,assoc_panel);
+				    PANEL_APPLET_ASSOC_PANEL_KEY, assoc_panel);
 		assoc_panel->master_widget = applet;
 	}
 	gtk_object_set_data(GTK_OBJECT(applet),
-			    PANEL_APPLET_FORBIDDEN_PANELS,NULL);
+			    PANEL_APPLET_FORBIDDEN_PANELS, NULL);
 		
 	if(!applets) {
-		applets_last = applets = g_slist_append(NULL,info);
+		applets_last = applets = g_slist_append(NULL, info);
 	} else {
-		applets_last = g_slist_append(applets_last,info);
+		applets_last = g_slist_append(applets_last, info);
 		applets_last = applets_last->next;
 	}
 	applet_count++;

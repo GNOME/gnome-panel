@@ -331,6 +331,9 @@ button_widget_destroy(GtkWidget *w, gpointer data)
 {
 	ButtonWidget *button = BUTTON_WIDGET(w);
 
+	if(button->pressed_timeout != 0)
+		gtk_timeout_remove(button->pressed_timeout);
+
 	if(button->pixbuf)
 		gdk_pixbuf_unref(button->pixbuf);
 	button->pixbuf = NULL;
@@ -717,7 +720,7 @@ button_widget_init (ButtonWidget *button)
 			   NULL);
 }
 
-static int
+static gboolean
 pressed_timeout_func(gpointer data)
 {
 	ButtonWidget *button;
@@ -727,7 +730,7 @@ pressed_timeout_func(gpointer data)
 
 	button = BUTTON_WIDGET (data);
 	
-	button->pressed_timeout=0;
+	button->pressed_timeout = 0;
 	
 	return FALSE;
 }
@@ -743,6 +746,8 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 
 	button = BUTTON_WIDGET (widget);
 
+	puts("PRESSED");
+
 	if (button->pressed_timeout)
 		return TRUE;
 
@@ -750,7 +755,7 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 		gtk_grab_add(widget);
 		button_widget_down (button);
 		button->pressed_timeout =
-			gtk_timeout_add(400,pressed_timeout_func,button);
+			gtk_timeout_add(400, pressed_timeout_func, button);
 	}
 	return TRUE;
 }

@@ -1,3 +1,18 @@
+Sun Feb 13 21:54:26 2000  George Lebl <jirka@5z.com>
+
+	* applet-widget.c,extern.c,applet.c: instead of adding gtkplug to
+	  a gtksocket do a slight hack.  Since the user can add only one
+	  widget and needs to use applet_widget_add, we don't really care if
+	  the applet is the real gtk parent.  So if we find the socket
+	  widget, we rip it out of it's event box and stick it into a
+	  temporary offscreen window.  Then on applet_widget_add we stick the
+	  given widget into the eventbox
+
+	* button-widget.c: add a debugging puts since I need to find that
+	  frozen buttons bug
+
+	* panel-widget.c: fix the scheduling of the moving.
+
 Sun Feb 13 20:06:46 2000  George Lebl <jirka@5z.com>
 
 	* panel-widget.[ch]: fix many races and applet dragging issues,

@@ -46,6 +46,7 @@ typedef GNOME_Panel_BackType PanelBackType;
 #define IS_APPLET_WIDGET(obj)       GTK_CHECK_TYPE (obj, applet_widget_get_type ())
 
 typedef struct _AppletWidget		AppletWidget;
+typedef struct _AppletWidgetPrivate	AppletWidgetPrivate;
 typedef struct _AppletWidgetClass	AppletWidgetClass;
 
 typedef void (*AppletCallbackFunc)(AppletWidget *applet, gpointer data);
@@ -63,26 +64,7 @@ struct _AppletWidget
 	int			size;			
 	
 	/*< private >*/
-	/* CORBA stuff */
-        gpointer                corbadat;
-	
-	/*change freezing*/
-	int			frozen_level;
-
-	gboolean		frozen_got_orient;
-	PanelOrientType		frozen_orient;			
-
-	gboolean		frozen_got_size;
-	int			frozen_size;			
-	
-	gboolean		frozen_got_back;
-	PanelBackType		frozen_back_type;			
-	char 			*frozen_back_pixmap;			
-	GdkColor		frozen_back_color;			
-	
-	gboolean		frozen_got_position;
-	int			frozen_position_x;
-	int			frozen_position_y;
+	AppletWidgetPrivate	*_priv;
 };
 
 struct _AppletWidgetClass
@@ -218,7 +200,7 @@ void		applet_widget_unregister_callback_dir (AppletWidget *applet,
 /*enable/disable a menu entry*/
 void		applet_widget_callback_set_sensitive	(AppletWidget *applet,
 							 const char *name,
-							 int sensitive);
+							 gboolean sensitive);
 
 /*get thenumber of applets*/
 int		applet_widget_get_applet_count	(void);
