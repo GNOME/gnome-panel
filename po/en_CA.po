@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 09:36+0000\n"
-"PO-Revision-Date: 2005-01-29 01:10-0500\n"
+"POT-Creation-Date: 2005-02-05 00:04-0500\n"
+"PO-Revision-Date: 2005-02-05 01:10-0500\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "_About"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:743
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:972
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:986
 #: gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "_Help"
@@ -185,10 +185,7 @@ msgstr "Custom format"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
-#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:67
-#: applets/wncklet/workspace-switcher.c:267
-#: applets/wncklet/workspace-switcher.c:575
+#: applets/wncklet/window-list.c:114 applets/wncklet/workspace-switcher.c:240
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "There was an error displaying help: %s"
@@ -235,9 +232,9 @@ msgstr "Use _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
-#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:97
-#: applets/wncklet/workspace-switcher.c:606
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:510
+#: applets/wncklet/window-list.c:736 applets/wncklet/window-menu.c:75
+#: applets/wncklet/workspace-switcher.c:554
 #: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
 msgstr "Maintainer: Adam Weinberger <adamw@gnome.org>"
@@ -504,8 +501,6 @@ msgid "    "
 msgstr "    "
 
 #: applets/fish/fish.glade.h:2 gnome-panel/panel-properties-dialog.glade.h:2
-#: gnome-panel/panel-run-dialog.glade.h:1
-#: libpanel-applet/panel-test-applets.glade.h:1
 msgid "*"
 msgstr "*"
 
@@ -669,7 +664,7 @@ msgid "Switch between workspaces"
 msgstr "Switch between workspaces"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:805
+#: applets/wncklet/window-list.c:739
 msgid "Window List"
 msgstr "Window List"
 
@@ -678,41 +673,41 @@ msgid "Window Navigation Applet Factory"
 msgstr "Window Navigation Applet Factory"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:108 applets/wncklet/window-menu.c:347
+#: applets/wncklet/window-menu.c:78 applets/wncklet/window-menu.c:261
 msgid "Window Selector"
 msgstr "Window Selector"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:617
+#: applets/wncklet/workspace-switcher.c:557
 msgid "Workspace Switcher"
 msgstr "Workspace Switcher"
 
-#: applets/wncklet/showdesktop.c:205
+#: applets/wncklet/showdesktop.c:171
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Failed to load %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:206 gnome-panel/panel-util.c:567
+#: applets/wncklet/showdesktop.c:172 gnome-panel/panel-util.c:569
 msgid "Icon not found"
 msgstr "Icon not found"
 
-#: applets/wncklet/showdesktop.c:264
+#: applets/wncklet/showdesktop.c:230
 msgid "Click here to restore hidden windows."
 msgstr "Click here to restore hidden windows."
 
-#: applets/wncklet/showdesktop.c:267
+#: applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Click here to hide all windows and show the desktop."
 
-#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
+#: applets/wncklet/showdesktop.c:429 applets/wncklet/showdesktop.c:513
 msgid "Show Desktop Button"
 msgstr "Show Desktop Button"
 
-#: applets/wncklet/showdesktop.c:582
+#: applets/wncklet/showdesktop.c:515
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "This button lets you hide all windows and show the desktop."
 
-#: applets/wncklet/showdesktop.c:623
+#: applets/wncklet/showdesktop.c:545
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -720,7 +715,7 @@ msgstr ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 
-#: applets/wncklet/window-list.c:808
+#: applets/wncklet/window-list.c:741
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr "The Window List shows a list of all windows and lets you browse them."
 
@@ -851,42 +846,42 @@ msgstr "This key specifies the minimum width that the window list requests."
 msgid "When to group windows"
 msgstr "When to group windows"
 
-#: applets/wncklet/window-menu.c:113
+#: applets/wncklet/window-menu.c:82
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "The Window Selector shows a list of all windows and lets you browse them."
 
-#: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:928
+#: applets/wncklet/workspace-switcher.c:130
+#: applets/wncklet/workspace-switcher.c:858
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "rows"
 
-#: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:928
+#: applets/wncklet/workspace-switcher.c:130
+#: applets/wncklet/workspace-switcher.c:858
 msgid "columns"
 msgstr "columns"
 
-#: applets/wncklet/workspace-switcher.c:455
+#: applets/wncklet/workspace-switcher.c:428
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "Error loading num_rows value for Workspace Switcher: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:466
+#: applets/wncklet/workspace-switcher.c:439
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:481
+#: applets/wncklet/workspace-switcher.c:454
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:620
+#: applets/wncklet/workspace-switcher.c:559
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1119,7 +1114,7 @@ msgstr "Add this as drawer to panel"
 msgid "Add this as menu to panel"
 msgstr "Add this as menu to panel"
 
-#: gnome-panel/menu.c:1532 gnome-panel/panel-menu-bar.c:775
+#: gnome-panel/menu.c:1532 gnome-panel/panel-menu-bar.c:789
 msgid "Applications"
 msgstr "Applications"
 
@@ -1140,7 +1135,7 @@ msgid "Restart _Screensaver Daemon"
 msgstr "Restart _Screensaver Daemon"
 
 #: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:630
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:632
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Cannot execute '%s'"
@@ -1250,29 +1245,29 @@ msgstr "A pop-out drawer to store other items in"
 msgid "(empty)"
 msgstr "(empty)"
 
-#: gnome-panel/panel-addto.c:373 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:400 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "query returned exception %s\n"
 
-#: gnome-panel/panel-addto.c:913
+#: gnome-panel/panel-addto.c:940
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "Select an _item to add to \"%s\":"
 
-#: gnome-panel/panel-addto.c:917
+#: gnome-panel/panel-addto.c:944
 msgid "Add to Drawer"
 msgstr "Add to Drawer"
 
-#: gnome-panel/panel-addto.c:919
+#: gnome-panel/panel-addto.c:946
 msgid "Select an _item to add to the drawer:"
 msgstr "Select an _item to add to the drawer:"
 
-#: gnome-panel/panel-addto.c:921
+#: gnome-panel/panel-addto.c:948
 msgid "Add to Panel"
 msgstr "Add to Panel"
 
-#: gnome-panel/panel-addto.c:923
+#: gnome-panel/panel-addto.c:950
 msgid "Select an _item to add to the panel:"
 msgstr "Select an _item to add to the panel:"
 
@@ -1620,26 +1615,26 @@ msgstr "Take screenshot"
 msgid "Take window screenshot"
 msgstr "Take window screenshot"
 
-#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:299
+#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:310
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Cannot display location '%s'"
 
-#: gnome-panel/panel-menu-bar.c:470
+#: gnome-panel/panel-menu-bar.c:479
 msgid "Bookmarks"
 msgstr "Bookmarks"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-menu-bar.c:487 gnome-panel/panel-recent.c:200
+#: gnome-panel/panel-menu-bar.c:500 gnome-panel/panel-recent.c:200
 #, c-format
 msgid "Open '%s'"
 msgstr "Open '%s'"
 
-#: gnome-panel/panel-menu-bar.c:545
+#: gnome-panel/panel-menu-bar.c:559
 msgid "Network Places"
 msgstr "Network Places"
 
-#: gnome-panel/panel-menu-bar.c:547
+#: gnome-panel/panel-menu-bar.c:561
 msgid "Removable Media"
 msgstr "Removable Media"
 
@@ -1649,22 +1644,22 @@ msgstr "Removable Media"
 #. * Desktop environment). Do
 #. * not keep "Desktop Folder|"
 #. * in the translation
-#: gnome-panel/panel-menu-bar.c:606
+#: gnome-panel/panel-menu-bar.c:620
 msgid "Desktop Folder|Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/panel-menu-bar.c:607
+#: gnome-panel/panel-menu-bar.c:621
 msgid "Open the desktop as a folder"
 msgstr "Open the desktop as a folder"
 
-#: gnome-panel/panel-menu-bar.c:786
+#: gnome-panel/panel-menu-bar.c:800
 msgid "Places"
 msgstr "Places"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: gnome-panel/panel-menu-bar.c:795
+#: gnome-panel/panel-menu-bar.c:809
 msgid "Desktop Environment|Desktop"
 msgstr "Desktop"
 
@@ -2037,62 +2032,66 @@ msgstr "Clear Recent Documents"
 msgid "Clear all items from the recent documents list"
 msgstr "Clear all items from the recent documents list"
 
-#: gnome-panel/panel-run-dialog.c:273
+#: gnome-panel/panel-run-dialog.c:284
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Cannot launch command '%s'"
 
-#: gnome-panel/panel-run-dialog.c:351
+#: gnome-panel/panel-run-dialog.c:362
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Cannot convert '%s' from UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1056
+#: gnome-panel/panel-run-dialog.c:1067
 msgid "Choose a file to append to the command..."
 msgstr "Choose a file to append to the command..."
 
-#: gnome-panel/panel-run-dialog.c:1333
+#: gnome-panel/panel-run-dialog.c:1414
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Will run command: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1339 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1421 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Select an application to view its description."
 
-#: gnome-panel/panel-run-dialog.c:1374
+#: gnome-panel/panel-run-dialog.c:1456
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "URI list dropped on run dialogue had wrong format (%d) or length (%d)\n"
 
+#: gnome-panel/panel-run-dialog.glade.h:1
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
+"Click this button to run the selected application or the command in the "
+"command entry field."
 msgstr ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
+"Click this button to run the selected application or the command in the "
+"command entry field."
 
 #: gnome-panel/panel-run-dialog.glade.h:3
-msgid ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
-msgstr ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
-
-#: gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command entry"
 msgstr "Command entry"
 
-#: gnome-panel/panel-run-dialog.glade.h:5
+#: gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command icon"
 msgstr "Command icon"
 
-#: gnome-panel/panel-run-dialog.glade.h:6
+#: gnome-panel/panel-run-dialog.glade.h:5
 msgid "Enter a command string here to run it."
 msgstr "Enter a command string here to run it."
+
+#: gnome-panel/panel-run-dialog.glade.h:6
+msgid "List of known applications"
+msgstr "List of known applications"
 
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
@@ -2563,11 +2562,11 @@ msgstr "Xinerama monitor where the panel is displayed"
 msgid "Y co-ordinate of panel"
 msgstr "Y co-ordinate of panel"
 
-#: gnome-panel/panel-util.c:63
+#: gnome-panel/panel-util.c:65
 msgid "Cannot display help document"
 msgstr "Cannot display help document"
 
-#: gnome-panel/panel-util.c:253
+#: gnome-panel/panel-util.c:255
 #, c-format
 msgid "Details: %s"
 msgstr "Details: %s"
@@ -2712,6 +2711,7 @@ msgstr "X Large"
 msgid "XX Large"
 msgstr "XX Large"
 
+#. This is an utility to easily test various applets
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Test applet utility"
 msgstr "Test applet utility"
@@ -2723,9 +2723,3 @@ msgstr "_Applet:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Prefs Dir:"
-
-#~ msgid "none"
-#~ msgstr "none"
-
-#~ msgid "file not found"
-#~ msgstr "file not found"
