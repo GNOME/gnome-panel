@@ -198,7 +198,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       panel_marshal_VOID__ENUM_POINTER_POINTER,
 			       GTK_TYPE_NONE,
 			       3,
-			       GTK_TYPE_ENUM,
+			       PANEL_TYPE_G_NOME__PANEL_BACKGROUND_TYPE,
 			       GTK_TYPE_POINTER,
 			       GTK_TYPE_POINTER);
 	panel_widget_signals[APPLET_DRAW_SIGNAL] =
