@@ -1054,10 +1054,11 @@ init_user_panels(void)
 		
 		g_free(color);
 		g_free(back_pixmap);
+		if (panel) {
+			panel_setup(panel);
 
-		panel_setup(panel);
-
-		gtk_widget_show(panel);
+			gtk_widget_show(panel);
+		}
 	}
 	g_string_free(buf,TRUE);
 }

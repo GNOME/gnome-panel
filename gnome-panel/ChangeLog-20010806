@@ -1,3 +1,15 @@
+1999-06-27  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* panel-widget.c (push_applet_right): 
+	(push_applet_left): This should fix movement a little; under certain
+	circumstances one couldn't move an applet to the left in a hori. panel
+
+	* panel.c (panel_setup): check for a NULL panelw just to make sure
+	we don't crash here
+
+	* session.c (init_user_panels): get rid of gtk warnings when the
+	panel config file gets messed up
+
 Mon Jun 21 05:26:28 1999  George Lebl  <jirka@5z.com>
 
 	* applet-widget.[ch],extern.[ch]: added position hint sending
@@ -6,7 +18,7 @@ Mon Jun 21 05:26:28 1999  George Lebl  <jirka@5z.com>
 Fri Jun 18 05:18:39 1999  George Lebl  <jirka@5z.com>
 
 	* panel-widget.[ch],panel_config_global.c: implement a push mode and
-	  swwitching of applet movement modes using modifiers
+	  switching of applet movement modes using modifiers
 
 1999-06-14  Nuno Ferreira  <nmrf@rnl.ist.utl.pt>
 

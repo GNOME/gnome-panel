@@ -1132,9 +1132,14 @@ void
 panel_setup(GtkWidget *panelw)
 {
 	PanelData *pd;
-	BasePWidget *basep = BASEP_WIDGET(panelw);
-	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(panelw)->panel);
-	
+	BasePWidget *basep; 
+	PanelWidget *panel;
+
+	g_return_if_fail(panelw);
+
+	basep = BASEP_WIDGET(panelw);
+	panel = PANEL_WIDGET(BASEP_WIDGET(panelw)->panel);
+
 	pd = g_new(PanelData,1);
 	pd->menu = NULL;
 	pd->menu_age = 0;

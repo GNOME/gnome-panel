@@ -619,20 +619,24 @@ push_applet_right(PanelWidget *panel, GList *list)
 
 	g_return_val_if_fail(panel!=NULL,FALSE);
 	g_return_val_if_fail(IS_PANEL_WIDGET(panel),FALSE);
-	g_return_val_if_fail(list!=NULL,FALSE);
 	
-	ad = list->data;
+	if (list) {
+		ad = list->data;
 	
-	if(ad->pos + ad->cells >= panel->size)
-		return FALSE;
+		if(ad->pos + ad->cells >= panel->size)
+			return FALSE;
 
-	if(list->next)
-		nad = list->next->data;
+		if(list->next)
+			nad = list->next->data;
+	}
+
 	if(!nad || nad->pos > ad->pos+ad->cells) {
 		ad->pos++;
 		panel_widget_queue_applet_for_resize(ad);
 		return TRUE;
 	}
+
+	g_return_val_if_fail(list!=NULL,FALSE);
 	
 	if(!push_applet_right(panel,list->next)) {
 		return FALSE;
@@ -650,20 +654,24 @@ push_applet_left(PanelWidget *panel, GList *list)
 
 	g_return_val_if_fail(panel!=NULL,FALSE);
 	g_return_val_if_fail(IS_PANEL_WIDGET(panel),FALSE);
-	g_return_val_if_fail(list!=NULL,FALSE);
-	
-	ad = list->data;
 
-	if(ad->pos <= pw_applet_padding)
-		return FALSE;
+	if (list) {
+		ad = list->data;
 
-	if(list->prev)
-		pad = list->prev->data;
-	if(!pad || pad->pos+pad->cells < ad->pos) {
+		if(ad->pos <= pw_applet_padding)
+			return FALSE;
+
+		if(list->prev)
+			pad = list->prev->data;
+	}
+
+	if(!list || !pad || pad->pos+pad->cells < ad->pos) {
 		ad->pos--;
 		panel_widget_queue_applet_for_resize(ad);
 		return TRUE;
 	}
+
+	g_return_val_if_fail(list!=NULL,FALSE);
 	
 	if(!push_applet_left(panel,list->prev)) {
 		return FALSE;
