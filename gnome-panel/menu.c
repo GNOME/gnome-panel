@@ -1919,7 +1919,13 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 static void
 panel_lock (GtkWidget *widget, void *data)
 {
-	system ("(xscreensaver-command -activate&)");
+	gboolean lock = gnome_config_get_bool_with_default ("Screensaver/Default/password", FALSE);
+	/* we want to default to something safe.
+	 * Have we started xscreensaver in a locked state or not?*/
+	if (lock)
+		system ("(xscreensaver-command -activate&)");
+	else
+		system ("(xscreensaver-command -lock&)");
 }
 
 static void
