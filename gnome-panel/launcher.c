@@ -35,7 +35,7 @@
 #include "gnome-desktop-item.h"
 #include "gnome-ditem-edit.h"
 
-#undef LAUNCHER_DEBUG
+#undef LAUNCHER_DEBUG 1
 
 static void properties_apply (Launcher *launcher);
 
@@ -325,23 +325,19 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	if (ditem == NULL) {
 		if (parameters == NULL) {
 			return NULL;
-		} else if (*parameters == '/') {
-			ditem = gnome_desktop_item_new_from_file (parameters,
-								  0 /* flags */,
-								  NULL /* error */);
+		} else if (strstr (parameters, "file://")) {
+
+#ifdef LAUNCHER_DEBUG
+	printf ("Creating gnome_desktop_item_new_from_file\n");
+#endif
+		ditem = gnome_desktop_item_new_from_uri (parameters,
+							 0 /* flags */,
+							 NULL /* error */);
 		} else {
-			char *apps_par, *entry, *extension;
-
-			if (strstr (parameters, ".desktop"))
-				extension = NULL;
-			else
-				extension = ".desktop";
-
-			apps_par = g_strconcat ("gnome/apps/", parameters,
-						extension, NULL);
+			char *apps_par, *entry;
 
 			entry = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
-							   apps_par, TRUE, NULL);
+							   parameters, TRUE, NULL);
 
 			g_free (apps_par);
 

@@ -50,7 +50,7 @@
 #include "multiscreen-stuff.h"
 #include "conditional.h"
 
-#undef SESSION_DEBUG 
+#undef SESSION_DEBUG 1
 
 int config_sync_timeout = 0;
 int applets_to_sync = FALSE;
@@ -1105,16 +1105,7 @@ init_user_applets (void)
 							       NULL, NULL);
 				hoard = TRUE;
 			} 
-			if (*file != '/') {
-				char *tmp;
-#ifdef SESSION_DEBUG
-	printf ("init_user_applets for non-starting slashes [%s]\n", file);
-#endif
-				tmp = launcher_file_name (file);
-				g_free (file);
-				file = tmp;
-			} 
-
+			
 			launcher = load_launcher_applet(file, panel, pos, TRUE);
 			g_free(file);
 
