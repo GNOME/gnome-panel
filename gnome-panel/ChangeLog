@@ -1,3 +1,13 @@
+2002-01-15  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* menu-util.c (panel_menu_position):
+	Ensure that menu position is close to panel even if popped up by
+	keystroke.
+
+	* panel.c:
+	Add panel_do_popup_menu() and panel_popup_menu() to support popping
+	up of menu using Shift+F10
+
 2002-01-14  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	reviewed by: Mark McLoughlin <mark@skynet.ie>

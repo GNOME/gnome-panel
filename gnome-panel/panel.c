@@ -756,7 +756,46 @@ panel_initiate_move (GtkWidget *widget, guint32 event_time)
 
 	return FALSE;
 }
-	
+
+static gboolean
+panel_do_popup_menu (PanelWidget *panel, BasePWidget *basep, GtkWidget *widget, guint button, guint32 activate_time)
+{
+	if(!panel_applet_in_drag) {
+		GtkWidget *menu;
+
+		menu = make_popup_panel_menu (panel);
+		if (basep) {
+                        basep->autohide_inhibit = TRUE;
+			basep_widget_autohide (basep);
+		}
+
+		gtk_menu_popup (GTK_MENU (menu),
+                                NULL,
+                                NULL,
+                                panel_menu_position,
+				widget,
+				button,
+                                activate_time);
+		return TRUE;
+	}
+	return FALSE;
+}
+
+static gboolean
+panel_popup_menu (GtkWidget *widget)
+{
+ 	PanelWidget *panel = NULL;
+	BasePWidget *basep = NULL;
+
+	if (BASEP_IS_WIDGET (widget)) {
+		basep = BASEP_WIDGET (widget);
+		panel = PANEL_WIDGET (basep->panel);
+	} else if (FOOBAR_IS_WIDGET (widget)) {
+		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
+	}
+	return panel_do_popup_menu (panel, basep, widget, 3, GDK_CURRENT_TIME);
+}
+
 static gboolean
 panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 {
@@ -776,25 +815,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 		bevent = (GdkEventButton *) event;
 		switch(bevent->button) {
 		case 3:
-			if(!panel_applet_in_drag) {
-				GtkWidget *menu;
-
-				menu = make_popup_panel_menu (panel);
-				if (basep) {
-					basep->autohide_inhibit = TRUE;
-					basep_widget_autohide (basep);
-				}
-
-				gtk_menu_popup (GTK_MENU (menu),
-						NULL,
-						NULL, 
-						panel_menu_position,
-						widget,
-						bevent->button,
-						bevent->time);
-
+			if (panel_do_popup_menu (panel, basep, widget, bevent->button, bevent->time))
 				return TRUE;
-			}
 			break;
 		case 2:
 			if ( ! commie_mode)
@@ -1774,6 +1796,8 @@ panel_setup(GtkWidget *panelw)
 
 	g_signal_connect (G_OBJECT (panelw), "event",
 			  G_CALLBACK (panel_event), pd);
+	g_signal_connect (G_OBJECT (panelw), "popup_menu",
+                          G_CALLBACK (panel_popup_menu), pd);
 	g_signal_connect (G_OBJECT (panel), "event",
 			  G_CALLBACK (panel_widget_event), panelw);
 	

@@ -93,6 +93,21 @@ panel_menu_position (GtkMenu  *menu,
 
 	g_return_if_fail (w != NULL);
 
+	gdk_window_get_origin (w->window, &wx, &wy);
+	/*
+	 * Make sure that the popup position is in the panel
+	 * as the menu may be popped up by a keystroke
+	 */
+	if (*x < wx)
+		*x = wx;
+	else if (*x > wx + w->allocation.width)
+		*x = wx + w->allocation.width;
+
+	if (*y < wy)
+		*y = wy;
+	else if (*y > wy + w->allocation.height)
+		*y = wy + w->allocation.height;
+
 /* FIXME - new gtk menus ?? 
 	if ( ! global_config.off_panel_popups) {
 		panel_standard_menu_pos (menu, x, y, data);
@@ -103,8 +118,6 @@ panel_menu_position (GtkMenu  *menu,
 		panel_standard_menu_pos (menu, x, y, data);
 		return;
 	}
-
-	gdk_window_get_origin (w->window, &wx, &wy);
 
 	gtk_widget_get_pointer(w, x, y);
 	if (BASEP_IS_WIDGET (w)) {
