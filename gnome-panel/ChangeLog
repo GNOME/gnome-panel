@@ -1,5 +1,13 @@
 2005-02-26  Vincent Untz  <vincent@vuntz.net>
 
+	Fix leak of pixbufs and models in "Add to panel" dialog.
+
+	* panel-addto.c: (panel_addto_append_item): unref the pixbuf
+	(panel_addto_populate_application_model): small cleanup
+	(panel_addto_dialog_free): unref the models
+
+2005-02-26  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-recent.c: (panel_recent_model_changed_cb): use the right list
 	so we don't have a leak.
 	Should help for bug #168389

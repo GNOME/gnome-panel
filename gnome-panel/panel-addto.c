@@ -490,6 +490,10 @@ panel_addto_append_item (PanelAddtoDialog *dialog,
 				    COLUMN_DATA, applet,
 				    COLUMN_SEARCH, applet->name,
 				    -1);
+
+		if (pixbuf)
+			g_object_unref (pixbuf);
+
 		g_free (text);
 	}
 }
@@ -635,9 +639,9 @@ panel_addto_populate_application_model (GtkTreeStore *store,
 				    COLUMN_SEARCH, data->item_info.name,
 				    -1);
 
-		if (pixbuf) {
+		if (pixbuf)
 			g_object_unref (pixbuf);
-		}
+
 		g_free (text);
 
 		if (data->children != NULL) 
@@ -919,6 +923,14 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 
 	panel_addto_dialog_free_application_list (dialog->application_list);
 	panel_addto_dialog_free_application_list (dialog->settings_list);
+
+	if (dialog->applet_model)
+		g_object_unref (dialog->applet_model);
+	dialog->applet_model = NULL;
+
+	if (dialog->application_model)
+		g_object_unref (dialog->application_model);
+	dialog->application_model = NULL;
 
 	if (dialog->menu_tree)
 		menu_tree_unref (dialog->menu_tree);
