@@ -425,7 +425,9 @@ save_applet_configuration(AppletInfo *info)
 		gnome_config_set_string("id", STATUS_ID);
 		break;
 	default:
-		g_assert_not_reached();
+		g_warning ("Unknown applet type encountered: %d; ignoring.",
+			   info->type);
+		break;
 	}
 	gnome_config_set_int("position", ad->pos);
 	gnome_config_set_int("panel", panel_num);
@@ -1202,7 +1204,7 @@ init_user_panels(void)
 			break;
 		}
 		default:
-			g_assert_not_reached ();
+			g_warning ("Unkown panel type: %d; ignoring.", type);
 			break;
 		}
 
