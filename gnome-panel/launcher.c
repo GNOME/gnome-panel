@@ -569,7 +569,7 @@ create_properties_dialog (Launcher *launcher)
 
 	dialog = gtk_dialog_new ();
 
-	gtk_window_set_title (GTK_WINDOW (dialog), _("Launcher properties"));
+	gtk_window_set_title (GTK_WINDOW (dialog), _("Launcher Properties"));
 
 	help = gtk_dialog_add_button (
 			GTK_DIALOG (dialog), GTK_STOCK_HELP, GTK_RESPONSE_HELP);
@@ -758,7 +758,7 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 	GnomeDItemEdit *dee;
 	GnomeDesktopItem *ditem;
 
-	dialog = gtk_dialog_new_with_buttons (_("Create launcher applet"),
+	dialog = gtk_dialog_new_with_buttons (_("Create Launcher"),
 					      NULL /* parent */,
 					      0 /* flags */,
 					      GTK_STOCK_HELP,

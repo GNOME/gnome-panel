@@ -1,3 +1,18 @@
+2002-04-22  Frank Worsley  <fworsley@shaw.ca>
+
+	* gnome-panel/gnome-desktop-item-edit.c:
+	call panel functions with correct parameters
+	fix so that existing files can be edited
+	
+	* gnome-panel/launcher.c:
+	change window titles to match other panel/nautilus terminology
+	
+	* gnome-panel/menu-ditem.c: 
+	change window titles to match other panel/nautilus terminology	
+	(is_item_writable): check correct parameter when dir != NULL
+	(panel_edit_direntry): don't free dirfile if we use it again
+	(create_launcher): display a message box if location not writable
+
 2002-04-26  Abel Cheung  <maddog@linux.org.hk>
 
 	* gnome-panel-screenshot.c (main): Removed reference of gnome-core

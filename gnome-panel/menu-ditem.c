@@ -123,8 +123,7 @@ static gboolean
 is_item_writable (const char *loc, const char *dir)
 {
 	if (loc != NULL) {
-		/* if old style kde link file, don't allow
-		 * editting */
+		/* if old style kde link file, don't allow editing */
 		if (is_ext (loc, ".kdelnk"))
 			return FALSE;
 		if (panel_is_uri_writable (loc))
@@ -132,9 +131,9 @@ is_item_writable (const char *loc, const char *dir)
 		else
 			return FALSE;
 	}
-
+	
 	if (dir != NULL) {
-		if (panel_is_uri_writable (loc))
+		if (panel_is_uri_writable (dir))
 			return TRUE;
 		else
 			return FALSE;
@@ -171,10 +170,10 @@ panel_edit_dentry (const char *loc,
 
 	ditem = gnome_desktop_item_new_from_uri (loc,
 						 0 /* flags */,
-						 NULL /* error */);
+						 NULL /* error */);		 
 
 	/* watch the enum at the top of the file */
-	dialog = gtk_dialog_new_with_buttons (_("Desktop entry properties"),
+	dialog = gtk_dialog_new_with_buttons (_("Launcher Properties"),
 					      NULL /* parent */,
 					      0 /* flags */,
 					      GTK_STOCK_HELP,
@@ -242,15 +241,17 @@ panel_edit_direntry (const char *dir, const char *dir_name)
 {
 	GtkWidget *dialog;
 	GtkWidget *dedit;
-	char *dirfile = g_build_path ("/", dir, ".directory", NULL);
 	GnomeDesktopItem *ditem;
+	char *dirfile;
+	
+	dirfile = g_strconcat (dir, "/", ".directory", NULL);
 
 	ditem = gnome_desktop_item_new_from_uri (dirfile,
 						 0 /* flags */,
 						 NULL /* error */);
 
 	/* watch the enum at the top of the file */
-	dialog = gtk_dialog_new_with_buttons (_("Desktop entry properties"),
+	dialog = gtk_dialog_new_with_buttons (_("Launcher Properties"),
 					      NULL /* parent */,
 					      0 /* flags */,
 					      GTK_STOCK_HELP,
@@ -274,8 +275,6 @@ panel_edit_direntry (const char *dir, const char *dir_name)
 		g_object_set_data_full (G_OBJECT (dedit), "location",
 					g_strdup (gnome_desktop_item_get_location (ditem)),
 					(GDestroyNotify)g_free);
-		g_free (dirfile);
-		dirfile = NULL;
 	} else {
 		ditem = gnome_desktop_item_new ();
 		if (dir_name == NULL) {
@@ -294,12 +293,11 @@ panel_edit_direntry (const char *dir, const char *dir_name)
 		gnome_desktop_item_set_string (ditem,
 					       GNOME_DESKTOP_ITEM_TYPE,
 					       "Directory");
-		/*we don't have to free dirfile here it will be freed as if
-		  we had strduped it here*/
+
+		/* we free dirfile below so make a copy here */
 		g_object_set_data_full (G_OBJECT (dedit),
-					"location", dirfile,
+					"location", g_strdup (dirfile),
 					(GDestroyNotify)g_free);
-		dirfile = NULL;
 		gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (dedit), ditem);
 	}
 
@@ -333,6 +331,8 @@ panel_edit_direntry (const char *dir, const char *dir_name)
 				    NULL);
 	}
 
+	g_free (dirfile);
+		
 	gtk_widget_show (dialog);
 
 	gnome_ditem_edit_grab_focus (GNOME_DITEM_EDIT (dedit));
@@ -476,7 +476,15 @@ panel_new_launcher (const char *item_loc)
 	GtkWidget *dialog;
 	GtkWidget *dee;
 
-	dialog = gtk_dialog_new_with_buttons (_("Create menu item"),
+	if (!is_item_writable (item_loc, NULL)) {
+		
+		dialog = panel_error_dialog ("can_not_create_launcher",
+				             _("You can not create a new launcher at this location since the location is not writable."));
+
+		return dialog;
+	}
+
+	dialog = gtk_dialog_new_with_buttons (_("Create Launcher"),
 					      NULL /* parent */,
 					      0 /* flags */,
 					      GTK_STOCK_CANCEL,

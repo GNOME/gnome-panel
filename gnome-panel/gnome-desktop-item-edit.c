@@ -105,34 +105,31 @@ main (int argc, char * argv[])
 		gnome_vfs_file_info_clear (info);
 
 		if (gnome_vfs_get_file_info
-		    (uri, info, GNOME_VFS_FILE_INFO_DEFAULT) != GNOME_VFS_OK) {
-			/* ok, this doesn't exist, really */
-			if (is_ext (desktops[i], ".directory")) {
+		    (uri, info, GNOME_VFS_FILE_INFO_DEFAULT) == GNOME_VFS_OK) {
+
+			if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY && create_new) {
+				dlg = panel_new_launcher (uri);
+
+			} else if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
+				   && is_ext (desktops[i], ".directory")
+				   && !create_new) {
 				char *dirname = g_path_get_dirname (uri);
-				char *basename = g_path_get_basename (dirname);
-				dlg = panel_edit_direntry (dirname, basename);
-				g_free (basename);
+				dlg = panel_edit_direntry (dirname, NULL);
 				g_free (dirname);
-			} else {
+			
+			} else if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
+				   && is_ext (desktops[i], ".desktop")
+				   && !create_new) {
 				char *dirname = g_path_get_dirname (uri);
 				dlg = panel_edit_dentry (uri, dirname);
 				g_free (dirname);
-			}
-		}
-
-		if (dlg == NULL &&
-		    info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
-			if (create_new) {
-				dlg = panel_new_launcher (uri);
+				
 			} else {
-				char *basename = g_path_get_basename (desktops[i]);
-				dlg = panel_edit_direntry (uri, basename);
-				g_free (basename);
+				fprintf (stderr, "gnome-desktop-item-edit: no file to edit\n");
+				return 0;
 			}
-		} else if (dlg == NULL) {
-			char *dirname = g_path_get_dirname (uri);
-			dlg = panel_edit_dentry (uri, dirname);
-			g_free (dirname);
+		} else {
+			fprintf (stderr, "gnome-desktop-item-edit: no file to edit\n");
 		}
 
 		if (dlg != NULL) {
