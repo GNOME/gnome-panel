@@ -68,8 +68,11 @@ void       panel_applet_frame_change_background_color  (PanelAppletFrame *frame,
 
 void       panel_applet_frame_clear_background         (PanelAppletFrame *frame);
 
-void       panel_applet_frame_save_position            (PanelAppletFrame *frame);
+void       panel_applet_frame_save_position            (PanelAppletFrame *frame,
+							const gchar      *base_key);
 
+void       panel_applet_frame_save_session             (PanelAppletFrame *frame,
+							const gchar      *base_key);
 
 G_END_DECLS
 

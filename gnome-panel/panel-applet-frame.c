@@ -8,6 +8,7 @@
  */
 
 #include <libbonoboui.h>
+#include <gconf/gconf.h>
 
 #include "panel-applet-frame.h"
 #include "applet.h"
@@ -19,6 +20,9 @@ struct _PanelAppletFramePrivate {
 	Bonobo_PropertyBag      property_bag;
 
 	AppletInfo             *applet_info;
+
+	gchar                  *iid;
+	gchar                  *unique_key;
 };
 
 static GObjectClass *parent_class;
@@ -96,11 +100,39 @@ panel_applet_frame_load (const gchar *iid,
 }
 
 void
-panel_applet_frame_save_position (PanelAppletFrame *frame)
+panel_applet_frame_save_position (PanelAppletFrame *frame,
+				  const gchar      *base_key)
 {
 	/*
-	 * FIXME: implement.
+	 * FIXME: implement
 	 */
+}
+
+void
+panel_applet_frame_save_session (PanelAppletFrame *frame,
+				 const gchar      *base_key)
+{
+	CORBA_Environment  env;
+	gchar             *global_key;
+	gchar             *private_key;
+
+	CORBA_exception_init (&env);
+
+	global_key  = g_strdup_printf ("%s/%s", base_key, frame->priv->iid);
+	private_key = g_strdup_printf ("%s/%s", base_key, frame->priv->unique_key);
+
+	GNOME_PanelAppletShell_saveYourself (frame->priv->applet_shell,
+					     global_key,
+					     private_key,
+					     &env); 
+	if (BONOBO_EX (&env))
+		g_warning (G_STRLOC " : exception return from saveYourself '%s'",
+			   BONOBO_EX_REPOID (&env));
+
+	g_free (global_key);
+	g_free (private_key);
+
+	CORBA_exception_free (&env);
 }
 
 void
@@ -179,6 +211,9 @@ static void
 panel_applet_frame_finalize (GObject *object)
 {
 	PanelAppletFrame *frame = PANEL_APPLET_FRAME (object);
+
+	g_free (frame->priv->iid);
+	g_free (frame->priv->unique_key);
 
         g_free (frame->priv);
         frame->priv = NULL;
@@ -271,6 +306,10 @@ panel_applet_frame_construct (PanelAppletFrame  *frame,
 		g_warning (G_STRLOC ": failed to load %s", iid);
 		return;
 	}
+
+	frame->priv->iid = g_strdup (iid);
+
+	frame->priv->unique_key = gconf_unique_key ();
 
         control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
 

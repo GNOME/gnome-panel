@@ -1,3 +1,27 @@
+2001-11-30  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-gconf.c: (panel_gconf_get_session_key): warn if we
+	can't get the client id.
+
+	* session.c: (save_applet_configuration): check the return
+	from panel_gconf_get_session_key.
+
+2001-11-30  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet-frame.[ch]:
+	(panel_applet_frame_save_position): add base_key arg.
+	(panel_applet_frame_save_session): impl.
+	(panel_applet_frame_finalize): free keys.
+	(panel_applet_frame_construct): generate keys.
+
+	* applet.c: (applet_idle_remove): update for
+	  panel_applet_frame_save_position change.
+
+	* panel.c: (panel_remove_applets): ditto.
+
+	* session.c: (panel_session_die): ditto.
+	(save_applet_configuration): save session.
+
 2001-11-30  Glynn Foster  <glynn.foster@sun.com>
 
 	* panel-gconf.c, panel-gconf.h:

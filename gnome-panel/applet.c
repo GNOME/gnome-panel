@@ -81,7 +81,7 @@ applet_idle_remove (gpointer data)
 
 	switch (info->type) {
 	case APPLET_BONOBO:
-		panel_applet_frame_save_position (PANEL_APPLET_FRAME (info->data));
+		panel_applet_frame_save_position (PANEL_APPLET_FRAME (info->data), NULL);
 		break;
 	case APPLET_SWALLOW: {
 		Swallow *swallow = info->data;

@@ -125,6 +125,15 @@ test_applet_handle_background_change (PanelApplet               *applet,
 	}
 }
 
+static void
+test_applet_handle_save_yourself (PanelApplet               *applet,
+				  const gchar               *global_key,
+				  const gchar               *private_key,
+				  GtkLabel                  *label)
+{
+	g_message ("saveYourself received '%s' '%s'", global_key, private_key);
+}
+
 static BonoboObject *
 test_applet_new (void)
 {
@@ -134,6 +143,8 @@ test_applet_new (void)
 	label = gtk_label_new (NULL);
 
 	applet = panel_applet_new (label);
+
+	gtk_widget_show_all (applet);
 
 	test_applet_handle_size_change (PANEL_APPLET (applet),
 					GNOME_PANEL_MEDIUM,
@@ -159,6 +170,11 @@ test_applet_new (void)
 	g_signal_connect (G_OBJECT (applet),
 			  "change_background",
 			  G_CALLBACK (test_applet_handle_background_change),
+			  label);
+
+	g_signal_connect (G_OBJECT (applet),
+			  "save_yourself",
+			  G_CALLBACK (test_applet_handle_save_yourself),
 			  label);
 			  
 	return BONOBO_OBJECT (panel_applet_get_control (PANEL_APPLET (applet)));
