@@ -187,12 +187,12 @@ kill_window_question (void)
  
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 				GTK_STOCK_CANCEL,
-				GTK_RESPONSE_REJECT,
+				GTK_RESPONSE_CANCEL,
 				PANEL_STOCK_FORCE_QUIT,
 				GTK_RESPONSE_ACCEPT,
 				NULL);
  
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_REJECT);
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 
 	retval = gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT;
 
