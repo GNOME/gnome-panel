@@ -38,6 +38,8 @@
 
 #define GLADE_FILE   GLADEDIR "/gnome-panel-preferences.glade"
 
+#define NEVER_SENSITIVE "never-sensitive"
+
 static GConfEnumStringPair global_properties_speed_type_enum_map [] = {
 	{ PANEL_SPEED_SLOW,   "panel-speed-slow" },
 	{ PANEL_SPEED_MEDIUM, "panel-speed-medium" },
@@ -52,15 +54,19 @@ void preferences_response (GtkWindow *window,
 static void
 update_sensitive_for_checkbox (GladeXML *gui,
 			       char     *key,
-			       int       checked)
+			       gboolean  checked)
 {
 	GtkWidget *associate = NULL;
 
 	if (!strcmp (key, "enable_animations"))
                 associate = glade_xml_get_widget (gui, "panel_animation_hbox");
 
-        if (associate)
+        if (associate) {
+		if (g_object_get_data (G_OBJECT (associate), 
+				       NEVER_SENSITIVE))
+			checked = FALSE;
                 gtk_widget_set_sensitive (associate, checked);
+	}
 }
 
 static void
@@ -76,7 +82,9 @@ bool_value_changed_notify (GConfClient     *client,
 
 	value = gconf_value_get_bool (entry->value);
 
-	if (gtk_toggle_button_get_active (toggle) != value) {
+	/* those ?: are there since booleans can't be compared since
+	   they are ints!!! */
+	if (gtk_toggle_button_get_active (toggle) ? 1 : 0 != value ? 1 : 0) {
 		char *basename;
 
 		gtk_toggle_button_set_active (toggle, value);
@@ -138,6 +146,12 @@ load_checkboxes (GladeXML    *gui,
 			checkbox, NULL, NULL);
 
 		checked = gconf_client_get_bool (client, key, NULL);
+
+		if ( ! gconf_client_key_is_writable (client, key, NULL)) {
+			g_object_set_data (G_OBJECT (checkbox), NEVER_SENSITIVE,
+					   GINT_TO_POINTER (1));
+			gtk_widget_set_sensitive (checkbox, FALSE);
+		}
 
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(checkbox), checked);
 
@@ -211,6 +225,13 @@ load_animation_menu (GladeXML    *gui,
 
 	g_signal_connect (option, "changed",
 			  G_CALLBACK (animation_menu_changed), NULL);
+
+	if ( ! gconf_client_key_is_writable (client, key, NULL)) {
+                GtkWidget *hbox = glade_xml_get_widget (gui, "panel_animation_hbox");
+		g_object_set_data (G_OBJECT (hbox), NEVER_SENSITIVE,
+				   GINT_TO_POINTER (1));
+		gtk_widget_set_sensitive (hbox, FALSE);
+	}
 }
 
 static void
