@@ -31,7 +31,8 @@ struct _MFile {
 enum {
 	FILE_REC_FILE, /*.desktop file record*/
 	FILE_REC_DIR,  /*directory*/
-	FILE_REC_EXTRA /*just check the mtime*/
+	FILE_REC_EXTRA, /*just check the mtime*/
+	FILE_REC_SEP
 };
 
 struct _FileRec {

@@ -231,6 +231,54 @@ tasklist_icon_check_x (GwmhTask *task,  GtkWidget *widget)
 	return scaled;
 }
 
+static GdkPixbuf *
+tasklist_icon_create_minimized_icon (GtkWidget *widget, GdkPixbuf *pixbuf)
+{
+        GdkPixbuf *target;
+        gint i, j;
+        gint width, height, has_alpha, rowstride;
+        guchar *target_pixels;
+        guchar *original_pixels;
+        guchar *dest_pixel, *src_pixel;
+        gint32 red, green, blue;
+        GdkColor color;
+        
+        color = widget->style->bg[GTK_STATE_NORMAL];
+        red = color.red / 255;
+        blue = color.blue / 255;
+        green = color.green / 255;
+        
+        has_alpha = gdk_pixbuf_get_has_alpha (pixbuf);
+        width = gdk_pixbuf_get_width (pixbuf);
+        height = gdk_pixbuf_get_height (pixbuf);
+        rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+
+        target = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                                 has_alpha,
+                                 gdk_pixbuf_get_bits_per_sample (pixbuf),
+                                 width, height);
+
+        target_pixels = gdk_pixbuf_get_pixels (target);
+        original_pixels = gdk_pixbuf_get_pixels (pixbuf);
+
+        for (i = 0; i < height; i++) {
+                for (j = 0; j < width; j++) {
+                                src_pixel = original_pixels + i*rowstride + j*(has_alpha?4:3);
+                                dest_pixel = target_pixels + i*rowstride + j*(has_alpha?4:3);
+
+                                dest_pixel[0] = ((src_pixel[0] - red) >> 1) + red;
+                                dest_pixel[1] = ((src_pixel[1] - green) >> 1) + green;
+                                dest_pixel[2] = ((src_pixel[2] - blue) >> 1) + blue;
+                                
+                                if (has_alpha)
+                                        dest_pixel[3] = src_pixel[3];
+
+                }
+        }
+        
+        return target;
+}
+
 GtkWidget *
 get_task_icon (GwmhTask *task, GtkWidget *widget)
 {
@@ -238,13 +286,20 @@ get_task_icon (GwmhTask *task, GtkWidget *widget)
 	GdkPixmap *pixmap;
 	GdkBitmap *mask;
 	GdkPixbuf *pixbuf;
-
+	GdkPixbuf *pixbuf2;
+	
 	pixbuf = tasklist_icon_check_x (task, widget);
 	if (!pixbuf) {
 		pixbuf = tasklist_icon_check_mini (task, widget);
 
 		if (!pixbuf)
 			return NULL;
+	}
+	if (GWMH_TASK_ICONIFIED (task)) {
+		pixbuf2 = tasklist_icon_create_minimized_icon (widget, 
+								pixbuf);
+		gdk_pixbuf_unref (pixbuf);
+		pixbuf = pixbuf2;
 	}
 
 	gdk_pixbuf_render_pixmap_and_mask (pixbuf, &pixmap, &mask, 128);

@@ -2949,12 +2949,14 @@ create_menu_at_fr (GtkWidget *menu,
 				add_menu_separator(menu);
 			}
 
-			if (create_menuitem (menu, tfr,
-					     applets,
-					     launcher_add,
-					     fake_submenus,
-					     &add_separator,
-					     &first_item))
+			if (tfr->type == FILE_REC_SEP)
+				add_menu_separator (menu);				
+			else if (create_menuitem (menu, tfr,
+						  applets,
+						  launcher_add,
+						  fake_submenus,
+						  &add_separator,
+						  &first_item))
 				last_added = li;
 		}
 	}
@@ -4539,8 +4541,8 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_menu_append (GTK_MENU (submenu), submenuitem);
 	gtk_signal_connect(GTK_OBJECT(submenuitem), "activate",
 			   GTK_SIGNAL_FUNC(add_menu_to_panel),
-			   "gnome/apps/");
-	setup_internal_applet_drag(submenuitem, "MENU:gnome/apps/");
+			   "gnome/apps");
+	setup_internal_applet_drag(submenuitem, "MENU:gnome/apps");
 
 	submenuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
@@ -4549,8 +4551,8 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_menu_append (GTK_MENU (submenu), submenuitem);
 	gtk_signal_connect(GTK_OBJECT(submenuitem), "activate",
 			   GTK_SIGNAL_FUNC(add_menu_to_panel),
-			   "~/.gnome/apps/");
-	setup_internal_applet_drag(submenuitem, "MENU:~/.gnome/apps/");
+			   "~/.gnome/apps");
+	setup_internal_applet_drag(submenuitem, "MENU:~/.gnome/apps");
 
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
@@ -4724,6 +4726,13 @@ show_panel_help (GtkWidget *w, gpointer data)
 	panel_show_help ("index.html");
 }
 
+static void
+panel_launch_gmenu (GtkWidget *widget, gpointer data)
+{
+	char *argv[2] = {"gmenu", NULL};
+	if (gnome_execute_async (g_get_home_dir (), 2, argv) < 0)
+		   panel_error_dialog (_("Cannot launch gmenu!"));
+}
 
 void
 make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
@@ -4818,6 +4827,16 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC(panel_config_global), 
+			    NULL);
+
+	menuitem = gtk_menu_item_new ();
+	gtk_widget_lock_accelerators (menuitem);
+	setup_menuitem_try_pixmap (menuitem,
+				   "gnome-gmenu.png",
+				   _("Edit menus..."), SMALL_ICON_SIZE);
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC(panel_launch_gmenu), 
 			    NULL);
 
 	if ( ! global_config.menu_check) {

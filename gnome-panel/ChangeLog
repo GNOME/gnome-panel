@@ -1,3 +1,21 @@
+Tue Apr 24 19:09:55 2001  George Lebl <jirka@5z.com>
+
+	* Applying some of the ximian patches
+
+	* menu-fentry.c:  in fr_is_subdir, check for nullity or
+	  emptiness of the superdir
+
+	* foobar-widget.c, tasklist_icon.c:  Shade iconified tasks in
+	  the foobar tasklist
+
+	* menu.c:  Add "Edit menus..." item to the "Panel" menu
+
+	* menu-fentry.[ch], menu.c:  Allow a "Separator" .desktop type
+	  to properly read the ximian menus apparently
+
+	* menu.c:  Use gnome/apps rather then gnome/apps/ for adding
+	  menus to panel
+
 Tue Apr 24 13:55:29 2001  George Lebl <jirka@5z.com>
 
 	* session.c: If we can find an installed mozilla desktop file,

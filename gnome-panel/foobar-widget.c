@@ -681,6 +681,8 @@ static void
 focus_task (GtkWidget *w, GwmhTask *task)
 {
 	gwmh_desk_set_current_area (task->desktop, task->harea, task->varea);
+	if (GWMH_TASK_ICONIFIED (task)) 
+		gwmh_task_deiconify (task);
 	gwmh_task_show  (task);
 	gwmh_task_raise (task);
 	gwmh_task_focus (task);
@@ -702,8 +704,16 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 		return;
 	/*g_message ("task: %s", task->name);*/
 	slen = strlen (task->name);
-	if (slen > 43)
-		title = g_strdup_printf ("%.20s...%s", task->name, task->name+slen-20);
+	if (slen > 443)
+		title = g_strdup_printf ("%.420s...%s", task->name, task->name+slen-20);
+
+	if (GWMH_TASK_ICONIFIED (task)) {
+		char *tmp = title;
+		title = g_strdup_printf ("[%s]", title ? title : task->name);
+		if (tmp)
+			g_free (tmp);
+	}
+	
 	item = gtk_pixmap_menu_item_new ();
 	pixmap = get_task_icon (task, GTK_WIDGET (foo));
 	if (pixmap != NULL) {
