@@ -308,7 +308,6 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 
 	g_free(order_out_name);
 	g_free(order_in_name);
-	g_free(file);
 }
 
 static void

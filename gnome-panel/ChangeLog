@@ -1,3 +1,9 @@
+1999-09-04  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* menu.c (remove_menuitem): don't g_free file -
+	g_filename_pointer() doesn't allocate memory
+	(fixes a crash I just had)
+
 1999-09-03  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* menu.c (create_root_menu): 
