@@ -87,6 +87,7 @@ static void display_about_dialog      (BonoboUIComponent *uic,
 
 static void
 set_tooltip (GtkWidget  *applet,
+	     GtkWidget  *widget,
 	     const char *tip)
 {
 	GtkTooltips *tooltips;
@@ -101,7 +102,7 @@ set_tooltip (GtkWidget  *applet,
 			(GDestroyNotify) g_object_unref);
 	}
 
-	gtk_tooltips_set_tip (tooltips, applet, tip, NULL);
+	gtk_tooltips_set_tip (tooltips, widget, tip, NULL);
 }
 
 static int
@@ -310,7 +311,7 @@ update_clock (ClockData * cd, time_t current_time)
 	g_free (loc);
 
 	utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
-	set_tooltip (GTK_WIDGET (cd->applet), utf8);
+	set_tooltip (cd->applet, cd->toggle, utf8);
 	g_free (utf8);
 }
 
@@ -1014,6 +1015,7 @@ fill_clock_applet (PanelApplet *applet)
 	GError *error;
 	
 	panel_applet_add_preferences (applet, "/schemas/apps/clock_applet/prefs", NULL);
+	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 	
 	cd = g_new0 (ClockData, 1);
 
@@ -1055,6 +1057,7 @@ fill_clock_applet (PanelApplet *applet)
 	create_clock_widget (cd);
 
 	gtk_container_set_border_width (GTK_CONTAINER (cd->applet), 0);
+	gtk_container_set_border_width (GTK_CONTAINER (cd->toggle), 0);
 	gtk_container_add (GTK_CONTAINER (cd->applet), cd->toggle);
 
 	gtk_widget_show (cd->applet);
