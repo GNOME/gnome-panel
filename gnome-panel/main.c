@@ -500,7 +500,7 @@ panel_state_change(GtkWidget *widget,
 	return TRUE;
 }
 
-static gint
+static void
 applet_move_foreach(gpointer data, gpointer user_data)
 {
 	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
@@ -513,7 +513,6 @@ applet_move_foreach(gpointer data, gpointer user_data)
 				     applet_move_foreach,
 				     NULL);
 	}
-	return TRUE;
 }
 
 static gint

@@ -6,6 +6,7 @@
 #include "mico-glue.h"
 #include "gnome-panel.h"
 #include "panel.h"
+#include "panel-widget.h"
 #include "mico-parse.h"
 
 #include "cookie.h"
@@ -53,7 +54,8 @@ public:
 		CHECK_COOKIE ();
 		::applet_abort_id (applet_id);
 	}
-	void applet_request_glob_cfg (const char *ccookie, char *&globcfgpath) {
+	void applet_request_glob_cfg (const char *ccookie,
+				      char *&globcfgpath) {
 		char *globcfg=NULL;
 
 		CHECK_COOKIE ();
@@ -64,11 +66,13 @@ public:
 		} else
 			globcfgpath = CORBA::string_dup("");
 	}
-	CORBA::Short applet_get_panel (const char *ccookie, CORBA::Short applet_id) {
+	CORBA::Short applet_get_panel (const char *ccookie,
+				       CORBA::Short applet_id) {
 		CHECK_COOKIE_V (0);
 		return ::applet_get_panel (applet_id);
 	}
-	CORBA::Short applet_get_pos (const char *ccookie, CORBA::Short applet_id) {
+	CORBA::Short applet_get_pos (const char *ccookie,
+				     CORBA::Short applet_id) {
 		CHECK_COOKIE_V (0);
 		return ::applet_get_pos (applet_id);
 	}
@@ -84,7 +88,8 @@ public:
 		CHECK_COOKIE ();
 		::applet_drag_stop (applet_id);
 	}
-	void applet_remove_from_panel (const char *ccookie, CORBA::Short applet_id) {
+	void applet_remove_from_panel (const char *ccookie,
+				       CORBA::Short applet_id) {
 		CHECK_COOKIE ();
 		::applet_remove_from_panel(applet_id);
 	}
@@ -97,13 +102,19 @@ public:
 				      (char *)callback_name,
 				      (char *)menuitem_text);
 	}
-	void applet_add_tooltip (const char *ccookie, CORBA::Short applet_id, const char *tooltip) {
+	void applet_add_tooltip (const char *ccookie, CORBA::Short applet_id,
+				 const char *tooltip) {
 		CHECK_COOKIE ();
 		::applet_set_tooltip(applet_id,tooltip);
 	}
-	void applet_remove_tooltip (const char *ccookie, CORBA::Short applet_id) {
+	void applet_remove_tooltip (const char *ccookie,
+				    CORBA::Short applet_id) {
 		CHECK_COOKIE ();
 		::applet_set_tooltip(applet_id,NULL);
+	}
+	CORBA::Short applet_in_drag (const char *ccookie) {
+		CHECK_COOKIE ();
+		return panel_applet_in_drag;
 	}
 	void quit(const char *ccookie) {
 		CHECK_COOKIE ();

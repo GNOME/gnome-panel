@@ -19,10 +19,6 @@
 
 GNOME::Panel_var panel_client;
 
-/*this might be done better but I doubt there will be more then one
-  drag at a time :) Blah blah */
-static int currently_dragged_id = -1;
-
 static GdkCursor *fleur_cursor=NULL;
 
 typedef struct _CallbackInfo CallbackInfo;
@@ -196,21 +192,22 @@ gnome_panel_applet_register_callback(int applet_id,
 static gint
 applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
-	int ourid = (int)data;
+	int ourid = PTOI(data);
 	GdkEventButton *bevent;
+	gint in_drag;
 
 	switch (event->type) {
 		case GDK_BUTTON_PRESS:
 			bevent = (GdkEventButton *) event;
-			if(bevent->button == 2 && currently_dragged_id==-1) {
+			in_drag = panel_client->applet_in_drag(cookie);
+			/*check to see if there is an applet being dragged*/
+			if(bevent->button == 2 && !in_drag) {
+				gdk_pointer_ungrab(GDK_CURRENT_TIME);
+				gtk_grab_remove(widget);
 				panel_client->applet_drag_start(cookie,ourid);
-				currently_dragged_id = ourid;
-				move_grab_add(widget);
 				return TRUE;
-			} else if(currently_dragged_id > -1) {
+			} else if(in_drag) {
 				panel_client->applet_drag_stop(cookie,ourid);
-				currently_dragged_id = -1;
-				move_grab_remove(widget);
 				return TRUE;
 			} else if(bevent->button == 3) {
 				gdk_pointer_ungrab(GDK_CURRENT_TIME);
@@ -220,10 +217,8 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			}
 			break;
 		case GDK_BUTTON_RELEASE:
-			if(currently_dragged_id > -1) {
+			if(panel_client->applet_in_drag(cookie)) {
 				panel_client->applet_drag_stop(cookie, ourid);
-				currently_dragged_id = -1;
-				move_grab_remove(widget);
 				return TRUE;
 			}
 			break;
@@ -283,7 +278,7 @@ bind_top_applet_events(GtkWidget *widget, int applet_id)
 	gtk_signal_connect(GTK_OBJECT(widget),
 			   "event",
 			   GTK_SIGNAL_FUNC(applet_event),
-			   (gpointer)applet_id);
+			   ITOP(applet_id));
 
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),

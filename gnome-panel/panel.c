@@ -645,7 +645,9 @@ applet_drag_start(gint applet_id)
 				    PANEL_APPLET_PARENT_KEY);
 	g_return_if_fail(panel!=NULL);
 
-	panel_widget_applet_drag_start_no_grab(panel,info->widget);
+	panel_widget_applet_drag_start(panel,info->widget);
+	panel_widget_applet_drag_end(panel);
+	panel_widget_applet_drag_start(panel,info->widget);
 	panel_widget_applet_move_use_idle(panel);
 }
 
@@ -661,7 +663,7 @@ applet_drag_stop(gint applet_id)
 				    PANEL_APPLET_PARENT_KEY);
 	g_return_if_fail(panel!=NULL);
 
-	panel_widget_applet_drag_end_no_grab(panel);
+	panel_widget_applet_drag_end(panel);
 }
 
 void

@@ -1,3 +1,20 @@
+Thu Apr 30 01:11:24 1998  George Lebl  <jirka@5z.com>
+
+	* gnome-panel.idl,mico-glue.cc: a new call for
+	  checking if an applet is in drag
+
+	* panel-widget.[ch]: global variable which specifies
+	  if an applet is being dragged or not
+
+	* panel.c: use grabing functions for drags of corba applets
+
+	* applet-lib.cc: don't keep track of dragged applets,
+	  and ask panel for that info, this makes corba applets
+	  erspond to every button2 click
+
+	* panel-widget.c: put eventbox behind the dropzone to
+	  catch it's button press so we can get a menu
+
 Wed Apr 29 23:07:38 1998  George Lebl  <jirka@5z.com>
 
 	* drawer.c,panel-widget.[ch]: store position of drawers

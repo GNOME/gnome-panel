@@ -6,6 +6,10 @@
 
 GList *panels=NULL; /*other panels we might want to move the applet to*/
 
+/*there  can universally be only one applet being dragged since we assume
+we only have one mouse :) */
+gint panel_applet_in_drag = FALSE;
+
 static void panel_widget_class_init	(PanelWidgetClass *klass);
 static void panel_widget_init		(PanelWidget      *panel_widget);
 
@@ -1651,10 +1655,12 @@ panel_widget_new (gint size,
 				   GTK_SIGNAL_FUNC(panel_show_hide_right),
 				   panel);
 	} else {
-		panel->hidebutton_e = gtk_frame_new(NULL);
+		GtkWidget *frame = gtk_frame_new(NULL);
+		gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_OUT);
+		gtk_widget_show(frame);
+		panel->hidebutton_e = gtk_event_box_new();
 		gtk_widget_show(panel->hidebutton_e);
-		gtk_frame_set_shadow_type(GTK_FRAME(panel->hidebutton_e),
-					  GTK_SHADOW_OUT);
+		gtk_container_add(GTK_CONTAINER(panel->hidebutton_e),frame);
 		gtk_widget_set_usize(panel->hidebutton_e,40,0);
 	}
 	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_e,
@@ -1672,10 +1678,12 @@ panel_widget_new (gint size,
 				   GTK_SIGNAL_FUNC(panel_show_hide_right),
 				   panel);
 	} else {
-		panel->hidebutton_n = gtk_frame_new(NULL);
+		GtkWidget *frame = gtk_frame_new(NULL);
+		gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_OUT);
+		gtk_widget_show(frame);
+		panel->hidebutton_n = gtk_event_box_new();
 		gtk_widget_show(panel->hidebutton_n);
-		gtk_frame_set_shadow_type(GTK_FRAME(panel->hidebutton_n),
-					  GTK_SHADOW_OUT);
+		gtk_container_add(GTK_CONTAINER(panel->hidebutton_n),frame);
 		gtk_widget_set_usize(panel->hidebutton_n,0,40);
 	}
 	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_n,
@@ -1693,10 +1701,12 @@ panel_widget_new (gint size,
 				   GTK_SIGNAL_FUNC(panel_show_hide_left),
 				   panel);
 	} else {
-		panel->hidebutton_w = gtk_frame_new(NULL);
+		GtkWidget *frame = gtk_frame_new(NULL);
+		gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_OUT);
+		gtk_widget_show(frame);
+		panel->hidebutton_w = gtk_event_box_new();
 		gtk_widget_show(panel->hidebutton_w);
-		gtk_frame_set_shadow_type(GTK_FRAME(panel->hidebutton_w),
-					  GTK_SHADOW_OUT);
+		gtk_container_add(GTK_CONTAINER(panel->hidebutton_w),frame);
 		gtk_widget_set_usize(panel->hidebutton_w,40,0);
 	}
 	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_w,
@@ -1714,10 +1724,12 @@ panel_widget_new (gint size,
 				   GTK_SIGNAL_FUNC(panel_show_hide_left),
 				   panel);
 	} else {
-		panel->hidebutton_s = gtk_frame_new(NULL);
+		GtkWidget *frame = gtk_frame_new(NULL);
+		gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_OUT);
+		gtk_widget_show(frame);
+		panel->hidebutton_s = gtk_event_box_new();
 		gtk_widget_show(panel->hidebutton_s);
-		gtk_frame_set_shadow_type(GTK_FRAME(panel->hidebutton_s),
-					  GTK_SHADOW_OUT);
+		gtk_container_add(GTK_CONTAINER(panel->hidebutton_s),frame);
 		gtk_widget_set_usize(panel->hidebutton_s,0,40);
 	}
 	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_s,
@@ -1822,6 +1834,7 @@ panel_widget_new (gint size,
 void
 panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
 {
+	panel_applet_in_drag = TRUE;
 	panel->currently_dragged_applet = applet;
 	panel->currently_dragged_applet_pos =
 		panel_widget_get_pos(panel,applet);
@@ -1831,6 +1844,7 @@ void
 panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
 {
 	panel->currently_dragged_applet = NULL;
+	panel_applet_in_drag = FALSE;
 }
 
 void
@@ -1847,7 +1861,7 @@ panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
 			 GDK_CURRENT_TIME);
 }
 
-static void
+void
 panel_widget_applet_drag_end(PanelWidget *panel)
 {
 	gdk_pointer_ungrab(GDK_CURRENT_TIME);
@@ -1979,6 +1993,10 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 						new_panel,0);
 					if(pos<0)
 						pos = 0;
+					/*disable reentrancy into this
+					  function*/
+					panel->currently_dragged_applet_pos =
+						-999;
 					if(panel_widget_reparent(panel,
 							         new_panel,
 							         applet,

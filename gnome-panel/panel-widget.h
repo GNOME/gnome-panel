@@ -182,9 +182,10 @@ void		panel_widget_restore_state	(PanelWidget *panel);
 void		panel_widget_open_drawer	(PanelWidget *panel);
 void		panel_widget_close_drawer	(PanelWidget *panel);
 
-/*initiate drag*/
+/*drag*/
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
 						 GtkWidget *applet);
+void		panel_widget_applet_drag_end	(PanelWidget *panel);
 
 /* needed for corba */
 void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
@@ -228,6 +229,8 @@ void		panel_widget_set_drawer_pos	(PanelWidget *panel,
 
 
 extern GList *panels;
+
+extern gint panel_applet_in_drag;
 
 #ifdef __cplusplus
 }
