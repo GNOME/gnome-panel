@@ -26,6 +26,7 @@ GtkWidget *applet = NULL;
 
 typedef enum {
 	MAILBOX_LOCAL,
+	MAILBOX_LOCALDIR,
 	MAILBOX_POP3,
 	MAILBOX_IMAP
 } MailboxType;
@@ -116,7 +117,7 @@ struct _MailCheck {
 	GtkWidget *play_sound_check;
         
 	char *remote_server, *remote_username, *remote_password;
-	MailboxType mailbox_type; /* local = 0; pop3 = 1; imap = 2 */
+	MailboxType mailbox_type; /* local = 0; maildir = 1; pop3 = 2; imap = 3 */
         MailboxType mailbox_type_temp;
 
 	gboolean play_sound;
@@ -163,6 +164,24 @@ mail_animation_filename (MailCheck *mc)
 		return NULL;
 }
 
+static int
+calc_dir_contents (char *dir) {
+       DIR* dr;
+       struct dirent *de;
+       int size=0;
+
+       dr = opendir(dir);
+       if (dr == NULL)
+               return 0;
+       while((de = readdir(dr))) {
+               if (strlen(de->d_name) < 1 || de->d_name[0] == '.')
+                       continue;
+               size ++;
+       }
+       closedir(dr);
+       return size;
+}
+
 /*
  * Get file modification time, based upon the code
  * of Byron C. Darrah for coolmail and reused on fvwm95
@@ -199,33 +218,45 @@ check_mail_file_status (MailCheck *mc)
 			mc->anymail = mc->newmail = 0;
 #endif
 		} else {
-      old_unreadmail = mc->unreadmail;
-			mc->unreadmail = (signed int) (((unsigned int) v) >> 16);
-      if(mc->unreadmail > 0 && old_unreadmail != mc->unreadmail)
-        mc->newmail = 1;
-      else
-        mc->newmail = 0;
-			mc->anymail = (signed int) (((unsigned int) v) & 0x0000FFFFL) ? 1 : 0;
+		  old_unreadmail = mc->unreadmail;
+		  mc->unreadmail = (signed int) (((unsigned int) v) >> 16);
+		  if(mc->unreadmail > 0 && old_unreadmail != mc->unreadmail)
+		    mc->newmail = 1;
+		  else
+		    mc->newmail = 0;
+		  mc->anymail = (signed int) (((unsigned int) v) & 0x0000FFFFL) ? 1 : 0;
 		} 
-	} else {
-		status = stat (mc->mail_file, &s);
-		if (status < 0) {
-			oldsize = 0;
-			mc->anymail = mc->newmail = mc->unreadmail = 0;
-			return;
-		}
+	} else if(mc->mailbox_type == MAILBOX_LOCAL) {
+	    status = stat (mc->mail_file, &s);
+	    if (status < 0) {
+	      oldsize = 0;
+	      mc->anymail = mc->newmail = mc->unreadmail = 0;
+	      return;
+	    }
 		
-		newsize = s.st_size;
-		mc->anymail = newsize > 0;
-		mc->unreadmail = (s.st_mtime >= s.st_atime && newsize > 0);
+	    newsize = s.st_size;
+	    mc->anymail = newsize > 0;
+	    mc->unreadmail = (s.st_mtime >= s.st_atime && newsize > 0);
 		
-		if (newsize != oldsize && mc->unreadmail)
-			mc->newmail = 1;
-		else
-			mc->newmail = 0;
+	    if (newsize != oldsize && mc->unreadmail)
+	      mc->newmail = 1;
+	    else
+	      mc->newmail = 0;
 		
-		oldsize = newsize;
+	    oldsize = newsize;
 	}
+	else { /* MAILBOX_LOCALDIR */
+	  int newmail, oldmail;
+	  char tmp[1024];
+	  snprintf(tmp, 1024, "%s/new", mc->mail_file);
+	  newmail = calc_dir_contents(tmp);
+	  snprintf(tmp, 1024, "%s/cur", mc->mail_file);
+	  oldmail = calc_dir_contents(tmp);
+	  mc->newmail = newmail > oldsize;
+	  mc->unreadmail = newmail;
+	  oldsize = newmail;
+	  mc->anymail = newmail || oldmail;
+	}	    
 }
 
 static void
@@ -682,7 +713,8 @@ apply_properties_callback (GtkWidget *widget, gint page, gpointer data)
 static void
 make_remote_widgets_sensitive(MailCheck *mc)
 {
-	gboolean b = mc->mailbox_type_temp != MAILBOX_LOCAL;
+	gboolean b = mc->mailbox_type_temp != MAILBOX_LOCAL &&
+	             mc->mailbox_type_temp != MAILBOX_LOCALDIR;
 	
 	gtk_widget_set_sensitive (mc->mailfile_fentry, !b);
 	gtk_widget_set_sensitive (mc->mailfile_label, !b);
@@ -731,6 +763,14 @@ mailbox_properties_page(MailCheck *mc)
 	gtk_signal_connect (GTK_OBJECT(item), "activate", 
 			    GTK_SIGNAL_FUNC(set_mailbox_selection), 
 			    GINT_TO_POINTER(MAILBOX_LOCAL));
+	gtk_menu_append(GTK_MENU(l2), item);
+
+	item = gtk_menu_item_new_with_label(_("Local maildir")); 
+	gtk_widget_show(item);
+	gtk_object_set_user_data(GTK_OBJECT(item), mc);
+	gtk_signal_connect (GTK_OBJECT(item), "activate", 
+			    GTK_SIGNAL_FUNC(set_mailbox_selection), 
+			    GINT_TO_POINTER(MAILBOX_LOCALDIR));
 	gtk_menu_append(GTK_MENU(l2), item);
 
 	item = gtk_menu_item_new_with_label(_("Remote POP3-server")); 
