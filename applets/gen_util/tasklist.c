@@ -87,7 +87,45 @@ tasklist_update (TasklistData *tasklist)
 	wnck_tasklist_set_switch_workspace_on_unminimize (WNCK_TASKLIST (tasklist->tasklist),
 							  tasklist->move_unminimized_windows);
 }
+static void
+response_cb(GtkWidget * widget,int id, gpointer data)
+{
+	if(id == GTK_RESPONSE_HELP) {
 
+		GError *error = NULL;
+		static GnomeProgram *applet_program = NULL;
+
+		if (!applet_program) {
+			int argc = 1;
+			char *argv[2] = { "window-list" };
+			applet_program = gnome_program_init ("window-list", VERSION,
+							     LIBGNOME_MODULE,argc, argv,
+							     GNOME_PROGRAM_STANDARD_PROPERTIES,NULL);
+		}
+
+		gnome_help_display_desktop (applet_program, "window-list",
+					    "window-list","windowlist-prefs", &error);
+		if (error) {
+			GtkWidget *dialog;
+			dialog = gtk_message_dialog_new (GTK_WINDOW(widget),
+							 GTK_DIALOG_DESTROY_WITH_PARENT,
+							 GTK_MESSAGE_ERROR,
+							 GTK_BUTTONS_CLOSE,
+							  _("There was an error displaying help: %s"),
+							 error->message);
+
+			g_signal_connect (G_OBJECT (dialog), "response",
+					  G_CALLBACK (gtk_widget_destroy),
+					  NULL);
+	
+			gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+			gtk_widget_show (dialog);
+			g_error_free (error);
+		}
+	}
+	else
+		gtk_widget_hide (widget);
+}
 
 static void
 applet_change_orient (PanelApplet       *applet,
@@ -612,11 +650,33 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	GError *error = NULL;
+	static GnomeProgram *applet_program = NULL;
 
-	gnome_help_display_desktop (
-			NULL, "window-list", "window-list", NULL, &error);
+	if (!applet_program) {
+		int argc = 1;
+		char *argv[2] = { "window-list" };
+		applet_program = gnome_program_init ("window-list", VERSION,
+						     LIBGNOME_MODULE,argc, argv,
+						     GNOME_PROGRAM_STANDARD_PROPERTIES,NULL);
+	}
+
+	gnome_help_display_desktop (applet_program, "window-list",
+				    "window-list",NULL, &error);
 	if (error) {
-		g_warning ("help error: %s\n", error->message);
+		GtkWidget *dialog;
+		dialog = gtk_message_dialog_new (NULL,
+						 GTK_DIALOG_MODAL,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_CLOSE,
+						  _("There was an error displaying help: %s"),
+						 error->message);
+
+		g_signal_connect (G_OBJECT (dialog), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  NULL);
+
+		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		gtk_widget_show (dialog);
 		g_error_free (error);
 	}
 }
@@ -810,6 +870,10 @@ setup_dialog (GladeXML     *xml,
 	g_signal_connect_swapped (WID ("done_button"), "clicked",
 				  (GCallback) gtk_widget_hide, 
 				  tasklist->properties_dialog);
+	g_signal_connect (tasklist->properties_dialog, "response",
+			  G_CALLBACK (response_cb),
+			  tasklist);
+
 
 }
 
