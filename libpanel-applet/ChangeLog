@@ -1,3 +1,15 @@
+2003-06-23  Mark McLoughlin  <mark@skynet.ie>
+
+	Other half of fix for #114692.
+
+	* panel-applet.c:
+	(panel_applet_set_flags),
+	(panel_applet_set_size_hints): actually set the
+	properties rather than some internal state so
+	that listeners get updated.
+	(panel_applet_set_prop): impl setting of size hints
+	and flags.
+
 ==================== 2.3.3.1 ====================
 
 ==================== 2.3.3 ====================

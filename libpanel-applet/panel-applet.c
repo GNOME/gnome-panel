@@ -237,7 +237,7 @@ panel_applet_set_flags (PanelApplet      *applet,
 {
 	g_return_if_fail (PANEL_IS_APPLET (applet));
 
-	applet->priv->flags = flags;
+	bonobo_pbclient_set_short (BONOBO_OBJREF (applet->priv->prop_sack), PROPERTY_FLAGS, flags, NULL);
 }
 
 void
@@ -246,13 +246,28 @@ panel_applet_set_size_hints (PanelApplet      *applet,
 			     int               n_elements,
 			     int               base_size)
 {
-	int i;
-	applet->priv->size_hints = g_realloc (applet->priv->size_hints, n_elements * sizeof (int));
-	memcpy (applet->priv->size_hints, size_hints, n_elements * sizeof (int));
-	applet->priv->size_hints_len = n_elements;
+	CORBA_sequence_CORBA_long *seq;
+	CORBA_any                  any;
+	int                        i;
+
+	seq = CORBA_sequence_CORBA_long__alloc ();
+	seq->_length = seq->_maximum = n_elements;
+	seq->_release = CORBA_TRUE;
+	seq->_buffer  = CORBA_sequence_CORBA_long_allocbuf (seq->_length);
 
 	for (i = 0; i < n_elements; i++)
-		applet->priv->size_hints[i] += base_size;
+		seq->_buffer [i] = size_hints [i] + base_size;
+
+	any._type    = TC_CORBA_sequence_CORBA_long;
+	any._release = CORBA_FALSE;
+	any._value   = seq;
+
+	Bonobo_PropertyBag_setValue (BONOBO_OBJREF (applet->priv->prop_sack),
+				     PROPERTY_SIZE_HINTS,
+				     &any,
+				     NULL);
+
+	CORBA_free (seq);
 }
 
 guint
@@ -893,8 +908,8 @@ panel_applet_get_prop (BonoboPropertyBag *sack,
 		seq->_release = CORBA_TRUE;
 		
 		for (i = 0; i < applet->priv->size_hints_len; i++)
-			seq->_buffer [i] = applet->priv->size_hints[i];
-		}
+			seq->_buffer [i] = applet->priv->size_hints [i];
+	}
 		break;
 	default:
 		g_assert_not_reached ();
@@ -957,7 +972,7 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 				       panel_applet_signals [CHANGE_ORIENT],
 				       0, orient);
 		}
-		}
+	}
 		break;
 	case PROPERTY_SIZE_IDX: {
 		guint size;
@@ -971,7 +986,7 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
                                        panel_applet_signals [CHANGE_SIZE],
                                        0, size);
 		}
-		}
+	}
 		break;
 	case PROPERTY_BACKGROUND_IDX:
 		if (applet->priv->background)
@@ -980,6 +995,21 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 		applet->priv->background = g_strdup (BONOBO_ARG_GET_STRING (arg));
 
 		panel_applet_handle_background (applet);
+		break;
+	case PROPERTY_FLAGS_IDX:
+		applet->priv->flags = BONOBO_ARG_GET_SHORT (arg);
+		break;
+	case PROPERTY_SIZE_HINTS_IDX: {
+		CORBA_sequence_CORBA_long *seq = arg->_value;
+		int                        i;
+
+		applet->priv->size_hints = g_realloc (applet->priv->size_hints,
+						      seq->_length * sizeof (int));
+		for (i = 0; i < seq->_length; i++)
+			applet->priv->size_hints [i] = seq->_buffer [i];
+		
+		applet->priv->size_hints_len = seq->_length;;
+	}
 		break;
 	default:
 		g_assert_not_reached ();
