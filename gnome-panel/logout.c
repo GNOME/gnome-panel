@@ -16,29 +16,31 @@ void
 change_orient(int id, int orient)
 {
   PanelOrientType o = (PanelOrientType)orient;
-  puts("CHANGE_ORIENT");
 }
 
 void
-session_save(int id, const char *cfgpath)
+session_save(int id, const char *cfgpath, const char *globcfgpath)
 {
-  /*FIXME: save the position*/
-  puts("SESSION_SAVE");
 }
+
+static gint
+quit_logout(gpointer data)
+{
+	exit(0);
+}
+
 
 void
 shutdown_applet(int id)
 {
-  puts("SHUTDOWN_APPLET");
-  /*kill our window*/
-  gtk_widget_unref(aw);
-  exit(0);
+  gtk_widget_destroy(aw);
+  gtk_idle_add(quit_logout,NULL);
 }
 
 static void
 logout(void)
 {
-  g_warning("I don't know how to log out!\n");
+  gnome_panel_quit();
 }
 
 static GtkWidget *
@@ -73,6 +75,7 @@ main(int argc, char *argv[])
   GtkWidget *logout;
   char *result;
   char *cfgpath;
+  char *globcfgpath;
 
   panel_corba_register_arguments ();
 
@@ -105,7 +108,7 @@ main(int argc, char *argv[])
     
     result = gnome_panel_applet_request_id (GTK_WIDGET(aw),
 					    myinvoc, &applet_id,
-					    &cfgpath);
+					    &cfgpath,&globcfgpath);
     if(result)
       g_error("Could not talk to the panel: %s\n", result);
 
@@ -113,6 +116,7 @@ main(int argc, char *argv[])
   }
 
   g_free(cfgpath); /* We should load up config data first... */
+  g_free(globcfgpath);
 
   result = gnome_panel_prepare_and_transfer(aw, applet_id);
   if (result)

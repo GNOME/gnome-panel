@@ -21,6 +21,8 @@ GList *applets = NULL;
 
 extern GtkWidget * root_menu;
 
+char *panel_cfg_path=NULL;
+
 GtkTooltips *panel_tooltips = NULL;
 
 GnomeClient *client = NULL;
@@ -48,7 +50,7 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 
 		g_return_if_fail (params != NULL);
 
-		reserve_applet_spot (cfgpath, params, panel, pos,
+		reserve_applet_spot (id, params, panel, pos, cfgpath,
 				     APPLET_EXTERN_PENDING);
 		
 		command = g_copy_strings ("(true;", params, ") &", NULL);
@@ -64,7 +66,7 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 
 		
 		register_toy(menu->button,menu->menu,menu,MENU_ID,params,pos,
-			     panel,APPLET_HAS_PROPERTIES,APPLET_MENU);
+			     panel,NULL,APPLET_MENU);
 		printf("[load:menu:%ld]\n",(long)menu);
 	} else if(strcmp(id,DRAWER_ID) == 0) {
 		Drawer *drawer;
@@ -109,8 +111,7 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 		g_return_if_fail(drawer != NULL);
 
 		register_toy(drawer->button,drawer->drawer,drawer,DRAWER_ID,
-			     params, pos, panel,
-			     APPLET_HAS_PROPERTIES,APPLET_DRAWER);
+			     params, pos, panel, NULL, APPLET_DRAWER);
 	}
 }
 
@@ -344,6 +345,61 @@ panel_applet_move(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	applet_move_foreach(applet,widget);
 }
 
+static void
+panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
+{
+	int wx, wy;
+	PanelWidget *panel = data;
+
+	g_return_if_fail(panel != NULL);
+
+	gdk_window_get_origin (GTK_WIDGET(panel)->window, &wx, &wy);
+
+	switch(panel->snapped) {
+		case PANEL_DRAWER:
+		case PANEL_FREE:
+			if(panel->orient==PANEL_VERTICAL) {
+				gtk_widget_get_pointer(GTK_WIDGET(panel),
+						       NULL, &wy);
+				*x = wx + GTK_WIDGET(panel)->allocation.width;
+				*y = wy;
+				break;
+			}
+			/*fall through for horizontal*/
+		case PANEL_BOTTOM:
+			gtk_widget_get_pointer(GTK_WIDGET(panel),
+					       &wx, NULL);
+			*x = wx;
+			*y = wy - GTK_WIDGET (menu)->allocation.height;
+			break;
+		case PANEL_TOP:
+			gtk_widget_get_pointer(GTK_WIDGET(panel),
+					       &wx, NULL);
+			*x = wx;
+			*y = wy + GTK_WIDGET(panel)->allocation.height;
+			break;
+		case PANEL_LEFT:
+			gtk_widget_get_pointer(GTK_WIDGET(panel),
+					       NULL, &wy);
+			*x = wx + GTK_WIDGET(panel)->allocation.width;
+			*y = wy;
+			break;
+		case PANEL_RIGHT:
+			gtk_widget_get_pointer(GTK_WIDGET(panel),
+					       NULL, &wy);
+			*x = wx - GTK_WIDGET (menu)->allocation.width;
+			*y = wy;
+			break;
+	}
+
+	if(*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width())
+		*x=gdk_screen_width() - GTK_WIDGET (menu)->allocation.width;
+	if(*x < 0) *x =0;
+
+	if(*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height())
+		*y=gdk_screen_height() - GTK_WIDGET (menu)->allocation.height;
+	if(*y < 0) *y =0;
+}
 
 
 static int
@@ -351,8 +407,8 @@ panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
 	/* FIXME: display main menu instead! */
 	if(event->button==3 || event->button==1) {
-		gtk_menu_popup(GTK_MENU(data), NULL, NULL, NULL,
-			NULL, event->button, time(NULL));
+		gtk_menu_popup(GTK_MENU(data), NULL, NULL, panel_menu_position,
+			widget, event->button, time(NULL));
 		return TRUE;
 	}
 	return FALSE;
@@ -471,6 +527,9 @@ main(int argc, char **argv)
 	panel_corba_register_arguments ();
 
 	gnome_init("panel", NULL, argc, argv, 0, NULL);
+
+	/*FIXME: this should be session specific*/
+	panel_cfg_path = g_strdup("/panel/");
 
 	/*set up global options*/
 	global_config.tooltips_enabled =

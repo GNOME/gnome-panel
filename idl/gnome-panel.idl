@@ -5,7 +5,8 @@ module GNOME {
 		void reparent_window_id (in unsigned long wid, in short id);
 		short applet_request_id(in string ior,
 					in string path,
-					out string cfgpath);
+					out string cfgpath,
+					out string globcfgpath);
 		void applet_remove_from_panel (in short id);
 		short applet_get_panel (in short id);
 		short applet_get_pos (in short id);
@@ -21,7 +22,9 @@ module GNOME {
 	interface Applet {
 		void change_orient (in short id, in short orient);
 		void do_callback (in short id, in string callback_name);
-		void session_save (in short id, in string cfgpath);
+		void session_save (in short id,
+				   in string cfgpath,
+				   in string globcfgpath);
 		void shutdown_applet (in short id);
 	};
 };

@@ -36,6 +36,8 @@ extern GList *small_icons;
 
 extern GlobalConfig global_config;
 
+extern char *panel_cfg_path;
+
 static void
 get_applet_geometry(GtkWidget *applet, int *x, int *y, int *width, int *height)
 {
@@ -138,7 +140,8 @@ save_applet_configuration(gpointer data, gpointer user_data)
 		g_free(fullpath);
 
 		/*have the applet do it's own session saving*/
-		send_applet_session_save(info->id,(*num)-2,path);
+		send_applet_session_save(info->id,(*num)-2,path,
+					 panel_cfg_path);
 	} else {
 		fullpath = g_copy_strings(path,"id",NULL);
 		gnome_config_set_string(fullpath, info->id);
@@ -332,9 +335,7 @@ panel_quit(void)
 	if (! GNOME_CLIENT_CONNECTED (client)) {
 		panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 				    GNOME_INTERACT_NONE, 0, NULL);
-		/*puts("BEFORE_GTK_MAIN_QUIT");*/
-		gtk_main_quit ();
-		/*puts("AFTER_GTK_MAIN_QUIT");*/
+		gtk_exit (0);
 	} else {
 		/* We request a completely interactive, full, slow shutdown.  */
 		gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
@@ -460,14 +461,63 @@ create_applet_menu(AppletInfo *info, GList *user_menu)
 }
 
 static void
+applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
+{
+	AppletInfo *info = data;
+	int wx, wy;
+	PanelWidget *panel = find_applet_panel(info->widget);
+
+	g_return_if_fail(panel != NULL);
+
+	gdk_window_get_origin (info->widget->window, &wx, &wy);
+
+	switch(panel->snapped) {
+		case PANEL_DRAWER:
+		case PANEL_FREE:
+			if(panel->orient==PANEL_VERTICAL) {
+				*x = wx + info->widget->allocation.width;
+				*y = wy;
+				break;
+			}
+			/*fall through for horizontal*/
+		case PANEL_BOTTOM:
+			*x = wx;
+			*y = wy - GTK_WIDGET (menu)->allocation.height;
+			break;
+		case PANEL_TOP:
+			*x = wx;
+			*y = wy + info->widget->allocation.height;
+			break;
+		case PANEL_LEFT:
+			*x = wx + info->widget->allocation.width;
+			*y = wy;
+			break;
+		case PANEL_RIGHT:
+			*x = wx - GTK_WIDGET (menu)->allocation.width;
+			*y = wy;
+			break;
+	}
+
+	if(*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width())
+		*x=gdk_screen_width() - GTK_WIDGET (menu)->allocation.width;
+	if(*x < 0) *x =0;
+
+	if(*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height())
+		*y=gdk_screen_height() - GTK_WIDGET (menu)->allocation.height;
+	if(*y < 0) *y =0;
+}
+
+
+
+
+static void
 show_applet_menu(AppletInfo *info)
 {
 	if (!info->menu)
 		info->menu = create_applet_menu(info,info->user_menu);
 
-	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, NULL, NULL, 0/*3*/, time(NULL));
-	/*FIXME: make it pop-up on some title bar of the applet menu or
-	  somehow avoid pressing remove applet being under the cursor!*/
+	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
+		       info, 0/*3*/, time(NULL));
 }
 
 
@@ -525,7 +575,8 @@ applet_show_menu(int id)
 	if(!arrow)
 		arrow = gdk_cursor_new(GDK_ARROW);
 
-	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, NULL, NULL, 0/*3*/, time(NULL));
+	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
+		       info, 0/*3*/, time(NULL));
 	gtk_grab_add(info->menu);
 	gdk_pointer_grab(info->menu->window,
 			 TRUE,
@@ -622,7 +673,8 @@ applet_add_callback(short id, char *callback_name, char *menuitem_text)
 }
 
 int
-applet_request_id (const char * ior, const char *path, char **cfgpath)
+applet_request_id (const char * ior, const char *path, char **cfgpath,
+		   char **globcfgpath)
 {
 	GtkWidget *eb;
 	GdkWindow *win;
@@ -630,21 +682,28 @@ applet_request_id (const char * ior, const char *path, char **cfgpath)
 	AppletInfo *info;
 	int i;
 
+	if(path==NULL)
+		puts("DAMN!!!!!!");
+
 	for(i=0,list=applets;list!=NULL;list=g_list_next(list),i++) {
 		info = list->data;
 		if(info && info->type == APPLET_EXTERN_PENDING &&
 		   strcmp(info->params,path)==0) {
-			*cfgpath = info->id;
-			info->id = g_strdup(ior);
 			/*we started this and already reserved a spot
 			  for it, including the eventbox widget*/
+			*cfgpath = info->cfg;
+			info->cfg = NULL;
+			*globcfgpath = g_strdup(panel_cfg_path);
+			g_free(info->id);
+			info->id = g_strdup(ior);
 			info->type = APPLET_EXTERN_RESERVED;
 			return i;
 		}
 	}
 
-	reserve_applet_spot (ior, path, 0, 0, APPLET_EXTERN_RESERVED);
-	*cfgpath = g_strdup("");
+	reserve_applet_spot (ior, path, 0, 0, NULL, APPLET_EXTERN_RESERVED);
+	*cfgpath = NULL;
+	*globcfgpath = g_strdup(panel_cfg_path);
 	return i;
 }
 
@@ -679,7 +738,7 @@ reparent_window_id (unsigned long winid, int id)
   only*/
 void
 reserve_applet_spot (const char *id, const char *path, int panel, int pos,
-		     AppletType type)
+		     char *cfgpath, AppletType type)
 {
 	GtkWidget *eb;
 	GdkWindow *win;
@@ -693,7 +752,7 @@ reserve_applet_spot (const char *id, const char *path, int panel, int pos,
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the params field*/
 	register_toy(eb,NULL,NULL,g_strdup(id),g_strdup(path),
-		     pos,panel,0,type);
+		     pos,panel,cfgpath, type);
 
 	/*printf ("leaving reserve spot\n");*/
 }
@@ -779,7 +838,7 @@ register_toy(GtkWidget *applet,
 	     char *params,
 	     int pos,
 	     int panel,
-	     long flags,
+	     char *cfgpath,
 	     AppletType type)
 {
 	GtkWidget     *eventbox;
@@ -816,7 +875,14 @@ register_toy(GtkWidget *applet,
 	info->menu = NULL;
 	info->data = data;
 	info->id = g_strdup(id);
-	info->params = g_strdup(params);
+	if(params)
+		info->params = g_strdup(params);
+	else
+		info->params = NULL;
+	if(cfgpath)
+		info->cfg = g_strdup(cfgpath);
+	else
+		info->cfg = NULL;
 	info->user_menu = NULL;
 
 	gtk_object_set_user_data(GTK_OBJECT(eventbox),info);
@@ -836,6 +902,4 @@ register_toy(GtkWidget *applet,
 			   info);
 
 	orientation_change(info,panelw);
-
-	/*printf ("The window id for %s is: %d\n",id, GDK_WINDOW_XWINDOW (eventbox->window));*/
 }

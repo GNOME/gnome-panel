@@ -7,7 +7,9 @@ BEGIN_GNOME_DECLS
 
 void panel_corba_gtk_main (char *service_name);
 
-void send_applet_session_save (const char *ior, int id, const char *cfgpath);
+void send_applet_session_save (const char *ior, int id,
+			       const char *cfgpath,
+			       const char *globcfgpath);
 void send_applet_shutdown_applet (const char *ior, int id);
 void send_applet_change_orient (const char *ior, int id,  int orient);
 void send_applet_do_callback (const char *ior, int id, char *callback_name);

@@ -1,3 +1,16 @@
+Sat Mar 14 01:38:34 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c, main.c: added menu positioning to popup menus
+	  so they appear beside the widgets not on them
+
+	* logout.c: now quits properly, I have to make this a
+	  core applet instead of a corba applet, but it provides
+	  soem corba testing now
+
+	* gnome-panel.idl, mico-glue.cc,applet-lib.cc, panel.c ...:
+	  implemented a global cfg path for applets to load/save
+	  some general stuff (will be needed for multi applet applets)
+
 1998-03-13  Carsten Schaar  <nhadcasc@fs-maphy.uni-hannover.de>
 
 	* panel_config.c: Removed the definition of the '_' macro. Uses

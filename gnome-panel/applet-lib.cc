@@ -33,7 +33,7 @@ static CORBA::BOA_ptr boa_ptr;
 /*every applet must implement these*/
 BEGIN_GNOME_DECLS
 void change_orient(int id, int orient);
-void session_save(int id, const char *cfgpath);
+void session_save(int id, const char *cfgpath, const char *globcfgpath);
 void shutdown_applet(int id);
 END_GNOME_DECLS
 
@@ -45,8 +45,9 @@ public:
 		::change_orient(id,orient);
 	}
 	void session_save (CORBA::Short id,
-			   const char *cfgpath) {
-		::session_save(id,cfgpath);
+			   const char *cfgpath,
+			   const char *globcfgpath) {
+		::session_save(id,cfgpath,globcfgpath);
 	}
 	void shutdown_applet (CORBA::Short id) {
 		::shutdown_applet(id);
@@ -241,11 +242,13 @@ char *
 gnome_panel_applet_request_id (GtkWidget *widget,
 			       char *path,
 			       int *id,
-			       char **cfgpath)
+			       char **cfgpath,
+			       char **globcfgpath)
 {
 	char *result;
 	char *ior;
 	char *cfgpathback = NULL;
+	char *globcfgpathback = NULL;
 
 	/* Create an applet object, I do pass the widget parameter to the
 	 * constructor object to have a way of sort out to which object
@@ -261,7 +264,8 @@ gnome_panel_applet_request_id (GtkWidget *widget,
 	ior = orb_ptr->object_to_string (applet);
 
 	/*reserve a spot and get an id for this applet*/
-	*id = panel_client->applet_request_id(ior,path,cfgpathback);
+	*id = panel_client->applet_request_id(ior,path,cfgpathback,
+					      globcfgpathback);
 
 	if(cfgpath==NULL) {
 		CORBA::string_free(cfgpathback);
@@ -270,6 +274,14 @@ gnome_panel_applet_request_id (GtkWidget *widget,
 		CORBA::string_free(cfgpathback);
 	} else {
 		*cfgpath = NULL;
+	}
+	if(globcfgpath==NULL) {
+		CORBA::string_free(globcfgpathback);
+	} else if(cfgpathback != NULL) {
+		*globcfgpath = g_strdup(globcfgpathback);
+		CORBA::string_free(globcfgpathback);
+	} else {
+		*globcfgpath = NULL;
 	}
 
 	return 0;
@@ -296,6 +308,15 @@ gnome_panel_prepare_and_transfer (GtkWidget *widget, int id)
 	return 0;
 }
 
+char *
+gnome_panel_quit (void)
+{
+	char *result;
+
+	panel_client->quit ();
+
+	return 0;
+}
 
 
 void

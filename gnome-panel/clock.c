@@ -177,7 +177,7 @@ change_orient(int id, int orient)
 }
 
 void
-session_save(int id, const char *cfgpath)
+session_save(int id, const char *cfgpath, const char *globcfgpath)
 {
 	/*save the session here*/
 }
@@ -210,6 +210,7 @@ main(int argc, char **argv)
 	GtkWidget *clock;
 	char *result;
 	char *cfgpath;
+	char *globcfgpath;
 
 	char *mypath;
 	char *myinvoc;
@@ -232,7 +233,8 @@ main(int argc, char **argv)
 		myinvoc = g_copy_strings(mypath,"/",argv[0],NULL);
 		free(mypath);
 	}
-	result = gnome_panel_applet_request_id(aw,myinvoc,&applet_id,&cfgpath);
+	result = gnome_panel_applet_request_id(aw,myinvoc,&applet_id,
+					       &cfgpath,&globcfgpath);
 	g_free(myinvoc);
 	if (result){
 		g_error ("Could not talk to the Panel: %s\n", result);
@@ -241,6 +243,7 @@ main(int argc, char **argv)
 
 	/*use cfg path for loading up data!*/
 
+	g_free(globcfgpath);
 	g_free(cfgpath);
 
 	gnome_panel_applet_register_callback (APPLET_WIDGET(aw),

@@ -37,10 +37,6 @@ struct _PanelConfig {
 };
 
 typedef enum {
-	APPLET_HAS_PROPERTIES = 1L << 0
-} AppletFlags;
-
-typedef enum {
 	APPLET_EXTERN,
 	APPLET_EXTERN_RESERVED,
 	APPLET_EXTERN_PENDING,
@@ -73,8 +69,8 @@ struct _AppletInfo {
 	GtkWidget *assoc; /*associated widget, e.g. a drawer or a menu*/
 	GtkWidget *menu; /*the applet menu*/
 	gpointer data;
-	gchar *id; /*used for IOR or string Id, and also for passing around
-		     the config path*/
+	gchar *id; /*used for IOR or string Id*/
+	gchar *cfg; /*used for passing around the per applet config path*/
 	gchar *params; /*used for parameters to internal applets and for path
 			 for external applets*/
 	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
@@ -98,7 +94,7 @@ void register_toy(GtkWidget *applet,
 		  char *params,
 		  int pos,
 		  int panel,
-		  long flags,
+		  char *cfgpath,
 		  AppletType type);
 
 void panel_quit(void);
@@ -106,9 +102,10 @@ void panel_quit(void);
 void apply_global_config(void);
 
 void reparent_window_id (unsigned long winid, int id);
-int applet_request_id (const char * ior, const char *path, char **cfgpath);
+int applet_request_id (const char * ior, const char *path, char **cfgpath,
+		       char **globcfgpath);
 void reserve_applet_spot (const char *id, const char *path, int panel,
-			  int pos, AppletType type);
+			  int pos, char *cfgpath, AppletType type);
 
 /*stuff for corba*/
 int applet_get_panel(int id);

@@ -21,15 +21,26 @@ public:
 	}
 	CORBA::Short applet_request_id (const char *ior,
 					const char *path,
-					char *&cfgpath) {
-		char *s=NULL;
+					char *&cfgpath,
+					char *&globcfgpath) {
+		char *cfg=NULL;
+		char *globcfg=NULL;
 		int id;
 
-		id = ::applet_request_id (ior,path,&s);
-		if(s) {
-			cfgpath = CORBA::string_dup(s);
-			g_free(s);
-		}
+		if(path == NULL)
+			puts("DAMN!!!!!!!");
+
+		id = ::applet_request_id (ior,path,&cfg,&globcfg);
+		if(cfg) {
+			cfgpath = CORBA::string_dup(cfg);
+			g_free(cfg);
+		} else 
+			cfgpath = CORBA::string_dup("");
+		if(globcfg) {
+			globcfgpath = CORBA::string_dup(globcfg);
+			g_free(globcfg);
+		} else
+			globcfgpath = CORBA::string_dup("");
 		return id;
 	}
 	CORBA::Short applet_get_panel (CORBA::Short id) {
@@ -91,14 +102,15 @@ panel_corba_gtk_main (char *service_name)
 }
 
 void
-send_applet_session_save (const char *ior, int id, const char *cfgpath)
+send_applet_session_save (const char *ior, int id, const char *cfgpath,
+			  const char *globcfgpath)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
 	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->session_save(id,cfgpath);
+	applet->session_save(id,cfgpath,globcfgpath);
 }
 
 void

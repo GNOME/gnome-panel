@@ -4,6 +4,7 @@
  *
  * Authors: Miguel de Icaza
  *          Federico Mena
+ * CORBAized by George Lebl
  */
 
 #include <config.h>
@@ -17,12 +18,8 @@
 #include "panel.h"
 
 
-#define APPLET_ID "Launcher"
-
-
-static PanelCmdFunc panel_cmd_func;
-
-gpointer applet_cmd_func(AppletCommand *cmd);
+#define CONFIG_TAG "Launcher"
+#define APPLET_DATA "launcher_data"
 
 static char *default_app_pixmap;
 
