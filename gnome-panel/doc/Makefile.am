@@ -47,7 +47,7 @@ scan:
 	-(cd $(srcdir) \
 	&& env CFLAGS=$(CFLAGS) LDFLAGS=$(LDFLAGS) \
 		 gtkdoc-scanobj --module=$(DOC_MODULE) \
-	&& gtkdoc-scan --module=$(DOC_MODULE) --source-dir=$(DOC_SOURCE_DIR) \
+	&& gtkdoc-scan --module=$(DOC_MODULE) --source-dir=.. \
 		--ignore-headers="aligned-widget.h   menu-rh.h	\
 			menu-util.h	   sliding-widget.h	\
 			applet.h           menu.h		\
@@ -71,7 +71,7 @@ templates: scan
 
 sgml:
 	cd $(srcdir) \
-	&& gtkdoc-mkdb --module=$(DOC_MODULE) --source-dir=$(DOC_SOURCE_DIR)
+	&& gtkdoc-mkdb --module=$(DOC_MODULE) --source-dir=..
 
 html:
 	test -d $(srcdir)/html || mkdir $(srcdir)/html
