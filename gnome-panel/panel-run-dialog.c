@@ -458,7 +458,8 @@ panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 	const char *text;
 	char       *quoted, *temp;
 	
-	if (!file)
+	/* Don't allow filenames beginning with '-' */
+	if (!file || file[0] == '-')
 		return;
 	
 	quoted = quote_string (file);
