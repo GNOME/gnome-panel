@@ -681,7 +681,7 @@ handle_task_percent_complete_edited (ClockData           *cd,
         GtkTreeIter  iter;
         char        *uid;
         int          percent_complete;
-        char        *error = NULL;
+        char        *error = NULL, *text_copy;
 
         path       = gtk_tree_path_new_from_string (path_str);
         child_path = gtk_tree_model_filter_convert_path_to_child_path (cd->tasks_filter, path);
@@ -690,7 +690,10 @@ handle_task_percent_complete_edited (ClockData           *cd,
                             TASK_COLUMN_UID, &uid,
                             -1);
 
-        percent_complete = (int) g_strtod (text, &error);
+        text_copy = g_strdup (text);
+        text_copy = g_strdelimit (text_copy, "%", ' ');
+        text_copy = g_strstrip (text_copy);
+        percent_complete = (int) g_strtod (text_copy, &error);
         if (!error || !error [0]) {
                 gboolean task_completed;
 
@@ -704,6 +707,7 @@ handle_task_percent_complete_edited (ClockData           *cd,
         }
 
         g_free (uid);
+        g_free (text_copy);
         gtk_tree_path_free (path);
         gtk_tree_path_free (child_path);
 }
