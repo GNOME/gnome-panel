@@ -31,7 +31,6 @@
 #include <libgnome/gnome-i18n.h>
 
 #include "applet.h"
-#include "drawer-widget.h"
 #include "egg-screen-exec.h"
 #include "gnome-run.h"
 #include "menu.h"
@@ -315,24 +314,12 @@ panel_action_button_clicked (GtkButton *gtk_button)
 	g_return_if_fail (button->priv->type < PANEL_ACTION_LAST);
 
 	if (global_config.drawer_auto_close) {
-		GtkWidget *parent;
+		PanelToplevel *toplevel;
 
-		g_return_if_fail (PANEL_WIDGET (GTK_WIDGET (button)->parent)->panel_parent != NULL);
+		toplevel = PANEL_WIDGET (GTK_WIDGET (button)->parent)->toplevel;
 
-		parent = PANEL_WIDGET (GTK_WIDGET (button)->parent)->panel_parent;
-
-		if (DRAWER_IS_WIDGET (parent)) {
-			GtkWidget *grandparent;
-
-			grandparent = PANEL_WIDGET (
-						PANEL_WIDGET (
-							BASEP_WIDGET (parent)->panel
-						)->master_widget->parent
-					)->panel_parent;
-
-			drawer_widget_close_drawer (
-				DRAWER_WIDGET (parent), grandparent);
-		}
+		if (panel_toplevel_get_is_attached (toplevel))
+			panel_toplevel_hide (toplevel, FALSE, -1);
 	}
 
 	if (actions [button->priv->type].invoke)
@@ -364,7 +351,7 @@ panel_action_button_class_init (PanelActionButtonClass *klass,
 					   _("Action Type"),
 					   _("The type of action this button implements"),
 					   PANEL_TYPE_ACTION_BUTTON_TYPE,
-					   PANEL_ORIENT_UP,
+					   PANEL_ORIENTATION_TOP,
 					   G_PARAM_READWRITE));
 }
 

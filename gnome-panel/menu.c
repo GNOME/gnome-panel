@@ -37,26 +37,21 @@
 
 #include "menu.h"
 
-#include "aligned-widget.h"
 #include "button-widget.h"
 #include "distribution.h"
-#include "drawer-widget.h"
-#include "edge-widget.h"
-#include "floating-widget.h"
 #include "gnome-run.h"
 #include "launcher.h"
 #include "nothing.h"
 #include "menu-fentry.h"
 #include "menu-util.h"
 #include "menu-ditem.h"
-#include "multiscreen-stuff.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
 #include "panel-main.h"
 #include "panel.h"
+#include "drawer.h"
 #include "panel-config-global.h"
 #include "session.h"
-#include "sliding-widget.h"
 #include "panel-applet-frame.h"
 #include "quick-desktop-reader.h"
 #include "xstuff.h"
@@ -66,6 +61,8 @@
 #include "panel-recent.h"
 #include "panel-menu-bar.h"
 #include "panel-compatibility.h"
+#include "panel-multiscreen.h"
+#include "panel-toplevel.h"
 
 #undef MENU_DEBUG
 
@@ -422,8 +419,7 @@ menuitem_to_screen (GtkWidget *menuitem)
 
 	panel_widget = menu_get_panel (menuitem);
 
-	return gtk_window_get_screen (
-			GTK_WINDOW (panel_widget->panel_parent));
+	return gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel));
 }
 
 static void
@@ -591,7 +587,7 @@ menu_on_screen (GtkMenu  *menu,
 {
 	MenuReposition *repo = data;
 	GtkRequisition  req;
-	int             screen;
+	GdkScreen      *screen;
 	int             monitor;
 	int             monitor_width;
 	int             monitor_height;
@@ -600,14 +596,13 @@ menu_on_screen (GtkMenu  *menu,
 
 	gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
 
-	screen = gdk_screen_get_number (
-			gtk_widget_get_screen (GTK_WIDGET (menu)));
-	monitor = multiscreen_locate_coords (screen, *x, *y);
+	screen  = gtk_widget_get_screen (GTK_WIDGET (menu));
+	monitor = panel_multiscreen_locate_coords (screen, *x, *y);
 
-	monitor_width  = multiscreen_width (screen, monitor);
-	monitor_height = multiscreen_height (screen, monitor);
-	monitor_basex  = multiscreen_x (screen, monitor);
-	monitor_basey  = multiscreen_y (screen, monitor);
+	monitor_width  = panel_multiscreen_width (screen, monitor);
+	monitor_height = panel_multiscreen_height (screen, monitor);
+	monitor_basex  = panel_multiscreen_x (screen, monitor);
+	monitor_basey  = panel_multiscreen_y (screen, monitor);
 
 	if (repo->orig_func != NULL) {
 		repo->orig_func (menu, x, y, push_in, repo->orig_data);
@@ -1212,7 +1207,7 @@ add_app_to_panel (GtkWidget    *widget,
 	PanelData *pd;
 	int insertion_pos = -1;
 
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 
@@ -1257,7 +1252,7 @@ add_drawers_from_dir (const char *dirname, const char *name,
 		return;
 	}
 
-	newpanel = PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
+	newpanel = panel_toplevel_get_panel_widget (drawer->toplevel);
 
 	list = get_mfiles_from_menudir (dirname, NULL /* sorted */);
 	for(li = list; li!= NULL; li = li->next) {
@@ -1314,7 +1309,7 @@ add_menudrawer_to_panel(GtkWidget *widget, gpointer data)
 
 	g_return_if_fail (mf != 0);
 
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 
@@ -1333,7 +1328,7 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 
 	panel = menu_get_panel (widget);
 
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 
@@ -1608,7 +1603,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 
 	gtk_menu_set_screen (
 		GTK_MENU (sim->menu),
-		panel_screen_from_toplevel (panel_widget->panel_parent));
+		gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
 
 	gtk_menu_popup (GTK_MENU (sim->menu),
 			NULL,
@@ -1895,7 +1890,7 @@ add_drawer_to_panel (GtkWidget *widget, gpointer data)
 	PanelData *pd;
 	int insertion_pos = -1;
 
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 	
@@ -1911,7 +1906,7 @@ add_action_button_to_panel (GtkWidget *widget,
 	PanelData *pd;
 	int insertion_pos = -1;
 
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 	
@@ -1927,7 +1922,7 @@ add_menu_bar_to_panel (GtkWidget *widget,
 	PanelData *pd;
 	int insertion_pos = -1;
 
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 	
@@ -1944,7 +1939,7 @@ add_launcher (GtkWidget *widget, const char *item_loc)
 
 	panel = menu_get_panel (widget);
 
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 
@@ -2410,11 +2405,13 @@ free_menu (gpointer data)
 static void
 menu_deactivate (GtkWidget *w, gpointer data)
 {
-	Menu *menu = data;
-	GtkWidget *panel = get_panel_parent (menu->button);
+	PanelWidget *panel_widget;
+	Menu        *menu = data;
 
-	/* allow the panel to hide again */
-	BASEP_WIDGET (panel)->autohide_inhibit = FALSE;
+	panel_widget = PANEL_WIDGET (menu->button->parent);
+
+	panel_toplevel_unblock_auto_hide (panel_widget->toplevel);
+
 	GTK_BUTTON (menu->button)->in_button = FALSE;
 	BUTTON_WIDGET (menu->button)->ignore_leave = FALSE;
 	gtk_button_released (GTK_BUTTON (menu->button));
@@ -2475,7 +2472,7 @@ add_bonobo_applet (GtkWidget  *widget,
 
 	panel = menu_get_panel (widget);
 
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 
@@ -2702,39 +2699,40 @@ create_applets_menu (GtkWidget             *menu,
 	return menu;
 }
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 static void
-find_empty_pos_array (int screen,
-		      int monitor,
-		      int posscore[3][3])
+find_empty_pos_array (GdkScreen *screen,
+		      int        monitor,
+		      int        posscore[3][3])
 {
 	GSList *li;
 	int i,j;
 	PanelData *pd;
-	BasePWidget *basep;
+	BasePNAWidget *basep;
 	
 	int tx, ty;
 	int w, h;
 	gfloat sw, sw2, sh, sh2;
 
-	sw2 = 2 * (sw = multiscreen_width (screen, monitor) / 3);
-	sh2 = 2 * (sh = multiscreen_height (screen, monitor) / 3);
+	sw2 = 2 * (sw = panel_multiscreen_width (screen, monitor) / 3);
+	sh2 = 2 * (sh = panel_multiscreen_height (screen, monitor) / 3);
 	
 	for (li = panel_list; li != NULL; li = li->next) {
 		pd = li->data;
 
-		if (DRAWER_IS_WIDGET(pd->panel))
+		if (DRAWER_IS_NA_WIDGET(pd->panel))
 			continue;
 
-		basep = BASEP_WIDGET (pd->panel);
+		basep = BASEP_NA_WIDGET (pd->panel);
 		
 		if (basep->screen  != screen &&
 		    basep->monitor != monitor)
 			continue;
 
-		basep_widget_get_pos (basep, &tx, &ty);
-		tx -= multiscreen_x (screen, monitor);
-		ty -= multiscreen_y (screen, monitor);
-		basep_widget_get_size (basep, &w, &h);
+		basep_na_widget_get_pos (basep, &tx, &ty);
+		tx -= panel_multiscreen_x (screen, monitor);
+		ty -= panel_multiscreen_y (screen, monitor);
+		basep_na_widget_get_size (basep, &w, &h);
 
 		if (PANEL_WIDGET (basep->panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
 			j = MIN (ty / sh, 2);
@@ -2753,10 +2751,10 @@ find_empty_pos_array (int screen,
 }
 
 static void
-find_empty_pos (int     screen,
-		int     monitor,
-		gint16 *x,
-		gint16 *y)
+find_empty_pos (GdkScreen *screen,
+		int        monitor,
+		gint16    *x,
+		gint16    *y)
 {
 	int posscore[3][3] = { {1,2,0}, {1,4096,0}, {1,2,0}};
 	int i, j, lowi= 0, lowj = 2;
@@ -2772,15 +2770,16 @@ find_empty_pos (int     screen,
 		}
 	}
 
-	*x = ((float)lowi * multiscreen_width (screen, monitor)) / 2.0;
-	*y = ((float)lowj * multiscreen_height (screen, monitor)) / 2.0;
+	*x = ((float)lowi * panel_multiscreen_width (screen, monitor)) / 2.0;
+	*y = ((float)lowj * panel_multiscreen_height (screen, monitor)) / 2.0;
 
-	*x += multiscreen_x (screen, monitor);
-	*y += multiscreen_y (screen, monitor);
+	*x += panel_multiscreen_x (screen, monitor);
+	*y += panel_multiscreen_y (screen, monitor);
 }
 
 static BorderEdge
-find_empty_edge (int screen, int monitor)
+find_empty_edge (GdkScreen *screen,
+		 int        monitor)
 {
 	int posscore[3][3] = { {1,2,0}, {1,4096,0}, {1,2,0}};
 	int escore [4] = { 0, 0, 0, 0};
@@ -2804,7 +2803,7 @@ find_empty_edge (int screen, int monitor)
 }
 
 static BorderEdge
-find_empty_border_and_anchor (int            screen,
+find_empty_border_and_anchor (GdkScreen     *screen,
 			      int            monitor,
 			      SlidingAnchor *anchor)
 {
@@ -2835,181 +2834,35 @@ find_empty_border_and_anchor (int            screen,
 
 	return edge;
 }
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 static void
-create_new_panel (GtkWidget *w, gpointer data)
+create_new_panel (GtkWidget *menuitem)
 {
-	PanelType  type = GPOINTER_TO_INT (data);
-	PanelColor bcolor = { { 0, 0, 0, 0 }, 0xffff };
-	gint16     x, y;
-	GtkWidget *panel = NULL;
-	int        screen;
+	GtkWidget *toplevel;
+	GdkScreen *screen;
 	int        monitor;
 
-	g_return_if_fail (type != DRAWER_PANEL);
+	screen  = gtk_widget_get_screen (menuitem);
+	monitor = panel_multiscreen_locate_widget_monitor (
+			GTK_WIDGET (menu_get_panel (menuitem)));
 
-	screen = gdk_screen_get_number (
-			gtk_widget_get_screen (w));
-	monitor = multiscreen_locate_widget (
-			screen, GTK_WIDGET (menu_get_panel (w)));
+	/* FIXME_FOR_NEW_TOPLEVEL:
+	 *   figure out the initial panel position
+	find_empty_pos (screen, monitor, &x, &y);
+	*/
 
-	switch (type) {
-	case ALIGNED_PANEL: 
-		find_empty_pos (screen, monitor, &x, &y);
-		panel = aligned_widget_new (NULL,
-					    screen,
-					    monitor,
-					    ALIGNED_LEFT,
-					    BORDER_TOP,
-					    BASEP_EXPLICIT_HIDE,
-					    BASEP_SHOWN,
-					    PANEL_SIZE_MEDIUM,
-					    TRUE,
-					    TRUE,
-					    PANEL_BACK_NONE,
-					    NULL,
-					    TRUE, FALSE, TRUE,
-					    &bcolor);
-		panel_save_to_gconf (panel_setup (panel));
-		gtk_window_set_title (GTK_WINDOW (panel), _("Aligned Panel"));
-		gtk_widget_show (panel);
-		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
+	toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
+				 "screen", screen,
+				 "monitor", monitor,
+				  NULL);
 
-		panel_set_atk_name_desc (BASEP_WIDGET (panel)->panel,
-					 _("Aligned Panel"),
-					 _("GNOME Aligned Panel"));
-		break;
-	case EDGE_PANEL: 
-		panel = edge_widget_new (NULL,
-					 screen,
-					 monitor,
-					 find_empty_edge (screen, monitor),
-					 BASEP_EXPLICIT_HIDE,
-					 BASEP_SHOWN,
-					 PANEL_SIZE_MEDIUM,
-					 TRUE,
-					 TRUE,
-					 PANEL_BACK_NONE,
-					 NULL,
-					 TRUE, FALSE, TRUE,
-					 &bcolor);
-		panel_save_to_gconf (panel_setup (panel));
-		gtk_window_set_title (GTK_WINDOW (panel), _("Edge Panel"));
-		gtk_widget_show (panel);
+	panel_setup (PANEL_TOPLEVEL (toplevel));
 
-		panel_set_atk_name_desc (BASEP_WIDGET (panel)->panel,
-					 _("Edge Panel"),
-					 _("GNOME Edge Panel"));
-		break;
-	case SLIDING_PANEL: {
-		BorderEdge    edge;
-		SlidingAnchor anchor;
+	/* FIXME_FOR_NEW_TOPLEVEL:
+	 * panel_save_to_gconf (panel_setup (panel)); */
 
-		edge = find_empty_border_and_anchor (screen, monitor, &anchor);
-
-		panel = sliding_widget_new (NULL,
-					    screen,
-					    monitor,
-					    anchor, 0,
-					    edge,
-					    BASEP_EXPLICIT_HIDE,
-					    BASEP_SHOWN,
-					    PANEL_SIZE_MEDIUM,
-					    TRUE, TRUE,
-					    PANEL_BACK_NONE,
-					    NULL, TRUE, FALSE, TRUE,
-					    &bcolor);
-		panel_save_to_gconf (panel_setup (panel));
-		gtk_window_set_title (GTK_WINDOW (panel), _("Sliding Panel"));
-		gtk_widget_show (panel);
-
-		panel_set_atk_name_desc (BASEP_WIDGET (panel)->panel,
-					 _("Sliding Panel"),
-					 _("GNOME Sliding Panel"));
-		}
-		break;
-	case FLOATING_PANEL:
-		find_empty_pos (screen, monitor, &x, &y);
-		panel = floating_widget_new (NULL,
-					     screen,
-					     monitor,
-					     x, y,
-					     GTK_ORIENTATION_VERTICAL,
-					     BASEP_EXPLICIT_HIDE,
-					     BASEP_SHOWN,
-					     PANEL_SIZE_MEDIUM,
-					     TRUE, TRUE,
-					     PANEL_BACK_NONE,
-					     NULL, TRUE, FALSE, TRUE,
-					     &bcolor);
-		panel_save_to_gconf (panel_setup (panel));
-		gtk_window_set_title (GTK_WINDOW (panel), _("Floating Panel"));
-		gtk_widget_show (panel);
-		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
-
-		panel_set_atk_name_desc (BASEP_WIDGET (panel)->panel,
-					 _("Floating Panel"),
-					 _("GNOME Floating Panel"));
-		break;
-	default:
-		break;
-	}
-
-	if (!panel)
-		return;
-		
-	panels_to_sync = TRUE;
-	gtk_window_present (GTK_WINDOW (panel));
-}
-
-static GtkWidget *
-create_add_panel_submenu (void)
-{
-	GtkWidget *menu, *menuitem;
-
-	menu = menu_new ();
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_CORNER_PANEL, _("C_orner Panel"));
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
-			      _("Create corner panel"), NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(create_new_panel),
-			   GINT_TO_POINTER(ALIGNED_PANEL));
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_EDGE_PANEL, _("_Edge Panel"));
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
-			      _("Create edge panel"), NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(create_new_panel),
-			   GINT_TO_POINTER(EDGE_PANEL));
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_FLOATING_PANEL, _("_Floating Panel"));
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
-			      _("Create floating panel"), NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(create_new_panel),
-			   GINT_TO_POINTER(FLOATING_PANEL));
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_SLIDING_PANEL, _("_Sliding Panel"));
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
-			      _("Create sliding panel"), NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(create_new_panel),
-			   GINT_TO_POINTER(SLIDING_PANEL));
-
-	return menu;
+	gtk_widget_show (toplevel);
 }
 
 static void
@@ -3182,36 +3035,36 @@ create_button_menu (void)
 }	
 		
 static void
-remove_panel_accept (GtkWidget *w,
-		     int        response,
-		     GtkWidget *panel)
+remove_panel_accept (GtkWidget     *w,
+		     int            response,
+		     PanelToplevel *toplevel)
 {
 	if (response == GTK_RESPONSE_OK) {
+		PanelWidget *panel_widget;
+
+		panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
 		/* Destroy the drawers button before destroying the drawer */
-		if (DRAWER_IS_WIDGET (panel)) {
-			PanelWidget *panel_widget;
+		if (panel_toplevel_get_is_attached (toplevel) &&
+		    panel_widget && panel_widget->master_widget) {
+			AppletInfo *info;
 
-			panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
+			info = g_object_get_data (
+					G_OBJECT (panel_widget->master_widget),
+					"applet_info");
+			((Drawer *) info->data)->toplevel = NULL;
+			panel_applet_clean (info, TRUE);
 
-			if (panel_widget && panel_widget->master_widget) {
-				AppletInfo *info;
-
-				info = g_object_get_data (
-						G_OBJECT (panel_widget->master_widget),
-						"applet_info");
-				((Drawer *) info->data)->drawer = NULL;
-				panel_applet_clean (info, TRUE);
-
-				g_assert (panel_widget->master_widget == NULL);
-			}
+			g_assert (panel_widget->master_widget == NULL);
 		}
 
 		panel_push_window_busy (w);
 
-		panel_remove_from_gconf (PANEL_WIDGET (BASEP_WIDGET (panel)->panel));
+#ifdef FIXME_FOR_NEW_TOPLEVEL
+		panel_remove_from_gconf (panel_widget);
+#endif
 
-		gtk_widget_destroy (panel);
+		gtk_widget_destroy (GTK_WIDGET (toplevel));
 		panel_pop_window_busy (w);
 	}
 
@@ -3222,23 +3075,28 @@ static void
 remove_panel_query (GtkWidget *menuitem,
 		    gpointer   data)
 {
-	PanelWidget *panel_widget;
-	GtkWidget   *dialog;
-	GtkWidget   *panel;
+	PanelWidget   *panel_widget;
+	GtkWidget     *dialog;
+	PanelToplevel *toplevel;
 
 	panel_widget = menu_get_panel (menuitem);
-	panel = panel_widget->panel_parent;
+	toplevel     = panel_widget->toplevel;
 
-	if (!DRAWER_IS_WIDGET (panel) && base_panels == 1) {
+#ifdef FIXME_FOR_NEW_TOPLEVEL
+	/* Need some way of figuring out if this is the last
+	 * non-drawer panel
+	 */
+	if (!panel_toplevel_get_is_attached (toplevel) && base_panels == 1) {
 		panel_error_dialog (
 			menuitem_to_screen (menuitem),
 			"cannot_remove_last_panel",
 			_("You cannot remove your last panel."));
 		return;
 	}
+#endif
 
 	if (!global_config.confirm_panel_remove) {
-		gtk_widget_destroy (panel);
+		gtk_widget_destroy (GTK_WIDGET (toplevel));
 		return;
 	}
 
@@ -3259,13 +3117,13 @@ remove_panel_query (GtkWidget *menuitem,
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"panel_remove_query", "Panel");
 	gtk_window_set_screen (GTK_WINDOW (dialog),
-			       gtk_window_get_screen (GTK_WINDOW (panel)));
+			       gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (remove_panel_accept),
-			  panel);
+			  toplevel);
 	panel_signal_connect_object_while_alive (
-			G_OBJECT (panel), "destroy",
+			G_OBJECT (toplevel), "destroy",
 			G_CALLBACK (gtk_widget_destroy),
 			G_OBJECT (dialog));
 	gtk_widget_show_all (dialog);
@@ -3283,17 +3141,24 @@ create_panel_root_menu (PanelWidget *panel)
 }
 
 static void
-setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
+setup_remove_this_panel (GtkWidget *menu,
+			 GtkWidget *menuitem)
 {
-	PanelWidget *panel = menu_get_panel (menu);
-	GtkWidget *label;
+	PanelWidget *panel_widget;
+	GtkWidget   *label;
 
-	g_assert(panel->panel_parent);
+	panel_widget = menu_get_panel (menu);
 
-	if( ! DRAWER_IS_WIDGET(panel->panel_parent) &&
-	   base_panels == 1)
+	g_assert (PANEL_IS_TOPLEVEL (panel_widget->toplevel));
+
+#ifdef FIXME_FOR_NEW_TOPLEVEL
+	/* Need some way of figuring out if this is the last
+	 * non-drawer panel
+	 */
+	if (!panel_toplevel_get_is_attached (panel_widget->toplevel) && base_panels == 1)
 		gtk_widget_set_sensitive(menuitem, FALSE);
 	else
+#endif
 		gtk_widget_set_sensitive(menuitem, TRUE);
 
 	label = GTK_BIN(menuitem)->child;
@@ -3315,7 +3180,7 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 
 	/* this will not handle the case of menu being torn off
 	 * and then the confirm_panel_remove changed, but oh well */
-	if (panel->applet_list != NULL &&
+	if (panel_widget->applet_list != NULL &&
 	    global_config.confirm_panel_remove)
 		gtk_label_set_text_with_mnemonic (
 			GTK_LABEL (label), _("_Delete This Panel..."));
@@ -3324,16 +3189,154 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 			GTK_LABEL (label), _("_Delete This Panel"));
 }
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 static void
-current_panel_config(GtkWidget *w, gpointer data)
+current_panel_config (GtkWidget *menuitem)
 {
-	PanelWidget *panel = menu_get_panel(w);
-	GtkWidget *parent = panel->panel_parent;
-	panel_config(parent);
+	PanelWidget *panel_widget;
+
+	panel_widget = menu_get_panel (menuitem);
+
+	panel_config (panel_widget->toplevel);
+}
+#endif
+
+#ifndef FIXME_FOR_NEW_TOPLEVEL
+
+static void
+toggle_expand (PanelToplevel *toplevel)
+{
+	panel_toplevel_set_expand (toplevel,
+				   !panel_toplevel_get_expand (toplevel));
 }
 
 static void
-make_panel_submenu (GtkWidget *menu)
+toggle_auto_hide (PanelToplevel *toplevel)
+{
+	panel_toplevel_set_auto_hide (toplevel,
+				      !panel_toplevel_get_auto_hide (toplevel));
+}
+
+static void
+rotate_clockwise (PanelToplevel *toplevel)
+{
+	panel_toplevel_rotate (toplevel, TRUE);
+}
+
+static void
+rotate_counter_clockwise (PanelToplevel *toplevel)
+{
+	panel_toplevel_rotate (toplevel, FALSE);
+}
+
+static void
+increase_size (PanelToplevel *toplevel)
+{
+	panel_toplevel_set_size (toplevel, panel_toplevel_get_size (toplevel) + 4);
+}
+
+static void
+decrease_size (PanelToplevel *toplevel)
+{
+	panel_toplevel_set_size (toplevel, panel_toplevel_get_size (toplevel) - 4);
+}
+
+static void
+toggle_animations (PanelToplevel *toplevel)
+{
+	panel_toplevel_set_animate (toplevel, !panel_toplevel_get_animate (toplevel));
+}
+
+static void
+toggle_buttons (PanelToplevel *toplevel)
+{
+	panel_toplevel_set_enable_buttons (toplevel, !panel_toplevel_get_enable_buttons (toplevel));
+}
+
+static void
+toggle_arrows (PanelToplevel *toplevel)
+{
+	panel_toplevel_set_enable_arrows (toplevel, !panel_toplevel_get_enable_arrows (toplevel));
+}
+
+static GtkWidget *
+create_toplevel_testing_menu (PanelToplevel *toplevel)
+{
+	GtkWidget *retval;
+	GtkWidget *menuitem;
+	
+	retval = menu_new ();
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Expand"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (toggle_expand), toplevel);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Auto Hide"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (toggle_auto_hide), toplevel);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Rotate Clockwise"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (rotate_clockwise), toplevel);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Rotate Counter Clockwise"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (rotate_counter_clockwise), toplevel);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Increase Size (for only $2000!!)"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (increase_size), toplevel);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Decrease Size"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (decrease_size), toplevel);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Animations"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (toggle_animations), toplevel);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Buttons"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (toggle_buttons), toplevel);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Arrows"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (toggle_arrows), toplevel);
+
+	return retval;
+}
+#endif
+
+static void
+make_panel_submenu (PanelWidget *panel_widget,
+		    GtkWidget   *menu)
 {
 	Bonobo_ServerInfoList *applet_list;
 	GtkWidget             *menuitem, *submenu;
@@ -3375,9 +3378,23 @@ make_panel_submenu (GtkWidget *menu)
 			_("_Properties"));
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+#if FIXME_FOR_NEW_TOPLEVEL
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (current_panel_config), 
 			  NULL);
+#else
+	gtk_widget_set_sensitive (menuitem, FALSE);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (
+		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toplevel Testing"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+	submenu = create_toplevel_testing_menu (panel_widget->toplevel);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+	g_signal_connect (submenu, "show",
+			  G_CALLBACK (submenu_to_display), NULL);
+#endif
 
 	add_menu_separator (menu);
 
@@ -3387,8 +3404,9 @@ make_panel_submenu (GtkWidget *menu)
 			gtk_image_new_from_stock (GTK_STOCK_NEW, GTK_ICON_SIZE_MENU),
 			_("_New Panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-				   create_add_panel_submenu ());
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (create_new_panel), 
+			  NULL);
 
 	add_menu_separator (menu);
 }
@@ -3410,7 +3428,7 @@ create_panel_context_menu (PanelWidget *panel)
 	retval = menu_new ();
 
 	if (!commie_mode)
-		make_panel_submenu (retval);
+		make_panel_submenu (panel, retval);
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem,
@@ -3453,19 +3471,19 @@ create_panel_context_menu (PanelWidget *panel)
 }
 
 static void
-ask_about_launcher_cb(GtkWidget *widget, gpointer data)
+ask_about_launcher_cb (GtkWidget *widget)
 {
-	PanelWidget *panel;
-	PanelData *pd;
-	int insertion_pos = -1;
+	PanelWidget *panel_widget;
+	PanelData   *pd;
+	int          insertion_pos;
 
-	panel = menu_get_panel (widget);
+	panel_widget = menu_get_panel (widget);
 
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
+	pd = g_object_get_data (G_OBJECT (panel_widget->toplevel), "PanelData");
 
-	ask_about_launcher(NULL, panel, insertion_pos, FALSE);
+	insertion_pos = pd ? pd->insertion_pos : -1;
+
+	ask_about_launcher (NULL, panel_widget, insertion_pos, FALSE);
 }
 
 static void
@@ -3888,8 +3906,9 @@ menu_button_menu_popup (Menu    *menu,
 			guint    button,
 			guint32  activate_time)
 {
-	GtkWidget *panel;
-	int        flags;
+	PanelWidget   *panel_widget;
+	PanelToplevel *toplevel;
+	int            flags;
 
 	if (menu->global_main)
 		flags = get_default_menu_flags ();
@@ -3918,17 +3937,17 @@ menu_button_menu_popup (Menu    *menu,
 		check_and_reread_applet (menu);
 	}
 
-	panel = get_panel_parent (menu->button);
+	panel_widget = PANEL_WIDGET (menu->button->parent);
+	toplevel     = panel_widget->toplevel;
 
-	BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
-	basep_widget_queue_autohide (BASEP_WIDGET (panel));
+	panel_toplevel_block_auto_hide (toplevel);
 
 	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;
 
 	menu->age = 0;
 
 	gtk_menu_set_screen (GTK_MENU (menu->menu),
-			     panel_screen_from_toplevel (panel));
+			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
 	gtk_menu_popup (GTK_MENU (menu->menu),
 			NULL,
@@ -3982,7 +4001,7 @@ menu_applet_reparented (GtkWidget *applet,
 
 static Menu *
 create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
-		   PanelOrient orient, int main_menu_flags,
+		   PanelOrientation orientation, int main_menu_flags,
 		   gboolean global_main,
 		   gboolean custom_icon, const char *custom_icon_file)
 {
@@ -4017,7 +4036,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 	/*make the pixmap*/
 	menu->button = button_widget_new (pixmap_name, -1,
-					  TRUE, orient);
+					  TRUE, orientation);
 	g_free (pixmap_name);
 	if (!menu->button) {
 		free_menu (menu);
@@ -4076,7 +4095,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 static Menu *
 create_menu_applet (PanelWidget *panel,
 		    const char *path,
-		    PanelOrient orient,
+		    PanelOrientation orientation,
 		    gboolean main_menu,
 		    int main_menu_flags,
 		    gboolean global_main,
@@ -4096,7 +4115,7 @@ create_menu_applet (PanelWidget *panel,
 							  TRUE, NULL);
 
 	menu = create_panel_menu (panel, this_menu, main_menu,
-				  orient, main_menu_flags, global_main,
+				  orientation, main_menu_flags, global_main,
 				  custom_icon, custom_icon_file);
 
 	g_free (this_menu);
@@ -4104,12 +4123,13 @@ create_menu_applet (PanelWidget *panel,
 }
 
 void
-set_menu_applet_orient(Menu *menu, PanelOrient orient)
+set_menu_applet_orientation (Menu             *menu,
+			     PanelOrientation  orientation)
 {
 	g_return_if_fail (menu != NULL);
 
 	button_widget_set_params (BUTTON_WIDGET (menu->button),
-				  TRUE, orient);
+				  TRUE, orientation);
 }
 
 void
@@ -4126,7 +4146,7 @@ load_menu_applet (const char  *params,
 {
 	Menu *menu;
 
-	menu = create_menu_applet (panel, params, PANEL_ORIENT_UP,
+	menu = create_menu_applet (panel, params, PANEL_ORIENTATION_TOP,
 				   main_menu, main_menu_flags, global_main,
 				   custom_icon, custom_icon_file);
 

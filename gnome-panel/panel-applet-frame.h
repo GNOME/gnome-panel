@@ -75,8 +75,8 @@ void       panel_applet_frame_load      (const gchar *iid,
 
 void       panel_applet_frame_load_applets  (void);
 
-void       panel_applet_frame_change_orient (PanelAppletFrame *frame,
-					     PanelOrient       orient);
+void       panel_applet_frame_change_orientation (PanelAppletFrame *frame,
+						  PanelOrientation  orientation);
 
 void       panel_applet_frame_change_size   (PanelAppletFrame *frame,
 					     PanelSize         size);

@@ -53,7 +53,7 @@ struct _PanelAppletFramePrivate {
 
 	PanelWidget                    *panel;
 	AppletInfo                     *applet_info;
-	PanelOrient                     orient;
+	PanelOrientation                orientation;
 
 	gchar                          *iid;
 	gboolean			moving_focus_out;
@@ -254,13 +254,41 @@ panel_applet_frame_get_size_hints (PanelAppletFrame  *frame,
 }
 
 void
-panel_applet_frame_change_orient (PanelAppletFrame *frame,
-				  PanelOrient       orient)
+panel_applet_frame_change_orientation (PanelAppletFrame *frame,
+				       PanelOrientation  orientation)
 {
-	if (orient == frame->priv->orient)
+	CORBA_unsigned_short orient = 0;
+
+	if (orientation == frame->priv->orientation)
 		return;
 
-	frame->priv->orient = orient;
+	frame->priv->orientation = orientation;
+
+	/* FIXME_FOR_NEW_TOPLEVEL:
+	 *   I think there may be a semanic difference between
+	 *   these orientations i.e. top might mean down, not up
+	 *   Then again I think only horizontal/vertical really
+	 *   matters. Uggh.
+	 */
+
+	switch (orientation) {
+	case PANEL_ORIENTATION_TOP:
+		orient = GNOME_Vertigo_PANEL_ORIENT_UP;
+		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		orient = GNOME_Vertigo_PANEL_ORIENT_DOWN;
+		break;
+	case PANEL_ORIENTATION_LEFT:
+		orient = GNOME_Vertigo_PANEL_ORIENT_LEFT;
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		orient = GNOME_Vertigo_PANEL_ORIENT_RIGHT;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
 	bonobo_pbclient_set_short (frame->priv->property_bag, 
 				   "panel-applet-orient",
 				   orient,
@@ -354,16 +382,16 @@ panel_applet_frame_paint (GtkWidget    *widget,
 		return;
   
 	if (GTK_WIDGET_DRAWABLE (widget)) {
-		GtkOrientation orient = 0;
+		GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
 
-		switch (frame->priv->orient) {
-		case PANEL_ORIENT_UP:
-		case PANEL_ORIENT_DOWN:
-			orient = GTK_ORIENTATION_HORIZONTAL;
+		switch (frame->priv->orientation) {
+		case PANEL_ORIENTATION_TOP:
+		case PANEL_ORIENTATION_BOTTOM:
+			orientation = GTK_ORIENTATION_HORIZONTAL;
 			break;
-		case PANEL_ORIENT_LEFT:
-		case PANEL_ORIENT_RIGHT:
-			orient = GTK_ORIENTATION_VERTICAL;
+		case PANEL_ORIENTATION_LEFT:
+		case PANEL_ORIENTATION_RIGHT:
+			orientation = GTK_ORIENTATION_VERTICAL;
 			break;
 		default:
 			g_assert_not_reached ();
@@ -379,7 +407,7 @@ panel_applet_frame_paint (GtkWidget    *widget,
                         frame->priv->handle_rect.y,
                         frame->priv->handle_rect.width,
                         frame->priv->handle_rect.height,
-                        orient);
+                        orientation);
 	}
 }
 
@@ -407,14 +435,14 @@ panel_applet_frame_constrain_size (PanelAppletFrame *frame,
 
 	panel = frame->priv->panel;
 
-	switch (frame->priv->orient) {
-	case PANEL_ORIENT_UP:
-	case PANEL_ORIENT_DOWN:
+	switch (frame->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+	case PANEL_ORIENTATION_BOTTOM:
 		if (requisition->height > panel->sz)
 			requisition->height = panel->sz;
 		break;
-	case PANEL_ORIENT_LEFT:
-	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENTATION_LEFT:
+	case PANEL_ORIENTATION_RIGHT:
 		if (requisition->width > panel->sz)
 			requisition->width = panel->sz;
 		break;
@@ -456,13 +484,13 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 	requisition->width += GTK_CONTAINER (widget)->border_width;
 	requisition->height += GTK_CONTAINER (widget)->border_width;
 
-	switch (frame->priv->orient) {
-	case PANEL_ORIENT_UP:
-	case PANEL_ORIENT_DOWN:
+	switch (frame->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+	case PANEL_ORIENTATION_BOTTOM:
 		requisition->width += HANDLE_SIZE;
 		break;
-	case PANEL_ORIENT_LEFT:
-	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENTATION_LEFT:
+	case PANEL_ORIENTATION_RIGHT:
 		requisition->height += HANDLE_SIZE;
 		break;
 	default:
@@ -494,9 +522,9 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	frame->priv->handle_rect.x = 0;
 	frame->priv->handle_rect.y = 0;
 
-	switch (frame->priv->orient) {
-	case PANEL_ORIENT_UP:
-	case PANEL_ORIENT_DOWN:
+	switch (frame->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+	case PANEL_ORIENTATION_BOTTOM:
 		frame->priv->handle_rect.width  = HANDLE_SIZE;
 		frame->priv->handle_rect.height = allocation->height;
 
@@ -505,8 +533,8 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 		new_allocation.width  = allocation->width - HANDLE_SIZE;
 		new_allocation.height = allocation->height;
 		break;
-	case PANEL_ORIENT_LEFT:
-	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENTATION_LEFT:
+	case PANEL_ORIENTATION_RIGHT:
 		frame->priv->handle_rect.width  = allocation->width;
 		frame->priv->handle_rect.height = HANDLE_SIZE;
 
@@ -804,8 +832,10 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 
 	gtk_widget_destroy (dialog);
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	if (response == GTK_RESPONSE_OK)
 		panel_applet_clean_gconf (APPLET_BONOBO, gconf_key, TRUE);
+#endif
 }
 
 static void
@@ -836,7 +866,7 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 	frame->priv->property_bag     = CORBA_OBJECT_NIL;
 	frame->priv->ui_component     = NULL;
 	frame->priv->panel            = NULL;
-	frame->priv->orient           = PANEL_ORIENT_UP;
+	frame->priv->orientation      = PANEL_ORIENTATION_TOP;
 	frame->priv->applet_info      = NULL;
 	frame->priv->moving_focus_out = FALSE;
 }
@@ -894,22 +924,29 @@ static G_CONST_RETURN char *
 panel_applet_frame_get_orient_string (PanelAppletFrame *frame,
 				      PanelWidget      *panel)
 {
-	PanelOrient  orient;
-	const char  *retval = NULL;
+	PanelOrientation  orientation;
+	const char       *retval = NULL;
 
-	orient = panel_widget_get_applet_orient (panel);
+	orientation = panel_widget_get_applet_orientation (panel);
 
-	switch (orient) {
-	case PANEL_ORIENT_UP:
+	/* FIXME_FOR_NEW_TOPLEVEL:
+	 *   I think there may be a semanic difference between
+	 *   these orientations i.e. top might mean down, not up
+	 *   Then again I think only horizontal/vertical really
+	 *   matters. Uggh.
+	 */
+
+	switch (orientation) {
+	case PANEL_ORIENTATION_TOP:
 		retval = "up";
 		break;
-	case PANEL_ORIENT_DOWN:
+	case PANEL_ORIENTATION_BOTTOM:
 		retval = "down";
 		break;
-	case PANEL_ORIENT_LEFT:
+	case PANEL_ORIENTATION_LEFT:
 		retval = "left";
 		break;
-	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENTATION_RIGHT:
 		retval = "right";
 		break;
 	default:
@@ -1007,7 +1044,7 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	if (BONOBO_EX (&ev)) {
 		panel_applet_frame_loading_failed (
-			frame, &ev, iid, gconf_key, GTK_WINDOW (panel->panel_parent));
+			frame, &ev, iid, gconf_key, GTK_WINDOW (panel->toplevel));
 		CORBA_exception_free (&ev);
 		return NULL;
 	}

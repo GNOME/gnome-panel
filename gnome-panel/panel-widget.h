@@ -16,6 +16,7 @@
 #include "button-widget.h"
 #include "panel-types.h"
 #include "panel-background.h"
+#include "panel-toplevel.h"
 
 G_BEGIN_DECLS
 
@@ -87,7 +88,7 @@ struct _PanelWidget
 	                                  * panel widget itself
 	                                  */
 	
-	GtkWidget      *panel_parent;
+	PanelToplevel  *toplevel;
 	
 	GdkEventKey    *key_event;
 
@@ -122,7 +123,8 @@ struct _PanelWidgetClass
 
 GType		panel_widget_get_type		(void) G_GNUC_CONST;
 
-GtkWidget *	panel_widget_new		(const char *panel_id,
+GtkWidget *	panel_widget_new		(PanelToplevel *toplevel,
+						 const char *panel_id,
 						 gboolean packed,
 						 GtkOrientation orient,
 						 int sz,
@@ -180,6 +182,13 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 gboolean rotate_pixmap_bg,
 						 PanelColor *back_color);
 
+void            panel_widget_set_packed         (PanelWidget    *panel_widget,
+						 gboolean        packed);
+void            panel_widget_set_orientation    (PanelWidget    *panel_widget,
+						 GtkOrientation  orientation);
+void            panel_widget_set_size           (PanelWidget    *panel_widget,
+						 int             size);
+
 void		panel_widget_set_back_pixmap	(PanelWidget *panel,
 						 const char *file);
 void		panel_widget_set_back_color	(PanelWidget *panel,
@@ -205,7 +214,7 @@ gboolean	panel_widget_is_cursor		(PanelWidget *panel,
 /* set the focus on the panel */
 void            panel_widget_focus              (PanelWidget *panel);
 
-PanelOrient     panel_widget_get_applet_orient  (PanelWidget *panel);
+PanelOrientation panel_widget_get_applet_orientation (PanelWidget *panel);
 
 void         panel_widget_set_applet_expandable (PanelWidget *panel,
 						 GtkWidget   *applet,

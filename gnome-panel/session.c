@@ -45,6 +45,7 @@ gboolean                commie_mode = FALSE;
 gboolean                no_run_box = FALSE;
 GlobalConfig            global_config;
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 static void
 panel_session_save_applets (GSList *applets_list)
 {
@@ -58,6 +59,7 @@ panel_session_save_applets (GSList *applets_list)
 		panel_applet_save_position (info, info->gconf_key, TRUE);
 	}
 }
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 /*
  * We queue the location of .desktop files belonging
@@ -102,6 +104,7 @@ panel_session_do_save (GnomeClient *client,
 		       gboolean     save_applets,
 		       gboolean     save_panels)
 {
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	GSList *l;
 
 	if (commie_mode)
@@ -119,6 +122,9 @@ panel_session_do_save (GnomeClient *client,
 
 		panel_session_save_applets (applets);
 	}
+#else
+	session_unlink_dead_launchers ();
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 }
 
 static guint sync_handler = 0;
@@ -234,12 +240,14 @@ panel_session_die (GnomeClient *client,
 
 	g_source_remove (config_sync_timeout);
 	config_sync_timeout = 0;
-  
+ 
+#ifdef FIXME_FOR_NEW_TOPLEVEL 
 	for (l = applets; l; l = l->next) {
 		AppletInfo *info = l->data;
 
 		panel_applet_save_position (info, info->gconf_key, TRUE);
 	}
+#endif
 
 	panels_to_destroy = g_slist_copy (panel_list);
 
@@ -345,6 +353,9 @@ void session_load (void) {
 
 	panel_load_global_config ();
 	init_menus ();
+
 	panel_load_panels_from_gconf ();
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	panel_applet_load_applets_from_gconf ();
+#endif
 }

@@ -100,18 +100,10 @@ panel_sources =			\
 	panel-marshal.h		\
 	main.c			\
 	panel-widget.c  	\
-	basep-widget.c  	\
 	button-widget.c  	\
-	multiscreen-stuff.c	\
 	xstuff.c		\
 	session.c		\
 	panel-compatibility.c   \
-	border-widget.c		\
-	edge-widget.c		\
-	aligned-widget.c	\
-	drawer-widget.c		\
-	sliding-widget.c	\
-	floating-widget.c	\
 	disclosure-widget.c	\
 	panel.c			\
 	applet.c		\
@@ -131,7 +123,6 @@ panel_sources =			\
 	panel-applet-frame.c	\
 	panel-shell.c		\
 	quick-desktop-reader.c	\
-	panel-access.c		\
 	panel-background.c	\
 	panel-background-monitor.c \
 	panel-stock-icons.c	\
@@ -139,6 +130,11 @@ panel_sources =			\
 	panel-menu-bar.c        \
 	panel-recent.c		\
 	panel-gdk-pixbuf-extensions.c \
+	panel-toplevel.c	\
+	panel-frame.c		\
+	panel-xutils.c		\
+	panel-multiscreen.c	\
+	panel-a11y.c		\
 	$(EGG_RECENT_FILES_C)	\
 	$(NULL)
 
@@ -146,18 +142,10 @@ panel_headers =			\
 	panel-types.h		\
 	panel-widget.h		\
 	panel-main.h		\
-	basep-widget.h		\
 	button-widget.h		\
-	multiscreen-stuff.h	\
 	xstuff.h		\
 	session.h		\
 	panel-compatibility.h   \
-	border-widget.h		\
-	edge-widget.h		\
-	aligned-widget.h	\
-	drawer-widget.h		\
-	sliding-widget.h	\
-	floating-widget.h	\
 	disclosure-widget.h	\
 	panel.h         	\
 	applet.h         	\
@@ -184,6 +172,12 @@ panel_headers =			\
 	panel-menu-bar.h        \
 	panel-recent.h		\
 	panel-gdk-pixbuf-extensions.h \
+	panel-toplevel.h	\
+	panel-frame.h		\
+	panel-xutils.h		\
+	panel-multiscreen.h	\
+	panel-a11y.h		\
+	panel-enums.h		\
 	$(EGG_RECENT_FILES_H)	\
 	$(NULL)
 
@@ -206,7 +200,7 @@ gnome_panel_LDFLAGS = -export-dynamic
 gnome_panel_preferences_SOURCES =	\
 	gnome-panel-preferences.c	\
 	panel-gconf.c			\
-	panel-access.c
+	panel-a11y.c
 
 gnome_panel_preferences_LDADD =		\
 	$(X_LIBS)			\
@@ -220,7 +214,7 @@ gnome_desktop_item_edit_SOURCES = \
 	menu-ditem.c		  \
 	panel-util.c		  \
 	xstuff.c		  \
-	panel-access.c		  \
+	panel-a11y.c		  \
 	egg-screen-exec.c	  \
 	egg-screen-help.c	  \
 	egg-screen-url.c
@@ -267,12 +261,11 @@ sys_DATA = $(sys_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 panel_enum_headers =					\
+	$(top_srcdir)/gnome-panel/panel-enums.h		\
 	$(top_srcdir)/gnome-panel/panel-types.h		\
 	$(top_srcdir)/gnome-panel/panel-widget.h	\
-	$(top_srcdir)/gnome-panel/basep-widget.h	\
-	$(top_srcdir)/gnome-panel/aligned-widget.h	\
-	$(top_srcdir)/gnome-panel/sliding-widget.h	\
 	$(top_srcdir)/gnome-panel/panel-action-button.h	\
+	$(top_srcdir)/gnome-panel/panel-toplevel.h	\
 	$(top_builddir)/gnome-panel/GNOME_Panel.h
 
 panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)
@@ -287,13 +280,13 @@ panel-typebuiltins.c: @REBUILD@ $(panel_enum_headers)
 			--fhead "#include \"panel-typebuiltins.h\"\n\n" \
 			--fprod "\n/* enumerations from \"@filename@\" */" \
 			--fprod "\n#include \"@filename@\"\n" \
-			--vhead "static const G@Type@Value _@enum_name@_values[] = {" \
+			--vhead "static const GEnumValue _@enum_name@_values[] = {" \
 			--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 			--vtail "  { 0, NULL, NULL }\n};\n\n" \
 			--vtail "GType\n@enum_name@_get_type (void)\n{\n" \
 			--vtail "  static GType type = 0;\n\n" \
 			--vtail "  if (!type)\n" \
-			--vtail "    type = g_@type@_register_static (\"@EnumName@\", _@enum_name@_values);\n\n" \
+			--vtail "    type = g_enum_register_static (\"@EnumName@\", _@enum_name@_values);\n\n" \
 			--vtail "  return type;\n}\n\n" \
 		$(panel_enum_headers) > $@
 

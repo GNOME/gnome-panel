@@ -279,7 +279,6 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 	if (keycode == menu_keycode &&
 	    (state & (~ignored_mods)) == menu_state) {
 		PanelWidget *panel_widget;
-		GtkWidget   *panel;
 		GtkWidget   *menu;
 
 		/* check if anybody else has a grab */
@@ -288,10 +287,8 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 
 		panel_widget = panels->data;
 		menu = create_panel_root_menu (panel_widget);
-		panel = panel_widget->panel_parent;
 
-		BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
-		basep_widget_autohide (BASEP_WIDGET (panel));
+		panel_toplevel_block_auto_hide (panel_widget->toplevel);
 
 		gtk_menu_set_screen (GTK_MENU (menu), screen);
 		gtk_menu_popup (GTK_MENU (menu), NULL, NULL,

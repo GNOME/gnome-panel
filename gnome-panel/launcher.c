@@ -27,9 +27,7 @@
 
 #include "launcher.h"
 
-#include "basep-widget.h"
 #include "button-widget.h"
-#include "drawer-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
 #include "panel-util.h"
@@ -38,6 +36,8 @@
 #include "panel-main.h"
 #include "session.h"
 #include "xstuff.h"
+#include "panel-toplevel.h"
+#include "panel-a11y.h"
 
 #include "quick-desktop-reader.h"
 
@@ -65,15 +65,15 @@ enum {
 static GdkScreen *
 launcher_get_screen (Launcher *launcher)
 {
-	GtkWidget *panel;
+	PanelWidget *panel_widget;
 
 	g_return_val_if_fail (launcher != NULL, 0);
 	g_return_val_if_fail (launcher->info != NULL, 0);
 	g_return_val_if_fail (launcher->info->widget != NULL, 0);
 
-	panel = get_panel_parent (launcher->info->widget);
+	panel_widget = PANEL_WIDGET (launcher->info->widget->parent);
 
-	return gtk_window_get_screen (GTK_WINDOW (panel));
+	return gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel));
 }
 
 static void
@@ -145,20 +145,12 @@ launch_cb (GtkWidget *widget,
 	}
 	
 	if (global_config.drawer_auto_close) {
-		GtkWidget *parent;
+		PanelToplevel *toplevel;
 
-		parent = PANEL_WIDGET (launcher->button->parent)->panel_parent;
-		if (DRAWER_IS_WIDGET (parent)) {
-			GtkWidget *grandparent;
+		toplevel = PANEL_WIDGET (launcher->button->parent)->toplevel;
 
-			grandparent = PANEL_WIDGET (
-						PANEL_WIDGET (
-							BASEP_WIDGET (parent)->panel
-							     )->master_widget->parent
-						     )->panel_parent;
-			drawer_widget_close_drawer (
-					DRAWER_WIDGET (parent), grandparent);
-		}
+		if (panel_toplevel_get_is_attached (toplevel)) 
+			panel_toplevel_hide (toplevel, FALSE, -1);
 	}
 }
 
@@ -430,7 +422,7 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	launcher->button = button_widget_new (NULL /* icon */,
 					      -1,
 					      FALSE,
-					      PANEL_ORIENT_UP);
+					      PANEL_ORIENTATION_TOP);
 
 	gtk_widget_show (launcher->button);
 
@@ -500,7 +492,7 @@ setup_button (Launcher *launcher)
 			      str, NULL);
 
 	/* Setup accessible name */
-	panel_set_atk_name_desc (launcher->button, str, NULL);
+	panel_a11y_set_atk_name_desc (launcher->button, str, NULL);
 
 	g_free (str);
 
@@ -852,7 +844,7 @@ ask_about_launcher (const char  *file,
 
 	dialog = gtk_dialog_new_with_buttons (
 				_("Create Launcher"),
-				GTK_WINDOW (panel->panel_parent),
+				GTK_WINDOW (panel->toplevel),
 				0 /* flags */,
 				GTK_STOCK_HELP, GTK_RESPONSE_HELP,
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

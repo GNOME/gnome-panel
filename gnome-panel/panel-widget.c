@@ -19,7 +19,6 @@
 #include "panel-util.h"
 #include "panel-marshal.h"
 #include "panel-typebuiltins.h"
-#include "drawer-widget.h"
 #include "panel-applet-frame.h"
 
 #define MOVE_INCREMENT 2
@@ -227,7 +226,7 @@ add_all_move_bindings (PanelWidget *panel)
                                       GDK_space, 0,
                                       "end_move", 0);
 
-	focus_widget = gtk_window_get_focus (GTK_WINDOW (panel->panel_parent));
+	focus_widget = gtk_window_get_focus (GTK_WINDOW (panel->toplevel));
 	if (GTK_IS_SOCKET (focus_widget)) {
 		/*
 		 * If the focus widget is a GtkSocket, i.e. the
@@ -1219,7 +1218,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	g_return_if_fail(PANEL_IS_WIDGET(widget));
 	g_return_if_fail(allocation!=NULL);
-	
+
 	panel = PANEL_WIDGET(widget);
 
 	/* allow drawing if it was inhibited */
@@ -1477,7 +1476,7 @@ panel_widget_realize (GtkWidget *widget)
 {
 	PanelWidget *panel = (PanelWidget *) widget;
 
-	g_signal_connect (panel->panel_parent, "configure-event",
+	g_signal_connect (panel->toplevel, "configure-event",
 			  G_CALLBACK (toplevel_configure_event), panel);
 
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
@@ -1498,7 +1497,7 @@ panel_widget_unrealize (GtkWidget *widget)
 	panel_background_unrealized (&panel->background);
 
 	g_signal_handlers_disconnect_by_func (
-		panel->panel_parent,
+		panel->toplevel,
 		G_CALLBACK (toplevel_configure_event),
 		panel);
 
@@ -1630,7 +1629,8 @@ panel_widget_instance_init (PanelWidget *panel)
 }
 
 GtkWidget *
-panel_widget_new (const char          *panel_id,
+panel_widget_new (PanelToplevel       *toplevel,
+		  const char          *panel_id,
 		  gboolean             packed,
 		  GtkOrientation       orient,
 		  int                  sz,
@@ -1665,6 +1665,9 @@ panel_widget_new (const char          *panel_id,
 		panel->size = 0;
 	else
 		panel->size = G_MAXINT;
+
+	panel->toplevel    = toplevel;
+	panel->drop_widget = GTK_WIDGET (toplevel);
 	
 	return GTK_WIDGET (panel);
 }
@@ -2436,8 +2439,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	/* Don't try and reparent to an explicitly hidden panel,
 	 * very confusing for the user ...
 	 */
-	if ((BASEP_WIDGET (new_panel->panel_parent)->state == BASEP_HIDDEN_LEFT ||
-	     BASEP_WIDGET (new_panel->panel_parent)->state == BASEP_HIDDEN_RIGHT))
+	if (panel_toplevel_get_is_hidden (new_panel->toplevel))
 		return FALSE;
 	
 	/*we'll resize both panels anyway*/
@@ -2448,9 +2450,8 @@ panel_widget_reparent (PanelWidget *old_panel,
 	ad->no_die++;
 
 	panel_widget_reset_saved_focus (old_panel);
-	if (GTK_CONTAINER (old_panel)->focus_child == applet) {
-		focus_widget = gtk_window_get_focus (GTK_WINDOW (old_panel->panel_parent));
-	}
+	if (GTK_CONTAINER (old_panel)->focus_child == applet)
+		focus_widget = gtk_window_get_focus (GTK_WINDOW (old_panel->toplevel));
 	gtk_widget_reparent (applet, GTK_WIDGET (new_panel));
 
 	if (GTK_WIDGET_CAN_FOCUS (new_panel))
@@ -2464,7 +2465,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 				       GTK_DIR_TAB_FORWARD,
 				       &return_val);
 	}
- 	gtk_window_present (GTK_WINDOW (new_panel->panel_parent));
+ 	gtk_window_present (GTK_WINDOW (new_panel->toplevel));
 
 	gdk_flush();
 
@@ -2486,10 +2487,8 @@ panel_widget_change_params(PanelWidget         *panel,
 {
 	GtkOrientation oldorient;
 	int            oldsz;
-	gboolean       change_back = FALSE;
 
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
-	g_return_if_fail (GTK_WIDGET_REALIZED (panel));
 
 	oldorient = panel->orient;
 	panel->orient = orient;
@@ -2507,20 +2506,58 @@ panel_widget_change_params(PanelWidget         *panel,
 	   	g_signal_emit (
 			panel, panel_widget_signals [SIZE_CHANGE_SIGNAL], 0);
 
-	change_back = panel_background_set (
-			&panel->background, back_type, back_color, pixmap,
-			fit_pixmap_bg, stretch_pixmap_bg, rotate_pixmap_bg);
-	if (change_back) {
-		panel_background_realized (
-			&panel->background, GTK_WIDGET (panel)->window);
+	if (panel_background_set (&panel->background, back_type, back_color, pixmap,
+				  fit_pixmap_bg, stretch_pixmap_bg, rotate_pixmap_bg)) {
+		if (GTK_WIDGET_REALIZED (panel))
+			panel_background_realized (
+				&panel->background,
+				GTK_WIDGET (panel)->window);
 		
-		g_signal_emit (
-			panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
+		g_signal_emit (panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
 	}
 
 	/* inhibit draws until we resize */
 	panel->inhibit_draw = TRUE;
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
+}
+
+void
+panel_widget_set_packed (PanelWidget *panel_widget,
+			 gboolean     packed)
+{
+	panel_widget->packed = packed;
+
+	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
+}
+
+void
+panel_widget_set_orientation (PanelWidget    *panel_widget,
+			      GtkOrientation  orientation)
+{
+	panel_widget_change_params (panel_widget,
+				    orientation,	
+				    panel_widget->sz,
+				    panel_widget->background.type,
+				    panel_widget->background.image,
+				    panel_widget->background.fit_image,
+				    panel_widget->background.stretch_image,
+				    panel_widget->background.rotate_image,
+				   &panel_widget->background.color);
+}
+
+void
+panel_widget_set_size (PanelWidget *panel_widget,
+		       int          size)
+{
+	panel_widget_change_params (panel_widget,
+				    panel_widget->orient,	
+				    size,
+				    panel_widget->background.type,
+				    panel_widget->background.image,
+				    panel_widget->background.fit_image,
+				    panel_widget->background.stretch_image,
+				    panel_widget->background.rotate_image,
+				   &panel_widget->background.color);
 }
 
 static void 
@@ -2668,29 +2705,30 @@ panel_widget_real_focus (GtkWidget        *widget,
 }
 
 void 
-panel_widget_focus (PanelWidget *panel)
+panel_widget_focus (PanelWidget *panel_widget)
 {
+	if (panel_toplevel_get_is_attached (panel_widget->toplevel))
+		return;
+
 	/*
          * Set the focus back on the panel; we unset the focus child so that
 	 * the next time focus is inside the panel we do not remember the
 	 * previously focused child. We also need to set GTK_CAN_FOCUS flag
 	 * on the panel as it is unset when this function is called.
 	 */
-	if (!DRAWER_IS_WIDGET (panel->panel_parent)) {
-		gtk_container_set_focus_child (GTK_CONTAINER (panel), NULL);
-		GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
-		gtk_widget_grab_focus (GTK_WIDGET (panel));
-	}
+	gtk_container_set_focus_child (GTK_CONTAINER (panel_widget), NULL);
+	GTK_WIDGET_SET_FLAGS (panel_widget, GTK_CAN_FOCUS);
+	gtk_widget_grab_focus (GTK_WIDGET (panel_widget));
 }
 
 
-PanelOrient
-panel_widget_get_applet_orient (PanelWidget *panel)
+PanelOrientation
+panel_widget_get_applet_orientation (PanelWidget *panel)
 {
-	g_return_val_if_fail (PANEL_IS_WIDGET (panel), PANEL_ORIENT_UP);
-	g_return_val_if_fail (panel->panel_parent != NULL, PANEL_ORIENT_UP);
+	g_return_val_if_fail (PANEL_IS_WIDGET (panel), PANEL_ORIENTATION_TOP);
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (panel->toplevel), PANEL_ORIENTATION_TOP);
 
-	return basep_widget_get_applet_orient (BASEP_WIDGET (panel->panel_parent));
+	return panel_toplevel_get_orientation (panel->toplevel);
 }
 
 void

@@ -13,7 +13,6 @@
 #include <libbonobo.h>
 #include <gdk/gdkx.h>
 
-#include "basep-widget.h"
 #include "button-widget.h"
 #include "drawer.h"
 #include "launcher.h"
@@ -28,6 +27,8 @@
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
 #include "panel-compatibility.h"
+#include "panel-toplevel.h"
+#include "panel-util.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -43,6 +44,7 @@ extern int need_complete_save;
 extern gboolean commie_mode;
 extern GlobalConfig global_config;
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 static GConfEnumStringPair object_type_enum_map [] = {
 	{ APPLET_DRAWER,   "drawer-object" },
 	{ APPLET_MENU,     "menu-object" },
@@ -56,6 +58,8 @@ static GConfEnumStringPair object_type_enum_map [] = {
 
 static GSList *queued_position_saves = NULL;
 static guint   queued_position_source = 0;
+
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 static void
 move_applet_callback (GtkWidget *widget, AppletInfo *info)
@@ -73,6 +77,7 @@ move_applet_callback (GtkWidget *widget, AppletInfo *info)
 					PW_DRAG_OFF_CENTER);
 }
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 void
 panel_applet_clean_gconf (AppletType  type,
 			  const char *gconf_key,
@@ -123,6 +128,7 @@ panel_applet_clean_gconf (AppletType  type,
 
 	panel_g_slist_deep_free (id_list);
 }
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 /* permanently remove an applet - all non-permanent
  * cleanups should go in panel_applet_destroy()
@@ -144,7 +150,9 @@ panel_applet_clean (AppletInfo *info,
 			session_add_dead_launcher (location);
 	}
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	panel_applet_clean_gconf (info->type, info->gconf_key, clean_gconf);
+#endif
 
 	if (info->widget) {
 		GtkWidget *widget = info->widget;
@@ -183,8 +191,11 @@ applet_remove_callback (GtkWidget  *widget,
 static inline GdkScreen *
 applet_user_menu_get_screen (AppletUserMenu *menu)
 {
-	return gtk_window_get_screen (
-			GTK_WINDOW (get_panel_parent (menu->info->widget)));
+	PanelWidget *panel_widget;
+
+	panel_widget = PANEL_WIDGET (menu->info->widget->parent);
+
+	return gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel));
 }
 
 static void
@@ -213,7 +224,9 @@ applet_callback_callback (GtkWidget      *widget,
 		if (strcmp (menu->name, "properties")==0) {
 			Drawer *drawer = menu->info->data;
 			g_assert(drawer);
-			panel_config(drawer->drawer);
+#ifdef FIXME_FOR_NEW_TOPLEVEL
+			panel_config (drawer->toplevel);
+#endif
 		} else if (strcmp (menu->name, "help") == 0) {
 			panel_show_help (screen, "wgospanel.xml", "gospanel-18");
 		}
@@ -247,10 +260,13 @@ applet_callback_callback (GtkWidget      *widget,
 static void
 applet_menu_deactivate (GtkWidget *w, AppletInfo *info)
 {
-	GtkWidget *panel = get_panel_parent(info->widget);
+	PanelWidget *panel_widget;
+
 	info->menu_age = 0;
-	
-	BASEP_WIDGET(panel)->autohide_inhibit = FALSE;
+
+	panel_widget = PANEL_WIDGET (info->widget->parent);
+
+	panel_toplevel_unblock_auto_hide (panel_widget->toplevel);
 }
 
 AppletUserMenu *
@@ -546,19 +562,18 @@ static void
 applet_show_menu (AppletInfo     *info,
 		  GdkEventButton *event)
 {
-	GtkWidget *panel;
+	PanelWidget *panel_widget;
 
 	g_return_if_fail (info != NULL);
 
-	panel = get_panel_parent (info->widget);
+	panel_widget = PANEL_WIDGET (info->widget->parent);
 
 	if (!info->menu)
 		info->menu = panel_applet_create_menu (info);
 
 	g_assert (info->menu);
 
-	BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
-	basep_widget_queue_autohide (BASEP_WIDGET (panel));
+	panel_toplevel_block_auto_hide (panel_widget->toplevel);
 
 	info->menu_age = 0;
 
@@ -567,7 +582,7 @@ applet_show_menu (AppletInfo     *info,
 				       info->widget->parent);
 
 	gtk_menu_set_screen (GTK_MENU (info->menu),
-			     panel_screen_from_toplevel (panel));
+			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
 
 	if (!GTK_WIDGET_REALIZED (info->menu))
 		gtk_widget_show (info->menu);
@@ -632,8 +647,10 @@ panel_applet_destroy (GtkWidget  *widget,
 
 	applets = g_slist_remove (applets, info);
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	queued_position_saves =
 		g_slist_remove (queued_position_saves, info);
+#endif
 
 	if (info->remove_idle) {
 		g_source_remove (info->remove_idle);
@@ -643,11 +660,15 @@ panel_applet_destroy (GtkWidget  *widget,
 	if (info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 
-		if (drawer->drawer) {
-			PANEL_WIDGET (BASEP_WIDGET (drawer->drawer)->panel)->master_widget = NULL;
+		if (drawer->toplevel) {
+			PanelWidget *panel_widget;
 
-			gtk_widget_destroy (drawer->drawer);
-			drawer->drawer = NULL;
+			panel_widget = panel_toplevel_get_panel_widget (
+							drawer->toplevel);
+			panel_widget->master_widget = NULL;
+
+			gtk_widget_destroy (GTK_WIDGET (drawer->toplevel));
+			drawer->toplevel = NULL;
 		}
 	}
 
@@ -677,6 +698,8 @@ panel_applet_destroy (GtkWidget  *widget,
 
 	g_free (info);
 }
+
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 
 typedef struct {
 	AppletType   type;
@@ -905,6 +928,7 @@ panel_applet_load_applets_from_gconf (void)
 
 	g_idle_add (panel_applet_load_idle_handler, NULL);
 }
+#endif /* FIXME_FOR_TOPLEVEL */
 
 static void
 panel_applet_load_default_applet_for_screen (PanelGConfKeyType  type,
@@ -1017,6 +1041,7 @@ panel_applet_load_defaults_for_screen (PanelGConfKeyType  type,
         g_slist_free (applets);
 }
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 static G_CONST_RETURN char *
 panel_applet_get_panel_id (AppletInfo *applet)
 {
@@ -1108,7 +1133,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 	gconf_client_set_int (client, temp_key, position, NULL);
 }
 
-void
+static void
 panel_applet_save_to_gconf (AppletInfo *applet_info)
 {
 	PanelGConfKeyType  key_type;
@@ -1189,6 +1214,7 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 		break;
 	}
 }
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 AppletInfo *
 panel_applet_register (GtkWidget      *applet,
@@ -1226,8 +1252,9 @@ panel_applet_register (GtkWidget      *applet,
 
 	if (type == APPLET_DRAWER) {
 		Drawer *drawer = data;
-		PanelWidget *assoc_panel =
-			PANEL_WIDGET (BASEP_WIDGET (drawer->drawer)->panel);
+		PanelWidget *assoc_panel;
+
+		assoc_panel = panel_toplevel_get_panel_widget (drawer->toplevel);
 
 		g_object_set_data (G_OBJECT (applet),
 				   PANEL_APPLET_ASSOC_PANEL_KEY, assoc_panel);
@@ -1298,7 +1325,9 @@ panel_applet_register (GtkWidget      *applet,
 	if (gconf_key)
 		info->gconf_key = g_strdup (gconf_key);
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	panel_applet_save_to_gconf (info);
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 	if (type != APPLET_BONOBO)
 		gtk_widget_grab_focus (applet);

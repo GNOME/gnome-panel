@@ -66,8 +66,8 @@ void		add_menu_widget		(Menu *menu,
 					 GSList *menudirl,
 					 gboolean fake_subs);
 
-void		set_menu_applet_orient	(Menu *menu,
-					 PanelOrient orient);
+void		set_menu_applet_orientation (Menu             *menu,
+					     PanelOrientation  orientation);
 
 void		setup_menuitem		(GtkWidget   *menuitem,
 					 GtkIconSize  icon_size,

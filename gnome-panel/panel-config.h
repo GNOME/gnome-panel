@@ -1,6 +1,8 @@
 #ifndef PANEL_CONFIG_H
 #define PANEL_CONFIG_H
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
+
 #include "panel-widget.h"
 #include "border-widget.h"
 #include "aligned-widget.h"
@@ -108,9 +110,11 @@ void update_config_floating_pos (BasePWidget *panel);
 void update_config_floating_orient (BasePWidget *panel);
 void update_config_floating_pos_limits (BasePWidget *panel);
 void update_config_type (BasePWidget *panel);
-void kill_config_dialog (GtkWidget *panel);
+void kill_config_dialog (PanelToplevel *toplevel);
 
 GtkWidget *make_size_widget (PerPanelConfig *ppc);
+
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 
 #endif /* PANEL_CONFIG_H */

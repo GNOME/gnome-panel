@@ -40,7 +40,6 @@
 #include "disclosure-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
-#include "multiscreen-stuff.h"
 #include "panel-main.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
@@ -49,6 +48,8 @@
 #include "egg-screen-exec.h"
 #include "egg-screen-url.h"
 #include "panel-stock-icons.h"
+#include "panel-multiscreen.h"
+#include "panel-a11y.h"
 
 enum {
 	COLUMN_ICON,
@@ -963,7 +964,7 @@ create_simple_contents (GdkScreen *screen)
 			    TRUE, TRUE, GNOME_PAD_SMALL);
 
         /* 1/4 the width of the first monitor should be a good value */
-	width_request = multiscreen_width (gdk_screen_get_number (screen), 0) / 4;
+	width_request = panel_multiscreen_width (screen, 0) / 4;
 	g_object_set (G_OBJECT (gentry), "width_request", width_request, NULL);
 
         entry = gnome_entry_gtk_entry (GNOME_ENTRY (gentry));
@@ -1518,9 +1519,9 @@ create_program_list_contents (void)
 
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
 
-	panel_set_atk_name_desc (list,
-				 _("List of known applications"),
-				 _("Choose an application to run from the list"));
+	panel_a11y_set_atk_name_desc (list,
+				      _("List of known applications"),
+				      _("Choose an application to run from the list"));
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);

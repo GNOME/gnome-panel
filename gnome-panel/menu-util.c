@@ -15,14 +15,13 @@
 #include "menu-util.h"
 #include "quick-desktop-reader.h"
 
-#include "basep-widget.h"
-#include "multiscreen-stuff.h"
 #include "distribution.h"
 #include "panel-config-global.h"
 #include "panel-main.h"
 #include "panel-util.h"
 #include "menu.h"
 #include "panel-stock-icons.h"
+#include "panel-multiscreen.h"
 
 #undef MENU_UTIL_DEBUG
 
@@ -46,25 +45,24 @@ add_menu_separator (GtkWidget *menu)
 static void
 panel_standard_menu_pos (GtkMenu *menu, gint *x, gint *y)
 {
-	GtkRequisition requisition;
-	int            screen;
-	int            monitor;
-	int            monitor_basex;
-	int            monitor_basey;
-	int            monitor_width;
-	int            monitor_height;
+	GtkRequisition  requisition;
+	GdkScreen      *screen;
+	int             monitor;
+	int             monitor_basex;
+	int             monitor_basey;
+	int             monitor_width;
+	int             monitor_height;
 
 	gtk_widget_get_child_requisition (GTK_WIDGET (menu),
 					  &requisition);
 
-	screen = gdk_screen_get_number (
-			gtk_widget_get_screen (GTK_WIDGET (menu)));
-	monitor = multiscreen_locate_coords (screen, *x, *y);
+	screen  = gtk_widget_get_screen (GTK_WIDGET (menu));
+	monitor = panel_multiscreen_locate_coords (screen, *x, *y);
 
-	monitor_basex  = multiscreen_x (screen, monitor);
-	monitor_basey  = multiscreen_y (screen, monitor);
-	monitor_width  = multiscreen_width (screen, monitor);
-	monitor_height = multiscreen_height (screen, monitor);
+	monitor_basex  = panel_multiscreen_x (screen, monitor);
+	monitor_basey  = panel_multiscreen_y (screen, monitor);
+	monitor_width  = panel_multiscreen_width (screen, monitor);
+	monitor_height = panel_multiscreen_height (screen, monitor);
 
 	*x -= monitor_basex;
 	*y -= monitor_basey;

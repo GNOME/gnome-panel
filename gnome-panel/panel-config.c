@@ -7,6 +7,8 @@
  *          George Lebl
  */
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
+
 #include <config.h>
 
 #include <gtk/gtk.h>
@@ -31,9 +33,8 @@
 #include "floating-widget.h"
 #include "sliding-widget.h"
 #include "panel.h"
-#include "multiscreen-stuff.h"
-
-#include "nothing.cP"
+#include "panel-multiscreen.h"
+#include "panel-a11y.h"
 
 static void config_apply (PerPanelConfig *ppc);
 
@@ -63,16 +64,14 @@ get_config_struct(GtkWidget *panel)
 }
 
 void
-kill_config_dialog (GtkWidget *panel)
+kill_config_dialog (PanelToplevel *toplevel)
 {
 	PerPanelConfig *ppc;
 
-	g_return_if_fail (panel != NULL);
-	g_return_if_fail (GTK_IS_WIDGET (panel));
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
-	ppc = get_config_struct (panel);
-	if (ppc != NULL &&
-	    ppc->config_window != NULL)
+	ppc = get_config_struct (GTK_WIDGET (toplevel));
+	if (ppc && ppc->config_window)
 		gtk_widget_destroy (ppc->config_window);
 }
 
@@ -133,28 +132,31 @@ update_config_floating_pos (BasePWidget *panel)
 }
 
 void
-update_config_floating_pos_limits (BasePWidget *panel)
+update_config_floating_pos_limits (PanelToplevel *toplevel)
 {
-	GtkWidget *widget;
 	PerPanelConfig *ppc;
-	int xlimit, ylimit;
-	int val;
-	GtkAdjustment *adj;
+	GtkAdjustment  *adj;
+	GtkWidget      *widget;
+	GdkScreen      *screen;
+	int             monitor;
+	int             xlimit, ylimit;
+	int             val;
 
-	g_return_if_fail (panel != NULL);
-	g_return_if_fail (GTK_IS_WIDGET (panel));
+	g_return_if_fail (toplevel != NULL);
+	g_return_if_fail (GTK_IS_WIDGET (toplevel));
 
-	widget = GTK_WIDGET (panel);
+	widget = GTK_WIDGET (toplevel);
 	ppc = get_config_struct (widget);
 
 	if (ppc == NULL ||
 	    ppc->ppc_origin_change)
 		return;
 
-	xlimit = multiscreen_width (panel->screen, panel->monitor)
-			- widget->allocation.width;
-	ylimit = multiscreen_height (panel->screen, panel->monitor)
-			- widget->allocation.height;
+	screen  = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	monitor = panel_toplevel_get_monitor (toplevel);
+
+	xlimit = panel_multiscreen_width  (screen, monitor) - widget->allocation.width;
+	ylimit = panel_multiscreen_height (screen, monitor) - widget->allocation.height;
 
 	adj = gtk_spin_button_get_adjustment(GTK_SPIN_BUTTON (ppc->x_spin));
 	if((int)adj->upper == xlimit) {
@@ -197,26 +199,33 @@ update_config_floating_orient (BasePWidget *panel)
 }
 
 void
-update_config_screen (BasePWidget *w)
+update_config_screen (PanelToplevel *toplevel)
 {
-	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
+	PerPanelConfig *ppc;
+	GdkScreen      *screen;
+	int             n_screen;
+	int             monitor;
+
+	ppc = get_config_struct (GTK_WIDGET (toplevel));
 
 	if (!ppc || ppc->ppc_origin_change)
 		return;
 
-	gtk_spin_button_set_value (
-		GTK_SPIN_BUTTON (ppc->screen_spin), w->screen);
-	gtk_spin_button_set_value (
-		GTK_SPIN_BUTTON (ppc->monitor_spin), w->monitor);
+	screen   = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	n_screen = gdk_screen_get_number (screen);
+	monitor  = panel_toplevel_get_monitor (toplevel);
+
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->screen_spin), n_screen);
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->monitor_spin), monitor);
 
 	gtk_spin_button_set_range (
 		GTK_SPIN_BUTTON (ppc->monitor_spin),
-		0, multiscreen_monitors (w->screen));
+		0, panel_multiscreen_monitors (screen));
 
-	if (FLOATING_IS_WIDGET (w))
-		update_config_floating_pos_limits (w);
-	else if (SLIDING_IS_WIDGET (w))
-		update_config_offset_limit (w);
+	if (FLOATING_IS_WIDGET (toplevel))
+		update_config_floating_pos_limits (toplevel);
+	else if (SLIDING_IS_WIDGET (toplevel))
+		update_config_offset_limit (toplevel);
 }
 
 void
@@ -267,11 +276,10 @@ update_config_back (PanelWidget *pw)
 {
 	PerPanelConfig *ppc;
 	
-	g_return_if_fail (pw);
-	g_return_if_fail (PANEL_IS_WIDGET(pw));
-	g_return_if_fail (pw->panel_parent);
+	g_return_if_fail (PANEL_IS_WIDGET (pw));
+	g_return_if_fail (PANEL_IS_TOPLEVEL (pw->toplevel));
 
-	ppc = get_config_struct (pw->panel_parent);
+	ppc = get_config_struct (pw->toplevel);
 
 	if (ppc == NULL ||
 	    ppc->ppc_origin_change)
@@ -338,22 +346,30 @@ update_config_offset (BasePWidget *w)
 }
 
 void
-update_config_offset_limit (BasePWidget *panel)
+update_config_offset_limit (PanelToplevel *toplevel)
 {
-	GtkWidget *widget = GTK_WIDGET(panel);
-	PerPanelConfig *ppc = get_config_struct (widget);
-	int range, val;
-	GtkAdjustment *adj;
+	PerPanelConfig *ppc;
+	GtkWidget      *widget;
+	GtkAdjustment  *adj;
+	GdkScreen      *screen;
+	int             monitor;
+	int             range, val;
+
+	widget = GTK_WIDGET (toplevel);
+	ppc    = get_config_struct (widget);
 
 	if (ppc == NULL ||
 	    ppc->ppc_origin_change)
 		return;
 
+	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	monitor = panel_toplevel_get_monitor (toplevel);
+
 	if(ppc->edge == BORDER_LEFT || ppc->edge == BORDER_RIGHT)
-		range = multiscreen_height (panel->screen, panel->monitor)
+		range = panel_multiscreen_height (screen, monitor)
 				- widget->allocation.height;
 	else
-		range = multiscreen_width (panel->screen, panel->monitor)
+		range = panel_multiscreen_width (screen, monitor)
 				- widget->allocation.width;
 
 	adj = gtk_spin_button_get_adjustment(GTK_SPIN_BUTTON (ppc->offset_spin));
@@ -588,14 +604,19 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 static void
 screen_set (GtkWidget *widget, gpointer data)
 {
-	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
+	PerPanelConfig *ppc;
+	GdkScreen      *screen;
+
+	ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 
 	ppc->screen = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
 	panel_config_register_changes (ppc);	
 
+	screen = gdk_display_get_screen (gdk_display_get_default (), ppc->screen);
+
 	if (ppc->monitor_spin)
 		gtk_spin_button_set_range (GTK_SPIN_BUTTON (ppc->monitor_spin),
-					   0, multiscreen_monitors (ppc->screen));
+					   0, panel_multiscreen_monitors (screen));
 }
 
 static void
@@ -617,8 +638,8 @@ make_misc_widget (PerPanelConfig *ppc)
 	GtkWidget *button, *label;
 	char      *text;
 
-	if (multiscreen_screens () <= 1  &&
-	    multiscreen_monitors (0) <= 1)
+	if (panel_multiscreen_screens () <= 1  &&
+	    panel_multiscreen_monitors (0) <= 1)
 		return NULL;
 
 	text = g_strdup_printf ("<b>%s</b>", _("Miscellaneous:"));
@@ -635,7 +656,7 @@ make_misc_widget (PerPanelConfig *ppc)
 	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
-	if (multiscreen_screens () > 1) {
+	if (panel_multiscreen_screens () > 1) {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
 
@@ -643,7 +664,8 @@ make_misc_widget (PerPanelConfig *ppc)
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
 		ppc->screen_spin = button =
-			gtk_spin_button_new_with_range (0, multiscreen_screens () - 1, 1);
+			gtk_spin_button_new_with_range (
+					0, panel_multiscreen_screens () - 1, 1);
 		gtk_widget_set_size_request (GTK_WIDGET (button), 65, -1);
 		g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->screen);
@@ -651,7 +673,11 @@ make_misc_widget (PerPanelConfig *ppc)
 		gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 	}
 
-	if (multiscreen_monitors (0) > 1) {
+	if (panel_multiscreen_monitors (0) > 1) {
+		GdkScreen *screen;
+
+		screen = gdk_display_get_screen (gdk_display_get_default (), ppc->screen);
+
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
 
@@ -660,7 +686,7 @@ make_misc_widget (PerPanelConfig *ppc)
 
 		ppc->monitor_spin = button =
 			gtk_spin_button_new_with_range (
-					0, multiscreen_monitors (ppc->screen) - 1, 1);
+					0, panel_multiscreen_monitors (screen) - 1, 1);
 		gtk_widget_set_size_request (GTK_WIDGET (button), 65, -1);
 		g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->monitor);
@@ -700,10 +726,10 @@ border_set_align (GtkWidget *widget, gpointer data)
 }
 
 static void
-make_position_widget_accessible (GtkWidget   *w,
-				 int          current,
-				 int          max,
-				 PanelOrient  orient)
+make_position_widget_accessible (GtkWidget        *w,
+				 int               current,
+				 int               max,
+				 PanelOrientation  orientation)
 {
 	static const char *horiz_prefix[] = { "Left ", "Middle ", "Right " };
 	static const char *vert_prefix[] = { "Top ", "Middle ", "Bottom " };
@@ -711,17 +737,17 @@ make_position_widget_accessible (GtkWidget   *w,
 	char              *str1 = "";
 	char              *str2 = "";
 
-	switch (orient) {
-	case PANEL_ORIENT_LEFT:
+	switch (orientation) {
+	case PANEL_ORIENTATION_LEFT:
 		str2 = "Left Vertical";
 		break;
-	case PANEL_ORIENT_UP:
+	case PANEL_ORIENTATION_TOP:
 		str2 = "Top Horizontal";
 		break;
-	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENTATION_RIGHT:
 		str2 = "Right Vertical";
 		break;
-	case PANEL_ORIENT_DOWN:
+	case PANEL_ORIENTATION_BOTTOM:
 		str2 = "Bottom Horizontal";
 		break;
 	}
@@ -745,9 +771,10 @@ make_position_widget_accessible (GtkWidget   *w,
 
 	atk_name = g_strconcat (str1, str2, NULL);
 
-	panel_set_atk_name_desc (w,
-				 _(atk_name),
-				 _("Indicates the panel position and orientation on screen"));
+	panel_a11y_set_atk_name_desc (
+			w,
+			_(atk_name),
+			_("Indicates the panel position and orientation on screen"));
 
 	g_free (atk_name);
 }
@@ -775,7 +802,7 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 	gtk_widget_set_direction (table, GTK_TEXT_DIR_LTR);
 	gtk_container_add (GTK_CONTAINER (w), table);
 
-	panel_set_atk_relation (table, GTK_LABEL (label));
+	panel_a11y_set_atk_relation (table, GTK_LABEL (label));
 
 	w = NULL;
 
@@ -802,7 +829,7 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  GINT_TO_POINTER (align));
 
 		make_position_widget_accessible (
-				w, align, aligns, PANEL_ORIENT_LEFT);
+				w, align, aligns, PANEL_ORIENTATION_LEFT);
 	}
 	
 	/* TOP */
@@ -826,7 +853,7 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  GINT_TO_POINTER (align));
 
 		make_position_widget_accessible (
-				w, align, aligns, PANEL_ORIENT_UP);
+				w, align, aligns, PANEL_ORIENTATION_TOP);
 	}
 
 
@@ -852,7 +879,7 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  GINT_TO_POINTER (align));
 
 		make_position_widget_accessible (
-				w, align, aligns, PANEL_ORIENT_RIGHT);
+				w, align, aligns, PANEL_ORIENTATION_RIGHT);
 	}
 
 
@@ -878,7 +905,7 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  GINT_TO_POINTER (align));
 
 		make_position_widget_accessible (
-				w, align, aligns, PANEL_ORIENT_DOWN);
+				w, align, aligns, PANEL_ORIENTATION_BOTTOM);
 	}
 
 	update_position_toggles (ppc);
@@ -979,12 +1006,15 @@ floating_notebook_page (PerPanelConfig *ppc)
 	GtkWidget *alignment;
 	GtkObject *range;
 	GtkWidget *w;
-	int xlimit, ylimit;
-	char *text;
+	GdkScreen *screen;
+	int        xlimit, ylimit;
+	char      *text;
 
-	xlimit = multiscreen_width (ppc->screen, ppc->monitor)
+	screen = gdk_display_get_screen (gdk_display_get_default (), ppc->screen);
+
+	xlimit = panel_multiscreen_width (screen, ppc->monitor)
 			- ppc->panel->allocation.width;
-	ylimit = multiscreen_height (ppc->screen, ppc->monitor)
+	ylimit = panel_multiscreen_height (screen, ppc->monitor)
 			- ppc->panel->allocation.height;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -1059,7 +1089,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1,
 			  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-	panel_set_atk_relation (ppc->x_spin, GTK_LABEL (label));
+	panel_a11y_set_atk_relation (ppc->x_spin, GTK_LABEL (label));
 	
 	alignment = gtk_alignment_new (0, 0.5, 0, 0);
 	label = gtk_label_new_with_mnemonic (_("Ver_tical:"));
@@ -1076,7 +1106,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->y);
 	g_signal_connect (button, "value-changed",
 			  G_CALLBACK (floating_set_xy), &ppc->y);
-	panel_set_atk_relation (ppc->y_spin, GTK_LABEL (label));
+	panel_a11y_set_atk_relation (ppc->y_spin, GTK_LABEL (label));
 	gtk_table_attach (GTK_TABLE (table), button, 1, 2, 1, 2,
 			  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
@@ -1111,12 +1141,13 @@ sliding_set_offset (GtkWidget *widget, gpointer data)
 static GtkWidget *
 sliding_notebook_page (PerPanelConfig *ppc)
 {
-	GtkWidget *vbox, *hbox;
-	GtkWidget *w;
-	GtkWidget *l;
-	GtkWidget *button;
 	GtkAdjustment *adj;
-	int range;
+	GtkWidget     *vbox, *hbox;
+	GtkWidget     *w;
+	GtkWidget     *l;
+	GtkWidget     *button;
+	GdkScreen     *screen;
+	int            range;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	
@@ -1130,11 +1161,13 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	l = gtk_label_new_with_mnemonic (_("_Distance from edge:"));
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 
+	screen = gdk_display_get_screen (gdk_display_get_default (), ppc->screen);
+
 	if(ppc->edge == BORDER_LEFT || ppc->edge == BORDER_RIGHT)
-		range = multiscreen_height (ppc->screen, ppc->monitor)
+		range = panel_multiscreen_height (screen, ppc->monitor)
 				- ppc->panel->allocation.height;
 	else
-		range = multiscreen_width (ppc->screen, ppc->monitor)
+		range = panel_multiscreen_width (screen, ppc->monitor)
 				- ppc->panel->allocation.width;
 	adj = GTK_ADJUSTMENT(gtk_adjustment_new (ppc->offset, 0, range, 1, 10, 10));
 	ppc->offset_spin = button = 
@@ -1146,7 +1179,7 @@ sliding_notebook_page (PerPanelConfig *ppc)
 			  G_CALLBACK (sliding_set_offset), ppc);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
-	panel_set_atk_relation (ppc->offset_spin, GTK_LABEL (l));
+	panel_a11y_set_atk_relation (ppc->offset_spin, GTK_LABEL (l));
 	
 	w = make_size_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
@@ -1257,7 +1290,7 @@ make_size_widget (PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (box), ppc->size_menu,
 			    FALSE, FALSE, 0);
 
-	panel_set_atk_relation (ppc->size_menu, GTK_LABEL (label));
+	panel_a11y_set_atk_relation (ppc->size_menu, GTK_LABEL (label));
 	
 	switch(ppc->sz) {
 	case PANEL_SIZE_XX_SMALL:
@@ -1442,7 +1475,7 @@ background_page (PerPanelConfig *ppc)
 			  GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL,
 			  2, 2);
 
-	panel_set_atk_relation (ppc->back_om, GTK_LABEL (label));
+	panel_a11y_set_atk_relation (ppc->back_om, GTK_LABEL (label));
 
 	g_signal_connect (ppc->back_om, "changed",
 			  G_CALLBACK (background_type_changed), ppc);
@@ -1469,7 +1502,7 @@ background_page (PerPanelConfig *ppc)
 				   ppc->back_color.gdk.blue,
 				   ppc->back_color.alpha);
 
-	panel_set_atk_relation (ppc->backsel, GTK_LABEL (ppc->col_label));
+	panel_a11y_set_atk_relation (ppc->backsel, GTK_LABEL (ppc->col_label));
 
 	gtk_table_attach (GTK_TABLE (table), ppc->backsel,
 			  1, 2, 1, 2,
@@ -1795,3 +1828,4 @@ panel_config (GtkWidget *panel)
 	/* show main window */
 	gtk_widget_show_all (ppc->config_window);
 }
+#endif /* FIXME_FOR_NEW_TOPLEVEL */

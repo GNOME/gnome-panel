@@ -29,17 +29,14 @@
 #include "panel.h"
 
 #include "applet.h"
+#include "drawer.h"
 #include "button-widget.h"
 #include "distribution.h"
-#include "drawer-widget.h"
-#include "edge-widget.h"
-#include "floating-widget.h"
 #include "gnome-run.h"
 #include "launcher.h"
 #include "menu-fentry.h"
 #include "menu-util.h"
 #include "menu.h"
-#include "multiscreen-stuff.h"
 #include "panel-util.h"
 #include "panel-config.h"
 #include "panel-config-global.h"
@@ -50,22 +47,11 @@
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
 #include "panel-compatibility.h"
-
-#define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
-			   GDK_BUTTON_RELEASE_MASK |		\
-			   GDK_POINTER_MOTION_MASK |		\
-			   GDK_POINTER_MOTION_HINT_MASK)
+#include "panel-multiscreen.h"
+#include "panel-toplevel.h"
 
 /*list of all panel widgets created*/
 GSList *panel_list = NULL;
-
-static gboolean panel_dragged = FALSE;
-static guint panel_dragged_timeout = 0;
-static gboolean panel_been_moved = FALSE;
-
-/*the number of base panels (corner/snapped) out there, never let it
-  go below 1*/
-int base_panels = 0;
 
 extern GSList *applets;
 
@@ -78,12 +64,7 @@ extern GtkTooltips *panel_tooltips;
 
 extern char *kde_menudir;
 
-
-
-
 extern GlobalConfig global_config;
-
-/*the types of stuff we accept*/
 
 enum {
 	TARGET_URL,
@@ -97,8 +78,7 @@ enum {
 	TARGET_BACKGROUND_RESET,
 };
 
-/* FIXME : Need to do some good error checking on all of these variables */
-
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 static GConfEnumStringPair panel_type_type_enum_map [] = {
 	{ EDGE_PANEL,      "edge-panel" },
 	{ DRAWER_PANEL,    "drawer-panel" },
@@ -143,32 +123,23 @@ static GConfEnumStringPair panel_anchor_type_enum_map [] = {
 };
 
 static GConfEnumStringPair panel_orient_type_enum_map [] = {
-	{ PANEL_ORIENT_UP, "panel-orient-up" },
-	{ PANEL_ORIENT_DOWN, "panel-orient-down" },
-	{ PANEL_ORIENT_LEFT, "panel-orient-left" },
-	{ PANEL_ORIENT_RIGHT, "panel-orient-right" },
+	{ PANEL_ORIENTATION_TOP, "panel-orient-up" },
+	{ PANEL_ORIENTATION_BOTTOM, "panel-orient-down" },
+	{ PANEL_ORIENTATION_LEFT, "panel-orient-left" },
+	{ PANEL_ORIENTATION_RIGHT, "panel-orient-right" },
 };
 
 static GConfEnumStringPair panel_orientation_type_enum_map [] = {
 	{ GTK_ORIENTATION_HORIZONTAL, "panel-orientation-horizontal" },
 	{ GTK_ORIENTATION_VERTICAL, "panel-orientation-vertical" },
 };
+#endif /* FIXME_FOR_TOPLEVEL */
 
 static GConfEnumStringPair panel_speed_type_enum_map [] = {
 	{ PANEL_SPEED_MEDIUM, "panel-speed-medium" },
 	{ PANEL_SPEED_SLOW,   "panel-speed-slow" },
 	{ PANEL_SPEED_FAST,   "panel-speed-fast" },
 };
-
-static void
-panel_realize (GtkWidget *widget, gpointer data)
-{
-	basep_widget_enable_buttons(BASEP_WIDGET(widget), TRUE);
-
-	/*FIXME: this seems to fix the panel size problems on startup
-	  (from a report) but I don't think it's right*/
-	gtk_widget_queue_resize (GTK_WIDGET (widget));
-}
 
 /*we call this recursively*/
 static void orient_change_foreach(GtkWidget *w, gpointer data);
@@ -177,26 +148,29 @@ void
 orientation_change (AppletInfo  *info,
 		    PanelWidget *panel)
 {
+	PanelOrientation orientation;
+
+	orientation = panel_widget_get_applet_orientation (panel);
 
 	switch (info->type) {
 	case APPLET_BONOBO:
-		panel_applet_frame_change_orient (PANEL_APPLET_FRAME (info->widget),
-						  panel_widget_get_applet_orient (panel));
+		panel_applet_frame_change_orientation (
+				PANEL_APPLET_FRAME (info->widget), orientation);
 		break;
 	case APPLET_MENU:
-		set_menu_applet_orient ((Menu *)info->data,
-					panel_widget_get_applet_orient (panel));
+		set_menu_applet_orientation ((Menu *)info->data, orientation);
 		break;
 	case APPLET_DRAWER: {
 		Drawer      *drawer = info->data;
-		BasePWidget *basep = BASEP_WIDGET (drawer->drawer);
+		PanelWidget *panel_widget;
 
-		set_drawer_applet_orient (drawer,
-					  panel_widget_get_applet_orient (panel));
-		gtk_widget_queue_resize (drawer->drawer);
-		gtk_container_foreach (GTK_CONTAINER (basep->panel),
+		panel_widget = panel_toplevel_get_panel_widget (drawer->toplevel);
+
+		set_drawer_applet_orientation (drawer, orientation);
+		gtk_widget_queue_resize (GTK_WIDGET (drawer->toplevel));
+		gtk_container_foreach (GTK_CONTAINER (panel_widget),
 				       orient_change_foreach,
-				       (gpointer)basep->panel);
+				       panel_widget);
 		}
 		break;
 	default:
@@ -221,24 +195,7 @@ panel_orient_change (GtkWidget *widget, gpointer data)
 			      orient_change_foreach,
 			      widget);
 
-	if (FLOATING_IS_WIDGET (PANEL_WIDGET (widget)->panel_parent))
-		update_config_floating_orient (FLOATING_WIDGET (PANEL_WIDGET (widget)->panel_parent));
-
 	panels_to_sync = TRUE;
-}
-
-static void
-border_edge_change (BorderPos *border,
-		    BorderEdge edge,
-		    gpointer data)
-{
-	BasePWidget *basep = BASEP_WIDGET (data);
-	PanelWidget *panel = PANEL_WIDGET (basep->panel);
-	gtk_container_foreach (GTK_CONTAINER (panel),
-			       orient_change_foreach,
-			       panel);
-	panels_to_sync = TRUE;
-	update_config_edge (basep);
 }
 
 /*we call this recursively*/
@@ -269,8 +226,11 @@ panel_size_change (GtkWidget *widget, gpointer data)
 	gtk_container_foreach(GTK_CONTAINER(widget), size_change_foreach,
 			      widget);
 	panels_to_sync = TRUE;
+
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	/*update the configuration box if it is displayed*/
-	update_config_size (PANEL_WIDGET (widget)->panel_parent);
+	update_config_size (PANEL_WIDGET (widget)->toplevel);
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 }
 
 void
@@ -301,132 +261,24 @@ panel_back_change (GtkWidget *widget, gpointer data)
 			       widget);
 
 	panels_to_sync = TRUE;
+
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	/*update the configuration box if it is displayed*/
 	update_config_back(PANEL_WIDGET(widget));
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 }
-
-static void state_hide_foreach(GtkWidget *w, gpointer data);
-
-static void
-state_restore_foreach(GtkWidget *w, gpointer data)
-{
-	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
-	
-	if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
-
-		DRAWER_POS (basep->pos)->temp_hidden = FALSE;
-		gtk_widget_queue_resize (GTK_WIDGET (basep));
-
-		gtk_container_foreach (GTK_CONTAINER (basep->panel),
-				       (basep->state == BASEP_SHOWN)
-				       ? state_restore_foreach
-				       : state_hide_foreach,
-				       NULL);
-	}
-}
-
-static void
-state_hide_foreach(GtkWidget *w, gpointer data)
-{
-	AppletInfo *info = g_object_get_data (G_OBJECT(w), "applet_info");
-	if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
-		GtkWidget *widget = GTK_WIDGET(basep);
-
-		DRAWER_POS (basep->pos)->temp_hidden = TRUE;
-		gtk_container_foreach(GTK_CONTAINER(basep->panel),
-				      state_hide_foreach,
-				      NULL);
-
-		gtk_widget_queue_resize (widget);
-
-		/* quickly hide the window from sight, the allocation
-		   and all that will get updated in the main loop */
-		if(widget->window) {
-			gdk_window_move(widget->window,
-					-ABS (widget->allocation.width) - 1,
-					-ABS (widget->allocation.height) - 1);
-		}
-	}
-}
-
-static void
-queue_resize_foreach(GtkWidget *w, gpointer data)
-{
-	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
-
-	if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
-		
-		if(basep->state == BASEP_SHOWN) {
-			gtk_widget_queue_resize(w);
-			gtk_container_foreach(GTK_CONTAINER(basep->panel),
-					       queue_resize_foreach,
-					       NULL);
-		}
-	}
-}
-
-static void
-basep_state_change(BasePWidget *basep,
-		   BasePState old_state,
-		   gpointer data)
-{
-	gtk_container_foreach (GTK_CONTAINER (basep->panel),
-			       (basep->state == BASEP_SHOWN)
-			       ? state_restore_foreach
-			       : state_hide_foreach,
-			       (gpointer)basep);
-}
-
-#ifdef FIXME
-/* Is this even needed anymore - remove?
- */
-static void
-basep_type_change(BasePWidget *basep,
-		  PanelType type,
-		  gpointer data)
-{
-	update_config_type(basep);
-	panels_to_sync = TRUE;
-}
-#endif
 
 static void
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	AppletInfo *info = g_object_get_data (G_OBJECT (applet),
-					       "applet_info");
-	GtkWidget *panelw = PANEL_WIDGET(widget)->panel_parent;
+	PanelToplevel *toplevel;
+	AppletInfo    *info;
 
-	g_assert (BASEP_IS_WIDGET (panelw));
-	
-	/*
-	 * on a real add the info will be NULL as the 
-	 * only adding is done in panel_applet_register 
-	 * and that doesn't add the info to the array until 
-	 * after the add, so we can be sure this was 
-	 * generated on a reparent.
-	 */
-	if(!DRAWER_IS_WIDGET(panelw) &&
-	   info && info->type == APPLET_DRAWER) {
-	        Drawer *drawer = info->data;
-		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
-		if(basep->state == BASEP_SHOWN ||
-		   basep->state == BASEP_AUTO_HIDDEN) {
-			BASEP_WIDGET(panelw)->drawers_open++;
-			basep_widget_autoshow(BASEP_WIDGET(panelw));
-		}
-	}
-	
-	/*pop the panel up on addition*/
-	basep_widget_autoshow(BASEP_WIDGET(panelw));
-	/*try to pop down though if the mouse is out*/
-	basep_widget_queue_autohide(BASEP_WIDGET(panelw));
+	toplevel = PANEL_WIDGET (widget)->toplevel;
+	info = g_object_get_data (G_OBJECT (applet), "applet_info");
+
+	panel_toplevel_unhide (toplevel);
+	panel_toplevel_queue_auto_hide (toplevel);
 
 	orientation_change(info,PANEL_WIDGET(widget));
 	size_change(info,PANEL_WIDGET(widget));
@@ -439,21 +291,21 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 static void
 panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	GtkWidget *parentw = PANEL_WIDGET(widget)->panel_parent;
-	AppletInfo *info = g_object_get_data (G_OBJECT (applet),
-					      "applet_info");
+	PanelToplevel *toplevel;
+	AppletInfo    *info;
+
+	toplevel = PANEL_WIDGET (widget)->toplevel;
+	info = g_object_get_data (G_OBJECT (applet), "applet_info");
 
 	/*we will need to save this applet's config now*/
 	applets_to_sync = TRUE;
  
-	if(info->type == APPLET_DRAWER) {
+	if (info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
-		if((drawer->drawer) && (
-			(BASEP_WIDGET(drawer->drawer)->state == BASEP_SHOWN) ||
-			(BASEP_WIDGET(drawer->drawer)->state == BASEP_AUTO_HIDDEN))) {
-			BASEP_WIDGET(parentw)->drawers_open--;
-			basep_widget_queue_autohide(BASEP_WIDGET(parentw));
-		}
+
+		if (drawer->toplevel)
+			panel_toplevel_queue_auto_hide (toplevel);
+
 		/*it was a drawer so we need to save panels as well*/
 		panels_to_sync = TRUE;
 	}
@@ -476,36 +328,8 @@ menu_deactivate(GtkWidget *w, PanelData *pd)
 	pd->menu_age = 0;
 	if (pd->deactivate_idle == 0)
 		pd->deactivate_idle = g_idle_add (deactivate_idle, pd);
-	BASEP_WIDGET(pd->panel)->autohide_inhibit = FALSE;
-}
 
-static void
-move_panel_to_cursor (GtkWidget *panel)
-{
-	GdkScreen *screen;
-	GdkWindow *root_window;
-	int        x, y;
-
-	g_return_if_fail (GTK_IS_WINDOW (panel));
-
-	screen = gtk_window_get_screen (GTK_WINDOW (panel));
-	root_window = gdk_screen_get_root_window (screen);
-
-	gdk_window_get_pointer (root_window, &x, &y, NULL);
-
-	basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
-}
-
-static gboolean
-panel_move_timeout (GtkWidget *panel)
-{
-	if (panel_dragged && panel_been_moved)
-		move_panel_to_cursor (panel);
-	
-	panel_been_moved = FALSE;
-	panel_dragged_timeout = 0;
-
-	return FALSE;
+	panel_toplevel_unblock_auto_hide (PANEL_TOPLEVEL (pd->panel));
 }
 
 static void
@@ -527,19 +351,18 @@ panel_remove_applets (PanelWidget *panel)
 }
 
 static void
-panel_destroy (GtkWidget *widget, gpointer data)
+panel_destroy (PanelToplevel *toplevel,
+	       PanelData     *pd)
 {
-	PanelData *pd = g_object_get_data (G_OBJECT (widget), "PanelData");
-	PanelWidget *panel;
+	PanelWidget *panel_widget;
 
-	panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
+	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
-	panel_remove_applets (panel);
-		
-	kill_config_dialog (widget);
+	panel_remove_applets (panel_widget);
 
-	if (!DRAWER_IS_WIDGET (widget))
-		base_panels--;
+#ifdef FIXME_FOR_NEW_TOPLEVEL		
+	kill_config_dialog (toplevel);
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 	if (pd->menu)
 		g_object_unref (pd->menu);
@@ -551,7 +374,7 @@ panel_destroy (GtkWidget *widget, gpointer data)
 		g_source_remove (pd->deactivate_idle);
 	pd->deactivate_idle = 0;
 
-	g_object_set_data (G_OBJECT (widget), "PanelData", NULL);
+	g_object_set_data (G_OBJECT (toplevel), "PanelData", NULL);
 
 	panel_list = g_slist_remove (panel_list, pd);
 	g_free (pd);
@@ -566,7 +389,9 @@ panel_applet_move(PanelWidget *panel, GtkWidget *widget, gpointer data)
 
 	g_return_if_fail (info);
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	panel_applet_save_position (info, info->gconf_key, FALSE);
+#endif
 }
 
 static GtkWidget *
@@ -583,253 +408,91 @@ panel_menu_get (PanelWidget *panel, PanelData *pd)
 }
 
 GtkWidget *
-make_popup_panel_menu (PanelWidget *panel)
+make_popup_panel_menu (PanelWidget *panel_widget)
 {
-	GtkWidget *panelw;
 	PanelData *pd;
 	GtkWidget *menu;
 
-	if (!panel) {
-		panelw = ((PanelData *)panel_list->data)->panel;
-		panel = PANEL_WIDGET (BASEP_WIDGET (panelw)->panel);
-	} else
-		panelw = panel->panel_parent;
+	if (!panel_widget) {
+		PanelToplevel *toplevel;
 
-	pd = g_object_get_data (G_OBJECT (panelw), "PanelData");
-	menu = panel_menu_get (panel, pd);
-	g_object_set_data (G_OBJECT (menu), "menu_panel", panel);
+		toplevel = PANEL_TOPLEVEL (((PanelData *) panel_list->data)->panel);
+
+		panel_widget = panel_toplevel_get_panel_widget (toplevel);
+	}
+
+	pd = g_object_get_data (G_OBJECT (panel_widget->toplevel), "PanelData");
+	menu = panel_menu_get (panel_widget, pd);
+	g_object_set_data (G_OBJECT (menu), "menu_panel", panel_widget);
 
 	pd->menu_age = 0;
 	return menu;
 }
 
 static gboolean
-panel_initiate_move (GtkWidget *widget,
-		     guint32    event_time)
+panel_popup_menu (PanelToplevel *toplevel,
+		  guint          button,
+		  guint32        activate_time)
 {
-	PanelWidget *panel;
-	BasePWidget *basep;
-	GdkCursor   *cursor;
+	PanelWidget *panel_widget;
+	GtkWidget   *menu;
+	PanelData   *panel_data;
+	int          x = -1, y = 1;
 
-	g_assert (BASEP_IS_WIDGET (widget));
+	panel_widget = panel_toplevel_get_panel_widget (toplevel);
+	panel_data   = g_object_get_data (G_OBJECT (toplevel), "PanelData");
 
-	basep = BASEP_WIDGET (widget);
-	panel = PANEL_WIDGET (basep->panel);
+	gtk_widget_get_pointer (GTK_WIDGET (panel_widget), &x, &y);
 
-	if (DRAWER_IS_WIDGET (widget) && !panel_applet_in_drag) {
-		panel_widget_applet_drag_start (
-			PANEL_WIDGET (panel->master_widget->parent),
-			panel->master_widget,
-			PW_DRAG_OFF_CURSOR);
-		return TRUE;
-	}
+	if (panel_widget->orient == GTK_ORIENTATION_VERTICAL)
+		panel_data->insertion_pos = x;
+	else
+		panel_data->insertion_pos = y;
+	
+	menu = make_popup_panel_menu (panel_widget);
 
-	if (panel_dragged)
-		return FALSE;
+	panel_toplevel_block_auto_hide (toplevel);
 
-	gtk_grab_add (widget);
+	gtk_menu_set_screen (GTK_MENU (menu),
+			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
-	cursor = gdk_cursor_new (GDK_FLEUR);
-	gdk_pointer_grab (widget->window, FALSE, PANEL_EVENT_MASK,
-			  NULL, cursor, event_time);
-	gdk_cursor_unref (cursor);
-
-	basep->autohide_inhibit = TRUE;
-	basep_widget_init_offsets (basep);
-	panel_dragged = TRUE;
+	gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
+			panel_menu_position, panel_widget, button, activate_time);
 
 	return TRUE;
 }
 
 static gboolean
-panel_do_popup_menu (PanelWidget *panel,
-		     BasePWidget *basep,
-		     GtkWidget   *widget,
-		     int          screen,
-		     guint        button,
-		     guint32      activate_time)
+panel_popup_menu_signal (PanelToplevel *toplevel)
 {
-	g_assert (basep != NULL);
-
-	if (!panel_applet_in_drag) {
-		GtkWidget *menu;
-
-		menu = make_popup_panel_menu (panel);
-		basep->autohide_inhibit = TRUE;
-		basep_widget_queue_autohide (basep);
-
-		gtk_menu_set_screen (GTK_MENU (menu),
-				     panel_screen_from_number (screen));
-
-		gtk_menu_popup (GTK_MENU (menu),
-                                NULL,
-                                NULL,
-                                panel_menu_position,
-				widget,
-				button,
-                                activate_time);
-		return TRUE;
-	}
-
-	return FALSE;
+	return panel_popup_menu (toplevel, 3, GDK_CURRENT_TIME);
 }
 
 static gboolean
-panel_popup_menu (PanelWidget *panel,
-		  BasePWidget *basep)
+panel_button_press_event (PanelToplevel  *toplevel,
+			  GdkEventButton *event)
 {
-	return panel_do_popup_menu (
-			panel, basep, GTK_WIDGET (panel), basep->screen, 3, GDK_CURRENT_TIME);
-}
-
-static gboolean
-panel_end_move (GtkWidget *widget, GdkEventButton *bevent)
-{
-	BasePWidget *basep;
-
-	if (!panel_dragged)
+	if (event->button != 3)
 		return FALSE;
 
-	basep = BASEP_WIDGET (widget);
-
-	basep_widget_set_pos (basep, bevent->x_root, bevent->y_root);
-	basep->autohide_inhibit = FALSE;
-	basep_widget_queue_autohide (basep);
-
-	gtk_grab_remove (widget);
-	gdk_pointer_ungrab (bevent->time);
-	panel_dragged = FALSE;
-
-	if (panel_dragged_timeout != 0)
-		g_source_remove (panel_dragged_timeout);
-	panel_dragged_timeout = 0;
-	panel_been_moved = FALSE;
-
-	return TRUE;
+	return panel_popup_menu (toplevel, event->button, event->time);
 }
 
 static gboolean
-panel_event(GtkWidget *widget, GdkEvent *event)
+panel_key_press_event (GtkWidget   *widget,
+		       GdkEventKey *event)
 {
-	PanelData *pd;
-	PanelWidget *panel;
-	BasePWidget *basep;
-	GdkEventButton *bevent;
-	GdkEventKey *kevent;
-	int x, y;
-	int screen;
-
-	basep = BASEP_WIDGET (widget);
-	panel = PANEL_WIDGET (basep->panel);
-	screen = basep->screen;
-
-	switch (event->type) {
-	case GDK_BUTTON_PRESS:
-		bevent = (GdkEventButton *) event;
-		if (panel_dragged) {
-			return panel_end_move (widget, bevent);
-		}
-		switch (bevent->button) {
-		case 3:
-			/* Store the point where the popup menu was started to
-			 * insert applets at that point */
-			pd = g_object_get_data (G_OBJECT (widget), "PanelData");
-			gtk_widget_get_pointer (GTK_WIDGET (panel), &x, &y);
-			if (panel->orient == GTK_ORIENTATION_VERTICAL)
-				pd->insertion_pos = y;
-			else
-				pd->insertion_pos = x;
-
-			if (panel_do_popup_menu (panel, basep, widget, screen,
-						 bevent->button, bevent->time))
-				return TRUE;
-			break;
-		case 2:
-			if (!commie_mode)
-				return panel_initiate_move (widget,
-							    bevent->time);
-			break;
-		default: break;
-		}
-		break;
-
-	case GDK_BUTTON_RELEASE:
-		bevent = (GdkEventButton *) event;
-		if (panel_dragged)
-			return panel_end_move (widget, bevent);
-		break;
-	case GDK_MOTION_NOTIFY:
-		if (panel_dragged) {
-			if (!panel_dragged_timeout) {
-				panel_been_moved = FALSE;
-				move_panel_to_cursor (widget);
-				panel_dragged_timeout = g_timeout_add (30, (GSourceFunc) panel_move_timeout, widget);
-			} else
-				panel_been_moved = TRUE;
-		}
-		break;
-	case GDK_KEY_PRESS:
-		kevent = (GdkEventKey *)event;
-		if (GTK_IS_SOCKET (GTK_WINDOW (widget)->focus_widget)) {
-			/*
-		  	 * If the focus widget is a GtkSocket, i.e. the
-			 * focus is in an applet in another process, then key 
-			 * bindings do not work. We get around this by
-			 * activating the key binding we require here.
-			 */ 
-			if (kevent->keyval == GDK_F10 && kevent->state == GDK_CONTROL_MASK)
-				return gtk_bindings_activate (GTK_OBJECT (panel), kevent->keyval, kevent->state);
-		}
-		break;
-	default:
-		break;
-	}
-
-	return FALSE;
-}
-
-static gboolean
-panel_widget_event (GtkWidget *widget, GdkEvent *event, GtkWidget *panelw)
-{
-	if (commie_mode)
-		return FALSE;
-
-	if (event->type == GDK_BUTTON_PRESS) {
-		GdkEventButton *bevent = (GdkEventButton *) event;
-
-		if (bevent->button == 1 ||
-		    bevent->button == 2) {
-			if (panel_dragged) {
-				return panel_end_move (widget, bevent);
-			} else {
-				return panel_initiate_move (panelw, bevent->time);
-			}
-		}
-	}
-
-	return FALSE;
-}
-
-static gboolean
-panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
-{
-	GdkEventButton *bevent;
-	switch (event->type) {
-		/*pass these to the parent!*/
-		case GDK_BUTTON_PRESS:
-	        case GDK_BUTTON_RELEASE:
-	        case GDK_MOTION_NOTIFY:
-			bevent = (GdkEventButton *) event;
-			/*if the widget is a button we want to keep the
-			  button 1 events*/
-			if(!GTK_IS_BUTTON(widget) || bevent->button!=1)
-				return gtk_widget_event(data, event);
-
-			break;
-
-		default:
-			break;
-	}
+	/*
+  	 * If the focus widget is a GtkSocket, i.e. the
+	 * focus is in an applet in another process, then key 
+	 * bindings do not work. We get around this by
+	 * activating the key binding we require here.
+	 */ 
+	if (GTK_IS_SOCKET (GTK_WINDOW (widget)->focus_widget) &&
+	    event->keyval == GDK_F10 && event->state == GDK_CONTROL_MASK)
+		return gtk_bindings_activate (GTK_OBJECT (widget),
+					      event->keyval,
+					      event->state);
 
 	return FALSE;
 }
@@ -1056,8 +719,6 @@ drop_background_reset (PanelWidget *panel)
 				    panel->background.stretch_image,
 				    panel->background.rotate_image,
 				    &panel->background.color);
-
-	basep_update_frame (BASEP_WIDGET (panel->panel_parent));
 }
 
 static void
@@ -1071,8 +732,6 @@ drop_bgimage (PanelWidget *panel, const char *bgimage)
 
 		g_free (filename);
 	}
-
-	basep_update_frame (BASEP_WIDGET (panel->panel_parent));
 }
 
 static void
@@ -1192,8 +851,6 @@ drop_color (PanelWidget *panel,
 	color.alpha     = 65535;
 
 	panel_widget_set_back_color (panel, &color);
-
-	basep_update_frame (BASEP_WIDGET (panel->panel_parent));
 }
 
 static GtkTargetList *
@@ -1233,7 +890,7 @@ panel_check_dnd_target_data (GtkWidget      *widget,
 
 	g_return_val_if_fail (widget, FALSE);
 
-	if (!BASEP_IS_WIDGET  (widget) &&
+	if (!PANEL_IS_TOPLEVEL  (widget) &&
 	    !BUTTON_IS_WIDGET (widget))
 		return FALSE;
 
@@ -1263,6 +920,11 @@ static void
 do_highlight (GtkWidget *widget, gboolean highlight)
 {
 	gboolean have_drag;
+
+	/* FIXME: what's going on here ? How are we highlighting
+	 *        the toplevel widget ? I don't think we are ...
+	 */
+
 	have_drag = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
 							"have-drag"));
 	if(highlight) {
@@ -1328,21 +990,25 @@ drag_motion_cb (GtkWidget	   *widget,
 		gint                y,
 		guint               time)
 {
-	PanelWidget *panel = NULL;
-	guint        info;
+	PanelToplevel *toplevel;
+	PanelWidget   *panel_widget;
+	guint          info;
+
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (widget), FALSE);
 
 	if (!panel_check_dnd_target_data (widget, context, &info, NULL))
 		return FALSE;
 
-	panel = PANEL_WIDGET (BASEP_WIDGET (widget)->panel);
+	toplevel = PANEL_TOPLEVEL (widget);
+	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
-	if (!panel_check_drop_forbidden (panel, context, info, time))
+	if (!panel_check_drop_forbidden (panel_widget, context, info, time))
 		return FALSE;
 
 	do_highlight (widget, TRUE);
 
-	basep_widget_autoshow (BASEP_WIDGET (widget));
-	basep_widget_queue_autohide (BASEP_WIDGET (widget));
+	panel_toplevel_unhide (toplevel);
+	panel_toplevel_queue_auto_hide (toplevel);
 
 	return TRUE;
 }
@@ -1360,8 +1026,7 @@ drag_drop_cb (GtkWidget	        *widget,
 	if (!panel_check_dnd_target_data (widget, context, NULL, &ret_atom))
 		return FALSE;
 
-	gtk_drag_get_data(widget, context,
-			  ret_atom, time);
+	gtk_drag_get_data (widget, context, ret_atom, time);
 
 	return TRUE;
 }
@@ -1435,11 +1100,10 @@ drag_data_recieved_cb (GtkWidget	*widget,
 		       guint             info,
 		       guint             time)
 {
-	PanelWidget *panel;
-	int pos;
+	PanelWidget *panel_widget;
+	int          pos;
 
-	g_return_if_fail(widget!=NULL);
-	g_return_if_fail (BASEP_IS_WIDGET (widget));
+	g_return_if_fail (PANEL_IS_TOPLEVEL (widget));
 
 	/* we use this only to really find out the info, we already
 	   know this is an ok drop site and the info that got passed
@@ -1449,9 +1113,9 @@ drag_data_recieved_cb (GtkWidget	*widget,
 		return;
 	}
 
-	panel = PANEL_WIDGET (BASEP_WIDGET (widget)->panel);
+	panel_widget = panel_toplevel_get_panel_widget (PANEL_TOPLEVEL (widget));
 
-	pos = panel_widget_get_cursorloc(panel);
+	pos = panel_widget_get_cursorloc (panel_widget);
 	
 	/* 
 	 * -1 passed to panel_applet_register will turn on 
@@ -1460,11 +1124,11 @@ drag_data_recieved_cb (GtkWidget	*widget,
 	 */
 	if(pos < 0)
 		pos = -1;
-	else if(pos > panel->size)
-		pos = panel->size;
+	else if(pos > panel_widget->size)
+		pos = panel_widget->size;
 
 	panel_receive_dnd_data (
-		panel, info, pos, selection_data, context, time);
+		panel_widget, info, pos, selection_data, context, time);
 }
 
 static void
@@ -1496,194 +1160,50 @@ panel_widget_setup(PanelWidget *panel)
 			  NULL);
 }
 
-void
-basep_pos_connect_signals (BasePWidget *basep)
-{
-	if (BORDER_IS_WIDGET (basep)) {
-		g_signal_connect (G_OBJECT (basep->pos),
-				  "edge_change",
-				  G_CALLBACK (border_edge_change),
-				  basep);
-	}
-
-	if (ALIGNED_IS_WIDGET (basep))
-		g_signal_connect_swapped (G_OBJECT (basep->pos),
-					  "align_change",
-					  G_CALLBACK (update_config_align),
-					  G_OBJECT (basep));
-	else if (FLOATING_IS_WIDGET (basep))
-		g_signal_connect_swapped (G_OBJECT (basep->pos),
-					  "floating_coords_change",
-					  G_CALLBACK (update_config_floating_pos),
-					  G_OBJECT(basep));
-	else if (SLIDING_IS_WIDGET (basep)) {
-		g_signal_connect_swapped (G_OBJECT (basep->pos),
-					  "anchor_change",
-					  G_CALLBACK (update_config_anchor),
-					  G_OBJECT(basep));
-		g_signal_connect_swapped (G_OBJECT (basep->pos),
-					  "offset_change",
-					  G_CALLBACK (update_config_offset),
-					  G_OBJECT (basep));
-	}
-}
-
-static void
-drawer_orient_change_foreach(GtkWidget *w, gpointer data)
-{
-	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
-	PanelWidget *panel = data;
-	
-	if(info->type == APPLET_DRAWER)
-		orientation_change(info, panel);
-}
-
-static void
-panelw_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
-{
-	if(!GTK_WIDGET_REALIZED(basep))
-		return;
-
-	if(DRAWER_IS_WIDGET(basep)) {
-		gtk_container_foreach(GTK_CONTAINER(basep->panel),
-				      orient_change_foreach,
-				      basep->panel);
-	} else if(FLOATING_IS_WIDGET(basep)) {
-		gtk_container_foreach(GTK_CONTAINER(basep->panel),
-				      orient_change_foreach,
-				      basep->panel);
-		update_config_floating_pos_limits(basep);
-	} else if(ALIGNED_IS_WIDGET(basep)) {
-		gtk_container_foreach(GTK_CONTAINER(basep->panel),
-				      drawer_orient_change_foreach,
-				      basep->panel);
-	} else if(SLIDING_IS_WIDGET(basep)) {
-		gtk_container_foreach(GTK_CONTAINER(basep->panel),
-				      drawer_orient_change_foreach,
-				      basep->panel);
-		update_config_offset_limit(basep);
-	}
-}
-
 PanelData *
-panel_setup (GtkWidget *panelw)
+panel_setup (PanelToplevel *toplevel)
 {
-	PanelData *pd;
-	BasePWidget *basep = NULL; 
-	PanelWidget *panel = NULL;
+	PanelWidget *panel_widget;
+	PanelData   *pd;
 
-	g_return_val_if_fail (panelw != NULL, NULL);
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
 
-	basep = BASEP_WIDGET (panelw);
-	panel = PANEL_WIDGET (basep->panel);
+	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
 	pd = g_new0 (PanelData,1);
 	pd->menu = NULL;
 	pd->menu_age = 0;
-	pd->panel = panelw;
+	pd->panel = GTK_WIDGET (toplevel);
 	pd->insertion_pos = -1;
 	pd->deactivate_idle = 0;
 
-	if (!DRAWER_IS_WIDGET (panelw))
-		base_panels++;
+	panel_list = g_slist_append (panel_list, pd);
 	
-	if (EDGE_IS_WIDGET(panelw))
-		pd->type = EDGE_PANEL;
-	else if (DRAWER_IS_WIDGET(panelw))
-		pd->type = DRAWER_PANEL;
-	else if (ALIGNED_IS_WIDGET(panelw))
-		pd->type = ALIGNED_PANEL;
-	else if (SLIDING_IS_WIDGET(panelw))
-		pd->type = SLIDING_PANEL;
-	else if (FLOATING_IS_WIDGET(panelw))
-		pd->type = FLOATING_PANEL;
-	else
-		g_warning("unknown panel type");
-	
-	panel_list = g_slist_append(panel_list,pd);
-	
-	g_object_set_data (G_OBJECT (panelw), "PanelData", pd);
+	g_object_set_data (G_OBJECT (toplevel), "PanelData", pd);
 
-	panel_widget_setup(panel);
+	panel_widget_setup (panel_widget);
 
-	g_signal_connect (basep->hidebutton_e, "event",
-			  G_CALLBACK (panel_sub_event_handler),
-			  panelw);
-	g_signal_connect (basep->hidebutton_w, "event",
-			  G_CALLBACK (panel_sub_event_handler),
-			  panelw);
-	g_signal_connect (basep->hidebutton_n, "event",
-			  G_CALLBACK (panel_sub_event_handler),
-			  panelw);
-	g_signal_connect (basep->hidebutton_s, "event",
-			  G_CALLBACK (panel_sub_event_handler),
-			  panelw);
-	g_signal_connect (basep, "state_change",
-			  G_CALLBACK (basep_state_change),
-			  NULL);
-	basep_pos_connect_signals (basep);
-	basep_widget_enable_buttons(basep, FALSE);
+	g_signal_connect (toplevel, "drag_data_received",
+			  G_CALLBACK (drag_data_recieved_cb), NULL);
+	g_signal_connect (toplevel, "drag_motion",
+			  G_CALLBACK (drag_motion_cb), NULL);
+	g_signal_connect (toplevel, "drag_leave",
+			  G_CALLBACK (drag_leave_cb), NULL);
+	g_signal_connect (toplevel, "drag_drop",
+			  G_CALLBACK (drag_drop_cb), NULL);
 
-	g_signal_connect_after (panelw, "size_allocate",
-				G_CALLBACK(panelw_size_alloc),
-				NULL);
+	gtk_drag_dest_set (GTK_WIDGET (toplevel), 0, NULL, 0, 0);
 
-	g_signal_connect (panelw, "drag_data_received",
-			  G_CALLBACK(drag_data_recieved_cb),
-			  NULL);
-	g_signal_connect (panelw, "drag_motion",
-			  G_CALLBACK(drag_motion_cb),
-			  NULL);
-	g_signal_connect (panelw, "drag_leave",
-			  G_CALLBACK(drag_leave_cb),
-			  NULL);
-	g_signal_connect (panelw, "drag_drop",
-			  G_CALLBACK(drag_drop_cb),
-			  NULL);
-
-	gtk_drag_dest_set (GTK_WIDGET (panelw), 0, NULL, 0, 0);
-
-	g_signal_connect (panelw, "event",
-			  G_CALLBACK (panel_event), NULL);
-
-	g_signal_connect (panel, "popup_menu",
-                          G_CALLBACK (panel_popup_menu), panelw);
-	g_signal_connect (panel, "event",
-			  G_CALLBACK (panel_widget_event), panelw);
-	
-	gtk_widget_set_events(panelw,
-			      gtk_widget_get_events(panelw) |
-			      PANEL_EVENT_MASK);
+	g_signal_connect (toplevel, "key-press-event",
+			  G_CALLBACK (panel_key_press_event), NULL);
+	g_signal_connect (toplevel, "button-press-event",
+			  G_CALLBACK (panel_button_press_event), NULL);
+	g_signal_connect (toplevel, "popup-menu",
+			  G_CALLBACK (panel_popup_menu_signal), NULL);
  
-	g_signal_connect (panelw, "destroy",
-			  G_CALLBACK (panel_destroy), NULL);
-
-
-	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panelw)))
-		panel_realize(GTK_WIDGET(panelw),NULL);
-	else
-		g_signal_connect_after (panelw, "realize",
-					G_CALLBACK(panel_realize), NULL);
+	g_signal_connect (toplevel, "destroy", G_CALLBACK (panel_destroy), pd);
 
 	return pd;
-}
-
-/*send state change to all the panels*/
-void
-send_state_change (void)
-{
-	GSList *l;
-
-	for (l = panel_list; l; l = l->next) {
-		PanelData *pd = l->data;
-
-		if (DRAWER_IS_WIDGET(pd->panel))
-			continue;
-
-		basep_state_change (BASEP_WIDGET (pd->panel),
-				    BASEP_WIDGET (pd->panel)->state,
-				    NULL);
-	}
 }
 
 PanelData *
@@ -1695,12 +1215,12 @@ panel_data_by_id (const char *id)
 		return NULL;
 
 	for (l = panel_list; l; l = l->next) {
-		PanelData  *pd = l->data;
-		const char *pd_id = NULL;
+		PanelData   *pd = l->data;
+		PanelWidget *panel_widget;
 
-		pd_id = PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->unique_id;
+		panel_widget = panel_toplevel_get_panel_widget (PANEL_TOPLEVEL (pd->panel));
 
-		if (pd_id && !strcmp (id, pd_id))
+		if (panel_widget->unique_id && !strcmp (id, panel_widget->unique_id))
 			return pd;
 	}
 
@@ -1721,170 +1241,37 @@ panel_register_window_icon (void)
 }
 
 GdkScreen *
-panel_screen_from_toplevel (GtkWidget *panel)
-{
-	return gdk_display_get_screen (
-			gdk_display_get_default (),
-			BASEP_WIDGET (panel)->screen);
-}
-
-int
-panel_monitor_from_toplevel (GtkWidget *panel)
-{
-	return BASEP_WIDGET (panel)->monitor;
-}
-
-int
 panel_screen_from_panel_widget (PanelWidget *panel)
 {
-	g_return_val_if_fail (PANEL_IS_WIDGET (panel), 0);
-	g_return_val_if_fail (panel->panel_parent != NULL, 0);
-	g_return_val_if_fail (BASEP_IS_WIDGET (panel->panel_parent), 0);
+	g_return_val_if_fail (PANEL_IS_WIDGET (panel), NULL);
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (panel->toplevel), NULL);
 
-	return BASEP_WIDGET (panel->panel_parent)->screen;
+	return gtk_window_get_screen (GTK_WINDOW (panel->toplevel));
 }
 
 int
 panel_monitor_from_panel_widget (PanelWidget *panel)
 {
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), 0);
-	g_return_val_if_fail (panel->panel_parent != NULL, 0);
-	g_return_val_if_fail (BASEP_IS_WIDGET (panel->panel_parent), 0);
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (panel->toplevel), 0);
 
-	return BASEP_WIDGET (panel->panel_parent)->monitor;
+	return panel_toplevel_get_monitor (panel->toplevel);
 }
 
 gboolean
 panel_is_applet_right_stick (GtkWidget *applet)
 {
-        PanelWidget *panel;
+	PanelWidget *panel_widget;
 
-        g_return_val_if_fail (GTK_IS_WIDGET (applet), FALSE);
-        g_return_val_if_fail (PANEL_IS_WIDGET (applet->parent), FALSE);
+	g_return_val_if_fail (GTK_IS_WIDGET (applet), FALSE);
+	g_return_val_if_fail (PANEL_IS_WIDGET (applet->parent), FALSE);
 
-        panel = PANEL_WIDGET (applet->parent);
+	panel_widget = PANEL_WIDGET (applet->parent);
 
-        /* These types of panels are *always* packed */
-        if (ALIGNED_IS_WIDGET (panel->panel_parent) ||
-            BORDER_IS_WIDGET (panel->panel_parent)  ||
-            SLIDING_IS_WIDGET (panel->panel_parent) ||
-            FLOATING_IS_WIDGET (panel->panel_parent))
-                return FALSE;
+	if (!panel_toplevel_get_expand (panel_widget->toplevel))
+		return FALSE;
 
-        return panel_widget_is_applet_stuck (panel, applet);
-}
-
-static char *
-panel_get_string (const char *profile,
-		  const char *panel_id,
-		  const char *key,
-		  const char *default_val)
-{
-	const char *full_key;
-	char       *retval;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	retval = panel_gconf_get_string (full_key, default_val);
-
-	return retval;
-}
-
-static int
-panel_get_int (const char *profile,
-	       const char *panel_id,
-	       const char *key,
-	       gint        default_val)
-{
-	const char *full_key;
-	int         retval;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	retval = panel_gconf_get_int (full_key, default_val);
-
-	return retval;
-}
-
-static gboolean
-panel_get_bool (const char *profile,
-		const char *panel_id,
-		const char *key,
-		gboolean    default_val)
-{
-	const char *full_key;
-	gboolean    retval;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	retval = panel_gconf_get_bool (full_key, default_val);
-
-	return retval;
-}
-
-static void
-panel_set_string (const char *profile,
-		  const char *panel_id,
-		  const char *key,
-		  const char *value)
-{
-	const char *full_key;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	panel_gconf_set_string (full_key, value);	
-}
-
-static void
-panel_set_int (const char *profile,
-	       const char *panel_id,
-	       const char *key,
-	       int         value)
-{
-	const char *full_key;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	panel_gconf_set_int (full_key, value);	
-}
-
-static void
-panel_set_bool (const char *profile,
-		const char *panel_id,
-		const char *key,
-		gboolean    value)
-{
-	const char *full_key;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	panel_gconf_set_bool (full_key, value);	
-}
-
-static void
-panel_load_fallback_default_panel (int screen)
-{
-	PanelColor  color = { { 0, 0, 0, 0 }, 0xffff };
-	GtkWidget  *panel;
-
-	panel = edge_widget_new (NULL,
-				 screen,
-				 0,
-				 BORDER_TOP,
-				 BASEP_EXPLICIT_HIDE,
-				 BASEP_SHOWN,
-				 PANEL_SIZE_X_SMALL,
-				 FALSE,
-				 FALSE,
-				 PANEL_BACK_NONE,
-				 NULL,
-				 FALSE,
-				 FALSE,
-				 FALSE,
-				 &color);
-
-	panel_save_to_gconf (panel_setup (panel));
-	gtk_widget_show (panel);
+	return panel_widget_is_applet_stuck (panel_widget, applet);
 }
 
 void
@@ -1975,21 +1362,103 @@ panel_save_global_config (void)
 void
 panel_apply_global_config (void)
 {
-	GSList *l;
-
 	if (global_config.tooltips_enabled)
 		gtk_tooltips_enable (panel_tooltips);
 	else
 		gtk_tooltips_disable (panel_tooltips);
 
-	for (l = panel_list; l; l = l->next) {
-		PanelData *pd = l->data;
-
-		basep_update_frame (BASEP_WIDGET (pd->panel));
-	}
-
 	panel_global_keys_setup ();
 }
+
+#ifdef FIXME_FOR_NEW_TOPLEVEL
+
+static char *
+panel_get_string (const char *profile,
+		  const char *panel_id,
+		  const char *key,
+		  const char *default_val)
+{
+	const char *full_key;
+	char       *retval;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	retval = panel_gconf_get_string (full_key, default_val);
+
+	return retval;
+}
+
+static int
+panel_get_int (const char *profile,
+	       const char *panel_id,
+	       const char *key,
+	       gint        default_val)
+{
+	const char *full_key;
+	int         retval;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	retval = panel_gconf_get_int (full_key, default_val);
+
+	return retval;
+}
+
+static gboolean
+panel_get_bool (const char *profile,
+		const char *panel_id,
+		const char *key,
+		gboolean    default_val)
+{
+	const char *full_key;
+	gboolean    retval;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	retval = panel_gconf_get_bool (full_key, default_val);
+
+	return retval;
+}
+
+static void
+panel_set_string (const char *profile,
+		  const char *panel_id,
+		  const char *key,
+		  const char *value)
+{
+	const char *full_key;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	panel_gconf_set_string (full_key, value);	
+}
+
+static void
+panel_set_int (const char *profile,
+	       const char *panel_id,
+	       const char *key,
+	       int         value)
+{
+	const char *full_key;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	panel_gconf_set_int (full_key, value);	
+}
+
+static void
+panel_set_bool (const char *profile,
+		const char *panel_id,
+		const char *key,
+		gboolean    value)
+{
+	const char *full_key;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	panel_gconf_set_bool (full_key, value);	
+}
+
 
 
 static GtkWidget *
@@ -2154,7 +1623,7 @@ panel_load_drawer_panel_from_gconf (const char          *profile,
 				    gboolean             rotate_pixmap_bg,
 				    PanelColor          *back_color)
 {
-	int   orient = PANEL_ORIENT_UP;
+	int   orientation = PANEL_ORIENTATION_TOP;
 	char *tmp_str;
 
 	tmp_str = panel_get_string (profile, panel_id,
@@ -2166,7 +1635,7 @@ panel_load_drawer_panel_from_gconf (const char          *profile,
 	return drawer_widget_new (panel_id,
 				  screen,
 				  monitor,
-				  (PanelOrient) orient,
+				  (PanelOrientation) orientation,
 				  BASEP_EXPLICIT_HIDE, 
 				  state,
 				  size,
@@ -2243,6 +1712,7 @@ panel_load_panel_from_gconf (const char *profile,
 	gboolean             rotate_pixmap_bg;
 	gboolean             hidebuttons_enabled;
 	gboolean             hidebutton_pixmaps_enabled;
+	GdkScreen           *gdkscreen;
 	int                  screen;
 	int                  monitor;
 	int                  size = PANEL_SIZE_SMALL;
@@ -2260,8 +1730,10 @@ panel_load_panel_from_gconf (const char *profile,
 		monitor = panel_get_int (profile, panel_id, "screen_id", 0);
 	}
 
-	if (screen >= multiscreen_screens () ||
-	    monitor >= multiscreen_monitors (screen))
+	gdkscreen = gdk_display_get_screen (gdk_display_get_default (), screen);
+
+	if (screen >= panel_multiscreen_screens () ||
+	    monitor >= panel_multiscreen_monitors (gdkscreen))
 		return;
 
 	back_pixmap = panel_get_string (profile, panel_id,
@@ -2471,6 +1943,23 @@ panel_load_default_panels_for_screen (const char *profile,
 }
 
 static void
+panel_load_fallback_default_panel (int screen)
+{
+	PanelToplevel *toplevel;
+
+	/* FIXME_FOR_NEW_TOPLEVEL: set the screen */
+	toplevel = g_object_new (PANEL_TYPE_TOPLEVEL, NULL);
+
+	panel_setup (toplevel);
+
+	/* FIXME_FOR_NEW_TOPLEVEL:
+	 * panel_save_to_gconf (panel_setup (toplevel));
+	 */
+
+	gtk_widget_show (GTK_WIDGET (toplevel));
+}
+
+static void
 panel_ensure_panel_per_screen (const char *profile,
 			       int         screen)
 {
@@ -2516,7 +2005,7 @@ panel_load_panels_from_gconf (void)
 		panel_load_fallback_default_panel (0);
 	}
 
-	for (i = 0; i < multiscreen_screens (); i++)
+	for (i = 0; i < panel_multiscreen_screens (); i++)
 		panel_ensure_panel_per_screen (profile, i);
 
 	panel_g_slist_deep_free (panel_ids);
@@ -2706,3 +2195,15 @@ panel_remove_from_gconf (PanelWidget *panel)
 	if (new_panels)
 		panel_g_slist_deep_free (new_panels);
 }
+
+#else
+void
+panel_load_panels_from_gconf (void)
+{
+	PanelToplevel *toplevel;
+
+	toplevel = g_object_new (PANEL_TYPE_TOPLEVEL, NULL);
+	panel_setup (toplevel);
+	gtk_widget_show (GTK_WIDGET (toplevel));
+}
+#endif /* FIXME_FOR_NEW_TOPLEVEL */

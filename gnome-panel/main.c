@@ -18,19 +18,20 @@
 #include <libbonoboui.h>
 #include <bonobo-activation/bonobo-activation.h>
 
-#include "drawer-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
-#include "multiscreen-stuff.h"
 #include "panel.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
 #include "panel-config-global.h"
 #include "panel-shell.h"
+#include "panel-multiscreen.h"
 #include "session.h"
 #include "xstuff.h"
 #include "panel-stock-icons.h"
 #include "global-keys.h"
+
+#include "nothing.cP"
 
 extern int config_sync_timeout;
 
@@ -192,7 +193,7 @@ main(int argc, char **argv)
 	panel_tooltips = gtk_tooltips_new ();
 
 	xstuff_init ((GdkFilterFunc) panel_global_keys_filter);
-	multiscreen_init ();
+	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 
 	panel_gconf_add_dir ("/apps/panel/global");
@@ -205,9 +206,6 @@ main(int argc, char **argv)
 	g_slist_foreach (panels,
 			 (GFunc)panel_widget_add_forbidden,
 			 NULL);
-
-	/*this will make the drawers be hidden for closed panels etc ...*/
-	send_state_change ();
 
 	panel_session_setup_config_sync ();
 

@@ -1,3 +1,169 @@
+2003-01-29  Mark McLoughlin  <mark@skynet.ie>
+
+	Replace BasePWidget and co. with a single widget written
+	from scratch. Basically, this means there are is no
+	such thing as panel types any more - you can easily
+	swicth between what was an edge panel to what was a
+	corner/floating/sliding panel. Switching between corner/
+	floating/sliding is just a matter of moving the panel.
+
+	Some other improvements in the widget like auto hiding
+	into corners, stock gtk arrows for the hide buttons,
+	no shadow at the screen edge, simpler (and hopefully
+	smoother) animations.
+
+	This patch isn't finished. Loading/saving Configuration
+	doesn't work, drawers don't work (implemented but crashing),
+	propert keynav for the widget has to be implemented etc.
+	See the TODO in panel-toplevel.c
+
+	* Makefile.am: remove loads of files, add a good few
+	files. Generate enums from panel-enums.h. Only ever
+	generate enum types, not flags types.
+
+	* aligned-widget.[ch], basep-widget.[ch], border-widget.[ch],
+	  drawer-widget.[ch], edge-widget.[ch], floating-widget.[ch],
+	  sliding-widget.[ch]: remove these.
+
+	* panel-toplevel.[ch]: add a new toplevel panel widget.
+	A complete rewrite BasePWidget and co., and consolidates
+	them all into a single widget.
+
+	* panel-frame.[ch]: new widget which doesn't draw the shadow
+	at the screen edge. Should help us with our Fitt worshipping.
+
+	* applet.c: comment out all gconf/configuration code
+	for the moment and update everything to use PanelToplevel
+	instead of BasePWidget and co.
+
+	* button-widget.[ch]:
+	(calculate_overlay_geometry): remove some overlaying which
+	isn't needed anymore.
+	(button_widget_realize), (button_widget_parent_set),
+	(button_widget_get_property), (button_widget_set_property),
+	(draw_arrow), (button_widget_expose),
+	(button_widget_size_allocate), (button_widget_instance_init),
+	(button_widget_class_init), (button_widget_new),
+	(button_widget_new_from_stock), (button_widget_set_params):
+	Update for toplevel changes plus use PanelOrientation everywhere
+	instead of PanelOrient.
+
+	* drawer.[ch]: re-write big chunks of this to use PanelToplevel.
+	None of this is really tested, though, and is broken atm.
+
+	* global-keys.c: (panel_global_keys_filter): update for new
+	autohide blocking mechanism.
+
+	* gnome-run.c: update for multiscreen/a11y function renaming.
+
+	* launcher.c: update to use PanelToplevel.
+
+	* main.c: (main): various updates and kill initial state change
+	crack.
+
+	* menu-util.c: upd for multiscreen renaming.
+
+	* menu.c: (menuitem_to_screen), (menu_on_screen),
+	(add_app_to_panel), (add_drawers_from_dir),
+	(add_menudrawer_to_panel), (add_menu_to_panel), (show_item_menu),
+	(add_drawer_to_panel), (add_action_button_to_panel),
+	(add_menu_bar_to_panel), (add_launcher), (menu_deactivate),
+	(add_bonobo_applet): various unexciting updates.
+	(find_empty_pos_array), (find_empty_pos),
+	(find_empty_edge), (find_empty_border_and_anchor): disable all
+	this initial panel position code until I figure out how to
+	replace it.
+	(create_new_panel): no more different panel types - this is a
+	tiny function now.
+	(create_add_panel_submenu): no "New Panel" submenu anymore.
+	(remove_panel_accept): upd.
+	(remove_panel_query): disable the "you can't remove your last
+	panel" code for the moment.
+	(setup_remove_this_panel): ditto.
+	(current_panel_config): disable configuration dialog for the
+	moment.
+	(toggle_expand), (toggle_auto_hide), (rotate_clockwise),
+	(rotate_counter_clockwise), (increase_size), (decrease_size),
+	(toggle_animations), (toggle_buttons), (toggle_arrows),
+	(create_toplevel_testing_menu), (make_panel_submenu): replace
+	with a submenu for testing the new toplevel widget.
+	(create_panel_context_menu), (ask_about_launcher_cb),
+	(menu_button_menu_popup), (create_panel_menu),
+	(create_menu_applet), (set_menu_applet_orientation),
+	(load_menu_applet): more unexciting updates.
+
+	* multiscreen-stuff.[ch]: rename to panel-multiscreen.[ch] (wow)
+	and use GdkScreen instead of the screen number everywhere.
+
+	* panel-access.c: rename to panel-a11y.[ch].
+
+	* panel-action-button.c: more unexciting updates.
+
+	* panel-applet-frame.[ch]:
+	(panel_applet_frame_change_orientation): give up trying to keep
+	the internal orientation enum in sync with the IDL definition,
+	just map between the two when setting the property.
+	(panel_applet_frame_paint), (panel_applet_frame_constrain_size),
+	(panel_applet_frame_size_request),
+	(panel_applet_frame_size_allocate),
+	(panel_applet_frame_loading_failed),
+	(panel_applet_frame_instance_init),
+	(panel_applet_frame_get_orient_string),
+	(panel_applet_frame_construct): upd for above.
+
+	* panel-compatibility.c:
+	(panel_compatibility_load_menu_panel): disable for the moment.
+
+	* panel-config.[ch]: disable all this too.
+
+
+	* panel-types.h: remove some enums.
+
+	* panel-util.c: upd.
+
+	* panel-widget.[ch]: (add_all_move_bindings),
+	(panel_widget_size_allocate), (panel_widget_realize),
+	(panel_widget_unrealize), (panel_widget_new),
+	(panel_widget_reparent),(panel_widget_change_params): nothing
+	exciting here.
+	(panel_widget_set_packed), (panel_widget_set_orientation),
+	(panel_widget_set_size): new functions so you don't have to
+	call change_params passing in a multitude of params that you
+	don't want to set.
+	(panel_widget_focus), (panel_widget_get_applet_orientation):
+	upd.
+
+	* panel-xutils.[ch]: some new x utility methods.
+
+	* panel.[ch]: (orientation_change), (panel_orient_change),
+	(panel_size_change), (panel_back_change), (panel_applet_added),
+	(panel_applet_removed), (menu_deactivate), (panel_destroy),
+	(panel_applet_move): updates and remove loads of code. e.g.
+	moving panels with the mouse is handled in panel-toplevel now.
+	(make_popup_panel_menu), (panel_popup_menu),
+	(panel_popup_menu_signal), (panel_button_press_event),
+	(panel_key_press_event): simplify popup menu code and event
+	handling.
+	(drop_background_reset), (drop_bgimage), (drop_color):
+	don't update the frame.
+	(panel_check_dnd_target_data), (do_highlight),
+	(drag_motion_cb), (drag_drop_cb), (drag_data_recieved_cb): more
+	boring stuff.
+	(panel_setup): remove a good bit of code - we're hooked up to
+	a hell off a lot less signals now.
+	(panel_data_by_id),
+	(panel_screen_from_panel_widget),
+	(panel_monitor_from_panel_widget), (panel_is_applet_right_stick),
+	(panel_apply_global_config): boring.
+	(panel_get_string), (panel_get_int), (panel_get_bool),
+	(panel_set_string), (panel_set_int), (panel_set_bool),
+	(panel_load_drawer_panel_from_gconf), (panel_load_panel_from_gconf),
+	(panel_load_fallback_default_panel), (panel_load_panels_from_gconf):
+	disable all the gconf code for now.
+
+	* session.c: (panel_session_do_save), (panel_session_die),
+	(session_load): disable some stuff temporarily.
+
 2003-01-22  Mark McLoughlin  <mark@skynet.ie>
 
 	* egg-recent-model.c:

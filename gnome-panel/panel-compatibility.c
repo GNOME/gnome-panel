@@ -28,12 +28,12 @@
 
 #include <libgnome/gnome-i18n.h>
 
-#include "edge-widget.h"
 #include "panel-menu-bar.h"
 #include "panel-applet-frame.h"
 
 extern GSList *panels;
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 static void
 panel_compatibility_warn (const char *message)
 {
@@ -53,12 +53,14 @@ panel_compatibility_warn (const char *message)
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 	gtk_widget_show (dialog);
 }
+#endif
 
 GtkWidget *
 panel_compatibility_load_menu_panel (const char *panel_id,
 				     int         screen,
 				     int         monitor)
 {
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	PanelColor  color = { { 0, 0, 0, 0 }, 0xffff };
 	GtkWidget  *retval;
 
@@ -87,6 +89,9 @@ panel_compatibility_load_menu_panel (const char *panel_id,
 			   "load-compatibility-applets", GINT_TO_POINTER (1));
 
 	return retval;
+#else
+	return NULL;
+#endif /* FIXME_FOR_NEW_TOPLEVEL */
 }
 
 void
