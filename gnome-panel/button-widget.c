@@ -42,7 +42,7 @@ static void button_widget_unpressed	(ButtonWidget *button);
 static GList *buttons = NULL;
 
 /*the tiles go here*/
-struct {
+static struct {
 	GdkPixbuf *tiles_up[LAST_TILE];
 	GdkPixbuf *tiles_up_lc[LAST_TILE];
 	GdkPixbuf *tiles_down[LAST_TILE];
@@ -53,15 +53,15 @@ static int tile_border[LAST_TILE]={0,0,0,0};
 static int tile_depth[LAST_TILE]={0,0,0,0};
 
 /*are tiles enabled*/
-static int tiles_enabled[LAST_TILE]={FALSE,FALSE,FALSE,FALSE};
+static gboolean tiles_enabled[LAST_TILE] = {FALSE,FALSE,FALSE,FALSE};
 
-static int pixmaps_enabled[LAST_TILE] = {TRUE,TRUE,TRUE,TRUE};
-static int always_text[LAST_TILE] = {FALSE,FALSE,FALSE,FALSE}; /*text always displayed*/
+static gboolean pixmaps_enabled[LAST_TILE] = {TRUE,TRUE,TRUE,TRUE};
+static gboolean always_text[LAST_TILE] = {FALSE,FALSE,FALSE,FALSE}; /*text always displayed*/
 
 static GtkWidgetClass *parent_class;
 
 guint
-button_widget_get_type ()
+button_widget_get_type (void)
 {
 	static guint button_widget_type = 0;
 
@@ -151,18 +151,18 @@ button_widget_class_init (ButtonWidgetClass *class)
 static void
 setup_no_alpha(ButtonWidget *button)
 {
-	button->no_alpha = FALSE;
+	button->no_alpha = 0;
 	if(!tiles_enabled[button->tile] ||
 	   global_config.tile_when_over)
 		return;
 	if(button->pressed) {
 		if(tiles.tiles_down[button->tile] &&
 		   !tiles.tiles_down[button->tile]->art_pixbuf->has_alpha)
-			button->no_alpha = TRUE;
+			button->no_alpha = 1;
 	} else {
 		if(tiles.tiles_up[button->tile] &&
 		   !tiles.tiles_up[button->tile]->art_pixbuf->has_alpha)
-			button->no_alpha = TRUE;
+			button->no_alpha = 1;
 	}
 }
 
@@ -496,14 +496,22 @@ button_widget_real_draw(GtkWidget *widget, GdkRectangle *area)
 void
 button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 {
-	GtkWidget *widget = GTK_WIDGET(button);
-	GtkWidget *pwidget;
-	PanelWidget *panel = PANEL_WIDGET(widget->parent);
-	int size = panel->sz;
+	GtkWidget *widget, *pwidget;
+	PanelWidget *panel;
+	int size, off, border;
+
+	g_return_if_fail(button != NULL);
+	g_return_if_fail(IS_BUTTON_WIDGET(button));
+	g_return_if_fail(rgb != NULL);
+	g_return_if_fail(rowstride >= 0);
+
+	widget = GTK_WIDGET(button);
+	panel = PANEL_WIDGET(widget->parent);
+	size = panel->sz;
 	/*offset for pressed buttons*/
-	int off = button->in_button&&button->pressed?SCALE(tile_depth[button->tile]):0;
+	off = button->in_button&&button->pressed?SCALE(tile_depth[button->tile]):0;
 	/*border to not draw when drawing a tile*/
-	int border = tiles_enabled[button->tile]?SCALE(tile_border[button->tile]):0;
+	border = tiles_enabled[button->tile]?SCALE(tile_border[button->tile]):0;
 	 
 	button->size = size;
 	
@@ -582,13 +590,19 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 void
 button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 {
-	GtkWidget *widget = GTK_WIDGET(button);
-	GtkWidget *pwidget;
+	GtkWidget *widget, *pwidget;
 	GdkGC *gc;
-	int size = button->size;
+	int size, off;
+
+	g_return_if_fail(button != NULL);
+	g_return_if_fail(IS_BUTTON_WIDGET(button));
+	g_return_if_fail(pixmap != NULL);
+
+	widget = GTK_WIDGET(button);
+	size = button->size;
+
 	/*offset for pressed buttons*/
-	int off = button->in_button&&button->pressed?SCALE(tile_depth[button->tile]):0;
-	/*border to not draw when drawing a tile*/
+	off = button->in_button&&button->pressed?SCALE(tile_depth[button->tile]):0;
 	 
 	gc = gdk_gc_new(pixmap);
 	
@@ -921,12 +935,15 @@ make_lc_pixbuf(GdkPixbuf *pb)
 GtkWidget*
 button_widget_new(char *filename,
 		  int size,
-		  guint tile,
-		  guint arrow,
+		  int tile,
+		  gboolean arrow,
 		  PanelOrientType orient,
 		  char *text)
 {
 	ButtonWidget *button;
+
+	g_return_val_if_fail(tile >= 0, NULL);
+	g_return_val_if_fail(tile < LAST_TILE, NULL);
 
 	button = BUTTON_WIDGET (gtk_type_new (button_widget_get_type ()));
 	
@@ -935,7 +952,7 @@ button_widget_new(char *filename,
 	button->filename = g_strdup(filename);
 	button->size = size;
 	button->tile = tile;
-	button->arrow = arrow;
+	button->arrow = arrow?1:0;
 	button->orient = orient;
 	button->text = text?g_strdup(text):NULL;
 
@@ -990,15 +1007,17 @@ button_widget_set_text(ButtonWidget *button, char *text)
 
 void
 button_widget_set_params(ButtonWidget *button,
-			 guint tile,
-			 guint arrow,
+			 int tile,
+			 gboolean arrow,
 			 PanelOrientType orient)
 {
 	g_return_if_fail(button != NULL);
 	g_return_if_fail(IS_BUTTON_WIDGET(button));
+	g_return_if_fail(tile >= 0);
+	g_return_if_fail(tile < LAST_TILE);
 
 	button->tile = tile;
-	button->arrow = arrow;
+	button->arrow = arrow?1:0;
 	button->orient = orient;
 
 	if(button->cache)
@@ -1015,6 +1034,11 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 			int border, int depth)
 {
 	GList *list;
+
+	g_return_if_fail(tile >= 0);
+	g_return_if_fail(tile < LAST_TILE);
+	g_return_if_fail(tile_up != NULL);
+	g_return_if_fail(tile_down != NULL);
 
 	if(tiles.tiles_up[tile])
 		gdk_pixbuf_unref(tiles.tiles_up[tile]);
@@ -1047,16 +1071,22 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 }
 
 void
-button_widget_set_flags(int type, int _tiles_enabled, int _pixmaps_enabled, int _always_text)
+button_widget_set_flags(int tile,
+			gboolean _tiles_enabled,
+			gboolean _pixmaps_enabled,
+			gboolean _always_text)
 {
-	if(tiles_enabled[type] != _tiles_enabled ||
-	   pixmaps_enabled[type] != _pixmaps_enabled ||
-	   always_text[type] != _always_text) {
+	g_return_if_fail(tile >= 0);
+	g_return_if_fail(tile < LAST_TILE);
+
+	if(tiles_enabled[tile] != _tiles_enabled ||
+	   pixmaps_enabled[tile] != _pixmaps_enabled ||
+	   always_text[tile] != _always_text) {
 		GList *list;
 
-		tiles_enabled[type] = _tiles_enabled;
-		pixmaps_enabled[type] = _pixmaps_enabled;
-		always_text[type] = _always_text;
+		tiles_enabled[tile] = _tiles_enabled;
+		pixmaps_enabled[tile] = _pixmaps_enabled;
+		always_text[tile] = _always_text;
 
 		for(list = buttons;list!=NULL;list=g_list_next(list)) {
 			ButtonWidget *button = list->data;

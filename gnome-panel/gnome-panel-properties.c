@@ -411,7 +411,7 @@ icon_notebook_page(int i)
 	
 	/* image file entry widgets */
 	entry_up[i] = create_icon_entry(table,"tile_file",0, 1,
-					_("Normal Tile"),
+					_("Normal tile"),
 					global_config.tile_up[i],
 					NULL);
 	gnome_icon_entry_set_pixmap_subdir(GNOME_ICON_ENTRY(entry_up[i]),
@@ -423,7 +423,7 @@ icon_notebook_page(int i)
 				       GTK_OBJECT(capplet));
 
 	entry_down[i] = create_icon_entry(table,"tile_file",1, 2,
-					  _("Clicked Tile"),
+					  _("Clicked tile"),
 					  global_config.tile_down[i],
 					  NULL);
 	gnome_icon_entry_set_pixmap_subdir(GNOME_ICON_ENTRY(entry_down[i]),
@@ -477,7 +477,7 @@ buttons_notebook_page (void)
 	  gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
 	  gtk_widget_show (box);
 
-	  label = gtk_label_new (_("Button Type: "));
+	  label = gtk_label_new (_("Button type: "));
 	  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
 	  gtk_widget_show (label);
 
@@ -609,7 +609,7 @@ applets_notebook_page (void)
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), movement_type_push_rb, FALSE, FALSE, 0);	
 
-	box = make_int_scale_box(_("Applet padding"),
+	box = make_int_scale_box(_("Padding"),
 				 &applet_padding,
 				 0.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
@@ -739,7 +739,7 @@ menu_notebook_page(void)
 	gtk_table_attach_defaults(GTK_TABLE(table),use_large_icons_cb, 0,1,0,1);
 
 	/* Menu frame */
-	frame = gtk_frame_new (_("Panel menu"));
+	frame = gtk_frame_new (_("Global menu"));
 	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 	
@@ -1265,7 +1265,7 @@ setup_the_ui(GtkWidget *capplet)
 	/* applet settings */
 	page = applets_notebook_page ();
 	gtk_notebook_append_page (GTK_NOTEBOOK (nbook),
-				  page, gtk_label_new (_("Applets")));
+				  page, gtk_label_new (_("Panel Objects")));
 
 	/* Menu notebook page */
 	page = menu_notebook_page ();

@@ -1321,8 +1321,9 @@ send_draw_timeout(gpointer data)
 }
 
 static gboolean
-send_draw_idle(Extern *ext)
+send_draw_idle(gpointer data)
 {
+	Extern *ext = data;
 	ext->send_draw_idle = 0;
 	if(!ext->send_draw)
 		return FALSE;

@@ -1,3 +1,22 @@
+Fri Mar 24 15:44:34 2000  George Lebl <jirka@5z.com>
+
+	* doc/Makefile.am: don't clean *.signals so that "make clean;make"
+	  works
+
+	* button-widget.[ch]: sanitize a bit s/gint/gboolean/ where
+	  appropriate and add a whole bunch of precondition checks
+
+	* gnome-panel-properties.c: change "Applets" tab to "Panel Objects",
+	  "Applet padding" to "Padding", and "Panel menu" to "Global menu",
+	  also correct capitalization on "Button type", "Normal tile",
+	  "Clicked tile"
+
+	* foobar-widget.c: include panel-util.h
+
+	* panel-types.h: add a comment about number of _TILE enums
+
+	* extern.c, gnome-run.c: fix warnings
+
 Fri Mar 24 10:16:55 2000  George Lebl <jirka@5z.com>
 
 	* panel-util.c: add utility functions for setting dialog layers and

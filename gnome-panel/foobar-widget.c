@@ -22,6 +22,7 @@
 #include "xstuff.h"
 #include "basep-widget.h"
 #include "panel_config_global.h"
+#include "panel-util.h"
 #include "drawer-widget.h"
 
 #define SMALL_ICON_SIZE 20

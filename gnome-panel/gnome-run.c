@@ -164,7 +164,7 @@ browse(GtkWidget *w, GtkWidget *entry)
 	/* we must do show_now so that we can raise the window in the next
 	 * call after set_dialog_layer */
 	gtk_widget_show_now (GTK_WIDGET (fsel));
-	panel_set_dialog_layer (fsel);
+	panel_set_dialog_layer (GTK_WIDGET (fsel));
 	gdk_window_raise (GTK_WIDGET (fsel)->window);
 }
 

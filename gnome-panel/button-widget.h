@@ -24,9 +24,6 @@ struct _ButtonWidget
 	GdkPixbuf		*pixbuf_lc;
 
 	GdkPixmap		*cache;
-	gboolean		no_alpha; /*we don't have any alpha to speak of,
-					    so we don't have to dump the cache all
-					    the time*/
 	
 	char			*filename;
 	int			size;
@@ -43,9 +40,15 @@ struct _ButtonWidget
 						  set the in_button properly
 						  later!*/
 	
-	guint			tile:2; /*the tile number, only used if tiles are on*/
-	guint			arrow:1; /*0 no arrow, 1 simple arrow, more to do*/
+	guint			tile:2; /*the tile number, only used if tiles
+					  are on*/
+	guint			arrow:1; /*0 no arrow, 1 simple arrow, more
+					   to do*/
 	guint			dnd_highlight:1;
+
+	guint			no_alpha:1; /*we don't have any alpha to speak
+					      of, so we don't have to dump the
+					      cache all the time*/
 	
 	PanelOrientType		orient;
 
@@ -65,8 +68,8 @@ guint		button_widget_get_type		(void);
 
 GtkWidget*	button_widget_new		(char *pixmap,
 						 int size,
-						 guint tile,
-						 guint arrow,
+						 int tile,
+						 gboolean arrow,
 						 PanelOrientType orient,
 						 char *text);
 
@@ -85,8 +88,8 @@ void		button_widget_set_text		(ButtonWidget *button,
 						 char *text);
 
 void		button_widget_set_params	(ButtonWidget *button,
-						 guint tile,
-						 guint arrow,
+						 int tile,
+						 gboolean arrow,
 						 PanelOrientType orient);
 
 void		button_widget_set_dnd_highlight	(ButtonWidget *button,
@@ -105,10 +108,10 @@ void		button_widget_load_tile		(int tile,
 						 int border,
 						 int depth);
 
-void		button_widget_set_flags		(int type,
-						 int tiles_enabled,
-						 int pixmaps_enabled,
-						 int always_text);
+void		button_widget_set_flags		(int tile,
+						 gboolean tiles_enabled,
+						 gboolean pixmaps_enabled,
+						 gboolean always_text);
 
 #ifdef __cplusplus
 }

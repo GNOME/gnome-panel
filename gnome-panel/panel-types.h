@@ -33,6 +33,8 @@ typedef enum {
 	MISC_TILE,
 	LAST_TILE
 } PanelTileType;
+/* XXX: if you add any here you need to make the tile type larger
+ * for button-widget, as it's 2 bits only for now */
 
 typedef enum {
 	EDGE_PANEL,
