@@ -1,3 +1,13 @@
+2002-02-20  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes #71279 and #69147. Fix suggested by Shivram U.
+
+	* panel-util.c: (stretch_widget_calc_geometry): move geometry
+	calc code to here.
+	(stretch_widget_realize): use calc_gemoetry.
+	(stretch_widget_size_allocate): check geometry has changed
+	before unmapping.
+
 2002-02-19  Mark McLoughlin  <mark@skynet.ie>
 
 	* menu.c: (compare_filerecs), (create_menu_at_fr): re-indent

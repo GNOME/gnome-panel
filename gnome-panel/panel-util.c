@@ -967,48 +967,65 @@ panel_pixmap_discovery (const char *name, gboolean fallback)
 	return pixmap;
 }
 
+static GtkWidget *
+stretch_widget_calc_geometry (GtkWidget *widget,
+			      int       *x,
+			      int       *y,
+			      int       *w,
+			      int       *h)
+{
+	PanelStretchFlags  flags;
+	GtkWidget         *toplevel;
+
+	g_assert (x && y && w && h);
+
+	flags = GPOINTER_TO_INT (
+			g_object_get_data (G_OBJECT (widget) , "stretch-flags"));
+	toplevel = gtk_widget_get_toplevel (widget);
+
+	if (!toplevel || !GTK_WIDGET_REALIZED (toplevel))
+		return NULL;
+	
+	gtk_widget_translate_coordinates (widget, toplevel, 0, 0, x, y);
+
+	*w = widget->allocation.width;
+	*h = widget->allocation.height;
+
+	if (flags & PANEL_STRETCH_TOP) {
+		*h += *y;
+		*y  = 0;
+	}
+
+	if (flags & PANEL_STRETCH_LEFT) {
+		*w += *x;
+		*x  = 0;
+	}
+
+	if (flags & PANEL_STRETCH_BOTTOM)
+		*h = toplevel->allocation.height - *y;
+
+	if (flags & PANEL_STRETCH_RIGHT)
+		*w = toplevel->allocation.width - *x;
+
+	return toplevel;
+}
+
 static void
 stretch_widget_realize (GtkWidget *widget)
 {
-	GdkWindowAttr attributes = {0};
-	int attributes_mask;
-	GtkWidget *toplevel;
-	int x,y,w,h;
-	PanelStretchFlags flags;
-	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
-						 "StrechEventWindow");
-	flags = GPOINTER_TO_INT (
-			g_object_get_data (G_OBJECT (widget) , "stretch-flags"));
+	GdkWindowAttr  attributes = { 0 };
+	int            attributes_mask;
+	int            x, y, w, h;
+	GdkWindow     *eventwin;
+	GtkWidget     *toplevel;
 
+	eventwin = g_object_get_data (G_OBJECT (widget), "StrechEventWindow");
 	if (eventwin != NULL)
 		gdk_window_destroy (eventwin);
 
-	toplevel = gtk_widget_get_toplevel (widget);
-
-	if (toplevel == NULL ||
-	    ! GTK_WIDGET_REALIZED (toplevel))
+	toplevel = stretch_widget_calc_geometry (widget, &x, &y, &w, &h);
+	if (!toplevel)
 		return;
-	
-	gtk_widget_translate_coordinates (widget /* src_widget */,
-					  toplevel /* dest_widget */,
-					  0, 0 /* src */,
-					  &x, &y /* dest */);
-
-	w = widget->allocation.width;
-	h = widget->allocation.height;
-
-	if (flags & PANEL_STRETCH_TOP) {
-		h += y;
-		y = 0;
-	}
-	if (flags & PANEL_STRETCH_LEFT) {
-		w += x;
-		x = 0;
-	}
-	if (flags & PANEL_STRETCH_BOTTOM)
-		h = toplevel->allocation.height - y;
-	if (flags & PANEL_STRETCH_RIGHT)
-		w = toplevel->allocation.width - x;
 
 	attributes.window_type = GDK_WINDOW_CHILD;
 	attributes.x = x;
@@ -1097,11 +1114,23 @@ stretch_widget_unmap (GtkWidget *widget)
 
 
 static void
-stretch_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
+stretch_widget_size_allocate (GtkWidget     *widget,
+			      GtkAllocation *allocation)
 {
-	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
-						 "StrechEventWindow");
-	if (eventwin == NULL)
+	GdkWindow *eventwin;
+	int        x, y, w, h;
+	int        old_x, old_y, old_w, old_h, old_d;
+
+	eventwin = g_object_get_data (G_OBJECT (widget), "StrechEventWindow");
+	if (!eventwin)
+		return;
+
+	if (!stretch_widget_calc_geometry (widget, &x, &y, &w, &h))
+		return;
+
+	gdk_window_get_geometry (eventwin, &old_x, &old_y, &old_w, &old_h, &old_d);
+
+	if ((x == old_x) && (y == old_y) && (w == old_w) && (h == old_h))
 		return;
 
 	/* somewhat evil */
