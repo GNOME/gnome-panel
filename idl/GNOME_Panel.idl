@@ -1,12 +1,22 @@
+#ifndef GNOME_PANEL_IDL
+#define GNOME_PANEL_IDL
+
+#include <Bonobo_Unknown.idl>
+
 module GNOME {
 
 	interface PanelSpot;
 	interface Applet;
 	interface StatusSpot;
+	interface Panel;
 	interface PanelAppletBooter; /* a simple panel like interface other
 					things can implement with
 					launch_an_applet to be able to host
 					applets */
+
+	interface PanelShell : Bonobo::Unknown {
+		void runBox (in string initialString);
+	};
 
 	interface Panel {
 		struct Color {
@@ -233,3 +243,6 @@ module GNOME {
 		oneway void remove ();
 	};
 };
+
+#endif /* GNOME_PANEL_IDL */
+
