@@ -420,8 +420,12 @@ load_drawer_applet (int mypanel, const char *pixmap, const char *tooltip,
 
 		dr_pd = g_slist_nth_data (panel_list, mypanel);
 
-		if(dr_pd == NULL) {
+		if (dr_pd == NULL) {
 			g_warning ("Can't find the panel for drawer, making a new panel");
+			drawer = create_empty_drawer_applet(tooltip, pixmap, orient);
+			if(drawer) panel_setup(drawer->drawer);
+		} else if ( ! IS_DRAWER_WIDGET (dr_pd->panel)) {
+			g_warning ("I found a bogus panel for a drawer, making a new one");
 			drawer = create_empty_drawer_applet(tooltip, pixmap, orient);
 			if(drawer) panel_setup(drawer->drawer);
 		} else {
