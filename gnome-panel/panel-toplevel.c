@@ -2083,6 +2083,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	if (panel_background_effective_type (background) == PANEL_BACK_NONE) {
 		GtkStyle     *style;
 		GdkRectangle *geometry;
+		int           max_size;
 
 		style = GTK_WIDGET (toplevel->priv->inner_frame)->style;
 		geometry = &toplevel->priv->geometry;
@@ -2093,13 +2094,15 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		if (geometry->y <= style->ythickness && geometry->y > 0)
 			geometry->y = 0;
 
-		if (geometry->x + geometry->width + (2 * style->xthickness) >= monitor_width &&
-		    geometry->x < monitor_width)
-			geometry->x = MAX (geometry->x, monitor_width - geometry->width - style->xthickness);
+		max_size = monitor_width - geometry->width - style->xthickness;
+		if (geometry->x + style->xthickness >= max_size &&
+		    geometry->x < max_size)
+			geometry->x = max_size;
 
-		if (geometry->y + geometry->height + (2 * style->ythickness) >= monitor_height &&
-		    geometry->y < monitor_height)
-			geometry->y = MAX (geometry->y, monitor_height - geometry->height - style->ythickness);
+		max_size = monitor_height - geometry->height - style->ythickness;
+		if (geometry->y + style->ythickness >= max_size &&
+		    geometry->y < max_size)
+			geometry->y = max_size;
 	}
 
 	panel_toplevel_update_struts (toplevel, FALSE);
