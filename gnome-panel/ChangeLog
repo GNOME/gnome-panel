@@ -1,3 +1,14 @@
+Tue Aug 05 15:28:14 2003  George Lebl <jirka@5z.com>
+
+	* launcher.[ch]: the theme icon stuff is now fixed in gnome-desktop
+	  in a slightly nicer way anyway, so revert most of the changes from
+	  here.
+
+	* panel-properties-dialog.c: Fixup the code a bit according to mark,
+	  and refer to bug #119209 in the code.  Also handle the case where
+	  no icon is set at first (in this case normally we also want to
+	  theme).
+
 Mon Aug 04 16:52:07 2003  George Lebl <jirka@5z.com>
 
 	* panel-background.c: fix image rotation to be 64bit safe, do

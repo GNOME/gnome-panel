@@ -77,9 +77,8 @@ typedef struct {
 	guint          toplevel_notify;
 	guint          background_notify;
 
-	/* Hack: if we find this icon_dirname, then we remove it
-	   because it must be themed */
-	char          *icon_dirname;
+	/* The theme directory of the icon, see bug #119209 */
+	char          *icon_theme_dir;
 } PanelPropertiesDialog;
 
 static GQuark panel_properties_dialog_quark = 0;
@@ -103,8 +102,8 @@ panel_properties_dialog_free (PanelPropertiesDialog *dialog)
 		gtk_widget_destroy (dialog->properties_dialog);
 	dialog->properties_dialog = NULL;
 
-	g_free (dialog->icon_dirname);
-	dialog->icon_dirname = NULL;
+	g_free (dialog->icon_theme_dir);
+	dialog->icon_theme_dir = NULL;
 
 	g_free (dialog);
 }
@@ -296,26 +295,28 @@ static void
 panel_properties_dialog_icon_changed (PanelPropertiesDialog *dialog,
 				      GnomeIconEntry        *entry)
 {
-	const char *icon = gnome_icon_entry_get_filename (entry);
-	/* Hack:  If the icon dirname is the same as the one we got
-	   from the theme, then don't include that dirname in
-	   the path of the icon and just use the basename since
-	   that icon was from a theme */
-	if (dialog->icon_dirname != NULL &&
-	    icon != NULL &&
-	    g_path_is_absolute (icon)) {
-		char *dir = g_path_get_dirname (icon);
-		if (strcmp (dir, dialog->icon_dirname) == 0) {
-			char *base = g_path_get_basename (icon);
-			panel_profile_set_attached_custom_icon (dialog->toplevel, base);
-			g_free (base);
-		} else {
-			panel_profile_set_attached_custom_icon (dialog->toplevel, icon);
-		}
-		g_free (dir);
-	} else {
-		panel_profile_set_attached_custom_icon (dialog->toplevel, icon);
-	}
+	const char *icon = NULL;
+        char       *freeme = NULL;
+                                                                                                                                                              
+        icon = gnome_icon_entry_get_filename (entry);
+                                                                                                                                                              
+        /* Strip dir from the icon path if in the icon
+         * theme directory.  See bug #119209
+         */
+        if (icon && g_path_is_absolute (icon)) {
+                char *dir;
+                                                                                                                                                              
+                dir = g_path_get_dirname (icon);
+                                                                                                                                                              
+                if (dir && dialog->icon_theme_dir && strcmp (dir, dialog->icon_theme_dir) == 0)
+                        icon = freeme = g_path_get_basename (icon);
+                                                                                                                                                              
+                g_free (dir);
+        }
+                                                                                                                                                              
+        panel_profile_set_attached_custom_icon (dialog->toplevel, icon);
+                                                                                                                                                              
+        g_free (freeme);
 }
 
 static void
@@ -333,31 +334,30 @@ panel_properties_dialog_setup_icon_entry (PanelPropertiesDialog *dialog,
 	dialog->icon_label = glade_xml_get_widget (gui, "icon_label");
 	g_return_if_fail (dialog->icon_label != NULL);
 
-	dialog->icon_dirname = NULL;
+	dialog->icon_theme_dir = NULL;
 	custom_icon = panel_profile_get_attached_custom_icon (dialog->toplevel);
-	if (custom_icon != NULL) {
-		if ( ! g_path_is_absolute (custom_icon)) {
-			/* Hack: if the icon is from a theme store the icon's
-			 * dirname and if the user didn't change this whack it
-			 * from the new path */
-			char *icon = gnome_desktop_item_find_icon (panel_icon_theme,
-								   custom_icon,
-								   48 /* FIXME: preffered_size */,
-								   0 /* flags */);
-			if (icon != NULL) {
-				dialog->icon_dirname = g_path_get_dirname (icon);
-				gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), icon);
-				g_free (icon);
-			} else {
-				/* FIXME: what to do if we can't find this */
-				gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), custom_icon);
-			}
-		} else {
-			gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), custom_icon);
-		}
+	if (custom_icon != NULL &&
+	    ! g_path_is_absolute (custom_icon)) {
+		/* if the icon is not absolute path name it comes from the
+		   theme, and as such we wish to store the theme directory
+		   where it comes from.  See bug #119209 */
+		char *icon = gnome_desktop_item_find_icon (panel_icon_theme,
+							   custom_icon,
+							   48 /* FIXME: preffered_size */,
+							   0 /* flags */);
+		if (icon != NULL)
+			dialog->icon_theme_dir = g_path_get_dirname (icon);
 		g_free (custom_icon);
-	} else {
-		gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), NULL);
+		custom_icon = icon;
+	}
+	gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), custom_icon);
+	g_free (custom_icon);
+
+	if (dialog->icon_theme_dir == NULL) {
+		/* use the default pixmap directory as the standard icon_theme_dir,
+		 * since the standard directory is themed */
+		g_object_get (G_OBJECT (dialog->icon_entry), "pixmap_subdir",
+			      &(dialog->icon_theme_dir), NULL);
 	}
 
 	g_signal_connect_swapped (dialog->icon_entry, "changed",
