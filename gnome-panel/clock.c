@@ -196,7 +196,8 @@ shutdown_applet(int id)
 	puts("SHUTDOWN_APPLET");
 	/*kill our window*/
 	gtk_widget_unref(aw);
-	gtk_timeout_add(100,applet_die,NULL);
+	exit(0);
+	//gtk_timeout_add(100,applet_die,NULL);
 }
 
 
@@ -231,6 +232,10 @@ main(int argc, char **argv)
 	}
 
 	/*use cfg path for loading up data!*/
+
+	/*puts("CONFIG PATH");
+	puts(cfgpath);
+	puts("-----------");*/
 
 	g_free(cfgpath);
 

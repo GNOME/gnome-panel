@@ -119,7 +119,12 @@ send_applet_shutdown_applet (const char *ior, int id)
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->shutdown_applet(id);
+	try {
+		applet->shutdown_applet(id);
+	} catch ( ... ) {
+		/*FIXME: only incomplete exception handeled here*/
+		puts("EXCEPTION");
+	}
 }
 
 void
@@ -136,10 +141,10 @@ send_applet_change_orient (const char *ior, int id, int orient)
 void
 send_applet_do_callback (const char *ior, int id, char *callback_name)
 {
-  /* Use the ior that was sent to us to get an Applet CORBA object */
-  CORBA::Object_var obj = orb_ptr->string_to_object (ior);
-  GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
-  
-  /* Now, use corba to invoke the routine in the panel */
-  applet->do_callback(id, callback_name);
+	/* Use the ior that was sent to us to get an Applet CORBA object */
+	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
+	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
+
+	/* Now, use corba to invoke the routine in the panel */
+	applet->do_callback(id, callback_name);
 }

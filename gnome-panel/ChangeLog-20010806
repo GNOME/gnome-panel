@@ -1,3 +1,19 @@
+Wed Mar 11 22:42:39 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: fixed a cpl of warnings
+
+	* panel.c: for some reason not unreffing internal applets makes
+	  shutdown not segfault.
+
+	* panel.c: fixed a bug with multple applets
+
+	* clock.c: shutdown now kills the applet (this causes
+	  an exception)
+
+	* mico-glue.cc: catch exceptions on shutdown
+
+	* ChangeLog: :%s/\<teh\>/the/g
+
 Wed Mar 11 18:15:41 1998  George Lebl  <jirka@5z.com>
 
 	* gnome-panel.idl, mico-glue.(cc,h), panel.c: session save is
@@ -15,7 +31,7 @@ Wed Mar 11 12:33:56 1998  Tom Tromey  <tromey@cygnus.com>
 Wed Mar 11 00:00:49 1998  George Lebl  <jirka@5z.com>
 
 	* gnome-panel.idl, and just about every file: external applets
-	  now get restarted nicely. teh session saving stuff slightly
+	  now get restarted nicely. the session saving stuff slightly
 	  revamped ... just as the starting stuff ... makes more sense
 	  now. it still segfaults but oh well ...
 
@@ -76,7 +92,7 @@ Thu Mar 05 22:22:53 1998  George Lebl  <jirka@5z.com>
 	  "applet_move" and got rid of restore_state signal. this
 	  makes it possible for the drawers to move themselves
 	  appropriately. initialization cleaned up and should work
-	  fine for orientation otehr then bottom
+	  fine for orientation other then bottom
 
 Wed Mar 04 23:28:44 1998  George Lebl  <jirka@5z.com>
 
@@ -222,7 +238,7 @@ Sat Feb 21 01:21:40 1998  George Lebl  <jirka@5z.com>
 Sat Feb 21 00:24:30 1998  George Lebl  <jirka@5z.com>
 
 	* applet-widget.[ch]: simple applet widget with a window
-	  and an event box so that events get trapped by teh applet
+	  and an event box so that events get trapped by the applet
 	  and not partly by the panel.
 
 	* gnome-panel.idl: added a callback for button presses, and
@@ -492,7 +508,7 @@ Sun Jan 25 18:58:07 1998  George Lebl  <jirka@5z.com>
 	* menu/main.c: fixed orientation changes affecting only one menu
 
 	* panel.c: added "add main menu" to panel menu, switched "remove
-	  applet" with "move applet" to avoid removing teh applet by
+	  applet" with "move applet" to avoid removing the applet by
 	  mistake
 
 	* applet_cmds.h: orientation is passed though params for greater
@@ -611,7 +627,7 @@ Sun Jan 18 11:17:27 1998  Tom Tromey  <tromey@cygnus.com>
 
 Sun Jan 18 18:46:28 1998  George Lebl  <jirka@5z.com>
 
-	* mailcheck/mailcheck.c: now actually captures teh expose event
+	* mailcheck/mailcheck.c: now actually captures the expose event
 	  and redraws itself
 
 	* panel_cmds.h,panel.c: added a change size notify command, the
@@ -648,7 +664,7 @@ Sat Jan 17 03:11:40 1998  George Lebl  <jirka@5z.com>
 Sat Jan 17 02:15:08 1998  George Lebl  <jirka@5z.com>
 
 	* launcher/launcher.c: a bit of restructuring, now properties can
-	  be changed, stuff will be updated in real time and teh dialog
+	  be changed, stuff will be updated in real time and the dialog
 	  isn't modal
 
 Fri Jan 16 22:07:24 1998  George Lebl  <jirka@5z.com>
@@ -699,7 +715,7 @@ Fri Jan 16 03:17:15 1998  George Lebl  <jirka@5z.com>
 
 Fri Jan 16 01:45:30 1998  George Lebl  <jirka@5z.com>
 
-	* panel.[ch]: tehre will allways be one menu,
+	* panel.[ch]: there will allways be one menu,
 	  (last one can't get deleted) and moving from the menu now works
 
 Thu Jan 15 21:54:31 1998  George Lebl  <jirka@5z.com>

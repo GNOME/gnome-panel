@@ -733,9 +733,10 @@ set_menu_applet_orient(Menu *menu, MenuOrient orient)
 		/*FIXME: these guys need arrows as well*/
 		pixmap_name = gnome_unconditional_pixmap_file ("gnome-folder.png");
 		
-	pixmap=GTK_BUTTON(menu->button)->child;
+	pixmap=GTK_BIN(menu->button)->child;
 	gtk_container_remove(GTK_CONTAINER(menu->button),pixmap);
-	gtk_widget_destroy(pixmap);
+	/*this is done by remove right?*/
+	/*gtk_widget_unref(pixmap);*/
 
 	/*make the pixmap*/
 	pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,

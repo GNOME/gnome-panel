@@ -50,6 +50,9 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 
 		reserve_applet_spot (cfgpath, params, panel, pos);
 		
+		puts("-------------------------------------------");
+		puts("          LOADING EXTERN APPLET");
+		puts("-------------------------------------------");
 		command = g_copy_strings ("(true;", params, ") &", NULL);
 
 		system (command);

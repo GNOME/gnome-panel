@@ -299,12 +299,12 @@ panel_session_save (GnomeClient *client,
 		for(i=0,list=applets;list!=NULL;list = g_list_next(list),i++) {
 			info = list->data;
 			if(info->type == APPLET_EXTERN) {
-				puts("EXTERN");
+				printf("SHUTTING DOWN EXTERN (%d)\n",i);
 				send_applet_shutdown_applet(info->id,i);
 				puts("DONE");
-			} else {
-				puts("INTERNAL");
-				gtk_widget_unref(info->widget);
+			} else if(info->type != APPLET_EXTERN_PENDING) {
+				puts("SHUTTING DOWN INTERNAL");
+				//gtk_widget_unref(info->widget);
 				puts("DONE");
 			}
 		}
@@ -544,7 +544,7 @@ applet_drag_stop(int id)
 void
 applet_add_callback(short id, char *callback_name, char *menuitem_text)
 {
-  g_warning("Unimplemented\n");
+	g_warning("Unimplemented\n");
 }
 
 int
@@ -562,23 +562,14 @@ applet_request_id (const char * ior, const char *path, char **cfgpath)
 		   strcmp(info->params,path)==0) {
 			*cfgpath = info->id;
 			info->id = g_strdup(ior);
+			/*we started this and already reserved a spot
+			  for it, including the eventbox widget*/
 			return i;
 		}
 	}
 
 	reserve_applet_spot (ior, path, 0, 0);
-	info = g_new(AppletInfo,1);
-	info->type = APPLET_EXTERN_PENDING;
-	info->widget = NULL;
-	info->assoc = NULL;
-	info->data = NULL;
-	info->id = g_strdup(ior);
-	info->params = g_strdup(path);
-	info->flags = 0;
 	*cfgpath = g_strdup("");
-
-	applets = g_list_append(applets,info);
-	
 	return i;
 }
 
