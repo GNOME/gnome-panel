@@ -1443,9 +1443,10 @@ check_and_reread_applet(Menu *menu,int main_menu)
 			    list = g_slist_next(list)) {
 				MenuFinfo *mf = list->data;
 				dirlist = g_slist_append(dirlist,
-							 mf->menudir);
+							 g_strdup(mf->menudir));
 			}
 			add_menu_widget(menu,dirlist, main_menu,TRUE);
+			g_slist_foreach(dirlist,(GFunc)g_free,NULL);
 			g_slist_free(dirlist);
 		}
 	}
