@@ -472,9 +472,9 @@ update_workspaces_model (PagerData *pager)
 	int nr_ws, i;
 	WnckWorkspace *workspace;
 	GtkTreeIter iter;
-	
+
 	nr_ws = wnck_screen_get_workspace_count (pager->screen);
-	
+        
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_workspaces_spin), nr_ws);
 
 	gtk_list_store_clear (pager->workspaces_store);
@@ -500,6 +500,8 @@ workspace_created (WnckScreen    *screen,
 		   WnckWorkspace *space,
 		   PagerData     *pager)
 {
+        g_return_if_fail (WNCK_IS_SCREEN (screen));
+        
 	update_workspaces_model (pager);
 	g_signal_connect (G_OBJECT (space), "name_changed",
 			  (GCallback) workspace_renamed, pager);
@@ -510,6 +512,7 @@ workspace_destroyed (WnckScreen    *screen,
 		     WnckWorkspace *space,
 		     PagerData     *pager)
 {
+        g_return_if_fail (WNCK_IS_SCREEN (screen));
 	update_workspaces_model (pager);
 }
 
@@ -636,10 +639,10 @@ setup_dialog (GladeXML  *xml,
 	g_signal_connect (G_OBJECT (pager->num_workspaces_spin), "value_changed",
 			  (GCallback) num_workspaces_value_changed, pager);
 	
-	g_signal_connect_swapped (pager->screen, "workspace_created",
-				  (GCallback) workspace_created, pager);
-	g_signal_connect_swapped (pager->screen, "workspace_destroyed",
-				  (GCallback) workspace_destroyed, pager);
+	g_signal_connect (pager->screen, "workspace_created",
+                          (GCallback) workspace_created, pager);
+	g_signal_connect (pager->screen, "workspace_destroyed",
+                          (GCallback) workspace_destroyed, pager);
 
 	pager->workspaces_store = gtk_list_store_new (1, G_TYPE_STRING, NULL);
 	update_workspaces_model (pager);
