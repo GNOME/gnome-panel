@@ -843,8 +843,10 @@ panel_menu_button_create (PanelToplevel *toplevel,
 		gconf_client_set_string (client, key, menu_path, NULL);
 	}
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "tooltip");
-	gconf_client_set_string (client, key, tooltip, NULL);
+	if (tooltip && tooltip [0]) {
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "tooltip");
+		gconf_client_set_string (client, key, tooltip, NULL);
+	}
 
 	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);

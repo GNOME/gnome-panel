@@ -65,6 +65,7 @@
 #include "panel-properties-dialog.h"
 #include "panel-run-dialog.h"
 #include "panel-lockdown.h"
+#include "panel-addto.h"
 
 #undef MENU_DEBUG
 
@@ -95,80 +96,6 @@ typedef struct {
 	GtkIconSize  icon_size;
 } IconToAdd;
 
-typedef struct {
-	const char            *name;
-	const char            *category;
-	const char            *untranslated_category;
-	const char            *description;
-	const char            *icon;
-	const char            *stock_icon;
-	PanelActionButtonType  action_type;
-	const char            *drag_data;
-	gboolean               static_data;
-} AppletMenuInfo;
-
-static AppletMenuInfo action_buttons_info [] = {
-        { N_("Log Out"),
-	  N_("Actions"),
-	  "Actions",
-	  N_("Log out of this session to log in as a different user or to shut down the computer"),
-	  NULL,
-	  PANEL_STOCK_LOGOUT,
-	  PANEL_ACTION_LOGOUT,
-	  "ACTION:logout:NEW",
-	  TRUE },
-	  
-	{ N_("Lock"),
-	  N_("Actions"),
-	  "Actions",
-	  N_("Lock the screen so you can temporarily leave your computer"),
-	  NULL,
-	  PANEL_STOCK_LOCKSCREEN,
-	  PANEL_ACTION_LOCK,
-	  "ACTION:lock:NEW",
-	  TRUE },
-
-	{ N_("Force Quit"),
-	  N_("Actions"),
-	  "Actions",
-	  N_("Force a misbehaving application to quit"),
-	  NULL,
-	  PANEL_STOCK_FORCE_QUIT,
-	  PANEL_ACTION_FORCE_QUIT,
-	  "ACTION:force-quit:NEW",
-	  TRUE },
-	  
-	{ N_("Screenshot"),
-	  N_("Actions"),
-	  "Actions",
-	  N_("Take a screenshot of your desktop"),
-	  NULL,
-	  PANEL_STOCK_SCREENSHOT,
-	  PANEL_ACTION_SCREENSHOT,
-	  "ACTION:screenshot:NEW",
-	  TRUE },
-	 
-	{ N_("Search"),
-	  N_("Actions"),
-	  "Actions",
-	  N_("Find files, folders, and documents on your computer"),
-	  NULL,
-	  PANEL_STOCK_SEARCHTOOL,
-	  PANEL_ACTION_SEARCH,
-	  "ACTION:search:NEW",
-	  TRUE },
-	  
-	{ N_("Run"),
-	  N_("Actions"),
-	  "Actions",
-	  N_("Run a command"),
-	  NULL,
-	  PANEL_STOCK_RUN,
-	  PANEL_ACTION_RUN,
-	  "ACTION:run:NEW",
-	  TRUE }
-};
-
 static guint load_icons_id = 0;
 static GHashTable *loaded_icons = NULL;
 static GList *icons_to_load = NULL;
@@ -185,8 +112,6 @@ static GtkWidget * create_menu_at_fr (GtkWidget *menu,
 
 static GtkWidget * create_desktop_menu (GtkWidget *m);
 
-static void add_bonobo_applet (GtkWidget  *widget, const char *iid);
-
 static void add_distribution_submenu (GtkWidget *root_menu,
 				      gboolean fake_submenus,
 				      gboolean launcher_add);
@@ -196,8 +121,6 @@ static GtkWidget * create_add_launcher_menu (GtkWidget *menu,
 
 static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 					      GdkEventKey *event);
-static void         make_add_submenu   (GtkWidget             *menu,
-				        Bonobo_ServerInfoList *applet_list);
 static PanelWidget *menu_get_panel     (GtkWidget *menu);
 static GdkScreen   *menuitem_to_screen (GtkWidget *menuitem);
 
@@ -1675,16 +1598,6 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 	gtk_tooltips_disable (panel_tooltips);
 }
 
-static void  
-drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
-			 GtkSelectionData   *selection_data, guint info,
-			 guint time, const char *string)
-{
-	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, (guchar *)string,
-				strlen(string));
-}
-
 static void
 image_menuitem_size_request (GtkWidget      *menuitem,
 			     GtkRequisition *requisition,
@@ -1825,40 +1738,26 @@ setup_menuitem (GtkWidget   *menuitem,
 }
 
 static void
-setup_applet_drag (GtkWidget *menuitem, const char *iid)
+drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
+			 GtkSelectionData   *selection_data, guint info,
+			 guint time, const char *string)
 {
-        static GtkTargetEntry menu_item_targets[] = {
-		{ "application/x-panel-applet-iid", 0, 0 }
-	};
-	
-	if (!iid || panel_lockdown_get_locked_down ())
-		return;
-	
-	gtk_drag_source_set (menuitem,
-			     GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
-			     menu_item_targets, 1,
-			     GDK_ACTION_COPY);
-	
-	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
-			       G_CALLBACK (drag_data_get_string_cb),
-			       g_strdup (iid),
-			       (GClosureNotify)g_free,
-			       0 /* connect_flags */);
-	g_signal_connect (G_OBJECT (menuitem), "drag_end",
-			  G_CALLBACK (drag_end_menu_cb), NULL);
-
+	gtk_selection_data_set (selection_data,
+				selection_data->target, 8, (guchar *)string,
+				strlen(string));
 }
+
 
 void
 setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
 {
-        static GtkTargetEntry menu_item_targets[] = {
+	static GtkTargetEntry menu_item_targets[] = {
 		{ "application/x-panel-applet-internal", 0, 0 }
 	};
-	
+
 	if (!applet_type || panel_lockdown_get_locked_down ())
 		return;
-	
+
 	gtk_drag_source_set (menuitem,
 			     GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 			     menu_item_targets, 1,
@@ -1871,59 +1770,6 @@ setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
 			       0 /* connect_flags */);
 	g_signal_connect (G_OBJECT (menuitem), "drag_end",
 			  G_CALLBACK (drag_end_menu_cb), NULL);
-
-}
-
-static void
-add_drawer_to_panel (GtkWidget *item)
-{
-	PanelWidget   *panel_widget;
-	PanelToplevel *toplevel;
-	PanelData     *pd;
-	int            position;
-
-	panel_widget = menu_get_panel (item);
-	toplevel = panel_widget->toplevel;
-
-	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
-	position = pd ? pd->insertion_pos : -1;
-
-	panel_drawer_create (toplevel, position, NULL, FALSE, NULL);
-}
-
-static void
-add_action_button_to_panel (GtkWidget *widget,
-			    gpointer   data)
-{
-	PanelActionButtonType  action_type = GPOINTER_TO_INT (data);
-	PanelWidget           *panel_widget;
-	PanelToplevel         *toplevel;
-	PanelData             *pd;
-	int                    position;
-
-	panel_widget = menu_get_panel (widget);
-	toplevel = panel_widget->toplevel;
-
-	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
-	position = pd ? pd->insertion_pos : -1;
-
-	panel_action_button_create (toplevel, position, action_type);
-}
-
-static void
-add_menu_bar_to_panel (GtkWidget *item)
-{
-	PanelWidget *panel_widget;
-	PanelData   *pd;
-	int          position = -1;
-
-	panel_widget = menu_get_panel (item);
-
-	pd = g_object_get_data (G_OBJECT (panel_widget->toplevel), "PanelData");
-	if (pd)
-		position = pd->insertion_pos;
-
-	panel_menu_bar_create (panel_widget->toplevel, position);
 }
 
 static void
@@ -2343,414 +2189,6 @@ create_menu_at_fr (GtkWidget *menu,
 	return menu;
 }
 
-static const char *
-applet_menu_get_category_icon (const char *untranslated_category)
-{
-	static GHashTable *hash = NULL;
-
-	if (!hash) {
-		hash = g_hash_table_new (g_str_hash, g_str_equal);
-		g_hash_table_insert (hash, "Accessories", PANEL_STOCK_ACCESSORIES); 
-		g_hash_table_insert (hash, "Amusements", PANEL_STOCK_AMUSEMENTS);
-		g_hash_table_insert (hash, "Multimedia", PANEL_STOCK_MULTIMEDIA);
-		g_hash_table_insert (hash, "Internet",   PANEL_STOCK_INTERNET);
-		g_hash_table_insert (hash, "Utility",    PANEL_STOCK_UTILITY);
-		g_hash_table_insert (hash, "Actions",	 PANEL_STOCK_ACTION);
-	}
-
-	return g_hash_table_lookup (hash, untranslated_category);
-}
-
-static GtkWidget *
-applet_menu_append (GtkWidget  *menu,
-		    AppletMenuInfo *applet,
-		    gboolean applets_writable,
-		    gboolean objects_writable)
-{
-	GtkWidget *menuitem;
-
-	menuitem = gtk_image_menu_item_new ();
-
-	if (applet->icon || applet->stock_icon)
-		panel_load_menu_image_deferred (
-			menuitem, GTK_ICON_SIZE_MENU, applet->stock_icon, applet->icon, NULL, FALSE);
-	
-	setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, applet->name, TRUE);
-
-	gtk_widget_show_all (menuitem);
-
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-
-	if (applet->description)
-		gtk_tooltips_set_tip (panel_tooltips, menuitem, applet->description, NULL);
-	
-	if (applet->action_type != PANEL_ACTION_NONE) {
-		/* only allow dragging objects if we can add objects */
-		if (panel_profile_list_is_writable (PANEL_GCONF_OBJECTS))
-			setup_internal_applet_drag (menuitem, applet->drag_data);
-
-		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (add_action_button_to_panel),
-				  GINT_TO_POINTER (applet->action_type));
-		gtk_widget_set_sensitive (menuitem, objects_writable);
-	} else {
-		/* only allow dragging applets if we can add applets */
-		if (panel_profile_list_is_writable (PANEL_GCONF_APPLETS))
-			setup_applet_drag (menuitem, applet->drag_data);
-		
-		g_signal_connect_data (menuitem, "activate", G_CALLBACK (add_bonobo_applet),
-				       g_strdup (applet->drag_data), (GClosureNotify) g_free, 0);
-		gtk_widget_set_sensitive (menuitem, applets_writable);
-	}
-
-	return menuitem;
-}
-
-static GtkWidget *
-applet_menu_append_category (GtkWidget *menu,
-                             const char *category,
-			     const char *stock_icon)
-{
-	GtkWidget *menuitem;
-
-	menuitem = gtk_image_menu_item_new ();
-
-	if (stock_icon)
-		panel_load_menu_image_deferred (
-			menuitem, GTK_ICON_SIZE_MENU, stock_icon, NULL, NULL, FALSE);
-
-	setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, category, TRUE);
-
-	gtk_widget_show_all (menuitem);
-
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-
-	return menuitem;
-}
-
-static void
-add_bonobo_applet (GtkWidget  *item,
-		   const char *iid)
-{
-	PanelWidget   *panel_widget;
-	PanelToplevel *toplevel;
-	PanelData     *pd;
-	int            position;
-
-	panel_widget = menu_get_panel (item);
-	toplevel = panel_widget->toplevel;
-
-	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
-	position = pd ? pd->insertion_pos : -1;
-
-	panel_applet_frame_create (toplevel, position, iid);
-}
-
-static const char applet_requirements [] = 
-	"has_all (repo_ids, ['IDL:Bonobo/Control:1.0',"
-	"		     'IDL:GNOME/Vertigo/PanelAppletShell:1.0']) && "
-	"defined (panel:icon) && defined (panel:category)";
-
-static char *applet_sort_criteria [] = {
-	"panel:category",
-	"name",
-	NULL
-	};
-
-typedef struct {
-	Bonobo_ServerInfoList *applet_list;
-	GtkMenuItem           *item;
-	GtkWidget             *menu;
-	int                    timeout_id;
-} ReloadData;
-
-static gboolean
-Bonobo_ServerInfoList_equals (Bonobo_ServerInfoList *l1,
-			      Bonobo_ServerInfoList *l2)
-{
-	CORBA_any         a1, a2;
-	CORBA_Environment env;
-	gboolean          retval;
-
-	CORBA_exception_init (&env);
-
-	a1._release = FALSE;
-	a1._type    = TC_Bonobo_ServerInfoList;
-	a1._value   = l1;
-
-	a2._release = FALSE;
-	a2._type    = TC_Bonobo_ServerInfoList;
-	a2._value   = l2;
-
-	retval = ORBit_any_equivalent (&a1, &a2, &env);
-	if (BONOBO_EX (&env)) {
-		g_warning ("comparison returned exception %s\n", BONOBO_EX_REPOID (&env));
-		CORBA_exception_free (&env);
-		return FALSE;
-	}
-
-	return retval;
-}
-
-static gboolean
-recheck_applet_list (ReloadData *reload_data)
-{
-	Bonobo_ServerInfoList *applet_list;
-	CORBA_Environment      env;
-
-	if (GTK_WIDGET_VISIBLE (reload_data->menu))
-		return TRUE;
-
-	CORBA_exception_init (&env);
-
-	applet_list = bonobo_activation_query (applet_requirements,
-					       applet_sort_criteria,
-					       &env);
-	if (BONOBO_EX (&env)) {
-		g_warning (_("query returned exception %s\n"), BONOBO_EX_REPOID (&env));
-		CORBA_exception_free (&env);
-		return TRUE;
-	}
-
-	CORBA_exception_free (&env);
-
-	if (Bonobo_ServerInfoList_equals (applet_list, reload_data->applet_list)) {
-		CORBA_free (applet_list);
-		return TRUE;
-	}
-
-	gtk_widget_destroy (reload_data->menu);
-	g_object_unref (reload_data->menu);
-
-	reload_data->menu = menu_new ();
-	gtk_menu_item_set_submenu (reload_data->item, reload_data->menu);
-
-	CORBA_free (reload_data->applet_list);
-	reload_data->applet_list = applet_list;
-
-	make_add_submenu (reload_data->menu, applet_list);
-
-	return TRUE;
-}
-
-static void
-menu_item_destroyed (GtkMenuItem *item,
-		     ReloadData  *reload_data)
-{
-	g_source_remove (reload_data->timeout_id);
-
-	g_object_unref (reload_data->menu);
-
-	CORBA_free (reload_data->applet_list);
-
-	g_free (reload_data);
-}
-
-static Bonobo_ServerInfoList *
-instrument_add_submenu_for_reload (GtkMenuItem *item,
-				   GtkWidget   *menu)
-{
-	CORBA_Environment  env;
-	ReloadData        *reload_data;
-
-	reload_data = g_new0 (ReloadData, 1);
-
-	CORBA_exception_init (&env);
-
-	reload_data->applet_list =
-		bonobo_activation_query (applet_requirements,
-					 applet_sort_criteria,
-					 &env);
-	if (BONOBO_EX (&env)) {
-		g_warning (_("query returned exception %s\n"), BONOBO_EX_REPOID (&env));
-
-		CORBA_exception_free (&env);
-		g_free (reload_data);
-
-		return NULL;
-	}
-
-	reload_data->timeout_id =
-		g_timeout_add (5 * 1000, (GSourceFunc) recheck_applet_list, reload_data);
-
-	reload_data->item = item;
-	reload_data->menu = g_object_ref (menu);
-
-	g_signal_connect (item, "destroy",
-			  G_CALLBACK (menu_item_destroyed), reload_data);
-
-	CORBA_exception_free (&env);
-
-	return reload_data->applet_list;
-}
-
-static int
-applet_info_sort_func (AppletMenuInfo *a,
-                       AppletMenuInfo *b)
-{
-	int c;
-
-	if ((c = g_utf8_collate (a->category, b->category)))
-		return c;
-
-	return g_utf8_collate (a->name, b->name);
-}
-
-static GSList *
-append_internal_applets (GSList *list)
-{
-	static gboolean translated = FALSE;
-	int             i;
-
-	for (i = 0; i < G_N_ELEMENTS (action_buttons_info); i++) {
-		if (panel_lockdown_get_disable_command_line () && 
-		    action_buttons_info [i].action_type == PANEL_ACTION_RUN)
-			continue;
-
-		if (panel_lockdown_get_disable_force_quit () && 
-		    action_buttons_info [i].action_type == PANEL_ACTION_FORCE_QUIT)
-			continue;
-
-		if (panel_lockdown_get_disable_lock_screen () && 
-		    action_buttons_info [i].action_type == PANEL_ACTION_LOCK)
-			continue;
-
-		if (panel_lockdown_get_disable_log_out () && 
-		    action_buttons_info [i].action_type == PANEL_ACTION_LOGOUT)
-			continue;
-
-		if (!translated) {
-			action_buttons_info [i].name = _(action_buttons_info [i].name);
-			action_buttons_info [i].category = _(action_buttons_info [i].category);
-			action_buttons_info [i].description = _(action_buttons_info [i].description);
-                }
-
-                list = g_slist_append (list, &action_buttons_info [i]);
-        }
-
-	translated = TRUE;
-
-        return list;
-}	
-
-static GtkWidget *
-create_applets_menu (GtkWidget             *menu,
-		     Bonobo_ServerInfoList *applet_list)
-{
-	GtkWidget         *prev_menu = NULL;
-	const char        *prev_category = NULL;
-	int                i;
-	const GList       *langs_glist;
-	GSList            *langs_gslist;
-	GSList            *applets = NULL;
-	GSList		  *item = NULL;
-	gboolean           applets_writable;
-	gboolean           objects_writable;
-
-	if (!applet_list)
-		return NULL;
-
-	applets_writable = panel_profile_list_is_writable (PANEL_GCONF_APPLETS);
-	objects_writable = panel_profile_list_is_writable (PANEL_GCONF_OBJECTS);
-
-	if (!menu)
-		menu = menu_new ();
-
-	g_signal_connect (G_OBJECT (menu), "destroy", G_CALLBACK (menu_destroy), NULL);
-
-	/* Evil evil evil evil, we need to convert to
-	 * a GSList from a GList */
-	langs_glist = gnome_i18n_get_language_list ("LC_MESSAGES");
-	langs_gslist = NULL;
-	while (langs_glist != NULL) {
-		langs_gslist = g_slist_append (langs_gslist, langs_glist->data);
-		langs_glist = langs_glist->next;
-	}
-
-	for (i = 0; i < applet_list->_length; i++) {
-		Bonobo_ServerInfo *info;
-		AppletMenuInfo    *applet;
-		const char        *name;
-		const char        *description;
-		const char        *icon;
-		const char        *category;
-		const char        *untranslated_category;
-
-		info = &applet_list->_buffer [i];
-
-		if (panel_lockdown_is_applet_disabled (info->iid))
-			continue;
-
-		name        = bonobo_server_info_prop_lookup (info, "name", langs_gslist);
-		category    = bonobo_server_info_prop_lookup (info, "panel:category", langs_gslist);
-	        description = bonobo_server_info_prop_lookup (info, "description", langs_gslist);
-		icon        = bonobo_server_info_prop_lookup (info, "panel:icon", NULL);
-
-		untranslated_category =
-			bonobo_server_info_prop_lookup (info, "panel:category", NULL);
-
-		if (!name)
-			continue;
-
-		applet = g_new0 (AppletMenuInfo, 1);
-		applet->name = name;
-		applet->category = category;
-		applet->untranslated_category = untranslated_category;
-		applet->description = description;
-		applet->icon = icon;
-		applet->drag_data = info->iid;
-
-		applets = g_slist_append (applets, applet);
-	}
-	
-	/* add internal action buttons */
-	applets = append_internal_applets (applets);	
-	
-	/* sort by category, then name */
-	applets = g_slist_sort (applets, (GCompareFunc) applet_info_sort_func);
-
-	item = applets;
-	while (item != NULL) {
-		GtkWidget         *menuitem;		
-		AppletMenuInfo        *applet;
-		
-		applet = (AppletMenuInfo *) item->data;
-		item = item->next;
-		
-		if (string_empty (applet->category)) {
-			applet_menu_append (menu, applet,
-					    applets_writable,
-					    objects_writable);
-			continue;
-		}
-
-		if (!prev_category || strcmp (prev_category, applet->untranslated_category)) {
-			const char *cat_icon;
-
-			prev_category = applet->untranslated_category;
-			prev_menu = menu_new ();
-
-			cat_icon = applet_menu_get_category_icon (applet->untranslated_category);
-
-			menuitem = applet_menu_append_category (menu, applet->category, cat_icon);
-
-			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), prev_menu);
-		}
-
-		applet_menu_append (prev_menu, applet,
-				    applets_writable,
-				    objects_writable);
-		
-		if (!applet->static_data)
-			g_free (applet);
-	}
-	
-	g_slist_free (langs_gslist);
-	g_slist_free (applets);
-
-	return menu;
-}
-
 static void
 create_new_panel (GtkWidget *menuitem)
 {
@@ -2924,27 +2362,21 @@ static void
 make_panel_submenu (PanelWidget *panel_widget,
 		    GtkWidget   *menu)
 {
-	Bonobo_ServerInfoList *applet_list;
-	GtkWidget             *menuitem, *submenu;
+	GtkWidget             *menuitem;
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem,
 			GTK_ICON_SIZE_MENU,
 			gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU),
-			_("_Add to Panel"),
+			_("_Add to Panel..."),
 			FALSE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
-	submenu = menu_new ();
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-				   submenu);
+        g_signal_connect (G_OBJECT (menuitem), "activate",
+	      	       	  G_CALLBACK (panel_addto_present), panel_widget);
 
-	applet_list = instrument_add_submenu_for_reload (GTK_MENU_ITEM (menuitem), submenu);
-
-	if (panel_profile_list_is_writable (PANEL_GCONF_APPLETS) ||
-	    panel_profile_list_is_writable (PANEL_GCONF_OBJECTS))
-		make_add_submenu (submenu, applet_list);
-	else
+	if (!panel_profile_list_is_writable (PANEL_GCONF_APPLETS) &&
+	    !panel_profile_list_is_writable (PANEL_GCONF_OBJECTS))
 		gtk_widget_set_sensitive (menuitem, FALSE);
 
 	menuitem = gtk_image_menu_item_new ();
@@ -3053,86 +2485,6 @@ create_panel_context_menu (PanelWidget *panel)
 	g_object_set_data (G_OBJECT (retval), "menu_panel", panel);
 
 	return retval;
-}
-
-static void
-ask_about_launcher_cb (GtkWidget *widget)
-{
-	PanelWidget *panel_widget;
-	PanelData   *pd;
-	int          insertion_pos;
-
-	panel_widget = menu_get_panel (widget);
-
-	pd = g_object_get_data (G_OBJECT (panel_widget->toplevel), "PanelData");
-
-	insertion_pos = pd ? pd->insertion_pos : -1;
-
-	ask_about_launcher (NULL, panel_widget, insertion_pos, FALSE);
-}
-
-static void
-make_add_submenu (GtkWidget             *menu,
-		  Bonobo_ServerInfoList *applet_list)
-{
-	GtkWidget *menuitem, *m;
-	gboolean objects_writable;
-
-	objects_writable = panel_profile_list_is_writable (PANEL_GCONF_OBJECTS);
-
-	/* Add Menu */
-
-	create_applets_menu (menu, applet_list);
-
-	if (!panel_lockdown_get_disable_command_line ()) {
-		menuitem = gtk_image_menu_item_new ();
-		setup_stock_menu_item (menuitem, GTK_ICON_SIZE_MENU,
-				       PANEL_STOCK_LAUNCHER, _("Launcher..."), TRUE);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		g_signal_connect (G_OBJECT(menuitem), "activate",
-				  G_CALLBACK(ask_about_launcher_cb),NULL);
-		setup_internal_applet_drag(menuitem, "LAUNCHER:ASK");
-		gtk_widget_set_sensitive (menuitem, objects_writable);
-	}
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_LAUNCHER, _("Launcher from menu"), TRUE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	m = create_add_launcher_menu (NULL, TRUE);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), m);
-	g_signal_connect (G_OBJECT (m),"show",
-			  G_CALLBACK (submenu_to_display), NULL);
-	gtk_widget_set_sensitive (menuitem, objects_writable);
-
-  	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_MAIN_MENU, _("Main Menu"), TRUE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(add_menu_to_panel),
-			   NULL);
-	setup_internal_applet_drag(menuitem, "MENU:MAIN");
-	gtk_widget_set_sensitive (menuitem, objects_writable);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_GNOME_LOGO, _("Menu Bar"), TRUE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_menu_bar_to_panel), NULL);
-	setup_internal_applet_drag (menuitem, "MENUBAR:NEW");
-	gtk_widget_set_sensitive (menuitem, objects_writable);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_DRAWER, _("Drawer"), TRUE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) add_drawer_to_panel,
-			   NULL);
-	setup_internal_applet_drag(menuitem, "DRAWER:NEW");
-	gtk_widget_set_sensitive (menuitem, objects_writable);
 }
 
 static void

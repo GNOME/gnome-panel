@@ -1,3 +1,29 @@
+2004-06-22  Vincent Untz  <vincent@vuntz.net>
+
+	New add to dialog!
+	The original work was done by Iain Holmes <iain@prettypeople.org>.
+
+	* Makefile.am: add panel-addto.c to panel_sources and panel-addto.h to
+	panel_headers
+	* menu.c:
+	(add_bonobo_applet), (make_add_submenu), (setup_applet_drag),
+	(add_drawer_to_panel), (add_action_button_to_panel),
+	(add_menu_bar_to_panel), (applet_menu_get_category_icon),
+	(applet_menu_append), (applet_menu_append_category),
+	(Bonobo_ServerInfoList_equals), (recheck_applet_list),
+	(menu_item_destroyed), (instrument_add_submenu_for_reload),
+	(applet_info_sort_func), (append_internal_applets),
+	(create_applets_menu), (ask_about_launcher_cb), (make_add_submenu):
+	removed all the code concerning the 'addto' stuff. Some code is moved
+	to panel-addto.c
+	(make_panel_submenu): add an ellipse to the "Add to Panel" since this
+	now opens a dialog, just connect the menu item to the right function
+	instead of building a submenu. Yeah!
+	* panel-addto.[ch]: A new 'addto' dialog !!!
+
+	* panel-menu-button.c: (panel_menu_button_create): small fix to avoid
+	a GConf warning if there's no tooltip provided
+
 2004-06-09  Christian Neumair  <chris@gnome-de.org>
 
 	* menu-fentry.c: (get_presorted_from), (fr_fill_dir), (fr_read_dir),
