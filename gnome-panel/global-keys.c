@@ -147,7 +147,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 	guint menu_keycode, menu_state;
 	guint run_keycode, run_state;
 
-	if(xevent->type != KeyRelease)
+	if(xevent->type != KeyPress)
 		return GDK_FILTER_CONTINUE;
 
 	keycode = xevent->xkey.keycode;
