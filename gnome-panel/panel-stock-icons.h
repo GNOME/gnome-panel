@@ -73,6 +73,7 @@ G_BEGIN_DECLS
 void        panel_init_stock_icons_and_items (void);
 GtkIconSize panel_menu_icon_get_size         (void);
 GtkIconSize panel_foobar_icon_get_size       (void);
+GtkIconSize panel_button_icon_get_size       (void);
 
 G_END_DECLS
 
