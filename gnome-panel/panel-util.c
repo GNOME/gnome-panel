@@ -1075,8 +1075,11 @@ stretch_widget_realize (GtkWidget *widget)
 	GtkWidget     *toplevel;
 
 	eventwin = g_object_get_data (G_OBJECT (widget), "StrechEventWindow");
-	if (eventwin != NULL)
+	if (eventwin != NULL) {
+		gdk_window_set_user_data (eventwin, NULL);
+		g_object_set_data (G_OBJECT (widget), "StrechEventWindow", NULL);
 		gdk_window_destroy (eventwin);
+	}
 
 	toplevel = stretch_widget_calc_geometry (widget, &x, &y, &w, &h);
 	if (!toplevel)
@@ -1115,6 +1118,7 @@ stretch_widget_unrealize (GtkWidget *widget)
 	if (eventwin == NULL)
 		return;
 
+	gdk_window_set_user_data (eventwin, NULL);
 	gdk_window_destroy (eventwin);
 	g_object_set_data (G_OBJECT (widget),
 			   "StrechEventWindow",

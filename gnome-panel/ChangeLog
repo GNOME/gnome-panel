@@ -1,3 +1,10 @@
+2003-06-10  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-util.c: (stretch_widget_realize),
+	(stretch_widget_unrealize): don't leaver any stale
+	references to the widget in the GdkWindow's user_data
+	when destroying it. Pointed out by Owen Taylor in #113328.
+
 2003-05-26  Mark McLoughlin  <mark@skynet.ie>
 
 	* drawer.c: (create_drawer_applet): use the drawer stock
