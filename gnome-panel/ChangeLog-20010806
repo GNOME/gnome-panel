@@ -1,3 +1,18 @@
+Wed Jan 19 19:01:26 2000  George Lebl <jirka@5z.com>
+
+	* panel-util.[ch]: add strtok_with_escape function that works like
+	  strtok but works with escaped strings and can return empty parts,
+	  and escape_string which returns a newly allocated escaped version
+	  of the string.  Also s/int/gboolean/ for places that need it.
+
+	* menu.c: use gnome_error_dialog instead of g_warning in some places,
+	  use gnome_exec_async to launch stuff and check it's return (doesn't
+	  work with dentries as the dentry_launch doesn't return error), fix
+	  reading of the lock flag for launching the screensaver, fix the
+	  ugly add_to_personal function to work with files with spaces, and
+	  for tearoff menu loading/saving use the escaping functions from
+	  above
+
 Wed Jan 19 16:00:55 2000  George Lebl <jirka@5z.com>
 
 	* panel_config.[ch]: use radio items in the option menus, use

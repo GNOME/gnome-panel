@@ -116,7 +116,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	}
 
 	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
-			"(C) 1998, 1999 the Free Software Foundation",
+			"(C) 1997-2000 the Free Software Foundation",
 			(const gchar **)authors,
 			_("This program is responsible for launching "
 			"other applications, embedding small applets "
@@ -131,7 +131,8 @@ about_cb (GtkWidget *widget, gpointer data)
 static void
 about_gnome_cb(GtkObject *object, char *program_path)
 {
-	gnome_execute_async(NULL, 1, &program_path);
+	if(gnome_execute_async(NULL, 1, &program_path)<0)
+		gnome_error_dialog(_("Can't execute 'About GNOME'"));
 }
 
 static void
@@ -142,17 +143,19 @@ activate_app_def (GtkWidget *widget, char *item_loc)
 		gnome_desktop_entry_launch (item);
 		gnome_desktop_entry_free(item);
 	} else {
-		g_warning(_("Can't load entry"));
+		gnome_error_dialog(_("Can't load entry"));
 	}
 }
 
+/* FIXME: this is an extremely ugly function, I mean this is so
+   bad it's not even funny */
 static void
 add_app_to_personal (GtkWidget *widget, char *item_loc)
 {
 	char *s;
 	char *p;
 	p = gnome_util_home_file("apps");
-	s = g_strdup_printf("cp -r -f %s %s",item_loc,p);
+	s = g_strdup_printf("cp -r -f '%s' '%s'",item_loc,p);
 	g_free(p);
 	system(s);
 	g_free(s);
@@ -284,8 +287,11 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 
 	g_return_if_fail (item_loc);
 	if (unlink(item_loc) < 0) {
-		g_warning(_("Could not remove the menu item %s: %s\n"), 
-			  item_loc, g_strerror(errno));
+		char *s;
+		s = g_strdup_printf(_("Could not remove the menu item %s: %s\n"), 
+				    item_loc, g_strerror(errno));
+		gnome_error_dialog(s);
+		g_free(s);
 		return;
 	}
 
@@ -312,8 +318,12 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 	order_out_file = fopen(order_out_name, "w");
 
 	if (!order_out_file) {
-		g_warning(_("Could not open .order file: %s"),
-			  order_in_name);
+		char *s;
+		s = g_strdup_printf(_("Could not open .order file: %s"),
+				    order_in_name);
+		gnome_error_dialog(s);
+		g_free(s);
+
 		g_free(order_in_name);
 		g_free(order_out_name);
 		fclose(order_in_file);
@@ -329,9 +339,13 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 	fclose(order_out_file);
 	fclose(order_in_file);
 
-	if (rename(order_out_name, order_in_name) == -1)
-		g_warning(_("Could not rename tmp file %s"),
-			  order_out_name);
+	if (rename(order_out_name, order_in_name) == -1) {
+		char *s;
+		s = g_strdup_printf(_("Could not rename tmp file %s"),
+				    order_out_name);
+		gnome_error_dialog(s);
+		g_free(s);
+	}
 
 	g_free(order_out_name);
 	g_free(order_in_name);
@@ -1192,7 +1206,7 @@ add_applet (GtkWidget *w, char *item_loc)
 
 	ii = gnome_desktop_entry_load(item_loc);
 	if(!ii) {
-		g_warning(_("Can't load entry"));
+		gnome_error_dialog(_("Can't load entry"));
 		return;
 	}
 
@@ -1200,7 +1214,7 @@ add_applet (GtkWidget *w, char *item_loc)
 	gnome_desktop_entry_free(ii);
 	
 	if(!goad_id) {
-		g_warning(_("Can't get goad_id from desktop entry!"));
+		gnome_error_dialog(_("Can't get goad_id from desktop entry!"));
 		return;
 	}
 	load_extern_applet(goad_id,NULL,
@@ -2191,7 +2205,14 @@ create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 						    "gnome-logo-icon-transparent.png");
 		}
 	} else {
-		g_warning("No system menus found!");
+		/* show an error dialog for this only once, then just
+		   use g_warning */
+		static int dialogs = 0;
+		if(dialogs==0) {
+			gnome_error_dialog(_("No system menus found!"));
+			dialogs++;
+		} else
+			g_warning(_("No system menus found!"));
 	}
 	g_free (menudir); 	
 	return menu;
@@ -2287,14 +2308,7 @@ remove_panel (GtkWidget *w, gpointer data)
 		: BASEP_WIDGET (current_panel->panel_parent);
 	
 	if (base_panels == 1 && !IS_DRAWER_WIDGET (basep)) {
-		GtkWidget *d;
-		d = gnome_message_box_new (
-			_("You cannot remove your last panel."),
-			GNOME_MESSAGE_BOX_ERROR,
-			GNOME_STOCK_BUTTON_OK,
-			NULL);
-
-		gnome_dialog_run_and_close (GNOME_DIALOG (d));
+		gnome_error_dialog (_("You cannot remove your last panel."));
 		return;
 	}
 
@@ -2302,8 +2316,7 @@ remove_panel (GtkWidget *w, gpointer data)
 	gtk_widget_destroy (GTK_WIDGET (basep));
 }
 
-GtkWidget *
-create_panel_root_menu(GtkWidget *panel, int tearoff);
+GtkWidget * create_panel_root_menu(GtkWidget *panel, int tearoff);
 
 static void
 panel_tearoff_new_menu(GtkWidget *w, GtkWidget *panel)
@@ -3078,7 +3091,9 @@ add_to_panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 static void
 panel_config_global(void)
 {
-	system("(gnome-panel-properties-capplet &)");
+	char *argv[2] = {"gnome-panel-properties-capplet", NULL};
+	if(gnome_execute_async(NULL,1,argv)<0)
+		gnome_error_dialog(_("Cannot execute panel global properties"));
 }
 
 void
@@ -3168,13 +3183,17 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 void
 panel_lock (GtkWidget *widget, gpointer data)
 {
-	gboolean lock = gnome_config_get_bool_with_default ("Screensaver/Default/password", FALSE);
+	char *argv[3] = {"xscreensaver-command", NULL, NULL};
+	gboolean lock;
+	lock = gnome_config_get_bool ("Screensaver/Default/password=false");
 	/* we want to default to something safe.
 	 * Have we started xscreensaver in a locked state or not?*/
 	if (lock)
-		system ("(xscreensaver-command -activate&)");
+		argv[1] = "-activate";
 	else
-		system ("(xscreensaver-command -lock&)");
+		argv[1] = "-lock";
+	if(gnome_execute_async(NULL,2,argv)<0)
+		gnome_error_dialog(_("Cannot execute xscreensaver"));
 }
 
 static GtkWidget *create_panel_submenu (GtkWidget *m, int fake_sub, int tearoff);
@@ -3709,7 +3728,6 @@ load_menu_applet(char *params, int main_menu_flags,
 }
 
 /* the data can be title:wmclass:x:y:path:applets:dirname:pixmapname:path ... */
-/* FIXME: we should escape :'s also, data is  */
 /* note that it kills and frees 'data' */
 static void
 make_tearoff_from_data(char *data)
@@ -3725,21 +3743,20 @@ make_tearoff_from_data(char *data)
 	gulong wmclass_num;
 	PanelWidget *menu_panel_widget = NULL;
 
-	title = strtok(data,":");
+	title = strtok_with_escape(data,":",TRUE);
 	if(!title) return;
-	wmclass = strtok(NULL,":");
+	wmclass = strtok_with_escape(NULL,":",TRUE);
 	if(!wmclass) return;
-	menu_panel = strtok(NULL,":");
+	menu_panel = strtok_with_escape(NULL,":",TRUE);
 	if(!menu_panel) return;
-	geom = strtok(NULL,":");
+	geom = strtok_with_escape(NULL,":",TRUE);
 	if(!geom) return;
 
 	ix = iy = 0;
 	workspace = hints = state = 0;
 	sscanf(geom,"%d,%d,%d,%d,%d",&ix,&iy,&workspace,&hints,&state);
 
-	i=0;
-	sscanf(menu_panel,"%d",&i);
+	i = atoi(menu_panel);
 	if(i<0) i = 0;
 	menu_panel_widget = g_slist_nth_data(panels,i);
 	if(!menu_panel_widget)
@@ -3759,7 +3776,7 @@ make_tearoff_from_data(char *data)
 	while(1) {
 		char *path;
 
-		path = strtok(NULL,":");
+		path = strtok_with_escape(NULL,":",TRUE);
 		if(!path) break;
 
 		if(strcmp(path,"ADD_PANEL")==0) {
@@ -3802,11 +3819,11 @@ make_tearoff_from_data(char *data)
 			char *applets;
 			char *dir_name;
 			char *pixmap_name;
-			applets = strtok(NULL,":");
+			applets = strtok_with_escape(NULL,":",TRUE);
 			if(!applets) applets="0";
-			dir_name = strtok(NULL,":");
+			dir_name = strtok_with_escape(NULL,":",TRUE);
 			if(!dir_name) dir_name=g_basename(path);
-			pixmap_name = strtok(NULL,":");
+			pixmap_name = strtok_with_escape(NULL,":",TRUE);
 			if(!pixmap_name) pixmap_name="";
 
 			menu = create_menu_at(gtk_menu_new (),
@@ -3865,7 +3882,6 @@ make_tearoffs_from_data(GSList *list)
 
 /* returns a list of strings that can be loaded later with
    make_tearoffs_from_data */
-/* FIXME: we need to escape the :'s inside fields here */
 GSList *
 make_data_from_tearoffs(void)
 {
@@ -3903,20 +3919,32 @@ make_data_from_tearoffs(void)
 		menu_panel = g_slist_index(panels,menu_panel_widget);
 		if(menu_panel<0) menu_panel = 0;
 
-		g_string_sprintf(gs,"%s:%s:%d:%d,%d,%d,%d,%d",
-				 tm->title,tm->wmclass,menu_panel,
-				 x,y,workspace,hints,state);
+		{
+			char *etitle = escape_string(tm->title,":");
+			char *ewmclass = escape_string(tm->wmclass,":");
+			g_string_sprintf(gs,"%s:%s:%d:%d,%d,%d,%d,%d",
+					 etitle,ewmclass,menu_panel,
+					 x,y,workspace,hints,state);
+			g_free(etitle);
+			g_free(ewmclass);
+		}
 
 		if(tm->special)
 			g_string_sprintfa(gs,":%s",tm->special);
 
 		for(l=tm->mfl;l;l=l->next) {
 			MenuFinfo *mf = l->data;
+			char *ename = escape_string(mf->fr->name,":");
+			char *edir_name = escape_string(mf->dir_name,":");
+			char *epixmap_name = escape_string(mf->pixmap_name,":");
 			g_string_sprintfa(gs,":%s:%d:%s:%s",
-					  mf->fr->name,
+					  ename,
 					  mf->applets?1:0,
-					  mf->dir_name?mf->dir_name:"",
-					  mf->pixmap_name?mf->pixmap_name:"");
+					  edir_name?edir_name:"",
+					  epixmap_name?epixmap_name:"");
+			g_free(ename);
+			g_free(edir_name);
+			g_free(epixmap_name);
 		}
 		data = g_slist_prepend(data,gs->str);
 		g_string_free(gs,FALSE);
