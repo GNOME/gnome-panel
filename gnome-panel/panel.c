@@ -1328,8 +1328,7 @@ panel_setup(GtkWidget *panelw)
 					 GTK_SIGNAL_FUNC(panel_realize),
 					 NULL);
 
-	if(IS_FLOATING_WIDGET(panelw) ||
-	   IS_DRAWER_WIDGET(panelw))
+	if(IS_FLOATING_WIDGET(panelw))
 		gtk_signal_connect_after(GTK_OBJECT(panelw), "size_allocate",
 					 GTK_SIGNAL_FUNC(floating_size_alloc),
 					 NULL);
