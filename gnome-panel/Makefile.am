@@ -65,6 +65,11 @@ BUILT_SOURCES = \
 	panel-marshal.c		\
 	panel-marshal.h
 
+EGG_ACCELERATORS_FILES =        \
+	eggaccelerators.c       \
+	eggaccelerators.h       \
+	$(NULL)
+
 panel_sources =			\
 	panel-typebuiltins.c	\
 	panel-typebuiltins.h	\
@@ -106,8 +111,6 @@ panel_sources =			\
 	panel-shell.c		\
 	quick-desktop-reader.c	\
 	panel-access.c		\
-	eggaccelerators.c	\
-	eggaccelerators.h	\
 	panel-stock-icons.c	\
 	$(NULL)
 
@@ -151,10 +154,11 @@ panel_headers =			\
 	panel-stock-icons.h	\
 	$(NULL)
 
-gnome_panel_SOURCES =		\
-	$(CORBA_SRCLIST)	\
-	$(panel_sources)	\
-	$(panel_headers)	\
+gnome_panel_SOURCES =			\
+	$(CORBA_SRCLIST)		\
+	$(EGG_ACCELERATORS_FILES)	\
+	$(panel_sources)		\
+	$(panel_headers)		\
 	$(NULL)
 
 gnome_panel_LDADD =		\
@@ -213,6 +217,7 @@ EXTRA_DIST =					\
 	$(schemas_in_files)			\
 	$(ui_DATA)				\
 	panel-marshal.list			\
+	update-from-egg.sh			\
 	gnome-panelrc
 
 sysdir = $(datadir)/control-center-2.0/capplets
@@ -291,3 +296,8 @@ CLEANFILES = $(BUILT_SOURCES)
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
+
+EGG_ACCELERATORS_DIR = $(srcdir)/../../libegg/libegg/treeviewutils
+
+regenerate-built-sources:
+	EGGFILES="$(EGG_ACCELERATORS_FILES)" EGGDIR="$(EGG_ACCELERATORS_DIR)" $(srcdir)/update-from-egg.sh
