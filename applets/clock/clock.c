@@ -29,6 +29,7 @@ struct _ClockData {
 	GtkWidget *applet;
 	GtkWidget *clockw;
 	int timeout;
+	int timeouttime;
 	int hourformat;
         int showdate;
 	ClockUpdateFunc update_func;
@@ -64,7 +65,16 @@ clock_timeout_callback(gpointer data)
 
 	(*cd->update_func) (cd, current_time);
 
-	return 1;
+	if (cd->timeouttime != 36000)
+	{
+	   cd->timeouttime = 36000;
+	   cd->timeout = gtk_timeout_add(cd->timeouttime,
+			clock_timeout_callback,
+			cd);
+	   return FALSE;
+	}
+
+	return TRUE;
 }
 
 static gint
@@ -188,6 +198,7 @@ create_clock_widget(GtkWidget * applet)
 {
 	GtkWidget *clock;
 	ClockData *cd;
+	struct tm *tm;
 	time_t current_time;
 
 	cd = g_new(ClockData, 1);
@@ -200,10 +211,6 @@ create_clock_widget(GtkWidget * applet)
 
 	cd->props = NULL;
 
-	/* Install timeout handler */
-
-	cd->timeout = gtk_timeout_add(3000, clock_timeout_callback, cd);
-
 	cd->orient = ORIENT_UP;
 
 	gtk_signal_connect(GTK_OBJECT(clock), "destroy",
@@ -212,6 +219,13 @@ create_clock_widget(GtkWidget * applet)
 	/* Call the clock's update function so that it paints its first state */
 	time(&current_time);
 	(*cd->update_func) (cd, current_time);
+
+	/* Install timeout handler */
+        tm = localtime(&current_time);
+	cd->timeouttime = 36000-(tm->tm_sec*600);
+	cd->timeout = gtk_timeout_add(cd->timeouttime,
+			clock_timeout_callback,
+			cd);
 
 	return cd;
 }
