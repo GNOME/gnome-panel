@@ -1091,6 +1091,8 @@ static void
 set_panel_position(void)
 {
 	int width=DEFAULT_HEIGHT,height=DEFAULT_HEIGHT;
+	int buttonswidth=0;
+	int buttonsheight=0;
 	GtkAllocation newalloc;
 
 	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
@@ -1110,6 +1112,11 @@ set_panel_position(void)
 			newalloc.y=0;
 			newalloc.width=gdk_screen_width();
 			newalloc.height=height;
+			if(the_panel->mode==PANEL_STAYS_PUT)
+				buttonswidth=the_panel->hidebutton_l_h->
+					     allocation.width+
+					     the_panel->hidebutton_r_h->
+					     allocation.width;
 			break;
 		case PANEL_POS_BOTTOM:
 			gtk_widget_set_usize(the_panel->window,
@@ -1122,6 +1129,11 @@ set_panel_position(void)
 			newalloc.y=gdk_screen_height() - height;
 			newalloc.width=gdk_screen_width();
 			newalloc.height=height;
+			if(the_panel->mode==PANEL_STAYS_PUT)
+				buttonswidth=the_panel->hidebutton_l_h->
+					     allocation.width+
+					     the_panel->hidebutton_r_h->
+					     allocation.width;
 			break;
 		case PANEL_POS_LEFT:
 			gtk_widget_set_usize(the_panel->window, width,
@@ -1131,6 +1143,11 @@ set_panel_position(void)
 			newalloc.y=0;
 			newalloc.width=width;
 			newalloc.height=gdk_screen_height();
+			if(the_panel->mode==PANEL_STAYS_PUT)
+				buttonsheight=the_panel->hidebutton_l_v->
+					      allocation.height+
+					      the_panel->hidebutton_r_v->
+					      allocation.height;
 			break;
 		case PANEL_POS_RIGHT:
 			gtk_widget_set_usize(the_panel->window, width,
@@ -1142,9 +1159,17 @@ set_panel_position(void)
 			newalloc.y=0;
 			newalloc.width=width;
 			newalloc.height=gdk_screen_height();
+			if(the_panel->mode==PANEL_STAYS_PUT)
+				buttonsheight=the_panel->hidebutton_l_v->
+					      allocation.height+
+					      the_panel->hidebutton_r_v->
+					      allocation.height;
 			break;
 	}
 	gtk_widget_size_allocate(the_panel->window,&newalloc);
+	newalloc.width-=buttonswidth;
+	newalloc.height-=buttonsheight;
+	gtk_widget_size_allocate(the_panel->fixed,&newalloc);
 }
 
 
