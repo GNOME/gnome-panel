@@ -23,9 +23,11 @@
 
 #include "gnome-desktop-item.h"
 
+#include "quick-desktop-reader.h"
+#include "panel-util.h"
+
 #include "menu-properties.h"
 
-#include "panel-util.h"
 
 enum {
 	CLOSE_BUTTON,
@@ -60,7 +62,7 @@ struct _MenuDialogInfo {
 };
 
 char *
-get_real_menu_path(const char *arguments)
+get_real_menu_path (const char *arguments)
 {
 	char *this_menu;
 	
@@ -68,30 +70,20 @@ get_real_menu_path(const char *arguments)
 	if (string_empty (arguments))
 		arguments = ".";
 
-	if(!strcmp (arguments, "."))
-		this_menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR,
-						       "gnome/apps", FALSE, NULL);
-	else if (*arguments == '/')
-		this_menu = g_strdup (arguments);
+	if (strcmp (arguments, ".") == 0)
+		this_menu = g_strdup ("programs:");
 	else if (*arguments == '~')
+		/* FIXME: this needs to be a URI */
 		this_menu = g_build_filename (g_get_home_dir(),
 					      &arguments[1], NULL);
 	else
-		this_menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR,
-						       arguments, FALSE, NULL);
+		this_menu = g_strdup (arguments);
 
-	if ( ! g_file_test (this_menu, G_FILE_TEST_EXISTS)) {
-		g_warning("menu %s does not exist "
-			  "(arguments are %s)",
-			  this_menu, arguments);
-		g_free (this_menu);
-		return NULL;
-	}
 	return this_menu;
 }
 
 char *
-get_pixmap(const char *menudir, gboolean main_menu)
+get_pixmap (const char *menudir, gboolean main_menu)
 {
 	char *pixmap_name = NULL;
 
@@ -101,27 +93,28 @@ get_pixmap(const char *menudir, gboolean main_menu)
 							 FALSE, NULL);
 	} else {
 		char *dentry_name;
-		GnomeDesktopItem *item_info;
+		QuickDesktopItem *qitem;
 
-		dentry_name = g_build_filename (menudir,
-						".directory",
-						NULL);
-		item_info = gnome_desktop_item_new_from_file (dentry_name,
-							      0 /* flags */,
-							      NULL /* error */);
+		dentry_name = g_build_path ("/",
+					    menudir,
+					    ".directory",
+					    NULL);
+		qitem = quick_desktop_item_load_uri (dentry_name,
+						     NULL /* expected_type */,
+						     FALSE /* run_tryexec */);
 		g_free (dentry_name);
 
-		if (item_info != NULL)
-			pixmap_name = gnome_desktop_item_get_icon (item_info);
+		if (qitem != NULL)
+			pixmap_name = quick_desktop_item_find_icon (qitem->icon);
 
-		if (!pixmap_name)
+		if (pixmap_name == NULL)
 			pixmap_name = gnome_program_locate_file (NULL, 
 								 GNOME_FILE_DOMAIN_PIXMAP, 
 								 "gnome-folder.png",
 								 FALSE, NULL);
 
-		if (item_info != NULL)
-			gnome_desktop_item_unref (item_info);
+		if (qitem != NULL)
+			quick_desktop_item_destroy (qitem);
 	}
 	return pixmap_name;
 }

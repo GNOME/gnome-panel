@@ -47,6 +47,7 @@ struct _QuickDesktopItem {
 
 	char *icon;
 	char *tryexec;
+	char *sort_order;
 };
 
 QuickDesktopItem * quick_desktop_item_load_file (const char  *file,

@@ -21,6 +21,12 @@
 
 #include <libgnome/libgnome.h>
 
+#include <libgnomevfs/gnome-vfs-mime-utils.h>
+#include <libgnomevfs/gnome-vfs-uri.h>
+#include <libgnomevfs/gnome-vfs-ops.h>
+#include <libgnomevfs/gnome-vfs-directory.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
+
 #include "menu-fentry.h"
 #include "quick-desktop-reader.h"
 
@@ -35,28 +41,27 @@
 
 static GSList *dir_list = NULL;
 
-extern char *merge_main_dir;
-extern int merge_main_dir_len;
-extern char *merge_merge_dir;
-
 extern GlobalConfig global_config;
 
 static GSList *
-prepend_mfile (GSList *list, const char *name, gboolean merged,
-	       gboolean verified)
+prepend_mfile (GSList *list,
+	       const char *name,
+	       gboolean verified,
+	       time_t mtime,
+	       gboolean is_dir)
 {
 	MFile *mfile = g_new0 (MFile, 1);
 
 	mfile->name = g_strdup (name);
-	mfile->merged = merged;
 	mfile->verified = verified;
+	mfile->mtime = mtime;
+	mfile->is_dir = is_dir;
 
 	return g_slist_prepend (list, mfile);
 }
 
-/* merged is 1/0/-1 (-1 is don't care) */
 static MFile *
-find_mfile (GSList *list, const char *string, int merged)
+find_mfile (GSList *list, const char *string)
 {
 	GSList *li;
 
@@ -66,9 +71,7 @@ find_mfile (GSList *list, const char *string, int merged)
 		MFile *mfile = li->data;
 
 		if (mfile->name != NULL &&
-		    strcmp (mfile->name, string) == 0 &&
-		    (merged < 0 ||
-		     (merged ? 1 : 0) == (mfile->merged ? 1 : 0)))
+		    strcmp (mfile->name, string) == 0)
 			return mfile;
 	}
 
@@ -76,120 +79,92 @@ find_mfile (GSList *list, const char *string, int merged)
 }
 
 
-/*reads in the order file and makes a list*/
+/*reads in the sort order and makes a list*/
 static GSList *
-get_presorted_from(GSList *list, const char *dir, gboolean merged)
+get_presorted_from (const char *dir_uri)
 {
-	char buf[PATH_MAX+1];
-	char *fname = g_build_filename (dir, ".order", NULL);
-	FILE *fp = fopen(fname, "r");
+	char *uri, *sort_order, *p;
+	GSList *list = NULL;
+	QuickDesktopItem *qitem;
 	
-	if(!fp) {
-		g_free(fname);
-		return list;
-	}
-	while(fgets(buf, PATH_MAX+1, fp)!=NULL) {
-		MFile *mfile;
-		char *p = strchr(buf, '\n');
-		if(p)
-			*p = '\0';
+	uri = g_build_path ("/", dir_uri, ".directory", NULL);
+	qitem = quick_desktop_item_load_uri (uri,
+					     NULL /* expected_type */,
+					     FALSE /* run_tryexec */);
 
-		if(is_ext (buf, ".desktop") ||
-		   is_ext (buf, ".kdelnk")) {
-			mfile = find_mfile (list, buf, merged ? 1 : 0);
-		} else {
-			mfile = find_mfile (list, buf, -1);
-		}
+	g_free (uri);
 
-		if (mfile == NULL)
-			list = prepend_mfile (list, buf, merged, FALSE);
+	if (qitem == NULL)
+		return NULL;
+
+	/* steal sort_order, we're gonna mangle it */
+	sort_order = qitem->sort_order;
+	qitem->sort_order = NULL;
+
+	quick_desktop_item_destroy (qitem);
+
+	if (sort_order == NULL)
+		return NULL;
+
+	p = strtok (sort_order, ";");
+	while (p != NULL) {
+		list = prepend_mfile (list,
+				      p /* name */,
+				      FALSE /* verified */,
+				      0 /* mtime */,
+				      /* We don't know if it's
+				       * a directory */
+				      FALSE /* is_dir */);
+
+		p = strtok (NULL, ";");
 	}
-	fclose(fp);
-	g_free(fname);
+
+	g_free (sort_order);
+
 	return list;
 }
 
-gboolean
-fr_is_subdir (const char *dir, const char *superdir, int superdir_len)
-{
-	if (superdir == NULL || superdir_len == 0)
-		return FALSE;
-
-	if (strncmp (dir, superdir, superdir_len-1) == 0 &&
-	    (dir[superdir_len-1] == '/' ||
-	     dir[superdir_len-1] == '\0')) {
-		return TRUE;
-	} else {
-		return FALSE;
-	}
-}
-
-char *
-fr_get_mergedir (const char *dir)
-{
-	char *mergedir;
-
-	/* If we never merge, just return NULL */
-	if ( ! global_config.merge_menus)
-		return NULL;
-
-	if(merge_merge_dir != NULL &&
-	   fr_is_subdir(dir, merge_main_dir, merge_main_dir_len)) {
-		if (dir[merge_main_dir_len-1] == '/')
-			mergedir =
-				g_strconcat(merge_merge_dir,
-					    &dir[merge_main_dir_len], NULL);
-		else
-			mergedir =
-				g_strconcat(merge_merge_dir,
-					    &dir[merge_main_dir_len-1], NULL);
-	} else {
-		mergedir = NULL;
-	}
-
-	return mergedir;
-}
-
 static GSList *
-read_directory (GSList *list, const char *menudir, gboolean merged)
+read_directory (GSList *list, const char *menuuri)
 {
-	DIR *dir;
-	struct dirent *dent;
+	GnomeVFSDirectoryHandle *handle = NULL;
 
-	dir = opendir (menudir);
-	if (dir != NULL)  {
-		while((dent = readdir (dir)) != NULL) {
+	if (gnome_vfs_directory_open (&handle, menuuri,
+				      GNOME_VFS_FILE_INFO_DEFAULT)
+	    == GNOME_VFS_OK) {
+		GnomeVFSFileInfo *info = gnome_vfs_file_info_new ();
+		while (gnome_vfs_directory_read_next (handle, info)
+		       == GNOME_VFS_OK) {
 			MFile *mfile;
 
-			if (dent->d_name[0] == '.')
+			if (info->name[0] == '.') {
+				gnome_vfs_file_info_clear (info);
 				continue;
-
-			if(is_ext (dent->d_name, ".desktop") ||
-			   is_ext (dent->d_name, ".kdelnk")) {
-				mfile = find_mfile (list, dent->d_name,
-						    merged ? 1 : 0);
-			} else {
-				mfile = find_mfile (list, dent->d_name, -1);
-
-				/* if this is a bogus unmerged dir,
-				 * then append it again for the merged */
-				if (mfile != NULL &&
-				    merged &&
-				    ! mfile->merged &&
-				    ! mfile->verified)
-					mfile = NULL;
 			}
 
-			if (mfile == NULL)
-				list = prepend_mfile (list, dent->d_name,
-						      merged, TRUE);
-			/* if this is the same merge foo and we've
-			 * already foudn it in the presorted, just verify it */
-			else if ((mfile->merged ? 1 : 0) == (merged ? 1 : 0))
+			mfile = find_mfile (list, info->name);
+
+			/* FIXME: what if there is no mtime in the info? */
+
+			if (mfile == NULL) {
+				list = prepend_mfile (list,
+						      info->name,
+						      TRUE /* verified */,
+						      info->mtime,
+						      (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY));
+			/* if we've already found it in the presorted,
+			 * just verify it */
+			} else {
 				mfile->verified = TRUE;
+				mfile->mtime = info->mtime;
+				mfile->is_dir = (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY);
+			}
+
+			gnome_vfs_file_info_clear (info);
 		}
 
-		closedir(dir);
+		gnome_vfs_file_info_unref (info);
+		gnome_vfs_directory_close (handle);
 	}
 
 	return list;
@@ -218,22 +193,12 @@ free_mfile_list (GSList *list)
 }
 
 GSList *
-get_mfiles_from_menudir (const char *menudir)
+get_mfiles_from_menudir (const char *menuuri)
 {
 	GSList *list = NULL;
-	char *mergedir;
 
-	mergedir = fr_get_mergedir (menudir);
-	
-	list = get_presorted_from (list, menudir, FALSE /*merged*/);
-	list = read_directory (list, menudir, FALSE /*merged*/);
-
-	if (mergedir != NULL) {
-		list = get_presorted_from (list, mergedir, TRUE /*merged*/);
-		list = read_directory (list, mergedir, TRUE /*merged*/);
-
-		g_free (mergedir);
-	}
+	list = get_presorted_from (menuuri);
+	list = read_directory (list, menuuri);
 
 	return g_slist_reverse (list);
 }
@@ -345,137 +310,117 @@ fr_free (FileRec *fr, gboolean free_fr)
 }
 
 static void
-fr_fill_dir(FileRec *fr, int sublevels)
+fr_fill_dir (FileRec *fr, int sublevels)
 {
 	GSList *flist;
-	struct stat s;
 	DirRec *dr = (DirRec *)fr;
-	FileRec *ffr;
-	time_t curtime = time(NULL);
-	char *mergedir;
+	time_t curtime = time (NULL);
 	
 	g_return_if_fail (dr->recs == NULL);
 	g_return_if_fail (fr != NULL);
 	g_return_if_fail (fr->name != NULL);
 
-	ffr = g_new0 (FileRec, 1);
-	ffr->type = FILE_REC_EXTRA;
-	ffr->name = g_build_filename (fr->name, ".order", NULL);
-	ffr->parent = dr;
-	if (stat (ffr->name, &s) != -1)
-		ffr->mtime = s.st_mtime;
-	ffr->last_stat = curtime;
-	dr->recs = g_slist_prepend(dr->recs, ffr);
-
-	mergedir = fr_get_mergedir (fr->name);
-
-	flist = get_mfiles_from_menudir(fr->name);
+	flist = get_mfiles_from_menudir (fr->name);
 	while (flist != NULL) {
-		gboolean merged;
 		MFile *mfile = flist->data;
 		char *name;
 		GSList *tmp = flist;
 		flist = flist->next;
-		g_slist_free_1(tmp);
+		g_slist_free_1 (tmp);
 
-		if ( ! mfile->merged) {
-			name = g_build_filename (fr->name, mfile->name, NULL);
-		} else if (mergedir != NULL) {
-			name = g_build_filename (mergedir, mfile->name, NULL);
-		} else {
+		if ( ! mfile->verified) {
 			free_mfile (mfile);
 			continue;
 		}
-		merged = mfile->merged;
 
-		if (stat (name, &s) == -1) {
-			g_free(name);
-			free_mfile (mfile);
-			continue;
-		}
-		free_mfile (mfile);
+		g_print ("fr->name = \"%s\" , mfile->name = \"%s\"\n",
+			 fr->name, mfile->name);
 
-		if (S_ISDIR (s.st_mode)) {
-			if (merged)
-				ffr = fr_read_dir (NULL, name, NULL, &s, sublevels-1);
-			else 
-				ffr = fr_read_dir (NULL, name, &s, NULL, sublevels-1);
-			g_free(name);
-			if(ffr) {
-				ffr->merged = merged;
-				dr->recs = g_slist_prepend(dr->recs,ffr);
+		name = g_build_path ("/", fr->name, mfile->name, NULL);
+
+		if (mfile->is_dir) {
+			FileRec *ffr = fr_read_dir (NULL, name, mfile->mtime,
+						     sublevels - 1);
+			if (ffr != NULL) {
+				dr->recs = g_slist_prepend (dr->recs, ffr);
 			}
 		} else {
 			QuickDesktopItem *qitem;
 			char *tryexec_path;
-			char *p = strrchr(name,'.');
-			if (p == NULL ||
-			    (strcmp (p, ".desktop") != 0 &&
-			     strcmp (p, ".kdelnk") != 0)) {
+			if ( ! is_ext2 (mfile->name, ".desktop", ".kdelnk")) {
 				g_free (name);
+				free_mfile (mfile);
+				g_print ("BAD EXTENSION\n");
 				continue;
 			}
 
 			tryexec_path = NULL;
 
-			qitem = quick_desktop_item_load_file (name /* file */,
-							      NULL /* expected_type */,
-							      FALSE /* run_tryexec */);
-			if (qitem != NULL)  {
-				if (qitem->tryexec != NULL) {
-					tryexec_path = g_find_program_in_path (qitem->tryexec);
-					if (tryexec_path == NULL) {
-						dr->tryexecs = g_slist_prepend (dr->tryexecs,
-										g_strdup (qitem->tryexec));
-						quick_desktop_item_destroy (qitem);
-						qitem = NULL;
-					}
+			qitem = quick_desktop_item_load_uri (name /* uri */,
+							     NULL /* expected_type */,
+							     FALSE /* run_tryexec */);
+			if (qitem != NULL &&
+			    qitem->tryexec != NULL) {
+				tryexec_path = g_find_program_in_path (qitem->tryexec);
+				if (tryexec_path == NULL) {
+					dr->tryexecs = g_slist_prepend (dr->tryexecs,
+									g_strdup (qitem->tryexec));
+					quick_desktop_item_destroy (qitem);
+					qitem = NULL;
 				}
 			}
+
 			if (qitem != NULL) {
-				ffr = g_new0 (FileRec, 1);
+				FileRec *ffr = g_new0 (FileRec, 1);
 				if (qitem->type != NULL &&
 				    g_ascii_strcasecmp (qitem->type, "separator") == 0)
 					ffr->type = FILE_REC_SEP;
 				else
 					ffr->type = FILE_REC_FILE;
-				ffr->merged = merged;
 				ffr->name = name;
-				ffr->mtime = s.st_mtime;
+				name = NULL;
+				ffr->mtime = mfile->mtime;
 				ffr->last_stat = curtime;
 				ffr->parent = dr;
-				ffr->icon = g_strdup (qitem->icon);
-				ffr->fullname = g_strdup (qitem->name);
-				ffr->comment = g_strdup (qitem->comment);
+				ffr->icon = qitem->icon;
+				qitem->icon = NULL;
+				ffr->fullname = qitem->name;
+				qitem->name = NULL;
+				ffr->comment = qitem->comment;
+				qitem->comment = NULL;
 				ffr->tryexec_path = tryexec_path;
+
+				/* FIXME: we don't need this shit I don't think */
 				ffr->goad_id =
 					get_applet_goad_id_from_ditem (qitem);
+
 				quick_desktop_item_destroy (qitem);
 
 				dr->recs = g_slist_prepend (dr->recs, ffr);
 			} else {
-				g_free (name);
+				g_print ("NO QITEM\n");
 			}
 		}
+		g_free (name);
+		free_mfile (mfile);
 	}
 	dr->recs = g_slist_reverse (dr->recs);
-
-	g_free (mergedir);
 }
 
 FileRec *
-fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
-	     struct stat *merge_dstat, int sublevels)
+fr_read_dir (DirRec *dr, const char *muri, time_t mtime, int sublevels)
 {
-	char *fname;
-	struct stat s;
+	char *furi;
 	FileRec *fr;
 	time_t curtime = time (NULL);
-	char *mergedir;
+	GnomeVFSFileInfo *info;
 	
-	g_return_val_if_fail (mdir != NULL, NULL);
+	g_return_val_if_fail (muri != NULL, NULL);
 
-	mergedir = fr_get_mergedir (mdir);
+	g_print ("fr_read_dir (..., \"%s\", %ld, %d)\n",
+		 muri, (long)mtime, sublevels);
+
+	info = gnome_vfs_file_info_new ();
 
 	/*this will zero all fields*/
 	if (dr == NULL) {
@@ -488,46 +433,41 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 	fr = (FileRec *)dr;
 
 	if (fr->last_stat < curtime-STAT_EVERY) {
-		if (dstat == NULL) {
-			if (stat (mdir, &s) == -1) {
+		if (mtime <= 0) {
+			if (gnome_vfs_get_file_info
+			    (muri, info, GNOME_VFS_FILE_INFO_DEFAULT)
+			    != GNOME_VFS_OK) {
+				gnome_vfs_file_info_unref (info);
 				fr_free (fr, TRUE);
-				g_free (mergedir);
 				return NULL;
 			}
 
-			fr->mtime = s.st_mtime;
+			/* FIXME: what if there is no mtime in the info? */
+			fr->mtime = info->mtime;
 		} else {
-			fr->mtime = dstat->st_mtime;
-		}
-
-		if (mergedir != NULL) {
-			if (merge_dstat == NULL) {
-				if (stat (mergedir, &s) == -1) {
-					dr->merge_mtime = 0;
-				} else {
-					dr->merge_mtime = s.st_mtime;
-				}
-			} else
-				dr->merge_mtime = merge_dstat->st_mtime;
+			fr->mtime = mtime;
 		}
 
 		fr->last_stat = curtime;
 	}
 
-	g_free (mergedir);
-
 	fr->type = FILE_REC_DIR;
 	g_free (fr->name);
-	fr->name = g_strdup (mdir);
+	fr->name = g_strdup (muri);
 
-	s.st_mtime = 0;
-	fname = g_build_filename (mdir, ".directory", NULL);
+	gnome_vfs_file_info_clear (info);
+
+	/* FIXME: we've already read this when reading the sort_order,
+	 * so damnit we should just use that copy, oh well */
+	furi = g_build_path ("/", muri, ".directory", NULL);
 	if (dr->ditemlast_stat >= curtime-STAT_EVERY ||
-	    stat (fname, &s) != -1) {
+	    gnome_vfs_get_file_info (furi, info,
+				     GNOME_VFS_FILE_INFO_DEFAULT)
+	    == GNOME_VFS_OK) {
 		QuickDesktopItem *qitem;
-		qitem = quick_desktop_item_load_file (fname /* file */,
-						      NULL /* expected_type */,
-						      TRUE /* run_tryexec */);
+		qitem = quick_desktop_item_load_uri (furi /* uri */,
+						     NULL /* expected_type */,
+						     TRUE /* run_tryexec */);
 		if (qitem != NULL) {
 			g_free (fr->icon);
 			fr->icon = g_strdup (qitem->icon);
@@ -545,11 +485,11 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 			fr->comment = NULL;
 		}
 		/*if we statted*/
-		if (s.st_mtime != 0)
+		if (info->mtime != 0)
 			dr->ditemlast_stat = curtime;
-		dr->ditemmtime = s.st_mtime;
+		dr->ditemmtime = info->mtime;
 	}
-	g_free (fname);
+	g_free (furi);
 	
 	/* add if missing from list of directories */
 	if (g_slist_find (dir_list, fr) == NULL)
@@ -559,6 +499,8 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 	  the directory*/
 	if (sublevels > 0)
 		fr_fill_dir (fr, sublevels);
+
+	gnome_vfs_file_info_unref (info);
 
 	return fr;
 }
@@ -582,7 +524,7 @@ fr_replace (FileRec *fr)
 	/* sanity */
 	fr->type = FILE_REC_DIR;
 
-	fr = fr_read_dir ((DirRec *)fr, name, NULL, NULL, 1);
+	fr = fr_read_dir ((DirRec *)fr, name, 0, 1);
 	if (fr != NULL)
 		fr->parent = par;
 	g_free (name);
@@ -597,16 +539,18 @@ fr_check_and_reread (FileRec *fr)
 	DirRec *dr = (DirRec *)fr;
 	FileRec *ret = fr;
 	time_t curtime;
+	GnomeVFSFileInfo *info;
 
 	g_return_val_if_fail (fr != NULL, fr);
 	g_return_val_if_fail (fr->type == FILE_REC_DIR, fr);
+
+	info = gnome_vfs_file_info_new ();
 
 	if (dr->recs == NULL) {
 		fr_fill_dir (fr, 1);
 	} else {
 		gboolean reread = FALSE;
 		gboolean any_change = FALSE;
-		struct stat ds;
 		GSList *li;
 
 		if ( ! global_config.menu_check)
@@ -630,66 +574,71 @@ fr_check_and_reread (FileRec *fr)
 		curtime = time (NULL);
 
 		if ( ! reread &&
-		    fr->last_stat < curtime-STAT_EVERY) {
-			if(stat(fr->name, &ds)==-1) {
+		    fr->last_stat < curtime - STAT_EVERY) {
+			if (gnome_vfs_get_file_info
+			    (fr->name, info, GNOME_VFS_FILE_INFO_DEFAULT)
+			    != GNOME_VFS_OK) {
+				gnome_vfs_file_info_unref (info);
 				fr_free (fr, TRUE);
 				return NULL;
 			}
-			if(ds.st_mtime != fr->mtime)
-				reread = TRUE;
 
-			if(dr->merge_mtime > 0) {
-				char *mergedir = fr_get_mergedir (fr->name);
-				if(mergedir != NULL) {
-					if(stat(mergedir, &ds) >= 0 &&
-					   ds.st_mtime != dr->merge_mtime)
-						reread = TRUE;
-					g_free(mergedir);
-				}
-			}
+			if (info->mtime != fr->mtime)
+				reread = TRUE;
 		}
-		for(li = dr->recs; !reread && li!=NULL; li=g_slist_next(li)) {
+
+		for (li = dr->recs;
+		     ! reread && li != NULL;
+		     li = li->next) {
 			FileRec *ffr = li->data;
 			DirRec *ddr;
-			int r;
+			GnomeVFSResult result;
 			char *p;
 			struct stat s;
 
 			switch(ffr->type) {
 			case FILE_REC_DIR:
 				ddr = (DirRec *)ffr;
-				p = g_build_filename (ffr->name,
-						      ".directory",
-						      NULL);
+				p = g_build_path ("/",
+						  ffr->name,
+						  ".directory",
+						  NULL);
 				if (ddr->ditemlast_stat >= curtime-STAT_EVERY) {
 					g_free (p);
 					break;
 				}
 				dr->ditemlast_stat = curtime;
-				if(stat(p,&s)==-1) {
+				gnome_vfs_file_info_clear (info);
+				if (gnome_vfs_get_file_info
+				    (p, info, GNOME_VFS_FILE_INFO_DEFAULT)
+				    != GNOME_VFS_OK) {
+					gnome_vfs_file_info_clear (info);
 					/* perhaps the directory is gone */
-					if ( ! g_file_test (ffr->name,
-							    G_FILE_TEST_EXISTS)) {
+					if (gnome_vfs_get_file_info
+					    (ffr->name, info,
+					     GNOME_VFS_FILE_INFO_DEFAULT)
+					    != GNOME_VFS_OK) {
+						g_free (p);
 						reread = TRUE;
 						break;
 					}
 					/* if not, we're just now missing a
 					 * desktop file */
-					if(dr->ditemmtime) {
-						g_free(ffr->icon);
+					if (dr->ditemmtime > 0) {
+						g_free (ffr->icon);
 						ffr->icon = NULL;
-						g_free(ffr->fullname);
+						g_free (ffr->fullname);
 						ffr->fullname = NULL;
-						g_free(ffr->comment);
+						g_free (ffr->comment);
 						ffr->comment = NULL;
 						ddr->ditemmtime = 0;
 						any_change = TRUE;
 					}
 					dr->ditemlast_stat = 0;
-					g_free(p);
+					g_free (p);
 					break;
 				}
-				if (ddr->ditemmtime != s.st_mtime) {
+				if (ddr->ditemmtime != info->mtime) {
 					QuickDesktopItem *qitem;
 					qitem = quick_desktop_item_load_file (p /* file */,
 									      NULL /* expected_type */,
@@ -710,7 +659,7 @@ fr_check_and_reread (FileRec *fr)
 						g_free (ffr->comment);
 						ffr->comment = NULL;
 					}
-					ddr->ditemmtime = s.st_mtime;
+					ddr->ditemmtime = info->mtime;
 					any_change = TRUE;
 				}
 				g_free(p);
@@ -718,12 +667,15 @@ fr_check_and_reread (FileRec *fr)
 			case FILE_REC_FILE:
 				if (ffr->last_stat >= curtime-STAT_EVERY)
 					break;
-				if(stat(ffr->name,&s)==-1) {
+				gnome_vfs_file_info_clear (info);
+				if (gnome_vfs_get_file_info
+				    (ffr->name, info, GNOME_VFS_FILE_INFO_DEFAULT)
+				    != GNOME_VFS_OK) {
 					reread = TRUE;
 					break;
 				}
 				ffr->last_stat = curtime;
-				if(ffr->mtime != s.st_mtime) {
+				if (ffr->mtime != info->mtime) {
 					QuickDesktopItem *qitem;
 					qitem = quick_desktop_item_load_file (ffr->name /* file */,
 									      NULL /* expected_type */,
@@ -755,19 +707,24 @@ fr_check_and_reread (FileRec *fr)
 			case FILE_REC_EXTRA:
 				if (ffr->last_stat >= curtime-STAT_EVERY)
 					break;
-				r = stat(ffr->name,&s);
-				if((r==-1 && ffr->mtime) ||
-				   (r!=-1 && ffr->mtime != s.st_mtime))
+				gnome_vfs_file_info_clear (info);
+				result = gnome_vfs_get_file_info
+				    (ffr->name,
+				     info,
+				     GNOME_VFS_FILE_INFO_DEFAULT);
+				if((result != GNOME_VFS_OK && ffr->mtime > 0) ||
+				   (result == GNOME_VFS_OK && ffr->mtime != info->mtime))
 					reread = TRUE;
 				ffr->last_stat = curtime;
 				break;
 			}
 		}
-		if(reread) {
-			ret = fr_replace(fr);
-		} else if(any_change) {
+
+		if (reread) {
+			ret = fr_replace (fr);
+		} else if (any_change) {
 			GSList *li;
-			for(li = dr->mfl; li!=NULL; li = g_slist_next(li)) {
+			for (li = dr->mfl; li != NULL; li = li->next) {
 				MenuFinfo *mf = li->data;
 				li->data = NULL;
 				mf->fr = NULL;
@@ -792,7 +749,7 @@ fr_get_dir (const char *mdir)
 		if (strcmp (fr->name, mdir) == 0)
 			return fr_check_and_reread (fr);
 	}
-	return fr_read_dir (NULL, mdir, NULL, NULL, 1);
+	return fr_read_dir (NULL, mdir, 0, 1);
 }
 
 /* Get all directories we have in memory */

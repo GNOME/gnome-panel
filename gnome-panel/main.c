@@ -57,10 +57,6 @@ char *kde_menudir = NULL;
 char *kde_icondir = NULL;
 char *kde_mini_icondir = NULL;
 
-char *merge_merge_dir = NULL;
-int merge_main_dir_len = 0;
-char *merge_main_dir = NULL;
-
 gboolean panel_in_startup = TRUE;
 
 static gboolean
@@ -391,35 +387,6 @@ find_kde_directory(void)
 }
 
 static void
-setup_merge_directory(void)
-{
-	int len;
-
-	merge_main_dir = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR,
-						    "gnome/apps",
-						    FALSE /* only if exists */,
-						    NULL /* ret locations */);
-	merge_main_dir_len = merge_main_dir != NULL ? strlen (merge_main_dir) : 0;
-	merge_merge_dir = conditional_get_string ("/panel/Merge/Directory",
-						  "/etc/X11/applnk/",
-						  NULL);
-
-	if (string_empty (merge_merge_dir) ||
-	    ! g_file_test(merge_merge_dir, G_FILE_TEST_IS_DIR)) {
-		g_free(merge_merge_dir);
-		merge_merge_dir = NULL;
-		return;
-	}
-
-	len = strlen(merge_merge_dir);
-	if (merge_merge_dir[len-1] != '/') {
-		char *tmp = g_strconcat(merge_merge_dir, "/", NULL);
-		g_free(merge_merge_dir);
-		merge_merge_dir = tmp;
-	}
-}
-
-static void
 setup_visuals (void)
 {
 	gdk_rgb_init ();
@@ -558,8 +525,6 @@ main(int argc, char **argv)
 	}
 
 	setup_visuals ();
-
-	setup_merge_directory();
 
 	find_kde_directory();
 

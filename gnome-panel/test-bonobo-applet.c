@@ -126,7 +126,7 @@ test_applet_handle_background_change (PanelApplet               *applet,
 }
 
 static BonoboObject *
-test_applet_new ()
+test_applet_new (void)
 {
 	PanelApplet *applet;
 	GtkWidget   *label;
@@ -135,7 +135,7 @@ test_applet_new ()
 
 	applet = panel_applet_new (label);
 
-	test_applet_handle_size_change (applet, GNOME_PANEL_MEDIUM, label);
+	test_applet_handle_size_change (applet, GNOME_PANEL_MEDIUM, GTK_LABEL (label));
 
 	panel_applet_setup_menu (applet, test_applet_menu_xml, test_applet_menu_verbs, NULL);
 

@@ -26,8 +26,9 @@ struct _MenuFinfo {
 
 struct _MFile {
 	char *name;
-	gboolean merged;
 	gboolean verified;
+	time_t mtime;
+	gboolean is_dir;
 };
 
 enum {
@@ -39,7 +40,6 @@ enum {
 
 struct _FileRec {
 	int type;
-	gboolean merged;
 	char *name;
 	char *comment;
 	char *fullname;
@@ -55,7 +55,6 @@ struct _DirRec {
 	FileRec frec;
 	time_t ditemmtime;
 	time_t ditemlast_stat;
-	time_t merge_mtime;
 	gboolean force_reread;
 	GSList *tryexecs;
 	GSList *recs; /*records for directories*/
@@ -66,12 +65,10 @@ char * get_applet_goad_id_from_dentry(GnomeDesktopItem *ii);
 
 GSList * get_mfiles_from_menudir(const char *menudir);
 
-FileRec * fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, struct stat *merge_dstat, int sublevels);
+FileRec * fr_read_dir(DirRec *dr, const char *muri, time_t mtime, int sublevels);
 FileRec * fr_replace(FileRec *fr);
 FileRec * fr_check_and_reread(FileRec *fr);
 FileRec * fr_get_dir(const char *mdir);
-gboolean fr_is_subdir (const char *dir, const char *superdir, int superdir_len);
-char * fr_get_mergedir (const char *dir);
 void fr_force_reread(void);
 GSList* fr_get_all_dirs (void);
 

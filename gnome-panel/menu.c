@@ -30,6 +30,11 @@
 #include <gconf/gconf-client.h>
 #include <libbonobo.h>
 
+#include <libgnomevfs/gnome-vfs-mime-utils.h>
+#include <libgnomevfs/gnome-vfs-uri.h>
+#include <libgnomevfs/gnome-vfs-ops.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
+
 #include "aligned-widget.h"
 #include "button-widget.h"
 #include "conditional.h"
@@ -190,22 +195,18 @@ init_menus (void)
 	/*just load the menus from disk, don't make the widgets
 	  this just reads the .desktops of the top most directory
 	  and a level down*/
-	menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
-					  "gnome/apps", TRUE, NULL);
-	if (menu != NULL)
-		fr_read_dir (NULL, menu, NULL, NULL, 2);
-	g_free (menu);
+	fr_read_dir (NULL, "programs:/", 0, 2);
 
 	menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
 					  "applets", TRUE, NULL);
-	if (menu != NULL)
-		fr_read_dir (NULL, menu, NULL, NULL, 2);
+	if (menu != NULL) {
+		char *uri = gnome_vfs_get_uri_from_local_path (menu);
+		fr_read_dir (NULL, uri, 0, 2);
+		g_free (uri);
+	}
 	g_free (menu);
 
-	menu = gnome_util_home_file ("apps");
-	if (menu != NULL)
-		fr_read_dir (NULL, menu, NULL, NULL, 2);
-	g_free (menu);
+	fr_read_dir (NULL, "favorites:/", 0, 2);
 
 	if (distribution_info != NULL &&
 	    distribution_info->menu_init_func != NULL)
@@ -320,7 +321,7 @@ about_gnome_cb(GtkObject *object, char *program_path)
 static void
 activate_app_def (GtkWidget *widget, const char *item_loc)
 {
-	GnomeDesktopItem *item = gnome_desktop_item_new_from_file
+	GnomeDesktopItem *item = gnome_desktop_item_new_from_uri
 		(item_loc,
 		 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
 		 NULL /* error */);
@@ -339,10 +340,13 @@ activate_app_def (GtkWidget *widget, const char *item_loc)
 	}
 }
 
+#ifdef FIXME
 /* Copy a single file */
 static void
 copy_file_to_dir (const char *item, const char *to, mode_t mode)
 {
+	/* FIXME: port this to vfolders ... or are we getting rid of personal
+	 * folder anyway which is the only place it's used */
 	int fdin;
 	int fdout;
 	int chars;
@@ -373,10 +377,14 @@ copy_file_to_dir (const char *item, const char *to, mode_t mode)
 	close (fdin);
 	close (fdout);
 }
+#endif
 
+#ifdef FIXME
 static void
 copy_fr_dir (DirRec *dr, const char *to)
 {
+	/* FIXME: port this to vfolders ... or are we getting rid of personal
+	 * folder anyway which is the only place it's used */
 	GSList *li;
 	char *file_name;
 	FILE *order_file = NULL;
@@ -427,10 +435,14 @@ copy_fr_dir (DirRec *dr, const char *to)
 	if (order_file != NULL)
 		fclose (order_file);
 }
+#endif
 
 static void
 add_app_to_personal (GtkWidget *widget, const char *item_loc)
 {
+#ifdef FIXME
+	/* FIXME: port this to vfolders ... or are we getting rid of personal
+	 * folder anyway which is the only place it's used */
 	char *to;
 
 	to = gnome_util_home_file ("apps");
@@ -451,6 +463,7 @@ add_app_to_personal (GtkWidget *widget, const char *item_loc)
 	}
 
 	g_free (to);
+#endif
 }
 
 void
@@ -850,9 +863,11 @@ static void
 really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 {
 	GnomeDItemEdit *dedit = GNOME_DITEM_EDIT(data);
-	char *file, *dir = gtk_object_get_data(GTK_OBJECT(d), "dir");
+	char /* *file, */ *dir = gtk_object_get_data(GTK_OBJECT(d), "dir");
 	GnomeDesktopItem *ditem;
+#if 0
 	FILE *fp;
+#endif
 	int i;
 	char *name, *loc;
 
@@ -894,6 +909,9 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	gnome_desktop_item_set_location (ditem, loc);
 	g_free (name);
 
+#ifdef FIXME
+	/* FIXME: port to gnome-vfs */
+
 	file = g_build_filename (dir, ".order", NULL);
 	fp = fopen (file, "a");
 	if (fp != NULL) {
@@ -921,6 +939,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 		return;
 	}
 	fclose (fp);
+#endif
 
 	gnome_desktop_item_save (ditem,
 				 NULL /* under */,
@@ -981,8 +1000,10 @@ static void
 remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 {
 	char *file;
-	char *dir, buf[256], *order_in_name, *order_out_name;
+	char *dir /*, buf[256], *order_in_name, *order_out_name */;
+	/*
 	FILE *order_in_file, *order_out_file;
+	*/
 
 	g_return_if_fail (sim->item_loc != NULL);
 	g_return_if_fail (sim->menuitem != NULL);
@@ -1011,6 +1032,8 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 		return;
 	}
 	
+#ifdef FIXME
+	/* FIXME: port to gnome-vfs */
 	order_in_name = g_build_filename (dir, ".order", NULL);
 	order_in_file = fopen(order_in_name, "r");
 
@@ -1069,15 +1092,16 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 	g_free (order_out_name);
 	g_free (order_in_name);
 	g_free (file);
+#endif
 }
 
 static void
 add_to_run_dialog (GtkWidget *widget, const char *item_loc)
 {
 	GnomeDesktopItem *item =
-		gnome_desktop_item_new_from_file (item_loc,
-						  GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
-						  NULL /* error */);
+		gnome_desktop_item_new_from_uri (item_loc,
+						 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
+						 NULL /* error */);
 	if (item != NULL) {
 		const char *exec;
 
@@ -1104,9 +1128,9 @@ static void
 show_help_on (GtkWidget *widget, const char *item_loc)
 {
 	GnomeDesktopItem *item =
-		gnome_desktop_item_new_from_file (item_loc,
-						  GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
-						  NULL /* error */);
+		gnome_desktop_item_new_from_uri (item_loc,
+						 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
+						 NULL /* error */);
 	if (item != NULL) {
 		const char *docpath = gnome_desktop_item_get_string
 			(item, "DocPath");
@@ -1147,20 +1171,16 @@ add_drawers_from_dir (const char *dirname, const char *name,
 	char *dentry_name;
 	const char *subdir_name;
 	char *pixmap_name;
-	char *p;
 	char *filename = NULL;
-	char *mergedir;
 	GSList *list, *li;
 
-	if ( ! g_file_test (dirname, G_FILE_TEST_IS_DIR))
-		return;
-
-	dentry_name = g_build_filename (dirname,
-					".directory",
-					NULL);
-	item_info = quick_desktop_item_load_file (dentry_name,
-						  NULL /* expected_type */,
-						  FALSE /* run_tryexec */);
+	dentry_name = g_build_path ("/",
+				    dirname,
+				    ".directory",
+				    NULL);
+	item_info = quick_desktop_item_load_uri (dentry_name,
+						 NULL /* expected_type */,
+						 FALSE /* run_tryexec */);
 	g_free (dentry_name);
 
 	if (name == NULL)
@@ -1177,41 +1197,29 @@ add_drawers_from_dir (const char *dirname, const char *name,
 
 	newpanel = PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
 
-	mergedir = fr_get_mergedir(dirname);
-	
-	list = get_mfiles_from_menudir(dirname);
+	list = get_mfiles_from_menudir (dirname);
 	for(li = list; li!= NULL; li = li->next) {
 		MFile *mfile = li->data;
-		struct stat s;
 		GnomeDesktopItem *dentry;
 
 		g_free (filename);
-		if ( ! mfile->merged) {
-			filename = g_build_filename (dirname, mfile->name, NULL);
-		} else if (mergedir != NULL) {
-			filename = g_build_filename (mergedir, mfile->name, NULL);
-		} else {
-			filename = NULL;
+		filename = g_build_filename (dirname, mfile->name, NULL);
+
+		if ( ! mfile->verified) {
 			continue;
 		}
 
-		if (stat (filename, &s) != 0) {
-			continue;
-		}
-
-		if (S_ISDIR (s.st_mode)) {
+		if (mfile->is_dir) {
 			add_drawers_from_dir (filename, NULL, G_MAXINT/2,
 					      newpanel);
 			continue;
 		}
 			
-		p = strrchr(filename,'.');
-		if (p && (strcmp(p,".desktop")==0 || 
-			  strcmp(p,".kdelnk")==0)) {
+		if (is_ext2 (mfile->name, ".desktop", ".kdelnk")) {
 			/*we load the applet at the right
 			  side, that is end of the drawer*/
-			dentry = gnome_desktop_item_new_from_file (filename,
-								   GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS, NULL);
+			dentry = gnome_desktop_item_new_from_uri (filename,
+								  GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS, NULL);
 			if (dentry) {
 				Launcher *launcher;
 
@@ -1228,7 +1236,6 @@ add_drawers_from_dir (const char *dirname, const char *name,
 		}
 	}
 	g_free (filename);
-	g_free (mergedir);
 
 	free_mfile_list (list);
 }
@@ -1451,9 +1458,9 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 	g_return_if_fail (sim != NULL);
 	g_return_if_fail (sim->item_loc != NULL);
 
-	ditem = gnome_desktop_item_new_from_file (sim->item_loc,
-						  0 /* flags */,
-						  NULL /* error */);
+	ditem = gnome_desktop_item_new_from_uri (sim->item_loc,
+						 0 /* flags */,
+						 NULL /* error */);
 
 	/* watch the enum at the top of the file */
 	dialog = gtk_dialog_new_with_buttons (_("Desktop entry properties"),
@@ -1521,12 +1528,12 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 {
 	GtkWidget *dialog;
 	GtkWidget *dedit;
-	char *dirfile = g_build_filename (sim->mf->menudir, ".directory", NULL);
+	char *dirfile = g_build_path ("/", sim->mf->menudir, ".directory", NULL);
 	GnomeDesktopItem *ditem;
 
-	ditem = gnome_desktop_item_new_from_file (dirfile,
-						  0 /* flags */,
-						  NULL /* error */);
+	ditem = gnome_desktop_item_new_from_uri (dirfile,
+						 0 /* flags */,
+						 NULL /* error */);
 	if (ditem == NULL) {
 		return;
 	}
@@ -1672,7 +1679,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 				   item);
 
 		if (sim->type == 1) {
-			ii = gnome_desktop_item_new_from_file (sim->item_loc, 0, NULL);
+			ii = gnome_desktop_item_new_from_uri (sim->item_loc, 0, NULL);
 
 			menuitem = gtk_menu_item_new ();
 			if ( ! sim->applet)
@@ -3182,14 +3189,7 @@ create_menu_at_fr (GtkWidget *menu,
 		GSList *last_added = NULL;
 		for(li = dr->recs; li != NULL; li = li->next) {
 			FileRec *tfr = li->data;
-			FileRec *pfr = last_added ? last_added->data : NULL;
-
-			/* Add a separator between merged and non-merged menuitems */
-			if (tfr->merged &&
-			    pfr != NULL &&
-			    ! pfr->merged) {
-				add_menu_separator(menu);
-			}
+			g_print ("FileRec: '%s'\n", tfr->name);
 
 			if (tfr->type == FILE_REC_SEP)
 				add_menu_separator (menu);				
@@ -3819,42 +3819,25 @@ create_system_menu (GtkWidget *menu, gboolean fake_submenus,
 		    gboolean launcher_add,
 		    gboolean favourites_add)
 {
-	char *menudir;
-
-	menudir = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR,
-					     "gnome/apps", TRUE, NULL);
-
-	if (menudir &&
-	    g_file_test (menudir, G_FILE_TEST_IS_DIR)) {
-		if(!fake || menu) {
-			menu = create_menu_at (menu, menudir,
-					       FALSE /* applets */,
-					       launcher_add,
-					       favourites_add,
-					       _("Programs"),
-					       "gnome-logo-icon-transparent.png",
-					       fake_submenus, FALSE, title);
-		} else {
-			menu = create_fake_menu_at (menudir,
-						    FALSE /* applets */,
-						    launcher_add,
-						    favourites_add,
-						    _("Programs"),
-						    "gnome-logo-icon-transparent.png",
-						    title);
-		}
+	if ( ! fake ||
+	     menu != NULL) {
+		menu = create_menu_at (menu, "programs:/",
+				       FALSE /* applets */,
+				       launcher_add,
+				       favourites_add,
+				       _("Programs"),
+				       "gnome-logo-icon-transparent.png",
+				       fake_submenus, FALSE, title);
 	} else {
-		/* show an error dialog for this only once, then just
-		   use g_warning */
-		static gboolean done_dialog = FALSE;
-		if(!done_dialog) {
-			panel_error_dialog("no_system_menus",
-					   _("No system menus found!"));
-			done_dialog = TRUE;
-		} else
-			g_warning(_("No system menus found!"));
+		menu = create_fake_menu_at ("programs:/",
+					    FALSE /* applets */,
+					    launcher_add,
+					    favourites_add,
+					    _("Programs"),
+					    "gnome-logo-icon-transparent.png",
+					    title);
 	}
-	g_free (menudir); 	
+
 	return menu;
 }
 
@@ -3865,17 +3848,8 @@ create_user_menu (const char *title, const char *dir, GtkWidget *menu,
 		  gboolean launcher_add,
 		  gboolean favourites_add)
 {
-	char *menudir = gnome_util_home_file (dir);
-	if (!g_file_test (menudir, G_FILE_TEST_IS_DIR))
-		mkdir (menudir, 0755);
-	if (!g_file_test (menudir, G_FILE_TEST_IS_DIR)) {
-		g_warning(_("Can't create the user menu directory"));
-		g_free (menudir); 
-		return menu;
-	}
-	
 	if(!fake || menu) {
-		menu = create_menu_at (menu, menudir,
+		menu = create_menu_at (menu, dir,
 				       FALSE /* applets */,
 				       launcher_add,
 				       favourites_add,
@@ -3883,13 +3857,12 @@ create_user_menu (const char *title, const char *dir, GtkWidget *menu,
 				       fake_submenus,
 				       force, gottitle);
 	} else {
-		menu = create_fake_menu_at (menudir,
+		menu = create_fake_menu_at (dir,
 					    FALSE /* applets */,
 					    launcher_add,
 					    favourites_add,
 					    title, pixmap, gottitle);
 	}
-	g_free (menudir); 
 	return menu;
 }
 
@@ -3987,7 +3960,7 @@ create_add_launcher_menu (GtkWidget *menu, gboolean fake_submenus)
 			     GINT_TO_POINTER (1));
 
 	create_system_menu (menu, fake_submenus, FALSE, TRUE, TRUE, FALSE);
-	create_user_menu (_("Favorites"), "apps",
+	create_user_menu (_("Favorites"), "favorites:",
 			  menu, "gnome-favorites.png",
 			  fake_submenus, FALSE, FALSE, TRUE, TRUE, FALSE);
 
@@ -5004,8 +4977,8 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), submenuitem);
 	gtk_signal_connect(GTK_OBJECT(submenuitem), "activate",
 			   GTK_SIGNAL_FUNC(add_menu_to_panel),
-			   "gnome/apps");
-	setup_internal_applet_drag(submenuitem, "MENU:gnome/apps");
+			   "programs:/");
+	setup_internal_applet_drag(submenuitem, "MENU:programs:/");
 
 	submenuitem = gtk_menu_item_new ();
 	setup_menuitem_try_pixmap (submenuitem, "gnome-favorites.png",
@@ -5013,8 +4986,8 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), submenuitem);
 	gtk_signal_connect(GTK_OBJECT(submenuitem), "activate",
 			   GTK_SIGNAL_FUNC(add_menu_to_panel),
-			   "~/.gnome/apps");
-	setup_internal_applet_drag(submenuitem, "MENU:~/.gnome/apps");
+			   "favorites:");
+	setup_internal_applet_drag(submenuitem, "MENU:favorites:/");
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
@@ -5594,7 +5567,7 @@ create_root_menu (GtkWidget *root_menu,
 				   FALSE /* favourites_add */);
 	if (flags & MAIN_MENU_USER)
 		/* FIXME: add the add to favourites somehow here */
-		create_user_menu(_("Favorites"), "apps",
+		create_user_menu(_("Favorites"), "favorites:",
 				 root_menu, "gnome-favorites.png",
 				 fake_submenus, FALSE, FALSE, title,
 				 FALSE /* launcher_add */,
@@ -5647,7 +5620,7 @@ create_root_menu (GtkWidget *root_menu,
 
 	if (flags & MAIN_MENU_USER_SUB) {
 		menu = start_favourites_menu (NULL, fake_submenus);
-		create_user_menu(_("Favorites"), "apps", menu,
+		create_user_menu(_("Favorites"), "favorites:", menu,
 				 "gnome-favorites.png",
 				 fake_submenus, TRUE, TRUE, TRUE,
 				 FALSE /* launcher_add */,

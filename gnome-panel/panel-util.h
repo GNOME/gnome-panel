@@ -87,6 +87,9 @@ GtkWidget *	panel_info_dialog	(const char *class,
 
 gboolean	is_ext			(const char *file,
 					 const char *ext);
+gboolean	is_ext2			(const char *file,
+					 const char *ext1,
+					 const char *ext2);
 
 int		find_applet		(GtkWidget *widget);
 
@@ -103,6 +106,20 @@ char *		panel_quote_string	(const char *str);
 
 void		panel_push_window_busy	(GtkWidget *window);
 void		panel_pop_window_busy	(GtkWidget *window);
+
+/* GnomeVFS reading utils */
+
+typedef struct _ReadBuf ReadBuf;
+
+int		readbuf_getc		(ReadBuf *rb);
+/* Note, does not include the trailing \n */
+char *		readbuf_gets		(char *buf, 
+					 gsize bufsize,
+					 ReadBuf *rb);
+ReadBuf *	readbuf_open		(const char *uri);
+/* unused for now */
+gboolean	readbuf_rewind		(ReadBuf *rb);
+void		readbuf_close		(ReadBuf *rb);
 
 G_END_DECLS
 

@@ -52,132 +52,11 @@
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 
+#include "panel-util.h"
+
 #include "quick-desktop-reader.h"
 
 /* This shares a lot of code with gnome-desktop-item, hmmm .... */
-
-/*
- * GnomeVFS reading utils, that look like the libc buffered io stuff
- */
-typedef struct {
-	GnomeVFSHandle *handle;
-	char *uri;
-	gboolean eof;
-	char buf[BUFSIZ];
-	gsize size;
-	gsize pos;
-} ReadBuf;
-
-static int
-readbuf_getc (ReadBuf *rb)
-{
-	if (rb->eof)
-		return EOF;
-
-	if (rb->size == 0 ||
-	    rb->pos == rb->size) {
-		GnomeVFSFileSize bytes_read;
-		/* FIXME: handle other errors */
-		if (gnome_vfs_read (rb->handle,
-				    rb->buf,
-				    BUFSIZ,
-				    &bytes_read) != GNOME_VFS_OK) {
-			rb->eof = TRUE;
-			return EOF;
-		}
-		rb->size = bytes_read;
-		rb->pos = 0;
-
-		if (rb->size == 0) {
-			rb->eof = TRUE;
-			return EOF;
-		}
-	}
-
-	return (int)rb->buf[rb->pos++];
-}
-
-/* Note, does not include the trailing \n */
-static char *
-readbuf_gets (char *buf, gsize bufsize, ReadBuf *rb)
-{
-	int c;
-	gsize pos;
-
-	g_return_val_if_fail (rb != NULL, NULL);
-
-	pos = 0;
-	buf[0] = '\0';
-
-	do {
-		c = readbuf_getc (rb);
-		if (c == EOF ||
-		    c == '\n')
-			break;
-		buf[pos++] = c;
-	} while (pos < bufsize-1);
-
-	if (c == EOF &&
-	    pos == 0)
-		return NULL;
-
-	buf[pos++] = '\0';
-
-	return buf;
-}
-
-static ReadBuf *
-readbuf_open (const char *uri)
-{
-	GnomeVFSHandle *handle;
-	ReadBuf *rb;
-
-	g_return_val_if_fail (uri != NULL, NULL);
-
-	if (gnome_vfs_open (&handle, uri,
-			    GNOME_VFS_OPEN_READ) != GNOME_VFS_OK)
-		return NULL;
-
-	rb = g_new0 (ReadBuf, 1);
-	rb->handle = handle;
-	rb->uri = g_strdup (uri);
-	rb->eof = FALSE;
-	rb->size = 0;
-	rb->pos = 0;
-
-	return rb;
-}
-
-#if 0
-/* unused for now */
-static gboolean
-readbuf_rewind (ReadBuf *rb)
-{
-	if (gnome_vfs_seek (rb->handle,
-			    GNOME_VFS_SEEK_START, 0) == GNOME_VFS_OK)
-		return TRUE;
-
-	gnome_vfs_close (rb->handle);
-	rb->handle = NULL;
-	if (gnome_vfs_open (&rb->handle, rb->uri,
-			    GNOME_VFS_OPEN_READ) == GNOME_VFS_OK)
-		return TRUE;
-
-	return FALSE;
-}
-#endif
-
-static void
-readbuf_close (ReadBuf *rb)
-{
-	if (rb->handle != NULL)
-		gnome_vfs_close (rb->handle);
-	rb->handle = NULL;
-	g_free (rb->uri);
-	rb->uri = NULL;
-
-	g_free (rb);
-}
 
 QuickDesktopItem *
 quick_desktop_item_load_file (const char *file,
@@ -520,6 +399,9 @@ quick_desktop_item_load_uri (const char *uri,
 			}
 			g_free (retval->tryexec);
 			retval->tryexec = g_strdup (val);
+		} else if ((val = IS_KEY ("SortOrder", buf)) != NULL) {
+			g_free (retval->sort_order);
+			retval->sort_order = g_strdup (val);
 		}
 	}
 
@@ -619,6 +501,9 @@ quick_desktop_item_destroy (QuickDesktopItem *item)
 	g_free (item->tryexec);
 	item->tryexec = NULL;
 
+	g_free (item->sort_order);
+	item->sort_order = NULL;
+
 	g_free (item);
 }
 
@@ -631,6 +516,8 @@ _quick_desktop_item_copy (gpointer boxed)
 	newitem->name = g_strdup (item->name);
 	newitem->comment = g_strdup (item->comment);
 	newitem->icon = g_strdup (item->icon);
+	newitem->tryexec = g_strdup (item->tryexec);
+	newitem->sort_order = g_strdup (item->sort_order);
 	return newitem;
 }
 

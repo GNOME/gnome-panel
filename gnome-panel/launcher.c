@@ -48,8 +48,6 @@ static char *default_app_pixmap = NULL;
 extern GlobalConfig global_config;
 extern gboolean commie_mode;
 
-extern char *merge_merge_dir;
-
 enum {
 	HELP_BUTTON,
 	OK_BUTTON,
@@ -351,17 +349,6 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 				/* perhaps just datadir? */
 				entry = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
 								   parameters, TRUE, NULL);
-			}
-
-			if (entry == NULL && merge_merge_dir != NULL) {
-				/* the merge dir? */
-				entry = g_strconcat (merge_merge_dir, "/",
-						     parameters,
-						     extension, NULL);
-				if ( ! g_file_test (entry, G_FILE_TEST_EXISTS)) {
-					g_free (entry);
-					entry = NULL;
-				}
 			}
 
 			/* eek, not found */

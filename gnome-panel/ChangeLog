@@ -1,3 +1,18 @@
+Sun Nov 25 20:07:06 2001  George Lebl <jirka@5z.com>
+
+	* launcher.c, menu.c, menu-fentry.[ch], main.c: remove the
+	  merged menu hack since that's taken care of in the
+	  vfolder-desktop-method nowdays
+
+	* quick-desktop-reader.[ch], panel-util.[ch]: add sort_order
+	  to quick desktop item and move the vfs helper routines to
+	  the util file
+
+	* menu-fentry.[ch], menu.c, menu-properties.c: port to gnome-vfs
+	  and use the programs:/ and favorites:/ uri schemes
+
+	* test-bonobo-applet.c: fix some warnings
+
 2001-11-23  Mark McLoughlin  <mark@skynet.ie>
 
 	* doc/libpanel-applet-changes.txt, doc/panel-decl.txt,
