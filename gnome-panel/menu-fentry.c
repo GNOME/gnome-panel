@@ -89,7 +89,6 @@ get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
 {
 	int i;
 	int constantlen = strlen("--activate-goad-server");
-	char *goad_id=NULL;
 
 	g_return_val_if_fail(ii!=NULL,NULL);
 
@@ -106,13 +105,13 @@ get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
 			if(strncmp("--activate-goad-server",
 				   ii->exec[i],constantlen)==0) {
 				if(strlen(ii->exec[i])>constantlen)
-					goad_id = g_strdup(&ii->exec[i][constantlen+1]);
+					return g_strdup(&ii->exec[i][constantlen+1]);
 				else
-					goad_id = g_strdup(ii->exec[i+1]);
+					return g_strdup(ii->exec[i+1]);
 			}
 		}
 	}
-	return goad_id;
+	return NULL;
 }
 
 static void

@@ -237,7 +237,7 @@ send_applet_session_save (AppletInfo *info,
 	gtk_timeout_add(ss_timeout,session_save_timeout,GINT_TO_POINTER((int)ss_cookie));
 
 	CORBA_exception_init(&ev);
-	GNOME_Applet_session_save(obj,
+	GNOME_Applet_save_session(obj,
 				  (CORBA_char *)cfgpath,
 				  (CORBA_char *)globcfgpath,
 				  ss_cookie, &ev);

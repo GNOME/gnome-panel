@@ -1,3 +1,19 @@
+Thu Jan 13 02:20:28 2000  George Lebl <jirka@5z.com>
+
+	* applet-widget.c: adapt to the new idl, which means HEAD applets
+	  need to most definately load this version and not the old one,
+	  to work with the newest panel, and a bunch of sanity
+	  fixes that make it work with the 1.0 panel, the session_save
+	  has been renamed to save_session and an old (1.0) session_save
+	  was implemented.
+
+	* menu-fentry.c: fix a small memory leak in get_applet_id_from_dentry
+
+	* Makefile.am: once again switch the soname of the applet lib to be
+	  0.0.1 since we really are binary compatible.  This means that all
+	  HEAD applets need to be recompiled but most of all you all need
+	  to delete that <prefix>/lib/libpanel_applet.so.1* first.
+
 2000-01-11  Jacob Berkman  <jacob@helixcode.com>
 
 	* panel_config.c (update_position_toggles): update the border

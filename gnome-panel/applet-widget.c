@@ -64,10 +64,16 @@ server_applet_do_callback(CustomAppletServant *servant,
 			  CORBA_Environment *ev);
 
 static void
-server_applet_session_save(CustomAppletServant *servant,
+server_applet_save_session(CustomAppletServant *servant,
 			   CORBA_char * cfgpath,
 			   CORBA_char * globcfgpath,
 			   CORBA_unsigned_long cookie,
+			   CORBA_Environment *ev);
+
+static CORBA_boolean
+server_applet_session_save(CustomAppletServant *servant,
+			   CORBA_char * cfgpath,
+			   CORBA_char * globcfgpath,
 			   CORBA_Environment *ev);
 
 static void
@@ -105,14 +111,15 @@ server_applet_thaw_changes(CustomAppletServant *servant,
 static POA_GNOME_Applet__epv applet_epv = {
   NULL,
   (gpointer)&server_applet_change_orient,
-  (gpointer)&server_applet_change_size,
   (gpointer)&server_applet_do_callback,
   (gpointer)&server_applet_session_save,
   (gpointer)&server_applet_back_change,
-  (gpointer)&server_applet_draw,
   (gpointer)&server_applet_set_tooltips_state,
-  (gpointer)&server_applet_change_position,
   (gpointer)&server_applet__get_goad_id,
+  (gpointer)&server_applet_draw,
+  (gpointer)&server_applet_save_session,
+  (gpointer)&server_applet_change_size,
+  (gpointer)&server_applet_change_position,
   (gpointer)&server_applet_freeze_changes,
   (gpointer)&server_applet_thaw_changes
 };
@@ -769,6 +776,13 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 	/*{  static volatile int stop_here = 0;
 		while(stop_here);}*/
 
+	/* we need to do this as 1.0 panel will crap out otherwise, it NEEDS
+	   to know the applet as it's doing orient change signals during
+	   this */
+	applet_servant->appwidget = applet;
+	/* this is just for consistency with the above */
+	applet_servant->goad_id = g_strdup(goad_id);
+
 	applet_servant->pspot = GNOME_Panel_add_applet(panel_client,
 						       applet_obj,
 						       (char *)goad_id,
@@ -791,8 +805,19 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 	/* initialize orient and size correctly */
 	applet->orient =
 		GNOME_PanelSpot__get_parent_orient(applet_servant->pspot,&ev);
+	if(ev._major) {
+		g_warning("CORBA Exception, can't get orient");
+		/* just recycle the exception */
+		CORBA_exception_free(&ev);
+		CORBA_exception_init(&ev);
+		applet->size = ORIENT_UP;
+	}
 	applet->size =
 		GNOME_PanelSpot__get_parent_size(applet_servant->pspot,&ev);
+	if(ev._major) {
+		g_warning("CORBA Exception, can't get size");
+		applet->size = PIXEL_SIZE_STANDARD;
+	}
 
 	CORBA_exception_free(&ev);
 
@@ -822,12 +847,8 @@ applet_widget_construct(AppletWidget* applet, const char *goad_id)
 
 	g_return_if_fail(corbadat!=NULL);
 
-	corbadat->appwidget = applet;
-
 	gtk_plug_construct(GTK_PLUG(applet), corbadat->winid);
 	
-	corbadat->goad_id = g_strdup(goad_id);
-
 	gtk_signal_connect(GTK_OBJECT(applet),"destroy",
 			   GTK_SIGNAL_FUNC(applet_widget_destroy),
 			   NULL);
@@ -1231,8 +1252,9 @@ server_applet_do_callback(CustomAppletServant *servant,
 	}
 }
 
+/* this is the new session saving call and the one which should be used */
 static void
-server_applet_session_save(CustomAppletServant *servant,
+server_applet_save_session(CustomAppletServant *servant,
 			   CORBA_char * cfgpath,
 			   CORBA_char * globcfgpath,
 			   CORBA_unsigned_long cookie,
@@ -1256,6 +1278,30 @@ server_applet_session_save(CustomAppletServant *servant,
 	  corba function */
 	GNOME_PanelSpot_done_session_save(CD(applet)->pspot,
 					  !return_val, cookie, ev);
+}
+
+/* this is here just that if an applet uses the new lib with the old
+   panel it will still work */
+static CORBA_boolean
+server_applet_session_save(CustomAppletServant *servant,
+			   CORBA_char * cfgpath,
+			   CORBA_char * globcfgpath,
+			   CORBA_Environment *ev)
+{
+	AppletWidget *applet;
+	char *cfg = g_strdup(cfgpath);
+	char *globcfg = g_strdup(globcfgpath);
+
+	int return_val = FALSE;
+
+	applet = servant->appwidget;
+	gtk_signal_emit(GTK_OBJECT(applet),
+			applet_widget_signals[SAVE_SESSION_SIGNAL],
+			cfg, globcfg, &return_val);
+	g_free(cfg);
+	g_free(globcfg);
+
+	return !return_val;
 }
 
 static void
