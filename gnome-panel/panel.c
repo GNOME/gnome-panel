@@ -318,14 +318,14 @@ panel_quit(void)
 static void
 move_applet_callback(GtkWidget *widget, gpointer data)
 {
-	AppletInfo     *info;
+	AppletInfo     *info = data;
 	PanelWidget    *panel;
 
-	info = data;
+	g_return_if_fail(info != NULL);
 
-	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-					 PANEL_APPLET_PARENT_KEY)))
-		return;
+	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+				    PANEL_APPLET_PARENT_KEY);
+	g_return_if_fail(panel!=NULL);
 
 	panel_widget_applet_drag_start(panel,info->widget);
 	panel_widget_applet_move_use_idle(panel);
@@ -613,10 +613,10 @@ applet_drag_start(gint applet_id)
 	PanelWidget *panel;
 	AppletInfo *info = get_applet_by_id(applet_id);
 
-	if(!info)
-		return;
-	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-					 PANEL_APPLET_PARENT_KEY)))
+	g_return_if_fail(info != NULL);
+	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+				    PANEL_APPLET_PARENT_KEY);
+	g_return_if_fail(panel!=NULL);
 
 	panel_widget_applet_drag_start_no_grab(panel,info->widget);
 	panel_widget_applet_move_use_idle(panel);
@@ -628,11 +628,10 @@ applet_drag_stop(gint applet_id)
 	PanelWidget *panel;
 	AppletInfo *info = get_applet_by_id(applet_id);
 
-	if(!info)
-		return;
-	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-					 PANEL_APPLET_PARENT_KEY)))
-		return;
+	g_return_if_fail(info != NULL);
+	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+				    PANEL_APPLET_PARENT_KEY);
+	g_return_if_fail(panel!=NULL);
 
 	panel_widget_applet_drag_end_no_grab(panel);
 }
@@ -706,11 +705,10 @@ applet_register (const char * ior, int applet_id)
 	AppletInfo *info = get_applet_by_id(applet_id);
 	PanelWidget *panel;
 
-	if(!info)
-		return;
-
+	g_return_if_fail(info != NULL);
  	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
 				    PANEL_APPLET_PARENT_KEY);
+	g_return_if_fail(panel!=NULL);
 
 	/*no longer pending*/
 	info->type = APPLET_EXTERN;
@@ -816,9 +814,10 @@ panel_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
 	AppletInfo *info = data;
 	PanelWidget *panel;
 
-	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-					 PANEL_APPLET_PARENT_KEY)))
-		return;
+	g_return_if_fail(info != NULL);
+	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+				    PANEL_APPLET_PARENT_KEY);
+	g_return_if_fail(panel!=NULL);
 
 	gtk_widget_dnd_data_set (widget, event, &info->widget,
 				 sizeof(GtkWidget *));
