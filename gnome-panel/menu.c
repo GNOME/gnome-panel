@@ -46,11 +46,12 @@
 #include "panel-lockdown.h"
 
 typedef struct {
-	GtkWidget   *pixmap;
-	const char  *stock_id;
-	char        *image;
-	char        *fallback_image;
-	GtkIconSize  icon_size;
+	GtkWidget    *pixmap;
+	const char   *stock_id;
+	char         *image;
+	char         *fallback_image;
+	GtkIconTheme *icon_theme;
+	GtkIconSize   icon_size;
 } IconToLoad;
 
 typedef struct {
@@ -285,7 +286,7 @@ panel_create_menu (void)
 	if (!registered_icon_theme_changer) {
 		registered_icon_theme_changer = TRUE;
 
-		g_signal_connect (panel_icon_theme, "changed",
+		g_signal_connect (gtk_icon_theme_get_default (), "changed",
 				  G_CALLBACK (icon_theme_changed), NULL);
 	}
 	
@@ -358,10 +359,11 @@ remove_pixmap_from_loaded (gpointer data, GObject *where_the_object_was)
 }
 
 GdkPixbuf *
-panel_make_menu_icon (const char *icon,
-		      const char *fallback,
-		      int         size,
-		      gboolean   *long_operation)
+panel_make_menu_icon (GtkIconTheme *icon_theme,
+		      const char   *icon,
+		      const char   *fallback,
+		      int           size,
+		      gboolean     *long_operation)
 {
 	GdkPixbuf *pb;
 	char *file, *key;
@@ -371,15 +373,9 @@ panel_make_menu_icon (const char *icon,
 
 	file = NULL;
 	if (icon != NULL)
-		file = gnome_desktop_item_find_icon (panel_icon_theme,
-						     icon,
-						     size /* desired size */,
-						     0 /* flags */);
+		file = panel_find_icon (icon_theme, icon, size);
 	if (file == NULL && fallback != NULL)
-		file = gnome_desktop_item_find_icon (panel_icon_theme,
-						     fallback,
-						     size /* desired size */,
-						     0 /* flags */);
+		file = panel_find_icon (icon_theme, fallback, size);
 
 	if (file == NULL)
 		return NULL;
@@ -571,7 +567,8 @@ load_icons_handler_again:
 
 		gtk_icon_size_lookup (icon->icon_size, NULL, &icon_height);
 
-		pb = panel_make_menu_icon (icon->image,
+		pb = panel_make_menu_icon (icon->icon_theme,
+					   icon->image,
 					   icon->fallback_image,
 					   icon_height,
 					   &long_operation);
@@ -1563,15 +1560,19 @@ find_in_load_list (GtkWidget *image)
 static void
 image_menu_shown (GtkWidget *image, gpointer data)
 {
-	IconToLoad *icon = data;
+	IconToLoad *new_icon;
+	IconToLoad *icon;
+	
+	icon = (IconToLoad *) data;
 
 	/* if we've already handled this */
 	if (gtk_image_get_storage_type (GTK_IMAGE (image)) != GTK_IMAGE_EMPTY)
 		return;
 
 	if (find_in_load_list (image) == NULL) {
-		icons_to_load = g_list_append (icons_to_load,
-					       icon_to_load_copy (icon));
+		new_icon = icon_to_load_copy (icon);
+		new_icon->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (image));
+		icons_to_load = g_list_append (icons_to_load, new_icon);
 	}
 	if (load_icons_id == 0)
 		load_icons_id = g_idle_add (load_icons_handler, NULL);

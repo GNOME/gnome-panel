@@ -26,7 +26,6 @@
 #define __PANEL_GLOBALS_H__
 
 #include <gtk/gtk.h>
-#include <libgnomeui/gnome-icon-theme.h>
 
 G_BEGIN_DECLS
 
@@ -34,8 +33,6 @@ extern GSList         *panels;
 extern GSList         *panel_list;
 
 extern GtkTooltips    *panel_tooltips;
-
-extern GnomeIconTheme *panel_icon_theme;
 
 G_END_DECLS
 

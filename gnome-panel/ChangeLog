@@ -1,5 +1,44 @@
 2005-01-29  Vincent Untz  <vincent@vuntz.net>
 
+	Move away from GnomeIconTheme. Still some work to do to use
+	the icon theme of the right screen...
+
+	* button-widget.[ch]: (button_widget_realize): get the icon theme of
+	the screen here and connect to the changed signal
+	(button_widget_reload_pixbuf): update and use panel_load_icon()
+	(get_missing): update to use GtkIconTheme functions
+	(load_pixbuf): kill
+	(button_load_pixbuf): kill
+	(button_widget_instance_init): don't connect to the changed signal
+	of the icon theme here
+	* launcher.c: (guess_icon_from_exec): simplified thanks to
+	panel_find_icon()
+	(setup_button): updated
+	* main.c: (main): no more panel_icon_theme
+	* panel-globals.h: ditto
+	* menu.[ch]: (panel_create_menu): use gtk_icon_theme_get_default ()
+	instead of panel_icon_theme (for now)
+	(panel_make_menu_icon): use panel_find_icon() instead of
+	gnome_desktop_item_find_icon()
+	(load_icons_handler_again): updated
+	(image_menu_shown): get the icon theme for the image menu item
+	* panel-addto.c: (panel_addto_make_pixbuf): use panel_load_icon()
+	to simplify
+	* panel-properties-dialog.c: use panel_find_icon() instead of
+	gnome_desktop_item_find_icon()
+	* panel-run-dialog.c: (panel_run_dialog_set_icon): use
+	panel_find_icon() instead of gnome_desktop_item_find_icon()
+	(panel_run_dialog_add_icon_idle): updated
+	* panel-util.[ch]: (panel_find_icon): new, with some code from
+	gnome-desktop
+	(panel_load_icon): new
+	* panel.c: (drop_url): remove .png from icon name
+	(drop_urilist): use gtk_icon_theme_get_default ()
+	instead of panel_icon_theme (for now), remove .png from icon names
+	(panel_receive_dnd_data): remove .png from icon name
+
+2005-01-29  Vincent Untz  <vincent@vuntz.net>
+
 	* .cvsignore: add panel-default-setup.entries
 
 2005-01-29  Vincent Untz  <vincent@vuntz.net>

@@ -18,6 +18,7 @@ typedef struct _ButtonWidgetClass	ButtonWidgetClass;
 struct _ButtonWidget {
 	GtkButton         parent;
 	
+	GtkIconTheme     *icon_theme;
 	GdkPixbuf        *pixbuf;
 	GdkPixbuf        *pixbuf_hc;
 

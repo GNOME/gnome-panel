@@ -56,10 +56,11 @@ void            setup_uri_drag             (GtkWidget  *menuitem,
 
 GtkWidget *	panel_create_menu              (void);
 
-GdkPixbuf *	panel_make_menu_icon (const char *icon,
-				      const char *fallback,
-				      int size,
-				      gboolean *long_operation);
+GdkPixbuf *	panel_make_menu_icon (GtkIconTheme *icon_theme,
+				      const char   *icon,
+				      const char   *fallback,
+				      int           size,
+				      gboolean     *long_operation);
 
 GdkScreen      *menuitem_to_screen   (GtkWidget *menuitem);
 PanelWidget    *menu_get_panel       (GtkWidget *menu);

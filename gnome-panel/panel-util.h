@@ -56,6 +56,13 @@ gboolean	panel_uri_exists	(const char *uri);
 
 void            panel_lock_screen       (GdkScreen *screen);
 
+char *          panel_find_icon         (GtkIconTheme  *icon_theme,
+					 const char    *icon_name,
+					 gint           size);
+GdkPixbuf *     panel_load_icon         (GtkIconTheme  *icon_theme,
+					 const char    *icon_name,
+					 gint           size,
+					 char         **error_msg);
 GdkPixbuf *	missing_pixbuf		(int size);
 
 char *panel_make_full_path   (const char *dir,

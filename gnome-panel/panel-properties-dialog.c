@@ -283,12 +283,13 @@ panel_properties_dialog_setup_icon_entry (PanelPropertiesDialog *dialog,
 		/* if the icon is not absolute path name it comes from the
 		   theme, and as such we wish to store the theme directory
 		   where it comes from.  See bug #119209 */
-		char *icon = gnome_desktop_item_find_icon (panel_icon_theme,
-							   custom_icon,
-							   48 /* FIXME: preffered_size */,
-							   0 /* flags */);
+		char *icon;
+		
+		icon = panel_find_icon (gtk_icon_theme_get_default (),
+					custom_icon, 48);
 		if (icon != NULL)
 			dialog->icon_theme_dir = g_path_get_dirname (icon);
+
 		g_free (custom_icon);
 		custom_icon = icon;
 	}

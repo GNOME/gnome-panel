@@ -18,10 +18,9 @@
 
 
 
-static GdkPixbuf *button_load_pixbuf (const char  *file,
-				      int          size,
-				      char       **error);
-static GdkPixbuf * get_missing (int preffered_size);
+static GdkPixbuf * get_missing (GtkIconTheme *icon_theme,
+				int           preffered_size);
+static void button_widget_icon_theme_changed (ButtonWidget *button);
 
 enum {
 	PROP_0,
@@ -133,6 +132,13 @@ button_widget_realize(GtkWidget *widget)
 	gdk_window_set_user_data (button->event_window, widget);
 
 	widget->style = gtk_style_attach (widget->style, widget->window);
+
+	BUTTON_WIDGET (widget)->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
+	g_signal_connect_object (BUTTON_WIDGET (widget)->icon_theme, "changed",
+				 G_CALLBACK (button_widget_icon_theme_changed),
+				 button,
+				 G_CONNECT_SWAPPED);
+
 }
 
 static void
@@ -217,9 +223,10 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 	if (button->filename != NULL) {
 		char *error = NULL;
 
-		button->pixbuf = button_load_pixbuf (button->filename,
-						     button->size,
-						     &error);
+		button->pixbuf = panel_load_icon (button->icon_theme,
+						  button->filename,
+						  button->size,
+						  &error);
 		if (error) {
 			panel_error_dialog (gdk_screen_get_default (),
 					    "cannot_load_pixbuf", TRUE,
@@ -235,7 +242,8 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 		button->pixbuf = button_widget_load_and_scale_stock_icon (button);
 
 	if (button->pixbuf == NULL)
-		button->pixbuf = get_missing (button->size);
+		button->pixbuf = get_missing (button->icon_theme,
+					      button->size);
 
 	if (button->pixbuf == NULL)
 		return;
@@ -349,83 +357,16 @@ button_widget_set_property (GObject      *object,
 	}
 }
 
-static char *default_pixmap = NULL;
-
 static GdkPixbuf *
-get_missing (int preffered_size)
+get_missing (GtkIconTheme *icon_theme,
+	     int           preffered_size)
 {
 	GdkPixbuf *retval = NULL;
 
-	if (default_pixmap == NULL)
-		default_pixmap = gnome_desktop_item_find_icon (panel_icon_theme, "gnome-unknown.png",
-							       preffered_size, 0);
-	if (default_pixmap != NULL)
-		retval = gdk_pixbuf_new_from_file_at_size (default_pixmap,
-							   preffered_size,
-							   preffered_size,
-							   NULL);
+	retval = gtk_icon_theme_load_icon (icon_theme, "gnome-unknown",
+					   preffered_size, 0, NULL);
 	if (retval == NULL)
 		retval = missing_pixbuf (preffered_size);
-
-	return retval;
-}
-
-static GdkPixbuf *
-load_pixbuf (const char  *file,
-	     int          preffered_size,
-	     char       **str_error)
-{
-	GError    *error = NULL;
-	GdkPixbuf *retval = NULL;
-	char      *full;
-
-	if (g_path_is_absolute (file))
-		full = g_strdup (file);
-	else
-		full = gnome_desktop_item_find_icon (panel_icon_theme, file, preffered_size, 0);
-
-	if (full) {
-		retval = gdk_pixbuf_new_from_file_at_size (full,
-							   preffered_size,
-							   preffered_size,
-							   &error);
-		if (!retval) {
-			if (str_error)
-				*str_error = g_strdup (error ? error->message : _("none"));
-			g_error_free (error);
-		}
-		g_free (full);
-	} else if (str_error)
-		*str_error = g_strdup (_("file not found"));
-
-	return retval;
-
-
-}
-
-static GdkPixbuf *
-button_load_pixbuf (const char  *file,
-		    int          preffered_size,
-		    char       **error)
-{
-	GdkPixbuf *retval = NULL;
-
-	if (string_empty (file))
-		return NULL;
-
-	retval = load_pixbuf (file, preffered_size, NULL);
-	if (!retval) {
-		char *tmp;
-
-		if (error && *error) {
-			g_free (*error);
-			*error = NULL;
-		}
-
-		tmp = g_path_get_basename (file);
-		retval = load_pixbuf (tmp, preffered_size, error);
-		g_free (tmp);
-	}
 
 	return retval;
 }
@@ -709,11 +650,6 @@ button_widget_instance_init (ButtonWidget *button)
 	button->dnd_highlight = FALSE;
 
 	button->size = 0;
-
-	g_signal_connect_object (panel_icon_theme, "changed",
-				 G_CALLBACK (button_widget_icon_theme_changed),
-				 button,
-				 G_CONNECT_SWAPPED);
 
 	g_signal_connect (button, "style-set", 
 			  G_CALLBACK (button_widget_gtk_theme_changed), button);

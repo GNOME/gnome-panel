@@ -480,7 +480,7 @@ drop_url (PanelWidget *panel,
 
 	panel_launcher_create_from_info (panel->toplevel, position, FALSE,
 					 netscape_url[NETSCAPE_URL_URL],
-					 name, comment, "gnome-globe.png");
+					 name, comment, "gnome-globe");
 
 	g_free (comment);
 	g_strfreev (netscape_url);
@@ -605,14 +605,14 @@ drop_urilist (PanelWidget *panel,
 			} else {
 				char *icon;
 
-				icon = gnome_icon_lookup (panel_icon_theme,
+				icon = gnome_icon_lookup (gtk_icon_theme_get_default (),
 							  NULL, NULL, NULL,
 							  info, info->mime_type,
 							  GNOME_ICON_LOOKUP_FLAGS_NONE,
 							  NULL);
 
 				if (!icon)
-					icon = g_strdup ("gnome-unknown.png");
+					icon = g_strdup ("gnome-unknown");
 
 				if (!drop_uri (panel, pos, uri, icon))
 					success = FALSE;
@@ -620,7 +620,7 @@ drop_urilist (PanelWidget *panel,
 				g_free (icon);
 			}
 		} else {
-			if (!drop_uri (panel, pos, uri, "gnome-unknown.png"))
+			if (!drop_uri (panel, pos, uri, "gnome-unknown"))
 				success = FALSE;
 		}
 
@@ -1009,7 +1009,8 @@ panel_receive_dnd_data (PanelWidget      *panel,
 		}
 		break;
 	case TARGET_DIRECTORY:
-		success = drop_uri (panel, pos, (char *)selection_data->data, "gnome-fs-directory.png");
+		success = drop_uri (panel, pos, (char *)selection_data->data,
+				    "gnome-fs-directory");
 		break;
 	case TARGET_APPLET:
 		if (!selection_data->data) {

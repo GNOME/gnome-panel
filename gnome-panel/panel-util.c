@@ -493,6 +493,94 @@ panel_uri_exists (const char *uri)
 	return ret;
 }
 
+char *
+panel_find_icon (GtkIconTheme  *icon_theme,
+		 const char    *icon_name,
+		 gint           size)
+{
+	GtkIconInfo *info;
+	char        *retval;
+	char        *icon_no_extension;
+	char        *p;
+
+	if (icon_name == NULL || strcmp (icon_name, "") == 0)
+		return NULL;
+
+	if (g_path_is_absolute (icon_name)) {
+		if (g_file_test (icon_name, G_FILE_TEST_EXISTS)) {
+			return g_strdup (icon_name);
+		} else {
+			char *basename;
+
+			basename = g_path_get_basename (icon_name);
+			retval = panel_find_icon (icon_theme, basename,
+						  size);
+			g_free (basename);
+
+			return retval;
+		}
+	}
+
+	/* This is needed because some .desktop files have an icon name *and*
+	 * an extension as icon */
+	icon_no_extension = g_strdup (icon_name);
+	p = strrchr (icon_no_extension, '.');
+	if (p &&
+	    (strcmp (p, ".png") == 0 ||
+	     strcmp (p, ".xpm") == 0 ||
+	     strcmp (p, ".svg") == 0)) {
+	    *p = 0;
+	}
+
+	info = gtk_icon_theme_lookup_icon (icon_theme, icon_no_extension,
+					   size, 0);
+
+	g_free (icon_no_extension);
+
+	if (info) {
+		retval = g_strdup (gtk_icon_info_get_filename (info));
+		gtk_icon_info_free (info);
+	} else
+		retval = NULL;
+
+	return retval;
+}
+
+GdkPixbuf *
+panel_load_icon (GtkIconTheme  *icon_theme,
+		 const char    *icon_name,
+		 gint           size,
+		 char         **error_msg)
+{
+	GdkPixbuf *retval;
+	char      *file;
+	GError    *error;
+
+	g_return_val_if_fail (error_msg == NULL || *error_msg == NULL, NULL);
+	
+	file = panel_find_icon (icon_theme, icon_name, size);
+
+	if (!file) {
+		retval = NULL;
+
+		if (error_msg)
+			*error_msg = g_strdup (_("Icon not found"));
+	} else {
+		error = NULL;
+
+		retval =  gdk_pixbuf_new_from_file_at_size (file, size, size,
+							    &error);
+
+		if (error) {
+			*error_msg = g_strdup (error->message);
+			g_error_free (error);
+		}
+	}
+
+	g_free (file);
+	return retval;
+}
+
 GdkPixbuf *
 missing_pixbuf (int size)
 {

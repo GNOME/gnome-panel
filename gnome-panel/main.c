@@ -13,7 +13,6 @@
 #include <sys/wait.h>
 
 #include <libgnomeui/gnome-authentication-manager.h>
-#include <libgnomeui/gnome-icon-theme.h>
 #include <libgnomeui/gnome-ui-init.h>
 
 #include <libbonoboui.h>
@@ -41,8 +40,6 @@ GSList *panel_list = NULL;
 
 GtkTooltips *panel_tooltips = NULL;
 
-GnomeIconTheme *panel_icon_theme = NULL;
-
 static const struct poptOption options[] = {
   {NULL, '\0', 0, NULL, 0}
 };
@@ -66,9 +63,6 @@ main (int argc, char **argv)
 
 	gnome_authentication_manager_init ();
 
-	panel_icon_theme = gnome_icon_theme_new ();
-	gnome_icon_theme_set_allow_svg (panel_icon_theme, TRUE);
-	
 	gtk_window_set_default_icon_name ("gnome-panel");
 
 	panel_tooltips = gtk_tooltips_new ();

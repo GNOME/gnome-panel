@@ -255,7 +255,6 @@ static GdkPixbuf *
 panel_addto_make_pixbuf (const char *filename,
 			 GtkIconSize size)
 {
-	char *file;
 	GdkPixbuf *pb, *newpb;
 	int width, height;
 	int desired_width, desired_height;
@@ -263,14 +262,8 @@ panel_addto_make_pixbuf (const char *filename,
 	if (!gtk_icon_size_lookup (size, &desired_width, &desired_height))
 		return NULL;
 
-	file = gnome_desktop_item_find_icon (panel_icon_theme,
-					     filename, desired_height, 0);
-
-	if (file == NULL)
-		return NULL;
-
-	pb = gdk_pixbuf_new_from_file_at_size (file, desired_width,
-					       desired_height, NULL);
+	pb = panel_load_icon (gtk_icon_theme_get_default (), filename,
+			      desired_height, NULL);
 	width = gdk_pixbuf_get_width (pb);
 	height = gdk_pixbuf_get_height (pb);
 
@@ -290,7 +283,6 @@ panel_addto_make_pixbuf (const char *filename,
 		pb = newpb;
 	}
 
-	g_free (file);
 	return pb;
 }
 

@@ -177,13 +177,14 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 	dialog->icon_path = NULL;
 		
 	if (icon_path)
-		icon = gnome_desktop_item_find_icon (panel_icon_theme,
-						     icon_path,
-						     ICON_SIZE /* desired size */,
-						     0 /* flags */);
+		icon = panel_find_icon (gtk_icon_theme_get_default (),
+					icon_path, ICON_SIZE);
 						     
 	if (icon)
-		pixbuf = gdk_pixbuf_new_from_file_at_size (icon, ICON_SIZE, ICON_SIZE, NULL);
+		pixbuf = gdk_pixbuf_new_from_file_at_size (icon,
+							   ICON_SIZE,
+							   ICON_SIZE,
+							   NULL);
 
                         
 	if (pixbuf) {
@@ -666,7 +667,7 @@ panel_run_dialog_add_icon_idle (PanelRunDialog *dialog)
 			icon_height = PANEL_DEFAULT_MENU_ICON_SIZE;
 		}
 
-		pixbuf = panel_make_menu_icon (file, NULL, icon_height, &long_operation);
+		pixbuf = panel_make_menu_icon (gtk_icon_theme_get_default (), file, NULL, icon_height, &long_operation);
 		if (pixbuf) {
 			gtk_list_store_set (dialog->program_list_store, &iter, COLUMN_ICON, pixbuf, -1);
 			g_object_unref (pixbuf);
