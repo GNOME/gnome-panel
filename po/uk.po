@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-04 19:07+0200\n"
-"PO-Revision-Date: 2005-03-04 10:45+0300\n"
+"POT-Creation-Date: 2005-03-25 04:36+0100\n"
+"PO-Revision-Date: 2005-03-25 10:45+0300\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1628,6 +1628,14 @@ msgstr "Мережні місця"
 msgid "Removable Media"
 msgstr "Змінні носії"
 
+#. Translators: Desktop is used here as in
+#. * "Desktop Folder" (this is not the Desktop
+#. * environment). Do not keep "Desktop Folder|"
+#. * in the translation
+#: gnome-panel/panel-menu-items.c:477
+msgid "Desktop Folder|Desktop"
+msgstr "Стільниця"
+
 #: gnome-panel/panel-menu-items.c:478
 msgid "Open the desktop as a folder"
 msgstr "Відкрити робочий стіл як теку"
@@ -1635,6 +1643,13 @@ msgstr "Відкрити робочий стіл як теку"
 #: gnome-panel/panel-menu-items.c:805
 msgid "Places"
 msgstr "Місця"
+
+#. Translators: Desktop is used here as in "Desktop Environment" (this
+#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
+#. * the translation.
+#: gnome-panel/panel-menu-items.c:843
+msgid "Desktop Environment|Desktop"
+msgstr "Середовище"
 
 #: gnome-panel/panel-menu-items.c:984
 msgid "Cannot launch entry"
@@ -1958,7 +1973,7 @@ msgid "_None (use system theme)"
 msgstr "_Немає (системна тема)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
-#: libpanel-applet/panel-test-applets.glade.h:3
+#: libpanel-applet/panel-test-applets.glade.h:4
 msgid "_Orientation:"
 msgstr "_Орієнтація:"
 
@@ -1967,7 +1982,7 @@ msgid "_Scale"
 msgstr "_Масштабувати"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#: libpanel-applet/panel-test-applets.glade.h:5
+#: libpanel-applet/panel-test-applets.glade.h:6
 msgid "_Size:"
 msgstr "_Розмір:"
 
@@ -2030,16 +2045,16 @@ msgstr "Не вдається перетворити '%s' з UTF-8"
 msgid "Choose a file to append to the command..."
 msgstr "Вибрати файл, щоб додати його до команди..."
 
-#: gnome-panel/panel-run-dialog.c:1414
+#: gnome-panel/panel-run-dialog.c:1420
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Буде запущено: \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:1421 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1427 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Вибрати програму перегляду опису."
 
-#: gnome-panel/panel-run-dialog.c:1456
+#: gnome-panel/panel-run-dialog.c:1462
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2695,14 +2710,15 @@ msgstr "Дуже великий"
 msgid "XX Large"
 msgstr "Дуже-дуже великий"
 
-#: libpanel-applet/panel-test-applets.glade.h:1
+#. This is an utility to easily test various applets
+#: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Test applet utility"
 msgstr "Утиліта тестового аплету"
 
-#: libpanel-applet/panel-test-applets.glade.h:2
+#: libpanel-applet/panel-test-applets.glade.h:3
 msgid "_Applet:"
 msgstr "_Аплет:"
 
-#: libpanel-applet/panel-test-applets.glade.h:4
+#: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Каталог параметрів:"
