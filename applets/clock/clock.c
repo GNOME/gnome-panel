@@ -412,6 +412,8 @@ update_clock (ClockData * cd)
 	gtk_label_set_text (GTK_LABEL (cd->clockw), utf8);
 	g_free (utf8);
 
+        gtk_widget_queue_resize (cd->toggle);
+
 	/* Show date in tooltip */
 	loc = g_locale_from_utf8 (_("%A %B %d"), -1, NULL, NULL, NULL);
 	if (!loc)
