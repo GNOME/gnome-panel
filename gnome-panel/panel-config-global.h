@@ -16,6 +16,7 @@ struct _GlobalConfig {
 	PanelMovementType movement_type;
 	int disable_animations;
 	int applet_padding;
+	int tiles_enabled;
 };
 
 

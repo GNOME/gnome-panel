@@ -201,6 +201,41 @@ set_movement (GtkWidget *widget, gpointer data)
 	return FALSE;
 }
 
+GtkWidget *
+icon_notebook_page(void)
+{
+	GtkWidget *frame;
+	GtkWidget *button;
+	GtkWidget *box;
+	GtkWidget *vbox;
+	
+	/* main vbox */
+	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
+	
+	/* General frame */
+	frame = gtk_frame_new (_("General"));
+	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+	
+	/* vbox for frame */
+	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+	
+	/* Enable tiles frame */
+	button = gtk_check_button_new_with_label (_("Tiles enabled"));
+	if (temp_config.tiles_enabled)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.tiles_enabled));
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+
+	return (vbox);
+}
 
 GtkWidget *
 misc_notebook_page(void)
@@ -352,6 +387,11 @@ panel_config_global(void)
 	page = animation_notebook_page ();
 	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 				  page, gtk_label_new (_("Animation settings")));
+
+	/* Icon notebook page */
+	page = icon_notebook_page ();
+	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
+				  page, gtk_label_new (_("Icon settings")));
 
 	/* Miscellaneous notebook page */
 	page = misc_notebook_page ();

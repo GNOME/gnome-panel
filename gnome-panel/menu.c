@@ -1547,7 +1547,7 @@ get_pixmap(char *menudir, PanelOrientType orient, int main_menu)
 {
 	char *pixmap_name;
 	if (main_menu) {
-		pixmap_name = gnome_unconditional_pixmap_file ("panel-menu-main.xpm");
+		pixmap_name = gnome_unconditional_pixmap_file("gnome-logo-icon.png");
 	} else {
 		char *dentry_name;
 		GnomeDesktopEntry *item_info;

@@ -85,6 +85,7 @@ apply_global_config(void)
 		gtk_tooltips_disable(panel_tooltips);
 	set_show_small_icons();
 	send_tooltips_state(global_config.tooltips_enabled);
+	button_widget_tile_enable(global_config.tiles_enabled);
 }
 
 /*shouldn't this be in gnome-dentry?? :)*/
@@ -427,6 +428,8 @@ do_session_save(GnomeClient *client,
 				      global_config.disable_animations);
 		gnome_config_set_int("applet_padding",
 				     global_config.applet_padding);
+		gnome_config_set_bool("tiles_enabled",
+				      global_config.tiles_enabled);
 	}
 
 	gnome_config_pop_prefix ();
@@ -878,6 +881,9 @@ load_up_globals(void)
 	global_config.movement_type=gnome_config_get_int(buf);
 
 	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
+
+	global_config.tiles_enabled =
+		gnome_config_get_bool("tiles_enabled=TRUE");
 		
 	gnome_config_pop_prefix();
 
