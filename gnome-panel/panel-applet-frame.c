@@ -51,6 +51,7 @@ struct _PanelAppletFramePrivate {
 	Bonobo_PropertyBag              property_bag;
 	BonoboUIComponent              *ui_component;
 
+	PanelWidget                    *panel;
 	AppletInfo                     *applet_info;
 	PanelOrient                     orient;
 
@@ -129,18 +130,17 @@ popup_handle_move (BonoboUIComponent *uic,
 		   PanelAppletFrame  *frame,
 		   const gchar       *verbname)
 {
-	PanelWidget *panel;
-	GtkWidget   *widget;
+	GtkWidget *widget;
 
 	g_return_if_fail (GTK_IS_WIDGET (frame));
+	g_return_if_fail (PANEL_IS_WIDGET (frame->priv->panel));
 
 	widget = GTK_WIDGET (frame);
 
 	g_return_if_fail (PANEL_IS_WIDGET (widget->parent));
 
-	panel = PANEL_WIDGET (widget->parent);
-
-	panel_widget_applet_drag_start (panel, widget, PW_DRAG_OFF_CENTER);
+	panel_widget_applet_drag_start (
+		frame->priv->panel, widget, PW_DRAG_OFF_CENTER);
 }
 
 static BonoboUIVerb popup_verbs [] = {
@@ -400,9 +400,9 @@ panel_applet_frame_constrain_size (PanelAppletFrame *frame,
 {
 	PanelWidget *panel;
 
-	g_return_if_fail (PANEL_IS_WIDGET (GTK_WIDGET (frame)->parent));
+	g_return_if_fail (PANEL_IS_WIDGET (frame->priv->panel));
 
-	panel = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
+	panel = frame->priv->panel;
 
 	switch (frame->priv->orient) {
 	case PANEL_ORIENT_UP:
@@ -574,17 +574,13 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 	case 1:
 	case 2:
 		if (button_event_in_rect (event, &frame->priv->handle_rect)) {
-			PanelWidget *panel;
-
-			panel = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
-
 			if (event->type == GDK_BUTTON_PRESS ||
 			    event->type == GDK_2BUTTON_PRESS) {
 				panel_widget_applet_drag_start (
-					panel, GTK_WIDGET (frame), PW_DRAG_OFF_CURSOR);
+					frame->priv->panel, GTK_WIDGET (frame), PW_DRAG_OFF_CURSOR);
 				handled = TRUE;
 			} else if (event->type == GDK_BUTTON_RELEASE) {
-				panel_widget_applet_drag_end (panel);
+				panel_widget_applet_drag_end (frame->priv->panel);
 				handled = TRUE;
 			}
 		}
@@ -628,32 +624,32 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
 
-	if (!GTK_WIDGET (frame)->parent) {
-		g_object_unref (frame);
-		gtk_widget_destroy (dialog);
+	if (!frame->priv->iid || !frame->priv->panel)
 		return;
-	}
 
 	info = frame->priv->applet_info;
 
 	if (response == GTK_RESPONSE_YES) {
 		PanelWidget *panel;
 		char        *iid;
-		char        *gconf_key;
-		int          position;
+		char        *gconf_key = NULL;
+		int          position = -1;
 
-		panel     = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
-		iid       = g_strdup (frame->priv->iid);
-		gconf_key = g_strdup (info->gconf_key);
-		position  = panel_applet_get_position (info);
+		panel = frame->priv->panel;
+		iid   = g_strdup (frame->priv->iid);
 
-		panel_applet_clean (info, FALSE);
+		if (info) {
+			gconf_key = g_strdup (info->gconf_key);
+			position  = panel_applet_get_position (info);
+			panel_applet_clean (info, FALSE);
+		}
 
 		panel_applet_frame_load (iid, panel, position, TRUE, gconf_key);
 
 		g_free (iid);
 		g_free (gconf_key);
-	} else
+
+	} else if (info)
 		panel_applet_clean (info, TRUE);
 
 	g_object_unref (frame);
@@ -701,16 +697,15 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 {
 	GtkWidget *dialog;
 	GdkScreen *screen;
-	char      *applet_name;
+	char      *applet_name = NULL;
 	char      *txt;
 
-	g_return_if_fail (frame->priv->applet_info != NULL);
+	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
 
-	screen = gtk_window_get_screen (
-			GTK_WINDOW (get_panel_parent (
-					frame->priv->applet_info->widget)));
+	screen = gtk_widget_get_screen (GTK_WIDGET (frame));
 
-	applet_name = panel_applet_frame_get_name (frame->priv->iid);
+	if (frame->priv->iid)
+		applet_name = panel_applet_frame_get_name (frame->priv->iid);
 
 	txt = g_strdup_printf (
 			_("The %s applet appears to have died "
@@ -835,6 +830,7 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 	frame->priv->applet_shell     = CORBA_OBJECT_NIL;
 	frame->priv->property_bag     = CORBA_OBJECT_NIL;
 	frame->priv->ui_component     = NULL;
+	frame->priv->panel            = NULL;
 	frame->priv->orient           = PANEL_ORIENT_UP;
 	frame->priv->applet_info      = NULL;
 	frame->priv->moving_focus_out = FALSE;
@@ -992,6 +988,8 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	GtkWidget             *widget;
 	char                  *moniker;
 
+	frame->priv->panel = panel;
+
 	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, gconf_key);
 
 	/* FIXME: this should really use bonobo_get_object_async */
@@ -1008,6 +1006,8 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 		CORBA_exception_free (&ev);
 		return NULL;
 	}
+
+	frame->priv->iid = g_strdup (iid);
 
 	cnx_status = ORBit_small_get_connection_status (control);
 	if (cnx_status != ORBIT_CONNECTION_IN_PROC)
@@ -1029,23 +1029,25 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 		return NULL;
 	}
 
-	frame->priv->iid = g_strdup (iid);
-
 	control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
-
-	control = bonobo_control_frame_get_control (control_frame);
 
 	frame->priv->property_bag = 
 		bonobo_control_frame_get_control_property_bag (control_frame, NULL);
 
 	frame->priv->ui_component =
 		bonobo_control_frame_get_popup_component (control_frame, NULL);
+	if (!frame->priv->ui_component)
+		return NULL;
 
 	bonobo_ui_util_set_ui (frame->priv->ui_component, DATADIR,
 			       "GNOME_Panel_Popup.xml", "panel", NULL);
 
 	bonobo_ui_component_add_verb_list_with_data (
 		frame->priv->ui_component, popup_verbs, frame);
+
+	control = bonobo_control_frame_get_control (control_frame);
+	if (!control)
+		return NULL;
 
 	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
 

@@ -1,3 +1,21 @@
+2002-12-16  Mark McLoughlin  <mark@skynet.ie>
+
+	Be more robust in the face of applet crashes
+	during loading. Should fix #99205.
+
+	* panel-applet-frame.c: Keep a ref to the PanelWidget
+	so that we can reload an applet even when it hasn't
+	been fully loaded.
+	(popup_handle_move),
+	(panel_applet_frame_constrain_size),
+	(panel_applet_frame_button_changed): use that ref here.
+	(panel_applet_frame_reload_response): fix up to work even
+	when an applet hasn't fully loaded.
+	(panel_applet_frame_cnx_broken): don't require the applet
+	to have been registered.
+	(panel_applet_frame_construct): check for failure of
+	vairious remote bonobo operations.
+
 2002-12-10  Arvind Samptur <arvind.samptur@wipro.com>
 	* panel-background.c: (panel_background_prepare): re-draw
 	the panel after setting the background. Fixes #100401
