@@ -44,8 +44,21 @@ PanelApplet       *panel_applet_new       (GtkWidget *widget);
 void               panel_applet_construct (PanelApplet *applet,
 					   GtkWidget   *widget);
 
-BonoboControl     *panel_applet_get_control         (PanelApplet *applet);
-BonoboUIComponent *panel_applet_get_popup_component (PanelApplet *applet);
+
+BonoboControl     *panel_applet_get_control          (PanelApplet  *applet);
+BonoboUIComponent *panel_applet_get_popup_component  (PanelApplet  *applet);
+
+void               panel_applet_setup_menu           (PanelApplet        *applet,
+						      const gchar        *xml,
+						      const BonoboUIVerb *verb_list,
+						      gpointer            user_data);
+
+void               panel_applet_setup_menu_from_file (PanelApplet        *applet,
+						      const gchar        *opt_datadir,
+						      const gchar        *file,
+						      const gchar        *opt_app_name,
+						      const BonoboUIVerb *verb_list,
+						      gpointer            user_data);
 
 G_END_DECLS
 

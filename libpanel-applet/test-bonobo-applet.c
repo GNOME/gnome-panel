@@ -45,26 +45,10 @@ static const BonoboUIVerb test_applet_menu_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
-static char test_applet_menu_xml [] =
-	"<popups>\n"
-	"  <popup name=\"button3\">\n"
-	"    <menuitem name=\"Test Item 1\" verb=\"TestAppletDo1\" _label=\"Test This One\"/>\n"
-	"    <menuitem name=\"Test Item 2\" verb=\"TestAppletDo2\" _label=\"Test This Two\"/>\n"
-	"    <menuitem name=\"Test Item 3\" verb=\"TestAppletDo3\" _label=\"Test This Three\"/>\n"
-	"  </popup>\n"
-	"</popups>\n";
-
-static void
-test_applet_setup_popup_menu (PanelApplet *applet)
-{
-	BonoboUIComponent *popup_component;
-
-	popup_component = panel_applet_get_popup_component (applet);
-
-	bonobo_ui_component_set_translate (popup_component, "/", test_applet_menu_xml, NULL);
-
-	bonobo_ui_component_add_verb_list (popup_component, test_applet_menu_verbs);
-}
+static const char test_applet_menu_xml [] =
+	"<menuitem name=\"Test Item 1\" verb=\"TestAppletDo1\" _label=\"Test This One\"/>\n"
+	"<menuitem name=\"Test Item 2\" verb=\"TestAppletDo2\" _label=\"Test This Two\"/>\n"
+	"<menuitem name=\"Test Item 3\" verb=\"TestAppletDo3\" _label=\"Test This Three\"/>\n";
 
 static BonoboObject *
 test_applet_new (const gchar *iid)
@@ -78,7 +62,7 @@ test_applet_new (const gchar *iid)
 
 	applet = panel_applet_new (label);
 
-	test_applet_setup_popup_menu (applet);
+	panel_applet_setup_menu (applet, test_applet_menu_xml, test_applet_menu_verbs, NULL);
 
 	return BONOBO_OBJECT (panel_applet_get_control (applet));
 }

@@ -7,6 +7,9 @@
  * Copyright 2001 Sun Microsystems, Inc.
  */
 
+#include <unistd.h>
+#include <bonobo/bonobo-ui-util.h>
+
 #include "panel-applet.h"
 
 struct _PanelAppletPrivate {
@@ -14,6 +17,55 @@ struct _PanelAppletPrivate {
 };
 
 static GObjectClass *parent_class;
+
+void
+panel_applet_setup_menu (PanelApplet        *applet,
+			 const gchar        *xml,
+			 const BonoboUIVerb *verb_list,
+			 gpointer            user_data)
+{
+	BonoboUIComponent *popup_component;
+
+	g_return_if_fail (applet && xml && verb_list);
+
+	popup_component = panel_applet_get_popup_component (applet);
+
+	bonobo_ui_component_set (popup_component, "/",
+				 "<popups><popup name=\"button3\"/></popups>", NULL);
+
+	bonobo_ui_component_set_translate (popup_component, "/", xml, NULL);
+
+	bonobo_ui_component_add_verb_list_with_data (popup_component, verb_list, user_data);
+}
+
+void
+panel_applet_setup_menu_from_file (PanelApplet        *applet, 
+				   const gchar        *opt_datadir,
+				   const gchar        *file,
+				   const gchar        *opt_app_name,
+				   const BonoboUIVerb *verb_list,
+				   gpointer            user_data)
+{
+	BonoboUIComponent *popup_component;
+	gchar             *app_name = NULL;
+
+	g_return_if_fail (applet && file && verb_list);
+
+	if (!opt_datadir)
+		opt_datadir = GNOME_DATADIR;
+
+	if (!opt_app_name)
+		opt_app_name = app_name = g_strdup_printf ("%d", getpid ());
+
+	popup_component = panel_applet_get_popup_component (applet);
+
+	bonobo_ui_util_set_ui (popup_component, opt_datadir, file, opt_app_name, NULL);
+
+	bonobo_ui_component_add_verb_list_with_data (popup_component, verb_list, user_data);
+
+	if (app_name)
+		g_free (app_name);
+}
 
 BonoboControl *
 panel_applet_get_control (PanelApplet *applet)
