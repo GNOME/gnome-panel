@@ -1099,7 +1099,7 @@ mailcheck_properties_page (MailCheck *mc)
 static void
 phelp_cb (GtkWidget *w, gint tab, gpointer data)
 {
-	GnomeHelpMenuEntry help_entry = { "mailcheck", NULL };
+	GnomeHelpMenuEntry help_entry = { "mailcheck_applet", NULL };
 
 	char *das_names[] =  { "index.html#MAILCHECK_PREFS",
 			       "index.html#MAILCHECK-SETTINGS-MAILBOX-FIG" };
