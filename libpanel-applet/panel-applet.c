@@ -237,7 +237,10 @@ panel_applet_set_flags (PanelApplet      *applet,
 {
 	g_return_if_fail (PANEL_IS_APPLET (applet));
 
-	bonobo_pbclient_set_short (BONOBO_OBJREF (applet->priv->prop_sack), PROPERTY_FLAGS, flags, NULL);
+	if (applet->priv->prop_sack != NULL)
+		bonobo_pbclient_set_short (BONOBO_OBJREF (applet->priv->prop_sack), PROPERTY_FLAGS, flags, NULL);
+	else
+		applet->priv->flags = flags;
 }
 
 void

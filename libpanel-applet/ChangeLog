@@ -1,3 +1,10 @@
+Wed Jul 02 11:45:57 2003  George Lebl <jirka@5z.com>
+
+	* panel-applet.c: panel_applet_set_flags needs to itself set the
+	  flags in case the property bag is not yet created.  This fixes
+	  wanda the fish because she set the EXPAND_MINOR flag before
+	  a property bag was created (in her instance_init).
+
 ==================== 2.3.3.3 ====================
 
 ==================== 2.3.3.2 ====================
