@@ -179,8 +179,11 @@ command_value_changed (GtkEntry   *entry,
 
 	text = gtk_entry_get_text (entry);
 
-	if (!text || !text [0])
+	if (!text || !text [0]) {
+		panel_applet_gconf_set_string (PANEL_APPLET (fish), 
+					       "command", "", NULL);
 		return;
+	}
 
 	if (!strncmp (text, "ps ", 3)  ||
 	    !strcmp  (text, "ps")      ||

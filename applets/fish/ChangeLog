@@ -1,3 +1,10 @@
+2004-01-21  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix for bug #131671 from Maneesh Pusalkar <mpusalkar@novell.com>.
+
+	* fish.c: (command_value_changed): set a blank command
+	rather than leaving as is if the user deletes the command.
+
 ==================== 2.5.3.1 ====================
 
 ==================== 2.5.3 ====================
