@@ -774,14 +774,14 @@ typedef struct _applet_pos {
 } applet_pos;
 
 static void
-is_applet_pos_ok(GtkWidget *applet, gpointer data)
+is_applet_pos_ok(gpointer data, gpointer user_data)
 {
-	applet_pos *newpos;
+	GtkWidget *applet=(GtkWidget *)data;
+	applet_pos *newpos=(applet_pos *)user_data;
 	int x, y, width, height;
 	int diffx, diffy;
 	int nx, ny;
 
-	newpos=(applet_pos *)data;
 
 	if(!(newpos->ok) || (applet==newpos->w && newpos->w!=NULL))
 		return;
@@ -843,8 +843,8 @@ is_applet_pos_ok(GtkWidget *applet, gpointer data)
 }
 
 static gint
-panel_find_clean_spot(GtkWidget *widget, gint *x, gint *y, gint width,
-	gint height)
+panel_find_clean_spot(GtkWidget *widget, GList *applets, gint *x, gint *y,
+	gint width, gint height)
 {
 	/*set up the applet_pos structure*/
 	applet_pos newpos={*x,*y,width,height,0,0,TRUE,TRUE,widget};
@@ -861,14 +861,14 @@ panel_find_clean_spot(GtkWidget *widget, gint *x, gint *y, gint width,
 			break;
 	}
 
-	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
-		      is_applet_pos_ok,
-		      &newpos);
+	g_list_foreach(applets,
+		       is_applet_pos_ok,
+		       (gpointer)&newpos);
 	if(newpos.repair==FALSE) {
 		newpos.ok=TRUE;
-		gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
-			      is_applet_pos_ok,
-			      &newpos);
+		g_list_foreach(applets,
+			       is_applet_pos_ok,
+			       (gpointer)&newpos);
 	}
 
 	if(newpos.ok) {
@@ -911,7 +911,7 @@ fix_coordinates_to_limits(int *x,int *y, int width, int height)
 /*find a free spot for the applet*/
 static void
 fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
-	gint height)
+	gint height,gint useoldlist)
 {
 	gint movedown; /*used for moving the applet (it would be move right
 			 for horizontal but we use only one .. i.e. move
@@ -923,6 +923,8 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 	gint adjdef;	/*default for the above*/
 	gint adjlim;	/*limit to the above*/
 	gint xpos,ypos;
+
+	static GList *applets=NULL;
 
 
 	if(!widget)
@@ -958,10 +960,19 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 			break;
 	}
 
+	if(!useoldlist && applets) {
+		g_list_free(applets);
+		applets=NULL;
+	}
+		
+
+	if(!applets)
+		applets=gtk_container_children(GTK_CONTAINER(the_panel->fixed));
+
 	/*move the applet as close as we can to the
 	  one blocking it*/
 	noturn=FALSE;
-	while(!panel_find_clean_spot(widget,x,y,width,height)) {
+	while(!panel_find_clean_spot(widget,applets,x,y,width,height)) {
 		if(movedown) {
 			if(--(*adjvar)<0) {
 				movedown=FALSE;
@@ -1049,7 +1060,8 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 				fixup_applet_position(the_panel->
 						      applet_being_dragged,
-						      &x1,&y1,width,height);
+						      &x1,&y1,width,height,
+						      TRUE);
 
 				if ((x1 != xpos) || (y1 != ypos))
 					gtk_fixed_move(GTK_FIXED(the_panel->
@@ -1451,7 +1463,6 @@ bind_applet_events(GtkWidget *widget, void *data)
 		gtk_container_foreach (GTK_CONTAINER (widget), bind_applet_events, 0);
 }
 
-
 static void
 sort_applet_by_pos(GtkWidget *applet, gpointer data)
 {
@@ -1474,6 +1485,8 @@ sort_applet_by_pos(GtkWidget *applet, gpointer data)
 
 	*list = g_list_insert(*list, applet, pos);
 }
+
+
 
 static void
 fix_applet_position(GtkWidget *applet, int *xpos, int *ypos)
@@ -1576,7 +1589,7 @@ fix_an_applet_idle_func(gpointer data)
 
 	fixup_applet_position(applet,&xpos,&ypos,
 		GTK_WIDGET(applet)->allocation.width,
-		GTK_WIDGET(applet)->allocation.height);
+		GTK_WIDGET(applet)->allocation.height,FALSE);
 	gtk_fixed_move(GTK_FIXED(the_panel->fixed), applet, xpos, ypos);
 	if((--applet_stacktop)<0) {
 		set_panel_position();
