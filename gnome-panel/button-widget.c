@@ -537,7 +537,7 @@ button_load_pixbuf (const char  *file,
 	if (string_empty (file))
 		return get_missing (preffered_size);
 
-	full = gnome_desktop_item_find_icon (panel_icon_loader, file,
+	full = gnome_desktop_item_find_icon (panel_icon_theme, file,
 					     preffered_size, 0);
 	if (full != NULL) {
 		retval = gdk_pixbuf_new_from_file (full, &gerror);

@@ -51,7 +51,7 @@ char *kde_menudir = NULL;
 char *kde_icondir = NULL;
 char *kde_mini_icondir = NULL;
 
-GnomeIconLoader *panel_icon_loader = NULL;
+GnomeIconTheme *panel_icon_theme = NULL;
 
 static gchar *profile_name;
 
@@ -173,7 +173,7 @@ main(int argc, char **argv)
 	if (!panel_shell_register ())
 		return -1;
 
-	panel_icon_loader = gnome_icon_loader_new ();
+	panel_icon_theme = gnome_icon_theme_new ();
 	
 	find_kde_directory();
 

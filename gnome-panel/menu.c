@@ -680,7 +680,7 @@ panel_make_sure_menu_within_screen (GtkMenu *menu)
 }
 
 static void
-icon_theme_changed (GnomeIconLoader *icon_loader,
+icon_theme_changed (GnomeIconTheme *icon_theme,
 		    gpointer data)
 {
   GtkWidget *image;
@@ -717,7 +717,7 @@ panel_menu_new (void)
 	if (!registred_icon_theme_changer) {
 	  registred_icon_theme_changer = TRUE;
 
-	  g_signal_connect (panel_icon_loader, "changed",
+	  g_signal_connect (panel_icon_theme, "changed",
 			    G_CALLBACK (icon_theme_changed), NULL);
 	}
 	
@@ -807,12 +807,12 @@ panel_make_menu_icon (const char *icon,
 	if (long_operation != NULL)
 		*long_operation = TRUE;
 
-	file = gnome_desktop_item_find_icon (panel_icon_loader,
+	file = gnome_desktop_item_find_icon (panel_icon_theme,
 					     icon,
 					     size /* desired size */,
 					     0 /* flags */);
 	if (file == NULL && fallback != NULL)
-		file = gnome_desktop_item_find_icon (panel_icon_loader,
+		file = gnome_desktop_item_find_icon (panel_icon_theme,
 						     fallback,
 						     size /* desired size */,
 						     0 /* flags */);

@@ -96,7 +96,7 @@ panel_init_stock_icons (GtkIconFactory *factory)
 		char       *filename;
 
 		filename = gnome_desktop_item_find_icon (
-				panel_icon_loader, stock_icons [i].icon, icon_height, 0);
+				panel_icon_theme, stock_icons [i].icon, icon_height, 0);
 		if (!filename) {
 			g_warning (_("Unable to load panel stock icon '%s'\n"), stock_icons [i].icon);
 

@@ -209,7 +209,7 @@ launcher_properties_destroy (Launcher *launcher)
 }
 
 static void
-icon_theme_changed_cb (GnomeIconLoader *icon_loader,
+icon_theme_changed_cb (GnomeIconTheme *icon_theme,
 		       Launcher        *launcher)
 {
 	const char *icon;
@@ -227,7 +227,7 @@ free_launcher (gpointer data)
 {
 	Launcher *launcher = data;
 
-	g_signal_handler_disconnect (panel_icon_loader, launcher->icon_changed_signal);
+	g_signal_handler_disconnect (panel_icon_theme, launcher->icon_changed_signal);
 
 	launchers_to_hoard = g_slist_remove (launchers_to_hoard, launcher);
 
@@ -497,7 +497,7 @@ setup_button (Launcher *launcher)
 	button_widget_set_pixmap (BUTTON_WIDGET (launcher->button), icon);
 
 	launcher->icon_changed_signal =
-			g_signal_connect (panel_icon_loader, "changed",
+			g_signal_connect (panel_icon_theme, "changed",
 					  G_CALLBACK (icon_theme_changed_cb), launcher);
 
 	/* Setup help */
@@ -883,7 +883,7 @@ ditem_set_icon (GnomeDesktopItem *ditem, const char *icon)
 {
 	if (icon != NULL &&
 	    icon[0] != G_DIR_SEPARATOR) {
-		char *full = gnome_desktop_item_find_icon (panel_icon_loader,
+		char *full = gnome_desktop_item_find_icon (panel_icon_theme,
 							   icon,
 							   48 /* desired size */,
 							   0 /* flags */);

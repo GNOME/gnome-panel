@@ -318,7 +318,7 @@ get_pixmap (const char *menudir, gboolean main_menu)
                 g_free (dentry_name);
 
                 if (qitem != NULL)
-			pixmap_name = gnome_desktop_item_find_icon (panel_icon_loader,
+			pixmap_name = gnome_desktop_item_find_icon (panel_icon_theme,
 								    qitem->icon,
                                                                     20 /* desired size */,
                                                                     0 /* flags */);
