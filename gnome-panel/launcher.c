@@ -407,7 +407,7 @@ setup_button (Launcher *launcher)
 	const char *name;
 	const char *docpath;
 	char *str;
-	char *icon;
+	const char *icon;
 	
 	g_return_if_fail (launcher != NULL);
 
@@ -436,7 +436,6 @@ setup_button (Launcher *launcher)
 	icon = gnome_desktop_item_get_string (launcher->ditem,
 					      GNOME_DESKTOP_ITEM_ICON);
 	button_widget_set_pixmap (BUTTON_WIDGET (launcher->button), icon, -1);
-	g_free (icon);
 
 	/* Setup help */
 	docpath = gnome_desktop_item_get_string (launcher->ditem,
