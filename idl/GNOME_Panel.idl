@@ -37,7 +37,8 @@ module Vertigo {
 	 * GNOME::PanelBackground Format:
 	 *    o "none:" - no background.
 	 *    o "colour:#xxxxxx' - rgb colour value.
-	 *    o "pixmap:/path/to/pixmap" - pixmap path.
+	 *    o "pixmap:XID,x,y" - the pixmap XID, and the applets offsets into
+	 *                         that pixmap.
 	 */
 	typedef string PanelBackground;
 

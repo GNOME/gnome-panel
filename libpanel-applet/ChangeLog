@@ -1,5 +1,18 @@
 2002-01-08  Mark McLoughlin  <mark@skynet.ie>
 
+	Implement the applet side of the pixmap background stuff.
+
+	* panel-applet.[ch]: (panel_applet_finalize): free background.
+	(panel_applet_parse_pixmap_str), (panel_applet_get_pixmap): impl
+	parsing of pixmap string and copying pixmap area.
+	(panel_applet_set_prop): update for pixmap changes.
+	(panel_applet_class_init): update background-changed signal.
+
+	* panel-applet-marshal.list: change VOID:ENUM,POINTER,STRING to
+	VOID:ENUM,POINTER,OBJECT.
+
+2002-01-08  Mark McLoughlin  <mark@skynet.ie>
+
 	* TODO: add pixmap bacground todo.
 
 	* panel-applet.c: (panel_applet_associate_schemas_in_dir):

@@ -23,6 +23,7 @@
  */
 
 #include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
 #include <bonobo/bonobo-ui-util.h>
 #include <bonobo/bonobo-types.h>
@@ -350,6 +351,9 @@ panel_applet_finalize (GObject *object)
 	if (applet->priv->prefs_key)
 		g_free (applet->priv->prefs_key);
 
+	if (applet->priv->background)
+		g_free (applet->priv->background);
+
 	if (applet->priv->iid)
 		g_free (applet->priv->iid);
 
@@ -396,6 +400,88 @@ panel_applet_parse_color (const gchar *color_str,
 	return TRUE;
 }
 
+static gboolean
+panel_applet_parse_pixmap_str (const char *str,
+			       GdkNativeWindow *xid,
+			       int             *x,
+			       int             *y)
+{
+	char **elements;
+	char  *tmp;
+
+	g_return_val_if_fail (str != NULL, FALSE);
+	g_return_val_if_fail (xid != NULL, FALSE);
+	g_return_val_if_fail (x != NULL, FALSE);
+	g_return_val_if_fail (y != NULL, FALSE);
+
+	elements = g_strsplit (str, "'", -1);
+
+	if (!elements)
+		return FALSE;
+
+	if (!elements [0] || !*elements [0] ||
+	    !elements [1] || !*elements [1] ||
+	    !elements [2] || !*elements [2])
+		goto ERROR_AND_FREE;
+
+	*xid = strtol (elements [0], &tmp, 10);
+	if (tmp == elements [0])
+		goto ERROR_AND_FREE;
+
+	*x   = strtol (elements [1], &tmp, 10);
+	if (tmp == elements [1])
+		goto ERROR_AND_FREE;
+
+	*y   = strtol (elements [2], &tmp, 10);
+	if (tmp == elements [2])
+		goto ERROR_AND_FREE;
+
+ 	g_strfreev (elements);
+	return TRUE;
+
+ ERROR_AND_FREE:
+ 	g_strfreev (elements);
+	return FALSE;
+}
+
+static GdkPixmap *
+panel_applet_get_pixmap (PanelApplet     *applet,
+			 GdkNativeWindow  xid,
+			 int              x,
+			 int              y)
+{
+	GdkPixmap *pixmap;
+	GdkPixmap *retval;
+	int        width;
+	int        height;
+
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
+
+	pixmap = gdk_pixmap_lookup (xid);
+	if (pixmap)
+		g_object_ref (G_OBJECT (pixmap));
+	else
+		pixmap = gdk_pixmap_foreign_new (xid);
+
+	g_return_val_if_fail (pixmap != NULL, NULL);
+
+	gdk_drawable_get_size (GDK_DRAWABLE (GTK_WIDGET (applet)->window),
+			       &width, &height);
+
+	retval = gdk_pixmap_new (GTK_WIDGET (applet)->window, width, height, -1);
+
+	gdk_draw_drawable (GDK_DRAWABLE (retval),
+			   GTK_WIDGET (applet)->style->bg_gc, /* FIXME: is this right? */
+			   GDK_DRAWABLE (pixmap),
+			   x, y,
+			   0, 0,
+			   width, height);
+
+	g_object_unref (G_OBJECT (pixmap));
+
+	return retval;
+}
+			
 static void
 panel_applet_get_prop (BonoboPropertyBag *sack,
                        BonoboArg         *arg,
@@ -463,11 +549,14 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 		gchar  *bg_str;
 		gchar **elements;
 
+
 		bg_str = BONOBO_ARG_GET_STRING (arg);
 
 		elements = g_strsplit (bg_str, ":", -1);
 
 		if (elements [0] && !strcmp (elements [0], "none" )) {
+			if (applet->priv->background)
+				g_free (applet->priv->background);
 			applet->priv->background = NULL;
 
 			g_signal_emit (G_OBJECT (applet),
@@ -486,16 +575,20 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 				return;
 			}
 
-			applet->priv->background = bg_str;
+			if (applet->priv->background)
+				g_free (applet->priv->background);
+			applet->priv->background = g_strdup (bg_str);
 
 			g_signal_emit (G_OBJECT (applet),
 				       panel_applet_signals [CHANGE_BACKGROUND],
 				       0, PANEL_COLOR_BACKGROUND, &color, NULL);
 
 		} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
-			gchar *pixmap = elements [1];
+			GdkNativeWindow  pixmap_id;
+			GdkPixmap       *pixmap;
+			int              x, y;
 
-			if (!pixmap) {
+			if (!panel_applet_parse_pixmap_str (elements [1], &pixmap_id, &x, &y)) {
 				g_warning (_("panel_applet_set_prop: Incomplete '%s'"
 					     " background type received"), elements [0]);
 
@@ -503,7 +596,18 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 				return;
 			}
 
-			applet->priv->background = bg_str;
+			pixmap = panel_applet_get_pixmap (applet, pixmap_id, x, y);
+			if (!pixmap) {
+				g_warning (_("panel_applet_set_prop: Failed to get pixmap"
+					     " %s"), elements [1]);
+
+				g_strfreev (elements);
+				return;
+			}
+
+			if (applet->priv->background)
+				g_free (applet->priv->background);
+			applet->priv->background = g_strdup (bg_str);
 
 			g_signal_emit (G_OBJECT (applet),
 				       panel_applet_signals [CHANGE_BACKGROUND],
@@ -659,7 +763,7 @@ panel_applet_class_init (PanelAppletClass *klass,
                               G_STRUCT_OFFSET (PanelAppletClass, change_background),
                               NULL,
 			      NULL,
-                              panel_applet_marshal_VOID__ENUM_POINTER_STRING,
+                              panel_applet_marshal_VOID__ENUM_POINTER_OBJECT,
                               G_TYPE_NONE,
 			      3,
 			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
