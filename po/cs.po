@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-12 04:44+0200\n"
-"PO-Revision-Date: 2003-07-12 14:27+0200\n"
+"POT-Creation-Date: 2003-07-13 12:54+0200\n"
+"PO-Revision-Date: 2003-07-13 14:56+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1296,7 +1296,7 @@ msgstr "Vlastnosti spouštěče"
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Klíč %s není nastaven, nelze načíst spouštěč\n"
 
-#: gnome-panel/launcher.c:885 gnome-panel/menu-ditem.c:527
+#: gnome-panel/launcher.c:885 gnome-panel/menu-ditem.c:528
 msgid "Create Launcher"
 msgstr "Vytvořit spouštěč"
 
@@ -1589,8 +1589,10 @@ msgid "Cannot save menu item to disk"
 msgstr "Nemohu uložit položku menu na disk"
 
 #: gnome-panel/menu-ditem.c:521
-msgid "This location since the location is not writable."
-msgstr "Toto umístění, protože, protože na toto místo nelze zapisovat."
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr "Nemůžete vytvořit nový spouštěč v tomto umístění, protože na toto místo nelze zapisovat."
 
 #: gnome-panel/panel-action-button.c:85
 msgid "_Activate Screensaver"
@@ -2714,12 +2716,11 @@ msgstr ""
 "Je-li true, bude velikost obrázku změněna na rozměry panelu. Poměr stran "
 "obrázku nebude zachován."
 
-# FIXME: the pointer is hidden... when "it" leaves the panel area
 #: gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
-"it leaves the panel area. Moving the pointer to that corner will cause the "
-"panel to re-appear."
+"the pointer leaves the panel area. Moving it to that corner again will cause "
+"the panel to re-appear."
 msgstr ""
 "Je-li true, je panel automaticky skryt do rohu obrazovky, když kurzor opustí "
 "oblast panelu. Přesun kurzoru do tohoto rozhu způsobí, že se panel znovu "
@@ -3083,9 +3084,6 @@ msgstr "Mrňavý"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Obrovský"
-
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "Nemohu spustit 'O GNOME'"
 
 #~ msgid ""
 #~ "To be usable, Window List requires a minimum width. Window List requests "
