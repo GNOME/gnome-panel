@@ -1627,23 +1627,23 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	if(panel->backpix)
 		gdk_pixbuf_unref(panel->backpix);
 	panel->backpix = NULL;
-	if(panel->backpixmap)
-		gdk_pixmap_unref(panel->backpixmap);
+	if (panel->backpixmap != NULL)
+		gdk_pixmap_unref (panel->backpixmap);
 	panel->backpixmap = NULL;
 
-	if(!pixmap || strcmp(pixmap,"")==0) {
+	if (string_empty (pixmap)) {
 		return TRUE;
 	}
 
-	if (!panel_file_exists (pixmap))
+	if ( ! panel_file_exists (pixmap))
 		return FALSE;
 	
 	panel->backpix = gdk_pixbuf_new_from_file (pixmap);
-	if (!panel->backpix)
+	if (panel->backpix == NULL)
 		return FALSE;
 
-	panel->scale_w = gdk_pixbuf_get_width(panel->backpix);
-	panel->scale_h = gdk_pixbuf_get_height(panel->backpix);
+	panel->scale_w = gdk_pixbuf_get_width (panel->backpix);
+	panel->scale_h = gdk_pixbuf_get_height (panel->backpix);
 
 	return TRUE;
 }
@@ -1819,7 +1819,7 @@ panel_widget_new (gboolean packed,
 	panel->fit_pixmap_bg = fit_pixmap_bg;
 	panel->strech_pixmap_bg = strech_pixmap_bg;
 	panel->rotate_pixmap_bg = rotate_pixmap_bg;
-	panel->back_pixmap = g_strdup (back_pixmap ? back_pixmap : "");
+	panel->back_pixmap = g_strdup (sure_string (back_pixmap));
 	panel->no_padding_on_ends = no_padding_on_ends;
 	
 	if(back_color)

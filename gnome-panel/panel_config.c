@@ -333,8 +333,8 @@ update_config_back (PanelWidget *pw)
 		break;
 	case PANEL_BACK_PIXMAP:
 		t=gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
-		gtk_entry_set_text(GTK_ENTRY(t),
-				   pw->back_pixmap?pw->back_pixmap:"");
+		gtk_entry_set_text (GTK_ENTRY (t),
+				    sure_string (pw->back_pixmap));
 		item = ppc->pix;
 		history = 2;
 		break;
@@ -1486,8 +1486,8 @@ background_page (PerPanelConfig *ppc)
 					GTK_OBJECT (ppc->pix_entry));
 	gtk_box_pack_start (GTK_BOX (box), ppc->pix_entry, FALSE, FALSE, 0);
 	
-	gtk_entry_set_text (GTK_ENTRY(t),
-			    ppc->back_pixmap?ppc->back_pixmap:"");
+	gtk_entry_set_text (GTK_ENTRY (t),
+			    sure_string (ppc->back_pixmap));
 	
 	noscale = gtk_radio_button_new_with_label (
 		NULL, _("Don't scale image to fit"));

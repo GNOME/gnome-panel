@@ -40,14 +40,12 @@ properties_apply_callback(gpointer data)
 						     "tooltip");
 	char         *s;
 
-	if(drawer->pixmap)
-		g_free(drawer->pixmap);
+	g_free (drawer->pixmap);
 	drawer->pixmap = NULL;
-	if(drawer->tooltip)
-		g_free(drawer->tooltip);
+	g_free (drawer->tooltip);
 	drawer->tooltip = NULL;
 	s = gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(pixentry));
-	if(!s || !*s) {
+	if (string_empty (s)) {
 		drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
 		button_widget_set_pixmap (BUTTON_WIDGET(drawer->button),
 					  drawer->pixmap,-1);
@@ -62,7 +60,7 @@ properties_apply_callback(gpointer data)
 	}
 	g_free(s);
 	s = gtk_entry_get_text(GTK_ENTRY(gnome_entry_gtk_entry(GNOME_ENTRY(tipentry))));
-	if(!s || !*s)
+	if (string_empty (s))
 		drawer->tooltip = NULL;
 	else
 		drawer->tooltip = g_strdup(s);

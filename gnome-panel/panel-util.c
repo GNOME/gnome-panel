@@ -672,29 +672,70 @@ convert_keysym_state_to_string(guint keysym,
 	}
 }
 
+static GSList *layered_dialogs = NULL;
+
 static void
-panel_dialog_realized(GtkWidget *dialog)
+panel_dialog_realized (GtkWidget *dialog)
 {
-	if(!global_config.keep_bottom)
+	if ( ! global_config.keep_bottom &&
+	     ! global_config.normal_layer)
 		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
 					   WIN_LAYER_ABOVE_DOCK);
+	else
+		gnome_win_hints_set_layer (GTK_WIDGET (dialog),
+					   WIN_LAYER_NORMAL);
+}
+
+static void
+remove_from_layered (GtkWidget *w)
+{
+	layered_dialogs = g_slist_remove (layered_dialogs, w);
 }
 
 void
-panel_set_dialog_layer(GtkWidget *dialog)
+panel_set_dialog_layer (GtkWidget *dialog)
 {
-	if(GTK_WIDGET_REALIZED(dialog) &&
-	   !global_config.keep_bottom)
-		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
+	if (g_slist_find (layered_dialogs, dialog) == NULL) {
+		layered_dialogs = g_slist_prepend (layered_dialogs, dialog);
+		gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+				    GTK_SIGNAL_FUNC (remove_from_layered),
+				    NULL);
+	}
+
+	if (GTK_WIDGET_REALIZED (dialog) &&
+	    ! global_config.normal_layer &&
+	    ! global_config.keep_bottom)
+		gnome_win_hints_set_layer (GTK_WIDGET (dialog),
 					   WIN_LAYER_ABOVE_DOCK);
 
-	gtk_signal_connect(GTK_OBJECT(dialog), "realize",
-			   GTK_SIGNAL_FUNC(panel_dialog_realized),
-			   NULL);
+	gtk_signal_connect (GTK_OBJECT (dialog), "realize",
+			    GTK_SIGNAL_FUNC (panel_dialog_realized),
+			    NULL);
+}
+
+void
+panel_reset_dialog_layers (void)
+{
+	GSList *li;
+
+	for (li = layered_dialogs; li != NULL; li = li->next) {
+		GtkWidget *dialog = li->data;
+
+		if ( ! GTK_WIDGET_REALIZED (dialog))
+			continue;
+
+		if ( ! global_config.normal_layer &&
+		     ! global_config.keep_bottom)
+			gnome_win_hints_set_layer (GTK_WIDGET (dialog),
+						   WIN_LAYER_ABOVE_DOCK);
+		else
+			gnome_win_hints_set_layer (GTK_WIDGET (dialog),
+						   WIN_LAYER_NORMAL);
+	}
 }
 
 GtkWidget *
-panel_error_dialog(const char *format, ...)
+panel_error_dialog (const char *format, ...)
 {
 	GtkWidget *w;
 	char *s;

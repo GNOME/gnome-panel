@@ -190,6 +190,7 @@ apply_global_config (void)
 			else if (IS_FOOBAR_WIDGET (pd->panel))
 				foobar_widget_update_winhints (FOOBAR_WIDGET (pd->panel));
 		}
+		panel_reset_dialog_layers ();
 	}
 	keep_bottom_old = global_config.keep_bottom;
 	normal_layer_old = global_config.normal_layer;
@@ -568,8 +569,8 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_bool("strech_pixmap_bg", panel->strech_pixmap_bg);
 	gnome_config_set_bool("rotate_pixmap_bg", panel->rotate_pixmap_bg);
 
-	gnome_config_set_string("backpixmap",
-				panel->back_pixmap ? panel->back_pixmap : "");
+	gnome_config_set_string ("backpixmap",
+				 sure_string (panel->back_pixmap));
 
 	g_string_sprintf(buf, "#%02x%02x%02x",
 			 (guint)panel->back_color.red/256,
@@ -1084,8 +1085,7 @@ init_user_applets(void)
 		
 		if(strcmp(applet_name, EXTERN_ID) == 0) {
 			char *goad_id = gnome_config_get_string("goad_id");
-			if (goad_id != NULL &&
-			    *goad_id != '\0' &&
+			if ( ! string_empty (goad_id) &&
 			    /* if we try an evil hack such as loading tasklist
 			     * and deskguide instead of the desguide don't
 			     * try to load this applet in the first place */
@@ -1097,14 +1097,14 @@ init_user_applets(void)
 				load_extern_applet (goad_id, buf->str, 
 						    panel, pos, TRUE, TRUE);
 			}
-			g_free(goad_id);
+			g_free (goad_id);
 		} else if(strcmp(applet_name, LAUNCHER_ID) == 0) { 
 			gboolean hoard = FALSE;
 			Launcher *launcher;
 			char *file;
 
 			file = gnome_config_get_string("base_location=");
-			if (file == NULL || *file == '\0') {
+			if (string_empty (file)) {
 				g_free (file);
 				file = gnome_config_get_string("parameters=");
 				hoard = TRUE;
@@ -1371,13 +1371,13 @@ init_user_panels(void)
 		gnome_config_push_prefix (buf->str);
 		
 		back_pixmap = gnome_config_get_string ("backpixmap=");
-		if (back_pixmap && *back_pixmap == '\0') {
+		if (string_empty (back_pixmap)) {
 			g_free(back_pixmap);
 			back_pixmap = NULL;
 		}
 
 		color = gnome_config_get_string("backcolor=#ffffff");
-		if(color && *color)
+		if ( ! string_empty (color))
 			gdk_color_parse(color, &back_color);
 
 		g_string_sprintf(buf,"back_type=%d",PANEL_BACK_NONE);

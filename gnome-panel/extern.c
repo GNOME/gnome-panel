@@ -1092,11 +1092,10 @@ s_panel_run_box (PortableServer_Servant _servant,
 		 const CORBA_char * initial_string,
 		 CORBA_Environment * ev)
 {
-	if (initial_string != NULL &&
-	    initial_string[0] != '\0')
-		show_run_dialog_with_text (initial_string);
-	else
+	if (string_empty (initial_string))
 		show_run_dialog ();
+	else
+		show_run_dialog_with_text (initial_string);
 }
 
 void

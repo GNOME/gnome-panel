@@ -378,8 +378,7 @@ loadup_file(const char *file)
 {
 	GdkPixbuf *pb = NULL;
 	
-	if (file == NULL ||
-	    *file == '\0')
+	if (string_empty (file))
 		return NULL;
 
 	if ( ! g_path_is_absolute(file)) {

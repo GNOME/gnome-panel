@@ -155,8 +155,7 @@ setup_merge_directory(void)
 	merge_main_dir_len = merge_main_dir != NULL ? strlen (merge_main_dir) : 0;
 	merge_merge_dir = gnome_config_get_string("/panel/Merge/Directory=/etc/X11/applnk/");
 
-	if (merge_merge_dir == NULL ||
-	    merge_merge_dir[0] == '\0' ||
+	if (string_empty (merge_merge_dir) ||
 	    ! g_file_test(merge_merge_dir, G_FILE_TEST_ISDIR)) {
 		g_free(merge_merge_dir);
 		merge_merge_dir = NULL;

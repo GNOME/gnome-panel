@@ -425,8 +425,7 @@ properties_apply (Launcher *launcher)
 	/* restore location */
 	launcher->dentry->location = location;
 
-	if(launcher->dentry->name == NULL ||
-	   launcher->dentry->name[0] == '\0') {
+	if (string_empty (launcher->dentry->name)) {
 		g_free (launcher->dentry->name);
 		launcher->dentry->name = g_strdup ("???");
 	}
@@ -437,7 +436,7 @@ properties_apply (Launcher *launcher)
 	button_widget_set_text (BUTTON_WIDGET(launcher->button),
 				launcher->dentry->name);
 	icon = launcher->dentry->icon;
-	if (icon && *icon) {
+	if ( ! string_empty (icon)) {
 		/* Sigh, now we need to make them local to the gnome
 		   install */
 		if (*icon != '/') {

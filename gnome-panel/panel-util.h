@@ -12,6 +12,7 @@ gboolean	string_is_in_list	(const GSList *list,
 
 /* return TRUE if string is NULL or the first character is '\0' */
 gboolean	string_empty		(const char *string);
+#define		sure_string(s)		((s)!=NULL?(s):"")
 
 GtkWidget *	create_text_entry	(GtkWidget *table,
 					 const char *history_id,
@@ -65,13 +66,14 @@ char *		strtok_with_escape	(char *string,
 char *		escape_string		(const char *string,
 					 const char *special);
 
-gboolean	convert_string_to_keysym_state(const char *string,
-					       guint *keysym,
-					       guint *state);
-char *		convert_keysym_state_to_string(guint keysym,
-					       guint state);
+gboolean	convert_string_to_keysym_state (const char *string,
+						guint *keysym,
+						guint *state);
+char *		convert_keysym_state_to_string (guint keysym,
+						guint state);
 
 void		panel_set_dialog_layer	(GtkWidget *dialog);
+void		panel_reset_dialog_layers (void);
 GtkWidget *	panel_error_dialog	(const char *format, ...) G_GNUC_PRINTF (1, 2);
 
 gboolean	is_ext			(const char *file,

@@ -2475,7 +2475,7 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_unref),
 		      GTK_OBJECT(menu));
 	
-	title = g_string_new("");
+	title = g_string_new(NULL);
 
 	for(list = mfl; list != NULL; list = list->next) {
 		MenuFinfo *mf = list->data;
@@ -5361,8 +5361,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 	menu = g_new0(Menu, 1);
 
 	menu->custom_icon = custom_icon;
-	if (custom_icon_file != NULL &&
-	    custom_icon_file[0] != '\0')
+	if (string_empty (custom_icon_file))
 		menu->custom_icon_file = g_strdup (custom_icon_file);
 	else
 		menu->custom_icon_file = NULL;
@@ -5558,7 +5557,7 @@ save_tornoff (void)
 				     gnome_win_hints_get_state(tw));
 
 		gnome_config_set_string("special",
-					tm->special?tm->special:"");
+					sure_string (tm->special));
 
 		gnome_config_set_int("mfl_count", g_slist_length(tm->mfl));
 
