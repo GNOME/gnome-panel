@@ -92,6 +92,12 @@ screensaver_properties_enabled (void)
 	return TRUE;
 }
 
+static gboolean
+screensaver_enabled (void)
+{
+  return !panel_lockdown_get_disable_lock_screen ();
+}
+
 static void
 panel_action_lock_setup_menu (PanelActionButton *button)
 {
@@ -99,13 +105,13 @@ panel_action_lock_setup_menu (PanelActionButton *button)
 				   "activate",
 				   NULL,
 				   _("_Activate Screensaver"),
-				   panel_lockdown_get_disable_lock_screen);
+				   screensaver_enabled);
 
 	panel_applet_add_callback (button->priv->info,
 				   "lock",
 				   NULL,
 				   _("_Lock Screen"),
-				   panel_lockdown_get_disable_lock_screen);
+				   screensaver_enabled);
 
 	panel_applet_add_callback (button->priv->info,
 				   "exit",

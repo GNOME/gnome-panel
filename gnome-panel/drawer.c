@@ -536,6 +536,12 @@ panel_drawer_connect_to_gconf (Drawer *drawer)
 	g_assert (i == PANEL_DRAWER_N_LISTENERS);
 }
 
+static gboolean
+drawer_properties_enabled (void)
+{
+  return !panel_lockdown_get_locked_down ();
+}
+
 static void
 load_drawer_applet (char          *toplevel_id,
 		    const char    *custom_icon,
@@ -597,7 +603,7 @@ load_drawer_applet (char          *toplevel_id,
 				   "properties",
 				   GTK_STOCK_PROPERTIES,
 				   _("_Properties"),
-				   panel_lockdown_get_locked_down);
+				   drawer_properties_enabled);
 
 	panel_applet_add_callback (drawer->info,
 				   "help",

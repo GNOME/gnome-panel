@@ -1,5 +1,19 @@
 2004-02-16  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix a couple of occurrences where menu items were disabled when
+	they should have been enabled. Based on a patch from Srinivasa
+	Ragavan in bug #132971.
+
+	* drawer.c:
+	(drawer_properties_enabled): impl.
+	(load_drawer_applet): use this instead of get_locked_down()
+	
+	* panel-action-button.c:
+	(screensaver_enabled): impl.
+	(panel_action_lock_setup_menu): use this instead of get_disable_lock_screen().
+
+2004-02-16  Mark McLoughlin  <mark@skynet.ie>
+
 	* button-widget.c: (button_widget_class_init):
 	* panel-action-button.c: (panel_action_button_class_init):
 	* panel-frame.c: (panel_frame_class_init):
