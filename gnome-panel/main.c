@@ -234,7 +234,7 @@ main(int argc, char **argv)
 	/* FIXME - get the session stuff working properly */
 
 	g_signal_connect (G_OBJECT (client), "save_yourself",
-			  G_CALLBACK (panel_session_save), NULL);
+			  G_CALLBACK (panel_session_save), argv[0]);
 	g_signal_connect (G_OBJECT (client), "die",
 			  G_CALLBACK (panel_session_die), NULL);
 
