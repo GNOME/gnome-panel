@@ -21,14 +21,6 @@
 #include "status.h"
 #include "swallow.h"
 
-static GdkAtom KWM_MODULE = GDK_NONE;
-static GdkAtom KWM_MODULE_DOCKWIN_ADD = GDK_NONE;
-static GdkAtom KWM_MODULE_DOCKWIN_REMOVE = GDK_NONE;
-static GdkAtom KWM_DOCKWINDOW = GDK_NONE;
-static GdkAtom NAUTILUS_DESKTOP_WINDOW_ID = GDK_NONE;
-static GdkAtom _NET_WM_DESKTOP = GDK_NONE;
-static GdkAtom GNOME_PANEL_DESKTOP_AREA = GDK_NONE;
-
 extern GList *check_swallows;
 
 /*list of all panel widgets created*/
@@ -36,6 +28,37 @@ extern GSList *panel_list;
 
 static void xstuff_setup_global_desktop_area (int left, int right,
 					      int top, int bottom);
+
+#define ATOM(name) xstuff_atom_intern(GDK_DISPLAY(),name)
+/* Once we have multiple display support we need to only use
+ * the below ones */
+
+#define ATOMD(display,name) xstuff_atom_intern(display,name)
+#define ATOMEV(event,name) xstuff_atom_intern(((XAnyEvent *)event)->display,name)
+#define ATOMGDK(win,name) xstuff_atom_intern(GDK_WINDOW_XDISPLAY(win),name)
+
+Atom
+xstuff_atom_intern (Display *display, const char *name)
+{
+	static GHashTable *cache = NULL;
+	char *key;
+	Atom atom;
+
+	if (cache == 0)
+		cache = g_hash_table_new (g_str_hash, g_str_equal);
+
+	key = g_strdup_printf ("%p %s", display, name);
+
+	atom = (Atom)g_hash_table_lookup (cache, key);
+	if (atom == 0) {
+		atom = XInternAtom (display, name, False);
+		g_hash_table_insert (cache, key, (gpointer)atom);
+	} else {
+		g_free (key);
+	}
+
+	return atom;
+}
 
 static void
 steal_statusspot(StatusSpot *ss, Window winid)
@@ -61,8 +84,8 @@ try_adding_status(guint32 winid)
 
 	data = get_typed_property_data (GDK_DISPLAY (),
 					winid,
-					KWM_DOCKWINDOW,
-					KWM_DOCKWINDOW,
+					ATOM ("KWM_DOCKWINDOW"),
+					ATOM ("KWM_DOCKWINDOW"),
 					&size, 32);
 
 	if(data && *data) {
@@ -180,19 +203,6 @@ task_notifier (gpointer func_data,
 void
 xstuff_init (void)
 {
-	KWM_MODULE = gdk_atom_intern ("KWM_MODULE", FALSE);
-	KWM_MODULE_DOCKWIN_ADD =
-		gdk_atom_intern ("KWM_MODULE_DOCKWIN_ADD", FALSE);
-	KWM_MODULE_DOCKWIN_REMOVE =
-		gdk_atom_intern ("KWM_MODULE_DOCKWIN_REMOVE", FALSE);
-	KWM_DOCKWINDOW = gdk_atom_intern ("KWM_DOCKWINDOW", FALSE);
-	NAUTILUS_DESKTOP_WINDOW_ID =
-		gdk_atom_intern ("NAUTILUS_DESKTOP_WINDOW_ID", FALSE);
-	_NET_WM_DESKTOP =
-		gdk_atom_intern ("_NET_WM_DESKTOP", FALSE);
-	GNOME_PANEL_DESKTOP_AREA =
-		gdk_atom_intern ("GNOME_PANEL_DESKTOP_AREA", FALSE);
-
 #ifdef FIXME
 	gwmh_init ();
 
@@ -225,16 +235,16 @@ xstuff_nautilus_desktop_present (void)
 	gdk_error_trap_push ();
 	data = get_typed_property_data (GDK_DISPLAY (),
 					GDK_ROOT_WINDOW (),
-					NAUTILUS_DESKTOP_WINDOW_ID,
-					(GdkAtom)XA_WINDOW,
+					ATOM ("NAUTILUS_DESKTOP_WINDOW_ID"),
+					XA_WINDOW,
 					&size, 32);
 	if (data != NULL &&
 	    *data != 0) {
 		guint32 *desktop;
 		desktop = get_typed_property_data (GDK_DISPLAY (),
 						   *data,
-						   _NET_WM_DESKTOP,
-						   (GdkAtom)XA_CARDINAL,
+						   ATOM ("_NET_WM_DESKTOP"),
+						   XA_CARDINAL,
 						   &size, 32);
 		if (size > 0)
 			ret = TRUE;
@@ -249,13 +259,15 @@ xstuff_nautilus_desktop_present (void)
 }
 
 void
-xstuff_set_simple_hint (GdkWindow *w, GdkAtom atom, long val)
+xstuff_set_simple_hint (GdkWindow *w, const char *name, long val)
 {
+	Atom atom = ATOMGDK (w, name);
+
 	gdk_error_trap_push ();
 
 	XChangeProperty (GDK_DISPLAY (),
 			 GDK_WINDOW_XWINDOW (w),
-			 (Atom)atom, (Atom)atom,
+			 atom, atom,
 			 32, PropModeReplace,
 			 (unsigned char*)&val, 1);
 
@@ -271,7 +283,8 @@ status_event_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 	xevent = (XEvent *)gdk_xevent;
 
 	if(xevent->type == ClientMessage) {
-		if(xevent->xclient.message_type == (Atom)KWM_MODULE_DOCKWIN_ADD &&
+		if(xevent->xclient.message_type ==
+		   ATOMEV (xevent, "KWM_MODULE_DOCKWIN_ADD") &&
 		   !status_applet_get_ss(xevent->xclient.data.l[0])) {
 			Window w = xevent->xclient.data.l[0];
 			StatusSpot *ss;
@@ -279,7 +292,7 @@ status_event_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 			if (ss != NULL)
 				steal_statusspot (ss, w);
 		} else if(xevent->xclient.message_type ==
-			  (Atom)KWM_MODULE_DOCKWIN_REMOVE) {
+			  ATOMEV (xevent, "KWM_MODULE_DOCKWIN_REMOVE")) {
 			StatusSpot *ss;
 			ss = status_applet_get_ss (xevent->xclient.data.l[0]);
 			if (ss != NULL)
@@ -293,19 +306,20 @@ status_event_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 void
 xstuff_setup_kde_dock_thingie (GdkWindow *w)
 {
-	xstuff_set_simple_hint (w, KWM_MODULE, 2);
+	xstuff_set_simple_hint (w, "KWM_MODULE", 2);
 	gdk_window_add_filter (w, status_event_filter, NULL);
-	send_client_message_1L (GDK_ROOT_WINDOW (), GDK_WINDOW_XWINDOW (w),
-				KWM_MODULE, SubstructureNotifyMask,
-				GDK_WINDOW_XWINDOW (w));
+	send_client_message_3L (GDK_ROOT_WINDOW (), GDK_WINDOW_XWINDOW (w),
+				ATOMGDK (w, "KWM_MODULE"),
+				SubstructureNotifyMask,
+				GDK_WINDOW_XWINDOW (w), 0, 0);
 }
 
 /* Stolen from deskguide */
 gpointer
 get_typed_property_data (Display *xdisplay,
 			 Window   xwindow,
-			 GdkAtom  property,
-			 GdkAtom  requested_type,
+			 Atom     property,
+			 Atom     requested_type,
 			 gint    *size_p,
 			 guint    expected_format)
 {
@@ -324,10 +338,10 @@ get_typed_property_data (Display *xdisplay,
 
   abort = XGetWindowProperty (xdisplay,
 			      xwindow,
-			      (Atom)property,
+			      property,
 			      0, prop_buffer_lengh,
 			      False,
-			      (Atom)requested_type,
+			      requested_type,
 			      &type_returned, &format_returned,
 			      &nitems_return,
 			      &bytes_after_return,
@@ -336,8 +350,8 @@ get_typed_property_data (Display *xdisplay,
       type_returned == None)
     abort++;
   if (!abort &&
-      (Atom)requested_type != AnyPropertyType &&
-      (Atom)requested_type != type_returned)
+      requested_type != AnyPropertyType &&
+      requested_type != type_returned)
     {
       g_warning (G_GNUC_PRETTY_FUNCTION "(): Property has wrong type, probably on crack");
       abort++;
@@ -399,17 +413,19 @@ get_typed_property_data (Display *xdisplay,
 
 /* sorta stolen from deskguide */
 gboolean
-send_client_message_1L (Window recipient,
+send_client_message_3L (Window recipient,
 			Window event_window,
-			GdkAtom   message_type,
+			Atom   message_type,
 			long   event_mask,
-			glong  long1)
+			long   long1,
+			long   long2,
+			long   long3)
 {
   XEvent xevent = { 0 };
 
   xevent.type = ClientMessage;
   xevent.xclient.window = event_window;
-  xevent.xclient.message_type = (Atom)message_type;
+  xevent.xclient.message_type = message_type;
   xevent.xclient.format = 32;
   xevent.xclient.data.l[0] = long1;
 
@@ -424,15 +440,21 @@ send_client_message_1L (Window recipient,
 gboolean
 xstuff_is_compliant_wm (void)
 {
-#ifdef FIXME
-	GwmhDesk *desk;
+	gpointer data;
+	int size;
 
-	desk = gwmh_desk_get_config ();
-
-	return desk->detected_gnome_wm;
-#else
-	return FALSE;
-#endif
+	data = get_typed_property_data (GDK_DISPLAY (),
+					GDK_ROOT_WINDOW (),
+					ATOM ("_NET_SUPPORTED"),
+					XA_ATOM,
+					&size, 32);
+	if (data != NULL) {
+		/* Actually checks for some of these */
+		g_free (data);
+		return TRUE;
+	} else {
+		return FALSE;
+	}
 }
 
 void
@@ -440,13 +462,10 @@ xstuff_set_no_group_and_no_input (GdkWindow *win)
 {
 	XWMHints *old_wmhints;
 	XWMHints wmhints = {0};
-	static GdkAtom wm_client_leader_atom = GDK_NONE;
 
-	if (wm_client_leader_atom == GDK_NONE)
-		wm_client_leader_atom = gdk_atom_intern ("WM_CLIENT_LEADER",
-							 FALSE);
-
-	gdk_property_delete (win, wm_client_leader_atom);
+	XDeleteProperty (GDK_WINDOW_XDISPLAY (win),
+			 GDK_WINDOW_XWINDOW (win),
+			 ATOMGDK (win, "WM_CLIENT_LEADER"));
 
 	old_wmhints = XGetWMHints (GDK_DISPLAY (), GDK_WINDOW_XWINDOW (win));
 	/* General paranoia */
@@ -494,7 +513,7 @@ xstuff_setup_global_desktop_area (int left, int right, int top, int bottom)
 
 	XChangeProperty (GDK_DISPLAY (),
 			 GDK_ROOT_WINDOW (), 
-			 (Atom)GNOME_PANEL_DESKTOP_AREA,
+			 ATOM ("GNOME_PANEL_DESKTOP_AREA"),
 			 XA_CARDINAL,
 			 32, PropModeReplace,
 			 (unsigned char *)vals, 4);
@@ -509,7 +528,6 @@ void
 xstuff_setup_desktop_area (int screen, int left, int right, int top, int bottom)
 {
 	char *screen_atom;
-	GdkAtom atom;
 	long vals[4];
 	static int screen_width = -1, screen_height = -1;
 
@@ -529,15 +547,14 @@ xstuff_setup_desktop_area (int screen, int left, int right, int top, int bottom)
 	 * root window, this should just set the GNOME_PANEL_DESKTOP_AREA */
 	screen_atom = g_strdup_printf ("GNOME_PANEL_DESKTOP_AREA_%d",
 				       screen);
-	atom = gdk_atom_intern (screen_atom, FALSE);
-	g_free (screen_atom);
-
 	XChangeProperty (GDK_DISPLAY (),
 			 GDK_ROOT_WINDOW (), 
-			 (Atom)atom,
+			 ATOM (screen_atom),
 			 XA_CARDINAL,
 			 32, PropModeReplace,
 			 (unsigned char *)vals, 4);
+
+	g_free (screen_atom);
 
 	xstuff_setup_global_desktop_area
 		((multiscreen_x (screen)      == 0)             ? left   : -1,
@@ -556,23 +573,22 @@ xstuff_unsetup_desktop_area (void)
 {
 	int i;
 	char *screen_atom;
-	GdkAtom atom;
 
 	gdk_error_trap_push ();
 
 	XDeleteProperty (GDK_DISPLAY (),
 			 GDK_ROOT_WINDOW (),
-			 (Atom)GNOME_PANEL_DESKTOP_AREA);
+			 ATOM ("GNOME_PANEL_DESKTOP_AREA"));
 
 	for (i = 0; i < multiscreen_screens (); i++) {
 		screen_atom =
 			g_strdup_printf ("GNOME_PANEL_DESKTOP_AREA_%d", i);
-		atom = gdk_atom_intern (screen_atom, FALSE);
-		g_free (screen_atom);
 
 		XDeleteProperty (GDK_DISPLAY (),
 				 GDK_ROOT_WINDOW (),
-				 (Atom)atom);
+				 ATOM (screen_atom));
+
+		g_free (screen_atom);
 	}
 
 	gdk_flush ();
@@ -610,15 +626,32 @@ xstuff_set_wmspec_dock_hints (GdkWindow *window)
 {
         Atom atom;
         
-        atom = XInternAtom (gdk_display,
-                            "_NET_WM_WINDOW_TYPE_DOCK",
-                            False);
+        atom = ATOMGDK (window, "_NET_WM_WINDOW_TYPE_DOCK");
 
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
                          GDK_WINDOW_XWINDOW (window),
-                         XInternAtom (gdk_display,
-                                      "_NET_WM_WINDOW_TYPE",
-                                      False),
+			 ATOMGDK (window, "_NET_WM_WINDOW_TYPE"),
                          XA_ATOM, 32, PropModeReplace,
                          (guchar *)&atom, 1);
+}
+
+void
+xstuff_set_wmspec_strut (GdkWindow *window,
+			 int left,
+			 int right,
+			 int top,
+			 int bottom)
+{
+	long vals[4];
+        
+	vals[0] = left;
+	vals[1] = right;
+	vals[2] = top;
+	vals[3] = bottom;
+
+        XChangeProperty (GDK_WINDOW_XDISPLAY (window),
+                         GDK_WINDOW_XWINDOW (window),
+			 ATOMGDK (window, "_NET_WM_STRUT"),
+                         XA_ATOM, 32, PropModeReplace,
+                         (guchar *)vals, 4);
 }

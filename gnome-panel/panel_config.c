@@ -202,28 +202,6 @@ update_config_floating_orient (BasePWidget *panel)
 }
 
 void
-update_config_avoid_on_maximize (BasePWidget *panel)
-{
-	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
-	GtkWidget *toggle;
-
-	if (ppc == NULL ||
-	    ppc->ppc_origin_change)
-		return;
-
-	toggle = ppc->avoid_on_maximize_button;
-
-	if (panel->avoid_on_maximize &&
-	    ! GTK_TOGGLE_BUTTON (toggle)->active)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-					      TRUE);
-	else if ( ! panel->avoid_on_maximize &&
-		 GTK_TOGGLE_BUTTON (toggle)->active)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-					      FALSE);
-}
-
-void
 update_config_screen (BasePWidget *w)
 {
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
@@ -496,7 +474,6 @@ config_apply (PerPanelConfig *ppc)
 					    ppc->sz,
 					    ppc->mode,
 					    BASEP_WIDGET(ppc->panel)->state,
-					    ppc->avoid_on_maximize,
 					    ppc->hidebuttons,
 					    ppc->hidebutton_pixmaps,
 					    ppc->back_type,
@@ -514,7 +491,6 @@ config_apply (PerPanelConfig *ppc)
 					     ppc->sz,
 					     ppc->mode,
 					     BASEP_WIDGET(ppc->panel)->state,
-					     ppc->avoid_on_maximize,
 					     ppc->hidebuttons,
 					     ppc->hidebutton_pixmaps,
 					     ppc->back_type,
@@ -531,7 +507,6 @@ config_apply (PerPanelConfig *ppc)
 					      ppc->sz,
 					      ppc->mode,
 					      BASEP_WIDGET(ppc->panel)->state,
-					      ppc->avoid_on_maximize,
 					      ppc->hidebuttons,
 					      ppc->hidebutton_pixmaps,
 					      ppc->back_type,
@@ -548,7 +523,6 @@ config_apply (PerPanelConfig *ppc)
 					       ppc->orient,
 					       ppc->mode,
 					       BASEP_WIDGET (ppc->panel)->state,
-					       ppc->avoid_on_maximize,
 					       ppc->sz,
 					       ppc->hidebuttons,
 					       ppc->hidebutton_pixmaps,
@@ -564,7 +538,6 @@ config_apply (PerPanelConfig *ppc)
 					    dp->orient,
 					    ppc->mode,
 					    BASEP_WIDGET (ppc->panel)->state, 
-					    ppc->avoid_on_maximize,
 					    ppc->sz,
 					    ppc->hidebuttons,
 					    ppc->hidebutton_pixmaps,
@@ -597,16 +570,6 @@ static void
 set_sensitive_toggle (GtkWidget *widget, GtkWidget *widget2)
 {
 	gtk_widget_set_sensitive(widget2,GTK_TOGGLE_BUTTON(widget)->active);
-}
-
-static void
-basep_set_avoid (GtkWidget *widget, gpointer data)
-{
-	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
-	
-	ppc->avoid_on_maximize = GTK_TOGGLE_BUTTON (widget)->active ? TRUE : FALSE;
-
-	panel_config_register_changes (ppc);
 }
 
 static void
@@ -706,18 +669,6 @@ make_misc_widget (PerPanelConfig *ppc, gboolean avoiding)
 	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
-	/* Avoid */
-	button = gtk_check_button_new_with_label
-		(_("Avoid this panel when maximizing windows"));
-	ppc->avoid_on_maximize_button = button;
-	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
-	if (ppc->avoid_on_maximize)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	g_signal_connect (G_OBJECT (button), "toggled", 
-			  G_CALLBACK (basep_set_avoid), 
-			  NULL);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
-
 	if (multiscreen_screens () > 1) {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
@@ -1674,7 +1625,6 @@ panel_config (GtkWidget *panel)
 
 	ppc->sz = pw->sz;
 	ppc->screen = basep->screen;
-	ppc->avoid_on_maximize = basep->avoid_on_maximize;
 	ppc->hidebuttons = basep->hidebuttons_enabled;
 	ppc->hidebutton_pixmaps = basep->hidebutton_pixmaps_enabled;
 	ppc->fit_pixmap_bg = pw->fit_pixmap_bg;

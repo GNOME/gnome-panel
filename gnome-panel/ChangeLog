@@ -1,3 +1,30 @@
+Wed Dec 05 13:36:43 2001  George Lebl <jirka@5z.com>
+
+	* aligned-widget.[ch], basep-widget.[ch],
+	  border-widget.[ch], drawer-widget.[ch],
+	  edge-widget.[ch], floating-widget.[ch],
+	  drawer.c, menu.c, panel_config.[ch],
+	  session.c, sliding-widget.[ch]:  Remove the avoid
+	  on maximize configuration crack.  It was just pure
+	  crack.  With WM_STRUT we should be mostly sane
+	  on this issue anyway.
+
+	* basep-widget.[ch]: whack some of the old hint stuff
+	  and make user the update_winhints virtual method
+	  is called
+
+	* applet.c: fix warning.
+
+	* xstuff.[ch]: add some api for atom interning, that
+	  caches atoms per display, and be in general more
+	  multiple display safe.  Also use X atoms only and
+	  not GdkAtoms.  Also implement checking for _NET
+	  standard being supported.  We'll screw the old
+	  gnome hitns and just have two states:  _NET
+	  supported or completely dumb WM (use override
+	  redirect).  Add a WM_STRUT setting function (not
+	  yet actually used.
+
 2001-12-04 Stephen Browne <stephen.browne@sun.com>
 
 	* gnome-panel-properties.c

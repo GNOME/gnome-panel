@@ -69,7 +69,6 @@ struct _BasePWidget
 
 	BasePMode               mode;
 	BasePState              state;
-	gboolean		avoid_on_maximize;
 
 	gboolean		hidebuttons_enabled;
 	gboolean		hidebutton_pixmaps_enabled;
@@ -181,7 +180,6 @@ GtkWidget*	basep_widget_construct		(BasePWidget *basep,
 						 int sz,
 						 BasePMode mode,
 						 BasePState state,
-						 gboolean avoid_on_maximize,
 						 gboolean hidebuttons_enabled,
 						 gboolean hidebutton_pixmaps_enabled,
 						 PanelBackType back_type,
@@ -198,7 +196,6 @@ void		basep_widget_change_params	(BasePWidget *basep,
 						 int sz,
 						 BasePMode mode,
 						 BasePState state,
-						 gboolean avoid_on_maximize,
 						 gboolean hidebuttons_enabled,
 						 gboolean hidebutton_pixmaps_enabled,
 						 PanelBackType back_type,

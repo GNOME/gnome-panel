@@ -22,7 +22,6 @@ struct _PerPanelConfig {
 	gboolean		hidebuttons;
 	gboolean		hidebutton_pixmaps;
 	BasePMode               mode;
-	gboolean		avoid_on_maximize;
 
 	/*floating widget*/
 	GtkOrientation        orient;
@@ -60,10 +59,7 @@ struct _PerPanelConfig {
 
 	GtkWidget		*pix_entry;
 
-	/*avoid_on_maximize*/
-	GtkWidget               *avoid_on_maximize_button;
-
-	/*avoid_on_maximize*/
+	/*screen number spinner*/
 	GtkWidget               *screen_spin;
 
 	/*hiding stuff*/
@@ -100,7 +96,6 @@ void panel_config_register_changes (PerPanelConfig *ppc);
 
 void panel_config (GtkWidget *panel);
 void update_config_size (GtkWidget *panel);
-void update_config_avoid_on_maximize (BasePWidget *panel);
 void update_config_screen (BasePWidget *panel);
 void update_config_mode (BasePWidget *panel);
 void update_config_hidebuttons (BasePWidget *panel);

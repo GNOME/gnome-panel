@@ -778,7 +778,7 @@ panel_applet_register (GtkWidget      *applet,
 			     PANEL_APPLET_FORBIDDEN_PANELS, NULL);
 
 	if (type == APPLET_BONOBO) {
-		panel_applet_frame_get_expand_flags (applet,
+		panel_applet_frame_get_expand_flags (PANEL_APPLET_FRAME (applet),
 						     &expand_major,
 						     &expand_minor);
 	}

@@ -448,8 +448,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int ("mode", basep->mode);
 		gnome_config_set_int ("state", basep->state);
 
-		gnome_config_set_bool ("avoid_on_maximize",
-				       basep->avoid_on_maximize);
 		gnome_config_set_int ("screen",
 				      basep->screen);
 	}
@@ -1070,7 +1068,6 @@ session_init_user_panels(void)
 					 BORDER_BOTTOM,
 					 BASEP_EXPLICIT_HIDE /* mode */,
 					 BASEP_SHOWN /* state */,
-					 TRUE /* avoid_on_maximize */,
 					 PANEL_SIZE_MEDIUM,
 					 TRUE /* hidebuttons_enabled */,
 					 TRUE /* hidebutton_pixmaps */,
@@ -1103,7 +1100,6 @@ session_init_user_panels(void)
 		int sz;
 		BasePState state;
 		BasePMode mode;
-		gboolean avoid_on_maximize;
 		BorderEdge edge;
 		char *back_pixmap, *color;
 		GdkColor back_color = {0,0,0,1};
@@ -1172,13 +1168,9 @@ session_init_user_panels(void)
 			edge = conditional_get_int ("edge", BORDER_BOTTOM,
 						    NULL);
 
-			avoid_on_maximize = conditional_get_bool
-				("avoid_on_maximize", TRUE, NULL);
-
 			panel = edge_widget_new (screen,
 						 edge, 
 						 mode, state,
-						 avoid_on_maximize,
 						 sz,
 						 hidebuttons_enabled,
 						 hidebutton_pixmaps_enabled,
@@ -1196,15 +1188,11 @@ session_init_user_panels(void)
 			align = conditional_get_int ("align", ALIGNED_LEFT,
 						     NULL);
 
-			avoid_on_maximize = conditional_get_bool
-				("avoid_on_maximize", TRUE, NULL);
-
 			panel = aligned_widget_new (screen,
 						    align,
 						    edge,
 						    mode,
 						    state,
-						    avoid_on_maximize,
 						    sz,
 						    hidebuttons_enabled,
 						    hidebutton_pixmaps_enabled,
@@ -1228,16 +1216,12 @@ session_init_user_panels(void)
 
 			offset = conditional_get_int ("offset", 0, NULL);
 
-			avoid_on_maximize = conditional_get_bool
-				("avoid_on_maximize", TRUE, NULL);
-
 			panel = sliding_widget_new (screen,
 						    anchor,
 						    offset,
 						    edge,
 						    mode,
 						    state,
-						    avoid_on_maximize,
 						    sz,
 						    hidebuttons_enabled,
 						    hidebutton_pixmaps_enabled,
@@ -1258,13 +1242,9 @@ session_init_user_panels(void)
 
 			/* FIXME: there are some issues with auto hiding drawers */
 
-			avoid_on_maximize = conditional_get_bool
-				("avoid_on_maximize", FALSE, NULL);
-
 			panel = drawer_widget_new (orient,
 						   BASEP_EXPLICIT_HIDE, 
 						   state,
-						   avoid_on_maximize,
 						   sz,
 						   hidebuttons_enabled,
 						   hidebutton_pixmaps_enabled,
@@ -1292,16 +1272,12 @@ session_init_user_panels(void)
 			x = conditional_get_int ("x", 0, NULL);
 			y = conditional_get_int ("y", 0, NULL);
 
-			avoid_on_maximize = conditional_get_bool
-				("avoid_on_maximize", FALSE, NULL);
-
 			panel = floating_widget_new (screen,
 						     x,
 						     y,
 						     orient,
 						     mode,
 						     state,
-						     avoid_on_maximize,
 						     sz,
 						     hidebuttons_enabled,
 						     hidebutton_pixmaps_enabled,

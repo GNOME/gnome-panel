@@ -7,8 +7,10 @@
 #include <X11/Xatom.h>
 
 void xstuff_init			(void);
+Atom xstuff_atom_intern			(Display *display,
+					 const char *name);
 void xstuff_set_simple_hint		(GdkWindow *w,
-					 GdkAtom atom,
+					 const char *name,
 					 long val);
 void xstuff_setup_kde_dock_thingie	(GdkWindow *w);
 
@@ -16,16 +18,18 @@ gboolean xstuff_is_compliant_wm		(void);
 
 gpointer get_typed_property_data	(Display *xdisplay,
 					 Window   xwindow,
-					 GdkAtom  property,
-					 GdkAtom  requested_type,
+					 Atom     property,
+					 Atom     requested_type,
 					 gint    *size_p,
 					 guint    expected_format);
 
-gboolean send_client_message_1L		(Window  recipient,
+gboolean send_client_message_3L		(Window  recipient,
 					 Window  event_window,
-					 GdkAtom message_type,
+					 Atom    message_type,
 					 long    event_mask,
-					 glong   long1);
+					 long    long1,
+					 long    long2,
+					 long    long3);
 
 void xstuff_go_through_client_list	(void);
 
@@ -42,5 +46,10 @@ void xstuff_set_pos_size		(GdkWindow *window,
 					 int x, int y,
 					 int w, int h);
 void xstuff_set_wmspec_dock_hints       (GdkWindow *window);
+void xstuff_set_wmspec_strut		(GdkWindow *window,
+					 int left,
+					 int right,
+					 int top,
+					 int bottom);
 
 #endif

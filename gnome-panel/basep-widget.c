@@ -1119,10 +1119,6 @@ basep_widget_instance_init (BasePWidget *basep)
 	GTK_WINDOW(basep)->allow_shrink = TRUE;
 	GTK_WINDOW(basep)->allow_grow = TRUE;
 
-#ifdef FIXME
-	GTK_WINDOW(basep)->auto_shrink = TRUE;
-#endif
-
 	/*don't let us close the window*/                                       
 	
 	g_signal_connect(G_OBJECT(basep),"delete_event",                    
@@ -1166,7 +1162,6 @@ basep_widget_instance_init (BasePWidget *basep)
 		      "hidebutton_pixmaps_enabled", TRUE,
 		      NULL);
 
-	basep->avoid_on_maximize = TRUE;
 	basep->leave_notify_timer_tag = 0;
 	basep->autohide_inhibit = FALSE;
 	basep->drawers_open = 0;
@@ -1200,83 +1195,16 @@ basep_widget_show_hidebutton_pixmaps(BasePWidget *basep)
 void
 basep_widget_update_winhints (BasePWidget *basep)
 {
-  GtkWidget *w = GTK_WIDGET (basep);
-  gtk_window_set_decorated (GTK_WINDOW (w), FALSE);
-  gtk_window_stick (GTK_WINDOW (w));
-  /* FIXME: Should be GDK_WINDOW_TYPE_HINT_DOCK */
-  /*
-  gtk_window_set_type_hint (GTK_WINDOW (w),
-			    GDK_WINDOW_TYPE_HINT_TOOLBAR);
-  */
-#if FIXME /* Nearly all of this is old cruft and should just be removed. We need to use the new wm spec instead */
-	GnomeWinLayer layer;
-	guint coverhint;
+	GtkWidget *w = GTK_WIDGET (basep);
+	gtk_window_set_decorated (GTK_WINDOW (w), FALSE);
+	gtk_window_stick (GTK_WINDOW (w));
 
-        /* Do this before compliance check, the compliance
-         * check is for the legacy GNOME spec, this is for the
-         * new WM spec. Also, there's no harm to setting the hint
-         * for incompliant WM's, they'll just ignore it.
-         */
-        xstuff_set_wmspec_dock_hints (w->window);
-        
-	if ( ! basep->compliant_wm)
-		return;
+	xstuff_set_wmspec_dock_hints (w->window);
 
-	gnome_win_hints_set_expanded_size (w, 0, 0, 0, 0);
-	gdk_window_set_decorations (w->window, 0);
-	gnome_win_hints_set_state (w, WIN_STATE_STICKY |
-				   WIN_STATE_FIXED_POSITION);
+	/* FIXME: non-compiance should be tested! */
 
-	if (basep->avoid_on_maximize) {
-		coverhint = WIN_HINTS_DO_NOT_COVER;
-	} else {
-		coverhint = 0;
-	}
-
-	if (basep->level == BASEP_LEVEL_DEFAULT) {
-		if (global_config.normal_layer) {
-			layer = WIN_LAYER_NORMAL;
-		} else if (global_config.keep_bottom) {
-			layer = WIN_LAYER_BELOW;
-		} else {
-			layer = WIN_LAYER_DOCK;
-		}
-
-		/* drawers are always in DOCK, or NORMAL */
-		if ( DRAWER_IS_WIDGET(w) &&
-		     ! global_config.normal_layer)
-			layer = WIN_LAYER_DOCK;
-
-		/* if in autohiding mode, then we always want dock by default
-		 */
-		if (basep->mode == BASEP_AUTO_HIDE)
-			layer = WIN_LAYER_DOCK;
-
-	} else if (basep->level == BASEP_LEVEL_BELOW) {
-		layer = WIN_LAYER_BELOW;
-	} else if (basep->level == BASEP_LEVEL_NORMAL) {
-		layer = WIN_LAYER_NORMAL;
-	} else /* if (basep->level == BASEP_LEVEL_ABOVE) */ {
-		layer = WIN_LAYER_DOCK;
-	} 
-
-	switch (basep->state) {
-	case BASEP_SHOWN:
-	case BASEP_MOVING:
-
-		gnome_win_hints_set_layer (w, layer);
-		gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
-					   coverhint);
-		break;
-	default: /* all of the hidden states */
-		gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS);
-		gnome_win_hints_set_layer (w, (global_config.keep_bottom ||
-					       global_config.normal_layer)
-					   ? WIN_LAYER_ONTOP 
-					   : WIN_LAYER_ABOVE_DOCK);
-		break;
-	}
-#endif
+	if (BASEP_POS_GET_CLASS (basep->pos)->update_winhints != NULL)
+		BASEP_POS_GET_CLASS (basep->pos)->update_winhints (basep);
 }
 
 void
@@ -1404,7 +1332,6 @@ basep_widget_construct (BasePWidget *basep,
 			int sz,
 			BasePMode mode,
 			BasePState state,
-			gboolean avoid_on_maximize,
 			gboolean hidebuttons_enabled,
 			gboolean hidebutton_pixmaps_enabled,
 			PanelBackType back_type,
@@ -1491,8 +1418,6 @@ basep_widget_construct (BasePWidget *basep,
 
 	basep->screen = screen;
 
-	basep->avoid_on_maximize = avoid_on_maximize;
-
 	basep->hidebuttons_enabled = hidebuttons_enabled;
 	basep->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 
@@ -1524,7 +1449,6 @@ basep_widget_change_params (BasePWidget *basep,
 			    int sz,
 			    BasePMode mode,
 			    BasePState state,
-			    gboolean avoid_on_maximize,
 			    gboolean hidebuttons_enabled,
 			    gboolean hidebutton_pixmaps_enabled,
 			    PanelBackType back_type,
@@ -1575,11 +1499,6 @@ basep_widget_change_params (BasePWidget *basep,
 				   strech_pixmap_bg,
 				   rotate_pixmap_bg,
 				   back_color);
-
-	if (basep->avoid_on_maximize != avoid_on_maximize) {
-		basep->avoid_on_maximize = avoid_on_maximize;
-		basep_widget_update_winhints (basep);
-	}
 
 	basep_widget_set_hidebuttons (basep);
 	basep_widget_show_hidebutton_pixmaps (basep);
