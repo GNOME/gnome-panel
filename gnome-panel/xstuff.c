@@ -508,7 +508,5 @@ xstuff_get_current_workspace (GdkScreen *screen)
  
 	XFree (num);
 
-	g_print ("Current workspace %d\n", retval);
-
 	return retval;
 }
