@@ -1,3 +1,26 @@
+2005-02-03  Vincent Untz  <vincent@vuntz.net>
+
+	Make "Run application" faster.
+	Based on patch by Frank Worsley <fworsley@shaw.ca>
+	Should fix bug #133243
+
+	* panel-run-dialog.c: (panel_run_dialog_destroy): free new stuff
+	(fill_files_from): add a prefix as parameter that tell us what we're
+	looking for, and use it, use only g_file_test() if necessary,
+	remove the test to see if we already have the items in our completion
+	list since it should never happen now
+	(fill_possible_executables): new, just find names of possible
+	executables
+	(fill_executables): find real executables that have a specific prefix
+	(panel_run_dialog_ensure_completion): kill
+	(panel_run_dialog_update_completion): massive update, create the
+	completion stuff if it was not created yet, find the prefix of the
+	basename to help us look for completion items, use a hash table to
+	know if we already looked for a prefix in a directory
+	(entry_event): do not update the completion when it's not necessary,
+	remove leading spaces from the command to complete
+	(entry_changed): remove leading spaces from the command
+
 2005-02-03  Mark McLoughlin  <mark@skynet.ie>
 
 	* egg-recent-item.[ch]: sync with libegg to get

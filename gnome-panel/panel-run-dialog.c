@@ -80,6 +80,8 @@ typedef struct {
 	
 	GtkListStore     *program_list_store;
 
+	GHashTable       *dir_hash;
+	GList		 *possible_executables;
 	GList		 *completion_items;
 	GCompletion      *completion;
 	
@@ -138,6 +140,15 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 					    dialog->content_notify_id);
 	dialog->content_notify_id = 0;
 
+	if (dialog->dir_hash)
+		g_hash_table_destroy (dialog->dir_hash);
+	dialog->dir_hash = NULL;
+
+	for (l = dialog->possible_executables; l; l = l->next)
+		g_free (l->data);
+	g_list_free (dialog->possible_executables);
+	dialog->possible_executables = NULL;
+	
 	for (l = dialog->completion_items; l; l = l->next)
 		g_free (l->data);
 	g_list_free (dialog->completion_items);
@@ -1084,39 +1095,42 @@ panel_run_dialog_setup_file_button (PanelRunDialog *dialog,
 }
 
 static GList *
-fill_files_from (GList      *list,
-		 const char *dirname,
-		 const char *prefix,
+fill_files_from (const char *dirname,
+		 const char *dirprefix,
+		 char        prefix,
 		 GList      *existing_items)
 {
-	struct dirent *dent;
+	GList         *list;
 	DIR           *dir;
+	struct dirent *dent;
 	
+	list = NULL;
 	dir = opendir (dirname);
 	
 	if (!dir)
 		return list;
 	
 	while ((dent = readdir (dir))) {
-		char          *file;
-		char          *item;
-		const char    *suffix;
+		char       *file;
+		char       *item;
+		const char *suffix;
 		
+		if (!dent->d_name ||
+		    dent->d_name [0] != prefix)
+			continue;
+
 		file = g_build_filename (dirname, dent->d_name, NULL);
 		
 		suffix = NULL;
-		if (g_file_test (file, G_FILE_TEST_IS_DIR))
+		/* don't use g_file_test at first so we don't stat() */
+		if (dent->d_type == DT_DIR ||
+		    (dent->d_type == DT_LNK &&
+		     g_file_test (file, G_FILE_TEST_IS_DIR)))
 			suffix = "/";
 		
 		g_free (file);
 		
-		item = g_strconcat (prefix, dent->d_name, suffix, NULL);
-		
-		if (g_list_find_custom (existing_items, item, (GCompareFunc) strcmp)) {
-			g_free (item);
-			closedir (dir);
-			return list;
-		}
+		item = g_build_filename (dirprefix, dent->d_name, suffix, NULL);
 		
 		list = g_list_prepend (list, item);
 	}
@@ -1127,100 +1141,152 @@ fill_files_from (GList      *list,
 }	
 
 static GList *
-fill_executables_from (GList      *list,
-		       const char *dirname)
+fill_possible_executables ()
 {
-	struct dirent *dent;
-	DIR           *dir;
-	char          *file;
-	struct stat    file_stat;
-
-	dir = opendir (dirname);
-
-	if (!dir)
-		return list;
-
-	while ((dent = readdir (dir))) {
-		file = g_build_filename (dirname, dent->d_name, NULL);
-
-		if (!access (file, X_OK) &&
-		    !stat (file, &file_stat) && !S_ISDIR (file_stat.st_mode))
-			list = g_list_prepend (list, g_strdup (dent->d_name));
-		
-		g_free (file);
-	}
-
-	closedir (dir);
+	GList         *list;
+	const char    *path;
+	char         **pathv;
+	int            i;
 	
-	return list;
-}
-
-static GList *
-fill_executables (GList *list)
-{
-	const char  *path;
-	char       **pathv;
-	int          i;
-
+	list = NULL;
 	path = g_getenv ("PATH");
 
 	if (!path || !path [0])
 		return list;
 
 	pathv = g_strsplit (path, ":", 0);
+	
+	for (i = 0; pathv [i]; i++) {
+		const char *file;
+		char       *filename;
+		GDir       *dir;
 
-	for (i = 0; pathv [i]; i++)
-		list = fill_executables_from (list, pathv [i]);
+		dir = g_dir_open (pathv [i], 0, NULL);
+
+		if (!dir)
+			continue;
+
+		while ((file = g_dir_read_name (dir))) {
+			filename = g_build_filename (pathv [i], file, NULL);
+			list = g_list_prepend (list, filename);
+		}
+
+		g_dir_close (dir);
+	}
 	
 	g_strfreev (pathv);
 	
 	return list;
 }
 
-static void
-panel_run_dialog_ensure_completion (PanelRunDialog *dialog)
+static GList *
+fill_executables (GList *possible_executables,
+		  GList *existing_items,
+		  char   prefix)
 {
-	if (!dialog->completion) {
-		dialog->completion = g_completion_new (NULL);
-		
-		dialog->completion_items = fill_executables (NULL);
-		dialog->completion_items = fill_files_from  (dialog->completion_items, "/", "/", NULL);
-		dialog->completion_items = fill_files_from  (dialog->completion_items, g_get_home_dir(), "", NULL);
-		
-		g_completion_add_items (dialog->completion,
-					dialog->completion_items);
+	GList *list;
+	GList *l;
+	
+	list = NULL;	
+	
+	for (l = possible_executables; l; l = l->next) {
+		const char *filename;
+		char       *basename;
+			
+		filename = l->data;
+		basename = g_path_get_basename (filename);
+			
+		if (basename [0] == prefix &&
+		    g_file_test (filename, G_FILE_TEST_IS_REGULAR) &&
+		    g_file_test (filename, G_FILE_TEST_IS_EXECUTABLE)) {
+			    
+			if (g_list_find_custom (existing_items, basename,
+						(GCompareFunc) strcmp)) {
+				g_free (basename);
+				return NULL;
+			}
+
+			list = g_list_prepend (list, basename);
+		 } else {
+			g_free (basename);
+		 }
 	}
+	
+	return list;
 }
 
 static void
 panel_run_dialog_update_completion (PanelRunDialog *dialog,
 				    const char     *text)
 {
-	g_assert (dialog->completion != NULL);
-	
-	if (text [strlen (text) - 1] == '/') {
-		const char *dirname;
-		char       *freeme;
-		GList      *list;
-		
-		dirname = text;
-		freeme = NULL;
-		
-		if (dirname [0] != '/')
-			dirname = freeme = g_build_filename(g_get_home_dir(), text, NULL);
-		
-		list = fill_files_from (NULL, dirname, text, dialog->completion_items);
-		
-		if (freeme)
-			g_free (freeme);
-		
-		if (list == NULL)
-			return;
-		
-		g_completion_add_items (dialog->completion, list);
-		
-		dialog->completion_items = g_list_concat (dialog->completion_items, list);
+	GList *list;
+	GList *executables;
+	char   prefix;
+	char  *buf;
+	char  *dirname;
+	char  *dirprefix;
+	char  *key;
+
+	g_assert (text != NULL && *text != '\0' && !g_ascii_isspace (*text));
+
+	list = NULL;
+	executables = NULL;
+
+	if (!dialog->completion) {
+		dialog->completion = g_completion_new (NULL);
+		dialog->possible_executables = fill_possible_executables ();
+		dialog->dir_hash = g_hash_table_new_full (g_str_hash,
+							  g_str_equal,
+							  g_free, NULL);
 	}
+	
+	buf = g_path_get_basename (text);
+	prefix = buf[0];
+	g_free (buf);
+	if (prefix == '/' || prefix == '.')
+		return;
+
+	if (text [0] == '/') {
+		/* complete against absolute path */
+		dirname = g_path_get_dirname (text);
+		dirprefix = g_strdup (dirname);
+	} else {
+		/* complete against relative path and executable name */
+		if (!strchr (text, '/')) {
+			executables = fill_executables (dialog->possible_executables,
+							dialog->completion_items,
+							text [0]);
+			dirprefix = g_strdup ("");
+		} else {
+			dirprefix = g_path_get_dirname (text);
+		}
+
+		dirname = g_build_filename (g_get_home_dir (), dirprefix, NULL);
+	}
+
+	key = g_strdup_printf ("%s%c%c", dirprefix, G_DIR_SEPARATOR, prefix);
+
+	if (!g_hash_table_lookup (dialog->dir_hash, key)) {
+		g_hash_table_insert (dialog->dir_hash, key, dialog);
+
+		list = fill_files_from (dirname, dirprefix, prefix,
+					dialog->completion_items);
+	} else {
+		g_free (key);
+	}
+
+	list = g_list_concat (list, executables);
+
+	g_free (dirname);
+	g_free (dirprefix);
+
+	if (list == NULL)
+		return;
+		
+	g_completion_add_items (dialog->completion, list);
+		
+	dialog->completion_items = g_list_concat (dialog->completion_items,
+						  list);	
 }
 
 static gboolean
@@ -1229,6 +1295,7 @@ entry_event (GtkEditable    *entry,
 	     PanelRunDialog *dialog)
 {
 	char *prefix;
+	char *nospace_prefix;
 	char *nprefix;
 	char *temp;
 	int   pos, tmp;
@@ -1248,21 +1315,17 @@ entry_event (GtkEditable    *entry,
 		    tmp == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
 	    		gtk_editable_select_region (entry, 0, 0);		
 			gtk_editable_set_position (entry, -1);
-
-			panel_run_dialog_update_completion (dialog,
-			    				    gtk_entry_get_text (GTK_ENTRY (entry)));
 			
 			return TRUE;
 		}
 	} else if (event->type == GDK_KEY_PRESS &&
 		   event->length > 0) {
-		panel_run_dialog_ensure_completion (dialog);
-
+			   
 		gtk_editable_get_selection_bounds (entry, &pos, &tmp);
 
 		if (dialog->completion_started &&
 		    pos != tmp &&
-		    pos != 1 &&
+		    pos != 0 &&
 		    tmp == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
 			temp = gtk_editable_get_chars (entry, 0, pos);
 			prefix = g_strconcat (temp, event->string, NULL);
@@ -1275,29 +1338,42 @@ entry_event (GtkEditable    *entry,
 			return FALSE;
 		}
 		
+		nospace_prefix = prefix;
+		while (*nospace_prefix != '\0' &&
+		       g_ascii_isspace (*nospace_prefix))
+			nospace_prefix++;
+		if (*nospace_prefix == '\0')
+			return FALSE;
+
+		panel_run_dialog_update_completion (dialog, nospace_prefix);
+		
+		if (!dialog->completion) {
+			g_free (prefix);
+			return FALSE;
+		}
+		
 		pos = strlen (prefix);
 		nprefix = NULL;
 
-		g_completion_complete (dialog->completion, prefix, &nprefix);
+		g_completion_complete (dialog->completion, nospace_prefix,
+				       &nprefix);
 
 		if (nprefix) {
-		    	gtk_entry_set_text (GTK_ENTRY (entry), nprefix);
+			temp = g_strndup (prefix, nospace_prefix - prefix);
+			g_free (prefix);
+
+			prefix = g_strconcat (temp, nprefix, NULL);
+		    	gtk_entry_set_text (GTK_ENTRY (entry), prefix);
  			gtk_editable_set_position (entry, pos);
 			gtk_editable_select_region (entry, pos, -1);
 			
 			dialog->completion_started = TRUE;
 
-			if (strcmp(event->string, "/") == 0)
-				panel_run_dialog_update_completion (dialog, nprefix);
-			
 			g_free (nprefix);
 			g_free (prefix);
 			
 			return TRUE;
 		}
-
-		if (strcmp(event->string, "/") == 0)
-			panel_run_dialog_update_completion (dialog, prefix);
 		
 		g_free (prefix);
 	}
@@ -1309,13 +1385,18 @@ static void
 entry_changed (GtkEntry       *entry,
 	       PanelRunDialog *dialog)
 {
-	const char            *text;
-	char                  *msg;
+	const char *text;
+	const char *start;
+	char       *msg;
 
 	text = gtk_entry_get_text (entry);
 
+	start = text;
+	while (*start != '\0' && g_ascii_isspace (*start))
+		start++;
+
 	/* desensitize run button if no text entered */
-	if (!text || !text [0]) {
+	if (!start || !start [0]) {
 		gtk_widget_set_sensitive (dialog->run_button, FALSE);
 		gtk_drag_source_unset (dialog->run_dialog);
 	} else {
@@ -1328,9 +1409,10 @@ entry_changed (GtkEntry       *entry,
 	}
 	
 	/* update description label */
-        if (text && text [0]) {
+        if (start && start [0]) {
 		if (!dialog->use_program_list) {
-			msg = g_strdup_printf (_("Will run command: '%s'"), text);
+			msg = g_strdup_printf (_("Will run command: '%s'"),
+					       start);
 			gtk_label_set_text (GTK_LABEL (dialog->program_label), msg);
 			g_free (msg);
 		}
@@ -1345,7 +1427,7 @@ entry_changed (GtkEntry       *entry,
 	}
 
 	/* look up icon for the command */
-	if (text && text [0] &&
+	if (start && start [0] &&
 	    panel_profile_get_enable_program_list () &&
 	    !dialog->use_program_list &&
 	    !dialog->find_command_icon_idle_id)
