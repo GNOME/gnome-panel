@@ -809,7 +809,7 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 static void
 make_background(PanelWidget *panel, guchar *rgb_buf,
 		int x, int y, int w, int h,
-		GdkPixBuf *pb)
+		GdkPixbuf *pb)
 {
 	if(pb) {
 		tile_rgb(rgb_buf,w,h,x,y,w*3,
@@ -854,7 +854,7 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	GdkPixmap *pixmap;
 	GdkPixmap *bg_pixmap;
 	GdkRectangle da;
-	GdkPixBuf *pb = NULL;
+	GdkPixbuf *pb = NULL;
 	int size;
 
 	g_return_if_fail(panel!=NULL);
@@ -883,20 +883,20 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	if(panel->back_type == PANEL_BACK_NONE) {
 		if(bg_pixmap && bg_pixmap != panel->back_source) {
 			if(panel->backpix)
-				gdk_pixbuf_destroy(panel->backpix);
+				gdk_pixbuf_unref(panel->backpix);
 			panel->backpix = my_gdk_pixbuf_rgb_from_drawable(bg_pixmap);
 			panel->back_source = bg_pixmap;
 		} else if(!bg_pixmap && panel->backpix) {
 			if(panel->backpix)
-				gdk_pixbuf_destroy(panel->backpix);
+				gdk_pixbuf_unref(panel->backpix);
 			panel->backpix = NULL;
 		}
 		pb = panel->backpix;
 	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
 		if(panel->fit_pixmap_bg)
-			pb = gdk_pixbuf_scale(panel->backpix,
-					      panel->scale_w,
-					      panel->scale_h);
+			pb = my_gdk_pixbuf_scale(panel->backpix,
+						 panel->scale_w,
+						 panel->scale_h);
 		else
 			pb = panel->backpix;
 	} 
@@ -965,7 +965,7 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	gdk_pixmap_unref(pixmap);
 
 	if(pb!= panel->backpix)
-		gdk_pixbuf_destroy(pb);
+		gdk_pixbuf_unref(pb);
 }
 
 void
@@ -1326,7 +1326,7 @@ panel_widget_set_back_color(PanelWidget *panel, GdkColor *color)
 }
 
 static GdkPixmap *
-get_pixmap_from_pixbuf(GtkWidget *w, GdkPixBuf *pb)
+get_pixmap_from_pixbuf(GtkWidget *w, GdkPixbuf *pb)
 {
 	GdkGC *gc;
 	GdkPixmap *p;
@@ -1369,7 +1369,7 @@ static void
 panel_resize_pixmap(PanelWidget *panel)
 {
 	int w, h;
-	GdkPixBuf *pb = NULL;
+	GdkPixbuf *pb = NULL;
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
@@ -1385,15 +1385,15 @@ panel_resize_pixmap(PanelWidget *panel)
 
 	switch (panel->orient) {
 	case PANEL_HORIZONTAL:
-		pb = gdk_pixbuf_scale(panel->backpix,
-				      w * panel->thick / h,
-				      panel->thick);
+		pb = my_gdk_pixbuf_scale(panel->backpix,
+					 w * panel->thick / h,
+					 panel->thick);
 		break;
 
 	case PANEL_VERTICAL:
-		pb = gdk_pixbuf_scale(panel->backpix,
-				      panel->thick,
-				      h * panel->thick / w);
+		pb = my_gdk_pixbuf_scale(panel->backpix,
+					 panel->thick,
+					 h * panel->thick / w);
 		break;
 
 	default:
@@ -1404,7 +1404,7 @@ panel_resize_pixmap(PanelWidget *panel)
 	panel->scale_h = pb->art_pixbuf->height;
 	
 	panel->backpixmap = get_pixmap_from_pixbuf(GTK_WIDGET(panel),pb);
-	gdk_pixbuf_destroy(pb);
+	gdk_pixbuf_unref(pb);
 
 	panel_widget_draw_all(panel,NULL);
 }
@@ -1416,7 +1416,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	g_return_val_if_fail(IS_PANEL_WIDGET(panel),FALSE);
 
 	if(panel->backpix)
-		gdk_pixbuf_destroy(panel->backpix);
+		gdk_pixbuf_unref(panel->backpix);
 	panel->backpix = NULL;
 	if(panel->backpixmap)
 		gdk_pixmap_unref(panel->backpixmap);
@@ -1429,26 +1429,28 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	if (!g_file_exists (pixmap))
 		return FALSE;
 	
-	panel->backpix = gdk_pixbuf_load_image (pixmap);
+	panel->backpix = gdk_pixbuf_new_from_file (pixmap);
 	if (!panel->backpix)
 		return FALSE;
 	
 	if (panel->fit_pixmap_bg) {
 		int w, h;
-		GdkPixBuf *pb = NULL;
+		GdkPixbuf *pb = NULL;
 
 		w = panel->backpix->art_pixbuf->width;
 		h = panel->backpix->art_pixbuf->height;
 
 		switch (panel->orient) {
 		case PANEL_HORIZONTAL:
-			pb = gdk_pixbuf_scale(panel->backpix,
-					      w * panel->thick / h, panel->thick);
+			pb = my_gdk_pixbuf_scale(panel->backpix,
+						 w * panel->thick / h,
+						 panel->thick);
 			break;
 
 		case PANEL_VERTICAL:
-			pb = gdk_pixbuf_scale(panel->backpix,
-					      panel->thick, h * panel->thick / w);
+			pb = my_gdk_pixbuf_scale(panel->backpix,
+						 panel->thick,
+						 h * panel->thick / w);
 			break;
 
 		default:
@@ -1458,7 +1460,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 		panel->scale_h = pb->art_pixbuf->height;
 	
 		panel->backpixmap = get_pixmap_from_pixbuf(GTK_WIDGET(panel), pb);
-		gdk_pixbuf_destroy(pb);
+		gdk_pixbuf_unref(pb);
 	} else {
 		panel->backpixmap = get_pixmap_from_pixbuf(GTK_WIDGET(panel),
 							   panel->backpix);
@@ -1497,7 +1499,7 @@ panel_widget_destroy(GtkWidget *w, gpointer data)
 	g_return_if_fail(IS_PANEL_WIDGET(w));
 
 	if(panel->backpix)
-		gdk_pixbuf_destroy(panel->backpix);
+		gdk_pixbuf_unref(panel->backpix);
 	panel->backpix = NULL;
 	
 	/*remove from panels list*/

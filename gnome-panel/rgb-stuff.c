@@ -12,9 +12,12 @@
 #include <glib.h>
 #include <gmodule.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <libart_lgpl/art_alphagamma.h>
+#include <libart_lgpl/art_filterlevel.h>
+#include <libart_lgpl/art_rgb_pixbuf_affine.h>
 #include "rgb-stuff.h"
 
-GdkPixBuf *
+GdkPixbuf *
 my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 {
 	GdkImage *image;
@@ -107,7 +110,7 @@ my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 
 	art_pixbuf = art_pixbuf_new_rgb (buff, width, height, rowstride);
 
-	return gdk_pixbuf_new(art_pixbuf, NULL);
+	return gdk_pixbuf_new_from_art_pixbuf(art_pixbuf);
 }
 
 void
@@ -200,6 +203,7 @@ make_scale_affine(double affine[], int w, int h, int size)
 	affine[3] = h / (double)(oh);
 }
 
+#if 0
 void
 cutout_rgb(guchar *dest, int drs, guchar *src, int x, int y, int w, int h, int srs)
 {
@@ -226,4 +230,44 @@ place_rgb(guchar *dest, int drs, guchar *src, int x, int y, int w, int h, int sr
 		dstrow = dest + (j+y) * drs + (x*3);
 		memcpy(dstrow,srcrow,3*w);
 	}
+}
+#endif
+
+GdkPixbuf *
+my_gdk_pixbuf_scale (const GdkPixbuf *pixbuf, gint w, gint h)
+{
+	art_u8 *pixels;
+	gint rowstride;
+	double affine[6];
+	ArtAlphaGamma *alphagamma;
+	ArtPixBuf *art_pixbuf = NULL;
+	GdkPixbuf *copy = NULL;
+
+	alphagamma = NULL;
+
+	affine[1] = affine[2] = affine[4] = affine[5] = 0;
+
+	affine[0] = w / (double)(pixbuf->art_pixbuf->width);
+	affine[3] = h / (double)(pixbuf->art_pixbuf->height);
+
+	/* rowstride = w * pixbuf->art_pixbuf->n_channels; */
+	rowstride = w * 3;
+
+	pixels = art_alloc (h * rowstride);
+	art_rgb_pixbuf_affine (pixels, 0, 0, w, h, rowstride,
+			       pixbuf->art_pixbuf,
+			       affine, ART_FILTER_NEAREST, alphagamma);
+
+	if (pixbuf->art_pixbuf->has_alpha)
+		/* should be rgba */
+		art_pixbuf = art_pixbuf_new_rgb(pixels, w, h, rowstride);
+	else
+		art_pixbuf = art_pixbuf_new_rgb(pixels, w, h, rowstride);
+
+	copy = gdk_pixbuf_new_from_art_pixbuf (art_pixbuf);
+
+	if (!copy)
+		art_free (pixels);
+
+	return copy;
 }

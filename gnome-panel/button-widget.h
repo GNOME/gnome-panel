@@ -20,7 +20,7 @@ struct _ButtonWidget
 {
 	GtkWidget		pixmap;
 	
-	GdkPixBuf		*pixbuf;
+	GdkPixbuf		*pixbuf;
 	
 	char			*filename;
 	int			size;

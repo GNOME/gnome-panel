@@ -87,7 +87,7 @@ struct _PanelWidget
 	
 	GtkWidget		*panel_parent;
 	
-	GdkPixBuf		*backpix;	/* background pixmap unscaled */
+	GdkPixbuf		*backpix;	/* background pixmap unscaled */
 	int			scale_w,scale_h;
 	
 	GdkPixmap		*backpixmap;	/* if a background pixmap was set,

@@ -45,8 +45,8 @@ static GList *buttons=NULL;
 
 /*the tiles go here*/
 struct {
-	GdkPixBuf *tiles_up[LAST_TILE];
-	GdkPixBuf *tiles_down[LAST_TILE];
+	GdkPixbuf *tiles_up[LAST_TILE];
+	GdkPixbuf *tiles_down[LAST_TILE];
 } tiles = {{NULL}}; /*ansi C trick to make it all 0*/
 
 static int tile_border[LAST_TILE]={0,0,0,0};
@@ -256,7 +256,7 @@ button_widget_destroy(GtkWidget *w, gpointer data)
 	ButtonWidget *button = BUTTON_WIDGET(w);
 
 	if(button->pixbuf)
-		gdk_pixbuf_destroy(button->pixbuf);
+		gdk_pixbuf_unref(button->pixbuf);
 	button->pixbuf = NULL;
 
 	g_free(button->text);
@@ -264,10 +264,10 @@ button_widget_destroy(GtkWidget *w, gpointer data)
 	buttons = g_list_remove(buttons,button);
 }
 
-static GdkPixBuf *
+static GdkPixbuf *
 loadup_file(char *file)
 {
-	GdkPixBuf *pb = NULL;
+	GdkPixbuf *pb = NULL;
 	
 	if(!file) {
 		return NULL;
@@ -277,11 +277,11 @@ loadup_file(char *file)
 		char *f;
 		f = gnome_pixmap_file (file);
 		if(f) {
-			pb = gdk_pixbuf_load_image(f);
+			pb = gdk_pixbuf_new_from_file(f);
 			g_free(f);
 		}
 	} else
-		pb = gdk_pixbuf_load_image (file);
+		pb = gdk_pixbuf_new_from_file (file);
 	return pb;
 }
 
@@ -744,11 +744,11 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 	GList *list;
 
 	if(tiles.tiles_up[tile])
-		gdk_pixbuf_destroy(tiles.tiles_up[tile]);
+		gdk_pixbuf_unref(tiles.tiles_up[tile]);
 	tiles.tiles_up[tile] = loadup_file(tile_up);
 
 	if(tiles.tiles_down[tile])
-		gdk_pixbuf_destroy(tiles.tiles_down[tile]);
+		gdk_pixbuf_unref(tiles.tiles_down[tile]);
 	tiles.tiles_down[tile] = loadup_file(tile_down);
 
 	tile_border[tile] = border;

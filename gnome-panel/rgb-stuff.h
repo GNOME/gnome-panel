@@ -12,12 +12,16 @@ void tile_rgb(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 	      guchar *tile, int w, int h, int rowstride, int has_alpha);
 
 /* just copied from pixbuf source */
-GdkPixBuf *my_gdk_pixbuf_rgb_from_drawable(GdkWindow *window);
+GdkPixbuf *my_gdk_pixbuf_rgb_from_drawable(GdkWindow *window);
 
 /* scale a w by h pixmap into a square of size 'size' */
 void make_scale_affine(double affine[], int w, int h, int size);
 
+#if 0
 void cutout_rgb(guchar *dest, int drs, guchar *src, int x, int y, int w, int h, int srs);
 void place_rgb(guchar *dest, int drs, guchar *src, int x, int y, int w, int h, int srs);
+#endif
+
+GdkPixbuf * my_gdk_pixbuf_scale (const GdkPixbuf *pixbuf, gint w, gint h);
 
 #endif /* _RGB_STUFF_H_ */
