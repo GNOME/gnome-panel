@@ -48,6 +48,7 @@ extern int applets_to_sync;
 extern int panels_to_sync;
 extern int need_complete_save;
 
+extern gboolean commie_mode;
 extern GlobalConfig global_config;
 
 extern GtkTooltips *panel_tooltips;
@@ -802,7 +803,9 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 			}
 			break;
 		case 2:
-			return panel_initiate_move (widget, bevent->time);
+			if ( ! commie_mode)
+				return panel_initiate_move (widget,
+							    bevent->time);
 			break;
 		default: break;
 		}

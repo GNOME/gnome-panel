@@ -27,6 +27,9 @@ GSList *panels = NULL; /*other panels we might want to move the applet to*/
 we only have one mouse :) */
 gboolean panel_applet_in_drag = FALSE;
 
+/* Commie mode! */
+extern gboolean commie_mode;
+
 static void panel_widget_class_init	(PanelWidgetClass *klass);
 static void panel_widget_init		(PanelWidget      *panel_widget);
 static int  panel_try_to_set_pixmap     (PanelWidget      *panel,
@@ -102,7 +105,7 @@ applet_data_compare (AppletData *ad1, AppletData *ad2)
  ************************/
 
 guint
-panel_widget_get_type ()
+panel_widget_get_type (void)
 {
 	static guint panel_widget_type = 0;
 
@@ -2406,7 +2409,8 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			if (panel->currently_dragged_applet)
 				return TRUE;
 
-			if(bevent->button == 2) {
+			if ( ! commie_mode &&
+			    bevent->button == 2) {
 				/* Start drag */
 				panel_widget_applet_drag_start
 					(panel, widget, PW_DRAG_OFF_CURSOR);

@@ -29,12 +29,14 @@
 
 #include "panel-include.h"
 #include "foobar-widget.h"
+#include "multiscreen-stuff.h"
 
 #include "gnome-run.h"
 
 extern GSList *applets_last;
 extern GtkTooltips *panel_tooltips;
 extern GlobalConfig global_config;
+extern gboolean no_run_box;
 
 static GtkWidget *run_dialog = NULL;
 
@@ -387,6 +389,9 @@ show_run_dialog (void)
 	GtkWidget *hbox;
 	GtkWidget *w;
 
+	if (no_run_box)
+		return;
+
 	if(run_dialog != NULL) {
 		gtk_widget_show_now(run_dialog);
 		gdk_window_raise(run_dialog->window);
@@ -462,11 +467,9 @@ show_run_dialog_with_text (const char *text)
 
 	g_return_if_fail(text != NULL);
 
-	show_run_dialog();
+	show_run_dialog ();
 
 	if(run_dialog == NULL) {
-		/* this should NEVER happen, but I'm paranoid */
-		g_warning("Eeeeeeek!");
 		return;
 	}
 

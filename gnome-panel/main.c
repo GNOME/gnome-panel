@@ -33,6 +33,7 @@ extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;
 
+extern gboolean commie_mode;
 extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
@@ -487,14 +488,18 @@ main(int argc, char **argv)
 
 	gnome_win_hints_init ();
 
+	load_system_wide ();
+
 	/* read, convert and remove old config */
-	convert_old_config ();
+	if ( ! commie_mode)
+		convert_old_config ();
 
 	/* set the globals, it is important this is before
 	 * init_user_applets */
 	load_up_globals ();
 	/* this is so the capplet gets the right defaults */
-	write_global_config ();
+	if ( ! commie_mode)
+		write_global_config ();
 
 	gwmh_init ();
 

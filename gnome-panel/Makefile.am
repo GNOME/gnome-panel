@@ -8,13 +8,18 @@ AUTOMAKE_OPTIONS = 1.3
 
 SUBDIRS = doc help
 
-INCLUDES = -I. -I$(srcdir) \
-	-I$(top_srcdir)/intl \
-	-I$(top_builddir)/intl \
-	-I$(top_builddir)/panel \
+INCLUDES = \
+	-I.			\
+	-I$(srcdir)		\
+	-I$(top_srcdir)/intl	\
+	-I$(top_builddir)/intl	\
+	-I$(top_builddir)/panel	\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DGNOME_DATADIR=\""$(datadir)"\" \
-	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS) \
+	-DGLOBAL_CONFDIR=\""$(datadir)/gnome/panel-config"\" \
+	-I$(includedir)		\
+	$(GNOME_INCLUDEDIR)	\
+	$(ORB_CFLAGS)		\
 	@PIXBUF_CFLAGS@
 
 gwmh_dir = $(top_srcdir)/applets/desk-guide

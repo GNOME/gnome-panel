@@ -39,6 +39,9 @@ extern GtkTooltips *panel_tooltips;
 
 extern GnomeClient *client;
 
+gboolean commie_mode = FALSE;
+gboolean no_run_box = FALSE;
+
 GlobalConfig global_config;
 
 char *panel_cfg_path = NULL;
@@ -671,8 +674,13 @@ do_session_save(GnomeClient *client,
 	gchar *new_args[] = { "rm", "-r", NULL };
 #endif /* PER_SESSION_CONFIGURATION */
 
+	/* If in commie mode, then no saving is needed, the user
+	 * could have changed anything anyway */
+	if (commie_mode)
+		return;
+
 	if (panel_cfg_path)
-		g_free(panel_cfg_path);
+		g_free (panel_cfg_path);
 
 #ifdef PER_SESSION_CONFIGURATION
 	if (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED &&
@@ -1009,23 +1017,91 @@ try_evil_config_hacks(const char *goad_id, PanelWidget *panel, int pos)
 	return ret;
 }
 
+char *
+get_correct_prefix (char const **sep)
+{
+	int count;
+	char *path;
+
+	gnome_config_push_prefix ("");
+
+	/* if we're being commies, we just use the global path */
+	if (commie_mode) {
+		gnome_config_pop_prefix ();
+		*sep = "=";
+		return g_strdup_printf ("=%s/panel.d/default/", GLOBAL_CONFDIR);
+	}
+
+	count = conditional_get_int (PANEL_CONFIG_PATH
+				     "panel/Config/panel_count", 0, NULL);
+	if (count > 0) {
+		gnome_config_pop_prefix ();
+		*sep = "";
+		return g_strdup (PANEL_CONFIG_PATH);
+	}
+
+	path = g_strdup_printf ("=%s/panel.d/default/panel=/Config/panel_count",
+				GLOBAL_CONFDIR);
+	count = conditional_get_int (path, 0, NULL);
+	g_free (path);
+
+	if (count > 0) {
+		gnome_config_pop_prefix ();
+		*sep = "=";
+		return g_strdup_printf ("=%s/panel.d/default/", GLOBAL_CONFDIR);
+	}
+
+	gnome_config_pop_prefix ();
+
+	/* Eeeeek! return to standard home path and load some slightly sane
+	 * setup */
+	*sep = "";
+	return g_strdup (PANEL_CONFIG_PATH);
+}
+
+void
+push_correct_global_prefix (void)
+{
+	if ( ! commie_mode) {
+		gboolean foo, def;
+
+		gnome_config_push_prefix ("/panel/Config/");
+
+		foo = conditional_get_bool ("tooltips_enabled", TRUE, &def);
+		if ( ! def)
+			return;
+	}
+
+	/* ahhh, this doesn't exist, but tooltips_enabled should be
+	 * in every home, every kitchen and every panel configuration,
+	 * so we will load up from the global location */
+	gnome_config_pop_prefix ();
+	gnome_config_push_prefix ("=" GLOBAL_CONFDIR "/panel=/Config/");
+}
+
 void
 init_user_applets(void)
 {
 	GString *buf;
 	int count, num;	
 	DistributionType distribution = get_distribution_type ();
+	char *prefix;
+	const char *sep;
 
-	count = conditional_get_int (PANEL_CONFIG_PATH
-				     "panel/Config/applet_count", 0, NULL);
+	prefix = get_correct_prefix (&sep);
+
 	buf = g_string_new (NULL);
+
+	g_string_sprintf (buf, "%spanel%s/Config/applet_count",
+			  prefix, sep);
+	count = conditional_get_int (buf->str, 0, NULL);
 	for (num = 1; num <= count; num++) {
 		char *applet_name;
 		int   pos = 0, panel_num, panel_id;
 		PanelWidget *panel;
 
-		g_string_sprintf (buf, "%sApplet_Config/Applet_%d/",
-				  PANEL_CONFIG_PATH, num);
+		g_string_sprintf (buf, "%sApplet_Config%s/Applet_%d/",
+				  prefix, sep, num);
 		gnome_config_push_prefix (buf->str);
 
 		if ( ! conditional_true ("Conditional")) {
@@ -1170,7 +1246,8 @@ init_user_applets(void)
 						     NULL);
 			
 			/* Hack to try to do the right conversion while trying
-			 * to turn on the feature on as many setups as possible */
+			 * to turn on the feature on as many setups as
+			 * possible */
 			if (global_main_was_default &&
 			    flags == global_config.menu_flags) {
 				global_main = TRUE;
@@ -1255,7 +1332,8 @@ init_user_applets(void)
 		gnome_config_pop_prefix ();
 		g_free (applet_name);
 	}
-	g_string_free(buf, TRUE);
+	g_string_free (buf, TRUE);
+	g_free (prefix);
 }
 
 void
@@ -1264,16 +1342,24 @@ init_user_panels(void)
 	GString *buf;
 	int count, num;	
 	char *s;
-	GtkWidget *panel=NULL;
+	GtkWidget *panel = NULL;
+	char *prefix;
+	const char *sep;
 
-	count = conditional_get_int (PANEL_CONFIG_PATH
-				     "panel/Config/panel_count", 0, NULL);
+	prefix = get_correct_prefix (&sep);
+
+	buf = g_string_new (NULL);
+
+	g_string_sprintf (buf, "%spanel%s/Config/panel_count",
+			  prefix, sep);
+
+	count = conditional_get_int (buf->str, 0, NULL);
 
 	/*load a default snapped panel on the bottom of the screen,
 	  it is required to have at least one panel for this all
 	  to work, so this is the way we find out if there was no
 	  config from last time*/
-	if(count <= 0)  {
+	if (count <= 0)  {
 		int sz;
 		gboolean hidebutton_pixmaps;
 
@@ -1344,9 +1430,12 @@ init_user_panels(void)
 					   NULL);*/
 		panel = foobar_widget_new (0 /*screen*/);
 
-		s = conditional_get_string ("/panel/Config/clock_format",
+		push_correct_global_prefix ();
+		s = conditional_get_string ("clock_format",
 					    _("%I:%M:%S %p"),
 					    NULL);
+		gnome_config_pop_prefix ();
+
 		if (s != NULL)
 			foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 		g_free (s);
@@ -1362,10 +1451,11 @@ init_user_panels(void)
 		  next syncing*/
 		need_complete_save = TRUE;
 
+		g_free (prefix);
+		g_string_free (buf, TRUE);
+
 		return;
 	}
-
-	buf = g_string_new(NULL);
 
 	for (num = 1; num <= count; num++) {
 		PanelType type;
@@ -1385,9 +1475,9 @@ init_user_panels(void)
 		int hidebutton_pixmaps_enabled;
 		int unique_id;
 		int screen;
-		
-		g_string_sprintf(buf,"%spanel/Panel_%d/",
-				 PANEL_CONFIG_PATH, num);
+
+		g_string_sprintf (buf, "%spanel%s/Panel_%d/",
+				  prefix, sep, num);
 		gnome_config_push_prefix (buf->str);
 
 		if ( ! conditional_true ("Conditional")) {
@@ -1604,9 +1694,12 @@ init_user_panels(void)
 		case FOOBAR_PANEL:
 			panel = foobar_widget_new (screen);
 
-			s = conditional_get_string
-				("/panel/Config/clock_format",
-				 _("%l:%M:%S %p"), NULL);
+			push_correct_global_prefix ();
+			s = conditional_get_string ("clock_format",
+						    _("%I:%M:%S %p"),
+						    NULL);
+			gnome_config_pop_prefix ();
+
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 			g_free (s);
@@ -1631,6 +1724,17 @@ init_user_panels(void)
 		}
 	}
 	g_string_free (buf, TRUE);
+
+	g_free (prefix);
+}
+
+void
+load_system_wide (void)
+{
+	gnome_config_push_prefix ("=" GLOBAL_CONFDIR "/System=/Config/");
+	commie_mode = gnome_config_get_bool ("LockDown=FALSE");
+	no_run_box = gnome_config_get_bool ("NoRunBox=FALSE");
+	gnome_config_pop_prefix ();
 }
 
 
@@ -1655,7 +1759,10 @@ load_up_globals (void)
 	GString *tilebuf;
 
 	/*set up global options*/
-	gnome_config_push_prefix("/panel/Config/");
+	push_correct_global_prefix ();
+
+	global_config.tooltips_enabled =
+		conditional_get_bool ("tooltips_enabled", TRUE, NULL);
 
 	global_config.tooltips_enabled =
 		conditional_get_bool ("tooltips_enabled", TRUE, NULL);
@@ -1818,72 +1925,74 @@ write_global_config (void)
 	int i;
 	GString *buf;
 
-	gnome_config_push_prefix("/panel/Config/");
+	gnome_config_push_prefix ("/panel/Config/");
 
-	gnome_config_set_int("auto_hide_step_size",
-			     global_config.auto_hide_step_size);
-	gnome_config_set_int("explicit_hide_step_size",
-			     global_config.explicit_hide_step_size);
-	gnome_config_set_int("drawer_step_size",
-			     global_config.drawer_step_size);
-	gnome_config_set_int("minimized_size",
-			     global_config.minimized_size);
-	gnome_config_set_int("minimize_delay",
-			     global_config.minimize_delay);
-	gnome_config_set_int("maximize_delay",
-			     global_config.maximize_delay);
-	gnome_config_set_int("movement_type",
-			     (int)global_config.movement_type);
-	gnome_config_set_bool("tooltips_enabled",
-			      global_config.tooltips_enabled);
-	gnome_config_set_bool("show_dot_buttons",
-			      global_config.show_dot_buttons);
-	gnome_config_set_bool("memory_hungry_menus",
-			      global_config.hungry_menus);
-	gnome_config_set_bool("use_large_icons",
-			      global_config.use_large_icons);
-	gnome_config_set_bool("merge_menus",
-			      global_config.merge_menus);
-	gnome_config_set_bool("menu_check",
-			      global_config.menu_check);
-	gnome_config_set_bool("off_panel_popups",
-			      global_config.off_panel_popups);
-	gnome_config_set_bool("disable_animations",
-			      global_config.disable_animations);
-	gnome_config_set_int("applet_padding",
-			     global_config.applet_padding);
-	gnome_config_set_int("applet_border_padding",
-			     global_config.applet_border_padding);
-	gnome_config_set_bool("autoraise",
-			      global_config.autoraise);
-	gnome_config_set_bool("keep_bottom",
-			      global_config.keep_bottom);
-	gnome_config_set_bool("normal_layer",
-			      global_config.normal_layer);
-	gnome_config_set_bool("drawer_auto_close",
-			      global_config.drawer_auto_close);
-	gnome_config_set_bool("simple_movement",
-			      global_config.simple_movement);
-	gnome_config_set_bool("hide_panel_frame",
-			      global_config.hide_panel_frame);
-	gnome_config_set_bool("tile_when_over",
-			      global_config.tile_when_over);
-	gnome_config_set_bool("saturate_when_over",
-			      global_config.saturate_when_over);
-	gnome_config_set_bool("confirm_panel_remove",
-			      global_config.confirm_panel_remove);
-	gnome_config_set_int("menu_flags", global_config.menu_flags);
-	gnome_config_set_bool("keys_enabled", global_config.keys_enabled);
-	gnome_config_set_string("menu_key", global_config.menu_key);
-	gnome_config_set_string("run_key", global_config.run_key);
-	gnome_config_set_bool("fast_button_scaling", global_config.fast_button_scaling);
-	gnome_config_set_bool("avoid_collisions", global_config.avoid_collisions);
+	gnome_config_set_int ("auto_hide_step_size",
+			      global_config.auto_hide_step_size);
+	gnome_config_set_int ("explicit_hide_step_size",
+			      global_config.explicit_hide_step_size);
+	gnome_config_set_int ("drawer_step_size",
+			      global_config.drawer_step_size);
+	gnome_config_set_int ("minimized_size",
+			      global_config.minimized_size);
+	gnome_config_set_int ("minimize_delay",
+			      global_config.minimize_delay);
+	gnome_config_set_int ("maximize_delay",
+			      global_config.maximize_delay);
+	gnome_config_set_int ("movement_type",
+			      (int)global_config.movement_type);
+	gnome_config_set_bool ("tooltips_enabled",
+			       global_config.tooltips_enabled);
+	gnome_config_set_bool ("show_dot_buttons",
+			       global_config.show_dot_buttons);
+	gnome_config_set_bool ("memory_hungry_menus",
+			       global_config.hungry_menus);
+	gnome_config_set_bool ("use_large_icons",
+			       global_config.use_large_icons);
+	gnome_config_set_bool ("merge_menus",
+			       global_config.merge_menus);
+	gnome_config_set_bool ("menu_check",
+			       global_config.menu_check);
+	gnome_config_set_bool ("off_panel_popups",
+			       global_config.off_panel_popups);
+	gnome_config_set_bool ("disable_animations",
+			       global_config.disable_animations);
+	gnome_config_set_int ("applet_padding",
+			      global_config.applet_padding);
+	gnome_config_set_int ("applet_border_padding",
+			      global_config.applet_border_padding);
+	gnome_config_set_bool ("autoraise",
+			       global_config.autoraise);
+	gnome_config_set_bool ("keep_bottom",
+			       global_config.keep_bottom);
+	gnome_config_set_bool ("normal_layer",
+			       global_config.normal_layer);
+	gnome_config_set_bool ("drawer_auto_close",
+			       global_config.drawer_auto_close);
+	gnome_config_set_bool ("simple_movement",
+			       global_config.simple_movement);
+	gnome_config_set_bool ("hide_panel_frame",
+			       global_config.hide_panel_frame);
+	gnome_config_set_bool ("tile_when_over",
+			       global_config.tile_when_over);
+	gnome_config_set_bool ("saturate_when_over",
+			       global_config.saturate_when_over);
+	gnome_config_set_bool ("confirm_panel_remove",
+			       global_config.confirm_panel_remove);
+	gnome_config_set_int ("menu_flags", global_config.menu_flags);
+	gnome_config_set_bool ("keys_enabled", global_config.keys_enabled);
+	gnome_config_set_string ("menu_key", global_config.menu_key);
+	gnome_config_set_string ("run_key", global_config.run_key);
+	gnome_config_set_bool ("fast_button_scaling",
+			       global_config.fast_button_scaling);
+	gnome_config_set_bool ("avoid_collisions",
+			       global_config.avoid_collisions);
 			     
 	buf = g_string_new (NULL);
 	for (i = 0; i < LAST_TILE; i++) {
-		g_string_sprintf(buf,"new_tiles_enabled_%d",i);
-		gnome_config_set_bool(buf->str,
-				      global_config.tiles_enabled[i]);
+		g_string_sprintf (buf, "new_tiles_enabled_%d", i);
+		gnome_config_set_bool (buf->str,
+				       global_config.tiles_enabled[i]);
 		g_string_sprintf(buf,"tile_up_%d",i);
 		gnome_config_set_string(buf->str,
 					global_config.tile_up[i]);

@@ -1227,6 +1227,25 @@ help (GtkWidget *capplet)
 }
 
 static void
+_push_correct_global_prefix (void)
+{
+	gboolean foo, def;
+
+	/*set up global options*/
+	gnome_config_push_prefix ("/panel/Config/");
+
+	foo = conditional_get_bool ("tooltips_enabled", TRUE, &def);
+	if (def) {
+		/* ahhh, this doesn't exist, but tooltips_enabled should be
+		 * in every home, every kitchen and every panel configuration,
+		 * so we will load up from the global location */
+		gnome_config_pop_prefix ();
+		gnome_config_push_prefix ("=" GLOBAL_CONFDIR "/panel=/Config/");
+	}
+}
+
+
+static void
 loadup_vals (void)
 {
 	/* NOTE: !!!!!!!
@@ -1247,7 +1266,7 @@ loadup_vals (void)
 	GString *tilebuf;
 
 	/*set up global options*/
-	gnome_config_push_prefix("/panel/Config/");
+	_push_correct_global_prefix ();
 
 	global_config.tooltips_enabled =
 		conditional_get_bool ("tooltips_enabled", TRUE, NULL);
@@ -1617,6 +1636,26 @@ main (int argc, char **argv)
 			      argv, NULL, 0, NULL) < 0)
 		return 1;
 	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-panel.png");
+	/* Ahhh, yes the infamous commie mode, don't allow running of this,
+	 * just display a label */
+	if (gnome_config_get_bool
+		("=" GLOBAL_CONFDIR "/System=/Config/LockDown=FALSE")) {
+		GtkWidget *label;
+
+		capplet = capplet_widget_new();
+
+		label = gtk_label_new (_("The system administrator has "
+					 "disallowed modification of the "
+					 "panel configuration"));
+		gtk_widget_show (label);
+
+		gtk_container_add (GTK_CONTAINER (capplet), label);
+
+		capplet_gtk_main ();
+
+		return 0;
+	}
+
 	loadup_vals ();
 	
 	set_config (&loaded_config, &global_config);

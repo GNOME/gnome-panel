@@ -1,3 +1,18 @@
+Sun May 27 18:30:42 2001  George Lebl <jirka@5z.com>
+
+	* Makefile.am, session.[ch], menu.c, gnome-panel-properties.c,
+	  main.c, applet.c, gnome-run.c, panel-widget.c, panel.c: Implement
+	  reading of defaults from a global directory.  At some close point
+	  in the future the default config will be made a set of files and
+	  installed and the default config that's hardcoded will disappear
+	  (become something simple for failsafe reasons).  Also add a
+	  LockDown (commie mode) and a NoRunBox configuration stuff for anal
+	  sysadmins and kiosks.  It's untested, except that it doesn't
+	  interfere with normal operation.
+
+	* conditional.c: change "Conditional" to ":Conditional" since that
+	  makes files nicer
+
 Fri May 25 14:36:29 2001  George Lebl <jirka@5z.com>
 
 	* foobar-widget.c: don't use the global for the clock_ebox

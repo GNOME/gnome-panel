@@ -441,7 +441,7 @@ conditional_get_string (const char *key, const char *def, gboolean *isdef)
 	if (lisdef) {
 		char *cond;
 		g_free (ret);
-		fullkey = g_strdup_printf ("%sConditional", key);
+		fullkey = g_strdup_printf ("%s:Conditional", key);
 		cond = gnome_config_get_string_with_default (fullkey, &lisdef);
 		g_free (fullkey);
 		if (lisdef) {
@@ -473,7 +473,7 @@ conditional_get_bool (const char *key, gboolean def, gboolean *isdef)
 	g_free (fullkey);
 	if (lisdef) {
 		char *cond, *str;
-		fullkey = g_strdup_printf ("%sConditional", key);
+		fullkey = g_strdup_printf ("%s:Conditional", key);
 		cond = gnome_config_get_string_with_default (fullkey, &lisdef);
 		g_free (fullkey);
 		if (lisdef) {
@@ -512,7 +512,7 @@ conditional_get_int (const char *key, int def, gboolean *isdef)
 	g_free (fullkey);
 	if (lisdef) {
 		char *cond, *str;
-		fullkey = g_strdup_printf ("%sConditional", key);
+		fullkey = g_strdup_printf ("%s:Conditional", key);
 		cond = gnome_config_get_string_with_default (fullkey, &lisdef);
 		g_free (fullkey);
 		if (lisdef) {

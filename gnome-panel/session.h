@@ -41,9 +41,10 @@ void panel_quit(void);
 void panel_config_sync(void);
 void panel_config_sync_schedule (void);
 
-void load_up_globals(void);
+void load_system_wide (void);
+void load_up_globals (void);
 /* only to be used on beginning, we don't really want to write globals much */
-void write_global_config(void);
+void write_global_config (void);
 
 void init_user_applets(void);
 void init_user_panels(void);
@@ -52,6 +53,10 @@ void apply_global_config(void);
 
 /* just temporary so that we can bridge the gap between old and new config */
 void convert_old_config(void);
+
+/* prefix thingie */
+char * get_correct_prefix (char const **sep);
+void push_correct_global_prefix (void);
 
 END_GNOME_DECLS
 

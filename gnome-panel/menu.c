@@ -52,6 +52,8 @@ extern GSList *panel_list;
 /*list of all PanelWidgets created*/
 extern GSList *panels;
 
+extern gboolean commie_mode;
+extern gboolean no_run_box;
 extern GlobalConfig global_config;
 
 extern int config_sync_timeout;
@@ -1765,6 +1767,10 @@ show_item_menu_b_cb(GtkWidget *w, GdkEvent *event, ShowItemMenu *sim)
 	
 	if (event->type != GDK_BUTTON_PRESS)
 		return FALSE;
+
+	/* no item menu in commie mode */
+	if (commie_mode)
+		return FALSE;
 	
 	item = w->parent->parent;
 	show_item_menu (item, bevent, sim);
@@ -1776,6 +1782,10 @@ static gboolean
 show_item_menu_mi_cb (GtkWidget *w, GdkEvent *event, ShowItemMenu *sim)
 {
 	GdkEventButton *bevent = (GdkEventButton *)event;
+
+	/* no item menu in commie mode */
+	if (commie_mode)
+		return FALSE;
 	
 	if (event->type == GDK_BUTTON_PRESS &&
 	    bevent->button == 3)
@@ -2014,7 +2024,7 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 		}
 
 		/*applets have their own drag'n'drop*/
-		if(!applet) {
+		if ( ! applet && ! commie_mode) {
 			gtk_drag_source_set(menuitem,
 					    GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 					    menu_item_targets, 1,
@@ -2081,7 +2091,8 @@ setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
 		{ "application/x-panel-applet-internal", 0, 0 }
 	};
 	
-	if (applet_type == NULL)
+	if (applet_type == NULL ||
+	    commie_mode)
 		return;
 	
 	gtk_drag_source_set (menuitem,
@@ -3056,7 +3067,8 @@ create_menu_at_fr (GtkWidget *menu,
 
 		g_free (menu_name);
 
-		setup_directory_drag (menuitem, mf->menudir);
+		if ( ! commie_mode)
+			setup_directory_drag (menuitem, mf->menudir);
 	}
 
 	/*add separator*/
@@ -4813,119 +4825,121 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 {
 	GtkWidget *menuitem, *submenu, *submenuitem;
 
-	menuitem = gtk_menu_item_new ();
-	gtk_widget_lock_accelerators (menuitem);
-	setup_menuitem (menuitem,
-			gnome_stock_pixmap_widget (menu,
-						   GNOME_STOCK_PIXMAP_ADD),
-			_("Add to panel"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	if ( ! commie_mode) {
+		menuitem = gtk_menu_item_new ();
+		gtk_widget_lock_accelerators (menuitem);
+		setup_menuitem (menuitem,
+				gnome_stock_pixmap_widget (menu,
+							   GNOME_STOCK_PIXMAP_ADD),
+				_("Add to panel"));
+		gtk_menu_append (GTK_MENU (menu), menuitem);
 
-	submenu = menu_new ();
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-				   submenu);
-	
-	if (gnome_preferences_get_menus_have_tearoff ()) {
-		menuitem = tearoff_item_new();
-		gtk_widget_show(menuitem);
-		gtk_menu_prepend(GTK_MENU(submenu),menuitem);
-	
-		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-				   GTK_SIGNAL_FUNC(add_to_panel_menu_tearoff_new_menu),
-				   NULL);
-	}
+		submenu = menu_new ();
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+					   submenu);
 
-	make_add_submenu (submenu, fake_submenus);
+		if (gnome_preferences_get_menus_have_tearoff ()) {
+			menuitem = tearoff_item_new();
+			gtk_widget_show(menuitem);
+			gtk_menu_prepend(GTK_MENU(submenu),menuitem);
 
-        menuitem = gtk_menu_item_new ();
-	gtk_widget_lock_accelerators (menuitem);
-	setup_menuitem (menuitem, 
-			gnome_stock_pixmap_widget (menu,
-						   GNOME_STOCK_MENU_NEW),
-			_("Create panel"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-				   create_add_panel_submenu(TRUE));
+			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+					   GTK_SIGNAL_FUNC(add_to_panel_menu_tearoff_new_menu),
+					   NULL);
+		}
 
-	menuitem = gtk_menu_item_new ();
-	gtk_widget_lock_accelerators (menuitem);
+		make_add_submenu (submenu, fake_submenus);
 
-	setup_menuitem (menuitem, 
-			gnome_stock_pixmap_widget (NULL,
-						   GNOME_STOCK_PIXMAP_REMOVE),
-			_("Remove this panel"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (remove_panel_query),
-			    NULL);
-	gtk_signal_connect (GTK_OBJECT (menu), "show",
-			    GTK_SIGNAL_FUNC(setup_remove_this_panel),
-			    menuitem);
-
-	add_menu_separator(menu);
-
-	if (is_basep) {
 		menuitem = gtk_menu_item_new ();
 		gtk_widget_lock_accelerators (menuitem);
 		setup_menuitem (menuitem, 
 				gnome_stock_pixmap_widget (menu,
-							   GNOME_STOCK_MENU_PROP),
-				_("Properties"));
+							   GNOME_STOCK_MENU_NEW),
+				_("Create panel"));
 		gtk_menu_append (GTK_MENU (menu), menuitem);
-		
-		submenu = menu_new ();
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
-		
-		submenuitem = gtk_menu_item_new ();
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+					   create_add_panel_submenu(TRUE));
+
+		menuitem = gtk_menu_item_new ();
 		gtk_widget_lock_accelerators (menuitem);
-		setup_menuitem (submenuitem,
-				gnome_stock_pixmap_widget(submenu,
-							  GNOME_STOCK_MENU_PROP),
-				_("All properties..."));
-		
-		gtk_menu_append (GTK_MENU (submenu), submenuitem);
-		gtk_signal_connect (GTK_OBJECT (submenuitem), "activate",
-				    GTK_SIGNAL_FUNC(current_panel_config), 
+
+		setup_menuitem (menuitem, 
+				gnome_stock_pixmap_widget (NULL,
+							   GNOME_STOCK_PIXMAP_REMOVE),
+				_("Remove this panel"));
+		gtk_menu_append (GTK_MENU (menu), menuitem);
+		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+				    GTK_SIGNAL_FUNC (remove_panel_query),
 				    NULL);
-		
-		/*add_menu_separator (submenu);*/
-		make_properties_submenu (submenu);
-	}
-	
-	menuitem = gtk_menu_item_new ();
-	gtk_widget_lock_accelerators (menuitem);
-	setup_menuitem (menuitem,
-			gnome_stock_pixmap_widget(menu,
-						  GNOME_STOCK_MENU_PREF),
-			_("Global Preferences..."));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC(panel_config_global), 
-			    NULL);
+		gtk_signal_connect (GTK_OBJECT (menu), "show",
+				    GTK_SIGNAL_FUNC(setup_remove_this_panel),
+				    menuitem);
 
-	menuitem = gtk_menu_item_new ();
-	gtk_widget_lock_accelerators (menuitem);
-	setup_menuitem_try_pixmap (menuitem,
-				   "gnome-gmenu.png",
-				   _("Edit menus..."), SMALL_ICON_SIZE);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC(panel_launch_gmenu), 
-			    NULL);
+		add_menu_separator(menu);
 
-	if ( ! global_config.menu_check) {
+		if (is_basep) {
+			menuitem = gtk_menu_item_new ();
+			gtk_widget_lock_accelerators (menuitem);
+			setup_menuitem (menuitem, 
+					gnome_stock_pixmap_widget (menu,
+								   GNOME_STOCK_MENU_PROP),
+					_("Properties"));
+			gtk_menu_append (GTK_MENU (menu), menuitem);
+
+			submenu = menu_new ();
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+
+			submenuitem = gtk_menu_item_new ();
+			gtk_widget_lock_accelerators (menuitem);
+			setup_menuitem (submenuitem,
+					gnome_stock_pixmap_widget(submenu,
+								  GNOME_STOCK_MENU_PROP),
+					_("All properties..."));
+
+			gtk_menu_append (GTK_MENU (submenu), submenuitem);
+			gtk_signal_connect (GTK_OBJECT (submenuitem), "activate",
+					    GTK_SIGNAL_FUNC(current_panel_config), 
+					    NULL);
+
+			/*add_menu_separator (submenu);*/
+			make_properties_submenu (submenu);
+		}
+
 		menuitem = gtk_menu_item_new ();
 		gtk_widget_lock_accelerators (menuitem);
 		setup_menuitem (menuitem,
-				NULL,
-				_("Reread all menus"));
+				gnome_stock_pixmap_widget(menu,
+							  GNOME_STOCK_MENU_PREF),
+				_("Global Preferences..."));
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-				    GTK_SIGNAL_FUNC (fr_force_reread), 
+				    GTK_SIGNAL_FUNC(panel_config_global), 
 				    NULL);
-	}
 
-	add_menu_separator (menu);
+		menuitem = gtk_menu_item_new ();
+		gtk_widget_lock_accelerators (menuitem);
+		setup_menuitem_try_pixmap (menuitem,
+					   "gnome-gmenu.png",
+					   _("Edit menus..."), SMALL_ICON_SIZE);
+		gtk_menu_append (GTK_MENU (menu), menuitem);
+		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+				    GTK_SIGNAL_FUNC(panel_launch_gmenu), 
+				    NULL);
+
+		if ( ! global_config.menu_check) {
+			menuitem = gtk_menu_item_new ();
+			gtk_widget_lock_accelerators (menuitem);
+			setup_menuitem (menuitem,
+					NULL,
+					_("Reread all menus"));
+			gtk_menu_append (GTK_MENU (menu), menuitem);
+			gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+					    GTK_SIGNAL_FUNC (fr_force_reread), 
+					    NULL);
+		}
+
+		add_menu_separator (menu);
+	}
 
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
@@ -5239,7 +5253,9 @@ create_root_menu (GtkWidget *root_menu,
 		create_user_menu(_("Favorites"), "apps",
 				 root_menu, "gnome-favorites.png",
 				 fake_submenus, FALSE, FALSE, title, FALSE);
-	if (flags & MAIN_MENU_APPLETS)
+	/* in commie mode the applets menu doesn't make sense */
+	if ( ! commie_mode &&
+	    flags & MAIN_MENU_APPLETS)
 		create_applets_menu(root_menu, fake_submenus, title);
 
 	if (flags & MAIN_MENU_DISTRIBUTION &&
@@ -5292,7 +5308,9 @@ create_root_menu (GtkWidget *root_menu,
 				   GTK_SIGNAL_FUNC(submenu_to_display),
 				   NULL);
 	}
-	if (flags & MAIN_MENU_APPLETS_SUB) {
+	/* in commie mode the applets menu doesn't make sense */
+	if ( ! commie_mode &&
+	    flags & MAIN_MENU_APPLETS_SUB) {
 		menu = create_applets_menu(NULL, fake_submenus, FALSE);
 		menuitem = gtk_menu_item_new ();
 		gtk_widget_lock_accelerators (menuitem);
@@ -5313,16 +5331,18 @@ create_root_menu (GtkWidget *root_menu,
 				 FALSE /*launcher_add */);
 	}
 
-	menuitem = gtk_menu_item_new ();
-	gtk_widget_lock_accelerators (menuitem);
-	setup_menuitem_try_pixmap (menuitem, "gnome-run.png", 
-				   _("Run..."), size);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (run_cb), NULL);
-	gtk_menu_append (GTK_MENU (root_menu), menuitem);
-	setup_internal_applet_drag(menuitem, "RUN:NEW");
-	gtk_tooltips_set_tip (panel_tooltips, menuitem,
-			      _("Execute a command line"), NULL);
+	if ( ! no_run_box) {
+		menuitem = gtk_menu_item_new ();
+		gtk_widget_lock_accelerators (menuitem);
+		setup_menuitem_try_pixmap (menuitem, "gnome-run.png", 
+					   _("Run..."), size);
+		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+				    GTK_SIGNAL_FUNC (run_cb), NULL);
+		gtk_menu_append (GTK_MENU (root_menu), menuitem);
+		setup_internal_applet_drag(menuitem, "RUN:NEW");
+		gtk_tooltips_set_tip (panel_tooltips, menuitem,
+				      _("Execute a command line"), NULL);
+	}
 
 	if (((has_inline && !has_subs) || has_subs) && has_subs2)
 		add_menu_separator (root_menu);
@@ -5690,10 +5710,10 @@ save_tornoff (void)
 		char *s;
 		int j;
 
-		s = g_strdup_printf("%spanel/TornoffMenu_%d/",
-				    PANEL_CONFIG_PATH,i);
+		s = g_strdup_printf ("%spanel/TornoffMenu_%d/",
+				     PANEL_CONFIG_PATH, i);
 		gnome_config_push_prefix (s);
-		g_free(s);
+		g_free (s);
 
 		tw = GTK_MENU(tm->menu)->tearoff_window;
 
@@ -5937,13 +5957,18 @@ load_tornoff(void)
 	char *s;
 	int i, length;
 
-	gnome_config_push_prefix(PANEL_CONFIG_PATH "panel/Config/");
+	push_correct_global_prefix ();
 	length = conditional_get_int("tearoffs_count", 0, NULL);
 	gnome_config_pop_prefix();
 
 	for (i = 0; i < length; i++) {
-		s = g_strdup_printf ("%spanel/TornoffMenu_%d/",
-				     PANEL_CONFIG_PATH, i);
+		char *prefix;
+		const char *sep;
+
+		prefix = get_correct_prefix (&sep);
+		s = g_strdup_printf ("%spanel%s/TornoffMenu_%d/",
+				     prefix, sep, i);
+		g_free (prefix);
 		gnome_config_push_prefix (s);
 		g_free (s);
 
