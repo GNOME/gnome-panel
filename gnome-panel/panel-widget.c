@@ -1758,6 +1758,7 @@ panel_widget_finalize (GObject *obj)
 
 	if (panel->key_event)
 		gdk_event_free ((GdkEvent *)panel->key_event);
+	panel->key_event = NULL;
 
 	if (G_OBJECT_CLASS (panel_widget_parent_class)->finalize)
 		G_OBJECT_CLASS (panel_widget_parent_class)->finalize (obj);

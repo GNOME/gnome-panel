@@ -97,14 +97,13 @@ panel_applet_clean_gconf (AppletInfo *info,
 			GCONF_VALUE_STRING, NULL);
 
         for (l = id_list; l; l = l->next)
-                if (!strcmp (info->gconf_key, (char *) l->data))
+                if (strcmp (info->gconf_key, (char *) l->data) == 0)
                         break;
 
         if (l) {
-                id_list = g_slist_remove_link (id_list, l);
-
 		g_free (l->data);
-		g_slist_free (l);
+		l->data = NULL;
+                id_list = g_slist_delete_link (id_list, l);
 
                 gconf_client_set_list (client, temp_key, GCONF_VALUE_STRING, id_list, NULL);
 
@@ -256,9 +255,9 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		gboolean freeit = FALSE;
 		if (strcmp (menu->name, "help") == 0)
 			panel_show_help ("specialobjects", "LOCKBUTTON");
-		else if (!strcmp (menu->name, "restart")) {
+		else if (strcmp (menu->name, "restart") == 0) {
 			command = "xscreensaver-command -exit ; xscreensaver &";
-		} else if (!strcmp (menu->name, "prefs")) {
+		} else if (strcmp (menu->name, "prefs") == 0) {
 			command = "xscreensaver-demo";
 		} else {
 			command = g_strdup_printf ("xscreensaver-command -%s",
@@ -309,7 +308,7 @@ panel_applet_get_callback (GList      *user_menu,
 	for (l = user_menu; l; l = l->next) {
 		AppletUserMenu *menu = l->data;
 
-		if (!strcmp (menu->name, name))
+		if (strcmp (menu->name, name) == 0)
 			return menu;
 	}
 
@@ -759,6 +758,8 @@ static GSList *panel_applets_to_load = NULL;
 static void
 whack_applet_to_load (PanelAppletToLoad *applet)
 {
+	applet->panel_widget = NULL;
+
 	if (applet->destroy_handler > 0)
 		g_signal_handler_disconnect (applet->panel_widget,
 					     applet->destroy_handler);
@@ -775,12 +776,14 @@ panel_applet_load_idle_handler (gpointer dummmy)
 {
 	PanelAppletToLoad *applet;
 
-	if (!panel_applets_to_load)
+	if (panel_applets_to_load == NULL)
 		return FALSE;
 
 	applet = (PanelAppletToLoad *) panel_applets_to_load->data;
+	panel_applets_to_load->data = NULL;
 	panel_applets_to_load =
-		g_slist_remove (panel_applets_to_load, applet);
+		g_slist_delete_link (panel_applets_to_load,
+				     panel_applets_to_load);
 
 	panel_applet_frame_load_from_gconf (
 			applet->panel_widget,
@@ -1018,7 +1021,7 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 		applet_info->gconf_key = gconf_unique_key ();
 
 	for (l = id_list; l; l = l->next)
-		if (!strcmp (applet_info->gconf_key, (char *) l->data))
+		if (strcmp (applet_info->gconf_key, (char *) l->data) == 0)
 			break;
 
 	if (!l) {

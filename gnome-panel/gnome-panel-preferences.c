@@ -94,10 +94,10 @@ update_sensitive_for_checkbox (char *key,
 {
 	GtkWidget *associate = NULL;
 
-	if (!strcmp (key, "enable_animations"))
+	if (strcmp (key, "enable_animations") == 0)
                 associate = glade_xml_get_widget (glade_gui, "animation-vbox");
 
-	else if (!strcmp (key, "enable_key_bindings"))
+	else if (strcmp (key, "enable_key_bindings") == 0)
                 associate = glade_xml_get_widget (glade_gui,"kb-table");
 
         if (associate)
@@ -128,7 +128,7 @@ option_menu_changed (GtkWidget *widget,
 
 	full_key = panel_gconf_global_key (key);
 
-	if (!strcmp (key, "panel_animation_speed"))
+	if (strcmp (key, "panel_animation_speed") == 0)
 		gconf_client_set_string (gconf_client, full_key,
 				         gconf_enum_to_string (global_properties_speed_type_enum_map,
 			       		 		       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
@@ -181,7 +181,7 @@ load_option_menus (void)
         	option = glade_xml_get_widget (glade_gui, optionmenus [i]);
         	key = panel_gconf_global_key (optionmenus [i]);
 		
-		if (!strcmp (optionmenus[i], "panel_animation_speed"))
+		if (strcmp (optionmenus[i], "panel_animation_speed") == 0)
 			gconf_string_to_enum (global_properties_speed_type_enum_map,
 			      		      gconf_client_get_string (gconf_client, key, NULL),
 			                      &retval);

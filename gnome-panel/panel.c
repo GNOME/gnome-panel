@@ -1858,9 +1858,11 @@ panel_load_global_config (void)
 
 	list = panel_gconf_all_global_entries ();
 
-	for (li = list; li != NULL ; li = li->next) {
-		panel_global_config_set_entry (li->data);
-		gconf_entry_free (li->data);
+	for (li = list; li != NULL; li = li->next) {
+		GConfEntry *entry = li->data;
+		li->data = NULL;
+		panel_global_config_set_entry (entry);
+		gconf_entry_free (entry);
 	}
 
 	g_slist_free (list);
@@ -2045,7 +2047,7 @@ panel_set_bool (const char *profile,
 void
 panel_load_panels_from_gconf (void)
 {
-	GSList     *panels;
+	GSList     *panel_ids;
 	GSList     *l;
 	const char *profile;
 	const char *key;
@@ -2054,10 +2056,10 @@ panel_load_panels_from_gconf (void)
 	
 	key = panel_gconf_general_key (profile, "panel_id_list");
 
-	panels = gconf_client_get_list (
+	panel_ids = gconf_client_get_list (
 			panel_gconf_get_client (), key, GCONF_VALUE_STRING, NULL);
 
-	for (l = panels; l; l = l->next) {
+	for (l = panel_ids; l; l = l->next) {
 		GtkWidget     *panel;
 		PanelType      type;
 		PanelBackType  back_type;
@@ -2287,7 +2289,7 @@ panel_load_panels_from_gconf (void)
 	}
 
 	/* Failsafe! */
-	if (!panels) {
+	if (panel_ids == NULL) {
 		GtkWidget *panel;
 
 		panel_error_dialog ("no_panels_found",
@@ -2300,7 +2302,7 @@ panel_load_panels_from_gconf (void)
 		gtk_widget_show (panel);
 	}
 
-	panel_g_slist_deep_free (panels);
+	panel_g_slist_deep_free (panel_ids);
 }
 
 void
@@ -2333,7 +2335,7 @@ panel_save_to_gconf (PanelData *pd)
 				client, key, GCONF_VALUE_STRING, NULL);
 
 	for (l = panel_id_list; l; l = l->next)
-		if (!strcmp (panel->unique_id, l->data))
+		if (strcmp (panel->unique_id, l->data) == 0)
 			break;
 	
 	if (!l) {
@@ -2350,7 +2352,7 @@ panel_save_to_gconf (PanelData *pd)
 	panel_set_string (profile, panel->unique_id, "panel_type", 
 			  gconf_enum_to_string (panel_type_type_enum_map, pd->type));
 
-	if (basep) {
+	if (basep != NULL) {
 		panel_set_bool (profile, panel->unique_id,
 				"hide_buttons_enabled",
 				basep->hidebuttons_enabled);
@@ -2455,16 +2457,18 @@ panel_remove_from_gconf (PanelWidget *panel)
 {
 	const char *key;
 	GSList     *new_panels = NULL;
-	GSList     *panels;
+	GSList     *panel_ids;
 	GSList     *l;
 
 	key = panel_gconf_general_key (panel_gconf_get_profile (), "panel_id_list");
 
-	panels = gconf_client_get_list (
+	panel_ids = gconf_client_get_list (
 			panel_gconf_get_client (), key, GCONF_VALUE_STRING, NULL);
 
-	for (l = panels; l; l = l->next) {
-		if (!strcmp (panel->unique_id, (char *) l->data)) {
+	for (l = panel_ids; l; l = l->next) {
+		char *id = l->data;
+		l->data = NULL;
+		if (strcmp (panel->unique_id, id) == 0) {
 			char *dir;
 
 			dir = g_strdup_printf ("/apps/panel/profiles/%s/panels/%s",
@@ -2473,12 +2477,13 @@ panel_remove_from_gconf (PanelWidget *panel)
 
 			panel_gconf_clean_dir (panel_gconf_get_client (), dir);
 			g_free (dir);
-			g_free (l->data);
-		} else
-			new_panels = g_slist_prepend (new_panels, l->data);
+			g_free (id);
+		} else {
+			new_panels = g_slist_prepend (new_panels, id);
+		}
         }
 
-	g_slist_free (panels);
+	g_slist_free (panel_ids);
 
         gconf_client_set_list (panel_gconf_get_client (), key,
 			       GCONF_VALUE_STRING, new_panels, NULL);

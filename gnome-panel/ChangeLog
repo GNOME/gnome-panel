@@ -1,3 +1,14 @@
+Mon May 20 17:12:06 2002  George Lebl <jirka@5z.com>
+
+	* applet.c, basep-widget.c, gnome-panel-preferences.c,
+	  gnome-run.c, menu-fentry.c, menu.c, panel-config-global.c,
+	  panel-util.c, panel-widget.c, panel.c:  Tried to verify GSList
+	  code and while at it did a bunch of slist code cleanup.  Also
+	  I HATE !strcmp with a passion so I changed all such instances
+	  to strcmp(a, b) == 0.
+
+	* basep-widget.c: some more descriptive property names/descs
+
 2002-05-20  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet-frame.c:

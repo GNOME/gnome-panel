@@ -576,14 +576,15 @@ panel_parse_accelerator (GlobalConfigKey *key)
 	key->keysym = 0;
 	key->state = 0;
 
-	if (!key->str || !key->str [0] ||
-	    !strcmp (key->str, "Disabled") ||
-	    !strcmp (key->str, _("Disabled")))
+	if (key->str == NULL ||
+	    key->str[0] == '\0' ||
+	    strcmp (key->str, "Disabled") == 0 ||
+	    strcmp (key->str, _("Disabled")) == 0)
 		return FALSE;
 
 	gtk_accelerator_parse (key->str, &key->keysym, &key->state);
 
-	if (!key->keysym)
+	if (key->keysym == 0)
 		return FALSE;
 
 	return TRUE;

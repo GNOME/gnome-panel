@@ -153,16 +153,16 @@ basep_widget_class_init (BasePWidgetClass *klass)
         g_object_class_install_property (object_class,
                                         PROP_MODE,
                                         g_param_spec_enum ("mode",
-                                                             _("mode"),
-                                                             _("mode"),
+                                                             _("Mode"),
+                                                             _("Mode of this panel"),
 							    PANEL_TYPE_BASE_PMODE,
                                                             BASEP_EXPLICIT_HIDE,
                                                             G_PARAM_READWRITE));
         g_object_class_install_property (object_class,
                                         PROP_STATE,
                                         g_param_spec_enum ("state",
-                                                             _("state"),
-                                                             _("state"),
+                                                             _("State"),
+                                                             _("Current state of this panel"),
 							     PANEL_TYPE_BASE_PSTATE,
                                                              BASEP_SHOWN,
                                                              G_PARAM_READWRITE));
@@ -170,16 +170,16 @@ basep_widget_class_init (BasePWidgetClass *klass)
         g_object_class_install_property (object_class,
         			  	PROP_HIDEBUTTONS_ENABLED,
                                         g_param_spec_boolean ("hidebuttons_enabled",
-                                                             _("hidebuttons_enabled"),
-                                                             _("hidebuttons_enabled"),
+                                                             _("Hidebuttons enabled"),
+                                                             _("Are hidebuttons (buttons that hide or show the panel) enabled?"),
                                                              TRUE,
                                                              G_PARAM_READWRITE));
 
         g_object_class_install_property (object_class,
         			  	PROP_HIDEBUTTON_PIXMAPS_ENABLED,
                                         g_param_spec_boolean ("hidebutton_pixmaps_enabled",
-                                                             _("hidebutton_pixmaps_enabled"),
-                                                             _("hidebutton_pixmaps_enabled"),
+                                                             _("Hidebutton pixmaps enabled"),
+                                                             _("Hidebuttons have pixmaps"),
                                                              TRUE,
                                                              G_PARAM_READWRITE));
 

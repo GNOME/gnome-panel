@@ -79,7 +79,7 @@ extern GtkTooltips *panel_tooltips;
 extern gboolean no_run_box;
 
 static GtkWidget *run_dialog = NULL;
-static GSList *add_icon_iters = NULL;
+static GSList *add_icon_paths = NULL;
 static guint add_icon_idle_id = 0;
 static guint add_items_idle_id = 0;
 static guint find_icon_timeout_id = 0;
@@ -1084,36 +1084,44 @@ find_icon_timeout (gpointer data)
 static gboolean
 add_icon_idle (GtkListStore *list)
 {
-	GtkTreeIter *iter;
+	GtkTreeIter  iter;
+	GtkTreePath *path;
 	gboolean     long_operation = FALSE;
 	GdkPixbuf   *pixbuf;
 	char        *file;
 
 	do {
-		if (!add_icon_iters) {
+		if (add_icon_paths == NULL) {
 			add_icon_idle_id = 0;
 			return FALSE;
 		}
 
-		iter = add_icon_iters->data;
-		add_icon_iters = g_slist_remove (add_icon_iters, iter);
+		path = add_icon_paths->data;
+		add_icon_paths->data = NULL;
+		add_icon_paths = g_slist_delete_link (add_icon_paths,
+						      add_icon_paths);
 
-		gtk_tree_model_get (GTK_TREE_MODEL (list), iter,
+		if ( ! gtk_tree_model_get_iter (GTK_TREE_MODEL (list),
+						&iter,
+						path)) {
+			gtk_tree_path_free (path);
+			continue;
+		}
+		gtk_tree_path_free (path);
+
+		gtk_tree_model_get (GTK_TREE_MODEL (list), &iter,
 				    COLUMN_ICON_FILE, &file, -1);
 
 		pixbuf = panel_make_menu_icon (file, NULL /* fallback */,
 					       ICON_SIZE, &long_operation);
 		if (pixbuf) {
-			gtk_list_store_set (list, iter, COLUMN_ICON, pixbuf, -1);
+			gtk_list_store_set (list, &iter, COLUMN_ICON, pixbuf, -1);
 			g_object_unref (pixbuf);
 		}
-
-		g_free (iter);
-
 	/* don't go back into the main loop if this wasn't very hard to do */
 	} while (!long_operation);
 
-	if (!add_icon_iters) {
+	if (add_icon_paths == NULL) {
 		add_icon_idle_id = 0;
 		return FALSE;
 	}
@@ -1160,10 +1168,9 @@ fill_list (GtkWidget *list)
 
 		fr = tmp->data;
 		if (prev_name && strcmp (fr->fullname, prev_name) == 0) {
-			GSList *del = tmp;
-
-			prev->next = del->next;
-			g_slist_free_1 (del);
+			prev->next = tmp->next;
+			tmp->data = NULL;
+			g_slist_free_1 (tmp);
 			tmp = prev->next;
 		} else {
 			prev = tmp;
@@ -1174,15 +1181,14 @@ fill_list (GtkWidget *list)
 
 	tmp = files;
 	while (tmp != NULL) {
-		GtkTreeIter *iter;
+		GtkTreeIter iter;
 		FileRec *fr;
+		GtkTreePath *path;
 
 		fr = tmp->data;
 
-		iter = g_new0 (GtkTreeIter, 1);
-
-		gtk_list_store_append (store, iter);
-		gtk_list_store_set (store, iter,
+		gtk_list_store_append (store, &iter);
+		gtk_list_store_set (store, &iter,
 				    COLUMN_ICON, NULL,
 				    COLUMN_ICON_FILE, fr->icon,
 				    COLUMN_FULLNAME, fr->fullname,
@@ -1191,7 +1197,10 @@ fill_list (GtkWidget *list)
 				    COLUMN_EXEC, fr->exec,
 				    -1);
 
-		add_icon_iters = g_slist_prepend (add_icon_iters, iter);
+		path = gtk_tree_model_get_path (GTK_TREE_MODEL (store), &iter);
+
+		if (path != NULL)
+			add_icon_paths = g_slist_prepend (add_icon_paths, path);
 
 		tmp = tmp->next;
 	}
@@ -1203,7 +1212,7 @@ fill_list (GtkWidget *list)
 
 	add_columns (GTK_TREE_VIEW (list));
 
-	add_icon_iters = g_slist_reverse (add_icon_iters);
+	add_icon_paths = g_slist_reverse (add_icon_paths);
 
 	if (add_icon_idle_id == 0)
 		add_icon_idle_id =
@@ -1504,9 +1513,9 @@ run_dialog_destroyed (GtkWidget *widget)
 {
 	run_dialog = NULL;
 
-	g_slist_foreach (add_icon_iters, (GFunc)g_free, NULL);
-	g_slist_free (add_icon_iters);
-	add_icon_iters = NULL;
+	g_slist_foreach (add_icon_paths, (GFunc)gtk_tree_path_free, NULL);
+	g_slist_free (add_icon_paths);
+	add_icon_paths = NULL;
 
 	if (add_icon_idle_id)
 		g_source_remove (add_icon_idle_id);

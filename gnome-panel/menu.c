@@ -1760,12 +1760,16 @@ menu_destroy(GtkWidget *menu, gpointer data)
 {
 	GSList *mfl = g_object_get_data (G_OBJECT (menu), "mf");
 	GSList *li;
+
+	g_object_set_data (G_OBJECT (menu), "mf", NULL);
+
 	for (li = mfl; li != NULL; li = li->next) {
 		MenuFinfo *mf = li->data;
+		li->data = NULL;
+
 		destroy_mf (mf);
 	}
 	g_slist_free (mfl);
-	g_object_set_data (G_OBJECT (menu), "mf", NULL);
 }
 
 /*reread the applet menu, not a submenu*/
@@ -1893,6 +1897,7 @@ submenu_to_display (GtkWidget *menuw, gpointer data)
 		    list != NULL;
 		    list = list->next) {
 			MenuFinfo *mf = list->data;
+			list->data = NULL;
 
 			menuw = create_menu_at_fr (menuw,
 						   mf->fr,
@@ -3818,7 +3823,7 @@ menu_button_notify (GtkWidget *widget, GParamSpec *pspec,gpointer data)
 {
 	Menu *menu = data;
 
-	if (!strcmp (pspec->name, "has-focus")) 
+	if (strcmp (pspec->name, "has-focus") == 0) 
 		menu_button_menu_popup (menu, 1, GDK_CURRENT_TIME);
 }
 #endif

@@ -279,7 +279,7 @@ fr_free (FileRec *fr, gboolean free_fr)
 static void
 fr_fill_dir (FileRec *fr, int sublevels)
 {
-	GSList *flist;
+	GSList *flist, *li;
 	DirRec *dr = (DirRec *)fr;
 	time_t curtime = time (NULL);
 	gboolean sorted = FALSE;
@@ -289,12 +289,10 @@ fr_fill_dir (FileRec *fr, int sublevels)
 	g_return_if_fail (fr->name != NULL);
 
 	flist = get_mfiles_from_menudir (fr->name, &sorted);
-	while (flist != NULL) {
-		MFile *mfile = flist->data;
+	for (li = flist; li != NULL; li = li->next) {
+		MFile *mfile = li->data;
 		char *name;
-		GSList *tmp = flist;
-		flist = flist->next;
-		g_slist_free_1 (tmp);
+		li->data = NULL;
 
 		if ( ! mfile->verified) {
 			free_mfile (mfile);
@@ -377,6 +375,7 @@ fr_fill_dir (FileRec *fr, int sublevels)
 		g_free (name);
 		free_mfile (mfile);
 	}
+	g_slist_free (flist);
 	if (sorted)
 		dr->recs = g_slist_reverse (dr->recs);
 	else
