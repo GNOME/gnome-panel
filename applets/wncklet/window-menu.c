@@ -64,6 +64,21 @@ static void window_menu_connect_to_window (WindowMenu *window_menu,
 					   WnckWindow *window);
 
 static void
+window_menu_make_label_bold (GtkLabel *label)
+{
+  PangoFontDescription *font_desc;
+
+  font_desc = pango_font_description_new ();
+
+  pango_font_description_set_weight (font_desc,
+                                     PANGO_WEIGHT_BOLD);
+
+  gtk_widget_modify_font (GTK_WIDGET (label), font_desc);
+
+  pango_font_description_free (font_desc);
+}
+
+static void
 window_menu_help (BonoboUIComponent *uic,
 		  WindowMenu        *window_menu,
 		  const char        *verb) 
@@ -380,7 +395,8 @@ get_width (GtkWidget *widget, const char *text)
 
 static GtkWidget*
 window_menu_item_new (WindowMenu  *window_menu,
-		      const gchar *label)
+		      const gchar *label,
+		      gboolean make_bold)
 {
 	GtkWidget *item;
 	GtkWidget *ellipsizing_label;
@@ -389,6 +405,8 @@ window_menu_item_new (WindowMenu  *window_menu,
 	
 	ellipsizing_label = eel_ellipsizing_label_new (label);
 	gtk_misc_set_alignment (GTK_MISC (ellipsizing_label), 0.0, 0.5);
+	if (make_bold)
+		window_menu_make_label_bold (ellipsizing_label);
 
 	gtk_container_add (GTK_CONTAINER (item), ellipsizing_label);
 
@@ -424,7 +442,9 @@ window_menu_add_window (WindowMenu *window_menu,
 		freeme = label;
 	}
 
-	item = window_menu_item_new (window_menu, label);
+	item = window_menu_item_new (window_menu,
+				     label,
+				     wnck_window_demands_attention (window));
 	if (freeme)
 		g_free (freeme);
 
@@ -616,9 +636,10 @@ window_menu_popup_menu (WindowMenu *window_menu,
 	}
 
 	if (!l) {
-		window_menu->no_windows_item = window_menu_item_new (
-							window_menu,
-							_("No Windows Open"));
+		window_menu->no_windows_item =
+			window_menu_item_new (window_menu,
+					      _("No Windows Open"),
+					      FALSE);
 
 		gtk_widget_set_sensitive (window_menu->no_windows_item, FALSE);
 		gtk_widget_show (window_menu->no_windows_item);	
