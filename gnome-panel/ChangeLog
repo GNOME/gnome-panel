@@ -1,3 +1,18 @@
+2002-01-13  Alexander Larsson  <alla@lysator.liu.se>
+
+	* panel-util.[ch]:
+	Make convert_string_to_keysym_state() use gtk_accelerator_parse()
+	and convert_keysym_state_to_string() use gtk_accelerator_name().
+
+	* gnome-panel-properties.glade:
+	Convert to new keysym string format.
+
+	* panel-config-global.h:
+	Make the _state variables GdkModifierType.
+
+	* panel-widget.[ch]:
+	Remove "applet_draw" signal.
+	
 2002-01-12  Glynn Foster  <glynn.foster@sun.com>
 
 	* applet.c, panel-gconf.c, panel.c: Tighten up the 

@@ -60,9 +60,9 @@ void		remove_directory	(const char *dirname,
 
 gboolean	convert_string_to_keysym_state (const char *string,
 						guint *keysym,
-						guint *state);
+						GdkModifierType *state);
 char *		convert_keysym_state_to_string (guint keysym,
-						guint state);
+						GdkModifierType state);
 
 GtkWidget *	panel_error_dialog	(const char *class,
 					 const char *format,

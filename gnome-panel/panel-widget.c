@@ -62,8 +62,6 @@ static void panel_widget_cremove        (GtkContainer     *container,
 static int  panel_widget_expose         (GtkWidget        *widget,
 					 GdkEventExpose   *event);
 static void panel_widget_destroy        (GtkObject        *obj);
-static void applet_move                 (PanelWidget      *panel,
-					 GtkWidget        *applet);
 static void panel_widget_style_set      (GtkWidget        *widget,
 					 GtkStyle         *previous_style);
 static void panel_widget_realize        (GtkWidget        *widget);
@@ -149,7 +147,6 @@ enum {
 	APPLET_ADDED_SIGNAL,
 	APPLET_REMOVED_SIGNAL,
 	BACK_CHANGE_SIGNAL,
-	APPLET_DRAW_SIGNAL,
 	APPLET_ABOUT_TO_DIE_SIGNAL,
 	LAST_SIGNAL
 };
@@ -238,18 +235,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 			      G_TYPE_POINTER,
 			      G_TYPE_POINTER);
 
-	panel_widget_signals[APPLET_DRAW_SIGNAL] =
-                g_signal_new ("applet_draw",
-                              G_TYPE_FROM_CLASS (object_class),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (PanelWidgetClass, applet_draw),
-                              NULL,
-                              NULL, 
-                              panel_marshal_VOID__POINTER,
-                              G_TYPE_NONE,
-                              1,
-                              G_TYPE_POINTER);
-
 	panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL] =
                 g_signal_new ("applet_about_to_die",
                               G_TYPE_FROM_CLASS (object_class),
@@ -264,11 +249,10 @@ panel_widget_class_init (PanelWidgetClass *class)
 
 	class->orient_change = NULL;
 	class->size_change = NULL;
-	class->applet_move = applet_move;
+	class->applet_move = NULL;
 	class->applet_added = NULL;
 	class->applet_removed = NULL;
 	class->back_change = NULL;
-	class->applet_draw = NULL;
 	class->applet_about_to_die = NULL;
 	
 	object_class->destroy = panel_widget_destroy;
@@ -281,18 +265,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
-}
-
-static void
-applet_move(PanelWidget *panel, GtkWidget *applet)
-{
-	if(panel->back_type == PANEL_BACK_COLOR ||
-	   (panel->back_type == PANEL_BACK_NONE &&
-	    !GTK_WIDGET(panel)->style->bg_pixmap[GTK_WIDGET_STATE(panel)]))
-		return;
-	g_signal_emit (G_OBJECT(panel),
-		       panel_widget_signals[APPLET_DRAW_SIGNAL],
-		       0, applet);
 }
 
 static void
@@ -929,20 +901,6 @@ queue_resize_on_all_applets(PanelWidget *panel)
 	}
 }
 
-/* TODO: I think this function, and the whole APPLET_DRAW_SIGNAL is utterly bogus */
-static void
-send_draw_to_all_applets(PanelWidget *panel)
-{
-	GList *li;
-	for(li = panel->applet_list; li != NULL;
-	    li = g_list_next(li)) {
-		AppletData *ad = li->data;
-		g_signal_emit (G_OBJECT(panel),
-			       panel_widget_signals[APPLET_DRAW_SIGNAL],
-			       0, ad->applet);
-	}
-}
-
 static void
 setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 		 gboolean *rotate)
@@ -963,11 +921,9 @@ setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 			panel->backpix = gdk_pixbuf_get_from_drawable
 				(NULL, bg_pixmap, widget->style->colormap,
 				 0, 0, 0, 0, w, h);
-			send_draw_to_all_applets(panel);
 		} else if(!bg_pixmap && panel->backpix) {
 			g_object_unref (G_OBJECT (panel->backpix));
 			panel->backpix = NULL;
-			send_draw_to_all_applets(panel);
 		}
 		*pb = panel->backpix;
 	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
@@ -1081,14 +1037,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	
 	old_alloc = widget->allocation;
 
-	if((widget->allocation.width != allocation->width ||
-	    widget->allocation.height != allocation->height) &&
-	   panel->back_type != PANEL_BACK_COLOR &&
-	   (panel->back_type != PANEL_BACK_NONE ||
-	    GTK_WIDGET(panel)->style->bg_pixmap[GTK_WIDGET_STATE(panel)])) {
-		send_draw_to_all_applets(panel);
-	}
-	
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget))
 		gdk_window_move_resize (widget->window,
@@ -1302,8 +1250,6 @@ panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
 	g_return_if_fail(PANEL_IS_WIDGET(panel));
 	g_return_if_fail(color!=NULL);
 	
-	send_draw_to_all_applets(panel);
-
 	cmap = gtk_widget_get_colormap(GTK_WIDGET(panel));
 
 	if(gdk_colormap_alloc_color(cmap,color,FALSE,TRUE)) {
@@ -1446,8 +1392,6 @@ panel_try_to_set_pixmap (PanelWidget *panel, const char *pixmap)
 	g_return_val_if_fail(panel!=NULL,FALSE);
 	g_return_val_if_fail(PANEL_IS_WIDGET(panel),FALSE);
 
-	send_draw_to_all_applets(panel);
-
 	if(panel->backpix)
 		g_object_unref (G_OBJECT (panel->backpix));
 	panel->backpix = NULL;
@@ -1532,7 +1476,6 @@ panel_widget_style_set(GtkWidget *widget,
 		if(panel->backpix)
 			g_object_unref (G_OBJECT (panel->backpix));
 		panel->backpix = NULL;
-		send_draw_to_all_applets(panel);
 	}
 
 	if (GTK_WIDGET_CLASS (panel_widget_parent_class)->style_set)
@@ -1579,13 +1522,13 @@ panel_widget_get_by_id (gchar *id)
 	g_return_val_if_fail (id != NULL, NULL);
 
 #ifdef PANEL_WIDGET_DEBUG
-	printf ("Call panel_widget_get_by_id (%s) \n", id):
+	printf ("Call panel_widget_get_by_id (%s) \n", id);
 #endif
 	for (li = panels; li != NULL; li = li->next) {
 		PanelWidget *panel = li->data;
 
 #ifdef PANEL_WIDGET_DEBUG
-	printf ("Testing panel id %s\n"panel->unique_id);
+		printf ("Testing panel id %s\n", panel->unique_id);
 #endif
 		if (panel->unique_id != NULL) {
 			if (strcmp (panel->unique_id, id) == 0) {
@@ -2627,7 +2570,6 @@ panel_widget_change_params(PanelWidget *panel,
 #endif
 
 	queue_resize_on_all_applets(panel);
-	send_draw_to_all_applets(panel);
 
 	if(oldorient != panel->orient) {
 	   	g_signal_emit (G_OBJECT(panel),

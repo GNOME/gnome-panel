@@ -122,8 +122,6 @@ struct _PanelWidgetClass
 			      PanelBackType type,
 			      char *pixmap,
 			      GdkColor *color);
-	void (* applet_draw) (PanelWidget *panel,
-			      GtkWidget *applet);
 	void (* applet_about_to_die) (PanelWidget *panel,
 				      GtkWidget *applet);
 };
