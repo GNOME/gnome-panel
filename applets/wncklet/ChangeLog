@@ -1,5 +1,11 @@
 2005-01-01  Vincent Untz  <vincent@vuntz.net>
 
+	* workspace-switcher.c: (applet_scroll): fix the algorithm for some
+	weird layouts (where n_workspaces % n_rows or n_workspaces % n_columns
+	are not 0).
+
+2005-01-01  Vincent Untz  <vincent@vuntz.net>
+
 	Patch by Mark McLoughlin. Fix bug #130308.
 
 	* workspace-switcher.c: (applet_scroll): new function to change

@@ -188,20 +188,27 @@ applet_scroll (PanelApplet    *applet,
 	int         index;
 	int         n_workspaces;
 	int         n_columns;
+	int         in_last_row;
 	
 	if (event->type != GDK_SCROLL)
 		return FALSE;
 
-	screen       = applet_get_screen (GTK_WIDGET (applet));
-	index        = wnck_workspace_get_number (wnck_screen_get_active_workspace (screen));
-	n_workspaces = wnck_screen_get_workspace_count (screen);
-	n_columns    = n_workspaces / pager->n_rows;
+	screen         = applet_get_screen (GTK_WIDGET (applet));
+	index          = wnck_workspace_get_number (wnck_screen_get_active_workspace (screen));
+	n_workspaces   = wnck_screen_get_workspace_count (screen);
+	n_columns      = n_workspaces / pager->n_rows;
+	if (n_workspaces % pager->n_rows != 0)
+		n_columns++;
+	in_last_row    = n_workspaces % n_columns;
 	
 	switch (event->direction) {
 	case GDK_SCROLL_DOWN:
 		if (index + n_columns < n_workspaces)
 			index += n_columns;
-		else if (index < n_workspaces - 1)
+		else if ((index < n_workspaces - 1
+			  && index + in_last_row != n_workspaces - 1) ||
+			 (index == n_workspaces - 1
+			  && in_last_row != 0))
 			index = (index % n_columns) + 1;
 		break;
 		
@@ -215,6 +222,8 @@ applet_scroll (PanelApplet    *applet,
 			index -= n_columns;
 		else if (index > 0)
 			index = ((pager->n_rows - 1) * n_columns) + (index % n_columns) - 1;
+			if (index >= n_workspaces)
+				index -= n_columns;
 		break;
 
 	case GDK_SCROLL_LEFT:
