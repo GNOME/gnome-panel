@@ -171,7 +171,8 @@ get_desktop_pixbuf (PanelBackground *background)
 
 	if (!background->monitor) {
 		background->monitor =
-			panel_background_monitor_get ();
+			panel_background_monitor_get_for_screen (
+				gdk_drawable_get_screen (background->window));
 
 		background->monitor_signal =
 			g_signal_connect (

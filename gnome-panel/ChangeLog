@@ -1,5 +1,23 @@
 2002-12-17  Mark McLoughlin  <mark@skynet.ie>
 
+	Make PanelBackgroundMonitor multiscreen aware.
+
+	* panel-background-monitor.[ch]:
+	(panel_background_monitor_init): factor out the
+	screen specific stuff to
+	(panel_background_monitor_connect_to_screen): here.
+	(panel_background_monitor_new): take a GdkScreen arg.
+	(panel_background_monitor_get_for_screen): keep a
+	list of monitors, one for each screen, instead of
+	a single one.
+	(panel_background_monitor_get): get the monitor for
+	the default screen.
+
+	* panel-background.c: (get_desktop_pixbuf): use
+	panel_background_monitor_get_for_screen().
+
+2002-12-17  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-stock-icons.h: add panel_button_icon_get_size()
 	to fix warning.
 

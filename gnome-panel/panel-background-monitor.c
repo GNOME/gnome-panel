@@ -61,7 +61,7 @@ struct _PanelBackgroundMonitor {
 	int        height;
 };
 
-static PanelBackgroundMonitor *global_background_monitor = NULL;
+static PanelBackgroundMonitor **global_background_monitors = NULL;
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
@@ -104,21 +104,14 @@ panel_background_monitor_class_init (PanelBackgroundMonitorClass *klass)
 static void
 panel_background_monitor_init (PanelBackgroundMonitor *monitor)
 {
-	monitor->gdkwindow = gdk_get_default_root_window ();
-	monitor->xwindow   = gdk_x11_drawable_get_xid (monitor->gdkwindow);
+	monitor->gdkwindow = NULL;
+	monitor->xwindow   = None;
 
 	monitor->gdkatom = gdk_atom_intern ("_XROOTPMAP_ID", FALSE);
 	monitor->xatom   = gdk_x11_atom_to_xatom (monitor->gdkatom);
 
 	monitor->gdkpixmap = NULL;
 	monitor->gdkpixbuf = NULL;
-
-	gdk_window_add_filter (
-		monitor->gdkwindow, panel_background_monitor_xevent_filter, monitor);
-
-	gdk_window_set_events (
-		monitor->gdkwindow, 
-		gdk_window_get_events (monitor->gdkwindow) | GDK_PROPERTY_CHANGE_MASK);
 }
 
 GType
@@ -146,29 +139,66 @@ panel_background_monitor_get_type (void)
 	return object_type;
 }
 
+static void
+panel_background_monitor_connect_to_screen (PanelBackgroundMonitor *monitor,
+					    GdkScreen              *screen)
+{
+	monitor->gdkwindow = gdk_screen_get_root_window (screen);
+	monitor->xwindow   = gdk_x11_drawable_get_xid (monitor->gdkwindow);
+
+	gdk_window_add_filter (
+		monitor->gdkwindow, panel_background_monitor_xevent_filter, monitor);
+
+	gdk_window_set_events (
+		monitor->gdkwindow, 
+		gdk_window_get_events (monitor->gdkwindow) | GDK_PROPERTY_CHANGE_MASK);
+}
+
 static PanelBackgroundMonitor *
-panel_background_monitor_new (void)
+panel_background_monitor_new (GdkScreen *screen)
 {
 	PanelBackgroundMonitor *monitor;
 
 	monitor = g_object_new (PANEL_TYPE_BACKGROUND_MONITOR, NULL);
 
+	panel_background_monitor_connect_to_screen (monitor, screen);
+
 	return monitor;
+}
+
+PanelBackgroundMonitor *
+panel_background_monitor_get_for_screen (GdkScreen *screen)
+{
+	int screen_number;
+
+	screen_number = gdk_screen_get_number (screen);
+
+	if (!global_background_monitors) {
+		int n_screens;
+
+		n_screens = gdk_display_get_n_screens (gdk_display_get_default ());
+
+		global_background_monitors = g_new0 (PanelBackgroundMonitor *, n_screens);
+	}
+
+	if (!global_background_monitors [screen_number]) {
+		global_background_monitors [screen_number] =
+				panel_background_monitor_new (screen);
+
+		g_object_add_weak_pointer (
+			G_OBJECT (global_background_monitors [screen_number]),
+			(void **) &global_background_monitors [screen_number]);
+
+		return global_background_monitors [screen_number];
+	}
+
+	return g_object_ref (global_background_monitors [screen_number]);
 }
 
 PanelBackgroundMonitor *
 panel_background_monitor_get (void)
 {
-	if (!global_background_monitor) {
-		global_background_monitor = panel_background_monitor_new ();
-
-		g_object_add_weak_pointer (G_OBJECT (global_background_monitor),
-                                           (void **) &global_background_monitor);
-
-		return global_background_monitor;
-	}
-
-	return g_object_ref (global_background_monitor);
+	return panel_background_monitor_get_for_screen (gdk_screen_get_default ());
 }
 
 static GdkFilterReturn

@@ -53,12 +53,13 @@
 typedef struct _PanelBackgroundMonitorClass PanelBackgroundMonitorClass;
 typedef struct _PanelBackgroundMonitor      PanelBackgroundMonitor;
 
-GType                   panel_background_monitor_get_type   (void);
-PanelBackgroundMonitor *panel_background_monitor_get        (void);
-GdkPixbuf              *panel_background_monitor_get_region (PanelBackgroundMonitor *monitor,
-							     int                     x,
-							     int                     y,
-							     int                     width,
-							     int                     height);
+GType                   panel_background_monitor_get_type       (void);
+PanelBackgroundMonitor *panel_background_monitor_get            (void);
+PanelBackgroundMonitor *panel_background_monitor_get_for_screen (GdkScreen *screen);
+GdkPixbuf              *panel_background_monitor_get_region     (PanelBackgroundMonitor *monitor,
+								 int                     x,
+								 int                     y,
+								 int                     width,
+								 int                     height);
 
 #endif /* __PANEL_BACKGROUND_MONITOR_H__ */
