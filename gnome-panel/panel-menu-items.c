@@ -353,12 +353,14 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		}
 
 		if (!label) {
-			char *buffer;
-
 			if (gnome_vfs_uri_is_local (bookmark->uri)) {
+				const char *buffer;
+
 				buffer = gnome_vfs_uri_get_path (bookmark->uri);
 				label = g_filename_display_basename (buffer);
 			} else {
+				char *buffer;
+
 				buffer = gnome_vfs_uri_extract_short_name (bookmark->uri);
 				label = g_filename_display_name (buffer);
 				g_free (buffer);

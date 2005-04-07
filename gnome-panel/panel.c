@@ -19,6 +19,7 @@
 
 #include <libbonobo.h>
 #include <libgnomeui/gnome-icon-lookup.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
 #include <libgnomevfs/gnome-vfs-uri.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>

@@ -1,3 +1,12 @@
+2005-04-07  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix some warnings.
+
+	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmarks):
+	Don't lose constness.
+	
+	* panel.c: include gnome-vfs-utils.h
+
 2005-04-06  Mark McLoughlin  <mark@skynet.ie>
 
 	* menu.c: (create_applications_menu),
