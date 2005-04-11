@@ -11,7 +11,7 @@ INCLUDES =							\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DGLADEDIR=\""$(gladedir)"\"				\
 	-DICONDIR=\""$(datadir)/gnome/panel/pixmaps"\"		\
-	-DMENU_I_KNOW_THIS_IS_UNSTABLE				\
+	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(STANDARD_PROPERTIES_CFLAGS)				\
 	$(PANEL_CFLAGS)						\

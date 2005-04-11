@@ -699,8 +699,8 @@ panel_menu_button_load (const char  *menu_path,
 static char *
 panel_menu_button_get_icon (PanelMenuButton *button)
 {
-	MenuTreeDirectory *directory;
-        char              *retval;
+	GMenuTreeDirectory *directory;
+        char               *retval;
 
 	retval = NULL;
 
@@ -716,21 +716,21 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 					       "panel-menu-tree-directory");
 
 		if (!directory) {
-			MenuTree *tree;
+			GMenuTree *tree;
 
 			if ((tree = g_object_get_data (G_OBJECT (button->priv->menu),
 						       "panel-menu-tree"))) {
-				directory = menu_tree_get_directory_from_path (tree,
-									       button->priv->menu_path);
+				directory = gmenu_tree_get_directory_from_path (tree,
+										button->priv->menu_path);
 				g_object_set_data_full (G_OBJECT (button->priv->menu),
 							"panel-menu-tree-directory",
 							directory,
-							(GDestroyNotify) menu_tree_item_unref);
+							(GDestroyNotify) gmenu_tree_item_unref);
 			}
 		}
 
 		if (directory)
-			retval = g_strdup (menu_tree_directory_get_icon (directory));
+			retval = g_strdup (gmenu_tree_directory_get_icon (directory));
 	}
 
 	if (!retval)

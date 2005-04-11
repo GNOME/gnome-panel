@@ -671,31 +671,31 @@ panel_run_dialog_add_icon_idle (PanelRunDialog *dialog)
 }
 
 static int
-compare_applications (MenuTreeEntry *a,
-		      MenuTreeEntry *b)
+compare_applications (GMenuTreeEntry *a,
+		      GMenuTreeEntry *b)
 {
-	return g_utf8_collate (menu_tree_entry_get_name (a),
-			       menu_tree_entry_get_name (b));
+	return g_utf8_collate (gmenu_tree_entry_get_name (a),
+			       gmenu_tree_entry_get_name (b));
 }
 
-static GSList *get_all_applications_from_dir (MenuTreeDirectory *directory,
+static GSList *get_all_applications_from_dir (GMenuTreeDirectory *directory,
 					      GSList            *list);
 
 static GSList *
-get_all_applications_from_alias (MenuTreeAlias *alias,
-				 GSList        *list)
+get_all_applications_from_alias (GMenuTreeAlias *alias,
+				 GSList         *list)
 {
-	MenuTreeItem *aliased_item;
+	GMenuTreeItem *aliased_item;
 
-	aliased_item = menu_tree_alias_get_item (alias);
+	aliased_item = gmenu_tree_alias_get_item (alias);
 
-	switch (menu_tree_item_get_type (aliased_item)) {
-	case MENU_TREE_ITEM_ENTRY:
-		list = g_slist_append (list, menu_tree_item_ref (aliased_item));
+	switch (gmenu_tree_item_get_type (aliased_item)) {
+	case GMENU_TREE_ITEM_ENTRY:
+		list = g_slist_append (list, gmenu_tree_item_ref (aliased_item));
 		break;
 
-	case MENU_TREE_ITEM_DIRECTORY:
-		list = get_all_applications_from_dir (MENU_TREE_DIRECTORY (aliased_item),
+	case GMENU_TREE_ITEM_DIRECTORY:
+		list = get_all_applications_from_dir (GMENU_TREE_DIRECTORY (aliased_item),
 						      list);
 		break;
 
@@ -703,31 +703,31 @@ get_all_applications_from_alias (MenuTreeAlias *alias,
 		break;
 	}
 
-	menu_tree_item_unref (aliased_item);
+	gmenu_tree_item_unref (aliased_item);
 
 	return list;
 }
 
 static GSList *
-get_all_applications_from_dir (MenuTreeDirectory *directory,
-			       GSList            *list)
+get_all_applications_from_dir (GMenuTreeDirectory *directory,
+			       GSList             *list)
 {
 	GSList *items;
 	GSList *l;
 
-	items = menu_tree_directory_get_contents (directory);
+	items = gmenu_tree_directory_get_contents (directory);
 
 	for (l = items; l; l = l->next) {
-		switch (menu_tree_item_get_type (l->data)) {
-		case MENU_TREE_ITEM_ENTRY:
-			list = g_slist_append (list, menu_tree_item_ref (l->data));
+		switch (gmenu_tree_item_get_type (l->data)) {
+		case GMENU_TREE_ITEM_ENTRY:
+			list = g_slist_append (list, gmenu_tree_item_ref (l->data));
 			break;
 
-		case MENU_TREE_ITEM_DIRECTORY:
+		case GMENU_TREE_ITEM_DIRECTORY:
 			list = get_all_applications_from_dir (l->data, list);
 			break;
 
-		case MENU_TREE_ITEM_ALIAS:
+		case GMENU_TREE_ITEM_ALIAS:
 			list = get_all_applications_from_alias (l->data, list);
 			break;
 
@@ -735,7 +735,7 @@ get_all_applications_from_dir (MenuTreeDirectory *directory,
 			break;
 		}
 
-		menu_tree_item_unref (l->data);
+		gmenu_tree_item_unref (l->data);
 	}
 
 	g_slist_free (items);
@@ -746,18 +746,18 @@ get_all_applications_from_dir (MenuTreeDirectory *directory,
 static GSList *
 get_all_applications (void)
 {
-	MenuTree          *tree;
-	MenuTreeDirectory *root;
-	GSList            *retval;
+	GMenuTree          *tree;
+	GMenuTreeDirectory *root;
+	GSList             *retval;
 
-	tree = menu_tree_lookup ("applications.menu", MENU_TREE_FLAGS_NONE);
+	tree = gmenu_tree_lookup ("applications.menu", GMENU_TREE_FLAGS_NONE);
 
-	root = menu_tree_get_root_directory (tree);
+	root = gmenu_tree_get_root_directory (tree);
 
 	retval = get_all_applications_from_dir (root, NULL);
 
-	menu_tree_item_unref (root);
-	menu_tree_unref (tree);
+	gmenu_tree_item_unref (root);
+	gmenu_tree_unref (tree);
 
 	retval = g_slist_sort (retval,
 			       (GCompareFunc) compare_applications);
@@ -789,39 +789,39 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 	/* Strip duplicates */
 	prev_name = NULL;
 	for (l = all_applications; l; l = next) {
-		MenuTreeEntry *entry = l->data;
+		GMenuTreeEntry *entry = l->data;
 
 		next = l->next;
 
-		if (prev_name && strcmp (menu_tree_entry_get_name (entry), prev_name) == 0) {
-			menu_tree_item_unref (entry);
+		if (prev_name && strcmp (gmenu_tree_entry_get_name (entry), prev_name) == 0) {
+			gmenu_tree_item_unref (entry);
 
 			all_applications = g_slist_delete_link (all_applications, l);
 		} else {
-			prev_name = menu_tree_entry_get_name (entry);
+			prev_name = gmenu_tree_entry_get_name (entry);
 		}
 	}
 
 	for (l = all_applications; l; l = l->next) {
-		MenuTreeEntry *entry = l->data;
+		GMenuTreeEntry *entry = l->data;
 		GtkTreeIter    iter;
 		GtkTreePath   *path;
 
 		gtk_list_store_append (dialog->program_list_store, &iter);
 		gtk_list_store_set (dialog->program_list_store, &iter,
 				    COLUMN_ICON,      NULL,
-				    COLUMN_ICON_FILE, menu_tree_entry_get_icon (entry),
-				    COLUMN_NAME,      menu_tree_entry_get_name (entry),
-				    COLUMN_COMMENT,   menu_tree_entry_get_comment (entry),
-				    COLUMN_EXEC,      menu_tree_entry_get_exec (entry),
-				    COLUMN_PATH,      menu_tree_entry_get_desktop_file_path (entry),
+				    COLUMN_ICON_FILE, gmenu_tree_entry_get_icon (entry),
+				    COLUMN_NAME,      gmenu_tree_entry_get_name (entry),
+				    COLUMN_COMMENT,   gmenu_tree_entry_get_comment (entry),
+				    COLUMN_EXEC,      gmenu_tree_entry_get_exec (entry),
+				    COLUMN_PATH,      gmenu_tree_entry_get_desktop_file_path (entry),
 				    -1);
 
 		path = gtk_tree_model_get_path (GTK_TREE_MODEL (dialog->program_list_store), &iter);
 		if (path != NULL)
 			dialog->add_icon_paths = g_slist_prepend (dialog->add_icon_paths, path);
 
-		menu_tree_item_unref (entry);
+		gmenu_tree_item_unref (entry);
 	}
 	g_slist_free (all_applications);
 

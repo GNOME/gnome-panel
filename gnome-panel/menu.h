@@ -25,7 +25,7 @@
 
 #include "panel-widget.h"
 #include "applet.h"
-#include <menu-tree.h>
+#include <gmenu-tree.h>
 
 G_BEGIN_DECLS
 

@@ -54,7 +54,7 @@ typedef struct {
 	GtkTreeModel *applet_model;
 	GtkTreeModel *application_model;
 
-	MenuTree     *menu_tree;
+	GMenuTree    *menu_tree;
 
 	GSList       *applet_list;
 	GSList       *application_list;
@@ -549,25 +549,25 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 	return (GtkTreeModel *) model;
 }
 
-static void panel_addto_make_application_list (GSList            **parent_list,
-					       MenuTreeDirectory  *directory,
-					       const char         *filename);
+static void panel_addto_make_application_list (GSList             **parent_list,
+					       GMenuTreeDirectory  *directory,
+					       const char          *filename);
 
 static void
-panel_addto_prepend_directory (GSList            **parent_list,
-			       MenuTreeDirectory  *directory,
-			       const char         *filename)
+panel_addto_prepend_directory (GSList             **parent_list,
+			       GMenuTreeDirectory  *directory,
+			       const char          *filename)
 {
 	PanelAddtoAppList *data;
 
 	data = g_new0 (PanelAddtoAppList, 1);
 
 	data->item_info.type          = PANEL_ADDTO_MENU;
-	data->item_info.name          = g_strdup (menu_tree_directory_get_name (directory));
-	data->item_info.description   = g_strdup (menu_tree_directory_get_comment (directory));
-	data->item_info.icon          = g_strdup (menu_tree_directory_get_icon (directory));
+	data->item_info.name          = g_strdup (gmenu_tree_directory_get_name (directory));
+	data->item_info.description   = g_strdup (gmenu_tree_directory_get_comment (directory));
+	data->item_info.icon          = g_strdup (gmenu_tree_directory_get_icon (directory));
 	data->item_info.menu_filename = g_strdup (filename);
-	data->item_info.menu_path     = menu_tree_directory_make_path (directory, NULL);
+	data->item_info.menu_path     = gmenu_tree_directory_make_path (directory, NULL);
 	data->item_info.static_data   = FALSE;
 
 	/* We should set the iid here to something and do
@@ -584,43 +584,43 @@ panel_addto_prepend_directory (GSList            **parent_list,
 }
 
 static void
-panel_addto_prepend_entry (GSList        **parent_list,
-			   MenuTreeEntry  *entry,
-			   const char     *filename)
+panel_addto_prepend_entry (GSList         **parent_list,
+			   GMenuTreeEntry  *entry,
+			   const char      *filename)
 {
 	PanelAddtoAppList *data;
 
 	data = g_new0 (PanelAddtoAppList, 1);
 
 	data->item_info.type          = PANEL_ADDTO_LAUNCHER;
-	data->item_info.name          = g_strdup (menu_tree_entry_get_name (entry));
-	data->item_info.description   = g_strdup (menu_tree_entry_get_comment (entry));
-	data->item_info.icon          = g_strdup (menu_tree_entry_get_icon (entry));
-	data->item_info.launcher_path = g_strdup (menu_tree_entry_get_desktop_file_path (entry));
+	data->item_info.name          = g_strdup (gmenu_tree_entry_get_name (entry));
+	data->item_info.description   = g_strdup (gmenu_tree_entry_get_comment (entry));
+	data->item_info.icon          = g_strdup (gmenu_tree_entry_get_icon (entry));
+	data->item_info.launcher_path = g_strdup (gmenu_tree_entry_get_desktop_file_path (entry));
 	data->item_info.static_data   = FALSE;
 
 	*parent_list = g_slist_prepend (*parent_list, data);
 }
 
 static void
-panel_addto_prepend_alias (GSList        **parent_list,
-			   MenuTreeAlias  *alias,
-			   const char     *filename)
+panel_addto_prepend_alias (GSList         **parent_list,
+			   GMenuTreeAlias  *alias,
+			   const char      *filename)
 {
-	MenuTreeItem *aliased_item;
+	GMenuTreeItem *aliased_item;
 
-	aliased_item = menu_tree_alias_get_item (alias);
+	aliased_item = gmenu_tree_alias_get_item (alias);
 
-	switch (menu_tree_item_get_type (aliased_item)) {
-	case MENU_TREE_ITEM_DIRECTORY:
+	switch (gmenu_tree_item_get_type (aliased_item)) {
+	case GMENU_TREE_ITEM_DIRECTORY:
 		panel_addto_prepend_directory (parent_list,
-					       MENU_TREE_DIRECTORY (aliased_item),
+					       GMENU_TREE_DIRECTORY (aliased_item),
 					       filename);
 		break;
 
-	case MENU_TREE_ITEM_ENTRY:
+	case GMENU_TREE_ITEM_ENTRY:
 		panel_addto_prepend_entry (parent_list,
-					   MENU_TREE_ENTRY (aliased_item),
+					   GMENU_TREE_ENTRY (aliased_item),
 					   filename);
 		break;
 
@@ -628,30 +628,30 @@ panel_addto_prepend_alias (GSList        **parent_list,
 		break;
 	}
 
-	menu_tree_item_unref (aliased_item);
+	gmenu_tree_item_unref (aliased_item);
 }
 
 static void
-panel_addto_make_application_list (GSList            **parent_list,
-				   MenuTreeDirectory  *directory,
-				   const char         *filename)
+panel_addto_make_application_list (GSList             **parent_list,
+				   GMenuTreeDirectory  *directory,
+				   const char          *filename)
 {
 	GSList *items;
 	GSList *l;
 
-	items = menu_tree_directory_get_contents (directory);
+	items = gmenu_tree_directory_get_contents (directory);
 
 	for (l = items; l; l = l->next) {
-		switch (menu_tree_item_get_type (l->data)) {
-		case MENU_TREE_ITEM_DIRECTORY:
+		switch (gmenu_tree_item_get_type (l->data)) {
+		case GMENU_TREE_ITEM_DIRECTORY:
 			panel_addto_prepend_directory (parent_list, l->data, filename);
 			break;
 
-		case MENU_TREE_ITEM_ENTRY:
+		case GMENU_TREE_ITEM_ENTRY:
 			panel_addto_prepend_entry (parent_list, l->data, filename);
 			break;
 
-		case MENU_TREE_ITEM_ALIAS:
+		case GMENU_TREE_ITEM_ALIAS:
 			panel_addto_prepend_alias (parent_list, l->data, filename);
 			break;
 
@@ -659,7 +659,7 @@ panel_addto_make_application_list (GSList            **parent_list,
 			break;
 		}
 
-		menu_tree_item_unref (l->data);
+		gmenu_tree_item_unref (l->data);
 	}
 
 	g_slist_free (items);
@@ -709,8 +709,8 @@ static GtkTreeModel *
 panel_addto_make_application_model (PanelAddtoDialog *dialog)
 {
 	GtkTreeStore      *store;
-	MenuTree          *tree;
-	MenuTreeDirectory *root;
+	GMenuTree          *tree;
+	GMenuTreeDirectory *root;
 
 	store = gtk_tree_store_new (NUMBER_COLUMNS,
 				    GDK_TYPE_PIXBUF,
@@ -718,21 +718,21 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 				    G_TYPE_POINTER,
 				    G_TYPE_STRING);
 
-	tree = menu_tree_lookup ("applications.menu", MENU_TREE_FLAGS_NONE);
+	tree = gmenu_tree_lookup ("applications.menu", GMENU_TREE_FLAGS_NONE);
 
-	if ((root = menu_tree_get_root_directory (tree))) {
+	if ((root = gmenu_tree_get_root_directory (tree))) {
 		panel_addto_make_application_list (&dialog->application_list,
 						   root, "applications.menu");
 		panel_addto_populate_application_model (store, NULL, dialog->application_list);
 
-		menu_tree_item_unref (root);
+		gmenu_tree_item_unref (root);
 	}
 
-	menu_tree_unref (tree);
+	gmenu_tree_unref (tree);
 
-	tree = menu_tree_lookup ("settings.menu", MENU_TREE_FLAGS_NONE);
+	tree = gmenu_tree_lookup ("settings.menu", GMENU_TREE_FLAGS_NONE);
 
-	if ((root = menu_tree_get_root_directory (tree))) {
+	if ((root = gmenu_tree_get_root_directory (tree))) {
 		GtkTreeIter iter;
 
 		gtk_tree_store_append (store, &iter, NULL);
@@ -748,10 +748,10 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 		panel_addto_populate_application_model (store, NULL,
 							dialog->settings_list);
 
-		menu_tree_item_unref (root);
+		gmenu_tree_item_unref (root);
 	}
 
-	menu_tree_unref (tree);
+	gmenu_tree_unref (tree);
 
 	return GTK_TREE_MODEL (store);
 }
@@ -987,7 +987,7 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 	dialog->application_model = NULL;
 
 	if (dialog->menu_tree)
-		menu_tree_unref (dialog->menu_tree);
+		gmenu_tree_unref (dialog->menu_tree);
 	dialog->menu_tree = NULL;
 
 	g_free (dialog);
