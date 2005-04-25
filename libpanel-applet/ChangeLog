@@ -1,3 +1,10 @@
+2005-04-25  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet.h: don't call textdomain() from shlib
+	applets. Should fix reported issue with quick-lounge,
+	although quick-lounge isn't an shlib applet anymore
+	apparently (bug #138625)
+
 ==================== 2.10.0 ====================
 
 ==================== 2.9.92 ====================

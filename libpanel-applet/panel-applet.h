@@ -266,7 +266,6 @@ __panel_applet_shlib_factory (PortableServer_POA  poa,				\
 {										\
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);			\
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");			\
-	textdomain (GETTEXT_PACKAGE);						\
         return panel_applet_shlib_factory ((iid), (type), poa, impl_ptr,	\
 					   (callback), (data), ev);		\
 }										\
