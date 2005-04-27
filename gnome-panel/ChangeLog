@@ -1,5 +1,14 @@
 2005-04-27  Mark McLoughlin  <mark@skynet.ie>
 
+	Fudge a fix for "moved the panel to the left, now I can't
+	move it	back". See:
+	  https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=141743
+
+	* button-widget.c: (button_widget_size_allocate): clamp the
+	icon size at 48x48.
+
+2005-04-27  Mark McLoughlin  <mark@skynet.ie>
+
 	* applet.c: (panel_applet_locked_change_notify):
 	Don't crash if the key is unset.
 	
