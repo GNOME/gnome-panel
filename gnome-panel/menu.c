@@ -187,7 +187,7 @@ menus_have_icons_changed (GConfClient *client,
 
 	value = gconf_entry_get_value (entry);
 
-	if (value->type == GCONF_VALUE_BOOL)
+	if (value != NULL && value->type == GCONF_VALUE_BOOL)
 		have_icons = gconf_value_get_bool (value);
 
 	list = g_list_copy (GTK_MENU_SHELL (menu)->children);

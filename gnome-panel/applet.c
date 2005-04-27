@@ -176,7 +176,7 @@ panel_applet_locked_change_notify (GConfClient *client,
 		return;
 
 	value = gconf_entry_get_value (entry);
-	if (value->type != GCONF_VALUE_BOOL)
+	if (value == NULL || value->type != GCONF_VALUE_BOOL)
 		return;
 
 	locked = gconf_value_get_bool (value);
