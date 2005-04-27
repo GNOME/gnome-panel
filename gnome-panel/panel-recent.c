@@ -265,4 +265,7 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	egg_recent_view_set_model (EGG_RECENT_VIEW (view), model);
 	egg_recent_view_gtk_set_icon_size (view, panel_menu_icon_get_size ());
 	g_object_unref (G_OBJECT (model));
+
+	g_object_set_data_full (G_OBJECT (menu), "recent-view",
+				view, g_object_unref);
 }
