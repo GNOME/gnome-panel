@@ -61,6 +61,8 @@ struct _PanelPlaceMenuItemPrivate {
 	GtkWidget   *menu;
 	PanelWidget *panel;
 
+	EggRecentViewGtk *recent_view;
+
 	GnomeVFSMonitorHandle *bookmarks_monitor;
 
 	gulong       volume_mounted_id;
@@ -465,7 +467,7 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 
 
 static GtkWidget *
-panel_place_menu_item_create_menu (void)
+panel_place_menu_item_create_menu (EggRecentViewGtk **recent_view)
 {
 	GtkWidget *places_menu;
 	GtkWidget *item;
@@ -514,7 +516,8 @@ panel_place_menu_item_create_menu (void)
 	panel_menu_items_append_from_desktop (places_menu,
 					      "gnome-search-tool.desktop");
 
-	panel_recent_append_documents_menu (places_menu);
+	*recent_view = panel_recent_append_documents_menu (places_menu,
+							   *recent_view);
 
 	return places_menu;
 }
@@ -528,7 +531,7 @@ panel_place_menu_item_recreate_menu (GtkWidget *widget)
 
 	if (place_item->priv->menu) {
 		gtk_widget_destroy (place_item->priv->menu);
-		place_item->priv->menu = panel_place_menu_item_create_menu ();
+		place_item->priv->menu = panel_place_menu_item_create_menu (&place_item->priv->recent_view);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (place_item),
 					   place_item->priv->menu);
 		panel_applet_menu_set_recurse (GTK_MENU (place_item->priv->menu),
@@ -638,6 +641,10 @@ panel_place_menu_item_finalize (GObject *object)
 	gconf_client_remove_dir (panel_gconf_get_client (),
 				 DESKTOP_IS_HOME_DIR_DIR,
 				 NULL);
+
+	if (menuitem->priv->recent_view != NULL)
+		g_object_unref (menuitem->priv->recent_view);
+	menuitem->priv->recent_view = NULL;
 
 	if (menuitem->priv->bookmarks_monitor != NULL)
 		gnome_vfs_monitor_cancel (menuitem->priv->bookmarks_monitor);
@@ -831,7 +838,7 @@ panel_place_menu_item_new (gboolean use_image)
 					       image);
 	}
 
-	menuitem->priv->menu = panel_place_menu_item_create_menu ();
+	menuitem->priv->menu = panel_place_menu_item_create_menu (&menuitem->priv->recent_view);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 				   menuitem->priv->menu);
 
