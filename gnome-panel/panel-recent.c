@@ -203,13 +203,13 @@ recent_documents_tooltip_func (GtkTooltips   *tooltips,
 	g_free (tooltip);
 }
 
-void
-panel_recent_append_documents_menu (GtkWidget *top_menu)
+EggRecentViewGtk *
+panel_recent_append_documents_menu (GtkWidget        *top_menu,
+				    EggRecentViewGtk *view)
 {
-	GtkWidget        *menu;
-	GtkWidget        *menu_item;
-	EggRecentModel   *model;
-	EggRecentViewGtk *view;
+	GtkWidget      *menu;
+	GtkWidget      *menu_item;
+	EggRecentModel *model;
 
 	menu_item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (menu_item,
@@ -227,18 +227,29 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	gtk_menu_shell_append (GTK_MENU_SHELL (top_menu), menu_item);
 	gtk_widget_show_all (menu_item);
 	
-	/* a model that shows the global recent doc list */
-	model = egg_recent_model_new (EGG_RECENT_MODEL_SORT_MRU);
+	if (!view) {
+		/* a model that shows the global recent doc list */
+		model = egg_recent_model_new (EGG_RECENT_MODEL_SORT_MRU);
+		view = egg_recent_view_gtk_new (menu, NULL);
+
+		egg_recent_view_gtk_set_tooltip_func (view,
+						      recent_documents_tooltip_func,
+						      NULL);
+
+		egg_recent_view_gtk_show_numbers (view, FALSE);
+		egg_recent_view_set_model (EGG_RECENT_VIEW (view), model);
+		egg_recent_view_gtk_set_icon_size (view, panel_menu_icon_get_size ());
+	} else {
+		egg_recent_view_gtk_set_menu (view, menu);
+		model = egg_recent_view_get_model (EGG_RECENT_VIEW (view));
+		g_object_ref (model);
+	}
+
 	g_signal_connect_object (model, "changed",
 				 G_CALLBACK (panel_recent_model_changed_cb),
 				 menu_item, 0);
+	g_object_unref (model);
 
-	view = egg_recent_view_gtk_new (menu, NULL);
-	g_object_unref (G_OBJECT (menu));
-
-	egg_recent_view_gtk_set_tooltip_func (view,
-					      recent_documents_tooltip_func,
-					      NULL);
 	add_menu_separator (menu);
 
 	menu_item = gtk_image_menu_item_new ();
@@ -258,14 +269,9 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 			  G_CALLBACK (recent_documents_clear_cb),
 			  model);
 
-	g_signal_connect (view, "activate",
-			  G_CALLBACK (recent_documents_activate_cb),
-			  menu);
-	egg_recent_view_gtk_show_numbers (view, FALSE);
-	egg_recent_view_set_model (EGG_RECENT_VIEW (view), model);
-	egg_recent_view_gtk_set_icon_size (view, panel_menu_icon_get_size ());
-	g_object_unref (G_OBJECT (model));
+	g_signal_connect_object (view, "activate",
+				 G_CALLBACK (recent_documents_activate_cb),
+				 menu, 0);
 
-	g_object_set_data_full (G_OBJECT (menu), "recent-view",
-				view, g_object_unref);
+	return view;
 }
