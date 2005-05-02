@@ -1,4 +1,9 @@
 2005-05-02  Mark McLoughlin  <mark@skynet.ie>
+	
+	Change things around so that we don't 1) slave the lifecycle
+	of the EggRecentViewGtk to the menu it manages, 2) incorrectly
+	unref the menu after creating the view and 3) take a ref on
+	the menu in EggRecentViewgtk.
 
 	* panel-recent.[ch]: (panel_recent_append_documents_menu):
 	Re-work so that it returns the newly created EggRecentViewGtk
