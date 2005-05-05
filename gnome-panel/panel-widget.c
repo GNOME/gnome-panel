@@ -2365,7 +2365,6 @@ bind_top_applet_events (GtkWidget *widget)
 			  G_CALLBACK (panel_widget_applet_destroy),
 			  NULL);
 
-	/* connect-after so that we stop the propogation of the event */
 	g_signal_connect (widget, "button-press-event",
 			  G_CALLBACK (panel_widget_applet_button_press_event),
 			  NULL);
