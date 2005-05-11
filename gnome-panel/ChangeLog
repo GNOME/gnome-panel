@@ -1,3 +1,16 @@
+2005-05-11  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix "dialogs pop up under panel dialogs" issue by
+	making each panel be in its own window group and
+	the dialogs part of the default group. Bug #303570
+
+	* panel-toplevel.c: (panel_toplevel_realize):
+	Just set the group leader to be the panel itself
+	rather than making a futile effort to foil gtk.
+	
+	* xstuff.[ch]: 
+	(xstuff_set_no_group): remove.
+
 2005-05-04  Mark McLoughlin  <mark@skynet.ie>
 
 	Fix crasher with recent items menu - bug #170660
