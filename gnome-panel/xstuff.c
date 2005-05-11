@@ -183,37 +183,6 @@ xstuff_net_wm_supports (const char *hint)
 	return gdk_net_wm_supports (gdk_atom_intern (hint, FALSE));
 }
 
-void
-xstuff_set_no_group (GdkWindow *win)
-{
-	XWMHints *old_wmhints;
-	XWMHints wmhints = {0};
-
-	XDeleteProperty (GDK_WINDOW_XDISPLAY (win),
-			 GDK_WINDOW_XWINDOW (win),
-			 panel_atom_get ("WM_CLIENT_LEADER"));
-
-	old_wmhints = XGetWMHints (GDK_WINDOW_XDISPLAY (win),
-				   GDK_WINDOW_XWINDOW (win));
-	/* General paranoia */
-	if (old_wmhints != NULL) {
-		memcpy (&wmhints, old_wmhints, sizeof (XWMHints));
-		XFree (old_wmhints);
-
-		wmhints.flags &= ~WindowGroupHint;
-		wmhints.window_group = 0;
-	} else {
-		/* General paranoia */
-		wmhints.flags = StateHint;
-		wmhints.window_group = 0;
-		wmhints.initial_state = NormalState;
-	}
-
-	XSetWMHints (GDK_WINDOW_XDISPLAY (win),
-		     GDK_WINDOW_XWINDOW (win),
-		     &wmhints);
-}
-
 /* This is such a broken stupid function. */   
 void
 xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)

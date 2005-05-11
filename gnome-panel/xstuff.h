@@ -9,8 +9,6 @@ void xstuff_delete_property		(GdkWindow *window,
 gboolean xstuff_is_compliant_wm		(void);
 gboolean xstuff_net_wm_supports         (const char *hint);
 
-void xstuff_set_no_group	        (GdkWindow *win);
-
 void xstuff_unsetup_desktop_area	(void);
 void xstuff_set_pos_size		(GdkWindow *window,
 					 int x, int y,
