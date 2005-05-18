@@ -1,3 +1,20 @@
+2005-05-18  Mark McLoughlin  <mark@skynet.ie>
+
+	Add an "Edit Menus" menu item to the menu bar
+	and menu button context menu. Based on a patch
+	from Vijaykumar Patwari <vijaykumar.patwari@wipro.com>
+	in bug #129073.
+
+	* panel-menu-bar.c:
+	(panel_menu_bar_load): add an "Edit Menus" context
+	menu if gmenu-simple-editor is installed.
+	(panel_menu_bar_invoke_menu): Run gmenu-simple-editor
+	if Edit Menus is clicked.
+	
+	* panel-menu-button.c:
+	(panel_menu_button_load),
+	(panel_menu_button_invoke_menu): ditto here.
+
 2005-05-11  Mark McLoughlin  <mark@skynet.ie>
 
 	Fix "dialogs pop up under panel dialogs" issue by

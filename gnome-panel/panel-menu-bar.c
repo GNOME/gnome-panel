@@ -224,14 +224,24 @@ panel_menu_bar_load (PanelWidget *panel,
 				   GTK_STOCK_HELP,
 				   _("_Help"),
 				   NULL);
-	g_signal_connect_after (G_OBJECT (menubar), "focus-in-event",
+
+	if (panel_is_program_in_path ("gmenu-simple-editor")) {
+		panel_applet_add_callback (menubar->priv->info,
+					   "edit",
+					   NULL,
+					   _("_Edit Menus"),
+					   NULL);
+	}
+
+	g_signal_connect_after (menubar, "focus-in-event",
 				G_CALLBACK (gtk_widget_queue_draw), menubar);
-	g_signal_connect_after (G_OBJECT (menubar), "focus-out-event",
+	g_signal_connect_after (menubar, "focus-out-event",
 				G_CALLBACK (gtk_widget_queue_draw), menubar);
-	g_signal_connect_after (G_OBJECT (menubar), "expose-event",
+	g_signal_connect_after (menubar, "expose-event",
 				G_CALLBACK (panel_menu_bar_on_expose), menubar);
-	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
 	GTK_WIDGET_SET_FLAGS (menubar, GTK_CAN_FOCUS);
+
+	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
 }
 
 void
@@ -264,12 +274,27 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 	g_return_if_fail (PANEL_IS_MENU_BAR (menubar));
 	g_return_if_fail (callback_name != NULL);
 
-	if (strcmp (callback_name, "help"))
-		return;
-
 	screen = gtk_widget_get_screen (GTK_WIDGET (menubar));
 
-	panel_show_help (screen, "user-guide.xml", "gospanel-37");
+	if (!strcmp (callback_name, "help")) {
+		panel_show_help (screen, "user-guide.xml", "gospanel-37");
+
+	} else if (!strcmp (callback_name, "edit")) {
+		GError *error = NULL;
+		char   *argv [2] = {"gmenu-simple-editor", NULL};
+
+		if (!gdk_spawn_on_screen (screen, NULL, argv, NULL,
+					  G_SPAWN_SEARCH_PATH,
+					  NULL, NULL, NULL, &error)) {
+			panel_error_dialog (screen,
+					    "cannot_exec_gmenu-simple-editor", TRUE,
+					    _("Cannot execute '%s'"),
+					    "%s",
+					    "gmenu-simple-editor",
+					    error->message);
+			g_error_free (error);
+		}
+	}
 }
 
 void
