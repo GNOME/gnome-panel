@@ -1,4 +1,81 @@
 ==============
+Version 2.11.1
+==============
+
+  Panel
+
+	* Add an "Edit Menus" menu item for the menu button and bar (Mark, Vijaykumar Patwari)
+	* Fix "dialogs pop up under panel dialogs" issue (Mark)
+	* Fix crasher with recent items menu (Mark)
+	* Fix lifecycle issues with the recent items menu (Mark)
+	* Fix "moved the panel to the left, now I can't move it back" issue (Mark)
+	* Don't crash if certain GConf keys are unset (Mark)
+	* Don't let force quit kill the panel (Arvind)
+	* Move "Properties" above "Delete This Panel" in the context menu (Vincent)
+	* Add preference for disabling autocompletion in the run dialog (Fernando Villacis Postigo)
+	* Remove "Run application" from the menus (Vincent)
+	* Keep up with latest libgnome-menu API (Mark, Frederic)
+	* Warnings fixes (Mark, Vincent)
+
+  Misc
+
+	* Don't call textdomain() in shlib applets (Mark)
+
+  Translators
+
+	* Vladimir Petkov (bg)
+	* Miloslav Trmac (cs)
+	* Telsa Gwynne (cy)
+	* Hendrik Richter (de)
+	* Adam Weinberger (en_CA)
+	* David Lodge (en_GB)
+	* Francisco Javier F. Serrador (es)
+	* Ivar Smolin (et)
+	* Takeshi AIHANA (ja)
+	* Steve Murphy (rw)
+	* Elian Myftiu (sq)
+	* Woodman Tuen (zh_TW)
+
+==============
+Version 2.10.1
+==============
+
+  Panel
+
+	* Fix crash in the properties dialog when debugging is disabled in
+	  GTK+ (Vincent)
+	* Fix applet appearing twice when added once and the crash happening
+	  when removing them (Vincent)
+	* Fix launchers not appearing in drawers (Vincent)
+	* Load the correct icon for menu buttons (Vincent)
+	* Only accept numeric values for the panel size (Pradeep MN)
+	* Fix tooltip of launcher not appearing when it contains a % (Vincent)
+	* Don't escape the name and the comments in launchers created by an URI
+	  drop (Vincent)
+	* Fix broken label in the Places menu for GTK+ bookmarks when filenames
+	  are not in UTF-8 (Vincent)
+	* Fix for running applications/open documents with filenames not in
+	  UTF-8 in the run dialog (Takao Fujiwara, Vincent)
+
+  Misc
+
+	* Fix compilation on Solaris and some other platforms (Vincent)
+
+  Translators
+
+	* Jordi Mallach (ca)
+	* Telsa Gwynne (cy)
+	* Martin Willemoes Hansen (da)
+	* Hendrik Richter (de)
+	* Adam Weinberger (en_CA)
+	* Leonid Kanter (ru)
+	* Steve Murphy (rw)
+	* N. Seha Islam (tr)
+	* Maxim Dziumanenko (uk)
+	* Canonical Ltd (xh)
+	* Woodman Tuen (zh_TW)
+
+==============
 Version 2.10.0
 ==============
 
