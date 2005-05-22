@@ -29,6 +29,9 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <libgnome/gnome-desktop-item.h>
+#include <libgnomevfs/gnome-vfs-result.h>
+#include <libgnomevfs/gnome-vfs-uri.h>
+#include <libgnomevfs/gnome-vfs-xfer.h>
 #include <gconf/gconf-client.h>
 
 #include "launcher.h"
@@ -89,6 +92,16 @@ panel_menu_have_icons (void)
 			"/desktop/gnome/interface/menus_have_icons",
 			NULL);
 }
+
+static inline gboolean
+desktop_is_home_dir (void)
+{	
+	return gconf_client_get_bool (
+			panel_gconf_get_client (),
+			"/apps/nautilus/preferences/desktop_is_home_dir",
+			NULL);
+}
+
 
 GtkWidget *
 add_menu_separator (GtkWidget *menu)
@@ -604,6 +617,58 @@ add_app_to_panel (GtkWidget      *item,
 			       gmenu_tree_entry_get_desktop_file_path (entry));
 }
 
+
+static void
+add_app_to_desktop (GtkWidget      *item,
+		    GMenuTreeEntry *entry)
+{
+	GnomeVFSURI *vfs_source_uri;
+	GnomeVFSURI *vfs_target_uri;
+	GnomeVFSResult res;
+	char *source_uri;
+	char *target_dir;
+	char *target_uri;
+
+	g_return_if_fail (entry != NULL);
+
+	source_uri = g_filename_to_uri (gmenu_tree_entry_get_desktop_file_path (entry), NULL, NULL);
+	g_return_if_fail (source_uri != NULL);
+
+	vfs_source_uri = gnome_vfs_uri_new (source_uri);
+	g_return_if_fail (vfs_source_uri != NULL);
+
+	if (desktop_is_home_dir ()) {
+		target_dir = g_build_filename (g_get_home_dir (), NULL);
+	} else {
+		target_dir = g_build_filename (g_get_home_dir (), "Desktop", NULL);
+	}
+
+	target_uri = panel_make_unique_uri (target_dir, ".desktop");
+	g_return_if_fail (target_uri != NULL);
+
+	vfs_target_uri = gnome_vfs_uri_new (target_uri);
+	g_return_if_fail (vfs_target_uri != NULL);
+
+	res = gnome_vfs_xfer_uri (vfs_source_uri, vfs_target_uri,
+				  GNOME_VFS_XFER_DEFAULT,
+				  GNOME_VFS_XFER_ERROR_MODE_ABORT,
+				  GNOME_VFS_XFER_OVERWRITE_MODE_ABORT,
+				  NULL, NULL);
+
+	if (res != GNOME_VFS_OK) {
+		g_warning ("Problem while copying launcher to desktop: %s",
+			   gnome_vfs_result_to_string (res));
+	}
+
+	gnome_vfs_uri_unref (vfs_source_uri);
+	gnome_vfs_uri_unref (vfs_target_uri);
+
+	g_free (source_uri);
+	g_free (target_dir);
+	g_free (target_uri);
+}
+
+
 static void add_drawers_from_dir (GMenuTreeDirectory *directory,
 				  int                 pos,
 				  const char         *toplevel_id);
@@ -858,6 +923,17 @@ create_item_context_menu (GtkWidget   *item,
 			FALSE);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (add_app_to_panel), entry);
+	gtk_widget_set_sensitive (menuitem, id_lists_writable);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem (menuitem,
+			panel_menu_icon_get_size (),
+			NULL,
+			_("Add this launcher to desktop"),
+			FALSE);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_app_to_desktop), entry);
 	gtk_widget_set_sensitive (menuitem, id_lists_writable);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
