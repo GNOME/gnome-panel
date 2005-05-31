@@ -162,6 +162,8 @@ recent_documents_clear_cb (GtkMenuItem    *menuitem,
 
 	gtk_container_set_border_width (GTK_CONTAINER (clear_recent_dialog), 6);
 
+	gtk_window_set_title (GTK_WINDOW (clear_recent_dialog), "");
+
 	gtk_dialog_set_default_response (GTK_DIALOG (clear_recent_dialog), GTK_RESPONSE_ACCEPT);
 
 	g_signal_connect (clear_recent_dialog, "response",
