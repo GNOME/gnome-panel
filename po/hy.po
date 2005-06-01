@@ -1,0 +1,1534 @@
+# translation of gnome-panel.HEAD.hy.po to armenian
+# translation of gnome-panel.HEAD.hy.po to
+# translation of gnome-panel.HEAD.po to armenian
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Norayr Chilingaryan <asprayama@yahoo.com>, 2004, 2005.
+# Lilit Azizbekyan <l@freenet.am>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-panel.HEAD.hy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-22 04:29+0100\n"
+"PO-Revision-Date: 2005-02-24 22:56+0400\n"
+"Last-Translator: Lilit Azizbekyan <l@freenet.am>\n"
+"Language-Team: armenian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:1
+msgid "Ad_just Date & Time"
+msgstr "_Ուղղել Ամսաթիվը և Ժամը"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:2
+msgid "Copy _Date"
+msgstr "Պատճենել _Ամսաթիվը"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:3
+msgid "Copy _Time"
+msgstr "Պատճենել _Ժամը"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:4
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
+msgid "_About"
+msgstr "_Ապլետի մասին"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:5
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
+#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:727
+#: gnome-panel/panel-context-menu.c:346 gnome-panel/panel-menu-bar.c:313
+#: gnome-panel/panel-menu-button.c:601
+msgid "_Help"
+msgstr "_Ձեռնարկ"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:6
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
+msgid "_Preferences"
+msgstr "_Նախընտրանք"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
+#: applets/clock/clock.c:2595
+msgid "Clock"
+msgstr "Ժամացույց"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
+msgid "Clock Applet Factory"
+msgstr "Ժամացույց ապլետի արհեստանոց"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+msgid "Factory for creating clock applets."
+msgstr "Ժամացույց ապլետներ ստեղծելու արհեստանոց"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+msgid "Get the current time and date"
+msgstr "Ներկա ժամը և ամսաթիվը"
+
+#: applets/clock/clock.c:268
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#: applets/clock/clock.c:268 applets/clock/clock.c:584
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
+
+#: applets/clock/clock.c:270 applets/clock/clock.c:1684
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+#: applets/clock/clock.c:270 applets/clock/clock.c:586
+#: applets/clock/clock.c:1686
+msgid "%H:%M"
+msgstr "%H:%M"
+
+#. translators: replace %e with %d if, when the day of the
+#. *              month as a decimal number is a single digit, it
+#. *              should begin with a 0 in your locale (e.g. "May
+#. *              01" instead of "May  1").
+#.
+#: applets/clock/clock.c:281
+msgid "%a %b %e"
+msgstr "%a %b %e"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/clock/clock.c:288
+#, c-format
+msgid ""
+"%1$s\n"
+"%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/clock/clock.c:295
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
+
+#. Show date in tooltip
+#: applets/clock/clock.c:379
+msgid "%A %B %d"
+msgstr "%A %B %d"
+
+#. Translators: If the event did not start on the current day
+#. we will display the start date in the most abbreviated way possible.
+#: applets/clock/clock.c:591
+msgid "%b %d"
+msgstr "%b %d"
+
+#: applets/clock/clock.c:890
+msgid "Tasks"
+msgstr "Առաջադրանքներ"
+
+#: applets/clock/clock.c:1034
+msgid "All Day"
+msgstr "Ամբողջ Օր"
+
+#: applets/clock/clock.c:1073
+msgid "Appointments"
+msgstr "Հանդիպումներ"
+
+#: applets/clock/clock.c:1305
+msgid "Calendar"
+msgstr "Օրացույց"
+
+#: applets/clock/clock.c:1586
+msgid "Computer Clock"
+msgstr "Համակարգչային ժամացույց"
+
+#: applets/clock/clock.c:1679
+msgid "%I:%M:%S %p"
+msgstr "%I:%M:%S %p"
+
+#: applets/clock/clock.c:1681
+msgid "%I:%M %p"
+msgstr "%I:%M %p"
+
+#: applets/clock/clock.c:1723
+msgid "%A, %B %d %Y"
+msgstr "%A, %B %d %Y"
+
+#: applets/clock/clock.c:1767
+#, c-format
+msgid "Failed to launch time configuration tool: %s"
+msgstr "Ժամացույցի կազմաձևման ծրագրի խափանում՝ %s"
+
+#: applets/clock/clock.c:1806
+msgid ""
+"Failed to locate a program for configuring the date and time. Perhaps none "
+"is installed?"
+msgstr ""
+"Չեմ գտնում ժամացույցը կազմաձևող ծրագիրը։ "
+"Հավանաբար այն տեղակայված չէ։"
+
+#: applets/clock/clock.c:2254
+msgid "Custom format"
+msgstr "Ընտրովի ձևաչափ"
+
+#: applets/clock/clock.c:2375 applets/clock/clock.c:2552
+#: applets/fish/fish.c:137 applets/notification_area/main.c:81
+#: applets/wncklet/showdesktop.c:438 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:780 applets/wncklet/window-menu.c:88
+#: applets/wncklet/workspace-switcher.c:202
+#: applets/wncklet/workspace-switcher.c:508
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Ձեռնարկի խափանում. %s"
+
+#: applets/clock/clock.c:2410
+msgid "Clock Preferences"
+msgstr "Ժամացույց ապլետի նախընտրանքներ"
+
+#: applets/clock/clock.c:2434
+msgid "Clock _type:"
+msgstr "_Ժամացույցի տեսակը՝"
+
+#: applets/clock/clock.c:2444
+#, fuzzy
+msgid "12 hour"
+msgstr "12 ժամ"
+
+#: applets/clock/clock.c:2445
+#, fuzzy
+msgid "24 hour"
+msgstr "24 ժամ"
+
+#: applets/clock/clock.c:2446
+msgid "UNIX time"
+msgstr "UNIX ժամ"
+
+#: applets/clock/clock.c:2447
+#, fuzzy
+msgid "Internet time"
+msgstr "Ինտերնետ ժամ"
+
+#: applets/clock/clock.c:2455
+msgid "Custom _format:"
+msgstr "_Ընտրովի ձևաչափ՝"
+
+#: applets/clock/clock.c:2474
+msgid "Show _seconds"
+msgstr "Ցույց տալ _վայրկյանները"
+
+#: applets/clock/clock.c:2483
+msgid "Show _date"
+msgstr "Ցույց տալ _ամսաթիվը"
+
+#: applets/clock/clock.c:2492
+msgid "Use _UTC"
+msgstr "Ցույց տալ ժամը _ըստ Գրինվիչի"
+
+#. Translator credits
+#: applets/clock/clock.c:2584 applets/fish/fish.c:480
+#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:468
+#: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
+#: applets/wncklet/workspace-switcher.c:539
+#: gnome-panel/panel-context-menu.c:128
+msgid "translator-credits"
+msgstr ""
+"Նորայր Չիլինգարյան<norik@freenet.am>\n"
+"Լիլիթ Ազիզբեկյան<l@freenet.am>"
+
+#: applets/clock/clock.c:2598
+msgid "The Clock displays the current time and date"
+msgstr "Ժամացույցը ցուցադրում է ներկա ժամը և ամսաթիվը"
+
+#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:2
+msgid "24"
+msgstr "24"
+
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
+msgid "24-hour"
+msgstr "24-hour"
+
+#: applets/clock/clock.schemas.in.h:5
+msgid "Custom format of the clock"
+msgstr "Ժամացույցի ընտրովի ձևաչափ"
+
+#: applets/clock/clock.schemas.in.h:6
+msgid "Hour format"
+msgstr "Ժամի ձևաչափ"
+
+#: applets/clock/clock.schemas.in.h:7
+msgid "If true, display date in the clock, in addition to time."
+msgstr "Ընտրելու դեպքում ապլետում կցուցադրվի նաև ամսաթիվը։"
+
+#: applets/clock/clock.schemas.in.h:8
+msgid "If true, display seconds in time."
+msgstr "Ընտրելու դեպքում ապլետում կցուցադրվեն վայրկյանները"
+
+#: applets/clock/clock.schemas.in.h:9
+msgid "If true, display time in Universal Coordinated Time zone."
+msgstr "Ընտրելու դեպքում ցուցադրվում է ժամանակը ըստ Գրինվիչի"
+
+#: applets/clock/clock.schemas.in.h:10
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr "Ընտրելու դեպքում ամսաթիվը կցուցադրվի որպես ակնարկ, երբ մկնիկի սլաքը գտնվի ժամացույցի վրա։"
+
+#: applets/clock/clock.schemas.in.h:11
+msgid "If true, show week numbers in the calendar."
+msgstr "Ընտրելու դեպքում օրացույցում կցուցադրվեն շաբաթվա համարները։"
+
+#: applets/clock/clock.schemas.in.h:12
+msgid "Show date in clock"
+msgstr "Ցուցադրել ամսաթիվը ժամացույցի մեջ"
+
+#: applets/clock/clock.schemas.in.h:13
+msgid "Show date in tooltip"
+msgstr "Ցուցադրել ամսաթիվը որպես ակնարկ"
+
+#: applets/clock/clock.schemas.in.h:14
+msgid "Show time with seconds"
+msgstr "Ցույց տալ ժամը վայրկյաններով"
+
+#: applets/clock/clock.schemas.in.h:15
+msgid "Show week numbers in calendar"
+msgstr "Ցույց տալ շաբաթվա համարները օրացույցում"
+
+#: applets/clock/clock.schemas.in.h:16
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"Այս բանալին խորհուրդ չի տրվում կիրառել GNOME 2.6 միջավայրում։Այն պահպանված է միայն հին տարբերակների հետ համատեղելիության նպատակով։ "
+"Կիրառեք 'ձևաչափ' բանալին "
+
+#: applets/clock/clock.schemas.in.h:17
+#, fuzzy
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format."
+msgstr "Այս բանալին հատկորոշում է ժամացույցի ապլետի ձևաչափը, երբ 'ձևաչափ' բանալին ընտրված է որպես 'ընտրովի'։ Դուք կարող եք կիրառել հաջորդականություններ, որոնց հասկանում է strftime() ֆունկցիան, ցանկալի ձևաչափ ստանալու համար"
+
+#: applets/clock/clock.schemas.in.h:18
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"Այս բանալին մատնորոշում է ժամացույց ապլետի ժամը ցույց տալու ձևաչափը։ Հնարավոր արժեքներ՝ "
+"\"12-ժամ\",\"24-ժամ\",\"ինտերնետ\",\"unix(յունիքս)\"և\"ընտրովի(custom)\"։ Եթե ընտրված է \"ինտերնետ\", ժամացույցը ցուցադրելու է ինտերնետ ժամանակը։ Այս ժամանակը բաժանում է օրը 1000 հատվածի։ Այս համակագում բացակայում են ժամանակային գոտիները, և ժամանակը ամբողջ աշխարհում նույնն է։ Եթե ընտրված է \"յոինիքս(unix)\", ապա ժամացույցի ապլետը կպատկերի ժամանակը վայրկյաններում \"դարաշրջանի(Epoch)\" սկզբից, այսինքն 1.01.1970 թվից սկսած։ "
+"Եթե ընտրված է \"ընտրովի(custom)\" տարբերակը, ապա ժամացույցը կպատկերի ժամանակը ըստ \"ընտրովի ձեաչափ\" բանալիով որոշված ձևաչափի։"
+
+#: applets/clock/clock.schemas.in.h:19
+msgid "This key specifies the program to run in order to configure the time."
+msgstr "Այս բանալին մատնորոշում է ժամանակը կազմաձևելու համար ծրագիրը։"
+
+#: applets/clock/clock.schemas.in.h:20
+msgid "Time configuration tool"
+msgstr "Ժամանակի կազմաձևման գործիք"
+
+#: applets/clock/clock.schemas.in.h:21
+msgid "Use Internet time"
+msgstr "Պատկերել ինտերնետ ժամանակը"
+
+#: applets/clock/clock.schemas.in.h:22
+msgid "Use UNIX time"
+msgstr "Պատկերել Յունիքս (UNIX) ժամանակը"
+
+#: applets/clock/clock.schemas.in.h:23
+msgid "Use UTC"
+msgstr "Պատկերել ժամանակը ըստ Գրինվիչի (UTC)"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr "Պատկերել լողող ձկնիկ կամ այլ կենդանի "
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
+#: applets/fish/fish.c:500
+msgid "Fish"
+msgstr "Ձկնիկ"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "Ո՞րտեղից է հայտնվել այս հիմարիկ ձկնիկը"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+msgid "Wanda Factory"
+msgstr "Ուանդա գործարան"
+
+#: applets/fish/fish.c:207
+#, c-format
+msgid ""
+"Warning:  The command appears to be something actually useful.\n"
+"Since this is a useless applet, you may not want to do this.\n"
+"We strongly advise you against using %s for anything\n"
+"which would make the applet \"practical\" or useful."
+msgstr ""
+"Ուշադրություն՝ հավանաբար հրամանը իրոք ինչ–որ կիրառելի բան է անելու։\n"
+"Քանի որ սա անպիտանի ապլետ է, Դուք կարող է չուզենաք այն գործ անի։\n"
+"Խորհուրդ ենք տալիս խուսափել \"%s ձկնիկի կիրառումը \" յուրաքանչյուր նպատակով, որը կդարցնի ապլետը \"պիտանի\" կամ օգտակար։"
+
+#: applets/fish/fish.c:466 applets/fish/fish.c:528 applets/fish/fish.c:643
+#, no-c-format
+msgid "%s the Fish"
+msgstr "%s Ձկնիկը"
+
+#: applets/fish/fish.c:467
+#, c-format
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. If "
+"anyone is found using it, he should be promptly sent for a psychiatric "
+"evaluation."
+msgstr "\"%s Ձկնիկը\" լրիվ անպիտանի ապլետ է։ Այն միայն դիսկի վրա տեղ է զբաղեցնում, և երկարացնում է կազմարկման (compilation) ընթացքը։ Աշխատելիս, զբաղեցնում է տեղ պանելի վրա, և հիշողության մեջ։ Այն մարդուն, որը գտել է այս ապլետի կիրառումը, պետք է ուղարկել հոգեբանական հետազոտման։"
+
+#: applets/fish/fish.c:493
+msgid "(with minor help from George)"
+msgstr "Ջորջի նվազագույն օգնությամբ"
+
+#: applets/fish/fish.c:529
+#, c-format
+msgid "%s the Fish, a contemporary oracle"
+msgstr "%s Ձկնիկը, ժամանակակից պատգամախոս"
+
+#: applets/fish/fish.c:599
+msgid "Unable to locate the command to execute"
+msgstr "Չեմ գտնում հրաման այն կատարելու համար։"
+
+#: applets/fish/fish.c:648
+#, no-c-format
+msgid "%s the Fish Says:"
+msgstr "%s Չկնիկը ասում է՝ "
+
+#: applets/fish/fish.c:717
+#, c-format
+msgid ""
+"Unable to read output from command\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Չեմ կարող կարդալ հրամանի ելքային տվյալները\n"
+"\n"
+"Մանրամասներ՝ %s"
+
+#: applets/fish/fish.c:782
+msgid "_Speak again"
+msgstr "_Կրկնեք նորից"
+
+#: applets/fish/fish.c:863
+#, c-format
+msgid "The configured command is not working and has been replaced by: %s"
+msgstr "Կազմաձևված հրամանը աշխատող չէ և փոխարինված է %s հրամանով"
+
+#: applets/fish/fish.c:886
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Չեմ կարող աշխատացնել '%s'\n"
+"\n"
+"Մանրամասներ՝ %s "
+
+#: applets/fish/fish.c:902
+#, c-format
+msgid ""
+"Unable to read from '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Չեմ կարող կարդալ '%s'–ից\n"
+"\n"
+"Մանրամասներ՝ %s "
+
+#: applets/fish/fish.c:1539
+msgid ""
+"The water needs changing!\n"
+"(Look at today's date)"
+msgstr ""
+"Ջուրը անհրաժեշտ է փո՜խել։ "
+"(Նաիր ամսի քանիսն է)"
+
+#: applets/fish/fish.c:1599
+#, c-format
+msgid "%s the Fish, the fortune teller"
+msgstr "%s Ձկնիկը, ապագայի գուշակ է"
+
+#: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
+#: applets/wncklet/workspace-switcher.glade.h:1
+#: gnome-panel/panel-properties-dialog.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: applets/fish/fish.glade.h:2 gnome-panel/panel-properties-dialog.glade.h:2
+#: gnome-panel/panel-run-dialog.glade.h:1
+#: libpanel-applet/panel-test-applets.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: applets/fish/fish.glade.h:3
+msgid "<b>Animation</b>"
+msgstr "<b>Անիմացիա</b>"
+
+#: applets/fish/fish.glade.h:4
+msgid "<b>General</b>"
+msgstr "<b>Ընդհանուր</b>"
+
+#: applets/fish/fish.glade.h:5
+msgid "Browse"
+msgstr "Զննել"
+
+#: applets/fish/fish.glade.h:6
+msgid "Co_mmand to run when clicked:"
+msgstr "_Հրաման, որն աշխատացվելու է ըստ կտոցի"
+
+#: applets/fish/fish.glade.h:7
+msgid "Fish Preferences"
+msgstr "Ձկնիկի Նախընտրանքները"
+
+#: applets/fish/fish.glade.h:8
+msgid "_File:"
+msgstr "_Ֆայլ"
+
+#: applets/fish/fish.glade.h:9
+msgid "_Name of fish:"
+msgstr "_Չկնիկի անունը"
+
+#: applets/fish/fish.glade.h:10
+msgid "_Pause per frame:"
+msgstr "_Կադրի հապաղումը"
+
+#: applets/fish/fish.glade.h:11
+msgid "_Rotate on vertical panels"
+msgstr "_Պտտել ուղղաձիգլ վահանակների վրա"
+
+#: applets/fish/fish.glade.h:12
+msgid "_Total frames in animation:"
+msgstr "_Անիմացիայի կադրերի ընդհանուր քանակը"
+
+#: applets/fish/fish.glade.h:13
+msgid "frames"
+msgstr "կադր"
+
+#: applets/fish/fish.glade.h:14
+msgid "seconds"
+msgstr "վայրկյան"
+
+#: applets/fish/fish.schemas.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr "Առանց անուն ձկնիկը անկապ հիմար չկնիկ է։ Կենդանացրեք Ձեր ձկնիկին իրան անուն տալով։"
+
+#: applets/fish/fish.schemas.in.h:2
+msgid "Command to execute on click"
+msgstr "Հրամանը, որը կատարվելու է կտոցի ժամանակ"
+
+#: applets/fish/fish.schemas.in.h:3
+msgid "Frames in fish's animation"
+msgstr "Ձկնիկի անիմացիայի կադրերի քանակը "
+
+#: applets/fish/fish.schemas.in.h:4
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr "Եթե ըբտրված է ապա ձկնիկի անիմացիան պատկերվելու է պտտված ուղղաձիգ վահանակների վրա։"
+
+#: applets/fish/fish.schemas.in.h:5
+msgid "Pause per frame"
+msgstr "Կադրի հապաղում"
+
+#: applets/fish/fish.schemas.in.h:6
+msgid "Rotate on vertical panels"
+msgstr "Պտտել ուղղաձիգ վահանակների վրա"
+
+#: applets/fish/fish.schemas.in.h:7
+msgid "The fish's animation pixmap"
+msgstr "Ձկնիկի անիմացված պատկերը"
+
+#: applets/fish/fish.schemas.in.h:8
+msgid "The fish's name"
+msgstr "Ձկնիկի անունը"
+
+#: applets/fish/fish.schemas.in.h:9
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "Այս բանալին մատնորոշում է այն հրամանը, որը կաշխատացվի երբ կտացնեկ ձկնիկի վրա։"
+
+#: applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr "Այս բանալին մատնորոշում է ձկնիկի պատկերի ֆայլը"
+
+#: applets/fish/fish.schemas.in.h:11
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
+msgstr "Ձկնիկի անիմացիայի կադրերի քանակը"
+
+#: applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr "Այս բանալին մանտորոշում է քանի վայրկյան է ցուցադրվալու յուրաքանչյուր կադրը"
+
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr "Տեղայնք, որտեղ հայտնվում են ծանուցման պատկերակները"
+
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
+msgid "Notification Area"
+msgstr "Ծանուցման տեղայնք"
+
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
+msgid "Notification Area Factory"
+msgstr "\"Ծանուցման տեղայնքի\" արհեստանոց"
+
+#: applets/notification_area/eggtraymanager.c:145
+msgid "Orientation"
+msgstr "Կողմնորոշում"
+
+#: applets/notification_area/eggtraymanager.c:146
+msgid "The orientation of the tray."
+msgstr "Վահանակի կողմնորոշում"
+
+#: applets/notification_area/main.c:128 applets/notification_area/main.c:341
+msgid "Panel Notification Area"
+msgstr "Վահանակի Ծանուցման Տեղայնք"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+msgid "Factory for the window navigation related applets"
+msgstr "Պատուհանների նավավարության ապլետներ ստեղծելու արհեստանոց"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+msgid "Hide application windows and show the desktop"
+msgstr "Թաքցնել բոլոր ծրագրերը և ցույց տալ աշխատասեղանը"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+msgid "Show Desktop"
+msgstr "Ցույց տալ աշխատանքային սեղանը"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows"
+msgstr "Փոխել առաջադրյալ պատուհանը"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between workspaces"
+msgstr "Փոխել աշխատատիրույթը"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+#: applets/wncklet/window-list.c:820
+msgid "Window List"
+msgstr "Պատուհանացանկ"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+msgid "Window Navigation Applet Factory"
+msgstr "Պատուհանների Նավավարության Ապլետների Արհեստանոց"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:886 applets/wncklet/window-menu.c:888
+msgid "Window Selector"
+msgstr "Պատուհանների փոխիչ"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: applets/wncklet/workspace-switcher.c:550
+#: applets/wncklet/workspace-switcher.c:957
+msgid "Workspace Switcher"
+msgstr "Աշխատատիրույթ փոխելու գործիք"
+
+#: applets/wncklet/showdesktop.c:240
+msgid "Click here to restore hidden windows."
+msgstr "Կտացրեք այստեղ թաքնված պատուհանները վերականգնելու համար"
+
+#: applets/wncklet/showdesktop.c:243
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Կտացրեք այստեղ բոլոր պատուհանները թաքցնելու և աշխատանքային սեղանը ցույց տալու համար"
+
+#: applets/wncklet/showdesktop.c:326
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "%s: %s բեռնելու խափանում\n"
+
+#: applets/wncklet/showdesktop.c:328
+msgid "File not found"
+msgstr "Ֆայլը գտնված չէ"
+
+#: applets/wncklet/showdesktop.c:358 applets/wncklet/showdesktop.c:479
+msgid "Show Desktop Button"
+msgstr "Աշխատանքային սեղանը ցուցադրելու ստեղն"
+
+#: applets/wncklet/showdesktop.c:482
+msgid "This button lets you hide all windows and show the desktop."
+msgstr "Այս ստեղնը ընձեռում է հնարավորություն թաքցնել բոլոր պատուհանները և ցույց տալ աշխատանքային սեղանը"
+
+#: applets/wncklet/showdesktop.c:523
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr "Ձեր պատուհանների կառավարիչը չի ապահովում աշխատանքային ցուցադրման ստեղնը կամ Դուք չեք աշխատացրել պատուհանների կառավարիչ"
+
+#: applets/wncklet/window-list.c:823
+msgid "The Window List shows a list of all windows and lets you browse them."
+msgstr "Ցույց է տալիս բոլոր պատուհանների ցուցակը և հնարավորություն է ընձեռում ընտրել որևէ մեկը"
+
+#: applets/wncklet/window-list.glade.h:2
+msgid "<b>Restoring Minimized Windows</b>"
+msgstr "իչեցված պատուհանների վերականգնումը"
+
+#: applets/wncklet/window-list.glade.h:3
+msgid "<b>Window Grouping</b>"
+msgstr "Պատուհանների խմբավորում"
+
+#: applets/wncklet/window-list.glade.h:4
+msgid "<b>Window List Content</b>"
+msgstr "Ցանկի պարունակությունը"
+
+#: applets/wncklet/window-list.glade.h:5
+msgid "<b>Window List Size</b>"
+msgstr "Պատուհանների Ցանկի Չափը"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Behavior"
+msgstr "Վարքագիծը"
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Group windows when _space is limited"
+msgstr "Խնբավորել պատուհանները երբ _տարածքը սահմանափակ է"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "M_inimum size:"
+msgstr "Ն_վազագույն չափը՝"
+
+#: applets/wncklet/window-list.glade.h:9
+msgid "Ma_ximum size:"
+msgstr "Ա_ռավելագույն չափը"
+
+#: applets/wncklet/window-list.glade.h:10
+msgid "Restore to current _workspace"
+msgstr "Վերականգնել ընթացիկ _աշխատատիրույթում"
+
+#: applets/wncklet/window-list.glade.h:11
+msgid "Restore to na_tive workspace"
+msgstr "Վերականգնել բնիկ աշխատատիրույթում"
+
+#: applets/wncklet/window-list.glade.h:12
+msgid "Sh_ow windows from current workspace"
+msgstr "Ցույց տալ ընթացիկ աշխատատիրույթի պատուհանները"
+
+#: applets/wncklet/window-list.glade.h:13
+msgid "Show windows from a_ll workspaces"
+msgstr "Ցույց տալ բոլոր աշխատատիրույթների պատուհանները"
+
+#: applets/wncklet/window-list.glade.h:14
+msgid "Size"
+msgstr "Չափը"
+
+#: applets/wncklet/window-list.glade.h:15
+msgid "Window List Preferences"
+msgstr "Պատուհանացանկի Նախընտրանքները"
+
+#: applets/wncklet/window-list.glade.h:16
+msgid "_Always group windows"
+msgstr "_Միշտ խմբավորել պատուհանները"
+
+#: applets/wncklet/window-list.glade.h:17
+msgid "_Never group windows"
+msgstr "_Երբեք չխմբավորել պատուհանները"
+
+#: applets/wncklet/window-list.glade.h:18
+#: gnome-panel/panel-properties-dialog.glade.h:27
+msgid "pixels"
+msgstr "փիքսել"
+
+#: applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Որոշում է երբ խմբավորել միատեսակ ծրագրերի պատուհանները Պատուհանացանկում "
+"Հնարավոր տարբերակներն են \"երբեք\", \"ավտո\" և \"միշտ\"։"
+
+#: applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr "Եթե ընտրված է, պատուհանացանկում ցուցադրվելու են պատույաններ բոլոր աշխատատիրույթներից, հակառակ դեպքում միայն ընթացիկ աշխատատիրույթի պատուհանները։"
+
+#: applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr "Եթե ընտրված է, պատուհանները վերականգնվելու են ընթացիք , ոչ թե բնիկ աշխատատիրույթում։"
+
+#: applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum window list size"
+msgstr "Պատւհանացանկի առավելագույն չափը"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum window list size"
+msgstr "Պատուհանացանկի նվազագույն չափը"
+
+#: applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to current workspace when unminimized"
+msgstr "Move windows to current workspace when unminimized"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Ցույց տալ բոլոր աշխատատիրույթների պատուհանները"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"This key specifies the maximum width that the window list requests. The "
+"maximum width setting is useful to limit the size of the window list in "
+"large panels, where the window list could fill the entire space available."
+msgstr "Այս բանալին մանտորոշում է պատուհանացանկի առավելագույն լայնությունը"
+
+#: applets/wncklet/window-list.schemas.in.h:9
+msgid "This key specifies the minimum width that the window list requests."
+msgstr "Այս բանալին սահմանում է պատուհանացակի փոքրագույն լայնությունը։"
+
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "Երբ խմբավորել պատուհանները"
+
+#: applets/wncklet/window-menu.c:129
+msgid "Workspace Selector"
+msgstr "Աշխատատիրույթի ընտրում"
+
+#: applets/wncklet/window-menu.c:134
+msgid "The Window Selector shows a list of all windows and lets you browse them."
+msgstr "Ծրագիրը ցույց է տալիս բոլոր պատուհանների ցանկը և թույլ է տալիս փոխարկել դրանք։"
+
+#: applets/wncklet/window-menu.c:309
+msgid "Unknown Window"
+msgstr "Անհայտ Պատուհան"
+
+#: applets/wncklet/window-menu.c:724
+msgid "No Windows Open"
+msgstr "Բաց պատուհան չկա"
+
+#: applets/wncklet/window-menu.c:887
+msgid "Tool to switch between windows"
+msgstr "Պատուհանների միջև փոխարկման գործիք"
+
+#: applets/wncklet/workspace-switcher.c:146
+#: applets/wncklet/workspace-switcher.c:861
+#: applets/wncklet/workspace-switcher.glade.h:11
+msgid "rows"
+msgstr "տողեր"
+
+#: applets/wncklet/workspace-switcher.c:146
+#: applets/wncklet/workspace-switcher.c:861
+msgid "columns"
+msgstr "սյուներ"
+
+#: applets/wncklet/workspace-switcher.c:390
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr "Խափանվել է num_rows արժեքի բեռնումը Աշխատատիրույթի Փոխարկչի համար՝ %s\n"
+
+#: applets/wncklet/workspace-switcher.c:401
+#, c-format
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr "Խափանվել է display_workspace_names արժեքի բեռնումը Աշխատատիրույթի Փոխարկչի համար՝ %s\n"
+
+#: applets/wncklet/workspace-switcher.c:416
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr "Խափանվել է display_all_workspaces արժեքի բեռնումը Աշխատատիրույթի Փոխարկչի համար՝ %s\n"
+
+#: applets/wncklet/workspace-switcher.c:553
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr "Աշխատատիրույթի Փոխարկիչը ցույց է տալիս աշխատատիրույթները փոքրացված, ինչը հնարավորություն է տալիս ղեկավարել պատուհանները։"
+
+#: applets/wncklet/workspace-switcher.glade.h:2
+msgid "<b>Switcher</b>"
+msgstr "<b>Փոխարկիչ</b>"
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+msgid "<b>Workspaces</b>"
+msgstr "<b>Աշխատատիրույթներ</b>"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Number of _workspaces:"
+msgstr "_Աշխատատիրույթների թիվը՝"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show _all workspaces in:"
+msgstr "Ցույց տալ _բոլոր աշխատատիրույթները այստեղ՝"
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+msgid "Show _only the current workspace"
+msgstr "Ցուցադրել _միայն ընթացիկ աշխատատիրույթը"
+
+#: applets/wncklet/workspace-switcher.glade.h:7
+msgid "Show workspace _names in switcher"
+msgstr "Ցույց տալ աշխատատիրույթի _անվանումը փոխարկչում"
+
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Names"
+msgstr "Աշխատատիրույթի Անվանումները"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspace Switcher Preferences"
+msgstr "Աշխատատիրույթի Փոխարկչի Նախընտրանքներ"
+
+#: applets/wncklet/workspace-switcher.glade.h:10
+msgid "Workspace na_mes:"
+msgstr "Աշխատատիրույթի ան_վանումները՝"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid "Display all workspaces"
+msgstr "Ցուցադրել բոլոր աշխատատիրույթները"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid "Display workspace names"
+msgstr "Ցուցադրել աշխատատիրույթի անվանումները"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr "Ընտրելու դեպքում աշխատատիրույթի փոխարկիչը կցուցադրի բոլոր աշխատատիրույթները։ Հակառակ դեպքում կտեսնեք միայն ընթացիկ աշխատատիրույթը։"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace."
+msgstr "Ընտրելու դեպքում աշխատատիրույթի փոխարկչում կցուցադրվեն աշխատատիրույթները իրենց անվանումներով։ Հակառակ դեպքում աշխատատիրույթում կերևան պատուհանները։"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Rows in workspace switcher"
+msgstr "Տողեր աշխատատիրույթի փոխարկչում"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr "Այս կետը որոշում է, թե քանի տող (հորիզոնական դիրքի համար) կամ սյուն (ուղղաձիգ դիրքի համար) աշխատատիրույթ կցուցադրի աշխատատրիրույթի փոխարկիչը։ Այդ իմաստ ունի միայն երբ ընտրված է display_all_workspaces կետը։"
+
+#: gnome-panel/GNOME_Panel.server.in.h:1
+#, fuzzy
+msgid "GNOME Panel Shell"
+msgstr "Գնոմ վահանակի միջավայր"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:99
+#: gnome-panel/applet.c:480 gnome-panel/panel-applet-frame.c:130
+msgid "_Lock"
+msgstr "_Ամրացնել"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:488
+msgid "_Move"
+msgstr "_Տեղաշարժել"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:472
+#, fuzzy
+msgid "_Remove From Panel"
+msgstr "_Վերացնել վահանակից"
+
+#: gnome-panel/applet.c:99 gnome-panel/applet.c:480
+#: gnome-panel/panel-applet-frame.c:130
+msgid "Un_lock"
+msgstr "Անջա_տել"
+
+#: gnome-panel/applet.c:389
+#, fuzzy
+msgid "???"
+msgstr "անանուն"
+
+#: gnome-panel/applet.c:1145
+msgid "Can't find an empty spot"
+msgstr "Անհնար է գտնել դատարկ տեղ"
+
+#: gnome-panel/button-widget.c:226
+#, c-format
+msgid "Failed to load image %s"
+msgstr "Չհաջեղվեց բեռնել %s նկարը"
+
+#: gnome-panel/button-widget.c:394
+#, fuzzy
+msgid "none"
+msgstr "ոչինչ"
+
+#: gnome-panel/button-widget.c:399
+msgid "file not found"
+msgstr "ֆայլը գտնված չէ"
+
+#: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
+#: gnome-panel/panel-addto.c:150
+#, fuzzy
+msgid "Drawer"
+msgstr "Գզրոց"
+
+#: gnome-panel/drawer.c:599
+#, fuzzy
+msgid "_Add to drawer..."
+msgstr "_Ավելացնել գզրոցին..."
+
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:837
+#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:283
+msgid "_Properties"
+msgstr "_Նախընտրանք"
+
+#: gnome-panel/gnome-desktop-item-edit.c:27
+msgid "Create new file in the given directory"
+msgstr "Ստեղծել նոր ֆայլ տրված ցանկում"
+
+#: gnome-panel/launcher.c:135
+#, fuzzy
+msgid "Cannot save launcher to disk"
+msgstr "Հնարավոր չէ պահել"
+
+#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:215
+#: gnome-panel/launcher.c:269
+#, fuzzy
+msgid "Cannot launch icon"
+msgstr "Անհնար է բեռնել պատկերը"
+
+#: gnome-panel/launcher.c:166
+msgid "This launch icon does not specify a url to show."
+msgstr ""
+
+#: gnome-panel/launcher.c:178
+#, c-format
+msgid "Cannot show %s"
+msgstr "Հնարավոր չէ ցույց տալ %s"
+
+#: gnome-panel/launcher.c:463
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:477
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:719 gnome-panel/menu-ditem.c:181
+#: gnome-panel/menu-ditem.c:264
+msgid "Launcher Properties"
+msgstr ""
+
+#: gnome-panel/launcher.c:831
+msgid "_Launch"
+msgstr ""
+
+#: gnome-panel/launcher.c:908
+#, c-format
+msgid "Key %s is not set, can't load launcher\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:963 gnome-panel/launcher.c:981
+#: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
+#: gnome-panel/menu-ditem.c:535
+msgid "Cannot create launcher"
+msgstr ""
+
+#: gnome-panel/launcher.c:964 gnome-panel/menu-ditem.c:463
+msgid "You have to specify a name."
+msgstr ""
+
+#: gnome-panel/launcher.c:982 gnome-panel/menu-ditem.c:480
+msgid "You have to specify a valid URL or command."
+msgstr ""
+
+#: gnome-panel/launcher.c:1025 gnome-panel/menu-ditem.c:543
+msgid "Create Launcher"
+msgstr ""
+
+#: gnome-panel/menu-ditem.c:126
+msgid "Cannot save changes to launcher"
+msgstr ""
+
+#: gnome-panel/menu-ditem.c:308
+msgid "Menu"
+msgstr ""
+
+#. class
+#: gnome-panel/menu-ditem.c:510
+msgid "Cannot save menu item to disk"
+msgstr ""
+
+#: gnome-panel/menu-ditem.c:536
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
+
+#: gnome-panel/menu.c:124
+msgid "Cannot launch entry"
+msgstr ""
+
+#: gnome-panel/menu.c:136
+msgid "Cannot load entry"
+msgstr ""
+
+#: gnome-panel/menu.c:800
+msgid "Add this launcher to panel"
+msgstr ""
+
+#: gnome-panel/menu.c:817
+msgid "Entire menu"
+msgstr ""
+
+#: gnome-panel/menu.c:827
+msgid "Add this as drawer to panel"
+msgstr ""
+
+#: gnome-panel/menu.c:839
+msgid "Add this as menu to panel"
+msgstr ""
+
+#: gnome-panel/menu.c:1444 gnome-panel/panel-menu-bar.c:182
+msgid "Applications"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:108
+msgid "_Activate Screensaver"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:114
+msgid "_Lock Screen"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:120
+msgid "_Kill Screensaver Daemon"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:126
+msgid "Restart _Screensaver Daemon"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-context-menu.c:58
+#: gnome-panel/panel-util.c:542
+#, c-format
+msgid "Cannot execute '%s'"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:289
+msgid "Lock screen"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:290
+msgid "Protect your computer from unauthorized use"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:302
+msgid "Log Out"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:303
+msgid ""
+"Log out of this session to log in as a different user or to shut down the "
+"computer"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:313
+msgid "Run Application..."
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:314
+msgid "Run an Application by entering a command"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:324
+msgid "Search for Files..."
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:325
+msgid "Find files, folders, and documents on your computer"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:334
+msgid "Take Screenshot..."
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:335
+msgid "Take a screenshot of your desktop"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:344
+msgid "Force Quit"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:345
+msgid "Force a misbehaving application to quit"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:102
+msgid "Custom Application Launcher"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:103
+msgid "Create a new launcher"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:113
+msgid "Application Launcher..."
+msgstr ""
+
+#: gnome-panel/panel-addto.c:114
+msgid "Launch a program that is already in the GNOME menu"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:128
+msgid "Main Menu"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:129
+msgid "The main GNOME menu"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:139
+msgid "Menu Bar"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:140
+msgid "A custom menu bar"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:151
+msgid "A pop out drawer to store other items in"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:240
+msgid "(empty)"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:379 libpanel-applet/panel-test-applets.c:234
+#, c-format
+msgid "query returned exception %s\n"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:885
+#, c-format
+msgid "Add to %s"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:887
+msgid "Add to the panel"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:893
+#, c-format
+msgid "Select an _item to add to %s:"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:896
+msgid "Select an _item to add to the panel:"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:785
+#, c-format
+msgid "Exception from popup_menu '%s'\n"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:904
+#, c-format
+msgid "\"%s\" has quit unexpectedly"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:906
+msgid "Panel object has quit unexpectedly"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:913
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:919
+msgid "_Don't Reload"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:920
+msgid "_Reload"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:946
+msgid "D_on't Delete"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:994
+#, c-format
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:1011
+msgid "Do you want to delete the applet from your configuration?"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:1108
+msgid "Unable to obtain AppletShell interface from control\n"
+msgstr ""
+
+#: gnome-panel/panel-bindings.c:167
+#, c-format
+msgid "Error watching gconf key '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-bindings.c:185
+#, c-format
+msgid "Error loading gconf directory '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-bindings.c:199
+#, c-format
+msgid "Error getting value for '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:59
+#, c-format
+msgid "%s: %s"
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:60
+msgid "About GNOME"
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:118
+msgid "And many, many others..."
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:143
+msgid "The GNOME Panel"
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:146
+msgid ""
+"This program is responsible for launching other applications and embedding "
+"small applets within itself."
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:186
+msgid "You cannot remove your last panel."
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:235
+msgid "_Delete This Panel..."
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:238 gnome-panel/panel-context-menu.c:268
+msgid "_Delete This Panel"
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:252
+msgid "_Add to Panel..."
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:298
+msgid "_New Panel"
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:357
+msgid "A_bout Panels"
+msgstr ""
+
+#: gnome-panel/panel-context-menu.c:373
+msgid "About _GNOME"
+msgstr ""
+
+#: gnome-panel/panel-force-quit.c:74
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+
+#: gnome-panel/panel-force-quit.c:186
+msgid ""
+"Force this application to exit?\n"
+"(Any open documents will be lost.)"
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:1
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:2
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:3
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:4
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:5
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:6
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:7
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:9
+msgid "Old profiles configuration migrated"
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:10
+msgid "Panel ID list"
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:11
+msgid "Panel applet ID list"
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:12
+msgid "Panel object ID list"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:1
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:2
+#: gnome-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:3
+msgid "Applet IIDs to disable from loading"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:4
+msgid "Autoclose drawer"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:5
+msgid "Complete panel lockdown"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:6
+msgid "Confirm panel removal"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:7
+msgid "Disable Force Quit"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:8
+msgid "Disable Lock Screen"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:9
+msgid "Disable Logging Out"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:10
+msgid "Display \"Run Application\" dialog keybinding"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:11
+#: gnome-panel/panel-toplevel.schemas.in.h:9
+msgid "Enable animations"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:12
+msgid "Enable keybindings"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:13
+msgid "Enable tooltips"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:14
+msgid "FIXME - is this resolved with the new menu stuff"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:15
+msgid "FIXME - need to define limits"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:16
+msgid "Highlight launchers on mouseover"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:17
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:18
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:19
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:20
+msgid "If true, panel-specific keybindings are enabled."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:21
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:22
+msgid ""
+"If true, the panel will not allow a user to lock their screen, by removing "
+"access to the lock screen menu entries."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:23
+msgid "If true, the panel will not allow a user to log out, by removing access to "
+msgstr ""
+
