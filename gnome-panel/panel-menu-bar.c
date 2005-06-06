@@ -88,6 +88,7 @@ panel_menu_bar_append_applications_menu (GtkWidget    *menu,
 		gboolean  add_separator;
 		GList    *children;
 
+		add_separator = FALSE;
 		children = gtk_container_get_children (GTK_CONTAINER (menu));
 
 		if (children != NULL) {

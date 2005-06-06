@@ -788,6 +788,7 @@ create_item_context_menu (GtkWidget   *item,
 		return NULL;
 
 	parent = item->parent;
+	menu_filename = NULL;
 
 	while (parent) {
 		menu_filename = g_object_get_data (G_OBJECT (parent),
@@ -1470,6 +1471,8 @@ main_menu_append (GtkWidget   *main_menu,
 	GtkWidget *item;
 	gboolean   add_separator;
 	GList     *children;
+
+	add_separator = FALSE;
 
 	if (!g_object_get_data (G_OBJECT (main_menu),
 				"panel-menu-needs-appending"))
