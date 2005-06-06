@@ -34,14 +34,8 @@
 #include "panel-gconf.h"
 
 typedef struct {
-	int                 minimized_size;
-	int                 show_delay;
-	PanelAnimationSpeed animation_speed;
-	int                 hide_delay;
-
 	guint               tooltips_enabled : 1;
 	guint               enable_animations : 1;
-
 	guint               drawer_auto_close : 1;
 	guint               confirm_panel_remove : 1;
 	guint               highlight_when_over : 1;
@@ -49,11 +43,6 @@ typedef struct {
 
 static GlobalConfig global_config = { 0, };
 static gboolean global_config_initialised = FALSE;
-static GConfEnumStringPair panel_speed_map [] = {
-        { PANEL_ANIMATION_SLOW,   "panel-speed-slow" },
-        { PANEL_ANIMATION_MEDIUM, "panel-speed-medium" },
-        { PANEL_ANIMATION_FAST,   "panel-speed-fast" },
-};
 
 gboolean
 panel_global_config_get_highlight_when_over (void)
@@ -120,25 +109,6 @@ panel_global_config_set_entry (GConfEntry *entry)
 	} else if (strcmp (key, "enable_animations") == 0)
 		global_config.enable_animations =
 				gconf_value_get_bool (value);
-
-	else if (strcmp (key, "panel_minimized_size") == 0)
-		global_config.minimized_size =
-				gconf_value_get_int (value);
-
-	else if (strcmp (key, "panel_show_delay") == 0)
-		global_config.show_delay =
-				gconf_value_get_int (value);
-
-	else if (strcmp (key, "panel_animation_speed") == 0) {
-		int speed = PANEL_ANIMATION_SLOW;
-
-		if (gconf_string_to_enum (
-			panel_speed_map, gconf_value_get_string (value), &speed))
-			global_config.animation_speed = speed;
-
-	} else if (strcmp (key, "panel_hide_delay") == 0)
-		global_config.hide_delay =
-				gconf_value_get_int (value);
 
 	else if (strcmp (key, "drawer_autoclose") == 0)
 		global_config.drawer_auto_close =

@@ -1,5 +1,14 @@
 2005-06-06  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-config-global.c: kill useless settings
+	(panel_global_config_set_entry): don't read panel_minimized_size,
+	panel_show_delay, panel_animation_speed, panel_hide_delay since
+	they're not global any more
+	* panel-global.schemas.in: deprecate some useless settings
+	Fix bug #304031.
+
+2005-06-06  Vincent Untz  <vuntz@gnome.org>
+
 	Preload menu in the idle loop. Fix bug #164574.
 
 	* menu.c: (load_submenu_to_display): new, contains code from the old
