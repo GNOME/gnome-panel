@@ -1,5 +1,26 @@
 2005-06-06  Vincent Untz  <vuntz@gnome.org>
 
+	Add gnome-screensaver support. Fixes bug #302348.
+	Patch by William Jon McCann <mccann@jhu.edu>.
+
+	* panel-util.[ch]: (panel_lock_screen_action_get_command)
+	(panel_lock_screen_action_available), (panel_lock_screen_action) 
+	(panel_lock_screen): Consolidate all the screensaver handling into
+	these functions.  Add gnome-screensaver support.  Check if command
+	is in the path.
+
+	* panel-menu-items.c: (panel_menu_items_append_lock_logout): look
+	if a screensaver command is available before appending the lock
+	item.
+
+	* panel-action-button.c: (screensaver_properties_enabled)
+	(screensaver_enabled), (panel_action_lock_is_disabled): Only enable
+	actions if the command exists.
+	(panel_action_lock_setup_menu): add icon to the properties item.
+	(panel_action_lock_invoke_menu): Move functionality to utils.
+
+2005-06-06  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-config-global.c: kill useless settings
 	(panel_global_config_set_entry): don't read panel_minimized_size,
 	panel_show_delay, panel_animation_speed, panel_hide_delay since

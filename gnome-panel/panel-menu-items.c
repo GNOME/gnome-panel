@@ -962,7 +962,7 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		separator_inserted = GTK_IS_SEPARATOR (GTK_WIDGET (children->data));
 	}
 
-	if (panel_is_program_in_path ("xscreensaver")) {
+	if (panel_lock_screen_action_available ("lock")) {
 		item = panel_menu_items_create_action_item (PANEL_ACTION_LOCK);
 		if (item != NULL) {
 			if (!separator_inserted) {

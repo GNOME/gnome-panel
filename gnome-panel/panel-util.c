@@ -1,4 +1,5 @@
-/*
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
+ *
  * GNOME panel utils
  * (C) 1997, 1998, 1999, 2000 The Free Software Foundation
  * Copyright 2000 Helix Code, Inc.
@@ -649,27 +650,90 @@ missing_pixbuf (int size)
 	return pb;
 }
 
-void
-panel_lock_screen (GdkScreen *screen)
+static char *
+panel_lock_screen_action_get_command (const char *action)
 {
-#define XSCREENSAVER_LOCK_COMMAND "xscreensaver-command -lock"
+	char    *command          = NULL;
+	gboolean use_gscreensaver = FALSE;
 
-	GError *error = NULL;
+	if (panel_is_program_in_path ("gnome-screensaver-command")
+	    && panel_is_program_in_path ("gnome-screensaver-preferences"))
+		use_gscreensaver = TRUE;
+	else if (!panel_is_program_in_path ("xscreensaver-command"))
+		return NULL;
+
+	if (strcmp (action, "prefs") == 0) {
+		if (use_gscreensaver) {
+			command = g_strdup ("gnome-screensaver-preferences");
+		} else if (panel_is_program_in_path ("xscreensaver-demo")) {
+			command = g_strdup ("xscreensaver-demo");
+		} else {
+			command = NULL;
+		}
+	} else if (strcmp (action, "activate") == 0
+		   || strcmp (action, "lock") == 0
+		   || strcmp (action, "exit") == 0
+		   || strcmp (action, "restart") == 0) {
+		if (use_gscreensaver) {
+			command = g_strdup_printf ("gnome-screensaver-command --%s", action);
+		} else {
+			command = g_strdup_printf ("xscreensaver-command -%s", action);
+		}
+	}
+
+	return command;
+}
+
+gboolean
+panel_lock_screen_action_available (const char *action)
+{
+	char    *command;
+	gboolean enabled = FALSE;
+
+	g_return_val_if_fail (action != NULL, FALSE);
+
+	command = panel_lock_screen_action_get_command (action);
+	if (command)
+		enabled = TRUE;
+
+	g_free (command);
+
+	return enabled;
+}
+
+void
+panel_lock_screen_action (GdkScreen  *screen,
+			  const char *action)
+{
+	GError  *error            = NULL;
+	char    *command          = NULL;
 
 	g_return_if_fail (GDK_IS_SCREEN (screen));
+	g_return_if_fail (action != NULL);
 
-	if (!gdk_spawn_command_line_on_screen (screen, XSCREENSAVER_LOCK_COMMAND, &error)) {
+	command = panel_lock_screen_action_get_command (action);
+
+	if (!command)
+		return;
+
+	if (!gdk_spawn_command_line_on_screen (screen, command, &error)) {
 		panel_error_dialog (screen,
-				    "cannot_exec_xscreensaver",
+				    "cannot_exec_screensaver",
 				    TRUE,
 				    _("Cannot execute '%s'"),
 				    "%s",
-				    XSCREENSAVER_LOCK_COMMAND,
+				    command,
 				    error->message);
 		g_error_free (error);
 	}
-	
-#undef XSCREENSAVER_LOCK_COMMAND
+
+	g_free (command);
+}
+
+void
+panel_lock_screen (GdkScreen *screen)
+{
+	panel_lock_screen_action (screen, "lock");
 }
 
 

@@ -1,4 +1,5 @@
-/*
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
+ *
  * panel-action-button.c: panel "Action Button" module
  *
  * Copyright (C) 2002 Sun Microsystems, Inc.
@@ -90,13 +91,22 @@ screensaver_properties_enabled (void)
 	    panel_lockdown_get_disable_lock_screen ())
 		return FALSE;
 
-	return TRUE;
+	return panel_lock_screen_action_available ("prefs");
 }
 
 static gboolean
 screensaver_enabled (void)
 {
-  return !panel_lockdown_get_disable_lock_screen ();
+	if (panel_lockdown_get_disable_lock_screen ())
+		return FALSE;
+
+	return panel_lock_screen_action_available ("lock");
+}
+
+static gboolean
+panel_action_lock_is_disabled (void)
+{
+	return !screensaver_enabled ();
 }
 
 static void
@@ -128,7 +138,7 @@ panel_action_lock_setup_menu (PanelActionButton *button)
 
 	panel_applet_add_callback (button->priv->info,
 				   "prefs",
-				   NULL,
+				   GTK_STOCK_PROPERTIES,
 				   _("_Properties"),
 				   screensaver_properties_enabled);
 }
@@ -137,24 +147,11 @@ static void
 panel_action_lock_invoke_menu (PanelActionButton *button,
 			       const char *callback_name)
 {
-	char *command = NULL;
+	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
+	g_return_if_fail (callback_name != NULL);
 
-	if (!strcmp (callback_name, "prefs"))
-		command = g_strdup ("xscreensaver-demo");
-
-	else if (!strcmp (callback_name, "activate") ||
-		 !strcmp (callback_name, "lock") ||
-		 !strcmp (callback_name, "exit") ||
-		 !strcmp (callback_name, "restart"))
-		command = g_strdup_printf ("xscreensaver-command -%s", callback_name);
-
-	if (command)
-		gdk_spawn_command_line_on_screen (
-			gtk_widget_get_screen (GTK_WIDGET (button)),
-			command,
-			NULL);
-
-	g_free (command);
+	panel_lock_screen_action (gtk_widget_get_screen (GTK_WIDGET (button)),
+				  callback_name);
 }
 
 /* Log Out
@@ -317,7 +314,7 @@ static PanelAction actions [] = {
 		panel_action_lock_screen,
 		panel_action_lock_setup_menu,
 		panel_action_lock_invoke_menu,
-		panel_lockdown_get_disable_lock_screen
+		panel_action_lock_is_disabled
 	},
 	{
 		PANEL_ACTION_LOGOUT,
