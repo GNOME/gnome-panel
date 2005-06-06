@@ -217,13 +217,13 @@ panel_addto_prepend_internal_applets (GSList *list)
 		info              = g_new0 (PanelAddtoItemInfo, 1);
 		info->type        = PANEL_ADDTO_ACTION;
 		info->action_type = i;
-		info->name        = (char *) panel_action_get_text (i);
-		info->description = (char *) panel_action_get_tooltip (i);
-		info->icon        = (char *) panel_action_get_icon_name (i);
-		info->iid         = (char *) panel_action_get_drag_id (i);
-		info->static_data = TRUE;
+		info->name        = g_strdup (panel_action_get_text (i));
+		info->description = g_strdup (panel_action_get_tooltip (i));
+		info->icon        = g_strdup (panel_action_get_icon_name (i));
+		info->iid         = g_strdup (panel_action_get_drag_id (i));
+		info->static_data = FALSE;
 
-                list = g_slist_prepend (list, info);
+		list = g_slist_prepend (list, info);
 	}
 
         return list;

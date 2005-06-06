@@ -1485,6 +1485,7 @@ panel_profile_delete_toplevel_objects (const char        *toplevel_id,
 
 		new_list = g_slist_prepend (new_list, id);
 
+		g_free (parent_toplevel_id);
 	}
 	g_slist_free (list);
 

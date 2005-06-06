@@ -1,5 +1,13 @@
 2005-06-06  Vincent Untz  <vuntz@gnome.org>
 
+	Patch by Ryan Lortie <desrt@desrt.ca>. Fixes bug #306583.
+
+	* panel-addto.c: (panel_addto_prepend_internal_applets): the
+	structures created are not static, and we don't want to leak.
+	* panel-profile.c: (panel_profile_delete_toplevel_objects): plug leak
+
+2005-06-06  Vincent Untz  <vuntz@gnome.org>
+
 	Patch by Kjartan Maraas <kmaraas@gnome.org>. Fixes bug #301861
 
 	* gnome-desktop-item-edit.c: some cleanup
