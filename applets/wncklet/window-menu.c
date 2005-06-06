@@ -79,7 +79,7 @@ window_menu_about (BonoboUIComponent *uic,
 			       "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
 			       "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
 			       "Copyright \xc2\xa9 2000 Helix Code, Inc.",
-			       _("The Window Selector shows a list of all windows and lets you browse them."),
+			       _("The Window Selector shows a list of all windows in a menu and lets you browse them."),
 			       authors,
 			       documenters,
 			       translator_credits,
