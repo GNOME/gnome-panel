@@ -1,5 +1,15 @@
 2005-06-06  Vincent Untz  <vuntz@gnome.org>
 
+	Preload menu in the idle loop. Fix bug #164574.
+
+	* menu.c: (load_submenu_to_display): new, contains code from the old
+	submenu_to_display()
+	(submenu_to_display): load the menu
+	(create_fake_menu): load the menu in idle loop
+	(create_applications_menu): ditto
+
+2005-06-06  Vincent Untz  <vuntz@gnome.org>
+
 	* egg-recent-item.c: synchronize with libegg
 
 2005-06-06  Vincent Untz  <vuntz@gnome.org>

@@ -1287,7 +1287,7 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 }
 
 static void
-submenu_to_display (GtkWidget *menu)
+load_submenu_to_display (GtkWidget *menu)
 {
 	GMenuTree          *tree;
 	GMenuTreeDirectory *directory;
@@ -1314,6 +1314,18 @@ submenu_to_display (GtkWidget *menu)
 		populate_menu_from_directory (menu, directory);
 }
 
+static gboolean
+submenu_to_display (gpointer data)
+{
+	GtkWidget         *menu;
+
+	menu = GTK_WIDGET (data);
+
+	load_submenu_to_display (menu);
+
+	return FALSE;
+}
+
 static GtkWidget *
 create_fake_menu (GMenuTreeDirectory *directory)
 {	
@@ -1335,7 +1347,8 @@ create_fake_menu (GMenuTreeDirectory *directory)
 			   GUINT_TO_POINTER (TRUE));
 
 	g_signal_connect (menu, "show",
-			  G_CALLBACK (submenu_to_display), NULL);
+			  G_CALLBACK (load_submenu_to_display), NULL);
+	g_idle_add_full (G_PRIORITY_LOW, submenu_to_display, menu, NULL);
 	g_signal_connect (menu, "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
@@ -1573,7 +1586,8 @@ create_applications_menu (const char *menu_file,
 			   GUINT_TO_POINTER (TRUE));
 
 	g_signal_connect (menu, "show",
-			  G_CALLBACK (submenu_to_display), NULL);
+			  G_CALLBACK (load_submenu_to_display), NULL);
+	g_idle_add_full (G_PRIORITY_LOW, submenu_to_display, menu, NULL);
 	g_signal_connect (menu, "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
