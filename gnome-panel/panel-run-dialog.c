@@ -1147,7 +1147,7 @@ fill_files_from (const char *dirname,
 }	
 
 static GList *
-fill_possible_executables ()
+fill_possible_executables (void)
 {
 	GList         *list;
 	const char    *path;

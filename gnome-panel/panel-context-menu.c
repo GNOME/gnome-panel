@@ -50,7 +50,7 @@ panel_context_menu_show_help (GtkWidget *w,
 			      gpointer data)
 {
 	panel_show_help (gtk_widget_get_screen (w),
-			 "user-guide.xml", "gospanel-5");
+			 "user-guide.xml", "gospanel-1");
 }
 
 static gboolean

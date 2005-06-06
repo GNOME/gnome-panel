@@ -22,7 +22,7 @@ GSList *panel_applet_list_applets (void) { return NULL; }
 static int dialogs = 0;
 static gboolean create_new = FALSE;
 
-struct poptOption options [] = {
+static struct poptOption options [] = {
 	{ "create-new", '\0', POPT_ARG_NONE,
 	  &create_new, 0, N_("Create new file in the given directory"), NULL },
         POPT_AUTOHELP
