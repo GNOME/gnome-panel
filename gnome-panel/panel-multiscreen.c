@@ -116,7 +116,7 @@ panel_multiscreen_reinit (void)
 }
 	
 int
-panel_multiscreen_screens ()
+panel_multiscreen_screens (void)
 {
 	return screens;
 }

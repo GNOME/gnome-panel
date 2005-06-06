@@ -824,7 +824,7 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 	switch (response_id) {
 	case GTK_RESPONSE_HELP:
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (dialog->addto_dialog)),
-				 "user-guide.xml", "gospanel-28"); //FIXME
+				 "user-guide.xml", "gospanel-15");
 		break;
 
 	case PANEL_ADDTO_RESPONSE_ADD:
