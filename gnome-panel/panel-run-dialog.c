@@ -189,8 +189,8 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 
 		gtk_window_set_icon (GTK_WINDOW (dialog->run_dialog), pixbuf);
 		
-		/* Don't unref pixbuf here, GTK will do it for us. */
-		gtk_drag_source_set_icon_pixbuf (dialog->run_dialog, pixbuf);		
+		gtk_drag_source_set_icon_pixbuf (dialog->run_dialog, pixbuf);
+		g_object_unref (pixbuf);
 	} else {
 		gtk_image_set_from_icon_name (GTK_IMAGE (dialog->pixmap),
 					      PANEL_RUN_ICON,
