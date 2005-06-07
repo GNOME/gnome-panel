@@ -1,3 +1,10 @@
+2005-06-07  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* gnome-panel/panel-run-dialog.c: (panel_run_dialog_set_icon):
+	Unref the pixbuf here. Gtk+ takes it's own reference so we need
+	to drop ours it seems. Remove comment that said we didn't need
+	to unref also. Closes bug #306748.
+
 2005-06-01  Christian Rose  <menthos@menthos.com>
 
 	* configure.in: Added "hy" to ALL_LINGUAS.
