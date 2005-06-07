@@ -1,3 +1,14 @@
+2005-06-07  William Jon McCann  <mccann@jhu.edu>
+
+	* clock.c (compare_priority, handle_tasks_changed) 
+	(create_task_list): 
+	* calendar-client.[ch] (get_ical_priority, calendar_task_equal) 
+	(calendar_task_copy, calendar_task_init): 
+	Sort task list by priority.
+
+	Based on patch by Carlos Garcia Campos <carlosgc@gnome.org>
+	Fixes #166450.
+	
 ==================== 2.11.1 ====================
 
 ==================== 2.10.0 ====================

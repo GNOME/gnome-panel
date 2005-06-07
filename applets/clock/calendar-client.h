@@ -95,6 +95,7 @@ typedef struct
   GTime  due_time;
   guint  percent_complete;
   GTime  completed_time;
+  int    priority;
 } CalendarTask;
 
 typedef struct

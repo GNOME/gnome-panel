@@ -546,6 +546,7 @@ enum {
         TASK_COLUMN_OVERDUE_ATTR,
         TASK_COLUMN_COLOR,
         TASK_COLUMN_URL,
+        TASK_COLUMN_PRIORITY,
         N_TASK_COLUMNS
 };
 
@@ -626,6 +627,7 @@ handle_tasks_changed (ClockData *cd)
                                     TASK_COLUMN_COMPLETED_TIME,        task->completed_time,
                                     TASK_COLUMN_COLOR,                 task->color_string,
                                     TASK_COLUMN_URL,                   task->url,
+                                    TASK_COLUMN_PRIORITY,              task->priority,
                                     -1);
 
                 g_free (percent_complete_text);
@@ -873,6 +875,33 @@ appointment_pixbuf_cell_data_func (GtkTreeViewColumn *column,
                                              APPOINTMENT_COLUMN_COLOR);
 }
 
+static int
+compare_priority  (GtkTreeModel *model,
+                   GtkTreeIter  *a,
+                   GtkTreeIter  *b,
+                   gpointer      user_data)
+{
+        int priority_a;
+        int priority_b;
+
+        gtk_tree_model_get (model, a, TASK_COLUMN_PRIORITY, &priority_a, -1);
+        gtk_tree_model_get (model, b, TASK_COLUMN_PRIORITY, &priority_b, -1);
+
+	/* We change undefined priorities so they appear after 'Low'. */
+	if (priority_a <= 0)
+		priority_a = 10;
+	if (priority_b <= 0)
+		priority_b = 10;
+
+	/* We'll just use the ordering of the priority values. */
+	if (priority_a < priority_b)
+		return -1;
+	else if (priority_a > priority_b)
+		return 1;
+	else
+		return 0;
+}
+
 static GtkWidget *
 create_task_list (ClockData  *cd,
                   GtkWidget **tree_view,
@@ -908,10 +937,20 @@ create_task_list (ClockData  *cd,
                         G_TYPE_LONG,           /* completed time          */
                         PANGO_TYPE_ATTR_LIST,  /* summary text attributes */
                         G_TYPE_STRING,         /* color                   */
-                        G_TYPE_STRING          /* url                     */
+                        G_TYPE_STRING,         /* url                     */
+                        G_TYPE_INT             /* priority                */
                 };
 
                 cd->tasks_model = gtk_list_store_newv (N_TASK_COLUMNS, column_types);
+
+                gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (cd->tasks_model),
+                                                 TASK_COLUMN_PRIORITY,
+                                                 compare_priority,
+                                                 NULL, NULL);
+
+                gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (cd->tasks_model),
+                                                      TASK_COLUMN_PRIORITY,
+                                                      GTK_SORT_ASCENDING);
 
                 cd->tasks_filter = GTK_TREE_MODEL_FILTER (
                         gtk_tree_model_filter_new (GTK_TREE_MODEL (cd->tasks_model),
@@ -929,8 +968,6 @@ create_task_list (ClockData  *cd,
                          cd,
                          NULL);
         }
-
-        /* FIXME: implement sorting */
 
         *tree_view = view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (cd->tasks_filter));
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);

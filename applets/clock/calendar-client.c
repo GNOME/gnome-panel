@@ -635,6 +635,18 @@ get_ical_completed_time (icalcomponent *ical,
                                  default_zone);
 }
 
+static int
+get_ical_priority (icalcomponent *ical)
+{
+  icalproperty *prop;
+
+  prop = icalcomponent_get_first_property (ical, ICAL_PRIORITY_PROPERTY);
+  if (!prop)
+    return -1;
+
+  return icalproperty_get_priority (prop);
+}
+
 static char *
 get_source_color (ECal *esource)
 {
@@ -836,7 +848,8 @@ calendar_task_equal (CalendarTask *a,
     a->start_time       == b->start_time                   &&
     a->due_time         == b->due_time                     &&
     a->percent_complete == b->percent_complete             &&
-    a->completed_time   == b->completed_time;
+    a->completed_time   == b->completed_time               &&
+    a->priority         == b->priority;
 }
 
 static void
@@ -855,6 +868,7 @@ calendar_task_copy (CalendarTask *task,
   task_copy->due_time         = task->due_time;
   task_copy->percent_complete = task->percent_complete;
   task_copy->completed_time   = task->completed_time;
+  task_copy->priority         = task->priority;
 }
 
 static void
@@ -893,6 +907,7 @@ calendar_task_init (CalendarTask         *task,
   task->due_time         = get_ical_due_time (ical, default_zone);
   task->percent_complete = get_ical_percent_complete (ical);
   task->completed_time   = get_ical_completed_time (ical, default_zone);
+  task->priority         = get_ical_priority (ical);
 }
 
 void
