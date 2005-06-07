@@ -957,6 +957,7 @@ panel_menu_button_create (PanelToplevel *toplevel,
 
 	if (filename && !scheme) {
 		g_warning ("Failed to find menu scheme for %s\n", filename);
+		g_free (id);
 		return FALSE;
 	}
 
@@ -976,8 +977,8 @@ panel_menu_button_create (PanelToplevel *toplevel,
 		gconf_client_set_string (client, key, tooltip, NULL);
 	}
 
-	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+	g_free (id);
 
 	return TRUE;
 }
