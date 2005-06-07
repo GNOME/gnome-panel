@@ -1354,7 +1354,7 @@ entry_event (GtkEditable    *entry,
 	/* if user typed something we're not using the list anymore */
 	dialog->use_program_list = FALSE;
 
-	if (!panel_profile_get_enable_autocomplete ())
+	if (!panel_profile_get_enable_autocompletion ())
 		return FALSE;
 
 	/* tab completion */
