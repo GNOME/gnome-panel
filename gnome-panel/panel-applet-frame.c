@@ -1246,9 +1246,6 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 	}
 
 	frame->priv->control = CORBA_Object_duplicate (object, NULL);
-	ORBit_small_listen_for_broken (object,
-				       G_CALLBACK (panel_applet_frame_cnx_broken),
-				       frame);
 
 	widget = bonobo_widget_new_control_from_objref (object,
 							CORBA_OBJECT_NIL);
@@ -1351,6 +1348,10 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 	}
 
 	CORBA_exception_free (&corba_ev);
+
+	ORBit_small_listen_for_broken (object,
+				       G_CALLBACK (panel_applet_frame_cnx_broken),
+				       frame);
 
 	gtk_container_add (GTK_CONTAINER (frame), widget);
 

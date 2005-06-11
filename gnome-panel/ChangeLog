@@ -1,3 +1,11 @@
+2005-06-11  Vincent Untz  <vuntz@gnome.org>
+
+	Avoid getting two error dialogs when an applet crashes.
+	Patch by Ryan Lortie <desrt@desrt.ca>. Fix bug #307237
+
+	* panel-applet-frame.c: (panel_applet_frame_activated): only listen
+	for brokent connexions once we're sure the applet is loaded.
+
 2005-06-08  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* panel-menu-button.c: (panel_menu_button_create):
