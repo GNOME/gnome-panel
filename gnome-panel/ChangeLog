@@ -1,3 +1,9 @@
+2005-06-13  Kjartan Maraas  <kmaraas@gnome.org>
+
+        * gnome-panel/panel-profile.c:
+        (panel_profile_delete_toplevel_objects):
+        Plug a leak. Closes bug #307492.
+
 2005-06-11  Vincent Untz  <vuntz@gnome.org>
 
 	Avoid getting two error dialogs when an applet crashes.
@@ -20,6 +26,13 @@
 	Fix stupid bug #306448.
 
 ==================== 2.11.3 ====================
+
+2005-06-07  Kjartan Maraas  <kmaraas@gnome.org>
+
+        * gnome-panel/panel-run-dialog.c: (panel_run_dialog_set_icon):
+        Unref the pixbuf here. Gtk+ takes it's own reference so we need
+        to drop ours it seems. Remove comment that said we didn't need
+        to unref also. Closes bug #306748.
 
 2005-06-06  Vincent Untz  <vuntz@gnome.org>
 
