@@ -1480,6 +1480,7 @@ panel_profile_delete_toplevel_objects (const char        *toplevel_id,
 
 		if (parent_toplevel_id && !strcmp (toplevel_id, parent_toplevel_id)) {
 			g_free (id);
+			g_free (parent_toplevel_id);
 			continue;
 		}
 
