@@ -448,7 +448,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 		break;
 	case GTK_RESPONSE_HELP:
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (d)),
-				 "wgospanel.xml", "gospanel-52");
+				 "user-guide.xml", "gospanel-52");
 		return;
 	default:
 		gtk_widget_destroy (d);
