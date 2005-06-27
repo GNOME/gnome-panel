@@ -71,6 +71,8 @@ main (int argc, char **argv)
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 
+	panel_session_init ();
+
 	gconf_client_add_dir (panel_gconf_get_client (),
 			      "/desktop/gnome/interface",
 			      GCONF_CLIENT_PRELOAD_NONE,
@@ -79,8 +81,6 @@ main (int argc, char **argv)
 	panel_global_config_load ();
 	panel_lockdown_init ();
 	panel_profile_load ();
-
-	panel_session_init ();
 
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,

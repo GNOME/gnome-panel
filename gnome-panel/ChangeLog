@@ -1,3 +1,17 @@
+2005-06-27  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix for:
+	  https://bugzilla.redhat.com/160439
+
+	Basically, the WM was restoring the saved window
+	position of the panel which we don't want it to do.
+
+	* main.c: (main): call panel_session_init() before
+	creating any toplevels.
+	
+	* panel-session.c: (panel_session_init): unset
+	the SM_CLIENT_ID property.
+
 2005-06-26  Sebastien Bacher  <seb128@debian.org>
 
 	* menu-ditem.c: (really_add_new_menu_item):
