@@ -22,7 +22,10 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <gdkconfig.h>
+#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
+#endif
 #include <gdk/gdkkeysyms.h>
 
 enum
@@ -587,6 +590,7 @@ static void
 reload_modmap (GdkKeymap *keymap,
                EggModmap *modmap)
 {
+#ifdef GDK_WINDOWING_X11
   XModifierKeymap *xmodmap;
   int map_size;
   int i;
@@ -667,6 +671,9 @@ reload_modmap (GdkKeymap *keymap,
   modmap->mapping[EGG_MODMAP_ENTRY_MOD5] |= EGG_VIRTUAL_MOD5_MASK;
   
   XFreeModifiermap (xmodmap);
+#else
+  g_error ("Not yet implemented for Win32: eggaccelerators.c:reload_modmap()");
+#endif
 }
 
 const EggModmap*

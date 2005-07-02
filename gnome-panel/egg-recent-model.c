@@ -150,6 +150,14 @@ static GMarkupParser parser = {start_element_handler, end_element_handler,
 			NULL,
 			error_handler};
 
+static GObjectClass *parent_class;
+
+static void egg_recent_model_clear_mime_filter (EggRecentModel *model);
+static void egg_recent_model_clear_group_filter (EggRecentModel *model);
+static void egg_recent_model_clear_scheme_filter (EggRecentModel *model);
+
+static GObjectClass *parent_class;
+
 static gboolean
 egg_recent_model_string_match (const GSList *list, const gchar *str)
 {
@@ -193,7 +201,9 @@ egg_recent_model_write_raw (EggRecentModel *model, FILE *file,
 	if (fputs (content, file) == EOF)
 		return FALSE;
 
+#ifndef G_OS_WIN32
 	fsync (fd);
+#endif
 	rewind (file);
 
 	return TRUE;
@@ -884,6 +894,7 @@ egg_recent_model_open_file (EggRecentModel *model)
 static gboolean
 egg_recent_model_lock_file (FILE *file)
 {
+#ifdef F_TLOCK
 	int fd;
 	gint	try = 5;
 
@@ -913,17 +924,24 @@ egg_recent_model_lock_file (FILE *file)
 	}
 
 	return FALSE;
+#else
+	return TRUE;
+#endif
 }
 
 static gboolean
 egg_recent_model_unlock_file (FILE *file)
 {
+#ifdef F_TLOCK
 	int fd;
 
 	rewind (file);
 	fd = fileno (file);
 
 	return (lockf (fd, F_ULOCK, 0) == 0) ? TRUE : FALSE;
+#else
+	return TRUE;
+#endif
 }
 
 static void
@@ -976,6 +994,8 @@ egg_recent_model_finalize (GObject *object)
 
 
 	g_free (model->priv);
+
+	parent_class->finalize (object);
 }
 
 static void
@@ -989,16 +1009,25 @@ egg_recent_model_set_property (GObject *object,
 	switch (prop_id)
 	{
 		case PROP_MIME_FILTERS:
+			if (model->priv->mime_filter_values != NULL)
+				egg_recent_model_clear_mime_filter (model);
+			
 			model->priv->mime_filter_values =
 				(GSList *)g_value_get_pointer (value);
 		break;
 
 		case PROP_GROUP_FILTERS:
+			if (model->priv->group_filter_values != NULL)
+				egg_recent_model_clear_group_filter (model);
+			
 			model->priv->group_filter_values =
 				(GSList *)g_value_get_pointer (value);
 		break;
 
 		case PROP_SCHEME_FILTERS:
+			if (model->priv->scheme_filter_values != NULL)
+				egg_recent_model_clear_scheme_filter (model);
+			
 			model->priv->scheme_filter_values =
 				(GSList *)g_value_get_pointer (value);
 		break;
@@ -1058,6 +1087,10 @@ static void
 egg_recent_model_class_init (EggRecentModelClass * klass)
 {
 	GObjectClass *object_class;
+
+	parent_class = g_type_class_peek_parent (klass);
+
+	parent_class = g_type_class_peek_parent (klass);
 
 	object_class = G_OBJECT_CLASS (klass);
 	object_class->set_property = egg_recent_model_set_property;
@@ -1524,6 +1557,18 @@ egg_recent_model_clear (EggRecentModel *model)
 	fclose (file);
 }
 
+static void
+egg_recent_model_clear_mime_filter (EggRecentModel *model)
+{
+	g_return_if_fail (model != NULL);
+
+	if (model->priv->mime_filter_values != NULL) {
+		g_slist_foreach (model->priv->mime_filter_values,
+				 (GFunc) g_pattern_spec_free, NULL);
+		g_slist_free (model->priv->mime_filter_values);
+		model->priv->mime_filter_values = NULL;
+	}
+}	
 
 /**
  * egg_recent_model_set_filter_mime_types:
@@ -1543,12 +1588,7 @@ egg_recent_model_set_filter_mime_types (EggRecentModel *model,
 
 	g_return_if_fail (model != NULL);
 
-	if (model->priv->mime_filter_values != NULL) {
-		g_slist_foreach (model->priv->mime_filter_values,
-				 (GFunc) g_pattern_spec_free, NULL);
-		g_slist_free (model->priv->mime_filter_values);
-		model->priv->mime_filter_values = NULL;
-	}
+	egg_recent_model_clear_mime_filter (model);
 
 	va_start (valist, model);
 
@@ -1563,6 +1603,18 @@ egg_recent_model_set_filter_mime_types (EggRecentModel *model,
 	va_end (valist);
 
 	model->priv->mime_filter_values = list;
+}
+
+static void
+egg_recent_model_clear_group_filter (EggRecentModel *model)
+{
+	g_return_if_fail (model != NULL);
+
+	if (model->priv->group_filter_values != NULL) {
+		g_slist_foreach (model->priv->group_filter_values, (GFunc)g_free, NULL);
+		g_slist_free (model->priv->group_filter_values);
+		model->priv->group_filter_values = NULL;
+	}
 }
 
 /**
@@ -1583,12 +1635,8 @@ egg_recent_model_set_filter_groups (EggRecentModel *model,
 
 	g_return_if_fail (model != NULL);
 
-	if (model->priv->group_filter_values != NULL) {
-		g_slist_foreach (model->priv->group_filter_values, (GFunc)g_free, NULL);
-		g_slist_free (model->priv->group_filter_values);
-		model->priv->group_filter_values = NULL;
-	}
-
+	egg_recent_model_clear_group_filter (model);
+	
 	va_start (valist, model);
 
 	str = va_arg (valist, gchar*);
@@ -1602,6 +1650,19 @@ egg_recent_model_set_filter_groups (EggRecentModel *model,
 	va_end (valist);
 
 	model->priv->group_filter_values = list;
+}
+
+static void
+egg_recent_model_clear_scheme_filter (EggRecentModel *model)
+{
+	g_return_if_fail (model != NULL);
+
+	if (model->priv->scheme_filter_values != NULL) {
+		g_slist_foreach (model->priv->scheme_filter_values,
+				(GFunc) g_pattern_spec_free, NULL);
+		g_slist_free (model->priv->scheme_filter_values);
+		model->priv->scheme_filter_values = NULL;
+	}
 }
 
 /**
@@ -1621,13 +1682,8 @@ egg_recent_model_set_filter_uri_schemes (EggRecentModel *model, ...)
 
 	g_return_if_fail (model != NULL);
 
-	if (model->priv->scheme_filter_values != NULL) {
-		g_slist_foreach (model->priv->scheme_filter_values,
-				(GFunc) g_pattern_spec_free, NULL);
-		g_slist_free (model->priv->scheme_filter_values);
-		model->priv->scheme_filter_values = NULL;
-	}
-
+	egg_recent_model_clear_scheme_filter (model);
+	
 	va_start (valist, model);
 
 	str = va_arg (valist, gchar*);
