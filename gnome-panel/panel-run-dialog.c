@@ -374,8 +374,8 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	scheme = gnome_vfs_get_uri_scheme (url);
 	result = FALSE;
 	
-	if (!strcasecmp (scheme, "http") ||
-	    !strcasecmp (scheme, "file"))
+	if (!g_ascii_strcasecmp (scheme, "http") ||
+	    !g_ascii_strcasecmp (scheme, "file"))
 		/* If this returns an http or file url, the url might refer to a
 		 * command that is somewhere in the path or an executable file.
 		 * So try executing it before displaying it. We execute the 
@@ -1601,10 +1601,10 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
 	scheme = gnome_vfs_get_uri_scheme (uri);
 	
-	if (!strcasecmp (scheme, "http"))
+	if (!g_ascii_strcasecmp (scheme, "http"))
 		exec = command_is_executable (text);
 		
-	else if (!strcasecmp (scheme, "file"))
+	else if (!g_ascii_strcasecmp (scheme, "file"))
 		exec = command_is_executable (uri);
 		
 	if (exec) {

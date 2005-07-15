@@ -1,3 +1,9 @@
+2005-07-15  Murray Cumming  <murrayc@murrayc.com>
+
+	* gnome-panel/panel-run-dialog.c: (panel_run_dialog_execute),
+	(pixmap_drag_data_get): Use g_ascii_strcasecmp() instead of 
+	strcasecmp() to partly fix the build on Ubuntu breezy.
+
 2005-07-13  Vincent Untz  <vuntz@gnome.org>
 
 	* configure.in: post-release bump to 2.11.90
