@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.10.0\n"
+"Project-Id-Version: gnome-panel 2.10.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-06 17:01+0100\n"
-"PO-Revision-Date: 2005-03-06 16:31+0100\n"
+"POT-Creation-Date: 2005-07-17 17:49+0200\n"
+"PO-Revision-Date: 2005-07-17 17:24+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -49,8 +49,8 @@ msgstr "À _propos"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:743
-#: gnome-panel/panel-context-menu.c:325 gnome-panel/panel-menu-bar.c:302
+#: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:740
+#: gnome-panel/panel-context-menu.c:324 gnome-panel/panel-menu-bar.c:225
 #: gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "_Aide"
@@ -63,7 +63,7 @@ msgid "_Preferences"
 msgstr "_Préférences"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:2590
+#: applets/clock/clock.c:2627
 msgid "Clock"
 msgstr "Horloge"
 
@@ -83,16 +83,16 @@ msgstr "Donne l'heure et la date courante"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:265 applets/clock/clock.c:581
+#: applets/clock/clock.c:265 applets/clock/clock.c:582
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:267 applets/clock/clock.c:1682
+#: applets/clock/clock.c:267 applets/clock/clock.c:1719
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:267 applets/clock/clock.c:583
-#: applets/clock/clock.c:1684
+#: applets/clock/clock.c:267 applets/clock/clock.c:584
+#: applets/clock/clock.c:1721
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -134,48 +134,48 @@ msgstr "%A %d %B"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: applets/clock/clock.c:588
+#: applets/clock/clock.c:589
 msgid "%b %d"
 msgstr "%e %b"
 
-#: applets/clock/clock.c:887
+#: applets/clock/clock.c:916
 msgid "Tasks"
 msgstr "Tâches"
 
-#: applets/clock/clock.c:1031
+#: applets/clock/clock.c:1068
 msgid "All Day"
 msgstr "Toute la journée"
 
-#: applets/clock/clock.c:1070
+#: applets/clock/clock.c:1107
 msgid "Appointments"
 msgstr "Rendez-vous"
 
-#: applets/clock/clock.c:1302
+#: applets/clock/clock.c:1339
 msgid "Calendar"
 msgstr "Calendrier"
 
-#: applets/clock/clock.c:1583
+#: applets/clock/clock.c:1620
 msgid "Computer Clock"
 msgstr "Horloge"
 
-#: applets/clock/clock.c:1677
+#: applets/clock/clock.c:1714
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1679
+#: applets/clock/clock.c:1716
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1721
+#: applets/clock/clock.c:1758
 msgid "%A, %B %d %Y"
 msgstr "%A %d %B %Y"
 
-#: applets/clock/clock.c:1765
+#: applets/clock/clock.c:1802
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Le lancement de l'outil de configuration de l'heure a échoué : %s"
 
-#: applets/clock/clock.c:1804
+#: applets/clock/clock.c:1841
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -183,11 +183,11 @@ msgstr ""
 "La localisation d'un programme pour configurer la date et l'heure a échoué. "
 "Peut-être que vous n'en n'avez installé aucun."
 
-#: applets/clock/clock.c:2251
+#: applets/clock/clock.c:2288
 msgid "Custom format"
 msgstr "Format personnalisé"
 
-#: applets/clock/clock.c:2372 applets/clock/clock.c:2549
+#: applets/clock/clock.c:2409 applets/clock/clock.c:2586
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
 #: applets/wncklet/window-list.c:114 applets/wncklet/wncklet.c:123
 #: applets/wncklet/workspace-switcher.c:241
@@ -195,52 +195,52 @@ msgstr "Format personnalisé"
 msgid "There was an error displaying help: %s"
 msgstr "Il y a eu une erreur lors de l'affichage de l'aide : %s"
 
-#: applets/clock/clock.c:2407
+#: applets/clock/clock.c:2444
 msgid "Clock Preferences"
 msgstr "Préférences de l'horloge"
 
-#: applets/clock/clock.c:2431
+#: applets/clock/clock.c:2468
 msgid "Clock _type:"
 msgstr "_Type d'horloge :"
 
-#: applets/clock/clock.c:2441
+#: applets/clock/clock.c:2478
 msgid "12 hour"
 msgstr "12 heures"
 
-#: applets/clock/clock.c:2442
+#: applets/clock/clock.c:2479
 msgid "24 hour"
 msgstr "24 heures"
 
-#: applets/clock/clock.c:2443
+#: applets/clock/clock.c:2480
 msgid "UNIX time"
 msgstr "Heure UNIX"
 
-#: applets/clock/clock.c:2444
+#: applets/clock/clock.c:2481
 msgid "Internet time"
 msgstr "Heure Internet"
 
-#: applets/clock/clock.c:2452
+#: applets/clock/clock.c:2489
 msgid "Custom _format:"
 msgstr "_Format personnalisé :"
 
-#: applets/clock/clock.c:2471
+#: applets/clock/clock.c:2508
 msgid "Show _seconds"
 msgstr "Afficher les _secondes"
 
-#: applets/clock/clock.c:2480
+#: applets/clock/clock.c:2517
 msgid "Show _date"
 msgstr "Afficher la _date"
 
-#: applets/clock/clock.c:2489
+#: applets/clock/clock.c:2526
 msgid "Use _UTC"
 msgstr "Utiliser _UTC"
 
-#: applets/clock/clock.c:2593
+#: applets/clock/clock.c:2630
 msgid "The Clock displays the current time and date"
 msgstr "L'Horloge affiche l'heure et la date courante."
 
 #. Translator credits
-#: applets/clock/clock.c:2596 applets/fish/fish.c:505
+#: applets/clock/clock.c:2633 applets/fish/fish.c:505
 #: applets/notification_area/main.c:133 applets/wncklet/showdesktop.c:510
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:75
 #: applets/wncklet/workspace-switcher.c:555
@@ -674,28 +674,34 @@ msgid "Show Desktop"
 msgstr "Afficher le bureau"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
-msgid "Switch between open windows"
+#, fuzzy
+msgid "Switch between open windows using a menu"
 msgstr "Bascule entre les fenêtres ouvertes"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+#, fuzzy
+msgid "Switch between open windows using buttons"
+msgstr "Bascule entre les fenêtres ouvertes"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
 msgid "Switch between workspaces"
 msgstr "Bascule entre les espaces de travail"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
 #: applets/wncklet/window-list.c:775
 msgid "Window List"
 msgstr "Liste des fenêtres"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
 msgid "Window Navigation Applet Factory"
 msgstr "Fabrique pour l'applet de navigation de fenêtres"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: applets/wncklet/window-menu.c:78 applets/wncklet/window-menu.c:261
 msgid "Window Selector"
 msgstr "Sélecteur de fenêtre"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/workspace-switcher.c:558
 msgid "Workspace Switcher"
 msgstr "Sélecteur d'espaces de travail"
@@ -705,7 +711,7 @@ msgstr "Sélecteur d'espaces de travail"
 msgid "Failed to load %s: %s\n"
 msgstr "Le chargement de %s a échoué : %s\n"
 
-#: applets/wncklet/showdesktop.c:172 gnome-panel/panel-util.c:569
+#: applets/wncklet/showdesktop.c:172 gnome-panel/panel-util.c:602
 msgid "Icon not found"
 msgstr "Icône non trouvé"
 
@@ -736,7 +742,10 @@ msgstr ""
 "fonctionnement."
 
 #: applets/wncklet/window-list.c:777
-msgid "The Window List shows a list of all windows and lets you browse them."
+#, fuzzy
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
 msgstr ""
 "La liste des fenêtres affiche la liste de toutes les fenêtres et vous permet "
 "de les parcourir."
@@ -875,8 +884,10 @@ msgid "When to group windows"
 msgstr "Quand grouper les fenêtres"
 
 #: applets/wncklet/window-menu.c:82
+#, fuzzy
 msgid ""
-"The Window Selector shows a list of all windows and lets you browse them."
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
 msgstr ""
 "Le sélecteur de fenêtre affiche la liste de toutes les fenêtres et vous "
 "permet de les parcourir."
@@ -1022,13 +1033,13 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "Impossible de trouver une place vide"
 
-#: gnome-panel/button-widget.c:196
+#: gnome-panel/button-widget.c:198
 #, c-format
 msgid "Failed to load image %s"
 msgstr "Le chargement de l'image %s a échoué"
 
 #: gnome-panel/drawer.c:353 gnome-panel/panel-addto.c:150
-#: gnome-panel/panel-toplevel.c:1531
+#: gnome-panel/panel-toplevel.c:1530
 msgid "Drawer"
 msgstr "Tiroir"
 
@@ -1036,8 +1047,8 @@ msgstr "Tiroir"
 msgid "_Add to Drawer..."
 msgstr "_Ajouter au tableau de bord..."
 
-#: gnome-panel/drawer.c:602 gnome-panel/launcher.c:846
-#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:263
+#: gnome-panel/drawer.c:602 gnome-panel/launcher.c:852
+#: gnome-panel/panel-action-button.c:142 gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Propriétés"
 
@@ -1075,37 +1086,37 @@ msgstr ""
 "Impossible d'ouvrir le fichier de bureau %s pour le lanceur du tableau de "
 "bord%s%s\n"
 
-#: gnome-panel/launcher.c:728 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:734 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Propriétés du lanceur"
 
-#: gnome-panel/launcher.c:840
+#: gnome-panel/launcher.c:846
 msgid "_Launch"
 msgstr "_Lancer"
 
-#: gnome-panel/launcher.c:918
+#: gnome-panel/launcher.c:924
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "La clé %s n'est pas défini, impossible de charger le lanceur\n"
 
 # hum, j'ai un doute...
-#: gnome-panel/launcher.c:973 gnome-panel/launcher.c:991
+#: gnome-panel/launcher.c:979 gnome-panel/launcher.c:997
 #: gnome-panel/menu-ditem.c:469 gnome-panel/menu-ditem.c:486
 #: gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "Impossible de créer un lanceur"
 
-#: gnome-panel/launcher.c:974 gnome-panel/menu-ditem.c:470
+#: gnome-panel/launcher.c:980 gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "Vous devez spécifier un nom."
 
-#: gnome-panel/launcher.c:992 gnome-panel/menu-ditem.c:487
+#: gnome-panel/launcher.c:998 gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "Vous devez indiquer une URL ou une commande valide."
 
 # hum, j'ai un doute...
-#: gnome-panel/launcher.c:1035 gnome-panel/menu-ditem.c:550
+#: gnome-panel/launcher.c:1041 gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "Créer un lanceur"
 
@@ -1130,61 +1141,67 @@ msgstr ""
 "Vous ne pouvez pas créer un lanceur à cet emplacement car il est protégé "
 "contre l'écriture."
 
-#: gnome-panel/menu.c:818
+#: gnome-panel/menu.c:922
 msgid "Add this launcher to panel"
 msgstr "Ajouter ce lanceur au tableau de bord"
 
-#: gnome-panel/menu.c:838
+#: gnome-panel/menu.c:933
+#, fuzzy
+msgid "Add this launcher to desktop"
+msgstr "Ajouter ce lanceur au tableau de bord"
+
+#: gnome-panel/menu.c:953
 msgid "Entire menu"
 msgstr "Tout le menu"
 
-#: gnome-panel/menu.c:848
+#: gnome-panel/menu.c:963
 msgid "Add this as drawer to panel"
 msgstr "Ajouter ceci comme tiroir au tableau de bord"
 
-#: gnome-panel/menu.c:860
+#: gnome-panel/menu.c:975
 msgid "Add this as menu to panel"
 msgstr "Ajouter ceci comme menu au tableau de bord"
 
-#: gnome-panel/panel-action-button.c:108
+#: gnome-panel/panel-action-button.c:118
 msgid "_Activate Screensaver"
 msgstr "_Activer l'économiseur d'écran"
 
-#: gnome-panel/panel-action-button.c:114
+#: gnome-panel/panel-action-button.c:124
 msgid "_Lock Screen"
 msgstr "_Verrouiller l'écran"
 
-#: gnome-panel/panel-action-button.c:120
+#: gnome-panel/panel-action-button.c:130
 msgid "_Kill Screensaver Daemon"
 msgstr "_Tuer le démon de l'économiseur d'écran"
 
-#: gnome-panel/panel-action-button.c:126
+#: gnome-panel/panel-action-button.c:136
 msgid "Restart _Screensaver Daemon"
 msgstr "_Relancer le démon de l'économiseur d'écran"
 
-#: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:633
+#: gnome-panel/panel-action-button.c:206 gnome-panel/panel-action-button.c:219
+#: gnome-panel/panel-action-button.c:243 gnome-panel/panel-menu-bar.c:291
+#: gnome-panel/panel-menu-button.c:1009 gnome-panel/panel-util.c:723
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Impossible d'exécuter « %s »"
 
-#: gnome-panel/panel-action-button.c:282
+#: gnome-panel/panel-action-button.c:279
 msgid "Cannot connect to server"
 msgstr "Impossible de se connecter au serveur"
 
-#: gnome-panel/panel-action-button.c:313
+#: gnome-panel/panel-action-button.c:310
 msgid "Lock Screen"
 msgstr "Verrouiller l'écran"
 
-#: gnome-panel/panel-action-button.c:314
+#: gnome-panel/panel-action-button.c:311
 msgid "Protect your computer from unauthorized use"
 msgstr "Interdit les utilisations non désirées de votre ordinateur"
 
-#: gnome-panel/panel-action-button.c:325
+#: gnome-panel/panel-action-button.c:322
 msgid "Log Out"
 msgstr "Clore la session"
 
-#: gnome-panel/panel-action-button.c:326
+#: gnome-panel/panel-action-button.c:323
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1192,46 +1209,46 @@ msgstr ""
 "Se déconnecte de cette session afin de se reconnecter sous un autre "
 "identifiant ou pour éteindre l'ordinateur"
 
-#: gnome-panel/panel-action-button.c:335
+#: gnome-panel/panel-action-button.c:332
 msgid "Run Application..."
 msgstr "Lancer une application..."
 
-#: gnome-panel/panel-action-button.c:336
+#: gnome-panel/panel-action-button.c:333
 msgid "Run an Application by entering a command"
 msgstr "Lance une application en saisissant une commande"
 
-#: gnome-panel/panel-action-button.c:345
+#: gnome-panel/panel-action-button.c:342
 msgid "Search for Files..."
 msgstr "Rechercher des fichiers..."
 
-#: gnome-panel/panel-action-button.c:346
+#: gnome-panel/panel-action-button.c:343
 msgid "Find files, folders, and documents on your computer"
 msgstr "Recherche des fichiers, dossiers et documents sur votre ordinateur"
 
-#: gnome-panel/panel-action-button.c:354
+#: gnome-panel/panel-action-button.c:351
 msgid "Take Screenshot..."
 msgstr "Prendre une capture d'écran..."
 
-#: gnome-panel/panel-action-button.c:355
+#: gnome-panel/panel-action-button.c:352
 msgid "Take a screenshot of your desktop"
 msgstr "Effectue une capture d'écran de votre bureau"
 
-#: gnome-panel/panel-action-button.c:363
+#: gnome-panel/panel-action-button.c:360
 msgid "Force Quit"
 msgstr "Forcer quitter"
 
-#: gnome-panel/panel-action-button.c:364
+#: gnome-panel/panel-action-button.c:361
 msgid "Force a misbehaving application to quit"
 msgstr "Force une application ayant un comportement anormal à quitter"
 
 #. FIXME icon
-#: gnome-panel/panel-action-button.c:373
+#: gnome-panel/panel-action-button.c:370
 msgid "Connect to Server..."
-msgstr "Connecter au serveur..."
+msgstr "Se connecter à un serveur..."
 
-#: gnome-panel/panel-action-button.c:374
+#: gnome-panel/panel-action-button.c:371
 msgid "Connect to a remote server"
-msgstr "Se connecter à un serveur distant"
+msgstr "Se connecte à un serveur distant"
 
 #: gnome-panel/panel-addto.c:102
 msgid "Custom Application Launcher"
@@ -1279,24 +1296,24 @@ msgstr "(vide)"
 msgid "query returned exception %s\n"
 msgstr "la requête a retourné l'exception %s\n"
 
-#: gnome-panel/panel-addto.c:952
+#: gnome-panel/panel-addto.c:1006
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "Chois_ir un objet à ajouter à « %s » :"
 
-#: gnome-panel/panel-addto.c:956
+#: gnome-panel/panel-addto.c:1010
 msgid "Add to Drawer"
 msgstr "Ajouter au tableau de bord"
 
-#: gnome-panel/panel-addto.c:958
+#: gnome-panel/panel-addto.c:1012
 msgid "Select an _item to add to the drawer:"
 msgstr "Chois_ir un objet à ajouter au tableau de bord :"
 
-#: gnome-panel/panel-addto.c:960
+#: gnome-panel/panel-addto.c:1014
 msgid "Add to Panel"
 msgstr "Ajouter au tableau de bord"
 
-#: gnome-panel/panel-addto.c:962
+#: gnome-panel/panel-addto.c:1016
 msgid "Select an _item to add to the panel:"
 msgstr "Chois_ir un objet à ajouter au tableau de bord :"
 
@@ -1383,7 +1400,7 @@ msgstr "Vous ne pouvez pas supprimer votre dernier tableau de bord."
 msgid "_Delete This Panel..."
 msgstr "_Supprimer ce tableau de bord..."
 
-#: gnome-panel/panel-context-menu.c:218 gnome-panel/panel-context-menu.c:248
+#: gnome-panel/panel-context-menu.c:218 gnome-panel/panel-context-menu.c:260
 msgid "_Delete This Panel"
 msgstr "_Supprimer ce tableau de bord"
 
@@ -1391,11 +1408,11 @@ msgstr "_Supprimer ce tableau de bord"
 msgid "_Add to Panel..."
 msgstr "A_jouter au tableau de bord..."
 
-#: gnome-panel/panel-context-menu.c:278
+#: gnome-panel/panel-context-menu.c:277
 msgid "_New Panel"
 msgstr "_Nouveau tableau de bord"
 
-#: gnome-panel/panel-context-menu.c:336
+#: gnome-panel/panel-context-menu.c:335
 msgid "A_bout Panels"
 msgstr "À _propos des tableaux de bord"
 
@@ -1455,18 +1472,30 @@ msgstr ""
 "ces objets sont stockés dans /apps/panel/objets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:5
-msgid "Enable program list in \"Run Application\" dialog"
+#, fuzzy
+msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
 "Active la liste des programmes dans la boîte de dialogue « Lancer une "
 "application »"
 
 #: gnome-panel/panel-general.schemas.in.h:6
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr ""
+"Active la liste des programmes dans la boîte de dialogue « Lancer une "
+"application »"
+
+#: gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr ""
 "Déroule la liste des programmes dans la boîte de dialogue « Lancer une "
 "application »"
 
-#: gnome-panel/panel-general.schemas.in.h:7
+#: gnome-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:9
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1476,7 +1505,7 @@ msgstr ""
 "« Lancer une application » est ouverte. Ce réglage n'est valable que si "
 "enable_program_list est vrai."
 
-#: gnome-panel/panel-general.schemas.in.h:8
+#: gnome-panel/panel-general.schemas.in.h:10
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1487,19 +1516,19 @@ msgstr ""
 "lorsque la boîte de dialogue est affichée est contrôlée par la clé "
 "show_program_list."
 
-#: gnome-panel/panel-general.schemas.in.h:9
+#: gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
 msgstr "Anciens profiles de réglages migrés"
 
-#: gnome-panel/panel-general.schemas.in.h:10
+#: gnome-panel/panel-general.schemas.in.h:12
 msgid "Panel ID list"
 msgstr "Liste des ID de tableaux de bord"
 
-#: gnome-panel/panel-general.schemas.in.h:11
+#: gnome-panel/panel-general.schemas.in.h:13
 msgid "Panel applet ID list"
 msgstr "Liste des ID d'applets de tableaux de bord"
 
-#: gnome-panel/panel-general.schemas.in.h:12
+#: gnome-panel/panel-general.schemas.in.h:14
 msgid "Panel object ID list"
 msgstr "Liste des ID d'objets de tableaux de bord"
 
@@ -1517,25 +1546,24 @@ msgstr ""
 "redemarré pour que cela prenne effet."
 
 #: gnome-panel/panel-global.schemas.in.h:2
-#: gnome-panel/panel-toplevel.schemas.in.h:1
-msgid "Animation speed"
-msgstr "Vitesse de l'animation"
-
-#: gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
 msgstr "IIDs d'applets à ne pas charger"
 
-#: gnome-panel/panel-global.schemas.in.h:4
+#: gnome-panel/panel-global.schemas.in.h:3
 msgid "Autoclose drawer"
 msgstr "Fermer automatiquement le tiroir"
 
-#: gnome-panel/panel-global.schemas.in.h:5
+#: gnome-panel/panel-global.schemas.in.h:4
 msgid "Complete panel lockdown"
 msgstr "Verrouillage complet du tableau de bord"
 
-#: gnome-panel/panel-global.schemas.in.h:6
+#: gnome-panel/panel-global.schemas.in.h:5
 msgid "Confirm panel removal"
 msgstr "Confirmer la suppression du tableau de bord"
+
+#: gnome-panel/panel-global.schemas.in.h:6
+msgid "Deprecated"
+msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:7
 msgid "Disable Force Quit"
@@ -1550,35 +1578,19 @@ msgid "Disable Logging Out"
 msgstr "Désactiver Déconnecter"
 
 #: gnome-panel/panel-global.schemas.in.h:10
-msgid "Display \"Run Application\" dialog keybinding"
-msgstr "Affiche le raccourci clavier du dialogue « Lancer une application »"
-
-#: gnome-panel/panel-global.schemas.in.h:11
 #: gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
 msgstr "Activer les animations"
 
-#: gnome-panel/panel-global.schemas.in.h:12
-msgid "Enable keybindings"
-msgstr "Activer les raccourcis clavier"
-
-#: gnome-panel/panel-global.schemas.in.h:13
+#: gnome-panel/panel-global.schemas.in.h:11
 msgid "Enable tooltips"
 msgstr "Activer les bulles d'aide"
 
-#: gnome-panel/panel-global.schemas.in.h:14
-msgid "FIXME - is this resolved with the new menu stuff"
-msgstr "FIXME - est-ce corrigé avec les nouveaux menus"
-
-#: gnome-panel/panel-global.schemas.in.h:15
-msgid "FIXME - need to define limits"
-msgstr "FIXME - il faut définir des limites"
-
-#: gnome-panel/panel-global.schemas.in.h:16
+#: gnome-panel/panel-global.schemas.in.h:12
 msgid "Highlight launchers on mouseover"
 msgstr "Mettre en surbrillance les lanceurs sur mouseover"
 
-#: gnome-panel/panel-global.schemas.in.h:17
+#: gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -1586,7 +1598,7 @@ msgstr ""
 "Si vrai, un dialogue est affiché demandant confirmation si l'utilisateur "
 "veut supprimer un tableau de bord."
 
-#: gnome-panel/panel-global.schemas.in.h:18
+#: gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -1594,19 +1606,14 @@ msgstr ""
 "Si vrai, un tiroir sera automatiquement fermé lorsque l'utilisateur cliquera "
 "un lanceur à l'intérieur."
 
-#: gnome-panel/panel-global.schemas.in.h:19
+#: gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Si vrai, un lanceur sera mis en surbrillance lorsque l'utilisateur déplacera "
 "le pointeur de la souris dessus."
 
-#: gnome-panel/panel-global.schemas.in.h:20
-msgid "If true, panel-specific keybindings are enabled."
-msgstr ""
-"Si vrai, les raccourcis clavier spécifique au tableau de bord seront activés."
-
-#: gnome-panel/panel-global.schemas.in.h:21
+#: gnome-panel/panel-global.schemas.in.h:16
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1614,7 +1621,7 @@ msgstr ""
 "Si vrai, le tableau de bord n'autorisera pas un utilisateur à forcer une "
 "application à quitter en supprimant l'accès au bouton forcer à quitter."
 
-#: gnome-panel/panel-global.schemas.in.h:22
+#: gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
@@ -1622,7 +1629,7 @@ msgstr ""
 "Si vrai, le tableau de bord n'autorisera pas un utilisateur à verrouiller "
 "son écran en supprimant l'accès au bouton verrouiller l'écran."
 
-#: gnome-panel/panel-global.schemas.in.h:23
+#: gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
@@ -1630,7 +1637,7 @@ msgstr ""
 "Si vrai, le tableau de bord n'autorisera pas un utilisateur à se déconnecter "
 "en supprimant l'accès au bouton de déconnexion."
 
-#: gnome-panel/panel-global.schemas.in.h:24
+#: gnome-panel/panel-global.schemas.in.h:19
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -1641,48 +1648,41 @@ msgstr ""
 "pourraient nécessiter d'être verrouillées séparément. Le tableau de bord "
 "doit être redémarré pour que cela prenne effet."
 
-#: gnome-panel/panel-global.schemas.in.h:25
+#: gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
 "Si vrai, les bulles d'aide seront affichées pour les objets du tableau de "
 "bord."
 
-#: gnome-panel/panel-global.schemas.in.h:26
-msgid "Popup panel menu keybinding"
-msgstr "Raccourci clavier du menu popup du tableau de bord"
-
-#: gnome-panel/panel-global.schemas.in.h:27
-msgid "Take screenshot"
-msgstr "Prendre une capture d'écran"
-
-#: gnome-panel/panel-global.schemas.in.h:28
-msgid "Take window screenshot"
-msgstr "Prendre une capture de fenêtre"
-
-#: gnome-panel/panel-menu-bar.c:132
+#: gnome-panel/panel-menu-bar.c:71
 msgid "Applications"
 msgstr "Applications"
 
-#: gnome-panel/panel-menu-items.c:103 gnome-panel/panel-run-dialog.c:310
+#: gnome-panel/panel-menu-bar.c:232 gnome-panel/panel-menu-button.c:691
+#, fuzzy
+msgid "_Edit Menus"
+msgstr "Menu principal"
+
+#: gnome-panel/panel-menu-items.c:105 gnome-panel/panel-run-dialog.c:310
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Impossible d'afficher l'emplacement « %s »"
 
-#: gnome-panel/panel-menu-items.c:322
+#: gnome-panel/panel-menu-items.c:324
 msgid "Bookmarks"
 msgstr "Signets"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-menu-items.c:343 gnome-panel/panel-recent.c:197
+#: gnome-panel/panel-menu-items.c:345 gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "Ouvrir « %s »"
 
-#: gnome-panel/panel-menu-items.c:417
+#: gnome-panel/panel-menu-items.c:431
 msgid "Network Places"
 msgstr "Emplacements réseau"
 
-#: gnome-panel/panel-menu-items.c:419
+#: gnome-panel/panel-menu-items.c:433
 msgid "Removable Media"
 msgstr "Media amovible"
 
@@ -1690,30 +1690,30 @@ msgstr "Media amovible"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: gnome-panel/panel-menu-items.c:477
+#: gnome-panel/panel-menu-items.c:491
 msgid "Desktop Folder|Desktop"
 msgstr "Bureau"
 
-#: gnome-panel/panel-menu-items.c:478
+#: gnome-panel/panel-menu-items.c:492
 msgid "Open the desktop as a folder"
 msgstr "Ouvrir le bureau comme un dossier"
 
-#: gnome-panel/panel-menu-items.c:805
+#: gnome-panel/panel-menu-items.c:824
 msgid "Places"
 msgstr "Raccourcis"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: gnome-panel/panel-menu-items.c:843
+#: gnome-panel/panel-menu-items.c:862
 msgid "Desktop Environment|Desktop"
-msgstr "Environnement de bureau"
+msgstr "Bureau"
 
-#: gnome-panel/panel-menu-items.c:984
+#: gnome-panel/panel-menu-items.c:1003
 msgid "Cannot launch entry"
 msgstr "Impossible de lancer l'entrée"
 
-#: gnome-panel/panel-menu-items.c:996
+#: gnome-panel/panel-menu-items.c:1015
 msgid "Cannot load entry"
 msgstr "Impossible de charger l'entrée"
 
@@ -1898,18 +1898,18 @@ msgid "Use custom path for menu contents"
 msgstr "Utiliser un chemin personnalisée pour le contenu du menu"
 
 #: gnome-panel/panel-profile.c:743 gnome-panel/panel-profile.c:770
-#: gnome-panel/panel-profile.c:806 gnome-panel/panel-profile.c:1611
+#: gnome-panel/panel-profile.c:806 gnome-panel/panel-profile.c:1630
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Erreur lors de la lecture de la valeur chaîne GConf « %s » : %s"
 
-#: gnome-panel/panel-profile.c:785 gnome-panel/panel-profile.c:1509
-#: gnome-panel/panel-profile.c:1580 gnome-panel/panel-profile.c:1643
+#: gnome-panel/panel-profile.c:785 gnome-panel/panel-profile.c:1526
+#: gnome-panel/panel-profile.c:1599 gnome-panel/panel-profile.c:1662
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Erreur lors de la lecture de la valeur entière GConf « %s » : %s"
 
-#: gnome-panel/panel-profile.c:1519
+#: gnome-panel/panel-profile.c:1536
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1918,7 +1918,7 @@ msgstr ""
 "Le tableau de bord « %s »est défini pour être affiché sur l'écran %d qui "
 "n'est actuellement pas disponible. Ne charge pas ce tableau de bord."
 
-#: gnome-panel/panel-profile.c:1595
+#: gnome-panel/panel-profile.c:1614
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Erreur lors de la lecture de la valeur booléenne GConf « %s » : %s"
@@ -2080,15 +2080,15 @@ msgstr ""
 "• Toutes les entrées de la liste des documents récents de toutes les "
 "applications."
 
-#: gnome-panel/panel-recent.c:219
+#: gnome-panel/panel-recent.c:221
 msgid "Recent Documents"
 msgstr "Documents récents"
 
-#: gnome-panel/panel-recent.c:249
+#: gnome-panel/panel-recent.c:262
 msgid "Clear Recent Documents"
 msgstr "Videz les documents récents"
 
-#: gnome-panel/panel-recent.c:253
+#: gnome-panel/panel-recent.c:266
 msgid "Clear all items from the recent documents list"
 msgstr "Vide les entrées de la liste des documents récents"
 
@@ -2102,20 +2102,20 @@ msgstr "Impossible de lancer la commande « %s »"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Impossible de convertir « %s » from UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1067
+#: gnome-panel/panel-run-dialog.c:1109
 msgid "Choose a file to append to the command..."
 msgstr "Choisissez un fichier à ajouter à la commande..."
 
-#: gnome-panel/panel-run-dialog.c:1414
+#: gnome-panel/panel-run-dialog.c:1465
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Lancement de « %s »"
 
-#: gnome-panel/panel-run-dialog.c:1421 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1472 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Sélectionnez une application pour voir sa description."
 
-#: gnome-panel/panel-run-dialog.c:1456
+#: gnome-panel/panel-run-dialog.c:1507
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2218,75 +2218,79 @@ msgstr "_Vider"
 msgid "D_on't Delete"
 msgstr "_Ne pas supprimer"
 
-#: gnome-panel/panel-toplevel.c:1121
+#: gnome-panel/panel-toplevel.c:1120
 msgid "Hide Panel"
 msgstr "Cache le tableau de bord"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1502
+#: gnome-panel/panel-toplevel.c:1501
 msgid "Top Expanded Edge Panel"
 msgstr "Tableau de bord supérieur de coté étendu"
 
-#: gnome-panel/panel-toplevel.c:1503
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Top Centered Panel"
 msgstr "Tableau de bord supérieur centré"
 
-#: gnome-panel/panel-toplevel.c:1504
+#: gnome-panel/panel-toplevel.c:1503
 msgid "Top Floating Panel"
 msgstr "Tableau de bord supérieur flottant"
 
-#: gnome-panel/panel-toplevel.c:1505
+#: gnome-panel/panel-toplevel.c:1504
 msgid "Top Edge Panel"
 msgstr "Tableau de bord supérieur de coté"
 
-#: gnome-panel/panel-toplevel.c:1509
+#: gnome-panel/panel-toplevel.c:1508
 msgid "Bottom Expanded Edge Panel"
 msgstr "Tableau de bord inférieur de coté étendu"
 
-#: gnome-panel/panel-toplevel.c:1510
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Bottom Centered Panel"
 msgstr "Tableau de bord inférieur centré"
 
-#: gnome-panel/panel-toplevel.c:1511
+#: gnome-panel/panel-toplevel.c:1510
 msgid "Bottom Floating Panel"
 msgstr "Tableau de bord inférieur flottant"
 
-#: gnome-panel/panel-toplevel.c:1512
+#: gnome-panel/panel-toplevel.c:1511
 msgid "Bottom Edge Panel"
 msgstr "Tableau de bord inférieur de coté"
 
-#: gnome-panel/panel-toplevel.c:1516
+#: gnome-panel/panel-toplevel.c:1515
 msgid "Left Expanded Edge Panel"
 msgstr "Tableau de bord gauche de coté étendu"
 
-#: gnome-panel/panel-toplevel.c:1517
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Left Centered Panel"
 msgstr "Tableau de bord gauche centré"
 
-#: gnome-panel/panel-toplevel.c:1518
+#: gnome-panel/panel-toplevel.c:1517
 msgid "Left Floating Panel"
 msgstr "Tableau de bord gauche flottant"
 
-#: gnome-panel/panel-toplevel.c:1519
+#: gnome-panel/panel-toplevel.c:1518
 msgid "Left Edge Panel"
 msgstr "Tableau de bord gauche de coté"
 
-#: gnome-panel/panel-toplevel.c:1523
+#: gnome-panel/panel-toplevel.c:1522
 msgid "Right Expanded Edge Panel"
 msgstr "Tableau de bord droit de coté étendu"
 
-#: gnome-panel/panel-toplevel.c:1524
+#: gnome-panel/panel-toplevel.c:1523
 msgid "Right Centered Panel"
 msgstr "Tableau de bord droit centré"
 
-#: gnome-panel/panel-toplevel.c:1525
+#: gnome-panel/panel-toplevel.c:1524
 msgid "Right Floating Panel"
 msgstr "Tableau de bord droit flottant"
 
-#: gnome-panel/panel-toplevel.c:1526
+#: gnome-panel/panel-toplevel.c:1525
 msgid "Right Edge Panel"
 msgstr "Tableau de bord droit de coté"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "Vitesse de l'animation"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
@@ -2636,25 +2640,25 @@ msgstr "Moniteur Xinerama sur lequel est affiché le tableau de bord"
 msgid "Y co-ordinate of panel"
 msgstr "Coordonnée en Y du tableau de bord"
 
-#: gnome-panel/panel-util.c:65
+#: gnome-panel/panel-util.c:66
 msgid "Cannot display help document"
 msgstr "Impossible d'afficher le document d'aide"
 
-#: gnome-panel/panel-util.c:255
+#: gnome-panel/panel-util.c:288
 #, c-format
 msgid "Details: %s"
 msgstr "Détails : %s"
 
-#: gnome-panel/panel.c:473
+#: gnome-panel/panel.c:474
 #, c-format
 msgid "Open URL: %s"
 msgstr "Ouvrir l'URL : %s"
 
-#: gnome-panel/panel.c:1254
+#: gnome-panel/panel.c:1262
 msgid "Delete this drawer?"
 msgstr "Supprimer ce tableau de bord ?"
 
-#: gnome-panel/panel.c:1255
+#: gnome-panel/panel.c:1263
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2662,15 +2666,15 @@ msgstr ""
 "Lorsqu'un tableau de bord est supprimé, le tableau de bord\n"
 "et ses réglages sont perdus."
 
-#: gnome-panel/panel.c:1257
+#: gnome-panel/panel.c:1265
 msgid "Delete Drawer"
 msgstr "Supprimer le tableau de bord"
 
-#: gnome-panel/panel.c:1259
+#: gnome-panel/panel.c:1267
 msgid "Delete this panel?"
 msgstr "Supprimer ce tableau de bord ?"
 
-#: gnome-panel/panel.c:1260
+#: gnome-panel/panel.c:1268
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2678,7 +2682,7 @@ msgstr ""
 "Lorsqu'un tableau de bord est supprimé, le tableau de bord\n"
 "et ses réglages sont perdus."
 
-#: gnome-panel/panel.c:1262
+#: gnome-panel/panel.c:1270
 msgid "Delete Panel"
 msgstr "Supprimer ce tableau de bord"
 
@@ -2800,3 +2804,29 @@ msgstr "_Applet :"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Répertoire des _préférences :"
+
+#~ msgid "Display \"Run Application\" dialog keybinding"
+#~ msgstr "Affiche le raccourci clavier du dialogue « Lancer une application »"
+
+#~ msgid "Enable keybindings"
+#~ msgstr "Activer les raccourcis clavier"
+
+#~ msgid "FIXME - is this resolved with the new menu stuff"
+#~ msgstr "FIXME - est-ce corrigé avec les nouveaux menus"
+
+#~ msgid "FIXME - need to define limits"
+#~ msgstr "FIXME - il faut définir des limites"
+
+#~ msgid "If true, panel-specific keybindings are enabled."
+#~ msgstr ""
+#~ "Si vrai, les raccourcis clavier spécifique au tableau de bord seront "
+#~ "activés."
+
+#~ msgid "Popup panel menu keybinding"
+#~ msgstr "Raccourci clavier du menu popup du tableau de bord"
+
+#~ msgid "Take screenshot"
+#~ msgstr "Prendre une capture d'écran"
+
+#~ msgid "Take window screenshot"
+#~ msgstr "Prendre une capture de fenêtre"
