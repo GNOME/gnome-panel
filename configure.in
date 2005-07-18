@@ -183,6 +183,10 @@ dnl gtk-doc stuff
 
 GTK_DOC_CHECK([1.0])
 
+dnl gnome-doc-utils stuff
+
+GNOME_DOC_INIT
+
 dnl scrollkeeper checks 
 
 AC_PATH_PROG(SCROLLKEEPER_CONFIG, scrollkeeper-config,no)
@@ -227,11 +231,10 @@ doc/Makefile
 doc/reference/Makefile
 doc/reference/panel-applet/Makefile
 help/Makefile
-help/C/Makefile
-help/C/fish/Makefile
-help/C/clock/Makefile
-help/C/window-list/Makefile
-help/C/workspace-switcher/Makefile
+help/clock/Makefile
+help/fish/Makefile
+help/window-list/Makefile
+help/workspace-switcher/Makefile
 help/ja/Makefile
 help/ja/fish/Makefile
 help/ja/clock/Makefile

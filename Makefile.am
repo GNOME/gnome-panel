@@ -38,7 +38,8 @@ EXTRA_DIST = \
 	xmldocs.make		\
 	intltool-extract.in	\
 	intltool-merge.in	\
-	intltool-update.in
+	intltool-update.in	\
+	gnome-doc-utils.make
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 DISTCLEANFILES =		\
