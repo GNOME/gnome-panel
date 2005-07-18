@@ -45,4 +45,5 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 DISTCLEANFILES =		\
         intltool-extract	\
         intltool-merge		\
-        intltool-update
+        intltool-update		\
+	gnome-doc-utils.make
