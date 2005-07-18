@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-08 17:38-0400\n"
-"PO-Revision-Date: 2005-06-08 01:10-0500\n"
+"POT-Creation-Date: 2005-07-18 14:11-0400\n"
+"PO-Revision-Date: 2005-07-18 01:10-0500\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -59,7 +59,7 @@ msgid "_Preferences"
 msgstr "_Preferences"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:2627
+#: applets/clock/clock.c:2635
 msgid "Clock"
 msgstr "Clock"
 
@@ -79,16 +79,16 @@ msgstr "Get the current date and time"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:265 applets/clock/clock.c:582
+#: applets/clock/clock.c:265 applets/clock/clock.c:590
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:267 applets/clock/clock.c:1719
+#: applets/clock/clock.c:267 applets/clock/clock.c:1727
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:267 applets/clock/clock.c:584
-#: applets/clock/clock.c:1721
+#: applets/clock/clock.c:267 applets/clock/clock.c:592
+#: applets/clock/clock.c:1729
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -124,54 +124,62 @@ msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:376
+#: applets/clock/clock.c:377
 msgid "%A %B %d"
 msgstr "%A %d %B"
 
+#: applets/clock/clock.c:389
+msgid "Click to view your appointments and tasks"
+msgstr "Click to view your appointments and tasks"
+
+#: applets/clock/clock.c:391
+msgid "Click to view month calendar"
+msgstr "Click to view month calendar"
+
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: applets/clock/clock.c:589
+#: applets/clock/clock.c:597
 msgid "%b %d"
 msgstr "%d %b"
 
-#: applets/clock/clock.c:916
+#: applets/clock/clock.c:924
 msgid "Tasks"
 msgstr "Tasks"
 
-#: applets/clock/clock.c:1068
+#: applets/clock/clock.c:1076
 msgid "All Day"
 msgstr "All Day"
 
-#: applets/clock/clock.c:1107
+#: applets/clock/clock.c:1115
 msgid "Appointments"
 msgstr "Appointments"
 
-#: applets/clock/clock.c:1339
+#: applets/clock/clock.c:1347
 msgid "Calendar"
 msgstr "Calendar"
 
-#: applets/clock/clock.c:1620
+#: applets/clock/clock.c:1628
 msgid "Computer Clock"
 msgstr "Computer Clock"
 
-#: applets/clock/clock.c:1714
+#: applets/clock/clock.c:1722
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1716
+#: applets/clock/clock.c:1724
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1758
+#: applets/clock/clock.c:1766
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: applets/clock/clock.c:1802
+#: applets/clock/clock.c:1810
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Failed to launch time configuration tool: %s"
 
-#: applets/clock/clock.c:1841
+#: applets/clock/clock.c:1849
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -179,11 +187,11 @@ msgstr ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 
-#: applets/clock/clock.c:2288
+#: applets/clock/clock.c:2296
 msgid "Custom format"
 msgstr "Custom format"
 
-#: applets/clock/clock.c:2409 applets/clock/clock.c:2586
+#: applets/clock/clock.c:2417 applets/clock/clock.c:2594
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
 #: applets/wncklet/window-list.c:114 applets/wncklet/wncklet.c:123
 #: applets/wncklet/workspace-switcher.c:241
@@ -191,52 +199,52 @@ msgstr "Custom format"
 msgid "There was an error displaying help: %s"
 msgstr "There was an error displaying help: %s"
 
-#: applets/clock/clock.c:2444
+#: applets/clock/clock.c:2452
 msgid "Clock Preferences"
 msgstr "Clock Preferences"
 
-#: applets/clock/clock.c:2468
+#: applets/clock/clock.c:2476
 msgid "Clock _type:"
 msgstr "Clock _type:"
 
-#: applets/clock/clock.c:2478
+#: applets/clock/clock.c:2486
 msgid "12 hour"
 msgstr "12 hour"
 
-#: applets/clock/clock.c:2479
+#: applets/clock/clock.c:2487
 msgid "24 hour"
 msgstr "24 hour"
 
-#: applets/clock/clock.c:2480
+#: applets/clock/clock.c:2488
 msgid "UNIX time"
 msgstr "UNIX time"
 
-#: applets/clock/clock.c:2481
+#: applets/clock/clock.c:2489
 msgid "Internet time"
 msgstr "Internet time"
 
-#: applets/clock/clock.c:2489
+#: applets/clock/clock.c:2497
 msgid "Custom _format:"
 msgstr "Custom _format:"
 
-#: applets/clock/clock.c:2508
+#: applets/clock/clock.c:2516
 msgid "Show _seconds"
 msgstr "Show _seconds"
 
-#: applets/clock/clock.c:2517
+#: applets/clock/clock.c:2525
 msgid "Show _date"
 msgstr "Show _date"
 
-#: applets/clock/clock.c:2526
+#: applets/clock/clock.c:2534
 msgid "Use _UTC"
 msgstr "Use _UTC"
 
-#: applets/clock/clock.c:2630
+#: applets/clock/clock.c:2638
 msgid "The Clock displays the current time and date"
 msgstr "The Clock displays the current time and date"
 
 #. Translator credits
-#: applets/clock/clock.c:2633 applets/fish/fish.c:505
+#: applets/clock/clock.c:2641 applets/fish/fish.c:505
 #: applets/notification_area/main.c:133 applets/wncklet/showdesktop.c:510
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:75
 #: applets/wncklet/workspace-switcher.c:555
@@ -1836,18 +1844,18 @@ msgid "Use custom path for menu contents"
 msgstr "Use custom path for menu contents"
 
 #: gnome-panel/panel-profile.c:743 gnome-panel/panel-profile.c:770
-#: gnome-panel/panel-profile.c:806 gnome-panel/panel-profile.c:1629
+#: gnome-panel/panel-profile.c:806 gnome-panel/panel-profile.c:1630
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Error reading GConf string value '%s': %s"
 
-#: gnome-panel/panel-profile.c:785 gnome-panel/panel-profile.c:1525
-#: gnome-panel/panel-profile.c:1598 gnome-panel/panel-profile.c:1661
+#: gnome-panel/panel-profile.c:785 gnome-panel/panel-profile.c:1526
+#: gnome-panel/panel-profile.c:1599 gnome-panel/panel-profile.c:1662
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Error reading GConf integer value '%s': %s"
 
-#: gnome-panel/panel-profile.c:1535
+#: gnome-panel/panel-profile.c:1536
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1856,7 +1864,7 @@ msgstr ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 
-#: gnome-panel/panel-profile.c:1613
+#: gnome-panel/panel-profile.c:1614
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Error reading GConf boolean value '%s': %s"
