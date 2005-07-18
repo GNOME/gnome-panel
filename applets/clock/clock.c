@@ -372,17 +372,25 @@ update_clock (ClockData * cd)
 
         gtk_widget_queue_resize (cd->toggle);
 
-	/* Show date in tooltip */
-	loc = g_locale_from_utf8 (_("%A %B %d"), -1, NULL, NULL, NULL);
-	if (!loc)
-		strcpy (date, "???");
-	else if (strftime (date, sizeof (date), loc, tm) <= 0)
-		strcpy (date, "???");
-	g_free (loc);
+        if (!cd->showdate) {
+                /* Show date in tooltip */
+                loc = g_locale_from_utf8 (_("%A %B %d"), -1, NULL, NULL, NULL);
+                if (!loc)
+                        strcpy (date, "???");
+                else if (strftime (date, sizeof (date), loc, tm) <= 0)
+                        strcpy (date, "???");
+                g_free (loc);
 
-	utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
-	set_tooltip (cd->applet, cd->toggle, utf8);
-	g_free (utf8);
+                utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
+                set_tooltip (cd->applet, cd->toggle, utf8);
+                g_free (utf8);
+        } else {
+#ifdef HAVE_LIBECAL
+                set_tooltip (cd->applet, cd->toggle, _("Click to view your appointments and tasks"));
+#else
+                set_tooltip (cd->applet, cd->toggle, _("Click to view month calendar"));
+#endif
+        }
 }
 
 static void
