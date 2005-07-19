@@ -4,4 +4,4 @@ dist-hook: doc-dist-hook
 DOC_MODULE = clock
 DOC_INCLUDES = legal.xml
 
-DOC_LINGUAS = sr
+DOC_LINGUAS = de es fr sr
