@@ -1,3 +1,14 @@
+2005-07-19  Rodrigo Moya <rodrigo@novell.com>
+
+	* clock.c: added support for SuSE's YAST datetime config tool.
+	(try_config_tool): support command lines with arguments.
+	(clock_check_config_tool): new function to look for the tools
+	correctly, even if the command line has arguments.
+	(fill_clock_applet): use clock_check_config_tool to look for the
+	configuration tool.
+	(config_tool_changed): check the value entered by the user before
+	using it.
+
 2005-07-15  Rodrigo Moya <rodrigo@novell.com>
 
 	* clock.c (update_clock): only show the date in the tooltip if the applet

@@ -82,6 +82,7 @@ static const char* KEY_SHOW_WEEK     = "show_week_numbers";
 static const char *clock_config_tools [] = {
 	"system-config-date",
 	"redhat-config-date",
+        "/sbin/yast2 timezone",
 	"time-admin",
 };
 
@@ -1784,25 +1785,33 @@ try_config_tool (GdkScreen  *screen,
 {
 	GtkWidget *dialog;
 	GError    *err;
-	char      *argv[2];
-	char      *app;
+	char     **argv;
+	gboolean   app = FALSE;
 
 	g_return_val_if_fail (tool != NULL, FALSE);
 
-	app = g_find_program_in_path (tool);
+        if (tool && g_shell_parse_argv (tool, NULL, &argv, NULL)) {
+                char *path;
+
+                app = TRUE;
+
+                if (!(path = g_find_program_in_path (argv [0])))
+                        app = FALSE;
+
+                g_free (path);
+        }
 
 	if (!app)
 		return FALSE;
-		
-	argv [0] = app;
-	argv [1] = NULL;		
 
 	err = NULL;
 	if (gdk_spawn_on_screen (screen, NULL, argv, NULL, 0, NULL, NULL, NULL, &err)) {
-		g_free (app);
+                g_strfreev (argv);
 		return TRUE;
 	}
-			
+
+        g_strfreev (argv);
+
 	dialog = gtk_message_dialog_new (NULL,
 					 GTK_DIALOG_DESTROY_WITH_PARENT,
 					 GTK_MESSAGE_ERROR,
@@ -1817,8 +1826,6 @@ try_config_tool (GdkScreen  *screen,
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 			
 	gtk_widget_show_all (dialog);			
-
-	g_free (app);
 		
 	return TRUE;
 }
@@ -1956,8 +1963,10 @@ config_tool_changed (GConfClient  *client,
 
 	value = gconf_value_get_string (entry->value);
 
-        g_free (clock->config_tool);
-	clock->config_tool = g_strdup (value);
+        if (clock_check_config_tool (clock, value)) {
+                g_free (clock->config_tool);
+                clock->config_tool = g_strdup (value);
+        }
 }
 
 static void
@@ -2122,6 +2131,30 @@ clock_migrate_to_26 (ClockData *clock)
 				       NULL);
 }
 
+static char *
+clock_check_config_tool (ClockData *cd, const char *config_tool)
+{
+        char **argv = NULL;
+        char *tool = NULL;
+
+        if (config_tool && g_shell_parse_argv (config_tool, NULL, &argv, NULL)) {
+                char *path;
+
+                g_assert (argv != NULL);
+
+                if (!(path = g_find_program_in_path (argv [0])))
+                        tool = NULL;
+                else {
+                        tool = config_tool;
+                        g_free (path);
+                }
+
+                g_strfreev (argv);
+        }
+
+        return tool;
+}
+
 static gboolean
 fill_clock_applet (PanelApplet *applet)
 {
@@ -2227,25 +2260,35 @@ fill_clock_applet (PanelApplet *applet)
 	}
 
         config_tool = NULL;
-	if (cd->config_tool && cd->config_tool [0])
-		config_tool = g_find_program_in_path (cd->config_tool);
+	if (cd->config_tool && cd->config_tool [0]) {
+		config_tool = clock_check_config_tool (cd, cd->config_tool);
+        }
 
         if (!config_tool) {
                 int i;
 
                 for (i = 0; i < G_N_ELEMENTS (clock_config_tools); i++)
-                        if ((config_tool = g_find_program_in_path (clock_config_tools [i])))
+                        if (config_tool = clock_check_config_tool (cd, clock_config_tools [i]))
                                 break;
         }
 
-	if (!config_tool)
+        g_free (cd->config_tool);
+	if (config_tool) {
+                cd->config_tool = g_strdup (config_tool);
+
+                bonobo_ui_component_set_prop (popup_component,
+					      "/commands/ClockConfig",
+					      "hidden", "0",
+					      NULL);
+        } else {
+                cd->config_tool = NULL;
+
 		bonobo_ui_component_set_prop (popup_component,
 					      "/commands/ClockConfig",
 					      "hidden", "1",
 					      NULL);
-        
-        g_free (config_tool);
-	
+        }
+
 	return TRUE;
 }
 
