@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-26 22:29+0200\n"
-"PO-Revision-Date: 2005-02-12 15:21+0100\n"
+"POT-Creation-Date: 2005-07-20 20:27+0200\n"
+"PO-Revision-Date: 2005-07-20 20:31+0200\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgid "_Preferences"
 msgstr "Nas_tavenia"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2627
+#: ../applets/clock/clock.c:2678
 msgid "Clock"
 msgstr "Hodiny"
 
@@ -81,20 +81,20 @@ msgstr "vytváracie rozhranie pre applety Hodiny."
 msgid "Get the current time and date"
 msgstr "Získanie aktuálneho dátumu a času"
 
-#: ../applets/clock/clock.c:265
+#: ../applets/clock/clock.c:266
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:265 ../applets/clock/clock.c:582
+#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:267 ../applets/clock/clock.c:1719
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:267 ../applets/clock/clock.c:584
-#: ../applets/clock/clock.c:1721
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
+#: ../applets/clock/clock.c:1730
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -103,7 +103,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:278
+#: ../applets/clock/clock.c:279
 msgid "%a %b %e"
 msgstr "%a %b %d"
 
@@ -111,7 +111,7 @@ msgstr "%a %b %d"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:285
+#: ../applets/clock/clock.c:286
 #, c-format
 msgid ""
 "%1$s\n"
@@ -124,60 +124,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:292
+#: ../applets/clock/clock.c:293
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s, %1$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:378
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
+#: ../applets/clock/clock.c:390
+msgid "Click to view your appointments and tasks"
+msgstr "Kliknite, aby ste si pozreli svoje schôdzky a úlohy"
+
+#: ../applets/clock/clock.c:392
+msgid "Click to view month calendar"
+msgstr "Kliknite, aby ste si pozreli mesačný kalendár"
+
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:589
+#: ../applets/clock/clock.c:598
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/clock.c:916
+#: ../applets/clock/clock.c:925
 msgid "Tasks"
 msgstr "Úlohy"
 
-#: ../applets/clock/clock.c:1068
+#: ../applets/clock/clock.c:1077
 msgid "All Day"
 msgstr "Celý deň"
 
-#: ../applets/clock/clock.c:1107
+#: ../applets/clock/clock.c:1116
 msgid "Appointments"
 msgstr "Schôdzky"
 
-#: ../applets/clock/clock.c:1339
+#: ../applets/clock/clock.c:1348
 msgid "Calendar"
 msgstr "Kalendár"
 
-#: ../applets/clock/clock.c:1620
+#: ../applets/clock/clock.c:1629
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
-#: ../applets/clock/clock.c:1714
+#: ../applets/clock/clock.c:1723
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1716
+#: ../applets/clock/clock.c:1725
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1758
+#: ../applets/clock/clock.c:1767
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1802
+#: ../applets/clock/clock.c:1819
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nepodarilo sa spustiť nástroj pre nastavenie času: %s"
 
-#: ../applets/clock/clock.c:1841
+#: ../applets/clock/clock.c:1856
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -185,11 +193,11 @@ msgstr ""
 "Nepodarilo sa nájsť program pre nastavenie dátumu a času. Možno nie je "
 "nainštalovaný."
 
-#: ../applets/clock/clock.c:2288
+#: ../applets/clock/clock.c:2339
 msgid "Custom format"
 msgstr "Vlastný formát"
 
-#: ../applets/clock/clock.c:2409 ../applets/clock/clock.c:2586
+#: ../applets/clock/clock.c:2460 ../applets/clock/clock.c:2637
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -197,52 +205,52 @@ msgstr "Vlastný formát"
 msgid "There was an error displaying help: %s"
 msgstr "Pri pokuse o zobrazenie Pomocníka nastala chyba: %s"
 
-#: ../applets/clock/clock.c:2444
+#: ../applets/clock/clock.c:2495
 msgid "Clock Preferences"
 msgstr "Nastavenie hodín"
 
-#: ../applets/clock/clock.c:2468
+#: ../applets/clock/clock.c:2519
 msgid "Clock _type:"
 msgstr "_Typ hodín:"
 
-#: ../applets/clock/clock.c:2478
+#: ../applets/clock/clock.c:2529
 msgid "12 hour"
 msgstr "12-hodinový"
 
-#: ../applets/clock/clock.c:2479
+#: ../applets/clock/clock.c:2530
 msgid "24 hour"
 msgstr "24-hodinový"
 
-#: ../applets/clock/clock.c:2480
+#: ../applets/clock/clock.c:2531
 msgid "UNIX time"
 msgstr "Unixový čas"
 
-#: ../applets/clock/clock.c:2481
+#: ../applets/clock/clock.c:2532
 msgid "Internet time"
 msgstr "Internetový čas"
 
-#: ../applets/clock/clock.c:2489
+#: ../applets/clock/clock.c:2540
 msgid "Custom _format:"
 msgstr "Vlastný _formát:"
 
-#: ../applets/clock/clock.c:2508
+#: ../applets/clock/clock.c:2559
 msgid "Show _seconds"
 msgstr "Zobraziť _sekundy"
 
-#: ../applets/clock/clock.c:2517
+#: ../applets/clock/clock.c:2568
 msgid "Show _date"
 msgstr "Zobraziť _dátum"
 
-#: ../applets/clock/clock.c:2526
+#: ../applets/clock/clock.c:2577
 msgid "Use _UTC"
 msgstr "Používať _UTC"
 
-#: ../applets/clock/clock.c:2630
+#: ../applets/clock/clock.c:2681
 msgid "The Clock displays the current time and date"
 msgstr "Applet Hodiny zobrazuje aktuálny dátum a čas"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2633 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2684 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -642,7 +650,7 @@ msgstr "Orientácia"
 
 #: ../applets/notification_area/eggtraymanager.c:146
 msgid "The orientation of the tray."
-msgstr ""
+msgstr "Orientácia zásobníka."
 
 #: ../applets/notification_area/main.c:342
 msgid "Panel Notification Area"
@@ -729,8 +737,8 @@ msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
 msgstr ""
-"Zoznam okien zobrazuje zoznam všetkých okien pomocou tlačidiel a umožňuje medzi "
-"nimi prechádzať."
+"Zoznam okien zobrazuje zoznam všetkých okien pomocou tlačidiel a umožňuje "
+"medzi nimi prechádzať."
 
 #: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -1403,8 +1411,8 @@ msgid ""
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
 msgstr ""
-"Boolovský príznak na indikáciu, či predchádzajúca konfigurácia používateľa v "
-"/apps/panel/profiles/default bola skopírovaná na nové miesto v /apps/panel."
+"Boolovský príznak na indikáciu, či predchádzajúca konfigurácia používateľa "
+"v /apps/panel/profiles/default bola skopírovaná na nové miesto v /apps/panel."
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
 msgid ""
@@ -1449,7 +1457,8 @@ msgstr "Rozbaliť zoznam programov v dialógu \"Spustiť\""
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
-"Ak je true, automatické dopĺňanie v dialógovom okne \"Spustiť aplikáciu\" bude dostupné."
+"Ak je true, automatické dopĺňanie v dialógovom okne \"Spustiť aplikáciu\" "
+"bude dostupné."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1517,7 +1526,7 @@ msgstr "Potvrdiť odstránenie panelu"
 
 #: ../gnome-panel/panel-global.schemas.in.h:6
 msgid "Deprecated"
-msgstr ""
+msgstr "Zastaralé"
 
 #: ../gnome-panel/panel-global.schemas.in.h:7
 msgid "Disable Force Quit"
@@ -2059,7 +2068,7 @@ msgstr "Vyberte aplikáciu,ktore popis chcete zobraziť."
 #: ../gnome-panel/panel-run-dialog.c:1507
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr ""
+msgstr "Zoznam URI pustený na dialógovom okne spustenia mal zlý formát (%d) alebo dĺžku (%d)\n"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:1
 msgid ""
