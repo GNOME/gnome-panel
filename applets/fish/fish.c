@@ -129,7 +129,7 @@ show_help (FishApplet *fish, const char *link_id)
 	GError *error = NULL;
 
 	gnome_help_display_desktop_on_screen (
-		NULL, "fish-applet-2", "fish-applet-2", link_id,
+		NULL, "fish", "fish", link_id,
 		gtk_widget_get_screen (GTK_WIDGET (fish)),
 		&error);
 
