@@ -110,10 +110,10 @@ egg_recent_view_gtk_clear (EggRecentViewGtk *view)
 
 	p = menu_children;
 	while (p != NULL) {
-		menu_item = (GObject *)p->data;
+		menu_item = G_OBJECT (p->data);
 
-		menu_data = (gint *)g_object_get_data (menu_item,
-						       view->uid);
+		menu_data = (gint *) g_object_get_data (menu_item,
+						        view->uid);
 	
 		if (menu_data) {
 			gtk_container_remove (GTK_CONTAINER (view->menu),
@@ -310,6 +310,38 @@ egg_recent_view_gtk_new_menu_item (EggRecentViewGtk *view,
 }
 
 static void
+egg_recent_view_gtk_create_tooltip (EggRecentViewGtk *view,
+				    GtkWidget        *menu_item,
+				    EggRecentItem    *recent_item)
+{
+	gchar *name, *tip_text;
+	
+	g_return_if_fail (EGG_IS_RECENT_VIEW_GTK (view));
+	g_return_if_fail (GTK_IS_WIDGET (menu_item));
+	g_return_if_fail (recent_item != NULL);
+
+	if (!view->tooltips)
+		return;
+
+	name = egg_recent_item_get_uri_for_display (recent_item);
+	if (!name)
+		return;
+
+	tip_text = g_strdup_printf ("Open '%s'", name);
+	if (!tip_text) {
+		g_free (name);
+		return;
+	}
+
+	gtk_tooltips_set_tip (view->tooltips, menu_item,
+			      tip_text,
+			      NULL);
+	
+	g_free (tip_text);
+	g_free (name);
+}
+
+static void
 egg_recent_view_gtk_add_to_menu (EggRecentViewGtk *view,
 				 EggRecentItem *item,
 				 gint display,
@@ -323,19 +355,30 @@ egg_recent_view_gtk_add_to_menu (EggRecentViewGtk *view,
 
 	menu_offset = egg_recent_view_gtk_find_menu_offset (view);
 
-	if (item != NULL)
+	if (item != NULL) {
 		menu_item = egg_recent_view_gtk_new_menu_item (view, item, display);
+		
+		/* if present, use the custom tooltip function;
+		 * otherwise, use ours (which has been "borrowed"
+		 * from GEdit)
+		 */
+		if (view->tooltip_func != NULL) {
+			view->tooltip_func (view->tooltips,
+					    menu_item,
+					    item,
+					    view->tooltip_func_data);
+		}
+		else {
+			egg_recent_view_gtk_create_tooltip (view, menu_item, item);
+		}
+	}
 	else
 		menu_item = egg_recent_view_gtk_new_separator (view);
 
-	if (view->tooltip_func != NULL && menu_item != NULL) {
-		view->tooltip_func (view->tooltips, menu_item,
-				    item, view->tooltip_func_data);
-	}
-	
 	if (menu_item)
-		gtk_menu_shell_insert (GTK_MENU_SHELL (view->menu), menu_item,
-			       menu_offset+index);
+		gtk_menu_shell_insert (GTK_MENU_SHELL (view->menu),
+				       menu_item,
+				       menu_offset + index);
 }
 
 static void
@@ -513,14 +556,14 @@ egg_recent_view_gtk_finalize (GObject *object)
 	g_signal_handler_disconnect (G_OBJECT (view->model),
 				     view->changed_cb_id);
 
+	egg_recent_view_gtk_clear (view);
+
 	g_free (view->uid);
 
 	g_object_unref (view->model);
 	g_object_unref (view->client);
 
 	g_object_unref (view->tooltips);
-
-	egg_recent_view_gtk_clear (view);
 
 	parent_class->finalize (object);
 }
