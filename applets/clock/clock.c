@@ -177,6 +177,7 @@ static void display_about_dialog      (BonoboUIComponent *uic,
 static void position_calendar_popup   (ClockData         *cd,
                                        GtkWidget         *window,
                                        GtkWidget         *button);
+static char *clock_check_config_tool  (ClockData *cd, const char *config_tool);
 
 static void
 unfix_size (ClockData *cd)
@@ -2268,7 +2269,7 @@ fill_clock_applet (PanelApplet *applet)
                 int i;
 
                 for (i = 0; i < G_N_ELEMENTS (clock_config_tools); i++)
-                        if (config_tool = clock_check_config_tool (cd, clock_config_tools [i]))
+                        if ((config_tool = clock_check_config_tool (cd, clock_config_tools [i])))
                                 break;
         }
 
