@@ -1,3 +1,18 @@
+2005-07-21  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix warning and some logic errors.
+
+	* clock.c:
+	(try_config_tool): return FALSE if argv parsing
+	failed; simplify logic.
+	(check_config_tool_command): rename, don't take
+	ClockData as an arg; return boolean to indicate
+	success rather than the command line (warning was
+	here); return FALSE if argv parsing failed; simplify
+	logic.
+	(fill_clock_applet): upd. for above changes and
+	simplify logic.
+
 2005-07-21  Vincent Untz  <vuntz@gnome.org>
 
 	* clock.c: declare clock_check_config_tool() so that it compiles

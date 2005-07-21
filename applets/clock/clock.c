@@ -177,7 +177,6 @@ static void display_about_dialog      (BonoboUIComponent *uic,
 static void position_calendar_popup   (ClockData         *cd,
                                        GtkWidget         *window,
                                        GtkWidget         *button);
-static char *clock_check_config_tool  (ClockData *cd, const char *config_tool);
 
 static void
 unfix_size (ClockData *cd)
@@ -1787,23 +1786,20 @@ try_config_tool (GdkScreen  *screen,
 	GtkWidget *dialog;
 	GError    *err;
 	char     **argv;
-	gboolean   app = FALSE;
+        char      *path;
 
-	g_return_val_if_fail (tool != NULL, FALSE);
+        if (!tool || tool[0] == '\0')
+                return FALSE;
 
-        if (tool && g_shell_parse_argv (tool, NULL, &argv, NULL)) {
-                char *path;
+        if (!g_shell_parse_argv (tool, NULL, &argv, NULL))
+                return FALSE;
 
-                app = TRUE;
-
-                if (!(path = g_find_program_in_path (argv [0])))
-                        app = FALSE;
-
-                g_free (path);
+        if (!(path = g_find_program_in_path (argv [0]))) {
+                g_strfreev (argv);
+                return FALSE;
         }
 
-	if (!app)
-		return FALSE;
+        g_free (path);
 
 	err = NULL;
 	if (gdk_spawn_on_screen (screen, NULL, argv, NULL, 0, NULL, NULL, NULL, &err)) {
@@ -1842,8 +1838,7 @@ config_date (BonoboUIComponent *uic,
 
 	screen = gtk_widget_get_screen (cd->applet);
 
-	if (cd->config_tool && cd->config_tool[0] &&
-            try_config_tool (screen, cd->config_tool))
+	if (try_config_tool (screen, cd->config_tool))
 		return;
 	
 	for (i = 0; i < G_N_ELEMENTS (clock_config_tools); i++)
@@ -1951,6 +1946,30 @@ gmt_time_changed (GConfClient  *client,
 	refresh_clock_timeout (clock);
 }
 
+static gboolean
+check_config_tool_command (const char *config_tool)
+{
+        char **argv;
+        char  *path;
+
+        if (!config_tool || config_tool[0] == '\0')
+                return FALSE;
+
+        argv = NULL;
+        if (!g_shell_parse_argv (config_tool, NULL, &argv, NULL))
+                return FALSE;
+
+        if (!(path = g_find_program_in_path (argv [0]))) {
+                g_strfreev (argv);
+                return FALSE;
+        }
+
+        g_free (path);
+        g_strfreev (argv);
+
+        return TRUE;
+}
+
 static void
 config_tool_changed (GConfClient  *client,
                      guint         cnxn_id,
@@ -1964,7 +1983,7 @@ config_tool_changed (GConfClient  *client,
 
 	value = gconf_value_get_string (entry->value);
 
-        if (clock_check_config_tool (clock, value)) {
+        if (check_config_tool_command (value)) {
                 g_free (clock->config_tool);
                 clock->config_tool = g_strdup (value);
         }
@@ -2132,30 +2151,6 @@ clock_migrate_to_26 (ClockData *clock)
 				       NULL);
 }
 
-static char *
-clock_check_config_tool (ClockData *cd, const char *config_tool)
-{
-        char **argv = NULL;
-        char *tool = NULL;
-
-        if (config_tool && g_shell_parse_argv (config_tool, NULL, &argv, NULL)) {
-                char *path;
-
-                g_assert (argv != NULL);
-
-                if (!(path = g_find_program_in_path (argv [0])))
-                        tool = NULL;
-                else {
-                        tool = config_tool;
-                        g_free (path);
-                }
-
-                g_strfreev (argv);
-        }
-
-        return tool;
-}
-
 static gboolean
 fill_clock_applet (PanelApplet *applet)
 {
@@ -2164,7 +2159,6 @@ fill_clock_applet (PanelApplet *applet)
 	GError            *error;
         int                format;
 	char              *format_str;
-	char              *config_tool;
 	
 	panel_applet_add_preferences (applet, "/schemas/apps/clock_applet/prefs", NULL);
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
@@ -2260,35 +2254,25 @@ fill_clock_applet (PanelApplet *applet)
 					      NULL);
 	}
 
-        config_tool = NULL;
-	if (cd->config_tool && cd->config_tool [0]) {
-		config_tool = clock_check_config_tool (cd, cd->config_tool);
+        if (!check_config_tool_command (cd->config_tool)) {
+                g_free (cd->config_tool);
+                cd->config_tool = NULL;
         }
 
-        if (!config_tool) {
+        if (!cd->config_tool) {
                 int i;
 
                 for (i = 0; i < G_N_ELEMENTS (clock_config_tools); i++)
-                        if ((config_tool = clock_check_config_tool (cd, clock_config_tools [i])))
+                        if (check_config_tool_command (clock_config_tools [i])) {
+                                cd->config_tool = g_strdup (clock_config_tools [i]);
                                 break;
+                        }
         }
 
-        g_free (cd->config_tool);
-	if (config_tool) {
-                cd->config_tool = g_strdup (config_tool);
-
-                bonobo_ui_component_set_prop (popup_component,
-					      "/commands/ClockConfig",
-					      "hidden", "0",
-					      NULL);
-        } else {
-                cd->config_tool = NULL;
-
-		bonobo_ui_component_set_prop (popup_component,
-					      "/commands/ClockConfig",
-					      "hidden", "1",
-					      NULL);
-        }
+        bonobo_ui_component_set_prop (popup_component,
+                                      "/commands/ClockConfig",
+                                      "hidden", cd->config_tool ? "0" : "1",
+                                      NULL);
 
 	return TRUE;
 }
