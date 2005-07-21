@@ -1,3 +1,10 @@
+2005-07-21  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix for #302223 requires gdk_pixbuf_new_from_file_at_size()
+	to support passing -1 for width/height.
+
+	* configure.in: require gtk+ 2.7.1.
+
 2005-07-19  Vincent Untz  <vuntz@gnome.org>
 
 	* Makefile.am: add gnome-doc-utils.make to DISTCLEANFILES
