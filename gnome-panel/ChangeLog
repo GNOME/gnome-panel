@@ -1,5 +1,46 @@
 2005-07-21  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix crasher from the fix for bug #163197
+	
+	* launcher.c:
+	(really_add_launcher): use g_signal_connect_object()
+	rather than g_signal_connect_swapped() in order to
+	make sure the warning dialog gets destroyed with its
+	parent - using the later caused a crash if the error
+	dialog had already been destroyed.
+	
+2005-07-21  Mark McLoughlin  <mark@skynet.ie>
+
+	Re-work the way launcher hoarding works such that
+	we don't hoard system launchers until the user
+	edits them.
+
+	* launcher.c:
+	(panel_launcher_save_ditem): don't report errors if we
+	fail during hoarding; set the full path to the hoarded
+	.desktop file if it we pass a relative path.
+	(panel_launcher_delete): only delete the .desktop file
+	if its a hoarded launcher.
+	(panel_launcher_hoard): re-name from ensure_hoarded()
+	and re-write.
+	(properties_apply): hoard the launcher (if neccessary)
+	before saving.
+	(window_response): ditto before reverting.
+	(launcher_load_from_gconf): don't hoard launchers here,
+	but do de-sentize the Properties menu item if we won't
+	be able hoard in the future.
+	(panel_launcher_create_with_id): hoard the .desktop file
+	before creating adding a new launcher to the config.
+
+2005-07-21  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-compatibility.c:
+	(panel_compatibility_maybe_copy_old_config): Don't
+	set the "profiles_migrated" flag unless we actually
+	had to migrate old config.
+
+2005-07-21  Mark McLoughlin  <mark@skynet.ie>
+
 	Fixes bug #302223 - rectangular buttons get
 	scaled incorrectly.
 

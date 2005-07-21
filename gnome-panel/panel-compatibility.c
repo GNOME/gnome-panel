@@ -1007,20 +1007,20 @@ panel_compatibility_maybe_copy_old_config (GConfClient *client)
 		return;
 
 	if (!(engine = get_homedir_source ()))
-		goto set_migrated_flag;
+		goto no_migration_needed;;
 
 	if (!is_general_key_set (engine, PANEL_OLD_CONFIG_DIR, "panel_id_list")    &&
 	    !is_general_key_set (engine, PANEL_OLD_CONFIG_DIR, "toplevel_id_list") &&
 	    !is_general_key_set (engine, PANEL_OLD_CONFIG_DIR, "applet_id_list")   &&
 	    !is_general_key_set (engine, PANEL_OLD_CONFIG_DIR, "object_id_list"))
-		goto set_migrated_flag;
+		goto no_migration_needed;
 
 	copy_gconf_dir (client, PANEL_OLD_CONFIG_DIR, PANEL_CONFIG_DIR);
 
- set_migrated_flag:
 	key = panel_gconf_general_key ("profiles_migrated");
 	gconf_client_set_bool (client, key, TRUE, NULL);
 
+ no_migration_needed:
 	if (engine)
 		gconf_engine_unref (engine);
 }
