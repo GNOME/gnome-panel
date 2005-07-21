@@ -260,8 +260,12 @@ panel_addto_make_pixbuf (const char *filename,
 	if (!gtk_icon_size_lookup (size, &desired_width, &desired_height))
 		return NULL;
 
-	pb = panel_load_icon (gtk_icon_theme_get_default (), filename,
-			      desired_height, NULL);
+	pb = panel_load_icon (gtk_icon_theme_get_default (),
+			      filename,
+			      desired_height,
+			      desired_height,
+			      desired_height,
+			      NULL);
 	if (!pb)
 		return NULL;
 

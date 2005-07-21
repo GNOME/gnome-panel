@@ -1,3 +1,19 @@
+2005-07-21  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes bug #302223 - rectangular buttons get
+	scaled incorrectly.
+
+	* panel-util.[ch]: (panel_load_icon): add desired_width
+	and desired_height arguments to specify the dimensions
+	the icon can be scaled to. Passing -1 for either is
+	interpreted as "not constrained", so e.g. you'd pass
+	-1 for width on a horizontal panel.
+	
+	* button-widget.c: (button_widget_reload_pixbuf):
+	* panel-addto.c: (panel_addto_make_pixbuf):
+	* panel-run-dialog.c: (panel_run_dialog_set_icon):
+	Update callers for API change above.
+
 2005-07-20  Mark McLoughlin  <mark@skynet.ie>
 
 	* egg-recent-model.c,

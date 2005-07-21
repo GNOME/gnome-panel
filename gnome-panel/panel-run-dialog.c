@@ -176,9 +176,12 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 
 	if (icon_path)
 		pixbuf = panel_load_icon (gtk_icon_theme_get_default (),
-					  icon_path, ICON_SIZE, NULL);
-
-                        
+					  icon_path,
+					  ICON_SIZE,
+					  ICON_SIZE,
+					  ICON_SIZE,
+					  NULL);
+	
 	if (pixbuf) {
 		dialog->icon_path = g_strdup (icon_path);
 

@@ -65,10 +65,12 @@ gboolean        panel_lock_screen_action_available (const char   *action);
 
 char *          panel_find_icon         (GtkIconTheme  *icon_theme,
 					 const char    *icon_name,
-					 gint           size);
+					 int            size);
 GdkPixbuf *     panel_load_icon         (GtkIconTheme  *icon_theme,
 					 const char    *icon_name,
-					 gint           size,
+					 int            size,
+					 int            desired_width,
+					 int            desired_height,
 					 char         **error_msg);
 GdkPixbuf *	missing_pixbuf		(int size);
 

@@ -191,6 +191,8 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 		button->pixbuf = panel_load_icon (button->icon_theme,
 						  button->filename,
 						  button->size,
+						  button->orientation & PANEL_VERTICAL_MASK   ? button->size : -1,
+						  button->orientation & PANEL_HORIZONTAL_MASK ? button->size : -1,
 						  &error);
 		if (error) {
 			panel_error_dialog (gdk_screen_get_default (),

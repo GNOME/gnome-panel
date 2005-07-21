@@ -584,7 +584,9 @@ panel_find_icon (GtkIconTheme  *icon_theme,
 GdkPixbuf *
 panel_load_icon (GtkIconTheme  *icon_theme,
 		 const char    *icon_name,
-		 gint           size,
+		 int            size,
+		 int            desired_width,
+		 int            desired_height,
 		 char         **error_msg)
 {
 	GdkPixbuf *retval;
@@ -592,28 +594,28 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 	GError    *error;
 
 	g_return_val_if_fail (error_msg == NULL || *error_msg == NULL, NULL);
-	
+
 	file = panel_find_icon (icon_theme, icon_name, size);
-
 	if (!file) {
-		retval = NULL;
-
 		if (error_msg)
 			*error_msg = g_strdup (_("Icon not found"));
-	} else {
-		error = NULL;
 
-		retval =  gdk_pixbuf_new_from_file_at_size (file, size, size,
-							    &error);
+		return NULL;
+	}
 
-		if (error) {
-			if (error_msg)
-				*error_msg = g_strdup (error->message);
-			g_error_free (error);
-		}
+	error = NULL;
+	retval = gdk_pixbuf_new_from_file_at_size (file,
+						   desired_width,
+						   desired_height,
+						   &error);
+	if (error) {
+		if (error_msg)
+			*error_msg = g_strdup (error->message);
+		g_error_free (error);
 	}
 
 	g_free (file);
+
 	return retval;
 }
 
