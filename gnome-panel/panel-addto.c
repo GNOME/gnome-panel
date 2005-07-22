@@ -437,7 +437,8 @@ panel_addto_query_applets (GSList *list)
 						       "panel:icon",
 						       NULL);
 
-		if (!name) {
+		if (!name ||
+		    panel_lockdown_is_applet_disabled (info->iid)) {
 			continue;
 		}
 
