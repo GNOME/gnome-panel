@@ -1,5 +1,14 @@
 2005-07-22  Mark McLoughlin  <mark@skynet.ie>
 
+	Fixes last of the "panel writes to various GConf keys at login"
+	problems.
+
+	* panel-profile.c: (panel_profile_queue_toplevel_location_change):
+	Only save the panel's co-ordinates in GConf if its an expanded
+	panel.
+
+2005-07-22  Mark McLoughlin  <mark@skynet.ie>
+
 	Fix for bug #311197
 
 	* panel-addto.c: (panel_addto_query_applets): don't show

@@ -902,35 +902,37 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 			panel_profile_get_toplevel_key (toplevel, "size"),
 			change->size);
 
-	if (change->x_changed)
-		gconf_change_set_set_int (
-			queued_changes,
-			panel_profile_get_toplevel_key (toplevel, "x"),
-			change->x);
-
-	if (change->x_centered_changed)
-		gconf_change_set_set_bool (
-			queued_changes,
-			panel_profile_get_toplevel_key (toplevel, "x_centered"),
-			change->x_centered);
-
-	if (change->y_changed)
-		gconf_change_set_set_int (
-			queued_changes,
-			panel_profile_get_toplevel_key (toplevel, "y"),
-			change->y);
-
-	if (change->y_centered_changed)
-		gconf_change_set_set_bool (
-			queued_changes,
-			panel_profile_get_toplevel_key (toplevel, "y_centered"),
-			change->y_centered);
-
 	if (change->orientation_changed)
 		gconf_change_set_set_string (
 			queued_changes,
 			panel_profile_get_toplevel_key (toplevel, "orientation"),
 			gconf_enum_to_string (panel_orientation_map, change->orientation));
+
+	if (!panel_toplevel_get_expand (toplevel)) {
+		if (change->x_changed)
+			gconf_change_set_set_int (
+				queued_changes,
+				panel_profile_get_toplevel_key (toplevel, "x"),
+				change->x);
+
+		if (change->x_centered_changed)
+			gconf_change_set_set_bool (
+				queued_changes,
+				panel_profile_get_toplevel_key (toplevel, "x_centered"),
+				change->x_centered);
+
+		if (change->y_changed)
+			gconf_change_set_set_int (
+				queued_changes,
+				panel_profile_get_toplevel_key (toplevel, "y"),
+				change->y);
+
+		if (change->y_centered_changed)
+			gconf_change_set_set_bool (
+				queued_changes,
+				panel_profile_get_toplevel_key (toplevel, "y_centered"),
+				change->y_centered);
+	}
 
 	commit_timeout = panel_profile_get_commit_timeout (G_OBJECT (toplevel));
 	if (!commit_timeout) {
