@@ -35,7 +35,6 @@ EXTRA_DIST = \
 	COPYING-DOCS		\
 	HACKING			\
 	omf.make		\
-	xmldocs.make		\
 	intltool-extract.in	\
 	intltool-merge.in	\
 	intltool-update.in	\
