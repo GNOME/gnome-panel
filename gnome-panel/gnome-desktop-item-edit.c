@@ -92,6 +92,8 @@ main (int argc, char * argv[])
 		      GNOME_PARAM_POPT_CONTEXT, &ctx,
 		      NULL);
 
+	gtk_window_set_default_icon_name ("launcher-program");
+
 	desktops = (char **)poptGetArgs (ctx);
 
 	if (desktops == NULL ||
