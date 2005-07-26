@@ -72,6 +72,10 @@ void       panel_menu_bar_popup_menu       (PanelMenuBar *menubar,
 
 void       panel_menu_bar_change_background (PanelMenuBar *menubar);
 
+void             panel_menu_bar_set_orientation (PanelMenuBar     *menubar,
+						 PanelOrientation  orientation);
+PanelOrientation panel_menu_bar_get_orientation (PanelMenuBar     *menubar);
+
 G_END_DECLS
 
 #endif /* __PANEL_MENU_BAR_H__ */

@@ -1,5 +1,39 @@
 2005-07-26  Mark McLoughlin  <mark@skynet.ie>
 
+	Rotate the menu bar on vertical panels using new
+	gtk+ coolness. Fixes bug #141702
+
+	* panel-menu-bar.c:
+	(set_item_text_angle_and_alignment),
+	(panel_menu_bar_update_orientation): when the
+	menu bar is vertical, set its pack direction,
+	child pack direction, text angle and alignment
+	in order to rotate the thing.
+
+2005-07-26  Mark McLoughlin  <mark@skynet.ie>
+	
+	* panel-menu-bar.[ch]:
+	(panel_menu_bar_get_property),
+	(panel_menu_bar_set_property),
+	(panel_menu_bar_class_init),
+	(panel_menu_bar_set_orientation),
+	(panel_menu_bar_get_orientation): add infrastructure
+	for an orientation property.
+
+2005-07-26  Mark McLoughlin  <mark@skynet.ie>
+	
+	* panel-menu-bar.c:
+	(panel_menu_bar_set_no_background),
+	(panel_menu_bar_set_image_background),
+	(panel_menu_bar_set_color_background),
+	(panel_menu_bar_change_background): split this code
+	out into 3 functions to make it somewhat readable.
+	
+	* panel.c: (orientation_change): update the 
+	orientation of menu bars.
+	
+2005-07-26  Mark McLoughlin  <mark@skynet.ie>
+
 	Patch from Jaap A. Haitsma <jaap@haitsma.org>
 	in bug #309900
 

@@ -79,6 +79,9 @@ orientation_change (AppletInfo  *info,
 	case PANEL_OBJECT_ACTION:
 		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
 		break;
+	case PANEL_OBJECT_MENU_BAR:
+		panel_menu_bar_set_orientation (PANEL_MENU_BAR (info->widget), orientation);
+		break;
 	case PANEL_OBJECT_DRAWER: {
 		Drawer      *drawer = info->data;
 		PanelWidget *panel_widget;
