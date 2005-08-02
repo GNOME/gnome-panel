@@ -347,11 +347,12 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 
 	} else if (!strcmp (callback_name, "edit")) {
 		GError *error = NULL;
-		char   *argv [2] = {"gmenu-simple-editor", NULL};
 
-		if (!gdk_spawn_on_screen (screen, NULL, argv, NULL,
-					  G_SPAWN_SEARCH_PATH,
-					  NULL, NULL, NULL, &error)) {
+		panel_launch_desktop_file ("gmenu-simple-editor.desktop",
+					   "gmenu-simple-editor",
+					   screen,
+					   &error);
+		if (error) {
 			panel_error_dialog (screen,
 					    "cannot_exec_gmenu-simple-editor", TRUE,
 					    _("Cannot execute '%s'"),

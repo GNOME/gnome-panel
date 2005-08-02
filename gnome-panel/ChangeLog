@@ -1,3 +1,17 @@
+2005-08-02  Mark McLoughlin  <mark@skynet.ie>
+
+	Based on patch from Dennis Cranston <dennis_cranston@yahoo.com>
+	in bug #12118
+
+	* panel-util.[ch]: (panel_launch_desktop_file):
+	add function for launching a program using its
+	.desktop file basename.
+
+	* panel-menu-bar.c: (panel_menu_bar_invoke_menu),
+	   panel-menu-button.c: (panel_menu_button_invoke_menu): use
+	panel_launch_desktop_file() to launch gmenu-simple-editor
+	so that we're using startup notification.
+
 ==================== 2.11.90 ====================
 
 2005-07-26  Mark McLoughlin  <mark@skynet.ie>
