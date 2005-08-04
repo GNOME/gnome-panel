@@ -1287,7 +1287,7 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 }
 
 static void
-load_submenu_to_display (GtkWidget *menu)
+submenu_to_display (GtkWidget *menu)
 {
 	GMenuTree          *tree;
 	GMenuTreeDirectory *directory;
@@ -1315,21 +1315,30 @@ load_submenu_to_display (GtkWidget *menu)
 }
 
 static gboolean
-submenu_to_display (gpointer data)
+submenu_to_display_in_idle (gpointer data)
 {
-	GtkWidget         *menu;
+	GtkWidget *menu = GTK_WIDGET (data);
 
-	menu = GTK_WIDGET (data);
+	g_object_set_data (G_OBJECT (menu), "panel-menu-idle-id", NULL);
 
-	load_submenu_to_display (menu);
+	submenu_to_display (menu);
 
 	return FALSE;
+}
+
+static void
+remove_submenu_to_display_idle (gpointer data)
+{
+	guint idle_id = GPOINTER_TO_UINT (data);
+
+	g_source_remove (idle_id);
 }
 
 static GtkWidget *
 create_fake_menu (GMenuTreeDirectory *directory)
 {	
 	GtkWidget *menu;
+	guint      idle_id;
 	
 	menu = create_empty_menu ();
 
@@ -1347,8 +1356,17 @@ create_fake_menu (GMenuTreeDirectory *directory)
 			   GUINT_TO_POINTER (TRUE));
 
 	g_signal_connect (menu, "show",
-			  G_CALLBACK (load_submenu_to_display), NULL);
-	g_idle_add_full (G_PRIORITY_LOW, submenu_to_display, menu, NULL);
+			  G_CALLBACK (submenu_to_display), NULL);
+
+	idle_id = g_idle_add_full (G_PRIORITY_LOW,
+				   submenu_to_display_in_idle,
+				   menu,
+				   NULL);
+	g_object_set_data_full (G_OBJECT (menu),
+				"panel-menu-idle-id",
+				GUINT_TO_POINTER (idle_id),
+				remove_submenu_to_display_idle);
+
 	g_signal_connect (menu, "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
@@ -1557,6 +1575,7 @@ create_applications_menu (const char *menu_file,
 {
 	GMenuTree *tree;
 	GtkWidget *menu;
+	guint      idle_id;
 
 	menu = create_empty_menu ();
 
@@ -1586,8 +1605,17 @@ create_applications_menu (const char *menu_file,
 			   GUINT_TO_POINTER (TRUE));
 
 	g_signal_connect (menu, "show",
-			  G_CALLBACK (load_submenu_to_display), NULL);
-	g_idle_add_full (G_PRIORITY_LOW, submenu_to_display, menu, NULL);
+			  G_CALLBACK (submenu_to_display), NULL);
+
+	idle_id = g_idle_add_full (G_PRIORITY_LOW,
+				   submenu_to_display_in_idle,
+				   menu,
+				   NULL);
+	g_object_set_data_full (G_OBJECT (menu),
+				"panel-menu-idle-id",
+				GUINT_TO_POINTER (idle_id),
+				remove_submenu_to_display_idle);
+
 	g_signal_connect (menu, "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 

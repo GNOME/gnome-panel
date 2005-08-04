@@ -489,13 +489,13 @@ set_item_text_angle_and_alignment (GtkWidget *item,
 				   float      xalign,
 				   float      yalign)
 {
-  GtkWidget *label;
+	GtkWidget *label;
 
-  label = GTK_BIN (item)->child;
+	label = GTK_BIN (item)->child;
 
-  gtk_label_set_angle (GTK_LABEL (label), text_angle);
+	gtk_label_set_angle (GTK_LABEL (label), text_angle);
 
-  gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
+	gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
 }
 
 static void

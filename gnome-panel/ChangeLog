@@ -1,3 +1,16 @@
+2005-08-04  Mark McLoughlin  <mark@skynet.ie>
+
+	Remove the idle handler for menus if the menu is
+	destroyed. Fixes crash in bug #312512
+
+	* menu.c:
+	(submenu_to_display_in_idle): unset the idle-id.
+	(remove_submenu_to_display_idle): remove the idle
+	handler if the menu is destroyed.
+	(create_fake_menu), (create_applications_menu):
+	attach the idle-id to the menu so we can remove
+	it when the menu is destroyed.
+	
 2005-08-02  Mark McLoughlin  <mark@skynet.ie>
 
 	Based on patch from Dennis Cranston <dennis_cranston@yahoo.com>
