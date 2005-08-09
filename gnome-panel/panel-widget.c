@@ -1673,10 +1673,14 @@ panel_widget_destroy (GtkObject *obj)
 
 	panel_widget_destroy_open_dialogs (panel);
 
-	if (panel->master_widget != NULL)
+	if (panel->master_widget != NULL) {
 		g_object_set_data (G_OBJECT (panel->master_widget),
 				   PANEL_APPLET_ASSOC_PANEL_KEY,
 				   NULL);
+		g_object_remove_weak_pointer (G_OBJECT (panel->master_widget),
+					      (gpointer *) &panel->master_widget);
+		panel->master_widget = NULL;
+	}
 
 	if (GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy)
 		GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy (obj);

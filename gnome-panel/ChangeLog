@@ -1,3 +1,11 @@
+2005-08-09  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix valgrind warning in bug #149151
+
+	* panel-widget.c: (panel_widget_destroy): remove the
+	weak pointer to the drawer button from the PanelWidget when
+	a drawer is destroyed.
+
 2005-08-04  Mark McLoughlin  <mark@skynet.ie>
 
 	Remove the idle handler for menus if the menu is
