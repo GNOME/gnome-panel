@@ -1802,7 +1802,15 @@ try_config_tool (GdkScreen  *screen,
         g_free (path);
 
 	err = NULL;
-	if (gdk_spawn_on_screen (screen, NULL, argv, NULL, 0, NULL, NULL, NULL, &err)) {
+	if (gdk_spawn_on_screen (screen,
+                                 NULL,
+                                 argv,
+                                 NULL,
+                                 G_SPAWN_SEARCH_PATH,
+                                 NULL,
+                                 NULL,
+                                 NULL,
+                                 &err)) {
                 g_strfreev (argv);
 		return TRUE;
 	}
