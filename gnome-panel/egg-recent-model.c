@@ -718,7 +718,9 @@ egg_recent_model_monitor_cb (GnomeVFSMonitorHandle *handle,
 	g_return_if_fail (EGG_IS_RECENT_MODEL (user_data));
 	model = EGG_RECENT_MODEL (user_data);
 
-	if (event_type == GNOME_VFS_MONITOR_EVENT_CHANGED) {
+	if (event_type == GNOME_VFS_MONITOR_EVENT_CHANGED ||
+	    event_type == GNOME_VFS_MONITOR_EVENT_CREATED ||
+	    event_type == GNOME_VFS_MONITOR_EVENT_DELETED) {
 		if (model->priv->changed_timeout > 0) {
 			g_source_remove (model->priv->changed_timeout);
 		}
