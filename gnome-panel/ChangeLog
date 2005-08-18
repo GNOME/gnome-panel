@@ -1,3 +1,10 @@
+2005-08-18  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet-frame.c: (panel_applet_frame_sync_menu_state):
+	* applet.c: (panel_applet_create_menu):
+	If an applet's "locked" key is set to true and its not
+	writable, don't allow the applet to be removed.
+
 2005-08-16  Mark McLoughlin  <mark@skynet.ie>
 
 	Pull in fix for recent file list not getting updated

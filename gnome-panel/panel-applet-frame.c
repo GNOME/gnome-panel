@@ -139,7 +139,7 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
 				      "/commands/RemoveAppletFromPanel",
 				      "sensitive",
-				      removable ? "1" : "0",
+				      (locked && !lockable) ? "0" : (removable ? "1" : "0"),
 				      NULL);
 
 	bonobo_ui_component_set_prop (frame->priv->ui_component,

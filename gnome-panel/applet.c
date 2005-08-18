@@ -512,7 +512,7 @@ panel_applet_create_menu (AppletInfo *info)
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_widget_set_sensitive (menuitem, removable);
+		gtk_widget_set_sensitive (menuitem, (!locked || lockable) && removable);
 		
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, _("_Move"), FALSE);
