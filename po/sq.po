@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.sq\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-12 14:29+0000\n"
-"PO-Revision-Date: 2005-06-12 19:34+0200\n"
+"POT-Creation-Date: 2005-08-15 06:36+0000\n"
+"PO-Revision-Date: 2005-08-20 22:40+0200\n"
 "Last-Translator: Elian Myftiu <elian@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "_Informacione"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:740
-#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:225
+#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:291
 #: ../gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "_Ndihmë"
@@ -60,7 +60,7 @@ msgid "_Preferences"
 msgstr "_Preferimet"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2627
+#: ../applets/clock/clock.c:2671
 msgid "Clock"
 msgstr "Ora"
 
@@ -76,20 +76,20 @@ msgstr "Fabrikë për krijimin e disa programeve për orën."
 msgid "Get the current time and date"
 msgstr "Trego orën e tanishme dhe datën"
 
-#: ../applets/clock/clock.c:265
+#: ../applets/clock/clock.c:266
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:265 ../applets/clock/clock.c:582
+#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:267 ../applets/clock/clock.c:1719
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:267 ../applets/clock/clock.c:584
-#: ../applets/clock/clock.c:1721
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
+#: ../applets/clock/clock.c:1730
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -98,7 +98,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:278
+#: ../applets/clock/clock.c:279
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -106,7 +106,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:285
+#: ../applets/clock/clock.c:286
 #, c-format
 msgid ""
 "%1$s\n"
@@ -119,60 +119,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:292
+#: ../applets/clock/clock.c:293
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:378
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
+#: ../applets/clock/clock.c:390
+msgid "Click to view your appointments and tasks"
+msgstr "Kliko për të parë takimet dhe punët"
+
+#: ../applets/clock/clock.c:392
+msgid "Click to view month calendar"
+msgstr "Kliko për të parë kalendarin mujor"
+
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:589
+#: ../applets/clock/clock.c:598
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/clock.c:916
+#: ../applets/clock/clock.c:925
 msgid "Tasks"
 msgstr "Aktivitete"
 
-#: ../applets/clock/clock.c:1068
+#: ../applets/clock/clock.c:1077
 msgid "All Day"
 msgstr "Gjithë Ditën"
 
-#: ../applets/clock/clock.c:1107
+#: ../applets/clock/clock.c:1116
 msgid "Appointments"
 msgstr "Takime"
 
-#: ../applets/clock/clock.c:1339
+#: ../applets/clock/clock.c:1348
 msgid "Calendar"
 msgstr "Kalendari"
 
-#: ../applets/clock/clock.c:1620
+#: ../applets/clock/clock.c:1629
 msgid "Computer Clock"
 msgstr "Ora e Kompjuterit"
 
-#: ../applets/clock/clock.c:1714
+#: ../applets/clock/clock.c:1723
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1716
+#: ../applets/clock/clock.c:1725
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1758
+#: ../applets/clock/clock.c:1767
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1802
+#: ../applets/clock/clock.c:1824
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nisja e programit për konfigurimin e orës dështoi: %s"
 
-#: ../applets/clock/clock.c:1841
+#: ../applets/clock/clock.c:1860
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -180,11 +188,11 @@ msgstr ""
 "Nuk arrij të gjej asnjë program për të konfiguruar datën dhe orën. Keni "
 "instaluar një të tillë, vërtet?"
 
-#: ../applets/clock/clock.c:2288
+#: ../applets/clock/clock.c:2332
 msgid "Custom format"
 msgstr "Format i personalizuar"
 
-#: ../applets/clock/clock.c:2409 ../applets/clock/clock.c:2586
+#: ../applets/clock/clock.c:2453 ../applets/clock/clock.c:2630
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -192,52 +200,52 @@ msgstr "Format i personalizuar"
 msgid "There was an error displaying help: %s"
 msgstr "U verifikua një gabim gjatë shfaqjes së ndihmës: %s"
 
-#: ../applets/clock/clock.c:2444
+#: ../applets/clock/clock.c:2488
 msgid "Clock Preferences"
 msgstr "Preferimet e Orës"
 
-#: ../applets/clock/clock.c:2468
+#: ../applets/clock/clock.c:2512
 msgid "Clock _type:"
 msgstr "_Lloji i orës:"
 
-#: ../applets/clock/clock.c:2478
+#: ../applets/clock/clock.c:2522
 msgid "12 hour"
 msgstr "12 orë"
 
-#: ../applets/clock/clock.c:2479
+#: ../applets/clock/clock.c:2523
 msgid "24 hour"
 msgstr "24 orë"
 
-#: ../applets/clock/clock.c:2480
+#: ../applets/clock/clock.c:2524
 msgid "UNIX time"
 msgstr "Ora UNIX"
 
-#: ../applets/clock/clock.c:2481
+#: ../applets/clock/clock.c:2525
 msgid "Internet time"
 msgstr "Ora e Internetit"
 
-#: ../applets/clock/clock.c:2489
+#: ../applets/clock/clock.c:2533
 msgid "Custom _format:"
 msgstr "_Formati i personalizuar:"
 
-#: ../applets/clock/clock.c:2508
+#: ../applets/clock/clock.c:2552
 msgid "Show _seconds"
 msgstr "Shfaq _sekondat"
 
-#: ../applets/clock/clock.c:2517
+#: ../applets/clock/clock.c:2561
 msgid "Show _date"
 msgstr "Trego _datën"
 
-#: ../applets/clock/clock.c:2526
+#: ../applets/clock/clock.c:2570
 msgid "Use _UTC"
 msgstr "Përdor _UTC(orën e Greenwich)"
 
-#: ../applets/clock/clock.c:2630
+#: ../applets/clock/clock.c:2674
 msgid "The Clock displays the current time and date"
 msgstr "Ora tregon kohën e tanishme dhe datën"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2633 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2677 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -696,7 +704,7 @@ msgstr "Zgjedhësi i hapësirës së punës"
 msgid "Failed to load %s: %s\n"
 msgstr "Ngarkimi i %s dështoi: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:602
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:624
 msgid "Icon not found"
 msgstr "Ikona nuk u gjet"
 
@@ -731,8 +739,8 @@ msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
 msgstr ""
-"Lista e dritareve shfaq listën e gjitha dritareve në një set butonash dhe ju lejon "
-"t'i zgjidhni."
+"Lista e dritareve shfaq listën e gjitha dritareve në një set butonash dhe ju "
+"lejon t'i zgjidhni."
 
 #: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -1012,7 +1020,7 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "Nuk gjendet asnjë vend bosh"
 
-#: ../gnome-panel/button-widget.c:198
+#: ../gnome-panel/button-widget.c:200
 #, c-format
 msgid "Failed to load image %s"
 msgstr "Gabim gjatë ngarkimit të figurës %s"
@@ -1026,7 +1034,7 @@ msgstr "Sirtari"
 msgid "_Add to Drawer..."
 msgstr "_Shto në Sirtar..."
 
-#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:852
+#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:926
 #: ../gnome-panel/panel-action-button.c:142
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
@@ -1036,64 +1044,64 @@ msgstr "_Pronësitë"
 msgid "Create new file in the given directory"
 msgstr "Krijo një file të ri në directory e dhënë"
 
-#: ../gnome-panel/launcher.c:136
+#: ../gnome-panel/launcher.c:144
 msgid "Cannot save launcher to disk"
 msgstr "Nuk arrij të ruaj ikonën e nisjes në disk"
 
-#: ../gnome-panel/launcher.c:166 ../gnome-panel/launcher.c:216
-#: ../gnome-panel/launcher.c:273
+#: ../gnome-panel/launcher.c:174 ../gnome-panel/launcher.c:224
+#: ../gnome-panel/launcher.c:281
 msgid "Cannot launch icon"
 msgstr "E pamundur nisja e ikonës"
 
-#: ../gnome-panel/launcher.c:167
+#: ../gnome-panel/launcher.c:175
 msgid "This launch icon does not specify a url to show."
 msgstr "Kjo ikonë lëshuese nuk përcakton url që duhet shfaqur."
 
-#: ../gnome-panel/launcher.c:179
+#: ../gnome-panel/launcher.c:187
 #, c-format
 msgid "Cannot show %s"
 msgstr "Shfaqja e \"%s\" është e pamundur"
 
-#: ../gnome-panel/launcher.c:467
+#: ../gnome-panel/launcher.c:476
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Nuk është dhënë asnjë URI për file e lëshuesit të panelit\n"
 
-#: ../gnome-panel/launcher.c:481
+#: ../gnome-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "E pamundur hapja e file të hapësirës së punës %s për lëshuesin e panelit%s%"
 "s\n"
 
-#: ../gnome-panel/launcher.c:734 ../gnome-panel/menu-ditem.c:181
+#: ../gnome-panel/launcher.c:808 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Pronësitë e lëshuesit"
 
-#: ../gnome-panel/launcher.c:846
+#: ../gnome-panel/launcher.c:920
 msgid "_Launch"
 msgstr "_Fillo"
 
-#: ../gnome-panel/launcher.c:924
+#: ../gnome-panel/launcher.c:959
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Kyçi %s nuk është përcaktuar, i pamundur ngarkimi i lëshuesit\n"
 
-#: ../gnome-panel/launcher.c:979 ../gnome-panel/launcher.c:997
+#: ../gnome-panel/launcher.c:1014 ../gnome-panel/launcher.c:1033
 #: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
 #: ../gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "I pamundur krijimi i ikonës së nisjes"
 
-#: ../gnome-panel/launcher.c:980 ../gnome-panel/menu-ditem.c:470
+#: ../gnome-panel/launcher.c:1015 ../gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "Duhet të përcaktoni një emër."
 
-#: ../gnome-panel/launcher.c:998 ../gnome-panel/menu-ditem.c:487
+#: ../gnome-panel/launcher.c:1034 ../gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "Duhet të caktoni një adresë URL të saktë ose komandë."
 
-#: ../gnome-panel/launcher.c:1041 ../gnome-panel/menu-ditem.c:550
+#: ../gnome-panel/launcher.c:1078 ../gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "Krijo Lëshuesin"
 
@@ -1156,8 +1164,8 @@ msgstr "Rinis Demonin e _Screensaver-it"
 #: ../gnome-panel/panel-action-button.c:206
 #: ../gnome-panel/panel-action-button.c:219
 #: ../gnome-panel/panel-action-button.c:243
-#: ../gnome-panel/panel-menu-bar.c:291 ../gnome-panel/panel-menu-button.c:1009
-#: ../gnome-panel/panel-util.c:723
+#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1010
+#: ../gnome-panel/panel-util.c:748
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "I pamundur ekzekutimi i '%s'"
@@ -1267,30 +1275,30 @@ msgstr "Një krijues pop out për të vendosur elementë të tjerë në të"
 msgid "(empty)"
 msgstr "(bosh)"
 
-#: ../gnome-panel/panel-addto.c:400
+#: ../gnome-panel/panel-addto.c:404
 #: ../libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "pyetja ktheu përjashtim %s\n"
 
-#: ../gnome-panel/panel-addto.c:1006
+#: ../gnome-panel/panel-addto.c:1011
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "Zgjidh një _element për t'a shtuar tek \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:1010
+#: ../gnome-panel/panel-addto.c:1015
 msgid "Add to Drawer"
 msgstr "Shto në Sirtar"
 
-#: ../gnome-panel/panel-addto.c:1012
+#: ../gnome-panel/panel-addto.c:1017
 msgid "Select an _item to add to the drawer:"
 msgstr "Zgjidh një _element për t'a shtuar në sirtar:"
 
-#: ../gnome-panel/panel-addto.c:1014
+#: ../gnome-panel/panel-addto.c:1019
 msgid "Add to Panel"
 msgstr "Shto në Paneli"
 
-#: ../gnome-panel/panel-addto.c:1016
+#: ../gnome-panel/panel-addto.c:1021
 msgid "Select an _item to add to the panel:"
 msgstr "Zgjidh një _element për t'a shtuar në panel:"
 
@@ -1619,15 +1627,15 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Nëse e vërtetë, për elementët e panelit do të shfaqen propozimet."
 
-#: ../gnome-panel/panel-menu-bar.c:71
+#: ../gnome-panel/panel-menu-bar.c:79
 msgid "Applications"
 msgstr "Programe"
 
-#: ../gnome-panel/panel-menu-bar.c:232 ../gnome-panel/panel-menu-button.c:691
+#: ../gnome-panel/panel-menu-bar.c:298 ../gnome-panel/panel-menu-button.c:691
 msgid "_Edit Menus"
 msgstr "_Ndrysho Menutë"
 
-#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:310
+#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "E pamundur shfaqja e pozicionit '%s'"
@@ -1860,18 +1868,18 @@ msgid "Use custom path for menu contents"
 msgstr "Përdor pozicionin e personalizuar për përmbajtjen e menusë"
 
 #: ../gnome-panel/panel-profile.c:743 ../gnome-panel/panel-profile.c:770
-#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1629
+#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1632
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Gabim gjatë leximit të vlerës së stringës GConf '%s': %s"
 
-#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1525
-#: ../gnome-panel/panel-profile.c:1598 ../gnome-panel/panel-profile.c:1661
+#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1528
+#: ../gnome-panel/panel-profile.c:1601 ../gnome-panel/panel-profile.c:1664
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Gabim gjatë leximit të vlerës së plotë të stringës GConf '%s': %s"
 
-#: ../gnome-panel/panel-profile.c:1535
+#: ../gnome-panel/panel-profile.c:1538
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1880,7 +1888,7 @@ msgstr ""
 "Paneli '%s' është zgjedhur që të shfaqet tek ekrani %d, aktualisht jo në "
 "dispozicion. Ky panel nuk do të ngarkohet."
 
-#: ../gnome-panel/panel-profile.c:1613
+#: ../gnome-panel/panel-profile.c:1616
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Gabim gjatë leximit të vlerës booleane të GConf '%s': %s"
@@ -2053,31 +2061,31 @@ msgstr "Pastro Dokumentat e Fundit"
 msgid "Clear all items from the recent documents list"
 msgstr "Pastro të gjithë elementët nga lista e dokumentëve të fundit"
 
-#: ../gnome-panel/panel-run-dialog.c:284
+#: ../gnome-panel/panel-run-dialog.c:287
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "E pamundur nisja e komandës '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:362
+#: ../gnome-panel/panel-run-dialog.c:365
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "I pamundur konvertimi nga UTF-8 i '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1109
+#: ../gnome-panel/panel-run-dialog.c:1112
 msgid "Choose a file to append to the command..."
 msgstr "Zgjidh një file për t'ja shtuar komandës..."
 
-#: ../gnome-panel/panel-run-dialog.c:1465
+#: ../gnome-panel/panel-run-dialog.c:1468
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Do ekzekutojë komandën: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1472
+#: ../gnome-panel/panel-run-dialog.c:1475
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Zgjidh një program për të lexuar përshkrimin e tij."
 
-#: ../gnome-panel/panel-run-dialog.c:1507
+#: ../gnome-panel/panel-run-dialog.c:1510
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2591,25 +2599,25 @@ msgstr "Monitori·Xinerama·ku·shfaqet·paneli"
 msgid "Y co-ordinate of panel"
 msgstr "Koordinata Y e panelit"
 
-#: ../gnome-panel/panel-util.c:66
+#: ../gnome-panel/panel-util.c:89
 msgid "Cannot display help document"
 msgstr "E pamundur shfaqja e dokumenteve të ndihmës"
 
-#: ../gnome-panel/panel-util.c:288
+#: ../gnome-panel/panel-util.c:311
 #, c-format
 msgid "Details: %s"
 msgstr "Hollësi: %s"
 
-#: ../gnome-panel/panel.c:474
+#: ../gnome-panel/panel.c:477
 #, c-format
 msgid "Open URL: %s"
 msgstr "Hap URL:%s"
 
-#: ../gnome-panel/panel.c:1262
+#: ../gnome-panel/panel.c:1265
 msgid "Delete this drawer?"
 msgstr "Ta fshij sirtarin?"
 
-#: ../gnome-panel/panel.c:1263
+#: ../gnome-panel/panel.c:1266
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2617,15 +2625,15 @@ msgstr ""
 "Kur një sirtar fshihet,sirtari dhe mjediset e tij\n"
 "humbin."
 
-#: ../gnome-panel/panel.c:1265
+#: ../gnome-panel/panel.c:1268
 msgid "Delete Drawer"
 msgstr "Fshi Sirtarin"
 
-#: ../gnome-panel/panel.c:1267
+#: ../gnome-panel/panel.c:1270
 msgid "Delete this panel?"
 msgstr "Ta fshij këtë panel?"
 
-#: ../gnome-panel/panel.c:1268
+#: ../gnome-panel/panel.c:1271
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2633,7 +2641,7 @@ msgstr ""
 "Kur një panel fshihet, paneli dhe rregullimet\n"
 "e tij humbin."
 
-#: ../gnome-panel/panel.c:1270
+#: ../gnome-panel/panel.c:1273
 msgid "Delete Panel"
 msgstr "Fshije Panelin"
 
