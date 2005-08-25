@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.9.91\n"
+"Project-Id-Version: gnome-panel 2.11.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-08 12:40+0100\n"
-"PO-Revision-Date: 2005-03-22 00:30+0100\n"
+"POT-Creation-Date: 2005-08-25 10:33+0200\n"
+"PO-Revision-Date: 2005-08-25 10:36+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,8 +45,8 @@ msgstr "_Quant a..."
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:743
-#: ../gnome-panel/panel-context-menu.c:327 ../gnome-panel/panel-menu-bar.c:986
+#: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:740
+#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:291
 #: ../gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "A_juda"
@@ -59,7 +59,7 @@ msgid "_Preferences"
 msgstr "_Preferències"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2594
+#: ../applets/clock/clock.c:2671
 msgid "Clock"
 msgstr "Rellotge"
 
@@ -75,20 +75,20 @@ msgstr "Factoria per a crear miniaplicacions de rellotge."
 msgid "Get the current time and date"
 msgstr "Dóna l'hora i data actuals"
 
-#: ../applets/clock/clock.c:268
+#: ../applets/clock/clock.c:266
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:584
+#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:270 ../applets/clock/clock.c:1684
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:270 ../applets/clock/clock.c:586
-#: ../applets/clock/clock.c:1686
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
+#: ../applets/clock/clock.c:1730
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -97,7 +97,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:281
+#: ../applets/clock/clock.c:279
 msgid "%a %b %e"
 msgstr "%a, %e de %b"
 
@@ -105,7 +105,7 @@ msgstr "%a, %e de %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:288
+#: ../applets/clock/clock.c:286
 #, c-format
 msgid ""
 "%1$s\n"
@@ -118,60 +118,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:295
+#: ../applets/clock/clock.c:293
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:379
+#: ../applets/clock/clock.c:378
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
+#: ../applets/clock/clock.c:390
+msgid "Click to view your appointments and tasks"
+msgstr "Feu clic per a veure les vostres cites i tarees"
+
+#: ../applets/clock/clock.c:392
+msgid "Click to view month calendar"
+msgstr "Feu clic per a veure el calendari del mes"
+
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:591
+#: ../applets/clock/clock.c:598
 msgid "%b %d"
 msgstr "%d %b"
 
-#: ../applets/clock/clock.c:890
+#: ../applets/clock/clock.c:925
 msgid "Tasks"
 msgstr "Tasques"
 
-#: ../applets/clock/clock.c:1034
+#: ../applets/clock/clock.c:1077
 msgid "All Day"
 msgstr "Tot el dia"
 
-#: ../applets/clock/clock.c:1073
+#: ../applets/clock/clock.c:1116
 msgid "Appointments"
 msgstr "Cites"
 
-#: ../applets/clock/clock.c:1305
+#: ../applets/clock/clock.c:1348
 msgid "Calendar"
 msgstr "Calendari"
 
-#: ../applets/clock/clock.c:1586
+#: ../applets/clock/clock.c:1629
 msgid "Computer Clock"
 msgstr "Rellotge del sistema"
 
-#: ../applets/clock/clock.c:1679
+#: ../applets/clock/clock.c:1723
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1681
+#: ../applets/clock/clock.c:1725
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1723
+#: ../applets/clock/clock.c:1767
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d de %B"
 
-#: ../applets/clock/clock.c:1767
+#: ../applets/clock/clock.c:1824
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "No s'ha pogut executar l'eina de configuració: %s"
 
-#: ../applets/clock/clock.c:1806
+#: ../applets/clock/clock.c:1860
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -179,75 +187,75 @@ msgstr ""
 "No s'ha trobat cap programa per a configurar la data i l'hora. Potser no "
 "n'hi ha cap d'instal·lat?"
 
-#: ../applets/clock/clock.c:2253
+#: ../applets/clock/clock.c:2332
 msgid "Custom format"
 msgstr "Format personalitzat"
 
-#: ../applets/clock/clock.c:2374 ../applets/clock/clock.c:2551
+#: ../applets/clock/clock.c:2453 ../applets/clock/clock.c:2630
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
-#: ../applets/wncklet/workspace-switcher.c:240
+#: ../applets/wncklet/workspace-switcher.c:241
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "S'ha produït un error en mostrar l'ajuda: %s"
 
-#: ../applets/clock/clock.c:2409
+#: ../applets/clock/clock.c:2488
 msgid "Clock Preferences"
 msgstr "Preferències del rellotge"
 
-#: ../applets/clock/clock.c:2433
+#: ../applets/clock/clock.c:2512
 msgid "Clock _type:"
 msgstr "_Tipus de rellotge:"
 
-#: ../applets/clock/clock.c:2443
+#: ../applets/clock/clock.c:2522
 msgid "12 hour"
 msgstr "12 hores"
 
-#: ../applets/clock/clock.c:2444
+#: ../applets/clock/clock.c:2523
 msgid "24 hour"
 msgstr "24 hores"
 
 # La u de «Unix» és semiconsonant, no? iv
-#: ../applets/clock/clock.c:2445
+#: ../applets/clock/clock.c:2524
 msgid "UNIX time"
 msgstr "Hora de UNIX"
 
-#: ../applets/clock/clock.c:2446
+#: ../applets/clock/clock.c:2525
 msgid "Internet time"
 msgstr "Hora d'Internet"
 
-#: ../applets/clock/clock.c:2454
+#: ../applets/clock/clock.c:2533
 msgid "Custom _format:"
 msgstr "_Format personalitzat:"
 
-#: ../applets/clock/clock.c:2473
+#: ../applets/clock/clock.c:2552
 msgid "Show _seconds"
 msgstr "Mostra els _segons"
 
-#: ../applets/clock/clock.c:2482
+#: ../applets/clock/clock.c:2561
 msgid "Show _date"
 msgstr "Mostra la _data"
 
-#: ../applets/clock/clock.c:2491
+#: ../applets/clock/clock.c:2570
 msgid "Use _UTC"
 msgstr "Utilitza _UTC"
 
+#: ../applets/clock/clock.c:2674
+msgid "The Clock displays the current time and date"
+msgstr "El rellotge mostra l'hora i la data actuals"
+
 #. Translator credits
-#: ../applets/clock/clock.c:2583 ../applets/fish/fish.c:481
-#: ../applets/notification_area/main.c:116
-#: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:736
+#: ../applets/clock/clock.c:2677 ../applets/fish/fish.c:505
+#: ../applets/notification_area/main.c:133
+#: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:554
-#: ../gnome-panel/panel-context-menu.c:110
+#: ../applets/wncklet/workspace-switcher.c:555
+#: ../gnome-panel/panel-context-menu.c:130
 msgid "translator-credits"
 msgstr ""
 "Ivan Vilata i Balaguer <ivan@selidor.net>\n"
 "Quico Llach <quico@softcatala.org>\n"
 "Jordi Mallach <jordi@sindominio.net>"
-
-#: ../applets/clock/clock.c:2597
-msgid "The Clock displays the current time and date"
-msgstr "El rellotge mostra l'hora i la data actuals"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -388,7 +396,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Mostra un peix nedant o una altra criatura animada"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-#: ../applets/fish/fish.c:501
+#: ../applets/fish/fish.c:499
 msgid "Fish"
 msgstr "Peix"
 
@@ -413,8 +421,8 @@ msgstr ""
 "Us recomanem que no feu servir %s per a res que pugui fer\n"
 "de la miniaplicació una cosa «pràctica» o útil."
 
-#: ../applets/fish/fish.c:467 ../applets/fish/fish.c:529
-#: ../applets/fish/fish.c:644
+#: ../applets/fish/fish.c:467 ../applets/fish/fish.c:527
+#: ../applets/fish/fish.c:642
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s el Peix"
@@ -432,25 +440,25 @@ msgstr ""
 "es troba algú utilitzant aquesta miniaplicació, s'hauria de sotmetre "
 "urgentment a una avaluació psiquiàtrica."
 
-#: ../applets/fish/fish.c:494
+#: ../applets/fish/fish.c:492
 msgid "(with minor help from George)"
 msgstr "(amb una petita ajuda de George)"
 
-#: ../applets/fish/fish.c:530
+#: ../applets/fish/fish.c:528
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s el Peix, un oracle contemporani"
 
-#: ../applets/fish/fish.c:600
+#: ../applets/fish/fish.c:598
 msgid "Unable to locate the command to execute"
 msgstr "No s'ha pogut trobar l'ordre a executar"
 
-#: ../applets/fish/fish.c:649
+#: ../applets/fish/fish.c:647
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s el Peix diu:"
 
-#: ../applets/fish/fish.c:718
+#: ../applets/fish/fish.c:716
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -461,16 +469,16 @@ msgstr ""
 "\n"
 "Detalls: %s"
 
-#: ../applets/fish/fish.c:783
+#: ../applets/fish/fish.c:781
 msgid "_Speak again"
 msgstr "_Torna a parlar"
 
-#: ../applets/fish/fish.c:864
+#: ../applets/fish/fish.c:862
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "L'ordre configurada no funciona i s'ha reemplaçat per: %s"
 
-#: ../applets/fish/fish.c:887
+#: ../applets/fish/fish.c:885
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -481,7 +489,7 @@ msgstr ""
 "\n"
 "Detalls: %s"
 
-#: ../applets/fish/fish.c:903
+#: ../applets/fish/fish.c:901
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -492,7 +500,7 @@ msgstr ""
 "\n"
 "Detalls: %s"
 
-#: ../applets/fish/fish.c:1565
+#: ../applets/fish/fish.c:1564
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -500,7 +508,7 @@ msgstr ""
 "Cal canviar l'aigua!\n"
 "(Mireu la data d'avui)"
 
-#: ../applets/fish/fish.c:1659
+#: ../applets/fish/fish.c:1658
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s el Peix, el contacontes"
@@ -637,7 +645,7 @@ msgid "Area where notification icons appear"
 msgstr "Àrea on apareixen les icones de notificació"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: ../applets/notification_area/main.c:129
+#: ../applets/notification_area/main.c:128
 msgid "Notification Area"
 msgstr "Àrea de notificació"
 
@@ -671,29 +679,33 @@ msgid "Show Desktop"
 msgstr "Mostra l'escriptori"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
-msgid "Switch between open windows"
-msgstr "Canvia entre finestres obertes"
+msgid "Switch between open windows using a menu"
+msgstr "Canvia entre finestres obertes utilitzant un menú"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between open windows using buttons"
+msgstr "Canvia entre finestres obertes utilitzant botons"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
 msgid "Switch between workspaces"
 msgstr "Canvia entre espais de treball"
 
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: ../applets/wncklet/window-list.c:739
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: ../applets/wncklet/window-list.c:775
 msgid "Window List"
 msgstr "Llista de finestres"
 
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
 msgid "Window Navigation Applet Factory"
 msgstr "Factoria de la miniaplicació de navegació de finestres"
 
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:261
 msgid "Window Selector"
 msgstr "Selector de finestres"
 
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/workspace-switcher.c:557
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: ../applets/wncklet/workspace-switcher.c:558
 msgid "Workspace Switcher"
 msgstr "Canviador d'espais de treball"
 
@@ -702,7 +714,7 @@ msgstr "Canviador d'espais de treball"
 msgid "Failed to load %s: %s\n"
 msgstr "No s'ha pogut carregar %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:569
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:624
 msgid "Icon not found"
 msgstr "No s'ha trobat la icona"
 
@@ -731,11 +743,11 @@ msgstr ""
 "El vostre gestor de finestres no permet el botó «Mostra l'escriptori», o no "
 "esteu executant cap gestor de finestres."
 
-#: ../applets/wncklet/window-list.c:741
-msgid "The Window List shows a list of all windows and lets you browse them."
-msgstr ""
-"La llista de finestres mostra una llista de totes les finestres visibles i "
-"us permet navegar-hi."
+#: ../applets/wncklet/window-list.c:777
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
+msgstr "La llista de finestres mostra una llista de totes les finestres en un conjunt de botons i us permet navegar-hi."
 
 #: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -869,30 +881,29 @@ msgstr "Quan agrupar les finestres"
 
 #: ../applets/wncklet/window-menu.c:82
 msgid ""
-"The Window Selector shows a list of all windows and lets you browse them."
-msgstr ""
-"El selector de finestres mostra una llista de totes les finestres i us hi "
-"permet navegar."
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
+msgstr "El selector de finestres mostra una llista de totes les finestres en un menú i us hi permet navegar."
 
 #: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:858
+#: ../applets/wncklet/workspace-switcher.c:859
 #: ../applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "files"
 
 #: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:858
+#: ../applets/wncklet/workspace-switcher.c:859
 msgid "columns"
 msgstr "columnes"
 
-#: ../applets/wncklet/workspace-switcher.c:428
+#: ../applets/wncklet/workspace-switcher.c:429
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "S'ha produït un error en carregar el valor num_rows per al canviador "
 "d'espais de treball: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:439
+#: ../applets/wncklet/workspace-switcher.c:440
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -900,14 +911,14 @@ msgstr ""
 "S'ha produït un error en carregar el valor display_workspace_names per al "
 "canviador d'espais de treball: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:454
+#: ../applets/wncklet/workspace-switcher.c:455
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "S'ha produït un error en carregar el valor display_all_workspaces per al "
 "canviador d'espais de treball: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:559
+#: ../applets/wncklet/workspace-switcher.c:560
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1015,13 +1026,13 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "No es pot trobar cap forat lliure"
 
-#: ../gnome-panel/button-widget.c:196
+#: ../gnome-panel/button-widget.c:200
 #, c-format
 msgid "Failed to load image %s"
 msgstr "No s'ha pogut carregar %s"
 
 #: ../gnome-panel/drawer.c:353 ../gnome-panel/panel-addto.c:150
-#: ../gnome-panel/panel-toplevel.c:1531
+#: ../gnome-panel/panel-toplevel.c:1530
 msgid "Drawer"
 msgstr "Calaix"
 
@@ -1029,9 +1040,9 @@ msgstr "Calaix"
 msgid "_Add to Drawer..."
 msgstr "_Afegeix al calaix..."
 
-#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:846
-#: ../gnome-panel/panel-action-button.c:132
-#: ../gnome-panel/panel-context-menu.c:265
+#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:926
+#: ../gnome-panel/panel-action-button.c:142
+#: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Propietats"
 
@@ -1039,64 +1050,64 @@ msgstr "_Propietats"
 msgid "Create new file in the given directory"
 msgstr "Crea un fitxer nou en el directori especificat"
 
-#: ../gnome-panel/launcher.c:136
+#: ../gnome-panel/launcher.c:144
 msgid "Cannot save launcher to disk"
 msgstr "No es pot desar el llançador al disc"
 
-#: ../gnome-panel/launcher.c:166 ../gnome-panel/launcher.c:216
-#: ../gnome-panel/launcher.c:273
+#: ../gnome-panel/launcher.c:174 ../gnome-panel/launcher.c:224
+#: ../gnome-panel/launcher.c:281
 msgid "Cannot launch icon"
 msgstr "No es pot llançar la icona"
 
-#: ../gnome-panel/launcher.c:167
+#: ../gnome-panel/launcher.c:175
 msgid "This launch icon does not specify a url to show."
 msgstr "Aquesta icona de llançament no especifica cap url a mostrar."
 
-#: ../gnome-panel/launcher.c:179
+#: ../gnome-panel/launcher.c:187
 #, c-format
 msgid "Cannot show %s"
 msgstr "No es pot mostrar %s"
 
-#: ../gnome-panel/launcher.c:467
+#: ../gnome-panel/launcher.c:476
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "No s'ha proporcionat cap URI per al fitxer desktop del llançador del quadre\n"
 
-#: ../gnome-panel/launcher.c:481
+#: ../gnome-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "No s'ha pogut obrir el fitxer desktop %s per al llançador del quadre%s%s\n"
 
-#: ../gnome-panel/launcher.c:728 ../gnome-panel/menu-ditem.c:181
+#: ../gnome-panel/launcher.c:808 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Propietats del llançador"
 
-#: ../gnome-panel/launcher.c:840
+#: ../gnome-panel/launcher.c:920
 msgid "_Launch"
 msgstr "_Llança"
 
-#: ../gnome-panel/launcher.c:918
+#: ../gnome-panel/launcher.c:959
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "La clau %s no està establerta, no es pot carregar el llançador\n"
 
-#: ../gnome-panel/launcher.c:973 ../gnome-panel/launcher.c:991
+#: ../gnome-panel/launcher.c:1014 ../gnome-panel/launcher.c:1033
 #: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
 #: ../gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "No es pot crear el llançador"
 
-#: ../gnome-panel/launcher.c:974 ../gnome-panel/menu-ditem.c:470
+#: ../gnome-panel/launcher.c:1015 ../gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "Heu d'especificar un nom."
 
-#: ../gnome-panel/launcher.c:992 ../gnome-panel/menu-ditem.c:487
+#: ../gnome-panel/launcher.c:1034 ../gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "Heu d'especificar una URL o ordre vàlida."
 
-#: ../gnome-panel/launcher.c:1035 ../gnome-panel/menu-ditem.c:550
+#: ../gnome-panel/launcher.c:1078 ../gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "Crea un llançador"
 
@@ -1121,74 +1132,68 @@ msgstr ""
 "No podeu crear un llançador nou en aquest punt, ja que no es pot escriure en "
 "aquest lloc."
 
-#: ../gnome-panel/menu.c:125 ../gnome-panel/panel-menu-bar.c:136
-msgid "Cannot launch entry"
-msgstr "No es pot llançar l'entrada"
-
-#: ../gnome-panel/menu.c:137 ../gnome-panel/panel-menu-bar.c:148
-msgid "Cannot load entry"
-msgstr "No es pot carregar l'entrada"
-
-#: ../gnome-panel/menu.c:839
+#: ../gnome-panel/menu.c:922
 msgid "Add this launcher to panel"
 msgstr "Afegeix aquest llançador al quadre"
 
-#: ../gnome-panel/menu.c:859
+#: ../gnome-panel/menu.c:933
+msgid "Add this launcher to desktop"
+msgstr "Afegeix aquest llançador a l'escriptori"
+
+#: ../gnome-panel/menu.c:953
 msgid "Entire menu"
 msgstr "Menú sencer"
 
-#: ../gnome-panel/menu.c:869
+#: ../gnome-panel/menu.c:963
 msgid "Add this as drawer to panel"
 msgstr "Afegeix això com a calaix al quadre"
 
-#: ../gnome-panel/menu.c:881
+#: ../gnome-panel/menu.c:975
 msgid "Add this as menu to panel"
 msgstr "Afegeix això com a menú al quadre"
 
-#: ../gnome-panel/menu.c:1532 ../gnome-panel/panel-menu-bar.c:789
-msgid "Applications"
-msgstr "Aplicacions"
-
-#: ../gnome-panel/panel-action-button.c:108
+#: ../gnome-panel/panel-action-button.c:118
 msgid "_Activate Screensaver"
 msgstr "_Activa el protector de pantalla"
 
-#: ../gnome-panel/panel-action-button.c:114
+#: ../gnome-panel/panel-action-button.c:124
 msgid "_Lock Screen"
 msgstr "B_loca la pantalla"
 
-#: ../gnome-panel/panel-action-button.c:120
+#: ../gnome-panel/panel-action-button.c:130
 msgid "_Kill Screensaver Daemon"
 msgstr "Ma_ta el dimoni del protector de pantalla"
 
-#: ../gnome-panel/panel-action-button.c:126
+#: ../gnome-panel/panel-action-button.c:136
 msgid "Restart _Screensaver Daemon"
 msgstr "Reinicia el dimoni del _protector de pantalla"
 
-#: ../gnome-panel/panel-action-button.c:209
-#: ../gnome-panel/panel-action-button.c:222
-#: ../gnome-panel/panel-action-button.c:246 ../gnome-panel/panel-util.c:632
+#: ../gnome-panel/panel-action-button.c:206
+#: ../gnome-panel/panel-action-button.c:219
+#: ../gnome-panel/panel-action-button.c:243
+#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1010
+#: ../gnome-panel/panel-util.c:748
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "No es pot executar «%s»"
 
-#: ../gnome-panel/panel-action-button.c:282
+#: ../gnome-panel/panel-action-button.c:279
 msgid "Cannot connect to server"
 msgstr "No es pot connectar al servidor"
 
-#: ../gnome-panel/panel-action-button.c:313
+#: ../gnome-panel/panel-action-button.c:310
 msgid "Lock Screen"
 msgstr "Bloca la pantalla"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:311
 msgid "Protect your computer from unauthorized use"
 msgstr "Protegeix el vostre ordinador d'usos no autoritzats"
 
-#: ../gnome-panel/panel-action-button.c:325
+#: ../gnome-panel/panel-action-button.c:322
 msgid "Log Out"
 msgstr "Surt"
 
-#: ../gnome-panel/panel-action-button.c:326
+#: ../gnome-panel/panel-action-button.c:323
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1196,44 +1201,44 @@ msgstr ""
 "Surt d'aquesta sessió per a entrar com a un usuari diferent o per a tancar "
 "l'ordinador"
 
-#: ../gnome-panel/panel-action-button.c:335
+#: ../gnome-panel/panel-action-button.c:332
 msgid "Run Application..."
 msgstr "Executa una aplicació..."
 
-#: ../gnome-panel/panel-action-button.c:336
+#: ../gnome-panel/panel-action-button.c:333
 msgid "Run an Application by entering a command"
 msgstr "Executa una aplicació, introduint una ordre"
 
-#: ../gnome-panel/panel-action-button.c:345
+#: ../gnome-panel/panel-action-button.c:342
 msgid "Search for Files..."
 msgstr "Cerca fitxers..."
 
-#: ../gnome-panel/panel-action-button.c:346
+#: ../gnome-panel/panel-action-button.c:343
 msgid "Find files, folders, and documents on your computer"
 msgstr "Cerca fitxers, carpetes i documents en el vostre ordinador"
 
-#: ../gnome-panel/panel-action-button.c:354
+#: ../gnome-panel/panel-action-button.c:351
 msgid "Take Screenshot..."
 msgstr "Fes una captura de pantalla..."
 
-#: ../gnome-panel/panel-action-button.c:355
+#: ../gnome-panel/panel-action-button.c:352
 msgid "Take a screenshot of your desktop"
 msgstr "Fes una captura de l'escriptori"
 
-#: ../gnome-panel/panel-action-button.c:363
+#: ../gnome-panel/panel-action-button.c:360
 msgid "Force Quit"
 msgstr "Força la sortida"
 
-#: ../gnome-panel/panel-action-button.c:364
+#: ../gnome-panel/panel-action-button.c:361
 msgid "Force a misbehaving application to quit"
 msgstr "Força la sortida d'una aplicació que no es comporta correctament"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:373
+#: ../gnome-panel/panel-action-button.c:370
 msgid "Connect to Server..."
 msgstr "Connecta al servidor..."
 
-#: ../gnome-panel/panel-action-button.c:374
+#: ../gnome-panel/panel-action-button.c:371
 msgid "Connect to a remote server"
 msgstr "Connecta a un servidor remot"
 
@@ -1277,30 +1282,30 @@ msgstr "Un calaix emergent on s'hi poden introduir altres elements"
 msgid "(empty)"
 msgstr "(buit)"
 
-#: ../gnome-panel/panel-addto.c:400
+#: ../gnome-panel/panel-addto.c:404
 #: ../libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "la petició ha tornat l'excepció %s\n"
 
-#: ../gnome-panel/panel-addto.c:940
+#: ../gnome-panel/panel-addto.c:1011
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "Seleccioneu un _element a afegir a «%s»:"
 
-#: ../gnome-panel/panel-addto.c:944
+#: ../gnome-panel/panel-addto.c:1015
 msgid "Add to Drawer"
 msgstr "Afegeix al calaix"
 
-#: ../gnome-panel/panel-addto.c:946
+#: ../gnome-panel/panel-addto.c:1017
 msgid "Select an _item to add to the drawer:"
 msgstr "Seleccioneu un _element a afegir al calaix:"
 
-#: ../gnome-panel/panel-addto.c:948
+#: ../gnome-panel/panel-addto.c:1019
 msgid "Add to Panel"
 msgstr "Afegeix al quadre"
 
-#: ../gnome-panel/panel-addto.c:950
+#: ../gnome-panel/panel-addto.c:1021
 msgid "Select an _item to add to the panel:"
 msgstr "Seleccioneu un _element a afegir al quadre:"
 
@@ -1366,11 +1371,11 @@ msgstr "S'ha produït un error en obtenir el valor per a «%s»: %s"
 msgid "And many, many others..."
 msgstr "I molts, molts d'altres..."
 
-#: ../gnome-panel/panel-context-menu.c:125
+#: ../gnome-panel/panel-context-menu.c:123
 msgid "The GNOME Panel"
 msgstr "El quadre del GNOME"
 
-#: ../gnome-panel/panel-context-menu.c:128
+#: ../gnome-panel/panel-context-menu.c:126
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1378,28 +1383,28 @@ msgstr ""
 "Aquest programa s'encarrega de llançar altres aplicacions i d'incrustar  "
 "miniaplicacions dins seu."
 
-#: ../gnome-panel/panel-context-menu.c:168
+#: ../gnome-panel/panel-context-menu.c:166
 msgid "You cannot remove your last panel."
 msgstr "No podeu suprimir el vostre últim quadre."
 
-#: ../gnome-panel/panel-context-menu.c:217
+#: ../gnome-panel/panel-context-menu.c:215
 msgid "_Delete This Panel..."
 msgstr "_Suprimeix aquest quadre..."
 
-#: ../gnome-panel/panel-context-menu.c:220
-#: ../gnome-panel/panel-context-menu.c:250
+#: ../gnome-panel/panel-context-menu.c:218
+#: ../gnome-panel/panel-context-menu.c:260
 msgid "_Delete This Panel"
 msgstr "_Suprimeix aquest quadre"
 
-#: ../gnome-panel/panel-context-menu.c:234
+#: ../gnome-panel/panel-context-menu.c:232
 msgid "_Add to Panel..."
 msgstr "_Afegeix al quadre..."
 
-#: ../gnome-panel/panel-context-menu.c:280
+#: ../gnome-panel/panel-context-menu.c:277
 msgid "_New Panel"
 msgstr "_Quadre nou"
 
-#: ../gnome-panel/panel-context-menu.c:338
+#: ../gnome-panel/panel-context-menu.c:335
 msgid "A_bout Panels"
 msgstr "Q_uant als quadres"
 
@@ -1457,14 +1462,23 @@ msgstr ""
 "s'emmagatzema a /apps/panel/objects/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr "Habilita la compleció automàtica al diàleg «Executa una aplicació»"
+
+#: ../gnome-panel/panel-general.schemas.in.h:6
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Habilita el llistat de programes al diàleg «Executa una aplicació»"
 
-#: ../gnome-panel/panel-general.schemas.in.h:6
+#: ../gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Expandeix el llistat de programes al diàleg «Executa una aplicació»"
 
-#: ../gnome-panel/panel-general.schemas.in.h:7
+#: ../gnome-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr "Si és cert, la compleció automàtica al diàleg «Executa una aplicació» estarà disponible."
+
+#: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1474,7 +1488,7 @@ msgstr ""
 "programa» estarà disponible. Aquesta clau només té importància si la clau "
 "enable_program_list és certa."
 
-#: ../gnome-panel/panel-general.schemas.in.h:8
+#: ../gnome-panel/panel-general.schemas.in.h:10
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1484,19 +1498,19 @@ msgstr ""
 "programa» estarà disponible. Si el llistat està o no expandit quan es mostra "
 "el diàleg està controlat per la clau show_program_list."
 
-#: ../gnome-panel/panel-general.schemas.in.h:9
+#: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
 msgstr "Perfils de configuració antics migrats"
 
-#: ../gnome-panel/panel-general.schemas.in.h:10
+#: ../gnome-panel/panel-general.schemas.in.h:12
 msgid "Panel ID list"
 msgstr "Llista d'ID de quadres"
 
-#: ../gnome-panel/panel-general.schemas.in.h:11
+#: ../gnome-panel/panel-general.schemas.in.h:13
 msgid "Panel applet ID list"
 msgstr "Llista d'ID de miniaplicacions del quadre"
 
-#: ../gnome-panel/panel-general.schemas.in.h:12
+#: ../gnome-panel/panel-general.schemas.in.h:14
 msgid "Panel object ID list"
 msgstr "Llista d'ID de objectes de quadre"
 
@@ -1514,25 +1528,24 @@ msgstr ""
 "quadre per a que aixì tingui efecte."
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
-#: ../gnome-panel/panel-toplevel.schemas.in.h:1
-msgid "Animation speed"
-msgstr "Velocitat de l'animació:"
-
-#: ../gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
 msgstr "IID de les miniaplicacions que no es carregaran"
 
-#: ../gnome-panel/panel-global.schemas.in.h:4
+#: ../gnome-panel/panel-global.schemas.in.h:3
 msgid "Autoclose drawer"
 msgstr "Tanca automàticament els calaixos"
 
-#: ../gnome-panel/panel-global.schemas.in.h:5
+#: ../gnome-panel/panel-global.schemas.in.h:4
 msgid "Complete panel lockdown"
 msgstr "Bloqueig complet del quadre"
 
-#: ../gnome-panel/panel-global.schemas.in.h:6
+#: ../gnome-panel/panel-global.schemas.in.h:5
 msgid "Confirm panel removal"
 msgstr "Confirma la supressió dels quadres"
+
+#: ../gnome-panel/panel-global.schemas.in.h:6
+msgid "Deprecated"
+msgstr "Desaconsellat"
 
 #: ../gnome-panel/panel-global.schemas.in.h:7
 msgid "Disable Force Quit"
@@ -1547,35 +1560,19 @@ msgid "Disable Logging Out"
 msgstr "Inhabilita la sortida"
 
 #: ../gnome-panel/panel-global.schemas.in.h:10
-msgid "Display \"Run Application\" dialog keybinding"
-msgstr "Mostra el vincle de tecles «Executa un programa»"
-
-#: ../gnome-panel/panel-global.schemas.in.h:11
 #: ../gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
 msgstr "Habilita les animacions"
 
-#: ../gnome-panel/panel-global.schemas.in.h:12
-msgid "Enable keybindings"
-msgstr "Habilita les tecles vinculades"
-
-#: ../gnome-panel/panel-global.schemas.in.h:13
+#: ../gnome-panel/panel-global.schemas.in.h:11
 msgid "Enable tooltips"
 msgstr "Habilita els rètols indicadors"
 
-#: ../gnome-panel/panel-global.schemas.in.h:14
-msgid "FIXME - is this resolved with the new menu stuff"
-msgstr "FIXME - està açò resolt amb les coses noves dels menús?"
-
-#: ../gnome-panel/panel-global.schemas.in.h:15
-msgid "FIXME - need to define limits"
-msgstr "FIXME - necessitem definir els límits"
-
-#: ../gnome-panel/panel-global.schemas.in.h:16
+#: ../gnome-panel/panel-global.schemas.in.h:12
 msgid "Highlight launchers on mouseover"
 msgstr "Ressalta els llançadors si hi ha el ratolí al damunt"
 
-#: ../gnome-panel/panel-global.schemas.in.h:17
+#: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -1583,7 +1580,7 @@ msgstr ""
 "Si és cert, es mostra un diàleg demanant confirmació si l'usuari vol "
 "suprimir un quadre."
 
-#: ../gnome-panel/panel-global.schemas.in.h:18
+#: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -1591,19 +1588,14 @@ msgstr ""
 "Si és cert, els calaixos es tancaran automàticament quan l'usuari faci clic "
 "en un llançador de dins."
 
-#: ../gnome-panel/panel-global.schemas.in.h:19
+#: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Si és cert, els llançadors es ressaltaran quan l'usuari posi el punter "
 "damunt seu."
 
-#: ../gnome-panel/panel-global.schemas.in.h:20
-msgid "If true, panel-specific keybindings are enabled."
-msgstr ""
-"Si és cert, els vincles de tecles específics del quadre estaran habilitats."
-
-#: ../gnome-panel/panel-global.schemas.in.h:21
+#: ../gnome-panel/panel-global.schemas.in.h:16
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1611,7 +1603,7 @@ msgstr ""
 "Si és cert, el quadre no permetrà a l'usuari forçar la sortida d'una "
 "aplicació suprimint l'accés al botó de sortida forçada."
 
-#: ../gnome-panel/panel-global.schemas.in.h:22
+#: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
@@ -1619,7 +1611,7 @@ msgstr ""
 "Si és cert, el quadre no permetrà a l'usuari blocar la pantalla, suprimint "
 "les entrades del menú de blocatge de pantalla."
 
-#: ../gnome-panel/panel-global.schemas.in.h:23
+#: ../gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
@@ -1627,7 +1619,7 @@ msgstr ""
 "Si és cert, el quadre no permetrà a l'usuari sortir, suprimint l'accés a les "
 "entrades del menú de sortida."
 
-#: ../gnome-panel/panel-global.schemas.in.h:24
+#: ../gnome-panel/panel-global.schemas.in.h:19
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -1637,70 +1629,72 @@ msgstr ""
 "així, pot ser necessari blocar algunes miniaplicacions individuals per "
 "separat. El quadre s'ha de reiniciar per a què això tingui efecte."
 
-#: ../gnome-panel/panel-global.schemas.in.h:25
+#: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
 "Si és cert, es mostraran rètols indicadors per als objectes en els quadres."
 
-#: ../gnome-panel/panel-global.schemas.in.h:26
-msgid "Popup panel menu keybinding"
-msgstr "Mostra el vincle de tecla del menú del quadre"
+#: ../gnome-panel/panel-menu-bar.c:79
+msgid "Applications"
+msgstr "Aplicacions"
 
-#: ../gnome-panel/panel-global.schemas.in.h:27
-msgid "Take screenshot"
-msgstr "Fes una captura de pantalla"
+#: ../gnome-panel/panel-menu-bar.c:298 ../gnome-panel/panel-menu-button.c:691
+msgid "_Edit Menus"
+msgstr "_Edita els menús"
 
-#: ../gnome-panel/panel-global.schemas.in.h:28
-msgid "Take window screenshot"
-msgstr "Fes una captura de finestra"
-
-#: ../gnome-panel/panel-menu-bar.c:108 ../gnome-panel/panel-run-dialog.c:310
+#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "No es pot mostrar la ubicació «%s»"
 
-#: ../gnome-panel/panel-menu-bar.c:479
+#: ../gnome-panel/panel-menu-items.c:324
 msgid "Bookmarks"
 msgstr "Adreces d'interès"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-bar.c:500 ../gnome-panel/panel-recent.c:200
+#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "Obre «%s»"
 
-#: ../gnome-panel/panel-menu-bar.c:559
+#: ../gnome-panel/panel-menu-items.c:431
 msgid "Network Places"
 msgstr "Llocs de xarxa"
 
-#: ../gnome-panel/panel-menu-bar.c:561
+#: ../gnome-panel/panel-menu-items.c:433
 msgid "Removable Media"
 msgstr "Medis extraïbles"
 
-#. Translators: Desktop is
-#. * used here as in "Desktop
-#. * Folder" (this is not the
-#. * Desktop environment). Do
-#. * not keep "Desktop Folder|"
+#. Translators: Desktop is used here as in
+#. * "Desktop Folder" (this is not the Desktop
+#. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-bar.c:620
+#: ../gnome-panel/panel-menu-items.c:491
 msgid "Desktop Folder|Desktop"
 msgstr "Escriptori"
 
-#: ../gnome-panel/panel-menu-bar.c:621
+#: ../gnome-panel/panel-menu-items.c:492
 msgid "Open the desktop as a folder"
 msgstr "Obre l'escriptori com a carpeta"
 
-#: ../gnome-panel/panel-menu-bar.c:800
+#: ../gnome-panel/panel-menu-items.c:824
 msgid "Places"
 msgstr "Llocs"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-bar.c:809
+#: ../gnome-panel/panel-menu-items.c:862
 msgid "Desktop Environment|Desktop"
 msgstr "Escriptori"
+
+#: ../gnome-panel/panel-menu-items.c:1003
+msgid "Cannot launch entry"
+msgstr "No es pot llançar l'entrada"
+
+#: ../gnome-panel/panel-menu-items.c:1015
+msgid "Cannot load entry"
+msgstr "No es pot carregar l'entrada"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1883,19 +1877,19 @@ msgid "Use custom path for menu contents"
 msgstr "Utilitza un camí personalitzat per als continguts del menú"
 
 #: ../gnome-panel/panel-profile.c:743 ../gnome-panel/panel-profile.c:770
-#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1611
+#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1632
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr ""
 "S'ha produït un error en llegir el valor GConf de tipus cadena «%s»: %s"
 
-#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1509
-#: ../gnome-panel/panel-profile.c:1580 ../gnome-panel/panel-profile.c:1643
+#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1528
+#: ../gnome-panel/panel-profile.c:1601 ../gnome-panel/panel-profile.c:1664
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "S'ha produït un error en llegir el valor GConf de tipus enter «%s»: %s"
 
-#: ../gnome-panel/panel-profile.c:1519
+#: ../gnome-panel/panel-profile.c:1538
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1904,7 +1898,7 @@ msgstr ""
 "El quadre «%s» està establert per a mostrar-se a la pantalla %d que no està "
 "actualment disponible. No es carrega aquest quadre."
 
-#: ../gnome-panel/panel-profile.c:1595
+#: ../gnome-panel/panel-profile.c:1616
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr ""
@@ -2049,11 +2043,11 @@ msgstr "No es pot obrir el document utilitzat recentment"
 msgid "An unknown error occurred while trying to open %s"
 msgstr "S'ha produït un error desconegut en intentar obrir %s"
 
-#: ../gnome-panel/panel-recent.c:155
+#: ../gnome-panel/panel-recent.c:152
 msgid "Clear the Recent Documents list?"
 msgstr "Voleu netejar la llista de documents recents?"
 
-#: ../gnome-panel/panel-recent.c:157
+#: ../gnome-panel/panel-recent.c:154
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
@@ -2066,43 +2060,43 @@ msgstr ""
 "• Tots els elements de la llista de documents recents de totes les "
 "aplicacions."
 
-#: ../gnome-panel/panel-recent.c:222
+#: ../gnome-panel/panel-recent.c:221
 msgid "Recent Documents"
 msgstr "Documents recents"
 
-#: ../gnome-panel/panel-recent.c:251
+#: ../gnome-panel/panel-recent.c:262
 msgid "Clear Recent Documents"
 msgstr "Neteja la llista de documents recents"
 
-#: ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:266
 msgid "Clear all items from the recent documents list"
 msgstr "Voleu netejar tots els elements de la llista de documents recents?"
 
-#: ../gnome-panel/panel-run-dialog.c:284
+#: ../gnome-panel/panel-run-dialog.c:287
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "No es pot llançar l'ordre «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:362
+#: ../gnome-panel/panel-run-dialog.c:365
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "No es pot convertir «%s» des d'UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1067
+#: ../gnome-panel/panel-run-dialog.c:1112
 msgid "Choose a file to append to the command..."
 msgstr "Seleccioneu un fitxer a afegir a l'ordre..."
 
-#: ../gnome-panel/panel-run-dialog.c:1414
+#: ../gnome-panel/panel-run-dialog.c:1468
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "S'executarà l'ordre: «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:1421
+#: ../gnome-panel/panel-run-dialog.c:1475
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Seleccioneu una aplicació per a veure'n la seva descripció."
 
-#: ../gnome-panel/panel-run-dialog.c:1456
+#: ../gnome-panel/panel-run-dialog.c:1510
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2203,75 +2197,79 @@ msgstr "_Neteja"
 msgid "D_on't Delete"
 msgstr "N_o suprimeixis"
 
-#: ../gnome-panel/panel-toplevel.c:1121
+#: ../gnome-panel/panel-toplevel.c:1120
 msgid "Hide Panel"
 msgstr "Amaga el quadre"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1502
+#: ../gnome-panel/panel-toplevel.c:1501
 msgid "Top Expanded Edge Panel"
 msgstr "Quadre cantoner expandit superior"
 
-#: ../gnome-panel/panel-toplevel.c:1503
+#: ../gnome-panel/panel-toplevel.c:1502
 msgid "Top Centered Panel"
 msgstr "Quadre centrat superior"
 
-#: ../gnome-panel/panel-toplevel.c:1504
+#: ../gnome-panel/panel-toplevel.c:1503
 msgid "Top Floating Panel"
 msgstr "Quadre flotant superior"
 
-#: ../gnome-panel/panel-toplevel.c:1505
+#: ../gnome-panel/panel-toplevel.c:1504
 msgid "Top Edge Panel"
 msgstr "Quadre cantoner superior"
 
-#: ../gnome-panel/panel-toplevel.c:1509
+#: ../gnome-panel/panel-toplevel.c:1508
 msgid "Bottom Expanded Edge Panel"
 msgstr "Quadre cantoner expandit inferior"
 
-#: ../gnome-panel/panel-toplevel.c:1510
+#: ../gnome-panel/panel-toplevel.c:1509
 msgid "Bottom Centered Panel"
 msgstr "Quadre centrat inferior"
 
-#: ../gnome-panel/panel-toplevel.c:1511
+#: ../gnome-panel/panel-toplevel.c:1510
 msgid "Bottom Floating Panel"
 msgstr "Quadre flotant inferior"
 
-#: ../gnome-panel/panel-toplevel.c:1512
+#: ../gnome-panel/panel-toplevel.c:1511
 msgid "Bottom Edge Panel"
 msgstr "Quadre cantoner inferior"
 
-#: ../gnome-panel/panel-toplevel.c:1516
+#: ../gnome-panel/panel-toplevel.c:1515
 msgid "Left Expanded Edge Panel"
 msgstr "Quadre cantoner expandit a l'esquerre"
 
-#: ../gnome-panel/panel-toplevel.c:1517
+#: ../gnome-panel/panel-toplevel.c:1516
 msgid "Left Centered Panel"
 msgstr "Quadre centrat a l'esquerre"
 
-#: ../gnome-panel/panel-toplevel.c:1518
+#: ../gnome-panel/panel-toplevel.c:1517
 msgid "Left Floating Panel"
 msgstr "Quadre flotant a l'esquerre"
 
-#: ../gnome-panel/panel-toplevel.c:1519
+#: ../gnome-panel/panel-toplevel.c:1518
 msgid "Left Edge Panel"
 msgstr "Quadre cantoner a l'esquerre"
 
-#: ../gnome-panel/panel-toplevel.c:1523
+#: ../gnome-panel/panel-toplevel.c:1522
 msgid "Right Expanded Edge Panel"
 msgstr "Quadre cantoner expandit a la dreta"
 
-#: ../gnome-panel/panel-toplevel.c:1524
+#: ../gnome-panel/panel-toplevel.c:1523
 msgid "Right Centered Panel"
 msgstr "Quadre centrat a la dreta"
 
-#: ../gnome-panel/panel-toplevel.c:1525
+#: ../gnome-panel/panel-toplevel.c:1524
 msgid "Right Floating Panel"
 msgstr "Quadre flotant a la dreta"
 
-#: ../gnome-panel/panel-toplevel.c:1526
+#: ../gnome-panel/panel-toplevel.c:1525
 msgid "Right Edge Panel"
 msgstr "Quadre cantoner a la dreta"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "Velocitat de l'animació:"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
@@ -2614,25 +2612,25 @@ msgstr "El monitor Xinerama on es mostra el quadre"
 msgid "Y co-ordinate of panel"
 msgstr "La coordenada Y del quadre"
 
-#: ../gnome-panel/panel-util.c:65
+#: ../gnome-panel/panel-util.c:89
 msgid "Cannot display help document"
 msgstr "No es pot mostrar el document d'ajuda"
 
-#: ../gnome-panel/panel-util.c:255
+#: ../gnome-panel/panel-util.c:311
 #, c-format
 msgid "Details: %s"
 msgstr "Detalls: %s"
 
-#: ../gnome-panel/panel.c:473
+#: ../gnome-panel/panel.c:477
 #, c-format
 msgid "Open URL: %s"
 msgstr "Obre URL: %s"
 
-#: ../gnome-panel/panel.c:1254
+#: ../gnome-panel/panel.c:1265
 msgid "Delete this drawer?"
 msgstr "Voleu suprimir aquest calaix?"
 
-#: ../gnome-panel/panel.c:1255
+#: ../gnome-panel/panel.c:1266
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2640,15 +2638,15 @@ msgstr ""
 "Quan es suprimeix un calaix, el calaix i la seva\n"
 "configuració es perden."
 
-#: ../gnome-panel/panel.c:1257
+#: ../gnome-panel/panel.c:1268
 msgid "Delete Drawer"
 msgstr "Suprimeix el calaix"
 
-#: ../gnome-panel/panel.c:1259
+#: ../gnome-panel/panel.c:1270
 msgid "Delete this panel?"
 msgstr "Voleu suprimir aquest quadre?"
 
-#: ../gnome-panel/panel.c:1260
+#: ../gnome-panel/panel.c:1271
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2656,7 +2654,7 @@ msgstr ""
 "Quan es suprimeix un quadre, el quadre i la seva\n"
 "configuració es perden."
 
-#: ../gnome-panel/panel.c:1262
+#: ../gnome-panel/panel.c:1273
 msgid "Delete Panel"
 msgstr "Suprimeix el quadre"
 
@@ -2783,6 +2781,32 @@ msgstr "Mini_aplicació:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Directori de les _preferències:"
+
+#~ msgid "Display \"Run Application\" dialog keybinding"
+#~ msgstr "Mostra el vincle de tecles «Executa un programa»"
+
+#~ msgid "Enable keybindings"
+#~ msgstr "Habilita les tecles vinculades"
+
+#~ msgid "FIXME - is this resolved with the new menu stuff"
+#~ msgstr "FIXME - està açò resolt amb les coses noves dels menús?"
+
+#~ msgid "FIXME - need to define limits"
+#~ msgstr "FIXME - necessitem definir els límits"
+
+#~ msgid "If true, panel-specific keybindings are enabled."
+#~ msgstr ""
+#~ "Si és cert, els vincles de tecles específics del quadre estaran "
+#~ "habilitats."
+
+#~ msgid "Popup panel menu keybinding"
+#~ msgstr "Mostra el vincle de tecla del menú del quadre"
+
+#~ msgid "Take screenshot"
+#~ msgstr "Fes una captura de pantalla"
+
+#~ msgid "Take window screenshot"
+#~ msgstr "Fes una captura de finestra"
 
 #~ msgid "Unable to get the name of the command to execute"
 #~ msgstr "No s'ha pogut obtenir el nom de l'ordre a executar"
@@ -4278,9 +4302,6 @@ msgstr "Directori de les _preferències:"
 # De veres aquesta gent parla així? iv
 #~ msgid "Can't open directory, using main menu!"
 #~ msgstr "No es pot obrir el directori, empreant el menú principal!"
-
-#~ msgid "Edit menus..."
-#~ msgstr "Edita els menús..."
 
 # Solució de compromís! Ha de valdre per totes dues. iv
 #~ msgid "Off"
