@@ -248,16 +248,59 @@ get_itime (time_t current_time)
 	return itime;
 }
 
+/* adapted from panel-toplevel.c */
+static int
+calculate_minimum_height (GtkWidget        *widget,
+                          PanelAppletOrient orientation)
+{
+        PangoContext     *context;
+        PangoFontMetrics *metrics;
+        int               focus_width = 0;
+        int               focus_pad = 0;
+        int               ascent;
+        int               descent;
+        int               thickness;
+  
+        context = gtk_widget_get_pango_context (widget);
+        metrics = pango_context_get_metrics (context,
+                                             widget->style->font_desc,
+                                             pango_context_get_language (context));
+  
+        ascent  = pango_font_metrics_get_ascent  (metrics);
+        descent = pango_font_metrics_get_descent (metrics);
+  
+        pango_font_metrics_unref (metrics);
+
+        gtk_widget_style_get (widget,
+                              "focus-line-width", &focus_width,
+                              "focus-padding", &focus_pad,
+                              NULL);
+
+        if (orientation == PANEL_APPLET_ORIENT_UP
+            || orientation == PANEL_APPLET_ORIENT_DOWN) {
+                thickness = widget->style->ythickness;
+        } else {
+                thickness = widget->style->xthickness;
+        }
+
+        return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad + thickness);
+}
+
+static gboolean
+use_two_line_format (ClockData *cd)
+{
+        if (cd->size >= 2 * calculate_minimum_height (cd->applet, cd->orient))
+                return TRUE;
+
+        return FALSE;
+}
+
 static void
 update_timeformat (ClockData *cd)
 {
  /* Show date in another line if panel is vertical, or
   * horizontal but large enough to hold two lines of text
   */
-#define USE_TWO_LINE_FORMAT(cd) ((cd)->orient == PANEL_APPLET_ORIENT_LEFT  || \
-                                 (cd)->orient == PANEL_APPLET_ORIENT_RIGHT || \
-                                 (cd)->size >= GNOME_Vertigo_PANEL_MEDIUM)
-
 	const char *time_format;
 	const char *date_format;
 	char       *clock_format;
@@ -278,7 +321,7 @@ update_timeformat (ClockData *cd)
 		 */
 		date_format = _("%a %b %e");
 
-		if (USE_TWO_LINE_FORMAT (cd))
+		if (use_two_line_format (cd))
 			/* translators: reverse the order of these arguments
 			 *              if the time should come before the
 			 *              date on a clock in your locale.
@@ -301,8 +344,6 @@ update_timeformat (ClockData *cd)
 		cd->timeformat = g_strdup ("???");
 
 	g_free (clock_format);
-
-#undef USE_TWO_LINE_FORMAT
 }
 
 /* sets accessible name and description for the widget */
@@ -339,9 +380,7 @@ update_clock (ClockData * cd)
 		tm = localtime (&cd->current_time);
 
 	if (cd->format == CLOCK_FORMAT_UNIX) {
-		if ((cd->orient == PANEL_APPLET_ORIENT_LEFT ||
-		     cd->orient == PANEL_APPLET_ORIENT_RIGHT) &&
-		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM) {
+		if (use_two_line_format (cd)) {
 			g_snprintf (hour, sizeof(hour), "%lu\n%05lu",
 				    (unsigned long)(cd->current_time / 100000L),
 				    (unsigned long)(cd->current_time % 100000L));
@@ -1589,7 +1628,6 @@ create_clock_widget (ClockData *cd)
 				  G_CALLBACK (unfix_size),
 				  cd);
 	gtk_label_set_justify (GTK_LABEL (clock), GTK_JUSTIFY_CENTER);
-	gtk_label_set_line_wrap (GTK_LABEL (clock), TRUE);
 	gtk_widget_show (clock);
 
 	toggle = gtk_toggle_button_new ();
@@ -1619,6 +1657,15 @@ create_clock_widget (ClockData *cd)
 	cd->props = NULL;
 
 	cd->orient = panel_applet_get_orient (PANEL_APPLET (cd->applet));
+
+	/* Initialize label orientation */
+	if (cd->orient == PANEL_APPLET_ORIENT_LEFT)
+		gtk_label_set_angle (GTK_LABEL (cd->clockw), 270);
+	else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT)
+		gtk_label_set_angle (GTK_LABEL (cd->clockw), 90);
+	else
+		gtk_label_set_angle (GTK_LABEL (cd->clockw), 0);
+
 	cd->size = panel_applet_get_size (PANEL_APPLET (cd->applet));
 
 	g_signal_connect (G_OBJECT(clock), "destroy",
@@ -1639,10 +1686,17 @@ applet_change_orient (PanelApplet       *applet,
 		      PanelAppletOrient  orient,
 		      ClockData         *cd)
 {
-	cd->orient = orient;
-
+        cd->orient = orient;
+        
+        if (cd->orient == PANEL_APPLET_ORIENT_LEFT)
+                gtk_label_set_angle (GTK_LABEL (cd->clockw), 270);
+        else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT)
+                gtk_label_set_angle (GTK_LABEL (cd->clockw), 90);
+        else
+                gtk_label_set_angle (GTK_LABEL (cd->clockw), 0);
+	
         unfix_size (cd);
-	update_clock (cd);
+        update_clock (cd);
         update_popup (cd);
 }
 

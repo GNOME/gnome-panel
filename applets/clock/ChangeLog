@@ -1,3 +1,15 @@
+2005-09-15  William Jon McCann  <mccann@jhu.edu>
+
+	* clock.c (calculate_minimum_height, use_two_line_format) 
+	(update_timeformat, update_clock, create_clock_widget) 
+	(applet_change_orient): Orient the text vertically on
+	vertical panels.  Only use multiple lines when there
+	is enough space two fit two lines.
+	
+	Based on patches from John Spray <jcs116@york.ac.uk>
+	and Callum McKenzie <callum@physics.otago.ac.nz>
+	Fixes #313807.
+
 ==================== 2.12.0 ====================
 
 ==================== 2.11.92 ====================
