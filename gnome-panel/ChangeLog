@@ -1,3 +1,17 @@
+2005-09-15  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-menu-items.c: (panel_menu_items_append_from_desktop): add an
+	argument to force a name for the item
+	(panel_place_menu_item_create_menu): if set, use the name the user has
+	set for the home folder and computer
+	(panel_place_menu_item_is_home_dir_changed): renamed to
+	panel_place_menu_item_key_changed()
+	(panel_desktop_menu_item_append_menu): updated
+	(panel_place_menu_item_finalize): we now also watch NAMES_DIR
+	(panel_place_menu_item_instance_init): ditto, plus we recreate the
+	menu if the name of home or computer has changed
+	Fix bug #309853
+
 ==================== 2.12.0 ====================
 
 2005-08-24  Vincent Untz  <vuntz@gnome.org>

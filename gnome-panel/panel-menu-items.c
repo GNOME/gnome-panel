@@ -52,6 +52,9 @@
 #define BOOKMARKS_FILENAME      ".gtk-bookmarks"
 #define DESKTOP_IS_HOME_DIR_DIR "/apps/nautilus/preferences"
 #define DESKTOP_IS_HOME_DIR_KEY "/apps/nautilus/preferences/desktop_is_home_dir"
+#define NAMES_DIR               "/apps/nautilus/desktop"
+#define HOME_NAME_KEY           "/apps/nautilus/desktop/home_icon_name"
+#define COMPUTER_NAME_KEY       "/apps/nautilus/desktop/computer_icon_name"
 #define MAX_ITEMS_OR_SUBMENU    5
 
 #define PANEL_PLACE_MENU_ITEM_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_PLACE_MENU_ITEM, PanelPlaceMenuItemPrivate))
@@ -115,7 +118,8 @@ activate_uri (GtkWidget *menuitem,
  
 static void
 panel_menu_items_append_from_desktop (GtkWidget *menu,
-				      char      *path)
+				      char      *path,
+				      char      *force_name)
 {
 	GKeyFile  *key_file;
 	gboolean   loaded;
@@ -166,10 +170,14 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 
 	icon    = g_key_file_get_locale_string (key_file, "Desktop Entry",
 						"Icon", NULL, NULL);
-	name    = g_key_file_get_locale_string (key_file, "Desktop Entry",
-						"Name", NULL, NULL);
 	comment = g_key_file_get_locale_string (key_file, "Desktop Entry",
 						"Comment", NULL, NULL);
+
+	if (string_empty (force_name))
+		name = g_key_file_get_locale_string (key_file, "Desktop Entry",
+						     "Name", NULL, NULL);
+	else
+		name = g_strdup (force_name);
 
 	item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
@@ -473,11 +481,18 @@ panel_place_menu_item_create_menu (EggRecentViewGtk **recent_view)
 {
 	GtkWidget *places_menu;
 	GtkWidget *item;
+	char      *gconf_name;
 
 	places_menu = panel_create_menu ();
 
+	gconf_name = gconf_client_get_string (panel_gconf_get_client (),
+					      HOME_NAME_KEY,
+					      NULL);
 	panel_menu_items_append_from_desktop (places_menu,
-					      "nautilus-home.desktop");
+					      "nautilus-home.desktop",
+					      gconf_name);
+	if (gconf_name)
+		g_free (gconf_name);
 
 	if (!gconf_client_get_bool (panel_gconf_get_client (),
 				    DESKTOP_IS_HOME_DIR_KEY,
@@ -497,13 +512,21 @@ panel_place_menu_item_create_menu (EggRecentViewGtk **recent_view)
 	panel_place_menu_item_append_gtk_bookmarks (places_menu);
 	add_menu_separator (places_menu);
 
+	gconf_name = gconf_client_get_string (panel_gconf_get_client (),
+					      COMPUTER_NAME_KEY,
+					      NULL);
 	panel_menu_items_append_from_desktop (places_menu,
-					      "nautilus-computer.desktop");
+					      "nautilus-computer.desktop",
+					      gconf_name);
+	if (gconf_name)
+		g_free (gconf_name);
+
 	panel_place_menu_item_append_volumes (places_menu, FALSE);
 	add_menu_separator (places_menu);
 
 	panel_menu_items_append_from_desktop (places_menu,
-					      "network-scheme.desktop");
+					      "network-scheme.desktop",
+					      NULL);
 	panel_place_menu_item_append_volumes (places_menu, TRUE);
 
 	if (panel_is_program_in_path ("nautilus-connect-server")) {
@@ -516,7 +539,8 @@ panel_place_menu_item_create_menu (EggRecentViewGtk **recent_view)
 	add_menu_separator (places_menu);
 
 	panel_menu_items_append_from_desktop (places_menu,
-					      "gnome-search-tool.desktop");
+					      "gnome-search-tool.desktop",
+					      NULL);
 
 	*recent_view = panel_recent_append_documents_menu (places_menu,
 							   *recent_view);
@@ -543,10 +567,10 @@ panel_place_menu_item_recreate_menu (GtkWidget *widget)
 }
 
 static void
-panel_place_menu_item_is_home_dir_changed (GConfClient *client,
-					   guint        cnxn_id,
-					   GConfEntry  *entry,
-					   GtkWidget   *place_item)
+panel_place_menu_item_key_changed (GConfClient *client,
+				   guint        cnxn_id,
+				   GConfEntry  *entry,
+				   GtkWidget   *place_item)
 {
 	panel_place_menu_item_recreate_menu (place_item);
 }
@@ -600,8 +624,8 @@ panel_desktop_menu_item_append_menu (GtkWidget            *menu,
 			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	}
 
-	panel_menu_items_append_from_desktop (menu, "yelp.desktop");
-	panel_menu_items_append_from_desktop (menu, "gnome-about.desktop");
+	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL);
+	panel_menu_items_append_from_desktop (menu, "gnome-about.desktop", NULL);
 
 	if (parent->priv->append_lock_logout)
 		panel_menu_items_append_lock_logout (menu);
@@ -642,6 +666,9 @@ panel_place_menu_item_finalize (GObject *object)
 
 	gconf_client_remove_dir (panel_gconf_get_client (),
 				 DESKTOP_IS_HOME_DIR_DIR,
+				 NULL);
+	gconf_client_remove_dir (panel_gconf_get_client (),
+				 NAMES_DIR,
 				 NULL);
 
 	if (menuitem->priv->recent_view != NULL)
@@ -689,9 +716,19 @@ panel_place_menu_item_instance_init (PanelPlaceMenuItem      *menuitem,
 			      DESKTOP_IS_HOME_DIR_DIR,
 			      GCONF_CLIENT_PRELOAD_NONE,
 			      NULL);
+	gconf_client_add_dir (panel_gconf_get_client (),
+			      NAMES_DIR,
+			      GCONF_CLIENT_PRELOAD_NONE,
+			      NULL);
 
+	panel_gconf_notify_add_while_alive (HOME_NAME_KEY,
+					    (GConfClientNotifyFunc) panel_place_menu_item_key_changed,
+					    G_OBJECT (menuitem));
 	panel_gconf_notify_add_while_alive (DESKTOP_IS_HOME_DIR_KEY,
-					    (GConfClientNotifyFunc) panel_place_menu_item_is_home_dir_changed,
+					    (GConfClientNotifyFunc) panel_place_menu_item_key_changed,
+					    G_OBJECT (menuitem));
+	panel_gconf_notify_add_while_alive (COMPUTER_NAME_KEY,
+					    (GConfClientNotifyFunc) panel_place_menu_item_key_changed,
 					    G_OBJECT (menuitem));
 
 	bookmarks_filename = g_build_filename (g_get_home_dir (),
