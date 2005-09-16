@@ -1,3 +1,10 @@
+2005-09-16  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-background-monitor.c: (panel_background_monitor_finalize):
+	chain to parent class finalize
+	(panel_background_monitor_class_init): get parent class
+	Fix bug #307553.
+
 2005-09-15  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-menu-items.c: (panel_menu_items_append_from_desktop): add an

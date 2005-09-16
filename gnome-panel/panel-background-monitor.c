@@ -68,6 +68,8 @@ struct _PanelBackgroundMonitor {
 	gboolean   display_grabbed;
 };
 
+static GObjectClass *parent_class;
+
 static PanelBackgroundMonitor **global_background_monitors = NULL;
 
 static guint signals [LAST_SIGNAL] = { 0 };
@@ -89,12 +91,16 @@ panel_background_monitor_finalize (GObject *object)
 	if (monitor->gdkpixbuf)
 		g_object_unref (monitor->gdkpixbuf);
 	monitor->gdkpixbuf = NULL;
+
+	parent_class->finalize (object);
 }
 
 static void
 panel_background_monitor_class_init (PanelBackgroundMonitorClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	parent_class = g_type_class_peek_parent (klass);
 
 	signals [CHANGED] = 
 		g_signal_new ("changed",
