@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-30 15:26+0000\n"
+"POT-Creation-Date: 2005-09-16 21:19+0200\n"
 "PO-Revision-Date: 2005-07-31 00:14+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -64,7 +64,7 @@ msgid "_Preferences"
 msgstr "首选项(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2663
+#: ../applets/clock/clock.c:2725
 msgid "Clock"
 msgstr "时钟"
 
@@ -80,20 +80,20 @@ msgstr "创建时钟小程序的车间。"
 msgid "Get the current time and date"
 msgstr "获取当前时间和日期"
 
-#: ../applets/clock/clock.c:266
+#: ../applets/clock/clock.c:309
 msgid "%l:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
+#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
-#: ../applets/clock/clock.c:1730
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
+#: ../applets/clock/clock.c:1784
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -102,7 +102,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:279
+#: ../applets/clock/clock.c:322
 msgid "%a %b %e"
 msgstr "%-m月%-d日%A"
 
@@ -110,7 +110,7 @@ msgstr "%-m月%-d日%A"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:286
+#: ../applets/clock/clock.c:329
 #, c-format
 msgid ""
 "%1$s\n"
@@ -123,78 +123,78 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:293
+#: ../applets/clock/clock.c:336
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:378
+#: ../applets/clock/clock.c:417
 msgid "%A %B %d"
 msgstr "%-m月%-d日%A"
 
-#: ../applets/clock/clock.c:390
+#: ../applets/clock/clock.c:429
 msgid "Click to view your appointments and tasks"
 msgstr "单击可查看您的约会和任务"
 
-#: ../applets/clock/clock.c:392
+#: ../applets/clock/clock.c:431
 msgid "Click to view month calendar"
 msgstr "单击可查看月历"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:598
+#: ../applets/clock/clock.c:637
 msgid "%b %d"
 msgstr "%-m月%-d日"
 
-#: ../applets/clock/clock.c:925
+#: ../applets/clock/clock.c:964
 msgid "Tasks"
 msgstr "任务"
 
-#: ../applets/clock/clock.c:1077
+#: ../applets/clock/clock.c:1116
 msgid "All Day"
 msgstr "全天"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1155
 msgid "Appointments"
 msgstr "约会"
 
-#: ../applets/clock/clock.c:1348
+#: ../applets/clock/clock.c:1387
 msgid "Calendar"
 msgstr "日历"
 
-#: ../applets/clock/clock.c:1629
+#: ../applets/clock/clock.c:1676
 msgid "Computer Clock"
 msgstr "计算机时钟"
 
-#: ../applets/clock/clock.c:1723
+#: ../applets/clock/clock.c:1777
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1725
+#: ../applets/clock/clock.c:1779
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:1767
+#: ../applets/clock/clock.c:1821
 msgid "%A, %B %d %Y"
 msgstr "%Y年%-m月%-d日%A"
 
-#: ../applets/clock/clock.c:1816
+#: ../applets/clock/clock.c:1878
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "启动时间配置工具失败：%s"
 
-#: ../applets/clock/clock.c:1852
+#: ../applets/clock/clock.c:1914
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "找不到用于配置日期和时间的程序。可能没有安装？"
 
-#: ../applets/clock/clock.c:2324
+#: ../applets/clock/clock.c:2386
 msgid "Custom format"
 msgstr "自定义格式"
 
-#: ../applets/clock/clock.c:2445 ../applets/clock/clock.c:2622
+#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -202,52 +202,52 @@ msgstr "自定义格式"
 msgid "There was an error displaying help: %s"
 msgstr "显示帮助时发生错误：%s"
 
-#: ../applets/clock/clock.c:2480
+#: ../applets/clock/clock.c:2542
 msgid "Clock Preferences"
 msgstr "时钟首选项"
 
-#: ../applets/clock/clock.c:2504
+#: ../applets/clock/clock.c:2566
 msgid "Clock _type:"
 msgstr "时钟类型(_T)："
 
-#: ../applets/clock/clock.c:2514
+#: ../applets/clock/clock.c:2576
 msgid "12 hour"
 msgstr "12 小时"
 
-#: ../applets/clock/clock.c:2515
+#: ../applets/clock/clock.c:2577
 msgid "24 hour"
 msgstr "24 小时"
 
-#: ../applets/clock/clock.c:2516
+#: ../applets/clock/clock.c:2578
 msgid "UNIX time"
 msgstr "UNIX 时间"
 
-#: ../applets/clock/clock.c:2517
+#: ../applets/clock/clock.c:2579
 msgid "Internet time"
 msgstr "Internet 时间"
 
-#: ../applets/clock/clock.c:2525
+#: ../applets/clock/clock.c:2587
 msgid "Custom _format:"
 msgstr "自定义格式(_F)："
 
-#: ../applets/clock/clock.c:2544
+#: ../applets/clock/clock.c:2606
 msgid "Show _seconds"
 msgstr "显示秒(_S)"
 
-#: ../applets/clock/clock.c:2553
+#: ../applets/clock/clock.c:2615
 msgid "Show _date"
 msgstr "显示日期(_D)"
 
-#: ../applets/clock/clock.c:2562
+#: ../applets/clock/clock.c:2624
 msgid "Use _UTC"
 msgstr "使用 _UTC"
 
-#: ../applets/clock/clock.c:2666
+#: ../applets/clock/clock.c:2728
 msgid "The Clock displays the current time and date"
 msgstr "时钟显示当前时间和日期"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2669 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -698,7 +698,7 @@ msgstr "工作区切换器"
 msgid "Failed to load %s: %s\n"
 msgstr "载入 %s 失败：%s\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:601
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:624
 msgid "Icon not found"
 msgstr "未找到图标"
 
@@ -1129,8 +1129,8 @@ msgstr "重启屏幕保护守护进程(_S)"
 #: ../gnome-panel/panel-action-button.c:206
 #: ../gnome-panel/panel-action-button.c:219
 #: ../gnome-panel/panel-action-button.c:243
-#: ../gnome-panel/panel-menu-bar.c:357 ../gnome-panel/panel-menu-button.c:1009
-#: ../gnome-panel/panel-util.c:725
+#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1010
+#: ../gnome-panel/panel-util.c:748
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "无法执行“%s”"
@@ -1573,26 +1573,26 @@ msgstr "应用程序"
 msgid "_Edit Menus"
 msgstr "编辑菜单(_E)"
 
-#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "无法显示位置“%s”"
 
-#: ../gnome-panel/panel-menu-items.c:324
+#: ../gnome-panel/panel-menu-items.c:332
 msgid "Bookmarks"
 msgstr "书签"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "打开“%s”"
 
-#: ../gnome-panel/panel-menu-items.c:431
+#: ../gnome-panel/panel-menu-items.c:439
 msgid "Network Places"
 msgstr "网络位置"
 
-#: ../gnome-panel/panel-menu-items.c:433
+#: ../gnome-panel/panel-menu-items.c:441
 msgid "Removable Media"
 msgstr "可移动介质"
 
@@ -1600,30 +1600,30 @@ msgstr "可移动介质"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:491
+#: ../gnome-panel/panel-menu-items.c:506
 msgid "Desktop Folder|Desktop"
 msgstr "桌面"
 
-#: ../gnome-panel/panel-menu-items.c:492
+#: ../gnome-panel/panel-menu-items.c:507
 msgid "Open the desktop as a folder"
 msgstr "将桌面以文件夹形式打开"
 
-#: ../gnome-panel/panel-menu-items.c:824
+#: ../gnome-panel/panel-menu-items.c:861
 msgid "Places"
 msgstr "位置"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:862
+#: ../gnome-panel/panel-menu-items.c:899
 msgid "Desktop Environment|Desktop"
 msgstr "桌面"
 
-#: ../gnome-panel/panel-menu-items.c:1003
+#: ../gnome-panel/panel-menu-items.c:1040
 msgid "Cannot launch entry"
 msgstr "无法调用项"
 
-#: ../gnome-panel/panel-menu-items.c:1015
+#: ../gnome-panel/panel-menu-items.c:1052
 msgid "Cannot load entry"
 msgstr "无法装入项"
 
@@ -1990,21 +1990,21 @@ msgstr "无法启动命令“%s”"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "无法从 UTF-8 转换“%s”"
 
-#: ../gnome-panel/panel-run-dialog.c:1112
+#: ../gnome-panel/panel-run-dialog.c:1116
 msgid "Choose a file to append to the command..."
 msgstr "选择追加到命令的文件..."
 
-#: ../gnome-panel/panel-run-dialog.c:1468
+#: ../gnome-panel/panel-run-dialog.c:1472
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "将运行命令：“%s”"
 
-#: ../gnome-panel/panel-run-dialog.c:1475
+#: ../gnome-panel/panel-run-dialog.c:1479
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "选择应用程序可查看其描述。"
 
-#: ../gnome-panel/panel-run-dialog.c:1510
+#: ../gnome-panel/panel-run-dialog.c:1514
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "拖放到运行对话框上的 URI 列表格式(%d)或长度(%d)不对\n"
@@ -2478,11 +2478,11 @@ msgstr "显示面板的 Xinerama 监视器"
 msgid "Y co-ordinate of panel"
 msgstr "面板的 Y 坐标"
 
-#: ../gnome-panel/panel-util.c:66
+#: ../gnome-panel/panel-util.c:89
 msgid "Cannot display help document"
 msgstr "无法显示帮助文档"
 
-#: ../gnome-panel/panel-util.c:288
+#: ../gnome-panel/panel-util.c:311
 #, c-format
 msgid "Details: %s"
 msgstr "细节：%s"
@@ -2637,33 +2637,3 @@ msgstr "小程序(_A)："
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "首选目录(_P)："
-
-#~ msgid "Display \"Run Application\" dialog keybinding"
-#~ msgstr "显示“运行应用程序”对话框按键绑定"
-
-#~ msgid "Enable keybindings"
-#~ msgstr "启用按键绑定"
-
-#~ msgid "FIXME - is this resolved with the new menu stuff"
-#~ msgstr "需修正 - 是否要通过新菜单项来解决"
-
-#~ msgid "FIXME - need to define limits"
-#~ msgstr "需修正 - 需要定义限制"
-
-#~ msgid "If true, panel-specific keybindings are enabled."
-#~ msgstr "如果为 true，将会启用面板特定的按键绑定。"
-
-#~ msgid "Popup panel menu keybinding"
-#~ msgstr "弹出面板菜单按键绑定"
-
-#~ msgid "Take screenshot"
-#~ msgstr "屏幕抓图"
-
-#~ msgid "Take window screenshot"
-#~ msgstr "抓取屏幕快照"
-
-#~ msgid "none"
-#~ msgstr "无"
-
-#~ msgid "file not found"
-#~ msgstr "找不到文件"

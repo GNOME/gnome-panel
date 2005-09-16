@@ -15,13 +15,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-15 06:36+0000\n"
+"POT-Creation-Date: 2005-09-16 21:19+0200\n"
 "PO-Revision-Date: 2005-08-15 08:08+0800\n"
 "Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
 "Language-Team: Chinese/Traditional <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -66,7 +66,7 @@ msgid "_Preferences"
 msgstr "偏好設定(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2671
+#: ../applets/clock/clock.c:2725
 msgid "Clock"
 msgstr "時鐘"
 
@@ -82,20 +82,20 @@ msgstr "產生時鐘面板程式的工廠。"
 msgid "Get the current time and date"
 msgstr "取得目前的時間及日期"
 
-#: ../applets/clock/clock.c:266
+#: ../applets/clock/clock.c:309
 msgid "%l:%M:%S %p"
 msgstr "%p %l:%M:%S"
 
-#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
+#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
 msgid "%l:%M %p"
 msgstr "%p %l:%M"
 
-#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
-#: ../applets/clock/clock.c:1730
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
+#: ../applets/clock/clock.c:1784
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -104,7 +104,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:279
+#: ../applets/clock/clock.c:322
 msgid "%a %b %e"
 msgstr "%-m月%-d日(%a)"
 
@@ -112,7 +112,7 @@ msgstr "%-m月%-d日(%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:286
+#: ../applets/clock/clock.c:329
 #, c-format
 msgid ""
 "%1$s\n"
@@ -125,78 +125,78 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:293
+#: ../applets/clock/clock.c:336
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:378
+#: ../applets/clock/clock.c:417
 msgid "%A %B %d"
 msgstr "%-m月%-d日(%A)"
 
-#: ../applets/clock/clock.c:390
+#: ../applets/clock/clock.c:429
 msgid "Click to view your appointments and tasks"
 msgstr "按下來顯示約會及工作"
 
-#: ../applets/clock/clock.c:392
+#: ../applets/clock/clock.c:431
 msgid "Click to view month calendar"
 msgstr "按下來顯示月曆"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:598
+#: ../applets/clock/clock.c:637
 msgid "%b %d"
 msgstr "%-d/%-m"
 
-#: ../applets/clock/clock.c:925
+#: ../applets/clock/clock.c:964
 msgid "Tasks"
 msgstr "工作"
 
-#: ../applets/clock/clock.c:1077
+#: ../applets/clock/clock.c:1116
 msgid "All Day"
 msgstr "整天"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1155
 msgid "Appointments"
 msgstr "約會"
 
-#: ../applets/clock/clock.c:1348
+#: ../applets/clock/clock.c:1387
 msgid "Calendar"
 msgstr "月曆"
 
-#: ../applets/clock/clock.c:1629
+#: ../applets/clock/clock.c:1676
 msgid "Computer Clock"
 msgstr "電腦時鐘"
 
-#: ../applets/clock/clock.c:1723
+#: ../applets/clock/clock.c:1777
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: ../applets/clock/clock.c:1725
+#: ../applets/clock/clock.c:1779
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
-#: ../applets/clock/clock.c:1767
+#: ../applets/clock/clock.c:1821
 msgid "%A, %B %d %Y"
 msgstr "%x(%A)"
 
-#: ../applets/clock/clock.c:1824
+#: ../applets/clock/clock.c:1878
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "無法執行時間設置工具：%s"
 
-#: ../applets/clock/clock.c:1860
+#: ../applets/clock/clock.c:1914
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "找不到任何設置日期及時間的程式。或許根本沒有安裝？"
 
-#: ../applets/clock/clock.c:2332
+#: ../applets/clock/clock.c:2386
 msgid "Custom format"
 msgstr "自訂格式"
 
-#: ../applets/clock/clock.c:2453 ../applets/clock/clock.c:2630
+#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -204,52 +204,52 @@ msgstr "自訂格式"
 msgid "There was an error displaying help: %s"
 msgstr "顯示說明文件時出現錯誤：%s"
 
-#: ../applets/clock/clock.c:2488
+#: ../applets/clock/clock.c:2542
 msgid "Clock Preferences"
 msgstr "時鐘偏好設定"
 
-#: ../applets/clock/clock.c:2512
+#: ../applets/clock/clock.c:2566
 msgid "Clock _type:"
 msgstr "時鐘類型(_T)："
 
-#: ../applets/clock/clock.c:2522
+#: ../applets/clock/clock.c:2576
 msgid "12 hour"
 msgstr "12 小時制"
 
-#: ../applets/clock/clock.c:2523
+#: ../applets/clock/clock.c:2577
 msgid "24 hour"
 msgstr "24 小時制"
 
-#: ../applets/clock/clock.c:2524
+#: ../applets/clock/clock.c:2578
 msgid "UNIX time"
 msgstr "UNIX 時間"
 
-#: ../applets/clock/clock.c:2525
+#: ../applets/clock/clock.c:2579
 msgid "Internet time"
 msgstr "Internet 時間"
 
-#: ../applets/clock/clock.c:2533
+#: ../applets/clock/clock.c:2587
 msgid "Custom _format:"
 msgstr "自訂格式(_F)："
 
-#: ../applets/clock/clock.c:2552
+#: ../applets/clock/clock.c:2606
 msgid "Show _seconds"
 msgstr "顯示秒數(_S)"
 
-#: ../applets/clock/clock.c:2561
+#: ../applets/clock/clock.c:2615
 msgid "Show _date"
 msgstr "顯示日期(_D)"
 
-#: ../applets/clock/clock.c:2570
+#: ../applets/clock/clock.c:2624
 msgid "Use _UTC"
 msgstr "使用世界協調時(_UTC)"
 
-#: ../applets/clock/clock.c:2674
+#: ../applets/clock/clock.c:2728
 msgid "The Clock displays the current time and date"
 msgstr "時鐘程式可顯示目前的時間及日期"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2677 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -1586,26 +1586,26 @@ msgstr "應用程式"
 msgid "_Edit Menus"
 msgstr "編輯選單(_E)"
 
-#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "無法顯示位置‘%s’"
 
-#: ../gnome-panel/panel-menu-items.c:324
+#: ../gnome-panel/panel-menu-items.c:332
 msgid "Bookmarks"
 msgstr "書籤"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "開啟‘%s’"
 
-#: ../gnome-panel/panel-menu-items.c:431
+#: ../gnome-panel/panel-menu-items.c:439
 msgid "Network Places"
 msgstr "網路位置"
 
-#: ../gnome-panel/panel-menu-items.c:433
+#: ../gnome-panel/panel-menu-items.c:441
 msgid "Removable Media"
 msgstr "抽取式媒體"
 
@@ -1613,30 +1613,30 @@ msgstr "抽取式媒體"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:491
+#: ../gnome-panel/panel-menu-items.c:506
 msgid "Desktop Folder|Desktop"
 msgstr "桌面"
 
-#: ../gnome-panel/panel-menu-items.c:492
+#: ../gnome-panel/panel-menu-items.c:507
 msgid "Open the desktop as a folder"
 msgstr "以資料夾形式開啟桌面"
 
-#: ../gnome-panel/panel-menu-items.c:824
+#: ../gnome-panel/panel-menu-items.c:861
 msgid "Places"
 msgstr "位置"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:862
+#: ../gnome-panel/panel-menu-items.c:899
 msgid "Desktop Environment|Desktop"
 msgstr "桌面"
 
-#: ../gnome-panel/panel-menu-items.c:1003
+#: ../gnome-panel/panel-menu-items.c:1040
 msgid "Cannot launch entry"
 msgstr "無法啟動該項目"
 
-#: ../gnome-panel/panel-menu-items.c:1015
+#: ../gnome-panel/panel-menu-items.c:1052
 msgid "Cannot load entry"
 msgstr "無法載入該項目"
 
@@ -2009,21 +2009,21 @@ msgstr "無法啟動‘%s’指令"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "無法由 UTF-8 轉換‘%s’"
 
-#: ../gnome-panel/panel-run-dialog.c:1112
+#: ../gnome-panel/panel-run-dialog.c:1116
 msgid "Choose a file to append to the command..."
 msgstr "在指令後附加檔案名稱..."
 
-#: ../gnome-panel/panel-run-dialog.c:1468
+#: ../gnome-panel/panel-run-dialog.c:1472
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "將會執行指令：‘%s’"
 
-#: ../gnome-panel/panel-run-dialog.c:1475
+#: ../gnome-panel/panel-run-dialog.c:1479
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "選取應用程式後可以顯示有關該程式的說明。"
 
-#: ../gnome-panel/panel-run-dialog.c:1510
+#: ../gnome-panel/panel-run-dialog.c:1514
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "拖曳到執行視窗的 URI 清單的格式 (%d) 或長度 (%d) 錯誤\n"
@@ -2660,4 +2660,3 @@ msgstr "面板程式(_A)："
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "偏好設定目錄(_P)："
-

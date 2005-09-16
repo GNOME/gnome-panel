@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-25 05:02+0300\n"
+"POT-Creation-Date: 2005-09-16 21:19+0200\n"
 "PO-Revision-Date: 2005-02-05 20:03+0200\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -61,7 +61,7 @@ msgstr "_Tietoja"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:740
-#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:225
+#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:291
 #: ../gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "O_hje"
@@ -81,7 +81,7 @@ msgstr "_Asetukset"
 # applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 # applets/gen_util/clock.c:1156
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2663
+#: ../applets/clock/clock.c:2725
 msgid "Clock"
 msgstr "Kello"
 
@@ -101,23 +101,23 @@ msgid "Get the current time and date"
 msgstr "Hae nykyinen aika ja päiväys"
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
-#: ../applets/clock/clock.c:266
+#: ../applets/clock/clock.c:309
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
 # applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
-#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
+#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
 # applets/gen_util/clock.c:157 applets/gen_util/clock.c:467
-#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 # applets/gen_util/clock.c:159 applets/gen_util/clock.c:469
-#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
-#: ../applets/clock/clock.c:1730
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
+#: ../applets/clock/clock.c:1784
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -127,7 +127,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:279
+#: ../applets/clock/clock.c:322
 msgid "%a %b %e"
 msgstr "%a %e. %Bta"
 
@@ -135,7 +135,7 @@ msgstr "%a %e. %Bta"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:286
+#: ../applets/clock/clock.c:329
 #, c-format
 msgid ""
 "%1$s\n"
@@ -148,75 +148,75 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:293
+#: ../applets/clock/clock.c:336
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 # applets/gen_util/clock.c:273
 #. Show date in tooltip
-#: ../applets/clock/clock.c:378
+#: ../applets/clock/clock.c:417
 msgid "%A %B %d"
 msgstr "%A %e. %Bta"
 
-#: ../applets/clock/clock.c:390
+#: ../applets/clock/clock.c:429
 msgid "Click to view your appointments and tasks"
 msgstr "Näytä tapaamisesi ja tehtäväsi napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:392
+#: ../applets/clock/clock.c:431
 msgid "Click to view month calendar"
 msgstr "Näytä kuukauden kalenteri napsauttamalla tästä"
 
 # applets/gen_util/clock.c:170 applets/gen_util/clock.c:173
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:598
+#: ../applets/clock/clock.c:637
 msgid "%b %d"
 msgstr "%d.%m."
 
-#: ../applets/clock/clock.c:925
+#: ../applets/clock/clock.c:964
 msgid "Tasks"
 msgstr "Tehtävät"
 
-#: ../applets/clock/clock.c:1077
+#: ../applets/clock/clock.c:1116
 msgid "All Day"
 msgstr "Koko päivä"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1155
 msgid "Appointments"
 msgstr "Tapaamiset"
 
-#: ../applets/clock/clock.c:1348
+#: ../applets/clock/clock.c:1387
 msgid "Calendar"
 msgstr "Kalenteri"
 
 # applets/gen_util/clock.c:378
-#: ../applets/clock/clock.c:1629
+#: ../applets/clock/clock.c:1676
 msgid "Computer Clock"
 msgstr "Tietokoneen kello"
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
-#: ../applets/clock/clock.c:1723
+#: ../applets/clock/clock.c:1777
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
 # applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
-#: ../applets/clock/clock.c:1725
+#: ../applets/clock/clock.c:1779
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 # applets/gen_util/clock.c:503
-#: ../applets/clock/clock.c:1767
+#: ../applets/clock/clock.c:1821
 msgid "%A, %B %d %Y"
 msgstr "%A %e. %Bta %Y"
 
 # gnome-panel/gnome-run.c:229 gnome-panel/gnome-run.c:246
-#: ../applets/clock/clock.c:1816
+#: ../applets/clock/clock.c:1878
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Ajan asetustyökalun käynnistys epäonnistui: %s"
 
-#: ../applets/clock/clock.c:1852
+#: ../applets/clock/clock.c:1914
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -224,7 +224,7 @@ msgstr ""
 "Päiväyksen ja ajan muuttamiseen käytettävää ohjelmaa ei löytynyt. Ehkäpä "
 "sitä ei ole asennettu?"
 
-#: ../applets/clock/clock.c:2324
+#: ../applets/clock/clock.c:2386
 msgid "Custom format"
 msgstr "Muu muoto"
 
@@ -232,7 +232,7 @@ msgstr "Muu muoto"
 # applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
 # applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 # applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
-#: ../applets/clock/clock.c:2445 ../applets/clock/clock.c:2622
+#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -241,57 +241,57 @@ msgid "There was an error displaying help: %s"
 msgstr "Ohjeen näyttämisessä tapahtui virhe: %s"
 
 # applets/gen_util/clock.c:916
-#: ../applets/clock/clock.c:2480
+#: ../applets/clock/clock.c:2542
 msgid "Clock Preferences"
 msgstr "Kellon asetukset"
 
 # applets/gen_util/clock.c:943
-#: ../applets/clock/clock.c:2504
+#: ../applets/clock/clock.c:2566
 msgid "Clock _type:"
 msgstr "Kellon t_yyppi:"
 
 # applets/gen_util/clock.c:953
-#: ../applets/clock/clock.c:2514
+#: ../applets/clock/clock.c:2576
 msgid "12 hour"
 msgstr "12-tuntinen"
 
 # applets/gen_util/clock.c:959
-#: ../applets/clock/clock.c:2515
+#: ../applets/clock/clock.c:2577
 msgid "24 hour"
 msgstr "24-tuntinen"
 
 # applets/gen_util/clock.c:964
-#: ../applets/clock/clock.c:2516
+#: ../applets/clock/clock.c:2578
 msgid "UNIX time"
 msgstr "Unix-aika"
 
 # applets/gen_util/clock.c:968
-#: ../applets/clock/clock.c:2517
+#: ../applets/clock/clock.c:2579
 msgid "Internet time"
 msgstr "Internet-aika"
 
 # applets/gen_util/clock.schemas.in.h:6
-#: ../applets/clock/clock.c:2525
+#: ../applets/clock/clock.c:2587
 msgid "Custom _format:"
 msgstr "Muu _muoto:"
 
 # applets/gen_util/clock.c:1005
-#: ../applets/clock/clock.c:2544
+#: ../applets/clock/clock.c:2606
 msgid "Show _seconds"
 msgstr "Näytä _sekunnit"
 
 # applets/gen_util/clock.c:1015
-#: ../applets/clock/clock.c:2553
+#: ../applets/clock/clock.c:2615
 msgid "Show _date"
 msgstr "_Näytä päiväys"
 
 # applets/gen_util/clock.c:1025
-#: ../applets/clock/clock.c:2562
+#: ../applets/clock/clock.c:2624
 msgid "Use _UTC"
 msgstr "Näytä _UTC-aikaa"
 
 # applets/gen_util/clock.c:1158
-#: ../applets/clock/clock.c:2666
+#: ../applets/clock/clock.c:2728
 msgid "The Clock displays the current time and date"
 msgstr "Kello näyttää nykyisen ajan ja päiväyksen"
 
@@ -299,7 +299,7 @@ msgstr "Kello näyttää nykyisen ajan ja päiväyksen"
 # applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 # gnome-panel/menu.c:242
 #. Translator credits
-#: ../applets/clock/clock.c:2669 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -825,7 +825,7 @@ msgstr "Tiedoston \"%s\" lataaminen epäonnistui: %s\n"
 
 # gnome-panel/panel-util.c:72 gnome-panel/panel-util.c:107
 # gnome-panel/panel-util.c:132
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:601
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:624
 msgid "Icon not found"
 msgstr "Kuvaketta ei löydy"
 
@@ -1020,8 +1020,7 @@ msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
 msgstr ""
-"Ikkunavalitsin näyttää kaikki ikkunat valikkona josta ikkunoita "
-"voi vaihtaa."
+"Ikkunavalitsin näyttää kaikki ikkunat valikkona josta ikkunoita voi vaihtaa."
 
 # applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1245
 # gnome-panel/panel-config.c:1427 gnome-panel/panel-util.c:241
@@ -1363,8 +1362,8 @@ msgstr "Käynnistä näytönsäästäjädemoni _uudelleen"
 #: ../gnome-panel/panel-action-button.c:206
 #: ../gnome-panel/panel-action-button.c:219
 #: ../gnome-panel/panel-action-button.c:243
-#: ../gnome-panel/panel-menu-bar.c:291 ../gnome-panel/panel-menu-button.c:1009
-#: ../gnome-panel/panel-util.c:725
+#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1010
+#: ../gnome-panel/panel-util.c:748
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Suorittaminen ei onnistunut: %s"
@@ -1707,8 +1706,7 @@ msgstr "Avaa sovellusluettelo \"Suorita sovellus\"-ikkunassa"
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
-"Jos tosi, \"Suorita sovellus\"-ikkunassa on käytössä automaattinen "
-"täydennys."
+"Jos tosi, \"Suorita sovellus\"-ikkunassa on käytössä automaattinen täydennys."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1869,38 +1867,38 @@ msgstr "Jos tosi, paneelien esineiden vinkit näkyvät."
 
 # gnome-panel/foobar-widget.c:697 gnome-panel/menu.c:2809
 # gnome-panel/menu.c:2815 gnome-panel/menu.c:3633
-#: ../gnome-panel/panel-menu-bar.c:71
+#: ../gnome-panel/panel-menu-bar.c:79
 msgid "Applications"
 msgstr "Sovellukset"
 
 # gnome-panel/distribution.c:26
-#: ../gnome-panel/panel-menu-bar.c:232 ../gnome-panel/panel-menu-button.c:691
+#: ../gnome-panel/panel-menu-bar.c:298 ../gnome-panel/panel-menu-button.c:691
 msgid "_Edit Menus"
 msgstr "_Muokkaa valikoita"
 
 # gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
 # gnome-panel/panel-util.c:49
-#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Sijaintia \"%s\" ei voi näyttää"
 
-#: ../gnome-panel/panel-menu-items.c:324
+#: ../gnome-panel/panel-menu-items.c:332
 msgid "Bookmarks"
 msgstr "Kirjanmerkit"
 
 # gnome-panel/panel.c:881
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "Avaa \"%s\""
 
-#: ../gnome-panel/panel-menu-items.c:431
+#: ../gnome-panel/panel-menu-items.c:439
 msgid "Network Places"
 msgstr "Verkkosijainnit"
 
-#: ../gnome-panel/panel-menu-items.c:433
+#: ../gnome-panel/panel-menu-items.c:441
 msgid "Removable Media"
 msgstr "Irrotettavat taltiot"
 
@@ -1908,32 +1906,32 @@ msgstr "Irrotettavat taltiot"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:491
+#: ../gnome-panel/panel-menu-items.c:506
 msgid "Desktop Folder|Desktop"
 msgstr "Työpöytä"
 
-#: ../gnome-panel/panel-menu-items.c:492
+#: ../gnome-panel/panel-menu-items.c:507
 msgid "Open the desktop as a folder"
 msgstr "Avaa työpöytä kansiona"
 
-#: ../gnome-panel/panel-menu-items.c:824
+#: ../gnome-panel/panel-menu-items.c:861
 msgid "Places"
 msgstr "Sijainnit"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:862
+#: ../gnome-panel/panel-menu-items.c:899
 msgid "Desktop Environment|Desktop"
 msgstr "Työpöytä"
 
 # gnome-panel/launcher.c:152
-#: ../gnome-panel/panel-menu-items.c:1003
+#: ../gnome-panel/panel-menu-items.c:1040
 msgid "Cannot launch entry"
 msgstr "Kohdan käynnistäminen ei onnistunut"
 
 # gnome-panel/gnome-run.c:849
-#: ../gnome-panel/panel-menu-items.c:1015
+#: ../gnome-panel/panel-menu-items.c:1052
 msgid "Cannot load entry"
 msgstr "Kohtaa ei voi ladata"
 
@@ -2343,22 +2341,22 @@ msgstr "Komentoa \"%s\" ei voi käynnistää"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Tekstiä \"%s\" ei voi muuntaa UTF-8:sta"
 
-#: ../gnome-panel/panel-run-dialog.c:1112
+#: ../gnome-panel/panel-run-dialog.c:1116
 msgid "Choose a file to append to the command..."
 msgstr "Valitse komennon perään liitettävä tiedosto..."
 
 # gnome-panel/gnome-run.c:1268
-#: ../gnome-panel/panel-run-dialog.c:1468
+#: ../gnome-panel/panel-run-dialog.c:1472
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Suorittaa komennon \"%s\""
 
-#: ../gnome-panel/panel-run-dialog.c:1475
+#: ../gnome-panel/panel-run-dialog.c:1479
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Katsele sovelluksen kuvausta valitsemalla se."
 
-#: ../gnome-panel/panel-run-dialog.c:1510
+#: ../gnome-panel/panel-run-dialog.c:1514
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2896,28 +2894,28 @@ msgstr "Paneelin y-koordinaatti"
 
 # gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
 # gnome-panel/panel-util.c:49
-#: ../gnome-panel/panel-util.c:66
+#: ../gnome-panel/panel-util.c:89
 msgid "Cannot display help document"
 msgstr "Ohjetta ei voi näyttää"
 
-#: ../gnome-panel/panel-util.c:288
+#: ../gnome-panel/panel-util.c:311
 #, c-format
 msgid "Details: %s"
 msgstr "Yksityiskohdat: %s"
 
 # gnome-panel/panel.c:881
-#: ../gnome-panel/panel.c:474
+#: ../gnome-panel/panel.c:477
 #, c-format
 msgid "Open URL: %s"
 msgstr "Avaa URL: %s"
 
 # gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
-#: ../gnome-panel/panel.c:1262
+#: ../gnome-panel/panel.c:1265
 msgid "Delete this drawer?"
 msgstr "Poistetaanko tämä laatikko?"
 
 # gnome-panel/menu.c:2964
-#: ../gnome-panel/panel.c:1263
+#: ../gnome-panel/panel.c:1266
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2926,17 +2924,17 @@ msgstr ""
 "asetukset häviävät."
 
 # gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
-#: ../gnome-panel/panel.c:1265
+#: ../gnome-panel/panel.c:1268
 msgid "Delete Drawer"
 msgstr "Poista laatikko"
 
 # gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
-#: ../gnome-panel/panel.c:1267
+#: ../gnome-panel/panel.c:1270
 msgid "Delete this panel?"
 msgstr "Poistetaanko tämä paneeli?"
 
 # gnome-panel/menu.c:2964
-#: ../gnome-panel/panel.c:1268
+#: ../gnome-panel/panel.c:1271
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2945,7 +2943,7 @@ msgstr ""
 "häviävät."
 
 # gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
-#: ../gnome-panel/panel.c:1270
+#: ../gnome-panel/panel.c:1273
 msgid "Delete Panel"
 msgstr "Poista paneeli"
 
@@ -3086,42 +3084,3 @@ msgstr "_Sovelma:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Asetuskansio:"
-
-# gnome-panel/panel-global-config.schemas.in.h:1
-#~ msgid "Display \"Run Application\" dialog keybinding"
-#~ msgstr "Näytä \"Suorita sovellus\"-ikkunan pikanäppäin"
-
-# applets/gen_util/mailcheck.c:1505
-#~ msgid "Enable keybindings"
-#~ msgstr "Käytä pikanäppäimiä"
-
-# gnome-panel/panel-global-config.schemas.in.h:2
-#~ msgid "FIXME - is this resolved with the new menu stuff"
-#~ msgstr "FIXME - ratkaiseeko uusi valikkokama tämän?"
-
-# gnome-panel/panel-global-config.schemas.in.h:3
-#~ msgid "FIXME - need to define limits"
-#~ msgstr "FIXME - rajat pitäisi määritellä"
-
-#~ msgid "If true, panel-specific keybindings are enabled."
-#~ msgstr "Jos tosi, paneelikohtaiset pikanäppäimet ovat käytössä."
-
-# gnome-panel/panel-global-config.schemas.in.h:4
-#~ msgid "Popup panel menu keybinding"
-#~ msgstr "Paneelivalikon avaava pikanäppäin"
-
-# gnome-panel/panel-global-config.schemas.in.h:5
-#~ msgid "Take screenshot"
-#~ msgstr "Ota kuvakaappaus"
-
-# gnome-panel/panel-global-config.schemas.in.h:5
-#~ msgid "Take window screenshot"
-#~ msgstr "Ota kuvakaappaus ikkunasta"
-
-#~ msgid "none"
-#~ msgstr "ei mikään"
-
-# gnome-panel/panel-util.c:72 gnome-panel/panel-util.c:107
-# gnome-panel/panel-util.c:132
-#~ msgid "file not found"
-#~ msgstr "tiedostoa ei löydy"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-03 14:30+0000\n"
+"POT-Creation-Date: 2005-09-16 21:19+0200\n"
 "PO-Revision-Date: 2005-08-03 23:04+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -66,7 +66,7 @@ msgid "_Preferences"
 msgstr "_Beállítások"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2663
+#: ../applets/clock/clock.c:2725
 msgid "Clock"
 msgstr "Óra"
 
@@ -82,20 +82,20 @@ msgstr "Factory az Óra kisalkalmazás létrehozására."
 msgid "Get the current time and date"
 msgstr "A pontos időt és dátumot jeleníti meg"
 
-#: ../applets/clock/clock.c:266
+#: ../applets/clock/clock.c:309
 msgid "%l:%M:%S %p"
 msgstr "%l.%M.%S %p"
 
-#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
+#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
 msgid "%l:%M %p"
 msgstr "%l.%M %p"
 
-#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
 msgid "%H:%M:%S"
 msgstr "%H.%M.%S"
 
-#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
-#: ../applets/clock/clock.c:1730
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
+#: ../applets/clock/clock.c:1784
 msgid "%H:%M"
 msgstr "%H.%M"
 
@@ -104,7 +104,7 @@ msgstr "%H.%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:279
+#: ../applets/clock/clock.c:322
 msgid "%a %b %e"
 msgstr "%b. %e., %a"
 
@@ -112,7 +112,7 @@ msgstr "%b. %e., %a"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:286
+#: ../applets/clock/clock.c:329
 #, c-format
 msgid ""
 "%1$s\n"
@@ -125,68 +125,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:293
+#: ../applets/clock/clock.c:336
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:378
+#: ../applets/clock/clock.c:417
 msgid "%A %B %d"
 msgstr "%B %e., %A"
 
-#: ../applets/clock/clock.c:390
+#: ../applets/clock/clock.c:429
 msgid "Click to view your appointments and tasks"
 msgstr "Kattintson a találkozói és feladatai megjelenítéséhez"
 
-#: ../applets/clock/clock.c:392
+#: ../applets/clock/clock.c:431
 msgid "Click to view month calendar"
 msgstr "Kattintson a havi naptár megjelenítéséhez"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:598
+#: ../applets/clock/clock.c:637
 msgid "%b %d"
 msgstr "%b. %e."
 
-#: ../applets/clock/clock.c:925
+#: ../applets/clock/clock.c:964
 msgid "Tasks"
 msgstr "Feladatok"
 
-#: ../applets/clock/clock.c:1077
+#: ../applets/clock/clock.c:1116
 msgid "All Day"
 msgstr "Egész nap"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1155
 msgid "Appointments"
 msgstr "Találkozók"
 
-#: ../applets/clock/clock.c:1348
+#: ../applets/clock/clock.c:1387
 msgid "Calendar"
 msgstr "Naptár"
 
-#: ../applets/clock/clock.c:1629
+#: ../applets/clock/clock.c:1676
 msgid "Computer Clock"
 msgstr "Számítógép óra"
 
-#: ../applets/clock/clock.c:1723
+#: ../applets/clock/clock.c:1777
 msgid "%I:%M:%S %p"
 msgstr "%l.%M.%S %p"
 
-#: ../applets/clock/clock.c:1725
+#: ../applets/clock/clock.c:1779
 msgid "%I:%M %p"
 msgstr "%l.%M %p"
 
-#: ../applets/clock/clock.c:1767
+#: ../applets/clock/clock.c:1821
 msgid "%A, %B %d %Y"
 msgstr "%Y. %B %e., %A"
 
-#: ../applets/clock/clock.c:1816
+#: ../applets/clock/clock.c:1878
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nem sikerült elindítani az időbeállító eszközt: %s"
 
-#: ../applets/clock/clock.c:1852
+#: ../applets/clock/clock.c:1914
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -194,11 +194,11 @@ msgstr ""
 "A rendszerben nem található meg az idő és dátumbeállításokat elvégző "
 "program. Lehet hogy nincs telepítve?"
 
-#: ../applets/clock/clock.c:2324
+#: ../applets/clock/clock.c:2386
 msgid "Custom format"
 msgstr "Egyéni formátum"
 
-#: ../applets/clock/clock.c:2445 ../applets/clock/clock.c:2622
+#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -206,52 +206,52 @@ msgstr "Egyéni formátum"
 msgid "There was an error displaying help: %s"
 msgstr "Hiba történt a súgó megjelenítése közben: %s"
 
-#: ../applets/clock/clock.c:2480
+#: ../applets/clock/clock.c:2542
 msgid "Clock Preferences"
 msgstr "Óra beállításai"
 
-#: ../applets/clock/clock.c:2504
+#: ../applets/clock/clock.c:2566
 msgid "Clock _type:"
 msgstr "Óra _típusa:"
 
-#: ../applets/clock/clock.c:2514
+#: ../applets/clock/clock.c:2576
 msgid "12 hour"
 msgstr "12 órás"
 
-#: ../applets/clock/clock.c:2515
+#: ../applets/clock/clock.c:2577
 msgid "24 hour"
 msgstr "24 órás"
 
-#: ../applets/clock/clock.c:2516
+#: ../applets/clock/clock.c:2578
 msgid "UNIX time"
 msgstr "UNIX idő"
 
-#: ../applets/clock/clock.c:2517
+#: ../applets/clock/clock.c:2579
 msgid "Internet time"
 msgstr "Internet idő"
 
-#: ../applets/clock/clock.c:2525
+#: ../applets/clock/clock.c:2587
 msgid "Custom _format:"
 msgstr "Egyéni _formátum:"
 
-#: ../applets/clock/clock.c:2544
+#: ../applets/clock/clock.c:2606
 msgid "Show _seconds"
 msgstr "_Másodpercek megjelenítése"
 
-#: ../applets/clock/clock.c:2553
+#: ../applets/clock/clock.c:2615
 msgid "Show _date"
 msgstr "_Dátum megjelenítése"
 
-#: ../applets/clock/clock.c:2562
+#: ../applets/clock/clock.c:2624
 msgid "Use _UTC"
 msgstr "_UTC használata"
 
-#: ../applets/clock/clock.c:2666
+#: ../applets/clock/clock.c:2728
 msgid "The Clock displays the current time and date"
 msgstr "Az óra a jelenlegi időt és dátumot mutatja"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2669 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -1648,26 +1648,26 @@ msgstr "Alkalmazások"
 msgid "_Edit Menus"
 msgstr "_Menük szerkesztése"
 
-#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Nem lehet megjeleníteni a(z) \"%s\" helyet"
 
-#: ../gnome-panel/panel-menu-items.c:324
+#: ../gnome-panel/panel-menu-items.c:332
 msgid "Bookmarks"
 msgstr "Könyvjelzők"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "\"%s\" megnyitása"
 
-#: ../gnome-panel/panel-menu-items.c:431
+#: ../gnome-panel/panel-menu-items.c:439
 msgid "Network Places"
 msgstr "Hálózati helyek"
 
-#: ../gnome-panel/panel-menu-items.c:433
+#: ../gnome-panel/panel-menu-items.c:441
 msgid "Removable Media"
 msgstr "Cserélhető adathordozók"
 
@@ -1675,30 +1675,30 @@ msgstr "Cserélhető adathordozók"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:491
+#: ../gnome-panel/panel-menu-items.c:506
 msgid "Desktop Folder|Desktop"
 msgstr "Asztal"
 
-#: ../gnome-panel/panel-menu-items.c:492
+#: ../gnome-panel/panel-menu-items.c:507
 msgid "Open the desktop as a folder"
 msgstr "Az asztal megnyitása mappaként"
 
-#: ../gnome-panel/panel-menu-items.c:824
+#: ../gnome-panel/panel-menu-items.c:861
 msgid "Places"
 msgstr "Helyek"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:862
+#: ../gnome-panel/panel-menu-items.c:899
 msgid "Desktop Environment|Desktop"
 msgstr "Környezet"
 
-#: ../gnome-panel/panel-menu-items.c:1003
+#: ../gnome-panel/panel-menu-items.c:1040
 msgid "Cannot launch entry"
 msgstr "Nem lehet elindítani a menüelemet"
 
-#: ../gnome-panel/panel-menu-items.c:1015
+#: ../gnome-panel/panel-menu-items.c:1052
 msgid "Cannot load entry"
 msgstr "Nem lehet betölteni a menüelemet"
 
@@ -2088,21 +2088,21 @@ msgstr "Nem lehet elindítani a(z) \"%s\" parancsot"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Nem lehet UTF-8-ból konvertálni a(z) \"%s\"-t"
 
-#: ../gnome-panel/panel-run-dialog.c:1112
+#: ../gnome-panel/panel-run-dialog.c:1116
 msgid "Choose a file to append to the command..."
 msgstr "Válassza ki a parancshoz hozzáfűzendő fájlt..."
 
-#: ../gnome-panel/panel-run-dialog.c:1468
+#: ../gnome-panel/panel-run-dialog.c:1472
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "A következő parancsot futtatja: \"%s\""
 
-#: ../gnome-panel/panel-run-dialog.c:1475
+#: ../gnome-panel/panel-run-dialog.c:1479
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Válasszon ki egy alkalmazást a leírásának megtekintéséhez."
 
-#: ../gnome-panel/panel-run-dialog.c:1510
+#: ../gnome-panel/panel-run-dialog.c:1514
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""

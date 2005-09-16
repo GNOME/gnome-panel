@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-11 17:26+0200\n"
+"POT-Creation-Date: 2005-09-16 21:19+0200\n"
 "PO-Revision-Date: 2005-03-03 09:23+0200\n"
 "Last-Translator: Canonical Ltd <translations@canonical.com>\n"
 "Language-Team: Xhosa <xh-translate@ubuntu.com>\n"
@@ -45,8 +45,8 @@ msgstr "_Malunga"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:743
-#: ../gnome-panel/panel-context-menu.c:325 ../gnome-panel/panel-menu-bar.c:302
+#: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:740
+#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:291
 #: ../gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "_Uncedo"
@@ -59,7 +59,7 @@ msgid "_Preferences"
 msgstr "U_luhlu lwezinto ezikhethwayo"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2590
+#: ../applets/clock/clock.c:2725
 msgid "Clock"
 msgstr "Iwotshi"
 
@@ -75,20 +75,20 @@ msgstr "Ifektri yokudala iinkqutyana ze-applet yewotshi ekhompyutheni."
 msgid "Get the current time and date"
 msgstr "Fumana ixesha nomhla wangoku"
 
-#: ../applets/clock/clock.c:265
+#: ../applets/clock/clock.c:309
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:265 ../applets/clock/clock.c:581
+#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:267 ../applets/clock/clock.c:1682
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:267 ../applets/clock/clock.c:583
-#: ../applets/clock/clock.c:1684
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
+#: ../applets/clock/clock.c:1784
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -97,7 +97,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:278
+#: ../applets/clock/clock.c:322
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -105,7 +105,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:285
+#: ../applets/clock/clock.c:329
 #, c-format
 msgid ""
 "%1$s\n"
@@ -118,61 +118,69 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:292
+#: ../applets/clock/clock.c:336
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:417
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
+#: ../applets/clock/clock.c:429
+msgid "Click to view your appointments and tasks"
+msgstr ""
+
+#: ../applets/clock/clock.c:431
+msgid "Click to view month calendar"
+msgstr ""
+
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:588
+#: ../applets/clock/clock.c:637
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/clock.c:887
+#: ../applets/clock/clock.c:964
 msgid "Tasks"
 msgstr "Imisebenzi"
 
-#: ../applets/clock/clock.c:1031
+#: ../applets/clock/clock.c:1116
 msgid "All Day"
 msgstr "Imini Yonke"
 
-#: ../applets/clock/clock.c:1070
+#: ../applets/clock/clock.c:1155
 msgid "Appointments"
 msgstr "Izigqibo Zokudibana"
 
-#: ../applets/clock/clock.c:1302
+#: ../applets/clock/clock.c:1387
 msgid "Calendar"
 msgstr "Ikhalenda"
 
-#: ../applets/clock/clock.c:1583
+#: ../applets/clock/clock.c:1676
 msgid "Computer Clock"
 msgstr "Iwotshi Yekhompyutha"
 
-#: ../applets/clock/clock.c:1677
+#: ../applets/clock/clock.c:1777
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1679
+#: ../applets/clock/clock.c:1779
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1721
+#: ../applets/clock/clock.c:1821
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1765
+#: ../applets/clock/clock.c:1878
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr ""
 "Isilele ekundululeni ixesha lesixhobo sokumiselwa kwenkqubo yekhompyutha: %s"
 
-#: ../applets/clock/clock.c:1804
+#: ../applets/clock/clock.c:1914
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -180,11 +188,11 @@ msgstr ""
 "Isilele ekufumaneni inkqubo yokumisela inkqubo yomhla nexesha. Mhlawumbi "
 "akukho ifakiweyo?"
 
-#: ../applets/clock/clock.c:2251
+#: ../applets/clock/clock.c:2386
 msgid "Custom format"
 msgstr "Ulungiselelo lokuzikhethela"
 
-#: ../applets/clock/clock.c:2372 ../applets/clock/clock.c:2549
+#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -192,52 +200,52 @@ msgstr "Ulungiselelo lokuzikhethela"
 msgid "There was an error displaying help: %s"
 msgstr "Bekukho impazamo ekubonisweni koncedo: %s"
 
-#: ../applets/clock/clock.c:2407
+#: ../applets/clock/clock.c:2542
 msgid "Clock Preferences"
 msgstr "Uluhlu Lokukhetha Iiwotshi"
 
-#: ../applets/clock/clock.c:2431
+#: ../applets/clock/clock.c:2566
 msgid "Clock _type:"
 msgstr "_Uhlobo lwewotshi:"
 
-#: ../applets/clock/clock.c:2441
+#: ../applets/clock/clock.c:2576
 msgid "12 hour"
 msgstr "iiyure ezi-12"
 
-#: ../applets/clock/clock.c:2442
+#: ../applets/clock/clock.c:2577
 msgid "24 hour"
 msgstr "ngeyure yama-24"
 
-#: ../applets/clock/clock.c:2443
+#: ../applets/clock/clock.c:2578
 msgid "UNIX time"
 msgstr "Ixesha le-UNIX"
 
-#: ../applets/clock/clock.c:2444
+#: ../applets/clock/clock.c:2579
 msgid "Internet time"
 msgstr "Ixesha lothungelwano ngekhompyutha"
 
-#: ../applets/clock/clock.c:2452
+#: ../applets/clock/clock.c:2587
 msgid "Custom _format:"
 msgstr "_Ulungiselelo lokuzikhethela:"
 
-#: ../applets/clock/clock.c:2471
+#: ../applets/clock/clock.c:2606
 msgid "Show _seconds"
 msgstr "Bonisa _imizuzwana"
 
-#: ../applets/clock/clock.c:2480
+#: ../applets/clock/clock.c:2615
 msgid "Show _date"
 msgstr "Bonisa _umhla"
 
-#: ../applets/clock/clock.c:2489
+#: ../applets/clock/clock.c:2624
 msgid "Use _UTC"
 msgstr "Sebenzisa i_UTC"
 
-#: ../applets/clock/clock.c:2593
+#: ../applets/clock/clock.c:2728
 msgid "The Clock displays the current time and date"
 msgstr "Iwotshi Ibonisa ixesha nomhla wangoku"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2596 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -675,28 +683,34 @@ msgid "Show Desktop"
 msgstr "Bonisa Ulwazi Oluseskrinini"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
-msgid "Switch between open windows"
+#, fuzzy
+msgid "Switch between open windows using a menu"
 msgstr "Tshintsha-tshintsha phakathi kweefestile ezivuliweyo"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+#, fuzzy
+msgid "Switch between open windows using buttons"
+msgstr "Tshintsha-tshintsha phakathi kweefestile ezivuliweyo"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
 msgid "Switch between workspaces"
 msgstr "Tshintsha-tshintsha phakathi kwezithuba zokusebenza"
 
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
 #: ../applets/wncklet/window-list.c:775
 msgid "Window List"
 msgstr "Uludwe Lweefestile"
 
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
 msgid "Window Navigation Applet Factory"
 msgstr "Ifektri Yokuntywila Efestileni Yenkqubo Ye-applet"
 
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:261
 msgid "Window Selector"
 msgstr "Umnyuli Wefestile"
 
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: ../applets/wncklet/workspace-switcher.c:558
 msgid "Workspace Switcher"
 msgstr "Umvuli Nomvali Wezithuba Zokusebenza"
@@ -706,7 +720,7 @@ msgstr "Umvuli Nomvali Wezithuba Zokusebenza"
 msgid "Failed to load %s: %s\n"
 msgstr "Isilele ukulayisha oku %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:569
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:624
 #, fuzzy
 msgid "Icon not found"
 msgstr "Ayifunyanwanga ifayili"
@@ -739,7 +753,10 @@ msgstr ""
 "okanye akumphumezi umlawuli wefestile."
 
 #: ../applets/wncklet/window-list.c:777
-msgid "The Window List shows a list of all windows and lets you browse them."
+#, fuzzy
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
 msgstr ""
 "Uludwe Lwefestile lubonisa uludwe lwazo zonke iifestile kwaye lukuvumela "
 "ukuba ukhangele kuzo."
@@ -876,8 +893,10 @@ msgid "When to group windows"
 msgstr "Iifestile zibekwa nini ngokwamaqela"
 
 #: ../applets/wncklet/window-menu.c:82
+#, fuzzy
 msgid ""
-"The Window Selector shows a list of all windows and lets you browse them."
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
 msgstr ""
 "Umnyuli Wefestile ubonisa uludwe lwazo zonke iifestile aze akuvumele ukuba "
 "ukhangele kuzo."
@@ -1029,13 +1048,13 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "Ayilifumani ibala elingenanto"
 
-#: ../gnome-panel/button-widget.c:196
+#: ../gnome-panel/button-widget.c:200
 #, c-format
 msgid "Failed to load image %s"
 msgstr "Isilele ukulayisha umfanekiso %s"
 
 #: ../gnome-panel/drawer.c:353 ../gnome-panel/panel-addto.c:150
-#: ../gnome-panel/panel-toplevel.c:1531
+#: ../gnome-panel/panel-toplevel.c:1530
 msgid "Drawer"
 msgstr "Idrowa"
 
@@ -1043,9 +1062,9 @@ msgstr "Idrowa"
 msgid "_Add to Drawer..."
 msgstr "_Fakela kwiDrowa..."
 
-#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:846
-#: ../gnome-panel/panel-action-button.c:132
-#: ../gnome-panel/panel-context-menu.c:263
+#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:926
+#: ../gnome-panel/panel-action-button.c:142
+#: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Iimpawu zesimo"
 
@@ -1053,67 +1072,67 @@ msgstr "_Iimpawu zesimo"
 msgid "Create new file in the given directory"
 msgstr "Yila ifayili entsha kuvimba weefayili onikiweyo"
 
-#: ../gnome-panel/launcher.c:136
+#: ../gnome-panel/launcher.c:144
 msgid "Cannot save launcher to disk"
 msgstr "Ayikwazi kugcina umndululi kwidiski"
 
-#: ../gnome-panel/launcher.c:166 ../gnome-panel/launcher.c:216
-#: ../gnome-panel/launcher.c:273
+#: ../gnome-panel/launcher.c:174 ../gnome-panel/launcher.c:224
+#: ../gnome-panel/launcher.c:281
 msgid "Cannot launch icon"
 msgstr "Ayikwazi kundulula umfanekiso ongumqondiso"
 
-#: ../gnome-panel/launcher.c:167
+#: ../gnome-panel/launcher.c:175
 msgid "This launch icon does not specify a url to show."
 msgstr ""
 "Olu ndululo lomfanekiso womqondiso alukwazi kwenza i-url ukuba ibonise."
 
-#: ../gnome-panel/launcher.c:179
+#: ../gnome-panel/launcher.c:187
 #, c-format
 msgid "Cannot show %s"
 msgstr "Ayikwazi kubonisa oku %s"
 
-#: ../gnome-panel/launcher.c:467
+#: ../gnome-panel/launcher.c:476
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "Akukho i-URI enikelwe ifayili yolwazi oluseskrinini lokundulula indawo "
 "yokulawula\n"
 
-#: ../gnome-panel/launcher.c:481
+#: ../gnome-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Ayikwazi kuvula ifayili ekulwazi oluseskrinini %s ukwenzela ukundululi "
 "wendawo yolawulo%s%s\n"
 
-#: ../gnome-panel/launcher.c:728 ../gnome-panel/menu-ditem.c:181
+#: ../gnome-panel/launcher.c:808 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Iimpawu Zesimo Somndululi"
 
-#: ../gnome-panel/launcher.c:840
+#: ../gnome-panel/launcher.c:920
 msgid "_Launch"
 msgstr "_Ndulula"
 
-#: ../gnome-panel/launcher.c:918
+#: ../gnome-panel/launcher.c:959
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Iqhosha elingu %s alisetwanga, alinakumlayisha umndululi\n"
 
-#: ../gnome-panel/launcher.c:973 ../gnome-panel/launcher.c:991
+#: ../gnome-panel/launcher.c:1014 ../gnome-panel/launcher.c:1033
 #: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
 #: ../gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "Alikwazi kudala umndululi"
 
-#: ../gnome-panel/launcher.c:974 ../gnome-panel/menu-ditem.c:470
+#: ../gnome-panel/launcher.c:1015 ../gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "Kufuneka uxele igama."
 
-#: ../gnome-panel/launcher.c:992 ../gnome-panel/menu-ditem.c:487
+#: ../gnome-panel/launcher.c:1034 ../gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "Kufuneka uxele i-URL esebenzayo okanye umyalelo."
 
-#: ../gnome-panel/launcher.c:1035 ../gnome-panel/menu-ditem.c:550
+#: ../gnome-panel/launcher.c:1078 ../gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "Yila Umndululi"
 
@@ -1137,62 +1156,69 @@ msgid ""
 msgstr ""
 "Akunakho ukuyila umndululi omtsha kule ndawo njengoko indawo ingabhaleki."
 
-#: ../gnome-panel/menu.c:818
+#: ../gnome-panel/menu.c:922
 msgid "Add this launcher to panel"
 msgstr "Fakela lo mndululi kwindawo yokulawula"
 
-#: ../gnome-panel/menu.c:838
+#: ../gnome-panel/menu.c:933
+#, fuzzy
+msgid "Add this launcher to desktop"
+msgstr "Fakela lo mndululi kwindawo yokulawula"
+
+#: ../gnome-panel/menu.c:953
 msgid "Entire menu"
 msgstr "Imenyu iphelele"
 
-#: ../gnome-panel/menu.c:848
+#: ../gnome-panel/menu.c:963
 msgid "Add this as drawer to panel"
 msgstr "Fakela oku njengedrowa kwindawo yokulawula"
 
-#: ../gnome-panel/menu.c:860
+#: ../gnome-panel/menu.c:975
 msgid "Add this as menu to panel"
 msgstr "Fakela oku njengemenyu kwindawo yokulawula"
 
-#: ../gnome-panel/panel-action-button.c:108
+#: ../gnome-panel/panel-action-button.c:118
 msgid "_Activate Screensaver"
 msgstr "_Yenza ukuba isilondolozi Seskrini Sisebenze"
 
-#: ../gnome-panel/panel-action-button.c:114
+#: ../gnome-panel/panel-action-button.c:124
 msgid "_Lock Screen"
 msgstr "_Tshixa Iskrini"
 
-#: ../gnome-panel/panel-action-button.c:120
+#: ../gnome-panel/panel-action-button.c:130
 msgid "_Kill Screensaver Daemon"
 msgstr "_Bulala Isilondolozi Seskrini seDaemon"
 
-#: ../gnome-panel/panel-action-button.c:126
+#: ../gnome-panel/panel-action-button.c:136
 msgid "Restart _Screensaver Daemon"
 msgstr "Phinda Uqalise I_silondolozi Seskrini se-Daemon"
 
-#: ../gnome-panel/panel-action-button.c:209
-#: ../gnome-panel/panel-action-button.c:222
-#: ../gnome-panel/panel-action-button.c:246 ../gnome-panel/panel-util.c:633
+#: ../gnome-panel/panel-action-button.c:206
+#: ../gnome-panel/panel-action-button.c:219
+#: ../gnome-panel/panel-action-button.c:243
+#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1010
+#: ../gnome-panel/panel-util.c:748
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Ayikwazi kuphumeza oku '%s'"
 
-#: ../gnome-panel/panel-action-button.c:282
+#: ../gnome-panel/panel-action-button.c:279
 msgid "Cannot connect to server"
 msgstr "Ayikwazi kunxibelelana neseva"
 
-#: ../gnome-panel/panel-action-button.c:313
+#: ../gnome-panel/panel-action-button.c:310
 msgid "Lock Screen"
 msgstr "Tshixa Iskrini"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:311
 msgid "Protect your computer from unauthorized use"
 msgstr "Khusela ikhompyutha yakho ekusetyenzisweni ngokungekho mthethweni"
 
-#: ../gnome-panel/panel-action-button.c:325
+#: ../gnome-panel/panel-action-button.c:322
 msgid "Log Out"
 msgstr "Ukuphuma"
 
-#: ../gnome-panel/panel-action-button.c:326
+#: ../gnome-panel/panel-action-button.c:323
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1200,44 +1226,44 @@ msgstr ""
 "Phuma kule seshoni ukuze ungene njengomsebenzisi ongomnye okanye ucime "
 "ikhompyutha"
 
-#: ../gnome-panel/panel-action-button.c:335
+#: ../gnome-panel/panel-action-button.c:332
 msgid "Run Application..."
 msgstr "Phumeza Inkqubo Yekhompyutha..."
 
-#: ../gnome-panel/panel-action-button.c:336
+#: ../gnome-panel/panel-action-button.c:333
 msgid "Run an Application by entering a command"
 msgstr "Phumeza Inkqubo Yekhompyutha ngokufaka umyalelo"
 
-#: ../gnome-panel/panel-action-button.c:345
+#: ../gnome-panel/panel-action-button.c:342
 msgid "Search for Files..."
 msgstr "Phanda Iifayili..."
 
-#: ../gnome-panel/panel-action-button.c:346
+#: ../gnome-panel/panel-action-button.c:343
 msgid "Find files, folders, and documents on your computer"
 msgstr "Fumana iifayili, iziqulathi zeefayili, namaxwebhu ekhompyutheni yakho"
 
-#: ../gnome-panel/panel-action-button.c:354
+#: ../gnome-panel/panel-action-button.c:351
 msgid "Take Screenshot..."
 msgstr "Thabatha Umfanekiso Weskrini..."
 
-#: ../gnome-panel/panel-action-button.c:355
+#: ../gnome-panel/panel-action-button.c:352
 msgid "Take a screenshot of your desktop"
 msgstr "Thabatha umfanekiso weskrini wolwazi oluseskrinini lwakho"
 
-#: ../gnome-panel/panel-action-button.c:363
+#: ../gnome-panel/panel-action-button.c:360
 msgid "Force Quit"
 msgstr "Nyanzelisa Ukuyeka"
 
-#: ../gnome-panel/panel-action-button.c:364
+#: ../gnome-panel/panel-action-button.c:361
 msgid "Force a misbehaving application to quit"
 msgstr "Nyanzelisa inkqubo yekhompyutha ebhoxayo ukuba iyeke"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:373
+#: ../gnome-panel/panel-action-button.c:370
 msgid "Connect to Server..."
 msgstr "Nxibelelanisa Neseva..."
 
-#: ../gnome-panel/panel-action-button.c:374
+#: ../gnome-panel/panel-action-button.c:371
 msgid "Connect to a remote server"
 msgstr "Nxibelelanisa neseva ekude"
 
@@ -1281,30 +1307,30 @@ msgstr "Idrowa yokukhetha okuvelayo ukuze igcine ezinye izinto ngaphakathi"
 msgid "(empty)"
 msgstr "(akukhonto iqulathiweyo)"
 
-#: ../gnome-panel/panel-addto.c:400
+#: ../gnome-panel/panel-addto.c:404
 #: ../libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "intandabuzo ibuyisa isinxaxhi %s\n"
 
-#: ../gnome-panel/panel-addto.c:952
+#: ../gnome-panel/panel-addto.c:1011
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "Khetha oku _khethwayo ukuze ufakele apha \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:956
+#: ../gnome-panel/panel-addto.c:1015
 msgid "Add to Drawer"
 msgstr "Fakela Kwidrowa"
 
-#: ../gnome-panel/panel-addto.c:958
+#: ../gnome-panel/panel-addto.c:1017
 msgid "Select an _item to add to the drawer:"
 msgstr "Khetha oku _khethwayo ukuze ufakele kwidrowa:"
 
-#: ../gnome-panel/panel-addto.c:960
+#: ../gnome-panel/panel-addto.c:1019
 msgid "Add to Panel"
 msgstr "Fakela Kwindawo Yokulawula"
 
-#: ../gnome-panel/panel-addto.c:962
+#: ../gnome-panel/panel-addto.c:1021
 msgid "Select an _item to add to the panel:"
 msgstr "Khetha oku _khethwayo ukuze ufakele kwindawo yokulawula:"
 
@@ -1390,7 +1416,7 @@ msgid "_Delete This Panel..."
 msgstr "_Cima Le Ndawo Yokulawula..."
 
 #: ../gnome-panel/panel-context-menu.c:218
-#: ../gnome-panel/panel-context-menu.c:248
+#: ../gnome-panel/panel-context-menu.c:260
 msgid "_Delete This Panel"
 msgstr "_Cima Le Ndawo Yokulawula"
 
@@ -1398,11 +1424,11 @@ msgstr "_Cima Le Ndawo Yokulawula"
 msgid "_Add to Panel..."
 msgstr "_Fakela Kwindawo Yokulawula..."
 
-#: ../gnome-panel/panel-context-menu.c:278
+#: ../gnome-panel/panel-context-menu.c:277
 msgid "_New Panel"
 msgstr "_Indawo Yokulawula Entsha"
 
-#: ../gnome-panel/panel-context-menu.c:336
+#: ../gnome-panel/panel-context-menu.c:335
 msgid "A_bout Panels"
 msgstr "Ma_lunga Nendawo Yokulawula"
 
@@ -1462,15 +1488,26 @@ msgstr ""
 "$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
-msgid "Enable program list in \"Run Application\" dialog"
+#, fuzzy
+msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
 "Inika isakhono kuludwe lwenkqubo apha\"Phumeza Inkqubo Yekhompyutha\" ingxoxo"
 
 #: ../gnome-panel/panel-general.schemas.in.h:6
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr ""
+"Inika isakhono kuludwe lwenkqubo apha\"Phumeza Inkqubo Yekhompyutha\" ingxoxo"
+
+#: ../gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Yandisa uludwe lwenkqubo apha\"Phumeza Inkqubo\" ingxoxo"
 
-#: ../gnome-panel/panel-general.schemas.in.h:7
+#: ../gnome-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+
+#: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1480,7 +1517,7 @@ msgstr ""
 "ingxoxo iyandiswa xa ivulwa ingxoxo. Eli qhosha libaluleke kuphela xa ulwazi "
 "lwe enable_program_list luyinyaniso."
 
-#: ../gnome-panel/panel-general.schemas.in.h:8
+#: ../gnome-panel/panel-general.schemas.in.h:10
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1490,19 +1527,19 @@ msgstr ""
 "ingxoxo yenziwa ukuba ibe khona. Nokuba ukudwelisa kwandisiwe okanye "
 "akunjalo xa ingxoxo eboniswayo ilawulwa liqhosha le show_program_list."
 
-#: ../gnome-panel/panel-general.schemas.in.h:9
+#: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
 msgstr "Iinkangeleko ezindala zomiselo zifudukile"
 
-#: ../gnome-panel/panel-general.schemas.in.h:10
+#: ../gnome-panel/panel-general.schemas.in.h:12
 msgid "Panel ID list"
 msgstr "Uludwe lwe-ID yendawo yolawulo"
 
-#: ../gnome-panel/panel-general.schemas.in.h:11
+#: ../gnome-panel/panel-general.schemas.in.h:13
 msgid "Panel applet ID list"
 msgstr "Uludwe lwe-ID yenkqutyana ye-applet yendawo yolawulo"
 
-#: ../gnome-panel/panel-general.schemas.in.h:12
+#: ../gnome-panel/panel-general.schemas.in.h:14
 msgid "Panel object ID list"
 msgstr "Uludwe lwe-ID yoludwe lwendawo yolawulo"
 
@@ -1521,25 +1558,24 @@ msgstr ""
 "oku ukuze isebenze."
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
-#: ../gnome-panel/panel-toplevel.schemas.in.h:1
-msgid "Animation speed"
-msgstr "Isantya soopopayi"
-
-#: ../gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
 msgstr "Ii-IID ze-applet zokwaphula isakhono sokulayisha"
 
-#: ../gnome-panel/panel-global.schemas.in.h:4
+#: ../gnome-panel/panel-global.schemas.in.h:3
 msgid "Autoclose drawer"
 msgstr "Idrowa ezivalekela ngokwayo"
 
-#: ../gnome-panel/panel-global.schemas.in.h:5
+#: ../gnome-panel/panel-global.schemas.in.h:4
 msgid "Complete panel lockdown"
 msgstr "Ukukhululeka kokutshixeleka okupheleleyo kwendawo yolawulo"
 
-#: ../gnome-panel/panel-global.schemas.in.h:6
+#: ../gnome-panel/panel-global.schemas.in.h:5
 msgid "Confirm panel removal"
 msgstr "Qinisekisa ukususwa kwendawo yolawulo"
+
+#: ../gnome-panel/panel-global.schemas.in.h:6
+msgid "Deprecated"
+msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:7
 msgid "Disable Force Quit"
@@ -1554,35 +1590,19 @@ msgid "Disable Logging Out"
 msgstr "Yaphula Isakhono Sokuphuma"
 
 #: ../gnome-panel/panel-global.schemas.in.h:10
-msgid "Display \"Run Application\" dialog keybinding"
-msgstr "Bonisa \"Impumezo Yenkqubo\" ukubotshwa kwesitshixo sengxoxo"
-
-#: ../gnome-panel/panel-global.schemas.in.h:11
 #: ../gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
 msgstr "Yenza oopopayi basebenze"
 
-#: ../gnome-panel/panel-global.schemas.in.h:12
-msgid "Enable keybindings"
-msgstr "Yenza ukubotshwa kwezitshixo kusebenze"
-
-#: ../gnome-panel/panel-global.schemas.in.h:13
+#: ../gnome-panel/panel-global.schemas.in.h:11
 msgid "Enable tooltips"
 msgstr "Yenza amacebiso okusetyenziswa kwezixhobo"
 
-#: ../gnome-panel/panel-global.schemas.in.h:14
-msgid "FIXME - is this resolved with the new menu stuff"
-msgstr "I-FIXME - ingaba iyasombululeka ngezixhobo ezitsha zemenyu"
-
-#: ../gnome-panel/panel-global.schemas.in.h:15
-msgid "FIXME - need to define limits"
-msgstr "I-FIXME - kufuneka kuchazwe imida"
-
-#: ../gnome-panel/panel-global.schemas.in.h:16
+#: ../gnome-panel/panel-global.schemas.in.h:12
 msgid "Highlight launchers on mouseover"
 msgstr "Khanyisa izindululi phezu kwemawusi"
 
-#: ../gnome-panel/panel-global.schemas.in.h:17
+#: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -1590,7 +1610,7 @@ msgstr ""
 "Ukuba yinyaniso, ingxoxo iboniswa icela uqinisekiso lokuba ingaba "
 "umsebenzisi ufuna ukuyisusa na indawo yolawulo."
 
-#: ../gnome-panel/panel-global.schemas.in.h:18
+#: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -1598,20 +1618,14 @@ msgstr ""
 "Ukuba yinyani, idrowa iyakuzivalekela ngokwayo xa umsebenzisi ecofa "
 "isindululi kuyo."
 
-#: ../gnome-panel/panel-global.schemas.in.h:19
+#: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Ukuba yinyaniso, isindululi siyagxininiswa xa umsebenzisi eshenxisela "
 "isikhanyisi phezu kwaso."
 
-#: ../gnome-panel/panel-global.schemas.in.h:20
-msgid "If true, panel-specific keybindings are enabled."
-msgstr ""
-"Ukuba yinyaniso, izibophelelo zeqhosha ezingqale kwindawo yolawulo zinikwa "
-"isakhono."
-
-#: ../gnome-panel/panel-global.schemas.in.h:21
+#: ../gnome-panel/panel-global.schemas.in.h:16
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1619,7 +1633,7 @@ msgstr ""
 "Ukuba yinyaniso, indawo yolawulo ayisayi kuvumela umsebenzisi ukunyanzelisa "
 "inkqubo ukuba iphume ngokususa ufikelelo kwiqhosha lokunyanzelisa ukuphuma."
 
-#: ../gnome-panel/panel-global.schemas.in.h:22
+#: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
@@ -1628,7 +1642,7 @@ msgstr ""
 "iskrini sabo, ngokushenxisela ufikelelo kumangenelo emenyu yeskrini "
 "esitshixiweyo."
 
-#: ../gnome-panel/panel-global.schemas.in.h:23
+#: ../gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
@@ -1636,7 +1650,7 @@ msgstr ""
 "Ukuba yinyaniso, indawo yolawulo ayisayi kuvumela umsebenzisi ukuba aphume, "
 "ngokumshenxisela kwizingeniso emenyu yokuphuma."
 
-#: ../gnome-panel/panel-global.schemas.in.h:24
+#: ../gnome-panel/panel-global.schemas.in.h:19
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -1647,48 +1661,41 @@ msgstr ""
 "ukutshixelwa ngokwahlukana. Indawo yolawulo mayiphinde iqaliswe ukuze oku "
 "kwenzeke."
 
-#: ../gnome-panel/panel-global.schemas.in.h:25
+#: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
 "Ukuba yinyaniso, amacebiso ngezixhobo aboniswa njengezinto ezikwindawo "
 "yolawulo."
 
-#: ../gnome-panel/panel-global.schemas.in.h:26
-msgid "Popup panel menu keybinding"
-msgstr "Isibophelelo seqhosha lemenyu yendawo yolawulo yokukhetha okuvelayo"
-
-#: ../gnome-panel/panel-global.schemas.in.h:27
-msgid "Take screenshot"
-msgstr "Thabatha umfanekiso weskrini"
-
-#: ../gnome-panel/panel-global.schemas.in.h:28
-msgid "Take window screenshot"
-msgstr "Thabatha umfanekiso weskrini ngefestile"
-
-#: ../gnome-panel/panel-menu-bar.c:132
+#: ../gnome-panel/panel-menu-bar.c:79
 msgid "Applications"
 msgstr "Iinkqubo zekhompyutha"
 
-#: ../gnome-panel/panel-menu-items.c:103 ../gnome-panel/panel-run-dialog.c:310
+#: ../gnome-panel/panel-menu-bar.c:298 ../gnome-panel/panel-menu-button.c:691
+#, fuzzy
+msgid "_Edit Menus"
+msgstr "Imenyu Esentloko"
+
+#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Ayikwazi kubonisa indawo '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:322
+#: ../gnome-panel/panel-menu-items.c:332
 msgid "Bookmarks"
 msgstr "Izinto zokuphawula"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:343 ../gnome-panel/panel-recent.c:197
+#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "Vula oku '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:417
+#: ../gnome-panel/panel-menu-items.c:439
 msgid "Network Places"
 msgstr "Iindawo Zothungelwano"
 
-#: ../gnome-panel/panel-menu-items.c:419
+#: ../gnome-panel/panel-menu-items.c:441
 msgid "Removable Media"
 msgstr "Ulwazi Olususekayo Olugciniweyo"
 
@@ -1697,31 +1704,31 @@ msgstr "Ulwazi Olususekayo Olugciniweyo"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:477
+#: ../gnome-panel/panel-menu-items.c:506
 #, fuzzy
 msgid "Desktop Folder|Desktop"
 msgstr "Uvimba weefayili okulwazi oluseskrinini"
 
-#: ../gnome-panel/panel-menu-items.c:478
+#: ../gnome-panel/panel-menu-items.c:507
 msgid "Open the desktop as a folder"
 msgstr ""
 
-#: ../gnome-panel/panel-menu-items.c:805
+#: ../gnome-panel/panel-menu-items.c:861
 msgid "Places"
 msgstr "Iindawo"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:843
+#: ../gnome-panel/panel-menu-items.c:899
 msgid "Desktop Environment|Desktop"
 msgstr ""
 
-#: ../gnome-panel/panel-menu-items.c:984
+#: ../gnome-panel/panel-menu-items.c:1040
 msgid "Cannot launch entry"
 msgstr "Ayikwazi kundulula isingeniso"
 
-#: ../gnome-panel/panel-menu-items.c:996
+#: ../gnome-panel/panel-menu-items.c:1052
 msgid "Cannot load entry"
 msgstr "Ayikwazi kuthwala isingeniso"
 
@@ -1910,18 +1917,18 @@ msgid "Use custom path for menu contents"
 msgstr "Sebenzisa indlela elungiselelweyo ukwenzela iziqulatho zemenyu"
 
 #: ../gnome-panel/panel-profile.c:743 ../gnome-panel/panel-profile.c:770
-#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1611
+#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1632
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Ukufunda ngemposiso ixabiso lomtya weGConf '%s': %s"
 
-#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1509
-#: ../gnome-panel/panel-profile.c:1580 ../gnome-panel/panel-profile.c:1643
+#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1528
+#: ../gnome-panel/panel-profile.c:1601 ../gnome-panel/panel-profile.c:1664
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Ukufunda ngemposiso ixabiso lenani elipheleleyo leGConf '%s': %s"
 
-#: ../gnome-panel/panel-profile.c:1519
+#: ../gnome-panel/panel-profile.c:1538
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1930,7 +1937,7 @@ msgstr ""
 "Indawo yolawulo '%s' isetelwe ukuboniswa eskrinini %d esingekhoyo okwangoku. "
 "Ayilayishwa le ndawo yolawulo."
 
-#: ../gnome-panel/panel-profile.c:1595
+#: ../gnome-panel/panel-profile.c:1616
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Ukufunda ngemposiso ixabiso le-boolean leGConf '%s': %s"
@@ -2092,43 +2099,43 @@ msgstr ""
 "nje.\n"
 "• Konke okukhethwa kuludwe lwamaxwebhu akutsha nje kuzo zonke iinkqubo."
 
-#: ../gnome-panel/panel-recent.c:219
+#: ../gnome-panel/panel-recent.c:221
 msgid "Recent Documents"
 msgstr "Amaxwebhu Akutsha nje"
 
-#: ../gnome-panel/panel-recent.c:249
+#: ../gnome-panel/panel-recent.c:262
 msgid "Clear Recent Documents"
 msgstr "Susa Amaxwebhu Akutsha nje"
 
-#: ../gnome-panel/panel-recent.c:253
+#: ../gnome-panel/panel-recent.c:266
 msgid "Clear all items from the recent documents list"
 msgstr "Susa konke okukhethwa kuludwe lwamaxwebhu akutsha nje"
 
-#: ../gnome-panel/panel-run-dialog.c:284
+#: ../gnome-panel/panel-run-dialog.c:287
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Ayikwazi ukundulula umyalelo '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:362
+#: ../gnome-panel/panel-run-dialog.c:365
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Ayikwazi ukuguqula oku '%s' okuvela UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1067
+#: ../gnome-panel/panel-run-dialog.c:1116
 msgid "Choose a file to append to the command..."
 msgstr "Khetha ifayili yokuhlomela kumyalelo..."
 
-#: ../gnome-panel/panel-run-dialog.c:1420
+#: ../gnome-panel/panel-run-dialog.c:1472
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Iya kuphumeza umyalelo: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1427
+#: ../gnome-panel/panel-run-dialog.c:1479
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Khetha inkqubo ukuze ubone inkcazelo yayo."
 
-#: ../gnome-panel/panel-run-dialog.c:1462
+#: ../gnome-panel/panel-run-dialog.c:1514
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2228,75 +2235,79 @@ msgstr "_Susa"
 msgid "D_on't Delete"
 msgstr "Mu_sa Ukucima"
 
-#: ../gnome-panel/panel-toplevel.c:1121
+#: ../gnome-panel/panel-toplevel.c:1120
 msgid "Hide Panel"
 msgstr "Fihla Indawo Yolawulo"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1502
+#: ../gnome-panel/panel-toplevel.c:1501
 msgid "Top Expanded Edge Panel"
 msgstr "Indawo Yolawulo Engumngcipheko Yomphezulu Owandisiweyo"
 
-#: ../gnome-panel/panel-toplevel.c:1503
+#: ../gnome-panel/panel-toplevel.c:1502
 msgid "Top Centered Panel"
 msgstr "Indawo Yolawulo Yomphezulu Osesizikithini"
 
-#: ../gnome-panel/panel-toplevel.c:1504
+#: ../gnome-panel/panel-toplevel.c:1503
 msgid "Top Floating Panel"
 msgstr "Indawo Yolawulo Yomphezulu we-Float"
 
-#: ../gnome-panel/panel-toplevel.c:1505
+#: ../gnome-panel/panel-toplevel.c:1504
 msgid "Top Edge Panel"
 msgstr "Indawo Yolawulo Engumngcipheko Ophezulu"
 
-#: ../gnome-panel/panel-toplevel.c:1509
+#: ../gnome-panel/panel-toplevel.c:1508
 msgid "Bottom Expanded Edge Panel"
 msgstr "Indawo Yolawulo Yomzantsi Owandisiweyo"
 
-#: ../gnome-panel/panel-toplevel.c:1510
+#: ../gnome-panel/panel-toplevel.c:1509
 msgid "Bottom Centered Panel"
 msgstr "Indawo Yolawulo Yomzantsi Osesizikithini"
 
-#: ../gnome-panel/panel-toplevel.c:1511
+#: ../gnome-panel/panel-toplevel.c:1510
 msgid "Bottom Floating Panel"
 msgstr "Indawo Yolawulo Yomzantsi we-Float"
 
-#: ../gnome-panel/panel-toplevel.c:1512
+#: ../gnome-panel/panel-toplevel.c:1511
 msgid "Bottom Edge Panel"
 msgstr "Indawo Yolawulo Yomzantsi Womngcipheko"
 
-#: ../gnome-panel/panel-toplevel.c:1516
+#: ../gnome-panel/panel-toplevel.c:1515
 msgid "Left Expanded Edge Panel"
 msgstr "Indawo Yolawulo Yomngcipheko Owandiswe Ekhohlo"
 
-#: ../gnome-panel/panel-toplevel.c:1517
+#: ../gnome-panel/panel-toplevel.c:1516
 msgid "Left Centered Panel"
 msgstr "Indawo Yolawulo Lwe-Float Esekhohlo"
 
-#: ../gnome-panel/panel-toplevel.c:1518
+#: ../gnome-panel/panel-toplevel.c:1517
 msgid "Left Floating Panel"
 msgstr "Indawo ye-Foat Esekhohlo"
 
-#: ../gnome-panel/panel-toplevel.c:1519
+#: ../gnome-panel/panel-toplevel.c:1518
 msgid "Left Edge Panel"
 msgstr "Indawo Yolawulo Enomngcipheko Osekhohlo"
 
-#: ../gnome-panel/panel-toplevel.c:1523
+#: ../gnome-panel/panel-toplevel.c:1522
 msgid "Right Expanded Edge Panel"
 msgstr "Indawo Yolawulo Eyandiswe Ekunene"
 
-#: ../gnome-panel/panel-toplevel.c:1524
+#: ../gnome-panel/panel-toplevel.c:1523
 msgid "Right Centered Panel"
 msgstr "Indawo Yolawulo Enesezikithi Esekunene"
 
-#: ../gnome-panel/panel-toplevel.c:1525
+#: ../gnome-panel/panel-toplevel.c:1524
 msgid "Right Floating Panel"
 msgstr "Indawo Yolawulo Ene-float Esekunene"
 
-#: ../gnome-panel/panel-toplevel.c:1526
+#: ../gnome-panel/panel-toplevel.c:1525
 msgid "Right Edge Panel"
 msgstr "Indawo Yolawulo Enomngcipheko Osekunene"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "Isantya soopopayi"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
@@ -2648,25 +2659,25 @@ msgstr "Iskrini se-Xinerama apho indawo yolawulo iboniswa khona"
 msgid "Y co-ordinate of panel"
 msgstr "Ubumbaniso lwe-Y lwendawo yolawulo"
 
-#: ../gnome-panel/panel-util.c:65
+#: ../gnome-panel/panel-util.c:89
 msgid "Cannot display help document"
 msgstr "Ayikwazi kubonisa uxwebhu loncedo"
 
-#: ../gnome-panel/panel-util.c:255
+#: ../gnome-panel/panel-util.c:311
 #, c-format
 msgid "Details: %s"
 msgstr "Iinkcukacha: %s"
 
-#: ../gnome-panel/panel.c:473
+#: ../gnome-panel/panel.c:477
 #, c-format
 msgid "Open URL: %s"
 msgstr "Vula i-URL: %s"
 
-#: ../gnome-panel/panel.c:1254
+#: ../gnome-panel/panel.c:1265
 msgid "Delete this drawer?"
 msgstr "Icinywe le drowa?"
 
-#: ../gnome-panel/panel.c:1255
+#: ../gnome-panel/panel.c:1266
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2674,15 +2685,15 @@ msgstr ""
 "Xa idrowa icinywa, idrowa kunye\n"
 "nemimiselo yayo iyalahleka."
 
-#: ../gnome-panel/panel.c:1257
+#: ../gnome-panel/panel.c:1268
 msgid "Delete Drawer"
 msgstr "Iyacinywa Idrowa"
 
-#: ../gnome-panel/panel.c:1259
+#: ../gnome-panel/panel.c:1270
 msgid "Delete this panel?"
 msgstr "Icinywe le ndawo yolawulo?"
 
-#: ../gnome-panel/panel.c:1260
+#: ../gnome-panel/panel.c:1271
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2690,7 +2701,7 @@ msgstr ""
 "Xa indawo yolawulo icinywa, indawo yolawulo kunye \n"
 "nemimiselo yayo iyalahleka."
 
-#: ../gnome-panel/panel.c:1262
+#: ../gnome-panel/panel.c:1273
 msgid "Delete Panel"
 msgstr "Iyacinywa Indawo Yolawulo"
 
@@ -2814,21 +2825,3 @@ msgstr "I-_Applet:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Okukhethwa Koovimba Beefayili:"
-
-#~ msgid "Unknown Window"
-#~ msgstr "Ifestile Engaziwayo"
-
-#~ msgid "No Windows Open"
-#~ msgstr "Akukho Zifestile Ezivuliweyo"
-
-#~ msgid "Tool to switch between windows"
-#~ msgstr "Isixhobo sokuvula uvale phakathi kweefestile"
-
-#~ msgid "none"
-#~ msgstr "ayikho"
-
-#~ msgid "file not found"
-#~ msgstr "ifayili ayifumaneki"
-
-#~ msgid "Desktop"
-#~ msgstr "I-Desktop"
