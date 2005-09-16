@@ -499,6 +499,8 @@ fuzzy_command_match (const char *cmd1,
 	char **tokens;
 	char  *word1, *word2;
 
+	g_return_val_if_fail (cmd1 && cmd2, TRUE);
+
 	*fuzzy = FALSE;
 
 	if (!strcmp (cmd1, cmd2))
@@ -793,15 +795,17 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 	prev_name = NULL;
 	for (l = all_applications; l; l = next) {
 		GMenuTreeEntry *entry = l->data;
+		char           *entry_name;
 
 		next = l->next;
 
-		if (prev_name && strcmp (gmenu_tree_entry_get_name (entry), prev_name) == 0) {
+		entry_name = gmenu_tree_entry_get_name (entry);
+		if (prev_name && entry_name && strcmp (entry_name, prev_name) == 0) {
 			gmenu_tree_item_unref (entry);
 
 			all_applications = g_slist_delete_link (all_applications, l);
 		} else {
-			prev_name = gmenu_tree_entry_get_name (entry);
+			prev_name = entry_name;
 		}
 	}
 

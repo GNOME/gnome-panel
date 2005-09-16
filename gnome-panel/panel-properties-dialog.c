@@ -667,6 +667,8 @@ panel_properties_dialog_toplevel_notify (GConfClient           *client,
 	const char *key;
 
 	key = panel_gconf_basename (gconf_entry_get_key (entry));
+	if (!key)
+		return;
 
 	value = gconf_entry_get_value (entry);
 
@@ -793,6 +795,8 @@ panel_properties_dialog_background_notify (GConfClient           *client,
 	const char *key;
 
 	key = panel_gconf_basename (gconf_entry_get_key (entry));
+	if (!key)
+		return;
 
 	value = gconf_entry_get_value (entry);
 

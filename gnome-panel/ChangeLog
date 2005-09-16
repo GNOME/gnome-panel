@@ -1,5 +1,13 @@
 2005-09-16  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-properties-dialog.c: (panel_properties_dialog_toplevel_notify):
+	(panel_properties_dialog_background_notif): check the value we got
+	from panel_gconf_basename()
+	* panel-run-dialog.c: (fuzzy_command_match):
+	(panel_run_dialog_add_items_idle): add sanity checks before strcmp()
+
+2005-09-16  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-background-monitor.c: (panel_background_monitor_finalize):
 	chain to parent class finalize
 	(panel_background_monitor_class_init): get parent class
