@@ -279,8 +279,6 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	table = g_hash_table_new (g_str_hash, g_str_equal);
 	add_bookmarks = NULL;
 
-	//FIXME gnome_vfs_uri_exists: could there be an authentication
-	//dialog if there's a bookmarks to sftp://something?
 	for (i = 0; lines[i]; i++) {
 		if (lines[i][0] && !g_hash_table_lookup (table, lines[i])) {
 			GnomeVFSURI *uri;
@@ -301,7 +299,9 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			uri = gnome_vfs_uri_new (unescaped_uri);
 			g_free (unescaped_uri);
 
-			if (!gnome_vfs_uri_exists (uri)) {
+			if (!uri ||
+			     (gnome_vfs_uri_is_local (uri) &&
+			     !gnome_vfs_uri_exists (uri))) {
 				if (label)
 					g_free (label);
 				gnome_vfs_uri_unref (uri);
@@ -396,6 +396,28 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	g_slist_free (add_bookmarks);
 }
 
+static gint
+panel_place_menu_item_sort_volume (gconstpointer a,
+				   gconstpointer b) {
+	const GnomeVFSVolume *volume_a = a;
+	const GnomeVFSVolume *volume_b = b;
+	char                 *display_a;
+	char                 *display_b;
+	int                   retval;
+
+	g_return_val_if_fail (a && b, 0);
+
+	display_a = gnome_vfs_volume_get_display_name (volume_a);
+	display_b = gnome_vfs_volume_get_display_name (volume_b);
+
+	retval = g_utf8_collate (display_a, display_b);
+
+	g_free (display_a);
+	g_free (display_b);
+
+	return retval;
+}
+
 static void
 panel_place_menu_item_append_volumes (GtkWidget *menu,
 				      gboolean   connected_volumes)
@@ -428,7 +450,11 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 		}
 	}
 
-	add_volumes = g_slist_reverse (add_volumes);
+	if (connected_volumes)
+		add_volumes = g_slist_sort (add_volumes,
+					    panel_place_menu_item_sort_volume);
+	else
+		add_volumes = g_slist_reverse (add_volumes);
 
 	if (g_slist_length (add_volumes) <= MAX_ITEMS_OR_SUBMENU) {
 		add_menu = menu;

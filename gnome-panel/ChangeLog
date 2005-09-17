@@ -1,3 +1,11 @@
+2005-09-17  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmarks):
+	don't check if the URI exists if it's not local
+	Fix bug #309135.
+	(panel_place_menu_item_sort_volume): new
+	(panel_place_menu_item_append_volumes): sort network volumes
+
 2005-09-16  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-properties-dialog.c: (panel_properties_dialog_toplevel_notify):
