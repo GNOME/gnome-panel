@@ -459,12 +459,23 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 	if (g_slist_length (add_volumes) <= MAX_ITEMS_OR_SUBMENU) {
 		add_menu = menu;
 	} else {
-		GtkWidget *item;
+		GtkWidget  *item;
+		const char *title;
+		const char *icon;
 
-		if (connected_volumes)
-			item = gtk_menu_item_new_with_label (_("Network Places"));
-		else
-			item = gtk_menu_item_new_with_label (_("Removable Media"));
+		/* FIXME: find nice icons. We don't use NULL since it will
+		 * make the menu items smaller... */
+		if (connected_volumes) {
+			title = _("Network Places");
+			icon = "";
+		} else {
+			title = _("Removable Media");
+			icon = "";
+		}
+
+		item = gtk_image_menu_item_new ();
+		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
+					   icon, NULL, title, TRUE);
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		gtk_widget_show (item);
