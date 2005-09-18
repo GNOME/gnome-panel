@@ -1,5 +1,12 @@
 2005-09-18  Vincent Untz  <vuntz@gnome.org>
 
+	* applet.c: (panel_applet_position_menu): fix positionning algorithm
+	so that we don't take the mouse position into account if it's not in
+	the widget (that is the case when the menu is open with the keyboard)
+	Fix bug #313813.
+
+2005-09-18  Vincent Untz  <vuntz@gnome.org>
+
 	Workaround persistent tooltip for dnd. Fix bug #311935.
 
 	* menu.c: (drag_begin_menu_cb): new, created only for our workaround
