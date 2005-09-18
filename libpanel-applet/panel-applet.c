@@ -611,7 +611,8 @@ panel_applet_position_menu (GtkMenu   *menu,
 
 	if (applet->priv->orient == PANEL_APPLET_ORIENT_UP ||
 	    applet->priv->orient == PANEL_APPLET_ORIENT_DOWN) {
-		if (requisition.width < pointer_x)
+		if (pointer_x < widget->allocation.width &&
+		    requisition.width < pointer_x)
 			menu_x += MIN (pointer_x, widget->allocation.width - requisition.width);
 		menu_x = MIN (menu_x, gdk_screen_get_width (screen) - requisition.width);
 
@@ -620,7 +621,8 @@ panel_applet_position_menu (GtkMenu   *menu,
 		else
 			menu_y += widget->allocation.height;
 	} else  {
-		if (requisition.height < pointer_y)
+		if (pointer_y < widget->allocation.height &&
+		    requisition.height < pointer_y)
 			menu_y += MIN (pointer_y, widget->allocation.height - requisition.height);
 		menu_y = MIN (menu_y, gdk_screen_get_height (screen) - requisition.height);
 
