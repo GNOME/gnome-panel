@@ -1033,6 +1033,15 @@ menuitem_button_press_event (GtkWidget      *menuitem,
 	return FALSE;
 }
 
+static void  
+drag_begin_menu_cb (GtkWidget *widget, GdkDragContext     *context)
+{
+	/* FIXME: workaround for a possible gtk+ bug
+	 *    See bugs #92085(gtk+) and #91184(panel) for details.
+	 */
+	gtk_tooltips_disable (panel_tooltips);
+}
+
 /* This is a _horrible_ hack to have this here. This needs to be added to the
  * GTK+ menuing code in some manner.
  */
@@ -1115,11 +1124,6 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 				selection_data->target, 8, (guchar *)uri_list,
 				strlen (uri_list));
 	g_free (uri_list);
-
-	/* FIXME: workaround for a possible gtk+ bug
-	 *    See bugs #92085(gtk+) and #91184(panel) for details.
-	 */
-	gtk_tooltips_disable (panel_tooltips);
 }
 
 static void
@@ -1245,6 +1249,8 @@ setup_uri_drag (GtkWidget  *menuitem,
 
 	gtk_drag_source_set_icon_name (menuitem, icon);
 	
+	g_signal_connect (G_OBJECT (menuitem), "drag_begin",
+			  G_CALLBACK (drag_begin_menu_cb), NULL);
 	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
 			       G_CALLBACK (drag_data_get_string_cb),
 			       g_strdup (uri),
@@ -1274,6 +1280,8 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 		gtk_drag_source_set_icon_name (menuitem,
 					       panel_action_get_icon_name (type));
 	
+	g_signal_connect (G_OBJECT (menuitem), "drag_begin",
+			  G_CALLBACK (drag_begin_menu_cb), NULL);
 	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
 			       G_CALLBACK (drag_data_get_string_cb),
 			       g_strdup (panel_action_get_drag_id (type)),
@@ -1495,6 +1503,8 @@ create_menuitem (GtkWidget          *menu,
 
 		gtk_drag_source_set_icon_name (menuitem,
 					       gmenu_tree_entry_get_icon (entry));
+		g_signal_connect (G_OBJECT (menuitem), "drag_begin",
+				  G_CALLBACK (drag_begin_menu_cb), NULL);
 		g_signal_connect (menuitem, "drag_data_get",
 				  G_CALLBACK (drag_data_get_menu_cb), entry);
 		g_signal_connect (menuitem, "drag_end",
