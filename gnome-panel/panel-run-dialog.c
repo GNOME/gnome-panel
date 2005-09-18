@@ -202,8 +202,8 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		gtk_window_set_icon_name (GTK_WINDOW (dialog->run_dialog),
 					  PANEL_RUN_ICON);
 		
-		/* FIXME: waiting for bug #116577
-		gtk_drag_source_set_icon_name (dialog->run_dialog, PANEL_RUN_ICON); */
+		gtk_drag_source_set_icon_name (dialog->run_dialog,
+					       PANEL_RUN_ICON);
 	}
 }
 
@@ -795,7 +795,7 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 	prev_name = NULL;
 	for (l = all_applications; l; l = next) {
 		GMenuTreeEntry *entry = l->data;
-		char           *entry_name;
+		const char     *entry_name;
 
 		next = l->next;
 

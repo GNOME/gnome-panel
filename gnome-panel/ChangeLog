@@ -1,3 +1,17 @@
+2005-09-18  Vincent Untz  <vuntz@gnome.org>
+
+	Use icon names for drag and drop. Fix bug #167010.
+
+	* drawer.c: (panel_drawer_set_dnd_enabled): use
+	gtk_drag_source_set_icon_name()
+	* menu.c: (setup_uri_drag): ditto
+	(setup_internal_applet_drag): ditto
+	(create_menuitem): ditto
+	* panel-action-button.c: (panel_action_button_set_dnd_enabled): ditto
+	* panel-menu-button.c: (panel_menu_button_set_dnd_enabled): ditto
+	* panel-run-dialog.c: (panel_run_dialog_set_icon): ditto
+	(panel_run_dialog_add_items_idle): fix warning
+
 2005-09-17  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmarks):

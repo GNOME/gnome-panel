@@ -1243,8 +1243,7 @@ setup_uri_drag (GtkWidget  *menuitem,
 			     menu_item_targets, 1,
 			     GDK_ACTION_COPY);
 
-	/* FIXME: waiting for bug #116577
-	gtk_drag_source_set_icon_name (GTK_WIDGET (button), icon); */
+	gtk_drag_source_set_icon_name (menuitem, icon);
 	
 	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
 			       G_CALLBACK (drag_data_get_string_cb),
@@ -1271,11 +1270,9 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 			     menu_item_targets, 1,
 			     GDK_ACTION_COPY);
 
-	/* FIXME: waiting for bug #116577
 	if (panel_action_get_icon_name (type)  != NULL)
-		gtk_drag_source_set_icon_name (GTK_WIDGET (button),
-					panel_action_get_icon_name (type);
-					*/
+		gtk_drag_source_set_icon_name (menuitem,
+					       panel_action_get_icon_name (type));
 	
 	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
 			       G_CALLBACK (drag_data_get_string_cb),
@@ -1496,10 +1493,8 @@ create_menuitem (GtkWidget          *menu,
 				     menu_item_targets, 1,
 				     GDK_ACTION_COPY);
 
-		/* FIXME: waiting for bug #116577
-		gtk_drag_source_set_icon_name (GTK_WIDGET (button),
-					gmenu_tree_entry_get_icon (entry));
-		*/
+		gtk_drag_source_set_icon_name (menuitem,
+					       gmenu_tree_entry_get_icon (entry));
 		g_signal_connect (menuitem, "drag_data_get",
 				  G_CALLBACK (drag_data_get_menu_cb), entry);
 		g_signal_connect (menuitem, "drag_end",

@@ -759,8 +759,8 @@ panel_drawer_set_dnd_enabled (Drawer   *drawer,
 				     GDK_BUTTON1_MASK,
 				     dnd_targets, 1,
 				     GDK_ACTION_MOVE);
-		/* FIXME: waiting for bug #116577
-		gtk_drag_source_set_icon_name (drawer->button, PANEL_DRAWER_ICON); */
+		gtk_drag_source_set_icon_name (drawer->button,
+					       button_widget_get_icon_name (BUTTON_WIDGET (drawer->button)));
 
 		GTK_WIDGET_SET_FLAGS (drawer->button, GTK_NO_WINDOW);
 
