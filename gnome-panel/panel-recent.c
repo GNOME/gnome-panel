@@ -212,6 +212,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 	GtkWidget      *menu;
 	GtkWidget      *menu_item;
 	EggRecentModel *model;
+	GList          *recent_list;
 
 	menu_item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (menu_item,
@@ -239,6 +240,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 						      NULL);
 
 		egg_recent_view_gtk_show_numbers (view, FALSE);
+		egg_recent_view_gtk_set_trailing_sep (view, TRUE);
 		egg_recent_view_set_model (EGG_RECENT_VIEW (view), model);
 		egg_recent_view_gtk_set_icon_size (view, panel_menu_icon_get_size ());
 	} else {
@@ -250,9 +252,11 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 	g_signal_connect_object (model, "changed",
 				 G_CALLBACK (panel_recent_model_changed_cb),
 				 menu_item, 0);
+	recent_list = egg_recent_model_get_list (model);
+	gtk_widget_set_sensitive (menu_item, g_list_length (recent_list) > 0);
+	if (recent_list)
+		EGG_RECENT_ITEM_LIST_UNREF (recent_list);
 	g_object_unref (model);
-
-	add_menu_separator (menu);
 
 	menu_item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (menu_item,
