@@ -286,6 +286,8 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			char        *label;
 			char        *unescaped_uri;
 
+			g_hash_table_insert (table, lines[i], lines[i]);
+
 			space = strchr (lines[i], ' ');
 			if (space) {
 				*space = '\0';
@@ -300,8 +302,8 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			g_free (unescaped_uri);
 
 			if (!uri ||
-			     (gnome_vfs_uri_is_local (uri) &&
-			     !gnome_vfs_uri_exists (uri))) {
+			     (!strcmp (gnome_vfs_uri_get_scheme (uri), "file") &&
+			      !gnome_vfs_uri_exists (uri))) {
 				if (label)
 					g_free (label);
 				gnome_vfs_uri_unref (uri);
@@ -312,7 +314,6 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			bookmark->uri = uri;
 			bookmark->label = label;
 			add_bookmarks = g_slist_prepend (add_bookmarks, bookmark);
-			g_hash_table_insert (table, lines[i], lines[i]);
 		}
 	}
 
