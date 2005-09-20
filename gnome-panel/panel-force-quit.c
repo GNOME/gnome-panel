@@ -144,8 +144,8 @@ find_managed_window (Window window)
 	Window  parent;
 	Window *kids = NULL;
 	Window  retval;
-	int     nkids, i;
-	int     result;
+	guint   nkids;
+	int     i, result;
 
 	if (wm_state_set (window))
 		return window;
@@ -174,12 +174,28 @@ find_managed_window (Window window)
 	return retval;
 }
 
+static void
+kill_window_response (GtkDialog *dialog,
+		      gint       response_id,
+		      gpointer   user_data)
+{
+	if (response_id == GTK_RESPONSE_ACCEPT) {
+		Window window = (Window) user_data;
+
+		gdk_error_trap_push ();
+		XKillClient (gdk_display, window);
+		gdk_flush ();
+		gdk_error_trap_pop ();
+	}
+
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
 /* From metacity */
-static gboolean
-kill_window_question (void)
+static void
+kill_window_question (gpointer window)
 {
 	GtkWidget *dialog;
-	gboolean   retval;
  
 	dialog = gtk_message_dialog_new (NULL, 0,
 					 GTK_MESSAGE_QUESTION,
@@ -196,11 +212,10 @@ kill_window_question (void)
  
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 
-	retval = gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT;
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (kill_window_response), window);
 
-	gtk_widget_destroy (dialog);
-
-	return retval;
+	gtk_widget_show (dialog);
 }
 
 static void 
@@ -220,10 +235,8 @@ handle_button_press_event (GtkWidget *popup,
 	window = find_managed_window (event->subwindow);
 
 	if (window != None) {
-		if (!gdk_xid_table_lookup_for_display (gdk_display_get_default (), window)) {
-			if (kill_window_question ())
-				XKillClient (gdk_display, window);
-		}
+		if (!gdk_xid_table_lookup_for_display (gdk_display_get_default (), window))
+			kill_window_question ((gpointer) window);
 	}
 }
 

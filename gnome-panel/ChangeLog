@@ -1,3 +1,13 @@
+2005-09-20  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-force-quit.c: (find_managed_window): kill warning
+	(kill_window_response): new, we kill the window here and also
+	trap X errors (useful when the client has already quit ;-))
+	(kill_window_question): connect to the response signal so that we
+	don't block the panel
+	(handle_button_press_event): don't kill the window here.
+	Fix bug #313006.
+
 2005-09-18  Vincent Untz  <vuntz@gnome.org>
 
 	* applet.c: (panel_applet_position_menu): fix positionning algorithm
