@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.11.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-16 21:19+0200\n"
+"POT-Creation-Date: 2005-08-22 22:52+0900\n"
 "PO-Revision-Date: 2005-08-22 22:52+0900\n"
 "Last-Translator: Young-Ho Cha <ganadist at gmail dot com>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
@@ -58,7 +58,7 @@ msgid "_Preferences"
 msgstr "기본 설정(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2725
+#: ../applets/clock/clock.c:2671
 msgid "Clock"
 msgstr "시계"
 
@@ -74,20 +74,20 @@ msgstr "시계 애플릿을 만드는 데 쓰이는 팩토리."
 msgid "Get the current time and date"
 msgstr "현재 시각과 날짜를 보여 줍니다"
 
-#: ../applets/clock/clock.c:309
+#: ../applets/clock/clock.c:266
 msgid "%l:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
+#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
 msgid "%l:%M %p"
 msgstr "%p %I:%M"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
-#: ../applets/clock/clock.c:1784
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
+#: ../applets/clock/clock.c:1730
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -96,7 +96,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:322
+#: ../applets/clock/clock.c:279
 msgid "%a %b %e"
 msgstr "%b %e일 (%a)"
 
@@ -104,7 +104,7 @@ msgstr "%b %e일 (%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:329
+#: ../applets/clock/clock.c:286
 #, c-format
 msgid ""
 "%1$s\n"
@@ -117,68 +117,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:336
+#: ../applets/clock/clock.c:293
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s %s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:417
+#: ../applets/clock/clock.c:378
 msgid "%A %B %d"
 msgstr "%b %e일 %A"
 
-#: ../applets/clock/clock.c:429
+#: ../applets/clock/clock.c:390
 msgid "Click to view your appointments and tasks"
 msgstr "약속과 작업을 보려면 누르십시오"
 
-#: ../applets/clock/clock.c:431
+#: ../applets/clock/clock.c:392
 msgid "Click to view month calendar"
 msgstr "달력을 보려면 누르십시오"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:637
+#: ../applets/clock/clock.c:598
 msgid "%b %d"
 msgstr "%b %e일"
 
-#: ../applets/clock/clock.c:964
+#: ../applets/clock/clock.c:925
 msgid "Tasks"
 msgstr "작업"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1077
 msgid "All Day"
 msgstr "하루 종일"
 
-#: ../applets/clock/clock.c:1155
+#: ../applets/clock/clock.c:1116
 msgid "Appointments"
 msgstr "약속"
 
-#: ../applets/clock/clock.c:1387
+#: ../applets/clock/clock.c:1348
 msgid "Calendar"
 msgstr "달력"
 
-#: ../applets/clock/clock.c:1676
+#: ../applets/clock/clock.c:1629
 msgid "Computer Clock"
 msgstr "컴퓨터 시계"
 
-#: ../applets/clock/clock.c:1777
+#: ../applets/clock/clock.c:1723
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: ../applets/clock/clock.c:1779
+#: ../applets/clock/clock.c:1725
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
-#: ../applets/clock/clock.c:1821
+#: ../applets/clock/clock.c:1767
 msgid "%A, %B %d %Y"
 msgstr "%Y년 %b %e일 %A"
 
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1824
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "시간 설정 도구를 실행하는 데 실패: %s"
 
-#: ../applets/clock/clock.c:1914
+#: ../applets/clock/clock.c:1860
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -186,11 +186,11 @@ msgstr ""
 "날짜 및 시간을 설정하는 프로그램을 찾는데 실패했습니다. 설치가 안 된 것 같습"
 "니다?"
 
-#: ../applets/clock/clock.c:2386
+#: ../applets/clock/clock.c:2332
 msgid "Custom format"
 msgstr "사용자 지정 형식"
 
-#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
+#: ../applets/clock/clock.c:2453 ../applets/clock/clock.c:2630
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -198,52 +198,52 @@ msgstr "사용자 지정 형식"
 msgid "There was an error displaying help: %s"
 msgstr "도움말을 보여주는 데 오류가 발생했습니다: %s"
 
-#: ../applets/clock/clock.c:2542
+#: ../applets/clock/clock.c:2488
 msgid "Clock Preferences"
 msgstr "시계 기본 설정"
 
-#: ../applets/clock/clock.c:2566
+#: ../applets/clock/clock.c:2512
 msgid "Clock _type:"
 msgstr "시계 종류(_T):"
 
-#: ../applets/clock/clock.c:2576
+#: ../applets/clock/clock.c:2522
 msgid "12 hour"
 msgstr "12시간"
 
-#: ../applets/clock/clock.c:2577
+#: ../applets/clock/clock.c:2523
 msgid "24 hour"
 msgstr "24시간"
 
-#: ../applets/clock/clock.c:2578
+#: ../applets/clock/clock.c:2524
 msgid "UNIX time"
 msgstr "유닉스 시각"
 
-#: ../applets/clock/clock.c:2579
+#: ../applets/clock/clock.c:2525
 msgid "Internet time"
 msgstr "인터넷 시각"
 
-#: ../applets/clock/clock.c:2587
+#: ../applets/clock/clock.c:2533
 msgid "Custom _format:"
 msgstr "사용자 지정 형식(_F):"
 
-#: ../applets/clock/clock.c:2606
+#: ../applets/clock/clock.c:2552
 msgid "Show _seconds"
 msgstr "초 보기(_S)"
 
-#: ../applets/clock/clock.c:2615
+#: ../applets/clock/clock.c:2561
 msgid "Show _date"
 msgstr "날짜 보기(_D)"
 
-#: ../applets/clock/clock.c:2624
+#: ../applets/clock/clock.c:2570
 msgid "Use _UTC"
 msgstr "UTC 사용(_U)"
 
-#: ../applets/clock/clock.c:2728
+#: ../applets/clock/clock.c:2674
 msgid "The Clock displays the current time and date"
 msgstr "시계는 현재 시간과 날짜를 보여 줍니다"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2677 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -1608,26 +1608,26 @@ msgstr "프로그램"
 msgid "_Edit Menus"
 msgstr "메뉴 편집(_E)"
 
-#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "'%s' 위치를 보일 수 없습니다"
 
-#: ../gnome-panel/panel-menu-items.c:332
+#: ../gnome-panel/panel-menu-items.c:324
 msgid "Bookmarks"
 msgstr "책갈피"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' 열기"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:431
 msgid "Network Places"
 msgstr "네트워크 위치"
 
-#: ../gnome-panel/panel-menu-items.c:441
+#: ../gnome-panel/panel-menu-items.c:433
 msgid "Removable Media"
 msgstr "이동식 미디어"
 
@@ -1635,30 +1635,30 @@ msgstr "이동식 미디어"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:491
 msgid "Desktop Folder|Desktop"
 msgstr "바탕 화면"
 
-#: ../gnome-panel/panel-menu-items.c:507
+#: ../gnome-panel/panel-menu-items.c:492
 msgid "Open the desktop as a folder"
 msgstr "바탕 화면을 폴더로 엽니다"
 
-#: ../gnome-panel/panel-menu-items.c:861
+#: ../gnome-panel/panel-menu-items.c:824
 msgid "Places"
 msgstr "위치"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:899
+#: ../gnome-panel/panel-menu-items.c:862
 msgid "Desktop Environment|Desktop"
 msgstr "데스크탑"
 
-#: ../gnome-panel/panel-menu-items.c:1040
+#: ../gnome-panel/panel-menu-items.c:1003
 msgid "Cannot launch entry"
 msgstr "항목을 실행할 수 없습니다"
 
-#: ../gnome-panel/panel-menu-items.c:1052
+#: ../gnome-panel/panel-menu-items.c:1015
 msgid "Cannot load entry"
 msgstr "항목을 읽어들일 수 없습니다"
 
@@ -2040,21 +2040,21 @@ msgstr "'%s' 명령을 실행할 수 없습니다"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "'%s'을(를) UTF-8에서 변환할 수 없습니다"
 
-#: ../gnome-panel/panel-run-dialog.c:1116
+#: ../gnome-panel/panel-run-dialog.c:1112
 msgid "Choose a file to append to the command..."
 msgstr "명령어에 덧붙일 파일을 선택하세요..."
 
-#: ../gnome-panel/panel-run-dialog.c:1472
+#: ../gnome-panel/panel-run-dialog.c:1468
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "다음 명령을 실행합니다: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1479
+#: ../gnome-panel/panel-run-dialog.c:1475
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "설명을 볼 프로그램을 선택하세요."
 
-#: ../gnome-panel/panel-run-dialog.c:1514
+#: ../gnome-panel/panel-run-dialog.c:1510
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2707,3 +2707,341 @@ msgstr "애플릿(_A):"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "설정 디렉토리(_P):"
+
+#~ msgid "Display \"Run Application\" dialog keybinding"
+#~ msgstr "\"프로그램 실행\" 대화 상자를 보여주는 키바인딩"
+
+#~ msgid "Enable keybindings"
+#~ msgstr "키바인딩 사용"
+
+#~ msgid "FIXME - is this resolved with the new menu stuff"
+#~ msgstr "FIXME - 새 메뉴와 동작하는지?"
+
+#~ msgid "FIXME - need to define limits"
+#~ msgstr "FIXME - 한계값 정의해야 함"
+
+#~ msgid "If true, panel-specific keybindings are enabled."
+#~ msgstr "참이면, 패널 고유의 키바인딩을 사용합니다."
+
+#~ msgid "Popup panel menu keybinding"
+#~ msgstr "팝업 패널 메뉴의 키바인딩"
+
+#~ msgid "Take screenshot"
+#~ msgstr "스크린샷 잡기"
+
+#~ msgid "Take window screenshot"
+#~ msgstr "창의 스크린샷 잡기"
+
+#~ msgid "Unknown Window"
+#~ msgstr "알 수 없는 창"
+
+#~ msgid "No Windows Open"
+#~ msgstr "열린 창 없음"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "창 사이로 전환하는 도구"
+
+#~ msgid "none"
+#~ msgstr "없음"
+
+#~ msgid "file not found"
+#~ msgstr "파일을 찾을 수 없습니다"
+
+#~ msgid "Desktop"
+#~ msgstr "바탕화면"
+
+#~ msgid "Workspace Selector"
+#~ msgstr "작업 공간 바꾸기 프로그램"
+
+#~ msgid "_Lock"
+#~ msgstr "고정(_L)"
+
+#~ msgid "Un_lock"
+#~ msgstr "고정 해제(_L)"
+
+#~ msgid "Lock screen"
+#~ msgstr "화면 잠그기"
+
+#~ msgid "Add to %s"
+#~ msgstr "%s에 더하기"
+
+#~ msgid "Add to the panel"
+#~ msgstr "패널에 더하기"
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#~ msgid "About GNOME"
+#~ msgstr "그놈 정보"
+
+#~ msgid "About _GNOME"
+#~ msgstr "그놈 정보(_G)"
+
+#~ msgid "Actions"
+#~ msgstr "명령"
+
+#~ msgid "Workspace List"
+#~ msgstr "작업 공간 이름"
+
+#~ msgid "Specify a profile name to load"
+#~ msgstr "읽을 프로파일 이름 지정"
+
+#~ msgid "Cannot remove menu item %s"
+#~ msgstr "메뉴 항목 %s을(를) 지울 수 없습니다"
+
+#~ msgid "Could not get file name from path: %s"
+#~ msgstr "이 경로에서 파일이름을 가져올 수 없습니다: %s"
+
+#~ msgid "Could not get directory name from path: %s"
+#~ msgstr "이 경로에서 디렉토리이름을 가져올 수 없습니다: %s"
+
+#~ msgid "Remove this item"
+#~ msgstr "이 항목 지우기"
+
+#~ msgid "Add new item to this menu"
+#~ msgstr "새 항목을 이 메뉴에 더하기"
+
+#~ msgid "Properties"
+#~ msgstr "등록 정보"
+
+#~ msgid "_Name:"
+#~ msgstr "이름(_N):"
+
+#~ msgid ""
+#~ "The default application for this type of file cannot handle remote files"
+#~ msgstr "기본 프로그램이 이런 형식의 원격 파일을 처리할 수 없습니다"
+
+#~ msgid "Unable to get the name of the command to execute"
+#~ msgstr "실행할 명령어 이름을 얻어올 수 없습니다"
+
+#~ msgid ""
+#~ "You do not have fortune installed or you have not specified a program to "
+#~ "run.\n"
+#~ "\n"
+#~ "Please refer to fish properties dialog."
+#~ msgstr ""
+#~ "운세 프로그램 또는 실행할 프로그램이 지정되지 않았습니다.\n"
+#~ "\n"
+#~ "물고기 등록 정보 대화상자를 참고하십시오."
+
+#~ msgid "Debian GNU/Linux"
+#~ msgstr "데비안 GNU/리눅스"
+
+#~ msgid "Debian Menu"
+#~ msgstr "데비안 메뉴"
+
+#~ msgid "SuSE Linux"
+#~ msgstr "SuSE 리눅스"
+
+#~ msgid "SuSE Menu"
+#~ msgstr "SuSE 메뉴"
+
+#~ msgid "Solaris"
+#~ msgstr "솔라리스"
+
+#~ msgid ""
+#~ "Unable to initialize png structure.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "png 구조를 초기화 할 수 없음.\n"
+#~ "시스템에 libpng의 잘못된 판이 설치되어 있을것입니다."
+
+#~ msgid ""
+#~ "Unable to create png info.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "png 정보를 만들 수 없음.\n"
+#~ "시스템에 libpng의 잘못된 판이 설치되어 있을것입니다."
+
+#~ msgid ""
+#~ "Unable to set png info.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "png 정보를 설정할 수 없음.\n"
+#~ "시스템에 libpng의 잘못된 판이 설치되어 있을것입니다."
+
+#~ msgid ""
+#~ "Insufficient memory to save the screenshot.\n"
+#~ "Please free up some resources and try again."
+#~ msgstr ""
+#~ "스크린샷을 저장하는데 메모리가 부족합니다.\n"
+#~ "몇몇 자원을 해제시킨 다음 다시 시도하십시오."
+
+#~ msgid "File %s already exists. Overwrite?"
+#~ msgstr "파일 %s이(가) 이미 있습니다. 덮어쓸까요?"
+
+#~ msgid ""
+#~ "Unable to create the file:\n"
+#~ "\"%s\"\n"
+#~ "Please check your permissions of the parent directory"
+#~ msgstr ""
+#~ "파일을 만들 수 없습니다:\n"
+#~ "\"%s\"\n"
+#~ "부모 디렉토리의 허가권을 확인하십시오"
+
+#~ msgid "Screenshot-%s.png"
+#~ msgstr "스크린샷-%s.png"
+
+#~ msgid "Screenshot.png"
+#~ msgstr "스크린샷.png"
+
+#~ msgid "Screenshot-%s-%d.png"
+#~ msgstr "스크린샷-%s-%d.png"
+
+#~ msgid "Screenshot-%d.png"
+#~ msgstr "스크린샷-%d.png"
+
+#~ msgid "Not enough room to write file %s"
+#~ msgstr "%s 파일을 쓸 공간이 부족합니다"
+
+#~ msgid ""
+#~ "There was an error displaying help: \n"
+#~ "%s"
+#~ msgstr ""
+#~ "도움말을 보이는데 오류가 발생했습니다: \n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Glade file for the screenshot program is missing.\n"
+#~ "Please check your installation of gnome-panel"
+#~ msgstr ""
+#~ "스크린샷 프로그램의 Glade파일이 없습니다.\n"
+#~ "gnome-panel 설치를 확인하십시오."
+
+#~ msgid "Unable to take a screenshot of the current desktop."
+#~ msgstr "현재 데스크탑의 스크린샷을 찍을 수 없습니다."
+
+#~ msgid "Save screenshot to _web page (save in %s)"
+#~ msgstr "웹페이지에 스크린샷 저장 (%s에 저장)(_W)"
+
+#~ msgid "Grab a window instead of the entire screen"
+#~ msgstr "전체화면 대신에 창 한 개만 잡습니다"
+
+#~ msgid "Take screenshot after specified delay [in seconds]"
+#~ msgstr "지정한 시간(초) 뒤에 스크린샷을 잡습니다"
+
+#~ msgid "<b>Options</b>"
+#~ msgstr "<b>옵션</b>"
+
+#~ msgid "<b>Preview</b>"
+#~ msgstr "<b>미리 보기</b>"
+
+#~ msgid "Save Screenshot"
+#~ msgstr "스크린샷 저장"
+
+#~ msgid "Save screenshot to _desktop"
+#~ msgstr "바탕화면에 스크린샷 저장(_D)"
+
+#~ msgid "Save screenshot to _file:"
+#~ msgstr "파일로 스크린샷 저장(_F):"
+
+#~ msgid "Save screenshot to _web page (save in ~/public__html)"
+#~ msgstr "웹페이지(~/public__html)에 스크린샷 저장(_W)"
+
+#~ msgid ""
+#~ "The user's directory in which screenshots should be saved so as to appear "
+#~ "on the web."
+#~ msgstr "스크린샷에서 웹에 바로 보이도록 저장하는 사용자 디렉토리."
+
+#~ msgid ""
+#~ "The \"%s\" applet appears to have died unexpectedly.\n"
+#~ "\n"
+#~ "Do you want to reload this applet?"
+#~ msgstr ""
+#~ "\"%s\" 애플릿이 갑작스럽게 죽었습니다.\n"
+#~ "\n"
+#~ "이 애플릿을 다시 읽어들이시겠습니까?"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "(If you choose not to reload it at this time you can always add it by "
+#~ "right clicking on the panel and clicking on the \"Add to Panel\" submenu)"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "(지금 다시 읽어들이지 않는다고 선택하더라도, 언제든지 패널에서 오른쪽 클릭"
+#~ "하고 \"패널에 더하기\" 하위메뉴에서 애플릿을 클릭해 애플릿을 더할 수 있습"
+#~ "니다)"
+
+#~ msgid "Unable to load panel stock icon '%s'\n"
+#~ msgstr "패널 스톡 아이콘 '%s'(을)를 읽을 수 없습니다\n"
+
+#~ msgid "Size:"
+#~ msgstr "크기:"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "시스템 관리자가 패널 설정을 바꾸지\n"
+#~ "못하도록 하였습니다."
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "glade 파일 %s을(를) 읽어들이는 데 오류 발생"
+
+#~ msgid "Panel"
+#~ msgstr "패널"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "모든 패널에 대한 기본 설정 선택"
+
+#~ msgid "Animation _speed:"
+#~ msgstr "애니매이션 속도(_S):"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "실행 아이콘을 누른 경우에 서랍 닫기(_D)"
+
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "서랍과 패널 애니메이션(_A)"
+
+#~ msgid "Fast"
+#~ msgstr "빠르게"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "패널 기본 설정"
+
+#~ msgid "Slow"
+#~ msgstr "느리게"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr "컴퓨터를 잠시 쓰지 않을 때 화면을 잠급니다"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "그놈 로그아웃"
+
+#~ msgid "Search for Files"
+#~ msgstr "파일 찾기"
+
+#~ msgid "Screenshot"
+#~ msgstr "스크린샷"
+
+#~ msgid "Lock"
+#~ msgstr "잠그기"
+
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr "화면을 잠그고 컴퓨터 앞을 잠시 떠납니다"
+
+#~ msgid "Search"
+#~ msgstr "찾기"
+
+#~ msgid "Run"
+#~ msgstr "실행"
+
+#~ msgid "Run a command"
+#~ msgstr "명령을 실행합니다"
+
+#~ msgid "Accessories"
+#~ msgstr "보조프로그램"
+
+#~ msgid "Amusements"
+#~ msgstr "재미"
+
+#~ msgid "Utility"
+#~ msgstr "유틸리티"
+
+#~ msgid "Clear recent document history?"
+#~ msgstr "최근 문서 기록을 지우시겠습니까?"
+
+#~ msgid "This will clear the contents of the Recent Documents menu."
+#~ msgstr "최근 문서 메뉴의 내용을 지웁니다."

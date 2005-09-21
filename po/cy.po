@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-16 21:19+0200\n"
+"POT-Creation-Date: 2005-09-01 17:52+0100\n"
 "PO-Revision-Date: 2005-09-01 17:53+0100\n"
 "Last-Translator: Rhys Jones <rhys@sucs.org>\n"
 "Language-Team: Welsh <gnome-cy@www.linux.org.uk>\n"
@@ -59,7 +59,7 @@ msgid "_Preferences"
 msgstr "_Hoffterau"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2725
+#: ../applets/clock/clock.c:2671
 msgid "Clock"
 msgstr "Cloc"
 
@@ -75,20 +75,20 @@ msgstr "Ffatri creu rhai rhaglennigion cloc."
 msgid "Get the current time and date"
 msgstr "Cyrchu'r dyddiad ac amser cyfredol"
 
-#: ../applets/clock/clock.c:309
+#: ../applets/clock/clock.c:266
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
+#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
-#: ../applets/clock/clock.c:1784
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
+#: ../applets/clock/clock.c:1730
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -101,7 +101,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:322
+#: ../applets/clock/clock.c:279
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -112,7 +112,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:329
+#: ../applets/clock/clock.c:286
 #, c-format
 msgid ""
 "%1$s\n"
@@ -128,7 +128,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:336
+#: ../applets/clock/clock.c:293
 #, c-format
 msgid "%1$s, %2$s"
 msgstr ""
@@ -136,15 +136,15 @@ msgstr ""
 "%2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:417
+#: ../applets/clock/clock.c:378
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: ../applets/clock/clock.c:429
+#: ../applets/clock/clock.c:390
 msgid "Click to view your appointments and tasks"
 msgstr "Gwasgwch i weld eich apwyntiadau a thasgau"
 
-#: ../applets/clock/clock.c:431
+#: ../applets/clock/clock.c:392
 msgid "Click to view month calendar"
 msgstr "Gwasgwch i weld calendr mis"
 
@@ -154,48 +154,48 @@ msgstr "Gwasgwch i weld calendr mis"
 #  *              01" instead of "May  1").
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:637
+#: ../applets/clock/clock.c:598
 msgid "%b %d"
 msgstr "%b %e"
 
-#: ../applets/clock/clock.c:964
+#: ../applets/clock/clock.c:925
 msgid "Tasks"
 msgstr "Tasgiau"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1077
 msgid "All Day"
 msgstr "Drwy'r Dydd"
 
-#: ../applets/clock/clock.c:1155
+#: ../applets/clock/clock.c:1116
 msgid "Appointments"
 msgstr "Apwyntiadau"
 
-#: ../applets/clock/clock.c:1387
+#: ../applets/clock/clock.c:1348
 msgid "Calendar"
 msgstr "Calendr"
 
-#: ../applets/clock/clock.c:1676
+#: ../applets/clock/clock.c:1629
 msgid "Computer Clock"
 msgstr "Cloc Cyfrifiadur"
 
-#: ../applets/clock/clock.c:1777
+#: ../applets/clock/clock.c:1723
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1779
+#: ../applets/clock/clock.c:1725
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1821
+#: ../applets/clock/clock.c:1767
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1824
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Methu lansio'r offeryn cyfluno'r amser: %s"
 
-#: ../applets/clock/clock.c:1914
+#: ../applets/clock/clock.c:1860
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -203,11 +203,11 @@ msgstr ""
 "Methu canfod rhaglen er mwyn cyfluno'r dyddiad a'r amser. Efallai nad oes un "
 "wedi ei osod?"
 
-#: ../applets/clock/clock.c:2386
+#: ../applets/clock/clock.c:2332
 msgid "Custom format"
 msgstr "Fformat addasiedig"
 
-#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
+#: ../applets/clock/clock.c:2453 ../applets/clock/clock.c:2630
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -215,53 +215,53 @@ msgstr "Fformat addasiedig"
 msgid "There was an error displaying help: %s"
 msgstr "Roedd gwall wrth ddangos cymorth: %s"
 
-#: ../applets/clock/clock.c:2542
+#: ../applets/clock/clock.c:2488
 msgid "Clock Preferences"
 msgstr "Hoffterau Cloc"
 
-#: ../applets/clock/clock.c:2566
+#: ../applets/clock/clock.c:2512
 msgid "Clock _type:"
 msgstr "_Math cloc:"
 
-#: ../applets/clock/clock.c:2576
+#: ../applets/clock/clock.c:2522
 msgid "12 hour"
 msgstr "12 awr"
 
-#: ../applets/clock/clock.c:2577
+#: ../applets/clock/clock.c:2523
 msgid "24 hour"
 msgstr "24 awr"
 
-#: ../applets/clock/clock.c:2578
+#: ../applets/clock/clock.c:2524
 msgid "UNIX time"
 msgstr "Amser UNIX"
 
-#: ../applets/clock/clock.c:2579
+#: ../applets/clock/clock.c:2525
 msgid "Internet time"
 msgstr "Amser rhyngrwyd"
 
-#: ../applets/clock/clock.c:2587
+#: ../applets/clock/clock.c:2533
 msgid "Custom _format:"
 msgstr "_Fformat addasiedig:"
 
-#: ../applets/clock/clock.c:2606
+#: ../applets/clock/clock.c:2552
 msgid "Show _seconds"
 msgstr "Dangos _eiliadau"
 
-#: ../applets/clock/clock.c:2615
+#: ../applets/clock/clock.c:2561
 msgid "Show _date"
 msgstr "Dangos y _dyddiad"
 
-#: ../applets/clock/clock.c:2624
+#: ../applets/clock/clock.c:2570
 msgid "Use _UTC"
 msgstr "Defnyddio _UTC"
 
-#: ../applets/clock/clock.c:2728
+#: ../applets/clock/clock.c:2674
 msgid "The Clock displays the current time and date"
 msgstr "Mae'r Cloc yn dangos yr amser a'r dyddiad cyfredol"
 
 #  Translator credits
 #. Translator credits
-#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2677 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -1660,26 +1660,26 @@ msgstr "Rhaglenni"
 msgid "_Edit Menus"
 msgstr "Golygu Dewislenni"
 
-#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Ni ellir dangos y lleoliad '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:332
+#: ../gnome-panel/panel-menu-items.c:324
 msgid "Bookmarks"
 msgstr "Llyfyrnodau"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "Agor '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:431
 msgid "Network Places"
 msgstr "Mannau Rhwydwaith"
 
-#: ../gnome-panel/panel-menu-items.c:441
+#: ../gnome-panel/panel-menu-items.c:433
 msgid "Removable Media"
 msgstr "Cyfryngau Echdynnol"
 
@@ -1687,30 +1687,30 @@ msgstr "Cyfryngau Echdynnol"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:491
 msgid "Desktop Folder|Desktop"
 msgstr "Penbwrdd"
 
-#: ../gnome-panel/panel-menu-items.c:507
+#: ../gnome-panel/panel-menu-items.c:492
 msgid "Open the desktop as a folder"
 msgstr "Agor y penfwrdd fel plygell"
 
-#: ../gnome-panel/panel-menu-items.c:861
+#: ../gnome-panel/panel-menu-items.c:824
 msgid "Places"
 msgstr "Mannau"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:899
+#: ../gnome-panel/panel-menu-items.c:862
 msgid "Desktop Environment|Desktop"
 msgstr "Penbwrdd"
 
-#: ../gnome-panel/panel-menu-items.c:1040
+#: ../gnome-panel/panel-menu-items.c:1003
 msgid "Cannot launch entry"
 msgstr "Ni ellir lansio'r cofnod"
 
-#: ../gnome-panel/panel-menu-items.c:1052
+#: ../gnome-panel/panel-menu-items.c:1015
 msgid "Cannot load entry"
 msgstr "Ni ellir llwytho'r cofnod"
 
@@ -2097,21 +2097,21 @@ msgstr "Ni ellir lansio'r gorchymyn '%s'"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Ni ellir trosi i '%s' o UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1116
+#: ../gnome-panel/panel-run-dialog.c:1112
 msgid "Choose a file to append to the command..."
 msgstr "Dewis ffeil i'w atodi i'r gorchymyn..."
 
-#: ../gnome-panel/panel-run-dialog.c:1472
+#: ../gnome-panel/panel-run-dialog.c:1468
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Caiff y gorchymyn '%s' ei weithredu"
 
-#: ../gnome-panel/panel-run-dialog.c:1479
+#: ../gnome-panel/panel-run-dialog.c:1475
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Desiswch rhaglen er mwyn gweld ei ddisgrifiad."
 
-#: ../gnome-panel/panel-run-dialog.c:1514
+#: ../gnome-panel/panel-run-dialog.c:1510
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2786,3 +2786,1429 @@ msgstr "_Rhaglennig:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Cyfe_iriadur Hoffterau:"
+
+#~ msgid "Display \"Run Application\" dialog keybinding"
+#~ msgstr "Dangos bysellrhwymiad deialog \"Gweithredu Rhaglen\""
+
+#~ msgid "Enable keybindings"
+#~ msgstr "Galluogi bysellrhwymiadau"
+
+#~ msgid "FIXME - is this resolved with the new menu stuff"
+#~ msgstr "TRWSIO - ydi hyn wedi ei ddatrys gyda'r stwff dewislen newydd?"
+
+#~ msgid "FIXME - need to define limits"
+#~ msgstr "TRWSIO - angen penodi terfynau"
+
+#~ msgid "If true, panel-specific keybindings are enabled."
+#~ msgstr "OS gwir, galluogir bysellrhwymiadau yn benodol i'r panel."
+
+#~ msgid "Popup panel menu keybinding"
+#~ msgstr "Brysddangos bysellrhwymiad dewislen y panel"
+
+#~ msgid "Take screenshot"
+#~ msgstr "Tynnu sgrînlun"
+
+#~ msgid "Take window screenshot"
+#~ msgstr "Tynnu sgrînlun o ffenest"
+
+#~ msgid "File not found"
+#~ msgstr "Ni chanfodwyd y ffeil"
+
+#~ msgid "Unknown Window"
+#~ msgstr "Ffenest Anhysbys"
+
+#~ msgid "No Windows Open"
+#~ msgstr "Dim ffenestri ar Agor"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "Teclyn i newid rhwng ffenestri"
+
+#~ msgid "none"
+#~ msgstr "dim"
+
+#~ msgid "file not found"
+#~ msgstr "ffeil heb ei ganfod"
+
+#~ msgid "Desktop"
+#~ msgstr "Penbwrdd"
+
+#, fuzzy
+#~ msgid "Workspace Selector"
+#~ msgstr "Cyfnewidydd Gweithfannau"
+
+#~ msgid "_Lock"
+#~ msgstr "_Cloi"
+
+#~ msgid "Un_lock"
+#~ msgstr "_Datgloi"
+
+#~ msgid "Lock screen"
+#~ msgstr "Cloi'r sgrîn"
+
+#~ msgid "Add to %s"
+#~ msgstr "Ychwanegu at %s"
+
+#~ msgid "Add to the panel"
+#~ msgstr "Ychwanegu at y Panel"
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#~ msgid "About GNOME"
+#~ msgstr "Ynghylch GNOME"
+
+#~ msgid "About _GNOME"
+#~ msgstr "Ynghylch _GNOME"
+
+#~ msgid "Actions"
+#~ msgstr "Gweithredoedd"
+
+#, fuzzy
+#~ msgid "Workspace List"
+#~ msgstr "Enwau Gweithfannau"
+
+#~ msgid "Specify a profile name to load"
+#~ msgstr "Penodwch enw proffeil i'w lwytho"
+
+#~ msgid "Cannot remove menu item %s"
+#~ msgstr "Ni ellir tynnu'r eitem dewislen %s"
+
+#~ msgid "Could not get file name from path: %s"
+#~ msgstr "Methu cyrchu enw'r ffeil o'r llwybr: %s"
+
+#~ msgid "Could not get directory name from path: %s"
+#~ msgstr "Methu cyrchu enw'r cyfeiriadur o'r llwybr: %s"
+
+#~ msgid "Remove this item"
+#~ msgstr "Tynnu'r eitem hwn"
+
+#~ msgid "Add new item to this menu"
+#~ msgstr "Ychwanegu eitem newydd i'r dewislen hwn"
+
+#~ msgid "Properties"
+#~ msgstr "Priodweddau"
+
+#~ msgid "_Name:"
+#~ msgstr "_Enw:"
+
+#~ msgid ""
+#~ "The default application for this type of file cannot handle remote files"
+#~ msgstr ""
+#~ "Nid yw'r rhaglen rhagosodedig ar gyfer y math yma o ffeil yn gallu ymdrin "
+#~ "a ffeiliau pell"
+
+#~ msgid "Unable to get the name of the command to execute"
+#~ msgstr "Methu canfod enw'r gorchymyn i'w weithredu"
+
+#~ msgid ""
+#~ "You do not have fortune installed or you have not specified a program to "
+#~ "run.\n"
+#~ "\n"
+#~ "Please refer to fish properties dialog."
+#~ msgstr ""
+#~ "Nid yw'r rhaglen \"fortune\" wedi ei osod gennych, neu nid ydych wedi "
+#~ "pennu gorchymyn i'w redeg.\n"
+#~ "Cyfeiriwch at ddeialog briodoleddau'r pysgodyn os gwelwch yn dda."
+
+#~ msgid "Debian GNU/Linux"
+#~ msgstr "GNU/Linux Debian"
+
+#~ msgid "Debian Menu"
+#~ msgstr "Dewislen Debian"
+
+#~ msgid "SuSE Linux"
+#~ msgstr "Linux SuSE"
+
+#~ msgid "SuSE Menu"
+#~ msgstr "Dewislen SuSE"
+
+#~ msgid "Solaris"
+#~ msgstr "Solaris"
+
+#~ msgid "CDE Menu"
+#~ msgstr "Dewislen CDE"
+
+#~ msgid ""
+#~ "Unable to initialize png structure.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Methu cychwyn y strwythur PNG.\n"
+#~ "Mae'n debygol fod fersiwn gwael o libpng ar eich system"
+
+#~ msgid ""
+#~ "Unable to create png info.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Methu creu gwybodaeth PNG.\n"
+#~ "Mae'n debygol fod fersiwn gwael o libpng ar eich system"
+
+#~ msgid ""
+#~ "Unable to set png info.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Methu gosod gwybodaeth PNG.\n"
+#~ "Mae'n debygol fod fersiwn gwael o libpng ar eich system"
+
+#~ msgid ""
+#~ "Insufficient memory to save the screenshot.\n"
+#~ "Please free up some resources and try again."
+#~ msgstr ""
+#~ "Dim digon o gof er mwyn arbed y sgrînlun.\n"
+#~ "Rhyddhewch rhai adnoddau a ceisiwch eto os gwelwch yn dda."
+
+#~ msgid "File %s already exists. Overwrite?"
+#~ msgstr "Mae'r ffeil %s yn bodoli yn barod. Dylid trosysgrifo?"
+
+#~ msgid ""
+#~ "Unable to create the file:\n"
+#~ "\"%s\"\n"
+#~ "Please check your permissions of the parent directory"
+#~ msgstr ""
+#~ "Methu creu'r ffeil:\n"
+#~ "\"%s\"\n"
+#~ "Gwiriwch eich caniatâdau ar y cyfeiriadur rhiant os gwelwch yn dda"
+
+#  translators: this is the name of the file that gets made up
+#  * with the screenshot if a specific window is taken
+#~ msgid "Screenshot-%s.png"
+#~ msgstr "Sgrînlun-%s.png"
+
+#  translators: this is the name of the file that gets made up
+#  * with the screenshot if the entire screen is taken
+#~ msgid "Screenshot.png"
+#~ msgstr "Sgrînlun.png"
+
+#  translators: this is the name of the file that gets
+#  * made up with the screenshot if a specific window is
+#  * taken
+#~ msgid "Screenshot-%s-%d.png"
+#~ msgstr "Sgrînlun-%s-%d.png"
+
+#  translators: this is the name of the file that gets
+#  * made up with the screenshot if the entire screen is
+#  * taken
+#~ msgid "Screenshot-%d.png"
+#~ msgstr "Sgrînlun-%d.png"
+
+#~ msgid "Not enough room to write file %s"
+#~ msgstr "Dim digon o le er mwyn ysgrifennu'r ffeil %s"
+
+#~ msgid ""
+#~ "There was an error displaying help: \n"
+#~ "%s"
+#~ msgstr ""
+#~ "Roedd gwall wrth ddangos cymorth: \n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Glade file for the screenshot program is missing.\n"
+#~ "Please check your installation of gnome-panel"
+#~ msgstr ""
+#~ " Mae'r ffeil Glade ar gyfer y rhaglen sgrînlun ar goll.\n"
+#~ " Gwiriwch eich gosodiad gnome-panel os gwelwch yn dda"
+
+#~ msgid "Unable to take a screenshot of the current desktop."
+#~ msgstr "Methu creu sgrînlun o'r penbwrdd cyfredol"
+
+#~ msgid "Save screenshot to _web page (save in %s)"
+#~ msgstr "Cadw'r sgrînlun i dudalen _gwe (arbed yn %s)"
+
+#~ msgid "Grab a window instead of the entire screen"
+#~ msgstr "Cipio ffenest yn lle'r holl sgrîn"
+
+#~ msgid "Take screenshot after specified delay [in seconds]"
+#~ msgstr "Creu sgrînlun ar ôl oediad penodol [mewn eiliadau]"
+
+#~ msgid "<b>Options</b>"
+#~ msgstr "<b>Dewisiadau</b>"
+
+#~ msgid "<b>Preview</b>"
+#~ msgstr "<b>Rhagolwg</b>"
+
+#~ msgid "Save Screenshot"
+#~ msgstr "Cadw'r Sgrînlun"
+
+#~ msgid "Save screenshot to _desktop"
+#~ msgstr "Cadw'r sgrînlun i'r _penbwrdd"
+
+#~ msgid "Save screenshot to _file:"
+#~ msgstr "Cadw'r sgrînlun i _ffeil:"
+
+#~ msgid "Save screenshot to _web page (save in ~/public__html)"
+#~ msgstr "Cadw'r sgrînlun i dudalen we (arbed yn ~/public__html)"
+
+#~ msgid ""
+#~ "The user's directory in which screenshots should be saved so as to appear "
+#~ "on the web."
+#~ msgstr ""
+#~ "Cyfeiriadur y defnyddiwr lle dylid cadw sgrînluniau er mwyn iddynt "
+#~ "ymddangos ar y we."
+
+#~ msgid ""
+#~ "The \"%s\" applet appears to have died unexpectedly.\n"
+#~ "\n"
+#~ "Do you want to reload this applet?"
+#~ msgstr ""
+#~ "Mae'r rhaglennig \"%s\" wedi marw'n annisgwyl\n"
+#~ "\n"
+#~ "Ydych chi eisiau ail-lwytho'r rhaglennig yma?"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "(If you choose not to reload it at this time you can always add it by "
+#~ "right clicking on the panel and clicking on the \"Add to Panel\" submenu)"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "(Os ydych yn dewis peidio'i ail-lwytho ar hyn o bryd fe allwch wastad ei "
+#~ "ychwanegu drwy dde-glicio ar y panel a chlicio ar yr is-ddewislen "
+#~ "\"Ychwanegu at y Panel\")"
+
+#~ msgid "Unable to load panel stock icon '%s'\n"
+#~ msgstr "Methu canfod eicon stoc '%s' y panel\n"
+
+#~ msgid "Orientation:"
+#~ msgstr "Gogwydd:"
+
+#~ msgid "Size:"
+#~ msgstr "Maint:"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "Mae gweinyddwr y system wedi rhwystro newidiadau\n"
+#~ "i gyfluniad y panel"
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "Gwall wrth lwytho ffeil glade %s"
+
+#~ msgid "Panel"
+#~ msgstr "Panel"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "Gosod hoffterau am eich holl baneli "
+
+#~ msgid "Animation _speed:"
+#~ msgstr "_Cyflymder animeiddiad:"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "Cau'r _drôr pan caiff lansiwr ei glicio"
+
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "_Animeiddiad paneli a droriau"
+
+#~ msgid "Fast"
+#~ msgstr "Cyflym"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "Hoffterau Panel"
+
+#~ msgid "Slow"
+#~ msgstr "Araf"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr "Cloi'r sgrîn fel y gallwch adael eich cyfrifiadur dros dro"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "Allgofnodi o GNOME"
+
+#~ msgid "Search for Files"
+#~ msgstr "Chwilio am Ffeiliau"
+
+#~ msgid "Screenshot"
+#~ msgstr "Sgrînlun"
+
+#~ msgid "Lock"
+#~ msgstr "Cloi"
+
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr "Cloi'r sgrîn fel y gallwch adael eich cyfrifiadur dros dro"
+
+#~ msgid "Search"
+#~ msgstr "Chwilio"
+
+#~ msgid "Run"
+#~ msgstr "Gweithredu"
+
+#~ msgid "Run a command"
+#~ msgstr "Gweithredu gorchymyn"
+
+#~ msgid "Accessories"
+#~ msgstr "Ategolion"
+
+#~ msgid "Amusements"
+#~ msgstr "Difyrion"
+
+#~ msgid "Utility"
+#~ msgstr "Teclyn"
+
+#, fuzzy
+#~ msgid "Clear recent document history?"
+#~ msgstr "Dogfennau Diweddar"
+
+#~ msgid "Launcher from menu"
+#~ msgstr "Lansiwr o'r ddewislen"
+
+#~ msgid "Cannot add to run box"
+#~ msgstr "Ni ellir ychwanegu i'r blwch gweithredu"
+
+#~ msgid "No 'Exec' or 'URL' field in entry"
+#~ msgstr "Dim maes 'Exec' neu 'URL' yn y cofnod"
+
+#~ msgid "Put into run dialog"
+#~ msgstr "Rhoi yn y deialog gweithredu"
+
+#~ msgid "Error reading GConf list value '%s': %s"
+#~ msgstr "Gwall wrth ddarllen gwerth rhestr GConf '%s': %s"
+
+#, fuzzy
+#~ msgid "Log Out %s"
+#~ msgstr "Allgofnodi"
+
+#, fuzzy
+#~ msgid ""
+#~ "Log out %s of this session to log in as a different user or to shut down "
+#~ "your computer"
+#~ msgstr ""
+#~ "Allgofnodi o'r sesiwn cyfredol er mwyn mewngofnodi fel defnyddiwr arall "
+#~ "neu troi'r cyfrifiadur bant"
+
+#, fuzzy
+#~ msgid "Quit from %s's desktop"
+#~ msgstr "Gadael y penbwrdd GNOME"
+
+#, fuzzy
+#~ msgid "Year"
+#~ msgstr "Chwilio"
+
+#, fuzzy
+#~ msgid "The currently monitored year"
+#~ msgstr "Y monitr cyfredol:"
+
+#, fuzzy
+#~ msgid "Activatable"
+#~ msgstr "Analluogwyd"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Mae Ganddi Saeth"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Dylir dangos saeth ai peidio"
+
+#, fuzzy
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "Amlygu Llusgo a Gollwng"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr "A ddylid amlygu'r eicon wrth lusgo a gollwng"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "Gogwydd ButtonWidget"
+
+#~ msgid "Icon Name"
+#~ msgstr "Enw Eicon"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "Yr eicon awyddol ar gyfer y ButtonWidget"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "ID Eicon Stoc"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Yr eicon stoc awyddol ar gyfer y ButtonWidget"
+
+#~ msgid "Action Type"
+#~ msgstr "Math Gweithred"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "Y math o weithred mae'r botwm yma'n perfformio"
+
+#, fuzzy
+#~ msgid "Drag and drop enabled"
+#~ msgstr "Galluogwyd llusgo a gollwng"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "A ydy llusgo a gollwng wed i ei alluogi ar y teclyn"
+
+#~ msgid "Edges"
+#~ msgstr "Ymylion"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "Pa ymylion i'w arlunio"
+
+#~ msgid "Menu Path"
+#~ msgstr "Llwybr y Dewislen"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "Y llwybr i adeiladu'r dewislen ohoni"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Eicon Addasiedig"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Yr eicon addasiedig ar gyfer y dewislen"
+
+#, fuzzy
+#~ msgid "Tooltip"
+#~ msgstr "Cyngor offer/Enw"
+
+#, fuzzy
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "Y brysgymorth a ddangosir ar gyfer y drôr hwn"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Defnyddio Llwybr y Ddewislen"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "Defnyddio'r llwybr a benodwyd gan y priodwedd menu-path"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Defnyddio Eicon Addasiedig"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "Defnyddio'r eicon a benodwyd gan y priodwedd custom-icon"
+
+#~ msgid "Name"
+#~ msgstr "Enw"
+
+#~ msgid "The name of this panel"
+#~ msgstr "Enw'r panel hwn"
+
+#~ msgid "Expand"
+#~ msgstr "Ehangu"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "Ehangu er mwyn llenwi holl hyd/lled y monitr"
+
+#~ msgid "The orientation of the panel"
+#~ msgstr "Gogwydd y panel"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Ucher (neu lled pan yn fertigol) y panel"
+
+#~ msgid "X position"
+#~ msgstr "Safle X"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "Safle X y panel"
+
+#~ msgid "X centered"
+#~ msgstr "Canoledig yn X"
+
+# EFALLAI
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "Mae'r cyfesurun x yn gymharol i'r sgrîn ganol"
+
+#~ msgid "Y position"
+#~ msgstr "Safle Y"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "Safle Y y panel"
+
+#~ msgid "Y centered"
+#~ msgstr "Canoledig yn Y"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "Mae'r cyfesurun y yn gymharol i'r sgrîn ganol"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Monitr Xinerama"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "Y monitr (yn nhermau Xinerama) mae'r panel arni"
+
+#~ msgid "Auto hide"
+#~ msgstr "Cuddio'n Awtomatig"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "Cuddio'r panel yn awtomatig pan mae'r llygoden yn gadael y panel"
+
+#~ msgid "Hide delay"
+#~ msgstr "Saib cuddio"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "Nifer o filfedau eiliad i seibio cyn cuddio'n awtomatig"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "Saib dat-guddio"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "Nifer o filfedau eiliad i seibio cyn datguddio'n awtomatig"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "Maint cuddio'n awtomatig"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr ""
+#~ "Y nifer o bicseli sy'n weladwy pan mae'r panel wedi ei guddio'n awtomatig"
+
+#~ msgid "Animate"
+#~ msgstr "Animeiddio"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "Galluogi animeiddiadau cuddio/dangos"
+
+#~ msgid "Animation Speed"
+#~ msgstr "Cyflymder Animeiddiad"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "Y cyflymder dylai animeiddiadau cuddio/dangos paneli ei ddefnyddio"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "Galluogi Botymau"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Galluogi botymau cuddio/dangos"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "Galluogi Saethau"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Galluogi saethau ar fotymau cuddio/dangos"
+
+#, fuzzy
+#~ msgid "Text"
+#~ msgstr "Testun yn unig"
+
+#, fuzzy
+#~ msgid "Text to render"
+#~ msgstr "Testun yn unig"
+
+#, fuzzy
+#~ msgid "Background color name"
+#~ msgstr "Lliw y cefndir"
+
+#, fuzzy
+#~ msgid "Background color as a string"
+#~ msgstr "Didreiddedd lliw y cefndir"
+
+#, fuzzy
+#~ msgid "Background color as a GdkColor"
+#~ msgstr "Lliw y cefndir"
+
+#, fuzzy
+#~ msgid "Foreground color name"
+#~ msgstr "Lliw y cefndir"
+
+#, fuzzy
+#~ msgid "Foreground color"
+#~ msgstr "Lliw y cefndir"
+
+#, fuzzy
+#~ msgid "Font stretch"
+#~ msgstr "_Ehangu"
+
+#, fuzzy
+#~ msgid "Font size"
+#~ msgstr "Maint y panel"
+
+#, fuzzy
+#~ msgid "Background set"
+#~ msgstr "Cefndir"
+
+#~ msgid "Cannot execute %s"
+#~ msgstr "Ni ellir gweithredu %s"
+
+#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
+#~ msgstr "Os yn wir, dangosir yr amser mewn eiliadau ers Ionawr y 1af 1970."
+
+#~ msgid ""
+#~ "This key specifies the hour format used by the clock applet. Possible "
+#~ "values are 12 and 24."
+#~ msgstr ""
+#~ "Mae'r allwedd hon yn penodi'r ffurf awr a ddefnyddir gan y rhaglennig "
+#~ "cloc. Mae 12 a 24 yn werthoedd posib."
+
+#~ msgid "Window Menu"
+#~ msgstr "Dewislen Ffenestri"
+
+#~ msgid "Print Screenshot"
+#~ msgstr "Argraffu Sgrînlun"
+
+#~ msgid "Screenshot Print Preview"
+#~ msgstr "Rhagolwg Argraffu Sgrînlun"
+
+#~ msgid "_Print screenshot..."
+#~ msgstr "_Argraffu'r sgrînlun..."
+
+#, fuzzy
+#~ msgid ""
+#~ "The panel encountered a problem while loading \"%s\"\n"
+#~ "Details: %s%s"
+#~ msgstr ""
+#~ "Fe gafodd y panel broblem tra'n llwytho \"%s\"\n"
+#~ "Manylion: %s\n"
+#~ "\n"
+#~ "Ydych chi eisiau dileu'r rhaglennig o'ch cyfluniad?"
+
+#~ msgid "Open Recent"
+#~ msgstr "Agor Ffeil Diweddar"
+
+#~ msgid "If true, display internet time, which is same all over the world."
+#~ msgstr "Dangos amser rhyngrwyd, sy'n unffurf dros y byd."
+
+#~ msgid "%s the GNOME Fish"
+#~ msgstr "%s y Pysgodyn GNOME"
+
+#~ msgid "Expander Size"
+#~ msgstr "Maint Ehangwr"
+
+#~ msgid "Size of the expander arrow"
+#~ msgstr "Maint y saeth ehangu"
+
+#~ msgid "Help on %s _Application"
+#~ msgstr "Cymorth ynghylch y _Rhaglen%s"
+
+#~ msgid "Help on %s"
+#~ msgstr "Cymorth ynghylch %s"
+
+#~ msgid "Application"
+#~ msgstr "Rhaglen"
+
+#~ msgid "<b>_Icon:</b>"
+#~ msgstr "<b>_Eicon:</b>"
+
+#~ msgid "<b>_Name:</b>"
+#~ msgstr "<b>_Enw:</b>"
+
+#~ msgid "<b>_Orientation:</b>"
+#~ msgstr "<b>_Gogwydd:</b>"
+
+#~ msgid "<b>_Size:</b>"
+#~ msgstr "<b>_Maint:</b>"
+
+#~ msgid ""
+#~ "A description of the currently selected application or information on the "
+#~ "command that will be run."
+#~ msgstr ""
+#~ "Disgridiad o'r rhaglen sydd wedi ei ddewis neu wybodaeth ynghylch y "
+#~ "gorchymyn a gaiff ei rhedeg."
+
+#~ msgid "Application description"
+#~ msgstr "Disgrigfiad rhaglen"
+
+#~ msgid "Select an application from the list to run it"
+#~ msgstr "Dewiswch rhaglen i'w rhedeg o'r rhestr er mwyn ei rhedeg"
+
+#~ msgid "When this is selected the list of known applications is displayed."
+#~ msgstr ""
+#~ "Pan fo yn wedi ei ddewis, caiff y rhestr rhaglenni hysbys ei ddangos."
+
+#~ msgid "Help document not found"
+#~ msgstr "Dogfen gymorth heb ei ganfod"
+
+#~ msgid "No document to show"
+#~ msgstr "Dim dogfen i'w dangos"
+
+#~ msgid ""
+#~ "Failed to load image %s\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "Methu llwytho y ddelwedd %s\n"
+#~ "\n"
+#~ "Manylion: %s"
+
+#~ msgid "_Drawer"
+#~ msgstr "_Drôr"
+
+#~ msgid "_Run Application..."
+#~ msgstr "_Gweithredu Rhaglen..."
+
+#~ msgid "_Search for Files..."
+#~ msgstr "_Chwilio am Ffeiliau..."
+
+#~ msgid "_Take Screenshot..."
+#~ msgstr "_Cymryd Sgrînlun..."
+
+#~ msgid "_Log Out"
+#~ msgstr "_Allgofnodi"
+
+#~ msgid "Size and Position"
+#~ msgstr "Maint a Safle"
+
+#~ msgid "Applet appearance"
+#~ msgstr "Golwg rhaglennig"
+
+#~ msgid "Drawer handle"
+#~ msgstr "Dolen drôr"
+
+#~ msgid "Enable hidebutton"
+#~ msgstr "Galluogi botwm cuddio"
+
+#~ msgid "Enable hidebutton arrow"
+#~ msgstr "Galluogi saeth ar y botwm cuddio"
+
+#~ msgid ""
+#~ "Cannot save launcher to disk, the following error occured:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Methu arbed y lansiwr at ddisg, digwyddodd y gwall canlynol:\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Can't execute 'About GNOME'"
+#~ msgstr "Methu gweithredu 'Ynghylch GNOME'"
+
+#~ msgid "probably does not exist"
+#~ msgstr "mwynathebyg ddim yn bodoli"
+
+#~ msgid "Could not remove the menu item"
+#~ msgstr "Ni allwyd tynnu'r eitem dewislen"
+
+#~ msgid "Cannot execute gnome-search-tool"
+#~ msgstr "Methu gweithredu gnome-search-tool"
+
+#~ msgid "Cannot execute gnome-panel-screenshot"
+#~ msgstr "Methu gweithredu gnome-panel-screenshot"
+
+#~ msgid "Error launching command"
+#~ msgstr "Gwall wrth lansio gorchymyn"
+
+#~ msgid "Sets the hour format, may be either 12 or 24"
+#~ msgstr "Gosod y fformat oriau, gall fod un ai 12 neu 24"
+
+#~ msgid "Maximum size that Window List requests"
+#~ msgstr "Y maint mwyaf y bydd y Rhestr Ffenestri yn gofyn amdani"
+
+#~ msgid ""
+#~ "To be usable, Window List requires a minimum width. Window List requests "
+#~ "this minimum width. The minimum width setting is useful for sliding and "
+#~ "edge panels, which usually request a small default width."
+#~ msgstr ""
+#~ "Er mwyn bod yn ddefnyddiol, mae'r Rhestr Ffenestri angen terfyn lled "
+#~ "lleiaf. Mae'r gosodiad hwn yn ddefnyddiol ar gyfer paneli ymyl a phaneli "
+#~ "symudol, sy'n gofyn am led bychan rhagosodiedig."
+
+#~ msgid "Number of rows in the Workspace Switcher."
+#~ msgstr "Nifer y rhesi yn y Newidydd Gweithfan."
+
+#~ msgid "Whether to display the all workspaces in the Workspace Switcher."
+#~ msgstr ""
+#~ "Os y dylid dangos y gweithfannau oll yn y Newidydd Gweithfannau ai peidio."
+
+#~ msgid ""
+#~ "Whether to display the names of the workspaces in the Workspace Switcher."
+#~ msgstr ""
+#~ "A ddylid dangos enwau y gweithfannau yn y Newidydd Gweithfannau ai peidio."
+
+#~ msgid ""
+#~ "If true, the x key is ignored and the panel is placed at the center of "
+#~ "the x-axis of the screen. If the panel is resized it will remain at that "
+#~ "position - i.e. the panel will grow on both sides. If false, the x key "
+#~ "determines the location of the panel."
+#~ msgstr ""
+#~ "Os yn wir, caiff yr allwedd x ei anwybyddu a gosodir y panel ar ganol "
+#~ "echelin x y sgrîn. Os newidir maint y panel fe fydd yn aros yn y safle "
+#~ "hwnnw - h.y. fe fydd y panel yn tyfu ar y ddwy ochr. Os yn anwir yna "
+#~ "mae'r allwedd x yn penderfynu safle'r panel."
+
+# EFALLAI
+#~ msgid "A list of panel IDs"
+#~ msgstr "Rhestr o IDau Panel"
+
+#~ msgid "Take a screen shot of a window"
+#~ msgstr "Cymryd sgrînlun o ffenest"
+
+#~ msgid "The Bonobo IID of the applet"
+#~ msgstr "IID Bonobo y Rhaglennig"
+
+# msgstr "Y safle i ychwanegu'r lansiwr ati"
+#~ msgid "The location of the launcher"
+#~ msgstr "Lleoliad y lansiwr"
+
+#~ msgid "The path for the menu contents"
+#~ msgstr "Y llwybr ar gyfer cynnwys y dewislen"
+
+# msgstr "Y math o weithred mae'r botwm yma'n perfformio"
+#~ msgid "The type of action button"
+#~ msgstr "Y math o fotwm gweithred"
+
+#~ msgid "The type of panel object"
+#~ msgstr "Y math o wrthrych panel"
+
+#~ msgid "Delay before automatically hiding the panel."
+#~ msgstr "Saib cyn cuddio'r panel yn awtomatig."
+
+#~ msgid "Delay before automatically un-hiding the panel."
+#~ msgstr "Saib cyn dat-guddio'r panel yn awtomatig."
+
+#~ msgid "The background image."
+#~ msgstr "Delwedd y cefndir."
+
+#~ msgid "The background type."
+#~ msgstr "Math y cefndir."
+
+#~ msgid "The size of the panel."
+#~ msgstr "Maint y panel."
+
+#~ msgid "The speed of animations."
+#~ msgstr "Cyflymder animieddiadau."
+
+#~ msgid "and finally, The Knights Who Say... NI!"
+#~ msgstr "ac, yn olaf, y Marchogion Sy'n Dweud... NI!"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Running in \"Lockdown\" mode.  This means your system administrator has "
+#~ "prohibited any changes to the panel's configuration to take place."
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Gweithredu mewn modd \"Lockdown\". Mae hyn yn golygu bod gweinydd eith "
+#~ "system wedi gwahardd newidiadau i ffurfweddiad y panel rhag cymryd lle."
+
+#~ msgid "End world hunger"
+#~ msgstr "Terfynu chwant bwyd byd-eang"
+
+#~ msgid "The desired ButtonWidget size"
+#~ msgstr "Maint awyddol ButtonWidget"
+
+#~ msgid "      "
+#~ msgstr "      "
+
+#~ msgid ""
+#~ "<b>Cannot launch icon</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Methu lansio eicon</b>\n"
+#~ "\n"
+#~ "Manylion: %s"
+
+#~ msgid ""
+#~ "<b>Can't execute 'About GNOME'</b>\n"
+#~ "\n"
+#~ "Details: %s probably does not exist"
+#~ msgstr ""
+#~ "<b>Methu gweithredu 'Ynghylch GNOME'</b>\n"
+#~ "\n"
+#~ "Manylion: mwy na thebyg, nid yw %s yn bodoli"
+
+#~ msgid ""
+#~ "<b>Can't launch entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Methu lansio cofnod</b>\n"
+#~ "\n"
+#~ "Manylion: %s"
+
+#~ msgid ""
+#~ "<b>Can't load entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Methu llwytho cofnod</b>\n"
+#~ "\n"
+#~ "Manylion: %s"
+
+#~ msgid "Floating"
+#~ msgstr "Arnof"
+
+#~ msgid "Centered"
+#~ msgstr "Canoledig"
+
+#~ msgid "Edge"
+#~ msgstr "Ymyl"
+
+# EFALLAI (need to check I've done this reordering right)
+#~ msgid "%s %s Panel"
+#~ msgstr "Panel %2$s %1$s"
+
+#~ msgid ""
+#~ "<b>Failed to run this program</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Methu gweithredu'r rhaglen hwn</b>\n"
+#~ "\n"
+#~ "Manylion: %s"
+
+#~ msgid ""
+#~ "<b>Failed to execute command:</b> '%s'\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Methu gweithredu'r gorchymyn:</b> '%s'\n"
+#~ "\n"
+#~ "Manylion: %s"
+
+#~ msgid ""
+#~ "<b>Failed to open file:</b> '%s'\n"
+#~ "\n"
+#~ "Details: no application available to open file"
+#~ msgstr ""
+#~ "<b>Methu agor ffeil:</b> '%s'\n"
+#~ "\n"
+#~ "Manylion: dim rhaglen ar gael I agor y ffeil"
+
+#~ msgid ""
+#~ "<b>Failed to open file:</b> '%s'\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Methu agor ffeil:</b> '%s'\n"
+#~ "\n"
+#~ "Manylion: %s"
+
+#~ msgid "Choose a file"
+#~ msgstr "Dewiswch ffeil"
+
+#~ msgid "Pause _per frame (s):"
+#~ msgstr "_Saib rhwng fframiau:"
+
+#~ msgid "_Animation filename:"
+#~ msgstr "_Ffeil animeiddiad:"
+
+#~ msgid "Alert you when new mail arrives"
+#~ msgstr "Eich hysbysu pan mae e-bost newydd yn cyrraedd"
+
+#~ msgid "Inbox Monitor"
+#~ msgstr "Monitr Blwch Derbyn"
+
+#~ msgid "_Check for mail"
+#~ msgstr "_Edrych am e-bost newydd"
+
+#~ msgid "There was an error executing %s: %s"
+#~ msgstr "Roedd gwall yn gweithredu %s: %s"
+
+#~ msgid ""
+#~ " You didn't set a password in the preferences for the Inbox Monitor,\n"
+#~ " so you have to enter it each time it starts up.\n"
+#~ msgstr ""
+#~ "Ni wnaethoch chi osod cyfrinair yn y dewisiadau ar gyfer y Monitr Blwch "
+#~ "Derbyn,\n"
+#~ "felly mae'n rhaid i chi fewnbynnu cyfrinair bob tro mae'n dechrau.\n"
+
+#~ msgid "Please enter your mailserver's _password:"
+#~ msgstr "Mewnbynnwch _cyfrinair eich gweinydd e-bost os gwelwch yn dda:"
+
+#~ msgid "Password Entry box"
+#~ msgstr "Blwch Mewnbynnu Cyfrinair"
+
+#~ msgid ""
+#~ " The Inbox Monitor failed to check your mails and thus automatic updating "
+#~ "has been deactivated for now.\n"
+#~ " Maybe you used a wrong server, username or password?\n"
+#~ msgstr ""
+#~ "Mae'r Monitr Blwch Derbyn wedi methu cyrchu'ch e-bost felly mae  "
+#~ "diweddaru awtomatig wedi ei ddadysgogi dros dro.\n"
+#~ "Efallai defnyddiwyd gweinydd, defnyddiwr neu cyfrinair annilys?\n"
+
+#~ msgid "You have new mail."
+#~ msgstr "Mae gennych e-bost newydd."
+
+#~ msgid "You have mail."
+#~ msgstr "Mae gennych e-bost."
+
+#~ msgid "%d/%d messages"
+#~ msgstr "%d/%d o negeseuon."
+
+#~ msgid "%d messages"
+#~ msgstr "%d o negeseuon."
+
+#~ msgid "No mail."
+#~ msgstr "Dim e-bost."
+
+#~ msgid "Status not updated"
+#~ msgstr "Statws heb ei ddiweddaru"
+
+#~ msgid "Mailbox _resides on:"
+#~ msgstr "Mae'r blwch e-bost yn _preswylio ar:"
+
+#~ msgid "Local mailspool"
+#~ msgstr "Sb?l e-bost leol"
+
+#~ msgid "Local maildir"
+#~ msgstr "Cyrchfan e-bost leol"
+
+#~ msgid "Remote POP3-server"
+#~ msgstr "Gweinydd POP3 pell"
+
+#~ msgid "Remote IMAP-server"
+#~ msgstr "Gweinydd IMAP pell"
+
+#~ msgid "Mail _spool file:"
+#~ msgstr "Ffeil _sb?l e-bost:"
+
+#~ msgid "Mail s_erver:"
+#~ msgstr "_Gweinydd e-bost:"
+
+#~ msgid "Mail Server Entry box"
+#~ msgstr "Blwch Mewnbynnu Gweinydd E-Bost"
+
+#~ msgid "_Username:"
+#~ msgstr "_Enw Defnyddiwr:"
+
+#~ msgid "Username Entry box"
+#~ msgstr "Blwch Mewnbynnu Enw Defnyddiwr"
+
+#~ msgid "_Password:"
+#~ msgstr "_Cyfrinair:"
+
+#~ msgid "_Folder:"
+#~ msgstr "_Ffoldr:"
+
+#~ msgid "Folder Entry box"
+#~ msgstr "Blwch Mewnbynnu Ffoldr"
+
+#~ msgid "C_ommand to run before checking for mail:"
+#~ msgstr "G_orchymyn i'w weithredu cyn edrych am e-bost:"
+
+#~ msgid "Execute"
+#~ msgstr "Gweithredu"
+
+#~ msgid "Before each _update:"
+#~ msgstr "Cyn bob _diweddariad:"
+
+#~ msgid "Command to execute before each update"
+#~ msgstr "Gorchymyn i'w weithredu cyn bob diweddariad"
+
+#~ msgid "When new mail _arrives:"
+#~ msgstr "Pan fo e-bost newydd yn _cyrraedd"
+
+#~ msgid "Command to execute when new mail arrives"
+#~ msgstr "Gorchymyn i'w weithredu pan fo e-bost newydd yn cyrraedd"
+
+#~ msgid "When clicke_d:"
+#~ msgstr "Pan caiff ei gl_icio:"
+
+#~ msgid "Set the number of unread mails to _zero"
+#~ msgstr "Gosod y nifer o negeseuon newydd i _sero"
+
+#~ msgid "Check for mail _every"
+#~ msgstr "Edrych am e-bost _bob"
+
+#~ msgid "minutes"
+#~ msgstr "munud"
+
+#~ msgid "Choose time interval in minutes to check mail"
+#~ msgstr "Dewis yr ysbaid amser mewn munudau rhwng bob diweddariad"
+
+#~ msgid "Choose time interval in seconds to check mail"
+#~ msgstr "Dewis yr ysbaid amser mewn eiliadau rhwng bob diweddariad"
+
+#~ msgid "Play a _sound when new mail arrives"
+#~ msgstr "Chwarae _sain pan mae e-bost newydd yn cyrraedd"
+
+#~ msgid "Inbox Monitor Preferences"
+#~ msgstr "Dewisiadau Monitr Blwch Derbyn"
+
+#~ msgid "_Mail check"
+#~ msgstr "Edrych am _E-Bost"
+
+#~ msgid "Mail_box"
+#~ msgstr "_Blwch E-Bost"
+
+#~ msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
+#~ msgstr ""
+#~ "Mae'r Monitr Blwch Derbyn yn eich hysbysu pan mae e-bost newydd yn "
+#~ "cyrraedd eich blwch e-bost"
+
+#~ msgid "Mail check"
+#~ msgstr "Monitr e-bost"
+
+#~ msgid "Mail check notifies you when new mail arrives in your mailbox"
+#~ msgstr ""
+#~ "Mae'r monitr e-bost yn eich hysbysu pan fo e-bost newydd yn cyrraedd yn "
+#~ "eich blwch derbyn"
+
+#~ msgid "Command to execute when checking mail"
+#~ msgstr "Gorchymyn i'w weithredu wrth edrych am e-bost"
+
+#~ msgid "Command to execute when you click on the Inbox Monitor"
+#~ msgstr "Gorchymyn i'w weithredu pan caiff y Monitr Blwch Derbyn ei glicio"
+
+#~ msgid "Command to run before checking mail"
+#~ msgstr "Gorchymyn i'w weithredu cyn edrych am e-bost"
+
+#~ msgid "Do we run the exec-command"
+#~ msgstr "A ydym ni'n gweithredu'r exec-command"
+
+#~ msgid "Do we run the newmail-command"
+#~ msgstr "A ydym ni'n gweithredu'r newmail-command"
+
+#~ msgid "How often (in milliseconds) we check the mail"
+#~ msgstr "Pa mor aml (ym milfedau o eiliadau) rydym ni'n edrych am e-bost"
+
+#~ msgid "If mail should be checked automatically"
+#~ msgstr "Os dylir edrych am e-bost yn awtomatig"
+
+#~ msgid "If this is set mail will be checked every update-freq milliseconds"
+#~ msgstr ""
+#~ "Os gosodir hyn, yna fe edrychir am e-bost bob update-freq o filfedau o "
+#~ "eiliadau"
+
+#~ msgid "If this is set, we should run the exec-command"
+#~ msgstr "Os gosodir hyn, yna fe ddylai'r exec-command gael ei weithredu"
+
+#~ msgid "If this is set, we should run the newmail-command"
+#~ msgstr "Os gosodir hyn, yna fe ddylai'r newmail-command gael ei weithredu"
+
+#~ msgid "Interval for checking mail"
+#~ msgstr "Ysbaid rhwng bob tro a edrychir am e-bost"
+
+#~ msgid "Path to the animation file"
+#~ msgstr "Y llwybr i ffeil yr animeiddiad"
+
+#~ msgid "Play a sound when mail is recieved"
+#~ msgstr "Chwarae sain pan derbynnir e-bost"
+
+#~ msgid "Remote folder for mail retrieval"
+#~ msgstr "Plygell pell ar gyfer cyrchu e-bost"
+
+#~ msgid "Remote server to connect to for our mail"
+#~ msgstr "Y gweinydd i gysylltu efo ar gyfer ein e-bost"
+
+#~ msgid "Run this command before we check the mail"
+#~ msgstr "Gweithredu'r gorchymyn hwn cyn edrych am e-bost"
+
+#~ msgid "The mail server"
+#~ msgstr "Y gweinydd e-bost"
+
+#~ msgid "The user's password"
+#~ msgstr "Cyfrinair y defnyddiwr"
+
+#~ msgid "The user's password for the remote server"
+#~ msgstr "Cyfinair y defnyddiwr ar gyfer y gweinydd pell"
+
+#~ msgid "This is how we check the mail, check the mail, check the mail..."
+#~ msgstr "Fel hyn 'dan ni'n cyrchu'r post, cyrchu'r post, cyrchu'r post..."
+
+#~ msgid ""
+#~ "This is how we process the mail, process the mail, process the mail..."
+#~ msgstr "Fel hyn 'dan ni'n prosesu'r post, prosesu'r post, prosesu'r post..."
+
+#~ msgid ""
+#~ " This is the animation that will be displayed during normal Inbox Monitor "
+#~ "usage"
+#~ msgstr ""
+#~ "Dyma'r animeiddiad a gaiff ei ddangos yn ystod defnydd normal y Monitr "
+#~ "Blwch Derbyn"
+
+#~ msgid "We run this command when the user clicks on Inbox Monitor"
+#~ msgstr ""
+#~ "Rydym ni'n gweithredu'r gorchymyn hwn pan fo'r defnyddiwr yn clicio ar y "
+#~ "Monitr Blwch Derbyn"
+
+#~ msgid "Whether to reset mail status when you click on Inbox Monitor"
+#~ msgstr ""
+#~ "Os y dylai ailosod y statws e-bost pan caiff y Monitr Blwch Derbyn ei "
+#~ "glicio"
+
+#~ msgid "You've got mail!"
+#~ msgstr "Mae gennych bost!"
+
+#~ msgid "Mailcheck"
+#~ msgstr "Monitr E-Bost"
+
+#~ msgid "New Mail"
+#~ msgstr "E-Bost Newydd"
+
+#~ msgid "Rows"
+#~ msgstr "Rhesi"
+
+#~ msgid ""
+#~ "No object_type set for panel object with ID %s\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Dim object_type wedi ei osod ar gyfer y gwrthrych panel gyda'r ID %s\n"
+
+#~ msgid "Mode"
+#~ msgstr "Modd"
+
+#~ msgid "State"
+#~ msgstr "Cyflwr"
+
+#~ msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
+#~ msgstr ""
+#~ "Ydi botymau cuddio (botymau sy'n cuddio neu dangos y panel) wedi eu "
+#~ "galluogi?"
+
+#~ msgid "Hidebutton pixmaps enabled"
+#~ msgstr "Mapiau picseli'r botymau cuddio wedi eu galluogi"
+
+#~ msgid "Hidebuttons have pixmaps"
+#~ msgstr "Mae gan y botymau cuddio fapiau picsel"
+
+#~ msgid "Hide this panel"
+#~ msgstr "Cuddio y panel hwn"
+
+#~ msgid "Show this panel"
+#~ msgstr "Dangos y panel hwn"
+
+#~ msgid "Run Program..."
+#~ msgstr "Gweithredu Gorchymyn..."
+
+#~ msgid "GNOME Menu Panel"
+#~ msgstr "Panel Ddewislen GNOME"
+
+#~ msgid "Can't find the screenshot program"
+#~ msgstr "Methu cyrchu'r rhaglen sgrînlun"
+
+#~ msgid "Can't execute the screenshot program"
+#~ msgstr "Methu gweithredu'r rhaglen sgrînlun"
+
+#~ msgid "Panel to add the launcher to"
+#~ msgstr "Y panel i ychwanegu'r lansiwr iddi"
+
+#~ msgid "NUMBER"
+#~ msgstr "RHIF"
+
+#~ msgid "The argument is a url to add, not a .desktop file"
+#~ msgstr "Mae'r ymresymiad yn LAU i'w ychwanegu, nid ffeil .desktop"
+
+#~ msgid ""
+#~ " You must supply a single argument with the .desktop file or url to use\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Mae'n rhaid rhoi ymresymiad sy'n penodi'r ffeil .desktop neu'r LAU i'w "
+#~ "ddefnyddio\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "No panel found\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Dim panel wedi ei ganfod\n"
+#~ "\n"
+
+#~ msgid ""
+#~ " There was an error displaying help: \n"
+#~ " %s\n"
+#~ msgstr ""
+#~ "Roedd gwall wrth ddangos cymorth: \n"
+#~ " %s\n"
+
+#~ msgid "_Append File..."
+#~ msgstr "_Atodi Ffeil..."
+
+#~ msgid "Run Program"
+#~ msgstr "Gweithredu Rhaglen"
+
+#~ msgid "GNOME Aligned Panel"
+#~ msgstr "Panel Aliniedig GNOME"
+
+#~ msgid "GNOME Edge Panel"
+#~ msgstr "Panel Ymylon GNOME"
+
+#~ msgid "Sliding Panel"
+#~ msgstr "Panel Symudol"
+
+#~ msgid "GNOME Sliding Panel"
+#~ msgstr "Panel Symudol GNOME"
+
+#~ msgid "GNOME Floating Panel"
+#~ msgstr "Panel Arnofio GNOME"
+
+#~ msgid "You can only have one menu panel at a time."
+#~ msgstr "Dim ond un panel ddewislen y gallwch gael ar y tro."
+
+#~ msgid "C_orner Panel"
+#~ msgstr "Panel _Gornel"
+
+#~ msgid "Create corner panel"
+#~ msgstr "Creu panel cornel"
+
+#~ msgid "Create edge panel"
+#~ msgstr "Creu panel ymylon"
+
+#~ msgid "Create floating panel"
+#~ msgstr "Creu panel arnofio"
+
+#~ msgid "_Sliding Panel"
+#~ msgstr "Panel _Symudol"
+
+#~ msgid "Create sliding panel"
+#~ msgstr "Creu panel symudol"
+
+#~ msgid "_Menu Panel"
+#~ msgstr "Panel dewislen"
+
+#~ msgid "Create menu panel"
+#~ msgstr "Creu panel dewislen"
+
+#~ msgid "Button"
+#~ msgstr "Botwm"
+
+#~ msgid "Menu:"
+#~ msgstr "Dewislen:"
+
+#~ msgid "Can't create menu, using main menu!"
+#~ msgstr "Methu creu'r ddewislen, defnyddio'r prif ddewislen yn lle!"
+
+#~ msgid ""
+#~ "No path set at %s for panel menu object\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Dim llwybr wedi ei osod at %s ar gyfer gwrthrych dewislen panel\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "Cannot register control widget\n"
+#~ "\n"
+#~ msgstr "Methu cofrestru widget rheoli\n"
+
+#~ msgid ""
+#~ " No panels were found in your configuration.  I will create a menu panel "
+#~ "for you"
+#~ msgstr ""
+#~ " Darganfuwyd dim panel yn eich ffurfosodiad. Fe gaiff panel dewislen ei "
+#~ "greu ar eich cyfer"
+
+#~ msgid "Miscellaneous:"
+#~ msgstr "Amrywiol:"
+
+#~ msgid "Current screen:"
+#~ msgstr "Y sgrîn cyfredol:"
+
+#~ msgid "Indicates the panel position and orientation on screen"
+#~ msgstr "Hysbysu lleoliad a gogwydd y panel ar y sgrîn"
+
+#~ msgid "_Position:"
+#~ msgstr "_Lleoliad"
+
+#~ msgid "Hori_zontal"
+#~ msgstr "_Llorweddol:"
+
+#~ msgid "_Vertical"
+#~ msgstr "_Fertigol:"
+
+#~ msgid "H_orizontal:"
+#~ msgstr "_Llorweddol:"
+
+#~ msgid "Ver_tical:"
+#~ msgstr "_Fertigol:"
+
+#~ msgid "_Distance from edge:"
+#~ msgstr "_Pellter o'r ymylon:"
+
+#~ msgid "Color"
+#~ msgstr "Lliw"
+
+#~ msgid "Transparent"
+#~ msgstr "Tryloyw"
+
+#~ msgid "Image:"
+#~ msgstr "Delwedd:"
+
+#~ msgid "Edge panel"
+#~ msgstr "Panel ymylon"
+
+#~ msgid "Sliding panel"
+#~ msgstr "Panel symudol"
+
+#~ msgid "Floating panel"
+#~ msgstr "Panel arnofio"
+
+#~ msgid "Show the program listing by default when opening the Run box"
+#~ msgstr "Dangos y rhestr rhaglenni yn y blwch Gweithredu yn ddiofyn"
+
+#~ msgid "Show the program listing in the Run box"
+#~ msgstr "Dangos y rhestr rhaglenni yn y blwch Gweithredu"

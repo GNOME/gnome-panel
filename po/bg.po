@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-16 21:19+0200\n"
+"POT-Creation-Date: 2005-07-29 20:32+0300\n"
 "PO-Revision-Date: 2005-07-29 20:31+0300\n"
 "Last-Translator: Vladimir Petkov <vpetkov@i-space.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -62,7 +62,7 @@ msgid "_Preferences"
 msgstr "_Настройки"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2725
+#: ../applets/clock/clock.c:2663
 msgid "Clock"
 msgstr "Часовник"
 
@@ -78,20 +78,20 @@ msgstr "Фабрика за създаването на аплети за час
 msgid "Get the current time and date"
 msgstr "Взимане на текущия час и дата"
 
-#: ../applets/clock/clock.c:309
+#: ../applets/clock/clock.c:266
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
+#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
-#: ../applets/clock/clock.c:1784
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
+#: ../applets/clock/clock.c:1730
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -100,7 +100,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:322
+#: ../applets/clock/clock.c:279
 msgid "%a %b %e"
 msgstr "%a %b %d"
 
@@ -108,7 +108,7 @@ msgstr "%a %b %d"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:329
+#: ../applets/clock/clock.c:286
 #, c-format
 msgid ""
 "%1$s\n"
@@ -121,68 +121,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:336
+#: ../applets/clock/clock.c:293
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:417
+#: ../applets/clock/clock.c:378
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: ../applets/clock/clock.c:429
+#: ../applets/clock/clock.c:390
 msgid "Click to view your appointments and tasks"
 msgstr "Натиснете, за да видите Вашите срещи и задачи"
 
-#: ../applets/clock/clock.c:431
+#: ../applets/clock/clock.c:392
 msgid "Click to view month calendar"
 msgstr "Натиснете, за да видите месечния календар"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:637
+#: ../applets/clock/clock.c:598
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/clock.c:964
+#: ../applets/clock/clock.c:925
 msgid "Tasks"
 msgstr "Задачи"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1077
 msgid "All Day"
 msgstr "Целият ден"
 
-#: ../applets/clock/clock.c:1155
+#: ../applets/clock/clock.c:1116
 msgid "Appointments"
 msgstr "Уговорени срещи"
 
-#: ../applets/clock/clock.c:1387
+#: ../applets/clock/clock.c:1348
 msgid "Calendar"
 msgstr "Календар"
 
-#: ../applets/clock/clock.c:1676
+#: ../applets/clock/clock.c:1629
 msgid "Computer Clock"
 msgstr "Компютърен часовник"
 
-#: ../applets/clock/clock.c:1777
+#: ../applets/clock/clock.c:1723
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1779
+#: ../applets/clock/clock.c:1725
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1821
+#: ../applets/clock/clock.c:1767
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1816
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Инструмента за настройка: %s не можа да бъде стартиран"
 
-#: ../applets/clock/clock.c:1914
+#: ../applets/clock/clock.c:1852
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -190,11 +190,11 @@ msgstr ""
 "Програмата за конфигуриране на датата и часа не беше намерена. Може би не е "
 "инсталирана?"
 
-#: ../applets/clock/clock.c:2386
+#: ../applets/clock/clock.c:2324
 msgid "Custom format"
 msgstr "Личен формат"
 
-#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
+#: ../applets/clock/clock.c:2445 ../applets/clock/clock.c:2622
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -202,52 +202,52 @@ msgstr "Личен формат"
 msgid "There was an error displaying help: %s"
 msgstr "Имаше грешка при показването на помощта: %s"
 
-#: ../applets/clock/clock.c:2542
+#: ../applets/clock/clock.c:2480
 msgid "Clock Preferences"
 msgstr "Настройки на часовника"
 
-#: ../applets/clock/clock.c:2566
+#: ../applets/clock/clock.c:2504
 msgid "Clock _type:"
 msgstr "_Вид часовник:"
 
-#: ../applets/clock/clock.c:2576
+#: ../applets/clock/clock.c:2514
 msgid "12 hour"
 msgstr "12-часов"
 
-#: ../applets/clock/clock.c:2577
+#: ../applets/clock/clock.c:2515
 msgid "24 hour"
 msgstr "24-часов"
 
-#: ../applets/clock/clock.c:2578
+#: ../applets/clock/clock.c:2516
 msgid "UNIX time"
 msgstr "UNIX време"
 
-#: ../applets/clock/clock.c:2579
+#: ../applets/clock/clock.c:2517
 msgid "Internet time"
 msgstr "Интернет време"
 
-#: ../applets/clock/clock.c:2587
+#: ../applets/clock/clock.c:2525
 msgid "Custom _format:"
 msgstr "Личен формат:"
 
-#: ../applets/clock/clock.c:2606
+#: ../applets/clock/clock.c:2544
 msgid "Show _seconds"
 msgstr "Показване на _секундите"
 
-#: ../applets/clock/clock.c:2615
+#: ../applets/clock/clock.c:2553
 msgid "Show _date"
 msgstr "Показване на _датата"
 
-#: ../applets/clock/clock.c:2624
+#: ../applets/clock/clock.c:2562
 msgid "Use _UTC"
 msgstr "Използване на _Гринуич"
 
-#: ../applets/clock/clock.c:2728
+#: ../applets/clock/clock.c:2666
 msgid "The Clock displays the current time and date"
 msgstr "Часовникът показва текущото време и дата"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2669 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -713,7 +713,7 @@ msgstr "Превключвател на работни места"
 msgid "Failed to load %s: %s\n"
 msgstr "Неуспешно зареждане на %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:624
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:601
 msgid "Icon not found"
 msgstr "Иконата не намерена"
 
@@ -1172,8 +1172,8 @@ msgstr "_Рестартиране на демона на предпазител�
 #: ../gnome-panel/panel-action-button.c:206
 #: ../gnome-panel/panel-action-button.c:219
 #: ../gnome-panel/panel-action-button.c:243
-#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1010
-#: ../gnome-panel/panel-util.c:748
+#: ../gnome-panel/panel-menu-bar.c:357 ../gnome-panel/panel-menu-button.c:1009
+#: ../gnome-panel/panel-util.c:725
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "„%s“ не може да бъде стартиран"
@@ -1643,26 +1643,26 @@ msgstr "Програми"
 msgid "_Edit Menus"
 msgstr "_Редактиране на менютата"
 
-#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Местоположението „%s“ не може да бъде показано"
 
-#: ../gnome-panel/panel-menu-items.c:332
+#: ../gnome-panel/panel-menu-items.c:324
 msgid "Bookmarks"
 msgstr "Отметки"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "Отваряне на „%s“"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:431
 msgid "Network Places"
 msgstr "Мрежови места"
 
-#: ../gnome-panel/panel-menu-items.c:441
+#: ../gnome-panel/panel-menu-items.c:433
 msgid "Removable Media"
 msgstr "Преносими носители"
 
@@ -1670,30 +1670,30 @@ msgstr "Преносими носители"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:491
 msgid "Desktop Folder|Desktop"
 msgstr "Работен плот"
 
-#: ../gnome-panel/panel-menu-items.c:507
+#: ../gnome-panel/panel-menu-items.c:492
 msgid "Open the desktop as a folder"
 msgstr "Отваряне на работния плот като папка"
 
-#: ../gnome-panel/panel-menu-items.c:861
+#: ../gnome-panel/panel-menu-items.c:824
 msgid "Places"
 msgstr "Места"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:899
+#: ../gnome-panel/panel-menu-items.c:862
 msgid "Desktop Environment|Desktop"
 msgstr "Работна среда"
 
-#: ../gnome-panel/panel-menu-items.c:1040
+#: ../gnome-panel/panel-menu-items.c:1003
 msgid "Cannot launch entry"
 msgstr "Това не може да бъде стартирано"
 
-#: ../gnome-panel/panel-menu-items.c:1052
+#: ../gnome-panel/panel-menu-items.c:1015
 msgid "Cannot load entry"
 msgstr "Това не може да бъде заредено"
 
@@ -2078,21 +2078,21 @@ msgstr "Командата „%s“ не може да бъде стартира
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Не може да обърне „%s“ от UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1116
+#: ../gnome-panel/panel-run-dialog.c:1112
 msgid "Choose a file to append to the command..."
 msgstr "Избор на файл, към който да се приложи командата..."
 
-#: ../gnome-panel/panel-run-dialog.c:1472
+#: ../gnome-panel/panel-run-dialog.c:1468
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Ще се изпълни командата: „%s“"
 
-#: ../gnome-panel/panel-run-dialog.c:1479
+#: ../gnome-panel/panel-run-dialog.c:1475
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Избор на програма за преглед на нейното описание."
 
-#: ../gnome-panel/panel-run-dialog.c:1514
+#: ../gnome-panel/panel-run-dialog.c:1510
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2606,11 +2606,11 @@ msgstr "Xinerama мониторът, където е изобразен пане
 msgid "Y co-ordinate of panel"
 msgstr "Координатата Y от панела"
 
-#: ../gnome-panel/panel-util.c:89
+#: ../gnome-panel/panel-util.c:66
 msgid "Cannot display help document"
 msgstr "Документа с помощта не може да бъде показан"
 
-#: ../gnome-panel/panel-util.c:311
+#: ../gnome-panel/panel-util.c:288
 #, c-format
 msgid "Details: %s"
 msgstr "Подробности: %s"

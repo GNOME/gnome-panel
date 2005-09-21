@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-16 21:19+0200\n"
+"POT-Creation-Date: 2005-08-10 15:19+0200\n"
 "PO-Revision-Date: 2003-09-10 21:43+0100\n"
 "Last-Translator: Gnome PL Team <translators@gnomepl.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -61,7 +61,7 @@ msgid "_Preferences"
 msgstr "P_referencje"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2725
+#: ../applets/clock/clock.c:2663
 msgid "Clock"
 msgstr "Zegar"
 
@@ -77,20 +77,20 @@ msgstr "Generator tworzący aplety zegara."
 msgid "Get the current time and date"
 msgstr "Wyświetla bieżącą datę i czas"
 
-#: ../applets/clock/clock.c:309
+#: ../applets/clock/clock.c:266
 msgid "%l:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
+#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
-#: ../applets/clock/clock.c:1784
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
+#: ../applets/clock/clock.c:1730
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -99,7 +99,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:322
+#: ../applets/clock/clock.c:279
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -107,7 +107,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:329
+#: ../applets/clock/clock.c:286
 #, c-format
 msgid ""
 "%1$s\n"
@@ -120,68 +120,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:336
+#: ../applets/clock/clock.c:293
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:417
+#: ../applets/clock/clock.c:378
 msgid "%A %B %d"
 msgstr "%A %d %B"
 
-#: ../applets/clock/clock.c:429
+#: ../applets/clock/clock.c:390
 msgid "Click to view your appointments and tasks"
 msgstr "Kliknij aby wyświetlić terminy i zadania"
 
-#: ../applets/clock/clock.c:431
+#: ../applets/clock/clock.c:392
 msgid "Click to view month calendar"
 msgstr "Kliknij aby wyświetlić miesięczny kalendarz"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:637
+#: ../applets/clock/clock.c:598
 msgid "%b %d"
 msgstr "%d %b"
 
-#: ../applets/clock/clock.c:964
+#: ../applets/clock/clock.c:925
 msgid "Tasks"
 msgstr "Zadania"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1077
 msgid "All Day"
 msgstr "Cały dzień"
 
-#: ../applets/clock/clock.c:1155
+#: ../applets/clock/clock.c:1116
 msgid "Appointments"
 msgstr "Przypomnienia"
 
-#: ../applets/clock/clock.c:1387
+#: ../applets/clock/clock.c:1348
 msgid "Calendar"
 msgstr "Kalendarz"
 
-#: ../applets/clock/clock.c:1676
+#: ../applets/clock/clock.c:1629
 msgid "Computer Clock"
 msgstr "Zegar komputerowy"
 
-#: ../applets/clock/clock.c:1777
+#: ../applets/clock/clock.c:1723
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1779
+#: ../applets/clock/clock.c:1725
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:1821
+#: ../applets/clock/clock.c:1767
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1816
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nie można uruchomić narzędzia do konfiguracji czasu: %s"
 
-#: ../applets/clock/clock.c:1914
+#: ../applets/clock/clock.c:1852
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -189,11 +189,11 @@ msgstr ""
 "Nie można odnaleźć programu do konfiguracji daty i czasu. Być może żaden nie "
 "jest zainstalowany?"
 
-#: ../applets/clock/clock.c:2386
+#: ../applets/clock/clock.c:2324
 msgid "Custom format"
 msgstr "Własny format"
 
-#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
+#: ../applets/clock/clock.c:2445 ../applets/clock/clock.c:2622
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -201,52 +201,52 @@ msgstr "Własny format"
 msgid "There was an error displaying help: %s"
 msgstr "Przy wyświetlaniu pomocy wystąpił błąd: %s"
 
-#: ../applets/clock/clock.c:2542
+#: ../applets/clock/clock.c:2480
 msgid "Clock Preferences"
 msgstr "Preferencje zegara"
 
-#: ../applets/clock/clock.c:2566
+#: ../applets/clock/clock.c:2504
 msgid "Clock _type:"
 msgstr "Typ _zegara:"
 
-#: ../applets/clock/clock.c:2576
+#: ../applets/clock/clock.c:2514
 msgid "12 hour"
 msgstr "12-godzinny"
 
-#: ../applets/clock/clock.c:2577
+#: ../applets/clock/clock.c:2515
 msgid "24 hour"
 msgstr "24-godzinny"
 
-#: ../applets/clock/clock.c:2578
+#: ../applets/clock/clock.c:2516
 msgid "UNIX time"
 msgstr "Czas uniksowy"
 
-#: ../applets/clock/clock.c:2579
+#: ../applets/clock/clock.c:2517
 msgid "Internet time"
 msgstr "Czas internetowy"
 
-#: ../applets/clock/clock.c:2587
+#: ../applets/clock/clock.c:2525
 msgid "Custom _format:"
 msgstr "Własny _format:"
 
-#: ../applets/clock/clock.c:2606
+#: ../applets/clock/clock.c:2544
 msgid "Show _seconds"
 msgstr "Wyświetlanie _sekund"
 
-#: ../applets/clock/clock.c:2615
+#: ../applets/clock/clock.c:2553
 msgid "Show _date"
 msgstr "Wyświetlanie _daty"
 
-#: ../applets/clock/clock.c:2624
+#: ../applets/clock/clock.c:2562
 msgid "Use _UTC"
 msgstr "Czas _UTC"
 
-#: ../applets/clock/clock.c:2728
+#: ../applets/clock/clock.c:2666
 msgid "The Clock displays the current time and date"
 msgstr "Aplet zegara wyświetlający bieżącą datę i czas"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2669 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -742,8 +742,8 @@ msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
 msgstr ""
-"Lista okien wyświetla listę wszystkich okien jako zestaw przycisków i "
-"pozwala na ich przeglądanie."
+"Lista okien wyświetla listę wszystkich okien jako zestaw przycisków i pozwala "
+"na ich przeglądanie."
 
 #: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -1469,8 +1469,7 @@ msgstr "Rozwinięcie listy programów w oknie \"Uruchom program\""
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
-"Jeżeli ustawione, w oknie \"Uruchom program\" będzie dostępne "
-"autouzupełnianie."
+"Jeżeli ustawione, w oknie \"Uruchom program\" będzie dostępne autouzupełnianie."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1635,26 +1634,26 @@ msgstr "Aplikacje"
 msgid "_Edit Menus"
 msgstr "_Modyfikuj menu"
 
-#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Nie można wyświetlić położenia \"%s\""
 
-#: ../gnome-panel/panel-menu-items.c:332
+#: ../gnome-panel/panel-menu-items.c:324
 msgid "Bookmarks"
 msgstr "Zakładki"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "Otwiera \"%s\""
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:431
 msgid "Network Places"
 msgstr "Miejsca sieciowe"
 
-#: ../gnome-panel/panel-menu-items.c:441
+#: ../gnome-panel/panel-menu-items.c:433
 msgid "Removable Media"
 msgstr "Nośniki wymienne"
 
@@ -1662,30 +1661,30 @@ msgstr "Nośniki wymienne"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:491
 msgid "Desktop Folder|Desktop"
 msgstr "Pulpit"
 
-#: ../gnome-panel/panel-menu-items.c:507
+#: ../gnome-panel/panel-menu-items.c:492
 msgid "Open the desktop as a folder"
 msgstr "Otwiera pulpit jako folder"
 
-#: ../gnome-panel/panel-menu-items.c:861
+#: ../gnome-panel/panel-menu-items.c:824
 msgid "Places"
 msgstr "Miejsca"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:899
+#: ../gnome-panel/panel-menu-items.c:862
 msgid "Desktop Environment|Desktop"
 msgstr "Środowisko"
 
-#: ../gnome-panel/panel-menu-items.c:1040
+#: ../gnome-panel/panel-menu-items.c:1003
 msgid "Cannot launch entry"
 msgstr "Nie można uruchomić pozycji"
 
-#: ../gnome-panel/panel-menu-items.c:1052
+#: ../gnome-panel/panel-menu-items.c:1015
 msgid "Cannot load entry"
 msgstr "Nie można wczytać pozycji"
 
@@ -2070,21 +2069,21 @@ msgstr "Nie można uruchomić polecenia \"%s\""
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Nie można przekonwertować \"%s\" z UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1116
+#: ../gnome-panel/panel-run-dialog.c:1112
 msgid "Choose a file to append to the command..."
 msgstr "Wybór pliku dołączanego do polecenia..."
 
-#: ../gnome-panel/panel-run-dialog.c:1472
+#: ../gnome-panel/panel-run-dialog.c:1468
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Zostanie wykonane polecenie: \"%s\""
 
-#: ../gnome-panel/panel-run-dialog.c:1479
+#: ../gnome-panel/panel-run-dialog.c:1475
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Wybierz aplikację, żeby zobaczyć jej opis."
 
-#: ../gnome-panel/panel-run-dialog.c:1514
+#: ../gnome-panel/panel-run-dialog.c:1510
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2760,3 +2759,559 @@ msgstr "_Aplet:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Katalog z ustawieniami:"
+
+#~ msgid "Display \"Run Application\" dialog keybinding"
+#~ msgstr "Klawisze skrótu wyświetlenia okna \"Uruchom program\""
+
+#~ msgid "Enable keybindings"
+#~ msgstr "Włączenie klawiszy skrótu"
+
+#~ msgid "FIXME - is this resolved with the new menu stuff"
+#~ msgstr "POPRAWMNIE - czy jest to rozwiązane w nowych menu"
+
+#~ msgid "FIXME - need to define limits"
+#~ msgstr "Trzeba zdefiniować ograniczenia"
+
+#~ msgid "If true, panel-specific keybindings are enabled."
+#~ msgstr "Określa czy są włączone skróty klawiszy dla panelu."
+
+#~ msgid "Popup panel menu keybinding"
+#~ msgstr "Klawisze skrótu do menu panelu"
+
+#~ msgid "Take screenshot"
+#~ msgstr "Pobranie zrzutu ekranu"
+
+#~ msgid "Take window screenshot"
+#~ msgstr "Pobranie zrzutu okna"
+
+#~ msgid "Unable to get the name of the command to execute"
+#~ msgstr "Nie można uzyskać nazwy wykonywanego polecenia"
+
+#~ msgid ""
+#~ "You do not have fortune installed or you have not specified a program to "
+#~ "run.\n"
+#~ "\n"
+#~ "Please refer to fish properties dialog."
+#~ msgstr ""
+#~ "W systemie nie jest zainstalowany program fortune lub nie określono "
+#~ "uruchamianego programu.\n"
+#~ "\n"
+#~ "Skorzystaj z okna właściwości rybki."
+
+#~ msgid "Unknown Window"
+#~ msgstr "Nieznane okno"
+
+#~ msgid "No Windows Open"
+#~ msgstr "Brak otwartych okien"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "Narzędzie do przełączania pomiędzy oknami"
+
+#~ msgid "_Lock"
+#~ msgstr "_Zablokuj"
+
+#~ msgid "Un_lock"
+#~ msgstr "_Odblokuj"
+
+#~ msgid "none"
+#~ msgstr "brak"
+
+#~ msgid "file not found"
+#~ msgstr "nie odnaleziono pliku"
+
+#~ msgid "Debian GNU/Linux"
+#~ msgstr "Debian GNU/Linux"
+
+#~ msgid "Debian Menu"
+#~ msgstr "Menu Debiana"
+
+#~ msgid "SuSE Linux"
+#~ msgstr "SuSE Linux"
+
+#~ msgid "SuSE Menu"
+#~ msgstr "Menu SuSE"
+
+#~ msgid "Solaris"
+#~ msgstr "Solaris"
+
+#~ msgid ""
+#~ "There was an error displaying help: \n"
+#~ "%s"
+#~ msgstr ""
+#~ "Przy wyświetlaniu pomocy wystąpił błąd:\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "Administrator systemu zablokował możliwość\n"
+#~ "modyfikacji konfiguracji panelu"
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "Przy odczycie pliku glade %s wystąpił błąd"
+
+#~ msgid "Panel"
+#~ msgstr "Panel"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "Wybór ustawień wszystkich paneli GNOME"
+
+#~ msgid "Animation _speed:"
+#~ msgstr "Szybkość _animacji:"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "_Zamykanie szuflady po kliknięciu aktywatora"
+
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "_Animacja szuflad i paneli"
+
+#~ msgid "Fast"
+#~ msgstr "Szybko"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "Preferencje panelu"
+
+#~ msgid "Slow"
+#~ msgstr "Wolno"
+
+#~ msgid ""
+#~ "Unable to initialize png structure.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Nie można zainicjować struktury png.\n"
+#~ "Prawdopodobnie w systemie zainstalowana jest niewłaściwa wersja libpng"
+
+#~ msgid ""
+#~ "Unable to create png info.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Nie można utworzyć informacji png.\n"
+#~ "Prawdopodobnie w systemie zainstalowana jest niewłaściwa wersja libpng"
+
+#~ msgid ""
+#~ "Unable to set png info.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Nie można ustawić informacji png.\n"
+#~ "Prawdopodobnie w systemie zainstalowana jest niewłaściwa wersja libpng"
+
+#~ msgid ""
+#~ "Insufficient memory to save the screenshot.\n"
+#~ "Please free up some resources and try again."
+#~ msgstr ""
+#~ "Brak pamięci na zapisanie zrzutu ekranu.\n"
+#~ "Zwolnij nieco zasobów i spróbuj ponownie."
+
+#~ msgid "File %s already exists. Overwrite?"
+#~ msgstr "Plik %s już istnieje. Nadpisać?"
+
+#~ msgid ""
+#~ "Unable to create the file:\n"
+#~ "\"%s\"\n"
+#~ "Please check your permissions of the parent directory"
+#~ msgstr ""
+#~ "Nie można utworzyć pliku:\n"
+#~ "\"%s\"\n"
+#~ "Upewnij się, że uprawnienia do katalogu nadrzędnego są właściwe"
+
+#~ msgid "Screenshot-%s.png"
+#~ msgstr "zrzutokna-%s.png"
+
+#~ msgid "Screenshot.png"
+#~ msgstr "zrzutekranu.png"
+
+#~ msgid "Screenshot-%s-%d.png"
+#~ msgstr "zrzutokna-%s-%d.png"
+
+#~ msgid "Screenshot-%d.png"
+#~ msgstr "zrzutekranu-%d.png"
+
+#~ msgid "Not enough room to write file %s"
+#~ msgstr "Brak miejsca na zapisanie pliku %s"
+
+#~ msgid ""
+#~ "Glade file for the screenshot program is missing.\n"
+#~ "Please check your installation of gnome-panel"
+#~ msgstr ""
+#~ "Nie można odnaleźć pliku glade programu wykonującego zrzut ekranu.\n"
+#~ "Zweryfikuj instalację pakietu gnome-panel."
+
+#~ msgid "Unable to take a screenshot of the current desktop."
+#~ msgstr "Nie można pobrać zrzutu zawartości bieżącego biurka."
+
+#~ msgid "Save screenshot to _web page (save in %s)"
+#~ msgstr "Zapis zrzutu na stronie _www (zapis w %s)"
+
+#~ msgid "Grab a window instead of the entire screen"
+#~ msgstr "Zrzucenie obrazu okna zamiast całego ekranu"
+
+#~ msgid "Take screenshot after specified delay [in seconds]"
+#~ msgstr "Pobranie zrzutu z określonym opóźnieniem [w sekundach]"
+
+#~ msgid "<b>Options</b>"
+#~ msgstr "<b>Opcje</b>"
+
+#~ msgid "<b>Preview</b>"
+#~ msgstr "<b>Podgląd</b>"
+
+#~ msgid "Save Screenshot"
+#~ msgstr "Zapis zrzutu ekranu"
+
+#~ msgid "Save screenshot to _desktop"
+#~ msgstr "Zapis zrzutu na _biurku"
+
+#~ msgid "Save screenshot to _file:"
+#~ msgstr "_Zapis zrzutu do pliku:"
+
+#~ msgid "Save screenshot to _web page (save in ~/public__html)"
+#~ msgstr "Zapis zrzutu na stronie _www (zapis w ~/public__html)"
+
+#~ msgid ""
+#~ "The user's directory in which screenshots should be saved so as to appear "
+#~ "on the web."
+#~ msgstr ""
+#~ "Katalog użytkownika, w którym zapisywane powinny być zrzuty ekranu, "
+#~ "mające się pojawić na witrynie WWW."
+
+#~ msgid "Web directory"
+#~ msgstr "Katalog witryny WWW"
+
+#~ msgid "Specify a profile name to load"
+#~ msgstr "Określa nazwę wczytywanego profilu"
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#~ msgid "About GNOME"
+#~ msgstr "Informacje o GNOME"
+
+#~ msgid "Cannot remove menu item %s"
+#~ msgstr "Nie można usunąć elementu menu %s"
+
+#~ msgid "Could not get file name from path: %s"
+#~ msgstr "Nie można pobrać nazwy pliku ze ścieżki: %s"
+
+#~ msgid "Could not get directory name from path: %s"
+#~ msgstr "Nie można pobrać nazwy katalogu ze ścieżki: %s"
+
+#~ msgid "Remove this item"
+#~ msgstr "Usuń ten element"
+
+#~ msgid "Add new item to this menu"
+#~ msgstr "Dodaj nowy element do menu"
+
+#~ msgid "Properties"
+#~ msgstr "Właściwości"
+
+#~ msgid "About _GNOME"
+#~ msgstr "Informacje o _GNOME"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr "Blokuje ekran, pozwalając na chwilowe odejście od komputera."
+
+#~ msgid "Desktop"
+#~ msgstr "Biurko"
+
+#~ msgid "Lock screen"
+#~ msgstr "Zabezpiecz ekran"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "Kończy sesję GNOME"
+
+#~ msgid "Search for Files"
+#~ msgstr "Znajdź pliki..."
+
+#~ msgid "Screenshot"
+#~ msgstr "Zapis zrzutu ekranu"
+
+#~ msgid "Lock"
+#~ msgstr "Blokada"
+
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr "Zabezpiecza ekran, pozwalając na chwilowe odejście od komputera."
+
+#~ msgid "Search"
+#~ msgstr "Wyszukiwanie"
+
+#~ msgid "Run"
+#~ msgstr "Uruchom"
+
+#~ msgid "Run a command"
+#~ msgstr "Wykonuje polecenie"
+
+#~ msgid "Add to the panel"
+#~ msgstr "Dodaj do panelu"
+
+#~ msgid ""
+#~ "The \"%s\" applet appears to have died unexpectedly.\n"
+#~ "\n"
+#~ "Do you want to reload this applet?"
+#~ msgstr ""
+#~ "Aplet \"%s\" prawdopodobnie niespodziewanie zakończył pracę.\n"
+#~ "\n"
+#~ "Czy chcesz ponownie wczytać ten aplet?"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "(If you choose not to reload it at this time you can always add it by "
+#~ "right clicking on the panel and clicking on the \"Add to Panel\" submenu)"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "(Jeśli nie chcesz przeładować go w tej chwili, zawsze możesz dodać go "
+#~ "klikając prawym panel przyciskiem i klikając podmenu \"Dodaj do penelu\")"
+
+#~ msgid "Actions"
+#~ msgstr "Operacje"
+
+#~ msgid "_Name:"
+#~ msgstr "_Nazwa:"
+
+#~ msgid ""
+#~ "The default application for this type of file cannot handle remote files"
+#~ msgstr ""
+#~ "Domyślna aplikacja dla plików tego typu nie obsługuje zdalnego dostępu do "
+#~ "plików"
+
+#~ msgid "Unable to load panel stock icon '%s'\n"
+#~ msgstr "Nie można odczytać typowej ikony panelu o nazwie \"%s\"\n"
+
+#~ msgid "Orientation:"
+#~ msgstr "Ułożenie:"
+
+#~ msgid "Size:"
+#~ msgstr "Rozmiar:"
+
+#~ msgid "Accessories"
+#~ msgstr "Akcesoria"
+
+#~ msgid "Amusements"
+#~ msgstr "Zabawki"
+
+#~ msgid "Utility"
+#~ msgstr "Narzędzia"
+
+#~ msgid "Launcher from menu"
+#~ msgstr "Aktywator z elementu menu"
+
+#~ msgid "Cannot add to run box"
+#~ msgstr "Nie można dodać do okna uruchamiania"
+
+#~ msgid "No 'Exec' or 'URL' field in entry"
+#~ msgstr "Element nie zawiera pola \"Exec\" lub \"URL\""
+
+#~ msgid "Put into run dialog"
+#~ msgstr "Umieść w oknie uruchamiania programu"
+
+#~ msgid "Log Out %s"
+#~ msgstr "Wylogowanie %s"
+
+#~ msgid ""
+#~ "Log out %s of this session to log in as a different user or to shut down "
+#~ "your computer"
+#~ msgstr ""
+#~ "Wylogowanie %s z bieżącej sesji, pozwalając na zalogowanie się jako inny "
+#~ "użytkownik lub na wyłączenie komputera"
+
+#~ msgid "Quit from %s's desktop"
+#~ msgstr "Zakończenie pracy ze środowiskiem %s"
+
+#~ msgid "Error reading GConf list value '%s': %s"
+#~ msgstr "Przy odczycie zmiennej GConf \"%s\" typu lista wystąpił błąd: %s"
+
+#~ msgid "Day"
+#~ msgstr "Dzień"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr "Obecnie śledzony dzień pomiędzy 1 a 31 (0 - nieustawione)"
+
+#~ msgid "Month"
+#~ msgstr "Miesiąc"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "Obecnie śledzony miesiąc pomiędzy 0 a 11"
+
+#~ msgid "Year"
+#~ msgstr "Rok"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "Obecnie śledzony rok"
+
+#~ msgid "Activatable"
+#~ msgstr "Uaktywnialny"
+
+#~ msgid "Whether the button is activatable"
+#~ msgstr "Określa, czy przycisk może być uaktywniony"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Ze strzałką"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Określa, czy powinna być rysowana strzałka"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "Wyróżnianie przeciągania i upuszczania"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr "Określa czy wyróżniać ikony podczas przeciągania i upuszczania"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "Ułożenie widgetu ButtonWidget"
+
+#~ msgid "Icon Name"
+#~ msgstr "Nazwa ikony"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "Pożądana ikona widgetu ButtonWidget"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "ID typowej ikony"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Pożądana typowa ikona widgetu ButtonWidget"
+
+#~ msgid "Action Type"
+#~ msgstr "Typ operacji"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "Typ operacji wykonywanej przez przycisk"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "Mechanizm przeciągania i upuszczania włączony"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr ""
+#~ "Określa, czy dla tego elementu jest włączony mechanizm przeciągnij i upuść"
+
+#~ msgid "Edges"
+#~ msgstr "Krawędzie"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "Krawędzie do narysowania"
+
+#~ msgid "Menu Path"
+#~ msgstr "Ścieżka do menu"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "Ścieżka, na podstawie której będzie zbudowane menu."
+
+#~ msgid "Custom Icon"
+#~ msgstr "Własna ikona"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Pożądana własna ikona dla menu"
+
+#~ msgid "Tooltip"
+#~ msgstr "Podpowiedź"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "Podpowiedź wyświetlana dla menu"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Użyj ścieżki do menu"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "Użyj ścieżki określonej przez własność menu-path"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Użyj własnej ikony"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "Użyj ikony określonej przez własność custom-icon"
+
+#~ msgid "Name"
+#~ msgstr "Nazwa"
+
+#~ msgid "The name of this panel"
+#~ msgstr "Nazwa tego panelu"
+
+#~ msgid "Expand"
+#~ msgstr "Rozszerz"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "Zajmij całą szerokość/wysokość monitora"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Wysokość (lub szerokość jeśli pionowy) panelu"
+
+#~ msgid "X position"
+#~ msgstr "Współrzędna na osi X"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "Współrzędna X położenia panelu"
+
+#~ msgid "X centered"
+#~ msgstr "Wyśrodkowane na osi X"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "Określa, czy współrzędna x jest podana względem środka ekranu"
+
+#~ msgid "Y position"
+#~ msgstr "Wpółrzędna na osi Y"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "Współrzędna Y położenia panelu"
+
+#~ msgid "Y centered"
+#~ msgstr "Wyśrodkowane na osi Y"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "Określa, czy współrzędna y jest podana względem środka ekranu"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Monitor Xineramy"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "Monitor (zgodnie z konwencją Xineramy), na którym jest panel"
+
+#~ msgid "Auto hide"
+#~ msgstr "_Automatyczne ukrywanie"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "Automatycznie chowaj panel, gdy wskaźnik myszy go opuści"
+
+#~ msgid "Hide delay"
+#~ msgstr "Opóźnienie autoukrywania"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "Liczba milisekund, zanim panel zostanie automatycznie ukryty"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "Opóźnienie odkrywania"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "Liczba milisekund, zanim panel zostanie automatycznie odkryty"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "Rozmiar automatycznie ukrywanego panelu"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr ""
+#~ "Określa ile pikseli jest widocznych, po automatycznym ukryciu panelu."
+
+#~ msgid "Animate"
+#~ msgstr "Animacja"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "Włączona animacja wyświetlania/ukrywania"
+
+#~ msgid "Animation Speed"
+#~ msgstr "Szybkość _animacji:"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "Szybkość animacji ukrywania/wyświetlania panelu"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "Włączone przyciski"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Włączone ukrywanie/wyświetlanie przycisków"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "Włączone strzałki"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Włączone strzałki na przyciskach ukrywania/wyświetlania"

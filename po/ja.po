@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-16 21:19+0200\n"
+"POT-Creation-Date: 2005-07-19 23:26+0900\n"
 "PO-Revision-Date: 2005-04-04 21:07+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -52,7 +52,7 @@ msgstr "情報(_A)"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:740
-#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:291
+#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:225
 #: ../gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "ヘルプ(_H)"
@@ -65,7 +65,7 @@ msgid "_Preferences"
 msgstr "設定(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2725
+#: ../applets/clock/clock.c:2635
 msgid "Clock"
 msgstr "時計"
 
@@ -81,20 +81,20 @@ msgstr "Clock アプレットを生成するためのファクトリです。"
 msgid "Get the current time and date"
 msgstr "現在の時刻と日付を取得します"
 
-#: ../applets/clock/clock.c:309
+#: ../applets/clock/clock.c:265
 msgid "%l:%M:%S %p"
 msgstr "%p%l:%M:%S"
 
-#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
+#: ../applets/clock/clock.c:265 ../applets/clock/clock.c:590
 msgid "%l:%M %p"
 msgstr "%p%l:%M"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
+#: ../applets/clock/clock.c:267 ../applets/clock/clock.c:1727
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
-#: ../applets/clock/clock.c:1784
+#: ../applets/clock/clock.c:267 ../applets/clock/clock.c:592
+#: ../applets/clock/clock.c:1729
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -103,7 +103,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:322
+#: ../applets/clock/clock.c:278
 msgid "%a %b %e"
 msgstr "%b%e日 (%a)"
 
@@ -111,7 +111,7 @@ msgstr "%b%e日 (%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:329
+#: ../applets/clock/clock.c:285
 #, c-format
 msgid ""
 "%1$s\n"
@@ -124,68 +124,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:336
+#: ../applets/clock/clock.c:292
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:417
+#: ../applets/clock/clock.c:377
 msgid "%A %B %d"
 msgstr "%B%e日 %A"
 
-#: ../applets/clock/clock.c:429
+#: ../applets/clock/clock.c:389
 msgid "Click to view your appointments and tasks"
 msgstr "クリックすると予定とタスクを表示します"
 
-#: ../applets/clock/clock.c:431
+#: ../applets/clock/clock.c:391
 msgid "Click to view month calendar"
 msgstr "クリックすると月間カレンダを表示します"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:637
+#: ../applets/clock/clock.c:597
 msgid "%b %d"
 msgstr "%b%e日"
 
-#: ../applets/clock/clock.c:964
+#: ../applets/clock/clock.c:924
 msgid "Tasks"
 msgstr "タスク"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1076
 msgid "All Day"
 msgstr "全日"
 
-#: ../applets/clock/clock.c:1155
+#: ../applets/clock/clock.c:1115
 msgid "Appointments"
 msgstr "予定"
 
-#: ../applets/clock/clock.c:1387
+#: ../applets/clock/clock.c:1347
 msgid "Calendar"
 msgstr "カレンダ"
 
-#: ../applets/clock/clock.c:1676
+#: ../applets/clock/clock.c:1628
 msgid "Computer Clock"
 msgstr "コンピュータ時計"
 
-#: ../applets/clock/clock.c:1777
+#: ../applets/clock/clock.c:1722
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: ../applets/clock/clock.c:1779
+#: ../applets/clock/clock.c:1724
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
-#: ../applets/clock/clock.c:1821
+#: ../applets/clock/clock.c:1766
 msgid "%A, %B %d %Y"
 msgstr "%Y/%m/%e (%a)"
 
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1810
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "時刻設定ツールの起動に失敗: %s"
 
-#: ../applets/clock/clock.c:1914
+#: ../applets/clock/clock.c:1849
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -193,11 +193,11 @@ msgstr ""
 "日付と時刻を設定するプログラムの特定に失敗しました。おそらく何もインストール"
 "されていないかも？"
 
-#: ../applets/clock/clock.c:2386
+#: ../applets/clock/clock.c:2296
 msgid "Custom format"
 msgstr "書式のカスタマイズ"
 
-#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
+#: ../applets/clock/clock.c:2417 ../applets/clock/clock.c:2594
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -205,52 +205,52 @@ msgstr "書式のカスタマイズ"
 msgid "There was an error displaying help: %s"
 msgstr "ヘルプを表示する際にエラーが発生しました:%s"
 
-#: ../applets/clock/clock.c:2542
+#: ../applets/clock/clock.c:2452
 msgid "Clock Preferences"
 msgstr "時計の設定"
 
-#: ../applets/clock/clock.c:2566
+#: ../applets/clock/clock.c:2476
 msgid "Clock _type:"
 msgstr "時計の種類(_T):"
 
-#: ../applets/clock/clock.c:2576
+#: ../applets/clock/clock.c:2486
 msgid "12 hour"
 msgstr "12時間制"
 
-#: ../applets/clock/clock.c:2577
+#: ../applets/clock/clock.c:2487
 msgid "24 hour"
 msgstr "24時間制"
 
-#: ../applets/clock/clock.c:2578
+#: ../applets/clock/clock.c:2488
 msgid "UNIX time"
 msgstr "UNIX 時間"
 
-#: ../applets/clock/clock.c:2579
+#: ../applets/clock/clock.c:2489
 msgid "Internet time"
 msgstr "インターネット時間"
 
-#: ../applets/clock/clock.c:2587
+#: ../applets/clock/clock.c:2497
 msgid "Custom _format:"
 msgstr "書式のカスタマイズ(_F):"
 
-#: ../applets/clock/clock.c:2606
+#: ../applets/clock/clock.c:2516
 msgid "Show _seconds"
 msgstr "秒を表示する(_S)"
 
-#: ../applets/clock/clock.c:2615
+#: ../applets/clock/clock.c:2525
 msgid "Show _date"
 msgstr "日付を表示する(_D)"
 
-#: ../applets/clock/clock.c:2624
+#: ../applets/clock/clock.c:2534
 msgid "Use _UTC"
 msgstr "UTC を使用する(_U)"
 
-#: ../applets/clock/clock.c:2728
+#: ../applets/clock/clock.c:2638
 msgid "The Clock displays the current time and date"
 msgstr "現在の時刻と日付を表示する時計"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2641 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -716,7 +716,7 @@ msgstr "ワークスペース切り換え器"
 msgid "Failed to load %s: %s\n"
 msgstr "%s の読み込みに失敗しました: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:624
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:602
 msgid "Icon not found"
 msgstr "アイコンが見つかりません"
 
@@ -1024,7 +1024,7 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "空いているスペースを見つけられません"
 
-#: ../gnome-panel/button-widget.c:200
+#: ../gnome-panel/button-widget.c:198
 #, c-format
 msgid "Failed to load image %s"
 msgstr "画像 %s の読み込みに失敗しました"
@@ -1038,7 +1038,7 @@ msgstr "引き出し"
 msgid "_Add to Drawer..."
 msgstr "引き出しへ追加(_A)..."
 
-#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:926
+#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:852
 #: ../gnome-panel/panel-action-button.c:142
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
@@ -1048,62 +1048,62 @@ msgstr "プロパティ(_P)"
 msgid "Create new file in the given directory"
 msgstr "新しいファイルを指定したフォルダに作成する"
 
-#: ../gnome-panel/launcher.c:144
+#: ../gnome-panel/launcher.c:136
 msgid "Cannot save launcher to disk"
 msgstr "ランチャを保存できません"
 
-#: ../gnome-panel/launcher.c:174 ../gnome-panel/launcher.c:224
-#: ../gnome-panel/launcher.c:281
+#: ../gnome-panel/launcher.c:166 ../gnome-panel/launcher.c:216
+#: ../gnome-panel/launcher.c:273
 msgid "Cannot launch icon"
 msgstr "アイコンを起動できません"
 
-#: ../gnome-panel/launcher.c:175
+#: ../gnome-panel/launcher.c:167
 msgid "This launch icon does not specify a url to show."
 msgstr "このランチャ・アイコンには表示する URL が指定されていません。"
 
-#: ../gnome-panel/launcher.c:187
+#: ../gnome-panel/launcher.c:179
 #, c-format
 msgid "Cannot show %s"
 msgstr "%s を表示できません"
 
-#: ../gnome-panel/launcher.c:476
+#: ../gnome-panel/launcher.c:467
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "パネル・ランチャのデスクトップ・ファイルに URI がありません\n"
 
-#: ../gnome-panel/launcher.c:490
+#: ../gnome-panel/launcher.c:481
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "デスクトップ・ファイル %s (パネル・ランチャ %s%s) が開けません\n"
 
-#: ../gnome-panel/launcher.c:808 ../gnome-panel/menu-ditem.c:181
+#: ../gnome-panel/launcher.c:734 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "ランチャのプロパティ"
 
-#: ../gnome-panel/launcher.c:920
+#: ../gnome-panel/launcher.c:846
 msgid "_Launch"
 msgstr "起動(_L)"
 
-#: ../gnome-panel/launcher.c:959
+#: ../gnome-panel/launcher.c:924
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "キー %s がセットされていないので、ランチャを起動できません\n"
 
-#: ../gnome-panel/launcher.c:1014 ../gnome-panel/launcher.c:1033
+#: ../gnome-panel/launcher.c:979 ../gnome-panel/launcher.c:997
 #: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
 #: ../gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "ランチャを生成できません"
 
-#: ../gnome-panel/launcher.c:1015 ../gnome-panel/menu-ditem.c:470
+#: ../gnome-panel/launcher.c:980 ../gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "ランチャの名前を指定して下さい。"
 
-#: ../gnome-panel/launcher.c:1034 ../gnome-panel/menu-ditem.c:487
+#: ../gnome-panel/launcher.c:998 ../gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "正しい URL またはコマンドを指定して下さい。"
 
-#: ../gnome-panel/launcher.c:1078 ../gnome-panel/menu-ditem.c:550
+#: ../gnome-panel/launcher.c:1041 ../gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "ランチャの作成"
 
@@ -1167,8 +1167,8 @@ msgstr "スクリーンセーバーの再起動(_S)"
 #: ../gnome-panel/panel-action-button.c:206
 #: ../gnome-panel/panel-action-button.c:219
 #: ../gnome-panel/panel-action-button.c:243
-#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1010
-#: ../gnome-panel/panel-util.c:748
+#: ../gnome-panel/panel-menu-bar.c:291 ../gnome-panel/panel-menu-button.c:1009
+#: ../gnome-panel/panel-util.c:723
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s' を実行できません"
@@ -1278,30 +1278,30 @@ msgstr "他のアイテムを格納するポップアップ式の引き出しで
 msgid "(empty)"
 msgstr "(空)"
 
-#: ../gnome-panel/panel-addto.c:404
+#: ../gnome-panel/panel-addto.c:400
 #: ../libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "問い合わせが例外 %s を返しました\n"
 
-#: ../gnome-panel/panel-addto.c:1011
+#: ../gnome-panel/panel-addto.c:1006
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "\"%s\" へ追加するアイテムを選択して下さい(_I):"
 
-#: ../gnome-panel/panel-addto.c:1015
+#: ../gnome-panel/panel-addto.c:1010
 msgid "Add to Drawer"
 msgstr "引き出しへ追加"
 
-#: ../gnome-panel/panel-addto.c:1017
+#: ../gnome-panel/panel-addto.c:1012
 msgid "Select an _item to add to the drawer:"
 msgstr "引き出しへ追加するアイテムを選択して下さい(_I):"
 
-#: ../gnome-panel/panel-addto.c:1019
+#: ../gnome-panel/panel-addto.c:1014
 msgid "Add to Panel"
 msgstr "パネルへ追加"
 
-#: ../gnome-panel/panel-addto.c:1021
+#: ../gnome-panel/panel-addto.c:1016
 msgid "Select an _item to add to the panel:"
 msgstr "パネルへ追加するアイテムを選択して下さい(_I):"
 
@@ -1629,34 +1629,34 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "TRUE にすると、パネルにあるオブジェクトのツールチップが表示されます。"
 
-#: ../gnome-panel/panel-menu-bar.c:79
+#: ../gnome-panel/panel-menu-bar.c:71
 msgid "Applications"
 msgstr "アプリケーション"
 
-#: ../gnome-panel/panel-menu-bar.c:298 ../gnome-panel/panel-menu-button.c:691
+#: ../gnome-panel/panel-menu-bar.c:232 ../gnome-panel/panel-menu-button.c:691
 msgid "_Edit Menus"
 msgstr "メニューの編集(_E)"
 
-#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:310
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "場所 '%s' を表示できません"
 
-#: ../gnome-panel/panel-menu-items.c:332
+#: ../gnome-panel/panel-menu-items.c:324
 msgid "Bookmarks"
 msgstr "ブックマーク"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' を開きます"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:431
 msgid "Network Places"
 msgstr "ネットワークの場所"
 
-#: ../gnome-panel/panel-menu-items.c:441
+#: ../gnome-panel/panel-menu-items.c:433
 msgid "Removable Media"
 msgstr "リムーバブル・メディア"
 
@@ -1664,30 +1664,30 @@ msgstr "リムーバブル・メディア"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:491
 msgid "Desktop Folder|Desktop"
 msgstr "デスクトップ"
 
-#: ../gnome-panel/panel-menu-items.c:507
+#: ../gnome-panel/panel-menu-items.c:492
 msgid "Open the desktop as a folder"
 msgstr "フォルダとしてデスクトップを開きます"
 
-#: ../gnome-panel/panel-menu-items.c:861
+#: ../gnome-panel/panel-menu-items.c:824
 msgid "Places"
 msgstr "場所"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:899
+#: ../gnome-panel/panel-menu-items.c:862
 msgid "Desktop Environment|Desktop"
 msgstr "デスクトップ"
 
-#: ../gnome-panel/panel-menu-items.c:1040
+#: ../gnome-panel/panel-menu-items.c:1003
 msgid "Cannot launch entry"
 msgstr "エントリを起動できません"
 
-#: ../gnome-panel/panel-menu-items.c:1052
+#: ../gnome-panel/panel-menu-items.c:1015
 msgid "Cannot load entry"
 msgstr "エントリを読み込めません"
 
@@ -1871,18 +1871,18 @@ msgid "Use custom path for menu contents"
 msgstr "メニューの内容にカスタム・パスを使用する"
 
 #: ../gnome-panel/panel-profile.c:743 ../gnome-panel/panel-profile.c:770
-#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1632
+#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1630
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "GConf の string 値 '%s' の読み込みでエラー: %s"
 
-#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1528
-#: ../gnome-panel/panel-profile.c:1601 ../gnome-panel/panel-profile.c:1664
+#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1526
+#: ../gnome-panel/panel-profile.c:1599 ../gnome-panel/panel-profile.c:1662
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "GConf の int 値 '%s' の読み込みでエラー: %s"
 
-#: ../gnome-panel/panel-profile.c:1538
+#: ../gnome-panel/panel-profile.c:1536
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1891,7 +1891,7 @@ msgstr ""
 "パネル '%s' は、現在無効なスクリーン %d で表示するようになっています。このパ"
 "ネルを読み込みません。"
 
-#: ../gnome-panel/panel-profile.c:1616
+#: ../gnome-panel/panel-profile.c:1614
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "GConf の bool 値 '%s' の読み込みでエラー: %s"
@@ -2064,31 +2064,31 @@ msgstr "この一覧をクリアする"
 msgid "Clear all items from the recent documents list"
 msgstr "\"最近開いたドキュメント\" の一覧を全てクリアします"
 
-#: ../gnome-panel/panel-run-dialog.c:287
+#: ../gnome-panel/panel-run-dialog.c:284
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "コマンド '%s' を起動できません"
 
-#: ../gnome-panel/panel-run-dialog.c:365
+#: ../gnome-panel/panel-run-dialog.c:362
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "UTF-8 から '%s' へ変換できません"
 
-#: ../gnome-panel/panel-run-dialog.c:1116
+#: ../gnome-panel/panel-run-dialog.c:1109
 msgid "Choose a file to append to the command..."
 msgstr "コマンドの後ろに続けるファイルを選んで下さい..."
 
-#: ../gnome-panel/panel-run-dialog.c:1472
+#: ../gnome-panel/panel-run-dialog.c:1465
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "実行するコマンド: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1479
+#: ../gnome-panel/panel-run-dialog.c:1472
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "説明を見たいアプリケーションを選んで下さい。"
 
-#: ../gnome-panel/panel-run-dialog.c:1514
+#: ../gnome-panel/panel-run-dialog.c:1507
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2592,25 +2592,25 @@ msgstr "パネルを表示する Xinerama のモニタ"
 msgid "Y co-ordinate of panel"
 msgstr "パネルの Y 軸方向の座標"
 
-#: ../gnome-panel/panel-util.c:89
+#: ../gnome-panel/panel-util.c:66
 msgid "Cannot display help document"
 msgstr "ヘルプを表示できません"
 
-#: ../gnome-panel/panel-util.c:311
+#: ../gnome-panel/panel-util.c:288
 #, c-format
 msgid "Details: %s"
 msgstr "詳細: %s"
 
-#: ../gnome-panel/panel.c:477
+#: ../gnome-panel/panel.c:474
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL を開く: %s"
 
-#: ../gnome-panel/panel.c:1265
+#: ../gnome-panel/panel.c:1262
 msgid "Delete this drawer?"
 msgstr "この引き出しを削除しますか？"
 
-#: ../gnome-panel/panel.c:1266
+#: ../gnome-panel/panel.c:1263
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2618,15 +2618,15 @@ msgstr ""
 "引き出しを削除すると、引き出しと\n"
 "その設定が失われてしまいます。"
 
-#: ../gnome-panel/panel.c:1268
+#: ../gnome-panel/panel.c:1265
 msgid "Delete Drawer"
 msgstr "引き出しの削除"
 
-#: ../gnome-panel/panel.c:1270
+#: ../gnome-panel/panel.c:1267
 msgid "Delete this panel?"
 msgstr "このパネルを削除しますか？"
 
-#: ../gnome-panel/panel.c:1271
+#: ../gnome-panel/panel.c:1268
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2634,7 +2634,7 @@ msgstr ""
 "パネルを削除すると、パネルと\n"
 "その設定が失われてしまいます。"
 
-#: ../gnome-panel/panel.c:1273
+#: ../gnome-panel/panel.c:1270
 msgid "Delete Panel"
 msgstr "パネルの削除"
 

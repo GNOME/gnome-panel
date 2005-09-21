@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-16 21:19+0200\n"
+"POT-Creation-Date: 2005-08-03 21:36+0200\n"
 "PO-Revision-Date: 2005-07-29 10:25+0100\n"
 "Last-Translator: Слободан Д. Средојевић <slobo@akrep.be>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -62,7 +62,7 @@ msgid "_Preferences"
 msgstr "По_ставке"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2725
+#: ../applets/clock/clock.c:2663
 msgid "Clock"
 msgstr "Часовник"
 
@@ -78,20 +78,20 @@ msgstr "Производња програмчета за часовник."
 msgid "Get the current time and date"
 msgstr "Сазнај тренутно време и датум"
 
-#: ../applets/clock/clock.c:309
+#: ../applets/clock/clock.c:266
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
+#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
-#: ../applets/clock/clock.c:1784
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
+#: ../applets/clock/clock.c:1730
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -100,7 +100,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:322
+#: ../applets/clock/clock.c:279
 msgid "%a %b %e"
 msgstr "%a, %e. %b"
 
@@ -108,7 +108,7 @@ msgstr "%a, %e. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:329
+#: ../applets/clock/clock.c:286
 #, c-format
 msgid ""
 "%1$s\n"
@@ -121,68 +121,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:336
+#: ../applets/clock/clock.c:293
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:417
+#: ../applets/clock/clock.c:378
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#: ../applets/clock/clock.c:429
+#: ../applets/clock/clock.c:390
 msgid "Click to view your appointments and tasks"
 msgstr "Притисните како би видели заказане састанке и задатке"
 
-#: ../applets/clock/clock.c:431
+#: ../applets/clock/clock.c:392
 msgid "Click to view month calendar"
 msgstr "Притисните како би видели месечни календар"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:637
+#: ../applets/clock/clock.c:598
 msgid "%b %d"
 msgstr "%d. %b"
 
-#: ../applets/clock/clock.c:964
+#: ../applets/clock/clock.c:925
 msgid "Tasks"
 msgstr "Задужења"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1077
 msgid "All Day"
 msgstr "Цео дан"
 
-#: ../applets/clock/clock.c:1155
+#: ../applets/clock/clock.c:1116
 msgid "Appointments"
 msgstr "Заказани састанци"
 
-#: ../applets/clock/clock.c:1387
+#: ../applets/clock/clock.c:1348
 msgid "Calendar"
 msgstr "Календар"
 
-#: ../applets/clock/clock.c:1676
+#: ../applets/clock/clock.c:1629
 msgid "Computer Clock"
 msgstr "Рачунарски часовник"
 
-#: ../applets/clock/clock.c:1777
+#: ../applets/clock/clock.c:1723
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1779
+#: ../applets/clock/clock.c:1725
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1821
+#: ../applets/clock/clock.c:1767
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y."
 
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1816
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Не могу да покренем алат за подешавање времена: %s"
 
-#: ../applets/clock/clock.c:1914
+#: ../applets/clock/clock.c:1852
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -190,11 +190,11 @@ msgstr ""
 "Не могу да пронађем програм за подешавање датума и времена. Можда ниједан "
 "није инсталиран?"
 
-#: ../applets/clock/clock.c:2386
+#: ../applets/clock/clock.c:2324
 msgid "Custom format"
 msgstr "Облик по избору"
 
-#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
+#: ../applets/clock/clock.c:2445 ../applets/clock/clock.c:2622
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -202,52 +202,52 @@ msgstr "Облик по избору"
 msgid "There was an error displaying help: %s"
 msgstr "Дошло је до грешке при приказивању помоћи: %s"
 
-#: ../applets/clock/clock.c:2542
+#: ../applets/clock/clock.c:2480
 msgid "Clock Preferences"
 msgstr "Поставке часовника"
 
-#: ../applets/clock/clock.c:2566
+#: ../applets/clock/clock.c:2504
 msgid "Clock _type:"
 msgstr "_Врста часовника:"
 
-#: ../applets/clock/clock.c:2576
+#: ../applets/clock/clock.c:2514
 msgid "12 hour"
 msgstr "12-точасовни"
 
-#: ../applets/clock/clock.c:2577
+#: ../applets/clock/clock.c:2515
 msgid "24 hour"
 msgstr "24-очасовни"
 
-#: ../applets/clock/clock.c:2578
+#: ../applets/clock/clock.c:2516
 msgid "UNIX time"
 msgstr "UNIX време"
 
-#: ../applets/clock/clock.c:2579
+#: ../applets/clock/clock.c:2517
 msgid "Internet time"
 msgstr "Интернет време"
 
-#: ../applets/clock/clock.c:2587
+#: ../applets/clock/clock.c:2525
 msgid "Custom _format:"
 msgstr "Облик по _избору:"
 
-#: ../applets/clock/clock.c:2606
+#: ../applets/clock/clock.c:2544
 msgid "Show _seconds"
 msgstr "Прикажи _секунде"
 
-#: ../applets/clock/clock.c:2615
+#: ../applets/clock/clock.c:2553
 msgid "Show _date"
 msgstr "Прикажи _датум"
 
-#: ../applets/clock/clock.c:2624
+#: ../applets/clock/clock.c:2562
 msgid "Use _UTC"
 msgstr "Користи _УТ"
 
-#: ../applets/clock/clock.c:2728
+#: ../applets/clock/clock.c:2666
 msgid "The Clock displays the current time and date"
 msgstr "Часовник приказује тренутно време и датум"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2669 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -1641,26 +1641,26 @@ msgstr "Програми"
 msgid "_Edit Menus"
 msgstr "_Уредите меније"
 
-#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Не могу да прикаже путању „%s“"
 
-#: ../gnome-panel/panel-menu-items.c:332
+#: ../gnome-panel/panel-menu-items.c:324
 msgid "Bookmarks"
 msgstr "Обележивачи"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "Отвори „%s“"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:431
 msgid "Network Places"
 msgstr "Мрежна места"
 
-#: ../gnome-panel/panel-menu-items.c:441
+#: ../gnome-panel/panel-menu-items.c:433
 msgid "Removable Media"
 msgstr "Измењиви дискови"
 
@@ -1668,30 +1668,30 @@ msgstr "Измењиви дискови"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:491
 msgid "Desktop Folder|Desktop"
 msgstr "Радна површ"
 
-#: ../gnome-panel/panel-menu-items.c:507
+#: ../gnome-panel/panel-menu-items.c:492
 msgid "Open the desktop as a folder"
 msgstr "Отвори радну површ као директоријум"
 
-#: ../gnome-panel/panel-menu-items.c:861
+#: ../gnome-panel/panel-menu-items.c:824
 msgid "Places"
 msgstr "Пречице"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:899
+#: ../gnome-panel/panel-menu-items.c:862
 msgid "Desktop Environment|Desktop"
 msgstr "Окружење"
 
-#: ../gnome-panel/panel-menu-items.c:1040
+#: ../gnome-panel/panel-menu-items.c:1003
 msgid "Cannot launch entry"
 msgstr "Не могу да покренем ставку"
 
-#: ../gnome-panel/panel-menu-items.c:1052
+#: ../gnome-panel/panel-menu-items.c:1015
 msgid "Cannot load entry"
 msgstr "Не могу да учитам ставку"
 
@@ -2075,21 +2075,21 @@ msgstr "Не могу да покренем наредбу „%s“"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Не могу да претворим „%s“ из УТФ-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1116
+#: ../gnome-panel/panel-run-dialog.c:1112
 msgid "Choose a file to append to the command..."
 msgstr "Изаберите датотеку коју желите да придодате наредби..."
 
-#: ../gnome-panel/panel-run-dialog.c:1472
+#: ../gnome-panel/panel-run-dialog.c:1468
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Извршићу наредбу: „%s“"
 
-#: ../gnome-panel/panel-run-dialog.c:1479
+#: ../gnome-panel/panel-run-dialog.c:1475
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Изаберите програм да видите његов опис."
 
-#: ../gnome-panel/panel-run-dialog.c:1514
+#: ../gnome-panel/panel-run-dialog.c:1510
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2759,3 +2759,912 @@ msgstr "_Програмче:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Поставке:"
+
+#~ msgid "Display \"Run Application\" dialog keybinding"
+#~ msgstr "Прикажи пречицу са тастатуре за „Покрени“ прозорче"
+
+#~ msgid "Enable keybindings"
+#~ msgstr "Укључи пречице"
+
+#~ msgid "FIXME - is this resolved with the new menu stuff"
+#~ msgstr "ПОПРАВИ — да ли је ово решено помоћу нових менија?"
+
+#~ msgid "FIXME - need to define limits"
+#~ msgstr "ПОПРАВИ — обавезно је поставити ограничења"
+
+#~ msgid "If true, panel-specific keybindings are enabled."
+#~ msgstr ""
+#~ "Уколико је постављено, укључене су пречице са тастатуре за појединачни "
+#~ "панел."
+
+#~ msgid "Popup panel menu keybinding"
+#~ msgstr "Пречица за приручни мени панела"
+
+#~ msgid "Take screenshot"
+#~ msgstr "Снимак екрана"
+
+#~ msgid "Take window screenshot"
+#~ msgstr "Снимак прозора"
+
+#~ msgid "File not found"
+#~ msgstr "Датотека није нађена"
+
+#~ msgid "Unknown Window"
+#~ msgstr "Непознати прозор"
+
+#~ msgid "No Windows Open"
+#~ msgstr "Нема отворених прозора"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "Алат за пребацивање између прозора"
+
+#~ msgid "none"
+#~ msgstr "ниједан"
+
+#~ msgid "file not found"
+#~ msgstr "датотека није нађена"
+
+#~ msgid "Desktop"
+#~ msgstr "Радна површина"
+
+#~ msgid "_Lock"
+#~ msgstr "Прив_ежи"
+
+#~ msgid "Un_lock"
+#~ msgstr "Одв_ежи"
+
+#~ msgid "Lock screen"
+#~ msgstr "Закључај екран"
+
+#~ msgid "Add to %s"
+#~ msgstr "Додај на %s"
+
+#~ msgid "Add to the panel"
+#~ msgstr "Додај на панел"
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#~ msgid "About GNOME"
+#~ msgstr "О Гному"
+
+#~ msgid "About _GNOME"
+#~ msgstr "О _Гному"
+
+#~ msgid "Actions"
+#~ msgstr "Акције"
+
+#~ msgid "Specify a profile name to load"
+#~ msgstr "Наведите име профила који учитавате"
+
+#~ msgid "Cannot remove menu item %s"
+#~ msgstr "Не могу да уклоним ставку менија %s"
+
+#~ msgid "Could not get file name from path: %s"
+#~ msgstr "Не могу одредити име датотеке из путање „%s“"
+
+#~ msgid "Could not get directory name from path: %s"
+#~ msgstr "Не могу одредити име директоријума из путање „%s“"
+
+#~ msgid "Remove this item"
+#~ msgstr "Уклони ову ставку"
+
+#~ msgid "Add new item to this menu"
+#~ msgstr "Додај нову ставку у овај мени"
+
+#~ msgid "Properties"
+#~ msgstr "Особине"
+
+#~ msgid "_Name:"
+#~ msgstr "_Име:"
+
+#~ msgid ""
+#~ "The default application for this type of file cannot handle remote files"
+#~ msgstr ""
+#~ "Подразумевани програм за ову врсту датотека не прихвата мрежне адресе"
+
+#~ msgid "Unable to get the name of the command to execute"
+#~ msgstr "Не могу да сазнам име наредбе коју треба извршити"
+
+#~ msgid ""
+#~ "You do not have fortune installed or you have not specified a program to "
+#~ "run.\n"
+#~ "\n"
+#~ "Please refer to fish properties dialog."
+#~ msgstr ""
+#~ "Немате инсталиран програм „fortune“, или нисте навели програм за "
+#~ "покретање.\n"
+#~ "\n"
+#~ "Проверите прозорче за особине рибе."
+
+#~ msgid "Debian GNU/Linux"
+#~ msgstr "Дебијан ГНУ/Линукс"
+
+#~ msgid "Debian Menu"
+#~ msgstr "Дебијан мени"
+
+#~ msgid "SuSE Linux"
+#~ msgstr "СуСЕ Линукс"
+
+#~ msgid "SuSE Menu"
+#~ msgstr "СуСЕ мени"
+
+#~ msgid "Solaris"
+#~ msgstr "Соларис"
+
+#~ msgid "CDE Menu"
+#~ msgstr "CDE мени"
+
+#~ msgid ""
+#~ "Unable to initialize png structure.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Не могу да иницијализујем PNG структуру.\n"
+#~ "Вероватно имате неодговарајуће издање libpng-а на вашем систему"
+
+#~ msgid ""
+#~ "Unable to create png info.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Не могу да направим податке о PNG-у.\n"
+#~ "Вероватно имате неодговарајуће издање libpng-а на вашем систему"
+
+#~ msgid ""
+#~ "Unable to set png info.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Не могу да поставим PNG податке.\n"
+#~ "Вероватно имате неодговарајуће издање libpng-а на вашем систему"
+
+#~ msgid ""
+#~ "Insufficient memory to save the screenshot.\n"
+#~ "Please free up some resources and try again."
+#~ msgstr ""
+#~ "Недовољно меморије за снимање екрана.\n"
+#~ "Ослободите нешто меморије и пробајте поново."
+
+#~ msgid "File %s already exists. Overwrite?"
+#~ msgstr "Датотека „%s“ већ постоји. Преснимити преко ње?"
+
+#~ msgid ""
+#~ "Unable to create the file:\n"
+#~ "\"%s\"\n"
+#~ "Please check your permissions of the parent directory"
+#~ msgstr ""
+#~ "Не могу да направим датотеку:\n"
+#~ "„%s“\n"
+#~ "Проверите овлашћења и дозволе за текући директоријум"
+
+#~ msgid "Screenshot-%s.png"
+#~ msgstr "snimak-ekrana-%s.png"
+
+#~ msgid "Screenshot.png"
+#~ msgstr "snimak-ekrana.png"
+
+#~ msgid "Screenshot-%s-%d.png"
+#~ msgstr "snimak-ekrana-%s-%d.png"
+
+#~ msgid "Screenshot-%d.png"
+#~ msgstr "snimak-ekrana-%d.png"
+
+#~ msgid "Not enough room to write file %s"
+#~ msgstr "Недовољно места за упис датотеке „%s“"
+
+#~ msgid ""
+#~ "There was an error displaying help: \n"
+#~ "%s"
+#~ msgstr ""
+#~ "Дошло је до грешке при приказивању помоћи: \n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Glade file for the screenshot program is missing.\n"
+#~ "Please check your installation of gnome-panel"
+#~ msgstr ""
+#~ "Glade датотека за снимање екрана недостаје.\n"
+#~ "Проверите инсталацију (пакет „gnome-panel“)"
+
+#~ msgid "Unable to take a screenshot of the current desktop."
+#~ msgstr "Не могу да снимим екран текуће радне површине."
+
+#~ msgid "Save screenshot to _web page (save in %s)"
+#~ msgstr "Сачувај снимак екрана на веб страницу (сними у %s)"
+
+#~ msgid "Grab a window instead of the entire screen"
+#~ msgstr "Сними прозор уместо целог екрана"
+
+#~ msgid "Take screenshot after specified delay [in seconds]"
+#~ msgstr "Сними екран након одређеног времена (у секундама)"
+
+#~ msgid "<b>Options</b>"
+#~ msgstr "<b>Опције</b>"
+
+#~ msgid "<b>Preview</b>"
+#~ msgstr "<b>Преглед</b>"
+
+#~ msgid "Save Screenshot"
+#~ msgstr "Сачувај снимак екрана"
+
+#~ msgid "Save screenshot to _desktop"
+#~ msgstr "Постави снимак екрана на _радну површину"
+
+#~ msgid "Save screenshot to _file:"
+#~ msgstr "Сачувај снимак екрана у _датотеку:"
+
+#~ msgid "Save screenshot to _web page (save in ~/public__html)"
+#~ msgstr "Постави снимак екрана на веб страницу (сними у ~/public__html)"
+
+#~ msgid ""
+#~ "The user's directory in which screenshots should be saved so as to appear "
+#~ "on the web."
+#~ msgstr ""
+#~ "Директоријум корисника у којем треба сачувати снимке екрана како би се "
+#~ "појавили на вебу."
+
+#~ msgid ""
+#~ "The \"%s\" applet appears to have died unexpectedly.\n"
+#~ "\n"
+#~ "Do you want to reload this applet?"
+#~ msgstr ""
+#~ "Чини се да је програмче „%s“ неочекивано угашено.\n"
+#~ "\n"
+#~ "Поново учитати ово програмче?"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "(If you choose not to reload it at this time you can always add it by "
+#~ "right clicking on the panel and clicking on the \"Add to Panel\" submenu)"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "(Ако се одлучите да га не учитате поново, можете га свакако додати десним "
+#~ "кликом на панел, и избором подменија „Додај на панел“)"
+
+#~ msgid "Unable to load panel stock icon '%s'\n"
+#~ msgstr "Не могу учитати испоручену икону „%s“ за панел\n"
+
+#~ msgid "Orientation:"
+#~ msgstr "Усмерење:"
+
+#~ msgid "Size:"
+#~ msgstr "Величина:"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "Администратор система је онемогућио\n"
+#~ "измене поставки панела"
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "Грешка при учитавању glade датотеке „%s“"
+
+#~ msgid "Panel"
+#~ msgstr "Панел"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "Изабери поставке за све панеле"
+
+#~ msgid "Animation _speed:"
+#~ msgstr "_Брзина анимације"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "Затвори _фиоку по клику на покретач"
+
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "_Анимација фиоке и панела"
+
+#~ msgid "Fast"
+#~ msgstr "Брзо"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "Поставке панела"
+
+#~ msgid "Slow"
+#~ msgstr "Споро"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr ""
+#~ "Закључајте екран како бисте могли да се привремено удаљите од рачунара"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "Напуштање Гнома"
+
+#~ msgid "Search for Files"
+#~ msgstr "Потражи датотеке"
+
+#~ msgid "Screenshot"
+#~ msgstr "Снимак екрана"
+
+#~ msgid "Lock"
+#~ msgstr "Закључај"
+
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr ""
+#~ "Закључај екран како бисте могли да се привремено удаљите од рачунара"
+
+#~ msgid "Search"
+#~ msgstr "Тражи"
+
+#~ msgid "Run"
+#~ msgstr "Покрени"
+
+#~ msgid "Run a command"
+#~ msgstr "Покрени наредбу"
+
+#~ msgid "Accessories"
+#~ msgstr "Допунски програми"
+
+#~ msgid "Amusements"
+#~ msgstr "Занимљивости"
+
+#~ msgid "Utility"
+#~ msgstr "Алати"
+
+#~ msgid "Launcher from menu"
+#~ msgstr "Покретач из менија"
+
+#~ msgid "Cannot add to run box"
+#~ msgstr "Не могу да додам у прозорче за покретање"
+
+#~ msgid "No 'Exec' or 'URL' field in entry"
+#~ msgstr "Нема „Exec“ нити „URL“ поља у уносу"
+
+#~ msgid "Put into run dialog"
+#~ msgstr "Постави као наредбу"
+
+#~ msgid "Error reading GConf list value '%s': %s"
+#~ msgstr "Грешка при читању Гконф списка „%s“: %s"
+
+# bug: NOOO STRING COMPOSITION, PLEAAASEE!
+#~ msgid "Log Out %s"
+#~ msgstr "Одјави се „%s“"
+
+# bug: no string composition
+#~ msgid ""
+#~ "Log out %s of this session to log in as a different user or to shut down "
+#~ "your computer"
+#~ msgstr ""
+#~ "Одјавите корисника „%s“ из ове сесије како бисте се пријавили као неки "
+#~ "други корисник, или да искључите ваш рачунар"
+
+# bug: no string composition
+#~ msgid "Quit from %s's desktop"
+#~ msgstr "%s: напустите окружење"
+
+#~ msgid "Day"
+#~ msgstr "Дан"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr "Тренутно праћен дан између 1 и 31 (0 означава непостављено)"
+
+#~ msgid "Month"
+#~ msgstr "Месец"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "Тренутно праћен месец између 0 и 11"
+
+#~ msgid "Year"
+#~ msgstr "Година"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "Тренутно праћена година"
+
+# bug: SUCKS, crap to translate
+#~ msgid "Activatable"
+#~ msgstr "Притискиво"
+
+#~ msgid "Whether the button is activatable"
+#~ msgstr "Да ли се дугме може притиснути"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Има стрелицу"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Да ли да прикаже стрелицу"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "Истицање за превлачење и пуштање"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr "Да ли се икона истиче приликом превлачења и пуштања"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "Оријентација дугмића"
+
+#~ msgid "Icon Name"
+#~ msgstr "Име иконице"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "Жељена иконица за дугмиће"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "ID испоручене иконице"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Жељена иконица за дугмиће"
+
+#~ msgid "Action Type"
+#~ msgstr "Врста акције"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "Врста акције коју ово дугме изводи"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "Укључено превлачење и пуштање"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "Да ли је омогућено превлачење и пуштање на елемент"
+
+#~ msgid "Edges"
+#~ msgstr "Ивице"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "Које ивице да исцрта"
+
+#~ msgid "Menu Path"
+#~ msgstr "Путања менија"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "Путања од које направити мени"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Икона по избору"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Икона по избору за мени"
+
+#~ msgid "Tooltip"
+#~ msgstr "Облачић"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "Приказује се облачић за мени"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Користи путању менија"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "Користи путању садржану у особини menu-path"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Користи икону по избору"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "Користи икону наведену помоћу особине custom-icon"
+
+#~ msgid "Name"
+#~ msgstr "Име"
+
+#~ msgid "The name of this panel"
+#~ msgstr "Име овог панела"
+
+#~ msgid "Expand"
+#~ msgstr "Рашири"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "Рашири тако да заузме пуну ширину/висину екрана"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Висина (или ширина када је усправан) панела"
+
+#~ msgid "X position"
+#~ msgstr "Водоравна позиција"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "Водоравна позиција панела"
+
+#~ msgid "X centered"
+#~ msgstr "Водоравно центриран"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "Водоравна координата је дата у односу на средиште екрана"
+
+#~ msgid "Y position"
+#~ msgstr "Усправна позиција"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "Усправна позиција панела"
+
+#~ msgid "Y centered"
+#~ msgstr "Усправно центриран"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "Усправна координата је дата у односу на средиште екрана"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Ксинерама екран"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "Екран (како је назван у Ксинерами) на ком је панел"
+
+#~ msgid "Auto hide"
+#~ msgstr "Самоскривање"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "Када миш напусти панел, сам га сакриј"
+
+#~ msgid "Hide delay"
+#~ msgstr "Време скривања"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "Колико милисекунди се чека пре него што се сакрије"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "Време откривања"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "Колико милисекунди се чека пре него што се открије"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "Величина за самоскривање"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr "Колико тачака се види када је панел самоскривен"
+
+#~ msgid "Animate"
+#~ msgstr "Анимирај"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "Укључи анимацију при скривању/откривању"
+
+#~ msgid "Animation Speed"
+#~ msgstr "Брзина анимације"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "Брзина којом се анимира сакривање/откривање панела"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "Омогућени дугмићи"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Омогући дугмиће за скривање/откривање"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "Стрелице укључене"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Прикажи стрелице на дугмићима за скривање и откривање"
+
+#~ msgid "Text"
+#~ msgstr "Текст"
+
+#~ msgid "Text to render"
+#~ msgstr "Текст за исцртавање"
+
+#~ msgid "Markup"
+#~ msgstr "Означени"
+
+#~ msgid "Marked up text to render"
+#~ msgstr "Означени текст за исцртавање"
+
+#~ msgid "Attributes"
+#~ msgstr "Особине"
+
+#~ msgid "A list of style attributes to apply to the text of the renderer"
+#~ msgstr "Списак стилских особина које се примењују на текст при исцртавању"
+
+#~ msgid "Ellipsize"
+#~ msgstr "Пресеци"
+
+#~ msgid "Whether to crop the text and display \"...\" when space is limited"
+#~ msgstr "Да ли да пресече текст и прикаже „...“ када је простор ограничен"
+
+#~ msgid "Background color name"
+#~ msgstr "Име боје позадине"
+
+#~ msgid "Background color as a string"
+#~ msgstr "Боја позадине као ниска"
+
+#~ msgid "Background color as a GdkColor"
+#~ msgstr "Боја позадине као GdkColor"
+
+#~ msgid "Foreground color name"
+#~ msgstr "Име боје исцртавања"
+
+#~ msgid "Foreground color as a string"
+#~ msgstr "Боја исцртавања као ниска"
+
+#~ msgid "Foreground color"
+#~ msgstr "Боја исцртавања"
+
+#~ msgid "Foreground color as a GdkColor"
+#~ msgstr "Боја исцртавања као GdkColor"
+
+#~ msgid "Whether the text can be modified by the user"
+#~ msgstr "Да ли корисник може изменити текст"
+
+#~ msgid "Font"
+#~ msgstr "Фонт"
+
+#~ msgid "Font description as a string"
+#~ msgstr "Опис фонта као ниска"
+
+#~ msgid "Font description as a PangoFontDescription struct"
+#~ msgstr "Опис фонта као структура PangoFontDescription"
+
+#~ msgid "Font family"
+#~ msgstr "Породица фонта"
+
+#~ msgid "Name of the font family, e.g. Sans, Helvetica, Times, Monospace"
+#~ msgstr "Име породице фонта, нпр. Санс, Хелветика, Тајмс, Моноспејс"
+
+#~ msgid "Font style"
+#~ msgstr "Стил фонта"
+
+#~ msgid "Font variant"
+#~ msgstr "Врста фонта"
+
+#~ msgid "Font weight"
+#~ msgstr "Тежина фонта"
+
+#~ msgid "Font stretch"
+#~ msgstr "Развлачење фонта"
+
+#~ msgid "Font size"
+#~ msgstr "Величина фонта"
+
+#~ msgid "Font points"
+#~ msgstr "Фонт у тачкама"
+
+#~ msgid "Font size in points"
+#~ msgstr "Величина фонта у тачкама"
+
+#~ msgid "Font scale"
+#~ msgstr "Размера фонта"
+
+#~ msgid "Font scaling factor"
+#~ msgstr "Чинилац размере фонта"
+
+#~ msgid "Rise"
+#~ msgstr "Издигнуће"
+
+#~ msgid ""
+#~ "Offset of text above the baseline (below the baseline if rise is negative)"
+#~ msgstr ""
+#~ "Померај текста изнад основне линије (испод ње ако је издигнуће негативно)"
+
+#~ msgid "Strikethrough"
+#~ msgstr "Прецртано"
+
+#~ msgid "Whether to strike through the text"
+#~ msgstr "Да ли да прецртам текст"
+
+#~ msgid "Underline"
+#~ msgstr "Подвучено"
+
+#~ msgid "Style of underline for this text"
+#~ msgstr "Стил подвлачења текста"
+
+#~ msgid "Background set"
+#~ msgstr "Позадина постављена"
+
+#~ msgid "Whether this tag affects the background color"
+#~ msgstr "Да ли ова ознака утиче на боју позадине"
+
+#~ msgid "Foreground set"
+#~ msgstr "Боја постављена"
+
+#~ msgid "Whether this tag affects the foreground color"
+#~ msgstr "Да ли ова ознака утиче на боју исцртавања"
+
+#~ msgid "Editability set"
+#~ msgstr "Измењљивост постављена"
+
+#~ msgid "Whether this tag affects text editability"
+#~ msgstr "Да ли ова ознака утиче на измењљивост"
+
+#~ msgid "Font family set"
+#~ msgstr "Породица фонта постављена"
+
+#~ msgid "Whether this tag affects the font family"
+#~ msgstr "Да ли ова ознака утиче на породицу фонта"
+
+#~ msgid "Font style set"
+#~ msgstr "Стил фонта постављен"
+
+#~ msgid "Whether this tag affects the font style"
+#~ msgstr "Да ли ова ознака утиче на стил фонта"
+
+#~ msgid "Font variant set"
+#~ msgstr "Врста фонта постављена"
+
+#~ msgid "Whether this tag affects the font variant"
+#~ msgstr "Да ли ова ознака утиче на врсту фонта"
+
+#~ msgid "Font weight set"
+#~ msgstr "Тежина фонта постављена"
+
+#~ msgid "Whether this tag affects the font weight"
+#~ msgstr "Да ли ова ознака утиче на тежину фонта"
+
+#~ msgid "Font stretch set"
+#~ msgstr "Развлачење фонта постављено"
+
+#~ msgid "Whether this tag affects the font stretch"
+#~ msgstr "Да ли ова ознака утиче на развлачење фонта"
+
+#~ msgid "Font size set"
+#~ msgstr "Величина фонта постављена"
+
+#~ msgid "Whether this tag affects the font size"
+#~ msgstr "Да ли ова ознака утиче на величину фонта"
+
+#~ msgid "Font scale set"
+#~ msgstr "Размера фонта постављена"
+
+#~ msgid "Whether this tag scales the font size by a factor"
+#~ msgstr "Да ли ова ознака утиче на величину фонта према чиниоцу"
+
+#~ msgid "Rise set"
+#~ msgstr "Издигнуће постављено"
+
+#~ msgid "Whether this tag affects the rise"
+#~ msgstr "Да ли ова ознака утиче на издигнуће"
+
+#~ msgid "Strikethrough set"
+#~ msgstr "Прецртавање постављено"
+
+#~ msgid "Whether this tag affects strikethrough"
+#~ msgstr "Да ли ова ознака утиче на прецртано"
+
+#~ msgid "Underline set"
+#~ msgstr "Подвлачење постављено"
+
+#~ msgid "Whether this tag affects underlining"
+#~ msgstr "Да ли ова ознака утиче на подвлачење"
+
+#~ msgid ""
+#~ "If true, the panel will be locked in place, properties won't be "
+#~ "changable. The user won't be able to add, remove or even move applets. "
+#~ "Also properties of all objects on this panel will be locked down as well. "
+#~ "Properties of external applets may however have to be locked down "
+#~ "separately. The panel must be restarted for this to take effect."
+#~ msgstr ""
+#~ "Уколико је постављено, панел ће бити закључан на текућој позицији, "
+#~ "особине неће бити могуће изменити. Корисник неће моћи ни да додаје, "
+#~ "уклања, па чак ни да помера програмчиће. Такође, на овом панелу ће бити "
+#~ "закључане и све особине објеката. Особине спољњих програмчета можда могу "
+#~ "да се засебно закључају. Панел је неопходно изнова покенути да би ово "
+#~ "узело маха."
+
+#~ msgid "Cannot execute %s"
+#~ msgstr "Не може да изврши %s"
+
+#~ msgid ""
+#~ "If true, display internet time. The internet time system divides the day "
+#~ "into 1000 \".beats\". There is no time zones in this system, so time is "
+#~ "the same all over the world."
+#~ msgstr ""
+#~ "Уколико је постављено, прикажи Интернет време. Систем Интернет времена "
+#~ "дели дан на 100 „откуцаја“. У овом систему нема временских зона, па је "
+#~ "време исто широм света."
+
+#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
+#~ msgstr ""
+#~ "Уколико је постављено, прикажи време као број секунди протеклих од Епохе, "
+#~ "тј. 1. јануара 1970."
+
+#~ msgid ""
+#~ "This key specifies the hour format used by the clock applet. Possible "
+#~ "values are 12 and 24."
+#~ msgstr ""
+#~ "Овај кључ наводи која се врста часовника користи. Могуће вредности су 12 "
+#~ "и 24."
+
+#~ msgid "Open Recent"
+#~ msgstr "Отвори скорашње"
+
+#~ msgid "Print Screenshot"
+#~ msgstr "Штампај снимак екрана"
+
+#~ msgid "Screenshot Print Preview"
+#~ msgstr "Преглед снимка екрана пре штампе"
+
+#~ msgid "_Print screenshot..."
+#~ msgstr "_Штампај снимак екрана..."
+
+#~ msgid ""
+#~ "The panel encountered a problem while loading \"%s\"\n"
+#~ "Details: %s%s"
+#~ msgstr ""
+#~ "Овај панел је наишао на неприлику при учитавању „%s“\n"
+#~ "Детаљи: %s%s"
+
+#~ msgid "Window Menu"
+#~ msgstr "Мени прозора"
+
+#~ msgid "%s the GNOME Fish"
+#~ msgstr "GNOME Риба звана %s"
+
+#~ msgid "Help on %s _Application"
+#~ msgstr "Помоћ за програм „%s“"
+
+#~ msgid "Help on %s"
+#~ msgstr "Помоћ за „%s“"
+
+#~ msgid "Application"
+#~ msgstr "Програм"
+
+#~ msgid "<b>_Icon:</b>"
+#~ msgstr "<b>_Икона:</b>"
+
+#~ msgid "Help document not found"
+#~ msgstr "Садржај помоћи није нађен"
+
+#~ msgid "No document to show"
+#~ msgstr "Нема шта да прикаже"
+
+#~ msgid "Expander Size"
+#~ msgstr "Величина проширивача"
+
+#~ msgid "Size of the expander arrow"
+#~ msgstr "Величина стрелице за проширивање"
+
+#~ msgid "<b>_Name:</b>"
+#~ msgstr "<b>_Име:</b>"
+
+#~ msgid "<b>_Orientation:</b>"
+#~ msgstr "<b>_Оријентација:</b>"
+
+#~ msgid "<b>_Size:</b>"
+#~ msgstr "<b>_Величина:</b>"
+
+#~ msgid ""
+#~ "A description of the currently selected application or information on the "
+#~ "command that will be run."
+#~ msgstr ""
+#~ "Опис тренутно изабраног програма или подаци о наредби која ће се извршити."
+
+#~ msgid "Application description"
+#~ msgstr "Опис програма"
+
+#~ msgid "Select an application from the list to run it"
+#~ msgstr "Изаберите програм из списка да бисте га извршили"
+
+#~ msgid "When this is selected the list of known applications is displayed."
+#~ msgstr "Када се ово изабере, приказује се списак познатих програма."
+
+#~ msgid "If true, display internet time, which is same all over the world."
+#~ msgstr ""
+#~ "Уколико је постављено, прикажи Интернет време, које је исто свуда у свету."
+
+#~ msgid ""
+#~ "Failed to load image %s\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "Неуспело учитавање слике „%s“\n"
+#~ "\n"
+#~ "Детаљи: %s"
+
+#~ msgid "Size and Position"
+#~ msgstr "Величина и позиција"
+
+#~ msgid "Applet appearance"
+#~ msgstr "Изглед програмчета"
+
+#~ msgid "Drawer handle"
+#~ msgstr "Ручица фиоке"
+
+#~ msgid "Enable hidebutton"
+#~ msgstr "Омогући дугме за скривање"
+
+#~ msgid "Enable hidebutton arrow"
+#~ msgstr "Омогући стрелицу дугмића за скривање"
+
+#~ msgid "_Drawer"
+#~ msgstr "_Фиока"
+
+#~ msgid "_Run Application..."
+#~ msgstr "Пок_рени програм..."
+
+#~ msgid "_Search for Files..."
+#~ msgstr "_Тражи датотеке..."
+
+#~ msgid "_Take Screenshot..."
+#~ msgstr "_Снимак екрана..."
+
+#~ msgid "_Log Out"
+#~ msgstr "О_дјава"

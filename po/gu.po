@@ -2,18 +2,15 @@
 # Ankit Patel <ankit644@yahoo.com>, 2005.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel.HEAD.gu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-16 21:19+0200\n"
-"PO-Revision-Date: 2005-07-21 12:58+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
+"PO-Revision-Date: 2005-07-21 12:58+0530\n"
+"Project-Id-Version: gnome-panel.HEAD.gu\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
-"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -54,7 +51,7 @@ msgstr "વિશે (_A)"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:740
-#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:291
+#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:225
 #: ../gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "મદદ (_H)"
@@ -67,7 +64,7 @@ msgid "_Preferences"
 msgstr "પસંદગીઓ (_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2725
+#: ../applets/clock/clock.c:2678
 msgid "Clock"
 msgstr "ઘડિયાળ"
 
@@ -83,20 +80,20 @@ msgstr "ઘડિયાળ એપ્લેટ બનાવવા માટેન
 msgid "Get the current time and date"
 msgstr "વર્તમાન સમય અને તારીખ મેળવો"
 
-#: ../applets/clock/clock.c:309
+#: ../applets/clock/clock.c:266
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
+#: ../applets/clock/clock.c:266 ../applets/clock/clock.c:591
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:1728
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
-#: ../applets/clock/clock.c:1784
+#: ../applets/clock/clock.c:268 ../applets/clock/clock.c:593
+#: ../applets/clock/clock.c:1730
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -105,7 +102,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:322
+#: ../applets/clock/clock.c:279
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -113,7 +110,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:329
+#: ../applets/clock/clock.c:286
 #, c-format
 msgid ""
 "%1$s\n"
@@ -126,69 +123,69 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:336
+#: ../applets/clock/clock.c:293
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:417
+#: ../applets/clock/clock.c:378
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: ../applets/clock/clock.c:429
+#: ../applets/clock/clock.c:390
 msgid "Click to view your appointments and tasks"
 msgstr "તમારી મુલાકાતો અને ક્રિયાઓ જોવા માટે ક્લિક કરો"
 
-#: ../applets/clock/clock.c:431
+#: ../applets/clock/clock.c:392
 msgid "Click to view month calendar"
 msgstr "માસિક કેલેન્ડર જોવા માટે ક્લિક કરો"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:637
+#: ../applets/clock/clock.c:598
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/clock.c:964
+#: ../applets/clock/clock.c:925
 msgid "Tasks"
 msgstr "કાર્યો"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1077
 msgid "All Day"
 msgstr "બધા દિવસે"
 
-#: ../applets/clock/clock.c:1155
+#: ../applets/clock/clock.c:1116
 msgid "Appointments"
 msgstr "મુલાકાતો"
 
 # libgnomeui/gnome-dateedit.c:745
-#: ../applets/clock/clock.c:1387
+#: ../applets/clock/clock.c:1348
 msgid "Calendar"
 msgstr "કેલેન્ડર"
 
-#: ../applets/clock/clock.c:1676
+#: ../applets/clock/clock.c:1629
 msgid "Computer Clock"
 msgstr "કમ્પ્યૂટર ઘડિયાળ"
 
-#: ../applets/clock/clock.c:1777
+#: ../applets/clock/clock.c:1723
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1779
+#: ../applets/clock/clock.c:1725
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1821
+#: ../applets/clock/clock.c:1767
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1819
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "સમય રુપરેખા સાધન લાવવામાં નિષ્ફળ: %s"
 
-#: ../applets/clock/clock.c:1914
+#: ../applets/clock/clock.c:1856
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -196,11 +193,11 @@ msgstr ""
 "તારીખ અને સમય ની રુપરેખા માટેનો કાર્યક્રમ શોધવામાં નિષ્ફળ. કદાચ કંઇજ સ્થાપતિ કરાયું ન "
 "હોય ?"
 
-#: ../applets/clock/clock.c:2386
+#: ../applets/clock/clock.c:2339
 msgid "Custom format"
 msgstr "કસ્ટમ બંધારણ"
 
-#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
+#: ../applets/clock/clock.c:2460 ../applets/clock/clock.c:2637
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -208,52 +205,52 @@ msgstr "કસ્ટમ બંધારણ"
 msgid "There was an error displaying help: %s"
 msgstr "મદદ દર્શાવવામાં કોઇ ભૂલ થઇ : %s"
 
-#: ../applets/clock/clock.c:2542
+#: ../applets/clock/clock.c:2495
 msgid "Clock Preferences"
 msgstr "ઘડિયાળની પસંદગીઓ"
 
-#: ../applets/clock/clock.c:2566
+#: ../applets/clock/clock.c:2519
 msgid "Clock _type:"
 msgstr "ઘડિયાળનો પ્રકાર (_t):"
 
-#: ../applets/clock/clock.c:2576
+#: ../applets/clock/clock.c:2529
 msgid "12 hour"
 msgstr "૧૨ કલાક"
 
-#: ../applets/clock/clock.c:2577
+#: ../applets/clock/clock.c:2530
 msgid "24 hour"
 msgstr "૨૪ કલાક"
 
-#: ../applets/clock/clock.c:2578
+#: ../applets/clock/clock.c:2531
 msgid "UNIX time"
 msgstr "યુનિક્સ સમય"
 
-#: ../applets/clock/clock.c:2579
+#: ../applets/clock/clock.c:2532
 msgid "Internet time"
 msgstr "ઇન્ટરનેટ સમય"
 
-#: ../applets/clock/clock.c:2587
+#: ../applets/clock/clock.c:2540
 msgid "Custom _format:"
 msgstr "કસ્ટમ બંધારણ (_f):"
 
-#: ../applets/clock/clock.c:2606
+#: ../applets/clock/clock.c:2559
 msgid "Show _seconds"
 msgstr "સેકંડો દર્શાવો (_s)"
 
-#: ../applets/clock/clock.c:2615
+#: ../applets/clock/clock.c:2568
 msgid "Show _date"
 msgstr "તારીખ દર્શાવો (_d)"
 
-#: ../applets/clock/clock.c:2624
+#: ../applets/clock/clock.c:2577
 msgid "Use _UTC"
 msgstr "_UTC ઉપયોગમાં લો"
 
-#: ../applets/clock/clock.c:2728
+#: ../applets/clock/clock.c:2681
 msgid "The Clock displays the current time and date"
 msgstr "ઘડિયાળ હાલનો સમય અને તારીખ દર્શાવે છે"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2684 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
 #: ../applets/wncklet/window-menu.c:75
@@ -586,8 +583,7 @@ msgid "Frames in fish's animation"
 msgstr "માછલીના એનિમેશનમાંના ચોકઠાઓ"
 
 #: ../applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "જો ખરુ હોય તો, માછલીનું એનિમેશન ઊભી પેનલો પર ફરતુ દેખાશે."
 
 #: ../applets/fish/fish.schemas.in.h:5
@@ -610,8 +606,7 @@ msgstr "માછલીનું નામ"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr ""
-"જ્યારે માછલી ને ક્લિક કરવામાં આવે ત્યારે જે આદેશ ચલાવવાનો પ્રયત્ન કરવાનો છે તે સ્પષ્ટ કરો."
+msgstr "જ્યારે માછલી ને ક્લિક કરવામાં આવે ત્યારે જે આદેશ ચલાવવાનો પ્રયત્ન કરવાનો છે તે સ્પષ્ટ કરો."
 
 #: ../applets/fish/fish.schemas.in.h:10
 msgid ""
@@ -705,7 +700,7 @@ msgid "Failed to load %s: %s\n"
 msgstr "%s લાવવામાં નિષ્ફળ: %s\n"
 
 # libgnomevfs/gnome-vfs-result.c:36
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:624
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:602
 msgid "Icon not found"
 msgstr "ચિહ્ન મળ્યું નહિં"
 
@@ -737,9 +732,7 @@ msgstr ""
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
-msgstr ""
-"વિન્ડો યાદી બટનોના સમૂહમાં બધી વિન્ડોની યાદી બતાવે છે અને તેમને બ્રાઉઝ કરવા માટે તમને "
-"પરવાનગી આપે છે."
+msgstr "વિન્ડો યાદી બટનોના સમૂહમાં બધી વિન્ડોની યાદી બતાવે છે અને તેમને બ્રાઉઝ કરવા માટે તમને પરવાનગી આપે છે."
 
 #: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -872,9 +865,7 @@ msgstr "વિન્ડોના જૂથ ક્યારે પાડવા"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr ""
-"વિન્ડો પસંદગીકારક મેનુમાં વિન્ડોની યાદી બતાવે છે અને તેમને બ્રાઉઝ કરવા માટે તમને પરવાનગી "
-"આપે છે."
+msgstr "વિન્ડો પસંદગીકારક મેનુમાં વિન્ડોની યાદી બતાવે છે અને તેમને બ્રાઉઝ કરવા માટે તમને પરવાનગી આપે છે."
 
 #: ../applets/wncklet/workspace-switcher.c:130
 #: ../applets/wncklet/workspace-switcher.c:859
@@ -894,8 +885,7 @@ msgstr "કામ કરવાની જગ્યાની ફેરબદલી
 
 #: ../applets/wncklet/workspace-switcher.c:440
 #, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "કામ કરવાની જગ્યાની ફેરબદલી કરનાર માટે કામ કરવાની જગ્યાના નામ પ્રદર્શિત કરવા માટેી "
 "કિંમતો મેળવવામાં થતી ભૂલ: %s\n"
@@ -1013,7 +1003,7 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "ખાલી સ્થાન મળી શક્યું નહિં"
 
-#: ../gnome-panel/button-widget.c:200
+#: ../gnome-panel/button-widget.c:198
 #, c-format
 msgid "Failed to load image %s"
 msgstr "ચિત્ર %s ને લાવવામાં અસમર્થ"
@@ -1027,7 +1017,7 @@ msgstr "ડ્રોઅર"
 msgid "_Add to Drawer..."
 msgstr "ડ્રોઅરમાં ઉમેરો (_A)..."
 
-#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:926
+#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:852
 #: ../gnome-panel/panel-action-button.c:142
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
@@ -1037,62 +1027,62 @@ msgstr "ગુણધર્મો (_P)"
 msgid "Create new file in the given directory"
 msgstr "આપેલ ડિરેકટરીમાં નવી ફાઇલ બનાવો"
 
-#: ../gnome-panel/launcher.c:144
+#: ../gnome-panel/launcher.c:136
 msgid "Cannot save launcher to disk"
 msgstr "શરૂ કરનારને ડિસ્કમાં સંગ્રહી શકાતું નથી"
 
-#: ../gnome-panel/launcher.c:174 ../gnome-panel/launcher.c:224
-#: ../gnome-panel/launcher.c:281
+#: ../gnome-panel/launcher.c:166 ../gnome-panel/launcher.c:216
+#: ../gnome-panel/launcher.c:273
 msgid "Cannot launch icon"
 msgstr "ચિહ્ન લાવી શકાતું નથી"
 
-#: ../gnome-panel/launcher.c:175
+#: ../gnome-panel/launcher.c:167
 msgid "This launch icon does not specify a url to show."
 msgstr "આ શરૂ કરવા માટેનું ચિહ્ન url સ્પષ્ટ કરતું નથી."
 
-#: ../gnome-panel/launcher.c:187
+#: ../gnome-panel/launcher.c:179
 #, c-format
 msgid "Cannot show %s"
 msgstr "%s દર્શાવી શકાતું નથી"
 
-#: ../gnome-panel/launcher.c:476
+#: ../gnome-panel/launcher.c:467
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "પેનલ શરૂ કરનાર ડેસ્કટોપ ફાઇલ માટે URI પૂરુ પડાયુ નથી\n"
 
-#: ../gnome-panel/launcher.c:490
+#: ../gnome-panel/launcher.c:481
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "પેનલ શરૂ કરનાર %s%s માટે ડેસ્કટોપ ફાઇલ %s ખોલી શકાતી નથી\n"
 
-#: ../gnome-panel/launcher.c:808 ../gnome-panel/menu-ditem.c:181
+#: ../gnome-panel/launcher.c:734 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "શરૂ કરનારના ગુણધર્મો"
 
-#: ../gnome-panel/launcher.c:920
+#: ../gnome-panel/launcher.c:846
 msgid "_Launch"
 msgstr "લોન્ચ કરો (_L)"
 
-#: ../gnome-panel/launcher.c:959
+#: ../gnome-panel/launcher.c:924
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "કી %s સુયોજિત નથી. શરૂ કરનારને લાવવું શક્ય નથી\n"
 
-#: ../gnome-panel/launcher.c:1014 ../gnome-panel/launcher.c:1033
+#: ../gnome-panel/launcher.c:979 ../gnome-panel/launcher.c:997
 #: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
 #: ../gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "શરૂ કરનાર બનાવી શકાતુ નથી"
 
-#: ../gnome-panel/launcher.c:1015 ../gnome-panel/menu-ditem.c:470
+#: ../gnome-panel/launcher.c:980 ../gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "તમારે નામ સ્પષ્ટ કરવુ પડશે."
 
-#: ../gnome-panel/launcher.c:1034 ../gnome-panel/menu-ditem.c:487
+#: ../gnome-panel/launcher.c:998 ../gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "તમારે યોગ્ય URL અથવા આદેશ સ્પષ્ટ કરવો પડશે."
 
-#: ../gnome-panel/launcher.c:1078 ../gnome-panel/menu-ditem.c:550
+#: ../gnome-panel/launcher.c:1041 ../gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "શરૂ કરનાર બનાવો"
 
@@ -1154,8 +1144,8 @@ msgstr "સ્ક્રીન સેવર ડિમનને ફરી ચા�
 #: ../gnome-panel/panel-action-button.c:206
 #: ../gnome-panel/panel-action-button.c:219
 #: ../gnome-panel/panel-action-button.c:243
-#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1010
-#: ../gnome-panel/panel-util.c:748
+#: ../gnome-panel/panel-menu-bar.c:291 ../gnome-panel/panel-menu-button.c:1009
+#: ../gnome-panel/panel-util.c:723
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s' ચલાવી શકાતું નથી"
@@ -1180,8 +1170,7 @@ msgstr "બહાર નીકળો"
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
-msgstr ""
-"અન્ય વપરાશકર્તા તરીકે પ્રવેશ કરવા માટે આ સત્રમાંથી બહાર નીકળો અથવા તમારું કમ્પ્યૂટર બંધ કરો"
+msgstr "અન્ય વપરાશકર્તા તરીકે પ્રવેશ કરવા માટે આ સત્રમાંથી બહાર નીકળો અથવા તમારું કમ્પ્યૂટર બંધ કરો"
 
 #: ../gnome-panel/panel-action-button.c:332
 msgid "Run Application..."
@@ -1264,30 +1253,30 @@ msgstr "માં બીજી વસ્તુઓ સંગ્રહવા મ�
 msgid "(empty)"
 msgstr "(ખાલી)"
 
-#: ../gnome-panel/panel-addto.c:404
+#: ../gnome-panel/panel-addto.c:400
 #: ../libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "કોયડાએ વળતરમાં અપવાદ %s મોકલાવયો\n"
 
-#: ../gnome-panel/panel-addto.c:1011
+#: ../gnome-panel/panel-addto.c:1006
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "\"%s\" માં ઉમેરવા માટે વસ્તુ પસંદ કરો (_i):"
 
-#: ../gnome-panel/panel-addto.c:1015
+#: ../gnome-panel/panel-addto.c:1010
 msgid "Add to Drawer"
 msgstr "ડ્રોઅરમાં ઉમેરો"
 
-#: ../gnome-panel/panel-addto.c:1017
+#: ../gnome-panel/panel-addto.c:1012
 msgid "Select an _item to add to the drawer:"
 msgstr "ડ્રોઅરમાં ઉમેરવા માટે વસ્તુ પસંદ કરો (_i):"
 
-#: ../gnome-panel/panel-addto.c:1019
+#: ../gnome-panel/panel-addto.c:1014
 msgid "Add to Panel"
 msgstr "પેનલમાં ઉમેરો"
 
-#: ../gnome-panel/panel-addto.c:1021
+#: ../gnome-panel/panel-addto.c:1016
 msgid "Select an _item to add to the panel:"
 msgstr "પેનલમાં ઉમેરવા માટે વસ્તુ પસંદ કરો (_i):"
 
@@ -1390,10 +1379,8 @@ msgid "A_bout Panels"
 msgstr "પેનલો વિશે (_b)"
 
 #: ../gnome-panel/panel-force-quit.c:75
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"કાર્યક્રમને જબરદસ્તી બહાર કાઢવા માટે વિન્ડો પર ક્લિક કરો. રદ કરવા માટે <ESC> દબાવો."
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr "કાર્યક્રમને જબરદસ્તી બહાર કાઢવા માટે વિન્ડો પર ક્લિક કરો. રદ કરવા માટે <ESC> દબાવો."
 
 #: ../gnome-panel/panel-force-quit.c:187
 msgid ""
@@ -1452,10 +1439,8 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr "કાર્યક્રમની યાદીને \"કાર્યક્રમ ચલાવો\" સંવાદમાં વિસ્તારો"
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
-msgid ""
-"If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr ""
-"જો સાચું હોય, તો \"કાર્યક્રમ ચલાવો\" સંવાદમાં આપોઆપ પૂર્ણ કરવાનું ઉપલબ્ધ કરવામાં આવ્યું છે."
+msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr "જો સાચું હોય, તો \"કાર્યક્રમ ચલાવો\" સંવાદમાં આપોઆપ પૂર્ણ કરવાનું ઉપલબ્ધ કરવામાં આવ્યું છે."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1555,19 +1540,16 @@ msgstr "શરૂ કરનાર ઉપર માઉસ આવે ત્યા�
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr ""
-"જો ખરુ હોય તો, જો વપરાશકર્તાને પેનલ કાઢવી હોય તો ખાતરી કરવા માટે સંવાદદર્શાવાય છે."
+msgstr "જો ખરુ હોય તો, જો વપરાશકર્તાને પેનલ કાઢવી હોય તો ખાતરી કરવા માટે સંવાદદર્શાવાય છે."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr ""
-"જો ખરુ હોય તો, જો વપરાશકર્તા ડ્રોઅરમાં શરૂ કરનાર પર ક્લિક કરશે તો તેઆપમેળે બંધ થઇ જશે."
+msgstr "જો ખરુ હોય તો, જો વપરાશકર્તા ડ્રોઅરમાં શરૂ કરનાર પર ક્લિક કરશે તો તેઆપમેળે બંધ થઇ જશે."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "જો ખરુ હોય તો, વપરાશકર્તા શરૂ કરનાર પર નિર્દેશક લાવે તો તે પ્રકાશતિ થશે."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
@@ -1608,34 +1590,34 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "જો ખરુ હોય તો, પેનલમાંની વસ્તુઓ માટે સાધનમદદ દર્શાવાશે."
 
-#: ../gnome-panel/panel-menu-bar.c:79
+#: ../gnome-panel/panel-menu-bar.c:71
 msgid "Applications"
 msgstr "કાર્યક્રમો"
 
-#: ../gnome-panel/panel-menu-bar.c:298 ../gnome-panel/panel-menu-button.c:691
+#: ../gnome-panel/panel-menu-bar.c:232 ../gnome-panel/panel-menu-button.c:691
 msgid "_Edit Menus"
 msgstr "ફેરફાર મેનુઓ (_E)"
 
-#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:310
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "સ્થાન '%s' દર્શાવી શકાતું નથી"
 
-#: ../gnome-panel/panel-menu-items.c:332
+#: ../gnome-panel/panel-menu-items.c:324
 msgid "Bookmarks"
 msgstr "બુકમાર્કો"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' ખોલો"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:431
 msgid "Network Places"
 msgstr "નેટવર્ક જગ્યાઓ"
 
-#: ../gnome-panel/panel-menu-items.c:441
+#: ../gnome-panel/panel-menu-items.c:433
 msgid "Removable Media"
 msgstr "દૂર કરી શકાય તેવી મીડિયા"
 
@@ -1643,30 +1625,30 @@ msgstr "દૂર કરી શકાય તેવી મીડિયા"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:491
 msgid "Desktop Folder|Desktop"
 msgstr "ડેસ્કટોપ"
 
-#: ../gnome-panel/panel-menu-items.c:507
+#: ../gnome-panel/panel-menu-items.c:492
 msgid "Open the desktop as a folder"
 msgstr "ડેસ્કટોપને ફોલ્ડર તરીકે ખોલો"
 
-#: ../gnome-panel/panel-menu-items.c:861
+#: ../gnome-panel/panel-menu-items.c:824
 msgid "Places"
 msgstr "જગ્યાઓ"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:899
+#: ../gnome-panel/panel-menu-items.c:862
 msgid "Desktop Environment|Desktop"
 msgstr "ડેસ્કટોપ"
 
-#: ../gnome-panel/panel-menu-items.c:1040
+#: ../gnome-panel/panel-menu-items.c:1003
 msgid "Cannot launch entry"
 msgstr "પ્રવેશ શરૂ કરવામાં નિષ્ફળ"
 
-#: ../gnome-panel/panel-menu-items.c:1052
+#: ../gnome-panel/panel-menu-items.c:1015
 msgid "Cannot load entry"
 msgstr "પ્રવેશ લાવવામાં નિષ્ફળ"
 
@@ -1845,18 +1827,18 @@ msgid "Use custom path for menu contents"
 msgstr "મેનુના સમાવિષ્ટો માટે કસ્ટમ પથ વાપરો"
 
 #: ../gnome-panel/panel-profile.c:743 ../gnome-panel/panel-profile.c:770
-#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1632
+#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1630
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "જીકોન્ફ શબ્દમાળાની કિંમત '%s' વાંચવામાં થતી ભૂલઃ  '%s'"
 
-#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1528
-#: ../gnome-panel/panel-profile.c:1601 ../gnome-panel/panel-profile.c:1664
+#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1526
+#: ../gnome-panel/panel-profile.c:1599 ../gnome-panel/panel-profile.c:1662
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "જીકોન્ફ પૂર્ણાંકની કિંમત '%s' વાંચવામાં થતી ભૂલઃ  '%s'"
 
-#: ../gnome-panel/panel-profile.c:1538
+#: ../gnome-panel/panel-profile.c:1536
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1865,7 +1847,7 @@ msgstr ""
 "પેનલ '%s' સ્ક્રીન %d પર પ્રદર્શિત કરવા માટે સુયોજિત છે કે જે હાલમાં ઉપ્લબ્ધ નથી. આ પેનલ "
 "લવાતી નથી."
 
-#: ../gnome-panel/panel-profile.c:1616
+#: ../gnome-panel/panel-profile.c:1614
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "જીકોન્ફ બુલિયન કિંમત '%s' વાંચવામાં ભૂલઃ  '%s'"
@@ -2038,31 +2020,31 @@ msgstr "છેલ્લે ખોલેલા દસ્તાવેજો"
 msgid "Clear all items from the recent documents list"
 msgstr "છેલ્લી દસ્તાવેજોની યાદીમાંથી બધી વસ્તુઓ સાફ કરો"
 
-#: ../gnome-panel/panel-run-dialog.c:287
+#: ../gnome-panel/panel-run-dialog.c:284
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "આદેશ '%s' લાવી શકાતો નથી"
 
-#: ../gnome-panel/panel-run-dialog.c:365
+#: ../gnome-panel/panel-run-dialog.c:362
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "UTF-8 માંથી '%s' માં ફેરવી શકાતું નથી"
 
-#: ../gnome-panel/panel-run-dialog.c:1116
+#: ../gnome-panel/panel-run-dialog.c:1109
 msgid "Choose a file to append to the command..."
 msgstr "આદેશ સાથે ઉમેરવા માટે ફાઇલ પસંદ કરો..."
 
-#: ../gnome-panel/panel-run-dialog.c:1472
+#: ../gnome-panel/panel-run-dialog.c:1465
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "આદેશ ચલાવશે: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1479
+#: ../gnome-panel/panel-run-dialog.c:1472
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "કાર્યક્રમનું વર્ણન જોવા માટે પસંદ કરો."
 
-#: ../gnome-panel/panel-run-dialog.c:1514
+#: ../gnome-panel/panel-run-dialog.c:1507
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "URI યાદી ચલાવો સંવાદ પર મૂકાઈ ગઈ છે જેને ખોટું બંધારણ (%d) અથવા લંબાઈ (%d) છે\n"
@@ -2301,8 +2283,7 @@ msgstr ""
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr ""
-"જો ખરુ હોય તો, આ પેનલને સંતાડવાનુ અને પાછુ દેખીતુ કરવાનું તુરંત થવા કરતા એનિમેટ થતુ રહેશે."
+msgstr "જો ખરુ હોય તો, આ પેનલને સંતાડવાનુ અને પાછુ દેખીતુ કરવાનું તુરંત થવા કરતા એનિમેટ થતુ રહેશે."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2322,8 +2303,7 @@ msgstr ""
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr ""
-"જો ખરુ હોય તો, પેનલના પરિમાણ પ્રમાણે ચિત્રનું માપ બદલાશે. ચિત્રની ગુણવત્તા બદલાઇ જાય છે."
+msgstr "જો ખરુ હોય તો, પેનલના પરિમાણ પ્રમાણે ચિત્રનું માપ બદલાશે. ચિત્રની ગુણવત્તા બદલાઇ જાય છે."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2557,25 +2537,25 @@ msgstr "ઝિનેરામા મોનિટર કે જ્યાં પ�
 msgid "Y co-ordinate of panel"
 msgstr "પેનલની Y અક્ષ"
 
-#: ../gnome-panel/panel-util.c:89
+#: ../gnome-panel/panel-util.c:66
 msgid "Cannot display help document"
 msgstr "મદદ દસ્તાવેજ દેખાડી શકાતો નથી"
 
-#: ../gnome-panel/panel-util.c:311
+#: ../gnome-panel/panel-util.c:288
 #, c-format
 msgid "Details: %s"
 msgstr "વિગતો: %s"
 
-#: ../gnome-panel/panel.c:477
+#: ../gnome-panel/panel.c:474
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL ખોલો: %s"
 
-#: ../gnome-panel/panel.c:1265
+#: ../gnome-panel/panel.c:1262
 msgid "Delete this drawer?"
 msgstr "આ ડ્રોઅર કાઢી નાંખવું છે?"
 
-#: ../gnome-panel/panel.c:1266
+#: ../gnome-panel/panel.c:1263
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2583,15 +2563,15 @@ msgstr ""
 "જ્યારે ડ્રોઅર કાઢી નંખાય, ત્યારે ડ્રોઅર અને તેના સુયોજનો\n"
 "ખોવાઈ જાય."
 
-#: ../gnome-panel/panel.c:1268
+#: ../gnome-panel/panel.c:1265
 msgid "Delete Drawer"
 msgstr "ડ્રોઅર કાઢી નાંખો"
 
-#: ../gnome-panel/panel.c:1270
+#: ../gnome-panel/panel.c:1267
 msgid "Delete this panel?"
 msgstr "આ પેનલ કાઢી નાંખવી છે?"
 
-#: ../gnome-panel/panel.c:1271
+#: ../gnome-panel/panel.c:1268
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2599,7 +2579,7 @@ msgstr ""
 "જ્યારે પેનલ કાઢી નંખાય, તો પેનલ અને તેના સુયોજનો\n"
 "ખોવાઈ જાય."
 
-#: ../gnome-panel/panel.c:1273
+#: ../gnome-panel/panel.c:1270
 msgid "Delete Panel"
 msgstr "પેનલ કાઢી નાખો"
 
@@ -2663,8 +2643,7 @@ msgid "Specify an applet IID to load"
 msgstr "લાવવા માટેના એપ્લેટની IID સ્પષ્ટ કરો"
 
 #: ../libpanel-applet/panel-test-applets.c:33
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
+msgid "Specify a gconf location in which the applet preferences should be stored"
 msgstr "જીકૉન્ફનું સ્થાન દર્શાવો કે જેમાં એપ્લેટની પસંદગીઓ સંગ્રહાય છે"
 
 #: ../libpanel-applet/panel-test-applets.c:34
@@ -2672,8 +2651,7 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "એપ્લેટનું શરુઆતનું માપ દર્શાવો (xx-નાનું, મધ્યમ, મોટું વગેરે.)"
 
 #: ../libpanel-applet/panel-test-applets.c:36
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "એપ્લેટની શરુઆતની દિશા સ્પષ્ટ કરો (ઉપર, નીચે, ડાબે અથવા જમણે)"
 
 #: ../libpanel-applet/panel-test-applets.c:60
@@ -2716,3 +2694,4 @@ msgstr "એપ્લેટ (_A):"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "પસંદગીઓ ડિરેક્ટરી (_P):"
+
