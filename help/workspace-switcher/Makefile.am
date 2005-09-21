@@ -4,4 +4,4 @@ dist-hook: doc-dist-hook
 DOC_MODULE = workspace-switcher
 DOC_INCLUDES = legal.xml
 
-DOC_LINGUAS = es nl uk
+DOC_LINGUAS = es it nl uk
