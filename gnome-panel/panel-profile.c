@@ -71,19 +71,22 @@ static GConfEnumStringPair panel_orientation_map [] = {
 	{ PANEL_ORIENTATION_TOP,    "top"    },
 	{ PANEL_ORIENTATION_BOTTOM, "bottom" },
 	{ PANEL_ORIENTATION_LEFT,   "left"   },
-	{ PANEL_ORIENTATION_RIGHT,  "right"  }
+	{ PANEL_ORIENTATION_RIGHT,  "right"  },
+	{ 0,                        NULL     }
 };
 
 static GConfEnumStringPair panel_animation_speed_map [] = {
 	{ PANEL_ANIMATION_SLOW,   "slow"   },
 	{ PANEL_ANIMATION_MEDIUM, "medium" },
-	{ PANEL_ANIMATION_FAST,   "fast"   }
+	{ PANEL_ANIMATION_FAST,   "fast"   },
+	{ 0,                      NULL     }
 };
 
 static GConfEnumStringPair panel_background_type_map [] = {
 	{ PANEL_BACK_NONE,  "gtk"   },
 	{ PANEL_BACK_COLOR, "color" },
-	{ PANEL_BACK_IMAGE, "image" }
+	{ PANEL_BACK_IMAGE, "image" },
+	{ 0,                NULL    }
 };
 
 static GConfEnumStringPair panel_object_type_map [] = {
@@ -95,7 +98,8 @@ static GConfEnumStringPair panel_object_type_map [] = {
 	{ PANEL_OBJECT_MENU_BAR, "menu-bar" },
 	/* The following two are for backwards compatibility with 2.0.x */
 	{ PANEL_OBJECT_LOCK,     "lock-object" },
-	{ PANEL_OBJECT_LOGOUT,   "logout-object" }
+	{ PANEL_OBJECT_LOGOUT,   "logout-object" },
+	{ 0,                     NULL }
 };
 
 static GQuark toplevel_id_quark = 0;

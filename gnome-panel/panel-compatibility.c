@@ -44,7 +44,8 @@ static GConfEnumStringPair panel_orient_map [] = {
 	{ PANEL_ORIENT_UP,    "panel-orient-up" },
 	{ PANEL_ORIENT_DOWN,  "panel-orient-down" },
 	{ PANEL_ORIENT_LEFT,  "panel-orient-left" },
-	{ PANEL_ORIENT_RIGHT, "panel-orient-right" }
+	{ PANEL_ORIENT_RIGHT, "panel-orient-right" },
+	{ 0,                  NULL }
 };
 
 static gboolean
@@ -69,6 +70,7 @@ panel_compatibility_map_orient_string (const char  *str,
 static GConfEnumStringPair panel_orientation_map [] = {
 	{ GTK_ORIENTATION_HORIZONTAL, "panel-orientation-horizontal" },
 	{ GTK_ORIENTATION_VERTICAL,   "panel-orientation-vertical" },
+	{ 0,                          NULL }
 };
 
 
@@ -103,6 +105,7 @@ static GConfEnumStringPair panel_edge_map [] = {
 	{ BORDER_RIGHT,  "panel-edge-right" },
 	{ BORDER_BOTTOM, "panel-edge-bottom" },
 	{ BORDER_LEFT,   "panel-edge-left" },
+	{ 0,             NULL }
 };
 
 static gboolean
@@ -140,6 +143,7 @@ static GConfEnumStringPair panel_type_map [] = {
 	{ SLIDING_PANEL,   "sliding-panel" },
 	{ FLOATING_PANEL,  "floating-panel" },
 	{ MENU_PANEL,      "menu-panel" },
+	{ 0,               NULL }
 };
 
 static gboolean
@@ -169,6 +173,7 @@ static GConfEnumStringPair panel_size_map [] = {
 	{ PANEL_SIZE_LARGE,    "panel-size-large" },
 	{ PANEL_SIZE_X_LARGE,  "panel-size-x-large" },
 	{ PANEL_SIZE_XX_LARGE, "panel-size-xx-large" },
+	{ 0,                   NULL }
 };
 
 static gboolean
@@ -194,6 +199,7 @@ static GConfEnumStringPair panel_background_type_map [] = {
 	{ PANEL_BACK_NONE,   "no-background" },
 	{ PANEL_BACK_COLOR,  "color-background" },
 	{ PANEL_BACK_IMAGE,  "pixmap-background" },
+	{ 0,                 NULL }
 };
 
 static gboolean

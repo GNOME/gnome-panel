@@ -1,3 +1,11 @@
+2005-09-22  James Henstridge  <james@jamesh.id.au>
+
+	* panel-action-button.c: 
+	* panel-compatibility.c:
+	* panel-profile.c: add a terminator to all the GConfEnumStringPair
+	tables to prevent crashes on unknown enum strings.  Fixes bug
+	#316933.
+
 2005-09-20  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-force-quit.c: (find_managed_window): kill warning

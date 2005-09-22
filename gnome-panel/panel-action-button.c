@@ -73,7 +73,8 @@ static GConfEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_SEARCH,         "search"         },
 	{ PANEL_ACTION_SCREENSHOT,     "screenshot"     },
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
-	{ PANEL_ACTION_CONNECT_SERVER, "connect-server" }
+	{ PANEL_ACTION_CONNECT_SERVER, "connect-server" },
+	{ 0,                           NULL             },
 };
 
 /* Lock Screen
