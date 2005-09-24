@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel 2.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-08 15:06+0100\n"
-"PO-Revision-Date: 2005-07-20 14:13+0300\n"
+"PO-Revision-Date: 2005-09-22 12:42+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -74,11 +74,11 @@ msgstr "Kell"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock Applet Factory"
-msgstr "Clock Applet Factory"
+msgstr "Kellarakendi Factory"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
-msgstr ""
+msgstr "Kellarakendite loomise factory."
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
@@ -349,7 +349,6 @@ msgstr "Nädalanumbrite näitamine kalendris"
 #: applets/clock/clock.schemas.in.h:34
 msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
 msgstr ""
-"See võti on GNOME 2.6's vananenud ja selle asemel kasutatake 'format' võtit. "
 
 #: applets/clock/clock.schemas.in.h:35
 msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format."
@@ -781,13 +780,14 @@ msgstr "pikslit"
 #: applets/wncklet/window-list.schemas.in.h:1
 msgid "Decides when to group windows from the same application on the window list. Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"Määrab, millal grupeerida sama rakenduse aknad akende nimistus. Võimalikud "
-"väärtused on mitte kunagi (never), automaatselt (auto) ja alati (always)."
+"Määrab, millal grupeerida sama rakenduse aknad akende loendis. Võimalikud "
+"väärtused on mitte kunagi \"never\", automaatselt \"auto\" ja alati "
+"\"always\"."
 
 #: applets/wncklet/window-list.schemas.in.h:2
 msgid "If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace."
 msgstr ""
-"Kui see väärtus on tõene, siis akende nimistu näitab kõikide tööalade "
+"Kui see väärtus on tõene, siis akende loend näitab kõikide tööalade "
 "aknaid, vastasel juhul näidatakse ainult aktiivse tööala aknaid."
 
 #: applets/wncklet/window-list.schemas.in.h:3
@@ -816,9 +816,9 @@ msgstr "Näita kõikide tööalade aknaid"
 #: applets/wncklet/window-list.schemas.in.h:8
 msgid "This key specifies the maximum width that the window list requests. The maximum width setting is useful to limit the size of the window list in large panels, where the window list could fill the entire space available."
 msgstr ""
-"See väärtus on akende nimistu suurim laius, mida rakend tellib. See on "
+"See väärtus on akende loendi suurim laius, mida rakend tellib. See on "
 "kasulik eelkõige rakendi laiuse piiramiseks suurtel paneelidel, kus akende "
-"nimistu võib hõivata kogu vaba ruumi."
+"loend võib hõivata kogu vaba ruumi."
 
 #: applets/wncklet/window-list.schemas.in.h:9
 msgid "This key specifies the minimum width that the window list requests."
@@ -929,9 +929,7 @@ msgstr "Töölauahalduri ridade arv"
 #: applets/wncklet/workspace-switcher.schemas.in.h:6
 msgid "This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true."
 msgstr ""
-"Kui näidatakse kõiki tööalasid, siis määrab see väärtus, mitmes reas "
-"(horisontaalse asendi puhul) või veerus (vertikaalse asendi puhul) "
-"näidatakse miniatuurseid tööalasid."
+"Selle võtme abil määratakse, mitmes reas (rõhtasendi puhul) või veerus (püstasendi puhul) tööalade lüliti tööalasid näitab. See võti kehtib ainult juhul, kui võti display_all_workspaces on märgitud."
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -1543,7 +1541,7 @@ msgstr "Võrgukohad"
 
 #: gnome-panel/panel-menu-bar.c:561
 msgid "Removable Media"
-msgstr ""
+msgstr "Eemaldatav meedia"
 
 #. Translators: Desktop is
 #. * used here as in "Desktop
@@ -1576,11 +1574,11 @@ msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:2
 msgid "Applet Bonobo IID"
-msgstr ""
+msgstr "Rakendi Bonobo IID"
 
 #: gnome-panel/panel-object.schemas.in.h:3
 msgid "Icon used for object's button"
-msgstr ""
+msgstr "Objektide nupu poolt kasutatav ikoon"
 
 #: gnome-panel/panel-object.schemas.in.h:4
 msgid "If true, the custom_icon key is used as a custom icon for the button. If false, the custom_icon key is ignored. This key is only relevant if the object_type key is \"menu-object\" or \"drawer-object\"."
@@ -1608,7 +1606,7 @@ msgstr "Käivitaja asukoht"
 
 #: gnome-panel/panel-object.schemas.in.h:10
 msgid "Lock the object to the panel"
-msgstr ""
+msgstr "Objekti lukustamine paneelile"
 
 #: gnome-panel/panel-object.schemas.in.h:11
 msgid "Menu content path"
@@ -1766,7 +1764,7 @@ msgstr "Üldine"
 
 #: gnome-panel/panel-properties-dialog.glade.h:11
 msgid "Image Background Details"
-msgstr ""
+msgstr "Pilditausta üksikasjad"
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
 msgid "Panel Properties"
@@ -2097,7 +2095,7 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:13
 msgid "Fit image to panel"
-msgstr ""
+msgstr "Pildi sobitamine paneelile"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
 msgid "If true, arrows will be placed on the hide buttons. This key is only relevant if the enable_buttons key is true."
@@ -2149,11 +2147,11 @@ msgstr "Paneeli nimi"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:26
 msgid "Panel autohide delay"
-msgstr ""
+msgstr "Paneeli automaatpeitmise viivitus"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:27
 msgid "Panel autounhide delay"
-msgstr ""
+msgstr "Paneeli automaatse peidust väljatoomise viivitus"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:28
 msgid "Panel orientation"
@@ -2169,7 +2167,7 @@ msgstr "Pööra pilti vertikaalpaneelidel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
-msgstr ""
+msgstr "Paneeli taustavärvi määramine #RGB vormingus."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:32
 msgid "Specifies the file to be used for the background image. If the image contains an alpha channel it will be composited onto the desktop background image."
@@ -2221,7 +2219,7 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "Visible pixels when hidden"
-msgstr ""
+msgstr "Nähavate pikslite arv peidetuna"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:45
 msgid "Which type of background should be used for this panel. Possible values are \"gtk\" - the default GTK+ widget background will be used, \"color\" - the color key will be used as background color or \"image\" - the image specified by the image key will be used as background."
@@ -2233,19 +2231,19 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:47
 msgid "X co-ordinate of panel"
-msgstr ""
+msgstr "Paneeli X-koordinaat"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
 msgid "X screen where the panel is displayed"
-msgstr ""
+msgstr "X'i ekraan, kus paneeli kuvatakse"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "Xinerama monitor where the panel is displayed"
-msgstr ""
+msgstr "Xinerama monitor, kus paneeli kuvatakse"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "Y co-ordinate of panel"
-msgstr ""
+msgstr "Paneeli Y-koordinaat"
 
 #: gnome-panel/panel-util.c:65
 msgid "Cannot display help document"
