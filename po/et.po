@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-09-09 05:26+0200\n"
-"PO-Revision-Date: 2005-09-26 14:43+0300\n"
+"PO-Revision-Date: 2005-09-28 14:38+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -1236,7 +1236,7 @@ msgstr "Rakenduste käivitaja..."
 
 #: ../gnome-panel/panel-addto.c:114
 msgid "Launch a program that is already in the GNOME menu"
-msgstr ""
+msgstr "Juba GNOME menüüs oleva programmi käivitamine"
 
 #: ../gnome-panel/panel-addto.c:128
 msgid "Main Menu"
@@ -1478,10 +1478,15 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
+"Paneeli poolt eiratavate rakendite IID'de loend. Selle abil on võimalik "
+"keelata rakendite laadimist või näitamist menüüs. Näiteks Pisi-käsurea "
+"rakendi keelamiseld tuleb sellesse loendisse lisada "
+"'OAFIID:GNOME_MiniCommanderApplet'. Muudatuse rakendamiseks tuleb paneel "
+"taaskäivitada."
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
 msgid "Applet IIDs to disable from loading"
-msgstr ""
+msgstr "Rakendite, mille laadimine on keelatud, IID'd"
 
 #: ../gnome-panel/panel-global.schemas.in.h:3
 msgid "Autoclose drawer"
@@ -1719,7 +1724,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
-msgstr ""
+msgstr "Seda objekti sisaldava ülemise taseme paneeli identifikaator."
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
 msgid ""
@@ -1766,7 +1771,7 @@ msgstr "Sahtli või menüü jaoks kuvatav vihje"
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
-msgstr ""
+msgstr "Objekti sisaldav ülataseme paneel"
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Use custom icon for object's button"
@@ -1966,7 +1971,7 @@ msgstr "Eemaldab kõik kirjed hiljutiste dokumendite nimekirjast"
 #: ../gnome-panel/panel-run-dialog.c:287
 #, c-format
 msgid "Cannot launch command '%s'"
-msgstr "Ei saa käivitada käsku '%s'"
+msgstr "Käsku '%s' pole võimalik käivitada"
 
 #: ../gnome-panel/panel-run-dialog.c:365
 #, c-format
@@ -1985,7 +1990,7 @@ msgstr "Käivitatav käsk: '%s'"
 #: ../gnome-panel/panel-run-dialog.c:1475
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
-msgstr ""
+msgstr "Vali rakendus, et näha selle kirjeldust."
 
 #: ../gnome-panel/panel-run-dialog.c:1510
 #, c-format
@@ -2034,7 +2039,7 @@ msgstr "Käivita _failiga..."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:11
 msgid "Select this box to run the command in a terminal window."
-msgstr ""
+msgstr "Märgi see ruut kui soovid käsku käivitada terminaliaknas."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:12
 msgid "Show list of known _applications"
@@ -2189,11 +2194,11 @@ msgstr "Peitmisnuppudel on noolekesed lubatud"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:11
 msgid "Enable hide buttons"
-msgstr "Näita peitenuppu"
+msgstr "Peitmisnuppude peitmine lubatud"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:12
 msgid "Expand to occupy entire screen width"
-msgstr ""
+msgstr "Laiendamine kogu ekraanilaiuse ulatuses"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:13
 msgid "Fit image to panel"
