@@ -32,6 +32,7 @@
 #include <gconf/gconf-client.h>
 #include <libecal/e-cal.h>
 #include <libedataserver/e-source-list.h>
+#include <libedataserverui/e-passwords.h>
 
 #undef CALENDAR_ENABLE_DEBUG
 #include "calendar-debug.h"
@@ -278,6 +279,23 @@ is_source_selected (ESource *esource,
   return FALSE;
 }
 
+static char *
+auth_func_cb (ECal       *ecal,
+	      const char *prompt,
+	      const char *key,
+	      gpointer    user_data)
+{
+	ESource *source;
+	const gchar *auth_domain;
+	const gchar *component_name;
+
+	source = e_cal_get_source (ecal);
+	auth_domain = e_source_get_property (source, "auth-domain");
+	component_name = auth_domain ? auth_domain : "Calendar";
+
+	return e_passwords_get_password (component_name, key);
+}
+
 static ECal *
 load_esource (ESource        *esource,
 	      ECalSourceType  source_type,
@@ -312,6 +330,8 @@ load_esource (ESource        *esource,
 		 e_source_peek_relative_uri (esource));
       return NULL;
     }
+
+  e_cal_set_auth_func (retval, auth_func_cb, NULL);
 
   error = NULL;
   if (!e_cal_open (retval, TRUE, &error))

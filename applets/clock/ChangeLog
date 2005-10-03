@@ -1,5 +1,13 @@
 2005-10-03  Vincent Untz  <vuntz@gnome.org>
 
+	Use authentication for calendar sources. Patch by Tommi Komulainen
+	<tommi.komulainen@iki.fi>. Fix bug #317095.
+
+	* calendar-sources.c: (auth_func_cb): new, stolen from evo
+	(load_esource): add a callback for authentication
+
+2005-10-03  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.schemas.in: show weeks by default.
 	Fix bug #167753.
 
