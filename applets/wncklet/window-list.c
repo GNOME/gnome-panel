@@ -192,6 +192,17 @@ applet_change_background (PanelApplet               *applet,
 			  GdkPixmap                 *pixmap,
 			  TasklistData              *tasklist)
 {
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		wnck_tasklist_set_button_relief (WNCK_TASKLIST (tasklist->tasklist),
+						 GTK_RELIEF_NORMAL);
+		break;
+	case PANEL_COLOR_BACKGROUND:
+	case PANEL_PIXMAP_BACKGROUND:
+		wnck_tasklist_set_button_relief (WNCK_TASKLIST (tasklist->tasklist),
+						 GTK_RELIEF_NONE);
+		break;
+	}
 	wncklet_change_background (GTK_WIDGET (tasklist->applet), type,
 				   color, pixmap);
 }
