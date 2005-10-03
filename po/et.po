@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel 2.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-08 15:06+0100\n"
-"PO-Revision-Date: 2005-09-22 12:42+0300\n"
+"PO-Revision-Date: 2005-09-28 14:38+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -1184,7 +1184,7 @@ msgstr "Ühendu serveriga..."
 
 #: gnome-panel/panel-action-button.c:374
 msgid "Connect to a remote server"
-msgstr ""
+msgstr "Ühendumine võrguserveriga"
 
 #: gnome-panel/panel-addto.c:102
 msgid "Custom Application Launcher"
@@ -1200,7 +1200,7 @@ msgstr "Rakenduste käivitaja..."
 
 #: gnome-panel/panel-addto.c:114
 msgid "Launch a program that is already in the GNOME menu"
-msgstr ""
+msgstr "Juba GNOME menüüs oleva programmi käivitamine"
 
 #: gnome-panel/panel-addto.c:128
 msgid "Main Menu"
@@ -1295,7 +1295,7 @@ msgstr ""
 #: gnome-panel/panel-bindings.c:168
 #, c-format
 msgid "Error watching gconf key '%s': %s"
-msgstr ""
+msgstr "Viga GConf võtme '%s' jälgimisel: %s"
 
 #: gnome-panel/panel-bindings.c:186
 #, c-format
@@ -1394,7 +1394,7 @@ msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:10
 msgid "Panel ID list"
-msgstr ""
+msgstr "Paneeli ID loend"
 
 #: gnome-panel/panel-general.schemas.in.h:11
 msgid "Panel applet ID list"
@@ -1407,6 +1407,11 @@ msgstr "Paneeli objektide ID loend"
 #: gnome-panel/panel-global.schemas.in.h:1
 msgid "A list of applet IIDs that the panel will ignore. This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list. The panel must be restarted for this to take effect."
 msgstr ""
+"Paneeli poolt eiratavate rakendite IID'de loend. Selle abil on võimalik "
+"keelata rakendite laadimist või näitamist menüüs. Näiteks Pisi-käsurea "
+"rakendi keelamiseld tuleb sellesse loendisse lisada "
+"'OAFIID:GNOME_MiniCommanderApplet'. Muudatuse rakendamiseks tuleb paneel "
+"taaskäivitada."
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1415,11 +1420,11 @@ msgstr "Animatsiooni kiirus"
 
 #: gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
-msgstr ""
+msgstr "Rakendite, mille laadimine on keelatud, IID'd"
 
 #: gnome-panel/panel-global.schemas.in.h:4
 msgid "Autoclose drawer"
-msgstr ""
+msgstr "Sahtli automaatne sulgemine"
 
 #: gnome-panel/panel-global.schemas.in.h:5
 msgid "Complete panel lockdown"
@@ -1638,7 +1643,7 @@ msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
-msgstr ""
+msgstr "Seda objekti sisaldava ülemise taseme paneeli identifikaator."
 
 #: gnome-panel/panel-object.schemas.in.h:19
 msgid "The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is \"launcher-object\"."
@@ -1666,19 +1671,19 @@ msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
-msgstr ""
+msgstr "Sahtli või menüü jaoks kuvatav vihje"
 
 #: gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
-msgstr ""
+msgstr "Objekti sisaldav ülataseme paneel"
 
 #: gnome-panel/panel-object.schemas.in.h:27
 msgid "Use custom icon for object's button"
-msgstr ""
+msgstr "Kohtandatud ikooni kasutamine objektinupu jaoks"
 
 #: gnome-panel/panel-object.schemas.in.h:28
 msgid "Use custom path for menu contents"
-msgstr ""
+msgstr "Kohandatud raja kasutamine menüü sisu jaoks"
 
 #: gnome-panel/panel-profile.c:743
 #: gnome-panel/panel-profile.c:770
@@ -1686,7 +1691,7 @@ msgstr ""
 #: gnome-panel/panel-profile.c:1611
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
-msgstr ""
+msgstr "Viga GConf stringiväärtuse '%s' lugemisel: %s"
 
 #: gnome-panel/panel-profile.c:785
 #: gnome-panel/panel-profile.c:1509
@@ -1694,7 +1699,7 @@ msgstr ""
 #: gnome-panel/panel-profile.c:1643
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
-msgstr ""
+msgstr "Viga GConf täisarvulise väärtuse '%s' lugemisel: %s"
 
 #: gnome-panel/panel-profile.c:1519
 #, c-format
@@ -1873,7 +1878,7 @@ msgstr "Eemaldab kõik kirjed hiljutiste dokumendite nimekirjast"
 #: gnome-panel/panel-run-dialog.c:284
 #, c-format
 msgid "Cannot launch command '%s'"
-msgstr "Ei saa käivitada käsku '%s'"
+msgstr "Käsku '%s' pole võimalik käivitada"
 
 #: gnome-panel/panel-run-dialog.c:362
 #, c-format
@@ -1892,7 +1897,7 @@ msgstr "Käivitatav käsk: '%s'"
 #: gnome-panel/panel-run-dialog.c:1421
 #: gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
-msgstr ""
+msgstr "Vali rakendus, et näha selle kirjeldust."
 
 #: gnome-panel/panel-run-dialog.c:1456
 #, c-format
@@ -1937,7 +1942,7 @@ msgstr "Käivita _failiga..."
 
 #: gnome-panel/panel-run-dialog.glade.h:11
 msgid "Select this box to run the command in a terminal window."
-msgstr ""
+msgstr "Märgi see ruut kui soovid käsku käivitada terminaliaknas."
 
 #: gnome-panel/panel-run-dialog.glade.h:12
 msgid "Show list of known _applications"
@@ -2055,7 +2060,7 @@ msgstr "Paremal asuv äärepaneel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
-msgstr ""
+msgstr "Paneeli automaatne nurkapeitmine"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:3
 msgid "Background color"
@@ -2087,11 +2092,11 @@ msgstr "Peitmisnuppudel on noolekesed lubatud"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:11
 msgid "Enable hide buttons"
-msgstr "Näita peitenuppu"
+msgstr "Peitmisnuppude peitmine lubatud"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:12
 msgid "Expand to occupy entire screen width"
-msgstr ""
+msgstr "Laiendamine kogu ekraanilaiuse ulatuses"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:13
 msgid "Fit image to panel"
@@ -2191,7 +2196,7 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
-msgstr ""
+msgstr "Pildi venitamine paneelile"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:38
 msgid "The height (width for a vertical panel) of the panel. The panel will determine at runtime a minimum size based on the font size and other indicators. The maximum size is fixed at one quarter of the screen height (or width)."
