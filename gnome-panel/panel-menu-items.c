@@ -284,7 +284,6 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			GnomeVFSURI *uri;
 			char        *space;
 			char        *label;
-			char        *unescaped_uri;
 
 			g_hash_table_insert (table, lines[i], lines[i]);
 
@@ -296,10 +295,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 				label = NULL;
 			}
 
-			unescaped_uri = gnome_vfs_unescape_string (lines[i],
-								   "");
-			uri = gnome_vfs_uri_new (unescaped_uri);
-			g_free (unescaped_uri);
+			uri = gnome_vfs_uri_new (lines[i]);
 
 			if (!uri ||
 			     (!strcmp (gnome_vfs_uri_get_scheme (uri), "file") &&
@@ -364,18 +360,23 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		}
 
 		if (!label) {
-			if (gnome_vfs_uri_is_local (bookmark->uri)) {
-				const char *buffer;
+			char *buffer;
 
-				buffer = gnome_vfs_uri_get_path (bookmark->uri);
+			if (gnome_vfs_uri_is_local (bookmark->uri)) {
+				buffer = gnome_vfs_get_local_path_from_uri (full_uri);
 				label = g_filename_display_basename (buffer);
 			} else {
-				char *buffer;
-
+				/* FIXME: do this:
+				hostname = gnome_vfs_uri_get_host_name (uri);
+				buffer = gnome_vfs_get_local_path_from_uri (full_uri);
+				displayname = g_filename_display_basename (buffer);
+				label = g_strdup_printf (_("%s on %s"), displayname, hostname);
+				 */
 				buffer = gnome_vfs_uri_extract_short_name (bookmark->uri);
 				label = g_filename_display_name (buffer);
-				g_free (buffer);
 			}
+
+			g_free (buffer);
 		}
 
 		panel_menu_items_append_place_item ("gnome-fs-directory",
