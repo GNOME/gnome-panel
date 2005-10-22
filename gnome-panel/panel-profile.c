@@ -1158,9 +1158,6 @@ panel_profile_background_change_notify (GConfClient   *client,
 	if (!strcmp (key, "type")) {
 		if (value->type == GCONF_VALUE_STRING) {
 			PanelBackgroundType  background_type;
-			const char          *str;
-
-			str = gconf_value_get_string (value);
 
 			if (panel_profile_map_background_type_string (
 						gconf_value_get_string (value),
@@ -2161,25 +2158,22 @@ panel_profile_copy_defaults_for_screen (GConfClient       *client,
 	GSList     *default_ids, *l;
 	GSList     *new_ids = NULL;
 	const char *key;
-	const char *id_list, *type_str, *schemas_str;
+	const char *id_list, *type_str;
 
 	id_list = panel_gconf_key_type_to_id_list (type);
 
 	switch (type) {
 	case PANEL_GCONF_TOPLEVELS:
 		type_str    = "toplevels";
-		schemas_str = "toplevels";
 		break;
 	case PANEL_GCONF_OBJECTS:
 		type_str    = "objects";
-		schemas_str = "objects";
 		break;
 	case PANEL_GCONF_APPLETS:
 		type_str    = "applets";
-		schemas_str = "objects";
 		break;
 	default:
-		type_str = schemas_str = NULL;
+		type_str = NULL;
 		g_assert_not_reached ();
 		break;
 	}

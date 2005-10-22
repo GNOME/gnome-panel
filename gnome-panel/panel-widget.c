@@ -1322,8 +1322,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	GList *list;
 	int i;
 	int old_size;
-	int old_thick;
-	GtkAllocation old_alloc;
 
 	g_return_if_fail(PANEL_IS_WIDGET(widget));
 	g_return_if_fail(allocation!=NULL);
@@ -1331,10 +1329,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	panel = PANEL_WIDGET(widget);
 
 	old_size = panel->size;
-	old_thick = panel->thick;
 	
-	old_alloc = widget->allocation;
-
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget))
 		gdk_window_move_resize (widget->window,
@@ -2010,9 +2005,6 @@ panel_widget_nice_move (PanelWidget *panel,
 			AppletData  *ad,
 			int          pos)
 {
-	AppletData *pad1 = NULL, *pad2 = NULL;
-	GList      *l;
-	
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 	g_return_if_fail (ad != NULL);
 
@@ -2020,21 +2012,11 @@ panel_widget_nice_move (PanelWidget *panel,
 	if (pos < 0 || pos == ad->pos)
 		return;
 
-	l = g_list_find (panel->applet_list, ad);
-	if (l && l->prev) {
-		pad1 = l->prev->data;
-	}
-
 	ad->pos = ad->constrained = pos;
 
 	panel->applet_list =
 		panel_g_list_resort_item (panel->applet_list, ad,
 					  (GCompareFunc)applet_data_compare);
-
-	l = g_list_find (panel->applet_list, ad);
-	if (l && l->prev) {
-		pad2 = l->prev->data;
-	}
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 

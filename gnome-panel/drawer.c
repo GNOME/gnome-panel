@@ -241,10 +241,6 @@ close_drawer_in_idle (gpointer data)
 	drawer->close_timeout_id = 0;
 
 	if (drawer->opened_for_drag) {
-		PanelWidget *button_parent;
-
-		button_parent = PANEL_WIDGET (drawer->button->parent);
-
 		panel_toplevel_hide (drawer->toplevel, FALSE, -1);
 		drawer->opened_for_drag = FALSE;
 	}
@@ -475,8 +471,8 @@ panel_drawer_custom_icon_changed (GConfClient *client,
 
 		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer->info->id, "use_custom_icon");
 		use_custom_icon = gconf_client_get_bool (client, key, NULL);
-		
-		button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
+		if (use_custom_icon)
+			button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
 	}
 }
 
@@ -486,12 +482,8 @@ panel_drawer_tooltip_changed (GConfClient *client,
 			      GConfEntry  *entry,
 			      Drawer      *drawer)
 {
-	const char *tooltip;
-
 	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
 		return;
-
-	tooltip = gconf_value_get_string (entry->value);
 
 	set_tooltip_and_name (drawer,
 			      gconf_value_get_string (entry->value));

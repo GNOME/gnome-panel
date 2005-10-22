@@ -746,15 +746,9 @@ panel_toplevel_rotate_to_pointer (PanelToplevel *toplevel,
 				  int            pointer_x,
 				  int            pointer_y)
 {
-	GtkWidget *widget;
-	GdkScreen *screen;
 	int        x_diff, y_diff;
 	int        x, y;
 	int        snap_tolerance;
-
-	widget = GTK_WIDGET (toplevel);
-
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 
 	x = toplevel->priv->geometry.x;
 	y = toplevel->priv->geometry.y;
@@ -1599,7 +1593,6 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 	GdkRectangle      toplevel_box;
 	GdkRectangle      parent_box;
 	GdkRectangle      attach_box;
-	GdkScreen        *screen;
 	int               x_origin = 0, y_origin = 0;
 	int               monitor_x, monitor_y;
 	int               monitor_width, monitor_height;
@@ -1668,12 +1661,6 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 		break;
 	}
 
-	screen = panel_toplevel_get_monitor_geometry (toplevel,
-						      &monitor_x,
-						      &monitor_y,
-						      &monitor_width,
-						      &monitor_height);
-                                                                                
 	*x -= monitor_x;
 	*y -= monitor_y;
 
@@ -1690,7 +1677,6 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 				       int           *w,
 				       int           *h)
 {
-	GtkWidget *widget;
 	int        monitor_width, monitor_height;
 	int        width, height;
 	int        snap_tolerance;
@@ -1701,8 +1687,6 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 		panel_toplevel_update_attached_position (toplevel, FALSE, x, y, w, h);
 		return;
 	}
-
-	widget = GTK_WIDGET (toplevel);
 
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
@@ -1990,7 +1974,6 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 static void
 panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 {
-	GtkWidget *widget;
 	GdkScreen *screen;
 	int        monitor_width, monitor_height;
 	int        screen_width, screen_height;
@@ -2000,8 +1983,6 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 
 	if (!toplevel->priv->expand)
 		return;
-
-	widget = GTK_WIDGET (toplevel);
 
 	screen = panel_toplevel_get_screen_geometry (
 			toplevel, &screen_width, &screen_height);
@@ -2063,14 +2044,11 @@ static void
 panel_toplevel_update_position (PanelToplevel *toplevel)
 {
 	PanelBackground *background;
-	GtkWidget       *widget;
 	GdkScreen       *screen;
 	int              x, y;
 	int              w, h;
 	int              screen_width, screen_height;
 	int              monitor_width, monitor_height;
-
-	widget = GTK_WIDGET (toplevel);
 
 	screen = panel_toplevel_get_screen_geometry (
 			toplevel, &screen_width, &screen_height);
@@ -3115,9 +3093,6 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	toplevel->priv->animation_end_height = -1;
 
 	if (!toplevel->priv->expand) {
-		GtkWidget *widget;
-
-		widget = GTK_WIDGET (toplevel);
 
 		if (toplevel->priv->x_centered)
 			toplevel->priv->animation_end_x =
@@ -4355,7 +4330,6 @@ void
 panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 				PanelOrientation  orientation)
 {
-	GtkWidget *widget;
 	gboolean   rotate;
 	int        monitor_width;
 	int        monitor_height;
@@ -4364,8 +4338,6 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 
 	if (toplevel->priv->orientation == orientation)
 		return;
-
-	widget = GTK_WIDGET (toplevel);
 
 	g_object_freeze_notify (G_OBJECT (toplevel));
 

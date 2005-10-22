@@ -1427,6 +1427,7 @@ entry_event (GtkEditable    *entry,
 			
 			dialog->completion_started = TRUE;
 
+			g_free (temp);
 			g_free (nprefix);
 			g_free (prefix);
 			

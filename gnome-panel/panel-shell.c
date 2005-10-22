@@ -130,5 +130,5 @@ panel_shell_init (PanelShell *shell)
 BONOBO_TYPE_FUNC_FULL (PanelShell,
 		       GNOME_Vertigo_PanelShell,
 		       BONOBO_OBJECT_TYPE,
-		       panel_shell);
+		       panel_shell)
 

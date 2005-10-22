@@ -192,10 +192,8 @@ panel_back_change (GtkWidget *widget, gpointer data)
 static void
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	PanelToplevel *toplevel;
 	AppletInfo    *info;
 
-	toplevel = PANEL_WIDGET (widget)->toplevel;
 	info = g_object_get_data (G_OBJECT (applet), "applet_info");
 
 	orientation_change(info,PANEL_WIDGET(widget));
@@ -260,10 +258,6 @@ static void
 panel_destroy (PanelToplevel *toplevel,
 	       PanelData     *pd)
 {
-	PanelWidget *panel_widget;
-
-	panel_widget = panel_toplevel_get_panel_widget (toplevel);
-
 	panel_lockdown_notify_remove (G_CALLBACK (panel_recreate_context_menu),
 				      pd);
 
@@ -1218,12 +1212,9 @@ panel_delete_without_query (PanelToplevel *toplevel)
 	if (panel_toplevel_get_is_attached (toplevel) &&
 	    panel_widget->master_widget) {
 		AppletInfo *info;
-		Drawer *drawer;
 
 		info = g_object_get_data (G_OBJECT (panel_widget->master_widget),
 					  "applet_info");
-
-		drawer = (Drawer *) info->data;
 
 		panel_profile_delete_object (info);
 	} else

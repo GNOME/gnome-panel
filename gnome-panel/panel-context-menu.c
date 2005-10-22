@@ -295,7 +295,6 @@ panel_context_menu_create (PanelWidget *panel)
 	if (panel->master_widget) {
 		gpointer    *pointer;
 		AppletInfo  *info;
-		PanelWidget *parent_panel;
 
 		pointer = g_object_get_data (G_OBJECT (panel->master_widget),
 					     "applet_info");
@@ -304,7 +303,6 @@ panel_context_menu_create (PanelWidget *panel)
 		info = (AppletInfo *) pointer;
 
 		if (info->menu == NULL) {
-			parent_panel = PANEL_WIDGET (info->widget->parent);
 			info->menu = panel_applet_create_menu (info);
 		}
 

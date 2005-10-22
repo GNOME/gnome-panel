@@ -1266,15 +1266,12 @@ panel_applet_get_position (AppletInfo *applet)
 gboolean
 panel_applet_can_freely_move (AppletInfo *applet)
 {
-	PanelWidget       *panel_widget;
 	GConfClient       *client;
 	PanelGConfKeyType  key_type;
 	const char        *key;
 
 	if (panel_lockdown_get_locked_down ())
 		return FALSE;
-
-	panel_widget = PANEL_WIDGET (applet->widget->parent);
 
 	client  = panel_gconf_get_client ();
 	
@@ -1299,15 +1296,12 @@ gboolean
 panel_applet_lockable (AppletInfo *applet)
 {
 	GConfClient        *client;
-	PanelWidget        *panel_widget;
 	PanelGConfKeyType   key_type;
 	const char         *key;
 
 	if (panel_lockdown_get_locked_down ())
 		return FALSE;
 	
-	panel_widget = PANEL_WIDGET (applet->widget->parent);
-
 	client  = panel_gconf_get_client ();
 	
 	key_type = (applet->type == PANEL_OBJECT_BONOBO) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;

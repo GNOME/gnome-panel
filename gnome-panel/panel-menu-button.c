@@ -323,12 +323,9 @@ panel_menu_button_drag_data_get (GtkWidget        *widget,
 				 guint             info,
 				 guint             time)
 {
-	PanelMenuButton *button;
 	char            *drag_data;
 
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (widget));
-
-	button = PANEL_MENU_BUTTON (widget);
 
 	drag_data = g_strdup_printf ("MENU:%d", panel_find_applet_index (widget));
 

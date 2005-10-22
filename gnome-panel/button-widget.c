@@ -147,13 +147,11 @@ button_widget_unrealize (GtkWidget *widget)
 {
 	GtkButton *button;
 	PanelWidget *panel;
-	GtkWidget *parent;
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (BUTTON_IS_WIDGET (widget));
 
 	panel  = PANEL_WIDGET (widget->parent);
-	parent = GTK_WIDGET (panel->toplevel);
 	button = GTK_BUTTON (widget);
 
 	if (button->event_window != NULL) {
@@ -519,10 +517,6 @@ button_widget_size_allocate (GtkWidget     *widget,
 	widget->allocation = *allocation;
 
 	if (GTK_WIDGET_REALIZED (widget)) {
-		PanelWidget *panel;
-
-		panel = PANEL_WIDGET (widget->parent);
-
 		gdk_window_move_resize (button->event_window, 
 					allocation->x,
 					allocation->y,
