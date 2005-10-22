@@ -34,6 +34,7 @@
 
 
 static gboolean panel_background_composite (PanelBackground *background);
+static void load_background_file (PanelBackground *background);
 
 
 static void
@@ -348,6 +349,7 @@ get_scaled_and_rotated_pixbuf (PanelBackground *background)
 	int        panel_width, panel_height;
 	int        width, height;
 
+	load_background_file (background);
 	if (!background->loaded_image)
 		return NULL;
 
@@ -548,6 +550,17 @@ panel_background_set_type (PanelBackground     *background,
 	panel_background_transform (background);
 }
 
+static void
+panel_background_set_gdk_color_no_update (PanelBackground *background,
+					  GdkColor        *gdk_color)
+{
+	g_return_if_fail (gdk_color != NULL);
+
+	background->color.gdk.red   = gdk_color->red;
+	background->color.gdk.green = gdk_color->green;
+	background->color.gdk.blue  = gdk_color->blue;
+}
+
 void
 panel_background_set_gdk_color (PanelBackground *background,
 				GdkColor        *gdk_color)
@@ -560,12 +573,16 @@ panel_background_set_gdk_color (PanelBackground *background,
 		return;
 
 	free_transformed_resources (background);
-
-	background->color.gdk.red   = gdk_color->red;
-	background->color.gdk.green = gdk_color->green;
-	background->color.gdk.blue  = gdk_color->blue;
-
+	panel_background_set_gdk_color_no_update (background, gdk_color);
 	panel_background_transform (background);
+}
+
+static void
+panel_background_set_opacity_no_update (PanelBackground *background,
+				        guint16          opacity)
+{
+	background->color.alpha = opacity;
+	panel_background_update_has_alpha (background);
 }
 
 void
@@ -576,12 +593,18 @@ panel_background_set_opacity (PanelBackground *background,
 		return;
 
 	free_transformed_resources (background);
-
-	background->color.alpha = opacity;
-
-	panel_background_update_has_alpha (background);
-
+	panel_background_set_opacity_no_update (background, opacity);
 	panel_background_transform (background);
+}
+
+static void
+panel_background_set_color_no_update (PanelBackground *background,
+				      PanelColor      *color)
+{
+	g_return_if_fail (color != NULL);
+
+	panel_background_set_gdk_color_no_update (background, &(color->gdk));
+	panel_background_set_opacity_no_update (background, color->alpha);
 }
 
 void
@@ -590,8 +613,33 @@ panel_background_set_color (PanelBackground *background,
 {
 	g_return_if_fail (color != NULL);
 
-	panel_background_set_gdk_color (background, &(color->gdk));
-	panel_background_set_opacity (background, color->alpha);
+	if (background->color.gdk.red   == color->gdk.red &&
+	    background->color.gdk.green == color->gdk.green &&
+	    background->color.gdk.blue  == color->gdk.blue &&
+	    background->color.alpha  == color->alpha)
+		return;
+
+	free_transformed_resources (background);
+	panel_background_set_color_no_update (background, color);
+	panel_background_transform (background);
+}
+
+static void
+panel_background_set_image_no_update (PanelBackground *background,
+				      const char      *image)
+{
+	if (background->loaded_image)
+		g_object_unref (background->loaded_image);
+	background->loaded_image = NULL;
+
+	if (background->image)
+		g_free (background->image);
+	background->image = NULL;
+
+	if (image && image [0])
+		background->image = g_strdup (image);
+
+	panel_background_update_has_alpha (background);
 }
 
 void
@@ -605,23 +653,15 @@ panel_background_set_image (PanelBackground *background,
 		return;
 
 	free_transformed_resources (background);
-
-	if (background->loaded_image)
-		g_object_unref (background->loaded_image);
-	background->loaded_image = NULL;
-
-	if (background->image)
-		g_free (background->image);
-	background->image = NULL;
-
-	if (image && image [0]) {
-		background->image = g_strdup (image);
-		load_background_file (background);
-	}
-
-	panel_background_update_has_alpha (background);
-
+	panel_background_set_image_no_update (background, image);
 	panel_background_transform (background);
+}
+
+static void
+panel_background_set_fit_no_update (PanelBackground *background,
+				    gboolean         fit_image)
+{
+	background->fit_image = fit_image != FALSE;
 }
 
 void
@@ -634,10 +674,15 @@ panel_background_set_fit (PanelBackground *background,
 		return;
 
 	free_transformed_resources (background);
-
-	background->fit_image = fit_image;
-
+	panel_background_set_fit_no_update (background, fit_image);
 	panel_background_transform (background);
+}
+
+static void
+panel_background_set_stretch_no_update (PanelBackground *background,
+				        gboolean         stretch_image)
+{
+	background->stretch_image = stretch_image != FALSE;
 }
 
 void
@@ -650,10 +695,15 @@ panel_background_set_stretch (PanelBackground *background,
 		return;
 
 	free_transformed_resources (background);
-
-	background->stretch_image = stretch_image;
-
+	panel_background_set_stretch_no_update (background, stretch_image);
 	panel_background_transform (background);
+}
+
+static void
+panel_background_set_rotate_no_update (PanelBackground *background,
+				       gboolean         rotate_image)
+{
+	background->rotate_image = rotate_image != FALSE;
 }
 
 void
@@ -666,9 +716,7 @@ panel_background_set_rotate (PanelBackground *background,
 		return;
 
 	free_transformed_resources (background);
-
-	background->rotate_image = rotate_image;
-
+	panel_background_set_rotate_no_update (background, rotate_image);
 	panel_background_transform (background);
 }
 
@@ -681,11 +729,11 @@ panel_background_set (PanelBackground     *background,
 		      gboolean             stretch_image,
 		      gboolean             rotate_image)
 {
-	panel_background_set_color (background, color);
-	panel_background_set_image (background, image);
-	panel_background_set_fit (background, fit_image);
-	panel_background_set_stretch (background, stretch_image);
-	panel_background_set_rotate (background, rotate_image);
+	panel_background_set_color_no_update (background, color);
+	panel_background_set_image_no_update (background, image);
+	panel_background_set_fit_no_update (background, fit_image);
+	panel_background_set_stretch_no_update (background, stretch_image);
+	panel_background_set_rotate_no_update (background, rotate_image);
 	panel_background_set_type (background, type);
 }
 

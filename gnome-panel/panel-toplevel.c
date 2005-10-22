@@ -1661,6 +1661,12 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 		break;
 	}
 
+	panel_toplevel_get_monitor_geometry (toplevel,
+					     &monitor_x,
+					     &monitor_y,
+					     &monitor_width,
+					     &monitor_height);
+
 	*x -= monitor_x;
 	*y -= monitor_y;
 

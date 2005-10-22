@@ -1,3 +1,30 @@
+2005-10-22  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-background.c: (get_scaled_and_rotated_pixbuf): load image
+	file here
+	(panel_background_set_gdk_color_no_update): new
+	(panel_background_set_gdk_color): updated
+	(panel_background_set_opacity_no_update): new
+	(panel_background_set_opacity): updated
+	(panel_background_set_color_no_update): new
+	(panel_background_set_color): updated
+	(panel_background_set_image_no_update): new
+	(panel_background_set_image): updated, don't load image here
+	(panel_background_set_fit_no_update): new
+	(panel_background_set_fit): updated
+	(panel_background_set_stretch_no_update): new
+	(panel_background_set_stretch): updated
+	(panel_background_set_rotate_no_update): new
+	(panel_background_set_rotate): updated
+	(panel_background_set): don't set the background multiple times here,
+	but only once
+
+	* panel-widget.c: (panel_widget_background_changed): update the edges
+	of the toplevel: they might not be needed anymore
+
+	* panel-toplevel.c: (panel_toplevel_update_attached_position): fix
+	drawers not working after previous patch
+
 2005-10-17  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* panel-run-dialog.c: (entry_event): Plug a leak.
