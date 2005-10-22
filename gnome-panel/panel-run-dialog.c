@@ -834,6 +834,8 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 
 	gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->program_list), 
 				 GTK_TREE_MODEL (dialog->program_list_store));
+	gtk_tree_view_set_search_column (GTK_TREE_VIEW (dialog->program_list),
+					 COLUMN_NAME);
 
 	renderer = gtk_cell_renderer_pixbuf_new ();
 	column = gtk_tree_view_column_new ();
