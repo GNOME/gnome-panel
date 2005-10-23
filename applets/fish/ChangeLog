@@ -1,3 +1,15 @@
+2005-10-23  Vincent Untz  <vuntz@gnome.org>
+
+	Do not use deprecated widgets.
+
+	* fish.c: (get_image_path): new, utility function
+	(image_value_changed): updated for the file chooser
+	(chooser_preview_update): new, preview for the file chooser
+	(display_preferences_dialog): updated to use new widgets
+	(load_fish_image): update the preview in the pref dialog, updated
+	(fish_applet_instance_init): updated
+	* fish.glade: use nice non-deprecated widgets
+
 ==================== 2.12.1 ====================
 
 ==================== 2.12.0 ====================

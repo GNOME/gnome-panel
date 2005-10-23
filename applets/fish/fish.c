@@ -80,10 +80,10 @@ typedef struct {
 
 	GtkWidget         *preferences_dialog;
 	GtkWidget         *name_entry;
-	GtkWidget         *pixmap_entry;
-	GtkWidget         *image_entry;
 	GtkWidget         *command_label;
 	GtkWidget         *command_entry;
+	GtkWidget         *preview_image;
+	GtkWidget         *image_chooser;
 	GtkWidget         *frames_spin;
 	GtkWidget         *speed_spin;
 	GtkWidget         *rotate_toggle;
@@ -122,6 +122,19 @@ static int fools_day        = 0;
 static int fools_month      = 0;
 static int fools_hour_start = 0;
 static int fools_hour_end   = 0;
+
+static char *
+get_image_path (FishApplet *fish)
+{
+	char *path;
+
+	if (g_path_is_absolute (fish->image))
+		path = g_strdup (fish->image);
+	else
+		path = g_strdup_printf ("%s/%s", FISH_ICONDIR, fish->image);
+
+	return path;
+}
 
 static void
 show_help (FishApplet *fish, const char *link_id)
@@ -172,18 +185,36 @@ name_value_changed (GtkEntry   *entry,
 }
 
 static void
-image_value_changed (GtkEntry   *entry,
-		     FishApplet *fish)
+image_value_changed (GtkFileChooser *chooser,
+		     FishApplet     *fish)
 {	char *path;
+	char *image;
+	char *path_gconf;
 
-	path = gnome_file_entry_get_full_path (
-			GNOME_FILE_ENTRY (fish->pixmap_entry), TRUE);
-	if (!path || !path [0]) {
+	path = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
+
+	if (!path || !path[0]) {
 		g_free (path);
 		return;
 	}
 
-	panel_applet_gconf_set_string (PANEL_APPLET (fish), "image", path, NULL);
+	path_gconf = get_image_path (fish);
+	if (!strcmp (path, path_gconf)) {
+		g_free (path);
+		g_free (path_gconf);
+		return;
+	}
+	g_free (path_gconf);
+
+	if (!strncmp (path, FISH_ICONDIR, strlen (FISH_ICONDIR))) {
+		image = path + strlen (FISH_ICONDIR);
+		while (*image && *image == G_DIR_SEPARATOR)
+			image++;
+	} else
+		image = path;
+
+	panel_applet_gconf_set_string (PANEL_APPLET (fish), "image",
+				       image, NULL);
 
 	g_free (path);
 }
@@ -321,13 +352,40 @@ setup_sensitivity (FishApplet *fish,
 
 }
 
+static void
+chooser_preview_update (GtkFileChooser *file_chooser,
+			gpointer data)
+{
+	GtkWidget *preview;
+	char      *filename;
+	GdkPixbuf *pixbuf;
+	gboolean   have_preview;
+
+	preview = GTK_WIDGET (data);
+	filename = gtk_file_chooser_get_preview_filename (file_chooser);
+
+	pixbuf = gdk_pixbuf_new_from_file_at_size (filename, 128, 128, NULL);
+	have_preview = (pixbuf != NULL);
+	g_free (filename);
+
+	gtk_image_set_from_pixbuf (GTK_IMAGE (preview), pixbuf);
+	if (pixbuf)
+		g_object_unref (pixbuf);
+
+	gtk_file_chooser_set_preview_widget_active (file_chooser,
+						    have_preview);
+}
+
 static void 
 display_preferences_dialog (BonoboUIComponent *uic,
 			    FishApplet        *fish,
 			    const char        *verbname)
 {
-	GladeXML  *xml;
-	GtkWidget *button;
+	GladeXML      *xml;
+	GtkWidget     *button;
+	GtkFileFilter *filter;
+	GtkWidget     *chooser_preview;
+	char          *path;
 
 	if (fish->preferences_dialog) {
 		gtk_window_set_screen (GTK_WINDOW (fish->preferences_dialog),
@@ -359,18 +417,35 @@ display_preferences_dialog (BonoboUIComponent *uic,
 			   NULL /* label_post */,
 			   "name" /* key */);
 
-	fish->pixmap_entry = glade_xml_get_widget (xml, "image_entry");
-	gnome_pixmap_entry_set_pixmap_subdir (GNOME_PIXMAP_ENTRY (fish->pixmap_entry),
-					    FISH_ICONDIR);
-	fish->image_entry = gnome_file_entry_gtk_entry (
-				GNOME_FILE_ENTRY (fish->pixmap_entry));
-	gtk_entry_set_text (GTK_ENTRY (fish->image_entry), fish->image);
+	fish->preview_image = glade_xml_get_widget (xml, "preview_image");
+	if (fish->pixbuf)
+		gtk_image_set_from_pixbuf (GTK_IMAGE (fish->preview_image),
+					   fish->pixbuf);
 
-	g_signal_connect (fish->image_entry, "changed",
+	fish->image_chooser =  glade_xml_get_widget (xml, "image_chooser");
+	filter = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter, _("Images"));
+	gtk_file_filter_add_pixbuf_formats (filter);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fish->image_chooser),
+				     filter);
+	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fish->image_chooser),
+				     filter);
+	chooser_preview = gtk_image_new ();
+	gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (fish->image_chooser),
+					     chooser_preview);
+	g_signal_connect (GTK_FILE_CHOOSER (fish->image_chooser),
+			  "update-preview",
+			  G_CALLBACK (chooser_preview_update), chooser_preview);
+	path = get_image_path (fish);
+	gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fish->image_chooser),
+				       path);
+	g_free (path);
+
+	g_signal_connect (fish->image_chooser, "selection-changed",
 			  G_CALLBACK (image_value_changed), fish);
 
 	setup_sensitivity (fish, xml,
-			   "image_entry" /* wid */,
+			   "image_chooser" /* wid */,
 			   "image_label" /* label */,
 			   NULL /* label_post */,
 			   "image" /* key */);
@@ -970,9 +1045,19 @@ image_changed_notify (GConfClient *client,
 	load_fish_image (fish);
 	update_pixmap (fish);
 
-	if (fish->image_entry &&
-	    strcmp (gtk_entry_get_text (GTK_ENTRY (fish->image_entry)), fish->image))
-		gtk_entry_set_text (GTK_ENTRY (fish->image_entry), fish->image);
+	if (fish->image_chooser) {
+		char *path_gconf;
+		char *path_chooser;
+
+		path_gconf = get_image_path (fish);
+		path_chooser = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (fish->image_chooser));
+		if (strcmp (path_gconf, path_chooser))
+			gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fish->image_chooser),
+						       path_gconf);
+
+		g_free (path_gconf);
+		g_free (path_chooser);
+	}
 }
 
 static void
@@ -1288,10 +1373,7 @@ load_fish_image (FishApplet *fish)
 	if (!fish->image)
 		return FALSE;
 
-	if (g_path_is_absolute (fish->image))
-		path = g_strdup (fish->image);
-	else
-		path = g_strdup_printf ("%s/%s", FISH_ICONDIR, fish->image);
+	path = get_image_path (fish);
 
 	pixbuf = gdk_pixbuf_new_from_file (path, &error);
 	if (error) {
@@ -1304,6 +1386,10 @@ load_fish_image (FishApplet *fish)
 	if (fish->pixbuf)
 		g_object_unref (fish->pixbuf);
 	fish->pixbuf = pixbuf;
+
+	if (fish->preview_image)
+		gtk_image_set_from_pixbuf (GTK_IMAGE (fish->preview_image),
+					   fish->pixbuf);
 
 	g_free (path);
 
@@ -1960,10 +2046,10 @@ fish_applet_instance_init (FishApplet      *fish,
 
 	fish->preferences_dialog = NULL;
 	fish->name_entry         = NULL;
-	fish->pixmap_entry       = NULL;
-	fish->image_entry        = NULL;
 	fish->command_label      = NULL;
 	fish->command_entry      = NULL;
+	fish->preview_image      = NULL;
+	fish->image_chooser      = NULL;
 	fish->frames_spin        = NULL;
 	fish->speed_spin         = NULL;
 	fish->rotate_toggle      = NULL;
