@@ -1,6 +1,7 @@
 /* fish.c:
  *
  * Copyright (C) 1998-2002 Free Software Foundation, Inc.
+ * Copyright (C) 2002-2005 Vincent Untz
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,23 +21,23 @@
  * Authors:
  *      George Lebl  <jirka@5z.com>
  *      Mark McLoughlin <mark@skynet.ie>
+ *      Vincent Untz <vuntz@gnome.org>
  */
 
 #include <config.h>
 #include <string.h>
 #include <time.h>
 
+#include <math.h>
+#include <cairo/cairo.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 #include <gconf/gconf-client.h>
-#include <libgnomeui/gnome-file-entry.h>
 #include <libgnomeui/gnome-help.h>
-#include <libgnomeui/gnome-pixmap-entry.h>
 #include <libgnomeui/gnome-uidefs.h>
-#include <libart_lgpl/libart.h>
 #include <glade/glade-xml.h>
 
 #define FISH_APPLET(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), \
@@ -433,8 +434,7 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	chooser_preview = gtk_image_new ();
 	gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (fish->image_chooser),
 					     chooser_preview);
-	g_signal_connect (GTK_FILE_CHOOSER (fish->image_chooser),
-			  "update-preview",
+	g_signal_connect (fish->image_chooser, "update-preview",
 			  G_CALLBACK (chooser_preview_update), chooser_preview);
 	path = get_image_path (fish);
 	gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fish->image_chooser),
@@ -1400,18 +1400,21 @@ static void
 update_pixmap (FishApplet *fish)
 {
 	GtkWidget *widget = fish->drawing_area;
-	GdkGC     *gc;
 	int        width  = -1;
 	int        height = -1;
 	int        pixbuf_width = -1;
 	int        pixbuf_height = -1;
 	gboolean   rotate = FALSE;
-	double     affine [6];
-	guchar    *rgb;
+	cairo_t   *cr;
+	cairo_matrix_t matrix;
+	cairo_pattern_t *pattern;
 
 	if (!GTK_WIDGET_REALIZED (widget) ||
 	    widget->allocation.width <= 0 ||
 	    widget->allocation.height <= 0)
+		return;
+
+	if (!fish->pixbuf && !load_fish_image (fish))
 		return;
 
 	if (fish->rotate &&
@@ -1419,33 +1422,23 @@ update_pixmap (FishApplet *fish)
 	     fish->orientation == PANEL_APPLET_ORIENT_RIGHT))
 		rotate = TRUE;
 
-	if (fish->pixbuf || load_fish_image (fish)) {
-		pixbuf_width  = gdk_pixbuf_get_width  (fish->pixbuf);
-		pixbuf_height = gdk_pixbuf_get_height (fish->pixbuf);
+	pixbuf_width  = gdk_pixbuf_get_width  (fish->pixbuf);
+	pixbuf_height = gdk_pixbuf_get_height (fish->pixbuf);
 
-		if (fish->orientation == PANEL_APPLET_ORIENT_UP ||
-		    fish->orientation == PANEL_APPLET_ORIENT_DOWN) {
-			height = widget->allocation.height;
-			width  = pixbuf_width * ((gdouble) height / pixbuf_height);
-			widget->requisition.width = width / fish->n_frames;
-		} else {
-			if (!rotate) {
-				width = widget->allocation.width * fish->n_frames;
-				height = pixbuf_height * ((gdouble) width / pixbuf_width);
-				widget->requisition.height = height;
-			} else {
-				width = widget->allocation.width;
-				height = pixbuf_width * ((gdouble) width / pixbuf_height);
-				widget->requisition.height = height / fish->n_frames;
-			}
-		}
+	if (fish->orientation == PANEL_APPLET_ORIENT_UP ||
+	    fish->orientation == PANEL_APPLET_ORIENT_DOWN) {
+		height = widget->allocation.height;
+		width  = pixbuf_width * ((gdouble) height / pixbuf_height);
+		widget->requisition.width = width / fish->n_frames;
 	} else {
-		if (rotate) {
-			width  = widget->allocation.width;
-			height = widget->allocation.height * fish->n_frames;
+		if (!rotate) {
+			width = widget->allocation.width * fish->n_frames;
+			height = pixbuf_height * ((gdouble) width / pixbuf_width);
+			widget->requisition.height = height;
 		} else {
-			height = widget->allocation.height;
-			width  = widget->allocation.width * fish->n_frames;
+			width = widget->allocation.width;
+			height = pixbuf_width * ((gdouble) width / pixbuf_height);
+			widget->requisition.height = height / fish->n_frames;
 		}
 	}
 
@@ -1458,71 +1451,55 @@ update_pixmap (FishApplet *fish)
 		g_object_unref (fish->pixmap);
 	fish->pixmap = gdk_pixmap_new (widget->window, width, height, -1);
 
-	if (!fish->pixbuf)
-		return;
-
 	gtk_widget_queue_resize (widget);
 
 	g_assert (pixbuf_width != -1 && pixbuf_height != -1);
 
-	affine [1] = affine [2] = affine [4] = affine [5] = 0;
+	cr = gdk_cairo_create (fish->pixmap);
 
-	if (!rotate) {
-		affine [0] = width  / (double) pixbuf_width;
-		affine [3] = height / (double) pixbuf_height;
-	} else {
-		double tmp [6];
+	cairo_set_source_rgb (cr, 1, 1, 1);
+	cairo_paint (cr);
 
-		affine [0] = height / (double) pixbuf_width;
-		affine [3] = width  / (double) pixbuf_height;
-		
-		art_affine_rotate (tmp, 270);
-		art_affine_multiply (affine, affine, tmp);
-                art_affine_translate (tmp, 0, height);
-                art_affine_multiply (affine, affine, tmp);
-	}
+	gdk_cairo_set_source_pixbuf (cr, fish->pixbuf, 0, 0);
+	pattern = cairo_get_source (cr);
+	cairo_pattern_set_filter (pattern, CAIRO_FILTER_BEST);
+
+	cairo_matrix_init_identity (&matrix);
 
 	if (fish->april_fools) {
-                double tmp [6];
+		cairo_matrix_translate (&matrix,
+					pixbuf_width - 1, pixbuf_height - 1);
+		cairo_matrix_rotate (&matrix, M_PI);
+	}
 
-                art_affine_rotate (tmp, 180);
-                art_affine_multiply (affine, affine, tmp);
-                art_affine_translate (tmp, width, height);
-                art_affine_multiply (affine, affine, tmp);
-        }
+	if (rotate) {
+		if (fish->orientation == PANEL_APPLET_ORIENT_LEFT) {
+			cairo_matrix_translate (&matrix, pixbuf_width - 1, 0);
+			cairo_matrix_rotate (&matrix, M_PI * 0.5);
+		} else {
+			cairo_matrix_translate (&matrix, 0, pixbuf_height - 1);
+			cairo_matrix_rotate (&matrix, M_PI * 1.5);
+		}
+		cairo_matrix_scale (&matrix,
+				    (double) (pixbuf_height - 1) / width,
+				    (double) (pixbuf_width - 1) / height);
+	} else {
+		cairo_matrix_scale (&matrix,
+				    (double) (pixbuf_width - 1) / width,
+				    (double) (pixbuf_height - 1) / height);
+	}
 
-	rgb = g_new0 (guchar, width * height * 3);
+	cairo_pattern_set_matrix (pattern, &matrix);
 
-	if (gdk_pixbuf_get_has_alpha (fish->pixbuf))
-		art_rgb_rgba_affine (rgb, 0, 0, width, height, width * 3,
-				     gdk_pixbuf_get_pixels (fish->pixbuf),
-                                     pixbuf_width, pixbuf_height,
-                                     gdk_pixbuf_get_rowstride (fish->pixbuf),
-                                     affine,
-                                     ART_FILTER_NEAREST,
-                                     NULL);
-        else
-                art_rgb_affine (rgb, 0, 0, width, height, width * 3,
-                                gdk_pixbuf_get_pixels (fish->pixbuf),
-                                pixbuf_width, pixbuf_height,
-                                gdk_pixbuf_get_rowstride (fish->pixbuf),
-                                affine,
-                                ART_FILTER_NEAREST,
-                                NULL);
+	cairo_rectangle (cr, 0, 0, width, height);
+	cairo_fill (cr);
 
+	if (fish->april_fools) {
+		cairo_set_source_rgb (cr, 1, 0.5, 0);
+		cairo_paint_with_alpha (cr, 0.25);
+	}
 
-	if (fish->april_fools)
-                art_rgb_run_alpha (rgb, 255, 128, 0, 70, width * height);
-
-	gc = gdk_gc_new (fish->pixmap);
-
-	gdk_draw_rgb_image (fish->pixmap, gc,
-			    0, 0, width, height,
-                            GDK_RGB_DITHER_NORMAL,
-                            rgb, width * 3);
-
-	g_object_unref (gc);
-        g_free (rgb);
+	cairo_destroy (cr);
 }
 
 static gboolean
@@ -1542,11 +1519,14 @@ fish_applet_expose_event (GtkWidget      *widget,
 	src_x = event->area.x;
 	src_y = event->area.y;
 
-	if (fish->rotate &&
-	    (fish->orientation == PANEL_APPLET_ORIENT_LEFT ||
-	     fish->orientation == PANEL_APPLET_ORIENT_RIGHT))
-		src_y += ((height * fish->current_frame) / fish->n_frames);
-	else
+	if (fish->rotate) {
+		if (fish->orientation == PANEL_APPLET_ORIENT_LEFT)
+			src_y += ((height * (fish->n_frames - 1 - fish->current_frame)) / fish->n_frames);
+		else if (fish->orientation == PANEL_APPLET_ORIENT_RIGHT)
+			src_y += ((height * fish->current_frame) / fish->n_frames);
+		else
+			src_x += ((width * fish->current_frame) / fish->n_frames);
+	} else
 		src_x += ((width * fish->current_frame) / fish->n_frames);
 
 	gdk_draw_drawable (widget->window,

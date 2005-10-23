@@ -1,5 +1,16 @@
 2005-10-23  Vincent Untz  <vuntz@gnome.org>
 
+	Bye bye libart, welcome cairo.
+
+	* fish.c: remove some useless includes
+	(display_preferences_dialog): small beautification
+	(update_pixmap): rewritten to move Wanda to the new world, with cairo.
+	(fish_applet_expose_event): Wanda is now rotated diffently depending
+	of the panel orientation on vertical panels.
+	also, add my name to authors/copyright
+
+2005-10-23  Vincent Untz  <vuntz@gnome.org>
+
 	Do not use deprecated widgets.
 
 	* fish.c: (get_image_path): new, utility function
