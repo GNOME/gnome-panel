@@ -1092,13 +1092,11 @@ handle_appointments_changed (ClockData *cd)
         guint   year, month, day;
 
         if (cd->calendar) {
-                gtk_calendar_freeze (GTK_CALENDAR (cd->calendar));
                 gtk_calendar_clear_marks (GTK_CALENDAR (cd->calendar));
 
                 calendar_client_foreach_appointment_day (cd->client,
                                                          (CalendarDayIter) mark_day_on_calendar,
                                                          cd);
-                gtk_calendar_thaw (GTK_CALENDAR (cd->calendar));
         }
 
         gtk_list_store_clear (cd->appointments_model);
