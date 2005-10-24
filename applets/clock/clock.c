@@ -1476,7 +1476,7 @@ position_calendar_popup (ClockData *cd,
 	 * I expected.
 	 */
 	switch (cd->orient) {
-	case PANEL_APPLET_ORIENT_RIGHT:
+	case PANEL_APPLET_ORIENT_LEFT:
 		x += button_w;
 		if ((y + h) > monitor.y + monitor.height)
 			y -= (y + h) - (monitor.y + monitor.height);
@@ -1487,7 +1487,7 @@ position_calendar_popup (ClockData *cd,
 			gravity = GDK_GRAVITY_NORTH_WEST;
 
 		break;
-	case PANEL_APPLET_ORIENT_LEFT:
+	case PANEL_APPLET_ORIENT_RIGHT:
 		x -= w;
 		if ((y + h) > monitor.y + monitor.height)
 			y -= (y + h) - (monitor.y + monitor.height);
@@ -1658,9 +1658,9 @@ create_clock_widget (ClockData *cd)
 
 	/* Initialize label orientation */
 	if (cd->orient == PANEL_APPLET_ORIENT_LEFT)
-		gtk_label_set_angle (GTK_LABEL (cd->clockw), 270);
-	else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT)
 		gtk_label_set_angle (GTK_LABEL (cd->clockw), 90);
+	else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT)
+		gtk_label_set_angle (GTK_LABEL (cd->clockw), 270);
 	else
 		gtk_label_set_angle (GTK_LABEL (cd->clockw), 0);
 
@@ -1687,9 +1687,9 @@ applet_change_orient (PanelApplet       *applet,
         cd->orient = orient;
         
         if (cd->orient == PANEL_APPLET_ORIENT_LEFT)
-                gtk_label_set_angle (GTK_LABEL (cd->clockw), 270);
-        else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT)
                 gtk_label_set_angle (GTK_LABEL (cd->clockw), 90);
+        else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT)
+                gtk_label_set_angle (GTK_LABEL (cd->clockw), 270);
         else
                 gtk_label_set_angle (GTK_LABEL (cd->clockw), 0);
 	
