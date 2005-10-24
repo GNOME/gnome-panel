@@ -1508,7 +1508,6 @@ entry_drag_data_received (GtkEditable      *entry,
 			  guint32           time,
 			  PanelRunDialog   *dialog)
 {
-	char  *uri_list;
 	char **uris;
 	char  *file;
 	int    i;
@@ -1520,11 +1519,9 @@ entry_drag_data_received (GtkEditable      *entry,
 		return;
         }
 
-	uri_list = g_strndup (selection_data->data, selection_data->length);
-	uris = g_strsplit (uri_list, "\r\n", -1);
+	uris = g_uri_list_extract_uris ((const char *)selection_data->data);
 
 	if (!uris) {
-		g_free (uri_list);
 		gtk_drag_finish (context, FALSE, FALSE, time);
 		return;
 	}
@@ -1544,7 +1541,6 @@ entry_drag_data_received (GtkEditable      *entry,
 	}
 
 	g_strfreev (uris);
-	g_free (uri_list);
 	gtk_drag_finish (context, TRUE, FALSE, time);
 }
 
@@ -1646,7 +1642,7 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 	if (gnome_desktop_item_save (ditem, NULL, FALSE, NULL))
 		gtk_selection_data_set (selection_data,
 					selection_data->target, 8,
-					uri, strlen (uri));
+					(unsigned char *) uri, strlen (uri));
 	gnome_desktop_item_unref (ditem);
 
 	g_free (uri);

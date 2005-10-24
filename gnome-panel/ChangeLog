@@ -1,3 +1,18 @@
+2005-10-24  Vincent Untz  <vuntz@gnome.org>
+
+	* drawer.c: add FIXME
+	* launcher.c: (drag_data_get_cb): fix warning
+	(panel_launcher_set_dnd_enabled): add FIXME
+	* menu.c: (icon_theme_changed): don't use GnomeIconTheme
+	* panel-applet-frame.c: (panel_applet_frame_change_orientation): I'm
+	not sure why the orientation were inverted, but I think it's a bug.
+	So fix it. It might break things, though...
+	(panel_applet_frame_get_orient_string): ditto
+	* panel-properties-dialog.c: add TODO
+	* panel-run-dialog.c: (entry_drag_data_received): use
+	g_uri_list_extract_uris() and remove warning
+	(pixmap_drag_data_get): remove warning
+
 2005-10-22  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-toplevel.schemas.in: change default panel size to 24.

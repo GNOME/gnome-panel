@@ -260,8 +260,8 @@ reload_image_menu_items (void)
 }
 
 static void
-icon_theme_changed (GnomeIconTheme *icon_theme,
-		    gpointer        data)
+icon_theme_changed (GtkIconTheme *icon_theme,
+		    gpointer      data)
 {
 	reload_image_menu_items ();
 }

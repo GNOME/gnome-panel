@@ -406,6 +406,7 @@ panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 	GtkFileFilter *filter;
 	char          *image;
 
+	//TODO add a preview widget
 	dialog->image_chooser = glade_xml_get_widget (gui, "image_chooser");
 
 	filter = gtk_file_filter_new ();

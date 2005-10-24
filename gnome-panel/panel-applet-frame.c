@@ -406,16 +406,16 @@ panel_applet_frame_change_orientation (PanelAppletFrame *frame,
 
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:
-		orient = GNOME_Vertigo_PANEL_ORIENT_DOWN;
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
 		orient = GNOME_Vertigo_PANEL_ORIENT_UP;
 		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		orient = GNOME_Vertigo_PANEL_ORIENT_DOWN;
+		break;
 	case PANEL_ORIENTATION_LEFT:
-		orient = GNOME_Vertigo_PANEL_ORIENT_RIGHT;
+		orient = GNOME_Vertigo_PANEL_ORIENT_LEFT;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		orient = GNOME_Vertigo_PANEL_ORIENT_LEFT;
+		orient = GNOME_Vertigo_PANEL_ORIENT_RIGHT;
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1127,16 +1127,16 @@ panel_applet_frame_get_orient_string (PanelAppletFrame *frame,
 
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:
-		retval = "down";
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
 		retval = "up";
 		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		retval = "down";
+		break;
 	case PANEL_ORIENTATION_LEFT:
-		retval = "right";
+		retval = "left";
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		retval = "left";
+		retval = "right";
 		break;
 	default:
 		g_assert_not_reached ();

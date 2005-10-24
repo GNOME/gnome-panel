@@ -462,7 +462,8 @@ drag_data_get_cb (GtkWidget          *widget,
 	} else if (info == TARGET_ICON_INTERNAL)
 		gtk_selection_data_set (selection_data,
 					selection_data->target, 8,
-					location, strlen (location));
+					(unsigned char *) location,
+					strlen (location));
 }
 
 static Launcher *
@@ -1289,6 +1290,7 @@ panel_launcher_set_dnd_enabled (Launcher *launcher,
 				     GDK_BUTTON1_MASK,
 				     dnd_targets, 2,
 				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
+		//FIXME: this doesn't work since the pixbuf isn't loaded yet
 		if (BUTTON_WIDGET (launcher->button)->pixbuf)
 			gtk_drag_source_set_icon_pixbuf (launcher->button,
 							 BUTTON_WIDGET (launcher->button)->pixbuf);
