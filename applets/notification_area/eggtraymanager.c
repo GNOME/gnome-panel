@@ -23,11 +23,16 @@
 
 #include "eggtraymanager.h"
 
+#include <gdkconfig.h>
+#if defined (GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
+#include <X11/Xatom.h>
+#elif defined (GDK_WINDOWING_WIN32)
+#include <gdk/gdkwin32.h>
+#endif
 #include <gtk/gtkinvisible.h>
 #include <gtk/gtksocket.h>
 #include <gtk/gtkwindow.h>
-#include <X11/Xatom.h>
 
 #include "eggmarshalers.h"
 
@@ -63,8 +68,10 @@ typedef struct
   long remaining_len;
   
   long timeout;
-  Window window;
   char *str;
+#ifdef GDK_WINDOWING_X11
+  Window window;
+#endif
 } PendingMessage;
 
 static GObjectClass *parent_class = NULL;
@@ -77,7 +84,9 @@ static guint manager_signals[LAST_SIGNAL] = { 0 };
 #define SYSTEM_TRAY_ORIENTATION_HORZ 0
 #define SYSTEM_TRAY_ORIENTATION_VERT 1
 
+#ifdef GDK_WINDOWING_X11
 static gboolean egg_tray_manager_check_running_xscreen (Screen *xscreen);
+#endif
 
 static void egg_tray_manager_init (EggTrayManager *manager);
 static void egg_tray_manager_class_init (EggTrayManagerClass *klass);
@@ -198,6 +207,13 @@ egg_tray_manager_class_init (EggTrayManagerClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+#if defined (GDK_WINDOWING_X11)
+  /* Nothing */
+#elif defined (GDK_WINDOWING_WIN32)
+  g_warning ("Port eggtraymanager to Win32");
+#else
+  g_warning ("Port eggtraymanager to this GTK+ backend");
+#endif
 }
 
 static void
@@ -259,6 +275,8 @@ egg_tray_manager_new (void)
 
   return manager;
 }
+
+#ifdef GDK_WINDOWING_X11
 
 static gboolean
 egg_tray_manager_plug_removed (GtkSocket       *socket,
@@ -464,13 +482,15 @@ egg_tray_manager_window_filter (GdkXEvent *xev, GdkEvent *event, gpointer data)
       g_signal_emit (manager, manager_signals[LOST_SELECTION], 0);
       egg_tray_manager_unmanage (manager);
     }
-  
   return GDK_FILTER_CONTINUE;
 }
+
+#endif  
 
 static void
 egg_tray_manager_unmanage (EggTrayManager *manager)
 {
+#ifdef GDK_WINDOWING_X11
   Display *display;
   guint32 timestamp;
   GtkWidget *invisible;
@@ -497,11 +517,13 @@ egg_tray_manager_unmanage (EggTrayManager *manager)
   manager->invisible = NULL; /* prior to destroy for reentrancy paranoia */
   gtk_widget_destroy (invisible);
   g_object_unref (G_OBJECT (invisible));
+#endif
 }
 
 static void
 egg_tray_manager_set_orientation_property (EggTrayManager *manager)
 {
+#ifdef GDK_WINDOWING_X11
   gulong data[1];
 
   if (!manager->invisible || !manager->invisible->window)
@@ -519,7 +541,10 @@ egg_tray_manager_set_orientation_property (EggTrayManager *manager)
 		   XA_CARDINAL, 32,
 		   PropModeReplace,
 		   (guchar *) &data, 1);
+#endif
 }
+
+#ifdef GDK_WINDOWING_X11
 
 static gboolean
 egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
@@ -606,6 +631,8 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
     }
 }
 
+#endif
+
 gboolean
 egg_tray_manager_manage_screen (EggTrayManager *manager,
 				GdkScreen      *screen)
@@ -613,9 +640,15 @@ egg_tray_manager_manage_screen (EggTrayManager *manager,
   g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
   g_return_val_if_fail (manager->screen == NULL, FALSE);
 
+#ifdef GDK_WINDOWING_X11
   return egg_tray_manager_manage_xscreen (manager, 
 					  GDK_SCREEN_XSCREEN (screen));
+#else
+  return FALSE;
+#endif
 }
+
+#ifdef GDK_WINDOWING_X11
 
 static gboolean
 egg_tray_manager_check_running_xscreen (Screen *xscreen)
@@ -634,22 +667,29 @@ egg_tray_manager_check_running_xscreen (Screen *xscreen)
     return FALSE;
 }
 
+#endif
+
 gboolean
 egg_tray_manager_check_running (GdkScreen *screen)
 {
   g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 
+#ifdef GDK_WINDOWING_X11
   return egg_tray_manager_check_running_xscreen (GDK_SCREEN_XSCREEN (screen));
+#else
+  return FALSE;
+#endif
 }
 
 char *
 egg_tray_manager_get_child_title (EggTrayManager *manager,
 				  EggTrayManagerChild *child)
 {
+  char *retval = NULL;
+#ifdef GDK_WINDOWING_X11
   Window *child_window;
   Atom utf8_string, atom, type;
   int result;
-  char *retval;
   int format;
   gulong nitems;
   gulong bytes_after;
@@ -695,9 +735,8 @@ egg_tray_manager_get_child_title (EggTrayManager *manager,
   retval = g_strndup (val, nitems);
 
   XFree (val);
-
+#endif
   return retval;
-
 }
 
 void

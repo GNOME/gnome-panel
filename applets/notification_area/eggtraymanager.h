@@ -22,7 +22,9 @@
 #define __EGG_TRAY_MANAGER_H__
 
 #include <gtk/gtkwidget.h>
+#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
+#endif
 
 G_BEGIN_DECLS
 
@@ -41,10 +43,12 @@ struct _EggTrayManager
 {
   GObject parent_instance;
 
+#ifdef GDK_WINDOWING_X11
   Atom opcode_atom;
   Atom selection_atom;
   Atom message_data_atom;
   Atom orientation_atom;
+#endif
   
   GtkWidget *invisible;
   GdkScreen *screen;
