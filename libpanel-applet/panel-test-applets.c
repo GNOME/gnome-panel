@@ -48,7 +48,7 @@ typedef struct {
 	const char *value;
 } ComboItem;
 
-static ComboItem size_items [] = {
+static ComboItem orient_items [] = {
 	{ N_("Top"),    "top"    },
 	{ N_("Bottom"), "bottom" },
 	{ N_("Left"),   "left"   },
@@ -56,7 +56,7 @@ static ComboItem size_items [] = {
 };
 
 
-static ComboItem orient_items [] = {
+static ComboItem size_items [] = {
 	{ N_("XX Small"), "xx-small" },
 	{ N_("X Small"),  "x-small"  },
 	{ N_("Small"),    "small"    },
