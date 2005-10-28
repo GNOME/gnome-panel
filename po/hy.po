@@ -3,7 +3,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Norayr Chilingaryan <asprayama@yahoo.com>, 2004, 2005.
 # Lilit Azizbekyan <l@freenet.am>, 2005.
-#
+# Ruzanna Khachatryan, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.hy\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Language-Team:  <norik@freenet.am>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 16bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
@@ -50,14 +50,14 @@ msgstr "_Ապլետի մասին"
 #: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:225
 #: ../gnome-panel/panel-menu-button.c:688
 msgid "_Help"
-msgstr "_Հարց–բացատրություն"
+msgstr "_Ձեռնարկ"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:6
 #: ../applets/fish/GNOME_FishApplet.xml.h:3
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences"
-msgstr "_Նախընտրանքներ կամ պարամետրեր"
+msgstr "_Նախընտրանքներ"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 #: ../applets/clock/clock.c:2635
@@ -70,7 +70,7 @@ msgstr "Ժամացույցի ապլետ ֆաբրիկա"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
-msgstr "Ժամացույցի ապլետներ ստեղծելու ֆաբրկա"
+msgstr "Ժամացույցի ապլետներ ստեղծելու ֆաբրիկա"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
@@ -178,13 +178,14 @@ msgstr "%A, %B %d %Y"
 #: ../applets/clock/clock.c:1810
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr "Ժամանակի կոնֆիգուրացիայի գործիքը գործարկել չհաջողվեց  %s"
+msgstr "Ժամանակի կոնֆիգուրացիայի գործիքը գործարկել չհաջողվեց՝  %s"
 
 #: ../applets/clock/clock.c:1849
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
-msgstr "Օրը և ժամը կարգադրող ծրագիրը չհաջողվեց գտնել։ Հավանաբար այն տեղակայված չէ"
+msgstr ""
+"Օրը և ժամը կարգադրող ծրագիրը չհաջողվեց գտնել։ Հավանաբար այն տեղակայված չէ"
 
 #: ../applets/clock/clock.c:2296
 msgid "Custom format"
@@ -196,7 +197,7 @@ msgstr "Այլ ֆորմատ"
 #: ../applets/wncklet/workspace-switcher.c:241
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr "Հարց–բացատրության գործարկման ժամանակ սխալ տեղի ունեցավ %s"
+msgstr "Ձեռնարկի գործարկման ժամանակ սխալ տեղի ունեցավ %s"
 
 #: ../applets/clock/clock.c:2452
 msgid "Clock Preferences"
@@ -255,7 +256,7 @@ msgstr "Ժամացույցը ցույց է տալիս ընթացիկ ժամը և
 msgid "translator-credits"
 msgstr ""
 "Նորայր Չիլինգարյան<norik@freenet.am>\n"
-"Լիլիթ Ազիզբեկյան<l@freenet.am>"
+"Լիլիթ Ազիզբեկյան<l@freenet.am>Ruzanna Khachatryan"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -337,7 +338,8 @@ msgid ""
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
 "Այս բանալին խորհուրդ չի տրվում կիրառել GNOME 2.6 միջավայրում։Այն պահպանված է "
-"միայն հին տարբերակների հետ համատեղելիության նպատակով։ Կիրառեք 'ֆորմատի բանալին"
+"միայն հին տարբերակների հետ համատեղելիության նպատակով։ Կիրառեք 'ֆորմատի "
+"բանալին"
 
 #: ../applets/clock/clock.schemas.in.h:35
 msgid ""
@@ -346,8 +348,8 @@ msgid ""
 "strftime() to obtain a specific format."
 msgstr ""
 "Այս բանալին հատկորոշում է ժամացույցի ապլետի ֆորմատը, երբ 'ֆորմատի բանալին "
-"ընտրված է որպես 'ընտրովի'։ Դուք կարող եք կիրառել հաջորդականություններ, որոնց "
-" strftime() ֆունկցիան հասկանում է, հատուկ ֆորմատ ստանալու համար"
+"ընտրված է որպես 'ընտրովի'։ Դուք կարող եք կիրառել հաջորդականություններ, "
+"որոնց  strftime() ֆունկցիան հասկանում է, հատուկ ֆորմատ ստանալու համար"
 
 #: ../applets/clock/clock.schemas.in.h:36
 msgid ""
@@ -417,8 +419,8 @@ msgid ""
 msgstr ""
 "Ուշադրություն՝ հավանաբար հրահանգը իրականում օգտակար է։\n"
 "Քանի որ սա անօգտակար ապլետ է, Դուք կարող է չցանկանաք օգտագործել այն։\n"
-"Խորհուրդ ենք տալիս \"%s չկիրառել \" ցանկացած նպատակով, "
-"որը  ապլետը կդարձնի \"կիրառելի\" կամ օգտակար։"
+"Խորհուրդ ենք տալիս \"%s չկիրառել \" ցանկացած նպատակով, որը  ապլետը կդարձնի "
+"\"կիրառելի\" կամ օգտակար։"
 
 #: ../applets/fish/fish.c:467 ../applets/fish/fish.c:527
 #: ../applets/fish/fish.c:642
@@ -434,9 +436,10 @@ msgid ""
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"\"%s Ձկնիկը\" միանգամայն անպիտանի ապլետ է։ Այն միայն դիսկի վրա տեղ է զբաղեցնում, և "
-"երկարացնում է կազմարկման (compilation) ընթացքը։ Աշխատելիս, զբաղեցնում է տեղ "
-"վահաակի վրա, և հիշողության մեջ։ Նա, ով կարողանում է այն օգտագործել, հավանաբար հոգեբանական հետազոտման կարիք ունի։"
+"\"%s Ձկնիկը\" միանգամայն անպիտանի ապլետ է։ Այն միայն դիսկի վրա տեղ է "
+"զբաղեցնում, և երկարացնում է կազմարկման (compilation) ընթացքը։ Աշխատելիս, "
+"զբաղեցնում է տեղ վահաակի վրա, և հիշողության մեջ։ Նա, ով կարողանում է այն "
+"օգտագործել, հավանաբար հոգեբանական հետազոտման կարիք ունի։"
 
 #: ../applets/fish/fish.c:492
 msgid "(with minor help from George)"
@@ -530,7 +533,7 @@ msgstr "<b>Ընդհանուր</b>"
 
 #: ../applets/fish/fish.glade.h:5
 msgid "Browse"
-msgstr "Բրաուզ կամ փնտրում"
+msgstr "Գտնել"
 
 #: ../applets/fish/fish.glade.h:6
 msgid "Co_mmand to run when clicked:"
@@ -558,11 +561,11 @@ msgstr "_Պտտել ուղղահայաց վահանակների վրա"
 
 #: ../applets/fish/fish.glade.h:12
 msgid "_Total frames in animation:"
-msgstr "_Անիմացիայի շրջանակների ընդհանուր թիվը"
+msgstr "_Անիմացիայի կադրերի ընդհանուր թիվը"
 
 #: ../applets/fish/fish.glade.h:13
 msgid "frames"
-msgstr "Շրջանակներ"
+msgstr "կադրեր"
 
 #: ../applets/fish/fish.glade.h:14
 msgid "seconds"
@@ -572,7 +575,9 @@ msgstr "Վայրկյաններ"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr "Անուն չունեցող ձկնիկը միանգամայն ձանձրալի ձկնիկ է։ Կյանքի կոչեք ձեր ձկնիկին՝ տալով նրան անուն"
+msgstr ""
+"Անուն չունեցող ձկնիկը միանգամայն ձանձրալի ձկնիկ է։ Կյանքի կոչեք ձեր ձկնիկին՝ "
+"տալով նրան անուն"
 
 #: ../applets/fish/fish.schemas.in.h:2
 msgid "Command to execute on click"
@@ -580,11 +585,13 @@ msgstr "Կտտոցով կատարվող հրահանգ"
 
 #: ../applets/fish/fish.schemas.in.h:3
 msgid "Frames in fish's animation"
-msgstr "Ձկնիկի անիմացիայի շրջանակների թիվը "
+msgstr "Ձկնիկի անիմացիայի կադրերի թիվը "
 
 #: ../applets/fish/fish.schemas.in.h:4
-msgid "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Եթե ճշգրտ է, պտտվող ձկնիկի անիմացիոն պատկերը կերևա ուղղահայաց վահանակի վրա։"
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr ""
+"Եթե ճշգրտ է, պտտվող ձկնիկի անիմացիոն պատկերը կերևա ուղղահայաց վահանակի վրա։"
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -606,23 +613,32 @@ msgstr "Ձկնիկի անունը"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "Այս բանալին մասնավորեցնում է այն հրահանգը, որը պետք է գրոծարկվի, երբ ձկնիկի վրա կտտոց կատարվի"
+msgstr ""
+"Այս բանալին մասնավորեցնում է այն հրահանգը, որը պետք է գրոծարկվի, երբ ձկնիկի "
+"վրա կտտոց կատարվի"
 
 #: ../applets/fish/fish.schemas.in.h:10
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Այս բանալին մասնավորեցնում է պիքսելների քարտեզի ֆայլի անունը, որը պետք է օգտագործվի ձկնիկ ապլետում ցույց տրվող անիմացիայի համար, համաձայն պիքսելների քարտեզի թղթապանակի"
+msgstr ""
+"Այս բանալին մասնավորեցնում է պիքսելների քարտեզի ֆայլի անունը, որը պետք է "
+"օգտագործվի ձկնիկ ապլետում ցույց տրվող անիմացիայի համար, համաձայն պիքսելների "
+"քարտեզի թղթապանակի"
 
 #: ../applets/fish/fish.schemas.in.h:11
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
-msgstr "Այս բանալին մասնավորեցնում է շրջանակների թիվը, որոնք պետք է ցուցադրվեն ձկնիկի անիմացիայի ժամանակ"
+msgstr ""
+"Այս բանալին մասնավորեցնում է շրջանակների թիվը, որոնք պետք է ցուցադրվեն "
+"ձկնիկի անիմացիայի ժամանակ"
 
 #: ../applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
-msgstr "Այս բանալին մասնավորեցնում է վայրկյանների թիվը, որի ընթացքում պետք է յուրաքանչյուր շրջանակը ցուցադրվի"
+msgstr ""
+"Այս բանալին մասնավորեցնում է վայրկյանների թիվը, որի ընթացքում պետք է "
+"յուրաքանչյուր շրջանակը ցուցադրվի"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
@@ -663,7 +679,7 @@ msgstr "Ցույց տալ աշխատանքային էկրանը"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
 msgid "Switch between open windows using a menu"
-msgstr "Փոխել բաց պատուհանը, օգտագործելով մենյուն"
+msgstr "Փոխել բաց պատուհանը, օգտագործելով ցանկը"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
 msgid "Switch between open windows using buttons"
@@ -725,15 +741,17 @@ msgstr ""
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
-msgstr "Ձեր պատուհանների կառավարիչը չի ապահովում աշխատանքային էկրանը ցույց տվող կոճակը կամ դուք պատուհանի կառավարչին չեք ակտիվացրել"
+msgstr ""
+"Ձեր պատուհանների կառավարիչը չի ապահովում աշխատանքային էկրանը ցույց տվող "
+"կոճակը կամ դուք պատուհանի կառավարչին չեք ակտիվացրել"
 
 #: ../applets/wncklet/window-list.c:777
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
 msgstr ""
-"Պատուհանների ցուցակը ցույց է տալիս բոլոր պատուհանների ցուցակը՝ իրենց կոճակներով և  հնարավորություն է ընձեռում ընտրել "
-"որևէ մեկը"
+"Պատուհանների ցուցակը ցույց է տալիս բոլոր պատուհանների ցուցակը՝ իրենց "
+"կոճակներով և  հնարավորություն է ընձեռում ընտրել որևէ մեկը"
 
 #: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -802,7 +820,7 @@ msgstr "_Երբեք չխմբավորել պատուհանները"
 #: ../applets/wncklet/window-list.glade.h:18
 #: ../gnome-panel/panel-properties-dialog.glade.h:28
 msgid "pixels"
-msgstr "Պիքսել"
+msgstr "պիքսել"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -817,14 +835,16 @@ msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"Եթե ճշգրտ է, պատուհանների ցանկը ցույց կտա բոլոր աշխատատիրույթների պատուհանները, հակառակ դեպքում միայն ընթացիկ աշխատատիրույթի "
-"պատուհանները։"
+"Եթե ճշգրտ է, պատուհանների ցանկը ցույց կտա բոլոր աշխատատիրույթների "
+"պատուհանները, հակառակ դեպքում միայն ընթացիկ աշխատատիրույթի պատուհանները։"
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
-msgstr "Եթե ճշգրիտ է, պատուհանները վերականգնվելու ժամանակ անհրաժեշ է դրանք տեղափոխել ընթացիկ աշխատատիրույթ, կամ պատուհանի աշխատատիրույթ։"
+msgstr ""
+"Եթե ճշգրիտ է, պատուհանները վերականգնվելու ժամանակ անհրաժեշ է դրանք տեղափոխել "
+"ընթացիկ աշխատատիրույթ, կամ պատուհանի աշխատատիրույթ։"
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
@@ -847,11 +867,17 @@ msgid ""
 "This key specifies the maximum width that the window list requests. The "
 "maximum width setting is useful to limit the size of the window list in "
 "large panels, where the window list could fill the entire space available."
-msgstr "Այս բանալին մասնավորեցնում է պատուհանացանկի առավելագույն լայնությունը, որը պահանջվում է պատուհանների ցուցակով։ Առավելագույն լայնության կարգադրվածքը օգտակար է սահմանափակելու համար պատուհանների ցուցակը մեծ վահանակի վրա, որտեղ պատուհանների ցուցակը կարող է զբաղեցնել ամբողջ առկա տարածքը"
+msgstr ""
+"Այս բանալին մասնավորեցնում է պատուհանացանկի առավելագույն լայնությունը, որը "
+"պահանջվում է պատուհանների ցուցակով։ Առավելագույն լայնության կարգադրվածքը "
+"օգտակար է սահմանափակելու համար պատուհանների ցուցակը մեծ վահանակի վրա, որտեղ "
+"պատուհանների ցուցակը կարող է զբաղեցնել ամբողջ առկա տարածքը"
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "This key specifies the minimum width that the window list requests."
-msgstr "Այս բանալին սահմանում է  նվազագույն լայնությունը, որը պահանջվում է պատուհանների ցանկով։"
+msgstr ""
+"Այս բանալին սահմանում է  նվազագույն լայնությունը, որը պահանջվում է "
+"պատուհանների ցանկով։"
 
 #: ../applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
@@ -861,7 +887,9 @@ msgstr "Երբ խմբավորել պատուհանները"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "Պատուհան սելեկտորը ցույց է տալիս բոլոր պատուհանների ցուցակը մենյուի մեջ և թույլ է տալիս ընտրել դրանք"
+msgstr ""
+"Պատուհան ընտրիչը ցույց է տալիս բոլոր պատուհանների ցուցակը ցանկի մեջ և թույլ "
+"է տալիս ընտրել դրանք"
 
 #: ../applets/wncklet/workspace-switcher.c:130
 #: ../applets/wncklet/workspace-switcher.c:859
@@ -877,11 +905,13 @@ msgstr "սյուներ"
 #: ../applets/wncklet/workspace-switcher.c:429
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "Խափանվել է num_rows արժեքի բեռնումը Աշխատատիրույթի Փոխարկչի համար՝ %s\n"
+msgstr ""
+"Խափանվել է num_rows արժեքի բեռնումը Աշխատատիրույթի Փոխարկչի համար՝ %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:440
 #, c-format
-msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Խափանվել է display_workspace_names արժեքի բեռնումը Աշխատատիրույթի Փոխարկչի "
 "համար՝ %s\n"
@@ -958,8 +988,9 @@ msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace."
 msgstr ""
-"Եթե ճշգրիտ է,աշխատատիրույթները աշխատատիրույթի փոխարկչում կցուցադրեն աշխատատիրույթների անունները։ "
-"Հակառակ դեպքում աշխատատիրույթում կերևան պատուհանները։"
+"Եթե ճշգրիտ է,աշխատատիրույթները աշխատատիրույթի փոխարկչում կցուցադրեն "
+"աշխատատիրույթների անունները։ Հակառակ դեպքում աշխատատիրույթում կերևան "
+"պատուհանները։"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -972,8 +1003,9 @@ msgid ""
 "only relevant if the display_all_workspaces key is true."
 msgstr ""
 "Այս բանալին սահմանում է, թե քանի տող  (հորիզոնական դիրքով) կամ սյուն "
-"(ուղղահայաց դիրքով)  է աշխատատիրույթի փոխարկիչը կցուցադրում աշխատատիրույթում։ "
-"Այս բանալին տեղին է, եթե  display_all_workspaces բանալին ճշգրիտ է։"
+"(ուղղահայաց դիրքով)  է աշխատատիրույթի փոխարկիչը կցուցադրում "
+"աշխատատիրույթում։ Այս բանալին տեղին է, եթե  display_all_workspaces բանալին "
+"ճշգրիտ է։"
 
 #: ../gnome-panel/GNOME_Panel.server.in.h:1
 #, fuzzy
@@ -1024,11 +1056,11 @@ msgstr "_Հատկություններ"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
-msgstr "Տրված թղթապահակում նոր ֆայլ բացել"
+msgstr "Տրված պանակում նոր ֆայլ բացել"
 
 #: ../gnome-panel/launcher.c:136
 msgid "Cannot save launcher to disk"
-msgstr "Հնարավոր չէ դիսկը գործարկիչում պահել"
+msgstr "Հնարավոր չէ պիտակը պահել սկավառակ վրա"
 
 #: ../gnome-panel/launcher.c:166 ../gnome-panel/launcher.c:216
 #: ../gnome-panel/launcher.c:273
@@ -1037,7 +1069,7 @@ msgstr "Անհնար է  դրվագապատկերը գործարկել"
 
 #: ../gnome-panel/launcher.c:167
 msgid "This launch icon does not specify a url to show."
-msgstr "Գործարկման այս դրվագապտկերը չի մասնավորեցնում url–ն ցուցադրել"
+msgstr "Այս պիտակը չի մասնավորեցնում ցուցադրելու url"
 
 #: ../gnome-panel/launcher.c:179
 #, c-format
@@ -1046,32 +1078,32 @@ msgstr "Հնարավոր չէ ցույց տալ %s"
 
 #: ../gnome-panel/launcher.c:467
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr "Աշխատանքային էկրանի ֆայլի վահանակի գործարկչի համար URI սահմանված չէ\n"
+msgstr ""
 
 #: ../gnome-panel/launcher.c:481
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Անհնար է բացել %s%s վահանակի գործարկման %s աշխատանքային էկրանի ֆայլը\n"
+msgstr "Անհնար է բացել %s%s վահանակի գործարկման %s աշխատասեղանի ֆայլը\n"
 
 #: ../gnome-panel/launcher.c:734 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
-msgstr "Գործարկող հատկություններ"
+msgstr "Պիտակի հատկություններ"
 
 #: ../gnome-panel/launcher.c:846
 msgid "_Launch"
-msgstr "_Գործարկում"
+msgstr "_Գործարկել"
 
 #: ../gnome-panel/launcher.c:924
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
-msgstr "Բանալին %s կարգադրված չէ, անհնար է բեռնել գործարկիչը\n"
+msgstr "Բանալին %s կարգադրված չէ, անհնար է բեռնել պիտակը\n"
 
 #: ../gnome-panel/launcher.c:979 ../gnome-panel/launcher.c:997
 #: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
 #: ../gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
-msgstr "Անհնար է գործարկիչ կերտել"
+msgstr "Անհնար է պիտակ կերտել"
 
 #: ../gnome-panel/launcher.c:980 ../gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
@@ -1079,11 +1111,11 @@ msgstr "Անհրաժետ է անուն նշել"
 
 #: ../gnome-panel/launcher.c:998 ../gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
-msgstr "Անհրաժեշտ է համապատասխան URL կամ հրահանգ մասնավորեցնել"
+msgstr "Անհրաժեշտ է համապատասխան URL կամ հրահանգ նշել"
 
 #: ../gnome-panel/launcher.c:1041 ../gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
-msgstr "Կերտել գործարկիչ"
+msgstr "Կերտել Պիտակ"
 
 #: ../gnome-panel/menu-ditem.c:126
 msgid "Cannot save changes to launcher"
@@ -1091,30 +1123,32 @@ msgstr "Անկարող է պահել գործարկչի փոփոխություն
 
 #: ../gnome-panel/menu-ditem.c:308
 msgid "Menu"
-msgstr "Մենյու"
+msgstr "Ցանկ"
 
 #. class
 #: ../gnome-panel/menu-ditem.c:517
 msgid "Cannot save menu item to disk"
-msgstr "Անկարող է մենյու տարրը պահել դիսկի վրա"
+msgstr "Չի հաջողվում պահել ցանկի տարրը սկավառակի վրա"
 
 #: ../gnome-panel/menu-ditem.c:543
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
-msgstr "Դուք չեք կարող նոր գործարկիչ կերտել այս տեղադրությունում, քանի որ այն անընդունակ է գրելու համար "
+msgstr ""
+"Դուք չեք կարող նոր պիտակ կերտել այս տեղադրությունում, քանի որ այն անընդունակ "
+"է գրելու համար "
 
 #: ../gnome-panel/menu.c:922
 msgid "Add this launcher to panel"
-msgstr "Ավելացնել այս գործարկիչը վահանակի վրա"
+msgstr "Ավելացնել այս պիտակը վահանակի վրա"
 
 #: ../gnome-panel/menu.c:933
 msgid "Add this launcher to desktop"
-msgstr "Ավելացնել այս գործարկիչը աշխատանքային էկրանի վրա"
+msgstr "Ավելացնել այս պիտակը աշխատանքային էկրանի վրա"
 
 #: ../gnome-panel/menu.c:953
 msgid "Entire menu"
-msgstr "Ամբողջ մենյուն"
+msgstr "Ամբողջ ցանկը"
 
 #: ../gnome-panel/menu.c:963
 msgid "Add this as drawer to panel"
@@ -1122,7 +1156,7 @@ msgstr "Ավելացնել սա որպես գզրող վահանակի վրա"
 
 #: ../gnome-panel/menu.c:975
 msgid "Add this as menu to panel"
-msgstr "Ավելացնել սա որպես մենյու վահանակի վրա"
+msgstr "Ավելացնել սա որպես ցանկ վահանակի վրա"
 
 #: ../gnome-panel/panel-action-button.c:118
 msgid "_Activate Screensaver"
@@ -1147,15 +1181,15 @@ msgstr "Վերագործարկել_էկրանի դրվագապատկեր Դեմ�
 #: ../gnome-panel/panel-util.c:723
 #, c-format
 msgid "Cannot execute '%s'"
-msgstr "Անկարող է կատարել %s'"
+msgstr "Չի հաջողվել է կատարել %s'"
 
 #: ../gnome-panel/panel-action-button.c:279
 msgid "Cannot connect to server"
-msgstr "Անկարող է միանալ սերվերին"
+msgstr "Չի հաջողվել միանալ սերվերին"
 
 #: ../gnome-panel/panel-action-button.c:310
 msgid "Lock Screen"
-msgstr "Արգելափակել էկրանը"
+msgstr "Արգելափակել"
 
 #: ../gnome-panel/panel-action-button.c:311
 msgid "Protect your computer from unauthorized use"
@@ -1163,7 +1197,7 @@ msgstr "Պաշտպանիր համակարգիչդ ոչ իրավասու օգտա
 
 #: ../gnome-panel/panel-action-button.c:322
 msgid "Log Out"
-msgstr "Ավարտել կամ համակարգից դուրս գալ"
+msgstr "Ելք"
 
 #: ../gnome-panel/panel-action-button.c:323
 msgid ""
@@ -1185,7 +1219,7 @@ msgstr "Փնտրել ֆայլը"
 
 #: ../gnome-panel/panel-action-button.c:343
 msgid "Find files, folders, and documents on your computer"
-msgstr "Փնտրել համակարգչում ֆայլեր, ֆոլդերներ և փաստաթղթեր"
+msgstr "Փնտրել համակարգչում ֆայլեր, պանակներ և փաստաթղթեր"
 
 #: ../gnome-panel/panel-action-button.c:351
 msgid "Take Screenshot..."
@@ -1193,20 +1227,20 @@ msgstr "Նկարել"
 
 #: ../gnome-panel/panel-action-button.c:352
 msgid "Take a screenshot of your desktop"
-msgstr "Նկարել աշխատանքային էկրանը"
+msgstr "Նկարել աշխատասեղանը"
 
 #: ../gnome-panel/panel-action-button.c:360
 msgid "Force Quit"
-msgstr "Հեռանալ"
+msgstr "Ստիպել Ընդհատվել"
 
 #: ../gnome-panel/panel-action-button.c:361
 msgid "Force a misbehaving application to quit"
-msgstr "Ստիպել սխալ ծրագրին հեռանալ"
+msgstr "Ստիպել սխալ ծրագրին ընդհատվել"
 
 #. FIXME icon
 #: ../gnome-panel/panel-action-button.c:370
 msgid "Connect to Server..."
-msgstr "Միանալ սերվերին"
+msgstr "Միանալ Սերվերին"
 
 #: ../gnome-panel/panel-action-button.c:371
 msgid "Connect to a remote server"
@@ -1214,35 +1248,35 @@ msgstr "Միանալ հեռավոր սերվերին"
 
 #: ../gnome-panel/panel-addto.c:102
 msgid "Custom Application Launcher"
-msgstr "Գործարկողի կիրառական ծրագրի գործարկիչ"
+msgstr "Նոր Պիտակ"
 
 #: ../gnome-panel/panel-addto.c:103
 msgid "Create a new launcher"
-msgstr "Կերտել նոր գործարկիչ"
+msgstr "Կերտել նոր պիտակ"
 
 #: ../gnome-panel/panel-addto.c:113
 msgid "Application Launcher..."
-msgstr "Կիրառական ծրագրի գործարկիչ"
+msgstr "Պիտակ"
 
 #: ../gnome-panel/panel-addto.c:114
 msgid "Launch a program that is already in the GNOME menu"
-msgstr "Գործարկել ծրագիր, որը արդեն կա Գնոմ մենյուի մեջ"
+msgstr "Գործարկել ծրագիր, որը արդեն կա GNOME ցանկի մեջ"
 
 #: ../gnome-panel/panel-addto.c:128
 msgid "Main Menu"
-msgstr "Հիմնական մենյու"
+msgstr "Ընդհանուր ցանկ"
 
 #: ../gnome-panel/panel-addto.c:129
 msgid "The main GNOME menu"
-msgstr "Հիմնական Գնոմ մենյու"
+msgstr "Ընդհանուր GNOME ցանկ"
 
 #: ../gnome-panel/panel-addto.c:139
 msgid "Menu Bar"
-msgstr "Մենյու բար"
+msgstr "Ցանկ"
 
 #: ../gnome-panel/panel-addto.c:140
 msgid "A custom menu bar"
-msgstr "Գործարկողի մենյու բար"
+msgstr "Այլ ցանկ"
 
 #: ../gnome-panel/panel-addto.c:151
 msgid "A pop out drawer to store other items in"
@@ -1283,22 +1317,23 @@ msgstr "Ընտրել _տարր վահանակի ավելացնելու համա�
 #: ../gnome-panel/panel-applet-frame.c:814
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr "Բացառություն էկրանին առկայծող _մենյուից'%s'\n"
+msgstr "Բացառություն էկրանին առկայծող _ցանկից'%s'\n"
 
 #: ../gnome-panel/panel-applet-frame.c:933
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
-msgstr "\"%s\" անսպասելի հեռացավ"
+msgstr "\"%s\" անսպասելի ընդհատվեց"
 
 #: ../gnome-panel/panel-applet-frame.c:935
 msgid "Panel object has quit unexpectedly"
-msgstr "Վահանակի տարրը անսպասելի հեռացավ"
+msgstr "Վահանակի տարրը անսպասելի ընդհատվեց"
 
 #: ../gnome-panel/panel-applet-frame.c:942
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr "Երբ բեռնվում է վահանակի տարր, այն ավտոմատ կերպով ավելացվում է վահանակին"
+msgstr ""
+"Երբ բեռնվում է վահանակի տարր, այն ավտոմատ կերպով ավելացվում է վահանակին"
 
 #: ../gnome-panel/panel-applet-frame.c:948
 msgid "_Don't Reload"
@@ -1329,7 +1364,7 @@ msgstr "gconf  բանալին տեսնելու սխալ%s': %s"
 #: ../gnome-panel/panel-bindings.c:186
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
-msgstr "gconf թղթապանակը բեռնելու սխալ '%s': %s"
+msgstr "gconf պանակը բեռնելու սխալ '%s': %s"
 
 #: ../gnome-panel/panel-bindings.c:200
 #, c-format
@@ -1348,7 +1383,9 @@ msgstr "Գնոմ վահանակ"
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
-msgstr "Ծրագիրը պատասխանատու է այլ կիրառական ծրագրերի գործարկման և իր ներսում փոքր ապլետներ տեղադրելու համար"
+msgstr ""
+"Ծրագիրը պատասխանատու է այլ կիրառական ծրագրերի գործարկման և իր ներսում փոքր "
+"ապլետներ տեղադրելու համար"
 
 #: ../gnome-panel/panel-context-menu.c:166
 msgid "You cannot remove your last panel."
@@ -1376,8 +1413,11 @@ msgid "A_bout Panels"
 msgstr "Վահանակների մա_սին"
 
 #: ../gnome-panel/panel-force-quit.c:75
-msgid "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Կտտացրեք պատուհանի վրա կիրառական ծրագիրը հեռացնելու համար։ Այն վերացնելու համար սեղմեք <ESC>."
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Կտտացրեք պատուհանի վրա կիրառական ծրագիրը հեռացնելու համար։ Այն վերացնելու "
+"համար սեղմեք <ESC>."
 
 #: ../gnome-panel/panel-force-quit.c:187
 msgid ""
@@ -1392,13 +1432,18 @@ msgid ""
 "A boolean flag to indicate whether the user's previous configuration in /"
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
-msgstr "Բուլեյան դրոշ, որը ցույ է տալիս արդյոք գործարկողի նախորդ կոնֆիգուրացիան apps/panel/profiles/default–ում պատճենվել է նոր տեղադրության՝/apps/ վահանակի վրա "
+msgstr ""
+"Բուլեյան դրոշ, որը ցույ է տալիս արդյոք գործարկողի նախորդ կոնֆիգուրացիան apps/"
+"panel/profiles/default–ում պատճենվել է նոր տեղադրության՝/apps/ վահանակի վրա "
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Վահանակի իդենտիֆիկատորների ցուցակ։ Յուրաքանչյուր իդենտիֆիկատոր սահմանում է անհատական բարձր կարգի վահանակ։ Կարգադրվածքները յուրաքանչյուր այս վահանակների համար պահվում են /apps/panel/toplevels/$(id)–ում։"
+msgstr ""
+"Վահանակի իդենտիֆիկատորների ցուցակ։ Յուրաքանչյուր իդենտիֆիկատոր սահմանում է "
+"անհատական բարձր կարգի վահանակ։ Կարգադրվածքները յուրաքանչյուր այս վահանակների "
+"համար պահվում են /apps/panel/toplevels/$(id)–ում։"
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
 msgid ""
@@ -1406,15 +1451,20 @@ msgid ""
 "The settings for each of these applets are stored in /apps/panel/applets/"
 "$(id)."
 msgstr ""
-"Վահանակի ապլետների իդենտիֆիկատորների ցուցակ։ Յուրաքանչյուր իդենտիֆիկատոր սահմանում է անհատական վահանակի ապլետ։ Յուրաքանչյուր այս ապլետների կարգադրվածքները պահվում են /apps/panel/applets/"
-"$(id)–ում։"
+"Վահանակի ապլետների իդենտիֆիկատորների ցուցակ։ Յուրաքանչյուր իդենտիֆիկատոր "
+"սահմանում է անհատական վահանակի ապլետ։ Յուրաքանչյուր այս ապլետների "
+"կարգադրվածքները պահվում են /apps/panel/applets/$(id)–ում։"
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Վահանակի տարրերի իդենտիֆիկատորների ցուցակ։ Յուրաքանչյուր իդենտիֆիկատոր սահմանում է անհատական վահանակի տարր (օրինակ, գործարկման գործողության կոճակ, մոնյուի կոճակ)։ Այս տարրերից յուրաքանչյուրի կարգադրվածքները պահպանվում են apps/panel/objects/$(id)–ում։"
+msgstr ""
+"Վահանակի տարրերի իդենտիֆիկատորների ցուցակ։ Յուրաքանչյուր իդենտիֆիկատոր "
+"սահմանում է անհատական վահանակի տարր (օրինակ, գործարկման գործողության կոճակ, "
+"մոնյուի կոճակ)։ Այս տարրերից յուրաքանչյուրի կարգադրվածքները պահպանվում են "
+"apps/panel/objects/$(id)–ում։"
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1429,15 +1479,20 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Ընդլայնել ծրագրերի ցանկը  \"Run Application\" դիալոգում"
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
-msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Եթե ճշգրտ է, ավտոմատ լրացումը  \"Run Application\" դիալոգում հնարավոր է"
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+"Եթե ճշգրտ է, ավտոմատ լրացումը  \"Run Application\" դիալոգում հնարավոր է"
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr "Եթե ճշգրտ է  \"Known Applications\" ցանկը \"Run Application\" դիալոգում ընդլայնվում է, երբ դիալոգը բաց է։ Այս բանալին տեղին է միայն եթե enable_program_list–ը ճշգրիտ է։"
+msgstr ""
+"Եթե ճշգրտ է  \"Known Applications\" ցանկը \"Run Application\" դիալոգում "
+"ընդլայնվում է, երբ դիալոգը բաց է։ Այս բանալին տեղին է միայն եթե "
+"enable_program_list–ը ճշգրիտ է։"
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
 msgid ""
@@ -1445,8 +1500,9 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"Եթե ճշգրիտ է, \"Known Applications\" ցանկը "
-"\"Run Application\" դիալոգում կիրառելի է։ Ցանկը  ընդլայնվում է, երբ դիալոգը ցույց է տրվում և վերահսկվում է show_program_list բանալիով։"
+"Եթե ճշգրիտ է, \"Known Applications\" ցանկը \"Run Application\" դիալոգում "
+"կիրառելի է։ Ցանկը  ընդլայնվում է, երբ դիալոգը ցույց է տրվում և վերահսկվում է "
+"show_program_list բանալիով։"
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
@@ -1470,7 +1526,12 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "Ապլետի IID ցանկ, որը վահանակը բաց է թողնելու։ Այս կերպ դուք կարող եք անջատել որոշ ապլետներ և չբեռնել, կամ ցույց տալ մենյուի մեջ։ Օրինակ, անջատելու համար Մինի–հրահանգ ապլետը պետք է այս ցուցակին  ավելացնել'OAFIID:GNOME_MiniCommanderApplet։ Վահանակը այս արդյունքը ստանալու համար պետք է վերագործարկել։"
+msgstr ""
+"Ապլետի IID ցանկ, որը վահանակը բաց է թողնելու։ Այս կերպ դուք կարող եք անջատել "
+"որոշ ապլետներ և չբեռնել, կամ ցույց տալ ցանկի մեջ։ Օրինակ, անջատելու համար "
+"Մինի–հրահանգ ապլետը պետք է այս ցուցակին  ավելացնել'OAFIID:"
+"GNOME_MiniCommanderApplet։ Վահանակը այս արդյունքը ստանալու համար պետք է "
+"վերագործարկել։"
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
 msgid "Applet IIDs to disable from loading"
@@ -1521,63 +1582,82 @@ msgstr "Ընդգծել–ծածկել գործարկիչները մկնիկով"
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "Եթե ճշգրիտ է, երևում է դիալոգը, որը հարց է տալիս պնդման վերաբերյալ, եթե գործարկողը ցանկանում է հեռացնել վահանակը։"
+msgstr ""
+"Եթե ճշգրիտ է, երևում է դիալոգը, որը հարց է տալիս պնդման վերաբերյալ, եթե "
+"գործարկողը ցանկանում է հեռացնել վահանակը։"
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "եթե ճշգրիտ է, գզրոցը ավտոմատ կերպով փակվում է, երբ գործարկողը կտտոցով միացնում է գործարկիչը"
+msgstr ""
+"եթե ճշգրիտ է, գզրոցը ավտոմատ կերպով փակվում է, երբ գործարկողը կտտոցով "
+"միացնում է գործարկիչը"
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
-msgid "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "Եթե ճշգրիտ է, գործարկիչը ընդգծվում–ծածակվում է, երբ գործարկողը տեղաշարժում է սլաքը դրա վրայով։"
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+"Եթե ճշգրիտ է, գործարկիչը ընդգծվում–ծածակվում է, երբ գործարկողը տեղաշարժում է "
+"սլաքը դրա վրայով։"
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr "Եթե ճշգրտ է, վահանակը թույլ չի տալիս գործարկողին կիրառական ծրագիրը հեռացնել՝ սեղմելով հեռանալ կոճակը։"
+msgstr ""
+"Եթե ճշգրտ է, վահանակը թույլ չի տալիս գործարկողին կիրառական ծրագիրը հեռացնել՝ "
+"սեղմելով հեռանալ կոճակը։"
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
-msgstr "Եթե ճշգրիտ է, վահանակը թույլչի տալիս գործարկողին արգելափակել էկրանը՝ սեղմելով հեռանալ կոճակը։"
+msgstr ""
+"Եթե ճշգրիտ է, վահանակը թույլչի տալիս գործարկողին արգելափակել էկրանը՝ "
+"սեղմելով հեռանալ կոճակը։"
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
-msgstr "Եթե ճշգրիտ է, վահանակը թույլ չի տալիս գործարկողին ավարտել՝ սեղմելով մենյուի ավարտելու մուտքերը"
+msgstr ""
+"Եթե ճշգրիտ է, վահանակը թույլ չի տալիս գործարկողին ավարտել՝ սեղմելով ցանկի "
+"ավարտելու գրառումները"
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
-msgstr "Եթե ճշգրտ է, վահանակը թույլ չի տալիս որևէ փոփոխություններ վահանակի կոնֆիգուրացիաներում։ Անհատական ապլետները կարող է կարիք ունենալ արգելափակվելու առանձին–առանձին։ Վահանակը պետք է վերագործարկվի, որպեսզի դա հնարավոր լինի։"
+msgstr ""
+"Եթե ճշգրտ է, վահանակը թույլ չի տալիս որևէ փոփոխություններ վահանակի "
+"կոնֆիգուրացիաներում։ Անհատական ապլետները կարող է կարիք ունենալ "
+"արգելափակվելու առանձին–առանձին։ Վահանակը պետք է վերագործարկվի, որպեսզի դա "
+"հնարավոր լինի։"
 
 #: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
-msgstr "Եթե ճշգիտ է, գործիքների հուշումները ցույց են տրվում վահանակներում՝ որպես տարրեր։"
+msgstr ""
+"Եթե ճշգիտ է, գործիքների հուշումները ցույց են տրվում վահանակներում՝ որպես "
+"տարրեր։"
 
 #: ../gnome-panel/panel-menu-bar.c:71
 msgid "Applications"
-msgstr "Կիրառական ծրագրեր"
+msgstr "Ծրագրեր"
 
 #: ../gnome-panel/panel-menu-bar.c:232 ../gnome-panel/panel-menu-button.c:691
 msgid "_Edit Menus"
-msgstr "_Խմբագրել մենյուներ"
+msgstr "_Խմբագրել ցանկերը"
 
 #: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:310
 #, c-format
 msgid "Cannot display location '%s'"
-msgstr "Անկարող է ցույց տալ տեղակայությունը %s'"
+msgstr "Չի հաջողվել ցույց տալ տեղակայությունը %s'"
 
 #: ../gnome-panel/panel-menu-items.c:324
 msgid "Bookmarks"
-msgstr "Կոդեր"
+msgstr "Էջանշաններ"
 
 #. Translators: %s is a URI
 #: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
@@ -1587,7 +1667,7 @@ msgstr "Բացել '%s'"
 
 #: ../gnome-panel/panel-menu-items.c:431
 msgid "Network Places"
-msgstr "Ցանցի տեղեր"
+msgstr "Ցանցային տեղայնքներ"
 
 #: ../gnome-panel/panel-menu-items.c:433
 msgid "Removable Media"
@@ -1599,30 +1679,30 @@ msgstr "Հեռացվող մեդիա"
 #. * in the translation
 #: ../gnome-panel/panel-menu-items.c:491
 msgid "Desktop Folder|Desktop"
-msgstr "Աշխատանքային էկրանի ֆոլդեր–աշխատանքային էկրան"
+msgstr "Աշխատասեղան"
 
 #: ../gnome-panel/panel-menu-items.c:492
 msgid "Open the desktop as a folder"
-msgstr "Աշխատանքային էկրանը բացել որպես ֆոլդեր"
+msgstr "Բացել ածխատասեղանը որպես պանակ"
 
 #: ../gnome-panel/panel-menu-items.c:824
 msgid "Places"
-msgstr "Տեղեր"
+msgstr "Տեղայնքներ"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
 #: ../gnome-panel/panel-menu-items.c:862
 msgid "Desktop Environment|Desktop"
-msgstr "Աշխատանքային էկրանի միջավայր–Աշխատանքային էկրան"
+msgstr "Աշխատասեղան"
 
 #: ../gnome-panel/panel-menu-items.c:1003
 msgid "Cannot launch entry"
-msgstr "Անկարող է գործարկել մուտքը"
+msgstr "Չի հաջողվել գործարկել մուտքը"
 
 #: ../gnome-panel/panel-menu-items.c:1015
 msgid "Cannot load entry"
-msgstr "Անկարող է բեռնել մուտքը"
+msgstr "Չի հաջողվել բեռնել մուտքը"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1634,33 +1714,45 @@ msgstr "Ապլետ Bonobo IID"
 
 #: ../gnome-panel/panel-object.schemas.in.h:3
 msgid "Icon used for object's button"
-msgstr "Դրվագապատկեր, որն օգտագործվում է տարրերի կոճակների համար"
+msgstr "Պատկերակ, որն օգտագործվում է տարրերի կոճակների համար"
 
 #: ../gnome-panel/panel-object.schemas.in.h:4
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Եթե ճշգրիտ է, գործարկող_դրվագապատկեր բանալին օգտագործվում է որպես գործարկողի դրվագապատկեր կոճակի համար։ եթե ճշգրիտ չէ, գործարկող_դրվագապատկեր բանալին բաց է թողնվում։ Այս բանալին տեղին է միայն, երբ տարր_տեսակ բանալին \"menu-object\" կամ \"drawer-object\". է։"
+msgstr ""
+"Եթե ճշգրիտ է, custom_icon բանալին օգտագործվում է որպես գործարկողի "
+"դրվագապատկեր կոճակի համար։ եթե ճշգրիտ չէ, custom_icon բանալին բաց է "
+"թողնվում։ Այս բանալին տեղին է միայն, երբ  \"menu-object\" կամ \"drawer-object"
+"\" բանալին է։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr "Եթե ճշգրիտ է, մենյու menu_path բանալին օգտագործվում է որպես ուղի, որտեղից մենյուի բովանդակությունը պետք է կառուցվի։ Եթե ճշգրիտ չէ, menu_path բանալին բաց է թողնվում։ Այս բանալին տեղին է միայն երբ object_type բանալին \"menu-object\" է։"
+msgstr ""
+"Եթե ճշգրիտ է, menu_path բանալին օգտագործվում է որպես ուղի, որտեղից ցանկի "
+"բովանդակությունը պետք է կառուցվի։ Եթե ճշգրիտ չէ, menu_path բանալին բաց է "
+"թողնվում։ Այս բանալին տեղին է միայն երբ object_type բանալին \"menu-object\" "
+"է։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
-msgstr "Եթե ճշգրիտ է, տարրի դիրքը ընդունվում է վահանակի աջ ծայրի (կամ ներքևի, ուղղահայաց լինելու դեպքում) համեմատ"
+msgstr ""
+"Եթե ճշգրիտ է, տարրի դիրքը ընդունվում է վահանակի աջ ծայրի (կամ ներքևի, "
+"ուղղահայաց լինելու դեպքում) համեմատ"
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
-msgstr "Եթե ճշգրիտ է, գործարկողը կարող է չշարժել ապլետը առանց, մինչ այդ, տարրը արգելափակումից դուրս բերելու, օգտագործելով մենյուի \"menu-object\" տարրը։"
+msgstr ""
+"Եթե ճշգրիտ է, գործարկողը կարող է չշարժել ապլետը առանց, մինչ այդ, տարրը "
+"արգելափակումից դուրս բերելու, օգտագործելով ցանկի \"menu-object\" տարրը։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
@@ -1668,15 +1760,15 @@ msgstr "Դիրքը հասկանալ ներքև/աջ ծայրի իմաստով"
 
 #: ../gnome-panel/panel-object.schemas.in.h:9
 msgid "Launcher location"
-msgstr "Գործարկչի տեղակայությունը"
+msgstr "Պիտակի տեղակայությունը"
 
 #: ../gnome-panel/panel-object.schemas.in.h:10
 msgid "Lock the object to the panel"
-msgstr "Տարրը արգելափակել դեպի վահանակ"
+msgstr "Տարրը արգելակցել վահանակին"
 
 #: ../gnome-panel/panel-object.schemas.in.h:11
 msgid "Menu content path"
-msgstr "Մենյուի բովանդակության ուղի"
+msgstr "Ցանկի բովանդակության ուղի"
 
 #: ../gnome-panel/panel-object.schemas.in.h:12
 msgid "Object's position on the panel"
@@ -1694,7 +1786,9 @@ msgstr "Վահանակի տարրի տեսակը"
 msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This key is only relevant if the object_type key is \"bonobo-applet\"."
-msgstr "Ապլետի Bonobo իրականացման իդենտիֆիկատոր–օրինակ \"OAFIID:GNOME_ClockApplet\"։ Այս բանալին տեղին է միայն, եթե object_type կոճակը \"bonobo-applet\" է։"
+msgstr ""
+"Ապլետի Bonobo իրականացման իդենտիֆիկատոր–օրինակ \"OAFIID:GNOME_ClockApplet\"։ "
+"Այս բանալին տեղին է միայն, եթե object_type կոճակը \"bonobo-applet\" է։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -1703,13 +1797,16 @@ msgid ""
 "relevant if the object_type key is \"action-applet\"."
 msgstr ""
 "Այս կոճակը բնութագրող գործողության տեսակը։ Հնարավոր արժեքներն են \"lock\", "
-"\"logout\", \"run\", \"search\" and \"screenshot\". Այս բանալին միայն տեղին է, եթե object_type բանալին \"action-applet\" է։"
+"\"logout\", \"run\", \"search\" and \"screenshot\". Այս բանալին միայն տեղին "
+"է, եթե object_type բանալին \"action-applet\" է։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr "Այս գզրոցին կցված վահանակի իդենտիֆիկատոր։ Այս բանալին տեղին է միայն եթե object_type բանալին \"drawer-object\" է։"
+msgstr ""
+"Այս գզրոցին կցված վահանակի իդենտիֆիկատոր։ Այս բանալին տեղին է միայն եթե "
+"object_type բանալին \"drawer-object\" է։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
@@ -1719,14 +1816,19 @@ msgstr "Վերին մակարդակի վահանակի իդենտիֆիկատո�
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr "Աշխատանքային էկրանի ֆայլի տեղակայությունը, որը նկարագրում է գործարկչին։ Այս բանալին տեղին է միայն եթե object_type բանալին \"launcher-object\" է։"
+msgstr ""
+"Աշխատանքային էկրանի ֆայլի տեղակայությունը, որը նկարագրում է պիտակը։ Այս "
+"բանալին տեղին է միայն եթե object_type բանալին \"launcher-object\" է։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
-msgstr "Տեսապատկերի ֆայլի տեղակայությունը, որոնք օգտագործվում են որպես տարրերի կոճակներ։ Այս բանալին տեղին է միայն երբ object_type բանալին \"drawer-object\" է, կամ \"menu-object\" և use_custom_icon բանալին ճշգրիտ է։"
+msgstr ""
+"Տեսապատկերի ֆայլի տեղակայությունը, որոնք օգտագործվում են որպես տարրերի "
+"կոճակներ։ Այս բանալին տեղին է միայն երբ object_type բանալին \"drawer-object"
+"\" է, կամ \"menu-object\" և use_custom_icon բանալին ճշգրիտ է։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
 msgid ""
@@ -1734,20 +1836,25 @@ msgid ""
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
 msgstr ""
-"ՈՒղին որից մենյուի բովանդակությունն է սկսվում։ Այս բանալին տեղին է միայն, եթե use_menu_path բանալին ճշգրիտ է և object_type բանալին  \"menu-"
-"object\" է։"
+"ՈՒղին որից ցանկի բովանդակությունն է սկսվում։ Այս բանալին տեղին է միայն, եթե "
+"use_menu_path բանալին ճշգրիտ է և object_type բանալին  \"menu-object\" է։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "Այս վահանակի տարրի դիրքը։ Դիրքը մասնավորեցվում է վահանակի ձախ ծայրի(կամ ուղղահայացի դեպքում վերևի) պիքսելների թվով"
+msgstr ""
+"Այս վահանակի տարրի դիրքը։ Դիրքը մասնավորեցվում է վահանակի ձախ ծայրի(կամ "
+"ուղղահայացի դեպքում վերևի) պիքսելների թվով"
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
-msgstr "Գործիքների հուշում տեքստը, որը ցույց է տրվում այս գզրոցի կամ այս մենյուի համար։ Այս բանալին միայն տեղին է, եթե  object_type բանալին \"drawer-object\" է կամ \"menu-object\"."
+msgstr ""
+"Գործիքների հուշումը, որը ցույց է տրվում այս գզրոցի կամ այս ցանկի համար։ Այս "
+"բանալին միայն տեղին է, եթե  object_type բանալին \"drawer-object\" է կամ "
+"\"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -1761,7 +1868,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
-msgstr "Գզրոցի կամ մենյուի համար ցույց տրվող գործիքների հուշում"
+msgstr "Գզրոցի կամ ցանկի համար ցույց տրվող գործիքների հուշում"
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
@@ -1769,11 +1876,11 @@ msgstr "Վերին մակարդակի վահանակ պարունակող տար
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Use custom icon for object's button"
-msgstr "Օգտագործել գործարկողի դրվագապատկերը որպես տարրի կոճակ"
+msgstr "Օգտագործել գործարկողի պատկերակը որպես տարրի կոճակ"
 
 #: ../gnome-panel/panel-object.schemas.in.h:28
 msgid "Use custom path for menu contents"
-msgstr "Օգտագործել գործարկողի ուղին որպես մենյուի բովանդակություն"
+msgstr "Օգտագործել գործարկողի ուղին որպես ցանկի բովանդակություն"
 
 #: ../gnome-panel/panel-profile.c:743 ../gnome-panel/panel-profile.c:770
 #: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1630
@@ -1792,7 +1899,9 @@ msgstr "GConf ամբողջ թվի արժեքի ընթերցման սխալ '%s':
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
-msgstr "'%s վահանակը կարգադրվածքով պետք է երևա %d էկրանին, որը այս պահին հնարավոր չէ։ Այս վահանակը չի բեռնում։"
+msgstr ""
+"'%s վահանակը կարգադրվածքով պետք է երևա %d էկրանին, որը այս պահին հնարավոր "
+"չէ։ Այս վահանակը չի բեռնում։"
 
 #: ../gnome-panel/panel-profile.c:1614
 #, c-format
@@ -1841,7 +1950,7 @@ msgstr "Հետին պլան"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:7
 msgid "Background _image:"
-msgstr "Առաջին պլանի _պատկեր"
+msgstr "Հետին պլանի _պատկեր"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:8
 msgid "Co_lor:"
@@ -1902,7 +2011,7 @@ msgstr "_Ավտոմատ թաքցնել"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:22
 msgid "_Icon:"
-msgstr "_Դրվագապատկեր"
+msgstr "_Պատկերակ՝"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:23
 msgid "_None (use system theme)"
@@ -1952,8 +2061,8 @@ msgid ""
 msgstr ""
 "Եթե դուք մաքրեք Վերջին փաստաթղթեր ցանկը դուք մաքրում եք հետևյալը \n"
 "\n"
-"• Բոլոր տարրերը Տեղերից→Վերջին փաստաթղթեր մենյուի տարրերը "
-"• Բոլոր տարրերը վերջին փաստաթղթեր ցանկից բոլոր կիրառական ծրագրերում"
+"• Բոլոր տարրերը Տեղայնքներից→Վերջին փաստաթղթեր ցանկի տարրերը • Բոլոր տարրերը "
+"վերջին փաստաթղթեր ցանկից բոլոր կիրառական ծրագրերում"
 
 #: ../gnome-panel/panel-recent.c:221
 msgid "Recent Documents"
@@ -1994,19 +2103,25 @@ msgstr "Ընտրել կիրառական ծրագիրը նկարագրությո�
 #: ../gnome-panel/panel-run-dialog.c:1507
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr " URI ցանկը, որը տեղակայվել է գործարկում դիալոգում սխալ ֆորմատ  (%d) կամ երկարություն ունի (%d)\n"
+msgstr ""
+" URI ցանկը, որը տեղակայվել է գործարկում դիալոգում սխալ ֆորմատ  (%d) կամ "
+"երկարություն ունի (%d)\n"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:1
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
-msgstr "Կտտացնել այս կոճակին ընտրելու այն ֆայլը որի անունը պետք է ավելացնել հրահանգների տողին"
+msgstr ""
+"Կտտացնել այս կոճակին ընտրելու այն ֆայլը որի անունը պետք է ավելացնել "
+"հրահանգների տողին"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "Կտտացնել այս կոճակին գործարկելու համար կիրառական ծրագիրը կամ հրանանգը հրահանգների մուտքի դաշտում"
+msgstr ""
+"Կտտացնել այս կոճակին գործարկելու համար կիրառական ծրագիրը կամ հրանանգը "
+"հրահանգների մուտքի դաշտում"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:3
 msgid "Command entry"
@@ -2014,7 +2129,7 @@ msgstr "Հրահանգի մուտք"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command icon"
-msgstr "Հրահանգի դրվագապատկեր"
+msgstr "Հրահանգի patke8ak"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:5
 msgid "Enter a command string here to run it."
@@ -2026,11 +2141,11 @@ msgstr "Հայտնի կիրառական ծրագրերի ցանկ"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
-msgstr "Գործարկել կիրառական ծրագիրը"
+msgstr "Աշխատացնել Ծրագիրը"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
-msgstr "Գործարկել _տերմինալում"
+msgstr "Աշխատացնել _տերմինալում"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:9
 msgid "Run with _file..."
@@ -2042,7 +2157,7 @@ msgstr "Ընտրել այս արկղը հրահանգը տերմինալի պա�
 
 #: ../gnome-panel/panel-run-dialog.glade.h:12
 msgid "Show list of known _applications"
-msgstr "Ցույց տալ հայտնի _կիարառական ծրագրերի ցանկը"
+msgstr "Ցույց տալ հայտնի ծրագրերի ցանկը"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:13
 msgid "The icon of the command to be run."
@@ -2057,7 +2172,9 @@ msgstr "_Գործարկել"
 msgid ""
 "I've detected a panel already running,\n"
 "and will now exit."
-msgstr "Ես արդեն հայտնաբերել եմ գործարկման ընթացքի մեջ գտնվող վահանակը\n և այժմ հեռանում եմ"
+msgstr ""
+"Ես արդեն հայտնաբերել եմ գործարկման ընթացքի մեջ գտնվող վահանակը\n"
+" և այժմ հեռանում եմ"
 
 #: ../gnome-panel/panel-shell.c:78
 #, c-format
@@ -2067,7 +2184,8 @@ msgid ""
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
-"Վահանակը bonobo-ակտիվացման սերվերում գրանցելու ընթացքում դժվարություն է առաջացել\n"
+"Վահանակը bonobo-ակտիվացման սերվերում գրանցելու ընթացքում դժվարություն է "
+"առաջացել\n"
 "Սխալի կոդը հետևյալն է %d\n"
 "Վահանակը հիմա կհեռանա"
 
@@ -2205,44 +2323,60 @@ msgstr "Պատկերը տեղավորել վահանակի վրա"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr "Եթե ճշգրիտ է, սլաքները պետք է տեղադրվե թաքցնել կոճակների վրա։ Այս բանալին տեղին է միայն, երբ enable_buttons բանալին ճշգրիտ է։"
+msgstr ""
+"Եթե ճշգրիտ է, սլաքները պետք է տեղադրվե թաքցնել կոճակների վրա։ Այս բանալին "
+"տեղին է միայն, երբ enable_buttons բանալին ճշգրիտ է։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Եթե ճշգրիտ է, կոճակները պետք է տեղակայվեն վահանակի յուրաքանչյուր կողմում, որոնք կարող են օգտագործվել վահանակը էկրանի ծայրը տեղափոխելու համար, թողնելով միայն կոճակը։"
+msgstr ""
+"Եթե ճշգրիտ է, կոճակները պետք է տեղակայվեն վահանակի յուրաքանչյուր կողմում, "
+"որոնք կարող են օգտագործվել վահանակը էկրանի ծայրը տեղափոխելու համար, թողնելով "
+"միայն կոճակը։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr "Եթե ճշգրիտ է, այս վահանակի թաքցնելը և տեսանելի դարձնելը կլինեն անիմացված և ոչ արագ կատարվող։"
+msgstr ""
+"Եթե ճշգրիտ է, այս վահանակի թաքցնելը և տեսանելի դարձնելը կլինեն անիմացված և "
+"ոչ արագ կատարվող։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
-msgstr "Եթե ճշգրիտ է ապա հետին պլանի պատկերը կլինի պտտվող, երբ վահանակը տեղակայված է ուղղահայաց։"
+msgstr ""
+"Եթե ճշգրիտ է ապա հետին պլանի պատկերը կլինի պտտվող, երբ վահանակը տեղակայված է "
+"ուղղահայաց։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
-msgstr "Եթե ճշգրիտ է, ապա պատկերը կլինի մասշտաբային (պահպանելով պատկերի ասպեկտային հարաբերությունը) վահանակի բարձրության համեմատ(եթե հորիզոնական է)"
+msgstr ""
+"Եթե ճշգրիտ է, ապա պատկերը կլինի մասշտաբային (պահպանելով պատկերի ասպեկտային "
+"հարաբերությունը) վահանակի բարձրության համեմատ(եթե հորիզոնական է)"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr "Եթե ճշգրիտ է, պատկերի մասշտաբը համապատասխանեցվում է վահանակի չափումներին։ Պատկերի ասպեկտային հարաբերությունը չի պահպանվում։"
+msgstr ""
+"Եթե ճշգրիտ է, պատկերի մասշտաբը համապատասխանեցվում է վահանակի չափումներին։ "
+"Պատկերի ասպեկտային հարաբերությունը չի պահպանվում։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr "Եթե ճշգրիտ է, վահանակը ավտոմատ թաքնվում է էկրանի անկյունում, երբ սլաքը թողնում է վահանակի տարածքը։ Տեղափոխելով սլաքը դեպի այդ անկյունը կրկին վահանակը կրկին տեսանելի է դարձնում։"
+msgstr ""
+"Եթե ճշգրիտ է, վահանակը ավտոմատ թաքնվում է էկրանի անկյունում, երբ սլաքը "
+"թողնում է վահանակի տարածքը։ Տեղափոխելով սլաքը դեպի այդ անկյունը կրկին "
+"վահանակը կրկին տեսանելի է դարձնում։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
@@ -2251,8 +2385,10 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"Եթե ճշգրիտ է, վահանակը կզբաղեցնի էկրանի ամբողջ լայնությունը (բարձրությունը, եթե ուղղահայաց վահանակ է)։ Այս ռեժիմում վահանակը կարող է տեղակայվել միայն էկրանի անկյունում։ "
-"Եթե ճշգրիտ չէ, վահանակը պետք է բավականին մեծ լինի՝ ապլենտները, գործարկիչները և կոճակները վահանակի վրա հյուրընկալելու համար, "
+"Եթե ճշգրիտ է, վահանակը կզբաղեցնի էկրանի ամբողջ լայնությունը (բարձրությունը, "
+"եթե ուղղահայաց վահանակ է)։ Այս ռեժիմում վահանակը կարող է տեղակայվել միայն "
+"էկրանի անկյունում։ Եթե ճշգրիտ չէ, վահանակը պետք է բավականին մեծ լինի՝ "
+"ապլենտները, գործարկիչները և կոճակները վահանակի վրա հյուրընկալելու համար, "
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2260,7 +2396,11 @@ msgid ""
 "axis of the screen. If the panel is resized it will remain at that position "
 "- i.e. the panel will grow on both sides. If false, the x key specifies the "
 "location of the panel."
-msgstr "Եթե ճշգրիտ է, x բանալին բաց է թողնվում և վահանակը տեղակայվում է էկրանի x առանցքի կենտրոնում։ Եթե վահանակի չափսերը վերափոխվում են, այն կմնա նույն դիրքում, այն է, վահանակը կմեծանա երկու կողմից։ Եթե ճշգրիտ չէ, x բանալին մասնավորեցնում է վահանակի տեղակայությունը։"
+msgstr ""
+"Եթե ճշգրիտ է, x բանալին բաց է թողնվում և վահանակը տեղակայվում է էկրանի x "
+"առանցքի կենտրոնում։ Եթե վահանակի չափսերը վերափոխվում են, այն կմնա նույն "
+"դիրքում, այն է, վահանակը կմեծանա երկու կողմից։ Եթե ճշգրիտ չէ, x բանալին "
+"մասնավորեցնում է վահանակի տեղակայությունը։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
@@ -2268,13 +2408,20 @@ msgid ""
 "axis of the screen. If the panel is resized it will remain at that position "
 "- i.e. the panel will grow on both sides. If false, the y key specifies the "
 "location of the panel."
-msgstr "Եթե ճշգրիտ է, y բանալին բաց է թողնվում և վահանակը տեղակայվում է էկրանի y առանցքի կենտրոնում։  Եթե վահանակի չափսերը վերափոխվում են, այն կմնա նույն դիրքում, այն է, վահանակը կմեծանա երկու կողմից։ Եթե ճշգրիտ չէ, x բանալին մասնավորեցնում է վահանակի տեղակայությունը։"
+msgstr ""
+"Եթե ճշգրիտ է, y բանալին բաց է թողնվում և վահանակը տեղակայվում է էկրանի y "
+"առանցքի կենտրոնում։  Եթե վահանակի չափսերը վերափոխվում են, այն կմնա նույն "
+"դիրքում, այն է, վահանակը կմեծանա երկու կողմից։ Եթե ճշգրիտ չէ, x բանալին "
+"մասնավորեցնում է վահանակի տեղակայությունը։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr " Xinerama կարգադրվածքում դուք կարող եք վահանակներ ունենալ յուրաքանչյուր անհատական մոնիտորի վրա։ Այս կոճակը այն աշխատանքային մոնիտորը, որի վրա վահանակը ցույց է տրվում։"
+msgstr ""
+" Xinerama կարգադրվածքում դուք կարող եք վահանակներ ունենալ յուրաքանչյուր "
+"անհատական մոնիտորի վրա։ Այս կոճակը այն աշխատանքային մոնիտորը, որի վրա "
+"վահանակը ցույց է տրվում։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
 msgid "Name to identify panel"
@@ -2310,36 +2457,49 @@ msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr "Մասնավորեցնում է այն ֆայլը, որը պետք է օգտագործվի հետին ֆոնի պատկերի համար։ Եթե պատկերը պարունակում է ալֆա ուղի, այն կտեղակայվի աշխատանքային էկրանի հետին պլանի պատկերի կոմպոզիցիայում։"
+msgstr ""
+"Մասնավորեցնում է այն ֆայլը, որը պետք է օգտագործվի հետին ֆոնի պատկերի համար։ "
+"Եթե պատկերը պարունակում է ալֆա ուղի, այն կտեղակայվի աշխատանքային էկրանի "
+"հետին պլանի պատկերի կոմպոզիցիայում։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Մասնավորեցնում է միլիվայրկյանների ուշացման թիվը այն բանից հետո, երբ սլաքը մտնում է վահանակի տիրույթ, նախքան վահանակը ավտոմատ կերպով նորից կերևա։ Այս բանալին տեղին է միայն եթե auto_hide բանալին ճշգրիտ է։"
+msgstr ""
+"Մասնավորեցնում է միլիվայրկյանների ուշացման թիվը այն բանից հետո, երբ սլաքը "
+"մտնում է վահանակի տիրույթ, նախքան վահանակը ավտոմատ կերպով նորից կերևա։ Այս "
+"բանալին տեղին է միայն եթե auto_hide բանալին ճշգրիտ է։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr "Մասնավորեցնում է միլիվայրկյանների ուշացման թիվը այն բանից հետո, երբ սլաքը մտնում է վահանակի տիրույթ, նախքան վահանակը ավտոմատ կերպով փակվում է։ Այս բանալին տեղին է միայն եթե auto_hide բանալին ճշգրիտ է։"
+msgstr ""
+"Մասնավորեցնում է միլիվայրկյանների ուշացման թիվը այն բանից հետո, երբ սլաքը "
+"մտնում է վահանակի տիրույթ, նախքան վահանակը ավտոմատ կերպով փակվում է։ Այս "
+"բանալին տեղին է միայն եթե auto_hide բանալին ճշգրիտ է։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
-"Մասնավորեցնում է պիքսելների թիվը, որոնք տեսանելի են, երբ վահանակը ավտոմատ կերպով թաքնվում է անկյունում։ Այս բանալին տեղին է միայն, եթե "
-"auto_hide բանալին ճշգրիտ է։ "
+"Մասնավորեցնում է պիքսելների թիվը, որոնք տեսանելի են, երբ վահանակը ավտոմատ "
+"կերպով թաքնվում է անկյունում։ Այս բանալին տեղին է միայն, եթե auto_hide "
+"բանալին ճշգրիտ է։ "
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited "
 "onto the desktop background image."
-msgstr "Մասնավորեցնում է հետին պլանի գույնի անթափանց ֆորմատը։ Եթե գույնը ամբողջովին անթափանց չէ ( 65535–ի պակաս արժեքի դեպքում) գույնը կտեղակայվի աշխատանքային էկրանի հետին պլանի կոմպոզիցիայի մեջ։"
+msgstr ""
+"Մասնավորեցնում է հետին պլանի գույնի անթափանց ֆորմատը։ Եթե գույնը ամբողջովին "
+"անթափանց չէ ( 65535–ի պակաս արժեքի դեպքում) գույնը կտեղակայվի աշխատանքային "
+"էկրանի հետին պլանի կոմպոզիցիայի մեջ։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
@@ -2351,21 +2511,31 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr "Վահանակի բարձրությունը (հորիզոնական վահանակի համար լայնությունը։ Վահանկը սահմանում է վազագույն չափը աշխատանքային ժամանակում հենվելով տառատեսակի չափի և այլ ցուցիչների վրա։ Առավելագույն չափը ֆիքսվաած է էկրանի բարձրության (կամ լայնության).մեկ քառորդի չափով։"
+msgstr ""
+"Վահանակի բարձրությունը (հորիզոնական վահանակի համար լայնությունը։ Վահանկը "
+"սահմանում է վազագույն չափը աշխատանքային ժամանակում հենվելով տառատեսակի չափի "
+"և այլ ցուցիչների վրա։ Առավելագույն չափը ֆիքսվաած է էկրանի բարձրության (կամ "
+"լայնության).մեկ քառորդի չափով։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Վահանակի տեղակայությունը x առանցքի երկայնքով։ Այս բանալին միայն տեղին է ոչ ընդլայնված ռեժիմում։ Ընդլայնված ռեժիմում այս բանալին բաց է թողնվում և վահանակը տեղակայվում է էկրանի ծայրին, մասնավորեցվելով կողմնորոշիչ բանալիով։"
+msgstr ""
+"Վահանակի տեղակայությունը x առանցքի երկայնքով։ Այս բանալին միայն տեղին է ոչ "
+"ընդլայնված ռեժիմում։ Ընդլայնված ռեժիմում այս բանալին բաց է թողնվում և "
+"վահանակը տեղակայվում է էկրանի ծայրին, մասնավորեցվելով կողմնորոշիչ բանալիով։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
-msgstr "Վահանակի տեղակայությունը y առանցքի երկայնքով։ Այս բանալին տեղին է միայն ոչ ընդլայնված ռեժիմում։ Ընդլայնված ռեժիմում այս բանալին բաց է թողնվում և վահանակը տեղակայվում է էկրանին ծայրին, մասնավորեցվելով կողմնորոշիչ բանալիով։"
+msgstr ""
+"Վահանակի տեղակայությունը y առանցքի երկայնքով։ Այս բանալին տեղին է միայն ոչ "
+"ընդլայնված ռեժիմում։ Ընդլայնված ռեժիմում այս բանալին բաց է թողնվում և "
+"վահանակը տեղակայվում է էկրանին ծայրին, մասնավորեցվելով կողմնորոշիչ բանալիով։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
@@ -2379,7 +2549,13 @@ msgid ""
 "panel."
 msgstr ""
 "Վահանակի կողմնորոշումը։ Հնարավոր արժեքներն են. \"top\", \"bottom\", \"left"
-"\", \"right\". Ընդլայնված ռեժիմում բանալին մասնավորեցնում է, թե որ էկրանի ծայրին է գտնվում վահանակը։ Ոչ ընդլայնված ռեժիմում \"top\" և \"bottomճ միջև տարբերությունը պակաս կարևոր է – երկուսն էլ ցույց են տալիս որ սա հորիզոնական վահանակ է, սակայն տալիս են օգտակար հուշում այն մասին թե ինչպիսին պետք է լինի վահանակի մի քանի տարրերի վարքագիծը։ Օրինակ, \"top\" վահանակում մենյու կոճակը էկրան կբերի իր մենյուն վահանակի ներքևում, մինչդեռ  \"bottom\" վահանակում մենյուն էկրանին կհայտնվի վահանակի վերևում։"
+"\", \"right\". Ընդլայնված ռեժիմում բանալին մասնավորեցնում է, թե որ էկրանի "
+"ծայրին է գտնվում վահանակը։ Ոչ ընդլայնված ռեժիմում \"top\" և \"bottomճ միջև "
+"տարբերությունը պակաս կարևոր է – երկուսն էլ ցույց են տալիս որ սա հորիզոնական "
+"վահանակ է, սակայն տալիս են օգտակար հուշում այն մասին թե ինչպիսին պետք է լինի "
+"վահանակի մի քանի տարրերի վարքագիծը։ Օրինակ, \"top\" վահանակում ցանկ կոճակը "
+"էկրան կբերի իր ցանկը վահանակի ներքևում, մինչդեռ  \"bottom\" վահանակում ցանկը "
+"էկրանին կհայտնվի վահանակի վերևում։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -2387,15 +2563,19 @@ msgid ""
 "\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"Արագությունը, որով պետք է կատարվեն վահանակի անիմացիաները։ Հնարավոր արժեքներն են \"slow"
-"\", \"medium\" and \"fast\"։ Այս բանալին տեղին է միայն եթե enable_animations բանալին ճշգրիտ է։"
+"Արագությունը, որով պետք է կատարվեն վահանակի անիմացիաները։ Հնարավոր արժեքներն "
+"են \"slow\", \"medium\" and \"fast\"։ Այս բանալին տեղին է միայն եթե "
+"enable_animations բանալին ճշգրիտ է։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
-msgstr "Սա մարդու անուն է, որը դուք կարող եք օգտագործել վահանակը ճանաչելու համար։ Դրա հիմնական նպատակն է ծառայել որպես վահանակի պատուհանի վերնագիր, որն օգտակար է վահանակների միջև նավիգացիայի ժամանակ։"
+msgstr ""
+"Սա մարդու անուն է, որը դուք կարող եք օգտագործել վահանակը ճանաչելու համար։ "
+"Դրա հիմնական նպատակն է ծառայել որպես վահանակի պատուհանի վերնագիր, որն "
+"օգտակար է վահանակների միջև նավիգացիայի ժամանակ։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "Visible pixels when hidden"
@@ -2407,15 +2587,21 @@ msgid ""
 "\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
-msgstr "Ինչ տեսակի հետին պլան պետք է օգտագործվի այս վահանակի համար։ Հնարավոր արժեքներն են \"gtk\"–դեֆոլտ GTK+ widget հետին ֆոնը կօգտագործվի,\"color\"– գույնի բանալին կօգտագործվի որպես հետին պլան գույն, կամ \"image\"– այն պատկերը որը կմասնավորեցվի պատկերի բանալիով, դա էլ կօգտագործվի որպես հետին պլան։"
+msgstr ""
+"Ինչ տեսակի հետին պլան պետք է օգտագործվի այս վահանակի համար։ Հնարավոր "
+"արժեքներն են \"gtk\"–դեֆոլտ GTK+ widget հետին ֆոնը կօգտագործվի,\"color\"– "
+"գույնի բանալին կօգտագործվի որպես հետին պլան գույն, կամ \"image\"– այն "
+"պատկերը որը կմասնավորեցվի պատկերի բանալիով, դա էլ կօգտագործվի որպես հետին "
+"պլան։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
-"Բազմէկրան կարգադրվածքով դուք կարող եք ունենալ վահանակներ, և դրանց վրա անհատական էկրան։ "
-"Այս բանալին հայտնաբերումէ ընթացիկ էկրանը, որի վրա պատկերված է վահանակը։"
+"Բազմէկրան կարգադրվածքով դուք կարող եք ունենալ վահանակներ, և դրանց վրա "
+"անհատական էկրան։ Այս բանալին հայտնաբերումէ ընթացիկ էկրանը, որի վրա պատկերված "
+"է վահանակը։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
 msgid "X co-ordinate of panel"
@@ -2520,7 +2706,8 @@ msgstr "Ապլետը պարունակում է վահանակի չափսը պի�
 
 #: ../libpanel-applet/panel-applet.c:1226
 msgid "The Applet's containing Panel's background color or pixmap"
-msgstr "Ապլետը պարունակում է վահանակի հետին պլանի գույնը կամ պիքսելների քարտեզը"
+msgstr ""
+"Ապլետը պարունակում է վահանակի հետին պլանի գույնը կամ պիքսելների քարտեզը"
 
 #: ../libpanel-applet/panel-applet.c:1234
 msgid "The Applet's flags"
@@ -2528,7 +2715,9 @@ msgstr "Ապլետի դրոշները"
 
 #: ../libpanel-applet/panel-applet.c:1242
 msgid "Ranges that hint what sizes are acceptable for the applet"
-msgstr "Ցույց է տալիս հուշումների տարբերակները, թե որ չափսերն են ընդունելի ապլետի համար։"
+msgstr ""
+"Ցույց է տալիս հուշումների տարբերակները, թե որ չափսերն են ընդունելի ապլետի "
+"համար։"
 
 #: ../libpanel-applet/panel-applet.c:1250
 msgid "The Applet's containing Panel is locked down"
@@ -2539,15 +2728,18 @@ msgid "Specify an applet IID to load"
 msgstr "Մասնավորեցնել IID ապլետը բեռնելու համար"
 
 #: ../libpanel-applet/panel-test-applets.c:33
-msgid "Specify a gconf location in which the applet preferences should be stored"
-msgstr "Մասնավորեցնել gconf տեղակայությունը, որում պահված են ապլետի պարամետրերը։"
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
+msgstr ""
+"Մասնավորեցնել gconf տեղակայությունը, որում պահված են ապլետի պարամետրերը։"
 
 #: ../libpanel-applet/panel-test-applets.c:34
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "Մասնավորեցնել ապլետի նախնական չափսը (xx-փոքր, միջին, մեծ, և այլն.)"
 
 #: ../libpanel-applet/panel-test-applets.c:36
-msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "Մասնավորեցնել ապլետի նախնական կողմնորոշումը (վերև, ներքև, ձախ կամ աջ)"
 
 #: ../libpanel-applet/panel-test-applets.c:60
@@ -2572,7 +2764,7 @@ msgstr "Մեծ"
 
 #: ../libpanel-applet/panel-test-applets.c:65
 msgid "X Large"
-msgstr "X մեծ"
+msgstr "X Մեծ"
 
 #: ../libpanel-applet/panel-test-applets.c:66
 msgid "XX Large"
@@ -2589,5 +2781,4 @@ msgstr "_Ապլետ"
 
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
-msgstr "_Պարամետրերի կատալոգ"
-
+msgstr "_Պարամետրերի պանակ"
