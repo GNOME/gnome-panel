@@ -1,3 +1,10 @@
+2005-10-28  Christian Neumair  <chris@gnome-de.org>
+
+	* configure.in: Require libgnome 2.13.0.
+	* gnome-panel/panel-menu-items.c: (activate_uri):
+	Don't bail if gnome_url_show_on_screen returns
+	GNOME_URL_ERROR_CANCELLED.
+
 2005-10-24  Vincent Untz  <vuntz@gnome.org>
 
 	* configure.in: post-release bump to 2.12.2.

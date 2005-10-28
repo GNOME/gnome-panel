@@ -39,6 +39,7 @@
 #include <glib/gi18n.h>
 
 #include <libgnomevfs/gnome-vfs.h>
+#include <libgnome/gnome-url.h>
 #include <libgnomeui/gnome-url.h>
 
 #include "menu.h"
@@ -102,16 +103,17 @@ activate_uri (GtkWidget *menuitem,
 						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
 	gnome_url_show_on_screen (url, screen, &error);
 
-	if (error) {
-		escaped = g_markup_escape_text (url, -1);
-		panel_error_dialog (screen, "cannot_show_url", TRUE,
-				    _("Cannot display location '%s'"),
-				    "%s",
-				    escaped,
-				    error->message);
-
+	if (error != NULL) {
+		if (error->code != GNOME_URL_ERROR_CANCELLED) {
+			escaped = g_markup_escape_text (url, -1);
+			panel_error_dialog (screen, "cannot_show_url", TRUE,
+					    _("Cannot display location '%s'"),
+					    "%s",
+					    escaped,
+					    error->message);
+			g_free (escaped);
+		}
 		g_error_free (error);
-		g_free (escaped);
 	}
 	g_free (url);
 }
