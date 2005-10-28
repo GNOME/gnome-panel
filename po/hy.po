@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Norayr Chilingaryan <asprayama@yahoo.com>, 2004, 2005.
-# Lilit Azizbekyan <l@freenet.am>, 2005.
-# Ruzanna Khachatryan, 2005.
+# Lilit Azizbekyan <l@freenet.am>, 2004, 2005.
+# Ruzanna Khachatryan <ruzannak@hotmail.com>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.hy\n"
-"Report-Msgid-Bugs-To: norik@freenet.am\n"
-"POT-Creation-Date: 2005-07-19 06:26+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-28 18:13+0000\n"
 "PO-Revision-Date: 2005-08-24 21:35+0500\n"
 "Last-Translator: Norayr Chilingaryan\n"
 "Language-Team:  <norik@freenet.am>\n"
@@ -46,9 +46,9 @@ msgstr "_Ապլետի մասին"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:740
-#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:225
-#: ../gnome-panel/panel-menu-button.c:688
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:741
+#: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:291
+#: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
 msgstr "_Ձեռնարկ"
 
@@ -60,7 +60,7 @@ msgid "_Preferences"
 msgstr "_Նախընտրանքներ"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2635
+#: ../applets/clock/clock.c:2725
 msgid "Clock"
 msgstr "Ժամացույց"
 
@@ -76,20 +76,20 @@ msgstr "Ժամացույցի ապլետներ ստեղծելու ֆաբրիկա"
 msgid "Get the current time and date"
 msgstr "Ընթացիկ օրը և ժամը"
 
-#: ../applets/clock/clock.c:265
+#: ../applets/clock/clock.c:309
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:265 ../applets/clock/clock.c:590
+#: ../applets/clock/clock.c:309 ../applets/clock/clock.c:630
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:267 ../applets/clock/clock.c:1727
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1782
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:267 ../applets/clock/clock.c:592
-#: ../applets/clock/clock.c:1729
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
+#: ../applets/clock/clock.c:1784
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -98,7 +98,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:278
+#: ../applets/clock/clock.c:322
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -106,7 +106,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:285
+#: ../applets/clock/clock.c:329
 #, c-format
 msgid ""
 "%1$s\n"
@@ -119,79 +119,79 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:292
+#: ../applets/clock/clock.c:336
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:377
+#: ../applets/clock/clock.c:417
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: ../applets/clock/clock.c:389
+#: ../applets/clock/clock.c:429
 msgid "Click to view your appointments and tasks"
 msgstr "Կտտացրեք՝ ձեր պայմանավորվածությունները և առաջադրանքները տեսնելու համար"
 
-#: ../applets/clock/clock.c:391
+#: ../applets/clock/clock.c:431
 msgid "Click to view month calendar"
 msgstr "Կտտացրեք՝ ամսվա օրացույցը տեսնելու համար"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:597
+#: ../applets/clock/clock.c:637
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/clock.c:924
+#: ../applets/clock/clock.c:964
 msgid "Tasks"
 msgstr "Առաջադրանքներ"
 
-#: ../applets/clock/clock.c:1076
+#: ../applets/clock/clock.c:1116
 msgid "All Day"
 msgstr "Ամբողջ օրը"
 
-#: ../applets/clock/clock.c:1115
+#: ../applets/clock/clock.c:1155
 msgid "Appointments"
 msgstr "Պայմանավորվածություններ"
 
-#: ../applets/clock/clock.c:1347
+#: ../applets/clock/clock.c:1387
 msgid "Calendar"
 msgstr "Օրացույց"
 
-#: ../applets/clock/clock.c:1628
+#: ../applets/clock/clock.c:1676
 msgid "Computer Clock"
 msgstr "Համակարգչային ժամացույց"
 
-#: ../applets/clock/clock.c:1722
+#: ../applets/clock/clock.c:1777
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1724
+#: ../applets/clock/clock.c:1779
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1766
+#: ../applets/clock/clock.c:1821
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1810
+#: ../applets/clock/clock.c:1878
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Ժամանակի կոնֆիգուրացիայի գործիքը գործարկել չհաջողվեց՝  %s"
 
-#: ../applets/clock/clock.c:1849
+#: ../applets/clock/clock.c:1914
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
 "Օրը և ժամը կարգադրող ծրագիրը չհաջողվեց գտնել։ Հավանաբար այն տեղակայված չէ"
 
-#: ../applets/clock/clock.c:2296
+#: ../applets/clock/clock.c:2386
 msgid "Custom format"
 msgstr "Այլ ֆորմատ"
 
-#: ../applets/clock/clock.c:2417 ../applets/clock/clock.c:2594
+#: ../applets/clock/clock.c:2507 ../applets/clock/clock.c:2684
 #: ../applets/fish/fish.c:144 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
 #: ../applets/wncklet/workspace-switcher.c:241
@@ -199,57 +199,57 @@ msgstr "Այլ ֆորմատ"
 msgid "There was an error displaying help: %s"
 msgstr "Ձեռնարկի գործարկման ժամանակ սխալ տեղի ունեցավ %s"
 
-#: ../applets/clock/clock.c:2452
+#: ../applets/clock/clock.c:2542
 msgid "Clock Preferences"
 msgstr "Ժամացույցի պարամետրեր"
 
-#: ../applets/clock/clock.c:2476
+#: ../applets/clock/clock.c:2566
 msgid "Clock _type:"
 msgstr "_Ժամացույցի տեսակը՝"
 
-#: ../applets/clock/clock.c:2486
+#: ../applets/clock/clock.c:2576
 #, fuzzy
 msgid "12 hour"
 msgstr "12 ժամ"
 
-#: ../applets/clock/clock.c:2487
+#: ../applets/clock/clock.c:2577
 #, fuzzy
 msgid "24 hour"
 msgstr "24 ժամ"
 
-#: ../applets/clock/clock.c:2488
+#: ../applets/clock/clock.c:2578
 msgid "UNIX time"
 msgstr "UNIX ժամ"
 
-#: ../applets/clock/clock.c:2489
+#: ../applets/clock/clock.c:2579
 #, fuzzy
 msgid "Internet time"
 msgstr "Ինտերնետ ժամ"
 
-#: ../applets/clock/clock.c:2497
+#: ../applets/clock/clock.c:2587
 msgid "Custom _format:"
 msgstr "_Ընտրովի_ֆորմատ"
 
-#: ../applets/clock/clock.c:2516
+#: ../applets/clock/clock.c:2606
 msgid "Show _seconds"
 msgstr "Ցույց տալ _վայրկյանները"
 
-#: ../applets/clock/clock.c:2525
+#: ../applets/clock/clock.c:2615
 msgid "Show _date"
 msgstr "Ցույց տալ _ամսաթիվը"
 
-#: ../applets/clock/clock.c:2534
+#: ../applets/clock/clock.c:2624
 msgid "Use _UTC"
 msgstr "Ցույց տալ ժամը _ըստ Գրինվիչի"
 
-#: ../applets/clock/clock.c:2638
+#: ../applets/clock/clock.c:2728
 msgid "The Clock displays the current time and date"
 msgstr "Ժամացույցը ցույց է տալիս ընթացիկ ժամը և օրը"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2641 ../applets/fish/fish.c:505
+#: ../applets/clock/clock.c:2731 ../applets/fish/fish.c:505
 #: ../applets/notification_area/main.c:133
-#: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:772
+#: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:783
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:555
 #: ../gnome-panel/panel-context-menu.c:130
@@ -436,7 +436,7 @@ msgid ""
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"\"%s Ձկնիկը\" միանգամայն անպիտանի ապլետ է։ Այն միայն դիսկի վրա տեղ է "
+"\"%s Ձկնիկը\" միանգամայն անպիտանի ապլետ է։ Այն միայն սկավառակի վրա տեղ է "
 "զբաղեցնում, և երկարացնում է կազմարկման (compilation) ընթացքը։ Աշխատելիս, "
 "զբաղեցնում է տեղ վահաակի վրա, և հիշողության մեջ։ Նա, ով կարողանում է այն "
 "օգտագործել, հավանաբար հոգեբանական հետազոտման կարիք ունի։"
@@ -642,7 +642,7 @@ msgstr ""
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr "Տարածք, որտեղ հայտնվում են ծանուցող դրվագապատկերները"
+msgstr "Տարածք, որտեղ հայտնվում են ծանուցող պատկերակները"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 #: ../applets/notification_area/main.c:128
@@ -671,11 +671,11 @@ msgstr "Պատուհանների նավիգացիային առնչվող ապլ�
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Hide application windows and show the desktop"
-msgstr "Թաքցնել կիրառական ծրագրերը  և ցույց տալ աշխատանքային էկրանը"
+msgstr "Թաքցնել կիրառական ծրագրերը  և ցույց տալ աշխաըասեղանը"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Show Desktop"
-msgstr "Ցույց տալ աշխատանքային էկրանը"
+msgstr "Ցույց տալ աշխաըասեղանը"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
 msgid "Switch between open windows using a menu"
@@ -690,7 +690,7 @@ msgid "Switch between workspaces"
 msgstr "Փոխել աշխատատիրույթը կամ աշխատանքային տարածքը"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:775
+#: ../applets/wncklet/window-list.c:786
 msgid "Window List"
 msgstr "Պատուհանների ցանկ"
 
@@ -713,9 +713,9 @@ msgstr "Աշխատատիրույթը փոխելու գործիք"
 msgid "Failed to load %s: %s\n"
 msgstr "%s: %s բեռնելու խափանում\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:602
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:624
 msgid "Icon not found"
-msgstr "Դրվագապատկերը գտնված չէ"
+msgstr "Պատկերակը գտնված չէ"
 
 #: ../applets/wncklet/showdesktop.c:230
 msgid "Click here to restore hidden windows."
@@ -724,28 +724,27 @@ msgstr "Կտտացրեք այստեղ՝ թաքնված պատուհանները 
 #: ../applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
-"Կտացրեք այստեղ բոլոր պատուհանները թաքցնելու և աշխատանքային էկրանը ցույց "
-"տալու համար"
+"Կտացրեք այստեղ բոլոր պատուհանները թաքցնելու և աշխաըասեղանը ցույց տալու համար"
 
 #: ../applets/wncklet/showdesktop.c:429 ../applets/wncklet/showdesktop.c:513
 msgid "Show Desktop Button"
-msgstr "Աշխատանքային էկրանը ցուցադրելու կոճակ"
+msgstr "Աշխաըասեղանը ցուցադրելու կոճակ"
 
 #: ../applets/wncklet/showdesktop.c:515
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Այս ստեղնը ընձեռում է հնարավորություն թաքցնել բոլոր պատուհանները և ցույց տալ "
-"աշխատանքային էկրանը"
+"աշխաըասեղանը"
 
 #: ../applets/wncklet/showdesktop.c:545
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
-"Ձեր պատուհանների կառավարիչը չի ապահովում աշխատանքային էկրանը ցույց տվող "
-"կոճակը կամ դուք պատուհանի կառավարչին չեք ակտիվացրել"
+"Ձեր պատուհանների կառավարիչը չի ապահովում աշխաըասեղանը ցույց տվող կոճակը կամ "
+"դուք պատուհանի կառավարչին չեք ակտիվացրել"
 
-#: ../applets/wncklet/window-list.c:777
+#: ../applets/wncklet/window-list.c:788
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -1028,7 +1027,7 @@ msgstr "_Հեռացնել վահանակից"
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1214
+#: ../gnome-panel/applet.c:1216
 msgid "Can't find an empty spot"
 msgstr "Անհնար է դատարկ տեղ գտնել"
 
@@ -1037,19 +1036,19 @@ msgstr "Անհնար է դատարկ տեղ գտնել"
 msgid "Failed to load image %s"
 msgstr "Չհաջեղվեց բեռնել %s նկարը"
 
-#: ../gnome-panel/drawer.c:353 ../gnome-panel/panel-addto.c:150
-#: ../gnome-panel/panel-toplevel.c:1530
+#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:150
+#: ../gnome-panel/panel-toplevel.c:1524
 #, fuzzy
 msgid "Drawer"
 msgstr "Գզրոց"
 
-#: ../gnome-panel/drawer.c:596
+#: ../gnome-panel/drawer.c:588
 #, fuzzy
 msgid "_Add to Drawer..."
 msgstr "_Ավելացնել գզրոցին..."
 
-#: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:852
-#: ../gnome-panel/panel-action-button.c:142
+#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:926
+#: ../gnome-panel/panel-action-button.c:143
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Հատկություններ"
@@ -1058,68 +1057,68 @@ msgstr "_Հատկություններ"
 msgid "Create new file in the given directory"
 msgstr "Տրված պանակում նոր ֆայլ բացել"
 
-#: ../gnome-panel/launcher.c:136
+#: ../gnome-panel/launcher.c:144
 msgid "Cannot save launcher to disk"
 msgstr "Հնարավոր չէ պիտակը պահել սկավառակ վրա"
 
-#: ../gnome-panel/launcher.c:166 ../gnome-panel/launcher.c:216
-#: ../gnome-panel/launcher.c:273
+#: ../gnome-panel/launcher.c:174 ../gnome-panel/launcher.c:224
+#: ../gnome-panel/launcher.c:281
 msgid "Cannot launch icon"
-msgstr "Անհնար է  դրվագապատկերը գործարկել"
+msgstr "Անհնար է  պատկերակը գործարկել"
 
-#: ../gnome-panel/launcher.c:167
+#: ../gnome-panel/launcher.c:175
 msgid "This launch icon does not specify a url to show."
 msgstr "Այս պիտակը չի մասնավորեցնում ցուցադրելու url"
 
-#: ../gnome-panel/launcher.c:179
+#: ../gnome-panel/launcher.c:187
 #, c-format
 msgid "Cannot show %s"
 msgstr "Հնարավոր չէ ցույց տալ %s"
 
-#: ../gnome-panel/launcher.c:467
+#: ../gnome-panel/launcher.c:476
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 
-#: ../gnome-panel/launcher.c:481
+#: ../gnome-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Անհնար է բացել %s%s վահանակի գործարկման %s աշխատասեղանի ֆայլը\n"
 
-#: ../gnome-panel/launcher.c:734 ../gnome-panel/menu-ditem.c:181
+#: ../gnome-panel/launcher.c:808 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Պիտակի հատկություններ"
 
-#: ../gnome-panel/launcher.c:846
+#: ../gnome-panel/launcher.c:920
 msgid "_Launch"
 msgstr "_Գործարկել"
 
-#: ../gnome-panel/launcher.c:924
+#: ../gnome-panel/launcher.c:959
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Բանալին %s կարգադրված չէ, անհնար է բեռնել պիտակը\n"
 
-#: ../gnome-panel/launcher.c:979 ../gnome-panel/launcher.c:997
+#: ../gnome-panel/launcher.c:1014 ../gnome-panel/launcher.c:1033
 #: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
 #: ../gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "Անհնար է պիտակ կերտել"
 
-#: ../gnome-panel/launcher.c:980 ../gnome-panel/menu-ditem.c:470
+#: ../gnome-panel/launcher.c:1015 ../gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "Անհրաժետ է անուն նշել"
 
-#: ../gnome-panel/launcher.c:998 ../gnome-panel/menu-ditem.c:487
+#: ../gnome-panel/launcher.c:1034 ../gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "Անհրաժեշտ է համապատասխան URL կամ հրահանգ նշել"
 
-#: ../gnome-panel/launcher.c:1041 ../gnome-panel/menu-ditem.c:550
+#: ../gnome-panel/launcher.c:1078 ../gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "Կերտել Պիտակ"
 
 #: ../gnome-panel/menu-ditem.c:126
 msgid "Cannot save changes to launcher"
-msgstr "Անկարող է պահել գործարկչի փոփոխությունները"
+msgstr "Չի հաջողվել պահել գործարկչի փոփոխությունները"
 
 #: ../gnome-panel/menu-ditem.c:308
 msgid "Menu"
@@ -1144,7 +1143,7 @@ msgstr "Ավելացնել այս պիտակը վահանակի վրա"
 
 #: ../gnome-panel/menu.c:933
 msgid "Add this launcher to desktop"
-msgstr "Ավելացնել այս պիտակը աշխատանքային էկրանի վրա"
+msgstr "Ավելացնել այս պիտակը աշխաըասեղանի վրա"
 
 #: ../gnome-panel/menu.c:953
 msgid "Entire menu"
@@ -1158,91 +1157,91 @@ msgstr "Ավելացնել սա որպես գզրող վահանակի վրա"
 msgid "Add this as menu to panel"
 msgstr "Ավելացնել սա որպես ցանկ վահանակի վրա"
 
-#: ../gnome-panel/panel-action-button.c:118
+#: ../gnome-panel/panel-action-button.c:119
 msgid "_Activate Screensaver"
-msgstr "_Ակտիվացնել էկրանի դրվագապատկերը"
+msgstr "_Ակտիվացնել էկրանի պատկերակը"
 
-#: ../gnome-panel/panel-action-button.c:124
+#: ../gnome-panel/panel-action-button.c:125
 msgid "_Lock Screen"
 msgstr "_Արգելափակել էկրանը"
 
-#: ../gnome-panel/panel-action-button.c:130
+#: ../gnome-panel/panel-action-button.c:131
 msgid "_Kill Screensaver Daemon"
-msgstr "_Սպանել Էկրանի դրվագապատկեր Դեմոնին"
+msgstr "_Սպանել Էկրանի պատկերակ Դեմոնին"
 
-#: ../gnome-panel/panel-action-button.c:136
+#: ../gnome-panel/panel-action-button.c:137
 msgid "Restart _Screensaver Daemon"
-msgstr "Վերագործարկել_էկրանի դրվագապատկեր Դեմոնին"
+msgstr "Վերագործարկել_էկրանի պատկերակ Դեմոնին"
 
-#: ../gnome-panel/panel-action-button.c:206
-#: ../gnome-panel/panel-action-button.c:219
-#: ../gnome-panel/panel-action-button.c:243
-#: ../gnome-panel/panel-menu-bar.c:291 ../gnome-panel/panel-menu-button.c:1009
-#: ../gnome-panel/panel-util.c:723
+#: ../gnome-panel/panel-action-button.c:207
+#: ../gnome-panel/panel-action-button.c:220
+#: ../gnome-panel/panel-action-button.c:244
+#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1007
+#: ../gnome-panel/panel-util.c:748
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Չի հաջողվել է կատարել %s'"
 
-#: ../gnome-panel/panel-action-button.c:279
+#: ../gnome-panel/panel-action-button.c:280
 msgid "Cannot connect to server"
 msgstr "Չի հաջողվել միանալ սերվերին"
 
-#: ../gnome-panel/panel-action-button.c:310
+#: ../gnome-panel/panel-action-button.c:311
 msgid "Lock Screen"
 msgstr "Արգելափակել"
 
-#: ../gnome-panel/panel-action-button.c:311
+#: ../gnome-panel/panel-action-button.c:312
 msgid "Protect your computer from unauthorized use"
 msgstr "Պաշտպանիր համակարգիչդ ոչ իրավասու օգտագործումից"
 
-#: ../gnome-panel/panel-action-button.c:322
+#: ../gnome-panel/panel-action-button.c:323
 msgid "Log Out"
 msgstr "Ելք"
 
-#: ../gnome-panel/panel-action-button.c:323
+#: ../gnome-panel/panel-action-button.c:324
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
-msgstr "Ավարտել այս սեանսը և սկսել որպես նոր գործարկող կամ համակարգիչն անջատել"
+msgstr "Ավարտել այս նիստը և սկսել որպես նոր գործարկող կամ համակարգիչն անջատել"
 
-#: ../gnome-panel/panel-action-button.c:332
+#: ../gnome-panel/panel-action-button.c:333
 msgid "Run Application..."
 msgstr "Գոծարկել կիրառական ծրագրերեը"
 
-#: ../gnome-panel/panel-action-button.c:333
+#: ../gnome-panel/panel-action-button.c:334
 msgid "Run an Application by entering a command"
 msgstr "Գործարկել կիրառական ծրագիրը՝ տալով հրահանգը"
 
-#: ../gnome-panel/panel-action-button.c:342
+#: ../gnome-panel/panel-action-button.c:343
 msgid "Search for Files..."
 msgstr "Փնտրել ֆայլը"
 
-#: ../gnome-panel/panel-action-button.c:343
+#: ../gnome-panel/panel-action-button.c:344
 msgid "Find files, folders, and documents on your computer"
 msgstr "Փնտրել համակարգչում ֆայլեր, պանակներ և փաստաթղթեր"
 
-#: ../gnome-panel/panel-action-button.c:351
+#: ../gnome-panel/panel-action-button.c:352
 msgid "Take Screenshot..."
 msgstr "Նկարել"
 
-#: ../gnome-panel/panel-action-button.c:352
+#: ../gnome-panel/panel-action-button.c:353
 msgid "Take a screenshot of your desktop"
 msgstr "Նկարել աշխատասեղանը"
 
-#: ../gnome-panel/panel-action-button.c:360
+#: ../gnome-panel/panel-action-button.c:361
 msgid "Force Quit"
 msgstr "Ստիպել Ընդհատվել"
 
-#: ../gnome-panel/panel-action-button.c:361
+#: ../gnome-panel/panel-action-button.c:362
 msgid "Force a misbehaving application to quit"
 msgstr "Ստիպել սխալ ծրագրին ընդհատվել"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:370
+#: ../gnome-panel/panel-action-button.c:371
 msgid "Connect to Server..."
 msgstr "Միանալ Սերվերին"
 
-#: ../gnome-panel/panel-action-button.c:371
+#: ../gnome-panel/panel-action-button.c:372
 msgid "Connect to a remote server"
 msgstr "Միանալ հեռավոր սերվերին"
 
@@ -1286,31 +1285,31 @@ msgstr "Էկրանին հայտնվող գզրոց այլ տարրեր պահե�
 msgid "(empty)"
 msgstr "(դատարկ)"
 
-#: ../gnome-panel/panel-addto.c:400
+#: ../gnome-panel/panel-addto.c:404
 #: ../libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "Հարցումով վերադարձած բացառություն %s\n"
 
-#: ../gnome-panel/panel-addto.c:1006
+#: ../gnome-panel/panel-addto.c:1011
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "Ընտրել _տարր ավելացնելու համար \"%s\""
 
-#: ../gnome-panel/panel-addto.c:1010
+#: ../gnome-panel/panel-addto.c:1015
 #, fuzzy
 msgid "Add to Drawer"
 msgstr "_Ավելացնել գզրոցին..."
 
-#: ../gnome-panel/panel-addto.c:1012
+#: ../gnome-panel/panel-addto.c:1017
 msgid "Select an _item to add to the drawer:"
 msgstr "Ընտրել տարր _գզրոցին ավելացնելու համար"
 
-#: ../gnome-panel/panel-addto.c:1014
+#: ../gnome-panel/panel-addto.c:1019
 msgid "Add to Panel"
 msgstr "_Ավելացնել վահանակին"
 
-#: ../gnome-panel/panel-addto.c:1016
+#: ../gnome-panel/panel-addto.c:1021
 msgid "Select an _item to add to the panel:"
 msgstr "Ընտրել _տարր վահանակի ավելացնելու համար"
 
@@ -1408,7 +1407,7 @@ msgstr "_Ավելացնել վահանակին"
 msgid "_New Panel"
 msgstr "_Նոր վահանակ"
 
-#: ../gnome-panel/panel-context-menu.c:335
+#: ../gnome-panel/panel-context-menu.c:333
 msgid "A_bout Panels"
 msgstr "Վահանակների մա_սին"
 
@@ -1419,7 +1418,7 @@ msgstr ""
 "Կտտացրեք պատուհանի վրա կիրառական ծրագիրը հեռացնելու համար։ Այն վերացնելու "
 "համար սեղմեք <ESC>."
 
-#: ../gnome-panel/panel-force-quit.c:187
+#: ../gnome-panel/panel-force-quit.c:203
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -1576,7 +1575,7 @@ msgstr "ՄԻացնել գործիքների հուշումները"
 
 #: ../gnome-panel/panel-global.schemas.in.h:12
 msgid "Highlight launchers on mouseover"
-msgstr "Ընդգծել–ծածկել գործարկիչները մկնիկով"
+msgstr "Ընդգծել–ծածկել պիտակները մկնիկով"
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
@@ -1592,13 +1591,13 @@ msgid ""
 "launcher in it."
 msgstr ""
 "եթե ճշգրիտ է, գզրոցը ավտոմատ կերպով փակվում է, երբ գործարկողը կտտոցով "
-"միացնում է գործարկիչը"
+"միացնում է պիտակը"
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
-"Եթե ճշգրիտ է, գործարկիչը ընդգծվում–ծածակվում է, երբ գործարկողը տեղաշարժում է "
+"Եթե ճշգրիտ է, պիտակը ընդգծվում–ծածակվում է, երբ գործարկողը տեղաշարժում է "
 "սլաքը դրա վրայով։"
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
@@ -1642,34 +1641,34 @@ msgstr ""
 "Եթե ճշգիտ է, գործիքների հուշումները ցույց են տրվում վահանակներում՝ որպես "
 "տարրեր։"
 
-#: ../gnome-panel/panel-menu-bar.c:71
+#: ../gnome-panel/panel-menu-bar.c:79
 msgid "Applications"
 msgstr "Ծրագրեր"
 
-#: ../gnome-panel/panel-menu-bar.c:232 ../gnome-panel/panel-menu-button.c:691
+#: ../gnome-panel/panel-menu-bar.c:298 ../gnome-panel/panel-menu-button.c:688
 msgid "_Edit Menus"
 msgstr "_Խմբագրել ցանկերը"
 
-#: ../gnome-panel/panel-menu-items.c:105 ../gnome-panel/panel-run-dialog.c:310
+#: ../gnome-panel/panel-menu-items.c:108 ../gnome-panel/panel-run-dialog.c:313
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Չի հաջողվել ցույց տալ տեղակայությունը %s'"
 
-#: ../gnome-panel/panel-menu-items.c:324
+#: ../gnome-panel/panel-menu-items.c:329
 msgid "Bookmarks"
 msgstr "Էջանշաններ"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:345 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:350 ../gnome-panel/panel-recent.c:199
 #, c-format
 msgid "Open '%s'"
 msgstr "Բացել '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:431
+#: ../gnome-panel/panel-menu-items.c:471
 msgid "Network Places"
 msgstr "Ցանցային տեղայնքներ"
 
-#: ../gnome-panel/panel-menu-items.c:433
+#: ../gnome-panel/panel-menu-items.c:474
 msgid "Removable Media"
 msgstr "Հեռացվող մեդիա"
 
@@ -1677,30 +1676,30 @@ msgstr "Հեռացվող մեդիա"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:491
+#: ../gnome-panel/panel-menu-items.c:545
 msgid "Desktop Folder|Desktop"
 msgstr "Աշխատասեղան"
 
-#: ../gnome-panel/panel-menu-items.c:492
+#: ../gnome-panel/panel-menu-items.c:546
 msgid "Open the desktop as a folder"
 msgstr "Բացել ածխատասեղանը որպես պանակ"
 
-#: ../gnome-panel/panel-menu-items.c:824
+#: ../gnome-panel/panel-menu-items.c:900
 msgid "Places"
 msgstr "Տեղայնքներ"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:862
+#: ../gnome-panel/panel-menu-items.c:938
 msgid "Desktop Environment|Desktop"
 msgstr "Աշխատասեղան"
 
-#: ../gnome-panel/panel-menu-items.c:1003
+#: ../gnome-panel/panel-menu-items.c:1079
 msgid "Cannot launch entry"
 msgstr "Չի հաջողվել գործարկել մուտքը"
 
-#: ../gnome-panel/panel-menu-items.c:1015
+#: ../gnome-panel/panel-menu-items.c:1091
 msgid "Cannot load entry"
 msgstr "Չի հաջողվել բեռնել մուտքը"
 
@@ -1722,10 +1721,9 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
-"Եթե ճշգրիտ է, custom_icon բանալին օգտագործվում է որպես գործարկողի "
-"դրվագապատկեր կոճակի համար։ եթե ճշգրիտ չէ, custom_icon բանալին բաց է "
-"թողնվում։ Այս բանալին տեղին է միայն, երբ  \"menu-object\" կամ \"drawer-object"
-"\" բանալին է։"
+"Եթե ճշգրիտ է, custom_icon բանալին օգտագործվում է որպես գործարկողի պատկերակ "
+"կոճակի համար։ եթե ճշգրիտ չէ, custom_icon բանալին բաց է թողնվում։ Այս բանալին "
+"տեղին է միայն, երբ  \"menu-object\" կամ \"drawer-object\" բանալին է։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
 msgid ""
@@ -1817,8 +1815,8 @@ msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
-"Աշխատանքային էկրանի ֆայլի տեղակայությունը, որը նկարագրում է պիտակը։ Այս "
-"բանալին տեղին է միայն եթե object_type բանալին \"launcher-object\" է։"
+"Աշխաըասեղանի ֆայլի տեղակայությունը, որը նկարագրում է պիտակը։ Այս բանալին "
+"տեղին է միայն եթե object_type բանալին \"launcher-object\" է։"
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -1882,19 +1880,19 @@ msgstr "Օգտագործել գործարկողի պատկերակը որպես 
 msgid "Use custom path for menu contents"
 msgstr "Օգտագործել գործարկողի ուղին որպես ցանկի բովանդակություն"
 
-#: ../gnome-panel/panel-profile.c:743 ../gnome-panel/panel-profile.c:770
-#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1630
+#: ../gnome-panel/panel-profile.c:747 ../gnome-panel/panel-profile.c:774
+#: ../gnome-panel/panel-profile.c:810 ../gnome-panel/panel-profile.c:1633
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "GConf տողի արժեքի ընթերցման սխալ '%s': %s"
 
-#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1526
-#: ../gnome-panel/panel-profile.c:1599 ../gnome-panel/panel-profile.c:1662
+#: ../gnome-panel/panel-profile.c:789 ../gnome-panel/panel-profile.c:1529
+#: ../gnome-panel/panel-profile.c:1602 ../gnome-panel/panel-profile.c:1665
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "GConf ամբողջ թվի արժեքի ընթերցման սխալ '%s': %s"
 
-#: ../gnome-panel/panel-profile.c:1536
+#: ../gnome-panel/panel-profile.c:1539
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1903,7 +1901,7 @@ msgstr ""
 "'%s վահանակը կարգադրվածքով պետք է երևա %d էկրանին, որը այս պահին հնարավոր "
 "չէ։ Այս վահանակը չի բեռնում։"
 
-#: ../gnome-panel/panel-profile.c:1614
+#: ../gnome-panel/panel-profile.c:1617
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr " GConf բուլեյան արժեքի ընթերցման սխալ %s': %s"
@@ -2037,11 +2035,11 @@ msgstr "_Խճանկար"
 
 #: ../gnome-panel/panel-recent.c:54
 msgid "Couldn't find a suitable application"
-msgstr "Անկարող է գտնել համապատասխան կիրառական ծրագիր"
+msgstr "Չի հաջողվել գտնել համապատասխան կիրառական ծրագիր"
 
 #: ../gnome-panel/panel-recent.c:93 ../gnome-panel/panel-recent.c:101
 msgid "Cannot open recently used document"
-msgstr "Անկարող է բացել վերջերս օգտագործված փաստաթուղթը"
+msgstr "Չի հաջողվել բացել վերջերս օգտագործված փաստաթուղթը"
 
 #: ../gnome-panel/panel-recent.c:102
 #, c-format
@@ -2064,43 +2062,43 @@ msgstr ""
 "• Բոլոր տարրերը Տեղայնքներից→Վերջին փաստաթղթեր ցանկի տարրերը • Բոլոր տարրերը "
 "վերջին փաստաթղթեր ցանկից բոլոր կիրառական ծրագրերում"
 
-#: ../gnome-panel/panel-recent.c:221
+#: ../gnome-panel/panel-recent.c:222
 msgid "Recent Documents"
 msgstr "Վերջին փաստաթղթեր"
 
-#: ../gnome-panel/panel-recent.c:262
+#: ../gnome-panel/panel-recent.c:266
 msgid "Clear Recent Documents"
 msgstr "Մաքրել վերջին փաստաթղթերը"
 
-#: ../gnome-panel/panel-recent.c:266
+#: ../gnome-panel/panel-recent.c:270
 msgid "Clear all items from the recent documents list"
 msgstr "Մաքրել բոլոր փաստաթղթերը վերջին փաստաթղթերի ցանկից"
 
-#: ../gnome-panel/panel-run-dialog.c:284
+#: ../gnome-panel/panel-run-dialog.c:287
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Անհնար է հրանանգը բեռնել '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:362
+#: ../gnome-panel/panel-run-dialog.c:365
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "'%s–ը UTF-8–ից փոխարկել անհնար է"
 
-#: ../gnome-panel/panel-run-dialog.c:1109
+#: ../gnome-panel/panel-run-dialog.c:1118
 msgid "Choose a file to append to the command..."
 msgstr "Ընտրել ֆայլը հրահանգին ավելացնելու համար"
 
-#: ../gnome-panel/panel-run-dialog.c:1465
+#: ../gnome-panel/panel-run-dialog.c:1475
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Հրահանգը կկատարվի '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1472
+#: ../gnome-panel/panel-run-dialog.c:1482
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Ընտրել կիրառական ծրագիրը նկարագրությունը տեսնելու համար"
 
-#: ../gnome-panel/panel-run-dialog.c:1507
+#: ../gnome-panel/panel-run-dialog.c:1517
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2161,7 +2159,7 @@ msgstr "Ցույց տալ հայտնի ծրագրերի ցանկը"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:13
 msgid "The icon of the command to be run."
-msgstr "Գործարկվող հրահանգի դրվագապատկերը"
+msgstr "Գործարկվող հրահանգի պատկերակը"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:14
 #: ../gnome-panel/panel-stock-icons.c:89
@@ -2201,73 +2199,73 @@ msgstr "Մ_աքրել"
 msgid "D_on't Delete"
 msgstr "Չ_հեռացնել"
 
-#: ../gnome-panel/panel-toplevel.c:1120
+#: ../gnome-panel/panel-toplevel.c:1114
 msgid "Hide Panel"
 msgstr "Վահանակը թաքցնել"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1501
+#: ../gnome-panel/panel-toplevel.c:1495
 msgid "Top Expanded Edge Panel"
 msgstr "Վերին ծայրի ընդլայնված վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1502
+#: ../gnome-panel/panel-toplevel.c:1496
 msgid "Top Centered Panel"
 msgstr "Վերևի կենտրոնի վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1503
+#: ../gnome-panel/panel-toplevel.c:1497
 msgid "Top Floating Panel"
 msgstr "Վերևում լողացող վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1504
+#: ../gnome-panel/panel-toplevel.c:1498
 msgid "Top Edge Panel"
 msgstr "Վերևի անկյան վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1508
+#: ../gnome-panel/panel-toplevel.c:1502
 msgid "Bottom Expanded Edge Panel"
 msgstr "Ներքևի ծայրի ընդլայնված վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1509
+#: ../gnome-panel/panel-toplevel.c:1503
 msgid "Bottom Centered Panel"
 msgstr "Ներքևի կենտրոնի վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1510
+#: ../gnome-panel/panel-toplevel.c:1504
 msgid "Bottom Floating Panel"
 msgstr "Ներքևի լողացոց վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1511
+#: ../gnome-panel/panel-toplevel.c:1505
 msgid "Bottom Edge Panel"
 msgstr "Ներքևի ծայրի վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1515
+#: ../gnome-panel/panel-toplevel.c:1509
 msgid "Left Expanded Edge Panel"
 msgstr "Ձախ ծայրի ընդլայնված վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1516
+#: ../gnome-panel/panel-toplevel.c:1510
 msgid "Left Centered Panel"
 msgstr "Ձախ կենտրոնի վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1517
+#: ../gnome-panel/panel-toplevel.c:1511
 msgid "Left Floating Panel"
 msgstr "Ձախ կողմի լողացող վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1518
+#: ../gnome-panel/panel-toplevel.c:1512
 msgid "Left Edge Panel"
 msgstr "Ձախ ծայրի վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1522
+#: ../gnome-panel/panel-toplevel.c:1516
 msgid "Right Expanded Edge Panel"
 msgstr "Աջ ծայրի ընդլայնված վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1523
+#: ../gnome-panel/panel-toplevel.c:1517
 msgid "Right Centered Panel"
 msgstr "Աջ կողմի կենտրոնի վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1524
+#: ../gnome-panel/panel-toplevel.c:1518
 msgid "Right Floating Panel"
 msgstr "Աջ կողմի լողացող վահանակ"
 
-#: ../gnome-panel/panel-toplevel.c:1525
+#: ../gnome-panel/panel-toplevel.c:1519
 msgid "Right Edge Panel"
 msgstr "Աջ ծայրի վահանակ"
 
@@ -2388,7 +2386,7 @@ msgstr ""
 "Եթե ճշգրիտ է, վահանակը կզբաղեցնի էկրանի ամբողջ լայնությունը (բարձրությունը, "
 "եթե ուղղահայաց վահանակ է)։ Այս ռեժիմում վահանակը կարող է տեղակայվել միայն "
 "էկրանի անկյունում։ Եթե ճշգրիտ չէ, վահանակը պետք է բավականին մեծ լինի՝ "
-"ապլենտները, գործարկիչները և կոճակները վահանակի վրա հյուրընկալելու համար, "
+"ապլենտները, պիտակները և կոճակները վահանակի վրա հյուրընկալելու համար, "
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2459,8 +2457,8 @@ msgid ""
 "image."
 msgstr ""
 "Մասնավորեցնում է այն ֆայլը, որը պետք է օգտագործվի հետին ֆոնի պատկերի համար։ "
-"Եթե պատկերը պարունակում է ալֆա ուղի, այն կտեղակայվի աշխատանքային էկրանի "
-"հետին պլանի պատկերի կոմպոզիցիայում։"
+"Եթե պատկերը պարունակում է ալֆա ուղի, այն կտեղակայվի աշխաըասեղանի հետին պլանի "
+"պատկերի կոմպոզիցիայում։"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
@@ -2589,7 +2587,7 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 "Ինչ տեսակի հետին պլան պետք է օգտագործվի այս վահանակի համար։ Հնարավոր "
-"արժեքներն են \"gtk\"–դեֆոլտ GTK+ widget հետին ֆոնը կօգտագործվի,\"color\"– "
+"արժեքներն են \"gtk\"–նախնական GTK+ widget հետին ֆոնը կօգտագործվի,\"color\"– "
 "գույնի բանալին կօգտագործվի որպես հետին պլան գույն, կամ \"image\"– այն "
 "պատկերը որը կմասնավորեցվի պատկերի բանալիով, դա էլ կօգտագործվի որպես հետին "
 "պլան։"
@@ -2619,25 +2617,25 @@ msgstr "Xinerama մոնիտոր, որտեղ պատկերվում է վահանա
 msgid "Y co-ordinate of panel"
 msgstr "Վահանակի Y կոորդինատ"
 
-#: ../gnome-panel/panel-util.c:66
+#: ../gnome-panel/panel-util.c:89
 msgid "Cannot display help document"
-msgstr "Անկարող է ցույց տալ հարց փաստաթուղթը"
+msgstr "Չի հաջողվել ցույց տալ ձեռնարկ փաստաթուղթը"
 
-#: ../gnome-panel/panel-util.c:288
+#: ../gnome-panel/panel-util.c:311
 #, c-format
 msgid "Details: %s"
 msgstr "Մանրամասներ %s"
 
-#: ../gnome-panel/panel.c:474
+#: ../gnome-panel/panel.c:471
 #, c-format
 msgid "Open URL: %s"
 msgstr "ԲացելURL: %s"
 
-#: ../gnome-panel/panel.c:1262
+#: ../gnome-panel/panel.c:1256
 msgid "Delete this drawer?"
 msgstr "Հեռացնե՞լ այս գզրոցը։"
 
-#: ../gnome-panel/panel.c:1263
+#: ../gnome-panel/panel.c:1257
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2645,15 +2643,15 @@ msgstr ""
 "Երբ գզրոցը հեռացվում է, գզրոցը և իր կարգադրվածքները \n"
 "կորում են"
 
-#: ../gnome-panel/panel.c:1265
+#: ../gnome-panel/panel.c:1259
 msgid "Delete Drawer"
 msgstr "Գզրոցը հեռացնել"
 
-#: ../gnome-panel/panel.c:1267
+#: ../gnome-panel/panel.c:1261
 msgid "Delete this panel?"
 msgstr "Հեռացնե՞լ այս վահանակը"
 
-#: ../gnome-panel/panel.c:1268
+#: ../gnome-panel/panel.c:1262
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2661,7 +2659,7 @@ msgstr ""
 "Երբ վահանակը հեռացվում է, վահանակը և իր \n"
 "կարգադրվածքները կորում են"
 
-#: ../gnome-panel/panel.c:1270
+#: ../gnome-panel/panel.c:1264
 msgid "Delete Panel"
 msgstr "Վահանակը հեռացնել"
 
@@ -2677,49 +2675,49 @@ msgstr "Ստուգել Bonobo ապլետը"
 msgid "Test Bonobo Applet Factory"
 msgstr "ՍտուգելBonobo  ապլետ ֆաբրիկան"
 
-#: ../libpanel-applet/panel-applet.c:995
+#: ../libpanel-applet/panel-applet.c:997
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Անավարտ '%s հետին պլանի տեսակը ստացվել է"
 
-#: ../libpanel-applet/panel-applet.c:1009
+#: ../libpanel-applet/panel-applet.c:1011
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Անավարտ '%s' հետին պլանի տեսակը ստացվել է %s"
 
-#: ../libpanel-applet/panel-applet.c:1018
+#: ../libpanel-applet/panel-applet.c:1020
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Չհաջողվեց ստանալ պիքսելների քարտեզը %s "
 
-#: ../libpanel-applet/panel-applet.c:1025
+#: ../libpanel-applet/panel-applet.c:1027
 msgid "Unknown background type received"
 msgstr "Անհայտ հետին պլանի տեսակը ստացվել է"
 
-#: ../libpanel-applet/panel-applet.c:1210
+#: ../libpanel-applet/panel-applet.c:1212
 msgid "The Applet's containing Panel's orientation"
 msgstr "Ապլետը պարունակում է վահանակի կողմնորոշիչը"
 
-#: ../libpanel-applet/panel-applet.c:1218
+#: ../libpanel-applet/panel-applet.c:1220
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Ապլետը պարունակում է վահանակի չափսը պիքսելներով"
 
-#: ../libpanel-applet/panel-applet.c:1226
+#: ../libpanel-applet/panel-applet.c:1228
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 "Ապլետը պարունակում է վահանակի հետին պլանի գույնը կամ պիքսելների քարտեզը"
 
-#: ../libpanel-applet/panel-applet.c:1234
+#: ../libpanel-applet/panel-applet.c:1236
 msgid "The Applet's flags"
 msgstr "Ապլետի դրոշները"
 
-#: ../libpanel-applet/panel-applet.c:1242
+#: ../libpanel-applet/panel-applet.c:1244
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Ցույց է տալիս հուշումների տարբերակները, թե որ չափսերն են ընդունելի ապլետի "
 "համար։"
 
-#: ../libpanel-applet/panel-applet.c:1250
+#: ../libpanel-applet/panel-applet.c:1252
 msgid "The Applet's containing Panel is locked down"
 msgstr "Ապլետի վահանակի պարունակությունը արգելափակված է"
 
@@ -2782,3 +2780,7 @@ msgstr "_Ապլետ"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Պարամետրերի պանակ"
+
+#, fuzzy
+#~ msgid "Select an animation"
+#~ msgstr "Միացնել անիմացիաները"
