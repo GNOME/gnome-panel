@@ -1735,6 +1735,13 @@ panel_run_dialog_present (GdkScreen *screen,
 	gui = glade_xml_new (GLADEDIR "/panel-run-dialog.glade",
 			     "panel_run_dialog",
 			     NULL);
+	if (gui == NULL) {
+		panel_error_dialog (screen, "cannot_display_run_dialog", TRUE,
+				    _("Cannot Display Run Dialog"),
+				    _("%s could not be loaded."),
+				      GLADEDIR "/panel-run-dialog.glade");
+		return;
+	}
 
 	static_dialog = panel_run_dialog_new (screen, gui, activate_time);
 

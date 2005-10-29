@@ -977,6 +977,14 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 	gui = glade_xml_new (GLADEDIR "/panel-properties-dialog.glade",
 			     "panel_properties_dialog",
 			     NULL);
+	if (gui == NULL) {
+		panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (toplevel)),
+				    "cannot_display_properties_dialog", TRUE,
+				    _("Cannot Display Properties Dialog"),
+				    _("%s could not be loaded."),
+				    GLADEDIR "/panel-properties-dialog.glade");
+		return;
+	}
 
 	dialog = panel_properties_dialog_new (toplevel, gui);
 

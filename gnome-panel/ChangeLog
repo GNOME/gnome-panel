@@ -1,3 +1,15 @@
+2005-10-29  Christian Neumair  <chris@gnome-de.org>
+
+	* panel-properties-dialog.c: (panel_properties_dialog_present):
+	* panel-run-dialog.c: (panel_run_dialog_present):
+	Handle glade errors instead of crashing. Fixes #320160.
+
+2005-10-28  Christian Neumair  <chris@gnome-de.org>
+
+	* panel-menu-items.c: (activate_uri):
+	Don't bail if gnome_url_show_on_screen returns
+	GNOME_URL_ERROR_CANCELLED.
+
 ==================== 2.13.1 ====================
 
 2005-10-24  Vincent Untz  <vuntz@gnome.org>
