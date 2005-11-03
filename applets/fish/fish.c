@@ -1473,7 +1473,7 @@ update_pixmap (FishApplet *fish)
 	}
 
 	if (rotate) {
-		if (fish->orientation == PANEL_APPLET_ORIENT_LEFT) {
+		if (fish->orientation == PANEL_APPLET_ORIENT_RIGHT) {
 			cairo_matrix_translate (&matrix, pixbuf_width - 1, 0);
 			cairo_matrix_rotate (&matrix, M_PI * 0.5);
 		} else {
@@ -1520,9 +1520,9 @@ fish_applet_expose_event (GtkWidget      *widget,
 	src_y = event->area.y;
 
 	if (fish->rotate) {
-		if (fish->orientation == PANEL_APPLET_ORIENT_LEFT)
+		if (fish->orientation == PANEL_APPLET_ORIENT_RIGHT)
 			src_y += ((height * (fish->n_frames - 1 - fish->current_frame)) / fish->n_frames);
-		else if (fish->orientation == PANEL_APPLET_ORIENT_RIGHT)
+		else if (fish->orientation == PANEL_APPLET_ORIENT_LEFT)
 			src_y += ((height * fish->current_frame) / fish->n_frames);
 		else
 			src_x += ((width * fish->current_frame) / fish->n_frames);
