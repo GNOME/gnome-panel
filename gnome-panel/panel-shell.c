@@ -36,36 +36,36 @@
  */
 static PanelShell *panel_shell = NULL;
 
+static Bonobo_RegistrationResult
+panel_shell_bonobo_activation_register_for_display (const char    *iid,
+						    Bonobo_Unknown ref)
+{
+	const char *display_name;
+	GSList     *reg_env ;
+	Bonobo_RegistrationResult result;
+	
+	display_name = gdk_display_get_name (gdk_display_get_default ());
+	reg_env = bonobo_activation_registration_env_set (NULL,
+							  "DISPLAY",
+							  display_name);
+	result = bonobo_activation_register_active_server (iid, ref, reg_env);
+	bonobo_activation_registration_env_free (reg_env);
+	return result;
+}
+
 gboolean
 panel_shell_register (void)
 {
         if (!panel_shell) {
 		Bonobo_RegistrationResult  reg_res;
 		char                      *message = NULL;
-		char                      *iid;
-		char			  *display;
-		char			  *p;
 
 		panel_shell = g_object_new (PANEL_SHELL_TYPE, NULL);
 		bonobo_object_set_immortal (BONOBO_OBJECT (panel_shell), TRUE);
 
-		/* Strip off the screen portion of the display */
-		display = g_strdup (g_getenv ("DISPLAY"));
-		p = strrchr (display, ':');
-		if (p) {
-			p = strchr (p, '.');
-			if (p)
-				p [0] = '\0';
-		}
-
-		iid = bonobo_activation_make_registration_id (
-				"OAFIID:GNOME_PanelShell", display);
-
-		reg_res = bonobo_activation_active_server_register (
-				iid, BONOBO_OBJREF (panel_shell));
-
-		g_free (iid);
-		g_free (display);
+		reg_res = panel_shell_bonobo_activation_register_for_display
+				("OAFIID:GNOME_PanelShell",
+				 BONOBO_OBJREF (panel_shell));
 
 		switch (reg_res) {
 		case Bonobo_ACTIVATION_REG_SUCCESS:
@@ -100,7 +100,7 @@ panel_shell_register (void)
 void
 panel_shell_unregister (void)
 {
-	bonobo_activation_active_server_unregister ("OAFIID:GNOME_PanelShell",
+	bonobo_activation_unregister_active_server ("OAFIID:GNOME_PanelShell",
 						    BONOBO_OBJREF (panel_shell));
 }
 

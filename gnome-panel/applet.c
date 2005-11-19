@@ -10,7 +10,8 @@
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
-#include <libbonobo.h>
+
+#include <glib/gi18n.h>
 #include <gdk/gdkx.h>
 
 #include "button-widget.h"

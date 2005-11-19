@@ -300,8 +300,8 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			uri = gnome_vfs_uri_new (lines[i]);
 
 			if (!uri ||
-			     (!strcmp (gnome_vfs_uri_get_scheme (uri), "file") &&
-			      !gnome_vfs_uri_exists (uri))) {
+			    (!strcmp (gnome_vfs_uri_get_scheme (uri), "file") &&
+			     !gnome_vfs_uri_exists (uri))) {
 				if (label)
 					g_free (label);
 				gnome_vfs_uri_unref (uri);
@@ -368,14 +368,17 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 				buffer = gnome_vfs_get_local_path_from_uri (full_uri);
 				label = g_filename_display_basename (buffer);
 			} else {
-				/* FIXME: do this:
-				hostname = gnome_vfs_uri_get_host_name (uri);
+				const char *hostname;
+				char       *displayname;
+
+				hostname = gnome_vfs_uri_get_host_name (bookmark->uri);
 				buffer = gnome_vfs_get_local_path_from_uri (full_uri);
 				displayname = g_filename_display_basename (buffer);
-				label = g_strdup_printf (_("%s on %s"), displayname, hostname);
-				 */
-				buffer = gnome_vfs_uri_extract_short_name (bookmark->uri);
-				label = g_filename_display_name (buffer);
+				/* Translators: the first string is a pathc and
+				 * the second string is a hostname. nautilus
+				 * contains the same string to translate. */
+				label = g_strdup_printf (_("%1$s on %2$s"), displayname, hostname);
+				g_free (displayname);
 			}
 
 			g_free (buffer);

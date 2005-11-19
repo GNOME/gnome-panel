@@ -15,9 +15,9 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 
-#include <libbonobo.h>
 #include <libgnomeui/gnome-icon-lookup.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <libgnomevfs/gnome-vfs-uri.h>

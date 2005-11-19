@@ -12,22 +12,16 @@
 #include <signal.h>
 #include <sys/wait.h>
 
+#include <glib/gi18n.h>
 #include <libgnomeui/gnome-authentication-manager.h>
 #include <libgnomeui/gnome-ui-init.h>
 
-#include <libbonoboui.h>
-#include <bonobo-activation/bonobo-activation.h>
-
-#include "menu.h"
-#include "panel.h"
-#include "panel-util.h"
 #include "panel-gconf.h"
 #include "panel-profile.h"
 #include "panel-config-global.h"
 #include "panel-shell.h"
 #include "panel-multiscreen.h"
 #include "panel-session.h"
-#include "xstuff.h"
 #include "panel-stock-icons.h"
 #include "panel-action-protocol.h"
 #include "panel-lockdown.h"
@@ -58,12 +52,12 @@ main (int argc, char **argv)
 			    GNOME_PROGRAM_STANDARD_PROPERTIES,
 			    NULL);
 
+	gtk_window_set_default_icon_name ("gnome-panel");
+
 	if (!panel_shell_register ())
 		return -1;
 
 	gnome_authentication_manager_init ();
-
-	gtk_window_set_default_icon_name ("gnome-panel");
 
 	panel_tooltips = gtk_tooltips_new ();
 

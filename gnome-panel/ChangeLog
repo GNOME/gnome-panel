@@ -1,3 +1,18 @@
+2005-11-19  Vincent Untz  <vuntz@gnome.org>
+
+	* applet.c: don't need a bonobo include here
+	* panel.c: ditto
+	* main.c: remove useless includes,
+	(main): call gtk_window_set_default_icon_name() before
+	panel_shell_register() in order to have an icon for the error dialog
+	:-)
+	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmarks): 
+	synchronize the way we display remote bookmarks with nautilus
+	* panel-shell.c: (panel_shell_bonobo_activation_register_for_display):
+	new, stolen from nautilus
+	(panel_shell_register): stop using deprecated functions
+	(panel_shell_unregister): ditto
+
 ==================== 2.13.2 ====================
 
 2005-11-11  Vincent Untz  <vuntz@gnome.org>
