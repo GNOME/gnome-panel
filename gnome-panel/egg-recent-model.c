@@ -447,15 +447,21 @@ end_element_handler (GMarkupParseContext *context,
 
 	switch (peek_state (info)) {
 		case STATE_RECENT_ITEM:
-			info->items = g_list_append (info->items,
-						    info->current_item);
-			if (info->current_item->uri == NULL ||
-			    strlen (info->current_item->uri) == 0)
-				g_warning ("URI NOT LOADED");
+			if (!info->current_item) {
+				g_warning ("No recent item found\n");
+				break;
+			}
+
+			if (!info->current_item->uri) {
+				g_warning ("Invalid item found\n");
+				break;
+			}
+				
+			info->items = g_list_prepend (info->items, info->current_item);
 			info->current_item = NULL;
-		break;
+			break;
 		default:
-		break;
+			break;
 	}
 
 	pop_state (info);
@@ -831,29 +837,33 @@ egg_recent_model_read (EggRecentModel *model, FILE *file)
 	ctx = g_markup_parse_context_new (&parser, 0, &info, NULL);
 	
 	error = NULL;
-	if (!g_markup_parse_context_parse (ctx, content, strlen (content),
-					   &error)) {
-		g_warning (error->message);
+	if (!g_markup_parse_context_parse (ctx, content, strlen (content), &error)) {
+		g_warning ("Error while parsing the .recently-used file: %s\n",
+			   error->message);
+		
 		g_error_free (error);
-		error = NULL;
-		goto out;
+		parse_info_free (&info);
+
+		return NULL;
 	}
 
 	error = NULL;
-	if (!g_markup_parse_context_end_parse (ctx, &error))
-		goto out;
+	if (!g_markup_parse_context_end_parse (ctx, &error)) {
+		g_warning ("Unable to complete parsing of the .recently-used file: %s\n",
+			   error->message);
+		
+		g_error_free (error);
+		g_markup_parse_context_free (ctx);
+		parse_info_free (&info);
+
+		return NULL;
+	}
 	
+	list = g_list_reverse (info.items);
+
 	g_markup_parse_context_free (ctx);
-out:
-	list = info.items;
-
 	parse_info_free (&info);
-
 	g_free (content);
-
-	/*
-	g_print ("Total items: %d\n", g_list_length (list));
-	*/
 
 	return list;
 }
