@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-01 12:51-0500\n"
+"POT-Creation-Date: 2005-12-03 15:44-0500\n"
 "PO-Revision-Date: 2005-07-18 01:10-0500\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -986,23 +986,23 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME Panel Shell"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:536
 msgid "_Lock To Panel"
 msgstr "_Lock To Panel"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:519
 msgid "_Move"
 msgstr "_Move"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:511
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:512
 msgid "_Remove From Panel"
 msgstr "_Remove From Panel"
 
-#: gnome-panel/applet.c:428
+#: gnome-panel/applet.c:429
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1216
+#: gnome-panel/applet.c:1217
 msgid "Can't find an empty spot"
 msgstr "Can't find an empty spot"
 
@@ -1024,6 +1024,17 @@ msgstr "_Add to Drawer..."
 #: gnome-panel/panel-action-button.c:143 gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Properties"
+
+#. Translators: %s is a URI
+#: gnome-panel/egg-recent-view-gtk.c:346 gnome-panel/panel-menu-items.c:352
+#: gnome-panel/panel-recent.c:199
+#, c-format
+msgid "Open '%s'"
+msgstr "Open '%s'"
+
+#: gnome-panel/egg-recent-view-gtk.c:444
+msgid "Empty"
+msgstr "Empty"
 
 #: gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
@@ -1622,17 +1633,19 @@ msgstr "Cannot display location '%s'"
 msgid "Bookmarks"
 msgstr "Bookmarks"
 
-#. Translators: %s is a URI
-#: gnome-panel/panel-menu-items.c:352 gnome-panel/panel-recent.c:199
+#. Translators: the first string is a pathc and
+#. * the second string is a hostname. nautilus
+#. * contains the same string to translate.
+#: gnome-panel/panel-menu-items.c:380
 #, c-format
-msgid "Open '%s'"
-msgstr "Open '%s'"
+msgid "%1$s on %2$s"
+msgstr "%1$s on %2$s"
 
-#: gnome-panel/panel-menu-items.c:473
+#: gnome-panel/panel-menu-items.c:476
 msgid "Network Places"
 msgstr "Network Places"
 
-#: gnome-panel/panel-menu-items.c:476
+#: gnome-panel/panel-menu-items.c:479
 msgid "Removable Media"
 msgstr "Removable Media"
 
@@ -1640,30 +1653,30 @@ msgstr "Removable Media"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: gnome-panel/panel-menu-items.c:547
+#: gnome-panel/panel-menu-items.c:550
 msgid "Desktop Folder|Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/panel-menu-items.c:548
+#: gnome-panel/panel-menu-items.c:551
 msgid "Open the desktop as a folder"
 msgstr "Open the desktop as a folder"
 
-#: gnome-panel/panel-menu-items.c:902
+#: gnome-panel/panel-menu-items.c:905
 msgid "Places"
 msgstr "Places"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: gnome-panel/panel-menu-items.c:940
+#: gnome-panel/panel-menu-items.c:943
 msgid "Desktop Environment|Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/panel-menu-items.c:1081
+#: gnome-panel/panel-menu-items.c:1084
 msgid "Cannot launch entry"
 msgstr "Cannot launch entry"
 
-#: gnome-panel/panel-menu-items.c:1093
+#: gnome-panel/panel-menu-items.c:1096
 msgid "Cannot load entry"
 msgstr "Cannot load entry"
 
