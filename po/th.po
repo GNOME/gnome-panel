@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-20 12:14+0700\n"
-"PO-Revision-Date: 2005-11-20 12:21+0700\n"
+"POT-Creation-Date: 2005-12-04 09:09+0700\n"
+"PO-Revision-Date: 2005-12-04 09:56+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <L10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
-msgstr "ป_รับวันที่และเวลา"
+msgstr "_ตั้งวันที่และเวลา"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -182,7 +182,7 @@ msgstr "วัน%Aที่ %-d %B %EY"
 #: applets/clock/clock.c:1876
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr "ล้มเหลวในการเรียกใช้เครื่องมือการกำหนดค่าเวลา: %s"
+msgstr "เรียกใช้เครื่องมือตั้งเวลาไม่สำเร็จ: %s"
 
 #: applets/clock/clock.c:1912
 msgid ""
@@ -200,7 +200,7 @@ msgstr "กำหนดรูปแบบเอง"
 #: applets/wncklet/workspace-switcher.c:241
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr "เกิดข้อผิดพลาดในการแสดงระบบช่วยเหลือ: %s"
+msgstr "เกิดข้อผิดพลาดในการแสดงวิธีใช้: %s"
 
 #: applets/clock/clock.c:2540
 msgid "Clock Preferences"
@@ -228,7 +228,7 @@ msgstr "เวลาแบบอินเทอร์เน็ต"
 
 #: applets/clock/clock.c:2585
 msgid "Custom _format:"
-msgstr "_กำหนดรูปแบบเอง"
+msgstr "_กำหนดรูปแบบเอง:"
 
 #: applets/clock/clock.c:2604
 msgid "Show _seconds"
@@ -373,11 +373,11 @@ msgstr ""
 
 #: applets/clock/clock.schemas.in.h:37
 msgid "This key specifies the program to run in order to configure the time."
-msgstr "ค่านี้กำหนดโปรแกรมที่เรียกใช้เพื่อกำหนดค่าเวลา"
+msgstr "ค่านี้กำหนดโปรแกรมที่เรียกใช้เพื่อตั้งเวลา"
 
 #: applets/clock/clock.schemas.in.h:38
 msgid "Time configuration tool"
-msgstr "เครื่องมือการกำหนดค่าเวลา"
+msgstr "เครื่องมือตั้งเวลา"
 
 #: applets/clock/clock.schemas.in.h:39
 msgid "Use Internet time"
@@ -630,16 +630,16 @@ msgstr "ค่านี้กำหนดจำนวนวินาทีขอ
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr "พื้นที่สำหรับไอคอนแจ้งเตือน"
+msgstr "พื้นที่สำหรับไอคอนแจ้งเหตุ"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 #: applets/notification_area/main.c:128
 msgid "Notification Area"
-msgstr "พื้นที่รายงานแจ้งเตือน"
+msgstr "พื้นที่แจ้งเหตุ"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
 msgid "Notification Area Factory"
-msgstr "โรงงานพื้นที่รายงานแจ้งเตือน"
+msgstr "โรงงานพื้นที่แจ้งเหตุ"
 
 #: applets/notification_area/eggtraymanager.c:154
 msgid "Orientation"
@@ -647,11 +647,11 @@ msgstr "ทิศทางการจัดวาง"
 
 #: applets/notification_area/eggtraymanager.c:155
 msgid "The orientation of the tray."
-msgstr "ทิศทางการวางของพื้นที่แจ้งเหตุ"
+msgstr "แนววางของพื้นที่แจ้งเหตุ"
 
 #: applets/notification_area/main.c:342
 msgid "Panel Notification Area"
-msgstr "พื้นที่สำหรับแจ้งเตือนพาเนล"
+msgstr "พื้นที่แจ้งเหตุสำหรับพาเนล"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 msgid "Factory for the window navigation related applets"
@@ -1016,6 +1016,17 @@ msgstr "เ_พิ่มลงในลิ้นชัก..."
 #: gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "คุณ_สมบัติ"
+
+#. Translators: %s is a URI
+#: gnome-panel/egg-recent-view-gtk.c:346
+#: gnome-panel/panel-menu-items.c:352 gnome-panel/panel-recent.c:199
+#, c-format
+msgid "Open '%s'"
+msgstr "เปิด '%s'"
+
+#: gnome-panel/egg-recent-view-gtk.c:444
+msgid "Empty"
+msgstr "ว่างเปล่า"
 
 #: gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
@@ -1591,12 +1602,6 @@ msgstr "ไม่สามารถแสดงตำแหน่ง '%s'"
 msgid "Bookmarks"
 msgstr "บุ๊กมาร์ก"
 
-#. Translators: %s is a URI
-#: gnome-panel/panel-menu-items.c:352 gnome-panel/panel-recent.c:199
-#, c-format
-msgid "Open '%s'"
-msgstr "เปิด '%s'"
-
 #. Translators: the first string is a pathc and
 #. * the second string is a hostname. nautilus
 #. * contains the same string to translate.
@@ -2146,11 +2151,11 @@ msgstr "ซ่อนพาเนล"
 #. * popup when you pass the focus to a panel
 #: gnome-panel/panel-toplevel.c:1495
 msgid "Top Expanded Edge Panel"
-msgstr "พาเนลที่ขยายขอบด้านบน"
+msgstr "พาเนลที่ขยายเต็มขอบบน"
 
 #: gnome-panel/panel-toplevel.c:1496
 msgid "Top Centered Panel"
-msgstr "พาเนลที่อยู่ตรงกลางด้านบน"
+msgstr "พาเนลที่อยู่ตรงกลางขอบบน"
 
 #: gnome-panel/panel-toplevel.c:1497
 msgid "Top Floating Panel"
@@ -2158,15 +2163,15 @@ msgstr "พาเนลที่ลอยอยู่ด้านบน"
 
 #: gnome-panel/panel-toplevel.c:1498
 msgid "Top Edge Panel"
-msgstr "พาเนลที่ขอบด้านบน"
+msgstr "พาเนลที่ขอบบน"
 
 #: gnome-panel/panel-toplevel.c:1502
 msgid "Bottom Expanded Edge Panel"
-msgstr "พาเนลที่ขยายขอบด้านล่าง"
+msgstr "พาเนลที่ขยายเต็มขอบล่าง"
 
 #: gnome-panel/panel-toplevel.c:1503
 msgid "Bottom Centered Panel"
-msgstr "พาเนลที่อยู่ตรงกลางด้านล่าง"
+msgstr "พาเนลที่อยู่ตรงกลางขอบล่าง"
 
 #: gnome-panel/panel-toplevel.c:1504
 msgid "Bottom Floating Panel"
@@ -2174,15 +2179,15 @@ msgstr "พาเนลที่ลอยอยู่ด้านล่าง"
 
 #: gnome-panel/panel-toplevel.c:1505
 msgid "Bottom Edge Panel"
-msgstr "พาเนลที่ขอบด้านล่าง"
+msgstr "พาเนลที่ขอบล่าง"
 
 #: gnome-panel/panel-toplevel.c:1509
 msgid "Left Expanded Edge Panel"
-msgstr "พาเนลที่ขยายขอบด้านซ้าย"
+msgstr "พาเนลที่ขยายเต็มขอบซ้าย"
 
 #: gnome-panel/panel-toplevel.c:1510
 msgid "Left Centered Panel"
-msgstr "พาเนลที่อยู่ตรงกลางด้านซ้าย"
+msgstr "พาเนลที่อยู่ตรงกลางขอบซ้าย"
 
 #: gnome-panel/panel-toplevel.c:1511
 msgid "Left Floating Panel"
@@ -2190,15 +2195,15 @@ msgstr "พาเนลที่ลอยออยู่ด้านซ้าย
 
 #: gnome-panel/panel-toplevel.c:1512
 msgid "Left Edge Panel"
-msgstr "พาเนลที่ขอบด้านซ้าย"
+msgstr "พาเนลที่ขอบซ้าย"
 
 #: gnome-panel/panel-toplevel.c:1516
 msgid "Right Expanded Edge Panel"
-msgstr "พาเนลที่ขยายขอบด้านขวา"
+msgstr "พาเนลที่ขยายเต็มขอบขวา"
 
 #: gnome-panel/panel-toplevel.c:1517
 msgid "Right Centered Panel"
-msgstr "พาเนลที่อยู่ตรงกลางด้านขวา"
+msgstr "พาเนลที่อยู่ตรงกลางขอบขวา"
 
 #: gnome-panel/panel-toplevel.c:1518
 msgid "Right Floating Panel"
@@ -2359,7 +2364,7 @@ msgstr "การหน่วงการปรากฏพาเนลอัต
 
 #: gnome-panel/panel-toplevel.schemas.in.h:28
 msgid "Panel orientation"
-msgstr "ทิศทางการวางพาเนล"
+msgstr "แนววางของพาเนล"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:29
 msgid "Panel size"
@@ -2436,8 +2441,8 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
-"ตำแหน่งของพาเนลตามแกน x ค่านี้ใช้ได้ก็ต่อเมื่ออยู่ในโหมดไม่ขยายตัว ในโหมดขยายตัว "
-"ค่านี้จะถูกละเลยและพาเนลจะวางไว้ที่ขอบจอภาพซึ่งกำหนดโดยค่าทิศทางการวาง"
+"ตำแหน่งของพาเนลตามแกน x ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว "
+"ค่านี้จะถูกละเลย และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2445,8 +2450,8 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
-"ตำแหน่งของพาเนลตามแกน y ค่านี้ใช้ได้ก็ต่อเมื่ออยู่ในโหมดไม่ขยายตัว ในโหมดขยายตัว "
-"ค่านี้จะถูกละเลยและพาเนลจะวางไว้ที่ขอบจอภาพซึ่งกำหนดโดยค่าทิศทางการวาง"
+"ตำแหน่งของพาเนลตามแกน y ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว "
+"ค่านี้จะถูกละเลย และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
@@ -2459,12 +2464,13 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"ทิศทางการวางพาเนล ค่าที่เป็นไปได้คือ \"top\", \"bottom\", \"left\", \"right\" "
-"ในโหมดขยายตัว ค่านี้กำหนดว่าพาเนลจะออยู่นขอบใด ในโหมดไม่ขยายตัว ความแตกต่างระหว่าง \"บน"
-"\" และ \"ล่าง\" มีความสำคัญน้อยมาก - ทั้งสองค่าแสดงว่านี่เป็นพาเนลตามแนวนอน - "
-"แต่ยังคงเป็นสิ่งที่เป็นประโยชน์ในการบอกว่าวัตถพาเนลบางตัวควรจะวางตัวอย่างไร ตัวอย่างเช่น "
-"บนพาเนลแบบ \"บน\" ปุ่มเมนูจะผุดเมนูขึ้นต่ำกว่าพาเนล, ในขณะที่ บนพาเนลแบบ \"ล่าง\" "
-"เมนูจะผุดขึ้นเหนือพาเนล"
+"แนววางของพาเนล ค่าที่เป็นไปได้คือ \"top\", \"bottom\", \"left\", \"right\" "
+"ในโหมดขยายตัว ค่านี้กำหนดว่าพาเนลจะอยู่บนขอบใดของหน้าจอ "
+"ในโหมดไม่ขยายตัว ความแตกต่างระหว่าง \"ขอบบน\" และ \"ขอบล่าง\" "
+"อาจจะไม่สำคัญ โดยทั้งสองค่าต่างแสดงว่าพาเนลเป็นพาเนลตามแนวนอน "
+"แต่ก็ยังให้แนวทางที่เป็นประโยชน์ ว่าวัตถุพาเนลบางตัวควรปฏิบัติอย่างไร "
+"ตัวอย่างเช่น บนพาเนล \"ขอบบน\" ปุ่มเมนูจะผุดเมนูใต้พาเนลลงมา "
+"ในขณะที่ บนพาเนล \"ขอบล่าง\" จะผุดเมนูด้านบนเหนือพาเนล"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -2482,7 +2488,8 @@ msgid ""
 "navigating between panels."
 msgstr ""
 "นี่เป็นชื่อที่คนสามารถอ่านได้ซึ่งคุณสามารถใช้เพื่อระบุพาเนล "
-"จุดประสงค์หลักคือเพื่อใช้เป็นชื่อหัวเรื่องของหน้าต่างซึ่งเป็นประโยชน์ ในการเปลี่ยนระหว่างพาเนล"
+"จุดประสงค์หลักคือเพื่อใช้เป็นชื่อหัวเรื่องของหน้าต่าง "
+"ซึ่งเป็นประโยชน์ในการเปลี่ยนไปมาระหว่างพาเนลที่มี"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "Visible pixels when hidden"
@@ -2495,9 +2502,9 @@ msgid ""
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
 msgstr ""
-"พื้นหลังชนิดใดที่ควรใช้สำหรับพาเนลนี้ ค่าที่เป็นไปได้คือ \"gtk\" - พื้นหลังของ GTK+ widget "
-"ที่จะใช้โดยปริยาย, \"color\" - ค่าสีที่จะใช้เป็นสีพื้นหลังหรือ \"image\" - "
-"ภาพที่จะใช้เป็นพื้นหลังซึ่งกำหนดโดยค่า image"
+"พื้นหลังชนิดใดที่ควรใช้สำหรับพาเนลนี้ ค่าที่เป็นไปได้คือ \"gtk\" - "
+"ใช้พื้นหลังปกติของวิดเจ็ต GTK+, \"color\" - ใช้ค่าในคีย์ \"สีพื้นหลัง\" เป็นสีพื้นหลัง "
+"หรือ \"image\" - ใช้ภาพในคีย์ \"ภาพพื้นหลัง\" เป็นพื้นหลัง"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
@@ -2584,12 +2591,12 @@ msgstr "ทดสอบโรงงานแอพเพล็ต Bonobo"
 #: libpanel-applet/panel-applet.c:997
 #, c-format
 msgid "Incomplete '%s' background type received"
-msgstr "ชนิดพื้นหลัง '%s' ที่ได้รับไม่สมบูรณ์"
+msgstr "ได้รับชนิดพื้นหลัง '%s' ที่ไม่สมบูรณ์"
 
 #: libpanel-applet/panel-applet.c:1011
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
-msgstr "ชนิดพื้นหลัง '%s' ที่ได้รับไม่สมบูรณ์: %s"
+msgstr "ได้รับชนิดพื้นหลัง '%s' ที่ไม่สมบูรณ์: %s"
 
 #: libpanel-applet/panel-applet.c:1020
 #, c-format
@@ -2602,7 +2609,7 @@ msgstr "ไม่รู้จักชนิดพื้นหลังที่
 
 #: libpanel-applet/panel-applet.c:1212
 msgid "The Applet's containing Panel's orientation"
-msgstr "ค่าสถานะของแอพเพล็ตมีค่าทิศทางการวางของพาเนล"
+msgstr "แนววางของพาเนลที่บรรจุแอ็พเพล็ตอยู่"
 
 #: libpanel-applet/panel-applet.c:1220
 msgid "The Applet's containing Panel's size in pixels"
@@ -2640,7 +2647,7 @@ msgstr "กำหนดขนาดเริ่มต้นของแอพเ
 #: libpanel-applet/panel-test-applets.c:36
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr "กำหนดทิศทางการวางเริ่มต้นของแอพเพล็ต (บน, ล่าง, ซ้าย หรือขวา)"
+msgstr "กำหนดแนววางเริ่มต้นของแอพเพล็ต (บน, ล่าง, ซ้าย หรือขวา)"
 
 #: libpanel-applet/panel-test-applets.c:60
 msgid "XX Small"
