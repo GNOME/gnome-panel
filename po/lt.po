@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-09 02:29+0200\n"
-"PO-Revision-Date: 2005-11-09 02:31+0200\n"
+"POT-Creation-Date: 2005-12-07 21:38+0200\n"
+"PO-Revision-Date: 2005-12-07 21:45+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +75,7 @@ msgstr "Gamykla laikrodžio įtaisams kurti."
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
-msgstr "Gauti dabarties laiką ir datą"
+msgstr "Gauti esamą laiką ir datą"
 
 #: ../applets/clock/clock.c:309
 msgid "%l:%M:%S %p"
@@ -632,7 +632,7 @@ msgstr "Šis raktas nurodo, kiek sekundžių kiekvienas kadras bus rodomas."
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr "Vieta, kurioje atsiranda pranešimų ikonos"
+msgstr "Vieta, kurioje atsiranda pranešimų piktogramos"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 #: ../applets/notification_area/main.c:128
@@ -988,23 +988,23 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME skydelio apvalkalas"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:535
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:536
 msgid "_Lock To Panel"
 msgstr "_Prirakinti prie skydelio"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:518
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:519
 msgid "_Move"
 msgstr "P_erkelti"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:511
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:512
 msgid "_Remove From Panel"
 msgstr "_Pašalinti iš skydelio"
 
-#: ../gnome-panel/applet.c:428
+#: ../gnome-panel/applet.c:429
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1216
+#: ../gnome-panel/applet.c:1217
 msgid "Can't find an empty spot"
 msgstr "Nepavyko rasti laisvos vietos"
 
@@ -1028,9 +1028,20 @@ msgstr "Į_dėti į stalčių..."
 msgid "_Properties"
 msgstr "_Savybės"
 
+#. Translators: %s is a URI
+#: ../gnome-panel/egg-recent-view-gtk.c:346
+#: ../gnome-panel/panel-menu-items.c:352 ../gnome-panel/panel-recent.c:199
+#, c-format
+msgid "Open '%s'"
+msgstr "Atverti „%s“"
+
+#: ../gnome-panel/egg-recent-view-gtk.c:444
+msgid "Empty"
+msgstr "Tuščia"
+
 #: ../gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
-msgstr "Sukurti naują bylą duotame kataloge"
+msgstr "Sukurti naują bylą nurodytame aplanke"
 
 #: ../gnome-panel/launcher.c:144
 msgid "Cannot save launcher to disk"
@@ -1628,17 +1639,19 @@ msgstr "Nepavyko parodyti vietos „%s“"
 msgid "Bookmarks"
 msgstr "Žymelės"
 
-#. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:352 ../gnome-panel/panel-recent.c:199
+#. Translators: the first string is a pathc and
+#. * the second string is a hostname. nautilus
+#. * contains the same string to translate.
+#: ../gnome-panel/panel-menu-items.c:380
 #, c-format
-msgid "Open '%s'"
-msgstr "Atverti „%s“"
+msgid "%1$s on %2$s"
+msgstr "%1$s kompiuteryje %2$s"
 
-#: ../gnome-panel/panel-menu-items.c:473
+#: ../gnome-panel/panel-menu-items.c:476
 msgid "Network Places"
 msgstr "Tinklo vietos"
 
-#: ../gnome-panel/panel-menu-items.c:476
+#: ../gnome-panel/panel-menu-items.c:479
 msgid "Removable Media"
 msgstr "Išimamos laikmenos"
 
@@ -1646,30 +1659,30 @@ msgstr "Išimamos laikmenos"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:547
+#: ../gnome-panel/panel-menu-items.c:550
 msgid "Desktop Folder|Desktop"
 msgstr "Darbastalis"
 
-#: ../gnome-panel/panel-menu-items.c:548
+#: ../gnome-panel/panel-menu-items.c:551
 msgid "Open the desktop as a folder"
 msgstr "Atverti darbastalį kaip aplanką"
 
-#: ../gnome-panel/panel-menu-items.c:902
+#: ../gnome-panel/panel-menu-items.c:905
 msgid "Places"
 msgstr "Vietos"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:940
+#: ../gnome-panel/panel-menu-items.c:943
 msgid "Desktop Environment|Desktop"
 msgstr "Aplinka"
 
-#: ../gnome-panel/panel-menu-items.c:1081
+#: ../gnome-panel/panel-menu-items.c:1084
 msgid "Cannot launch entry"
 msgstr "Neįmanoma paleisti įrašo"
 
-#: ../gnome-panel/panel-menu-items.c:1093
+#: ../gnome-panel/panel-menu-items.c:1096
 msgid "Cannot load entry"
 msgstr "Neįmanoma įkrauti įrašo"
 
@@ -1683,7 +1696,7 @@ msgstr "Applet Bonobo IID"
 
 #: ../gnome-panel/panel-object.schemas.in.h:3
 msgid "Icon used for object's button"
-msgstr "Objekto mygtukui naudojama ikona"
+msgstr "Objekto mygtukui naudojama piktograma"
 
 #: ../gnome-panel/panel-object.schemas.in.h:4
 msgid ""
@@ -1691,7 +1704,7 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
-"Jei teigiama, custom_icon raktas yra naudojamas mygtuko kaip kita ikona. "
+"Jei teigiama, custom_icon raktas yra naudojamas mygtuko kaip kita piktograma. "
 "Jeigu neigiama, custom_icon raktas yra ignoruojamas. Šis raktas turi įtakos "
 "tik jeigu raktas objekt_type yra su reikšmėmis „menu-object“ arba „drawer-"
 "object“."
@@ -1795,7 +1808,7 @@ msgid ""
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
-"Objekto mygtukui naudojamos ikonos paveikslėlio bylos vieta. Šis raktas "
+"Objekto mygtukui naudojamos piktogramos paveikslėlio bylos vieta. Šis raktas "
 "aktualus tik tada, kai object_type rakto reikšmė yra „drawer-object“ arba "
 "menu-object“ ir raktas use_custom_icon yra teigiamas."
 
@@ -1844,7 +1857,7 @@ msgstr "Skydelis, kuriame yra objektas"
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Use custom icon for object's button"
-msgstr "Objekto mygtukui naudoti pritaikytą ikoną"
+msgstr "Objekto mygtukui naudoti pritaikytą piktogramą"
 
 #: ../gnome-panel/panel-object.schemas.in.h:28
 msgid "Use custom path for menu contents"
@@ -2109,7 +2122,7 @@ msgstr "Komandos įvedimo langelis"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command icon"
-msgstr "Komandos ikona"
+msgstr "Komandos piktograma"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:5
 msgid "Enter a command string here to run it."
@@ -2143,7 +2156,7 @@ msgstr "Rodyti žinomų programų _sąrašą"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:13
 msgid "The icon of the command to be run."
-msgstr "Leidžiamos komandos ikona."
+msgstr "Paleidžiamos komandos piktograma."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:14
 #: ../gnome-panel/panel-stock-icons.c:89
@@ -2753,6 +2766,3 @@ msgstr "Įt_aisas:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Nustatymų aplankas:"
-
-#~ msgid "Browse"
-#~ msgstr "Naršyti"
