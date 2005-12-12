@@ -30,8 +30,6 @@ SUBDIRS =			\
 	man
 
 EXTRA_DIST = \
-	gnome-panel.spec.in	\
-	gnome-panel.spec	\
 	COPYING-DOCS		\
 	HACKING			\
 	omf.make		\
