@@ -162,6 +162,21 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 }
 
 static void
+panel_run_dialog_set_default_icon (PanelRunDialog *dialog, gboolean set_drag)
+{
+	gtk_image_set_from_icon_name (GTK_IMAGE (dialog->pixmap),
+				      PANEL_RUN_ICON,
+				      GTK_ICON_SIZE_DIALOG);
+	
+	gtk_window_set_icon_name (GTK_WINDOW (dialog->run_dialog),
+				  PANEL_RUN_ICON);
+
+	if (set_drag)
+		gtk_drag_source_set_icon_name (dialog->run_dialog,
+					       PANEL_RUN_ICON);
+}
+
+static void
 panel_run_dialog_set_icon (PanelRunDialog *dialog,
 			   const char     *icon_path)
 {
@@ -195,15 +210,7 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		gtk_drag_source_set_icon_pixbuf (dialog->run_dialog, pixbuf);
 		g_object_unref (pixbuf);
 	} else {
-		gtk_image_set_from_icon_name (GTK_IMAGE (dialog->pixmap),
-					      PANEL_RUN_ICON,
-					      GTK_ICON_SIZE_DIALOG);
-		
-		gtk_window_set_icon_name (GTK_WINDOW (dialog->run_dialog),
-					  PANEL_RUN_ICON);
-		
-		gtk_drag_source_set_icon_name (dialog->run_dialog,
-					       PANEL_RUN_ICON);
+		panel_run_dialog_set_default_icon (dialog, TRUE);
 	}
 }
 
@@ -928,8 +935,9 @@ program_list_selection_changed (GtkTreeSelection *selection,
 		if (ditem) {
 			dialog->use_program_list = TRUE;
 			
-			/* Order is important here. We have to set the text first so that the
-			 * drag source is enabled, otherwise the drag icon can't be set by
+			/* Order is important here. We have to set the text
+			 * first so that the drag source is enabled, otherwise
+			 * the drag icon can't be set by
 			 * panel_run_dialog_set_icon.
 			 */
 			temp = gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC);
@@ -1687,7 +1695,7 @@ panel_run_dialog_new (GdkScreen *screen,
 	panel_run_dialog_setup_program_list  (dialog, gui);
 	panel_run_dialog_setup_list_expander (dialog, gui);
 
-	panel_run_dialog_set_icon            (dialog, NULL);
+	panel_run_dialog_set_default_icon    (dialog, FALSE);
 
 	panel_run_dialog_update_content (dialog, panel_profile_get_show_program_list ());
 

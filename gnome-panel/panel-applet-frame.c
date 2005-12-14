@@ -1028,7 +1028,9 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	gtk_widget_show_all (dialog);
 
 	g_free (frame->priv->iid);
-	g_free (frame);
+	frame->priv->iid = NULL;
+
+	gtk_widget_destroy (GTK_WIDGET (frame));
 }
 
 static void

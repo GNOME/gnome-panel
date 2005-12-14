@@ -1,3 +1,25 @@
+2005-12-14  Vincent Untz  <vuntz@gnome.org>
+
+	Fix critical warning, bug #323495.
+
+	* menu.c: (setup_uri_drag): don't call gtk_drag_source_set_icon_name()
+	if icon is NULL
+	(create_menuitem): ditto
+	* panel-action-button.c: (panel_action_button_set_dnd_enabled): ditto
+	* panel-menu-button.c: (panel_menu_button_set_dnd_enabled): ditto
+	* panel-run-dialog.c: (panel_run_dialog_set_default_icon): new
+	function, which don't call gtk_drag_source_set_icon_name() when we
+	don't request it.
+	(panel_run_dialog_set_icon): call panel_run_dialog_set_default_icon()
+	(panel_run_dialog_new): ditto
+	(program_list_selection_changed): make comment readable
+
+	Don't crash when an applet can't be load. Fix bug #323996.
+	Patch by Crispin Flowerday <crispin@gnome.org>.
+
+	* panel-applet-frame.c: (panel_applet_frame_loading_failed): don't
+	free frame, but destroy it.
+
 ==================== 2.13.3 ====================
 
 2005-11-28  Vincent Untz  <vuntz@gnome.org>

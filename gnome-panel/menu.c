@@ -1247,7 +1247,8 @@ setup_uri_drag (GtkWidget  *menuitem,
 			     menu_item_targets, 1,
 			     GDK_ACTION_COPY);
 
-	gtk_drag_source_set_icon_name (menuitem, icon);
+	if (icon != NULL)
+		gtk_drag_source_set_icon_name (menuitem, icon);
 	
 	g_signal_connect (G_OBJECT (menuitem), "drag_begin",
 			  G_CALLBACK (drag_begin_menu_cb), NULL);
@@ -1501,8 +1502,9 @@ create_menuitem (GtkWidget          *menu,
 				     menu_item_targets, 1,
 				     GDK_ACTION_COPY);
 
-		gtk_drag_source_set_icon_name (menuitem,
-					       gmenu_tree_entry_get_icon (entry));
+		if (gmenu_tree_entry_get_icon (entry) != NULL)
+			gtk_drag_source_set_icon_name (menuitem,
+						       gmenu_tree_entry_get_icon (entry));
 		g_signal_connect (G_OBJECT (menuitem), "drag_begin",
 				  G_CALLBACK (drag_begin_menu_cb), NULL);
 		g_signal_connect (menuitem, "drag_data_get",
