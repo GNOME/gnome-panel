@@ -29,7 +29,7 @@
 #include <time.h>
 
 #include <math.h>
-#include <cairo/cairo.h>
+#include <cairo.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
