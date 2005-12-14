@@ -781,12 +781,16 @@ panel_place_menu_item_instance_init (PanelPlaceMenuItem      *menuitem,
 
 	if (bookmarks_uri) {
 		GnomeVFSResult result;
+
 		result = gnome_vfs_monitor_add (&menuitem->priv->bookmarks_monitor,
 						bookmarks_uri,
 						GNOME_VFS_MONITOR_FILE,
 						panel_place_menu_item_gtk_bookmarks_changed,
 						menuitem);
-		if (result != GNOME_VFS_OK)
+
+		if (result == GNOME_VFS_ERROR_NOT_SUPPORTED)
+			g_message ("File monitoring not supported in the compiled version of gnome-vfs: bookmarks won't be monitored.");
+		else if (result != GNOME_VFS_OK)
 			g_warning ("Failed to add file monitor for %s: %s\n",
 				   bookmarks_uri,
 				   gnome_vfs_result_to_string (result));
