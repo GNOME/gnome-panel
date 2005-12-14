@@ -304,7 +304,8 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			     !gnome_vfs_uri_exists (uri))) {
 				if (label)
 					g_free (label);
-				gnome_vfs_uri_unref (uri);
+				if (uri)
+					gnome_vfs_uri_unref (uri);
 				continue;
 			}
 
