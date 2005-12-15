@@ -42,7 +42,7 @@ panel_launch_desktop_file (const char  *desktop_file,
 {
 	GnomeDesktopItem *ditem;
 
-	ditem = gnome_desktop_item_new_from_basename ("gmenu-simple-editor.desktop", 0, NULL);
+	ditem = gnome_desktop_item_new_from_basename (desktop_file, 0, NULL);
 	if (ditem == NULL) {
 		char *argv [2] = {(char *)fallback_exec, NULL};
 
