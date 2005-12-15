@@ -98,10 +98,16 @@ panel_background_prepare (PanelBackground *background)
 
 	switch (effective_type) {
 	case PANEL_BACK_NONE:
-		if (background->default_pixmap)
-			gdk_window_set_back_pixmap (
-				background->window, background->default_pixmap, FALSE);
-		else
+		if (background->default_pixmap) {
+			if (background->default_pixmap != (GdkPixmap*) GDK_PARENT_RELATIVE)
+				gdk_window_set_back_pixmap (background->window,
+							    background->default_pixmap,
+							    FALSE);
+			else
+				gdk_window_set_back_pixmap (background->window,
+							    NULL,
+							    TRUE);
+		} else
 			gdk_window_set_background (
 				background->window, &background->default_color);
 		break;
@@ -746,10 +752,11 @@ panel_background_set_default_style (PanelBackground *background,
 
 	background->default_color = *color;
 
-	if (pixmap)
+	if (pixmap && pixmap != (GdkPixmap*) GDK_PARENT_RELATIVE)
 		g_object_ref (pixmap);
 
-	if (background->default_pixmap)
+	if (background->default_pixmap
+	    && background->default_pixmap != (GdkPixmap*) GDK_PARENT_RELATIVE)
 		g_object_unref (background->default_pixmap);
 
 	background->default_pixmap = pixmap;
@@ -949,7 +956,8 @@ panel_background_free (PanelBackground *background)
 		g_object_unref (background->gc);
 	background->gc = NULL;
 
-	if (background->default_pixmap)
+	if (background->default_pixmap
+	    && background->default_pixmap != (GdkPixmap*) GDK_PARENT_RELATIVE)
 		g_object_unref (background->default_pixmap);
 	background->default_pixmap = NULL;
 }

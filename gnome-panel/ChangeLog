@@ -1,5 +1,16 @@
 2005-12-15  Vincent Untz  <vuntz@gnome.org>
 
+	Don't crash with some themes. Thanks to Benjamin Berg for helping.
+	Fix bug #320602.
+
+	* panel-background.c: (panel_background_prepare): look if the pixmap
+	is GDK_PARENT_RELATIVE and do what is necessary in this case
+	(panel_background_set_default_style): don't ref/unref pixmap if it's
+	GDK_PARENT_RELATIVE
+	(panel_background_free): ditto
+
+2005-12-15  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_launch_desktop_file): why is the .desktop
 	filename hardcoded here? Someone did some bad paste ;-)
 
