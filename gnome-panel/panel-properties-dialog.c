@@ -400,13 +400,40 @@ panel_properties_dialog_image_changed (PanelPropertiesDialog *dialog)
 }
 
 static void
+panel_properties_dialog_chooser_preview_update (GtkFileChooser *file_chooser,
+						gpointer data)
+{
+	GtkWidget *preview;
+	char      *filename;
+	GdkPixbuf *pixbuf;
+	gboolean   have_preview;
+
+	preview = GTK_WIDGET (data);
+	filename = gtk_file_chooser_get_preview_filename (file_chooser);
+
+	if (filename == NULL)
+		return;
+
+	pixbuf = gdk_pixbuf_new_from_file_at_size (filename, 128, 128, NULL);
+	have_preview = (pixbuf != NULL);
+	g_free (filename);
+
+	gtk_image_set_from_pixbuf (GTK_IMAGE (preview), pixbuf);
+	if (pixbuf)
+		g_object_unref (pixbuf);
+
+	gtk_file_chooser_set_preview_widget_active (file_chooser,
+						    have_preview);
+}
+
+static void
 panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 					     GladeXML              *gui)
 {
 	GtkFileFilter *filter;
+	GtkWidget     *chooser_preview;
 	char          *image;
 
-	//TODO add a preview widget
 	dialog->image_chooser = glade_xml_get_widget (gui, "image_chooser");
 
 	filter = gtk_file_filter_new ();
@@ -416,6 +443,13 @@ panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 				     filter);
 	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog->image_chooser),
 				     filter);
+
+	chooser_preview = gtk_image_new ();
+	gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog->image_chooser),
+					     chooser_preview);
+	g_signal_connect (dialog->image_chooser, "update-preview",
+			  G_CALLBACK (panel_properties_dialog_chooser_preview_update),
+			  chooser_preview);
 
 	image = panel_profile_get_background_image (dialog->toplevel);
 
