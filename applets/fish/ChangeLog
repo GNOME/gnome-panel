@@ -1,5 +1,11 @@
 2005-12-15  Vincent Untz  <vuntz@gnome.org>
 
+	* fish.c: (chooser_preview_update): remove critical warning if
+	filename == NULL, when reopening the file chooser after nothing has
+	been selected
+
+2005-12-15  Vincent Untz  <vuntz@gnome.org>
+
 	* fish.c: fix path to cairo.h
 	Fix bug #321780
 
