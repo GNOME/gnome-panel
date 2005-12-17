@@ -51,7 +51,7 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 
 	app = gnome_vfs_mime_get_default_application_for_uri (uri, mime_type);
 	if (app == NULL) {
-		g_set_error (error, 0, 0, _("Couldn't find a suitable application"));
+		g_set_error (error, 0, 0, _("Could not find a suitable application."));
 		return FALSE;
 	}
 
@@ -65,6 +65,7 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 	gnome_vfs_mime_application_free (app);
 
 	if (result != GNOME_VFS_OK) {
+		g_set_error (error, 0, 0, gnome_vfs_result_to_string (result));
 		return FALSE;
 	}
 
@@ -87,20 +88,22 @@ recent_documents_activate_cb (EggRecentViewGtk *view, EggRecentItem *item,
 	mime_type = egg_recent_item_get_mime_type (item);
 
 	if (show_uri (uri, mime_type, screen, &error) != TRUE) {
-		if (error != NULL) {
+		if (error) {
 			panel_error_dialog (screen,
 					    "cannot_open_recent_doc", TRUE,
-					    _("Cannot open recently used document"),
+					    _("Could not open recently used document \"%s\""),
 					    "%s",
+					    uri_utf8,
 					    error->message);
 			g_error_free (error);
-		} else
+		} else {
 			panel_error_dialog (screen,
-					    "cannot_open_recent_doc_unknown",
-					    TRUE,
-					    _("Cannot open recently used document"),
-					    _("An unknown error occurred while trying to open %s"),
+					    "cannot_open_recent_doc", TRUE,
+					    _("Could not open recently used document \"%s\""),
+					    _("An unknown error occurred while trying to open \"%s\""),
+					    uri_utf8,
 					    uri_utf8);
+		}
 	}
 
 	g_free (uri);

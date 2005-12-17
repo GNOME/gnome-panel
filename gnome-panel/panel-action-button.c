@@ -203,11 +203,12 @@ panel_action_search (GtkWidget *widget)
 		}
 		if (error) {
 			panel_error_dialog (screen,
-			                    "cannot_exec_gnome-search-tool", TRUE,
-			                    _("Cannot execute '%s'"),
-			                    "%s",
-			                    "gnome-search-tool",
-			                    error->message);
+					    "cannot_exec_gnome-search-tool",
+					    TRUE,
+					    _("Could not execute '%s'"),
+					    "%s",
+					    "gnome-search-tool",
+					    error->message);
 			g_error_free (error);
 		}
 		g_free (file);
@@ -215,9 +216,9 @@ panel_action_search (GtkWidget *widget)
 	else if (!gdk_spawn_on_screen (screen, NULL, argv, NULL,
 				  G_SPAWN_SEARCH_PATH,
 				  NULL, NULL, NULL, &error)) {
-		panel_error_dialog (screen,
+				  panel_error_dialog (screen,
 				    "cannot_exec_gnome-search-tool", TRUE,
-				    _("Cannot execute '%s'"),
+				    _("Could not execute '%s'"),
 				    "%s",
 				    "gnome-search-tool",
 				    error->message);
@@ -241,7 +242,7 @@ panel_action_screenshot (GtkWidget *widget)
 				  NULL, NULL, NULL, &error)) {
 		panel_error_dialog (screen,
 				    "cannot_exec_gnome-screenshot", TRUE,
-				    _("Cannot execute '%s'"),
+				    _("Could not execute '%s'"),
 				    "%s",
 				    "gnome-screenshot",
 				    error->message);
@@ -277,8 +278,9 @@ panel_action_connect_server (GtkWidget *widget)
 		error_dialog = panel_error_dialog (screen,
 						   "cannot_connect_server",
 						   TRUE,
-						   _("Cannot connect to server"),
-						   "%s", error->message);
+						   _("Could not connect to server"),
+						   "%s",
+						   error->message);
 		g_clear_error (&error);
 	}
 }

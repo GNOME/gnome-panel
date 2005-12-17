@@ -1,3 +1,40 @@
+2005-12-17  Vincent Untz  <vuntz@gnome.org>
+
+	Reword a lot of error dialogs. Based on patch by Luke Worth
+	<luke_worth@hotpop.com>. Fix bug #320164.
+
+	* button-widget.c: (button_widget_reload_pixbuf): reword error dialog
+	* launcher.c: (panel_launcher_save_ditem): ditto
+	(launch_url): verify that url is not a void string + ditto
+	(drag_data_received_cb): reword error dialog
+	(create_properties_dialog): fix indent
+	(really_add_launcher): reword error dialog
+	* menu-ditem.c: (ditem_properties_close): ditto
+	(really_add_new_menu_item): ditto
+	(panel_new_launcher): ditto
+	* panel-action-button.c: (panel_action_search): ditto
+	(panel_action_screenshot): ditto
+	(panel_action_connect_server): ditto
+	* panel-context-menu.c: (panel_context_menu_remove_panel): ditto
+	* panel-menu-bar.c: (panel_menu_bar_invoke_menu): ditto
+	* panel-menu-button.c: (panel_menu_button_invoke_menu): ditto
+	* panel-menu-items.c: (activate_uri): ditto
+	(panel_menu_item_activate_desktop_file): ditto
+	* panel-properties-dialog.c: (panel_properties_dialog_present): ditto
+	* panel-recent.c: (show_uri): make errors more useful
+	(recent_documents_activate_cb): reword error dialog
+	* panel-run-dialog.c: (panel_run_dialog_launch_command): ditto
+	(panel_run_dialog_show_url): ditto
+	(panel_run_dialog_execute): ditto
+	(panel_run_dialog_present): ditto
+	* panel-util.c: (panel_show_help): ditto
+	(panel_load_icon): make error more useful
+	(panel_lock_screen_action): reword error dialog
+
+	* menu.c: (create_menuitem): add a FIXME
+	* panel-context-menu.c: (panel_context_menu_setup_remove_panel_item):
+	fix sensitivity of item
+
 2005-12-15  Vincent Untz  <vuntz@gnome.org>
 
 	Don't crash with some themes. Thanks to Benjamin Berg for helping.

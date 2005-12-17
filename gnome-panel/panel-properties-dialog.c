@@ -1014,8 +1014,8 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 	if (gui == NULL) {
 		panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (toplevel)),
 				    "cannot_display_properties_dialog", TRUE,
-				    _("Cannot Display Properties Dialog"),
-				    _("%s could not be loaded."),
+				    _("Could not display properties dialog"),
+				    _("Unable to load file '%s'."),
 				    GLADEDIR "/panel-properties-dialog.glade");
 		return;
 	}

@@ -71,7 +71,7 @@ launcher_widget_open_dialog_destroyed (GtkWidget *dialog,
 
 	launcher->error_dialogs = g_slist_remove (launcher->error_dialogs, dialog);
 }
-                                                                                                                            
+
 static void
 launcher_widget_destroy_open_dialogs (Launcher *launcher)
 {
@@ -141,7 +141,7 @@ panel_launcher_save_ditem (GnomeDesktopItem *ditem,
 		if (report_errors)
 			panel_error_dialog (screen,
 					    "cannot_save_launcher", TRUE,
-					    _("Cannot save launcher to disk"),
+					    _("Could not save launcher to disk"),
 					    "%s",
 					    error->message);
 
@@ -166,13 +166,13 @@ launch_url (Launcher *launcher)
 
 	screen = launcher_get_screen (launcher);
 
-	if (!url) {
+	if (!url || *url == 0) {
 		GtkWidget *error_dialog;
 
 		error_dialog = panel_error_dialog (screen,
 						   "no_url_dialog", TRUE,
-						   _("Cannot launch icon"),
-						   _("This launch icon does not specify a url to show."));
+						   _("Could not show this URL"),
+						   _("No URL was specified."));
 		launcher_register_error_dialog (launcher, error_dialog);
 		return;
 	}
@@ -184,7 +184,7 @@ launch_url (Launcher *launcher)
 		error_dialog = panel_error_dialog (screen,
 						   "cannot_show_url_dialog",
 						   TRUE,
-						   _("Cannot show %s"),
+						   _("Could not show '%s'"),
 						   "%s",
 						   url,
 						   error->message);
@@ -219,9 +219,9 @@ launcher_launch (Launcher  *launcher,
 			GtkWidget *error_dialog;
 
 			error_dialog = panel_error_dialog (launcher_get_screen (launcher),
-							   "cannot_launch_icon",
+							   "cannot_launch_application",
 							   TRUE,
-							   _("Cannot launch icon"),
+							   _("Could not launch application"),
 							   "%s",
 							   error->message);
 			launcher_register_error_dialog (launcher, error_dialog);
@@ -277,8 +277,9 @@ drag_data_received_cb (GtkWidget        *widget,
 	if (error) {
 		GtkWidget *error_dialog;
 		error_dialog = panel_error_dialog (launcher_get_screen (launcher),
-						   "cannot_launch_icon", TRUE,
-						   _("Cannot launch icon"),
+						   "cannot_use_dropped_item",
+						   TRUE,
+						   _("Could not use dropped item"),
 						   "%s",
 						   error->message);
 		launcher_register_error_dialog (launcher, error_dialog);
@@ -800,9 +801,9 @@ create_properties_dialog (Launcher  *launcher,
 			  GdkScreen *screen)
 {
 	GtkWidget *dialog;
-        GtkWidget *help;
-        GtkWidget *close;
-        GtkWidget *revert;
+	GtkWidget *help;
+	GtkWidget *close;
+	GtkWidget *revert;
 
 	dialog = gtk_dialog_new ();
 
@@ -817,7 +818,7 @@ create_properties_dialog (Launcher  *launcher,
 
 	revert = gtk_dialog_add_button (
 			GTK_DIALOG (dialog), GTK_STOCK_REVERT_TO_SAVED, REVERT_BUTTON);
-        gtk_widget_set_sensitive (revert, FALSE);
+	gtk_widget_set_sensitive (revert, FALSE);
 
 	close = gtk_dialog_add_button (
 			GTK_DIALOG (dialog), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
@@ -845,7 +846,7 @@ create_properties_dialog (Launcher  *launcher,
 					   (launcher->info->widget->parent),
 					   dialog);
 
-        g_signal_connect_swapped (launcher->dedit, "changed",
+	g_signal_connect_swapped (launcher->dedit, "changed",
 				  G_CALLBACK (set_revert_sensitive),
 				  revert);
 
@@ -960,7 +961,7 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 		g_printerr (_("Key %s is not set, can't load launcher\n"), key);
 		return;
 	}
-        
+
 	launcher = load_launcher_applet (launcher_location,
 					 panel_widget,
 					 locked,
@@ -1010,10 +1011,10 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 		/* check for valid name */
 		if (string_empty (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME))) {
 			err_dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
-						         "cannot_create_launcher",
+							 "cannot_create_launcher",
 							 TRUE,
-						         _("Cannot create launcher"),
-						         _("You have to specify a name."));
+							 _("Could not create launcher"),
+							 _("You have to specify a name."));
 			g_signal_connect_object (G_OBJECT (dialog),
 						 "destroy",
 						 G_CALLBACK (gtk_widget_destroy),
@@ -1031,7 +1032,7 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 			err_dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
 							 "cannot_create_launcher",
 							 TRUE,
-							 _("Cannot create launcher"),
+							 _("Could not create launcher"),
 							 _("You have to specify a valid URL or command."));
 			g_signal_connect_object (G_OBJECT (dialog),
 						 "destroy",

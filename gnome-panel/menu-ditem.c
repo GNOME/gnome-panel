@@ -123,7 +123,7 @@ ditem_properties_close (GtkWidget *dialog,
 	if (saving_error)
 		panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
 				    "cannot_save_entry", TRUE,
-				    _("Cannot save changes to launcher"),
+				    _("Could not save changes to launcher"),
 				    "%s",
 				    saving_error);
 }
@@ -466,7 +466,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	if (string_empty (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME))) {
 		dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (d)),
 					     "cannot_create_launcher", TRUE,
-					     _("Cannot create launcher"),
+					     _("Could not create launcher"),
 					     _("You have to specify a name."));
 
 		g_signal_connect_swapped (G_OBJECT (dialog),
@@ -483,7 +483,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL)))) {
 		dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (d)),
 					     "cannot_create_launcher", TRUE,
-					     _("Cannot create launcher"),
+					     _("Could not create launcher"),
 					     _("You have to specify a valid URL or command."));
 		g_signal_connect_swapped (G_OBJECT (dialog),
 					  "destroy",
@@ -513,8 +513,8 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 				 &error);
 	if (error) {
 		panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (d)),
-				    "cannot_save_menu_item" /* class */, TRUE,
-				    _("Cannot save menu item to disk"),
+				    "cannot_save_launcher" /* class */, TRUE,
+				    _("Could not save launcher to disk"),
 				    "%s",
 				    error->message);
 
@@ -539,9 +539,9 @@ panel_new_launcher (const char *item_loc,
 	if (!is_item_writable (item_loc, NULL)) {
 		dialog = panel_error_dialog (screen,
 					     "cannot_create_launcher", TRUE,
-					     _("Cannot create launcher"),
-					     _("You can not create a new launcher at this "
-					       "location since the location is not writable."));
+					     _("Could not create launcher"),
+					     _("You do not have permission to write to "
+					       "this location."));
 
 		return dialog;
 	}

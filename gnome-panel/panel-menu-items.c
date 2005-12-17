@@ -107,7 +107,7 @@ activate_uri (GtkWidget *menuitem,
 		if (error->code != GNOME_URL_ERROR_CANCELLED) {
 			escaped = g_markup_escape_text (url, -1);
 			panel_error_dialog (screen, "cannot_show_url", TRUE,
-					    _("Cannot display location '%s'"),
+					    _("Could not open location '%s'"),
 					    "%s",
 					    escaped,
 					    error->message);
@@ -1086,7 +1086,7 @@ panel_menu_item_activate_desktop_file (GtkWidget  *menuitem,
 		if (error) {
 			panel_error_dialog (menuitem_to_screen (menuitem),
 					    "cannot_launch_entry", TRUE,
-					    _("Cannot launch entry"),
+					    _("Could not launch menu item"),
 					    "%s",
 					    error->message);
 
@@ -1098,7 +1098,7 @@ panel_menu_item_activate_desktop_file (GtkWidget  *menuitem,
 
 		panel_error_dialog (menuitem_to_screen (menuitem),
 				    "cannot_load_entry", TRUE,
-				    _("Cannot load entry"),
+				    _("Could not load menu item"),
 				    "%s",
 				    error->message);
 		g_error_free (error);

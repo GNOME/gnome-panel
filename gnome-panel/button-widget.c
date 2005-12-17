@@ -195,9 +195,8 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 		if (error) {
 			panel_error_dialog (gdk_screen_get_default (),
 					    "cannot_load_pixbuf", TRUE,
-					    _("Failed to load image %s"),
+					    _("Could not load icon"),
 					    "%s",
-					    button->filename,
 					    error);
 			g_free (error);
 		}

@@ -355,7 +355,7 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 		if (error) {
 			panel_error_dialog (screen,
 					    "cannot_exec_gmenu-simple-editor", TRUE,
-					    _("Cannot execute '%s'"),
+					    _("Could not execute '%s'"),
 					    "%s",
 					    "gmenu-simple-editor",
 					    error->message);

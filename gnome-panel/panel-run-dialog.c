@@ -291,7 +291,7 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 			
 	if (!result) {
 		panel_error_dialog (screen, "cannot_spawn_command", TRUE,
-				    _("Cannot launch command '%s'"),
+				    _("Could not run command '%s'"),
 				    "%s",
 				    escaped,
 				    error->message);
@@ -317,7 +317,7 @@ panel_run_dialog_show_url (PanelRunDialog *dialog,
 	gnome_url_show_on_screen (url, screen, &error);
 	if (error) {
 		panel_error_dialog (screen, "cannot_show_url", TRUE,
-				    _("Cannot display location '%s'"),
+				    _("Could not open location '%s'"),
 				    "%s",
 				    escaped,
 				    error->message);
@@ -369,7 +369,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 
 	if (!disk || error) {
 		panel_error_dialog (screen, "cannot_convert_command_from_utf8",
-				    TRUE, _("Cannot convert '%s' from UTF-8"),
+				    TRUE, _("Could not convert '%s' from UTF-8"),
 				    "%s",
 				    command,
 				    error->message);
@@ -1743,10 +1743,10 @@ panel_run_dialog_present (GdkScreen *screen,
 	gui = glade_xml_new (GLADEDIR "/panel-run-dialog.glade",
 			     "panel_run_dialog",
 			     NULL);
-	if (gui == NULL) {
+	if (!gui) {
 		panel_error_dialog (screen, "cannot_display_run_dialog", TRUE,
-				    _("Cannot Display Run Dialog"),
-				    _("%s could not be loaded."),
+				    _("Could not display run dialog"),
+				    _("Unable to load file '%s'."),
 				      GLADEDIR "/panel-run-dialog.glade");
 		return;
 	}

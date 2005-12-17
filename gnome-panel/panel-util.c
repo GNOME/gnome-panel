@@ -86,7 +86,7 @@ panel_show_help (GdkScreen  *screen,
 			screen,
 			"cannot_show_help",
 			TRUE,
-			_("Cannot display help document"),
+			_("Could not display help document"),
 			"%s",
 			error != NULL ? error->message : "");
 
@@ -621,7 +621,8 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 	file = panel_find_icon (icon_theme, icon_name, size);
 	if (!file) {
 		if (error_msg)
-			*error_msg = g_strdup (_("Icon not found"));
+			*error_msg = g_strdup_printf (_("Icon '%s' not found"),
+						      icon_name);
 
 		return NULL;
 	}
@@ -745,7 +746,7 @@ panel_lock_screen_action (GdkScreen  *screen,
 		panel_error_dialog (screen,
 				    "cannot_exec_screensaver",
 				    TRUE,
-				    _("Cannot execute '%s'"),
+				    _("Could not execute '%s'"),
 				    "%s",
 				    command,
 				    error->message);

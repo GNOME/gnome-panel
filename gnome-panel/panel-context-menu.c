@@ -163,8 +163,8 @@ panel_context_menu_remove_panel (GtkWidget *menuitem,
 	if (panel_toplevel_is_last_unattached (toplevel)) {
 		panel_error_dialog (menuitem_to_screen (menuitem),
 				    "cannot_remove_last_panel", TRUE,
-				    _("You cannot remove your last panel."),
-				    NULL);
+				    _("Cannot delete this panel"),
+				    _("You must always have at least one panel."));
 		return;
 	}
 
@@ -184,9 +184,9 @@ panel_context_menu_setup_remove_panel_item (GtkWidget *menu,
 	g_assert (PANEL_IS_TOPLEVEL (panel_widget->toplevel));
 
 	sensitive =
-		panel_toplevel_is_last_unattached (panel_widget->toplevel) ||
-		!panel_lockdown_get_locked_down () ||
-		!panel_profile_id_lists_are_writable ();
+		!panel_toplevel_is_last_unattached (panel_widget->toplevel) &&
+		!panel_lockdown_get_locked_down () &&
+		panel_profile_id_lists_are_writable ();
 
 	gtk_widget_set_sensitive (menuitem, sensitive);
 

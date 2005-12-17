@@ -1502,6 +1502,7 @@ create_menuitem (GtkWidget          *menu,
 				     menu_item_targets, 1,
 				     GDK_ACTION_COPY);
 
+		//FIXME should remove .png at the end of the icon name
 		if (gmenu_tree_entry_get_icon (entry) != NULL)
 			gtk_drag_source_set_icon_name (menuitem,
 						       gmenu_tree_entry_get_icon (entry));
