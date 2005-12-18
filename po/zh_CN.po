@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-03 23:05+0100\n"
-"PO-Revision-Date: 2005-12-04 12:28+0800\n"
+"POT-Creation-Date: 2005-12-18 06:07+0100\n"
+"PO-Revision-Date: 2005-12-18 19:41+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -50,7 +50,7 @@ msgstr "关于(_A)"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:741
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:743
 #: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:291
 #: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
@@ -247,7 +247,7 @@ msgid "The Clock displays the current time and date"
 msgstr "时钟显示当前时间和日期"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2729 ../applets/fish/fish.c:580
+#: ../applets/clock/clock.c:2729 ../applets/fish/fish.c:583
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:783
 #: ../applets/wncklet/window-menu.c:75
@@ -393,7 +393,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "显示一条正在游泳的鱼或其它活动的生物"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-#: ../applets/fish/fish.c:574
+#: ../applets/fish/fish.c:577
 msgid "Fish"
 msgstr "小鱼"
 
@@ -418,17 +418,17 @@ msgstr ""
 "我们强烈建议您不要利用%s来做什么“实际”\n"
 "或有用的事情。"
 
-#: ../applets/fish/fish.c:428 ../gnome-panel/panel-properties-dialog.c:413
+#: ../applets/fish/fish.c:431 ../gnome-panel/panel-properties-dialog.c:440
 msgid "Images"
 msgstr "图像"
 
-#: ../applets/fish/fish.c:542 ../applets/fish/fish.c:602
-#: ../applets/fish/fish.c:717
+#: ../applets/fish/fish.c:545 ../applets/fish/fish.c:605
+#: ../applets/fish/fish.c:720
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s 小鱼"
 
-#: ../applets/fish/fish.c:543
+#: ../applets/fish/fish.c:546
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -440,25 +440,25 @@ msgstr ""
 "和内存空间。如果发现任何人在使用这个小程序，他可能应该马上送去检查一下精神状"
 "况喔。"
 
-#: ../applets/fish/fish.c:567
+#: ../applets/fish/fish.c:570
 msgid "(with minor help from George)"
 msgstr "(还有 George 的小帮助)"
 
-#: ../applets/fish/fish.c:603
+#: ../applets/fish/fish.c:606
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s 小鱼，当代祭司"
 
-#: ../applets/fish/fish.c:673
+#: ../applets/fish/fish.c:676
 msgid "Unable to locate the command to execute"
 msgstr "无法找到要执行的命令"
 
-#: ../applets/fish/fish.c:722
+#: ../applets/fish/fish.c:725
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s 小鱼说："
 
-#: ../applets/fish/fish.c:791
+#: ../applets/fish/fish.c:794
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -469,16 +469,16 @@ msgstr ""
 "\n"
 "细节：%s"
 
-#: ../applets/fish/fish.c:856
+#: ../applets/fish/fish.c:859
 msgid "_Speak again"
 msgstr "再说一次(_S)"
 
-#: ../applets/fish/fish.c:937
+#: ../applets/fish/fish.c:940
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "配置的命令无法运行，已经被替换为：%s"
 
-#: ../applets/fish/fish.c:960
+#: ../applets/fish/fish.c:963
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -489,7 +489,7 @@ msgstr ""
 "\n"
 "细节：%s"
 
-#: ../applets/fish/fish.c:976
+#: ../applets/fish/fish.c:979
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -500,7 +500,7 @@ msgstr ""
 "\n"
 "细节：%s"
 
-#: ../applets/fish/fish.c:1630
+#: ../applets/fish/fish.c:1633
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -508,7 +508,7 @@ msgstr ""
 "需要给我换水了！\n"
 "(看看今天几号了)"
 
-#: ../applets/fish/fish.c:1724
+#: ../applets/fish/fish.c:1727
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s 小鱼，预知幸福"
@@ -697,7 +697,7 @@ msgstr "工作区切换器"
 msgid "Failed to load %s: %s\n"
 msgstr "载入 %s 失败：%s\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:624
+#: ../applets/wncklet/showdesktop.c:172
 msgid "Icon not found"
 msgstr "未找到图标"
 
@@ -988,9 +988,8 @@ msgid "Can't find an empty spot"
 msgstr "无法找到空位"
 
 #: ../gnome-panel/button-widget.c:198
-#, c-format
-msgid "Failed to load image %s"
-msgstr "装入图像 %s 失败"
+msgid "Could not load icon"
+msgstr "无法装入图标"
 
 #: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:150
 #: ../gnome-panel/panel-toplevel.c:1524
@@ -1001,7 +1000,7 @@ msgstr "抽屉"
 msgid "_Add to Drawer..."
 msgstr "添加到抽屉(_A)..."
 
-#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:927
+#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:928
 #: ../gnome-panel/panel-action-button.c:143
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
@@ -1009,7 +1008,7 @@ msgstr "属性(_P)"
 
 #. Translators: %s is a URI
 #: ../gnome-panel/egg-recent-view-gtk.c:346
-#: ../gnome-panel/panel-menu-items.c:352 ../gnome-panel/panel-recent.c:199
+#: ../gnome-panel/panel-menu-items.c:353 ../gnome-panel/panel-recent.c:202
 #, c-format
 msgid "Open '%s'"
 msgstr "打开“%s”"
@@ -1022,83 +1021,84 @@ msgstr "空"
 msgid "Create new file in the given directory"
 msgstr "无法在给定的目录中创建新文件"
 
-#: ../gnome-panel/launcher.c:144
-msgid "Cannot save launcher to disk"
+#. class
+#: ../gnome-panel/launcher.c:144 ../gnome-panel/menu-ditem.c:517
+msgid "Could not save launcher to disk"
 msgstr "无法将启动器存入磁盘"
 
-#: ../gnome-panel/launcher.c:174 ../gnome-panel/launcher.c:224
-#: ../gnome-panel/launcher.c:281
-msgid "Cannot launch icon"
-msgstr "无法启动图标"
+#: ../gnome-panel/launcher.c:174
+msgid "Could not show this URL"
+msgstr "无法显示此 URL"
 
 #: ../gnome-panel/launcher.c:175
-msgid "This launch icon does not specify a url to show."
-msgstr "该启动图标未指定要显示的 URL。"
+msgid "No URL was specified."
+msgstr "未指定 URL。"
 
 #: ../gnome-panel/launcher.c:187
 #, c-format
-msgid "Cannot show %s"
-msgstr "无法显示 %s"
+msgid "Could not show '%s'"
+msgstr "无法显示“%s”"
 
-#: ../gnome-panel/launcher.c:477
+#: ../gnome-panel/launcher.c:224
+msgid "Could not launch application"
+msgstr "无法启动应用程序"
+
+#: ../gnome-panel/launcher.c:282
+msgid "Could not use dropped item"
+msgstr "无法使用拖放的项目"
+
+#: ../gnome-panel/launcher.c:478
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "没有给出面板启动器的 desktop 文件的 URI\n"
 
-#: ../gnome-panel/launcher.c:491
+#: ../gnome-panel/launcher.c:492
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "无法打开面板启动器的 desktop 文件 %s%s%s\n"
 
-#: ../gnome-panel/launcher.c:809 ../gnome-panel/menu-ditem.c:181
+#: ../gnome-panel/launcher.c:810 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "启动器属性"
 
-#: ../gnome-panel/launcher.c:921
+#: ../gnome-panel/launcher.c:922
 msgid "_Launch"
 msgstr "启动(_L)"
 
-#: ../gnome-panel/launcher.c:960
+#: ../gnome-panel/launcher.c:961
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "没有设置 GConf 项 %s，无法载入启动器\n"
 
-#: ../gnome-panel/launcher.c:1015 ../gnome-panel/launcher.c:1034
+#: ../gnome-panel/launcher.c:1016 ../gnome-panel/launcher.c:1035
 #: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
 #: ../gnome-panel/menu-ditem.c:542
-msgid "Cannot create launcher"
-msgstr "无法建立启动器"
+msgid "Could not create launcher"
+msgstr "无法创建启动器"
 
-#: ../gnome-panel/launcher.c:1016 ../gnome-panel/menu-ditem.c:470
+#: ../gnome-panel/launcher.c:1017 ../gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "您必须指定一个名字。"
 
-#: ../gnome-panel/launcher.c:1035 ../gnome-panel/menu-ditem.c:487
+#: ../gnome-panel/launcher.c:1036 ../gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "您必须指定一个合法的 URL 或命令。"
 
-#: ../gnome-panel/launcher.c:1079 ../gnome-panel/menu-ditem.c:550
+#: ../gnome-panel/launcher.c:1080 ../gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "创建启动器"
 
 #: ../gnome-panel/menu-ditem.c:126
-msgid "Cannot save changes to launcher"
+msgid "Could not save changes to launcher"
 msgstr "无法将修改保存到启动器"
 
 #: ../gnome-panel/menu-ditem.c:308
 msgid "Menu"
 msgstr "菜单"
 
-#. class
-#: ../gnome-panel/menu-ditem.c:517
-msgid "Cannot save menu item to disk"
-msgstr "无法将菜单项存入磁盘"
-
 #: ../gnome-panel/menu-ditem.c:543
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr "由于此处不可写，您不能在此处创建新的启动器。"
+msgid "You do not have permission to write to this location."
+msgstr "您没有权限写入此位置。"
 
 #: ../gnome-panel/menu.c:922
 msgid "Add this launcher to panel"
@@ -1136,75 +1136,75 @@ msgstr "杀死屏幕保护守护进程(_K)"
 msgid "Restart _Screensaver Daemon"
 msgstr "重启屏幕保护守护进程(_S)"
 
-#: ../gnome-panel/panel-action-button.c:207
-#: ../gnome-panel/panel-action-button.c:220
-#: ../gnome-panel/panel-action-button.c:244
+#: ../gnome-panel/panel-action-button.c:208
+#: ../gnome-panel/panel-action-button.c:221
+#: ../gnome-panel/panel-action-button.c:245
 #: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1007
-#: ../gnome-panel/panel-util.c:748
+#: ../gnome-panel/panel-util.c:749
 #, c-format
-msgid "Cannot execute '%s'"
+msgid "Could not execute '%s'"
 msgstr "无法执行“%s”"
 
-#: ../gnome-panel/panel-action-button.c:280
-msgid "Cannot connect to server"
+#: ../gnome-panel/panel-action-button.c:281
+msgid "Could not connect to server"
 msgstr "无法连接到服务器"
 
-#: ../gnome-panel/panel-action-button.c:311
+#: ../gnome-panel/panel-action-button.c:313
 msgid "Lock Screen"
 msgstr "锁住屏幕"
 
-#: ../gnome-panel/panel-action-button.c:312
+#: ../gnome-panel/panel-action-button.c:314
 msgid "Protect your computer from unauthorized use"
 msgstr "保护您的计算机免遭未授权的使用"
 
-#: ../gnome-panel/panel-action-button.c:323
+#: ../gnome-panel/panel-action-button.c:325
 msgid "Log Out"
 msgstr "注销"
 
-#: ../gnome-panel/panel-action-button.c:324
+#: ../gnome-panel/panel-action-button.c:326
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr "注销本会话以便让不同的用户登录，或关闭计算机"
 
-#: ../gnome-panel/panel-action-button.c:333
+#: ../gnome-panel/panel-action-button.c:335
 msgid "Run Application..."
 msgstr "运行应用程序..."
 
-#: ../gnome-panel/panel-action-button.c:334
+#: ../gnome-panel/panel-action-button.c:336
 msgid "Run an Application by entering a command"
 msgstr "输入命令来运行应用程序"
 
-#: ../gnome-panel/panel-action-button.c:343
+#: ../gnome-panel/panel-action-button.c:345
 msgid "Search for Files..."
 msgstr "搜索文件..."
 
-#: ../gnome-panel/panel-action-button.c:344
+#: ../gnome-panel/panel-action-button.c:346
 msgid "Find files, folders, and documents on your computer"
 msgstr "在您的计算机中查找文件、文件夹以及文档"
 
-#: ../gnome-panel/panel-action-button.c:352
+#: ../gnome-panel/panel-action-button.c:354
 msgid "Take Screenshot..."
 msgstr "屏幕抓图..."
 
-#: ../gnome-panel/panel-action-button.c:353
+#: ../gnome-panel/panel-action-button.c:355
 msgid "Take a screenshot of your desktop"
 msgstr "获取一个您的桌面的抓图"
 
-#: ../gnome-panel/panel-action-button.c:361
+#: ../gnome-panel/panel-action-button.c:363
 msgid "Force Quit"
 msgstr "强制退出"
 
-#: ../gnome-panel/panel-action-button.c:362
+#: ../gnome-panel/panel-action-button.c:364
 msgid "Force a misbehaving application to quit"
 msgstr "强制行为异常的应用程序退出"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:371
+#: ../gnome-panel/panel-action-button.c:373
 msgid "Connect to Server..."
 msgstr "连接到服务器..."
 
-#: ../gnome-panel/panel-action-button.c:372
+#: ../gnome-panel/panel-action-button.c:374
 msgid "Connect to a remote server"
 msgstr "连接到远程服务器"
 
@@ -1312,7 +1312,7 @@ msgstr "当面板载入“%s”时遇到问题。"
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "您是否想要从配置中删除小程序？"
 
-#: ../gnome-panel/panel-applet-frame.c:1109
+#: ../gnome-panel/panel-applet-frame.c:1111
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "无法从控制得到小程序外壳界面\n"
 
@@ -1346,8 +1346,12 @@ msgid ""
 msgstr "本程序负责启动其它应用程序、向其自身嵌入小程序。"
 
 #: ../gnome-panel/panel-context-menu.c:166
-msgid "You cannot remove your last panel."
-msgstr "您不能删除最后一个面板。"
+msgid "Cannot delete this panel"
+msgstr "无法删除此面板"
+
+#: ../gnome-panel/panel-context-menu.c:167
+msgid "You must always have at least one panel."
+msgstr "您必须至少有一个面板。"
 
 #: ../gnome-panel/panel-context-menu.c:215
 msgid "_Delete This Panel..."
@@ -1583,28 +1587,28 @@ msgstr "应用程序"
 msgid "_Edit Menus"
 msgstr "编辑菜单(_E)"
 
-#: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:313
+#: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:320
 #, c-format
-msgid "Cannot display location '%s'"
-msgstr "无法显示位置“%s”"
+msgid "Could not open location '%s'"
+msgstr "无法打开位置“%s”"
 
-#: ../gnome-panel/panel-menu-items.c:331
+#: ../gnome-panel/panel-menu-items.c:332
 msgid "Bookmarks"
 msgstr "书签"
 
 #. Translators: the first string is a pathc and
 #. * the second string is a hostname. nautilus
 #. * contains the same string to translate.
-#: ../gnome-panel/panel-menu-items.c:380
+#: ../gnome-panel/panel-menu-items.c:381
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%2$s 上的 %1$s"
 
-#: ../gnome-panel/panel-menu-items.c:476
+#: ../gnome-panel/panel-menu-items.c:477
 msgid "Network Places"
 msgstr "网络位置"
 
-#: ../gnome-panel/panel-menu-items.c:479
+#: ../gnome-panel/panel-menu-items.c:480
 msgid "Removable Media"
 msgstr "可移动介质"
 
@@ -1612,32 +1616,32 @@ msgstr "可移动介质"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:550
+#: ../gnome-panel/panel-menu-items.c:551
 msgid "Desktop Folder|Desktop"
 msgstr "桌面"
 
-#: ../gnome-panel/panel-menu-items.c:551
+#: ../gnome-panel/panel-menu-items.c:552
 msgid "Open the desktop as a folder"
 msgstr "将桌面以文件夹形式打开"
 
-#: ../gnome-panel/panel-menu-items.c:905
+#: ../gnome-panel/panel-menu-items.c:910
 msgid "Places"
 msgstr "位置"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:943
+#: ../gnome-panel/panel-menu-items.c:948
 msgid "Desktop Environment|Desktop"
 msgstr "桌面"
 
-#: ../gnome-panel/panel-menu-items.c:1084
-msgid "Cannot launch entry"
-msgstr "无法调用项"
+#: ../gnome-panel/panel-menu-items.c:1089
+msgid "Could not launch menu item"
+msgstr "无法调用菜单项"
 
-#: ../gnome-panel/panel-menu-items.c:1096
-msgid "Cannot load entry"
-msgstr "无法装入项"
+#: ../gnome-panel/panel-menu-items.c:1101
+msgid "Could not load menu item"
+msgstr "无法装入菜单项"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1845,15 +1849,15 @@ msgstr "左"
 msgid "Right"
 msgstr "右"
 
-#: ../gnome-panel/panel-properties-dialog.c:983
-msgid "Cannot Display Properties Dialog"
+#: ../gnome-panel/panel-properties-dialog.c:1017
+msgid "Could not display properties dialog"
 msgstr "无法显示属性对话框"
 
-#: ../gnome-panel/panel-properties-dialog.c:984
-#: ../gnome-panel/panel-run-dialog.c:1741
+#: ../gnome-panel/panel-properties-dialog.c:1018
+#: ../gnome-panel/panel-run-dialog.c:1749
 #, c-format
-msgid "%s could not be loaded."
-msgstr "%s 无法装入。"
+msgid "Unable to load file '%s'."
+msgstr "无法装入文件“%s”。"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:2
 msgid "*"
@@ -1962,23 +1966,24 @@ msgid "_Tile"
 msgstr "平铺(_T)"
 
 #: ../gnome-panel/panel-recent.c:54
-msgid "Couldn't find a suitable application"
-msgstr "无法找到合适的应用程序"
+msgid "Could not find a suitable application."
+msgstr "无法找到合适的应用程序。"
 
-#: ../gnome-panel/panel-recent.c:93 ../gnome-panel/panel-recent.c:101
-msgid "Cannot open recently used document"
-msgstr "无法打开最近用过的文档"
-
-#: ../gnome-panel/panel-recent.c:102
+#: ../gnome-panel/panel-recent.c:94 ../gnome-panel/panel-recent.c:102
 #, c-format
-msgid "An unknown error occurred while trying to open %s"
-msgstr "尝试打开 %s 时发生未知的错误"
+msgid "Could not open recently used document \"%s\""
+msgstr "无法打开最近用过的文档“%s”"
 
-#: ../gnome-panel/panel-recent.c:152
+#: ../gnome-panel/panel-recent.c:103
+#, c-format
+msgid "An unknown error occurred while trying to open \"%s\""
+msgstr "尝试打开“%s”时发生了未知错误"
+
+#: ../gnome-panel/panel-recent.c:155
 msgid "Clear the Recent Documents list?"
 msgstr "清除最近的文档列表吗？"
 
-#: ../gnome-panel/panel-recent.c:154
+#: ../gnome-panel/panel-recent.c:157
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
@@ -1990,49 +1995,49 @@ msgstr ""
 "* 位置 -> 最近文档菜单项中的全部项目。\n"
 "* 全部应用程序的最近文档列表中的全部项目。"
 
-#: ../gnome-panel/panel-recent.c:222
+#: ../gnome-panel/panel-recent.c:225
 msgid "Recent Documents"
 msgstr "最近的文档"
 
-#: ../gnome-panel/panel-recent.c:266
+#: ../gnome-panel/panel-recent.c:269
 msgid "Clear Recent Documents"
 msgstr "清除最近的文档"
 
-#: ../gnome-panel/panel-recent.c:270
+#: ../gnome-panel/panel-recent.c:273
 msgid "Clear all items from the recent documents list"
 msgstr "从最近的文档列表中清除全部项目"
 
-#: ../gnome-panel/panel-run-dialog.c:287
+#: ../gnome-panel/panel-run-dialog.c:294
 #, c-format
-msgid "Cannot launch command '%s'"
-msgstr "无法启动命令“%s”"
+msgid "Could not run command '%s'"
+msgstr "无法运行命令“%s”"
 
-#: ../gnome-panel/panel-run-dialog.c:365
+#: ../gnome-panel/panel-run-dialog.c:372
 #, c-format
-msgid "Cannot convert '%s' from UTF-8"
+msgid "Could not convert '%s' from UTF-8"
 msgstr "无法从 UTF-8 转换“%s”"
 
-#: ../gnome-panel/panel-run-dialog.c:1118
+#: ../gnome-panel/panel-run-dialog.c:1126
 msgid "Choose a file to append to the command..."
 msgstr "选择追加到命令的文件..."
 
-#: ../gnome-panel/panel-run-dialog.c:1475
+#: ../gnome-panel/panel-run-dialog.c:1483
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "将运行命令：“%s”"
 
-#: ../gnome-panel/panel-run-dialog.c:1482
+#: ../gnome-panel/panel-run-dialog.c:1490
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "选择应用程序可查看其描述。"
 
-#: ../gnome-panel/panel-run-dialog.c:1516
+#: ../gnome-panel/panel-run-dialog.c:1524
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "拖放到运行对话框上的 URI 列表格式(%d)或长度(%d)不对\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1740
-msgid "Cannot Display Run Dialog"
+#: ../gnome-panel/panel-run-dialog.c:1748
+msgid "Could not display run dialog"
 msgstr "无法显示运行对话框"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:1
@@ -2505,13 +2510,18 @@ msgid "Y co-ordinate of panel"
 msgstr "面板的 Y 坐标"
 
 #: ../gnome-panel/panel-util.c:89
-msgid "Cannot display help document"
+msgid "Could not display help document"
 msgstr "无法显示帮助文档"
 
 #: ../gnome-panel/panel-util.c:311
 #, c-format
 msgid "Details: %s"
 msgstr "细节：%s"
+
+#: ../gnome-panel/panel-util.c:624
+#, c-format
+msgid "Icon '%s' not found"
+msgstr "未找到图标“%s”"
 
 #: ../gnome-panel/panel.c:471
 #, c-format
