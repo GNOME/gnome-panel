@@ -84,6 +84,8 @@ char *panel_make_unique_uri (const char *dir,
 			     const char *suffix);
 char *panel_lookup_in_data_dirs (const char *basename);
 
+const char *panel_util_utf8_strstrcase (const char *haystack, const char *needle);
+
 G_END_DECLS
 
 #endif /* PANEL_UTIL_H */

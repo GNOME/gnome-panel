@@ -873,3 +873,60 @@ panel_lookup_in_data_dirs (const char *basename)
 
 	return NULL;
 }
+
+/* Stolen from evolution-data-server/libedataserver/e-util.c:
+ * e_util_unicode_get_utf8()
+ * e_util_utf8_strstrcase() */
+static char *
+panel_util_unicode_get_utf8 (const char *text, gunichar *out)
+{
+	*out = g_utf8_get_char (text);
+	return (*out == (gunichar)-1) ? NULL : g_utf8_next_char (text);
+}
+
+const char *
+panel_util_utf8_strstrcase (const char *haystack, const char *needle)
+{
+	gunichar *nuni;
+	gunichar unival;
+	gint nlen;
+	const char *o, *p;
+
+	if (haystack == NULL) return NULL;
+	if (needle == NULL) return NULL;
+	if (strlen (needle) == 0) return haystack;
+	if (strlen (haystack) == 0) return NULL;
+
+	nuni = g_alloca (sizeof (gunichar) * strlen (needle));
+
+	nlen = 0;
+	for (p = panel_util_unicode_get_utf8 (needle, &unival); p && unival; p = panel_util_unicode_get_utf8 (p, &unival)) {
+		nuni[nlen++] = g_unichar_tolower (unival);
+	}
+	/* NULL means there was illegal utf-8 sequence */
+	if (!p) return NULL;
+
+	o = haystack;
+	for (p = panel_util_unicode_get_utf8 (o, &unival); p && unival; p = panel_util_unicode_get_utf8 (p, &unival)) {
+		gint sc;
+		sc = g_unichar_tolower (unival);
+		/* We have valid stripped char */
+		if (sc == nuni[0]) {
+			const char *q = p;
+			gint npos = 1;
+			while (npos < nlen) {
+				q = panel_util_unicode_get_utf8 (q, &unival);
+				if (!q || !unival) return NULL;
+				sc = g_unichar_tolower (unival);
+				if (sc != nuni[npos]) break;
+				npos++;
+			}
+			if (npos == nlen) {
+				return o;
+			}
+		}
+		o = p;
+	}
+
+	return NULL;
+}

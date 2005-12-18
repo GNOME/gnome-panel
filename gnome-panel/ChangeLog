@@ -1,3 +1,29 @@
+2005-12-18  Vincent Untz  <vuntz@gnome.org>
+
+	Update the known applications list while typing and only show the
+	items that match. Fix bug #313808.
+
+	* panel-run-dialog.c: s/_command_icon_idle_id/_command_idle_id/g, add
+	some FIXME, add a visible column to the liststore,
+	(panel_run_dialog_destroy): reinitialize value of the new changed_id
+	handler id
+	(panel_run_dialog_make_all_list_visible): new
+	(panel_run_dialog_find_command_icon_idle): if the text doesn't match
+	the item, look if the text is in the command/name/comment of the item
+	and set the items visibility according to this, also make sure that we
+	show the beginning of the list since the displayed items change
+	(panel_run_dialog_add_items_idle): use a GtkTreeModelFilter
+	(entry_event): use g_completion_complete_utf8(), disable the "changed"
+	handler when we complete so that it's not called twice but only once
+	(entry_changed): move some code around to make it more readable,
+	reset the icon and the visibility of the list items if the text is
+	void
+	(panel_run_dialog_setup_entry): save the handler id for the "changed"
+	signal
+	* panel-util.[ch]: (panel_util_utf8_strstrcase): new, stolen from
+	e-d-s
+	(panel_util_unicode_get_utf8): ditto
+
 2005-12-17  Vincent Untz  <vuntz@gnome.org>
 
 	Reword a lot of error dialogs. Based on patch by Luke Worth

@@ -78,6 +78,8 @@ typedef struct {
 	GtkWidget        *program_label;
 	GtkWidget        *program_list;
 	
+	long              changed_id;
+
 	GtkListStore     *program_list_store;
 
 	GHashTable       *dir_hash;
@@ -88,7 +90,7 @@ typedef struct {
 	GSList           *add_icon_paths;
 	int	          add_icons_idle_id;
 	int	          add_items_idle_id;
-	int		  find_command_icon_idle_id;
+	int		  find_command_idle_id;
 	int		  content_notify_id;
 	gboolean	  use_program_list;
 	gboolean	  completion_started;
@@ -104,6 +106,7 @@ enum {
 	COLUMN_COMMENT,
 	COLUMN_PATH,
 	COLUMN_EXEC,
+	COLUMN_VISIBLE,
 	NUM_COLUMNS
 };
 
@@ -114,6 +117,8 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 {
 	GList *l;
 	
+	dialog->changed_id = 0;
+
 	g_object_unref (dialog->program_list_box);
 	
 	g_slist_foreach (dialog->add_icon_paths, (GFunc) gtk_tree_path_free, NULL);
@@ -131,9 +136,9 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 		g_source_remove (dialog->add_items_idle_id);
 	dialog->add_items_idle_id = 0;
 
-	if (dialog->find_command_icon_idle_id)
-		g_source_remove (dialog->find_command_icon_idle_id);
-	dialog->find_command_icon_idle_id = 0;
+	if (dialog->find_command_idle_id)
+		g_source_remove (dialog->find_command_idle_id);
+	dialog->find_command_idle_id = 0;
 
 	if (dialog->content_notify_id)
 		gconf_client_notify_remove (panel_gconf_get_client (),
@@ -549,7 +554,20 @@ fuzzy_command_match (const char *cmd1,
 }
 
 static gboolean
-panel_run_dialog_find_command_icon_idle (PanelRunDialog *dialog)
+panel_run_dialog_make_all_list_visible (GtkTreeModel *model,
+					GtkTreePath  *path,
+					GtkTreeIter  *iter,
+					gpointer      data)
+{
+	gtk_list_store_set (GTK_LIST_STORE (model), iter,
+			    COLUMN_VISIBLE, TRUE,
+			    -1);
+
+	return FALSE;
+}
+
+static gboolean
+panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 {
 	GtkTreeIter   iter;
 	GtkTreeModel *model;
@@ -557,12 +575,14 @@ panel_run_dialog_find_command_icon_idle (PanelRunDialog *dialog)
 	const char   *text;
 	char         *found_icon;
 	char         *found_name;
+	gboolean      fuzzy;
 	
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (dialog->program_list));
+	model = GTK_TREE_MODEL (dialog->program_list_store);
 	path = gtk_tree_path_new_first ();
-	text = gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry));
+	text = sure_string (gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry)));
 	found_icon = NULL;
 	found_name = NULL;
+	fuzzy = FALSE;
 	
 	if (!path || !gtk_tree_model_get_iter (model, &iter, path)) {
 		if (path)
@@ -570,7 +590,7 @@ panel_run_dialog_find_command_icon_idle (PanelRunDialog *dialog)
 		
 		panel_run_dialog_set_icon (dialog, NULL);
 	
-		dialog->find_command_icon_idle_id = 0;
+		dialog->find_command_idle_id = 0;
 		return FALSE;
 	}
 
@@ -578,57 +598,65 @@ panel_run_dialog_find_command_icon_idle (PanelRunDialog *dialog)
 		char *exec = NULL;
 		char *icon = NULL;
 		char *name = NULL;
-		char *path = NULL;
+		char *comment = NULL;
 
 		gtk_tree_model_get (model, &iter,
 				    COLUMN_EXEC,      &exec,
 				    COLUMN_ICON_FILE, &icon,
 				    COLUMN_NAME,      &name,
-				    COLUMN_PATH,      &path,
+				    COLUMN_COMMENT,   &comment,
 				    -1);
 
-        	if (exec && icon) {
-			gboolean fuzzy = FALSE;
-
-			if (fuzzy_command_match (sure_string (text), exec, &fuzzy)) {
-				g_free (found_icon);
-				g_free (found_name);
-				
-				found_icon = g_strdup (icon);
-				found_name = g_strdup (name);
-				
-				if (!fuzzy) {
-					/*
-					 * if not fuzzy then we have a precise
-					 * match and we can quit, else keep
-					 * searching for a better match
-					 */
-					g_free (exec);
-					g_free (icon);
-					g_free (name);
-					g_free (path);
-					break;
-				}
-			}
+		if (!fuzzy && exec && icon &&
+		    fuzzy_command_match (text, exec, &fuzzy)) {
+			g_free (found_icon);
+			g_free (found_name);
+			
+			found_icon = g_strdup (icon);
+			found_name = g_strdup (name);
+			
+			gtk_list_store_set (dialog->program_list_store,
+					    &iter,
+					    COLUMN_VISIBLE, TRUE,
+					    -1);
+		} else if (panel_util_utf8_strstrcase (exec, text) != NULL ||
+			   panel_util_utf8_strstrcase (name, text) != NULL ||
+			   panel_util_utf8_strstrcase (comment, text) != NULL) {
+			gtk_list_store_set (dialog->program_list_store,
+					    &iter,
+					    COLUMN_VISIBLE, TRUE,
+					    -1);
+		} else {
+			gtk_list_store_set (dialog->program_list_store,
+					    &iter,
+					    COLUMN_VISIBLE, FALSE,
+					    -1);
 		}
 
 		g_free (exec);
 		g_free (icon);
 		g_free (name);
-		g_free (path);
+		g_free (comment);
 	
         } while (gtk_tree_model_iter_next (model, &iter));
+
+	if (gtk_tree_model_get_iter (gtk_tree_view_get_model (GTK_TREE_VIEW (dialog->program_list)),
+				     &iter, path))
+		gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (dialog->program_list),
+					      path, NULL, FALSE, 0, 0);
 
 	gtk_tree_path_free (path);
 
 	panel_run_dialog_set_icon (dialog, found_icon);
+	//FIXME update dialog->program_label
 
 	g_free (found_icon);
 	
 	g_free (dialog->item_name);
 	dialog->item_name = found_name;
+	//FIXME err... why is this useful??? don't we want the .desktop path for dnd?
 	
-	dialog->find_command_icon_idle_id = 0;
+	dialog->find_command_idle_id = 0;
 	return FALSE;
 }
 
@@ -782,6 +810,7 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 {
 	GtkCellRenderer   *renderer;
 	GtkTreeViewColumn *column;
+	GtkTreeModel      *model_filter;
 	GSList            *all_applications;
 	GSList            *l;
 	GSList            *next;
@@ -794,7 +823,8 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 							 G_TYPE_STRING,
 							 G_TYPE_STRING,
 							 G_TYPE_STRING,
-							 G_TYPE_STRING);
+							 G_TYPE_STRING,
+							 G_TYPE_BOOLEAN);
 
 	all_applications = get_all_applications ();
 	
@@ -829,6 +859,7 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 				    COLUMN_COMMENT,   gmenu_tree_entry_get_comment (entry),
 				    COLUMN_EXEC,      gmenu_tree_entry_get_exec (entry),
 				    COLUMN_PATH,      gmenu_tree_entry_get_desktop_file_path (entry),
+				    COLUMN_VISIBLE,   TRUE,
 				    -1);
 
 		path = gtk_tree_model_get_path (GTK_TREE_MODEL (dialog->program_list_store), &iter);
@@ -839,8 +870,13 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 	}
 	g_slist_free (all_applications);
 
+	model_filter = gtk_tree_model_filter_new (GTK_TREE_MODEL (dialog->program_list_store),
+						  NULL);
+	gtk_tree_model_filter_set_visible_column (GTK_TREE_MODEL_FILTER (model_filter),
+						  COLUMN_VISIBLE);
+
 	gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->program_list), 
-				 GTK_TREE_MODEL (dialog->program_list_store));
+				 model_filter);
 	gtk_tree_view_set_search_column (GTK_TREE_VIEW (dialog->program_list),
 					 COLUMN_NAME);
 
@@ -954,6 +990,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 			panel_run_dialog_set_icon (dialog, temp);
 			
 			temp = gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_COMMENT);
+			//FIXME: if sure_string () == "", we should display "Will run..." as in entry_changed()
 			gtk_label_set_text (GTK_LABEL (dialog->program_label), sure_string (temp));
 			
 			terminal = gnome_desktop_item_get_boolean (ditem, GNOME_DESKTOP_ITEM_TERMINAL);
@@ -1423,15 +1460,28 @@ entry_event (GtkEditable    *entry,
 		pos = strlen (prefix);
 		nprefix = NULL;
 
-		g_completion_complete (dialog->completion, nospace_prefix,
-				       &nprefix);
+		g_completion_complete_utf8 (dialog->completion, nospace_prefix,
+					    &nprefix);
 
 		if (nprefix) {
+			int insertpos;
+			insertpos = 0;
+
 			temp = g_strndup (prefix, nospace_prefix - prefix);
 			g_free (prefix);
 
 			prefix = g_strconcat (temp, nprefix, NULL);
-		    	gtk_entry_set_text (GTK_ENTRY (entry), prefix);
+
+			g_signal_handler_block (dialog->gtk_entry,
+						dialog->changed_id);
+			gtk_editable_delete_text (entry, 0, -1);
+			g_signal_handler_unblock (dialog->gtk_entry,
+						  dialog->changed_id);
+
+			gtk_editable_insert_text (entry,
+						  prefix, strlen (prefix),
+						  &insertpos);
+
  			gtk_editable_set_position (entry, pos);
 			gtk_editable_select_region (entry, pos, -1);
 			
@@ -1464,45 +1514,63 @@ entry_changed (GtkEntry       *entry,
 	while (*start != '\0' && g_ascii_isspace (*start))
 		start++;
 
-	/* desensitize run button if no text entered */
-	if (!start || !start [0]) {
-		gtk_widget_set_sensitive (dialog->run_button, FALSE);
-		gtk_drag_source_unset (dialog->run_dialog);
-	} else {
-		gtk_widget_set_sensitive (dialog->run_button, TRUE);
-		gtk_drag_source_set (dialog->run_dialog,
-				     GDK_BUTTON1_MASK,
-				     NULL, 0,
-				     GDK_ACTION_COPY);
-		gtk_drag_source_add_uri_targets (dialog->run_dialog);
-	}
-	
-	/* update description label */
-        if (start && start [0]) {
-		if (!dialog->use_program_list) {
-			msg = g_strdup_printf (_("Will run command: '%s'"),
-					       start);
-			gtk_label_set_text (GTK_LABEL (dialog->program_label), msg);
-			g_free (msg);
-		}
-        } else
-		gtk_label_set_text (GTK_LABEL (dialog->program_label),
-				    _("Select an application to view its description."));
-
 	/* update item name to use for dnd */
 	if (!dialog->use_program_list && dialog->item_name) {
 		g_free (dialog->item_name);
 		dialog->item_name = NULL;
 	}
 
+	/* desensitize run button if no text entered */
+	if (!start || !start [0]) {
+		gtk_widget_set_sensitive (dialog->run_button, FALSE);
+		gtk_drag_source_unset (dialog->run_dialog);
+
+		gtk_label_set_text (GTK_LABEL (dialog->program_label),
+				    _("Select an application to view its description."));
+
+		panel_run_dialog_set_default_icon (dialog, FALSE);
+
+		if (panel_profile_get_enable_program_list ()) {
+			GtkTreeIter  iter;
+			GtkTreePath *path;
+
+			gtk_tree_model_foreach (GTK_TREE_MODEL (dialog->program_list_store),
+						panel_run_dialog_make_all_list_visible,
+						NULL);
+
+			path = gtk_tree_path_new_first ();
+			if (gtk_tree_model_get_iter (gtk_tree_view_get_model (GTK_TREE_VIEW (dialog->program_list)),
+						     &iter, path))
+				gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (dialog->program_list),
+							      path, NULL,
+							      FALSE, 0, 0);
+			gtk_tree_path_free (path);
+		}
+
+		return;
+	}
+
+	gtk_widget_set_sensitive (dialog->run_button, TRUE);
+	gtk_drag_source_set (dialog->run_dialog,
+			     GDK_BUTTON1_MASK,
+			     NULL, 0,
+			     GDK_ACTION_COPY);
+	gtk_drag_source_add_uri_targets (dialog->run_dialog);
+
+	if (!dialog->use_program_list) {
+		msg = g_strdup_printf (_("Will run command: '%s'"),
+				       start);
+		gtk_label_set_text (GTK_LABEL (dialog->program_label), msg);
+		g_free (msg);
+	}
+	
 	/* look up icon for the command */
-	if (start && start [0] &&
-	    panel_profile_get_enable_program_list () &&
+	if (panel_profile_get_enable_program_list () &&
 	    !dialog->use_program_list &&
-	    !dialog->find_command_icon_idle_id)
-		dialog->find_command_icon_idle_id =
+	    !dialog->find_command_idle_id)
+		dialog->find_command_idle_id =
 			g_idle_add_full (G_PRIORITY_LOW,
-					 (GSourceFunc) panel_run_dialog_find_command_icon_idle,
+					 (GSourceFunc) panel_run_dialog_find_command_idle,
 					 dialog, NULL);
 }
 
@@ -1573,8 +1641,9 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
         g_signal_connect (dialog->gtk_entry, "key-press-event",
 			  G_CALLBACK (entry_event), dialog);
 			  
-        g_signal_connect (dialog->gtk_entry, "changed",
-			  G_CALLBACK (entry_changed), dialog);
+        dialog->changed_id = g_signal_connect (dialog->gtk_entry, "changed",
+					       G_CALLBACK (entry_changed),
+					       dialog);
 
 	gtk_drag_dest_unset (dialog->gtk_entry);
 	
