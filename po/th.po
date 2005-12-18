@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-04 09:09+0700\n"
-"PO-Revision-Date: 2005-12-04 09:56+0700\n"
+"POT-Creation-Date: 2005-12-18 11:43+0700\n"
+"PO-Revision-Date: 2005-12-18 12:13+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <L10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,7 +50,7 @@ msgstr "เ_กี่ยวกับ..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:600 gnome-panel/panel-action-button.c:741
+#: gnome-panel/drawer.c:600 gnome-panel/panel-action-button.c:743
 #: gnome-panel/panel-context-menu.c:322 gnome-panel/panel-menu-bar.c:291
 #: gnome-panel/panel-menu-button.c:685
 msgid "_Help"
@@ -247,7 +247,7 @@ msgid "The Clock displays the current time and date"
 msgstr "นาฬิกาแสดงวันและเวลาปัจจุบัน"
 
 #. Translator credits
-#: applets/clock/clock.c:2729 applets/fish/fish.c:580
+#: applets/clock/clock.c:2729 applets/fish/fish.c:583
 #: applets/notification_area/main.c:133
 #: applets/wncklet/showdesktop.c:510 applets/wncklet/window-list.c:783
 #: applets/wncklet/window-menu.c:75
@@ -396,7 +396,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "แสดงปลากำลังว่ายน้ำหรือภาพเคลื่อนไหวของสัตว์ชนิดอื่น"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-#: applets/fish/fish.c:574
+#: applets/fish/fish.c:577
 msgid "Fish"
 msgstr "ปลา"
 
@@ -421,17 +421,17 @@ msgstr ""
 "ขอแนะนำว่าไม่ควรใช้ %s กับอะไรก็ตาม\n"
 "ที่จะทำให้แอพเพล็ตนี้ \"ใช้งานได้จริง\" หรือใช้ประโยชน์ได้"
 
-#: applets/fish/fish.c:428 gnome-panel/panel-properties-dialog.c:413
+#: applets/fish/fish.c:431 gnome-panel/panel-properties-dialog.c:440
 msgid "Images"
 msgstr "รูปภาพ"
 
-#: applets/fish/fish.c:542 applets/fish/fish.c:602
-#: applets/fish/fish.c:717
+#: applets/fish/fish.c:545 applets/fish/fish.c:605
+#: applets/fish/fish.c:720
 #, no-c-format
 msgid "%s the Fish"
 msgstr "ปลา %s"
 
-#: applets/fish/fish.c:543
+#: applets/fish/fish.c:546
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -442,25 +442,25 @@ msgstr ""
 "%s ไม่มีการใช้งานเลย แอพเพล็ตนี้ทำให้เสียเนื้อที่ดิสก์และเวลาคอมไพล์ และถ้าโหลดแอพเพล็ตนี้ขึ้นมา "
 "จะทำให้เสียเนื้อที่พาเนลและหน่วยความจำ จึงไม่ควรทำ"
 
-#: applets/fish/fish.c:567
+#: applets/fish/fish.c:570
 msgid "(with minor help from George)"
 msgstr "(ด้วยความช่วยเหลือเล็กน้อยจาก George)"
 
-#: applets/fish/fish.c:603
+#: applets/fish/fish.c:606
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "ปลา %s หมอดูร่วมสมัย"
 
-#: applets/fish/fish.c:673
+#: applets/fish/fish.c:676
 msgid "Unable to locate the command to execute"
 msgstr "ไม่สามารถหาคำสั่งเพื่อเรียกใช้งานได้"
 
-#: applets/fish/fish.c:722
+#: applets/fish/fish.c:725
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "ปลา %s บอกว่า:"
 
-#: applets/fish/fish.c:791
+#: applets/fish/fish.c:794
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -471,16 +471,16 @@ msgstr ""
 "\n"
 "รายละเอียด: %s"
 
-#: applets/fish/fish.c:856
+#: applets/fish/fish.c:859
 msgid "_Speak again"
 msgstr "_พูดอีก"
 
-#: applets/fish/fish.c:937
+#: applets/fish/fish.c:940
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "คำสั่งที่ตั้งไว้ไม่ทำงาน จะแทนที่ด้วย: %s"
 
-#: applets/fish/fish.c:960
+#: applets/fish/fish.c:963
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -491,7 +491,7 @@ msgstr ""
 "\n"
 "รายละเอียด: %s"
 
-#: applets/fish/fish.c:976
+#: applets/fish/fish.c:979
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -502,7 +502,7 @@ msgstr ""
 "\n"
 "รายละเอียด: %s"
 
-#: applets/fish/fish.c:1630
+#: applets/fish/fish.c:1633
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -510,7 +510,7 @@ msgstr ""
 "เปลี่ยนน้ำได้แล้ว!\n"
 "(ดูปฏิทินสิ)"
 
-#: applets/fish/fish.c:1724
+#: applets/fish/fish.c:1727
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "ปลา %s หมอดูไม่แม่น"
@@ -701,7 +701,7 @@ msgstr "สลับพื้นที่ทำงาน"
 msgid "Failed to load %s: %s\n"
 msgstr "ไม่สามารถเรียกใช้ %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:172 gnome-panel/panel-util.c:624
+#: applets/wncklet/showdesktop.c:172
 msgid "Icon not found"
 msgstr "ไม่พบไอคอน"
 
@@ -998,9 +998,8 @@ msgid "Can't find an empty spot"
 msgstr "ไม่มีที่ว่าง"
 
 #: gnome-panel/button-widget.c:198
-#, c-format
-msgid "Failed to load image %s"
-msgstr "ไม่สามารถอ่านภาพ %s"
+msgid "Could not load icon"
+msgstr "ไม่สามารถโหลดไอคอนได้"
 
 #: gnome-panel/drawer.c:349 gnome-panel/panel-addto.c:150
 #: gnome-panel/panel-toplevel.c:1524
@@ -1011,7 +1010,7 @@ msgstr "ลิ้นชัก"
 msgid "_Add to Drawer..."
 msgstr "เ_พิ่มลงในลิ้นชัก..."
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:927
+#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:928
 #: gnome-panel/panel-action-button.c:143
 #: gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
@@ -1019,7 +1018,7 @@ msgstr "คุณ_สมบัติ"
 
 #. Translators: %s is a URI
 #: gnome-panel/egg-recent-view-gtk.c:346
-#: gnome-panel/panel-menu-items.c:352 gnome-panel/panel-recent.c:199
+#: gnome-panel/panel-menu-items.c:353 gnome-panel/panel-recent.c:202
 #, c-format
 msgid "Open '%s'"
 msgstr "เปิด '%s'"
@@ -1032,83 +1031,84 @@ msgstr "ว่างเปล่า"
 msgid "Create new file in the given directory"
 msgstr "สร้างแฟ้มใหม่ในโฟลเดอร์ที่กำหนด"
 
-#: gnome-panel/launcher.c:144
-msgid "Cannot save launcher to disk"
+#. class
+#: gnome-panel/launcher.c:144 gnome-panel/menu-ditem.c:517
+msgid "Could not save launcher to disk"
 msgstr "ไม่สามารถบันทึกปุ่มเรียกโปรแกรมลงบนดิสก์ได้"
 
-#: gnome-panel/launcher.c:174 gnome-panel/launcher.c:224
-#: gnome-panel/launcher.c:281
-msgid "Cannot launch icon"
-msgstr "ไม่สามารถเรียกใช้ไอคอนได้"
+#: gnome-panel/launcher.c:174
+msgid "Could not show this URL"
+msgstr "ไม่สามารถแสดง URL นี้ได้"
 
 #: gnome-panel/launcher.c:175
-msgid "This launch icon does not specify a url to show."
-msgstr "ไอคอนเรียกใช้โปรแกรมไม่ได้กำหนด URL ที่จะแสดง"
+msgid "No URL was specified."
+msgstr "ไม่ได้ระบุ URL"
 
 #: gnome-panel/launcher.c:187
 #, c-format
-msgid "Cannot show %s"
-msgstr "ไม่สามารถแสดง %s"
+msgid "Could not show '%s'"
+msgstr "ไม่สามารถแสดง '%s'"
 
-#: gnome-panel/launcher.c:477
+#: gnome-panel/launcher.c:224
+msgid "Could not launch application"
+msgstr "ไม่สามารถเรียกใช้โปรแกรมได้"
+
+#: gnome-panel/launcher.c:282
+msgid "Could not use dropped item"
+msgstr "ไม่สามารถใช้สิ่งที่ลากมาปล่อยได้"
+
+#: gnome-panel/launcher.c:478
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "ไม่ได้กำหนด URI ของแฟ้มพื้นโต๊ะของปุ่มเรียกโปรแกรมบนพาเนล\n"
 
-#: gnome-panel/launcher.c:491
+#: gnome-panel/launcher.c:492
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "ไม่สามารถเปิดแฟ้มพื้นโต๊ะ %s สำหรับปุ่มเรียกโปรแกรมบนพาเนล %s%s\n"
 
-#: gnome-panel/launcher.c:809 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:810 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "คุณสมบัติปุ่มเรียกโปรแกรม"
 
-#: gnome-panel/launcher.c:921
+#: gnome-panel/launcher.c:922
 msgid "_Launch"
 msgstr "เ_รียกใช้"
 
-#: gnome-panel/launcher.c:960
+#: gnome-panel/launcher.c:961
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "ไม่ได้กำหนดค่า %s ไม่สามารถโหลดปุ่มเรียกโปรแกรม\n"
 
-#: gnome-panel/launcher.c:1015 gnome-panel/launcher.c:1034
+#: gnome-panel/launcher.c:1016 gnome-panel/launcher.c:1035
 #: gnome-panel/menu-ditem.c:469 gnome-panel/menu-ditem.c:486
 #: gnome-panel/menu-ditem.c:542
-msgid "Cannot create launcher"
-msgstr "ไม่สามารถสร้างปุ่มเรียกโปรแกรม"
+msgid "Could not create launcher"
+msgstr "ไม่สามารถสร้างปุ่มเรียกโปรแกรมได้"
 
-#: gnome-panel/launcher.c:1016 gnome-panel/menu-ditem.c:470
+#: gnome-panel/launcher.c:1017 gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "คุณต้องกำหนดชื่อ"
 
-#: gnome-panel/launcher.c:1035 gnome-panel/menu-ditem.c:487
+#: gnome-panel/launcher.c:1036 gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "คุณต้องกำหนด URL หรือคำสั่งที่ถูกต้อง"
 
-#: gnome-panel/launcher.c:1079 gnome-panel/menu-ditem.c:550
+#: gnome-panel/launcher.c:1080 gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "สร้างปุ่มเรียกโปรแกรม"
 
 #: gnome-panel/menu-ditem.c:126
-msgid "Cannot save changes to launcher"
-msgstr "ไม่สามารถบันทึกการเปลี่ยนแปลงให้แก่ปุ่มเรียกโปรแกรม"
+msgid "Could not save changes to launcher"
+msgstr "ไม่สามารถบันทึกการเปลี่ยนแปลงของปุ่มเรียกโปรแกรมได้"
 
 #: gnome-panel/menu-ditem.c:308
 msgid "Menu"
 msgstr "เมนู"
 
-#. class
-#: gnome-panel/menu-ditem.c:517
-msgid "Cannot save menu item to disk"
-msgstr "ไม่สามารถบันทึกรายการเมนูลงในดิสก์"
-
 #: gnome-panel/menu-ditem.c:543
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr "คุณไม่สามารถสร้างปุ่มเรียกโปรแกรมใหม่ตรงนี้เนื่องจากตรงนี้ไม่สามารถเขียนได้"
+msgid "You do not have permission to write to this location."
+msgstr "คุณไม่ได้รับอนุญาตให้เขียนลงในตำแหน่งนี้"
 
 #: gnome-panel/menu.c:922
 msgid "Add this launcher to panel"
@@ -1140,81 +1140,81 @@ msgstr "ล็_อคหน้าจอ"
 
 #: gnome-panel/panel-action-button.c:131
 msgid "_Kill Screensaver Daemon"
-msgstr "_กำจัดเดมอนรักษาหน้าจอ"
+msgstr "_กำจัดดีมอนรักษาหน้าจอ"
 
 #: gnome-panel/panel-action-button.c:137
 msgid "Restart _Screensaver Daemon"
-msgstr "เริ่_มเดมอนรักษาหน้าจอใหม่"
+msgstr "เริ่_มดีมอนรักษาหน้าจอใหม่"
 
-#: gnome-panel/panel-action-button.c:207
-#: gnome-panel/panel-action-button.c:220
-#: gnome-panel/panel-action-button.c:244
+#: gnome-panel/panel-action-button.c:208
+#: gnome-panel/panel-action-button.c:221
+#: gnome-panel/panel-action-button.c:245
 #: gnome-panel/panel-menu-bar.c:358 gnome-panel/panel-menu-button.c:1007
-#: gnome-panel/panel-util.c:748
+#: gnome-panel/panel-util.c:749
 #, c-format
-msgid "Cannot execute '%s'"
+msgid "Could not execute '%s'"
 msgstr "ไม่สามารถเรียกใช้ '%s'"
 
-#: gnome-panel/panel-action-button.c:280
-msgid "Cannot connect to server"
+#: gnome-panel/panel-action-button.c:281
+msgid "Could not connect to server"
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์ไม่สำเร็จ"
 
-#: gnome-panel/panel-action-button.c:311
+#: gnome-panel/panel-action-button.c:313
 msgid "Lock Screen"
 msgstr "ล็อคหน้าจอ"
 
-#: gnome-panel/panel-action-button.c:312
+#: gnome-panel/panel-action-button.c:314
 msgid "Protect your computer from unauthorized use"
 msgstr "ป้องกันคอมพิวเตอร์ของคุณจากการใช้งานโดยไม่ได้รับอนุญาต"
 
-#: gnome-panel/panel-action-button.c:323
+#: gnome-panel/panel-action-button.c:325
 msgid "Log Out"
 msgstr "ออกจากระบบ"
 
-#: gnome-panel/panel-action-button.c:324
+#: gnome-panel/panel-action-button.c:326
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr "ออกจากวาระนี้ เพื่อเข้าระบบเป็นผู้ใช้อื่น หรือเพื่อปิดคอมพิวเตอร์"
 
-#: gnome-panel/panel-action-button.c:333
+#: gnome-panel/panel-action-button.c:335
 msgid "Run Application..."
 msgstr "เรียกโปรแกรม..."
 
-#: gnome-panel/panel-action-button.c:334
+#: gnome-panel/panel-action-button.c:336
 msgid "Run an Application by entering a command"
 msgstr "เรียกใช้โปรแกรมโดยการป้อนคำสั่ง"
 
-#: gnome-panel/panel-action-button.c:343
+#: gnome-panel/panel-action-button.c:345
 msgid "Search for Files..."
 msgstr "ค้นหาแฟ้ม..."
 
-#: gnome-panel/panel-action-button.c:344
+#: gnome-panel/panel-action-button.c:346
 msgid "Find files, folders, and documents on your computer"
 msgstr "ค้นหาแฟ้ม โฟลเดอร์ และเอกสารบนคอมพิวเตอร์ของคุณ"
 
-#: gnome-panel/panel-action-button.c:352
+#: gnome-panel/panel-action-button.c:354
 msgid "Take Screenshot..."
 msgstr "จับภาพหน้าจอ..."
 
-#: gnome-panel/panel-action-button.c:353
+#: gnome-panel/panel-action-button.c:355
 msgid "Take a screenshot of your desktop"
 msgstr "จับภาพหน้าจอพื้นโต๊ะของคุณ"
 
-#: gnome-panel/panel-action-button.c:361
+#: gnome-panel/panel-action-button.c:363
 msgid "Force Quit"
 msgstr "บังคับออก"
 
-#: gnome-panel/panel-action-button.c:362
+#: gnome-panel/panel-action-button.c:364
 msgid "Force a misbehaving application to quit"
 msgstr "บังคับโปรแกรมที่เกเรให้ออกจากการทำงาน"
 
 #. FIXME icon
-#: gnome-panel/panel-action-button.c:371
+#: gnome-panel/panel-action-button.c:373
 msgid "Connect to Server..."
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์..."
 
-#: gnome-panel/panel-action-button.c:372
+#: gnome-panel/panel-action-button.c:374
 msgid "Connect to a remote server"
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์ในเครือข่าย"
 
@@ -1322,9 +1322,9 @@ msgstr "พาเนลพบกับปัญหาในขณะเรีย
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "คุณต้องการลบแอพเพล็ตนี้จากการกำหนดค่าของคุณหรือไม่?"
 
-#: gnome-panel/panel-applet-frame.c:1109
+#: gnome-panel/panel-applet-frame.c:1111
 msgid "Unable to obtain AppletShell interface from control\n"
-msgstr "ไม่สามารถรับอินเทอร์เฟซของแอพเพล็ตเชลล์จากคอนโทรลได้\n"
+msgstr "ไม่สามารถเรียกอินเทอร์เฟซของแอพเพล็ตเชลล์จากคอนโทรลได้\n"
 
 #: gnome-panel/panel-bindings.c:168
 #, c-format
@@ -1356,8 +1356,12 @@ msgid ""
 msgstr "โปรแกรมนี้ใช้สำหรับเรียกใช้โปรแกรมอื่นๆ และเป็นที่ให้แอพเพล็ตเล็กๆ ฝังตัวอยู่"
 
 #: gnome-panel/panel-context-menu.c:166
-msgid "You cannot remove your last panel."
-msgstr "คุณไม่สามารถลบพาเนลล่าสุดของคุณออกได้"
+msgid "Cannot delete this panel"
+msgstr "ลบพาเนลนี้ไม่ได้"
+
+#: gnome-panel/panel-context-menu.c:167
+msgid "You must always have at least one panel."
+msgstr "คุณต้องมีพาเนลอย่างน้อยหนึ่งแผงเสมอ"
 
 #: gnome-panel/panel-context-menu.c:215
 msgid "_Delete This Panel..."
@@ -1430,20 +1434,20 @@ msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
-msgstr "เปิดใช้งานการเติมชื่อโปรแกรมโดยอัตโนมัติในไดอะล็อก \"เรียกโปรแกรม\""
+msgstr "เปิดใช้งานการเติมชื่อโปรแกรมโดยอัตโนมัติในกล่องโต้ตอบ \"เรียกโปรแกรม\""
 
 #: gnome-panel/panel-general.schemas.in.h:6
 msgid "Enable program list in \"Run Application\" dialog"
-msgstr "เปิดใช้งานรายการโปรแกรมในไดอะล็อก \"เรียกโปรแกรม\""
+msgstr "เปิดใช้งานรายการโปรแกรมในกล่องโต้ตอบ \"เรียกโปรแกรม\""
 
 #: gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
-msgstr "ขยายรายการโปรแกรมในไดอะล็อก \"เรียกโปรแกรม\""
+msgstr "ขยายรายการโปรแกรมในกล่องโต้ตอบ \"เรียกโปรแกรม\""
 
 #: gnome-panel/panel-general.schemas.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "ถ้าเลือก, จะเปิดใช้การเติมชื่อโปรแกรมโดยอัตโนมัติขณะพิมพ์ในไดอะล็อก \"เรียกโปรแกรม\""
+msgstr "ถ้าเลือก, จะเปิดใช้การเติมชื่อโปรแกรมโดยอัตโนมัติขณะพิมพ์ในกล่องโต้ตอบ \"เรียกโปรแกรม\""
 
 #: gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1451,8 +1455,8 @@ msgid ""
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
-"ถ้าเลือก, จะขยายการแสดงรายการ \"โปรแกรมที่รู้จัก\" ในไดอะล็อก \"เรียกโปรแกรม\" "
-"เมื่อเปิดไดอะล็อก ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า enable_program_list"
+"ถ้าเลือก, จะขยายการแสดงรายการ \"โปรแกรมที่รู้จัก\" ในกล่องโต้ตอบ \"เรียกโปรแกรม\" "
+"เมื่อเปิดกล่องโต้ตอบ ค่านี้ใช้ได้ก็ต่อเมื่อเลือกใช้ค่า enable_program_list"
 
 #: gnome-panel/panel-general.schemas.in.h:10
 msgid ""
@@ -1460,8 +1464,8 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"ถ้าเลือก, การแสดงรายการ \"โปรแกรมที่รู้จัก\" ในไดอะล็อก \"เรียกโปรแกรม\" "
-"จะสามารถใช้งานได้ โดยไม่สนใจว่าการแสดงรายการนี้ถูกขยายเมื่อแสดงไดอะล็อกหรือไม่ "
+"ถ้าเลือก, การแสดงรายการ \"โปรแกรมที่รู้จัก\" ในกล่องโต้ตอบ \"เรียกโปรแกรม\" "
+"จะสามารถใช้งานได้ โดยไม่สนใจว่าการแสดงรายการนี้ถูกขยายเมื่อแสดงกล่องโต้ตอบหรือไม่ "
 "ซึ่งการแสดงรายการนี้ควบคุมโดยค่า show_program_list"
 
 #: gnome-panel/panel-general.schemas.in.h:11
@@ -1541,7 +1545,7 @@ msgstr "เน้นปุ่มเรียกโปรแกรมเมื่
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr "ถ้าเลือก จะแสดงไดอะล็อกเพื่อถามยืนยันถ้าผู้ใช้ต้องการลบพาเนล"
+msgstr "ถ้าเลือก จะแสดงกล่องโต้ตอบเพื่อถามยืนยันถ้าผู้ใช้ต้องการลบพาเนล"
 
 #: gnome-panel/panel-global.schemas.in.h:14
 msgid ""
@@ -1593,28 +1597,28 @@ msgstr "โปรแกรม"
 msgid "_Edit Menus"
 msgstr "แ_ก้ไขเมนู"
 
-#: gnome-panel/panel-menu-items.c:110 gnome-panel/panel-run-dialog.c:313
+#: gnome-panel/panel-menu-items.c:110 gnome-panel/panel-run-dialog.c:320
 #, c-format
-msgid "Cannot display location '%s'"
-msgstr "ไม่สามารถแสดงตำแหน่ง '%s'"
+msgid "Could not open location '%s'"
+msgstr "ไม่สามารถเปิดตำแหน่ง '%s'"
 
-#: gnome-panel/panel-menu-items.c:331
+#: gnome-panel/panel-menu-items.c:332
 msgid "Bookmarks"
-msgstr "บุ๊กมาร์ก"
+msgstr "ที่คั่นหน้า"
 
 #. Translators: the first string is a pathc and
 #. * the second string is a hostname. nautilus
 #. * contains the same string to translate.
-#: gnome-panel/panel-menu-items.c:380
+#: gnome-panel/panel-menu-items.c:381
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s ที่ %2$s"
 
-#: gnome-panel/panel-menu-items.c:476
+#: gnome-panel/panel-menu-items.c:477
 msgid "Network Places"
 msgstr "เซิร์ฟเวอร์ในเครือข่าย"
 
-#: gnome-panel/panel-menu-items.c:479
+#: gnome-panel/panel-menu-items.c:480
 msgid "Removable Media"
 msgstr "สื่อถอดเสียบ"
 
@@ -1622,32 +1626,32 @@ msgstr "สื่อถอดเสียบ"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: gnome-panel/panel-menu-items.c:550
+#: gnome-panel/panel-menu-items.c:551
 msgid "Desktop Folder|Desktop"
 msgstr "โฟลเดอร์พื้นโต๊ะ"
 
-#: gnome-panel/panel-menu-items.c:551
+#: gnome-panel/panel-menu-items.c:552
 msgid "Open the desktop as a folder"
 msgstr "เปิดดูพื้นโต๊ะแบบโฟลเดอร์"
 
-#: gnome-panel/panel-menu-items.c:905
+#: gnome-panel/panel-menu-items.c:910
 msgid "Places"
 msgstr "ที่หลักๆ"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: gnome-panel/panel-menu-items.c:943
+#: gnome-panel/panel-menu-items.c:948
 msgid "Desktop Environment|Desktop"
 msgstr "พื้นโต๊ะ"
 
-#: gnome-panel/panel-menu-items.c:1084
-msgid "Cannot launch entry"
-msgstr "ไม่สามารถเรียกใช้รายการ"
+#: gnome-panel/panel-menu-items.c:1089
+msgid "Could not launch menu item"
+msgstr "ไม่สามารถเรียกใช้รายการเมนูได้"
 
-#: gnome-panel/panel-menu-items.c:1096
-msgid "Cannot load entry"
-msgstr "ไม่สามารถโหลดรายการ"
+#: gnome-panel/panel-menu-items.c:1101
+msgid "Could not load menu item"
+msgstr "ไม่สามารถโหลดรายการเมนูได้"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1861,15 +1865,15 @@ msgstr "ขอบซ้าย"
 msgid "Right"
 msgstr "ขอบขวา"
 
-#: gnome-panel/panel-properties-dialog.c:983
-msgid "Cannot Display Properties Dialog"
-msgstr "ไม่สามารถเปิดไดอะล็อกคุณสมบัติได้"
+#: gnome-panel/panel-properties-dialog.c:1017
+msgid "Could not display properties dialog"
+msgstr "ไม่สามารถเปิดกล่องโต้ตอบคุณสมบัติได้"
 
-#: gnome-panel/panel-properties-dialog.c:984
-#: gnome-panel/panel-run-dialog.c:1741
+#: gnome-panel/panel-properties-dialog.c:1018
+#: gnome-panel/panel-run-dialog.c:1749
 #, c-format
-msgid "%s could not be loaded."
-msgstr "โหลด %s ไม่สำเร็จ"
+msgid "Unable to load file '%s'."
+msgstr "ไม่สามารถอ่านแฟ้ม '%s'"
 
 #: gnome-panel/panel-properties-dialog.glade.h:2
 msgid "*"
@@ -1979,23 +1983,24 @@ msgid "_Tile"
 msgstr "ปูเ_รียง"
 
 #: gnome-panel/panel-recent.c:54
-msgid "Couldn't find a suitable application"
+msgid "Could not find a suitable application."
 msgstr "ไม่พบโปรแกรมที่เหมาะสม"
 
-#: gnome-panel/panel-recent.c:93 gnome-panel/panel-recent.c:101
-msgid "Cannot open recently used document"
-msgstr "ไม่สามารถเปิดเอกสารที่เคยเรียกใช้เมื่อเร็วๆ นี้ได้"
-
-#: gnome-panel/panel-recent.c:102
+#: gnome-panel/panel-recent.c:94 gnome-panel/panel-recent.c:102
 #, c-format
-msgid "An unknown error occurred while trying to open %s"
-msgstr "เกิดปัญหาที่ไม่รู้จักขึ้นในขณะพยายามเปิด %s"
+msgid "Could not open recently used document \"%s\""
+msgstr "ไม่สามารถเปิดเอกสารล่าสุดชื่อ \"%s\" ได้"
 
-#: gnome-panel/panel-recent.c:152
+#: gnome-panel/panel-recent.c:103
+#, c-format
+msgid "An unknown error occurred while trying to open \"%s\""
+msgstr "เกิดข้อผิดพลาดไม่ทราบสาเหตุขณะพยายามเปิด \"%s\""
+
+#: gnome-panel/panel-recent.c:155
 msgid "Clear the Recent Documents list?"
-msgstr "ล้างรายการเอกสารล่าสุดจริงหรือ?"
+msgstr "ล้างรายการเอกสารล่าสุดหรือไม่?"
 
-#: gnome-panel/panel-recent.c:154
+#: gnome-panel/panel-recent.c:157
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
@@ -2007,52 +2012,52 @@ msgstr ""
 "•·รายการทั้งหมดในเมนู ที่หลักๆ → เอกสารล่าสุด\n"
 "•·รายการเอกสารล่าสุดในโปรแกรมทั้งหมด"
 
-#: gnome-panel/panel-recent.c:222
+#: gnome-panel/panel-recent.c:225
 msgid "Recent Documents"
 msgstr "เอกสารล่าสุด"
 
-#: gnome-panel/panel-recent.c:266
+#: gnome-panel/panel-recent.c:269
 msgid "Clear Recent Documents"
 msgstr "ล้างรายการเอกสารล่าสุด"
 
-#: gnome-panel/panel-recent.c:270
+#: gnome-panel/panel-recent.c:273
 msgid "Clear all items from the recent documents list"
 msgstr "ล้างรายการเอกสารล่าสุดทั้งหมด"
 
-#: gnome-panel/panel-run-dialog.c:287
+#: gnome-panel/panel-run-dialog.c:294
 #, c-format
-msgid "Cannot launch command '%s'"
+msgid "Could not run command '%s'"
 msgstr "ไม่สามารถเรียกใช้คำสั่ง '%s'"
 
-#: gnome-panel/panel-run-dialog.c:365
+#: gnome-panel/panel-run-dialog.c:372
 #, c-format
-msgid "Cannot convert '%s' from UTF-8"
-msgstr "ไม่สามารถแปลง '%s' จาก UTF-8"
+msgid "Could not convert '%s' from UTF-8"
+msgstr "ไม่สามารถแปลง '%s' จาก UTF-8 ได้"
 
-#: gnome-panel/panel-run-dialog.c:1118
+#: gnome-panel/panel-run-dialog.c:1126
 msgid "Choose a file to append to the command..."
 msgstr "เลือกแฟ้มที่จะใช้ต่อท้ายคำสั่ง..."
 
-#: gnome-panel/panel-run-dialog.c:1475
+#: gnome-panel/panel-run-dialog.c:1483
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "จะเรียกใช้คำสั่ง: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1482
+#: gnome-panel/panel-run-dialog.c:1490
 #: gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "เลือกโปรแกรมแล้วจะแสดงรายละเอียด"
 
-#: gnome-panel/panel-run-dialog.c:1516
+#: gnome-panel/panel-run-dialog.c:1524
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
-"รายการ URI ที่ถูกวางในไดอะล็อกเรียกโปรแกรมมีรูปแบบไม่ถูกต้อง (%d) หรือมีความยาวไม่ถูกต้อง (%"
+"รายการ URI ที่ถูกวางในกล่องโต้ตอบเรียกโปรแกรมมีรูปแบบไม่ถูกต้อง (%d) หรือมีความยาวไม่ถูกต้อง (%"
 "d)\n"
 
-#: gnome-panel/panel-run-dialog.c:1740
-msgid "Cannot Display Run Dialog"
-msgstr "ไม่สามารถเปิดไดอะล็อกเรียกโปรแกรมได้"
+#: gnome-panel/panel-run-dialog.c:1748
+msgid "Could not display run dialog"
+msgstr "ไม่สามารถเปิดกล่องโต้ตอบเรียกโปรแกรมได้"
 
 #: gnome-panel/panel-run-dialog.glade.h:1
 msgid ""
@@ -2441,8 +2446,8 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
-"ตำแหน่งของพาเนลตามแกน x ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว "
-"ค่านี้จะถูกละเลย และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
+"ตำแหน่งของพาเนลตามแกน x ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว ค่านี้จะถูกละเลย "
+"และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2450,8 +2455,8 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
-"ตำแหน่งของพาเนลตามแกน y ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว "
-"ค่านี้จะถูกละเลย และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
+"ตำแหน่งของพาเนลตามแกน y ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น ในโหมดขยายตัว ค่านี้จะถูกละเลย "
+"และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
@@ -2465,12 +2470,11 @@ msgid ""
 "panel."
 msgstr ""
 "แนววางของพาเนล ค่าที่เป็นไปได้คือ \"top\", \"bottom\", \"left\", \"right\" "
-"ในโหมดขยายตัว ค่านี้กำหนดว่าพาเนลจะอยู่บนขอบใดของหน้าจอ "
-"ในโหมดไม่ขยายตัว ความแตกต่างระหว่าง \"ขอบบน\" และ \"ขอบล่าง\" "
-"อาจจะไม่สำคัญ โดยทั้งสองค่าต่างแสดงว่าพาเนลเป็นพาเนลตามแนวนอน "
-"แต่ก็ยังให้แนวทางที่เป็นประโยชน์ ว่าวัตถุพาเนลบางตัวควรปฏิบัติอย่างไร "
-"ตัวอย่างเช่น บนพาเนล \"ขอบบน\" ปุ่มเมนูจะผุดเมนูใต้พาเนลลงมา "
-"ในขณะที่ บนพาเนล \"ขอบล่าง\" จะผุดเมนูด้านบนเหนือพาเนล"
+"ในโหมดขยายตัว ค่านี้กำหนดว่าพาเนลจะอยู่บนขอบใดของหน้าจอ ในโหมดไม่ขยายตัว "
+"ความแตกต่างระหว่าง \"ขอบบน\" และ \"ขอบล่าง\" อาจจะไม่สำคัญ "
+"โดยทั้งสองค่าต่างแสดงว่าพาเนลเป็นพาเนลตามแนวนอน แต่ก็ยังให้แนวทางที่เป็นประโยชน์ "
+"ว่าวัตถุพาเนลบางตัวควรปฏิบัติอย่างไร ตัวอย่างเช่น บนพาเนล \"ขอบบน\" "
+"ปุ่มเมนูจะผุดเมนูใต้พาเนลลงมา ในขณะที่ บนพาเนล \"ขอบล่าง\" จะผุดเมนูด้านบนเหนือพาเนล"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -2502,9 +2506,9 @@ msgid ""
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
 msgstr ""
-"พื้นหลังชนิดใดที่ควรใช้สำหรับพาเนลนี้ ค่าที่เป็นไปได้คือ \"gtk\" - "
-"ใช้พื้นหลังปกติของวิดเจ็ต GTK+, \"color\" - ใช้ค่าในคีย์ \"สีพื้นหลัง\" เป็นสีพื้นหลัง "
-"หรือ \"image\" - ใช้ภาพในคีย์ \"ภาพพื้นหลัง\" เป็นพื้นหลัง"
+"พื้นหลังชนิดใดที่ควรใช้สำหรับพาเนลนี้ ค่าที่เป็นไปได้คือ \"gtk\" - ใช้พื้นหลังปกติของวิดเจ็ต GTK+, "
+"\"color\" - ใช้ค่าในคีย์ \"สีพื้นหลัง\" เป็นสีพื้นหลัง หรือ \"image\" - ใช้ภาพในคีย์ "
+"\"ภาพพื้นหลัง\" เป็นพื้นหลัง"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
@@ -2531,13 +2535,18 @@ msgid "Y co-ordinate of panel"
 msgstr "พิกัด Y บนพาเนล"
 
 #: gnome-panel/panel-util.c:89
-msgid "Cannot display help document"
-msgstr "ไม่สามารถเอกสารวิธีใช้ได้"
+msgid "Could not display help document"
+msgstr "ไม่สามารถแสดงเอกสารวิธีใช้ได้"
 
 #: gnome-panel/panel-util.c:311
 #, c-format
 msgid "Details: %s"
 msgstr "รายละเอียด: %s"
+
+#: gnome-panel/panel-util.c:624
+#, c-format
+msgid "Icon '%s' not found"
+msgstr "ไม่พบไอคอน '%s'"
 
 #: gnome-panel/panel.c:471
 #, c-format
@@ -2690,6 +2699,26 @@ msgstr "แ_อพเพล็ต:"
 msgid "_Prefs Dir:"
 msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
 
+#~ msgid "This launch icon does not specify a url to show."
+#~ msgstr "ไอคอนเรียกใช้โปรแกรมไม่ได้กำหนด URL ที่จะแสดง"
+
+#~ msgid "Cannot save menu item to disk"
+#~ msgstr "ไม่สามารถบันทึกรายการเมนูลงในดิสก์"
+
+#~ msgid ""
+#~ "You can not create a new launcher at this location since the location is "
+#~ "not writable."
+#~ msgstr "คุณไม่สามารถสร้างปุ่มเรียกโปรแกรมใหม่ตรงนี้เนื่องจากตรงนี้ไม่สามารถเขียนได้"
+
+#~ msgid "You cannot remove your last panel."
+#~ msgstr "คุณไม่สามารถลบพาเนลล่าสุดของคุณออกได้"
+
+#~ msgid "Cannot load entry"
+#~ msgstr "ไม่สามารถโหลดรายการ"
+
+#~ msgid "%s could not be loaded."
+#~ msgstr "โหลด %s ไม่สำเร็จ"
+
 #~ msgid "Browse"
 #~ msgstr "เรียกดู"
 
@@ -2774,9 +2803,6 @@ msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
 
 #~ msgid "Specify a profile name to load"
 #~ msgstr "กำหนดชื่อโปรแฟ้มที่จะเรียกใช้"
-
-#~ msgid "Cannot remove menu item %s"
-#~ msgstr "ไม่สามารถลบรายการเมนู %s"
 
 #~ msgid "Could not get file name from path: %s"
 #~ msgstr "ไม่สามารถรับชื่อแฟ้มจากเส้นทาง: %s"
