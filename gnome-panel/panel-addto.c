@@ -239,56 +239,26 @@ panel_addto_make_text (const char *name,
 	real_name = name ? name : _("(empty)");
 
 	if (!string_empty (desc)) {
-		result = g_markup_printf_escaped ("<span size=\"larger\" weight=\"bold\">%s</span>\n%s",
+		result = g_markup_printf_escaped ("<span weight=\"bold\">%s</span>\n%s",
 						  real_name, desc);
 	} else {
-		result = g_markup_printf_escaped ("<span size=\"larger\" weight=\"bold\">%s</span>",
+		result = g_markup_printf_escaped ("<span weight=\"bold\">%s</span>",
 						  real_name);
 	}
 
 	return result;
 }
 
+#define ICON_SIZE 32
+
 static GdkPixbuf *
-panel_addto_make_pixbuf (const char *filename,
-			 GtkIconSize size)
+panel_addto_make_pixbuf (const char *filename)
 {
-	GdkPixbuf *pb, *newpb;
-	int width, height;
-	int desired_width, desired_height;
-
-	if (!gtk_icon_size_lookup (size, &desired_width, &desired_height))
-		return NULL;
-
-	pb = panel_load_icon (gtk_icon_theme_get_default (),
-			      filename,
-			      desired_height,
-			      desired_height,
-			      desired_height,
-			      NULL);
-	if (!pb)
-		return NULL;
-
-	width = gdk_pixbuf_get_width (pb);
-	height = gdk_pixbuf_get_height (pb);
-
-	/* If the icon is larger than the icon size, then scale down
-	 * to fit in the bounding box. */
-	if (height > desired_height || width > desired_width) {
-		if (width * desired_height / height > desired_width)
-			desired_height = height * desired_width / width;
-		else
-			desired_width = width * desired_height / height;
-
-		newpb = gdk_pixbuf_scale_simple (pb,
-						 desired_width,
-						 desired_height,
-						 GDK_INTERP_BILINEAR);
-		g_object_unref (pb);
-		pb = newpb;
-	}
-
-	return pb;
+	//FIXME: size shouldn't be fixed but should depend on the font size
+	return panel_load_icon (gtk_icon_theme_get_default (),
+				filename,
+				ICON_SIZE, ICON_SIZE, ICON_SIZE,
+				NULL);
 }
 
 static void  
@@ -480,8 +450,7 @@ panel_addto_append_item (PanelAddtoDialog *dialog,
 		pixbuf = NULL;
 
 		if (applet->icon != NULL) {
-			pixbuf = panel_addto_make_pixbuf (applet->icon,
-							  GTK_ICON_SIZE_DIALOG);
+			pixbuf = panel_addto_make_pixbuf (applet->icon);
 		}
 
 		gtk_list_store_append (model, &iter);
@@ -689,8 +658,7 @@ panel_addto_populate_application_model (GtkTreeStore *store,
 
 		text = panel_addto_make_text (data->item_info.name,
 					      data->item_info.description);
-		pixbuf = panel_addto_make_pixbuf (data->item_info.icon,
-						  GTK_ICON_SIZE_DIALOG);
+		pixbuf = panel_addto_make_pixbuf (data->item_info.icon);
 		gtk_tree_store_set (store, &iter,
 				    COLUMN_ICON, pixbuf,
 				    COLUMN_TEXT, text,
@@ -842,8 +810,7 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 					    COLUMN_DATA, &data, -1);
 
 			if (data != NULL) {
-				if (panel_addto_add_item (dialog, data))
-					gtk_widget_destroy (widget_dialog);
+				panel_addto_add_item (dialog, data);
 			}
 		}
 		break;
@@ -855,7 +822,7 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 		panel_addto_present_applets (dialog);
 		break;
 
-	case GTK_RESPONSE_CANCEL:
+	case GTK_RESPONSE_CLOSE:
 		gtk_widget_destroy (widget_dialog);
 		break;
 
@@ -1180,12 +1147,12 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	dialog->back_button = gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
 						     GTK_STOCK_GO_BACK,
 						     PANEL_ADDTO_RESPONSE_BACK);
-	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-			       GTK_STOCK_CANCEL,
-			       GTK_RESPONSE_CANCEL);
 	dialog->add_button = gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
 						     GTK_STOCK_ADD,
 						     PANEL_ADDTO_RESPONSE_ADD);
+	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
+			       GTK_STOCK_CLOSE,
+			       GTK_RESPONSE_CLOSE);
 	gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button), FALSE);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog->addto_dialog),
 				      FALSE);

@@ -1,3 +1,20 @@
+2005-12-19  Vincent Untz  <vuntz@gnome.org>
+
+	Use a close button instead of the cancel one. Fix bug #319077. Patch
+	by Claudio Saavedra <csaavedra@alumnos.utalca.cl>
+
+	* panel-addto.c: (panel_addto_dialog_response): don't close the dialog
+	when an object is added
+	(panel_addto_dialog_new): replace the cancel button with a close one
+
+	Make the "add to panel" dialog a bit nicer.
+
+	* panel-addto.c: (panel_addto_make_text): don't make the name larger
+	(panel_addto_make_pixbuf): use a smaller icon size, also, we don't
+	need to resize the icon since it should already be scaled.
+	(panel_addto_append_item): update for panel_addto_make_pixbuf()
+	(panel_addto_populate_application_model): ditto
+
 2005-12-18  Vincent Untz  <vuntz@gnome.org>
 
 	Update the known applications list while typing and only show the
