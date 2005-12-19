@@ -1,3 +1,9 @@
+2005-12-19  Vincent Untz  <vuntz@gnome.org>
+
+	* clock.c: rename compare_priority() to compare_tasks()
+	(compare_tasks): sort by due date if priorities are the same
+	Patch by kraai@ftbfs.org
+
 2005-12-19  William Jon McCann  <mccann@jhu.edu>
 
 	* clock.c (task_activated_cb): Make task activation work correctly

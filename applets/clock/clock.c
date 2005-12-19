@@ -931,10 +931,10 @@ appointment_pixbuf_cell_data_func (GtkTreeViewColumn *column,
 }
 
 static int
-compare_priority  (GtkTreeModel *model,
-                   GtkTreeIter  *a,
-                   GtkTreeIter  *b,
-                   gpointer      user_data)
+compare_tasks  (GtkTreeModel *model,
+                GtkTreeIter  *a,
+                GtkTreeIter  *b,
+                gpointer      user_data)
 {
         int priority_a;
         int priority_b;
@@ -953,8 +953,21 @@ compare_priority  (GtkTreeModel *model,
 		return -1;
 	else if (priority_a > priority_b)
 		return 1;
-	else
-		return 0;
+	else {
+                GTime due_time_a, due_time_b;
+
+                gtk_tree_model_get (model, a, TASK_COLUMN_DUE_TIME,
+                                    &due_time_a, G_MAXINT32);
+                gtk_tree_model_get (model, b, TASK_COLUMN_DUE_TIME,
+                                    &due_time_b, G_MAXINT32);
+
+                if (due_time_a < due_time_b)
+                        return -1;
+                else if (due_time_a > due_time_b)
+                        return 1;
+                else
+                        return 0;
+        }
 }
 
 static GtkWidget *
@@ -1000,7 +1013,7 @@ create_task_list (ClockData  *cd,
 
                 gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (cd->tasks_model),
                                                  TASK_COLUMN_PRIORITY,
-                                                 compare_priority,
+                                                 compare_tasks,
                                                  NULL, NULL);
 
                 gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (cd->tasks_model),
