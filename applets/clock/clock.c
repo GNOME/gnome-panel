@@ -856,17 +856,24 @@ task_activated_cb (GtkTreeView       *view,
                    GtkTreeViewColumn *column,
                    ClockData         *cd)
 {
-        GtkTreeIter iter;
-        char       *uri;
+        GtkTreeIter  iter;
+        GtkTreePath *child_path;
+        char        *uri;
 
-        gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, path);
+        child_path = gtk_tree_model_filter_convert_path_to_child_path (cd->tasks_filter, path);
+
+        gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, child_path);
         gtk_tree_model_get (GTK_TREE_MODEL (cd->tasks_model), &iter,
                             TASK_COLUMN_URL, &uri, -1);
 
-        if (uri)
+        if (uri) {
                 gnome_url_show_on_screen (uri,
 					  gtk_widget_get_screen (cd->applet),
 					  NULL);
+        }
+
+        g_free (uri);
+        gtk_tree_path_free (child_path);
 
         return TRUE;
 }
