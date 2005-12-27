@@ -1,5 +1,13 @@
 2005-12-27  Vincent Untz  <vuntz@gnome.org>
 
+	Don't do something on double/triple clicks for buttons. Fix bugs
+	#75796 and #323384.
+
+	* button-widget.c: (button_widget_button_press): only propagate event
+	if it's a GDK_BUTTON_PRESS event (to avoid double-click events)
+
+2005-12-27  Vincent Untz  <vuntz@gnome.org>
+
 	* egg-recent-model.c: update from libegg
 
 2005-12-27  Vincent Untz  <vuntz@gnome.org>

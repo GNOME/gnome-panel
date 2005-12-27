@@ -542,7 +542,10 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 
-	if (event->button == 1 && BUTTON_WIDGET (widget)->activatable)
+	if (event->button == 1 && BUTTON_WIDGET (widget)->activatable &&
+	/* we don't want to have two/three "click" events for double/triple
+	 * clicks. FIXME: this is only a workaround, waiting for bug 159101 */
+	    event->type == GDK_BUTTON_PRESS)
 		return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
 
 	return FALSE;
