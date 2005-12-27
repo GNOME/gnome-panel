@@ -46,6 +46,11 @@
 #define EGG_RECENT_MODEL_TIMEOUT_LENGTH 200
 #define EGG_RECENT_MODEL_POLL_TIME 3
 
+/* needed for Darwin */
+#if !HAVE_DECL_LOCKF
+int lockf (int filedes, int function, off_t size);
+#endif
+
 #define EGG_RECENT_MODEL_KEY_DIR "/desktop/gnome/recent_files"
 #define EGG_RECENT_MODEL_DEFAULT_LIMIT_KEY EGG_RECENT_MODEL_KEY_DIR "/default_limit"
 #define EGG_RECENT_MODEL_EXPIRE_KEY EGG_RECENT_MODEL_KEY_DIR "/expire"
@@ -99,7 +104,7 @@ typedef struct {
 	GSList *states;
 	GList *items;
 	EggRecentItem *current_item;
-}ParseInfo;
+} ParseInfo;
 
 typedef enum {
 	STATE_START,
@@ -113,10 +118,10 @@ typedef enum {
 	STATE_GROUP
 } ParseState;
 
-typedef struct _ChangedData {
+typedef struct {
 	EggRecentModel *model;
 	GList *list;
-}ChangedData;
+} ChangedData;
 
 #define TAG_RECENT_FILES "RecentFiles"
 #define TAG_RECENT_ITEM "RecentItem"
@@ -308,17 +313,23 @@ egg_recent_model_read_raw (EggRecentModel *model, FILE *file)
 
 
 
-static void
-parse_info_init (ParseInfo *info)
+static ParseInfo *
+parse_info_init (void)
 {
-	info->states = g_slist_prepend (NULL, STATE_START);
-	info->items = NULL;
+	ParseInfo *retval;
+	
+	retval = g_new0 (ParseInfo, 1);
+	retval->states = g_slist_prepend (NULL, STATE_START);
+	retval->items = NULL;
+	
+	return retval;
 }
 
 static void
 parse_info_free (ParseInfo *info)
 {
 	g_slist_free (info->states);
+	g_free (info);
 }
 
 static void
@@ -457,7 +468,8 @@ end_element_handler (GMarkupParseContext *context,
 				break;
 			}
 				
-			info->items = g_list_prepend (info->items, info->current_item);
+			info->items = g_list_prepend (info->items,
+			                              info->current_item);
 			info->current_item = NULL;
 			break;
 		default:
@@ -576,23 +588,23 @@ egg_recent_model_group_match (EggRecentItem *item, GSList *groups)
 }
 
 static GList *
-egg_recent_model_filter (EggRecentModel *model,
-				GList *list)
+egg_recent_model_filter (EggRecentModel *model, GList *list)
 {
-	EggRecentItem *item;
 	GList *newlist = NULL;
+	GList *l;
 	gchar *mime_type;
 	gchar *uri;
 
 	g_return_val_if_fail (list != NULL, NULL);
 
-	while (list) {
+	for (l = list; l != NULL ; l = l->next) {
+		EggRecentItem *item = (EggRecentItem *) l->data;
 		gboolean pass_mime_test = FALSE;
 		gboolean pass_group_test = FALSE;
 		gboolean pass_scheme_test = FALSE;
-		item = (EggRecentItem *)list->data;
-		list = list->next;
 
+		g_assert (item != NULL);
+		
 		uri = egg_recent_item_get_uri (item);
 
 		/* filter by mime type */
@@ -635,17 +647,15 @@ egg_recent_model_filter (EggRecentModel *model,
 
 		if (pass_mime_test && pass_group_test && pass_scheme_test)
 			newlist = g_list_prepend (newlist, item);
+		else
+			egg_recent_item_unref (item);
 
 		g_free (uri);
 	}
 
-	if (newlist) {
-		newlist = g_list_reverse (newlist);
-		g_list_free (list);
-	}
+	g_list_free (list);
 
-	
-	return newlist;
+	return g_list_reverse (newlist);
 }
 
 
@@ -822,7 +832,7 @@ egg_recent_model_read (EggRecentModel *model, FILE *file)
 	GList *list=NULL;
 	gchar *content;
 	GMarkupParseContext *ctx;
-	ParseInfo info;
+	ParseInfo *info;
 	GError *error;
 
 	content = egg_recent_model_read_raw (model, file);
@@ -832,9 +842,9 @@ egg_recent_model_read (EggRecentModel *model, FILE *file)
 		return NULL;
 	}
 
-	parse_info_init (&info);
+	info = parse_info_init ();
 	
-	ctx = g_markup_parse_context_new (&parser, 0, &info, NULL);
+	ctx = g_markup_parse_context_new (&parser, 0, info, NULL);
 	
 	error = NULL;
 	if (!g_markup_parse_context_parse (ctx, content, strlen (content), &error)) {
@@ -842,7 +852,7 @@ egg_recent_model_read (EggRecentModel *model, FILE *file)
 			   error->message);
 		
 		g_error_free (error);
-		parse_info_free (&info);
+		parse_info_free (info);
 
 		return NULL;
 	}
@@ -854,15 +864,15 @@ egg_recent_model_read (EggRecentModel *model, FILE *file)
 		
 		g_error_free (error);
 		g_markup_parse_context_free (ctx);
-		parse_info_free (&info);
+		parse_info_free (info);
 
 		return NULL;
 	}
 	
-	list = g_list_reverse (info.items);
+	list = g_list_reverse (info->items);
 
 	g_markup_parse_context_free (ctx);
-	parse_info_free (&info);
+	parse_info_free (info);
 	g_free (content);
 
 	return list;
@@ -991,7 +1001,7 @@ egg_recent_model_open_file (EggRecentModel *model,
 static gboolean
 egg_recent_model_lock_file (FILE *file)
 {
-#ifdef F_TLOCK
+#ifdef HAVE_LOCKF
 	int fd;
 	gint	try = 5;
 
@@ -1023,13 +1033,13 @@ egg_recent_model_lock_file (FILE *file)
 	return FALSE;
 #else
 	return TRUE;
-#endif
+#endif /* HAVE_LOCKF */
 }
 
 static gboolean
 egg_recent_model_unlock_file (FILE *file)
 {
-#ifdef F_TLOCK
+#ifdef HAVE_LOCKF
 	int fd;
 
 	rewind (file);
@@ -1038,7 +1048,7 @@ egg_recent_model_unlock_file (FILE *file)
 	return (lockf (fd, F_ULOCK, 0) == 0) ? TRUE : FALSE;
 #else
 	return TRUE;
-#endif
+#endif /* HAVE_LOCKF */
 }
 
 static void
@@ -1562,16 +1572,15 @@ GList *
 egg_recent_model_get_list (EggRecentModel *model)
 {
 	FILE *file;
-	GList *list=NULL;
+	GList *list = NULL;
 
 	file = egg_recent_model_open_file (model, FALSE);
 	if (file == NULL)
 		return NULL;
 	
-	if (egg_recent_model_lock_file (file)) {
+	if (egg_recent_model_lock_file (file))
 		list = egg_recent_model_read (model, file);
-		
-	} else {
+	else {
 		g_warning ("Failed to lock:  %s", strerror (errno));
 		fclose (file);
 		return NULL;
