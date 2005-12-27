@@ -1,3 +1,15 @@
+2005-12-27  Vincent Untz  <vuntz@gnome.org>
+
+	Add tooltips for the menu bar, hacky way.
+	Fix bug #317781.
+
+	* panel-menu-bar.c: (panel_menu_bar_enter_applications): new, change
+	the tooltip when the cursor is on the Applications item
+	(panel_menu_bar_enter_places): ditto for the Places item
+	(panel_menu_bar_enter_desktop): ditto for the Desktop item
+	(panel_menu_bar_instance_init): connect to the "enter-notify-event"
+	event for the menu items, initialize the tooltip for the menubar
+
 2005-12-19  Vincent Untz  <vuntz@gnome.org>
 
 	Use a close button instead of the cancel one. Fix bug #319077. Patch

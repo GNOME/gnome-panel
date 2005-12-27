@@ -64,6 +64,42 @@ enum {
 
 static GObjectClass *parent_class;
 
+static gboolean
+panel_menu_bar_enter_applications (GtkWidget        *widget,
+				   GdkEventCrossing *event,
+				   PanelMenuBar     *menubar)
+{
+	gtk_tooltips_set_tip (panel_tooltips,
+			      GTK_WIDGET (menubar),
+			      _("Browse and run installed applications"),
+			      NULL);
+	return FALSE;
+}
+
+static gboolean
+panel_menu_bar_enter_places (GtkWidget        *widget,
+			     GdkEventCrossing *event,
+			     PanelMenuBar     *menubar)
+{
+	gtk_tooltips_set_tip (panel_tooltips,
+			      GTK_WIDGET (menubar),
+			      _("Open and search local, remote and recently-used documents and folders"),
+			      NULL);
+	return FALSE;
+}
+
+static gboolean
+panel_menu_bar_enter_desktop (GtkWidget        *widget,
+			      GdkEventCrossing *event,
+			      PanelMenuBar     *menubar)
+{
+	gtk_tooltips_set_tip (panel_tooltips,
+			      GTK_WIDGET (menubar),
+			      _("Change desktop appearance and behaviour, get help, or log out"),
+			      NULL);
+	return FALSE;
+}
+
 static void
 panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 			      PanelMenuBarClass *klass)
@@ -81,6 +117,10 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 					      panel_menu_bar_icon_get_size ());
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item),
 				       image);
+	g_signal_connect (menubar->priv->applications_item,
+			  "enter-notify-event",
+			  G_CALLBACK (panel_menu_bar_enter_applications),
+			  menubar);
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->applications_item),
 				   menubar->priv->applications_menu);
@@ -90,10 +130,25 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 	menubar->priv->places_item = panel_place_menu_item_new (FALSE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->places_item);
+	g_signal_connect (menubar->priv->places_item,
+			  "enter-notify-event",
+			  G_CALLBACK (panel_menu_bar_enter_places),
+			  menubar);
 
 	menubar->priv->desktop_item = panel_desktop_menu_item_new (FALSE, TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->desktop_item);
+	g_signal_connect (menubar->priv->desktop_item,
+			  "enter-notify-event",
+			  G_CALLBACK (panel_menu_bar_enter_desktop),
+			  menubar);
+
+	/* Preset a tooltip that will change when the cursor enters an item
+	 * If we don't do this, the tooltip will not work on the first enter
+	 * event. */
+	gtk_tooltips_set_tip (panel_tooltips,
+			      GTK_WIDGET (menubar),
+			      "", NULL);
 }
 
 static void
