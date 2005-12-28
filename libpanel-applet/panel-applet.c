@@ -42,7 +42,6 @@
 #include <bonobo/bonobo-shlib-factory.h>
 #include <bonobo/bonobo-property-bag-client.h>
 #include <libgnome/gnome-program.h>
-#include <libgnomeui/gnome-ui-init.h>
 #include <gconf/gconf.h>
 #include <gconf/gconf-client.h>
 #include <X11/Xatom.h>
@@ -71,6 +70,10 @@ struct _PanelAppletPrivate {
 	PanelAppletOrient           orient;
 	guint                       size;
 	char                       *background;
+	GtkWidget                  *background_widget;
+
+	int                         previous_width;
+	int                         previous_height;
 
         int                        *size_hints;
         int                         size_hints_len;
@@ -108,6 +111,8 @@ enum {
 	PROPERTY_SIZE_HINTS_IDX,
 	PROPERTY_LOCKED_DOWN_IDX
 };
+
+static void panel_applet_handle_background (PanelApplet *applet);
 
 static void
 panel_applet_associate_schemas_in_dir (GConfClient  *client,
@@ -730,43 +735,53 @@ panel_applet_size_allocate (GtkWidget     *widget,
 	GtkBin        *bin;
 	int            border_width;
 	int            focus_width = 0;
+	PanelApplet   *applet;
 
 	if (!panel_applet_can_focus (widget)) {
 		GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
-		return;
+	} else {
+		/*
+		 * We are deliberately ignoring focus-padding here to
+		 * save valuable panel real estate.
+		 */
+		gtk_widget_style_get (widget,
+				      "focus-line-width", &focus_width,
+				      NULL);
+
+		border_width = GTK_CONTAINER (widget)->border_width;
+
+		widget->allocation = *allocation;
+		bin = GTK_BIN (widget);
+
+		child_allocation.x = focus_width;
+		child_allocation.y = focus_width;
+
+		child_allocation.width  = MAX (allocation->width  - border_width * 2, 0);
+		child_allocation.height = MAX (allocation->height - border_width * 2, 0);
+
+		if (GTK_WIDGET_REALIZED (widget))
+			gdk_window_move_resize (widget->window,
+						allocation->x + GTK_CONTAINER (widget)->border_width,
+						allocation->y + GTK_CONTAINER (widget)->border_width,
+						child_allocation.width,
+						child_allocation.height);
+
+		child_allocation.width  = MAX (child_allocation.width  - 2 * focus_width, 0);
+		child_allocation.height = MAX (child_allocation.height - 2 * focus_width, 0);
+
+		if (bin->child)
+			gtk_widget_size_allocate (bin->child, &child_allocation);
 	}
 
-	/*
-	 * We are deliberately ignoring focus-padding here to
-	 * save valuable panel real estate.
-	 */
-	gtk_widget_style_get (widget,
-			      "focus-line-width", &focus_width,
-			      NULL);
+	applet = PANEL_APPLET (widget);
 
-	border_width = GTK_CONTAINER (widget)->border_width;
+	if (applet->priv->previous_height != allocation->height ||
+	    applet->priv->previous_width  != allocation->width) {
+		applet->priv->previous_height = allocation->height;
+		applet->priv->previous_width = allocation->width;
 
-	widget->allocation = *allocation;
-	bin = GTK_BIN (widget);
-
- 	child_allocation.x = focus_width;
- 	child_allocation.y = focus_width;
-
-	child_allocation.width  = MAX (allocation->width  - border_width * 2, 0);
-	child_allocation.height = MAX (allocation->height - border_width * 2, 0);
-
-	if (GTK_WIDGET_REALIZED (widget))
-		gdk_window_move_resize (widget->window,
-					allocation->x + GTK_CONTAINER (widget)->border_width,
-					allocation->y + GTK_CONTAINER (widget)->border_width,
-					child_allocation.width,
-					child_allocation.height);
-
-	child_allocation.width  = MAX (child_allocation.width  - 2 * focus_width, 0);
-	child_allocation.height = MAX (child_allocation.height - 2 * focus_width, 0);
-
-	if (bin->child)
-		gtk_widget_size_allocate (bin->child, &child_allocation);
+		panel_applet_handle_background (applet);
+	}
 }
 
 static gboolean
@@ -1093,6 +1108,41 @@ panel_applet_get_prop (BonoboPropertyBag *sack,
 }
 
 static void
+panel_applet_update_background_for_widget (GtkWidget                 *widget,
+					   PanelAppletBackgroundType  type,
+					   GdkColor                  *color,
+					   GdkPixmap                 *pixmap)
+{
+	GtkRcStyle *rc_style;
+	GtkStyle   *style;
+
+	/* reset style */
+	gtk_widget_set_style (widget, NULL);
+	rc_style = gtk_rc_style_new ();
+	gtk_widget_modify_style (widget, rc_style);
+	gtk_rc_style_unref (rc_style);
+
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		break;
+	case PANEL_COLOR_BACKGROUND:
+		gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, color);
+		break;
+	case PANEL_PIXMAP_BACKGROUND:
+		style = gtk_style_copy (widget->style);
+		if (style->bg_pixmap[GTK_STATE_NORMAL])
+			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
+		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
+		gtk_widget_set_style (widget, style);
+		g_object_unref (style);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static void
 panel_applet_handle_background (PanelApplet *applet)
 {
 	PanelAppletBackgroundType  type;
@@ -1100,6 +1150,10 @@ panel_applet_handle_background (PanelApplet *applet)
 	GdkPixmap                 *pixmap = NULL;
 
 	type = panel_applet_handle_background_string (applet, &color, &pixmap);
+
+	if (applet->priv->background_widget)
+		panel_applet_update_background_for_widget (applet->priv->background_widget,
+							   type, &color, pixmap);
 
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
@@ -1743,4 +1797,22 @@ panel_applet_shlib_factory (const char                 *iid,
 			g_cclosure_new (G_CALLBACK (callback),
 					user_data, NULL),
 			ev);
+}
+
+void
+panel_applet_set_background_widget (PanelApplet *applet,
+				    GtkWidget   *widget)
+{
+	applet->priv->background_widget = widget;
+
+	if (widget) {
+		PanelAppletBackgroundType  type;
+		GdkColor                   color;
+		GdkPixmap                 *pixmap = NULL;
+
+		type = panel_applet_handle_background_string (applet,
+							      &color, &pixmap);
+		panel_applet_update_background_for_widget (widget, type,
+							   &color, pixmap);
+	}
 }

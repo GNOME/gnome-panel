@@ -1,3 +1,23 @@
+2005-12-28  Vincent Untz  <vuntz@gnome.org>
+
+	Emits the background-changed signal when the allocated size changes.
+	Fix bug #167771. Patch by Ryan Lortie <desrt@desrt.ca>
+
+	* panel-applet.c: (panel_applet_size_allocate): compare the new size
+	with the previous one and do as if the background changed if they are
+	different.
+	Also, remove a useless header.
+
+	Add new API to automatically update the background of a widget.
+	Based on patch by Ryan Lortie <desrt@desrt.ca>
+
+	* panel-applet.[ch]: (panel_applet_update_background_for_widget): new,
+	pasted from some random applet :-)
+	(panel_applet_handle_background): if there's a widget tracking the
+	background, automatically update its background
+	(panel_applet_set_background_widget): new API to tell the library to
+	automatically update the background of a widget
+
 ==================== 2.13.3 ====================
 
 ==================== 2.13.2 ====================

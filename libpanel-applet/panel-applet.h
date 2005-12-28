@@ -111,6 +111,9 @@ PanelAppletBackgroundType
 						      GdkColor    *color,
 						      GdkPixmap  **pixmap);
 
+void               panel_applet_set_background_widget (PanelApplet *applet,
+						       GtkWidget   *widget);
+
 gchar             *panel_applet_get_preferences_key  (PanelApplet *applet);
 
 void               panel_applet_add_preferences      (PanelApplet  *applet,
