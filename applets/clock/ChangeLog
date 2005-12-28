@@ -1,3 +1,9 @@
+2005-12-28  Vincent Untz  <vuntz@gnome.org>
+
+	* clock.c: (applet_change_background): kill
+	(fill_clock_applet): use new libpanel-applet API instead of connecting
+	to the change_background signal
+
 2005-12-19  Vincent Untz  <vuntz@gnome.org>
 
 	* clock.c: rename compare_priority() to compare_tasks()

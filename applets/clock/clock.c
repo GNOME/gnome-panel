@@ -1718,41 +1718,6 @@ applet_change_orient (PanelApplet       *applet,
         update_popup (cd);
 }
 
-static void
-applet_change_background (PanelApplet               *applet,
-			  PanelAppletBackgroundType  type,
-			  GdkColor                  *color,
-			  GdkPixmap                 *pixmap,
-			  ClockData                 *cd)
-{
-	GtkRcStyle *rc_style;
-	GtkStyle   *style;
-
-	/* reset style */
-	gtk_widget_set_style (GTK_WIDGET (cd->applet), NULL);
-	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (GTK_WIDGET (cd->applet), rc_style);
-	gtk_rc_style_unref (rc_style);
-
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		gtk_widget_modify_bg (GTK_WIDGET (cd->applet),
-				      GTK_STATE_NORMAL, color);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		style = gtk_style_copy (GTK_WIDGET (cd->applet)->style);
-		if (style->bg_pixmap[GTK_STATE_NORMAL])
-			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-		gtk_widget_set_style (GTK_WIDGET (cd->applet), style);
-		g_object_unref (style);
-		break;
-	}
-}
-
-
 /* this is when the panel size changes */
 static void
 applet_change_pixel_size (PanelApplet *applet,
@@ -2309,10 +2274,8 @@ fill_clock_applet (PanelApplet *applet)
 			  G_CALLBACK (applet_change_pixel_size),
 			  cd);
 
-	g_signal_connect (G_OBJECT (cd->applet),
-			  "change_background",
-			  G_CALLBACK (applet_change_background),
-			  cd);
+	panel_applet_set_background_widget (PANEL_APPLET (cd->applet),
+					    GTK_WIDGET (cd->applet));
 
 	panel_applet_setup_menu_from_file (PANEL_APPLET (cd->applet),
 					   NULL,
