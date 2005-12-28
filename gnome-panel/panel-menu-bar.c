@@ -95,7 +95,7 @@ panel_menu_bar_enter_desktop (GtkWidget        *widget,
 {
 	gtk_tooltips_set_tip (panel_tooltips,
 			      GTK_WIDGET (menubar),
-			      _("Change desktop appearance and behaviour, get help, or log out"),
+			      _("Change desktop appearance and behavior, get help, or log out"),
 			      NULL);
 	return FALSE;
 }
