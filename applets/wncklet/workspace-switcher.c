@@ -151,9 +151,6 @@ applet_change_background (PanelApplet               *applet,
 					    GTK_SHADOW_NONE);
 		break;
 	}
-
-	wncklet_change_background (GTK_WIDGET (pager->applet), type,
-				   color, pixmap);
 }
 
 static gboolean
@@ -505,6 +502,9 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 			  "change_background",
 			  G_CALLBACK (applet_change_background),
 			  pager);
+
+	panel_applet_set_background_widget (PANEL_APPLET (pager->applet),
+					    GTK_WIDGET (pager->applet));
 	
 	panel_applet_setup_menu_from_file (PANEL_APPLET (pager->applet),
 					   NULL,

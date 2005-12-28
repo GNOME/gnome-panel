@@ -203,8 +203,6 @@ applet_change_background (PanelApplet               *applet,
 						 GTK_RELIEF_NONE);
 		break;
 	}
-	wncklet_change_background (GTK_WIDGET (tasklist->applet), type,
-				   color, pixmap);
 }
 
 static void
@@ -732,6 +730,9 @@ window_list_applet_fill (PanelApplet *applet)
 			  "change_background",
 			  G_CALLBACK (applet_change_background),
 			  tasklist);
+
+	panel_applet_set_background_widget (PANEL_APPLET (tasklist->applet),
+					    GTK_WIDGET (tasklist->applet));
 	
 	panel_applet_setup_menu_from_file (PANEL_APPLET (tasklist->applet),
 					   NULL,

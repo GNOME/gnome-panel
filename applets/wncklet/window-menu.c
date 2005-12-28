@@ -107,17 +107,6 @@ window_menu_destroy (GtkWidget  *widget,
 	g_free (window_menu);
 }
 
-static void
-window_menu_change_background (PanelApplet               *applet,
-                               PanelAppletBackgroundType  type,
-                               GdkColor                  *color,
-                               GdkPixmap                 *pixmap,
-                               WindowMenu                *window_menu)
-{
-	wncklet_change_background (GTK_WIDGET (window_menu->selector), type,
-				   color, pixmap);
-}
-
 static gboolean
 window_menu_on_expose (GtkWidget *widget,
                        GdkEventExpose *event,
@@ -162,12 +151,9 @@ window_menu_size_allocate (PanelApplet	 *applet,
 			   GtkAllocation *allocation,
 			   WindowMenu	 *window_menu)
 {
-	PanelAppletOrient          orient;
-	GList                     *children;
-	GtkWidget                 *child;
-	PanelAppletBackgroundType  bg_type;
-	GdkColor                   bg_color;
-	GdkPixmap                 *bg_pixmap;
+	PanelAppletOrient  orient;
+	GList             *children;
+	GtkWidget         *child;
 
 	orient = panel_applet_get_orient (applet);
 
@@ -191,12 +177,6 @@ window_menu_size_allocate (PanelApplet	 *applet,
 	}
 
 	window_menu->orient = orient;
-
-	bg_type = panel_applet_get_background (PANEL_APPLET (window_menu->applet),
-					       &bg_color, &bg_pixmap);
-	window_menu_change_background (PANEL_APPLET (window_menu->applet),
-				       bg_type, &bg_color, bg_pixmap,
-				       window_menu);
 }
 
 static gboolean
@@ -275,8 +255,9 @@ window_menu_applet_fill (PanelApplet *applet)
 	gtk_container_add (GTK_CONTAINER (window_menu->applet), 
 			   window_menu->selector);
 
-	g_signal_connect (G_OBJECT (window_menu->applet), "change_background",
-			  G_CALLBACK (window_menu_change_background), window_menu);
+	panel_applet_set_background_widget (PANEL_APPLET (window_menu->applet),
+					    GTK_WIDGET (window_menu->selector));
+
 	g_signal_connect (window_menu->applet, "key_press_event",
 			  G_CALLBACK (window_menu_key_press_event), window_menu);
 	g_signal_connect (window_menu->applet, "size-allocate",

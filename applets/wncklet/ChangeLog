@@ -1,3 +1,21 @@
+2005-12-28  Vincent Untz  <vuntz@gnome.org>
+
+	* showdesktop.c: (applet_change_background): kill
+	(show_desktop_applet_fill): use new libpanel-applet API instead of
+	connecting to the change_background signal
+	* window-list.c: (applet_change_background): don't call
+	wncklet_change_background()
+	(window_list_applet_fill): use new libpanel-applet API
+	* window-menu.c: (window_menu_change_background): kill
+	(window_menu_size_allocate): we don't need to update the background
+	here (this was a bug fixed in libpanel-applet)
+	(window_menu_applet_fill): use new libpanel-applet API instead of
+	connecting to the change_background signal
+	* wncklet.[ch]: (wncklet_change_background): kill
+	* workspace-switcher.c: (applet_change_background): don't call
+	wncklet_change_background()
+	(workspace_switcher_applet_fill): use new libpanel-applet API
+
 2005-12-19  Vincent Untz  <vuntz@gnome.org>
 
 	* window-list.c: (window_list_applet_fill): show the widget after we

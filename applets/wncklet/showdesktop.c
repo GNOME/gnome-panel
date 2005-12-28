@@ -112,17 +112,6 @@ applet_change_orient (PanelApplet       *applet,
         update_icon (sdd);
 }
 
-static void
-applet_change_background (PanelApplet               *applet,
-                          PanelAppletBackgroundType  type,
-                          GdkColor                  *color,
-                          GdkPixmap                 *pixmap,
-                          ShowDesktopData           *sdd)
-{
-	wncklet_change_background (GTK_WIDGET (sdd->applet), type,
-				   color, pixmap);
-}
-
 /* this is when the panel size changes */
 static void
 applet_size_allocated (PanelApplet       *applet,
@@ -452,10 +441,8 @@ show_desktop_applet_fill (PanelApplet *applet)
                           G_CALLBACK (applet_size_allocated),
                           sdd);
 
-        g_signal_connect (G_OBJECT (sdd->applet),
-                          "change_background",
-                          G_CALLBACK (applet_change_background),
-                          sdd);
+	panel_applet_set_background_widget (PANEL_APPLET (sdd->applet),
+					    GTK_WIDGET (sdd->applet));
 
         panel_applet_setup_menu_from_file (PANEL_APPLET (sdd->applet),
                                            NULL,

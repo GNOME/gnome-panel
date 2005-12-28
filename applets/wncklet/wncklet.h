@@ -53,11 +53,6 @@ void        wncklet_display_help        (GtkWidget  *widget,
 					 const char *filename,
 					 const char *link_id);
 
-void        wncklet_change_background   (GtkWidget                 *widget,
-					 PanelAppletBackgroundType  type,
-					 GdkColor                  *color,
-					 GdkPixmap                 *pixmap);
-
 WnckScreen *wncklet_get_screen          (GtkWidget *applet);
 	
 void        wncklet_connect_while_alive (gpointer    object,
