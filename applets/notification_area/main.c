@@ -238,42 +238,6 @@ applet_change_orientation (PanelApplet       *applet,
 }
 
 static void
-applet_change_background (PanelApplet               *applet,
-			  PanelAppletBackgroundType  type,
-			  GdkColor                  *color,
-			  GdkPixmap                 *pixmap,
-			  SystemTray                *tray)
-{
-  GtkRcStyle *rc_style;
-  GtkStyle   *style;
-
-  /* reset style */
-  gtk_widget_set_style (GTK_WIDGET (tray->applet), NULL);
-  rc_style = gtk_rc_style_new ();
-  gtk_widget_modify_style (GTK_WIDGET (tray->applet), rc_style);
-  gtk_rc_style_unref (rc_style);
-
-  switch (type)
-    {
-    case PANEL_NO_BACKGROUND:
-      break;
-    case PANEL_COLOR_BACKGROUND:
-      gtk_widget_modify_bg (GTK_WIDGET (tray->applet),
-                            GTK_STATE_NORMAL, color);
-      break;
-    case PANEL_PIXMAP_BACKGROUND:
-      style = gtk_style_copy (GTK_WIDGET (tray->applet)->style);
-      if (style->bg_pixmap[GTK_STATE_NORMAL])
-        g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-
-      style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-      gtk_widget_set_style (GTK_WIDGET (tray->applet), style);
-      g_object_unref (style);
-      break;
-    }
-}
-
-static void
 applet_destroy (PanelApplet *applet,
 		SystemTray  *tray)
 {
@@ -370,15 +334,12 @@ applet_factory (PanelApplet *applet,
                     G_CALLBACK (applet_change_orientation),
                     tray);
 
-  g_signal_connect (G_OBJECT (tray->applet),
-                    "change_background",
-                    G_CALLBACK (applet_change_background),
-                    tray);
-
   g_signal_connect (tray->applet,
                     "destroy",
                     G_CALLBACK (applet_destroy),
                     tray);
+
+  panel_applet_set_background_widget (tray->applet, GTK_WIDGET (tray->applet));
 
   update_size_and_orientation (tray);
   
