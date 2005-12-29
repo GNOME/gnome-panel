@@ -966,7 +966,10 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 	else
 		pixmap = gdk_pixmap_foreign_new_for_display (display, xid);
 
-	g_return_val_if_fail (pixmap != NULL, NULL);
+	/* This can happen if the user changes the background very fast.
+	 * We'll get the next update, so it's not a big deal. */
+	if (pixmap == NULL)
+		return NULL;
 
 	gdk_drawable_get_size (GDK_DRAWABLE (GTK_WIDGET (applet)->window),
 			       &width, &height);

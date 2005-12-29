@@ -1,5 +1,11 @@
 2005-12-29  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-applet.c: (panel_applet_get_pixmap): don't use a critical
+	warning if the pixmap can be found. It just means the user changes the
+	background very fast. And we'll write a warning anyway.
+
+2005-12-29  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-applet.c: (panel_applet_handle_background): use
 	panel_applet_get_background() instead of
 	panel_applet_handle_background_string() since it's safer
