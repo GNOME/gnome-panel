@@ -1147,9 +1147,9 @@ panel_applet_handle_background (PanelApplet *applet)
 {
 	PanelAppletBackgroundType  type;
 	GdkColor                   color;
-	GdkPixmap                 *pixmap = NULL;
+	GdkPixmap                 *pixmap;
 
-	type = panel_applet_handle_background_string (applet, &color, &pixmap);
+	type = panel_applet_get_background (applet, &color, &pixmap);
 
 	if (applet->priv->background_widget)
 		panel_applet_update_background_for_widget (applet->priv->background_widget,
@@ -1808,11 +1808,12 @@ panel_applet_set_background_widget (PanelApplet *applet,
 	if (widget) {
 		PanelAppletBackgroundType  type;
 		GdkColor                   color;
-		GdkPixmap                 *pixmap = NULL;
+		GdkPixmap                 *pixmap;
 
-		type = panel_applet_handle_background_string (applet,
-							      &color, &pixmap);
+		type = panel_applet_get_background (applet, &color, &pixmap);
 		panel_applet_update_background_for_widget (widget, type,
 							   &color, pixmap);
+		if (type == PANEL_PIXMAP_BACKGROUND)
+			g_object_unref (pixmap);
 	}
 }
