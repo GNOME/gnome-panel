@@ -1033,3 +1033,100 @@ panel_background_effective_type (PanelBackground *background)
 
 	return retval;
 }
+
+static void
+panel_background_set_no_background_on_widget (PanelBackground *background,
+					      GtkWidget       *widget)
+{
+	GtkRcStyle *rc_style;
+
+	gtk_widget_set_style (widget, NULL);
+	rc_style = gtk_rc_style_new ();
+	gtk_widget_modify_style (widget, rc_style);
+	gtk_rc_style_unref (rc_style);
+}
+
+static void
+panel_background_set_image_background_on_widget (PanelBackground *background,
+						 GtkWidget       *widget)
+{
+	const GdkPixmap  *bg_pixmap;
+	GdkPixmap        *pixmap;
+	GtkStyle         *style;
+	GdkGC            *gc;
+
+	bg_pixmap = panel_background_get_pixmap (background);
+	if (!bg_pixmap)
+		return;
+
+	gc = gdk_gc_new (widget->window);
+	g_return_if_fail (GDK_IS_GC (gc));
+
+	pixmap = gdk_pixmap_new (widget->window,
+				 widget->allocation.width,
+				 widget->allocation.height,
+				 -1);
+
+	gdk_draw_drawable (GDK_DRAWABLE (pixmap),
+			   gc, 
+			   GDK_DRAWABLE (bg_pixmap),
+			   widget->allocation.x,
+			   widget->allocation.y,
+			   0, 0,
+			   widget->allocation.width,
+			   widget->allocation.height);
+
+	g_object_unref (gc);
+
+	style = gtk_style_copy (widget->style);
+	if (style->bg_pixmap[GTK_STATE_NORMAL])
+		g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
+	style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
+	gtk_widget_set_style (widget, style);
+	g_object_unref (style);
+
+	g_object_unref (pixmap);
+}
+
+static void
+panel_background_set_color_background_on_widget (PanelBackground *background,
+						 GtkWidget       *widget)
+{
+	const PanelColor *color;
+
+	color = panel_background_get_color (background);
+	if (color->alpha != 0xffff) {
+		panel_background_set_image_background_on_widget (background,
+								 widget);
+		return;
+	}
+
+	gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &color->gdk);
+}
+
+void
+panel_background_change_background_on_widget (PanelBackground *background,
+					      GtkWidget       *widget)
+{
+	PanelBackgroundType type;
+
+	panel_background_set_no_background_on_widget (background, widget);
+
+	type = panel_background_get_type (background);
+
+	switch (type) {
+	case PANEL_BACK_NONE:
+		break;
+	case PANEL_BACK_COLOR:
+		panel_background_set_color_background_on_widget (background,
+								 widget);
+		break;
+	case PANEL_BACK_IMAGE:
+		panel_background_set_image_background_on_widget (background,
+								 widget);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}

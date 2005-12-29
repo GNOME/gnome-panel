@@ -1,3 +1,24 @@
+2005-12-29  Vincent Untz  <vuntz@gnome.org>
+
+	Make applet handles handle transparency. Fix bug #306441.
+	Based on patch by Ryan Lortie <desrt@desrt.ca>
+
+	* panel-applet-frame.c: (panel_applet_frame_change_background): change
+	the background of the frame if it has handles
+	* panel-background.[ch]:
+	(panel_background_set_no_background_on_widget): new, moved from
+	panel-menu-bar.c
+	(panel_background_set_image_background_on_widget): ditto
+	(panel_background_set_color_background_on_widget): ditto
+	(panel_background_change_background_on_widget): ditto
+	* panel-menu-bar.c: (panel_menu_bar_size_allocate): only update the
+	background on size changes if it's a pixmap background
+	(panel_menu_bar_set_no_background): kill
+	(panel_menu_bar_set_image_background): ditto
+	(panel_menu_bar_set_color_background): ditto
+	(panel_menu_bar_change_background): make it a wrapper for
+	panel_background_change_background_on_widget()
+
 2005-12-28  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-menu-bar.c: (panel_menu_bar_enter_desktop): use US english in

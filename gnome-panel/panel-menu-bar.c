@@ -221,7 +221,8 @@ static void
 panel_menu_bar_size_allocate (GtkWidget     *widget,
 			      GtkAllocation *allocation)
 {
-	GtkAllocation old_allocation;
+	GtkAllocation    old_allocation;
+	PanelBackground *background;
 
 	old_allocation.x      = widget->allocation.x;
 	old_allocation.y      = widget->allocation.y;
@@ -234,6 +235,12 @@ panel_menu_bar_size_allocate (GtkWidget     *widget,
 	    old_allocation.y      == allocation->y &&
 	    old_allocation.width  == allocation->width &&
 	    old_allocation.height == allocation->height)
+		return;
+
+	background = &PANEL_MENU_BAR (widget)->priv->panel->background;
+
+	if (background->type == PANEL_BACK_NONE ||
+	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
 		return;
 
 	panel_menu_bar_change_background (PANEL_MENU_BAR (widget));
@@ -447,95 +454,11 @@ panel_menu_bar_popup_menu (PanelMenuBar *menubar,
 				    gtk_menu_get_attach_widget (menu));
 }
 
-static void
-panel_menu_bar_set_no_background (PanelMenuBar *menubar)
-{
-	GtkRcStyle *rc_style;
-
-	gtk_widget_set_style (GTK_WIDGET (menubar), NULL);
-	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (GTK_WIDGET (menubar), rc_style);
-	gtk_rc_style_unref (rc_style);
-
-}
-
-static void
-panel_menu_bar_set_image_background (PanelMenuBar *menubar)
-{
-	const GdkPixmap  *bg_pixmap;
-	GdkPixmap        *pixmap;
-	GtkStyle         *style;
-	GdkGC            *gc;
-
-	bg_pixmap = panel_background_get_pixmap (&menubar->priv->panel->background);
-	if (!bg_pixmap)
-		return;
-
-	gc = gdk_gc_new (GTK_WIDGET (menubar)->window);
-	g_return_if_fail (GDK_IS_GC (gc));
-
-	pixmap = gdk_pixmap_new (GTK_WIDGET (menubar)->window,
-				 GTK_WIDGET (menubar)->allocation.width,
-				 GTK_WIDGET (menubar)->allocation.height,
-				 -1);
-
-	gdk_draw_drawable (GDK_DRAWABLE (pixmap),
-			   gc, 
-			   GDK_DRAWABLE (bg_pixmap),
-			   GTK_WIDGET (menubar)->allocation.x,
-			   GTK_WIDGET (menubar)->allocation.y,
-			   0, 0,
-			   GTK_WIDGET (menubar)->allocation.width,
-			   GTK_WIDGET (menubar)->allocation.height);
-
-	g_object_unref (gc);
-
-	style = gtk_style_copy (GTK_WIDGET (menubar)->style);
-	if (style->bg_pixmap[GTK_STATE_NORMAL])
-		g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-	style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-	gtk_widget_set_style (GTK_WIDGET (menubar), style);
-	g_object_unref (style);
-
-	g_object_unref (pixmap);
-}
-
-static void
-panel_menu_bar_set_color_background (PanelMenuBar *menubar)
-{
-	const PanelColor *color;
-
-	color = panel_background_get_color (&menubar->priv->panel->background);
-	if (color->alpha != 0xffff) {
-		panel_menu_bar_set_image_background (menubar);
-		return;
-	}
-
-	gtk_widget_modify_bg (GTK_WIDGET (menubar), GTK_STATE_NORMAL, &color->gdk);
-}
-
 void
 panel_menu_bar_change_background (PanelMenuBar *menubar)
 {
-	PanelBackgroundType type;
-
-	panel_menu_bar_set_no_background (menubar);
-
-	type = panel_background_get_type (&menubar->priv->panel->background);
-
-	switch (type) {
-	case PANEL_BACK_NONE:
-		break;
-	case PANEL_BACK_COLOR:
-		panel_menu_bar_set_color_background (menubar);
-		break;
-	case PANEL_BACK_IMAGE:
-		panel_menu_bar_set_image_background (menubar);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
+	panel_background_change_background_on_widget (&menubar->priv->panel->background,
+						      GTK_WIDGET (menubar));
 }
 
 static void

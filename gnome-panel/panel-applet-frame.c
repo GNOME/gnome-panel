@@ -491,6 +491,14 @@ panel_applet_frame_change_background (PanelAppletFrame    *frame,
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
 	g_return_if_fail (PANEL_IS_WIDGET (GTK_WIDGET (frame)->parent));
 
+	if (frame->priv->has_handle) {
+		PanelBackground *background;
+
+		background = &PANEL_WIDGET (GTK_WIDGET (frame)->parent)->background;
+		panel_background_change_background_on_widget (background,
+							      GTK_WIDGET (frame));
+	}
+
 	bg_str = panel_applet_frame_get_background_string (
 			frame, PANEL_WIDGET (GTK_WIDGET (frame)->parent), type);
 
