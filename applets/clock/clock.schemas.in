@@ -69,7 +69,7 @@
         <key>/schemas/apps/clock_applet/prefs/show_date</key>
         <owner>clock-applet</owner>
         <type>bool</type>
-        <default>true</default>
+        <default>false</default>
         <locale name="C">
           <short>Show date in clock</short>
           <long>If true, display date in the clock, in addition to time.</long>
@@ -133,20 +133,8 @@
         <key>/schemas/apps/clock_applet/prefs/hour_format</key>
         <owner>clock-applet</owner>
         <type>int</type>
+        <default>12</default>
         <locale name="C">
-          <default>
-            <!-- Translators:
-               This controls whether the GNOME panel clock should display time in 24 hour mode
-               or 12 hour mode by default. The only valid values for this are "24" and
-               "12". If your locale uses 24 hour time notation, translate this to "24".
-               If your locale uses 12 hour time notation with am/pm, translate this to "12".
-
-               Do NOT translate this into anything else than "24" or "12". For example,
-               if you translate this to "۲۴" or anything else that isn't "24" or
-               "12", things will not work.
-              -->
-            24
-          </default>
           <short>Hour format</short>
           <long>
 	    The use of this key was deprecated in GNOME 2.6 in favour of the
@@ -154,9 +142,6 @@
 	    versions.
           </long>
         </locale>
-	<locale name="en_US">
-	  <default>12</default>
-	</locale>
       </schema>
 
       <schema>
