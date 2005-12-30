@@ -16,8 +16,9 @@
 
 #include "panel-applet.h"
 
-void on_ok_button_clicked (GtkButton *button, gpointer dummy);
+void on_execute_button_clicked (GtkButton *button, gpointer dummy);
 
+static GtkWidget *win = NULL;
 static GtkWidget *applet_combo = NULL;
 static GtkWidget *prefs_dir_entry = NULL;
 static GtkWidget *orient_combo = NULL;
@@ -116,16 +117,29 @@ load_applet_into_window (const char *moniker,
 	GtkWidget *applet_window;
 	GtkWidget *applet;
 
-	applet_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	g_signal_connect (G_OBJECT (applet_window), "destroy",
-			  G_CALLBACK (gtk_main_quit), NULL);
-
 	applet = bonobo_widget_new_control (moniker, NULL);
+
+	if (!applet) {
+		GtkWidget *dialog;
+
+		dialog = gtk_message_dialog_new (win ? GTK_WINDOW (win) : NULL,
+						 GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_CLOSE,
+						 _("Failed to load applet %s"),
+						 title);
+		gtk_dialog_run (GTK_DIALOG (dialog));
+		gtk_widget_destroy (dialog);
+		return;
+	}
+
+	applet_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
 	gtk_widget_show (applet);
 
 	gtk_container_add (GTK_CONTAINER (applet_window), applet);
 
+	//FIXME: we could set the window icon with the applet icon
 	gtk_window_set_title (GTK_WINDOW (applet_window), title);
 	gtk_widget_show (applet_window);
 }
@@ -164,8 +178,8 @@ load_applet_from_command_line (void)
 }
 
 G_GNUC_UNUSED void
-on_ok_button_clicked (GtkButton *button,
-		      gpointer   dummy)
+on_execute_button_clicked (GtkButton *button,
+			   gpointer   dummy)
 {
 	char *moniker;
 	char *title;
@@ -265,9 +279,8 @@ setup_options (void)
 int
 main (int argc, char **argv)
 {
-	GtkWidget *win;
-	GladeXML  *gui;
-	char      *gladefile;
+	GladeXML *gui;
+	char     *gladefile;
 
 	gnome_program_init (argv [0], "0.0.0.0", LIBGNOMEUI_MODULE,
 			    argc, argv,

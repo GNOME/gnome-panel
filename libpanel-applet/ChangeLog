@@ -1,3 +1,11 @@
+2005-12-30  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-test-applets.c: (on_ok_button_clicked): renamed to
+	on_execute_button_clicked()
+	(load_applet_into_window): if the applet can't be loaded, display an
+	error dialog and do not crash
+	* panel-test-applets.glade: change button order and use Execute button
+
 2005-12-29  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-applet.c: (panel_applet_get_pixmap): don't use a critical
