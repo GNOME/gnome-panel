@@ -785,21 +785,33 @@ add_menu_to_panel (GtkWidget      *menuitem,
 		   GMenuTreeEntry *entry)
 {
 	GMenuTreeDirectory *directory;
+	GMenuTree          *tree;
 	PanelWidget        *panel;
 	PanelData          *pd;
 	int                 insertion_pos;
 	char               *menu_path;
-	char               *menu_filename;
+	const char         *menu_filename;
 
-	menu_filename = g_object_get_data (G_OBJECT (menuitem->parent),
-					   "panel-menu-tree-filename");
-
-	if (!menu_filename) {
-		g_warning ("Cannot find the filename for the menu");
+	directory = gmenu_tree_item_get_parent (GMENU_TREE_ITEM (entry));
+	if (!directory) {
+		g_warning ("Cannot find the filename for the menu: no directory");
 		return;
 	}
 
-	directory = gmenu_tree_item_get_parent (GMENU_TREE_ITEM (entry));
+	tree = gmenu_tree_directory_get_tree (directory);
+	if (!tree) {
+		gmenu_tree_item_unref (directory);
+		g_warning ("Cannot find the filename for the menu: no tree");
+		return;
+	}
+
+	menu_filename = gmenu_tree_get_menu_file (tree);
+	gmenu_tree_unref (tree);
+	if (!menu_filename) {
+		gmenu_tree_item_unref (directory);
+		g_warning ("Cannot find the filename for the menu: no filename");
+		return;
+	}
 
 	panel = menu_get_panel (menuitem);
 
@@ -876,13 +888,14 @@ static GtkWidget *
 create_item_context_menu (GtkWidget   *item,
 			  PanelWidget *panel_widget)
 {
-	GMenuTreeEntry *entry;
-	GtkWidget      *parent;
-	GtkWidget      *menu;
-	GtkWidget      *submenu;
-	GtkWidget      *menuitem;
-	char           *menu_filename;
-	gboolean        id_lists_writable;
+	GMenuTreeEntry     *entry;
+	GMenuTreeDirectory *directory;
+	GMenuTree          *tree;
+	GtkWidget          *menu;
+	GtkWidget          *submenu;
+	GtkWidget          *menuitem;
+	const char         *menu_filename;
+	gboolean            id_lists_writable;
 
 	id_lists_writable = panel_profile_id_lists_are_writable ();
 
@@ -890,19 +903,19 @@ create_item_context_menu (GtkWidget   *item,
 	if (!entry)
 		return NULL;
 
-	parent = item->parent;
+	directory = gmenu_tree_item_get_parent (GMENU_TREE_ITEM (entry));
+	if (!directory)
+		return NULL;
 
-	menu_filename = NULL;
-	while (parent) {
-		menu_filename = g_object_get_data (G_OBJECT (parent),
-						   "panel-menu-tree-filename");
-		if (menu_filename)
-			break;
+	tree = gmenu_tree_directory_get_tree (directory);
+	gmenu_tree_item_unref (directory);
+	if (!tree)
+		return NULL;
 
-		parent = gtk_menu_get_attach_widget (GTK_MENU (parent))->parent;
-		if (!GTK_IS_MENU (parent))
-			break;
-	}
+	menu_filename = gmenu_tree_get_menu_file (tree);
+	gmenu_tree_unref (tree);
+	if (!menu_filename)
+		return NULL;
 
 	menu = create_empty_menu ();
 	g_object_set_data_full (G_OBJECT (item),
@@ -941,10 +954,6 @@ create_item_context_menu (GtkWidget   *item,
 	submenu = create_empty_menu ();
 
 	g_object_set_data (G_OBJECT (submenu), "menu_panel", panel_widget);
-	g_object_set_data_full (G_OBJECT (submenu),
-				"panel-menu-tree-filename",
-				g_strdup (menu_filename),
-				(GDestroyNotify) g_free);
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem,
@@ -1304,14 +1313,23 @@ submenu_to_display (GtkWidget *menu)
 
 	g_object_set_data (G_OBJECT (menu), "panel-menu-needs-loading", NULL);
 
-	if (!(directory = g_object_get_data (G_OBJECT (menu), "panel-menu-tree-directory")) &&
-	     (menu_path = g_object_get_data (G_OBJECT (menu), "panel-menu-tree-path"))) {
-		if (!(tree = g_object_get_data (G_OBJECT (menu), "panel-menu-tree")))
+	directory = g_object_get_data (G_OBJECT (menu),
+				       "panel-menu-tree-directory");
+	if (!directory) {
+		menu_path = g_object_get_data (G_OBJECT (menu),
+					       "panel-menu-tree-path");
+		if (!menu_path)
 			return;
 
-		directory = gmenu_tree_get_directory_from_path (tree, menu_path);
+		tree = g_object_get_data (G_OBJECT (menu), "panel-menu-tree");
+		if (!tree)
+			return;
 
-		g_object_set_data_full (G_OBJECT (menu), "panel-menu-tree-directory",
+		directory = gmenu_tree_get_directory_from_path (tree,
+								menu_path);
+
+		g_object_set_data_full (G_OBJECT (menu),
+					"panel-menu-tree-directory",
 					directory,
 					(GDestroyNotify) gmenu_tree_item_unref);
 	}
@@ -1463,6 +1481,8 @@ create_menuitem (GtkWidget          *menu,
 				(GDestroyNotify) gmenu_tree_item_unref);
 
 	if (alias_directory)
+		//FIXME: we should probably use this data when we do dnd or
+		//context menu for this menu item
 		g_object_set_data_full (G_OBJECT (menuitem),
 					"panel-menu-tree-alias-directory",
 					gmenu_tree_item_ref (alias_directory),
@@ -1482,7 +1502,10 @@ create_menuitem (GtkWidget          *menu,
 					  gmenu_tree_entry_get_name (entry),
 			TRUE);
 
-	if (gmenu_tree_entry_get_comment (entry))
+	if ((alias_directory &&
+	     gmenu_tree_directory_get_comment (alias_directory)) ||
+	    (!alias_directory &&
+	     gmenu_tree_entry_get_comment (entry)))
 		gtk_tooltips_set_tip (panel_tooltips,
 				      menuitem,
 				      alias_directory ? gmenu_tree_directory_get_comment (alias_directory) :
@@ -1588,11 +1611,6 @@ create_applications_menu (const char *menu_file,
 	menu = create_empty_menu ();
 
 	tree = gmenu_tree_lookup (menu_file, GMENU_TREE_FLAGS_NONE);
-
-	g_object_set_data_full (G_OBJECT (menu),
-				"panel-menu-tree-filename",
-				g_strdup (menu_file),
-				(GDestroyNotify) g_free);
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree",

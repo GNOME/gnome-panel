@@ -1,3 +1,14 @@
+2005-12-31  Vincent Untz  <vuntz@gnome.org>
+
+	* menu.c: (add_menu_to_panel): use gnome-menus functions to get the
+	filename of the menu
+	(create_item_context_menu): ditto, don't attach the menu filename to
+	an object
+	(submenu_to_display): make code more readable
+	(create_menuitem): add FIXME, fix tooltip for aliased directory
+	(create_applications_menu): don't attach the menu filename to an
+	object
+
 2005-12-29  Vincent Untz  <vuntz@gnome.org>
 
 	Make applet handles handle transparency. Fix bug #306441.
