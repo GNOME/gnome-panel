@@ -24,6 +24,7 @@
 #include "eggtraymanager.h"
 
 #include <gdkconfig.h>
+#include <glib/gi18n.h>
 #if defined (GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
 #include <X11/Xatom.h>
@@ -35,16 +36,6 @@
 #include <gtk/gtkwindow.h>
 
 #include "eggmarshalers.h"
-
-#ifndef EGG_COMPILATION
-#ifndef _
-#define _(x) dgettext (GETTEXT_PACKAGE, x)
-#define N_(x) x
-#endif
-#else
-#define _(x) x
-#define N_(x) x
-#endif
 
 /* Signals */
 enum
@@ -133,6 +124,7 @@ egg_tray_manager_get_type (void)
 static void
 egg_tray_manager_init (EggTrayManager *manager)
 {
+  manager->invisible = NULL;
   manager->socket_table = g_hash_table_new (NULL, NULL);
 }
 
@@ -224,6 +216,9 @@ egg_tray_manager_finalize (GObject *object)
   manager = EGG_TRAY_MANAGER (object);
 
   egg_tray_manager_unmanage (manager);
+
+  g_list_free (manager->messages);
+  g_hash_table_destroy (manager->socket_table);
   
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -302,6 +297,13 @@ egg_tray_manager_handle_dock_request (EggTrayManager       *manager,
 {
   GtkWidget *socket;
   Window *window;
+  GtkRequisition req;
+
+  if (g_hash_table_lookup (manager->socket_table, GINT_TO_POINTER (xevent->data.l[2])))
+    {
+      /* We already got this notification earlier, ignore this one */
+      return;
+    }
   
   socket = gtk_socket_new ();
   
@@ -324,9 +326,26 @@ egg_tray_manager_handle_dock_request (EggTrayManager       *manager,
       g_signal_connect (socket, "plug_removed",
 			G_CALLBACK (egg_tray_manager_plug_removed), manager);
       
-      gtk_socket_add_id (GTK_SOCKET (socket), xevent->data.l[2]);
+      gtk_socket_add_id (GTK_SOCKET (socket), *window);
 
-      g_hash_table_insert (manager->socket_table, GINT_TO_POINTER (xevent->data.l[2]), socket);
+      g_hash_table_insert (manager->socket_table, GINT_TO_POINTER (*window), socket);
+
+      /*
+       * Make sure the icons have a meaningfull size ...
+       */ 
+      req.width = req.height = 1;
+      gtk_widget_size_request (socket, &req);
+      /*
+      if ((req.width < 16) || (req.height < 16))
+      {
+          gint nw = MAX (24, req.width);
+          gint nh = MAX (24, req.height);
+          g_warning (_("tray icon has requested a size of (%i x %i), resizing to (%i x %i)"), 
+                      req.width, req.height, nw, nh);
+          gtk_widget_set_size_request(icon, nw,  nh);
+      }
+      */
+      gtk_widget_show(socket);
     }
   else
     gtk_widget_destroy (socket);
@@ -661,7 +680,7 @@ egg_tray_manager_check_running_xscreen (Screen *xscreen)
   selection_atom = XInternAtom (DisplayOfScreen (xscreen), selection_atom_name, False);
   g_free (selection_atom_name);
 
-  if (XGetSelectionOwner (DisplayOfScreen (xscreen), selection_atom))
+  if (XGetSelectionOwner (DisplayOfScreen (xscreen), selection_atom) != None)
     return TRUE;
   else
     return FALSE;
