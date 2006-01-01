@@ -1,5 +1,13 @@
 2006-01-01  Vincent Untz  <vuntz@gnome.org>
 
+	Fix crash when a toplevel is destroyed before the location changes
+	are committed.
+
+	* panel-profile.c: (panel_porfile_remove_commit_timeout): new
+	(panel_profile_set_commit_timeout): add a destroy notify
+
+2006-01-01  Vincent Untz  <vuntz@gnome.org>
+
 	Hide panel menu tooltips when a menu is activated. Fixes bug #325094
 	Based on path by Christian Kirbach
 	<Christian.Kirbach@student.uni-siegen.de>
