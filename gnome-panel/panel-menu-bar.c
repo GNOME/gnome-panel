@@ -100,6 +100,73 @@ panel_menu_bar_enter_desktop (GtkWidget        *widget,
 	return FALSE;
 }
 
+static gboolean
+panel_menu_bar_reinit_tooltip (GtkWidget    *widget,
+			       PanelMenuBar *menubar)
+{
+	gtk_tooltips_set_tip (panel_tooltips,
+			      GTK_WIDGET (menubar),
+			      "", NULL);
+
+	return FALSE;
+}
+
+static gboolean
+panel_menu_bar_hide_tooltip (GtkWidget    *widget,
+			     PanelMenuBar *menubar)
+{
+	gtk_tooltips_set_tip (panel_tooltips,
+			      GTK_WIDGET (menubar),
+			      NULL, NULL);
+
+	return FALSE;
+}
+
+static void
+panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
+{
+	/* Update tooltip when we enter the menu items */
+	g_signal_connect (menubar->priv->applications_item,
+			  "enter-notify-event",
+			  G_CALLBACK (panel_menu_bar_enter_applications),
+			  menubar);
+	g_signal_connect (menubar->priv->places_item,
+			  "enter-notify-event",
+			  G_CALLBACK (panel_menu_bar_enter_places),
+			  menubar);
+	g_signal_connect (menubar->priv->desktop_item,
+			  "enter-notify-event",
+			  G_CALLBACK (panel_menu_bar_enter_desktop),
+			  menubar);
+
+	/* Hide tooltip if a menu is activated */
+	g_signal_connect (menubar->priv->applications_item,
+			  "activate",
+			  G_CALLBACK (panel_menu_bar_hide_tooltip),
+			  menubar);
+	g_signal_connect (menubar->priv->places_item,
+			  "activate",
+			  G_CALLBACK (panel_menu_bar_hide_tooltip),
+			  menubar);
+	g_signal_connect (menubar->priv->desktop_item,
+			  "activate",
+			  G_CALLBACK (panel_menu_bar_hide_tooltip),
+			  menubar);
+
+	/* Reset tooltip when the menu bar is not used */
+	g_signal_connect (GTK_MENU_SHELL (menubar),
+			  "deactivate",
+			  G_CALLBACK (panel_menu_bar_reinit_tooltip),
+			  menubar);
+
+	/* Preset a tooltip that will change when the cursor enters an item
+	 * If we don't do this, the tooltip will not work on the first enter
+	 * event. */
+	gtk_tooltips_set_tip (panel_tooltips,
+			      GTK_WIDGET (menubar),
+			      "", NULL);
+}
+
 static void
 panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 			      PanelMenuBarClass *klass)
@@ -117,10 +184,6 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 					      panel_menu_bar_icon_get_size ());
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item),
 				       image);
-	g_signal_connect (menubar->priv->applications_item,
-			  "enter-notify-event",
-			  G_CALLBACK (panel_menu_bar_enter_applications),
-			  menubar);
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->applications_item),
 				   menubar->priv->applications_menu);
@@ -130,25 +193,12 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 	menubar->priv->places_item = panel_place_menu_item_new (FALSE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->places_item);
-	g_signal_connect (menubar->priv->places_item,
-			  "enter-notify-event",
-			  G_CALLBACK (panel_menu_bar_enter_places),
-			  menubar);
 
 	menubar->priv->desktop_item = panel_desktop_menu_item_new (FALSE, TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->desktop_item);
-	g_signal_connect (menubar->priv->desktop_item,
-			  "enter-notify-event",
-			  G_CALLBACK (panel_menu_bar_enter_desktop),
-			  menubar);
 
-	/* Preset a tooltip that will change when the cursor enters an item
-	 * If we don't do this, the tooltip will not work on the first enter
-	 * event. */
-	gtk_tooltips_set_tip (panel_tooltips,
-			      GTK_WIDGET (menubar),
-			      "", NULL);
+	panel_menu_bar_setup_tooltip (menubar);
 }
 
 static void

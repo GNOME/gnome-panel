@@ -1,3 +1,18 @@
+2006-01-01  Vincent Untz  <vuntz@gnome.org>
+
+	Hide panel menu tooltips when a menu is activated. Fixes bug #325094
+	Based on path by Christian Kirbach
+	<Christian.Kirbach@student.uni-siegen.de>
+
+	* panel-menu-bar.c: (panel_menu_bar_reinit_tooltip): new, reset the
+	tooltip
+	(panel_menu_bar_hide_tooltips): new, remove tooltip on the menu bar
+	(panel_menu_bar_setup_tooltip): new, with code from
+	panel_menu_bar_instance_init() and also connects to the correct
+	signals so that the tooltip disappear when we open a menu
+	(panel_menu_bar_instance_init): just use
+	panel_menu_bar_setup_tooltip()
+
 2005-12-31  Vincent Untz  <vuntz@gnome.org>
 
 	* menu.c: (add_menu_to_panel): use gnome-menus functions to get the
