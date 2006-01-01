@@ -1,5 +1,14 @@
 2006-01-01  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-addto.c: (panel_addto_dialog_new): register the open dialog so
+	that it gets destroyed when the PanelWidget is destroyed. Fix a crash
+	when killing the panel with the Add to dialog open.
+	* panel-properties-dialog.c: (panel_properties_dialog_new): ditto, but
+	there was no crash
+	* panel.c: (panel_delete): don't push twice the autohide disabler
+
+2006-01-01  Vincent Untz  <vuntz@gnome.org>
+
 	Fix crash when a toplevel is destroyed before the location changes
 	are committed.
 

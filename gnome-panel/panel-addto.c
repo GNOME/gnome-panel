@@ -1244,6 +1244,9 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 				       dialog->tree_view);
 
 	panel_toplevel_push_autohide_disabler (dialog->panel_widget->toplevel);
+	panel_widget_register_open_dialog (panel_widget,
+					   dialog->addto_dialog);
+
 	panel_addto_name_change (dialog,
 				 panel_toplevel_get_name (dialog->panel_widget->toplevel));
 
