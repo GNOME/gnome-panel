@@ -1,4 +1,96 @@
 ==============
+Version 2.13.4
+==============
+
+  Panel
+
+	* Don't crash when an applet can't be loaded (Crispin Flowerday)
+	* Fix critical warnings (Vincent, Claudio Saavedra)
+	* Remove useless warning (Vincent)
+	* Add a preview widget in the image background chooser (Vincent)
+	* Don't crash with some themes (Vincent, Benjamin Berg)
+	* Fix sensitivity of "Remove panel" menu item (Vincent)
+	* Reword error dialogs (Luke Worth, Vincent)
+	* Update the known applications list while typing and only show the
+	  items that match (Vincent)
+	* Make the "add to panel" dialog a bit nicer (Vincent)
+	* Use a close button instead of the cancel one in the "add to panel"
+	  dialog (Claudio Saavedra)
+	* Add tooltips for the menu bar (Vincent, Christian Kirbach)
+	* Update from libegg (Vincent)
+	* Don't do something on double/triple clicks for buttons (Vincent)
+	* Make applet handles handle transparency (Ryan Lortie, Vincent)
+	* Fix crash when a toplevel is destroyed (Vincent)
+	* Fix crash when quitting with "add to dialog" open (Vincent)
+	* Fix auto-hide panel not autohiding after the "Delete dialog" has been
+	  opened (Vincent)
+	* Minor fixes (Vincent)
+	* Code cleanups (Vincent)
+
+  libpanel-applet
+
+	* Add new API to automatically update the background of a widget
+	  (Ryan Lortie, Vincent)
+	* Emits the background-changed signal when the allocated size changes
+	  (Ryan Lortie)
+	* Fix criticla warning (Vincent)
+
+  Clock Applet
+
+	* Make task activation work correctly (William Jon McCann)
+	* Sort tasks by due date if priorities are the same (kraai@ftbfs.org)
+	* Don't show the date by default (Vincent)
+
+  Fish Applet
+
+	* Fix path to cairo.h (Vincent)
+	* Fix critical warning when choosing a new image (Vincent)
+
+  Notification Area Applet
+
+	* Update from libegg. Should fix some icons not showing (Vincent)
+
+  Window List Applet
+
+	* Fix critical warning and icon not showing during startup notification
+	  (Vincent)
+
+  All Applets
+
+	* use new libpanel-applet API for the background (Vincent)
+
+  Documentation
+
+	* Update for clock and fish applets (Luca Ferretti, Brent Smith)
+
+  Misc
+
+	* change button order and use Execute button for the test applet
+	  program (Vincent)
+	* don't crash when an applet can't be loaded in the test applet program
+	  (Vincent)
+	* Build fixes (Vincent)
+
+  Docs Translators
+
+	* Christophe Bliard (fr)
+
+  Translators
+
+	* Adam Weinberger (en_CA)
+	* Francisco Javier F. Serrador (es)
+	* Ilkka Tuohela (fi)
+	* Ignacio Casal Quinteiro (gl)
+	* Ankit Patel (gu)
+	* Takeshi AIHANA (ja)
+	* Žygimantas Beručka (lt)
+	* Kjartan Maraas (nb)
+	* Kjartan Maraas (no)
+	* Theppitak Karoonboonyanan (th)
+	* Clytie Siddall (vi)
+	* Funda Wang (zh_CN)
+
+==============
 Version 2.13.3
 ==============
 
