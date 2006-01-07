@@ -126,18 +126,6 @@ panel_action_lock_setup_menu (PanelActionButton *button)
 				   screensaver_enabled);
 
 	panel_applet_add_callback (button->priv->info,
-				   "exit",
-				   NULL,
-				   _("_Kill Screensaver Daemon"),
-				   screensaver_properties_enabled);
-
-	panel_applet_add_callback (button->priv->info,
-				   "restart",
-				   NULL,
-				   _("Restart _Screensaver Daemon"),
-				   screensaver_properties_enabled);
-
-	panel_applet_add_callback (button->priv->info,
 				   "prefs",
 				   GTK_STOCK_PROPERTIES,
 				   _("_Properties"),

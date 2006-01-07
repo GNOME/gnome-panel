@@ -697,9 +697,7 @@ panel_lock_screen_action_get_command (const char *action)
 			command = NULL;
 		}
 	} else if (strcmp (action, "activate") == 0
-		   || strcmp (action, "lock") == 0
-		   || strcmp (action, "exit") == 0
-		   || strcmp (action, "restart") == 0) {
+		   || strcmp (action, "lock") == 0) {
 		if (use_gscreensaver) {
 			command = g_strdup_printf ("gnome-screensaver-command --%s", action);
 		} else {
