@@ -139,6 +139,7 @@ panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 			  G_CALLBACK (panel_menu_bar_enter_desktop),
 			  menubar);
 
+	//FIXME: this doesn't handle the right-click case. Sigh.
 	/* Hide tooltip if a menu is activated */
 	g_signal_connect (menubar->priv->applications_item,
 			  "activate",

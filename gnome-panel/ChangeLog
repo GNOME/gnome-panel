@@ -1,3 +1,14 @@
+2006-01-09  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-background.c: (panel_background_prepare): notify for change
+	here instead of... (since we want to notify for change when the size
+	of panel changes, eg)
+	(panel_background_composite): here
+	(panel_background_set_image_background_on_widget): rewrite with cairo
+	goodness so that we correctly handle tiles
+	Fix part of bug #164349.
+	* panel-menu-bar.c: (panel_menu_bar_setup_tooltip): add a FIXME
+
 2006-01-06  William Jon McCann  <mccann@jhu.edu>
 
 	* panel-util.c (panel_lock_screen_action_get_command): 
