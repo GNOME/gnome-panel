@@ -29,6 +29,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <cairo.h>
+#include <cairo-xlib.h> //FIXME should be removed when gdk_cairo_set_source_pixmap() is available (GTK+ 2.10)
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
@@ -942,49 +944,74 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 			 int              x,
 			 int              y)
 {
-	GdkPixmap  *pixmap;
-	GdkDisplay *display;
-	GdkPixmap  *retval;
-	GdkGC      *gc;
-	int         width;
-	int         height;
+	gboolean         display_grabbed;
+	GdkPixmap       *pixmap;
+	GdkDisplay      *display;
+	GdkPixmap       *retval;
+	int              width;
+	int              height;
+	cairo_t         *cr;
+	cairo_surface_t *surface;
+	cairo_pattern_t *pattern;
+	cairo_matrix_t   matrix;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	if (!GTK_WIDGET_REALIZED (applet))
 		return NULL;
 
-	gc = gdk_gc_new (GDK_DRAWABLE (GTK_WIDGET (applet)->window));
-
-	g_return_val_if_fail (GDK_IS_GC (gc), NULL);
-
 	display = gdk_display_get_default ();
-	
+	display_grabbed = FALSE;
+
 	pixmap = gdk_pixmap_lookup_for_display (display, xid);
 	if (pixmap)
 		g_object_ref (pixmap);
-	else
+	else {
+		display_grabbed = TRUE;
+		gdk_x11_display_grab (display);
 		pixmap = gdk_pixmap_foreign_new_for_display (display, xid);
+	}
 
 	/* This can happen if the user changes the background very fast.
 	 * We'll get the next update, so it's not a big deal. */
-	if (pixmap == NULL)
+	if (pixmap == NULL) {
+		if (display_grabbed)
+			gdk_x11_display_ungrab (display);
 		return NULL;
+	}
+
+	gdk_drawable_get_size (GDK_DRAWABLE (pixmap), &width, &height);
+
+	//FIXME gdk_cairo_set_source_pixmap() should do the trick (GTK+ 2.10)
+	surface = cairo_xlib_surface_create (GDK_DISPLAY_XDISPLAY (display),
+ 					     //xid,
+					     gdk_x11_drawable_get_xid (GDK_DRAWABLE (pixmap)),
+					     gdk_x11_visual_get_xvisual (gdk_drawable_get_visual (GTK_WIDGET (applet)->window)),
+					     width, height);
+
+	pattern = cairo_pattern_create_for_surface (surface);
+	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+	cairo_matrix_init_translate (&matrix, x, y);
+	cairo_pattern_set_matrix (pattern, &matrix);
 
 	gdk_drawable_get_size (GDK_DRAWABLE (GTK_WIDGET (applet)->window),
 			       &width, &height);
+	retval = gdk_pixmap_new (GTK_WIDGET (applet)->window,
+				 width, height, -1);
 
-	retval = gdk_pixmap_new (GTK_WIDGET (applet)->window, width, height, -1);
+	cr = gdk_cairo_create (GDK_DRAWABLE (retval));
+	cairo_set_source (cr, pattern);
+	cairo_rectangle (cr, 0, 0, width, height);
+	cairo_fill (cr);
 
-	gdk_draw_drawable (GDK_DRAWABLE (retval),
-			   gc, 
-			   GDK_DRAWABLE (pixmap),
-			   x, y,
-			   0, 0,
-			   width, height);
+	cairo_pattern_destroy (pattern);
+	cairo_surface_destroy (surface);
+	cairo_destroy (cr);
 
-	g_object_unref (gc);
 	g_object_unref (pixmap);
+
+	if (display_grabbed)
+		gdk_x11_display_ungrab (display);
 
 	return retval;
 }

@@ -1,3 +1,10 @@
+2006-01-09  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-applet.c: (panel_applet_get_pixmap): rewrite with cairo
+	goodness so that we correctly handle tiles. Also, grab the display to
+	avoid crashes with xid that are being removed.
+	Fix part of bug #164349.
+
 ==================== 2.13.4 ====================
 
 2005-12-30  Vincent Untz  <vuntz@gnome.org>
