@@ -566,6 +566,10 @@ panel_place_menu_item_create_menu (EggRecentViewGtk **recent_view)
 	if (gconf_name)
 		g_free (gconf_name);
 
+	panel_menu_items_append_from_desktop (places_menu,
+					      "nautilus-cd-burner.desktop",
+					      NULL);
+
 	panel_place_menu_item_append_volumes (places_menu, FALSE);
 	add_menu_separator (places_menu);
 
