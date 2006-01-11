@@ -1530,6 +1530,11 @@ entry_changed (GtkEntry       *entry,
 
 		panel_run_dialog_set_default_icon (dialog, FALSE);
 
+		if (dialog->find_command_idle_id) {
+			g_source_remove (dialog->find_command_idle_id);
+			dialog->find_command_idle_id = 0;
+		}
+
 		if (panel_profile_get_enable_program_list ()) {
 			GtkTreeIter  iter;
 			GtkTreePath *path;

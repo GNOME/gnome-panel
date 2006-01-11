@@ -1,5 +1,11 @@
 2006-01-11  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-run-dialog.c: (entry_changed): remove the idle source looking
+	for an icon if there's no text in the entry.
+	Fix crasher in bug #326360 (caused by a critical warning)
+
+2006-01-11  Vincent Untz  <vuntz@gnome.org>
+
 	* Makefile.am: remove panel-gdk-pixbuf-extensions.[ch]
 	* panel-gdk-pixbuf-extensions.[ch]: kill
 	* panel-background-monitor.c:
