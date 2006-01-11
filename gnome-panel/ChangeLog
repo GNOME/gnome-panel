@@ -1,3 +1,17 @@
+2006-01-11  Vincent Untz  <vuntz@gnome.org>
+
+	* Makefile.am: remove panel-gdk-pixbuf-extensions.[ch]
+	* panel-gdk-pixbuf-extensions.[ch]: kill
+	* panel-background-monitor.c:
+	(panel_background_monitor_tile_background): use cairo and
+	panel_util_cairo_rgbdata_to_pixbuf() to tile the image
+	* panel-background.c: (composite_image_onto_desktop): use cairo
+	(load_background_file): add a FIXME, update alpha so we know if the
+	image has alpha
+	* panel-util.[ch]: (panel_util_cairo_rgbdata_to_pixbuf): new, to
+	convert data created by cairo to a GdkPixbuf
+	Fix bug #160926.
+
 2006-01-09  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-background.c: (panel_background_prepare): notify for change

@@ -84,7 +84,12 @@ char *panel_make_unique_uri (const char *dir,
 			     const char *suffix);
 char *panel_lookup_in_data_dirs (const char *basename);
 
-const char *panel_util_utf8_strstrcase (const char *haystack, const char *needle);
+const char *panel_util_utf8_strstrcase (const char *haystack,
+					const char *needle);
+
+GdkPixbuf *panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
+					       int            width,
+					       int            height);
 
 G_END_DECLS
 

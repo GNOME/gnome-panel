@@ -928,3 +928,43 @@ panel_util_utf8_strstrcase (const char *haystack, const char *needle)
 
 	return NULL;
 }
+
+GdkPixbuf *
+panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
+				    int            width,
+				    int            height)
+{
+	GdkPixbuf     *retval;
+	unsigned char *dstptr;
+	unsigned char *srcptr;
+	int            align;
+
+	g_assert (width > 0 && height > 0);
+
+	if (!data)
+		return NULL;
+
+	retval = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, width, height);
+	if (!retval)
+		return NULL;
+
+	dstptr = gdk_pixbuf_get_pixels (retval);
+	srcptr = data;
+	align  = gdk_pixbuf_get_rowstride (retval) - (width * 3);
+
+	while (height--) {
+		int x = width;
+		while (x--) {
+			dstptr[0] = srcptr[1];
+			dstptr[1] = srcptr[2];
+			dstptr[2] = srcptr[3];
+
+			dstptr += 3;
+			srcptr += 4;
+		}
+
+		dstptr += align;
+	}
+
+	return retval;
+}

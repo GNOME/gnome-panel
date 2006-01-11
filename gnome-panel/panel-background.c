@@ -32,7 +32,7 @@
 #include <cairo-xlib.h> //FIXME should be removed when gdk_cairo_set_source_pixmap() is available (GTK+ 2.10)
 
 #include "panel-background-monitor.h"
-#include "panel-gdk-pixbuf-extensions.h"
+#include "panel-util.h"
 
 
 static gboolean panel_background_composite (PanelBackground *background);
@@ -215,10 +215,12 @@ get_desktop_pixbuf (PanelBackground *background)
 static GdkPixbuf *
 composite_image_onto_desktop (PanelBackground *background)
 {
-	GdkPixbuf *retval;
-	ArtIRect   rect;
-	int        width, height;
-	int        tilewidth, tileheight;
+	GdkPixbuf       *retval;
+	int              width, height;
+	unsigned char   *data;
+	cairo_t         *cr;
+	cairo_surface_t *surface;
+	cairo_pattern_t *pattern;
 
 	if (!background->desktop)
 		background->desktop = get_desktop_pixbuf (background);
@@ -226,23 +228,37 @@ composite_image_onto_desktop (PanelBackground *background)
 	if (!background->desktop)
 		return NULL;
 
-	retval = gdk_pixbuf_copy (background->desktop);
-
 	width  = gdk_pixbuf_get_width  (background->desktop);
 	height = gdk_pixbuf_get_height (background->desktop);
 
-	tilewidth  = gdk_pixbuf_get_width (background->transformed_image);
-	tileheight = gdk_pixbuf_get_height (background->transformed_image);
+	data = g_malloc (width * height * 4);
+	if (!data)
+		return NULL;
 
-	rect.x0 = 0;
-	rect.y0 = 0;
-	rect.x1 = width;
-	rect.y1 = height;
+	surface = cairo_image_surface_create_for_data (data,
+						       CAIRO_FORMAT_RGB24,
+						       width, height,
+						       width * 4);
+	cr = cairo_create (surface);
+	cairo_set_source_rgb (cr, 1, 1, 1);
+	cairo_paint (cr);
 
-	panel_gdk_pixbuf_draw_to_pixbuf_tiled (
-		background->transformed_image,
-		retval, rect, tilewidth, tileheight,
-		0, 0, 255, GDK_INTERP_NEAREST);
+	gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
+	cairo_rectangle (cr, 0, 0, width, height);
+	cairo_fill (cr);
+
+	gdk_cairo_set_source_pixbuf (cr, background->transformed_image, 0, 0);
+	pattern = cairo_get_source (cr);
+	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+	cairo_rectangle (cr, 0, 0, width, height);
+	cairo_fill (cr);
+
+	cairo_destroy (cr);
+	cairo_surface_destroy (surface);
+
+	retval = panel_util_cairo_rgbdata_to_pixbuf (data, width, height);
+
+	g_free (data);
 
 	return retval;
 }
@@ -532,6 +548,8 @@ load_background_file (PanelBackground *background)
 	if (!g_file_test (background->image, G_FILE_TEST_IS_REGULAR))
 		return;
 
+	//FIXME add a monitor on the file so that we reload the background
+	//when it changes
 	background->loaded_image = 
 		gdk_pixbuf_new_from_file (background->image, &error);
 	if (!background->loaded_image) {
@@ -540,6 +558,8 @@ load_background_file (PanelBackground *background)
 			   background->image, error->message);
 		g_error_free (error);
 	}
+
+	panel_background_update_has_alpha (background);
 }
 
 void

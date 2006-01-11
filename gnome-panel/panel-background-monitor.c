@@ -32,7 +32,7 @@
 #include <X11/Xatom.h>
 
 #include "panel-background-monitor.h"
-#include "panel-gdk-pixbuf-extensions.h"
+#include "panel-util.h"
 
 enum {
 	CHANGED,
@@ -309,17 +309,36 @@ panel_background_monitor_tile_background (PanelBackgroundMonitor *monitor,
 
 		gdk_pixbuf_fill (retval, pixel);
 	} else {
-		ArtIRect rect;
+		unsigned char   *data;
+		cairo_t         *cr;
+		cairo_surface_t *surface;
+		cairo_pattern_t *pattern;
 
-		rect.x0 = 0;
-		rect.y0 = 0;
-		rect.x1 = width;
-		rect.y1 = height;
+		data = g_malloc (width * height * 4);
+		if (!data)
+			return NULL;
 
-		panel_gdk_pixbuf_draw_to_pixbuf_tiled (
-			monitor->gdkpixbuf, retval,
-			rect, tilewidth, tileheight,
-			0, 0, 255, GDK_INTERP_NEAREST);
+		surface = cairo_image_surface_create_for_data (data,
+							       CAIRO_FORMAT_RGB24,
+							       width, height,
+							       width * 4);
+		cr = cairo_create (surface);
+		cairo_set_source_rgb (cr, 1, 1, 1);
+		cairo_paint (cr);
+
+		gdk_cairo_set_source_pixbuf (cr, monitor->gdkpixbuf, 0, 0);
+		pattern = cairo_get_source (cr);
+		cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+		cairo_rectangle (cr, 0, 0, width, height);
+		cairo_fill (cr);
+
+		cairo_destroy (cr);
+		cairo_surface_destroy (surface);
+
+		retval = panel_util_cairo_rgbdata_to_pixbuf (data,
+							     width, height);
+
+		g_free (data);
 	}
 
 	return retval;
