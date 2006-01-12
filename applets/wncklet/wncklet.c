@@ -32,6 +32,7 @@
 #include <gtk/gtkmessagedialog.h>
 #include <gtk/gtktooltips.h>
 #include <libwnck/screen.h>
+#include <libwnck/util.h>
 
 #include "wncklet.h"
 #include "window-menu.h"
@@ -172,7 +173,13 @@ wncklet_factory (PanelApplet *applet,
 		 gpointer     data)
 {
 	gboolean retval = FALSE;
-	
+	static gboolean type_registered = FALSE;
+
+	if (!type_registered) {
+		wnck_set_client_type (WNCK_CLIENT_TYPE_PAGER);
+		type_registered = TRUE;
+	}
+
 	if (!strcmp (iid, "OAFIID:GNOME_WindowMenuApplet"))
 		retval = window_menu_applet_fill (applet);
 
