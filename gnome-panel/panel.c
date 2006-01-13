@@ -39,6 +39,7 @@
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
+#include "panel-separator.h"
 #include "panel-compatibility.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
@@ -95,6 +96,10 @@ orientation_change (AppletInfo  *info,
 				       orient_change_foreach,
 				       panel_widget);
 		}
+		break;
+	case PANEL_OBJECT_SEPARATOR:
+		panel_separator_set_orientation (PANEL_SEPARATOR (info->widget),
+						 orientation);
 		break;
 	default:
 		break;
@@ -159,6 +164,9 @@ back_change (AppletInfo  *info,
 		break;
 	case PANEL_OBJECT_MENU_BAR:
 		panel_menu_bar_change_background (PANEL_MENU_BAR (info->widget));
+		break;
+	case PANEL_OBJECT_SEPARATOR:
+		panel_separator_change_background (PANEL_SEPARATOR (info->widget));
 		break;
 	default:
 		break;
@@ -769,6 +777,14 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 	} else if (!strcmp (applet_type, "MENUBAR:NEW")) {
 		if (panel_profile_id_lists_are_writable ()) {
 			panel_menu_bar_create (panel->toplevel, pos);
+			success = TRUE;
+		} else {
+			success = FALSE;
+		}
+
+	} else if (!strcmp(applet_type,"SEPARATOR:NEW")) {
+		if (panel_profile_id_lists_are_writable ()) {
+			panel_separator_create (panel->toplevel, pos);
 			success = TRUE;
 		} else {
 			success = FALSE;

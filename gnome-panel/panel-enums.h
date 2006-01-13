@@ -81,6 +81,7 @@ typedef enum {
 	PANEL_OBJECT_BONOBO,
 	PANEL_OBJECT_ACTION,
 	PANEL_OBJECT_MENU_BAR,
+	PANEL_OBJECT_SEPARATOR,
 	/* The following two are for backwards compatibility with 2.0.x */
 	PANEL_OBJECT_LOGOUT,
 	PANEL_OBJECT_LOCK

@@ -24,6 +24,7 @@
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
+#include "panel-separator.h"
 #include "panel-compatibility.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
@@ -64,6 +65,7 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 						     dnd_enabled);
 		break;
 	case PANEL_OBJECT_MENU_BAR:
+	case PANEL_OBJECT_SEPARATOR:
 		break;
 	default:
 		g_assert_not_reached ();
@@ -268,6 +270,8 @@ applet_callback_callback (GtkWidget      *widget,
 		/*
 		 * Applet's menu's are handled differently
 		 */
+		break;
+	case PANEL_OBJECT_SEPARATOR:
 		break;
 	default:
 		g_assert_not_reached ();
@@ -896,6 +900,11 @@ panel_applet_load_idle_handler (gpointer dummy)
 				TRUE,
 				applet->id);
 		break;
+	case PANEL_OBJECT_SEPARATOR:
+		panel_separator_load_from_gconf (panel_widget,
+						 applet->locked,
+						 applet->position,
+						 applet->id);
 	default:
 		break;
 	}

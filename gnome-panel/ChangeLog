@@ -1,3 +1,21 @@
+2006-01-13  Vincent Untz  <vuntz@gnome.org>
+
+	Add separator internal applet. Based on patch by Carlos Garcia Campos
+	<carlosg@gnome.org>. Fix bug #300593
+
+	* Makefile.am: add new files
+	* applet.c: (panel_applet_set_dnd_enabled): handle the separator case
+	(applet_callback_callback): ditto
+	(panel_applet_load_idle_handler): ditto
+	* panel-addto.c: add separator item
+	(panel_addto_add_item): handle separator case
+	* panel-enums.h: add separator to the list of internal objects
+	* panel-profile.c: add separator to the object map list
+	* panel-separator.[ch]: new
+	* panel.c: (orientation_change): handle separator case,
+	(back_change): ditto
+	(drop_internal_applet): ditto
+
 2006-01-11  Sebastien Bacher  <seb128@debian.org>
 
 	* panel-menu-items.c: (panel_place_menu_item_create_menu):

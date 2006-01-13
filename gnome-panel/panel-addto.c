@@ -35,6 +35,7 @@
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
+#include "panel-separator.h"
 #include "panel-toplevel.h"
 #include "panel-menu-button.h"
 #include "panel-globals.h"
@@ -75,6 +76,7 @@ typedef enum {
 	PANEL_ADDTO_LAUNCHER_NEW,
 	PANEL_ADDTO_MENU,
 	PANEL_ADDTO_MENUBAR,
+	PANEL_ADDTO_SEPARATOR,
 	PANEL_ADDTO_DRAWER
 } PanelAddtoItemType;
 
@@ -144,6 +146,17 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  NULL,
 	  NULL,
 	  "MENUBAR:NEW",
+	  TRUE },
+
+	{ PANEL_ADDTO_SEPARATOR,
+	  N_("Separator"),
+	  N_("A separator to organize the panel items"),
+	  NULL,
+	  PANEL_ACTION_NONE,
+	  NULL,
+	  NULL,
+	  NULL,
+	  "SEPARATOR:NEW",
 	  TRUE },
 
 	{ PANEL_ADDTO_DRAWER,
@@ -774,6 +787,10 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 	case PANEL_ADDTO_MENUBAR:
 		panel_menu_bar_create (dialog->panel_widget->toplevel,
 				       dialog->insertion_position);
+		break;
+	case PANEL_ADDTO_SEPARATOR:
+		panel_separator_create (dialog->panel_widget->toplevel,
+					dialog->insertion_position);
 		break;
 	case PANEL_ADDTO_DRAWER:
 		panel_drawer_create (dialog->panel_widget->toplevel,

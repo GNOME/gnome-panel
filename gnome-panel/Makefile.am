@@ -100,6 +100,7 @@ panel_sources =			\
 	panel-menu-bar.c        \
 	panel-menu-button.c     \
 	panel-menu-items.c      \
+	panel-separator.c	\
 	panel-recent.c		\
 	panel-action-protocol.c	\
 	panel-toplevel.c	\
@@ -144,6 +145,7 @@ panel_headers =			\
 	panel-menu-bar.h        \
 	panel-menu-button.h     \
 	panel-menu-items.h      \
+	panel-separator.h	\
 	panel-recent.h		\
 	panel-action-protocol.h	\
 	panel-toplevel.h	\
