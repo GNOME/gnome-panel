@@ -1575,6 +1575,8 @@ static void
 handle_gmenu_tree_changed (GMenuTree *tree,
 			   GtkWidget *menu)
 {
+	guint idle_id;
+
 	while (GTK_MENU_SHELL (menu)->children)
                 gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
 
@@ -1589,6 +1591,15 @@ handle_gmenu_tree_changed (GMenuTree *tree,
 	g_object_set_data (G_OBJECT (menu),
 			   "panel-menu-needs-appending",
 			   GUINT_TO_POINTER (TRUE));
+
+	idle_id = g_idle_add_full (G_PRIORITY_LOW,
+				   submenu_to_display_in_idle,
+				   menu,
+				   NULL);
+	g_object_set_data_full (G_OBJECT (menu),
+				"panel-menu-idle-id",
+				GUINT_TO_POINTER (idle_id),
+				remove_submenu_to_display_idle);
 }
 
 static void

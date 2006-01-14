@@ -157,7 +157,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	{ PANEL_ADDTO_SEPARATOR,
 	  N_("Separator"),
 	  N_("A separator to organize the panel items"),
-	  NULL,
+	  PANEL_SEPARATOR_ICON,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
