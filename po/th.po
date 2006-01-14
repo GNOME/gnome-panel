@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-31 10:50+0700\n"
-"PO-Revision-Date: 2005-12-31 10:53+0700\n"
+"POT-Creation-Date: 2006-01-14 16:46+0700\n"
+"PO-Revision-Date: 2006-01-14 16:53+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <L10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,8 +50,8 @@ msgstr "เ_กี่ยวกับ..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:600 gnome-panel/panel-action-button.c:743
-#: gnome-panel/panel-context-menu.c:322 gnome-panel/panel-menu-bar.c:353
+#: gnome-panel/drawer.c:600 gnome-panel/panel-action-button.c:731
+#: gnome-panel/panel-context-menu.c:322 gnome-panel/panel-menu-bar.c:404
 #: gnome-panel/panel-menu-button.c:685
 msgid "_Help"
 msgstr "_วีธีใช้"
@@ -196,7 +196,7 @@ msgstr "กำหนดรูปแบบเอง"
 
 #: applets/clock/clock.c:2488 applets/clock/clock.c:2665
 #: applets/fish/fish.c:158 applets/notification_area/main.c:82
-#: applets/wncklet/window-list.c:114 applets/wncklet/wncklet.c:123
+#: applets/wncklet/window-list.c:114 applets/wncklet/wncklet.c:124
 #: applets/wncklet/workspace-switcher.c:238
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -627,11 +627,11 @@ msgstr "พื้นที่แจ้งเหตุ"
 msgid "Notification Area Factory"
 msgstr "โรงงานพื้นที่แจ้งเหตุ"
 
-#: applets/notification_area/eggtraymanager.c:154
+#: applets/notification_area/eggtraymanager.c:146
 msgid "Orientation"
 msgstr "ทิศทางการจัดวาง"
 
-#: applets/notification_area/eggtraymanager.c:155
+#: applets/notification_area/eggtraymanager.c:147
 msgid "The orientation of the tray."
 msgstr "แนววางของพื้นที่แจ้งเหตุ"
 
@@ -964,23 +964,23 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "เชลล์ของพาเนล GNOME"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:536
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:540
 msgid "_Lock To Panel"
 msgstr "ล็อ_คติดกับพาเนล"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:519
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:523
 msgid "_Move"
 msgstr "_ย้าย"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:512
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:516
 msgid "_Remove From Panel"
 msgstr "_ลบออกจากพาเนล"
 
-#: gnome-panel/applet.c:429
+#: gnome-panel/applet.c:433
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1217
+#: gnome-panel/applet.c:1226
 msgid "Can't find an empty spot"
 msgstr "ไม่มีที่ว่าง"
 
@@ -988,7 +988,7 @@ msgstr "ไม่มีที่ว่าง"
 msgid "Could not load icon"
 msgstr "ไม่สามารถโหลดไอคอนได้"
 
-#: gnome-panel/drawer.c:349 gnome-panel/panel-addto.c:150
+#: gnome-panel/drawer.c:349 gnome-panel/panel-addto.c:163
 #: gnome-panel/panel-toplevel.c:1524
 msgid "Drawer"
 msgstr "ลิ้นชัก"
@@ -998,7 +998,7 @@ msgid "_Add to Drawer..."
 msgstr "เ_พิ่มลงในลิ้นชัก..."
 
 #: gnome-panel/drawer.c:594 gnome-panel/launcher.c:928
-#: gnome-panel/panel-action-button.c:143
+#: gnome-panel/panel-action-button.c:131
 #: gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "คุณ_สมบัติ"
@@ -1097,23 +1097,23 @@ msgstr "เมนู"
 msgid "You do not have permission to write to this location."
 msgstr "คุณไม่ได้รับอนุญาตให้เขียนลงในตำแหน่งนี้"
 
-#: gnome-panel/menu.c:922
+#: gnome-panel/menu.c:935
 msgid "Add this launcher to panel"
 msgstr "เพิ่มปุ่มเรียกโปรแกรมนี้ในพาเนล"
 
-#: gnome-panel/menu.c:933
+#: gnome-panel/menu.c:946
 msgid "Add this launcher to desktop"
 msgstr "เพิ่มไอคอนเรียกโปรแกรมนี้บนพื้นโต๊ะ"
 
-#: gnome-panel/menu.c:953
+#: gnome-panel/menu.c:962
 msgid "Entire menu"
 msgstr "เมนูทั้งหมด"
 
-#: gnome-panel/menu.c:963
+#: gnome-panel/menu.c:972
 msgid "Add this as drawer to panel"
 msgstr "เพิ่มลงเป็นลิ้นชักในพาเนล"
 
-#: gnome-panel/menu.c:975
+#: gnome-panel/menu.c:984
 msgid "Add this as menu to panel"
 msgstr "เพิ่มลงเป็นเมนูในพาเนล"
 
@@ -1125,150 +1125,150 @@ msgstr "เ_ริ่มแสดงภาพรักษาหน้าจอ"
 msgid "_Lock Screen"
 msgstr "ล็_อคหน้าจอ"
 
-#: gnome-panel/panel-action-button.c:131
-msgid "_Kill Screensaver Daemon"
-msgstr "_กำจัดดีมอนรักษาหน้าจอ"
-
-#: gnome-panel/panel-action-button.c:137
-msgid "Restart _Screensaver Daemon"
-msgstr "เริ่_มดีมอนรักษาหน้าจอใหม่"
-
-#: gnome-panel/panel-action-button.c:208
-#: gnome-panel/panel-action-button.c:221
-#: gnome-panel/panel-action-button.c:245
-#: gnome-panel/panel-menu-bar.c:420 gnome-panel/panel-menu-button.c:1007
-#: gnome-panel/panel-util.c:749
+#: gnome-panel/panel-action-button.c:196
+#: gnome-panel/panel-action-button.c:209
+#: gnome-panel/panel-action-button.c:233
+#: gnome-panel/panel-menu-bar.c:471 gnome-panel/panel-menu-button.c:1007
+#: gnome-panel/panel-util.c:747
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "ไม่สามารถเรียกใช้ '%s'"
 
-#: gnome-panel/panel-action-button.c:281
+#: gnome-panel/panel-action-button.c:269
 msgid "Could not connect to server"
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์ไม่สำเร็จ"
 
-#: gnome-panel/panel-action-button.c:313
+#: gnome-panel/panel-action-button.c:301
 msgid "Lock Screen"
 msgstr "ล็อคหน้าจอ"
 
-#: gnome-panel/panel-action-button.c:314
+#: gnome-panel/panel-action-button.c:302
 msgid "Protect your computer from unauthorized use"
 msgstr "ป้องกันคอมพิวเตอร์ของคุณจากการใช้งานโดยไม่ได้รับอนุญาต"
 
-#: gnome-panel/panel-action-button.c:325
+#: gnome-panel/panel-action-button.c:313
 msgid "Log Out"
 msgstr "ออกจากระบบ"
 
-#: gnome-panel/panel-action-button.c:326
+#: gnome-panel/panel-action-button.c:314
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr "ออกจากวาระนี้ เพื่อเข้าระบบเป็นผู้ใช้อื่น หรือเพื่อปิดคอมพิวเตอร์"
 
-#: gnome-panel/panel-action-button.c:335
+#: gnome-panel/panel-action-button.c:323
 msgid "Run Application..."
 msgstr "เรียกโปรแกรม..."
 
-#: gnome-panel/panel-action-button.c:336
+#: gnome-panel/panel-action-button.c:324
 msgid "Run an Application by entering a command"
 msgstr "เรียกใช้โปรแกรมโดยการป้อนคำสั่ง"
 
-#: gnome-panel/panel-action-button.c:345
+#: gnome-panel/panel-action-button.c:333
 msgid "Search for Files..."
 msgstr "ค้นหาแฟ้ม..."
 
-#: gnome-panel/panel-action-button.c:346
+#: gnome-panel/panel-action-button.c:334
 msgid "Find files, folders, and documents on your computer"
 msgstr "ค้นหาแฟ้ม โฟลเดอร์ และเอกสารบนคอมพิวเตอร์ของคุณ"
 
-#: gnome-panel/panel-action-button.c:354
+#: gnome-panel/panel-action-button.c:342
 msgid "Take Screenshot..."
 msgstr "จับภาพหน้าจอ..."
 
-#: gnome-panel/panel-action-button.c:355
+#: gnome-panel/panel-action-button.c:343
 msgid "Take a screenshot of your desktop"
 msgstr "จับภาพหน้าจอพื้นโต๊ะของคุณ"
 
-#: gnome-panel/panel-action-button.c:363
+#: gnome-panel/panel-action-button.c:351
 msgid "Force Quit"
 msgstr "บังคับออก"
 
-#: gnome-panel/panel-action-button.c:364
+#: gnome-panel/panel-action-button.c:352
 msgid "Force a misbehaving application to quit"
 msgstr "บังคับโปรแกรมที่เกเรให้ออกจากการทำงาน"
 
 #. FIXME icon
-#: gnome-panel/panel-action-button.c:373
+#: gnome-panel/panel-action-button.c:361
 msgid "Connect to Server..."
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์..."
 
-#: gnome-panel/panel-action-button.c:374
+#: gnome-panel/panel-action-button.c:362
 msgid "Connect to a remote server"
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์ในเครือข่าย"
 
-#: gnome-panel/panel-addto.c:102
+#: gnome-panel/panel-addto.c:104
 msgid "Custom Application Launcher"
 msgstr "ปุ่มเรียกโปรแกรมสร้างเอง"
 
-#: gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-addto.c:105
 msgid "Create a new launcher"
 msgstr "สร้างปุ่มเรียกโปรแกรมใหม่"
 
-#: gnome-panel/panel-addto.c:113
+#: gnome-panel/panel-addto.c:115
 msgid "Application Launcher..."
 msgstr "ปุ่มเรียกโปรแกรม..."
 
-#: gnome-panel/panel-addto.c:114
+#: gnome-panel/panel-addto.c:116
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "สร้างปุ่มเรียกใช้โปรแกรมที่มีอยู่แล้วในเมนู GNOME"
 
-#: gnome-panel/panel-addto.c:128
+#: gnome-panel/panel-addto.c:130
 msgid "Main Menu"
 msgstr "เมนูหลัก"
 
-#: gnome-panel/panel-addto.c:129
+#: gnome-panel/panel-addto.c:131
 msgid "The main GNOME menu"
 msgstr "เมนูหลักของ GNOME"
 
-#: gnome-panel/panel-addto.c:139
+#: gnome-panel/panel-addto.c:141
 msgid "Menu Bar"
 msgstr "แถบเมนู"
 
-#: gnome-panel/panel-addto.c:140
+#: gnome-panel/panel-addto.c:142
 msgid "A custom menu bar"
 msgstr "แถบเมนูกำหนดเอง"
 
-#: gnome-panel/panel-addto.c:151
+#: gnome-panel/panel-addto.c:152
+msgid "Separator"
+msgstr "เส้นแบ่ง"
+
+#: gnome-panel/panel-addto.c:153
+msgid "A separator to organize the panel items"
+msgstr "เส้นแบ่งเพื่อแบ่งส่วนพาเนลของคุณ"
+
+#: gnome-panel/panel-addto.c:164
 msgid "A pop out drawer to store other items in"
 msgstr "ลิ้นชักที่เปิดออกได้ สำหรับใส่แอพเพล็ตต่างๆ"
 
-#: gnome-panel/panel-addto.c:239
+#: gnome-panel/panel-addto.c:252
 msgid "(empty)"
 msgstr "(ว่างเปล่า)"
 
-#: gnome-panel/panel-addto.c:374
+#: gnome-panel/panel-addto.c:387
 #: libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "การร้องขอข้อมูลแจ้งสิ่งผิดปรกติ %s\n"
 
-#: gnome-panel/panel-addto.c:978
+#: gnome-panel/panel-addto.c:995
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "เลือก_รายการที่จะเพิ่มลงใน \"%s\":"
 
-#: gnome-panel/panel-addto.c:982
+#: gnome-panel/panel-addto.c:999
 msgid "Add to Drawer"
 msgstr "เพิ่มลงในลิ้นชัก"
 
-#: gnome-panel/panel-addto.c:984
+#: gnome-panel/panel-addto.c:1001
 msgid "Select an _item to add to the drawer:"
 msgstr "เลือก_รายการที่จะเพิ่มลงในลิ้นชัก:"
 
-#: gnome-panel/panel-addto.c:986
+#: gnome-panel/panel-addto.c:1003
 msgid "Add to Panel"
 msgstr "เพิ่มลงในพาเนล"
 
-#: gnome-panel/panel-addto.c:988
+#: gnome-panel/panel-addto.c:1005
 msgid "Select an _item to add to the panel:"
 msgstr "เลือก_รายการที่จะเพิ่มลงในพาเนล"
 
@@ -1589,11 +1589,11 @@ msgstr "เปิดและค้นเอกสารและโฟลเด
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "เปลี่ยนรูปลักษณ์และพฤติกรรมของพื้นโต๊ะ อ่านวิธีใช้ หรือออกจากระบบ"
 
-#: gnome-panel/panel-menu-bar.c:115
+#: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "โปรแกรม"
 
-#: gnome-panel/panel-menu-bar.c:360 gnome-panel/panel-menu-button.c:688
+#: gnome-panel/panel-menu-bar.c:411 gnome-panel/panel-menu-button.c:688
 msgid "_Edit Menus"
 msgstr "แ_ก้ไขเมนู"
 
@@ -1634,22 +1634,22 @@ msgstr "โฟลเดอร์พื้นโต๊ะ"
 msgid "Open the desktop as a folder"
 msgstr "เปิดดูพื้นโต๊ะแบบโฟลเดอร์"
 
-#: gnome-panel/panel-menu-items.c:910
+#: gnome-panel/panel-menu-items.c:914
 msgid "Places"
 msgstr "ที่หลักๆ"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: gnome-panel/panel-menu-items.c:948
+#: gnome-panel/panel-menu-items.c:952
 msgid "Desktop Environment|Desktop"
 msgstr "พื้นโต๊ะ"
 
-#: gnome-panel/panel-menu-items.c:1089
+#: gnome-panel/panel-menu-items.c:1093
 msgid "Could not launch menu item"
 msgstr "ไม่สามารถเรียกใช้รายการเมนูได้"
 
-#: gnome-panel/panel-menu-items.c:1101
+#: gnome-panel/panel-menu-items.c:1105
 msgid "Could not load menu item"
 msgstr "ไม่สามารถโหลดรายการเมนูได้"
 
@@ -1821,26 +1821,26 @@ msgstr "ใช้ไอคอนที่กำหนดเองสำหรั
 msgid "Use custom path for menu contents"
 msgstr "ใช้พาธที่กำหนดเองสำหรับเนื้อหาเมนู"
 
-#: gnome-panel/panel-profile.c:747 gnome-panel/panel-profile.c:774
-#: gnome-panel/panel-profile.c:810 gnome-panel/panel-profile.c:1633
+#: gnome-panel/panel-profile.c:762 gnome-panel/panel-profile.c:789
+#: gnome-panel/panel-profile.c:825 gnome-panel/panel-profile.c:1648
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "ผิดพลาดในขณะอ่านค่าข้อความของ GConf '%s': %s"
 
-#: gnome-panel/panel-profile.c:789 gnome-panel/panel-profile.c:1529
-#: gnome-panel/panel-profile.c:1602 gnome-panel/panel-profile.c:1665
+#: gnome-panel/panel-profile.c:804 gnome-panel/panel-profile.c:1544
+#: gnome-panel/panel-profile.c:1617 gnome-panel/panel-profile.c:1680
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "ผิดพลาดในขณะอ่านค่าเลขจำนวนเต็มของ GConf '%s': %s"
 
-#: gnome-panel/panel-profile.c:1539
+#: gnome-panel/panel-profile.c:1554
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr "พาเนล '%s' ถูกตั้งให้แสดงบนหน้าจอที่ %d ซึ่งไม่สามารถใช้ได้ในขณะนี้ จึงไม่โหลดพาเนลนี้"
 
-#: gnome-panel/panel-profile.c:1617
+#: gnome-panel/panel-profile.c:1632
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "ผิดพลาดในขณะอ่านค่าบูลีนของ GConf '%s': %s"
@@ -1865,12 +1865,12 @@ msgstr "ขอบซ้าย"
 msgid "Right"
 msgstr "ขอบขวา"
 
-#: gnome-panel/panel-properties-dialog.c:1017
+#: gnome-panel/panel-properties-dialog.c:1019
 msgid "Could not display properties dialog"
 msgstr "ไม่สามารถเปิดกล่องโต้ตอบคุณสมบัติได้"
 
-#: gnome-panel/panel-properties-dialog.c:1018
-#: gnome-panel/panel-run-dialog.c:1818
+#: gnome-panel/panel-properties-dialog.c:1020
+#: gnome-panel/panel-run-dialog.c:1823
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "ไม่สามารถอ่านแฟ้ม '%s'"
@@ -2043,19 +2043,19 @@ msgstr "เลือกแฟ้มที่จะใช้ต่อท้าย
 msgid "Select an application to view its description."
 msgstr "เลือกโปรแกรมแล้วจะแสดงรายละเอียด"
 
-#: gnome-panel/panel-run-dialog.c:1561
+#: gnome-panel/panel-run-dialog.c:1566
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "จะเรียกใช้คำสั่ง: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1592
+#: gnome-panel/panel-run-dialog.c:1597
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "รายการ URI ที่ถูกวางในกล่องโต้ตอบเรียกโปรแกรมมีรูปแบบไม่ถูกต้อง (%d) หรือมีความยาวไม่ถูกต้อง "
 "(%d)\n"
 
-#: gnome-panel/panel-run-dialog.c:1817
+#: gnome-panel/panel-run-dialog.c:1822
 msgid "Could not display run dialog"
 msgstr "ไม่สามารถเปิดกล่องโต้ตอบเรียกโปรแกรมได้"
 
@@ -2548,16 +2548,16 @@ msgstr "รายละเอียด: %s"
 msgid "Icon '%s' not found"
 msgstr "ไม่พบไอคอน '%s'"
 
-#: gnome-panel/panel.c:471
+#: gnome-panel/panel.c:479
 #, c-format
 msgid "Open URL: %s"
 msgstr "เปิด URL: %s"
 
-#: gnome-panel/panel.c:1256
+#: gnome-panel/panel.c:1272
 msgid "Delete this drawer?"
 msgstr "ยืนยันการลบลิ้นชักนี้หรือไม่?"
 
-#: gnome-panel/panel.c:1257
+#: gnome-panel/panel.c:1273
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2565,15 +2565,15 @@ msgstr ""
 "เมื่อลบลิ้นชัก ลิ้นชักและค่าที่ตั้งไว้จะสูญหาย\n"
 "ลบลิ้นชักนี้หรือไม่?"
 
-#: gnome-panel/panel.c:1259
+#: gnome-panel/panel.c:1275
 msgid "Delete Drawer"
 msgstr "ลบลิ้นชัก"
 
-#: gnome-panel/panel.c:1261
+#: gnome-panel/panel.c:1277
 msgid "Delete this panel?"
 msgstr "ยืนยันการลบพาเนลนี้หรือไม่?"
 
-#: gnome-panel/panel.c:1262
+#: gnome-panel/panel.c:1278
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2581,7 +2581,7 @@ msgstr ""
 "เมื่อลบพาเนล พาเนลและค่าที่ตั้งไว้จะสูญหาย\n"
 "ลบพาเนลนี้หรือไม่?"
 
-#: gnome-panel/panel.c:1264
+#: gnome-panel/panel.c:1280
 msgid "Delete Panel"
 msgstr "ลบพาเนล"
 
@@ -2597,46 +2597,46 @@ msgstr "แอพเพล็ต Bonobo ทดสอบ"
 msgid "Test Bonobo Applet Factory"
 msgstr "ทดสอบโรงงานแอพเพล็ต Bonobo"
 
-#: libpanel-applet/panel-applet.c:1015
+#: libpanel-applet/panel-applet.c:1042
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "ได้รับชนิดพื้นหลัง '%s' ที่ไม่สมบูรณ์"
 
-#: libpanel-applet/panel-applet.c:1029
+#: libpanel-applet/panel-applet.c:1056
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "ได้รับชนิดพื้นหลัง '%s' ที่ไม่สมบูรณ์: %s"
 
-#: libpanel-applet/panel-applet.c:1038
+#: libpanel-applet/panel-applet.c:1065
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "อ่านภาพ %s ไม่สำเร็จ"
 
-#: libpanel-applet/panel-applet.c:1045
+#: libpanel-applet/panel-applet.c:1072
 msgid "Unknown background type received"
 msgstr "ไม่รู้จักชนิดพื้นหลังที่ได้รับ"
 
-#: libpanel-applet/panel-applet.c:1269
+#: libpanel-applet/panel-applet.c:1296
 msgid "The Applet's containing Panel's orientation"
 msgstr "แนววางของพาเนลที่บรรจุแอ็พเพล็ตอยู่"
 
-#: libpanel-applet/panel-applet.c:1277
+#: libpanel-applet/panel-applet.c:1304
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "ค่าสถานะของแอพเพล็ตมีค่าขนาดของพาเนลในหน่วยพิกเซล"
 
-#: libpanel-applet/panel-applet.c:1285
+#: libpanel-applet/panel-applet.c:1312
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "ค่าสถานะของแอพเพล็ตมีค่าสีหรือภาพพื้นหลังของพาเนล"
 
-#: libpanel-applet/panel-applet.c:1293
+#: libpanel-applet/panel-applet.c:1320
 msgid "The Applet's flags"
 msgstr "ค่าสถานะของแอพเพล็ต"
 
-#: libpanel-applet/panel-applet.c:1301
+#: libpanel-applet/panel-applet.c:1328
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "ช่วงที่ใช้แนะนำขนาดที่เหมาะสมของแอพเพล็ต"
 
-#: libpanel-applet/panel-applet.c:1309
+#: libpanel-applet/panel-applet.c:1336
 msgid "The Applet's containing Panel is locked down"
 msgstr "ค่าสถานะของแอพเพล็ตถูกล็อคในพาเนล"
 
@@ -2703,6 +2703,12 @@ msgstr "แ_อพเพล็ต:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
+
+#~ msgid "_Kill Screensaver Daemon"
+#~ msgstr "_กำจัดดีมอนรักษาหน้าจอ"
+
+#~ msgid "Restart _Screensaver Daemon"
+#~ msgstr "เริ่_มดีมอนรักษาหน้าจอใหม่"
 
 #~ msgid "24"
 #~ msgstr "24"
