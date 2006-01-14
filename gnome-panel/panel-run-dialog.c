@@ -877,6 +877,7 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 
 	gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->program_list), 
 				 model_filter);
+	//FIXME use the same search than the fuzzy one?
 	gtk_tree_view_set_search_column (GTK_TREE_VIEW (dialog->program_list),
 					 COLUMN_NAME);
 
@@ -950,17 +951,24 @@ program_list_selection_changed (GtkTreeSelection *selection,
 				PanelRunDialog   *dialog)
 {
 	GnomeDesktopItem *ditem;
-	GtkTreeModel     *model;
+	GtkTreeModel     *filter_model;
+	GtkTreeModel     *child_model;
 	GtkTreeIter       iter;
+	GtkTreeIter       filter_iter;
 	const char       *temp;
 	char             *path, *stripped;
 	gboolean          terminal;
 		
-	if (!gtk_tree_selection_get_selected (selection, &model, &iter))
+	if (!gtk_tree_selection_get_selected (selection, &filter_model,
+					      &filter_iter))
 		return;
 
+	gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (filter_model),
+							  &iter, &filter_iter);
+
 	path = NULL;
-	gtk_tree_model_get (model, &iter,
+	child_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filter_model));
+	gtk_tree_model_get (child_model, &iter,
 			    COLUMN_PATH, &path,
 			    -1);
 				  

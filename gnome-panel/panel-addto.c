@@ -49,17 +49,23 @@ typedef struct {
 
 	GtkWidget    *addto_dialog;
 	GtkWidget    *label;
+	GtkWidget    *search_entry;
 	GtkWidget    *back_button;
 	GtkWidget    *add_button;
 	GtkWidget    *tree_view;
 	GtkTreeModel *applet_model;
+	GtkTreeModel *filter_applet_model;
 	GtkTreeModel *application_model;
+	GtkTreeModel *filter_application_model;
 
 	GMenuTree    *menu_tree;
 
 	GSList       *applet_list;
 	GSList       *application_list;
 	GSList       *settings_list;
+
+	gchar        *search_text;
+	gchar        *applet_search_text;
 
 	guint         name_notify;
 
@@ -196,6 +202,9 @@ enum {
 
 static void panel_addto_present_applications (PanelAddtoDialog *dialog);
 static void panel_addto_present_applets      (PanelAddtoDialog *dialog);
+static gboolean panel_addto_filter_func (GtkTreeModel *model,
+					 GtkTreeIter  *iter,
+					 gpointer      data);
 
 static int
 panel_addto_applet_info_sort_func (PanelAddtoItemInfo *a,
@@ -292,18 +301,23 @@ panel_addto_drag_begin_cb (GtkWidget      *widget,
 			   GdkDragContext *context,
 			   gpointer        data)
 {
-	GtkTreeModel *model;
+	GtkTreeModel *filter_model;
+	GtkTreeModel *child_model;
 	GtkTreePath  *path;
 	GtkTreeIter   iter;
+	GtkTreeIter   filter_iter;
 	GdkPixbuf    *pixbuf;
 
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
+	filter_model = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
 	   
 	gtk_tree_view_get_cursor (GTK_TREE_VIEW (widget), &path, NULL);
-	gtk_tree_model_get_iter (model, &iter, path);
+	gtk_tree_model_get_iter (filter_model, &filter_iter, path);
 	gtk_tree_path_free (path);
+	gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (filter_model),
+							  &iter, &filter_iter);
 
-	gtk_tree_model_get (model, &iter,
+	child_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filter_model));
+	gtk_tree_model_get (child_model, &iter,
 	                    COLUMN_ICON, &pixbuf,
 	                    -1);
 
@@ -504,11 +518,14 @@ panel_addto_append_special_applets (PanelAddtoDialog *dialog,
 	translated = TRUE;
 }
 
-static GtkTreeModel *
+static void
 panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 {
 	GtkListStore *model;
 	GSList       *l;
+
+	if (dialog->filter_applet_model != NULL)
+		return;
 
 	if (panel_profile_id_lists_are_writable ()) {
 		dialog->applet_list = panel_addto_query_applets (dialog->applet_list);
@@ -533,7 +550,12 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 	for (l = dialog->applet_list; l; l = l->next)
 		panel_addto_append_item (dialog, model, l->data);
 
-	return (GtkTreeModel *) model;
+	dialog->applet_model = GTK_TREE_MODEL (model);
+	dialog->filter_applet_model = gtk_tree_model_filter_new (GTK_TREE_MODEL (dialog->applet_model),
+								 NULL);
+	gtk_tree_model_filter_set_visible_func (GTK_TREE_MODEL_FILTER (dialog->filter_applet_model),
+						panel_addto_filter_func,
+						dialog, NULL);
 }
 
 static void panel_addto_make_application_list (GSList             **parent_list,
@@ -691,12 +713,15 @@ panel_addto_populate_application_model (GtkTreeStore *store,
 	}
 }
 
-static GtkTreeModel *
+static void
 panel_addto_make_application_model (PanelAddtoDialog *dialog)
 {
 	GtkTreeStore      *store;
 	GMenuTree          *tree;
 	GMenuTreeDirectory *root;
+
+	if (dialog->filter_application_model != NULL)
+		return;
 
 	store = gtk_tree_store_new (NUMBER_COLUMNS,
 				    GDK_TYPE_PIXBUF,
@@ -739,18 +764,19 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 
 	gmenu_tree_unref (tree);
 
-	return GTK_TREE_MODEL (store);
+	dialog->application_model = GTK_TREE_MODEL (store);
+	dialog->filter_application_model = gtk_tree_model_filter_new (GTK_TREE_MODEL (dialog->application_model),
+								      NULL);
+	gtk_tree_model_filter_set_visible_func (GTK_TREE_MODEL_FILTER (dialog->filter_application_model),
+						panel_addto_filter_func,
+						dialog, NULL);
 }
 
-static gboolean
+static void
 panel_addto_add_item (PanelAddtoDialog   *dialog,
 	 	      PanelAddtoItemInfo *item_info)
 {
-	gboolean destroy;
-	
 	g_assert (item_info != NULL);
-
-	destroy = TRUE;
 
 	switch (item_info->type) {
 	case PANEL_ADDTO_APPLET:
@@ -765,7 +791,6 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 		break;
 	case PANEL_ADDTO_LAUNCHER_MENU:
 		panel_addto_present_applications (dialog);
-		destroy = FALSE;
 		break;
 	case PANEL_ADDTO_LAUNCHER:
 		panel_launcher_create (dialog->panel_widget->toplevel,
@@ -798,8 +823,6 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 				     NULL, FALSE, NULL);
 		break;
 	}
-
-	return destroy;
 }
 
 static void
@@ -808,8 +831,10 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 			     PanelAddtoDialog *dialog)
 {
 	GtkTreeSelection *selection;
-	GtkTreeModel *model;
-	GtkTreeIter iter;
+	GtkTreeModel     *filter_model;
+	GtkTreeModel     *child_model;
+	GtkTreeIter       iter;
+	GtkTreeIter       filter_iter;
 
 	switch (response_id) {
 	case GTK_RESPONSE_HELP:
@@ -819,16 +844,19 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 
 	case PANEL_ADDTO_RESPONSE_ADD:
 		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
-		if (gtk_tree_selection_get_selected (selection,
-						     &model, &iter)) {
+		if (gtk_tree_selection_get_selected (selection, &filter_model,
+						     &filter_iter)) {
 			PanelAddtoItemInfo *data;
 
-			gtk_tree_model_get (model, &iter,
+			gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (filter_model),
+									  &iter,
+									  &filter_iter);
+			child_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filter_model));
+			gtk_tree_model_get (child_model, &iter,
 					    COLUMN_DATA, &data, -1);
 
-			if (data != NULL) {
+			if (data != NULL)
 				panel_addto_add_item (dialog, data);
-			}
 		}
 		break;
 
@@ -861,25 +889,41 @@ panel_addto_dialog_destroy (GtkWidget *widget_dialog,
 static void
 panel_addto_present_applications (PanelAddtoDialog *dialog)
 {
-	if (dialog->application_model == NULL)
-		dialog->application_model = panel_addto_make_application_model (dialog);
+	if (dialog->applet_search_text)
+		g_free (dialog->applet_search_text);
+
+	dialog->applet_search_text = g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->search_entry)));
+	gtk_entry_set_text (GTK_ENTRY (dialog->search_entry), "");
+
+	if (dialog->filter_application_model == NULL)
+		panel_addto_make_application_model (dialog);
 	gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->tree_view),
-				 dialog->application_model);
+				 dialog->filter_application_model);
 	gtk_window_set_focus (GTK_WINDOW (dialog->addto_dialog),
-			      dialog->tree_view);
+			      dialog->search_entry);
 	gtk_widget_set_sensitive (dialog->back_button, TRUE);
 }
 
 static void
 panel_addto_present_applets (PanelAddtoDialog *dialog)
 {
-	if (dialog->applet_model == NULL)
-		dialog->applet_model = panel_addto_make_applet_model (dialog);
+	if (dialog->filter_applet_model == NULL)
+		panel_addto_make_applet_model (dialog);
 	gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->tree_view),
-				 dialog->applet_model);
+				 dialog->filter_applet_model);
 	gtk_window_set_focus (GTK_WINDOW (dialog->addto_dialog),
-			      dialog->tree_view);
+			      dialog->search_entry);
 	gtk_widget_set_sensitive (dialog->back_button, FALSE);
+
+	if (dialog->applet_search_text) {
+		gtk_entry_set_text (GTK_ENTRY (dialog->search_entry),
+				    dialog->applet_search_text);
+		gtk_editable_set_position (GTK_EDITABLE (dialog->search_entry),
+					   -1);
+
+		g_free (dialog->applet_search_text);
+		dialog->applet_search_text = NULL;
+	}
 }
 
 static void
@@ -949,6 +993,14 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 		gconf_client_notify_remove (client, dialog->name_notify);
 	dialog->name_notify = 0;
 
+	if (dialog->search_text)
+		g_free (dialog->search_text);
+	dialog->search_text = NULL;
+
+	if (dialog->applet_search_text)
+		g_free (dialog->applet_search_text);
+	dialog->applet_search_text = NULL;
+
 	if (dialog->addto_dialog)
 		gtk_widget_destroy (dialog->addto_dialog);
 	dialog->addto_dialog = NULL;
@@ -967,9 +1019,17 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 	panel_addto_dialog_free_application_list (dialog->application_list);
 	panel_addto_dialog_free_application_list (dialog->settings_list);
 
+	if (dialog->filter_applet_model)
+		g_object_unref (dialog->filter_applet_model);
+	dialog->filter_applet_model = NULL;
+
 	if (dialog->applet_model)
 		g_object_unref (dialog->applet_model);
 	dialog->applet_model = NULL;
+
+	if (dialog->filter_application_model)
+		g_object_unref (dialog->filter_application_model);
+	dialog->filter_application_model = NULL;
 
 	if (dialog->application_model)
 		g_object_unref (dialog->application_model);
@@ -992,17 +1052,17 @@ panel_addto_name_change (PanelAddtoDialog *dialog,
 	label = NULL;
 
 	if (!string_empty (name))
-		label = g_strdup_printf (_("Select an _item to add to \"%s\":"),
+		label = g_strdup_printf (_("Find an _item to add to \"%s\":"),
 					 name);
 
 	if (panel_toplevel_get_is_attached (dialog->panel_widget->toplevel)) {
 		title = g_strdup_printf (_("Add to Drawer"));
 		if (label == NULL)
-			label = g_strdup (_("Select an _item to add to the drawer:"));
+			label = g_strdup (_("Find an _item to add to the drawer:"));
 	} else {
 		title = g_strdup_printf (_("Add to Panel"));
 		if (label == NULL)
-			label = g_strdup (_("Select an _item to add to the panel:"));
+			label = g_strdup (_("Find an _item to add to the panel:"));
 	}
 
 	gtk_window_set_title (GTK_WINDOW (dialog->addto_dialog), title);
@@ -1036,24 +1096,104 @@ panel_addto_name_notify (GConfClient      *client,
 		panel_addto_name_change (dialog, text);
 }
 
+static gboolean
+panel_addto_filter_func (GtkTreeModel *model,
+			 GtkTreeIter  *iter,
+			 gpointer      userdata)
+{
+	PanelAddtoDialog   *dialog;
+	PanelAddtoItemInfo *data;
+
+	dialog = (PanelAddtoDialog *) userdata;
+
+	if (!dialog->search_text || !dialog->search_text[0])
+		return TRUE;
+
+	gtk_tree_model_get (model, iter, COLUMN_DATA, &data, -1);
+
+	if (data == NULL)
+		return FALSE;
+
+	//FIXME this doesn't really work for the GtkTreeStore used for
+	//the .desktop files
+	return (panel_util_utf8_strstrcase (data->name,
+					    dialog->search_text) != NULL ||
+	        panel_util_utf8_strstrcase (data->description,
+					    dialog->search_text) != NULL);
+}
+
+static void
+panel_addto_search_entry_changed (GtkWidget        *entry,
+				  PanelAddtoDialog *dialog)
+{
+	GtkTreeModel *model;
+	char         *new_text;
+	GtkTreeIter   iter;
+	GtkTreePath  *path;
+
+	new_text = g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->search_entry)));
+	g_strchomp (new_text);
+		
+	if (dialog->search_text &&
+	    g_utf8_collate (new_text, dialog->search_text) == 0) {
+		g_free (new_text);
+		return;
+	}
+
+	if (dialog->search_text)
+		g_free (dialog->search_text);
+	dialog->search_text = new_text;
+
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (dialog->tree_view));
+	gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (model));
+
+	path = gtk_tree_path_new_first ();
+	if (gtk_tree_model_get_iter (model, &iter, path)) {
+		GtkTreeSelection *selection;
+
+		gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (dialog->tree_view),
+					      path, NULL, FALSE, 0, 0);
+		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
+		gtk_tree_selection_select_path (selection, path);
+	}
+	gtk_tree_path_free (path);
+}
+
+static void
+panel_addto_search_entry_activated (GtkWidget        *entry,
+				    PanelAddtoDialog *dialog)
+{
+	gtk_dialog_response (GTK_DIALOG (dialog->addto_dialog),
+			     PANEL_ADDTO_RESPONSE_ADD);
+}
+
 static void
 panel_addto_selection_changed (GtkTreeSelection *selection,
 			       PanelAddtoDialog *dialog)
 {
-	GtkTreeModel       *model;
+	GtkTreeModel       *filter_model;
+	GtkTreeModel       *child_model;
 	GtkTreeIter         iter;
+	GtkTreeIter         filter_iter;
 	PanelAddtoItemInfo *data;
 	char               *iid;
 
-	if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
-		gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button), FALSE);
+	if (!gtk_tree_selection_get_selected (selection,
+					      &filter_model,
+					      &filter_iter)) {
+		gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button),
+					  FALSE);
 		return;
 	}
 
-	gtk_tree_model_get (model, &iter, COLUMN_DATA, &data, -1);
+	gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (filter_model),
+							  &iter, &filter_iter);
+	child_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (filter_model));
+	gtk_tree_model_get (child_model, &iter, COLUMN_DATA, &data, -1);
 
 	if (!data) {
-		gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button), FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button),
+					  FALSE);
 		return;
 	}
 
@@ -1137,6 +1277,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	PanelAddtoDialog *dialog;
 	GtkWidget *vbox;
 	GtkWidget *inner_vbox;
+	GtkWidget *find_hbox;
 	GtkWidget *sw;
 	GtkCellRenderer *renderer;
 	GtkTreeSelection *selection;
@@ -1191,12 +1332,27 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	inner_vbox = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), inner_vbox, TRUE, TRUE, 0);
 
+	find_hbox = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (inner_vbox), find_hbox, FALSE, FALSE, 0);
+
 	dialog->label = gtk_label_new_with_mnemonic ("");
 	gtk_misc_set_alignment (GTK_MISC (dialog->label), 0.0, 0.5);
 	gtk_label_set_use_markup (GTK_LABEL (dialog->label), TRUE);
 
-	gtk_box_pack_start (GTK_BOX (inner_vbox), dialog->label,
+	gtk_box_pack_start (GTK_BOX (find_hbox), dialog->label,
 			    FALSE, FALSE, 0);
+
+	dialog->search_entry = gtk_entry_new (); 
+	g_signal_connect (G_OBJECT (dialog->search_entry), "changed",
+			  G_CALLBACK (panel_addto_search_entry_changed), dialog);
+	g_signal_connect (G_OBJECT (dialog->search_entry), "activate",
+			  G_CALLBACK (panel_addto_search_entry_activated), dialog);
+
+	gtk_box_pack_end (GTK_BOX (find_hbox), dialog->search_entry,
+			  TRUE, TRUE, 0);
+
+	gtk_label_set_mnemonic_widget (GTK_LABEL (dialog->label),
+				       dialog->search_entry);
 
 	sw = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
@@ -1229,6 +1385,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 						     "markup", COLUMN_TEXT,
 						     NULL);
 
+	//FIXME use the same search than the one for the search entry?
 	gtk_tree_view_set_search_column (GTK_TREE_VIEW (dialog->tree_view),
 					 COLUMN_SEARCH);
 
@@ -1256,9 +1413,6 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	gtk_container_add (GTK_CONTAINER (sw), dialog->tree_view);
 
 	gtk_widget_show_all (vbox);
-
-	gtk_label_set_mnemonic_widget (GTK_LABEL (dialog->label),
-				       dialog->tree_view);
 
 	panel_toplevel_push_autohide_disabler (dialog->panel_widget->toplevel);
 	panel_widget_register_open_dialog (panel_widget,

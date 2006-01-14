@@ -1,3 +1,31 @@
+2006-01-14  Vincent Untz  <vuntz@gnome.org>
+	
+	Add a search entry to the "add to panel" dialog.
+
+	* panel-addto.c: (panel_addto_drag_begin_cb): use the child model of
+	the filter model
+	(panel_addto_make_applet_model): create a filter model, don't return a
+	model since this is useless
+	(panel_addto_make_application_model): ditto
+	(panel_addto_add_item): don't return a useless value
+	(panel_addto_dialog_response): use the child model of the filter model
+	(panel_addto_present_applications): small update for the filter, focus
+	the search entry, save the text from the search entry
+	(panel_addto_present_applets): small update for the filter, focus the
+	search entry, put the previous search text when there was one
+	(panel_addto_dialog_free): free the new stuff
+	(panel_addto_name_change): change the string
+	(panel_addto_filter_func): new function to know if an item is visible
+	(panel_addto_search_entry_changed): new, refilter the model and select
+	the first item
+	(panel_addto_search_entry_activated): new, do as if the user clicked
+	on Add
+	(panel_addto_selection_changed): use the child model of the filter
+	(panel_addto_dialog_new): add a search entry and connect the signals
+
+	* panel-run-dialog.c: (panel_run_dialog_add_items_idle): add a FIXME
+	(program_list_selection_changed): use the child model of the filter
+
 2006-01-13  Vincent Untz  <vuntz@gnome.org>
 
 	Add separator internal applet. Based on patch by Carlos Garcia Campos
