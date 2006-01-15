@@ -1,22 +1,22 @@
 # Vietnamese Translation for Gnome Panel.
-# Copyright © 2005 Free Software Foundation, Inc.
+# Copyright © 2002-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 # Nguyễn Thái Ngọc Duy <pclouds@vnlinux.org> 2002-2004.
-# Clytie Siddall <clytie@riverland.net.au>, 2005.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
 # 
 msgid ""
 ""
 msgstr "Project-Id-Version: gnome-panel 2.12 Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-01 06:28+0100\n"
-"PO-Revision-Date: 2006-01-01 16:44+1030\n"
+"POT-Creation-Date: 2006-01-14 23:09+0100\n"
+"PO-Revision-Date: 2006-01-15 18:10+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.5.1b\n"
+"X-Generator: LocFactoryEditor 1.6b23\n"
 
 #:../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -47,8 +47,8 @@ msgstr "_Giới thiệu"
 #:../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #:../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #:../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#:../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:743
-#:../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:353
+#:../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:731
+#:../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:404
 #:../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
 msgstr "Trợ _giúp"
@@ -193,7 +193,7 @@ msgstr "Dạng thức tự chọn"
 
 #:../applets/clock/clock.c:2488 ../applets/clock/clock.c:2665
 #:../applets/fish/fish.c:158 ../applets/notification_area/main.c:82
-#:../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
+#:../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:124
 #:../applets/wncklet/workspace-switcher.c:238
 #,c-format
 msgid "There was an error displaying help: %s"
@@ -555,7 +555,8 @@ msgstr "Các khung hình trong hoạt cảnh con cá"
 #:../applets/fish/fish.schemas.in.h:4
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Nếu đúng, hoạt cảnh cá sẽ được xoay khi hiển thị ngang trên Bảng điều khiển dọc."
+msgstr "Nếu đúng, hoạt cảnh cá sẽ được xoay khi hiển thị ngang trên Bảng điều khiển "
+"dọc."
 
 #:../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -850,18 +851,21 @@ msgstr "cột"
 #:../applets/wncklet/workspace-switcher.c:426
 #,c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "Gặp lỗi khi tải giá trị num_rows (số lượng hàng) cho bộ chuyển vùng làm việc: %s\n"
+msgstr "Gặp lỗi khi tải giá trị num_rows (số lượng hàng) cho bộ chuyển vùng làm "
+"việc: %s\n"
 
 #:../applets/wncklet/workspace-switcher.c:437
 #,c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "Gặp lỗi khi tải giá trị display_workspace_names (hiển thị các tên vùng làm việc) cho bộ chuyển vùng làm việc: %s\n"
+msgstr "Gặp lỗi khi tải giá trị display_workspace_names (hiển thị các tên vùng làm "
+"việc) cho bộ chuyển vùng làm việc: %s\n"
 
 #:../applets/wncklet/workspace-switcher.c:452
 #,c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "Gặp lỗi khi tải giá trị display_all_workspaces (hiển thị mọi vùng làm việc) cho bộ chuyển vùng làm việc: %s\n"
+msgstr "Gặp lỗi khi tải giá trị display_all_workspaces (hiển thị mọi vùng làm việc) "
+"cho bộ chuyển vùng làm việc: %s\n"
 
 #:../applets/wncklet/workspace-switcher.c:560
 msgid ""
@@ -946,23 +950,23 @@ msgstr "Khóa này xác định bao nhiêu hàng (cho bố trí dọc) hoặc ba
 msgid "GNOME Panel Shell"
 msgstr "Hệ vỏ bảng điều khiển GNOME"
 
-#:../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:536
+#:../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:540
 msgid "_Lock To Panel"
 msgstr "_Khóa với Bảng điều khiển"
 
-#:../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:519
+#:../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:523
 msgid "_Move"
 msgstr "_Di chuyển"
 
-#:../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:512
+#:../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
 msgid "_Remove From Panel"
 msgstr "_Loại bỏ khỏi Bảng điều khiển"
 
-#:../gnome-panel/applet.c:429
+#:../gnome-panel/applet.c:433
 msgid "???"
 msgstr "???"
 
-#:../gnome-panel/applet.c:1217
+#:../gnome-panel/applet.c:1226
 msgid "Can't find an empty spot"
 msgstr "Không thể tìm thấy chỗ trống"
 
@@ -970,7 +974,7 @@ msgstr "Không thể tìm thấy chỗ trống"
 msgid "Could not load icon"
 msgstr "Không thể tải biểu tượng"
 
-#:../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:150
+#:../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:169
 #:../gnome-panel/panel-toplevel.c:1524
 msgid "Drawer"
 msgstr "Ngăn kéo"
@@ -980,7 +984,7 @@ msgid "_Add to Drawer..."
 msgstr "_Thêm vào Ngăn kéo..."
 
 #:../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:928
-#:../gnome-panel/panel-action-button.c:143
+#:../gnome-panel/panel-action-button.c:131
 #:../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Thuộc tính"
@@ -1107,153 +1111,153 @@ msgstr "_Kích hoạt trình bảo vệ màn hình"
 msgid "_Lock Screen"
 msgstr "_Khóa màn hình"
 
-#:../gnome-panel/panel-action-button.c:131
-msgid "_Kill Screensaver Daemon"
-msgstr "_Buộc kết thức trình nền bảo vệ màn hình"
-
-#:../gnome-panel/panel-action-button.c:137
-msgid "Restart _Screensaver Daemon"
-msgstr "Khởi động _lại trình nền bảo vệ màn hình"
-
-#:../gnome-panel/panel-action-button.c:208
-#:../gnome-panel/panel-action-button.c:221
-#:../gnome-panel/panel-action-button.c:245
-#:../gnome-panel/panel-menu-bar.c:420 ../gnome-panel/panel-menu-button.c:1007
-#:../gnome-panel/panel-util.c:749
+#:../gnome-panel/panel-action-button.c:196
+#:../gnome-panel/panel-action-button.c:209
+#:../gnome-panel/panel-action-button.c:233
+#:../gnome-panel/panel-menu-bar.c:471 ../gnome-panel/panel-menu-button.c:1007
+#:../gnome-panel/panel-util.c:747
 #,c-format
 msgid "Could not execute '%s'"
 msgstr "Không thể thực hiện « %s »"
 
-#:../gnome-panel/panel-action-button.c:281
+#:../gnome-panel/panel-action-button.c:269
 msgid "Could not connect to server"
 msgstr "Không thể kết nối đến máy phục vụ"
 
-#:../gnome-panel/panel-action-button.c:313
+#:../gnome-panel/panel-action-button.c:301
 msgid "Lock Screen"
 msgstr "Khoá màn hình"
 
-#:../gnome-panel/panel-action-button.c:314
+#:../gnome-panel/panel-action-button.c:302
 msgid "Protect your computer from unauthorized use"
 msgstr "Tránh sự quấy nhiễu máy tính của những người dùng không được phép"
 
-#:../gnome-panel/panel-action-button.c:325
+#:../gnome-panel/panel-action-button.c:313
 msgid "Log Out"
 msgstr "Đăng xuất"
 
-#:../gnome-panel/panel-action-button.c:326
+#:../gnome-panel/panel-action-button.c:314
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr "Đăng xuất phiên làm việc này để đăng nhập vào như là một người dùng khác "
 "hoặc để tắt máy"
 
-#:../gnome-panel/panel-action-button.c:335
+#:../gnome-panel/panel-action-button.c:323
 msgid "Run Application..."
 msgstr "Chạy ứng dụng..."
 
-#:../gnome-panel/panel-action-button.c:336
+#:../gnome-panel/panel-action-button.c:324
 msgid "Run an Application by entering a command"
 msgstr "Chạy ứng dụng bằng cách nhập vào một lệnh"
 
-#:../gnome-panel/panel-action-button.c:345
+#:../gnome-panel/panel-action-button.c:333
 msgid "Search for Files..."
 msgstr "Tìm kiếm tập tin..."
 
-#:../gnome-panel/panel-action-button.c:346
+#:../gnome-panel/panel-action-button.c:334
 msgid "Find files, folders, and documents on your computer"
 msgstr "Tìm tập tin, thư mục, tài liệu trên máy tính"
 
-#:../gnome-panel/panel-action-button.c:354
+#:../gnome-panel/panel-action-button.c:342
 msgid "Take Screenshot..."
 msgstr "Chụp hình..."
 
-#:../gnome-panel/panel-action-button.c:355
+#:../gnome-panel/panel-action-button.c:343
 msgid "Take a screenshot of your desktop"
 msgstr "Chụp hình màn hình nền"
 
-#:../gnome-panel/panel-action-button.c:363
+#:../gnome-panel/panel-action-button.c:351
 msgid "Force Quit"
 msgstr "Buộc thoát"
 
-#:../gnome-panel/panel-action-button.c:364
+#:../gnome-panel/panel-action-button.c:352
 msgid "Force a misbehaving application to quit"
 msgstr "Buộc ứng dụng hành xử kỳ lạ phải thoát"
 
 #.FIXME icon
-#:../gnome-panel/panel-action-button.c:373
+#:../gnome-panel/panel-action-button.c:361
 msgid "Connect to Server..."
 msgstr "Kết nối đến máy chủ..."
 
-#:../gnome-panel/panel-action-button.c:374
+#:../gnome-panel/panel-action-button.c:362
 msgid "Connect to a remote server"
 msgstr "Kết nối đến máy chủ ở xa"
 
-#:../gnome-panel/panel-addto.c:102
+#:../gnome-panel/panel-addto.c:110
 msgid "Custom Application Launcher"
 msgstr "Bộ khởi chạy ứng dụng tự chọn"
 
-#:../gnome-panel/panel-addto.c:103
+#:../gnome-panel/panel-addto.c:111
 msgid "Create a new launcher"
 msgstr "Tạo bô khởi chạy mới"
 
-#:../gnome-panel/panel-addto.c:113
+#:../gnome-panel/panel-addto.c:121
 msgid "Application Launcher..."
 msgstr "Bộ khởi chạy ứng dụng..."
 
-#:../gnome-panel/panel-addto.c:114
+#:../gnome-panel/panel-addto.c:122
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "Khởi chạy chương trình đã có trong trình đơn GNOME"
 
-#:../gnome-panel/panel-addto.c:128
+#:../gnome-panel/panel-addto.c:136
 msgid "Main Menu"
 msgstr "Trình đơn chính"
 
-#:../gnome-panel/panel-addto.c:129
+#:../gnome-panel/panel-addto.c:137
 msgid "The main GNOME menu"
 msgstr "Trình đơn GNOME chính"
 
-#:../gnome-panel/panel-addto.c:139
+#:../gnome-panel/panel-addto.c:147
 msgid "Menu Bar"
 msgstr "Thanh trình đơn"
 
-#:../gnome-panel/panel-addto.c:140
+#:../gnome-panel/panel-addto.c:148
 msgid "A custom menu bar"
 msgstr "Thanh trình đợn tự chọn"
 
-#:../gnome-panel/panel-addto.c:151
+#:../gnome-panel/panel-addto.c:158
+msgid "Separator"
+msgstr "Bộ phân cách"
+
+#:../gnome-panel/panel-addto.c:159
+msgid "A separator to organize the panel items"
+msgstr "Một bộ phân cách để tổ chức các mục trong bảng điều khiển"
+
+#:../gnome-panel/panel-addto.c:170
 msgid "A pop out drawer to store other items in"
 msgstr "Ngăn kéo bật ra để lưu các mục khác vào"
 
-#:../gnome-panel/panel-addto.c:239
+#:../gnome-panel/panel-addto.c:261
 msgid "(empty)"
 msgstr "(rỗng)"
 
-#:../gnome-panel/panel-addto.c:374
+#:../gnome-panel/panel-addto.c:401
 #:../libpanel-applet/panel-test-applets.c:248
 #,c-format
 msgid "query returned exception %s\n"
 msgstr "truy vấn gây ra ngoại lệ %s\n"
 
-#:../gnome-panel/panel-addto.c:978
+#:../gnome-panel/panel-addto.c:1055
 #,c-format
-msgid "Select an _item to add to \"%s\":"
-msgstr "Chọn một _mục để thêm vào \"%s\":"
+msgid "Find an _item to add to \"%s\":"
+msgstr "Tìm một _mục để thêm vào « %s »:"
 
-#:../gnome-panel/panel-addto.c:982
+#:../gnome-panel/panel-addto.c:1059
 msgid "Add to Drawer"
 msgstr "Thêm vào Ngăn kéo..."
 
-#:../gnome-panel/panel-addto.c:984
-msgid "Select an _item to add to the drawer:"
-msgstr "Chọn một _mục để thêm vào Ngăn kéo:"
+#:../gnome-panel/panel-addto.c:1061
+msgid "Find an _item to add to the drawer:"
+msgstr "Tìm một _mục để thêm vào Ngăn kéo :"
 
-#:../gnome-panel/panel-addto.c:986
+#:../gnome-panel/panel-addto.c:1063
 msgid "Add to Panel"
 msgstr "Thêm vào Bảng điều khiển"
 
-#:../gnome-panel/panel-addto.c:988
-msgid "Select an _item to add to the panel:"
-msgstr "Chọn một _mục để thêm vào bảng điều khiển:"
+#:../gnome-panel/panel-addto.c:1065
+msgid "Find an _item to add to the panel:"
+msgstr "Tìm một _mục để thêm vào bảng điều khiển:"
 
 #:../gnome-panel/panel-applet-frame.c:822
 #,c-format
@@ -1419,7 +1423,8 @@ msgstr "Bung danh sách chương trình trong hộp thoại « Chạy ứng dụ
 #:../gnome-panel/panel-general.schemas.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Nếu đúng thì bật tính năng tự động hoàn thành trong hộp thoại « Chạy ứng dụng »."
+msgstr "Nếu đúng thì bật tính năng tự động hoàn thành trong hộp thoại « Chạy ứng "
+"dụng »."
 
 #:../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1572,17 +1577,18 @@ msgstr "Duyệt và chạy các ứng dụng đã cài đặt"
 
 #:../gnome-panel/panel-menu-bar.c:86
 msgid "Open and search local, remote and recently-used documents and folders"
-msgstr "Mở và tìm kiếm trong tài liệu và thư mục các kiểu cục bộ, từ xa và đã dùng gần đây"
+msgstr "Mở và tìm kiếm trong tài liệu và thư mục các kiểu cục bộ, từ xa và đã dùng "
+"gần đây"
 
 #:../gnome-panel/panel-menu-bar.c:98
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "Thay đổi diện mạo và hành vi môi trường, được trợ giúp hoặc đăng xuất"
 
-#:../gnome-panel/panel-menu-bar.c:115
+#:../gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Ứng dụng"
 
-#:../gnome-panel/panel-menu-bar.c:360 ../gnome-panel/panel-menu-button.c:688
+#:../gnome-panel/panel-menu-bar.c:411 ../gnome-panel/panel-menu-button.c:688
 msgid "_Edit Menus"
 msgstr "_Hiệu chỉnh trình đơn"
 
@@ -1623,22 +1629,22 @@ msgstr "Màn hình nền"
 msgid "Open the desktop as a folder"
 msgstr "Mở Màn hình nền như một thư mục"
 
-#:../gnome-panel/panel-menu-items.c:910
+#:../gnome-panel/panel-menu-items.c:914
 msgid "Places"
 msgstr "Nơi"
 
 #.Translators: Desktop is used here as in "Desktop Environment" (this
 #.* is not the Desktop folder). Do not keep "Desktop Environment|" in
 #.* the translation.
-#:../gnome-panel/panel-menu-items.c:948
+#:../gnome-panel/panel-menu-items.c:952
 msgid "Desktop Environment|Desktop"
 msgstr "Màn hình nền"
 
-#:../gnome-panel/panel-menu-items.c:1089
+#:../gnome-panel/panel-menu-items.c:1093
 msgid "Could not launch menu item"
 msgstr "Không thể khởi chạy mục trình đơn"
 
-#:../gnome-panel/panel-menu-items.c:1101
+#:../gnome-panel/panel-menu-items.c:1105
 msgid "Could not load menu item"
 msgstr "Không thể tải mục trình đơn"
 
@@ -1814,19 +1820,19 @@ msgstr "Dùng biểu tượng tự chọn cho nút đối tượng"
 msgid "Use custom path for menu contents"
 msgstr "Dùng đường dẫn tự chọn cho nội dung trình đơn"
 
-#:../gnome-panel/panel-profile.c:747 ../gnome-panel/panel-profile.c:774
-#:../gnome-panel/panel-profile.c:810 ../gnome-panel/panel-profile.c:1633
+#:../gnome-panel/panel-profile.c:762 ../gnome-panel/panel-profile.c:789
+#:../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1648
 #,c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Gặp lỗi khi đọc giá trị chuỗi GConf «%s»: %s"
 
-#:../gnome-panel/panel-profile.c:789 ../gnome-panel/panel-profile.c:1529
-#:../gnome-panel/panel-profile.c:1602 ../gnome-panel/panel-profile.c:1665
+#:../gnome-panel/panel-profile.c:804 ../gnome-panel/panel-profile.c:1544
+#:../gnome-panel/panel-profile.c:1617 ../gnome-panel/panel-profile.c:1680
 #,c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Gặp lỗi khi đọc giá trị số nguyên GConf «%s»: %s"
 
-#:../gnome-panel/panel-profile.c:1539
+#:../gnome-panel/panel-profile.c:1554
 #,c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1834,7 +1840,7 @@ msgid ""
 msgstr "Bảng điều khiển «%s» được đặt để hiển thị trên màn hình %d, mà hiện thời "
 "không sẵn sàng. Như thế thì sẽ không tải Bảng điều khiển này."
 
-#:../gnome-panel/panel-profile.c:1617
+#:../gnome-panel/panel-profile.c:1632
 #,c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Gặp lỗi khi đọc giá trị đúng/sai GConf «%s»: %s"
@@ -1859,12 +1865,12 @@ msgstr "Trái"
 msgid "Right"
 msgstr "Phải"
 
-#:../gnome-panel/panel-properties-dialog.c:1017
+#:../gnome-panel/panel-properties-dialog.c:1019
 msgid "Could not display properties dialog"
 msgstr "Không thể hiển thị hộp thoại thuộc tính"
 
-#:../gnome-panel/panel-properties-dialog.c:1018
-#:../gnome-panel/panel-run-dialog.c:1818
+#:../gnome-panel/panel-properties-dialog.c:1020
+#:../gnome-panel/panel-run-dialog.c:1831
 #,c-format
 msgid "Unable to load file '%s'."
 msgstr "Không thể tải tập tin « %s »"
@@ -2026,26 +2032,27 @@ msgstr "Không thể chạy lệnh « %s »"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Không thể chuyển đổi « %s » từ UTF-8"
 
-#:../gnome-panel/panel-run-dialog.c:1163
+#:../gnome-panel/panel-run-dialog.c:1171
 msgid "Choose a file to append to the command..."
 msgstr "Chọn tập tin để nối vào lệnh..."
 
-#:../gnome-panel/panel-run-dialog.c:1529
+#:../gnome-panel/panel-run-dialog.c:1537
 #:../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Chọn ứng dụng để xem mô tả của nó."
 
-#:../gnome-panel/panel-run-dialog.c:1561
+#:../gnome-panel/panel-run-dialog.c:1574
 #,c-format
 msgid "Will run command: '%s'"
 msgstr "Sẽ chạy lệnh: '%s'"
 
-#:../gnome-panel/panel-run-dialog.c:1592
+#:../gnome-panel/panel-run-dialog.c:1605
 #,c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Danh sách địa chỉ Mạng bị thả khi chạy hộp thoại thì có dạng không đúng (%d) hay độ dài (%d) không đúng.\n"
+msgstr "Danh sách địa chỉ Mạng bị thả khi chạy hộp thoại thì có dạng không đúng (%d) "
+"hay độ dài (%d) không đúng.\n"
 
-#:../gnome-panel/panel-run-dialog.c:1817
+#:../gnome-panel/panel-run-dialog.c:1830
 msgid "Could not display run dialog"
 msgstr "Không thể hiển thị hộp thoại chạy"
 
@@ -2535,38 +2542,38 @@ msgstr "Chi tiết: %s"
 msgid "Icon '%s' not found"
 msgstr "Không tìm thấy biểu tượng « %s »"
 
-#:../gnome-panel/panel.c:471
+#:../gnome-panel/panel.c:479
 #,c-format
 msgid "Open URL: %s"
 msgstr "Mở địa chỉ Mạng: %s"
 
-#:../gnome-panel/panel.c:1256
+#:../gnome-panel/panel.c:1272
 msgid "Delete this drawer?"
 msgstr "Xóa bỏ Ngăn kéo này chứ?"
 
-#:../gnome-panel/panel.c:1257
+#:../gnome-panel/panel.c:1273
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "Khi một ngăn kéo bị xóa bỏ, ngăn kéo và\n"
 "những thiết lập của nó cũng bị mất."
 
-#:../gnome-panel/panel.c:1259
+#:../gnome-panel/panel.c:1275
 msgid "Delete Drawer"
 msgstr "Xóa bỏ Ngăn kéo"
 
-#:../gnome-panel/panel.c:1261
+#:../gnome-panel/panel.c:1277
 msgid "Delete this panel?"
 msgstr "Xóa bỏ Bảng điều khiển này chứ?"
 
-#:../gnome-panel/panel.c:1262
+#:../gnome-panel/panel.c:1278
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr "Khi một bảng điều khiển bị xóa bỏ, bảng điều khiển và\n"
 "những thiết lập của nó cũng bị mất."
 
-#:../gnome-panel/panel.c:1264
+#:../gnome-panel/panel.c:1280
 msgid "Delete Panel"
 msgstr "Xóa bỏ Bảng điều khiển"
 
@@ -2582,46 +2589,46 @@ msgstr "Kiểm tra tiểu dụng Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Bộ tạo tiểu dụng kiểm tra Bonobo"
 
-#:../libpanel-applet/panel-applet.c:1015
+#:../libpanel-applet/panel-applet.c:1042
 #,c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Nhận được kiểu nền không hoàn chỉnh '%s'"
 
-#:../libpanel-applet/panel-applet.c:1029
+#:../libpanel-applet/panel-applet.c:1056
 #,c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Nhận được kiểu nền không hoàn chỉnh '%s': %s"
 
-#:../libpanel-applet/panel-applet.c:1038
+#:../libpanel-applet/panel-applet.c:1065
 #,c-format
 msgid "Failed to get pixmap %s"
 msgstr "Lỗi khi lấy ảnh bằng điểm %s"
 
-#:../libpanel-applet/panel-applet.c:1045
+#:../libpanel-applet/panel-applet.c:1072
 msgid "Unknown background type received"
 msgstr "Nhận được một kiểu nền lạ"
 
-#:../libpanel-applet/panel-applet.c:1269
+#:../libpanel-applet/panel-applet.c:1296
 msgid "The Applet's containing Panel's orientation"
 msgstr "Tiểu dụng chứa hướng Bảng điều khiển"
 
-#:../libpanel-applet/panel-applet.c:1277
+#:../libpanel-applet/panel-applet.c:1304
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Tiểu dụng chứa kích thước Panel (theo điểm ảnh)"
 
-#:../libpanel-applet/panel-applet.c:1285
+#:../libpanel-applet/panel-applet.c:1312
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Tiểu dụng chứa màu nền hoặc ảnh bằng điểm nền của Bảng điều khiển"
 
-#:../libpanel-applet/panel-applet.c:1293
+#:../libpanel-applet/panel-applet.c:1320
 msgid "The Applet's flags"
 msgstr "Cờ hiệu của tiểu dụng"
 
-#:../libpanel-applet/panel-applet.c:1301
+#:../libpanel-applet/panel-applet.c:1328
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Phạm vi mà gợi ý kích thước nào chấp nhận được đối với tiểu dụng"
 
-#:../libpanel-applet/panel-applet.c:1309
+#:../libpanel-applet/panel-applet.c:1336
 msgid "The Applet's containing Panel is locked down"
 msgstr "Bảng điều khiển chứa tiểu dụng ấy bị khóa."
 
