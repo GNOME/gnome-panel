@@ -207,13 +207,13 @@ panel_logout_new (PanelLogoutDialogType type)
 
 		//FIXME is gdm running?
 		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
-				       _("_Switch user"),
+				       _("_Switch User"),
 				       PANEL_LOGOUT_RESPONSE_SWITCH_USER);
 		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
 				       GTK_STOCK_CANCEL,
 				       GTK_RESPONSE_CANCEL);
 		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
-				       _("_Log out"),
+				       _("_Log Out"),
 				       PANEL_LOGOUT_RESPONSE_LOGOUT);
 		break;
 	case PANEL_LOGOUT_DIALOG_SHUTDOWN:
@@ -236,7 +236,7 @@ panel_logout_new (PanelLogoutDialogType type)
 				       GTK_STOCK_CANCEL,
 				       GTK_RESPONSE_CANCEL);
 		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
-				       _("_Shut down"),
+				       _("_Shut Down"),
 				       PANEL_LOGOUT_RESPONSE_SHUTDOWN);
 		break;
 	default:
