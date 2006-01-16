@@ -378,11 +378,17 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 					displayname = g_strdup ("/");
 				else
 					displayname = g_filename_display_basename (buffer);
-				/* Translators: the first string is a path and
-				 * the second string is a hostname. nautilus
-				 * contains the same string to translate. */
-				label = g_strdup_printf (_("%1$s on %2$s"), displayname, hostname);
-				g_free (displayname);
+				if (hostname) {
+					/* Translators: the first string is a
+					 * path and the second string is a
+					 * hostname. nautilus contains the same
+					 * string to translate. */
+					label = g_strdup_printf (_("%1$s on %2$s"),
+								 displayname,
+								 hostname);
+					g_free (displayname);
+				} else
+					label = displayname;
 			}
 
 			g_free (buffer);
