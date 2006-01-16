@@ -366,7 +366,7 @@ static PanelAction actions [] = {
 	{
 		PANEL_ACTION_SHUTDOWN,
 		"gnome-shutdown",
-		N_("Shut down"),
+		N_("Shut Down"),
 		N_("Shut down the computer"),
 		"gospanel-20",
 		"ACTION:shutdown:NEW",
