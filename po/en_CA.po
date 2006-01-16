@@ -1,14 +1,14 @@
 # English/Canada translation of gnome-panel.
-# Copyright (C) 2004-2005 Adam Weinberger and the GNOME Foundation
+# Copyright (C) 2004-2006 Adam Weinberger and the GNOME Foundation
 # This file is distributed under the same licence as the gnome-panel package.
-# Adam Weinberger <adamw@gnome.org>, 2004, 2005.
+# Adam Weinberger <adamw@gnome.org>, 2004, 2005, 2006.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-30 17:39-0500\n"
+"POT-Creation-Date: 2006-01-15 23:24-0500\n"
 "PO-Revision-Date: 2005-07-18 01:10-0500\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -45,8 +45,8 @@ msgstr "_About"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:743
-#: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:353
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:731
+#: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:404
 #: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
 msgstr "_Help"
@@ -193,7 +193,7 @@ msgstr "Custom format"
 
 #: ../applets/clock/clock.c:2488 ../applets/clock/clock.c:2665
 #: ../applets/fish/fish.c:158 ../applets/notification_area/main.c:82
-#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
+#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:124
 #: ../applets/wncklet/workspace-switcher.c:238
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -628,11 +628,11 @@ msgstr "Notification Area"
 msgid "Notification Area Factory"
 msgstr "Notification Area Factory"
 
-#: ../applets/notification_area/eggtraymanager.c:154
+#: ../applets/notification_area/eggtraymanager.c:146
 msgid "Orientation"
 msgstr "Orientation"
 
-#: ../applets/notification_area/eggtraymanager.c:155
+#: ../applets/notification_area/eggtraymanager.c:147
 msgid "The orientation of the tray."
 msgstr "The orientation of the tray."
 
@@ -974,23 +974,23 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME Panel Shell"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:536
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:540
 msgid "_Lock To Panel"
 msgstr "_Lock To Panel"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:519
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:523
 msgid "_Move"
 msgstr "_Move"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:512
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
 msgid "_Remove From Panel"
 msgstr "_Remove From Panel"
 
-#: ../gnome-panel/applet.c:429
+#: ../gnome-panel/applet.c:433
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1217
+#: ../gnome-panel/applet.c:1226
 msgid "Can't find an empty spot"
 msgstr "Can't find an empty spot"
 
@@ -998,7 +998,7 @@ msgstr "Can't find an empty spot"
 msgid "Could not load icon"
 msgstr "Could not load icon"
 
-#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:150
+#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:169
 #: ../gnome-panel/panel-toplevel.c:1524
 msgid "Drawer"
 msgstr "Drawer"
@@ -1008,7 +1008,7 @@ msgid "_Add to Drawer..."
 msgstr "_Add to Drawer..."
 
 #: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:928
-#: ../gnome-panel/panel-action-button.c:143
+#: ../gnome-panel/panel-action-button.c:131
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Properties"
@@ -1107,23 +1107,23 @@ msgstr "Menu"
 msgid "You do not have permission to write to this location."
 msgstr "You do not have permission to write to this location."
 
-#: ../gnome-panel/menu.c:922
+#: ../gnome-panel/menu.c:935
 msgid "Add this launcher to panel"
 msgstr "Add this launcher to panel"
 
-#: ../gnome-panel/menu.c:933
+#: ../gnome-panel/menu.c:946
 msgid "Add this launcher to desktop"
 msgstr "Add this launcher to desktop"
 
-#: ../gnome-panel/menu.c:953
+#: ../gnome-panel/menu.c:962
 msgid "Entire menu"
 msgstr "Entire menu"
 
-#: ../gnome-panel/menu.c:963
+#: ../gnome-panel/menu.c:972
 msgid "Add this as drawer to panel"
 msgstr "Add this as drawer to panel"
 
-#: ../gnome-panel/menu.c:975
+#: ../gnome-panel/menu.c:984
 msgid "Add this as menu to panel"
 msgstr "Add this as menu to panel"
 
@@ -1135,40 +1135,32 @@ msgstr "_Activate Screensaver"
 msgid "_Lock Screen"
 msgstr "_Lock Screen"
 
-#: ../gnome-panel/panel-action-button.c:131
-msgid "_Kill Screensaver Daemon"
-msgstr "_Kill Screensaver Daemon"
-
-#: ../gnome-panel/panel-action-button.c:137
-msgid "Restart _Screensaver Daemon"
-msgstr "Restart _Screensaver Daemon"
-
-#: ../gnome-panel/panel-action-button.c:208
-#: ../gnome-panel/panel-action-button.c:221
-#: ../gnome-panel/panel-action-button.c:245
-#: ../gnome-panel/panel-menu-bar.c:420 ../gnome-panel/panel-menu-button.c:1007
-#: ../gnome-panel/panel-util.c:749
+#: ../gnome-panel/panel-action-button.c:196
+#: ../gnome-panel/panel-action-button.c:209
+#: ../gnome-panel/panel-action-button.c:233
+#: ../gnome-panel/panel-menu-bar.c:471 ../gnome-panel/panel-menu-button.c:1007
+#: ../gnome-panel/panel-util.c:747
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Could not execute '%s'"
 
-#: ../gnome-panel/panel-action-button.c:281
+#: ../gnome-panel/panel-action-button.c:269
 msgid "Could not connect to server"
 msgstr "Could not connect to server"
 
-#: ../gnome-panel/panel-action-button.c:313
+#: ../gnome-panel/panel-action-button.c:301
 msgid "Lock Screen"
 msgstr "Lock Screen"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:302
 msgid "Protect your computer from unauthorized use"
 msgstr "Protect your computer from unauthorized use"
 
-#: ../gnome-panel/panel-action-button.c:325
+#: ../gnome-panel/panel-action-button.c:313
 msgid "Log Out"
 msgstr "Log Out"
 
-#: ../gnome-panel/panel-action-button.c:326
+#: ../gnome-panel/panel-action-button.c:314
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1176,113 +1168,121 @@ msgstr ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 
-#: ../gnome-panel/panel-action-button.c:335
+#: ../gnome-panel/panel-action-button.c:323
 msgid "Run Application..."
 msgstr "Run Application..."
 
-#: ../gnome-panel/panel-action-button.c:336
+#: ../gnome-panel/panel-action-button.c:324
 msgid "Run an Application by entering a command"
 msgstr "Run an Application by entering a command"
 
-#: ../gnome-panel/panel-action-button.c:345
+#: ../gnome-panel/panel-action-button.c:333
 msgid "Search for Files..."
 msgstr "Search for Files..."
 
-#: ../gnome-panel/panel-action-button.c:346
+#: ../gnome-panel/panel-action-button.c:334
 msgid "Find files, folders, and documents on your computer"
 msgstr "Find files, folders, and documents on your computer"
 
-#: ../gnome-panel/panel-action-button.c:354
+#: ../gnome-panel/panel-action-button.c:342
 msgid "Take Screenshot..."
 msgstr "Take Screenshot..."
 
-#: ../gnome-panel/panel-action-button.c:355
+#: ../gnome-panel/panel-action-button.c:343
 msgid "Take a screenshot of your desktop"
 msgstr "Take a screenshot of your desktop"
 
-#: ../gnome-panel/panel-action-button.c:363
+#: ../gnome-panel/panel-action-button.c:351
 msgid "Force Quit"
 msgstr "Force Quit"
 
-#: ../gnome-panel/panel-action-button.c:364
+#: ../gnome-panel/panel-action-button.c:352
 msgid "Force a misbehaving application to quit"
 msgstr "Force a misbehaving application to quit"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:373
+#: ../gnome-panel/panel-action-button.c:361
 msgid "Connect to Server..."
 msgstr "Connect to Server..."
 
-#: ../gnome-panel/panel-action-button.c:374
+#: ../gnome-panel/panel-action-button.c:362
 msgid "Connect to a remote server"
 msgstr "Connect to a remote server"
 
-#: ../gnome-panel/panel-addto.c:102
+#: ../gnome-panel/panel-addto.c:110
 msgid "Custom Application Launcher"
 msgstr "Custom Application Launcher"
 
-#: ../gnome-panel/panel-addto.c:103
+#: ../gnome-panel/panel-addto.c:111
 msgid "Create a new launcher"
 msgstr "Create a new launcher"
 
-#: ../gnome-panel/panel-addto.c:113
+#: ../gnome-panel/panel-addto.c:121
 msgid "Application Launcher..."
 msgstr "Application Launcher..."
 
-#: ../gnome-panel/panel-addto.c:114
+#: ../gnome-panel/panel-addto.c:122
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "Launch a program already in the GNOME menu"
 
-#: ../gnome-panel/panel-addto.c:128
+#: ../gnome-panel/panel-addto.c:136
 msgid "Main Menu"
 msgstr "Main Menu"
 
-#: ../gnome-panel/panel-addto.c:129
+#: ../gnome-panel/panel-addto.c:137
 msgid "The main GNOME menu"
 msgstr "The main GNOME menu"
 
-#: ../gnome-panel/panel-addto.c:139
+#: ../gnome-panel/panel-addto.c:147
 msgid "Menu Bar"
 msgstr "Menu Bar"
 
-#: ../gnome-panel/panel-addto.c:140
+#: ../gnome-panel/panel-addto.c:148
 msgid "A custom menu bar"
 msgstr "A custom menu bar"
 
-#: ../gnome-panel/panel-addto.c:151
+#: ../gnome-panel/panel-addto.c:158
+msgid "Separator"
+msgstr "Separator"
+
+#: ../gnome-panel/panel-addto.c:159
+msgid "A separator to organize the panel items"
+msgstr "A separator to organize the panel items"
+
+#: ../gnome-panel/panel-addto.c:170
 msgid "A pop out drawer to store other items in"
 msgstr "A pop-out drawer to store other items in"
 
-#: ../gnome-panel/panel-addto.c:239
+#: ../gnome-panel/panel-addto.c:261
 msgid "(empty)"
 msgstr "(empty)"
 
-#: ../gnome-panel/panel-addto.c:374
+#: ../gnome-panel/panel-addto.c:401
 #: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "query returned exception %s\n"
 
-#: ../gnome-panel/panel-addto.c:978
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
-msgid "Select an _item to add to \"%s\":"
-msgstr "Select an _item to add to \"%s\":"
+msgid "Find an _item to add to \"%s\":"
+msgstr "Find an _item to add to \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:982
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Add to Drawer"
 msgstr "Add to Drawer"
 
-#: ../gnome-panel/panel-addto.c:984
-msgid "Select an _item to add to the drawer:"
-msgstr "Select an _item to add to the drawer:"
+#: ../gnome-panel/panel-addto.c:1061
+msgid "Find an _item to add to the drawer:"
+msgstr "Find an _item to add to the drawer:"
 
-#: ../gnome-panel/panel-addto.c:986
+#: ../gnome-panel/panel-addto.c:1063
 msgid "Add to Panel"
 msgstr "Add to Panel"
 
-#: ../gnome-panel/panel-addto.c:988
-msgid "Select an _item to add to the panel:"
-msgstr "Select an _item to add to the panel:"
+#: ../gnome-panel/panel-addto.c:1065
+msgid "Find an _item to add to the panel:"
+msgstr "Find an _item to add to the panel:"
 
 #: ../gnome-panel/panel-applet-frame.c:822
 #, c-format
@@ -1623,11 +1623,11 @@ msgstr "Open and search local, remote and recently-used documents and folders"
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "Change desktop appearance and behaviour, get help, or log out"
 
-#: ../gnome-panel/panel-menu-bar.c:115
+#: ../gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Applications"
 
-#: ../gnome-panel/panel-menu-bar.c:360 ../gnome-panel/panel-menu-button.c:688
+#: ../gnome-panel/panel-menu-bar.c:411 ../gnome-panel/panel-menu-button.c:688
 msgid "_Edit Menus"
 msgstr "_Edit Menus"
 
@@ -1668,22 +1668,22 @@ msgstr "Desktop"
 msgid "Open the desktop as a folder"
 msgstr "Open the desktop as a folder"
 
-#: ../gnome-panel/panel-menu-items.c:910
+#: ../gnome-panel/panel-menu-items.c:914
 msgid "Places"
 msgstr "Places"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:948
+#: ../gnome-panel/panel-menu-items.c:952
 msgid "Desktop Environment|Desktop"
 msgstr "Desktop"
 
-#: ../gnome-panel/panel-menu-items.c:1089
+#: ../gnome-panel/panel-menu-items.c:1093
 msgid "Could not launch menu item"
 msgstr "Could not launch menu item"
 
-#: ../gnome-panel/panel-menu-items.c:1101
+#: ../gnome-panel/panel-menu-items.c:1105
 msgid "Could not load menu item"
 msgstr "Could not load menu item"
 
@@ -1863,19 +1863,19 @@ msgstr "Use custom icon for object's button"
 msgid "Use custom path for menu contents"
 msgstr "Use custom path for menu contents"
 
-#: ../gnome-panel/panel-profile.c:747 ../gnome-panel/panel-profile.c:774
-#: ../gnome-panel/panel-profile.c:810 ../gnome-panel/panel-profile.c:1633
+#: ../gnome-panel/panel-profile.c:762 ../gnome-panel/panel-profile.c:789
+#: ../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1648
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Error reading GConf string value '%s': %s"
 
-#: ../gnome-panel/panel-profile.c:789 ../gnome-panel/panel-profile.c:1529
-#: ../gnome-panel/panel-profile.c:1602 ../gnome-panel/panel-profile.c:1665
+#: ../gnome-panel/panel-profile.c:804 ../gnome-panel/panel-profile.c:1544
+#: ../gnome-panel/panel-profile.c:1617 ../gnome-panel/panel-profile.c:1680
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Error reading GConf integer value '%s': %s"
 
-#: ../gnome-panel/panel-profile.c:1539
+#: ../gnome-panel/panel-profile.c:1554
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1884,7 +1884,7 @@ msgstr ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 
-#: ../gnome-panel/panel-profile.c:1617
+#: ../gnome-panel/panel-profile.c:1632
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Error reading GConf boolean value '%s': %s"
@@ -1909,12 +1909,12 @@ msgstr "Left"
 msgid "Right"
 msgstr "Right"
 
-#: ../gnome-panel/panel-properties-dialog.c:1017
+#: ../gnome-panel/panel-properties-dialog.c:1019
 msgid "Could not display properties dialog"
 msgstr "Could not display properties dialogue"
 
-#: ../gnome-panel/panel-properties-dialog.c:1018
-#: ../gnome-panel/panel-run-dialog.c:1818
+#: ../gnome-panel/panel-properties-dialog.c:1020
+#: ../gnome-panel/panel-run-dialog.c:1831
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "Unable to load file '%s'."
@@ -2077,27 +2077,27 @@ msgstr "Could not run command '%s'"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Could not convert '%s' from UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1163
+#: ../gnome-panel/panel-run-dialog.c:1171
 msgid "Choose a file to append to the command..."
 msgstr "Choose a file to append to the command..."
 
-#: ../gnome-panel/panel-run-dialog.c:1529
+#: ../gnome-panel/panel-run-dialog.c:1537
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Select an application to view its description."
 
-#: ../gnome-panel/panel-run-dialog.c:1561
+#: ../gnome-panel/panel-run-dialog.c:1574
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Will run command: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1592
+#: ../gnome-panel/panel-run-dialog.c:1605
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "URI list dropped on run dialogue had wrong format (%d) or length (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1817
+#: ../gnome-panel/panel-run-dialog.c:1830
 msgid "Could not display run dialog"
 msgstr "Could not display run dialogue"
 
@@ -2621,16 +2621,16 @@ msgstr "Details: %s"
 msgid "Icon '%s' not found"
 msgstr "Icon '%s' not found"
 
-#: ../gnome-panel/panel.c:471
+#: ../gnome-panel/panel.c:479
 #, c-format
 msgid "Open URL: %s"
 msgstr "Open URL: %s"
 
-#: ../gnome-panel/panel.c:1256
+#: ../gnome-panel/panel.c:1272
 msgid "Delete this drawer?"
 msgstr "Delete this drawer?"
 
-#: ../gnome-panel/panel.c:1257
+#: ../gnome-panel/panel.c:1273
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2638,15 +2638,15 @@ msgstr ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 
-#: ../gnome-panel/panel.c:1259
+#: ../gnome-panel/panel.c:1275
 msgid "Delete Drawer"
 msgstr "Delete Drawer"
 
-#: ../gnome-panel/panel.c:1261
+#: ../gnome-panel/panel.c:1277
 msgid "Delete this panel?"
 msgstr "Delete this panel?"
 
-#: ../gnome-panel/panel.c:1262
+#: ../gnome-panel/panel.c:1278
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2654,7 +2654,7 @@ msgstr ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 
-#: ../gnome-panel/panel.c:1264
+#: ../gnome-panel/panel.c:1280
 msgid "Delete Panel"
 msgstr "Delete Panel"
 
@@ -2670,46 +2670,46 @@ msgstr "Test Bonobo Applet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test Bonobo Applet Factory"
 
-#: ../libpanel-applet/panel-applet.c:1015
+#: ../libpanel-applet/panel-applet.c:1042
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Incomplete '%s' background type received"
 
-#: ../libpanel-applet/panel-applet.c:1029
+#: ../libpanel-applet/panel-applet.c:1056
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Incomplete '%s' background type received: %s"
 
-#: ../libpanel-applet/panel-applet.c:1038
+#: ../libpanel-applet/panel-applet.c:1065
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Failed to get pixmap %s"
 
-#: ../libpanel-applet/panel-applet.c:1045
+#: ../libpanel-applet/panel-applet.c:1072
 msgid "Unknown background type received"
 msgstr "Unknown background type received"
 
-#: ../libpanel-applet/panel-applet.c:1269
+#: ../libpanel-applet/panel-applet.c:1296
 msgid "The Applet's containing Panel's orientation"
 msgstr "The Applet's containing Panel's orientation"
 
-#: ../libpanel-applet/panel-applet.c:1277
+#: ../libpanel-applet/panel-applet.c:1304
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "The Applet's containing Panel's size in pixels"
 
-#: ../libpanel-applet/panel-applet.c:1285
+#: ../libpanel-applet/panel-applet.c:1312
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "The Applet's containing Panel's background colour or pixmap"
 
-#: ../libpanel-applet/panel-applet.c:1293
+#: ../libpanel-applet/panel-applet.c:1320
 msgid "The Applet's flags"
 msgstr "The Applet's flags"
 
-#: ../libpanel-applet/panel-applet.c:1301
+#: ../libpanel-applet/panel-applet.c:1328
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Ranges that hint what sizes are acceptable for the applet"
 
-#: ../libpanel-applet/panel-applet.c:1309
+#: ../libpanel-applet/panel-applet.c:1336
 msgid "The Applet's containing Panel is locked down"
 msgstr "The Applet's containing Panel is locked down"
 
