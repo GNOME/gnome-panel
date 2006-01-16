@@ -373,8 +373,11 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 				char       *displayname;
 
 				hostname = gnome_vfs_uri_get_host_name (bookmark->uri);
-				buffer = gnome_vfs_get_local_path_from_uri (full_uri);
-				displayname = g_filename_display_basename (buffer);
+				buffer = gnome_vfs_uri_get_path (bookmark->uri);
+				if (!buffer || !buffer[0])
+					displayname = g_strdup ("/");
+				else
+					displayname = g_filename_display_basename (buffer);
 				/* Translators: the first string is a path and
 				 * the second string is a hostname. nautilus
 				 * contains the same string to translate. */
