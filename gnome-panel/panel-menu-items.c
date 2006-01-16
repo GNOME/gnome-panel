@@ -375,7 +375,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 				hostname = gnome_vfs_uri_get_host_name (bookmark->uri);
 				buffer = gnome_vfs_get_local_path_from_uri (full_uri);
 				displayname = g_filename_display_basename (buffer);
-				/* Translators: the first string is a pathc and
+				/* Translators: the first string is a path and
 				 * the second string is a hostname. nautilus
 				 * contains the same string to translate. */
 				label = g_strdup_printf (_("%1$s on %2$s"), displayname, hostname);
@@ -1065,6 +1065,14 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	}
 
 	item = panel_menu_items_create_action_item (PANEL_ACTION_LOGOUT);
+	if (item != NULL) {
+		if (!separator_inserted)
+			add_menu_separator (menu);
+
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+	}
+
+	item = panel_menu_items_create_action_item (PANEL_ACTION_SHUTDOWN);
 	if (item != NULL) {
 		if (!separator_inserted)
 			add_menu_separator (menu);

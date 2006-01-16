@@ -36,6 +36,12 @@ void
 panel_session_request_logout (void)
 {
 	GnomeClient *client;
+	static int   recursion_guard = 0;
+
+	if (recursion_guard)
+		return;
+
+	recursion_guard++;
 
 	if (!(client = gnome_master_client ()))
 		return;
@@ -48,8 +54,10 @@ panel_session_request_logout (void)
 				   GNOME_SAVE_GLOBAL,
 				   TRUE,
 				   GNOME_INTERACT_ANY,
-				   FALSE,
+				   TRUE, /* do not use the gnome-session gui */
 				   TRUE);
+
+	recursion_guard--;
 }
 
 static void

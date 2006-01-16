@@ -1,3 +1,21 @@
+2006-01-16  Vincent Untz  <vuntz@gnome.org>
+
+	Add new logout/shutdown dialogs.
+
+	* Makefile.am: add panel-logout.[ch] and panel-gdm.[ch]
+	* panel-logout.[ch]: new, implements a logout dialog
+	* panel-gdm.[ch]: new, for communications with gdm
+	* panel-action-button.c: add a new shutdown button
+	(panel_action_logout): remove the recursion guard from here and use
+	the new logout dialog
+	(panel_action_shutdown): new
+	* panel-enums.h: add the new shutdown action button
+	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmarks):
+	fix comment
+	(panel_menu_items_append_lock_logout): append the shutdown item
+	* panel-session.c: (panel_session_request_logout): add recursion guard
+	here, don't tell gnome-session to show its logout dialog
+
 2006-01-14  Vincent Untz  <vuntz@gnome.org>
 
 	Forgot this changelog entry:

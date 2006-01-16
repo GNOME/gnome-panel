@@ -45,6 +45,7 @@
 #include "panel-run-dialog.h"
 #include "panel-a11y.h"
 #include "panel-lockdown.h"
+#include "panel-logout.h"
 
 #define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
 
@@ -74,6 +75,7 @@ static GConfEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_SCREENSHOT,     "screenshot"     },
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
 	{ PANEL_ACTION_CONNECT_SERVER, "connect-server" },
+	{ PANEL_ACTION_SHUTDOWN,       "shutdown"       },
 	{ 0,                           NULL             },
 };
 
@@ -148,16 +150,13 @@ panel_action_lock_invoke_menu (PanelActionButton *button,
 static void
 panel_action_logout (GtkWidget *widget)
 {
-	static int recursion_guard = 0;
+	panel_logout_new (PANEL_LOGOUT_DIALOG_LOGOUT);
+}
 
-	if (recursion_guard)
-		return;
-
-	recursion_guard++;
-
-	panel_session_request_logout ();
-
-	recursion_guard--;
+static void
+panel_action_shutdown (GtkWidget *widget)
+{
+	panel_logout_new (PANEL_LOGOUT_DIALOG_SHUTDOWN);
 }
 
 /* Run Application
@@ -363,6 +362,16 @@ static PanelAction actions [] = {
 		"gospanel-563", //FIXME
 		"ACTION:connect-server:NEW",
 		panel_action_connect_server, NULL, NULL, NULL
+	},
+	{
+		PANEL_ACTION_SHUTDOWN,
+		"gnome-shutdown",
+		N_("Shut down"),
+		N_("Shut down the computer"),
+		"gospanel-20",
+		"ACTION:shutdown:NEW",
+		panel_action_shutdown, NULL, NULL,
+		panel_lockdown_get_disable_log_out
 	}
 };
 
