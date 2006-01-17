@@ -8,13 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-15 23:24-0500\n"
+"POT-Creation-Date: 2006-01-17 14:43-0500\n"
 "PO-Revision-Date: 2005-07-18 01:10-0500\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -45,7 +46,7 @@ msgstr "_About"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:731
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:740
 #: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:404
 #: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
@@ -1008,7 +1009,7 @@ msgid "_Add to Drawer..."
 msgstr "_Add to Drawer..."
 
 #: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:928
-#: ../gnome-panel/panel-action-button.c:131
+#: ../gnome-panel/panel-action-button.c:133
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Properties"
@@ -1127,40 +1128,40 @@ msgstr "Add this as drawer to panel"
 msgid "Add this as menu to panel"
 msgstr "Add this as menu to panel"
 
-#: ../gnome-panel/panel-action-button.c:119
+#: ../gnome-panel/panel-action-button.c:121
 msgid "_Activate Screensaver"
 msgstr "_Activate Screensaver"
 
-#: ../gnome-panel/panel-action-button.c:125
+#: ../gnome-panel/panel-action-button.c:127
 msgid "_Lock Screen"
 msgstr "_Lock Screen"
 
-#: ../gnome-panel/panel-action-button.c:196
-#: ../gnome-panel/panel-action-button.c:209
-#: ../gnome-panel/panel-action-button.c:233
+#: ../gnome-panel/panel-action-button.c:195
+#: ../gnome-panel/panel-action-button.c:208
+#: ../gnome-panel/panel-action-button.c:232
 #: ../gnome-panel/panel-menu-bar.c:471 ../gnome-panel/panel-menu-button.c:1007
 #: ../gnome-panel/panel-util.c:747
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Could not execute '%s'"
 
-#: ../gnome-panel/panel-action-button.c:269
+#: ../gnome-panel/panel-action-button.c:268
 msgid "Could not connect to server"
 msgstr "Could not connect to server"
 
-#: ../gnome-panel/panel-action-button.c:301
+#: ../gnome-panel/panel-action-button.c:300
 msgid "Lock Screen"
 msgstr "Lock Screen"
 
-#: ../gnome-panel/panel-action-button.c:302
+#: ../gnome-panel/panel-action-button.c:301
 msgid "Protect your computer from unauthorized use"
 msgstr "Protect your computer from unauthorized use"
 
-#: ../gnome-panel/panel-action-button.c:313
+#: ../gnome-panel/panel-action-button.c:312
 msgid "Log Out"
 msgstr "Log Out"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:313
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1168,46 +1169,54 @@ msgstr ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 
-#: ../gnome-panel/panel-action-button.c:323
+#: ../gnome-panel/panel-action-button.c:322
 msgid "Run Application..."
 msgstr "Run Application..."
 
-#: ../gnome-panel/panel-action-button.c:324
+#: ../gnome-panel/panel-action-button.c:323
 msgid "Run an Application by entering a command"
 msgstr "Run an Application by entering a command"
 
-#: ../gnome-panel/panel-action-button.c:333
+#: ../gnome-panel/panel-action-button.c:332
 msgid "Search for Files..."
 msgstr "Search for Files..."
 
-#: ../gnome-panel/panel-action-button.c:334
+#: ../gnome-panel/panel-action-button.c:333
 msgid "Find files, folders, and documents on your computer"
 msgstr "Find files, folders, and documents on your computer"
 
-#: ../gnome-panel/panel-action-button.c:342
+#: ../gnome-panel/panel-action-button.c:341
 msgid "Take Screenshot..."
 msgstr "Take Screenshot..."
 
-#: ../gnome-panel/panel-action-button.c:343
+#: ../gnome-panel/panel-action-button.c:342
 msgid "Take a screenshot of your desktop"
 msgstr "Take a screenshot of your desktop"
 
-#: ../gnome-panel/panel-action-button.c:351
+#: ../gnome-panel/panel-action-button.c:350
 msgid "Force Quit"
 msgstr "Force Quit"
 
-#: ../gnome-panel/panel-action-button.c:352
+#: ../gnome-panel/panel-action-button.c:351
 msgid "Force a misbehaving application to quit"
 msgstr "Force a misbehaving application to quit"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:361
+#: ../gnome-panel/panel-action-button.c:360
 msgid "Connect to Server..."
 msgstr "Connect to Server..."
 
-#: ../gnome-panel/panel-action-button.c:362
+#: ../gnome-panel/panel-action-button.c:361
 msgid "Connect to a remote server"
 msgstr "Connect to a remote server"
+
+#: ../gnome-panel/panel-action-button.c:369
+msgid "Shut Down"
+msgstr "Shut Down"
+
+#: ../gnome-panel/panel-action-button.c:370
+msgid "Shut down the computer"
+msgstr "Shut down the computer"
 
 #: ../gnome-panel/panel-addto.c:110
 msgid "Custom Application Launcher"
@@ -1611,6 +1620,48 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "If true, tooltips are shown for objects in panels."
 
+#: ../gnome-panel/panel-logout.c:160
+#, c-format
+msgid "You will be automatically logged out in %d second."
+msgid_plural "You will be automatically logged out in %d seconds."
+msgstr[0] "You will be logged out automatically in %d second."
+msgstr[1] "You will be logged out automatically in %d seconds."
+
+#: ../gnome-panel/panel-logout.c:167
+#, c-format
+msgid "This system will be automatically shut down in %d second."
+msgid_plural "This system will be automatically shut down in %d seconds."
+msgstr[0] "This system will shut down automatically in %d second."
+msgstr[1] "This system will shut down automatically in %d seconds."
+
+#: ../gnome-panel/panel-logout.c:234
+msgid "Are you sure you want to log out now?"
+msgstr "Are you sure you want to log out now?"
+
+#: ../gnome-panel/panel-logout.c:241
+msgid "_Switch User"
+msgstr "_Switch User"
+
+#: ../gnome-panel/panel-logout.c:247
+msgid "_Log Out"
+msgstr "_Log Out"
+
+#: ../gnome-panel/panel-logout.c:252
+msgid "Are you sure you want to shut down this system now?"
+msgstr "Are you sure you want to shut down this system now?"
+
+#: ../gnome-panel/panel-logout.c:260
+msgid "_Suspend"
+msgstr "_Suspend"
+
+#: ../gnome-panel/panel-logout.c:264
+msgid "_Reboot"
+msgstr "_Reboot"
+
+#: ../gnome-panel/panel-logout.c:270
+msgid "_Shut Down"
+msgstr "_Shut Down"
+
 #: ../gnome-panel/panel-menu-bar.c:74
 msgid "Browse and run installed applications"
 msgstr "Browse and run installed applications"
@@ -1640,19 +1691,20 @@ msgstr "Could not open location '%s'"
 msgid "Bookmarks"
 msgstr "Bookmarks"
 
-#. Translators: the first string is a pathc and
-#. * the second string is a hostname. nautilus
-#. * contains the same string to translate.
-#: ../gnome-panel/panel-menu-items.c:381
+#. Translators: the first string is a
+#. * path and the second string is a
+#. * hostname. nautilus contains the same
+#. * string to translate.
+#: ../gnome-panel/panel-menu-items.c:386
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s on %2$s"
 
-#: ../gnome-panel/panel-menu-items.c:477
+#: ../gnome-panel/panel-menu-items.c:486
 msgid "Network Places"
 msgstr "Network Places"
 
-#: ../gnome-panel/panel-menu-items.c:480
+#: ../gnome-panel/panel-menu-items.c:489
 msgid "Removable Media"
 msgstr "Removable Media"
 
@@ -1660,30 +1712,30 @@ msgstr "Removable Media"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:551
+#: ../gnome-panel/panel-menu-items.c:560
 msgid "Desktop Folder|Desktop"
 msgstr "Desktop"
 
-#: ../gnome-panel/panel-menu-items.c:552
+#: ../gnome-panel/panel-menu-items.c:561
 msgid "Open the desktop as a folder"
 msgstr "Open the desktop as a folder"
 
-#: ../gnome-panel/panel-menu-items.c:914
+#: ../gnome-panel/panel-menu-items.c:923
 msgid "Places"
 msgstr "Places"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:952
+#: ../gnome-panel/panel-menu-items.c:961
 msgid "Desktop Environment|Desktop"
 msgstr "Desktop"
 
-#: ../gnome-panel/panel-menu-items.c:1093
+#: ../gnome-panel/panel-menu-items.c:1110
 msgid "Could not launch menu item"
 msgstr "Could not launch menu item"
 
-#: ../gnome-panel/panel-menu-items.c:1105
+#: ../gnome-panel/panel-menu-items.c:1122
 msgid "Could not load menu item"
 msgstr "Could not load menu item"
 
