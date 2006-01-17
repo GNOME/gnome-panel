@@ -1,5 +1,14 @@
 2006-01-17  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-logout.c: (panel_logout_init): init timeout to 0
+	(panel_logout_destroy): forget the current dialog
+	(panel_logout_set_timeout): new, set the timeout
+	(panel_logout_new): if there's already a logout dialog of the same
+	type, use it; if it's of another type, destroy it.
+	use panel_logout_set_timeout()
+
+2006-01-17  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-logout.c: (panel_logout_timeout): fix timeout label so that
 	it really show the number of seconds. Fix bug #327321.
 

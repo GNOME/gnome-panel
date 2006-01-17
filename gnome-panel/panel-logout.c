@@ -54,8 +54,9 @@ struct _PanelLogoutDialogPrivate {
 	unsigned int          timeout_id;
 
 	unsigned int          default_response;
-	
 };
+
+static PanelLogoutDialog *current_dialog = NULL;
 
 static void panel_logout_destroy (PanelLogoutDialog *logout_dialog,
 				  gpointer           data);
@@ -77,7 +78,7 @@ panel_logout_init (PanelLogoutDialog *logout_dialog)
 	logout_dialog->priv = PANEL_LOGOUT_DIALOG_GET_PRIVATE (logout_dialog);
 
 	logout_dialog->priv->timeout_id = 0;
-	logout_dialog->priv->timeout    = AUTOMATIC_ACTION_TIMEOUT;
+	logout_dialog->priv->timeout    = 0;
 	logout_dialog->priv->default_response = GTK_RESPONSE_CANCEL;
 
 	//FIXME gtk_window_set_transient_for (GTK_WINDOW (logout_dialog), );
@@ -98,6 +99,8 @@ panel_logout_destroy (PanelLogoutDialog *logout_dialog,
 	if (logout_dialog->priv->timeout_id != 0)
 		g_source_remove (logout_dialog->priv->timeout_id);
 	logout_dialog->priv->timeout_id = 0;
+
+	current_dialog = NULL;
 }
 
 static void
@@ -181,8 +184,23 @@ panel_logout_timeout (gpointer data)
 	return TRUE;
 }
 
+static void
+panel_logout_set_timeout (PanelLogoutDialog *logout_dialog)
+{
+	logout_dialog->priv->timeout = AUTOMATIC_ACTION_TIMEOUT;
+
+	/* Sets the secondary text */
+	panel_logout_timeout (logout_dialog);
+
+	if (logout_dialog->priv->timeout_id != 0)
+		g_source_remove (logout_dialog->priv->timeout_id);
+
+	logout_dialog->priv->timeout_id = g_timeout_add (1000,
+							 panel_logout_timeout,
+							 logout_dialog);
+}
+
 //FIXME should take a GdkScreen as argument
-//FIXME we shouldn't be able to have two such dialogs
 void
 panel_logout_new (PanelLogoutDialogType type)
 {
@@ -190,7 +208,19 @@ panel_logout_new (PanelLogoutDialogType type)
 	char              *icon_name;
 	char              *primary_text;
 
+	if (current_dialog != NULL) {
+		if (current_dialog->priv->type == type) {
+			panel_logout_set_timeout (current_dialog);
+			//FIXME center the dialog on screen?
+			return;
+		} else {
+			gtk_widget_destroy (GTK_WIDGET (current_dialog));
+		}
+	}
+
 	logout_dialog = g_object_new (PANEL_TYPE_LOGOUT_DIALOG, NULL);
+	current_dialog = logout_dialog;
+
 	gtk_window_set_title (GTK_WINDOW (logout_dialog), "");
 
 	logout_dialog->priv->type = type;
@@ -222,7 +252,7 @@ panel_logout_new (PanelLogoutDialogType type)
 		primary_text   = _("Are you sure you want to shut down this "
 				   "system now?");
 
-		logout_dialog->priv->default_response = PANEL_LOGOUT_DIALOG_SHUTDOWN;
+		logout_dialog->priv->default_response = PANEL_LOGOUT_RESPONSE_SHUTDOWN;
 		//FIXME see previous FIXME
 
 		if (gdm_supports_logout_action (GDM_LOGOUT_ACTION_SUSPEND))
@@ -253,12 +283,7 @@ panel_logout_new (PanelLogoutDialogType type)
 	gtk_dialog_set_default_response (GTK_DIALOG (logout_dialog),
 					 logout_dialog->priv->default_response);
 
-	/* Sets the secondary text */
-	panel_logout_timeout (logout_dialog);
-
-	logout_dialog->priv->timeout_id = g_timeout_add (1000,
-							 panel_logout_timeout,
-							 logout_dialog);
+	panel_logout_set_timeout (logout_dialog);
 
 	gtk_widget_show (GTK_WIDGET (logout_dialog));
 }
