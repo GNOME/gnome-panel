@@ -173,6 +173,7 @@ panel_logout_timeout (gpointer data)
 
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (logout_dialog),
 						  secondary_text,
+						  logout_dialog->priv->timeout,
 						  NULL);
 
 	logout_dialog->priv->timeout--;
