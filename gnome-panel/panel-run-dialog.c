@@ -1753,8 +1753,7 @@ panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 
 static PanelRunDialog *
 panel_run_dialog_new (GdkScreen *screen,
-		      GladeXML  *gui,
-		      guint32    activate_time)
+		      GladeXML  *gui)
 {
 	PanelRunDialog *dialog;
 
@@ -1789,9 +1788,6 @@ panel_run_dialog_new (GdkScreen *screen,
 	gtk_window_set_screen (GTK_WINDOW (dialog->run_dialog), screen);
 
 	gtk_widget_grab_focus (dialog->gtk_entry);
-	gtk_widget_realize (dialog->run_dialog);
-	gdk_x11_window_set_user_time (dialog->run_dialog->window,
-				      activate_time);
 	gtk_widget_show (dialog->run_dialog);
 	
 	return dialog;
@@ -1815,9 +1811,8 @@ panel_run_dialog_present (GdkScreen *screen,
 
 	if (static_dialog) {
 		gtk_window_set_screen (GTK_WINDOW (static_dialog->run_dialog), screen);
-		gdk_x11_window_set_user_time (static_dialog->run_dialog->window,
+		gtk_window_present_with_time (GTK_WINDOW (static_dialog->run_dialog),
 					      activate_time);
-		gtk_window_present (GTK_WINDOW (static_dialog->run_dialog));
 		gtk_widget_grab_focus (static_dialog->gtk_entry);
 		return;
 	}
@@ -1833,7 +1828,7 @@ panel_run_dialog_present (GdkScreen *screen,
 		return;
 	}
 
-	static_dialog = panel_run_dialog_new (screen, gui, activate_time);
+	static_dialog = panel_run_dialog_new (screen, gui);
 
 	g_signal_connect_swapped (static_dialog->run_dialog, "destroy",
 				  G_CALLBACK (panel_run_dialog_static_dialog_destroyed),

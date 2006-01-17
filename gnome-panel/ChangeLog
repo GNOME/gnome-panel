@@ -1,5 +1,18 @@
 2006-01-17  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-action-button.c: (panel_action_logout): update to pass the
+	screen and the activate time to panel_logout_new()
+	(panel_action_shutdown): ditto
+	(panel_action_run_program): indentation love
+	* panel-logout.[ch]: (panel_logout_new): put the window on the correct
+	screen, present it with the correct time if it already exists
+	* panel-run-dialog.c: (panel_run_dialog_new): we don't need the
+	activate time here
+	(panel_run_dialog_present): use gtk_window_present_with_time(), update
+	for panel_run_dialog_new() change
+
+2006-01-17  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-logout.c: (panel_logout_init): put the window above other
 	windows and on all workspaces by default
 

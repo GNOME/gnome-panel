@@ -150,13 +150,17 @@ panel_action_lock_invoke_menu (PanelActionButton *button,
 static void
 panel_action_logout (GtkWidget *widget)
 {
-	panel_logout_new (PANEL_LOGOUT_DIALOG_LOGOUT);
+	panel_logout_new (PANEL_LOGOUT_DIALOG_LOGOUT,
+			  gtk_widget_get_screen (widget),
+			  gtk_get_current_event_time ());
 }
 
 static void
 panel_action_shutdown (GtkWidget *widget)
 {
-	panel_logout_new (PANEL_LOGOUT_DIALOG_SHUTDOWN);
+	panel_logout_new (PANEL_LOGOUT_DIALOG_SHUTDOWN,
+			  gtk_widget_get_screen (widget),
+			  gtk_get_current_event_time ());
 }
 
 /* Run Application
@@ -164,7 +168,8 @@ panel_action_shutdown (GtkWidget *widget)
 static void
 panel_action_run_program (GtkWidget *widget)
 {
-	panel_run_dialog_present (gtk_widget_get_screen (widget), gtk_get_current_event_time ());
+	panel_run_dialog_present (gtk_widget_get_screen (widget),
+				  gtk_get_current_event_time ());
 }
 
 /* Search For Files

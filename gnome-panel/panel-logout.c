@@ -200,9 +200,10 @@ panel_logout_set_timeout (PanelLogoutDialog *logout_dialog)
 							 logout_dialog);
 }
 
-//FIXME should take a GdkScreen as argument
 void
-panel_logout_new (PanelLogoutDialogType type)
+panel_logout_new (PanelLogoutDialogType  type,
+		  GdkScreen             *screen,
+		  guint32                activate_time)
 {
 	PanelLogoutDialog *logout_dialog;
 	char              *icon_name;
@@ -210,8 +211,12 @@ panel_logout_new (PanelLogoutDialogType type)
 
 	if (current_dialog != NULL) {
 		if (current_dialog->priv->type == type) {
+			gtk_window_set_screen (GTK_WINDOW (current_dialog),
+					       screen);
+			gtk_window_present_with_time (GTK_WINDOW (current_dialog),
+						      activate_time);
 			panel_logout_set_timeout (current_dialog);
-			//FIXME center the dialog on screen?
+			//FIXME center the dialog on screen, and reset sticky and above_all?
 			return;
 		} else {
 			gtk_widget_destroy (GTK_WIDGET (current_dialog));
@@ -233,7 +238,6 @@ panel_logout_new (PanelLogoutDialogType type)
 		icon_name      = "gnome-logout";
 		primary_text   = _("Are you sure you want to log out now?");
 		// FIXME need to verify that this response can be used
-		// FIXME set default button
 		logout_dialog->priv->default_response = PANEL_LOGOUT_DIALOG_LOGOUT;
 
 		//FIXME is gdm running?
@@ -285,5 +289,6 @@ panel_logout_new (PanelLogoutDialogType type)
 
 	panel_logout_set_timeout (logout_dialog);
 
+	gtk_window_set_screen (GTK_WINDOW (logout_dialog), screen);
 	gtk_widget_show (GTK_WIDGET (logout_dialog));
 }

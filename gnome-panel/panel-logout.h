@@ -57,7 +57,9 @@ struct _PanelLogoutDialogClass {
 
 GType  panel_logout_get_type          (void) G_GNUC_CONST;	
 
-void panel_logout_new (PanelLogoutDialogType type);
+void panel_logout_new (PanelLogoutDialogType  type,
+		       GdkScreen             *screen,
+		       guint32                activate_time);
 
 G_END_DECLS
 
