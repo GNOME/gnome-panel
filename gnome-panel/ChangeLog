@@ -1,5 +1,16 @@
 2006-01-17  Vincent Untz  <vuntz@gnome.org>
 
+	Fix crash with logout dialogs when esd and sound events are enabled.
+	Fix bug #327320.
+
+	* panel-logout.c: (panel_logout_set_property): new
+	(panel_logout_get_property): new
+	(panel_logout_class_init): override the "message-type" property of
+	GtkMessageDialog, so that our code is called when libgnomeui reads
+	the property (and not gtk+ code).
+
+2006-01-17  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-action-button.c: (panel_action_logout): update to pass the
 	screen and the activate time to panel_logout_new()
 	(panel_action_shutdown): ditto

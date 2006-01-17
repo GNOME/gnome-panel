@@ -64,11 +64,62 @@ static void panel_logout_response (GtkWidget *logout_dialog,
 				   guint      response_id,
 				   gpointer   data);
 
+enum {
+  PROP_0,
+  PROP_MESSAGE_TYPE
+};
 G_DEFINE_TYPE (PanelLogoutDialog, panel_logout, GTK_TYPE_MESSAGE_DIALOG);
+
+static void 
+panel_logout_set_property (GObject      *object,
+			   guint         prop_id,
+			   const GValue *value,
+			   GParamSpec   *pspec)
+{
+	switch (prop_id) {
+	case PROP_MESSAGE_TYPE:
+		break;
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		break;
+	}
+}
+
+static void 
+panel_logout_get_property (GObject     *object,
+			   guint        prop_id,
+			   GValue      *value,
+			   GParamSpec  *pspec)
+{
+	switch (prop_id) {
+	case PROP_MESSAGE_TYPE:
+		g_value_set_enum (value, GTK_MESSAGE_WARNING);
+		break;
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		break;
+	}
+}
 
 static void
 panel_logout_class_init (PanelLogoutDialogClass *klass)
 {
+	GObjectClass *gobject_class;
+
+	gobject_class = G_OBJECT_CLASS (klass);
+
+	/* This is a workaround to avoid a stupid crash: libgnomeui
+	 * listens for the "show" signal on all GtkMessageDialog and
+	 * gets the "message-type" of the dialogs. We will crash when
+	 * it accesses this property if we don't override it since we
+	 * didn't define it. */
+	gobject_class->set_property = panel_logout_set_property;
+	gobject_class->get_property = panel_logout_get_property;
+
+	g_object_class_override_property (gobject_class,
+					  PROP_MESSAGE_TYPE,
+					  "message-type");
+
 	g_type_class_add_private (klass, sizeof (PanelLogoutDialogPrivate));
 }
 
