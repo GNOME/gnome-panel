@@ -287,7 +287,7 @@ panel_logout_new (PanelLogoutDialogType  type,
 	switch (type) {
 	case PANEL_LOGOUT_DIALOG_LOGOUT:
 		icon_name      = "gnome-logout";
-		primary_text   = _("Are you sure you want to log out now?");
+		primary_text   = _("Log out of this system now?");
 		// FIXME need to verify that this response can be used
 		logout_dialog->priv->default_response = PANEL_LOGOUT_DIALOG_LOGOUT;
 
@@ -304,8 +304,7 @@ panel_logout_new (PanelLogoutDialogType  type,
 		break;
 	case PANEL_LOGOUT_DIALOG_SHUTDOWN:
 		icon_name      = "gnome-shutdown";
-		primary_text   = _("Are you sure you want to shut down this "
-				   "system now?");
+		primary_text   = _("Shut down this system now?");
 
 		logout_dialog->priv->default_response = PANEL_LOGOUT_RESPONSE_SHUTDOWN;
 		//FIXME see previous FIXME
