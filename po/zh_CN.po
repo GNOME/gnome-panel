@@ -5,21 +5,21 @@
 #   Updated and QA by Zipeco <zipeco@btamail.net.cn>, 2002
 #   Updated and QA by WangLi <charlesw1234@163.com>, 2002
 #   Updated by He Qiangqiang <carton@linux.net.cn>, 2002
-#   Funda Wang <fundawang@linux.net.cn>, 2003-2005
+#   Funda Wang <fundawang@linux.net.cn>, 2003-2006
 # Xiong Jiang <jxiong@offtopic.org>, 2003
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-18 06:07+0100\n"
-"PO-Revision-Date: 2005-12-18 19:41+0800\n"
+"POT-Creation-Date: 2006-01-18 07:05+0100\n"
+"PO-Revision-Date: 2006-01-18 20:39+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -50,8 +50,8 @@ msgstr "关于(_A)"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:743
-#: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:291
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:745
+#: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:404
 #: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
 msgstr "帮助(_H)"
@@ -64,7 +64,7 @@ msgid "_Preferences"
 msgstr "首选项(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2723
+#: ../applets/clock/clock.c:2706
 msgid "Clock"
 msgstr "时钟"
 
@@ -88,12 +88,12 @@ msgstr "%H:%M:%S"
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1780
+#: ../applets/clock/clock.c:311 ../applets/clock/clock.c:1765
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #: ../applets/clock/clock.c:311 ../applets/clock/clock.c:632
-#: ../applets/clock/clock.c:1782
+#: ../applets/clock/clock.c:1767
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -147,109 +147,109 @@ msgstr "单击可查看月历"
 msgid "%b %d"
 msgstr "%-m月%-d日"
 
-#: ../applets/clock/clock.c:964
+#: ../applets/clock/clock.c:984
 msgid "Tasks"
 msgstr "任务"
 
-#: ../applets/clock/clock.c:1114
+#: ../applets/clock/clock.c:1134
 msgid "All Day"
 msgstr "全天"
 
-#: ../applets/clock/clock.c:1153
+#: ../applets/clock/clock.c:1173
 msgid "Appointments"
 msgstr "约会"
 
-#: ../applets/clock/clock.c:1385
+#: ../applets/clock/clock.c:1405
 msgid "Calendar"
 msgstr "日历"
 
-#: ../applets/clock/clock.c:1674
+#: ../applets/clock/clock.c:1694
 msgid "Computer Clock"
 msgstr "计算机时钟"
 
-#: ../applets/clock/clock.c:1775
+#: ../applets/clock/clock.c:1760
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1777
+#: ../applets/clock/clock.c:1762
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:1819
+#: ../applets/clock/clock.c:1804
 msgid "%A, %B %d %Y"
 msgstr "%Y年%-m月%-d日%A"
 
-#: ../applets/clock/clock.c:1876
+#: ../applets/clock/clock.c:1861
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "启动时间配置工具失败：%s"
 
-#: ../applets/clock/clock.c:1912
+#: ../applets/clock/clock.c:1897
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "找不到用于配置日期和时间的程序。可能没有安装？"
 
-#: ../applets/clock/clock.c:2384
+#: ../applets/clock/clock.c:2367
 msgid "Custom format"
 msgstr "自定义格式"
 
-#: ../applets/clock/clock.c:2505 ../applets/clock/clock.c:2682
+#: ../applets/clock/clock.c:2488 ../applets/clock/clock.c:2665
 #: ../applets/fish/fish.c:158 ../applets/notification_area/main.c:82
-#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
-#: ../applets/wncklet/workspace-switcher.c:241
+#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:124
+#: ../applets/wncklet/workspace-switcher.c:238
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "显示帮助时发生错误：%s"
 
-#: ../applets/clock/clock.c:2540
+#: ../applets/clock/clock.c:2523
 msgid "Clock Preferences"
 msgstr "时钟首选项"
 
-#: ../applets/clock/clock.c:2564
+#: ../applets/clock/clock.c:2547
 msgid "Clock _type:"
 msgstr "时钟类型(_T)："
 
-#: ../applets/clock/clock.c:2574
+#: ../applets/clock/clock.c:2557
 msgid "12 hour"
 msgstr "12 小时"
 
-#: ../applets/clock/clock.c:2575
+#: ../applets/clock/clock.c:2558
 msgid "24 hour"
 msgstr "24 小时"
 
-#: ../applets/clock/clock.c:2576
+#: ../applets/clock/clock.c:2559
 msgid "UNIX time"
 msgstr "UNIX 时间"
 
-#: ../applets/clock/clock.c:2577
+#: ../applets/clock/clock.c:2560
 msgid "Internet time"
 msgstr "Internet 时间"
 
-#: ../applets/clock/clock.c:2585
+#: ../applets/clock/clock.c:2568
 msgid "Custom _format:"
 msgstr "自定义格式(_F)："
 
-#: ../applets/clock/clock.c:2604
+#: ../applets/clock/clock.c:2587
 msgid "Show _seconds"
 msgstr "显示秒(_S)"
 
-#: ../applets/clock/clock.c:2613
+#: ../applets/clock/clock.c:2596
 msgid "Show _date"
 msgstr "显示日期(_D)"
 
-#: ../applets/clock/clock.c:2622
+#: ../applets/clock/clock.c:2605
 msgid "Use _UTC"
 msgstr "使用 _UTC"
 
-#: ../applets/clock/clock.c:2726
+#: ../applets/clock/clock.c:2709
 msgid "The Clock displays the current time and date"
 msgstr "时钟显示当前时间和日期"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2729 ../applets/fish/fish.c:583
+#: ../applets/clock/clock.c:2712 ../applets/fish/fish.c:583
 #: ../applets/notification_area/main.c:133
-#: ../applets/wncklet/showdesktop.c:510 ../applets/wncklet/window-list.c:783
+#: ../applets/wncklet/showdesktop.c:497 ../applets/wncklet/window-list.c:784
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:555
 #: ../gnome-panel/panel-context-menu.c:130
@@ -263,20 +263,6 @@ msgstr ""
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
-#. or 12 hour mode by default. The only valid values for this are "24" and
-#. "12". If your locale uses 24 hour time notation, translate this to "24".
-#. If your locale uses 12 hour time notation with am/pm, translate this to "12".
-#.
-#. Do NOT translate this into anything else than "24" or "12". For example,
-#. if you translate this to "۲۴" or anything else that isn't "24" or
-#. "12", things will not work.
-#.
-#: ../applets/clock/clock.schemas.in.h:11
-msgid "24"
-msgstr "24"
-
-#. Translators:
-#. This controls whether the GNOME panel clock should display time in 24 hour mode
 #. or 12 hour mode by default. The only valid values for this are "24-hour" and
 #. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
 #. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
@@ -285,55 +271,55 @@ msgstr "24"
 #. if you translate this to "24 sata" or anything else that isn't "24-hour" or
 #. "12-hour", things will not work.
 #.
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:11
 msgid "24-hour"
 msgstr "24-hour"
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:12
 msgid "Custom format of the clock"
 msgstr "时钟的自定义格式"
 
-#: ../applets/clock/clock.schemas.in.h:24
+#: ../applets/clock/clock.schemas.in.h:13
 msgid "Hour format"
 msgstr "小时格式"
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:14
 msgid "If true, display date in the clock, in addition to time."
 msgstr "如果为 true，则在时钟上除了显示时间外，还要显示日期。"
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:15
 msgid "If true, display seconds in time."
 msgstr "如果为 true，则显示时间时显示秒数。"
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:16
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "如果为 true，则显示 UTC 时区的时间。"
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:17
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "如果为 true，则当鼠标在时钟上停留时在工具提示中显示日期。"
 
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:18
 msgid "If true, show week numbers in the calendar."
 msgstr "如果为 true，则在日历中显示周序号。"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Show date in clock"
 msgstr "在时钟上显示日期"
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:20
 msgid "Show date in tooltip"
 msgstr "在提示中显示日期"
 
-#: ../applets/clock/clock.schemas.in.h:32
+#: ../applets/clock/clock.schemas.in.h:21
 msgid "Show time with seconds"
 msgstr "显示带秒的时间"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "Show week numbers in calendar"
 msgstr "在日历中显示周序号"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:23
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -341,7 +327,7 @@ msgstr ""
 "在 GNOME 2.6 中不推荐使用此键，而应该使用“format”键。此大纲仅为与旧版本兼容而"
 "保留。"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:24
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -350,7 +336,7 @@ msgstr ""
 "当 format 键设为“custom”时，此键指定了时钟小程序要使用的格式。您可以选择 "
 "strftime() 明白的格式符来获取特定格式。"
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:25
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -368,23 +354,23 @@ msgstr ""
 "已过的秒数。如果设定为“custom”，时钟将会根据 custom_format 键中指定的格式来显"
 "示时间。"
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:26
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "此处指定了配置时间所要运行的程序。"
 
-#: ../applets/clock/clock.schemas.in.h:38
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "Time configuration tool"
 msgstr "时间配置工具"
 
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "Use Internet time"
 msgstr "使用 Internet 时间"
 
-#: ../applets/clock/clock.schemas.in.h:40
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "Use UNIX time"
 msgstr "使用 UNIX 时间"
 
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:30
 msgid "Use UTC"
 msgstr "使用 UTC"
 
@@ -500,7 +486,7 @@ msgstr ""
 "\n"
 "细节：%s"
 
-#: ../applets/fish/fish.c:1633
+#: ../applets/fish/fish.c:1597
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -508,7 +494,7 @@ msgstr ""
 "需要给我换水了！\n"
 "(看看今天几号了)"
 
-#: ../applets/fish/fish.c:1727
+#: ../applets/fish/fish.c:1691
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s 小鱼，预知幸福"
@@ -637,15 +623,15 @@ msgstr "通知区域"
 msgid "Notification Area Factory"
 msgstr "通知区域车间"
 
-#: ../applets/notification_area/eggtraymanager.c:154
+#: ../applets/notification_area/eggtraymanager.c:146
 msgid "Orientation"
 msgstr "方向"
 
-#: ../applets/notification_area/eggtraymanager.c:155
+#: ../applets/notification_area/eggtraymanager.c:147
 msgid "The orientation of the tray."
 msgstr "托盘的方向。"
 
-#: ../applets/notification_area/main.c:342
+#: ../applets/notification_area/main.c:306
 msgid "Panel Notification Area"
 msgstr "面板通知区域"
 
@@ -674,7 +660,7 @@ msgid "Switch between workspaces"
 msgstr "在工作区间切换"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:786
+#: ../applets/wncklet/window-list.c:787
 msgid "Window List"
 msgstr "窗口列表"
 
@@ -683,7 +669,7 @@ msgid "Window Navigation Applet Factory"
 msgstr "窗口导航小程序车间"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:261
+#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:241
 msgid "Window Selector"
 msgstr "窗口选择器"
 
@@ -692,38 +678,38 @@ msgstr "窗口选择器"
 msgid "Workspace Switcher"
 msgstr "工作区切换器"
 
-#: ../applets/wncklet/showdesktop.c:171
+#: ../applets/wncklet/showdesktop.c:160
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "载入 %s 失败：%s\n"
 
-#: ../applets/wncklet/showdesktop.c:172
+#: ../applets/wncklet/showdesktop.c:161
 msgid "Icon not found"
 msgstr "未找到图标"
 
-#: ../applets/wncklet/showdesktop.c:230
+#: ../applets/wncklet/showdesktop.c:219
 msgid "Click here to restore hidden windows."
 msgstr "单击此处恢复隐藏的窗口。"
 
-#: ../applets/wncklet/showdesktop.c:233
+#: ../applets/wncklet/showdesktop.c:222
 msgid "Click here to hide all windows and show the desktop."
 msgstr "单击此处隐藏所有的窗口并显示桌面。"
 
-#: ../applets/wncklet/showdesktop.c:429 ../applets/wncklet/showdesktop.c:513
+#: ../applets/wncklet/showdesktop.c:418 ../applets/wncklet/showdesktop.c:500
 msgid "Show Desktop Button"
 msgstr "显示桌面按钮"
 
-#: ../applets/wncklet/showdesktop.c:515
+#: ../applets/wncklet/showdesktop.c:502
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "这个按钮让您隐藏所有的窗口并显示桌面。"
 
-#: ../applets/wncklet/showdesktop.c:545
+#: ../applets/wncklet/showdesktop.c:532
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr "您的窗口管理器不支持显示桌面按钮，或者您未运行桌面管理器。"
 
-#: ../applets/wncklet/window-list.c:788
+#: ../applets/wncklet/window-list.c:789
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -871,18 +857,18 @@ msgstr "行"
 msgid "columns"
 msgstr "列"
 
-#: ../applets/wncklet/workspace-switcher.c:429
+#: ../applets/wncklet/workspace-switcher.c:426
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "载入工作区切换器的 num_rows 数值时出错：%s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:440
+#: ../applets/wncklet/workspace-switcher.c:437
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr "载入工作区切换器的 display_workspace_names 数值时出错：%s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:455
+#: ../applets/wncklet/workspace-switcher.c:452
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "载入工作区切换器的 display_all_workspaces 数值时出错：%s\n"
@@ -967,23 +953,23 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME 面板命令外壳"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:536
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:540
 msgid "_Lock To Panel"
 msgstr "锁定到面板(_L)"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:519
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:523
 msgid "_Move"
 msgstr "移动(_M)"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:512
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
 msgid "_Remove From Panel"
 msgstr "从面板上删除(_R)"
 
-#: ../gnome-panel/applet.c:429
+#: ../gnome-panel/applet.c:433
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1217
+#: ../gnome-panel/applet.c:1226
 msgid "Can't find an empty spot"
 msgstr "无法找到空位"
 
@@ -991,7 +977,7 @@ msgstr "无法找到空位"
 msgid "Could not load icon"
 msgstr "无法装入图标"
 
-#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:150
+#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:169
 #: ../gnome-panel/panel-toplevel.c:1524
 msgid "Drawer"
 msgstr "抽屉"
@@ -1001,7 +987,7 @@ msgid "_Add to Drawer..."
 msgstr "添加到抽屉(_A)..."
 
 #: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:928
-#: ../gnome-panel/panel-action-button.c:143
+#: ../gnome-panel/panel-action-button.c:133
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "属性(_P)"
@@ -1100,219 +1086,227 @@ msgstr "菜单"
 msgid "You do not have permission to write to this location."
 msgstr "您没有权限写入此位置。"
 
-#: ../gnome-panel/menu.c:922
+#: ../gnome-panel/menu.c:935
 msgid "Add this launcher to panel"
 msgstr "将该启动器添加到面板"
 
-#: ../gnome-panel/menu.c:933
+#: ../gnome-panel/menu.c:946
 msgid "Add this launcher to desktop"
 msgstr "将该启动器添加到桌面"
 
-#: ../gnome-panel/menu.c:953
+#: ../gnome-panel/menu.c:962
 msgid "Entire menu"
 msgstr "整个菜单"
 
-#: ../gnome-panel/menu.c:963
+#: ../gnome-panel/menu.c:972
 msgid "Add this as drawer to panel"
 msgstr "将它作为抽屉加进面板"
 
-#: ../gnome-panel/menu.c:975
+#: ../gnome-panel/menu.c:984
 msgid "Add this as menu to panel"
 msgstr "将它作为菜单加进面板"
 
-#: ../gnome-panel/panel-action-button.c:119
+#: ../gnome-panel/panel-action-button.c:121
 msgid "_Activate Screensaver"
 msgstr "激活屏幕保护程序(_A)"
 
-#: ../gnome-panel/panel-action-button.c:125
+#: ../gnome-panel/panel-action-button.c:127
 msgid "_Lock Screen"
 msgstr "锁住屏幕(_L)"
 
-#: ../gnome-panel/panel-action-button.c:131
-msgid "_Kill Screensaver Daemon"
-msgstr "杀死屏幕保护守护进程(_K)"
-
-#: ../gnome-panel/panel-action-button.c:137
-msgid "Restart _Screensaver Daemon"
-msgstr "重启屏幕保护守护进程(_S)"
-
-#: ../gnome-panel/panel-action-button.c:208
-#: ../gnome-panel/panel-action-button.c:221
-#: ../gnome-panel/panel-action-button.c:245
-#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:1007
-#: ../gnome-panel/panel-util.c:749
+#: ../gnome-panel/panel-action-button.c:200
+#: ../gnome-panel/panel-action-button.c:213
+#: ../gnome-panel/panel-action-button.c:237
+#: ../gnome-panel/panel-menu-bar.c:471 ../gnome-panel/panel-menu-button.c:1007
+#: ../gnome-panel/panel-util.c:747
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "无法执行“%s”"
 
-#: ../gnome-panel/panel-action-button.c:281
+#: ../gnome-panel/panel-action-button.c:273
 msgid "Could not connect to server"
 msgstr "无法连接到服务器"
 
-#: ../gnome-panel/panel-action-button.c:313
+#: ../gnome-panel/panel-action-button.c:305
 msgid "Lock Screen"
 msgstr "锁住屏幕"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:306
 msgid "Protect your computer from unauthorized use"
 msgstr "保护您的计算机免遭未授权的使用"
 
-#: ../gnome-panel/panel-action-button.c:325
+#: ../gnome-panel/panel-action-button.c:317
 msgid "Log Out"
 msgstr "注销"
 
-#: ../gnome-panel/panel-action-button.c:326
+#: ../gnome-panel/panel-action-button.c:318
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr "注销本会话以便让不同的用户登录，或关闭计算机"
 
-#: ../gnome-panel/panel-action-button.c:335
+#: ../gnome-panel/panel-action-button.c:327
 msgid "Run Application..."
 msgstr "运行应用程序..."
 
-#: ../gnome-panel/panel-action-button.c:336
+#: ../gnome-panel/panel-action-button.c:328
 msgid "Run an Application by entering a command"
 msgstr "输入命令来运行应用程序"
 
-#: ../gnome-panel/panel-action-button.c:345
+#: ../gnome-panel/panel-action-button.c:337
 msgid "Search for Files..."
 msgstr "搜索文件..."
 
-#: ../gnome-panel/panel-action-button.c:346
+#: ../gnome-panel/panel-action-button.c:338
 msgid "Find files, folders, and documents on your computer"
 msgstr "在您的计算机中查找文件、文件夹以及文档"
 
-#: ../gnome-panel/panel-action-button.c:354
+#: ../gnome-panel/panel-action-button.c:346
 msgid "Take Screenshot..."
 msgstr "屏幕抓图..."
 
-#: ../gnome-panel/panel-action-button.c:355
+#: ../gnome-panel/panel-action-button.c:347
 msgid "Take a screenshot of your desktop"
 msgstr "获取一个您的桌面的抓图"
 
-#: ../gnome-panel/panel-action-button.c:363
+#: ../gnome-panel/panel-action-button.c:355
 msgid "Force Quit"
 msgstr "强制退出"
 
-#: ../gnome-panel/panel-action-button.c:364
+#: ../gnome-panel/panel-action-button.c:356
 msgid "Force a misbehaving application to quit"
 msgstr "强制行为异常的应用程序退出"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:373
+#: ../gnome-panel/panel-action-button.c:365
 msgid "Connect to Server..."
 msgstr "连接到服务器..."
 
-#: ../gnome-panel/panel-action-button.c:374
+#: ../gnome-panel/panel-action-button.c:366
 msgid "Connect to a remote server"
 msgstr "连接到远程服务器"
 
-#: ../gnome-panel/panel-addto.c:102
+#: ../gnome-panel/panel-action-button.c:374
+msgid "Shut Down"
+msgstr "关机"
+
+#: ../gnome-panel/panel-action-button.c:375
+msgid "Shut down the computer"
+msgstr "关闭计算机"
+
+#: ../gnome-panel/panel-addto.c:110
 msgid "Custom Application Launcher"
 msgstr "自定义应用程序启动器"
 
-#: ../gnome-panel/panel-addto.c:103
+#: ../gnome-panel/panel-addto.c:111
 msgid "Create a new launcher"
 msgstr "创建新启动器"
 
-#: ../gnome-panel/panel-addto.c:113
+#: ../gnome-panel/panel-addto.c:121
 msgid "Application Launcher..."
 msgstr "应用程序启动器..."
 
-#: ../gnome-panel/panel-addto.c:114
+#: ../gnome-panel/panel-addto.c:122
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "调用已经位于 GNOME 菜单中的程序"
 
-#: ../gnome-panel/panel-addto.c:128
+#: ../gnome-panel/panel-addto.c:136
 msgid "Main Menu"
 msgstr "主菜单"
 
-#: ../gnome-panel/panel-addto.c:129
+#: ../gnome-panel/panel-addto.c:137
 msgid "The main GNOME menu"
 msgstr "GNOME 主菜单"
 
-#: ../gnome-panel/panel-addto.c:139
+#: ../gnome-panel/panel-addto.c:147
 msgid "Menu Bar"
 msgstr "菜单栏"
 
-#: ../gnome-panel/panel-addto.c:140
+#: ../gnome-panel/panel-addto.c:148
 msgid "A custom menu bar"
 msgstr "自定义菜单栏"
 
-#: ../gnome-panel/panel-addto.c:151
+#: ../gnome-panel/panel-addto.c:158
+msgid "Separator"
+msgstr "分隔符"
+
+#: ../gnome-panel/panel-addto.c:159
+msgid "A separator to organize the panel items"
+msgstr "组织面板项的分隔符"
+
+#: ../gnome-panel/panel-addto.c:170
 msgid "A pop out drawer to store other items in"
 msgstr "用于存储其它项目的弹出式抽屉"
 
-#: ../gnome-panel/panel-addto.c:239
+#: ../gnome-panel/panel-addto.c:261
 msgid "(empty)"
 msgstr "(空)"
 
-#: ../gnome-panel/panel-addto.c:404
-#: ../libpanel-applet/panel-test-applets.c:234
+#: ../gnome-panel/panel-addto.c:401
+#: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "查询返回异常 %s\n"
 
-#: ../gnome-panel/panel-addto.c:1011
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
-msgid "Select an _item to add to \"%s\":"
-msgstr "选择要添加到“%s”的项目(_I)："
+msgid "Find an _item to add to \"%s\":"
+msgstr "查找要添加到“%s”的项目(_I)："
 
-#: ../gnome-panel/panel-addto.c:1015
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Add to Drawer"
 msgstr "添加到抽屉"
 
-#: ../gnome-panel/panel-addto.c:1017
-msgid "Select an _item to add to the drawer:"
-msgstr "选择要添加到抽屉的项目(_I)："
+#: ../gnome-panel/panel-addto.c:1061
+msgid "Find an _item to add to the drawer:"
+msgstr "查找要添加到抽屉的项目(_I)："
 
-#: ../gnome-panel/panel-addto.c:1019
+#: ../gnome-panel/panel-addto.c:1063
 msgid "Add to Panel"
 msgstr "添加到面板"
 
-#: ../gnome-panel/panel-addto.c:1021
-msgid "Select an _item to add to the panel:"
-msgstr "选择要添加到面板的项目(_I)："
+#: ../gnome-panel/panel-addto.c:1065
+msgid "Find an _item to add to the panel:"
+msgstr "查找要添加到面板的项目(_I)："
 
-#: ../gnome-panel/panel-applet-frame.c:814
+#: ../gnome-panel/panel-applet-frame.c:822
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "来自弹出菜单“%s”的例外\n"
 
-#: ../gnome-panel/panel-applet-frame.c:933
+#: ../gnome-panel/panel-applet-frame.c:941
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "“%s”已经异常退出"
 
-#: ../gnome-panel/panel-applet-frame.c:935
+#: ../gnome-panel/panel-applet-frame.c:943
 msgid "Panel object has quit unexpectedly"
 msgstr "面板对象异常退出"
 
-#: ../gnome-panel/panel-applet-frame.c:942
+#: ../gnome-panel/panel-applet-frame.c:950
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "如果您重新装入面板对象，将会自动添加到面板中。"
 
-#: ../gnome-panel/panel-applet-frame.c:948
+#: ../gnome-panel/panel-applet-frame.c:956
 msgid "_Don't Reload"
 msgstr "不重新装入(_D)"
 
-#: ../gnome-panel/panel-applet-frame.c:949
+#: ../gnome-panel/panel-applet-frame.c:957
 msgid "_Reload"
 msgstr "重新装入(_R)"
 
-#: ../gnome-panel/panel-applet-frame.c:995
+#: ../gnome-panel/panel-applet-frame.c:1003
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "当面板载入“%s”时遇到问题。"
 
-#: ../gnome-panel/panel-applet-frame.c:1012
+#: ../gnome-panel/panel-applet-frame.c:1020
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "您是否想要从配置中删除小程序？"
 
-#: ../gnome-panel/panel-applet-frame.c:1111
+#: ../gnome-panel/panel-applet-frame.c:1119
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "无法从控制得到小程序外壳界面\n"
 
@@ -1579,15 +1573,67 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "如果为 true，会显示面板中对象的工具提示。"
 
-#: ../gnome-panel/panel-menu-bar.c:79
+#: ../gnome-panel/panel-logout.c:211
+#, c-format
+msgid "You will be automatically logged out in %d second."
+msgid_plural "You will be automatically logged out in %d seconds."
+msgstr[0] "您将在 %d 后被自动注销。"
+
+#: ../gnome-panel/panel-logout.c:218
+#, c-format
+msgid "This system will be automatically shut down in %d second."
+msgid_plural "This system will be automatically shut down in %d seconds."
+msgstr[0] "此系统将在 %d 秒后自动关机。"
+
+#: ../gnome-panel/panel-logout.c:290
+msgid "Log out of this system now?"
+msgstr "立即注销此系统吗？"
+
+#: ../gnome-panel/panel-logout.c:296
+msgid "_Switch User"
+msgstr "切换用户(_S)"
+
+#: ../gnome-panel/panel-logout.c:302
+msgid "_Log Out"
+msgstr "注销(_L)"
+
+#: ../gnome-panel/panel-logout.c:307
+msgid "Shut down this system now?"
+msgstr "立即关闭此系统吗？"
+
+#: ../gnome-panel/panel-logout.c:314
+msgid "_Suspend"
+msgstr "挂起(_S)"
+
+#: ../gnome-panel/panel-logout.c:318
+msgid "_Reboot"
+msgstr "重新启动(_R)"
+
+#: ../gnome-panel/panel-logout.c:324
+msgid "_Shut Down"
+msgstr "关机(_S)"
+
+#: ../gnome-panel/panel-menu-bar.c:74
+msgid "Browse and run installed applications"
+msgstr "浏览并运行已安装的应用程序"
+
+#: ../gnome-panel/panel-menu-bar.c:86
+msgid "Open and search local, remote and recently-used documents and folders"
+msgstr "打开并搜索本地、远程和最近使用过的文档和文件夹"
+
+#: ../gnome-panel/panel-menu-bar.c:98
+msgid "Change desktop appearance and behavior, get help, or log out"
+msgstr "更改桌面外观和行为、获得帮助或注销"
+
+#: ../gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "应用程序"
 
-#: ../gnome-panel/panel-menu-bar.c:298 ../gnome-panel/panel-menu-button.c:688
+#: ../gnome-panel/panel-menu-bar.c:411 ../gnome-panel/panel-menu-button.c:688
 msgid "_Edit Menus"
 msgstr "编辑菜单(_E)"
 
-#: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:320
+#: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:325
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "无法打开位置“%s”"
@@ -1596,19 +1642,20 @@ msgstr "无法打开位置“%s”"
 msgid "Bookmarks"
 msgstr "书签"
 
-#. Translators: the first string is a pathc and
-#. * the second string is a hostname. nautilus
-#. * contains the same string to translate.
-#: ../gnome-panel/panel-menu-items.c:381
+#. Translators: the first string is a
+#. * path and the second string is a
+#. * hostname. nautilus contains the same
+#. * string to translate.
+#: ../gnome-panel/panel-menu-items.c:386
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%2$s 上的 %1$s"
 
-#: ../gnome-panel/panel-menu-items.c:477
+#: ../gnome-panel/panel-menu-items.c:486
 msgid "Network Places"
 msgstr "网络位置"
 
-#: ../gnome-panel/panel-menu-items.c:480
+#: ../gnome-panel/panel-menu-items.c:489
 msgid "Removable Media"
 msgstr "可移动介质"
 
@@ -1616,30 +1663,30 @@ msgstr "可移动介质"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:551
+#: ../gnome-panel/panel-menu-items.c:560
 msgid "Desktop Folder|Desktop"
 msgstr "桌面"
 
-#: ../gnome-panel/panel-menu-items.c:552
+#: ../gnome-panel/panel-menu-items.c:561
 msgid "Open the desktop as a folder"
 msgstr "将桌面以文件夹形式打开"
 
-#: ../gnome-panel/panel-menu-items.c:910
+#: ../gnome-panel/panel-menu-items.c:923
 msgid "Places"
 msgstr "位置"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:948
+#: ../gnome-panel/panel-menu-items.c:961
 msgid "Desktop Environment|Desktop"
 msgstr "桌面"
 
-#: ../gnome-panel/panel-menu-items.c:1089
+#: ../gnome-panel/panel-menu-items.c:1110
 msgid "Could not launch menu item"
 msgstr "无法调用菜单项"
 
-#: ../gnome-panel/panel-menu-items.c:1101
+#: ../gnome-panel/panel-menu-items.c:1122
 msgid "Could not load menu item"
 msgstr "无法装入菜单项"
 
@@ -1805,56 +1852,56 @@ msgstr "使用对象按钮的自定义图标"
 msgid "Use custom path for menu contents"
 msgstr "使用菜单内容的自定义路径"
 
-#: ../gnome-panel/panel-profile.c:747 ../gnome-panel/panel-profile.c:774
-#: ../gnome-panel/panel-profile.c:810 ../gnome-panel/panel-profile.c:1633
+#: ../gnome-panel/panel-profile.c:762 ../gnome-panel/panel-profile.c:789
+#: ../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1648
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "读入 GConf 字符串值“%s”出错：%s"
 
-#: ../gnome-panel/panel-profile.c:789 ../gnome-panel/panel-profile.c:1529
-#: ../gnome-panel/panel-profile.c:1602 ../gnome-panel/panel-profile.c:1665
+#: ../gnome-panel/panel-profile.c:804 ../gnome-panel/panel-profile.c:1544
+#: ../gnome-panel/panel-profile.c:1617 ../gnome-panel/panel-profile.c:1680
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "读入 GConf 整数值“%s”出错：%s"
 
-#: ../gnome-panel/panel-profile.c:1539
+#: ../gnome-panel/panel-profile.c:1554
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr "面板“%s”被设置为显示在当前不可用的屏幕 %d 上。未装入该面板。"
 
-#: ../gnome-panel/panel-profile.c:1617
+#: ../gnome-panel/panel-profile.c:1632
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "读入 GConf 布尔值“%s”出错：%s"
 
 #: ../gnome-panel/panel-properties-dialog.c:120
-#: ../libpanel-applet/panel-test-applets.c:52
+#: ../libpanel-applet/panel-test-applets.c:53
 msgid "Top"
 msgstr "顶部"
 
 #: ../gnome-panel/panel-properties-dialog.c:121
-#: ../libpanel-applet/panel-test-applets.c:53
+#: ../libpanel-applet/panel-test-applets.c:54
 msgid "Bottom"
 msgstr "底部"
 
 #: ../gnome-panel/panel-properties-dialog.c:122
-#: ../libpanel-applet/panel-test-applets.c:54
+#: ../libpanel-applet/panel-test-applets.c:55
 msgid "Left"
 msgstr "左"
 
 #: ../gnome-panel/panel-properties-dialog.c:123
-#: ../libpanel-applet/panel-test-applets.c:55
+#: ../libpanel-applet/panel-test-applets.c:56
 msgid "Right"
 msgstr "右"
 
-#: ../gnome-panel/panel-properties-dialog.c:1017
+#: ../gnome-panel/panel-properties-dialog.c:1019
 msgid "Could not display properties dialog"
 msgstr "无法显示属性对话框"
 
-#: ../gnome-panel/panel-properties-dialog.c:1018
-#: ../gnome-panel/panel-run-dialog.c:1749
+#: ../gnome-panel/panel-properties-dialog.c:1020
+#: ../gnome-panel/panel-run-dialog.c:1826
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "无法装入文件“%s”。"
@@ -2007,36 +2054,36 @@ msgstr "清除最近的文档"
 msgid "Clear all items from the recent documents list"
 msgstr "从最近的文档列表中清除全部项目"
 
-#: ../gnome-panel/panel-run-dialog.c:294
+#: ../gnome-panel/panel-run-dialog.c:299
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "无法运行命令“%s”"
 
-#: ../gnome-panel/panel-run-dialog.c:372
+#: ../gnome-panel/panel-run-dialog.c:377
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "无法从 UTF-8 转换“%s”"
 
-#: ../gnome-panel/panel-run-dialog.c:1126
+#: ../gnome-panel/panel-run-dialog.c:1171
 msgid "Choose a file to append to the command..."
 msgstr "选择追加到命令的文件..."
 
-#: ../gnome-panel/panel-run-dialog.c:1483
-#, c-format
-msgid "Will run command: '%s'"
-msgstr "将运行命令：“%s”"
-
-#: ../gnome-panel/panel-run-dialog.c:1490
+#: ../gnome-panel/panel-run-dialog.c:1537
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "选择应用程序可查看其描述。"
 
-#: ../gnome-panel/panel-run-dialog.c:1524
+#: ../gnome-panel/panel-run-dialog.c:1574
+#, c-format
+msgid "Will run command: '%s'"
+msgstr "将运行命令：“%s”"
+
+#: ../gnome-panel/panel-run-dialog.c:1605
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "拖放到运行对话框上的 URI 列表格式(%d)或长度(%d)不对\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1748
+#: ../gnome-panel/panel-run-dialog.c:1825
 msgid "Could not display run dialog"
 msgstr "无法显示运行对话框"
 
@@ -2523,16 +2570,16 @@ msgstr "细节：%s"
 msgid "Icon '%s' not found"
 msgstr "未找到图标“%s”"
 
-#: ../gnome-panel/panel.c:471
+#: ../gnome-panel/panel.c:479
 #, c-format
 msgid "Open URL: %s"
 msgstr "打开 URL：%s"
 
-#: ../gnome-panel/panel.c:1256
+#: ../gnome-panel/panel.c:1272
 msgid "Delete this drawer?"
 msgstr "删除此抽屉吗？"
 
-#: ../gnome-panel/panel.c:1257
+#: ../gnome-panel/panel.c:1273
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2540,15 +2587,15 @@ msgstr ""
 "删除抽屉时，抽屉及其设置\n"
 "都会丢失。"
 
-#: ../gnome-panel/panel.c:1259
+#: ../gnome-panel/panel.c:1275
 msgid "Delete Drawer"
 msgstr "删除抽屉"
 
-#: ../gnome-panel/panel.c:1261
+#: ../gnome-panel/panel.c:1277
 msgid "Delete this panel?"
 msgstr "删除此面板吗？"
 
-#: ../gnome-panel/panel.c:1262
+#: ../gnome-panel/panel.c:1278
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2556,7 +2603,7 @@ msgstr ""
 "删除面板时，面板及其设置\n"
 "都会丢失。"
 
-#: ../gnome-panel/panel.c:1264
+#: ../gnome-panel/panel.c:1280
 msgid "Delete Panel"
 msgstr "删除面板"
 
@@ -2572,94 +2619,99 @@ msgstr "测试 Bonobo 小程序"
 msgid "Test Bonobo Applet Factory"
 msgstr "测试 Bonobo 小程序车间"
 
-#: ../libpanel-applet/panel-applet.c:997
+#: ../libpanel-applet/panel-applet.c:1042
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "收到不完整的“%s”背景"
 
-#: ../libpanel-applet/panel-applet.c:1011
+#: ../libpanel-applet/panel-applet.c:1056
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "收到不完整的“%s”背景：%s"
 
-#: ../libpanel-applet/panel-applet.c:1020
+#: ../libpanel-applet/panel-applet.c:1065
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "获取位图 %s 失败"
 
-#: ../libpanel-applet/panel-applet.c:1027
+#: ../libpanel-applet/panel-applet.c:1072
 msgid "Unknown background type received"
 msgstr "收到未知的背景类型"
 
-#: ../libpanel-applet/panel-applet.c:1212
+#: ../libpanel-applet/panel-applet.c:1296
 msgid "The Applet's containing Panel's orientation"
 msgstr "含有小程序的面板的方向"
 
-#: ../libpanel-applet/panel-applet.c:1220
+#: ../libpanel-applet/panel-applet.c:1304
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "含有小程序的面板的尺寸(以像素为单位)"
 
-#: ../libpanel-applet/panel-applet.c:1228
+#: ../libpanel-applet/panel-applet.c:1312
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "含有小程序的面板的背景颜色或图片"
 
-#: ../libpanel-applet/panel-applet.c:1236
+#: ../libpanel-applet/panel-applet.c:1320
 msgid "The Applet's flags"
 msgstr "小程序的标志"
 
-#: ../libpanel-applet/panel-applet.c:1244
+#: ../libpanel-applet/panel-applet.c:1328
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "界定关于小程序所能接受的尺寸的提示"
 
-#: ../libpanel-applet/panel-applet.c:1252
+#: ../libpanel-applet/panel-applet.c:1336
 msgid "The Applet's containing Panel is locked down"
 msgstr "含有面板的小程序已锁定"
 
-#: ../libpanel-applet/panel-test-applets.c:32
+#: ../libpanel-applet/panel-test-applets.c:33
 msgid "Specify an applet IID to load"
 msgstr "指定要装入的小程序 IID"
 
-#: ../libpanel-applet/panel-test-applets.c:33
+#: ../libpanel-applet/panel-test-applets.c:34
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
 msgstr "指定保存小程序首选项的 gconf 位置"
 
-#: ../libpanel-applet/panel-test-applets.c:34
+#: ../libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "指定小程序的初始大小 (微小、中、大 等等。)"
 
-#: ../libpanel-applet/panel-test-applets.c:36
+#: ../libpanel-applet/panel-test-applets.c:37
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "指定小程序的初始位置 (顶、底、左或右)"
 
-#: ../libpanel-applet/panel-test-applets.c:60
+#: ../libpanel-applet/panel-test-applets.c:61
 msgid "XX Small"
 msgstr "极小"
 
-#: ../libpanel-applet/panel-test-applets.c:61
+#: ../libpanel-applet/panel-test-applets.c:62
 msgid "X Small"
 msgstr "很小"
 
-#: ../libpanel-applet/panel-test-applets.c:62
+#: ../libpanel-applet/panel-test-applets.c:63
 msgid "Small"
 msgstr "小"
 
-#: ../libpanel-applet/panel-test-applets.c:63
+#: ../libpanel-applet/panel-test-applets.c:64
 msgid "Medium"
 msgstr "中速"
 
-#: ../libpanel-applet/panel-test-applets.c:64
+#: ../libpanel-applet/panel-test-applets.c:65
 msgid "Large"
 msgstr "大"
 
-#: ../libpanel-applet/panel-test-applets.c:65
+#: ../libpanel-applet/panel-test-applets.c:66
 msgid "X Large"
 msgstr "很大"
 
-#: ../libpanel-applet/panel-test-applets.c:66
+#: ../libpanel-applet/panel-test-applets.c:67
 msgid "XX Large"
 msgstr "极大"
+
+#: ../libpanel-applet/panel-test-applets.c:129
+#, c-format
+msgid "Failed to load applet %s"
+msgstr "载入小程序 %s 失败"
 
 #. This is an utility to easily test various applets
 #: ../libpanel-applet/panel-test-applets.glade.h:2
@@ -2673,4 +2725,3 @@ msgstr "小程序(_A)："
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "首选目录(_P)："
-
