@@ -12,13 +12,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 14:48+0100\n"
-"PO-Revision-Date: 2006-01-11 22:58+0100\n"
+"POT-Creation-Date: 2006-01-18 02:16+0100\n"
+"PO-Revision-Date: 2006-01-18 02:33+0100\n"
 "Last-Translator: Slobodan D. Sredojević <slobo@akrep.be>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -49,7 +51,7 @@ msgstr "_O programu"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:731
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:745
 #: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:404
 #: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
@@ -197,7 +199,7 @@ msgstr "Oblik po izboru"
 
 #: ../applets/clock/clock.c:2488 ../applets/clock/clock.c:2665
 #: ../applets/fish/fish.c:158 ../applets/notification_area/main.c:82
-#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
+#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:124
 #: ../applets/wncklet/workspace-switcher.c:238
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -993,23 +995,23 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "Gnomova ljuska panela"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:536
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:540
 msgid "_Lock To Panel"
 msgstr "Priveži _za panel"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:519
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:523
 msgid "_Move"
 msgstr "Pre_mesti"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:512
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
 msgid "_Remove From Panel"
 msgstr "_Ukloni sa panela"
 
-#: ../gnome-panel/applet.c:429
+#: ../gnome-panel/applet.c:433
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1217
+#: ../gnome-panel/applet.c:1226
 msgid "Can't find an empty spot"
 msgstr "Ne mogu da nađem prazno mesto"
 
@@ -1017,7 +1019,7 @@ msgstr "Ne mogu da nađem prazno mesto"
 msgid "Could not load icon"
 msgstr "Ne mogu da učitam ikonu"
 
-#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:150
+#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:169
 #: ../gnome-panel/panel-toplevel.c:1524
 msgid "Drawer"
 msgstr "Fioka"
@@ -1027,7 +1029,7 @@ msgid "_Add to Drawer..."
 msgstr "_Dodaj u fioku..."
 
 #: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:928
-#: ../gnome-panel/panel-action-button.c:131
+#: ../gnome-panel/panel-action-button.c:133
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "Oso_bine"
@@ -1061,6 +1063,7 @@ msgid "No URL was specified."
 msgstr "Nije zadana internet adresa"
 
 #: ../gnome-panel/launcher.c:187
+#, c-format
 msgid "Could not show '%s'"
 msgstr "Ne može da prikaže „%s“"
 
@@ -1147,39 +1150,40 @@ msgid "Add this as menu to panel"
 msgstr "Dodaj ovo na panel kao meni"
 
 # Zar nije dobar prevod, a?
-#: ../gnome-panel/panel-action-button.c:119
+#: ../gnome-panel/panel-action-button.c:121
 msgid "_Activate Screensaver"
 msgstr "_Pokreni čuvanje ekrana"
 
-#: ../gnome-panel/panel-action-button.c:125
+#: ../gnome-panel/panel-action-button.c:127
 msgid "_Lock Screen"
 msgstr "_Zaključaj ekran"
 
-#: ../gnome-panel/panel-action-button.c:196
-#: ../gnome-panel/panel-action-button.c:209
-#: ../gnome-panel/panel-action-button.c:233
+#: ../gnome-panel/panel-action-button.c:200
+#: ../gnome-panel/panel-action-button.c:213
+#: ../gnome-panel/panel-action-button.c:237
 #: ../gnome-panel/panel-menu-bar.c:471 ../gnome-panel/panel-menu-button.c:1007
 #: ../gnome-panel/panel-util.c:747
+#, c-format
 msgid "Could not execute '%s'"
 msgstr "Ne mogu da izvršim „%s“"
 
-#: ../gnome-panel/panel-action-button.c:269
+#: ../gnome-panel/panel-action-button.c:273
 msgid "Could not connect to server"
 msgstr "Ne mogu da se povežem sa serverom"
 
-#: ../gnome-panel/panel-action-button.c:301
+#: ../gnome-panel/panel-action-button.c:305
 msgid "Lock Screen"
 msgstr "Zaključaj ekran"
 
-#: ../gnome-panel/panel-action-button.c:302
+#: ../gnome-panel/panel-action-button.c:306
 msgid "Protect your computer from unauthorized use"
 msgstr "Zaštitite vaš računar od neovlašćene upotrebe"
 
-#: ../gnome-panel/panel-action-button.c:313
+#: ../gnome-panel/panel-action-button.c:317
 msgid "Log Out"
 msgstr "Odjava"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:318
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1187,113 +1191,128 @@ msgstr ""
 "Odjavite se da biste se prijavili kao neki drugi korisnik, ili da isključite "
 "vaš računar."
 
-#: ../gnome-panel/panel-action-button.c:323
+#: ../gnome-panel/panel-action-button.c:327
 msgid "Run Application..."
 msgstr "Pokreni program..."
 
-#: ../gnome-panel/panel-action-button.c:324
+#: ../gnome-panel/panel-action-button.c:328
 msgid "Run an Application by entering a command"
 msgstr "Pokrenite program unosom naredbe"
 
-#: ../gnome-panel/panel-action-button.c:333
+#: ../gnome-panel/panel-action-button.c:337
 msgid "Search for Files..."
 msgstr "Tražite datoteke..."
 
-#: ../gnome-panel/panel-action-button.c:334
+#: ../gnome-panel/panel-action-button.c:338
 msgid "Find files, folders, and documents on your computer"
 msgstr "Pronađite datoteke, direktorijume i dokumente na vašem računaru"
 
-#: ../gnome-panel/panel-action-button.c:342
+#: ../gnome-panel/panel-action-button.c:346
 msgid "Take Screenshot..."
 msgstr "Snimak ekrana..."
 
-#: ../gnome-panel/panel-action-button.c:343
+#: ../gnome-panel/panel-action-button.c:347
 msgid "Take a screenshot of your desktop"
 msgstr "Sačuvajte snimak ekrana vaše radne površine"
 
-#: ../gnome-panel/panel-action-button.c:351
+#: ../gnome-panel/panel-action-button.c:355
 msgid "Force Quit"
 msgstr "Primoraj zatvaranje"
 
-#: ../gnome-panel/panel-action-button.c:352
+#: ../gnome-panel/panel-action-button.c:356
 msgid "Force a misbehaving application to quit"
 msgstr "Primoraj nedolični program na zatvaranje"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:361
+#: ../gnome-panel/panel-action-button.c:365
 msgid "Connect to Server..."
 msgstr "Poveži se sa serverom..."
 
-#: ../gnome-panel/panel-action-button.c:362
+#: ../gnome-panel/panel-action-button.c:366
 msgid "Connect to a remote server"
 msgstr "Poveži se sa udaljenim serverom"
 
-#: ../gnome-panel/panel-addto.c:102
+#: ../gnome-panel/panel-action-button.c:374
+msgid "Shut Down"
+msgstr "Ugasi"
+
+#: ../gnome-panel/panel-action-button.c:375
+msgid "Shut down the computer"
+msgstr "Ugasi računar"
+
+#: ../gnome-panel/panel-addto.c:110
 msgid "Custom Application Launcher"
 msgstr "Pokretač proizvoljnog programa"
 
-#: ../gnome-panel/panel-addto.c:103
+#: ../gnome-panel/panel-addto.c:111
 msgid "Create a new launcher"
 msgstr "Napravi novi pokretač"
 
-#: ../gnome-panel/panel-addto.c:113
+#: ../gnome-panel/panel-addto.c:121
 msgid "Application Launcher..."
 msgstr "Pokretač programa..."
 
-#: ../gnome-panel/panel-addto.c:114
+#: ../gnome-panel/panel-addto.c:122
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "Pokreni program koji je već u meniju Gnoma"
 
-#: ../gnome-panel/panel-addto.c:128
+#: ../gnome-panel/panel-addto.c:136
 msgid "Main Menu"
 msgstr "Glavni meni"
 
-#: ../gnome-panel/panel-addto.c:129
+#: ../gnome-panel/panel-addto.c:137
 msgid "The main GNOME menu"
 msgstr "Glavni meni Gnoma"
 
-#: ../gnome-panel/panel-addto.c:139
+#: ../gnome-panel/panel-addto.c:147
 msgid "Menu Bar"
 msgstr "Linija menija"
 
-#: ../gnome-panel/panel-addto.c:140
+#: ../gnome-panel/panel-addto.c:148
 msgid "A custom menu bar"
 msgstr "Proizvoljni meni"
 
-#: ../gnome-panel/panel-addto.c:151
+#: ../gnome-panel/panel-addto.c:158
+msgid "Separator"
+msgstr "Razdvojnik"
+
+#: ../gnome-panel/panel-addto.c:159
+msgid "A separator to organize the panel items"
+msgstr "Razdvojnik između stavki na panelu"
+
+#: ../gnome-panel/panel-addto.c:170
 msgid "A pop out drawer to store other items in"
 msgstr "Iskačuća fioka za smeštanje drugih stavki"
 
-#: ../gnome-panel/panel-addto.c:239
+#: ../gnome-panel/panel-addto.c:261
 msgid "(empty)"
 msgstr "(prazno)"
 
-#: ../gnome-panel/panel-addto.c:374
+#: ../gnome-panel/panel-addto.c:401
 #: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "ispitaj vraćenu grešku „%s“\n"
 
-#: ../gnome-panel/panel-addto.c:978
-#, c-format
-msgid "Select an _item to add to \"%s\":"
-msgstr "Izaberite _stavku koju dodajete na „%s“:"
+#: ../gnome-panel/panel-addto.c:1055
+msgid "Find an _item to add to \"%s\":"
+msgstr "Traži _stavku koju dodajete na „%s“:"
 
-#: ../gnome-panel/panel-addto.c:982
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Add to Drawer"
 msgstr "Dodaj u fioku"
 
-#: ../gnome-panel/panel-addto.c:984
-msgid "Select an _item to add to the drawer:"
-msgstr "Izaberite _stavku koju dodajete u fioku:"
+#: ../gnome-panel/panel-addto.c:1061
+msgid "Find an _item to add to the drawer:"
+msgstr "Traži _stavku koju dodajete u fioku:"
 
-#: ../gnome-panel/panel-addto.c:986
+#: ../gnome-panel/panel-addto.c:1063
 msgid "Add to Panel"
 msgstr "Dodaj na panel"
 
-#: ../gnome-panel/panel-addto.c:988
-msgid "Select an _item to add to the panel:"
-msgstr "Izaberite _stavku koju dodajete na panel:"
+#: ../gnome-panel/panel-addto.c:1065
+msgid "Find an _item to add to the panel:"
+msgstr "Traži _stavku koju dodajete na panel:"
 
 #: ../gnome-panel/panel-applet-frame.c:822
 #, c-format
@@ -1623,6 +1642,50 @@ msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
 "Ukoliko je postavljeno, prikazuju se kratka uputstva za objekte na panelu."
 
+#: ../gnome-panel/panel-logout.c:211
+#, c-format
+msgid "You will be automatically logged out in %d second."
+msgid_plural "You will be automatically logged out in %d seconds."
+msgstr[0] "Bićete odjavljeni u roku od %d sekunde."
+msgstr[1] "Bićete odjavljeni u roku od %d sekunde."
+msgstr[2] "Bićete odjavljeni u roku od %d sekundi."
+
+#: ../gnome-panel/panel-logout.c:218
+#, c-format
+msgid "This system will be automatically shut down in %d second."
+msgid_plural "This system will be automatically shut down in %d seconds."
+msgstr[0] "Ovaj računar će biti ugašen u roku od %d sekunde."
+msgstr[1] "Ovaj računar će biti ugašen u roku od %d sekunde."
+msgstr[2] "Ovaj računar će biti ugašen u roku od %d sekundi."
+
+#: ../gnome-panel/panel-logout.c:290
+msgid "Are you sure you want to log out now?"
+msgstr "Da li ste sigurni da sada želite da se odjavite?"
+
+#: ../gnome-panel/panel-logout.c:296
+msgid "_Switch User"
+msgstr "Pro_meni korisnika"
+
+#: ../gnome-panel/panel-logout.c:302
+msgid "_Log Out"
+msgstr "O_djava"
+
+#: ../gnome-panel/panel-logout.c:307
+msgid "Are you sure you want to shut down this system now?"
+msgstr "Da li ste sigurni da sada želite da ugasite računar?"
+
+#: ../gnome-panel/panel-logout.c:315
+msgid "_Suspend"
+msgstr "Privremeno _zaustavi"
+
+#: ../gnome-panel/panel-logout.c:319
+msgid "_Reboot"
+msgstr "Ponovo pok_reni"
+
+#: ../gnome-panel/panel-logout.c:325
+msgid "_Shut Down"
+msgstr "_Ugasi"
+
 #: ../gnome-panel/panel-menu-bar.c:74
 msgid "Browse and run installed applications"
 msgstr "Pregledajte i pokrenite neki od instaliranih programa"
@@ -1647,6 +1710,7 @@ msgid "_Edit Menus"
 msgstr "_Uredite menije"
 
 #: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:325
+#, c-format
 msgid "Could not open location '%s'"
 msgstr "Ne mogu da otvorim mesto „%s“"
 
@@ -1654,18 +1718,20 @@ msgstr "Ne mogu da otvorim mesto „%s“"
 msgid "Bookmarks"
 msgstr "Obeleživači"
 
-#. Translators: the first string is a pathc and
-#. * the second string is a hostname. nautilus
-#. * contains the same string to translate.
-#: ../gnome-panel/panel-menu-items.c:381
+#. Translators: the first string is a
+#. * path and the second string is a
+#. * hostname. nautilus contains the same
+#. * string to translate.
+#: ../gnome-panel/panel-menu-items.c:386
+#, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s na %2$s"
 
-#: ../gnome-panel/panel-menu-items.c:477
+#: ../gnome-panel/panel-menu-items.c:486
 msgid "Network Places"
 msgstr "Mrežna mesta"
 
-#: ../gnome-panel/panel-menu-items.c:480
+#: ../gnome-panel/panel-menu-items.c:489
 msgid "Removable Media"
 msgstr "Izmenjivi diskovi"
 
@@ -1673,30 +1739,30 @@ msgstr "Izmenjivi diskovi"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:551
+#: ../gnome-panel/panel-menu-items.c:560
 msgid "Desktop Folder|Desktop"
 msgstr "Radna površ"
 
-#: ../gnome-panel/panel-menu-items.c:552
+#: ../gnome-panel/panel-menu-items.c:561
 msgid "Open the desktop as a folder"
 msgstr "Otvori radnu površ kao direktorijum"
 
-#: ../gnome-panel/panel-menu-items.c:910
+#: ../gnome-panel/panel-menu-items.c:923
 msgid "Places"
 msgstr "Prečice"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:948
+#: ../gnome-panel/panel-menu-items.c:961
 msgid "Desktop Environment|Desktop"
 msgstr "Okruženje"
 
-#: ../gnome-panel/panel-menu-items.c:1089
+#: ../gnome-panel/panel-menu-items.c:1110
 msgid "Could not launch menu item"
 msgstr "Ne mogu da pokrenem stavku menija"
 
-#: ../gnome-panel/panel-menu-items.c:1101
+#: ../gnome-panel/panel-menu-items.c:1122
 msgid "Could not load menu item"
 msgstr "Ne mogu da učitam stavku menija"
 
@@ -1877,19 +1943,19 @@ msgstr "Koristi ikonu po izboru za dugme objekta"
 msgid "Use custom path for menu contents"
 msgstr "Koristi putanju po izboru za sadržaj menija"
 
-#: ../gnome-panel/panel-profile.c:761 ../gnome-panel/panel-profile.c:788
-#: ../gnome-panel/panel-profile.c:824 ../gnome-panel/panel-profile.c:1647
+#: ../gnome-panel/panel-profile.c:762 ../gnome-panel/panel-profile.c:789
+#: ../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1648
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Greška pri čitanju Gkonf niske „%s“: %s"
 
-#: ../gnome-panel/panel-profile.c:803 ../gnome-panel/panel-profile.c:1543
-#: ../gnome-panel/panel-profile.c:1616 ../gnome-panel/panel-profile.c:1679
+#: ../gnome-panel/panel-profile.c:804 ../gnome-panel/panel-profile.c:1544
+#: ../gnome-panel/panel-profile.c:1617 ../gnome-panel/panel-profile.c:1680
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Greška pri čitanju Gkonf celog broja „%s“: %s"
 
-#: ../gnome-panel/panel-profile.c:1553
+#: ../gnome-panel/panel-profile.c:1554
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1898,7 +1964,7 @@ msgstr ""
 "Panel „%s“ je podešen da se prikazuje na ekranu %d koji trenutno nije "
 "dostupan. Ne učitavam ovaj panel."
 
-#: ../gnome-panel/panel-profile.c:1631
+#: ../gnome-panel/panel-profile.c:1632
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Greška pri čitanju Gkonf istinitosne vrednosti „%s“: %s"
@@ -1928,7 +1994,8 @@ msgid "Could not display properties dialog"
 msgstr "Ne mogu da prikažem prozorče sa postavkama"
 
 #: ../gnome-panel/panel-properties-dialog.c:1020
-#: ../gnome-panel/panel-run-dialog.c:1818
+#: ../gnome-panel/panel-run-dialog.c:1826
+#, c-format
 msgid "Unable to load file '%s'."
 msgstr "Ne mogu da učitam datoteku „%s“."
 
@@ -2043,10 +2110,12 @@ msgid "Could not find a suitable application."
 msgstr "Ne mogu pronaći odgovarajući program."
 
 #: ../gnome-panel/panel-recent.c:94 ../gnome-panel/panel-recent.c:102
+#, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Ne mogu da otvorim nedavno korišćeni dokument „%s“"
 
 #: ../gnome-panel/panel-recent.c:103
+#, c-format
 msgid "An unknown error occurred while trying to open \"%s\""
 msgstr "Došlo je do nepoznate greške pri pokušaju otvaranja „%s“"
 
@@ -2079,35 +2148,37 @@ msgid "Clear all items from the recent documents list"
 msgstr "Očisti sve stavke iz spiska skorašnjih dokumenata?"
 
 #: ../gnome-panel/panel-run-dialog.c:299
+#, c-format
 msgid "Could not run command '%s'"
 msgstr "Ne mogu da pokrenem naredbu „%s“"
 
 #: ../gnome-panel/panel-run-dialog.c:377
+#, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Ne mogu da pretvorim „%s“ iz UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1163
+#: ../gnome-panel/panel-run-dialog.c:1171
 msgid "Choose a file to append to the command..."
 msgstr "Izaberite datoteku koju želite da pridodate naredbi..."
 
-#: ../gnome-panel/panel-run-dialog.c:1529
+#: ../gnome-panel/panel-run-dialog.c:1537
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Izaberite program da vidite njegov opis."
 
-#: ../gnome-panel/panel-run-dialog.c:1561
+#: ../gnome-panel/panel-run-dialog.c:1574
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Izvršiću naredbu: „%s“"
 
-#: ../gnome-panel/panel-run-dialog.c:1592
+#: ../gnome-panel/panel-run-dialog.c:1605
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "Spisak adresa pušten na prozorče za pokretanje je bio neispravnog oblika (%d) "
 "ili dužine (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1817
+#: ../gnome-panel/panel-run-dialog.c:1825
 msgid "Could not display run dialog"
 msgstr "Ne mogu da prikažem prozorče za pokretanje programa"
 
@@ -2623,19 +2694,20 @@ msgid "Details: %s"
 msgstr "Detalji: %s"
 
 #: ../gnome-panel/panel-util.c:624
+#, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikona „%s“ nije nađena"
 
-#: ../gnome-panel/panel.c:471
+#: ../gnome-panel/panel.c:479
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otvori adresu: %s"
 
-#: ../gnome-panel/panel.c:1256
+#: ../gnome-panel/panel.c:1272
 msgid "Delete this drawer?"
 msgstr "Ukloni ovu fioku?"
 
-#: ../gnome-panel/panel.c:1257
+#: ../gnome-panel/panel.c:1273
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2643,15 +2715,15 @@ msgstr ""
 "Kada se ukloni fioka, fioka i njegove \n"
 "postavke se gube."
 
-#: ../gnome-panel/panel.c:1259
+#: ../gnome-panel/panel.c:1275
 msgid "Delete Drawer"
 msgstr "Ukloni fioku"
 
-#: ../gnome-panel/panel.c:1261
+#: ../gnome-panel/panel.c:1277
 msgid "Delete this panel?"
 msgstr "Ukloni ovaj panel?"
 
-#: ../gnome-panel/panel.c:1262
+#: ../gnome-panel/panel.c:1278
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2659,7 +2731,7 @@ msgstr ""
 "Kada se panel ukloni, panel i njegove postavke se \n"
 "nepovratno gube."
 
-#: ../gnome-panel/panel.c:1264
+#: ../gnome-panel/panel.c:1280
 msgid "Delete Panel"
 msgstr "Ukloni panel"
 
@@ -2766,6 +2838,7 @@ msgid "XX Large"
 msgstr "Gigantski"
 
 #: ../libpanel-applet/panel-test-applets.c:129
+#, c-format
 msgid "Failed to load applet %s"
 msgstr "Neuspelo učitavanje programčeta %s"
 
@@ -3713,6 +3786,3 @@ msgstr "_Postavke:"
 
 #~ msgid "_Take Screenshot..."
 #~ msgstr "_Snimak ekrana..."
-
-#~ msgid "_Log Out"
-#~ msgstr "O_djava"
