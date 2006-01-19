@@ -14,13 +14,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-04 23:19+0900\n"
-"PO-Revision-Date: 2006-01-04 23:13+0900\n"
+"POT-Creation-Date: 2006-01-20 08:20+0900\n"
+"PO-Revision-Date: 2006-01-20 08:13+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -51,8 +52,8 @@ msgstr "情報(_A)"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:743
-#: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:403
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:745
+#: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:404
 #: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
 msgstr "ヘルプ(_H)"
@@ -199,7 +200,7 @@ msgstr "書式のカスタマイズ"
 
 #: ../applets/clock/clock.c:2488 ../applets/clock/clock.c:2665
 #: ../applets/fish/fish.c:158 ../applets/notification_area/main.c:82
-#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:123
+#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:124
 #: ../applets/wncklet/workspace-switcher.c:238
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -267,7 +268,7 @@ msgstr ""
 "Shingo Akagaki <dora@kondara.org>\n"
 "Eiichiro ITANI <emu@ceres.dti.ne.jp>\n"
 "Akira TAGOH <tagoh@gnome.gr.jp>\n"
-"日本GNOMEユーザー会 <http://www.gnome.gr.jp>"
+"日本GNOMEユーザー会 http://www.gnome.gr.jp"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -989,23 +990,23 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME パネル・シェル"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:536
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:540
 msgid "_Lock To Panel"
 msgstr "ロックする(_L)"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:519
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:523
 msgid "_Move"
 msgstr "移動(_M)"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:512
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
 msgid "_Remove From Panel"
 msgstr "パネルから削除(_R)"
 
-#: ../gnome-panel/applet.c:429
+#: ../gnome-panel/applet.c:433
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1217
+#: ../gnome-panel/applet.c:1226
 msgid "Can't find an empty spot"
 msgstr "空いているスペースを見つけられません"
 
@@ -1013,7 +1014,7 @@ msgstr "空いているスペースを見つけられません"
 msgid "Could not load icon"
 msgstr "アイコンを読み込めませんでした"
 
-#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:150
+#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:169
 #: ../gnome-panel/panel-toplevel.c:1524
 msgid "Drawer"
 msgstr "引き出し"
@@ -1023,7 +1024,7 @@ msgid "_Add to Drawer..."
 msgstr "引き出しへ追加(_A)..."
 
 #: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:928
-#: ../gnome-panel/panel-action-button.c:143
+#: ../gnome-panel/panel-action-button.c:133
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "プロパティ(_P)"
@@ -1142,48 +1143,40 @@ msgstr "引き出しとしてパネルへ追加"
 msgid "Add this as menu to panel"
 msgstr "メニューとしてパネルへ追加"
 
-#: ../gnome-panel/panel-action-button.c:119
+#: ../gnome-panel/panel-action-button.c:121
 msgid "_Activate Screensaver"
 msgstr "スクリーンセーバーを有効にする(_A)"
 
-#: ../gnome-panel/panel-action-button.c:125
+#: ../gnome-panel/panel-action-button.c:127
 msgid "_Lock Screen"
 msgstr "画面のロック(_L)"
 
-#: ../gnome-panel/panel-action-button.c:131
-msgid "_Kill Screensaver Daemon"
-msgstr "スクリーンセーバーの強制終了(_K)"
-
-#: ../gnome-panel/panel-action-button.c:137
-msgid "Restart _Screensaver Daemon"
-msgstr "スクリーンセーバーの再起動(_S)"
-
-#: ../gnome-panel/panel-action-button.c:208
-#: ../gnome-panel/panel-action-button.c:221
-#: ../gnome-panel/panel-action-button.c:245
-#: ../gnome-panel/panel-menu-bar.c:470 ../gnome-panel/panel-menu-button.c:1007
-#: ../gnome-panel/panel-util.c:749
+#: ../gnome-panel/panel-action-button.c:200
+#: ../gnome-panel/panel-action-button.c:213
+#: ../gnome-panel/panel-action-button.c:237
+#: ../gnome-panel/panel-menu-bar.c:471 ../gnome-panel/panel-menu-button.c:1007
+#: ../gnome-panel/panel-util.c:747
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "'%s' を実行できませんでした"
 
-#: ../gnome-panel/panel-action-button.c:281
+#: ../gnome-panel/panel-action-button.c:273
 msgid "Could not connect to server"
 msgstr "サーバへ接続できませんでした"
 
-#: ../gnome-panel/panel-action-button.c:313
+#: ../gnome-panel/panel-action-button.c:305
 msgid "Lock Screen"
 msgstr "画面のロック"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:306
 msgid "Protect your computer from unauthorized use"
 msgstr "不正な使用からコンピュータを守ります"
 
-#: ../gnome-panel/panel-action-button.c:325
+#: ../gnome-panel/panel-action-button.c:317
 msgid "Log Out"
 msgstr "ログアウト"
 
-#: ../gnome-panel/panel-action-button.c:326
+#: ../gnome-panel/panel-action-button.c:318
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1191,113 +1184,129 @@ msgstr ""
 "別のユーザでログインしたりコンピュータをシャットダウンするために、このセッ"
 "ションからログアウトします"
 
-#: ../gnome-panel/panel-action-button.c:335
+#: ../gnome-panel/panel-action-button.c:327
 msgid "Run Application..."
 msgstr "アプリケーションの実行..."
 
-#: ../gnome-panel/panel-action-button.c:336
+#: ../gnome-panel/panel-action-button.c:328
 msgid "Run an Application by entering a command"
 msgstr "コマンドを入力すると、アプリケーションを起動します"
 
-#: ../gnome-panel/panel-action-button.c:345
+#: ../gnome-panel/panel-action-button.c:337
 msgid "Search for Files..."
 msgstr "ファイルの検索..."
 
-#: ../gnome-panel/panel-action-button.c:346
+#: ../gnome-panel/panel-action-button.c:338
 msgid "Find files, folders, and documents on your computer"
 msgstr "お使いのシステムにあるファイル、フォルダ、ドキュメントを検索します"
 
-#: ../gnome-panel/panel-action-button.c:354
+#: ../gnome-panel/panel-action-button.c:346
 msgid "Take Screenshot..."
 msgstr "スクリーンショット..."
 
-#: ../gnome-panel/panel-action-button.c:355
+#: ../gnome-panel/panel-action-button.c:347
 msgid "Take a screenshot of your desktop"
 msgstr "お使いのデスクトップのスクリーンショットを撮ります"
 
-#: ../gnome-panel/panel-action-button.c:363
+#: ../gnome-panel/panel-action-button.c:355
 msgid "Force Quit"
 msgstr "アプリの強制終了"
 
-#: ../gnome-panel/panel-action-button.c:364
+#: ../gnome-panel/panel-action-button.c:356
 msgid "Force a misbehaving application to quit"
 msgstr "おかしな動作をするアプリを強制的に終了します"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:373
+#: ../gnome-panel/panel-action-button.c:365
 msgid "Connect to Server..."
 msgstr "サーバへ接続..."
 
-#: ../gnome-panel/panel-action-button.c:374
+#: ../gnome-panel/panel-action-button.c:366
 msgid "Connect to a remote server"
 msgstr "リモートのサーバへ接続します"
 
-#: ../gnome-panel/panel-addto.c:102
+#: ../gnome-panel/panel-action-button.c:374
+msgid "Shut Down"
+msgstr "シャットダウン"
+
+#: ../gnome-panel/panel-action-button.c:375
+msgid "Shut down the computer"
+msgstr "コンピュータをシャットダウンします"
+
+#: ../gnome-panel/panel-addto.c:110
 msgid "Custom Application Launcher"
 msgstr "カスタム・アプリケーションのランチャ"
 
-#: ../gnome-panel/panel-addto.c:103
+#: ../gnome-panel/panel-addto.c:111
 msgid "Create a new launcher"
 msgstr "新しいランチャを生成します"
 
-#: ../gnome-panel/panel-addto.c:113
+#: ../gnome-panel/panel-addto.c:121
 msgid "Application Launcher..."
 msgstr "アプリケーションのランチャ..."
 
-#: ../gnome-panel/panel-addto.c:114
+#: ../gnome-panel/panel-addto.c:122
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "GNOME メニューの中にあるプログラムのランチャです"
 
-#: ../gnome-panel/panel-addto.c:128
+#: ../gnome-panel/panel-addto.c:136
 msgid "Main Menu"
 msgstr "メイン・メニュー"
 
-#: ../gnome-panel/panel-addto.c:129
+#: ../gnome-panel/panel-addto.c:137
 msgid "The main GNOME menu"
 msgstr "GNOME メイン・メニューです"
 
-#: ../gnome-panel/panel-addto.c:139
+#: ../gnome-panel/panel-addto.c:147
 msgid "Menu Bar"
 msgstr "メニュー・バー"
 
-#: ../gnome-panel/panel-addto.c:140
+#: ../gnome-panel/panel-addto.c:148
 msgid "A custom menu bar"
 msgstr "カスタム・メニュー・バーです"
 
-#: ../gnome-panel/panel-addto.c:151
+#: ../gnome-panel/panel-addto.c:158
+msgid "Separator"
+msgstr "区切り"
+
+#: ../gnome-panel/panel-addto.c:159
+msgid "A separator to organize the panel items"
+msgstr "パネルのアイテムを整理するための区切りです"
+
+#: ../gnome-panel/panel-addto.c:170
 msgid "A pop out drawer to store other items in"
 msgstr "他のアイテムを格納するポップアップ式の引き出しです"
 
-#: ../gnome-panel/panel-addto.c:239
+#: ../gnome-panel/panel-addto.c:261
 msgid "(empty)"
 msgstr "(空)"
 
-#: ../gnome-panel/panel-addto.c:374
+#: ../gnome-panel/panel-addto.c:401
 #: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "問い合わせが例外 %s を返しました\n"
 
-#: ../gnome-panel/panel-addto.c:978
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
-msgid "Select an _item to add to \"%s\":"
-msgstr "\"%s\" へ追加するアイテムを選択して下さい(_I):"
+msgid "Find an _item to add to \"%s\":"
+msgstr "\"%s\" へ追加するアイテムの検索(_I):"
 
-#: ../gnome-panel/panel-addto.c:982
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Add to Drawer"
 msgstr "引き出しへ追加"
 
-#: ../gnome-panel/panel-addto.c:984
-msgid "Select an _item to add to the drawer:"
-msgstr "引き出しへ追加するアイテムを選択して下さい(_I):"
+#: ../gnome-panel/panel-addto.c:1061
+msgid "Find an _item to add to the drawer:"
+msgstr "引き出しへ追加するアイテムの検索(_I):"
 
-#: ../gnome-panel/panel-addto.c:986
+#: ../gnome-panel/panel-addto.c:1063
 msgid "Add to Panel"
 msgstr "パネルへ追加"
 
-#: ../gnome-panel/panel-addto.c:988
-msgid "Select an _item to add to the panel:"
-msgstr "パネルへ追加するアイテムを選択して下さい(_I):"
+#: ../gnome-panel/panel-addto.c:1065
+msgid "Find an _item to add to the panel:"
+msgstr "パネルへ追加するアイテムの検索(_I):"
 
 #: ../gnome-panel/panel-applet-frame.c:822
 #, c-format
@@ -1627,6 +1636,48 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "TRUE にすると、パネルにあるオブジェクトのツールチップが表示されます。"
 
+#: ../gnome-panel/panel-logout.c:211
+#, c-format
+msgid "You will be automatically logged out in %d second."
+msgid_plural "You will be automatically logged out in %d seconds."
+msgstr[0] "%d 秒後に自動的にログアウトします。"
+msgstr[1] "%d 秒後に自動的にログアウトします。"
+
+#: ../gnome-panel/panel-logout.c:218
+#, c-format
+msgid "This system will be automatically shut down in %d second."
+msgid_plural "This system will be automatically shut down in %d seconds."
+msgstr[0] "%d 秒後に自動的にシャットダウンします。"
+msgstr[1] "%d 秒後に自動的にシャットダウンします。"
+
+#: ../gnome-panel/panel-logout.c:290
+msgid "Log out of this system now?"
+msgstr "このシステムからログアウトしますか？"
+
+#: ../gnome-panel/panel-logout.c:296
+msgid "_Switch User"
+msgstr "ユーザの切り替え(_S)"
+
+#: ../gnome-panel/panel-logout.c:302
+msgid "_Log Out"
+msgstr "ログアウト(_L)"
+
+#: ../gnome-panel/panel-logout.c:307
+msgid "Shut down this system now?"
+msgstr "このシステムをシャットダウンしますか？"
+
+#: ../gnome-panel/panel-logout.c:314
+msgid "_Suspend"
+msgstr "サスペンド(_S)"
+
+#: ../gnome-panel/panel-logout.c:318
+msgid "_Reboot"
+msgstr "再起動(_R)"
+
+#: ../gnome-panel/panel-logout.c:324
+msgid "_Shut Down"
+msgstr "シャットダウン(_S)"
+
 #: ../gnome-panel/panel-menu-bar.c:74
 msgid "Browse and run installed applications"
 msgstr "インストールしたアプリケーションを参照したり起動します"
@@ -1641,11 +1692,11 @@ msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr ""
 "デスクトップの外観や設定を変更したり、ヘルプを参照したり、ログアウトします"
 
-#: ../gnome-panel/panel-menu-bar.c:182
+#: ../gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "アプリケーション"
 
-#: ../gnome-panel/panel-menu-bar.c:410 ../gnome-panel/panel-menu-button.c:688
+#: ../gnome-panel/panel-menu-bar.c:411 ../gnome-panel/panel-menu-button.c:688
 msgid "_Edit Menus"
 msgstr "メニューの編集(_E)"
 
@@ -1658,19 +1709,20 @@ msgstr "場所 '%s' を開けませんでした"
 msgid "Bookmarks"
 msgstr "ブックマーク"
 
-#. Translators: the first string is a pathc and
-#. * the second string is a hostname. nautilus
-#. * contains the same string to translate.
-#: ../gnome-panel/panel-menu-items.c:381
+#. Translators: the first string is a
+#. * path and the second string is a
+#. * hostname. nautilus contains the same
+#. * string to translate.
+#: ../gnome-panel/panel-menu-items.c:386
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%2$s にある %1$s"
 
-#: ../gnome-panel/panel-menu-items.c:477
+#: ../gnome-panel/panel-menu-items.c:486
 msgid "Network Places"
 msgstr "ネットワークの場所"
 
-#: ../gnome-panel/panel-menu-items.c:480
+#: ../gnome-panel/panel-menu-items.c:489
 msgid "Removable Media"
 msgstr "リムーバブル・メディア"
 
@@ -1678,30 +1730,30 @@ msgstr "リムーバブル・メディア"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:551
+#: ../gnome-panel/panel-menu-items.c:560
 msgid "Desktop Folder|Desktop"
 msgstr "デスクトップ"
 
-#: ../gnome-panel/panel-menu-items.c:552
+#: ../gnome-panel/panel-menu-items.c:561
 msgid "Open the desktop as a folder"
 msgstr "フォルダとしてデスクトップを開きます"
 
-#: ../gnome-panel/panel-menu-items.c:910
+#: ../gnome-panel/panel-menu-items.c:923
 msgid "Places"
 msgstr "場所"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:948
+#: ../gnome-panel/panel-menu-items.c:961
 msgid "Desktop Environment|Desktop"
 msgstr "デスクトップ"
 
-#: ../gnome-panel/panel-menu-items.c:1089
+#: ../gnome-panel/panel-menu-items.c:1110
 msgid "Could not launch menu item"
 msgstr "メニューのアイテムを起動できませんでした"
 
-#: ../gnome-panel/panel-menu-items.c:1101
+#: ../gnome-panel/panel-menu-items.c:1122
 msgid "Could not load menu item"
 msgstr "メニューのアイテムを読み込めませんでした"
 
@@ -1884,19 +1936,19 @@ msgstr "オブジェクトのボタンにカスタム・アイコンを使用す
 msgid "Use custom path for menu contents"
 msgstr "メニューの内容にカスタム・パスを使用する"
 
-#: ../gnome-panel/panel-profile.c:761 ../gnome-panel/panel-profile.c:788
-#: ../gnome-panel/panel-profile.c:824 ../gnome-panel/panel-profile.c:1647
+#: ../gnome-panel/panel-profile.c:762 ../gnome-panel/panel-profile.c:789
+#: ../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1648
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "GConf の string 値 '%s' の読み込みでエラー: %s"
 
-#: ../gnome-panel/panel-profile.c:803 ../gnome-panel/panel-profile.c:1543
-#: ../gnome-panel/panel-profile.c:1616 ../gnome-panel/panel-profile.c:1679
+#: ../gnome-panel/panel-profile.c:804 ../gnome-panel/panel-profile.c:1544
+#: ../gnome-panel/panel-profile.c:1617 ../gnome-panel/panel-profile.c:1680
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "GConf の int 値 '%s' の読み込みでエラー: %s"
 
-#: ../gnome-panel/panel-profile.c:1553
+#: ../gnome-panel/panel-profile.c:1554
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1905,7 +1957,7 @@ msgstr ""
 "パネル '%s' は、現在無効なスクリーン %d で表示するようになっています。このパ"
 "ネルを読み込みません。"
 
-#: ../gnome-panel/panel-profile.c:1631
+#: ../gnome-panel/panel-profile.c:1632
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "GConf の bool 値 '%s' の読み込みでエラー: %s"
@@ -1935,7 +1987,7 @@ msgid "Could not display properties dialog"
 msgstr "プロパティ・ダイアログを表示できませんでした"
 
 #: ../gnome-panel/panel-properties-dialog.c:1020
-#: ../gnome-panel/panel-run-dialog.c:1818
+#: ../gnome-panel/panel-run-dialog.c:1826
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "ファイル '%s' を読み込めません"
@@ -2099,28 +2151,28 @@ msgstr "コマンド '%s' を起動できませんでした"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "UTF-8 から '%s' へ変換できませんでした"
 
-#: ../gnome-panel/panel-run-dialog.c:1163
+#: ../gnome-panel/panel-run-dialog.c:1171
 msgid "Choose a file to append to the command..."
 msgstr "コマンドの後ろに続けるファイルを選択して下さい..."
 
-#: ../gnome-panel/panel-run-dialog.c:1529
+#: ../gnome-panel/panel-run-dialog.c:1537
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "説明を表示するアプリケーションを選択して下さい"
 
-#: ../gnome-panel/panel-run-dialog.c:1561
+#: ../gnome-panel/panel-run-dialog.c:1574
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "実行するコマンド: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1592
+#: ../gnome-panel/panel-run-dialog.c:1605
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "実行ダイアログにドロップした URI の並びの書式 (%d) またはサイズ (%d) が間違っ"
 "ています\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1817
+#: ../gnome-panel/panel-run-dialog.c:1825
 msgid "Could not display run dialog"
 msgstr "プログラムの起動ダイアログを表示できませんでした"
 
@@ -2635,16 +2687,16 @@ msgstr "詳細: %s"
 msgid "Icon '%s' not found"
 msgstr "アイコン '%s' が見つかりません"
 
-#: ../gnome-panel/panel.c:471
+#: ../gnome-panel/panel.c:479
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL を開く: %s"
 
-#: ../gnome-panel/panel.c:1256
+#: ../gnome-panel/panel.c:1272
 msgid "Delete this drawer?"
 msgstr "この引き出しを削除しますか？"
 
-#: ../gnome-panel/panel.c:1257
+#: ../gnome-panel/panel.c:1273
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2652,15 +2704,15 @@ msgstr ""
 "引き出しを削除すると、引き出しと\n"
 "その設定が失われてしまいます。"
 
-#: ../gnome-panel/panel.c:1259
+#: ../gnome-panel/panel.c:1275
 msgid "Delete Drawer"
 msgstr "引き出しの削除"
 
-#: ../gnome-panel/panel.c:1261
+#: ../gnome-panel/panel.c:1277
 msgid "Delete this panel?"
 msgstr "このパネルを削除しますか？"
 
-#: ../gnome-panel/panel.c:1262
+#: ../gnome-panel/panel.c:1278
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2668,7 +2720,7 @@ msgstr ""
 "パネルを削除すると、\n"
 "パネルとその設定が失われてしまいます。"
 
-#: ../gnome-panel/panel.c:1264
+#: ../gnome-panel/panel.c:1280
 msgid "Delete Panel"
 msgstr "パネルの削除"
 
@@ -2684,46 +2736,46 @@ msgstr "Bonobo アプレット (テスト用)"
 msgid "Test Bonobo Applet Factory"
 msgstr "Bonobo アプレット・ファクトリ (テスト用)"
 
-#: ../libpanel-applet/panel-applet.c:1015
+#: ../libpanel-applet/panel-applet.c:1042
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "不完全な背景の種類 '%s' を受けとりました"
 
-#: ../libpanel-applet/panel-applet.c:1029
+#: ../libpanel-applet/panel-applet.c:1056
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "不完全な背景の種類 '%s' を受け取りました: %s"
 
-#: ../libpanel-applet/panel-applet.c:1038
+#: ../libpanel-applet/panel-applet.c:1065
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "画像 %s の取得に失敗しました"
 
-#: ../libpanel-applet/panel-applet.c:1045
+#: ../libpanel-applet/panel-applet.c:1072
 msgid "Unknown background type received"
 msgstr "不明な背景の種類を受け取りました"
 
-#: ../libpanel-applet/panel-applet.c:1269
+#: ../libpanel-applet/panel-applet.c:1296
 msgid "The Applet's containing Panel's orientation"
 msgstr "アプレットを含むパネルの向き"
 
-#: ../libpanel-applet/panel-applet.c:1277
+#: ../libpanel-applet/panel-applet.c:1304
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "アプレットを含むパネルの大きさ (ピクセル単位)"
 
-#: ../libpanel-applet/panel-applet.c:1285
+#: ../libpanel-applet/panel-applet.c:1312
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "アプレットを含むパネルの背景色、あるいは画像"
 
-#: ../libpanel-applet/panel-applet.c:1293
+#: ../libpanel-applet/panel-applet.c:1320
 msgid "The Applet's flags"
 msgstr "アプレットのフラグ"
 
-#: ../libpanel-applet/panel-applet.c:1301
+#: ../libpanel-applet/panel-applet.c:1328
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "アプレットの大きさのヒントとして指定可能な範囲"
 
-#: ../libpanel-applet/panel-applet.c:1309
+#: ../libpanel-applet/panel-applet.c:1336
 msgid "The Applet's containing Panel is locked down"
 msgstr "アプレットを含むパネルはロックされています"
 
