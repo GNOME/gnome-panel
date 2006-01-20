@@ -889,12 +889,6 @@ panel_addto_dialog_destroy (GtkWidget *widget_dialog,
 static void
 panel_addto_present_applications (PanelAddtoDialog *dialog)
 {
-	if (dialog->applet_search_text)
-		g_free (dialog->applet_search_text);
-
-	dialog->applet_search_text = g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->search_entry)));
-	gtk_entry_set_text (GTK_ENTRY (dialog->search_entry), "");
-
 	if (dialog->filter_application_model == NULL)
 		panel_addto_make_application_model (dialog);
 	gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->tree_view),
@@ -902,6 +896,13 @@ panel_addto_present_applications (PanelAddtoDialog *dialog)
 	gtk_window_set_focus (GTK_WINDOW (dialog->addto_dialog),
 			      dialog->search_entry);
 	gtk_widget_set_sensitive (dialog->back_button, TRUE);
+
+	if (dialog->applet_search_text)
+		g_free (dialog->applet_search_text);
+
+	dialog->applet_search_text = g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->search_entry)));
+	/* show everything */
+	gtk_entry_set_text (GTK_ENTRY (dialog->search_entry), "");
 }
 
 static void
@@ -1114,8 +1115,12 @@ panel_addto_filter_func (GtkTreeModel *model,
 	if (data == NULL)
 		return FALSE;
 
-	//FIXME this doesn't really work for the GtkTreeStore used for
-	//the .desktop files
+	/* This is more a workaround than anything else: show all the root
+	 * items in a tree store */
+	if (GTK_IS_TREE_STORE (model) &&
+	    gtk_tree_store_iter_depth (GTK_TREE_STORE (model), iter) == 0)
+		return TRUE;
+
 	return (panel_util_utf8_strstrcase (data->name,
 					    dialog->search_text) != NULL ||
 	        panel_util_utf8_strstrcase (data->description,

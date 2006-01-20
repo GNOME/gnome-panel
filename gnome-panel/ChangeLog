@@ -1,3 +1,11 @@
+2006-01-20  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-addto.c: (panel_addto_present_applications): change the search
+	entry text after switching models so that it gets refiltered
+	(panel_addto_filter_func): if the iter is a root in a tree model, just
+	show it
+	Fix bug #327612 and bug #327613.
+
 2006-01-20  Elijah Newren  <newren gmail com>
 
 	Revert part of patch from 2006-01-17.  Fixes #327878.
