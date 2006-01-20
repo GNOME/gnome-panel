@@ -1,5 +1,11 @@
 2006-01-20  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-applet-frame.c: (panel_applet_frame_load_from_gconf): don't
+	load the applet if the bonobo_iid is not set, eg.
+	Could fix bug #326942
+
+2006-01-20  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-addto.c: (panel_addto_present_applications): change the search
 	entry text after switching models so that it gets refiltered
 	(panel_addto_filter_func): if the iter is a root in a tree model, just
