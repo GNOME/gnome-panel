@@ -186,6 +186,9 @@ panel_logout_response (GtkWidget *logout_dialog,
 	case PANEL_LOGOUT_RESPONSE_STR:
 		//FIXME
 		break;
+	case GTK_RESPONSE_NONE:
+	case GTK_RESPONSE_DELETE_EVENT:
+		break;
 	default:
 		g_assert_not_reached ();
 	}
