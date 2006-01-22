@@ -158,6 +158,12 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 				      NULL);
 
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
+				      "/commands/LockSeparator",
+				      "hidden",
+				      locked_down ? "1" : "0",
+				      NULL);
+
+	bonobo_ui_component_set_prop (frame->priv->ui_component,
 				      "/commands/RemoveAppletFromPanel",
 				      "hidden",
 				      locked_down ? "1" : "0",

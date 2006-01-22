@@ -1,5 +1,16 @@
 2006-01-22  Vincent Untz  <vuntz@gnome.org>
 
+	* GNOME_Panel_Popup.xml: give a verb to the separator so we can
+	identify it
+	* panel-applet-frame.c: (panel_applet_frame_sync_menu_state): hide
+	separator if the panel is locked down
+	I don't really understand why it hides both separators (since the code
+	should only requests that one of them is hidden), but since it's what
+	we want, let's just be happy.
+	Fix bug #324444
+
+2006-01-22  Vincent Untz  <vuntz@gnome.org>
+
 	* GNOME_Panel_Popup.xml: change accelerator for Lock To Panel
 	* applet.c: (panel_applet_create_menu): ditto
 	Fix bug #320839
