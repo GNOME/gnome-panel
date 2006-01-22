@@ -1720,11 +1720,22 @@ applet_change_orient (PanelApplet       *applet,
 
 /* this is when the panel size changes */
 static void
-applet_change_pixel_size (PanelApplet *applet,
-			  gint         size,
-			  ClockData   *cd)
+applet_change_pixel_size (PanelApplet   *applet,
+			  GtkAllocation *allocation,
+			  ClockData     *cd)
 {
-	cd->size = size;
+	int new_size;
+
+        if (cd->orient == PANEL_APPLET_ORIENT_LEFT ||
+	    cd->orient == PANEL_APPLET_ORIENT_RIGHT)
+		new_size = allocation->width;
+	else
+		new_size = allocation->height;
+
+	if (cd->size == new_size)
+		return;
+
+	cd->size = new_size;
 
         unfix_size (cd);
 	update_timeformat (cd);
@@ -2237,7 +2248,7 @@ fill_clock_applet (PanelApplet *applet)
 	cd->showdate = panel_applet_gconf_get_bool (applet, KEY_SHOW_DATE, &error);
 	if (error) {
 		g_error_free (error);
-		/* if on a small screen don't show data by default */
+		/* if on a small screen don't show date by default */
 		if (gdk_screen_width () <= 800)
 			cd->showdate = FALSE;
 		else
@@ -2268,9 +2279,8 @@ fill_clock_applet (PanelApplet *applet)
 			  G_CALLBACK (applet_change_orient),
 			  cd);
 
-	/* similiar to the above in semantics*/
 	g_signal_connect (G_OBJECT (cd->applet),
-			  "change_size",
+			  "size-allocate",
 			  G_CALLBACK (applet_change_pixel_size),
 			  cd);
 

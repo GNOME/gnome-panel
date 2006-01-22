@@ -1,3 +1,12 @@
+2006-01-22  Vincent Untz  <vuntz@gnome.org>
+
+	* clock.c: (applet_change_pixel_size): updated so that it's a
+	size-allocate callback, and don't do anything if the size didn't
+	change
+	(fill_clock_applet): fix typo in a comment, connect to size-allocate
+	instead of change_size
+	Fix bug #325063
+
 ==================== 2.13.5 ====================
 
 ==================== 2.13.4 ====================
