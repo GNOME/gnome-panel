@@ -156,6 +156,8 @@ struct _ClockData {
         GtkWidget *custom_entry;
         gboolean   custom_format_shown;
 
+	gboolean   can_handle_format_12;
+
 	guint listeners [N_GCONF_PREFS];
 };
 
@@ -1941,8 +1943,13 @@ format_changed (GConfClient  *client,
 		return;
 
 	value = gconf_value_get_string (entry->value);
-	if (!gconf_string_to_enum (format_type_enum_map, value, &new_format) ||
-	    new_format == clock->format)
+	if (!gconf_string_to_enum (format_type_enum_map, value, &new_format))
+		return;
+
+	if (!clock->can_handle_format_12 && new_format == CLOCK_FORMAT_12)
+		new_format = CLOCK_FORMAT_24;
+
+	if (new_format == clock->format)
 		return;
 
 	clock->format = new_format;
@@ -2261,6 +2268,10 @@ fill_clock_applet (PanelApplet *applet)
 
 	cd->timeformat = NULL;
 
+	cd->can_handle_format_12 = (clock_locale_format () == CLOCK_FORMAT_12);
+	if (!cd->can_handle_format_12 && cd->format == CLOCK_FORMAT_12)
+		cd->format = CLOCK_FORMAT_24;
+
 	create_clock_widget (cd);
 
 	gtk_container_set_border_width (GTK_CONTAINER (cd->applet), 0);
@@ -2423,7 +2434,10 @@ set_format_cb (GtkComboBox *combo,
         ClockFormat format;
 
 	/* valid values begin from 1 */
-        format = gtk_combo_box_get_active (combo) + 1;
+	if (cd->can_handle_format_12)
+		format = gtk_combo_box_get_active (combo) + 1;
+	else
+		format = gtk_combo_box_get_active (combo) + 2;
 
         update_properties_for_format (cd, combo, format);
 
@@ -2564,7 +2578,8 @@ display_properties_dialog (BonoboUIComponent *uic,
         combo = gtk_combo_box_new_text ();
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("12 hour"));
+	if (cd->can_handle_format_12)
+		gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("12 hour"));
         gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("24 hour"));
         gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("UNIX time"));
         gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("Internet time"));
@@ -2631,7 +2646,13 @@ display_properties_dialog (BonoboUIComponent *uic,
         update_properties_for_format (cd, GTK_COMBO_BOX (combo), cd->format);
 
 	/* valid values begin from 1 */
-	gtk_combo_box_set_active (GTK_COMBO_BOX (combo), cd->format - 1);
+	if (cd->can_handle_format_12)
+		gtk_combo_box_set_active (GTK_COMBO_BOX (combo),
+					  cd->format - 1);
+	else
+		gtk_combo_box_set_active (GTK_COMBO_BOX (combo),
+					  cd->format - 2);
+
         g_signal_connect (combo, "changed",
                           G_CALLBACK (set_format_cb), cd);
 

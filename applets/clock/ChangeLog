@@ -1,5 +1,17 @@
 2006-01-22  Vincent Untz  <vuntz@gnome.org>
 
+	Don't offer the 12-hour format to the user if his locale don't support
+	it (strftime("%p") == ""). Fix bug #320156
+
+	* (format_changed): check if we support AM/PM and if we don't and it's
+	the new format, just use 24-hour as format
+	(fill_clock_applet): ditto
+	(set_format_cb): small tweak for when we don't support AM/PM
+	(display_properties_dialog): don't show the 12-hour option if we don't
+	support AM/PM, small tweak when initialize the current value
+
+2006-01-22  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (applet_change_pixel_size): updated so that it's a
 	size-allocate callback, and don't do anything if the size didn't
 	change
