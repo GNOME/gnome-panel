@@ -655,9 +655,8 @@ static void
 panel_desktop_menu_item_append_menu (GtkWidget            *menu,
 				     PanelDesktopMenuItem *parent)
 {
-	gboolean   add_separator;
-	GList     *children;
-	GtkWidget *item;
+	gboolean  add_separator;
+	GList    *children;
 
 	if (!g_object_get_data (G_OBJECT (menu), "panel-menu-needs-appending"))
 		return;

@@ -1,5 +1,21 @@
 2006-01-22  Vincent Untz  <vuntz@gnome.org>
 
+	Remove the screenshot action button and migrates the existing config
+	to use gnome-screenshot.desktop
+
+	* panel-action-button.c: remove screenshot stuff
+	(panel_action_screenshot): kill
+	(panel_action_button_load_from_gconf): if the type of the action is
+	screenshot, migrate this object
+	* panel-compatibility.[ch]:
+	(panel_compatiblity_migrate_screenshot_action): new, migrates the
+	screenshot action object to a simple launcher
+	* panel-enums.h: mark PANEL_ACTION_SCREENSHOT as deprecated
+	* panel-menu-items.c: (panel_desktop_menu_item_append_menu): remove
+	useless variable
+
+2006-01-22  Vincent Untz  <vuntz@gnome.org>
+
 	* .cvsignore: remove panel-default-setup.entries from here
 	* panel-default-setup.entries.in: kill
 	* panel-default-setup.entries: add back, without DATADIR

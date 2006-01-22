@@ -46,6 +46,7 @@
 #include "panel-a11y.h"
 #include "panel-lockdown.h"
 #include "panel-logout.h"
+#include "panel-compatibility.h"
 
 #define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
 
@@ -72,10 +73,11 @@ static GConfEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_LOGOUT,         "logout"         },
 	{ PANEL_ACTION_RUN,            "run"            },
 	{ PANEL_ACTION_SEARCH,         "search"         },
-	{ PANEL_ACTION_SCREENSHOT,     "screenshot"     },
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
 	{ PANEL_ACTION_CONNECT_SERVER, "connect-server" },
 	{ PANEL_ACTION_SHUTDOWN,       "shutdown"       },
+	/* compatibility with GNOME < 2.13.90 */
+	{ PANEL_ACTION_SCREENSHOT,     "screenshot"     },
 	{ 0,                           NULL             },
 };
 
@@ -218,30 +220,6 @@ panel_action_search (GtkWidget *widget)
 	}
 }
 
-/* Take Screenshot
- */
-static void
-panel_action_screenshot (GtkWidget *widget)
-{
-	GdkScreen *screen;
-	GError    *error = NULL;
-	char      *argv [2] = {"gnome-screenshot", NULL};
-
-	screen = gtk_widget_get_screen (widget);
-
-	if (!gdk_spawn_on_screen (screen, NULL, argv, NULL,
-				  G_SPAWN_SEARCH_PATH,
-				  NULL, NULL, NULL, &error)) {
-		panel_error_dialog (screen,
-				    "cannot_exec_gnome-screenshot", TRUE,
-				    _("Could not execute '%s'"),
-				    "%s",
-				    "gnome-screenshot",
-				    error->message);
-		g_error_free (error);
-	}
-}
-
 /* Force Quit
  */
 static void
@@ -339,15 +317,6 @@ static PanelAction actions [] = {
 		"gospanel-554",
 		"ACTION:search:NEW",
 		panel_action_search, NULL, NULL, NULL
-	},
-	{
-		PANEL_ACTION_SCREENSHOT,
-		"applets-screenshooter",
-		N_("Take Screenshot..."),
-		N_("Take a screenshot of your desktop"),
-		"gospanel-553",
-		"ACTION:screenshot:NEW",
-		panel_action_screenshot, NULL, NULL, NULL
 	},
 	{
 		PANEL_ACTION_FORCE_QUIT,
@@ -825,7 +794,13 @@ panel_action_button_load_from_gconf (PanelWidget *panel,
 
 	g_free (action_type);
 
-	panel_action_button_load (type, panel, locked, position, exactpos, id, FALSE);
+	/* compatibility: migrate from GNOME < 2.13.90 */
+	if (type == PANEL_ACTION_SCREENSHOT) {
+		panel_compatiblity_migrate_screenshot_action (panel_gconf_get_client (),
+							      id);
+	} else
+		panel_action_button_load (type, panel, locked,
+					  position, exactpos, id, FALSE);
 }
 
 void
