@@ -479,12 +479,29 @@ create_launcher (const char *location)
 		return NULL;
 	}
 
+	ditem = NULL;
+
 	if (!strchr (location, G_DIR_SEPARATOR)) {
+		/* try to first load a file in our config directory, and if it
+		 * doesn't exist there, try to find it in the xdg data dirs */
 		char *path;
 
 		path = panel_make_full_path (NULL, location);
-		ditem = gnome_desktop_item_new_from_file (path, 0, &error);
-		g_free (path);
+
+		if (!g_file_test (path, G_FILE_TEST_EXISTS)) {
+			char *buffer;
+
+			g_free (path);
+			buffer = g_strconcat ("applications/", location, NULL);
+			path = panel_lookup_in_data_dirs (buffer);
+			g_free (buffer);
+		}
+
+		if (path) {
+			ditem = gnome_desktop_item_new_from_file (path, 0,
+								  &error);
+			g_free (path);
+		}
 	} else
 		ditem = gnome_desktop_item_new_from_uri (location, 0, &error);
 

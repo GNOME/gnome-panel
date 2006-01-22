@@ -211,7 +211,7 @@ EXTRA_DIST =					\
 	panel-marshal.list			\
 	update-from-egg.sh			\
 	gnome-panelrc				\
-	panel-default-setup.entries.in
+	panel-default-setup.entries
 
 @INTLTOOL_DESKTOP_RULE@
 
@@ -266,11 +266,7 @@ rc_DATA = gnome-panelrc
 @INTLTOOL_SERVER_RULE@
 
 entriesdir       = $(GCONF_SCHEMA_FILE_DIR)
-entries_in_files = panel-default-setup.entries.in
-entries_DATA     = $(entries_in_files:.entries.in=.entries)
-
-%.entries: %.entries.in
-	sed -e "s|\@DATADIR\@|$(datadir)|" $< > $@
+entries_DATA     = panel-default-setup.entries
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files =				\
@@ -284,7 +280,7 @@ schemas_DATA     = panel-compatibility.schemas $(schemas_in_files:.schemas.in=.s
 @INTLTOOL_SCHEMAS_RULE@
 
 if GCONF_SCHEMAS_INSTALL
-install-data-local: $(entries_in_files:.entries.in=.entries)
+install-data-local:
 	if test -z "$(DESTDIR)" ; then \
 		for p in $(schemas_DATA) ; do \
 			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/gnome-panel/$$p ; \
