@@ -50,21 +50,21 @@ typedef struct {
 } ComboItem;
 
 static ComboItem orient_items [] = {
-	{ N_("Top"),    "top"    },
-	{ N_("Bottom"), "bottom" },
-	{ N_("Left"),   "left"   },
-	{ N_("Right"),  "right"  }
+	{ N_("Orientation|Top"),    "top"    },
+	{ N_("Orientation|Bottom"), "bottom" },
+	{ N_("Orientation|Left"),   "left"   },
+	{ N_("Orientation|Right"),  "right"  }
 };
 
 
 static ComboItem size_items [] = {
-	{ N_("XX Small"), "xx-small" },
-	{ N_("X Small"),  "x-small"  },
-	{ N_("Small"),    "small"    },
-	{ N_("Medium"),   "medium"   },
-	{ N_("Large"),    "large"    },
-	{ N_("X Large"),  "x-large"  },
-	{ N_("XX Large"), "xx-large" }
+	{ N_("Size|XX Small"), "xx-small" },
+	{ N_("Size|X Small"),  "x-small"  },
+	{ N_("Size|Small"),    "small"    },
+	{ N_("Size|Medium"),   "medium"   },
+	{ N_("Size|Large"),    "large"    },
+	{ N_("Size|X Large"),  "x-large"  },
+	{ N_("Size|XX Large"), "xx-large" }
 };
 
 static char *
@@ -213,7 +213,7 @@ setup_combo (GtkWidget *combo_box,
 	for (i = 0; i < nb_items; i++) {
 		gtk_list_store_append (model, &iter);
 		gtk_list_store_set (model, &iter,
-				    COLUMN_TEXT, dynamic ? g_strdup (items [i].name) : _(items [i].name),
+				    COLUMN_TEXT, dynamic ? g_strdup (items [i].name) : Q_(items [i].name),
 				    COLUMN_ITEM, dynamic ? g_strdup (items [i].value) : items [i].value,
 				    -1);
 	}
