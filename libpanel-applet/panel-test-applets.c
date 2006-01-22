@@ -9,6 +9,7 @@
 
 #include <config.h>
 #include <glade/glade.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <bonobo/bonobo-exception.h>
 #include <bonobo/bonobo-widget.h>
