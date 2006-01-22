@@ -1,5 +1,15 @@
 2006-01-22  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-action-button.c: add back the screenshot action in an array
+	(panel_action_get_is_deprecated): new
+	(panel_action_get_is_disabled): check if the action is deprecated
+	(panel_action_button_set_type): ditto
+	(panel_action_button_load_from_gconf): beautify code
+	(panel_action_button_load_from_drag): check if the action is deprecated
+	Fix bug #328157
+
+2006-01-22  Vincent Untz  <vuntz@gnome.org>
+
 	Remove the screenshot action button and migrates the existing config
 	to use gnome-screenshot.desktop
 
