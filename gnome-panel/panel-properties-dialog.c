@@ -117,10 +117,10 @@ typedef struct {
 } OrientationComboItem;
 
 static OrientationComboItem orientation_items [] = {
-	{ N_("Top"),    PANEL_ORIENTATION_TOP    },
-	{ N_("Bottom"), PANEL_ORIENTATION_BOTTOM },
-	{ N_("Left"),   PANEL_ORIENTATION_LEFT   },
-	{ N_("Right"),  PANEL_ORIENTATION_RIGHT  }
+	{ N_("Orientation|Top"),    PANEL_ORIENTATION_TOP    },
+	{ N_("Orientation|Bottom"), PANEL_ORIENTATION_BOTTOM },
+	{ N_("Orientation|Left"),   PANEL_ORIENTATION_LEFT   },
+	{ N_("Orientation|Right"),  PANEL_ORIENTATION_RIGHT  }
 };
 
 static void
@@ -172,7 +172,7 @@ panel_properties_dialog_setup_orientation_combo (PanelPropertiesDialog *dialog,
 	for (i = 0; i < G_N_ELEMENTS (orientation_items); i++) {
 		gtk_list_store_append (model, &iter);
 		gtk_list_store_set (model, &iter,
-				    COLUMN_TEXT, _(orientation_items [i].name),
+				    COLUMN_TEXT, Q_(orientation_items [i].name),
 				    COLUMN_ITEM, &(orientation_items [i]),
 				    -1);
 		if (orientation == orientation_items [i].orientation)

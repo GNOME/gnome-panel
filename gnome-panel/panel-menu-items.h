@@ -87,7 +87,6 @@ void panel_place_menu_item_set_panel   (GtkWidget   *item,
 void panel_desktop_menu_item_set_panel (GtkWidget   *item,
 					PanelWidget *panel);
 
-GtkWidget *panel_menu_items_create_action_item (PanelActionButtonType action_type);
 void panel_menu_items_append_lock_logout (GtkWidget *menu);
 void panel_menu_item_activate_desktop_file (GtkWidget  *menuitem,
 					    const char *path);

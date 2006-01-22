@@ -248,6 +248,45 @@ panel_menu_items_append_place_item (const char *icon_name,
 	setup_uri_drag (item, uri, icon_name);
 }
 
+static GtkWidget *
+panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
+					  const char            *label,
+					  const char            *tooltip)
+{
+	GtkWidget *item;
+
+	if (panel_action_get_is_disabled (action_type))
+		return NULL;
+
+	item = gtk_image_menu_item_new ();
+        setup_menu_item_with_icon (item,
+				   panel_menu_icon_get_size (),
+				   panel_action_get_icon_name (action_type),
+				   NULL,
+				   label ? label : panel_action_get_text (action_type),
+				   TRUE);
+
+	gtk_tooltips_set_tip (panel_tooltips,
+			      item,
+			      tooltip ? tooltip : panel_action_get_tooltip (action_type),
+			      NULL);
+
+	g_signal_connect (item, "activate",
+			  panel_action_get_invoke (action_type), NULL);
+	g_signal_connect (G_OBJECT (item), "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+	setup_internal_applet_drag (item, action_type);
+
+	return item;
+}
+
+static GtkWidget *
+panel_menu_items_create_action_item (PanelActionButtonType action_type)
+{
+	return panel_menu_items_create_action_item_full (action_type,
+							 NULL, NULL);
+}
+
 static void
 panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 {
@@ -363,21 +402,23 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		}
 
 		if (!label) {
-			char *buffer;
-
 			if (gnome_vfs_uri_is_local (bookmark->uri)) {
+				char *buffer;
+
 				buffer = gnome_vfs_get_local_path_from_uri (full_uri);
 				label = g_filename_display_basename (buffer);
+				g_free (buffer);
 			} else {
+				const char *path;
 				const char *hostname;
 				char       *displayname;
 
 				hostname = gnome_vfs_uri_get_host_name (bookmark->uri);
-				buffer = gnome_vfs_uri_get_path (bookmark->uri);
-				if (!buffer || !buffer[0])
+				path = gnome_vfs_uri_get_path (bookmark->uri);
+				if (!path || !path[0])
 					displayname = g_strdup ("/");
 				else
-					displayname = g_filename_display_basename (buffer);
+					displayname = g_filename_display_basename (path);
 				if (hostname) {
 					/* Translators: the first string is a
 					 * path and the second string is a
@@ -390,8 +431,6 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 				} else
 					label = displayname;
 			}
-
-			g_free (buffer);
 		}
 
 		panel_menu_items_append_place_item ("gnome-fs-directory",
@@ -414,15 +453,13 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 }
 
 static gint
-panel_place_menu_item_sort_volume (gconstpointer a,
-				   gconstpointer b) {
-	const GnomeVFSVolume *volume_a = a;
-	const GnomeVFSVolume *volume_b = b;
-	char                 *display_a;
-	char                 *display_b;
-	int                   retval;
+panel_place_menu_item_sort_volume (GnomeVFSVolume *volume_a,
+				   GnomeVFSVolume *volume_b) {
+	char *display_a;
+	char *display_b;
+	int   retval;
 
-	g_return_val_if_fail (a && b, 0);
+	g_return_val_if_fail (volume_a && volume_b, 0);
 
 	display_a = gnome_vfs_volume_get_display_name (volume_a);
 	display_b = gnome_vfs_volume_get_display_name (volume_b);
@@ -469,7 +506,7 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 
 	if (connected_volumes)
 		add_volumes = g_slist_sort (add_volumes,
-					    panel_place_menu_item_sort_volume);
+					    (GCompareFunc) panel_place_menu_item_sort_volume);
 	else
 		add_volumes = g_slist_reverse (add_volumes);
 
@@ -484,7 +521,7 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 		 * make the menu items smaller... */
 		if (connected_volumes) {
 			title = _("Network Places");
-			icon = "";
+			icon = "gnome-fs-bookmark";
 		} else {
 			title = _("Removable Media");
 			icon = "";
@@ -1008,42 +1045,15 @@ panel_desktop_menu_item_set_panel (GtkWidget   *item,
 				       "menu_panel", panel);
 }
 
-GtkWidget *
-panel_menu_items_create_action_item (PanelActionButtonType action_type)
-{
-	GtkWidget *item;
-
-	if (panel_action_get_is_disabled (action_type))
-		return NULL;
-
-	item = gtk_image_menu_item_new ();
-        setup_menu_item_with_icon (item,
-				   panel_menu_icon_get_size (),
-				   panel_action_get_icon_name (action_type),
-				   NULL,
-				   panel_action_get_text (action_type),
-				   TRUE);
-
-	gtk_tooltips_set_tip (panel_tooltips,
-			      item,
-			      panel_action_get_tooltip (action_type),
-			      NULL);
-
-	g_signal_connect (item, "activate",
-			  panel_action_get_invoke (action_type), NULL);
-	g_signal_connect (G_OBJECT (item), "button_press_event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
-	setup_internal_applet_drag (item, action_type);
-
-	return item;
-}
-
 void
 panel_menu_items_append_lock_logout (GtkWidget *menu)
 {
-	gboolean   separator_inserted;
-	GList     *children;
-	GtkWidget *item;
+	gboolean    separator_inserted;
+	GList      *children;
+	GtkWidget  *item;
+	const char *translate;
+	char       *label;
+	char       *tooltip;
 
 	separator_inserted = FALSE;
 	children = gtk_container_get_children (GTK_CONTAINER (menu));
@@ -1066,7 +1076,39 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		}
 	}
 
-	item = panel_menu_items_create_action_item (PANEL_ACTION_LOGOUT);
+	/* Translators: translate "panel:showusername|1" to anything
+	 * but "1" if "Log Out %s" doesn't make any sense in your
+	 * language (where %s is a username).
+	 */
+	translate = Q_("panel:showusername|1");
+	if (strcmp (translate, "1") == 0) {
+		const char *user_name;
+
+		user_name = g_get_real_name ();
+		if (!user_name || !user_name [0])
+			user_name = g_get_user_name ();
+
+		/* keep those strings in sync with the ones in
+		 * panel-action-button.c */
+		/* Translators: this string is used ONLY if you translated
+		 * "panel:showusername|1" to "1" */
+		label = g_strdup_printf (_("Log Out %s"), g_get_user_name ());
+		/* Translators: this string is used ONLY if you translated
+		 * "panel:showusername|1" to "1" */
+		tooltip = g_strdup_printf (_("Log out %s of this session to "
+					     "log in as a different user or "
+					     "to shut down your computer"),
+					   user_name);
+	} else {
+		label   = NULL;
+		tooltip = NULL;
+	}
+
+	item = panel_menu_items_create_action_item_full (PANEL_ACTION_LOGOUT,
+							 label, tooltip);
+	g_free (label);
+	g_free (tooltip);
+
 	if (item != NULL) {
 		if (!separator_inserted)
 			add_menu_separator (menu);

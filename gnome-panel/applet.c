@@ -537,7 +537,7 @@ panel_applet_create_menu (AppletInfo *info)
 		gtk_widget_show (menuitem);
 
 		menuitem = gtk_check_menu_item_new ();
-		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, _("_Lock To Panel"), FALSE);
+		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, _("Loc_k To Panel"), FALSE);
 		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
 						locked);
 		g_signal_connect (menuitem, "toggled",

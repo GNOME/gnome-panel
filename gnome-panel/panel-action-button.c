@@ -292,6 +292,9 @@ static PanelAction actions [] = {
 	{
 		PANEL_ACTION_LOGOUT,
 		"gnome-logout",
+		/* when changing one of those two strings, don't forget to
+		 * update the ones in panel-menu-items.c (look for
+		 * panel:showusername|1) */
 		N_("Log Out"),
 		N_("Log out of this session to log in as a different user or to shut down the computer"),
 		"gospanel-20",

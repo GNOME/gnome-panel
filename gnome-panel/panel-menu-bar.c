@@ -83,7 +83,7 @@ panel_menu_bar_enter_places (GtkWidget        *widget,
 {
 	gtk_tooltips_set_tip (panel_tooltips,
 			      GTK_WIDGET (menubar),
-			      _("Open and search local, remote and recently-used documents and folders"),
+			      _("Access documents, folders and network places"),
 			      NULL);
 	return FALSE;
 }

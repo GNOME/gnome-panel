@@ -1,5 +1,38 @@
 2006-01-22  Vincent Untz  <vuntz@gnome.org>
 
+	* GNOME_Panel_Popup.xml: change accelerator for Lock To Panel
+	* applet.c: (panel_applet_create_menu): ditto
+	Fix bug #320839
+
+	* panel-action-button.c: add a comment about strings
+	* panel-menu-items[.ch]: (panel_menu_items_create_action_item_full):
+	new based on panel_menu_items_create_action_item() but can force a
+	label/tooltip
+	(panel_menu_items_create_action_item): updated to use
+	panel_menu_items_create_action_item_full()
+	(panel_menu_items_append_lock_logout): put the username in the
+	label/tooltip for Log out
+	Fix bug #130663
+	
+	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmarks):
+	remove warning
+	(panel_place_menu_item_sort_volume): remove warning
+	(panel_place_menu_item_append_volumes): use an icon for the network
+	places submenu
+
+	* panel-addto.c: make the launcher description a bit better
+	Fix bug #171829
+
+	* panel-menu-bar.c: (panel_menu_bar_enter_places): simplify the
+	tooltip
+	Fix bug #326185
+
+	* panel-properties-dialog.c: add context to the orientation strings
+	(panel_properties_dialog_setup_orientation): use Q_()
+	Fix bug #315305
+
+2006-01-22  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-action-button.c: add back the screenshot action in an array
 	(panel_action_get_is_deprecated): new
 	(panel_action_get_is_disabled): check if the action is deprecated

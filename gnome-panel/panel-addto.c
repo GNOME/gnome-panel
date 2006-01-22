@@ -119,7 +119,7 @@ static PanelAddtoItemInfo special_addto_items [] = {
 
 	{ PANEL_ADDTO_LAUNCHER_MENU,
 	  N_("Application Launcher..."),
-	  N_("Launch a program that is already in the GNOME menu"),
+	  N_("Copy a launcher from the applications menu"),
 	  "launcher-program",
 	  PANEL_ACTION_NONE,
 	  NULL,
