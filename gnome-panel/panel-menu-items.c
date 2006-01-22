@@ -676,12 +676,6 @@ panel_desktop_menu_item_append_menu (GtkWidget            *menu,
 	if (add_separator)
 		add_menu_separator (menu);
 
-	if (panel_is_program_in_path ("gnome-screenshot")) {
-		item = panel_menu_items_create_action_item (PANEL_ACTION_SCREENSHOT);
-		if (item != NULL)
-			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	}
-
 	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL);
 	panel_menu_items_append_from_desktop (menu, "gnome-about.desktop", NULL);
 
