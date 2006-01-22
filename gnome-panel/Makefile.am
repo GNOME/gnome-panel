@@ -211,7 +211,7 @@ EXTRA_DIST =					\
 	panel-marshal.list			\
 	update-from-egg.sh			\
 	gnome-panelrc				\
-	panel-default-setup.entries
+	$(entries_DATA)
 
 @INTLTOOL_DESKTOP_RULE@
 
@@ -296,7 +296,6 @@ CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(schemas_in_files:.schemas.in=.schemas) \
 	$(server_DATA) \
-	$(entries_DATA) \
 	$(sys_DATA)
 
 dist-hook:
