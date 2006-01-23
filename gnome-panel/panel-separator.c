@@ -168,9 +168,9 @@ void
 panel_separator_set_orientation (PanelSeparator   *separator,
 				 PanelOrientation  orientation)
 {
-	g_return_if_fail (PANEL_IS_SEPARATOR (separator));
-
 	GtkOrientation orient = GTK_ORIENTATION_HORIZONTAL;
+
+	g_return_if_fail (PANEL_IS_SEPARATOR (separator));
 
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:

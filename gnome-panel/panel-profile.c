@@ -1978,7 +1978,11 @@ panel_profile_load_added_ids (GConfClient            *client,
 	}
 
 	for (l = added_ids; l; l = l->next) {
-		load_handler (client, PANEL_CONFIG_DIR, type, l->data);
+		char *id;
+		id = (char *) l->data;
+
+		if (id && id[0])
+			load_handler (client, PANEL_CONFIG_DIR, type, id);
 
 		g_free (l->data);
 		l->data = NULL;
@@ -2156,7 +2160,11 @@ panel_profile_load_list (GConfClient           *client,
 					  TRUE);
 
 	for (l = list; l; l = l->next) {
-		load_handler (client, profile_dir, type, l->data);
+		char *id;
+		id = (char *) l->data;
+
+		if (id && id[0])
+			load_handler (client, profile_dir, type, id);
 
 		g_free (l->data);
 		l->data = NULL;
