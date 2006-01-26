@@ -748,7 +748,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 			char *menu_filename;
 
 			menu_filename = g_strndup (menu, menu_path - menu);
-			*menu_path++;
+			menu_path++;
 			success = drop_menu (panel, pos,
 					     menu_filename, menu_path);
 			g_free (menu_filename);
