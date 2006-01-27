@@ -1,3 +1,81 @@
+===============
+Version 2.13.90
+===============
+
+  Panel
+
+	* Fix timeout label in the logout dialogs (Vincent)
+	* Don't make it possible to have two logout dialogs at the same time
+	  (Vincent)
+	* Put logout dialogs above all windows and on all workspaces (Vincent)
+	* Show the logout dialog on the correct screen (Vincent)
+	* Fix crash with logout dialogs when esd and sound events are enabled
+	  (Vincent)
+	* Simplify the logout dialogs questions (Dennis Cranston)
+	* Partial fix for Vincent's stupidity :-) (Elijah Newren)
+	* Fix search of application launchers in "Add to panel" dialog
+	  (Vincent)
+	* Fix potential crash when there's an error loading an applet (Vincent)
+	* Update libegg code (Vincent)
+	* Fix crash when logout dialogs are closed by the window manager
+	  (Vincent)
+	* Remove gnome-screenshot item from the Desktop menu (Vincent)
+	* Look in the XDG data dirs when loading a .desktop file, so we don't
+	  need the whole path (Vincent)
+	* Update default panel config to just use basenames for .desktop files
+	  (Vincent)
+	* Remove the screenshot action button and migrates the existing config
+	  to use gnome-screenshot.desktop (Vincent)
+	* Change accelerator for "Lock To Panel" (Vincent)
+	* Add username to the Logout menu item (Vincent)
+	* Fix crash happening with remote bookmarks in the Places menu
+	  (Vincent)
+	* Use an icon for the network places submenu (Vincent)
+	* Update the launcher item description in the "Add to panel" dialog
+	  (Vincent)
+	* Simplify and add context for some strings (Vincent)
+	* Fix warnings (Vincent, Jens Granseuer, Kjartan Maraas)
+	* Don't show useless separators in context menus of panel objects when
+	  the panel is locked down (Vincent)
+	* Fix theoretical breakage if gconf config is broken (Vincent)
+
+  Clock Applet
+
+	* Fix incoherency in the use of two lines format (Vincent)
+	* Don't offer the 12-hour format to the user if his locale don't
+	  support it (Vincent)
+
+  Misc
+
+	* Add context in some strings of the test applet program (Vincent)
+
+  Docs Translators
+
+	* Vincent Untz (fr)
+
+  Translators
+
+	* Vital Khilko (be)
+	* Vladimir Petkov (bg)
+	* Hendrik Brandt (de)
+	* Kostas Papadimas (el)
+	* Adam Weinberger (en_CA)
+	* Francisco Javier F. Serrador (es)
+	* Ilkka Tuohela (fi)
+	* Ignacio Casal Quinteiro (gl)
+	* Ankit Patel (gu)
+	* Luca Ferretti (it)
+	* Takeshi AIHANA (ja)
+	* Žygimantas Beručka (lt)
+	* Øivind Hoel (nb)
+	* Reinout van Schouwen (nl)
+	* Øivind Hoel (no)
+	* Evandro Fernandes Giovanini (pt_BR)
+	* Слободан Д. Средојевић (sr)
+	* Theppitak Karoonboonyanan (th)
+	* Clytie Siddall (vi)
+	* Funda Wang (zh_CN)
+
 ==============
 Version 2.13.5
 ==============
