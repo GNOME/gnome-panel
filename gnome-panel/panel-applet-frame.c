@@ -363,9 +363,14 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (id != NULL);
 
 	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "bonobo_iid");
-	applet_iid = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
+	applet_iid = gconf_client_get_string (panel_gconf_get_client (),
+					      key, NULL);
 
-	panel_applet_frame_load (applet_iid, panel_widget, locked, position, TRUE, id);
+	if (!applet_iid)
+		return;
+
+	panel_applet_frame_load (applet_iid, panel_widget,
+				 locked, position, TRUE, id);
 
 	g_free (applet_iid);
 }
@@ -1028,7 +1033,9 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	gtk_widget_show_all (dialog);
 
 	g_free (frame->priv->iid);
-	g_free (frame);
+	frame->priv->iid = NULL;
+
+	gtk_widget_destroy (GTK_WIDGET (frame));
 }
 
 static void

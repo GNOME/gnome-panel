@@ -1,3 +1,46 @@
+2006-02-06  Vincent Untz  <vuntz@gnome.org>
+
+	Backports from HEAD.
+
+	Don't crash when an applet can't be load. Fix bug #323996.
+	Patch by Crispin Flowerday <crispin@gnome.org>.
+
+	* panel-applet-frame.c: (panel_applet_frame_loading_failed): don't
+	free frame, but destroy it.
+
+	Don't crash with some themes. Thanks to Benjamin Berg for helping.
+	Fix bug #320602.
+
+	* panel-background.c: (panel_background_prepare): look if the pixmap
+	is GDK_PARENT_RELATIVE and do what is necessary in this case
+	(panel_background_set_default_style): don't ref/unref pixmap if it's
+	GDK_PARENT_RELATIVE
+	(panel_background_free): ditto
+
+	* panel-context-menu.c: (panel_context_menu_setup_remove_panel_item):
+	fix sensitivity of item
+
+	Fix crash when a toplevel is destroyed before the location changes
+	are committed.
+
+	* panel-profile.c: (panel_porfile_remove_commit_timeout): new
+	(panel_profile_set_commit_timeout): add a destroy notify
+
+	* panel-addto.c: (panel_addto_dialog_new): register the open dialog so
+	that it gets destroyed when the PanelWidget is destroyed. Fix a crash
+	when killing the panel with the Add to dialog open.
+	* panel-properties-dialog.c: (panel_properties_dialog_new): ditto, but
+	there was no crash
+	* panel.c: (panel_delete): don't push twice the autohide disabler
+
+	* panel-applet-frame.c: (panel_applet_frame_load_from_gconf): don't
+	load the applet if the bonobo_iid is not set, eg.
+	Could fix bug #326942
+
+	* panel-profile.c: (panel_profile_load_added_ids): don't load the
+	object if the id is null, so we're more solid against gconf breakage
+	(panel_profile_load_list): same here
+
 ==================== 2.12.2 ====================
 
 2005-10-22  Vincent Untz  <vuntz@gnome.org>

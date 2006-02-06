@@ -949,6 +949,8 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 						     panel_toplevel_get_is_attached (dialog->toplevel));
 
 	panel_toplevel_push_autohide_disabler (dialog->toplevel);
+	panel_widget_register_open_dialog (panel_toplevel_get_panel_widget (dialog->toplevel),
+					   dialog->properties_dialog);
 
 	gtk_widget_show (dialog->properties_dialog);
 

@@ -310,15 +310,29 @@ panel_profile_get_queued_changes (GObject *object)
 }
 
 static void
+panel_porfile_remove_commit_timeout (guint timeout)
+{
+	g_source_remove (timeout);
+}
+
+static void
 panel_profile_set_commit_timeout (PanelToplevel *toplevel,
 				  guint          timeout)
 {
+	GDestroyNotify destroy_notify;
+
 	if (!commit_timeout_quark)
 		commit_timeout_quark = g_quark_from_static_string ("panel-queued-timeout");
 
-	g_object_set_qdata (G_OBJECT (toplevel),
-			    commit_timeout_quark,
-			    GUINT_TO_POINTER (timeout));
+	if (timeout)
+		destroy_notify = (GDestroyNotify) panel_porfile_remove_commit_timeout;
+	else
+		destroy_notify = NULL;
+
+	g_object_set_qdata_full (G_OBJECT (toplevel),
+				 commit_timeout_quark,
+				 GUINT_TO_POINTER (timeout),
+				 destroy_notify);
 }
 
 static guint
@@ -1963,7 +1977,11 @@ panel_profile_load_added_ids (GConfClient            *client,
 	}
 
 	for (l = added_ids; l; l = l->next) {
-		load_handler (client, PANEL_CONFIG_DIR, type, l->data);
+		char *id;
+		id = (char *) l->data;
+
+		if (id && id[0])
+			load_handler (client, PANEL_CONFIG_DIR, type, id);
 
 		g_free (l->data);
 		l->data = NULL;
@@ -2141,7 +2159,11 @@ panel_profile_load_list (GConfClient           *client,
 					  TRUE);
 
 	for (l = list; l; l = l->next) {
-		load_handler (client, profile_dir, type, l->data);
+		char *id;
+		id = (char *) l->data;
+
+		if (id && id[0])
+			load_handler (client, profile_dir, type, id);
 
 		g_free (l->data);
 		l->data = NULL;

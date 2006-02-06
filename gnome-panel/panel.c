@@ -1338,7 +1338,5 @@ panel_delete (PanelToplevel *toplevel)
 		return;
 	}
 
-	panel_toplevel_push_autohide_disabler (toplevel);
-
 	panel_query_deletion (toplevel);
 }

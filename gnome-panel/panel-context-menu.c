@@ -184,9 +184,9 @@ panel_context_menu_setup_remove_panel_item (GtkWidget *menu,
 	g_assert (PANEL_IS_TOPLEVEL (panel_widget->toplevel));
 
 	sensitive =
-		panel_toplevel_is_last_unattached (panel_widget->toplevel) ||
-		!panel_lockdown_get_locked_down () ||
-		!panel_profile_id_lists_are_writable ();
+		!panel_toplevel_is_last_unattached (panel_widget->toplevel) &&
+		!panel_lockdown_get_locked_down () &&
+		panel_profile_id_lists_are_writable ();
 
 	gtk_widget_set_sensitive (menuitem, sensitive);
 
