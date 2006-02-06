@@ -716,8 +716,6 @@ window_list_applet_fill (PanelApplet *applet)
 
 	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->tasklist);
 
-	gtk_widget_show (tasklist->applet);
-
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "realize",
 			  G_CALLBACK (applet_realized),
@@ -752,6 +750,8 @@ window_list_applet_fill (PanelApplet *applet)
 					      "hidden", "1",
 					      NULL);
 	}
+
+	gtk_widget_show (tasklist->applet);
 	
 	return TRUE;
 }
