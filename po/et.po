@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-01-27 07:11+0100\n"
-"PO-Revision-Date: 2006-01-27 15:24+0200\n"
+"PO-Revision-Date: 2006-02-04 09:17+0200\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -159,7 +159,7 @@ msgstr "Kogu päev"
 
 #: ../applets/clock/clock.c:1175
 msgid "Appointments"
-msgstr "Kokkusaamised"
+msgstr "Sündmused"
 
 #: ../applets/clock/clock.c:1407
 msgid "Calendar"
@@ -463,7 +463,7 @@ msgstr ""
 #: ../applets/fish/fish.c:940
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr ""
+msgstr "See seadistuskäsk ei toimi ja on asendatud käsuga %s"
 
 #: ../applets/fish/fish.c:963
 #, c-format
@@ -472,9 +472,9 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"Ei saa käivitada käsku '%s'\n"
+"Käsku '%s' pole võimalik käivitada\n"
 "\n"
-"Info: %s"
+"Üksikasjad: %s"
 
 #: ../applets/fish/fish.c:979
 #, c-format
@@ -574,6 +574,8 @@ msgstr "Kala animatsiooni kaadrite arv"
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
+"Kui märgitud, siis kalaanimatsiooni kuvatakse pööratuna vertikaalpaneeli "
+"jaoks."
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -1059,7 +1061,7 @@ msgstr "Paneeli käivitaja töölaua (desktop) failile pole URIt määratud\n"
 #: ../gnome-panel/launcher.c:509
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Ei saa avada töölaua (desktop) faili %s paneeli käivitajale %s%s\n"
+msgstr "Töölauafaili %s pole paneeli käivitajale %s%s võimalik avada\n"
 
 #: ../gnome-panel/launcher.c:827 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
@@ -1078,7 +1080,6 @@ msgstr "Võti %s on määramata, käivitajat pole võimalik laadida\n"
 #: ../gnome-panel/launcher.c:1033 ../gnome-panel/launcher.c:1052
 #: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
 #: ../gnome-panel/menu-ditem.c:542
-#, fuzzy
 msgid "Could not create launcher"
 msgstr "Käivitajat pole võimalik luua"
 
@@ -1095,9 +1096,8 @@ msgid "Create Launcher"
 msgstr "Loo käivitaja"
 
 #: ../gnome-panel/menu-ditem.c:126
-#, fuzzy
 msgid "Could not save changes to launcher"
-msgstr "Ei saa kävitaja muudatusi salvestada"
+msgstr "Kävitaja muudatusi pole võimalik salvestada"
 
 #: ../gnome-panel/menu-ditem.c:308
 msgid "Menu"
@@ -1105,7 +1105,7 @@ msgstr "Menüü"
 
 #: ../gnome-panel/menu-ditem.c:543
 msgid "You do not have permission to write to this location."
-msgstr ""
+msgstr "Sul pole sellele asukohalie kirjutamiseks õiguseid"
 
 #: ../gnome-panel/menu.c:935
 msgid "Add this launcher to panel"
@@ -1139,12 +1139,11 @@ msgstr "_Lukusta ekraan"
 #: ../gnome-panel/panel-action-button.c:215
 #: ../gnome-panel/panel-menu-bar.c:471 ../gnome-panel/panel-menu-button.c:1007
 #: ../gnome-panel/panel-util.c:747
-#, fuzzy, c-format
+#, c-format
 msgid "Could not execute '%s'"
-msgstr "Ei suuda kävitada programmi '%s'"
+msgstr "'%s' pole võimalik kävitada"
 
 #: ../gnome-panel/panel-action-button.c:251
-#, fuzzy
 msgid "Could not connect to server"
 msgstr "Serveriga pole võimalik ühenduda"
 
@@ -1206,11 +1205,11 @@ msgstr "Ühendumine võrguserveriga"
 
 #: ../gnome-panel/panel-action-button.c:346
 msgid "Shut Down"
-msgstr ""
+msgstr "Lülita välja"
 
 #: ../gnome-panel/panel-action-button.c:347
 msgid "Shut down the computer"
-msgstr ""
+msgstr "Arvuti töö lõpetamine"
 
 #: ../gnome-panel/panel-addto.c:110
 msgid "Custom Application Launcher"
@@ -1267,27 +1266,25 @@ msgid "query returned exception %s\n"
 msgstr "päring tagastas erandi %s\n"
 
 #: ../gnome-panel/panel-addto.c:1056
-#, fuzzy, c-format
+#, c-format
 msgid "Find an _item to add to \"%s\":"
-msgstr "Vali _element, mida lisada paneelile \"%s\":"
+msgstr "Vali _kirje, mida lisada \"%s\" alla:"
 
 #: ../gnome-panel/panel-addto.c:1060
 msgid "Add to Drawer"
 msgstr "Lisa sahtlisse"
 
 #: ../gnome-panel/panel-addto.c:1062
-#, fuzzy
 msgid "Find an _item to add to the drawer:"
-msgstr "Vali _element, mida sahtlisse lisada:"
+msgstr "Vali _kirje, mida lisada sahtlisse:"
 
 #: ../gnome-panel/panel-addto.c:1064
 msgid "Add to Panel"
 msgstr "Paneelile lisamine"
 
 #: ../gnome-panel/panel-addto.c:1066
-#, fuzzy
 msgid "Find an _item to add to the panel:"
-msgstr "Vali _element, mida sahtlisse lisada:"
+msgstr "Vali _kirje, mida lisada paneelile:"
 
 #: ../gnome-panel/panel-applet-frame.c:833
 #, c-format
@@ -1531,24 +1528,28 @@ msgstr "Luba kohtspikrid"
 
 #: ../gnome-panel/panel-global.schemas.in.h:12
 msgid "Highlight launchers on mouseover"
-msgstr ""
+msgstr "Käivitajate esiletõstmine hiire üleliikumisel"
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
+"Kui märgitud, siis kuvatakse paneeli eemaldamise korral kinnitusdialoogi."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr ""
+"Kui märgitud, siis sahtel suletakse automaatselt peale seda, kui kasutaja "
+"klõpsab sahtlis olevat käivitajat."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
+"Kui märgitud, siis käivitaja tõstetakse hiirekursori üleliikumisel esile."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
 msgid ""
@@ -1607,7 +1608,7 @@ msgstr "_Logi välja"
 
 #: ../gnome-panel/panel-logout.c:310
 msgid "Shut down this system now?"
-msgstr ""
+msgstr "Kas lülitada arvuti välja?"
 
 #: ../gnome-panel/panel-logout.c:317
 msgid "_Suspend"
@@ -1696,31 +1697,31 @@ msgstr "Töölaud"
 #.
 #: ../gnome-panel/panel-menu-items.c:1083
 msgid "panel:showusername|1"
-msgstr ""
+msgstr "1"
 
 #. keep those strings in sync with the ones in
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
 #: ../gnome-panel/panel-menu-items.c:1095
-#, fuzzy, c-format
+#, c-format
 msgid "Log Out %s"
-msgstr "Logi välja"
+msgstr "Logi %s välja"
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
 #: ../gnome-panel/panel-menu-items.c:1098
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Log out %s of this session to log in as a different user or to shut down "
 "your computer"
 msgstr ""
-"Sellest seansist väljalogimine, et oleks võimalik teise kasutaja alt sisse "
-"logida või arvuti välja lülitada"
+"Kasutaja %s väljalogimine sellest seansist, et oleks võimalik teise kasutaja "
+"alt sisse logida või arvuti välja lülitada"
 
 #: ../gnome-panel/panel-menu-items.c:1145
 msgid "Could not launch menu item"
-msgstr ""
+msgstr "Menüükirjet pole võimalik käivitada"
 
 #: ../gnome-panel/panel-menu-items.c:1157
 msgid "Could not load menu item"
@@ -1786,7 +1787,7 @@ msgstr "Objekti asukoht paneelil"
 
 #: ../gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
-msgstr ""
+msgstr "Paneel on ühendatud sahtli külge"
 
 #: ../gnome-panel/panel-object.schemas.in.h:14
 msgid "Panel object type"
@@ -2642,7 +2643,7 @@ msgstr "Määra laetava rakendi IID"
 #: ../libpanel-applet/panel-test-applets.c:35
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
-msgstr ""
+msgstr "Määra gconf'i asukoht, kuhu rakendi eelistused salvestatakse"
 
 #: ../libpanel-applet/panel-test-applets.c:36
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
