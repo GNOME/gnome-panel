@@ -296,7 +296,7 @@ static PanelAction actions [] = {
 		 * update the ones in panel-menu-items.c (look for
 		 * panel:showusername|1) */
 		N_("Log Out"),
-		N_("Log out of this session to log in as a different user or to shut down the computer"),
+		N_("Log out of this session to log in as a different user"),
 		"gospanel-20",
 		"ACTION:logout:NEW",
 		panel_action_logout, NULL, NULL,

@@ -1096,8 +1096,7 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		/* Translators: this string is used ONLY if you translated
 		 * "panel:showusername|1" to "1" */
 		tooltip = g_strdup_printf (_("Log out %s of this session to "
-					     "log in as a different user or "
-					     "to shut down your computer"),
+					     "log in as a different user"),
 					   user_name);
 	} else {
 		label   = NULL;

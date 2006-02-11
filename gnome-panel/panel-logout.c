@@ -318,7 +318,7 @@ panel_logout_new (PanelLogoutDialogType  type,
 					       PANEL_LOGOUT_RESPONSE_STD);
 
 		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
-				       _("_Reboot"),
+				       _("_Restart"),
 				       PANEL_LOGOUT_RESPONSE_REBOOT);
 		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
 				       GTK_STOCK_CANCEL,

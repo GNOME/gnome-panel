@@ -160,6 +160,7 @@ launch_url (Launcher *launcher)
 	g_return_if_fail (launcher != NULL);
 	g_return_if_fail (launcher->ditem != NULL);
 
+	/* FIXME panel_ditem_launch() should be enough for this! */
 	item = launcher->ditem;
 	url = gnome_desktop_item_get_string (item,
 					     GNOME_DESKTOP_ITEM_URL);
