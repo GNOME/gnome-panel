@@ -1,5 +1,10 @@
 2006-02-11  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-logout.c: (panel_logout_timeout): don't change countdown every
+	second, but every 10 seconds when there's more than 30 seconds to wait
+
+2006-02-11  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-action-button.c: (panel_action_shutdown_is_disabled): new,
 	check if GDM supports the shutdown action
 	use this for the shutdown action button

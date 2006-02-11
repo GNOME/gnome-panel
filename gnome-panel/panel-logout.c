@@ -199,6 +199,7 @@ panel_logout_timeout (gpointer data)
 {
 	PanelLogoutDialog *logout_dialog;
 	char              *secondary_text;
+	int                seconds_to_show;
 
 	logout_dialog = (PanelLogoutDialog *) data;
 
@@ -209,20 +210,28 @@ panel_logout_timeout (gpointer data)
 		return FALSE;
 	}
 
+	if (logout_dialog->priv->timeout <= 30)
+		seconds_to_show = logout_dialog->priv->timeout;
+	else {
+		seconds_to_show = (logout_dialog->priv->timeout/10) * 10;
+		if (logout_dialog->priv->timeout % 10)
+			seconds_to_show += 10;
+	}
+
 	switch (logout_dialog->priv->type) {
 	case PANEL_LOGOUT_DIALOG_LOGOUT:
 		secondary_text = ngettext ("You will be automatically logged "
 					   "out in %d second.",
 					   "You will be automatically logged "
 					   "out in %d seconds.",
-					   logout_dialog->priv->timeout);
+					   seconds_to_show);
 		break;
 	case PANEL_LOGOUT_DIALOG_SHUTDOWN:
 		secondary_text = ngettext ("This system will be automatically "
 					   "shut down in %d second.",
 					   "This system will be automatically "
 					   "shut down in %d seconds.",
-					   logout_dialog->priv->timeout);
+					   seconds_to_show);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -230,7 +239,7 @@ panel_logout_timeout (gpointer data)
 
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (logout_dialog),
 						  secondary_text,
-						  logout_dialog->priv->timeout,
+						  seconds_to_show,
 						  NULL);
 
 	logout_dialog->priv->timeout--;
