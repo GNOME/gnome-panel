@@ -47,6 +47,7 @@
 #include "panel-lockdown.h"
 #include "panel-logout.h"
 #include "panel-compatibility.h"
+#include "panel-gdm.h"
 
 #define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
 
@@ -163,6 +164,13 @@ panel_action_shutdown (GtkWidget *widget)
 	panel_logout_new (PANEL_LOGOUT_DIALOG_SHUTDOWN,
 			  gtk_widget_get_screen (widget),
 			  gtk_get_current_event_time ());
+}
+
+static gboolean
+panel_action_shutdown_is_disabled (void)
+{
+	return (panel_lockdown_get_disable_log_out() ||
+		!gdm_supports_logout_action (GDM_LOGOUT_ACTION_SHUTDOWN));
 }
 
 /* Run Application
@@ -348,7 +356,7 @@ static PanelAction actions [] = {
 		"gospanel-20",
 		"ACTION:shutdown:NEW",
 		panel_action_shutdown, NULL, NULL,
-		panel_lockdown_get_disable_log_out
+		panel_action_shutdown_is_disabled
 	},
 	/* deprecated actions */
 	{

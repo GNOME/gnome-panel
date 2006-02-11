@@ -1,5 +1,11 @@
 2006-02-11  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-action-button.c: (panel_action_shutdown_is_disabled): new,
+	check if GDM supports the shutdown action
+	use this for the shutdown action button
+
+2006-02-11  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-gdm.c: use SET_SAFE_LOGOUT_ACTION instead of SET_LOGOUT_ACTION
 	for now
 
