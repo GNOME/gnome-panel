@@ -546,9 +546,9 @@ display_about_dialog (BonoboUIComponent *uic,
 	const char *about_format = _("%s has no use what-so-ever. "
 				     "It only takes up disk space and "
 				     "compilation time, and if loaded it also "
-				     "takes up precious panel space and memory. "
-				     "If anyone is found using it, he "
-				     "should be promptly sent for a psychiatric "
+				     "takes up precious panel space and "
+				     "memory. Anybody found using it should be "
+				     "promptly sent for a psychiatric "
 				     "evaluation.");
 	const char  *documenters [] = {
 		"Telsa Gwynne <hobbit@aloss.ukuu.org.uk>",
