@@ -21,12 +21,12 @@ GSList *panel_applet_list_applets (void) { return NULL; }
 
 static int dialogs = 0;
 static gboolean create_new = FALSE;
+static char **desktops = NULL;
 
-static struct poptOption options [] = {
-	{ "create-new", '\0', POPT_ARG_NONE,
-	  &create_new, 0, N_("Create new file in the given directory"), NULL },
-        POPT_AUTOHELP
-	{ NULL, 0, 0, NULL, 0}
+static const GOptionEntry options[] = {
+	{ "create-new", 0, 0, G_OPTION_ARG_NONE, &create_new, N_("Create new file in the given directory"), NULL },
+	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &desktops, NULL, NULL },
+	{ NULL }
 };
 
 
@@ -73,9 +73,8 @@ get_uri (const char *arg)
 int
 main (int argc, char * argv[])
 {
-	poptContext ctx;
+	GOptionContext *context;
 	GnomeProgram *program;
-	char **desktops;
 	int i;
 	GnomeVFSFileInfo *info;
 
@@ -83,18 +82,19 @@ main (int argc, char * argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	context = g_option_context_new ("");
+
+	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+
 	program = gnome_program_init ("gnome-desktop-item-edit", VERSION,
 				      LIBGNOMEUI_MODULE,
 				      argc, argv,
-				      GNOME_PARAM_POPT_TABLE, options,
+				      GNOME_PARAM_GOPTION_CONTEXT, context,
 				      NULL);
-	g_object_get (G_OBJECT (program),
-		      GNOME_PARAM_POPT_CONTEXT, &ctx,
-		      NULL);
+
+	g_option_context_free (context);
 
 	gtk_window_set_default_icon_name ("launcher-program");
-
-	desktops = (char **)poptGetArgs (ctx);
 
 	if (desktops == NULL ||
 	    desktops[0] == NULL) {

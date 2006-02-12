@@ -1,5 +1,13 @@
 2006-02-12  Vincent Untz  <vuntz@gnome.org>
 
+	Use GOption instead of popt
+	
+	* Makefile.am: don't link with popt
+	* gnome-desktop-item-edit.c: (main): use GOption
+	* main.c: (main): ditto
+
+2006-02-12  Vincent Untz  <vuntz@gnome.org>
+
 	* menu.c: (create_item_context_menu): add accelerator for items
 	
 	Fix invisible mnemonics in menu. Based on patch by Matthias Clasen

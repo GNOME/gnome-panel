@@ -34,23 +34,31 @@ GSList *panel_list = NULL;
 
 GtkTooltips *panel_tooltips = NULL;
 
-static const struct poptOption options[] = {
-  {NULL, '\0', 0, NULL, 0}
+static const GOptionEntry options[] = {
+  { NULL }
 };
 
 int
 main (int argc, char **argv)
 {
+	GOptionContext *context;
+
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	context = g_option_context_new ("");
+
+	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+
 	gnome_program_init ("gnome-panel", VERSION,
 			    LIBGNOMEUI_MODULE,
 			    argc, argv,
-			    GNOME_PARAM_POPT_TABLE, options,
+			    GNOME_PARAM_GOPTION_CONTEXT, context,
 			    GNOME_PROGRAM_STANDARD_PROPERTIES,
 			    NULL);
+
+	g_option_context_free (context);
 
 	gtk_window_set_default_icon_name ("gnome-panel");
 
