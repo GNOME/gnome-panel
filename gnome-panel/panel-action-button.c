@@ -303,7 +303,7 @@ static PanelAction actions [] = {
 		/* when changing one of those two strings, don't forget to
 		 * update the ones in panel-menu-items.c (look for
 		 * panel:showusername|1) */
-		N_("Log Out"),
+		N_("Log Out..."),
 		N_("Log out of this session to log in as a different user"),
 		"gospanel-20",
 		"ACTION:logout:NEW",
@@ -351,7 +351,7 @@ static PanelAction actions [] = {
 	{
 		PANEL_ACTION_SHUTDOWN,
 		"gnome-shutdown",
-		N_("Shut Down"),
+		N_("Shut Down..."),
 		N_("Shut down the computer"),
 		"gospanel-20",
 		"ACTION:shutdown:NEW",

@@ -1092,7 +1092,8 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		 * panel-action-button.c */
 		/* Translators: this string is used ONLY if you translated
 		 * "panel:showusername|1" to "1" */
-		label = g_strdup_printf (_("Log Out %s"), g_get_user_name ());
+		label = g_strdup_printf (_("Log Out %s..."),
+					 g_get_user_name ());
 		/* Translators: this string is used ONLY if you translated
 		 * "panel:showusername|1" to "1" */
 		tooltip = g_strdup_printf (_("Log out %s of this session to "
