@@ -30,13 +30,12 @@ static char *cli_prefs_dir = NULL;
 static char *cli_size = NULL;
 static char *cli_orient = NULL;
 
-static const struct poptOption options [] = {
-	{ "iid", '\0', POPT_ARG_STRING, &cli_iid, 0, N_("Specify an applet IID to load"), NULL},
-	{ "prefs-dir", '\0', POPT_ARG_STRING, &cli_prefs_dir, 0, N_("Specify a gconf location in which the applet preferences should be stored"), NULL},
-	{ "size", '\0', POPT_ARG_STRING, &cli_size, 0, N_("Specify the initial size of the applet (xx-small, medium, large etc.)"), NULL},
-	POPT_AUTOHELP
-	{ "orient", '\0', POPT_ARG_STRING, &cli_orient, 0, N_("Specify the initial orientation of the applet (top, bottom, left or right)"), NULL},
-	{NULL, '\0', 0, NULL, 0}
+static const GOptionEntry options [] = {
+	{ "iid", 0, 0, G_OPTION_ARG_STRING, &cli_iid, N_("Specify an applet IID to load"), NULL},
+	{ "prefs-dir", 0, 0, G_OPTION_ARG_STRING, &cli_prefs_dir, N_("Specify a gconf location in which the applet preferences should be stored"), NULL},
+	{ "size", 0, 0, G_OPTION_ARG_STRING, &cli_size, N_("Specify the initial size of the applet (xx-small, medium, large etc.)"), NULL},
+	{ "orient", 0, 0, G_OPTION_ARG_STRING, &cli_orient, N_("Specify the initial orientation of the applet (top, bottom, left or right)"), NULL},
+	{ NULL}
 };
 
 enum {
@@ -280,13 +279,24 @@ setup_options (void)
 int
 main (int argc, char **argv)
 {
-	GladeXML *gui;
-	char     *gladefile;
+	GOptionContext *context;
+	GladeXML       *gui;
+	char           *gladefile;
+
+	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+	textdomain (GETTEXT_PACKAGE);
+
+	context = g_option_context_new ("");
+
+	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
 	gnome_program_init (argv [0], "0.0.0.0", LIBGNOMEUI_MODULE,
 			    argc, argv,
-			    GNOME_PARAM_POPT_TABLE, options,
+			    GNOME_PARAM_GOPTION_CONTEXT, context,
 			    GNOME_PARAM_NONE);
+
+	g_option_context_free (context);
 
 	if (cli_iid) {
 		load_applet_from_command_line ();
