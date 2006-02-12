@@ -175,8 +175,8 @@ gnome_panel_SOURCES =			\
 	$(NULL)
 
 gnome_panel_LDADD =		\
-	$(X_LIBS)		\
-	$(PANEL_LIBS)
+	$(PANEL_LIBS)		\
+	$(X_LIBS)
 
 gnome_panel_LDFLAGS = -export-dynamic
 
@@ -190,8 +190,8 @@ gnome_desktop_item_edit_SOURCES = \
 gnome_desktop_item_edit_LDFLAGS = -export-dynamic
 
 gnome_desktop_item_edit_LDADD = 	\
-	$(X_LIBS)			\
-	$(PANEL_LIBS)
+	$(PANEL_LIBS)			\
+	$(X_LIBS)
 
 gladedir = $(datadir)/gnome/panel/glade
 glade_DATA =					\
