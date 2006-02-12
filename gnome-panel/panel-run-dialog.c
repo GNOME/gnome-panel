@@ -1533,8 +1533,9 @@ entry_changed (GtkEntry       *entry,
 		gtk_widget_set_sensitive (dialog->run_button, FALSE);
 		gtk_drag_source_unset (dialog->run_dialog);
 
-		gtk_label_set_text (GTK_LABEL (dialog->program_label),
-				    _("Select an application to view its description."));
+		if (panel_profile_get_enable_program_list ())
+			gtk_label_set_text (GTK_LABEL (dialog->program_label),
+					    _("Select an application to view its description."));
 
 		panel_run_dialog_set_default_icon (dialog, FALSE);
 
@@ -1570,7 +1571,8 @@ entry_changed (GtkEntry       *entry,
 			     GDK_ACTION_COPY);
 	gtk_drag_source_add_uri_targets (dialog->run_dialog);
 
-	if (!dialog->use_program_list) {
+	if (panel_profile_get_enable_program_list () &&
+	    !dialog->use_program_list) {
 		msg = g_strdup_printf (_("Will run command: '%s'"),
 				       start);
 		gtk_label_set_text (GTK_LABEL (dialog->program_label), msg);
