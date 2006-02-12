@@ -1,5 +1,19 @@
 2006-02-12  Vincent Untz  <vuntz@gnome.org>
 
+	* menu.c: (create_item_context_menu): add accelerator for items
+	
+	Fix invisible mnemonics in menu. Based on patch by Matthias Clasen
+	<mclasen@redhat.com>. Fix bug #300730
+
+	* menu.[ch]: (setup_mnemonic): kill
+	(setup_invisible_mnemonic): kill
+	(setup_menuitem): use an GtkAccelLabel for items with invisible
+	mnemonics
+	(setup_menu_item_with_icon): update the parameter name so that it's
+	clear that it creates a mnemonic if used
+
+2006-02-12  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-action-button.c: add "..." at the end of the Shut Down and Log
 	Out items
 	* panel-menu-items.c: (panel_menu_items_append_lock_logout): ditto

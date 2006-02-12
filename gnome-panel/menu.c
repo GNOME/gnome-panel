@@ -932,7 +932,7 @@ create_item_context_menu (GtkWidget   *item,
 	setup_menuitem (menuitem,
 			panel_menu_icon_get_size (),
 			NULL,
-			_("Add this launcher to panel"),
+			_("Add this launcher to _panel"),
 			FALSE);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (add_app_to_panel), entry);
@@ -943,7 +943,7 @@ create_item_context_menu (GtkWidget   *item,
 	setup_menuitem (menuitem,
 			panel_menu_icon_get_size (),
 			NULL,
-			_("Add this launcher to desktop"),
+			_("Add this launcher to _desktop"),
 			FALSE);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (add_app_to_desktop), entry);
@@ -959,7 +959,7 @@ create_item_context_menu (GtkWidget   *item,
 	setup_menuitem (menuitem,
 			panel_menu_icon_get_size (),
 			NULL,
-			_("Entire menu"),
+			_("_Entire menu"),
 			FALSE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
@@ -969,7 +969,7 @@ create_item_context_menu (GtkWidget   *item,
 	setup_menuitem (menuitem,
 			panel_menu_icon_get_size (),
 			NULL,
-			_("Add this as drawer to panel"),
+			_("Add this as _drawer to panel"),
 			FALSE);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (add_menudrawer_to_panel), entry);
@@ -981,7 +981,7 @@ create_item_context_menu (GtkWidget   *item,
 	setup_menuitem (menuitem,
 			panel_menu_icon_get_size (),
 			NULL,
-			_("Add this as menu to panel"),
+			_("Add this as _menu to panel"),
 			FALSE);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (add_menu_to_panel), entry);
@@ -1153,63 +1153,34 @@ image_menuitem_size_request (GtkWidget      *menuitem,
 	requisition->height = MAX (requisition->height, icon_height);
 }
 
-static void
-setup_mnemonic (GtkWidget *menuitem,
-		GtkWidget *old_toplevel,
-		gpointer   keyval_as_pointer)
-{
-	GtkWidget *toplevel;
-	guint      keyval;
-
-	keyval = GPOINTER_TO_UINT (keyval_as_pointer);
-
-	if (old_toplevel != NULL)
-		gtk_window_remove_mnemonic (GTK_WINDOW (old_toplevel),
-					    keyval,
-					    GTK_WIDGET (menuitem));
-
-	toplevel = gtk_widget_get_toplevel (menuitem);
-	if (GTK_WIDGET_TOPLEVEL (toplevel))
-		gtk_window_add_mnemonic (GTK_WINDOW (toplevel),
-					 keyval,
-					 GTK_WIDGET (menuitem));
-}
-
-static void
-setup_invisible_mnemonic (GtkWidget *menuitem,
-			  char       unicode_char)
-{
-	guint accel_key;
-
-	accel_key = gdk_keyval_to_lower (gdk_unicode_to_keyval (unicode_char));
-
-	g_signal_connect (menuitem, "hierarchy_changed", 
-			  G_CALLBACK (setup_mnemonic),
-			  GUINT_TO_POINTER (accel_key));
-
-	setup_mnemonic (menuitem, NULL, GUINT_TO_POINTER (accel_key));
-}
-
 void
 setup_menuitem (GtkWidget   *menuitem,
 		GtkIconSize  icon_size,
 		GtkWidget   *image,
 		const char  *title,
-		gboolean     invisible_mnemonic)
+		gboolean     create_invisible_mnemonic)
 			       
 {
 	GtkWidget *label;
 
-	if (invisible_mnemonic)
-		label = gtk_label_new (title);
-	else
+	if (create_invisible_mnemonic) {
+		gchar *_title;
+
+		label = g_object_new (GTK_TYPE_ACCEL_LABEL, NULL);
+		_title = g_strconcat ("_", title, NULL);
+		gtk_label_set_text_with_mnemonic (GTK_LABEL (label), _title);
+		g_free (_title);
+
+		gtk_label_set_pattern (GTK_LABEL (label), "");
+
+		gtk_accel_label_set_accel_widget (GTK_ACCEL_LABEL (label),
+						  menuitem);
+	} else
 		label = gtk_label_new_with_mnemonic (title);
+
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_widget_show (label);
        
-	if (invisible_mnemonic && title)
-		setup_invisible_mnemonic (menuitem, title [0]);
-	
 	gtk_container_add (GTK_CONTAINER (menuitem), label);
 
 	if (image) {
@@ -1727,13 +1698,13 @@ setup_menu_item_with_icon (GtkWidget   *item,
 			   const char  *icon_name,
 			   const char  *stock_id,
 			   const char  *title,
-			   gboolean     invisible_mnemonic)
+			   gboolean     create_invisible_mnemonic)
 {
 	if (icon_name || stock_id)
 		panel_load_menu_image_deferred (item, icon_size,
 						stock_id, icon_name, NULL);
 
-	setup_menuitem (item, icon_size, NULL, title, invisible_mnemonic);
+	setup_menuitem (item, icon_size, NULL, title, create_invisible_mnemonic);
 }
 
 static void
