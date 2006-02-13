@@ -1,21 +1,21 @@
 # GNOME paneeli eesti keele tõlge.
 # Estonian translation of GNOME panel.
 #
-# Copyright (C) 1999, 2001-2005 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2001-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 #
 # Lauris Kaplinski <lauris@ariman.ee>, 1999.
 # Ilmar Kerm <ikerm@hot.ee>, 2001, 2002.
 # Tõivo Leedjärv <toivo@linux.ee>, 2002, 2003.
 # Priit Laes <amd@store20.com>, 2004, 2005.
-# Ivar Smolin <okul@linux.ee>, 2005.
+# Ivar Smolin <okul@linux.ee>, 2005, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel HEAD\n"
+"Project-Id-Version: gnome-panel 2.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-09-09 05:26+0200\n"
-"PO-Revision-Date: 2005-10-28 12:27+0300\n"
+"PO-Revision-Date: 2006-02-04 09:17+0200\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -159,7 +159,7 @@ msgstr "Kogu päev"
 
 #: ../applets/clock/clock.c:1116
 msgid "Appointments"
-msgstr "Kokkusaamised"
+msgstr "Sündmused"
 
 #: ../applets/clock/clock.c:1348
 msgid "Calendar"
@@ -263,11 +263,7 @@ msgstr ""
 "Ilmar Kerm <ikerm@hot.ee>, 2001, 2002.\n"
 "Tõivo Leedjärv <toivo@linux.ee>, 2002, 2003.\n"
 "Priit Laes <amd@store20.com>, 2004, 2005.\n"
-"Ivar Smolin <okul@linux.ee>, 2005.\n"
-"\n"
-"GNOME Translation Project Eesti meeskond.\n"
-"http://et-gnome.sourceforge.net\n"
-"Veateated, parandused: <gnome-et@linux.ee>"
+"Ivar Smolin <okul@linux.ee>, 2005, 2006."
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -477,7 +473,7 @@ msgstr ""
 #: ../applets/fish/fish.c:862
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr ""
+msgstr "See seadistuskäsk ei toimi ja on asendatud käsuga %s"
 
 #: ../applets/fish/fish.c:885
 #, c-format
@@ -486,9 +482,9 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"Ei saa käivitada käsku '%s'\n"
+"Käsku '%s' pole võimalik käivitada\n"
 "\n"
-"Info: %s"
+"Üksikasjad: %s"
 
 #: ../applets/fish/fish.c:901
 #, c-format
@@ -593,6 +589,8 @@ msgstr "Kala animatsiooni kaadrite arv"
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
+"Kui märgitud, siis kalaanimatsiooni kuvatakse pööratuna vertikaalpaneeli "
+"jaoks."
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -1060,7 +1058,7 @@ msgstr "Paneeli käivitaja töölaua (desktop) failile pole URIt määratud\n"
 #: ../gnome-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Ei saa avada töölaua (desktop) faili %s paneeli käivitajale %s%s\n"
+msgstr "Töölauafaili %s pole paneeli käivitajale %s%s võimalik avada\n"
 
 #: ../gnome-panel/launcher.c:808 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
@@ -1529,24 +1527,28 @@ msgstr "Luba kohtspikrid"
 
 #: ../gnome-panel/panel-global.schemas.in.h:12
 msgid "Highlight launchers on mouseover"
-msgstr ""
+msgstr "Käivitajate esiletõstmine hiire üleliikumisel"
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
+"Kui märgitud, siis kuvatakse paneeli eemaldamise korral kinnitusdialoogi."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr ""
+"Kui märgitud, siis sahtel suletakse automaatselt peale seda, kui kasutaja "
+"klõpsab sahtlis olevat käivitajat."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
+"Kui märgitud, siis käivitaja tõstetakse hiirekursori üleliikumisel esile."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
 msgid ""
@@ -1699,7 +1701,7 @@ msgstr "Objekti asukoht paneelil"
 
 #: ../gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
-msgstr ""
+msgstr "Paneel on ühendatud sahtli külge"
 
 #: ../gnome-panel/panel-object.schemas.in.h:14
 msgid "Panel object type"
@@ -2434,7 +2436,7 @@ msgstr "Ei saa abidokumenti näidata"
 #: ../gnome-panel/panel-util.c:311
 #, c-format
 msgid "Details: %s"
-msgstr "Detailid: %s"
+msgstr "Üksikasjad: %s"
 
 #: ../gnome-panel/panel.c:477
 #, c-format
@@ -2443,14 +2445,14 @@ msgstr "Ava URL: %s"
 
 #: ../gnome-panel/panel.c:1265
 msgid "Delete this drawer?"
-msgstr "Kustutan selle sahtli?"
+msgstr "Kas kustutada see sahtel?"
 
 #: ../gnome-panel/panel.c:1266
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr ""
-"Kui sahtel eemaldada, siis läheb ta kaduma koos oma\n"
+"Kui sahtel eemaldada, siis läheb see kaduma koos oma\n"
 "sätetega."
 
 #: ../gnome-panel/panel.c:1268
@@ -2459,7 +2461,7 @@ msgstr "Kustuta sahtel"
 
 #: ../gnome-panel/panel.c:1270
 msgid "Delete this panel?"
-msgstr "Kustutan sellee paneeli?"
+msgstr "Kas kustutada see paneel?"
 
 #: ../gnome-panel/panel.c:1271
 msgid ""
@@ -2535,7 +2537,7 @@ msgstr "Määra laetava rakendi IID"
 #: ../libpanel-applet/panel-test-applets.c:33
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
-msgstr ""
+msgstr "Määra gconf'i asukoht, kuhu rakendi eelistused salvestatakse"
 
 #: ../libpanel-applet/panel-test-applets.c:34
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
