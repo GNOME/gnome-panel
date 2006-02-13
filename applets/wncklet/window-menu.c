@@ -54,7 +54,7 @@ window_menu_help (BonoboUIComponent *uic,
                   const char        *verb) 
 {
 	wncklet_display_help (window_menu->applet, "user-guide",
-			      "user-guide.xml", "gosmetacity-27");
+			      "user-guide.xml", "panel-windowselector");
 }
 
 static void
