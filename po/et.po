@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel 2.12\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-09-09 05:26+0200\n"
-"PO-Revision-Date: 2006-02-04 09:17+0200\n"
+"PO-Revision-Date: 2006-02-12 09:20+0200\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -1390,6 +1390,7 @@ msgstr "Paneelist _lähemalt"
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
+"Klõpsa aknal, mida soovid jõuga sulgeda. Toimingu tühistamiseks vajuta <ESC>."
 
 #: ../gnome-panel/panel-force-quit.c:187
 msgid ""
@@ -1555,18 +1556,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"Kui märgitud, siis paneel eemaldab ligipääsu rakenduse jõuga sulgemise "
+"nupule ja seega ei luba kasutajal rakendusi jõuga sulgeda."
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"Kui märgitud, siis paneel eemaldab ligipääsu ekraanilukustamise "
+"menüükirjetele ja seega ei luba kasutajal tema ekraani lukustada."
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
+"Kui märgitud, siis paneel eemaldab ligipääsu väljalogimise menüükirjetele ja "
+"seega ei luba kasutajal välja logida."
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
 msgid ""
@@ -1574,6 +1581,9 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
+"Kui märgitud, siis paneel ei luba teha ühtegi muudatust oma seadistustes. "
+"Üksikuid rakendeid saab samuti eraldi lukustada. Selle valiku rakendamiseks "
+"tuleb paneel taaskäivitada."
 
 #: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
@@ -2080,7 +2090,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-stock-icons.c:90
 msgid "_Force quit"
-msgstr ""
+msgstr "Sulge _jõuga"
 
 #: ../gnome-panel/panel-stock-icons.c:91
 msgid "C_lear"
