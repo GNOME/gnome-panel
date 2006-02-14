@@ -11,13 +11,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-09 23:57+0100\n"
-"PO-Revision-Date: 2006-02-13 06:36+0100\n"
+"POT-Creation-Date: 2006-02-13 08:13+0100\n"
+"PO-Revision-Date: 2006-02-14 04:56+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -48,7 +49,7 @@ msgstr "O _aplikaci"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:737
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:745
 #: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:404
 #: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
@@ -420,14 +421,9 @@ msgstr "Ryba %s"
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
-"time, and if loaded it also takes up precious panel space and memory. If "
-"anyone is found using it, he should be promptly sent for a psychiatric "
-"evaluation."
-msgstr ""
-"%s nemá žádné rozumné využití. Pouze zabírá místo na disku a čas při "
-"kompilaci a pokud je spuštěn, tak i místo na panelu (kterého je i tak "
-"nedostatek) a paměť (té je ještě méně). Pokud někdo tento aplet používá, "
-"nechť se bez průtahů dostaví k psychiatrickému vyšetření."
+"time, and if loaded it also takes up precious panel space and memory. "
+"Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgstr "%s nemá žádné rozumné využití. Pouze zabírá místo na disku a čas při kompilaci a pokud je spuštěn, tak i cenné místo na panelu a paměť. Pokud někdo tento aplet používá, nechť se bez průtahů dostaví k psychiatrickému vyšetření."
 
 #: ../applets/fish/fish.c:570
 msgid "(with minor help from George)"
@@ -1014,8 +1010,8 @@ msgstr "Zásuvka"
 msgid "_Add to Drawer..."
 msgstr "_Přidat do zásuvky..."
 
-#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:945
-#: ../gnome-panel/panel-action-button.c:135
+#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:946
+#: ../gnome-panel/panel-action-button.c:136
 #: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "_Vlastnosti"
@@ -1040,65 +1036,65 @@ msgstr "Vytvořit nový soubor v daném adresáři"
 msgid "Could not save launcher to disk"
 msgstr "Nemohu uložit spouštěč na disk"
 
-#: ../gnome-panel/launcher.c:174
+#: ../gnome-panel/launcher.c:175
 msgid "Could not show this URL"
 msgstr "Nemohu zobrazit toto URL"
 
-#: ../gnome-panel/launcher.c:175
+#: ../gnome-panel/launcher.c:176
 msgid "No URL was specified."
 msgstr "Nebylo zadáno URL."
 
-#: ../gnome-panel/launcher.c:187
+#: ../gnome-panel/launcher.c:188
 #, c-format
 msgid "Could not show '%s'"
 msgstr "Nemohu zobrazit '%s'"
 
-#: ../gnome-panel/launcher.c:224
+#: ../gnome-panel/launcher.c:225
 msgid "Could not launch application"
 msgstr "Nemohu spustit aplikaci"
 
-#: ../gnome-panel/launcher.c:282
+#: ../gnome-panel/launcher.c:283
 msgid "Could not use dropped item"
 msgstr "Nemohu použít upuštěnou položku"
 
-#: ../gnome-panel/launcher.c:478
+#: ../gnome-panel/launcher.c:479
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Pro soubor desktop spouštěče na panelu nebylo poskytnuto URI\n"
 
-#: ../gnome-panel/launcher.c:509
+#: ../gnome-panel/launcher.c:510
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Nemohu otevřít soubor desktop %s pro spouštěč na panelu %s%s\n"
 
-#: ../gnome-panel/launcher.c:827 ../gnome-panel/menu-ditem.c:181
+#: ../gnome-panel/launcher.c:828 ../gnome-panel/menu-ditem.c:181
 #: ../gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Vlastnosti spouštěče"
 
-#: ../gnome-panel/launcher.c:939
+#: ../gnome-panel/launcher.c:940
 msgid "_Launch"
 msgstr "_Spustit"
 
-#: ../gnome-panel/launcher.c:978
+#: ../gnome-panel/launcher.c:979
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Klíč %s není nastaven, nemohu načíst spouštěč\n"
 
-#: ../gnome-panel/launcher.c:1033 ../gnome-panel/launcher.c:1052
+#: ../gnome-panel/launcher.c:1034 ../gnome-panel/launcher.c:1053
 #: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
 #: ../gnome-panel/menu-ditem.c:542
 msgid "Could not create launcher"
 msgstr "Nemohu vytvořit spouštěč"
 
-#: ../gnome-panel/launcher.c:1034 ../gnome-panel/menu-ditem.c:470
+#: ../gnome-panel/launcher.c:1035 ../gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "Musíte zadat název."
 
-#: ../gnome-panel/launcher.c:1053 ../gnome-panel/menu-ditem.c:487
+#: ../gnome-panel/launcher.c:1054 ../gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "Musíte zadat platné URL nebo příkaz."
 
-#: ../gnome-panel/launcher.c:1097 ../gnome-panel/menu-ditem.c:550
+#: ../gnome-panel/launcher.c:1098 ../gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "Vytvořit spouštěč"
 
@@ -1115,106 +1111,102 @@ msgid "You do not have permission to write to this location."
 msgstr "Nemáte oprávnění zapisovat do tohoto umístění."
 
 #: ../gnome-panel/menu.c:935
-msgid "Add this launcher to panel"
-msgstr "Přidat tento spouštěč na panel"
+msgid "Add this launcher to _panel"
+msgstr "Přidat tento spouštěč na pan_el"
 
 #: ../gnome-panel/menu.c:946
-msgid "Add this launcher to desktop"
-msgstr "Přidat tento spouštěč na pracovní plochu"
+msgid "Add this launcher to _desktop"
+msgstr "Přidat tento spouštěč na p_racovní plochu"
 
 #: ../gnome-panel/menu.c:962
-msgid "Entire menu"
-msgstr "Celé menu"
+msgid "_Entire menu"
+msgstr "_Celé menu"
 
 #: ../gnome-panel/menu.c:972
-msgid "Add this as drawer to panel"
-msgstr "Přidat jako zásuvku na panel"
+msgid "Add this as _drawer to panel"
+msgstr "Přidat jako _zásuvku na panel"
 
 #: ../gnome-panel/menu.c:984
-msgid "Add this as menu to panel"
-msgstr "Přidat jako menu na panel"
+msgid "Add this as _menu to panel"
+msgstr "Přidat jako _menu na panel"
 
-#: ../gnome-panel/panel-action-button.c:123
+#: ../gnome-panel/panel-action-button.c:124
 msgid "_Activate Screensaver"
 msgstr "_Aktivovat šetřič obrazovky"
 
-#: ../gnome-panel/panel-action-button.c:129
+#: ../gnome-panel/panel-action-button.c:130
 msgid "_Lock Screen"
 msgstr "_Zamknout obrazovku"
 
-#: ../gnome-panel/panel-action-button.c:202
-#: ../gnome-panel/panel-action-button.c:215
+#: ../gnome-panel/panel-action-button.c:210
+#: ../gnome-panel/panel-action-button.c:223
 #: ../gnome-panel/panel-menu-bar.c:471 ../gnome-panel/panel-menu-button.c:1007
 #: ../gnome-panel/panel-util.c:747
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Nemohu spustit '%s'"
 
-#: ../gnome-panel/panel-action-button.c:251
+#: ../gnome-panel/panel-action-button.c:259
 msgid "Could not connect to server"
 msgstr "Nemohu se připojit k serveru"
 
-#: ../gnome-panel/panel-action-button.c:283
+#: ../gnome-panel/panel-action-button.c:291
 msgid "Lock Screen"
 msgstr "Zamknout obrazovku"
 
-#: ../gnome-panel/panel-action-button.c:284
+#: ../gnome-panel/panel-action-button.c:292
 msgid "Protect your computer from unauthorized use"
 msgstr "Chránit váš počítač před neautorizovaným použitím"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:298
-msgid "Log Out"
-msgstr "Odhlásit se"
+#: ../gnome-panel/panel-action-button.c:306
+msgid "Log Out..."
+msgstr "Odhlásit se..."
 
-#: ../gnome-panel/panel-action-button.c:299
-msgid ""
-"Log out of this session to log in as a different user or to shut down the "
-"computer"
-msgstr ""
-"Odhlásit se z tohoto sezení, aby bylo možné přihlásit se jako jiný uživatel "
-"nebo vypnout počítač"
+#: ../gnome-panel/panel-action-button.c:307
+msgid "Log out of this session to log in as a different user"
+msgstr "Odhlásit se z tohoto sezení, aby bylo možné přihlásit se jako jiný uživatel"
 
-#: ../gnome-panel/panel-action-button.c:308
+#: ../gnome-panel/panel-action-button.c:316
 msgid "Run Application..."
 msgstr "Spustit aplikaci..."
 
-#: ../gnome-panel/panel-action-button.c:309
+#: ../gnome-panel/panel-action-button.c:317
 msgid "Run an Application by entering a command"
 msgstr "Spustit aplikaci zadáním příkazu"
 
-#: ../gnome-panel/panel-action-button.c:318
+#: ../gnome-panel/panel-action-button.c:326
 msgid "Search for Files..."
 msgstr "Hledat soubory..."
 
-#: ../gnome-panel/panel-action-button.c:319
+#: ../gnome-panel/panel-action-button.c:327
 msgid "Find files, folders, and documents on your computer"
 msgstr "Hledat soubory, adresáře a dokumenty na vašem počítači"
 
-#: ../gnome-panel/panel-action-button.c:327
+#: ../gnome-panel/panel-action-button.c:335
 msgid "Force Quit"
 msgstr "Vynutit ukončení"
 
-#: ../gnome-panel/panel-action-button.c:328
+#: ../gnome-panel/panel-action-button.c:336
 msgid "Force a misbehaving application to quit"
 msgstr "Vynutit ukončení špatně se chovající aplikace"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:337
+#: ../gnome-panel/panel-action-button.c:345
 msgid "Connect to Server..."
 msgstr "Připojit se k serveru..."
 
-#: ../gnome-panel/panel-action-button.c:338
+#: ../gnome-panel/panel-action-button.c:346
 msgid "Connect to a remote server"
 msgstr "Připojit se k vzdálenému serveru"
 
-#: ../gnome-panel/panel-action-button.c:346
-msgid "Shut Down"
-msgstr "Vypnout"
+#: ../gnome-panel/panel-action-button.c:354
+msgid "Shut Down..."
+msgstr "Vypnout..."
 
-#: ../gnome-panel/panel-action-button.c:347
+#: ../gnome-panel/panel-action-button.c:355
 msgid "Shut down the computer"
 msgstr "Vypnout počítač"
 
@@ -1267,7 +1259,7 @@ msgid "(empty)"
 msgstr "(prázdné)"
 
 #: ../gnome-panel/panel-addto.c:401
-#: ../libpanel-applet/panel-test-applets.c:249
+#: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "dotaz vrátil výjimku %s\n"
@@ -1617,45 +1609,47 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Je-li true, jsou zobrazovány tipy pro objekty v panelech."
 
-#: ../gnome-panel/panel-logout.c:214
+#: ../gnome-panel/panel-logout.c:223
 #, c-format
 msgid "You will be automatically logged out in %d second."
 msgid_plural "You will be automatically logged out in %d seconds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Budete automaticky odhlášeni za %d sekundu."
+msgstr[1] "Budete automaticky odhlášeni za %d sekund."
+msgstr[2] "Budete automaticky odhlášeni za %d sekund."
 
-#: ../gnome-panel/panel-logout.c:221
+#: ../gnome-panel/panel-logout.c:230
 #, c-format
 msgid "This system will be automatically shut down in %d second."
 msgid_plural "This system will be automatically shut down in %d seconds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tento systém se automaticky vypne za %d sekundu."
+msgstr[1] "Tento systém se automaticky vypne za %d sekund."
+msgstr[2] "Tento systém se automaticky vypne za %d sekund."
 
-#: ../gnome-panel/panel-logout.c:293
+#: ../gnome-panel/panel-logout.c:302
 msgid "Log out of this system now?"
 msgstr "Odhlásit se z tohoto systému?"
 
-#: ../gnome-panel/panel-logout.c:299
+#: ../gnome-panel/panel-logout.c:308
 msgid "_Switch User"
 msgstr "_Přepnout uživatele"
 
-#: ../gnome-panel/panel-logout.c:305
+#: ../gnome-panel/panel-logout.c:314
 msgid "_Log Out"
 msgstr "_Odhlásit se"
 
-#: ../gnome-panel/panel-logout.c:310
+#: ../gnome-panel/panel-logout.c:319
 msgid "Shut down this system now?"
 msgstr "Vypnout tento systém?"
 
-#: ../gnome-panel/panel-logout.c:317
+#: ../gnome-panel/panel-logout.c:326
 msgid "_Suspend"
 msgstr "_Uspat"
 
-#: ../gnome-panel/panel-logout.c:321
-msgid "_Reboot"
+#: ../gnome-panel/panel-logout.c:330
+msgid "_Restart"
 msgstr "_Restartovat"
 
-#: ../gnome-panel/panel-logout.c:327
+#: ../gnome-panel/panel-logout.c:336
 msgid "_Shut Down"
 msgstr "_Vypnout"
 
@@ -1669,7 +1663,9 @@ msgstr "Přistupovat k dokumentům, adresářům a místům v síti"
 
 #: ../gnome-panel/panel-menu-bar.c:98
 msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "Změnit vzhled a chování prostředí pracovní plochy, získat nápovědu, nebo se odhlásit"
+msgstr ""
+"Změnit vzhled a chování prostředí pracovní plochy, získat nápovědu, nebo se "
+"odhlásit"
 
 #: ../gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
@@ -1734,7 +1730,7 @@ msgstr "Prostředí"
 #.
 #: ../gnome-panel/panel-menu-items.c:1083
 msgid "panel:showusername|1"
-msgstr "0"
+msgstr "1"
 
 #. keep those strings in sync with the ones in
 #. * panel-action-button.c
@@ -1742,17 +1738,15 @@ msgstr "0"
 #. * "panel:showusername|1" to "1"
 #: ../gnome-panel/panel-menu-items.c:1095
 #, c-format
-msgid "Log Out %s"
-msgstr ""
+msgid "Log Out %s..."
+msgstr "Odhlásit uživatele %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1098
+#: ../gnome-panel/panel-menu-items.c:1099
 #, c-format
-msgid ""
-"Log out %s of this session to log in as a different user or to shut down "
-"your computer"
-msgstr ""
+msgid "Log out %s of this session to log in as a different user"
+msgstr "Odhlásit uživatele %s z tohoto sezení, aby bylo možné přihlásit se jako jiný uživatel"
 
 #: ../gnome-panel/panel-menu-items.c:1145
 msgid "Could not launch menu item"
@@ -1964,22 +1958,22 @@ msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Chyba při čtení pravdivostní hodnoty GConf '%s': %s"
 
 #: ../gnome-panel/panel-properties-dialog.c:120
-#: ../libpanel-applet/panel-test-applets.c:54
+#: ../libpanel-applet/panel-test-applets.c:53
 msgid "Orientation|Top"
 msgstr "Nahoře"
 
 #: ../gnome-panel/panel-properties-dialog.c:121
-#: ../libpanel-applet/panel-test-applets.c:55
+#: ../libpanel-applet/panel-test-applets.c:54
 msgid "Orientation|Bottom"
 msgstr "Dole"
 
 #: ../gnome-panel/panel-properties-dialog.c:122
-#: ../libpanel-applet/panel-test-applets.c:56
+#: ../libpanel-applet/panel-test-applets.c:55
 msgid "Orientation|Left"
 msgstr "Vlevo"
 
 #: ../gnome-panel/panel-properties-dialog.c:123
-#: ../libpanel-applet/panel-test-applets.c:57
+#: ../libpanel-applet/panel-test-applets.c:56
 msgid "Orientation|Right"
 msgstr "Vpravo"
 
@@ -1988,7 +1982,7 @@ msgid "Could not display properties dialog"
 msgstr "Nemohu zobrazit dialog Vlastnosti"
 
 #: ../gnome-panel/panel-properties-dialog.c:1020
-#: ../gnome-panel/panel-run-dialog.c:1830
+#: ../gnome-panel/panel-run-dialog.c:1832
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "Nemohu načíst soubor '%s'."
@@ -2155,24 +2149,24 @@ msgstr "Nemohu převést '%s' z UTF-8"
 msgid "Choose a file to append to the command..."
 msgstr "Vyberte soubor, který připojit k příkazu..."
 
-#: ../gnome-panel/panel-run-dialog.c:1537
+#: ../gnome-panel/panel-run-dialog.c:1538
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Vyberte aplikaci pro zobrazení jejího popisu."
 
-#: ../gnome-panel/panel-run-dialog.c:1574
+#: ../gnome-panel/panel-run-dialog.c:1576
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Spustím příkaz: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1605
+#: ../gnome-panel/panel-run-dialog.c:1607
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "Seznam URI upuštěný na dialog spuštění měl špatný formát (%d) nebo délku (%"
 "d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1829
+#: ../gnome-panel/panel-run-dialog.c:1831
 msgid "Could not display run dialog"
 msgstr "Nemohu zobrazit dialog Spustit"
 
@@ -2793,40 +2787,40 @@ msgstr "Určení umístění gconf, ve kterém mají být uložena nastavení ap
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "Určení počáteční velikosti apletu (xx-small, medium, large atd.)"
 
-#: ../libpanel-applet/panel-test-applets.c:38
+#: ../libpanel-applet/panel-test-applets.c:37
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "Určení počáteční orientace apletu (top, bottom, left nebo right)"
 
-#: ../libpanel-applet/panel-test-applets.c:62
+#: ../libpanel-applet/panel-test-applets.c:61
 msgid "Size|XX Small"
 msgstr "Mrňavý"
 
-#: ../libpanel-applet/panel-test-applets.c:63
+#: ../libpanel-applet/panel-test-applets.c:62
 msgid "Size|X Small"
 msgstr "Malinkatý"
 
-#: ../libpanel-applet/panel-test-applets.c:64
+#: ../libpanel-applet/panel-test-applets.c:63
 msgid "Size|Small"
 msgstr "Malý"
 
-#: ../libpanel-applet/panel-test-applets.c:65
+#: ../libpanel-applet/panel-test-applets.c:64
 msgid "Size|Medium"
 msgstr "Střední"
 
-#: ../libpanel-applet/panel-test-applets.c:66
+#: ../libpanel-applet/panel-test-applets.c:65
 msgid "Size|Large"
 msgstr "Velký"
 
-#: ../libpanel-applet/panel-test-applets.c:67
+#: ../libpanel-applet/panel-test-applets.c:66
 msgid "Size|X Large"
 msgstr "Velikánský"
 
-#: ../libpanel-applet/panel-test-applets.c:68
+#: ../libpanel-applet/panel-test-applets.c:67
 msgid "Size|XX Large"
 msgstr "Obrovský"
 
-#: ../libpanel-applet/panel-test-applets.c:130
+#: ../libpanel-applet/panel-test-applets.c:129
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "Nemohu načíst aplet %s"
@@ -2843,6 +2837,9 @@ msgstr "_Aplet:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Adresář nastavení:"
+
+#~ msgid "_Reboot"
+#~ msgstr "_Restartovat"
 
 #~ msgid "_Lock To Panel"
 #~ msgstr "_Zamknout do panelu"
@@ -2931,9 +2928,6 @@ msgstr "_Adresář nastavení:"
 
 #~ msgid "Desktop"
 #~ msgstr "Pracovní plocha"
-
-#~ msgid "Restart"
-#~ msgstr "Restartovat"
 
 #~ msgid "Log out of GNOME and reboot the computer"
 #~ msgstr "Odhlásit se z GNOME a restartovat počítač"
