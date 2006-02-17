@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel 2.13/14\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-13 12:23+0100\n"
-"PO-Revision-Date: 2006-02-15 10:02+0100\n"
+"PO-Revision-Date: 2006-02-17 15:52+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italiano <tp@list.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -1212,11 +1212,12 @@ msgstr "Trova file, cartelle e documenti nel computer"
 
 #: ../gnome-panel/panel-action-button.c:335
 msgid "Force Quit"
-msgstr "Termina forzatamente"
+msgstr "Uscita forzata"
 
+# usato chiusura come sinomino, uscita e' gia' sopra
 #: ../gnome-panel/panel-action-button.c:336
 msgid "Force a misbehaving application to quit"
-msgstr "Termina forzatamente un'applicazione che si comporta male"
+msgstr "Forza la chiusura di un'applicazione che non risponde"
 
 #. FIXME icon
 #: ../gnome-panel/panel-action-button.c:345
@@ -1422,16 +1423,14 @@ msgstr "I_nformazioni sui pannelli"
 #: ../gnome-panel/panel-force-quit.c:75
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"Fare clic su una finestra per forzare l'uscita dell'applicazione. Per "
-"annullare premere <ESC>."
+msgstr "Fare clic su una finestra per forzare l'uscita dell'applicazione. Per annullare premere <ESC>."
 
 #: ../gnome-panel/panel-force-quit.c:203
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
 msgstr ""
-"Terminare forzatamente questa applicazione?\n"
+"Forzare l'uscita di questa applicazione?\n"
 "(Ogni documento aperto sarà perduto.)"
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
@@ -1566,7 +1565,7 @@ msgstr "Deprecata"
 
 #: ../gnome-panel/panel-global.schemas.in.h:7
 msgid "Disable Force Quit"
-msgstr "Termina forzatamente disabilitato"
+msgstr "Disabilita uscita forzata"
 
 #: ../gnome-panel/panel-global.schemas.in.h:8
 msgid "Disable Lock Screen"
@@ -1616,10 +1615,7 @@ msgstr ""
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr ""
-"Se impostata a vero, è rimosso l'accesso al pulsante \"Termina forzatamente"
-"\": l'utente non può quindi usare il pannello per forzare l'uscita da una "
-"applicazione."
+msgstr "Se impostata a vero, è rimosso l'accesso al pulsante \"Uscita forzata\": l'utente non può quindi usare il pannello per forzare l'uscita da una applicazione."
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
@@ -2313,7 +2309,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-stock-icons.c:90
 msgid "_Force quit"
-msgstr "_Termina forzatamente"
+msgstr "_Forza uscita"
 
 #: ../gnome-panel/panel-stock-icons.c:91
 msgid "C_lear"
