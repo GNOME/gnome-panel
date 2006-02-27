@@ -1,3 +1,11 @@
+2006-02-27  Vincent Untz  <vuntz@gnome.org>
+	
+	* panel-logout.c: (panel_logout_new): remove the Suspend button for
+	2.14. It's not working as expected (it logs the user out) and we
+	didn't have it in gnome-session anyway. We'll put it back thanks to
+	g-p-m in 2.15.
+	Fix bug #329630
+
 ==================== 2.13.91 ====================
 
 2006-02-12  Vincent Untz  <vuntz@gnome.org>

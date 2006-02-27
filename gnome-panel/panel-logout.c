@@ -321,10 +321,14 @@ panel_logout_new (PanelLogoutDialogType  type,
 		logout_dialog->priv->default_response = PANEL_LOGOUT_RESPONSE_SHUTDOWN;
 		//FIXME see previous FIXME
 
+#if 0
+		/* TODO: disable this for 2.14 since this is stupid (the user
+		 * don't want to log out of his session when suspending) */
 		if (gdm_supports_logout_action (GDM_LOGOUT_ACTION_SUSPEND))
 			gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
 					       _("_Suspend"),
 					       PANEL_LOGOUT_RESPONSE_STD);
+#endif
 
 		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
 				       _("_Restart"),
