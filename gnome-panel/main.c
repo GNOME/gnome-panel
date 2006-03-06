@@ -48,6 +48,7 @@ main (int argc, char **argv)
 	textdomain (GETTEXT_PACKAGE);
 
 	context = g_option_context_new ("");
+	g_option_context_set_ignore_unknown_options (context, TRUE);
 
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
