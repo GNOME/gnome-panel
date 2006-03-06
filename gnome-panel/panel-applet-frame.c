@@ -572,11 +572,11 @@ panel_applet_frame_paint (GtkWidget    *widget,
 		switch (frame->priv->orientation) {
 		case PANEL_ORIENTATION_TOP:
 		case PANEL_ORIENTATION_BOTTOM:
-			orientation = GTK_ORIENTATION_HORIZONTAL;
+			orientation = GTK_ORIENTATION_VERTICAL;
 			break;
 		case PANEL_ORIENTATION_LEFT:
 		case PANEL_ORIENTATION_RIGHT:
-			orientation = GTK_ORIENTATION_VERTICAL;
+			orientation = GTK_ORIENTATION_HORIZONTAL;
 			break;
 		default:
 			g_assert_not_reached ();
