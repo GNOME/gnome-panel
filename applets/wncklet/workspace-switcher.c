@@ -187,7 +187,7 @@ applet_scroll (PanelApplet    *applet,
 		break;
 		
 	case GDK_SCROLL_RIGHT:
-		if (index < n_workspaces)
+		if (index < n_workspaces - 1)
 			index++;
 		break;
 		
