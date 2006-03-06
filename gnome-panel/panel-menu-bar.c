@@ -456,7 +456,7 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 	screen = gtk_widget_get_screen (GTK_WIDGET (menubar));
 
 	if (!strcmp (callback_name, "help")) {
-		panel_show_help (screen, "user-guide.xml", "gospanel-37");
+		panel_show_help (screen, "user-guide.xml", "menubar");
 
 	} else if (!strcmp (callback_name, "edit")) {
 		GError *error = NULL;
