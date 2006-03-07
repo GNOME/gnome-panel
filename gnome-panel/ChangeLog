@@ -1,3 +1,11 @@
+2006-03-07  Vincent Untz  <vuntz@gnome.org>
+
+	Fix underscores not being visible in menu items. Fix bug #332526
+	
+	* menu.c: (menu_escape_underscores_and_prepend): new function to
+	prepend an underscore and escape all underscores in a label
+	(setup_menuitem): use menu_escape_underscores_and_prepend
+
 2006-03-06  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-menu-bar.c: (panel_menu_bar_invoke_menu): fix help id
