@@ -8,6 +8,7 @@
 # Ronald Hummelink <ronald@hummelink.xs4all.nl>, 2002.
 # Tino Meinen <a.t.meinen@chello.nl>, 2002. 2006
 # Reinout van Schouwen <reinout@cs.vu.nl>, 2002-2006
+# Wouter Bolstrelee <uws+gnome@xs4all.nl>, 2006
 #
 # desktop - bureaublad
 # workspace - werkblad
@@ -15,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-26 14:59+0100\n"
-"PO-Revision-Date: 2006-02-26 16:40+0100\n"
-"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
+"POT-Creation-Date: 2006-03-16 09:22+0100\n"
+"PO-Revision-Date: 2006-03-16 09:23+0100\n"
+"Last-Translator: Wouter Bolsterlee <uws+gnome@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -260,6 +261,7 @@ msgstr "De klok toont de huidige tijd en datum"
 #: ../gnome-panel/panel-context-menu.c:130
 msgid "translator-credits"
 msgstr ""
+"Wouter Bolsterlee \n"
 "Reinout van Schouwen \n"
 "Tino Meinen \n"
 "Dirk-Jan C. Binnema \n"
@@ -295,25 +297,28 @@ msgstr "Uren-weergave"
 
 #: ../applets/clock/clock.schemas.in.h:14
 msgid "If true, display date in the clock, in addition to time."
-msgstr "Indien waar, naast de tijd ook de datum tonen in de klok"
+msgstr ""
+"Indien ingeschakeld wordt naast de tijd ook de datum getoond in de klok."
 
 #: ../applets/clock/clock.schemas.in.h:15
 msgid "If true, display seconds in time."
-msgstr "Indien waar, de tijd in seconden nauwkeurig weergeven."
+msgstr "Indien ingeschakeld wordt de tijd in seconden nauwkeurig weergegeven."
 
 #: ../applets/clock/clock.schemas.in.h:16
 msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "Indien waar, tijd als Universal Coordinated Time-zone weergeven."
+msgstr ""
+"Indien ingeschakeld wordt de tijd als Universal Coordinated Time-zone "
+"weergeven."
 
 #: ../applets/clock/clock.schemas.in.h:17
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
-"Indien waar, datum tonen in een zwevende tip wanneer de muispijl boven de "
-"klok staat."
+"Indien ingeschakeld wordt de datum getoond in een zwevende tip wanneer de "
+"muispijl boven de klok staat."
 
 #: ../applets/clock/clock.schemas.in.h:18
 msgid "If true, show week numbers in the calendar."
-msgstr "Indien waar, weeknummers in de kalender tonen."
+msgstr "Indien ingeschakeld worden weeknummers in de kalender getoond."
 
 #: ../applets/clock/clock.schemas.in.h:19
 msgid "Show date in clock"
@@ -335,7 +340,10 @@ msgstr "Weeknummers tonen in kalender"
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
-msgstr "Het gebruik van deze sleutel is afgeraden sinds GNOME 2.6 en maakt plaats voor de 'weergave'-sleutel. Het schema blijft behouden voor compatibiliteit met oudere versies."
+msgstr ""
+"Het gebruik van deze sleutel is afgeraden sinds GNOME 2.6 en maakt plaats "
+"voor de 'weergave'-sleutel. Het schema blijft behouden voor compatibiliteit "
+"met oudere versies."
 
 # Betere vertaling van 'specifier'?
 #: ../applets/clock/clock.schemas.in.h:24
@@ -343,7 +351,11 @@ msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
-msgstr "Deze sleutel geeft aan welke weergave het klok-applet gebruik wanneer de weergavesleutel is ingsteld op \"custom\". U kunt de conversie-opstellers gebruiken die de functie strftime() begrijpt om een bepaalde weergave te verkrijgen."
+msgstr ""
+"Deze sleutel geeft aan welke weergave het klok-applet gebruik wanneer de "
+"weergavesleutel is ingsteld op ‘custom’. U kunt de conversie-opstellers "
+"gebruiken die de functie strftime() begrijpt om een bepaalde weergave te "
+"verkrijgen."
 
 #: ../applets/clock/clock.schemas.in.h:25
 msgid ""
@@ -355,7 +367,15 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
-msgstr "Deze sleutel geeft aan welke uren-weergave het klok-applet gebruikt. Mogelijke waarden zijn \"12-hour\", \"24-hour\", \"internet\", \"unix\" en \"custom\". Als ingesteld op \"internet\", dan geeft de klok internettijd weer. Het internet-tijdssysteem verdeelt de dag in 1000 \".beats\". Er zijn geen tijdzones in dit systeem, dus de tijd is overal ter wereld hetzelfde. Als ingesteld op \"unix\", dan geeft de klok het aantal seconden weer sinds Epoch, oftewel 01-01-1970. Als ingesteld op \"custom\", dan geeft de klok de tijd weer aan de hand van de weergave die is aangegeven in de sleutel custom_format."
+msgstr ""
+"Deze sleutel geeft aan welke uren-weergave het klok-applet gebruikt.  "
+"Mogelijke waarden zijn ‘12-hour’, ‘24-hour’, ‘internet’, ‘unix’ en  "
+"‘custom’. Als ingesteld op ‘internet’, dan geeft de klok internettijd weer. "
+"Het internet-tijdssysteem verdeelt de dag in 1000 ‘.beats’. Er zijn geen "
+"tijdzones in dit systeem, dus de tijd is overal ter wereld hetzelfde. Indien "
+"ingesteld op ‘unix’, dan geeft de klok het aantal seconden weer sinds Epoch "
+"(1 januari 1970). Als ingesteld op ‘custom’, dan geeft de klok de tijd weer "
+"aan de hand van de weergave die is aangegeven in de sleutel ‘custom_format’."
 
 #: ../applets/clock/clock.schemas.in.h:26
 msgid "This key specifies the program to run in order to configure the time."
@@ -406,7 +426,7 @@ msgstr ""
 "Waarschuwing: Deze opdracht lijkt daadwerkelijk iets nuttigs te doen.\n"
 "Omdat dit een nutteloos applet is, wilt u zich misschien wel bedenken.\n"
 "We raden u ten zeerste af om %s te gebruiken voor iets dat het applet\n"
-"nuttig of \"praktisch\" zou maken."
+"nuttig zou maken."
 
 #: ../applets/fish/fish.c:431 ../gnome-panel/panel-properties-dialog.c:440
 msgid "Images"
@@ -426,7 +446,11 @@ msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "%s is totaal nutteloos. Het kost slechts schijfruimte en processortijd, en indien gebruikt, ook kostbare ruimte in het paneel en het geheugen. Als iemand betrapt wordt op het gebruiken ervan, dient hij ogenblikkelijk een psychiatrisch onderzoek te ondergaan."
+msgstr ""
+"%s is totaal nutteloos. Het kost slechts schijfruimte en processortijd, en "
+"indien gebruikt, ook kostbare ruimte in het paneel en het geheugen. Als "
+"iemand betrapt wordt op het gebruik ervan is een psychiatrisch onderzoek een "
+"logische volgende stap."
 
 #: ../applets/fish/fish.c:570
 msgid "(with minor help from George)"
@@ -577,8 +601,8 @@ msgstr "Het aantal beeldjes in het animatiebestand"
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
-"Indien waar, dan wordt de achtergrondafbeelding gekanteld wanneer het paneel "
-"verticaal geöriënteerd is."
+"Indien ingeschakeld wordt de achtergrondafbeelding gekanteld wanneer het "
+"paneel verticaal geöriënteerd is."
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -812,14 +836,14 @@ msgid ""
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 "Bepaalt waneer vensters van eenzelfde toepassing op de vensterlijst worden "
-"gegroepeerd. Geldige waarden zijn: \"never\", \"auto\", en \"always\"."
+"gegroepeerd. Geldige waarden zijn: ‘never’, ‘auto’, en ‘always’."
 
 #: ../applets/wncklet/window-list.schemas.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"Indien waar, dan toont de vensterlijst alle vensters van alle werkbladen, "
+"Indien ingeschakeld toont de vensterlijst alle vensters van alle werkbladen, "
 "anders slechts de vensters van het huidige werkblad."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
@@ -827,7 +851,7 @@ msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr ""
-"Indien waar, dan zal het herstellen van een venster deze naar het huidige "
+"Indien ingeschakeld zal het herstellen van een venster deze naar het huidige "
 "werkblad brengen. Anders zal worden gewisseld naar het oorspronkelijke "
 "werkblad van het venster."
 
@@ -964,16 +988,16 @@ msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr ""
-"Indien waar, dan zal de werkbladwisselaar alle werkbladen tonen. Anders "
-"toont hij slechts het huidige werkblad."
+"Indien ingeschakeld zal de werkbladwisselaar alle werkbladen tonen, anders "
+"slechts het huidige werkblad."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace."
 msgstr ""
-"Indien waar, dan zullen de werkbladen in de werkbladwisselaar de namen van "
-"de werkbladen tonen. Anders tonen ze de vensters op het werkblad."
+"Indien ingeschakeld zullen de werkbladen in de werkbladwisselaar de namen "
+"van de werkbladen tonen, anders tonen ze de vensters op het werkblad."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -1466,25 +1490,23 @@ msgstr ""
 #: ../gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
-"Auto-aanvulling inschakelen in het \"Toepassing uitvoeren\"-dialoogvenster"
+"Auto-aanvulling inschakelen in het ‘Toepassing uitvoeren’-dialoogvenster"
 
 #: ../gnome-panel/panel-general.schemas.in.h:6
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr ""
-"Programma-opsomming inschakelen in het \"Toepassing uitvoeren\"-"
-"dialoogvenster"
+"Programma-opsomming inschakelen in het ‘Toepassing uitvoeren’-dialoogvenster"
 
 #: ../gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr ""
-"Programma-opsomming uitschuiven in het \"Toepassing uitvoeren\"-"
-"dialoogvenster"
+"Programma-opsomming uitschuiven in het ‘Toepassing uitvoeren’-dialoogvenster"
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
-"Indien waar, dan is auto-aanvulling in het \"Toepassing uitvoeren\"- "
+"Indien ingeschakeld is auto-aanvulling in het ‘Toepassing uitvoeren’-"
 "dialoogvenster beschikbaar."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
@@ -1493,9 +1515,10 @@ msgid ""
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
-"Indien waar dan is de lijst van bekende toepassingen in het \"Programma "
-"uitvoeren\"-dialoogvenster uitgeschoven wanneer deze wordt geopend. Deze "
-"sleutel is slechts relevant wanneer sleutel enable_program_list waar is."
+"Indien ingeschakeld is de lijst van bekende toepassingen in het ‘Programma "
+"uitvoeren’-dialoogvenster uitgeschoven wanneer deze wordt geopend. Deze "
+"sleutel is slechts relevant wanneer de sleutel enable_program_list "
+"ingeschakeld is."
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
 msgid ""
@@ -1503,10 +1526,10 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"Indien waar dan is de lijst van bekende toepassingen in het \"Programma "
-"uitvoeren\"-dialoogvenster beschikbaar. Of de lijst is uitgeschoven of niet "
+"Indien ingeschakeld is de lijst van bekende toepassingen in het ‘Programma "
+"uitvoeren’-dialoogvenster beschikbaar. Of de lijst is uitgeschoven of niet "
 "wanneer het dialoogvenster getoond wordt, hangt af van de sleutel "
-"\"show_program_list\"."
+"‘show_program_list’."
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
@@ -1588,7 +1611,7 @@ msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
-"Indien waar, dan wordt een bevestigingsdialoogvenster getoond wanneer de "
+"Indien ingeschakeld wordt een bevestigingsdialoogvenster getoond wanneer de "
 "gebruiker een paneel wil verwijderen."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
@@ -1596,14 +1619,14 @@ msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr ""
-"Indien waar, dan wordt de opberglade automatisch gesloten wanneer de "
+"Indien ingeschakeld wordt de opberglade automatisch gesloten wanneer de "
 "gebruiker een starter die erin zit, aanklikt"
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
-"Indien waar, dan licht een starter op wanneer de gebruiker de muispijl "
+"Indien ingeschakeld licht een starter op wanneer de gebruiker de muispijl "
 "eroverheen beweegt."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
@@ -1611,26 +1634,26 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
-"Als waar, dan staat het paneel een gebruiker niet toe om een toepassing te "
-"dwingen af te sluiten door geen toegang te geven tot de Afsluiten forceren-"
-"knop."
+"Indien ingeschakeld staat het paneel een gebruiker niet toe om een "
+"toepassing te dwingen af te sluiten door geen toegang te geven tot de "
+"‘Afsluiten forceren’-knop."
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
-"Als waar, dan staat het paneel een gebruiker niet toe om het scherm te "
-"vergrendelen, door geen toegang te geven tot de schermvergrendelings-menu-"
-"items."
+"Indien ingeschakeld staat het paneel een gebruiker niet toe om het scherm te "
+"vergrendelen, door geen toegang te geven tot de menu-items voor "
+"schermvergrendeling."
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
-"Als waar, dan staat het paneel een gebruiker niet toe om zich af te melden, "
-"door geen toegang te geven tot de afmeldings-menu-items."
+"Indien ingeschakeld staat het paneel een gebruiker niet toe om zich af te "
+"melden door geen toegang te geven tot de menu-items voor afmelden."
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
 msgid ""
@@ -1638,13 +1661,13 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
-"Indien waar, dan laat het paneel geen enkele wijziging toe tot zijn "
-"configuratie. Individuele applets zouden desondanks apart vastgezet moeten "
+"Indien ingeschakeld laat het paneel geen enkele wijziging toe tot de "
+"configuratie. Individuele applets moeten desalniettemin apart vastgezet "
 "worden. Het paneel dient herstart te worden om dit effect te laten hebben."
 
 #: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
-msgstr "Als waar, dan worden zwevende tips getoond voor paneelobjecten."
+msgstr "Indien ingeschakeld worden zwevende tips getoond voor paneelobjecten."
 
 #: ../gnome-panel/panel-logout.c:223
 #, c-format
@@ -1676,15 +1699,15 @@ msgstr "A_fmelden"
 msgid "Shut down this system now?"
 msgstr "Dit systeem nu afsluiten?"
 
-#: ../gnome-panel/panel-logout.c:326
+#: ../gnome-panel/panel-logout.c:329
 msgid "_Suspend"
 msgstr "_Slaapstand"
 
-#: ../gnome-panel/panel-logout.c:330
+#: ../gnome-panel/panel-logout.c:334
 msgid "_Restart"
 msgstr "He_rstarten"
 
-#: ../gnome-panel/panel-logout.c:336
+#: ../gnome-panel/panel-logout.c:340
 msgid "_Shut Down"
 msgstr "A_fsluiten"
 
@@ -1781,7 +1804,8 @@ msgstr "%s afmelden..."
 #: ../gnome-panel/panel-menu-items.c:1099
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
-msgstr "%s afmelden van deze sessie zodat een andere gebruiker zich kan aanmelden"
+msgstr ""
+"%s afmelden van deze sessie zodat een andere gebruiker zich kan aanmelden"
 
 #: ../gnome-panel/panel-menu-items.c:1145
 msgid "Could not launch menu item"
@@ -1809,10 +1833,10 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
-"Indien waar, dan wordt de custom_icon sleutel gebruikt voor een aangepast "
-"pictogram op de knop. Indien onwaar, dan wordt de custom_icon instelling "
-"genegeerd. Deze sleutel is slechts relevant als de object_type sleutel "
-"gelijk is aan \"menu-object\" of \"drawer-object\"."
+"Indien ingeschakeld wordt de custom_icon sleutel gebruikt voor een aangepast "
+"pictogram op de knop. Indien uitgeschakeld wordt de custom_icon instelling "
+"genegeerd. Deze sleutel is slechts relevant als de sleutel ‘object_type’ "
+"gelijk is aan ‘menu-object’ of ‘drawer-object’."
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
 msgid ""
@@ -1820,17 +1844,17 @@ msgid ""
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
-"Indien waar, dan wordt de menu_path sleutel gebruikt als het pad waarvandaan "
-"de menu-inhoud moet worden opgebouwd. Indien onwaar, dan wordt de menu_path "
-"sleutel genegeerd. Deze sleutel is slechts relevant als de object_type "
-"sleutel gelijk is aan \"menu-object\"."
+"Indien ingeschakeld wordt de sleutel ‘menu_path’ gebruikt als het pad "
+"waarvandaan de menu-inhoud moet worden opgebouwd. Indien uitgeschakeld wordt "
+"de sleutel ‘menu_path’ genegeerd. Deze sleutel is slechts relevant als de "
+"sleutel ‘object_type’ gelijk is aan ‘menu-object’."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
-"Indien waar, dan wordt de positie van het object geïnterpreteerd relatief "
+"Indien ingeschakeld wordt de positie van het object geïnterpreteerd relatief "
 "aan de rechterkant (of onderkant als verticaal) van het paneel."
 
 # Hoe is Unlock elders vertaald?
@@ -1839,8 +1863,8 @@ msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
-"Indien waar, dan mag de gebruiker het applet niet verplaatsen zonder eerst "
-"het object losgemaakt te hebben met het \"Losmaken\"-menu-item."
+"Indien ingeschakeld mag de gebruiker het applet niet verplaatsen zonder "
+"eerst het object losgemaakt te hebben met het ‘Losmaken’-menu-item."
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
@@ -1875,9 +1899,9 @@ msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr ""
-"Het Bonobo-implementatie-ID van het applet - bijv. \"OAFIID:GNOME_ClockApplet"
-"\". Deze sleutel is slechts relevant als de sleutel object_type gelijk is "
-"aan \"bonobo-applet\"."
+"Het Bonobo-implementatie-ID van het applet - bijv. ‘OAFIID:"
+"GNOME_ClockApplet’. Deze sleutel is slechts relevant als de sleutel "
+"‘object_type’ gelijk is aan ‘bonobo-applet’."
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -1885,9 +1909,9 @@ msgid ""
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
 msgstr ""
-"Het actietype dat deze knop representeert. Mogelijke waarden zijn \"lock\", "
-"\"logout\", \"run\", \"search\" en \"screenshot\". Deze sleutel is slechts "
-"relevant als de sleutel object_type gelijk is aan \"action-applet\"."
+"Het actietype dat deze knop representeert. Mogelijke waarden zijn ‘lock’, "
+"‘logout’, ‘run’, ‘search’ en ‘screenshot’. Deze sleutel is slechts relevant "
+"als de sleutel ‘object_type’ gelijk is aan ‘action-applet’."
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
 msgid ""
@@ -1895,7 +1919,8 @@ msgid ""
 "relevant if the object_type key is \"drawer-object\"."
 msgstr ""
 "De identificatie van het paneel dat verbonden is aan deze opberglade. Deze "
-"sleutel is slechts relevant als de sleutel object_type \"drawer-object\" is."
+"sleutel is slechts relevant als de sleutel ‘object_type’ gelijk is aan "
+"‘drawer-object’."
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
@@ -1907,7 +1932,8 @@ msgid ""
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
 "De locatie van het .desktop-bestand dat deze starter beschrijft. Deze "
-"sleutel is slechts relevant als het object_type \"launcher-object\" is."
+"sleutel is slechts relevant als het ‘object_type’ gelijk is aan ‘launcher-"
+"object’."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -1916,9 +1942,9 @@ msgid ""
 "\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
 "De locatie van het afbeeldingsbestand dat als pictogram dient voor de knop "
-"van het object. Deze sleutel is slechts relevant als het object_type gelijk "
-"is aan \"drawer-object\" of \"menu-object\" en de sleutel use_custom_icon "
-"waar is."
+"van het object. Deze sleutel is slechts relevant als ‘object_type’ gelijk is "
+"aan ‘drawer-object’ of ‘menu-object’ en de sleutel ‘use_custom_icon’ "
+"ingeschakeld is."
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
 msgid ""
@@ -1927,8 +1953,8 @@ msgid ""
 "object\"."
 msgstr ""
 "Het pad waarvanuit de menu-inhoud wordt samengesteld. Deze sleutel is "
-"slechts relevant als use_menu_path waar is en het de sleutel object_type "
-"\"menu-object\" is."
+"slechts relevant als ‘use_menu_path’ ingeschakeld is en de sleutel "
+"‘object_type’ gelijkt is aan ‘menu-object’."
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
 msgid ""
@@ -1944,8 +1970,8 @@ msgid ""
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
 "De weer te geven tekst in een zwevende tip voor deze opberglade of dit menu."
-"Deze sleutel is slechts relevant als de sleutel object_type \"drawer-object"
-"\" of \"menu-object\" is."
+"Deze sleutel is slechts relevant als de sleutel ‘object_type’ gelijk is aan "
+"‘drawer-object’ of ‘menu-object’."
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -1953,9 +1979,9 @@ msgid ""
 "object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
 "\"menu-bar\"."
 msgstr ""
-"Het type van dit paneel-object. Mogelijke waarden zijn \"drawer-object\", "
-"\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" "
-"en \"menu-bar\"."
+"Het type van dit paneel-object. Mogelijke waarden zijn ‘drawer-object’, "
+"‘menu-object’, ‘launcher-object’, ‘bonobo-applet’, ‘action-applet’ en ‘menu-"
+"bar’."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
@@ -2208,7 +2234,9 @@ msgstr "Opdracht ‘%s’ zal worden uitgevoerd"
 #: ../gnome-panel/panel-run-dialog.c:1607
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "URI-lijst die naar het uitvoeren-dialoogvenster is gesleept had een verkeerde vorm (%d) of lengte (%d)\n"
+msgstr ""
+"URI-lijst die naar het uitvoeren-dialoogvenster is gesleept had een "
+"verkeerde vorm (%d) of lengte (%d)\n"
 
 #: ../gnome-panel/panel-run-dialog.c:1831
 msgid "Could not display run dialog"
@@ -2434,16 +2462,16 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
-"Indien waar, dan worden pijltjes geplaatst op de verbergknoppen. Deze "
-"sleutel is slechts relevant als de sleutel enable_buttons waar is."
+"Indien ingeschakeld worden pijltjes geplaatst op de verbergknoppen. Deze "
+"sleutel is slechts relevant als de sleutel ‘enable_buttons’ waar is."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
-"Indien waar, dan worden knoppen geplaatst aan elke zijde van het paneel die "
-"gebruikt kunnen wordne om het paneel naar de rand van het scherm te "
+"Indien ingeschakeld worden aan beide zijden van het paneel knoppen geplaatst "
+"die gebruikt kunnen worden om het paneel naar de rand van het scherm te "
 "verplaatsen, waardoor slechts een knop zichtbaar blijft."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
@@ -2451,23 +2479,23 @@ msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
 msgstr ""
-"Indien waar, dan zal het verbergen en tevoorschijn brengen van dit paneel "
-"geanimeerd verlopen in plaats van op slag."
+"Indien ingeschakeld zal het verbergen en tevoorschijn brengen van dit paneel "
+"geanimeerd worden in plaats van op slag te verdwijnen en te verschijnen."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
-"Indien waar, dan wordt de achtergrondafbeelding gekanteld wanneer het paneel "
-"verticaal geöriënteerd is."
+"Indien ingeschakeld wordt de achtergrondafbeelding gekanteld wanneer het "
+"paneel verticaal geöriënteerd is."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"Indien waar, dan wordt de afbeelding op schaal gemaakt (met behoud van de "
+"Indien ingeschakeld wordt de afbeelding op schaal gemaakt (met behoud van de "
 "afbeeldingsverhoudingen) naar de paneelhoogte (indien horizontaal)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
@@ -2475,7 +2503,7 @@ msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
-"Indien waar dan wordt de afbeelding op dezelfde schaal gemaakt als de "
+"Indien ingeschakeld wordt de afbeelding op dezelfde schaal gemaakt als de "
 "paneelomvang. De afbeeldingsverhoudingen blijven niet behouden."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
@@ -2484,9 +2512,9 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"Indien waar, dan wordt het paneel automatisch verborgen in een hoek van het "
-"scherm wanneer de muispijl het paneelgebied verlaat. Het weer bewegen van de "
-"muispijl naar die hoek zorgt ervoor dat het paneel weer verschijnt."
+"Indien ingeschakeld wordt het paneel automatisch verborgen in een hoek van "
+"het scherm wanneer de muispijl het paneelgebied verlaat. Het paneel "
+"verschijnt als de muis weer naar het paneelgebied bewogen wordt."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
@@ -2495,11 +2523,11 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"Indien waar, dan beslaat het paneel de gehele breedte van het scerm (hoogte "
-"als dit een verticaal paneel is). In deze modus kan het paneel alleen aan "
-"een schermrand geplaatst worden. Indien onwaar, dan zal het paneel slechts "
-"net zo groot zijn als nodig is om de applets, starters en knoppen te "
-"herbergen."
+"Indien ingeschakeld beslaat het paneel de gehele breedte van het scherm "
+"(hoogte als dit een verticaal paneel is). In deze modus kan het paneel "
+"alleen aan een schermrand geplaatst worden. Indien uitgeschakeld zal het "
+"paneel slechts net zo groot zijn als nodig is om de applets, starters en "
+"knoppen te herbergen."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2508,10 +2536,10 @@ msgid ""
 "- i.e. the panel will grow on both sides. If false, the x key specifies the "
 "location of the panel."
 msgstr ""
-"Indien waar, dan wordt de x-sleutel genegeerd en staat het paneel in het "
-"midden van de x-as van het scherm. Wanneer het paneel van grootte wordt "
-"veranderd, dan blijft het op die positie - oftewel het paneel wordt aan "
-"beide kanten groter. Indien onwaar, dan bepaalt de x-sleutel de locatie van "
+"Indien ingeschakeld wordt de sleutel ‘x’ genegeerd en staat het paneel in "
+"het midden van de x-as van het scherm. Wanneer het paneel van grootte wordt "
+"veranderd, blijft het op die positie - oftewel het paneel wordt aan beide "
+"kanten groter. Indien uitgeschakeld bepaalt de sleutel ‘x’ de locatie van "
 "het paneel."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
@@ -2521,10 +2549,10 @@ msgid ""
 "- i.e. the panel will grow on both sides. If false, the y key specifies the "
 "location of the panel."
 msgstr ""
-"Indien waar, dan wordt de y-sleutel genegeerd en staat het paneel in het "
-"midden van de y-as van het scherm. Wanneer het paneel van grootte wordt "
-"veranderd, dan blijft het op die positie - oftewel het paneel wordt aan "
-"beide kanten groter. Indien onwaar, dan bepaalt de y-sleutel de locatie van "
+"Indien ingeschakeld wordt de sleutel ‘y’ genegeerd en staat het paneel in "
+"het midden van de y-as van het scherm. Wanneer het paneel van grootte wordt "
+"veranderd, blijft het op die positie - oftewel het paneel wordt aan beide "
+"kanten groter. Indien uitgeschakeld bepaalt de sleutel ‘y’ de locatie van "
 "het paneel."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
@@ -2662,14 +2690,14 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"De oriëntatie van het paneel. Mogelijke waarden zijn \"top\", \"bottom\", "
-"\"left\", \"right\". In uitgeschoven modus bepaalt deze sleutel aan welke "
+"De oriëntatie van het paneel. Mogelijke waarden zijn ‘top’, ‘bottom’, "
+"‘left’, ‘right’. In uitgeschoven modus bepaalt deze sleutel aan welke "
 "schermrand het paneel zich bevindt. In ingeschoven modus is het verschil "
-"tussen \"top\" en \"bottom\" minder belangrijk - beiden geven aan dat dit "
-"een horizontaal paneel is - maar geeft nog altijd een bruikbare hint wat "
-"betreft het gedrag van sommige paneelobjecten. Bijvoorbeeld, op een \"top\"-"
-"paneel zal een menuknop zijn menu onder het paneel weergeven, terwijl op een "
-"\"bottom\"-paneel het menu erboven verschijnt. "
+"tussen ‘top’ en ‘bottom’ minder belangrijk - beiden geven aan dat dit een "
+"horizontaal paneel is - maar geeft nog altijd een bruikbare hint wat betreft "
+"het gedrag van sommige paneelobjecten. Bijvoorbeeld, op een ‘top’-paneel zal "
+"een menuknop zijn menu onder het paneel weergeven, terwijl op een ‘bottom’-"
+"paneel het menu erboven verschijnt. "
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -2678,8 +2706,8 @@ msgid ""
 "enable_animations key is true."
 msgstr ""
 "De snelheid om paneel-animaties mee af te spelen. De mogelijke mogelijke "
-"waarden zijn \"slow\", \"medium\" en \"fast\". Deze sleutel is slechts "
-"relevant als de enable_animations sleutel waar is."
+"waarden zijn ‘slow’, ‘medium’ en ‘fast’. Deze sleutel is slechts relevant "
+"als de enable_animations sleutel waar is."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
@@ -2703,8 +2731,8 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 "Welk type achtergrond voor dit paneel gebruikt wordt. Mogelijke waarden zijn "
-"\"gtk\" - de standaard GTK+ elementachtergrond wordt gebruikt, \"color\" - "
-"de color-sleutel wordt als achtergrondkleur gebruikt, of \"image\" - de "
+"‘gtk’ - de standaard GTK+ elementachtergrond wordt gebruikt, ‘color’ - de "
+"color-sleutel wordt als achtergrondkleur gebruikt, of ‘image’ - de "
 "afbeelding aangegeven door de image-sleutel wordt als achtergrond gebruikt."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:46
