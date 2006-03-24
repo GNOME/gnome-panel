@@ -188,24 +188,32 @@ Bonobo_Unknown	   panel_applet_shlib_factory_closure (const char                
 #define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
 int main (int argc, char *argv [])						\
 {										\
-	gnome_program_init (name, version,					\
-			    LIBGNOMEUI_MODULE,					\
-			    argc, argv,						\
-			    GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,               \
-			    GNOME_PROGRAM_STANDARD_PROPERTIES,			\
-			    NULL);						\
-        return panel_applet_factory_main (iid, type, callback, data);		\
+	GnomeProgram *program;							\
+	int           retval;							\
+	program = gnome_program_init (name, version,				\
+				      LIBGNOMEUI_MODULE,			\
+				      argc, argv,				\
+				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
+				      GNOME_PROGRAM_STANDARD_PROPERTIES,	\
+				      NULL);					\
+        retval = panel_applet_factory_main (iid, type, callback, data);		\
+	g_object_unref (program);						\
+	return retval;								\
 }
 #else /* !defined(PREFIX) ... */
 #define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
 int main (int argc, char *argv [])						\
 {										\
-	gnome_program_init (name, version,					\
-			    LIBGNOMEUI_MODULE,					\
-			    argc, argv,						\
-			    GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,               \
-			    GNOME_PARAM_NONE);					\
-        return panel_applet_factory_main (iid, type, callback, data);		\
+	GnomeProgram *program;							\
+	int           retval;							\
+	program = gnome_program_init (name, version,				\
+				      LIBGNOMEUI_MODULE,			\
+				      argc, argv,				\
+				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
+				      GNOME_PARAM_NONE);			\
+        retval = panel_applet_factory_main (iid, type, callback, data);		\
+	g_object_unref (program);						\
+	return retval;								\
 }
 #endif /* defined(PREFIX) ... */
 #else /* defined(ENABLE_NLS) */
@@ -214,30 +222,38 @@ int main (int argc, char *argv [])						\
 #define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
 int main (int argc, char *argv [])						\
 {										\
+	GnomeProgram *program;							\
+	int           retval;							\
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);			\
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");			\
 	textdomain (GETTEXT_PACKAGE);						\
-	gnome_program_init (name, version,					\
-			    LIBGNOMEUI_MODULE,					\
-			    argc, argv,						\
-			    GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,               \
-			    GNOME_PROGRAM_STANDARD_PROPERTIES,			\
-			    NULL);						\
-        return panel_applet_factory_main (iid, type, callback, data);		\
+	program = gnome_program_init (name, version,				\
+				      LIBGNOMEUI_MODULE,			\
+				      argc, argv,				\
+				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
+				      GNOME_PROGRAM_STANDARD_PROPERTIES,	\
+				      NULL);					\
+        retval = panel_applet_factory_main (iid, type, callback, data);		\
+	g_object_unref (program);						\
+	return retval;								\
 }
 #else /* !defined(PREFIX) ... */
 #define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
 int main (int argc, char *argv [])						\
 {										\
+	GnomeProgram *program;							\
+	int           retval;							\
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);			\
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");			\
 	textdomain (GETTEXT_PACKAGE);						\
-	gnome_program_init (name, version,					\
-			    LIBGNOMEUI_MODULE,					\
-			    argc, argv,						\
-			    GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,               \
-			    GNOME_PARAM_NONE);					\
-        return panel_applet_factory_main (iid, type, callback, data);		\
+	program = gnome_program_init (name, version,				\
+				      LIBGNOMEUI_MODULE,			\
+				      argc, argv,				\
+				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
+				      GNOME_PARAM_NONE);			\
+        retval = panel_applet_factory_main (iid, type, callback, data);		\
+	g_object_unref (program);						\
+	return retval;								\
 }
 #endif /* defined(PREFIX) ... */
 #endif /* !defined(ENABLE_NLS) */
