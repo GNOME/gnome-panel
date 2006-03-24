@@ -59,8 +59,6 @@ main (int argc, char **argv)
 			    GNOME_PROGRAM_STANDARD_PROPERTIES,
 			    NULL);
 
-	g_option_context_free (context);
-
 	gtk_window_set_default_icon_name ("gnome-panel");
 
 	if (!panel_shell_register ())

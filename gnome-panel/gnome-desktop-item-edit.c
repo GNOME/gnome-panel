@@ -1,7 +1,4 @@
 #include "config.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
@@ -25,7 +22,7 @@ static char **desktops = NULL;
 
 static const GOptionEntry options[] = {
 	{ "create-new", 0, 0, G_OPTION_ARG_NONE, &create_new, N_("Create new file in the given directory"), NULL },
-	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &desktops, NULL, NULL },
+	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &desktops, NULL, "[FILE...]" }, //FIXME 2.16 mark for translation
 	{ NULL }
 };
 
@@ -82,7 +79,7 @@ main (int argc, char * argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	context = g_option_context_new ("");
+	context = g_option_context_new (""); //FIXME 2.16 "- Edit .desktop files"
 
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
@@ -92,13 +89,11 @@ main (int argc, char * argv[])
 				      GNOME_PARAM_GOPTION_CONTEXT, context,
 				      NULL);
 
-	g_option_context_free (context);
-
 	gtk_window_set_default_icon_name ("launcher-program");
 
 	if (desktops == NULL ||
 	    desktops[0] == NULL) {
-		fprintf (stderr, "gnome-desktop-item-edit: no file to edit\n");
+		g_printerr ("gnome-desktop-item-edit: no file to edit\n");
 		return 0;
 	}
 
@@ -146,9 +141,9 @@ main (int argc, char * argv[])
 				g_free (dirname);
 				
 			} else {
-				fprintf (stderr, "gnome-desktop-item-edit: %s "
-					 "doesn't seem like a desktop item\n",
-					 uri);
+				g_printerr ("gnome-desktop-item-edit: %s "
+					    "doesn't seem like a desktop "
+					    "item\n", uri);
 			}
 
 		} else if (g_str_has_suffix (desktops [i], ".directory")
@@ -172,8 +167,8 @@ main (int argc, char * argv[])
 			g_free (dirname);
 
 		} else {
-			fprintf (stderr, "gnome-desktop-item-edit: %s does "
-				 "not exist\n", uri);
+			g_printerr ("gnome-desktop-item-edit: %s does "
+				    "not exist\n", uri);
 		}
 
 		if (dlg != NULL) {

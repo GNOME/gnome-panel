@@ -402,12 +402,18 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		}
 
 		if (!label) {
-			if (gnome_vfs_uri_is_local (bookmark->uri)) {
+			if (!strcmp (gnome_vfs_uri_get_scheme (bookmark->uri),
+							       "file")) {
 				char *buffer;
 
 				buffer = gnome_vfs_get_local_path_from_uri (full_uri);
 				label = g_filename_display_basename (buffer);
 				g_free (buffer);
+			} else if (gnome_vfs_uri_is_local (bookmark->uri)) {
+				/* local non-file methods, such as burn:,
+				 * font:, etc. */
+				//FIXME 2.16: we should do the same than in nautilus (see nautilus_file_get_display_name_nocopy() and nautilus_get_vfs_method_display_name()
+				label = gnome_vfs_format_uri_for_display (full_uri);
 			} else {
 				const char *path;
 				const char *hostname;
@@ -703,11 +709,17 @@ panel_desktop_menu_item_append_menu (GtkWidget            *menu,
 	add_separator = FALSE;
 	children = gtk_container_get_children (GTK_CONTAINER (menu));
 
-	if (children != NULL) {
-		while (children->next != NULL)
-			children = children->next;
-		add_separator = !GTK_IS_SEPARATOR (GTK_WIDGET (children->data));
+	if (all_children != NULL) {
+		GList *child;
+
+		child = children;
+		while (child->next != NULL)
+			child = child->next;
+
+		add_separator = !GTK_IS_SEPARATOR (GTK_WIDGET (child->data));
 	}
+
+	g_list_free (children);
 
 	if (add_separator)
 		add_menu_separator (menu);
