@@ -709,7 +709,7 @@ panel_desktop_menu_item_append_menu (GtkWidget            *menu,
 	add_separator = FALSE;
 	children = gtk_container_get_children (GTK_CONTAINER (menu));
 
-	if (all_children != NULL) {
+	if (children != NULL) {
 		GList *child;
 
 		child = children;

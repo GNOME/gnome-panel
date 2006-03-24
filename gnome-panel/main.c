@@ -42,6 +42,7 @@ int
 main (int argc, char **argv)
 {
 	GOptionContext *context;
+	GnomeProgram   *program;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -52,12 +53,12 @@ main (int argc, char **argv)
 
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
-	gnome_program_init ("gnome-panel", VERSION,
-			    LIBGNOMEUI_MODULE,
-			    argc, argv,
-			    GNOME_PARAM_GOPTION_CONTEXT, context,
-			    GNOME_PROGRAM_STANDARD_PROPERTIES,
-			    NULL);
+	program = gnome_program_init ("gnome-panel", VERSION,
+				      LIBGNOMEUI_MODULE,
+				      argc, argv,
+				      GNOME_PARAM_GOPTION_CONTEXT, context,
+				      GNOME_PROGRAM_STANDARD_PROPERTIES,
+				      NULL);
 
 	gtk_window_set_default_icon_name ("gnome-panel");
 
@@ -95,6 +96,8 @@ main (int argc, char **argv)
 	gconf_client_remove_dir (panel_gconf_get_client (),
 				 "/desktop/gnome/interface",
 				 NULL);
+
+	g_object_unref (program);
 
 	return 0;
 }

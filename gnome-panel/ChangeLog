@@ -1,5 +1,13 @@
 2006-03-24  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-menu-items.c: (panel_desktop_menu_item_append_menu): fix
+	compilation
+	* main.c: (main): plug GnomeProgram leak
+	* gnome-desktop-item-edit.c: (main): ditto
+	Fix bug #335748.
+
+2006-03-24  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmarks):
 	special case local files that are not in a file: URI.
 	Should fix bug #335456.

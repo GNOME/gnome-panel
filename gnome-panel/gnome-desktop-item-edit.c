@@ -186,5 +186,7 @@ main (int argc, char * argv[])
 	if (dialogs > 0)
 		gtk_main ();
 
+	g_object_unref (program);
+
         return 0;
 }
