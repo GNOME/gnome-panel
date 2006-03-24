@@ -2673,20 +2673,10 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	GError *error = NULL;
-	static GnomeProgram *applet_program = NULL;
 
-	if (!applet_program) {
-		int argc = 1;
-		char *argv[2] = { "clock" };
-		applet_program = gnome_program_init ("clock", VERSION,
-						      LIBGNOME_MODULE, argc, argv,
-						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-	}
-
-	gnome_help_display_desktop_on_screen (
-			applet_program, "clock", "clock",NULL,
-			gtk_widget_get_screen (cd->applet),
-			&error);
+	gnome_help_display_desktop_on_screen (NULL, "clock", "clock", NULL,
+					      gtk_widget_get_screen (cd->applet),
+					      &error);
 	if (error) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new (NULL,
