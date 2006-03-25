@@ -27,7 +27,6 @@
 #define __CALENDAR_CLIENT_H__
 
 #include <glib-object.h>
-#include <gdk/gdk.h>
 
 G_BEGIN_DECLS
 
@@ -140,10 +139,6 @@ void            calendar_client_set_task_completed       (CalendarClient     *cl
 							  char               *task_uid,
 							  gboolean            task_completed,
 							  guint               percent_complete);
-gboolean        calendar_client_launch_editor            (CalendarClient     *client,
-							  CalendarEventType   event_type,
-							  GdkScreen          *screen,
-							  GError            **error);
 
 void calendar_event_free (CalendarEvent *event);
 

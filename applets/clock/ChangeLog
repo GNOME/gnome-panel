@@ -1,5 +1,22 @@
 2006-03-25  Vincent Untz  <vuntz@gnome.org>
 
+	* calendar-client.c: (calendar_event_new): print the value of the
+	unknown type. It's useful to know what it was :-)
+	(calendar_client_handle_query_result): don't crash if
+	calendar_event_new() returns NULL
+	Fix bug #333223
+
+	* calendar-client.[ch]: (calendar_client_launch_editor): kill
+
+	* clock.c: (calendar_day_activated): launch evolution on the clicked
+	day for appointments
+	Based on patch by Tollef Fog Heen <tfheen@ubuntu.com>
+	Partial fix for bug #162305
+
+	* clock.c: (try_config_tool): don't leak the error
+
+2006-03-25  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (compare_tasks): use -1 as terminator for
 	gtk_tree_model_get(). Patch by Mart Raudsepp <leio@dustbite.net>
 	Fix bug #334187

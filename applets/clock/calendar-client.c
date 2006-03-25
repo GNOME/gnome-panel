@@ -955,7 +955,8 @@ calendar_event_new (icalcomponent        *ical,
                           default_zone);
       break;
     default:
-      g_warning ("Unknown calendar component type\n");
+      g_warning ("Unknown calendar component type: %d\n",
+                 icalcomponent_isa (ical));
       g_free (event);
       return NULL;
     }
@@ -1244,6 +1245,9 @@ calendar_client_handle_query_result (CalendarClientSource *source,
       icalcomponent *ical = l->data;
 
       event = calendar_event_new (ical, source, client->priv->zone);
+      if (!event)
+	      continue;
+
       calendar_event_generate_ocurrences (event,
 					  ical,
 					  source->source,
@@ -1993,27 +1997,4 @@ calendar_client_set_task_completed (CalendarClient *client,
     }
 
   e_cal_modify_object (esource, ical, CALOBJ_MOD_ALL, NULL);
-}
-
-gboolean
-calendar_client_launch_editor (CalendarClient     *client,
-			       CalendarEventType   event_type,
-			       GdkScreen          *screen,
-			       GError            **error)
-{
-  char     *command_line;
-  gboolean  retval;
-
-  g_return_val_if_fail (CALENDAR_IS_CLIENT (client), FALSE);
-  g_return_val_if_fail (event_type == CALENDAR_EVENT_APPOINTMENT ||
-			event_type == CALENDAR_EVENT_TASK, FALSE);
-
-  command_line = g_strdup_printf ("evolution -c %s",
-				  event_type == CALENDAR_EVENT_APPOINTMENT ? "calendar" : "tasks");
-
-  retval = gdk_spawn_command_line_on_screen (screen, command_line, error);
-
-  g_free (command_line);
-
-  return retval;
 }

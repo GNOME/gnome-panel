@@ -1238,15 +1238,29 @@ create_appointment_list (ClockData  *cd,
 }
 
 static void
-calendar_day_activated (ClockData *cd)
+calendar_day_activated (ClockData   *cd,
+			GtkCalendar *calendar)
 {
-        /* FIXME: should be able to launch the editor for
-         *        the specific day
-         */
-        calendar_client_launch_editor (cd->client,
-                                       CALENDAR_EVENT_APPOINTMENT,
-                                       gtk_widget_get_screen (cd->calendar),
-                                       NULL);
+	unsigned int  day;
+	unsigned int  month;
+	unsigned int  year;
+	char         *command_line;
+	GError       *error;
+
+	gtk_calendar_get_date (GTK_CALENDAR (cd->calendar),
+			       &year, &month, &day);
+
+	command_line = g_strdup_printf ("evolution "
+					"calendar:///?startdate=%.4d%.2d%.2d",
+					year, month + 1, day);
+
+	if (!gdk_spawn_command_line_on_screen (gtk_widget_get_screen (cd->calendar),
+					       command_line, &error)) {
+		g_printerr ("Cannot launch calendar: %s\n", error->message);
+		g_error_free (error);
+	}
+
+	g_free (command_line);
 }
 
 static void
@@ -1873,6 +1887,7 @@ try_config_tool (GdkScreen  *screen,
 					 GTK_BUTTONS_OK,
 					 _("Failed to launch time configuration tool: %s"),
 					 err->message);
+	g_error_free (err);
 		
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (gtk_widget_destroy), NULL);
