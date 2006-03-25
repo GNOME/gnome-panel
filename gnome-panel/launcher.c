@@ -154,6 +154,7 @@ launch_url (Launcher *launcher)
 {
 	GnomeDesktopItem *item;
 	const char *url;
+	char *free_url;
 	GError *error = NULL;
 	GdkScreen *screen;
 
@@ -178,7 +179,9 @@ launch_url (Launcher *launcher)
 		return;
 	}
 
-	gnome_url_show_on_screen (url, screen, &error);
+	free_url = gnome_vfs_make_uri_canonical (url);
+	gnome_url_show_on_screen (free_url, screen, &error);
+
 	if (error) {
 		GtkWidget *error_dialog;
 	
@@ -187,11 +190,13 @@ launch_url (Launcher *launcher)
 						   TRUE,
 						   _("Could not show '%s'"),
 						   "%s",
-						   url,
+						   free_url,
 						   error->message);
 		launcher_register_error_dialog (launcher, error_dialog);
 		g_clear_error (&error);
 	}
+
+	g_free (free_url);
 }
 
 void
