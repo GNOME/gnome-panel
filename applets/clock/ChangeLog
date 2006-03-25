@@ -1,3 +1,9 @@
+2006-03-25  Vincent Untz  <vuntz@gnome.org>
+
+	* clock.c: (compare_tasks): use -1 as terminator for
+	gtk_tree_model_get(). Patch by Mart Raudsepp <leio@dustbite.net>
+	Fix bug #334187
+
 2006-03-24  Vincent Untz  <vuntz@gnome.org>
 
 	* clock.c: (display_help_dialog): we don't need a GnomeProgram here

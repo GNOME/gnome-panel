@@ -958,10 +958,10 @@ compare_tasks  (GtkTreeModel *model,
 	else {
                 GTime due_time_a, due_time_b;
 
-                gtk_tree_model_get (model, a, TASK_COLUMN_DUE_TIME,
-                                    &due_time_a, G_MAXINT32);
-                gtk_tree_model_get (model, b, TASK_COLUMN_DUE_TIME,
-                                    &due_time_b, G_MAXINT32);
+                gtk_tree_model_get (model, a,
+				    TASK_COLUMN_DUE_TIME, &due_time_a, -1);
+                gtk_tree_model_get (model, b,
+				    TASK_COLUMN_DUE_TIME, &due_time_b, -1);
 
                 if (due_time_a < due_time_b)
                         return -1;
