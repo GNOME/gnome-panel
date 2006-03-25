@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-22 19:11+0100\n"
+"POT-Creation-Date: 2006-03-25 09:15+0100\n"
 "PO-Revision-Date: 2006-03-22 17:35+0100\n"
 "Last-Translator: Jérémy Le Floc'h <jeremy.lefloch@gmail.com>\n"
 "Language-Team: Breton <jeremy.lefloch@gmail.com>\n"
@@ -59,7 +59,7 @@ msgid "_Preferences"
 msgstr "_Dibaboù gwellañ"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2737
+#: ../applets/clock/clock.c:2727
 msgid "Clock"
 msgstr "Horolaj"
 
@@ -191,7 +191,7 @@ msgstr ""
 msgid "Custom format"
 msgstr "Stumm personelaet"
 
-#: ../applets/clock/clock.c:2512 ../applets/clock/clock.c:2696
+#: ../applets/clock/clock.c:2512 ../applets/clock/clock.c:2686
 #: ../applets/fish/fish.c:158 ../applets/notification_area/main.c:82
 #: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:124
 #: ../applets/wncklet/workspace-switcher.c:238
@@ -239,12 +239,12 @@ msgstr "Diskouez an deizhiad"
 msgid "Use _UTC"
 msgstr "Implij _UTC"
 
-#: ../applets/clock/clock.c:2740
+#: ../applets/clock/clock.c:2730
 msgid "The Clock displays the current time and date"
 msgstr "An horolaj a ziskouez an eur hag an deizhiad"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2743 ../applets/fish/fish.c:583
+#: ../applets/clock/clock.c:2733 ../applets/fish/fish.c:583
 #: ../applets/notification_area/main.c:133
 #: ../applets/wncklet/showdesktop.c:497 ../applets/wncklet/window-list.c:784
 #: ../applets/wncklet/window-menu.c:75
@@ -343,7 +343,7 @@ msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:26
 msgid "This key specifies the program to run in order to configure the time."
-msgstr ""
+msgstr "An alc'hwez-mañ a resiz ar programm da lañsiñ evit kemmañ an eur."
 
 #: ../applets/clock/clock.schemas.in.h:27
 msgid "Time configuration tool"
@@ -602,7 +602,7 @@ msgstr ""
 
 #: ../applets/notification_area/eggtraymanager.c:146
 msgid "Orientation"
-msgstr ""
+msgstr "Tu"
 
 #: ../applets/notification_area/eggtraymanager.c:147
 msgid "The orientation of the tray."
@@ -648,7 +648,7 @@ msgstr ""
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:241
 msgid "Window Selector"
-msgstr ""
+msgstr "Diuzer prenestr"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: ../applets/wncklet/workspace-switcher.c:558
@@ -710,7 +710,7 @@ msgstr ""
 
 #: ../applets/wncklet/window-list.glade.h:6
 msgid "Behavior"
-msgstr ""
+msgstr "Emzalc'h"
 
 #: ../applets/wncklet/window-list.glade.h:7
 msgid "Group windows when _space is limited"
@@ -975,7 +975,7 @@ msgstr "Digeriñ '%s'"
 msgid "Empty"
 msgstr "Goullo"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:27
+#: ../gnome-panel/gnome-desktop-item-edit.c:24
 msgid "Create new file in the given directory"
 msgstr "Krouiñ ur restr nevez er renkell roet"
 
@@ -1518,7 +1518,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
-msgstr "Ma'z eo gwir, lagedennoù zo diskouezet evel elfennoù er panelloù."
+msgstr "Ma'z eo gwir, lagadennoù zo diskouezet evel elfennoù er panelloù."
 
 #: ../gnome-panel/panel-logout.c:223
 #, c-format
@@ -1562,15 +1562,15 @@ msgstr "_Lazhañ"
 
 #: ../gnome-panel/panel-menu-bar.c:74
 msgid "Browse and run installed applications"
-msgstr ""
+msgstr "Furchal ha lañsiñ arloadoù staliet"
 
 #: ../gnome-panel/panel-menu-bar.c:86
 msgid "Access documents, folders and network places"
-msgstr ""
+msgstr "Diraez dielloù, renkelloù ha plasoù rouedad"
 
 #: ../gnome-panel/panel-menu-bar.c:98
 msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr ""
+msgstr "Kemmañ stumm hag emzalc'h ar burev, kaout skoazell, pe dilugañ"
 
 #: ../gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
@@ -1593,39 +1593,39 @@ msgstr "Sinedoù"
 #. * path and the second string is a
 #. * hostname. nautilus contains the same
 #. * string to translate.
-#: ../gnome-panel/panel-menu-items.c:427
+#: ../gnome-panel/panel-menu-items.c:433
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s war %2$s"
 
-#: ../gnome-panel/panel-menu-items.c:523
+#: ../gnome-panel/panel-menu-items.c:529
 msgid "Network Places"
 msgstr "Plasoù kenrouedad"
 
-#: ../gnome-panel/panel-menu-items.c:526
+#: ../gnome-panel/panel-menu-items.c:532
 msgid "Removable Media"
-msgstr ""
+msgstr "Media helam"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:597
+#: ../gnome-panel/panel-menu-items.c:603
 msgid "Desktop Folder|Desktop"
 msgstr "Renkell ar gorretaol|Gorretaol"
 
-#: ../gnome-panel/panel-menu-items.c:598
+#: ../gnome-panel/panel-menu-items.c:604
 msgid "Open the desktop as a folder"
 msgstr "Digeriñ ar c'horretaol evel ur renkell"
 
-#: ../gnome-panel/panel-menu-items.c:953
+#: ../gnome-panel/panel-menu-items.c:965
 msgid "Places"
 msgstr "Plasoù"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: ../gnome-panel/panel-menu-items.c:991
+#: ../gnome-panel/panel-menu-items.c:1003
 msgid "Desktop Environment|Desktop"
 msgstr "Renkell ar gorretaol|Gorretaol"
 
@@ -1633,45 +1633,45 @@ msgstr "Renkell ar gorretaol|Gorretaol"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1083
+#: ../gnome-panel/panel-menu-items.c:1095
 msgid "panel:showusername|1"
-msgstr "panell:diskouezanvimplijer|1"
+msgstr "koukou"
 
 #. keep those strings in sync with the ones in
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1095
+#: ../gnome-panel/panel-menu-items.c:1107
 #, c-format
 msgid "Log Out %s..."
 msgstr "Dilugañ %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1099
+#: ../gnome-panel/panel-menu-items.c:1111
 #, c-format
-msgid "Log out %s of this session to log in as a different user"
+msgid "Log out %s of tdetachablehis session to log in as a different user"
 msgstr "Dilugañ %s diouzh an dalc'h-mañ evit en em lugañ dindan un anv all"
 
-#: ../gnome-panel/panel-menu-items.c:1145
+#: ../gnome-panel/panel-menu-items.c:1157
 msgid "Could not launch menu item"
 msgstr "Ne oa ket tu da lañsiñ elfenn ar roll"
 
-#: ../gnome-panel/panel-menu-items.c:1157
+#: ../gnome-panel/panel-menu-items.c:1169
 msgid "Could not load menu item"
 msgstr "Ne oa ket tu da gargañ elfenn ar roll"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
-msgstr ""
+msgstr "Seurt ar bouton gwered"
 
 #: ../gnome-panel/panel-object.schemas.in.h:2
 msgid "Applet Bonobo IID"
-msgstr ""
+msgstr "IID an elfenn Bonobo"
 
 #: ../gnome-panel/panel-object.schemas.in.h:3
 msgid "Icon used for object's button"
-msgstr ""
+msgstr "Arlun implijet evit bouton an elfenn"
 
 #: ../gnome-panel/panel-object.schemas.in.h:4
 msgid ""
@@ -1709,7 +1709,7 @@ msgstr "Lec'hiadur al lañser"
 
 #: ../gnome-panel/panel-object.schemas.in.h:10
 msgid "Lock the object to the panel"
-msgstr ""
+msgstr "Prennañ an elfenn war ar panell"
 
 #: ../gnome-panel/panel-object.schemas.in.h:11
 msgid "Menu content path"
@@ -1717,7 +1717,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:12
 msgid "Object's position on the panel"
-msgstr ""
+msgstr "Lec'h an elfenn war ar panell"
 
 #: ../gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
@@ -1725,7 +1725,7 @@ msgstr "Panel stag ouzh an dreser"
 
 #: ../gnome-panel/panel-object.schemas.in.h:14
 msgid "Panel object type"
-msgstr ""
+msgstr "Seurt elfenn ar panell"
 
 #: ../gnome-panel/panel-object.schemas.in.h:15
 msgid ""
@@ -1791,7 +1791,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
-msgstr "Lagedennoù diskouezet evit treser pe roll"
+msgstr "Lagadennoù diskouezet evit treser pe roll"
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
@@ -1799,7 +1799,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Use custom icon for object's button"
-msgstr ""
+msgstr "Implij un arlun personelaet evit bouton an elfenn"
 
 #: ../gnome-panel/panel-object.schemas.in.h:28
 msgid "Use custom path for menu contents"
@@ -1851,7 +1851,7 @@ msgstr "Tu|Dehoù"
 
 #: ../gnome-panel/panel-properties-dialog.c:1019
 msgid "Could not display properties dialog"
-msgstr ""
+msgstr "Ne oa ket tu da ziskouez ar c'hendiviz perzhioù"
 
 #: ../gnome-panel/panel-properties-dialog.c:1020
 #: ../gnome-panel/panel-run-dialog.c:1832
@@ -1865,7 +1865,7 @@ msgstr "*"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
-msgstr ""
+msgstr "<small>Divoull</small>"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:4
 msgid "<small>Transparent</small>"
@@ -1889,7 +1889,7 @@ msgstr "Liv:"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
 msgid "E_xpand"
-msgstr ""
+msgstr "Astenn"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "General"
@@ -1917,7 +1917,7 @@ msgstr "Neuz:"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:16
 msgid "Select background"
-msgstr "Dibab an drekleur"
+msgstr "Diuz an drekleur"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:17
 msgid "Show hide _buttons"
@@ -1925,7 +1925,7 @@ msgstr "Diskouezh ar boutonioù-kuzh"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:18
 msgid "Solid c_olor"
-msgstr ""
+msgstr "Liv pennañ"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:19
 msgid "Some of these properties are locked down"
@@ -1967,7 +1967,7 @@ msgstr "_Titl"
 
 #: ../gnome-panel/panel-recent.c:54
 msgid "Could not find a suitable application."
-msgstr ""
+msgstr "Ne oe ket tu da gavout un arload a zo mat."
 
 #: ../gnome-panel/panel-recent.c:94 ../gnome-panel/panel-recent.c:102
 #, c-format
@@ -2001,7 +2001,7 @@ msgstr "Netaat an dielloù nevez-implijet"
 
 #: ../gnome-panel/panel-recent.c:273
 msgid "Clear all items from the recent documents list"
-msgstr ""
+msgstr "Netaat pep tra eus ar roll dielloù nevez-implijet"
 
 #: ../gnome-panel/panel-run-dialog.c:299
 #, c-format
@@ -2011,11 +2011,11 @@ msgstr "Ne oa ket tu da lañsiñ an urzh '%s'"
 #: ../gnome-panel/panel-run-dialog.c:377
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
-msgstr ""
+msgstr "Ne oa ket tu amdreiñ '%s' eus UTF-8"
 
 #: ../gnome-panel/panel-run-dialog.c:1171
 msgid "Choose a file to append to the command..."
-msgstr ""
+msgstr "Dibabit ur restr da ouzhpennñ en urzhiad..."
 
 #: ../gnome-panel/panel-run-dialog.c:1538
 #: ../gnome-panel/panel-run-dialog.glade.h:10
@@ -2034,7 +2034,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-run-dialog.c:1831
 msgid "Could not display run dialog"
-msgstr ""
+msgstr "Ne oe ket tu da ziskouez ar c'hendiviz lañsiñ"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:1
 msgid ""
@@ -2078,7 +2078,7 @@ msgstr "Lañsiñ gant restr..."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:11
 msgid "Select this box to run the command in a terminal window."
-msgstr ""
+msgstr "Dibabit al log-mañ evit lañsiñ an urzhiad er prenestr termenell."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:12
 msgid "Show list of known _applications"
