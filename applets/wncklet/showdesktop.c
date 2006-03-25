@@ -414,6 +414,18 @@ show_desktop_applet_fill (PanelApplet *applet)
 			  G_CALLBACK (show_desktop_applet_realized), sdd);
 
         sdd->button = gtk_toggle_button_new ();
+
+	gtk_widget_set_name (sdd->button, "showdesktop-button");
+	gtk_rc_parse_string ("\n"
+			     "   style \"showdesktop-button-style\"\n"
+			     "   {\n"
+			     "      GtkWidget::focus-line-width=0\n"
+			     "      GtkWidget::focus-padding=0\n"
+			     "   }\n"
+			     "\n"
+			     "    widget \"*.showdesktop-button\" style \"showdesktop-button-style\"\n"
+			     "\n");
+
 	atk_obj = gtk_widget_get_accessible (sdd->button);
 	atk_object_set_name (atk_obj, _("Show Desktop Button"));
         g_signal_connect (G_OBJECT (sdd->button), "button_press_event",
