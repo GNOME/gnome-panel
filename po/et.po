@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-14 08:23+0100\n"
-"PO-Revision-Date: 2006-03-20 11:57+0200\n"
+"PO-Revision-Date: 2006-03-27 20:26+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -1409,12 +1409,17 @@ msgid ""
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
 msgstr ""
+"Tõeväärtus-tüüpi väli näitamaks, kas kasutaja eelmised sätted "
+"/apps/panel/profiles/default asukohas on kopeeritud uuele asukohale "
+"/apps/panel alla."
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
+"Paneelide ID-de loend. Iga ID identifitseerib ühte ülataseme paneeli. Iga "
+"paneeli sätted on salvestatud rajale /apps/panel/toplevels/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
 msgid ""
@@ -1422,6 +1427,8 @@ msgid ""
 "The settings for each of these applets are stored in /apps/panel/applets/"
 "$(id)."
 msgstr ""
+"Paneeli rakendite ID-de loend. Iga ID identifitseerib ühte paneelirakendit. "
+"Iga rakendi sätted on salvestatud rajale /apps/panel/applets/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
 msgid ""
@@ -1429,6 +1436,9 @@ msgid ""
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
+"Paneeli objektide ID-de loend. Iga ID identifitseerib ühte paneeliobjekti "
+"(näiteks käivitaja, tegevusnupp, menüüriba või -nupp). Iga objekti sätted on "
+"salvestatud rajale /apps/panel/objects/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1777,6 +1787,8 @@ msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
+"Kui märgitud, siis pole kasutajal võimalik rakendit mujale tõsta ilma "
+"objekti lukust lahti võtmata."
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
@@ -1811,6 +1823,9 @@ msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr ""
+"Bonobo implementatsioon rakendi ID-st - näiteks "
+"\"OAFIID:GNOME_ClockApplet\". See võti on relevantne ainult juhul, kui "
+"object_type võtme väärtuseks on \"bonobo-applet\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -1824,6 +1839,8 @@ msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
 msgstr ""
+"Selle sahtli külge ühendatud paneeli identifikaator. See võti on relevantne "
+"ainult juhul, kui object_type võtme väärtuseks on \"drawer-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
@@ -1834,6 +1851,8 @@ msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
+"Käivitajat kirjeldava .desktop faili asukoht. See võti on relevantne ainult "
+"juhul, kui object_type võtme väärtuseks on \"launcher-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -1841,6 +1860,9 @@ msgid ""
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
+"Objektinupu ikooni jaoks kasutatava pildi asukoht. See võti on relevantne "
+"ainult juhul, kui object_type võtme väärtusteks on \"drawer-object\" või "
+"\"menu-object\" ja kui use_custom_icon võti on märgitud."
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
 msgid ""
@@ -1854,12 +1876,17 @@ msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
+"Selle paneeliobjekti asukoht, mis määratakse pikslites kaugusena paneeli "
+"vasakust (püstpaneelipuhul ülemisest) servast."
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
+"Selle sahtli või menüü vihjetekstina kuvatav tekst. See võti on relevantne "
+"ainult juhul, kui object_type võtme väärtusteks on \"drawer-object\" või "
+"\"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -1867,6 +1894,9 @@ msgid ""
 "object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
 "\"menu-bar\"."
 msgstr ""
+"Selle paneeliobjekti liik. Võimalikud väärtused: \"drawer-object\", "
+"\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" "
+"ja \"menu-bar\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
