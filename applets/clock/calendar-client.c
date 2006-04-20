@@ -506,6 +506,22 @@ get_ical_uid (icalcomponent *ical)
 }
 
 static char *
+get_ical_rid (icalcomponent *ical)
+{
+  icalproperty        *prop;
+  struct icaltimetype  ical_time;
+  
+  prop = icalcomponent_get_first_property (ical, ICAL_RECURRENCEID_PROPERTY);
+  if (!prop)
+    return NULL;
+
+  ical_time = icalproperty_get_recurrenceid (prop);
+
+  return icaltime_is_valid_time (ical_time) && !icaltime_is_null_time (ical_time) ? 
+    g_strdup (icaltime_as_ical_string (ical_time)) : NULL;
+}
+
+static char *
 get_ical_summary (icalcomponent *ical)
 {
   icalproperty *prop;
@@ -763,6 +779,7 @@ calendar_appointment_init (CalendarAppointment  *appointment,
                            icaltimezone         *default_zone)
 {
   appointment->uid          = get_ical_uid (ical);
+  appointment->rid          = get_ical_rid (ical);
   appointment->summary      = get_ical_summary (ical);
   appointment->description  = get_ical_description (ical);
   appointment->color_string = get_source_color (source->source);
@@ -993,16 +1010,16 @@ calendar_event_copy (CalendarEvent *event)
   return retval;
 }
 
-static const char *
+static char *
 calendar_event_get_uid (CalendarEvent *event)
 {
   switch (event->type)
     {
     case CALENDAR_EVENT_APPOINTMENT:
-      return CALENDAR_APPOINTMENT (event)->uid;
+      return g_strdup_printf ("%s%s", CALENDAR_APPOINTMENT (event)->uid, CALENDAR_APPOINTMENT (event)->rid ? CALENDAR_APPOINTMENT (event)->rid : ""); 
       break;
     case CALENDAR_EVENT_TASK:
-      return CALENDAR_TASK (event)->uid;
+      return g_strdup (CALENDAR_TASK (event)->uid);
       break;
     default:
       g_assert_not_reached ();
@@ -1210,14 +1227,14 @@ calendar_client_handle_query_completed (CalendarClientSource *source,
 
 static void
 calendar_client_handle_query_result (CalendarClientSource *source,
-				     GSList               *objects,
+				     GList                *objects,
 				     ECalView             *view)
 {
   CalendarClientQuery *query;
   CalendarClient      *client;
   gboolean             emit_signal;
   gboolean             events_changed;
-  GSList              *l;
+  GList               *l;
   GTime                month_begin;
   GTime                month_end;
 
@@ -1226,7 +1243,7 @@ calendar_client_handle_query_result (CalendarClientSource *source,
   query = goddamn_this_is_crack (source, view, &emit_signal);
 
   dprintf ("Query %p result: %d objects:\n",
-	   query, g_slist_length (objects));
+	   query, g_list_length (objects));
 
   month_begin = make_time_for_day_begin (1,
 					 client->priv->month,
@@ -1242,7 +1259,8 @@ calendar_client_handle_query_result (CalendarClientSource *source,
       CalendarEvent *event;
       CalendarEvent *old_event;
       icalcomponent *ical = l->data;
-
+      char          *uid;
+      
       event = calendar_event_new (ical, source, client->priv->zone);
       calendar_event_generate_ocurrences (event,
 					  ical,
@@ -1251,21 +1269,24 @@ calendar_client_handle_query_result (CalendarClientSource *source,
 					  month_end,
                                           client->priv->zone);
 
-      old_event = g_hash_table_lookup (query->events,
-				       icalcomponent_get_uid (ical));
+      uid = calendar_event_get_uid (event);
+      
+      old_event = g_hash_table_lookup (query->events, uid);
 
       if (!calendar_event_equal (event, old_event))
 	{
-	  dprintf ("Event %s: ", old_event ? "modified" : "added");
+ 	  dprintf ("Event %s: ", old_event ? "modified" : "added");
 
 	  calendar_event_debug_dump (event);
 
-	  g_hash_table_replace (query->events,
-				(char *) calendar_event_get_uid (event),
-				event);
+	  g_hash_table_replace (query->events, uid, event);
 
 	  events_changed = TRUE;
 	}
+      else
+	{
+	  g_free (uid);
+	}		
     }
 
   if (emit_signal && events_changed)
@@ -1274,25 +1295,57 @@ calendar_client_handle_query_result (CalendarClientSource *source,
     }
 }
 
+static gboolean
+check_object_remove (gpointer key,
+                     gpointer value,
+                     gpointer data)
+{
+  char             *uid = data;
+  ssize_t           len;
+
+  len = strlen (uid);
+  
+  if (len <= strlen (key) && strncmp (uid, key, len) == 0)
+    {
+      dprintf ("Event removed: ");
+
+      calendar_event_debug_dump (value);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 static void
 calendar_client_handle_objects_removed (CalendarClientSource *source,
-					GSList               *uids,
+					GList                *ids,
 					ECalView             *view)
 {
   CalendarClientQuery *query;
   gboolean             emit_signal;
   gboolean             events_changed;
-  GSList              *l;
+  GList               *l;
 
   query = goddamn_this_is_crack (source, view, &emit_signal);
 
   events_changed = FALSE;
-  for (l = uids; l; l = l->next)
+  for (l = ids; l; l = l->next)
     {
-      CalendarEvent *event;
-      const char    *uid = l->data;
+      CalendarEvent   *event;
+      ECalComponentId *id = l->data;
+      char            *uid = g_strdup_printf ("%s%s", id->uid, id->rid ? id->rid : "");
 
-      if ((event = g_hash_table_lookup (query->events, uid)))
+      if (!id->rid || !(*id->rid))
+	{
+	  int size = g_hash_table_size (query->events);
+
+	  g_hash_table_foreach_remove (query->events, check_object_remove, id->uid);
+
+		if (size != g_hash_table_size (query->events))
+			events_changed = TRUE;		
+	}
+      else if ((event = g_hash_table_lookup (query->events, uid)))
 	{
 	  dprintf ("Event removed: ");
 
@@ -1302,6 +1355,7 @@ calendar_client_handle_objects_removed (CalendarClientSource *source,
 
 	  events_changed = TRUE;
 	}
+      g_free (uid);
     }
 
   if (emit_signal && events_changed)
@@ -1377,7 +1431,7 @@ calendar_client_start_query (CalendarClient       *client,
   source->in_progress_query.events =
     g_hash_table_new_full (g_str_hash,
 			   g_str_equal,
-			   NULL,
+			   g_free,
 			   (GDestroyNotify) calendar_event_free);
 
   g_signal_connect_swapped (view, "objects-added",
@@ -1416,10 +1470,8 @@ calendar_client_update_appointments (CalendarClient *client)
 					  client->priv->month + 1,
 					  client->priv->year);
 
-  /* FIXME: occur-in-time-range should take recurrences into account */
-  query = g_strdup_printf ("(or (occur-in-time-range? (make-time \"%s\") "
-			                             "(make-time \"%s\")) "
-			       "(has-recurrences?))",
+  query = g_strdup_printf ("occur-in-time-range? (make-time \"%s\") "
+			                        "(make-time \"%s\")",
 			   month_begin, month_end);
 
   for (l = client->priv->appointment_sources; l; l = l->next)

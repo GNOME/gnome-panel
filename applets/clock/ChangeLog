@@ -1,3 +1,27 @@
+2006-04-20  William Jon McCann  <mccann@jhu.edu>
+
+	* calendar-client.h: add rid field for events
+
+	* calendar-client.c (get_ical_rid): new function to extract the
+	recurrence id of an event
+	(calendar_event_get_uid): make the "uid" for events include the
+	rid to uniquely determine instances
+	(calendar_client_handle_query_result): take a GList not a GSList;
+	use the new "full" uid above in case we are sent instances without
+	a master recurring event
+	(check_object_remove): call back to iterate over all keys to match
+	a master uid
+	(calendar_client_handle_objects_removed): take a GList not a
+	GSList; the list is ECalComponentId structs; compare "full" uid
+	when we get a recurrence id and
+	(calendar_client_start_query): we dupe the key string now so free
+	it on exit
+	(calendar_client_update_appointments): occur-in-time-range does
+	take recurrences into account
+
+	Patch from JP Rosevear <jpr@novell.com>
+	Fixes #339061
+
 ==================== 2.12.3 ====================
 
 2006-02-06  Vincent Untz  <vuntz@gnome.org>
