@@ -458,26 +458,6 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	g_slist_free (add_bookmarks);
 }
 
-static gint
-panel_place_menu_item_sort_volume (GnomeVFSVolume *volume_a,
-				   GnomeVFSVolume *volume_b) {
-	char *display_a;
-	char *display_b;
-	int   retval;
-
-	g_return_val_if_fail (volume_a && volume_b, 0);
-
-	display_a = gnome_vfs_volume_get_display_name (volume_a);
-	display_b = gnome_vfs_volume_get_display_name (volume_b);
-
-	retval = g_utf8_collate (display_a, display_b);
-
-	g_free (display_a);
-	g_free (display_b);
-
-	return retval;
-}
-
 static void
 panel_place_menu_item_append_volumes (GtkWidget *menu,
 				      gboolean   connected_volumes)
@@ -510,11 +490,8 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 		}
 	}
 
-	if (connected_volumes)
-		add_volumes = g_slist_sort (add_volumes,
-					    (GCompareFunc) panel_place_menu_item_sort_volume);
-	else
-		add_volumes = g_slist_reverse (add_volumes);
+	add_volumes = g_slist_sort (add_volumes,
+				    (GCompareFunc) gnome_vfs_volume_compare);
 
 	if (g_slist_length (add_volumes) <= MAX_ITEMS_OR_SUBMENU) {
 		add_menu = menu;
