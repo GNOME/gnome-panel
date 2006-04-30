@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-14 08:23+0100\n"
-"PO-Revision-Date: 2006-04-11 23:38+0300\n"
+"PO-Revision-Date: 2006-04-30 11:11+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -333,6 +333,9 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
+"Selle võtme kasutamine on tänu 'format' võtmele alates GNOME versioonist 2.6 "
+"aegunud. See skeem on alles jäetud vanemate versioonidega ühildumise "
+"eesmärgil."
 
 #: ../applets/clock/clock.schemas.in.h:24
 msgid ""
@@ -340,7 +343,7 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
-"Selle võtme abil määratakse kellarakendi poolt kasutatav vorming juhul, kui "
+"Selle võtmega määratakse kellarakendi poolt kasutatav vorming juhul, kui "
 "vorminguvõti format väärtuseks on määratud \"custom\". See vorming on "
 "sarnane strftime() funktsiooni vormingule."
 
@@ -355,7 +358,7 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
-"Selle võtme abil määratakse kellarakendi tunnivorming. Võimalikud väärtused "
+"Selle võtmega määratakse kellarakendi tunnivorming. Võimalikud väärtused "
 "on \"12-hour\" (12-tunnine), \"24-hour\" (24-tunnine), \"internet\", "
 "\"unix\" ja \"custom\". Kui väärtuseks on \"internet\", siis kuvab kell "
 "Interneti aega. Interneti ajasüsteem jagab päeva tuhandeks \"löögiks\". "
@@ -366,7 +369,7 @@ msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:26
 msgid "This key specifies the program to run in order to configure the time."
-msgstr "Selle võtme abil määratakse aja seadistamiseks käivitatav programm."
+msgstr "Selle võtmega määratakse aja seadistamiseks käivitatav programm."
 
 #: ../applets/clock/clock.schemas.in.h:27
 msgid "Time configuration tool"
@@ -608,7 +611,7 @@ msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
 msgstr ""
-"Selle võtme abil määratakse käsk, mida proovitakse kala peal klõpsamise "
+"Selle võtmega määratakse käsk, mida proovitakse kala peal klõpsamise "
 "korral käivitada."
 
 #: ../applets/fish/fish.schemas.in.h:10
@@ -622,12 +625,12 @@ msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
 msgstr ""
-"Selle võtme abil määratakse kaadrite arv, mida kala animatsioonis kuvatakse."
+"Selle võtmega määratakse kaadrite arv, mida kala animatsioonis kuvatakse."
 
 #: ../applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr ""
-"Selle võtme abil määratakse iga kaadri kuvamiseks kulutatav sekundite arv."
+"Selle võtmega määratakse iga kaadri kuvamiseks kulutatav sekundite arv."
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
@@ -735,7 +738,7 @@ msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
 msgstr ""
-"Akende loend näitab kõikide nähtavate akende nimekirja nuppudena ja laseb "
+"Aknaloend näitab kõikide nähtavate akende nimekirja nuppudena ja laseb "
 "sul neid sirvida."
 
 #: ../applets/wncklet/window-list.glade.h:2
@@ -812,7 +815,7 @@ msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"Määrab, millal grupeerida sama rakenduse aknad akende loendis. Võimalikud "
+"Määrab, millal grupeerida sama rakenduse aknad aknaloendis. Võimalikud "
 "väärtused on mitte kunagi \"never\", automaatselt \"auto\" ja alati \"always"
 "\"."
 
@@ -821,7 +824,7 @@ msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"Kui see väärtus on tõene, siis akende loend näitab kõikide tööalade aknaid, "
+"Kui see väärtus on tõene, siis aknaloend näitab kõikide tööalade aknaid, "
 "vastasel juhul näidatakse ainult aktiivse tööala aknaid."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
@@ -835,11 +838,11 @@ msgstr ""
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
-msgstr "Suurim aknanimekirja suurus"
+msgstr "Aknaloendi suurim suurus"
 
 #: ../applets/wncklet/window-list.schemas.in.h:5
 msgid "Minimum window list size"
-msgstr "Väikseim aknanimekirja suurus."
+msgstr "Aknaloendi väikseim suurus."
 
 #: ../applets/wncklet/window-list.schemas.in.h:6
 msgid "Move windows to current workspace when unminimized"
@@ -855,13 +858,14 @@ msgid ""
 "maximum width setting is useful to limit the size of the window list in "
 "large panels, where the window list could fill the entire space available."
 msgstr ""
-"See väärtus on akende loendi suurim laius, mida rakend tellib. See on "
-"kasulik eelkõige rakendi laiuse piiramiseks suurtel paneelidel, kus akende "
-"loend võib hõivata kogu vaba ruumi."
+"Selle võtme väärtus määrab suurima laiuse, mida aknaloend omale küsib. See "
+"on kasulik eelkõige rakendi laiuse piiramiseks suurtel paneelidel, kus "
+"aknaloend võib hõivata kogu vaba ruumi."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "This key specifies the minimum width that the window list requests."
 msgstr ""
+"Selle võtmega määratakse väikseim laius, mida aknaloend endale küsib."
 
 #: ../applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
@@ -982,7 +986,7 @@ msgid ""
 "vertical layout) the workspace switcher shows the workspaces in. This key is "
 "only relevant if the display_all_workspaces key is true."
 msgstr ""
-"Selle võtme abil määratakse, mitmes reas (rõhtasendi puhul) või veerus "
+"Selle võtmega määratakse, mitmes reas (rõhtasendi puhul) või veerus "
 "(püstasendi puhul) tööalade lüliti tööalasid näitab. See võti kehtib ainult "
 "juhul, kui võti display_all_workspaces on märgitud."
 
@@ -1789,6 +1793,10 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
+"Kui märgitud, siis kasutatakse nupu ikooniks custom_icon võtmes määratud "
+"kohandatud ikooni. Kui märkimata, siis custom_icon võtit eiratakse. See võti "
+"on relevantne ainult juhul, kui object_type võtme väärtusteks on "
+"\"menu-object\" või \"drawer-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
 msgid ""
@@ -1802,6 +1810,8 @@ msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
+"Kui märgitud, siis objekti asukohta interpreteeritakse suhtelisena paneeli "
+"parempoolse (püstpaneelide puhul alumise) serva suhtes."
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
 msgid ""
@@ -1813,7 +1823,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
-msgstr ""
+msgstr "Interpreteeritav asukoht on suhteline alumise/parempoolse serva suhtes"
 
 #: ../gnome-panel/panel-object.schemas.in.h:9
 msgid "Launcher location"
@@ -2348,7 +2358,7 @@ msgstr "Taustavärv"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:4
 msgid "Background color opacity"
-msgstr "Taustavärvi tumedus"
+msgstr "Taustavärvi katvus"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:5
 msgid "Background image"
@@ -2387,12 +2397,17 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
+"Kui märgitud, siis joonistatakse peitmisnuppude peale nooled. See võti on "
+"relevantne ainult juhul, kui enable_buttons võti on märgitud."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
+"Kui märgitud, siis joonistatakse paneeli servadele nupud, millega on "
+"võimalik paneeli ekraani servale kokku kerida nii, et ainult lahtikerimise "
+"nupp jääb nähtavale."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
@@ -2521,6 +2536,8 @@ msgid ""
 "completely opaque (a value of less than 65535), the color will be composited "
 "onto the desktop background image."
 msgstr ""
+"Määrab taustavärvuse katvuse. Kui värvus pole täielikult kattev (väärtus on "
+"väiksem kui 65535), siis sulatatakse värvus taustapildiga kokku."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
@@ -2595,6 +2612,8 @@ msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
+"Mitme ekraaniga seadistuse puhul võivad igal ekraanil olla omad paneelid. "
+"Selle võtmega määratakse ekraan, kus paneeli kuvatakse."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
 msgid "X co-ordinate of panel"
