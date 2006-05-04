@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-14 08:23+0100\n"
-"PO-Revision-Date: 2006-04-30 11:11+0300\n"
+"PO-Revision-Date: 2006-05-03 08:42+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -1804,6 +1804,9 @@ msgid ""
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
+"Kui märgitud, siis menu_path võtit kasutatakse rajana, millelt menüü sisu "
+"tuleb kokku panna. Kui märkimata, siis menu_path võtit eiratakse. See võti "
+"on relevantne ainult juhul, kui object_type võtme väärtus on \"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
 msgid ""
@@ -1901,6 +1904,9 @@ msgid ""
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
 msgstr ""
+"Rada, millelt menüü sisu kokku pannakse. See võti on relevantne ainult "
+"juhul, kui use_menu_path võti on märgitud ja object_type võtme väärtus on "
+"\"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
 msgid ""
@@ -2370,11 +2376,11 @@ msgstr "Tausta tüüp"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:7
 msgid "Center panel on x-axis"
-msgstr "Tsentreeri paneel x-teljel"
+msgstr "Paneeli tsentreerimine x-teljel"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:8
 msgid "Center panel on y-axis"
-msgstr "Tsentreeri paneel y-teljel"
+msgstr "Paneeli tsentreerimine y-teljel"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:10
 msgid "Enable arrows on hide buttons"
@@ -2460,6 +2466,10 @@ msgid ""
 "- i.e. the panel will grow on both sides. If false, the x key specifies the "
 "location of the panel."
 msgstr ""
+"Kui märgitud, siis võtit x eiratakse ja paneel asetatakse ekraani x-teljel "
+"keskele. Paneeli suuruse muutumisel jääb siis paneeli asukoht samaks ja "
+"kasvamine/kahanemine toimub mõlema külje peal võrdselt. Kui märkimata, siis "
+"võti x määrab paneeli asukoha."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
@@ -2468,12 +2478,18 @@ msgid ""
 "- i.e. the panel will grow on both sides. If false, the y key specifies the "
 "location of the panel."
 msgstr ""
+"Kui märgitud, siis võtit y eiratakse ja paneel asetatakse ekraani y-teljel "
+"keskele. Paneeli suuruse muutumisel jääb siis paneeli asukoht samaks ja "
+"kasvamine/kahanemine toimub mõlema külje peal võrdselt. Kui märkimata, siis "
+"võti y määrab paneeli asukoha."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr ""
+"Xinerama seadistustega võivad igal monitoril olla oma paneelid. Selle "
+"võtmega määratakse monitor, kus paneeli kuvatakse."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
 msgid "Name to identify panel"
@@ -2509,6 +2525,8 @@ msgid ""
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr ""
+"Selle võtmega määratakse taustapildina kasutatav fail. Kui pilt sisaldab "
+"alfakanalit, siis see kombineeritakse töölaua taustapildiga."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
@@ -2516,6 +2534,9 @@ msgid ""
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
+"Viivitus, mis jääb kursori liikumise peidetud paneelile ja paneeli "
+"automaatse näitamise vahele (millisekundites). See võti on relevantne ainult "
+"juhul, kui võti auto_hide on märgitud."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
 msgid ""
@@ -2523,12 +2544,17 @@ msgid ""
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
+"Viivitus, mis jääb kursori paneelilt lahkumise ja paneeli automaatse "
+"peitmise vahele (millisekundites). See võti on relevantne ainult juhul, kui "
+"võti auto_hide on märgitud."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
+"Pikslite arv, mis jääb automaatselt peidetud paneelil nurgas nähtavale. See "
+"võti on relevantne ainult juhul, kui võti auto_hide on märgitud."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
@@ -2583,6 +2609,9 @@ msgid ""
 "\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
+"Paneeli animatsioonide kiirus. Võimalikud väärtused on  \"slow\" (aeglane), "
+"\"medium\" (keskmine kiirus) and \"fast\" (kiire). See võti on relevantne "
+"ainult juhul, kui enable_animations võti on märgitud."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
@@ -2590,6 +2619,8 @@ msgid ""
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr ""
+"Paneeli identifitseerimiseks mõeldud inimloetav nimi. Selle peamine eesmärk "
+"on paneelide vahel navigeerimisel toimida paneeliakna tiitlina."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "Visible pixels when hidden"
