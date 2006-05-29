@@ -139,6 +139,10 @@ about_cb (BonoboUIComponent *uic,
   g_object_add_weak_pointer (G_OBJECT (tray->about_dialog),
                              (gpointer) &tray->about_dialog);
 
+  g_signal_connect (tray->about_dialog, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
+
   gtk_widget_show (tray->about_dialog);
 }
 
