@@ -595,6 +595,11 @@ display_about_dialog (BonoboUIComponent *uic,
 	g_signal_connect (fish->about_dialog, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
 			  &fish->about_dialog);
+
+	g_signal_connect (fish->about_dialog, "response",
+			  G_CALLBACK (gtk_widget_destroy),
+			  NULL);
+
 	gtk_widget_show (fish->about_dialog);
 }
 
