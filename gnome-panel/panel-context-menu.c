@@ -118,6 +118,9 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 	for (i = 0; authors [i]; i++)
 		authors [i] = _(authors [i]);
 
+	/* Note: we don't use gtk_show_about_dialog() since some applets can
+	 * be loaded in this process and we don't want to share the about
+	 * dialog */
 	about = gtk_about_dialog_new ();
 	g_object_set (about,
 		      "name",  _("The GNOME Panel"),
@@ -139,6 +142,10 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 			  &about);
 	g_signal_connect (about, "event",
 			  G_CALLBACK (panel_context_menu_check_for_screen),
+			  NULL);
+
+	g_signal_connect (about, "response",
+			  G_CALLBACK (gtk_widget_destroy),
 			  NULL);
 
 	gtk_widget_show (about);
