@@ -99,6 +99,10 @@ wncklet_display_about (GtkWidget   *applet,
 	g_signal_connect (*dialog, "destroy",
 			  (GCallback) gtk_widget_destroyed, dialog);
 	
+	g_signal_connect (*dialog, "response",
+			  G_CALLBACK (gtk_widget_destroy),
+			  NULL);
+
 	gtk_widget_show (*dialog);
 }
 
