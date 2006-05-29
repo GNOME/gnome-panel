@@ -2756,6 +2756,10 @@ display_about_dialog (BonoboUIComponent *uic,
 	g_signal_connect (G_OBJECT(cd->about), "destroy",
 			  (GCallback)gtk_widget_destroyed, &cd->about);
 	
+	g_signal_connect (cd->about, "response",
+			  G_CALLBACK (gtk_widget_destroy),
+			  NULL);
+
 	gtk_widget_show (cd->about);
 }
 
