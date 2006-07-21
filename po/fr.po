@@ -4,7 +4,7 @@
 #
 # Vincent Renardias <vincent@ldsol.com>, 1998-2000.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
-# maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2005.
+# maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2006.
 # Christophe Fergeau <teuf@users.sourceforge.net>, 2002.
 # Baptiste Mille-Mathias <bmm80@free.fr>, 2004-2005.
 # Benoît Dejean <benoit@placenet.org>, 2006.
@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.14.1\n"
+"Project-Id-Version: gnome-panel 2.14.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-24 08:35+0200\n"
-"PO-Revision-Date: 2006-05-20 12:54+0200\n"
+"POT-Creation-Date: 2006-07-21 16:17+0200\n"
+"PO-Revision-Date: 2006-07-21 16:06+0200\n"
 "Last-Translator: Robert-André Mauchin <zebob.m@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,10 +53,10 @@ msgstr "À _propos"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:745
-#: ../gnome-panel/panel-context-menu.c:322 ../gnome-panel/panel-menu-bar.c:404
+#: ../gnome-panel/panel-context-menu.c:329 ../gnome-panel/panel-menu-bar.c:404
 #: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
-msgstr "Aid_e"
+msgstr "_Aide"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:6
 #: ../applets/fish/GNOME_FishApplet.xml.h:3
@@ -200,7 +200,7 @@ msgstr "Format personnalisé"
 
 #: ../applets/clock/clock.c:2527 ../applets/clock/clock.c:2701
 #: ../applets/fish/fish.c:158 ../applets/notification_area/main.c:82
-#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:124
+#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:128
 #: ../applets/wncklet/workspace-switcher.c:238
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -256,7 +256,7 @@ msgstr "L'Horloge affiche l'heure et la date actuelle"
 #: ../applets/wncklet/showdesktop.c:509 ../applets/wncklet/window-list.c:784
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:555
-#: ../gnome-panel/panel-context-menu.c:130
+#: ../gnome-panel/panel-context-menu.c:133
 msgid "translator-credits"
 msgstr ""
 "Mainteneur :\n"
@@ -421,8 +421,8 @@ msgstr ""
 msgid "Images"
 msgstr "Images"
 
-#: ../applets/fish/fish.c:545 ../applets/fish/fish.c:605
-#: ../applets/fish/fish.c:720
+#: ../applets/fish/fish.c:545 ../applets/fish/fish.c:610
+#: ../applets/fish/fish.c:725
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s le poisson"
@@ -444,21 +444,21 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(avec un peu d'aide de la part de George)"
 
-#: ../applets/fish/fish.c:606
+#: ../applets/fish/fish.c:611
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s le poisson, un oracle des temps modernes"
 
-#: ../applets/fish/fish.c:676
+#: ../applets/fish/fish.c:681
 msgid "Unable to locate the command to execute"
 msgstr "Impossible de localiser la commande à exécuter"
 
-#: ../applets/fish/fish.c:725
+#: ../applets/fish/fish.c:730
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s le poisson dit :"
 
-#: ../applets/fish/fish.c:794
+#: ../applets/fish/fish.c:799
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -469,16 +469,16 @@ msgstr ""
 "\n"
 "Détails : %s"
 
-#: ../applets/fish/fish.c:859
+#: ../applets/fish/fish.c:864
 msgid "_Speak again"
 msgstr "_Répéter"
 
-#: ../applets/fish/fish.c:940
+#: ../applets/fish/fish.c:945
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "La commande configurée ne fonctionne pas et a été remplacée par : %s"
 
-#: ../applets/fish/fish.c:963
+#: ../applets/fish/fish.c:968
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -489,7 +489,7 @@ msgstr ""
 "\n"
 "Détails : %s"
 
-#: ../applets/fish/fish.c:979
+#: ../applets/fish/fish.c:984
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -500,7 +500,7 @@ msgstr ""
 "\n"
 "Détails : %s"
 
-#: ../applets/fish/fish.c:1597
+#: ../applets/fish/fish.c:1602
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -508,7 +508,7 @@ msgstr ""
 "L'eau a besoin d'être changée !\n"
 "(Regardez la date)"
 
-#: ../applets/fish/fish.c:1691
+#: ../applets/fish/fish.c:1696
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s le poisson, le diseur de bonne aventure"
@@ -654,7 +654,7 @@ msgstr "Orientation"
 msgid "The orientation of the tray."
 msgstr "L'orientation du tray."
 
-#: ../applets/notification_area/main.c:306
+#: ../applets/notification_area/main.c:310
 msgid "Panel Notification Area"
 msgstr "Zone de notification du tableau de bord"
 
@@ -1041,7 +1041,7 @@ msgstr "_Ajouter au tiroir..."
 
 #: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:951
 #: ../gnome-panel/panel-action-button.c:136
-#: ../gnome-panel/panel-context-menu.c:247
+#: ../gnome-panel/panel-context-menu.c:254
 msgid "_Properties"
 msgstr "_Propriétés"
 
@@ -1385,11 +1385,11 @@ msgstr "Erreur lors de l'obtention de la valeur pour « %s » : %s"
 msgid "And many, many others..."
 msgstr "Et beaucoup, beaucoup d'autres..."
 
-#: ../gnome-panel/panel-context-menu.c:123
+#: ../gnome-panel/panel-context-menu.c:126
 msgid "The GNOME Panel"
 msgstr "Le tableau de bord GNOME"
 
-#: ../gnome-panel/panel-context-menu.c:126
+#: ../gnome-panel/panel-context-menu.c:129
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1397,32 +1397,32 @@ msgstr ""
 "Ce programme est responsable du lancement des autres applications et de "
 "l'inclusion de petites applets à l'intérieur de lui-même."
 
-#: ../gnome-panel/panel-context-menu.c:166
+#: ../gnome-panel/panel-context-menu.c:173
 msgid "Cannot delete this panel"
 msgstr "Impossible de supprimer ce tableau de bord"
 
-#: ../gnome-panel/panel-context-menu.c:167
+#: ../gnome-panel/panel-context-menu.c:174
 msgid "You must always have at least one panel."
 msgstr "Vous devez toujours avoir au moins un tableau de bord."
 
-#: ../gnome-panel/panel-context-menu.c:215
+#: ../gnome-panel/panel-context-menu.c:222
 msgid "_Delete This Panel..."
 msgstr "_Supprimer ce tableau de bord..."
 
-#: ../gnome-panel/panel-context-menu.c:218
-#: ../gnome-panel/panel-context-menu.c:260
+#: ../gnome-panel/panel-context-menu.c:225
+#: ../gnome-panel/panel-context-menu.c:267
 msgid "_Delete This Panel"
 msgstr "_Supprimer ce tableau de bord"
 
-#: ../gnome-panel/panel-context-menu.c:232
+#: ../gnome-panel/panel-context-menu.c:239
 msgid "_Add to Panel..."
 msgstr "A_jouter au tableau de bord..."
 
-#: ../gnome-panel/panel-context-menu.c:277
+#: ../gnome-panel/panel-context-menu.c:284
 msgid "_New Panel"
 msgstr "_Nouveau tableau de bord"
 
-#: ../gnome-panel/panel-context-menu.c:333
+#: ../gnome-panel/panel-context-menu.c:340
 msgid "A_bout Panels"
 msgstr "À _propos des tableaux de bord"
 
@@ -2892,7 +2892,7 @@ msgstr "Petit"
 
 #: ../libpanel-applet/panel-test-applets.c:64
 msgid "Size|Medium"
-msgstr "Moyenne"
+msgstr "Moyen"
 
 #: ../libpanel-applet/panel-test-applets.c:65
 msgid "Size|Large"
