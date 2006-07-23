@@ -952,12 +952,25 @@ panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
 	srcptr = data;
 	align  = gdk_pixbuf_get_rowstride (retval) - (width * 3);
 
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+/* cairo == 00RRGGBB */
+#define CAIRO_RED 2
+#define CAIRO_GREEN 1
+#define CAIRO_BLUE 0
+#else
+/* cairo == BBGGRR00 */
+#define CAIRO_RED 1
+#define CAIRO_GREEN 2
+#define CAIRO_BLUE 3
+#endif
+
 	while (height--) {
 		int x = width;
 		while (x--) {
-			dstptr[0] = srcptr[1];
-			dstptr[1] = srcptr[2];
-			dstptr[2] = srcptr[3];
+			/* pixbuf == BBGGRR */
+			dstptr[0] = srcptr[CAIRO_RED];
+			dstptr[1] = srcptr[CAIRO_GREEN];
+			dstptr[2] = srcptr[CAIRO_BLUE];
 
 			dstptr += 3;
 			srcptr += 4;
@@ -965,6 +978,9 @@ panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
 
 		dstptr += align;
 	}
+#undef CAIRO_RED
+#undef CAIRO_GREEN
+#undef CAIRO_BLUE
 
 	return retval;
 }
