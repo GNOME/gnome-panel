@@ -1,5 +1,19 @@
 2006-07-23  Vincent Untz  <vuntz@gnome.org>
 
+	Send a changed signal from the background monitor when the screen size
+	changes
+
+	* panel-background-monitor.c: (panel_background_monitor_changed): new
+	(panel_background_monitor_finalize): disconnect from the size-changed
+	signal
+	(panel_background_monitor_connect_to_screen): connect to the
+	size-changed screen signal
+	(panel_background_monitor_xevent_filter): call
+	panel_background_monitor_changed() instead of having the code here
+	Patch by Benjamin Otte <in7y118@public.uni-hamburg.de>
+
+2006-07-23  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_util_cairo_rgbdata_to_pixbuf): fix endianness
 	issue causing corrupted background. Based on patch by Andrew Johnson
 	<acjgenius@earthlink.net>. Fix bug #347510.

@@ -39,6 +39,8 @@ enum {
 	LAST_SIGNAL
 };
 
+static void panel_background_monitor_changed (PanelBackgroundMonitor *monitor);
+
 static GdkFilterReturn panel_background_monitor_xevent_filter (GdkXEvent *xevent,
 							       GdkEvent  *event,
 							       gpointer   data);
@@ -83,6 +85,8 @@ panel_background_monitor_finalize (GObject *object)
 
 	gdk_window_remove_filter (
 		monitor->gdkwindow, panel_background_monitor_xevent_filter, monitor);
+	g_signal_handlers_disconnect_by_func (monitor->screen, 
+		panel_background_monitor_changed, monitor);
 
 	if (monitor->gdkpixmap)
 		g_object_unref (monitor->gdkpixmap);
@@ -167,6 +171,8 @@ panel_background_monitor_connect_to_screen (PanelBackgroundMonitor *monitor,
 	}
 
 	monitor->screen = screen;
+	g_signal_connect_swapped (screen, "size-changed", 
+	    G_CALLBACK (panel_background_monitor_changed), monitor);
 
 	monitor->gdkwindow = gdk_screen_get_root_window (screen);
 	monitor->xwindow   = gdk_x11_drawable_get_xid (monitor->gdkwindow);
@@ -220,6 +226,20 @@ panel_background_monitor_get_for_screen (GdkScreen *screen)
 	return g_object_ref (global_background_monitors [screen_number]);
 }
 
+static void
+panel_background_monitor_changed (PanelBackgroundMonitor *monitor)
+{
+	if (monitor->gdkpixmap)
+		g_object_unref (monitor->gdkpixmap);
+	monitor->gdkpixmap = NULL;
+
+	if (monitor->gdkpixbuf)
+		g_object_unref (monitor->gdkpixbuf);
+	monitor->gdkpixbuf = NULL;
+
+	g_signal_emit (monitor, signals [CHANGED], 0);
+}
+
 static GdkFilterReturn
 panel_background_monitor_xevent_filter (GdkXEvent *xevent,
 					GdkEvent  *event,
@@ -235,15 +255,8 @@ panel_background_monitor_xevent_filter (GdkXEvent *xevent,
 
 	if (xev->type == PropertyNotify &&
 	    xev->xproperty.atom == monitor->xatom &&
-	    xev->xproperty.window == monitor->xwindow) {
-	    	if (monitor->gdkpixmap)
-			g_object_unref (monitor->gdkpixmap);
-		monitor->gdkpixmap = NULL;
-		if (monitor->gdkpixbuf)
-			g_object_unref (monitor->gdkpixbuf);
-		monitor->gdkpixbuf = NULL;
-		g_signal_emit (monitor, signals [CHANGED], 0);
-	}
+	    xev->xproperty.window == monitor->xwindow)
+		panel_background_monitor_changed (monitor);
 
 	return GDK_FILTER_CONTINUE;
 }
