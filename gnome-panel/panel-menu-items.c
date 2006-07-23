@@ -424,7 +424,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 				if (!path || !path[0])
 					displayname = g_strdup ("/");
 				else
-					displayname = g_filename_display_basename (path);
+					displayname = gnome_vfs_unescape_string_for_display (path);
 				if (hostname) {
 					/* Translators: the first string is a
 					 * path and the second string is a
