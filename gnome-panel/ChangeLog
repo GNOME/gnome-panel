@@ -1,5 +1,12 @@
 2006-07-24  Vincent Untz  <vuntz@gnome.org>
 
+	* Makefile.am: don't use eggaccelerators anymore
+	* eggaccelerators.[ch]: kill
+	* panel-bindings.c: (panel_binding_set_from_string): directly use
+	gtk_accelerator_parse() now
+
+2006-07-24  Vincent Untz  <vuntz@gnome.org>
+
 	Use gnome-power-manager to implement suspend/hibernate.
 	Based on patch by Ray Strode <rstrode@redhat.com>
 	Fix bug #347970

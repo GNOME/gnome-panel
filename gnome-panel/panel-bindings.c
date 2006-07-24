@@ -31,7 +31,6 @@
 
 #include "panel-gconf.h"
 #include "panel-profile.h"
-#include "eggaccelerators.h"
 
 #define BINDINGS_PREFIX "/apps/metacity/window_keybindings"
 
@@ -58,8 +57,6 @@ static void
 panel_binding_set_from_string (PanelBinding *binding,
 			       const char   *str)
 {
-	EggVirtualModifierType modifiers;
-	
 	g_assert (binding->keyval == 0);
 	g_assert (binding->modifiers == 0);
 
@@ -69,22 +66,10 @@ panel_binding_set_from_string (PanelBinding *binding,
 		return;
 	}
 
-	if (!egg_accelerator_parse_virtual (str, &binding->keyval,
-					    NULL, &modifiers)) {
+	gtk_accelerator_parse (str, &binding->keyval, &binding->modifiers);
+	if (binding->keyval == 0 && binding->modifiers == 0) {
 		g_warning ("Enable to parse binding '%s'\n", str);
 		return;
-	}
-
-	if (binding->keyval == 0)
-		return;
-
-	egg_keymap_resolve_virtual_modifiers (
-		gdk_keymap_get_default (), modifiers, &binding->modifiers);
-
-	if (binding->modifiers &&
-	    !(binding->modifiers & gtk_accelerator_get_default_mod_mask ())) {
-		binding->keyval = 0;
-		binding->modifiers = 0;
 	}
 }
 

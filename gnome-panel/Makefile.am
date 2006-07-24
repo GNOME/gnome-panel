@@ -57,11 +57,6 @@ EGG_RECENT_FILES_H =		\
 	egg-recent-view-gtk.h	\
 	egg-recent-util.h
 
-EGG_ACCELERATORS_FILES =        \
-	eggaccelerators.c       \
-	eggaccelerators.h       \
-	$(NULL)
-
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
 	panel-typebuiltins.c	\
@@ -171,7 +166,6 @@ panel_headers =			\
 
 gnome_panel_SOURCES =			\
 	$(CORBA_SRCLIST)		\
-	$(EGG_ACCELERATORS_FILES)	\
 	$(panel_sources)		\
 	$(panel_headers)		\
 	$(NULL)
@@ -302,9 +296,7 @@ dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
 
 EGG_RECENT_DIR = $(srcdir)/../../libegg/libegg/recent-files
-EGG_ACCELERATORS_DIR = $(srcdir)/../../libegg/libegg/treeviewutils
 
 regenerate-built-sources:
 	EGGFILES="$(EGG_RECENT_FILES_C)" EGGDIR="$(EGG_RECENT_DIR)" $(srcdir)/update-from-egg.sh
 	EGGFILES="$(EGG_RECENT_FILES_H)" EGGDIR="$(EGG_RECENT_DIR)" $(srcdir)/update-from-egg.sh
-	EGGFILES="$(EGG_ACCELERATORS_FILES)" EGGDIR="$(EGG_ACCELERATORS_DIR)" $(srcdir)/update-from-egg.sh
