@@ -116,6 +116,7 @@ panel_sources =			\
 	panel-addto.c		\
 	panel-logout.c		\
 	panel-gdm.c		\
+	panel-power-manager.c   \
 	$(EGG_RECENT_FILES_C)	\
 	$(NULL)
 
@@ -164,6 +165,7 @@ panel_headers =			\
 	panel-addto.h		\
 	panel-logout.h		\
 	panel-gdm.h		\
+	panel-power-manager.h	\
 	$(EGG_RECENT_FILES_H)	\
 	$(NULL)
 

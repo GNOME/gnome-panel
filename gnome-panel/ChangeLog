@@ -1,5 +1,23 @@
 2006-07-24  Vincent Untz  <vuntz@gnome.org>
 
+	Use gnome-power-manager to implement suspend/hibernate.
+	Based on patch by Ray Strode <rstrode@redhat.com>
+	Fix bug #347970
+
+	* panel-power-manager.[ch]: new files
+	* Makefile.am: add new files
+	* panel-logout.c: (panel_logout_init) connect to the power manager
+	(panel_logout_destroy): unref the power manager
+	(panel_logout_response): keep a ref to the power manager since we need
+	it for this function, don't use GDM to hibernate since it has the nasty
+	side-effect of loggint out the user..., implement suspend
+	(panel_logout_new): add buttons to suspend and hibernate
+
+	* panel-enums.h: reindent one line
+	* panel-menu-items.h: ditto
+
+2006-07-24  Vincent Untz  <vuntz@gnome.org>
+
 	Use alacarte when available to edit menus.
 	Based on patch by Frederic Crozat <fcrozat@mandriva.com>.
 

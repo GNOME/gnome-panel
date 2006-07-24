@@ -32,6 +32,7 @@
 
 #include "panel-logout.h"
 #include "panel-gdm.h"
+#include "panel-power-manager.h"
 #include "panel-session.h"
 
 #define PANEL_LOGOUT_DIALOG_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_LOGOUT_DIALOG, PanelLogoutDialogPrivate))
@@ -50,6 +51,8 @@ enum {
 struct _PanelLogoutDialogPrivate {
 	PanelLogoutDialogType type;
 
+	PanelPowerManager    *power_manager;
+
 	int                   timeout;
 	unsigned int          timeout_id;
 
@@ -60,9 +63,9 @@ static PanelLogoutDialog *current_dialog = NULL;
 
 static void panel_logout_destroy (PanelLogoutDialog *logout_dialog,
 				  gpointer           data);
-static void panel_logout_response (GtkWidget *logout_dialog,
-				   guint      response_id,
-				   gpointer   data);
+static void panel_logout_response (PanelLogoutDialog *logout_dialog,
+				   guint              response_id,
+				   gpointer           data);
 
 enum {
   PROP_0,
@@ -137,6 +140,8 @@ panel_logout_init (PanelLogoutDialog *logout_dialog)
 	gtk_window_set_keep_above (GTK_WINDOW (logout_dialog), TRUE);
 	gtk_window_stick (GTK_WINDOW (logout_dialog));
 
+	logout_dialog->priv->power_manager = panel_get_power_manager ();
+
 	g_signal_connect (logout_dialog, "destroy",
 			  G_CALLBACK (panel_logout_destroy), NULL);
 	g_signal_connect (logout_dialog, "response",
@@ -151,15 +156,21 @@ panel_logout_destroy (PanelLogoutDialog *logout_dialog,
 		g_source_remove (logout_dialog->priv->timeout_id);
 	logout_dialog->priv->timeout_id = 0;
 
+	g_object_unref (logout_dialog->priv->power_manager);
+	logout_dialog->priv->power_manager = NULL;
+
 	current_dialog = NULL;
 }
 
 static void
-panel_logout_response (GtkWidget *logout_dialog,
+panel_logout_response (PanelLogoutDialog *logout_dialog,
 		       guint      response_id,
 		       gpointer   data)
 {
-	gtk_widget_destroy (logout_dialog);
+	PanelPowerManager *power_manager;
+
+	power_manager = g_object_ref (logout_dialog->priv->power_manager);
+	gtk_widget_destroy (GTK_WIDGET (logout_dialog));
 
 	switch (response_id) {
 	case GTK_RESPONSE_CANCEL:
@@ -180,11 +191,12 @@ panel_logout_response (GtkWidget *logout_dialog,
 		panel_session_request_logout ();
 		break;
 	case PANEL_LOGOUT_RESPONSE_STD:
-		gdm_set_logout_action (GDM_LOGOUT_ACTION_SUSPEND);
-		panel_session_request_logout ();
+		if (panel_power_manager_can_hibernate (power_manager))
+			panel_power_manager_attempt_hibernate (power_manager);
 		break;
 	case PANEL_LOGOUT_RESPONSE_STR:
-		//FIXME
+		if (panel_power_manager_can_suspend (power_manager))
+			panel_power_manager_attempt_suspend (power_manager);
 		break;
 	case GTK_RESPONSE_NONE:
 	case GTK_RESPONSE_DELETE_EVENT:
@@ -192,6 +204,7 @@ panel_logout_response (GtkWidget *logout_dialog,
 	default:
 		g_assert_not_reached ();
 	}
+	g_object_unref (power_manager);
 }
 
 static gboolean
@@ -319,17 +332,17 @@ panel_logout_new (PanelLogoutDialogType  type,
 		primary_text   = _("Shut down this system now?");
 
 		logout_dialog->priv->default_response = PANEL_LOGOUT_RESPONSE_SHUTDOWN;
-		//FIXME see previous FIXME
-
-#if 0
-		/* TODO: disable this for 2.14 since this is stupid (the user
-		 * don't want to log out of his session when suspending) */
-		if (gdm_supports_logout_action (GDM_LOGOUT_ACTION_SUSPEND))
+		if (panel_power_manager_can_suspend (logout_dialog->priv->power_manager))
 			gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
-					       _("_Suspend"),
-					       PANEL_LOGOUT_RESPONSE_STD);
-#endif
+					       _("S_uspend"),
+					       PANEL_LOGOUT_RESPONSE_STR);
 
+		if (panel_power_manager_can_hibernate (logout_dialog->priv->power_manager))
+			gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
+					       _("_Hibernate"),
+					       PANEL_LOGOUT_RESPONSE_STD);
+
+		//FIXME see previous FIXME
 		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
 				       _("_Restart"),
 				       PANEL_LOGOUT_RESPONSE_REBOOT);

@@ -40,7 +40,7 @@ typedef struct _PanelPlaceMenuItem        PanelPlaceMenuItem;
 typedef struct _PanelPlaceMenuItemClass   PanelPlaceMenuItemClass;
 typedef struct _PanelPlaceMenuItemPrivate PanelPlaceMenuItemPrivate;
 
-struct _PanelPlaceMenuItem{
+struct _PanelPlaceMenuItem {
 	GtkImageMenuItem            menuitem;
 
 	PanelPlaceMenuItemPrivate  *priv;
