@@ -404,7 +404,8 @@ panel_menu_bar_load (PanelWidget *panel,
 				   _("_Help"),
 				   NULL);
 
-	if (panel_is_program_in_path ("gmenu-simple-editor")) {
+	if (panel_is_program_in_path ("alacarte") ||
+	    panel_is_program_in_path ("gmenu-simple-editor")) {
 		panel_applet_add_callback (menubar->priv->info,
 					   "edit",
 					   NULL,
@@ -461,10 +462,17 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 	} else if (!strcmp (callback_name, "edit")) {
 		GError *error = NULL;
 
-		panel_launch_desktop_file ("gmenu-simple-editor.desktop",
-					   "gmenu-simple-editor",
+		panel_launch_desktop_file ("alacarte.desktop",
+					   "alacarte",
 					   screen,
 					   &error);
+		if (error) {
+			g_error_free (error);
+			panel_launch_desktop_file ("gmenu-simple-editor.desktop",
+						   "gmenu-simple-editor",
+						   screen,
+						   &error);
+		}
 		if (error) {
 			panel_error_dialog (screen,
 					    "cannot_exec_gmenu-simple-editor", TRUE,

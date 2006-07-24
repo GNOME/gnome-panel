@@ -1,3 +1,17 @@
+2006-07-24  Vincent Untz  <vuntz@gnome.org>
+
+	Use alacarte when available to edit menus.
+	Based on patch by Frederic Crozat <fcrozat@mandriva.com>.
+
+	* panel-menu-bar.c: (panel_menu_bar_load): look for alacarte before
+	including the Edit menu item
+	(panel_menu_bar_invoke_menu): try launching alacarte before
+	gmenu-simple-editor
+	* panel-menu-button.c: (panel_menu_button_load): look for alacarte
+	before including the Edit menu item
+	(panel_menu_button_invoke_menu): try launching alacarte before
+	gmenu-simple-editor
+
 2006-07-23  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmarks):
