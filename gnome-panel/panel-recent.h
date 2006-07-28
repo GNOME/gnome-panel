@@ -25,12 +25,12 @@
 #ifndef __PANEL_RECENT_H__
 #define __PANEL_RECENT_H__
 
-#include "egg-recent-view-gtk.h"
+#include "gtk/gtk.h"
 
 G_BEGIN_DECLS
 
-EggRecentViewGtk *panel_recent_append_documents_menu (GtkWidget        *menu,
-						      EggRecentViewGtk *view);
+void panel_recent_append_documents_menu (GtkWidget        *menu,
+					 GtkRecentManager *manager);
 
 G_END_DECLS
 

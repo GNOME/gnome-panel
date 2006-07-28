@@ -43,20 +43,6 @@ CORBA_SRCLIST =			\
 $(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
 
-EGG_RECENT_FILES_C =		\
-	egg-recent-model.c	\
-	egg-recent-item.c	\
-	egg-recent-view.c	\
-	egg-recent-view-gtk.c	\
-	egg-recent-util.c
-
-EGG_RECENT_FILES_H =		\
-	egg-recent-model.h	\
-	egg-recent-item.h	\
-	egg-recent-view.h	\
-	egg-recent-view-gtk.h	\
-	egg-recent-util.h
-
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
 	panel-typebuiltins.c	\
@@ -112,7 +98,6 @@ panel_sources =			\
 	panel-logout.c		\
 	panel-gdm.c		\
 	panel-power-manager.c   \
-	$(EGG_RECENT_FILES_C)	\
 	$(NULL)
 
 panel_headers =			\
@@ -161,7 +146,6 @@ panel_headers =			\
 	panel-logout.h		\
 	panel-gdm.h		\
 	panel-power-manager.h	\
-	$(EGG_RECENT_FILES_H)	\
 	$(NULL)
 
 gnome_panel_SOURCES =			\
@@ -203,7 +187,6 @@ EXTRA_DIST =					\
 	panel-compatibility.schemas		\
 	$(ui_DATA)				\
 	panel-marshal.list			\
-	update-from-egg.sh			\
 	gnome-panelrc				\
 	$(entries_DATA)
 
@@ -294,9 +277,3 @@ CLEANFILES = \
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
-
-EGG_RECENT_DIR = $(srcdir)/../../libegg/libegg/recent-files
-
-regenerate-built-sources:
-	EGGFILES="$(EGG_RECENT_FILES_C)" EGGDIR="$(EGG_RECENT_DIR)" $(srcdir)/update-from-egg.sh
-	EGGFILES="$(EGG_RECENT_FILES_H)" EGGDIR="$(EGG_RECENT_DIR)" $(srcdir)/update-from-egg.sh

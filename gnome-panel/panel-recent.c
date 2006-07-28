@@ -29,10 +29,6 @@
 #include <glib/gi18n.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
-#include "egg-recent-model.h"
-#include "egg-recent-view.h"
-#include "egg-recent-view-gtk.h"
-#include "egg-recent-item.h"
 #include "menu.h"
 #include "panel-util.h"
 #include "panel-globals.h"
@@ -74,20 +70,28 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 
 
 static void
-recent_documents_activate_cb (EggRecentViewGtk *view, EggRecentItem *item,
-			      GtkWidget *widget)
+recent_documents_activate_cb (GtkRecentChooser *chooser,
+			      gpointer          data)
 {
-	char   *uri, *uri_utf8, *mime_type;
-	GError *error = NULL;
-	GdkScreen *screen;
+	GtkRecentInfo *recent_info;
+	const char    *uri;
+	const char    *mime_type;
+	GdkScreen     *screen;
+	GError        *error = NULL;
 
-	screen = gtk_widget_get_screen (widget);
+	screen = gtk_widget_get_screen (GTK_WIDGET (chooser));
 	
-	uri = egg_recent_item_get_uri (item);
-	uri_utf8 = egg_recent_item_get_uri_utf8 (item);
-	mime_type = egg_recent_item_get_mime_type (item);
+	recent_info = gtk_recent_chooser_get_current_item (chooser);
+	uri = gtk_recent_info_get_uri (recent_info);
+	mime_type = gtk_recent_info_get_mime_type (recent_info);
+	//FIXME gtk_recent_info_get_application_info() could be useful
 
 	if (show_uri (uri, mime_type, screen, &error) != TRUE) {
+		char *uri_utf8;
+
+		uri_utf8 = g_filename_to_utf8 (uri, -1, NULL, NULL, NULL);
+		//FIXME this could fail... Maybe we want gtk_recent_info_get_display_name()
+
 		if (error) {
 			panel_error_dialog (screen,
 					    "cannot_open_recent_doc", TRUE,
@@ -104,40 +108,41 @@ recent_documents_activate_cb (EggRecentViewGtk *view, EggRecentItem *item,
 					    uri_utf8,
 					    uri_utf8);
 		}
+
+		g_free (uri_utf8);
 	}
 
-	g_free (uri);
-	g_free (uri_utf8);
-	g_free (mime_type);
+
+	gtk_recent_info_unref (recent_info);
 }
 
 static void
-panel_recent_model_changed_cb (EggRecentModel *model,
-                               GList          *list,
-                               GtkWidget      *menu_item)
+panel_recent_manager_changed_cb (GtkRecentManager *manager,
+				 GtkWidget        *menu_item)
 {
-	if (list)
-		gtk_widget_set_sensitive (menu_item, TRUE);
-	else
-		gtk_widget_set_sensitive (menu_item, FALSE);
+	int size;
+
+	g_object_get (manager, "size", &size, NULL);
+
+	gtk_widget_set_sensitive (menu_item, size > 0);
 }
 
 static GtkWidget *clear_recent_dialog = NULL;
 
 static void
-clear_dialog_response (GtkWidget      *widget,
-		       int             response,
-		       EggRecentModel *model)
+clear_dialog_response (GtkWidget        *widget,
+		       int               response,
+		       GtkRecentManager *manager)
 {
         if (response == GTK_RESPONSE_ACCEPT)
-		egg_recent_model_clear (model);
+		gtk_recent_manager_purge_items (manager, NULL);
 
 	gtk_widget_destroy (widget);
 }
 
 static void
-recent_documents_clear_cb (GtkMenuItem    *menuitem,
-                           EggRecentModel *model)
+recent_documents_clear_cb (GtkMenuItem      *menuitem,
+                           GtkRecentManager *manager)
 {
 	gpointer tmp;
 
@@ -170,7 +175,7 @@ recent_documents_clear_cb (GtkMenuItem    *menuitem,
 	gtk_dialog_set_default_response (GTK_DIALOG (clear_recent_dialog), GTK_RESPONSE_ACCEPT);
 
 	g_signal_connect (clear_recent_dialog, "response",
-			  G_CALLBACK (clear_dialog_response), model);
+			  G_CALLBACK (clear_dialog_response), manager);
 
 	tmp = &clear_recent_dialog;
 	g_object_add_weak_pointer (G_OBJECT (clear_recent_dialog), tmp);
@@ -180,42 +185,13 @@ recent_documents_clear_cb (GtkMenuItem    *menuitem,
 	gtk_widget_show (clear_recent_dialog);
 }
 
-static void
-recent_documents_tooltip_func (GtkTooltips   *tooltips,
-			       GtkWidget     *menu_item,
-			       EggRecentItem *item,
-			       gpointer       user_data)
-{
-	char *uri;
-	char *tooltip;
-	int   offset;
-
-	uri = egg_recent_item_get_uri_for_display (item);
-	g_return_if_fail (uri != NULL);
-
-	if (g_str_has_prefix (uri, g_get_home_dir ()))
-		offset = strlen (g_get_home_dir ()) + 1;
-	else
-		offset = 0;
-
-	/* Translators: %s is a URI */
-	tooltip = g_strdup_printf (_("Open '%s'"), uri + offset);
-
-	g_free (uri);
-
-	gtk_tooltips_set_tip (tooltips, menu_item, tooltip, NULL);
-
-	g_free (tooltip);
-}
-
-EggRecentViewGtk *
+void
 panel_recent_append_documents_menu (GtkWidget        *top_menu,
-				    EggRecentViewGtk *view)
+				    GtkRecentManager *manager)
 {
-	GtkWidget      *menu;
+	GtkWidget      *recent_menu;
 	GtkWidget      *menu_item;
-	EggRecentModel *model;
-	GList          *recent_list;
+	int             size;
 
 	menu_item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (menu_item,
@@ -224,42 +200,36 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 				   GTK_STOCK_OPEN,
 				   _("Recent Documents"),
 				   TRUE);
-	menu = panel_create_menu ();
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), menu);
+	recent_menu = gtk_recent_chooser_menu_new_for_manager (manager);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), recent_menu);
 
-	g_signal_connect (G_OBJECT (menu), "button_press_event",
+	g_signal_connect (G_OBJECT (recent_menu), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (top_menu), menu_item);
 	gtk_widget_show_all (menu_item);
 	
-	if (!view) {
-		/* a model that shows the global recent doc list */
-		model = egg_recent_model_new (EGG_RECENT_MODEL_SORT_MRU);
-		view = egg_recent_view_gtk_new (menu, NULL);
+	gtk_recent_chooser_set_local_only (GTK_RECENT_CHOOSER (recent_menu),
+					   FALSE);
+	gtk_recent_chooser_set_show_tips (GTK_RECENT_CHOOSER (recent_menu),
+					  TRUE);
+	gtk_recent_chooser_set_sort_type (GTK_RECENT_CHOOSER (recent_menu),
+					  GTK_RECENT_SORT_MRU);
 
-		egg_recent_view_gtk_set_tooltip_func (view,
-						      recent_documents_tooltip_func,
-						      NULL);
+	g_signal_connect (GTK_RECENT_CHOOSER (recent_menu),
+			  "item-activated",
+			  G_CALLBACK (recent_documents_activate_cb),
+			  NULL);
 
-		egg_recent_view_gtk_show_numbers (view, FALSE);
-		egg_recent_view_gtk_set_trailing_sep (view, TRUE);
-		egg_recent_view_set_model (EGG_RECENT_VIEW (view), model);
-		egg_recent_view_gtk_set_icon_size (view, panel_menu_icon_get_size ());
-	} else {
-		egg_recent_view_gtk_set_menu (view, menu);
-		model = egg_recent_view_get_model (EGG_RECENT_VIEW (view));
-		g_object_ref (model);
-	}
+	//FIXME this is not possible with GtkRecent...: egg_recent_view_gtk_set_icon_size (view, panel_menu_icon_get_size ());
 
-	g_signal_connect_object (model, "changed",
-				 G_CALLBACK (panel_recent_model_changed_cb),
+	g_signal_connect_object (manager, "changed",
+				 G_CALLBACK (panel_recent_manager_changed_cb),
 				 menu_item, 0);
-	recent_list = egg_recent_model_get_list (model);
-	gtk_widget_set_sensitive (menu_item, g_list_length (recent_list) > 0);
-	if (recent_list)
-		EGG_RECENT_ITEM_LIST_UNREF (recent_list);
-	g_object_unref (model);
+
+	gtk_widget_set_sensitive (menu_item, size > 0);
+
+	add_menu_separator (recent_menu);
 
 	menu_item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (menu_item,
@@ -272,15 +242,9 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 			      menu_item,
 			      _("Clear all items from the recent documents list"),
 			      NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (recent_menu), menu_item);
 
 	g_signal_connect (menu_item, "activate",
 			  G_CALLBACK (recent_documents_clear_cb),
-			  model);
-
-	g_signal_connect_object (view, "activate",
-				 G_CALLBACK (recent_documents_activate_cb),
-				 menu, 0);
-
-	return view;
+			  manager);
 }

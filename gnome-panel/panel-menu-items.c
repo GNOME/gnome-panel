@@ -65,7 +65,7 @@ struct _PanelPlaceMenuItemPrivate {
 	GtkWidget   *menu;
 	PanelWidget *panel;
 
-	EggRecentViewGtk *recent_view;
+	GtkRecentManager *recent_manager;
 
 	GnomeVFSMonitorHandle *bookmarks_monitor;
 
@@ -551,7 +551,7 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 
 
 static GtkWidget *
-panel_place_menu_item_create_menu (EggRecentViewGtk **recent_view)
+panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 {
 	GtkWidget *places_menu;
 	GtkWidget *item;
@@ -620,8 +620,8 @@ panel_place_menu_item_create_menu (EggRecentViewGtk **recent_view)
 					      "gnome-search-tool.desktop",
 					      NULL);
 
-	*recent_view = panel_recent_append_documents_menu (places_menu,
-							   *recent_view);
+	panel_recent_append_documents_menu (places_menu,
+					    place_item->priv->recent_manager);
 
 	return places_menu;
 }
@@ -635,7 +635,7 @@ panel_place_menu_item_recreate_menu (GtkWidget *widget)
 
 	if (place_item->priv->menu) {
 		gtk_widget_destroy (place_item->priv->menu);
-		place_item->priv->menu = panel_place_menu_item_create_menu (&place_item->priv->recent_view);
+		place_item->priv->menu = panel_place_menu_item_create_menu (place_item);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (place_item),
 					   place_item->priv->menu);
 		panel_applet_menu_set_recurse (GTK_MENU (place_item->priv->menu),
@@ -748,10 +748,6 @@ panel_place_menu_item_finalize (GObject *object)
 				 NAMES_DIR,
 				 NULL);
 
-	if (menuitem->priv->recent_view != NULL)
-		g_object_unref (menuitem->priv->recent_view);
-	menuitem->priv->recent_view = NULL;
-
 	if (menuitem->priv->bookmarks_monitor != NULL)
 		gnome_vfs_monitor_cancel (menuitem->priv->bookmarks_monitor);
 	menuitem->priv->bookmarks_monitor = NULL;
@@ -807,6 +803,8 @@ panel_place_menu_item_instance_init (PanelPlaceMenuItem      *menuitem,
 	panel_gconf_notify_add_while_alive (COMPUTER_NAME_KEY,
 					    (GConfClientNotifyFunc) panel_place_menu_item_key_changed,
 					    G_OBJECT (menuitem));
+
+	menuitem->priv->recent_manager = gtk_recent_manager_get_default ();
 
 	bookmarks_filename = g_build_filename (g_get_home_dir (),
 					       BOOKMARKS_FILENAME, NULL);
@@ -958,7 +956,7 @@ panel_place_menu_item_new (gboolean use_image)
 					       image);
 	}
 
-	menuitem->priv->menu = panel_place_menu_item_create_menu (&menuitem->priv->recent_view);
+	menuitem->priv->menu = panel_place_menu_item_create_menu (menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 				   menuitem->priv->menu);
 
