@@ -1,4 +1,4 @@
-/* eggtraymanager.c
+/* na-tray-manager.c
  * Copyright (C) 2002 Anders Carlsson <andersca@gnu.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -15,13 +15,15 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
+ *
+ * Used to be: eggtraymanager.c
  */
 
 #include <config.h>
 #include <string.h>
 #include <libintl.h>
 
-#include "eggtraymanager.h"
+#include "na-tray-manager.h"
 
 #include <gdkconfig.h>
 #include <glib/gi18n.h>
@@ -35,7 +37,7 @@
 #include <gtk/gtksocket.h>
 #include <gtk/gtkwindow.h>
 
-#include "eggmarshalers.h"
+#include "na-marshal.h"
 
 /* Signals */
 enum
@@ -76,26 +78,26 @@ static guint manager_signals[LAST_SIGNAL] = { 0 };
 #define SYSTEM_TRAY_ORIENTATION_VERT 1
 
 #ifdef GDK_WINDOWING_X11
-static gboolean egg_tray_manager_check_running_xscreen (Screen *xscreen);
+static gboolean na_tray_manager_check_running_xscreen (Screen *xscreen);
 #endif
 
-static void egg_tray_manager_init (EggTrayManager *manager);
-static void egg_tray_manager_class_init (EggTrayManagerClass *klass);
+static void na_tray_manager_init (NaTrayManager *manager);
+static void na_tray_manager_class_init (NaTrayManagerClass *klass);
 
-static void egg_tray_manager_finalize     (GObject      *object);
-static void egg_tray_manager_set_property (GObject      *object,
-					   guint         prop_id,
-					   const GValue *value,
-					   GParamSpec   *pspec);
-static void egg_tray_manager_get_property (GObject      *object,
-					   guint         prop_id,
-					   GValue       *value,
-					   GParamSpec   *pspec);
+static void na_tray_manager_finalize     (GObject      *object);
+static void na_tray_manager_set_property (GObject      *object,
+					  guint         prop_id,
+					  const GValue *value,
+					  GParamSpec   *pspec);
+static void na_tray_manager_get_property (GObject      *object,
+					  guint         prop_id,
+					  GValue       *value,
+					  GParamSpec   *pspec);
 
-static void egg_tray_manager_unmanage (EggTrayManager *manager);
+static void na_tray_manager_unmanage (NaTrayManager *manager);
 
 GType
-egg_tray_manager_get_type (void)
+na_tray_manager_get_type (void)
 {
   static GType our_type = 0;
 
@@ -103,18 +105,18 @@ egg_tray_manager_get_type (void)
     {
       static const GTypeInfo our_info =
       {
-	sizeof (EggTrayManagerClass),
+	sizeof (NaTrayManagerClass),
 	(GBaseInitFunc) NULL,
 	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) egg_tray_manager_class_init,
+	(GClassInitFunc) na_tray_manager_class_init,
 	NULL, /* class_finalize */
 	NULL, /* class_data */
-	sizeof (EggTrayManager),
+	sizeof (NaTrayManager),
 	0,    /* n_preallocs */
-	(GInstanceInitFunc) egg_tray_manager_init
+	(GInstanceInitFunc) na_tray_manager_init
       };
 
-      our_type = g_type_register_static (G_TYPE_OBJECT, "EggTrayManager", &our_info, 0);
+      our_type = g_type_register_static (G_TYPE_OBJECT, "NaTrayManager", &our_info, 0);
     }
 
   return our_type;
@@ -122,23 +124,23 @@ egg_tray_manager_get_type (void)
 }
 
 static void
-egg_tray_manager_init (EggTrayManager *manager)
+na_tray_manager_init (NaTrayManager *manager)
 {
   manager->invisible = NULL;
   manager->socket_table = g_hash_table_new (NULL, NULL);
 }
 
 static void
-egg_tray_manager_class_init (EggTrayManagerClass *klass)
+na_tray_manager_class_init (NaTrayManagerClass *klass)
 {
   GObjectClass *gobject_class;
   
   parent_class = g_type_class_peek_parent (klass);
   gobject_class = (GObjectClass *)klass;
 
-  gobject_class->finalize = egg_tray_manager_finalize;
-  gobject_class->set_property = egg_tray_manager_set_property;
-  gobject_class->get_property = egg_tray_manager_get_property;
+  gobject_class->finalize = na_tray_manager_finalize;
+  gobject_class->set_property = na_tray_manager_set_property;
+  gobject_class->get_property = na_tray_manager_get_property;
 
   g_object_class_install_property (gobject_class,
 				   PROP_ORIENTATION,
@@ -153,7 +155,7 @@ egg_tray_manager_class_init (EggTrayManagerClass *klass)
     g_signal_new ("tray_icon_added",
 		  G_OBJECT_CLASS_TYPE (klass),
 		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (EggTrayManagerClass, tray_icon_added),
+		  G_STRUCT_OFFSET (NaTrayManagerClass, tray_icon_added),
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
@@ -163,7 +165,7 @@ egg_tray_manager_class_init (EggTrayManagerClass *klass)
     g_signal_new ("tray_icon_removed",
 		  G_OBJECT_CLASS_TYPE (klass),
 		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (EggTrayManagerClass, tray_icon_removed),
+		  G_STRUCT_OFFSET (NaTrayManagerClass, tray_icon_removed),
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
@@ -172,9 +174,9 @@ egg_tray_manager_class_init (EggTrayManagerClass *klass)
     g_signal_new ("message_sent",
 		  G_OBJECT_CLASS_TYPE (klass),
 		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (EggTrayManagerClass, message_sent),
+		  G_STRUCT_OFFSET (NaTrayManagerClass, message_sent),
 		  NULL, NULL,
-		  _egg_marshal_VOID__OBJECT_STRING_LONG_LONG,
+		  _na_marshal_VOID__OBJECT_STRING_LONG_LONG,
 		  G_TYPE_NONE, 4,
 		  GTK_TYPE_SOCKET,
 		  G_TYPE_STRING,
@@ -184,9 +186,9 @@ egg_tray_manager_class_init (EggTrayManagerClass *klass)
     g_signal_new ("message_cancelled",
 		  G_OBJECT_CLASS_TYPE (klass),
 		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (EggTrayManagerClass, message_cancelled),
+		  G_STRUCT_OFFSET (NaTrayManagerClass, message_cancelled),
 		  NULL, NULL,
-		  _egg_marshal_VOID__OBJECT_LONG,
+		  _na_marshal_VOID__OBJECT_LONG,
 		  G_TYPE_NONE, 2,
 		  GTK_TYPE_SOCKET,
 		  G_TYPE_LONG);
@@ -194,7 +196,7 @@ egg_tray_manager_class_init (EggTrayManagerClass *klass)
     g_signal_new ("lost_selection",
 		  G_OBJECT_CLASS_TYPE (klass),
 		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (EggTrayManagerClass, lost_selection),
+		  G_STRUCT_OFFSET (NaTrayManagerClass, lost_selection),
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
@@ -202,20 +204,20 @@ egg_tray_manager_class_init (EggTrayManagerClass *klass)
 #if defined (GDK_WINDOWING_X11)
   /* Nothing */
 #elif defined (GDK_WINDOWING_WIN32)
-  g_warning ("Port eggtraymanager to Win32");
+  g_warning ("Port NaTrayManager to Win32");
 #else
-  g_warning ("Port eggtraymanager to this GTK+ backend");
+  g_warning ("Port NaTrayManager to this GTK+ backend");
 #endif
 }
 
 static void
-egg_tray_manager_finalize (GObject *object)
+na_tray_manager_finalize (GObject *object)
 {
-  EggTrayManager *manager;
+  NaTrayManager *manager;
   
-  manager = EGG_TRAY_MANAGER (object);
+  manager = NA_TRAY_MANAGER (object);
 
-  egg_tray_manager_unmanage (manager);
+  na_tray_manager_unmanage (manager);
 
   g_list_free (manager->messages);
   g_hash_table_destroy (manager->socket_table);
@@ -224,17 +226,17 @@ egg_tray_manager_finalize (GObject *object)
 }
 
 static void
-egg_tray_manager_set_property (GObject      *object,
-			       guint         prop_id,
-			       const GValue *value,
-			       GParamSpec   *pspec)
+na_tray_manager_set_property (GObject      *object,
+			      guint         prop_id,
+			      const GValue *value,
+			      GParamSpec   *pspec)
 {
-  EggTrayManager *manager = EGG_TRAY_MANAGER (object);
+  NaTrayManager *manager = NA_TRAY_MANAGER (object);
 
   switch (prop_id)
     {
     case PROP_ORIENTATION:
-      egg_tray_manager_set_orientation (manager, g_value_get_enum (value));
+      na_tray_manager_set_orientation (manager, g_value_get_enum (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -243,12 +245,12 @@ egg_tray_manager_set_property (GObject      *object,
 }
 
 static void
-egg_tray_manager_get_property (GObject    *object,
-			       guint       prop_id,
-			       GValue     *value,
-			       GParamSpec *pspec)
+na_tray_manager_get_property (GObject    *object,
+			      guint       prop_id,
+			      GValue     *value,
+			      GParamSpec *pspec)
 {
-  EggTrayManager *manager = EGG_TRAY_MANAGER (object);
+  NaTrayManager *manager = NA_TRAY_MANAGER (object);
 
   switch (prop_id)
     {
@@ -261,12 +263,12 @@ egg_tray_manager_get_property (GObject    *object,
     }
 }
 
-EggTrayManager *
-egg_tray_manager_new (void)
+NaTrayManager *
+na_tray_manager_new (void)
 {
-  EggTrayManager *manager;
+  NaTrayManager *manager;
 
-  manager = g_object_new (EGG_TYPE_TRAY_MANAGER, NULL);
+  manager = g_object_new (NA_TYPE_TRAY_MANAGER, NULL);
 
   return manager;
 }
@@ -274,15 +276,15 @@ egg_tray_manager_new (void)
 #ifdef GDK_WINDOWING_X11
 
 static gboolean
-egg_tray_manager_plug_removed (GtkSocket       *socket,
-			       EggTrayManager  *manager)
+na_tray_manager_plug_removed (GtkSocket       *socket,
+			      NaTrayManager   *manager)
 {
   Window *window;
 
-  window = g_object_get_data (G_OBJECT (socket), "egg-tray-child-window");
+  window = g_object_get_data (G_OBJECT (socket), "na-tray-child-window");
 
   g_hash_table_remove (manager->socket_table, GINT_TO_POINTER (*window));
-  g_object_set_data (G_OBJECT (socket), "egg-tray-child-window",
+  g_object_set_data (G_OBJECT (socket), "na-tray-child-window",
 		     NULL);
   
   g_signal_emit (manager, manager_signals[TRAY_ICON_REMOVED], 0, socket);
@@ -292,8 +294,8 @@ egg_tray_manager_plug_removed (GtkSocket       *socket,
 }
 
 static void
-egg_tray_manager_handle_dock_request (EggTrayManager       *manager,
-				      XClientMessageEvent  *xevent)
+na_tray_manager_handle_dock_request (NaTrayManager       *manager,
+				     XClientMessageEvent *xevent)
 {
   GtkWidget *socket;
   Window *window;
@@ -315,7 +317,7 @@ egg_tray_manager_handle_dock_request (EggTrayManager       *manager,
   *window = xevent->data.l[2];
       
   g_object_set_data_full (G_OBJECT (socket),
-			  "egg-tray-child-window",
+			  "na-tray-child-window",
 			  window, g_free);
   g_signal_emit (manager, manager_signals[TRAY_ICON_ADDED], 0,
 		 socket);
@@ -324,7 +326,7 @@ egg_tray_manager_handle_dock_request (EggTrayManager       *manager,
   if (GTK_IS_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (socket))))
     {
       g_signal_connect (socket, "plug_removed",
-			G_CALLBACK (egg_tray_manager_plug_removed), manager);
+			G_CALLBACK (na_tray_manager_plug_removed), manager);
       
       gtk_socket_add_id (GTK_SOCKET (socket), *window);
 
@@ -359,8 +361,8 @@ pending_message_free (PendingMessage *message)
 }
 
 static void
-egg_tray_manager_handle_message_data (EggTrayManager       *manager,
-				       XClientMessageEvent  *xevent)
+na_tray_manager_handle_message_data (NaTrayManager       *manager,
+				     XClientMessageEvent *xevent)
 {
   GList *p;
   int len;
@@ -404,8 +406,8 @@ egg_tray_manager_handle_message_data (EggTrayManager       *manager,
 }
 
 static void
-egg_tray_manager_handle_begin_message (EggTrayManager       *manager,
-				       XClientMessageEvent  *xevent)
+na_tray_manager_handle_begin_message (NaTrayManager       *manager,
+				      XClientMessageEvent *xevent)
 {
   GList *p;
   PendingMessage *msg;
@@ -440,8 +442,8 @@ egg_tray_manager_handle_begin_message (EggTrayManager       *manager,
 }
 
 static void
-egg_tray_manager_handle_cancel_message (EggTrayManager       *manager,
-					XClientMessageEvent  *xevent)
+na_tray_manager_handle_cancel_message (NaTrayManager       *manager,
+				       XClientMessageEvent *xevent)
 {
   GtkSocket *socket;
   
@@ -455,21 +457,21 @@ egg_tray_manager_handle_cancel_message (EggTrayManager       *manager,
 }
 
 static GdkFilterReturn
-egg_tray_manager_handle_event (EggTrayManager       *manager,
-			       XClientMessageEvent  *xevent)
+na_tray_manager_handle_event (NaTrayManager       *manager,
+			      XClientMessageEvent *xevent)
 {
   switch (xevent->data.l[1])
     {
     case SYSTEM_TRAY_REQUEST_DOCK:
-      egg_tray_manager_handle_dock_request (manager, xevent);
+      na_tray_manager_handle_dock_request (manager, xevent);
       return GDK_FILTER_REMOVE;
 
     case SYSTEM_TRAY_BEGIN_MESSAGE:
-      egg_tray_manager_handle_begin_message (manager, xevent);
+      na_tray_manager_handle_begin_message (manager, xevent);
       return GDK_FILTER_REMOVE;
 
     case SYSTEM_TRAY_CANCEL_MESSAGE:
-      egg_tray_manager_handle_cancel_message (manager, xevent);
+      na_tray_manager_handle_cancel_message (manager, xevent);
       return GDK_FILTER_REMOVE;
     default:
       break;
@@ -479,27 +481,27 @@ egg_tray_manager_handle_event (EggTrayManager       *manager,
 }
 
 static GdkFilterReturn
-egg_tray_manager_window_filter (GdkXEvent *xev, GdkEvent *event, gpointer data)
+na_tray_manager_window_filter (GdkXEvent *xev, GdkEvent *event, gpointer data)
 {
   XEvent *xevent = (GdkXEvent *)xev;
-  EggTrayManager *manager = data;
+  NaTrayManager *manager = data;
 
   if (xevent->type == ClientMessage)
     {
       if (xevent->xclient.message_type == manager->opcode_atom)
 	{
-	  return egg_tray_manager_handle_event (manager, (XClientMessageEvent *)xevent);
+	  return na_tray_manager_handle_event (manager, (XClientMessageEvent *)xevent);
 	}
       else if (xevent->xclient.message_type == manager->message_data_atom)
 	{
-	  egg_tray_manager_handle_message_data (manager, (XClientMessageEvent *)xevent);
+	  na_tray_manager_handle_message_data (manager, (XClientMessageEvent *)xevent);
 	  return GDK_FILTER_REMOVE;
 	}
     }
   else if (xevent->type == SelectionClear)
     {
       g_signal_emit (manager, manager_signals[LOST_SELECTION], 0);
-      egg_tray_manager_unmanage (manager);
+      na_tray_manager_unmanage (manager);
     }
   return GDK_FILTER_CONTINUE;
 }
@@ -507,7 +509,7 @@ egg_tray_manager_window_filter (GdkXEvent *xev, GdkEvent *event, gpointer data)
 #endif  
 
 static void
-egg_tray_manager_unmanage (EggTrayManager *manager)
+na_tray_manager_unmanage (NaTrayManager *manager)
 {
 #ifdef GDK_WINDOWING_X11
   Display *display;
@@ -531,7 +533,7 @@ egg_tray_manager_unmanage (EggTrayManager *manager)
       XSetSelectionOwner (display, manager->selection_atom, None, timestamp);
     }
 
-  gdk_window_remove_filter (invisible->window, egg_tray_manager_window_filter, manager);  
+  gdk_window_remove_filter (invisible->window, na_tray_manager_window_filter, manager);  
 
   manager->invisible = NULL; /* prior to destroy for reentrancy paranoia */
   gtk_widget_destroy (invisible);
@@ -540,7 +542,7 @@ egg_tray_manager_unmanage (EggTrayManager *manager)
 }
 
 static void
-egg_tray_manager_set_orientation_property (EggTrayManager *manager)
+na_tray_manager_set_orientation_property (NaTrayManager *manager)
 {
 #ifdef GDK_WINDOWING_X11
   gulong data[1];
@@ -566,21 +568,21 @@ egg_tray_manager_set_orientation_property (EggTrayManager *manager)
 #ifdef GDK_WINDOWING_X11
 
 static gboolean
-egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
+na_tray_manager_manage_xscreen (NaTrayManager *manager, Screen *xscreen)
 {
   GtkWidget *invisible;
   char *selection_atom_name;
   guint32 timestamp;
   GdkScreen *screen;
   
-  g_return_val_if_fail (EGG_IS_TRAY_MANAGER (manager), FALSE);
+  g_return_val_if_fail (NA_IS_TRAY_MANAGER (manager), FALSE);
   g_return_val_if_fail (manager->screen == NULL, FALSE);
 
   /* If there's already a manager running on the screen
    * we can't create another one.
    */
 #if 0
-  if (egg_tray_manager_check_running_xscreen (xscreen))
+  if (na_tray_manager_check_running_xscreen (xscreen))
     return FALSE;
 #endif
   screen = gdk_display_get_screen (gdk_x11_lookup_xdisplay (DisplayOfScreen (xscreen)),
@@ -600,7 +602,7 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
   manager->orientation_atom = XInternAtom (DisplayOfScreen (xscreen),
 					   "_NET_SYSTEM_TRAY_ORIENTATION",
 					   FALSE);
-  egg_tray_manager_set_orientation_property (manager);
+  na_tray_manager_set_orientation_property (manager);
   
   timestamp = gdk_x11_get_server_time (invisible->window);
   XSetSelectionOwner (DisplayOfScreen (xscreen), manager->selection_atom,
@@ -639,7 +641,7 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
 						False);
 
       /* Add a window filter */
-      gdk_window_add_filter (invisible->window, egg_tray_manager_window_filter, manager);
+      gdk_window_add_filter (invisible->window, na_tray_manager_window_filter, manager);
       return TRUE;
     }
   else
@@ -653,15 +655,15 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
 #endif
 
 gboolean
-egg_tray_manager_manage_screen (EggTrayManager *manager,
-				GdkScreen      *screen)
+na_tray_manager_manage_screen (NaTrayManager *manager,
+			       GdkScreen     *screen)
 {
   g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
   g_return_val_if_fail (manager->screen == NULL, FALSE);
 
 #ifdef GDK_WINDOWING_X11
-  return egg_tray_manager_manage_xscreen (manager, 
-					  GDK_SCREEN_XSCREEN (screen));
+  return na_tray_manager_manage_xscreen (manager, 
+					 GDK_SCREEN_XSCREEN (screen));
 #else
   return FALSE;
 #endif
@@ -670,7 +672,7 @@ egg_tray_manager_manage_screen (EggTrayManager *manager,
 #ifdef GDK_WINDOWING_X11
 
 static gboolean
-egg_tray_manager_check_running_xscreen (Screen *xscreen)
+na_tray_manager_check_running_xscreen (Screen *xscreen)
 {
   Atom selection_atom;
   char *selection_atom_name;
@@ -689,20 +691,20 @@ egg_tray_manager_check_running_xscreen (Screen *xscreen)
 #endif
 
 gboolean
-egg_tray_manager_check_running (GdkScreen *screen)
+na_tray_manager_check_running (GdkScreen *screen)
 {
   g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 
 #ifdef GDK_WINDOWING_X11
-  return egg_tray_manager_check_running_xscreen (GDK_SCREEN_XSCREEN (screen));
+  return na_tray_manager_check_running_xscreen (GDK_SCREEN_XSCREEN (screen));
 #else
   return FALSE;
 #endif
 }
 
 char *
-egg_tray_manager_get_child_title (EggTrayManager *manager,
-				  EggTrayManagerChild *child)
+na_tray_manager_get_child_title (NaTrayManager      *manager,
+				 NaTrayManagerChild *child)
 {
   char *retval = NULL;
 #ifdef GDK_WINDOWING_X11
@@ -714,11 +716,11 @@ egg_tray_manager_get_child_title (EggTrayManager *manager,
   gulong bytes_after;
   guchar *val;
 
-  g_return_val_if_fail (EGG_IS_TRAY_MANAGER (manager), NULL);
+  g_return_val_if_fail (NA_IS_TRAY_MANAGER (manager), NULL);
   g_return_val_if_fail (GTK_IS_SOCKET (child), NULL);
   
   child_window = g_object_get_data (G_OBJECT (child),
-				    "egg-tray-child-window");
+				    "na-tray-child-window");
 
   utf8_string = XInternAtom (GDK_DISPLAY (), "UTF8_STRING", False);
   atom = XInternAtom (GDK_DISPLAY (), "_NET_WM_NAME", False);
@@ -759,25 +761,25 @@ egg_tray_manager_get_child_title (EggTrayManager *manager,
 }
 
 void
-egg_tray_manager_set_orientation (EggTrayManager *manager,
-				  GtkOrientation  orientation)
+na_tray_manager_set_orientation (NaTrayManager  *manager,
+				 GtkOrientation  orientation)
 {
-  g_return_if_fail (EGG_IS_TRAY_MANAGER (manager));
+  g_return_if_fail (NA_IS_TRAY_MANAGER (manager));
 
   if (manager->orientation != orientation)
     {
       manager->orientation = orientation;
 
-      egg_tray_manager_set_orientation_property (manager);
+      na_tray_manager_set_orientation_property (manager);
 
       g_object_notify (G_OBJECT (manager), "orientation");
     }
 }
 
 GtkOrientation
-egg_tray_manager_get_orientation (EggTrayManager *manager)
+na_tray_manager_get_orientation (NaTrayManager *manager)
 {
-  g_return_val_if_fail (EGG_IS_TRAY_MANAGER (manager), GTK_ORIENTATION_HORIZONTAL);
+  g_return_val_if_fail (NA_IS_TRAY_MANAGER (manager), GTK_ORIENTATION_HORIZONTAL);
 
   return manager->orientation;
 }

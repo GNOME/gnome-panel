@@ -32,7 +32,7 @@
 
 #include <bonobo/bonobo-shlib-factory.h>
 
-#include "eggtraymanager.h"
+#include "na-tray-manager.h"
 #include "fixedtip.h"
 #include "obox.h"
 
@@ -44,7 +44,7 @@
 #define N_(x) x
 #endif
 
-static EggTrayManager *tray_manager = NULL;
+static NaTrayManager *tray_manager = NULL;
 static GSList *all_trays = NULL;
 
 typedef struct
@@ -153,7 +153,7 @@ static const BonoboUIVerb menu_verbs [] = {
 };
 
 static void
-tray_added (EggTrayManager *manager, GtkWidget *icon, void *data)
+tray_added (NaTrayManager *manager, GtkWidget *icon, void *data)
 {
   SystemTray *tray;
 
@@ -168,13 +168,13 @@ tray_added (EggTrayManager *manager, GtkWidget *icon, void *data)
 }
 
 static void
-tray_removed (EggTrayManager *manager, GtkWidget *icon, void *data)
+tray_removed (NaTrayManager *manager, GtkWidget *icon, void *data)
 {
 
 }
 
 static void
-message_sent (EggTrayManager *manager, GtkWidget *icon, const char *text, glong id, glong timeout,
+message_sent (NaTrayManager *manager, GtkWidget *icon, const char *text, glong id, glong timeout,
               void *data)
 {
   /* FIXME multihead */
@@ -186,7 +186,7 @@ message_sent (EggTrayManager *manager, GtkWidget *icon, const char *text, glong 
 }
 
 static void
-message_cancelled (EggTrayManager *manager, GtkWidget *icon, glong id,
+message_cancelled (NaTrayManager *manager, GtkWidget *icon, glong id,
                    void *data)
 {
   
@@ -197,7 +197,7 @@ update_size_and_orientation (SystemTray *tray)
 {
   tray_obox_set_orientation (TRAY_OBOX (tray->box), tray->orientation);
 
-  egg_tray_manager_set_orientation (tray_manager, tray->orientation);
+  na_tray_manager_set_orientation (tray_manager, tray->orientation);
 
   /* note, you want this larger if the frame has non-NONE relief by default. */
 #define MIN_BOX_SIZE 3
@@ -283,9 +283,9 @@ applet_factory (PanelApplet *applet,
 
       screen = gtk_widget_get_screen (GTK_WIDGET (applet));
 
-      tray_manager = egg_tray_manager_new ();
+      tray_manager = na_tray_manager_new ();
 
-      if (!egg_tray_manager_manage_screen (tray_manager, screen))
+      if (!na_tray_manager_manage_screen (tray_manager, screen))
         g_printerr ("System tray didn't get the system tray manager selection\n");
 
       g_signal_connect (tray_manager, "tray_icon_added",

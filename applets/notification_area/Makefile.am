@@ -16,19 +16,16 @@ INCLUDES =							\
 
 libexec_PROGRAMS = notification-area-applet
 
-EGGFILES=			\
-	eggtraymanager.h	\
-	eggtraymanager.c
-
 notification_area_applet_SOURCES =		\
 	fixedtip.h				\
 	fixedtip.c				\
 	main.c					\
 	obox.c					\
 	obox.h					\
-	$(EGGFILES)				\
-	eggmarshalers.h				\
-	eggmarshalers.c
+	na-tray-manager.c			\
+	na-tray-manager.h			\
+	na-marshal.c				\
+	na-marshal.h
 
 notification_area_applet_LDADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
@@ -52,23 +49,17 @@ ui_DATA = GNOME_NotificationAreaApplet.xml
 EXTRA_DIST =					\
 	GNOME_NotificationAreaApplet.server.in.in	\
 	$(ui_DATA)				\
-	update-from-egg.sh			\
-	eggmarshalers.list
+	na-marshal.list
 
-EGGDIR=$(srcdir)/../../../libegg/libegg/tray
-
-BUILT_SOURCES = eggmarshalers.c eggmarshalers.h
+BUILT_SOURCES = na-marshal.c na-marshal.h
 
 CLEANFILES =                                    \
 	GNOME_NotificationAreaApplet.server.in        \
 	GNOME_NotificationAreaApplet.server
 
-regenerate-built-sources:
-	EGGFILES="$(EGGFILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
+na-marshal.h: na-marshal.list $(GLIB_GENMARSHAL)
+	$(GLIB_GENMARSHAL) $< --header --prefix=_na_marshal > $@
 
-eggmarshalers.h: eggmarshalers.list $(GLIB_GENMARSHAL)
-	$(GLIB_GENMARSHAL) $< --header --prefix=_egg_marshal > $@
-
-eggmarshalers.c: eggmarshalers.list $(GLIB_GENMARSHAL)
-	echo "#include \"eggmarshalers.h\"" > $@ && \
-	$(GLIB_GENMARSHAL) $< --body --prefix=_egg_marshal >> $@
+na-marshal.c: na-marshal.list $(GLIB_GENMARSHAL)
+	echo "#include \"na-marshal.h\"" > $@ && \
+	$(GLIB_GENMARSHAL) $< --body --prefix=_na_marshal >> $@
