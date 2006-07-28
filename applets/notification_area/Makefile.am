@@ -39,8 +39,10 @@ serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_NotificationAreaApplet.server.in
 server_DATA     = GNOME_NotificationAreaApplet.server
 
-GNOME_NotificationAreaApplet.server.in: $(srcdir)/GNOME_NotificationAreaApplet.server.in.in
-	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+$(server_in_files): $(server_in_files).in
+	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+	    $< > $@
 
 @INTLTOOL_SERVER_RULE@
 
