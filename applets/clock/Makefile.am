@@ -28,15 +28,17 @@ clock_applet_LDADD =					\
 
 libexec_PROGRAMS = clock-applet
 
-GNOME_ClockApplet_Factory.server.in: GNOME_ClockApplet_Factory.server.in.in
-	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
-
 uidir 	= $(datadir)/gnome-2.0/ui
 ui_DATA	= GNOME_ClockApplet.xml	
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_ClockApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
+
+$(server_in_files): $(server_in_files).in
+	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+	    $< > $@
 
 @INTLTOOL_SERVER_RULE@
 
