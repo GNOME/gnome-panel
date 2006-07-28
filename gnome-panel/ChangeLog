@@ -1,3 +1,16 @@
+2006-07-28  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-applet-frame.c: (panel_applet_frame_cnx_broken): check whether
+	our X connection is still alive before displaying the dialog. (See bug
+	#34803 for rationale)
+	* xstuff.[ch]: (xstuff_xio_error_handler): new
+	(xstuff_is_display_dead): new
+	(xstuff_init): new, installs the xio error handler
+	* main.c: (main): call xstuff_init()
+	Based on patch by Ray Strode <rstrode@redhat.com> and
+	Frédéric Crozat <fcrozat@mandriva.com>
+	Fix bug #348803
+
 ==================== 2.15.90 ====================
 
 2006-07-24  Vincent Untz  <vuntz@gnome.org>

@@ -25,6 +25,7 @@
 #include "panel-stock-icons.h"
 #include "panel-action-protocol.h"
 #include "panel-lockdown.h"
+#include "xstuff.h"
 
 #include "nothing.cP"
 
@@ -88,6 +89,8 @@ main (int argc, char **argv)
 	g_slist_foreach (panels,
 			 (GFunc)panel_widget_add_forbidden,
 			 NULL);
+
+	xstuff_init ();
 
 	gtk_main ();
 

@@ -30,4 +30,8 @@ void xstuff_grab_key_on_all_screens     (int      keycode,
 					 guint    modifiers,
 					 gboolean grab);
 
+gboolean xstuff_is_display_dead         (void);
+
+void xstuff_init                        (void);
+
 #endif /* __XSTUFF_H__ */

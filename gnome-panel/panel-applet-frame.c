@@ -40,6 +40,7 @@
 #include "panel-background.h"
 #include "panel-lockdown.h"
 #include "panel-stock-icons.h"
+#include "xstuff.h"
 
 #define PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFramePrivate))
 
@@ -944,6 +945,9 @@ panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (frame));
+
+	if (xstuff_is_display_dead ())
+		return;
 
 	if (frame->priv->iid)
 		applet_name = panel_applet_frame_get_name (frame->priv->iid);

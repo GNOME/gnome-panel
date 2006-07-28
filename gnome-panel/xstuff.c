@@ -24,6 +24,9 @@
 
 #include "xstuff.h"
 
+static int (* xstuff_old_xio_error_handler) (Display *) = NULL;
+static gboolean xstuff_display_is_dead = FALSE;
+
 static Atom
 panel_atom_get (const char *atom_name)
 {
@@ -500,4 +503,27 @@ xstuff_grab_key_on_all_screens (int      keycode,
 				    keycode, modifiers,
 				    gdk_x11_drawable_get_xid (root));
 	}
+}
+
+static int
+xstuff_xio_error_handler (Display *display)
+{
+	xstuff_display_is_dead = TRUE;
+
+	if (xstuff_old_xio_error_handler)
+		return xstuff_old_xio_error_handler (display);
+
+	return 0;
+}
+
+gboolean
+xstuff_is_display_dead (void)
+{
+	return xstuff_display_is_dead;
+}
+
+void
+xstuff_init (void)
+{
+	xstuff_old_xio_error_handler = XSetIOErrorHandler (xstuff_xio_error_handler);
 }
