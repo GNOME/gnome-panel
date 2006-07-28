@@ -45,7 +45,9 @@ server_in_files = GNOME_Wncklet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
 $(server_in_files): $(server_in_files).in
-	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+	    $< > $@
 
 @INTLTOOL_SERVER_RULE@
 
