@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel 2.14\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-02-14 08:23+0100\n"
-"PO-Revision-Date: 2006-02-23 20:05+0200\n"
+"PO-Revision-Date: 2006-05-10 23:16+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -333,6 +333,9 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
+"Selle võtme kasutamine on tänu 'format' võtmele alates GNOME versioonist 2.6 "
+"aegunud. See skeem on alles jäetud vanemate versioonidega ühildumise "
+"eesmärgil."
 
 #: ../applets/clock/clock.schemas.in.h:24
 msgid ""
@@ -340,6 +343,9 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Selle võtmega määratakse kellarakendi poolt kasutatav vorming juhul, kui "
+"vorminguvõti format väärtuseks on määratud \"custom\". See vorming on "
+"sarnane strftime() funktsiooni vormingule."
 
 #: ../applets/clock/clock.schemas.in.h:25
 msgid ""
@@ -352,10 +358,18 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
+"Selle võtmega määratakse kellarakendi tunnivorming. Võimalikud väärtused "
+"on \"12-hour\" (12-tunnine), \"24-hour\" (24-tunnine), \"internet\", "
+"\"unix\" ja \"custom\". Kui väärtuseks on \"internet\", siis kuvab kell "
+"Interneti aega. Interneti ajasüsteem jagab päeva tuhandeks \"löögiks\". "
+"Selles süsteemis pole ajavööndeid ja aeg on üle kogu maailma ühtne. Väärtuse "
+"\"unix\" korral kuvab kell sekundeid alates epohhi (1970-01-01) algusest. "
+"Väärtuse \"custom\" korral kuvatakse kohandatud aega custom_format võtmega "
+"määratud vormingus."
 
 #: ../applets/clock/clock.schemas.in.h:26
 msgid "This key specifies the program to run in order to configure the time."
-msgstr ""
+msgstr "Selle võtmega määratakse aja seadistamiseks käivitatav programm."
 
 #: ../applets/clock/clock.schemas.in.h:27
 msgid "Time configuration tool"
@@ -384,7 +398,7 @@ msgstr "Kala"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "From Whence That Stupid Fish Came"
-msgstr ""
+msgstr "Kustkohast see lollakas kala tuli"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "Wanda Factory"
@@ -597,7 +611,7 @@ msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
 msgstr ""
-"Selle võtme abil määratakse käsk, mida proovitakse kala peal klõpsamise "
+"Selle võtmega määratakse käsk, mida proovitakse kala peal klõpsamise "
 "korral käivitada."
 
 #: ../applets/fish/fish.schemas.in.h:10
@@ -605,16 +619,20 @@ msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
+"See võti määrab kalarakendi animatsiooni jaoks kasutatava pildifaili nime "
+"suhtelisena pixmap kataloogi suhtes."
 
 #: ../applets/fish/fish.schemas.in.h:11
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
 msgstr ""
+"Selle võtmega määratakse kaadrite arv, mida kala animatsioonis kuvatakse."
 
 #: ../applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr ""
+"Selle võtmega määratakse iga kaadri kuvamiseks kulutatav sekundite arv."
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
@@ -714,13 +732,15 @@ msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
+"Sinu aknahaldur ei toeta töölaua näitamise nuppu või pole sul aknahaldur "
+"üldse käivitatud."
 
 #: ../applets/wncklet/window-list.c:789
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
 msgstr ""
-"Akende loend näitab kõikide nähtavate akende nimekirja nuppudena ja laseb "
+"Aknaloend näitab kõikide nähtavate akende nimekirja nuppudena ja laseb "
 "sul neid sirvida."
 
 #: ../applets/wncklet/window-list.glade.h:2
@@ -797,7 +817,7 @@ msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"Määrab, millal grupeerida sama rakenduse aknad akende loendis. Võimalikud "
+"Määrab, millal grupeerida sama rakenduse aknad aknaloendis. Võimalikud "
 "väärtused on mitte kunagi \"never\", automaatselt \"auto\" ja alati \"always"
 "\"."
 
@@ -806,7 +826,7 @@ msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"Kui see väärtus on tõene, siis akende loend näitab kõikide tööalade aknaid, "
+"Kui see väärtus on tõene, siis aknaloend näitab kõikide tööalade aknaid, "
 "vastasel juhul näidatakse ainult aktiivse tööala aknaid."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
@@ -820,11 +840,11 @@ msgstr ""
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
-msgstr "Suurim aknanimekirja suurus"
+msgstr "Aknaloendi suurim suurus"
 
 #: ../applets/wncklet/window-list.schemas.in.h:5
 msgid "Minimum window list size"
-msgstr "Väikseim aknanimekirja suurus."
+msgstr "Aknaloendi väikseim suurus."
 
 #: ../applets/wncklet/window-list.schemas.in.h:6
 msgid "Move windows to current workspace when unminimized"
@@ -840,13 +860,14 @@ msgid ""
 "maximum width setting is useful to limit the size of the window list in "
 "large panels, where the window list could fill the entire space available."
 msgstr ""
-"See väärtus on akende loendi suurim laius, mida rakend tellib. See on "
-"kasulik eelkõige rakendi laiuse piiramiseks suurtel paneelidel, kus akende "
-"loend võib hõivata kogu vaba ruumi."
+"Selle võtme väärtus määrab suurima laiuse, mida aknaloend omale küsib. See "
+"on kasulik eelkõige rakendi laiuse piiramiseks suurtel paneelidel, kus "
+"aknaloend võib hõivata kogu vaba ruumi."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "This key specifies the minimum width that the window list requests."
 msgstr ""
+"Selle võtmega määratakse väikseim laius, mida aknaloend endale küsib."
 
 #: ../applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
@@ -967,7 +988,7 @@ msgid ""
 "vertical layout) the workspace switcher shows the workspaces in. This key is "
 "only relevant if the display_all_workspaces key is true."
 msgstr ""
-"Selle võtme abil määratakse, mitmes reas (rõhtasendi puhul) või veerus "
+"Selle võtmega määratakse, mitmes reas (rõhtasendi puhul) või veerus "
 "(püstasendi puhul) tööalade lüliti tööalasid näitab. See võti kehtib ainult "
 "juhul, kui võti display_all_workspaces on märgitud."
 
@@ -1308,7 +1329,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-applet-frame.c:967
 msgid "_Don't Reload"
-msgstr "Ä_ra lae uuesti"
+msgstr "Ä_ra laadi uuesti"
 
 #: ../gnome-panel/panel-applet-frame.c:968
 msgid "_Reload"
@@ -1407,12 +1428,17 @@ msgid ""
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
 msgstr ""
+"Tõeväärtus-tüüpi väli näitamaks, kas kasutaja eelmised sätted "
+"/apps/panel/profiles/default asukohas on kopeeritud uuele asukohale "
+"/apps/panel alla."
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
+"Paneelide ID-de loend. Iga ID identifitseerib ühte ülataseme paneeli. Iga "
+"paneeli sätted on salvestatud rajale /apps/panel/toplevels/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
 msgid ""
@@ -1420,6 +1446,8 @@ msgid ""
 "The settings for each of these applets are stored in /apps/panel/applets/"
 "$(id)."
 msgstr ""
+"Paneeli rakendite ID-de loend. Iga ID identifitseerib ühte paneelirakendit. "
+"Iga rakendi sätted on salvestatud rajale /apps/panel/applets/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
 msgid ""
@@ -1427,6 +1455,9 @@ msgid ""
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
+"Paneeli objektide ID-de loend. Iga ID identifitseerib ühte paneeliobjekti "
+"(näiteks käivitaja, tegevusnupp, menüüriba või -nupp). Iga objekti sätted on "
+"salvestatud rajale /apps/panel/objects/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1444,6 +1475,8 @@ msgstr "Programmide loendi laiendamine \"Rakenduse käivitamise\" dialoogis"
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
+"Kui märgitud, siis \"Rakenduse käivitamise\" dialoogis on automaatlõpetamine "
+"lubatud."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1451,6 +1484,9 @@ msgid ""
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
+"Kui märgitud, siis \"Rakenduse käivitamise\" all olev \"Teadaolevate "
+"rakenduste\" loend on dialoogi avamise ajal laiendatud. See võti on "
+"relevantne ainult juhul, kui enable_program_list võti on märgitud."
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
 msgid ""
@@ -1458,6 +1494,9 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
+"Kui märgitud, siis on \"Rakenduse käivitamise\" all olev \"Teadaolevate "
+"rakenduste\" loend saadaval. See võti on relevantne ainult juhul, kui "
+"show_program_list võti on märgitud."
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
@@ -1498,7 +1537,7 @@ msgstr "Sahtli automaatne sulgemine"
 
 #: ../gnome-panel/panel-global.schemas.in.h:4
 msgid "Complete panel lockdown"
-msgstr ""
+msgstr "Paneeli täielik lukustamine"
 
 #: ../gnome-panel/panel-global.schemas.in.h:5
 msgid "Confirm panel removal"
@@ -1612,11 +1651,11 @@ msgstr "Kas logida süsteemist välja?"
 
 #: ../gnome-panel/panel-logout.c:308
 msgid "_Switch User"
-msgstr "_Lülitu teisele kasutajale"
+msgstr "Lülitu teisele _kasutajale"
 
 #: ../gnome-panel/panel-logout.c:314
 msgid "_Log Out"
-msgstr "_Logi välja"
+msgstr "Logi _välja"
 
 #: ../gnome-panel/panel-logout.c:319
 msgid "Shut down this system now?"
@@ -1624,11 +1663,11 @@ msgstr "Kas lülitada arvuti välja?"
 
 #: ../gnome-panel/panel-logout.c:326
 msgid "_Suspend"
-msgstr ""
+msgstr "_Ooterežiim"
 
 #: ../gnome-panel/panel-logout.c:330
 msgid "_Restart"
-msgstr ""
+msgstr "_Taaskäivita"
 
 #: ../gnome-panel/panel-logout.c:336
 msgid "_Shut Down"
@@ -1740,7 +1779,7 @@ msgstr "Menüükirjet pole võimalik laadida"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
-msgstr ""
+msgstr "Tegevusnupu liik"
 
 #: ../gnome-panel/panel-object.schemas.in.h:2
 msgid "Applet Bonobo IID"
@@ -1756,6 +1795,10 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
+"Kui märgitud, siis kasutatakse nupu ikooniks custom_icon võtmes määratud "
+"kohandatud ikooni. Kui märkimata, siis custom_icon võtit eiratakse. See võti "
+"on relevantne ainult juhul, kui object_type võtme väärtusteks on "
+"\"menu-object\" või \"drawer-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
 msgid ""
@@ -1763,22 +1806,29 @@ msgid ""
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
+"Kui märgitud, siis menu_path võtit kasutatakse rajana, millelt menüü sisu "
+"tuleb kokku panna. Kui märkimata, siis menu_path võtit eiratakse. See võti "
+"on relevantne ainult juhul, kui object_type võtme väärtus on \"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
+"Kui märgitud, siis objekti asukohta interpreteeritakse suhtelisena paneeli "
+"parempoolse (püstpaneelide puhul alumise) serva suhtes."
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
+"Kui märgitud, siis pole kasutajal võimalik rakendit mujale tõsta ilma "
+"objekti lukust lahti võtmata."
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
-msgstr ""
+msgstr "Interpreteeritav asukoht on suhteline alumise/parempoolse serva suhtes"
 
 #: ../gnome-panel/panel-object.schemas.in.h:9
 msgid "Launcher location"
@@ -1809,6 +1859,9 @@ msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr ""
+"Bonobo implementatsioon rakendi ID-st - näiteks "
+"\"OAFIID:GNOME_ClockApplet\". See võti on relevantne ainult juhul, kui "
+"object_type võtme väärtuseks on \"bonobo-applet\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -1816,12 +1869,18 @@ msgid ""
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
 msgstr ""
+"Selle nupu poolt teostatava toimingu liik. Võimalikud väärtused on \"lock\" "
+"(lukustamine), \"logout\" (väljalogimine), \"run\" (käivitamine), \"search\" "
+"(otsing) ja \"screenshot\" (kuvatõmmise võtmine). See võti on relevantne "
+"ainult juhul, kui võtme object_type väärtus on \"action-applet\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
 msgstr ""
+"Selle sahtli külge ühendatud paneeli identifikaator. See võti on relevantne "
+"ainult juhul, kui object_type võtme väärtuseks on \"drawer-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
@@ -1832,6 +1891,8 @@ msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
+"Käivitajat kirjeldava .desktop faili asukoht. See võti on relevantne ainult "
+"juhul, kui object_type võtme väärtuseks on \"launcher-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -1839,6 +1900,9 @@ msgid ""
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
+"Objektinupu ikooni jaoks kasutatava pildi asukoht. See võti on relevantne "
+"ainult juhul, kui object_type võtme väärtusteks on \"drawer-object\" või "
+"\"menu-object\" ja kui use_custom_icon võti on märgitud."
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
 msgid ""
@@ -1846,18 +1910,26 @@ msgid ""
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
 msgstr ""
+"Rada, millelt menüü sisu kokku pannakse. See võti on relevantne ainult "
+"juhul, kui use_menu_path võti on märgitud ja object_type võtme väärtus on "
+"\"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
+"Selle paneeliobjekti asukoht, mis määratakse pikslites kaugusena paneeli "
+"vasakust (püstpaneelipuhul ülemisest) servast."
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
+"Selle sahtli või menüü vihjetekstina kuvatav tekst. See võti on relevantne "
+"ainult juhul, kui object_type võtme väärtusteks on \"drawer-object\" või "
+"\"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -1865,6 +1937,9 @@ msgid ""
 "object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
 "\"menu-bar\"."
 msgstr ""
+"Selle paneeliobjekti liik. Võimalikud väärtused: \"drawer-object\", "
+"\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" "
+"ja \"menu-bar\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
@@ -1900,6 +1975,8 @@ msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr ""
+"Paneel '%s' on määratud kuvamiseks ekraanil %d, kuid see ekraan pole hetkel "
+"saadaval. Seda paneeli ei laadita."
 
 #: ../gnome-panel/panel-profile.c:1632
 #, c-format
@@ -2006,7 +2083,7 @@ msgstr "Ühtlane _värv"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:19
 msgid "Some of these properties are locked down"
-msgstr ""
+msgstr "Mõned nendest omadustest on lukus"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:20
 msgid "St_retch"
@@ -2040,7 +2117,7 @@ msgstr "S_uurus:"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_Tile"
-msgstr ""
+msgstr "_Paanidena"
 
 #: ../gnome-panel/panel-recent.c:54
 msgid "Could not find a suitable application."
@@ -2067,6 +2144,10 @@ msgid ""
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
+"Kui sa puhastad hiljutiste dokumentide loendi, siis puhastatakse järgnev:\n"
+"\n"
+"• Kõik menüü Asukohad → Hiljutised dokumendid kirjed.\n"
+"• Kõik kirjed rakenduste viimaste dokumentide loenditest."
 
 #: ../gnome-panel/panel-recent.c:225
 msgid "Recent Documents"
@@ -2118,12 +2199,15 @@ msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
+"Klõpsa sellel nupul, et sirvida käsustringile argumendiks lisatavaid faile."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
+"Klõpsa sellel nupul, et valitud rakendus või käsurealt määratud käsk "
+"käivitada."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:3
 msgid "Command entry"
@@ -2286,7 +2370,7 @@ msgstr "Taustavärv"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:4
 msgid "Background color opacity"
-msgstr "Taustavärvi tumedus"
+msgstr "Taustavärvi katvus"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:5
 msgid "Background image"
@@ -2298,11 +2382,11 @@ msgstr "Tausta tüüp"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:7
 msgid "Center panel on x-axis"
-msgstr "Tsentreeri paneel x-teljel"
+msgstr "Paneeli tsentreerimine x-teljel"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:8
 msgid "Center panel on y-axis"
-msgstr "Tsentreeri paneel y-teljel"
+msgstr "Paneeli tsentreerimine y-teljel"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:10
 msgid "Enable arrows on hide buttons"
@@ -2325,18 +2409,25 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
+"Kui märgitud, siis joonistatakse peitmisnuppude peale nooled. See võti on "
+"relevantne ainult juhul, kui enable_buttons võti on märgitud."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
+"Kui märgitud, siis joonistatakse paneeli servadele nupud, millega on "
+"võimalik paneeli ekraani servale kokku kerida nii, et ainult lahtikerimise "
+"nupp jääb nähtavale."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
 msgstr ""
+"Kui märgitud, siis selle paneeli peitmine ja nähtavale toomine toimub "
+"animeerituna, vastasel juhul toimub see vahetult."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2350,12 +2441,16 @@ msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
+"Kui märgitud, siis skaleeritakse pilt (koos kuvasuhte säilitamisega) "
+"vastavalt paneeli kõrgusele (rõhtpaneeli puhul)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
+"Kui märgitud, siis skaleeritakse pilt vastavalt paneeli mõõtmetele, "
+"kusjuures kuvasuhet ei säilitata."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2379,6 +2474,10 @@ msgid ""
 "- i.e. the panel will grow on both sides. If false, the x key specifies the "
 "location of the panel."
 msgstr ""
+"Kui märgitud, siis võtit x eiratakse ja paneel asetatakse ekraani x-teljel "
+"keskele. Paneeli suuruse muutumisel jääb siis paneeli asukoht samaks ja "
+"kasvamine/kahanemine toimub mõlema külje peal võrdselt. Kui märkimata, siis "
+"võti x määrab paneeli asukoha."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
@@ -2387,12 +2486,18 @@ msgid ""
 "- i.e. the panel will grow on both sides. If false, the y key specifies the "
 "location of the panel."
 msgstr ""
+"Kui märgitud, siis võtit y eiratakse ja paneel asetatakse ekraani y-teljel "
+"keskele. Paneeli suuruse muutumisel jääb siis paneeli asukoht samaks ja "
+"kasvamine/kahanemine toimub mõlema külje peal võrdselt. Kui märkimata, siis "
+"võti y määrab paneeli asukoha."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr ""
+"Xinerama seadistustega võivad igal monitoril olla oma paneelid. Selle "
+"võtmega määratakse monitor, kus paneeli kuvatakse."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
 msgid "Name to identify panel"
@@ -2416,11 +2521,11 @@ msgstr "Paneeli suurus"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:30
 msgid "Rotate image on vertical panels"
-msgstr "Pööra pilti vertikaalpaneelidel"
+msgstr "Pildi pööramine vertikaalpaneelidel"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
-msgstr "Paneeli taustavärvi määramine #RGB vormingus."
+msgstr "Paneeli taustavärvus #RGB vormingus."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:32
 msgid ""
@@ -2428,6 +2533,8 @@ msgid ""
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr ""
+"Selle võtmega määratakse taustapildina kasutatav fail. Kui pilt sisaldab "
+"alfakanalit, siis see kombineeritakse töölaua taustapildiga."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
@@ -2435,6 +2542,9 @@ msgid ""
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
+"Viivitus, mis jääb kursori liikumise peidetud paneelile ja paneeli "
+"automaatse näitamise vahele (millisekundites). See võti on relevantne ainult "
+"juhul, kui võti auto_hide on märgitud."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
 msgid ""
@@ -2442,12 +2552,17 @@ msgid ""
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
+"Viivitus, mis jääb kursori paneelilt lahkumise ja paneeli automaatse "
+"peitmise vahele (millisekundites). See võti on relevantne ainult juhul, kui "
+"võti auto_hide on märgitud."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
+"Pikslite arv, mis jääb automaatselt peidetud paneelil nurgas nähtavale. See "
+"võti on relevantne ainult juhul, kui võti auto_hide on märgitud."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
@@ -2455,6 +2570,8 @@ msgid ""
 "completely opaque (a value of less than 65535), the color will be composited "
 "onto the desktop background image."
 msgstr ""
+"Määrab taustavärvuse katvuse. Kui värvus pole täielikult kattev (väärtus on "
+"väiksem kui 65535), siis sulatatakse värvus taustapildiga kokku."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
@@ -2467,6 +2584,10 @@ msgid ""
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
 msgstr ""
+"Paneeli kõrgus (püstpaneeli puhul laius). Paneel tuvastab töötamise ajal "
+"vähima võimaliku suuruse, mis põhineb kirjatüübi suurusel ja teistel "
+"näitajatel. Suurimaks suuruseks on määratud veerand ekraani kõrgust (või "
+"laiust)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
@@ -2474,6 +2595,9 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
+"Paneeli asukoht x-teljel. See võti on relevantne ainult laiendamata "
+"režiimis. Laiendatud režiimi puhul seda võtit eiratakse ja paneel asetatakse "
+"võtmega orientation määratud ekraani serva."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2481,6 +2605,9 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
+"Paneeli asukoht y-teljel. See võti on relevantne ainult laiendamata "
+"režiimis. Laiendatud režiimi puhul seda võtit eiratakse ja paneel asetatakse "
+"võtmega orientation määratud ekraani serva."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
@@ -2493,6 +2620,14 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
+"Paneeli suund. Võimalikud väärtused on \"top\" (üleval), \"bottom\" (all), "
+"\"left\" (vasakul) ja \"right\" (paremal). Laiendatud režiimis määrab see "
+"ekraani serva, kus paneel asub. Laiendamata režiimis on väärtuste \"top\" ja "
+"\"bottom\" vahe vähetähtis - mõlemad määravad, et tegemist on rõhtsa "
+"paneeliga. Siiski annavad mõlemad väärtused paneeli objektidele kasulikke "
+"käitumisvihjeid. Näiteks \"top\" väärtuse puhul avaneb menüünupust avatud "
+"hüpikmenüü paneelist allapoole, seevastu \"bottom\" väärtusega paneeli puhul "
+"aga ülespoole."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -2500,6 +2635,9 @@ msgid ""
 "\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
+"Paneeli animatsioonide kiirus. Võimalikud väärtused on  \"slow\" (aeglane), "
+"\"medium\" (keskmine kiirus) and \"fast\" (kiire). See võti on relevantne "
+"ainult juhul, kui enable_animations võti on märgitud."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
@@ -2507,6 +2645,8 @@ msgid ""
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr ""
+"Paneeli identifitseerimiseks mõeldud inimloetav nimi. Selle peamine eesmärk "
+"on paneelide vahel navigeerimisel toimida paneeliakna tiitlina."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "Visible pixels when hidden"
@@ -2519,12 +2659,18 @@ msgid ""
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
 msgstr ""
+"Millist tausta selle paneeli puhul kasutatakse. Võimalikud väärtused on "
+"\"gtk\" GTK+ vidina vaikimisi tausta jaoks, \"color\" - võtmega color "
+"määratud taustavärvuse jaoks ja \"image\" - võtmega image määratud "
+"taustapildi jaoks."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
+"Mitme ekraaniga seadistuse puhul võivad igal ekraanil olla omad paneelid. "
+"Selle võtmega määratakse ekraan, kus paneeli kuvatakse."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
 msgid "X co-ordinate of panel"
@@ -2646,11 +2792,11 @@ msgstr "Vahemikud, mis näitavad, millised suurused on rakendile vastuvõetavad"
 
 #: ../libpanel-applet/panel-applet.c:1336
 msgid "The Applet's containing Panel is locked down"
-msgstr ""
+msgstr "Rakendeid sisaldav paneel on lukus"
 
 #: ../libpanel-applet/panel-test-applets.c:34
 msgid "Specify an applet IID to load"
-msgstr "Määra laetava rakendi IID"
+msgstr "Määra laaditava rakendi IID"
 
 #: ../libpanel-applet/panel-test-applets.c:35
 msgid ""
