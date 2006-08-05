@@ -1,3 +1,36 @@
+2006-08-05  Vincent Untz  <vuntz@gnome.org>
+
+	Remove usage of GnomeDesktopItem in some places
+
+	* menu.c: remove useless include
+
+	* panel-action-button.c: (panel_action_search): simply call
+	panel_launch_desktop_file() instead of duplicating code
+
+	* panel-menu-items.c: (panel_menu_item_activate_desktop_file): call
+	panel_launch_desktop_file()
+
+	* panel-run-dialog.c: keep the path to the currently selected desktop
+	file in memory
+	(panel_run_dialog_destroy): nullify more stuff
+	(panel_run_dialog_find_command_idle): remove FIXME that was wrong
+	(program_list_selection_changed): yay, GKeyFile love!, also show all
+	programs in the program list and remember the path to the desktop file
+	(entry_event): unselect the currently selected program in the list
+	since the user has typed something
+	(entry_changed): updated
+	(panel_run_dialog_create_desktop_file): new, with GKeyFile love and
+	mostly copied from the old pixmap_drag_data_get()
+	(pixmap_drag_data_get): use the uri of the desktop file of the
+	currently selected program if available
+
+	* panel-util.[ch]: (panel_launch_desktop_file): load from file (and
+	not from basename) if the path is absolute, test if fallback_exec is
+	NULL before using it
+	(panel_util_key_file_new_desktop): new, to create desktop files from
+	GKeyFile
+	(panel_util_key_file_to_file): new
+
 2006-07-28  Vincent Untz  <vuntz@gnome.org>
 
 	Port from egg-recent to GtkRecent.

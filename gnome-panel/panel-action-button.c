@@ -187,39 +187,18 @@ panel_action_run_program (GtkWidget *widget)
 static void
 panel_action_search (GtkWidget *widget)
 {
-	GnomeDesktopItem *ditem;
 	GdkScreen *screen;
 	GError    *error = NULL;
-	char      *argv[2] = {"gnome-search-tool", NULL};
-	char      *file;
 
 	screen = gtk_widget_get_screen (widget);
-	file = panel_lookup_in_data_dirs ("applications/gnome-search-tool.desktop");
-
-	if (file) {
-		ditem = gnome_desktop_item_new_from_file (file, 0, &error);
-		if (ditem) {
-			g_assert (error == NULL);	
-			panel_ditem_launch (ditem, NULL, 0, screen, &error);
-			gnome_desktop_item_unref (ditem);
-		}
-		if (error) {
-			panel_error_dialog (screen,
-					    "cannot_exec_gnome-search-tool",
-					    TRUE,
-					    _("Could not execute '%s'"),
-					    "%s",
-					    "gnome-search-tool",
-					    error->message);
-			g_error_free (error);
-		}
-		g_free (file);
-	}
-	else if (!gdk_spawn_on_screen (screen, NULL, argv, NULL,
-				  G_SPAWN_SEARCH_PATH,
-				  NULL, NULL, NULL, &error)) {
-				  panel_error_dialog (screen,
-				    "cannot_exec_gnome-search-tool", TRUE,
+	panel_launch_desktop_file ("gnome-search-tool.desktop",
+				   "gnome-search-tool",
+				   screen,
+				   &error);
+	if (error) {
+		panel_error_dialog (screen,
+				    "cannot_exec_gnome-search-tool",
+				    TRUE,
 				    _("Could not execute '%s'"),
 				    "%s",
 				    "gnome-search-tool",

@@ -42,19 +42,26 @@ panel_launch_desktop_file (const char  *desktop_file,
 {
 	GnomeDesktopItem *ditem;
 
-	ditem = gnome_desktop_item_new_from_basename (desktop_file, 0, NULL);
-	if (ditem == NULL) {
+	if (g_path_is_absolute (desktop_file))
+		ditem = gnome_desktop_item_new_from_file (desktop_file, 0,
+							  error);
+	else
+		ditem = gnome_desktop_item_new_from_basename (desktop_file, 0,
+							      error);
+
+	if (ditem != NULL) {
+		panel_ditem_launch (ditem, NULL, 0, screen, error);
+		gnome_desktop_item_unref (ditem);
+	} else if (fallback_exec != NULL) {
 		char *argv [2] = {(char *)fallback_exec, NULL};
+
+		if (*error)
+			g_error_free (*error);
 
 		gdk_spawn_on_screen (screen, NULL, argv, NULL,
 				     G_SPAWN_SEARCH_PATH,
 				     NULL, NULL, NULL, error);
-		return;
 	}
-
-	panel_ditem_launch (ditem, NULL, 0, screen, error);
-
-	gnome_desktop_item_unref (ditem);
 }
 
 int
@@ -983,4 +990,50 @@ panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
 #undef CAIRO_BLUE
 
 	return retval;
+}
+
+GKeyFile *
+panel_util_key_file_new_desktop (void)
+{
+	GKeyFile *retval;
+
+	retval = g_key_file_new ();
+
+	//FIXME? g_key_file_set_string (retval, "Desktop Entry", "Name", _("No Name"));
+	g_key_file_set_string (retval, "Desktop Entry", "Encoding", "UTF-8");
+	g_key_file_set_string (retval, "Desktop Entry", "Version", "1.0");
+
+	return retval;
+}
+
+//FIXME: kill this when bug #309224 is fixed
+gboolean
+panel_util_key_file_to_file (GKeyFile     *keyfile,
+			     const gchar  *file,
+			     GError      **error)
+{
+	GError *write_error;
+	gchar *data;
+	gsize length;
+	gboolean res;
+
+	g_return_val_if_fail (keyfile != NULL, FALSE);
+	g_return_val_if_fail (file != NULL, FALSE);
+
+	write_error = NULL;
+	data = g_key_file_to_data (keyfile, &length, &write_error);
+	if (write_error) {
+		g_propagate_error (error, write_error);
+		return FALSE;
+	}
+
+	res = g_file_set_contents (file, data, length, &write_error);
+	if (write_error) {
+		g_propagate_error (error, write_error);
+		g_free (data);
+		return FALSE;
+	}
+
+	g_free (data);
+	return res;
 }

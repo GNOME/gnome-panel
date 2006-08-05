@@ -40,7 +40,6 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <glade/glade-xml.h>
-#include <libgnome/gnome-desktop-item.h>
 #include <libgnome/gnome-exec.h>
 #include <libgnome/gnome-util.h>
 #include <libgnomeui/gnome-entry.h>
@@ -96,6 +95,7 @@ typedef struct {
 	gboolean	  completion_started;
 	
 	char		 *icon_path;
+	char             *desktop_path;
 	char		 *item_name;	
 } PanelRunDialog;
 
@@ -126,7 +126,11 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	dialog->add_icon_paths = NULL;
 
 	g_free (dialog->icon_path);
+	dialog->icon_path = NULL;
+	g_free (dialog->desktop_path);
+	dialog->desktop_path = NULL;
 	g_free (dialog->item_name);
+	dialog->item_name = NULL;
 
 	if (dialog->add_icons_idle_id)
 		g_source_remove (dialog->add_icons_idle_id);
@@ -654,7 +658,6 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 	
 	g_free (dialog->item_name);
 	dialog->item_name = found_name;
-	//FIXME err... why is this useful??? don't we want the .desktop path for dnd?
 	
 	dialog->find_command_idle_id = 0;
 	return FALSE;
@@ -950,14 +953,13 @@ static void
 program_list_selection_changed (GtkTreeSelection *selection,
 				PanelRunDialog   *dialog)
 {
-	GnomeDesktopItem *ditem;
-	GtkTreeModel     *filter_model;
-	GtkTreeModel     *child_model;
-	GtkTreeIter       iter;
-	GtkTreeIter       filter_iter;
-	const char       *temp;
-	char             *path, *stripped;
-	gboolean          terminal;
+	GtkTreeModel *filter_model;
+	GtkTreeModel *child_model;
+	GtkTreeIter   iter;
+	GtkTreeIter   filter_iter;
+	const char   *temp;
+	char         *path, *stripped;
+	gboolean      terminal;
 		
 	if (!gtk_tree_selection_get_selected (selection, &filter_model,
 					      &filter_iter))
@@ -973,46 +975,77 @@ program_list_selection_changed (GtkTreeSelection *selection,
 			    -1);
 				  
 	if (path) {
-		ditem = gnome_desktop_item_new_from_file (path,
-							  GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS,
-							  NULL /* error */);
-		if (ditem) {
+		GKeyFile *key_file;
+		GError   *error;
+
+		key_file = g_key_file_new ();
+
+		if (g_key_file_load_from_file (key_file, path,
+					       G_KEY_FILE_NONE, NULL)) {
 			dialog->use_program_list = TRUE;
+			if (dialog->desktop_path)
+				g_free (dialog->desktop_path);
+			dialog->desktop_path = g_strdup (path);
+			if (dialog->item_name)
+				g_free (dialog->item_name);
+			dialog->item_name = NULL;
 			
+			gtk_tree_model_foreach (GTK_TREE_MODEL (dialog->program_list_store),
+						panel_run_dialog_make_all_list_visible,
+						NULL);
+
 			/* Order is important here. We have to set the text
 			 * first so that the drag source is enabled, otherwise
 			 * the drag icon can't be set by
 			 * panel_run_dialog_set_icon.
 			 */
-			temp = gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC);
+			temp = g_key_file_get_string (key_file,
+						      "Desktop Entry",
+						      "Exec",
+						      NULL);
 			if (temp) {
 				stripped = remove_parameters (temp);
 				gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry), stripped);
 				g_free (stripped);
 			} else {
-				temp = gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL);
+				temp = g_key_file_get_string (key_file,
+							      "Desktop Entry",
+							      "URL",
+							      NULL);
 				gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry), sure_string (temp));
 			}
 
-			temp = gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_ICON);
+			temp = g_key_file_get_locale_string (key_file,
+							     "Desktop Entry",
+							     "Icon",
+							     NULL, NULL);
 			panel_run_dialog_set_icon (dialog, temp);
 			
-			temp = gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_COMMENT);
+			temp = g_key_file_get_locale_string (key_file,
+							     "Desktop Entry",
+							     "Comment",
+							     NULL, NULL);
 			//FIXME: if sure_string () == "", we should display "Will run..." as in entry_changed()
 			gtk_label_set_text (GTK_LABEL (dialog->program_label), sure_string (temp));
-			
-			terminal = gnome_desktop_item_get_boolean (ditem, GNOME_DESKTOP_ITEM_TERMINAL);
+
+			error = NULL;
+			terminal = g_key_file_get_boolean (key_file,
+							   "Desktop Entry",
+							   "Terminal",
+							   &error);
+			if (error) {
+				terminal = FALSE;
+				g_error_free (error);
+			}
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox),
 						      terminal);
 
-			if (dialog->item_name)
-				g_free (dialog->item_name);
+			temp = g_key_file_get_locale_string (key_file,
+							     "Desktop Entry",
+							     "Name",
+							     NULL, NULL);
 
-			dialog->item_name = g_strdup (gnome_desktop_item_get_string (
-							      ditem,
-							      GNOME_DESKTOP_ITEM_NAME));
-
-			gnome_desktop_item_unref (ditem);
+			g_key_file_free (key_file);
                 }
 
 		g_free (path);
@@ -1404,17 +1437,20 @@ entry_event (GtkEditable    *entry,
 	     GdkEventKey    *event,
 	     PanelRunDialog *dialog)
 {
-	char *prefix;
-	char *nospace_prefix;
-	char *nprefix;
-	char *temp;
-	int   pos, tmp;
+	GtkTreeSelection *selection;
+	char             *prefix;
+	char             *nospace_prefix;
+	char             *nprefix;
+	char             *temp;
+	int               pos, tmp;
 
 	if (event->type != GDK_KEY_PRESS)
 		return FALSE;
 
 	/* if user typed something we're not using the list anymore */
 	dialog->use_program_list = FALSE;
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->program_list));
+	gtk_tree_selection_unselect_all (selection);
 
 	if (!panel_profile_get_enable_autocompletion ())
 		return FALSE;
@@ -1523,9 +1559,15 @@ entry_changed (GtkEntry       *entry,
 		start++;
 
 	/* update item name to use for dnd */
-	if (!dialog->use_program_list && dialog->item_name) {
-		g_free (dialog->item_name);
-		dialog->item_name = NULL;
+	if (!dialog->use_program_list) {
+		if (dialog->desktop_path) {
+			g_free (dialog->desktop_path);
+			dialog->desktop_path = NULL;
+		}
+		if (dialog->item_name) {
+			g_free (dialog->item_name);
+			dialog->item_name = NULL;
+		}
 	}
 
 	/* desensitize run button if no text entered */
@@ -1672,7 +1714,76 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 			  G_CALLBACK (entry_drag_data_received), dialog);
 }
 
-static void  
+static char *
+panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
+{
+	GKeyFile   *key_file;
+	gboolean    exec = FALSE;
+	const char *text;
+	char       *uri;
+	char       *disk;
+	char       *scheme;
+
+	text = gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry));
+	
+	if (!text || !text [0])
+		return NULL;
+		
+	key_file = panel_util_key_file_new_desktop ();
+
+	disk = g_locale_from_utf8 (text, -1, NULL, NULL, NULL);
+	uri = gnome_vfs_make_uri_from_input_with_dirs (disk,
+						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
+	g_free (disk);
+
+	scheme = gnome_vfs_get_uri_scheme (uri);
+	if (!g_ascii_strcasecmp (scheme, "http"))
+		exec = command_is_executable (text);
+	else if (!g_ascii_strcasecmp (scheme, "file"))
+		exec = command_is_executable (text);
+	g_free (scheme);
+		
+	if (exec) {
+		g_key_file_set_string (key_file, "Desktop Entry",
+				       "Type", "Application");
+		g_key_file_set_string (key_file, "Desktop Entry",
+				       "Exec", text);
+	} else {
+		g_key_file_set_string (key_file, "Desktop Entry",
+				       "Type", "Link");
+		g_key_file_set_string (key_file, "Desktop Entry",
+				       "URL", uri);
+	}
+	g_free (uri);
+
+	//FIXME localestring
+	g_key_file_set_string (key_file, "Desktop Entry",
+			       "Name",
+			       (dialog->item_name) ? dialog->item_name : text);
+
+	g_key_file_set_boolean (key_file, "Desktop Entry",
+				"Terminal",
+				gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)));
+
+	//FIXME localestring
+	g_key_file_set_string (key_file, "Desktop Entry",
+			       "Icon", dialog->icon_path);
+
+	uri = panel_make_unique_uri (g_get_tmp_dir (), ".desktop");
+	disk = g_filename_from_uri (uri, NULL, NULL);
+
+	if (!disk || !panel_util_key_file_to_file (key_file, disk, NULL)) {
+		g_free (uri);
+		uri = NULL;
+	}
+
+	g_key_file_free (key_file);
+	g_free (disk);
+
+	return uri;
+}
+
+static void
 pixmap_drag_data_get (GtkWidget          *run_dialog,
 	  	      GdkDragContext     *context,
 		      GtkSelectionData   *selection_data,
@@ -1680,66 +1791,19 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 		      guint               time,
 		      PanelRunDialog     *dialog)
 {
-	GnomeDesktopItem *ditem;
-	gboolean          exec = FALSE;
-	const char       *text;
-	char             *uri;
-	char             *disk;
-	char             *scheme;
-	
-	text = gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry));
-	
-	if (!text || !text [0])
-		return;
-		
-	ditem = gnome_desktop_item_new ();
+	char *uri;
 
-	disk = g_locale_from_utf8 (text, -1, NULL, NULL, NULL);
-	uri = gnome_vfs_make_uri_from_input_with_dirs (disk,
-						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
-	scheme = gnome_vfs_get_uri_scheme (uri);
-	
-	if (!g_ascii_strcasecmp (scheme, "http"))
-		exec = command_is_executable (text);
-		
-	else if (!g_ascii_strcasecmp (scheme, "file"))
-		exec = command_is_executable (uri);
-		
-	if (exec) {
-		gnome_desktop_item_set_entry_type (ditem, GNOME_DESKTOP_ITEM_TYPE_APPLICATION);
-		gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_EXEC, text);
-	} else {
-		gnome_desktop_item_set_entry_type (ditem, GNOME_DESKTOP_ITEM_TYPE_LINK);
-		gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_URL, uri);
-	}
-		
-	gnome_desktop_item_set_string (ditem,
-				       GNOME_DESKTOP_ITEM_NAME, (dialog->item_name) ?
-				              dialog->item_name : text);
+	if (dialog->use_program_list && dialog->desktop_path)
+		uri = g_strdup (dialog->desktop_path);
+	else
+		uri = panel_run_dialog_create_desktop_file (dialog);
 
-	gnome_desktop_item_set_boolean (ditem,
-					GNOME_DESKTOP_ITEM_TERMINAL,
-					gtk_toggle_button_get_active (
-						 GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)));
-
-	gnome_desktop_item_set_string (ditem,
-				       GNOME_DESKTOP_ITEM_ICON, 
-				       dialog->icon_path);
-	
-	g_free (uri);
-
-	uri = panel_make_unique_uri (g_get_tmp_dir (), ".desktop");
-	gnome_desktop_item_set_location (ditem, uri);
-
-	if (gnome_desktop_item_save (ditem, NULL, FALSE, NULL))
+	if (uri) {
 		gtk_selection_data_set (selection_data,
 					selection_data->target, 8,
 					(unsigned char *) uri, strlen (uri));
-	gnome_desktop_item_unref (ditem);
-
-	g_free (uri);
-	g_free (disk);
-	g_free (scheme);
+		g_free (uri);
+	}
 }
 
 static void

@@ -1116,34 +1116,18 @@ void
 panel_menu_item_activate_desktop_file (GtkWidget  *menuitem,
 				       const char *path)
 {
-	GnomeDesktopItem *item;
-	GError           *error;
+	GError *error;
 
 	error = NULL;
-	item = gnome_desktop_item_new_from_file (path, 0, &error);
-	if (item) {
-		g_assert (error == NULL);
-
-		panel_ditem_launch (item, NULL, 0,
-				    menuitem_to_screen (menuitem), &error);
-		if (error) {
-			panel_error_dialog (menuitem_to_screen (menuitem),
-					    "cannot_launch_entry", TRUE,
-					    _("Could not launch menu item"),
-					    "%s",
-					    error->message);
-
-			g_error_free (error);
-		}
-		gnome_desktop_item_unref (item);
-	} else {
-		g_assert (error != NULL);
-
+	panel_launch_desktop_file (path, NULL,
+				   menuitem_to_screen (menuitem), &error);
+	if (error) {
 		panel_error_dialog (menuitem_to_screen (menuitem),
-				    "cannot_load_entry", TRUE,
-				    _("Could not load menu item"),
+				    "cannot_launch_entry", TRUE,
+				    _("Could not launch menu item"),
 				    "%s",
 				    error->message);
+
 		g_error_free (error);
 	}
 }

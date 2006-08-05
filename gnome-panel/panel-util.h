@@ -91,6 +91,11 @@ GdkPixbuf *panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
 					       int            width,
 					       int            height);
 
+GKeyFile *panel_util_key_file_new_desktop (void);
+gboolean  panel_util_key_file_to_file     (GKeyFile     *keyfile,
+					   const gchar  *file,
+					   GError      **error);
+
 G_END_DECLS
 
 #endif /* PANEL_UTIL_H */
