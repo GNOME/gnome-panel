@@ -1014,12 +1014,14 @@ program_list_selection_changed (GtkTreeSelection *selection,
 							      NULL);
 				gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry), sure_string (temp));
 			}
+			g_free (temp);
 
 			temp = g_key_file_get_locale_string (key_file,
 							     "Desktop Entry",
 							     "Icon",
 							     NULL, NULL);
 			panel_run_dialog_set_icon (dialog, temp);
+			g_free (temp);
 			
 			temp = g_key_file_get_locale_string (key_file,
 							     "Desktop Entry",
@@ -1027,6 +1029,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 							     NULL, NULL);
 			//FIXME: if sure_string () == "", we should display "Will run..." as in entry_changed()
 			gtk_label_set_text (GTK_LABEL (dialog->program_label), sure_string (temp));
+			g_free (temp);
 
 			error = NULL;
 			terminal = g_key_file_get_boolean (key_file,
@@ -1039,11 +1042,6 @@ program_list_selection_changed (GtkTreeSelection *selection,
 			}
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox),
 						      terminal);
-
-			temp = g_key_file_get_locale_string (key_file,
-							     "Desktop Entry",
-							     "Name",
-							     NULL, NULL);
 
 			g_key_file_free (key_file);
                 }
