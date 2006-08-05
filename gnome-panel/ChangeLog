@@ -1,5 +1,26 @@
 2006-07-28  Vincent Untz  <vuntz@gnome.org>
 
+	Port from egg-recent to GtkRecent.
+
+	* Makefile.am: remove egg stuff
+	* egg-recent*: kill
+	* panel-menu-items.c: keep a GtkRecentManager instead of
+	EggRecentViewGtk
+	(panel_place_menu_item_create_menu): updated
+	(panel_place_menu_item_recreate_menu): updated
+	(panel_place_menu_item_finalize): updated
+	(panel_place_menu_item_instance_init): get the default recent manager
+	* panel-recent.[ch]: (recent_documents_activate_cb): updated for
+	GtkRecent
+	(panel_recent_model_changed_cb): renamed to...
+	(panel_recent_manager_changed_cb): and updated
+	(clear_dialog_response): updated
+	(recent_documents_clear_cb): updated
+	(recent_documents_tooltip_func): kill, GTK+ does this for us
+	(panel_recent_append_documents_menu): updated with GtkRecent
+
+2006-07-28  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-applet-frame.c: (panel_applet_frame_cnx_broken): check whether
 	our X connection is still alive before displaying the dialog. (See bug
 	#34803 for rationale)
