@@ -21,7 +21,6 @@
 
 #include <gtk/gtkdialog.h>
 #include <libgnomeui/gnome-help.h>
-#include <libgnome/gnome-desktop-item.h>
 #include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
