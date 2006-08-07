@@ -1289,7 +1289,7 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 	control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
 	if (control_frame == NULL) {
 		g_warning (G_STRLOC ": failed to load applet %s "
-			   "(can't get control frame)", frame->priv->iid);
+			   "(cannot get control frame)", frame->priv->iid);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
 		gtk_object_sink (GTK_OBJECT (widget));
 		g_free (frame_act->id);
@@ -1304,7 +1304,7 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 		error = bonobo_exception_get_text (&corba_ev);
 		CORBA_exception_free (&corba_ev);
 		g_warning (G_STRLOC ": failed to load applet %s "
-			   "(can't get property bag):\n%s",
+			   "(cannot get property bag):\n%s",
 			   frame->priv->iid, error);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
 		gtk_object_sink (GTK_OBJECT (widget));
@@ -1327,7 +1327,7 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 		error = bonobo_exception_get_text (&corba_ev);
 		CORBA_exception_free (&corba_ev);
 		g_warning (G_STRLOC ": failed to load applet %s "
-			   "(can't get popup component):\n%s",
+			   "(cannot get popup component):\n%s",
 			   frame->priv->iid, error);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
 		gtk_object_sink (GTK_OBJECT (widget));
@@ -1352,7 +1352,7 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 	if (!control) {
 		CORBA_exception_free (&corba_ev);
 		g_warning (G_STRLOC ": failed to load applet %s "
-			   "(can't get control)", frame->priv->iid);
+			   "(cannot get control)", frame->priv->iid);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
 		gtk_object_sink (GTK_OBJECT (widget));
 		g_free (frame_act->id);
@@ -1364,7 +1364,7 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 	if (frame->priv->applet_shell == CORBA_OBJECT_NIL) {
 		CORBA_exception_free (&corba_ev);
 		g_warning (G_STRLOC ": failed to load applet %s "
-			   "(can't get applet shell)", frame->priv->iid);
+			   "(cannot get applet shell)", frame->priv->iid);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
 		gtk_object_sink (GTK_OBJECT (widget));
 		g_free (frame_act->id);

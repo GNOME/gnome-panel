@@ -98,6 +98,7 @@ panel_sources =			\
 	panel-logout.c		\
 	panel-gdm.c		\
 	panel-power-manager.c   \
+	panel-ditem-editor.c	\
 	$(NULL)
 
 panel_headers =			\
@@ -146,6 +147,7 @@ panel_headers =			\
 	panel-logout.h		\
 	panel-gdm.h		\
 	panel-power-manager.h	\
+	panel-ditem-editor.h	\
 	$(NULL)
 
 gnome_panel_SOURCES =			\
@@ -162,8 +164,8 @@ gnome_panel_LDFLAGS = -export-dynamic
 
 gnome_desktop_item_edit_SOURCES = \
 	gnome-desktop-item-edit.c \
-	menu-ditem.c		  \
-	menu-ditem.h		  \
+	panel-ditem-editor.c	  \
+	panel-marshal.c		  \
 	panel-util.c		  \
 	xstuff.c
 

@@ -1,3 +1,110 @@
+2006-08-06  Vincent Untz  <vuntz@gnome.org>
+
+	New dialog to edit the launchers!
+	(and my biggest ChangeLog entry ever! awesome!)
+
+	* Makefile.am: add panel-ditem-editor.[ch] and remove menu-ditem.[ch]
+	* panel-ditem-editor.[ch]: new, with all the magic :-)
+	* menu-ditem.[ch]: killed
+	* gnome-desktop-item-edit.c: mark string for translation,
+	(validate_for_filename): copied from menu-ditem.c
+	(get_unique_name): ditto
+	(find_uri_on_save_directory): new, to get the name when creating a
+	.directory file
+	(find_uri_on_save): new, ditto for .desktop files
+	(error_reported): new, to report errors from the editor
+	(main): mark string for translation, update with PanelDItemEditor love
+	* launcher.[ch]: (panel_launcher_get_filename): updated so that we
+	don't consider non-local files as okay
+	(panel_launcher_save_ditem): kill
+	(launch_url): moved to GKeyFile, updated for panel_error_dialog()
+	change
+	(launcher_launch): ditto
+	(drag_data_received_cb): updated to use
+	panel_util_launch_from_key_file(), updated for panel_error_dialog()
+	change
+	(free_launcher): updated
+	(panel_launcher_delete): updated for location change
+	(drag_data_get_cb): updated for location change
+	(create_launcher): moved to GKeyFile, make sure that if the user edits
+	a desktop file from a datadir, the desktop file will get a random name
+	(guess_icon_from_exec): moved to GKeyFile
+	(setup_button): ditto
+	(panel_launcher_hoard): renamed to panel_launcher_find_writable_uri()
+	and...
+	(panel_launcher_find_writable_uri): ... change the function to only
+	get a filename (without saving), also, make it more understandable :-)
+	(properties_apply): kill
+	(launcher_changed): rewrote, update button look
+	(properties_close_callback): kill
+	(launcher_command_changed): do what we did in previous
+	launcher_changed(), ie: reset StartupNotify
+	(launcher_save_uri): function to get uri where the PanelDItemEditor
+	will save the file
+	(set_revert_insensitive): kill
+	(set_revert_sensitive): kill
+	(window_response): kill
+	(launcher_saved): update location gconf key if we had to change the
+	uri of the file
+	(create_properties_dialog): kill
+	(launcher_error_reported): report error
+	(launcher_properties): move to PanelDItemEditor
+	(load_launcher_applet): fix leak in case of error
+	(launcher_load_from_gconf): update string
+	(ensure_item_localefiled): kill
+	(launcher_new_saved): add the launcher to the profile
+	(really_add_launcher): kill
+	(ask_about_launcher): move to PanelDItemEditor
+	(panel_launcher_create_from_info): move to panel_util_key_file*
+	(panel_launcher_create_with_id): updated since panel_launcher_hoard()
+	is killed
+	(launcher_save): kill
+	(find_launcher): updated
+	* panel-util.[ch]: (panel_ditem_launch): make this private
+	(panel_util_launch_from_key_file): new, to use gnome-desktop to launch
+	a .desktop file in a GKeyFile
+	(panel_launch_desktop_file): updated for panel_ditem_launch() change
+	(panel_dialog): kill (well, integrated in panel_error_dialog())
+	(panel_error_dialog): use GtkMessageDialog API to set the secondary
+	text, make it possible to provide a parent window
+	(panel_show_help): updated for panel_error_dialog() change
+	(panel_lock_screen_action): ditto
+	(panel_util_key_file_to_file): handle both URI and paths
+	(panel_util_key_file_load_from_uri): new
+	(panel_util_key_file_get_boolean): new
+	(panel_util_key_file_set_locale_string): new
+	(panel_util_key_file_remove_locale_key): new
+	(and some other panel_util_key_file* macros): new
+
+	* applet.c: updated for launcher_properties() change
+	(panel_applet_register): update string
+	* panel-applet-frame.c: (panel_applet_frame_activated): ditto
+	* button-widget.c: (button_widget_reload_pixbuf): updated for
+	panel_error_dialog() change
+	* panel-action-button.c: (panel_action_search): ditto
+	(panel_action_connect_server): ditto
+	* panel-context-menu.c: (panel_context_menu_remove_panel): ditto
+	(panel_context_menu_setup_remove_panel_it...): update string
+	* panel-marshal.list: updated, and removed useless stuff
+	* panel-menu-bar.c: (panel_menu_bar_invoke_menu): updated for
+	panel_error_dialog() change
+	* panel-menu-button.c: (panel_menu_button_invoke_menu): ditto
+	* panel-menu-items.c: (activate_uri): ditto
+	(panel_menu_item_activate_desktop_file): dittp
+	(panel_menu_items_append_from_desktop): use panel_key_file* functions
+	* panel-properties-dialog.c: (panel_properties_dialog_present):
+	updated for panel_error_dialog() change
+	* panel-recent.c: (recent_documents_activate_cb): ditto
+	* panel-run-dialog.c: (panel_run_dialog_launch_command): ditto
+	(panel_run_dialog_show_url): ditto
+	(panel_run_dialog_execute): ditto
+	(program_list_selection_changed): use panel_key_file* functions
+	(panel_run_dialog_create_desktop_file): ditto
+	(panel_run_dialog_present): updated for panel_error_dialog() change
+	* panel-shell.c: (panel_shell_register): ditto
+	* panel-widget.c: (panel_widget_class_init): use glib marshal
+	functions
+
 2006-08-05  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-run-dialog.c: (panel-run-dialog.c):

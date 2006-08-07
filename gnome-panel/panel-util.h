@@ -2,7 +2,6 @@
 #define PANEL_UTIL_H
 
 #include <gtk/gtk.h>
-#include <libgnome/gnome-desktop-item.h>
 
 G_BEGIN_DECLS
 
@@ -13,13 +12,12 @@ typedef void (*UpdateFunction) (gpointer);
 
 #define		sure_string(s)		((const char *)((s)!=NULL?(s):""))
 
+void            panel_util_launch_from_key_file (GKeyFile                *keyfile,
+						 GList                   *file_list,
+						 GdkScreen               *screen,
+						 GError                 **error);
 void            panel_launch_desktop_file  (const char                   *desktop_file,
 					    const char                   *fallback_exec,
-					    GdkScreen                    *screen,
-					    GError                      **error);
-int             panel_ditem_launch         (GnomeDesktopItem             *item,
-					    GList                        *file_list,
-					    GnomeDesktopItemLaunchFlags   flags,
 					    GdkScreen                    *screen,
 					    GError                      **error);
 
@@ -45,12 +43,12 @@ GSList *panel_g_slist_make_unique (GSList       *list,
 				   GCompareFunc  compare,
 				   gboolean      free_data);
 
-GtkWidget      *panel_error_dialog      (GdkScreen  *screen,
+GtkWidget      *panel_error_dialog      (GtkWindow  *parent,
+					 GdkScreen  *screen,
 					 const char *class,
 					 gboolean    auto_destroy,
-					 const char *primary_format,
-					 const char *secondary_format,
-					 ...);
+					 const char *primary_text,
+					 const char *secondary_text);
 
 int		panel_find_applet_index	(GtkWidget *widget);
 
@@ -91,10 +89,32 @@ GdkPixbuf *panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
 					       int            width,
 					       int            height);
 
-GKeyFile *panel_util_key_file_new_desktop (void);
-gboolean  panel_util_key_file_to_file     (GKeyFile     *keyfile,
-					   const gchar  *file,
-					   GError      **error);
+GKeyFile *panel_util_key_file_new_desktop  (void);
+gboolean  panel_util_key_file_to_file      (GKeyFile       *keyfile,
+					    const gchar    *file,
+					    GError        **error);
+gboolean panel_util_key_file_load_from_uri (GKeyFile       *keyfile,
+					    const gchar    *uri,
+					    GKeyFileFlags   flags,
+					    GError        **error);
+gboolean panel_util_key_file_get_boolean   (GKeyFile       *keyfile,
+					    const gchar    *key,
+					    gboolean        default_value);
+#define panel_util_key_file_get_string(key_file, key) \
+	 g_key_file_get_string (key_file, "Desktop Entry", key, NULL)
+#define panel_util_key_file_get_locale_string(key_file, key) \
+	 g_key_file_get_locale_string(key_file, "Desktop Entry", key, NULL, NULL)
+#define panel_util_key_file_set_boolean(key_file, key, value) \
+	 g_key_file_set_boolean (key_file, "Desktop Entry", key, value)
+#define panel_util_key_file_set_string(key_file, key, value) \
+	 g_key_file_set_string (key_file, "Desktop Entry", key, value)
+void    panel_util_key_file_set_locale_string (GKeyFile    *keyfile,
+					       const gchar *key,
+					       const gchar *value);
+#define panel_util_key_file_remove_key(key_file, key) \
+	g_key_file_remove_key (key_file, "Desktop Entry", key, NULL)
+void panel_util_key_file_remove_locale_key (GKeyFile    *keyfile,
+					    const gchar *key);
 
 G_END_DECLS
 

@@ -84,9 +84,9 @@ panel_shell_register (void)
 
 		if (message) {
 			GtkWidget *dlg = panel_error_dialog (
-						gdk_screen_get_default (),
+						NULL, gdk_screen_get_default (),
 						"panel_shell_register_error",
-						FALSE, "%s", NULL, message);
+						FALSE, message, NULL);
 
 			gtk_dialog_run (GTK_DIALOG (dlg));
 			gtk_widget_destroy (dlg);

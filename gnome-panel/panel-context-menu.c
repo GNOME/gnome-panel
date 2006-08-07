@@ -168,7 +168,7 @@ panel_context_menu_remove_panel (GtkWidget *menuitem,
 	toplevel     = panel_widget->toplevel;
 
 	if (panel_toplevel_is_last_unattached (toplevel)) {
-		panel_error_dialog (menuitem_to_screen (menuitem),
+		panel_error_dialog (NULL, menuitem_to_screen (menuitem),
 				    "cannot_remove_last_panel", TRUE,
 				    _("Cannot delete this panel"),
 				    _("You must always have at least one panel."));
@@ -210,7 +210,7 @@ panel_context_menu_setup_remove_panel_item (GtkWidget *menu,
 		g_list_free (list);
 	}
 	if (!GTK_IS_LABEL (label)) {
-		g_warning ("We can't find the label of a menu item");
+		g_warning ("Cannot find the label of a menu item");
 		return;
 	}
 

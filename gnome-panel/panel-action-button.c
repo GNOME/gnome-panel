@@ -196,13 +196,13 @@ panel_action_search (GtkWidget *widget)
 				   screen,
 				   &error);
 	if (error) {
-		panel_error_dialog (screen,
-				    "cannot_exec_gnome-search-tool",
-				    TRUE,
-				    _("Could not execute '%s'"),
-				    "%s",
-				    "gnome-search-tool",
-				    error->message);
+		char *primary;
+		primary = g_strdup_printf (_("Could not execute '%s'"),
+					   "gnome-search-tool");
+		panel_error_dialog (NULL, screen,
+				    "cannot_exec_gnome-search-tool", TRUE,
+				    primary, error->message);
+		g_free (primary);
 		g_error_free (error);
 	}
 }
@@ -232,11 +232,10 @@ panel_action_connect_server (GtkWidget *widget)
 	if (error) {
 		GtkWidget *error_dialog;
 
-		error_dialog = panel_error_dialog (screen,
+		error_dialog = panel_error_dialog (NULL, screen,
 						   "cannot_connect_server",
 						   TRUE,
 						   _("Could not connect to server"),
-						   "%s",
 						   error->message);
 		g_clear_error (&error);
 	}

@@ -14,8 +14,6 @@
 #include "applet.h"
 #include "panel-widget.h"
 
-#include <libgnome/gnome-desktop-item.h>
-
 G_BEGIN_DECLS
 
 #define PANEL_LAUNCHERS_PATH "panel2.d/default/launchers"
@@ -23,18 +21,14 @@ G_BEGIN_DECLS
 typedef struct {
 	AppletInfo        *info;
 	GtkWidget         *button;
-	GtkWidget	  *dedit;
-	GnomeDesktopItem *ditem;
-	GnomeDesktopItem *revert_ditem;
+
+	char              *location;
+	GKeyFile          *key_file;
 
 	GtkWidget         *prop_dialog;
 	GSList 		  *error_dialogs;
 
 	gulong             destroy_handler;
-
-	/* If we can't hoard, and it's not hoarded
-	   already, then we can't write this launcher */
-	gboolean           non_writable;
 } Launcher;
 
 void panel_launcher_create           (PanelToplevel *toplevel,
@@ -57,8 +51,7 @@ void panel_launcher_create_from_info (PanelToplevel *toplevel,
 void		launcher_launch    		(Launcher  *launcher,
 						 GtkWidget *widget);
 
-void		launcher_properties		(Launcher  *launcher,
-						 GdkScreen *screen);
+void		launcher_properties		(Launcher  *launcher);
 
 void            launcher_load_from_gconf        (PanelWidget *panel_widget,
 						 gboolean     locked,

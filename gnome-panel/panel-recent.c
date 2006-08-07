@@ -93,20 +93,26 @@ recent_documents_activate_cb (GtkRecentChooser *chooser,
 		//FIXME this could fail... Maybe we want gtk_recent_info_get_display_name()
 
 		if (error) {
-			panel_error_dialog (screen,
+			char *primary;
+			primary = g_strdup_printf (_("Could not open recently used document \"%s\""),
+						   uri_utf8);
+			panel_error_dialog (NULL, screen,
 					    "cannot_open_recent_doc", TRUE,
-					    _("Could not open recently used document \"%s\""),
-					    "%s",
-					    uri_utf8,
-					    error->message);
+					    primary, error->message);
+			g_free (primary);
 			g_error_free (error);
 		} else {
-			panel_error_dialog (screen,
+			char *primary;
+			char *secondary;
+			primary = g_strdup_printf (_("Could not open recently used document \"%s\""),
+						   uri_utf8);
+			secondary = g_strdup_printf (_("An unknown error occurred while trying to open \"%s\"."),
+						     uri_utf8);
+			panel_error_dialog (NULL, screen,
 					    "cannot_open_recent_doc", TRUE,
-					    _("Could not open recently used document \"%s\""),
-					    _("An unknown error occurred while trying to open \"%s\""),
-					    uri_utf8,
-					    uri_utf8);
+					    primary, secondary);
+			g_free (primary);
+			g_free (secondary);
 		}
 
 		g_free (uri_utf8);

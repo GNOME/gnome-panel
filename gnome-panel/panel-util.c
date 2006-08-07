@@ -21,6 +21,7 @@
 #include <sys/types.h>
 
 #include <glib/gi18n.h>
+#include <libgnome/gnome-desktop-item.h>
 #include <libgnome/gnome-util.h>
 #include <libgnomeui/gnome-help.h>
 
@@ -33,6 +34,67 @@
 #include "xstuff.h"
 #include "panel-globals.h"
 #include "launcher.h"
+
+static int
+panel_ditem_launch (GnomeDesktopItem  *item,
+		    GList             *file_list,
+		    GdkScreen         *screen,
+		    GError           **error)
+{
+	int workspace;
+
+	workspace = xstuff_get_current_workspace (screen);
+
+	gnome_desktop_item_set_launch_time (item,
+					    gtk_get_current_event_time ());
+
+	return gnome_desktop_item_launch_on_screen (item, file_list, 0,
+						    screen, workspace, error);
+}
+
+void
+panel_util_launch_from_key_file (GKeyFile   *keyfile,
+				 GList      *file_list,
+				 GdkScreen  *screen,
+				 GError    **error)
+{
+	GnomeDesktopItem  *ditem;
+	int                i;
+	static const char *keys [] = { "Type",
+				       "Exec",
+				       "URL",
+				       "Dev",
+				       "Name",
+				       "GenericName",
+				       "Icon",
+				       "MiniIcon",
+				       "Path",
+				       "Terminal",
+				       "TerminalOptions",
+				       "StartupNotify",
+				       "StartupWMClass",
+				     };
+
+	g_return_if_fail (keyfile != NULL);
+
+	ditem = gnome_desktop_item_new ();
+	if (ditem == NULL)
+		return;
+
+	for (i = 0; i < G_N_ELEMENTS (keys); i++) {
+		char *value;
+
+		value = g_key_file_get_value (keyfile, "Desktop Entry",
+					      keys [i], NULL);
+		if (value != NULL) {
+			gnome_desktop_item_set_string (ditem, keys [i], value);
+			g_free (value);
+		}
+	}
+
+	panel_ditem_launch (ditem, file_list, screen, error);
+	gnome_desktop_item_unref (ditem);
+}
 
 void
 panel_launch_desktop_file (const char  *desktop_file,
@@ -50,7 +112,7 @@ panel_launch_desktop_file (const char  *desktop_file,
 							      error);
 
 	if (ditem != NULL) {
-		panel_ditem_launch (ditem, NULL, 0, screen, error);
+		panel_ditem_launch (ditem, NULL, screen, error);
 		gnome_desktop_item_unref (ditem);
 	} else if (fallback_exec != NULL) {
 		char *argv [2] = {(char *)fallback_exec, NULL};
@@ -64,23 +126,6 @@ panel_launch_desktop_file (const char  *desktop_file,
 	}
 }
 
-int
-panel_ditem_launch (GnomeDesktopItem             *item,
-		    GList                        *file_list,
-		    GnomeDesktopItemLaunchFlags   flags,
-		    GdkScreen                    *screen,
-		    GError                      **error)
-{
-	int workspace;
-
-	workspace = xstuff_get_current_workspace (screen);
-
-	gnome_desktop_item_set_launch_time (item, gtk_get_current_event_time ());
-
-	return gnome_desktop_item_launch_on_screen (
-			item, file_list, flags, screen, workspace, error);
-}
-
 void
 panel_show_help (GdkScreen  *screen,
 		 const char *doc_name,
@@ -89,13 +134,9 @@ panel_show_help (GdkScreen  *screen,
 	GError *error = NULL;
 
 	if (!gnome_help_display_desktop_on_screen (NULL, "user-guide", doc_name, linkid, screen, &error)) {
-		panel_error_dialog (
-			screen,
-			"cannot_show_help",
-			TRUE,
-			_("Could not display help document"),
-			"%s",
-			error != NULL ? error->message : "");
+		panel_error_dialog (NULL, screen, "cannot_show_help", TRUE,
+				    _("Could not display help document"),
+				    error != NULL ? error->message : NULL);
 
 		g_clear_error (&error);
 	}
@@ -264,27 +305,40 @@ panel_g_slist_make_unique (GSList       *list,
 	return list;
 }
 
-static GtkWidget *
-panel_dialog (GdkScreen  *screen,
-	      int         type,
-	      const char *class,
-	      const char *str,
-	      gboolean    auto_destroy)
+GtkWidget *
+panel_error_dialog (GtkWindow  *parent,
+		    GdkScreen  *screen,
+		    const char *class,
+		    gboolean    auto_destroy,
+		    const char *primary_text,
+		    const char *secondary_text)
 {
 	GtkWidget *dialog;
+	char      *freeme;
 
-	dialog = gtk_message_dialog_new (
-			NULL, 0, type, GTK_BUTTONS_OK,
-			/* No need to translate this, this should NEVER happen */
-			"Error with displaying error for dialog of class %s", class);
+	freeme = NULL;
+
+	if (primary_text == NULL) {
+		g_warning ("NULL dialog");
+		 /* No need to translate this, this should NEVER happen */
+		freeme = g_strdup_printf ("Error with displaying error "
+					  "for dialog of class %s", class);
+		primary_text = freeme;
+	}
+
+	dialog = gtk_message_dialog_new (parent, 0, GTK_MESSAGE_ERROR,
+					 GTK_BUTTONS_OK, primary_text);
+	if (secondary_text != NULL)
+		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+							  secondary_text);
+
 	gtk_widget_add_events (dialog, GDK_KEY_PRESS_MASK);
 	g_signal_connect (dialog, "event",
 			  G_CALLBACK (panel_dialog_window_event), NULL);
-	gtk_label_set_markup (
-		GTK_LABEL (GTK_MESSAGE_DIALOG (dialog)->label), str);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog), class, "Panel");
-	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+	if (screen)
+		gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
 	gtk_widget_show_all (dialog);
 
@@ -293,48 +347,10 @@ panel_dialog (GdkScreen  *screen,
 					  G_CALLBACK (gtk_widget_destroy),
 					  G_OBJECT (dialog));
 
+	if (freeme)
+		g_free (freeme);
+
 	return dialog;
-}
-
-GtkWidget *
-panel_error_dialog (GdkScreen  *screen,
-		    const char *class,
-		    gboolean    auto_destroy,
-		    const char *primary_format,
-		    const char *secondary_format,
-		    ...)
-{
-	GtkWidget *w;
-	char *sec = NULL, *format, *s;
-	va_list ap;
-
-	if (primary_format == NULL) {
-		g_warning ("NULL dialog");
-		s = g_strdup ("(null)");
-	} else {
-		if (secondary_format == NULL)
-			format = (char *)primary_format;
-		else {
-			sec = g_strdup_printf (_("Details: %s"), secondary_format);
-
-			format = g_strdup_printf ("<b>%s</b>\n\n%s",
-						  primary_format,
-						  sec);
-
-			g_free (sec);
-		}
-
-		va_start (ap, secondary_format);
-		s = g_strdup_vprintf (format, ap);
-		va_end (ap);
-
-		if (format != primary_format)
-			g_free (format);
-	}
-
-	w = panel_dialog (screen, GTK_MESSAGE_ERROR, class, s, auto_destroy);
-	g_free (s);
-	return w;
 }
 
 int
@@ -748,13 +764,14 @@ panel_lock_screen_action (GdkScreen  *screen,
 		return;
 
 	if (!gdk_spawn_command_line_on_screen (screen, command, &error)) {
-		panel_error_dialog (screen,
-				    "cannot_exec_screensaver",
-				    TRUE,
-				    _("Could not execute '%s'"),
-				    "%s",
-				    command,
-				    error->message);
+		char *primary;
+
+		primary = g_strdup_printf (_("Could not execute '%s'"),
+					   command);
+		panel_error_dialog (NULL, screen,
+				    "cannot_exec_screensaver", TRUE,
+				    primary, error->message);
+		g_free (primary);
 		g_error_free (error);
 	}
 
@@ -1012,9 +1029,10 @@ panel_util_key_file_to_file (GKeyFile     *keyfile,
 			     const gchar  *file,
 			     GError      **error)
 {
-	GError *write_error;
-	gchar *data;
-	gsize length;
+	gchar   *filename;
+	GError  *write_error;
+	gchar   *data;
+	gsize    length;
 	gboolean res;
 
 	g_return_val_if_fail (keyfile != NULL, FALSE);
@@ -1027,7 +1045,21 @@ panel_util_key_file_to_file (GKeyFile     *keyfile,
 		return FALSE;
 	}
 
-	res = g_file_set_contents (file, data, length, &write_error);
+	if (!g_path_is_absolute (file))
+		filename = g_filename_from_uri (file, NULL, &write_error);
+	else
+		filename = g_filename_from_utf8 (file, -1, NULL, NULL,
+						 &write_error);
+
+	if (write_error) {
+		g_propagate_error (error, write_error);
+		g_free (data);
+		return FALSE;
+	}
+
+	res = g_file_set_contents (filename, data, length, &write_error);
+	g_free (filename);
+
 	if (write_error) {
 		g_propagate_error (error, write_error);
 		g_free (data);
@@ -1036,4 +1068,128 @@ panel_util_key_file_to_file (GKeyFile     *keyfile,
 
 	g_free (data);
 	return res;
+}
+
+gboolean
+panel_util_key_file_load_from_uri (GKeyFile       *keyfile,
+                                   const gchar    *uri,
+				   GKeyFileFlags   flags,
+				   GError        **error)
+{
+	char     *scheme;
+	gboolean  is_local;
+	gboolean  result;
+
+	g_return_val_if_fail (keyfile != NULL, FALSE);
+	g_return_val_if_fail (uri != NULL, FALSE);
+	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+	scheme = gnome_vfs_get_uri_scheme (uri);
+	is_local = (scheme == NULL) || !g_ascii_strcasecmp (scheme, "file");
+	g_free (scheme);
+
+	if (is_local) {
+		char *path;
+
+		if (g_path_is_absolute (uri))
+			path = g_filename_from_utf8 (uri, -1, NULL, NULL, NULL);
+		else
+			path = g_filename_from_uri (uri, NULL, NULL);
+		result = g_key_file_load_from_file (keyfile, path,
+						    flags, error);
+		g_free (path);
+	} else {
+		GnomeVFSResult  vfs_result;
+		int             size;
+		char           *contents;
+
+		vfs_result = gnome_vfs_read_entire_file (uri, &size, &contents);
+		if (vfs_result != GNOME_VFS_OK)
+			return FALSE;
+
+		result = g_key_file_load_from_data (keyfile, contents, size,
+						    flags, error);
+
+		g_free (contents);
+	}
+
+	return result;
+}
+
+gboolean
+panel_util_key_file_get_boolean (GKeyFile       *keyfile,
+				 const gchar    *key,
+				 gboolean        default_value)
+{
+	GError   *error;
+	gboolean  retval;
+
+	error = NULL;
+	retval = g_key_file_get_boolean (keyfile, "Desktop Entry", key, &error);
+	if (error != NULL) {
+		retval = default_value;
+		g_error_free (error);
+	}
+
+	return retval;
+}
+
+void
+panel_util_key_file_set_locale_string (GKeyFile    *keyfile,
+				       const gchar *key,
+				       const gchar *value)
+{
+	const char         *locale;
+	const char * const *langs_pointer;
+	int                 i;
+
+	locale = NULL;
+	langs_pointer = g_get_language_names ();
+	for (i = 0; langs_pointer[i] != NULL; i++) {
+		/* find first without encoding  */
+		if (strchr (langs_pointer[i], '.') == NULL) {
+			locale = langs_pointer[i]; 
+			break;
+		}
+	}
+
+	if (locale)
+		g_key_file_set_locale_string (keyfile, "Desktop Entry",
+					      key, locale, value);
+	else
+		g_key_file_set_string (keyfile, "Desktop Entry",
+				       key, value);
+}
+
+void
+panel_util_key_file_remove_locale_key (GKeyFile    *keyfile,
+				       const gchar *key)
+{
+	const char * const *langs_pointer;
+	int                 i;
+	char               *locale_key;
+
+	locale_key = NULL;
+	langs_pointer = g_get_language_names ();
+	for (i = 0; langs_pointer[i] != NULL; i++) {
+		/* find first without encoding  */
+		if (strchr (langs_pointer[i], '.') == NULL) {
+			locale_key = g_strdup_printf ("%s[%s]",
+						      key, langs_pointer[i]);
+			if (g_key_file_has_key (keyfile, "Desktop Entry",
+						locale_key, NULL))
+				break;
+
+			g_free (locale_key);
+			locale_key = NULL;
+		}
+	}
+
+	if (locale_key) {
+		g_key_file_remove_key (keyfile, "Desktop Entry",
+				       locale_key, NULL);
+		g_free (locale_key);
+	} else
+		g_key_file_remove_key (keyfile, "Desktop Entry",
+				       key, NULL);
 }

@@ -19,7 +19,6 @@
 #include <string.h>
 
 #include <glib/gi18n.h>
-#include <libgnomeui/gnome-ditem-edit.h>
 #include <libgnomeui/gnome-url.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <gdk/gdkx.h>
@@ -39,15 +38,7 @@
 #include "panel-multiscreen.h"
 #include "panel-lockdown.h"
 #include "panel-compatibility.h"
-
-#undef LAUNCHER_DEBUG
-
-static void properties_apply (Launcher *launcher);
-static void launcher_save    (Launcher *launcher);
-
-enum {
-	REVERT_BUTTON
-};
+#include "panel-ditem-editor.h"
 
 static GdkScreen *
 launcher_get_screen (Launcher *launcher)
@@ -101,139 +92,108 @@ launcher_register_error_dialog (Launcher *launcher,
 }
 
 static const char *
-panel_launcher_get_filename (const char *path)
+panel_launcher_get_filename (const char *location)
 {
 	char *p;
 
-	if ((p = strstr (path, PANEL_LAUNCHERS_PATH)))
+	if (!g_path_is_absolute (location) &&
+	    g_ascii_strncasecmp (location, "file:", strlen ("file:")))
+		/* this is not a local URI */
+		return NULL;
+
+	if ((p = strstr (location, PANEL_LAUNCHERS_PATH)))
 		p += sizeof (PANEL_LAUNCHERS_PATH);
 
 	return p;
 }
 
 static void
-panel_launcher_save_ditem (GnomeDesktopItem *ditem,
-			   gboolean          report_errors,
-			   GdkScreen        *screen)
-{
-	GError     *error = NULL;
-	const char  *location;
-
-	g_return_if_fail (ditem != NULL);
-
-	location = gnome_desktop_item_get_location (ditem);
-	if (!location) {
-		char *uri;
-
-		uri = panel_make_unique_uri (NULL, ".desktop");
-		gnome_desktop_item_set_location (ditem, uri);
-		g_free (uri);
-	} else if (!strchr (location, G_DIR_SEPARATOR)) {
-		char *path;
-
-		path = panel_make_full_path (NULL, location);
-		gnome_desktop_item_set_location (ditem, path);
-		g_free (path);
-	}
-
-	gnome_desktop_item_save (ditem, NULL, TRUE, &error);
-	if (error) {
-		if (report_errors)
-			panel_error_dialog (screen,
-					    "cannot_save_launcher", TRUE,
-					    _("Could not save launcher to disk"),
-					    "%s",
-					    error->message);
-
-		g_error_free (error);
-	}
-}
-
-static void
 launch_url (Launcher *launcher)
 {
-	GnomeDesktopItem *item;
-	const char *url;
-	char *free_url;
+	char *url;
+	char *canonical_url;
 	GError *error = NULL;
 	GdkScreen *screen;
 
 	g_return_if_fail (launcher != NULL);
-	g_return_if_fail (launcher->ditem != NULL);
+	g_return_if_fail (launcher->key_file != NULL);
 
 	/* FIXME panel_ditem_launch() should be enough for this! */
-	item = launcher->ditem;
-	url = gnome_desktop_item_get_string (item,
-					     GNOME_DESKTOP_ITEM_URL);
+	url = panel_util_key_file_get_string (launcher->key_file, "URL");
 
 	screen = launcher_get_screen (launcher);
 
 	if (!url || *url == 0) {
 		GtkWidget *error_dialog;
 
-		error_dialog = panel_error_dialog (screen,
+		error_dialog = panel_error_dialog (NULL, screen,
 						   "no_url_dialog", TRUE,
 						   _("Could not show this URL"),
 						   _("No URL was specified."));
 		launcher_register_error_dialog (launcher, error_dialog);
+		g_free (url);
 		return;
 	}
 
-	free_url = gnome_vfs_make_uri_canonical (url);
-	gnome_url_show_on_screen (free_url, screen, &error);
+	canonical_url = gnome_vfs_make_uri_canonical (url);
+	gnome_url_show_on_screen (canonical_url, screen, &error);
 
 	if (error) {
 		GtkWidget *error_dialog;
+		char      *primary;
 	
-		error_dialog = panel_error_dialog (screen,
+		primary = g_strdup_printf (_("Could not show '%s'"),
+					   canonical_url);
+		error_dialog = panel_error_dialog (NULL, screen,
 						   "cannot_show_url_dialog",
 						   TRUE,
-						   _("Could not show '%s'"),
-						   "%s",
-						   free_url,
-						   error->message);
+						   primary, error->message);
+		g_free (primary);
 		launcher_register_error_dialog (launcher, error_dialog);
 		g_clear_error (&error);
 	}
 
-	g_free (free_url);
+	g_free (url);
+	g_free (canonical_url);
 }
 
 void
 launcher_launch (Launcher  *launcher,
 		 GtkWidget *widget)
 {
-	GnomeDesktopItem *item;
+	char *type;
 
 	g_return_if_fail (launcher != NULL);
-	g_return_if_fail (launcher->ditem != NULL);
-
-	item = launcher->ditem;
+	g_return_if_fail (launcher->key_file != NULL);
 
 	if (panel_global_config_get_enable_animations ())
 		xstuff_zoom_animate (widget, NULL);
 	
-	if (gnome_desktop_item_get_entry_type (item) == GNOME_DESKTOP_ITEM_TYPE_LINK)
+	type = panel_util_key_file_get_string (launcher->key_file, "Type");
+	if (type && !strcmp (type, "Link"))
 		launch_url (launcher);
-
 	else {
 		GError *error = NULL;
 
-		panel_ditem_launch (
-			item, NULL, 0, launcher_get_screen (launcher), &error);
+		panel_util_launch_from_key_file (launcher->key_file,
+						 NULL,
+						 launcher_get_screen (launcher),
+						 &error);
 		if (error) {
 			GtkWidget *error_dialog;
 
-			error_dialog = panel_error_dialog (launcher_get_screen (launcher),
-							   "cannot_launch_application",
-							   TRUE,
-							   _("Could not launch application"),
-							   "%s",
-							   error->message);
+			error_dialog = panel_error_dialog (
+						NULL,
+						launcher_get_screen (launcher),
+						"cannot_launch_application",
+						TRUE,
+						_("Could not launch application"),
+						error->message);
 			launcher_register_error_dialog (launcher, error_dialog);
 			g_clear_error (&error);
 		}
 	}
+	g_free (type);
 	
 	if (panel_global_config_get_drawer_auto_close ()) {
 		PanelToplevel *toplevel;
@@ -264,29 +224,35 @@ drag_data_received_cb (GtkWidget        *widget,
 		       guint             time,
 		       Launcher         *launcher)
 {
-	GdkScreen  *screen = launcher_get_screen (launcher);
 	GError     *error = NULL;
-	char      **envp = NULL;
-
-	envp = panel_make_environment_for_screen (screen, NULL);
+	GList      *li;
+	GList      *list;
 
 	if (panel_global_config_get_enable_animations ())
 		xstuff_zoom_animate (widget, NULL);
 	
-	gnome_desktop_item_drop_uri_list_with_env (launcher->ditem,
-						   (const char *)selection_data->data,
-						   0 /* flags */,
-						   envp,
-						   &error);
-	g_strfreev (envp);
+	list = gnome_vfs_uri_list_parse ((const char*) selection_data->data);
+	for (li = list; li != NULL; li = li->next) {
+		GnomeVFSURI *uri = li->data;
+		li->data = gnome_vfs_uri_to_string (uri, 0 /* hide_options */);
+		gnome_vfs_uri_unref (uri);
+	}
+
+	panel_util_launch_from_key_file (launcher->key_file,
+					 list,
+					 launcher_get_screen (launcher),
+					 &error);
+
+	g_list_foreach (list, (GFunc)g_free, NULL);
+	g_list_free (list);
 
 	if (error) {
 		GtkWidget *error_dialog;
-		error_dialog = panel_error_dialog (launcher_get_screen (launcher),
+		error_dialog = panel_error_dialog (NULL,
+						   launcher_get_screen (launcher),
 						   "cannot_use_dropped_item",
 						   TRUE,
 						   _("Could not use dropped item"),
-						   "%s",
 						   error->message);
 		launcher_register_error_dialog (launcher, error_dialog);
 		g_clear_error (&error);
@@ -320,12 +286,13 @@ free_launcher (gpointer data)
 {
 	Launcher *launcher = data;
 
-	gnome_desktop_item_unref (launcher->ditem);
-	launcher->ditem = NULL;
+	if (launcher->key_file)
+		g_key_file_free (launcher->key_file);
+	launcher->key_file = NULL;
 
-	if (launcher->revert_ditem != NULL)
-		gnome_desktop_item_unref (launcher->revert_ditem);
-	launcher->revert_ditem = NULL;
+	if (launcher->location != NULL)
+		g_free (launcher->location);
+	launcher->location = NULL;
 
 	g_free (launcher);
 }
@@ -335,7 +302,7 @@ panel_launcher_delete (Launcher *launcher)
 {
 	const char *location;
 
-	if (!(location = gnome_desktop_item_get_location (launcher->ditem)))
+	if (!launcher->location)
 		return;
 
 	if (panel_launcher_get_filename (location)) {
@@ -438,17 +405,11 @@ drag_data_get_cb (GtkWidget          *widget,
 		  guint               time,
 		  Launcher           *launcher)
 {
-	const char *location;
+	char *location;
 	
 	g_return_if_fail (launcher != NULL);
-	g_return_if_fail (launcher->ditem != NULL);
 
-	location = gnome_desktop_item_get_location (launcher->ditem);
-
-	if (!location) {
-		launcher_save (launcher);
-		location = gnome_desktop_item_get_location (launcher->ditem);
-	}
+	location = launcher->location;
 
 	if (info == TARGET_URI_LIST) {
 		if (location [0] != '/')
@@ -476,16 +437,19 @@ drag_data_get_cb (GtkWidget          *widget,
 static Launcher *
 create_launcher (const char *location)
 {
-	GnomeDesktopItem *ditem;
-	Launcher         *launcher;
-	GError           *error = NULL;
+	GKeyFile *key_file;
+	gboolean  loaded;
+	Launcher *launcher;
+	GError   *error = NULL;
+	char     *new_location;
 
 	if (!location) {
 		g_printerr (_("No URI provided for panel launcher desktop file\n"));
 		return NULL;
 	}
 
-	ditem = NULL;
+	new_location = NULL;
+	key_file = g_key_file_new ();
 
 	if (!strchr (location, G_DIR_SEPARATOR)) {
 		/* try to first load a file in our config directory, and if it
@@ -501,17 +465,28 @@ create_launcher (const char *location)
 			buffer = g_strconcat ("applications/", location, NULL);
 			path = panel_lookup_in_data_dirs (buffer);
 			g_free (buffer);
+			/* it's important to keep the full path if the desktop
+			 * file comes from a data dir: when the user will edit
+			 * it, we'll want to save it in PANEL_LAUNCHERS_PATH
+			 * with a random name (and not evolution.desktop, eg)
+			 * and having only a basename as location will make
+			 * this impossible */
+			if (path)
+				new_location = g_strdup (path);
 		}
 
 		if (path) {
-			ditem = gnome_desktop_item_new_from_file (path, 0,
-								  &error);
+			loaded = g_key_file_load_from_file (key_file, path,
+							    G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
+							    &error);
 			g_free (path);
 		}
 	} else
-		ditem = gnome_desktop_item_new_from_uri (location, 0, &error);
+		loaded = panel_util_key_file_load_from_uri (key_file, location,
+							    G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
+							    &error);
 
-	if (!ditem) {
+	if (!loaded) {
 		g_printerr (_("Unable to open desktop file %s for panel launcher%s%s\n"),
 			    location,
 			    error ? ": " : "",
@@ -519,17 +494,22 @@ create_launcher (const char *location)
 		if (error)
 			g_error_free (error);
 
+		g_key_file_free (key_file);
+
 		return NULL; /*button is null*/
 	}
+
+	if (!new_location)
+		new_location = g_strdup (location);
 
 	launcher = g_new0 (Launcher, 1);
 
 	launcher->info = NULL;
 	launcher->button = NULL;
-	launcher->dedit = NULL;
+	launcher->location = new_location;
+	launcher->key_file = key_file;
 	launcher->prop_dialog = NULL;
 	launcher->destroy_handler = 0;
-	launcher->non_writable = FALSE;
 
 	/* Icon will be setup later */
 	launcher->button = button_widget_new (NULL /* icon */,
@@ -562,25 +542,29 @@ create_launcher (const char *location)
 			g_signal_connect (launcher->button, "destroy",
 					  G_CALLBACK (destroy_launcher),
 					  launcher);
-	launcher->ditem = ditem;
 
 	return launcher;
 }
 
 static char *
-guess_icon_from_exec (GtkIconTheme     *icon_theme,
-		      GnomeDesktopItem *ditem)
+guess_icon_from_exec (GtkIconTheme *icon_theme,
+		      GKeyFile     *key_file)
 {
-	const char *exec;
-	char       *icon_name;
-	char       *retval;
+	char *exec;
+	char *icon_name;
+	char *retval;
 
-	exec = gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC);
-	if (!exec || !exec [0])
+	exec = panel_util_key_file_get_string (key_file, "Exec");
+
+	if (!exec || !exec [0]) {
+		g_free (exec);
 		return NULL;
+	}
 
 	icon_name = g_path_get_basename (exec);
 	retval = panel_find_icon (icon_theme, icon_name, 48);
+
+	g_free (exec);
 	g_free (icon_name);
 
 	return retval;
@@ -589,25 +573,27 @@ guess_icon_from_exec (GtkIconTheme     *icon_theme,
 static void
 setup_button (Launcher *launcher)
 {
-	const char *comment;
-	const char *name;
+	char *comment;
+	char *name;
 	char *str;
-	const char *icon;
+	char *icon;
 	char *unescaped_str;
-	char *freeme = NULL;
 	
 	g_return_if_fail (launcher != NULL);
 
-	name = gnome_desktop_item_get_localestring (launcher->ditem,
-						    GNOME_DESKTOP_ITEM_NAME);
-	comment = gnome_desktop_item_get_localestring (launcher->ditem,
-						       GNOME_DESKTOP_ITEM_COMMENT);
+	name = panel_util_key_file_get_locale_string (launcher->key_file,
+						      "Name");
+	comment = panel_util_key_file_get_locale_string (launcher->key_file,
+							 "Comment");
 
 	/* Setup tooltip */
 	if ( ! string_empty (comment))
 		str = g_strdup_printf ("%s\n%s", name, comment);
 	else
 		str = g_strdup (name);
+
+	g_free (name);
+	g_free (comment);
 
 	/* If we can unescape the string, then we probably have an escaped
 	 * string (a location e.g.). If we can't, then it most probably means
@@ -626,285 +612,180 @@ setup_button (Launcher *launcher)
 	g_free (str);
 
 	/* Setup icon */
-	icon = gnome_desktop_item_get_string (launcher->ditem,
-					      GNOME_DESKTOP_ITEM_ICON);
+	icon = panel_util_key_file_get_locale_string (launcher->key_file,
+						      "Icon");
 	if (!icon)
-		icon = freeme = guess_icon_from_exec (BUTTON_WIDGET (launcher->button)->icon_theme,
-						      launcher->ditem);
+		icon = guess_icon_from_exec (BUTTON_WIDGET (launcher->button)->icon_theme,
+					     launcher->key_file);
 
 	button_widget_set_icon_name (BUTTON_WIDGET (launcher->button), sure_string (icon));
-
-	g_free (freeme);
+	g_free (icon);
 }
 
 static char *
-panel_launcher_hoard (const char *launcher_location)
+panel_launcher_find_writable_uri (const char *launcher_location)
 {
-	GnomeDesktopItem *ditem;
-	const char       *path;
-	char             *retval;
+	char *path;
+	char *uri;
 
-	retval = NULL;
-	if (!launcher_location ||
-	    !strchr (launcher_location, G_DIR_SEPARATOR) ||
-	    (retval = g_strdup (panel_launcher_get_filename (launcher_location))))
-		return retval;
+	if (!launcher_location)
+		return panel_make_unique_uri (NULL, ".desktop");;
 
-	ditem = gnome_desktop_item_new_from_uri (launcher_location, 0, NULL);
-	if (!ditem)
-		return NULL;
+	if (!strchr (launcher_location, G_DIR_SEPARATOR)) {
+		path = panel_make_full_path (NULL, launcher_location);
+		uri = gnome_vfs_get_uri_from_local_path (path);
+		g_free (path);
+		return uri;
+	}
 
-	gnome_desktop_item_set_location (ditem, NULL);
-	panel_launcher_save_ditem (ditem, FALSE, NULL);
-	
-	retval = NULL;
-	if ((path = gnome_desktop_item_get_location (ditem)))
-		retval = g_strdup (panel_launcher_get_filename (path));
+	if (panel_launcher_get_filename (launcher_location) != NULL) {
+		if (g_path_is_absolute (launcher_location)) {
+			uri = gnome_vfs_get_uri_from_local_path (launcher_location);
+			return uri;
+		} else
+			return g_strdup (launcher_location);
+	}
 
-	gnome_desktop_item_unref (ditem);
-
-	return retval;
+	return panel_make_unique_uri (NULL, ".desktop");;
 }
 
 static void
-properties_apply (Launcher *launcher)
+launcher_changed (PanelDItemEditor *dialog,
+		  Launcher         *launcher)
 {
-	char *location;
-	char *new_location;
+	/* Setup the button look */
+	setup_button (launcher);
+}
 
-	/* save location */
-	location = g_strdup (gnome_desktop_item_get_location (launcher->ditem));
+static void
+launcher_command_changed (PanelDItemEditor *dialog,
+			  const char       *command,
+			  Launcher         *launcher)
+{
+	char     *exec;
+	char     *old_exec;
+	GKeyFile *revert_key_file;
 
-	gnome_desktop_item_unref (launcher->ditem);
+	revert_key_file = panel_ditem_editor_get_revert_key_file (dialog);
 
-	launcher->ditem =
-		gnome_ditem_edit_get_ditem (GNOME_DITEM_EDIT (launcher->dedit));
-	launcher->ditem = gnome_desktop_item_copy (launcher->ditem);
+	if (revert_key_file) {
+		exec = panel_util_key_file_get_string (launcher->key_file,
+						       "Exec");
+		old_exec = panel_util_key_file_get_string (revert_key_file,
+							   "Exec");
 
-	if ((new_location = panel_launcher_hoard (location))) {
-		GConfClient *client;
-		const char  *key;
+		if (!old_exec || !exec || strcmp (old_exec, exec))
+			panel_util_key_file_remove_key (launcher->key_file,
+							"StartupNotify");
 
+		g_free (exec);
+		g_free (old_exec);
+	}
+}
+
+static char *
+launcher_save_uri (PanelDItemEditor *dialog,
+		   gpointer          data)
+{
+	Launcher   *launcher;
+	char       *new_uri;
+	const char *uri;
+
+	launcher = (Launcher *) data;
+
+	if (launcher)
+		new_uri = panel_launcher_find_writable_uri (launcher->location);
+	else
+		new_uri = panel_launcher_find_writable_uri (NULL);
+
+	uri = panel_ditem_editor_get_uri (dialog);
+
+	if (!uri || (new_uri && strcmp (new_uri, uri)))
+		return new_uri;
+
+	g_free (new_uri);
+
+	return NULL;
+}
+
+static void
+launcher_saved (GtkWidget *dialog,
+		Launcher  *launcher)
+{
+	const char  *uri;
+	GConfClient *client;
+	const char  *key;
+
+	uri = panel_ditem_editor_get_uri (PANEL_DITEM_EDITOR (dialog));
+	if (panel_launcher_get_filename (uri) != NULL)
+		uri = panel_launcher_get_filename (uri);
+
+	if (uri && launcher->location && strcmp (uri, launcher->location)) {
 		client = panel_gconf_get_client ();
 
 		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS,
 					    launcher->info->id,
 					    "launcher_location");
 
-		gconf_client_set_string (client, key, new_location, NULL);
+		gconf_client_set_string (client, key, uri, NULL);
 
-		gnome_desktop_item_set_location (launcher->ditem, new_location);
-
-		g_free (new_location);
-	} else {
-		gnome_desktop_item_set_location (launcher->ditem, location);
-	}
-
-	g_free (location);
-
-	launcher_save (launcher);
-
-	/* Setup the button look */
-	setup_button (launcher);
-
-	/* FIXME_FOR_NEW_CONFIG: need to save changed settings here */
-}
-
-static void
-properties_close_callback(GtkWidget *widget, gpointer data)
-{
-	Launcher *launcher = data;
-
-	launcher->prop_dialog = NULL;
-	launcher->dedit = NULL;
-
-	if (launcher->revert_ditem != NULL)
-		gnome_desktop_item_unref (launcher->revert_ditem);
-	launcher->revert_ditem = NULL;
-}
-
-static void
-launcher_changed (GObject *dedit, gpointer data)
-{
-	Launcher         *launcher;
-	GnomeDesktopItem *new_ditem;
-	const char       *old_exec;
-	const char       *new_exec;
-
-	launcher = (Launcher *) data;
-	new_ditem = gnome_ditem_edit_get_ditem (GNOME_DITEM_EDIT (dedit));
-
-	old_exec = gnome_desktop_item_get_string (launcher->ditem,
-						  GNOME_DESKTOP_ITEM_EXEC);
-	new_exec = gnome_desktop_item_get_string (new_ditem,
-						  GNOME_DESKTOP_ITEM_EXEC);
-
-	if (!old_exec || !new_exec || strcmp (old_exec, new_exec))
-		gnome_desktop_item_clear_attr (new_ditem, "StartupNotify");
-
-	properties_apply (launcher);
-}
-
-static void
-set_revert_insensitive (GtkWidget *button,	
-			gpointer   dummy)
-{
-     gtk_widget_set_sensitive (button, FALSE);
-}
-
-static void
-set_revert_sensitive (GtkWidget *button,
-		      gpointer   dummy)
-{
-     gtk_widget_set_sensitive (button, TRUE);
-}
-
-static void
-window_response (GtkWidget *w, int response, gpointer data)
-{
-	Launcher *launcher = data;
-
-	if (response == GTK_RESPONSE_HELP) {
-		panel_show_help (
-			gtk_window_get_screen (GTK_WINDOW (w)),
-			"user-guide.xml", "gospanel-52");
-	} else if (response == REVERT_BUTTON) { /* revert */
-		char *new_location;
-
-		if (launcher->ditem != NULL)
-			gnome_desktop_item_unref (launcher->ditem);
-		launcher->ditem = gnome_desktop_item_copy (launcher->revert_ditem);
-
-		/* We want to ignore the "changed" signal first */ 
-		g_signal_handlers_disconnect_by_func (
-				   G_OBJECT (GNOME_DITEM_EDIT(launcher->dedit)),
-				   G_CALLBACK(launcher_changed),
-				   launcher);
-
-		gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (launcher->dedit),
-					    launcher->revert_ditem);
-
-		/* connect the launcher_changed () callback for the "changed"
-		 * signal again
-		 */
-		g_signal_connect (G_OBJECT (launcher->dedit), "changed",
-				  G_CALLBACK (launcher_changed),
-				  launcher);
-
-		if ((new_location = panel_launcher_hoard (gnome_desktop_item_get_location (launcher->ditem)))) {
-			GConfClient *client;
-			const char  *key;
-
-			client = panel_gconf_get_client ();
-
-			key = panel_gconf_full_key (PANEL_GCONF_OBJECTS,
-						    launcher->info->id,
-						    "launcher_location");
-
-			gconf_client_set_string (client, key, new_location, NULL);
-
-			gnome_desktop_item_set_location (launcher->ditem, new_location);
-
-			g_free (new_location);
-		}
-
-		/* resave launcher */
-		launcher_save (launcher);
-
-		/* Setup the button look */
-		setup_button (launcher);
-
-	} else {
-		gtk_widget_destroy (w);
+		if (launcher->location)
+			g_free (launcher->location);
+		launcher->location = g_strdup (uri);
 	}
 }
 
-static GtkWidget *
-create_properties_dialog (Launcher  *launcher,
-			  GdkScreen *screen)
+static void
+launcher_error_reported (GtkWidget  *dialog,
+			 const char *primary,
+			 const char *secondary,
+			 gpointer    data)
 {
-	GtkWidget *dialog;
-	GtkWidget *help;
-	GtkWidget *close;
-	GtkWidget *revert;
-
-	dialog = gtk_dialog_new ();
-
-	gtk_window_set_title (GTK_WINDOW (dialog), _("Launcher Properties"));
-	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
-	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
-
-	help = gtk_dialog_add_button (
-			GTK_DIALOG (dialog), GTK_STOCK_HELP, GTK_RESPONSE_HELP);
-
-	revert = gtk_dialog_add_button (
-			GTK_DIALOG (dialog), GTK_STOCK_REVERT_TO_SAVED, REVERT_BUTTON);
-	gtk_widget_set_sensitive (revert, FALSE);
-
-	close = gtk_dialog_add_button (
-			GTK_DIALOG (dialog), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
-
-	launcher->dedit = gnome_ditem_edit_new ();
-	gtk_container_set_border_width (GTK_CONTAINER (launcher->dedit), 5);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-			    launcher->dedit, TRUE, TRUE, 0);
-
-	gtk_window_set_wmclass (GTK_WINDOW (dialog),
-			       "launcher_properties", "Panel");
-	
-	if (launcher->revert_ditem != NULL)
-		gnome_desktop_item_unref (launcher->revert_ditem);
-	launcher->revert_ditem = gnome_desktop_item_copy (launcher->ditem);
-
-	gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (launcher->dedit),
-				    launcher->ditem);
-
-	g_signal_connect (launcher->dedit, "changed",
-			  G_CALLBACK (launcher_changed),
-			  launcher);
-	
-	panel_widget_register_open_dialog (PANEL_WIDGET 
-					   (launcher->info->widget->parent),
-					   dialog);
-
-	g_signal_connect_swapped (launcher->dedit, "changed",
-				  G_CALLBACK (set_revert_sensitive),
-				  revert);
-
-	g_signal_connect (dialog, "destroy",
-			  G_CALLBACK (properties_close_callback),
-			  launcher);
-
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
-
-	g_signal_connect (dialog, "response",
-			  G_CALLBACK (window_response),
-			  launcher);
-
-	g_signal_connect (revert, "clicked",
-			  G_CALLBACK (set_revert_insensitive),
-			  NULL);
-
-	gnome_ditem_edit_grab_focus (GNOME_DITEM_EDIT (launcher->dedit));
-
-	return dialog;
+	panel_error_dialog (GTK_WINDOW (dialog), NULL,
+			    "error_editing_launcher", TRUE,
+			    primary, secondary);
 }
 
 void
-launcher_properties (Launcher  *launcher,
-		     GdkScreen *screen)
+launcher_properties (Launcher  *launcher)
 {
 	if (launcher->prop_dialog != NULL) {
-		gtk_window_set_screen (
-			GTK_WINDOW (launcher->prop_dialog), screen);
+		gtk_window_set_screen (GTK_WINDOW (launcher->prop_dialog),
+				       gtk_widget_get_screen (launcher->button));
 		gtk_window_present (GTK_WINDOW (launcher->prop_dialog));
 		return;
 	}
 
-	launcher->prop_dialog = create_properties_dialog (launcher, screen);
-	gtk_widget_show_all (launcher->prop_dialog);
+	launcher->prop_dialog = panel_ditem_editor_new (GTK_WINDOW (PANEL_WIDGET (launcher->info->widget->parent)->toplevel),
+							launcher->key_file,
+							launcher->location,
+							_("Launcher Properties"));
+
+	panel_widget_register_open_dialog (PANEL_WIDGET 
+					   (launcher->info->widget->parent),
+					   launcher->prop_dialog);
+
+	panel_ditem_register_save_uri_func (PANEL_DITEM_EDITOR (launcher->prop_dialog),
+					    launcher_save_uri,
+					    launcher);
+
+	g_signal_connect (launcher->prop_dialog, "changed",
+			  G_CALLBACK (launcher_changed), launcher);
+
+	g_signal_connect (launcher->prop_dialog, "command_changed",
+			  G_CALLBACK (launcher_command_changed), launcher);
+
+	g_signal_connect (launcher->prop_dialog, "saved",
+			  G_CALLBACK (launcher_saved), launcher);
+
+	g_signal_connect (launcher->prop_dialog, "error_reported",
+			  G_CALLBACK (launcher_error_reported), NULL);
+
+	g_signal_connect (launcher->prop_dialog, "destroy",
+			  G_CALLBACK (gtk_widget_destroyed),
+			  &launcher->prop_dialog);
+
+	gtk_widget_show (launcher->prop_dialog);
 }
 
 static gboolean
@@ -936,8 +817,10 @@ load_launcher_applet (const char       *location,
 						free_launcher,
 						panel, locked, pos, exactpos,
 						PANEL_OBJECT_LAUNCHER, id);
-	if (!launcher->info)
+	if (!launcher->info) {
+		free_launcher (launcher);
 		return NULL;
+	}
 
 	panel_applet_add_callback (launcher->info,
 				   "launch",
@@ -981,7 +864,8 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 	launcher_location = gconf_client_get_string (client, key, NULL);
 
 	if (!launcher_location) {
-		g_printerr (_("Key %s is not set, can't load launcher\n"), key);
+		g_printerr (_("Key %s is not set, cannot load launcher\n"),
+			    key);
 		return;
 	}
 
@@ -1008,85 +892,20 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 }
 
 static void
-ensure_item_localefiled (GnomeDesktopItem *ditem, const char *field)
+launcher_new_saved (GtkWidget *dialog,
+		    gpointer   data)
 {
-	if (gnome_desktop_item_get_string (ditem, field) == NULL) {
-		const char *localized = gnome_desktop_item_get_localestring (ditem, field);
-		if (localized != NULL)
-			gnome_desktop_item_set_string (ditem, field, localized);
-	}
-}
+	PanelWidget *panel;
+	int          pos;
+	const char  *uri;
 
-static void
-really_add_launcher (GtkWidget *dialog, int response, gpointer data)
-{
-	GtkWidget *err_dialog;
-	GnomeDItemEdit *dedit = GNOME_DITEM_EDIT(data);
-	int pos = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "pos"));
-	PanelWidget *panel = g_object_get_data (G_OBJECT (dialog), "panel");
-	GnomeDesktopItem *ditem;
-	
-	if (response == GTK_RESPONSE_OK) {
-		const char *location;
+	pos = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "pos"));
+	panel = g_object_get_data (G_OBJECT (dialog), "panel");
 
-		ditem = gnome_ditem_edit_get_ditem (dedit);
-
-		/* check for valid name */
-		if (string_empty (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME))) {
-			err_dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
-							 "cannot_create_launcher",
-							 TRUE,
-							 _("Could not create launcher"),
-							 _("You have to specify a name."));
-			g_signal_connect_object (G_OBJECT (dialog),
-						 "destroy",
-						 G_CALLBACK (gtk_widget_destroy),
-						 G_OBJECT (err_dialog),
-						 G_CONNECT_SWAPPED);
-			return;
-		}
-		
-
-		/* check for valid URL or command */
-		if ((gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_APPLICATION && 
-		     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC))) ||
-		    (gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_LINK &&
-		     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL)))) {
-			err_dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
-							 "cannot_create_launcher",
-							 TRUE,
-							 _("Could not create launcher"),
-							 _("You have to specify a valid URL or command."));
-			g_signal_connect_object (G_OBJECT (dialog),
-						 "destroy",
-						 G_CALLBACK (gtk_widget_destroy),
-						 G_OBJECT (err_dialog),
-						 G_CONNECT_SWAPPED);
-			return;
-		}
-
-		/* Make sure we set the "C" locale strings to the terms we set
-		   here.  This is so that if the user logs into another locale
-		   they get their own description there rather then empty.  It
-		   is not the C locale however, but the user created this entry
-		   herself so it's OK */
-		ensure_item_localefiled (ditem, GNOME_DESKTOP_ITEM_NAME);
-		ensure_item_localefiled (ditem, GNOME_DESKTOP_ITEM_GENERIC_NAME);
-		ensure_item_localefiled (ditem, GNOME_DESKTOP_ITEM_COMMENT);
-
-		panel_launcher_save_ditem (ditem, TRUE, gtk_window_get_screen (GTK_WINDOW (dialog)));
-		location = gnome_desktop_item_get_location (ditem);
-
-		panel_launcher_create (panel->toplevel, pos, location);
-	} else if (response == GTK_RESPONSE_HELP) {
-		panel_show_help (
-			gtk_window_get_screen (GTK_WINDOW (dialog)),
-			"user-guide.xml", "gospanel-52");
-		/* just return as we don't want to close */
-		return;
-	}
-
-	gtk_widget_destroy (dialog);
+	uri = panel_ditem_editor_get_uri (PANEL_DITEM_EDITOR (dialog));
+	if (panel_launcher_get_filename (uri) != NULL)
+		uri = panel_launcher_get_filename (uri);
+	panel_launcher_create (panel->toplevel, pos, uri);
 }
 
 void
@@ -1096,57 +915,35 @@ ask_about_launcher (const char  *file,
 		    gboolean     exactpos)
 {
 	GtkWidget *dialog;
-	GnomeDItemEdit *dee;
-	GnomeDesktopItem *ditem;
+	GKeyFile  *key_file;
 
-	dialog = gtk_dialog_new_with_buttons (
-				_("Create Launcher"),
-				NULL,
-				0 /* flags */,
-				GTK_STOCK_HELP, GTK_RESPONSE_HELP,
-				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				GTK_STOCK_OK, GTK_RESPONSE_OK,
-				NULL);
-
-	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
-	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
-	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
-
-	gtk_window_set_wmclass (GTK_WINDOW (dialog),
-				"create_launcher", "Panel");
-	
-	dee = GNOME_DITEM_EDIT (gnome_ditem_edit_new ());
-	gtk_container_set_border_width (GTK_CONTAINER (dee), 5);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-			    GTK_WIDGET (dee), TRUE, TRUE, 0);
-
+	dialog = panel_ditem_editor_new (NULL, NULL, NULL,
+					 _("Create Launcher"));
 	panel_widget_register_open_dialog (panel, dialog);
 
-	ditem = gnome_desktop_item_new ();
-	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_EXEC, file);
-	gnome_desktop_item_set_entry_type (ditem, GNOME_DESKTOP_ITEM_TYPE_APPLICATION);
+	key_file = panel_ditem_editor_get_key_file (PANEL_DITEM_EDITOR (dialog));
+	if (file != NULL)
+		panel_util_key_file_set_string (key_file, "Exec", file);
+	panel_util_key_file_set_string (key_file, "Type", "Application");
+	panel_ditem_editor_sync_display (PANEL_DITEM_EDITOR (dialog));
 
-	gnome_ditem_edit_set_ditem (dee, ditem);
+	panel_ditem_register_save_uri_func (PANEL_DITEM_EDITOR (dialog),
+					    launcher_save_uri,
+					    NULL);
 
-	gnome_desktop_item_unref (ditem);
-	
-	g_object_set_data (G_OBJECT(dialog), "pos", GINT_TO_POINTER (pos));
-	g_object_set_data (G_OBJECT(dialog), "exactpos",
-			   GINT_TO_POINTER (exactpos));
+	g_signal_connect (G_OBJECT (dialog), "saved",
+			  G_CALLBACK (launcher_new_saved), NULL);
+
+	g_signal_connect (G_OBJECT (dialog), "error_reported",
+			  G_CALLBACK (launcher_error_reported), NULL);
+
+	gtk_window_set_screen (GTK_WINDOW (dialog),
+			       gtk_widget_get_screen (GTK_WIDGET (panel)));
+
+	g_object_set_data (G_OBJECT (dialog), "pos", GINT_TO_POINTER (pos));
 	g_object_set_data (G_OBJECT (dialog), "panel", panel);
 
-	g_signal_connect (G_OBJECT (dialog), "response",
-			    G_CALLBACK (really_add_launcher),
-			    dee);
-
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-
-	gtk_window_set_screen (GTK_WINDOW (dialog), gtk_widget_get_screen (GTK_WIDGET (panel)));
-
-	gtk_widget_show_all (dialog);
-
-	gnome_ditem_edit_grab_focus (dee);
+	gtk_widget_show (dialog);
 }
 
 void
@@ -1158,34 +955,42 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 				 const char    *comment,
 				 const char    *icon)
 {
-	GnomeDesktopItem *ditem;
-	const char       *location;
+	GKeyFile *key_file;
+	char     *location;
+	GError   *error;
 
-	ditem = gnome_desktop_item_new ();
+	key_file = panel_util_key_file_new_desktop ();
 
 	/* set current language and the "C" locale to this name,
 	 * this is kind of evil... */
-	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_NAME, name);
-	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_COMMENT, comment);
-	gnome_desktop_item_set_localestring (ditem, GNOME_DESKTOP_ITEM_NAME, name);
-	gnome_desktop_item_set_localestring (ditem, GNOME_DESKTOP_ITEM_COMMENT, comment);
-
-	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_ICON, icon);
+	panel_util_key_file_set_string (key_file, "Name", name);
+	panel_util_key_file_set_string (key_file, "Comment", comment);
+	panel_util_key_file_set_string (key_file, "Icon", icon);
+	panel_util_key_file_set_locale_string (key_file, "Name", name);
+	panel_util_key_file_set_locale_string (key_file, "Comment", comment);
+	panel_util_key_file_set_locale_string (key_file, "Icon", icon);
 
 	if (exec_info) {
-		gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_EXEC, exec_or_uri);
-		gnome_desktop_item_set_entry_type (ditem, GNOME_DESKTOP_ITEM_TYPE_APPLICATION);
+		panel_util_key_file_set_string (key_file, "Exec", exec_or_uri);
+		panel_util_key_file_set_string (key_file, "Type", "Application");
 	} else {
-		gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_URL, exec_or_uri);
-		gnome_desktop_item_set_entry_type (ditem, GNOME_DESKTOP_ITEM_TYPE_LINK);
+		panel_util_key_file_set_string (key_file, "URL", exec_or_uri);
+		panel_util_key_file_set_string (key_file, "Type", "Link");
 	}
 
-	panel_launcher_save_ditem (ditem, TRUE, gtk_window_get_screen (GTK_WINDOW (toplevel)));
-	location = gnome_desktop_item_get_location (ditem);
+	location = panel_make_unique_uri (NULL, ".desktop");
+	if (panel_util_key_file_to_file (key_file, location, &error)) {
+		panel_launcher_create (toplevel, position, location);
+	} else {
+		panel_error_dialog (NULL,
+				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
+				    "cannot_save_launcher", TRUE,
+				    _("Could not save launcher"),
+				    error->message);
+		g_error_free (error);
+	}
 
-	panel_launcher_create (toplevel, position, location);
-
-	gnome_desktop_item_unref (ditem);
+	g_key_file_free (key_file);
 }
 
 void
@@ -1196,27 +1001,28 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 	GConfClient *client;
 	const char  *key;
 	char        *id;
-	char        *new_location;
+	const char  *new_location;
 
 	g_return_if_fail (location != NULL);
 
 	client = panel_gconf_get_client ();
 
-	id = panel_profile_prepare_object_with_id (PANEL_OBJECT_LAUNCHER, toplevel_id, position, FALSE);
+	id = panel_profile_prepare_object_with_id (PANEL_OBJECT_LAUNCHER,
+						   toplevel_id,
+						   position,
+						   FALSE);
 
-	new_location = panel_launcher_hoard (location);
+	new_location = panel_launcher_get_filename (location);
+	if (new_location == NULL)
+		new_location = location;
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS,
 				    id,
 				    "launcher_location");
-	if (new_location)
-		gconf_client_set_string (client, key, new_location, NULL);
-	else
-		gconf_client_set_string (client, key, location, NULL);
+	gconf_client_set_string (client, key, new_location, NULL);
 
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
 
-	g_free (new_location);
 	g_free (id);
 }
 
@@ -1260,15 +1066,6 @@ panel_launcher_create_copy (PanelToplevel *toplevel,
 	g_free (new_location);
 }
 
-static void
-launcher_save (Launcher *launcher)
-{
-	g_return_if_fail (launcher != NULL);
-	g_return_if_fail (launcher->ditem != NULL);
-
-	panel_launcher_save_ditem (launcher->ditem, TRUE, launcher_get_screen (launcher));
-}
-
 Launcher *
 find_launcher (const char *path)
 {
@@ -1279,20 +1076,17 @@ find_launcher (const char *path)
 	for (l = panel_applet_list_applets (); l; l = l->next) {
 		AppletInfo *info = l->data;
 		Launcher *launcher;
-		const char *location;
 
 		if (info->type != PANEL_OBJECT_LAUNCHER)
 			continue;
 
 		launcher = info->data;
 
-		if (launcher->ditem == NULL)
+		if (launcher->key_file == NULL)
 			continue;
 
-		location = gnome_desktop_item_get_location (launcher->ditem);
-
-		if (location != NULL &&
-		    strcmp (location, path) == 0)
+		if (launcher->location != NULL &&
+		    strcmp (launcher->location, path) == 0)
 			return launcher;
 	}
 

@@ -193,11 +193,9 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 						  button->orientation & PANEL_HORIZONTAL_MASK ? button->size : -1,
 						  &error);
 		if (error) {
-			panel_error_dialog (gdk_screen_get_default (),
+			panel_error_dialog (NULL, gdk_screen_get_default (),
 					    "cannot_load_pixbuf", TRUE,
-					    _("Could not load icon"),
-					    "%s",
-					    error);
+					    _("Could not load icon"), error);
 			g_free (error);
 		}
 	}

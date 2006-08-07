@@ -311,7 +311,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, size_change),
                               NULL,
                               NULL, 
-                              panel_marshal_VOID__VOID,
+                              g_cclosure_marshal_VOID__VOID,
                               G_TYPE_NONE,
                               0);
 
@@ -322,7 +322,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, back_change),
                               NULL,
                               NULL, 
-                              panel_marshal_VOID__VOID,
+                              g_cclosure_marshal_VOID__VOID,
                               G_TYPE_NONE,
                               0);
 
@@ -333,7 +333,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_move),
                               NULL,
                               NULL, 
-                              panel_marshal_VOID__POINTER,
+                              g_cclosure_marshal_VOID__POINTER,
                               G_TYPE_NONE,
                               1,
                               G_TYPE_POINTER); 
@@ -345,7 +345,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_added),
                               NULL,
                               NULL, 
-                              panel_marshal_VOID__POINTER,
+                              g_cclosure_marshal_VOID__POINTER,
                               G_TYPE_NONE,
                               1,
                               G_TYPE_POINTER); 
@@ -357,7 +357,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_removed),
                               NULL,
                               NULL, 
-                              panel_marshal_VOID__POINTER,
+                              g_cclosure_marshal_VOID__POINTER,
                               G_TYPE_NONE,
                               1,
                               G_TYPE_POINTER); 
@@ -405,7 +405,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			      G_STRUCT_OFFSET (PanelWidgetClass, tab_move),
                               NULL,
                               NULL,
-                              panel_marshal_VOID__BOOLEAN,
+                              g_cclosure_marshal_VOID__BOOLEAN,
                               G_TYPE_NONE,
                               1,
                               G_TYPE_BOOLEAN);
@@ -417,7 +417,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, end_move),
                               NULL,
                               NULL,
-                              panel_marshal_VOID__VOID,
+                              g_cclosure_marshal_VOID__VOID,
                               G_TYPE_NONE,
                               0);
 

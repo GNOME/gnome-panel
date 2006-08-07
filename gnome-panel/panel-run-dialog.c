@@ -299,11 +299,14 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				      &error);
 			
 	if (!result) {
-		panel_error_dialog (screen, "cannot_spawn_command", TRUE,
-				    _("Could not run command '%s'"),
-				    "%s",
-				    escaped,
-				    error->message);
+		char *primary;
+
+		primary = g_strdup_printf (_("Could not run command '%s'"),
+					   escaped);
+		panel_error_dialog (GTK_WINDOW (dialog->run_dialog), NULL,
+				    "cannot_spawn_command", TRUE,
+				    primary, error->message);
+		g_free (primary);
 
 		g_error_free (error);
 	}
@@ -325,11 +328,14 @@ panel_run_dialog_show_url (PanelRunDialog *dialog,
 
 	gnome_url_show_on_screen (url, screen, &error);
 	if (error) {
-		panel_error_dialog (screen, "cannot_show_url", TRUE,
-				    _("Could not open location '%s'"),
-				    "%s",
-				    escaped,
-				    error->message);
+		char *primary;
+
+		primary = g_strdup_printf (_("Could not open location '%s'"),
+					   escaped);
+		panel_error_dialog (GTK_WINDOW (dialog->run_dialog), NULL,
+				    "cannot_show_url", TRUE,
+				    primary, error->message);
+		g_free (primary);
 
 		g_error_free (error);
 		return FALSE;
@@ -377,11 +383,14 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	disk = g_locale_from_utf8 (command, -1, NULL, NULL, &error);
 
 	if (!disk || error) {
-		panel_error_dialog (screen, "cannot_convert_command_from_utf8",
-				    TRUE, _("Could not convert '%s' from UTF-8"),
-				    "%s",
-				    command,
-				    error->message);
+		char *primary;
+
+		primary = g_strdup_printf (_("Could not convert '%s' from UTF-8"),
+					   command);
+		panel_error_dialog (GTK_WINDOW (dialog->run_dialog), NULL,
+				    "cannot_convert_command_from_utf8", TRUE,
+				    primary, error->message);
+		g_free (primary);
 
 		g_error_free (error);
 		return;
@@ -957,7 +966,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	GtkTreeModel *child_model;
 	GtkTreeIter   iter;
 	GtkTreeIter   filter_iter;
-	const char   *temp;
+	char         *temp;
 	char         *path, *stripped;
 	gboolean      terminal;
 		
@@ -976,7 +985,6 @@ program_list_selection_changed (GtkTreeSelection *selection,
 				  
 	if (path) {
 		GKeyFile *key_file;
-		GError   *error;
 
 		key_file = g_key_file_new ();
 
@@ -999,47 +1007,33 @@ program_list_selection_changed (GtkTreeSelection *selection,
 			 * the drag icon can't be set by
 			 * panel_run_dialog_set_icon.
 			 */
-			temp = g_key_file_get_string (key_file,
-						      "Desktop Entry",
-						      "Exec",
-						      NULL);
+			temp = panel_util_key_file_get_string (key_file,
+							       "Exec");
 			if (temp) {
 				stripped = remove_parameters (temp);
 				gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry), stripped);
 				g_free (stripped);
 			} else {
-				temp = g_key_file_get_string (key_file,
-							      "Desktop Entry",
-							      "URL",
-							      NULL);
+				temp = panel_util_key_file_get_string (key_file,
+								       "URL");
 				gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry), sure_string (temp));
 			}
 			g_free (temp);
 
-			temp = g_key_file_get_locale_string (key_file,
-							     "Desktop Entry",
-							     "Icon",
-							     NULL, NULL);
+			temp = panel_util_key_file_get_locale_string (key_file,
+								      "Icon");
 			panel_run_dialog_set_icon (dialog, temp);
 			g_free (temp);
 			
-			temp = g_key_file_get_locale_string (key_file,
-							     "Desktop Entry",
-							     "Comment",
-							     NULL, NULL);
+			temp = panel_util_key_file_get_locale_string (key_file,
+								      "Comment");
 			//FIXME: if sure_string () == "", we should display "Will run..." as in entry_changed()
 			gtk_label_set_text (GTK_LABEL (dialog->program_label), sure_string (temp));
 			g_free (temp);
 
-			error = NULL;
-			terminal = g_key_file_get_boolean (key_file,
-							   "Desktop Entry",
-							   "Terminal",
-							   &error);
-			if (error) {
-				terminal = FALSE;
-				g_error_free (error);
-			}
+			terminal = panel_util_key_file_get_boolean (key_file,
+								    "Terminal",
+								    FALSE);
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox),
 						      terminal);
 
@@ -1742,30 +1736,27 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	g_free (scheme);
 		
 	if (exec) {
-		g_key_file_set_string (key_file, "Desktop Entry",
-				       "Type", "Application");
-		g_key_file_set_string (key_file, "Desktop Entry",
-				       "Exec", text);
+		panel_util_key_file_set_string (key_file,
+						"Type", "Application");
+		panel_util_key_file_set_string (key_file,
+						"Exec", text);
 	} else {
-		g_key_file_set_string (key_file, "Desktop Entry",
-				       "Type", "Link");
-		g_key_file_set_string (key_file, "Desktop Entry",
-				       "URL", uri);
+		panel_util_key_file_set_string (key_file,
+						"Type", "Link");
+		panel_util_key_file_set_string (key_file,
+						"URL", uri);
 	}
 	g_free (uri);
 
-	//FIXME localestring
-	g_key_file_set_string (key_file, "Desktop Entry",
-			       "Name",
-			       (dialog->item_name) ? dialog->item_name : text);
+	panel_util_key_file_set_locale_string (key_file, "Name",
+					       (dialog->item_name) ?
+					       	dialog->item_name : text);
 
-	g_key_file_set_boolean (key_file, "Desktop Entry",
-				"Terminal",
-				gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)));
+	panel_util_key_file_set_boolean (key_file, "Terminal",
+					 gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)));
 
-	//FIXME localestring
-	g_key_file_set_string (key_file, "Desktop Entry",
-			       "Icon", dialog->icon_path);
+	panel_util_key_file_set_locale_string (key_file, "Icon",
+					       dialog->icon_path);
 
 	uri = panel_make_unique_uri (g_get_tmp_dir (), ".desktop");
 	disk = g_filename_from_uri (uri, NULL, NULL);
@@ -1889,10 +1880,15 @@ panel_run_dialog_present (GdkScreen *screen,
 			     "panel_run_dialog",
 			     NULL);
 	if (!gui) {
-		panel_error_dialog (screen, "cannot_display_run_dialog", TRUE,
+		char *secondary;
+
+		secondary = g_strdup_printf (_("Unable to load file '%s'."),
+					     GLADEDIR"/panel-run-dialog.glade");
+		panel_error_dialog (NULL, screen, "cannot_display_run_dialog",
+				    TRUE,
 				    _("Could not display run dialog"),
-				    _("Unable to load file '%s'."),
-				      GLADEDIR "/panel-run-dialog.glade");
+				      secondary);
+		g_free (secondary);
 		return;
 	}
 

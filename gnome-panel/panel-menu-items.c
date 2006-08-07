@@ -105,13 +105,15 @@ activate_uri (GtkWidget *menuitem,
 
 	if (error != NULL) {
 		if (error->code != GNOME_URL_ERROR_CANCELLED) {
+			char *primary;
 			escaped = g_markup_escape_text (url, -1);
-			panel_error_dialog (screen, "cannot_show_url", TRUE,
-					    _("Could not open location '%s'"),
-					    "%s",
-					    escaped,
-					    error->message);
+			primary = g_strdup_printf (_("Could not open location '%s'"),
+						   escaped);
 			g_free (escaped);
+			panel_error_dialog (NULL, screen,
+					    "cannot_show_url", TRUE,
+					    primary, error->message);
+			g_free (primary);
 		}
 		g_error_free (error);
 	}
@@ -170,14 +172,11 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 		return;
 	}
 
-	icon    = g_key_file_get_locale_string (key_file, "Desktop Entry",
-						"Icon", NULL, NULL);
-	comment = g_key_file_get_locale_string (key_file, "Desktop Entry",
-						"Comment", NULL, NULL);
+	icon    = panel_util_key_file_get_locale_string (key_file, "Icon");
+	comment = panel_util_key_file_get_locale_string (key_file, "Comment");
 
 	if (string_empty (force_name))
-		name = g_key_file_get_locale_string (key_file, "Desktop Entry",
-						     "Name", NULL, NULL);
+		name = panel_util_key_file_get_locale_string (key_file, "Name");
 	else
 		name = g_strdup (force_name);
 
@@ -1122,10 +1121,9 @@ panel_menu_item_activate_desktop_file (GtkWidget  *menuitem,
 	panel_launch_desktop_file (path, NULL,
 				   menuitem_to_screen (menuitem), &error);
 	if (error) {
-		panel_error_dialog (menuitem_to_screen (menuitem),
+		panel_error_dialog (NULL, menuitem_to_screen (menuitem),
 				    "cannot_launch_entry", TRUE,
 				    _("Could not launch menu item"),
-				    "%s",
 				    error->message);
 
 		g_error_free (error);

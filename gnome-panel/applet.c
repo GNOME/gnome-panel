@@ -235,7 +235,7 @@ applet_callback_callback (GtkWidget      *widget,
 		if (!strcmp (menu->name, "launch"))
 			launcher_launch (menu->info->data, widget);
 		else if (!strcmp (menu->name, "properties"))
-			launcher_properties (menu->info->data, screen);
+			launcher_properties (menu->info->data);
 		break;
 	case PANEL_OBJECT_DRAWER: 
 		if (strcmp (menu->name, "add") == 0) {
@@ -1223,7 +1223,7 @@ panel_applet_register (GtkWidget       *applet,
 		}
 
 		if (!l) {
-			g_warning (_("Can't find an empty spot"));
+			g_warning (_("Cannot find an empty spot"));
 			panel_profile_delete_object (info);
 			return NULL;
 		}

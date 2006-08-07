@@ -474,12 +474,14 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 						   &error);
 		}
 		if (error) {
-			panel_error_dialog (screen,
-					    "cannot_exec_gmenu-simple-editor", TRUE,
-					    _("Could not execute '%s'"),
-					    "%s",
-					    "gmenu-simple-editor",
-					    error->message);
+			char *primary;
+			primary = g_strdup_printf (_("Could not execute '%s'"),
+						   "gmenu-simple-editor");
+                        panel_error_dialog (NULL, screen,
+                                            "cannot_exec_gmenu-simple-editor",
+					    TRUE,
+					    primary, error->message);
+			g_free (primary);
 			g_error_free (error);
 		}
 	}
