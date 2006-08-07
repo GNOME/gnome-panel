@@ -18,12 +18,14 @@ fish_applet_2_LDADD =					\
 	$(FISH_LIBS)
 
 FISH_BITMAPS =		\
+	wanda.png	\
 	fishanim.png	\
 	oldwanda.png	\
 	footguy.png	\
 	monkey.png
 
 EXTRA_DIST =					\
+	wanda.svg				\
 	$(FISH_BITMAPS)				\
 	GNOME_FishApplet_Factory.server.in.in	\
 	gnome-fish.png				\
