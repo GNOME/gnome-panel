@@ -789,7 +789,7 @@ display_about_dialog (BonoboUIComponent *uic,
 			       authors,
 			       documenters,
 			       translator_credits,
-			       "panel-window-list",
+			       "gnome-panel-window-list",
 			       "tasklist",
 			       "Tasklist");
 }
@@ -1032,7 +1032,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	}
 
 	gtk_window_set_icon_name (GTK_WINDOW (tasklist->properties_dialog),
-				  "panel-window-list"); 
+				  "gnome-panel-window-list"); 
 
 	gtk_window_set_resizable (GTK_WINDOW (tasklist->properties_dialog), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (tasklist->properties_dialog),

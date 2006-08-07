@@ -83,7 +83,7 @@ window_menu_about (BonoboUIComponent *uic,
 			       authors,
 			       documenters,
 			       translator_credits,
-			       "panel-window-menu",
+			       "gnome-panel-window-menu",
 			       "window-menu",
 			       "WindowMenu");
 }

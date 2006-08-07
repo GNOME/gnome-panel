@@ -561,7 +561,7 @@ display_about_dialog (BonoboUIComponent *uic,
 			       authors,
 			       documenters,
 			       translator_credits,
-			       "gnome-workspace",
+			       "gnome-panel-workspace-switcher",
 			       "pager",
 			       "Pager");
 }
@@ -932,7 +932,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	}
 
 	gtk_window_set_icon_name (GTK_WINDOW (pager->properties_dialog),
-	                          "gnome-workspace");
+	                          "gnome-panel-workspace-switcher");
 	gtk_window_set_screen (GTK_WINDOW (pager->properties_dialog),
 			       gtk_widget_get_screen (pager->applet));
 	gtk_window_present (GTK_WINDOW (pager->properties_dialog));
