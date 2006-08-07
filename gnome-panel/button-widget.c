@@ -192,17 +192,32 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 						  button->orientation & PANEL_VERTICAL_MASK   ? button->size : -1,
 						  button->orientation & PANEL_HORIZONTAL_MASK ? button->size : -1,
 						  &error);
-		if (error) {
-			panel_error_dialog (NULL, gdk_screen_get_default (),
-					    "cannot_load_pixbuf", TRUE,
-					    _("Could not load icon"), error);
+		if (error && button->no_icon_dialog == NULL) {
+			button->no_icon_dialog = panel_error_dialog (
+					NULL, gdk_screen_get_default (),
+					"cannot_load_pixbuf", TRUE,
+					_("Could not load icon"), error);
 			g_free (error);
+
+			g_signal_connect (button->no_icon_dialog, "destroy",
+					  G_CALLBACK (gtk_widget_destroyed),
+					  &button->no_icon_dialog);
+
+			g_signal_connect_swapped (button, "destroy",
+						  G_CALLBACK (gtk_widget_destroy),
+						  button->no_icon_dialog);
+		} else if (error) {
+			gtk_window_set_screen (GTK_WINDOW (button->no_icon_dialog),
+					       gtk_widget_get_screen (GTK_WIDGET (button)));
+			gtk_window_present (GTK_WINDOW (button->no_icon_dialog));
 		}
 	}
 
 	if (button->pixbuf == NULL)
 		button->pixbuf = get_missing (button->icon_theme,
 					      button->size);
+	else if (button->no_icon_dialog != NULL)
+		gtk_widget_destroy (button->no_icon_dialog);
 
 	if (button->pixbuf == NULL)
 		return;
@@ -593,6 +608,8 @@ button_widget_instance_init (ButtonWidget *button)
 	button->orientation = PANEL_ORIENTATION_TOP;
 
 	button->size = 0;
+
+	button->no_icon_dialog = NULL;
 	
 	button->activatable   = FALSE;
 	button->ignore_leave  = FALSE;

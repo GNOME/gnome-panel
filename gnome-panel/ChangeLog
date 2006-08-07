@@ -1,5 +1,13 @@
 2006-08-07  Vincent Untz  <vuntz@gnome.org>
 
+	* button-widget.[ch]: (button_widget_reload_pixbuf): remember the
+	error dialog about the icon being not found and don't show a second
+	one if we already have one and automatically destroy it if we find an
+	icon afterwards
+	(button_widget_instance_init): init the dialog
+
+2006-08-07  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-items.c: (panel_desktop_menu_item_new): use System
 	instead of Desktop in the menu bar
 
