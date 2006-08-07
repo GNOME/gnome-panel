@@ -1,3 +1,21 @@
+2006-08-07  Vincent Untz  <vuntz@gnome.org>
+
+	Only display vertical text on vertical panels when the panel is not
+	wide enough for horizontal text.
+	Based on patch by Adam Sjøgren <asjo@koldfront.dk>
+	Fix bug #318377
+
+	* clock.c: (calculate_minimum_width): new
+	(update_clock): update orientation
+	(create_clock_widget): don't initialize orientation
+	(update_orient): new, does the work
+	(applet_change_orient): don't change orientation of the text. And
+	don't do anything if the orientation is the same :-)
+	(applet_change_pixel_size): update to not do anything if the whole
+	allocation is the same (and not only the width/height depending on
+	orientation)
+	(fill_clock_applet): beautification update
+
 2006-07-28  Vincent Untz  <vuntz@gnome.org>
 
 	* GNOME_ClockApplet_Factory.server.in.in: update bugzilla stuff

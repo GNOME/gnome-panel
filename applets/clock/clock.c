@@ -144,6 +144,7 @@ struct _ClockData {
 	guint              timeout;
 	PanelAppletOrient  orient;
 	int                size;
+	GtkAllocation      old_allocation;
 
 	int fixed_width;
 	int fixed_height;
@@ -179,6 +180,7 @@ static void display_about_dialog      (BonoboUIComponent *uic,
 static void position_calendar_popup   (ClockData         *cd,
                                        GtkWidget         *window,
                                        GtkWidget         *button);
+static void update_orient (ClockData *cd);
 
 static void
 unfix_size (ClockData *cd)
@@ -186,6 +188,43 @@ unfix_size (ClockData *cd)
 	cd->fixed_width = -1;
 	cd->fixed_height = -1;
 	gtk_widget_queue_resize (cd->toggle);
+}
+
+static int
+calculate_minimum_width (GtkWidget   *widget,
+			 GtkWidget   *button,
+			 const gchar *text)
+{
+	PangoContext *context;
+	PangoLayout  *layout;
+	int	      width, height;
+	int	      focus_width = 0;
+	int	      focus_pad = 0;
+
+	context = gtk_widget_get_pango_context (widget);
+
+	layout = pango_layout_new (context);
+	pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
+	pango_layout_set_text (layout, text, -1);
+	pango_layout_get_pixel_size (layout, &width, &height);
+	g_object_unref (G_OBJECT (layout));
+	layout = NULL;
+
+	gtk_widget_style_get (widget,
+			      "focus-line-width", &focus_width,
+			      "focus-padding", &focus_pad,
+			      NULL);
+
+	width += 2 * (focus_width + focus_pad + widget->style->xthickness);
+
+	gtk_widget_style_get (button,
+			      "focus-line-width", &focus_width,
+			      "focus-padding", &focus_pad,
+			      NULL);
+
+	width += 2 * (focus_width + focus_pad + button->style->xthickness);
+
+	return width;
 }
 
 static void
@@ -412,7 +451,8 @@ update_clock (ClockData * cd)
 	gtk_label_set_text (GTK_LABEL (cd->clockw), utf8);
 	g_free (utf8);
 
-        gtk_widget_queue_resize (cd->toggle);
+	update_orient (cd);
+	gtk_widget_queue_resize (cd->toggle);
 
         if (!cd->showdate) {
                 /* Show date in tooltip */
@@ -1692,14 +1732,6 @@ create_clock_widget (ClockData *cd)
 
 	cd->orient = panel_applet_get_orient (PANEL_APPLET (cd->applet));
 
-	/* Initialize label orientation */
-	if (cd->orient == PANEL_APPLET_ORIENT_RIGHT)
-		gtk_label_set_angle (GTK_LABEL (cd->clockw), 90);
-	else if (cd->orient == PANEL_APPLET_ORIENT_LEFT)
-		gtk_label_set_angle (GTK_LABEL (cd->clockw), 270);
-	else
-		gtk_label_set_angle (GTK_LABEL (cd->clockw), 0);
-
 	cd->size = panel_applet_get_size (PANEL_APPLET (cd->applet));
 
 	g_signal_connect (G_OBJECT(clock), "destroy",
@@ -1713,22 +1745,44 @@ create_clock_widget (ClockData *cd)
 	refresh_clock_timeout(cd);
 }
 
-/* this is when the panel orientation changes */
+static void
+update_orient (ClockData *cd)
+{
+	const gchar *text;
+	int          min_width;
+	gdouble      new_angle;
+	gdouble      angle;
 
+	text = gtk_label_get_text (GTK_LABEL (cd->clockw));
+	min_width = calculate_minimum_width (cd->applet, cd->toggle, text);
+
+	if (cd->orient == PANEL_APPLET_ORIENT_LEFT &&
+	    min_width > cd->applet->allocation.width)
+		new_angle = 270;
+	else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT &&
+		 min_width > cd->applet->allocation.width)
+		new_angle = 90;
+	else
+		new_angle = 0;
+
+	angle = gtk_label_get_angle (GTK_LABEL (cd->clockw));
+	if (angle != new_angle) {
+		unfix_size (cd);
+		gtk_label_set_angle (GTK_LABEL (cd->clockw), new_angle);
+	}
+}
+
+/* this is when the panel orientation changes */
 static void
 applet_change_orient (PanelApplet       *applet,
 		      PanelAppletOrient  orient,
 		      ClockData         *cd)
 {
+	if (orient == cd->orient)
+		return;
+
         cd->orient = orient;
         
-        if (cd->orient == PANEL_APPLET_ORIENT_RIGHT)
-                gtk_label_set_angle (GTK_LABEL (cd->clockw), 90);
-        else if (cd->orient == PANEL_APPLET_ORIENT_LEFT)
-                gtk_label_set_angle (GTK_LABEL (cd->clockw), 270);
-        else
-                gtk_label_set_angle (GTK_LABEL (cd->clockw), 0);
-	
         unfix_size (cd);
         update_clock (cd);
         update_popup (cd);
@@ -1736,20 +1790,24 @@ applet_change_orient (PanelApplet       *applet,
 
 /* this is when the panel size changes */
 static void
-applet_change_pixel_size (PanelApplet   *applet,
+applet_change_pixel_size (PanelApplet	*applet,
 			  GtkAllocation *allocation,
-			  ClockData     *cd)
+			  ClockData	*cd)
 {
 	int new_size;
 
-        if (cd->orient == PANEL_APPLET_ORIENT_LEFT ||
+	if (cd->old_allocation.width  == allocation->width &&
+	    cd->old_allocation.height == allocation->height)
+		return;
+
+	cd->old_allocation.width  = allocation->width;
+	cd->old_allocation.height = allocation->height;
+
+	if (cd->orient == PANEL_APPLET_ORIENT_LEFT ||
 	    cd->orient == PANEL_APPLET_ORIENT_RIGHT)
 		new_size = allocation->width;
 	else
 		new_size = allocation->height;
-
-	if (cd->size == new_size)
-		return;
 
 	cd->size = new_size;
 
@@ -2306,7 +2364,7 @@ fill_clock_applet (PanelApplet *applet)
 			  cd);
 
 	g_signal_connect (G_OBJECT (cd->applet),
-			  "size-allocate",
+			  "size_allocate",
 			  G_CALLBACK (applet_change_pixel_size),
 			  cd);
 
