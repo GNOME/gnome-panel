@@ -581,7 +581,7 @@ display_about_dialog (BonoboUIComponent *uic,
 		      "authors", (const char **) authors,
 		      "documenters", documenters,
 		      "translator-credits", _("translator-credits"),
-		      "logo-icon-name", "gnome-fish",
+		      "logo-icon-name", "gnome-panel-fish",
 		      NULL);
 
 	g_free (descr);
@@ -1880,7 +1880,7 @@ fish_applet_fill (FishApplet *fish)
 					      NULL);
 	}
 
-	gtk_window_set_default_icon_name ("gnome-fish");
+	gtk_window_set_default_icon_name ("gnome-panel-fish");
 	setup_fish_widget (fish);
 
 	return TRUE;

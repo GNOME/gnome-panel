@@ -28,7 +28,6 @@ EXTRA_DIST =					\
 	wanda.svg				\
 	$(FISH_BITMAPS)				\
 	GNOME_FishApplet_Factory.server.in.in	\
-	gnome-fish.png				\
 	fish.schemas.in				\
 	$(ui_DATA)				\
 	$(glade_DATA)
@@ -38,9 +37,6 @@ glade_DATA = fish.glade
 
 fishbitmapsdir = $(datadir)/gnome/panel/pixmaps
 fishbitmaps_DATA = $(FISH_BITMAPS)
-
-pixmapdir = $(datadir)/icons/hicolor/48x48/apps
-pixmap_DATA = gnome-fish.png
 
 uidir		= $(datadir)/gnome-2.0/ui
 ui_DATA		= GNOME_FishApplet.xml
