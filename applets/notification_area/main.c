@@ -131,7 +131,7 @@ about_cb (BonoboUIComponent *uic,
                 "authors", (const char **) authors,
                 "documenters", (const char **) documenters,
                 "translator-credits", _("translator-credits"),
-                "logo-icon-name", "panel-notification-area",
+                "logo-icon-name", "gnome-panel-notification-area",
                 NULL);
   
   gtk_window_set_screen (GTK_WINDOW (tray->about_dialog), screen);
@@ -349,7 +349,7 @@ applet_factory (PanelApplet *applet,
   
   gtk_container_add (GTK_CONTAINER (tray->applet), tray->frame);
   
-  gtk_window_set_default_icon_name ("panel-notification-area");
+  gtk_window_set_default_icon_name ("gnome-panel-notification-area");
   gtk_widget_show_all (GTK_WIDGET (tray->applet));
   
   panel_applet_setup_menu_from_file (PANEL_APPLET (applet), 
