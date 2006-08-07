@@ -971,10 +971,7 @@ panel_desktop_menu_item_new (gboolean use_image,
 
 	menuitem = g_object_new (PANEL_TYPE_DESKTOP_MENU_ITEM, NULL);
 
-	/* Translators: Desktop is used here as in "Desktop Environment" (this
-	 * is not the Desktop folder). Do not keep "Desktop Environment|" in
-	 * the translation. */
-	accel_label = gtk_accel_label_new (Q_("Desktop Environment|Desktop"));
+	accel_label = gtk_accel_label_new (_("System"));
 	gtk_misc_set_alignment (GTK_MISC (accel_label), 0.0, 0.5);
 
 	gtk_container_add (GTK_CONTAINER (menuitem), accel_label);
