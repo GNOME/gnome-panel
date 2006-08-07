@@ -51,7 +51,7 @@ typedef struct {
 } PanelStockIcon;
 
 static PanelStockIcon stock_icons [] = {
-	{ PANEL_STOCK_FORCE_QUIT,          "panel-force-quit" }
+	{ PANEL_STOCK_FORCE_QUIT,          "gnome-panel-force-quit" }
 };
 
 static void

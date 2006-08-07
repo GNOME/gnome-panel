@@ -30,7 +30,7 @@
 
 G_BEGIN_DECLS
 
-#define PANEL_GNOME_LOGO_ICON "gnome-logo-icon-transparent"
+#define PANEL_GNOME_LOGO_ICON "start-here"
 
 #define PANEL_TYPE_MENU_BAR         (panel_menu_bar_get_type ())
 #define PANEL_MENU_BAR(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_MENU_BAR, PanelMenuBar))

@@ -29,7 +29,7 @@
 
 G_BEGIN_DECLS
 
-#define PANEL_FORCE_QUIT_ICON "panel-force-quit"
+#define PANEL_FORCE_QUIT_ICON "gnome-panel-force-quit"
 
 void panel_force_quit (GdkScreen *screen);
 
