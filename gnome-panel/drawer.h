@@ -5,7 +5,7 @@
 
 G_BEGIN_DECLS
 
-#define PANEL_DRAWER_ICON "drawer"
+#define PANEL_DRAWER_ICON "gnome-panel-drawer"
 
 #define PANEL_DRAWER_N_LISTENERS 3
 
