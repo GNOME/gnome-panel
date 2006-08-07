@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-28 00:13+0200\n"
-"PO-Revision-Date: 2006-07-28 00:16+0200\n"
+"POT-Creation-Date: 2006-08-07 23:32+0200\n"
+"PO-Revision-Date: 2006-08-07 23:34+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -58,7 +58,7 @@ msgstr "_Acerca de"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:745
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:723
 #: ../gnome-panel/panel-context-menu.c:329 ../gnome-panel/panel-menu-bar.c:404
 #: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
@@ -206,7 +206,7 @@ msgstr "Formato personalizado"
 
 #: ../applets/clock/clock.c:2527 ../applets/clock/clock.c:2701
 #: ../applets/fish/fish.c:158 ../applets/notification_area/main.c:82
-#: ../applets/wncklet/window-list.c:114 ../applets/wncklet/wncklet.c:128
+#: ../applets/wncklet/window-list.c:113 ../applets/wncklet/wncklet.c:128
 #: ../applets/wncklet/workspace-switcher.c:238
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -259,7 +259,7 @@ msgstr "El reloj muestra la fecha y hora actual"
 #. Translator credits
 #: ../applets/clock/clock.c:2748 ../applets/fish/fish.c:583
 #: ../applets/notification_area/main.c:133
-#: ../applets/wncklet/showdesktop.c:509 ../applets/wncklet/window-list.c:784
+#: ../applets/wncklet/showdesktop.c:509 ../applets/wncklet/window-list.c:783
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:555
 #: ../gnome-panel/panel-context-menu.c:133
@@ -651,11 +651,11 @@ msgstr "Área de notificación"
 msgid "Notification Area Factory"
 msgstr "Fábrica de áreas de notificación"
 
-#: ../applets/notification_area/eggtraymanager.c:146
+#: ../applets/notification_area/na-tray-manager.c:148
 msgid "Orientation"
 msgstr "Orientación"
 
-#: ../applets/notification_area/eggtraymanager.c:147
+#: ../applets/notification_area/na-tray-manager.c:149
 msgid "The orientation of the tray."
 msgstr "La orientación de la bandeja."
 
@@ -688,7 +688,7 @@ msgid "Switch between workspaces"
 msgstr "Cambie entre las áreas de trabajo"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:787
+#: ../applets/wncklet/window-list.c:786
 msgid "Window List"
 msgstr "Lista de ventanas"
 
@@ -739,7 +739,7 @@ msgstr ""
 "Su gestor de ventanas no soporta el botón para mostrar el escritorio, o no "
 "está ejecutando un gestor de ventanas."
 
-#: ../applets/wncklet/window-list.c:789
+#: ../applets/wncklet/window-list.c:788
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -1021,8 +1021,8 @@ msgid "???"
 msgstr "¿?"
 
 #: ../gnome-panel/applet.c:1226
-msgid "Can't find an empty spot"
-msgstr "No se pudo encontrar un espacio vacío"
+msgid "Cannot find an empty spot"
+msgstr "No se puede encontrar un espacio vacío"
 
 #: ../gnome-panel/button-widget.c:198
 msgid "Could not load icon"
@@ -1037,127 +1037,102 @@ msgstr "Cajón"
 msgid "_Add to Drawer..."
 msgstr "Añadir al _cajón…"
 
-#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:951
+#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:834
 #: ../gnome-panel/panel-action-button.c:136
 #: ../gnome-panel/panel-context-menu.c:254
 msgid "_Properties"
 msgstr "_Propiedades"
 
-#. Translators: %s is a URI
-#: ../gnome-panel/egg-recent-view-gtk.c:346
-#: ../gnome-panel/panel-menu-items.c:392 ../gnome-panel/panel-recent.c:202
-#, c-format
-msgid "Open '%s'"
-msgstr "Abrir «%s»"
-
-#: ../gnome-panel/egg-recent-view-gtk.c:446
-msgid "Empty"
-msgstr "Vacío"
-
 #: ../gnome-panel/gnome-desktop-item-edit.c:24
 msgid "Create new file in the given directory"
 msgstr "Crea un archivo nuevo en el directorio dado"
 
-#. class
-#: ../gnome-panel/launcher.c:144 ../gnome-panel/menu-ditem.c:517
-msgid "Could not save launcher to disk"
-msgstr "No se pudo guardar el lanzador al disco"
+#: ../gnome-panel/gnome-desktop-item-edit.c:25
+msgid "[FILE...]"
+msgstr "[ARCHIVO…]"
 
-#: ../gnome-panel/launcher.c:176
+#: ../gnome-panel/gnome-desktop-item-edit.c:179
+msgid "- Edit .desktop files"
+msgstr "– Edita archivos .desktop"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:210
+#: ../gnome-panel/gnome-desktop-item-edit.c:278 ../gnome-panel/launcher.c:921
+msgid "Create Launcher"
+msgstr "Crear lanzador"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:234
+#: ../gnome-panel/gnome-desktop-item-edit.c:264
+msgid "Directory Properties"
+msgstr "Propiedades del directorio"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:239 ../gnome-panel/launcher.c:762
+msgid "Launcher Properties"
+msgstr "Propiedades del lanzador"
+
+#: ../gnome-panel/launcher.c:131
 msgid "Could not show this URL"
 msgstr "No se pudo mostrar esta URL"
 
-#: ../gnome-panel/launcher.c:177
+#: ../gnome-panel/launcher.c:132
 msgid "No URL was specified."
 msgstr "No se especificó ninguna URL."
 
-#: ../gnome-panel/launcher.c:191
+#: ../gnome-panel/launcher.c:145
 #, c-format
 msgid "Could not show '%s'"
 msgstr "No se pudo mostrar «%s»"
 
-#: ../gnome-panel/launcher.c:230
+#: ../gnome-panel/launcher.c:190
 msgid "Could not launch application"
 msgstr "No se pudo lanzar la aplicación"
 
-#: ../gnome-panel/launcher.c:288
+#: ../gnome-panel/launcher.c:255
 msgid "Could not use dropped item"
 msgstr "No se pudo usar el elemento soltado"
 
-#: ../gnome-panel/launcher.c:484
+#: ../gnome-panel/launcher.c:447
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "No se proporcionó una URI para el archivo de escritorio del lanzador del "
 "panel\n"
 
-#: ../gnome-panel/launcher.c:515
+#: ../gnome-panel/launcher.c:490
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "No se puede abrir el archivo de escritorio %s para el lanzador del panel%s%"
 "s\n"
 
-#: ../gnome-panel/launcher.c:833 ../gnome-panel/menu-ditem.c:181
-#: ../gnome-panel/menu-ditem.c:264
-msgid "Launcher Properties"
-msgstr "Propiedades del lanzador"
-
-#: ../gnome-panel/launcher.c:945
+#: ../gnome-panel/launcher.c:828
 msgid "_Launch"
 msgstr "_Lanzar"
 
-#: ../gnome-panel/launcher.c:984
+#: ../gnome-panel/launcher.c:867
 #, c-format
-msgid "Key %s is not set, can't load launcher\n"
+msgid "Key %s is not set, cannot load launcher\n"
 msgstr "La clave %s no está definida, no se puede cargar el lanzador\n"
 
-#: ../gnome-panel/launcher.c:1039 ../gnome-panel/launcher.c:1058
-#: ../gnome-panel/menu-ditem.c:469 ../gnome-panel/menu-ditem.c:486
-#: ../gnome-panel/menu-ditem.c:542
-msgid "Could not create launcher"
-msgstr "No se pudo crear el lanzador"
+#: ../gnome-panel/launcher.c:988
+msgid "Could not save launcher"
+msgstr "No se pudo guardar el lanzador"
 
-#: ../gnome-panel/launcher.c:1040 ../gnome-panel/menu-ditem.c:470
-msgid "You have to specify a name."
-msgstr "Tiene que especificar un nombre."
-
-#: ../gnome-panel/launcher.c:1059 ../gnome-panel/menu-ditem.c:487
-msgid "You have to specify a valid URL or command."
-msgstr "Tiene que especificar un URL válido o un comando."
-
-#: ../gnome-panel/launcher.c:1103 ../gnome-panel/menu-ditem.c:550
-msgid "Create Launcher"
-msgstr "Crear lanzador"
-
-#: ../gnome-panel/menu-ditem.c:126
-msgid "Could not save changes to launcher"
-msgstr "No se pudieron guardar los cambios del lanzador"
-
-#: ../gnome-panel/menu-ditem.c:308
-msgid "Menu"
-msgstr "Menú"
-
-#: ../gnome-panel/menu-ditem.c:543
-msgid "You do not have permission to write to this location."
-msgstr "No tiene permiso para escribir en este lugar."
-
-#: ../gnome-panel/menu.c:935
+#: ../gnome-panel/menu.c:934
 msgid "Add this launcher to _panel"
 msgstr "Añadir este lanzador al _panel"
 
-#: ../gnome-panel/menu.c:946
+#: ../gnome-panel/menu.c:945
 msgid "Add this launcher to _desktop"
 msgstr "Añadir este lanzador al _escritorio"
 
-#: ../gnome-panel/menu.c:962
+#: ../gnome-panel/menu.c:961
 msgid "_Entire menu"
 msgstr "Menú _completo"
 
-#: ../gnome-panel/menu.c:972
+#: ../gnome-panel/menu.c:971
 msgid "Add this as _drawer to panel"
 msgstr "Añadir esto como _cajón al panel"
 
-#: ../gnome-panel/menu.c:984
+#: ../gnome-panel/menu.c:983
 msgid "Add this as _menu to panel"
 msgstr "Añadir esto como _menú al panel"
 
@@ -1169,75 +1144,74 @@ msgstr "_Activar el salvapantallas"
 msgid "_Lock Screen"
 msgstr "_Bloquear la pantalla"
 
-#: ../gnome-panel/panel-action-button.c:210
-#: ../gnome-panel/panel-action-button.c:223
-#: ../gnome-panel/panel-menu-bar.c:479 ../gnome-panel/panel-menu-button.c:1017
-#: ../gnome-panel/panel-util.c:747
+#: ../gnome-panel/panel-action-button.c:200
+#: ../gnome-panel/panel-menu-bar.c:478 ../gnome-panel/panel-menu-button.c:1016
+#: ../gnome-panel/panel-util.c:769
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "No se pudo ejecutar «%s»"
 
-#: ../gnome-panel/panel-action-button.c:259
+#: ../gnome-panel/panel-action-button.c:238
 msgid "Could not connect to server"
 msgstr "No se pudo conectar con el servidor"
 
-#: ../gnome-panel/panel-action-button.c:291
+#: ../gnome-panel/panel-action-button.c:269
 msgid "Lock Screen"
 msgstr "Bloquear la pantalla"
 
-#: ../gnome-panel/panel-action-button.c:292
+#: ../gnome-panel/panel-action-button.c:270
 msgid "Protect your computer from unauthorized use"
 msgstr "Proteja su equipo del uso no autorizado"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:306
+#: ../gnome-panel/panel-action-button.c:284
 msgid "Log Out..."
 msgstr "Salir..."
 
-#: ../gnome-panel/panel-action-button.c:307
+#: ../gnome-panel/panel-action-button.c:285
 msgid "Log out of this session to log in as a different user"
 msgstr "Sale de esta sesión para entrar como un usuario diferente"
 
-#: ../gnome-panel/panel-action-button.c:316
+#: ../gnome-panel/panel-action-button.c:294
 msgid "Run Application..."
 msgstr "Ejecutar una aplicación…"
 
-#: ../gnome-panel/panel-action-button.c:317
+#: ../gnome-panel/panel-action-button.c:295
 msgid "Run an Application by entering a command"
 msgstr "Ejecute una aplicación introduciendo un comando"
 
-#: ../gnome-panel/panel-action-button.c:326
+#: ../gnome-panel/panel-action-button.c:304
 msgid "Search for Files..."
 msgstr "Buscar archivos…"
 
-#: ../gnome-panel/panel-action-button.c:327
+#: ../gnome-panel/panel-action-button.c:305
 msgid "Find files, folders, and documents on your computer"
 msgstr "Busca archivos, carpetas y documentos en su equipo"
 
-#: ../gnome-panel/panel-action-button.c:335
+#: ../gnome-panel/panel-action-button.c:313
 msgid "Force Quit"
 msgstr "Forzar la salida"
 
-#: ../gnome-panel/panel-action-button.c:336
+#: ../gnome-panel/panel-action-button.c:314
 msgid "Force a misbehaving application to quit"
 msgstr "Obliga a una aplicación de comportamiento errático a terminar"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:345
+#: ../gnome-panel/panel-action-button.c:323
 msgid "Connect to Server..."
 msgstr "Conectar con el servidor…"
 
-#: ../gnome-panel/panel-action-button.c:346
+#: ../gnome-panel/panel-action-button.c:324
 msgid "Connect to a remote server"
 msgstr "Conectar con un servidor remoto"
 
-#: ../gnome-panel/panel-action-button.c:354
+#: ../gnome-panel/panel-action-button.c:332
 msgid "Shut Down..."
 msgstr "Apagar..."
 
-#: ../gnome-panel/panel-action-button.c:355
+#: ../gnome-panel/panel-action-button.c:333
 msgid "Shut down the computer"
 msgstr "Apagar el equipo"
 
@@ -1316,44 +1290,44 @@ msgstr "Añadir al panel"
 msgid "Find an _item to add to the panel:"
 msgstr "Buscar un _elemento para añadirlo al panel:"
 
-#: ../gnome-panel/panel-applet-frame.c:833
+#: ../gnome-panel/panel-applet-frame.c:834
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Excepción del menú _emergente «%s»\n"
 
-#: ../gnome-panel/panel-applet-frame.c:952
+#: ../gnome-panel/panel-applet-frame.c:956
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "«%s» ha terminado de forma inesperada"
 
-#: ../gnome-panel/panel-applet-frame.c:954
+#: ../gnome-panel/panel-applet-frame.c:958
 msgid "Panel object has quit unexpectedly"
 msgstr "Un objeto del panel ha terminado de forma inesperada"
 
-#: ../gnome-panel/panel-applet-frame.c:961
+#: ../gnome-panel/panel-applet-frame.c:965
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Si recarga un objeto del panel, se añadirá automáticamente otra vez al panel."
 
-#: ../gnome-panel/panel-applet-frame.c:967
+#: ../gnome-panel/panel-applet-frame.c:971
 msgid "_Don't Reload"
 msgstr "_No recargar"
 
-#: ../gnome-panel/panel-applet-frame.c:968
+#: ../gnome-panel/panel-applet-frame.c:972
 msgid "_Reload"
 msgstr "_Recargar"
 
-#: ../gnome-panel/panel-applet-frame.c:1014
+#: ../gnome-panel/panel-applet-frame.c:1018
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "El panel ha encontrado un problema mientras cargaba «%s»."
 
-#: ../gnome-panel/panel-applet-frame.c:1031
+#: ../gnome-panel/panel-applet-frame.c:1035
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "¿Desea borrar la miniaplicación de su configuración?"
 
-#: ../gnome-panel/panel-applet-frame.c:1130
+#: ../gnome-panel/panel-applet-frame.c:1134
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "No se puede obtener el interfaz AppletShell del control\n"
 
@@ -1710,29 +1684,35 @@ msgstr "Aplicaciones"
 msgid "_Edit Menus"
 msgstr "_Editar menús"
 
-#: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:325
+#: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:333
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "No se puede abrir el lugar «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:371
+#: ../gnome-panel/panel-menu-items.c:370
 msgid "Bookmarks"
 msgstr "Marcadores"
+
+#. Translators: %s is a URI
+#: ../gnome-panel/panel-menu-items.c:391
+#, c-format
+msgid "Open '%s'"
+msgstr "Abrir «%s»"
 
 #. Translators: the first string is a
 #. * path and the second string is a
 #. * hostname. nautilus contains the same
 #. * string to translate.
-#: ../gnome-panel/panel-menu-items.c:433
+#: ../gnome-panel/panel-menu-items.c:432
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s en %2$s"
 
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:505
 msgid "Network Places"
 msgstr "Lugares en la red"
 
-#: ../gnome-panel/panel-menu-items.c:509
+#: ../gnome-panel/panel-menu-items.c:508
 msgid "Removable Media"
 msgstr "Soporte extraíble"
 
@@ -1740,30 +1720,27 @@ msgstr "Soporte extraíble"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:580
+#: ../gnome-panel/panel-menu-items.c:579
 msgid "Desktop Folder|Desktop"
 msgstr "Escritorio"
 
-#: ../gnome-panel/panel-menu-items.c:581
+#: ../gnome-panel/panel-menu-items.c:580
 msgid "Open the desktop as a folder"
 msgstr "Abrir el escritorio como una carpeta"
 
-#: ../gnome-panel/panel-menu-items.c:942
+#: ../gnome-panel/panel-menu-items.c:939
 msgid "Places"
 msgstr "Lugares"
 
-#. Translators: Desktop is used here as in "Desktop Environment" (this
-#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
-#. * the translation.
-#: ../gnome-panel/panel-menu-items.c:980
-msgid "Desktop Environment|Desktop"
-msgstr "Escritorio"
+#: ../gnome-panel/panel-menu-items.c:974
+msgid "System"
+msgstr "Sistema"
 
 #. Translators: translate "panel:showusername|1" to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1072
+#: ../gnome-panel/panel-menu-items.c:1066
 msgid "panel:showusername|1"
 msgstr "0"
 
@@ -1771,27 +1748,23 @@ msgstr "0"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1084
+#: ../gnome-panel/panel-menu-items.c:1078
 #, c-format
 msgid "Log Out %s..."
 msgstr "Cerrar sesión de %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1088
+#: ../gnome-panel/panel-menu-items.c:1082
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "Cierra la sesión de %s para entrar como un usuario diferente o apagar el "
 "equipo"
 
-#: ../gnome-panel/panel-menu-items.c:1134
+#: ../gnome-panel/panel-menu-items.c:1123
 msgid "Could not launch menu item"
 msgstr "No se pudo lanzar el elemento del menú"
-
-#: ../gnome-panel/panel-menu-items.c:1146
-msgid "Could not load menu item"
-msgstr "No se pudo cargar el elemento del menú"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2020,15 +1993,15 @@ msgstr "Izquierda"
 msgid "Orientation|Right"
 msgstr "Derecha"
 
-#: ../gnome-panel/panel-properties-dialog.c:1019
-msgid "Could not display properties dialog"
-msgstr "No se pudo mostrar el diálogo de propiedades"
-
-#: ../gnome-panel/panel-properties-dialog.c:1020
-#: ../gnome-panel/panel-run-dialog.c:1832
+#: ../gnome-panel/panel-properties-dialog.c:1018
+#: ../gnome-panel/panel-run-dialog.c:1885
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "No es posible cargar el archivo «%s»"
+
+#: ../gnome-panel/panel-properties-dialog.c:1023
+msgid "Could not display properties dialog"
+msgstr "No se pudo mostrar el diálogo de propiedades"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:2
 msgid "*"
@@ -2136,25 +2109,25 @@ msgstr "_Tamaño:"
 msgid "_Tile"
 msgstr "_Enlosado"
 
-#: ../gnome-panel/panel-recent.c:54
+#: ../gnome-panel/panel-recent.c:50
 msgid "Could not find a suitable application."
 msgstr "No se pudo encontrar una aplicación adecuada."
 
-#: ../gnome-panel/panel-recent.c:94 ../gnome-panel/panel-recent.c:102
+#: ../gnome-panel/panel-recent.c:97 ../gnome-panel/panel-recent.c:107
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "No se pudo abrir el documento usado recientemente «%s»"
 
-#: ../gnome-panel/panel-recent.c:103
+#: ../gnome-panel/panel-recent.c:109
 #, c-format
-msgid "An unknown error occurred while trying to open \"%s\""
-msgstr "Ocurrió un error desconocido al intentar abrir «%s»"
+msgid "An unknown error occurred while trying to open \"%s\"."
+msgstr "Ocurrió un error desconocido al intentar abrir «%s»."
 
-#: ../gnome-panel/panel-recent.c:155
+#: ../gnome-panel/panel-recent.c:166
 msgid "Clear the Recent Documents list?"
 msgstr "¿Desea vaciar la lista de documentos recientes?"
 
-#: ../gnome-panel/panel-recent.c:157
+#: ../gnome-panel/panel-recent.c:168
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
@@ -2167,50 +2140,50 @@ msgstr ""
 "• Todos los elementos de la lista de documentos recientes en todas las "
 "aplicaciones."
 
-#: ../gnome-panel/panel-recent.c:225
+#: ../gnome-panel/panel-recent.c:207
 msgid "Recent Documents"
 msgstr "Documentos recientes"
 
-#: ../gnome-panel/panel-recent.c:269
+#: ../gnome-panel/panel-recent.c:245
 msgid "Clear Recent Documents"
 msgstr "Vaciar documentos recientes"
 
-#: ../gnome-panel/panel-recent.c:273
+#: ../gnome-panel/panel-recent.c:249
 msgid "Clear all items from the recent documents list"
 msgstr "Vaciar todos los elementos de la lista de documentos recientes"
 
-#: ../gnome-panel/panel-run-dialog.c:299
+#: ../gnome-panel/panel-run-dialog.c:304
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "No se pudo ejecutar el comando «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:377
+#: ../gnome-panel/panel-run-dialog.c:388
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "No se pudo convertir «%s» desde UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1171
+#: ../gnome-panel/panel-run-dialog.c:1196
 msgid "Choose a file to append to the command..."
 msgstr "Seleccione un archivo para agregar al comando…"
 
-#: ../gnome-panel/panel-run-dialog.c:1538
+#: ../gnome-panel/panel-run-dialog.c:1572
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Seleccione una aplicación para ver su descripción."
 
-#: ../gnome-panel/panel-run-dialog.c:1576
+#: ../gnome-panel/panel-run-dialog.c:1610
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Se ejecutará el comando: «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:1607
+#: ../gnome-panel/panel-run-dialog.c:1641
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "La lista de URIs que cae del diálogo de ejecución tiene un formato erróneo (%"
 "d) o una longitud errónea (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1831
+#: ../gnome-panel/panel-run-dialog.c:1889
 msgid "Could not display run dialog"
 msgstr "No se pudo mostrar el diálogo de ejecución"
 
@@ -2725,16 +2698,11 @@ msgstr "El monitor Xinerama donde se muestra el panel"
 msgid "Y co-ordinate of panel"
 msgstr "Coordenada Y del panel"
 
-#: ../gnome-panel/panel-util.c:89
+#: ../gnome-panel/panel-util.c:138
 msgid "Could not display help document"
 msgstr "No se pudo mostrar el documento de ayuda"
 
-#: ../gnome-panel/panel-util.c:311
-#, c-format
-msgid "Details: %s"
-msgstr "Detalles: %s"
-
-#: ../gnome-panel/panel-util.c:624
+#: ../gnome-panel/panel-util.c:647
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "El icono «%s» no se ha encontrado"
