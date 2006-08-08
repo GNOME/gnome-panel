@@ -1,1 +1,1 @@
-SUBDIRS = fish window-list workspace-switcher
+SUBDIRS = fish workspace-switcher
