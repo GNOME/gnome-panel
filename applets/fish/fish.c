@@ -46,6 +46,8 @@
 #define FISH_IS_APPLET(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), \
 			   FISH_TYPE_APPLET))
 
+#define FISH_ICON "gnome-panel-fish"
+
 #define N_FISH_PREFS 6
 
 #define LOCKDOWN_COMMANDLINE_KEY "/desktop/gnome/lockdown/disable_command_line"
@@ -162,6 +164,7 @@ show_help (FishApplet *fish, const char *link_id)
 				  G_CALLBACK (gtk_widget_destroy),
 				  NULL);
 
+		gtk_window_set_icon_name (GTK_WINDOW (dialog), FISH_ICON);
 		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 		gtk_window_set_screen (GTK_WINDOW (dialog),
 				       gtk_widget_get_screen (GTK_WIDGET (fish)));
@@ -406,6 +409,8 @@ display_preferences_dialog (BonoboUIComponent *uic,
 
 	gtk_window_set_wmclass (GTK_WINDOW (fish->preferences_dialog),
 				"fish", "Fish");
+	gtk_window_set_icon_name (GTK_WINDOW (fish->preferences_dialog),
+				  FISH_ICON);
 	gtk_dialog_set_default_response (
 		GTK_DIALOG (fish->preferences_dialog), GTK_RESPONSE_OK);
 
@@ -581,12 +586,13 @@ display_about_dialog (BonoboUIComponent *uic,
 		      "authors", (const char **) authors,
 		      "documenters", documenters,
 		      "translator-credits", _("translator-credits"),
-		      "logo-icon-name", "gnome-panel-fish",
+		      "logo-icon-name", FISH_ICON,
 		      NULL);
 
 	g_free (descr);
 	g_free (authors [0]);
 
+	gtk_window_set_icon_name (GTK_WINDOW (fish->about_dialog), FISH_ICON);
 	gtk_window_set_wmclass (
 		GTK_WINDOW (fish->about_dialog), "fish", "Fish");
 	gtk_window_set_screen (GTK_WINDOW (fish->about_dialog),
@@ -642,6 +648,7 @@ something_fishy_going_on (FishApplet *fish,
 			  G_CALLBACK (gtk_widget_destroy),
 			  NULL);
 
+	gtk_window_set_icon_name (GTK_WINDOW (dialog), FISH_ICON);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (fish)));
@@ -865,6 +872,8 @@ display_fortune_dialog (FishApplet *fish)
 				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 				NULL);
 
+		gtk_window_set_icon_name (GTK_WINDOW (fish->fortune_dialog),
+					  FISH_ICON);
 		gtk_dialog_set_has_separator (
 			GTK_DIALOG (fish->fortune_dialog), FALSE);
 
@@ -1601,6 +1610,7 @@ change_water (FishApplet *fish)
 			GTK_BUTTONS_OK,
 			_("The water needs changing!\n"
 			  "(Look at today's date)"));
+	gtk_window_set_icon_name (GTK_WINDOW (dialog), FISH_ICON);
 	gtk_window_set_wmclass (GTK_WINDOW (dialog), "fish", "Fish");
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (fish)));
@@ -1880,7 +1890,9 @@ fish_applet_fill (FishApplet *fish)
 					      NULL);
 	}
 
-	gtk_window_set_default_icon_name ("gnome-panel-fish");
+#ifndef FISH_INPROCESS
+	gtk_window_set_default_icon_name (FISH_ICON);
+#endif
 	setup_fish_widget (fish);
 
 	return TRUE;
@@ -2066,9 +2078,18 @@ fish_applet_get_type (void)
 	return type;
 }
 
+#ifdef FISH_INPROCESS
+PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_FishApplet_Factory",
+				   fish_applet_get_type (),
+				   "That-stupid-fish",
+				   fishy_factory,
+				   NULL)
+
+#else
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_FishApplet_Factory",
 			     fish_applet_get_type (),
 			     "That-stupid-fish",
 			     "0",
 			     fishy_factory,
 			     NULL)
+#endif

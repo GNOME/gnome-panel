@@ -9,13 +9,29 @@ INCLUDES =							\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(FISH_CFLAGS)
 
-libexec_PROGRAMS = fish-applet-2
+FISH_SOURCES = fish.c
 
-fish_applet_2_SOURCES = fish.c
-
-fish_applet_2_LDADD =					\
+FISH_LDADD =						\
 	../../libpanel-applet/libpanel-applet-2.la	\
 	$(FISH_LIBS)
+
+if FISH_INPROCESS
+APPLET_TYPE     = shlib
+APPLET_LOCATION = $(libdir)/libfish-applet-2.so
+
+lib_LTLIBRARIES = libfish-applet-2.la
+libfish_applet_2_la_SOURCES = $(FISH_SOURCES)
+libfish_applet_2_la_LIBADD = $(FISH_LDADD)
+libfish_applet_2_la_CFLAGS =
+else
+APPLET_TYPE     = exe
+APPLET_LOCATION = $(libexecdir)/fish-applet-2
+
+libexec_PROGRAMS = fish-applet-2
+fish_applet_2_SOURCES = $(FISH_SOURCES)
+fish_applet_2_LDADD = $(FISH_LDADD)
+fish_applet_2_CFLAGS =
+endif
 
 FISH_BITMAPS =		\
 	wanda.png	\
@@ -45,8 +61,9 @@ serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_FishApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
-$(server_in_files): $(server_in_files).in
-	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+$(server_in_files): $(server_in_files).in Makefile
+	sed -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
 	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 	    $< > $@
 
