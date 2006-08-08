@@ -21,7 +21,6 @@
 
 #include <config.h>
 #include <string.h>
-#include <libintl.h>
 
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
@@ -30,19 +29,11 @@
 #include <gtk/gtkhbox.h>
 #include <libgnomeui/gnome-help.h>
 
-#include <bonobo/bonobo-shlib-factory.h>
-
 #include "na-tray-manager.h"
 #include "fixedtip.h"
 #include "obox.h"
 
-#ifndef _
-#define _(x) gettext(x)
-#endif
-
-#ifndef N_
-#define N_(x) x
-#endif
+#define NOTIFICATION_AREA_ICON "gnome-panel-notification-area"
 
 static NaTrayManager *tray_manager = NULL;
 static GSList *all_trays = NULL;
@@ -86,6 +77,7 @@ help_cb (BonoboUIComponent *uic,
                         G_CALLBACK (gtk_widget_destroy),
                         NULL);
       
+      gtk_window_set_icon_name (GTK_WINDOW (dialog), NOTIFICATION_AREA_ICON);
       gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
       gtk_window_set_screen (GTK_WINDOW (dialog),
                              gtk_widget_get_screen (GTK_WIDGET (tray->applet)));
@@ -131,9 +123,11 @@ about_cb (BonoboUIComponent *uic,
                 "authors", (const char **) authors,
                 "documenters", (const char **) documenters,
                 "translator-credits", _("translator-credits"),
-                "logo-icon-name", "gnome-panel-notification-area",
+                "logo-icon-name", NOTIFICATION_AREA_ICON,
                 NULL);
   
+  gtk_window_set_icon_name (GTK_WINDOW (tray->about_dialog),
+                            NOTIFICATION_AREA_ICON);
   gtk_window_set_screen (GTK_WINDOW (tray->about_dialog), screen);
 
   g_object_add_weak_pointer (G_OBJECT (tray->about_dialog),
@@ -349,7 +343,9 @@ applet_factory (PanelApplet *applet,
   
   gtk_container_add (GTK_CONTAINER (tray->applet), tray->frame);
   
-  gtk_window_set_default_icon_name ("gnome-panel-notification-area");
+#ifndef NOTIFICATION_AREA_INPROCESS
+  gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
+#endif
   gtk_widget_show_all (GTK_WIDGET (tray->applet));
   
   panel_applet_setup_menu_from_file (PANEL_APPLET (applet), 
@@ -362,18 +358,17 @@ applet_factory (PanelApplet *applet,
   return TRUE;
 }
 
-#if 1
+#if NOTIFICATION_AREA_INPROCESS
+PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_NotificationAreaApplet_Factory",
+				   PANEL_TYPE_APPLET,
+				   "NotificationArea",
+				   applet_factory,
+				   NULL);
+#else
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_NotificationAreaApplet_Factory",
 			     PANEL_TYPE_APPLET,
                              "NotificationArea",
                              "0",
                              applet_factory,
                              NULL)
-
-#else
-
-PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_NotificationAreaApplet_Factory",
-				   PANEL_TYPE_APPLET,
-				   "NotificationArea",
-				    applet_factory, NULL);
 #endif

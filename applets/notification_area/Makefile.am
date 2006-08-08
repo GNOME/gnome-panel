@@ -14,9 +14,7 @@ INCLUDES =							\
 	-DDATADIR=\"$(datadir)\"				\
 	-DLIBDIR=\"$(libdir)\"
 
-libexec_PROGRAMS = notification-area-applet
-
-notification_area_applet_SOURCES =		\
+NOTIFICATION_AREA_SOURCES =		\
 	fixedtip.h				\
 	fixedtip.c				\
 	main.c					\
@@ -27,17 +25,36 @@ notification_area_applet_SOURCES =		\
 	na-marshal.c				\
 	na-marshal.h
 
-notification_area_applet_LDADD =			\
+NOTIFICATION_AREA_LDADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
 	$(X_LIBS)					\
 	$(PANEL_LIBS)
+
+if NOTIFICATION_AREA_INPROCESS
+APPLET_TYPE     = shlib
+APPLET_LOCATION = $(libdir)/libnotification-area-applet.so
+
+lib_LTLIBRARIES = libnotification-area-applet.la
+libnotification_area_applet_la_SOURCES = $(NOTIFICATION_AREA_SOURCES)
+libnotification_area_applet_la_LIBADD = $(NOTIFICATION_AREA_LDADD)
+libnotification_area_applet_la_CFLAGS =
+else
+APPLET_TYPE     = exe
+APPLET_LOCATION = $(libexecdir)/notification-area-applet
+
+libexec_PROGRAMS = notification-area-applet
+notification_area_applet_SOURCES = $(NOTIFICATION_AREA_SOURCES)
+notification_area_applet_LDADD = $(NOTIFICATION_AREA_LDADD)
+notification_area_applet_CFLAGS =
+endif
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_NotificationAreaApplet.server.in
 server_DATA     = GNOME_NotificationAreaApplet.server
 
-$(server_in_files): $(server_in_files).in
-	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+$(server_in_files): $(server_in_files).in Makefile
+	sed -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
 	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 	    $< > $@
 
