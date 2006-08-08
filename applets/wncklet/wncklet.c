@@ -202,9 +202,17 @@ wncklet_factory (PanelApplet *applet,
 }
 
 
+#ifdef WNCKLET_INPROCESS
+PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_Wncklet_Factory",
+				   PANEL_TYPE_APPLET,
+				   "WindowNavigationApplets",
+				   wncklet_factory,
+				   NULL);
+#else
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_Wncklet_Factory",
                              PANEL_TYPE_APPLET,
                              "WindowNavigationApplets",
                              "0",
                              wncklet_factory,
                              NULL);
+#endif

@@ -1,5 +1,3 @@
-libexec_PROGRAMS = wnck-applet
-
 INCLUDES = \
 	-I$(top_builddir) \
 	-I$(top_builddir)/applets/wncklet \
@@ -16,7 +14,7 @@ INCLUDES = \
         -DDATADIR=\"$(datadir)\" \
         -DLIBDIR=\"$(libdir)\"
 
-wnck_applet_SOURCES = \
+WNCKLET_SOURCES = \
 	wncklet.c \
 	wncklet.h \
 	window-menu.c \
@@ -30,9 +28,27 @@ wnck_applet_SOURCES = \
 
 $(wnck_applet_OBJECTS): $(BUILT_SOURCES)
 
-wnck_applet_LDADD = \
-	../../libpanel-applet/libpanel-applet-2.la \
+WNCKLET_LDADD =						\
+	../../libpanel-applet/libpanel-applet-2.la	\
 	$(WNCKLET_LIBS)
+
+if WNCKLET_INPROCESS
+APPLET_TYPE     = shlib
+APPLET_LOCATION = $(libdir)/libwnck-applet.so
+
+lib_LTLIBRARIES = libwnck-applet.la
+libwnck_applet_la_SOURCES = $(WNCKLET_SOURCES)
+libwnck_applet_la_LIBADD = $(WNCKLET_LDADD)
+libwnck_applet_la_CFLAGS =
+else
+APPLET_TYPE     = exe
+APPLET_LOCATION = $(libexecdir)/wnck-applet
+
+libexec_PROGRAMS = wnck-applet
+wnck_applet_SOURCES = $(WNCKLET_SOURCES)
+wnck_applet_LDADD = $(WNCKLET_LDADD)
+wnck_applet_CFLAGS =
+endif
 
 EXTRA_DIST = \
 	GNOME_Wncklet_Factory.server.in.in \
@@ -44,8 +60,9 @@ serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_Wncklet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
-$(server_in_files): $(server_in_files).in
-	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+$(server_in_files): $(server_in_files).in Makefile
+	sed -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
 	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 	    $< > $@
 
