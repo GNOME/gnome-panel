@@ -21,7 +21,7 @@ icons_SOURCE =					\
 	gnome-panel-clock.xcf.bz2		\
 	gnome-panel-drawer.svg			\
 	gnome-panel-fish.xcf.bz2		\
-	gnome-panel-force-quit.xcf.bz2		\
+	gnome-panel-force-quit.svg		\
 	gnome-panel-notification-area.svg	\
 	gnome-panel-separator.svg		\
 	gnome-panel.svg				\
