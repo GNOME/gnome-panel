@@ -20,13 +20,29 @@ CALENDAR_SOURCES =		\
 	calendar-debug.h
 endif
 
-clock_applet_SOURCES = clock.c $(CALENDAR_SOURCES)
+CLOCK_SOURCES = clock.c $(CALENDAR_SOURCES)
 
-clock_applet_LDADD =					\
+CLOCK_LDADD =						\
 	../../libpanel-applet/libpanel-applet-2.la	\
 	$(CLOCK_LIBS)
 
+if CLOCK_INPROCESS
+APPLET_TYPE     = shlib
+APPLET_LOCATION = $(libdir)/libclock-applet.so
+
+lib_LTLIBRARIES = libclock-applet.la
+libclock_applet_la_SOURCES = $(CLOCK_SOURCES)
+libclock_applet_la_LIBADD = $(CLOCK_LDADD)
+libclock_applet_la_CFLAGS =
+else
+APPLET_TYPE     = exe
+APPLET_LOCATION = $(libexecdir)/clock-applet
+
 libexec_PROGRAMS = clock-applet
+clock_applet_SOURCES = $(CLOCK_SOURCES)
+clock_applet_LDADD = $(CLOCK_LDADD)
+clock_applet_CFLAGS =
+endif
 
 uidir 	= $(datadir)/gnome-2.0/ui
 ui_DATA	= GNOME_ClockApplet.xml	
@@ -35,8 +51,9 @@ serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_ClockApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
-$(server_in_files): $(server_in_files).in
-	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+$(server_in_files): $(server_in_files).in Makefile
+	sed -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
 	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 	    $< > $@
 

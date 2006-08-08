@@ -54,16 +54,15 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <libbonobo.h>
 #include <gconf/gconf-client.h>
 #include <libgnomeui/gnome-help.h>
-#include <libgnome/gnome-init.h>
 #include <libgnomeui/gnome-url.h>
 
 #ifdef HAVE_LIBECAL
 #include "calendar-client.h"
 #endif
 
+#define CLOCK_ICON "gnome-panel-clock"
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
 
@@ -1442,6 +1441,7 @@ create_calendar (ClockData *cd,
         struct tm                 *tm;
 
 	window = GTK_WINDOW (gtk_window_new (GTK_WINDOW_TOPLEVEL));
+	gtk_window_set_icon_name (window, CLOCK_ICON);
         gtk_window_set_screen (window, screen);
 
         frame = gtk_frame_new (NULL);
@@ -1949,7 +1949,8 @@ try_config_tool (GdkScreen  *screen,
 		
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (gtk_widget_destroy), NULL);
-			
+
+	gtk_window_set_icon_name (GTK_WINDOW (dialog), CLOCK_ICON);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 			
@@ -1986,6 +1987,7 @@ config_date (BonoboUIComponent *uic,
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (gtk_widget_destroy), NULL);
 		
+	gtk_window_set_icon_name (GTK_WINDOW (dialog), CLOCK_ICON);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
@@ -2351,7 +2353,9 @@ fill_clock_applet (PanelApplet *applet)
 	gtk_container_set_border_width (GTK_CONTAINER (cd->toggle), 0);
 	gtk_container_add (GTK_CONTAINER (cd->applet), cd->toggle);
 
-	gtk_window_set_default_icon_name ("gnome-panel-clock");
+#ifndef CLOCK_INPROCESS
+	gtk_window_set_default_icon_name (CLOCK_ICON);
+#endif
 	gtk_widget_show (cd->applet);
 
 	/* FIXME: Update this comment. */
@@ -2589,6 +2593,8 @@ properties_response_cb (GtkWidget *widget,
 					  G_CALLBACK (gtk_widget_destroy),
 					  NULL);
 
+			gtk_window_set_icon_name (GTK_WINDOW (dialog),
+						  CLOCK_ICON);
 			gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 			gtk_window_set_screen (GTK_WINDOW (dialog),
 					       gtk_widget_get_screen (cd->applet));
@@ -2624,6 +2630,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 						 GTK_RESPONSE_CLOSE,
 						 NULL);
 
+	gtk_window_set_icon_name (GTK_WINDOW (cd->props), CLOCK_ICON);
 	gtk_dialog_set_has_separator (GTK_DIALOG (cd->props), FALSE);
 	gtk_dialog_set_default_response (GTK_DIALOG (cd->props), GTK_RESPONSE_CLOSE);
 	gtk_window_set_resizable (GTK_WINDOW (cd->props), FALSE);
@@ -2763,6 +2770,7 @@ display_help_dialog (BonoboUIComponent *uic,
 				  G_CALLBACK (gtk_widget_destroy),
 				  NULL);
 
+		gtk_window_set_icon_name (GTK_WINDOW (dialog), CLOCK_ICON);
 		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 		gtk_window_set_screen (GTK_WINDOW (dialog),
 				       gtk_widget_get_screen (cd->applet));
@@ -2804,9 +2812,10 @@ display_about_dialog (BonoboUIComponent *uic,
 		      "authors", authors,
 		      "documenters", documenters,
 		      "translator-credits", _("translator-credits"),
-		      "logo-icon-name", "gnome-panel-clock",
+		      "logo-icon-name", CLOCK_ICON,
 		      NULL);
 	
+	gtk_window_set_icon_name (GTK_WINDOW (cd->about), CLOCK_ICON);
 	gtk_window_set_wmclass (GTK_WINDOW (cd->about), "clock", "Clock");
 	gtk_window_set_screen (GTK_WINDOW (cd->about),
 			       gtk_widget_get_screen (cd->applet));
@@ -2834,9 +2843,17 @@ clock_factory (PanelApplet *applet,
 	return retval;
 }
 
+#ifdef CLOCK_INPROCESS
+PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_ClockApplet_Factory",
+				   PANEL_TYPE_APPLET,
+				   "ClockApplet",
+				   clock_factory,
+				   NULL);
+#else
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_ClockApplet_Factory",
                              PANEL_TYPE_APPLET,
                              "ClockApplet",
                              "0",
                              clock_factory,
                              NULL);
+#endif
