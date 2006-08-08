@@ -1,5 +1,14 @@
 2006-08-08  Vincent Untz  <vuntz@gnome.org>
 
+	* gnome-desktop-item-edit.c: (is_an_uri): kill
+	(get_uri): rewrote, with nice gnome_vfs_uri_make_full_from_relative()
+	to resolve relative paths
+	(main): report correct error if the file exists but --create-new was
+	used
+	Fix bug #84321
+
+2006-08-08  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-toplevel.c: (panel_toplevel_start_animation): when canceling
 	the animation, really cancel it and remember we're not animating!
 	Fix bug #171938

@@ -35,33 +35,26 @@ dialog_destroyed (GtkWidget *dialog, gpointer data)
 		gtk_main_quit ();
 }
 
-static gboolean
-is_an_uri (const char *uri)
-{
-	GnomeVFSURI *suri = gnome_vfs_uri_new (uri);
-	if (suri == NULL)
-		return FALSE;
-	gnome_vfs_uri_unref (suri);
-	return TRUE;
-}
-
 static char *
 get_uri (const char *arg)
 {
+	char *current_dir;
+	char *resolved;
 	char *uri;
 
-	if (is_an_uri (arg))
-		return gnome_vfs_make_uri_canonical (arg);
+	if (!g_path_is_absolute (arg)) {
+		current_dir = g_get_current_dir ();
+		uri = g_strconcat (current_dir, "/", NULL);
+		g_free (current_dir);
+		current_dir = uri;
 
-	if (g_path_is_absolute (arg)) {
+		resolved = gnome_vfs_uri_make_full_from_relative (current_dir, arg);
+		g_free (current_dir);
+
+		uri = gnome_vfs_make_uri_canonical (resolved);
+		g_free (resolved);
+	} else
 		uri = gnome_vfs_get_uri_from_local_path (arg);
-	} else {
-		char *cur = g_get_current_dir ();
-		char *full = g_build_filename (cur, arg, NULL);
-		g_free (cur);
-		uri = gnome_vfs_get_uri_from_local_path (full);
-		g_free (full);
-	}
 
 	return uri;
 }
@@ -237,6 +230,10 @@ main (int argc, char * argv[])
 				   && !create_new) {
 				dlg = panel_ditem_editor_new (NULL, NULL, uri,
 							      _("Launcher Properties"));
+			} else if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
+				   && create_new) {
+				g_printerr ("gnome-desktop-item-edit: %s "
+					    "already exists\n", uri);
 			} else {
 				g_printerr ("gnome-desktop-item-edit: %s "
 					    "doesn't seem like a desktop "
