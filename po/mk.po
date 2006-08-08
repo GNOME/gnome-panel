@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-07 23:50+0200\n"
-"PO-Revision-Date: 2006-08-08 02:03+0200\n"
+"POT-Creation-Date: 2006-08-08 07:48+0200\n"
+"PO-Revision-Date: 2006-08-08 14:11+0200\n"
 "Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
@@ -1032,21 +1032,21 @@ msgstr "Креирајте нова датотека во дадениот ди�
 msgid "[FILE...]"
 msgstr "[ДАТОТЕКА...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:179
+#: ../gnome-panel/gnome-desktop-item-edit.c:172
 msgid "- Edit .desktop files"
 msgstr "- Уредувај .desktop датотеки"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:210
-#: ../gnome-panel/gnome-desktop-item-edit.c:278 ../gnome-panel/launcher.c:921
+#: ../gnome-panel/gnome-desktop-item-edit.c:203
+#: ../gnome-panel/gnome-desktop-item-edit.c:275 ../gnome-panel/launcher.c:921
 msgid "Create Launcher"
 msgstr "Креирај пуштач"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:234
-#: ../gnome-panel/gnome-desktop-item-edit.c:264
+#: ../gnome-panel/gnome-desktop-item-edit.c:227
+#: ../gnome-panel/gnome-desktop-item-edit.c:261
 msgid "Directory Properties"
 msgstr "Својства на директориумот"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:239 ../gnome-panel/launcher.c:762
+#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:762
 msgid "Launcher Properties"
 msgstr "Својства на пуштачот"
 
@@ -1091,7 +1091,9 @@ msgstr "_Лансирај"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Копчето %s не е поставено, не можам да го вчитам пуштачот\n"
 
-#: ../gnome-panel/launcher.c:988
+#: ../gnome-panel/launcher.c:988 ../gnome-panel/panel-ditem-editor.c:1226
+#: ../gnome-panel/panel-ditem-editor.c:1252
+#: ../gnome-panel/panel-ditem-editor.c:1320
 msgid "Could not save launcher"
 msgstr "Не можам да го зачувам пуштачот"
 
@@ -1371,6 +1373,74 @@ msgstr "_Нов панел"
 #: ../gnome-panel/panel-context-menu.c:340
 msgid "A_bout Panels"
 msgstr "За _панелите..."
+
+#: ../gnome-panel/panel-ditem-editor.c:111
+msgid "Application"
+msgstr "Апликација"
+
+#: ../gnome-panel/panel-ditem-editor.c:113
+msgid "Application in Terminal"
+msgstr "Апликација во терминал"
+
+#: ../gnome-panel/panel-ditem-editor.c:115
+msgid "File"
+msgstr "Датотека"
+
+#. Type
+#: ../gnome-panel/panel-ditem-editor.c:574
+msgid "_Type:"
+msgstr "_Тип:"
+
+#. Name
+#: ../gnome-panel/panel-ditem-editor.c:581
+msgid "_Name:"
+msgstr "_Име:"
+
+#: ../gnome-panel/panel-ditem-editor.c:589
+msgid "Browse icons"
+msgstr "Разгледај ги иконите"
+
+#: ../gnome-panel/panel-ditem-editor.c:607
+msgid "_Browse..."
+msgstr "_Разгледај..."
+
+#. Comment
+#: ../gnome-panel/panel-ditem-editor.c:614
+msgid "Co_mment:"
+msgstr "Ко_ментар:"
+
+#: ../gnome-panel/panel-ditem-editor.c:940
+msgid "Choose an application..."
+msgstr "Одберете апликација..."
+
+#: ../gnome-panel/panel-ditem-editor.c:944
+msgid "Choose a file..."
+msgstr "Одберете датотека..."
+
+#: ../gnome-panel/panel-ditem-editor.c:1058
+#: ../gnome-panel/panel-ditem-editor.c:1065
+msgid "_Command:"
+msgstr "_Команда:"
+
+#: ../gnome-panel/panel-ditem-editor.c:1072
+msgid "_Location:"
+msgstr "_Локација:"
+
+#: ../gnome-panel/panel-ditem-editor.c:1227
+msgid "The name of the launcher is not set."
+msgstr "Името на пуштачот не е поставено."
+
+#: ../gnome-panel/panel-ditem-editor.c:1240
+msgid "The command of the launcher is not set."
+msgstr "Командата на пуштачот не е поставена."
+
+#: ../gnome-panel/panel-ditem-editor.c:1243
+msgid "The location of the launcher is not set."
+msgstr "Локацијата на пуштачот не е поставена."
+
+#: ../gnome-panel/panel-ditem-editor.c:1360 ../gnome-panel/panel-util.c:138
+msgid "Could not display help document"
+msgstr "Не можам да го прикажам документот за помош"
 
 #: ../gnome-panel/panel-force-quit.c:75
 msgid "Click on a window to force the application to quit. To cancel press <ESC>."
@@ -2667,10 +2737,6 @@ msgstr "Xinerama мониторот каде што е прикажан пане
 #: ../gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "Y co-ordinate of panel"
 msgstr "Y-кординатата на панелот."
-
-#: ../gnome-panel/panel-util.c:138
-msgid "Could not display help document"
-msgstr "Не можам да го прикажам документот за помош"
 
 #: ../gnome-panel/panel-util.c:647
 #, c-format
