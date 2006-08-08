@@ -188,11 +188,14 @@ Bonobo_Unknown	   panel_applet_shlib_factory_closure (const char                
 #define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
 int main (int argc, char *argv [])						\
 {										\
-	GnomeProgram *program;							\
-	int           retval;							\
+	GnomeProgram   *program;							\
+	GOptionContext *context;						\
+	int             retval;							\
+	context = g_option_context_new ("");					\
 	program = gnome_program_init (name, version,				\
 				      LIBGNOMEUI_MODULE,			\
 				      argc, argv,				\
+				      GNOME_PARAM_GOPTION_CONTEXT, context,	\
 				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
 				      GNOME_PROGRAM_STANDARD_PROPERTIES,	\
 				      NULL);					\
@@ -223,13 +226,16 @@ int main (int argc, char *argv [])						\
 int main (int argc, char *argv [])						\
 {										\
 	GnomeProgram *program;							\
+	GOptionContext *context;						\
 	int           retval;							\
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);			\
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");			\
 	textdomain (GETTEXT_PACKAGE);						\
+	context = g_option_context_new ("");					\
 	program = gnome_program_init (name, version,				\
 				      LIBGNOMEUI_MODULE,			\
 				      argc, argv,				\
+				      GNOME_PARAM_GOPTION_CONTEXT, context,	\
 				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
 				      GNOME_PROGRAM_STANDARD_PROPERTIES,	\
 				      NULL);					\
@@ -242,13 +248,16 @@ int main (int argc, char *argv [])						\
 int main (int argc, char *argv [])						\
 {										\
 	GnomeProgram *program;							\
+	GOptionContext *context;						\
 	int           retval;							\
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);			\
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");			\
 	textdomain (GETTEXT_PACKAGE);						\
+	context = g_option_context_new ("");					\
 	program = gnome_program_init (name, version,				\
 				      LIBGNOMEUI_MODULE,			\
 				      argc, argv,				\
+				      GNOME_PARAM_GOPTION_CONTEXT, context,	\
 				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
 				      GNOME_PARAM_NONE);			\
         retval = panel_applet_factory_main (iid, type, callback, data);		\
