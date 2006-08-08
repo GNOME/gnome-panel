@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-08 00:35+0200\n"
-"PO-Revision-Date: 2006-08-08 00:30+0200\n"
+"POT-Creation-Date: 2006-08-08 11:02+0200\n"
+"PO-Revision-Date: 2006-08-08 11:02+0200\n"
 "Last-Translator: Wouter Bolsterlee <uws+gnome@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -1073,21 +1073,21 @@ msgstr "Maak een nieuw bestand in de gegeven map"
 msgid "[FILE...]"
 msgstr "[BESTAND...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:179
+#: ../gnome-panel/gnome-desktop-item-edit.c:172
 msgid "- Edit .desktop files"
 msgstr "- .desktop-bestanden bewerken"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:210
-#: ../gnome-panel/gnome-desktop-item-edit.c:278 ../gnome-panel/launcher.c:921
+#: ../gnome-panel/gnome-desktop-item-edit.c:203
+#: ../gnome-panel/gnome-desktop-item-edit.c:275 ../gnome-panel/launcher.c:921
 msgid "Create Launcher"
 msgstr "Starter aanmaken"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:234
-#: ../gnome-panel/gnome-desktop-item-edit.c:264
+#: ../gnome-panel/gnome-desktop-item-edit.c:227
+#: ../gnome-panel/gnome-desktop-item-edit.c:261
 msgid "Directory Properties"
 msgstr "Mapeigenschappen"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:239 ../gnome-panel/launcher.c:762
+#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:762
 msgid "Launcher Properties"
 msgstr "Starter-eigenschappen"
 
@@ -1131,7 +1131,9 @@ msgstr "_Uitvoeren"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Sleutel %s is niet ingesteld, kan starter niet laden\n"
 
-#: ../gnome-panel/launcher.c:988
+#: ../gnome-panel/launcher.c:988 ../gnome-panel/panel-ditem-editor.c:1226
+#: ../gnome-panel/panel-ditem-editor.c:1252
+#: ../gnome-panel/panel-ditem-editor.c:1320
 msgid "Could not save launcher"
 msgstr "Kan starter niet opslaan"
 
@@ -1414,6 +1416,74 @@ msgstr "_Nieuw paneel"
 #: ../gnome-panel/panel-context-menu.c:340
 msgid "A_bout Panels"
 msgstr "_Paneel-info"
+
+#: ../gnome-panel/panel-ditem-editor.c:111
+msgid "Application"
+msgstr "Toepassing"
+
+#: ../gnome-panel/panel-ditem-editor.c:113
+msgid "Application in Terminal"
+msgstr "Terminaltoepassing"
+
+#: ../gnome-panel/panel-ditem-editor.c:115
+msgid "File"
+msgstr "Bestand:"
+
+#. Type
+#: ../gnome-panel/panel-ditem-editor.c:574
+msgid "_Type:"
+msgstr "_Type:"
+
+#. Name
+#: ../gnome-panel/panel-ditem-editor.c:581
+msgid "_Name:"
+msgstr "_Naam:"
+
+#: ../gnome-panel/panel-ditem-editor.c:589
+msgid "Browse icons"
+msgstr "Pictogrammen doorbladeren"
+
+#: ../gnome-panel/panel-ditem-editor.c:607
+msgid "_Browse..."
+msgstr "_Bladeren"
+
+#. Comment
+#: ../gnome-panel/panel-ditem-editor.c:614
+msgid "Co_mment:"
+msgstr "Co_mmentaar"
+
+#: ../gnome-panel/panel-ditem-editor.c:940
+msgid "Choose an application..."
+msgstr "Kies een toepassing…"
+
+#: ../gnome-panel/panel-ditem-editor.c:944
+msgid "Choose a file..."
+msgstr "Kies een bestand…"
+
+#: ../gnome-panel/panel-ditem-editor.c:1058
+#: ../gnome-panel/panel-ditem-editor.c:1065
+msgid "_Command:"
+msgstr "_Opdrachtregel:"
+
+#: ../gnome-panel/panel-ditem-editor.c:1072
+msgid "_Location:"
+msgstr "_Locatie:"
+
+#: ../gnome-panel/panel-ditem-editor.c:1227
+msgid "The name of the launcher is not set."
+msgstr "De naam van de starter is niet ingesteld."
+
+#: ../gnome-panel/panel-ditem-editor.c:1240
+msgid "The command of the launcher is not set."
+msgstr "De opdrachtregel van de starter is niet ingesteld."
+
+#: ../gnome-panel/panel-ditem-editor.c:1243
+msgid "The location of the launcher is not set."
+msgstr "De locatie van de starter is nie ingesteld."
+
+#: ../gnome-panel/panel-ditem-editor.c:1360 ../gnome-panel/panel-util.c:138
+msgid "Could not display help document"
+msgstr "Kon het hulpdocument niet weergeven"
 
 #: ../gnome-panel/panel-force-quit.c:75
 msgid ""
@@ -2746,10 +2816,6 @@ msgstr "De Xinerama-monitor waarop het paneel zich bevindt."
 msgid "Y co-ordinate of panel"
 msgstr "Y-coördinaat van het paneel"
 
-#: ../gnome-panel/panel-util.c:138
-msgid "Could not display help document"
-msgstr "Kon het hulpdocument niet weergeven"
-
 #: ../gnome-panel/panel-util.c:647
 #, c-format
 msgid "Icon '%s' not found"
@@ -2982,9 +3048,6 @@ msgstr "Voor_keurenmap:"
 
 #~ msgid "24"
 #~ msgstr "24"
-
-#~ msgid "Browse"
-#~ msgstr "Bladeren"
 
 #~ msgid "This launch icon does not specify a url to show."
 #~ msgstr "Dit start-pictogram geeft geen te tonen URL."
