@@ -191,7 +191,6 @@ unfix_size (ClockData *cd)
 
 static int
 calculate_minimum_width (GtkWidget   *widget,
-			 GtkWidget   *button,
 			 const gchar *text)
 {
 	PangoContext *context;
@@ -215,13 +214,6 @@ calculate_minimum_width (GtkWidget   *widget,
 			      NULL);
 
 	width += 2 * (focus_width + focus_pad + widget->style->xthickness);
-
-	gtk_widget_style_get (button,
-			      "focus-line-width", &focus_width,
-			      "focus-padding", &focus_pad,
-			      NULL);
-
-	width += 2 * (focus_width + focus_pad + button->style->xthickness);
 
 	return width;
 }
@@ -329,7 +321,7 @@ calculate_minimum_height (GtkWidget        *widget,
 static gboolean
 use_two_line_format (ClockData *cd)
 {
-        if (cd->size >= 2 * calculate_minimum_height (cd->applet, cd->orient))
+        if (cd->size >= 2 * calculate_minimum_height (cd->toggle, cd->orient))
                 return TRUE;
 
         return FALSE;
@@ -1754,13 +1746,13 @@ update_orient (ClockData *cd)
 	gdouble      angle;
 
 	text = gtk_label_get_text (GTK_LABEL (cd->clockw));
-	min_width = calculate_minimum_width (cd->applet, cd->toggle, text);
+	min_width = calculate_minimum_width (cd->toggle, text);
 
 	if (cd->orient == PANEL_APPLET_ORIENT_LEFT &&
-	    min_width > cd->applet->allocation.width)
+	    min_width > cd->toggle->allocation.width)
 		new_angle = 270;
 	else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT &&
-		 min_width > cd->applet->allocation.width)
+		 min_width > cd->toggle->allocation.width)
 		new_angle = 90;
 	else
 		new_angle = 0;
@@ -1790,7 +1782,7 @@ applet_change_orient (PanelApplet       *applet,
 
 /* this is when the panel size changes */
 static void
-applet_change_pixel_size (PanelApplet	*applet,
+toggle_change_pixel_size (GtkWidget     *widget,
 			  GtkAllocation *allocation,
 			  ClockData	*cd)
 {
@@ -2367,9 +2359,9 @@ fill_clock_applet (PanelApplet *applet)
 			  G_CALLBACK (applet_change_orient),
 			  cd);
 
-	g_signal_connect (G_OBJECT (cd->applet),
+	g_signal_connect (G_OBJECT (cd->toggle),
 			  "size_allocate",
-			  G_CALLBACK (applet_change_pixel_size),
+			  G_CALLBACK (toggle_change_pixel_size),
 			  cd);
 
 	panel_applet_set_background_widget (PANEL_APPLET (cd->applet),

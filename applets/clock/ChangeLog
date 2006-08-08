@@ -1,5 +1,19 @@
 2006-08-08  Vincent Untz  <vuntz@gnome.org>
 
+	Only consider the size of the toggle button since it's what is
+	interesting (size of the applet is useless)
+
+	* clock.c: (calculate_minimum_width): take only one argument (the
+	toggle button)
+	(calculate_minimum_height): use the toggle button and not the applet
+	as basis of the math
+	(update_orient): ditto
+	(applet_change_pixel_size): renamed to toggle_change_pixel_size()
+	(fill_clock_applet): connect to size_allocate of the toggle button,
+	not of the applet
+
+2006-08-08  Vincent Untz  <vuntz@gnome.org>
+
 	* GNOME_ClockApplet_Factory.server.in.in:
 	* Makefile.am: make it possible to compile as an in-process applet
 	* clock.c: ditto, and set icons for all dialogs since the default icon
