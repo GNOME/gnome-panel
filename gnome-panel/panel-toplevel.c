@@ -3159,6 +3159,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 		toplevel->priv->animation_end_y      = -1;
 		toplevel->priv->animation_end_width  = -1;
 		toplevel->priv->animation_end_height = -1;
+		toplevel->priv->animating            = FALSE;
 		return;
 	}
 
