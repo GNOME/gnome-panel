@@ -114,9 +114,9 @@ applet_change_orient (PanelApplet       *applet,
 
 /* this is when the panel size changes */
 static void
-applet_size_allocated (PanelApplet       *applet,
-		       GtkAllocation     *allocation,
-                       ShowDesktopData   *sdd)
+button_size_allocated (GtkWidget       *button,
+		       GtkAllocation   *allocation,
+                       ShowDesktopData *sdd)
 {
 	if (((sdd->orient == GTK_ORIENTATION_HORIZONTAL)
 		&& (sdd->size == allocation->height))
@@ -142,14 +142,37 @@ update_icon (ShowDesktopData *sdd)
         int width, height;
         GdkPixbuf *icon;
         GdkPixbuf *scaled;
-        int icon_size;
-	GError *error;
+        int        icon_size;
+	GError    *error;
+	int	   focus_width = 0;
+	int	   focus_pad = 0;
+	int	   thickness = 0;
 
 	if (!sdd->icon_theme)
 		return;
 
-#define SPACE_FOR_BUTTON_BORDER 4
-	icon_size = sdd->size - SPACE_FOR_BUTTON_BORDER;
+	gtk_widget_style_get (sdd->button,
+			      "focus-line-width", &focus_width,
+			      "focus-padding", &focus_pad,
+			      NULL);
+
+	switch (sdd->orient) {
+	case GTK_ORIENTATION_HORIZONTAL:
+		thickness = sdd->button->style->ythickness;
+		break;
+	case GTK_ORIENTATION_VERTICAL:
+		thickness = sdd->button->style->xthickness;
+		break;
+	}
+
+	icon_size = sdd->size - 2 * (focus_width + focus_pad + thickness);
+
+	if (icon_size < 22)
+		icon_size = 16;
+	else if (icon_size < 32)
+		icon_size = 22;
+	else if (icon_size < 48)
+		icon_size = 32;
 
 	error = NULL;
 	icon = gtk_icon_theme_load_icon (sdd->icon_theme,
@@ -438,6 +461,11 @@ show_desktop_applet_fill (PanelApplet *applet)
         gtk_container_add (GTK_CONTAINER (sdd->button), sdd->image);
         gtk_container_add (GTK_CONTAINER (sdd->applet), sdd->button);
 
+        g_signal_connect (G_OBJECT (sdd->button),
+                          "size_allocate",
+                          G_CALLBACK (button_size_allocated),
+                          sdd);
+
         /* FIXME: Update this comment. */
         /* we have to bind change_orient before we do applet_widget_add
            since we need to get an initial change_orient signal to set our
@@ -445,12 +473,6 @@ show_desktop_applet_fill (PanelApplet *applet)
         g_signal_connect (G_OBJECT (sdd->applet),
                           "change_orient",
                           G_CALLBACK (applet_change_orient),
-                          sdd);
-
-        /* similiar to the above in semantics*/
-        g_signal_connect (G_OBJECT (sdd->applet),
-                          "size_allocate",
-                          G_CALLBACK (applet_size_allocated),
                           sdd);
 
 	panel_applet_set_background_widget (PANEL_APPLET (sdd->applet),

@@ -1,5 +1,17 @@
 2006-08-08  Vincent Untz  <vuntz@gnome.org>
 
+	* showdesktop.c: (applet_size_allocated): renamed to
+	button_size_allocated()
+	(update_icon): take into account the focus width and focus pad and
+	thickness of the button to calculate the icon size
+	also, force the icon size to be 16, 22 or 32 if it's < 22, < 32 and
+	< 48
+	(show_desktop_applet_fill): connect to the size_allocate signal of the
+	button, and not of the applet
+	Fix bug #335582
+
+2006-08-08  Vincent Untz  <vuntz@gnome.org>
+
 	* GNOME_Wncklet_Factory.server.in.in:
 	* Makefile.am: make it possible to compile as an in-process applet
 	* wncklet.c: ditto
