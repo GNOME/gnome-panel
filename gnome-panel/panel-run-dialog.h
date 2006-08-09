@@ -29,7 +29,7 @@
 
 G_BEGIN_DECLS
 
-#define PANEL_RUN_ICON "gnome-run"
+#define PANEL_RUN_ICON "system-run"
 
 void panel_run_dialog_present           (GdkScreen  *screen,
 					 guint32    activate_time);
