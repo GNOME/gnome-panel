@@ -468,6 +468,7 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 					   &error);
 		if (error) {
 			g_error_free (error);
+			error = NULL;
 			panel_launch_desktop_file ("gmenu-simple-editor.desktop",
 						   "gmenu-simple-editor",
 						   screen,

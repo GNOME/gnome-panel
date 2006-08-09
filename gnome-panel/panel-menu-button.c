@@ -1005,6 +1005,7 @@ panel_menu_button_invoke_menu (PanelMenuButton *button,
 					   &error);
 		if (error) {
 			g_error_free (error);
+			error = NULL;
 			panel_launch_desktop_file ("gmenu-simple-editor.desktop",
 						   "gmenu-simple-editor",
 						   screen,
