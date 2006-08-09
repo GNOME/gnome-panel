@@ -1,5 +1,12 @@
 2006-08-09  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-menu-items.c: (panel_menu_items_append_from_desktop): pass
+	uri and not path to setup_uri_drag
+	(panel_place_menu_item_create_menu): for the Desktop menu item, use an
+	URI, and not a relative path.
+
+2006-08-09  Vincent Untz  <vuntz@gnome.org>
+
 	* menu.c: (drag_data_get_menu_cb): pass a real uri and not a path as
 	drag data
 	Should fix bug #343756

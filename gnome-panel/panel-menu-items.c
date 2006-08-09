@@ -130,6 +130,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	GtkWidget *item;
 	char      *path_freeme;
 	char      *full_path;
+	char      *uri;
 	char      *icon;
 	char      *name;
 	char      *comment;
@@ -194,7 +195,10 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 			       (GClosureNotify) g_free, 0);
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
-	setup_uri_drag (item, full_path, icon);
+
+	uri = gnome_vfs_get_uri_from_local_path (full_path);
+	setup_uri_drag (item, uri, icon);
+	g_free (uri);
 
 	g_key_file_free (key_file);
 
@@ -569,7 +573,12 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 
 	if (!gconf_client_get_bool (panel_gconf_get_client (),
 				    DESKTOP_IS_HOME_DIR_KEY,
-				    NULL))
+				    NULL)) {
+		char *uri;
+
+		uri = gnome_vfs_make_uri_from_input_with_dirs ("Desktop",
+							       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
+
 		panel_menu_items_append_place_item (
 				"gnome-fs-desktop",
 				/* Translators: Desktop is used here as in
@@ -580,7 +589,10 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 				_("Open the desktop as a folder"),
 				places_menu,
 				G_CALLBACK (activate_uri),
-				"Desktop");
+				uri);
+
+		g_free (uri);
+	}
 
 	panel_place_menu_item_append_gtk_bookmarks (places_menu);
 	add_menu_separator (places_menu);
