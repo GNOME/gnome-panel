@@ -876,9 +876,12 @@ panel_ditem_editor_icon_changed (PanelDItemEditor *dialog)
 		 * another icon from the theme.  See bug #119208 */
 		char *dn = g_path_get_dirname (file);
 		if (dialog->priv->icon_theme_dir != NULL &&
-		    strcmp (dn, dialog->priv->icon_theme_dir) == 0)
-			icon = g_path_get_basename (file);
-		else
+		    strcmp (dn, dialog->priv->icon_theme_dir) == 0) {
+			char *buffer;
+			buffer = g_path_get_basename (file);
+			icon = panel_util_icon_remove_extension (buffer);
+			g_free (buffer);
+		} else
 			icon = g_strdup (file);
 		g_free (dn);
 	}

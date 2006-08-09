@@ -30,6 +30,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <libgnomevfs/gnome-vfs-result.h>
 #include <libgnomevfs/gnome-vfs-uri.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
 #include <libgnomevfs/gnome-vfs-xfer.h>
 #include <gconf/gconf-client.h>
 
@@ -1122,11 +1123,14 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 		       guint             time,
 		       GMenuTreeEntry   *entry)
 {
-	char *uri_list;
+	const char *path;
+	char       *uri;
+	char       *uri_list;
 
-	uri_list = g_strconcat (gmenu_tree_entry_get_desktop_file_path (entry),
-				"\r\n",
-				NULL);
+	path = gmenu_tree_entry_get_desktop_file_path (entry);
+	uri = gnome_vfs_get_uri_from_local_path (path);
+	uri_list = g_strconcat (uri, "\r\n", NULL);
+	g_free (uri);
 
 	gtk_selection_data_set (selection_data,
 				selection_data->target, 8, (guchar *)uri_list,
@@ -1531,10 +1535,18 @@ create_menuitem (GtkWidget          *menu,
 				     menu_item_targets, 1,
 				     GDK_ACTION_COPY);
 
-		//FIXME should remove .png at the end of the icon name
-		if (gmenu_tree_entry_get_icon (entry) != NULL)
-			gtk_drag_source_set_icon_name (menuitem,
-						       gmenu_tree_entry_get_icon (entry));
+		if (gmenu_tree_entry_get_icon (entry) != NULL) {
+			const char *icon;
+			char       *icon_no_ext;
+
+			icon = gmenu_tree_entry_get_icon (entry);
+			if (!g_path_is_absolute (icon)) {
+				icon_no_ext = panel_util_icon_remove_extension (icon);
+				gtk_drag_source_set_icon_name (menuitem,
+							       icon_no_ext);
+			}
+		}
+
 		g_signal_connect (G_OBJECT (menuitem), "drag_begin",
 				  G_CALLBACK (drag_begin_menu_cb), NULL);
 		g_signal_connect (menuitem, "drag_data_get",

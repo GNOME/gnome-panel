@@ -575,6 +575,24 @@ panel_uri_exists (const char *uri)
 }
 
 char *
+panel_util_icon_remove_extension (const char *icon)
+{
+	char *icon_no_extension;
+	char *p;
+
+	icon_no_extension = g_strdup (icon);
+	p = strrchr (icon_no_extension, '.');
+	if (p &&
+	    (strcmp (p, ".png") == 0 ||
+	     strcmp (p, ".xpm") == 0 ||
+	     strcmp (p, ".svg") == 0)) {
+	    *p = 0;
+	}
+
+	return icon_no_extension;
+}
+
+char *
 panel_find_icon (GtkIconTheme  *icon_theme,
 		 const char    *icon_name,
 		 gint           size)
@@ -582,7 +600,6 @@ panel_find_icon (GtkIconTheme  *icon_theme,
 	GtkIconInfo *info;
 	char        *retval;
 	char        *icon_no_extension;
-	char        *p;
 
 	if (icon_name == NULL || strcmp (icon_name, "") == 0)
 		return NULL;
@@ -604,14 +621,7 @@ panel_find_icon (GtkIconTheme  *icon_theme,
 
 	/* This is needed because some .desktop files have an icon name *and*
 	 * an extension as icon */
-	icon_no_extension = g_strdup (icon_name);
-	p = strrchr (icon_no_extension, '.');
-	if (p &&
-	    (strcmp (p, ".png") == 0 ||
-	     strcmp (p, ".xpm") == 0 ||
-	     strcmp (p, ".svg") == 0)) {
-	    *p = 0;
-	}
+	icon_no_extension = panel_util_icon_remove_extension (icon_name);
 
 	info = gtk_icon_theme_lookup_icon (icon_theme, icon_no_extension,
 					   size, 0);

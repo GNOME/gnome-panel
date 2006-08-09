@@ -1,5 +1,18 @@
 2006-08-09  Vincent Untz  <vuntz@gnome.org>
 
+	* menu.c: (drag_data_get_menu_cb): pass a real uri and not a path as
+	drag data
+	Should fix bug #343756
+
+	* menu.c: (create_menuitem): remove the extension of the icon if it's
+	not an absolute path (for drag icon)
+	* panel-ditem-editor.c: (panel_ditem_editor_icon_changed): ditto: we
+	don't want to save the extension
+	* panel-util.[ch]: (panel_util_icon_remove_extension): new
+	(panel_find_icon): use panel_util_icon_remove_extension
+
+2006-08-09  Vincent Untz  <vuntz@gnome.org>
+
 	* panel.c: (drop_nautilus_desktop_uri): new, to handle
 	some of the x-nautilus-desktop: URI (trash, home, computer, network)
 	(drop_urilist): remove useless variable, use
