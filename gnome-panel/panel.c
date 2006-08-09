@@ -541,6 +541,41 @@ drop_uri (PanelWidget *panel,
 }
 
 static gboolean
+drop_nautilus_desktop_uri (PanelWidget *panel,
+			   int          pos,
+			   const char  *uri)
+{
+	gboolean    success;
+	const char *id;
+	const char *basename;
+
+	if (g_ascii_strncasecmp (uri, "x-nautilus-desktop:///",
+				 strlen ("x-nautilus-desktop:///")) != 0)
+			return FALSE;
+
+	success = TRUE;
+	id = panel_profile_get_toplevel_id (panel->toplevel);
+	basename = uri + strlen ("x-nautilus-desktop:///");
+
+	if (strncmp (basename, "trash", strlen ("trash")) == 0)
+		panel_applet_frame_create (panel->toplevel, pos,
+					   "OAFIID:GNOME_Panel_TrashApplet");
+	else if (strncmp (basename, "home", strlen ("home")) == 0)
+		panel_launcher_create_with_id (id, pos,
+					       "nautilus-home.desktop");
+	else if (strncmp (basename, "computer", strlen ("computer")) == 0)
+		panel_launcher_create_with_id (id, pos,
+					       "nautilus-computer.desktop");
+	else if (strncmp (basename, "network", strlen ("network")) == 0)
+		panel_launcher_create_with_id (id, pos,
+					       "nautilus-scheme.desktop");
+	else
+		success = FALSE;
+
+	return success;
+}
+
+static gboolean
 drop_urilist (PanelWidget *panel,
 	      int          pos,
 	      char        *urilist)
@@ -558,23 +593,28 @@ drop_urilist (PanelWidget *panel,
 		GnomeVFSResult    res;
 		const char       *uri;
 		char             *basename;
-		char             *dirname;
 		char             *filename;
 
 		uri = uris[i];
 
-		if (strncmp (uri, "http:", strlen ("http:")) == 0 ||
-		    strncmp (uri, "https:", strlen ("https:")) == 0 ||
-		    strncmp (uri, "ftp:", strlen ("ftp:")) == 0 ||
-		    strncmp (uri, "gopher:", strlen ("gopher:")) == 0 ||
-		    strncmp (uri, "ghelp:", strlen ("ghelp:")) == 0 ||
-		    strncmp (uri, "man:", strlen ("man:")) == 0 ||
-		    strncmp (uri, "info:", strlen ("info:")) == 0) {
+		if (g_ascii_strncasecmp (uri, "http:", strlen ("http:")) == 0 ||
+		    g_ascii_strncasecmp (uri, "https:", strlen ("https:")) == 0 ||
+		    g_ascii_strncasecmp (uri, "ftp:", strlen ("ftp:")) == 0 ||
+		    g_ascii_strncasecmp (uri, "gopher:", strlen ("gopher:")) == 0 ||
+		    g_ascii_strncasecmp (uri, "ghelp:", strlen ("ghelp:")) == 0 ||
+		    g_ascii_strncasecmp (uri, "man:", strlen ("man:")) == 0 ||
+		    g_ascii_strncasecmp (uri, "info:", strlen ("info:")) == 0) {
 			/* FIXME: probably do this only on link,
 			 * in fact, on link always set up a link,
 			 * on copy do all the other stuff.  Or something. */
 			if ( ! drop_url (panel, pos, uri))
 				success = FALSE;
+			continue;
+		}
+
+		if (g_ascii_strncasecmp (uri, "x-nautilus-desktop:",
+					 strlen ("x-nautilus-desktop:")) == 0) {
+			success = drop_nautilus_desktop_uri (panel, pos, uri);
 			continue;
 		}
 
@@ -584,7 +624,6 @@ drop_urilist (PanelWidget *panel,
 		}
 
 		basename = gnome_vfs_uri_extract_short_path_name (vfs_uri);
-		dirname = gnome_vfs_uri_extract_dirname (vfs_uri);
 
 		info = gnome_vfs_file_info_new ();
 		res = gnome_vfs_get_file_info_uri (vfs_uri, info,
@@ -641,7 +680,6 @@ drop_urilist (PanelWidget *panel,
 		gnome_vfs_file_info_unref (info);
 
 		g_free (basename);
-		g_free (dirname);
 
 		gnome_vfs_uri_unref (vfs_uri);
 	}

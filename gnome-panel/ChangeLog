@@ -1,5 +1,13 @@
 2006-08-09  Vincent Untz  <vuntz@gnome.org>
 
+	* panel.c: (drop_nautilus_desktop_uri): new, to handle
+	some of the x-nautilus-desktop: URI (trash, home, computer, network)
+	(drop_urilist): remove useless variable, use
+	drop_nautilus_desktop_uri() when it makes sense
+	Fix part of bug #143580
+
+2006-08-09  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-bar.c: (panel_menu_bar_invoke_menu): fix crash when
 	alacarte is not found
 	(panel_menu_button_invoke_menu): ditto
