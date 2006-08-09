@@ -96,7 +96,7 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 		"Seth Nickell (snickell@stanford.edu)",
 		"Stephen Browne (stephen.browne@sun.com)",
 		"Tom Tromey (tromey@cygnus.com)",
-		"Vincent Untz (vincent@vuntz.net)",
+		"Vincent Untz (vuntz@gnome.org)",
 		N_("And many, many others..."),
 		NULL
 	};
@@ -158,18 +158,12 @@ panel_context_menu_create_new_panel (GtkWidget *menuitem)
 }
 
 static void
-panel_context_menu_remove_panel (GtkWidget *menuitem,
-				 gpointer data)
+panel_context_menu_delete_panel (PanelToplevel *toplevel)
 {
-	PanelWidget   *panel_widget;
-	PanelToplevel *toplevel;
-
-	panel_widget = menu_get_panel (menuitem);
-	toplevel     = panel_widget->toplevel;
-
 	if (panel_toplevel_is_last_unattached (toplevel)) {
-		panel_error_dialog (NULL, menuitem_to_screen (menuitem),
-				    "cannot_remove_last_panel", TRUE,
+		panel_error_dialog (NULL,
+				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
+				    "cannot_delete_last_panel", TRUE,
 				    _("Cannot delete this panel"),
 				    _("You must always have at least one panel."));
 		return;
@@ -179,11 +173,10 @@ panel_context_menu_remove_panel (GtkWidget *menuitem,
 }
 
 static void
-panel_context_menu_setup_remove_panel_item (GtkWidget *menu,
+panel_context_menu_setup_delete_panel_item (GtkWidget *menu,
 					    GtkWidget *menuitem)
 {
 	PanelWidget *panel_widget;
-	GtkWidget   *label;
 	gboolean     sensitive;
 
 	panel_widget = menu_get_panel (menu);
@@ -196,38 +189,11 @@ panel_context_menu_setup_remove_panel_item (GtkWidget *menu,
 		panel_profile_id_lists_are_writable ();
 
 	gtk_widget_set_sensitive (menuitem, sensitive);
-
-	label = GTK_BIN (menuitem)->child;
-	if (GTK_IS_BOX (label)) {
-		GList *li, *list;
-		list = gtk_container_get_children (GTK_CONTAINER (label));
-		for (li = list; li; li = li->next) {
-			if (GTK_IS_LABEL (li->data)) {
-				label = li->data;
-				break;
-			}
-		}
-		g_list_free (list);
-	}
-	if (!GTK_IS_LABEL (label)) {
-		g_warning ("Cannot find the label of a menu item");
-		return;
-	}
-
-	/* this will not handle the case of menu being torn off
-	 * and then the confirm_panel_remove changed, but oh well */
-	if (panel_widget->applet_list &&
-	    panel_global_config_get_confirm_panel_remove ())
-		gtk_label_set_text_with_mnemonic (GTK_LABEL (label),
-						  _("_Delete This Panel..."));
-	else
-		gtk_label_set_text_with_mnemonic (GTK_LABEL (label),
-						  _("_Delete This Panel"));
 }
 
 static void
-make_panel_submenu (PanelWidget *panel_widget,
-		    GtkWidget   *menu)
+panel_context_menu_build_edition (PanelWidget *panel_widget,
+				  GtkWidget   *menu)
 {
 	GtkWidget *menuitem;
 
@@ -267,11 +233,11 @@ make_panel_submenu (PanelWidget *panel_widget,
 			_("_Delete This Panel"),
 			FALSE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT (menuitem), "activate",
-			  G_CALLBACK (panel_context_menu_remove_panel),
-			  NULL);
+	g_signal_connect_swapped (G_OBJECT (menuitem), "activate",
+				  G_CALLBACK (panel_context_menu_delete_panel),
+				  panel_widget->toplevel);
 	g_signal_connect (G_OBJECT (menu), "show",
-			  G_CALLBACK (panel_context_menu_setup_remove_panel_item),
+			  G_CALLBACK (panel_context_menu_setup_delete_panel_item),
 			  menuitem);
 
 	add_menu_separator (menu);
@@ -319,7 +285,7 @@ panel_context_menu_create (PanelWidget *panel)
 	retval = create_empty_menu ();
 
 	if (!panel_lockdown_get_locked_down ())
-		make_panel_submenu (panel, retval);
+		panel_context_menu_build_edition (panel, retval);
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem,
@@ -344,6 +310,7 @@ panel_context_menu_create (PanelWidget *panel)
 			  G_CALLBACK (panel_context_menu_show_about_dialog),
 			  NULL);
 	
+	//FIXME: can we get rid of this? (needed by menu_get_panel())
 	g_object_set_data (G_OBJECT (retval), "menu_panel", panel);
 
 	return retval;

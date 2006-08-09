@@ -507,7 +507,7 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 		 * make the menu items smaller... */
 		if (connected_volumes) {
 			title = _("Network Places");
-			icon = "gnome-fs-bookmark";
+			icon = "network-server";
 		} else {
 			title = _("Removable Media");
 			icon = "";
