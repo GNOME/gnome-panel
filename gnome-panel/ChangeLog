@@ -1,3 +1,9 @@
+2006-08-10  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-applet-frame.c: (panel_applet_frame_finalize): disconnect from
+	the connection broken signal before doing anything else.
+	Fix crash when quitting and an applet is crashing.
+
 2006-08-09  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-context-menu.c: (panel_context_menu_show_about_dialog): update

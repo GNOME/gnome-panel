@@ -531,6 +531,15 @@ panel_applet_frame_finalize (GObject *object)
 	panel_lockdown_notify_remove (G_CALLBACK (panel_applet_frame_sync_menu_state),
 				      frame);
 
+	if (frame->priv->control) {
+		/* do this before unref'ing every bonobo stuff since it looks
+		 * like we can receive some events when unref'ing them */
+		ORBit_small_unlisten_for_broken (frame->priv->control,
+						 G_CALLBACK (panel_applet_frame_cnx_broken));
+		CORBA_Object_release (frame->priv->control, NULL);
+		frame->priv->control = CORBA_OBJECT_NIL;
+	}
+
 	if (frame->priv->property_bag)
 		bonobo_object_release_unref (
 			frame->priv->property_bag, NULL);
@@ -542,13 +551,6 @@ panel_applet_frame_finalize (GObject *object)
 	if (frame->priv->ui_component)
 		bonobo_object_unref (
 			BONOBO_OBJECT (frame->priv->ui_component));
-
-	if (frame->priv->control) {
-		ORBit_small_unlisten_for_broken (frame->priv->control,
-						 G_CALLBACK (panel_applet_frame_cnx_broken));
-		CORBA_Object_release (frame->priv->control, NULL);
-		frame->priv->control = CORBA_OBJECT_NIL;
-	}
 
 	g_free (frame->priv->iid);
 	frame->priv->iid = NULL;
