@@ -25,8 +25,8 @@
  * GTK+ at ftp://ftp.gtk.org/pub/gtk/. 
  */
 
-#ifndef __TRAY_OBOX_H__
-#define __TRAY_OBOX_H__
+#ifndef __NA_OBOX_H__
+#define __NA_OBOX_H__
 
 #include <gtk/gtkbox.h>
 
@@ -35,40 +35,39 @@ extern "C" {
 #endif /* __cplusplus */
 
 
-#define TRAY_TYPE_OBOX            (tray_obox_get_type ())
-#define TRAY_OBOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), TRAY_TYPE_OBOX, TrayOBox))
-#define TRAY_OBOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), TRAY_TYPE_OBOX, TrayOBoxClass))
-#define TRAY_IS_OBOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TRAY_TYPE_OBOX))
-#define TRAY_IS_OBOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TRAY_TYPE_OBOX))
-#define TRAY_OBOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), TRAY_TYPE_OBOX, TrayOBoxClass))
+#define NA_TYPE_OBOX            (na_obox_get_type ())
+#define NA_OBOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), NA_TYPE_OBOX, NaOBox))
+#define NA_OBOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), NA_TYPE_OBOX, NaOBoxClass))
+#define NA_IS_OBOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), NA_TYPE_OBOX))
+#define NA_IS_OBOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), NA_TYPE_OBOX))
+#define NA_OBOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), NA_TYPE_OBOX, NaOBoxClass))
 
 
-typedef struct _TrayOBox       TrayOBox;
-typedef struct _TrayOBoxClass  TrayOBoxClass;
+typedef struct _NaOBox       NaOBox;
+typedef struct _NaOBoxClass  NaOBoxClass;
 
-struct _TrayOBox
+struct _NaOBox
 {
   GtkBox box;
 
   GtkOrientation orientation;
 };
 
-struct _TrayOBoxClass
+struct _NaOBoxClass
 {
   GtkBoxClass parent_class;
 };
 
 
-GType	   tray_obox_get_type (void) G_GNUC_CONST;
-GtkWidget* tray_obox_new      (void);
+GType	   na_obox_get_type (void) G_GNUC_CONST;
+GtkWidget* na_obox_new      (void);
 
-void tray_obox_set_orientation (TrayOBox       *obox,
-                                GtkOrientation  orientation);
+void na_obox_set_orientation (NaOBox         *obox,
+                              GtkOrientation  orientation);
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-
-#endif /* __TRAY_OBOX_H__ */
+#endif /* __NA_OBOX_H__ */

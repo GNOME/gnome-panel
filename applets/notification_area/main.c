@@ -210,7 +210,7 @@ message_cancelled (NaTrayManager *manager,
 static void
 update_size_and_orientation (SystemTray *tray)
 {
-  tray_obox_set_orientation (TRAY_OBOX (tray->box), tray->orientation);
+  na_obox_set_orientation (NA_OBOX (tray->box), tray->orientation);
 
   na_tray_manager_set_orientation (tray->trays_screen->tray_manager,
                                    tray->orientation);
@@ -356,7 +356,7 @@ applet_factory (PanelApplet *applet,
                           PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
   
   tray->frame = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  tray->box = tray_obox_new ();
+  tray->box = na_obox_new ();
   gtk_box_set_spacing (GTK_BOX (tray->box), 1);
 
   gtk_container_add (GTK_CONTAINER (tray->frame), tray->box);
