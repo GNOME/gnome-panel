@@ -17,6 +17,8 @@
   <property name="skip_pager_hint">False</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
@@ -66,7 +68,7 @@
       </child>
 
       <child>
-	<widget class="GtkNotebook" id="notebook1">
+	<widget class="GtkNotebook" id="notebook">
 	  <property name="border_width">5</property>
 	  <property name="visible">True</property>
 	  <property name="can_focus">True</property>
@@ -118,6 +120,10 @@
 		      <property name="yalign">0.5</property>
 		      <property name="xpad">0</property>
 		      <property name="ypad">0</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
@@ -156,6 +162,10 @@
 		      <property name="xpad">0</property>
 		      <property name="ypad">0</property>
 		      <property name="mnemonic_widget">orientation_combo</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">0</property>
@@ -170,6 +180,8 @@
 		  <child>
 		    <widget class="GtkComboBox" id="orientation_combo">
 		      <property name="visible">True</property>
+		      <property name="add_tearoffs">False</property>
+		      <property name="focus_on_click">True</property>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">1</property>
@@ -195,6 +207,10 @@
 		      <property name="xpad">0</property>
 		      <property name="ypad">0</property>
 		      <property name="mnemonic_widget">size_spin</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">0</property>
@@ -244,6 +260,10 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -275,6 +295,10 @@
 		      <property name="yalign">0</property>
 		      <property name="xpad">0</property>
 		      <property name="ypad">0</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">0</property>
@@ -404,6 +428,10 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -464,6 +492,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">0</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="type">tab</property>
@@ -512,6 +544,10 @@
 		      <property name="yalign">0.5</property>
 		      <property name="xpad">0</property>
 		      <property name="ypad">0</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
@@ -598,6 +634,10 @@
 		      <property name="yalign">0.5</property>
 		      <property name="xpad">0</property>
 		      <property name="ypad">0</property>
+		      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+		      <property name="width_chars">-1</property>
+		      <property name="single_line_mode">False</property>
+		      <property name="angle">0</property>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
@@ -634,6 +674,10 @@
 			      <property name="yalign">0</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			      <property name="width_chars">-1</property>
+			      <property name="single_line_mode">False</property>
+			      <property name="angle">0</property>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -656,6 +700,10 @@
 			      <property name="yalign">0</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			      <property name="width_chars">-1</property>
+			      <property name="single_line_mode">False</property>
+			      <property name="angle">0</property>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -687,6 +735,10 @@
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
 			  <property name="mnemonic_widget">color_button</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -734,6 +786,10 @@
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
 			  <property name="mnemonic_widget">opacity_scale</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
@@ -822,6 +878,10 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -837,6 +897,7 @@
 			  <property name="action">GTK_FILE_CHOOSER_ACTION_OPEN</property>
 			  <property name="local_only">True</property>
 			  <property name="show_hidden">False</property>
+			  <property name="do_overwrite_confirmation">False</property>
 			  <property name="width_chars">-1</property>
 			</widget>
 			<packing>
@@ -879,6 +940,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">0</property>
 	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
 	    </widget>
 	    <packing>
 	      <property name="type">tab</property>
@@ -909,6 +974,8 @@
   <property name="skip_pager_hint">False</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
@@ -980,7 +1047,7 @@
 		  <property name="max_length">0</property>
 		  <property name="text" translatable="yes"></property>
 		  <property name="has_frame">True</property>
-		  <property name="invisible_char" translatable="yes">*</property>
+		  <property name="invisible_char">*</property>
 		  <property name="activates_default">False</property>
 		</widget>
 	      </child>

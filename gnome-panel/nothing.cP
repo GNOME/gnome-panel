@@ -3,12 +3,7 @@
 #include <unistd.h>
 
 #include <X11/Xlib.h>
-#include <libgnomecanvas/libgnomecanvas.h>
-#include <libart_lgpl/art_misc.h>
-#include <libart_lgpl/art_affine.h>
-#include <libart_lgpl/art_rgb_affine.h>
-#include <libart_lgpl/art_rgb_rgba_affine.h>
-#include <libart_lgpl/art_filterlevel.h>
+#include <cairo.h>
 #include <gdk/gdkkeysyms.h>
 #include <libgnome/gnome-program.h>
 #include <libgnome/gnome-sound.h>
@@ -16,8 +11,32 @@
 #include "panel-util.h"
 #include "nothing.h"
 
+static void
+pixbuf_reverse (GdkPixbuf *gp)
+{
+        guchar *pixels = gdk_pixbuf_get_pixels (gp);
+        int rs = gdk_pixbuf_get_rowstride (gp);
+	int w = gdk_pixbuf_get_width (gp);
+        int h = gdk_pixbuf_get_height (gp);
+        int x, y;
+#define DOSWAP(x,y) tmp = x; x = y; y = tmp;
+        for (y = 0; y < h; y++, pixels += rs) {
+                guchar *p = pixels;
+                guchar *p2 = pixels + w*4 - 4;
+                for (x = 0; x < w/2; x++, p+=4, p2-=4) {
+                        guchar tmp;
+                        DOSWAP (p[0], p2[0]);
+                        DOSWAP (p[1], p2[1]);
+                        DOSWAP (p[2], p2[2]);
+                        DOSWAP (p[3], p2[3]);
+                }
+        }
+#undef DOSWAP
+}
+
+/* This unsea's the phsh */
 /*code snippet, not to be compiled separately*/
-static int goat_pages=0;
+static gboolean goat_loaded=FALSE;
 static int goat_frame=0;
 static GdkPixmap *goat_pix[2] = {NULL,NULL};
 static GdkPixmap *goat_pix_rev[2] = {NULL,NULL};
@@ -30,95 +49,103 @@ static int goat_accx = -1, goat_accy = -1;
 static char *goat_filename = NULL;
 
 static void
-transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
-		 GdkPixbuf *pixbuf, double affine[6],
-		 int level, ArtAlphaGamma *ag)
-{
-	gint w, h, rs;
-
-	rs = gdk_pixbuf_get_rowstride(pixbuf);
-	h =  gdk_pixbuf_get_height(pixbuf);
-	w =  gdk_pixbuf_get_width(pixbuf);
-
-        if (gdk_pixbuf_get_has_alpha(pixbuf)) { 
-	        art_rgb_rgba_affine(dst, x0, y0, x1, y1, drs,
-                                    gdk_pixbuf_get_pixels(pixbuf),
-                                    w, h, rs, affine, level, ag);
-        } else {
-                art_rgb_affine(dst, x0, y0, x1, y1, drs,
-                               gdk_pixbuf_get_pixels(pixbuf),
-                               w, h, rs, affine, level, ag);
-	}
-}
-
-static void
 destroy_egg(GtkWidget *widget, gpointer data)
 {
-	goat_pages = 0;
+	int i;
+	goat_loaded = FALSE;
 	if(goat_timeout) {
 		g_source_remove(goat_timeout);
 		goat_timeout = 0;
 	}
+        for (i = 0; i < 2; i++) {
+		if (goat_pix[i] != NULL)
+			g_object_unref (G_OBJECT (goat_pix[i]));
+		goat_pix[i] = NULL;
+		if (goat_pix_rev[i] != NULL)
+			g_object_unref (G_OBJECT (goat_pix_rev[i]));
+		goat_pix_rev[i] = NULL;
+        }
 	goat_x = goat_y = -1;
 }
 
 static int
 goat_timeout_func(gpointer data)
 {
+	cairo_t *cr;
 	int real_goat_frame;
+	gboolean sound = FALSE;
+	int old_x;
+	int old_y;
 
 	if(!GTK_WIDGET_REALIZED(goat_darea) ||
-	   !GTK_WIDGET_DRAWABLE(goat_darea) ||
-	   !goat_pix[0])
+	   !GTK_WIDGET_DRAWABLE(goat_darea))
 		return TRUE;
-	
-	if(goat_x == -1) {
-		goat_x = 6;
-		goat_y = 6;
-		gdk_draw_rectangle(goat_darea->window,
-				   goat_darea->style->white_gc,
-				   TRUE, 0,0,-1,-1);
-		goat_accx = rand()%4 +3;
-		goat_accy = rand()%4 +3;
+
+	if (!goat_pix[0] || !goat_pix[1]) {
+		destroy_egg (NULL, NULL);
+		return FALSE;
 	}
 	
+	cr = gdk_cairo_create (goat_darea->window);
+
+	if(goat_x == -1) {
+		cairo_set_source_rgb (cr, 1, 1, 1);
+		cairo_paint (cr);
+
+		goat_x = 2;
+		goat_y = 2;
+		goat_accx = g_random_int()%4 +3;
+		goat_accy = g_random_int()%4 +3;
+	}
+	
+	old_x = goat_x;
+	old_y = goat_y;
 	goat_x += goat_accx;
 	goat_y += goat_accy;
 
-	if(goat_x>goat_darea->allocation.width-6-goat_width) {
-		goat_accx = -(rand()%4 +3);
-		goat_x = goat_darea->allocation.width-6-goat_width;
-		if (goat_filename != NULL)
-			gnome_sound_play (goat_filename);
-	} else if(goat_x<6) {
-		goat_accx = rand()%4 +3;
-		goat_x = 6;
-		if (goat_filename != NULL)
-			gnome_sound_play (goat_filename);
+
+	if(goat_x>goat_darea->allocation.width-2-goat_width) {
+		goat_accx = -(g_random_int()%4 +3);
+		goat_x = goat_darea->allocation.width-2-goat_width;
+		sound = TRUE;
+	} else if(goat_x<2) {
+		goat_accx = g_random_int()%4 +3;
+		goat_x = 2;
+		sound = TRUE;
 	}
-	if(goat_y>goat_darea->allocation.height-6-goat_height) {
-		goat_accy = -(rand()%4 +3);
-		goat_y = goat_darea->allocation.height-6-goat_height;
-		if (goat_filename != NULL)
-			gnome_sound_play (goat_filename);
-	} else if(goat_y<6) {
-		goat_accy = rand()%4 +3;
-		goat_y = 6;
-		if (goat_filename != NULL)
-			gnome_sound_play (goat_filename);
+	if(goat_y>goat_darea->allocation.height-2-goat_height) {
+		goat_accy = -(g_random_int()%4 +3);
+		goat_y = goat_darea->allocation.height-2-goat_height;
+		sound = TRUE;
+	} else if(goat_y<2) {
+		goat_accy = g_random_int()%4 +3;
+		goat_y = 2;
+		sound = TRUE;
 	}
 
+	if (sound && goat_filename != NULL)
+		gnome_sound_play (goat_filename);
+
 	real_goat_frame = goat_frame/2;
+
+	cairo_rectangle (cr, MIN(old_x, goat_x), MIN(old_y, goat_y),
+			 goat_width  + ABS(goat_x-old_x) + 6,
+			 goat_height + ABS(goat_y-old_y) + 6);
+
+	cairo_set_source_rgb (cr, 1, 1, 1);
+	cairo_paint (cr);
 	
-	gdk_draw_drawable (goat_darea->window,
-			   goat_darea->style->white_gc,
-			   goat_accx>0?goat_pix_rev[real_goat_frame]:
-			   goat_pix[real_goat_frame],
-			   0,0,goat_x,goat_y,
-			   goat_width,goat_height);
+	gdk_cairo_set_source_pixmap (cr,
+				     goat_accx<0?goat_pix_rev[real_goat_frame]:
+						 goat_pix[real_goat_frame],
+				     goat_x,goat_y);
+
+	cairo_paint (cr);
 
 	if(++goat_frame == 4)
 		goat_frame = 0;
+
+	cairo_destroy (cr);
 
 	return TRUE;
 }
@@ -126,13 +153,18 @@ goat_timeout_func(gpointer data)
 static int
 goat_expose(GtkWidget *widget, GdkEventExpose *event)
 {
+	cairo_t *cr;
+
 	if(!GTK_WIDGET_DRAWABLE(widget))
 		return FALSE;
 
-	gdk_draw_rectangle(goat_darea->window,
-			   goat_darea->style->white_gc,
-			   TRUE, event->area.x, event->area.y,
-			   event->area.width,event->area.height);
+	cr = gdk_cairo_create (goat_darea->window);
+
+	cairo_set_source_rgb (cr, 1, 1, 1);
+	cairo_paint (cr);
+
+	cairo_destroy (cr);
+
 	return FALSE;
 }
 
@@ -148,11 +180,12 @@ goat_realize(GtkWidget *widget)
 		return;
 	for(frame=0;frame<2;frame++) {
 		GdkPixbuf *pb;
-		guchar *rgb;
-		GdkGC *gc;
-		int i,j;
-		gdouble affine[6];
-		char *file;
+		char      *file;
+		int        width;
+		int        height;
+		cairo_t   *cr;
+		cairo_matrix_t matrix;
+		cairo_pattern_t *pattern;
 
 		file = g_strdup_printf ("%s/%s", ICONDIR, files[frame]);
 		if(!file)
@@ -165,61 +198,49 @@ goat_realize(GtkWidget *widget)
 			return;
 		}
 
-		goat_width = gdk_pixbuf_get_width(pb)+12;
-		goat_height = gdk_pixbuf_get_height(pb)+12;
-		rgb = g_new(guchar,goat_width*goat_height*3);
-		for(i=0;i<goat_width*goat_height*3;i++)
-			rgb[i] = 0xFF;
-
-		art_affine_translate(affine,6,6);
-		transform_pixbuf(rgb,
-			         0,0,goat_width,goat_height,goat_width*3,
-			         pb,affine,ART_FILTER_NEAREST,NULL);
-		g_object_unref (G_OBJECT (pb));
+		width = gdk_pixbuf_get_width(pb);
+		height = gdk_pixbuf_get_height(pb);
 
 		goat_pix[frame] = gdk_pixmap_new(widget->window,
-						 goat_width,goat_height,
-						 gtk_widget_get_visual(GTK_WIDGET(widget))->depth);
-		gc = gdk_gc_new(goat_pix[frame]);
-		gdk_draw_rgb_image(goat_pix[frame],gc,0,0,
-				   goat_width,goat_height,
-				   GDK_RGB_DITHER_NORMAL,
-				   rgb, goat_width*3);
-		g_object_unref (G_OBJECT (gc));
-
-#define GUCHARSWAP(x,y) { guchar tmp=(x); (x)=(y); (y)=tmp; }
-		for(i=0;i<goat_width/2;i++)
-			for(j=0;j<goat_height;j++) {
-				GUCHARSWAP(*(rgb+(j*goat_width*3)+(i*3)),
-					*(rgb+(j*goat_width*3)+((goat_width-i-1)*3)))
-				GUCHARSWAP(*(rgb+(j*goat_width*3)+(i*3)+1),
-					*(rgb+(j*goat_width*3)+((goat_width-i-1)*3)+1))
-				GUCHARSWAP(*(rgb+(j*goat_width*3)+(i*3)+2),
-					*(rgb+(j*goat_width*3)+((goat_width-i-1)*3)+2))
-			}
-#undef GUCHARSWAP
+						 width, height, -1);
+		cr = gdk_cairo_create (goat_pix[frame]);
+		gdk_cairo_set_source_pixbuf (cr, pb, 0, 0);
+		cairo_paint (cr);
+		cairo_destroy (cr);
 
 		goat_pix_rev[frame] = gdk_pixmap_new(widget->window,
-					  goat_width,goat_height,
-					  gtk_widget_get_visual(GTK_WIDGET(widget))->depth);
-		gc = gdk_gc_new(goat_pix_rev[frame]);
-		gdk_draw_rgb_image(goat_pix_rev[frame],gc,0,0,
-				   goat_width,goat_height,
-				   GDK_RGB_DITHER_NORMAL,
-				   rgb, goat_width*3);
+						     width, height, -1);
+		cr = gdk_cairo_create (goat_pix[frame]);
+		gdk_cairo_set_source_pixbuf (cr, pb, 0, 0);
 
-		g_object_unref (G_OBJECT (gc));
-		g_free(rgb);
+		cairo_matrix_init_identity (&matrix);
+ 		cairo_matrix_translate (&matrix, width, 0);
+ 		/* scale in -X direction to flip along X */
+ 		cairo_matrix_scale (&matrix, -1.0, 1.0);
+		pattern = cairo_get_source (cr);
+		cairo_pattern_set_filter (pattern, CAIRO_FILTER_BEST);
+		cairo_pattern_set_matrix (pattern, &matrix);
+
+		cairo_rectangle (cr, 0, 0, width, height);
+		cairo_fill (cr);
+		cairo_destroy (cr);
+
+		goat_width = MAX (width, goat_width);
+		goat_height = MAX (height, goat_height);
+
+		g_object_unref (pb);
 	}
 }
 
 /*thy evil easter egg*/
-int config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook) G_GNUC_UNUSED;
 int
 config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 {
 	static int clicks=0;
 	GdkEventButton *bevent;
+
+	if (!nbook)
+		return FALSE;
 
 	if(event->type != GDK_BUTTON_PRESS)
 		return FALSE;
@@ -234,16 +255,21 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 		return FALSE;
 	clicks = 0;
 	
-	if(goat_pages==0) {
+	if(!goat_loaded) {
 		if (goat_filename == NULL)
 			goat_filename =
 				gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_SOUND, 
-							   "ricochet.wav",
+							   /* FIXME "ricochet.wav", */
+							   "gnometris/turn.wav",
 							   TRUE /* only_if_exists */,
 							   NULL /* ret_locations */);
 
 		goat_darea = gtk_drawing_area_new();
 
+		g_signal_connect (G_OBJECT(goat_darea),"destroy",
+				  G_CALLBACK (destroy_egg),NULL);
+		g_signal_connect (GTK_OBJECT(goat_darea),"expose_event",
+				  G_CALLBACK (goat_expose),NULL);
 		g_signal_connect_after (G_OBJECT(goat_darea),"realize",
 					G_CALLBACK (goat_realize),NULL);
 		
@@ -257,11 +283,7 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 		gtk_notebook_append_page (nbook, goat_darea,
 					  gtk_label_new ("GEGL"));
 		gtk_notebook_set_current_page(nbook,-1);
-		goat_pages = 1;
-		g_signal_connect (G_OBJECT(goat_darea),"destroy",
-				  G_CALLBACK (destroy_egg),NULL);
-		g_signal_connect (GTK_OBJECT(goat_darea),"expose_event",
-				  G_CALLBACK (goat_expose),NULL);
+		goat_loaded = TRUE;
 	} else {
 		gtk_notebook_set_current_page(nbook,-1);
 	}
@@ -269,6 +291,19 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 }
 
 /* phish code */
+#define PHSHFRAMES 8
+#define PHSHORIGWIDTH 288
+#define PHSHORIGHEIGHT 22
+#define PHSHWIDTH (PHSHORIGWIDTH/PHSHFRAMES)
+#define PHSHHEIGHT PHSHORIGHEIGHT
+#define PHSHCHECKTIMEOUT (g_random_int()%120*1000)
+#define PHSHTIMEOUT 120
+#define PHSHHIDETIMEOUT 80
+#define PHSHXS 5
+#define PHSHYS ((g_random_int() % 2) + 1)
+#define PHSHXSHIDEFACTOR 2.5
+#define PHSHYSHIDEFACTOR 2.5
+#define PHSHPIXELSTOREMOVE(p) (p[3] < 55 || p[2] > 200)
 
 /* Some important code copied from PonG */
 typedef struct _AppletContainer AppletContainer;
@@ -278,8 +313,8 @@ struct _AppletContainer {
         int state;
         int x, y, xs, ys;
         int handler;
-        GdkPixmap *phsh[4];
-        GdkBitmap *phsh_mask[4];
+        GdkPixmap *phsh[2*PHSHFRAMES];
+        GdkBitmap *phsh_mask[2*PHSHFRAMES];
 };
 static AppletContainer phsh = {NULL};
 
@@ -287,9 +322,13 @@ static void
 phsh_kill (void)
 {
         int i;
-        for (i = 0; i < 4; i++) {
-                g_object_unref (G_OBJECT (phsh.phsh[i]));
-                g_object_unref (G_OBJECT (phsh.phsh_mask[i]));
+        for (i = 0; i < 2*PHSHFRAMES; i++) {
+		if (phsh.phsh[i] != NULL)
+			g_object_unref (G_OBJECT (phsh.phsh[i]));
+		phsh.phsh[i] = NULL;
+		if (phsh.phsh_mask[i] != NULL)
+			g_object_unref (G_OBJECT (phsh.phsh_mask[i]));
+		phsh.phsh_mask[i] = NULL;
         }
         gdk_window_destroy (phsh.win);
         g_source_remove (phsh.handler);
@@ -304,28 +343,33 @@ phsh_move (gpointer data)
 
         phsh.x += phsh.xs;
         phsh.y += phsh.ys;
-        if (phsh.x <= -60 ||
+        if (phsh.x <= -PHSHWIDTH ||
             phsh.x >= gdk_screen_width ()) {
                 phsh_kill ();
                 return FALSE;
         }
         if (phsh.y <= 0 ||
-            phsh.y >= gdk_screen_height () - 40 ||
-            rand() % (phsh.hide_mode?10:50) == 0)
+            phsh.y >= gdk_screen_height () - PHSHHEIGHT ||
+            g_random_int() % (phsh.hide_mode?10:50) == 0)
                 phsh.ys = -phsh.ys;
 
         phsh.state ++;
-        if (phsh.state % (phsh.hide_mode?2:4) == 0)
-                change = TRUE;
-        if (phsh.state >= (phsh.hide_mode?4:8))
+	if (phsh.hide_mode) {
+		phsh.state ++;
+		if (phsh.state >= 2*PHSHFRAMES)
+			phsh.state = 0;
+        } else if (phsh.state >= PHSHFRAMES)
                 phsh.state = 0;
 
-        state = phsh.state >= (phsh.hide_mode?2:4) ? 1 : 0;
-        orient = phsh.xs >= 0 ? 0 : 2;
+        if (!phsh.hide_mode || phsh.state % 2 == 0)
+                change = TRUE;
+
+        state = phsh.state / (phsh.hide_mode?2:1);
+        orient = phsh.xs >= 0 ? 0 : 1;
 
         if (change) {
-                gdk_window_set_back_pixmap (phsh.win, phsh.phsh[orient + state], FALSE);
-                gdk_window_shape_combine_mask (phsh.win, phsh.phsh_mask[orient + state], 0, 0);
+                gdk_window_set_back_pixmap (phsh.win, phsh.phsh[orient + 2*state], FALSE);
+                gdk_window_shape_combine_mask (phsh.win, phsh.phsh_mask[orient + 2*state], 0, 0);
                 gdk_window_clear (phsh.win);
         }
 
@@ -336,37 +380,18 @@ phsh_move (gpointer data)
 }
 
 static void
-phsh_reverse (GdkPixbuf *gp)
+phsh_unsea(GdkPixbuf *gp)
 {
         guchar *pixels = gdk_pixbuf_get_pixels (gp);
-        int x, y;
         int rs = gdk_pixbuf_get_rowstride (gp);
-#define DOSWAP(x,y) tmp = x; x = y; y = tmp;
-        for (y = 0; y < 40; y++, pixels += rs) {
-                guchar *p = pixels;
-                guchar *p2 = pixels + 60*4 - 4;
-                for (x = 0; x < 30; x++, p+=4, p2-=4) {
-                        guchar tmp;
-                        DOSWAP (p[0], p2[0]);
-                        DOSWAP (p[1], p2[1]);
-                        DOSWAP (p[2], p2[2]);
-                        DOSWAP (p[3], p2[3]);
-                }
-        }
-#undef DOSWAP
-}
+	int w = gdk_pixbuf_get_width (gp);
+        int h = gdk_pixbuf_get_height (gp);
+        int x, y;
 
-/* This dered's the phsh */
-static void
-phsh_dered(GdkPixbuf *gp)
-{
-        guchar *pixels = gdk_pixbuf_get_pixels (gp);
-        int x, y;
-        int rs = gdk_pixbuf_get_rowstride (gp);
-        for (y = 0; y < 40; y++, pixels += rs) {
+        for (y = 0; y < h; y++, pixels += rs) {
                 guchar *p = pixels;
-                for (x = 0; x < 60; x++, p+=4) {
-                        if (p[0] < 55 && p[1] > 100)
+                for (x = 0; x < w; x++, p+=4) {
+                        if (PHSHPIXELSTOREMOVE(p))
                                p[3] = 0;
                 }
         }
@@ -380,9 +405,9 @@ phsh_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
         if (xevent->type == ButtonPress &&
             ! phsh.hide_mode) {
                 g_source_remove (phsh.handler);
-                phsh.handler = g_timeout_add (90, phsh_move, NULL);
-                phsh.xs *= 2.0;
-                phsh.ys *= 2.5;
+                phsh.handler = g_timeout_add (PHSHHIDETIMEOUT, phsh_move, NULL);
+                phsh.xs *= PHSHXSHIDEFACTOR;
+                phsh.ys *= PHSHYSHIDEFACTOR;
                 phsh.hide_mode = TRUE;
                 if (phsh.x < (gdk_screen_width () / 2))
                         phsh.xs *= -1;
@@ -395,7 +420,7 @@ get_phsh_file (void)
 {
         char *phsh_file;
 
-        phsh_file = g_strdup_printf ("%s/%cishanim.png", ICONDIR, 'f');
+        phsh_file = g_strdup_printf ("%s/%cand%c.png", ICONDIR, 'w', 'a');
 
 	return phsh_file;
 }
@@ -405,8 +430,10 @@ get_phsh_frame (GdkPixbuf *pb, int frame)
 {
         GdkPixbuf *newpb;
 
-        newpb = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 60, 40);
-        gdk_pixbuf_copy_area (pb, frame * 60, 0, 60, 40, newpb, 0, 0);
+        newpb = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
+				PHSHWIDTH, PHSHHEIGHT);
+        gdk_pixbuf_copy_area (pb, frame * PHSHWIDTH, 0,
+			      PHSHWIDTH, PHSHHEIGHT, newpb, 0, 0);
 
 	return newpb;
 }
@@ -418,6 +445,7 @@ check_screen (void)
         GdkWindowAttr attributes;
         char *phsh_file;
         GdkPixbuf *gp, *tmp;
+	int i;
 
         if (phsh.win != NULL)
                 return;
@@ -433,42 +461,37 @@ check_screen (void)
 
         g_free (phsh_file);
 
-        if (gdk_pixbuf_get_width (tmp) != 180 ||
-            gdk_pixbuf_get_height (tmp) != 40) {
+        if (gdk_pixbuf_get_width (tmp) != PHSHORIGWIDTH ||
+            gdk_pixbuf_get_height (tmp) != PHSHORIGHEIGHT) {
                 g_object_unref (G_OBJECT (tmp));
                 return;
         }
 
         phsh.state = 0;
         phsh.hide_mode = FALSE;
+        phsh.x = -PHSHWIDTH;
+        phsh.y = (g_random_int() % (gdk_screen_height() - PHSHHEIGHT - 2)) + 1;
+        phsh.xs = PHSHXS;
+        phsh.ys = PHSHYS;
 
-	gp = get_phsh_frame (tmp, 1);
-
-        phsh_dered (gp);
-        gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[2], &phsh.phsh_mask[2], 128);
-        phsh_reverse (gp);
-        gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[0], &phsh.phsh_mask[0], 128);
-
-        gdk_pixbuf_copy_area (tmp, 120, 0, 60, 40, gp, 0, 0);
-
-        phsh_dered (gp);
-        gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[3], &phsh.phsh_mask[3], 128);
-        phsh_reverse (gp);
-        gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[1], &phsh.phsh_mask[1], 128);
-        g_object_unref (G_OBJECT (gp));
+	for (i = 0; i < PHSHFRAMES; i++) {
+		gp = get_phsh_frame (tmp, i);
+		phsh_unsea (gp);
+		gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[2*i+1],
+						   &phsh.phsh_mask[2*i+1], 128);
+		pixbuf_reverse (gp);
+		gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[2*i],
+						   &phsh.phsh_mask[2*i], 128);
+		g_object_unref (G_OBJECT (gp));
+	}
 
         g_object_unref (G_OBJECT (tmp));
-
-        phsh.x = -60;
-        phsh.y = (rand() % (gdk_screen_height () - 40 - 2)) + 1;
-        phsh.xs = 8;
-        phsh.ys = (rand() % 2) + 1;
 
         attributes.window_type = GDK_WINDOW_TEMP;
         attributes.x = phsh.x;
         attributes.y = phsh.y;
-        attributes.width = 60;
-        attributes.height = 40;
+        attributes.width = PHSHWIDTH;
+        attributes.height = PHSHHEIGHT;
         attributes.wclass = GDK_INPUT_OUTPUT;
         attributes.visual = gdk_rgb_get_visual();
         attributes.colormap = gdk_rgb_get_colormap();
@@ -486,7 +509,7 @@ check_screen (void)
                                NULL);
 
         gdk_window_show (phsh.win);
-        phsh.handler = g_timeout_add (150, phsh_move, NULL);
+        phsh.handler = g_timeout_add (PHSHTIMEOUT, phsh_move, NULL);
 }
 
 static guint screen_check_id = 0;
@@ -498,8 +521,8 @@ check_screen_timeout (gpointer data)
 
         check_screen ();
 
-        screen_check_id = g_timeout_add (rand()%120*1000,
-                                           check_screen_timeout, NULL);
+        screen_check_id = g_timeout_add (PHSHCHECKTIMEOUT,
+					 check_screen_timeout, NULL);
         return FALSE;
 }
 
@@ -509,10 +532,7 @@ start_screen_check (void)
         if (screen_check_id > 0)
                 g_source_remove (screen_check_id);
 
-        screen_check_id = 0;
-        check_screen ();
-
-        screen_check_id = g_timeout_add (rand()%120*1000, check_screen_timeout, NULL);
+	check_screen_timeout (NULL);
 }
 
 typedef struct {
@@ -946,16 +966,16 @@ geginv_timeout (gpointer data)
 	}
 
 	shots = 0;
-	max_shots = (rand () >> 3) % (2+inv_level);
+	max_shots = (g_random_int () >> 3) % (2+inv_level);
 	while ( ! inv_game_over && shots < MIN (max_shots, inv_num)) {
-		int i = (rand () >> 3) % INV_COLS;
+		int i = (g_random_int () >> 3) % INV_COLS;
 		for (j = INV_ROWS-1; j >= 0; j--) {
 			if (invs[i][j].live) {
 				InvShot *shot = g_new0 (InvShot, 1);
 
 				shot->good = FALSE;
-				shot->x = invs[i][j].x + (rand () % 6) - 3;
-				shot->y = invs[i][j].y + inv_goat_height/2 + (rand () % 3);
+				shot->x = invs[i][j].x + (g_random_int () % 6) - 3;
+				shot->y = invs[i][j].y + inv_goat_height/2 + (g_random_int () % 3);
 
 				inv_shots = g_slist_prepend (inv_shots, shot);
 				shots++;
@@ -1192,12 +1212,12 @@ ensure_creatures (void)
 	pb1 = get_phsh_frame (pb, 1);
 	phsh1 = pb_scale (pb1, inv_factor);
 	g_object_unref (G_OBJECT (pb1));
-	phsh_dered (phsh1);
+	phsh_unsea (phsh1);
 
 	pb1 = get_phsh_frame (pb, 2);
 	phsh2 = pb_scale (pb1, inv_factor);
 	g_object_unref (G_OBJECT (pb1));
-	phsh_dered (phsh2);
+	phsh_unsea (phsh2);
 
 	g_object_unref (G_OBJECT (pb));
 
