@@ -1,5 +1,32 @@
 2006-08-10  Vincent Untz  <vuntz@gnome.org>
 
+	Make transparent icons in the notification area.
+	Based on patch by Frédéric Crozat <fcrozat@mandriva.com> and
+	Dan Winship <danw@novell.com>
+	Fix bug #100600
+
+	* main.c: keep a hash table associating the icon to the tray it's
+	currently in
+	(get_tray): new, to get the tray to use on a screen
+	(force_redraw): new, to force a redraw of the whole notification area
+	(tray_added): updated, and force a redraw so all icons get the correct
+	background, add the icon to the hash table
+	(tray_removed): force a redraw to update the background, remove the
+	icon from the hash table
+	(update_size_and_orientation): force redraw
+	(applet_change_background): new, ditto
+	(free_tray): destroy the hash table if we release the manager
+	selection
+	(applet_factory): create hash table when it makes sense, connect to
+	the background changed signal
+	* na-tray-manager.c: (na_tray_manager_make_socket_transparent): new
+	(na_tray_manager_make_socket_style_set): new, make the socket
+	transparent again
+	(na_tray_manager_handle_dock_request): set the socket paintable by
+	application, connect to realize and style_set signals
+
+2006-08-10  Vincent Untz  <vuntz@gnome.org>
+
 	* obox.[ch]: use G_DEFINE_TYPE, rename from TrayOBox to NaOBox
 	* main.c: (update_size_and_orientation): updated for name change
 	(applet_factory): updated for name change

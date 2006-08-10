@@ -96,7 +96,7 @@ static void na_tray_manager_get_property (GObject      *object,
 
 static void na_tray_manager_unmanage (NaTrayManager *manager);
 
-G_DEFINE_TYPE (NaTrayManager, na_tray_manager, G_TYPE_OBJECT);
+G_DEFINE_TYPE (NaTrayManager, na_tray_manager, G_TYPE_OBJECT)
 
 static void
 na_tray_manager_init (NaTrayManager *manager)
@@ -269,6 +269,27 @@ na_tray_manager_plug_removed (GtkSocket       *socket,
 }
 
 static void
+na_tray_manager_make_socket_transparent (GtkWidget *widget,
+                                         gpointer   user_data)
+{
+  if (GTK_WIDGET_NO_WINDOW (widget))
+    return;
+
+  gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
+}
+
+static void
+na_tray_manager_make_socket_style_set (GtkWidget *widget,
+                                       GtkStyle  *previous_style,
+                                       gpointer   user_data)
+{
+  if (widget->window == NULL)
+    return;
+
+  na_tray_manager_make_socket_transparent (widget, user_data);
+}
+
+static void
 na_tray_manager_handle_dock_request (NaTrayManager       *manager,
 				     XClientMessageEvent *xevent)
 {
@@ -283,6 +304,12 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
     }
   
   socket = gtk_socket_new ();
+
+  gtk_widget_set_app_paintable (socket, TRUE);
+  g_signal_connect (socket, "realize",
+                    G_CALLBACK (na_tray_manager_make_socket_transparent), NULL);
+  g_signal_connect_after (socket, "style_set",
+                          G_CALLBACK (na_tray_manager_make_socket_style_set), NULL);
   
   /* We need to set the child window here
    * so that the client can call _get functions

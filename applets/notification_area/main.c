@@ -40,6 +40,7 @@ typedef struct
 {
   NaTrayManager *tray_manager;
   GSList        *all_trays;
+  GHashTable    *icon_table;
 } TraysScreen;
 
 static gboolean     initialized   = FALSE;
@@ -157,6 +158,26 @@ static const BonoboUIVerb menu_verbs [] = {
   BONOBO_UI_VERB_END
 };
 
+static SystemTray *
+get_tray (TraysScreen *trays_screen)
+{
+  if (trays_screen->all_trays == NULL)
+    return NULL;
+  
+  return trays_screen->all_trays->data;
+}
+
+static void
+force_redraw (SystemTray *tray)
+{
+  /* Force the icons to redraw their backgrounds.
+   * gtk_widget_queue_draw() doesn't work across process boundaries,
+   * so we do this instead.
+   */
+  gtk_widget_hide (tray->box);
+  gtk_widget_show (tray->box);
+}
+
 static void
 tray_added (NaTrayManager *manager,
             GtkWidget     *icon,
@@ -164,14 +185,16 @@ tray_added (NaTrayManager *manager,
 {
   SystemTray *tray;
 
-  if (trays_screen->all_trays == NULL)
+  tray = get_tray (trays_screen);
+  if (tray == NULL)
     return;
-  
-  tray = trays_screen->all_trays->data;
+
+  g_hash_table_insert (tray->trays_screen->icon_table, icon, tray);
 
   gtk_box_pack_end (GTK_BOX (tray->box), icon, FALSE, FALSE, 0);
   
   gtk_widget_show (icon);
+  force_redraw (tray);
 }
 
 static void
@@ -179,7 +202,15 @@ tray_removed (NaTrayManager *manager,
               GtkWidget     *icon,
               TraysScreen   *trays_screen)
 {
+  SystemTray *tray;
 
+  tray = g_hash_table_lookup (trays_screen->icon_table, icon);
+  if (tray == NULL)
+    return;
+
+  force_redraw (tray);
+
+  g_hash_table_remove (trays_screen->icon_table, icon);
 }
 
 static void
@@ -227,7 +258,20 @@ update_size_and_orientation (SystemTray *tray)
       gtk_widget_set_size_request (tray->box, -1, MIN_BOX_SIZE);
       break;
     }
+
+  force_redraw (tray);
 }
+
+static void
+applet_change_background (PanelApplet               *applet,
+                          PanelAppletBackgroundType  type,
+                          GdkColor                  *color,
+                          GdkPixmap                 *pixmap,
+                          SystemTray                *tray)
+{
+  force_redraw (tray);
+}
+
 
 static void
 applet_change_orientation (PanelApplet       *applet,
@@ -276,6 +320,10 @@ free_tray (SystemTray *tray)
       /* Make sure we drop the manager selection */
       g_object_unref (G_OBJECT (tray->trays_screen->tray_manager));
       tray->trays_screen->tray_manager = NULL;
+
+      g_hash_table_destroy (tray->trays_screen->icon_table);
+      tray->trays_screen->icon_table = NULL;
+
       fixed_tip_hide ();
     }
   
@@ -331,6 +379,9 @@ applet_factory (PanelApplet *applet,
           g_signal_connect (tray_manager, "message_cancelled",
                             G_CALLBACK (message_cancelled),
                             &trays_screens [screen_number]);
+
+          trays_screens [screen_number].icon_table = g_hash_table_new (NULL,
+                                                                       NULL);
         }
       else
         {
@@ -380,6 +431,11 @@ applet_factory (PanelApplet *applet,
   g_signal_connect (G_OBJECT (tray->applet),
                     "change_orient",
                     G_CALLBACK (applet_change_orientation),
+                    tray);
+
+  g_signal_connect (G_OBJECT (tray->applet),
+                    "change_background",
+                    G_CALLBACK (applet_change_background),
                     tray);
 
   g_signal_connect (tray->applet,
