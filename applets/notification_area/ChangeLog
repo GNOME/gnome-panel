@@ -1,3 +1,17 @@
+2006-08-10  Vincent Untz  <vuntz@gnome.org>
+
+	Stop using XInternAtom.
+	Fix bug #110876
+
+	* na-tray-manager.c: use G_DEFINE_TYPE
+	(na_tray_manager_check_running_xscreen): renamed to...
+	(na_tray_manager_check_running_screen_x11): ... this, use
+	gdk_x11_get_xatom_by_name_for_display() and other Gdk structures most
+	of the time
+	(na_tray_manager_check_running_xscreen): renamed to...
+	(na_tray_manager_check_running_screen_x11): ... this, ditto
+	(na_tray_manager_get_child_title): ditto
+
 2006-08-08  Vincent Untz  <vuntz@gnome.org>
 
 	* GNOME_NotificationAreaApplet.server.in.in:

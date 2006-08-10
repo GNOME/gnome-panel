@@ -78,7 +78,7 @@ static guint manager_signals[LAST_SIGNAL] = { 0 };
 #define SYSTEM_TRAY_ORIENTATION_VERT 1
 
 #ifdef GDK_WINDOWING_X11
-static gboolean na_tray_manager_check_running_xscreen (Screen *xscreen);
+static gboolean na_tray_manager_check_running_screen_x11 (GdkScreen *screen);
 #endif
 
 static void na_tray_manager_init (NaTrayManager *manager);
@@ -96,32 +96,7 @@ static void na_tray_manager_get_property (GObject      *object,
 
 static void na_tray_manager_unmanage (NaTrayManager *manager);
 
-GType
-na_tray_manager_get_type (void)
-{
-  static GType our_type = 0;
-
-  if (our_type == 0)
-    {
-      static const GTypeInfo our_info =
-      {
-	sizeof (NaTrayManagerClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) na_tray_manager_class_init,
-	NULL, /* class_finalize */
-	NULL, /* class_data */
-	sizeof (NaTrayManager),
-	0,    /* n_preallocs */
-	(GInstanceInitFunc) na_tray_manager_init
-      };
-
-      our_type = g_type_register_static (G_TYPE_OBJECT, "NaTrayManager", &our_info, 0);
-    }
-
-  return our_type;
-
-}
+G_DEFINE_TYPE (NaTrayManager, na_tray_manager, G_TYPE_OBJECT);
 
 static void
 na_tray_manager_init (NaTrayManager *manager)
@@ -568,12 +543,14 @@ na_tray_manager_set_orientation_property (NaTrayManager *manager)
 #ifdef GDK_WINDOWING_X11
 
 static gboolean
-na_tray_manager_manage_xscreen (NaTrayManager *manager, Screen *xscreen)
+na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
+				   GdkScreen     *screen)
 {
-  GtkWidget *invisible;
-  char *selection_atom_name;
-  guint32 timestamp;
-  GdkScreen *screen;
+  GdkDisplay *display;
+  Screen     *xscreen;
+  GtkWidget  *invisible;
+  char       *selection_atom_name;
+  guint32     timestamp;
   
   g_return_val_if_fail (NA_IS_TRAY_MANAGER (manager), FALSE);
   g_return_val_if_fail (manager->screen == NULL, FALSE);
@@ -582,11 +559,11 @@ na_tray_manager_manage_xscreen (NaTrayManager *manager, Screen *xscreen)
    * we can't create another one.
    */
 #if 0
-  if (na_tray_manager_check_running_xscreen (xscreen))
+  if (na_tray_manager_check_running_screen_x11 (screen))
     return FALSE;
 #endif
-  screen = gdk_display_get_screen (gdk_x11_lookup_xdisplay (DisplayOfScreen (xscreen)),
-				   XScreenNumberOfScreen (xscreen));
+  display = gdk_screen_get_display (screen);
+  xscreen = GDK_SCREEN_XSCREEN (screen);
   
   invisible = gtk_invisible_new_for_screen (screen);
   gtk_widget_realize (invisible);
@@ -594,29 +571,33 @@ na_tray_manager_manage_xscreen (NaTrayManager *manager, Screen *xscreen)
   gtk_widget_add_events (invisible, GDK_PROPERTY_CHANGE_MASK | GDK_STRUCTURE_MASK);
 
   selection_atom_name = g_strdup_printf ("_NET_SYSTEM_TRAY_S%d",
-					 XScreenNumberOfScreen (xscreen));
-  manager->selection_atom = XInternAtom (DisplayOfScreen (xscreen), selection_atom_name, False);
-
+					 gdk_screen_get_number (screen));
+  manager->selection_atom =
+        gdk_x11_get_xatom_by_name_for_display (display,
+                                               selection_atom_name);
   g_free (selection_atom_name);
 
-  manager->orientation_atom = XInternAtom (DisplayOfScreen (xscreen),
-					   "_NET_SYSTEM_TRAY_ORIENTATION",
-					   FALSE);
+  manager->orientation_atom =
+        gdk_x11_get_xatom_by_name_for_display (display,
+                                               "_NET_SYSTEM_TRAY_ORIENTATION");
   na_tray_manager_set_orientation_property (manager);
   
   timestamp = gdk_x11_get_server_time (invisible->window);
-  XSetSelectionOwner (DisplayOfScreen (xscreen), manager->selection_atom,
+  XSetSelectionOwner (GDK_DISPLAY_XDISPLAY (display),
+                      manager->selection_atom,
 		      GDK_WINDOW_XWINDOW (invisible->window), timestamp);
 
   /* Check if we were could set the selection owner successfully */
-  if (XGetSelectionOwner (DisplayOfScreen (xscreen), manager->selection_atom) ==
+  if (XGetSelectionOwner (GDK_DISPLAY_XDISPLAY (display),
+                          manager->selection_atom) ==
       GDK_WINDOW_XWINDOW (invisible->window))
     {
       XClientMessageEvent xev;
 
       xev.type = ClientMessage;
       xev.window = RootWindowOfScreen (xscreen);
-      xev.message_type = XInternAtom (DisplayOfScreen (xscreen), "MANAGER", False);
+      xev.message_type = gdk_x11_get_xatom_by_name_for_display (display,
+                                                                "MANAGER");
 
       xev.format = 32;
       xev.data.l[0] = timestamp;
@@ -625,23 +606,24 @@ na_tray_manager_manage_xscreen (NaTrayManager *manager, Screen *xscreen)
       xev.data.l[3] = 0;	/* manager specific data */
       xev.data.l[4] = 0;	/* manager specific data */
 
-      XSendEvent (DisplayOfScreen (xscreen),
+      XSendEvent (GDK_DISPLAY_XDISPLAY (display),
 		  RootWindowOfScreen (xscreen),
 		  False, StructureNotifyMask, (XEvent *)&xev);
 
       manager->invisible = invisible;
       g_object_ref (G_OBJECT (manager->invisible));
       
-      manager->opcode_atom = XInternAtom (DisplayOfScreen (xscreen),
-					  "_NET_SYSTEM_TRAY_OPCODE",
-					  False);
+      manager->opcode_atom =
+        gdk_x11_get_xatom_by_name_for_display (display,
+                                               "_NET_SYSTEM_TRAY_OPCODE");
 
-      manager->message_data_atom = XInternAtom (DisplayOfScreen (xscreen),
-						"_NET_SYSTEM_TRAY_MESSAGE_DATA",
-						False);
+      manager->message_data_atom =
+        gdk_x11_get_xatom_by_name_for_display (display,
+                                               "_NET_SYSTEM_TRAY_MESSAGE_DATA");
 
       /* Add a window filter */
-      gdk_window_add_filter (invisible->window, na_tray_manager_window_filter, manager);
+      gdk_window_add_filter (invisible->window,
+                             na_tray_manager_window_filter, manager);
       return TRUE;
     }
   else
@@ -662,8 +644,7 @@ na_tray_manager_manage_screen (NaTrayManager *manager,
   g_return_val_if_fail (manager->screen == NULL, FALSE);
 
 #ifdef GDK_WINDOWING_X11
-  return na_tray_manager_manage_xscreen (manager, 
-					 GDK_SCREEN_XSCREEN (screen));
+  return na_tray_manager_manage_screen_x11 (manager, screen);
 #else
   return FALSE;
 #endif
@@ -672,17 +653,21 @@ na_tray_manager_manage_screen (NaTrayManager *manager,
 #ifdef GDK_WINDOWING_X11
 
 static gboolean
-na_tray_manager_check_running_xscreen (Screen *xscreen)
+na_tray_manager_check_running_screen_x11 (GdkScreen *screen)
 {
-  Atom selection_atom;
-  char *selection_atom_name;
+  GdkDisplay *display;
+  Atom        selection_atom;
+  char       *selection_atom_name;
 
+  display = gdk_screen_get_display (screen);
   selection_atom_name = g_strdup_printf ("_NET_SYSTEM_TRAY_S%d",
-					 XScreenNumberOfScreen (xscreen));
-  selection_atom = XInternAtom (DisplayOfScreen (xscreen), selection_atom_name, False);
+                                         gdk_screen_get_number (screen));
+  selection_atom = gdk_x11_get_xatom_by_name_for_display (display,
+                                                          selection_atom_name);
   g_free (selection_atom_name);
 
-  if (XGetSelectionOwner (DisplayOfScreen (xscreen), selection_atom) != None)
+  if (XGetSelectionOwner (GDK_DISPLAY_XDISPLAY (display),
+                          selection_atom) != None)
     return TRUE;
   else
     return FALSE;
@@ -696,7 +681,7 @@ na_tray_manager_check_running (GdkScreen *screen)
   g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 
 #ifdef GDK_WINDOWING_X11
-  return na_tray_manager_check_running_xscreen (GDK_SCREEN_XSCREEN (screen));
+  return na_tray_manager_check_running_screen_x11 (screen);
 #else
   return FALSE;
 #endif
@@ -708,6 +693,7 @@ na_tray_manager_get_child_title (NaTrayManager      *manager,
 {
   char *retval = NULL;
 #ifdef GDK_WINDOWING_X11
+  GdkDisplay *display;
   Window *child_window;
   Atom utf8_string, atom, type;
   int result;
@@ -719,15 +705,17 @@ na_tray_manager_get_child_title (NaTrayManager      *manager,
   g_return_val_if_fail (NA_IS_TRAY_MANAGER (manager), NULL);
   g_return_val_if_fail (GTK_IS_SOCKET (child), NULL);
   
+  display = gdk_screen_get_display (manager->screen);
+
   child_window = g_object_get_data (G_OBJECT (child),
 				    "na-tray-child-window");
 
-  utf8_string = XInternAtom (GDK_DISPLAY (), "UTF8_STRING", False);
-  atom = XInternAtom (GDK_DISPLAY (), "_NET_WM_NAME", False);
+  utf8_string = gdk_x11_get_xatom_by_name_for_display (display, "UTF8_STRING");
+  atom = gdk_x11_get_xatom_by_name_for_display (display, "_NET_WM_NAME");
 
   gdk_error_trap_push ();
 
-  result = XGetWindowProperty (GDK_DISPLAY (),
+  result = XGetWindowProperty (GDK_DISPLAY_XDISPLAY (display),
 			       *child_window,
 			       atom,
 			       0, G_MAXLONG,
