@@ -1,5 +1,24 @@
 2006-08-10  Vincent Untz  <vuntz@gnome.org>
 
+	Try to fix the notification area in non-xinerama setups.
+	Should fix bug #115704
+
+	* main.c: add myself as author, keep a list of tray managers and trays
+	per screen
+	(about_cb): I'm here too :-)
+	(tray_added): beautify, update for non-xinerama fix by using the data
+	from the correct screen
+	(tray_removed): ditto
+	(message_sent): ditto
+	(message_cancelled): ditto
+	(update_size_and_orientation): ditto
+	(free_tray): ditto
+	(applet_factory): the first time this is runned, get the number of
+	screens and initializes structures, then use the correct screen to do
+	everything else
+
+2006-08-10  Vincent Untz  <vuntz@gnome.org>
+
 	Stop using XInternAtom.
 	Fix bug #110876
 

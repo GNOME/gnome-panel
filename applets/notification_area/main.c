@@ -2,6 +2,7 @@
 
 /* 
  * Copyright (C) 2002 Red Hat, Inc.
+ * Copyright (C) 2003-2006 Vincent Untz
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -35,12 +36,21 @@
 
 #define NOTIFICATION_AREA_ICON "gnome-panel-notification-area"
 
-static NaTrayManager *tray_manager = NULL;
-static GSList *all_trays = NULL;
+typedef struct
+{
+  NaTrayManager *tray_manager;
+  GSList        *all_trays;
+} TraysScreen;
+
+static gboolean     initialized   = FALSE;
+static int          screens       = 0;
+static TraysScreen *trays_screens = NULL;
 
 typedef struct
 {
   PanelApplet *applet;
+
+  TraysScreen *trays_screen;
 
   GtkWidget *box;
   GtkWidget *about_dialog;
@@ -99,6 +109,7 @@ about_cb (BonoboUIComponent *uic,
   const char *authors[] = {
     "Havoc Pennington <hp@redhat.com>",
     "Anders Carlsson <andersca@gnu.org>",
+    "Vincent Untz <vuntz@gnome.org>",
     NULL
   };
   const char *documenters [] = {
@@ -147,14 +158,16 @@ static const BonoboUIVerb menu_verbs [] = {
 };
 
 static void
-tray_added (NaTrayManager *manager, GtkWidget *icon, void *data)
+tray_added (NaTrayManager *manager,
+            GtkWidget     *icon,
+            TraysScreen   *trays_screen)
 {
   SystemTray *tray;
 
-  if (all_trays == NULL)
+  if (trays_screen->all_trays == NULL)
     return;
   
-  tray = all_trays->data;
+  tray = trays_screen->all_trays->data;
 
   gtk_box_pack_end (GTK_BOX (tray->box), icon, FALSE, FALSE, 0);
   
@@ -162,14 +175,20 @@ tray_added (NaTrayManager *manager, GtkWidget *icon, void *data)
 }
 
 static void
-tray_removed (NaTrayManager *manager, GtkWidget *icon, void *data)
+tray_removed (NaTrayManager *manager,
+              GtkWidget     *icon,
+              TraysScreen   *trays_screen)
 {
 
 }
 
 static void
-message_sent (NaTrayManager *manager, GtkWidget *icon, const char *text, glong id, glong timeout,
-              void *data)
+message_sent (NaTrayManager *manager,
+              GtkWidget     *icon,
+              const char    *text,
+              glong          id,
+              glong          timeout,
+              TraysScreen   *trays_screen)
 {
   /* FIXME multihead */
   int x, y;
@@ -180,8 +199,10 @@ message_sent (NaTrayManager *manager, GtkWidget *icon, const char *text, glong i
 }
 
 static void
-message_cancelled (NaTrayManager *manager, GtkWidget *icon, glong id,
-                   void *data)
+message_cancelled (NaTrayManager *manager,
+                   GtkWidget     *icon,
+                   glong          id,
+                   TraysScreen   *trays_screen)
 {
   
 }
@@ -191,7 +212,8 @@ update_size_and_orientation (SystemTray *tray)
 {
   tray_obox_set_orientation (TRAY_OBOX (tray->box), tray->orientation);
 
-  na_tray_manager_set_orientation (tray_manager, tray->orientation);
+  na_tray_manager_set_orientation (tray->trays_screen->tray_manager,
+                                   tray->orientation);
 
   /* note, you want this larger if the frame has non-NONE relief by default. */
 #define MIN_BOX_SIZE 3
@@ -246,13 +268,14 @@ applet_destroy (PanelApplet *applet,
 static void
 free_tray (SystemTray *tray)
 {
-  all_trays = g_slist_remove (all_trays, tray);
+  tray->trays_screen->all_trays = g_slist_remove (tray->trays_screen->all_trays,
+                                                  tray);
 
-  if (all_trays == NULL)
+  if (tray->trays_screen->all_trays == NULL)
     {
       /* Make sure we drop the manager selection */
-      g_object_unref (G_OBJECT (tray_manager));
-      tray_manager = NULL;
+      g_object_unref (G_OBJECT (tray->trays_screen->tray_manager));
+      tray->trays_screen->tray_manager = NULL;
       fixed_tip_hide ();
     }
   
@@ -264,35 +287,61 @@ applet_factory (PanelApplet *applet,
                 const gchar *iid,
                 gpointer     data)
 {
+  GdkScreen  *screen;
   SystemTray *tray;
   AtkObject  *atko;
+  int         screen_number;
   
   if (!(strcmp (iid, "OAFIID:GNOME_NotificationAreaApplet") == 0 ||
         strcmp (iid, "OAFIID:GNOME_SystemTrayApplet") == 0))
     return FALSE;
 
-  if (tray_manager == NULL)
+  if (!initialized)
     {
-      GdkScreen *screen;
+      GdkDisplay *display;
 
-      screen = gtk_widget_get_screen (GTK_WIDGET (applet));
+      display = gdk_display_get_default ();
+      screens = gdk_display_get_n_screens (display);
+      trays_screens = g_new0 (TraysScreen, screens);
+      initialized = TRUE;
+    }
+
+  screen = gtk_widget_get_screen (GTK_WIDGET (applet));
+  screen_number = gdk_screen_get_number (screen);
+
+  if (trays_screens [screen_number].tray_manager == NULL)
+    {
+      NaTrayManager *tray_manager;
 
       tray_manager = na_tray_manager_new ();
 
-      if (!na_tray_manager_manage_screen (tray_manager, screen))
-        g_printerr ("System tray didn't get the system tray manager selection\n");
+      if (na_tray_manager_manage_screen (tray_manager, screen))
+        {
+          trays_screens [screen_number].tray_manager = tray_manager;
 
-      g_signal_connect (tray_manager, "tray_icon_added",
-                        G_CALLBACK (tray_added), NULL);
-      g_signal_connect (tray_manager, "tray_icon_removed",
-                        G_CALLBACK (tray_removed), NULL);
-      g_signal_connect (tray_manager, "message_sent",
-                        G_CALLBACK (message_sent), NULL);
-      g_signal_connect (tray_manager, "message_cancelled",
-                        G_CALLBACK (message_cancelled), NULL);
+          g_signal_connect (tray_manager, "tray_icon_added",
+                            G_CALLBACK (tray_added),
+                            &trays_screens [screen_number]);
+          g_signal_connect (tray_manager, "tray_icon_removed",
+                            G_CALLBACK (tray_removed),
+                            &trays_screens [screen_number]);
+          g_signal_connect (tray_manager, "message_sent",
+                            G_CALLBACK (message_sent),
+                            &trays_screens [screen_number]);
+          g_signal_connect (tray_manager, "message_cancelled",
+                            G_CALLBACK (message_cancelled),
+                            &trays_screens [screen_number]);
+        }
+      else
+        {
+          g_printerr ("System tray didn't get the system tray manager selection\n");
+          g_object_unref (tray_manager);
+        }
     }
       
   tray = g_new0 (SystemTray, 1);
+
+  tray->trays_screen = &trays_screens [screen_number];
 
   tray->applet = applet;
   g_object_set_data_full (G_OBJECT (tray->applet),
@@ -325,7 +374,8 @@ applet_factory (PanelApplet *applet,
       break;
     }
   
-  all_trays = g_slist_append (all_trays, tray);
+  trays_screens [screen_number].all_trays = g_slist_append (trays_screens [screen_number].all_trays,
+                                                            tray);
   
   g_signal_connect (G_OBJECT (tray->applet),
                     "change_orient",
