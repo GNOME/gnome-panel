@@ -671,10 +671,9 @@ format_time (ClockFormat format,
         }
 
         strftime (result, sizeof (result), time_format, tm);
-
         g_free (time_format);
 
-        return g_strdup (result);
+        return g_locale_to_utf8 (result, -1, NULL, NULL, NULL);
 }
 
 static void
