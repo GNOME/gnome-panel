@@ -17,11 +17,13 @@ FISH_LDADD =						\
 
 if FISH_INPROCESS
 APPLET_TYPE     = shlib
-APPLET_LOCATION = $(libdir)/libfish-applet-2.so
+APPLET_LOCATION = $(pkglibdir)/libfish-applet-2.so
 
-lib_LTLIBRARIES = libfish-applet-2.la
+fish_applet_2libdir = $(pkglibdir)
+fish_applet_2lib_LTLIBRARIES = libfish-applet-2.la
 libfish_applet_2_la_SOURCES = $(FISH_SOURCES)
 libfish_applet_2_la_LIBADD = $(FISH_LDADD)
+libfish_applet_2_la_LDFLAGS = -module -avoid-version
 libfish_applet_2_la_CFLAGS =
 else
 APPLET_TYPE     = exe

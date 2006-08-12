@@ -32,11 +32,13 @@ NOTIFICATION_AREA_LDADD =			\
 
 if NOTIFICATION_AREA_INPROCESS
 APPLET_TYPE     = shlib
-APPLET_LOCATION = $(libdir)/libnotification-area-applet.so
+APPLET_LOCATION = $(pkglibdir)/libnotification-area-applet.so
 
-lib_LTLIBRARIES = libnotification-area-applet.la
+notification_area_appletlibdir = $(pkglibdir)
+notification_area_appletlib_LTLIBRARIES = libnotification-area-applet.la
 libnotification_area_applet_la_SOURCES = $(NOTIFICATION_AREA_SOURCES)
 libnotification_area_applet_la_LIBADD = $(NOTIFICATION_AREA_LDADD)
+libnotification_area_applet_la_LDFLAGS = -module -avoid-version
 libnotification_area_applet_la_CFLAGS =
 else
 APPLET_TYPE     = exe

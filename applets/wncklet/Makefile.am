@@ -34,11 +34,13 @@ WNCKLET_LDADD =						\
 
 if WNCKLET_INPROCESS
 APPLET_TYPE     = shlib
-APPLET_LOCATION = $(libdir)/libwnck-applet.so
+APPLET_LOCATION = $(pkglibdir)/libwnck-applet.so
 
-lib_LTLIBRARIES = libwnck-applet.la
+wnck_appletlibdir = $(pkglibdir)
+wnck_appletlib_LTLIBRARIES = libwnck-applet.la
 libwnck_applet_la_SOURCES = $(WNCKLET_SOURCES)
 libwnck_applet_la_LIBADD = $(WNCKLET_LDADD)
+libwnck_applet_la_LDFLAGS = -module -avoid-version
 libwnck_applet_la_CFLAGS =
 else
 APPLET_TYPE     = exe

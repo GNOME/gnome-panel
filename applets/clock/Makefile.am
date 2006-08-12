@@ -28,11 +28,13 @@ CLOCK_LDADD =						\
 
 if CLOCK_INPROCESS
 APPLET_TYPE     = shlib
-APPLET_LOCATION = $(libdir)/libclock-applet.so
+APPLET_LOCATION = $(pkglibdir)/libclock-applet.so
 
-lib_LTLIBRARIES = libclock-applet.la
+clock_appletlibdir = $(pkglibdir)
+clock_appletlib_LTLIBRARIES = libclock-applet.la
 libclock_applet_la_SOURCES = $(CLOCK_SOURCES)
 libclock_applet_la_LIBADD = $(CLOCK_LDADD)
+libclock_applet_la_LDFLAGS = -module -avoid-version
 libclock_applet_la_CFLAGS =
 else
 APPLET_TYPE     = exe
