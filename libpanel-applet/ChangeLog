@@ -1,3 +1,22 @@
+2006-08-12  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-applet.c: use G_DEFINE_TYPE
+	(panel_applet_associate_schemas_in_dir): updated for parent_class
+	renaming
+	(panel_applet_size_request): ditto
+	(panel_applet_size_allocate): ditto
+	(panel_applet_expose): ditto
+	(panel_applet_focus): ditto
+	(panel_applet_realize): ditto
+	(panel_applet_constructor): new, to automatically call
+	panel_applet_setup()
+	(panel_applet_class_init): set the constructor
+	(panel_applet_init): renamed from panel_applet_instance_init()
+	(panel_applet_get_type): killed
+	(panel_applet_setup): no need to call panel_applet_setup()
+	(panel_applet_factory_callback): ditto
+	Should fix bug #150122
+
 2006-08-08  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-applet.h: use GOption for the applets

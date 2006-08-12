@@ -85,8 +85,6 @@ struct _PanelAppletPrivate {
 	gboolean                    locked_down;
 };
 
-static GObjectClass *parent_class;
-
 enum {
         CHANGE_ORIENT,
         CHANGE_SIZE,
@@ -114,7 +112,10 @@ enum {
 	PROPERTY_LOCKED_DOWN_IDX
 };
 
+G_DEFINE_TYPE (PanelApplet, panel_applet, GTK_TYPE_EVENT_BOX)
+
 static void panel_applet_handle_background (PanelApplet *applet);
+static void panel_applet_setup             (PanelApplet *applet);
 
 static void
 panel_applet_associate_schemas_in_dir (GConfClient  *client,
@@ -559,7 +560,7 @@ panel_applet_finalize (GObject *object)
 		g_closure_unref (applet->priv->closure);
 	applet->priv->closure = NULL;
 
-	parent_class->finalize (object);
+	G_OBJECT_CLASS (panel_applet_parent_class)->finalize (object);
 }
 
 static gboolean
@@ -712,7 +713,8 @@ panel_applet_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
 	int focus_width = 0;
 
-	GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+	GTK_WIDGET_CLASS (panel_applet_parent_class)->size_request (widget,
+								    requisition);
 
 	if (!panel_applet_can_focus (widget))
 		return;
@@ -740,7 +742,7 @@ panel_applet_size_allocate (GtkWidget     *widget,
 	PanelApplet   *applet;
 
 	if (!panel_applet_can_focus (widget)) {
-		GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+		GTK_WIDGET_CLASS (panel_applet_parent_class)->size_allocate (widget, allocation);
 	} else {
 		/*
 		 * We are deliberately ignoring focus-padding here to
@@ -797,7 +799,8 @@ panel_applet_expose (GtkWidget      *widget,
 	g_return_val_if_fail (PANEL_IS_APPLET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 
-	GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+	GTK_WIDGET_CLASS (panel_applet_parent_class)->expose_event (widget,
+								    event);
 
         if (!GTK_WIDGET_HAS_FOCUS (widget))
 		return FALSE;
@@ -858,7 +861,7 @@ panel_applet_focus (GtkWidget        *widget,
 			return TRUE;
 		}
 	}
-	ret = GTK_WIDGET_CLASS (parent_class)->focus (widget, dir);
+	ret = GTK_WIDGET_CLASS (panel_applet_parent_class)->focus (widget, dir);
 	if (!ret && !previous_focus_child) {
  		if (!GTK_WIDGET_HAS_FOCUS (widget))  {
 			/*
@@ -1342,7 +1345,7 @@ panel_applet_property_bag (PanelApplet *applet)
 static void
 panel_applet_realize (GtkWidget *widget)
 {
-	GTK_WIDGET_CLASS (parent_class)->realize (widget);
+	GTK_WIDGET_CLASS (panel_applet_parent_class)->realize (widget);
 
 	if (PANEL_APPLET (widget)->priv->background)
 		panel_applet_handle_background (PANEL_APPLET (widget));
@@ -1506,6 +1509,25 @@ add_tab_bindings (GtkBindingSet   *binding_set,
 				      GTK_TYPE_DIRECTION_TYPE, direction);
 }
 
+static GObject *
+panel_applet_constructor (GType                  type,
+			  guint                  n_construct_properties,
+			  GObjectConstructParam *construct_properties)
+{
+	GObject     *obj;
+	PanelApplet *applet;
+
+	obj = G_OBJECT_CLASS (panel_applet_parent_class)->constructor (type,
+								       n_construct_properties,
+								       construct_properties);
+
+	applet = PANEL_APPLET (obj);
+
+	panel_applet_setup (applet);
+
+	return obj;
+}
+
 static void
 panel_applet_class_init (PanelAppletClass *klass)
 {
@@ -1514,8 +1536,7 @@ panel_applet_class_init (PanelAppletClass *klass)
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 	GtkBindingSet *binding_set;
 
-	parent_class = g_type_class_peek_parent (klass);
-
+	gobject_class->constructor = panel_applet_constructor;
 	klass->move_focus_out_of_applet = panel_applet_move_focus_out_of_applet;
 
 	widget_class->button_press_event = panel_applet_button_press;
@@ -1587,8 +1608,7 @@ panel_applet_class_init (PanelAppletClass *klass)
 }
 
 static void
-panel_applet_instance_init (PanelApplet      *applet,
-			    PanelAppletClass *klass)
+panel_applet_init (PanelApplet *applet)
 {
 	applet->priv = PANEL_APPLET_GET_PRIVATE (applet);
 
@@ -1603,32 +1623,6 @@ panel_applet_instance_init (PanelApplet      *applet,
 
 	gtk_widget_set_events (GTK_WIDGET (applet), 
 			       GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-}
-
-GType
-panel_applet_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelAppletClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) panel_applet_class_init,
-			NULL,
-			NULL,
-			sizeof (PanelApplet),
-			0,
-			(GInstanceInitFunc) panel_applet_instance_init,
-			NULL
-		};
-
-		type = g_type_register_static (GTK_TYPE_EVENT_BOX, "PanelApplet",
-					       &info, 0);
-	}
-
-	return type;
 }
 
 static void
@@ -1672,8 +1666,6 @@ panel_applet_new (void)
 
 	applet = g_object_new (PANEL_TYPE_APPLET, NULL);
 
-	panel_applet_setup (applet);
-
 	return GTK_WIDGET (applet);
 }
 
@@ -1711,8 +1703,6 @@ panel_applet_factory_callback (BonoboGenericFactory    *factory,
 	PanelApplet *applet;
 
 	applet = g_object_new (data->applet_type, NULL);
-
-	panel_applet_setup (applet);
 
 	applet->priv->iid     = g_strdup (iid);
 	applet->priv->closure = g_closure_ref (data->closure);
