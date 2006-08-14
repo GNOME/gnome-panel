@@ -233,6 +233,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 				 G_CALLBACK (panel_recent_manager_changed_cb),
 				 menu_item, 0);
 
+	g_object_get (manager, "size", &size, NULL);
 	gtk_widget_set_sensitive (menu_item, size > 0);
 
 	add_menu_separator (recent_menu);

@@ -1,3 +1,10 @@
+2006-08-14  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-recent.c: (panel_recent_append_documents_menu): use the size
+	of the manager to determine initial sensitivity, instead of using a
+	value filled with random data.
+	Should fix bug #351326
+
 2006-08-10  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-properties-dialog.c: don't forget properly setting up the
