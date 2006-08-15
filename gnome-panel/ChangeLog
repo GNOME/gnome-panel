@@ -1,3 +1,9 @@
+2006-08-15  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-ditem-editor.c: (panel_ditem_editor_connect_signals): change
+	order of callbacks, so we update the keyfile data before sending a
+	"changed" signal
+
 2006-08-14  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-recent.c: (panel_recent_append_documents_menu): use the size
