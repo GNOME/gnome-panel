@@ -1,3 +1,69 @@
+2006-08-15  Vincent Untz  <vuntz@gnome.org>
+
+	Lot of work. Basically: make balloon messages work, and make them
+	work in a good way.
+	Big part of fix for bug #104641.
+
+	* fixedtip.[ch]: change this to be a widget. This is basically a
+	rewrite.
+	* main.c: keep a hash table for the messages displayed (and the next
+	buffered messages for each tray icon) on each screen
+	(icon_tip_buffer_free): new
+	(icon_tip_free): new
+	(icon_tip_buffer_compare): new
+	(icon_tip_show_next_clicked): new, display next message for the tray
+	icon when the message is clicked,
+	(icon_tip_show_next_timeout): new, display next message for the tray
+	icon after the timeout of the current message
+	(icon_tip_show_next): new, do all the work to display the next message
+	(message_sent): don't accept a message with the same id as one we
+	already got, don't accept a message from an icon we don't know, add
+	the message to the buffer and display it if necessary
+	(message_cancelled): show the next message if the cancelled message is
+	the displayed one, else remove the buffered message with the specified
+	id
+	(update_orientation_for_messages): update orientation of all displayed
+	messages, called when the tray orientation changes
+	(update_size_and_orientation): call update_orientation_for_messages(),
+	don't change the orientation of the tray manager if the tray is not
+	the one used by the manager (yay for multiple trays on the same
+	screen!)
+	(free_tray): updated to kill new data if we let the manager go,
+	update the manager orientation to be the one of the new 'current' tray
+	(applet_factory): create hash table
+	* na-tray-manager.[ch]: remove useless stuff (following use of
+	G_DEFINE_TYPE)
+	(na_tray_manager_class_init): parent_class renaming
+	(na_tray_manager_socket_exposed): new, since it seems it's useful for
+	transparency with some themes (see bug #100600)
+	(na_tray_manager_socket_style_set): renamed from
+	na_tray_manager_make_socket_style_set()
+	(na_tray_manager_handle_dock_request): don't use double buffering for
+	the socket, and connect to the expose event (see bug #100600)
+	(na_tray_manager_handle_message_data): renamed to
+	na_tray_manager_handle_client_message_message_data(), beautify code
+	and make it a callback to handle client messages
+	(na_tray_manager_handle_begin_message): don't accept the message if we
+	don't know the tray icon, fix small leak, emit "message-sent" signal
+	if the size of the message is 0
+	(na_tray_manager_handle_cancel_message): remove the message from the
+	pending queue if it's there
+	(na_tray_manager_handle_event): renamed to...
+	(na_tray_manager_handle_client_message_opcode): ... this, don't handle
+	SYSTEM_TRAY_REQUEST_DOCK here
+	(na_tray_manager_window_filter): beautify, only handle
+	SYSTEM_TRAY_REQUEST_DOCK client messages here
+	(na_tray_manager_selection_clear_event): new, commented out for future
+	use
+	(na_tray_manager_unmanage): use gdk_selection_owner_set_for_display()
+	instead of X functions, add FIXME for when GTK+ 2.11 will exist
+	(na_tray_manager_set_orientation_property): get the atom here, instead
+	of keeping it in the manager structure
+	(na_tray_manager_manage_screen_x11): beautify, use
+	gdk_selection_owner_set_for_display(), use
+	gdk_display_add_client_message_filter() to get the client messages
+	* obox.c: remove useless stuff (following use of G_DEFINE_TYPE)
+
 2006-08-12  Vincent Untz  <vuntz@gnome.org>
 
 	* Makefile.am: install in-process library in $(libdir)/gnome-panel

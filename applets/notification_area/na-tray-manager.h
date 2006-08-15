@@ -1,6 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* na-tray-manager.h
  * Copyright (C) 2002 Anders Carlsson <andersca@gnu.org>
+ * Copyright (C) 2003-2006 Vincent Untz
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -46,10 +47,8 @@ struct _NaTrayManager
   GObject parent_instance;
 
 #ifdef GDK_WINDOWING_X11
-  Atom opcode_atom;
-  Atom selection_atom;
-  Atom message_data_atom;
-  Atom orientation_atom;
+  GdkAtom selection_atom;
+  Atom    opcode_atom;
 #endif
   
   GtkWidget *invisible;

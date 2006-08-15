@@ -41,11 +41,8 @@ typedef struct
   NaTrayManager *tray_manager;
   GSList        *all_trays;
   GHashTable    *icon_table;
+  GHashTable    *tip_table;
 } TraysScreen;
-
-static gboolean     initialized   = FALSE;
-static int          screens       = 0;
-static TraysScreen *trays_screens = NULL;
 
 typedef struct
 {
@@ -59,6 +56,30 @@ typedef struct
 
   GtkOrientation orientation;
 } SystemTray;
+
+typedef struct
+{
+  char  *text;
+  glong  id;
+  glong  timeout;
+} IconTipBuffer;
+
+typedef struct
+{
+  SystemTray *tray;      /* tray containing the tray icon */
+  GtkWidget  *icon;      /* tray icon sending the message */
+  GtkWidget  *fixedtip;
+  guint       source_id;
+  glong       id;        /* id of the current message */
+  GSList     *buffer;    /* buffered messages */
+} IconTip;
+
+
+static gboolean     initialized   = FALSE;
+static int          screens       = 0;
+static TraysScreen *trays_screens = NULL;
+
+static void icon_tip_show_next (IconTip *icontip);
 
 static void
 help_cb (BonoboUIComponent *uic,
@@ -211,6 +232,121 @@ tray_removed (NaTrayManager *manager,
   force_redraw (tray);
 
   g_hash_table_remove (trays_screen->icon_table, icon);
+  /* this will also destroy the tip associated to this icon */
+  g_hash_table_remove (trays_screen->tip_table, icon);
+}
+
+static void
+icon_tip_buffer_free (gpointer data,
+                      gpointer userdata)
+{
+  IconTipBuffer *buffer;
+
+  buffer = data;
+
+  g_free (buffer->text);
+  buffer->text = NULL;
+
+  g_free (buffer);
+}
+
+static void
+icon_tip_free (gpointer data)
+{
+  IconTip *icontip;
+
+  if (data == NULL)
+    return;
+
+  icontip = data;
+
+  if (icontip->fixedtip != NULL)
+    gtk_widget_destroy (GTK_WIDGET (icontip->fixedtip));
+  icontip->fixedtip = NULL;
+
+  if (icontip->source_id != 0)
+    g_source_remove (icontip->source_id);
+  icontip->source_id = 0;
+
+  if (icontip->buffer != NULL)
+    {
+      g_slist_foreach (icontip->buffer, icon_tip_buffer_free, NULL);
+      g_slist_free (icontip->buffer);
+    }
+  icontip->buffer = NULL;
+
+  g_free (icontip);
+}
+
+static int
+icon_tip_buffer_compare (gconstpointer a,
+                         gconstpointer b)
+{
+  IconTipBuffer *buffer_a;
+  IconTipBuffer *buffer_b;
+
+  if (buffer_a == NULL || buffer_b == NULL)
+    return !(buffer_a == buffer_b);
+
+  return buffer_a->id - buffer_b->id;
+}
+
+static void
+icon_tip_show_next_clicked (GtkWidget *widget,
+                            gpointer   data)
+{
+  icon_tip_show_next ((IconTip *) data);
+}
+
+static gboolean
+icon_tip_show_next_timeout (gpointer data)
+{
+  icon_tip_show_next ((IconTip *) data);
+
+  return FALSE;
+}
+
+static void
+icon_tip_show_next (IconTip *icontip)
+{
+  IconTipBuffer *buffer;
+
+  if (icontip->buffer == NULL)
+    {
+      /* this will also destroy the tip window */
+      g_hash_table_remove (icontip->tray->trays_screen->tip_table,
+                           icontip->icon);
+      return;
+    }
+
+  if (icontip->source_id != 0)
+    g_source_remove (icontip->source_id);
+  icontip->source_id = 0;
+
+  buffer = icontip->buffer->data;
+  icontip->buffer = g_slist_remove (icontip->buffer, buffer);
+
+  if (icontip->fixedtip == NULL)
+    {
+      icontip->fixedtip = na_fixed_tip_new (icontip->icon,
+                                            icontip->tray->orientation);
+
+      g_signal_connect (icontip->fixedtip, "clicked",
+                        G_CALLBACK (icon_tip_show_next_clicked), icontip);
+    }
+
+  na_fixed_tip_set_markup (icontip->fixedtip, buffer->text);
+
+  if (!GTK_WIDGET_MAPPED (icontip->fixedtip))
+    gtk_widget_show (icontip->fixedtip);
+
+  icontip->id = buffer->id;
+
+  if (buffer->timeout > 0)
+    icontip->source_id = g_timeout_add (buffer->timeout * 1000,
+                                        icon_tip_show_next_timeout, icontip);
+
+  icon_tip_buffer_free (buffer, NULL);
 }
 
 static void
@@ -221,12 +357,59 @@ message_sent (NaTrayManager *manager,
               glong          timeout,
               TraysScreen   *trays_screen)
 {
-  /* FIXME multihead */
-  int x, y;
+  IconTip       *icontip;
+  IconTipBuffer  find_buffer;
+  IconTipBuffer *buffer;
+  gboolean       show_now;
 
-  gdk_window_get_origin (icon->window, &x, &y);
-  
-  fixed_tip_show (0, x, y, FALSE, gdk_screen_height () - 50, text);
+  icontip = g_hash_table_lookup (trays_screen->tip_table, icon);
+
+  find_buffer.id = id;
+  if (icontip && 
+      (icontip->id == id ||
+       g_slist_find_custom (icontip->buffer, &find_buffer,
+                            icon_tip_buffer_compare) != NULL))
+    /* we already have this message, so ignore it */
+    /* FIXME: in an ideal world, we'd remember all the past ids and ignore them
+     * too */
+    return;
+
+  show_now = FALSE;
+
+  if (icontip == NULL)
+    {
+      SystemTray *tray;
+
+      tray = g_hash_table_lookup (trays_screen->icon_table, icon);
+      if (tray == NULL)
+        {
+          /* We don't know about the icon sending the message, so ignore it.
+           * But this should never happen since NaTrayManager shouldn't send
+           * us the message if there's no socket for it. */
+          g_critical ("Ignoring a message sent by a tray icon "
+                      "we don't know: \"%s\".\n", text);
+          return;
+        }
+
+      icontip = g_new0 (IconTip, 1);
+      icontip->tray = tray;
+      icontip->icon = icon;
+
+      g_hash_table_insert (trays_screen->tip_table, icon, icontip);
+
+      show_now = TRUE;
+    }
+
+  buffer = g_new0 (IconTipBuffer, 1);
+
+  buffer->text    = g_strdup (text);
+  buffer->id      = id;
+  buffer->timeout = timeout;
+
+  icontip->buffer = g_slist_append (icontip->buffer, buffer);
+
+  if (show_now)
+    icon_tip_show_next (icontip);
 }
 
 static void
@@ -235,16 +418,64 @@ message_cancelled (NaTrayManager *manager,
                    glong          id,
                    TraysScreen   *trays_screen)
 {
-  
+  IconTip       *icontip;
+  IconTipBuffer  find_buffer;
+  GSList        *cancel_buffer_l;
+  IconTipBuffer *cancel_buffer;
+
+  icontip = g_hash_table_lookup (trays_screen->tip_table, icon);
+  if (icontip == NULL)
+    return;
+
+  if (icontip->id == id)
+    {
+      icon_tip_show_next (icontip);
+      return;
+    }
+
+  find_buffer.id = id;
+  cancel_buffer_l = g_slist_find_custom (icontip->buffer, &find_buffer,
+                                         icon_tip_buffer_compare);
+  if (cancel_buffer_l == NULL)
+    return;
+
+  cancel_buffer = cancel_buffer_l->data;
+  icon_tip_buffer_free (cancel_buffer, NULL);
+
+  icontip->buffer = g_slist_remove_link (icontip->buffer, cancel_buffer_l);
+  g_slist_free_1 (cancel_buffer_l);
+}
+
+static void
+update_orientation_for_messages (gpointer key,
+                                 gpointer value,
+                                 gpointer data)
+{
+  SystemTray *tray;
+  IconTip    *icontip;
+
+  if (value == NULL)
+    return;
+
+  icontip = value;
+  tray    = data;
+  if (icontip->tray != tray)
+    return;
+
+  if (icontip->fixedtip)
+    na_fixed_tip_set_orientation (icontip->fixedtip, tray->orientation);
 }
 
 static void
 update_size_and_orientation (SystemTray *tray)
 {
   na_obox_set_orientation (NA_OBOX (tray->box), tray->orientation);
+  g_hash_table_foreach (tray->trays_screen->tip_table,
+                        update_orientation_for_messages, tray);
 
-  na_tray_manager_set_orientation (tray->trays_screen->tray_manager,
-                                   tray->orientation);
+  if (get_tray (tray->trays_screen) == tray)
+    na_tray_manager_set_orientation (tray->trays_screen->tray_manager,
+                                     tray->orientation);
 
   /* note, you want this larger if the frame has non-NONE relief by default. */
 #define MIN_BOX_SIZE 3
@@ -324,9 +555,19 @@ free_tray (SystemTray *tray)
       g_hash_table_destroy (tray->trays_screen->icon_table);
       tray->trays_screen->icon_table = NULL;
 
-      fixed_tip_hide ();
+      g_hash_table_destroy (tray->trays_screen->tip_table);
+      tray->trays_screen->tip_table = NULL;
     }
-  
+  else
+    {
+      SystemTray *new_tray;
+
+      new_tray = get_tray (tray->trays_screen);
+      if (new_tray != NULL)
+        na_tray_manager_set_orientation (tray->trays_screen->tray_manager,
+                                         new_tray->orientation);
+    }
+
   g_free (tray);
 }
 
@@ -382,6 +623,11 @@ applet_factory (PanelApplet *applet,
 
           trays_screens [screen_number].icon_table = g_hash_table_new (NULL,
                                                                        NULL);
+          trays_screens [screen_number].tip_table = g_hash_table_new_full (
+                                                                NULL,
+                                                                NULL,
+                                                                NULL,
+                                                                icon_tip_free);
         }
       else
         {

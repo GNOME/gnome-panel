@@ -30,8 +30,6 @@
 #include <gtk/gtkhbox.h>
 #include <gtk/gtkvbox.h>
 
-static void na_obox_class_init    (NaOBoxClass     *klass);
-static void na_obox_init          (NaOBox          *box);
 static void na_obox_size_request  (GtkWidget       *widget,
 				   GtkRequisition  *requisition);
 static void na_obox_size_allocate (GtkWidget       *widget,

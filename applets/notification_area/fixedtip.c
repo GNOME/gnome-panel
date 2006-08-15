@@ -2,6 +2,7 @@
 
 /* 
  * Copyright (C) 2001 Havoc Pennington
+ * Copyright (C) 2003-2006 Vincent Untz
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -21,126 +22,240 @@
 
 #include "fixedtip.h"
 
-static GtkWidget *tip = NULL;
-static GtkWidget *label = NULL;
-static int screen_width = 0;
-static int screen_height = 0;
+/* Signals */
+enum
+{
+  CLICKED,
+  LAST_SIGNAL
+};
+
+static guint fixedtip_signals[LAST_SIGNAL] = { 0 };
+
+struct _NaFixedTipPrivate
+{
+  GtkWidget      *parent;
+  GtkWidget      *label;
+  GtkOrientation  orientation;
+};
+
+G_DEFINE_TYPE (NaFixedTip, na_fixed_tip, GTK_TYPE_WINDOW)
 
 static gboolean
-button_press_handler (GtkWidget *tip,
-                      GdkEvent  *event,
-                      void      *data)
+button_press_handler (GtkWidget      *fixedtip,
+                      GdkEventButton *event,
+                      gpointer        data)
 {
-  fixed_tip_hide ();
+  if (event->button == 1 && event->type == GDK_BUTTON_PRESS)
+    g_signal_emit (fixedtip, fixedtip_signals[CLICKED], 0);
 
   return FALSE;
 }
 
 static gboolean
-expose_handler (GtkTooltips *tooltips)
+expose_handler (GtkWidget *fixedtip)
 {
-  gtk_paint_flat_box (tip->style, tip->window,
+  GtkRequisition req;
+
+  gtk_widget_size_request (fixedtip, &req);
+
+  gtk_paint_flat_box (fixedtip->style, fixedtip->window,
                       GTK_STATE_NORMAL, GTK_SHADOW_OUT, 
-                      NULL, tip, "tooltip",
-                      0, 0, -1, -1);
+                      NULL, fixedtip, "tooltip",
+                      0, 0, req.width, req.height);
 
   return FALSE;
 }
 
-void
-fixed_tip_show (int screen_number,
-                int root_x, int root_y,
-                gboolean strut_is_vertical,
-                int strut,
-                const char *markup_text)
+static void
+na_fixed_tip_class_init (NaFixedTipClass *class)
 {
-  int w, h;
+  fixedtip_signals[CLICKED] =
+    g_signal_new ("clicked",
+		  G_OBJECT_CLASS_TYPE (class),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (NaFixedTipClass, clicked),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
+  g_type_class_add_private (class, sizeof (NaFixedTipPrivate));
+}
+
+/* Did you already see this code? Yes, it's gtk_tooltips_force_window() ;-) */
+static void
+na_fixed_tip_init (NaFixedTip *fixedtip)
+{
+  GtkWidget *label;
+
+  fixedtip->priv = G_TYPE_INSTANCE_GET_PRIVATE (fixedtip, NA_TYPE_FIXED_TIP,
+                                                NaFixedTipPrivate);
+
+  gtk_window_set_type_hint (GTK_WINDOW (fixedtip),
+                            GDK_WINDOW_TYPE_HINT_TOOLTIP);
+
+  gtk_widget_set_app_paintable (GTK_WIDGET (fixedtip), TRUE);
+  gtk_window_set_resizable (GTK_WINDOW (fixedtip), FALSE);
+  gtk_widget_set_name (GTK_WIDGET (fixedtip), "gtk-tooltips");
+  gtk_container_set_border_width (GTK_CONTAINER (fixedtip), 4);
+
+  label = gtk_label_new (NULL);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  gtk_widget_show (label);
+  gtk_container_add (GTK_CONTAINER (fixedtip), label);
+  fixedtip->priv->label = label;
+
+  g_signal_connect (fixedtip, "expose_event",
+                    G_CALLBACK (expose_handler), NULL);
+
+  gtk_widget_add_events (GTK_WIDGET (fixedtip), GDK_BUTTON_PRESS_MASK);
   
-  if (tip == NULL)
-    {      
-      tip = gtk_window_new (GTK_WINDOW_POPUP);
-      {
-        GdkScreen *gdk_screen;
+  g_signal_connect (fixedtip, "button_press_event",
+                    G_CALLBACK (button_press_handler), NULL);
 
-        gdk_screen = gdk_display_get_screen (gdk_display_get_default (),
-                                             screen_number);
-        gtk_window_set_screen (GTK_WINDOW (tip),
-                               gdk_screen);
-        screen_width = gdk_screen_get_width (gdk_screen);
-        screen_height = gdk_screen_get_height (gdk_screen);
-      }
-      
-      gtk_widget_set_app_paintable (tip, TRUE);
-      gtk_window_set_resizable (GTK_WINDOW (tip), FALSE);
-      gtk_widget_set_name (tip, "gtk-tooltips");
-      gtk_container_set_border_width (GTK_CONTAINER (tip), 4);
+  fixedtip->priv->orientation = GTK_ORIENTATION_HORIZONTAL;
+}
 
-      g_signal_connect (tip, "expose_event",
-                        G_CALLBACK (expose_handler), NULL);
+static void
+na_fixed_tip_position (NaFixedTip *fixedtip)
+{
+  GdkScreen      *screen;
+  GtkRequisition  req;
+  int             root_x;
+  int             root_y;
+  int             parent_width;
+  int             parent_height;
+  int             screen_width;
+  int             screen_height;
 
-      gtk_widget_add_events (tip, GDK_BUTTON_PRESS_MASK);
-      
-      g_signal_connect (tip, "button_press_event",
-                        G_CALLBACK (button_press_handler), NULL);
-      
-      label = gtk_label_new (NULL);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-      gtk_widget_show (label);
-      
-      gtk_container_add (GTK_CONTAINER (tip), label);
+  screen = gtk_widget_get_screen (fixedtip->priv->parent);
+  gtk_window_set_screen (GTK_WINDOW (fixedtip), screen);
 
-      g_signal_connect (tip, "destroy",
-			G_CALLBACK (gtk_widget_destroyed), &tip);
-    }
+  gtk_widget_size_request (GTK_WIDGET (fixedtip), &req);
 
-  gtk_label_set_markup (GTK_LABEL (label), markup_text);
-  
-  /* FIXME should also handle Xinerama here, just to be
-   * really cool
-   */
-  gtk_window_get_size (GTK_WINDOW (tip), &w, &h);
+  gdk_window_get_origin (fixedtip->priv->parent->window, &root_x, &root_y);
+  gdk_drawable_get_size (GDK_DRAWABLE (fixedtip->priv->parent->window),
+                         &parent_width, &parent_height);
+
+  screen_width = gdk_screen_get_width (screen);
+  screen_height = gdk_screen_get_height (screen);
 
   /* pad between panel and message window */
 #define PAD 5
   
-  if (strut_is_vertical)
+  if (fixedtip->priv->orientation == GTK_ORIENTATION_VERTICAL)
     {
-      if (strut > root_x)
-        root_x = strut + PAD;
+      if (root_x <= screen_width / 2)
+        root_x += parent_width + PAD;
       else
-        root_x = strut - w - PAD;
-
-      root_y -= h / 2;
+        root_x -= req.width + PAD;
     }
   else
     {
-      if (strut > root_y)
-        root_y = strut + PAD;
+      if (root_y <= screen_height / 2)
+        root_y += parent_height + PAD;
       else
-        root_y = strut - h - PAD;
-
-      root_x -= w / 2;
+        root_y -= req.height + PAD;
     }
 
   /* Push onscreen */
-  if ((root_x + w) > screen_width)
-    root_x -= (root_x + w) - screen_width;
+  if ((root_x + req.width) > screen_width)
+    root_x = screen_width - req.width;
 
-  if ((root_y + h) > screen_height)
-    root_y -= (root_y + h) - screen_height;
+  if ((root_y + req.height) > screen_height)
+    root_y = screen_height - req.height;
   
-  gtk_window_move (GTK_WINDOW (tip), root_x, root_y);
+  gtk_window_move (GTK_WINDOW (fixedtip), root_x, root_y);
+}
 
-  gtk_widget_show (tip);
+static void
+na_fixed_tip_parent_size_allocated (GtkWidget     *parent,
+                                    GtkAllocation *allocation,
+                                    NaFixedTip    *fixedtip)
+{
+  na_fixed_tip_position (fixedtip);
+}
+
+static void
+na_fixed_tip_parent_screen_changed (GtkWidget  *parent,
+                                    GdkScreen  *new_screen,
+                                    NaFixedTip *fixedtip)
+{
+  na_fixed_tip_position (fixedtip);
+}
+
+GtkWidget *
+na_fixed_tip_new (GtkWidget      *parent,
+                  GtkOrientation  orientation)
+{
+  NaFixedTip *fixedtip;
+
+  g_return_val_if_fail (parent != NULL, NULL);
+
+  fixedtip = g_object_new (NA_TYPE_FIXED_TIP, NULL);
+
+  /* It doesn't work if we do this in na_fixed_tip_init(), so do it here */
+  GTK_WINDOW (fixedtip)->type = GTK_WINDOW_POPUP;
+
+  fixedtip->priv->parent = parent;
+
+#if 0
+  //FIXME: would be nice to be able to get the toplevel for the tip, but this
+  //doesn't work
+  GtkWidget  *toplevel;
+  
+  toplevel = gtk_widget_get_toplevel (parent);
+  /*
+  if (toplevel && GTK_WIDGET_TOPLEVEL (toplevel) && GTK_IS_WINDOW (toplevel))
+    gtk_window_set_transient_for (GTK_WINDOW (fixedtip), GTK_WINDOW (toplevel));
+    */
+#endif
+
+  fixedtip->priv->orientation = orientation;
+
+  //FIXME: would be nice to move the tip when the notification area moves
+  g_signal_connect_object (parent, "size-allocate",
+                           G_CALLBACK (na_fixed_tip_parent_size_allocated),
+                           fixedtip, 0);
+  g_signal_connect_object (parent, "screen-changed",
+                           G_CALLBACK (na_fixed_tip_parent_screen_changed),
+                           fixedtip, 0);
+
+  na_fixed_tip_position (fixedtip);
+
+  return GTK_WIDGET (fixedtip);
 }
 
 void
-fixed_tip_hide (void)
+na_fixed_tip_set_markup (GtkWidget  *widget,
+                         const char *markup_text)
 {
-  if (tip)
-    {
-      gtk_widget_destroy (tip);
-      tip = NULL;
-    }
+  NaFixedTip *fixedtip;
+
+  g_return_if_fail (NA_IS_FIXED_TIP (widget));
+
+  fixedtip = NA_FIXED_TIP (widget);
+
+  gtk_label_set_markup (GTK_LABEL (fixedtip->priv->label),
+                        markup_text);
+
+  na_fixed_tip_position (fixedtip);
+}
+
+void
+na_fixed_tip_set_orientation (GtkWidget      *widget,
+                              GtkOrientation  orientation)
+{
+  NaFixedTip *fixedtip;
+
+  g_return_if_fail (NA_IS_FIXED_TIP (widget));
+
+  fixedtip = NA_FIXED_TIP (widget);
+
+  if (orientation == fixedtip->priv->orientation)
+    return;
+
+  fixedtip->priv->orientation = orientation;
+
+  na_fixed_tip_position (fixedtip);
 }
