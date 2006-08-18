@@ -1,5 +1,11 @@
 2006-08-18  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-recent.c: (recent_documents_clear_cb): reset
+	clear_recent_dialog to NULL when the dialog is destroyed
+	Caught by Matthias Clasen <mclasen@redhat.com>
+
+2006-08-18  Vincent Untz  <vuntz@gnome.org>
+
 	Don't throw a critical warning if the icon can't be found in the icon
 	theme.
 	Patch by Jens Granseuer <jensgr@gmx.net>

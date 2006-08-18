@@ -183,6 +183,10 @@ recent_documents_clear_cb (GtkMenuItem      *menuitem,
 	g_signal_connect (clear_recent_dialog, "response",
 			  G_CALLBACK (clear_dialog_response), manager);
 
+	g_signal_connect (clear_recent_dialog, "destroy",
+			  G_CALLBACK (gtk_widget_destroyed),
+			  &clear_recent_dialog);
+
 	tmp = &clear_recent_dialog;
 	g_object_add_weak_pointer (G_OBJECT (clear_recent_dialog), tmp);
 
