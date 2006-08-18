@@ -1178,7 +1178,7 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 				       tmpstr);
 
 	g_free (dialog->priv->icon_theme_dir);
-	if (buffer != NULL && !g_path_is_absolute (buffer)) {
+	if (tmpstr != NULL && buffer != NULL && !g_path_is_absolute (buffer)) {
 		/* this is a themed icon, see bug #119208 */
 		dialog->priv->icon_theme_dir = g_path_get_dirname (tmpstr);
 		/* FIXME: what about theme changes when the dialog is up */
