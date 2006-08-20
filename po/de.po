@@ -9,14 +9,15 @@
 # Jörgen Scheibengruber <mfcn@gmx.de>, 2002.
 # Christian Neumair <chris@gnome-de.org>, 2002-2004.
 # Hendrik Richter <hendrikr@gnome.org>, 2004, 2005, 2006.
+# Christian Kintner <mail@christian-kintner.de>, 2006.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-16 17:09+0200\n"
-"PO-Revision-Date: 2006-08-16 17:10+0200\n"
-"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
+"POT-Creation-Date: 2006-08-20 15:12+0200\n"
+"PO-Revision-Date: 2006-08-20 15:23+0200\n"
+"Last-Translator: Christian Kintner <mail@christian-kintner.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -265,7 +266,8 @@ msgstr ""
 "Carsten Schaar <nhadcasc@fs-maphy.uni-hannover.de>\n"
 "Jörgen Scheibengruber <mfcn@gmx.de>\n"
 "Matthias Warkus <mawarkus@gnome.org>\n"
-"Hendrik Richter <hendrikr@gnome.org>"
+"Hendrik Richter <hendrikr@gnome.org>\n"
+"Christian Kintner <mail@christian-kintner.de>"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -312,6 +314,7 @@ msgstr ""
 "Falls dieser Schlüssel wahr ist, wird das Datum in einer Minihilfe "
 "angezeigt, wenn sich die Maus über der Uhr befindet?"
 
+#CHECK
 #: ../applets/clock/clock.schemas.in.h:18
 msgid "If true, show week numbers in the calendar."
 msgstr "Wenn »true«, werden die Wochennummern im Kalender angezeigt."
@@ -590,6 +593,7 @@ msgstr "Beim Anklicken des Fisches auszuführender Befehl"
 msgid "Frames in fish's animation"
 msgstr "Einzelbilder in Fischanimation"
 
+#CHECK
 #: ../applets/fish/fish.schemas.in.h:4
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
@@ -1039,9 +1043,8 @@ msgid "???"
 msgstr "???"
 
 #: ../gnome-panel/applet.c:1226
-#, fuzzy
 msgid "Cannot find an empty spot"
-msgstr "Kein Platz mehr im Panel"
+msgstr "Es konnte kein Platz im Panel gefunden werden"
 
 #: ../gnome-panel/button-widget.c:199
 msgid "Could not load icon"
@@ -1081,9 +1084,8 @@ msgstr "Einen Starter anlegen"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:227
 #: ../gnome-panel/gnome-desktop-item-edit.c:261
-#, fuzzy
 msgid "Directory Properties"
-msgstr "Panel-Eigenschaften"
+msgstr "Ordner-Eigenschaften"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:762
 msgid "Launcher Properties"
@@ -1124,16 +1126,15 @@ msgid "_Launch"
 msgstr "_Starten"
 
 #: ../gnome-panel/launcher.c:867
-#, fuzzy, c-format
+#, c-format
 msgid "Key %s is not set, cannot load launcher\n"
-msgstr "Schlüssel %s ist nicht festgelegt, Starter kann nicht geladen werden\n"
+msgstr "Schlüssel %s ist nicht festgelegt; Starter kann nicht geladen werden\n"
 
 #: ../gnome-panel/launcher.c:988 ../gnome-panel/panel-ditem-editor.c:1229
 #: ../gnome-panel/panel-ditem-editor.c:1255
 #: ../gnome-panel/panel-ditem-editor.c:1323
-#, fuzzy
 msgid "Could not save launcher"
-msgstr "Starter konnte nicht angelegt werden"
+msgstr "Starter konnte nicht gespeichert werden"
 
 #: ../gnome-panel/menu.c:935
 msgid "Add this launcher to _panel"
@@ -1414,79 +1415,69 @@ msgid "A_bout Panels"
 msgstr "_Info zu den Panels"
 
 #: ../gnome-panel/panel-ditem-editor.c:111
-#, fuzzy
 msgid "Application"
-msgstr "Anwendungen"
+msgstr "Anwendung"
 
 #: ../gnome-panel/panel-ditem-editor.c:113
-#, fuzzy
 msgid "Application in Terminal"
-msgstr "Anwendungsstarter …"
+msgstr "Anwendung im Terminal"
 
 #: ../gnome-panel/panel-ditem-editor.c:115
-#, fuzzy
 msgid "File"
-msgstr "_Datei:"
+msgstr "Datei"
 
+#CHECK
 #. Type
 #: ../gnome-panel/panel-ditem-editor.c:574
-#, fuzzy
 msgid "_Type:"
-msgstr "_Stil:"
+msgstr "_Typ:"
 
 #. Name
 #: ../gnome-panel/panel-ditem-editor.c:581
-#, fuzzy
 msgid "_Name:"
-msgstr "_Name des Fisches:"
+msgstr "_Name:"
 
 #: ../gnome-panel/panel-ditem-editor.c:589
-#, fuzzy
 msgid "Browse icons"
-msgstr "_Sekunden anzeigen"
+msgstr "Symbole durchsuchen"
 
 #: ../gnome-panel/panel-ditem-editor.c:607
 msgid "_Browse..."
-msgstr ""
+msgstr "_Durchsuchen …"
 
 #. Comment
 #: ../gnome-panel/panel-ditem-editor.c:614
-#, fuzzy
 msgid "Co_mment:"
-msgstr "Befehlseintrag"
+msgstr "Ko_mmentar:"
 
 #: ../gnome-panel/panel-ditem-editor.c:943
-#, fuzzy
 msgid "Choose an application..."
-msgstr "Anwendung ausführen …"
+msgstr "Anwendung auswählen …"
 
 #: ../gnome-panel/panel-ditem-editor.c:947
 msgid "Choose a file..."
-msgstr ""
+msgstr "Datei auswählen …"
 
 #: ../gnome-panel/panel-ditem-editor.c:1061
 #: ../gnome-panel/panel-ditem-editor.c:1068
-#, fuzzy
 msgid "_Command:"
-msgstr "Befehlssymbol"
+msgstr "_Befehl:"
 
 #: ../gnome-panel/panel-ditem-editor.c:1075
-#, fuzzy
 msgid "_Location:"
-msgstr "_Symbol:"
+msgstr "_Ort:"
 
 #: ../gnome-panel/panel-ditem-editor.c:1230
 msgid "The name of the launcher is not set."
-msgstr ""
+msgstr "Der Name des Starters ist nicht gesetzt."
 
 #: ../gnome-panel/panel-ditem-editor.c:1243
-#, fuzzy
 msgid "The command of the launcher is not set."
-msgstr "Das Symbol des auszuführenden Befehls."
+msgstr "Der Befehl des Startes ist nicht gesetzt."
 
 #: ../gnome-panel/panel-ditem-editor.c:1246
 msgid "The location of the launcher is not set."
-msgstr ""
+msgstr "Der Ort des Starters ist nicht gesetzt."
 
 #: ../gnome-panel/panel-ditem-editor.c:1363 ../gnome-panel/panel-util.c:138
 msgid "Could not display help document"
@@ -2233,9 +2224,9 @@ msgid "Could not open recently used document \"%s\""
 msgstr "Zuletzt geöffnetes Dokument »%s« konnte nicht geöffnet werden"
 
 #: ../gnome-panel/panel-recent.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
-msgstr "Beim Versuch, »%s« zu öffnen, ist ein unbekannter Fehler aufgetreten"
+msgstr "Beim Versuch, »%s« zu öffnen, ist ein unbekannter Fehler aufgetreten."
 
 #: ../gnome-panel/panel-recent.c:166
 msgid "Clear the Recent Documents list?"
@@ -2253,15 +2244,15 @@ msgstr ""
 "• Alle Einträge im Menü Orte → Zuletzt geöffnete Dokumente.\n"
 "• Die Liste der zuletzt geöffneten Dokumente in allen Anwendungen."
 
-#: ../gnome-panel/panel-recent.c:207
+#: ../gnome-panel/panel-recent.c:211
 msgid "Recent Documents"
 msgstr "Zuletzt geöffnete Dokumente"
 
-#: ../gnome-panel/panel-recent.c:246
+#: ../gnome-panel/panel-recent.c:250
 msgid "Clear Recent Documents"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen"
 
-#: ../gnome-panel/panel-recent.c:250
+#: ../gnome-panel/panel-recent.c:254
 msgid "Clear all items from the recent documents list"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen"
 
