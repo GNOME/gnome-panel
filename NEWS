@@ -1,4 +1,92 @@
 ===============
+Version 2.15.92
+===============
+
+  Panel
+
+	* Fix panel going to the top of screen instead of autohiding
+	  (Зоран Рилак)
+	* Make relative paths work in gnome-desktop-item-edit (Vincent)
+	* Use new icon for run dialog (Vincent)
+	* Fix crash when alacarte is not found for editing a menu (Ray Strode)
+	* Handle drop of some special icons on the nautilus desktop (trash,
+	  home, computer, network) (Vincent)
+	* Fix drag and drop of items from the menu (Vincent)
+	* Remove extensions of the icon name before looking for it for the
+	  menus (Vincent)
+	* Don't add ellipsises at the end of "Delete Panel" (Vincent)
+	* Update icon for the network places (Vincent)
+	* Fix crash when quitting and an applet is crashing (Vincent)
+	* Fix sensitivity of "Recent documents" menu item (Vincent)
+	* Fix updates of launchers when editing (Vincent)
+	* Don't throw a critical warning if the icon of a launcher can't be
+	  found in the icon theme when editing the launcher (Jens Granseuer)
+	* Make it possible to clear recent documents list more than once
+	  (Matthias Clasen)
+
+  libpanel-applet
+
+	* Use GOption for the applets (Vincent)
+	* Make g_object_new() really work for PanelApplet (Vincent)
+
+  Clock Applet
+
+	* Algorithm fix for size detection (Vincent)
+	* Convert from locale to UTF-8 the output of strftime() (Vincent)
+
+  Notification Area Applet
+
+	* Stop using XInternAtom() (Vincent)
+	* Try to fix the notification area in multihead non-xinerama setups
+	  (Vincent)
+	* Code beautifications (Vincent)
+	* Make transparent icons in the notification area (Frédéric Crozat,
+	  Dan Winship)
+	* Make balloon messages work (Vincent)
+
+  Show Desktop Applet
+
+	* Use the optimal size for icon so it's sharp (Vincent)
+
+  Misc
+
+	* Require GTK+ 2.10.0 (Vincent)
+	* Add new --with-in-process-applets to make it possible to compile
+	  applets as in-process applets (Vincent)
+
+  Docs Translators
+
+	* Christophe Bliard (fr)
+
+  Translators
+
+	* Runa Bhattacharjee (bn_IN)
+	* Christian Kintner (de)
+	* Mindu Dorji (dz)
+	* Kostas Papadimas (el)
+	* Francisco Javier F. Serrador (es)
+	* Priit Laes (et)
+	* Ilkka Tuohela (fi)
+	* Ankit Patel (gu)
+	* Mate ORY (hu)
+	* Mohammad DAMT (id)
+	* Satoru SATOH (ja)
+	* Changwoo Ryu (ko)
+	* ElîxanLoran (ku)
+	* Žygimantas Beručka (lt)
+	* Jovan Naumovski (mk)
+	* Badral (mn)
+	* Kjartan Maraas (nb)
+	* Wouter Bolsterlee (nl)
+	* Leonid Kanter (ru)
+	* Matic Žgur (sl)
+	* Daniel Nylander (sv)
+	* Theppitak Karoonboonyanan (th)
+	* Maxim Dziumanenko (uk)
+	* Clytie Siddall (vi)
+	* Funda Wang (zh_CN)
+
+===============
 Version 2.15.91
 ===============
 
