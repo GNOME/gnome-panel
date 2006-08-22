@@ -524,12 +524,16 @@ panel_widget_reset_focus (GtkContainer *container,
 	PanelWidget *panel = PANEL_WIDGET (container);
 
 	if (container->focus_child == widget) {
-		GList *l;
+		GList *children;
 
-		l = gtk_container_get_children (container);
-		if (l && l->next) { /* More than one element on the list */
+		children = gtk_container_get_children (container);
+
+		/* More than one element on the list */
+		if (children && children->next) {
+			GList *l;
+
 			/* There are still object on the panel */
-			for (; l; l = l->next) {
+			for (l = children; l; l = l->next) {
 				GtkWidget *child_widget;
 
 				child_widget = l->data;
@@ -550,7 +554,7 @@ panel_widget_reset_focus (GtkContainer *container,
 		} else
 			panel_widget_focus (panel);
 
-		g_list_free (l);
+		g_list_free (children);
 	}
 }
 

@@ -1544,6 +1544,7 @@ create_menuitem (GtkWidget          *menu,
 				icon_no_ext = panel_util_icon_remove_extension (icon);
 				gtk_drag_source_set_icon_name (menuitem,
 							       icon_no_ext);
+				g_free (icon_no_ext);
 			}
 		}
 
