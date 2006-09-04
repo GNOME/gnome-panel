@@ -1059,28 +1059,36 @@ type_combo_changed (PanelDItemEditor *dialog)
 	switch (panel_ditem_editor_get_item_type (dialog)) {
 	case PANEL_DITEM_EDITOR_TYPE_APPLICATION:
 		text = _("_Command:");
-		panel_util_key_file_set_string (dialog->priv->key_file,
-						"Type", "Application");
-		panel_util_key_file_set_boolean (dialog->priv->key_file,
-						 "Terminal", FALSE);
+		if (dialog->priv->combo_setuped) {
+			panel_util_key_file_set_string (dialog->priv->key_file,
+							"Type", "Application");
+			panel_util_key_file_set_boolean (dialog->priv->key_file,
+							 "Terminal", FALSE);
+		}
 		break;
 	case PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION:
 		text = _("_Command:");
-		panel_util_key_file_set_string (dialog->priv->key_file,
-						"Type", "Application");
-		panel_util_key_file_set_boolean (dialog->priv->key_file,
-						 "Terminal", TRUE);
+		if (dialog->priv->combo_setuped) {
+			panel_util_key_file_set_string (dialog->priv->key_file,
+							"Type", "Application");
+			panel_util_key_file_set_boolean (dialog->priv->key_file,
+							 "Terminal", TRUE);
+		}
 		break;
 	case PANEL_DITEM_EDITOR_TYPE_LINK:
 		text = _("_Location:");
-		panel_util_key_file_set_string (dialog->priv->key_file,
-						"Type", "Link");
-		panel_util_key_file_remove_key (dialog->priv->key_file,
-						"Terminal");
+		if (dialog->priv->combo_setuped) {
+			panel_util_key_file_set_string (dialog->priv->key_file,
+							"Type", "Link");
+			panel_util_key_file_remove_key (dialog->priv->key_file,
+							"Terminal");
+		}
 		break;
 	case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
-		panel_util_key_file_set_string (dialog->priv->key_file,
-						"Type", "Directory");
+		if (dialog->priv->combo_setuped) {
+			panel_util_key_file_set_string (dialog->priv->key_file,
+							"Type", "Directory");
+		}
 		return;
 	default:
 		g_assert_not_reached ();
