@@ -1284,6 +1284,8 @@ calendar_day_activated (ClockData   *cd,
 					"calendar:///?startdate=%.4d%.2d%.2d",
 					year, month + 1, day);
 
+	error = NULL;
+
 	if (!gdk_spawn_command_line_on_screen (gtk_widget_get_screen (cd->calendar),
 					       command_line, &error)) {
 		g_printerr ("Cannot launch calendar: %s\n", error->message);
