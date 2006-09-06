@@ -117,8 +117,10 @@ panel_launch_desktop_file (const char  *desktop_file,
 	} else if (fallback_exec != NULL) {
 		char *argv [2] = {(char *)fallback_exec, NULL};
 
-		if (*error)
+		if (*error) {
 			g_error_free (*error);
+			*error = NULL;
+		}
 
 		gdk_spawn_on_screen (screen, NULL, argv, NULL,
 				     G_SPAWN_SEARCH_PATH,
