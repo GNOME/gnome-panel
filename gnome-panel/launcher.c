@@ -917,6 +917,9 @@ ask_about_launcher (const char  *file,
 	GtkWidget *dialog;
 	GKeyFile  *key_file;
 
+	if (panel_lockdown_get_disable_command_line ())
+		return;
+
 	dialog = panel_ditem_editor_new (NULL, NULL, NULL,
 					 _("Create Launcher"));
 	panel_widget_register_open_dialog (panel, dialog);

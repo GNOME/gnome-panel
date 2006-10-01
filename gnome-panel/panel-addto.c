@@ -511,6 +511,10 @@ panel_addto_append_special_applets (PanelAddtoDialog *dialog,
 			special_addto_items [i].name = _(special_addto_items [i].name);
 			special_addto_items [i].description = _(special_addto_items [i].description);
 		}
+
+		if (special_addto_items [i].type == PANEL_ADDTO_LAUNCHER_NEW
+		    && panel_lockdown_get_disable_command_line ())
+			continue;
 		
 		panel_addto_append_item (dialog, model, &special_addto_items [i]);
 	}
