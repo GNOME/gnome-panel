@@ -199,6 +199,8 @@ if test $pango_omitted_x_deps = yes ; then
   fi
 fi
 
+AC_CHECK_LIB(Xau, XauFileName, [X_LIBS="$X_LIBS -lXau"])
+
 AC_SUBST(X_LIBS)
 
 dnl IDL directories
