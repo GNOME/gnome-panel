@@ -282,8 +282,8 @@ static int
 icon_tip_buffer_compare (gconstpointer a,
                          gconstpointer b)
 {
-  IconTipBuffer *buffer_a;
-  IconTipBuffer *buffer_b;
+  IconTipBuffer *buffer_a = a;
+  IconTipBuffer *buffer_b = b;
 
   if (buffer_a == NULL || buffer_b == NULL)
     return !(buffer_a == buffer_b);
