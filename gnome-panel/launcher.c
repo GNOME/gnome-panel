@@ -305,7 +305,8 @@ panel_launcher_delete (Launcher *launcher)
 	if (!launcher->location)
 		return;
 
-	if (panel_launcher_get_filename (location)) {
+	location = panel_launcher_get_filename (launcher->location);
+	if (location) {
 		GnomeVFSResult result;
 
 		result = gnome_vfs_unlink (location);
