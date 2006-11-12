@@ -563,7 +563,7 @@ panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
 	priv->table = gtk_table_new (4, 3, FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (priv->table), 12);
+	gtk_container_set_border_width (GTK_CONTAINER (priv->table), 5);
 	gtk_table_set_row_spacings (GTK_TABLE (priv->table), 6);
 	gtk_table_set_col_spacings (GTK_TABLE (priv->table), 12);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
