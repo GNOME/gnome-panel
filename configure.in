@@ -199,12 +199,10 @@ if test $pango_omitted_x_deps = yes ; then
   fi
 fi
 
-gnome_panel_save_LIBS=$LIBS
-LIBS="$X_LIBS $LIBS"
 AC_CHECK_LIB(Xau, XauFileName, [X_LIBS="$X_LIBS -lXau"],
              [AC_MSG_ERROR([
-*** Can't find the Xauth library. It is needed to compile gnome-panel.])])
-LIBS=$gnome_panel_save_LIBS
+*** Can't find the Xauth library. It is needed to compile gnome-session.])],
+	     $X_LIBS)
 
 AC_SUBST(X_LIBS)
 
