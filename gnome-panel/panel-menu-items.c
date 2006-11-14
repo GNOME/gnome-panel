@@ -1055,6 +1055,7 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 {
 	gboolean    separator_inserted;
 	GList      *children;
+	GList      *last;
 	GtkWidget  *item;
 	const char *translate;
 	char       *label;
@@ -1062,12 +1063,11 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 
 	separator_inserted = FALSE;
 	children = gtk_container_get_children (GTK_CONTAINER (menu));
-
-	if (children != NULL) {
-		while (children->next != NULL)
-			children = children->next;
-		separator_inserted = GTK_IS_SEPARATOR (GTK_WIDGET (children->data));
+	last = g_list_last (children);
+	if (last != NULL) {
+		separator_inserted = GTK_IS_SEPARATOR (GTK_WIDGET (last->data));
 	}
+	g_list_free (children);
 
 	if (panel_lock_screen_action_available ("lock")) {
 		item = panel_menu_items_create_action_item (PANEL_ACTION_LOCK);
