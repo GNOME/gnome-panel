@@ -1762,6 +1762,7 @@ main_menu_append (GtkWidget   *main_menu,
 	GtkWidget *item;
 	gboolean   add_separator;
 	GList     *children;
+	GList     *last;
 
 	if (!g_object_get_data (G_OBJECT (main_menu),
 				"panel-menu-needs-appending"))
@@ -1770,14 +1771,13 @@ main_menu_append (GtkWidget   *main_menu,
 	g_object_set_data (G_OBJECT (main_menu),
 			   "panel-menu-needs-appending", NULL);
 
-	children = gtk_container_get_children (GTK_CONTAINER (main_menu));
-
 	add_separator = FALSE;
-	if (children != NULL) {
-		while (children->next != NULL)
-			children = children->next;
-		add_separator = !GTK_IS_SEPARATOR (GTK_WIDGET (children->data));
+	children = gtk_container_get_children (GTK_CONTAINER (main_menu));
+	last = g_list_last (children);
+	if (last != NULL) {
+		add_separator = !GTK_IS_SEPARATOR (GTK_WIDGET (last->data));
 	}
+	g_list_free (children);
 
 	if (add_separator)
 		add_menu_separator (main_menu);
