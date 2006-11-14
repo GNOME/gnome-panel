@@ -823,7 +823,7 @@ panel_compatibility_migrate_objects (GConfClient       *client,
 				break;
 			}
 		}
-
+		g_free (object_type_str);
 		g_free (l->data);
 	}
 	g_slist_free (objects);

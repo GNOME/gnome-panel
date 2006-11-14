@@ -69,6 +69,7 @@ typedef struct {
 
 static GdmProtocolData gdm_protocol_data = {
         0,
+        NULL,
         GDM_LOGOUT_ACTION_NONE,
         GDM_LOGOUT_ACTION_NONE,
         0
@@ -260,6 +261,7 @@ gdm_init_protocol_connection (GdmProtocolData *data)
 
                 return FALSE;
         }
+	g_free (response);
 
         if (!gdm_authenticate_connection (data)) {
                 g_warning ("Failed to authenticate with GDM");

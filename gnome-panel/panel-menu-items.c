@@ -410,6 +410,16 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 				char *buffer;
 
 				buffer = gnome_vfs_get_local_path_from_uri (full_uri);
+				if (!buffer) {
+					g_free (tooltip);
+					g_free (full_uri);
+					if (bookmark->label)
+						g_free (bookmark->label);
+					gnome_vfs_uri_unref (bookmark->uri);
+					g_free (bookmark);
+					continue;
+				}
+
 				label = g_filename_display_basename (buffer);
 				g_free (buffer);
 			} else if (gnome_vfs_uri_is_local (bookmark->uri)) {
