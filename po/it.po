@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.16.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-09 20:06+0200\n"
-"PO-Revision-Date: 2006-09-12 10:06+0200\n"
+"POT-Creation-Date: 2007-01-05 13:03+0100\n"
+"PO-Revision-Date: 2007-01-05 13:06+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italiano <tp@list.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -1035,7 +1035,7 @@ msgstr "Cassetto"
 msgid "_Add to Drawer..."
 msgstr "A_ggiungi al cassetto..."
 
-#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:834
+#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:835
 #: ../gnome-panel/panel-action-button.c:136
 #: ../gnome-panel/panel-context-menu.c:220
 msgid "_Properties"
@@ -1054,7 +1054,7 @@ msgid "- Edit .desktop files"
 msgstr "- Modifica i file .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:203
-#: ../gnome-panel/gnome-desktop-item-edit.c:275 ../gnome-panel/launcher.c:921
+#: ../gnome-panel/gnome-desktop-item-edit.c:275 ../gnome-panel/launcher.c:925
 msgid "Create Launcher"
 msgstr "Creazione icona di avvio"
 
@@ -1063,7 +1063,7 @@ msgstr "Creazione icona di avvio"
 msgid "Directory Properties"
 msgstr "Proprietà della directory"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:762
+#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:763
 msgid "Launcher Properties"
 msgstr "Proprietà dell'icona di avvio"
 
@@ -1089,28 +1089,28 @@ msgstr "Impossibile avviare l'applicazione"
 msgid "Could not use dropped item"
 msgstr "Impossibile usare l'oggetto rilasciato"
 
-#: ../gnome-panel/launcher.c:447
+#: ../gnome-panel/launcher.c:448
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "Non è stato fornito alcun URI per il file .desktop dell'icona di avvio del "
 "pannello\n"
 
-#: ../gnome-panel/launcher.c:490
+#: ../gnome-panel/launcher.c:491
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Impossibile aprire il file .desktop «%s» per l'icona di avvio%s%s\n"
 
-#: ../gnome-panel/launcher.c:828
+#: ../gnome-panel/launcher.c:829
 msgid "_Launch"
 msgstr "A_vvia"
 
-#: ../gnome-panel/launcher.c:867
+#: ../gnome-panel/launcher.c:868
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr ""
 "La chiave «%s» non è impostata, impossibile caricare l'icona di avvio\n"
 
-#: ../gnome-panel/launcher.c:988 ../gnome-panel/panel-ditem-editor.c:1237
+#: ../gnome-panel/launcher.c:992 ../gnome-panel/panel-ditem-editor.c:1237
 #: ../gnome-panel/panel-ditem-editor.c:1263
 #: ../gnome-panel/panel-ditem-editor.c:1331
 msgid "Could not save launcher"
@@ -1179,16 +1179,17 @@ msgid "Run Application..."
 msgstr "Esegui applicazione..."
 
 #: ../gnome-panel/panel-action-button.c:295
-msgid "Run an Application by entering a command"
-msgstr "Esegue un'applicazione fornendo un comando"
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "Esegue un'applicazione digitando un comando o scegliendo da un elenco"
 
 #: ../gnome-panel/panel-action-button.c:304
 msgid "Search for Files..."
 msgstr "Cerca file..."
 
+# come in nautilus >= 2.17  -Luca
 #: ../gnome-panel/panel-action-button.c:305
-msgid "Find files, folders, and documents on your computer"
-msgstr "Trova file, cartelle e documenti nel computer"
+msgid "Locate documents and folders on this computer by name or content"
+msgstr "Individua documenti e cartelle su questo computer per nome o contenuto"
 
 #: ../gnome-panel/panel-action-button.c:313
 msgid "Force Quit"
@@ -1204,9 +1205,10 @@ msgstr "Forza la chiusura di un'applicazione che non risponde"
 msgid "Connect to Server..."
 msgstr "Connetti al server..."
 
+# come in nautilus >= 2.17   -Luca
 #: ../gnome-panel/panel-action-button.c:324
-msgid "Connect to a remote server"
-msgstr "Connette ad un server remoto"
+msgid "Connect to a remote computer or shared disk"
+msgstr "Connette a un computer remoto o disco condiviso"
 
 #: ../gnome-panel/panel-action-button.c:332
 msgid "Shut Down..."
@@ -1270,24 +1272,24 @@ msgstr "(vuoto)"
 msgid "query returned exception %s\n"
 msgstr "l'interrogazione ha restituito l'eccezione %s\n"
 
-#: ../gnome-panel/panel-addto.c:1056
+#: ../gnome-panel/panel-addto.c:1060
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Trova un ele_mento da aggiungere a «%s»:"
 
-#: ../gnome-panel/panel-addto.c:1060
+#: ../gnome-panel/panel-addto.c:1064
 msgid "Add to Drawer"
 msgstr "Aggiungi al cassetto"
 
-#: ../gnome-panel/panel-addto.c:1062
+#: ../gnome-panel/panel-addto.c:1066
 msgid "Find an _item to add to the drawer:"
 msgstr "Trova un ele_mento da aggiungere al cassetto:"
 
-#: ../gnome-panel/panel-addto.c:1064
+#: ../gnome-panel/panel-addto.c:1068
 msgid "Add to Panel"
 msgstr "Aggiungi al pannello"
 
-#: ../gnome-panel/panel-addto.c:1066
+#: ../gnome-panel/panel-addto.c:1070
 msgid "Find an _item to add to the panel:"
 msgstr "Trova un ele_mento da aggiungere al pannello:"
 
@@ -1492,14 +1494,20 @@ msgstr ""
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Una lista di ID di pannello. Ogni ID identifica un singolo pannello di livello superiore. Le impostazioni per ciascuno di questi pannelli sono memorizzate in /apps/panel/toplevels/$(ID)."
+msgstr ""
+"Una lista di ID di pannello. Ogni ID identifica un singolo pannello di "
+"livello superiore. Le impostazioni per ciascuno di questi pannelli sono "
+"memorizzate in /apps/panel/toplevels/$(ID)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
 msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
 "The settings for each of these applets are stored in /apps/panel/applets/"
 "$(id)."
-msgstr "Una lista di ID di applet di pannello. Ogni ID identifica una singola applet di pannello. Le impostazioni per ciascuna di queste applet sono memorizzate in /apps/panel/applets/$(ID)."
+msgstr ""
+"Una lista di ID di applet di pannello. Ogni ID identifica una singola applet "
+"di pannello. Le impostazioni per ciascuna di queste applet sono memorizzate "
+"in /apps/panel/applets/$(ID)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
 msgid ""
@@ -1783,16 +1791,16 @@ msgstr "Apre «%s»"
 #. * path and the second string is a
 #. * hostname. nautilus contains the same
 #. * string to translate.
-#: ../gnome-panel/panel-menu-items.c:436
+#: ../gnome-panel/panel-menu-items.c:446
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s su %2$s"
 
-#: ../gnome-panel/panel-menu-items.c:509
+#: ../gnome-panel/panel-menu-items.c:519
 msgid "Network Places"
 msgstr "Risorse di rete"
 
-#: ../gnome-panel/panel-menu-items.c:512
+#: ../gnome-panel/panel-menu-items.c:522
 msgid "Removable Media"
 msgstr "Dispositivi rimovibili"
 
@@ -1800,20 +1808,20 @@ msgstr "Dispositivi rimovibili"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:588
+#: ../gnome-panel/panel-menu-items.c:598
 msgid "Desktop Folder|Desktop"
 msgstr "Scrivania"
 
-#: ../gnome-panel/panel-menu-items.c:589
-msgid "Open the desktop as a folder"
-msgstr "Apre la scrivania come una cartella"
+#: ../gnome-panel/panel-menu-items.c:599
+msgid "Open the contents of your desktop in a folder"
+msgstr "Apre in contenuto della propria scrivania in una cartella"
 
-#: ../gnome-panel/panel-menu-items.c:951
+#: ../gnome-panel/panel-menu-items.c:961
 msgid "Places"
 msgstr "Risorse"
 
 # Il menù un tempo noto col nome di Desktop. Presa da Ubuntu -Luca
-#: ../gnome-panel/panel-menu-items.c:986
+#: ../gnome-panel/panel-menu-items.c:996
 msgid "System"
 msgstr "Sistema"
 
@@ -1821,7 +1829,7 @@ msgstr "Sistema"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1078
+#: ../gnome-panel/panel-menu-items.c:1088
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -1829,20 +1837,20 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1090
+#: ../gnome-panel/panel-menu-items.c:1100
 #, c-format
 msgid "Log Out %s..."
 msgstr "Termina sessione di %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1094
+#: ../gnome-panel/panel-menu-items.c:1104
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "Termina la sessione come «%s» per consentire l'accesso come altro utente"
 
-#: ../gnome-panel/panel-menu-items.c:1135
+#: ../gnome-panel/panel-menu-items.c:1145
 msgid "Could not launch menu item"
 msgstr "Impossibile avviare la voce di menù"
 
@@ -2199,7 +2207,8 @@ msgstr "Impossibile aprire il documento usato di recente «%s»"
 #: ../gnome-panel/panel-recent.c:109
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
-msgstr "Si è verificato un errore sconosciuto durante il tentativo di aprire «%s»."
+msgstr ""
+"Si è verificato un errore sconosciuto durante il tentativo di aprire «%s»."
 
 #: ../gnome-panel/panel-recent.c:166
 msgid "Clear the Recent Documents list?"
@@ -2222,11 +2231,11 @@ msgstr ""
 msgid "Recent Documents"
 msgstr "Documenti recenti"
 
-#: ../gnome-panel/panel-recent.c:250
+#: ../gnome-panel/panel-recent.c:251
 msgid "Clear Recent Documents"
 msgstr "Pulisci documenti recenti"
 
-#: ../gnome-panel/panel-recent.c:254
+#: ../gnome-panel/panel-recent.c:255
 msgid "Clear all items from the recent documents list"
 msgstr "Pulisce tutte le voci dall'elenco dei documenti recenti"
 
