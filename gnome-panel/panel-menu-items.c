@@ -596,7 +596,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 				 * environment). Do not keep "Desktop Folder|"
 				 * in the translation */
 				Q_("Desktop Folder|Desktop"),
-				_("Open the desktop as a folder"),
+				_("Open the contents of your desktop in a folder"),
 				places_menu,
 				G_CALLBACK (activate_uri),
 				uri);

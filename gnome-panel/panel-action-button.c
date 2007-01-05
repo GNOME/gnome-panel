@@ -292,7 +292,7 @@ static PanelAction actions [] = {
 		PANEL_ACTION_RUN,
 		PANEL_RUN_ICON,
 		N_("Run Application..."),
-		N_("Run an Application by entering a command"),
+		N_("Run an application by typing a command or choosing from a list"),
 		"gospanel-555",
 		"ACTION:run:NEW",
 		panel_action_run_program, NULL, NULL,
@@ -302,7 +302,7 @@ static PanelAction actions [] = {
 		PANEL_ACTION_SEARCH,
 		"gnome-searchtool",
 		N_("Search for Files..."),
-		N_("Find files, folders, and documents on your computer"),
+		N_("Locate documents and folders on this computer by name or content"),
 		"gospanel-554",
 		"ACTION:search:NEW",
 		panel_action_search, NULL, NULL, NULL
@@ -321,7 +321,7 @@ static PanelAction actions [] = {
 		PANEL_ACTION_CONNECT_SERVER,
 		"gnome-globe", //FIXME icon
 		N_("Connect to Server..."),
-		N_("Connect to a remote server"), //FIXME
+		N_("Connect to a remote computer or shared disk"),
 		"gospanel-563", //FIXME
 		"ACTION:connect-server:NEW",
 		panel_action_connect_server, NULL, NULL, NULL
