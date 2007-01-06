@@ -1275,7 +1275,13 @@ calendar_day_activated (ClockData   *cd,
 	unsigned int  month;
 	unsigned int  year;
 	char         *command_line;
+	char         *tmp;
 	GError       *error;
+
+	tmp = g_find_program_in_path ("evolution");
+	if (tmp == NULL)
+		return;
+	g_free (tmp);
 
 	gtk_calendar_get_date (GTK_CALENDAR (cd->calendar),
 			       &year, &month, &day);
