@@ -1,0 +1,134 @@
+<oaf_info>
+
+<oaf_server iid="OAFIID:GNOME_Wncklet_Factory"
+	    type="@TYPE@"
+	    location="@LOCATION@">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:Bonobo/GenericFactory:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Window Navigation Applet Factory"/>
+	<oaf_attribute name="description" type="string" _value="Factory for the window navigation related applets"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_WindowMenuApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_Wncklet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Window Selector"/>
+	<oaf_attribute name="description" type="string" _value="Switch between open windows using a menu"/>
+	<oaf_attribute name="panel:icon" type="string" value="gnome-panel-window-menu"/>
+	<oaf_attribute name="bugzilla:bugzilla" type="string" value="GNOME"/>
+	<oaf_attribute name="bugzilla:product" type="string" value="gnome-panel"/>
+	<oaf_attribute name="bugzilla:component" type="string" value="window selector"/>
+	<oaf_attribute name="bugzilla:version" type="string" value="@VERSION@"/>
+	<oaf_attribute name="bugzilla:other_binaries" type="string" value="wnck-applet"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_PagerApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_Wncklet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Workspace Switcher"/>
+	<oaf_attribute name="description" type="string" _value="Switch between workspaces"/>
+	<oaf_attribute name="bugzilla:bugzilla" type="string" value="GNOME"/>
+	<oaf_attribute name="bugzilla:product" type="string" value="gnome-panel"/>
+	<oaf_attribute name="bugzilla:component" type="string" value="workspace switcher"/>
+	<oaf_attribute name="bugzilla:version" type="string" value="@VERSION@"/>
+	<oaf_attribute name="bugzilla:other_binaries" type="string" value="wnck-applet"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_WorkspaceSwitcherApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_Wncklet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Workspace Switcher"/>
+	<oaf_attribute name="description" type="string" _value="Switch between workspaces"/>
+	<oaf_attribute name="panel:icon" type="string" value="gnome-panel-workspace-switcher"/>
+	<oaf_attribute name="bugzilla:bugzilla" type="string" value="GNOME"/>
+	<oaf_attribute name="bugzilla:product" type="string" value="gnome-panel"/>
+	<oaf_attribute name="bugzilla:component" type="string" value="workspace switcher"/>
+	<oaf_attribute name="bugzilla:version" type="string" value="@VERSION@"/>
+	<oaf_attribute name="bugzilla:other_binaries" type="string" value="wnck-applet"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_TasklistApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_Wncklet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Window List"/>
+	<oaf_attribute name="description" type="string" _value="Switch between open windows using buttons"/>
+	<oaf_attribute name="bugzilla:bugzilla" type="string" value="GNOME"/>
+	<oaf_attribute name="bugzilla:product" type="string" value="gnome-panel"/>
+	<oaf_attribute name="bugzilla:component" type="string" value="window list"/>
+	<oaf_attribute name="bugzilla:version" type="string" value="@VERSION@"/>
+	<oaf_attribute name="bugzilla:other_binaries" type="string" value="wnck-applet"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_WindowListApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_Wncklet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Window List"/>
+	<oaf_attribute name="description" type="string" _value="Switch between open windows using buttons"/>
+	<oaf_attribute name="panel:icon" type="string" value="gnome-panel-window-list"/>
+	<oaf_attribute name="bugzilla:bugzilla" type="string" value="GNOME"/>
+	<oaf_attribute name="bugzilla:product" type="string" value="gnome-panel"/>
+	<oaf_attribute name="bugzilla:component" type="string" value="window list"/>
+	<oaf_attribute name="bugzilla:version" type="string" value="@VERSION@"/>
+	<oaf_attribute name="bugzilla:other_binaries" type="string" value="wnck-applet"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_ShowDesktopApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_Wncklet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Show Desktop"/>
+	<oaf_attribute name="description" type="string" _value="Hide application windows and show the desktop"/>
+	<oaf_attribute name="panel:icon" type="string" value="gnome-fs-desktop.png"/>
+	<oaf_attribute name="bugzilla:bugzilla" type="string" value="GNOME"/>
+	<oaf_attribute name="bugzilla:product" type="string" value="gnome-panel"/>
+	<oaf_attribute name="bugzilla:component" type="string" value="Show Desktop Button"/>
+	<oaf_attribute name="bugzilla:version" type="string" value="@VERSION@"/>
+	<oaf_attribute name="bugzilla:other_binaries" type="string" value="wnck-applet"/>
+
+</oaf_server>
+
+</oaf_info>

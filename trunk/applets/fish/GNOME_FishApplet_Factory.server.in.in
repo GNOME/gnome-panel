@@ -1,0 +1,36 @@
+<oaf_info>
+
+<oaf_server iid="OAFIID:GNOME_FishApplet_Factory"
+	    type="@TYPE@"
+	    location="@LOCATION@">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:Bonobo/GenericFactory:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Wanda Factory"/>
+	<oaf_attribute name="description" type="string" _value="From Whence That Stupid Fish Came"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_FishApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_FishApplet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Fish"/>
+	<oaf_attribute name="description" type="string" _value="Display a swimming fish or another animated creature"/>
+	<oaf_attribute name="panel:icon" type="string" value="gnome-panel-fish"/>
+	<oaf_attribute name="bugzilla:bugzilla" type="string" value="GNOME"/>
+        <oaf_attribute name="bugzilla:product" type="string" value="gnome-panel"/>
+        <oaf_attribute name="bugzilla:component" type="string" value="fish"/>
+	<oaf_attribute name="bugzilla:version" type="string" value="@VERSION@"/>
+        <oaf_attribute name="bugzilla:other_binaries" type="string" value="fish-applet-2"/>
+
+</oaf_server>
+
+</oaf_info>

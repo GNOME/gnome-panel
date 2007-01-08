@@ -1,0 +1,1 @@
+SUBDIRS = fish workspace-switcher

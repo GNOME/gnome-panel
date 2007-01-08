@@ -1,0 +1,2864 @@
+# gnome-panel
+# Sung-Hyun Nam <namsh@kldp.org>, 2000
+# Young-Ho Cha <ganadist@chollian.net>, 2000, 2001, 2006
+# Changwoo Ryu <cwryu@debian.org>, 1998, 2002-2006
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-panel\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-12 19:58+0900\n"
+"PO-Revision-Date: 2006-08-12 20:03+0900\n"
+"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
+"Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:1
+msgid "Ad_just Date & Time"
+msgstr "날짜 및 시간 조정(_J)"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:2
+msgid "Copy _Date"
+msgstr "날짜 복사(_D)"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:3
+msgid "Copy _Time"
+msgstr "시각 복사(_T)"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:4
+#: ../applets/fish/GNOME_FishApplet.xml.h:1
+#: ../applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: ../applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: ../applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
+msgid "_About"
+msgstr "정보(_A)"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:5
+#: ../applets/fish/GNOME_FishApplet.xml.h:2
+#: ../applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: ../applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:723
+#: ../gnome-panel/panel-context-menu.c:295 ../gnome-panel/panel-menu-bar.c:404
+#: ../gnome-panel/panel-menu-button.c:685
+msgid "_Help"
+msgstr "도움말(_H)"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:6
+#: ../applets/fish/GNOME_FishApplet.xml.h:3
+#: ../applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
+msgid "_Preferences"
+msgstr "기본 설정(_P)"
+
+#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
+#: ../applets/clock/clock.c:2799
+msgid "Clock"
+msgstr "시계"
+
+#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
+msgid "Clock Applet Factory"
+msgstr "시계 애플릿 팩토리"
+
+#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+msgid "Factory for creating clock applets."
+msgstr "시계 애플릿을 만드는 데 쓰이는 팩토리."
+
+#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+msgid "Get the current time and date"
+msgstr "현재 시각과 날짜를 보여 줍니다"
+
+#: ../applets/clock/clock.c:341
+msgid "%l:%M:%S %p"
+msgstr "%p %I:%M:%S"
+
+#: ../applets/clock/clock.c:341 ../applets/clock/clock.c:663
+msgid "%l:%M %p"
+msgstr "%p %I:%M"
+
+#: ../applets/clock/clock.c:343 ../applets/clock/clock.c:1841
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+#: ../applets/clock/clock.c:343 ../applets/clock/clock.c:665
+#: ../applets/clock/clock.c:1843
+msgid "%H:%M"
+msgstr "%H:%M"
+
+#. translators: replace %e with %d if, when the day of the
+#. *              month as a decimal number is a single digit, it
+#. *              should begin with a 0 in your locale (e.g. "May
+#. *              01" instead of "May  1").
+#.
+#: ../applets/clock/clock.c:354
+msgid "%a %b %e"
+msgstr "%b %e일 (%a)"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:361
+#, c-format
+msgid ""
+"%1$s\n"
+"%2$s"
+msgstr ""
+"%s\n"
+"%s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:368
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%s %s"
+
+#. Show date in tooltip
+#: ../applets/clock/clock.c:450
+msgid "%A %B %d"
+msgstr "%b %e일 %A"
+
+#: ../applets/clock/clock.c:462
+msgid "Click to view your appointments and tasks"
+msgstr "약속과 작업을 보려면 누르십시오"
+
+#: ../applets/clock/clock.c:464
+msgid "Click to view month calendar"
+msgstr "달력을 보려면 누르십시오"
+
+#. Translators: If the event did not start on the current day
+#. we will display the start date in the most abbreviated way possible.
+#: ../applets/clock/clock.c:670
+msgid "%b %d"
+msgstr "%b %e일"
+
+#: ../applets/clock/clock.c:1016
+msgid "Tasks"
+msgstr "작업"
+
+#: ../applets/clock/clock.c:1166
+msgid "All Day"
+msgstr "하루 종일"
+
+#: ../applets/clock/clock.c:1205
+msgid "Appointments"
+msgstr "약속"
+
+#: ../applets/clock/clock.c:1452
+msgid "Calendar"
+msgstr "달력"
+
+#: ../applets/clock/clock.c:1733
+msgid "Computer Clock"
+msgstr "컴퓨터 시계"
+
+#: ../applets/clock/clock.c:1836
+msgid "%I:%M:%S %p"
+msgstr "%p %I:%M:%S"
+
+#: ../applets/clock/clock.c:1838
+msgid "%I:%M %p"
+msgstr "%p %I:%M"
+
+#: ../applets/clock/clock.c:1880
+msgid "%A, %B %d %Y"
+msgstr "%Y년 %b %e일 %A"
+
+#: ../applets/clock/clock.c:1937
+#, c-format
+msgid "Failed to launch time configuration tool: %s"
+msgstr "시간 설정 도구를 실행하는 데 실패: %s"
+
+#: ../applets/clock/clock.c:1975
+msgid ""
+"Failed to locate a program for configuring the date and time. Perhaps none "
+"is installed?"
+msgstr ""
+"날짜 및 시간을 설정하는 프로그램을 찾는데 실패했습니다. 설치가 안 된 것 같습"
+"니다?"
+
+#: ../applets/clock/clock.c:2456
+msgid "Custom format"
+msgstr "사용자 지정 형식"
+
+#: ../applets/clock/clock.c:2580 ../applets/clock/clock.c:2757
+#: ../applets/fish/fish.c:160 ../applets/notification_area/main.c:84
+#: ../applets/wncklet/window-list.c:113 ../applets/wncklet/wncklet.c:128
+#: ../applets/wncklet/workspace-switcher.c:238
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "도움말을 보여주는 데 오류가 발생했습니다: %s"
+
+#: ../applets/clock/clock.c:2617
+msgid "Clock Preferences"
+msgstr "시계 기본 설정"
+
+#: ../applets/clock/clock.c:2642
+msgid "Clock _type:"
+msgstr "시계 종류(_T):"
+
+#: ../applets/clock/clock.c:2653
+msgid "12 hour"
+msgstr "12시간"
+
+#: ../applets/clock/clock.c:2654
+msgid "24 hour"
+msgstr "24시간"
+
+#: ../applets/clock/clock.c:2655
+msgid "UNIX time"
+msgstr "유닉스 시각"
+
+#: ../applets/clock/clock.c:2656
+msgid "Internet time"
+msgstr "인터넷 시각"
+
+#: ../applets/clock/clock.c:2664
+msgid "Custom _format:"
+msgstr "사용자 지정 형식(_F):"
+
+#: ../applets/clock/clock.c:2683
+msgid "Show _seconds"
+msgstr "초 보기(_S)"
+
+#: ../applets/clock/clock.c:2692
+msgid "Show _date"
+msgstr "날짜 보기(_D)"
+
+#: ../applets/clock/clock.c:2701
+msgid "Use _UTC"
+msgstr "UTC 사용(_U)"
+
+#: ../applets/clock/clock.c:2802
+msgid "The Clock displays the current time and date"
+msgstr "시계는 현재 시간과 날짜를 보여 줍니다"
+
+#. Translator credits
+#: ../applets/clock/clock.c:2805 ../applets/fish/fish.c:588
+#: ../applets/notification_area/main.c:137
+#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:783
+#: ../applets/wncklet/window-menu.c:75
+#: ../applets/wncklet/workspace-switcher.c:555
+#: ../gnome-panel/panel-context-menu.c:133
+msgid "translator-credits"
+msgstr ""
+"남성현 <namsh@kldp.org>\n"
+"류창우 <cwryu@debian.org>\n"
+"차영호 <ganadist@mizi.com>"
+
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: ../applets/clock/clock.schemas.in.h:11
+msgid "24-hour"
+msgstr "24-hour"
+
+#: ../applets/clock/clock.schemas.in.h:12
+msgid "Custom format of the clock"
+msgstr "사용자 설정 시계 형식"
+
+#: ../applets/clock/clock.schemas.in.h:13
+msgid "Hour format"
+msgstr "시간 형식"
+
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "If true, display date in the clock, in addition to time."
+msgstr "참이면, 시계에 시간과 더불어 날짜를 보여줍니다."
+
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "If true, display seconds in time."
+msgstr "참이면, 시간에 초를 보여줍니다."
+
+#: ../applets/clock/clock.schemas.in.h:16
+msgid "If true, display time in Universal Coordinated Time zone."
+msgstr "참이면, 협정 세계시(UTC) 시간대의 시각을 보여줍니다."
+
+#: ../applets/clock/clock.schemas.in.h:17
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr ""
+"참이면, 마우스 포인터를 애플릿 위에 놓았을 때 설명에서 날짜를 보여줍니다."
+
+#: ../applets/clock/clock.schemas.in.h:18
+msgid "If true, show week numbers in the calendar."
+msgstr "참이면, 달력에서 몇 번째 주인지 표시합니다."
+
+#: ../applets/clock/clock.schemas.in.h:19
+msgid "Show date in clock"
+msgstr "시계에 날짜 표시"
+
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "Show date in tooltip"
+msgstr "설명에 날짜 표시"
+
+#: ../applets/clock/clock.schemas.in.h:21
+msgid "Show time with seconds"
+msgstr "시간에 초 표시"
+
+#: ../applets/clock/clock.schemas.in.h:22
+msgid "Show week numbers in calendar"
+msgstr "달력에서 몇 번째 주인지 표시"
+
+#: ../applets/clock/clock.schemas.in.h:23
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"그놈 2.6에서는 이 키를 사용하지 않기를 권합니다. 대신에 'format' 키를 사용합"
+"니다. 이 스키마는 과거 버전과의 호환성을 위해 유지됩니다."
+
+#: ../applets/clock/clock.schemas.in.h:24
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format."
+msgstr ""
+"이 키는 format 키를 \"custom\"이라고 할 때 시계 애플릿이 사용할 시각 형식입니"
+"다. strftime()에서 사용하는 형식으로 특정 형식을 지정할 수 있습니다."
+
+#: ../applets/clock/clock.schemas.in.h:25
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"이 키는 시계 애플릿이 사용할 시간 형식을 지정합니다. 가능한 값은 \"12-hour"
+"\", \"24-hour\", \"internet\", \"unix\" 그리고 \"custom\"입니다. \"internet"
+"\"으로 설정하면 시계는 인터넷 시각을 표시합니다. 인터넷 시각은 하루를 1000 "
+"\".beats\"로 표현합니다. 이 시스템에서는 시간대 구분이 없으므로, 세계 어디에"
+"나 시각은 동일합니다. \"unix\"로 설정하면 시계는 \"Epoch\"(1970년 1월 1일)로"
+"부터 몇 초가 지났는지를 표시합니다. \"custom\"이면 custom_format 키값에 따라 "
+"시각을 표시합니다."
+
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "This key specifies the program to run in order to configure the time."
+msgstr "이 키는 시간을 설정할 때 실행할 프로그램을 지정합니다."
+
+#: ../applets/clock/clock.schemas.in.h:27
+msgid "Time configuration tool"
+msgstr "시간 설정 도구"
+
+#: ../applets/clock/clock.schemas.in.h:28
+msgid "Use Internet time"
+msgstr "인터넷 시각 사용"
+
+#: ../applets/clock/clock.schemas.in.h:29
+msgid "Use UNIX time"
+msgstr "유닉스 시각 사용"
+
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "Use UTC"
+msgstr "UTC 사용"
+
+#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr "헤엄치는 물고기 혹은 다른 움직이는 생물을 보여줍니다"
+
+#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
+#: ../applets/fish/fish.c:582
+msgid "Fish"
+msgstr "물고기"
+
+#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "이 멍청한 물고기는 어디로부터 왔을까"
+
+#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+msgid "Wanda Factory"
+msgstr "완다 팩토리"
+
+# (FIXME) 좀 더 다듬을 필요 있음
+#: ../applets/fish/fish.c:249
+#, c-format
+msgid ""
+"Warning:  The command appears to be something actually useful.\n"
+"Since this is a useless applet, you may not want to do this.\n"
+"We strongly advise you against using %s for anything\n"
+"which would make the applet \"practical\" or useful."
+msgstr ""
+"경고: 이 프로그램의 명령어는 뭔가 쓸만한 프로그램처럼\n"
+"보이지만, 이것은 전혀 쓸모가 없는 애플릿입니다.\n"
+"%s(을)를 \"실용적\"이거나 유용하게 사용하지 않도록\n"
+"강력하게 조언합니다."
+
+#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:441
+msgid "Images"
+msgstr "그림"
+
+#: ../applets/fish/fish.c:550 ../applets/fish/fish.c:616
+#: ../applets/fish/fish.c:732
+#, no-c-format
+msgid "%s the Fish"
+msgstr "물고기 %s"
+
+#: ../applets/fish/fish.c:551
+#, c-format
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. "
+"Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgstr ""
+"%s(은)는 아무데도 쓸모가 없습니다.  디스크 공간과 컴파일 시간을 잡아먹을 뿐이"
+"고, 실행할 경우에는 소중한 패널의 공간과 메모리까지 차지합니다.  만약 누군가 "
+"이 애플릿을 쓰고 있다면, 그 사람은 빨리 정신 감정을 받으러 가야 할것입니다."
+
+#: ../applets/fish/fish.c:575
+msgid "(with minor help from George)"
+msgstr "(George의 작은 도움으로)"
+
+#: ../applets/fish/fish.c:617
+#, c-format
+msgid "%s the Fish, a contemporary oracle"
+msgstr "물고기 %s, 이 시대의 예언자"
+
+#: ../applets/fish/fish.c:688
+msgid "Unable to locate the command to execute"
+msgstr "실행할 명령어의 위치를 알 수 없습니다"
+
+#: ../applets/fish/fish.c:737
+#, no-c-format
+msgid "%s the Fish Says:"
+msgstr "물고기 %s 말하길:"
+
+#: ../applets/fish/fish.c:806
+#, c-format
+msgid ""
+"Unable to read output from command\n"
+"\n"
+"Details: %s"
+msgstr ""
+"명령에서 출력을 읽을 수 없습니다:\n"
+"\n"
+"자세한 정보: %s"
+
+#: ../applets/fish/fish.c:871
+msgid "_Speak again"
+msgstr "다시 말하기(_S)"
+
+#: ../applets/fish/fish.c:954
+#, c-format
+msgid "The configured command is not working and has been replaced by: %s"
+msgstr "설정하신 명령어가 동작하지 않아서 다음 명령을 대신 사용합니다: %s"
+
+#: ../applets/fish/fish.c:977
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"명령 실행 실패: '%s'\n"
+"\n"
+"자세한 정보: %s"
+
+#: ../applets/fish/fish.c:993
+#, c-format
+msgid ""
+"Unable to read from '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"'%s'에서 읽을 수 없습니다\n"
+"\n"
+"자세한 정보: %s"
+
+#: ../applets/fish/fish.c:1611
+msgid ""
+"The water needs changing!\n"
+"(Look at today's date)"
+msgstr ""
+"어항 물 좀 갈아 주세요!\n"
+"(오늘 날짜를 확인하세요)"
+
+#: ../applets/fish/fish.c:1706
+#, c-format
+msgid "%s the Fish, the fortune teller"
+msgstr "물고기 %s, fortune teller"
+
+#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
+#: ../applets/wncklet/workspace-switcher.glade.h:1
+#: ../gnome-panel/panel-properties-dialog.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: ../applets/fish/fish.glade.h:2
+msgid "<b>Animation</b>"
+msgstr "<b>애니메이션</b>"
+
+#: ../applets/fish/fish.glade.h:3
+msgid "<b>General</b>"
+msgstr "<b>일반</b>"
+
+#: ../applets/fish/fish.glade.h:4
+msgid "Co_mmand to run when clicked:"
+msgstr "클릭하면 실행할 명령어(_M):"
+
+#: ../applets/fish/fish.glade.h:5
+msgid "Fish Preferences"
+msgstr "물고기 기본 설정"
+
+#: ../applets/fish/fish.glade.h:6
+msgid "Select an animation"
+msgstr "애니메이션 선택"
+
+#: ../applets/fish/fish.glade.h:7
+msgid "_File:"
+msgstr "파일(_F):"
+
+#: ../applets/fish/fish.glade.h:8
+msgid "_Name of fish:"
+msgstr "물고기 이름(_N):"
+
+#: ../applets/fish/fish.glade.h:9
+msgid "_Pause per frame:"
+msgstr "프레임 사이사이의 시간(_P):"
+
+#: ../applets/fish/fish.glade.h:10
+msgid "_Rotate on vertical panels"
+msgstr "세로 패널에서 90도 회전(_R)"
+
+#: ../applets/fish/fish.glade.h:11
+msgid "_Total frames in animation:"
+msgstr "애니매이션의 전체 프레임 수(_T):"
+
+#: ../applets/fish/fish.glade.h:12
+msgid "frames"
+msgstr "프레임"
+
+#: ../applets/fish/fish.glade.h:13
+msgid "seconds"
+msgstr "초"
+
+#: ../applets/fish/fish.schemas.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr ""
+"이름 없는 물고기는 아주 멍청한 물고기일 뿐입니다. 당신의 물고기에 이름을 지"
+"어 생명을 불어 넣으십시오."
+
+#: ../applets/fish/fish.schemas.in.h:2
+msgid "Command to execute on click"
+msgstr "클릭했을때 실행할 명령"
+
+#: ../applets/fish/fish.schemas.in.h:3
+msgid "Frames in fish's animation"
+msgstr "물고기 애니메이션의 프레임 수"
+
+#: ../applets/fish/fish.schemas.in.h:4
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr "참이면, 세로 패널에서 물고기 애니메이션도 세로 방향으로 회전해서 보여줍니다."
+
+#: ../applets/fish/fish.schemas.in.h:5
+msgid "Pause per frame"
+msgstr "프레임마다 쉬는 시간"
+
+#: ../applets/fish/fish.schemas.in.h:6
+msgid "Rotate on vertical panels"
+msgstr "세로 패널에서 회전"
+
+#: ../applets/fish/fish.schemas.in.h:7
+msgid "The fish's animation pixmap"
+msgstr "물고기의 애니메이션 픽스맵"
+
+#: ../applets/fish/fish.schemas.in.h:8
+msgid "The fish's name"
+msgstr "물고기의 이름"
+
+#: ../applets/fish/fish.schemas.in.h:9
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "이 키는 물고기를 클릭했을때 실행할 명령을 지정합니다."
+
+#: ../applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"이 키는 물고기 애플릿에서 보여 줄 애니메이션의 픽스맵 파일이름을 지정합니다. "
+"픽스맵 디렉토리에 대한 상대 경로입니다."
+
+#: ../applets/fish/fish.schemas.in.h:11
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
+msgstr "물고기 애니메이션에서 보여줄 프레임 수를 지정합니다."
+
+#: ../applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr "이 키는 각 프레임을 보여줄 간격을 지정합니다 (초 단위)."
+
+#: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr "알림 아이콘이 나타날 구역"
+
+#: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
+#: ../applets/notification_area/main.c:132
+msgid "Notification Area"
+msgstr "알림 영역"
+
+#: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
+msgid "Notification Area Factory"
+msgstr "알림 영역 팩토리"
+
+#: ../applets/notification_area/na-tray-manager.c:123
+msgid "Orientation"
+msgstr "방향"
+
+#: ../applets/notification_area/na-tray-manager.c:124
+msgid "The orientation of the tray."
+msgstr "트레이의 방향."
+
+#: ../applets/notification_area/main.c:404
+msgid "Panel Notification Area"
+msgstr "패널 알림 영역"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+msgid "Factory for the window navigation related applets"
+msgstr "창 네비게이션과 관련된 애플릿을 위한 팩토리"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+msgid "Hide application windows and show the desktop"
+msgstr "프로그램 창을 숨기고 바탕화면을 보여줍니다"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+msgid "Show Desktop"
+msgstr "바탕화면 보여주기"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows using a menu"
+msgstr "메뉴를 써서 열려 있는 창 사이로 전환"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between open windows using buttons"
+msgstr "단추를 써서 열려 있는 창 사이로 전환"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+msgid "Switch between workspaces"
+msgstr "작업 공간 사이로 전환"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: ../applets/wncklet/window-list.c:786
+msgid "Window List"
+msgstr "창 목록"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+msgid "Window Navigation Applet Factory"
+msgstr "창 네비게이션 애플릿 팩토리"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:241
+msgid "Window Selector"
+msgstr "창 선택기"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: ../applets/wncklet/workspace-switcher.c:558
+msgid "Workspace Switcher"
+msgstr "작업 공간 바꾸기 프로그램"
+
+#: ../applets/wncklet/showdesktop.c:183
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "%s(을)를 읽어 들이는데 실패: %s\n"
+
+#: ../applets/wncklet/showdesktop.c:184
+msgid "Icon not found"
+msgstr "아이콘을 찾을 수 없습니다"
+
+#: ../applets/wncklet/showdesktop.c:242
+msgid "Click here to restore hidden windows."
+msgstr "누르면 숨긴 창을 되돌립니다."
+
+#: ../applets/wncklet/showdesktop.c:245
+msgid "Click here to hide all windows and show the desktop."
+msgstr "누르면 모든 창을 숨기고 바탕화면을 보여줍니다."
+
+#: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
+msgid "Show Desktop Button"
+msgstr "바탕화면 보여주기 단추"
+
+#: ../applets/wncklet/showdesktop.c:536
+msgid "This button lets you hide all windows and show the desktop."
+msgstr "이 단추를 누르면 모든 창을 숨기고 바탕화면을 보여줍니다."
+
+#: ../applets/wncklet/showdesktop.c:566
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+"창 관리자가 바탕화면 보여주기 단추를 지원하지 않거나, 창 관리자를 실행하고 있"
+"지 않습니다."
+
+#: ../applets/wncklet/window-list.c:788
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
+msgstr ""
+"창 목록은 모든 창의 목록을 단추 모음으로  보여주고 찾을 수 있도록 해 줍니다."
+
+#: ../applets/wncklet/window-list.glade.h:2
+msgid "<b>Restoring Minimized Windows</b>"
+msgstr "<b>최소화된 창을 복구</b>"
+
+#: ../applets/wncklet/window-list.glade.h:3
+msgid "<b>Window Grouping</b>"
+msgstr "<b>창 그룹</b>"
+
+#: ../applets/wncklet/window-list.glade.h:4
+msgid "<b>Window List Content</b>"
+msgstr "<b>창 목록 내용</b>"
+
+#: ../applets/wncklet/window-list.glade.h:5
+msgid "<b>Window List Size</b>"
+msgstr "<b>창 목록 크기</b>"
+
+#: ../applets/wncklet/window-list.glade.h:6
+msgid "Behavior"
+msgstr "동작"
+
+#: ../applets/wncklet/window-list.glade.h:7
+msgid "Group windows when _space is limited"
+msgstr "공간이 제한되어 있을 때 창 모으기(_S)"
+
+#: ../applets/wncklet/window-list.glade.h:8
+msgid "M_inimum size:"
+msgstr "최소 크기(_I):"
+
+#: ../applets/wncklet/window-list.glade.h:9
+msgid "Ma_ximum size:"
+msgstr "최대 크기(_X):"
+
+#: ../applets/wncklet/window-list.glade.h:10
+msgid "Restore to current _workspace"
+msgstr "현재 작업 공간으로 복귀(_W)"
+
+#: ../applets/wncklet/window-list.glade.h:11
+msgid "Restore to na_tive workspace"
+msgstr "본래 작업 공간으로 복귀(_T)"
+
+#: ../applets/wncklet/window-list.glade.h:12
+msgid "Sh_ow windows from current workspace"
+msgstr "현재 작업 공간의 창 보여주기(_O)"
+
+#: ../applets/wncklet/window-list.glade.h:13
+msgid "Show windows from a_ll workspaces"
+msgstr "모든 작업 공간의 창 보여주기(_L)"
+
+#: ../applets/wncklet/window-list.glade.h:14
+msgid "Size"
+msgstr "크기"
+
+#: ../applets/wncklet/window-list.glade.h:15
+msgid "Window List Preferences"
+msgstr "창 목록 기본 설정"
+
+#: ../applets/wncklet/window-list.glade.h:16
+msgid "_Always group windows"
+msgstr "언제나 창을 모음(_A)"
+
+#: ../applets/wncklet/window-list.glade.h:17
+msgid "_Never group windows"
+msgstr "창을 모으지 않음(_N)"
+
+#: ../applets/wncklet/window-list.glade.h:18
+#: ../gnome-panel/panel-properties-dialog.glade.h:27
+msgid "pixels"
+msgstr "픽셀"
+
+#: ../applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"언제 같은 프로그램의 창을 창 표시줄에서 모을 것인지 결정합니다. 쓸 수 있는 값"
+"은 \"never\", \"auto\" 그리고 \"always\"입니다."
+
+#: ../applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"참이면, 모든 작업 공간의 창을 창 표시줄에서 보이고. 거짓이면 현재 작업 공간"
+"에 있는 창만 보입니다."
+
+#: ../applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"참이면, 창의 최소화를 해제할 때 현재 작업 공간으로 창을 불러 옵니다. 거짓이"
+"면 그 창의 작업 공간으로 작업 공간을 바꿉니다."
+
+#: ../applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum window list size"
+msgstr "창 목록 최대 크기"
+
+#: ../applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum window list size"
+msgstr "창 목록 최소 크기"
+
+#: ../applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to current workspace when unminimized"
+msgstr "최소화 해제할 때 창을 현재 작업 공간으로 옮김"
+
+#: ../applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "모든 작업 공간의 창 보여주기"
+
+#: ../applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"This key specifies the maximum width that the window list requests. The "
+"maximum width setting is useful to limit the size of the window list in "
+"large panels, where the window list could fill the entire space available."
+msgstr ""
+"이 키는 애플릿이 요청할 최대 너비입니다. 최대 너비 설정은 큰 패널에서 애플릿"
+"의 크기를 제한할 때 쓰입니다. 이런 경우 제한하지 않으면 애플릿이 가장자리 패"
+"널같은 곳에서 전체 패널 가득히 차지할 수도 있습니다."
+
+#: ../applets/wncklet/window-list.schemas.in.h:9
+msgid "This key specifies the minimum width that the window list requests."
+msgstr "이 키는 창 목록이 요청할 최소 너비를 지정합니다."
+
+#: ../applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "창을 모을 상황"
+
+#: ../applets/wncklet/window-menu.c:82
+msgid ""
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
+msgstr "창 선택기는 모든 창의 목록을 메뉴로 보여주고 찾을 수 있도록 해 줍니다."
+
+#: ../applets/wncklet/workspace-switcher.c:130
+#: ../applets/wncklet/workspace-switcher.c:859
+#: ../applets/wncklet/workspace-switcher.glade.h:11
+msgid "rows"
+msgstr "행 개수"
+
+#: ../applets/wncklet/workspace-switcher.c:130
+#: ../applets/wncklet/workspace-switcher.c:859
+msgid "columns"
+msgstr "열 개수"
+
+#: ../applets/wncklet/workspace-switcher.c:426
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr ""
+"작업 공간 바꾸기 애플릿의 num_rows 값을 읽어들이는 데 오류가 발생했습니다: %"
+"s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:437
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"작업 공간 바꾸기 애플릿의 display_workspace_names 값을 읽어들이는 데 오류가 "
+"발생했습니다: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:452
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"작업 공간 바꾸기 애플릿의 display_all_workspaces 값을 읽어들이는 데 오류가 발"
+"생했습니다: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:560
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"작업 공간 바꾸기 프로그램은 여러분의 작업공간의 축소판에서 창을 관리할 수 있"
+"도록 해 줍니다."
+
+#: ../applets/wncklet/workspace-switcher.glade.h:2
+msgid "<b>Switcher</b>"
+msgstr "<b>작업 공간 바꾸기</b>"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:3
+msgid "<b>Workspaces</b>"
+msgstr "<b>작업 공간</b>"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:4
+msgid "Number of _workspaces:"
+msgstr "작업 공간의 개수(_W):"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show _all workspaces in:"
+msgstr "모든 작업 공간 보여 주기(_A):"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:6
+msgid "Show _only the current workspace"
+msgstr "현재 작업 공간만 보여 주기(_O)"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:7
+msgid "Show workspace _names in switcher"
+msgstr "작업 공간 바꾸기 프로그램에서 공간의 이름 표시(_N)"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Names"
+msgstr "작업 공간 이름"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspace Switcher Preferences"
+msgstr "작업 공간 바꾸기 기본 설정"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:10
+msgid "Workspace na_mes:"
+msgstr "작업 공간 이름(_M):"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid "Display all workspaces"
+msgstr "모든 작업 공간 보여 주기"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid "Display workspace names"
+msgstr "작업 공간 이름 보여 주기"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"참이면, 작업 공간 바꾸기 프로그램에서 모든 작업 공간을 보여줍니다. 거짓이면 "
+"현재 작업 공간만 보여줍니다."
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace."
+msgstr ""
+"참이면, 작업 공간 바꾸기 프로그램에서 작업 공간의 이름을 보여줍니다. 거짓이"
+"면 작업 공간에 들어 있는 창을 보여줍니다."
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Rows in workspace switcher"
+msgstr "작업 공간 바꾸기의 줄 개수"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"이 키는 작업 공간 바꾸기 프로그램에서 작업 공간을 몇 줄(가로 방향일 경우) 혹"
+"은 몇 열(세로 방향일 경우)로 보여줄 지 지정합니다.  이 키는 "
+"display_all_workspaces 키가 참일 경우에만 의미가 있습니다."
+
+#: ../gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "그놈 패널 쉘"
+
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:540
+msgid "Loc_k To Panel"
+msgstr "패널에 잠그기(_K)"
+
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:523
+msgid "_Move"
+msgstr "옮기기(_M)"
+
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
+msgid "_Remove From Panel"
+msgstr "패널에서 지우기(_R)"
+
+#: ../gnome-panel/applet.c:433
+msgid "???"
+msgstr "???"
+
+# 패널에 애플릿을 놓을 공간이 없음을 말한다.
+#: ../gnome-panel/applet.c:1226
+msgid "Cannot find an empty spot"
+msgstr "비어 있는 위치가 없습니다"
+
+#: ../gnome-panel/button-widget.c:199
+msgid "Could not load icon"
+msgstr "아이콘을 읽을 수 없습니다"
+
+#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:169
+#: ../gnome-panel/panel-toplevel.c:1524
+msgid "Drawer"
+msgstr "서랍"
+
+#: ../gnome-panel/drawer.c:588
+msgid "_Add to Drawer..."
+msgstr "서랍에 더하기(_A)..."
+
+#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:834
+#: ../gnome-panel/panel-action-button.c:136
+#: ../gnome-panel/panel-context-menu.c:220
+msgid "_Properties"
+msgstr "등록 정보(_P)"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:24
+msgid "Create new file in the given directory"
+msgstr "주어진 폴더에 새 파일 만들기"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:25
+msgid "[FILE...]"
+msgstr "[파일...]"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:172
+msgid "- Edit .desktop files"
+msgstr "- .desktop 파일을 편집합니다"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:203
+#: ../gnome-panel/gnome-desktop-item-edit.c:275 ../gnome-panel/launcher.c:921
+msgid "Create Launcher"
+msgstr "실행 아이콘 만들기"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:227
+#: ../gnome-panel/gnome-desktop-item-edit.c:261
+msgid "Directory Properties"
+msgstr "디렉토리 등록 정보"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:762
+msgid "Launcher Properties"
+msgstr "실행 아이콘 등록 정보"
+
+#: ../gnome-panel/launcher.c:131
+msgid "Could not show this URL"
+msgstr "이 URL을 볼 수 없습니다"
+
+#: ../gnome-panel/launcher.c:132
+msgid "No URL was specified."
+msgstr "URL을 지정하지 않았습니다."
+
+#: ../gnome-panel/launcher.c:145
+#, c-format
+msgid "Could not show '%s'"
+msgstr "%s(을)를 보여줄 수 없습니다"
+
+#: ../gnome-panel/launcher.c:190
+msgid "Could not launch application"
+msgstr "실행 아이콘을 실행할 수 없습니다"
+
+#: ../gnome-panel/launcher.c:255
+msgid "Could not use dropped item"
+msgstr "놓아진 항목을 쓸 수 없습니다"
+
+#: ../gnome-panel/launcher.c:447
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "패널 실행 아이콘의 데스크탑 파일에 대한 URI가 들어 있지 않습니다\n"
+
+#: ../gnome-panel/launcher.c:490
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr ""
+"패널 실행 아이콘 %2$s%3$s에 대한 데스크탑 파일 %1$s을(를) 열 수 없습니다\n"
+
+#: ../gnome-panel/launcher.c:828
+msgid "_Launch"
+msgstr "실행(_L)"
+
+#: ../gnome-panel/launcher.c:867
+#, c-format
+msgid "Key %s is not set, cannot load launcher\n"
+msgstr "%s 키를 설정하지 않았습니다.  실행 아이콘을 읽어들일 수 없습니다\n"
+
+#: ../gnome-panel/launcher.c:988 ../gnome-panel/panel-ditem-editor.c:1229
+#: ../gnome-panel/panel-ditem-editor.c:1255
+#: ../gnome-panel/panel-ditem-editor.c:1323
+msgid "Could not save launcher"
+msgstr "실행 아이콘을 저장할 수 없습니다"
+
+#: ../gnome-panel/menu.c:935
+msgid "Add this launcher to _panel"
+msgstr "실행 아이콘을 패널에 더하기(_P)"
+
+#: ../gnome-panel/menu.c:946
+msgid "Add this launcher to _desktop"
+msgstr "실행 아이콘을 바탕화면에 더하기(_D)"
+
+#: ../gnome-panel/menu.c:962
+msgid "_Entire menu"
+msgstr "전체 메뉴에서(_E)"
+
+#: ../gnome-panel/menu.c:972
+msgid "Add this as _drawer to panel"
+msgstr "서랍으로 패널에 더하기(_D)"
+
+#: ../gnome-panel/menu.c:984
+msgid "Add this as _menu to panel"
+msgstr "메뉴로 패널에 더하기(_M)"
+
+#: ../gnome-panel/panel-action-button.c:124
+msgid "_Activate Screensaver"
+msgstr "화면 보호기 활성(_A)"
+
+#: ../gnome-panel/panel-action-button.c:130
+msgid "_Lock Screen"
+msgstr "화면 잠그기(_L)"
+
+#: ../gnome-panel/panel-action-button.c:200
+#: ../gnome-panel/panel-menu-bar.c:479 ../gnome-panel/panel-menu-button.c:1017
+#: ../gnome-panel/panel-util.c:779
+#, c-format
+msgid "Could not execute '%s'"
+msgstr "'%s'을(를) 실행할 수 없습니다"
+
+#: ../gnome-panel/panel-action-button.c:238
+msgid "Could not connect to server"
+msgstr "서버에 연결할 수 없습니다"
+
+#: ../gnome-panel/panel-action-button.c:269
+msgid "Lock Screen"
+msgstr "화면 잠그기"
+
+#: ../gnome-panel/panel-action-button.c:270
+msgid "Protect your computer from unauthorized use"
+msgstr "인증하지 않은 사용을 막기 위해 컴퓨터를 잠급니다"
+
+#. when changing one of those two strings, don't forget to
+#. * update the ones in panel-menu-items.c (look for
+#. * panel:showusername|1)
+#: ../gnome-panel/panel-action-button.c:284
+msgid "Log Out..."
+msgstr "로그아웃..."
+
+#: ../gnome-panel/panel-action-button.c:285
+msgid "Log out of this session to log in as a different user"
+msgstr "다른 사용자가 로그인하기 위해 이 세션을 로그아웃합니다"
+
+#: ../gnome-panel/panel-action-button.c:294
+msgid "Run Application..."
+msgstr "프로그램 실행..."
+
+#: ../gnome-panel/panel-action-button.c:295
+msgid "Run an Application by entering a command"
+msgstr "명령어를 입력해 프로그램을 실행합니다"
+
+#: ../gnome-panel/panel-action-button.c:304
+msgid "Search for Files..."
+msgstr "파일 찾기..."
+
+#: ../gnome-panel/panel-action-button.c:305
+msgid "Find files, folders, and documents on your computer"
+msgstr "컴퓨터에 있는 파일, 폴더, 문서를 찾습니다"
+
+#: ../gnome-panel/panel-action-button.c:313
+msgid "Force Quit"
+msgstr "강제로 끝내기"
+
+#: ../gnome-panel/panel-action-button.c:314
+msgid "Force a misbehaving application to quit"
+msgstr "잘못 동작하는 응용 프로그램을 강제로 끝냅니다"
+
+#. FIXME icon
+#: ../gnome-panel/panel-action-button.c:323
+msgid "Connect to Server..."
+msgstr "서버에 연결..."
+
+#: ../gnome-panel/panel-action-button.c:324
+msgid "Connect to a remote server"
+msgstr "원격 서버에 연결합니다"
+
+#: ../gnome-panel/panel-action-button.c:332
+msgid "Shut Down..."
+msgstr "끄기..."
+
+#: ../gnome-panel/panel-action-button.c:333
+msgid "Shut down the computer"
+msgstr "컴퓨터를 끕니다"
+
+#: ../gnome-panel/panel-addto.c:110
+msgid "Custom Application Launcher"
+msgstr "사용자 지정 프로그램 실행 아이콘"
+
+#: ../gnome-panel/panel-addto.c:111
+msgid "Create a new launcher"
+msgstr "새 실행 아이콘 만들기"
+
+#: ../gnome-panel/panel-addto.c:121
+msgid "Application Launcher..."
+msgstr "프로그램 실행 아이콘..."
+
+#: ../gnome-panel/panel-addto.c:122
+msgid "Copy a launcher from the applications menu"
+msgstr "프로그램 메뉴에서 실행기를 복사합니다"
+
+#: ../gnome-panel/panel-addto.c:136
+msgid "Main Menu"
+msgstr "주 메뉴"
+
+#: ../gnome-panel/panel-addto.c:137
+msgid "The main GNOME menu"
+msgstr "그놈 주메뉴"
+
+#: ../gnome-panel/panel-addto.c:147
+msgid "Menu Bar"
+msgstr "메뉴 모음"
+
+#: ../gnome-panel/panel-addto.c:148
+msgid "A custom menu bar"
+msgstr "사용자 지정 메뉴 모음"
+
+#: ../gnome-panel/panel-addto.c:158
+msgid "Separator"
+msgstr "구분자"
+
+#: ../gnome-panel/panel-addto.c:159
+msgid "A separator to organize the panel items"
+msgstr "패널 항목을 정렬하는 구분자"
+
+#: ../gnome-panel/panel-addto.c:170
+msgid "A pop out drawer to store other items in"
+msgstr "그 안에 여러가지 항목을 집어 넣는 여닫을 수 있는 서랍"
+
+#: ../gnome-panel/panel-addto.c:261
+msgid "(empty)"
+msgstr "(비었음)"
+
+#: ../gnome-panel/panel-addto.c:401
+#: ../libpanel-applet/panel-test-applets.c:248
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "질의가 예외 %s을(를) 돌려줌\n"
+
+#: ../gnome-panel/panel-addto.c:1056
+#, c-format
+msgid "Find an _item to add to \"%s\":"
+msgstr "\"%s\"에 더할 항목 찾기(_I):"
+
+#: ../gnome-panel/panel-addto.c:1060
+msgid "Add to Drawer"
+msgstr "서랍에 더하기"
+
+#: ../gnome-panel/panel-addto.c:1062
+msgid "Find an _item to add to the drawer:"
+msgstr "서랍에 더할 항목 찾기(_I):"
+
+#: ../gnome-panel/panel-addto.c:1064
+msgid "Add to Panel"
+msgstr "패널에 더하기"
+
+#: ../gnome-panel/panel-addto.c:1066
+msgid "Find an _item to add to the panel:"
+msgstr "패널에 더할 항목 찾기(_I):"
+
+#: ../gnome-panel/panel-applet-frame.c:836
+#, c-format
+msgid "Exception from popup_menu '%s'\n"
+msgstr "popup_menu '%s'에서 예외 상황\n"
+
+#: ../gnome-panel/panel-applet-frame.c:958
+#, c-format
+msgid "\"%s\" has quit unexpectedly"
+msgstr "\"%s\" 애플릿이 갑자기 끝났습니다"
+
+#: ../gnome-panel/panel-applet-frame.c:960
+msgid "Panel object has quit unexpectedly"
+msgstr "패널 오브젝트가 갑자기 끝났습니다"
+
+#: ../gnome-panel/panel-applet-frame.c:967
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
+msgstr "패널 오브젝트를 다시 읽어들이면, 원래대로 다시 패널에 붙습니다."
+
+#: ../gnome-panel/panel-applet-frame.c:973
+msgid "_Don't Reload"
+msgstr "읽어들이지 않기(_D)"
+
+#: ../gnome-panel/panel-applet-frame.c:974
+msgid "_Reload"
+msgstr "다시 읽어들이기(_R)"
+
+#: ../gnome-panel/panel-applet-frame.c:1020
+#, c-format
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr "패널에서 '%s'(을)를 읽어들이는 데 문제가 발생했습니다."
+
+#: ../gnome-panel/panel-applet-frame.c:1037
+msgid "Do you want to delete the applet from your configuration?"
+msgstr "설정에서 이 애플릿을 지우시겠습니까?"
+
+#: ../gnome-panel/panel-applet-frame.c:1136
+msgid "Unable to obtain AppletShell interface from control\n"
+msgstr "컨트롤에서 AppletShell 인터페이스를 가져올 수 없습니다\n"
+
+#: ../gnome-panel/panel-bindings.c:153
+#, c-format
+msgid "Error watching gconf key '%s': %s"
+msgstr "gconf 키 '%s'을(를) 찾는 데 오류가 발생했습니다: %s"
+
+#: ../gnome-panel/panel-bindings.c:171
+#, c-format
+msgid "Error loading gconf directory '%s': %s"
+msgstr "gconf 디렉토리 '%s'을(를) 읽어들이는 데 오류: %s"
+
+#: ../gnome-panel/panel-bindings.c:185
+#, c-format
+msgid "Error getting value for '%s': %s"
+msgstr "'%s'의 값을 읽는 데 오류: %s"
+
+#: ../gnome-panel/panel-context-menu.c:100
+msgid "And many, many others..."
+msgstr "그리고 아주 아주 많은 사람들..."
+
+#: ../gnome-panel/panel-context-menu.c:126
+msgid "The GNOME Panel"
+msgstr "그놈 패널"
+
+#: ../gnome-panel/panel-context-menu.c:129
+msgid ""
+"This program is responsible for launching other applications and embedding "
+"small applets within itself."
+msgstr ""
+"이 프로그램은 다른 프로그램을 실행하고, 내부에 작은 애플릿들을 포함하는 일을 "
+"합니다."
+
+#: ../gnome-panel/panel-context-menu.c:167
+msgid "Cannot delete this panel"
+msgstr "이 패널을 지울 수 없습니다"
+
+#: ../gnome-panel/panel-context-menu.c:168
+msgid "You must always have at least one panel."
+msgstr "적어도 하나의 패널이 있어야 합니다."
+
+#: ../gnome-panel/panel-context-menu.c:205
+msgid "_Add to Panel..."
+msgstr "패널에 더하기(_A)..."
+
+#: ../gnome-panel/panel-context-menu.c:233
+msgid "_Delete This Panel"
+msgstr "이 패널 지우기(_D)"
+
+#: ../gnome-panel/panel-context-menu.c:250
+msgid "_New Panel"
+msgstr "새 패널(_N)"
+
+#: ../gnome-panel/panel-context-menu.c:306
+msgid "A_bout Panels"
+msgstr "패널 정보(_B)"
+
+#: ../gnome-panel/panel-ditem-editor.c:111
+msgid "Application"
+msgstr "프로그램"
+
+#: ../gnome-panel/panel-ditem-editor.c:113
+msgid "Application in Terminal"
+msgstr "터미널에 프로그램"
+
+#: ../gnome-panel/panel-ditem-editor.c:115
+msgid "File"
+msgstr "파일"
+
+#. Type
+#: ../gnome-panel/panel-ditem-editor.c:574
+msgid "_Type:"
+msgstr "종류(_T):"
+
+#. Name
+#: ../gnome-panel/panel-ditem-editor.c:581
+msgid "_Name:"
+msgstr "이름(_N):"
+
+#: ../gnome-panel/panel-ditem-editor.c:589
+msgid "Browse icons"
+msgstr "아이콘 찾아보기"
+
+#: ../gnome-panel/panel-ditem-editor.c:607
+msgid "_Browse..."
+msgstr "찾아보기(_B)..."
+
+#. Comment
+#: ../gnome-panel/panel-ditem-editor.c:614
+msgid "Co_mment:"
+msgstr "설명(_M):"
+
+#: ../gnome-panel/panel-ditem-editor.c:943
+msgid "Choose an application..."
+msgstr "프로그램을 선택하십시오..."
+
+#: ../gnome-panel/panel-ditem-editor.c:947
+msgid "Choose a file..."
+msgstr "파일을 선택하십시오..."
+
+#: ../gnome-panel/panel-ditem-editor.c:1061
+#: ../gnome-panel/panel-ditem-editor.c:1068
+msgid "_Command:"
+msgstr "명령어(_C):"
+
+#: ../gnome-panel/panel-ditem-editor.c:1075
+msgid "_Location:"
+msgstr "위치(_L):"
+
+#: ../gnome-panel/panel-ditem-editor.c:1230
+msgid "The name of the launcher is not set."
+msgstr "실행 아이콘의 이름을 설정하지 않았습니다."
+
+#: ../gnome-panel/panel-ditem-editor.c:1243
+msgid "The command of the launcher is not set."
+msgstr "실행 아이콘의 명령어를 설정하지 않았습니다."
+
+#: ../gnome-panel/panel-ditem-editor.c:1246
+msgid "The location of the launcher is not set."
+msgstr "실행 아이콘의 위치를 설정하지 않았습니다."
+
+#: ../gnome-panel/panel-ditem-editor.c:1363 ../gnome-panel/panel-util.c:138
+msgid "Could not display help document"
+msgstr "도움말 문서를 보일 수 없습니다"
+
+#: ../gnome-panel/panel-force-quit.c:75
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"강제로 끝내고 싶은 프로그램의 창에 클릭하십시오.  취소하려면 <Esc>를 누르십시"
+"오."
+
+#: ../gnome-panel/panel-force-quit.c:203
+msgid ""
+"Force this application to exit?\n"
+"(Any open documents will be lost.)"
+msgstr ""
+"이 프로그램을 강제로 끝낼까요?\n"
+"(프로그램이 사용중인 문서가 있으면 그 내용을 잃게 됩니다)"
+
+#: ../gnome-panel/panel-general.schemas.in.h:1
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+"/apps/panel/profiles/default에 있는 사용자의 이전 설정을 /apps/panel 밑의 새 "
+"위치로 복사할 지 여부를 나타내는 참/거짓 값."
+
+#: ../gnome-panel/panel-general.schemas.in.h:2
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"패널 ID 목록. 각 ID는 각각의 최상위 패널을 가리킵니다. 이 설정은 /apps/panel/"
+"toplevels/$(id)에 들어 있습니다."
+
+#: ../gnome-panel/panel-general.schemas.in.h:3
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+"패널 애플릿 ID 목록. 각 ID는 각각의 패널 애플릿을 가리킵니다. 이 애플릿의 설"
+"정은 /apps/panel/applets/$(id)에 들어 있습니다."
+
+#: ../gnome-panel/panel-general.schemas.in.h:4
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"패널 오브젝트 ID 목록. 각 ID는 각각의 패널 오브젝트를 가리킵니다. 실행 아이"
+"콘, 액션 단추, 혹은 메뉴 단추/메뉴 모음이 이에 해당됩니다.  이 오브젝트의 설"
+"정은 /apps/panel/objects/$(id)에 들어 있습니다."
+
+#: ../gnome-panel/panel-general.schemas.in.h:5
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr "\"프로그램 실행\" 대화 상자에서 자동완성 사용"
+
+#: ../gnome-panel/panel-general.schemas.in.h:6
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "\"프로그램 실행\" 대화 상자에서 프로그램 목록 사용"
+
+#: ../gnome-panel/panel-general.schemas.in.h:7
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "\"프로그램 실행\" 대화 상자에서 프로그램 목록 늘리기"
+
+#: ../gnome-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr "참이면, \"프로그램 실행\" 대화상자에서 자동완성을 쓰도록 합니다."
+
+#: ../gnome-panel/panel-general.schemas.in.h:9
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"참이면 \"프로그램 실행\" 대화 상자가 나타날 때 그 대화 상자의 \"알려진 프로그"
+"램\" 목록이 열립니다.  이 설정은 enable_program_list 키가 참일 경우에만 의미"
+"가 있습니다."
+
+#: ../gnome-panel/panel-general.schemas.in.h:10
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"참이면 \"프로그램 실행\" 대화 상자의 \"알려진 프로그램\" 목록을 사용할 수 있"
+"습니다.  대화 상자가 나타날 때 목록을 확장할지 아닐지는 show_program_list 키"
+"로 조정할 수 있습니다."
+
+#: ../gnome-panel/panel-general.schemas.in.h:11
+msgid "Old profiles configuration migrated"
+msgstr "과거 프로파일 설정 옮김"
+
+#: ../gnome-panel/panel-general.schemas.in.h:12
+msgid "Panel ID list"
+msgstr "패널 ID 목록"
+
+#: ../gnome-panel/panel-general.schemas.in.h:13
+msgid "Panel applet ID list"
+msgstr "패널 애플릿 ID 목록"
+
+#: ../gnome-panel/panel-general.schemas.in.h:14
+msgid "Panel object ID list"
+msgstr "패널 오브젝트 ID 목록"
+
+#: ../gnome-panel/panel-global.schemas.in.h:1
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+"패널이 무시할 애플릿 IID의 목록. 여기에 쓰면 특정 애플릿을 읽어들이거나 메뉴"
+"에 나타나지 못하게 할 수 있습니다. 예를 들어 mini-commander 애플릿을 사용하"
+"지 않으려면 'OAFIID::GNOME_MiniCommanderApplet'을 이 목록에 더하면 됩니다. "
+"이 설정을 적용하려면 패널을 다시 시작해야 합니다."
+
+#: ../gnome-panel/panel-global.schemas.in.h:2
+msgid "Applet IIDs to disable from loading"
+msgstr "읽어들이지 않을 애플릿 IID"
+
+#: ../gnome-panel/panel-global.schemas.in.h:3
+msgid "Autoclose drawer"
+msgstr "자동 닫기 서랍"
+
+#: ../gnome-panel/panel-global.schemas.in.h:4
+msgid "Complete panel lockdown"
+msgstr "패널 완전 고정"
+
+#: ../gnome-panel/panel-global.schemas.in.h:5
+msgid "Confirm panel removal"
+msgstr "패널을 지울 때 확인 질문"
+
+#: ../gnome-panel/panel-global.schemas.in.h:6
+msgid "Deprecated"
+msgstr "낡았음"
+
+#: ../gnome-panel/panel-global.schemas.in.h:7
+msgid "Disable Force Quit"
+msgstr "강제로 끝내기 못 하게"
+
+#: ../gnome-panel/panel-global.schemas.in.h:8
+msgid "Disable Lock Screen"
+msgstr "화면 잠그기 못 하게"
+
+#: ../gnome-panel/panel-global.schemas.in.h:9
+msgid "Disable Logging Out"
+msgstr "로그 아웃 못 하게"
+
+#: ../gnome-panel/panel-global.schemas.in.h:10
+#: ../gnome-panel/panel-toplevel.schemas.in.h:9
+msgid "Enable animations"
+msgstr "애니메이션 사용"
+
+#: ../gnome-panel/panel-global.schemas.in.h:11
+msgid "Enable tooltips"
+msgstr "툴팁 사용"
+
+#: ../gnome-panel/panel-global.schemas.in.h:12
+msgid "Highlight launchers on mouseover"
+msgstr "마우스를 실행 아이콘 위에 놓으면 강조 표시"
+
+#: ../gnome-panel/panel-global.schemas.in.h:13
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr "참이면, 패널을 지우려고 할 때 확인 질문을 하는 대화 상자가 표시됩니다."
+
+#: ../gnome-panel/panel-global.schemas.in.h:14
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+"참이면, 서랍 안의 실행 아이콘을 클릭했을 때 그 서랍이 자동으로 닫힙니다."
+
+#: ../gnome-panel/panel-global.schemas.in.h:15
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+"참이면, 마우스 포인터를 실행 아이콘 위에 가져갔을 때 강조 표시를 합니다."
+
+#: ../gnome-panel/panel-global.schemas.in.h:16
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"참이면, 강제로 끝내기 단추에 대해 접근하지 못하게 해서 프로그램을 강제로 끝내"
+"지 못하게 합니다."
+
+#: ../gnome-panel/panel-global.schemas.in.h:17
+msgid ""
+"If true, the panel will not allow a user to lock their screen, by removing "
+"access to the lock screen menu entries."
+msgstr ""
+"참이면, 화면 잠그기 단추를 접근하지 못하게 해서 화면을 잠그지 못하게 합니다."
+
+#: ../gnome-panel/panel-global.schemas.in.h:18
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"참이면, 로그 아웃 단추를 접근하지 못하게 해서 로스 아웃하지 못하게 합니다."
+
+#: ../gnome-panel/panel-global.schemas.in.h:19
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"참이면, 패널의 설정을 아무 것도 바꿀 수 없게 됩니다. 하지만 각각의 애플릿은 "
+"별도로 고정해야 합니다. 이 설정을 적용하려면 패널을 다시 시작해야 합니다."
+
+#: ../gnome-panel/panel-global.schemas.in.h:20
+msgid "If true, tooltips are shown for objects in panels."
+msgstr "참이면, 패널 위의 오브젝트에 대해 툴팁을 표시합니다."
+
+#: ../gnome-panel/panel-logout.c:236
+#, c-format
+msgid "You will be automatically logged out in %d second."
+msgid_plural "You will be automatically logged out in %d seconds."
+msgstr[0] "%d초 후에 자동으로 로그아웃됩니다."
+
+#: ../gnome-panel/panel-logout.c:243
+#, c-format
+msgid "This system will be automatically shut down in %d second."
+msgid_plural "This system will be automatically shut down in %d seconds."
+msgstr[0] "%d초 후에 자동으로 시스템이 꺼집니다."
+
+#: ../gnome-panel/panel-logout.c:315
+msgid "Log out of this system now?"
+msgstr "시스템에서 지금 로그아웃 하겠습니까?"
+
+#: ../gnome-panel/panel-logout.c:321
+msgid "_Switch User"
+msgstr "사용자 바꾸기(_S)"
+
+#: ../gnome-panel/panel-logout.c:327
+msgid "_Log Out"
+msgstr "로그아웃(_L)"
+
+#: ../gnome-panel/panel-logout.c:332
+msgid "Shut down this system now?"
+msgstr "시스템을 지금 끄겠습니까?"
+
+#: ../gnome-panel/panel-logout.c:337
+msgid "S_uspend"
+msgstr "일시 중지(_U)"
+
+#: ../gnome-panel/panel-logout.c:342
+msgid "_Hibernate"
+msgstr "최대 절전(_H)"
+
+#: ../gnome-panel/panel-logout.c:347
+msgid "_Restart"
+msgstr "다시 시작(_R)"
+
+#: ../gnome-panel/panel-logout.c:353
+msgid "_Shut Down"
+msgstr "시스템 종료(_S)"
+
+#: ../gnome-panel/panel-menu-bar.c:74
+msgid "Browse and run installed applications"
+msgstr "설치된 프로그램을 찾아 보고 실행합니다"
+
+#: ../gnome-panel/panel-menu-bar.c:86
+msgid "Access documents, folders and network places"
+msgstr "문서와 폴더, 그리고 네트워크에 접근합니다"
+
+#: ../gnome-panel/panel-menu-bar.c:98
+msgid "Change desktop appearance and behavior, get help, or log out"
+msgstr ""
+"바탕환경 모양새와 행동 방식을 바꾸거나, 도움말을 보거나 로그아웃합니다."
+
+#: ../gnome-panel/panel-menu-bar.c:183
+msgid "Applications"
+msgstr "프로그램"
+
+#: ../gnome-panel/panel-menu-bar.c:412 ../gnome-panel/panel-menu-button.c:690
+msgid "_Edit Menus"
+msgstr "메뉴 편집(_E)"
+
+#: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:333
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "'%s' 위치를 열 수 없습니다"
+
+#: ../gnome-panel/panel-menu-items.c:374
+msgid "Bookmarks"
+msgstr "책갈피"
+
+#. Translators: %s is a URI
+#: ../gnome-panel/panel-menu-items.c:395
+#, c-format
+msgid "Open '%s'"
+msgstr "'%s' 열기"
+
+#. Translators: the first string is a
+#. * path and the second string is a
+#. * hostname. nautilus contains the same
+#. * string to translate.
+#: ../gnome-panel/panel-menu-items.c:436
+#, c-format
+msgid "%1$s on %2$s"
+msgstr "%s %s"
+
+#: ../gnome-panel/panel-menu-items.c:509
+msgid "Network Places"
+msgstr "네트워크 위치"
+
+#: ../gnome-panel/panel-menu-items.c:512
+msgid "Removable Media"
+msgstr "이동식 미디어"
+
+#. Translators: Desktop is used here as in
+#. * "Desktop Folder" (this is not the Desktop
+#. * environment). Do not keep "Desktop Folder|"
+#. * in the translation
+#: ../gnome-panel/panel-menu-items.c:588
+msgid "Desktop Folder|Desktop"
+msgstr "바탕 화면"
+
+#: ../gnome-panel/panel-menu-items.c:589
+msgid "Open the desktop as a folder"
+msgstr "바탕 화면을 폴더로 엽니다"
+
+#: ../gnome-panel/panel-menu-items.c:951
+msgid "Places"
+msgstr "위치"
+
+#: ../gnome-panel/panel-menu-items.c:986
+msgid "System"
+msgstr "시스템"
+
+#. Translators: translate "panel:showusername|1" to anything
+#. * but "1" if "Log Out %s" doesn't make any sense in your
+#. * language (where %s is a username).
+#.
+#: ../gnome-panel/panel-menu-items.c:1078
+msgid "panel:showusername|1"
+msgstr "panel:showusername|1"
+
+#. keep those strings in sync with the ones in
+#. * panel-action-button.c
+#. Translators: this string is used ONLY if you translated
+#. * "panel:showusername|1" to "1"
+#: ../gnome-panel/panel-menu-items.c:1090
+#, c-format
+msgid "Log Out %s..."
+msgstr "%s 로그아웃..."
+
+#. Translators: this string is used ONLY if you translated
+#. * "panel:showusername|1" to "1"
+#: ../gnome-panel/panel-menu-items.c:1094
+#, c-format
+msgid "Log out %s of this session to log in as a different user"
+msgstr "다른 사용자가 로그인하기 위해 이 세션의 %s(을)를 로그아웃합니다"
+
+#: ../gnome-panel/panel-menu-items.c:1135
+msgid "Could not launch menu item"
+msgstr "메뉴 항목을 실행할 수 없습니다"
+
+#: ../gnome-panel/panel-object.schemas.in.h:1
+msgid "Action button type"
+msgstr "명령 단추 종류"
+
+#: ../gnome-panel/panel-object.schemas.in.h:2
+msgid "Applet Bonobo IID"
+msgstr "애플릿의 보노보 IID"
+
+#: ../gnome-panel/panel-object.schemas.in.h:3
+msgid "Icon used for object's button"
+msgstr "오브젝트의 단추에 쓸 아이콘"
+
+#: ../gnome-panel/panel-object.schemas.in.h:4
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"참이면, custom_icon 키를 이 단추의 사용자 설정 아이콘으로 사용합니다. 거짓이"
+"면, custom_icon 키를 무시합니다. 이 설정은 object_type 키가 \"menu-object\"이"
+"거나 \"drawer-object\"일 경우에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:5
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"참이면, menu_path 키를 메뉴 내용 읽어들일 경로로 사용합니다. 거짓이면 "
+"menu_path 키를 무시합니다. 이 설정은 object_type 키가 \"menu-object\"일 경우"
+"에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:6
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"참이면 오브젝트의 위치를 패널의 오른쪽(세로인 경우 아래쪽) 가장자리부터 상대"
+"적인 값으로 해석합니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:7
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+"참이면, \"고정 해제\" 메뉴 항목을 사용해 오브젝트의 고정 상태를 풀어야 애플릿"
+"을 옮길 수 있습니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:8
+msgid "Interpret position relative to bottom/right edge"
+msgstr "위치를 아래쪽/오른쪽 끝에서부터 상대적인 값으로 해석"
+
+#: ../gnome-panel/panel-object.schemas.in.h:9
+msgid "Launcher location"
+msgstr "실행 아이콘 위치"
+
+#: ../gnome-panel/panel-object.schemas.in.h:10
+msgid "Lock the object to the panel"
+msgstr "오브젝트를 패널에 고정"
+
+#: ../gnome-panel/panel-object.schemas.in.h:11
+msgid "Menu content path"
+msgstr "메뉴 내용 경로"
+
+#: ../gnome-panel/panel-object.schemas.in.h:12
+msgid "Object's position on the panel"
+msgstr "패널에서 오브젝트의 위치"
+
+#: ../gnome-panel/panel-object.schemas.in.h:13
+msgid "Panel attached to drawer"
+msgstr "서랍에 붙어 있는 패널"
+
+#: ../gnome-panel/panel-object.schemas.in.h:14
+msgid "Panel object type"
+msgstr "패널 오브젝트 종류"
+
+#: ../gnome-panel/panel-object.schemas.in.h:15
+msgid ""
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgstr ""
+"애플릿의 보노보 구현 ID - 예를 들어 \"OAFIID:GNOME_ClockApplet\". 이 키는 "
+"object_type이 \"bonobo-object\"일 경우에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:16
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"이 단추의 액션 타입. 가능한 값은 \"lock\", \"logout\", \"run\", \"search\", "
+"그리고 \"screenshot\"입니다. 이 키는 object_type 키가 \"action-applet\"일 경"
+"우에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:17
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"이 서랍에 붙어 있는 패널의 ID. 이 키는 object_type 키가 \"drawer-object\"일 "
+"경우에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:18
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "이 오브젝트가 들어 있는 최상위 패널의 ID."
+
+#: ../gnome-panel/panel-object.schemas.in.h:19
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"실행 아이콘에 대한 정보가 들어 있는 .desktop 파일의 위치. 이 키는 "
+"object_type 키가 \"launcher-object\"일 경우에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:20
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+"오브젝트의 단추에 아이콘으로 사용할 이미지 파일의 위치. 이 키는 object_type "
+"키가 \"drawer-object\"이거나 \"menu-object\"이고 use_custom_icon 키가 참일 경"
+"우에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:21
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"메뉴 내용을 만들 경로. 이 키는 use_menu_path 키가 참이고 object_type 키가 "
+"\"menu-object\"일 경우에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:22
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"이 패널 오브젝트의 위치. 이 위치는 패널의 왼쪽(세로인 경우 위쪽)에서부터 픽셀"
+"수로 지정됩니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:23
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+"이 서랍 혹은 메뉴의 설명으로 보여줄 텍스트. 이 키는 object_type 키가 "
+"\"drawer-object\" 혹은 \"menu-object\"일 경우에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:24
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
+msgstr ""
+"이 패널 오브젝트의 종류.  가능한 값은 - \"drawer-object\", \"menu-object\", "
+"\"launcher-object\", \"bonobo-applet\", \"action-applet\" 그리고 \"menu-bar"
+"\"입니다."
+
+#: ../gnome-panel/panel-object.schemas.in.h:25
+msgid "Tooltip displayed for drawer or menu"
+msgstr "서랍 혹은 메뉴에 표시할 설명"
+
+#: ../gnome-panel/panel-object.schemas.in.h:26
+msgid "Toplevel panel containing object"
+msgstr "이 오브젝트가 들어 있는 최상위 패널"
+
+#: ../gnome-panel/panel-object.schemas.in.h:27
+msgid "Use custom icon for object's button"
+msgstr "오브젝트의 단추에 사용자 지정 아이콘 사용"
+
+#: ../gnome-panel/panel-object.schemas.in.h:28
+msgid "Use custom path for menu contents"
+msgstr "메뉴 내용에 사용자 지정 경로 사용"
+
+#: ../gnome-panel/panel-profile.c:762 ../gnome-panel/panel-profile.c:789
+#: ../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1648
+#, c-format
+msgid "Error reading GConf string value '%s': %s"
+msgstr "GConf 문자열 값 '%s'을(를) 읽는 데 오류가 발생했습니다: %s"
+
+#: ../gnome-panel/panel-profile.c:804 ../gnome-panel/panel-profile.c:1544
+#: ../gnome-panel/panel-profile.c:1617 ../gnome-panel/panel-profile.c:1680
+#, c-format
+msgid "Error reading GConf integer value '%s': %s"
+msgstr "GConf 정수 값 '%s'을(를) 읽는 데 오류가 발생했습니다: %s"
+
+#: ../gnome-panel/panel-profile.c:1554
+#, c-format
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr "'%s' 패널은 스크린 %d에 보여주도록 설정되어 있으나, 이 스크린은 현재 사용할 수 없습니다. 이 패널은 읽어들이지 않습니다."
+
+#: ../gnome-panel/panel-profile.c:1632
+#, c-format
+msgid "Error reading GConf boolean value '%s': %s"
+msgstr "GConf 불리언 값 '%s'을(를) 읽는 데 오류가 발생했습니다: %s"
+
+#: ../gnome-panel/panel-properties-dialog.c:121
+#: ../libpanel-applet/panel-test-applets.c:53
+msgid "Orientation|Top"
+msgstr "위"
+
+#: ../gnome-panel/panel-properties-dialog.c:122
+#: ../libpanel-applet/panel-test-applets.c:54
+msgid "Orientation|Bottom"
+msgstr "아래"
+
+#: ../gnome-panel/panel-properties-dialog.c:123
+#: ../libpanel-applet/panel-test-applets.c:55
+msgid "Orientation|Left"
+msgstr "왼쪽"
+
+#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../libpanel-applet/panel-test-applets.c:56
+msgid "Orientation|Right"
+msgstr "오른쪽"
+
+#: ../gnome-panel/panel-properties-dialog.c:1023
+#: ../gnome-panel/panel-run-dialog.c:1885
+#, c-format
+msgid "Unable to load file '%s'."
+msgstr "%s 파일을 읽어 들이는데 실패했습니다."
+
+#: ../gnome-panel/panel-properties-dialog.c:1028
+msgid "Could not display properties dialog"
+msgstr "등록 정보 대화상자를 보여줄 수 없습니다"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:2
+msgid "<small>Opaque</small>"
+msgstr "<small>불투명</small>"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:3
+msgid "<small>Transparent</small>"
+msgstr "<small>투명</small>"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:4
+msgid "Arro_ws on hide buttons"
+msgstr "숨기기단추 위에 화살표(_W)"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:5
+msgid "Background"
+msgstr "바탕 그림"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:6
+msgid "Background _image:"
+msgstr "바탕 그림(_I):"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:7
+msgid "Co_lor:"
+msgstr "색(_L):"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:8
+msgid "E_xpand"
+msgstr "펼치기(_X)"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "일반"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:10
+msgid "Image Background Details"
+msgstr "바탕 이미지 세부설정"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:11
+msgid "Panel Properties"
+msgstr "패널 등록 정보"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:12
+msgid "Pick a color"
+msgstr "색 선택"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:13
+msgid "Rotate image when panel is _vertical"
+msgstr "패널이 세로로 떠있을 때 그림 회전(_V)"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:14
+msgid "S_tyle:"
+msgstr "형식(_T):"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:15
+msgid "Select background"
+msgstr "바탕 선택"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:16
+msgid "Show hide _buttons"
+msgstr "숨기기단추 보기(_B)"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:17
+msgid "Solid c_olor"
+msgstr "단색(_O)"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:18
+msgid "Some of these properties are locked down"
+msgstr "다음 등록 정보에서 일부는 사용할 수 없습니다"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:19
+msgid "St_retch"
+msgstr "그림 늘리기(_R)"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:20
+msgid "_Autohide"
+msgstr "자동 숨기기(_A)"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:21
+msgid "_Icon:"
+msgstr "아이콘(_I):"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:22
+msgid "_None (use system theme)"
+msgstr "없음 (시스템 테마 사용)(_N)"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:23
+#: ../libpanel-applet/panel-test-applets.glade.h:4
+msgid "_Orientation:"
+msgstr "방향(_O):"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:24
+msgid "_Scale"
+msgstr "크기 맞춤 반복(_S)"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:25
+#: ../libpanel-applet/panel-test-applets.glade.h:6
+msgid "_Size:"
+msgstr "크기(_S):"
+
+#: ../gnome-panel/panel-properties-dialog.glade.h:26
+msgid "_Tile"
+msgstr "타일(_T)"
+
+#: ../gnome-panel/panel-recent.c:50
+msgid "Could not find a suitable application."
+msgstr "알맞은 프로그램을 찾을 수 없습니다."
+
+#: ../gnome-panel/panel-recent.c:97 ../gnome-panel/panel-recent.c:107
+#, c-format
+msgid "Could not open recently used document \"%s\""
+msgstr "최근 사용한 문서 \"%s\"(을)를 열 수 없습니다"
+
+#: ../gnome-panel/panel-recent.c:109
+#, c-format
+msgid "An unknown error occurred while trying to open \"%s\"."
+msgstr "%s(을)를 여는 중 알 수 없는 오류가 발생했습니다."
+
+#: ../gnome-panel/panel-recent.c:166
+msgid "Clear the Recent Documents list?"
+msgstr "최근 문서 목록을 지우시겠습니까?"
+
+#: ../gnome-panel/panel-recent.c:168
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"\n"
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+"최근 문서 목록을 지운다면, 다음이 지워집니다:\n"
+"\n"
+"• 위치 → 최근 문서 메뉴 아래에 있는 모든 항목.\n"
+"• 모든 프로그램의 최근 문서 목록에 들어 있는 모든 항목."
+
+#: ../gnome-panel/panel-recent.c:207
+msgid "Recent Documents"
+msgstr "최근 문서"
+
+#: ../gnome-panel/panel-recent.c:245
+msgid "Clear Recent Documents"
+msgstr "최근 문서 지우기"
+
+#: ../gnome-panel/panel-recent.c:249
+msgid "Clear all items from the recent documents list"
+msgstr "최근 문서 목록에 있는 모든 항목을 지우시겠습니까?"
+
+#: ../gnome-panel/panel-run-dialog.c:304
+#, c-format
+msgid "Could not run command '%s'"
+msgstr "'%s' 명령을 실행할 수 없습니다"
+
+#: ../gnome-panel/panel-run-dialog.c:388
+#, c-format
+msgid "Could not convert '%s' from UTF-8"
+msgstr "'%s'을(를) UTF-8에서 변환할 수 없습니다"
+
+#: ../gnome-panel/panel-run-dialog.c:1196
+msgid "Choose a file to append to the command..."
+msgstr "명령어에 덧붙일 파일을 선택하세요..."
+
+#: ../gnome-panel/panel-run-dialog.c:1572
+#: ../gnome-panel/panel-run-dialog.glade.h:10
+msgid "Select an application to view its description."
+msgstr "설명을 볼 프로그램을 선택하세요."
+
+#: ../gnome-panel/panel-run-dialog.c:1610
+#, c-format
+msgid "Will run command: '%s'"
+msgstr "다음 명령을 실행합니다: '%s'"
+
+#: ../gnome-panel/panel-run-dialog.c:1641
+#, c-format
+msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
+msgstr ""
+"실행 대화 상자에 지정된 URI 목록의 형식(%d)이나 길이(%d)가 틀렸습니다\n"
+
+#: ../gnome-panel/panel-run-dialog.c:1889
+msgid "Could not display run dialog"
+msgstr "실행 대화상자를 보여줄 수 없습니다"
+
+#: ../gnome-panel/panel-run-dialog.glade.h:1
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr "명령어 스트링에 덧붙일 파일이름을 찾아보려면 이 단추를 클릭하세요."
+
+#: ../gnome-panel/panel-run-dialog.glade.h:2
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+"선택한 프로그램이나 명령어 입력란의 명령어를 실행하려면 이 단추를 클릭하세요."
+
+#: ../gnome-panel/panel-run-dialog.glade.h:3
+msgid "Command entry"
+msgstr "실행 입력란"
+
+#: ../gnome-panel/panel-run-dialog.glade.h:4
+msgid "Command icon"
+msgstr "실행 아이콘"
+
+#: ../gnome-panel/panel-run-dialog.glade.h:5
+msgid "Enter a command string here to run it."
+msgstr "실행할 명령어 스트링을 입력하세요."
+
+#: ../gnome-panel/panel-run-dialog.glade.h:6
+msgid "List of known applications"
+msgstr "알려진 프로그램 목록"
+
+#: ../gnome-panel/panel-run-dialog.glade.h:7
+msgid "Run Application"
+msgstr "프로그램 실행"
+
+#: ../gnome-panel/panel-run-dialog.glade.h:8
+msgid "Run in _terminal"
+msgstr "터미널에서 실행(_T)"
+
+#: ../gnome-panel/panel-run-dialog.glade.h:9
+msgid "Run with _file..."
+msgstr "파일 실행(_F)..."
+
+#: ../gnome-panel/panel-run-dialog.glade.h:11
+msgid "Select this box to run the command in a terminal window."
+msgstr "터미널 창에서 명령어를 실행하려면 이 상자를 선택하세요."
+
+#: ../gnome-panel/panel-run-dialog.glade.h:12
+msgid "Show list of known _applications"
+msgstr "알려진 프로그램 목록(_A)"
+
+#: ../gnome-panel/panel-run-dialog.glade.h:13
+msgid "The icon of the command to be run."
+msgstr "실행할 명령의 아이콘."
+
+#: ../gnome-panel/panel-run-dialog.glade.h:14
+#: ../gnome-panel/panel-stock-icons.c:89
+msgid "_Run"
+msgstr "실행(_R)"
+
+#: ../gnome-panel/panel-shell.c:74
+msgid ""
+"I've detected a panel already running,\n"
+"and will now exit."
+msgstr ""
+"이미 실행중인 패널을 발견했습니다.\n"
+"그래서 지금 마칩니다."
+
+#: ../gnome-panel/panel-shell.c:78
+#, c-format
+msgid ""
+"There was a problem registering the panel with the bonobo-activation "
+"server.\n"
+"The error code is: %d\n"
+"The panel will now exit."
+msgstr ""
+"bonobo-activation 서버에 패널을 등록하는데 문제가 있습니다.\n"
+"오류 코드는 %d 입니다\n"
+"패널이 마칠 것 입니다."
+
+#: ../gnome-panel/panel-stock-icons.c:90
+msgid "_Force quit"
+msgstr "강제로 끝내기(_F)"
+
+#: ../gnome-panel/panel-stock-icons.c:91
+msgid "C_lear"
+msgstr "지우기(_L)"
+
+#: ../gnome-panel/panel-stock-icons.c:92
+msgid "D_on't Delete"
+msgstr "지우지 말것(_O)"
+
+#: ../gnome-panel/panel-toplevel.c:1114
+msgid "Hide Panel"
+msgstr "패널 숨기기"
+
+#. translators: these string will be shown in MetaCity's switch window
+#. * popup when you pass the focus to a panel
+#: ../gnome-panel/panel-toplevel.c:1495
+msgid "Top Expanded Edge Panel"
+msgstr "위의 확장 가장자리 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1496
+msgid "Top Centered Panel"
+msgstr "위의 가운데 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1497
+msgid "Top Floating Panel"
+msgstr "위의 떠 다니는 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1498
+msgid "Top Edge Panel"
+msgstr "위의 가장자리 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1502
+msgid "Bottom Expanded Edge Panel"
+msgstr "아래 확장 가장자리 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1503
+msgid "Bottom Centered Panel"
+msgstr "아래 가운데 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1504
+msgid "Bottom Floating Panel"
+msgstr "아래 떠 다니는 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1505
+msgid "Bottom Edge Panel"
+msgstr "아래 가장자리 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1509
+msgid "Left Expanded Edge Panel"
+msgstr "왼쪽 확장 가장자리 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1510
+msgid "Left Centered Panel"
+msgstr "왼쪽 가운데 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1511
+msgid "Left Floating Panel"
+msgstr "왼쪽 떠다니는 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1512
+msgid "Left Edge Panel"
+msgstr "왼쪽 가장자리 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1516
+msgid "Right Expanded Edge Panel"
+msgstr "오른쪽 확장 가장자리 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1517
+msgid "Right Centered Panel"
+msgstr "오른쪽 가운데 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1518
+msgid "Right Floating Panel"
+msgstr "오른쪽 떠다니는 패널"
+
+#: ../gnome-panel/panel-toplevel.c:1519
+msgid "Right Edge Panel"
+msgstr "오른쪽 가장자리 패널"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "애니매이션 속도"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:2
+msgid "Automatically hide panel into corner"
+msgstr "자동으로 패널을 구석으로 감춥니다"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "바탕색"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:4
+msgid "Background color opacity"
+msgstr "바탕색 불투명도"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:5
+msgid "Background image"
+msgstr "바탕 그림"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:6
+msgid "Background type"
+msgstr "바탕 종류"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:7
+msgid "Center panel on x-axis"
+msgstr "가로 축 기준으로 패널을 가운데 둡니다"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:8
+msgid "Center panel on y-axis"
+msgstr "세로 축 기준으로 패널을 가운데 둡니다"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:10
+msgid "Enable arrows on hide buttons"
+msgstr "숨기기 단추 위에 화살표 사용"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:11
+msgid "Enable hide buttons"
+msgstr "숨기기 단추 사용"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:12
+msgid "Expand to occupy entire screen width"
+msgstr "전체 화면 너비를 차지할 만큼 확대"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:13
+msgid "Fit image to panel"
+msgstr "패널에 맞게 이미지 맞추기"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:14
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"참이면, 숨기기 단추에 화살표를 그립니다. 이 키는 enable_buttons 키가 참일 때"
+"에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:15
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"참이면, 패널의 양쪽 끝에 단추가 만들어집니다. 그 단추를 누르면 패널이 가장자"
+"리로 들어가고 단추만 남습니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:16
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
+msgstr ""
+"참이면, 이 패널의 숨기기 및 숨기기 해제가 즉시 이루어지지 않고 애니메이션으"
+"로 이루어집니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:17
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr "참이면, 패널 방향이 세로로 바뀌었을 때 바탕 이미지도 회전합니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:18
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+"참이면, 이미지의 크기를 패널 높이(가로 방향의 패널인 경우)에 맞게 바꿉니다 "
+"(이미지의 가로세로 비율 유지)."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:19
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"참이면, 패널의 크기에 맞게 이미지의 크기를 조절합니다. 이미지의 가로세로 비율"
+"은 유지하지 않습니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:20
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"참이면, 마우스 포인터가 패널을 벗어났을 때, 자동으로 패널을 화면 구석으로 숨"
+"깁니다. 포인터를 그 구석으로 움직이면 패널이 다시 나타납니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:21
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+"참이면, 패널 너비가 전체 화면 너비만큼 차지합니다 (세로 패널이면 패널 높이). "
+"이 모드에서 패널은 화면 가장자리에만 놓을 수 있습니다. 거짓이면, 패널은 그 안"
+"의 애플릿, 실행 아이콘, 단추를 집어 넣을 수 있을 만큼의 너비만 차지합니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:22
+msgid ""
+"If true, the x key is ignored and the panel is placed at the center of the x-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the x key specifies the "
+"location of the panel."
+msgstr ""
+"참이면, x 키를 무시하고 화면의 가로축의 중앙에 패널을 놓습니다. 패널의 크기"
+"가 바뀌어도 그 위치에 있습니다 - 즉, 패널은 양쪽 모든 방향으로 늘어납니다. 거"
+"짓이면, x 키가 패널의 위치를 결정합니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:23
+msgid ""
+"If true, the y key is ignored and the panel is placed at the center of the y-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the y key specifies the "
+"location of the panel."
+msgstr ""
+"참이면, y 설정을 무시하고 화면의 세로축의 중앙에 패널을 놓습니다. 패널의 크기"
+"가 바뀌어도 그 위치에 있습니다 - 즉, 패널은 양쪽 모든 방향으로 늘어납니다. 거"
+"짓이면, y 설정이 패널의 위치를 결정합니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:24
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"Xinerama 설정에서, 각각의 모니터에 대해서 패널을 놓을 수 있습니다. 이 키는 패"
+"널을 보여줄 모니터를 지정합니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:25
+msgid "Name to identify panel"
+msgstr "패널을 구분하는 이름"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:26
+msgid "Panel autohide delay"
+msgstr "패널 자동 숨기기 시간"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:27
+msgid "Panel autounhide delay"
+msgstr "패널 자동 숨기기 해제 시간"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:28
+msgid "Panel orientation"
+msgstr "패널 방향"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:29
+msgid "Panel size"
+msgstr "패널 크기"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:30
+msgid "Rotate image on vertical panels"
+msgstr "세로 패널에서 그림 회전해 방향 바꾸기"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:31
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr "패널의 바탕색을 #RGB 형식으로 지정합니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:32
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"바탕 이미지로 사용할 파일을 지정합니다. 이미지에 알파 채널이 들어 있으면 데스"
+"크탑 바탕 이미지와 결합됩니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:33
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"마우스가 포인터가 패널 구역에 들어오고, 패널이 자동으로 다시 나타날 때까지의 "
+"지연 시간을 지정합니다 (천분의 일초 단위). 이 키는 auto_hide 키가 참일 경우에"
+"만 의미가 있습니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:34
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"마우스 포인터가 패널 구역을 벗어나고, 패널이 자동으로 숨겨질 때까지의 지연 시"
+"간을 지정합니다 (천분의 일초 단위). 이 키는 auto_hide 키가 참일 경우에만 의미"
+"가 있습니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:35
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"패널이 자동으로 구석에 숨겨졌을 때 보여줄 픽셀 수를 지정합니다. 이 키는 "
+"auto_hide 키가 참일 경우에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:36
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr ""
+"바탕색 형식의 불투명도를 지정합니다. 색이 완전히 불투명한 경우가 아니면 "
+"(65535보다 작은 값), 이 색은 데스크탑 바탕 이미지와 결합됩니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:37
+msgid "Stretch image to panel"
+msgstr "패널 크기에 맞게 이미지 크기 늘리기"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:38
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"패널의 높이 (세로 패널의 경우 너비). 패널은 실행할 때 글꼴 크기와 그 외 사항"
+"들을 이용해 최소 크기를 결정합니다. 최대 크기는 화면 높이(혹은 너비)의 사분"
+"의 일입니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr "가로축에서 패널의 위치. 이 키는 확장하지 않은 모드에서만 의미가 있습니다. 확장한 모드에서 이 키는 무시하고 패널은 패널 방향 키에 따라 화면 가장자리에 놓여집니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:40
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr "세로축에서 패널의 위치. 이 키는 확장하지 않은 모드에서만 의미가 있습니다. 확장한 모드에서 이 키는 무시하고 패널은 패널 방향 키에 따라 화면 가장자리에 놓여집니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:41
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr "패널의 방향. 가능한 값은 \"top\", \"bottom\", \"left\", \"right\"입니다. 확장 모드에서 이 키는 패널이 놓인 화면 가장자리가 어디인지를 나타냅니다. 확장하지 않은 모드에서 \"top\"과 \"bottom\"의 차이점은 별로 중요하지 않습니다 - 둘 다 가로 방향 패널이지만 몇몇 패널 오브젝트의 동작 방식에 힌트를 줍니다. 예를 들어, \"top\" 패널에서 메뉴 단추를 누르면 패널의 아래 방향으로 메뉴가 나타나지만, \"bottom\" 패널에서는 패널의 위쪽 방향으로 메뉴가 나타납니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:42
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+"패널 애니메이션이 이루어지는 속도. 가능한 값은 \"slow\", \"medium\" 그리고 "
+"\"fast\"입니다. 이 키는 enable_animation 키가 참일 경우에만 의미가 있습니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:43
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"패널을 구분할 때 사람이 알아 볼 수 있는 이름입니다. 주된 목적은 패널의 창 제"
+"목으로 사용하는 것입니다. 패널 사이를 왔다갔다할 때 창 제목이 쓰입니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:44
+msgid "Visible pixels when hidden"
+msgstr "숨겨졌을 때 보여줄 픽셀 수"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:45
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"이 패널의 바탕에 사용할 종류. 가능한 값은 \"gtk\" - 기본 GTK+ 위젯 바탕을 사"
+"용, \"color\" - color 키를 바탕색으로 사용하고, \"image\"는 image 키에서 지정"
+"한 이미지를 바탕에 사용합니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:46
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"여러 화면에서 사용하는 경우, 각각의 화면에 패널을 놓을 수 있습니다. 이 키는 "
+"패널이 보이는 현재 화면을 나타냅니다."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:47
+msgid "X co-ordinate of panel"
+msgstr "패널의 가로 좌표"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:48
+msgid "X screen where the panel is displayed"
+msgstr "패널을 표시할 X 화면"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:49
+msgid "Xinerama monitor where the panel is displayed"
+msgstr "패널을 표시할 Xinerama 모니터"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:50
+msgid "Y co-ordinate of panel"
+msgstr "패널의 세로 좌표"
+
+#: ../gnome-panel/panel-util.c:657
+#, c-format
+msgid "Icon '%s' not found"
+msgstr "'%s' 아이콘을 찾을 수 없습니다"
+
+#: ../gnome-panel/panel.c:479
+#, c-format
+msgid "Open URL: %s"
+msgstr "URL 열기: %s"
+
+#: ../gnome-panel/panel.c:1310
+msgid "Delete this drawer?"
+msgstr "이 서랍을 지우시겠습니까?"
+
+#: ../gnome-panel/panel.c:1311
+msgid ""
+"When a drawer is deleted, the drawer and its\n"
+"settings are lost."
+msgstr ""
+"서랍을 지우면, 서랍과 그 안의 설정을\n"
+"지우게 됩니다."
+
+#: ../gnome-panel/panel.c:1313
+msgid "Delete Drawer"
+msgstr "서랍 지우기"
+
+#: ../gnome-panel/panel.c:1315
+msgid "Delete this panel?"
+msgstr "이 패널을 지우시겠습니까?"
+
+#: ../gnome-panel/panel.c:1316
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr ""
+"패널을 지우면, 패널과 그 안의 설정을\n"
+"지우게 됩니다."
+
+#: ../gnome-panel/panel.c:1318
+msgid "Delete Panel"
+msgstr "패널 지우기"
+
+#: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
+msgid "A simple applet for testing the GNOME-2.0 panel"
+msgstr "그놈-2.0 패널을 테스트하는 간단한 애플릿"
+
+#: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
+msgid "Test Bonobo Applet"
+msgstr "테스트 보노보 애플릿"
+
+#: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
+msgid "Test Bonobo Applet Factory"
+msgstr "테스트 보노보 애플릿 팩토리"
+
+#: ../libpanel-applet/panel-applet.c:1042
+#, c-format
+msgid "Incomplete '%s' background type received"
+msgstr "완전하지 않은 바탕그림  형식 '%s' 받음"
+
+#: ../libpanel-applet/panel-applet.c:1056
+#, c-format
+msgid "Incomplete '%s' background type received: %s"
+msgstr "완전하지 않은 바탕그림 형식 '%s' 받음: %s"
+
+#: ../libpanel-applet/panel-applet.c:1065
+#, c-format
+msgid "Failed to get pixmap %s"
+msgstr "그림 %s 받기 실패"
+
+#: ../libpanel-applet/panel-applet.c:1072
+msgid "Unknown background type received"
+msgstr "알 수 없는 바탕그림 형식 받음"
+
+#: ../libpanel-applet/panel-applet.c:1296
+msgid "The Applet's containing Panel's orientation"
+msgstr "애플릿에 패널의 방향정보이 포함되어 있습니다"
+
+#: ../libpanel-applet/panel-applet.c:1304
+msgid "The Applet's containing Panel's size in pixels"
+msgstr "애플릿에 패널의 크기정보가 포함되어 있습니다"
+
+#: ../libpanel-applet/panel-applet.c:1312
+msgid "The Applet's containing Panel's background color or pixmap"
+msgstr "애플릿에 패널의 바탕색과 그림정보가 포함되어 있습니다"
+
+#: ../libpanel-applet/panel-applet.c:1320
+msgid "The Applet's flags"
+msgstr "애플릿의 플래그"
+
+#: ../libpanel-applet/panel-applet.c:1328
+msgid "Ranges that hint what sizes are acceptable for the applet"
+msgstr "애플릿에서 가능한 크기 범위 알려줌"
+
+#: ../libpanel-applet/panel-applet.c:1336
+msgid "The Applet's containing Panel is locked down"
+msgstr "애플릿이 들어 있는 패널이 고정되어 있습니다"
+
+#: ../libpanel-applet/panel-test-applets.c:34
+msgid "Specify an applet IID to load"
+msgstr "읽어들일 애플릿 IID 지정"
+
+#: ../libpanel-applet/panel-test-applets.c:35
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
+msgstr "애플릿 기본 설정이 들어 있는 gconf 위치를 지정합니다"
+
+#: ../libpanel-applet/panel-test-applets.c:36
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr "애플릿의 최초 크기를 지정합니다 (xx-small, medium, large 등)"
+
+#: ../libpanel-applet/panel-test-applets.c:37
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr "애플릿의 최초 방향을 지정합니다 (top, bottom, left 혹은 right)"
+
+#: ../libpanel-applet/panel-test-applets.c:61
+msgid "Size|XX Small"
+msgstr "아주아주 작게"
+
+#: ../libpanel-applet/panel-test-applets.c:62
+msgid "Size|X Small"
+msgstr "아주 작게"
+
+#: ../libpanel-applet/panel-test-applets.c:63
+msgid "Size|Small"
+msgstr "작게"
+
+#: ../libpanel-applet/panel-test-applets.c:64
+msgid "Size|Medium"
+msgstr "중간"
+
+#: ../libpanel-applet/panel-test-applets.c:65
+msgid "Size|Large"
+msgstr "크게"
+
+#: ../libpanel-applet/panel-test-applets.c:66
+msgid "Size|X Large"
+msgstr "아주 크게"
+
+#: ../libpanel-applet/panel-test-applets.c:67
+msgid "Size|XX Large"
+msgstr "아주아주 크게"
+
+#: ../libpanel-applet/panel-test-applets.c:129
+#, c-format
+msgid "Failed to load applet %s"
+msgstr "%s 애플릿을 읽어 들이는데 실패했습니다"
+
+#. This is an utility to easily test various applets
+#: ../libpanel-applet/panel-test-applets.glade.h:2
+msgid "Test applet utility"
+msgstr "애플릿 테스트 유틸리티"
+
+#: ../libpanel-applet/panel-test-applets.glade.h:3
+msgid "_Applet:"
+msgstr "애플릿(_A):"
+
+#: ../libpanel-applet/panel-test-applets.glade.h:5
+msgid "_Prefs Dir:"
+msgstr "설정 디렉토리(_P):"
+
+#~ msgid "Empty"
+#~ msgstr "비었음"
+
+#~ msgid "Could not save launcher to disk"
+#~ msgstr "실행 아이콘을 디스크에 저장할 수 없습니다"
+
+#~ msgid "You have to specify a name."
+#~ msgstr "이름을 지정해야 합니다."
+
+#~ msgid "You have to specify a valid URL or command."
+#~ msgstr "올바른 URL이나 명령어를 지정해야 합니다."
+
+#~ msgid "Could not save changes to launcher"
+#~ msgstr "바뀐 점을 실행 아이콘에 저장할 수 없습니다"
+
+#~ msgid "Menu"
+#~ msgstr "메뉴"
+
+#~ msgid "You do not have permission to write to this location."
+#~ msgstr "이 위치에 쓸 허가권이 없습니다."
+
+#~ msgid "_Delete This Panel..."
+#~ msgstr "이 패널 지우기(_D)..."
+
+#~ msgid "Desktop Environment|Desktop"
+#~ msgstr "데스크탑"
+
+#~ msgid "Could not load menu item"
+#~ msgstr "메뉴 항목을 읽을 수 없습니다"
+
+#~ msgid "*"
+#~ msgstr "*"
+
+#~ msgid "Details: %s"
+#~ msgstr "자세한 정보: %s"
+
+#~ msgid "_Reboot"
+#~ msgstr "다시 시작(_R)"

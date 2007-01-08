@@ -1,0 +1,177 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.5.17">
+  <!ENTITY manrevision "2.1">
+  <!ENTITY date "August 2002">
+  <!ENTITY applet "Fish">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Mar 12, 2002
+  
+-->
+
+<article id="index" lang="zh_tw">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; Applet 手冊 V&manrevision;</title>
+	 <copyright> 
+		<year>2002</year> 
+ 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>Telsa Gwynne</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+
+	 <publisher> 
+		<publishername>GNOME 文件專案</publishername> 
+	 </publisher> 
+
+&legal;
+
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME 文件小組</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>GNOME 文件專案</orgname> 
+			 <address> <email>hobbit@aloss.ukuu.org.uk</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; Applet 手冊 V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME 文件小組
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Fish Applet 手冊 V2.0</revnumber> 
+		  <date>2002 年 5 月</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME 文件小組
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Fish Applet 手冊</revnumber> 
+		  <date>2000</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>hobbit@aloss.ukuu.org.uk</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo>本手冊的內容是說明 &appletversion; 版的 &applet;。
+		</releaseinfo>
+	 <legalnotice><title>回饋</title>
+		<para>關於 &applet; applet 或本手冊，如果要報告錯誤或是提出建議，請遵照 <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink> 的指示。 </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm><primary>Fish</primary></indexterm><!-- ============= Document Body ============================= --><!-- ============= Introduction ============================== --><sect1 id="fish-introduction"><title>介紹</title>
+<!-- ==== Figure ============================================= -->
+	 <figure id="fish-fig"><title>&applet; Applet</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/fish_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>顯示 Fish Applet。</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+<para><application>&applet;</application> Applet 會在面板中顯示一個動畫影像。</para>
+<para>如果要將 <application>&applet;</application> 加入面板，請在面板上按滑鼠右鍵，然後選擇<menuchoice><guimenu>加入面板</guimenu><guisubmenu>娛樂</guisubmenu><guimenuitem>Fish</guimenuitem>
+</menuchoice>。</para>
+</sect1>
+
+<sect1 id="fish-usage"><title>使用</title>
+<para>按一下面板，顯示 <guilabel>Wanda the Fish</guilabel> 對話方塊。 通常對話方塊會顯示一塊幸運餅乾。您可以配置 applet，指定當按一下 applet 時，程式要執行什麼指令。請參閱<xref linkend="fish-settings"/>，以取得進一步資訊。</para>
+</sect1>
+
+<!-- ============= Preferences  ================================ -->
+<sect1 id="fish-settings"><title>個人喜好</title>
+<para>如果要配置 <application>&applet;</application>，請在 <application>&applet;</application> Applet 上按滑鼠右鍵，然後選擇<guimenu>個人喜好</guimenu>。</para>
+<variablelist>
+<varlistentry><term><guilabel>GNOME fish 名稱</guilabel> </term>
+<listitem>
+<para>請使用這個文字方塊，指定魚的名稱。</para>
+<para>預設值： Wanda。</para>
+</listitem>
+</varlistentry>
+<varlistentry><term><guilabel>動畫檔名</guilabel> </term>
+<listitem>
+<para>請使用這個欄位，選取 Applet 所顯示的影像。您可以從 Applet 提供的影像中選取，也可以選取其他個人所提供的影像。</para>
+<para>預設值： <filename>fish/fishanim.png</filename>。</para>
+</listitem>
+</varlistentry>
+<varlistentry><term><guilabel>按一下魚時所要執行的指令</guilabel> </term><listitem>
+<para>依預設值，在您按一下 Applet 後，<application>&applet;</application> 會執行幸運餅乾指令。請使用這個文字方塊，指定執行其他的指令。</para>
+<para>預設值：幸運餅乾。</para>
+</listitem>
+</varlistentry>
+<varlistentry><term><guilabel>動畫影格數</guilabel> </term><listitem>
+<para>請使用這個旋轉方塊，指定動畫中影格的數目。</para>
+<para>預設值： 3。</para>
+</listitem>
+</varlistentry>
+<varlistentry><term><guilabel>影格延遲時間</guilabel> </term><listitem>
+<para>請使用這個旋轉方塊，指定動畫中每個影格的間隔時間 (以秒記)。</para>
+<para>預設值： 1.00。</para>
+</listitem>
+</varlistentry>
+<varlistentry><term><guilabel>在垂直面板上旋轉</guilabel> </term><listitem>
+<para>選取這個選項，當您將 Applet 加入垂直面板時，Applet 的影像便會旋轉。</para>
+<para>預設值：已選取。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+</article>

@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.0">
+  <!ENTITY manrevision "2.4">
+  <!ENTITY date "2003年2月">
+  <!ENTITY applet "ウィンドウ一覧">
+
+]>
+<!--
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+
+-->
+
+<!-- =============Document Header ============================= -->
+<article id="index" lang="ja">
+  <!-- please do not change the id; for translations, change lang to -->
+  <!-- appropriate code -->
+  <articleinfo>
+    <title>&applet;アプレットマニュアル V&manrevision;</title>
+    <copyright>
+      <year>2003</year>
+      <holder>Sun Microsystems</holder>
+    </copyright>
+    <copyright>
+      <year>2001</year>
+      <holder>John Fleck</holder>
+    </copyright>
+    <copyright>
+      <year>2003</year>
+      <holder>鎌ヶ迫正俊 (日本語訳)</holder>
+    </copyright>
+
+    <publisher>
+      <publishername>GNOMEドキュメンテーションプロジェクト</publishername>
+    </publisher>
+
+    &legal;
+    <!-- This file  contains link to license for the documentation (GNU FDL),
+    and other legal stuff such as "NO WARRANTY" statement. Please do not change
+     any of this. -->
+
+    <authorgroup>
+      <author>
+	<firstname>Sun</firstname>
+	<surname>GNOMEドキュメンテーションチーム</surname>
+	<affiliation>
+	  <orgname>サン マイクロシステムズ</orgname>
+	  <!-- <address><email>gdocteam@sun.com</email></address> -->
+	</affiliation>
+      </author>
+      <author>
+	<firstname>John </firstname>
+	<surname>Fleck</surname>
+	<affiliation>
+	  <orgname>GNOMEドキュメンテーションプロジェクト</orgname>
+	  <address><email>jfleck@inkstain.net</email></address>
+	</affiliation>
+      </author>
+      <othercredit role="translator">
+	<firstname>Masatoshi</firstname>
+	<surname>KAMAGASAKO</surname>
+	<affiliation>
+	  <orgname>日本GNOMEユーザ会 翻訳チーム</orgname>
+	  <address><email>emerald@gnome.gr.jp</email></address>
+	</affiliation>
+	<contrib>日本語訳</contrib>
+      </othercredit>
+    </authorgroup>
+
+    <revhistory>
+      <revision>
+	<revnumber>&applet;アプレットマニュアル V&manrevision;</revnumber>
+	<date>&date;</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム</para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>&applet;アプレットマニュアル V2。3</revnumber>
+	<date>2003年1月</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム</para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>ウィンドウ一覧アプレットマニュアル V2.2</revnumber>
+	<date>2002年8月</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム</para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>ウィンドウ一覧アプレットマニュアル V2.1</revnumber>
+	<date>2002年7月</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム</para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>ウィンドウ一覧アプレットマニュアル V2.0</revnumber>
+	<date>2002年3月</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム</para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>タスクリストアプレットマニュアル</revnumber>
+	<date>2001年</date>
+	<revdescription>
+	  <para role="author">John Fleck
+	    <email>jfleck@inkstain.net</email></para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+    </revhistory>
+    <releaseinfo>
+      このマニュアルは&applet;アプレット第&appletversion;版について
+      記述しています。
+    </releaseinfo>
+    <legalnotice>
+      <title>フィードバック</title>
+      <para>
+	この&applet;アプレットやマニュアルについてのバグレポートや提
+	案は、<ulink url="ghelp:gnome-feedback" type="help">GNOMEフィー
+	ドバックページ</ulink>を参照してください。
+      </para>
+      <para>
+        このマニュアルの日本語訳についての指摘や提案は
+        <email>emerald@gnome.gr.jp</email>
+        までお願いします。
+      </para>
+    </legalnotice>
+  </articleinfo>
+
+  <indexterm>
+    <primary>ウィンドウ一覧</primary>
+  </indexterm>
+
+  <!-- ============= Document Body ============================= -->
+  <!-- ============= Introduction ============================== -->
+  <sect1 id="windowlist-introduction">
+    <title>はじめに</title>
+
+    <!-- ==== Figure ============================================= -->
+    <figure id="windowlist-applet-fig">
+      <title>&applet;アプレット</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/window_list_applet.png" format="PNG"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>ウィンドウ一覧アプレットを表示</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    <!-- ==== End of Figure ======================================= -->
+
+    <para>
+      <application>&applet;</application>アプレットで、GNOMEデスクトッ
+      プに開いたウィンドウを管理することができます。
+      <application>&applet;</application>アプレットはボタンでそれぞれ
+      のウィンドウやウィンドウのグループを表示します。アプレット上のボ
+      タンの状態は、ボタンの表示するウィンドウの状態によって異なります。
+      次のテーブルは<application>&applet;</application>アプレットの
+      取り得る状態を説明しています:
+    </para>
+    <informaltable>
+      <tgroup cols="3">
+	<colspec colname="col1"/>
+	<colspec colname="col2"/>
+	<colspec colname="col3"/>
+	<thead>
+	  <row valign="top">
+	    <entry colname="col1">
+	      <para>ボタンの状態</para>
+	    </entry>
+	    <entry colname="col2">
+	      <para>ウィンドウの状態</para>
+	    </entry>
+	    <entry colname="col3">
+	      <para>例<xref linkend="windowlist-applet-fig"/></para>
+	    </entry>
+	  </row>
+	</thead>
+	<tbody>
+	  <row valign="top">
+	    <entry colname="col1">
+	      <para>ボタンが押下されている</para>
+	    </entry>
+	    <entry colname="col2">
+	      <para>ウィンドウはフォーカスされている</para>
+	    </entry>
+	    <entry colname="col3">
+	      <para><guibutton>gedit</guibutton></para>
+	    </entry>
+	  </row>
+	  <row valign="top">
+	    <entry colname="col1">
+	      <para>
+		ウィンドウのタイトルが大括弧で囲われ、ボタンの内容が
+		フェイドしている
+	      </para>
+	    </entry>
+	    <entry colname="col2">
+	      <para>ウィンドウは最小化されている</para>
+	    </entry>
+	    <entry colname="col3">
+	      <para><guibutton>辞書</guibutton></para>
+	    </entry>
+	  </row>
+	  <row valign="top">
+	    <entry colname="col1">
+	      <para>
+		ボタンは押下されておらず、括弧で囲まれてもいない
+	      </para>
+	    </entry>
+	    <entry colname="col2">
+	      <para>
+		ウィンドウはデスクトップに表示されており、
+		最小化されていない
+	      </para>
+	    </entry>
+	    <entry colname="col3">
+	      <para><guibutton>ghex</guibutton></para>
+	    </entry>
+	  </row>
+	  <row valign="top">
+	    <entry colname="col1">
+	      <para>
+		右上にドットの三角が表示され、小括弧の中に数字が
+		表示されている
+	      </para>
+	    </entry>
+	    <entry colname="col2">
+	      <para>ボタンはグループ化されている</para>
+	    </entry>
+	    <entry colname="col3">
+	      <para><guibutton>gnome-terminal</guibutton></para>
+	    </entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+    <para>
+      <application>&applet;</application>アプレットをパネルに追加する
+      には、パネルを右クリックし、
+      <menuchoice>
+	<guimenu>パネルに追加</guimenu>
+	<guisubmenu>ユーティリティ</guisubmenu>
+	<guimenuitem>ウィンドウの一覧</guimenuitem>
+      </menuchoice>
+      と選択します。<application>&applet;</application>アプレットが
+      ボタンを表示する行数は、アプレットのサイズに依存します。
+    </para>
+
+    <sect2 id="window-groups">
+      <title>ボタンをグループ化する</title>
+      <para>
+	パネル上のスペースが限られている場合、
+	<application>&applet;</application>アプレットは同じプロセスに
+	属するのウィンドウを一つの<application>&applet;</application>ボタンにグループ化することができます。グループ化されているボタンのリストを開くには、グループ化されているボタンを表示している<application>&applet;</application>ボタンをクリックします。<xref linkend="windowlist-applet-fig"/>の<guibutton>Gnome-terminal</guibutton>ボタンはグループ化したボタンの例です。次の画像はグループ化したボタンをリスト表示した<application>&applet;</application>アプレットの例です。
+      </para>
+
+      <!-- ==== Figure ============================================= -->
+      <figure id="windowgroup-open-fig">
+	<title>ボタンをグループ化している&applet;アプレット</title>
+	<screenshot>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="figures/window_list_group_applet.png"
+                         format="PNG"/>
+	    </imageobject>
+	    <textobject>
+	      <phrase>
+		ボタンをグループ化しているウィンドウ一覧アプレットを表示
+	      </phrase>
+	    </textobject>
+	  </mediaobject>
+	</screenshot>
+      </figure>
+    </sect2>
+  </sect1>
+
+  <!-- ================ Usage ================================ -->
+  <sect1 id="windowlist-usage">
+    <title>使い方</title>
+    <para>
+      <application>&applet;</application>アプレットは以下のようなタス
+      クに利用できます:
+    </para>
+    <itemizedlist>
+      <listitem>
+	<para>ウィンドウにフォーカスを当てる</para>
+	<para>
+	  デスクトップに表示されているがフォーカスが当たっていないウィ
+	  ンドウを表示するボタンをクリックすると、
+	  <application>&applet;</application>アプレットはそのウィンド
+	  ウにフォーカスを当てます。
+	</para>
+      </listitem>
+      <listitem>
+	<para>ウィンドウを最小化する</para>
+	<para>
+	  フォーカスが当たっているウィンドウを示すボタンをクリックする
+	  と、<application>&applet;</application>アプレットはそのウィ
+	  ンドウを最小化します。
+	</para>
+      </listitem>
+      <listitem>
+	<para>最小化したウィンドウの復元</para>
+	<para>
+	  最小化したウィンドウを示すボタンをクリックすると、
+	  <application>&applet;</application>アプレットはその
+	  ウィンドウを復元します。
+	</para>
+      </listitem>
+    </itemizedlist>
+  </sect1>
+
+  <!-- ============= Preferences ============================= -->
+  <sect1 id="windowlist-prefs">
+    <title>設定</title>
+    <para>
+      <application>&applet;</application>アプレットを設定するには、
+      アプレットを右クリックし、<guimenuitem>設定</guimenuitem>を
+      選択します。
+    </para>
+    <variablelist>
+      <varlistentry>
+	<term><guilabel>ウィンドウ一覧の内容</guilabel></term>
+	<listitem>
+	  <para>
+	    ウィンドウを<application>&applet;</application>アプレット
+	    上にどのように表示するか、以下のオプションから選択します:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<guilabel>
+		  現在のワークスペースにあるウィンドウを表示する
+		</guilabel>
+	      </para>
+	      <para>
+		現在のワークスペースに開かれているウィンドウのみを表
+		示します。
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<guilabel>
+		  全てのワークスペースにあるウィンドウを表示する
+		</guilabel>
+	      </para>
+	      <para>
+		全てのワークスペースに開かれているウィンドウを表示し
+		ます。
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>最小化したウィンドウを復元する場合</guilabel></term>
+	<listitem>
+	  <para>
+	    ウィンドウを復元する時の
+	    <application>&applet;</application>アプレットの挙動を設定
+	    します。以下のオプションから選択します:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><guilabel>現在のワークスペースに復元する</guilabel></para>
+	      <para>
+		最小化した時に現在のワークスペースに存在して
+		いなかったとしても、現在のワークスペースに復元します。
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><guilabel>元のワークスペースに復元する</guilabel></para>
+	      <para>
+		ウィンドウを復元する時に、ワークスペースをウィンドウが
+		最小化するときに存在していたワークスペースに切り替え、
+		そこに復元します。
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>ウィンドウのグループ化</guilabel></term>
+	<listitem>
+	  <para>
+	    <application>&applet;</application>アプレットが同じプロセスに属しているウィンドウをグループ化するときの挙動を設定します。以下のオプションから選択します:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><guilabel>グループ化しない</guilabel></para>
+	      <para>
+		同じプロセスに属しているボタンを一つの
+		<application>&applet;</application>アプレットのボタンに
+		グループ化することを禁止します。
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<guilabel>狭い時にグループ化する</guilabel>
+	      </para>
+	      <para>
+		パネルのスペースが制限されている時、同じプロセスに属し
+		ているボタンを一つの
+		<application>&applet;</application>
+		アプレットのボタンにグループ化します。
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><guilabel>常にグループ化する</guilabel></para>
+	      <para>
+		常に同じプロセスに属するボタンを一つの
+		<application>&applet;</application>アプレットの
+		ボタンにグループ化します。
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>ウィンドウ一覧の大きさ</guilabel></term>
+	<listitem>
+	  <para>
+	    <application>&applet;</application>アプレットの大きさは
+	    アプレットが存在するパネルの大きさによって変化します。
+	    アプレットのサイズについての制限をスピンボックスで設定
+	    します。
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><guilabel>最小サイズ</guilabel></para>
+	      <para>
+		アプレットの最小サイズを設定します。パネルがこの最小
+		サイズより小さい場合、パネルはアプレットにサイズを
+		合わせます。
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><guilabel>最大サイズ</guilabel></para>
+	      <para>アプレットの最大サイズを設定します。</para>
+	    </listitem>
+	  </itemizedlist>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </sect1>
+
+</article>

@@ -1,0 +1,4035 @@
+# Esperanto translation of gnome-panel.
+# Copyright (C) 2003 Free Software Foundation, Inc.
+# Joël Brich <joel.brich@laposte.net>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-panel 2.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-02 09:36+0000\n"
+"PO-Revision-Date: 2003-04-15 18:35+0100\n"
+"Last-Translator: Joël Brich <joel.brich@laposte.net>\n"
+"Language-Team: Esperanto <eo@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:1
+msgid "Ad_just Date & Time"
+msgstr ""
+
+#: applets/clock/GNOME_ClockApplet.xml.h:2
+#, fuzzy
+msgid "Copy _Date"
+msgstr "Kopiu _daton"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:3
+#, fuzzy
+msgid "Copy _Time"
+msgstr "Kopiu ho_ron"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:4
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
+#, fuzzy
+msgid "_About"
+msgstr "_Pri..."
+
+#: applets/clock/GNOME_ClockApplet.xml.h:5
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
+#: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:743
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:972
+#: gnome-panel/panel-menu-button.c:688
+msgid "_Help"
+msgstr "_Helpo"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:6
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
+#, fuzzy
+msgid "_Preferences"
+msgstr "_Agordo..."
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
+#: applets/clock/clock.c:2594
+msgid "Clock"
+msgstr "Horloĝo"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
+#, fuzzy
+msgid "Clock Applet Factory"
+msgstr "GenUtil aplikaĵeta fabrikejo"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+#, fuzzy
+msgid "Factory for creating clock applets."
+msgstr "faktorejo por krei ĝeneralajn aplikaĵetojn"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+msgid "Get the current time and date"
+msgstr "Ricevu nunajn horon kaj daton"
+
+#: applets/clock/clock.c:268
+msgid "%l:%M:%S %p"
+msgstr ""
+
+#: applets/clock/clock.c:268 applets/clock/clock.c:584
+msgid "%l:%M %p"
+msgstr ""
+
+#: applets/clock/clock.c:270 applets/clock/clock.c:1684
+msgid "%H:%M:%S"
+msgstr ""
+
+#: applets/clock/clock.c:270 applets/clock/clock.c:586
+#: applets/clock/clock.c:1686
+msgid "%H:%M"
+msgstr ""
+
+#. translators: replace %e with %d if, when the day of the
+#. *              month as a decimal number is a single digit, it
+#. *              should begin with a 0 in your locale (e.g. "May
+#. *              01" instead of "May  1").
+#.
+#: applets/clock/clock.c:281
+msgid "%a %b %e"
+msgstr ""
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/clock/clock.c:288
+#, fuzzy, c-format
+msgid ""
+"%1$s\n"
+"%2$s"
+msgstr ""
+"%s\n"
+"%s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/clock/clock.c:295
+#, fuzzy, c-format
+msgid "%1$s, %2$s"
+msgstr "%s, %s"
+
+#. Show date in tooltip
+#: applets/clock/clock.c:379
+msgid "%A %B %d"
+msgstr ""
+
+#. Translators: If the event did not start on the current day
+#. we will display the start date in the most abbreviated way possible.
+#: applets/clock/clock.c:591
+msgid "%b %d"
+msgstr ""
+
+#: applets/clock/clock.c:890
+msgid "Tasks"
+msgstr ""
+
+#: applets/clock/clock.c:1034
+msgid "All Day"
+msgstr ""
+
+#: applets/clock/clock.c:1073
+msgid "Appointments"
+msgstr ""
+
+#: applets/clock/clock.c:1305
+msgid "Calendar"
+msgstr ""
+
+#: applets/clock/clock.c:1586
+msgid "Computer Clock"
+msgstr "Komputila horloĝo"
+
+#: applets/clock/clock.c:1679
+msgid "%I:%M:%S %p"
+msgstr ""
+
+#: applets/clock/clock.c:1681
+msgid "%I:%M %p"
+msgstr ""
+
+#: applets/clock/clock.c:1723
+msgid "%A, %B %d %Y"
+msgstr ""
+
+#: applets/clock/clock.c:1767
+#, fuzzy, c-format
+msgid "Failed to launch time configuration tool: %s"
+msgstr ""
+"<b>Eraro ĉe lanĉi tiun programon</b>\n"
+"\n"
+"Detaloj : %s"
+
+#: applets/clock/clock.c:1806
+msgid ""
+"Failed to locate a program for configuring the date and time. Perhaps none "
+"is installed?"
+msgstr ""
+
+#: applets/clock/clock.c:2253
+#, fuzzy
+msgid "Custom format"
+msgstr "Horoformato"
+
+#: applets/clock/clock.c:2374 applets/clock/clock.c:2551
+#: applets/fish/fish.c:144 applets/notification_area/main.c:82
+#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:67
+#: applets/wncklet/workspace-switcher.c:267
+#: applets/wncklet/workspace-switcher.c:575
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Estis eraron montrante helpon : %s"
+
+#: applets/clock/clock.c:2409
+msgid "Clock Preferences"
+msgstr "Horloĝagordo"
+
+#: applets/clock/clock.c:2433
+#, fuzzy
+msgid "Clock _type:"
+msgstr "Horloĝtipo"
+
+#: applets/clock/clock.c:2443
+#, fuzzy
+msgid "12 hour"
+msgstr "_12 horoj"
+
+#: applets/clock/clock.c:2444
+#, fuzzy
+msgid "24 hour"
+msgstr "_24 horoj"
+
+#: applets/clock/clock.c:2445
+#, fuzzy
+msgid "UNIX time"
+msgstr "Uni_ksa tempo"
+
+#: applets/clock/clock.c:2446
+#, fuzzy
+msgid "Internet time"
+msgstr "_Interreta tempo"
+
+#: applets/clock/clock.c:2454
+#, fuzzy
+msgid "Custom _format:"
+msgstr "Horoformato"
+
+#: applets/clock/clock.c:2473
+msgid "Show _seconds"
+msgstr "Montru _sekundojn"
+
+#: applets/clock/clock.c:2482
+msgid "Show _date"
+msgstr "Montru _daton"
+
+#: applets/clock/clock.c:2491
+msgid "Use _UTC"
+msgstr "Uzu _UTC"
+
+#. Translator credits
+#: applets/clock/clock.c:2583 applets/fish/fish.c:481
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:97
+#: applets/wncklet/workspace-switcher.c:606
+#: gnome-panel/panel-context-menu.c:110
+#, fuzzy
+msgid "translator-credits"
+msgstr "Joël Brich <joel.brich@laposte.net>"
+
+#: applets/clock/clock.c:2597
+msgid "The Clock displays the current time and date"
+msgstr "La horloĝo montras la nunajn horon kaj daton"
+
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24" and
+#. "12". If your locale uses 24 hour time notation, translate this to "24".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12".
+#.
+#. Do NOT translate this into anything else than "24" or "12". For example,
+#. if you translate this to "۲۴" or anything else that isn't "24" or
+#. "12", things will not work.
+#.
+#: applets/clock/clock.schemas.in.h:11
+msgid "24"
+msgstr "24"
+
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: applets/clock/clock.schemas.in.h:22
+#, fuzzy
+msgid "24-hour"
+msgstr "24-hour"
+
+#: applets/clock/clock.schemas.in.h:23
+msgid "Custom format of the clock"
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:24
+msgid "Hour format"
+msgstr "Horoformato"
+
+#: applets/clock/clock.schemas.in.h:25
+#, fuzzy
+msgid "If true, display date in the clock, in addition to time."
+msgstr "Montru daton en la horloĝo, krome la horo"
+
+#: applets/clock/clock.schemas.in.h:26
+#, fuzzy
+msgid "If true, display seconds in time."
+msgstr "Montru sekondojn"
+
+#: applets/clock/clock.schemas.in.h:27
+#, fuzzy
+msgid "If true, display time in Universal Coordinated Time zone."
+msgstr "Montru tempon en Universala Koordinata Tempozono"
+
+#: applets/clock/clock.schemas.in.h:28
+#, fuzzy
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr "Montru daton en helpindiko, kiam la muso pasas sur la horloĝo"
+
+#: applets/clock/clock.schemas.in.h:29
+msgid "If true, show week numbers in the calendar."
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:30
+#, fuzzy
+msgid "Show date in clock"
+msgstr "Montru daton en horloĝo"
+
+#: applets/clock/clock.schemas.in.h:31
+msgid "Show date in tooltip"
+msgstr "Montru daton en helpindiko"
+
+#: applets/clock/clock.schemas.in.h:32
+msgid "Show time with seconds"
+msgstr "Montru sekundojn"
+
+#: applets/clock/clock.schemas.in.h:33
+#, fuzzy
+msgid "Show week numbers in calendar"
+msgstr "Montru laborkadronomojn en la ŝaltilo"
+
+#: applets/clock/clock.schemas.in.h:34
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:35
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format."
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:36
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:37
+msgid "This key specifies the program to run in order to configure the time."
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:38
+msgid "Time configuration tool"
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:39
+#, fuzzy
+msgid "Use Internet time"
+msgstr "Uzu Interretan tempon"
+
+#: applets/clock/clock.schemas.in.h:40
+msgid "Use UNIX time"
+msgstr "Uzu Uniksan tempon"
+
+#: applets/clock/clock.schemas.in.h:41
+msgid "Use UTC"
+msgstr "Uzu UTC"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr "Montru naĝantan fiŝon aŭ aliaj animata kreitaĵo"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
+#: applets/fish/fish.c:501
+msgid "Fish"
+msgstr "Fiŝo"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "De kie estas tiun stupidan fiŝon"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+msgid "Wanda Factory"
+msgstr "Wanda fabrikejo"
+
+#: applets/fish/fish.c:214
+#, c-format
+msgid ""
+"Warning:  The command appears to be something actually useful.\n"
+"Since this is a useless applet, you may not want to do this.\n"
+"We strongly advise you against using %s for anything\n"
+"which would make the applet \"practical\" or useful."
+msgstr ""
+"Averto : La komando ŝainas utila.\n"
+"Kiel tiu estas neutilan aplikaĵeton, vi povas ne voli fari tion.\n"
+"Ni forte avertas vin kontraŭ la uzado de %s por ĉiu,\n"
+"kiu eblas la aplikaĵeton uzebla aŭ utila."
+
+#: applets/fish/fish.c:467 applets/fish/fish.c:529 applets/fish/fish.c:644
+#, no-c-format
+msgid "%s the Fish"
+msgstr "%s la fiŝo"
+
+#: applets/fish/fish.c:468
+#, c-format
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. If "
+"anyone is found using it, he should be promptly sent for a psychiatric "
+"evaluation."
+msgstr ""
+"%s havas neniu utileco. Ĝi nur uzas diskospacon kaj kompiladan tempon, kaj, "
+"se ŝarĝita, ĝi ankaŭ uzas multvaloran panelspacon kaj memoron. Se iu estas "
+"trovita uzante ĝin, li devus rapide sendota por psikiatria taksado."
+
+#: applets/fish/fish.c:494
+msgid "(with minor help from George)"
+msgstr "(kun malgranda helpo de George)"
+
+#: applets/fish/fish.c:530
+#, fuzzy, c-format
+msgid "%s the Fish, a contemporary oracle"
+msgstr "%s la GNOME fiŝo, unu nuna aŭguristo"
+
+#: applets/fish/fish.c:600
+msgid "Unable to locate the command to execute"
+msgstr "Ne povas trovi la komandon por lanĉi"
+
+#: applets/fish/fish.c:649
+#, fuzzy, no-c-format
+msgid "%s the Fish Says:"
+msgstr "%s la GNOME fiŝo diras :"
+
+#: applets/fish/fish.c:718
+#, fuzzy, c-format
+msgid ""
+"Unable to read output from command\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Ne povas lanĉi '%s'\n"
+"\n"
+"Detaloj : %s"
+
+#: applets/fish/fish.c:783
+msgid "_Speak again"
+msgstr ""
+
+#: applets/fish/fish.c:864
+#, c-format
+msgid "The configured command is not working and has been replaced by: %s"
+msgstr ""
+
+#: applets/fish/fish.c:887
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Ne povas lanĉi '%s'\n"
+"\n"
+"Detaloj : %s"
+
+#: applets/fish/fish.c:903
+#, fuzzy, c-format
+msgid ""
+"Unable to read from '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Ne povas lanĉi '%s'\n"
+"\n"
+"Detaloj : %s"
+
+#: applets/fish/fish.c:1565
+msgid ""
+"The water needs changing!\n"
+"(Look at today's date)"
+msgstr ""
+"La akvo devas ŝanĝiĝi!\n"
+"(Rigardu la hodiaŭ daton)"
+
+#: applets/fish/fish.c:1659
+#, fuzzy, c-format
+msgid "%s the Fish, the fortune teller"
+msgstr "GNOME fiŝo, la aŭguristo"
+
+#: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
+#: applets/wncklet/workspace-switcher.glade.h:1
+#: gnome-panel/panel-properties-dialog.glade.h:1
+msgid "    "
+msgstr ""
+
+#: applets/fish/fish.glade.h:2 gnome-panel/panel-properties-dialog.glade.h:2
+#: gnome-panel/panel-run-dialog.glade.h:1
+#: libpanel-applet/panel-test-applets.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: applets/fish/fish.glade.h:3
+#, fuzzy
+msgid "<b>Animation</b>"
+msgstr "<b>Opcioj</b>"
+
+#: applets/fish/fish.glade.h:4
+#, fuzzy
+msgid "<b>General</b>"
+msgstr "<b>Antaŭrigardo</b>"
+
+#: applets/fish/fish.glade.h:5
+msgid "Browse"
+msgstr "Rigardu"
+
+#: applets/fish/fish.glade.h:6
+#, fuzzy
+msgid "Co_mmand to run when clicked:"
+msgstr "Lanĉenda komando kiam klakita"
+
+#: applets/fish/fish.glade.h:7
+#, fuzzy
+msgid "Fish Preferences"
+msgstr "GNOME fiŝa agordo"
+
+#: applets/fish/fish.glade.h:8
+#, fuzzy
+msgid "_File:"
+msgstr "_Kahelo"
+
+#: applets/fish/fish.glade.h:9
+#, fuzzy
+msgid "_Name of fish:"
+msgstr "_Nomo de GNOME fiŝo :"
+
+#: applets/fish/fish.glade.h:10
+#, fuzzy
+msgid "_Pause per frame:"
+msgstr "Paŭzo _per bildo"
+
+#: applets/fish/fish.glade.h:11
+msgid "_Rotate on vertical panels"
+msgstr "Rotaciu en vertikalaj paneloj"
+
+#: applets/fish/fish.glade.h:12
+#, fuzzy
+msgid "_Total frames in animation:"
+msgstr "Bildoj en animado :"
+
+#: applets/fish/fish.glade.h:13
+msgid "frames"
+msgstr ""
+
+#: applets/fish/fish.glade.h:14
+msgid "seconds"
+msgstr "sekundoj"
+
+#: applets/fish/fish.schemas.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr "Unu fiŝo sen nomo ne estas feliĉa. Donu nomon al via fiŝo"
+
+#: applets/fish/fish.schemas.in.h:2
+#, fuzzy
+msgid "Command to execute on click"
+msgstr "Komando por lanĉi, kiam fiŝo estas klakita :"
+
+#: applets/fish/fish.schemas.in.h:3
+#, fuzzy
+msgid "Frames in fish's animation"
+msgstr "La nombro da bildo en la fiŝa animado"
+
+#: applets/fish/fish.schemas.in.h:4
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr ""
+
+#: applets/fish/fish.schemas.in.h:5
+msgid "Pause per frame"
+msgstr "Paŭzo _per bildo"
+
+#: applets/fish/fish.schemas.in.h:6
+msgid "Rotate on vertical panels"
+msgstr "Rotaciu en vertikalaj paneloj"
+
+#: applets/fish/fish.schemas.in.h:7
+msgid "The fish's animation pixmap"
+msgstr "La fiŝa animada piktogramo"
+
+#: applets/fish/fish.schemas.in.h:8
+msgid "The fish's name"
+msgstr "La fiŝnomo"
+
+#: applets/fish/fish.schemas.in.h:9
+#, fuzzy
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "Komando por lanĉi, kiam fiŝo estas klakita"
+
+#: applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+
+#: applets/fish/fish.schemas.in.h:11
+#, fuzzy
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
+msgstr "La nombro da bildo en la fiŝa animado"
+
+#: applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr ""
+
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr "Areo, kie atentigopiktogramo aperas"
+
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
+#: applets/notification_area/main.c:129
+msgid "Notification Area"
+msgstr "Atentigoareo"
+
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
+msgid "Notification Area Factory"
+msgstr "Atentigoarea fabrikejo"
+
+#: applets/notification_area/eggtraymanager.c:145
+msgid "Orientation"
+msgstr "Orientiĝo"
+
+#: applets/notification_area/eggtraymanager.c:146
+#, fuzzy
+msgid "The orientation of the tray."
+msgstr "Aktuala stato de tiu panelo"
+
+#: applets/notification_area/main.c:342
+msgid "Panel Notification Area"
+msgstr "Atentigoaro de la panelo"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+#, fuzzy
+msgid "Factory for the window navigation related applets"
+msgstr "faktorejo por krei ĝeneralajn aplikaĵetojn"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+#, fuzzy
+msgid "Hide application windows and show the desktop"
+msgstr "Butono por kaŝi aplikaĵajn fenestrojn kaj montru la tabulon"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#, fuzzy
+msgid "Show Desktop"
+msgstr "Montru tabulbutonon"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows"
+msgstr "Ŝaltu inter malfermaj fenestroj"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between workspaces"
+msgstr "Ŝaltu inter laborkadroj"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+#: applets/wncklet/window-list.c:805
+msgid "Window List"
+msgstr "Fenestrolisto"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#, fuzzy
+msgid "Window Navigation Applet Factory"
+msgstr "GenUtil aplikaĵeta fabrikejo"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:108 applets/wncklet/window-menu.c:347
+#, fuzzy
+msgid "Window Selector"
+msgstr "Fenestrolisto"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: applets/wncklet/workspace-switcher.c:617
+msgid "Workspace Switcher"
+msgstr "Laborkadra ŝaltilo"
+
+#: applets/wncklet/showdesktop.c:205
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "Malsukcesis ŝarĝi %s : %s\n"
+
+#: applets/wncklet/showdesktop.c:206 gnome-panel/panel-util.c:567
+#, fuzzy
+msgid "Icon not found"
+msgstr ""
+"<b>Ne povas lanĉi xscreensaver</b>\n"
+"\n"
+"Detaloj: xscreensaver-command ne trovita"
+
+#: applets/wncklet/showdesktop.c:264
+msgid "Click here to restore hidden windows."
+msgstr "Klaku ĉi tien por malkaŝi kaŝitajn fenestrojn"
+
+#: applets/wncklet/showdesktop.c:267
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Klaku ĉi tien por kaŝi ĉiujn fenestrojn kaj montri la laborkadron."
+
+#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
+msgid "Show Desktop Button"
+msgstr "Montru tabulbutonon"
+
+#: applets/wncklet/showdesktop.c:582
+#, fuzzy
+msgid "This button lets you hide all windows and show the desktop."
+msgstr "Tiu butono eblas vin kaŝi ĉiujn fenestrojn kaj montri la laborkadron"
+
+#: applets/wncklet/showdesktop.c:623
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+
+#: applets/wncklet/window-list.c:808
+#, fuzzy
+msgid "The Window List shows a list of all windows and lets you browse them."
+msgstr ""
+"La fenestrolisto montras liston de ĉiuj videblaj fenestroj kaj eblas vin "
+"rigardi ĝin."
+
+#: applets/wncklet/window-list.glade.h:2
+#, fuzzy
+msgid "<b>Restoring Minimized Windows</b>"
+msgstr "Kiam restarante minimumita fenestroj"
+
+#: applets/wncklet/window-list.glade.h:3
+#, fuzzy
+msgid "<b>Window Grouping</b>"
+msgstr "Regrupigo de fenestroj"
+
+#: applets/wncklet/window-list.glade.h:4
+#, fuzzy
+msgid "<b>Window List Content</b>"
+msgstr "Enhavo de fenestrolisto"
+
+#: applets/wncklet/window-list.glade.h:5
+#, fuzzy
+msgid "<b>Window List Size</b>"
+msgstr "Grandeco de fenestrolisto"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Behavior"
+msgstr ""
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Group windows when _space is limited"
+msgstr "Grupigu fenestrojn, kiam _spaco estas limigita"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "M_inimum size:"
+msgstr "M_inimuma grandeco :"
+
+#: applets/wncklet/window-list.glade.h:9
+msgid "Ma_ximum size:"
+msgstr "M_aksimuma grandeco :"
+
+#: applets/wncklet/window-list.glade.h:10
+msgid "Restore to current _workspace"
+msgstr "Malkaŝu la aktualan _laborkadron"
+
+#: applets/wncklet/window-list.glade.h:11
+msgid "Restore to na_tive workspace"
+msgstr "Restarigu la a_prioran laborkadron"
+
+#: applets/wncklet/window-list.glade.h:12
+#, fuzzy
+msgid "Sh_ow windows from current workspace"
+msgstr "Montru fenestrojn de la _aktuala laborkadro"
+
+#: applets/wncklet/window-list.glade.h:13
+msgid "Show windows from a_ll workspaces"
+msgstr "Montru fenestrojn de ĉiuj laborkadroj"
+
+#: applets/wncklet/window-list.glade.h:14
+msgid "Size"
+msgstr "Grandeco"
+
+#: applets/wncklet/window-list.glade.h:15
+msgid "Window List Preferences"
+msgstr "Agordo de fenestrolisto"
+
+#: applets/wncklet/window-list.glade.h:16
+msgid "_Always group windows"
+msgstr "Ĉiam _grupu fenestrojn"
+
+#: applets/wncklet/window-list.glade.h:17
+msgid "_Never group windows"
+msgstr "_Neniam grupu fenestrojn"
+
+#: applets/wncklet/window-list.glade.h:18
+#: gnome-panel/panel-properties-dialog.glade.h:28
+msgid "pixels"
+msgstr ""
+
+#: applets/wncklet/window-list.schemas.in.h:1
+#, fuzzy
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Decidu kiam grupi fenestrojn de la sama aplikaĵo en la fenestrolisto. "
+"Validitaj valoroj estas \"neniam\", \"aŭtomate\" kaj \"ĉiam\"."
+
+#: applets/wncklet/window-list.schemas.in.h:2
+#, fuzzy
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"Se tio estas vera, la fenestrolisto montros la fenestrojn de ĉiuj "
+"laborkadroj, alie, ĝi montros nur la fenestrojn de la aktuala laborkadro."
+
+#: applets/wncklet/window-list.schemas.in.h:3
+#, fuzzy
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"Se tio estas vera, malminimumigu la fenestron en la aktuala laborkadro. "
+"Alie, ŝaltu ĝis la laborkadro de la fenestro."
+
+#: applets/wncklet/window-list.schemas.in.h:4
+#, fuzzy
+msgid "Maximum window list size"
+msgstr "M_aksimuma grandeco :"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+#, fuzzy
+msgid "Minimum window list size"
+msgstr "M_inimuma grandeco :"
+
+#: applets/wncklet/window-list.schemas.in.h:6
+#, fuzzy
+msgid "Move windows to current workspace when unminimized"
+msgstr "Movu fenestrojn al la aktuala laborkadro kiam malminimumigita"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Montru fenestrojn de ĉiu laborkadroj"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+#, fuzzy
+msgid ""
+"This key specifies the maximum width that the window list requests. The "
+"maximum width setting is useful to limit the size of the window list in "
+"large panels, where the window list could fill the entire space available."
+msgstr ""
+"Tiu valoro estas la maksimuman larĝecon de la fenestrolisto. La maksimuma "
+"larĝeco ebligas la limigon de la grandeco de la fenestrolisto en la larĝaj "
+"paneloj kiel randaj paneloj en kiu fenestrolisto povas plenigi la ĉiu spaco."
+
+#: applets/wncklet/window-list.schemas.in.h:9
+#, fuzzy
+msgid "This key specifies the minimum width that the window list requests."
+msgstr "Minimuma grandeco, ke la fenestrolisto bezonas"
+
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "Kiam grupi fenestrojn"
+
+#: applets/wncklet/window-menu.c:113
+#, fuzzy
+msgid ""
+"The Window Selector shows a list of all windows and lets you browse them."
+msgstr ""
+"La fenestrolisto montras liston de ĉiuj videblaj fenestroj kaj eblas vin "
+"rigardi ĝin."
+
+#: applets/wncklet/workspace-switcher.c:144
+#: applets/wncklet/workspace-switcher.c:928
+#: applets/wncklet/workspace-switcher.glade.h:11
+#, fuzzy
+msgid "rows"
+msgstr "Rigardu"
+
+#: applets/wncklet/workspace-switcher.c:144
+#: applets/wncklet/workspace-switcher.c:928
+#, fuzzy
+msgid "columns"
+msgstr "Kolumnoj"
+
+#: applets/wncklet/workspace-switcher.c:455
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr "Eraro dum legado de num_rows-valoro por la laborkadra ŝaltilo : %s\n"
+
+#: applets/wncklet/workspace-switcher.c:466
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Eraro dum legado de display_workspace_names-valoro por la laborkadra "
+"ŝaltilo : %s\n"
+
+#: applets/wncklet/workspace-switcher.c:481
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"Eraro dum legado de display_all_workspaces-valoro por la laborkadra "
+"ŝaltilo : %s\n"
+
+#: applets/wncklet/workspace-switcher.c:620
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"La laborkadra ŝaltilo montras al vi malgrandan version de viaj laborkadroj, "
+"kio eblas vin administri viajn fenerstrojn."
+
+#: applets/wncklet/workspace-switcher.glade.h:2
+#, fuzzy
+msgid "<b>Switcher</b>"
+msgstr "<b>Antaŭrigardo</b>"
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+#, fuzzy
+msgid "<b>Workspaces</b>"
+msgstr "Laborkadroj"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Number of _workspaces:"
+msgstr "Nombro da laborkadroj :"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+#, fuzzy
+msgid "Show _all workspaces in:"
+msgstr "Montru ĉiun laborkadrojn"
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+#, fuzzy
+msgid "Show _only the current workspace"
+msgstr "Montru nur la nunan laborkadron"
+
+#: applets/wncklet/workspace-switcher.glade.h:7
+#, fuzzy
+msgid "Show workspace _names in switcher"
+msgstr "Montru laborkadronomojn en la ŝaltilo"
+
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Names"
+msgstr "Laborkadronomoj"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspace Switcher Preferences"
+msgstr "Agordo de la laborkadra ŝaltilo"
+
+#: applets/wncklet/workspace-switcher.glade.h:10
+#, fuzzy
+msgid "Workspace na_mes:"
+msgstr "Laborkadronomoj"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+#, fuzzy
+msgid "Display all workspaces"
+msgstr "Montru ĉiun laborkadrojn"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+#, fuzzy
+msgid "Display workspace names"
+msgstr "Laborkadronomoj"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+#, fuzzy
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"Se tiu estas vera, la laborkadra ŝaltilo montros ĉiujn laborkadrojn, alieĝi "
+"montros nur la aktualan laborkadron"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+#, fuzzy
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace."
+msgstr ""
+"Se tiu estas vera, la laborkadroj en la laborkadra ŝaltilo montros la "
+"laborkadronomon, alie ĝi montros la enhavon de la laborkadroj"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+#, fuzzy
+msgid "Rows in workspace switcher"
+msgstr "Laborkadra ŝaltilo"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+#, fuzzy
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"Kiam montrante ĉiuj laborkadroj, tiu determinas kiom da linioj aŭ kolumnoj "
+"la laborkadra ŝaltilo montras"
+
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "GNOME panela ŝelo"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
+#, fuzzy
+msgid "_Lock To Panel"
+msgstr "Aktuala stato de tiu panelo"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
+msgid "_Move"
+msgstr "_Movu"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:511
+msgid "_Remove From Panel"
+msgstr "_Forigu de la panelo"
+
+#: gnome-panel/applet.c:428
+msgid "???"
+msgstr "???"
+
+#: gnome-panel/applet.c:1214
+msgid "Can't find an empty spot"
+msgstr "Ne povas trovi malplenan lokon"
+
+#: gnome-panel/button-widget.c:196
+#, fuzzy, c-format
+msgid "Failed to load image %s"
+msgstr "Malsukcesis ŝarĝi %s : %s\n"
+
+#: gnome-panel/drawer.c:353 gnome-panel/panel-addto.c:150
+#: gnome-panel/panel-toplevel.c:1516
+msgid "Drawer"
+msgstr "Tirkesto"
+
+#: gnome-panel/drawer.c:596
+#, fuzzy
+msgid "_Add to Drawer..."
+msgstr "_Aldonu al la panelo"
+
+#: gnome-panel/drawer.c:602 gnome-panel/launcher.c:846
+#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:265
+msgid "_Properties"
+msgstr "_Agordo"
+
+#: gnome-panel/gnome-desktop-item-edit.c:27
+msgid "Create new file in the given directory"
+msgstr "Kreu novan dosieron en la difinita dosierujo"
+
+#: gnome-panel/launcher.c:136
+#, fuzzy
+msgid "Cannot save launcher to disk"
+msgstr ""
+"<b>Ne povas konservi menueron sur la disko</b>\n"
+"\n"
+"Detaloj : %s"
+
+#: gnome-panel/launcher.c:166 gnome-panel/launcher.c:216
+#: gnome-panel/launcher.c:273
+#, fuzzy
+msgid "Cannot launch icon"
+msgstr ""
+"Ne povas lanĉi piktogramon\n"
+"%s"
+
+#: gnome-panel/launcher.c:167
+#, fuzzy
+msgid "This launch icon does not specify a url to show."
+msgstr "Tiu Lanĉa piktogramo ne havas urlon por montri"
+
+#: gnome-panel/launcher.c:179
+#, fuzzy, c-format
+msgid "Cannot show %s"
+msgstr ""
+"Ne povas montri %s\n"
+"%s"
+
+#: gnome-panel/launcher.c:467
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "Neniu URI difinita por tabuldosiero de la panellanĉilo\n"
+
+#: gnome-panel/launcher.c:481
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr "Ne povas malfermi tabuldosieron %s por panela lanĉilo %s%s\n"
+
+#: gnome-panel/launcher.c:728 gnome-panel/menu-ditem.c:181
+#: gnome-panel/menu-ditem.c:264
+msgid "Launcher Properties"
+msgstr "Ecoj de la lanĉilo"
+
+#: gnome-panel/launcher.c:840
+#, fuzzy
+msgid "_Launch"
+msgstr "Lanĉilo..."
+
+#: gnome-panel/launcher.c:918
+#, c-format
+msgid "Key %s is not set, can't load launcher\n"
+msgstr "Ŝlosilo %s ne estas difinita, ne povas ŝarĝi lanĉilon\n"
+
+#: gnome-panel/launcher.c:973 gnome-panel/launcher.c:991
+#: gnome-panel/menu-ditem.c:469 gnome-panel/menu-ditem.c:486
+#: gnome-panel/menu-ditem.c:542
+#, fuzzy
+msgid "Cannot create launcher"
+msgstr "Kreu Lanĉilon"
+
+#: gnome-panel/launcher.c:974 gnome-panel/menu-ditem.c:470
+#, fuzzy
+msgid "You have to specify a name."
+msgstr "Vi devas specifi nomon por la lanĉilo."
+
+#: gnome-panel/launcher.c:992 gnome-panel/menu-ditem.c:487
+msgid "You have to specify a valid URL or command."
+msgstr "Vi devas specifi validajn URLon aŭ komandon."
+
+#: gnome-panel/launcher.c:1035 gnome-panel/menu-ditem.c:550
+msgid "Create Launcher"
+msgstr "Kreu Lanĉilon"
+
+#: gnome-panel/menu-ditem.c:126
+#, fuzzy
+msgid "Cannot save changes to launcher"
+msgstr ""
+"<b>Ne povas konservi ŝanĝojn de la lanĉilo</b>\n"
+"\n"
+"Detaloj : %s"
+
+#: gnome-panel/menu-ditem.c:308
+msgid "Menu"
+msgstr "Menuo"
+
+#. class
+#: gnome-panel/menu-ditem.c:517
+#, fuzzy
+msgid "Cannot save menu item to disk"
+msgstr ""
+"<b>Ne povas konservi menueron sur la disko</b>\n"
+"\n"
+"Detaloj : %s"
+
+#: gnome-panel/menu-ditem.c:543
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr "Vi ne povas krei novan lanĉilon en tiu loko ĉar ĝi ne estas skribebla"
+
+#: gnome-panel/menu.c:125 gnome-panel/panel-menu-bar.c:136
+#, fuzzy
+msgid "Cannot launch entry"
+msgstr "Kreu Lanĉilon"
+
+#: gnome-panel/menu.c:137 gnome-panel/panel-menu-bar.c:148
+#, fuzzy
+msgid "Cannot load entry"
+msgstr "Enirujo de komando"
+
+#: gnome-panel/menu.c:839
+msgid "Add this launcher to panel"
+msgstr "Aldonu tiun lanĉilon al panelo"
+
+#: gnome-panel/menu.c:859
+msgid "Entire menu"
+msgstr "Tuta menuo"
+
+#: gnome-panel/menu.c:869
+msgid "Add this as drawer to panel"
+msgstr "Aldonu tiun kiel tirkesto al panelo"
+
+#: gnome-panel/menu.c:881
+msgid "Add this as menu to panel"
+msgstr "Aldonu tiun kiel menuo al panelo"
+
+#: gnome-panel/menu.c:1532 gnome-panel/panel-menu-bar.c:775
+msgid "Applications"
+msgstr "Aplikaĵoj"
+
+#: gnome-panel/panel-action-button.c:108
+msgid "_Activate Screensaver"
+msgstr "_Aktivigu ekrankurtenon"
+
+#: gnome-panel/panel-action-button.c:114
+msgid "_Lock Screen"
+msgstr "Ŝ_losu ekranon"
+
+#: gnome-panel/panel-action-button.c:120
+msgid "_Kill Screensaver Daemon"
+msgstr "_Mortigu ekrankurtenon demonon"
+
+#: gnome-panel/panel-action-button.c:126
+msgid "Restart _Screensaver Daemon"
+msgstr "Relanĉu _ekrankurtenon demonon"
+
+#: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:630
+#, fuzzy, c-format
+msgid "Cannot execute '%s'"
+msgstr "Ne povas lanĉi gnome-panel-screenshot"
+
+#: gnome-panel/panel-action-button.c:282
+msgid "Cannot connect to server"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:313
+msgid "Lock Screen"
+msgstr "Ŝlosu ekranon"
+
+#: gnome-panel/panel-action-button.c:314
+msgid "Protect your computer from unauthorized use"
+msgstr "Protektu vian komputilon kontraŭ malpermesa uzado"
+
+#: gnome-panel/panel-action-button.c:325
+msgid "Log Out"
+msgstr "Fermu sesion"
+
+#: gnome-panel/panel-action-button.c:326
+#, fuzzy
+msgid ""
+"Log out of this session to log in as a different user or to shut down the "
+"computer"
+msgstr ""
+"Adiaŭu el sesio por saluti kun alia uzantonomo aŭ por haltigi vian komputilon"
+
+#: gnome-panel/panel-action-button.c:335
+#, fuzzy
+msgid "Run Application..."
+msgstr "Aplikaĵo"
+
+#: gnome-panel/panel-action-button.c:336
+#, fuzzy
+msgid "Run an Application by entering a command"
+msgstr "Lanĉu aplikaĵojn, se vi povas skribi la ĝustan komandon"
+
+#: gnome-panel/panel-action-button.c:345
+msgid "Search for Files..."
+msgstr "Serĉu dosierojn..."
+
+#: gnome-panel/panel-action-button.c:346
+msgid "Find files, folders, and documents on your computer"
+msgstr "Serĉu dosierojn, dosierujojn kaj dokumentojn en via komputilo"
+
+#: gnome-panel/panel-action-button.c:354
+#, fuzzy
+msgid "Take Screenshot..."
+msgstr "Ekranfoto..."
+
+#: gnome-panel/panel-action-button.c:355
+msgid "Take a screenshot of your desktop"
+msgstr "Fotu vian tabulon"
+
+#: gnome-panel/panel-action-button.c:363
+msgid "Force Quit"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:364
+msgid "Force a misbehaving application to quit"
+msgstr ""
+
+#. FIXME icon
+#: gnome-panel/panel-action-button.c:373
+msgid "Connect to Server..."
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:374
+#, fuzzy
+msgid "Connect to a remote server"
+msgstr "Uzantonomo por la fora servilo"
+
+#: gnome-panel/panel-addto.c:102
+#, fuzzy
+msgid "Custom Application Launcher"
+msgstr "Aplikaĵo"
+
+#: gnome-panel/panel-addto.c:103
+#, fuzzy
+msgid "Create a new launcher"
+msgstr "Kreu Lanĉilon"
+
+#: gnome-panel/panel-addto.c:113
+#, fuzzy
+msgid "Application Launcher..."
+msgstr "Aplikaĵo"
+
+#: gnome-panel/panel-addto.c:114
+msgid "Launch a program that is already in the GNOME menu"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:128
+#, fuzzy
+msgid "Main Menu"
+msgstr "Precipa menuo"
+
+#: gnome-panel/panel-addto.c:129
+#, fuzzy
+msgid "The main GNOME menu"
+msgstr "La GNOME panelo"
+
+#: gnome-panel/panel-addto.c:139
+#, fuzzy
+msgid "Menu Bar"
+msgstr "Menuo"
+
+#: gnome-panel/panel-addto.c:140
+msgid "A custom menu bar"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:151
+msgid "A pop out drawer to store other items in"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:239
+msgid "(empty)"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:373 libpanel-applet/panel-test-applets.c:234
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "demando resendis escepton %s\n"
+
+#: gnome-panel/panel-addto.c:913
+#, c-format
+msgid "Select an _item to add to \"%s\":"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:917
+#, fuzzy
+msgid "Add to Drawer"
+msgstr "_Aldonu al la panelo"
+
+#: gnome-panel/panel-addto.c:919
+msgid "Select an _item to add to the drawer:"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:921
+#, fuzzy
+msgid "Add to Panel"
+msgstr "_Aldonu al la panelo"
+
+#: gnome-panel/panel-addto.c:923
+msgid "Select an _item to add to the panel:"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:814
+#, c-format
+msgid "Exception from popup_menu '%s'\n"
+msgstr "Escepto de la popup_menu-o '%s'\n"
+
+#: gnome-panel/panel-applet-frame.c:933
+#, c-format
+msgid "\"%s\" has quit unexpectedly"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:935
+#, fuzzy
+msgid "Panel object has quit unexpectedly"
+msgstr "Panelecoj"
+
+#: gnome-panel/panel-applet-frame.c:942
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:948
+#, fuzzy
+msgid "_Don't Reload"
+msgstr "Ne forigu"
+
+#: gnome-panel/panel-applet-frame.c:949
+msgid "_Reload"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:995
+#, fuzzy, c-format
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr ""
+"La panelo renkontis problemon dum la ŝargo de \"%s\"\n"
+"Detaloj : %s\n"
+"\n"
+"Ĉu vi volas forigi aplikaĵeton de via agordo?"
+
+#: gnome-panel/panel-applet-frame.c:1012
+#, fuzzy
+msgid "Do you want to delete the applet from your configuration?"
+msgstr ""
+"La panelo renkontis problemon dum la ŝargo de \"%s\"\n"
+"Detaloj : %s\n"
+"\n"
+"Ĉu vi volas forigi aplikaĵeton de via agordo?"
+
+#: gnome-panel/panel-applet-frame.c:1109
+msgid "Unable to obtain AppletShell interface from control\n"
+msgstr "Ne povas havi AppletShell-an interfacon de la kontrolo\n"
+
+#: gnome-panel/panel-bindings.c:168
+#, c-format
+msgid "Error watching gconf key '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-bindings.c:186
+#, fuzzy, c-format
+msgid "Error loading gconf directory '%s': %s"
+msgstr "Eraro legante glade-dosiero %s"
+
+#: gnome-panel/panel-bindings.c:200
+#, fuzzy, c-format
+msgid "Error getting value for '%s': %s"
+msgstr "Eraro legante glade-dosiero %s"
+
+#: gnome-panel/panel-context-menu.c:100
+#, fuzzy
+msgid "And many, many others..."
+msgstr "Multe, multe aliaj..."
+
+#: gnome-panel/panel-context-menu.c:125
+msgid "The GNOME Panel"
+msgstr "La GNOME panelo"
+
+#: gnome-panel/panel-context-menu.c:128
+#, fuzzy
+msgid ""
+"This program is responsible for launching other applications and embedding "
+"small applets within itself."
+msgstr ""
+"Tiu programo estas respondecan de la lanĉo de aliaj aplikaĵoj, de la "
+"internigo de malgrandaj aplikaĵetoj en ĝia, de la paco en la mondo, kaj de "
+"lotecaj X kolapsoj."
+
+#: gnome-panel/panel-context-menu.c:168
+msgid "You cannot remove your last panel."
+msgstr "Vi ne povas forigi vian lastan panelon."
+
+#: gnome-panel/panel-context-menu.c:217
+msgid "_Delete This Panel..."
+msgstr "_Forigu tiun panelon..."
+
+#: gnome-panel/panel-context-menu.c:220 gnome-panel/panel-context-menu.c:250
+msgid "_Delete This Panel"
+msgstr "_Forigu tiun panelon"
+
+#: gnome-panel/panel-context-menu.c:234
+#, fuzzy
+msgid "_Add to Panel..."
+msgstr "_Aldonu al la panelo"
+
+#: gnome-panel/panel-context-menu.c:280
+msgid "_New Panel"
+msgstr "_Nova panelo"
+
+#: gnome-panel/panel-context-menu.c:338
+#, fuzzy
+msgid "A_bout Panels"
+msgstr "_Pri paneloj"
+
+#: gnome-panel/panel-force-quit.c:75
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+
+#: gnome-panel/panel-force-quit.c:187
+msgid ""
+"Force this application to exit?\n"
+"(Any open documents will be lost.)"
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:1
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:2
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:3
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:4
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:5
+#, fuzzy
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "Enŝaltu programliston en la 'lanĉu' fenestro"
+
+#: gnome-panel/panel-general.schemas.in.h:6
+#, fuzzy
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "Enŝaltu programliston en la 'lanĉu' fenestro"
+
+#: gnome-panel/panel-general.schemas.in.h:7
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:9
+msgid "Old profiles configuration migrated"
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:10
+msgid "Panel ID list"
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:11
+#, fuzzy
+msgid "Panel applet ID list"
+msgstr "Neniu panel_id difinita por la panela objekto kun ID %s\n"
+
+#: gnome-panel/panel-general.schemas.in.h:12
+#, fuzzy
+msgid "Panel object ID list"
+msgstr "Neniu panel_id difinita por la panela objekto kun ID %s\n"
+
+#: gnome-panel/panel-global.schemas.in.h:1
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:2
+#: gnome-panel/panel-toplevel.schemas.in.h:1
+#, fuzzy
+msgid "Animation speed"
+msgstr "Animaca _rapideco :"
+
+#: gnome-panel/panel-global.schemas.in.h:3
+msgid "Applet IIDs to disable from loading"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:4
+msgid "Autoclose drawer"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:5
+msgid "Complete panel lockdown"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:6
+#, fuzzy
+msgid "Confirm panel removal"
+msgstr "Angula panelo"
+
+#: gnome-panel/panel-global.schemas.in.h:7
+msgid "Disable Force Quit"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:8
+#, fuzzy
+msgid "Disable Lock Screen"
+msgstr "Ŝlosu ekranon"
+
+#: gnome-panel/panel-global.schemas.in.h:9
+msgid "Disable Logging Out"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:10
+#, fuzzy
+msgid "Display \"Run Application\" dialog keybinding"
+msgstr "Montru la fenestron 'lanĉu'"
+
+#: gnome-panel/panel-global.schemas.in.h:11
+#: gnome-panel/panel-toplevel.schemas.in.h:9
+#, fuzzy
+msgid "Enable animations"
+msgstr "Elektu a_nimadon"
+
+#: gnome-panel/panel-global.schemas.in.h:12
+#, fuzzy
+msgid "Enable keybindings"
+msgstr "Elektu a_nimadon"
+
+#: gnome-panel/panel-global.schemas.in.h:13
+#, fuzzy
+msgid "Enable tooltips"
+msgstr "Elektu a_nimadon"
+
+#: gnome-panel/panel-global.schemas.in.h:14
+#, fuzzy
+msgid "FIXME - is this resolved with the new menu stuff"
+msgstr "FIXME - ĉu estas solvita kun la novaj menuoj?"
+
+#: gnome-panel/panel-global.schemas.in.h:15
+msgid "FIXME - need to define limits"
+msgstr "FIXME - bezonas difini limojn"
+
+#: gnome-panel/panel-global.schemas.in.h:16
+msgid "Highlight launchers on mouseover"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:17
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:18
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:19
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:20
+msgid "If true, panel-specific keybindings are enabled."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:21
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:22
+msgid ""
+"If true, the panel will not allow a user to lock their screen, by removing "
+"access to the lock screen menu entries."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:23
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:24
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:25
+msgid "If true, tooltips are shown for objects in panels."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:26
+#, fuzzy
+msgid "Popup panel menu keybinding"
+msgstr "Ekaperu la panelmenuon"
+
+#: gnome-panel/panel-global.schemas.in.h:27
+#, fuzzy
+msgid "Take screenshot"
+msgstr "Fotu"
+
+#: gnome-panel/panel-global.schemas.in.h:28
+#, fuzzy
+msgid "Take window screenshot"
+msgstr "Fotu"
+
+#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:299
+#, fuzzy, c-format
+msgid "Cannot display location '%s'"
+msgstr ""
+"<b>Ne povas montri helpdokumenton</b>\n"
+"\n"
+"Detaloj : %s"
+
+#: gnome-panel/panel-menu-bar.c:470
+msgid "Bookmarks"
+msgstr ""
+
+#. Translators: %s is a URI
+#: gnome-panel/panel-menu-bar.c:487 gnome-panel/panel-recent.c:200
+#, fuzzy, c-format
+msgid "Open '%s'"
+msgstr "Malfermu URLon : %s"
+
+#: gnome-panel/panel-menu-bar.c:545
+msgid "Network Places"
+msgstr ""
+
+#: gnome-panel/panel-menu-bar.c:547
+msgid "Removable Media"
+msgstr ""
+
+#. Translators: Desktop is
+#. * used here as in "Desktop
+#. * Folder" (this is not the
+#. * Desktop environment). Do
+#. * not keep "Desktop Folder|"
+#. * in the translation
+#: gnome-panel/panel-menu-bar.c:606
+#, fuzzy
+msgid "Desktop Folder|Desktop"
+msgstr "TTT-dosierujo."
+
+#: gnome-panel/panel-menu-bar.c:607
+msgid "Open the desktop as a folder"
+msgstr ""
+
+#: gnome-panel/panel-menu-bar.c:786
+msgid "Places"
+msgstr ""
+
+#. Translators: Desktop is used here as in "Desktop Environment" (this
+#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
+#. * the translation.
+#: gnome-panel/panel-menu-bar.c:795
+msgid "Desktop Environment|Desktop"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:1
+#, fuzzy
+msgid "Action button type"
+msgstr "Agtipo"
+
+#: gnome-panel/panel-object.schemas.in.h:2
+msgid "Applet Bonobo IID"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:3
+msgid "Icon used for object's button"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:4
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:5
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:6
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:7
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:8
+msgid "Interpret position relative to bottom/right edge"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:9
+#, fuzzy
+msgid "Launcher location"
+msgstr "Ecoj de la lanĉilo"
+
+#: gnome-panel/panel-object.schemas.in.h:10
+#, fuzzy
+msgid "Lock the object to the panel"
+msgstr "Aktuala stato de tiu panelo"
+
+#: gnome-panel/panel-object.schemas.in.h:11
+#, fuzzy
+msgid "Menu content path"
+msgstr "Panelmenuo"
+
+#: gnome-panel/panel-object.schemas.in.h:12
+#, fuzzy
+msgid "Object's position on the panel"
+msgstr "Aktuala stato de tiu panelo"
+
+#: gnome-panel/panel-object.schemas.in.h:13
+msgid "Panel attached to drawer"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:14
+#, fuzzy
+msgid "Panel object type"
+msgstr "Panelecoj"
+
+#: gnome-panel/panel-object.schemas.in.h:15
+msgid ""
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:16
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:17
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:18
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:19
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:20
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:21
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:22
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:23
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:24
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:25
+msgid "Tooltip displayed for drawer or menu"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:26
+msgid "Toplevel panel containing object"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:27
+#, fuzzy
+msgid "Use custom icon for object's button"
+msgstr "La dezirita akciopiktogramo por la ButtonWidget-o"
+
+#: gnome-panel/panel-object.schemas.in.h:28
+msgid "Use custom path for menu contents"
+msgstr ""
+
+#: gnome-panel/panel-profile.c:743 gnome-panel/panel-profile.c:770
+#: gnome-panel/panel-profile.c:806 gnome-panel/panel-profile.c:1611
+#, c-format
+msgid "Error reading GConf string value '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-profile.c:785 gnome-panel/panel-profile.c:1509
+#: gnome-panel/panel-profile.c:1580 gnome-panel/panel-profile.c:1643
+#, c-format
+msgid "Error reading GConf integer value '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-profile.c:1519
+#, c-format
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr ""
+
+#: gnome-panel/panel-profile.c:1595
+#, c-format
+msgid "Error reading GConf boolean value '%s': %s"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.c:120
+#: libpanel-applet/panel-test-applets.c:52
+msgid "Top"
+msgstr "Supra"
+
+#: gnome-panel/panel-properties-dialog.c:121
+#: libpanel-applet/panel-test-applets.c:53
+msgid "Bottom"
+msgstr "Malsupra"
+
+#: gnome-panel/panel-properties-dialog.c:122
+#: libpanel-applet/panel-test-applets.c:54
+msgid "Left"
+msgstr "Maldekstra"
+
+#: gnome-panel/panel-properties-dialog.c:123
+#: libpanel-applet/panel-test-applets.c:55
+msgid "Right"
+msgstr "Dekstra"
+
+#: gnome-panel/panel-properties-dialog.c:412
+#, fuzzy
+msgid "Images"
+msgstr "Bildo"
+
+#: gnome-panel/panel-properties-dialog.glade.h:3
+msgid "<small>Opaque</small>"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:4
+msgid "<small>Transparent</small>"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:5
+msgid "Arro_ws on hide buttons"
+msgstr "Sagoj sur kaŝbutonoj"
+
+#: gnome-panel/panel-properties-dialog.glade.h:6
+msgid "Background"
+msgstr "Fono"
+
+#: gnome-panel/panel-properties-dialog.glade.h:7
+#, fuzzy
+msgid "Background _image:"
+msgstr "Fono"
+
+#: gnome-panel/panel-properties-dialog.glade.h:8
+#, fuzzy
+msgid "Co_lor:"
+msgstr "_Koloro :"
+
+#: gnome-panel/panel-properties-dialog.glade.h:9
+#, fuzzy
+msgid "E_xpand"
+msgstr "Malfaldila grandeco"
+
+#: gnome-panel/panel-properties-dialog.glade.h:10
+msgid "General"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:11
+msgid "Image Background Details"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:12
+msgid "Panel Properties"
+msgstr "Panelecoj"
+
+#: gnome-panel/panel-properties-dialog.glade.h:13
+msgid "Pick a color"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:14
+msgid "Rotate image when panel is _vertical"
+msgstr "Rotaciu bildon, kiam panelo estas _vertikala"
+
+#: gnome-panel/panel-properties-dialog.glade.h:15
+#, fuzzy
+msgid "S_tyle:"
+msgstr "_Tipo :"
+
+#: gnome-panel/panel-properties-dialog.glade.h:16
+#, fuzzy
+msgid "Select background"
+msgstr "Fono"
+
+#: gnome-panel/panel-properties-dialog.glade.h:17
+msgid "Show hide _buttons"
+msgstr "Montru kaŝbutonojn"
+
+#: gnome-panel/panel-properties-dialog.glade.h:18
+msgid "Solid c_olor"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:19
+msgid "Some of these properties are locked down"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:20
+msgid "St_retch"
+msgstr "St_reĉo"
+
+#: gnome-panel/panel-properties-dialog.glade.h:21
+msgid "_Autohide"
+msgstr "_Automate kaŝita"
+
+#: gnome-panel/panel-properties-dialog.glade.h:22
+#, fuzzy
+msgid "_Icon:"
+msgstr "Piktogramo"
+
+#: gnome-panel/panel-properties-dialog.glade.h:23
+msgid "_None (use system theme)"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:24
+#: libpanel-applet/panel-test-applets.glade.h:4
+#, fuzzy
+msgid "_Orientation:"
+msgstr "Orientiĝo :"
+
+#: gnome-panel/panel-properties-dialog.glade.h:25
+msgid "_Scale"
+msgstr "_Skalo"
+
+#: gnome-panel/panel-properties-dialog.glade.h:26
+#: libpanel-applet/panel-test-applets.glade.h:6
+msgid "_Size:"
+msgstr "_Grandeco :"
+
+#: gnome-panel/panel-properties-dialog.glade.h:27
+#, fuzzy
+msgid "_Tile"
+msgstr "_Kahelo"
+
+#: gnome-panel/panel-recent.c:54
+msgid "Couldn't find a suitable application"
+msgstr "Ne povas trovi konvenan aplikaĵon"
+
+#: gnome-panel/panel-recent.c:93 gnome-panel/panel-recent.c:101
+#, fuzzy
+msgid "Cannot open recently used document"
+msgstr ""
+"<b>Ne povas montri helpdokumenton</b>\n"
+"\n"
+"Detaloj : %s"
+
+#: gnome-panel/panel-recent.c:102
+#, c-format
+msgid "An unknown error occurred while trying to open %s"
+msgstr "Nekonata eraro okazis dum provo malfermi %s"
+
+#: gnome-panel/panel-recent.c:155
+msgid "Clear the Recent Documents list?"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:157
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"\n"
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+
+#: gnome-panel/panel-recent.c:222
+msgid "Recent Documents"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:251
+msgid "Clear Recent Documents"
+msgstr ""
+
+#: gnome-panel/panel-recent.c:255
+msgid "Clear all items from the recent documents list"
+msgstr ""
+
+#: gnome-panel/panel-run-dialog.c:273
+#, fuzzy, c-format
+msgid "Cannot launch command '%s'"
+msgstr ""
+"Ne povas lanĉi piktogramon\n"
+"%s"
+
+#: gnome-panel/panel-run-dialog.c:351
+#, c-format
+msgid "Cannot convert '%s' from UTF-8"
+msgstr ""
+
+#: gnome-panel/panel-run-dialog.c:1056
+msgid "Choose a file to append to the command..."
+msgstr ""
+
+#: gnome-panel/panel-run-dialog.c:1333
+#, c-format
+msgid "Will run command: '%s'"
+msgstr "Lanĉo de : '%s'"
+
+#: gnome-panel/panel-run-dialog.c:1339 gnome-panel/panel-run-dialog.glade.h:10
+msgid "Select an application to view its description."
+msgstr ""
+
+#: gnome-panel/panel-run-dialog.c:1374
+#, c-format
+msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
+msgstr ""
+
+#: gnome-panel/panel-run-dialog.glade.h:2
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+
+#: gnome-panel/panel-run-dialog.glade.h:3
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+
+#: gnome-panel/panel-run-dialog.glade.h:4
+#, fuzzy
+msgid "Command entry"
+msgstr "Enirujo de komando"
+
+#: gnome-panel/panel-run-dialog.glade.h:5
+#, fuzzy
+msgid "Command icon"
+msgstr "Komando por lanĉi"
+
+#: gnome-panel/panel-run-dialog.glade.h:6
+msgid "Enter a command string here to run it."
+msgstr ""
+
+#: gnome-panel/panel-run-dialog.glade.h:7
+#, fuzzy
+msgid "Run Application"
+msgstr "Aplikaĵo"
+
+#: gnome-panel/panel-run-dialog.glade.h:8
+msgid "Run in _terminal"
+msgstr "Lanĉu en _terminalo"
+
+#: gnome-panel/panel-run-dialog.glade.h:9
+msgid "Run with _file..."
+msgstr ""
+
+#: gnome-panel/panel-run-dialog.glade.h:11
+msgid "Select this box to run the command in a terminal window."
+msgstr ""
+
+#: gnome-panel/panel-run-dialog.glade.h:12
+#, fuzzy
+msgid "Show list of known _applications"
+msgstr "Listo de la konataj aplikaĵoj"
+
+#: gnome-panel/panel-run-dialog.glade.h:13
+#, fuzzy
+msgid "The icon of the command to be run."
+msgstr "Ne povas trovi la komandon por lanĉi"
+
+#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:89
+msgid "_Run"
+msgstr "_Lanĉu"
+
+#: gnome-panel/panel-shell.c:74
+msgid ""
+"I've detected a panel already running,\n"
+"and will now exit."
+msgstr ""
+"Mi detektis panelon jam lanĉante,\n"
+"kaj tuj finas."
+
+#: gnome-panel/panel-shell.c:78
+#, c-format
+msgid ""
+"There was a problem registering the panel with the bonobo-activation "
+"server.\n"
+"The error code is: %d\n"
+"The panel will now exit."
+msgstr ""
+"Estas problemon dum la registro de la panelo kun la bonobo-a aktiviga "
+"servilo.\n"
+"La erarkodo estas : %d\n"
+"La panelo tuj finas."
+
+#: gnome-panel/panel-stock-icons.c:90
+msgid "_Force quit"
+msgstr ""
+
+#: gnome-panel/panel-stock-icons.c:91
+#, fuzzy
+msgid "C_lear"
+msgstr "_Koloro :"
+
+#: gnome-panel/panel-stock-icons.c:92
+msgid "D_on't Delete"
+msgstr "Ne forigu"
+
+#: gnome-panel/panel-toplevel.c:1121
+#, fuzzy
+msgid "Hide Panel"
+msgstr "_Randa panelo"
+
+#. translators: these string will be shown in MetaCity's switch window
+#. * popup when you pass the focus to a panel
+#: gnome-panel/panel-toplevel.c:1487
+#, fuzzy
+msgid "Top Expanded Edge Panel"
+msgstr "Malfaldila grandeco"
+
+#: gnome-panel/panel-toplevel.c:1488
+#, fuzzy
+msgid "Top Centered Panel"
+msgstr "Angula panelo"
+
+#: gnome-panel/panel-toplevel.c:1489
+#, fuzzy
+msgid "Top Floating Panel"
+msgstr "_Flosanta panelo"
+
+#: gnome-panel/panel-toplevel.c:1490
+#, fuzzy
+msgid "Top Edge Panel"
+msgstr "Randa panelo"
+
+#: gnome-panel/panel-toplevel.c:1494
+#, fuzzy
+msgid "Bottom Expanded Edge Panel"
+msgstr "Malfaldila grandeco"
+
+#: gnome-panel/panel-toplevel.c:1495
+#, fuzzy
+msgid "Bottom Centered Panel"
+msgstr "Angula panelo"
+
+#: gnome-panel/panel-toplevel.c:1496
+#, fuzzy
+msgid "Bottom Floating Panel"
+msgstr "_Flosanta panelo"
+
+#: gnome-panel/panel-toplevel.c:1497
+#, fuzzy
+msgid "Bottom Edge Panel"
+msgstr "Randa panelo"
+
+#: gnome-panel/panel-toplevel.c:1501
+#, fuzzy
+msgid "Left Expanded Edge Panel"
+msgstr "Malfaldila grandeco"
+
+#: gnome-panel/panel-toplevel.c:1502
+#, fuzzy
+msgid "Left Centered Panel"
+msgstr "Angula panelo"
+
+#: gnome-panel/panel-toplevel.c:1503
+#, fuzzy
+msgid "Left Floating Panel"
+msgstr "_Flosanta panelo"
+
+#: gnome-panel/panel-toplevel.c:1504
+#, fuzzy
+msgid "Left Edge Panel"
+msgstr "Randa panelo"
+
+#: gnome-panel/panel-toplevel.c:1508
+#, fuzzy
+msgid "Right Expanded Edge Panel"
+msgstr "Malfaldila grandeco"
+
+#: gnome-panel/panel-toplevel.c:1509
+#, fuzzy
+msgid "Right Centered Panel"
+msgstr "Laŭliniga panelo"
+
+#: gnome-panel/panel-toplevel.c:1510
+#, fuzzy
+msgid "Right Floating Panel"
+msgstr "_Flosanta panelo"
+
+#: gnome-panel/panel-toplevel.c:1511
+#, fuzzy
+msgid "Right Edge Panel"
+msgstr "Randa panelo"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:2
+msgid "Automatically hide panel into corner"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:3
+#, fuzzy
+msgid "Background color"
+msgstr "Fono"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:4
+#, fuzzy
+msgid "Background color opacity"
+msgstr "Nekonata fonotipo ricevita"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:5
+#, fuzzy
+msgid "Background image"
+msgstr "Fono"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:6
+#, fuzzy
+msgid "Background type"
+msgstr "Fono"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:7
+msgid "Center panel on x-axis"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:8
+msgid "Center panel on y-axis"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:10
+#, fuzzy
+msgid "Enable arrows on hide buttons"
+msgstr "Sagoj sur kaŝbutonoj"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:11
+#, fuzzy
+msgid "Enable hide buttons"
+msgstr "Enŝaltu kaŝbutonon"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:12
+msgid "Expand to occupy entire screen width"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:13
+#, fuzzy
+msgid "Fit image to panel"
+msgstr "Aktuala stato de tiu panelo"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:14
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:15
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:16
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:17
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:18
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:19
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:20
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:21
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:22
+msgid ""
+"If true, the x key is ignored and the panel is placed at the center of the x-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the x key specifies the "
+"location of the panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:23
+msgid ""
+"If true, the y key is ignored and the panel is placed at the center of the y-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the y key specifies the "
+"location of the panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:24
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:25
+#, fuzzy
+msgid "Name to identify panel"
+msgstr "Reĝimo de tiu panelo"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:26
+msgid "Panel autohide delay"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:27
+msgid "Panel autounhide delay"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:28
+#, fuzzy
+msgid "Panel orientation"
+msgstr "Orientiĝo"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:29
+#, fuzzy
+msgid "Panel size"
+msgstr "Panelo"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:30
+#, fuzzy
+msgid "Rotate image on vertical panels"
+msgstr "Rotaciu en vertikalaj paneloj"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:31
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:32
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:33
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:34
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:35
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:36
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:37
+#, fuzzy
+msgid "Stretch image to panel"
+msgstr "Aktuala stato de tiu panelo"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:38
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:40
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:41
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:42
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:43
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:44
+msgid "Visible pixels when hidden"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:45
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:46
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:47
+#, fuzzy
+msgid "X co-ordinate of panel"
+msgstr "Reĝimo de tiu panelo"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:48
+msgid "X screen where the panel is displayed"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:49
+msgid "Xinerama monitor where the panel is displayed"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.schemas.in.h:50
+#, fuzzy
+msgid "Y co-ordinate of panel"
+msgstr "Reĝimo de tiu panelo"
+
+#: gnome-panel/panel-util.c:63
+#, fuzzy
+msgid "Cannot display help document"
+msgstr ""
+"<b>Ne povas montri helpdokumenton</b>\n"
+"\n"
+"Detaloj : %s"
+
+#: gnome-panel/panel-util.c:253
+#, c-format
+msgid "Details: %s"
+msgstr ""
+
+#: gnome-panel/panel.c:473
+#, c-format
+msgid "Open URL: %s"
+msgstr "Malfermu URLon : %s"
+
+#: gnome-panel/panel.c:1254
+#, fuzzy
+msgid "Delete this drawer?"
+msgstr "Forigu panelon"
+
+#: gnome-panel/panel.c:1255
+#, fuzzy
+msgid ""
+"When a drawer is deleted, the drawer and its\n"
+"settings are lost."
+msgstr ""
+"Kiam panelo estas forigi, panelo kaj sia\n"
+" agordo estas perdita. Forigu tiun panelon?"
+
+#: gnome-panel/panel.c:1257
+#, fuzzy
+msgid "Delete Drawer"
+msgstr "Forigu panelon"
+
+#: gnome-panel/panel.c:1259
+#, fuzzy
+msgid "Delete this panel?"
+msgstr "_Forigu tiun panelon"
+
+#: gnome-panel/panel.c:1260
+#, fuzzy
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr ""
+"Kiam panelo estas forigi, panelo kaj sia\n"
+" agordo estas perdita. Forigu tiun panelon?"
+
+#: gnome-panel/panel.c:1262
+msgid "Delete Panel"
+msgstr "Forigu panelon"
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
+msgid "A simple applet for testing the GNOME-2.0 panel"
+msgstr "Simpla aplikaĵeto por testi la panelan GNOME-2.0-on"
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
+msgid "Test Bonobo Applet"
+msgstr "Testo de Bonobo-a aplikaĵeto"
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
+msgid "Test Bonobo Applet Factory"
+msgstr "Testo de Bonobo-a aplikaĵeta faktorejo"
+
+#: libpanel-applet/panel-applet.c:995
+#, c-format
+msgid "Incomplete '%s' background type received"
+msgstr "Nekompleta '%s' fonotipo ricevita"
+
+#: libpanel-applet/panel-applet.c:1009
+#, c-format
+msgid "Incomplete '%s' background type received: %s"
+msgstr "Nekompleta '%s' fonotipo ricevita: %s"
+
+#: libpanel-applet/panel-applet.c:1018
+#, c-format
+msgid "Failed to get pixmap %s"
+msgstr "Ne povas havi piktogramon %s"
+
+#: libpanel-applet/panel-applet.c:1025
+msgid "Unknown background type received"
+msgstr "Nekonata fonotipo ricevita"
+
+#: libpanel-applet/panel-applet.c:1210
+msgid "The Applet's containing Panel's orientation"
+msgstr "La aplikaĵeto enhavas panelan orientiĝon"
+
+#: libpanel-applet/panel-applet.c:1218
+msgid "The Applet's containing Panel's size in pixels"
+msgstr "La aplikaĵeto enhavas panelan grandecon en pikseloj"
+
+#: libpanel-applet/panel-applet.c:1226
+msgid "The Applet's containing Panel's background color or pixmap"
+msgstr "La aplikaĵeto enhavas panelfonan koloron aŭ piktogramon"
+
+#: libpanel-applet/panel-applet.c:1234
+msgid "The Applet's flags"
+msgstr "La aplikaĵetoflagoj"
+
+#: libpanel-applet/panel-applet.c:1242
+msgid "Ranges that hint what sizes are acceptable for the applet"
+msgstr "Intervalo de akceptebla grandeco por la aplikaĵeto"
+
+#: libpanel-applet/panel-applet.c:1250
+#, fuzzy
+msgid "The Applet's containing Panel is locked down"
+msgstr "La aplikaĵeto enhavas panelan orientiĝon"
+
+#: libpanel-applet/panel-test-applets.c:32
+#, fuzzy
+msgid "Specify an applet IID to load"
+msgstr "Donu unu profilnomon por ŝarĝi"
+
+#: libpanel-applet/panel-test-applets.c:33
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
+msgstr ""
+
+#: libpanel-applet/panel-test-applets.c:34
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr ""
+
+#: libpanel-applet/panel-test-applets.c:36
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr ""
+
+#: libpanel-applet/panel-test-applets.c:60
+msgid "XX Small"
+msgstr "Malgrandeteta"
+
+#: libpanel-applet/panel-test-applets.c:61
+msgid "X Small"
+msgstr "Malgrandeta"
+
+#: libpanel-applet/panel-test-applets.c:62
+msgid "Small"
+msgstr "Malgranda"
+
+#: libpanel-applet/panel-test-applets.c:63
+msgid "Medium"
+msgstr "Mezrapida"
+
+#: libpanel-applet/panel-test-applets.c:64
+msgid "Large"
+msgstr "Granda"
+
+#: libpanel-applet/panel-test-applets.c:65
+msgid "X Large"
+msgstr "Grandega"
+
+#: libpanel-applet/panel-test-applets.c:66
+msgid "XX Large"
+msgstr "Grandegega"
+
+#: libpanel-applet/panel-test-applets.glade.h:2
+#, fuzzy
+msgid "Test applet utility"
+msgstr "Neniu panel_id difinita por la panela objekto kun ID %s\n"
+
+#: libpanel-applet/panel-test-applets.glade.h:3
+#, fuzzy
+msgid "_Applet:"
+msgstr "Aplikaĵeto :"
+
+#: libpanel-applet/panel-test-applets.glade.h:5
+#, fuzzy
+msgid "_Prefs Dir:"
+msgstr "Agordodosierujo :"
+
+#~ msgid "File not found"
+#~ msgstr "Dosiero ne trovita"
+
+#, fuzzy
+#~ msgid "No Windows Open"
+#~ msgstr "Neniu fenestro malfermita"
+
+#, fuzzy
+#~ msgid "Tool to switch between windows"
+#~ msgstr "Ŝaltu inter malfermaj fenestroj"
+
+#~ msgid "none"
+#~ msgstr "neniu"
+
+#~ msgid "file not found"
+#~ msgstr "Dosiero ne trovita"
+
+#~ msgid "Desktop"
+#~ msgstr "Tabulo"
+
+#, fuzzy
+#~ msgid "Workspace Selector"
+#~ msgstr "Laborkadra ŝaltilo"
+
+#, fuzzy
+#~ msgid "_Lock"
+#~ msgstr "Ŝlosu"
+
+#, fuzzy
+#~ msgid "Un_lock"
+#~ msgstr "Horloĝo"
+
+#~ msgid "Lock screen"
+#~ msgstr "Ŝlosu ekranon"
+
+#, fuzzy
+#~ msgid "Add to %s"
+#~ msgstr "_Aldonu al la panelo"
+
+#, fuzzy
+#~ msgid "Add to the panel"
+#~ msgstr "_Aldonu al la panelo"
+
+#, fuzzy
+#~ msgid "%s: %s"
+#~ msgstr "%s, %s"
+
+#, fuzzy
+#~ msgid "About GNOME"
+#~ msgstr "Pri _GNOME"
+
+#~ msgid "About _GNOME"
+#~ msgstr "Pri _GNOME"
+
+#~ msgid "Actions"
+#~ msgstr "Agoj"
+
+#, fuzzy
+#~ msgid "Workspace List"
+#~ msgstr "Laborkadronomoj"
+
+#~ msgid "Specify a profile name to load"
+#~ msgstr "Donu unu profilnomon por ŝarĝi"
+
+#, fuzzy
+#~ msgid "Cannot remove menu item %s"
+#~ msgstr ""
+#~ "<b>Ne povas konservi menueron sur la disko</b>\n"
+#~ "\n"
+#~ "Detaloj : %s"
+
+#~ msgid "Could not get file name from path: %s"
+#~ msgstr "Ne povas obteni dosiero-nomon de la pado : %s"
+
+#~ msgid "Could not get directory name from path: %s"
+#~ msgstr "Ne povas obteni dosierujo-nomon de la pado : %s"
+
+#~ msgid "Remove this item"
+#~ msgstr "Forigu tiun eron"
+
+#~ msgid "Add new item to this menu"
+#~ msgstr "Aldonu novan eron al tiu menuo"
+
+#~ msgid "Properties"
+#~ msgstr "Ecoj"
+
+#, fuzzy
+#~ msgid "_Name:"
+#~ msgstr "Piktogramnomo"
+
+#~ msgid ""
+#~ "The default application for this type of file cannot handle remote files"
+#~ msgstr ""
+#~ "La apriora aplikaĵo por tiu dosiertipo ne povas trakti forajn dosierojn"
+
+#~ msgid "Unable to get the name of the command to execute"
+#~ msgstr "Ne povas havi la nomon de la komando por lanĉi"
+
+#~ msgid ""
+#~ "You do not have fortune installed or you have not specified a program to "
+#~ "run.\n"
+#~ "\n"
+#~ "Please refer to fish properties dialog."
+#~ msgstr ""
+#~ "Vi ne havas fortunon instalita aŭ vi ne havas specifita programon por "
+#~ "lanĉi.\n"
+#~ "\n"
+#~ "Bonvolu rigardi la agordodialogon de la fiŝo."
+
+#~ msgid "Debian GNU/Linux"
+#~ msgstr "Debian GNU/Linux"
+
+#~ msgid "Debian Menu"
+#~ msgstr "Debian menuo"
+
+#~ msgid "SuSE Linux"
+#~ msgstr "SuSe linukso"
+
+#~ msgid "SuSE Menu"
+#~ msgstr "SuSE menuo"
+
+#~ msgid "Solaris"
+#~ msgstr "Solaris"
+
+#~ msgid "CDE Menu"
+#~ msgstr "CDE menuo"
+
+#~ msgid ""
+#~ "Unable to initialize png structure.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Ne povas praŝargi png-strukturon.\n"
+#~ "Vi probable havas malbonan version de libpng sur via sistemo"
+
+#~ msgid ""
+#~ "Unable to create png info.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Ne povas krei png-informon.\n"
+#~ "Vi probable havas malbonan version de libpng sur via sistemo"
+
+#~ msgid ""
+#~ "Unable to set png info.\n"
+#~ "You probably have a bad version of libpng on your system"
+#~ msgstr ""
+#~ "Ne povas difini png-informon.\n"
+#~ "Vi probable havas malbonan version de libpng sur via sistemo"
+
+#~ msgid ""
+#~ "Insufficient memory to save the screenshot.\n"
+#~ "Please free up some resources and try again."
+#~ msgstr ""
+#~ "Nesufiĉa memoro por konservi ekranfoton.\n"
+#~ "Bonvolu liberigi memoron kaj reprovu."
+
+#~ msgid "File %s already exists. Overwrite?"
+#~ msgstr "Dosiero %s jam ekzistas. Anstataŭigu?"
+
+#~ msgid ""
+#~ "Unable to create the file:\n"
+#~ "\"%s\"\n"
+#~ "Please check your permissions of the parent directory"
+#~ msgstr ""
+#~ "Ne povas krei dosieron :\n"
+#~ "\"%s\"\n"
+#~ "Bonvolu kontroli permesojn de la patra dosierujo"
+
+#, fuzzy
+#~ msgid "Screenshot-%s.png"
+#~ msgstr "%s%cEkranfoto-%s.png"
+
+#, fuzzy
+#~ msgid "Screenshot.png"
+#~ msgstr "%s%cEkranfoto.png"
+
+#, fuzzy
+#~ msgid "Screenshot-%s-%d.png"
+#~ msgstr "%s%cEkranfoto-%s-%d.png"
+
+#, fuzzy
+#~ msgid "Screenshot-%d.png"
+#~ msgstr "%s%cEkranfoto-%d.png"
+
+#~ msgid "Not enough room to write file %s"
+#~ msgstr "Ne sufiĉa spaco por skribi dosieron %s"
+
+#~ msgid ""
+#~ "There was an error displaying help: \n"
+#~ "%s"
+#~ msgstr ""
+#~ "Estis eraron montrante helpo : \n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Glade file for the screenshot program is missing.\n"
+#~ "Please check your installation of gnome-panel"
+#~ msgstr ""
+#~ "Glade-dosiero por la ekranfota programo ne estas trovita.\n"
+#~ "Bonvolu kontroli vian instalaĵon de gnome-panel"
+
+#~ msgid "Unable to take a screenshot of the current desktop."
+#~ msgstr "Ne povas foti la aktualan tabulon."
+
+#, fuzzy
+#~ msgid "Save screenshot to _web page (save in %s)"
+#~ msgstr "Konservu ekranfoton en TTT-_paĝo (konservu en ~/public__html)"
+
+#~ msgid "Grab a window instead of the entire screen"
+#~ msgstr "Fotu fenestron anstataŭ plenekranon"
+
+#~ msgid "Take screenshot after specified delay [in seconds]"
+#~ msgstr "Fotu post limotempo [en sekundoj]"
+
+#~ msgid "<b>Options</b>"
+#~ msgstr "<b>Opcioj</b>"
+
+#~ msgid "<b>Preview</b>"
+#~ msgstr "<b>Antaŭrigardo</b>"
+
+#~ msgid "Save Screenshot"
+#~ msgstr "Konservu ekranfoton"
+
+#~ msgid "Save screenshot to _desktop"
+#~ msgstr "Konservu ekranfoton sur la _tabulo"
+
+#, fuzzy
+#~ msgid "Save screenshot to _file:"
+#~ msgstr "_Konservu ekranfoton en dosiero :"
+
+#~ msgid "Save screenshot to _web page (save in ~/public__html)"
+#~ msgstr "Konservu ekranfoton en TTT-_paĝo (konservu en ~/public__html)"
+
+#~ msgid ""
+#~ "The user's directory in which screenshots should be saved so as to appear "
+#~ "on the web."
+#~ msgstr ""
+#~ "La uzantodosierujo, en kiu ekranfotoj devus konserviĝita, por esti "
+#~ "videbla en la TTT."
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "(If you choose not to reload it at this time you can always add it by "
+#~ "right clicking on the panel and clicking on the \"Add to Panel\" submenu)"
+#~ msgstr ""
+#~ "La %s aplikaĵeto ŝajnas neatendite mortita\n"
+#~ "\n"
+#~ "Reŝargu tiun aplikaĵeton?\n"
+#~ "\n"
+#~ "(Se vi elektas ne reŝargi ĝin nun, vi ĉiam povas aldoni ĝin per dekstra "
+#~ "klako sur la panelo kaj klako sur la submenuo 'Aldonu al la panelo')"
+
+#~ msgid "Unable to load panel stock icon '%s'\n"
+#~ msgstr "Ne eblas ŝargi panelan akcian piktogramon '%s'\n"
+
+#~ msgid "Orientation:"
+#~ msgstr "Orientiĝo :"
+
+#~ msgid "Size:"
+#~ msgstr "Grandeco :"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "La sistemadministrulo havas prohibita\n"
+#~ "ĉiun ŝangon de via panelagordo"
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "Eraro legante glade-dosiero %s"
+
+#~ msgid "Panel"
+#~ msgstr "Panelo"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "Elektu agordon por viaj paneloj"
+
+#~ msgid "Animation _speed:"
+#~ msgstr "Animaca _rapideco :"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "_Fermu tirkeston, kiam lanĉilo estas klakita"
+
+#, fuzzy
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "Tirkesta kaj panela _animaco"
+
+#~ msgid "Fast"
+#~ msgstr "Rapida"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "Panelagordo"
+
+#~ msgid "Slow"
+#~ msgstr "Malrapida"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr "Ŝlosu ekranon por protekti ĝin, kiam vi estas for de via komputilo"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "Adiaŭu el GNOME"
+
+#~ msgid "Search for Files"
+#~ msgstr "Serĉu dosierojn"
+
+#~ msgid "Screenshot"
+#~ msgstr "Ekranfoto"
+
+#~ msgid "Lock"
+#~ msgstr "Ŝlosu"
+
+#, fuzzy
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr "Ŝlosu ekranon por protekti ĝin, kiam vi estas for de via komputilo"
+
+#~ msgid "Search"
+#~ msgstr "Serĉu"
+
+#~ msgid "Run"
+#~ msgstr "Lanĉu"
+
+#~ msgid "Run a command"
+#~ msgstr "Lanĉu komandon"
+
+#~ msgid "Accessories"
+#~ msgstr "Utilaĵoj"
+
+#~ msgid "Amusements"
+#~ msgstr "Amuzaĵoj"
+
+#~ msgid "Utility"
+#~ msgstr "Ilo"
+
+#, fuzzy
+#~ msgid "Launcher from menu"
+#~ msgstr "Lanĉilo de la menuo"
+
+#, fuzzy
+#~ msgid "Cannot add to run box"
+#~ msgstr ""
+#~ "Ne povas lanĉi piktogramon\n"
+#~ "%s"
+
+#, fuzzy
+#~ msgid "No 'Exec' or 'URL' field in entry"
+#~ msgstr ""
+#~ "<b>Ne povas aldoni al la 'lanĉu' fenestro</b>\n"
+#~ "\n"
+#~ "Detaloj : Kampo 'Exec' aŭ 'URL' ne estas plenigita"
+
+#~ msgid "Put into run dialog"
+#~ msgstr "Meti en la 'lanĉu' fenestro"
+
+#, fuzzy
+#~ msgid "Log Out %s"
+#~ msgstr "Fermu sesion"
+
+#, fuzzy
+#~ msgid ""
+#~ "Log out %s of this session to log in as a different user or to shut down "
+#~ "your computer"
+#~ msgstr ""
+#~ "Adiaŭu el sesio por saluti kun alia uzantonomo aŭ por haltigi vian "
+#~ "komputilon"
+
+#, fuzzy
+#~ msgid "Quit from %s's desktop"
+#~ msgstr "Adiaŭu el la GNOME tabulo"
+
+#, fuzzy
+#~ msgid "Year"
+#~ msgstr "Serĉu"
+
+#, fuzzy
+#~ msgid "The currently monitored year"
+#~ msgstr "Aktuala vidigilo :"
+
+#, fuzzy
+#~ msgid "Activatable"
+#~ msgstr "Elŝaltita"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Havas Sagon"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Se sago estas desegnita aŭ ne"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "La orientiĝo de la ButtonWidget-o"
+
+#~ msgid "Icon Name"
+#~ msgstr "Piktogramnomo"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "La dezirita piktogramo por la ButtonWidget-o"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "Akciopiktogramo ID"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "La dezirita akciopiktogramo por la ButtonWidget-o"
+
+#~ msgid "Action Type"
+#~ msgstr "Agtipo"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "La tipo de ago, ke tiu butono realigas"
+
+#, fuzzy
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "Se sago estas desegnita aŭ ne"
+
+#, fuzzy
+#~ msgid "Menu Path"
+#~ msgstr "Panelmenuo"
+
+#, fuzzy
+#~ msgid "The custom icon for the menu"
+#~ msgstr "La dezirita akciopiktogramo por la ButtonWidget-o"
+
+#, fuzzy
+#~ msgid "Tooltip"
+#~ msgstr "Helpindiko/Nomo"
+
+#, fuzzy
+#~ msgid "Use Menu Path"
+#~ msgstr "Panelmenuo"
+
+#, fuzzy
+#~ msgid "Name"
+#~ msgstr "Piktogramnomo"
+
+#, fuzzy
+#~ msgid "The name of this panel"
+#~ msgstr "Reĝimo de tiu panelo"
+
+#, fuzzy
+#~ msgid "Expand"
+#~ msgstr "Malfaldila grandeco"
+
+#, fuzzy
+#~ msgid "The orientation of the panel"
+#~ msgstr "Aktuala stato de tiu panelo"
+
+#, fuzzy
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Aktuala stato de tiu panelo"
+
+#, fuzzy
+#~ msgid "X position"
+#~ msgstr "Pozicio :"
+
+#, fuzzy
+#~ msgid "Y position"
+#~ msgstr "Pozicio :"
+
+#, fuzzy
+#~ msgid "Auto hide"
+#~ msgstr "_Automate kaŝita"
+
+#, fuzzy
+#~ msgid "Auto-hide size"
+#~ msgstr "_Automate kaŝita"
+
+#, fuzzy
+#~ msgid "Animation Speed"
+#~ msgstr "Animaca _rapideco :"
+
+#, fuzzy
+#~ msgid "Buttons Enabled"
+#~ msgstr "Kaŝbutonoj enŝaltita"
+
+#, fuzzy
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Enŝaltu kaŝbutonon"
+
+#, fuzzy
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Sagoj sur kaŝbutonoj"
+
+#, fuzzy
+#~ msgid "Text"
+#~ msgstr "Nur teksto"
+
+#, fuzzy
+#~ msgid "Text to render"
+#~ msgstr "Nur teksto"
+
+#, fuzzy
+#~ msgid "Background color name"
+#~ msgstr "Fono"
+
+#, fuzzy
+#~ msgid "Background color as a string"
+#~ msgstr "Nekonata fonotipo ricevita"
+
+#, fuzzy
+#~ msgid "Background color as a GdkColor"
+#~ msgstr "Fono"
+
+#, fuzzy
+#~ msgid "Foreground color name"
+#~ msgstr "Fono"
+
+#, fuzzy
+#~ msgid "Foreground color"
+#~ msgstr "Fono"
+
+#, fuzzy
+#~ msgid "Font stretch"
+#~ msgstr "St_reĉo"
+
+#, fuzzy
+#~ msgid "Font size"
+#~ msgstr "Panelo"
+
+#, fuzzy
+#~ msgid "Background set"
+#~ msgstr "Fono"
+
+#, fuzzy
+#~ msgid "Cannot execute %s"
+#~ msgstr "Ne povas lanĉi gnome-panel-screenshot"
+
+#, fuzzy
+#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
+#~ msgstr "Montru tempon en sekondoj ekde Epoko (1970-01-01)"
+
+#, fuzzy
+#~ msgid "Window Menu"
+#~ msgstr "Precipa menuo"
+
+#~ msgid "Print Screenshot"
+#~ msgstr "Presu ekranfoton"
+
+#~ msgid "Screenshot Print Preview"
+#~ msgstr "Antaŭrigardo de la ekranfoto"
+
+#~ msgid "_Print screenshot..."
+#~ msgstr "_Presu ekranfoton..."
+
+#, fuzzy
+#~ msgid ""
+#~ "The panel encountered a problem while loading \"%s\"\n"
+#~ "Details: %s%s"
+#~ msgstr ""
+#~ "La panelo renkontis problemon dum la ŝargo de \"%s\"\n"
+#~ "Detaloj : %s\n"
+#~ "\n"
+#~ "Ĉu vi volas forigi aplikaĵeton de via agordo?"
+
+#, fuzzy
+#~ msgid "Open Recent"
+#~ msgstr "Malfermu lastajn"
+
+#, fuzzy
+#~ msgid "If true, display internet time, which is same all over the world."
+#~ msgstr "Montru Interretan tempon, kiu estas la saman ĉie en la mondo"
+
+#~ msgid "%s the GNOME Fish"
+#~ msgstr "%s la GNOME fiŝo"
+
+#~ msgid "Expander Size"
+#~ msgstr "Malfaldila grandeco"
+
+#~ msgid "Size of the expander arrow"
+#~ msgstr "Grandeco de la malfaldila sago"
+
+#~ msgid "Help on %s _Application"
+#~ msgstr "Helpo pri %s _Aplikaĵo"
+
+#~ msgid "Help on %s"
+#~ msgstr "Helpo pri %s"
+
+#~ msgid "Application"
+#~ msgstr "Aplikaĵo"
+
+#, fuzzy
+#~ msgid "<b>_Icon:</b>"
+#~ msgstr "<b>Antaŭrigardo</b>"
+
+#, fuzzy
+#~ msgid "<b>_Orientation:</b>"
+#~ msgstr "Orientiĝo :"
+
+#, fuzzy
+#~ msgid "<b>_Size:</b>"
+#~ msgstr "<b>Antaŭrigardo</b>"
+
+#, fuzzy
+#~ msgid "Application description"
+#~ msgstr "Aplikaĵoj"
+
+#~ msgid "List of known applications"
+#~ msgstr "Listo de la konataj aplikaĵoj"
+
+#, fuzzy
+#~ msgid "Select an application from the list to run it"
+#~ msgstr "Elektu unu aplikaĵon en la listo, por lanĉi"
+
+#~ msgid "Help document not found"
+#~ msgstr "Helpodokumento ne trovita"
+
+#~ msgid "No document to show"
+#~ msgstr "Neniu dokumento por montri"
+
+#~ msgid ""
+#~ "Failed to load image %s\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "Eraro dum ŝarĝo de la bildo %s\n"
+#~ "\n"
+#~ "Detaloj : %s"
+
+#~ msgid "Size and Position"
+#~ msgstr "Grandeco kaj pozicio"
+
+#~ msgid "Applet appearance"
+#~ msgstr "Aplikaĵetaspekto"
+
+#~ msgid "Drawer handle"
+#~ msgstr "Tirkestanso"
+
+#~ msgid "Enable hidebutton"
+#~ msgstr "Enŝaltu kaŝbutonon"
+
+#~ msgid "Enable hidebutton arrow"
+#~ msgstr "Enŝaltu sagon sur kaŝbutono"
+
+#~ msgid "KDE Menu"
+#~ msgstr "KDE menuo"
+
+#, fuzzy
+#~ msgid "_Drawer"
+#~ msgstr "Tirkesto"
+
+#, fuzzy
+#~ msgid "_Run Application..."
+#~ msgstr "Aplikaĵo"
+
+#, fuzzy
+#~ msgid "_Search for Files..."
+#~ msgstr "Serĉu dosierojn..."
+
+#, fuzzy
+#~ msgid "_Take Screenshot..."
+#~ msgstr "Ekranfoto..."
+
+#, fuzzy
+#~ msgid "_Log Out"
+#~ msgstr "Fermu sesion"
+
+#~ msgid "Sets the hour format, may be either 12 or 24"
+#~ msgstr "Elektu la horoformato, 12 aŭ 24 "
+
+#~ msgid "Maximum size that Window List requests"
+#~ msgstr "Maksimuma grandeco, ke la fenestrolisto bezonas"
+
+#~ msgid ""
+#~ "To be usable, Window List requires a minimum width. Window List requests "
+#~ "this minimum width. The minimum width setting is useful for sliding and "
+#~ "edge panels, which usually request a small default width."
+#~ msgstr ""
+#~ "Por esti uzebla, fenestrolisto bezonas unu minimuman larĝecon. "
+#~ "Fenestrolisto bezonas tiu minimuman larĝecon. La minimuma larĝeco estas "
+#~ "utila por glitanta kaj randa paneloj, kiu kutime bezonas unu malgrandan "
+#~ "aprioran larĝecon"
+
+#~ msgid "Number of rows in the Workspace Switcher."
+#~ msgstr "Linionombro en la laborkadra ŝaltilo"
+
+#~ msgid "Whether to display the all workspaces in the Workspace Switcher."
+#~ msgstr "Se la montro de ĉiuj laborkadroj estas en la laborkadra ŝaltilo."
+
+#~ msgid ""
+#~ "Whether to display the names of the workspaces in the Workspace Switcher."
+#~ msgstr "Se la montro de la laborkadronomoj estas en la laborkadra ŝaltilo."
+
+#~ msgid ""
+#~ "Cannot save launcher to disk, the following error occured:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Ne povas konservi lanĉilon surdiske, la sekva eraro okazis :\n"
+#~ "\n"
+#~ "%s"
+
+#, fuzzy
+#~ msgid "Could not remove the menu item"
+#~ msgstr ""
+#~ "<b>Ne povas forigi la menueron %s</b>\n"
+#~ "\n"
+#~ "Detaloj : %s\n"
+
+#~ msgid "Cannot execute gnome-search-tool"
+#~ msgstr "Ne povas lanĉi gnome-search-tool"
+
+#~ msgid "Cannot execute gnome-panel-screenshot"
+#~ msgstr "Ne povas lanĉi gnome-panel-screenshot"
+
+#~ msgid "Take a screen shot of a window"
+#~ msgstr "Fotu unu fenestron"
+
+#, fuzzy
+#~ msgid "The Bonobo IID of the applet"
+#~ msgstr "Testo de Bonobo-a aplikaĵeto"
+
+#, fuzzy
+#~ msgid "The location of the launcher"
+#~ msgstr "Pozicio por aldoni la lanĉilon"
+
+#, fuzzy
+#~ msgid "The type of action button"
+#~ msgstr "La tipo de ago, ke tiu butono realigas"
+
+#, fuzzy
+#~ msgid "Error launching command"
+#~ msgstr ""
+#~ "<b>Ne povas lanĉi piktogramon</b>\n"
+#~ "\n"
+#~ "Detaloj : %s"
+
+#, fuzzy
+#~ msgid "The background type."
+#~ msgstr "Nekonata fonotipo ricevita"
+
+#, fuzzy
+#~ msgid "The size of the panel."
+#~ msgstr "Aktuala stato de tiu panelo"
+
+#~ msgid "and finally, The Knights Who Say... NI!"
+#~ msgstr "kaj fine, la kavaliroj kiu diras...  NE!"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Running in \"Lockdown\" mode.  This means your system administrator has "
+#~ "prohibited any changes to the panel's configuration to take place."
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Lanĉante en \"Ŝlosa\" reĝimo.  Tio signifas, ke via sistemadministrulo "
+#~ "havas prohibita ĉiun ŝanĝon en la panela agordo."
+
+#~ msgid "End world hunger"
+#~ msgstr "Haltu malsaton en la mondo"
+
+#~ msgid "The desired ButtonWidget size"
+#~ msgstr "La desirata grandeco de la ButtonWidget-o"
+
+#~ msgid ""
+#~ "<b>Cannot launch icon</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Ne povas lanĉi piktogramon</b>\n"
+#~ "\n"
+#~ "Detaloj : %s"
+
+#~ msgid ""
+#~ "<b>Can't execute 'About GNOME'</b>\n"
+#~ "\n"
+#~ "Details: %s probably does not exist"
+#~ msgstr ""
+#~ "<b>Ne povas lanĉi 'Pri GNOME'</b>\n"
+#~ "\n"
+#~ "Detaloj : %s ne probable ekzistas"
+
+#~ msgid ""
+#~ "<b>Can't launch entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Ne povas lanĉi eron</b>\n"
+#~ "\n"
+#~ "Detaloj : %s"
+
+#~ msgid ""
+#~ "<b>Can't load entry</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Ne povas ŝarĝi eron</b>\n"
+#~ "\n"
+#~ "Detaloj : %s"
+
+#, fuzzy
+#~ msgid "Floating"
+#~ msgstr "Flosanta panelo"
+
+#, fuzzy
+#~ msgid "Centered"
+#~ msgstr "Interreto"
+
+#, fuzzy
+#~ msgid "%s %s Panel"
+#~ msgstr "Panelo"
+
+#~ msgid ""
+#~ "<b>Failed to run this program</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Eraro ĉe lanĉi tiun programon</b>\n"
+#~ "\n"
+#~ "Detaloj : %s"
+
+#~ msgid ""
+#~ "<b>Failed to execute command:</b> '%s'\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Eraro ĉe lanĉi komandon :</b> '%s'\n"
+#~ "\n"
+#~ "Detaloj : %s"
+
+#~ msgid ""
+#~ "<b>Failed to open file:</b> '%s'\n"
+#~ "\n"
+#~ "Details: no application available to open file"
+#~ msgstr ""
+#~ "<b>Eraro ĉe malfermi dosieron :</b> '%s'\n"
+#~ "\n"
+#~ "Detaloj : neniu disponebla aplikaĵo por malfermi dosieron"
+
+#~ msgid ""
+#~ "<b>Failed to open file:</b> '%s'\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Eraro ĉe malfermi dosieron :</b> '%s'\n"
+#~ "\n"
+#~ "Detaloj : %s"
+
+#~ msgid "Choose a file"
+#~ msgstr "Elektu unu dosieron"
+
+#~ msgid "Known Applications"
+#~ msgstr "Konataj aplikaĵoj"
+
+#~ msgid "No application selected"
+#~ msgstr "Neniu aplikaĵo elektita"
+
+#~ msgid "Pause _per frame (s):"
+#~ msgstr "Paŭzo _per bildo(j) :"
+
+#~ msgid "_Animation filename:"
+#~ msgstr "Pri_animada dosiernomo :"
+
+#~ msgid "Alert you when new mail arrives"
+#~ msgstr "Avertu kiam nova poŝto alvenas"
+
+#~ msgid "Inbox Monitor"
+#~ msgstr "Poŝtkesta inspektilo"
+
+#~ msgid "_Check for mail"
+#~ msgstr "_Kontrolu novan poŝton"
+
+#~ msgid "There was an error executing %s: %s"
+#~ msgstr "Estas eraro lanĉante %s : %s"
+
+#~ msgid ""
+#~ "You didn't set a password in the preferences for the Inbox Monitor,\n"
+#~ "so you have to enter it each time it starts up."
+#~ msgstr ""
+#~ "Vi ne difinis pasvorton en la agordo de via poŝtkesta inspektilo,\n"
+#~ "vi do devas doni ĝin ĉiu lanĉado."
+
+#~ msgid "Please enter your mailserver's _password:"
+#~ msgstr "Bonvolu doni vian poŝtservilpasvorton :"
+
+#~ msgid "Password Entry box"
+#~ msgstr "Teksta enirujo de pasvorto"
+
+#~ msgid ""
+#~ "The Inbox Monitor failed to check your mails and thus automatic updating "
+#~ "has been deactivated for now.\n"
+#~ "Maybe you used a wrong server, username or password?"
+#~ msgstr ""
+#~ "La poŝtkesta inspektilo eraras dum la kontrolo de viaj poŝtoj. La "
+#~ "aŭtomata aktualigo estas neaktivata nun.\n"
+#~ "Eble vi uzis malbonajn uzantonomon aŭ pasvorton?"
+
+#~ msgid "You have new mail."
+#~ msgstr "Vi havas novan poŝton"
+
+#~ msgid "You have mail."
+#~ msgstr "Vi havas poŝton"
+
+#~ msgid "%d/%d messages"
+#~ msgstr "%d/%d mesaĝo(j)"
+
+#~ msgid "%d messages"
+#~ msgstr "%d mesaĝo(j)"
+
+#~ msgid "No mail."
+#~ msgstr "Neniu poŝto"
+
+#~ msgid "Status not updated"
+#~ msgstr "Stato ne aktualita"
+
+#~ msgid "Mailbox _resides on:"
+#~ msgstr "Poŝtkesto _situas en :"
+
+#~ msgid "Local mailspool"
+#~ msgstr "Loka poŝtatendovico"
+
+#~ msgid "Local maildir"
+#~ msgstr "Loka poŝtdosierujo"
+
+#~ msgid "Remote POP3-server"
+#~ msgstr "Fora POP3-servilo"
+
+#~ msgid "Remote IMAP-server"
+#~ msgstr "Fora IMAP-servilo"
+
+#~ msgid "Mail _spool file:"
+#~ msgstr "Atendovico-dosiero de poŝto :"
+
+#~ msgid "Mail s_erver:"
+#~ msgstr "Poŝts_ervilo :"
+
+#~ msgid "Mail Server Entry box"
+#~ msgstr "Teksta enirujo de poŝtservilo"
+
+#~ msgid "_Username:"
+#~ msgstr "_Uzantonomo :"
+
+#~ msgid "Username Entry box"
+#~ msgstr "Teksta enirujo de uzantonomo"
+
+#~ msgid "_Password:"
+#~ msgstr "_Pasvorto :"
+
+#~ msgid "_Folder:"
+#~ msgstr "_Dosierujo :"
+
+#~ msgid "Folder Entry box"
+#~ msgstr "Enirujo de dosierujo"
+
+#~ msgid "C_ommand to run before checking for mail:"
+#~ msgstr "Lanĉenda komando _antaŭ poŝtkontrolo :"
+
+#~ msgid "Execute"
+#~ msgstr "Lanĉu"
+
+#~ msgid "Before each _update:"
+#~ msgstr "Antaŭ ĉiu aktualigo :"
+
+#~ msgid "Command to execute before each update"
+#~ msgstr "Lanĉenda komando antaŭ ĉiu aktualigo"
+
+#~ msgid "When new mail _arrives:"
+#~ msgstr "Kiam nova poŝto _alvenas :"
+
+#~ msgid "Command to execute when new mail arrives"
+#~ msgstr "Lanĉenda komando kiam nova poŝto alvenas"
+
+#~ msgid "When clicke_d:"
+#~ msgstr "Kiam klakita :"
+
+#~ msgid "Set the number of unread mails to _zero"
+#~ msgstr "Nuligi nombron de nelegita poŝto"
+
+#~ msgid "Check for mail _every"
+#~ msgstr "Kontrolu poŝton ĉiu"
+
+#~ msgid "minutes"
+#~ msgstr "minutoj"
+
+#~ msgid "Choose time interval in minutes to check mail"
+#~ msgstr "Elektu intertempon en minutoj por kontroli poŝton"
+
+#~ msgid "Choose time interval in seconds to check mail"
+#~ msgstr "Elektu intertempon en sekundoj por kontroli poŝton"
+
+#~ msgid "Play a _sound when new mail arrives"
+#~ msgstr "Ludu _sonon kiam nova poŝto alvenas"
+
+#~ msgid "Inbox Monitor Preferences"
+#~ msgstr "Agordo de poŝtkesta inspektilo"
+
+#~ msgid "_Mail check"
+#~ msgstr "Kontrolu _poŝton"
+
+#~ msgid "Mail_box"
+#~ msgstr "_Poŝtkesto"
+
+#~ msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
+#~ msgstr ""
+#~ "Poŝtkesta inspektilo informas vin, kiam nova poŝto eniras en via poŝtkesto"
+
+#~ msgid "Mail check"
+#~ msgstr "Poŝtkontrolilo"
+
+#~ msgid "Mail check notifies you when new mail arrives in your mailbox"
+#~ msgstr ""
+#~ "Poŝtkontrolilo informas vin, kiam nova poŝto eniras en via poŝtkesto"
+
+#~ msgid "Command to execute when checking mail"
+#~ msgstr "Lanĉenda komando, kiam kontrolante poŝton"
+
+#~ msgid "Command to execute when you click on the Inbox Monitor"
+#~ msgstr "Lanĉenda komando, kiam vi klakas sur la poŝtkesta inspektilo"
+
+#~ msgid "Command to run before checking mail"
+#~ msgstr "Lanĉenda komando antaŭ kontrolante poŝto"
+
+#~ msgid "Do we run the exec-command"
+#~ msgstr "Se oni lanĉas la exec-komandon"
+
+#~ msgid "Do we run the newmail-command"
+#~ msgstr "Se oni lanĉas la newmail-komandon"
+
+#~ msgid "How often (in milliseconds) we check the mail"
+#~ msgstr "Kiomofte (en milisekundoj) oni kontrolas poŝton"
+
+#~ msgid "If mail should be checked automatically"
+#~ msgstr "Se poŝto estos kontrolata aŭtomate"
+
+#~ msgid "If this is set mail will be checked every update-freq milliseconds"
+#~ msgstr ""
+#~ "Se tio estas difini, poŝto estos kontrolata ĉiu update-freq milisekundoj"
+
+#~ msgid "If this is set, we should run the exec-command"
+#~ msgstr "Se tio estas difini, oni devus lanĉi la newmail-komandon"
+
+#~ msgid "If this is set, we should run the newmail-command"
+#~ msgstr "Se tio estas difini, oni devus lanĉi la newmail-komandon"
+
+#~ msgid "Interval for checking mail"
+#~ msgstr "Intertempo por kontroli poŝton"
+
+#~ msgid "Path to the animation file"
+#~ msgstr "Pado de la animada dosiero"
+
+#~ msgid "Play a sound when mail is recieved"
+#~ msgstr "Ludu sonon kiam nova poŝto alvenas"
+
+#~ msgid "Remote folder for mail retrieval"
+#~ msgstr "Fora dosirerujo por poŝtelŝuto"
+
+#~ msgid "Remote server to connect to for our mail"
+#~ msgstr "Fora konektenda servilo por nia poŝto"
+
+#~ msgid "Run this command before we check the mail"
+#~ msgstr "Lanĉu tiun komandon antaŭ poŝtkontrolo"
+
+#~ msgid "The mail server"
+#~ msgstr "La poŝtservilo"
+
+#~ msgid "The user's password"
+#~ msgstr "La uzanta pasvorto"
+
+#~ msgid "The user's password for the remote server"
+#~ msgstr "La uzanta pasvorto por la fora servilo"
+
+#~ msgid "This is how we check the mail, check the mail, check the mail..."
+#~ msgstr ""
+#~ "Tio estas la kielo ni kontrolas la poŝton, kontrolas la poŝton, kontrolas "
+#~ "la poŝton..."
+
+#~ msgid ""
+#~ "This is how we process the mail, process the mail, process the mail..."
+#~ msgstr ""
+#~ "Tio estas la kielo ni traktas la poŝton, traktas la poŝton, traktas la "
+#~ "poŝton..."
+
+#~ msgid ""
+#~ "This is the animation that will be displayed during normal Inbox Monitor "
+#~ "usage"
+#~ msgstr ""
+#~ "Tiu estas la animadon, kiu estos montrata dum la normala uzo de "
+#~ "lapoŝtkesta inspektilo"
+
+#~ msgid "We run this command when the user clicks on Inbox Monitor"
+#~ msgstr ""
+#~ "Oni lanĉas tiun komandon, kiam la uzanto klakas sur la poŝtkesta "
+#~ "inspektilo"
+
+#~ msgid "Whether to reset mail status when you click on Inbox Monitor"
+#~ msgstr ""
+#~ "Se oni restartas poŝtstaton, kiam vi klakas sur la poŝtkesta inspektilo"
+
+#~ msgid "You've got mail!"
+#~ msgstr "Vi havas poŝton!"
+
+#~ msgid "Mailcheck"
+#~ msgstr "Poŝtkontrolilo"
+
+#~ msgid "New Mail"
+#~ msgstr "Nova poŝto"
+
+#~ msgid "Rows"
+#~ msgstr "Linioj"
+
+#~ msgid "No object_type set for panel object with ID %s\n"
+#~ msgstr "Neniu object_type difinita por la panela objekto kun ID %s\n"
+
+#~ msgid "Mode"
+#~ msgstr "Reĝimo"
+
+#~ msgid "State"
+#~ msgstr "Stato"
+
+#~ msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
+#~ msgstr ""
+#~ "Ĉu kaŝitaj butonoj (butonoj kiu kaŝas aŭ montras la panelon) enŝaltita?"
+
+#~ msgid "Hidebutton pixmaps enabled"
+#~ msgstr "Kaŝitaj butonaj piktogramoj enŝaltita"
+
+#~ msgid "Hidebuttons have pixmaps"
+#~ msgstr "Kaŝitaj butonaj havas piktogramojn"
+
+#~ msgid "Hide this panel"
+#~ msgstr "Kaŝu tiun panelon"
+
+#~ msgid "Show this panel"
+#~ msgstr "Montru tiun panelon"
+
+#~ msgid "Run Program..."
+#~ msgstr "Lanĉu programon..."
+
+#~ msgid "GNOME Menu Panel"
+#~ msgstr "GNOME panelmenuo"
+
+#~ msgid "Can't find the screenshot program"
+#~ msgstr "Ne povas trovi ekranfotan programon"
+
+#~ msgid "Can't execute the screenshot program"
+#~ msgstr "Ne povas lanĉi la ekranfotan programon"
+
+#~ msgid "Panel to add the launcher to"
+#~ msgstr "Panelo, en kiu vi povas aldoni la lanĉilon"
+
+#~ msgid "NUMBER"
+#~ msgstr "NOMBRO"
+
+#~ msgid "The argument is a url to add, not a .desktop file"
+#~ msgstr "La argumento estas urlon por aldoni, ne .desktop dosiero"
+
+#~ msgid ""
+#~ "You must supply a single argument with the .desktop file or url to use\n"
+#~ msgstr "Vi devas doni nur unu argumenton kun la .desktop dosiero aŭ urlo\n"
+
+#~ msgid "No panel found\n"
+#~ msgstr "Neniu panelo trovita\n"
+
+#~ msgid "_Append File..."
+#~ msgstr "_Aldonu dosieron..."
+
+#~ msgid "Run Program"
+#~ msgstr "Lanĉu programon"
+
+#~ msgid "GNOME Aligned Panel"
+#~ msgstr "GNOME laŭliniga panelo"
+
+#~ msgid "GNOME Edge Panel"
+#~ msgstr "GNOME randa panelo"
+
+#~ msgid "Sliding Panel"
+#~ msgstr "Glitanta panelo"
+
+#~ msgid "GNOME Sliding Panel"
+#~ msgstr "GNOME glitanta panelo"
+
+#~ msgid "GNOME Floating Panel"
+#~ msgstr "GNOME flosanta panelo"
+
+#~ msgid "You can only have one menu panel at a time."
+#~ msgstr "Vi povas nur havi unu panelmenuon"
+
+#~ msgid "C_orner Panel"
+#~ msgstr "_Angula panelo"
+
+#~ msgid "Create corner panel"
+#~ msgstr "Kreu angulan panelon"
+
+#~ msgid "Create edge panel"
+#~ msgstr "Kreu randan panelon"
+
+#~ msgid "Create floating panel"
+#~ msgstr "Kreu flosantan panelon"
+
+#~ msgid "_Sliding Panel"
+#~ msgstr "_Glitanta panelo"
+
+#~ msgid "Create sliding panel"
+#~ msgstr "Kreu glitantan panelon"
+
+#~ msgid "_Menu Panel"
+#~ msgstr "Panel_menuo"
+
+#~ msgid "Create menu panel"
+#~ msgstr "Kreu panelmenuon"
+
+#~ msgid "Button"
+#~ msgstr "Butono"
+
+#~ msgid "Menu:"
+#~ msgstr "Menuo :"
+
+#~ msgid "Can't create menu, using main menu!"
+#~ msgstr "Ne povas krei menuon, uzante precipa menuo!"
+
+#~ msgid "No path set at %s for panel menu object\n"
+#~ msgstr "Neniu pado de %s por menua objekto de la panelo\n"
+
+#~ msgid "Cannot register control widget\n"
+#~ msgstr "Ne povas registri kontrolan fenestraĵon\n"
+
+#~ msgid ""
+#~ "No panels were found in your configuration.  I will create a menu panel "
+#~ "for you"
+#~ msgstr "Neniu panelo trovita en via agordo. Mi tuj kreas panelon por vi"
+
+#~ msgid "Miscellaneous:"
+#~ msgstr "Diversaj :"
+
+#~ msgid "Current screen:"
+#~ msgstr "Aktuala ekrano :"
+
+#~ msgid "Indicates the panel position and orientation on screen"
+#~ msgstr "Indiki la panelan pozicion kaj la orientiĝon sur la ekrano"
+
+#~ msgid "_Position:"
+#~ msgstr "_Pozicio :"
+
+#~ msgid "Hori_zontal"
+#~ msgstr "Hori_zontala"
+
+#~ msgid "_Vertical"
+#~ msgstr "_Vertikala"
+
+#~ msgid "H_orizontal:"
+#~ msgstr "H_orizontala :"
+
+#~ msgid "Ver_tical:"
+#~ msgstr "Ver_tikala :"
+
+#~ msgid "_Distance from edge:"
+#~ msgstr "_Distanco de la rando :"
+
+#~ msgid "Default"
+#~ msgstr "Apriora"
+
+#~ msgid "Color"
+#~ msgstr "Koloro"
+
+#~ msgid "Transparent"
+#~ msgstr "Travidebla"
+
+#~ msgid "Image:"
+#~ msgstr "Bildo :"
+
+#~ msgid "Edge panel"
+#~ msgstr "Randa panelo"
+
+#~ msgid "Sliding panel"
+#~ msgstr "Glitanta panelo"
+
+#~ msgid "Floating panel"
+#~ msgstr "Flosanta panelo"
+
+#~ msgid "Show the program listing by default when opening the Run box"
+#~ msgstr "Montru aprioran programliston ĉe malfermo de la 'lanĉu' fenestro"
+
+#~ msgid "Show the program listing in the Run box"
+#~ msgstr "Montru programliston en la 'lanĉu' fenestro"

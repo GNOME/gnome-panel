@@ -1,0 +1,46 @@
+NULL =
+
+size = 22x22
+
+iconsdir = $(datadir)/icons/hicolor/$(size)/apps
+
+icons_DATA =					\
+	gnome-panel-clock.png			\
+	gnome-panel-drawer.png			\
+	gnome-panel-fish.png			\
+	gnome-panel-force-quit.png		\
+	gnome-panel-notification-area.png	\
+	gnome-panel-separator.png		\
+	gnome-panel.png				\
+	gnome-panel-window-list.png		\
+	gnome-panel-window-menu.png		\
+	gnome-panel-workspace-switcher.png	\
+	$(NULL)
+
+icons_SOURCE =					\
+	gnome-panel-clock.svg			\
+	gnome-panel-drawer.svg			\
+	gnome-panel-fish.xcf.bz2		\
+	gnome-panel-force-quit.xcf.bz2		\
+	gnome-panel-notification-area.svg	\
+	gnome-panel-separator.svg		\
+	gnome-panel.svg				\
+	gnome-panel-window-list.xcf.bz2		\
+	gnome-panel-window-menu.xcf.bz2		\
+	gnome-panel-workspace-switcher.svg	\
+	$(NULL)
+
+EXTRA_DIST =		\
+	$(icons_DATA)	\
+	$(icons_SOURCE)
+
+gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
+
+install-data-hook:
+	@-if test -z "$(DESTDIR)"; then \
+		echo "Updating Gtk icon cache."; \
+		$(gtk_update_icon_cache); \
+	else \
+		echo "*** Icon cache not updated.  After install, run this:"; \
+		echo "***   $(gtk_update_icon_cache)"; \
+	fi

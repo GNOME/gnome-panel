@@ -1,0 +1,35 @@
+<oaf_info>
+
+<oaf_server iid="OAFIID:GNOME_ClockApplet_Factory"
+	    type="@TYPE@"
+	    location="@LOCATION@">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:Bonobo/GenericFactory:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Clock Applet Factory"/>
+	<oaf_attribute name="description" type="string" _value="Factory for creating clock applets."/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_ClockApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_ClockApplet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Clock"/>
+	<oaf_attribute name="description" type="string" _value="Get the current time and date"/>
+	<oaf_attribute name="panel:icon" type="string" value="gnome-panel-clock"/>
+	<oaf_attribute name="bugzilla:bugzilla" type="string" value="GNOME"/>
+	<oaf_attribute name="bugzilla:product" type="string" value="gnome-panel"/>
+	<oaf_attribute name="bugzilla:component" type="string" value="clock"/>
+	<oaf_attribute name="bugzilla:version" type="string" value="@VERSION@"/>
+	<oaf_attribute name="bugzilla:other_binaries" type="string" value="clock-applet"/>
+</oaf_server>
+
+</oaf_info>

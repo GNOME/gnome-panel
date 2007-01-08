@@ -1,0 +1,56 @@
+<oaf_info>
+
+<oaf_server iid="OAFIID:GNOME_NotificationAreaApplet_Factory"
+	    type="@TYPE@"
+	    location="@LOCATION@">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:Bonobo/GenericFactory:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Notification Area Factory"/>
+	<oaf_attribute name="description" type="string" _value="Notification Area Factory"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_NotificationAreaApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_NotificationAreaApplet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Notification Area"/>
+	<oaf_attribute name="description" type="string" _value="Area where notification icons appear"/>
+	<oaf_attribute name="panel:icon" type="string" value="gnome-panel-notification-area"/>
+	<oaf_attribute name="bugzilla:bugzilla" type="string" value="GNOME"/>
+	<oaf_attribute name="bugzilla:product" type="string" value="gnome-panel"/>
+	<oaf_attribute name="bugzilla:component" type="string" value="notification area"/>
+	<oaf_attribute name="bugzilla:version" type="string" value="@VERSION@"/>
+	<oaf_attribute name="bugzilla:other_binaries" type="string" value="notification-area-applet"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_SystemTrayApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_NotificationAreaApplet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Notification Area"/>
+	<oaf_attribute name="description" type="string" _value="Area where notification icons appear"/>
+	<!-- has no panel: attributes as we don't want it in the menus -->
+	<oaf_attribute name="bugzilla:bugzilla" type="string" value="GNOME"/>
+	<oaf_attribute name="bugzilla:product" type="string" value="gnome-panel"/>
+	<oaf_attribute name="bugzilla:component" type="string" value="System Tray Applet"/>
+	<oaf_attribute name="bugzilla:version" type="string" value="@VERSION@"/>
+	<oaf_attribute name="bugzilla:other_binaries" type="string" value="notification-area-applet"/>
+</oaf_server>   
+
+
+</oaf_info>

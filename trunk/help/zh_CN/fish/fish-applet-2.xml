@@ -1,0 +1,197 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.5.17">
+  <!ENTITY manrevision "2.1">
+  <!ENTITY date "August 2002">
+  <!ENTITY applet "Fish">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Mar 12, 2002
+  
+-->
+
+<article id="index" lang="zh_cn">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; 小程序手册 V&manrevision;</title>
+	 <copyright> 
+		<year>2002</year> 
+ 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>Telsa Gwynne</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+
+	 <publisher> 
+		<publishername>GNOME Documentation Project</publishername> 
+	 </publisher> 
+
+&legal;
+
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME Documentation Team</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>hobbit@aloss.ukuu.org.uk</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; 小程序手册 V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>鱼小程序手册 V2.0</revnumber> 
+		  <date>2002 年 5 月</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>鱼小程序手册</revnumber> 
+		  <date>2000</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>hobbit@aloss.ukuu.org.uk</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> 本手册介绍 &applet; &appletversion; 版。
+		</releaseinfo>
+	 <legalnotice> 
+		<title>反馈</title>
+		<para> 要报告关于 &applet; 小程序或本手册的错误或提出建议，请遵循 <ulink url="ghelp:gnome-feedback" type="help">GNOME 反馈页</ulink>中的指导。</para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>鱼</primary> 
+  </indexterm> 
+
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+<sect1 id="fish-introduction">
+<title>简介</title>
+<!-- ==== Figure ============================================= -->
+	 <figure id="fish-fig"> 
+		<title>&applet; 小程序</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/fish_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>显示鱼小程序。</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+<para>该 <application>&applet;</application> 小程序会在面板中显示一个动画图像。</para>
+<para>要将 <application>&applet;</application> 添加到面板，请右击该面板，然后选择<menuchoice><guimenu>"添加到面板"</guimenu><guisubmenu>"娱乐"</guisubmenu><guimenuitem>"鱼"</guimenuitem></menuchoice>。</para>
+</sect1>
+
+<sect1 id="fish-usage">
+<title>用法</title>
+<para>单击该小程序就会显示<guilabel>"Wanda 鱼"</guilabel>对话框。该对话框通常会显示一个签饼。您可以配置该小程序，从而指定单击该小程序时运行的命令。有关的更多信息，请参阅 <xref linkend="fish-settings"/>。</para>
+</sect1>
+
+<!-- ============= Preferences  ================================ -->
+<sect1 id="fish-settings">
+<title>首选项</title>
+<para>要配置 <application>&applet;</application>，请右击该 <application>&applet;</application> 小程序，然后选择<guimenu>"首选项"</guimenu>。 </para>
+<variablelist>
+<varlistentry>
+<term><guilabel>GNOME 鱼的名称</guilabel> </term>
+<listitem>
+<para>使用此文本框可以指定鱼的名称。</para>
+<para>默认值： Wanda。</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>动画文件名</guilabel> </term>
+<listitem>
+<para>使用此字段可以选择一个在小程序中显示的图像。您可以选择该小程序附带的图像，也可以选择自己的图像。</para>
+<para>默认值： <filename>fish/fishanim.png</filename>。</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>单击鱼时执行的命令</guilabel> </term>
+<listitem>
+<para>默认情况下，当单击该小程序时 <application>&applet;</application> 将运行 fortune 命令。使用该文本框可以指定运行另外一个命令。</para>
+<para>默认值： fortune。</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>动画中的帧数</guilabel> </term>
+<listitem>
+<para>使用此旋转框可以指定动画中的帧数。</para>
+<para>默认值： 3。</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>每帧的暂停时间</guilabel> </term>
+<listitem>
+<para>使用该旋转框可以指定动画中每帧之间的暂停秒数。</para>
+<para>默认值： 1.00。</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>垂直面板上旋转</guilabel> </term>
+<listitem>
+<para>如果选择此选项，当将该小程序添加到垂直面中时，将旋转该小程序的图像。</para>
+<para>默认值：选中。</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+</article>
