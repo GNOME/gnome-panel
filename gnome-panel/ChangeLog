@@ -1,5 +1,12 @@
 2007-01-14  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-stock-icons.h: use 22 as default size for menu icons
+	* button-widget.c: force size of the icons to be those defined in the
+	tango spec (16, 22, 32, 48)
+	Fix bug #343437
+
+2007-01-14  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-compatibility.[ch]:
 	(panel_compatiblity_migrate_settings_menu_button): new, migrates the
 	settings menu button objects to a simple launcher

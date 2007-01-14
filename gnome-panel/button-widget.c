@@ -480,7 +480,14 @@ button_widget_size_allocate (GtkWidget     *widget,
 	else
 		size = allocation->width;
 
-	size = CLAMP (size, 1, 48);
+	if (size < 22)
+		size = 16;
+	else if (size < 32)
+		size = 22;
+	else if (size < 48)
+		size = 32;
+	else
+		size = 48;
 
 	if (button_widget->size != size) {
 		button_widget->size = size;
