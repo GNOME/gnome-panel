@@ -29,7 +29,12 @@
 
 #include <string.h>
 
+#if defined(HAVE_CRT_EXTERNS_H) && defined(HAVE__NSGETENVIRON)
+#include <crt_externs.h> /* for _NSGetEnviron */
+#define environ (*_NSGetEnviron())
+#else
 extern char **environ;
+#endif
 
 static int            screens     = 0;
 static int           *monitors    = NULL;
