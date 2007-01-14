@@ -81,9 +81,6 @@ void       panel_menu_button_load_from_gconf     (PanelWidget      *panel,
 						  gboolean          exactpos,
 						  const char       *id);
 
-void       panel_menu_button_save_to_gconf       (PanelMenuButton  *button,
-						  const char       *id);
-
 void       panel_menu_button_invoke_menu         (PanelMenuButton  *button,
 						  const char       *callback_name);
 

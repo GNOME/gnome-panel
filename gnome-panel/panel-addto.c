@@ -745,7 +745,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 
 	gmenu_tree_unref (tree);
 
-	tree = gmenu_tree_lookup ("settings.menu", GMENU_TREE_FLAGS_NONE);
+	tree = gmenu_tree_lookup ("preferences.menu", GMENU_TREE_FLAGS_NONE);
 
 	if ((root = gmenu_tree_get_root_directory (tree))) {
 		GtkTreeIter iter;
@@ -759,7 +759,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 				    -1);
 
 		panel_addto_make_application_list (&dialog->settings_list,
-						   root, "settings.menu");
+						   root, "preferences.menu");
 		panel_addto_populate_application_model (store, NULL,
 							dialog->settings_list);
 

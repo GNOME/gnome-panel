@@ -1,5 +1,18 @@
 2007-01-14  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-compatibility.[ch]:
+	(panel_compatiblity_migrate_settings_menu_button): new, migrates the
+	settings menu button objects to a simple launcher
+	* panel-menu-button.c: do not use settings.menu anymore, handle
+	preferences.menu
+	(panel_menu_button_load_from_gconf): migrate the settings menu buttons
+	to launchers
+	* panel-menu-button.h: remove cruft
+	* panel-addto.c: (panel_addto_make_application_model): list capplets
+	from preferences.menu instead of settings.menu
+
+2007-01-14  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-items.c: (panel_desktop_menu_item_append_menu): kill
 	(panel_desktop_menu_item_create_menu): we don't need to load
 	settings.menu anymore and we can just load gnomecc.desktop instead
