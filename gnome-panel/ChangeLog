@@ -1,5 +1,22 @@
 2007-01-14  Vincent Untz  <vuntz@gnome.org>
 
+	Patch by Dan Williams <danw@novell.com>
+	Fix bug #366429
+
+	* panel-util.c (panel_make_unique_desktop_uri): rename from
+	"panel_make_unique_uri" and remove the "suffix" arg, since this is
+	only used to create desktop file URIs. Add a "source" arg and base
+	the desktop file name on that, so that we end up with names like
+	"epiphany.desktop" rather than "hadjaha-00818f1ab6.desktop"
+
+	* launcher.c (launcher_save_uri, panel_launcher_create_from_info) 
+	(panel_launcher_create_copy): 
+	* menu.c (add_app_to_desktop): 
+	* panel-run-dialog.c (panel_run_dialog_create_desktop_file):
+	Update for that
+
+2007-01-14  Vincent Untz  <vuntz@gnome.org>
+
 	* button-widget.[ch]: (button_widget_reload_pixbuf): use
 	GTK_STOCK_MISSING_IMAGE when the icon can't be found, kill the error
 	dialog

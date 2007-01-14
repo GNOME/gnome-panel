@@ -624,13 +624,14 @@ setup_button (Launcher *launcher)
 }
 
 static char *
-panel_launcher_find_writable_uri (const char *launcher_location)
+panel_launcher_find_writable_uri (const char *launcher_location,
+				  const char *source)
 {
 	char *path;
 	char *uri;
 
 	if (!launcher_location)
-		return panel_make_unique_uri (NULL, ".desktop");;
+		return panel_make_unique_desktop_uri (NULL, source);;
 
 	if (!strchr (launcher_location, G_DIR_SEPARATOR)) {
 		path = panel_make_full_path (NULL, launcher_location);
@@ -647,7 +648,7 @@ panel_launcher_find_writable_uri (const char *launcher_location)
 			return g_strdup (launcher_location);
 	}
 
-	return panel_make_unique_uri (NULL, ".desktop");;
+	return panel_make_unique_desktop_uri (NULL, source);
 }
 
 static void
@@ -688,16 +689,23 @@ static char *
 launcher_save_uri (PanelDItemEditor *dialog,
 		   gpointer          data)
 {
+	GKeyFile   *key_file;
+	char       *file;
 	Launcher   *launcher;
 	char       *new_uri;
 	const char *uri;
 
+	key_file = panel_ditem_editor_get_key_file (dialog);
+	file = panel_util_key_file_get_string (key_file, "Exec");
+
 	launcher = (Launcher *) data;
 
 	if (launcher)
-		new_uri = panel_launcher_find_writable_uri (launcher->location);
+		new_uri = panel_launcher_find_writable_uri (launcher->location, file);
 	else
-		new_uri = panel_launcher_find_writable_uri (NULL);
+		new_uri = panel_launcher_find_writable_uri (NULL, file);
+
+	g_free (file);
 
 	uri = panel_ditem_editor_get_uri (dialog);
 
@@ -982,7 +990,7 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 		panel_util_key_file_set_string (key_file, "Type", "Link");
 	}
 
-	location = panel_make_unique_uri (NULL, ".desktop");
+	location = panel_make_unique_desktop_uri (NULL, exec_or_uri);
 	if (panel_util_key_file_to_file (key_file, location, &error)) {
 		panel_launcher_create (toplevel, position, location);
 	} else {
@@ -1050,7 +1058,7 @@ panel_launcher_create_copy (PanelToplevel *toplevel,
 	char        *new_location;
 	const char  *filename;
 
-	new_location = panel_make_unique_uri (NULL, ".desktop");
+	new_location = panel_make_unique_desktop_uri (NULL, location);
 	
 	source_uri = gnome_vfs_uri_new (location);
 	dest_uri   = gnome_vfs_uri_new (new_location);

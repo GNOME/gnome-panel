@@ -643,7 +643,7 @@ add_app_to_desktop (GtkWidget      *item,
 		target_dir = g_build_filename (g_get_home_dir (), "Desktop", NULL);
 	}
 
-	target_uri = panel_make_unique_uri (target_dir, ".desktop");
+	target_uri = panel_make_unique_desktop_uri (target_dir, source_uri);
 	g_return_if_fail (target_uri != NULL);
 
 	vfs_target_uri = gnome_vfs_uri_new (target_uri);

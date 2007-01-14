@@ -79,8 +79,8 @@ GdkPixbuf *	missing_pixbuf		(int size);
 
 char *panel_make_full_path   (const char *dir,
 			      const char *filename);
-char *panel_make_unique_uri (const char *dir,
-			     const char *suffix);
+char *panel_make_unique_desktop_uri (const char *dir,
+				     const char *source);
 char *panel_lookup_in_data_dirs (const char *basename);
 
 const char *panel_util_utf8_strstrcase (const char *haystack,

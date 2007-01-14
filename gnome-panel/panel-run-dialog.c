@@ -1713,6 +1713,7 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	gboolean    exec = FALSE;
 	const char *text;
 	char       *uri;
+	char       *name;
 	char       *disk;
 	char       *scheme;
 
@@ -1740,11 +1741,13 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 						"Type", "Application");
 		panel_util_key_file_set_string (key_file,
 						"Exec", text);
+		name = g_strdup (text);
 	} else {
 		panel_util_key_file_set_string (key_file,
 						"Type", "Link");
 		panel_util_key_file_set_string (key_file,
 						"URL", uri);
+		name = g_strdup (uri);
 	}
 	g_free (uri);
 
@@ -1758,7 +1761,7 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	panel_util_key_file_set_locale_string (key_file, "Icon",
 					       dialog->icon_path);
 
-	uri = panel_make_unique_uri (g_get_tmp_dir (), ".desktop");
+	uri = panel_make_unique_desktop_uri (g_get_tmp_dir (), name);
 	disk = g_filename_from_uri (uri, NULL, NULL);
 
 	if (!disk || !panel_util_key_file_to_file (key_file, disk, NULL)) {
@@ -1768,6 +1771,7 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 
 	g_key_file_free (key_file);
 	g_free (disk);
+	g_free (name);
 
 	return uri;
 }

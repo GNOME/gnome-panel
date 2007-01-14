@@ -823,53 +823,57 @@ panel_make_full_path (const char *dir,
 }
 
 char *
-panel_make_unique_uri (const char *dir,
-		       const char *suffix)
+panel_make_unique_desktop_uri (const char *dir,
+			       const char *source)
 {
-#define NUM_OF_WORDS 12
-	char *words[] = {
-		"foo",
-		"bar",
-		"blah",
-		"gegl",
-		"frobate",
-		"hadjaha",
-		"greasy",
-		"hammer",
-		"eek",
-		"larry",
-		"curly",
-		"moe",
-		NULL};
+	char     *name, *p;
 	char     *uri;
 	char     *path = NULL;
 	gboolean  exists = TRUE;
+	int       num = 0;
+
+	/* source may be an exec string, a path, or a URI. We truncate
+	 * it at the first space (to get just the command name if it's
+	 * an exec string), strip the path/URI, and remove the suffix
+	 * if it's ".desktop".
+	 */
+	name = g_strndup (source, strcspn (source, " "));
+	p = strrchr (name, '/');
+	while (p && !*(p + 1)) {
+		*p = '\0';
+		p = strrchr (name, '/');
+	}
+	if (p)
+		memmove (name, p + 1, strlen (p + 1) + 1);
+	p = strrchr (name, '.');
+	if (p && !strcmp (p, ".desktop"))
+		*p = '\0';
+
+	if (name[0] == '\0') {
+		g_free (name);
+		name = g_strdup (_("file"));
+	}
 
 	while (exists) {
 		char *filename;
-		int   rnd;
-		int   word;
 
-		rnd = g_random_int ();
-		word = g_random_int () % NUM_OF_WORDS;
-
-		filename = g_strdup_printf ("%s-%010x%s",
-					    words [word],
-					    (guint) rnd,
-					    suffix);
+		filename = num == 0 ?
+			g_strdup_printf ("%s.desktop", name) :
+			g_strdup_printf ("%s-%d.desktop", name, num);
 
 		g_free (path);
 		path = panel_make_full_path (dir, filename);
 		exists = g_file_test (path, G_FILE_TEST_EXISTS);
 		g_free (filename);
+
+		num++;
 	}
 
 	uri = gnome_vfs_get_uri_from_local_path (path);
 	g_free (path);
+	g_free (name);
 
 	return uri;
-
-#undef NUM_OF_WORDS
 }
 
 static char *
