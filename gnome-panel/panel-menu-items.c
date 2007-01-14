@@ -692,53 +692,22 @@ panel_place_menu_item_volume_changed (GnomeVFSVolumeMonitor *monitor,
 	panel_place_menu_item_recreate_menu (place_menu);
 }
 
-static void
-panel_desktop_menu_item_append_menu (GtkWidget            *menu,
-				     PanelDesktopMenuItem *parent)
-{
-	gboolean  add_separator;
-	GList    *children;
-
-	if (!g_object_get_data (G_OBJECT (menu), "panel-menu-needs-appending"))
-		return;
-
-	g_object_set_data (G_OBJECT (menu), "panel-menu-needs-appending", NULL);
-
-	add_separator = FALSE;
-	children = gtk_container_get_children (GTK_CONTAINER (menu));
-
-	if (children != NULL) {
-		GList *child;
-
-		child = children;
-		while (child->next != NULL)
-			child = child->next;
-
-		add_separator = !GTK_IS_SEPARATOR (GTK_WIDGET (child->data));
-	}
-
-	g_list_free (children);
-
-	if (add_separator)
-		add_menu_separator (menu);
-
-	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL);
-	panel_menu_items_append_from_desktop (menu, "gnome-about.desktop", NULL);
-
-	if (parent->priv->append_lock_logout)
-		panel_menu_items_append_lock_logout (menu);
-}
-
 static GtkWidget *
 panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item)
 {
 	GtkWidget *desktop_menu;
 
-	desktop_menu = create_applications_menu ("settings.menu", NULL);
+	desktop_menu = panel_create_menu ();
 
-	g_signal_connect (desktop_menu, "show",
-			  G_CALLBACK (panel_desktop_menu_item_append_menu),
-			  desktop_item);
+	panel_menu_items_append_from_desktop (desktop_menu, "gnomecc.desktop", NULL);
+
+	add_menu_separator (desktop_menu);
+
+	panel_menu_items_append_from_desktop (desktop_menu, "yelp.desktop", NULL);
+	panel_menu_items_append_from_desktop (desktop_menu, "gnome-about.desktop", NULL);
+
+	if (desktop_item->priv->append_lock_logout)
+		panel_menu_items_append_lock_logout (desktop_menu);
 
 	return desktop_menu;
 }
@@ -1005,7 +974,7 @@ panel_desktop_menu_item_new (gboolean use_image,
 	if (use_image) {
 		GtkWidget *image;
 
-		image = gtk_image_new_from_icon_name ("gnome-fs-desktop",
+		image = gtk_image_new_from_icon_name ("computer",
 						      panel_menu_icon_get_size ());
 
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),

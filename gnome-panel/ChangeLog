@@ -1,5 +1,15 @@
 2007-01-14  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-menu-items.c: (panel_desktop_menu_item_append_menu): kill
+	(panel_desktop_menu_item_create_menu): we don't need to load
+	settings.menu anymore and we can just load gnomecc.desktop instead
+	(new menu layout), so we load everything there
+	(panel_desktop_menu_item_new): use the computer icon for this menu
+	item
+	Fix bug #395416
+
+2007-01-14  Vincent Untz  <vuntz@gnome.org>
+
 	Patch by Dan Williams <danw@novell.com>
 	Fix bug #366429
 
