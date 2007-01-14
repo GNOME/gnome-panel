@@ -382,8 +382,8 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 	gdk_drawable_get_size (
 		GDK_DRAWABLE (monitor->gdkpixmap), &pwidth, &pheight);
 
-	gdk_drawable_get_size (
-		GDK_DRAWABLE (monitor->gdkwindow), &rwidth, &rheight);
+	gdk_window_get_geometry (monitor->gdkwindow,
+				 NULL, NULL, &rwidth, &rheight, NULL);
 
 	monitor->width  = MIN (pwidth,  rwidth);
 	monitor->height = MIN (pheight, rheight);
