@@ -9,6 +9,7 @@ icons_DATA =					\
 	gnome-panel-drawer.png			\
 	gnome-panel-fish.png			\
 	gnome-panel-force-quit.png		\
+	gnome-panel-launcher.png		\
 	gnome-panel-notification-area.png	\
 	gnome-panel-separator.png		\
 	gnome-panel.png				\
@@ -22,6 +23,7 @@ icons_SOURCE =					\
 	gnome-panel-drawer.svg			\
 	gnome-panel-fish.xcf.bz2		\
 	gnome-panel-force-quit.xcf.bz2		\
+	gnome-panel-launcher.svg		\
 	gnome-panel-notification-area.svg	\
 	gnome-panel-separator.svg		\
 	gnome-panel.svg				\

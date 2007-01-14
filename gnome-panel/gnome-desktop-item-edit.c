@@ -179,7 +179,7 @@ main (int argc, char * argv[])
 				      GNOME_PARAM_GOPTION_CONTEXT, context,
 				      NULL);
 
-	gtk_window_set_default_icon_name ("launcher-program");
+	gtk_window_set_default_icon_name ("gnome-panel-launcher");
 
 	if (desktops == NULL ||
 	    desktops[0] == NULL) {

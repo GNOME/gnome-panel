@@ -9,6 +9,7 @@ icons_DATA =					\
 	gnome-panel-drawer.svg			\
 	gnome-panel-fish.svg			\
 	gnome-panel-force-quit.svg		\
+	gnome-panel-launcher.svg		\
 	gnome-panel-notification-area.svg	\
 	gnome-panel-separator.svg		\
 	gnome-panel.svg				\
