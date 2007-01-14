@@ -1,5 +1,10 @@
 2007-01-14  Vincent Untz  <vuntz@gnome.org>
 
+	* main.c: (main): don't accept all unknown options, and instead add
+	back a hidden --profile argument that does nothing.
+
+2007-01-14  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-background-monitor.c: (panel_background_monitor_setup_pixbuf):
 	get the size of the window with gdk_window_get_geometry() instead of
 	gdk_drawable_get_size() since the lattest might not give us the latest

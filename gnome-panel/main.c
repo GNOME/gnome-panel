@@ -35,7 +35,11 @@ GSList *panel_list = NULL;
 
 GtkTooltips *panel_tooltips = NULL;
 
+static char *deprecated_profile;
+
 static const GOptionEntry options[] = {
+  /* keep this for compatibilty with old GNOME < 2.10 */
+  { "profile", 0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_STRING, &deprecated_profile, NULL, NULL },
   { NULL }
 };
 
@@ -50,7 +54,6 @@ main (int argc, char **argv)
 	textdomain (GETTEXT_PACKAGE);
 
 	context = g_option_context_new ("");
-	g_option_context_set_ignore_unknown_options (context, TRUE);
 
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
