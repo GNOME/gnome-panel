@@ -68,7 +68,7 @@ typedef struct
 #endif
 } PendingMessage;
 
-static guint manager_signals[LAST_SIGNAL] = { 0 };
+static guint manager_signals[LAST_SIGNAL];
 
 #define SYSTEM_TRAY_REQUEST_DOCK    0
 #define SYSTEM_TRAY_BEGIN_MESSAGE   1
@@ -116,11 +116,15 @@ na_tray_manager_class_init (NaTrayManagerClass *klass)
   g_object_class_install_property (gobject_class,
 				   PROP_ORIENTATION,
 				   g_param_spec_enum ("orientation",
-						      _("Orientation"),
-						      _("The orientation of the tray."),
+						      "orientation",
+						      "orientation",
 						      GTK_TYPE_ORIENTATION,
 						      GTK_ORIENTATION_HORIZONTAL,
-						      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+						      G_PARAM_READWRITE |
+						      G_PARAM_CONSTRUCT |
+						      G_PARAM_STATIC_NAME |
+						      G_PARAM_STATIC_NICK |
+						      G_PARAM_STATIC_BLURB));
   
   manager_signals[TRAY_ICON_ADDED] =
     g_signal_new ("tray_icon_added",

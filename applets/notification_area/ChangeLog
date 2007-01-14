@@ -1,3 +1,31 @@
+2007-01-14  Christian Persch  <chpe@svn.gnome.org>
+
+	* Makefile.am:
+	* main.c: (get_orientation_from_applet), (help_cb), (about_cb),
+	(applet_change_background), (applet_change_orientation),
+	(applet_destroy), (free_applet_data), (applet_factory):
+	* na-tray-manager.c: (na_tray_manager_class_init):
+	* na-tray.c: (get_tray), (tray_added), (tray_removed),
+	(icon_tip_buffer_free), (icon_tip_free), (icon_tip_buffer_compare),
+	(icon_tip_show_next_clicked), (icon_tip_show_next_timeout),
+	(icon_tip_show_next), (message_sent), (message_cancelled),
+	(update_orientation_for_messages), (update_size_and_orientation),
+	(na_tray_init), (na_tray_constructor), (na_tray_dispose),
+	(na_tray_set_property), (na_tray_size_request),
+	(na_tray_size_allocate), (na_tray_class_init),
+	(na_tray_new_for_screen), (na_tray_set_orientation),
+	(na_tray_get_orientation), (idle_redraw_cb),
+	(na_tray_force_redraw):
+	* na-tray.h:
+	Move the tray implementation into the NaTray class, so it can be shared
+	with test-tray. Adapt the applet to the change.
+
+	* testtray.c: (do_add), (update_child_count), (tray_added_cb),
+	(tray_removed_cb), (orientation_changed_cb), (maybe_quit),
+	(warning_dialog_response_cb), (add_tray_cb),
+	(create_tray_on_screen), (main):
+	Add a test-tray programme. Bug #393651.
+
 ==================== 2.16.2 ====================
 
 2006-10-19  JP Rosevear  <jpr@novell.com>

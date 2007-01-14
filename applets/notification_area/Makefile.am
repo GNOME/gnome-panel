@@ -2,7 +2,7 @@ INCLUDES =							\
 	-I$(srcdir)						\
 	-I$(srcdir)/../../libpanel-applet			\
 	-I$(top_builddir)/libpanel-applet			\
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
 	$(GNOME_INCLUDEDIR)					\
 	$(WARN_CFLAGS)						\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
@@ -20,6 +20,8 @@ NOTIFICATION_AREA_SOURCES =		\
 	main.c					\
 	obox.c					\
 	obox.h					\
+	na-tray.c				\
+	na-tray.h				\
 	na-tray-manager.c			\
 	na-tray-manager.h			\
 	na-marshal.c				\
@@ -82,3 +84,22 @@ na-marshal.h: na-marshal.list $(GLIB_GENMARSHAL)
 na-marshal.c: na-marshal.list $(GLIB_GENMARSHAL)
 	echo "#include \"na-marshal.h\"" > $@ && \
 	$(GLIB_GENMARSHAL) $< --body --prefix=_na_marshal >> $@
+
+noinst_PROGRAMS = testtray
+
+testtray_SOURCES = \
+	fixedtip.h		\
+	fixedtip.c		\
+	na-marshal.c		\
+	na-marshal.h		\
+	na-tray.c		\
+	na-tray.h		\
+	na-tray-manager.c	\
+	na-tray-manager.h	\
+	obox.c			\
+	obox.h			\
+	testtray.c
+
+testtray_LDADD = \
+	$(X_LIBS)					\
+	$(PANEL_LIBS)
