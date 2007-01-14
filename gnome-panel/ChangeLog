@@ -1,3 +1,11 @@
+2007-01-15  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-action-button.c: (panel_action_logout): check for the
+	/apps/gnome-session/options/logout_prompt key to know whether we
+	should show the logout dialog or just log out
+	Based on patch by Ray Strode <rstrode@redhat.com>
+	Fix bug #343406
+
 2007-01-14  Vincent Untz  <vuntz@gnome.org>
 
 	* gnome-desktop-item-edit.c: (main): fix some not-translated strings,

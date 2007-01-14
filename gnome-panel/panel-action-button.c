@@ -51,6 +51,8 @@
 
 #define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
 
+#define LOGOUT_PROMPT_KEY "/apps/gnome-session/options/logout_prompt"
+
 enum {
 	PROP_0,
 	PROP_ACTION_TYPE,
@@ -153,9 +155,20 @@ panel_action_lock_invoke_menu (PanelActionButton *button,
 static void
 panel_action_logout (GtkWidget *widget)
 {
-	panel_logout_new (PANEL_LOGOUT_DIALOG_LOGOUT,
-			  gtk_widget_get_screen (widget),
-			  gtk_get_current_event_time ());
+	gboolean not_prompt;
+
+	not_prompt = gconf_client_get_bool (panel_gconf_get_client (),
+					    LOGOUT_PROMPT_KEY, NULL);
+	/* this avoids handling errors from gconf since prompting is
+	 * safer */
+	not_prompt = !not_prompt;
+
+	if (not_prompt)
+		panel_session_request_logout ();
+	else
+		panel_logout_new (PANEL_LOGOUT_DIALOG_LOGOUT,
+				  gtk_widget_get_screen (widget),
+				  gtk_get_current_event_time ());
 }
 
 static void
