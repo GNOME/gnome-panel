@@ -236,12 +236,11 @@ main (int argc, char * argv[])
 					    "already exists\n", uri);
 			} else {
 				g_printerr ("gnome-desktop-item-edit: %s "
-					    "doesn't seem like a desktop "
+					    "does not look like a desktop "
 					    "item\n", uri);
 			}
 
-		} else if (g_str_has_suffix (desktops [i], ".directory")
-			   && !create_new) {
+		} else if (g_str_has_suffix (desktops [i], ".directory")) {
 			/* a non-existant file.  Well we can still edit that
 			 * sort of.  We will just create it new */
 			GKeyFile *key_file;
@@ -263,16 +262,16 @@ main (int argc, char * argv[])
 							    find_uri_on_save_directory,
 							    NULL);
 
-		} else if (g_str_has_suffix (desktops [i], ".desktop")
-			   && !create_new) {
+		} else if (g_str_has_suffix (desktops [i], ".desktop")) {
 			/* a non-existant file.  Well we can still edit that
 			 * sort of.  We will just create it new */
 			dlg = panel_ditem_editor_new (NULL, NULL, uri,
 						      _("Create Launcher"));
 
 		} else {
-			g_printerr ("gnome-desktop-item-edit: %s does "
-				    "not exist\n", uri);
+			g_printerr ("gnome-desktop-item-edit: %s does not "
+				    "have a .desktop or .directory "
+				    "suffix\n", uri);
 		}
 
 		if (dlg != NULL) {
