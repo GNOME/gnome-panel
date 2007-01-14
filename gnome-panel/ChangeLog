@@ -1,5 +1,20 @@
 2007-01-14  Vincent Untz  <vuntz@gnome.org>
 
+	* launcher.[ch]: (panel_launcher_get_uri): new, get the uri of the
+	launcher file
+	(drag_data_get_cb): correctly set the uri of the launcher for uri-list
+	targets
+	(panel_launcher_create_copy): get the uri of the file before copying
+	the launcher so that we don't lose the launcher when moving it
+	(because of copying a non-existing file and then deleting it), also
+	returns whether the copy succeeded or not
+	* panel.c: (drop_internal_icon): stop moving the icon if the copy
+	didn't succeed
+
+	Fix bug #355513
+
+2007-01-14  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-multiscreen.c: define environ for darwin
 	Part of bug #394896
 

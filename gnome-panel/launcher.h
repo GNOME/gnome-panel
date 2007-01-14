@@ -37,9 +37,9 @@ void panel_launcher_create           (PanelToplevel *toplevel,
 void panel_launcher_create_with_id   (const char    *toplevel_id,
 				      int            position,
 				      const char    *location);
-void panel_launcher_create_copy      (PanelToplevel *toplevel,
-				      int            position,
-				      const char    *location);
+gboolean panel_launcher_create_copy      (PanelToplevel *toplevel,
+					  int            position,
+					  const char    *location);
 void panel_launcher_create_from_info (PanelToplevel *toplevel,
 				      int            position,
 				      gboolean       exec_info,

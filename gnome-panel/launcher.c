@@ -91,6 +91,26 @@ launcher_register_error_dialog (Launcher *launcher,
 			  launcher);
 }
 
+static char *
+panel_launcher_get_uri (const char *location)
+{
+	char *path;
+	char *uri;
+
+	if (!g_ascii_strncasecmp (location, "file:", strlen ("file:")))
+		return g_strdup (location);
+
+	if (!g_path_is_absolute (location))
+		path = panel_make_full_path (NULL, location);
+	else
+		path = g_strdup (location);
+
+	uri = gnome_vfs_get_uri_from_local_path (path);
+	g_free (path);
+
+	return uri;
+}
+
 static const char *
 panel_launcher_get_filename (const char *location)
 {
@@ -399,12 +419,12 @@ enum {
 
 
 static void  
-drag_data_get_cb (GtkWidget          *widget,
-		  GdkDragContext     *context,
-		  GtkSelectionData   *selection_data,
-		  guint               info,
-		  guint               time,
-		  Launcher           *launcher)
+drag_data_get_cb (GtkWidget        *widget,
+		  GdkDragContext   *context,
+		  GtkSelectionData *selection_data,
+		  guint             info,
+		  guint             time,
+		  Launcher         *launcher)
 {
 	char *location;
 	
@@ -413,26 +433,20 @@ drag_data_get_cb (GtkWidget          *widget,
 	location = launcher->location;
 
 	if (info == TARGET_URI_LIST) {
-		if (location [0] != '/')
-			gtk_selection_data_set (
-				selection_data, selection_data->target, 8,
-				(guchar *)location, strlen (location));
-		else {
-			char *uri;
+		char *uri[2];
 
-			uri = g_strconcat ("file://", location, "\r\n", NULL);
+		uri[0] = panel_launcher_get_uri (location);
+		uri[1] = NULL;
 
-			gtk_selection_data_set (
-				selection_data, selection_data->target, 8,
-				(guchar *)uri, strlen (uri));
+		gtk_selection_data_set_uris (selection_data, uri);
 
-			g_free (uri);
-		}
+		g_free (uri[0]);
 	} else if (info == TARGET_ICON_INTERNAL)
 		gtk_selection_data_set (selection_data,
 					selection_data->target, 8,
 					(unsigned char *) location,
 					strlen (location));
+
 }
 
 static Launcher *
@@ -1048,34 +1062,47 @@ panel_launcher_create (PanelToplevel *toplevel,
 				       location);
 }
 
-void
+gboolean
 panel_launcher_create_copy (PanelToplevel *toplevel,
 			    int            position,
 			    const char    *location)
 {
-	GnomeVFSURI *source_uri;
-	GnomeVFSURI *dest_uri;
-	char        *new_location;
-	const char  *filename;
+	GnomeVFSResult  vfs_result;
+	GnomeVFSURI    *source_uri;
+	GnomeVFSURI    *dest_uri;
+	char           *old_location;
+	char           *new_location;
+	const char     *filename;
 
 	new_location = panel_make_unique_desktop_uri (NULL, location);
 	
-	source_uri = gnome_vfs_uri_new (location);
+	old_location = panel_launcher_get_uri (location);
+
+	source_uri = gnome_vfs_uri_new (old_location);
 	dest_uri   = gnome_vfs_uri_new (new_location);
 
-	gnome_vfs_xfer_uri (source_uri,
-			    dest_uri,
-			    GNOME_VFS_XFER_FOLLOW_LINKS,
-			    GNOME_VFS_XFER_ERROR_MODE_ABORT,
-			    GNOME_VFS_XFER_OVERWRITE_MODE_REPLACE,
-			    NULL, NULL);
+	g_free (old_location);
+
+	vfs_result = gnome_vfs_xfer_uri (source_uri,
+					 dest_uri,
+					 GNOME_VFS_XFER_FOLLOW_LINKS,
+					 GNOME_VFS_XFER_ERROR_MODE_ABORT,
+					 GNOME_VFS_XFER_OVERWRITE_MODE_REPLACE,
+					 NULL, NULL);
 
 	gnome_vfs_uri_unref (source_uri);
 	gnome_vfs_uri_unref (dest_uri);
 
+	if (vfs_result != GNOME_VFS_OK) {
+		g_free (new_location);
+		return FALSE;
+	}
+
 	filename = panel_launcher_get_filename (new_location);
 	panel_launcher_create (toplevel, position, filename);
 	g_free (new_location);
+
+	return TRUE;
 }
 
 Launcher *
