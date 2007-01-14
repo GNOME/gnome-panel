@@ -1608,8 +1608,9 @@ change_water (FishApplet *fish)
 	dialog = gtk_message_dialog_new (
 			NULL, 0, GTK_MESSAGE_INFO,
 			GTK_BUTTONS_OK,
-			_("The water needs changing!\n"
-			  "(Look at today's date)"));
+			_("The water needs changing"));
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+						  _("Look at today's date!"));
 	gtk_window_set_icon_name (GTK_WINDOW (dialog), FISH_ICON);
 	gtk_window_set_wmclass (GTK_WINDOW (dialog), "fish", "Fish");
 	gtk_window_set_screen (GTK_WINDOW (dialog),
