@@ -1,5 +1,12 @@
 2007-01-15  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-widget.c: (panel_widget_applet_button_press_event): do not
+	start dragging an applet when it's not possible because a grab is
+	active
+	Fix bug #381549, patch by Amnon Aaronsohn <amnonaar@gmail.com>
+
+2007-01-15  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-action-button.c: (panel_action_logout): check for the
 	/apps/gnome-session/options/logout_prompt key to know whether we
 	should show the logout dialog or just log out

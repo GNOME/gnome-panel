@@ -2196,7 +2196,10 @@ panel_widget_applet_button_press_event (GtkWidget      *widget,
 		return TRUE;
 	}
 
-	if (panel_lockdown_get_locked_down () || event->button != 2)
+	/* Begin drag if the middle mouse button is pressed, unless the panel
+	 * is locked down or a grab is active (meaning a menu is open) */
+	if (panel_lockdown_get_locked_down () || event->button != 2 ||
+	    gtk_grab_get_current() != NULL)
 		return FALSE;
 
 	/* time on sent events seems to be bogus */
