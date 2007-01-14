@@ -870,6 +870,8 @@ setup_dialog (GladeXML  *xml,
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_workspaces_spin),
 				   wnck_screen_get_workspace_count (pager->screen));
+ 	gtk_spin_button_set_increments (GTK_SPIN_BUTTON (pager->num_workspaces_spin),
+					0.2, 0.2);
 	g_signal_connect (G_OBJECT (pager->num_workspaces_spin), "value_changed",
 			  (GCallback) num_workspaces_value_changed, pager);
 	
