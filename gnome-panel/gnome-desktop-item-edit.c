@@ -245,13 +245,9 @@ main (int argc, char * argv[])
 			/* a non-existant file.  Well we can still edit that
 			 * sort of.  We will just create it new */
 			GKeyFile *key_file;
-			char     *dirname;
 			char     *filename;
 
-			dirname = g_path_get_dirname (uri);
-			filename = g_strconcat (dirname, "/", ".directory",
-						NULL);
-			g_free (dirname);
+			filename = g_strdup (desktops [i]);
 
 			key_file = panel_util_key_file_new_desktop ();
 			panel_util_key_file_set_string (key_file,
