@@ -1,5 +1,13 @@
 2007-01-14  Vincent Untz  <vuntz@gnome.org>
 
+	* button-widget.[ch]: (button_widget_reload_pixbuf): use
+	GTK_STOCK_MISSING_IMAGE when the icon can't be found, kill the error
+	dialog
+	(get_missing): kill
+	Fix bug #100964, patch by Thomas Wood <thos@gnome.org>
+
+2007-01-14  Vincent Untz  <vuntz@gnome.org>
+
 	* gnome-desktop-item-edit.c: (main): make it possible to create a
 	.directory file with a name instead of forcing the name to
 	$(dir)/.directory 

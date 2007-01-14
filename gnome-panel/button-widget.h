@@ -28,8 +28,6 @@ struct _ButtonWidget {
 
 	int               size;
 
-	GtkWidget        *no_icon_dialog;
-
 	guint             activatable   : 1;
 	guint             ignore_leave  : 1;
 	guint             arrow         : 1;
