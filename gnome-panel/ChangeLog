@@ -1,5 +1,11 @@
 2007-01-15  Vincent Untz  <vuntz@gnome.org>
 
+	* launcher.c: (panel_launcher_delete): get the uri of the file before
+	trying to unlink it so that we actually unlink it. And do not try to
+	unlink it if it doesn't live in the user's launchers path.
+
+2007-01-15  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_make_unique_desktop_uri): if the basename of
 	the source contains -4.desktop, then remove not only .desktop, but
 	also -4 since it was probably added by us. Helps avoiding having

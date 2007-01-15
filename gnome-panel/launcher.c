@@ -320,13 +320,20 @@ free_launcher (gpointer data)
 void
 panel_launcher_delete (Launcher *launcher)
 {
-	const char *location;
+	char *location;
+	char *p;
 
 	if (!launcher->location)
 		return;
 
-	location = panel_launcher_get_filename (launcher->location);
-	if (location) {
+	p = NULL;
+
+	location = panel_launcher_get_uri (launcher->location);
+	if (location)
+		p = strstr (location, PANEL_LAUNCHERS_PATH);
+
+	/* do not remove the file if it's not in the user's launchers path */
+	if (p) {
 		GnomeVFSResult result;
 
 		result = gnome_vfs_unlink (location);
@@ -334,6 +341,8 @@ panel_launcher_delete (Launcher *launcher)
 			g_warning ("Error unlinking '%s': %s\n", location,
 				   gnome_vfs_result_to_string (result));
 	}
+
+	g_free (location);
 }
 
 static gboolean
