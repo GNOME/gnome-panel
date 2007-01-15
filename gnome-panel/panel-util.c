@@ -846,8 +846,18 @@ panel_make_unique_desktop_uri (const char *dir,
 	if (p)
 		memmove (name, p + 1, strlen (p + 1) + 1);
 	p = strrchr (name, '.');
-	if (p && !strcmp (p, ".desktop"))
+	if (p && !strcmp (p, ".desktop")) {
 		*p = '\0';
+
+		/* also remove the -%d that might be at the end of the name */
+		p = strrchr (name, '-');
+		if (p) {
+			char *end;
+			strtol ((p + 1), &end, 10);
+			if (!*end)
+				*p = '\0';
+		}
+	}
 
 	if (name[0] == '\0') {
 		g_free (name);
