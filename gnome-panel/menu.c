@@ -1314,9 +1314,11 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 static void
 submenu_to_display (GtkWidget *menu)
 {
-	GMenuTree          *tree;
-	GMenuTreeDirectory *directory;
-	const char         *menu_path;
+	GMenuTree           *tree;
+	GMenuTreeDirectory  *directory;
+	const char          *menu_path;
+	void               (*append_callback) (GtkWidget *, gpointer);
+	gpointer             append_data;
 
 	if (!g_object_get_data (G_OBJECT (menu), "panel-menu-needs-loading"))
 		return;
@@ -1346,6 +1348,13 @@ submenu_to_display (GtkWidget *menu)
 
 	if (directory)
 		populate_menu_from_directory (menu, directory);
+
+	append_callback = g_object_get_data (G_OBJECT (menu),
+					     "panel-menu-append-callback");
+	append_data     = g_object_get_data (G_OBJECT (menu),
+					     "panel-menu-append-data");
+	if (append_callback)
+		append_callback (menu, append_data);
 }
 
 static gboolean
@@ -1383,10 +1392,6 @@ create_fake_menu (GMenuTreeDirectory *directory)
 	
 	g_object_set_data (G_OBJECT (menu),
 			   "panel-menu-needs-loading",
-			   GUINT_TO_POINTER (TRUE));
-
-	g_object_set_data (G_OBJECT (menu),
-			   "panel-menu-needs-appending",
 			   GUINT_TO_POINTER (TRUE));
 
 	g_signal_connect (menu, "show",
@@ -1607,10 +1612,6 @@ handle_gmenu_tree_changed (GMenuTree *tree,
 			   "panel-menu-needs-loading",
 			   GUINT_TO_POINTER (TRUE));
 
-	g_object_set_data (G_OBJECT (menu),
-			   "panel-menu-needs-appending",
-			   GUINT_TO_POINTER (TRUE));
-
 	idle_id = g_idle_add_full (G_PRIORITY_LOW,
 				   submenu_to_display_in_idle,
 				   menu,
@@ -1654,10 +1655,6 @@ create_applications_menu (const char *menu_file,
 	
 	g_object_set_data (G_OBJECT (menu),
 			   "panel-menu-needs-loading",
-			   GUINT_TO_POINTER (TRUE));
-
-	g_object_set_data (G_OBJECT (menu),
-			   "panel-menu-needs-appending",
 			   GUINT_TO_POINTER (TRUE));
 
 	g_signal_connect (menu, "show",
@@ -1756,20 +1753,16 @@ setup_menu_item_with_icon (GtkWidget   *item,
 }
 
 static void
-main_menu_append (GtkWidget   *main_menu,
-		  PanelWidget *panel)
+main_menu_append (GtkWidget *main_menu,
+		  gpointer   data)
 {
-	GtkWidget *item;
-	gboolean   add_separator;
-	GList     *children;
-	GList     *last;
+	PanelWidget *panel;
+	GtkWidget   *item;
+	gboolean     add_separator;
+	GList       *children;
+	GList       *last;
 
-	if (!g_object_get_data (G_OBJECT (main_menu),
-				"panel-menu-needs-appending"))
-		return;
-
-	g_object_set_data (G_OBJECT (main_menu),
-			   "panel-menu-needs-appending", NULL);
+	panel = PANEL_WIDGET (data);
 
 	add_separator = FALSE;
 	children = gtk_container_get_children (GTK_CONTAINER (main_menu));
@@ -1804,8 +1797,12 @@ create_main_menu (PanelWidget *panel)
 	g_object_set_data (G_OBJECT (main_menu), "menu_panel", panel);
 	/* FIXME need to update the panel on parent_set */
 
-	g_signal_connect (main_menu, "show",
-			  G_CALLBACK (main_menu_append), panel);
+	g_object_set_data (G_OBJECT (main_menu),
+			   "panel-menu-append-callback",
+			   main_menu_append);
+	g_object_set_data (G_OBJECT (main_menu),
+			   "panel-menu-append-callback-data",
+			   panel);
 
 	return main_menu;
 }
