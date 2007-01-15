@@ -608,9 +608,19 @@ panel_applet_position_menu (GtkMenu   *menu,
 	}
 
 	if (PANEL_WIDGET (applet->parent)->orient == GTK_ORIENTATION_HORIZONTAL) {
-		if (pointer_x < applet->allocation.width &&
-		    requisition.width < pointer_x)
-			menu_x += MIN (pointer_x, applet->allocation.width - requisition.width);
+		if (gtk_widget_get_direction (GTK_WIDGET (menu)) != GTK_TEXT_DIR_RTL) {
+			if (pointer_x < applet->allocation.width &&
+			    requisition.width < pointer_x)
+				menu_x += MIN (pointer_x,
+					       applet->allocation.width - requisition.width);
+		} else {
+			menu_x += applet->allocation.width - requisition.width;
+			if (pointer_x > 0 && pointer_x < applet->allocation.width &&
+			    pointer_x < applet->allocation.width - requisition.width) {
+				menu_x -= MIN (applet->allocation.width - pointer_x,
+					       applet->allocation.width - requisition.width);
+			}
+		}
 		menu_x = MIN (menu_x, gdk_screen_get_width (screen) - requisition.width);
 
 		if (menu_y > gdk_screen_get_height (screen) / 2)
