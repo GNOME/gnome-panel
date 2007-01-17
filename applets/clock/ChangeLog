@@ -1,5 +1,21 @@
 2007-01-17  Vincent Untz  <vuntz@gnome.org>
 
+	* calendar-client.c: (get_ical_url): kill
+	(calendar_task_equal):
+	(calendar_task_copy):
+	(calendar_task_finalize):
+	(calendar_task_init): remove URL stuff
+	* clock.c: (clock_launch_evolution): new, to launch evolution with an
+	argument
+	(handle_tasks_changed):
+	(create_task_list): remove URL stuff
+	(task_activated_cb): launch evolution with the task uid
+	(calendar_day_activated): updated to use clock_launch_evolution()
+	Based on patch by Nickolay V. Shmyrev <nshmyrev@yandex.ru>
+	Fix bug #162305
+
+2007-01-17  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: add ifdef for langinfo.h
 	(clock_locale_format): add ifdef for nl_langinfo
 	Fix bug #394893

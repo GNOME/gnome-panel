@@ -545,18 +545,6 @@ get_ical_description (icalcomponent *ical)
   return g_strdup (icalproperty_get_description (prop));
 }
 
-static char *
-get_ical_url (icalcomponent *ical)
-{
-  icalproperty *prop;
-
-  prop = icalcomponent_get_first_property (ical, ICAL_URL_PROPERTY);
-  if (!prop)
-    return NULL;
-
-  return g_strdup (icalproperty_get_url (prop));
-}
-
 static inline GTime
 get_ical_start_time (icalcomponent *ical,
                      icaltimezone  *default_zone)
@@ -861,7 +849,6 @@ calendar_task_equal (CalendarTask *a,
     null_safe_strcmp (a->summary,      b->summary)      == 0 &&
     null_safe_strcmp (a->description,  b->description)  == 0 &&
     null_safe_strcmp (a->color_string, b->color_string) == 0 &&
-    null_safe_strcmp (a->url,          b->url)          == 0 &&
     a->start_time       == b->start_time                   &&
     a->due_time         == b->due_time                     &&
     a->percent_complete == b->percent_complete             &&
@@ -880,7 +867,6 @@ calendar_task_copy (CalendarTask *task,
   task_copy->summary          = g_strdup (task->summary);
   task_copy->description      = g_strdup (task->description);
   task_copy->color_string     = g_strdup (task->color_string);
-  task_copy->url              = g_strdup (task->url);
   task_copy->start_time       = task->start_time;
   task_copy->due_time         = task->due_time;
   task_copy->percent_complete = task->percent_complete;
@@ -903,9 +889,6 @@ calendar_task_finalize (CalendarTask *task)
   g_free (task->color_string);
   task->color_string = NULL;
 
-  g_free (task->url);
-  task->url = NULL;
-
   task->percent_complete = 0;
 }
 
@@ -919,7 +902,6 @@ calendar_task_init (CalendarTask         *task,
   task->summary          = get_ical_summary (ical);
   task->description      = get_ical_description (ical);
   task->color_string     = get_source_color (source->source);
-  task->url              = get_ical_url (ical);
   task->start_time       = get_ical_start_time (ical, default_zone);
   task->due_time         = get_ical_due_time (ical, default_zone);
   task->percent_complete = get_ical_percent_complete (ical);

@@ -58,7 +58,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gconf/gconf-client.h>
 #include <libgnomeui/gnome-help.h>
-#include <libgnomeui/gnome-url.h>
 
 #ifdef HAVE_LIBECAL
 #include "calendar-client.h"
@@ -591,6 +590,34 @@ clock_locale_format (void)
 #ifdef HAVE_LIBECAL
 
 static void
+clock_launch_evolution (ClockData   *cd,
+			const char  *argument)
+{
+	char   *command_line;
+	GError *error;
+
+	command_line = g_find_program_in_path ("evolution");
+	if (command_line == NULL)
+		return;
+	g_free (command_line);
+
+	if (argument)
+		command_line = g_strdup_printf ("evolution %s", argument);
+	else
+		command_line = g_strdup ("evolution");
+
+	error = NULL;
+
+	if (!gdk_spawn_command_line_on_screen (gtk_widget_get_screen (cd->calendar),
+					       command_line, &error)) {
+		g_printerr ("Cannot launch evolution: %s\n", error->message);
+		g_error_free (error);
+	}
+
+	g_free (command_line);
+}
+
+static void
 update_frame_visibility (GtkWidget    *frame,
                          GtkTreeModel *model)
 {
@@ -632,7 +659,6 @@ enum {
         TASK_COLUMN_COMPLETED_TIME,
         TASK_COLUMN_OVERDUE_ATTR,
         TASK_COLUMN_COLOR,
-        TASK_COLUMN_URL,
         TASK_COLUMN_PRIORITY,
         N_TASK_COLUMNS
 };
@@ -712,7 +738,6 @@ handle_tasks_changed (ClockData *cd)
                                     TASK_COLUMN_COMPLETED,             task->percent_complete == 100,
                                     TASK_COLUMN_COMPLETED_TIME,        task->completed_time,
                                     TASK_COLUMN_COLOR,                 task->color_string,
-                                    TASK_COLUMN_URL,                   task->url,
                                     TASK_COLUMN_PRIORITY,              task->priority,
                                     -1);
 
@@ -896,21 +921,22 @@ task_activated_cb (GtkTreeView       *view,
 {
         GtkTreeIter  iter;
         GtkTreePath *child_path;
-        char        *uri;
+        char        *uid;
+	char        *argument;
 
-        child_path = gtk_tree_model_filter_convert_path_to_child_path (cd->tasks_filter, path);
+        child_path = gtk_tree_model_filter_convert_path_to_child_path (cd->tasks_filter,
+								       path);
 
         gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, child_path);
         gtk_tree_model_get (GTK_TREE_MODEL (cd->tasks_model), &iter,
-                            TASK_COLUMN_URL, &uri, -1);
+                            TASK_COLUMN_UID, &uid, -1);
 
-        if (uri) {
-                gnome_url_show_on_screen (uri,
-					  gtk_widget_get_screen (cd->applet),
-					  NULL);
-        }
+	argument = g_strdup_printf ("task:%s", uid);
 
-        g_free (uri);
+	clock_launch_evolution (cd, argument);
+
+	g_free (argument);
+        g_free (uid);
         gtk_tree_path_free (child_path);
 
         return TRUE;
@@ -1043,7 +1069,6 @@ create_task_list (ClockData  *cd,
                         G_TYPE_LONG,           /* completed time          */
                         PANGO_TYPE_ATTR_LIST,  /* summary text attributes */
                         G_TYPE_STRING,         /* color                   */
-                        G_TYPE_STRING,         /* url                     */
                         G_TYPE_INT             /* priority                */
                 };
 
@@ -1280,31 +1305,17 @@ calendar_day_activated (ClockData   *cd,
 	unsigned int  day;
 	unsigned int  month;
 	unsigned int  year;
-	char         *command_line;
-	char         *tmp;
-	GError       *error;
-
-	tmp = g_find_program_in_path ("evolution");
-	if (tmp == NULL)
-		return;
-	g_free (tmp);
+	char         *argument;
 
 	gtk_calendar_get_date (GTK_CALENDAR (cd->calendar),
 			       &year, &month, &day);
 
-	command_line = g_strdup_printf ("evolution "
-					"calendar:///?startdate=%.4d%.2d%.2d",
-					year, month + 1, day);
+	argument = g_strdup_printf ("calendar:///?startdate=%.4d%.2d%.2d",
+				    year, month + 1, day);
 
-	error = NULL;
+	clock_launch_evolution (cd, argument);
 
-	if (!gdk_spawn_command_line_on_screen (gtk_widget_get_screen (cd->calendar),
-					       command_line, &error)) {
-		g_printerr ("Cannot launch calendar: %s\n", error->message);
-		g_error_free (error);
-	}
-
-	g_free (command_line);
+	g_free (argument);
 }
 
 static void
