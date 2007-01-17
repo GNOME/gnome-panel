@@ -77,6 +77,9 @@ PKG_CHECK_MODULES(WNCKLET, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED gtk+-2.0 >= $G
 AC_SUBST(WNCKLET_CFLAGS)
 AC_SUBST(WNCKLET_LIBS)
 
+AC_CHECK_HEADERS(langinfo.h)
+AC_CHECK_FUNCS(nl_langinfo)
+
 AC_ARG_ENABLE(eds,
 	AC_HELP_STRING([--enable-eds],
 		[Enable evolution-data-server dependencies @<:@default=auto@:>@]
@@ -168,9 +171,6 @@ AM_CONDITIONAL(WNCKLET_INPROCESS, test -n "$WNCKLET_COMPILE_INPROCESS")
 
 # For the run dialog
 gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE
-
-# For egg-recent-files
-AC_CHECK_FUNCS(lockf)
 
 dnl X development libraries check
 

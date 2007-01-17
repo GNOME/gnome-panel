@@ -1,5 +1,11 @@
 2007-01-17  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: add ifdef for langinfo.h
+	(clock_locale_format): add ifdef for nl_langinfo
+	Fix bug #394893
+
+2007-01-17  Vincent Untz  <vuntz@gnome.org>
+
 	* calendar-client.c: (calendar_client_foreach_appointment_day): don't
 	mark multiple days on the calendar if the event is an all day meeting.
 	Fix bug #382754
