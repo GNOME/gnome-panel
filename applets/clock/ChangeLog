@@ -1,3 +1,10 @@
+2007-01-17  Vincent Untz  <vuntz@gnome.org>
+
+	* calendar-client.c: (calendar_client_foreach_appointment_day): make
+	sure that the last day of a multi-day events is marked.
+	Fix bug #305022
+	Patch by Michael Frank <msfrank@syntaxjockey.com>
+
 2007-01-06  Vincent Untz  <vuntz@gnome.org>
 
 	* clock.c: (calendar_day_activated): don't do anything if we can't

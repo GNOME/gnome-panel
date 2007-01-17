@@ -1940,7 +1940,7 @@ calendar_client_foreach_appointment_day (CalendarClient  *client,
             {
               int day_offset;
               int duration = appointment->end_time - appointment->start_time;
-              for (day_offset = 1; day_offset < duration / 86400; day_offset++)
+              for (day_offset = 1; day_offset <= duration / 86400; day_offset++)
                 {
                   GTime day_time = appointment->start_time + day_offset * 86400;
 
