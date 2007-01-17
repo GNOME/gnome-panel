@@ -1936,7 +1936,7 @@ calendar_client_foreach_appointment_day (CalendarClient  *client,
           if (day_time >= month_begin)
             marked_days [day_from_time_t (day_time)] = TRUE;
       
-          if (appointment->end_time)
+          if (appointment->end_time && !appointment->is_all_day)
             {
               int day_offset;
               int duration = appointment->end_time - appointment->start_time;

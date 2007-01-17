@@ -1,5 +1,11 @@
 2007-01-17  Vincent Untz  <vuntz@gnome.org>
 
+	* calendar-client.c: (calendar_client_foreach_appointment_day): don't
+	mark multiple days on the calendar if the event is an all day meeting.
+	Fix bug #382754
+
+2007-01-17  Vincent Untz  <vuntz@gnome.org>
+
 	* calendar-client.c: (calendar_client_foreach_appointment_day): make
 	sure that the last day of a multi-day events is marked.
 	Fix bug #305022
