@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-15 03:21+0000\n"
-"PO-Revision-Date: 2007-01-15 22:46+0100\n"
+"POT-Creation-Date: 2007-01-15 21:48+0000\n"
+"PO-Revision-Date: 2007-01-18 01:55+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -629,20 +629,20 @@ msgstr "Ez a kulcs megadja, hogy hány másodpercig látható egy képkocka."
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr "Terület, ahol a figyelmeztető ikonok megjelennek"
+msgstr "Terület, ahol az értesítési ikonok megjelennek"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 #: ../applets/notification_area/main.c:135
 msgid "Notification Area"
-msgstr "Figyelmeztető terület"
+msgstr "Értesítési terület"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
 msgid "Notification Area Factory"
-msgstr "Figyelmeztető terület factory"
+msgstr "Értesítési terület factory"
 
 #: ../applets/notification_area/main.c:224
 msgid "Panel Notification Area"
-msgstr "Panel figyelmeztető területe"
+msgstr "Panel értesítési területe"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 msgid "Factory for the window navigation related applets"
@@ -675,7 +675,7 @@ msgstr "Ablaklista"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
 msgid "Window Navigation Applet Factory"
-msgstr "Ablak Navigációs kisalkalmazás Factory"
+msgstr "Ablaknavigációs kisalkalmazás Factory"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:241
@@ -998,7 +998,7 @@ msgstr "_Eltávolítás a panelról"
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1226
+#: ../gnome-panel/applet.c:1236
 msgid "Cannot find an empty spot"
 msgstr "Nem található üres hely"
 
@@ -1011,7 +1011,7 @@ msgstr "Fiók"
 msgid "_Add to Drawer..."
 msgstr "Hozzá_adás a fiókhoz..."
 
-#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:857
+#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:866
 #: ../gnome-panel/panel-action-button.c:138
 #: ../gnome-panel/panel-context-menu.c:220
 msgid "_Properties"
@@ -1030,7 +1030,7 @@ msgid "- Edit .desktop files"
 msgstr "- .desktop fájlok szerkesztése"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:203
-#: ../gnome-panel/gnome-desktop-item-edit.c:269 ../gnome-panel/launcher.c:947
+#: ../gnome-panel/gnome-desktop-item-edit.c:269 ../gnome-panel/launcher.c:956
 msgid "Create Launcher"
 msgstr "Indítóikon létrehozása"
 
@@ -1039,7 +1039,7 @@ msgstr "Indítóikon létrehozása"
 msgid "Directory Properties"
 msgstr "Könyvtár tulajdonságai"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:785
+#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:794
 msgid "Launcher Properties"
 msgstr "Indítóikon tulajdonságai"
 
@@ -1064,25 +1064,25 @@ msgstr "Az alkalmazás elindítása sikertelen"
 msgid "Could not use dropped item"
 msgstr "Nem használható az ejtett elem"
 
-#: ../gnome-panel/launcher.c:462
+#: ../gnome-panel/launcher.c:471
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Nincs URI a panelindító desktop fájlhoz\n"
 
-#: ../gnome-panel/launcher.c:505
+#: ../gnome-panel/launcher.c:514
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "%s desktop fájl megnyitása (%s%s panelindítóhoz) sikertelen\n"
 
-#: ../gnome-panel/launcher.c:851
+#: ../gnome-panel/launcher.c:860
 msgid "_Launch"
 msgstr "I_ndítás"
 
-#: ../gnome-panel/launcher.c:890
+#: ../gnome-panel/launcher.c:899
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "A(z) %s kulcs nincs beállítva, az indítóikon nem tölthető be\n"
 
-#: ../gnome-panel/launcher.c:1014 ../gnome-panel/panel-ditem-editor.c:1237
+#: ../gnome-panel/launcher.c:1023 ../gnome-panel/panel-ditem-editor.c:1237
 #: ../gnome-panel/panel-ditem-editor.c:1263
 #: ../gnome-panel/panel-ditem-editor.c:1331
 msgid "Could not save launcher"
@@ -2703,7 +2703,7 @@ msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
-"Többképernyős beállítással minden önálló képernyőn lehetnek paneljai. Ez a "
+"Több képernyős beállítással minden önálló képernyőn lehetnek paneljai. Ez a "
 "kulcs azonosítja a jelenlegi képernyőt, amelyen a panel megjelenik."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
@@ -2727,7 +2727,7 @@ msgstr "A panel Y koordinátája"
 msgid "Icon '%s' not found"
 msgstr "A(z) \"%s' ikon nem található"
 
-#: ../gnome-panel/panel-util.c:854
+#: ../gnome-panel/panel-util.c:864
 msgid "file"
 msgstr "fájl"
 
@@ -2776,48 +2776,48 @@ msgstr "Teszt Bonobo kisalkalmazás"
 msgid "Test Bonobo Applet Factory"
 msgstr "Teszt Bonobo kisalkalmazás factory"
 
-#: ../libpanel-applet/panel-applet.c:1045
+#: ../libpanel-applet/panel-applet.c:1055
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Nem teljes \"%s\" háttértípus érkezett"
 
-#: ../libpanel-applet/panel-applet.c:1059
+#: ../libpanel-applet/panel-applet.c:1069
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Nem teljes \"%s\" háttértípus érkezett: %s"
 
-#: ../libpanel-applet/panel-applet.c:1068
+#: ../libpanel-applet/panel-applet.c:1078
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Nem sikerült a következő képet megkapni: %s"
 
-#: ../libpanel-applet/panel-applet.c:1075
+#: ../libpanel-applet/panel-applet.c:1085
 msgid "Unknown background type received"
 msgstr "Ismeretlen háttértípus érkezett"
 
-#: ../libpanel-applet/panel-applet.c:1299
+#: ../libpanel-applet/panel-applet.c:1309
 msgid "The Applet's containing Panel's orientation"
 msgstr "a kisalkalmazás tartalmazza a panel elhelyezkedését"
 
-#: ../libpanel-applet/panel-applet.c:1307
+#: ../libpanel-applet/panel-applet.c:1317
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "a kisalkalmazás tartalmazza a panel méretét képpontban"
 
-#: ../libpanel-applet/panel-applet.c:1315
+#: ../libpanel-applet/panel-applet.c:1325
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "a kisalkalmazás tartalmazza a panel háttérszínét vagy mintázatát"
 
-#: ../libpanel-applet/panel-applet.c:1323
+#: ../libpanel-applet/panel-applet.c:1333
 msgid "The Applet's flags"
 msgstr "a kisalkalmazás kapcsolói"
 
-#: ../libpanel-applet/panel-applet.c:1331
+#: ../libpanel-applet/panel-applet.c:1341
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Tartományok, amelyek azt mutatják, milyen méret elfogadható az "
 "kisalkalmazásnak"
 
-#: ../libpanel-applet/panel-applet.c:1339
+#: ../libpanel-applet/panel-applet.c:1349
 msgid "The Applet's containing Panel is locked down"
 msgstr "A kisalkalmazást tartalmazó panel zárolva van"
 
