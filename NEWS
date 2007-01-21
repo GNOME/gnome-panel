@@ -1,3 +1,106 @@
+===============
+Version 2.17.90
+===============
+
+  Panel
+
+	* Remove code warning (JP Rosevear)
+	* Change text of some menu items (Luca Ferretti)
+	* Use GTK_STOCK_MISSING_IMAGE when the icon of a launcher can't be
+	  found and remove useless error dialog (Thomas Wood)
+	* Use better filenames when creating launchers (Dan Winship, Vincent)
+	* Simplify system menu code thanks to new control center shell
+	  (Vincent)
+	* Fix "Add to panel" dialog to correctly display capplets (Vincent)
+	* Migrate settings menu buttons to a control center shell launcher
+	  (Vincent)
+	* Use 22 as default icon sizes for menus (Vincent)
+	* Force size of launchers to 16, 22, 32 or 48 (Vincent)
+	* Use new launcher icon (Vincent)
+	* Fix compilation on darwin (Vincent)
+	* Fix disappearing launcher on drag and drop (and other related issues)
+	  (Vincent)
+	* Fix transparency broken when screen size changes (bugreports@nn7.de)
+	* Don't accept every command line option, but only the deprecated
+	  --profile (Vincent)
+	* Check for the logout_prompt gconf key to know whether we should show
+	  the logout dialog or just log out (Ray Strode, Vincent)
+	* Do not start dragging an applet when it's not possible because a grab
+	  is active, fix change of cursor icon in this case (Amnon Aaronsohn)
+	* Do not hardcode invisible_char in glade files (Vitaliy Ischenko)
+	* Correctly position applet menu in RTL environments (Vincent)
+	* Really remove launcher file when deleting a launcher, and do it only
+	  when possible (Vincent)
+	* Fix main menu not completely reloading when the menu is updated
+	  (Vincent)
+
+  gnome-desktop-item-edit
+
+	* Make it possible to create a .directory file with a name instead of
+	  forcing the name to $(dir)/.directory (Vincent)
+	* Use new launcher icon (Vincent)
+	* Make --create-new usage more logical (Vincent)
+
+  libpanel-applet
+
+	* Do not hardcode invisible_char in glade files (Vitaliy Ischenko)
+	* Correctly position applet menu in RTL environments (Vincent)
+
+  Clock Applet
+
+	* Look for evolution binary before trying to run it (Vincent)
+	* Make sure that the last day of a multi-day events is marked in the
+	  calendar Michael Frank)
+	* Don't mark multiple days on the calendar if the event is an all day
+	  event (Vincent)
+	* Fix compilation on some systems (Vincent)
+	* Launch evolution when double-clicking on a task (Nickolay V. Shmyrev,
+	  Vincent)
+
+  Fish Applet
+
+	* HIG fix (Vincent)
+	* Do not hardcode invisible_char in glade files (Vitaliy Ischenko)
+
+  Notification Area Applet
+
+	* Add a test-tray program (Christian Persch)
+
+  Workspace Switcher Applet
+
+	* Slow down speed of the spin button for number of workspaces
+	  (Manu Cornet)
+
+  Misc
+
+	* New launcher icon
+	* Build fixes (Vincent)
+
+  Documentation
+
+	* Add a link to the user guide (Claude Paroz)
+
+  Docs Translators
+
+	* Nickolay V. Shmyrev (ru)
+
+  Translators
+
+	* Khaled Hosny (ar)
+	* Ihar Hrachyshka (be)
+	* Jordi Mallach (ca)
+	* Jakub Friedl (cs)
+	* Hendrik Richter (de)
+	* David Lodge (en_GB)
+	* Ivar Smolin (et)
+	* Yuval Tanny (he)
+	* Gabor Kelemen (hu)
+	* Luca Ferretti (it)
+	* A S Alam (pa)
+	* Данило Шеган (sr)
+	* Daniel Nylander (sv)
+	* Theppitak Karoonboonyanan (th)
+
 ==============
 Version 2.16.2
 ==============
