@@ -706,7 +706,8 @@ drop_internal_icon (PanelWidget *panel,
 	if (action == GDK_ACTION_MOVE)
 		old_launcher = find_launcher (icon_name);
 	
-	panel_launcher_create_copy (panel->toplevel, pos, icon_name);
+	if (!panel_launcher_create_copy (panel->toplevel, pos, icon_name))
+		return FALSE;
 
 	if (old_launcher && old_launcher->button) {
 		if (old_launcher->prop_dialog) {
