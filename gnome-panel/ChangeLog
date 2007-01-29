@@ -1,3 +1,11 @@
+2007-01-29  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-background-monitor.c: (panel_background_monitor_setup_pixbuf):
+	get the size of the window with gdk_window_get_geometry() instead of
+	gdk_drawable_get_size() since the lattest might not give us the latest
+	size, and this breaks when resizing the screen.
+	Fix bug #353781, patch by <bugreports@nn7.de>
+
 ==================== 2.16.2 ====================
 
 2006-11-14  Paolo Borelli  <pborelli@katamail.com>
