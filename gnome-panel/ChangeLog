@@ -1,5 +1,11 @@
 2007-01-29  Vincent Untz  <vuntz@gnome.org>
 
+	* launcher.c: (panel_launcher_delete): get the uri of the file before
+	trying to unlink it so that we actually unlink it. And do not try to
+	unlink it if it doesn't live in the user's launchers path.
+
+2007-01-29  Vincent Untz  <vuntz@gnome.org>
+
 	* launcher.[ch]: (panel_launcher_get_uri): new, get the uri of the
 	launcher file
 	(drag_data_get_cb): correctly set the uri of the launcher for uri-list
