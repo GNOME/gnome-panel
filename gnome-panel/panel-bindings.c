@@ -183,7 +183,7 @@ panel_bindings_initialise (void)
 		str = gconf_client_get_string (client, key, &error);
 		if (error) {
 			g_warning (_("Error getting value for '%s': %s"),
-				   error->message, key);
+				   key, error->message);
 			continue;
 		}
 

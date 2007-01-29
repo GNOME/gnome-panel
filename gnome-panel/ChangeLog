@@ -1,3 +1,34 @@
+==================== 2.16.2 ====================
+
+2006-11-14  Paolo Borelli  <pborelli@katamail.com>
+
+	* panel-menu-items.c (panel_menu_items_append_lock_logout):
+	* gnome-panel/menu.c (main_menu_append):
+	plug GList leak.
+
+2006-11-14  Vincent Untz  <vuntz@gnome.org>
+	
+	* panel-bindings.c: (panel_bindings_initialise): fix order of the
+	g_warning arguments
+	Patch by Claudio Saavedra <csaavedra@alumnos.utalca.cl>
+	Fix bug #365008
+
+2006-11-14  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-compatibility.c: (panel_compatibility_migrate_objects): plug
+	leak
+	* panel-gdm.c: fix structure
+	(gdm_init_protocol_connection): plug leak
+	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmar):
+	handle case when gnome_vfs_get_local_path_from_uri() returns NULL
+	Fix bug #375326
+	Based on patch by Kjartan Maraas <kmaraas@gnome.org>.
+
+2006-11-11  Dennis Cranston  <dennis_cranston@yahoo.com>
+
+	* panel-ditem-editor.c: (panel_ditem_editor_make_ui): Dialog 
+	spacing fix.  (bug #350691).
+
 ==================== 2.16.1 ====================
 
 2006-10-01  Vincent Untz  <vuntz@gnome.org>
