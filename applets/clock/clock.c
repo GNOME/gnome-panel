@@ -47,7 +47,9 @@
 #include <dirent.h>
 #include <string.h>
 #include <time.h>
+#ifdef HAVE_LANGINFO_H
 #include <langinfo.h>
+#endif
 
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
@@ -576,10 +578,14 @@ delete_event (GtkWidget   *widget,
 static inline ClockFormat
 clock_locale_format (void)
 {
+#ifdef HAVE_NL_LANGINFO
         const char *am;
 
         am = nl_langinfo (AM_STR);
         return (am[0] == '\0') ? CLOCK_FORMAT_24 : CLOCK_FORMAT_12;
+#else
+	return CLOCK_FORMAT_24;
+#endif
 }
 
 #ifdef HAVE_LIBECAL
