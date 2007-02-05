@@ -1089,6 +1089,7 @@ panel_menu_button_set_dnd_enabled (PanelMenuButton *button,
 #define PANEL_IS_MENU_BUTTON_ACCESSIBLE(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), panel_menu_button_accessible_get_type ()))
 
 static GType panel_menu_button_accessible_get_type (void);
+static gpointer parent_accessible_class = NULL;
 
 static int
 panel_menu_button_accessible_get_n_children (AtkObject *obj)
@@ -1115,8 +1116,24 @@ panel_menu_button_accessible_ref_child (AtkObject *obj,
 
 	if (!(menu = panel_menu_button_create_menu (button)))
 		return NULL;
+	/*
+	 * This ensures that the menu is populated with all menu items
+	 */
+	g_signal_emit_by_name (menu, "show", NULL);
 
 	return g_object_ref (gtk_widget_get_accessible (menu));
+}
+
+static G_CONST_RETURN gchar *
+panel_menu_button_accessible_get_name (AtkObject *obj)
+{
+	const char *name;
+
+	name = ATK_OBJECT_CLASS (parent_accessible_class)->get_name(obj);
+	if (name == NULL)
+		name = _("Main Menu");
+
+	return name;
 }
 
 static void
@@ -1124,6 +1141,9 @@ panel_menu_button_accessible_class_init (AtkObjectClass *klass)
 {
 	klass->get_n_children = panel_menu_button_accessible_get_n_children;
 	klass->ref_child      = panel_menu_button_accessible_ref_child; 
+	klass->get_name       = panel_menu_button_accessible_get_name; 
+
+	parent_accessible_class = g_type_class_peek_parent (klass);
 }
 
 static GType

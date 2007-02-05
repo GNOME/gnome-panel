@@ -1,3 +1,13 @@
+2007-02-06  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-menu-button.c: (panel_menu_button_accessible_ref_child): emit
+	the "show" signal on the menu so that it's populated
+	(panel_menu_button_accessible_get_name): new
+	(panel_menu_button_accessible_class_init): set the accessible name
+	handler
+	Patch by Padraig O'Briain <padraig.obriain@sun.com>
+	Fix bug #361363
+
 ==================== 2.17.90 ====================
 
 2007-01-15  Vincent Untz  <vuntz@gnome.org>
