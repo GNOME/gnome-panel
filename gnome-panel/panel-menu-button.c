@@ -30,7 +30,6 @@
 #include <glib/gi18n.h>
 
 #include "applet.h"
-#include "panel-compatibility.h"
 #include "panel-widget.h"
 #include "panel-util.h"
 #include "panel-profile.h"
@@ -56,7 +55,6 @@ typedef enum {
 	APPLICATIONS_MENU,
 #define DEFAULT_MENU      APPLICATIONS_MENU
 	SETTINGS_MENU,
-	PREFERENCES_MENU,
 	LAST_MENU
 } MenuPathRoot;
 
@@ -68,9 +66,7 @@ typedef struct {
 
 static MenuPathRootItem root_items [] = {
 	{ APPLICATIONS_MENU, "applications", "applications.menu" },
-	{ PREFERENCES_MENU,  "preferences",  "preferences.menu"  },
-	/* compatibility with GNOME < 2.17.90 */
-	{ SETTINGS_MENU,     "settings",     NULL                }
+	{ SETTINGS_MENU,     "settings",     "settings.menu"     }
 };
 
 struct _PanelMenuButtonPrivate {
@@ -895,30 +891,18 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 				   gboolean     exactpos,
 				   const char  *id)
 {
-	GConfClient  *client;
-	char         *scheme;
-	MenuPathRoot root;
-	const char   *key;
-	char         *menu_path;
-	char         *custom_icon;
-	char         *tooltip;
-	gboolean      use_menu_path;
-	gboolean      use_custom_icon;
+	GConfClient *client;
+	const char  *key;
+	char        *menu_path;
+	char        *custom_icon;
+	char        *tooltip;
+	gboolean     use_menu_path;
+	gboolean     use_custom_icon;
 
 	client  = panel_gconf_get_client ();
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "menu_path");
 	menu_path = gconf_client_get_string (client, key, NULL);
-
-	scheme = g_strndup (menu_path, strcspn (menu_path, ":"));
-	root = panel_menu_scheme_to_path_root (scheme);
-	g_free (scheme);
-	if (root == SETTINGS_MENU) {
-		panel_compatiblity_migrate_settings_menu_button (panel_gconf_get_client (),
-								 id);
-		g_free (menu_path);
-		return;
-	}
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "custom_icon");
 	custom_icon = gconf_client_get_string (client, key, NULL);

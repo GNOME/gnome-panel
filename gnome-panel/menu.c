@@ -1352,7 +1352,7 @@ submenu_to_display (GtkWidget *menu)
 	append_callback = g_object_get_data (G_OBJECT (menu),
 					     "panel-menu-append-callback");
 	append_data     = g_object_get_data (G_OBJECT (menu),
-					     "panel-menu-append-data");
+					     "panel-menu-append-callback-data");
 	if (append_callback)
 		append_callback (menu, append_data);
 }

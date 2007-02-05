@@ -692,22 +692,49 @@ panel_place_menu_item_volume_changed (GnomeVFSVolumeMonitor *monitor,
 	panel_place_menu_item_recreate_menu (place_menu);
 }
 
+static void
+panel_desktop_menu_item_append_menu (GtkWidget *menu,
+				     gpointer   data)
+{
+	PanelDesktopMenuItem *parent;
+	gboolean              add_separator;
+	GList                *children;
+	GList                *last;
+
+	parent = PANEL_DESKTOP_MENU_ITEM (data);
+
+	add_separator = FALSE;
+	children = gtk_container_get_children (GTK_CONTAINER (menu));
+	last = g_list_last (children);
+
+	if (last != NULL)
+		add_separator = !GTK_IS_SEPARATOR (GTK_WIDGET (last->data));
+
+	g_list_free (children);
+
+	if (add_separator)
+		add_menu_separator (menu);
+
+	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL);
+	panel_menu_items_append_from_desktop (menu, "gnome-about.desktop", NULL);
+
+	if (parent->priv->append_lock_logout)
+		panel_menu_items_append_lock_logout (menu);
+}
+
 static GtkWidget *
 panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item)
 {
 	GtkWidget *desktop_menu;
 
-	desktop_menu = panel_create_menu ();
+	desktop_menu = create_applications_menu ("settings.menu", NULL);
 
-	panel_menu_items_append_from_desktop (desktop_menu, "gnomecc.desktop", NULL);
-
-	add_menu_separator (desktop_menu);
-
-	panel_menu_items_append_from_desktop (desktop_menu, "yelp.desktop", NULL);
-	panel_menu_items_append_from_desktop (desktop_menu, "gnome-about.desktop", NULL);
-
-	if (desktop_item->priv->append_lock_logout)
-		panel_menu_items_append_lock_logout (desktop_menu);
+	g_object_set_data (G_OBJECT (desktop_menu),
+			   "panel-menu-append-callback",
+			   panel_desktop_menu_item_append_menu);
+	g_object_set_data (G_OBJECT (desktop_menu),
+			   "panel-menu-append-callback-data",
+			   desktop_item);
 
 	return desktop_menu;
 }

@@ -1,5 +1,22 @@
 2007-02-06  Vincent Untz  <vuntz@gnome.org>
 
+	Revert changes about settings.menu.
+	Based on patch by Denis Washington <dwashington@gmx.net>
+
+	* panel-compatibility.[ch]:
+	(panel_compatiblity_migrate_settings_menu_button): kill
+	* menu.c: (submenu_to_display): fix callback data when appending a
+	menu
+	* panel-menu-items.c: (panel_desktop_menu_item_append_menu): brought
+	back from the deads
+	(panel_desktop_menu_item_create_menu): use settings.menu as basis for
+	the menu and append data later
+	* panel-menu-button.c: don't migrate from settings.menu
+	* panel-addto.c: (panel_addto_make_application_model):
+	(panel_addto_make_application_model): use settings.menu
+
+2007-02-06  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-button.c: (panel_menu_button_accessible_ref_child): emit
 	the "show" signal on the menu so that it's populated
 	(panel_menu_button_accessible_get_name): new
