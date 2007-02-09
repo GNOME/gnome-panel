@@ -1,22 +1,22 @@
 # French translation of gnome-panel.
-# Copyright (C) 1998-2006 Free Software Foundation, Inc.
+# Copyright (C) 1998-2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 #
 # Vincent Renardias <vincent@ldsol.com>, 1998-2000.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
-# maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2006.
+# Christophe Merlet <redfox@redfoxcenter.org>, 2000-2006.
 # Christophe Fergeau <teuf@users.sourceforge.net>, 2002.
 # Baptiste Mille-Mathias <bmm80@free.fr>, 2004-2005.
 # Benoît Dejean <benoit@placenet.org>, 2006.
-# Robert-André Mauchin <zebob.m@gmail.com>, 2006.
+# Robert-André Mauchin <zebob.m@gmail.com>, 2006-2007.
 # Damien Durand <splinux@fedoraproject.org>, 2006
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-25 18:03+0200\n"
-"PO-Revision-Date: 2006-08-25 17:50+0200\n"
+"POT-Creation-Date: 2007-02-09 20:41+0100\n"
+"PO-Revision-Date: 2007-01-17 16:56+0100\n"
 "Last-Translator: Robert-André Mauchin <zebob.m@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,11 +53,11 @@ msgstr "À _propos"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:723
+#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:736
 #: ../gnome-panel/panel-context-menu.c:295 ../gnome-panel/panel-menu-bar.c:404
 #: ../gnome-panel/panel-menu-button.c:685
 msgid "_Help"
-msgstr "_Aide"
+msgstr "Aid_e"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:6
 #: ../applets/fish/GNOME_FishApplet.xml.h:3
@@ -67,7 +67,7 @@ msgid "_Preferences"
 msgstr "_Préférences"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2799
+#: ../applets/clock/clock.c:2824
 msgid "Clock"
 msgstr "Horloge"
 
@@ -83,20 +83,20 @@ msgstr "Fabrique pour créer des applets Horloges."
 msgid "Get the current time and date"
 msgstr "Donne l'heure et la date actuelle"
 
-#: ../applets/clock/clock.c:341
+#: ../applets/clock/clock.c:342
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:341 ../applets/clock/clock.c:663
+#: ../applets/clock/clock.c:342 ../applets/clock/clock.c:695
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:343 ../applets/clock/clock.c:1841
+#: ../applets/clock/clock.c:344 ../applets/clock/clock.c:1866
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:343 ../applets/clock/clock.c:665
-#: ../applets/clock/clock.c:1843
+#: ../applets/clock/clock.c:344 ../applets/clock/clock.c:697
+#: ../applets/clock/clock.c:1868
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -105,7 +105,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:354
+#: ../applets/clock/clock.c:355
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -113,7 +113,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:361
+#: ../applets/clock/clock.c:362
 #, c-format
 msgid ""
 "%1$s\n"
@@ -126,68 +126,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:368
+#: ../applets/clock/clock.c:369
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:451
 msgid "%A %B %d"
 msgstr "%A %d %B"
 
-#: ../applets/clock/clock.c:462
+#: ../applets/clock/clock.c:463
 msgid "Click to view your appointments and tasks"
 msgstr "Cliquez pour afficher vos rendez-vous et tâches"
 
-#: ../applets/clock/clock.c:464
+#: ../applets/clock/clock.c:465
 msgid "Click to view month calendar"
 msgstr "Cliquez pour afficher le calendrier mensuel"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:670
+#: ../applets/clock/clock.c:702
 msgid "%b %d"
 msgstr "%e %b"
 
-#: ../applets/clock/clock.c:1016
+#: ../applets/clock/clock.c:1048
 msgid "Tasks"
 msgstr "Tâches"
 
-#: ../applets/clock/clock.c:1166
+#: ../applets/clock/clock.c:1197
 msgid "All Day"
 msgstr "Toute la journée"
 
-#: ../applets/clock/clock.c:1205
+#: ../applets/clock/clock.c:1236
 msgid "Appointments"
 msgstr "Rendez-vous"
 
-#: ../applets/clock/clock.c:1452
+#: ../applets/clock/clock.c:1477
 msgid "Calendar"
 msgstr "Calendrier"
 
-#: ../applets/clock/clock.c:1733
+#: ../applets/clock/clock.c:1758
 msgid "Computer Clock"
 msgstr "Horloge"
 
-#: ../applets/clock/clock.c:1836
+#: ../applets/clock/clock.c:1861
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1838
+#: ../applets/clock/clock.c:1863
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1880
+#: ../applets/clock/clock.c:1905
 msgid "%A, %B %d %Y"
 msgstr "%A %d %B %Y"
 
-#: ../applets/clock/clock.c:1937
+#: ../applets/clock/clock.c:1962
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Le lancement de l'outil de configuration de l'heure a échoué : %s"
 
-#: ../applets/clock/clock.c:1975
+#: ../applets/clock/clock.c:2000
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -195,75 +195,72 @@ msgstr ""
 "La localisation d'un programme pour configurer la date et l'heure a échoué. "
 "Peut-être que vous n'en n'avez installé aucun."
 
-#: ../applets/clock/clock.c:2456
+#: ../applets/clock/clock.c:2481
 msgid "Custom format"
 msgstr "Format personnalisé"
 
-#: ../applets/clock/clock.c:2580 ../applets/clock/clock.c:2757
-#: ../applets/fish/fish.c:160 ../applets/notification_area/main.c:105
+#: ../applets/clock/clock.c:2605 ../applets/clock/clock.c:2782
+#: ../applets/fish/fish.c:160 ../applets/notification_area/main.c:90
 #: ../applets/wncklet/window-list.c:113 ../applets/wncklet/wncklet.c:128
 #: ../applets/wncklet/workspace-switcher.c:238
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Il y a eu une erreur lors de l'affichage de l'aide : %s"
 
-#: ../applets/clock/clock.c:2617
+#: ../applets/clock/clock.c:2642
 msgid "Clock Preferences"
 msgstr "Préférences de l'horloge"
 
-#: ../applets/clock/clock.c:2642
+#: ../applets/clock/clock.c:2667
 msgid "Clock _type:"
 msgstr "_Type d'horloge :"
 
-#: ../applets/clock/clock.c:2653
+#: ../applets/clock/clock.c:2678
 msgid "12 hour"
 msgstr "12 heures"
 
-#: ../applets/clock/clock.c:2654
+#: ../applets/clock/clock.c:2679
 msgid "24 hour"
 msgstr "24 heures"
 
-#: ../applets/clock/clock.c:2655
+#: ../applets/clock/clock.c:2680
 msgid "UNIX time"
 msgstr "Heure UNIX"
 
-#: ../applets/clock/clock.c:2656
+#: ../applets/clock/clock.c:2681
 msgid "Internet time"
 msgstr "Heure Internet"
 
-#: ../applets/clock/clock.c:2664
+#: ../applets/clock/clock.c:2689
 msgid "Custom _format:"
 msgstr "_Format personnalisé :"
 
-#: ../applets/clock/clock.c:2683
+#: ../applets/clock/clock.c:2708
 msgid "Show _seconds"
 msgstr "Afficher les _secondes"
 
-#: ../applets/clock/clock.c:2692
+#: ../applets/clock/clock.c:2717
 msgid "Show _date"
 msgstr "Afficher la _date"
 
-#: ../applets/clock/clock.c:2701
+#: ../applets/clock/clock.c:2726
 msgid "Use _UTC"
 msgstr "Utiliser _UTC"
 
-#: ../applets/clock/clock.c:2802
+#: ../applets/clock/clock.c:2827
 msgid "The Clock displays the current time and date"
 msgstr "L'Horloge affiche l'heure et la date actuelle"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2805 ../applets/fish/fish.c:588
-#: ../applets/notification_area/main.c:158
+#: ../applets/clock/clock.c:2830 ../applets/fish/fish.c:588
+#: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:783
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:555
 #: ../gnome-panel/panel-context-menu.c:133
 msgid "translator-credits"
 msgstr ""
-"Mainteneur :\n"
-"Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
-"\n"
-"Contributeurs :\n"
+"Christophe Merlet <redfox@redfoxcenter.org>\n"
 "Christophe Fergeau <teuf@users.sourceforge.net>\n"
 "Baptiste Mille-Mathias <bmm80@free.fr>\n"
 "Benoît Dejean <benoit@placenet.org>\n"
@@ -504,14 +501,14 @@ msgstr ""
 "Détails : %s"
 
 #: ../applets/fish/fish.c:1611
-msgid ""
-"The water needs changing!\n"
-"(Look at today's date)"
-msgstr ""
-"L'eau a besoin d'être changée !\n"
-"(Regardez la date)"
+msgid "The water needs changing"
+msgstr "L'eau a besoin d'être changée"
 
-#: ../applets/fish/fish.c:1706
+#: ../applets/fish/fish.c:1613
+msgid "Look at today's date!"
+msgstr "Regardez la date d'aujourd'hui !"
+
+#: ../applets/fish/fish.c:1707
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s le poisson, le diseur de bonne aventure"
@@ -641,7 +638,7 @@ msgid "Area where notification icons appear"
 msgstr "Zone où les icônes de notification apparaîtront"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: ../applets/notification_area/main.c:153
+#: ../applets/notification_area/main.c:135
 msgid "Notification Area"
 msgstr "Zone de notification"
 
@@ -649,15 +646,7 @@ msgstr "Zone de notification"
 msgid "Notification Area Factory"
 msgstr "Fabrique de zone de notification"
 
-#: ../applets/notification_area/na-tray-manager.c:119
-msgid "Orientation"
-msgstr "Orientation"
-
-#: ../applets/notification_area/na-tray-manager.c:120
-msgid "The orientation of the tray."
-msgstr "L'orientation du tray."
-
-#: ../applets/notification_area/main.c:650
+#: ../applets/notification_area/main.c:224
 msgid "Panel Notification Area"
 msgstr "Zone de notification du tableau de bord"
 
@@ -1025,13 +1014,9 @@ msgstr "_Enlever du tableau de bord"
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1226
+#: ../gnome-panel/applet.c:1236
 msgid "Cannot find an empty spot"
 msgstr "Impossible de trouver un emplacement vide"
-
-#: ../gnome-panel/button-widget.c:199
-msgid "Could not load icon"
-msgstr "Impossible de charger l'icône"
 
 #: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:169
 #: ../gnome-panel/panel-toplevel.c:1524
@@ -1042,8 +1027,8 @@ msgstr "Tiroir"
 msgid "_Add to Drawer..."
 msgstr "A_jouter au tiroir..."
 
-#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:834
-#: ../gnome-panel/panel-action-button.c:136
+#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:866
+#: ../gnome-panel/panel-action-button.c:138
 #: ../gnome-panel/panel-context-menu.c:220
 msgid "_Properties"
 msgstr "_Propriétés"
@@ -1062,64 +1047,64 @@ msgstr "- Éditer les fichiers .desktop"
 
 # hum, j'ai un doute...
 #: ../gnome-panel/gnome-desktop-item-edit.c:203
-#: ../gnome-panel/gnome-desktop-item-edit.c:275 ../gnome-panel/launcher.c:921
+#: ../gnome-panel/gnome-desktop-item-edit.c:269 ../gnome-panel/launcher.c:956
 msgid "Create Launcher"
 msgstr "Créer un lanceur"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:227
-#: ../gnome-panel/gnome-desktop-item-edit.c:261
+#: ../gnome-panel/gnome-desktop-item-edit.c:256
 msgid "Directory Properties"
 msgstr "Propriétés du répertoire"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:762
+#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:794
 msgid "Launcher Properties"
 msgstr "Propriétés du lanceur"
 
-#: ../gnome-panel/launcher.c:131
+#: ../gnome-panel/launcher.c:151
 msgid "Could not show this URL"
 msgstr "Impossible d'afficher cet URL"
 
-#: ../gnome-panel/launcher.c:132
+#: ../gnome-panel/launcher.c:152
 msgid "No URL was specified."
 msgstr "Aucun URL n'a été indiqué."
 
-#: ../gnome-panel/launcher.c:145
+#: ../gnome-panel/launcher.c:165
 #, c-format
 msgid "Could not show '%s'"
 msgstr "Impossible d'afficher « %s »"
 
-#: ../gnome-panel/launcher.c:190
+#: ../gnome-panel/launcher.c:210
 msgid "Could not launch application"
 msgstr "Impossible de lancer l'application"
 
-#: ../gnome-panel/launcher.c:255
+#: ../gnome-panel/launcher.c:275
 msgid "Could not use dropped item"
 msgstr "Impossible de déposer l'élément"
 
-#: ../gnome-panel/launcher.c:447
+#: ../gnome-panel/launcher.c:471
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "Aucun URI fourni pour le fichier de bureau du lanceur du tableau de bord\n"
 
-#: ../gnome-panel/launcher.c:490
+#: ../gnome-panel/launcher.c:514
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Impossible d'ouvrir le fichier de bureau %s pour le lanceur du tableau de "
 "bord%s%s\n"
 
-#: ../gnome-panel/launcher.c:828
+#: ../gnome-panel/launcher.c:860
 msgid "_Launch"
 msgstr "_Lancer"
 
-#: ../gnome-panel/launcher.c:867
+#: ../gnome-panel/launcher.c:899
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "La clé %s n'est pas définie, impossible de charger le lanceur\n"
 
-#: ../gnome-panel/launcher.c:988 ../gnome-panel/panel-ditem-editor.c:1229
-#: ../gnome-panel/panel-ditem-editor.c:1255
-#: ../gnome-panel/panel-ditem-editor.c:1323
+#: ../gnome-panel/launcher.c:1023 ../gnome-panel/panel-ditem-editor.c:1237
+#: ../gnome-panel/panel-ditem-editor.c:1263
+#: ../gnome-panel/panel-ditem-editor.c:1331
 msgid "Could not save launcher"
 msgstr "Impossible d'enregistrer le lanceur"
 
@@ -1143,85 +1128,88 @@ msgstr "Ajouter ceci comme t_iroir au tableau de bord"
 msgid "Add this as _menu to panel"
 msgstr "Ajouter ceci comme _menu au tableau de bord"
 
-#: ../gnome-panel/panel-action-button.c:124
+#: ../gnome-panel/panel-action-button.c:126
 msgid "_Activate Screensaver"
 msgstr "_Activer l'économiseur d'écran"
 
-#: ../gnome-panel/panel-action-button.c:130
+#: ../gnome-panel/panel-action-button.c:132
 msgid "_Lock Screen"
 msgstr "_Verrouiller l'écran"
 
-#: ../gnome-panel/panel-action-button.c:200
+#: ../gnome-panel/panel-action-button.c:213
 #: ../gnome-panel/panel-menu-bar.c:479 ../gnome-panel/panel-menu-button.c:1017
-#: ../gnome-panel/panel-util.c:779
+#: ../gnome-panel/panel-util.c:781
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Impossible d'exécuter « %s »"
 
-#: ../gnome-panel/panel-action-button.c:238
+#: ../gnome-panel/panel-action-button.c:251
 msgid "Could not connect to server"
 msgstr "Impossible de se connecter au serveur"
 
-#: ../gnome-panel/panel-action-button.c:269
+#: ../gnome-panel/panel-action-button.c:282
 msgid "Lock Screen"
 msgstr "Verrouiller l'écran"
 
-#: ../gnome-panel/panel-action-button.c:270
+#: ../gnome-panel/panel-action-button.c:283
 msgid "Protect your computer from unauthorized use"
 msgstr "Interdit les utilisations non désirées de votre ordinateur"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:284
+#: ../gnome-panel/panel-action-button.c:297
 msgid "Log Out..."
 msgstr "Clore la session..."
 
-#: ../gnome-panel/panel-action-button.c:285
+#: ../gnome-panel/panel-action-button.c:298
 msgid "Log out of this session to log in as a different user"
 msgstr ""
 "Se déconnecte de cette session afin de se reconnecter sous un autre "
 "identifiant"
 
-#: ../gnome-panel/panel-action-button.c:294
+#: ../gnome-panel/panel-action-button.c:307
 msgid "Run Application..."
 msgstr "Lancer une application..."
 
-#: ../gnome-panel/panel-action-button.c:295
-msgid "Run an Application by entering a command"
-msgstr "Lance une application en saisissant une commande"
+#: ../gnome-panel/panel-action-button.c:308
+msgid "Run an application by typing a command or choosing from a list"
+msgstr ""
+"Lance une application en saisissant une commande ou en choisissant dans la "
+"liste"
 
-#: ../gnome-panel/panel-action-button.c:304
+#: ../gnome-panel/panel-action-button.c:317
 msgid "Search for Files..."
 msgstr "Rechercher des fichiers..."
 
-#: ../gnome-panel/panel-action-button.c:305
-msgid "Find files, folders, and documents on your computer"
+#: ../gnome-panel/panel-action-button.c:318
+msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
-"Recherche des fichiers, des dossiers et des documents sur votre ordinateur"
+"Localise des documents et des dossiers sur cet ordinateur selon leur nom ou "
+"leur contenu"
 
-#: ../gnome-panel/panel-action-button.c:313
+#: ../gnome-panel/panel-action-button.c:326
 msgid "Force Quit"
 msgstr "Forcer quitter"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:327
 msgid "Force a misbehaving application to quit"
 msgstr "Force une application ayant un comportement anormal à quitter"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:323
+#: ../gnome-panel/panel-action-button.c:336
 msgid "Connect to Server..."
 msgstr "Se connecter à un serveur..."
 
-#: ../gnome-panel/panel-action-button.c:324
-msgid "Connect to a remote server"
-msgstr "Se connecte à un serveur distant"
+#: ../gnome-panel/panel-action-button.c:337
+msgid "Connect to a remote computer or shared disk"
+msgstr "Se connecte à un serveur distant ou à un disque partagé"
 
-#: ../gnome-panel/panel-action-button.c:332
+#: ../gnome-panel/panel-action-button.c:345
 msgid "Shut Down..."
 msgstr "Éteindre..."
 
-#: ../gnome-panel/panel-action-button.c:333
+#: ../gnome-panel/panel-action-button.c:346
 msgid "Shut down the computer"
 msgstr "Éteint l'ordinateur"
 
@@ -1241,7 +1229,7 @@ msgstr "Lanceur d'application..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Copie un lanceur depuis le menu d'applications"
 
-#: ../gnome-panel/panel-addto.c:136
+#: ../gnome-panel/panel-addto.c:136 ../gnome-panel/panel-menu-button.c:1118
 msgid "Main Menu"
 msgstr "Menu principal"
 
@@ -1279,24 +1267,24 @@ msgstr "(vide)"
 msgid "query returned exception %s\n"
 msgstr "la requête a retourné l'exception %s\n"
 
-#: ../gnome-panel/panel-addto.c:1056
+#: ../gnome-panel/panel-addto.c:1060
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Chois_ir un élément à ajouter à « %s » :"
 
-#: ../gnome-panel/panel-addto.c:1060
+#: ../gnome-panel/panel-addto.c:1064
 msgid "Add to Drawer"
 msgstr "Ajouter au tiroir"
 
-#: ../gnome-panel/panel-addto.c:1062
+#: ../gnome-panel/panel-addto.c:1066
 msgid "Find an _item to add to the drawer:"
 msgstr "Chois_ir un élément à ajouter au tiroir :"
 
-#: ../gnome-panel/panel-addto.c:1064
+#: ../gnome-panel/panel-addto.c:1068
 msgid "Add to Panel"
 msgstr "Ajouter au tableau de bord"
 
-#: ../gnome-panel/panel-addto.c:1066
+#: ../gnome-panel/panel-addto.c:1070
 msgid "Find an _item to add to the panel:"
 msgstr "Chois_ir un élément à ajouter au tableau de bord :"
 
@@ -1443,27 +1431,27 @@ msgid "Choose a file..."
 msgstr "Choisissez un fichier..."
 
 #: ../gnome-panel/panel-ditem-editor.c:1061
-#: ../gnome-panel/panel-ditem-editor.c:1068
+#: ../gnome-panel/panel-ditem-editor.c:1070
 msgid "_Command:"
 msgstr "_Commande :"
 
-#: ../gnome-panel/panel-ditem-editor.c:1075
+#: ../gnome-panel/panel-ditem-editor.c:1079
 msgid "_Location:"
 msgstr "_Emplacement :"
 
-#: ../gnome-panel/panel-ditem-editor.c:1230
+#: ../gnome-panel/panel-ditem-editor.c:1238
 msgid "The name of the launcher is not set."
 msgstr "Le nom du lanceur n'est pas défini."
 
-#: ../gnome-panel/panel-ditem-editor.c:1243
+#: ../gnome-panel/panel-ditem-editor.c:1251
 msgid "The command of the launcher is not set."
 msgstr "La commande du lanceur n'est pas définie."
 
-#: ../gnome-panel/panel-ditem-editor.c:1246
+#: ../gnome-panel/panel-ditem-editor.c:1254
 msgid "The location of the launcher is not set."
 msgstr "La position du lanceur n'est pas indiquée."
 
-#: ../gnome-panel/panel-ditem-editor.c:1363 ../gnome-panel/panel-util.c:138
+#: ../gnome-panel/panel-ditem-editor.c:1371 ../gnome-panel/panel-util.c:140
 msgid "Could not display help document"
 msgstr "Impossible d'afficher le document d'aide"
 
@@ -1789,16 +1777,16 @@ msgstr "Ouvre « %s »"
 #. * path and the second string is a
 #. * hostname. nautilus contains the same
 #. * string to translate.
-#: ../gnome-panel/panel-menu-items.c:436
+#: ../gnome-panel/panel-menu-items.c:446
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s sur %2$s"
 
-#: ../gnome-panel/panel-menu-items.c:509
+#: ../gnome-panel/panel-menu-items.c:519
 msgid "Network Places"
 msgstr "Emplacements réseau"
 
-#: ../gnome-panel/panel-menu-items.c:512
+#: ../gnome-panel/panel-menu-items.c:522
 msgid "Removable Media"
 msgstr "Media amovibles"
 
@@ -1806,19 +1794,19 @@ msgstr "Media amovibles"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:588
+#: ../gnome-panel/panel-menu-items.c:598
 msgid "Desktop Folder|Desktop"
 msgstr "Bureau"
 
-#: ../gnome-panel/panel-menu-items.c:589
-msgid "Open the desktop as a folder"
-msgstr "Ouvre le bureau comme un dossier"
+#: ../gnome-panel/panel-menu-items.c:599
+msgid "Open the contents of your desktop in a folder"
+msgstr "Ouvre le contenu de votre bureau dans un dossier"
 
-#: ../gnome-panel/panel-menu-items.c:951
+#: ../gnome-panel/panel-menu-items.c:957
 msgid "Places"
 msgstr "Raccourcis"
 
-#: ../gnome-panel/panel-menu-items.c:986
+#: ../gnome-panel/panel-menu-items.c:992
 msgid "System"
 msgstr "Système"
 
@@ -1826,7 +1814,7 @@ msgstr "Système"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1078
+#: ../gnome-panel/panel-menu-items.c:1084
 msgid "panel:showusername|1"
 msgstr "42"
 
@@ -1834,21 +1822,21 @@ msgstr "42"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1090
+#: ../gnome-panel/panel-menu-items.c:1096
 #, c-format
 msgid "Log Out %s..."
 msgstr "Clore la session de %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1094
+#: ../gnome-panel/panel-menu-items.c:1100
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "Se déconnecte de la session %s afin de se reconnecter sous un autre "
 "identifiant"
 
-#: ../gnome-panel/panel-menu-items.c:1135
+#: ../gnome-panel/panel-menu-items.c:1141
 msgid "Could not launch menu item"
 msgstr "Impossible de lancer l'entrée du menu"
 
@@ -2080,7 +2068,7 @@ msgid "Orientation|Right"
 msgstr "Droite"
 
 #: ../gnome-panel/panel-properties-dialog.c:1023
-#: ../gnome-panel/panel-run-dialog.c:1885
+#: ../gnome-panel/panel-run-dialog.c:1889
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "Impossible de charger le fichier « %s »."
@@ -2227,11 +2215,11 @@ msgstr ""
 msgid "Recent Documents"
 msgstr "Documents récents"
 
-#: ../gnome-panel/panel-recent.c:250
+#: ../gnome-panel/panel-recent.c:251
 msgid "Clear Recent Documents"
 msgstr "Vider les documents récents"
 
-#: ../gnome-panel/panel-recent.c:254
+#: ../gnome-panel/panel-recent.c:255
 msgid "Clear all items from the recent documents list"
 msgstr "Vide les entrées de la liste des documents récents"
 
@@ -2266,7 +2254,7 @@ msgstr ""
 "La liste d'URI déposée sur la boîte de dialogue de lancement a un mauvais "
 "format (%d) ou une mauvaise taille (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1889
+#: ../gnome-panel/panel-run-dialog.c:1893
 msgid "Could not display run dialog"
 msgstr "Impossible d'afficher le dialogue de lancement"
 
@@ -2790,21 +2778,25 @@ msgstr "Écran Xinerama sur lequel le tableau de bord est affiché"
 msgid "Y co-ordinate of panel"
 msgstr "Ordonnée du tableau de bord"
 
-#: ../gnome-panel/panel-util.c:657
+#: ../gnome-panel/panel-util.c:659
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Icône « %s » non trouvée"
+
+#: ../gnome-panel/panel-util.c:864
+msgid "file"
+msgstr "fichier"
 
 #: ../gnome-panel/panel.c:479
 #, c-format
 msgid "Open URL: %s"
 msgstr "Ouvrir l'URL : %s"
 
-#: ../gnome-panel/panel.c:1310
+#: ../gnome-panel/panel.c:1311
 msgid "Delete this drawer?"
 msgstr "Supprimer ce tiroir ?"
 
-#: ../gnome-panel/panel.c:1311
+#: ../gnome-panel/panel.c:1312
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2812,15 +2804,15 @@ msgstr ""
 "Lorsqu'un tiroir est supprimé, le tiroir\n"
 "et ses réglages sont perdus."
 
-#: ../gnome-panel/panel.c:1313
+#: ../gnome-panel/panel.c:1314
 msgid "Delete Drawer"
 msgstr "Supprimer le tiroir"
 
-#: ../gnome-panel/panel.c:1315
+#: ../gnome-panel/panel.c:1316
 msgid "Delete this panel?"
 msgstr "Supprimer ce tableau de bord ?"
 
-#: ../gnome-panel/panel.c:1316
+#: ../gnome-panel/panel.c:1317
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2828,7 +2820,7 @@ msgstr ""
 "Lorsqu'un tableau de bord est supprimé, le tableau de bord\n"
 "et ses réglages sont perdus."
 
-#: ../gnome-panel/panel.c:1318
+#: ../gnome-panel/panel.c:1319
 msgid "Delete Panel"
 msgstr "Supprimer ce tableau de bord"
 
@@ -2844,47 +2836,47 @@ msgstr "Applet de test Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Fabrique de l'applet de test Bonobo"
 
-#: ../libpanel-applet/panel-applet.c:1045
+#: ../libpanel-applet/panel-applet.c:1055
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Type d'arrière-plan « %s » incomplet reçu"
 
-#: ../libpanel-applet/panel-applet.c:1059
+#: ../libpanel-applet/panel-applet.c:1069
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Type d'arrière-plan « %s » incomplet reçu : %s"
 
-#: ../libpanel-applet/panel-applet.c:1068
+#: ../libpanel-applet/panel-applet.c:1078
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "L'obtention de l'image %s a échoué"
 
-#: ../libpanel-applet/panel-applet.c:1075
+#: ../libpanel-applet/panel-applet.c:1085
 msgid "Unknown background type received"
 msgstr "Type d'arrière-plan inconnu reçu"
 
-#: ../libpanel-applet/panel-applet.c:1299
+#: ../libpanel-applet/panel-applet.c:1309
 msgid "The Applet's containing Panel's orientation"
 msgstr "L'orientation du tableau de bord contenant l'applet"
 
-#: ../libpanel-applet/panel-applet.c:1307
+#: ../libpanel-applet/panel-applet.c:1317
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "La taille en pixels du tableau de bord contenant l'applet"
 
-#: ../libpanel-applet/panel-applet.c:1315
+#: ../libpanel-applet/panel-applet.c:1325
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 "La couleur ou l'image d'arrière-plan du tableau de bord contenant l'applet"
 
-#: ../libpanel-applet/panel-applet.c:1323
+#: ../libpanel-applet/panel-applet.c:1333
 msgid "The Applet's flags"
 msgstr "Les drapeaux de l'applet"
 
-#: ../libpanel-applet/panel-applet.c:1331
+#: ../libpanel-applet/panel-applet.c:1341
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Intervalle de taille acceptable pour l'applet"
 
-#: ../libpanel-applet/panel-applet.c:1339
+#: ../libpanel-applet/panel-applet.c:1349
 msgid "The Applet's containing Panel is locked down"
 msgstr "Le tableau de bord contenant l'applet est verrouillé"
 
@@ -2954,3 +2946,16 @@ msgstr "_Applet :"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Répertoire des _préférences :"
+
+#~ msgid "Orientation"
+#~ msgstr "Orientation"
+
+#~ msgid "The orientation of the tray."
+#~ msgstr "L'orientation du tray."
+
+#~ msgid "Could not load icon"
+#~ msgstr "Impossible de charger l'icône"
+
+#~ msgid "Find files, folders, and documents on your computer"
+#~ msgstr ""
+#~ "Recherche des fichiers, des dossiers et des documents sur votre ordinateur"
