@@ -1,5 +1,15 @@
 2007-02-12  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-toplevel.c: (panel_toplevel_hide_button_clicked): fix for RTL
+	* panel-widget.[ch]: (panel_widget_size_allocate): start from the end of
+	the panel when placing applets in RTL environments
+	(panel_widget_get_cursorloc): get position in coordinates starting
+	from the right in RTL environments
+	* panel.c: (panel_popup_menu): use panel_widget_get_cursorloc
+	Fix bug #149886, patch by yair <yairhr@yahoo.com>
+
+2007-02-12  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_make_unique_desktop_uri): accept NULL arguments
 	* launcher.c: (panel_launcher_find_writable_uri): remove useless ;
 	* launcher_save_uri: (launcher_save_uri): look at URL key instead of

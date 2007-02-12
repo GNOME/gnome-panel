@@ -176,7 +176,7 @@ void		panel_widget_draw_icon		(PanelWidget *panel,
 /*tells us if an applet is "stuck" on the right side*/
 int		panel_widget_is_applet_stuck	(PanelWidget *panel,
 						 GtkWidget *applet);
-/*get pos of the cursor location*/
+/*get pos of the cursor location in panel coordinates*/
 int		panel_widget_get_cursorloc	(PanelWidget *panel);
 
 /*needed for other panel types*/

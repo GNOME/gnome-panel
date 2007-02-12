@@ -1063,11 +1063,13 @@ panel_toplevel_hide_button_clicked (PanelToplevel *toplevel,
 				    GtkButton     *button)
 {
 	GtkArrowType arrow_type;
+	gboolean ltr;
 
 	if (toplevel->priv->animating ||
 	    toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
 		return;
 
+	ltr = gtk_widget_get_direction (GTK_WIDGET (toplevel)) == GTK_TEXT_DIR_LTR;
 	arrow_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "arrow-type"));
 
 	if (toplevel->priv->state == PANEL_STATE_NORMAL) {
@@ -1081,10 +1083,10 @@ panel_toplevel_hide_button_clicked (PanelToplevel *toplevel,
 			direction = GTK_DIR_DOWN;
 			break;
 		case GTK_ARROW_LEFT:
-			direction = GTK_DIR_LEFT;
+			direction = ltr ? GTK_DIR_LEFT : GTK_DIR_RIGHT;
 			break;
 		case GTK_ARROW_RIGHT:
-			direction = GTK_DIR_RIGHT;
+			direction = ltr ? GTK_DIR_RIGHT : GTK_DIR_LEFT;
 			break;
 		default:
 			g_assert_not_reached ();

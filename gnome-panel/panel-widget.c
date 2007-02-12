@@ -1326,6 +1326,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	GList *list;
 	int i;
 	int old_size;
+	gboolean ltr;
 
 	g_return_if_fail(PANEL_IS_WIDGET(widget));
 	g_return_if_fail(allocation!=NULL);
@@ -1333,6 +1334,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	panel = PANEL_WIDGET(widget);
 
 	old_size = panel->size;
+	ltr = gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR;
 	
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget))
@@ -1395,7 +1397,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				}
 
 				ad->cells = challoc.width;
-				challoc.x = ad->constrained;
+				challoc.x = ltr ? ad->constrained : panel->size - ad->constrained - challoc.width;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
 				if (ad->expand_minor)
@@ -1503,7 +1505,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				if (ad->expand_minor) {
 					challoc.height = allocation->height;
 				}
-				challoc.x = ad->constrained;
+				challoc.x = ltr ? ad->constrained : panel->size - ad->constrained - challoc.width;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
 				challoc.height = ad->cells;
@@ -1867,17 +1869,22 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 	gdk_flush ();
 }
 
-/*get pos of the cursor location*/
+/*get pos of the cursor location in panel coordinates*/
 int
 panel_widget_get_cursorloc (PanelWidget *panel)
 {
 	int x, y;
+	gboolean rtl;
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
 
 	gtk_widget_get_pointer (GTK_WIDGET (panel), &x, &y);
-
-	return panel->orient == GTK_ORIENTATION_HORIZONTAL ? x : y;
+	rtl = gtk_widget_get_direction (GTK_WIDGET (panel)) == GTK_TEXT_DIR_RTL;
+	
+	if (panel->orient == GTK_ORIENTATION_HORIZONTAL)
+		return (rtl ? panel->size - x : x);
+	else
+		return y;
 }
 
 /*calculates the value to move the applet by*/

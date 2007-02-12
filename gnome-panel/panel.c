@@ -350,13 +350,9 @@ panel_popup_menu (PanelToplevel *toplevel,
 	panel_data   = g_object_get_data (G_OBJECT (toplevel), "PanelData");
 
 	current_event = gtk_get_current_event ();
-	if (current_event->type == GDK_BUTTON_PRESS) {
-		int x = -1, y = 1;
-	
-		gtk_widget_get_pointer (GTK_WIDGET (panel_widget), &x, &y);
-
-		panel_data->insertion_pos = panel_widget->orient == GTK_ORIENTATION_HORIZONTAL ? x : y;
-	} else
+	if (current_event->type == GDK_BUTTON_PRESS)
+		panel_data->insertion_pos = panel_widget_get_cursorloc (panel_widget);
+	else
 		panel_data->insertion_pos = -1;
 	
 	menu = make_popup_panel_menu (panel_widget);
