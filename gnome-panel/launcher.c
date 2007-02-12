@@ -654,7 +654,7 @@ panel_launcher_find_writable_uri (const char *launcher_location,
 	char *uri;
 
 	if (!launcher_location)
-		return panel_make_unique_desktop_uri (NULL, source);;
+		return panel_make_unique_desktop_uri (NULL, source);
 
 	if (!strchr (launcher_location, G_DIR_SEPARATOR)) {
 		path = panel_make_full_path (NULL, launcher_location);
@@ -713,22 +713,31 @@ launcher_save_uri (PanelDItemEditor *dialog,
 		   gpointer          data)
 {
 	GKeyFile   *key_file;
-	char       *file;
+	char       *type;
+	char       *exec_or_uri;
 	Launcher   *launcher;
 	char       *new_uri;
 	const char *uri;
 
 	key_file = panel_ditem_editor_get_key_file (dialog);
-	file = panel_util_key_file_get_string (key_file, "Exec");
+	type = panel_util_key_file_get_string (key_file, "Type");
+	if (type && !strcmp (type, "Application"))
+		exec_or_uri = panel_util_key_file_get_string (key_file, "Exec");
+	else if (type && !strcmp (type, "Link"))
+		exec_or_uri = panel_util_key_file_get_string (key_file, "URL");
+	else
+		exec_or_uri = panel_util_key_file_get_string (key_file, "Name");
+	g_free (type);
 
 	launcher = (Launcher *) data;
 
 	if (launcher)
-		new_uri = panel_launcher_find_writable_uri (launcher->location, file);
+		new_uri = panel_launcher_find_writable_uri (launcher->location,
+							    exec_or_uri);
 	else
-		new_uri = panel_launcher_find_writable_uri (NULL, file);
+		new_uri = panel_launcher_find_writable_uri (NULL, exec_or_uri);
 
-	g_free (file);
+	g_free (exec_or_uri);
 
 	uri = panel_ditem_editor_get_uri (dialog);
 

@@ -1,3 +1,12 @@
+2007-02-12  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-util.c: (panel_make_unique_desktop_uri): accept NULL arguments
+	* launcher.c: (panel_launcher_find_writable_uri): remove useless ;
+	* launcher_save_uri: (launcher_save_uri): look at URL key instead of
+	Exec key when saving a Link .desktop file, and default to Name in
+	other cases
+	Should fix bug #402462
+
 2007-02-06  Vincent Untz  <vuntz@gnome.org>
 
 	Revert changes about settings.menu.

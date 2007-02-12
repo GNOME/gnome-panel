@@ -832,6 +832,11 @@ panel_make_unique_desktop_uri (const char *dir,
 	gboolean  exists = TRUE;
 	int       num = 0;
 
+	/* Accept NULL source. Using an emptry string makes our life easier
+	 * than keeping NULL. */
+	if (!source)
+		source = "";
+
 	/* source may be an exec string, a path, or a URI. We truncate
 	 * it at the first space (to get just the command name if it's
 	 * an exec string), strip the path/URI, and remove the suffix
