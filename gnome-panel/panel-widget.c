@@ -32,6 +32,8 @@ typedef enum {
 	PANEL_PUSH_MOVE
 } PanelMovementType;
 
+G_DEFINE_TYPE (PanelWidget, panel_widget, GTK_TYPE_FIXED);
+
 enum {
 	SIZE_CHANGE_SIGNAL,
 	BACK_CHANGE_SIGNAL,
@@ -55,8 +57,6 @@ static guint panel_widget_signals [LAST_SIGNAL] = {0};
 static gboolean panel_applet_in_drag = FALSE;
 static GtkWidget *saved_focus_widget = NULL;
 
-static void panel_widget_class_init     (PanelWidgetClass *klass);
-static void panel_widget_instance_init  (PanelWidget      *panel_widget);
 static void panel_widget_size_request   (GtkWidget        *widget,
 					 GtkRequisition   *requisition);
 static void panel_widget_size_allocate  (GtkWidget        *widget,
@@ -117,33 +117,6 @@ emit_applet_moved (PanelWidget *panel_widget,
 /************************
  widget core
  ************************/
-
-static GtkFixedClass *panel_widget_parent_class = NULL;
-
-GType
-panel_widget_get_type (void)
-{
-	static GType object_type= 0;
-
-	if (object_type == 0) {
-		static const GTypeInfo object_info = {
-                    sizeof (PanelWidgetClass),
-                    (GBaseInitFunc)         NULL,
-                    (GBaseFinalizeFunc)     NULL,
-                    (GClassInitFunc)        panel_widget_class_init,
-                    NULL,                   /* class_finalize */
-                    NULL,                   /* class_data */
-                    sizeof (PanelWidget),
-                    0,                      /* n_preallocs */
-                    (GInstanceInitFunc)     panel_widget_instance_init 
-		};
-
-		object_type = g_type_register_static (GTK_TYPE_FIXED , "PanelWidget", &object_info, 0);
-		panel_widget_parent_class = g_type_class_ref (GTK_TYPE_FIXED);
-	}
-
-	return object_type;
-}
 
 static void
 add_tab_bindings (GtkBindingSet    *binding_set,
@@ -1688,7 +1661,7 @@ panel_widget_destroy (GtkObject *obj)
 }
 
 static void
-panel_widget_instance_init (PanelWidget *panel)
+panel_widget_init (PanelWidget *panel)
 {
 	GtkWidget *widget = (GtkWidget *) panel;
 

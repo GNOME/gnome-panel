@@ -32,7 +32,7 @@ enum {
 
 #define BUTTON_WIDGET_DISPLACEMENT 2
 
-static GObjectClass *parent_class;
+G_DEFINE_TYPE (ButtonWidget, button_widget, GTK_TYPE_BUTTON);
 
 /* colorshift a pixbuf */
 static void
@@ -158,7 +158,7 @@ button_widget_unrealize (GtkWidget *widget)
 		button->event_window = NULL;
 	}
 
-	GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+	GTK_WIDGET_CLASS (button_widget_parent_class)->unrealize (widget);
 }
 
 static void
@@ -220,7 +220,7 @@ button_widget_finalize (GObject *object)
 	g_free (button->filename);
 	button->filename = NULL;
 
-	parent_class->finalize (object);
+	G_OBJECT_CLASS (button_widget_parent_class)->finalize (object);
 }
 
 static void
@@ -514,8 +514,8 @@ button_widget_activate (GtkButton *button)
 	if (!button_widget->activatable)
 		return;
 
-	if (GTK_BUTTON_CLASS (parent_class)->activate)
-		GTK_BUTTON_CLASS (parent_class)->activate (button);
+	if (GTK_BUTTON_CLASS (button_widget_parent_class)->activate)
+		GTK_BUTTON_CLASS (button_widget_parent_class)->activate (button);
 }
 
 static gboolean
@@ -528,7 +528,7 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 	/* we don't want to have two/three "click" events for double/triple
 	 * clicks. FIXME: this is only a workaround, waiting for bug 159101 */
 	    event->type == GDK_BUTTON_PRESS)
-		return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
+		return GTK_WIDGET_CLASS (button_widget_parent_class)->button_press_event (widget, event);
 
 	return FALSE;
 }
@@ -541,7 +541,7 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
 	in_button = GTK_BUTTON (widget)->in_button;
-	GTK_WIDGET_CLASS (parent_class)->enter_notify_event (widget, event);
+	GTK_WIDGET_CLASS (button_widget_parent_class)->enter_notify_event (widget, event);
 	if (in_button != GTK_BUTTON (widget)->in_button &&
 	    panel_global_config_get_highlight_when_over ())
 		gtk_widget_queue_draw (widget);
@@ -557,7 +557,7 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
 	in_button = GTK_BUTTON (widget)->in_button;
-	GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget, event);
+	GTK_WIDGET_CLASS (button_widget_parent_class)->leave_notify_event (widget, event);
 	if (in_button != GTK_BUTTON (widget)->in_button &&
 	    panel_global_config_get_highlight_when_over ())
 		gtk_widget_queue_draw (widget);
@@ -566,7 +566,7 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 }
 
 static void
-button_widget_instance_init (ButtonWidget *button)
+button_widget_init (ButtonWidget *button)
 {
 	button->icon_theme = NULL;
 	button->pixbuf     = NULL;
@@ -590,8 +590,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 	GObjectClass *gobject_class   = (GObjectClass   *) klass;
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
 	GtkButtonClass *button_class  = (GtkButtonClass *) klass;
-
-	parent_class = g_type_class_peek_parent (klass);
 
 	gobject_class->finalize     = button_widget_finalize;
 	gobject_class->get_property = button_widget_get_property;
@@ -653,31 +651,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 					     "The desired icon for the ButtonWidget",
 					     NULL,
 					     G_PARAM_READWRITE));
-}
-
-GType
-button_widget_get_type (void)
-{
-	static GType object_type = 0;
-
-	if (object_type == 0) {
-		static const GTypeInfo object_info = {
-			sizeof (ButtonWidgetClass),
-                    	(GBaseInitFunc)         NULL,
-                    	(GBaseFinalizeFunc)     NULL,
-                    	(GClassInitFunc)        button_widget_class_init,
-                    	NULL,                   /* class_finalize */
-                    	NULL,                   /* class_data */
-                    	sizeof (ButtonWidget),
-                    	0,                      /* n_preallocs */
-                    	(GInstanceInitFunc)     button_widget_instance_init
-
-		};
-
-		object_type = g_type_register_static (GTK_TYPE_BUTTON, "ButtonWidget", &object_info, 0);
-	}
-
-	return object_type;
 }
 
 GtkWidget *

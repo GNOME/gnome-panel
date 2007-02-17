@@ -49,6 +49,8 @@
 #include "panel-compatibility.h"
 #include "panel-gdm.h"
 
+G_DEFINE_TYPE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET);
+
 #define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
 
 #define LOGOUT_PROMPT_KEY "/apps/gnome-session/options/logout_prompt"
@@ -67,8 +69,6 @@ struct _PanelActionButtonPrivate {
 	
 	guint                  dnd_enabled : 1;
 };
-
-static GObjectClass *parent_class;
 
 static GConfEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_NONE,           "none"           },
@@ -444,7 +444,7 @@ panel_action_button_finalize (GObject *object)
 				    button->priv->gconf_notify);
 	button->priv->gconf_notify = 0;
 
-	parent_class->finalize (object);
+	G_OBJECT_CLASS (panel_action_button_parent_class)->finalize (object);
 }
 
 static void
@@ -556,8 +556,6 @@ panel_action_button_class_init (PanelActionButtonClass *klass)
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
 	GtkButtonClass *button_class  = (GtkButtonClass *) klass;
 
-	parent_class = g_type_class_peek_parent (klass);
-
 	gobject_class->finalize     = panel_action_button_finalize;
 	gobject_class->get_property = panel_action_button_get_property;
 	gobject_class->set_property = panel_action_button_set_property;
@@ -589,8 +587,7 @@ panel_action_button_class_init (PanelActionButtonClass *klass)
 }
 
 static void
-panel_action_button_instance_init (PanelActionButton      *button,
-				   PanelActionButtonClass *klass)
+panel_action_button_init (PanelActionButton *button)
 {
 	button->priv = PANEL_ACTION_BUTTON_GET_PRIVATE (button);
 
@@ -599,32 +596,6 @@ panel_action_button_instance_init (PanelActionButton      *button,
 
 	button->priv->gconf_notify = 0;
 	button->priv->dnd_enabled  = FALSE;
-}
-
-GType
-panel_action_button_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelActionButtonClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) panel_action_button_class_init,
-			NULL,
-			NULL,
-			sizeof (PanelActionButton),
-			0,
-			(GInstanceInitFunc) panel_action_button_instance_init,
-			NULL
-		};
-
-		type = g_type_register_static (
-				BUTTON_TYPE_WIDGET, "PanelActionButton", &info, 0);
-	}
-
-	return type;
 }
 
 void

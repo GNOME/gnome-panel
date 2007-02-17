@@ -42,9 +42,9 @@
 #include "panel-stock-icons.h"
 #include "xstuff.h"
 
-#define PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFramePrivate))
+G_DEFINE_TYPE (PanelAppletFrame, panel_applet_frame, GTK_TYPE_EVENT_BOX);
 
-#undef PANEL_APPLET_FRAME_DEBUG
+#define PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFramePrivate))
 
 #define HANDLE_SIZE 10
 
@@ -82,8 +82,6 @@ typedef struct {
 	gboolean          exactpos;
 	char             *id;
 } PanelAppletFrameActivating;
-
-static GObjectClass *parent_class;
 
 /* Keep in sync with panel-applet.h. Uggh.
  */	
@@ -555,7 +553,7 @@ panel_applet_frame_finalize (GObject *object)
 	g_free (frame->priv->iid);
 	frame->priv->iid = NULL;
 
-        parent_class->finalize (object);
+        G_OBJECT_CLASS (panel_applet_frame_parent_class)->finalize (object);
 }
 
 static void
@@ -604,7 +602,7 @@ panel_applet_frame_expose (GtkWidget      *widget,
 			   GdkEventExpose *event)
 {
 	if (GTK_WIDGET_DRAWABLE (widget)) {
-		GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->expose_event (widget, event);
 
 		panel_applet_frame_paint (widget, &event->area);
 
@@ -647,7 +645,7 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 	bin = GTK_BIN (widget);
 
 	if (!frame->priv->has_handle) {
-		GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_request (widget, requisition);
 		return;
 	}
   
@@ -697,7 +695,7 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	bin = GTK_BIN (widget);
 
 	if (!frame->priv->has_handle) {
-		GTK_WIDGET_CLASS (parent_class)->size_allocate (widget,
+		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_allocate (widget,
 								allocation);
 		panel_applet_frame_update_background_size (frame,
 							   &old_allocation,
@@ -1059,13 +1057,10 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 }
 
 static void
-panel_applet_frame_class_init (PanelAppletFrameClass *klass,
-			       gpointer               dummy)
+panel_applet_frame_class_init (PanelAppletFrameClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
-
-	parent_class = g_type_class_peek_parent (klass);
 
 	gobject_class->finalize = panel_applet_frame_finalize;
 
@@ -1079,8 +1074,7 @@ panel_applet_frame_class_init (PanelAppletFrameClass *klass,
 }
 
 static void
-panel_applet_frame_instance_init (PanelAppletFrame      *frame,
-				  PanelAppletFrameClass *klass)
+panel_applet_frame_init (PanelAppletFrame *frame)
 {
 	frame->priv = PANEL_APPLET_FRAME_GET_PRIVATE (frame);
 
@@ -1092,33 +1086,6 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 	frame->priv->applet_info      = NULL;
 	frame->priv->moving_focus_out = FALSE;
 	frame->priv->has_handle       = FALSE;
-}
-
-GType
-panel_applet_frame_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelAppletFrameClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) panel_applet_frame_class_init,
-			NULL,
-			NULL,
-			sizeof (PanelAppletFrame),
-			0,
-			(GInstanceInitFunc) panel_applet_frame_instance_init,
-			NULL
-		};
-
-		type = g_type_register_static (GTK_TYPE_EVENT_BOX,
-					       "PanelAppletFrame",
-					       &info, 0);
-	}
-
-	return type;
 }
 
 static GNOME_Vertigo_PanelAppletShell

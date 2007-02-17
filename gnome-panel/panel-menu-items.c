@@ -58,6 +58,9 @@
 #define COMPUTER_NAME_KEY       "/apps/nautilus/desktop/computer_icon_name"
 #define MAX_ITEMS_OR_SUBMENU    5
 
+G_DEFINE_TYPE (PanelPlaceMenuItem, panel_place_menu_item, GTK_TYPE_IMAGE_MENU_ITEM);
+G_DEFINE_TYPE (PanelDesktopMenuItem, panel_desktop_menu_item, GTK_TYPE_IMAGE_MENU_ITEM);
+
 #define PANEL_PLACE_MENU_ITEM_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_PLACE_MENU_ITEM, PanelPlaceMenuItemPrivate))
 #define PANEL_DESKTOP_MENU_ITEM_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_DESKTOP_MENU_ITEM, PanelDesktopMenuItemPrivate))
 
@@ -82,9 +85,6 @@ struct _PanelDesktopMenuItemPrivate {
 	guint        use_image : 1;
 	guint        append_lock_logout : 1;
 };
-
-static GObjectClass *place_parent_class;
-static GObjectClass *desktop_parent_class;
 
 static GnomeVFSVolumeMonitor *volume_monitor = NULL;
 
@@ -779,7 +779,7 @@ panel_place_menu_item_finalize (GObject *object)
 					     menuitem->priv->volume_unmounted_id);
 	menuitem->priv->volume_unmounted_id = 0;
 
-	place_parent_class->finalize (object);
+	G_OBJECT_CLASS (panel_place_menu_item_parent_class)->finalize (object);
 }
 
 static void
@@ -790,12 +790,11 @@ panel_desktop_menu_item_finalize (GObject *object)
 	if (menuitem->priv->append_lock_logout)
 		panel_lockdown_notify_remove (G_CALLBACK (panel_desktop_menu_item_recreate_menu),
 					      menuitem);
-	desktop_parent_class->finalize (object);
+	G_OBJECT_CLASS (panel_desktop_menu_item_parent_class)->finalize (object);
 }
 
 static void
-panel_place_menu_item_instance_init (PanelPlaceMenuItem      *menuitem,
-				     PanelPlaceMenuItemClass *klass)
+panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 {
 	char *bookmarks_filename;
 	char *bookmarks_uri;
@@ -865,8 +864,7 @@ panel_place_menu_item_instance_init (PanelPlaceMenuItem      *menuitem,
 }
 
 static void
-panel_desktop_menu_item_instance_init (PanelDesktopMenuItem      *menuitem,
-				       PanelDesktopMenuItemClass *klass)
+panel_desktop_menu_item_init (PanelDesktopMenuItem *menuitem)
 {
 	menuitem->priv = PANEL_DESKTOP_MENU_ITEM_GET_PRIVATE (menuitem);
 }
@@ -876,7 +874,6 @@ panel_place_menu_item_class_init (PanelPlaceMenuItemClass *klass)
 {
 	GObjectClass *gobject_class = (GObjectClass   *) klass;
 
-	place_parent_class = g_type_class_peek_parent (klass);
 	gobject_class->finalize  = panel_place_menu_item_finalize;
 
 	g_type_class_add_private (klass, sizeof (PanelPlaceMenuItemPrivate));
@@ -887,64 +884,10 @@ panel_desktop_menu_item_class_init (PanelDesktopMenuItemClass *klass)
 {
 	GObjectClass *gobject_class = (GObjectClass   *) klass;
 
-	desktop_parent_class = g_type_class_peek_parent (klass);
 	gobject_class->finalize  = panel_desktop_menu_item_finalize;
 
 	g_type_class_add_private (klass, sizeof (PanelDesktopMenuItemPrivate));
 }
-
-GType
-panel_place_menu_item_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelPlaceMenuItemClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) panel_place_menu_item_class_init,
-			NULL,
-			NULL,
-			sizeof (PanelPlaceMenuItem),
-			0,
-			(GInstanceInitFunc) panel_place_menu_item_instance_init,
-			NULL
-		};
-
-		type = g_type_register_static (GTK_TYPE_IMAGE_MENU_ITEM,
-					       "PanelPlaceMenuItem", &info, 0);
-	}
-
-	return type;
-}
-
-GType
-panel_desktop_menu_item_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelDesktopMenuItemClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) panel_desktop_menu_item_class_init,
-			NULL,
-			NULL,
-			sizeof (PanelDesktopMenuItem),
-			0,
-			(GInstanceInitFunc) panel_desktop_menu_item_instance_init,
-			NULL
-		};
-
-		type = g_type_register_static (GTK_TYPE_IMAGE_MENU_ITEM,
-					       "PanelDesktopMenuItem", &info, 0);
-	}
-
-	return type;
-}
-
 
 GtkWidget *
 panel_place_menu_item_new (gboolean use_image)

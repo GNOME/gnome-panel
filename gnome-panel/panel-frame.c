@@ -28,7 +28,7 @@
 
 #include "panel-typebuiltins.h"
 
-static GObjectClass *parent_class;
+G_DEFINE_TYPE (PanelFrame, panel_frame, GTK_TYPE_BIN);
 
 enum {
 	PROP_0,
@@ -191,8 +191,8 @@ panel_frame_expose (GtkWidget      *widget,
 	if (!GTK_WIDGET_DRAWABLE (widget))
 		return retval;
 
-	if (GTK_WIDGET_CLASS (parent_class)->expose_event)
-		retval = GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+	if (GTK_WIDGET_CLASS (panel_frame_parent_class)->expose_event)
+		retval = GTK_WIDGET_CLASS (panel_frame_parent_class)->expose_event (widget, event);
 
 	panel_frame_draw (widget, frame->edges);
 
@@ -249,8 +249,6 @@ panel_frame_class_init (PanelFrameClass *klass)
 	GObjectClass   *gobject_class   = (GObjectClass    *) klass;
 	GtkWidgetClass *widget_class    = (GtkWidgetClass  *) klass;
 
-	parent_class = g_type_class_peek_parent (klass);
-
 	gobject_class->set_property = panel_frame_set_property;
         gobject_class->get_property = panel_frame_get_property;
 
@@ -271,35 +269,9 @@ panel_frame_class_init (PanelFrameClass *klass)
 }
 
 static void
-panel_frame_instance_init (PanelFrame      *frame,
-			      PanelFrameClass *klass)
+panel_frame_init (PanelFrame *frame)
 {
 	frame->edges = PANEL_EDGE_NONE;
-}
-
-GType
-panel_frame_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelFrameClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) panel_frame_class_init,
-			NULL,
-			NULL,
-			sizeof (PanelFrame),
-			0,
-			(GInstanceInitFunc) panel_frame_instance_init,
-			NULL
-		};
-
-		type = g_type_register_static (GTK_TYPE_BIN, "PanelFrame", &info, 0);
-	}
-
-	return type;
 }
 
 GtkWidget *

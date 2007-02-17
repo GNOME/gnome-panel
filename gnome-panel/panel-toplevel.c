@@ -47,6 +47,8 @@
 #include "panel-config-global.h"
 #include "panel-lockdown.h"
 
+G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW);
+
 #define PANEL_TOPLEVEL_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_TOPLEVEL, PanelToplevelPrivate))
 
 #define DEFAULT_SIZE              48
@@ -212,7 +214,6 @@ enum {
 	PROP_ARROWS_ENABLED
 };
 
-static GObjectClass *parent_class;
 static guint         toplevel_signals [LAST_SIGNAL] = { 0 };
 static GSList       *toplevel_list = NULL;
 
@@ -2664,8 +2665,8 @@ panel_toplevel_realize (GtkWidget *widget)
 	gtk_window_set_decorated (GTK_WINDOW (widget), FALSE);
 	gtk_window_stick (GTK_WINDOW (widget));
 
-	if (GTK_WIDGET_CLASS (parent_class)->realize)
-		GTK_WIDGET_CLASS (parent_class)->realize (widget);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize)
+		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize (widget);
 
 	panel_struts_set_window_hint (toplevel);
 	panel_xutils_set_window_type (widget->window, PANEL_XUTILS_TYPE_DOCK);
@@ -2697,8 +2698,8 @@ panel_toplevel_unrealize (GtkWidget *widget)
 {
 	panel_toplevel_disconnect_timeouts (PANEL_TOPLEVEL (widget));
 
-	if (GTK_WIDGET_CLASS (parent_class)->unrealize)
-		GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->unrealize)
+		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->unrealize (widget);
 }
 
 static void
@@ -2716,8 +2717,8 @@ panel_toplevel_destroy (GtkObject *widget)
 
 	panel_toplevel_disconnect_timeouts (toplevel);
 
-	if (GTK_OBJECT_CLASS (parent_class)->destroy)
-		GTK_OBJECT_CLASS (parent_class)->destroy (widget);
+	if (GTK_OBJECT_CLASS (panel_toplevel_parent_class)->destroy)
+		GTK_OBJECT_CLASS (panel_toplevel_parent_class)->destroy (widget);
 }
 
 static void
@@ -2851,8 +2852,8 @@ panel_toplevel_expose (GtkWidget      *widget,
 	if (!GTK_WIDGET_DRAWABLE (widget))
 		return retval;
 
-	if (GTK_WIDGET_CLASS (parent_class)->expose_event)
-		retval = GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->expose_event)
+		retval = GTK_WIDGET_CLASS (panel_toplevel_parent_class)->expose_event (widget, event);
 
 	edges = toplevel->priv->edges;
 	panel_frame_draw (widget, edges);
@@ -3006,8 +3007,8 @@ panel_toplevel_key_press_event (GtkWidget   *widget,
 	    panel_toplevel_handle_grab_op_key_event (toplevel, event))
 		return TRUE;
 
-	if (GTK_WIDGET_CLASS (parent_class)->key_press_event)
-		return GTK_WIDGET_CLASS (parent_class)->key_press_event (widget, event);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->key_press_event)
+		return GTK_WIDGET_CLASS (panel_toplevel_parent_class)->key_press_event (widget, event);
 
 	return FALSE;
 }
@@ -3395,8 +3396,8 @@ panel_toplevel_enter_notify_event (GtkWidget        *widget,
 	if (toplevel->priv->auto_hide && event->detail != GDK_NOTIFY_INFERIOR)
 		panel_toplevel_queue_auto_unhide (toplevel);
 
-	if (GTK_WIDGET_CLASS (parent_class)->enter_notify_event)
-		return GTK_WIDGET_CLASS (parent_class)->enter_notify_event (widget, event);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->enter_notify_event)
+		return GTK_WIDGET_CLASS (panel_toplevel_parent_class)->enter_notify_event (widget, event);
 
 	return FALSE;
 }
@@ -3414,8 +3415,8 @@ panel_toplevel_leave_notify_event (GtkWidget        *widget,
 	if (toplevel->priv->auto_hide && event->detail != GDK_NOTIFY_INFERIOR)
 		panel_toplevel_queue_auto_hide (toplevel);
 
-	if (GTK_WIDGET_CLASS (parent_class)->leave_notify_event)
-		return GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget, event);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->leave_notify_event)
+		return GTK_WIDGET_CLASS (panel_toplevel_parent_class)->leave_notify_event (widget, event);
 
 	return FALSE;
 }
@@ -3429,8 +3430,8 @@ panel_toplevel_focus_in_event (GtkWidget     *widget,
 	if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
 		panel_toplevel_unhide (toplevel);
 
-	if (GTK_WIDGET_CLASS (parent_class)->focus_in_event)
-		return GTK_WIDGET_CLASS (parent_class)->focus_in_event (widget, event);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->focus_in_event)
+		return GTK_WIDGET_CLASS (panel_toplevel_parent_class)->focus_in_event (widget, event);
 
 	return FALSE;
 }
@@ -3447,8 +3448,8 @@ panel_toplevel_focus_out_event (GtkWidget     *widget,
 	if (toplevel->priv->auto_hide)
 		panel_toplevel_queue_auto_hide (toplevel);
 
-	if (GTK_WIDGET_CLASS (parent_class)->focus_out_event)
-		return GTK_WIDGET_CLASS (parent_class)->focus_out_event (widget, event);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->focus_out_event)
+		return GTK_WIDGET_CLASS (panel_toplevel_parent_class)->focus_out_event (widget, event);
 
 	return FALSE;
 }
@@ -3459,8 +3460,8 @@ panel_toplevel_style_set (GtkWidget *widget,
 {
 	panel_toplevel_update_hide_buttons (PANEL_TOPLEVEL (widget));
 
-	if (GTK_WIDGET_CLASS (parent_class)->style_set)
-		GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->style_set)
+		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->style_set (widget, previous_style);
 }
 
 static void
@@ -3501,8 +3502,8 @@ panel_toplevel_screen_changed (GtkWidget *widget,
 {
 	panel_toplevel_update_gtk_settings (PANEL_TOPLEVEL (widget));
 
-	if (GTK_WIDGET_CLASS (parent_class)->screen_changed)
-		GTK_WIDGET_CLASS (parent_class)->screen_changed (widget, previous_screen);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->screen_changed)
+		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->screen_changed (widget, previous_screen);
 
 	gtk_widget_queue_resize (widget);
 }
@@ -3688,7 +3689,7 @@ panel_toplevel_finalize (GObject *object)
 		g_free (toplevel->priv->name);
 	toplevel->priv->name = NULL;
 
-	parent_class->finalize (object);
+	G_OBJECT_CLASS (panel_toplevel_parent_class)->finalize (object);
 }
 
 static void
@@ -3701,8 +3702,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	GtkBindingSet     *binding_set;
 
         binding_set = gtk_binding_set_by_class (klass);
-
-	parent_class = g_type_class_peek_parent (klass);
 
 	gobject_class->set_property = panel_toplevel_set_property;
         gobject_class->get_property = panel_toplevel_get_property;
@@ -4099,8 +4098,7 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 }
 
 static void
-panel_toplevel_instance_init (PanelToplevel      *toplevel,
-			      PanelToplevelClass *klass)
+panel_toplevel_init (PanelToplevel *toplevel)
 {
 	int i;
 
@@ -4199,32 +4197,6 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	                  "delete-event",
 	                  G_CALLBACK (gtk_true),
 	                  NULL);
-}
-
-GType
-panel_toplevel_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelToplevelClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) panel_toplevel_class_init,
-			NULL,
-			NULL,
-			sizeof (PanelToplevel),
-			0,
-			(GInstanceInitFunc) panel_toplevel_instance_init,
-			NULL
-		};
-
-		type = g_type_register_static (
-				GTK_TYPE_WINDOW, "PanelToplevel", &info, 0);
-	}
-
-	return type;
 }
 
 PanelWidget *

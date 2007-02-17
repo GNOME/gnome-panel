@@ -43,6 +43,8 @@
 #include "panel-stock-icons.h"
 #include "panel-typebuiltins.h"
 
+G_DEFINE_TYPE (PanelMenuBar, panel_menu_bar, GTK_TYPE_MENU_BAR);
+
 #define PANEL_MENU_BAR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BAR, PanelMenuBarPrivate))
 
 struct _PanelMenuBarPrivate {
@@ -61,8 +63,6 @@ enum {
 	PROP_0,
 	PROP_ORIENTATION,
 };
-
-static GObjectClass *parent_class;
 
 static gboolean
 panel_menu_bar_enter_applications (GtkWidget        *widget,
@@ -169,8 +169,7 @@ panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 }
 
 static void
-panel_menu_bar_instance_init (PanelMenuBar      *menubar,
-			      PanelMenuBarClass *klass)
+panel_menu_bar_init (PanelMenuBar *menubar)
 {
 	GtkWidget *image;
 
@@ -280,7 +279,7 @@ panel_menu_bar_size_allocate (GtkWidget     *widget,
 	old_allocation.width  = widget->allocation.width;
 	old_allocation.height = widget->allocation.height;
 
-	GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+	GTK_WIDGET_CLASS (panel_menu_bar_parent_class)->size_allocate (widget, allocation);
 
 	if (old_allocation.x      == allocation->x &&
 	    old_allocation.y      == allocation->y &&
@@ -302,8 +301,6 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass   *) klass;
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
-
-	parent_class = g_type_class_peek_parent (klass);
 
 	gobject_class->get_property = panel_menu_bar_get_property;
         gobject_class->set_property = panel_menu_bar_set_property;
@@ -330,32 +327,6 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 		"  GtkMenuBar::internal-padding = 0\n"
 		"}\n"
 		"class \"PanelMenuBar\" style \"panel-menubar-style\"");
-}
-
-GType
-panel_menu_bar_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelMenuBarClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) panel_menu_bar_class_init,
-			NULL,
-			NULL,
-			sizeof (PanelMenuBar),
-			0,
-			(GInstanceInitFunc) panel_menu_bar_instance_init,
-			NULL
-		};
-
-		type = g_type_register_static (
-				GTK_TYPE_MENU_BAR, "PanelMenuBar", &info, 0);
-	}
-
-	return type;
 }
 
 static gboolean

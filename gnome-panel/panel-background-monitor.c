@@ -70,7 +70,7 @@ struct _PanelBackgroundMonitor {
 	gboolean   display_grabbed;
 };
 
-static GObjectClass *parent_class;
+G_DEFINE_TYPE (PanelBackgroundMonitor, panel_background_monitor, G_TYPE_OBJECT);
 
 static PanelBackgroundMonitor **global_background_monitors = NULL;
 
@@ -96,15 +96,13 @@ panel_background_monitor_finalize (GObject *object)
 		g_object_unref (monitor->gdkpixbuf);
 	monitor->gdkpixbuf = NULL;
 
-	parent_class->finalize (object);
+	G_OBJECT_CLASS (panel_background_monitor_parent_class)->finalize (object);
 }
 
 static void
 panel_background_monitor_class_init (PanelBackgroundMonitorClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	parent_class = g_type_class_peek_parent (klass);
 
 	signals [CHANGED] = 
 		g_signal_new ("changed",
@@ -133,31 +131,6 @@ panel_background_monitor_init (PanelBackgroundMonitor *monitor)
 	monitor->gdkpixbuf = NULL;
 
 	monitor->display_grabbed = FALSE;
-}
-
-GType
-panel_background_monitor_get_type (void)
-{
-	static GType object_type = 0;
-
-	if (!object_type) {
-		static const GTypeInfo object_info = {
-			sizeof (PanelBackgroundMonitorClass),
-			(GBaseInitFunc) NULL,
-			(GBaseFinalizeFunc) NULL,
-			(GClassInitFunc) panel_background_monitor_class_init,
-			NULL,           /* class_finalize */
-			NULL,           /* class_data */
-			sizeof (PanelBackgroundMonitor),
-			0,              /* n_preallocs */
-			(GInstanceInitFunc) panel_background_monitor_init,
-		};
-
-		object_type = g_type_register_static (
-					G_TYPE_OBJECT, "PanelBackgroundMonitor", &object_info, 0);
-	}
-
-	return object_type;
 }
 
 static void

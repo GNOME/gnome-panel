@@ -38,6 +38,8 @@
 #include "panel-lockdown.h"
 #include "panel-a11y.h"
 
+G_DEFINE_TYPE (PanelMenuButton, panel_menu_button, BUTTON_TYPE_WIDGET);
+
 #define PANEL_MENU_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BUTTON, PanelMenuButtonPrivate))
 
 enum {
@@ -91,8 +93,6 @@ static void panel_menu_button_recreate_menu         (PanelMenuButton *button);
 static void panel_menu_button_set_icon              (PanelMenuButton *button);
 
 static AtkObject *panel_menu_button_get_accessible  (GtkWidget       *widget);
-
-static GObjectClass *parent_class;
 
 static const char *
 panel_menu_path_root_to_filename (MenuPathRoot path_root)
@@ -159,8 +159,7 @@ panel_menu_scheme_to_path_root (const char *scheme)
 }
 
 static void
-panel_menu_button_instance_init (PanelMenuButton      *button,
-				 PanelMenuButtonClass *klass)
+panel_menu_button_init (PanelMenuButton *button)
 {
 	button->priv = PANEL_MENU_BUTTON_GET_PRIVATE (button);
 
@@ -205,7 +204,7 @@ panel_menu_button_finalize (GObject *object)
 	g_free (button->priv->tooltip);
 	button->priv->tooltip = NULL;
 
-	parent_class->finalize (object);
+	G_OBJECT_CLASS (panel_menu_button_parent_class)->finalize (object);
 }
 
 static void
@@ -312,8 +311,8 @@ panel_menu_button_parent_set (GtkWidget *widget,
 	panel_menu_button_associate_panel (button);
 	panel_menu_button_set_icon (button);
 
-	if (GTK_WIDGET_CLASS (parent_class)->parent_set)
-		GTK_WIDGET_CLASS (parent_class)->parent_set (widget, previous_parent);
+	if (GTK_WIDGET_CLASS (panel_menu_button_parent_class)->parent_set)
+		GTK_WIDGET_CLASS (panel_menu_button_parent_class)->parent_set (widget, previous_parent);
 }
 
 static void
@@ -441,8 +440,8 @@ panel_menu_button_pressed (GtkButton *gtk_button)
 
 	button = PANEL_MENU_BUTTON (gtk_button);
 
-	if (GTK_BUTTON_CLASS (parent_class)->pressed)
-		GTK_BUTTON_CLASS (parent_class)->pressed (gtk_button);
+	if (GTK_BUTTON_CLASS (panel_menu_button_parent_class)->pressed)
+		GTK_BUTTON_CLASS (panel_menu_button_parent_class)->pressed (gtk_button);
 
 	panel_menu_button_popup_menu (button, 0, gtk_get_current_event_time());
 }
@@ -457,8 +456,8 @@ panel_menu_button_clicked (GtkButton *gtk_button)
 
 	button = PANEL_MENU_BUTTON (gtk_button);
 
-	if (GTK_BUTTON_CLASS (parent_class)->clicked)
-		GTK_BUTTON_CLASS (parent_class)->clicked (gtk_button);
+	if (GTK_BUTTON_CLASS (panel_menu_button_parent_class)->clicked)
+		GTK_BUTTON_CLASS (panel_menu_button_parent_class)->clicked (gtk_button);
 
 	if ((event = gtk_get_current_event ())) {
 		panel_menu_button_popup_menu (button,
@@ -476,8 +475,6 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 	GObjectClass   *gobject_class = (GObjectClass   *) klass;
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
 	GtkButtonClass *button_class  = (GtkButtonClass *) klass;
-
-	parent_class = g_type_class_peek_parent (klass);
 
 	gobject_class->finalize     = panel_menu_button_finalize;
 	gobject_class->get_property = panel_menu_button_get_property;
@@ -545,32 +542,6 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 					      "Whether or not drag and drop is enabled on the widget",
 					      FALSE,
 					      G_PARAM_READWRITE));
-}
-
-GType
-panel_menu_button_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelMenuButtonClass),
-			NULL,
-			NULL,
-			(GClassInitFunc) panel_menu_button_class_init,
-			NULL,
-			NULL,
-			sizeof (PanelMenuButton),
-			0,
-			(GInstanceInitFunc) panel_menu_button_instance_init,
-			NULL
-		};
-
-		type = g_type_register_static (
-				BUTTON_TYPE_WIDGET, "PanelMenuButton", &info, 0);
-	}
-
-	return type;
 }
 
 static void
@@ -1215,5 +1186,5 @@ panel_menu_button_get_accessible (GtkWidget *widget)
 
 	first_time = FALSE;
 	 
-	return GTK_WIDGET_CLASS (parent_class)->get_accessible (widget);
+	return GTK_WIDGET_CLASS (panel_menu_button_parent_class)->get_accessible (widget);
 }
