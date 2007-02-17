@@ -893,7 +893,6 @@ GtkWidget *
 panel_place_menu_item_new (gboolean use_image)
 {
 	PanelPlaceMenuItem *menuitem;
-	GtkWidget          *accel_label;
 	GtkWidget          *image;
 
 	menuitem = g_object_new (PANEL_TYPE_PLACE_MENU_ITEM, NULL);
@@ -904,7 +903,7 @@ panel_place_menu_item_new (gboolean use_image)
 	else
 		image = NULL;
 
-	setup_menuitem (menuitem,
+	setup_menuitem (GTK_WIDGET (menuitem),
 			panel_menu_icon_get_size (),
 			image,
 			_("Places"),
@@ -924,7 +923,6 @@ panel_desktop_menu_item_new (gboolean use_image,
 			     gboolean append_lock_logout)
 {
 	PanelDesktopMenuItem *menuitem;
-	GtkWidget            *accel_label;
 	GtkWidget            *image;
 
 	menuitem = g_object_new (PANEL_TYPE_DESKTOP_MENU_ITEM, NULL);
@@ -935,7 +933,7 @@ panel_desktop_menu_item_new (gboolean use_image,
 	else
 		image = NULL;
 
-	setup_menuitem (menuitem,
+	setup_menuitem (GTK_WIDGET (menuitem),
 			panel_menu_icon_get_size (),
 			image,
 			_("System"),
