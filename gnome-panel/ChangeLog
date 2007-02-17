@@ -1,5 +1,18 @@
 2007-02-17  Vincent Untz  <vuntz@gnome.org>
 
+	Fix error dialogs always popping up when there's an applet that fails
+	to load and we move a launcher or add another applet.
+
+	* panel-applet-frame.c: (panel_applet_frame_loading_failed): add the
+	applet to a list of applet we don't want to reload
+	(panel_applet_frame_loading_failed_response): if the user chooses to
+	delete the applet, remove the id from the list of applet we don't want
+	to reload, since it can be reused by another applet
+	(panel_applet_frame_load): don't load the applet if we already failed
+	to load it once
+
+2007-02-17  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-items.c: (panel_place_menu_item_new):
 	(panel_desktop_menu_item_new): fix warnings introduced by last commit
 

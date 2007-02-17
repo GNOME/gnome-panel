@@ -92,6 +92,8 @@ typedef enum {
 	APPLET_HAS_HANDLE   = 1 << 2
 } PanelAppletFlags;
 
+static GSList *no_reload_applets = NULL;
+
 static void panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 					   PanelAppletFrame *frame);
 
@@ -329,6 +331,10 @@ panel_applet_frame_load (const gchar *iid,
 	g_return_if_fail (iid != NULL);
 	g_return_if_fail (panel != NULL);
 	g_return_if_fail (id != NULL);
+
+	if (g_slist_find_custom (no_reload_applets, id,
+				 (GCompareFunc) strcmp))
+		return;
 
 	if (panel_lockdown_is_applet_disabled (iid))
 		return;
@@ -999,8 +1005,19 @@ panel_applet_frame_loading_failed_response (GtkWidget *dialog,
 
 	if (response == LOADING_FAILED_RESPONSE_DELETE &&
 	    !panel_lockdown_get_locked_down () &&
-	    panel_profile_id_lists_are_writable ())
+	    panel_profile_id_lists_are_writable ()) {
+		GSList *item;
+
+		item = g_slist_find_custom (no_reload_applets, id,
+					    (GCompareFunc) strcmp);
+		if (item) {
+			g_free (item->data);
+			no_reload_applets = g_slist_delete_link (no_reload_applets,
+								 item);
+		}
+
 		panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
+	}
 
 	g_free (id);
 }
@@ -1012,6 +1029,9 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	GtkWidget *dialog;
 	char      *problem_txt;
 	gboolean   locked_down;
+
+	no_reload_applets = g_slist_prepend (no_reload_applets,
+					     g_strdup (id));
 
 	locked_down = panel_lockdown_get_locked_down ();
 
