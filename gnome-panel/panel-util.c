@@ -64,16 +64,17 @@ panel_util_launch_from_key_file (GKeyFile   *keyfile,
 				       "Exec",
 				       "URL",
 				       "Dev",
-				       "Name",
-				       "GenericName",
-				       "Icon",
-				       "MiniIcon",
 				       "Path",
 				       "Terminal",
 				       "TerminalOptions",
 				       "StartupNotify",
 				       "StartupWMClass",
 				     };
+	static const char *locale_keys [] = { "Name",
+					      "GenericName",
+					      "Icon",
+					      "MiniIcon",
+					    };
 
 	g_return_if_fail (keyfile != NULL);
 
@@ -84,10 +85,21 @@ panel_util_launch_from_key_file (GKeyFile   *keyfile,
 	for (i = 0; i < G_N_ELEMENTS (keys); i++) {
 		char *value;
 
-		value = g_key_file_get_value (keyfile, "Desktop Entry",
-					      keys [i], NULL);
+		value = panel_util_key_file_get_string (keyfile,
+							keys [i]);
 		if (value != NULL) {
 			gnome_desktop_item_set_string (ditem, keys [i], value);
+			g_free (value);
+		}
+	}
+
+	for (i = 0; i < G_N_ELEMENTS (locale_keys); i++) {
+		char *value;
+
+		value = panel_util_key_file_get_locale_string (keyfile,
+							       locale_keys [i]);
+		if (value != NULL) {
+			gnome_desktop_item_set_string (ditem, locale_keys [i], value);
 			g_free (value);
 		}
 	}
