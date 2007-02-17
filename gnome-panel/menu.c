@@ -1145,6 +1145,7 @@ image_menuitem_size_request (GtkWidget      *menuitem,
 {
 	GtkIconSize icon_size = (GtkIconSize) GPOINTER_TO_INT (data);
 	int         icon_height;
+	int         req_height;
 
 	if (!gtk_icon_size_lookup (icon_size, NULL, &icon_height))
 		return;
@@ -1152,8 +1153,13 @@ image_menuitem_size_request (GtkWidget      *menuitem,
 	/* If we don't have a pixmap for this menuitem
 	 * at least make sure its the same height as
 	 * the rest.
+	 * This is a bit ugly, since we should keep this in sync with what's in
+	 * gtk_menu_item_size_request()
 	 */
-	requisition->height = MAX (requisition->height, icon_height);
+	req_height = icon_height;
+	req_height += (GTK_CONTAINER (menuitem)->border_width +
+		       menuitem->style->ythickness) * 2;
+	requisition->height = MAX (requisition->height, req_height);
 }
 
 static char *
