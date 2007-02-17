@@ -894,27 +894,23 @@ panel_place_menu_item_new (gboolean use_image)
 {
 	PanelPlaceMenuItem *menuitem;
 	GtkWidget          *accel_label;
+	GtkWidget          *image;
 
 	menuitem = g_object_new (PANEL_TYPE_PLACE_MENU_ITEM, NULL);
 
-	accel_label = gtk_accel_label_new (_("Places"));
-	gtk_misc_set_alignment (GTK_MISC (accel_label), 0.0, 0.5);
-
-	gtk_container_add (GTK_CONTAINER (menuitem), accel_label);
-	gtk_accel_label_set_accel_widget (GTK_ACCEL_LABEL (accel_label),
-					  GTK_WIDGET (menuitem));
-	gtk_widget_show (accel_label);
-
-	menuitem->priv->use_image = use_image;
-	if (use_image) {
-		GtkWidget *image;
-
+	if (use_image)
 		image = gtk_image_new_from_icon_name ("gnome-fs-directory",
 						      panel_menu_icon_get_size ());
+	else
+		image = NULL;
 
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
-					       image);
-	}
+	setup_menuitem (menuitem,
+			panel_menu_icon_get_size (),
+			image,
+			_("Places"),
+			TRUE);
+
+	menuitem->priv->use_image = use_image;
 
 	menuitem->priv->menu = panel_place_menu_item_create_menu (menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
@@ -929,27 +925,23 @@ panel_desktop_menu_item_new (gboolean use_image,
 {
 	PanelDesktopMenuItem *menuitem;
 	GtkWidget            *accel_label;
+	GtkWidget            *image;
 
 	menuitem = g_object_new (PANEL_TYPE_DESKTOP_MENU_ITEM, NULL);
 
-	accel_label = gtk_accel_label_new (_("System"));
-	gtk_misc_set_alignment (GTK_MISC (accel_label), 0.0, 0.5);
-
-	gtk_container_add (GTK_CONTAINER (menuitem), accel_label);
-	gtk_accel_label_set_accel_widget (GTK_ACCEL_LABEL (accel_label),
-					  GTK_WIDGET (menuitem));
-	gtk_widget_show (accel_label);
-
-	menuitem->priv->use_image = use_image;
-	if (use_image) {
-		GtkWidget *image;
-
+	if (use_image)
 		image = gtk_image_new_from_icon_name ("computer",
 						      panel_menu_icon_get_size ());
+	else
+		image = NULL;
 
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
-					       image);
-	}
+	setup_menuitem (menuitem,
+			panel_menu_icon_get_size (),
+			image,
+			_("System"),
+			TRUE);
+
+	menuitem->priv->use_image = use_image;
 
 	menuitem->priv->append_lock_logout = append_lock_logout;
 	if (append_lock_logout)

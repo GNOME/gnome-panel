@@ -1,5 +1,12 @@
 2007-02-17  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-menu-items.c: (panel_place_menu_item_new):
+	(panel_desktop_menu_item_new): use setup_menuitem() to correctly
+	setup the menu items, so that mnemonics work
+	Fix bug #402431, patch by Padraig O'Briain <padraig.obriain@sun.com>
+
+2007-02-17  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-background-monitor.c:
 	* panel-menu-bar.c:
 	* panel-applet-frame.c:
