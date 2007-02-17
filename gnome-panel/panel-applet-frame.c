@@ -67,7 +67,6 @@ struct _PanelAppletFramePrivate {
 	PanelOrientation                orientation;
 
 	gchar                          *iid;
-	gboolean			moving_focus_out;
 
 	GtkAllocation                   child_allocation;
 	GdkRectangle                    handle_rect;
@@ -1104,7 +1103,6 @@ panel_applet_frame_init (PanelAppletFrame *frame)
 	frame->priv->panel            = NULL;
 	frame->priv->orientation      = PANEL_ORIENTATION_TOP;
 	frame->priv->applet_info      = NULL;
-	frame->priv->moving_focus_out = FALSE;
 	frame->priv->has_handle       = FALSE;
 }
 
