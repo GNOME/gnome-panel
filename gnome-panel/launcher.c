@@ -26,7 +26,6 @@
 #include "launcher.h"
 
 #include "button-widget.h"
-#include "menu.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"

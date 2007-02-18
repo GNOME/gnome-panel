@@ -376,7 +376,7 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	applet_iid = gconf_client_get_string (panel_gconf_get_client (),
 					      key, NULL);
 
-	if (!applet_iid)
+	if (!applet_iid || !applet_iid[0])
 		return;
 
 	panel_applet_frame_load (applet_iid, panel_widget,

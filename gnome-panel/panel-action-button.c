@@ -33,7 +33,6 @@
 #include <glib/gi18n.h>
 
 #include "applet.h"
-#include "menu.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
 #include "panel-profile.h"

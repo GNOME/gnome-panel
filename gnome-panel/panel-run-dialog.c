@@ -46,6 +46,7 @@
 #include <libgnomeui/gnome-url.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <gconf/gconf-client.h>
+#include <gmenu-tree.h>
 
 #include "nothing.h"
 #include "panel-gconf.h"

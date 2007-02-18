@@ -1,3 +1,18 @@
+2007-02-19  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-run-dialog.c: add missing include
+	* panel-menu-button.c: ditto
+	* launcher.c: remove useless include
+	* panel-action-button.c: ditto
+	* panel-addto.c: ditto
+	* panel-applet-frame.c: (panel_applet_frame_load_from_gconf): check
+	that the iid is not an emptry string too
+	* applet.c: (setup_an_item): get rid of setup_menuitem() and
+	panel_create_menu() usage
+	(panel_applet_create_menu): ditto
+	* panel-context-menu.c: (panel_context_menu_build_edition): ditto
+	(panel_context_menu_create): ditto
+
 2007-02-18  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-menu-bar.c: (panel_menu_bar_enter_applications): call

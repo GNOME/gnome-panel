@@ -27,7 +27,7 @@
 
 #include <libbonobo.h>
 
-#include "menu.h"
+#include <gmenu-tree.h>
 
 #include "launcher.h"
 #include "panel.h"

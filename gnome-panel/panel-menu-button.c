@@ -29,6 +29,8 @@
 #include <string.h>
 #include <glib/gi18n.h>
 
+#include <gmenu-tree.h>
+
 #include "applet.h"
 #include "panel-widget.h"
 #include "panel-util.h"

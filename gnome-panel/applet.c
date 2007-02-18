@@ -17,7 +17,6 @@
 #include "button-widget.h"
 #include "drawer.h"
 #include "launcher.h"
-#include "menu.h"
 #include "panel-addto.h"
 #include "panel-gconf.h"
 #include "panel-config-global.h"
@@ -353,16 +352,18 @@ setup_an_item (AppletUserMenu *menu,
 {
 	GtkWidget *image = NULL;
 
-	menu->menuitem = gtk_image_menu_item_new ();
+	menu->menuitem = gtk_image_menu_item_new_with_mnemonic (menu->text);
+	if (menu->stock_item && menu->stock_item [0]) {
+		image = gtk_image_new_from_stock (menu->stock_item,
+						  GTK_ICON_SIZE_MENU);
+		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menu->menuitem),
+					       image);
+	}
+	gtk_widget_show (menu->menuitem);
 
 	g_signal_connect (G_OBJECT (menu->menuitem), "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
 			  &menu->menuitem);
-
-	if (menu->stock_item && menu->stock_item [0])
-		image = gtk_image_new_from_stock (menu->stock_item, GTK_ICON_SIZE_MENU);
-
-	setup_menuitem (menu->menuitem, GTK_ICON_SIZE_MENU, image, menu->text, FALSE);
 
 	if(submenu)
 		gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menu->menuitem);
@@ -378,7 +379,7 @@ setup_an_item (AppletUserMenu *menu,
 	/* if the item is a submenu and doesn't have it's menu
 	   created yet*/
 	} else if (!menu->submenu) {
-		menu->submenu = panel_create_menu ();
+		menu->submenu = gtk_menu_new ();
 	}
 
 	if(menu->submenu) {
@@ -440,7 +441,7 @@ add_to_submenus (AppletInfo *info,
 	}
 	
 	if (s_menu->submenu == NULL) {
-		s_menu->submenu = panel_create_menu ();
+		s_menu->submenu = gtk_menu_new ();
 		/*a more elegant way to do this should be done
 		  when I don't want to go to sleep */
 		if (s_menu->menuitem != NULL) {
@@ -468,7 +469,7 @@ panel_applet_create_menu (AppletInfo *info)
 
 	panel_widget = PANEL_WIDGET (info->widget->parent);
 
-	menu = g_object_ref (panel_create_menu ());
+	menu = g_object_ref (gtk_menu_new ());
 	gtk_object_sink (GTK_OBJECT (menu));
 
 	/* connect the show & deactivate signal, so that we can "disallow" and
@@ -510,19 +511,21 @@ panel_applet_create_menu (AppletInfo *info)
 			gtk_widget_show (menuitem);
 		}
 
-		menuitem = gtk_image_menu_item_new ();
+		menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Remove From Panel"));
 		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
 						  GTK_ICON_SIZE_MENU);
-		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, image , _("_Remove From Panel"), FALSE);
+		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
+					       image);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
+		gtk_widget_show (menuitem);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		gtk_widget_set_sensitive (menuitem, (!locked || lockable) && removable);
 		
-		menuitem = gtk_image_menu_item_new ();
-		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, _("_Move"), FALSE);
+		menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (move_applet_callback), info);
+		gtk_widget_show (menuitem);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		gtk_widget_set_sensitive (menuitem, !locked && movable);
 
@@ -536,12 +539,12 @@ panel_applet_create_menu (AppletInfo *info)
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		gtk_widget_show (menuitem);
 
-		menuitem = gtk_check_menu_item_new ();
-		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, _("Loc_k To Panel"), FALSE);
+		menuitem = gtk_check_menu_item_new_with_mnemonic (_("Loc_k To Panel"));
 		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
 						locked);
 		g_signal_connect (menuitem, "toggled",
 				  G_CALLBACK (panel_applet_lock), info);
+		gtk_widget_show (menuitem);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		gtk_widget_set_sensitive (menuitem, lockable);
 
