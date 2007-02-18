@@ -64,6 +64,8 @@ enum {
 	PROP_ORIENTATION,
 };
 
+static void panel_menu_bar_update_text_gravity (PanelMenuBar *menubar);
+
 static gboolean
 panel_menu_bar_enter_applications (GtkWidget        *widget,
 				   GdkEventCrossing *event,
@@ -199,6 +201,11 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 			       menubar->priv->desktop_item);
 
 	panel_menu_bar_setup_tooltip (menubar);
+
+	panel_menu_bar_update_text_gravity (menubar);
+	g_signal_connect (menubar, "screen-changed",
+			  G_CALLBACK (panel_menu_bar_update_text_gravity),
+			  NULL);
 }
 
 static void
@@ -492,6 +499,27 @@ panel_menu_bar_change_background (PanelMenuBar *menubar)
 {
 	panel_background_change_background_on_widget (&menubar->priv->panel->background,
 						      GTK_WIDGET (menubar));
+}
+
+static void
+set_item_text_gravity (GtkWidget *item)
+{
+	GtkWidget    *label;
+	PangoLayout  *layout;
+	PangoContext *context;
+
+	label = GTK_BIN (item)->child;
+	layout = gtk_label_get_layout (GTK_LABEL (label));
+	context = pango_layout_get_context (layout);
+	pango_context_set_base_gravity (context, PANGO_GRAVITY_AUTO);
+}
+
+static void
+panel_menu_bar_update_text_gravity (PanelMenuBar *menubar)
+{
+	set_item_text_gravity (menubar->priv->applications_item);
+	set_item_text_gravity (menubar->priv->places_item);
+	set_item_text_gravity (menubar->priv->desktop_item);
 }
 
 static void

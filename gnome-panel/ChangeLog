@@ -1,5 +1,14 @@
 2007-02-18  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-menu-bar.c: (panel_menu_bar_enter_applications): call
+	panel_menu_bar_update_text_gravity() and connect to the screen-changed
+	signal because we need to set the gravity again
+	(set_item_text_gravity): new, magic pango stuff
+	(panel_menu_bar_update_text_gravity): new
+	Fix bug #337443, based on patch by Behdad Esfahbod <behdad@gnome.org>
+
+2007-02-18  Vincent Untz  <vuntz@gnome.org>
+
 	Fix bug #343092: the image is not always 48x48 anymore
 
 	* panel-run-dialog.c: (panel_run_dialog_set_icon): add argument to
