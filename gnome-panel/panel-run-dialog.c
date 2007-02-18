@@ -59,8 +59,6 @@
 #include "panel-lockdown.h"
 #include "panel-xutils.h"
 
-#define ICON_SIZE 48.0
-
 typedef struct {
 	GtkWidget        *run_dialog;
 
@@ -187,24 +185,36 @@ panel_run_dialog_set_default_icon (PanelRunDialog *dialog, gboolean set_drag)
 
 static void
 panel_run_dialog_set_icon (PanelRunDialog *dialog,
-			   const char     *icon_path)
+			   const char     *icon_path,
+			   gboolean        force)
 {
 	GdkPixbuf *pixbuf = NULL;
+
+	if (!force && icon_path && dialog->icon_path &&
+	    !strcmp (icon_path, dialog->icon_path))
+		return;
 
 	g_free (dialog->icon_path);
 	dialog->icon_path = NULL;
 		
-	if (icon_path && dialog->icon_path &&
-	    !strcmp (icon_path, dialog->icon_path))
-		return;
+	if (icon_path) {
+		GdkScreen   *screen;
+		GtkSettings *settings;
+		int          size;
 
-	if (icon_path)
+		screen = gtk_widget_get_screen (GTK_WIDGET (dialog->pixmap));
+		settings = gtk_settings_get_for_screen (screen);
+		gtk_icon_size_lookup_for_settings (settings,
+						   GTK_ICON_SIZE_DIALOG,
+						   &size, NULL);
+
 		pixbuf = panel_load_icon (gtk_icon_theme_get_default (),
 					  icon_path,
-					  ICON_SIZE,
-					  ICON_SIZE,
-					  ICON_SIZE,
+					  size,
+					  size,
+					  size,
 					  NULL);
+	}
 	
 	if (pixbuf) {
 		dialog->icon_path = g_strdup (icon_path);
@@ -214,6 +224,8 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		 */
 		gtk_image_set_from_pixbuf (GTK_IMAGE (dialog->pixmap), pixbuf);
 
+		//FIXME: it'd be better to set an icon of the correct size,
+		//(ditto for the drag icon?)
 		gtk_window_set_icon (GTK_WINDOW (dialog->run_dialog), pixbuf);
 		
 		gtk_drag_source_set_icon_pixbuf (dialog->run_dialog, pixbuf);
@@ -601,7 +613,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 		if (path)
 			gtk_tree_path_free (path);
 		
-		panel_run_dialog_set_icon (dialog, NULL);
+		panel_run_dialog_set_icon (dialog, NULL, FALSE);
 	
 		dialog->find_command_idle_id = 0;
 		return FALSE;
@@ -660,7 +672,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 
 	gtk_tree_path_free (path);
 
-	panel_run_dialog_set_icon (dialog, found_icon);
+	panel_run_dialog_set_icon (dialog, found_icon, FALSE);
 	//FIXME update dialog->program_label
 
 	g_free (found_icon);
@@ -1022,7 +1034,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 
 			temp = panel_util_key_file_get_locale_string (key_file,
 								      "Icon");
-			panel_run_dialog_set_icon (dialog, temp);
+			panel_run_dialog_set_icon (dialog, temp, FALSE);
 			g_free (temp);
 			
 			temp = panel_util_key_file_get_locale_string (key_file,
@@ -1800,11 +1812,46 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 }
 
 static void
+panel_run_dialog_style_set (GtkWidget      *widget,
+			    GtkStyle       *prev_style,
+			    PanelRunDialog *dialog)
+{
+  if (dialog->icon_path) {
+	  char *icon_path;
+
+	  icon_path = g_strdup (dialog->icon_path);
+	  panel_run_dialog_set_icon (dialog, icon_path, TRUE);
+	  g_free (icon_path);
+  }
+}
+
+static void
+panel_run_dialog_screen_changed (GtkWidget      *widget,
+				 GdkScreen      *prev_screen,
+				 PanelRunDialog *dialog)
+{
+  if (dialog->icon_path) {
+	  char *icon_path;
+
+	  icon_path = g_strdup (dialog->icon_path);
+	  panel_run_dialog_set_icon (dialog, icon_path, TRUE);
+	  g_free (icon_path);
+  }
+}
+
+static void
 panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 			       GladeXML       *gui)
 {
 	dialog->pixmap = glade_xml_get_widget (gui, "icon_pixmap");
 	
+	g_signal_connect (dialog->pixmap, "style-set",
+			  G_CALLBACK (panel_run_dialog_style_set),
+			  dialog);
+	g_signal_connect (dialog->pixmap, "screen-changed",
+			  G_CALLBACK (panel_run_dialog_screen_changed),
+			  dialog);
+
 	g_signal_connect (dialog->run_dialog, "drag_data_get",
 			  G_CALLBACK (pixmap_drag_data_get),
 			  dialog);

@@ -1,3 +1,20 @@
+2007-02-18  Vincent Untz  <vuntz@gnome.org>
+
+	Fix bug #343092: the image is not always 48x48 anymore
+
+	* panel-run-dialog.c: (panel_run_dialog_set_icon): add argument to
+	force the reloading of icon, move useless check so that it's useful,
+	use GtkSettings to get the size of the icon instead of hardcoding 48
+	(panel_run_dialog_find_command_idle): update for
+	panel_run_dialog_set_icon() change
+	(program_list_selection_changed): ditto
+	(panel_run_dialog_style_set): new, reload icon
+	(panel_run_dialog_screen_changed): ditto
+	(panel_run_dialog_setup_pixmap): connect to style-set and
+	screen-changed signal
+	* panel-run-dialog.glade: don't force size of the image (and totally
+	rewritten by glade3...)
+
 2007-02-17  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-applet-frame.c: remove useless moving_focus_out field
