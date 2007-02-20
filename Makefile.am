@@ -30,6 +30,7 @@ SUBDIRS =			\
 	man
 
 EXTRA_DIST = \
+	MAINTAINERS		\
 	COPYING-DOCS		\
 	HACKING			\
 	omf.make		\
