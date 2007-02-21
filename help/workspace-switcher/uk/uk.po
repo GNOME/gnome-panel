@@ -1,14 +1,14 @@
 # Ukrainian translation of gnome-panel manual
 # Copyright (C) 1999-2002 Free Software Foundation, Inc.
-# Maxim Dzumanenko <mvd@mylinux.ua>, 2006
+# Maxim Dzumanenko <dziumanenko@gmail.com>, 2006-2007
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel manual\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-14 22:26+0200\n"
+"POT-Creation-Date: 2007-02-21 11:08+0200\n"
 "PO-Revision-Date: 2006-03-03 16:43+0300\n"
-"Last-Translator: Maxim V. Dziumanenko <mvd@mylinux.ua>\n"
+"Last-Translator: Maxim Dzumanenko <dziumanenko@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -151,7 +151,7 @@ msgstr "John Fleck <email>jfleck@inkstain.net</email>"
 
 #: ../C/workspace-switcher.xml:149(releaseinfo)
 msgid "This manual describes version 2.7.92 of Workspace Switcher."
-msgstr "Ця довідка описує аплет \"Перемикач робочих областей\" версії 2.7.92."
+msgstr "У довідці описується аплет \"Перемикач робочих областей\" версії 2.7.92."
 
 #: ../C/workspace-switcher.xml:152(title)
 msgid "Feedback"
@@ -244,8 +244,8 @@ msgid ""
 "\"/> for information about how to change the number of applet rows."
 msgstr ""
 "На <xref linkend=\"workspacelist-fig\"/> показано аплет "
-"<application>Перемикач робочих областей</application> з чотирма робочими "
-"областями. Аплет відображає робочі області зліва направо рядками. На <xref "
+"<application>Перемикач робочих областей</application>, що містить чотири робочі "
+"області. Аплет відображає робочі області зліва направо рядками. На <xref "
 "linkend=\"workspacelist-fig\"/> аплет налаштований для відображення робочих "
 "областей у один рядок. Спосіб зміни кількості відображуваних аплетом рядків "
 "описано у <xref linkend=\"workspacelist-prefs\"/>."
@@ -290,22 +290,25 @@ msgstr "Навігація по робочим областям"
 msgid ""
 "The background of the button in the applet that represents the current "
 "workspace is highlighted. To switch to another workspace, click on the "
-"button that represents the new workspace. If you click on a specific window "
-"on a workspace button, <application>Workspace Switcher</application> "
-"switches to the new workspace and gives focus to the window. To return to "
-"your original workspace, click on the button that represents the workspace "
-"in the <application>Workspace Switcher</application>."
+"button that represents the new workspace. To return to your original "
+"workspace, repeat this for the workspace you started on."
 msgstr ""
-"Тло кнопки, яка представляє поточну робочу область, підсвічується. Щоб "
-"перемикнутись на іншу робочу область, клацніть на кнопці, яка представляє цю "
-"область. Якщо ви клацнете на окремому вікні всередині кнопки робочої "
-"області, аплет <application>Перемикач робочих областей</application> "
-"перемикнеться на нову робочу область та передасть фокус вводу вибраному "
-"вікну. Щоб повернутись до початкової робочої області, клацніть на кнопці, "
-"яка її представляє у аплеті <application>Перемикач робочих областей</"
-"application>."
+"Тло кнопки, яка представляє поточну робочу область, виділяється кольором. Щоб "
+"перемикнутись на іншу робочу область, натисніть відповідну кнопку.  "
+"область. Щоб повернутись до початкової робочої області, натисніть на кнопці, "
+"яка представляє робочу область на якій ви знаходились."
 
 #: ../C/workspace-switcher.xml:221(para)
+msgid ""
+"You can also switch between workspaces using keyboard shortcuts: see the "
+"<ulink type=\"help\" url=\"ghelp:user-guide?gosoverview-41\">related section "
+"in the Desktop User Guide</ulink>."
+msgstr ""
+"Можна перемикатись між робочими столами за допомогою комбінацій клавіш: "
+"дивіться <ulink type=\"help\" url=\"ghelp:user-guide?gosoverview-41\">докладнішу "
+"документацію у посібнику користувача</ulink>."
+
+#: ../C/workspace-switcher.xml:222(para)
 msgid ""
 "When you switch to a different workspace, the content of the "
 "<application>Window List</application> applet changes to reflect the windows "
@@ -315,11 +318,11 @@ msgstr ""
 "<application>Список вікон</application> змінюється, щоб показувати відкриті "
 "у поточній робочий області вікна."
 
-#: ../C/workspace-switcher.xml:224(title)
+#: ../C/workspace-switcher.xml:225(title)
 msgid "To Move a Window From One Workspace to Another"
 msgstr "Переміщення вікна з однієї робочої області на іншу"
 
-#: ../C/workspace-switcher.xml:225(para)
+#: ../C/workspace-switcher.xml:226(para)
 msgid ""
 "To use <application>Workspace Switcher</application> to move a window from "
 "one workspace to another, drag the window from the current workspace to the "
@@ -329,11 +332,11 @@ msgstr ""
 "<application>Перемикач робочих областей</application>, перетягніть вікно з "
 "поточної робочої області на нову."
 
-#: ../C/workspace-switcher.xml:230(title)
+#: ../C/workspace-switcher.xml:231(title)
 msgid "Preferences"
 msgstr "Параметри"
 
-#: ../C/workspace-switcher.xml:231(para)
+#: ../C/workspace-switcher.xml:232(para)
 msgid ""
 "To configure the <application>Workspace Switcher</application> applet, right-"
 "click on the applet, then choose <guimenuitem>Preferences</guimenuitem>. The "
@@ -344,11 +347,11 @@ msgstr ""
 "<guimenuitem>Параметри</guimenuitem>. Відкриється діалогове вікно "
 "<application>Параметри перемикача робочих областей</application>"
 
-#: ../C/workspace-switcher.xml:233(guilabel)
+#: ../C/workspace-switcher.xml:234(guilabel)
 msgid "Switcher"
 msgstr "Перемикач"
 
-#: ../C/workspace-switcher.xml:235(para)
+#: ../C/workspace-switcher.xml:236(para)
 msgid ""
 "Select one of the following options to determine which workspaces the "
 "<application>Workspace Switcher</application> displays:"
@@ -357,11 +360,11 @@ msgstr ""
 "<application>Перемикач робочих областей</application>, виберіть один з "
 "наступних варіантів:"
 
-#: ../C/workspace-switcher.xml:237(guilabel)
+#: ../C/workspace-switcher.xml:238(guilabel)
 msgid "Show only the current workspace"
 msgstr "Показувати лише поточну робочу область"
 
-#: ../C/workspace-switcher.xml:238(para)
+#: ../C/workspace-switcher.xml:239(para)
 msgid ""
 "Select this option to only display the current workspace in the "
 "<application>Workspace Switcher</application> applet."
@@ -369,11 +372,11 @@ msgstr ""
 "Виберіть цей варіант, щоб аплет <application>Перемикач робочих областей</"
 "application> відображав лише поточну робочу область."
 
-#: ../C/workspace-switcher.xml:240(guilabel)
+#: ../C/workspace-switcher.xml:241(guilabel)
 msgid "Show all workspaces in ... rows"
 msgstr "Показувати всі робочі області у ... рядків"
 
-#: ../C/workspace-switcher.xml:241(para)
+#: ../C/workspace-switcher.xml:242(para)
 msgid ""
 "Select this option to show all of the workspaces that are on your GNOME "
 "Desktop in the <application>Workspace Switcher</application> applet. Use the "
@@ -385,11 +388,11 @@ msgstr ""
 "поле зі стрілками вкажіть у скільки рядків відображатимуться робочі області "
 "у аплеті."
 
-#: ../C/workspace-switcher.xml:246(guilabel)
+#: ../C/workspace-switcher.xml:247(guilabel)
 msgid "Workspaces"
 msgstr "Робочі області"
 
-#: ../C/workspace-switcher.xml:247(para)
+#: ../C/workspace-switcher.xml:248(para)
 msgid ""
 "Use the following options to determine how the applet displays the "
 "workspaces:"
@@ -397,11 +400,11 @@ msgstr ""
 "Користуйтесь наступними варіантами для визначення відображення робочих "
 "областей:"
 
-#: ../C/workspace-switcher.xml:249(guilabel)
+#: ../C/workspace-switcher.xml:250(guilabel)
 msgid "Number of workspaces"
 msgstr "Кількість робочих областей"
 
-#: ../C/workspace-switcher.xml:250(para)
+#: ../C/workspace-switcher.xml:251(para)
 msgid ""
 "Use this spin box to increase or decrease the number of workspaces in a "
 "session."
@@ -409,11 +412,11 @@ msgstr ""
 "Користуючись полем зі стрілками можна збільшити або зменшити кількість "
 "робочих областей."
 
-#: ../C/workspace-switcher.xml:252(guilabel)
+#: ../C/workspace-switcher.xml:253(guilabel)
 msgid "Workspace names"
 msgstr "Назви робочих областей"
 
-#: ../C/workspace-switcher.xml:253(para)
+#: ../C/workspace-switcher.xml:254(para)
 msgid ""
 "Use this list box to edit the names of the workspaces on your GNOME Desktop. "
 "To edit a workspace name, click twice on the name, then type the new name."
@@ -422,11 +425,11 @@ msgstr ""
 "GNOME. Для цього двічі клацніть на назві робочого місця, потім введіть нову "
 "назву."
 
-#: ../C/workspace-switcher.xml:255(guilabel)
+#: ../C/workspace-switcher.xml:256(guilabel)
 msgid "Show workspace names in switcher"
 msgstr "Показувати назви робочих областей в перемикачі"
 
-#: ../C/workspace-switcher.xml:256(para)
+#: ../C/workspace-switcher.xml:257(para)
 msgid ""
 "Select this option to display the names of the workspaces in the applet "
 "instead of a visual representation of the workspaces."
@@ -539,10 +542,5 @@ msgstr ""
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
 #: ../C/legal.xml:0(None)
 msgid "translator-credits"
-msgstr "Максим Дзюманенко <mvd@mylinux.ua>, 2003,2005"
+msgstr "Максим Дзюманенко <dziumanenko@gmail.com>, 2003,2005"
 
-#~ msgid "August 2004"
-#~ msgstr "Серпень 2004"
-
-#~ msgid "User manual for Workspace Switcher."
-#~ msgstr "Довідка з аплету Перемикач робочих областей"
