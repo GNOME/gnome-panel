@@ -1,3 +1,23 @@
+2007-02-21  Vincent Untz  <vuntz@gnome.org>
+
+	* clock.c: (get_updated_timeformat): copied from update_timeformat(),
+	but contains code to add gravity around the time
+	(update_timeformat): call get_updated_timeformat() twice: once to get
+	the format with the markup, and once to get a fallback format without
+	markup
+	(update_clock): changed the logic a bit, so that we can use pango
+	markup, and make sure that we display something if the markup is not
+	correct
+	(destroy_clock): updated
+	(clock_update_text_gravity): new, set the gravity of the label for
+	vertical text!
+	(force_no_focus_padding): updated, and call
+	clock_update_text_gravity() and connect to the screen-changed signal
+	to call it again
+	Fix bug #409127.
+	And, although this is not the goal of this commit, this fixes bug
+	#332737.
+
 ==================== 2.17.91 ====================
 
 ==================== 2.17.90 ====================

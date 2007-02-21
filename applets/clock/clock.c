@@ -141,6 +141,7 @@ struct _ClockData {
 	/* runtime data */
         time_t             current_time;
 	char              *timeformat;
+	char              *fallback_timeformat;
 	guint              timeout;
 	PanelAppletOrient  orient;
 	int                size;
@@ -328,13 +329,16 @@ use_two_line_format (ClockData *cd)
         return FALSE;
 }
 
-static void
-update_timeformat (ClockData *cd)
+static char *
+get_updated_timeformat (ClockData *cd,
+			gboolean   safe)
 {
  /* Show date in another line if panel is vertical, or
   * horizontal but large enough to hold two lines of text
   */
+	char       *result;
 	const char *time_format;
+	char       *time_gravity_format;
 	const char *date_format;
 	char       *clock_format;
 
@@ -343,8 +347,17 @@ update_timeformat (ClockData *cd)
 	else
 		time_format = cd->showseconds ? _("%H:%M:%S") : _("%H:%M");
 
+	if (!safe) {
+		/* FIXME: we need this for bug #410169 in pango. We'll be able
+		 * to remove this at a later stage. */
+		time_gravity_format = g_strdup_printf ("<span gravity=\"south\">%s</span>",
+						       time_format);
+	} else {
+		time_gravity_format = g_strdup (time_format);
+	}
+
 	if (!cd->showdate)
-		clock_format = g_strdup (time_format);
+		clock_format = g_strdup (time_gravity_format);
 
 	else {
 		/* translators: replace %e with %d if, when the day of the
@@ -360,23 +373,37 @@ update_timeformat (ClockData *cd)
 			 *              date on a clock in your locale.
 			 */
 			clock_format = g_strdup_printf (_("%1$s\n%2$s"),
-							date_format, time_format);
+							date_format,
+							time_gravity_format);
 		else
 			/* translators: reverse the order of these arguments
 			 *              if the time should come before the
 			 *              date on a clock in your locale.
 			 */
 			clock_format = g_strdup_printf (_("%1$s, %2$s"),
-							date_format, time_format);
+							date_format,
+							time_gravity_format);
 	}
 
-	g_free (cd->timeformat);
-	cd->timeformat = g_locale_from_utf8 (clock_format, -1, NULL, NULL, NULL);
-	/* let's be paranoid */
-	if (!cd->timeformat)
-		cd->timeformat = g_strdup ("???");
+	g_free (time_gravity_format);
 
+	result = g_locale_from_utf8 (clock_format, -1, NULL, NULL, NULL);
 	g_free (clock_format);
+
+	/* let's be paranoid */
+	if (!result)
+		result = g_strdup ("???");
+
+	return result;
+}
+
+static void
+update_timeformat (ClockData *cd)
+{
+	g_free (cd->timeformat);
+	cd->timeformat = get_updated_timeformat (cd, FALSE);
+	g_free (cd->fallback_timeformat);
+	cd->fallback_timeformat = get_updated_timeformat (cd, TRUE);
 }
 
 /* sets accessible name and description for the widget */
@@ -404,6 +431,7 @@ update_clock (ClockData * cd)
 	struct tm *tm;
 	char date[256], hour[256];
 	char *utf8, *loc;
+	gboolean use_markup;
 
 	time (&cd->current_time);
 	
@@ -411,6 +439,9 @@ update_clock (ClockData * cd)
 		tm = gmtime (&cd->current_time);
 	else
 		tm = localtime (&cd->current_time);
+
+	use_markup = FALSE;
+	utf8 = NULL;
 
 	if (cd->format == CLOCK_FORMAT_UNIX) {
 		if (use_two_line_format (cd)) {
@@ -434,13 +465,32 @@ update_clock (ClockData * cd)
 		else if (strftime (hour, sizeof (hour), timeformat, tm) <= 0)
 			strcpy (hour, "???");
 		g_free (timeformat);
+
+		utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
+		if (pango_parse_markup (utf8, -1, 0, NULL, NULL, NULL, NULL))
+			use_markup = TRUE;
 	} else {
 		if (strftime (hour, sizeof (hour), cd->timeformat, tm) <= 0)
 			strcpy (hour, "???");
+
+		utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
+		if (pango_parse_markup (utf8, -1, 0, NULL, NULL, NULL, NULL))
+			use_markup = TRUE;
+		else {
+			if (strftime (hour, sizeof (hour),
+				      cd->fallback_timeformat, tm) <= 0)
+				strcpy (hour, "???");
+		}
 	}
 
-	utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
-	gtk_label_set_text (GTK_LABEL (cd->clockw), utf8);
+	if (!utf8)
+		utf8 = hour;
+
+	if (use_markup)
+		gtk_label_set_markup (GTK_LABEL (cd->clockw), utf8);
+	else
+		gtk_label_set_text (GTK_LABEL (cd->clockw), utf8);
+
 	g_free (utf8);
 
 	update_orient (cd);
@@ -547,6 +597,7 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 	cd->calendar_popup = NULL;
 
 	g_free (cd->timeformat);
+	g_free (cd->fallback_timeformat);
 	g_free (cd->config_tool);
 	g_free (cd->custom_format);
 	g_free (cd);
@@ -1682,6 +1733,17 @@ clock_size_request (GtkWidget *clock, GtkRequisition *req, gpointer data)
 	req->height = cd->fixed_height;
 }
 
+static void
+clock_update_text_gravity (GtkWidget *label)
+{
+	PangoLayout  *layout;
+	PangoContext *context;
+
+	layout = gtk_label_get_layout (GTK_LABEL (label));
+	context = pango_layout_get_context (layout);
+	pango_context_set_base_gravity (context, PANGO_GRAVITY_AUTO);
+}
+
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
@@ -1718,6 +1780,10 @@ create_clock_widget (ClockData *cd)
 				  G_CALLBACK (unfix_size),
 				  cd);
 	gtk_label_set_justify (GTK_LABEL (clock), GTK_JUSTIFY_CENTER);
+	clock_update_text_gravity (clock);
+	g_signal_connect (clock, "screen-changed",
+			  G_CALLBACK (clock_update_text_gravity),
+			  NULL);
 	gtk_widget_show (clock);
 
 	toggle = gtk_toggle_button_new ();
@@ -2358,6 +2424,7 @@ fill_clock_applet (PanelApplet *applet)
 	cd->config_tool = panel_applet_gconf_get_string (applet, KEY_CONFIG_TOOL, NULL);
 
 	cd->timeformat = NULL;
+	cd->fallback_timeformat = NULL;
 
 	cd->can_handle_format_12 = (clock_locale_format () == CLOCK_FORMAT_12);
 	if (!cd->can_handle_format_12 && cd->format == CLOCK_FORMAT_12)
