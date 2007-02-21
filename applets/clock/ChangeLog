@@ -1,5 +1,16 @@
 2007-02-21  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (clock_set_timeout): new function, set the timeout to
+	update the clock and don't use a timeout of 1 second when we don't
+	show the seconds
+	(clock_timeout_callback): call clock_set_timeout() instead of
+	continuing with the same timeout
+	(refresh_clock_timeout): simply call clock_set_timeout()
+	Based on patch by Matthias Clasen <mclasen@redhat.com>
+	Fix bug #348749
+
+2007-02-21  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (get_updated_timeformat): copied from update_timeformat(),
 	but contains code to add gravity around the time
 	(update_timeformat): call get_updated_timeformat() twice: once to get

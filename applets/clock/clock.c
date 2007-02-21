@@ -50,6 +50,7 @@
 #ifdef HAVE_LANGINFO_H
 #include <langinfo.h>
 #endif
+#include <sys/time.h>
 
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
@@ -164,6 +165,7 @@ struct _ClockData {
 };
 
 static void  update_clock (ClockData * cd);
+static int   clock_timeout_callback (gpointer data);
 static float get_itime    (time_t current_time);
 
 static void set_atk_name_description (GtkWidget *widget,
@@ -240,6 +242,26 @@ set_tooltip (GtkWidget  *applet,
 	gtk_tooltips_set_tip (tooltips, widget, tip, NULL);
 }
 
+static void
+clock_set_timeout (ClockData *cd)
+{
+	int timeouttime;
+
+	if (cd->format == CLOCK_FORMAT_INTERNET)
+		timeouttime = INTERNETSECOND;
+ 	else {
+ 		struct timeval tv;
+		gettimeofday (&tv, NULL);
+ 		timeouttime = (1000000 - tv.tv_usec)/1000+1;
+ 		if (!cd->showseconds)
+ 			timeouttime += 1000 * (59 - cd->current_time % 60);
+ 	}
+	
+	cd->timeout = g_timeout_add (timeouttime,
+	                             clock_timeout_callback,
+	                             cd);
+}
+
 static int
 clock_timeout_callback (gpointer data)
 {
@@ -264,7 +286,9 @@ clock_timeout_callback (gpointer data)
 		update_clock (cd);
 	}
 
-	return TRUE;
+	clock_set_timeout (cd);
+
+	return FALSE;
 }
 
 static float
@@ -527,8 +551,6 @@ refresh_clock (ClockData *cd)
 static void
 refresh_clock_timeout(ClockData *cd)
 {
-	int timeouttime;
-
 	unfix_size (cd);
 	
 	update_timeformat (cd);
@@ -538,14 +560,7 @@ refresh_clock_timeout(ClockData *cd)
 
 	update_clock (cd);
 	
-	if (cd->format == CLOCK_FORMAT_INTERNET)
-		timeouttime = INTERNETSECOND;
-	else
-		timeouttime = 1000;
-	
-	cd->timeout = g_timeout_add (timeouttime,
-	                             clock_timeout_callback,
-	                             cd);
+	clock_set_timeout (cd);
 }
 
 static void
