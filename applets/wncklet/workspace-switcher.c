@@ -622,7 +622,8 @@ update_workspaces_model (PagerData *pager)
 
 	nr_ws = wnck_screen_get_workspace_count (pager->screen);
         
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_workspaces_spin), nr_ws);
+	if (nr_ws != gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pager->num_workspaces_spin)))
+		gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_workspaces_spin), nr_ws);
 
 	gtk_list_store_clear (pager->workspaces_store);
 	for (i = 0; i < nr_ws; i++) {
@@ -639,7 +640,16 @@ static void
 workspace_renamed (WnckWorkspace *space,
 		   PagerData     *pager)
 {
-	update_workspaces_model (pager);
+	int         i;
+	GtkTreeIter iter;
+
+	i = wnck_workspace_get_number (space);
+	if (gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (pager->workspaces_store),
+					   &iter, NULL, i))
+		gtk_list_store_set (pager->workspaces_store,
+				    &iter,
+				    0, wnck_workspace_get_name (space),
+				    -1);
 }
 
 static void
