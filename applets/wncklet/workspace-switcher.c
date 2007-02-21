@@ -158,11 +158,12 @@ applet_scroll (PanelApplet    *applet,
                GdkEventScroll *event,
                PagerData      *pager)
 {
-	WnckScreen *screen;
-	int         index;
-	int         n_workspaces;
-	int         n_columns;
-	int         in_last_row;
+	WnckScreen         *screen;
+	GdkScrollDirection  absolute_direction;
+	int                 index;
+	int                 n_workspaces;
+	int                 n_columns;
+	int                 in_last_row;
 	
 	if (event->type != GDK_SCROLL)
 		return FALSE;
@@ -175,7 +176,22 @@ applet_scroll (PanelApplet    *applet,
 		n_columns++;
 	in_last_row    = n_workspaces % n_columns;
 	
-	switch (event->direction) {
+	absolute_direction = event->direction;
+	if (gtk_widget_get_direction (GTK_WIDGET (applet)) == GTK_TEXT_DIR_RTL) {
+		switch (event->direction) {
+		case GDK_SCROLL_DOWN:
+		case GDK_SCROLL_UP:
+			break;
+		case GDK_SCROLL_RIGHT:
+			absolute_direction = GDK_SCROLL_LEFT;
+			break;
+		case GDK_SCROLL_LEFT:
+			absolute_direction = GDK_SCROLL_RIGHT;
+			break;
+		}
+	}
+
+	switch (absolute_direction) {
 	case GDK_SCROLL_DOWN:
 		if (index + n_columns < n_workspaces)
 			index += n_columns;
