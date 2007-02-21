@@ -679,8 +679,13 @@ workspace_destroyed (WnckScreen    *screen,
 
 static void
 num_workspaces_value_changed (GtkSpinButton *button,
-			      PagerData       *pager)
+			      PagerData     *pager)
 {
+	/* Slow down a bit after the first change, since it's moving really to
+	 * fast. See bug #336731 for background.
+	 * FIXME: remove this if bug 410520 gets fixed. */
+	button->timer_step = 0.2;
+
         wnck_screen_change_workspace_count (pager->screen,
                                             gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pager->num_workspaces_spin)));
 }
@@ -896,8 +901,6 @@ setup_dialog (GladeXML  *xml,
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_workspaces_spin),
 				   wnck_screen_get_workspace_count (pager->screen));
- 	gtk_spin_button_set_increments (GTK_SPIN_BUTTON (pager->num_workspaces_spin),
-					0.2, 0.2);
 	g_signal_connect (G_OBJECT (pager->num_workspaces_spin), "value_changed",
 			  (GCallback) num_workspaces_value_changed, pager);
 	

@@ -1,5 +1,12 @@
 2007-02-21  Vincent Untz  <vuntz@gnome.org>
 
+	* workspace-switcher.c: (num_workspaces_value_changed): modify the
+	timer step of the spin button so that it doesn't go too fast
+	(setup_dialog): don't set the increments of the spon button
+	Better fix for bug #336731
+
+2007-02-21  Vincent Untz  <vuntz@gnome.org>
+
 	* workspace-switcher.c: (update_workspaces_model): don't change the
 	spin button if it's the same value
 	(workspace_renamed): don't call update_workspaces_model(), but only
