@@ -1,4 +1,72 @@
 ===============
+Version 2.17.92
+===============
+
+  Panel
+
+	* Fix wrong initial position of menu (Vincent)
+	* Code cleanups (Vincent)
+	* Add missing mnemonics in main menu (Padraig O'Briain, Vincent)
+	* Don't show multiple times a dialog about an applet failing to load
+	  (Vincent)
+	* Don't try to load again in the same session an applet that failed to
+	  load before (Vincent)
+	* Get localized names when starting a launcher so that the startup
+	  notification use the translated name (Vincent)
+	* Fix image size on the run dialog so that it's always the correct size
+	  (Vincent)
+	* Set automatic gravity for the labels in the menubar, so that japanese
+	  and other scripts are correctly displayed on vertical panels
+	  (Behdad Esfahbod, Vincent)
+
+  Workspace Switcher Applet
+
+	* Make mouse scrolling correctly work in RTL environments (Vincent)
+	* Performance improvement when a workspace is renamed/added/removed.
+	  This has an important impact when accessibility is turned on.
+	  (Vincent)
+	* Fix speed of the spin button for number of workspaces (Vincent)
+
+  Clock Applet
+
+	* Set automatic gravity for the clock label, so that japanese and other
+	  scripts are correctly displayed on vertical panels (Vincent)
+	* Make it possible to use markup for the clock text, which is useful
+	  with custom format (Vincent)
+	* Don't wake up every second if it's not necessary (Matthias Clasen,
+	  Vincent)
+
+  Misc
+
+	* Add missing check for gconf for libpanel-applet (Vincent)
+	* Require pango 1.15.4 (Vincent)
+	* Distribute MAINTAINERS (Kjartan Maraas)
+
+  Docs
+
+	* Update fish screenshot (Luca Ferretti)
+
+  Docs Translators
+
+	* Luca Ferretti (it)
+	* Daniel Nylander (sv)
+	* Maxim Dziumanenko (uk)
+
+  Translators
+
+	* Peter Bach (da)
+	* Luca Ferretti (it)
+	* Takeshi AIHANA (ja)
+	* wadim dziedzic (pl)
+	* Duarte Loreto (pt)
+	* Daniel Nylander (sv)
+	* Maxim Dziumanenko (uk)
+	* Clytie Siddall (vi)
+	* Funda Wang (zh_CN)
+	* Woodman Tuen (zh_HK)
+	* Woodman Tuen (zh_TW)
+
+===============
 Version 2.17.91
 ===============
 
