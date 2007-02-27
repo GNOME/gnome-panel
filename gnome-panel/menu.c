@@ -1237,7 +1237,7 @@ setup_menuitem (GtkWidget   *menuitem,
 		if (panel_menu_have_icons ())
 			gtk_image_menu_item_set_image (
 				GTK_IMAGE_MENU_ITEM (menuitem), image);
-	} else
+	} else if (icon_size != GTK_ICON_SIZE_INVALID)
 		g_signal_connect (menuitem, "size_request",
 				  G_CALLBACK (image_menuitem_size_request),
 				  GINT_TO_POINTER (icon_size));

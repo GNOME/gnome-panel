@@ -904,7 +904,7 @@ panel_place_menu_item_new (gboolean use_image)
 		image = NULL;
 
 	setup_menuitem (GTK_WIDGET (menuitem),
-			panel_menu_icon_get_size (),
+			image ? panel_menu_icon_get_size () : GTK_ICON_SIZE_INVALID,
 			image,
 			_("Places"),
 			TRUE);
@@ -934,7 +934,7 @@ panel_desktop_menu_item_new (gboolean use_image,
 		image = NULL;
 
 	setup_menuitem (GTK_WIDGET (menuitem),
-			panel_menu_icon_get_size (),
+			image ? panel_menu_icon_get_size () : GTK_ICON_SIZE_INVALID,
 			image,
 			_("System"),
 			TRUE);
