@@ -13,10 +13,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.17.92\n"
+"Project-Id-Version: gnome-panel 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-21 21:33+0800\n"
-"PO-Revision-Date: 2007-02-21 21:34+0800\n"
+"POT-Creation-Date: 2007-02-25 20:05+0000\n"
+"PO-Revision-Date: 2007-03-02 20:51+0800\n"
 "Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgid "_Preferences"
 msgstr "偏好設定(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2824
+#: ../applets/clock/clock.c:2906
 msgid "Clock"
 msgstr "時鐘"
 
@@ -83,20 +83,20 @@ msgstr "產生時鐘面板程式的工廠。"
 msgid "Get the current time and date"
 msgstr "取得目前的時間及日期"
 
-#: ../applets/clock/clock.c:342
+#: ../applets/clock/clock.c:370
 msgid "%l:%M:%S %p"
 msgstr "%p %l:%M:%S"
 
-#: ../applets/clock/clock.c:342 ../applets/clock/clock.c:695
+#: ../applets/clock/clock.c:370 ../applets/clock/clock.c:761
 msgid "%l:%M %p"
 msgstr "%p %l:%M"
 
-#: ../applets/clock/clock.c:344 ../applets/clock/clock.c:1866
+#: ../applets/clock/clock.c:372 ../applets/clock/clock.c:1947
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:344 ../applets/clock/clock.c:697
-#: ../applets/clock/clock.c:1868
+#: ../applets/clock/clock.c:372 ../applets/clock/clock.c:763
+#: ../applets/clock/clock.c:1949
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -107,7 +107,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:355
+#: ../applets/clock/clock.c:392
 msgid "%a %b %e"
 msgstr "%-m月%-d日(%a)"
 
@@ -115,7 +115,7 @@ msgstr "%-m月%-d日(%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:362
+#: ../applets/clock/clock.c:399
 #, c-format
 msgid ""
 "%1$s\n"
@@ -128,78 +128,78 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:369
+#: ../applets/clock/clock.c:407
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:451
+#: ../applets/clock/clock.c:525
 msgid "%A %B %d"
 msgstr "%-m月%-d日(%A)"
 
-#: ../applets/clock/clock.c:463
+#: ../applets/clock/clock.c:537
 msgid "Click to view your appointments and tasks"
 msgstr "按下來顯示約會及工作"
 
-#: ../applets/clock/clock.c:465
+#: ../applets/clock/clock.c:539
 msgid "Click to view month calendar"
 msgstr "按下來顯示月曆"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:702
+#: ../applets/clock/clock.c:768
 msgid "%b %d"
 msgstr "%-d/%-m"
 
-#: ../applets/clock/clock.c:1048
+#: ../applets/clock/clock.c:1114
 msgid "Tasks"
 msgstr "工作"
 
-#: ../applets/clock/clock.c:1197
+#: ../applets/clock/clock.c:1263
 msgid "All Day"
 msgstr "整天"
 
-#: ../applets/clock/clock.c:1236
+#: ../applets/clock/clock.c:1302
 msgid "Appointments"
 msgstr "約會"
 
-#: ../applets/clock/clock.c:1477
+#: ../applets/clock/clock.c:1543
 msgid "Calendar"
 msgstr "月曆"
 
-#: ../applets/clock/clock.c:1758
+#: ../applets/clock/clock.c:1839
 msgid "Computer Clock"
 msgstr "電腦時鐘"
 
-#: ../applets/clock/clock.c:1861
+#: ../applets/clock/clock.c:1942
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: ../applets/clock/clock.c:1863
+#: ../applets/clock/clock.c:1944
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
-#: ../applets/clock/clock.c:1905
+#: ../applets/clock/clock.c:1986
 msgid "%A, %B %d %Y"
 msgstr "%Y年%-m月%-d日(%A)"
 
-#: ../applets/clock/clock.c:1962
+#: ../applets/clock/clock.c:2043
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "無法執行時間設置工具：%s"
 
-#: ../applets/clock/clock.c:2000
+#: ../applets/clock/clock.c:2081
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "找不到任何設置日期及時間的程式。或許根本沒有安裝？"
 
-#: ../applets/clock/clock.c:2481
+#: ../applets/clock/clock.c:2563
 msgid "Custom format"
 msgstr "自訂格式"
 
-#: ../applets/clock/clock.c:2605 ../applets/clock/clock.c:2782
+#: ../applets/clock/clock.c:2687 ../applets/clock/clock.c:2864
 #: ../applets/fish/fish.c:160 ../applets/notification_area/main.c:90
 #: ../applets/wncklet/window-list.c:113 ../applets/wncklet/wncklet.c:128
 #: ../applets/wncklet/workspace-switcher.c:254
@@ -207,52 +207,52 @@ msgstr "自訂格式"
 msgid "There was an error displaying help: %s"
 msgstr "顯示說明文件時出現錯誤：%s"
 
-#: ../applets/clock/clock.c:2642
+#: ../applets/clock/clock.c:2724
 msgid "Clock Preferences"
 msgstr "時鐘偏好設定"
 
-#: ../applets/clock/clock.c:2667
+#: ../applets/clock/clock.c:2749
 msgid "Clock _type:"
 msgstr "時鐘類型(_T)："
 
-#: ../applets/clock/clock.c:2678
+#: ../applets/clock/clock.c:2760
 msgid "12 hour"
 msgstr "12 小時制"
 
-#: ../applets/clock/clock.c:2679
+#: ../applets/clock/clock.c:2761
 msgid "24 hour"
 msgstr "24 小時制"
 
-#: ../applets/clock/clock.c:2680
+#: ../applets/clock/clock.c:2762
 msgid "UNIX time"
 msgstr "UNIX 時間"
 
-#: ../applets/clock/clock.c:2681
+#: ../applets/clock/clock.c:2763
 msgid "Internet time"
 msgstr "Internet 時間"
 
-#: ../applets/clock/clock.c:2689
+#: ../applets/clock/clock.c:2771
 msgid "Custom _format:"
 msgstr "自訂格式(_F)："
 
-#: ../applets/clock/clock.c:2708
+#: ../applets/clock/clock.c:2790
 msgid "Show _seconds"
 msgstr "顯示秒數(_S)"
 
-#: ../applets/clock/clock.c:2717
+#: ../applets/clock/clock.c:2799
 msgid "Show _date"
 msgstr "顯示日期(_D)"
 
-#: ../applets/clock/clock.c:2726
+#: ../applets/clock/clock.c:2808
 msgid "Use _UTC"
 msgstr "使用世界協調時(_UTC)"
 
-#: ../applets/clock/clock.c:2827
+#: ../applets/clock/clock.c:2909
 msgid "The Clock displays the current time and date"
 msgstr "時鐘程式可顯示目前的時間及日期"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2830 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:2912 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:783
 #: ../applets/wncklet/window-menu.c:75
@@ -264,7 +264,7 @@ msgstr ""
 "以下地址，GNOME 翻譯隊伍會盡快回覆你：\n"
 "community@linuxhall.org\n"
 "\n"
-"Woodman Tuen <wmtuen@gmail.com>, 2005-06\n"
+"Woodman Tuen <wmtuen@gmail.com>, 2005-07\n"
 "Abel Cheung <abel@oaka.org>, 2001-04\n"
 "Kevin Kee <kevin@oaka.org>, 2004\n"
 "Chih-Wei Huang <cwhuang@linux.org.tw>, 2000\n"
@@ -831,13 +831,13 @@ msgid ""
 msgstr "「視窗選擇程式」會在選單中顯示視窗清單以供瀏覽。"
 
 #: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:875
+#: ../applets/wncklet/workspace-switcher.c:890
 #: ../applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "列"
 
 #: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:875
+#: ../applets/wncklet/workspace-switcher.c:890
 msgid "columns"
 msgstr "行"
 
@@ -878,7 +878,7 @@ msgstr "工作區數目(_W)："
 # FIXME: "Show all workspaces in [4] rows" -- Abel
 #: ../applets/wncklet/workspace-switcher.glade.h:5
 msgid "Show _all workspaces in:"
-msgstr "顯示所有工作區的方式(_A)：分成"
+msgstr "顯示所有工作區的方式(_A)：分為"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:6
 msgid "Show _only the current workspace"
