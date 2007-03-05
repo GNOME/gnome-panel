@@ -469,18 +469,19 @@ update_clock (ClockData * cd)
 
 	if (cd->format == CLOCK_FORMAT_UNIX) {
 		if (use_two_line_format (cd)) {
-			g_snprintf (hour, sizeof(hour), "%lu\n%05lu",
-				    (unsigned long)(cd->current_time / 100000L),
-				    (unsigned long)(cd->current_time % 100000L));
+			utf8 = g_strdup_printf ("%lu\n%05lu",
+						(unsigned long)(cd->current_time / 100000L),
+						(unsigned long)(cd->current_time % 100000L));
 		} else {
-			g_snprintf (hour, sizeof(hour), "%lu", (unsigned long)cd->current_time);
+			utf8 = g_strdup_printf ("%lu",
+						(unsigned long)cd->current_time);
 		}
 	} else if (cd->format == CLOCK_FORMAT_INTERNET) {
 		float itime = get_itime (cd->current_time);
 		if (cd->showseconds)
-			g_snprintf (hour, sizeof (hour), "@%3.2f", itime);
+			utf8 = g_strdup_printf ("@%3.2f", itime);
 		else
-			g_snprintf (hour, sizeof (hour), "@%3.0f", itime);
+			utf8 = g_strdup_printf ("@%3.0f", itime);
 	} else if (cd->format == CLOCK_FORMAT_CUSTOM) {
 		char *timeformat = g_locale_from_utf8 (cd->custom_format, -1,
 						       NULL, NULL, NULL);
@@ -504,11 +505,13 @@ update_clock (ClockData * cd)
 			if (strftime (hour, sizeof (hour),
 				      cd->fallback_timeformat, tm) <= 0)
 				strcpy (hour, "???");
+			g_free (utf8);
+			utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
 		}
 	}
 
 	if (!utf8)
-		utf8 = hour;
+		utf8 = g_strdup (hour);
 
 	if (use_markup)
 		gtk_label_set_markup (GTK_LABEL (cd->clockw), utf8);

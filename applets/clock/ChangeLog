@@ -1,3 +1,10 @@
+2007-03-05  Vincent Untz  <vuntz@gnome.org>
+
+	* clock.c: (update_clock): don't free a static variable, and fix a
+	potential bug when we have an invalid markup because of strftime.
+	Fix bug #413447.
+	Based on patch by Sébastien Bacher <seb128@debian.org>
+
 ==================== 2.17.92 ====================
 
 2007-02-21  Vincent Untz  <vuntz@gnome.org>
