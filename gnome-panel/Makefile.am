@@ -190,7 +190,8 @@ EXTRA_DIST =					\
 	$(ui_DATA)				\
 	panel-marshal.list			\
 	gnome-panelrc				\
-	$(entries_DATA)
+	$(entries_DATA)				\
+	$(desktop_DATA)
 
 @INTLTOOL_DESKTOP_RULE@
 
@@ -255,6 +256,9 @@ schemas_in_files =				\
 	panel-object.schemas.in			\
 	$(NULL)
 schemas_DATA     = panel-compatibility.schemas $(schemas_in_files:.schemas.in=.schemas)
+
+desktopdir = $(datadir)/applications
+desktop_DATA = gnome-panel.desktop
 
 @INTLTOOL_SCHEMAS_RULE@
 

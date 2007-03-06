@@ -106,7 +106,7 @@ if test -n "$LIBECAL_REQUIREMENT"; then
 fi
 AM_CONDITIONAL(HAVE_LIBECAL, test -n "$LIBECAL_REQUIREMENT")
 
-PKG_CHECK_MODULES(CLOCK, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED $LIBECAL_REQUIREMENT)
+PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED $LIBECAL_REQUIREMENT)
 AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
@@ -273,6 +273,7 @@ icons/24x24/Makefile
 icons/32x32/Makefile
 icons/scalable/Makefile
 gnome-panel/Makefile
+gnome-panel/gnome-panel.desktop
 libpanel-applet/libpanelapplet-2.0.pc
 libpanel-applet/libpanelapplet-2.0-uninstalled.pc
 libpanel-applet/Makefile
