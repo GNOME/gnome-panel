@@ -341,10 +341,10 @@ panel_error_dialog (GtkWindow  *parent,
 	}
 
 	dialog = gtk_message_dialog_new (parent, 0, GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_OK, primary_text);
+					 GTK_BUTTONS_OK, "%s", primary_text);
 	if (secondary_text != NULL)
 		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-							  secondary_text);
+							  "%s", secondary_text);
 
 	gtk_widget_add_events (dialog, GDK_KEY_PRESS_MASK);
 	g_signal_connect (dialog, "event",
