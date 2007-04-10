@@ -1,5 +1,12 @@
 2007-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-util.c: (panel_lock_screen_action_get_command): if EUID is 0,
+	return NULL if the user wants to lock the screen: gnome-screensaver
+	and xscreensaver don't support root locking the screen.
+	Fix bug #424545.
+
+2007-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-run-dialog.c: (panel_run_dialog_destroy): call
 	panel_run_dialog_disconnect_pixmap()
 	(panel_run_dialog_disconnect_pixmap): new function, to disconnect

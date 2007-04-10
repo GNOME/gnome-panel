@@ -745,10 +745,16 @@ panel_lock_screen_action_get_command (const char *action)
 		}
 	} else if (strcmp (action, "activate") == 0
 		   || strcmp (action, "lock") == 0) {
-		if (use_gscreensaver) {
-			command = g_strdup_printf ("gnome-screensaver-command --%s", action);
+		/* Neither gnome-screensaver or xscreensaver allow root
+		 * to lock the screen */
+		if (geteuid () == 0) {
+			command = NULL;
 		} else {
-			command = g_strdup_printf ("xscreensaver-command -%s", action);
+			if (use_gscreensaver) {
+				command = g_strdup_printf ("gnome-screensaver-command --%s", action);
+			} else {
+				command = g_strdup_printf ("xscreensaver-command -%s", action);
+			}
 		}
 	}
 
