@@ -1,5 +1,16 @@
 2007-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-run-dialog.c: (panel_run_dialog_destroy): call
+	panel_run_dialog_disconnect_pixmap()
+	(panel_run_dialog_disconnect_pixmap): new function, to disconnect
+	signals
+	Fix bug happening because we get a screen_changed signal when the
+	widget is destroyed and the data read in the handler has already been
+	freed.
+	Fix bug #413921. Patch by Ray Strode <rstrode@redhat.com>
+
+2007-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_error_dialog): don't use the error message as a
 	format string.
 	Fix bug #418186. Patch by Chris Wilson <chris@chris-wilson.co.uk>

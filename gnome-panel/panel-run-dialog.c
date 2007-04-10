@@ -111,6 +111,8 @@ enum {
 
 static PanelRunDialog *static_dialog = NULL;
 
+static void panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog);
+
 static void
 panel_run_dialog_destroy (PanelRunDialog *dialog)
 {
@@ -165,6 +167,8 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	if (dialog->completion)
 		g_completion_free (dialog->completion);
 	dialog->completion = NULL;
+
+	panel_run_dialog_disconnect_pixmap (dialog);
 	
 	g_free (dialog);
 }
@@ -1902,6 +1906,17 @@ panel_run_dialog_new (GdkScreen *screen,
 	gtk_widget_show (dialog->run_dialog);
 	
 	return dialog;
+}
+
+static void
+panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog)
+{
+	g_signal_handlers_disconnect_by_func (dialog->pixmap,
+			                      G_CALLBACK (panel_run_dialog_style_set),
+			                      dialog);
+	g_signal_handlers_disconnect_by_func (dialog->pixmap,
+			                      G_CALLBACK (panel_run_dialog_screen_changed),
+			                      dialog);
 }
 
 static void
