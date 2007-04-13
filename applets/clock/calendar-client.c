@@ -614,7 +614,12 @@ static guint
 get_ical_percent_complete (icalcomponent *ical)
 {
   icalproperty *prop;
+  icalproperty_status status;
   int           percent_complete;
+
+  status = icalcomponent_get_status (ical);
+  if (status == ICAL_STATUS_COMPLETED)
+    return 100;
 
   prop = icalcomponent_get_first_property (ical, ICAL_COMPLETED_PROPERTY);
   if (prop)
