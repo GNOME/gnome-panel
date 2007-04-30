@@ -1,3 +1,14 @@
+2007-05-01  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-shell.c: (panel_shell_register_error_dialog): new, show the
+	error dialog with a checkbox to let the user force the panel to not
+	be restarted by gnome-session
+	(panel_shell_register): force the panel to not be restarted if there's
+	already one running and don't show an error dialog in this case
+	* panel-session.[ch]: (panel_session_do_not_restart): new, to tell the
+	session manager to not restart the panel
+	Fix bug #309539
+
 2007-04-30  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-util.[ch]: (missing_pixbuf): unused => kill

@@ -78,6 +78,16 @@ panel_session_handle_die_request (GnomeClient *client)
 }
 
 void
+panel_session_do_not_restart (void)
+{
+	GnomeClient *client;
+
+	client = gnome_master_client ();
+
+	gnome_client_set_restart_style (client, GNOME_RESTART_IF_RUNNING);
+}
+
+void
 panel_session_init (void)
 {
 	GnomeClient *client;

@@ -29,6 +29,7 @@
 #include <gtk/gtk.h>
 
 #include "panel-shell.h"
+#include "panel-session.h"
 #include "panel-util.h"
 
 /*
@@ -53,12 +54,53 @@ panel_shell_bonobo_activation_register_for_display (const char    *iid,
 	return result;
 }
 
+static void
+panel_shell_register_error_dialog (int reg_res)
+{
+	GtkWidget *dlg;
+	GtkWidget *checkbox;
+	char      *secondary;
+
+	secondary = g_strdup_printf (_("The panel could not register with the "
+				       "bonobo-activation server (error code: "
+				       "%d) and will exit.\n"
+				       "It may be automatically restarted."),
+				       reg_res);
+
+	dlg = panel_error_dialog (NULL,
+				  gdk_screen_get_default (),
+				  "panel_shell_register_error",
+				  FALSE,
+				  _("The panel has encountered a fatal error"),
+				  secondary);
+
+	g_free (secondary);
+
+	//FIXME: the checkbox is not correctly aligned in the dialog...
+	checkbox = gtk_check_button_new_with_mnemonic (_("Force the panel to "
+							 "not be automatically "
+							 "restarted"));
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+			    checkbox, FALSE, FALSE, 0);
+	gtk_widget_show (checkbox);
+
+	gtk_dialog_run (GTK_DIALOG (dlg));
+
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbox)))
+		panel_session_do_not_restart ();
+
+	gtk_widget_destroy (dlg);
+}
+
 gboolean
 panel_shell_register (void)
 {
+	gboolean retval;
+
+	retval = TRUE;
+
         if (!panel_shell) {
 		Bonobo_RegistrationResult  reg_res;
-		char                      *message = NULL;
 
 		panel_shell = g_object_new (PANEL_SHELL_TYPE, NULL);
 		bonobo_object_set_immortal (BONOBO_OBJECT (panel_shell), TRUE);
@@ -71,30 +113,18 @@ panel_shell_register (void)
 		case Bonobo_ACTIVATION_REG_SUCCESS:
 			break;
 		case Bonobo_ACTIVATION_REG_ALREADY_ACTIVE:
-			message = _("I've detected a panel already running,\n"
-				    "and will now exit.");
+			retval = FALSE;
+			g_printerr ("A panel is already running.\n");
+			panel_session_do_not_restart ();
 			break;
 		default:
-			message = g_strdup_printf (_("There was a problem registering the panel "
-						     "with the bonobo-activation server.\n"
-						     "The error code is: %d\n"
-						     "The panel will now exit."), reg_res);
+			retval = FALSE;
+			panel_shell_register_error_dialog (reg_res);
 			break;
-		}
-
-		if (message) {
-			GtkWidget *dlg = panel_error_dialog (
-						NULL, gdk_screen_get_default (),
-						"panel_shell_register_error",
-						FALSE, message, NULL);
-
-			gtk_dialog_run (GTK_DIALOG (dlg));
-			gtk_widget_destroy (dlg);
-			return FALSE;
 		}
 	}
 
-	return TRUE;
+	return retval;
 }
 
 void
