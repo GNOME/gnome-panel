@@ -690,39 +690,6 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 	return retval;
 }
 
-GdkPixbuf *
-missing_pixbuf (int size)
-{
-	int i, j;
-	int rowstride;
-	guchar *pixels;
-	GdkPixbuf *pb;
-
-	pb = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-			     FALSE /* has alpha */,
-			     8 /* bits per sample */,
-			     size, size);
-	pixels = gdk_pixbuf_get_pixels (pb);
-	rowstride = gdk_pixbuf_get_rowstride (pb);
-
-	for (i = 0; i < size; i++) {
-		for (j = 0; j < size; j++) {
-			guchar *p = pixels + i * rowstride + 3 * j;
-			if (i == j || size - i == j) {
-				p[0] = 255;
-				p[1] = 0;
-				p[2] = 0;
-			} else {
-				p[0] = 255;
-				p[1] = 255;
-				p[2] = 255;
-			}
-		}
-	}
-
-	return pb;
-}
-
 static char *
 panel_lock_screen_action_get_command (const char *action)
 {

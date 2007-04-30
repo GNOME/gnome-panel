@@ -75,7 +75,6 @@ GdkPixbuf *     panel_load_icon         (GtkIconTheme  *icon_theme,
 					 int            desired_width,
 					 int            desired_height,
 					 char         **error_msg);
-GdkPixbuf *	missing_pixbuf		(int size);
 
 char *panel_make_full_path   (const char *dir,
 			      const char *filename);

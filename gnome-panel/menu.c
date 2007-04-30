@@ -41,7 +41,6 @@
 #include "panel-config-global.h"
 #include "panel-stock-icons.h"
 #include "panel-action-button.h"
-#include "panel-recent.h"
 #include "panel-profile.h"
 #include "panel-menu-button.h"
 #include "panel-menu-items.h"
@@ -214,10 +213,6 @@ menus_have_icons_changed (GConfClient *client,
 
 		image = g_object_get_data (G_OBJECT (item), "Panel:Image");
 		if (!image)
-			continue;
-
-		/* A forced image is always on */
-		if (g_object_get_data (G_OBJECT (item), "Panel:ForceImage"))
 			continue;
 
 		cur_image = gtk_image_menu_item_get_image (
