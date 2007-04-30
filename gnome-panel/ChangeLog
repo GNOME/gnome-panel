@@ -1,5 +1,13 @@
 2007-05-01  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-applet-frame.c: (panel_applet_frame_cnx_broken): default the
+	dialog response to "reload"
+	(panel_applet_frame_loading_failed): default the response to "don't
+	delete"
+	Fix bug #345156
+
+2007-05-01  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-shell.c: (panel_shell_register_error_dialog): new, show the
 	error dialog with a checkbox to let the user force the panel to not
 	be restarted by gnome-session

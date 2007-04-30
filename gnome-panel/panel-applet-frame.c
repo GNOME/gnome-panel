@@ -977,6 +977,9 @@ panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 				_("_Reload"), GTK_RESPONSE_YES,
 				NULL);
 
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+					 GTK_RESPONSE_YES);
+
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
 	g_signal_connect (dialog, "response",
@@ -1048,7 +1051,6 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 					GTK_STOCK_OK, LOADING_FAILED_RESPONSE_DONT_DELETE,
 					NULL);
-		gtk_dialog_set_default_response (GTK_DIALOG (dialog), LOADING_FAILED_RESPONSE_DONT_DELETE);
 	} else {
 		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
 					_("Do you want to delete the applet "
@@ -1057,8 +1059,10 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 					PANEL_STOCK_DONT_DELETE, LOADING_FAILED_RESPONSE_DONT_DELETE,
 					GTK_STOCK_DELETE, LOADING_FAILED_RESPONSE_DELETE,
 					NULL);
-		gtk_dialog_set_default_response (GTK_DIALOG (dialog), LOADING_FAILED_RESPONSE_DELETE);
 	}
+
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+					 LOADING_FAILED_RESPONSE_DONT_DELETE);
 
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_window_get_screen (GTK_WINDOW (frame->priv->panel->toplevel)));
