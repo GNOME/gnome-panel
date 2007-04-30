@@ -112,7 +112,7 @@ static ComboItem type_items [] = {
 	  PANEL_DITEM_EDITOR_TYPE_APPLICATION          },
 	{ N_("Application in Terminal"), "Application",
 	  PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION },
-	{ N_("File"),                    "Link",
+	{ N_("Location"),                "Link",
 	  PANEL_DITEM_EDITOR_TYPE_LINK                 },
 	/* FIXME: hack hack hack: we will remove this item from the combo
 	 * box if we show it */
