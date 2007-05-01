@@ -4,4 +4,4 @@ dist-hook: doc-dist-hook
 DOC_MODULE = window-list
 DOC_INCLUDES = legal.xml
 
-DOC_LINGUAS = es fr it pa ru sv uk zh_CN
+DOC_LINGUAS = es fr it ko pa ru sv uk zh_CN
