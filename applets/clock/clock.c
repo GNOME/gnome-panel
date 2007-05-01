@@ -2001,14 +2001,30 @@ copy_date (BonoboUIComponent *uic,
 	g_free (utf8);
 }
 
+static void
+on_config_tool_exited (GPid     pid,
+                       gint     status,
+                       gpointer data)
+{
+  ClockData *clock;
+
+  clock = (ClockData *) data;
+
+  refresh_clock (clock);
+
+  g_spawn_close_pid (pid);
+}
+
 static gboolean
 try_config_tool (GdkScreen  *screen,
-		 const char *tool)
+		 const char *tool,
+		 ClockData  *cd)
 {
 	GtkWidget *dialog;
 	GError    *err;
 	char     **argv;
-        char      *path;
+	char      *path;
+	GPid       pid;
 
         if (!tool || tool[0] == '\0')
                 return FALSE;
@@ -2028,12 +2044,14 @@ try_config_tool (GdkScreen  *screen,
                                  NULL,
                                  argv,
                                  NULL,
-                                 G_SPAWN_SEARCH_PATH,
+                                 G_SPAWN_SEARCH_PATH|G_SPAWN_DO_NOT_REAP_CHILD,
                                  NULL,
                                  NULL,
-                                 NULL,
+                                 &pid,
                                  &err)) {
-                g_strfreev (argv);
+
+		g_child_watch_add (pid, on_config_tool_exited, cd); 
+		g_strfreev (argv);
 		return TRUE;
 	}
 
@@ -2070,11 +2088,11 @@ config_date (BonoboUIComponent *uic,
 
 	screen = gtk_widget_get_screen (cd->applet);
 
-	if (try_config_tool (screen, cd->config_tool))
+	if (try_config_tool (screen, cd->config_tool, cd))
 		return;
 	
 	for (i = 0; i < G_N_ELEMENTS (clock_config_tools); i++)
-		if (try_config_tool (screen, clock_config_tools [i]))
+		if (try_config_tool (screen, clock_config_tools [i], cd))
 			return;
 		
 	dialog = gtk_message_dialog_new (NULL,

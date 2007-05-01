@@ -1,3 +1,11 @@
+2007-05-01  Vincent Untz  <vuntz@gnome.org>
+
+	* clock.c: (on_config_tool_exited): new, updates the clock when the
+	config tool exits
+	(try_config_tool): add a watch on the child
+	(config_date): updated
+	Fix bug #425910. Patch by Ray Strode <rstrode@redhat.com>
+
 2007-04-13  Ross Burton  <ross@openedhand.com>
 
 	* calendar-client.c:
