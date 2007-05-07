@@ -904,12 +904,15 @@ command_browse_chooser_response (GtkFileChooser   *chooser,
 				 PanelDItemEditor *dialog)
 {
 	char *uri;
+	char *text;
 
 	if (response_id == GTK_RESPONSE_ACCEPT) {
 		switch (panel_ditem_editor_get_item_type (dialog)) {
 		case PANEL_DITEM_EDITOR_TYPE_APPLICATION:
 		case PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION:
-			uri = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
+			text = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
+			uri = panel_util_make_exec_uri_for_desktop (text);
+			g_free (text);
 			break;
 		case PANEL_DITEM_EDITOR_TYPE_LINK:
 			uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (chooser));
@@ -1182,8 +1185,6 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 	buffer = panel_util_key_file_get_locale_string (key_file, "Icon");
 	tmpstr = panel_find_icon (gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (dialog))),
 				  buffer, 48);
-	gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->priv->icon_entry),
-				       tmpstr);
 
 	g_free (dialog->priv->icon_theme_dir);
 	if (tmpstr != NULL && buffer != NULL && !g_path_is_absolute (buffer)) {
@@ -1196,6 +1197,11 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 		g_object_get (G_OBJECT (dialog->priv->icon_entry), "pixmap_subdir",
 			      &(dialog->priv->icon_theme_dir), NULL);
 	}
+
+	/* do this after we set icon_theme_dir since this will launch a
+	 * callback */
+	gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->priv->icon_entry),
+				       tmpstr);
 
 	g_free (tmpstr);
 	g_free (buffer);

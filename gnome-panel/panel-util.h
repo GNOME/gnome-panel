@@ -21,6 +21,8 @@ void            panel_launch_desktop_file  (const char                   *deskto
 					    GdkScreen                    *screen,
 					    GError                      **error);
 
+char *          panel_util_make_exec_uri_for_desktop (const char *exec);
+
 void		panel_show_help		(GdkScreen  *screen,
 					 const char *path,
 					 const char *linkid);

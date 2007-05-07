@@ -1,5 +1,17 @@
 2007-05-07  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-util.[ch]: (panel_util_make_exec_uri_for_desktop): new
+	* panel-ditem-editor.c: (command_browse_chooser_response): use the new
+	function to add quotes when necessary, since this is how the Exec
+	works with spaces. Fixes creating launchers with empty spaces in the
+	command.
+	(panel_ditem_editor_sync_display): set the filename in the icon entry
+	after having looked at the theme directory. Fixes the launcher editor
+	to not save a localized Icon key with the whole path when there's only
+	a icon name
+
+2007-05-07  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-run-dialog.c: fix alignment of the run button again, and use
 	markup for the label in there
 
