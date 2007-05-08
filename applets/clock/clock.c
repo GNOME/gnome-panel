@@ -80,11 +80,11 @@ static const char* KEY_CONFIG_TOOL   = "config_tool";
 static const char* KEY_CUSTOM_FORMAT = "custom_format";
 static const char* KEY_SHOW_WEEK     = "show_week_numbers";
 
+#define FALLBACK_CONFIG_TOOL "time-admin"
+
 static const char *clock_config_tools [] = {
-	"system-config-date",
-	"redhat-config-date",
-        "/sbin/yast2 timezone",
-	"time-admin",
+	CLOCK_TIME_UTILITY,
+	FALLBACK_CONFIG_TOOL
 };
 
 /* Needs to match the indices in the combo */

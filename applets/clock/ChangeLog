@@ -1,5 +1,12 @@
 2007-05-08  Vincent Untz  <vuntz@gnome.org>
 
+	* Makefile.am: add new define CLOCK_TIME_UTILITY in compile line
+	* clock.c: stop hardcoding the various utilities out there to setup
+	the time and date and use the one passed in configure
+	Fix bug #436837
+
+2007-05-08  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.schemas.in: show date by default because it seems the majority
 	of people are weird and are not like me.
 

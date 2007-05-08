@@ -8,8 +8,9 @@ INCLUDES = 						\
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBDIR=\""$(libdir)"\"			\
 	-DSYSCONFDIR=\""$(sysconfdir)"\"		\
-	-DPREFIX=\""$(prefix)"\"				\
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" 
+	-DPREFIX=\""$(prefix)"\"			\
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"  \
+	-DCLOCK_TIME_UTILITY="\"$(CLOCK_TIME_UTILITY)\""
 
 if HAVE_LIBECAL
 CALENDAR_SOURCES =		\
