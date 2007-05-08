@@ -114,6 +114,15 @@ PKG_CHECK_MODULES(FISH, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_
 AC_SUBST(FISH_CFLAGS)
 AC_SUBST(FISH_LIBS)
 
+# Let distributor specify which utility to use when changing the time
+AC_ARG_WITH(clock-time-utility,
+              [AC_HELP_STRING([--with-clock-time-utility],
+                              [Specify the utility to use when changing the time from the clock applet @<:@default=@:>@])],,
+                              [with_clock_time_utility=""])
+
+CLOCK_TIME_UTILTIY=$with_clock_time_utility
+AC_SUBST(CLOCK_TIME_UTILTIY)
+
 # Make it possible to compile the applets in-process
 PANEL_INPROCESS_NONE=
 PANEL_INPROCESS_ALL=
