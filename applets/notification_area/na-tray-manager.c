@@ -834,7 +834,7 @@ na_tray_manager_get_child_title (NaTrayManager      *manager,
   int format;
   gulong nitems;
   gulong bytes_after;
-  guchar *val;
+  gchar *val;
 
   g_return_val_if_fail (NA_IS_TRAY_MANAGER (manager), NULL);
   g_return_val_if_fail (GTK_IS_SOCKET (child), NULL);
