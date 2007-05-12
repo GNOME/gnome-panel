@@ -1,5 +1,13 @@
 2007-05-13  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-util.c: (panel_error_dialog):
+	* panel-context-menu.c: (panel_context_menu_show_about_dialog):
+	* panel.c: (panel_deletion_dialog): don't call
+	gtk_window_set_wmclass() since GTK+ doc says "Don't use this
+	function."
+
+2007-05-13  Vincent Untz  <vuntz@gnome.org>
+
 	* gnome-panel.desktop.in.in: renamed from gnome-panel.desktop.in and
 	add a comment
 	* panel-context-menu.c: (panel_context_menu_show_about_dialog): update

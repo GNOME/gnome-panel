@@ -381,7 +381,6 @@ panel_error_dialog (GtkWindow  *parent,
 	g_signal_connect (dialog, "event",
 			  G_CALLBACK (panel_dialog_window_event), NULL);
 
-	gtk_window_set_wmclass (GTK_WINDOW (dialog), class, "Panel");
 	if (screen)
 		gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 

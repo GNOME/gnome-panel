@@ -1333,9 +1333,6 @@ panel_deletion_dialog (PanelToplevel *toplevel)
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 	gtk_window_set_title (GTK_WINDOW (dialog), title);
 
-	gtk_window_set_wmclass (GTK_WINDOW (dialog),
-				"panel_remove_query", "Panel");
-
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 				gtk_window_get_screen (GTK_WINDOW (toplevel)));
 

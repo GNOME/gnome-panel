@@ -135,7 +135,6 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 		      "logo-icon-name", PANEL_ICON_PANEL,
 		      NULL);
 
-	gtk_window_set_wmclass (GTK_WINDOW (about), "about_dialog", "Panel");
 	gtk_window_set_screen (GTK_WINDOW (about),
 			       menuitem_to_screen (menuitem));
 	g_signal_connect (about, "destroy",
