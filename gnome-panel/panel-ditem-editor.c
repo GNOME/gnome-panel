@@ -1087,7 +1087,7 @@ type_combo_changed (PanelDItemEditor *dialog)
 
 	switch (panel_ditem_editor_get_item_type (dialog)) {
 	case PANEL_DITEM_EDITOR_TYPE_APPLICATION:
-		text = _("_Command:");
+		text = _("Comm_and:");
 		if (dialog->priv->combo_setuped) {
 			panel_util_key_file_set_string (dialog->priv->key_file,
 							"Type", "Application");
