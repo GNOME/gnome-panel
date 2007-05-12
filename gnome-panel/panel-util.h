@@ -80,6 +80,8 @@ GdkPixbuf *     panel_load_icon         (GtkIconTheme  *icon_theme,
 
 char *panel_make_full_path   (const char *dir,
 			      const char *filename);
+char *panel_make_unique_desktop_path_from_name (const char *dir,
+						const char *name);
 char *panel_make_unique_desktop_uri (const char *dir,
 				     const char *source);
 char *panel_lookup_in_data_dirs (const char *basename);

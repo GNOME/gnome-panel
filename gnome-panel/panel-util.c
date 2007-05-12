@@ -839,14 +839,55 @@ panel_make_full_path (const char *dir,
 }
 
 char *
+panel_make_unique_desktop_path_from_name (const char *dir,
+					  const char *name)
+{
+	int   num = 1;
+	char *path = NULL;
+	char  filename[NAME_MAX];
+
+/* g_file_set_contents() use "%s.XXXXXX"
+ * FIXME: waiting for http://bugzilla.gnome.org/show_bug.cgi?id=437977 */
+#define LENGTH_FOR_TMPFILE_EXT 7
+
+	g_snprintf (filename,
+		    sizeof (filename) - strlen (".desktop") - LENGTH_FOR_TMPFILE_EXT,
+		    "%s", name);
+	g_strlcat (filename, ".desktop", sizeof (filename));
+	path = panel_make_full_path (dir, filename);
+	if (!g_file_test (path, G_FILE_TEST_EXISTS))
+		return path;
+	g_free (path);
+
+	while (TRUE) {
+		char *buf;
+
+		buf = g_strdup_printf ("-%d.desktop", num);
+		g_snprintf (filename,
+			    sizeof (filename) - strlen (buf) - LENGTH_FOR_TMPFILE_EXT,
+			    "%s", name);
+		g_strlcat (filename, buf, sizeof (filename));
+		g_free (buf);
+
+		g_free (path);
+		path = panel_make_full_path (dir, filename);
+		if (!g_file_test (path, G_FILE_TEST_EXISTS))
+			return path;
+		g_free (path);
+
+		num++;
+	}
+
+	return NULL;
+}
+
+char *
 panel_make_unique_desktop_uri (const char *dir,
 			       const char *source)
 {
 	char     *name, *p;
 	char     *uri;
 	char     *path = NULL;
-	gboolean  exists = TRUE;
-	int       num = 0;
 
 	/* Accept NULL source. Using an emptry string makes our life easier
 	 * than keeping NULL. */
@@ -885,24 +926,11 @@ panel_make_unique_desktop_uri (const char *dir,
 		name = g_strdup (_("file"));
 	}
 
-	while (exists) {
-		char *filename;
-
-		filename = num == 0 ?
-			g_strdup_printf ("%s.desktop", name) :
-			g_strdup_printf ("%s-%d.desktop", name, num);
-
-		g_free (path);
-		path = panel_make_full_path (dir, filename);
-		exists = g_file_test (path, G_FILE_TEST_EXISTS);
-		g_free (filename);
-
-		num++;
-	}
+	path = panel_make_unique_desktop_path_from_name (dir, name);
+	g_free (name);
 
 	uri = gnome_vfs_get_uri_from_local_path (path);
 	g_free (path);
-	g_free (name);
 
 	return uri;
 }

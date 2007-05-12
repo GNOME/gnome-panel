@@ -1,5 +1,17 @@
 2007-05-12  Vincent Untz  <vuntz@gnome.org>
 
+	* gnome-desktop-item-edit.c: (get_unique_name): kill
+	(find_uri_on_save): use panel_make_unique_desktop_path_from_name()
+	instead
+	* panel-util.[ch]: (panel_make_unique_desktop_path_from_name): new,
+	based on code from panel_make_unique_desktop_uri(), but also takes
+	into account NAME_MAX
+	(panel_make_unique_desktop_uri): use
+	panel_make_unique_desktop_path_from_name()
+	Fix bug #426281
+
+2007-05-12  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-gdm.c: (gdm_init_protocol_connection): prefer the new path for
 	the gdm socket.
 	Fix bug #437460. Patch by Loïc Minier <lool+gnome@via.ecp.fr>

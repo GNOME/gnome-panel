@@ -76,39 +76,6 @@ validate_for_filename (char *file)
 }
 
 static char *
-get_unique_name (const char *dir,
-		 const char *name)
-{
-	int i;
-	char *full;
-	char *nameext = g_strdup_printf ("%s.desktop", name);
-
-	full = g_build_path ("/", dir, nameext, NULL);
-	if (!panel_uri_exists (full)) {
-		g_free (nameext);
-		return full;
-	}
-	g_free (full);
-
-	i = 2;
-	for (;;) {
-		g_free (nameext);
-		nameext = g_strdup_printf ("%s%d.desktop", name, i++);
-
-		/* randomize further same name desktops */
-		if (i > 5)
-			i = g_random_int ();
-
-		full = g_build_path ("/", dir, nameext, NULL);
-		if (!panel_uri_exists (full)) {
-			g_free (nameext);
-			return full;
-		}
-		g_free (full);
-	}
-}
-
-static char *
 find_uri_on_save (PanelDItemEditor *dialog,
 		  gpointer          data)
 {
@@ -129,7 +96,7 @@ find_uri_on_save (PanelDItemEditor *dialog,
 		filename = g_strdup ("foo");
 
 	dir = g_object_get_data (G_OBJECT (dialog), "dir");
-	uri = get_unique_name (dir, filename);
+	uri = panel_make_unique_desktop_path_from_name (dir, filename);
 
 	g_free (filename);
 
