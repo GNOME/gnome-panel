@@ -1,5 +1,11 @@
 2007-05-12  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-gdm.c: (gdm_init_protocol_connection): prefer the new path for
+	the gdm socket.
+	Fix bug #437460. Patch by Loïc Minier <lool+gnome@via.ecp.fr>
+
+2007-05-12  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-action-button.c: (panel_action_shutdown_reboot_is_disabled):
 	renamed from panel_action_shutdown_is_disabled()
 	* panel-logout.c: (panel_logout_new): only show restart/shutdown
