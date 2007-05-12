@@ -1240,3 +1240,29 @@ panel_util_key_file_remove_locale_key (GKeyFile    *keyfile,
 		g_key_file_remove_key (keyfile, "Desktop Entry",
 				       key, NULL);
 }
+
+char *
+guess_icon_from_exec (GtkIconTheme *icon_theme,
+		      GKeyFile     *key_file)
+{
+	char *exec;
+	char *icon_name;
+	char *path;
+
+	exec = panel_util_key_file_get_string (key_file, "Exec");
+	if (!exec || !exec [0]) {
+		g_free (exec);
+		return NULL;
+	}
+
+	icon_name = g_path_get_basename (exec);
+	g_free (exec);
+
+	path = panel_find_icon (icon_theme, icon_name, 48);
+	if (!path) {
+		g_free (icon_name);
+		return NULL;
+	}
+
+	return icon_name;
+}

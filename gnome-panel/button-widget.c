@@ -191,6 +191,7 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 						  button->orientation & PANEL_HORIZONTAL_MASK ? button->size : -1,
 						  &error);
 		if (error) {
+			//FIXME: this is not rendered at button->size
 			button->pixbuf = gtk_widget_render_icon (GTK_WIDGET (button),
 								 GTK_STOCK_MISSING_IMAGE,
 								 (GtkIconSize) -1, NULL);

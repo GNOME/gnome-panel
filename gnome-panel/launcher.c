@@ -569,30 +569,6 @@ create_launcher (const char *location)
 	return launcher;
 }
 
-static char *
-guess_icon_from_exec (GtkIconTheme *icon_theme,
-		      GKeyFile     *key_file)
-{
-	char *exec;
-	char *icon_name;
-	char *retval;
-
-	exec = panel_util_key_file_get_string (key_file, "Exec");
-
-	if (!exec || !exec [0]) {
-		g_free (exec);
-		return NULL;
-	}
-
-	icon_name = g_path_get_basename (exec);
-	retval = panel_find_icon (icon_theme, icon_name, 48);
-
-	g_free (exec);
-	g_free (icon_name);
-
-	return retval;
-}
-
 static void
 setup_button (Launcher *launcher)
 {
@@ -640,8 +616,10 @@ setup_button (Launcher *launcher)
 	if (!icon)
 		icon = guess_icon_from_exec (BUTTON_WIDGET (launcher->button)->icon_theme,
 					     launcher->key_file);
+	if (!icon)
+		icon = g_strdup ("gnome-panel-launcher");
 
-	button_widget_set_icon_name (BUTTON_WIDGET (launcher->button), sure_string (icon));
+	button_widget_set_icon_name (BUTTON_WIDGET (launcher->button), icon);
 	g_free (icon);
 }
 

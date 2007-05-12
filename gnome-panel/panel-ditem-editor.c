@@ -171,6 +171,10 @@ static void type_combo_changed (PanelDItemEditor *dialog);
 
 static void response_cb (GtkDialog *dialog,
 			 gint       response_id);
+
+static void setup_icon_entry (PanelDItemEditor *dialog,
+			      const char       *icon_name);
+
 static gboolean panel_ditem_editor_save         (PanelDItemEditor *dialog,
 						 gboolean          report_errors);
 static gboolean panel_ditem_editor_save_timeout (gpointer data);
@@ -247,6 +251,9 @@ panel_ditem_editor_constructor (GType                  type,
 	dialog->priv->dirty = FALSE;
 
 	panel_ditem_editor_setup_ui (dialog);
+
+	if (dialog->priv->new_file)
+		setup_icon_entry (dialog, NULL);
 
 	return obj;
 }
@@ -814,6 +821,8 @@ panel_ditem_editor_command_changed (PanelDItemEditor *dialog)
 {
 	PanelDItemEditorType  type;
 	const char           *exec_or_uri;
+	GtkIconTheme         *icon_theme;
+	char                 *icon;
 
 	exec_or_uri = gtk_entry_get_text (GTK_ENTRY (dialog->priv->command_entry));
 
@@ -828,6 +837,22 @@ panel_ditem_editor_command_changed (PanelDItemEditor *dialog)
 		panel_util_key_file_remove_key (dialog->priv->key_file, "URL");
 		panel_util_key_file_set_string (dialog->priv->key_file, "Exec",
 						exec_or_uri);
+
+		icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (dialog)));
+		icon = guess_icon_from_exec (icon_theme,
+					     dialog->priv->key_file);
+		if (icon) {
+			char *current;
+
+			current = panel_util_key_file_get_locale_string (dialog->priv->key_file,
+									 "Icon");
+
+			if (!current || strcmp (icon, current))
+				setup_icon_entry (dialog, icon);
+
+			g_free (current);
+			g_free (icon);
+		}
 		break;
 	case PANEL_DITEM_EDITOR_TYPE_LINK:
 		panel_util_key_file_remove_key (dialog->priv->key_file, "Exec");
@@ -1108,6 +1133,47 @@ type_combo_changed (PanelDItemEditor *dialog)
 	update_chooser_for_type (dialog);
 }
 
+static void
+setup_icon_entry (PanelDItemEditor *dialog,
+		  const char       *icon_name)
+{
+	char *buffer;
+	char *tmpstr;
+
+	if (!icon_name || icon_name[0] == '\0') {
+		if (panel_ditem_editor_get_item_type (dialog) == PANEL_DITEM_EDITOR_TYPE_DIRECTORY) {
+			buffer = g_strdup ("folder");
+		} else {
+			buffer = g_strdup ("gnome-panel-launcher");
+		}
+	} else {
+		buffer = g_strdup (icon_name);
+	}
+
+	tmpstr = panel_find_icon (gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (dialog))),
+				  buffer, 48);
+
+	g_free (dialog->priv->icon_theme_dir);
+	if (tmpstr != NULL && buffer != NULL && !g_path_is_absolute (buffer)) {
+		/* this is a themed icon, see bug #119208 */
+		dialog->priv->icon_theme_dir = g_path_get_dirname (tmpstr);
+		/* FIXME: what about theme changes when the dialog is up */
+	} else {
+		/* use the default pixmap directory as the standard
+		 * icon_theme_dir, since the standard directory is themed */
+		g_object_get (G_OBJECT (dialog->priv->icon_entry), "pixmap_subdir",
+			      &(dialog->priv->icon_theme_dir), NULL);
+	}
+
+	/* do this after we set icon_theme_dir since this will launch a
+	 * callback */
+	gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->priv->icon_entry),
+				       tmpstr);
+
+	g_free (tmpstr);
+	g_free (buffer);
+}
+
 /* Conform display to ditem */
 void
 panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
@@ -1117,7 +1183,6 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 	gboolean              run_in_terminal;
 	GKeyFile             *key_file;
 	char                 *buffer;
-	char                 *tmpstr;
 	GtkTreeIter           iter;
 	GtkTreeModel         *model;
 	PanelDItemEditorType  buf_type;
@@ -1183,27 +1248,7 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 
 	/* Icon */
 	buffer = panel_util_key_file_get_locale_string (key_file, "Icon");
-	tmpstr = panel_find_icon (gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (dialog))),
-				  buffer, 48);
-
-	g_free (dialog->priv->icon_theme_dir);
-	if (tmpstr != NULL && buffer != NULL && !g_path_is_absolute (buffer)) {
-		/* this is a themed icon, see bug #119208 */
-		dialog->priv->icon_theme_dir = g_path_get_dirname (tmpstr);
-		/* FIXME: what about theme changes when the dialog is up */
-	} else {
-		/* use the default pixmap directory as the standard
-		 * icon_theme_dir, since the standard directory is themed */
-		g_object_get (G_OBJECT (dialog->priv->icon_entry), "pixmap_subdir",
-			      &(dialog->priv->icon_theme_dir), NULL);
-	}
-
-	/* do this after we set icon_theme_dir since this will launch a
-	 * callback */
-	gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->priv->icon_entry),
-				       tmpstr);
-
-	g_free (tmpstr);
+	setup_icon_entry (dialog, buffer);
 	g_free (buffer);
 
 	if (dialog->priv->save_timeout != 0) {

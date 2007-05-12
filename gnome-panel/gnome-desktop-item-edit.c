@@ -108,17 +108,6 @@ get_unique_name (const char *dir,
 }
 
 static char *
-find_uri_on_save_directory (PanelDItemEditor *dialog,
-			    gpointer          data)
-{
-	char *filename;
-
-	filename = g_object_get_data (G_OBJECT (dialog), "filename");
-
-	return g_strdup (filename);
-}
-
-static char *
 find_uri_on_save (PanelDItemEditor *dialog,
 		  gpointer          data)
 {
@@ -244,23 +233,13 @@ main (int argc, char * argv[])
 			/* a non-existant file.  Well we can still edit that
 			 * sort of.  We will just create it new */
 			GKeyFile *key_file;
-			char     *filename;
-
-			filename = g_strdup (desktops [i]);
 
 			key_file = panel_util_key_file_new_desktop ();
 			panel_util_key_file_set_string (key_file,
 							"Type", "Directory");
 
-			dlg = panel_ditem_editor_new (NULL, key_file, NULL,
+			dlg = panel_ditem_editor_new (NULL, key_file, uri,
 						      _("Directory Properties"));
-			g_object_set_data_full (G_OBJECT (dlg), "filename",
-						filename,
-						(GDestroyNotify)g_free);
-
-			panel_ditem_register_save_uri_func (PANEL_DITEM_EDITOR (dlg),
-							    find_uri_on_save_directory,
-							    NULL);
 
 		} else if (g_str_has_suffix (desktops [i], ".desktop")) {
 			/* a non-existant file.  Well we can still edit that

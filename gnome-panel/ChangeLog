@@ -1,3 +1,23 @@
+2007-05-12  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-util.[ch]: (guess_icon_from_exec): new, moved from launcher.c
+	* panel-ditem-editor.c: (setup_icon_entry): new, to setup the icon in
+	the icon entry
+	(panel_ditem_editor_constructor): if we're creating a new file, call
+	setup_icon_entry() to get nice default icons
+	(panel_ditem_editor_command_changed): guess the icon from the new
+	command and update it. It's what the user wants in 99% of the case, to
+	get a nice icon.
+	(panel_ditem_editor_sync_display): use setup_icon_entry()
+	* gnome-desktop-item-edit.c: (find_uri_on_save_directory): kill
+	(main): when the file for a .directory file doesn't exist, we don't
+	need to register a save_uri function. It was impossible to edit a
+	file that was not passed a non-absolute URI
+	* launcher.c: (guess_icon_from_exec): moved in another file
+	(setup_button): if we can't find an icon, use the launcher icon
+	* button-widget.c: (button_widget_reload_pixbuf): add FIXME
+	Sideeffect: fix bug #435150
+
 2007-05-07  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-util.[ch]: (panel_util_make_exec_uri_for_desktop): new

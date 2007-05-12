@@ -118,6 +118,9 @@ void    panel_util_key_file_set_locale_string (GKeyFile    *keyfile,
 void panel_util_key_file_remove_locale_key (GKeyFile    *keyfile,
 					    const gchar *key);
 
+char *guess_icon_from_exec (GtkIconTheme *icon_theme,
+			    GKeyFile     *key_file);
+
 G_END_DECLS
 
 #endif /* PANEL_UTIL_H */
