@@ -1264,8 +1264,6 @@ panel_ditem_editor_save (PanelDItemEditor *dialog,
 	PanelDItemEditorType  type;
 	GKeyFile             *key_file;
 	const char           *const_buf;
-	char                 *buffer;
-	char                 *C_value;
 	GError               *error;
 
 	g_return_val_if_fail (dialog != NULL, FALSE);
@@ -1318,45 +1316,9 @@ panel_ditem_editor_save (PanelDItemEditor *dialog,
 
 	key_file = dialog->priv->key_file;
 
-	/* Make sure we set the "C" locale strings to the terms we set here.
-	 * This is so that if the user logs into another locale they get their
-	 * own description there rather then empty. It is not the C locale
-	 * however, but the user created this entry herself so it's OK */
-	C_value = panel_util_key_file_get_string (key_file, "Name");
-	if (C_value == NULL || C_value [0] == '\0') {
-		buffer = panel_util_key_file_get_locale_string (key_file,
-								"Name");
-		if (buffer) {
-			panel_util_key_file_set_string (key_file, "Name",
-							buffer);
-			g_free (buffer);
-		}
-	}
-	g_free (C_value);
-
-	C_value = panel_util_key_file_get_string (key_file, "Comment");
-	if (C_value == NULL || C_value [0] == '\0') {
-		buffer = panel_util_key_file_get_locale_string (key_file,
-								"Comment");
-		if (buffer) {
-			panel_util_key_file_set_string (key_file, "Comment",
-							buffer);
-			g_free (buffer);
-		}
-	}
-	g_free (C_value);
-
-	C_value = panel_util_key_file_get_string (key_file, "Icon");
-	if (C_value == NULL || C_value [0] == '\0') {
-		buffer = panel_util_key_file_get_locale_string (key_file,
-								"Icon");
-		if (buffer) {
-			panel_util_key_file_set_string (key_file, "Icon",
-							buffer);
-			g_free (buffer);
-		}
-	}
-	g_free (C_value);
+	panel_util_key_file_ensure_C_key (key_file, "Name");
+	panel_util_key_file_ensure_C_key (key_file, "Comment");
+	panel_util_key_file_ensure_C_key (key_file, "Icon");
 
 	if (dialog->priv->save_uri) {
 		char *uri;

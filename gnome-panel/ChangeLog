@@ -1,5 +1,11 @@
 2007-05-12  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-util.[ch]: (panel_util_key_file_ensure_C_key): new
+	* panel-ditem-editor.c: (panel_ditem_editor_save): move code to use
+	panel_util_key_file_ensure_C_key()
+
+2007-05-12  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.[ch]: (guess_icon_from_exec): new, moved from launcher.c
 	* panel-ditem-editor.c: (setup_icon_entry): new, to setup the icon in
 	the icon entry

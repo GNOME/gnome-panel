@@ -117,6 +117,8 @@ void    panel_util_key_file_set_locale_string (GKeyFile    *keyfile,
 	g_key_file_remove_key (key_file, "Desktop Entry", key, NULL)
 void panel_util_key_file_remove_locale_key (GKeyFile    *keyfile,
 					    const gchar *key);
+void panel_util_key_file_ensure_C_key (GKeyFile   *keyfile,
+				       const char *key);
 
 char *guess_icon_from_exec (GtkIconTheme *icon_theme,
 			    GKeyFile     *key_file);
