@@ -868,7 +868,6 @@ panel_make_unique_desktop_path_from_name (const char *dir,
 		g_strlcat (filename, buf, sizeof (filename));
 		g_free (buf);
 
-		g_free (path);
 		path = panel_make_full_path (dir, filename);
 		if (!g_file_test (path, G_FILE_TEST_EXISTS))
 			return path;

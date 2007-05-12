@@ -1,5 +1,10 @@
 2007-05-13  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-util.c: (panel_make_unique_desktop_path_from_name): remove
+	duplicate g_free() which makes the panel crash
+
+2007-05-13  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_error_dialog):
 	* panel-context-menu.c: (panel_context_menu_show_about_dialog):
 	* panel.c: (panel_deletion_dialog): don't call
