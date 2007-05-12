@@ -180,10 +180,11 @@ panel_action_shutdown (GtkWidget *widget)
 }
 
 static gboolean
-panel_action_shutdown_is_disabled (void)
+panel_action_shutdown_reboot_is_disabled (void)
 {
 	return (panel_lockdown_get_disable_log_out() ||
-		!gdm_supports_logout_action (GDM_LOGOUT_ACTION_SHUTDOWN));
+	(!gdm_supports_logout_action (GDM_LOGOUT_ACTION_SHUTDOWN) &&
+	 !gdm_supports_logout_action (GDM_LOGOUT_ACTION_REBOOT)));
 }
 
 /* Run Application
@@ -347,7 +348,7 @@ static PanelAction actions [] = {
 		"gospanel-20",
 		"ACTION:shutdown:NEW",
 		panel_action_shutdown, NULL, NULL,
-		panel_action_shutdown_is_disabled
+		panel_action_shutdown_reboot_is_disabled
 	},
 	/* deprecated actions */
 	{

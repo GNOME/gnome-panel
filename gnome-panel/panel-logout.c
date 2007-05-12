@@ -343,16 +343,19 @@ panel_logout_new (PanelLogoutDialogType  type,
 					       _("_Hibernate"),
 					       PANEL_LOGOUT_RESPONSE_STD);
 
-		//FIXME see previous FIXME
-		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
-				       _("_Restart"),
-				       PANEL_LOGOUT_RESPONSE_REBOOT);
+		if (gdm_supports_logout_action (GDM_LOGOUT_ACTION_REBOOT))
+			gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
+					       _("_Restart"),
+					       PANEL_LOGOUT_RESPONSE_REBOOT);
+
 		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
 				       GTK_STOCK_CANCEL,
 				       GTK_RESPONSE_CANCEL);
-		gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
-				       _("_Shut Down"),
-				       PANEL_LOGOUT_RESPONSE_SHUTDOWN);
+
+		if (gdm_supports_logout_action (GDM_LOGOUT_ACTION_SHUTDOWN))
+			gtk_dialog_add_button (GTK_DIALOG (logout_dialog),
+					       _("_Shut Down"),
+					       PANEL_LOGOUT_RESPONSE_SHUTDOWN);
 		break;
 	default:
 		g_assert_not_reached ();

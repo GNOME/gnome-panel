@@ -1,5 +1,13 @@
 2007-05-12  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-action-button.c: (panel_action_shutdown_reboot_is_disabled):
+	renamed from panel_action_shutdown_is_disabled()
+	* panel-logout.c: (panel_logout_new): only show restart/shutdown
+	buttons when gdm supports the actions
+	Fix bug #433792. Patch by Brian Cameron <Brian.Cameron@Sun.Com>
+
+2007-05-12  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-icon-names.h: new file, containing defines for all named icons
 	we use. So that the names are easy to change.
 	* Makefile.am: add new file
