@@ -33,6 +33,7 @@
 #include <libgnomeui/gnome-help.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include "panel-ditem-editor.h"
+#include "panel-icon-names.h"
 #include "panel-util.h"
 #include "panel-marshal.h"
 
@@ -1142,9 +1143,9 @@ setup_icon_entry (PanelDItemEditor *dialog,
 
 	if (!icon_name || icon_name[0] == '\0') {
 		if (panel_ditem_editor_get_item_type (dialog) == PANEL_DITEM_EDITOR_TYPE_DIRECTORY) {
-			buffer = g_strdup ("folder");
+			buffer = g_strdup (PANEL_ICON_FOLDER);
 		} else {
-			buffer = g_strdup ("gnome-panel-launcher");
+			buffer = g_strdup (PANEL_ICON_LAUNCHER);
 		}
 	} else {
 		buffer = g_strdup (icon_name);

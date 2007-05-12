@@ -44,6 +44,7 @@
 #include "panel-properties-dialog.h"
 #include "panel-lockdown.h"
 #include "panel-addto.h"
+#include "panel-icon-names.h"
 
 static void
 panel_context_menu_show_help (GtkWidget *w,
@@ -131,7 +132,7 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 		      "authors", authors,
 		      "documenters", documenters,
 		      "translator-credits", _("translator-credits"),
-		      "logo-icon-name", "gnome-panel",
+		      "logo-icon-name", PANEL_ICON_PANEL,
 		      NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (about), "about_dialog", "Panel");

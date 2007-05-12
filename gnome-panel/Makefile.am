@@ -148,6 +148,7 @@ panel_headers =			\
 	panel-gdm.h		\
 	panel-power-manager.h	\
 	panel-ditem-editor.h	\
+	panel-icon-names.h	\
 	$(NULL)
 
 gnome_panel_SOURCES =			\

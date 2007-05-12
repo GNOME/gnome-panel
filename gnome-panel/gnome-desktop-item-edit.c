@@ -9,6 +9,7 @@
 
 #include "panel-ditem-editor.h"
 #include "panel-util.h"
+#include "panel-icon-names.h"
 
 #include "nothing.cP"
 
@@ -168,7 +169,7 @@ main (int argc, char * argv[])
 				      GNOME_PARAM_GOPTION_CONTEXT, context,
 				      NULL);
 
-	gtk_window_set_default_icon_name ("gnome-panel-launcher");
+	gtk_window_set_default_icon_name (PANEL_ICON_LAUNCHER);
 
 	if (desktops == NULL ||
 	    desktops[0] == NULL) {

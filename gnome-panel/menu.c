@@ -47,6 +47,7 @@
 #include "panel-globals.h"
 #include "panel-run-dialog.h"
 #include "panel-lockdown.h"
+#include "panel-icon-names.h"
 
 typedef struct {
 	GtkWidget    *pixmap;
@@ -1425,7 +1426,7 @@ create_submenu_entry (GtkWidget          *menu,
 					panel_menu_icon_get_size (),
 					NULL,
 					gmenu_tree_directory_get_icon (directory),
-					"gnome-fs-directory");
+					PANEL_ICON_FOLDER);
 
 	setup_menuitem (menuitem,
 			panel_menu_icon_get_size (),

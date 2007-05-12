@@ -25,6 +25,7 @@
 #include "panel-stock-icons.h"
 #include "panel-action-protocol.h"
 #include "panel-lockdown.h"
+#include "panel-icon-names.h"
 #include "xstuff.h"
 
 #include "nothing.cP"
@@ -64,7 +65,7 @@ main (int argc, char **argv)
 				      GNOME_PROGRAM_STANDARD_PROPERTIES,
 				      NULL);
 
-	gtk_window_set_default_icon_name ("gnome-panel");
+	gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
 
 	if (!panel_shell_register ())
 		return -1;

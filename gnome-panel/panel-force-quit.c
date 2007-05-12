@@ -32,6 +32,7 @@
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 
+#include "panel-icon-names.h"
 #include "panel-stock-icons.h"
 
 GdkFilterReturn popup_filter (GdkXEvent *gdk_xevent,
@@ -66,7 +67,7 @@ display_popup_window (GdkScreen *screen)
 	gtk_container_add (GTK_CONTAINER (frame), vbox);
 	gtk_widget_show (vbox);
 
-	image = gtk_image_new_from_icon_name (PANEL_FORCE_QUIT_ICON,
+	image = gtk_image_new_from_icon_name (PANEL_ICON_FORCE_QUIT,
 					      GTK_ICON_SIZE_DIALOG);
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.5);
 	gtk_box_pack_start (GTK_BOX (vbox), image, TRUE, TRUE, 4);

@@ -43,6 +43,7 @@
 #include "panel-util.h"
 #include "panel-profile.h"
 #include "panel-addto.h"
+#include "panel-icon-names.h"
 
 typedef struct {
 	PanelWidget *panel_widget;
@@ -109,7 +110,7 @@ static PanelAddtoItemInfo special_addto_items [] = {
 	{ PANEL_ADDTO_LAUNCHER_NEW,
 	  N_("Custom Application Launcher"),
 	  N_("Create a new launcher"),
-	  "gnome-panel-launcher",
+	  PANEL_ICON_LAUNCHER,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -120,7 +121,7 @@ static PanelAddtoItemInfo special_addto_items [] = {
 	{ PANEL_ADDTO_LAUNCHER_MENU,
 	  N_("Application Launcher..."),
 	  N_("Copy a launcher from the applications menu"),
-	  "gnome-panel-launcher",
+	  PANEL_ICON_LAUNCHER,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -135,7 +136,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	{ PANEL_ADDTO_MENU,
 	  N_("Main Menu"),
 	  N_("The main GNOME menu"),
-	  PANEL_MAIN_MENU_ICON,
+	  PANEL_ICON_MAIN_MENU,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -146,7 +147,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	{ PANEL_ADDTO_MENUBAR,
 	  N_("Menu Bar"),
 	  N_("A custom menu bar"),
-	  PANEL_GNOME_LOGO_ICON,
+	  PANEL_ICON_MAIN_MENU,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -157,7 +158,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	{ PANEL_ADDTO_SEPARATOR,
 	  N_("Separator"),
 	  N_("A separator to organize the panel items"),
-	  PANEL_SEPARATOR_ICON,
+	  PANEL_ICON_SEPARATOR,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -168,7 +169,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	{ PANEL_ADDTO_DRAWER,
 	  N_("Drawer"),
 	  N_("A pop out drawer to store other items in"),
-	  PANEL_DRAWER_ICON,
+	  PANEL_ICON_DRAWER,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,

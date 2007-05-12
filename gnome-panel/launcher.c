@@ -38,6 +38,7 @@
 #include "panel-lockdown.h"
 #include "panel-compatibility.h"
 #include "panel-ditem-editor.h"
+#include "panel-icon-names.h"
 
 static GdkScreen *
 launcher_get_screen (Launcher *launcher)
@@ -617,7 +618,7 @@ setup_button (Launcher *launcher)
 		icon = guess_icon_from_exec (BUTTON_WIDGET (launcher->button)->icon_theme,
 					     launcher->key_file);
 	if (!icon)
-		icon = g_strdup ("gnome-panel-launcher");
+		icon = g_strdup (PANEL_ICON_LAUNCHER);
 
 	button_widget_set_icon_name (BUTTON_WIDGET (launcher->button), icon);
 	g_free (icon);

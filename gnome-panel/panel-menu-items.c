@@ -45,6 +45,7 @@
 #include "menu.h"
 #include "panel-action-button.h"
 #include "panel-globals.h"
+#include "panel-icon-names.h"
 #include "panel-lockdown.h"
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
@@ -370,7 +371,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 
 		item = gtk_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-					   "stock_bookmark", NULL,
+					   PANEL_ICON_BOOKMARKS, NULL,
 					   _("Bookmarks"), TRUE);
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -452,7 +453,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			}
 		}
 
-		panel_menu_items_append_place_item ("gnome-fs-directory",
+		panel_menu_items_append_place_item (PANEL_ICON_FOLDER,
 						    label,
 						    tooltip,
 						    add_menu,
@@ -590,7 +591,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 							       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
 
 		panel_menu_items_append_place_item (
-				"gnome-fs-desktop",
+				PANEL_ICON_DESKTOP,
 				/* Translators: Desktop is used here as in
 				 * "Desktop Folder" (this is not the Desktop
 				 * environment). Do not keep "Desktop Folder|"
@@ -898,7 +899,7 @@ panel_place_menu_item_new (gboolean use_image)
 	menuitem = g_object_new (PANEL_TYPE_PLACE_MENU_ITEM, NULL);
 
 	if (use_image)
-		image = gtk_image_new_from_icon_name ("gnome-fs-directory",
+		image = gtk_image_new_from_icon_name (PANEL_ICON_FOLDER,
 						      panel_menu_icon_get_size ());
 	else
 		image = NULL;

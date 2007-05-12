@@ -30,6 +30,8 @@
 #include <gtk/gtkiconfactory.h>
 #include <glib/gi18n.h>
 
+#include "panel-icon-names.h"
+
 static GtkIconSize panel_menu_icon_size = 0;
 static GtkIconSize panel_menu_bar_icon_size = 0;
 
@@ -51,7 +53,7 @@ typedef struct {
 } PanelStockIcon;
 
 static PanelStockIcon stock_icons [] = {
-	{ PANEL_STOCK_FORCE_QUIT,          "gnome-panel-force-quit" }
+	{ PANEL_STOCK_FORCE_QUIT, PANEL_ICON_FORCE_QUIT }
 };
 
 static void

@@ -1,5 +1,36 @@
 2007-05-12  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-icon-names.h: new file, containing defines for all named icons
+	we use. So that the names are easy to change.
+	* Makefile.am: add new file
+	* drawer.c: (create_drawer_applet):
+	* drawer.h:
+	* gnome-desktop-item-edit.c: (main):
+	* launcher.c: (setup_button):
+	* main.c: (main):
+	* menu.c: (create_submenu_entry):
+	* panel-action-button.c:
+	* panel-addto.c:
+	* panel-context-menu.c: (panel_context_menu_show_about_dialog):
+	* panel-ditem-editor.c: (setup_icon_entry):
+	* panel-force-quit.c: (display_popup_window):
+	* panel-force-quit.h:
+	* panel-logout.c: (panel_logout_new):
+	* panel-menu-bar.c: (panel_menu_bar_init):
+	* panel-menu-bar.h:
+	* panel-menu-button.c: (panel_menu_button_get_icon):
+	* panel-menu-button.h:
+	* panel-menu-items.c: (panel_place_menu_item_append_gtk_bookmarks),
+	(panel_place_menu_item_create_menu), (panel_place_menu_item_new):
+	* panel-run-dialog.c: (panel_run_dialog_set_default_icon):
+	* panel-run-dialog.h:
+	* panel-separator.h:
+	* panel-stock-icons.c:
+	* panel.c: (drop_url), (drop_urilist), (panel_receive_dnd_data):
+	Update to use the new macros
+
+2007-05-12  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.[ch]: (panel_util_key_file_ensure_C_key): new
 	* panel-ditem-editor.c: (panel_ditem_editor_save): move code to use
 	panel_util_key_file_ensure_C_key()

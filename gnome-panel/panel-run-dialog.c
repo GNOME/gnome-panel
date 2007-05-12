@@ -59,6 +59,7 @@
 #include "menu.h"
 #include "panel-lockdown.h"
 #include "panel-xutils.h"
+#include "panel-icon-names.h"
 
 typedef struct {
 	GtkWidget        *run_dialog;
@@ -177,15 +178,15 @@ static void
 panel_run_dialog_set_default_icon (PanelRunDialog *dialog, gboolean set_drag)
 {
 	gtk_image_set_from_icon_name (GTK_IMAGE (dialog->pixmap),
-				      PANEL_RUN_ICON,
+				      PANEL_ICON_RUN,
 				      GTK_ICON_SIZE_DIALOG);
 	
 	gtk_window_set_icon_name (GTK_WINDOW (dialog->run_dialog),
-				  PANEL_RUN_ICON);
+				  PANEL_ICON_RUN);
 
 	if (set_drag)
 		gtk_drag_source_set_icon_name (dialog->run_dialog,
-					       PANEL_RUN_ICON);
+					       PANEL_ICON_RUN);
 }
 
 static void

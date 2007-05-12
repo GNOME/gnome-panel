@@ -46,6 +46,7 @@
 #include "panel-menu-button.h"
 #include "panel-globals.h"
 #include "panel-lockdown.h"
+#include "panel-icon-names.h"
 
 enum {
 	TARGET_URL,
@@ -482,7 +483,7 @@ drop_url (PanelWidget *panel,
 
 	panel_launcher_create_from_info (panel->toplevel, position, FALSE,
 					 netscape_url[NETSCAPE_URL_URL],
-					 name, comment, "gnome-globe");
+					 name, comment, PANEL_ICON_REMOTE);
 
 	g_free (comment);
 	g_strfreev (netscape_url);
@@ -661,7 +662,7 @@ drop_urilist (PanelWidget *panel,
 							  NULL);
 
 				if (!icon)
-					icon = g_strdup ("gnome-unknown");
+					icon = g_strdup (PANEL_ICON_UNKNOWN);
 
 				if (!drop_uri (panel, pos, uri, icon))
 					success = FALSE;
@@ -669,7 +670,7 @@ drop_urilist (PanelWidget *panel,
 				g_free (icon);
 			}
 		} else {
-			if (!drop_uri (panel, pos, uri, "gnome-unknown"))
+			if (!drop_uri (panel, pos, uri, PANEL_ICON_UNKNOWN))
 				success = FALSE;
 		}
 
@@ -1082,7 +1083,7 @@ panel_receive_dnd_data (PanelWidget      *panel,
 		break;
 	case TARGET_DIRECTORY:
 		success = drop_uri (panel, pos, (char *)selection_data->data,
-				    "gnome-fs-directory");
+				    PANEL_ICON_FOLDER);
 		break;
 	case TARGET_APPLET:
 		if (!selection_data->data) {

@@ -39,6 +39,7 @@
 #include "menu.h"
 #include "panel-lockdown.h"
 #include "panel-a11y.h"
+#include "panel-icon-names.h"
 
 G_DEFINE_TYPE (PanelMenuButton, panel_menu_button, BUTTON_TYPE_WIDGET);
 
@@ -709,7 +710,7 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 	}
 
 	if (!retval)
-		retval = g_strdup (PANEL_MAIN_MENU_ICON);
+		retval = g_strdup (PANEL_ICON_MAIN_MENU);
 
 	return retval;
 }

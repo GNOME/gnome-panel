@@ -30,8 +30,6 @@
 
 G_BEGIN_DECLS
 
-#define PANEL_SEPARATOR_ICON "gnome-panel-separator"
-
 #define PANEL_TYPE_SEPARATOR         (panel_separator_get_type ())
 #define PANEL_SEPARATOR(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_SEPARATOR, PanelSeparator))
 #define PANEL_SEPARATOR_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), PANEL_TYPE_SEPARATOR, PanelSeparatorClass))

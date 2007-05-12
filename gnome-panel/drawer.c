@@ -29,6 +29,7 @@
 #include "xstuff.h"
 #include "panel-globals.h"
 #include "panel-lockdown.h"
+#include "panel-icon-names.h"
 
 static void
 drawer_click (GtkWidget *w, Drawer *drawer)
@@ -334,7 +335,7 @@ create_drawer_applet (PanelToplevel    *toplevel,
 	drawer->toplevel = toplevel;
 
 	if (!use_custom_icon || !custom_icon || !custom_icon [0]) {
-		drawer->button = button_widget_new (PANEL_DRAWER_ICON, TRUE,
+		drawer->button = button_widget_new (PANEL_ICON_DRAWER, TRUE,
 						    orientation);
 	} else {
 		drawer->button = button_widget_new (custom_icon, TRUE,

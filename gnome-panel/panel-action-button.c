@@ -47,6 +47,7 @@
 #include "panel-logout.h"
 #include "panel-compatibility.h"
 #include "panel-gdm.h"
+#include "panel-icon-names.h"
 
 G_DEFINE_TYPE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET);
 
@@ -277,7 +278,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_LOCK,
-		"gnome-lockscreen",
+		PANEL_ICON_LOCKSCREEN,
 		N_("Lock Screen"),
 		N_("Protect your computer from unauthorized use"),
 		"gospanel-21",
@@ -289,7 +290,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_LOGOUT,
-		"gnome-logout",
+		PANEL_ICON_LOGOUT,
 		/* when changing one of those two strings, don't forget to
 		 * update the ones in panel-menu-items.c (look for
 		 * panel:showusername|1) */
@@ -302,7 +303,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_RUN,
-		PANEL_RUN_ICON,
+		PANEL_ICON_RUN,
 		N_("Run Application..."),
 		N_("Run an application by typing a command or choosing from a list"),
 		"gospanel-555",
@@ -312,7 +313,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_SEARCH,
-		"gnome-searchtool",
+		PANEL_ICON_SEARCHTOOL,
 		N_("Search for Files..."),
 		N_("Locate documents and folders on this computer by name or content"),
 		"gospanel-554",
@@ -321,7 +322,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_FORCE_QUIT,
-		PANEL_FORCE_QUIT_ICON,
+		PANEL_ICON_FORCE_QUIT,
 		N_("Force Quit"),
 		N_("Force a misbehaving application to quit"),
 		"gospanel-563",
@@ -331,7 +332,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_CONNECT_SERVER,
-		"gnome-globe", //FIXME icon
+		PANEL_ICON_REMOTE, //FIXME icon
 		N_("Connect to Server..."),
 		N_("Connect to a remote computer or shared disk"),
 		"gospanel-563", //FIXME
@@ -340,7 +341,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_SHUTDOWN,
-		"gnome-shutdown",
+		PANEL_ICON_SHUTDOWN,
 		N_("Shut Down..."),
 		N_("Shut down the computer"),
 		"gospanel-20",

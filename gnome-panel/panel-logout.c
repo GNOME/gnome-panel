@@ -34,6 +34,7 @@
 #include "panel-gdm.h"
 #include "panel-power-manager.h"
 #include "panel-session.h"
+#include "panel-icon-names.h"
 
 #define PANEL_LOGOUT_DIALOG_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_LOGOUT_DIALOG, PanelLogoutDialogPrivate))
 
@@ -311,7 +312,7 @@ panel_logout_new (PanelLogoutDialogType  type,
 
 	switch (type) {
 	case PANEL_LOGOUT_DIALOG_LOGOUT:
-		icon_name      = "gnome-logout";
+		icon_name      = PANEL_ICON_LOGOUT;
 		primary_text   = _("Log out of this system now?");
 		// FIXME need to verify that this response can be used
 		logout_dialog->priv->default_response = PANEL_LOGOUT_DIALOG_LOGOUT;
@@ -328,7 +329,7 @@ panel_logout_new (PanelLogoutDialogType  type,
 				       PANEL_LOGOUT_RESPONSE_LOGOUT);
 		break;
 	case PANEL_LOGOUT_DIALOG_SHUTDOWN:
-		icon_name      = "gnome-shutdown";
+		icon_name      = PANEL_ICON_SHUTDOWN;
 		primary_text   = _("Shut down this system now?");
 
 		logout_dialog->priv->default_response = PANEL_LOGOUT_RESPONSE_SHUTDOWN;
