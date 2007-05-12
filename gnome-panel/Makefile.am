@@ -259,7 +259,8 @@ schemas_in_files =				\
 schemas_DATA     = panel-compatibility.schemas $(schemas_in_files:.schemas.in=.schemas)
 
 desktopdir = $(datadir)/applications
-desktop_DATA = gnome-panel.desktop
+desktop_in_files = gnome-panel.desktop.in
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_SCHEMAS_RULE@
 
@@ -280,7 +281,8 @@ CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(schemas_in_files:.schemas.in=.schemas) \
 	$(server_DATA) \
-	$(sys_DATA)
+	$(sys_DATA) \
+	$(desktop_DATA)
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)

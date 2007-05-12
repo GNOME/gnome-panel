@@ -128,7 +128,7 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 		      "version", VERSION,
 		      "copyright", "Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.",
 		      "comments", _("This program is responsible for launching other "
-				    "applications and embedding small applets within itself."),
+				    "applications and provides useful utilities."),
 		      "authors", authors,
 		      "documenters", documenters,
 		      "translator-credits", _("translator-credits"),
