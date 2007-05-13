@@ -1,5 +1,12 @@
 2007-05-13  Vincent Untz  <vuntz@gnome.org>
 
+	* launcher.c: (panel_launcher_create_with_id): if we have a file URI,
+	we need to unescape the URI before putting the filename in gconf,
+	since the file on disk is unescaped.
+	Fix bug #432942
+
+2007-05-13  Vincent Untz  <vuntz@gnome.org>
+
 	* Makefile.am: install data in $(datadir)/gnome-panel/ instead of
 	$(datadir)/gnome/panel/
 	Fix bug #436461
