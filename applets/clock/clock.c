@@ -243,22 +243,34 @@ set_tooltip (GtkWidget  *applet,
 }
 
 static void
-clock_set_timeout (ClockData *cd)
+clock_set_timeout (ClockData *cd,
+		   time_t     now)
 {
 	int timeouttime;
 
-	if (cd->format == CLOCK_FORMAT_INTERNET)
-		timeouttime = INTERNETSECOND;
- 	else {
+	if (cd->format == CLOCK_FORMAT_INTERNET) {
+		int itime_ms;
+
+		itime_ms = ((unsigned int) (get_itime (now) * 1000));
+
+		if (!cd->showseconds)
+			timeouttime = (999 - itime_ms % 1000) * 86.4 + 1;
+		else {
+			struct timeval tv;
+			gettimeofday (&tv, NULL);
+			itime_ms += (tv.tv_usec * 86.4) / 1000;
+			timeouttime = ((999 - itime_ms % 1000) * 86.4) / 100 + 1;
+		}
+	} else {
  		struct timeval tv;
 
 		gettimeofday (&tv, NULL);
- 		timeouttime = (1000000 - tv.tv_usec)/1000+1;
+ 		timeouttime = (G_USEC_PER_SEC - tv.tv_usec)/1000+1;
 
 		/* timeout of one minute if we don't care about the seconds */
  		if (cd->format != CLOCK_FORMAT_UNIX &&
 		    !cd->showseconds)
- 			timeouttime += 1000 * (59 - cd->current_time % 60);
+ 			timeouttime += 1000 * (59 - now % 60);
  	}
 	
 	cd->timeout = g_timeout_add (timeouttime,
@@ -290,7 +302,7 @@ clock_timeout_callback (gpointer data)
 		update_clock (cd);
 	}
 
-	clock_set_timeout (cd);
+	clock_set_timeout (cd, new_time);
 
 	return FALSE;
 }
@@ -567,7 +579,7 @@ refresh_clock_timeout(ClockData *cd)
 
 	update_clock (cd);
 	
-	clock_set_timeout (cd);
+	clock_set_timeout (cd, cd->current_time);
 }
 
 static void

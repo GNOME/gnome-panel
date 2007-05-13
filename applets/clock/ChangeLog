@@ -1,5 +1,13 @@
 2007-05-13  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (clock_set_timeout): add a time_t parameter so we don't
+	call time() multiple times, improve a bit the timeout for internet
+	time. It's still not good when seconds are shown.
+	(clock_timeout_callback): updated
+	(refresh_clock_timeout): updated
+
+2007-05-13  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (clock_timeout_callback), (update_clock), (copy_time):
 	convert the float internet time to unsigned int, so there's no
 	rounding error when displaying it.
