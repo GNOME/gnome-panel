@@ -991,6 +991,8 @@ panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 
 	panel_widget_register_open_dialog (frame->priv->panel, dialog);
 	gtk_window_set_urgency_hint (GTK_WINDOW (dialog), TRUE);
+	/* FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132 */
+	gtk_window_set_title (GTK_WINDOW (dialog), _("Error"));
 
 	gtk_widget_show (dialog);
 	g_free (applet_name);
@@ -1077,6 +1079,8 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 
 	panel_widget_register_open_dialog (frame->priv->panel, dialog);
 	gtk_window_set_urgency_hint (GTK_WINDOW (dialog), TRUE);
+	/* FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132 */
+	gtk_window_set_title (GTK_WINDOW (dialog), _("Error"));
 
 	gtk_widget_show_all (dialog);
 
