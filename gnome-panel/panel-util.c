@@ -384,8 +384,14 @@ panel_error_dialog (GtkWindow  *parent,
 	if (screen)
 		gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
-	if (!parent)
+	if (!parent) {
 		gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
+		/* FIXME: We need a title in this case, but we don't know what
+		 * the format should be. Let's put something simple until
+		 * the following bug gets fixed:
+		 * http://bugzilla.gnome.org/show_bug.cgi?id=165132 */
+		gtk_window_set_title (GTK_WINDOW (dialog), _("Error"));
+	}
 
 	gtk_widget_show_all (dialog);
 

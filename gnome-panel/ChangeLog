@@ -1,5 +1,10 @@
 2007-05-13  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-util.c: (panel_error_dialog): set a title when we show the
+	dialog in the tasklist
+
+2007-05-13  Vincent Untz  <vuntz@gnome.org>
+
 	* launcher.c: (launcher_properties): don't set a parent window,
 	because we don't want the dialog to be transient to a panel toplevel
 	(panel_launcher_create_from_info): set a parent for the error dialog
