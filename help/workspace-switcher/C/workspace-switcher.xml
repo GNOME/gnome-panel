@@ -1,265 +1,34 @@
 <?xml version="1.0"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
-"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-  <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "2.7.92">
-  <!ENTITY manrevision "2.6">
-  <!ENTITY date "August 2004">
-  <!ENTITY applet "Workspace Switcher">
 
-]>
-<!-- 
-      (Do not remove this comment block.)
-  Maintained by the GNOME Documentation Project
-  http://developer.gnome.org/projects/gdp
-  Template version: 2.0 beta
-  Template last modified Feb 12, 2002
-  
--->
-<!-- =============Document Header ============================= -->
-<article id="index" lang="en">
-<!-- please do not change the id; for translations, change lang to -->
-<!-- appropriate code -->
-  <articleinfo> 
-	 <title>&applet; Manual</title> 
-	 <copyright> 
-		<year>2002</year> 
-		<year>2003</year>
-		<year>2004</year>
-		<holder>Sun Microsystems</holder> 
-	 </copyright> 
-	 <copyright> 
-		<year>2000</year> 
-		<holder>John Fleck</holder> 
-	 </copyright>
-<!-- translators: uncomment this:
+<article id="index">
 
-  <copyright>
-   <year>2002</year>
-   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
-  </copyright>
+<remark>This file has been created when we migrated the workspace docs to the user guide in march 2007.</remark>
+<remark>One day we should remove it completely, say in a couple of release cyles.</remark>
 
-   -->
-	 <publisher role="maintainer"> 
-		<publishername> GNOME Documentation Project </publishername> 
-	 </publisher> 
+	<anchor id="index"/>
+	<anchor id="workspacelist-introduction"/>
+	<anchor id="workspacelist-fig"/>
+	<anchor id="workspacelist-introduction-add"/>
+	<anchor id="workspacelist-usage"/>
+	<anchor id="workspacelist-move-window"/>
+	<anchor id="workspacelist-prefs"/>
 
-&legal;
-<!-- This file  contains link to license for the documentation (GNU FDL), and 
-     other legal stuff such as "NO WARRANTY" statement. Please do not change 
-     any of this. -->
+	<title>Problem showing document</title>
+	
+	<para>
+		This document is depreciated, please consult the 
+		<ulink type="help" url="ghelp:user-guide?gosoverview-39">
+			Workspaces help in the GNOME User Guide
+		</ulink>.
+	</para>
 
-	 <authorgroup> 
-		<author> 
-		  <firstname>Sun</firstname> 
-		  <surname>GNOME Documentation Team</surname> 
-		  <affiliation> 
-			 <orgname>Sun Microsystems</orgname> 
-			 <address></address> 
-		  </affiliation> 
-		</author> 
-		<author> 
-		  <firstname>John </firstname> 
-		  <surname>Fleck</surname> 
-		  <affiliation> 
-			 <orgname>GNOME Documentation Project</orgname> 
-			 <address> <email>jfleck@inkstain.net</email> </address> 
-		  </affiliation> 
-		</author> 
-      <!-- This is appropriate place for other contributors: translators,
-           maintainers,  etc. Commented out by default.
-           <othercredit role="translator">
-	     <firstname>Latin</firstname> 
-	     <surname>Translator 1</surname> 
-	     <affiliation> 
-	       <orgname>Latin Translation Team</orgname> 
-	       <address> <email>translator@gnome.org</email> </address> 
-	     </affiliation>
-	     <contrib>Latin translation</contrib>
-           </othercredit>
--->
-	 </authorgroup>
-	 <revhistory>
-		<revision> 
-		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
-		  <date>&date;</date> 
-		  <revdescription> 
-			 <para role="author">Sun Java Desktop System Documentation Team</para> 
-			 <para role="publisher">GNOME Documentation Project</para> 
-		  </revdescription> 
-		</revision> 
-		<revision> 
-		  <revnumber>Workspace Switcher Applet Manual V2.5</revnumber> 
-		  <date>February 2004</date> 
-		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team</para> 
-			 <para role="publisher">GNOME Documentation Project</para> 
-		  </revdescription> 
-		</revision>
-		<revision> 
-		  <revnumber>Workspace Switcher Applet Manual V2.4</revnumber> 
-		  <date>September 2003</date> 
-		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team</para> 
-			 <para role="publisher">GNOME Documentation Project</para> 
-		  </revdescription> 
-		</revision>
-		<revision> 
-		  <revnumber>Workspace Switcher Applet Manual V2.3</revnumber> 
-		  <date>August 2003</date> 
-		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team</para> 
-			 <para role="publisher">GNOME Documentation Project</para> 
-		  </revdescription> 
-		</revision>
-		<revision> 
-		  <revnumber>Workspace Switcher Applet Manual V2.2</revnumber> 
-		  <date>August 2002</date> 
-		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team</para> 
-			 <para role="publisher">GNOME Documentation Project</para> 
-		  </revdescription> 
-		</revision>
-		<revision> 
-		  <revnumber>Workspace Switcher Applet Manual V2.1</revnumber> 
-		  <date>July 2002</date> 
-		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team</para> 
-			 <para role="publisher">GNOME Documentation Project</para> 
-		  </revdescription> 
-		</revision>
-		<revision> 
-		  <revnumber>Workspace Switcher Applet Manual V&manrevision;</revnumber> 
-		  <date>March 2002</date> 
-		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team</para> 
-			 <para role="publisher">GNOME Documentation Project</para> 
-		  </revdescription> 
-		</revision>
-		<revision> 
-		  <revnumber>Desk Guide Applet Manual</revnumber> 
-		  <date>2000</date> 
-		  <revdescription> 
-			 <para role="author">John Fleck
-				<email>jfleck@inkstain.net</email></para> 
-			 <para role="publisher">GNOME Documentation Project</para> 
-		  </revdescription> 
-		</revision> 
-	 </revhistory> 
-	 <releaseinfo> This manual describes version &appletversion; of &applet;.
-		</releaseinfo> 
-	 <legalnotice> 
-		<title>Feedback</title> 
-		<para> To report a bug or make a suggestion regarding the &applet; applet or this manual, follow the directions in the <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
-		
-	 </legalnotice> 
-	 <abstract role="description">
-		<para>The &applet; displays the workspaces for your GNOME
-		  Desktop in the panel and enables you to switch between them.  You
-                  can also manage windows by dragging them between workspaces.</para>
-	 </abstract>
-  </articleinfo> 
-  <indexterm> 
-	 <primary>Workspace Switcher</primary> 
-  </indexterm> 
-<!-- ============= Document Body ============================= -->
-<!-- ============= Introduction ============================== -->
-  <sect1 id="workspacelist-introduction"> 
-	 <title>Introduction</title> 
-	<!-- ==== Figure ============================================= -->
-	 <figure id="workspacelist-fig"> 
-		<title>&applet; Applet</title> 
-		<screenshot> 
-		  <mediaobject> 
-			 <imageobject><imagedata fileref="figures/workspace_switcher_applet.png"
-				format="PNG"/> 
-			 </imageobject>
-			 <textobject> 
-				<phrase>Shows Workspace Switcher applet. Contains a button for each workspace.</phrase> 
-			 </textobject> 
-		  </mediaobject> 
-		</screenshot> 
-	 </figure> 
-    	<!-- ==== End of Figure ======================================= -->
-	<para>The <application>&applet;</application> applet displays the workspaces that are on your GNOME Desktop. A workspace is a discrete area on the GNOME Desktop in which you can work. Every workspace on the GNOME Desktop contains the same desktop background, the same panels, and the same menus. However, you can run different applications and open different windows in each workspace. You can display only one workspace at a time but you can have windows open in other workspaces. </para>
-	<para>By default, the <application>&applet;</application> applet displays a visual representation of the workspaces on the GNOME Desktop, as shown in <xref linkend="workspacelist-fig"/>. The applet displays the application windows and dialogs that are open in a workspace. The applet highlights the background of the current workspace and the window that has focus. You can change the default behavior of the applet to display only the names of the workspaces in the applet. See <xref linkend="workspacelist-prefs"/> for more information about how to configure the applet.</para>
-	<para><xref linkend="workspacelist-fig"/> shows the <application>&applet;</application> applet when a session contains four workspaces. The applet displays the workspaces in order from left to right across the rows of the applet. In <xref linkend="workspacelist-fig"/> the applet is set up to display the workspaces in one row. See <xref linkend="workspacelist-prefs"/> for information about how to change the number of applet rows. </para>
-                                                                               
-    <sect2 id="workspacelist-introduction-add">
-      <title>To Add &applet; to a Panel</title>
-	 <para>Perform the following steps:</para>
-         <orderedlist>
-           <listitem>
-             <para>
-               Right-click on the panel.
-             </para>
-           </listitem>
-           <listitem>
-             <para>
-               Choose <guimenuitem>Add to Panel</guimenuitem>.
-             </para>
-           </listitem>
-           <listitem>
-             <para>
-               Scroll down the list of items in the <guilabel>Add to Top Panel</guilabel> dialog, then select <guilabel>Workspace Switcher</guilabel>.
-             </para>
-           </listitem>
-           <listitem>
-             <para>
-               Click <guibutton>Add</guibutton>.
-             </para>
-           </listitem>
-         </orderedlist>
-    </sect2>
-  </sect1>
-<!-- ================ Usage ================================ -->
-  <sect1 id="workspacelist-usage"> 
-	<title>Usage</title> 
-	<sect2 id="workspacelist-navigate">
-	<title>To Navigate Workspaces</title>
-	<para>The background of the button in the applet that represents the current workspace is highlighted. To switch to another workspace, click on the button that represents the new workspace. To return to your original workspace, repeat this for the workspace you started on.</para>
-	<para>You can also switch between workspaces using keyboard shortcuts: see the <ulink type="help" url="ghelp:user-guide?gosoverview-41">related section in the Desktop User Guide</ulink>.</para>
-	<para>When you switch to a different workspace, the content of the <application>Window List</application> applet changes to reflect the windows that are open in the new workspace.</para>
-	</sect2>
-	<sect2 id="workspacelist-move-window">
-	<title>To Move a Window From One Workspace to Another</title>
-	<para>To use <application>&applet;</application> to move a window from one workspace to another, drag the window from the current workspace to the new workspace. </para>
-	</sect2>
-  </sect1>
-<!-- ============= Preferences ============================= -->
-  <sect1 id="workspacelist-prefs"> 
-	 <title>Preferences</title> 
-	 <para>To configure the <application>&applet;</application> applet, right-click on the applet, then choose <guimenuitem>Preferences</guimenuitem>. The <guilabel>Workspace Switcher Preferences</guilabel> dialog is displayed.</para>
-	 <variablelist>
-	 <varlistentry><term><guilabel>Switcher</guilabel></term>
-	 	<listitem>
-	 	<para>Select one of the following options to determine which workspaces the <application>&applet;</application> displays:</para>	
-	 		<itemizedlist>
-	 		<listitem><para><guilabel>Show only the current workspace</guilabel></para>
-	 		<para>Select this option to only display the current workspace in the <application>&applet;</application> applet.</para>
-	 		</listitem>
-	 		<listitem><para><guilabel>Show all workspaces in ... rows</guilabel></para>
-	 		<para>Select this option to show all of the workspaces that are on your GNOME Desktop in the <application>&applet;</application> applet. Use the spin box to specify the number of rows to use to display the workspaces in the applet. </para>
-	 		</listitem>
-	 		</itemizedlist>
-	 </listitem>
-	 </varlistentry>
-	 <varlistentry><term><guilabel>Workspaces</guilabel> </term>
-	 <listitem><para>Use the following options to determine how the applet displays the workspaces:</para> 
-	 <itemizedlist>
-	 	<listitem><para><guilabel>Number of workspaces</guilabel></para>
-	 	<para>Use this spin box to increase or decrease the number of workspaces in a session.</para>
-	 	</listitem>
-		<listitem><para><guilabel>Workspace names</guilabel></para> 
-		<para>Use this list box to edit the names of the workspaces on your GNOME Desktop. To edit a workspace name, click twice on the name, then type the new name. </para>
-	 	</listitem>
-	 	<listitem><para><guilabel>Show workspace names in switcher</guilabel></para>
-	 	<para>Select this option to display the names of the workspaces in the applet instead of a visual representation of the workspaces.</para>
-	 	</listitem>
-	 </itemizedlist>
-	 </listitem>
-	 </varlistentry>
-	 </variablelist>
-  </sect1>
+	<para>
+		Please take the time to 
+		<ulink type="help" url="http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-user-docs">
+			report a bug
+		</ulink>.
+		Select the general component of gnome-user-docs and be sure to indicate
+		how you came upon this depreciated document.
+	</para>
 
 </article> 
