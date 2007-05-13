@@ -236,35 +236,10 @@ response_cb (GtkWidget *widget,
 	     int        id,
 	     PagerData *pager)
 {
-	if (id == GTK_RESPONSE_HELP) {
-		GError *error = NULL;
-
-		gnome_help_display_desktop_on_screen (
-			NULL, "workspace-switcher", "workspace-switcher", "workspacelist-prefs",
-			gtk_widget_get_screen (pager->applet),
-			&error);
-
-		if (error) {
-			GtkWidget *dialog;
-
-			dialog = gtk_message_dialog_new (GTK_WINDOW (widget),
-							 GTK_DIALOG_DESTROY_WITH_PARENT,
-							 GTK_MESSAGE_ERROR,
-							 GTK_BUTTONS_OK,
-							  _("There was an error displaying help: %s"),
-							 error->message);
-
-			g_signal_connect (dialog, "response",
-					  G_CALLBACK (gtk_widget_destroy),
-					  NULL);
-
-			gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-			gtk_window_set_screen (GTK_WINDOW (dialog),
-					       gtk_widget_get_screen (pager->applet));
-			gtk_widget_show (dialog);
-			g_error_free (error);
-		}
-	} else
+	if (id == GTK_RESPONSE_HELP)
+		wncklet_display_help (pager->applet, "user-guide",
+				      "user-guide.xml", "gosoverview-39");
+	else
 		gtk_widget_hide (widget);
 }
 
@@ -549,8 +524,8 @@ display_help_dialog (BonoboUIComponent *uic,
 		     PagerData         *pager,
 		     const gchar       *verbname)
 {
-	wncklet_display_help (pager->applet, "workspace-switcher",
-			      "workspace-switcher", NULL);
+	wncklet_display_help (pager->applet, "user-guide",
+			      "user-guide.xml", "gosoverview-39");
 }
 
 static void

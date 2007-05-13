@@ -1,5 +1,14 @@
 2007-05-13  Vincent Untz  <vuntz@gnome.org>
 
+	* window-list.c: (response_cb), (display_help_dialog):
+	* workspace-switcher.c: (response_cb), (display_help_dialog):
+	Use help from the user guide since it was migrated there. Also,
+	always use wncklet_display_help()
+	Fix bugs #415899 and #415896.
+	Based on patch by Karderio <karderio@gmail.com>
+
+2007-05-13  Vincent Untz  <vuntz@gnome.org>
+
 	* Makefile.am: install data in $(datadir)/gnome-panel/ instead of
 	$(datadir)/gnome/panel/
 	Fix bug #436461
