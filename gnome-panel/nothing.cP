@@ -593,23 +593,45 @@ static guint inv_draw_idle = 0;
 static void
 inv_show_status (void)
 {
-	char *s;
+	gchar *s, *t, *u, *v, *w;
 	if (geginv == NULL)
 		return;
 
 	if (inv_game_over) {
-		s = g_strdup_printf ("<big><b>GAME OVER</b> at level %d!</big>   "
-				     "Press 'q' to quit   "
-				     "<big><b>GAME OVER</b> at level %d!</big>",
-				     inv_level+1, inv_level+1);
+		t = g_strdup_printf (_("<b>GAME OVER</b> at level %d!"),
+				     inv_level+1); 	
+		u = g_strdup_printf ("<big>%s</big>", t); 
+		/* Translators: the first and third strings are similar to a
+		 * title, and the second string is a small information text.
+		 * The spaces are there only to separate all the strings, so
+		 try to keep them as is. */
+		s = g_strdup_printf (_("%1$s   %2$s   t%3$s"),
+				     u, _("Press 'q' to quit"), u);
+		g_free (t);
+		g_free (u);
+
 	} else if (inv_paused) {
-		s = g_strdup ("<big><b>Paused</b></big>    "
-			      "Press 'p' to unpause");
+		t = g_strdup_printf("<big><b>%s</b></big>", _("Paused"));
+		/* Translators: the first string is a title and the second
+		 * string is a small information text. */
+		s = g_strdup_printf (_("%1$s\t%2$s"),
+				     t, _("Press 'p' to unpause"));
+		g_free (t);
+
 	} else {
-		s = g_strdup_printf ("<big>Level: <b>%d</b>  Lives: <b>%d</b></big>    "
-				     "Left/Right to move, Space to fire, "
-				     "'p' to pause, 'q' to quit",
-				     inv_level+1, inv_lives);
+		t = g_strdup_printf ("<b>%d</b>", inv_level+1);
+		u = g_strdup_printf ("<b>%d</b>", inv_lives);
+		v = g_strdup_printf (_("Level: %s,  Lives: %s"), t, u);
+		w = g_strdup_printf ("<big>%s</big>", v);
+		/* Translators: the first string is a title and the second
+		 * string is a small information text. */
+		s = g_strdup_printf (_("%1$s\t%2$s"), w,
+				     _("Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"));
+		g_free (t);
+		g_free (u);		
+		g_free (v);
+		g_free (w);
+
 	}
 	gtk_label_set_markup (GTK_LABEL (geginv_label), s);
 
