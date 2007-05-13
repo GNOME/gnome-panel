@@ -1,5 +1,12 @@
 2007-05-13  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (clock_timeout_callback), (update_clock), (copy_time):
+	convert the float internet time to unsigned int, so there's no
+	rounding error when displaying it.
+	Fix part of bug #410542
+
+2007-05-13  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (clock_set_timeout): add a useful comment
 
 2007-05-13  Vincent Untz  <vuntz@gnome.org>

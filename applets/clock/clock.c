@@ -278,8 +278,8 @@ clock_timeout_callback (gpointer data)
 	    cd->format != CLOCK_FORMAT_UNIX &&
 	    cd->format != CLOCK_FORMAT_CUSTOM) {
 		if (cd->format == CLOCK_FORMAT_INTERNET && 
-		    (long)get_itime (new_time) !=
-		    (long)get_itime (cd->current_time)) {
+		    (unsigned int)get_itime (new_time) !=
+		    (unsigned int)get_itime (cd->current_time)) {
 			update_clock (cd);
 		} else if ((cd->format == CLOCK_FORMAT_12 ||
 			    cd->format == CLOCK_FORMAT_24) &&
@@ -485,7 +485,7 @@ update_clock (ClockData * cd)
 		if (cd->showseconds)
 			utf8 = g_strdup_printf ("@%3.2f", itime);
 		else
-			utf8 = g_strdup_printf ("@%3.0f", itime);
+			utf8 = g_strdup_printf ("@%3d", (unsigned int) itime);
 	} else if (cd->format == CLOCK_FORMAT_CUSTOM) {
 		char *timeformat = g_locale_from_utf8 (cd->custom_format, -1,
 						       NULL, NULL, NULL);
@@ -1936,7 +1936,8 @@ copy_time (BonoboUIComponent *uic,
 		if (cd->showseconds)
 			g_snprintf (string, sizeof (string), "@%3.2f", itime);
 		else
-			g_snprintf (string, sizeof (string), "@%3.0f", itime);
+			g_snprintf (string, sizeof (string), "@%3d",
+				    (unsigned int) itime);
 	} else {
 		struct tm *tm;
 		char      *format;
