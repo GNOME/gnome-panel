@@ -1,5 +1,11 @@
 2007-05-13  Vincent Untz  <vuntz@gnome.org>
 
+	* Makefile.am: install data in $(datadir)/gnome-panel/ instead of
+	$(datadir)/gnome/panel/
+	Fix bug #436461
+
+2007-05-13  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_make_unique_desktop_path_from_name): remove
 	duplicate g_free() which makes the panel crash
 

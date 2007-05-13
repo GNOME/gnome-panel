@@ -10,7 +10,7 @@ INCLUDES =							\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DGLADEDIR=\""$(gladedir)"\"				\
-	-DICONDIR=\""$(datadir)/gnome/panel/pixmaps"\"		\
+	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(STANDARD_PROPERTIES_CFLAGS)				\
@@ -176,7 +176,7 @@ gnome_desktop_item_edit_LDADD = 	\
 	$(PANEL_LIBS)			\
 	$(X_LIBS)
 
-gladedir = $(datadir)/gnome/panel/glade
+gladedir = $(datadir)/gnome-panel/glade
 glade_DATA =					\
 	panel-properties-dialog.glade		\
 	panel-run-dialog.glade
