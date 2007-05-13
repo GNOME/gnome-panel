@@ -384,6 +384,9 @@ panel_error_dialog (GtkWindow  *parent,
 	if (screen)
 		gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
+	if (!parent)
+		gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
+
 	gtk_widget_show_all (dialog);
 
 	if (auto_destroy)

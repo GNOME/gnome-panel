@@ -1,5 +1,26 @@
 2007-05-13  Vincent Untz  <vuntz@gnome.org>
 
+	* launcher.c: (launcher_properties): don't set a parent window,
+	because we don't want the dialog to be transient to a panel toplevel
+	(panel_launcher_create_from_info): set a parent for the error dialog
+	* panel-applet-frame.c: (panel_applet_frame_reload_response): destroy
+	the dialog anyway if we're in an inconsistent state
+	(panel_applet_frame_cnx_broken): set urgency hint on the dialog
+	(panel_applet_frame_loading_failed): ditto, and register the dialog as
+	an open dialog
+	* panel-context-menu.c: (panel_context_menu_delete_panel): set a
+	parent for the error dialog
+	* panel-logout.c: (panel_logout_init): add FIXME
+	* panel-properties-dialog.c: (panel_properties_dialog_present): set a
+	parent for the error dialog
+	* panel-util.c: (panel_error_dialog): if we don't have a parent, show
+	the dialog in the task bar since we don't have any real other windows
+	shown on the screen. This follows the HIG.
+	* panel-widget.c: (panel_widget_register_open_dialog): show the dialog
+	in the task bar, for the same reason.
+
+2007-05-13  Vincent Untz  <vuntz@gnome.org>
+
 	* launcher.c: (panel_launcher_create_with_id): if we have a file URI,
 	we need to unescape the URI before putting the filename in gconf,
 	since the file on disk is unescaped.

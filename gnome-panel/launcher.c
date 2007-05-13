@@ -775,7 +775,7 @@ launcher_properties (Launcher  *launcher)
 		return;
 	}
 
-	launcher->prop_dialog = panel_ditem_editor_new (GTK_WINDOW (PANEL_WIDGET (launcher->info->widget->parent)->toplevel),
+	launcher->prop_dialog = panel_ditem_editor_new (NULL,
 							launcher->key_file,
 							launcher->location,
 							_("Launcher Properties"));
@@ -1004,7 +1004,7 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 	if (panel_util_key_file_to_file (key_file, location, &error)) {
 		panel_launcher_create (toplevel, position, location);
 	} else {
-		panel_error_dialog (NULL,
+		panel_error_dialog (GTK_WINDOW (toplevel),
 				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
 				    "cannot_save_launcher", TRUE,
 				    _("Could not save launcher"),

@@ -861,8 +861,11 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
 
-	if (!frame->priv->iid || !frame->priv->panel)
+	if (!frame->priv->iid || !frame->priv->panel) {
+		g_object_unref (frame);
+		gtk_widget_destroy (dialog);
 		return;
+	}
 
 	info = frame->priv->applet_info;
 
@@ -987,6 +990,7 @@ panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 			  g_object_ref (frame));
 
 	panel_widget_register_open_dialog (frame->priv->panel, dialog);
+	gtk_window_set_urgency_hint (GTK_WINDOW (dialog), TRUE);
 
 	gtk_widget_show (dialog);
 	g_free (applet_name);
@@ -1070,6 +1074,9 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (panel_applet_frame_loading_failed_response),
 			  g_strdup (id));
+
+	panel_widget_register_open_dialog (frame->priv->panel, dialog);
+	gtk_window_set_urgency_hint (GTK_WINDOW (dialog), TRUE);
 
 	gtk_widget_show_all (dialog);
 

@@ -605,7 +605,7 @@ inv_show_status (void)
 		 * title, and the second string is a small information text.
 		 * The spaces are there only to separate all the strings, so
 		 try to keep them as is. */
-		s = g_strdup_printf (_("%1$s   %2$s   t%3$s"),
+		s = g_strdup_printf (_("%1$s   %2$s   %3$s"),
 				     u, _("Press 'q' to quit"), u);
 		g_free (t);
 		g_free (u);

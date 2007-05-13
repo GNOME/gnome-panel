@@ -2905,6 +2905,11 @@ void
 panel_widget_register_open_dialog (PanelWidget *panel,
 				   GtkWidget   *dialog)
 {
+	/* the window is for a panel, so it should be shown in the taskbar. See
+	 * HIG: An alert should not appear in the panel window list unless it
+	 * is, or may be, the only window shown by an application. */
+	gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
+
 	panel->open_dialogs = g_slist_append (panel->open_dialogs,
 					      dialog);
 	

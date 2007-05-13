@@ -161,7 +161,7 @@ static void
 panel_context_menu_delete_panel (PanelToplevel *toplevel)
 {
 	if (panel_toplevel_is_last_unattached (toplevel)) {
-		panel_error_dialog (NULL,
+		panel_error_dialog (GTK_WINDOW (toplevel),
 				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
 				    "cannot_delete_last_panel", TRUE,
 				    _("Cannot delete this panel"),
