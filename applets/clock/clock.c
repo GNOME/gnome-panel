@@ -251,8 +251,11 @@ clock_set_timeout (ClockData *cd)
 		timeouttime = INTERNETSECOND;
  	else {
  		struct timeval tv;
+
 		gettimeofday (&tv, NULL);
  		timeouttime = (1000000 - tv.tv_usec)/1000+1;
+
+		/* timeout of one minute if we don't care about the seconds */
  		if (cd->format != CLOCK_FORMAT_UNIX &&
 		    !cd->showseconds)
  			timeouttime += 1000 * (59 - cd->current_time % 60);
