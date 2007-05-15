@@ -1,5 +1,35 @@
 2007-05-15  Vincent Untz  <vuntz@gnome.org>
 
+	* button-widget.[ch]: (button_widget_realize),
+	(button_widget_unset_pixbufs), (button_widget_reload_pixbuf),
+	(button_widget_icon_theme_changed), (button_widget_finalize),
+	(button_widget_get_property), (button_widget_set_property),
+	(button_widget_expose), (button_widget_size_request),
+	(button_widget_size_allocate), (button_widget_activate),
+	(button_widget_button_press), (button_widget_init),
+	(button_widget_class_init), (button_widget_set_activatable),
+	(button_widget_get_activatable), (button_widget_set_icon_name),
+	(button_widget_get_icon_name), (button_widget_set_orientation),
+	(button_widget_get_orientation), (button_widget_set_has_arrow),
+	(button_widget_get_has_arrow), (button_widget_set_dnd_highlight),
+	(button_widget_get_dnd_highlight),
+	(button_widget_set_ignore_leave), (button_widget_get_ignore_leave),
+	(button_widget_get_icon_theme), (button_widget_get_pixbuf):
+	Use a private structure to contain object data
+	Make "ignore-leave" a property
+	Add button_widget_set_ignore_leave(),
+	button_widget_get_ignore_leave(), button_widget_get_icon_theme() and
+	button_widget_get_pixbuf()
+	* launcher.c: (setup_button): updated to use
+	button_widget_get_icon_theme()
+	(panel_launcher_set_dnd_enabled): updated to use
+	button_widget_get_pixbuf()
+	* panel-menu-button.c: (panel_menu_button_menu_deactivated),
+	(panel_menu_button_popup_menu): updated to use
+	button_widget_set_ignore_leave()
+
+2007-05-15  Vincent Untz  <vuntz@gnome.org>
+
 	* launcher.c: (setup_button): if the value for the Icon key is empty,
 	use the launcher icon
 

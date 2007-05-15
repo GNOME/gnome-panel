@@ -620,7 +620,7 @@ setup_button (Launcher *launcher)
 	}
 
 	if (!icon)
-		icon = guess_icon_from_exec (BUTTON_WIDGET (launcher->button)->icon_theme,
+		icon = guess_icon_from_exec (button_widget_get_icon_theme (BUTTON_WIDGET (launcher->button)),
 					     launcher->key_file);
 	if (!icon)
 		icon = g_strdup (PANEL_ICON_LAUNCHER);
@@ -1147,6 +1147,8 @@ void
 panel_launcher_set_dnd_enabled (Launcher *launcher,
 				gboolean  dnd_enabled)
 {
+	GdkPixbuf *pixbuf;
+
 	if (dnd_enabled) {
 		static GtkTargetEntry dnd_targets[] = {
 			{ "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
@@ -1159,9 +1161,12 @@ panel_launcher_set_dnd_enabled (Launcher *launcher,
 				     dnd_targets, 2,
 				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
 		//FIXME: this doesn't work since the pixbuf isn't loaded yet
-		if (BUTTON_WIDGET (launcher->button)->pixbuf)
+		pixbuf = button_widget_get_pixbuf (BUTTON_WIDGET (launcher->button));
+		if (pixbuf) {
 			gtk_drag_source_set_icon_pixbuf (launcher->button,
-							 BUTTON_WIDGET (launcher->button)->pixbuf);
+							 pixbuf);
+			g_object_unref (pixbuf);
+		}
 		GTK_WIDGET_SET_FLAGS (launcher->button, GTK_NO_WINDOW);
 	
 

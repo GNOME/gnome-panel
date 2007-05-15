@@ -14,24 +14,12 @@ G_BEGIN_DECLS
 
 typedef struct _ButtonWidget		ButtonWidget;
 typedef struct _ButtonWidgetClass	ButtonWidgetClass;
+typedef struct _ButtonWidgetPrivate	ButtonWidgetPrivate;
 
 struct _ButtonWidget {
-	GtkButton         parent;
-	
-	GtkIconTheme     *icon_theme;
-	GdkPixbuf        *pixbuf;
-	GdkPixbuf        *pixbuf_hc;
+	GtkButton            parent;
 
-	char             *filename;
-
-	PanelOrientation  orientation;
-
-	int               size;
-
-	guint             activatable   : 1;
-	guint             ignore_leave  : 1;
-	guint             arrow         : 1;
-	guint             dnd_highlight : 1;
+	ButtonWidgetPrivate *priv;
 };
 
 struct _ButtonWidgetClass {
@@ -57,6 +45,11 @@ gboolean         button_widget_get_has_arrow     (ButtonWidget     *button);
 void             button_widget_set_dnd_highlight (ButtonWidget     *button,
 						  gboolean          dnd_highlight);
 gboolean         button_widget_get_dnd_highlight (ButtonWidget     *button);
+void             button_widget_set_ignore_leave  (ButtonWidget     *button,
+						  gboolean          ignore_leave);
+gboolean         button_widget_get_ignore_leave  (ButtonWidget     *button);
+GtkIconTheme    *button_widget_get_icon_theme    (ButtonWidget     *button);
+GdkPixbuf       *button_widget_get_pixbuf        (ButtonWidget     *button);
 
 G_END_DECLS
 

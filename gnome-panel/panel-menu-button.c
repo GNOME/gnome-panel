@@ -344,7 +344,7 @@ panel_menu_button_menu_deactivated (PanelMenuButton *button)
 	panel_toplevel_pop_autohide_disabler (button->priv->toplevel);
 
 	GTK_BUTTON (button)->in_button = FALSE;
-	BUTTON_WIDGET (button)->ignore_leave = FALSE;
+	button_widget_set_ignore_leave (BUTTON_WIDGET (button), FALSE);
 	gtk_button_released (GTK_BUTTON (button));
 }
 
@@ -420,7 +420,7 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 
 	panel_toplevel_push_autohide_disabler (button->priv->toplevel);
 
-	BUTTON_WIDGET (button)->ignore_leave = TRUE;
+	button_widget_set_ignore_leave (BUTTON_WIDGET (button), TRUE);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (button->priv->toplevel));
 	gtk_menu_set_screen (GTK_MENU (button->priv->menu), screen);

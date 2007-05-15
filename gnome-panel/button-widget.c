@@ -16,7 +16,24 @@
 #include "panel-typebuiltins.h"
 #include "panel-globals.h"
 
+#define BUTTON_WIDGET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), BUTTON_TYPE_WIDGET, ButtonWidgetPrivate))
 
+struct _ButtonWidgetPrivate {
+	GtkIconTheme     *icon_theme;
+	GdkPixbuf        *pixbuf;
+	GdkPixbuf        *pixbuf_hc;
+
+	char             *filename;
+
+	PanelOrientation  orientation;
+
+	int               size;
+
+	guint             activatable   : 1;
+	guint             ignore_leave  : 1;
+	guint             arrow         : 1;
+	guint             dnd_highlight : 1;
+};
 
 static void button_widget_icon_theme_changed (ButtonWidget *button);
 static void button_widget_reload_pixbuf (ButtonWidget *button);
@@ -24,6 +41,7 @@ static void button_widget_reload_pixbuf (ButtonWidget *button);
 enum {
 	PROP_0,
 	PROP_ACTIVATABLE,
+	PROP_IGNORE_LEAVE,
 	PROP_HAS_ARROW,
 	PROP_DND_HIGHLIGHT,
 	PROP_ORIENTATION,
@@ -131,8 +149,9 @@ button_widget_realize(GtkWidget *widget)
 
 	widget->style = gtk_style_attach (widget->style, widget->window);
 
-	BUTTON_WIDGET (widget)->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
-	g_signal_connect_object (BUTTON_WIDGET (widget)->icon_theme, "changed",
+	BUTTON_WIDGET (widget)->priv->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
+	g_signal_connect_object (BUTTON_WIDGET (widget)->priv->icon_theme,
+				 "changed",
 				 G_CALLBACK (button_widget_icon_theme_changed),
 				 button,
 				 G_CONNECT_SWAPPED);
@@ -164,13 +183,13 @@ button_widget_unrealize (GtkWidget *widget)
 static void
 button_widget_unset_pixbufs (ButtonWidget *button)
 {
-	if (button->pixbuf)
-		g_object_unref (button->pixbuf);
-	button->pixbuf = NULL;
+	if (button->priv->pixbuf)
+		g_object_unref (button->priv->pixbuf);
+	button->priv->pixbuf = NULL;
 
-	if (button->pixbuf_hc)
-		g_object_unref (button->pixbuf_hc);
-	button->pixbuf_hc = NULL;
+	if (button->priv->pixbuf_hc)
+		g_object_unref (button->priv->pixbuf_hc);
+	button->priv->pixbuf_hc = NULL;
 }
 
 static void
@@ -178,28 +197,31 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 {
 	button_widget_unset_pixbufs (button);
 
-	if (button->size <= 1 || button->icon_theme == NULL)
+	if (button->priv->size <= 1 || button->priv->icon_theme == NULL)
 		return;
 
-	if (button->filename != NULL && button->filename [0] != '\0') {
+	if (button->priv->filename != NULL &&
+	    button->priv->filename [0] != '\0') {
 		char *error = NULL;
 
-		button->pixbuf = panel_load_icon (button->icon_theme,
-						  button->filename,
-						  button->size,
-						  button->orientation & PANEL_VERTICAL_MASK   ? button->size : -1,
-						  button->orientation & PANEL_HORIZONTAL_MASK ? button->size : -1,
-						  &error);
+		button->priv->pixbuf =
+			panel_load_icon (button->priv->icon_theme,
+					 button->priv->filename,
+					 button->priv->size,
+					 button->priv->orientation & PANEL_VERTICAL_MASK   ? button->priv->size : -1,
+					 button->priv->orientation & PANEL_HORIZONTAL_MASK ? button->priv->size : -1,
+					 &error);
 		if (error) {
-			//FIXME: this is not rendered at button->size
-			button->pixbuf = gtk_widget_render_icon (GTK_WIDGET (button),
-								 GTK_STOCK_MISSING_IMAGE,
-								 (GtkIconSize) -1, NULL);
+			//FIXME: this is not rendered at button->priv->size
+			button->priv->pixbuf =
+				gtk_widget_render_icon (GTK_WIDGET (button),
+							GTK_STOCK_MISSING_IMAGE,
+							(GtkIconSize) -1, NULL);
 			g_free (error);
 		}
 	}
 
-	button->pixbuf_hc = make_hc_pixbuf (button->pixbuf);
+	button->priv->pixbuf_hc = make_hc_pixbuf (button->priv->pixbuf);
 
 	gtk_widget_queue_resize (GTK_WIDGET (button));
 }
@@ -207,7 +229,7 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 static void
 button_widget_icon_theme_changed (ButtonWidget *button)
 {
-	if (button->filename != NULL)
+	if (button->priv->filename != NULL)
 		button_widget_reload_pixbuf (button);
 }
 
@@ -218,8 +240,8 @@ button_widget_finalize (GObject *object)
 
 	button_widget_unset_pixbufs (button);
 
-	g_free (button->filename);
-	button->filename = NULL;
+	g_free (button->priv->filename);
+	button->priv->filename = NULL;
 
 	G_OBJECT_CLASS (button_widget_parent_class)->finalize (object);
 }
@@ -238,19 +260,22 @@ button_widget_get_property (GObject    *object,
 
 	switch (prop_id) {
 	case PROP_ACTIVATABLE:
-		g_value_set_boolean (value, button->activatable);
+		g_value_set_boolean (value, button->priv->activatable);
+		break;
+	case PROP_IGNORE_LEAVE:
+		g_value_set_boolean (value, button->priv->ignore_leave);
 		break;
 	case PROP_HAS_ARROW:
-		g_value_set_boolean (value, button->arrow);
+		g_value_set_boolean (value, button->priv->arrow);
 		break;
 	case PROP_DND_HIGHLIGHT:
-		g_value_set_boolean (value, button->dnd_highlight);
+		g_value_set_boolean (value, button->priv->dnd_highlight);
 		break;
 	case PROP_ORIENTATION:
-		g_value_set_enum (value, button->orientation);
+		g_value_set_enum (value, button->priv->orientation);
 		break;
 	case PROP_ICON_NAME:
-		g_value_set_string (value, button->filename);
+		g_value_set_string (value, button->priv->filename);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -273,6 +298,9 @@ button_widget_set_property (GObject      *object,
 	switch (prop_id) {
 	case PROP_ACTIVATABLE:
 		button_widget_set_activatable (button, g_value_get_boolean (value));
+		break;
+	case PROP_IGNORE_LEAVE:
+		button_widget_set_ignore_leave (button, g_value_get_boolean (value));
 		break;
 	case PROP_HAS_ARROW:
 		button_widget_set_has_arrow (button, g_value_get_boolean (value));
@@ -355,24 +383,25 @@ button_widget_expose (GtkWidget         *widget,
 	if (!GTK_WIDGET_VISIBLE (widget) || !GTK_WIDGET_MAPPED (widget))
 		return FALSE;
 
-	if (!button_widget->pixbuf_hc && !button_widget->pixbuf)
+	if (!button_widget->priv->pixbuf_hc && !button_widget->priv->pixbuf)
 		return FALSE;
 
 	/* offset for pressed buttons */
-	off = (button_widget->activatable && button->in_button && button->button_down) ?
+	off = (button_widget->priv->activatable &&
+	       button->in_button && button->button_down) ?
 		BUTTON_WIDGET_DISPLACEMENT * widget->allocation.height / 48.0 : 0;
 
-	if (!button_widget->activatable) {
-		pb = gdk_pixbuf_copy (button_widget->pixbuf);
-		gdk_pixbuf_saturate_and_pixelate (button_widget->pixbuf,
+	if (!button_widget->priv->activatable) {
+		pb = gdk_pixbuf_copy (button_widget->priv->pixbuf);
+		gdk_pixbuf_saturate_and_pixelate (button_widget->priv->pixbuf,
 						  pb,
 						  0.8,
 						  TRUE);
 	} else if (panel_global_config_get_highlight_when_over () && 
-	    (button->in_button || GTK_WIDGET_HAS_FOCUS (widget)))
-		pb = g_object_ref (button_widget->pixbuf_hc);
+		   (button->in_button || GTK_WIDGET_HAS_FOCUS (widget)))
+		pb = g_object_ref (button_widget->priv->pixbuf_hc);
 	else
-		pb = g_object_ref (button_widget->pixbuf);
+		pb = g_object_ref (button_widget->priv->pixbuf);
 
 	g_assert (pb != NULL);
 
@@ -399,13 +428,13 @@ button_widget_expose (GtkWidget         *widget,
 
 	g_object_unref (pb);
 	
-	if (button_widget->arrow) {
+	if (button_widget->priv->arrow) {
 		GtkArrowType arrow_type;
 		int          x, y, width, height;
 
 		x = y = width = height = -1;
 
-		arrow_type = calc_arrow (button_widget->orientation,
+		arrow_type = calc_arrow (button_widget->priv->orientation,
 					 widget->allocation.width,
 					 widget->allocation.height,
 					 &x,
@@ -428,7 +457,7 @@ button_widget_expose (GtkWidget         *widget,
 				 height);
 	}
 
-	if (button_widget->dnd_highlight) {
+	if (button_widget->priv->dnd_highlight) {
 		gdk_draw_rectangle(widget->window, widget->style->black_gc, FALSE,
 				   widget->allocation.x, widget->allocation.y,
 				   widget->allocation.width - 1,
@@ -462,9 +491,9 @@ button_widget_size_request (GtkWidget      *widget,
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 
-	if (button_widget->pixbuf) {
-		requisition->width  = gdk_pixbuf_get_width  (button_widget->pixbuf);
-		requisition->height = gdk_pixbuf_get_height (button_widget->pixbuf);
+	if (button_widget->priv->pixbuf) {
+		requisition->width  = gdk_pixbuf_get_width  (button_widget->priv->pixbuf);
+		requisition->height = gdk_pixbuf_get_height (button_widget->priv->pixbuf);
 	}
 }
 
@@ -476,7 +505,7 @@ button_widget_size_allocate (GtkWidget     *widget,
 	GtkButton    *button = GTK_BUTTON (widget);
 	int           size;
 
-	if (button_widget->orientation & PANEL_HORIZONTAL_MASK)
+	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
 		size = allocation->height;
 	else
 		size = allocation->width;
@@ -490,8 +519,8 @@ button_widget_size_allocate (GtkWidget     *widget,
 	else
 		size = 48;
 
-	if (button_widget->size != size) {
-		button_widget->size = size;
+	if (button_widget->priv->size != size) {
+		button_widget->priv->size = size;
 
 		button_widget_reload_pixbuf (button_widget);
 	}
@@ -512,7 +541,7 @@ button_widget_activate (GtkButton *button)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (button);
 
-	if (!button_widget->activatable)
+	if (!button_widget->priv->activatable)
 		return;
 
 	if (GTK_BUTTON_CLASS (button_widget_parent_class)->activate)
@@ -525,7 +554,7 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 
-	if (event->button == 1 && BUTTON_WIDGET (widget)->activatable &&
+	if (event->button == 1 && BUTTON_WIDGET (widget)->priv->activatable &&
 	/* we don't want to have two/three "click" events for double/triple
 	 * clicks. FIXME: this is only a workaround, waiting for bug 159101 */
 	    event->type == GDK_BUTTON_PRESS)
@@ -569,20 +598,22 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 static void
 button_widget_init (ButtonWidget *button)
 {
-	button->icon_theme = NULL;
-	button->pixbuf     = NULL;
-	button->pixbuf_hc  = NULL;
+	button->priv = BUTTON_WIDGET_GET_PRIVATE (button);
 
-	button->filename   = NULL;
-	
-	button->orientation = PANEL_ORIENTATION_TOP;
+	button->priv->icon_theme = NULL;
+	button->priv->pixbuf     = NULL;
+	button->priv->pixbuf_hc  = NULL;
 
-	button->size = 0;
+	button->priv->filename   = NULL;
 	
-	button->activatable   = FALSE;
-	button->ignore_leave  = FALSE;
-	button->arrow         = FALSE;
-	button->dnd_highlight = FALSE;
+	button->priv->orientation = PANEL_ORIENTATION_TOP;
+
+	button->priv->size = 0;
+	
+	button->priv->activatable   = FALSE;
+	button->priv->ignore_leave  = FALSE;
+	button->priv->arrow         = FALSE;
+	button->priv->dnd_highlight = FALSE;
 }
 
 static void
@@ -595,6 +626,8 @@ button_widget_class_init (ButtonWidgetClass *klass)
 	gobject_class->finalize     = button_widget_finalize;
 	gobject_class->get_property = button_widget_get_property;
 	gobject_class->set_property = button_widget_set_property;
+
+	g_type_class_add_private (klass, sizeof (ButtonWidgetPrivate));
 	  
 	widget_class->realize            = button_widget_realize;
 	widget_class->unrealize          = button_widget_unrealize;
@@ -615,6 +648,15 @@ button_widget_class_init (ButtonWidgetClass *klass)
 					      "Whether the button is activatable",
 					      TRUE,
 					      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+	g_object_class_install_property (
+			gobject_class,
+			PROP_IGNORE_LEAVE,
+			g_param_spec_boolean ("ignore-leave",
+					      "Ignore leaving to not unhighlight the icon",
+					      "Whether or not to unhighlight the icon when the cursor leaves it",
+					      FALSE,
+					      G_PARAM_READWRITE));
 
 	g_object_class_install_property (
 			gobject_class,
@@ -679,8 +721,8 @@ button_widget_set_activatable (ButtonWidget *button,
 
 	activatable = activatable != FALSE;
 
-	if (button->activatable != activatable) {
-		button->activatable = activatable;
+	if (button->priv->activatable != activatable) {
+		button->priv->activatable = activatable;
 
 		if (GTK_WIDGET_DRAWABLE (button))
 			gtk_widget_queue_draw (GTK_WIDGET (button));
@@ -694,7 +736,7 @@ button_widget_get_activatable (ButtonWidget *button)
 {
 	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
 
-	return button->activatable;
+	return button->priv->activatable;
 }
 
 void
@@ -703,12 +745,13 @@ button_widget_set_icon_name (ButtonWidget *button,
 {
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
 
-	if (button->filename && icon_name && !strcmp (button->filename, icon_name))
+	if (button->priv->filename && icon_name &&
+	    !strcmp (button->priv->filename, icon_name))
 		return;
 
-	if (button->filename)
-		g_free (button->filename);
-	button->filename = g_strdup (icon_name);
+	if (button->priv->filename)
+		g_free (button->priv->filename);
+	button->priv->filename = g_strdup (icon_name);
 
 	button_widget_reload_pixbuf (button);
 
@@ -720,7 +763,7 @@ button_widget_get_icon_name (ButtonWidget *button)
 {
 	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
 
-	return button->filename;
+	return button->priv->filename;
 }
 
 void
@@ -729,13 +772,13 @@ button_widget_set_orientation (ButtonWidget     *button,
 {
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
 
-	if (button->orientation == orientation)
+	if (button->priv->orientation == orientation)
 		return;
 
-	button->orientation = orientation;
+	button->priv->orientation = orientation;
 
 	/* Force a re-scale */
-	button->size = -1;
+	button->priv->size = -1;
 
 	gtk_widget_queue_resize (GTK_WIDGET (button));
 
@@ -747,7 +790,7 @@ button_widget_get_orientation (ButtonWidget *button)
 {
 	g_return_val_if_fail (BUTTON_IS_WIDGET (button), 0);
 
-	return button->orientation;
+	return button->priv->orientation;
 }
 
 void
@@ -758,10 +801,10 @@ button_widget_set_has_arrow (ButtonWidget *button,
 
 	has_arrow = has_arrow != FALSE;
 
-	if (button->arrow == has_arrow)
+	if (button->priv->arrow == has_arrow)
 		return;
 
-	button->arrow = has_arrow;
+	button->priv->arrow = has_arrow;
 
 	gtk_widget_queue_draw (GTK_WIDGET (button));
 
@@ -773,7 +816,7 @@ button_widget_get_has_arrow (ButtonWidget *button)
 {
 	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
 
-	return button->arrow;
+	return button->priv->arrow;
 }
 
 void
@@ -784,10 +827,10 @@ button_widget_set_dnd_highlight (ButtonWidget *button,
 
 	dnd_highlight = dnd_highlight != FALSE;
 
-	if (button->dnd_highlight == dnd_highlight)
+	if (button->priv->dnd_highlight == dnd_highlight)
 		return;
 
-	button->dnd_highlight = dnd_highlight;
+	button->priv->dnd_highlight = dnd_highlight;
 
 	gtk_widget_queue_draw (GTK_WIDGET (button));
 
@@ -799,5 +842,50 @@ button_widget_get_dnd_highlight (ButtonWidget *button)
 {
 	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
 
-	return button->dnd_highlight;
+	return button->priv->dnd_highlight;
+}
+
+void
+button_widget_set_ignore_leave (ButtonWidget *button,
+				gboolean      ignore_leave)
+{
+	g_return_if_fail (BUTTON_IS_WIDGET (button));
+
+	ignore_leave = ignore_leave != FALSE;
+
+	if (button->priv->ignore_leave == ignore_leave)
+		return;
+
+	button->priv->ignore_leave = ignore_leave;
+
+	gtk_widget_queue_draw (GTK_WIDGET (button));
+
+	g_object_notify (G_OBJECT (button), "ignore-leave");
+}
+
+gboolean
+button_widget_get_ignore_leave (ButtonWidget *button)
+{
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
+
+	return button->priv->ignore_leave;
+}
+
+GtkIconTheme *
+button_widget_get_icon_theme (ButtonWidget *button)
+{
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
+
+	return button->priv->icon_theme;
+}
+
+GdkPixbuf *
+button_widget_get_pixbuf (ButtonWidget *button)
+{
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
+
+	if (!button->priv->pixbuf)
+		return NULL;
+
+	return g_object_ref (button->priv->pixbuf);
 }
