@@ -614,6 +614,11 @@ setup_button (Launcher *launcher)
 	/* Setup icon */
 	icon = panel_util_key_file_get_locale_string (launcher->key_file,
 						      "Icon");
+	if (icon && icon[0] == '\0') {
+		g_free (icon);
+		icon = NULL;
+	}
+
 	if (!icon)
 		icon = guess_icon_from_exec (BUTTON_WIDGET (launcher->button)->icon_theme,
 					     launcher->key_file);
