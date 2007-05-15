@@ -16,6 +16,7 @@
 
 #include "panel-util.h"
 
+#include <dirent.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -852,7 +853,7 @@ panel_make_unique_desktop_path_from_name (const char *dir,
 {
 	int   num = 1;
 	char *path = NULL;
-	char  filename[NAME_MAX];
+	char  filename[MAXNAMLEN];
 
 /* g_file_set_contents() use "%s.XXXXXX"
  * FIXME: waiting for http://bugzilla.gnome.org/show_bug.cgi?id=437977 */

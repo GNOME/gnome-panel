@@ -1,3 +1,9 @@
+2007-05-15  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-util.c: (panel_make_unique_desktop_path_from_name): use
+	MAXNAMLEN instead of NAME_MAX, for BSD/Solaris compatibility
+	Fix bug #438637. Patch by Damien Carbery <damien.carbery@sun.com>
+
 ==================== 2.19.2 ====================
 
 2007-05-13  Vincent Untz  <vuntz@gnome.org>
