@@ -213,6 +213,7 @@ panel_logout_timeout (gpointer data)
 {
 	PanelLogoutDialog *logout_dialog;
 	char              *secondary_text;
+	const char        *name;
 	int                seconds_to_show;
 
 	logout_dialog = (PanelLogoutDialog *) data;
@@ -234,15 +235,23 @@ panel_logout_timeout (gpointer data)
 
 	switch (logout_dialog->priv->type) {
 	case PANEL_LOGOUT_DIALOG_LOGOUT:
-		secondary_text = ngettext ("You will be automatically logged "
+		secondary_text = ngettext ("You are currently logged in as "
+					   "\"%s\".\n"
+					   "You will be automatically logged "
 					   "out in %d second.",
+					   "You are currently logged in as "
+					   "\"%s\".\n"
 					   "You will be automatically logged "
 					   "out in %d seconds.",
 					   seconds_to_show);
 		break;
 	case PANEL_LOGOUT_DIALOG_SHUTDOWN:
-		secondary_text = ngettext ("This system will be automatically "
+		secondary_text = ngettext ("You are currently logged in as "
+					   "\"%s\".\n"
+					   "This system will be automatically "
 					   "shut down in %d second.",
+					   "You are currently logged in as "
+					   "\"%s\".\n"
 					   "This system will be automatically "
 					   "shut down in %d seconds.",
 					   seconds_to_show);
@@ -251,8 +260,13 @@ panel_logout_timeout (gpointer data)
 		g_assert_not_reached ();
 	}
 
+	name = g_get_real_name ();
+	if (!name)
+		name = g_get_user_name ();
+
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (logout_dialog),
 						  secondary_text,
+						  name,
 						  seconds_to_show,
 						  NULL);
 
