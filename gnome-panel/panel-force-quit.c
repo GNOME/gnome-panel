@@ -199,10 +199,14 @@ kill_window_question (gpointer window)
 	GtkWidget *dialog;
  
 	dialog = gtk_message_dialog_new (NULL, 0,
-					 GTK_MESSAGE_QUESTION,
+					 GTK_MESSAGE_WARNING,
 					 GTK_BUTTONS_NONE,
-					 _("Force this application to exit?\n"
-					   "(Any open documents will be lost.)"));
+					 _("Force this application to exit?"));
+
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+						  _("If you choose to force an application "
+						  "to exit, any open documents in it will "
+						  "be lost."));
  
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 				GTK_STOCK_CANCEL,
@@ -211,7 +215,9 @@ kill_window_question (gpointer window)
 				GTK_RESPONSE_ACCEPT,
 				NULL);
  
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+					 GTK_RESPONSE_CANCEL);
+	gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (kill_window_response), window);

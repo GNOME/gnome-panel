@@ -137,7 +137,6 @@ panel_logout_init (PanelLogoutDialog *logout_dialog)
 	logout_dialog->priv->default_response = GTK_RESPONSE_CANCEL;
 
 	/* FIXME: we should most probably use gtk_window_set_transient_for(PANEL) */
-	gtk_window_set_skip_pager_hint (GTK_WINDOW (logout_dialog), TRUE);
 	gtk_window_set_skip_taskbar_hint (GTK_WINDOW (logout_dialog), TRUE);
 	gtk_window_set_keep_above (GTK_WINDOW (logout_dialog), TRUE);
 	gtk_window_stick (GTK_WINDOW (logout_dialog));

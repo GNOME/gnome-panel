@@ -1,3 +1,17 @@
+2007-05-16  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-applet-frame.c: (panel_applet_frame_loading_failed): make the
+	dialog a warning insted of a question
+	* panel-force-quit.c: (kill_window_question): make dialog text more
+	HIG compliant, make it a warning, don't skip the taskbar
+	* panel-logout.c: (panel_logout_init): don't skip the pager for the
+	dialog
+	* panel-recent.c: (recent_documents_clear_cb): make the dialog a
+	question, don't skip the tasklist
+	* panel.c: (panel_deletion_dialog): don't set a title to the dialog,
+	and make the dialog a warning
+	Fix bug #324627
+
 2007-05-15  Vincent Untz  <vuntz@gnome.org>
 
 	* button-widget.[ch]: (button_widget_realize),

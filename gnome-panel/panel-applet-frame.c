@@ -1048,7 +1048,7 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 				       frame->priv->iid);
 
 	dialog = gtk_message_dialog_new (NULL, 0,
-					 locked_down ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
+					 locked_down ? GTK_MESSAGE_INFO : GTK_MESSAGE_WARNING,
 					 GTK_BUTTONS_NONE,
 					 problem_txt);
 	g_free (problem_txt);
