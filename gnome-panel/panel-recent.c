@@ -180,7 +180,8 @@ recent_documents_clear_cb (GtkMenuItem      *menuitem,
 
 	gtk_dialog_set_default_response (GTK_DIALOG (clear_recent_dialog),
 					 GTK_RESPONSE_ACCEPT);
-	gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
+	gtk_window_set_skip_taskbar_hint (GTK_WINDOW (clear_recent_dialog),
+					  FALSE);
 
 	g_signal_connect (clear_recent_dialog, "response",
 			  G_CALLBACK (clear_dialog_response), manager);
