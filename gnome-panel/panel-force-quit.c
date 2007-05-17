@@ -218,6 +218,7 @@ kill_window_question (gpointer window)
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
 					 GTK_RESPONSE_CANCEL);
 	gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
+	gtk_window_set_title (GTK_WINDOW (dialog), _("Force Quit"));
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (kill_window_response), window);

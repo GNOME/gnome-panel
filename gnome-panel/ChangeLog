@@ -1,5 +1,11 @@
 2007-05-17  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-force-quit.c: (kill_window_question): set title, since the
+	dialog appears in tasklist now
+	* panel-recent.c: (recent_documents_clear_cb): ditto
+
+2007-05-17  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-logout.c: (panel_logout_timeout): add username of the current
 	user to the logout dialog
 
