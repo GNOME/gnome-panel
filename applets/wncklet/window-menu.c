@@ -232,7 +232,6 @@ gboolean
 window_menu_applet_fill (PanelApplet *applet)
 {
 	WindowMenu *window_menu;
-	WnckScreen *screen;
 
 	window_menu = g_new0 (WindowMenu, 1);
 
@@ -250,8 +249,7 @@ window_menu_applet_fill (PanelApplet *applet)
 	panel_applet_setup_menu_from_file (applet, NULL, "GNOME_WindowMenuApplet.xml",
 					   NULL, window_menu_verbs, window_menu);
 
-	screen = wncklet_get_screen (window_menu->applet);
-	window_menu->selector = wnck_selector_new (screen);
+	window_menu->selector = wnck_selector_new ();
 	gtk_container_add (GTK_CONTAINER (window_menu->applet), 
 			   window_menu->selector);
 
