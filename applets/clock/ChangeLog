@@ -1,3 +1,22 @@
+2007-05-21  Vincent Untz  <vuntz@gnome.org>
+
+	Move the calendar popup code in a new file.
+	Implement saving of the state of appointment expanders in gconf.
+
+	* Makefile.am: add new files, generate clock-typebuiltins.[ch]
+	* calendar-window.[ch]: new GtkWindow-derived widget, that implements
+	the calendar popup. Based on code from clock.c (which has been of
+	course removed)
+	* clock.h: new, with stuff from clock.c needed by CalendarWindow
+	* clock.schemas.in: add new gconf keys for the state of expanders
+	* clock.c: (destroy_clock): remove now unneeded code
+	(create_calendar): simplify, now only creates a CalendarWindow
+	(update_popup): updated
+	(format_changed): update CalendarWindow
+	(gmt_time_changed): update CalendarWindow
+	(show_week_changed): update CalendarWindow
+	(fill_clock_applet): updated
+
 2007-05-20  Vincent Untz  <vuntz@gnome.org>
 
 	Have separate treeviews for appointments, birthdays and weather.

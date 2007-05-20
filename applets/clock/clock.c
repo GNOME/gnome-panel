@@ -29,16 +29,6 @@
  *      Mark McLoughlin
  */
 
- /*
-  * Evolution calendar integration TODO:
-  *   + Fix treeview scrolling and sizing
-  *   + Tooltips for tasks/appointments
-  *   + Do everything backwards if the clock is on the bottom
-  *   + Double clicking appointments/tasks should open them in evo
-  *   + Consider using different colours for different sources
-  *   + Consider doing a GtkMenu tearoff type thing
-  */
-
 #include "config.h"
 
 #include <stdio.h>
@@ -60,11 +50,10 @@
 #include <gconf/gconf-client.h>
 #include <libgnomeui/gnome-help.h>
 
-#ifdef HAVE_LIBECAL
-#include "calendar-client.h"
-#endif
+#include "clock.h"
 
-#define CLOCK_ICON "gnome-panel-clock"
+#include "calendar-window.h"
+
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
 
@@ -87,16 +76,6 @@ static const char *clock_config_tools [] = {
 	FALLBACK_CONFIG_TOOL
 };
 
-/* Needs to match the indices in the combo of the prefs dialog */
-typedef enum {
-        CLOCK_FORMAT_INVALID = 0,
-	CLOCK_FORMAT_12,
-	CLOCK_FORMAT_24,
-	CLOCK_FORMAT_UNIX,
-	CLOCK_FORMAT_INTERNET,
-	CLOCK_FORMAT_CUSTOM
-} ClockFormat;
-
 static GConfEnumStringPair format_type_enum_map [] = {
 	{ CLOCK_FORMAT_12,       "12-hour"  },
 	{ CLOCK_FORMAT_24,       "24-hour"  },
@@ -116,29 +95,6 @@ struct _ClockData {
 	GtkWidget *props;
 	GtkWidget *about;
         GtkWidget *calendar_popup;
-        GtkWidget *calendar;
-
-#ifdef HAVE_LIBECAL
-        GtkWidget *appointment_list;
-        GtkWidget *birthday_list;
-        GtkWidget *weather_list;
-        GtkWidget *task_list;
-        
-        GtkListStore       *appointments_model;
-        GtkListStore       *tasks_model;
-
-        GtkTreeModelFilter *appointments_filter;
-        GtkTreeModelFilter *birthdays_filter;
-        GtkTreeModelFilter *tasks_filter;
-        GtkTreeModelFilter *weather_filter;
-
-	gboolean appointments_open;
-	gboolean birthdays_open;
-	gboolean tasks_open;
-	gboolean weather_open;
-
-        CalendarClient *client;
-#endif /* HAVE_LIBECAL */
 
 	/* preferences */
 	ClockFormat  format;
@@ -611,37 +567,6 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 		g_source_remove (cd->timeout);
         cd->timeout = 0;
 
-#ifdef HAVE_LIBECAL
-        if (cd->client)
-                g_object_unref (cd->client);
-        cd->client = NULL;
-
-        if (cd->appointments_model)
-                g_object_unref (cd->appointments_model);
-        cd->appointments_model = NULL;
-
-        if (cd->tasks_model)
-                g_object_unref (cd->tasks_model);
-        cd->tasks_model = NULL;
-        
-        if (cd->appointments_filter)
-                g_object_unref (cd->appointments_filter);
-        cd->appointments_filter = NULL;
-
-        if (cd->birthdays_filter)
-                g_object_unref (cd->birthdays_filter);
-        cd->birthdays_filter = NULL;
-        
-        if (cd->tasks_filter)
-                g_object_unref (cd->tasks_filter);
-        cd->tasks_filter = NULL;
-
-        if (cd->weather_filter)
-                g_object_unref (cd->weather_filter);
-        cd->weather_filter = NULL;
-        
-#endif /* HAVE_LIBECAL */
-
 	if (cd->about)
 		gtk_widget_destroy (cd->about);
         cd->about = NULL;
@@ -683,7 +608,7 @@ delete_event (GtkWidget   *widget,
 	return TRUE;
 }
 
-static inline ClockFormat
+ClockFormat
 clock_locale_format (void)
 {
 #ifdef HAVE_NL_LANGINFO
@@ -696,1160 +621,34 @@ clock_locale_format (void)
 #endif
 }
 
-#ifdef HAVE_LIBECAL
-
-static void
-clock_launch_evolution (ClockData   *cd,
-			const char  *argument)
-{
-	char   *command_line;
-	GError *error;
-
-	command_line = g_find_program_in_path ("evolution");
-	if (command_line == NULL)
-		return;
-	g_free (command_line);
-
-	if (argument)
-		command_line = g_strdup_printf ("evolution %s", argument);
-	else
-		command_line = g_strdup ("evolution");
-
-	error = NULL;
-
-	if (!gdk_spawn_command_line_on_screen (gtk_widget_get_screen (cd->calendar),
-					       command_line, &error)) {
-		g_printerr ("Cannot launch evolution: %s\n", error->message);
-		g_error_free (error);
-	}
-
-	g_free (command_line);
-}
-
-static void
-update_frame_visibility (GtkWidget    *frame,
-                         GtkTreeModel *model)
-{
-        GtkTreeIter iter;
-        gboolean    model_empty;
-
-        if (!frame)
-                return;
-
-        model_empty = !gtk_tree_model_get_iter_first (model, &iter);
-
-        if (model_empty)
-                gtk_widget_hide (frame);
-        else
-                gtk_widget_show (frame);
-}
-
-enum {
-        APPOINTMENT_COLUMN_UID,
-        APPOINTMENT_COLUMN_URI,
-        APPOINTMENT_COLUMN_SUMMARY,
-        APPOINTMENT_COLUMN_DESCRIPTION,
-        APPOINTMENT_COLUMN_START_TIME,
-        APPOINTMENT_COLUMN_START_TEXT,
-        APPOINTMENT_COLUMN_END_TIME,
-        APPOINTMENT_COLUMN_ALL_DAY,
-        APPOINTMENT_COLUMN_PIXBUF,
-        N_APPOINTMENT_COLUMNS
-};
-
-enum {
-        TASK_COLUMN_UID,
-        TASK_COLUMN_SUMMARY,
-        TASK_COLUMN_DESCRIPTION,
-        TASK_COLUMN_START_TIME,
-        TASK_COLUMN_DUE_TIME,
-        TASK_COLUMN_PERCENT_COMPLETE,
-        TASK_COLUMN_PERCENT_COMPLETE_TEXT,
-        TASK_COLUMN_COMPLETED,
-        TASK_COLUMN_COMPLETED_TIME,
-        TASK_COLUMN_OVERDUE_ATTR,
-        TASK_COLUMN_COLOR,
-        TASK_COLUMN_PRIORITY,
-        N_TASK_COLUMNS
-};
-
-static char *
-format_time (ClockFormat format,
-             time_t      t,
-             guint       year,
-             guint       month,
-             guint       day,
-             gboolean    use_utc)
-{
-        struct tm *tm;
-        char      *time_format;
-        char       result [256] = { 0, };
-
-        if (!t)
-                return NULL;
-
-        if (use_utc)
-                tm = gmtime (&t);
-        else
-                tm = localtime (&t);
-        if (!tm)
-                return NULL;
-
-        if (year  == (tm->tm_year + 1900) &&
-            month == tm->tm_mon &&
-            day   == tm->tm_mday) {
-                if (format != CLOCK_FORMAT_12 && format != CLOCK_FORMAT_24)
-                        format = clock_locale_format ();
-
-                if (format == CLOCK_FORMAT_12)
-                        time_format = g_locale_from_utf8 (_("%l:%M %p"), -1, NULL, NULL, NULL);
-                else
-                        time_format = g_locale_from_utf8 (_("%H:%M"), -1, NULL, NULL, NULL);
-        }
-        else {
-                /* Translators: If the event did not start on the current day
-                 we will display the start date in the most abbreviated way possible. */
-                time_format = g_locale_from_utf8 (_("%b %d"), -1, NULL, NULL, NULL);
-        }
-
-        strftime (result, sizeof (result), time_format, tm);
-        g_free (time_format);
-
-        return g_locale_to_utf8 (result, -1, NULL, NULL, NULL);
-}
-
-static void
-handle_tasks_changed (ClockData *cd)
-{
-        GSList *events, *l;
-
-        gtk_list_store_clear (cd->tasks_model);
-
-        events = calendar_client_get_events (cd->client, CALENDAR_EVENT_TASK);
-        for (l = events; l; l = l->next) {
-                CalendarTask *task = l->data;
-                GtkTreeIter   iter;
-                char         *percent_complete_text;
-
-                g_assert (CALENDAR_EVENT (task)->type == CALENDAR_EVENT_TASK);
-      
-                /* FIXME: should this format be locale specific ? */
-                percent_complete_text = g_strdup_printf ("%d%%", task->percent_complete);
-
-                gtk_list_store_append (cd->tasks_model, &iter);
-                gtk_list_store_set (cd->tasks_model, &iter,
-                                    TASK_COLUMN_UID,                   task->uid,
-                                    TASK_COLUMN_SUMMARY,               task->summary,
-                                    TASK_COLUMN_DESCRIPTION,           task->description,
-                                    TASK_COLUMN_START_TIME,            task->start_time,
-                                    TASK_COLUMN_DUE_TIME,              task->due_time,
-                                    TASK_COLUMN_PERCENT_COMPLETE,      task->percent_complete,
-                                    TASK_COLUMN_PERCENT_COMPLETE_TEXT, percent_complete_text,
-                                    TASK_COLUMN_COMPLETED,             task->percent_complete == 100,
-                                    TASK_COLUMN_COMPLETED_TIME,        task->completed_time,
-                                    TASK_COLUMN_COLOR,                 task->color_string,
-                                    TASK_COLUMN_PRIORITY,              task->priority,
-                                    -1);
-
-                g_free (percent_complete_text);
-                calendar_event_free (CALENDAR_EVENT (task));
-        }
-        g_slist_free (events);
-
-        update_frame_visibility (cd->task_list, GTK_TREE_MODEL (cd->tasks_filter));
-}
-
-static void
-handle_task_completed_toggled (ClockData             *cd,
-                               const char            *path_str,
-                               GtkCellRendererToggle *cell)
-{
-        GtkTreePath *child_path, *path;
-        GtkTreeIter  iter;
-        char        *uid;
-        gboolean     task_completed;
-        guint        percent_complete;
-        
-        path       = gtk_tree_path_new_from_string (path_str);
-        child_path = gtk_tree_model_filter_convert_path_to_child_path (cd->tasks_filter, path);
-        gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, child_path);
-        gtk_tree_model_get (GTK_TREE_MODEL (cd->tasks_model), &iter,
-                            TASK_COLUMN_UID,                  &uid,
-                            TASK_COLUMN_COMPLETED,            &task_completed,
-                            TASK_COLUMN_PERCENT_COMPLETE,     &percent_complete,
-                            -1);
-
-        task_completed   = !task_completed;
-        percent_complete = task_completed ? 100 : 0;
-
-        calendar_client_set_task_completed (cd->client,
-                                            uid,
-                                            task_completed,
-                                            percent_complete);
-
-        g_free (uid);
-        gtk_tree_path_free (path);
-        gtk_tree_path_free (child_path);
-}
-
-static void
-handle_task_percent_complete_edited (ClockData           *cd,
-                                     const char          *path_str,
-                                     const char          *text,
-                                     GtkCellRendererText *cell)
-{
-        GtkTreePath *child_path, *path;
-        GtkTreeIter  iter;
-        char        *uid;
-        int          percent_complete;
-        char        *error = NULL, *text_copy;
-
-        path       = gtk_tree_path_new_from_string (path_str);
-        child_path = gtk_tree_model_filter_convert_path_to_child_path (cd->tasks_filter, path);
-        gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, child_path);
-        gtk_tree_model_get (GTK_TREE_MODEL (cd->tasks_model), &iter,
-                            TASK_COLUMN_UID, &uid,
-                            -1);
-
-        text_copy = g_strdup (text);
-        text_copy = g_strdelimit (text_copy, "%", ' ');
-        text_copy = g_strstrip (text_copy);
-        percent_complete = (int) g_strtod (text_copy, &error);
-        if (!error || !error [0]) {
-                gboolean task_completed;
-
-                percent_complete = CLAMP (percent_complete, 0, 100);
-                task_completed = (percent_complete == 100);
-
-                calendar_client_set_task_completed (cd->client,
-                                                    uid,
-                                                    task_completed,
-                                                    percent_complete);
-        }
-
-        g_free (uid);
-        g_free (text_copy);
-        gtk_tree_path_free (path);
-        gtk_tree_path_free (child_path);
-}
-
-static gboolean
-is_appointment (GtkTreeModel *model,
-		GtkTreeIter  *iter,
-		gpointer      data)
-{
-	gchar *uri;
-
-	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
-	if (uri)
-		return (strcmp (uri, "file") == 0 ||
-			strcmp (uri, "webcal") == 0);
-	return FALSE;
-}
-
-static gboolean
-is_birthday (GtkTreeModel *model,
-	     GtkTreeIter  *iter,
-	     gpointer      data)
-{
-	gchar *uri;
-
-	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
-	if (uri)
-		return (strcmp (uri, "contacts") == 0);
-	return FALSE;
-}
-
-static gboolean
-is_weather (GtkTreeModel *model,
-	    GtkTreeIter  *iter,
-	    gpointer      data)
-{
-	gchar *uri;
-
-	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
-	if (uri)
-		return (strcmp (uri, "weather") == 0);
-	return FALSE;
-}
-    
-static gboolean
-filter_out_tasks (GtkTreeModel *model,
-                  GtkTreeIter  *iter,
-                  ClockData    *cd)
-{
-        GTime    start_time;
-        GTime    completed_time;
-        GTime    one_day_ago;
-        gboolean visible;
-
-        gtk_tree_model_get (model, iter,
-                            TASK_COLUMN_START_TIME,     &start_time,
-                            TASK_COLUMN_COMPLETED_TIME, &completed_time,
-                            -1);
-
-        one_day_ago = cd->current_time - (24 * 60 * 60);
-
-        visible = !start_time || start_time <= cd->current_time;
-        if (visible)
-                visible = !completed_time || completed_time >= one_day_ago;
-
-        return visible;
-}
-
-static void
-modify_task_text_attributes (GtkTreeModel *model,
-                             GtkTreeIter  *iter,
-                             GValue       *value,
-                             gint          column,
-                             ClockData    *cd)
-{
-        GTime           due_time;
-        PangoAttrList  *attr_list;
-        PangoAttribute *attr;
-        GtkTreeIter     child_iter;
-
-        gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (model),
-                                                          &child_iter,
-                                                          iter);
-
-        if (column != TASK_COLUMN_OVERDUE_ATTR) {
-                memset (value, 0, sizeof (GValue));
-                gtk_tree_model_get_value (GTK_TREE_MODEL (cd->tasks_model),
-                                          &child_iter, column, value);
-
-                return;
-        }
-
-        gtk_tree_model_get (GTK_TREE_MODEL (cd->tasks_model), &child_iter,
-                            TASK_COLUMN_DUE_TIME, &due_time,
-                            -1);
-        if (due_time && due_time > cd->current_time)
-                return;
-
-        attr_list = pango_attr_list_new ();
-
-        attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-        attr->start_index = 0;
-        attr->end_index = G_MAXINT;
-        pango_attr_list_insert (attr_list, attr);
-
-        g_value_take_boxed (value, attr_list);
-}
-
-static gboolean
-task_activated_cb (GtkTreeView       *view,
-                   GtkTreePath       *path,
-                   GtkTreeViewColumn *column,
-                   ClockData         *cd)
-{
-        GtkTreeIter  iter;
-        GtkTreePath *child_path;
-        char        *uid;
-	char        *argument;
-
-        child_path = gtk_tree_model_filter_convert_path_to_child_path (cd->tasks_filter,
-								       path);
-
-        gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, child_path);
-        gtk_tree_model_get (GTK_TREE_MODEL (cd->tasks_model), &iter,
-                            TASK_COLUMN_UID, &uid, -1);
-
-	argument = g_strdup_printf ("task:%s", uid);
-
-	clock_launch_evolution (cd, argument);
-
-	g_free (argument);
-        g_free (uid);
-        gtk_tree_path_free (child_path);
-
-        return TRUE;
-}
-
-static void
-set_renderer_pixbuf_color_by_column (GtkCellRenderer *renderer,
-                                     GtkTreeModel    *model,
-                                     GtkTreeIter     *iter,
-                                     gint             column_number)
-{
-        char      *color_string;
-        GdkPixbuf *pixbuf = NULL;
-        guint32    color;
-
-        gtk_tree_model_get (model, iter, column_number, &color_string, -1);
-
-        if (color_string) {
-                sscanf (color_string, "%06x", &color);
-                pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 16, 16);
-                gdk_pixbuf_fill (pixbuf, color << 8);
-
-                g_object_set (renderer, "visible", pixbuf != NULL, "pixbuf", pixbuf, NULL);
-
-                if (pixbuf)
-                        g_object_unref (pixbuf);
-
-                g_free (color_string);
-        }
-}
-static void
-set_renderer_pixbuf_pixmap_for_bday (GtkCellRenderer *renderer,
-				     GtkTreeModel    *model,
-				     GtkTreeIter     *iter,
-				     gint             data_column)
-{
-	const gchar *path   = NULL;
-	gchar       *type   = NULL;
-	GdkPixbuf   *pixbuf = NULL;
-	GError      *error  = NULL;
-
-
-	gtk_tree_model_get (model, iter, data_column, &type, -1); 
-	if (!type)
-		return;
-
-	/* type should be in format like this:
-	 * pas-id-4121A93E00000001-anniversary
-	 * pas-id-41112AF900000003-birthday 
-	 * ...
-	 */
-	if (g_strrstr (type, "birthday") != 0)
-		path = CLOCK_ICONDIR"/icon_birthday_16.png"; 
-	else if (g_strrstr (type, "anniversary") != 0)
-		path = CLOCK_ICONDIR"/icon_anniversary_16.png"; 
-	else
-		path = CLOCK_ICONDIR"/icon_unknown_16.png"; 
-
-	g_free (type);
-
-	pixbuf = gdk_pixbuf_new_from_file (path, &error);
-	if (error) {
-		g_warning ("Cannot load '%s': %s", path, error->message);
-		g_error_free (error);
-		return;
-	}
-
-	g_object_set (renderer,
-		      "visible", pixbuf != NULL,
-		      "pixbuf", pixbuf,
-		      NULL);
-
-	if (pixbuf)
-		g_object_unref (pixbuf);
-}
-
-static void
-set_renderer_pixbuf_pixmap_for_weather (GtkCellRenderer *renderer,
-					GtkTreeModel    *model,
-					GtkTreeIter     *iter)
-{
-	const gchar *path   = NULL;
-	GdkPixbuf   *pixbuf = NULL;
-	GError      *error  = NULL;
-
-
-	path = CLOCK_ICONDIR"/icon_weather_16.png";
-
-	pixbuf = gdk_pixbuf_new_from_file (path, &error);
-	if (error) {
-		g_warning ("Cannot load '%s': %s", path, error->message);
-		g_error_free (error);
-		return;
-	}
-
-	g_object_set (renderer,
-		      "visible", pixbuf != NULL,
-		      "pixbuf", pixbuf,
-		      NULL);
-
-	if (pixbuf)
-		g_object_unref (pixbuf);
-}
-
-static void
-task_pixbuf_cell_data_func (GtkTreeViewColumn *column,
-                            GtkCellRenderer   *renderer,
-                            GtkTreeModel      *model,
-                            GtkTreeIter       *iter,
-                            gpointer           data)
-{
-        set_renderer_pixbuf_color_by_column (renderer,
-                                             model,
-                                             iter,
-                                             TASK_COLUMN_COLOR);
-}
-
-static void
-appointment_pixbuf_cell_data_func (GtkTreeViewColumn *column,
-                                   GtkCellRenderer   *renderer,
-                                   GtkTreeModel      *model,
-                                   GtkTreeIter       *iter,
-                                   gpointer           data)
-{
-        set_renderer_pixbuf_color_by_column (renderer,
-                                             model,
-                                             iter,
-                                             APPOINTMENT_COLUMN_PIXBUF);
-}
-static void
-birthday_pixbuf_cell_data_func (GtkTreeViewColumn   *column,
-				GtkCellRenderer     *renderer,
-				GtkTreeModel        *model,
-				GtkTreeIter         *iter,
-				gpointer             data)
-{
-
-	/* APPOINTMENT_COLUMN_UID contains data to select between
-	 * anniversary or birthday
-	 */
-	set_renderer_pixbuf_pixmap_for_bday (renderer,
-					     model,
-					     iter,
-					     APPOINTMENT_COLUMN_UID);
-}
-static void
-weather_pixbuf_cell_data_func (GtkTreeViewColumn   *column,
-			       GtkCellRenderer     *renderer,
-			       GtkTreeModel        *model,
-			       GtkTreeIter         *iter,
-			       gpointer             data)
-{
-
-	set_renderer_pixbuf_pixmap_for_weather (renderer,
-						model,
-						iter);
-}
-
-static int
-compare_tasks  (GtkTreeModel *model,
-                GtkTreeIter  *a,
-                GtkTreeIter  *b,
-                gpointer      user_data)
-{
-        int priority_a;
-        int priority_b;
-
-        gtk_tree_model_get (model, a, TASK_COLUMN_PRIORITY, &priority_a, -1);
-        gtk_tree_model_get (model, b, TASK_COLUMN_PRIORITY, &priority_b, -1);
-
-	/* We change undefined priorities so they appear after 'Low'. */
-	if (priority_a <= 0)
-		priority_a = 10;
-	if (priority_b <= 0)
-		priority_b = 10;
-
-	/* We'll just use the ordering of the priority values. */
-	if (priority_a < priority_b)
-		return -1;
-	else if (priority_a > priority_b)
-		return 1;
-	else {
-                GTime due_time_a, due_time_b;
-
-                gtk_tree_model_get (model, a,
-				    TASK_COLUMN_DUE_TIME, &due_time_a, -1);
-                gtk_tree_model_get (model, b,
-				    TASK_COLUMN_DUE_TIME, &due_time_b, -1);
-
-                if (due_time_a < due_time_b)
-                        return -1;
-                else if (due_time_a > due_time_b)
-                        return 1;
-                else
-                        return 0;
-        }
-}
-
-static void
-clock_expander_activated (GtkExpander *expander,
-			  gboolean    *expanded)
-{
-	*expanded = gtk_expander_get_expanded (expander);
-}
-
-static GtkWidget *
-create_task_list (ClockData  *cd,
-		  gboolean   *expanded,
-                  GtkWidget **tree_view,
-                  GtkWidget **scrolled_window)
-{
-        GtkWidget         *list;
-        GtkWidget         *view;
-        GtkWidget         *scrolled;
-        GtkCellRenderer   *cell;
-        GtkTreeViewColumn *column;
-
-        list = gtk_expander_new_with_mnemonic (_("_Tasks"));
-	gtk_expander_set_expanded (GTK_EXPANDER (list), *expanded);
-	g_signal_connect_after (list, "activate",
-				G_CALLBACK (clock_expander_activated),
-				expanded);
-
-        *scrolled_window = scrolled = gtk_scrolled_window_new (NULL, NULL);
-        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
-                                             GTK_SHADOW_IN);
-        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                        GTK_POLICY_NEVER,
-                                        GTK_POLICY_AUTOMATIC);
-        gtk_container_add (GTK_CONTAINER (list), scrolled);
-        gtk_widget_show (scrolled);
-
-        if (!cd->tasks_model) {
-                GType column_types [N_TASK_COLUMNS] = {
-                        G_TYPE_STRING,         /* uid                     */
-                        G_TYPE_STRING,         /* summary                 */
-                        G_TYPE_STRING,         /* description             */
-                        G_TYPE_LONG,           /* start time              */
-                        G_TYPE_LONG,           /* due time                */
-                        G_TYPE_UINT,           /* percent complete        */
-                        G_TYPE_STRING,         /* percent complete text   */
-                        G_TYPE_BOOLEAN,        /* completed               */
-                        G_TYPE_LONG,           /* completed time          */
-                        PANGO_TYPE_ATTR_LIST,  /* summary text attributes */
-                        G_TYPE_STRING,         /* color                   */
-                        G_TYPE_INT             /* priority                */
-                };
-
-                cd->tasks_model = gtk_list_store_newv (N_TASK_COLUMNS, column_types);
-
-                gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (cd->tasks_model),
-                                                 TASK_COLUMN_PRIORITY,
-                                                 compare_tasks,
-                                                 NULL, NULL);
-
-                gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (cd->tasks_model),
-                                                      TASK_COLUMN_PRIORITY,
-                                                      GTK_SORT_ASCENDING);
-
-                cd->tasks_filter = GTK_TREE_MODEL_FILTER (
-                        gtk_tree_model_filter_new (GTK_TREE_MODEL (cd->tasks_model),
-                                                   NULL));
-                gtk_tree_model_filter_set_visible_func (
-                         cd->tasks_filter,
-                         (GtkTreeModelFilterVisibleFunc) filter_out_tasks,
-                         cd,
-                         NULL);
-                gtk_tree_model_filter_set_modify_func (
-                         cd->tasks_filter,
-                         N_TASK_COLUMNS,
-                         column_types,
-                         (GtkTreeModelFilterModifyFunc) modify_task_text_attributes,
-                         cd,
-                         NULL);
-        }
-
-        *tree_view = view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (cd->tasks_filter));
-        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
-
-        g_signal_connect (view, "row-activated",
-                          G_CALLBACK (task_activated_cb), cd);
-
-        /* Source color */
-        column = gtk_tree_view_column_new ();
-        cell = gtk_cell_renderer_pixbuf_new ();
-        gtk_tree_view_column_pack_start (column, cell, TRUE);
-        gtk_tree_view_column_set_cell_data_func (column, cell,
-                                                 (GtkTreeCellDataFunc) task_pixbuf_cell_data_func,
-                                                 NULL, NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
-
-        /* Completed toggle */
-        column = gtk_tree_view_column_new ();
-        cell = gtk_cell_renderer_toggle_new ();
-        g_object_set (cell,
-                      "activatable", TRUE,
-                      NULL);
-        g_signal_connect_swapped (cell, "toggled",
-                                  G_CALLBACK (handle_task_completed_toggled), cd);
-        gtk_tree_view_column_pack_start (column, cell, TRUE);
-        gtk_tree_view_column_add_attribute (column, cell,
-                                            "active", TASK_COLUMN_COMPLETED);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
-
-        /* Percent complete */
-        column = gtk_tree_view_column_new ();
-        cell = gtk_cell_renderer_text_new ();
-        g_object_set (cell,
-                      "editable", TRUE,
-                      NULL);
-        g_signal_connect_swapped (cell, "edited",
-                                  G_CALLBACK (handle_task_percent_complete_edited), cd);
-        gtk_tree_view_column_pack_start (column, cell, TRUE);
-        gtk_tree_view_column_add_attribute (column, cell,
-                                            "text", TASK_COLUMN_PERCENT_COMPLETE_TEXT);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
-
-        /* Summary */
-        column = gtk_tree_view_column_new ();
-        cell = gtk_cell_renderer_text_new ();
-        g_object_set (cell, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-        gtk_tree_view_column_pack_start (column, cell, TRUE);
-        gtk_tree_view_column_set_attributes (column, cell,
-                                             "text", TASK_COLUMN_SUMMARY,
-                                             "strikethrough", TASK_COLUMN_COMPLETED,
-                                             "attributes", TASK_COLUMN_OVERDUE_ATTR,
-                                             NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
-
-        gtk_container_add (GTK_CONTAINER (scrolled), view);
-
-        gtk_widget_show (view);
-
-        return list;
-}
-
-static void
-mark_day_on_calendar (CalendarClient *client,
-		      guint           day,
-		      ClockData      *cd)
-{
-        gtk_calendar_mark_day (GTK_CALENDAR (cd->calendar), day);
-}
-
-static void
-handle_appointments_changed (ClockData *cd)
-{
-        GSList *events, *l;
-        guint   year, month, day;
-
-        if (cd->calendar) {
-                gtk_calendar_clear_marks (GTK_CALENDAR (cd->calendar));
-
-                calendar_client_foreach_appointment_day (cd->client,
-                                                         (CalendarDayIter) mark_day_on_calendar,
-                                                         cd);
-        }
-
-        gtk_list_store_clear (cd->appointments_model);
-
-        events = calendar_client_get_events (cd->client, CALENDAR_EVENT_APPOINTMENT);
-        calendar_client_get_date (cd->client, &year, &month, &day);
-        for (l = events; l; l = l->next) {
-                CalendarAppointment *appointment = l->data;
-                GtkTreeIter          iter;
-                char                *start_text;
-
-                g_assert (CALENDAR_EVENT (appointment)->type == CALENDAR_EVENT_APPOINTMENT);
-
-                if (appointment->is_all_day)
-                        start_text = g_strdup (_("All Day"));
-                else
-                        start_text = format_time (cd->format,
-                                                  appointment->start_time,
-                                                  year, month, day,
-                                                  cd->gmt_time);
-
-
-                gtk_list_store_append (cd->appointments_model, &iter);
-                gtk_list_store_set (cd->appointments_model, &iter,
-                                    APPOINTMENT_COLUMN_UID,         appointment->uid,
-                                    APPOINTMENT_COLUMN_URI,         appointment->uri,
-                                    APPOINTMENT_COLUMN_SUMMARY,     appointment->summary,
-                                    APPOINTMENT_COLUMN_DESCRIPTION, appointment->description,
-                                    APPOINTMENT_COLUMN_START_TIME,  appointment->start_time,
-                                    APPOINTMENT_COLUMN_START_TEXT,  start_text,
-                                    APPOINTMENT_COLUMN_END_TIME,    appointment->end_time,
-                                    APPOINTMENT_COLUMN_ALL_DAY,     appointment->is_all_day,
-                                    APPOINTMENT_COLUMN_PIXBUF,      appointment->color_string,
-                                    -1);
-
-                g_free (start_text);
-                calendar_event_free (CALENDAR_EVENT (appointment));
-        }
-        g_slist_free (events);
-
-        update_frame_visibility (cd->appointment_list,
-				 GTK_TREE_MODEL (cd->appointments_filter));
-        update_frame_visibility (cd->birthday_list,
-				 GTK_TREE_MODEL (cd->birthdays_filter));
-        update_frame_visibility (cd->weather_list,
-				 GTK_TREE_MODEL (cd->weather_filter));
-}
-
-static GtkWidget *
-create_list_for_appointment_model (ClockData  *cd,
-				   const char *label,
-				   gboolean   *expanded,
-				   GtkTreeModelFilter **filter,
-				   GtkTreeModelFilterVisibleFunc is_for_filter,
-				   GtkTreeCellDataFunc set_pixbuf_cell,
-				   gboolean    show_start,
-				   GtkWidget **tree_view,
-				   GtkWidget **scrolled_window)
-{
-        GtkWidget         *list;
-        GtkWidget         *view;
-        GtkWidget         *scrolled;
-        GtkCellRenderer   *cell;
-        GtkTreeViewColumn *column;
-
-        list = gtk_expander_new_with_mnemonic (label);
-	gtk_expander_set_expanded (GTK_EXPANDER (list), *expanded);
-	g_signal_connect_after (list, "activate",
-				G_CALLBACK (clock_expander_activated),
-				expanded);
-
-        *scrolled_window = scrolled = gtk_scrolled_window_new (NULL, NULL);
-        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
-                                             GTK_SHADOW_IN);
-        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                        GTK_POLICY_NEVER,
-                                        GTK_POLICY_AUTOMATIC);
-        gtk_container_add (GTK_CONTAINER (list), scrolled);
-        gtk_widget_show (scrolled);
-
-        if (!cd->appointments_model) {
-                cd->appointments_model =
-                        gtk_list_store_new (N_APPOINTMENT_COLUMNS,
-                                            G_TYPE_STRING,   /* uid              */
-                                            G_TYPE_STRING,   /* uri              */
-                                            G_TYPE_STRING,   /* summary          */
-                                            G_TYPE_STRING,   /* description      */
-                                            G_TYPE_LONG,     /* start time       */
-                                            G_TYPE_STRING,   /* start time text  */
-                                            G_TYPE_LONG,     /* end time         */
-                                            G_TYPE_BOOLEAN,  /* all day          */
-                                            G_TYPE_STRING);  /* color            */
-
-                gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (cd->appointments_model),
-                                                      APPOINTMENT_COLUMN_START_TIME,
-                                                      GTK_SORT_ASCENDING);
-
-        }
-
-        if (!*filter) {
-		*filter =
-			GTK_TREE_MODEL_FILTER (
-				gtk_tree_model_filter_new (GTK_TREE_MODEL (cd->appointments_model),
-							   NULL));
-		gtk_tree_model_filter_set_visible_func (
-				*filter,
-				(GtkTreeModelFilterVisibleFunc) is_for_filter,
-				cd,
-				NULL);
-        }
-
-        *tree_view = view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (*filter));
-        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
-
-        /* Icon */
-        column = gtk_tree_view_column_new ();
-        cell = gtk_cell_renderer_pixbuf_new ();
-        gtk_tree_view_column_pack_start (column, cell, TRUE);
-        gtk_tree_view_column_set_cell_data_func (column, cell,
-                                                 (GtkTreeCellDataFunc) set_pixbuf_cell,
-                                                 NULL, NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
-
-	if (show_start) {
-		/* Start time */
-		column = gtk_tree_view_column_new ();
-		cell = gtk_cell_renderer_text_new ();
-		gtk_tree_view_column_pack_start (column, cell, TRUE);
-		gtk_tree_view_column_add_attribute (column, cell,
-						    "text", APPOINTMENT_COLUMN_START_TEXT);
-		gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
-	}
-  
-        /* Summary */
-        column = gtk_tree_view_column_new ();
-        cell = gtk_cell_renderer_text_new ();
-        g_object_set (cell, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-        gtk_tree_view_column_pack_start (column, cell, TRUE);
-        gtk_tree_view_column_add_attribute (column, cell,
-                                            "text", APPOINTMENT_COLUMN_SUMMARY);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
-
-        gtk_container_add (GTK_CONTAINER (scrolled), view);
-
-        gtk_widget_show (view);
-
-        return list;
-}
-
-static GtkWidget *
-create_appointment_list (ClockData  *cd,
-                         GtkWidget **tree_view,
-                         GtkWidget **scrolled_window)
-{
-	return create_list_for_appointment_model (
-					cd,
-					_("_Appointments"),
-					&cd->appointments_open,
-					&cd->appointments_filter,
-					is_appointment,
-					appointment_pixbuf_cell_data_func,
-					TRUE,
-					tree_view,
-					scrolled_window);
-}
-
-static GtkWidget *
-create_birthday_list (ClockData  *cd,
-                         GtkWidget **tree_view,
-                         GtkWidget **scrolled_window)
-{
-        /* FIXME: Figure out how to get rid of useless localized message in front of the summary */
-	return create_list_for_appointment_model (
-					cd,
-					_("_Birthdays and Anniversaries"),
-					&cd->birthdays_open,
-					&cd->birthdays_filter,
-					is_birthday,
-					birthday_pixbuf_cell_data_func,
-					FALSE,
-					tree_view,
-					scrolled_window);
-}
-
-static GtkWidget *
-create_weather_list (ClockData  *cd,
-                         GtkWidget **tree_view,
-                         GtkWidget **scrolled_window)
-{
-	return create_list_for_appointment_model (
-					cd,
-					_("_Weather Information"),
-					&cd->weather_open,
-					&cd->weather_filter,
-					is_weather,
-					weather_pixbuf_cell_data_func,
-					FALSE,
-					tree_view,
-					scrolled_window);
-}
-
-static void
-calendar_day_activated (ClockData   *cd,
-			GtkCalendar *calendar)
-{
-	unsigned int  day;
-	unsigned int  month;
-	unsigned int  year;
-	char         *argument;
-
-	gtk_calendar_get_date (GTK_CALENDAR (cd->calendar),
-			       &year, &month, &day);
-
-	argument = g_strdup_printf ("calendar:///?startdate=%.4d%.2d%.2d",
-				    year, month + 1, day);
-
-	clock_launch_evolution (cd, argument);
-
-	g_free (argument);
-}
-
-static void
-calendar_day_selected (ClockData *cd)
-{
-        guint day;
-
-        gtk_calendar_get_date (GTK_CALENDAR (cd->calendar), NULL, NULL, &day);
-
-        calendar_client_select_day (cd->client, day);
-
-        handle_appointments_changed (cd);
-        handle_tasks_changed (cd);
-}
-
-static void
-calendar_month_selected (ClockData *cd)
-{
-        guint year, month;
-
-        gtk_calendar_get_date (GTK_CALENDAR (cd->calendar), &year, &month, NULL);
-
-        calendar_client_select_month (cd->client, month, year);
-
-        handle_appointments_changed (cd);
-        handle_tasks_changed (cd);
-}
-
-typedef struct
-{
-        GtkWidget *calendar;
-        GtkWidget *tree;
-} ConstraintData;
-
-static void
-constrain_list_size (GtkWidget      *widget,
-                     GtkRequisition *requisition,
-                     ConstraintData *constraint)
-{
-        GtkRequisition req;
-        int            max_height;
-
-        /* constrain width to the calendar width */
-        gtk_widget_size_request (constraint->calendar, &req);
-        requisition->width = MIN (requisition->width, req.width);
-
-        /* constrain height to be the tree height up to a max */
-        max_height = (gdk_screen_get_height (gtk_widget_get_screen (widget)) - req.height) / 3;
-        gtk_widget_size_request (constraint->tree, &req);
-
-        requisition->height = MIN (req.height, max_height);
-        requisition->height += 2 * widget->style->ythickness;
-}
-
-static void
-setup_list_size_constraint (GtkWidget *widget,
-                            GtkWidget *calendar,
-                            GtkWidget *tree)
-{
-        ConstraintData *constraint;
-
-        constraint           = g_new0 (ConstraintData, 1);
-        constraint->calendar = calendar;
-        constraint->tree     = tree;
-
-        g_signal_connect_data (widget, "size-request",
-                               G_CALLBACK (constrain_list_size), constraint,
-                               (GClosureNotify) g_free, 0);
-}
-
-#endif /* HAVE_LIBECAL */
-
-static void
-add_appointments_and_tasks (ClockData *cd,
-                            GtkWidget *vbox)
-{
-#ifdef HAVE_LIBECAL
-        GtkWidget *tree_view;
-        GtkWidget *scrolled_window;
-        guint      year, month, day;
-        
-        cd->task_list = create_task_list (cd, &cd->tasks_open,
-					  &tree_view, &scrolled_window);
-        g_object_add_weak_pointer (G_OBJECT (cd->task_list),
-                                   (gpointer *) &cd->task_list);
-        setup_list_size_constraint (scrolled_window, cd->calendar, tree_view);
-        update_frame_visibility (cd->task_list, GTK_TREE_MODEL (cd->tasks_model));
-
-        cd->birthday_list = create_birthday_list (cd, &tree_view, &scrolled_window);
-        g_object_add_weak_pointer (G_OBJECT (cd->birthday_list),
-                                   (gpointer *) &cd->birthday_list);
-        setup_list_size_constraint (scrolled_window, cd->calendar, tree_view);
-        update_frame_visibility (cd->birthday_list, GTK_TREE_MODEL (cd->birthdays_filter));
-
-        cd->weather_list = create_weather_list (cd, &tree_view, &scrolled_window);
-        g_object_add_weak_pointer (G_OBJECT (cd->weather_list),
-                                   (gpointer *) &cd->weather_list);
-        setup_list_size_constraint (scrolled_window, cd->calendar, tree_view);
-        update_frame_visibility (cd->weather_list, GTK_TREE_MODEL (cd->weather_filter));
-
-        cd->appointment_list = create_appointment_list (cd, &tree_view, &scrolled_window);
-        g_object_add_weak_pointer (G_OBJECT (cd->appointment_list),
-                                   (gpointer *) &cd->appointment_list);
-        setup_list_size_constraint (scrolled_window, cd->calendar, tree_view);
-        update_frame_visibility (cd->appointment_list, GTK_TREE_MODEL (cd->appointments_filter));
-
-        switch (cd->orient) {
-        case PANEL_APPLET_ORIENT_UP:
-                gtk_box_pack_start (GTK_BOX (vbox), cd->weather_list, TRUE, TRUE, 0);
-                gtk_box_pack_start (GTK_BOX (vbox), cd->birthday_list, TRUE, TRUE, 0);
-                gtk_box_pack_start (GTK_BOX (vbox), cd->appointment_list, TRUE, TRUE, 0);
-                gtk_box_pack_start (GTK_BOX (vbox), cd->task_list, TRUE, TRUE, 0);
-                break;
-        default:
-                gtk_box_pack_start (GTK_BOX (vbox), cd->task_list, TRUE, TRUE, 0);
-                gtk_box_pack_start (GTK_BOX (vbox), cd->appointment_list, TRUE, TRUE, 0);
-                gtk_box_pack_start (GTK_BOX (vbox), cd->birthday_list, TRUE, TRUE, 0);
-                gtk_box_pack_start (GTK_BOX (vbox), cd->weather_list, TRUE, TRUE, 0);
-                break;
-        }
-
-        if (!cd->client) {
-                cd->client = calendar_client_new ();
-
-                g_signal_connect_swapped (cd->client, "tasks-changed",
-                                          G_CALLBACK (handle_tasks_changed), cd);
-                g_signal_connect_swapped (cd->client, "appointments-changed",
-                                          G_CALLBACK (handle_appointments_changed), cd);
-        }
-
-        gtk_calendar_get_date (GTK_CALENDAR (cd->calendar), &year, &month, &day);
-
-        calendar_client_select_day   (cd->client, day);
-        calendar_client_select_month (cd->client, month, year);
-
-        handle_tasks_changed (cd);
-        handle_appointments_changed (cd);
-
-        g_signal_connect_swapped (cd->calendar, "day-selected-double-click",
-                                  G_CALLBACK (calendar_day_activated), cd);
-        g_signal_connect_swapped (cd->calendar, "day-selected",
-                                  G_CALLBACK (calendar_day_selected), cd);
-        g_signal_connect_swapped (cd->calendar, "month-changed",
-                                  G_CALLBACK (calendar_month_selected), cd);
-#endif /* HAVE_LIBECAL */
-}
-
 static GtkWidget *
 create_calendar (ClockData *cd,
 		 GdkScreen *screen)
 {
-	GtkWindow                 *window;
-        GtkWidget                 *frame;
-        GtkWidget                 *vbox;
-	GtkCalendarDisplayOptions  options;
-        struct tm                 *tm;
+	GtkWidget *window;
+	char      *prefs_dir;
 
-	window = GTK_WINDOW (gtk_window_new (GTK_WINDOW_TOPLEVEL));
-	gtk_window_set_icon_name (window, CLOCK_ICON);
-        gtk_window_set_screen (window, screen);
+	prefs_dir = panel_applet_get_preferences_key (PANEL_APPLET (cd->applet));
+	window = calendar_window_new (&cd->current_time,
+				      prefs_dir,
+				      cd->orient == PANEL_APPLET_ORIENT_UP);
+	g_free (prefs_dir);
 
-        frame = gtk_frame_new (NULL);
-        gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-        gtk_container_add (GTK_CONTAINER (window), frame);
-        gtk_widget_show (frame);
+	calendar_window_set_utc_time (CALENDAR_WINDOW (window),
+				      cd->gmt_time);
+	calendar_window_set_show_weeks (CALENDAR_WINDOW (window),
+					cd->showweek);
+	calendar_window_set_time_format (CALENDAR_WINDOW (window),
+					 cd->format);
 
-        vbox = gtk_vbox_new (FALSE, 6);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-        gtk_container_add (GTK_CONTAINER (frame), vbox);
-        gtk_widget_show (vbox);
-
-	gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_DOCK);
-	gtk_window_set_decorated (window, FALSE);
-	gtk_window_set_resizable (window, FALSE);
-	gtk_window_stick (window);
-	gtk_window_set_title (window, _("Calendar"));
+        gtk_window_set_screen (GTK_WINDOW (window), screen);
 
 	g_signal_connect (window, "delete_event",
 			  G_CALLBACK (delete_event), cd);
-			
 	g_signal_connect (window, "key_press_event",
 			  G_CALLBACK (close_on_escape), cd);
-			
-	cd->calendar = gtk_calendar_new ();
-        g_object_add_weak_pointer (G_OBJECT (cd->calendar),
-                                   (gpointer *) &cd->calendar);
 
-	options = gtk_calendar_get_display_options (GTK_CALENDAR (cd->calendar));
-	if (cd->showweek)
-		options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
-	gtk_calendar_set_display_options (GTK_CALENDAR (cd->calendar), options);
-
-	if (cd->gmt_time)
-		tm = gmtime (&cd->current_time);
-	else
-		tm = localtime (&cd->current_time);
-        gtk_calendar_select_month (GTK_CALENDAR (cd->calendar),
-                                   tm->tm_mon,
-                                   tm->tm_year + 1900);
-        gtk_calendar_select_day (GTK_CALENDAR (cd->calendar), tm->tm_mday);
-
-	switch (cd->orient) {
-        case PANEL_APPLET_ORIENT_UP:
-                add_appointments_and_tasks (cd, vbox);
-                gtk_box_pack_start (GTK_BOX (vbox), cd->calendar, TRUE, FALSE, 0);
-                break;
-        default:
-                gtk_box_pack_start (GTK_BOX (vbox), cd->calendar, TRUE, FALSE, 0);
-                add_appointments_and_tasks (cd, vbox);
-                break;
-        }
-        gtk_widget_show (cd->calendar);
-
-	return GTK_WIDGET (window);
+	return window;
 }
 
 static void
@@ -1975,19 +774,8 @@ update_popup (ClockData *cd)
         }
 
         if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle)) {
-#ifdef HAVE_LIBECAL
-                if (cd->appointments_filter && cd->appointment_list)
-                        gtk_tree_model_filter_refilter (cd->appointments_filter);
-                if (cd->birthdays_filter && cd->birthday_list)
-                        gtk_tree_model_filter_refilter (cd->birthdays_filter);
-                if (cd->tasks_filter && cd->task_list)
-                        gtk_tree_model_filter_refilter (cd->tasks_filter);
-                if (cd->weather_filter && cd->weather_list)
-                        gtk_tree_model_filter_refilter (cd->weather_filter);
-#endif
-
+		calendar_window_refresh (CALENDAR_WINDOW (cd->calendar_popup));
                 present_calendar_popup (cd, cd->calendar_popup, cd->toggle);
-                gtk_window_present (GTK_WINDOW (cd->calendar_popup));
         }
 }
 
@@ -2423,6 +1211,13 @@ format_changed (GConfClient  *client,
 	clock->format = new_format;
 	update_timeformat (clock);
 	refresh_clock_timeout (clock);
+
+	if (clock->calendar_popup != NULL) {
+		calendar_window_set_time_format (CALENDAR_WINDOW (clock->calendar_popup), clock->format);
+                position_calendar_popup (clock, clock->calendar_popup,
+					 clock->toggle);
+	}
+
 }
 
 static void
@@ -2474,7 +1269,14 @@ gmt_time_changed (GConfClient  *client,
 	value = gconf_value_get_bool (entry->value);
 	
 	clock->gmt_time = (value != 0);
+
 	refresh_clock_timeout (clock);
+
+	if (clock->calendar_popup != NULL) {
+		calendar_window_set_utc_time (CALENDAR_WINDOW (clock->calendar_popup), clock->gmt_time);
+                position_calendar_popup (clock, clock->calendar_popup,
+					 clock->toggle);
+	}
 }
 
 static gboolean
@@ -2546,7 +1348,6 @@ show_week_changed (GConfClient  *client,
 		   GConfEntry   *entry,
 		   ClockData    *clock)
 {
-	GtkCalendarDisplayOptions options;
 	gboolean value;
 	
 	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
@@ -2560,16 +1361,7 @@ show_week_changed (GConfClient  *client,
 	clock->showweek = (value != 0);
 
 	if (clock->calendar_popup != NULL) {
-		options = gtk_calendar_get_display_options (GTK_CALENDAR (clock->calendar));
-
-		if (clock->showweek)
-			options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
-		else
-			options &= ~(GTK_CALENDAR_SHOW_WEEK_NUMBERS);
-
-		gtk_calendar_set_display_options (GTK_CALENDAR (clock->calendar),
-						  options);
-
+		calendar_window_set_show_weeks (CALENDAR_WINDOW (clock->calendar_popup), clock->showweek);
                 position_calendar_popup (clock, clock->calendar_popup,
 					 clock->toggle);
 	}
@@ -2740,11 +1532,6 @@ fill_clock_applet (PanelApplet *applet)
 	cd->can_handle_format_12 = (clock_locale_format () == CLOCK_FORMAT_12);
 	if (!cd->can_handle_format_12 && cd->format == CLOCK_FORMAT_12)
 		cd->format = CLOCK_FORMAT_24;
-
-	cd->appointments_open = FALSE;
-	cd->birthdays_open    = FALSE;
-	cd->tasks_open        = FALSE;
-	cd->weather_open      = FALSE;
 
 	create_clock_widget (cd);
 
