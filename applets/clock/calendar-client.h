@@ -73,6 +73,7 @@ typedef struct
 {
   char   *uid;
   char   *rid;
+  char   *uri;
   char   *summary;
   char   *description;
   char   *color_string;

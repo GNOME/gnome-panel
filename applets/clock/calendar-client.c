@@ -672,6 +672,31 @@ get_source_color (ECal *esource)
   return NULL;
 }
 
+static gchar *
+get_source_uri (ECal *esource)
+{
+    ESource *source;
+    gchar   *string;
+    gchar  **list;
+
+    g_return_val_if_fail (E_IS_CAL (esource), NULL);
+
+    source = e_cal_get_source (esource);
+    string = g_strdup (e_source_get_uri (source));
+    if (string) {
+        list = g_strsplit (string, ":", 2);
+        g_free (string);
+
+        if (list[0]) {
+            string = g_strdup (list[0]);
+            g_strfreev (list);
+            return string;
+        }
+	g_strfreev (list);
+    }
+    return NULL;
+}
+
 static inline int
 null_safe_strcmp (const char *a,
 		  const char *b)
@@ -700,6 +725,7 @@ calendar_appointment_equal (CalendarAppointment *a,
 
   return
     null_safe_strcmp (a->uid,          b->uid)          == 0 &&
+    null_safe_strcmp (a->uri,          b->uri)          == 0 &&
     null_safe_strcmp (a->summary,      b->summary)      == 0 &&
     null_safe_strcmp (a->description,  b->description)  == 0 &&
     null_safe_strcmp (a->color_string, b->color_string) == 0 &&
@@ -731,6 +757,7 @@ calendar_appointment_copy (CalendarAppointment *appointment,
     }
 
   appointment_copy->uid          = g_strdup (appointment->uid);
+  appointment_copy->uri          = g_strdup (appointment->uri);
   appointment_copy->summary      = g_strdup (appointment->summary);
   appointment_copy->description  = g_strdup (appointment->description);
   appointment_copy->color_string = g_strdup (appointment->color_string);
@@ -751,6 +778,9 @@ calendar_appointment_finalize (CalendarAppointment *appointment)
 
   g_free (appointment->uid);
   appointment->uid = NULL;
+
+  g_free (appointment->uri);
+  appointment->uri = NULL;
 
   g_free (appointment->summary);
   appointment->summary = NULL;
@@ -773,6 +803,7 @@ calendar_appointment_init (CalendarAppointment  *appointment,
 {
   appointment->uid          = get_ical_uid (ical);
   appointment->rid          = get_ical_rid (ical);
+  appointment->uri          = get_source_uri (source->source);
   appointment->summary      = get_ical_summary (ical);
   appointment->description  = get_ical_description (ical);
   appointment->color_string = get_source_color (source->source);

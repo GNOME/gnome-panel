@@ -6,6 +6,7 @@ INCLUDES = 						\
 	$(WARN_CFLAGS) 					\
 	$(CLOCK_CFLAGS) 				\
 	-DDATADIR=\""$(datadir)"\"			\
+	-DCLOCK_ICONDIR=\""$(clockbitmapsdir)"\"			\
 	-DLIBDIR=\""$(libdir)"\"			\
 	-DSYSCONFDIR=\""$(sysconfdir)"\"		\
 	-DPREFIX=\""$(prefix)"\"			\
@@ -19,6 +20,11 @@ CALENDAR_SOURCES =		\
 	calendar-sources.c	\
 	calendar-sources.h	\
 	calendar-debug.h
+#CLOCK_BITMAPS = 		\
+#	icon_anniversary_16.png \
+#	icon_birthday_16.png 	\
+#	icon_weather_16.png 	\
+#	icon_unknown_16.png 
 endif
 
 CLOCK_SOURCES = clock.c $(CALENDAR_SOURCES)
@@ -81,8 +87,12 @@ install-data-local:
 endif
 
 EXTRA_DIST =						\
+	$(CLOCK_BITMAPS)				\
 	GNOME_ClockApplet_Factory.server.in.in		\
 	$(schemas_in_files)				\
 	$(ui_DATA)
+
+clockbitmapsdir = $(datadir)/gnome-panel/pixmaps/clock
+clockbitmaps_DATA = $(CLOCK_BITMAPS)
 
 CLEANFILES = $(server_in_files) $(server_DATA) $(schemas_DATA)

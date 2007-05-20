@@ -1,3 +1,40 @@
+2007-05-20  Vincent Untz  <vuntz@gnome.org>
+
+	Have separate treeviews for appointments, birthdays and weather.
+	Use GtkExpander to let the user hide them.
+	Fix most of bug #165732
+	Based on patch by Priit Laes <amd@store20.com>
+
+	* Makefile.am: prepare for installation of some icons, even if we
+	don't install some right now. This might get reverted later.
+	* calendar-client.[ch]: (get_source_uri): new
+	(calendar_appointment_equal): take into account the uri
+	(calendar_appointment_copy): ditto
+	(calendar_appointment_finalize): ditto
+	(calendar_appointment_init): ditto
+	* clock.c: (destroy_clock): updated for new treeviews
+	(is_appointment): new
+	(is_birthday): new
+	(is_weather): new
+	(create_hig_frame): kill
+	(set_renderer_pixbuf_pixmap_for_bday): new
+	(set_renderer_pixbuf_pixmap_for_weather): new
+	(appointment_pixbuf_cell_data_func): small update
+	(birthday_pixbuf_cell_data_func): new
+	(weather_pixbuf_cell_data_func): new
+	(clock_expander_activated): new
+	(create_task_list): use a GtkExpander instead of a frame
+	(handle_appointments_changed): small update
+	(create_list_for_appointment_model): new, mostly based on
+	create_appointment_list(), but with a GtkExpander and made more
+	generic
+	(create_appointment_list): call create_list_for_appointment_model()
+	(create_birthday_list): new
+	(create_weather_list): new
+	(add_appointments_and_tasks): updated
+	(update_popup): updated
+	(fill_clock_applet): updated
+
 ==================== 2.19.2 ====================
 
 2007-05-13  Vincent Untz  <vuntz@gnome.org>

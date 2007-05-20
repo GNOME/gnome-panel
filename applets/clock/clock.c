@@ -87,7 +87,7 @@ static const char *clock_config_tools [] = {
 	FALLBACK_CONFIG_TOOL
 };
 
-/* Needs to match the indices in the combo */
+/* Needs to match the indices in the combo of the prefs dialog */
 typedef enum {
         CLOCK_FORMAT_INVALID = 0,
 	CLOCK_FORMAT_12,
@@ -119,12 +119,23 @@ struct _ClockData {
         GtkWidget *calendar;
 
 #ifdef HAVE_LIBECAL
-        GtkWidget *task_list;
         GtkWidget *appointment_list;
+        GtkWidget *birthday_list;
+        GtkWidget *weather_list;
+        GtkWidget *task_list;
         
         GtkListStore       *appointments_model;
         GtkListStore       *tasks_model;
+
+        GtkTreeModelFilter *appointments_filter;
+        GtkTreeModelFilter *birthdays_filter;
         GtkTreeModelFilter *tasks_filter;
+        GtkTreeModelFilter *weather_filter;
+
+	gboolean appointments_open;
+	gboolean birthdays_open;
+	gboolean tasks_open;
+	gboolean weather_open;
 
         CalendarClient *client;
 #endif /* HAVE_LIBECAL */
@@ -613,9 +624,22 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
                 g_object_unref (cd->tasks_model);
         cd->tasks_model = NULL;
         
+        if (cd->appointments_filter)
+                g_object_unref (cd->appointments_filter);
+        cd->appointments_filter = NULL;
+
+        if (cd->birthdays_filter)
+                g_object_unref (cd->birthdays_filter);
+        cd->birthdays_filter = NULL;
+        
         if (cd->tasks_filter)
                 g_object_unref (cd->tasks_filter);
         cd->tasks_filter = NULL;
+
+        if (cd->weather_filter)
+                g_object_unref (cd->weather_filter);
+        cd->weather_filter = NULL;
+        
 #endif /* HAVE_LIBECAL */
 
 	if (cd->about)
@@ -722,13 +746,14 @@ update_frame_visibility (GtkWidget    *frame,
 
 enum {
         APPOINTMENT_COLUMN_UID,
+        APPOINTMENT_COLUMN_URI,
         APPOINTMENT_COLUMN_SUMMARY,
         APPOINTMENT_COLUMN_DESCRIPTION,
         APPOINTMENT_COLUMN_START_TIME,
         APPOINTMENT_COLUMN_START_TEXT,
         APPOINTMENT_COLUMN_END_TIME,
         APPOINTMENT_COLUMN_ALL_DAY,
-        APPOINTMENT_COLUMN_COLOR,
+        APPOINTMENT_COLUMN_PIXBUF,
         N_APPOINTMENT_COLUMNS
 };
 
@@ -909,6 +934,46 @@ handle_task_percent_complete_edited (ClockData           *cd,
 }
 
 static gboolean
+is_appointment (GtkTreeModel *model,
+		GtkTreeIter  *iter,
+		gpointer      data)
+{
+	gchar *uri;
+
+	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
+	if (uri)
+		return (strcmp (uri, "file") == 0 ||
+			strcmp (uri, "webcal") == 0);
+	return FALSE;
+}
+
+static gboolean
+is_birthday (GtkTreeModel *model,
+	     GtkTreeIter  *iter,
+	     gpointer      data)
+{
+	gchar *uri;
+
+	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
+	if (uri)
+		return (strcmp (uri, "contacts") == 0);
+	return FALSE;
+}
+
+static gboolean
+is_weather (GtkTreeModel *model,
+	    GtkTreeIter  *iter,
+	    gpointer      data)
+{
+	gchar *uri;
+
+	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
+	if (uri)
+		return (strcmp (uri, "weather") == 0);
+	return FALSE;
+}
+    
+static gboolean
 filter_out_tasks (GtkTreeModel *model,
                   GtkTreeIter  *iter,
                   ClockData    *cd)
@@ -972,32 +1037,6 @@ modify_task_text_attributes (GtkTreeModel *model,
         g_value_take_boxed (value, attr_list);
 }
 
-static GtkWidget *
-create_hig_frame (const char  *title)
-{
-        GtkWidget *vbox;
-        GtkWidget *alignment;
-        GtkWidget *label;
-        char      *bold_title;
-
-        vbox = gtk_vbox_new (FALSE, 6);
-
-        bold_title = g_strdup_printf ("<b>%s</b>", title);
-
-        alignment = gtk_alignment_new (0, 0.5, 0, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, FALSE, 0);
-        gtk_widget_show (alignment);
-        
-        label = gtk_label_new (bold_title);
-        gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-        gtk_container_add (GTK_CONTAINER (alignment), label);
-        gtk_widget_show (label);
-
-        g_free (bold_title);
-
-        return vbox;
-}
-
 static gboolean
 task_activated_cb (GtkTreeView       *view,
                    GtkTreePath       *path,
@@ -1052,6 +1091,79 @@ set_renderer_pixbuf_color_by_column (GtkCellRenderer *renderer,
                 g_free (color_string);
         }
 }
+static void
+set_renderer_pixbuf_pixmap_for_bday (GtkCellRenderer *renderer,
+				     GtkTreeModel    *model,
+				     GtkTreeIter     *iter,
+				     gint             data_column)
+{
+	const gchar *path   = NULL;
+	gchar       *type   = NULL;
+	GdkPixbuf   *pixbuf = NULL;
+	GError      *error  = NULL;
+
+
+	gtk_tree_model_get (model, iter, data_column, &type, -1); 
+	if (!type)
+		return;
+
+	/* type should be in format like this:
+	 * pas-id-4121A93E00000001-anniversary
+	 * pas-id-41112AF900000003-birthday 
+	 * ...
+	 */
+	if (g_strrstr (type, "birthday") != 0)
+		path = CLOCK_ICONDIR"/icon_birthday_16.png"; 
+	else if (g_strrstr (type, "anniversary") != 0)
+		path = CLOCK_ICONDIR"/icon_anniversary_16.png"; 
+	else
+		path = CLOCK_ICONDIR"/icon_unknown_16.png"; 
+
+	g_free (type);
+
+	pixbuf = gdk_pixbuf_new_from_file (path, &error);
+	if (error) {
+		g_warning ("Cannot load '%s': %s", path, error->message);
+		g_error_free (error);
+		return;
+	}
+
+	g_object_set (renderer,
+		      "visible", pixbuf != NULL,
+		      "pixbuf", pixbuf,
+		      NULL);
+
+	if (pixbuf)
+		g_object_unref (pixbuf);
+}
+
+static void
+set_renderer_pixbuf_pixmap_for_weather (GtkCellRenderer *renderer,
+					GtkTreeModel    *model,
+					GtkTreeIter     *iter)
+{
+	const gchar *path   = NULL;
+	GdkPixbuf   *pixbuf = NULL;
+	GError      *error  = NULL;
+
+
+	path = CLOCK_ICONDIR"/icon_weather_16.png";
+
+	pixbuf = gdk_pixbuf_new_from_file (path, &error);
+	if (error) {
+		g_warning ("Cannot load '%s': %s", path, error->message);
+		g_error_free (error);
+		return;
+	}
+
+	g_object_set (renderer,
+		      "visible", pixbuf != NULL,
+		      "pixbuf", pixbuf,
+		      NULL);
+
+	if (pixbuf)
+		g_object_unref (pixbuf);
+}
 
 static void
 task_pixbuf_cell_data_func (GtkTreeViewColumn *column,
@@ -1076,7 +1188,35 @@ appointment_pixbuf_cell_data_func (GtkTreeViewColumn *column,
         set_renderer_pixbuf_color_by_column (renderer,
                                              model,
                                              iter,
-                                             APPOINTMENT_COLUMN_COLOR);
+                                             APPOINTMENT_COLUMN_PIXBUF);
+}
+static void
+birthday_pixbuf_cell_data_func (GtkTreeViewColumn   *column,
+				GtkCellRenderer     *renderer,
+				GtkTreeModel        *model,
+				GtkTreeIter         *iter,
+				gpointer             data)
+{
+
+	/* APPOINTMENT_COLUMN_UID contains data to select between
+	 * anniversary or birthday
+	 */
+	set_renderer_pixbuf_pixmap_for_bday (renderer,
+					     model,
+					     iter,
+					     APPOINTMENT_COLUMN_UID);
+}
+static void
+weather_pixbuf_cell_data_func (GtkTreeViewColumn   *column,
+			       GtkCellRenderer     *renderer,
+			       GtkTreeModel        *model,
+			       GtkTreeIter         *iter,
+			       gpointer             data)
+{
+
+	set_renderer_pixbuf_pixmap_for_weather (renderer,
+						model,
+						iter);
 }
 
 static int
@@ -1119,18 +1259,30 @@ compare_tasks  (GtkTreeModel *model,
         }
 }
 
+static void
+clock_expander_activated (GtkExpander *expander,
+			  gboolean    *expanded)
+{
+	*expanded = gtk_expander_get_expanded (expander);
+}
+
 static GtkWidget *
 create_task_list (ClockData  *cd,
+		  gboolean   *expanded,
                   GtkWidget **tree_view,
                   GtkWidget **scrolled_window)
 {
-        GtkWidget         *vbox;
+        GtkWidget         *list;
         GtkWidget         *view;
         GtkWidget         *scrolled;
         GtkCellRenderer   *cell;
         GtkTreeViewColumn *column;
 
-        vbox = create_hig_frame (_("Tasks"));
+        list = gtk_expander_new_with_mnemonic (_("_Tasks"));
+	gtk_expander_set_expanded (GTK_EXPANDER (list), *expanded);
+	g_signal_connect_after (list, "activate",
+				G_CALLBACK (clock_expander_activated),
+				expanded);
 
         *scrolled_window = scrolled = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
@@ -1138,7 +1290,7 @@ create_task_list (ClockData  *cd,
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                         GTK_POLICY_NEVER,
                                         GTK_POLICY_AUTOMATIC);
-        gtk_box_pack_start (GTK_BOX (vbox), scrolled, TRUE, TRUE, 0);
+        gtk_container_add (GTK_CONTAINER (list), scrolled);
         gtk_widget_show (scrolled);
 
         if (!cd->tasks_model) {
@@ -1242,7 +1394,7 @@ create_task_list (ClockData  *cd,
 
         gtk_widget_show (view);
 
-        return vbox;
+        return list;
 }
 
 static void
@@ -1290,13 +1442,14 @@ handle_appointments_changed (ClockData *cd)
                 gtk_list_store_append (cd->appointments_model, &iter);
                 gtk_list_store_set (cd->appointments_model, &iter,
                                     APPOINTMENT_COLUMN_UID,         appointment->uid,
+                                    APPOINTMENT_COLUMN_URI,         appointment->uri,
                                     APPOINTMENT_COLUMN_SUMMARY,     appointment->summary,
                                     APPOINTMENT_COLUMN_DESCRIPTION, appointment->description,
                                     APPOINTMENT_COLUMN_START_TIME,  appointment->start_time,
                                     APPOINTMENT_COLUMN_START_TEXT,  start_text,
                                     APPOINTMENT_COLUMN_END_TIME,    appointment->end_time,
                                     APPOINTMENT_COLUMN_ALL_DAY,     appointment->is_all_day,
-                                    APPOINTMENT_COLUMN_COLOR  ,     appointment->color_string,
+                                    APPOINTMENT_COLUMN_PIXBUF,      appointment->color_string,
                                     -1);
 
                 g_free (start_text);
@@ -1304,21 +1457,36 @@ handle_appointments_changed (ClockData *cd)
         }
         g_slist_free (events);
 
-        update_frame_visibility (cd->appointment_list, GTK_TREE_MODEL (cd->appointments_model));
+        update_frame_visibility (cd->appointment_list,
+				 GTK_TREE_MODEL (cd->appointments_filter));
+        update_frame_visibility (cd->birthday_list,
+				 GTK_TREE_MODEL (cd->birthdays_filter));
+        update_frame_visibility (cd->weather_list,
+				 GTK_TREE_MODEL (cd->weather_filter));
 }
 
 static GtkWidget *
-create_appointment_list (ClockData  *cd,
-                         GtkWidget **tree_view,
-                         GtkWidget **scrolled_window)
+create_list_for_appointment_model (ClockData  *cd,
+				   const char *label,
+				   gboolean   *expanded,
+				   GtkTreeModelFilter **filter,
+				   GtkTreeModelFilterVisibleFunc is_for_filter,
+				   GtkTreeCellDataFunc set_pixbuf_cell,
+				   gboolean    show_start,
+				   GtkWidget **tree_view,
+				   GtkWidget **scrolled_window)
 {
-        GtkWidget         *vbox;
+        GtkWidget         *list;
         GtkWidget         *view;
         GtkWidget         *scrolled;
         GtkCellRenderer   *cell;
         GtkTreeViewColumn *column;
 
-        vbox = create_hig_frame ( _("Appointments"));
+        list = gtk_expander_new_with_mnemonic (label);
+	gtk_expander_set_expanded (GTK_EXPANDER (list), *expanded);
+	g_signal_connect_after (list, "activate",
+				G_CALLBACK (clock_expander_activated),
+				expanded);
 
         *scrolled_window = scrolled = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
@@ -1326,13 +1494,14 @@ create_appointment_list (ClockData  *cd,
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                         GTK_POLICY_NEVER,
                                         GTK_POLICY_AUTOMATIC);
-        gtk_box_pack_start (GTK_BOX (vbox), scrolled, TRUE, TRUE, 0);
+        gtk_container_add (GTK_CONTAINER (list), scrolled);
         gtk_widget_show (scrolled);
 
         if (!cd->appointments_model) {
                 cd->appointments_model =
                         gtk_list_store_new (N_APPOINTMENT_COLUMNS,
                                             G_TYPE_STRING,   /* uid              */
+                                            G_TYPE_STRING,   /* uri              */
                                             G_TYPE_STRING,   /* summary          */
                                             G_TYPE_STRING,   /* description      */
                                             G_TYPE_LONG,     /* start time       */
@@ -1347,25 +1516,39 @@ create_appointment_list (ClockData  *cd,
 
         }
 
-        *tree_view = view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (cd->appointments_model));
+        if (!*filter) {
+		*filter =
+			GTK_TREE_MODEL_FILTER (
+				gtk_tree_model_filter_new (GTK_TREE_MODEL (cd->appointments_model),
+							   NULL));
+		gtk_tree_model_filter_set_visible_func (
+				*filter,
+				(GtkTreeModelFilterVisibleFunc) is_for_filter,
+				cd,
+				NULL);
+        }
+
+        *tree_view = view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (*filter));
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
 
-        /* Source color */
+        /* Icon */
         column = gtk_tree_view_column_new ();
         cell = gtk_cell_renderer_pixbuf_new ();
         gtk_tree_view_column_pack_start (column, cell, TRUE);
         gtk_tree_view_column_set_cell_data_func (column, cell,
-                                                 (GtkTreeCellDataFunc) appointment_pixbuf_cell_data_func,
+                                                 (GtkTreeCellDataFunc) set_pixbuf_cell,
                                                  NULL, NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 
-        /* Start time */
-        column = gtk_tree_view_column_new ();
-        cell = gtk_cell_renderer_text_new ();
-        gtk_tree_view_column_pack_start (column, cell, TRUE);
-        gtk_tree_view_column_add_attribute (column, cell,
-                                            "text", APPOINTMENT_COLUMN_START_TEXT);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
+	if (show_start) {
+		/* Start time */
+		column = gtk_tree_view_column_new ();
+		cell = gtk_cell_renderer_text_new ();
+		gtk_tree_view_column_pack_start (column, cell, TRUE);
+		gtk_tree_view_column_add_attribute (column, cell,
+						    "text", APPOINTMENT_COLUMN_START_TEXT);
+		gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
+	}
   
         /* Summary */
         column = gtk_tree_view_column_new ();
@@ -1380,7 +1563,59 @@ create_appointment_list (ClockData  *cd,
 
         gtk_widget_show (view);
 
-        return vbox;
+        return list;
+}
+
+static GtkWidget *
+create_appointment_list (ClockData  *cd,
+                         GtkWidget **tree_view,
+                         GtkWidget **scrolled_window)
+{
+	return create_list_for_appointment_model (
+					cd,
+					_("_Appointments"),
+					&cd->appointments_open,
+					&cd->appointments_filter,
+					is_appointment,
+					appointment_pixbuf_cell_data_func,
+					TRUE,
+					tree_view,
+					scrolled_window);
+}
+
+static GtkWidget *
+create_birthday_list (ClockData  *cd,
+                         GtkWidget **tree_view,
+                         GtkWidget **scrolled_window)
+{
+        /* FIXME: Figure out how to get rid of useless localized message in front of the summary */
+	return create_list_for_appointment_model (
+					cd,
+					_("_Birthdays and Anniversaries"),
+					&cd->birthdays_open,
+					&cd->birthdays_filter,
+					is_birthday,
+					birthday_pixbuf_cell_data_func,
+					FALSE,
+					tree_view,
+					scrolled_window);
+}
+
+static GtkWidget *
+create_weather_list (ClockData  *cd,
+                         GtkWidget **tree_view,
+                         GtkWidget **scrolled_window)
+{
+	return create_list_for_appointment_model (
+					cd,
+					_("_Weather Information"),
+					&cd->weather_open,
+					&cd->weather_filter,
+					is_weather,
+					weather_pixbuf_cell_data_func,
+					FALSE,
+					tree_view,
+					scrolled_window);
 }
 
 static void
@@ -1482,26 +1717,43 @@ add_appointments_and_tasks (ClockData *cd,
         GtkWidget *scrolled_window;
         guint      year, month, day;
         
-        cd->task_list = create_task_list (cd, &tree_view, &scrolled_window);
+        cd->task_list = create_task_list (cd, &cd->tasks_open,
+					  &tree_view, &scrolled_window);
         g_object_add_weak_pointer (G_OBJECT (cd->task_list),
                                    (gpointer *) &cd->task_list);
         setup_list_size_constraint (scrolled_window, cd->calendar, tree_view);
         update_frame_visibility (cd->task_list, GTK_TREE_MODEL (cd->tasks_model));
 
+        cd->birthday_list = create_birthday_list (cd, &tree_view, &scrolled_window);
+        g_object_add_weak_pointer (G_OBJECT (cd->birthday_list),
+                                   (gpointer *) &cd->birthday_list);
+        setup_list_size_constraint (scrolled_window, cd->calendar, tree_view);
+        update_frame_visibility (cd->birthday_list, GTK_TREE_MODEL (cd->birthdays_filter));
+
+        cd->weather_list = create_weather_list (cd, &tree_view, &scrolled_window);
+        g_object_add_weak_pointer (G_OBJECT (cd->weather_list),
+                                   (gpointer *) &cd->weather_list);
+        setup_list_size_constraint (scrolled_window, cd->calendar, tree_view);
+        update_frame_visibility (cd->weather_list, GTK_TREE_MODEL (cd->weather_filter));
+
         cd->appointment_list = create_appointment_list (cd, &tree_view, &scrolled_window);
         g_object_add_weak_pointer (G_OBJECT (cd->appointment_list),
                                    (gpointer *) &cd->appointment_list);
         setup_list_size_constraint (scrolled_window, cd->calendar, tree_view);
-        update_frame_visibility (cd->appointment_list, GTK_TREE_MODEL (cd->appointments_model));
+        update_frame_visibility (cd->appointment_list, GTK_TREE_MODEL (cd->appointments_filter));
 
         switch (cd->orient) {
         case PANEL_APPLET_ORIENT_UP:
+                gtk_box_pack_start (GTK_BOX (vbox), cd->weather_list, TRUE, TRUE, 0);
+                gtk_box_pack_start (GTK_BOX (vbox), cd->birthday_list, TRUE, TRUE, 0);
                 gtk_box_pack_start (GTK_BOX (vbox), cd->appointment_list, TRUE, TRUE, 0);
                 gtk_box_pack_start (GTK_BOX (vbox), cd->task_list, TRUE, TRUE, 0);
                 break;
         default:
                 gtk_box_pack_start (GTK_BOX (vbox), cd->task_list, TRUE, TRUE, 0);
                 gtk_box_pack_start (GTK_BOX (vbox), cd->appointment_list, TRUE, TRUE, 0);
+                gtk_box_pack_start (GTK_BOX (vbox), cd->birthday_list, TRUE, TRUE, 0);
+                gtk_box_pack_start (GTK_BOX (vbox), cd->weather_list, TRUE, TRUE, 0);
                 break;
         }
 
@@ -1724,8 +1976,14 @@ update_popup (ClockData *cd)
 
         if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle)) {
 #ifdef HAVE_LIBECAL
+                if (cd->appointments_filter && cd->appointment_list)
+                        gtk_tree_model_filter_refilter (cd->appointments_filter);
+                if (cd->birthdays_filter && cd->birthday_list)
+                        gtk_tree_model_filter_refilter (cd->birthdays_filter);
                 if (cd->tasks_filter && cd->task_list)
                         gtk_tree_model_filter_refilter (cd->tasks_filter);
+                if (cd->weather_filter && cd->weather_list)
+                        gtk_tree_model_filter_refilter (cd->weather_filter);
 #endif
 
                 present_calendar_popup (cd, cd->calendar_popup, cd->toggle);
@@ -2482,6 +2740,11 @@ fill_clock_applet (PanelApplet *applet)
 	cd->can_handle_format_12 = (clock_locale_format () == CLOCK_FORMAT_12);
 	if (!cd->can_handle_format_12 && cd->format == CLOCK_FORMAT_12)
 		cd->format = CLOCK_FORMAT_24;
+
+	cd->appointments_open = FALSE;
+	cd->birthdays_open    = FALSE;
+	cd->tasks_open        = FALSE;
+	cd->weather_open      = FALSE;
 
 	create_clock_widget (cd);
 
