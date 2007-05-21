@@ -185,38 +185,26 @@ gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE
 
 dnl X development libraries check
 
-#
-# If Pango included the shared library dependencies from X11 in
-# the pkg-config output, then we use that (to avoid duplicates).
-# but if they were omitted to avoid binary compatibility problems
-# then we need to repeat the checks.
-#
-if $PKG_CONFIG --exists pangoxft ; then
-  PANGO_PACKAGES="pangox pangoxft"
-else
-  PANGO_PACKAGES="pangox"
-fi
-
-x_libs="`$PKG_CONFIG --libs $PANGO_PACKAGES`"
-case x_libs in
-  *-lX11*) pango_omitted_x_deps=no ;;
-  *)       pango_omitted_x_deps=yes ;;
-esac
-
-if test $pango_omitted_x_deps = yes ; then
-  AC_PATH_XTRA
-
+PKG_CHECK_MODULES(X, x11 xau, :, [
+  # pkg-config modules not found (only present since X11R7 aka Xorg); use
+  # old-style detection
+  AC_PATH_XTRA()
+  # X not found
   if test x$no_x = xyes ; then
     AC_MSG_ERROR([X development libraries not found])
-  else
-    X_LIBS="$X_PRE_LIBS $X_LIBS -lX11 $X_EXTRA_LIBS"
   fi
-fi
 
-AC_CHECK_LIB(Xau, XauFileName, [X_LIBS="$X_LIBS -lXau"],
-             [AC_MSG_ERROR([
-*** Can't find the Xauth library. It is needed to compile gnome-session.])],
-	     $X_LIBS)
+  gp_save_cflags="$CFLAGS"
+  gp_save_libs="$LIBS"
+  CFLAGS="$X_CFLAGS"
+  LIBS="$X_PRE_LIBS $X_LIBS $X_EXTRA_LIBS"
+  AC_CHECK_LIB(X11, XFree,, AC_MSG_ERROR([libX11 not found]))
+  AC_CHECK_LIB(Xau, XauFileName,, AC_MSG_ERROR([libXau not found]))
+  CFLAGS="$gp_save_cflags"
+  LIBS="$gp_save_libs"
+
+  X_LIBS="$X_PRE_LIBS $X_LIBS -lX11 -lXau $X_EXTRA_LIBS"
+])
 
 AC_SUBST(X_LIBS)
 
