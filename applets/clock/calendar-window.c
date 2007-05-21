@@ -84,6 +84,11 @@ struct _CalendarWindowPrivate {
         GtkListStore *appointments_model;
         GtkListStore *tasks_model;
 
+        GtkTreeSelection *appointments_selection;
+        GtkTreeSelection *birthdays_selection;
+        GtkTreeSelection *tasks_selection;
+        GtkTreeSelection *weather_selection;
+
         GtkTreeModelFilter *appointments_filter;
         GtkTreeModelFilter *birthdays_filter;
         GtkTreeModelFilter *tasks_filter;
@@ -684,6 +689,48 @@ compare_tasks  (GtkTreeModel *model,
         }
 }
 
+static void
+calendar_window_tree_selection_changed (GtkTreeSelection *selection,
+					CalendarWindow   *calwin)
+{
+	if (selection != calwin->priv->appointments_selection) {
+		g_signal_handlers_block_by_func (calwin->priv->appointments_selection,
+						 calendar_window_tree_selection_changed,
+						 calwin);
+		gtk_tree_selection_unselect_all (calwin->priv->appointments_selection);
+		g_signal_handlers_unblock_by_func (calwin->priv->appointments_selection,
+						   calendar_window_tree_selection_changed,
+						   calwin);
+	}
+	if (selection != calwin->priv->birthdays_selection) {
+		g_signal_handlers_block_by_func (calwin->priv->birthdays_selection,
+						 calendar_window_tree_selection_changed,
+						 calwin);
+		gtk_tree_selection_unselect_all (calwin->priv->birthdays_selection);
+		g_signal_handlers_unblock_by_func (calwin->priv->birthdays_selection,
+						   calendar_window_tree_selection_changed,
+						   calwin);
+	}
+	if (selection != calwin->priv->tasks_selection) {
+		g_signal_handlers_block_by_func (calwin->priv->tasks_selection,
+						 calendar_window_tree_selection_changed,
+						 calwin);
+		gtk_tree_selection_unselect_all (calwin->priv->tasks_selection);
+		g_signal_handlers_unblock_by_func (calwin->priv->tasks_selection,
+						   calendar_window_tree_selection_changed,
+						   calwin);
+	}
+	if (selection != calwin->priv->weather_selection) {
+		g_signal_handlers_block_by_func (calwin->priv->weather_selection,
+						 calendar_window_tree_selection_changed,
+						 calwin);
+		gtk_tree_selection_unselect_all (calwin->priv->weather_selection);
+		g_signal_handlers_unblock_by_func (calwin->priv->weather_selection,
+						   calendar_window_tree_selection_changed,
+						   calwin);
+	}
+}
+
 static GtkWidget *
 create_task_list (CalendarWindow *calwin,
                   GtkWidget     **tree_view,
@@ -762,6 +809,11 @@ create_task_list (CalendarWindow *calwin,
                                              "attributes", TASK_COLUMN_OVERDUE_ATTR,
                                              NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
+
+	calwin->priv->tasks_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+	g_signal_connect (calwin->priv->tasks_selection, "changed",
+			  G_CALLBACK (calendar_window_tree_selection_changed),
+			  calwin);
 
         gtk_container_add (GTK_CONTAINER (scrolled), view);
 
@@ -845,6 +897,7 @@ static GtkWidget *
 create_list_for_appointment_model (CalendarWindow      *calwin,
 				   const char          *label,
 				   GtkTreeModelFilter **filter,
+				   GtkTreeSelection   **selection,
 				   GtkTreeModelFilterVisibleFunc is_for_filter,
 				   GtkTreeCellDataFunc  set_pixbuf_cell,
 				   gboolean             show_start,
@@ -913,6 +966,11 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
                                             "text", APPOINTMENT_COLUMN_SUMMARY);
         gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 
+	*selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+	g_signal_connect (*selection, "changed",
+			  G_CALLBACK (calendar_window_tree_selection_changed),
+			  calwin);
+
         gtk_container_add (GTK_CONTAINER (scrolled), view);
 
         gtk_widget_show (view);
@@ -929,6 +987,7 @@ create_appointment_list (CalendarWindow  *calwin,
 					calwin,
 					_("_Appointments"),
 					&calwin->priv->appointments_filter,
+					&calwin->priv->appointments_selection,
 					is_appointment,
 					appointment_pixbuf_cell_data_func,
 					TRUE,
@@ -946,6 +1005,7 @@ create_birthday_list (CalendarWindow  *calwin,
 					calwin,
 					_("_Birthdays and Anniversaries"),
 					&calwin->priv->birthdays_filter,
+					&calwin->priv->birthdays_selection,
 					is_birthday,
 					birthday_pixbuf_cell_data_func,
 					FALSE,
@@ -962,6 +1022,7 @@ create_weather_list (CalendarWindow  *calwin,
 					calwin,
 					_("_Weather Information"),
 					&calwin->priv->weather_filter,
+					&calwin->priv->weather_selection,
 					is_weather,
 					weather_pixbuf_cell_data_func,
 					FALSE,

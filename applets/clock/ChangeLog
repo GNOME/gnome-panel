@@ -1,5 +1,15 @@
 2007-05-21  Vincent Untz  <vuntz@gnome.org>
 
+	* calendar-window.c: (calendar_window_tree_selection_changed): new,
+	unselect the selection in other treeviews than the newly selected one
+	(create_task_list): connect to the selection changed signal
+	(create_list_for_appointment_model): ditto
+	(create_appointment_list): updated
+	(create_birthday_list): ditto
+	(create_weather_list): ditto
+
+2007-05-21  Vincent Untz  <vuntz@gnome.org>
+
 	* calendar-window.c: (format_time): don't check that the time format
 	is CLOCK_FORMAT_12 or CLOCK_FORMAT_24 and just assume it is.
 	(calendar_window_class_init): initialize time format with
