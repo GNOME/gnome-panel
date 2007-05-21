@@ -26,7 +26,9 @@ libpanel_applet_2_la_SOURCES =		\
 libpanel_applet_2_la_LDFLAGS = \
 	-version-info $(LIB_PANEL_APPLET_LT_VERSION) \
 	-no-undefined
-libpanel_applet_2_la_LIBADD  = $(LIBPANEL_APPLET_LIBS)
+libpanel_applet_2_la_LIBADD  = \
+	$(LIBPANEL_APPLET_LIBS) \
+	$(X_LIBS)
 
 libpanel_appletincludedir = $(includedir)/panel-2.0
 
