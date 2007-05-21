@@ -219,9 +219,6 @@ format_time (ClockFormat format,
         if (year  == (tm->tm_year + 1900) &&
             month == tm->tm_mon &&
             day   == tm->tm_mday) {
-                if (format != CLOCK_FORMAT_12 && format != CLOCK_FORMAT_24)
-                        format = clock_locale_format ();
-
                 if (format == CLOCK_FORMAT_12)
                         time_format = g_locale_from_utf8 (_("%l:%M %p"), -1, NULL, NULL, NULL);
                 else
@@ -1595,7 +1592,7 @@ calendar_window_class_init (CalendarWindowClass *klass)
 				   "Time Format",
 				   "Time format used to display time",
 				   CLOCK_TYPE_FORMAT,
-				   CLOCK_FORMAT_INVALID,
+				   clock_locale_format (),
 				   G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 #endif
 
@@ -1780,6 +1777,9 @@ calendar_window_set_time_format (CalendarWindow *calwin,
 	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
 
 #ifdef HAVE_LIBECAL
+	if (time_format != CLOCK_FORMAT_12 && time_format != CLOCK_FORMAT_24)
+		time_format = clock_locale_format ();
+
 	if (time_format == calwin->priv->time_format)
 		return;
 

@@ -1,5 +1,15 @@
 2007-05-21  Vincent Untz  <vuntz@gnome.org>
 
+	* calendar-window.c: (format_time): don't check that the time format
+	is CLOCK_FORMAT_12 or CLOCK_FORMAT_24 and just assume it is.
+	(calendar_window_class_init): initialize time format with
+	clock_locale_format()
+	(calendar_window_set_time_format): if new time format is not
+	CLOCK_FORMAT_12 or CLOCK_FORMAT_24, then set it with
+	clock_locale_format()
+
+2007-05-21  Vincent Untz  <vuntz@gnome.org>
+
 	Move the calendar popup code in a new file.
 	Implement saving of the state of appointment expanders in gconf.
 
