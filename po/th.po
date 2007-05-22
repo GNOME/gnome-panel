@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-18 14:44+0700\n"
-"PO-Revision-Date: 2007-05-18 15:17+0700\n"
+"POT-Creation-Date: 2007-05-22 19:04+0700\n"
+"PO-Revision-Date: 2007-05-22 19:10+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <L10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgid "_Preferences"
 msgstr "_ปรับแต่ง..."
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:2945
+#: applets/clock/clock.c:1995
 msgid "Clock"
 msgstr "นาฬิกา"
 
@@ -81,29 +81,60 @@ msgstr "โรงงานสร้างแอพเพล็ตนาฬิก
 msgid "Get the current time and date"
 msgstr "รับค่าวันและเวลาปัจจุบัน"
 
-#: applets/clock/clock.c:386
-msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %p"
-
-#: applets/clock/clock.c:386 applets/clock/clock.c:780
+#: applets/clock/calendar-window.c:228 applets/clock/clock.c:353
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:388 applets/clock/clock.c:1967
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
-#: applets/clock/clock.c:388 applets/clock/clock.c:782
-#: applets/clock/clock.c:1969
+#: applets/clock/calendar-window.c:230 applets/clock/clock.c:355
+#: applets/clock/clock.c:1015
 msgid "%H:%M"
 msgstr "%H:%M"
+
+#. Translators: If the event did not start on the current day
+#. * we will display the start date in the most abbreviated way
+#. * possible.
+#: applets/clock/calendar-window.c:236
+msgid "%b %d"
+msgstr "%a %e %b"
+
+#: applets/clock/calendar-window.c:745
+msgid "_Tasks"
+msgstr "_งาน"
+
+#: applets/clock/calendar-window.c:861
+msgid "All Day"
+msgstr "ทั้งวัน"
+
+#: applets/clock/calendar-window.c:988
+msgid "_Appointments"
+msgstr "_นัด"
+
+#: applets/clock/calendar-window.c:1006
+msgid "_Birthdays and Anniversaries"
+msgstr "_วันเกิดและวันครบรอบ"
+
+#: applets/clock/calendar-window.c:1023
+msgid "_Weather Information"
+msgstr "_รายงานอากาศ"
+
+#: applets/clock/calendar-window.c:1690
+msgid "Calendar"
+msgstr "ปฏิทิน"
+
+#: applets/clock/clock.c:353
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#: applets/clock/clock.c:355 applets/clock/clock.c:1013
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
 
 #. translators: replace %e with %d if, when the day of the
 #. *              month as a decimal number is a single digit, it
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:408
+#: applets/clock/clock.c:375
 msgid "%a %b %e"
 msgstr "%a %-d %b"
 
@@ -111,7 +142,7 @@ msgstr "%a %-d %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:415
+#: applets/clock/clock.c:382
 #, c-format
 msgid ""
 "%1$s\n"
@@ -124,130 +155,108 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:423
+#: applets/clock/clock.c:390
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:544
+#: applets/clock/clock.c:511
 msgid "%A %B %d"
 msgstr "%Aที่ %-d %B"
 
-#: applets/clock/clock.c:556
+#: applets/clock/clock.c:523
 msgid "Click to view your appointments and tasks"
 msgstr "กดเพื่อดูนัดหมายและรายการภารกิจของคุณ"
 
-#: applets/clock/clock.c:558
+#: applets/clock/clock.c:525
 msgid "Click to view month calendar"
 msgstr "กดเพื่อดูปฏิทินรายเดือน"
 
-#. Translators: If the event did not start on the current day
-#. we will display the start date in the most abbreviated way possible.
-#: applets/clock/clock.c:787
-msgid "%b %d"
-msgstr "%a %e %b"
-
-#: applets/clock/clock.c:1133
-msgid "Tasks"
-msgstr "งาน"
-
-#: applets/clock/clock.c:1282
-msgid "All Day"
-msgstr "ทั้งวัน"
-
-#: applets/clock/clock.c:1321
-msgid "Appointments"
-msgstr "นัด"
-
-#: applets/clock/clock.c:1562
-msgid "Calendar"
-msgstr "ปฏิทิน"
-
-#: applets/clock/clock.c:1858
+#: applets/clock/clock.c:904
 msgid "Computer Clock"
 msgstr "นาฬิกาคอมพิวเตอร์"
 
-#: applets/clock/clock.c:1962
+#: applets/clock/clock.c:1008
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:1964
+#: applets/clock/clock.c:1010
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: applets/clock/clock.c:2006
+#: applets/clock/clock.c:1052
 msgid "%A, %B %d %Y"
 msgstr "วัน%Aที่ %-d %B %EY"
 
-#: applets/clock/clock.c:2081
+#: applets/clock/clock.c:1127
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "เรียกใช้เครื่องมือตั้งเวลาไม่สำเร็จ: %s"
 
-#: applets/clock/clock.c:2119
+#: applets/clock/clock.c:1165
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "หาโปรแกรมสำหรับตั้งวันที่และเวลาไม่พบ โปรแกรมอาจยังไม่ได้ติดตั้ง?"
 
-#: applets/clock/clock.c:2601
+#: applets/clock/clock.c:1651
 msgid "Custom format"
 msgstr "กำหนดรูปแบบเอง"
 
-#: applets/clock/clock.c:2725 applets/clock/clock.c:2903
+#: applets/clock/clock.c:1775 applets/clock/clock.c:1953
 #: applets/fish/fish.c:160 applets/notification_area/main.c:90
 #: applets/wncklet/wncklet.c:128
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "เกิดข้อผิดพลาดในการแสดงวิธีใช้: %s"
 
-#: applets/clock/clock.c:2762
+#: applets/clock/clock.c:1812
 msgid "Clock Preferences"
 msgstr "ปรับแต่งนาฬิกา"
 
-#: applets/clock/clock.c:2787
+#: applets/clock/clock.c:1837
 msgid "Clock _type:"
 msgstr "_แบบบอกเวลา:"
 
-#: applets/clock/clock.c:2798
+#: applets/clock/clock.c:1848
 msgid "12 hour"
 msgstr "12 ชั่วโมง"
 
-#: applets/clock/clock.c:2799
+#: applets/clock/clock.c:1849
 msgid "24 hour"
 msgstr "24 ชั่วโมง"
 
-#: applets/clock/clock.c:2800
+#: applets/clock/clock.c:1850
 msgid "UNIX time"
 msgstr "เวลาแบบยูนิกซ์"
 
-#: applets/clock/clock.c:2801
+#: applets/clock/clock.c:1851
 msgid "Internet time"
 msgstr "เวลาแบบอินเทอร์เน็ต"
 
-#: applets/clock/clock.c:2809
+#: applets/clock/clock.c:1859
 msgid "Custom _format:"
 msgstr "_กำหนดรูปแบบเอง:"
 
-#: applets/clock/clock.c:2828
+#: applets/clock/clock.c:1878
 msgid "Show _seconds"
 msgstr "แสดง_วินาที"
 
-#: applets/clock/clock.c:2837
+#: applets/clock/clock.c:1887
 msgid "Show _date"
 msgstr "แสดงวั_นที่"
 
-#: applets/clock/clock.c:2846
+#: applets/clock/clock.c:1896
 msgid "Use _UTC"
 msgstr "แสดงเวลา _UTC"
 
-#: applets/clock/clock.c:2948
+#: applets/clock/clock.c:1998
 msgid "The Clock displays the current time and date"
 msgstr "นาฬิกาแสดงวันและเวลาปัจจุบัน"
 
 #. Translator credits
-#: applets/clock/clock.c:2951 applets/fish/fish.c:588
+#: applets/clock/clock.c:2001 applets/fish/fish.c:588
 #: applets/notification_area/main.c:140
 #: applets/wncklet/showdesktop.c:531 applets/wncklet/window-list.c:760
 #: applets/wncklet/window-menu.c:75
@@ -284,46 +293,78 @@ msgid "Custom format of the clock"
 msgstr "รูปแบบเวลาที่กำหนดเอง"
 
 #: applets/clock/clock.schemas.in.h:13
+msgid "Expand list of appointments"
+msgstr "ขยายรายการนัด"
+
+#: applets/clock/clock.schemas.in.h:14
+msgid "Expand list of birthdays"
+msgstr "ขยายรายการวันเกิด"
+
+#: applets/clock/clock.schemas.in.h:15
+msgid "Expand list of tasks"
+msgstr "ขยายรายการงาน"
+
+#: applets/clock/clock.schemas.in.h:16
+msgid "Expand list of weather information"
+msgstr "ขยายรายการรายงานอากาศ"
+
+#: applets/clock/clock.schemas.in.h:17
 msgid "Hour format"
 msgstr "รูปแบบชั่วโมง"
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:18
 msgid "If true, display date in the clock, in addition to time."
 msgstr "ถ้าเลือก จะแสดงวันที่ในนาฬิกาพร้อมกับเวลา"
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:19
 msgid "If true, display seconds in time."
 msgstr "ถ้าเลือก จะแสดงวินาทีในเวลา"
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:20
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "ถ้าเลือก จะแสดงเวลาตามเขตพิกัดเวลาสากล"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:21
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "ถ้าเลือก จะขยายรายการนัดในหน้าต่างปฏิทิน"
+
+#: applets/clock/clock.schemas.in.h:22
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "ถ้าเลือก จะขยายรายการวันเกิดในหน้าต่างปฏิทิน"
+
+#: applets/clock/clock.schemas.in.h:23
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "ถ้าเลือก จะขยายรายการงานในหน้าต่างปฏิทิน"
+
+#: applets/clock/clock.schemas.in.h:24
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "ถ้าเลือก จะขยายรายการรายงานอากาศในหน้าต่างปฏิทิน"
+
+#: applets/clock/clock.schemas.in.h:25
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "ถ้าเลือก จะแสดงวันที่ในคำแนะนำเครื่องมือเมื่อตัวชี้อยู่เหนือนาฬิกา"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:26
 msgid "If true, show week numbers in the calendar."
 msgstr "ถ้าเลือก จะแสดงเลขสัปดาห์ในปฏิทิน"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:27
 msgid "Show date in clock"
 msgstr "แสดงวันที่ในนาฬิกา"
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:28
 msgid "Show date in tooltip"
 msgstr "แสดงวันที่ในคำแนะนำเครื่องมือ"
 
-#: applets/clock/clock.schemas.in.h:21
+#: applets/clock/clock.schemas.in.h:29
 msgid "Show time with seconds"
 msgstr "แสดงเวลาพร้อมวินาที"
 
-#: applets/clock/clock.schemas.in.h:22
+#: applets/clock/clock.schemas.in.h:30
 msgid "Show week numbers in calendar"
 msgstr "แสดงเลขสัปดาห์ในปฏิทิน"
 
-#: applets/clock/clock.schemas.in.h:23
+#: applets/clock/clock.schemas.in.h:31
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -331,7 +372,7 @@ msgstr ""
 "ค่านี้เลิกใช้แล้วใน GNOME 2.6 และจะใช้ค่า 'format' แทน schema "
 "นี้คงไว้เพื่อความเข้ากันได้กับโปรแกรมรุ่นเก่าเท่านั้น"
 
-#: applets/clock/clock.schemas.in.h:24
+#: applets/clock/clock.schemas.in.h:32
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -342,7 +383,7 @@ msgstr ""
 "คุณสามารถใช้รหัสการแปลงของ strftime() เพื่อระบุรูปแบบที่ต้องการได้ "
 "ดูข้อมูลเพิ่มเติมได้จากคู่มือของ strftime()"
 
-#: applets/clock/clock.schemas.in.h:25
+#: applets/clock/clock.schemas.in.h:33
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -359,23 +400,23 @@ msgstr ""
 "เวลาจึงเหมือนกันทุกแห่งในโลกถ้ากำหนดเป็น \"unix\" นาฬิกาจะแสดงเวลาเป็นวินาทีนับจาก 1970-"
 "01-01 ถ้ากำหนดเป็น \"custom\" นาฬิกาจะแสดงตามรูปแบบที่กำหนดใน custom_format"
 
-#: applets/clock/clock.schemas.in.h:26
+#: applets/clock/clock.schemas.in.h:34
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "ค่านี้กำหนดโปรแกรมที่เรียกใช้เพื่อตั้งเวลา"
 
-#: applets/clock/clock.schemas.in.h:27
+#: applets/clock/clock.schemas.in.h:35
 msgid "Time configuration tool"
 msgstr "เครื่องมือตั้งเวลา"
 
-#: applets/clock/clock.schemas.in.h:28
+#: applets/clock/clock.schemas.in.h:36
 msgid "Use Internet time"
 msgstr "ใช้เวลาแบบอินเทอร์เน็ต"
 
-#: applets/clock/clock.schemas.in.h:29
+#: applets/clock/clock.schemas.in.h:37
 msgid "Use UNIX time"
 msgstr "ใช้เวลาแบบยูนิกซ์"
 
-#: applets/clock/clock.schemas.in.h:30
+#: applets/clock/clock.schemas.in.h:38
 msgid "Use UTC"
 msgstr "แสดงเวลา UTC"
 
@@ -666,7 +707,7 @@ msgid "Window Navigation Applet Factory"
 msgstr "โรงงานแอพเพล็ตการนำทางหน้าต่าง"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:78 applets/wncklet/window-menu.c:241
+#: applets/wncklet/window-menu.c:78 applets/wncklet/window-menu.c:240
 msgid "Window Selector"
 msgstr "เลือกรายการหน้าต่าง"
 
