@@ -522,9 +522,7 @@ drop_uri (PanelWidget *panel,
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
 
-	base = g_path_get_basename (uri);
-	name = gnome_vfs_unescape_string_for_display (base);
-	g_free (base);
+	name = panel_util_get_label_for_uri (base);
 
 	comment = gnome_vfs_unescape_string_for_display (uri);
 
@@ -655,6 +653,7 @@ drop_urilist (PanelWidget *panel,
 			} else {
 				char *icon;
 
+				//FIXME: use panel_util_get_icon_for_uri
 				icon = gnome_icon_lookup (gtk_icon_theme_get_default (),
 							  NULL, NULL, NULL,
 							  info, info->mime_type,

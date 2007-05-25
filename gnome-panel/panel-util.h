@@ -125,6 +125,10 @@ void panel_util_key_file_ensure_C_key (GKeyFile   *keyfile,
 char *guess_icon_from_exec (GtkIconTheme *icon_theme,
 			    GKeyFile     *key_file);
 
+const char *panel_util_get_vfs_method_display_name (const char *method);
+char *panel_util_get_label_for_uri (const char *text_uri);
+char *panel_util_get_icon_for_uri (const char *text_uri);
+
 G_END_DECLS
 
 #endif /* PANEL_UTIL_H */

@@ -1,5 +1,21 @@
 2007-05-25  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-icon-names.h: add new icons
+	* panel-menu-items.c: (activate_uri): handle x-nautilus-search uri by
+	directly launching nautilus. This is ugly, though.
+	(panel_place_menu_item_append_gtk_bookmarks): accept trash and
+	x-nautilus-search uri, and also use the new functions from panel-util
+	* panel-util.[ch]: (panel_util_get_vfs_method_display_name): new
+	(panel_util_get_icon_for_uri_method): new
+	(panel_util_get_label_for_uri): new
+	(panel_util_get_icon_for_uri): new
+	Most of this is copied from nautilus.
+	* panel.c: (drop_uri): use panel_util_get_label_for_uri()
+	(drop_urilist): add FIXME
+	Fix bug #402628, bug #309598.
+
+2007-05-25  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-run-dialog.c: (program_list_selection_changed): don't reset
 	visibility of all programs in the program list. And beautify the code.
 	Fix bug #339963

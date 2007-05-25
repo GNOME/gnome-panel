@@ -102,7 +102,14 @@ activate_uri (GtkWidget *menuitem,
 
 	url = gnome_vfs_make_uri_from_input_with_dirs (path,
 						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
-	gnome_url_show_on_screen (url, screen, &error);
+	if (g_str_has_prefix (url, "x-nautilus-search:")) {
+		//FIXME: this is ugly...
+		char *command;
+
+		command = g_strdup_printf ("nautilus --no-desktop %s", url);
+		gdk_spawn_command_line_on_screen (screen, command, &error);
+	} else
+		gnome_url_show_on_screen (url, screen, &error);
 
 	if (error != NULL) {
 		if (error->code != GNOME_URL_ERROR_CANCELLED) {
@@ -295,8 +302,8 @@ static void
 panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 {
 	typedef struct {
-		GnomeVFSURI *uri;
-		char        *label;
+		char *full_uri;
+		char *label;
 	} PanelBookmark;
 
 	GtkWidget   *add_menu;
@@ -329,6 +336,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			GnomeVFSURI *uri;
 			char        *space;
 			char        *label;
+			gboolean     keep;
 
 			g_hash_table_insert (table, lines[i], lines[i]);
 
@@ -340,20 +348,33 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 				label = NULL;
 			}
 
-			uri = gnome_vfs_uri_new (lines[i]);
+			keep = FALSE;
+			uri = NULL;
 
-			if (!uri ||
-			    (!strcmp (gnome_vfs_uri_get_scheme (uri), "file") &&
-			     !gnome_vfs_uri_exists (uri))) {
+			if (g_str_has_prefix (lines[i], "x-nautilus-search:") ||
+			    g_str_has_prefix (lines[i], "trash:"))
+				keep = TRUE;
+
+			if (!keep) {
+				uri = gnome_vfs_uri_new (lines[i]);
+				if (uri) {
+					const char *scheme;
+
+					scheme = gnome_vfs_uri_get_scheme (uri);
+					keep = strcmp (scheme, "file") != 0 ||
+					       gnome_vfs_uri_exists (uri);
+					gnome_vfs_uri_unref (uri);
+				}
+			}
+
+			if (!keep) {
 				if (label)
 					g_free (label);
-				if (uri)
-					gnome_vfs_uri_unref (uri);
 				continue;
 			}
 
 			bookmark = g_malloc (sizeof (PanelBookmark));
-			bookmark->uri = uri;
+			bookmark->full_uri = g_strdup (lines[i]);
 			bookmark->label = label;
 			add_bookmarks = g_slist_prepend (add_bookmarks, bookmark);
 		}
@@ -382,16 +403,14 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	}
 
 	for (l = add_bookmarks; l; l = l->next) {
-		char *full_uri;
 		char *display_uri;
 		char *tooltip;
 		char *label;
+		char *icon;
 
 		bookmark = l->data;
-		full_uri = gnome_vfs_uri_to_string (bookmark->uri,
-						    GNOME_VFS_URI_HIDE_NONE);
 
-		display_uri = gnome_vfs_format_uri_for_display (full_uri);
+		display_uri = gnome_vfs_format_uri_for_display (bookmark->full_uri);
 		/* Translators: %s is a URI */
 		tooltip = g_strdup_printf (_("Open '%s'"), display_uri);
 		g_free (display_uri);
@@ -406,66 +425,36 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		}
 
 		if (!label) {
-			if (!strcmp (gnome_vfs_uri_get_scheme (bookmark->uri),
-							       "file")) {
-				char *buffer;
+			label = panel_util_get_label_for_uri (bookmark->full_uri);
 
-				buffer = gnome_vfs_get_local_path_from_uri (full_uri);
-				if (!buffer) {
-					g_free (tooltip);
-					g_free (full_uri);
-					if (bookmark->label)
-						g_free (bookmark->label);
-					gnome_vfs_uri_unref (bookmark->uri);
-					g_free (bookmark);
-					continue;
-				}
-
-				label = g_filename_display_basename (buffer);
-				g_free (buffer);
-			} else if (gnome_vfs_uri_is_local (bookmark->uri)) {
-				/* local non-file methods, such as burn:,
-				 * font:, etc. */
-				//FIXME 2.16: we should do the same than in nautilus (see nautilus_file_get_display_name_nocopy() and nautilus_get_vfs_method_display_name()
-				label = gnome_vfs_format_uri_for_display (full_uri);
-			} else {
-				const char *path;
-				const char *hostname;
-				char       *displayname;
-
-				hostname = gnome_vfs_uri_get_host_name (bookmark->uri);
-				path = gnome_vfs_uri_get_path (bookmark->uri);
-				if (!path || !path[0])
-					displayname = g_strdup ("/");
-				else
-					displayname = gnome_vfs_unescape_string_for_display (path);
-				if (hostname) {
-					/* Translators: the first string is a
-					 * path and the second string is a
-					 * hostname. nautilus contains the same
-					 * string to translate. */
-					label = g_strdup_printf (_("%1$s on %2$s"),
-								 displayname,
-								 hostname);
-					g_free (displayname);
-				} else
-					label = displayname;
+			if (!label) {
+				g_free (tooltip);
+				g_free (bookmark->full_uri);
+				if (bookmark->label)
+					g_free (bookmark->label);
+				g_free (bookmark);
+				continue;
 			}
 		}
 
-		panel_menu_items_append_place_item (PANEL_ICON_FOLDER,
+		icon = panel_util_get_icon_for_uri (bookmark->full_uri);
+		if (!icon)
+			icon = g_strdup (PANEL_ICON_FOLDER);
+
+		//FIXME: drag and drop will be broken for x-nautilus-search uris
+		panel_menu_items_append_place_item (icon,
 						    label,
 						    tooltip,
 						    add_menu,
 						    G_CALLBACK (activate_uri),
-						    full_uri);
+						    bookmark->full_uri);
 
+		g_free (icon);
 		g_free (tooltip);
-		g_free (full_uri);
 		g_free (label);
+		g_free (bookmark->full_uri);
 		if (bookmark->label)
 			g_free (bookmark->label);
-		gnome_vfs_uri_unref (bookmark->uri);
 		g_free (bookmark);
 	}
 

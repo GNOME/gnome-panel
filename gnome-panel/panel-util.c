@@ -24,6 +24,7 @@
 #include <glib/gi18n.h>
 #include <libgnome/gnome-desktop-item.h>
 #include <libgnome/gnome-util.h>
+#include <libgnomeui/gnome-icon-lookup.h>
 #include <libgnomeui/gnome-help.h>
 
 #include <libgnomevfs/gnome-vfs-utils.h>
@@ -35,6 +36,7 @@
 #include "xstuff.h"
 #include "panel-globals.h"
 #include "launcher.h"
+#include "panel-icon-names.h"
 
 static int
 panel_ditem_launch (GnomeDesktopItem  *item,
@@ -1323,4 +1325,158 @@ guess_icon_from_exec (GtkIconTheme *icon_theme,
 	}
 
 	return icon_name;
+}
+
+/* This is nautilus_get_vfs_method_display_name() */
+const char *
+panel_util_get_vfs_method_display_name (const char *method)
+{
+	//FIXME: /apps/nautilus/desktop/computer_icon_visible (same for trash and network)
+	if (g_ascii_strcasecmp (method, "computer") == 0 ) {
+		return _("Computer");
+	} else if (g_ascii_strcasecmp (method, "network") == 0 ) {
+		return _("Network");
+	} else if (g_ascii_strcasecmp (method, "fonts") == 0 ) {
+		return _("Fonts");
+	} else if (g_ascii_strcasecmp (method, "themes") == 0 ) {
+		return _("Themes");
+	} else if (g_ascii_strcasecmp (method, "burn") == 0 ) {
+		return _("CD/DVD Creator");
+	} else if (g_ascii_strcasecmp (method, "smb") == 0 ) {
+		return _("Windows Network");
+	} else if (g_ascii_strcasecmp (method, "dns-sd") == 0 ) {
+		/* translators: this is the title of the "dns-sd:///" location */
+		return _("Services in");
+	}
+	return NULL;
+}
+
+static const char *
+panel_util_get_icon_for_uri_method (const char *uri)
+{
+	if (g_str_has_prefix (uri, "computer:")) {
+		return PANEL_ICON_COMPUTER;
+	} else if (g_str_has_prefix (uri, "network:")) {
+		return PANEL_ICON_NETWORK;
+	} else if (g_str_has_prefix (uri, "fonts:")) {
+		return PANEL_ICON_FONTS;
+	} else if (g_str_has_prefix (uri, "themes:")) {
+		return PANEL_ICON_THEME;
+	} else if (g_str_has_prefix (uri, "burn:")) {
+		return PANEL_ICON_BURNER;
+	} else if (g_str_has_prefix (uri, "smb:")) {
+		return PANEL_ICON_NETWORK;
+	} else if (g_str_has_prefix (uri, "dns-sd:")) {
+		return PANEL_ICON_NETWORK;
+	} else if (g_str_has_prefix (uri, "trash:")) {
+		//FIXME: we should look if the trash is empty or not
+		return PANEL_ICON_TRASH;
+	} else if (g_str_has_prefix (uri, "x-nautilus-search:")) {
+		return PANEL_ICON_SEARCHTOOL;
+	} else
+		return NULL;
+}
+
+/* This is based on nautilus_compute_title_for_uri() and
+ * nautilus_file_get_display_name_nocopy() */
+char *
+panel_util_get_label_for_uri (const char *text_uri)
+{
+	GnomeVFSURI *uri;
+	const char  *hostname;
+	const char  *method;
+	char        *displayname;
+	char        *label;
+	char        *buffer;
+
+	//FIXME: we're not handling $HOME and $Desktop
+	hostname = NULL;
+	label = NULL;
+
+	//FIXME: nautilus uses nautilus_query_to_readable_string() to have a nice name
+	if (g_str_has_prefix (text_uri, "x-nautilus-search:"))
+		return g_strdup (_("Search"));
+
+	if (g_str_has_prefix (text_uri, "trash:"))
+		return g_strdup (_("Trash"));
+
+	if (g_str_has_prefix (text_uri, "file:")) {
+		buffer = gnome_vfs_get_local_path_from_uri (text_uri);
+		if (!buffer)
+			return NULL;
+
+		label = g_filename_display_basename (buffer);
+		g_free (buffer);
+
+		return label;
+	}
+
+	uri = gnome_vfs_uri_new (text_uri);
+	if (uri) {
+		char *short_name;
+
+		hostname = gnome_vfs_uri_get_host_name (uri);
+
+		buffer = gnome_vfs_uri_extract_short_path_name (uri);
+		short_name = gnome_vfs_unescape_string_for_display (buffer);
+		g_free (buffer);
+
+		if (strcmp (short_name, GNOME_VFS_URI_PATH_STR) != 0) {
+			displayname = short_name;
+		} else {
+			g_free (short_name);
+			method = panel_util_get_vfs_method_display_name (uri->method_string);
+			if (method == NULL)
+				method = uri->method_string;
+
+			buffer = gnome_vfs_uri_extract_short_name (uri);
+			short_name = gnome_vfs_unescape_string_for_display (buffer);
+			g_free (buffer);
+
+			if (short_name == NULL ||
+			    strcmp (short_name, GNOME_VFS_URI_PATH_STR) == 0) {
+				displayname = g_strdup (method);
+			} else {
+				displayname = g_strdup_printf ("%s: %s",
+							       method,
+							       short_name);
+			}
+			g_free (short_name);
+		}
+	} else {
+		displayname = gnome_vfs_format_uri_for_display (text_uri);
+	}
+
+	if (hostname) {
+		/* Translators: the first string is a path and the second
+		 * string is a hostname. nautilus contains the same string to
+		 * translate. */
+		label = g_strdup_printf (_("%1$s on %2$s"), displayname, hostname);
+		g_free (displayname);
+	} else {
+		label = displayname;
+	}
+
+	if (uri)
+		gnome_vfs_uri_unref (uri);
+
+	return label;
+}
+
+char *
+panel_util_get_icon_for_uri (const char *text_uri)
+{
+	const char *icon;
+
+	icon = panel_util_get_icon_for_uri_method (text_uri);
+	if (icon)
+		return g_strdup (icon);
+
+	if (!g_str_has_prefix (text_uri, "file:"))
+		return NULL;
+
+	return gnome_icon_lookup_sync (gtk_icon_theme_get_default (),
+				       NULL, text_uri, NULL,
+				       GNOME_ICON_LOOKUP_FLAGS_NONE,
+				       GNOME_ICON_LOOKUP_RESULT_FLAGS_NONE);
 }
