@@ -507,6 +507,8 @@ applet_size_request (GtkWidget      *widget,
 	gtk_widget_get_child_requisition (tasklist->applet, &child_req);
 	
 	size_hints = wnck_tasklist_get_size_hint_list (wncktl, &len);
+	g_assert (len % 2 == 0);
+
 	new_size_hints = g_new0 (int, len);
 	
 	/* size_hints is an array of (max, min) int pairs
