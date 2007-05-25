@@ -987,6 +987,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	char         *temp;
 	char         *path, *stripped;
 	gboolean      terminal;
+	GKeyFile     *key_file;
 		
 	if (!gtk_tree_selection_get_selected (selection, &filter_model,
 					      &filter_iter))
@@ -1001,65 +1002,62 @@ program_list_selection_changed (GtkTreeSelection *selection,
 			    COLUMN_PATH, &path,
 			    -1);
 				  
-	if (path) {
-		GKeyFile *key_file;
+	if (!path)
+		return;
 
-		key_file = g_key_file_new ();
+	key_file = g_key_file_new ();
 
-		if (g_key_file_load_from_file (key_file, path,
-					       G_KEY_FILE_NONE, NULL)) {
-			dialog->use_program_list = TRUE;
-			if (dialog->desktop_path)
-				g_free (dialog->desktop_path);
-			dialog->desktop_path = g_strdup (path);
-			if (dialog->item_name)
-				g_free (dialog->item_name);
-			dialog->item_name = NULL;
-			
-			gtk_tree_model_foreach (GTK_TREE_MODEL (dialog->program_list_store),
-						panel_run_dialog_make_all_list_visible,
-						NULL);
-
-			/* Order is important here. We have to set the text
-			 * first so that the drag source is enabled, otherwise
-			 * the drag icon can't be set by
-			 * panel_run_dialog_set_icon.
-			 */
-			temp = panel_util_key_file_get_string (key_file,
-							       "Exec");
-			if (temp) {
-				stripped = remove_parameters (temp);
-				gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry), stripped);
-				g_free (stripped);
-			} else {
-				temp = panel_util_key_file_get_string (key_file,
-								       "URL");
-				gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry), sure_string (temp));
-			}
-			g_free (temp);
-
-			temp = panel_util_key_file_get_locale_string (key_file,
-								      "Icon");
-			panel_run_dialog_set_icon (dialog, temp, FALSE);
-			g_free (temp);
-			
-			temp = panel_util_key_file_get_locale_string (key_file,
-								      "Comment");
-			//FIXME: if sure_string () == "", we should display "Will run..." as in entry_changed()
-			gtk_label_set_text (GTK_LABEL (dialog->program_label), sure_string (temp));
-			g_free (temp);
-
-			terminal = panel_util_key_file_get_boolean (key_file,
-								    "Terminal",
-								    FALSE);
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox),
-						      terminal);
-
-			g_key_file_free (key_file);
-                }
-
+	if (!g_key_file_load_from_file (key_file, path,
+					G_KEY_FILE_NONE, NULL)) {
+		g_key_file_free (key_file);
 		g_free (path);
-        }
+		return;
+	}
+
+	dialog->use_program_list = TRUE;
+	if (dialog->desktop_path)
+		g_free (dialog->desktop_path);
+	dialog->desktop_path = g_strdup (path);
+	if (dialog->item_name)
+		g_free (dialog->item_name);
+	dialog->item_name = NULL;
+	
+	/* Order is important here. We have to set the text first so that the
+	 * drag source is enabled, otherwise the drag icon can't be set by
+	 * panel_run_dialog_set_icon.
+	 */
+	temp = panel_util_key_file_get_string (key_file, "Exec");
+	if (temp) {
+		stripped = remove_parameters (temp);
+		gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry),
+				    stripped);
+		g_free (stripped);
+	} else {
+		temp = panel_util_key_file_get_string (key_file, "URL");
+		gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry),
+				    sure_string (temp));
+	}
+	g_free (temp);
+
+	temp = panel_util_key_file_get_locale_string (key_file, "Icon");
+	panel_run_dialog_set_icon (dialog, temp, FALSE);
+	g_free (temp);
+	
+	temp = panel_util_key_file_get_locale_string (key_file, "Comment");
+	//FIXME: if sure_string () == "", we should display "Will run..." as in entry_changed()
+	gtk_label_set_text (GTK_LABEL (dialog->program_label),
+			    sure_string (temp));
+	g_free (temp);
+
+	terminal = panel_util_key_file_get_boolean (key_file,
+						    "Terminal",
+						    FALSE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox),
+				      terminal);
+
+	g_key_file_free (key_file);
+
+	g_free (path);
 }
 
 static void
