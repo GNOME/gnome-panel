@@ -1,5 +1,14 @@
 2007-05-25  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-ditem-editor.c: (panel_ditem_editor_setup_ui): set default
+	response
+	(panel_ditem_editor_activated): emits a reponse for the dialog
+	(panel_ditem_editor_connect_signals): connect to the activate signal
+	for the entries
+	Fix bug #440690
+
+2007-05-25  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-ditem-editor.c: (panel_ditem_editor_setup_ui): always put
 	initial focus on the name entry
 	Fix part of bug #440690

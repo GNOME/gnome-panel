@@ -700,6 +700,8 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 		gtk_widget_hide (priv->close_button);
 		gtk_widget_show (priv->cancel_button);
 		gtk_widget_show (priv->ok_button);
+		gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+						 GTK_RESPONSE_OK);
 
 		if (!priv->combo_setuped) {
 			setup_combo (priv->type_combo,
@@ -717,6 +719,8 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 		gtk_widget_show (priv->close_button);
 		gtk_widget_hide (priv->cancel_button);
 		gtk_widget_hide (priv->ok_button);
+		gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+						 GTK_RESPONSE_CLOSE);
 
 		show_combo = (type != PANEL_DITEM_EDITOR_TYPE_LINK) &&
 			     (type != PANEL_DITEM_EDITOR_TYPE_DIRECTORY);
@@ -830,6 +834,17 @@ panel_ditem_editor_changed (PanelDItemEditor *dialog)
 
 	dialog->priv->dirty = TRUE;
 	g_signal_emit (G_OBJECT (dialog), ditem_edit_signals[CHANGED], 0);
+}
+
+static void
+panel_ditem_editor_activated (PanelDItemEditor *dialog)
+{
+	if (GTK_WIDGET_VISIBLE (dialog->priv->ok_button))
+		gtk_dialog_response (GTK_DIALOG (dialog),
+				     GTK_RESPONSE_OK);
+	else if (GTK_WIDGET_VISIBLE (dialog->priv->close_button))
+		gtk_dialog_response (GTK_DIALOG (dialog),
+				     GTK_RESPONSE_CLOSE);
 }
 
 static void
@@ -1071,6 +1086,16 @@ panel_ditem_editor_connect_signals (PanelDItemEditor *dialog)
 	CONNECT_CHANGED (priv->command_entry, panel_ditem_editor_command_changed);
 	CONNECT_CHANGED (priv->comment_entry, panel_ditem_editor_comment_changed);
 	CONNECT_CHANGED (priv->icon_entry, panel_ditem_editor_icon_changed);
+
+	g_signal_connect_swapped (priv->name_entry, "activate",
+				  G_CALLBACK (panel_ditem_editor_activated),
+				  dialog);
+	g_signal_connect_swapped (priv->command_entry, "activate",
+				  G_CALLBACK (panel_ditem_editor_activated),
+				  dialog);
+	g_signal_connect_swapped (priv->comment_entry, "activate",
+				  G_CALLBACK (panel_ditem_editor_activated),
+				  dialog);
 
 	g_signal_connect_swapped (priv->command_browse_button, "clicked",
 				  G_CALLBACK (command_browse_button_clicked),
