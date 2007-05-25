@@ -180,8 +180,10 @@ main (int argc, char * argv[])
 			} else if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
 				   && g_str_has_suffix (desktops [i], ".directory")
 				   && !create_new) {
-				dlg = panel_ditem_editor_new (NULL, NULL, uri,
-							      _("Directory Properties"));
+				dlg = panel_ditem_editor_new_directory (NULL,
+									NULL,
+									uri,
+									_("Directory Properties"));
 			} else if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
 				   && g_str_has_suffix (desktops [i], ".desktop")
 				   && !create_new) {
@@ -200,14 +202,8 @@ main (int argc, char * argv[])
 		} else if (g_str_has_suffix (desktops [i], ".directory")) {
 			/* a non-existant file.  Well we can still edit that
 			 * sort of.  We will just create it new */
-			GKeyFile *key_file;
-
-			key_file = panel_util_key_file_new_desktop ();
-			panel_util_key_file_set_string (key_file,
-							"Type", "Directory");
-
-			dlg = panel_ditem_editor_new (NULL, key_file, uri,
-						      _("Directory Properties"));
+			dlg = panel_ditem_editor_new_directory (NULL, NULL, uri,
+								_("Directory Properties"));
 
 		} else if (g_str_has_suffix (desktops [i], ".desktop")) {
 			/* a non-existant file.  Well we can still edit that

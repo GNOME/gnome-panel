@@ -87,6 +87,11 @@ GtkWidget *panel_ditem_editor_new (GtkWindow   *parent,
 				   const char  *uri,
 				   const char  *title);
 
+GtkWidget *panel_ditem_editor_new_directory (GtkWindow   *parent,
+					     GKeyFile    *key_file,
+					     const char  *uri,
+					     const char  *title);
+
 void panel_ditem_editor_sync_display (PanelDItemEditor *dialog);
 
 GKeyFile *panel_ditem_editor_get_key_file        (PanelDItemEditor *dialog);

@@ -1,3 +1,30 @@
+2007-05-25  Vincent Untz  <vuntz@gnome.org>
+
+	* gnome-desktop-item-edit.c: (main): use
+	panel_ditem_editor_new_directory() when it makes sense
+	* panel-ditem-editor.[ch]: add a new type-directory construct-only
+	property to know if the file is for .directory files
+	(panel_ditem_editor_constructor): set the Type key to directory if
+	we're editing a .directory file, and cache this information in
+	type_directory 
+	(panel_ditem_editor_get_property): updated for new property
+	(panel_ditem_editor_set_property): updated for new property
+	(panel_ditem_editor_class_init): updated for new property
+	(panel_ditem_editor_get_item_type): properly handle the .directory
+	case
+	(panel_ditem_editor_setup_ui): don't show the combo if we edit a new
+	.directory file
+	(panel_ditem_editor_init): update
+	(setup_icon_entry): update
+	(panel_ditem_editor_save): update, and make the error message
+	.directory aware
+	(panel_ditem_editor_new_full): new
+	(panel_ditem_editor_new): update to call panel_ditem_editor_new_full()
+	(panel_ditem_editor_new_directory): new
+	(panel_ditem_editor_set_type_directory): new
+	(panel_ditem_editor_get_type_directory): new
+	Fix bug #437940
+
 2007-05-17  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-force-quit.c: (kill_window_question): set title, since the
