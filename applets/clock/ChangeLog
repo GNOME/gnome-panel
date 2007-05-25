@@ -1,3 +1,16 @@
+2007-05-25  Vincent Untz  <vuntz@gnome.org>
+
+	* Makefile.am: remove old code handling icons, and directly use the
+	e-d-s icons
+	* calendar-window.c: (set_renderer_pixbuf_pixmap): new
+	(set_renderer_pixbuf_pixmap_for_bday): change path for icons, and use
+	set_renderer_pixbuf_pixmap()
+	(set_renderer_pixbuf_pixmap_for_weather): ditto
+	(calendar_window_tree_selection_changed), (create_task_list),
+	(create_list_for_appointment_model), (create_appointment_list),
+	(create_birthday_list), (create_weather_list),
+	(calendar_window_init): simplify the code to have only one selection
+
 2007-05-21  Sebastien Bacher  <seb128@ubuntu.com>
 
 	* calendar-client.c: (calendar_client_foreach_appointment_day):

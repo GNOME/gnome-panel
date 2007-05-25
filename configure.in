@@ -92,9 +92,10 @@ if test "x$enable_eds" = "xyes"; then
 else
   if test "x$enable_eds" != "xno"; then
     AC_MSG_CHECKING(for evolution-data-server)
-    if $PKG_CONFIG --exists libecal-1.2 libedataserverui-1.2; then
+    if $PKG_CONFIG --exists libecal-1.2 libedataserverui-1.2 evolution-data-server-1.2; then
        AC_MSG_RESULT(yes)
        LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED libedataserverui-1.2 >= $LIBEDATASERVERUI_REQUIRED"
+       CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
     else
        AC_MSG_RESULT(no)
     fi
@@ -105,6 +106,7 @@ if test -n "$LIBECAL_REQUIREMENT"; then
             [Defined when evolution-data-server libecal-1.2 and libedataserverui-1.2 are detected])
 fi
 AM_CONDITIONAL(HAVE_LIBECAL, test -n "$LIBECAL_REQUIREMENT")
+AC_SUBST(CLOCK_EDS_ICONDIR)
 
 PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED $LIBECAL_REQUIREMENT)
 AC_SUBST(CLOCK_CFLAGS)

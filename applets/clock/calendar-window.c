@@ -84,10 +84,7 @@ struct _CalendarWindowPrivate {
         GtkListStore *appointments_model;
         GtkListStore *tasks_model;
 
-        GtkTreeSelection *appointments_selection;
-        GtkTreeSelection *birthdays_selection;
-        GtkTreeSelection *tasks_selection;
-        GtkTreeSelection *weather_selection;
+        GtkTreeSelection *previous_selection;
 
         GtkTreeModelFilter *appointments_filter;
         GtkTreeModelFilter *birthdays_filter;
@@ -521,39 +518,25 @@ set_renderer_pixbuf_color_by_column (GtkCellRenderer *renderer,
                 g_free (color_string);
         }
 }
+
 static void
-set_renderer_pixbuf_pixmap_for_bday (GtkCellRenderer *renderer,
-				     GtkTreeModel    *model,
-				     GtkTreeIter     *iter,
-				     gint             data_column)
+set_renderer_pixbuf_pixmap (GtkCellRenderer *renderer,
+			    GtkTreeModel    *model,
+			    GtkTreeIter     *iter,
+			    const char      *iconpath)
 {
-	const gchar *path   = NULL;
-	gchar       *type   = NULL;
 	GdkPixbuf   *pixbuf = NULL;
 	GError      *error  = NULL;
 
-
-	gtk_tree_model_get (model, iter, data_column, &type, -1); 
-	if (!type)
+	if (!g_file_test (iconpath, G_FILE_TEST_IS_REGULAR)) {
+		g_printerr ("File '%s' does not exist.\n", iconpath);
 		return;
+	}
 
-	/* type should be in format like this:
-	 * pas-id-4121A93E00000001-anniversary
-	 * pas-id-41112AF900000003-birthday 
-	 * ...
-	 */
-	if (g_strrstr (type, "birthday") != 0)
-		path = CLOCK_ICONDIR"/icon_birthday_16.png"; 
-	else if (g_strrstr (type, "anniversary") != 0)
-		path = CLOCK_ICONDIR"/icon_anniversary_16.png"; 
-	else
-		path = CLOCK_ICONDIR"/icon_unknown_16.png"; 
-
-	g_free (type);
-
-	pixbuf = gdk_pixbuf_new_from_file (path, &error);
+	pixbuf = gdk_pixbuf_new_from_file (iconpath, &error);
 	if (error) {
-		g_warning ("Cannot load '%s': %s", path, error->message);
+		g_printerr ("Cannot load '%s': %s\n",
+			    iconpath, error->message);
 		g_error_free (error);
 		return;
 	}
@@ -568,31 +551,42 @@ set_renderer_pixbuf_pixmap_for_bday (GtkCellRenderer *renderer,
 }
 
 static void
+set_renderer_pixbuf_pixmap_for_bday (GtkCellRenderer *renderer,
+				     GtkTreeModel    *model,
+				     GtkTreeIter     *iter,
+				     gint             data_column)
+{
+	const gchar *path   = NULL;
+	gchar       *type   = NULL;
+
+	gtk_tree_model_get (model, iter, data_column, &type, -1); 
+	if (!type)
+		return;
+
+	/* type should be in format like this:
+	 * pas-id-4121A93E00000001-anniversary
+	 * pas-id-41112AF900000003-birthday 
+	 * ...
+	 */
+	if (g_strrstr (type, "birthday") != 0)
+		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_birthday_16.png"; 
+	else if (g_strrstr (type, "anniversary") != 0)
+		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_gifts_16.png"; 
+	else
+		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_miscellaneous_16.png"; 
+
+	g_free (type);
+
+	set_renderer_pixbuf_pixmap (renderer, model, iter, path);
+}
+
+static void
 set_renderer_pixbuf_pixmap_for_weather (GtkCellRenderer *renderer,
 					GtkTreeModel    *model,
 					GtkTreeIter     *iter)
 {
-	const gchar *path   = NULL;
-	GdkPixbuf   *pixbuf = NULL;
-	GError      *error  = NULL;
-
-
-	path = CLOCK_ICONDIR"/icon_weather_16.png";
-
-	pixbuf = gdk_pixbuf_new_from_file (path, &error);
-	if (error) {
-		g_warning ("Cannot load '%s': %s", path, error->message);
-		g_error_free (error);
-		return;
-	}
-
-	g_object_set (renderer,
-		      "visible", pixbuf != NULL,
-		      "pixbuf", pixbuf,
-		      NULL);
-
-	if (pixbuf)
-		g_object_unref (pixbuf);
+	set_renderer_pixbuf_pixmap (renderer, model, iter,
+				    CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_holiday_16.png");
 }
 
 static void
@@ -693,42 +687,20 @@ static void
 calendar_window_tree_selection_changed (GtkTreeSelection *selection,
 					CalendarWindow   *calwin)
 {
-	if (selection != calwin->priv->appointments_selection) {
-		g_signal_handlers_block_by_func (calwin->priv->appointments_selection,
+	if (selection == calwin->priv->previous_selection)
+		return;
+
+	if (calwin->priv->previous_selection) {
+		g_signal_handlers_block_by_func (calwin->priv->previous_selection,
 						 calendar_window_tree_selection_changed,
 						 calwin);
-		gtk_tree_selection_unselect_all (calwin->priv->appointments_selection);
-		g_signal_handlers_unblock_by_func (calwin->priv->appointments_selection,
+		gtk_tree_selection_unselect_all (calwin->priv->previous_selection);
+		g_signal_handlers_unblock_by_func (calwin->priv->previous_selection,
 						   calendar_window_tree_selection_changed,
 						   calwin);
 	}
-	if (selection != calwin->priv->birthdays_selection) {
-		g_signal_handlers_block_by_func (calwin->priv->birthdays_selection,
-						 calendar_window_tree_selection_changed,
-						 calwin);
-		gtk_tree_selection_unselect_all (calwin->priv->birthdays_selection);
-		g_signal_handlers_unblock_by_func (calwin->priv->birthdays_selection,
-						   calendar_window_tree_selection_changed,
-						   calwin);
-	}
-	if (selection != calwin->priv->tasks_selection) {
-		g_signal_handlers_block_by_func (calwin->priv->tasks_selection,
-						 calendar_window_tree_selection_changed,
-						 calwin);
-		gtk_tree_selection_unselect_all (calwin->priv->tasks_selection);
-		g_signal_handlers_unblock_by_func (calwin->priv->tasks_selection,
-						   calendar_window_tree_selection_changed,
-						   calwin);
-	}
-	if (selection != calwin->priv->weather_selection) {
-		g_signal_handlers_block_by_func (calwin->priv->weather_selection,
-						 calendar_window_tree_selection_changed,
-						 calwin);
-		gtk_tree_selection_unselect_all (calwin->priv->weather_selection);
-		g_signal_handlers_unblock_by_func (calwin->priv->weather_selection,
-						   calendar_window_tree_selection_changed,
-						   calwin);
-	}
+
+	calwin->priv->previous_selection = selection;
 }
 
 static GtkWidget *
@@ -741,6 +713,7 @@ create_task_list (CalendarWindow *calwin,
         GtkWidget         *scrolled;
         GtkCellRenderer   *cell;
         GtkTreeViewColumn *column;
+        GtkTreeSelection  *selection;
 
         list = gtk_expander_new_with_mnemonic (_("_Tasks"));
 
@@ -810,8 +783,8 @@ create_task_list (CalendarWindow *calwin,
                                              NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 
-	calwin->priv->tasks_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-	g_signal_connect (calwin->priv->tasks_selection, "changed",
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+	g_signal_connect (selection, "changed",
 			  G_CALLBACK (calendar_window_tree_selection_changed),
 			  calwin);
 
@@ -897,7 +870,6 @@ static GtkWidget *
 create_list_for_appointment_model (CalendarWindow      *calwin,
 				   const char          *label,
 				   GtkTreeModelFilter **filter,
-				   GtkTreeSelection   **selection,
 				   GtkTreeModelFilterVisibleFunc is_for_filter,
 				   GtkTreeCellDataFunc  set_pixbuf_cell,
 				   gboolean             show_start,
@@ -909,6 +881,7 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
         GtkWidget         *scrolled;
         GtkCellRenderer   *cell;
         GtkTreeViewColumn *column;
+	GtkTreeSelection  *selection;
 
         list = gtk_expander_new_with_mnemonic (label);
 
@@ -966,8 +939,8 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
                                             "text", APPOINTMENT_COLUMN_SUMMARY);
         gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 
-	*selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-	g_signal_connect (*selection, "changed",
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+	g_signal_connect (selection, "changed",
 			  G_CALLBACK (calendar_window_tree_selection_changed),
 			  calwin);
 
@@ -987,7 +960,6 @@ create_appointment_list (CalendarWindow  *calwin,
 					calwin,
 					_("_Appointments"),
 					&calwin->priv->appointments_filter,
-					&calwin->priv->appointments_selection,
 					is_appointment,
 					appointment_pixbuf_cell_data_func,
 					TRUE,
@@ -1005,7 +977,6 @@ create_birthday_list (CalendarWindow  *calwin,
 					calwin,
 					_("_Birthdays and Anniversaries"),
 					&calwin->priv->birthdays_filter,
-					&calwin->priv->birthdays_selection,
 					is_birthday,
 					birthday_pixbuf_cell_data_func,
 					FALSE,
@@ -1022,7 +993,6 @@ create_weather_list (CalendarWindow  *calwin,
 					calwin,
 					_("_Weather Information"),
 					&calwin->priv->weather_filter,
-					&calwin->priv->weather_selection,
 					is_weather,
 					weather_pixbuf_cell_data_func,
 					FALSE,
@@ -1691,6 +1661,7 @@ calendar_window_init (CalendarWindow *calwin)
 	gtk_window_set_icon_name (window, CLOCK_ICON);
 
 #ifdef HAVE_LIBECAL
+	calwin->priv->previous_selection = NULL;
 	calwin->priv->gconfclient = gconf_client_get_default ();
 #endif
 }
