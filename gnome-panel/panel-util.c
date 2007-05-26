@@ -1280,6 +1280,39 @@ panel_util_key_file_remove_locale_key (GKeyFile    *keyfile,
 }
 
 void
+panel_util_key_file_remove_all_locale_key (GKeyFile    *keyfile,
+					   const gchar *key)
+{
+	char **keys;
+	int    key_len;
+	int    i;
+
+	if (!key)
+		return;
+
+	keys = g_key_file_get_keys (keyfile, "Desktop Entry", NULL, NULL);
+	if (!keys)
+		return;
+
+	key_len = strlen (key);
+
+	for (i = 0; keys[i] != NULL; i++) {
+		int len;
+
+		if (strncmp (keys[i], key, key_len))
+			continue;
+
+		len = strlen (keys[i]);
+		if (len == key_len ||
+		    (len > key_len && keys[i][key_len] == '['))
+			g_key_file_remove_key (keyfile, "Desktop Entry",
+					       keys[i], NULL);
+	}
+
+	g_strfreev (keys);
+}
+
+void
 panel_util_key_file_ensure_C_key (GKeyFile   *keyfile,
 				  const char *key)
 {

@@ -1,5 +1,15 @@
 2007-05-26  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-ditem-editor.c: (panel_ditem_editor_name_changed),
+	(panel_ditem_editor_comment_changed),
+	(panel_ditem_editor_icon_changed), (panel_ditem_editor_revert): use
+	panel_util_key_file_remove_all_locale_key()
+	* panel-util.[ch]: (panel_util_key_file_remove_all_locale_key): new,
+	to remove all localized and non-locale versions of a key.
+	Fix bug #363818
+
+2007-05-26  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-properties-dialog.c:
 	(panel_properties_dialog_image_changed): ignore the first
 	selection-changed signals, since they're bogus (GTK+ bug #327243)

@@ -858,8 +858,8 @@ panel_ditem_editor_name_changed (PanelDItemEditor *dialog)
 		panel_util_key_file_set_locale_string (dialog->priv->key_file,
 						       "Name", name);
 	else
-		panel_util_key_file_remove_locale_key (dialog->priv->key_file,
-						       "Name");
+		panel_util_key_file_remove_all_locale_key (dialog->priv->key_file,
+							   "Name");
 
 	g_signal_emit (G_OBJECT (dialog), ditem_edit_signals[NAME_CHANGED], 0,
 		       name);
@@ -928,8 +928,8 @@ panel_ditem_editor_comment_changed (PanelDItemEditor *dialog)
 		panel_util_key_file_set_locale_string (dialog->priv->key_file,
 						       "Comment", comment);
 	else
-		panel_util_key_file_remove_locale_key (dialog->priv->key_file,
-						       "Comment");
+		panel_util_key_file_remove_all_locale_key (dialog->priv->key_file,
+							   "Comment");
 
 	g_signal_emit (G_OBJECT (dialog), ditem_edit_signals[COMMENT_CHANGED],
 		       0, comment);
@@ -964,8 +964,8 @@ panel_ditem_editor_icon_changed (PanelDItemEditor *dialog)
 		panel_util_key_file_set_locale_string (dialog->priv->key_file,
 						       "Icon", icon);
 	else
-		panel_util_key_file_remove_locale_key (dialog->priv->key_file,
-						       "Icon");
+		panel_util_key_file_remove_all_locale_key (dialog->priv->key_file,
+							   "Icon");
 
 	g_signal_emit (G_OBJECT (dialog), ditem_edit_signals[ICON_CHANGED], 0,
 		       file);
@@ -1502,7 +1502,7 @@ panel_ditem_editor_revert (PanelDItemEditor *dialog)
 						revert_key_file,
 						revert_keys [i].key);
 				if (string == NULL)
-					panel_util_key_file_remove_locale_key (
+					panel_util_key_file_remove_all_locale_key (
 							key_file,
 							revert_keys [i].key);
 				else
