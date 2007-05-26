@@ -1,5 +1,13 @@
 2007-05-26  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-properties-dialog.c:
+	(panel_properties_dialog_image_changed): ignore the first
+	selection-changed signals, since they're bogus (GTK+ bug #327243)
+	(panel_properties_dialog_setup_image_chooser): initialize helper.
+	Fix bug #412479
+
+2007-05-26  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-applet-frame.c: (panel_applet_frame_set_flags_from_any):
 	update the background if a handle was added. Fix initial background
 	not working for handles.

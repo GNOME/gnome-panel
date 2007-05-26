@@ -77,6 +77,9 @@ typedef struct {
 
 	/* The theme directory of the icon, see bug #119209 */
 	char          *icon_theme_dir;
+
+	/* FIXME: This is a workaround for GTK+ bug #327243 */
+	int            selection_emitted;
 } PanelPropertiesDialog;
 
 static GQuark panel_properties_dialog_quark = 0;
@@ -395,6 +398,12 @@ panel_properties_dialog_image_changed (PanelPropertiesDialog *dialog)
 
 	image = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->image_chooser));
 
+	/* FIXME: This is an ugly workaround for GTK+ bug #327243.
+	 * FIXME: Note that GTK+ 2.12 and file-set signal might help. */
+	if (!dialog->selection_emitted < 2 && !image) {
+		dialog->selection_emitted++;
+		return;
+	}
 	panel_profile_set_background_image (dialog->toplevel, image);
 
 	g_free (image);
@@ -463,6 +472,7 @@ panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 	if (image)
 		g_free (image);
 
+	dialog->selection_emitted = 0;
 	g_signal_connect_swapped (dialog->image_chooser, "selection-changed",
 				  G_CALLBACK (panel_properties_dialog_image_changed),
 				  dialog);
