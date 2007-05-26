@@ -503,14 +503,12 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 		const char *title;
 		const char *icon;
 
-		/* FIXME: find nice icons. We don't use NULL since it will
-		 * make the menu items smaller... */
 		if (connected_volumes) {
 			title = _("Network Places");
-			icon = "network-server";
+			icon = PANEL_ICON_NETWORK_SERVER;
 		} else {
 			title = _("Removable Media");
-			icon = "";
+			icon = PANEL_ICON_REMOVABLE_MEDIA;
 		}
 
 		item = gtk_image_menu_item_new ();
