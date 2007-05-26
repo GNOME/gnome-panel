@@ -1,5 +1,12 @@
 2007-05-26  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-properties-dialog.c:
+	(panel_properties_dialog_update_for_attached): change title of the
+	dialog to Drawer Properties if the toplevel is a drawer.
+	Fix bug #319284
+
+2007-05-26  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-icon-names.h: add new icon
 	* panel-menu-items.c: (panel_place_menu_item_append_volumes): use an
 	icon for removable media menu item

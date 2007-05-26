@@ -923,6 +923,8 @@ panel_properties_dialog_update_for_attached (PanelPropertiesDialog *dialog,
 	if (!attached)
 		panel_properties_dialog_remove_icon_entry (dialog);
 	else {
+		gtk_window_set_title (GTK_WINDOW (dialog->properties_dialog),
+				      _("Drawer Properties"));
 		panel_properties_dialog_remove_toggles (dialog);
 		panel_properties_dialog_remove_orientation_combo (dialog);
 	}
