@@ -2824,7 +2824,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 			  G_CALLBACK (properties_response_cb),
                           cd);
 
-        update_properties_for_format (cd, GTK_COMBO_BOX (combo), cd->format);
+	cd->custom_format_shown = FALSE;
+	update_properties_for_format (cd, GTK_COMBO_BOX (combo), cd->format);
 
 	/* valid values begin from 1 */
 	if (cd->can_handle_format_12)
