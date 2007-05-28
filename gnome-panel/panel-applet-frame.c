@@ -182,6 +182,7 @@ panel_applet_frame_set_flags_from_any (PanelAppletFrame *frame,
 {
 	gboolean major;
 	gboolean minor;
+	gboolean old_has_handle;
 	int      flags;
 	
 	flags = BONOBO_ARG_GET_SHORT (any);
@@ -192,7 +193,17 @@ panel_applet_frame_set_flags_from_any (PanelAppletFrame *frame,
 	panel_widget_set_applet_expandable (
 		frame->priv->panel, GTK_WIDGET (frame), major, minor);
 
+	old_has_handle = frame->priv->has_handle;
 	frame->priv->has_handle = (flags & APPLET_HAS_HANDLE) != 0;
+
+	if (!old_has_handle && frame->priv->has_handle) {
+		/* we've added an handle, so we need to get the background for
+		 * it */
+		PanelBackground *background;
+
+		background = &frame->priv->panel->background;
+		panel_applet_frame_change_background (frame, background->type);
+	}
 }
 
 static void

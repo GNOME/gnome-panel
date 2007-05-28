@@ -2,6 +2,15 @@
 
 	Backport from HEAD.
 
+	* panel-applet-frame.c: (panel_applet_frame_set_flags_from_any):
+	update the background if a handle was added. Fix initial background
+	not working for handles.
+	Fix bug #343168
+
+2007-05-28  Vincent Untz  <vuntz@gnome.org>
+
+	Backport from HEAD.
+
 	* panel-run-dialog.c: (program_list_selection_changed): don't reset
 	visibility of all programs in the program list. And beautify the code.
 	Fix bug #339963
