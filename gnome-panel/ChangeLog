@@ -2,6 +2,14 @@
 
 	Backport from HEAD.
 
+	* panel-ditem-editor.c: (panel_ditem_editor_setup_ui): always put
+	initial focus on the name entry
+	Fix part of bug #440690
+
+2007-05-28  Vincent Untz  <vuntz@gnome.org>
+
+	Backport from HEAD.
+
 	* launcher.c: (panel_launcher_create_with_id): if we have a file URI,
 	we need to unescape the URI before putting the filename in gconf,
 	since the file on disk is unescaped.

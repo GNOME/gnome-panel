@@ -715,8 +715,6 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 				break;
 			}
 		} while (gtk_tree_model_iter_next (model, &iter));
-
-		gtk_widget_grab_focus (priv->type_combo);
 	} else if (type == PANEL_DITEM_EDITOR_TYPE_DIRECTORY) {
 		table_attach_label (GTK_TABLE (priv->table), priv->name_label,
 				    1, 2, 0, 1);
@@ -727,8 +725,6 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 				    1, 2, 1, 2);
 		table_attach_entry (GTK_TABLE (priv->table), priv->comment_entry,
 				    2, 3, 1, 2);
-
-		gtk_widget_grab_focus (priv->name_entry);
 	} else {
 		table_attach_label (GTK_TABLE (priv->table), priv->name_label,
 				    1, 2, 0, 1);
@@ -744,8 +740,6 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 				    1, 2, 2, 3);
 		table_attach_entry (GTK_TABLE (priv->table), priv->comment_entry,
 				    2, 3, 2, 3);
-
-		gtk_widget_grab_focus (priv->name_entry);
 	}
 
 	type_combo_changed (dialog);
@@ -762,6 +756,8 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 	gtk_container_set_focus_chain (GTK_CONTAINER (priv->table),
 				       focus_chain);
 	g_list_free (focus_chain);
+
+	gtk_widget_grab_focus (priv->name_entry);
 }
 
 /*
