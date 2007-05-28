@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-14 05:33+0300\n"
-"PO-Revision-Date: 2007-05-14 05:39+0300\n"
+"POT-Creation-Date: 2007-05-27 23:48+0300\n"
+"PO-Revision-Date: 2007-05-27 23:54+0300\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: i18n@mova.org <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgid "_Preferences"
 msgstr "Nała_dy"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2945
+#: ../applets/clock/clock.c:1995
 msgid "Clock"
 msgstr "Hadzińnik"
 
@@ -78,32 +78,63 @@ msgstr "Hieneratar, što stvaraje aplety hadzińnika."
 msgid "Get the current time and date"
 msgstr "Pakazvaje dziejnuju datu j čas"
 
-#: ../applets/clock/clock.c:386
-msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %p"
-
-#: ../applets/clock/clock.c:386
-#: ../applets/clock/clock.c:780
+#: ../applets/clock/calendar-window.c:225
+#: ../applets/clock/clock.c:353
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:388
-#: ../applets/clock/clock.c:1967
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
-#: ../applets/clock/clock.c:388
-#: ../applets/clock/clock.c:782
-#: ../applets/clock/clock.c:1969
+#: ../applets/clock/calendar-window.c:227
+#: ../applets/clock/clock.c:355
+#: ../applets/clock/clock.c:1015
 msgid "%H:%M"
 msgstr "%H:%M"
+
+#. Translators: If the event did not start on the current day
+#. * we will display the start date in the most abbreviated way
+#. * possible.
+#: ../applets/clock/calendar-window.c:233
+msgid "%b %d"
+msgstr "%d %b"
+
+#: ../applets/clock/calendar-window.c:718
+msgid "_Tasks"
+msgstr "_Zadačy"
+
+#: ../applets/clock/calendar-window.c:834
+msgid "All Day"
+msgstr "Ceły dzień"
+
+#: ../applets/clock/calendar-window.c:961
+msgid "_Appointments"
+msgstr "_Terminy"
+
+#: ../applets/clock/calendar-window.c:978
+msgid "_Birthdays and Anniversaries"
+msgstr ""
+
+#: ../applets/clock/calendar-window.c:994
+msgid "_Weather Information"
+msgstr "_Źviestki ab nadvorji"
+
+#: ../applets/clock/calendar-window.c:1660
+msgid "Calendar"
+msgstr "Kalandar"
+
+#: ../applets/clock/clock.c:353
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#: ../applets/clock/clock.c:355
+#: ../applets/clock/clock.c:1013
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
 
 #. translators: replace %e with %d if, when the day of the
 #. *              month as a decimal number is a single digit, it
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:408
+#: ../applets/clock/clock.c:375
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -111,7 +142,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:415
+#: ../applets/clock/clock.c:382
 #, c-format
 msgid ""
 "%1$s\n"
@@ -124,77 +155,55 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:423
+#: ../applets/clock/clock.c:390
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:544
+#: ../applets/clock/clock.c:511
 msgid "%A %B %d"
 msgstr "%A %d %B"
 
-#: ../applets/clock/clock.c:556
+#: ../applets/clock/clock.c:523
 msgid "Click to view your appointments and tasks"
 msgstr "Klikni, kab pabačyć terminy j zadačy"
 
-#: ../applets/clock/clock.c:558
+#: ../applets/clock/clock.c:525
 msgid "Click to view month calendar"
 msgstr "Klikni, kab pabačyć miesiačny kalandar"
 
-#. Translators: If the event did not start on the current day
-#. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:787
-msgid "%b %d"
-msgstr "%d %b"
-
-#: ../applets/clock/clock.c:1133
-msgid "Tasks"
-msgstr "Zadačy"
-
-#: ../applets/clock/clock.c:1282
-msgid "All Day"
-msgstr "Ceły dzień"
-
-#: ../applets/clock/clock.c:1321
-msgid "Appointments"
-msgstr "Terminy"
-
-#: ../applets/clock/clock.c:1562
-msgid "Calendar"
-msgstr "Kalandar"
-
-#: ../applets/clock/clock.c:1858
+#: ../applets/clock/clock.c:904
 msgid "Computer Clock"
 msgstr "Kamputarny hadzińnik"
 
-#: ../applets/clock/clock.c:1962
+#: ../applets/clock/clock.c:1008
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1964
+#: ../applets/clock/clock.c:1010
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:2006
+#: ../applets/clock/clock.c:1052
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:2081
+#: ../applets/clock/clock.c:1127
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Niemahčyma ŭruchomić pryładu kanfihuracyi času: %s"
 
-#: ../applets/clock/clock.c:2119
+#: ../applets/clock/clock.c:1165
 msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
 msgstr "Nielha adšukać prahramu kanfihuracyi daty j času. Moža, jana nie zainstalavanaja?"
 
-#: ../applets/clock/clock.c:2601
+#: ../applets/clock/clock.c:1651
 msgid "Custom format"
 msgstr "Ułasny farmat"
 
-#: ../applets/clock/clock.c:2725
-#: ../applets/clock/clock.c:2903
+#: ../applets/clock/clock.c:1775
+#: ../applets/clock/clock.c:1953
 #: ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90
 #: ../applets/wncklet/wncklet.c:128
@@ -202,56 +211,56 @@ msgstr "Ułasny farmat"
 msgid "There was an error displaying help: %s"
 msgstr "Pry pakazie dapamohi adbyłasia pamyłka: %s"
 
-#: ../applets/clock/clock.c:2762
+#: ../applets/clock/clock.c:1812
 msgid "Clock Preferences"
 msgstr "Nałady hadzińnika"
 
-#: ../applets/clock/clock.c:2787
+#: ../applets/clock/clock.c:1837
 msgid "Clock _type:"
 msgstr "Typ _hadzińnika:"
 
-#: ../applets/clock/clock.c:2798
+#: ../applets/clock/clock.c:1848
 msgid "12 hour"
 msgstr "12-hadzinny"
 
-#: ../applets/clock/clock.c:2799
+#: ../applets/clock/clock.c:1849
 msgid "24 hour"
 msgstr "24-hadzinny"
 
-#: ../applets/clock/clock.c:2800
+#: ../applets/clock/clock.c:1850
 msgid "UNIX time"
 msgstr "Uniksavy čas"
 
-#: ../applets/clock/clock.c:2801
+#: ../applets/clock/clock.c:1851
 msgid "Internet time"
 msgstr "Internetny čas"
 
-#: ../applets/clock/clock.c:2809
+#: ../applets/clock/clock.c:1859
 msgid "Custom _format:"
 msgstr "Ułasny _farmat:"
 
-#: ../applets/clock/clock.c:2828
+#: ../applets/clock/clock.c:1878
 msgid "Show _seconds"
 msgstr "Pakazvaj _sekundy"
 
-#: ../applets/clock/clock.c:2837
+#: ../applets/clock/clock.c:1887
 msgid "Show _date"
 msgstr "Pakazvaj _datu"
 
-#: ../applets/clock/clock.c:2846
+#: ../applets/clock/clock.c:1896
 msgid "Use _UTC"
 msgstr "Čas _UTC"
 
-#: ../applets/clock/clock.c:2948
+#: ../applets/clock/clock.c:1998
 msgid "The Clock displays the current time and date"
 msgstr "Aplet hadzińnika, jaki pakazvaje dziejnuju datu j čas"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2951
+#: ../applets/clock/clock.c:2001
 #: ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:531
-#: ../applets/wncklet/window-list.c:760
+#: ../applets/wncklet/window-list.c:762
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:546
 #: ../gnome-panel/panel-context-menu.c:134
@@ -277,74 +286,110 @@ msgid "Custom format of the clock"
 msgstr "Ułasny farmat hadzińnika"
 
 #: ../applets/clock/clock.schemas.in.h:13
+msgid "Expand list of appointments"
+msgstr "Razharni śpis terminaŭ"
+
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "Expand list of birthdays"
+msgstr "Razharni śpis dnioŭ naradžeńniaŭ"
+
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "Expand list of tasks"
+msgstr "Razharni śpis zadač"
+
+#: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of weather information"
+msgstr "Razharni śpis sa źviestkami ab nadvorji"
+
+#: ../applets/clock/clock.schemas.in.h:17
 msgid "Hour format"
 msgstr "Farmat hadzin"
 
-#: ../applets/clock/clock.schemas.in.h:14
+#: ../applets/clock/clock.schemas.in.h:18
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Akreślivaje, ci pakazvać u hadzińniku datu pobač z časam."
 
-#: ../applets/clock/clock.schemas.in.h:15
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "If true, display seconds in time."
 msgstr "Akreślivaje, ci pakazvać sekundy."
 
-#: ../applets/clock/clock.schemas.in.h:16
+#: ../applets/clock/clock.schemas.in.h:20
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Akreślivaje, ci pakazvać čas UTC."
 
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:21
+#, fuzzy
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Kali PRAŬDA, pakazvaje numary tydniaŭ u kalandary."
+
+#: ../applets/clock/clock.schemas.in.h:22
+#, fuzzy
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "Kali PRAŬDA, pakazvaje numary tydniaŭ u kalandary."
+
+#: ../applets/clock/clock.schemas.in.h:23
+#, fuzzy
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "Kali PRAŬDA, pakazvaje numary tydniaŭ u kalandary."
+
+#: ../applets/clock/clock.schemas.in.h:24
+#, fuzzy
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "Kali PRAŬDA, pakazvaje numary tydniaŭ u kalandary."
+
+#: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "Akreślivaje, ci pakazvać datu ŭ padkazcy, kali kursor myšy znachodzicca nad hadzińnikam."
 
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, show week numbers in the calendar."
 msgstr "Kali PRAŬDA, pakazvaje numary tydniaŭ u kalandary."
 
-#: ../applets/clock/clock.schemas.in.h:19
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "Show date in clock"
 msgstr "Pakazvaj datu ŭ hadzińniku"
 
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "Show date in tooltip"
 msgstr "Pakazvaj datu ŭ padkazcy"
 
-#: ../applets/clock/clock.schemas.in.h:21
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "Show time with seconds"
 msgstr "Pakazvaj čas z sekundami"
 
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:30
 msgid "Show week numbers in calendar"
 msgstr "Pakazvaj numary tydniaŭ u kalandary"
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
 msgstr "Užyvańnie hetaha kluča sastarełaje ŭ GNOME 2.6 ad času pajaŭleńnia kluča \"format\". Schiema była zachavanaja dla zhodnaści z papiarednimi versijami."
 
-#: ../applets/clock/clock.schemas.in.h:24
+#: ../applets/clock/clock.schemas.in.h:32
 msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information."
 msgstr "Hety kluč akreślivaje farmat času, užyvany apletam hadzińnika, kali kluč farmatu akreśleny jak \"custom\" (ułasny). Kab atrymać akreśleny farmat, možna ŭžyvać parametry, zrazumiełyja dla funkcyi strftime(). Hladzi dadatkovyja źviestki ŭ dapamožniku pa strftime()."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display Internet time. The Internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
 msgstr "Hety kluč akreślivaje farmat hadziny, užyvany apletam hadzińnika. Dapuščalnyja vartaści: \"12-hour\", \"24-hour\", \"internet\", \"unix\" i \"custom\" (ułasny). Kali budzie abrany \"internet\" , hadzińnik budzie pakazvać internetny čas. Systema internetnaha času padzialaje dzień na 1000 \"udaraŭ\". U hetaj systemie niama časavych pajasoŭ, tamu hety čas va ŭsim śviecie adziny. Kali abrany \"unix\", hadzińnik budzie pakazvać čas u sekundach, jaki minuŭ ad Epochi, ad 01-01-1970. Kali abrany \"custom\" (ułasny), hadzińnik budzie pakazvać čas zhodna z farmatam, padadzienym u klučy custom_format."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Akreślivaje prahramu, uklučanuju z metaj kanfihuravańnia času."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:35
 msgid "Time configuration tool"
 msgstr "Pryłada kanfihuracyi času"
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Use Internet time"
 msgstr "Užyćcio internetnaha času"
 
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:37
 msgid "Use UNIX time"
 msgstr "Uniksavy čas"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Use UTC"
 msgstr "Čas UTC"
 
@@ -380,7 +425,7 @@ msgstr ""
 "prydatnaha, ci choć trochi \"karysnaha\"."
 
 #: ../applets/fish/fish.c:436
-#: ../gnome-panel/panel-properties-dialog.c:441
+#: ../gnome-panel/panel-properties-dialog.c:450
 msgid "Images"
 msgstr "Vyjavy"
 
@@ -614,7 +659,7 @@ msgid "Switch between workspaces"
 msgstr "Pieraklučaje pamiž rabočymi abšarami"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:763
+#: ../applets/wncklet/window-list.c:765
 msgid "Window List"
 msgstr "Śpis voknaŭ"
 
@@ -624,7 +669,7 @@ msgstr "Hieneratar apletaŭ navihacyi voknaŭ"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: ../applets/wncklet/window-menu.c:78
-#: ../applets/wncklet/window-menu.c:241
+#: ../applets/wncklet/window-menu.c:240
 msgid "Window Selector"
 msgstr "Menu voknaŭ"
 
@@ -663,7 +708,7 @@ msgstr "Knopka, jakaja chavaje ŭsie vokny i pakazvaje stoł."
 msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
 msgstr "Kiraŭnik voknaŭ nie padtrymvaje knopki adkryvańnia stała, albo nivodzin z kiraŭnikoŭ nia ŭklučany."
 
-#: ../applets/wncklet/window-list.c:765
+#: ../applets/wncklet/window-list.c:767
 msgid "The Window List shows a list of all windows in a set of buttons and lets you browse them."
 msgstr "Śpis voknaŭ pakazvaje śpis usich voknaŭ u jakaści naboru knopak i dazvalaje ich prahladać."
 
@@ -908,7 +953,7 @@ msgid "_Add to Drawer..."
 msgstr "_Dadaj da šuflady..."
 
 #: ../gnome-panel/drawer.c:595
-#: ../gnome-panel/launcher.c:853
+#: ../gnome-panel/launcher.c:858
 #: ../gnome-panel/panel-action-button.c:138
 #: ../gnome-panel/panel-context-menu.c:212
 msgid "_Properties"
@@ -928,18 +973,18 @@ msgstr "- Redahuj fajły .desktop"
 
 # FIXME moža niešta lepšaje prydumajecca
 #: ../gnome-panel/gnome-desktop-item-edit.c:160
-#: ../gnome-panel/gnome-desktop-item-edit.c:216
-#: ../gnome-panel/launcher.c:943
+#: ../gnome-panel/gnome-desktop-item-edit.c:212
+#: ../gnome-panel/launcher.c:948
 msgid "Create Launcher"
 msgstr "Novy aktyvatar"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:184
-#: ../gnome-panel/gnome-desktop-item-edit.c:210
+#: ../gnome-panel/gnome-desktop-item-edit.c:186
+#: ../gnome-panel/gnome-desktop-item-edit.c:206
 msgid "Directory Properties"
 msgstr "Ułaścivaści katalohu"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:189
-#: ../gnome-panel/launcher.c:781
+#: ../gnome-panel/gnome-desktop-item-edit.c:191
+#: ../gnome-panel/launcher.c:786
 msgid "Launcher Properties"
 msgstr "Ułaścivaści aktyvatara"
 
@@ -981,19 +1026,19 @@ msgstr "Dla fajłu aktyvatara paneli nie akreślili URI\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Niemahčyma adčynić fajł %s z aktyvataram paneli%s%s\n"
 
-#: ../gnome-panel/launcher.c:847
+#: ../gnome-panel/launcher.c:852
 msgid "_Launch"
 msgstr "_Uruchom"
 
-#: ../gnome-panel/launcher.c:886
+#: ../gnome-panel/launcher.c:891
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Kluč %s nie abrany, niemahčyma zahruzić aktyvatar\n"
 
-#: ../gnome-panel/launcher.c:1010
-#: ../gnome-panel/panel-ditem-editor.c:1287
-#: ../gnome-panel/panel-ditem-editor.c:1313
-#: ../gnome-panel/panel-ditem-editor.c:1345
+#: ../gnome-panel/launcher.c:1015
+#: ../gnome-panel/panel-ditem-editor.c:1346
+#: ../gnome-panel/panel-ditem-editor.c:1380
+#: ../gnome-panel/panel-ditem-editor.c:1412
 msgid "Could not save launcher"
 msgstr "Niemahčyma zapisać aktyvatar"
 
@@ -1075,7 +1120,7 @@ msgstr "_Zablakuj ekran"
 #: ../gnome-panel/panel-action-button.c:214
 #: ../gnome-panel/panel-menu-bar.c:458
 #: ../gnome-panel/panel-menu-button.c:991
-#: ../gnome-panel/panel-util.c:805
+#: ../gnome-panel/panel-util.c:808
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Niemahčyma ŭruchomić '%s'"
@@ -1120,6 +1165,7 @@ msgid "Locate documents and folders on this computer by name or content"
 msgstr "Znachodzić dakumenty j katalohi pa naźvie albo źmieścivie"
 
 #: ../gnome-panel/panel-action-button.c:327
+#: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
 msgstr "Začyni gvałtam"
 
@@ -1220,29 +1266,29 @@ msgstr "Dadavańnie da paneli"
 msgid "Find an _item to add to the panel:"
 msgstr "_Šukany element kab dadać da paneli:"
 
-#: ../gnome-panel/panel-applet-frame.c:839
+#: ../gnome-panel/panel-applet-frame.c:850
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Vyklučeńnie z popup_menu \"%s\"\n"
 
-#: ../gnome-panel/panel-applet-frame.c:964
+#: ../gnome-panel/panel-applet-frame.c:975
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" niečakana pierastaŭ dziejničać"
 
-#: ../gnome-panel/panel-applet-frame.c:966
+#: ../gnome-panel/panel-applet-frame.c:977
 msgid "Panel object has quit unexpectedly"
 msgstr "Abjekt paneli niečakana pierastaŭ dziejničać"
 
-#: ../gnome-panel/panel-applet-frame.c:973
+#: ../gnome-panel/panel-applet-frame.c:984
 msgid "If you reload a panel object, it will automatically be added back to the panel."
 msgstr "Kali abjekt paneli budzie pierazahružany, jon budzie aŭtamatyčna dadadzieny da paneli znoŭ."
 
-#: ../gnome-panel/panel-applet-frame.c:979
+#: ../gnome-panel/panel-applet-frame.c:990
 msgid "_Don't Reload"
 msgstr "_Nie pierazahružaj znoŭ"
 
-#: ../gnome-panel/panel-applet-frame.c:980
+#: ../gnome-panel/panel-applet-frame.c:991
 msgid "_Reload"
 msgstr "_Pierazahruzi"
 
@@ -1251,22 +1297,22 @@ msgstr "_Pierazahruzi"
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:995
-#: ../gnome-panel/panel-applet-frame.c:1083
-#: ../gnome-panel/panel-util.c:393
+#: ../gnome-panel/panel-applet-frame.c:1006
+#: ../gnome-panel/panel-applet-frame.c:1094
+#: ../gnome-panel/panel-util.c:396
 msgid "Error"
 msgstr "Pamyłka"
 
-#: ../gnome-panel/panel-applet-frame.c:1046
+#: ../gnome-panel/panel-applet-frame.c:1057
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panel sutyknułasia z prablemaj pry zahruzcy \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:1062
+#: ../gnome-panel/panel-applet-frame.c:1073
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Ci vydalić hety aplet z kanfihuracyi?"
 
-#: ../gnome-panel/panel-applet-frame.c:1136
+#: ../gnome-panel/panel-applet-frame.c:1147
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Niemahčyma atrymać ad farmantu interfejsu AppletShell\n"
 
@@ -1321,75 +1367,83 @@ msgstr "_Novaja panel"
 msgid "A_bout Panels"
 msgstr "_Pra paneli"
 
-#: ../gnome-panel/panel-ditem-editor.c:112
+#: ../gnome-panel/panel-ditem-editor.c:113
 msgid "Application"
 msgstr "Aplikacyja"
 
-#: ../gnome-panel/panel-ditem-editor.c:114
+#: ../gnome-panel/panel-ditem-editor.c:115
 msgid "Application in Terminal"
 msgstr "Aplikacyja ŭ terminale"
 
-#: ../gnome-panel/panel-ditem-editor.c:116
+#: ../gnome-panel/panel-ditem-editor.c:117
 msgid "Location"
 msgstr "Pałažeńnie"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:582
+#: ../gnome-panel/panel-ditem-editor.c:619
 msgid "_Type:"
 msgstr "_Typ:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:589
+#: ../gnome-panel/panel-ditem-editor.c:626
 msgid "_Name:"
 msgstr "_Nazva:"
 
-#: ../gnome-panel/panel-ditem-editor.c:597
+#: ../gnome-panel/panel-ditem-editor.c:634
 msgid "Browse icons"
 msgstr "Prahladaj ikony"
 
-#: ../gnome-panel/panel-ditem-editor.c:615
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "_Prahladaj..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:622
+#: ../gnome-panel/panel-ditem-editor.c:659
 msgid "Co_mment:"
 msgstr "Ka_mentar:"
 
-#: ../gnome-panel/panel-ditem-editor.c:972
+#: ../gnome-panel/panel-ditem-editor.c:1020
 msgid "Choose an application..."
 msgstr "Abiary aplikacyju..."
 
-#: ../gnome-panel/panel-ditem-editor.c:976
+#: ../gnome-panel/panel-ditem-editor.c:1024
 msgid "Choose a file..."
 msgstr "Abiary fajł..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1090
+#: ../gnome-panel/panel-ditem-editor.c:1149
 msgid "Comm_and:"
 msgstr "_Zahad:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1099
+#: ../gnome-panel/panel-ditem-editor.c:1158
 msgid "_Command:"
 msgstr "_Zahad:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1108
+#: ../gnome-panel/panel-ditem-editor.c:1167
 msgid "_Location:"
 msgstr "_Pałažeńnie:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1288
+#: ../gnome-panel/panel-ditem-editor.c:1347
 msgid "The name of the launcher is not set."
 msgstr "Nie akreślenaja nazva aktyvatara."
 
-#: ../gnome-panel/panel-ditem-editor.c:1301
+#: ../gnome-panel/panel-ditem-editor.c:1351
+msgid "Could not save directory properties"
+msgstr "Niemahčyma zapisać ułaścivaści katalohu"
+
+#: ../gnome-panel/panel-ditem-editor.c:1352
+msgid "The name of the directory is not set."
+msgstr "Nie akreślenaja nazva katalohu."
+
+#: ../gnome-panel/panel-ditem-editor.c:1368
 msgid "The command of the launcher is not set."
 msgstr "Nie akreśleny zahad aktyvatara."
 
-#: ../gnome-panel/panel-ditem-editor.c:1304
+#: ../gnome-panel/panel-ditem-editor.c:1371
 msgid "The location of the launcher is not set."
 msgstr "Nie akreślenaje pałažeńnie aktyvatara."
 
-#: ../gnome-panel/panel-ditem-editor.c:1385
-#: ../gnome-panel/panel-util.c:183
+#: ../gnome-panel/panel-ditem-editor.c:1452
+#: ../gnome-panel/panel-util.c:186
 msgid "Could not display help document"
 msgstr "Niemahčyma pakazać dakument dapamohi"
 
@@ -1398,12 +1452,12 @@ msgid "Click on a window to force the application to quit. To cancel press <ESC>
 msgstr "Klikni ŭ vakno, kab prymusić aplikacyju zakončyć pracu. Kab anulavać, naciśni <ESC>."
 
 #: ../gnome-panel/panel-force-quit.c:204
-msgid ""
-"Force this application to exit?\n"
-"(Any open documents will be lost.)"
-msgstr ""
-"Ci prymusić aplikacyju zakončycca?\n"
-"(Usie adčynienyja dakumenty buduć stračanyja.)"
+msgid "Force this application to exit?"
+msgstr "Prymusić hetuju aplikacyju zakončycca?"
+
+#: ../gnome-panel/panel-force-quit.c:207
+msgid "If you choose to force an application to exit, any open documents in it will be lost."
+msgstr "Kali ty prymusiš aplikacyju zakončycca, tady ŭsie adčynienyja ŭ joj dakumenty buduć stračanyja."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid "A boolean flag to indicate whether the user's previous configuration in /apps/panel/profiles/default has been copied to the new location in /apps/panel."
@@ -1543,51 +1597,59 @@ msgid "If true, tooltips are shown for objects in panels."
 msgstr "Akreślivaje, ci pajaŭlajucca padkazki dla abjektaŭ paneli."
 
 #: ../gnome-panel/panel-logout.c:238
-#, c-format
-msgid "You will be automatically logged out in %d second."
-msgid_plural "You will be automatically logged out in %d seconds."
+#, fuzzy, c-format
+msgid ""
+"You are currently logged in as \"%s\".\n"
+"You will be automatically logged out in %d second."
+msgid_plural ""
+"You are currently logged in as \"%s\".\n"
+"You will be automatically logged out in %d seconds."
 msgstr[0] "Praz %d sekundu adbudziecca aŭtamatyčny vychad."
 msgstr[1] "Praz %d sekundy adbudziecca aŭtamatyčny vychad."
 msgstr[2] "Praz %d sekundaŭ adbudziecca aŭtamatyčny vychad."
 
-#: ../gnome-panel/panel-logout.c:245
-#, c-format
-msgid "This system will be automatically shut down in %d second."
-msgid_plural "This system will be automatically shut down in %d seconds."
+#: ../gnome-panel/panel-logout.c:249
+#, fuzzy, c-format
+msgid ""
+"You are currently logged in as \"%s\".\n"
+"This system will be automatically shut down in %d second."
+msgid_plural ""
+"You are currently logged in as \"%s\".\n"
+"This system will be automatically shut down in %d seconds."
 msgstr[0] "Kamputar budzie aŭtamatyčna vyklučany praz %d sekundu."
 msgstr[1] "Kamputar budzie aŭtamatyčna vyklučany praz %d sekundy."
 msgstr[2] "Kamputar budzie aŭtamatyčna vyklučany praz %d sekundaŭ."
 
-#: ../gnome-panel/panel-logout.c:317
+#: ../gnome-panel/panel-logout.c:330
 msgid "Log out of this system now?"
 msgstr "Ci vyjści ciapier?"
 
-#: ../gnome-panel/panel-logout.c:323
+#: ../gnome-panel/panel-logout.c:336
 msgid "_Switch User"
 msgstr "_Pieraklučy karystalnika"
 
-#: ../gnome-panel/panel-logout.c:329
+#: ../gnome-panel/panel-logout.c:342
 msgid "_Log Out"
 msgstr "_Vyjdzi"
 
-#: ../gnome-panel/panel-logout.c:334
+#: ../gnome-panel/panel-logout.c:347
 msgid "Shut down this system now?"
 msgstr "Vyklučyć kamputar ciapier?"
 
-#: ../gnome-panel/panel-logout.c:339
+#: ../gnome-panel/panel-logout.c:352
 msgid "S_uspend"
 msgstr "_Usypi"
 
-#: ../gnome-panel/panel-logout.c:344
+#: ../gnome-panel/panel-logout.c:357
 msgid "_Hibernate"
 msgstr "_Hibernuj"
 
 # FIXME
-#: ../gnome-panel/panel-logout.c:349
+#: ../gnome-panel/panel-logout.c:362
 msgid "_Restart"
 msgstr "_Restartuj"
 
-#: ../gnome-panel/panel-logout.c:358
+#: ../gnome-panel/panel-logout.c:371
 msgid "_Shut Down"
 msgstr "_Vykluč"
 
@@ -1612,36 +1674,27 @@ msgstr "Aplikacyi"
 msgid "_Edit Menus"
 msgstr "_Madyfikuj menu"
 
-#: ../gnome-panel/panel-menu-items.c:111
+#: ../gnome-panel/panel-menu-items.c:118
 #: ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Niemahčyma adčynić pałažeńnie '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:375
+#: ../gnome-panel/panel-menu-items.c:396
 msgid "Bookmarks"
 msgstr "Zakładki"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:396
+#: ../gnome-panel/panel-menu-items.c:415
 #, c-format
 msgid "Open '%s'"
 msgstr "Adčyniaje '%s'"
 
-#. Translators: the first string is a
-#. * path and the second string is a
-#. * hostname. nautilus contains the same
-#. * string to translate.
-#: ../gnome-panel/panel-menu-items.c:447
-#, c-format
-msgid "%1$s on %2$s"
-msgstr "%1$s na %2$s"
-
-#: ../gnome-panel/panel-menu-items.c:520
+#: ../gnome-panel/panel-menu-items.c:507
 msgid "Network Places"
 msgstr "Sieciŭnyja miescy"
 
-#: ../gnome-panel/panel-menu-items.c:523
+#: ../gnome-panel/panel-menu-items.c:510
 msgid "Removable Media"
 msgstr "Pieranosnyja nośbity"
 
@@ -1649,19 +1702,19 @@ msgstr "Pieranosnyja nośbity"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:599
+#: ../gnome-panel/panel-menu-items.c:586
 msgid "Desktop Folder|Desktop"
 msgstr "Stoł"
 
-#: ../gnome-panel/panel-menu-items.c:600
+#: ../gnome-panel/panel-menu-items.c:587
 msgid "Open the contents of your desktop in a folder"
 msgstr "Adčyniaje stoł jak tečku"
 
-#: ../gnome-panel/panel-menu-items.c:910
+#: ../gnome-panel/panel-menu-items.c:897
 msgid "Places"
 msgstr "Miescy"
 
-#: ../gnome-panel/panel-menu-items.c:940
+#: ../gnome-panel/panel-menu-items.c:927
 msgid "System"
 msgstr "Systema"
 
@@ -1669,7 +1722,7 @@ msgstr "Systema"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1018
+#: ../gnome-panel/panel-menu-items.c:1005
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -1677,19 +1730,19 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1030
+#: ../gnome-panel/panel-menu-items.c:1017
 #, c-format
 msgid "Log Out %s..."
 msgstr "%s, vyjdzi..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1034
+#: ../gnome-panel/panel-menu-items.c:1021
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Vychad %s ź dziejnaj sesii, jaki dazvalaje aŭtaryzavacca inšamu karystalniku"
 
-#: ../gnome-panel/panel-menu-items.c:1075
+#: ../gnome-panel/panel-menu-items.c:1062
 msgid "Could not launch menu item"
 msgstr "Niemahčyma ŭruchomić element menu"
 
@@ -1831,33 +1884,37 @@ msgstr "Pavodle naładaŭ, panel '%s' bačnaja na ekranie %d, jaki ciapier nieda
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Pry adčytvańni lahičnaj źmiennaj GConf '%s' adbyłasia pamyłka: %s"
 
-#: ../gnome-panel/panel-properties-dialog.c:121
+#: ../gnome-panel/panel-properties-dialog.c:124
 #: ../libpanel-applet/panel-test-applets.c:53
 msgid "Orientation|Top"
 msgstr "Vierh"
 
-#: ../gnome-panel/panel-properties-dialog.c:122
+#: ../gnome-panel/panel-properties-dialog.c:125
 #: ../libpanel-applet/panel-test-applets.c:54
 msgid "Orientation|Bottom"
 msgstr "Niz"
 
-#: ../gnome-panel/panel-properties-dialog.c:123
+#: ../gnome-panel/panel-properties-dialog.c:126
 #: ../libpanel-applet/panel-test-applets.c:55
 msgid "Orientation|Left"
 msgstr "Levy"
 
-#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../gnome-panel/panel-properties-dialog.c:127
 #: ../libpanel-applet/panel-test-applets.c:56
 msgid "Orientation|Right"
 msgstr "Pravy"
 
-#: ../gnome-panel/panel-properties-dialog.c:1023
-#: ../gnome-panel/panel-run-dialog.c:1953
+#: ../gnome-panel/panel-properties-dialog.c:927
+msgid "Drawer Properties"
+msgstr "Ułaścivaści šuflady"
+
+#: ../gnome-panel/panel-properties-dialog.c:1035
+#: ../gnome-panel/panel-run-dialog.c:1951
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "Niemahčyma zahruzić fajł '%s'."
 
-#: ../gnome-panel/panel-properties-dialog.c:1028
+#: ../gnome-panel/panel-properties-dialog.c:1040
 msgid "Could not display properties dialog"
 msgstr "Niemahčyma pakazać vakno ŭłaścivaściaŭ"
 
@@ -1985,24 +2042,23 @@ msgstr "Prybrać śpis apošnich dakumentaŭ?"
 #: ../gnome-panel/panel-recent.c:168
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
-"\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 "Kali budzie prybrany śpis apošnich dakumentaŭ, buduć prybranyja:\n"
-"\n"
 "• Usie elementy z menu Miescy → Apošnija dakumenty.\n"
 "• Usie elementy z menu apošnich dakumentaŭ va ŭsich aplikacyjach."
 
-#: ../gnome-panel/panel-recent.c:211
-msgid "Recent Documents"
-msgstr "Apošnija dakumenty"
-
-#: ../gnome-panel/panel-recent.c:251
+#: ../gnome-panel/panel-recent.c:180
+#: ../gnome-panel/panel-recent.c:255
 msgid "Clear Recent Documents"
 msgstr "Pryborka apošnich dakumentaŭ"
 
-#: ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:215
+msgid "Recent Documents"
+msgstr "Apošnija dakumenty"
+
+#: ../gnome-panel/panel-recent.c:259
 msgid "Clear all items from the recent documents list"
 msgstr "Vydalaje ŭsie elementy sa śpisu apošnich dakumentaŭ"
 
@@ -2016,26 +2072,26 @@ msgstr "Niemahčyma ŭruchomić zahad '%s'"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Niemahčyma pierakanvertavać '%s' z UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1214
+#: ../gnome-panel/panel-run-dialog.c:1212
 msgid "Choose a file to append to the command..."
 msgstr "Vybar fajłu, dałučanaha da zahadu..."
 
-#: ../gnome-panel/panel-run-dialog.c:1590
+#: ../gnome-panel/panel-run-dialog.c:1588
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Abiary aplikacyju, kab pabačyć jaje apisańnie."
 
-#: ../gnome-panel/panel-run-dialog.c:1628
+#: ../gnome-panel/panel-run-dialog.c:1626
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Budzie vykanany zahad: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1659
+#: ../gnome-panel/panel-run-dialog.c:1657
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "Śpis adrasoŭ URI, puščany na vakno ŭruchamleńnia, maje niapravilny farmat (%d) albo daŭžyniu (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1957
+#: ../gnome-panel/panel-run-dialog.c:1955
 msgid "Could not display run dialog"
 msgstr "Niemahčyma pakazać vakno ŭruchamleńnia"
 
@@ -2388,25 +2444,70 @@ msgstr "Manitor Xinerama, na jakim pakazanaja hetaja panel"
 msgid "Y co-ordinate of panel"
 msgstr "Kaardynata Y pałažeńnia paneli"
 
-#: ../gnome-panel/panel-util.c:710
+#: ../gnome-panel/panel-util.c:713
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Nia znojdzienaja ikona '%s'"
 
-#: ../gnome-panel/panel-util.c:933
+#: ../gnome-panel/panel-util.c:936
 msgid "file"
 msgstr "fajł"
+
+#: ../gnome-panel/panel-util.c:1369
+msgid "Computer"
+msgstr "Kamputar"
+
+#: ../gnome-panel/panel-util.c:1371
+msgid "Network"
+msgstr "Sietka"
+
+#: ../gnome-panel/panel-util.c:1373
+msgid "Fonts"
+msgstr "Šryfty"
+
+#: ../gnome-panel/panel-util.c:1375
+msgid "Themes"
+msgstr "Matyvy"
+
+#: ../gnome-panel/panel-util.c:1377
+msgid "CD/DVD Creator"
+msgstr "Stvaralnik CD/DVD"
+
+#: ../gnome-panel/panel-util.c:1379
+msgid "Windows Network"
+msgstr "Sietka Windows"
+
+#. translators: this is the title of the "dns-sd:///" location
+#: ../gnome-panel/panel-util.c:1382
+msgid "Services in"
+msgstr "Pasłuhi na"
+
+#: ../gnome-panel/panel-util.c:1431
+msgid "Search"
+msgstr "Pošuk"
+
+#: ../gnome-panel/panel-util.c:1434
+msgid "Trash"
+msgstr "Śmietnica"
+
+#. Translators: the first string is a path and the second
+#. * string is a hostname. nautilus contains the same string to
+#. * translate.
+#: ../gnome-panel/panel-util.c:1487
+#, c-format
+msgid "%1$s on %2$s"
+msgstr "%1$s na %2$s"
 
 #: ../gnome-panel/panel.c:476
 #, c-format
 msgid "Open URL: %s"
 msgstr "Adčyni URL: %s"
 
-#: ../gnome-panel/panel.c:1308
+#: ../gnome-panel/panel.c:1306
 msgid "Delete this drawer?"
 msgstr "Vydalić šufladu?"
 
-#: ../gnome-panel/panel.c:1309
+#: ../gnome-panel/panel.c:1307
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2414,25 +2515,17 @@ msgstr ""
 "Kali vydalić šufladu, buduć stračanyja jaje \n"
 "nałady."
 
-#: ../gnome-panel/panel.c:1311
-msgid "Delete Drawer"
-msgstr "Vydaleńnie šuflady"
-
-#: ../gnome-panel/panel.c:1313
+#: ../gnome-panel/panel.c:1310
 msgid "Delete this panel?"
 msgstr "Vydalić panel?"
 
-#: ../gnome-panel/panel.c:1314
+#: ../gnome-panel/panel.c:1311
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Kali vydalić panel, buduć stračanyja jaje \n"
 "nałady."
-
-#: ../gnome-panel/panel.c:1316
-msgid "Delete Panel"
-msgstr "Vydaleńnie paneli"
 
 #: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2551,6 +2644,10 @@ msgstr "_Aplet:"
 msgid "_Prefs Dir:"
 msgstr "_Kataloh z naładami:"
 
+#~ msgid "Delete Drawer"
+#~ msgstr "Vydaleńnie šuflady"
+#~ msgid "Delete Panel"
+#~ msgstr "Vydaleńnie paneli"
 #~ msgid "File"
 #~ msgstr "Fajł"
 #~ msgid ""
