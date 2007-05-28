@@ -1923,11 +1923,12 @@ calendar_client_foreach_appointment_day (CalendarClient  *client,
           if (day_time >= month_begin)
             marked_days [day_from_time_t (day_time)] = TRUE;
       
-          if (appointment->end_time && !appointment->is_all_day)
+          if (appointment->end_time)
             {
               int day_offset;
               int duration = appointment->end_time - appointment->start_time;
-              for (day_offset = 1; day_offset <= duration / 86400; day_offset++)
+	      /* mark the days for the appointment, no need to add an extra one when duration is a multiple of 86400 */
+              for (day_offset = 1; day_offset <= duration / 86400 && duration != day_offset * 86400; day_offset++)
                 {
                   GTime day_time = appointment->start_time + day_offset * 86400;
 
