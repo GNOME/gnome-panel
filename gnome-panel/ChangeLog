@@ -2,6 +2,15 @@
 
 	Backport from HEAD.
 
+	* launcher.c: (panel_launcher_create_with_id): if we have a file URI,
+	we need to unescape the URI before putting the filename in gconf,
+	since the file on disk is unescaped.
+	Fix bug #432942
+
+2007-05-28  Vincent Untz  <vuntz@gnome.org>
+
+	Backport from HEAD.
+
 	* panel-run-dialog.glade: fix alignment of the run button again, and
 	use markup for the label in there
 

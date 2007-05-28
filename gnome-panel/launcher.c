@@ -1044,6 +1044,7 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 	GConfClient *client;
 	const char  *key;
 	char        *id;
+	char        *no_uri;
 	const char  *new_location;
 
 	g_return_if_fail (location != NULL);
@@ -1055,9 +1056,17 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 						   position,
 						   FALSE);
 
-	new_location = panel_launcher_get_filename (location);
+	no_uri = NULL;
+	/* if we have an URI, it might contain escaped characters (? : etc)
+	 * that might get unescaped on disk */
+	if (!g_ascii_strncasecmp (location, "file:", strlen ("file:")))
+		no_uri = gnome_vfs_get_local_path_from_uri (location);
+	if (!no_uri)
+		no_uri = g_strdup (location);
+
+	new_location = panel_launcher_get_filename (no_uri);
 	if (new_location == NULL)
-		new_location = location;
+		new_location = no_uri;
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS,
 				    id,
@@ -1066,6 +1075,7 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
 
+	g_free (no_uri);
 	g_free (id);
 }
 
