@@ -1,4 +1,86 @@
 ==============
+Version 2.19.3
+==============
+
+  Panel
+
+	* Fix compilation on BSD/Solaris (Damien Carbery)
+	* Use the launcher icon if the Icon key of a launcher is empty
+	  (Vincent)
+	* Code cleanups (Vincent)
+	* Make some dialogs more HIG-compliant (Vincent)
+	* Add username of the current user to the logout dialog (Vincent)
+	* Always put focus on the name entry in launcher editor (Vincent)
+	* Make it possible to press Enter to close the launcher editor
+	  (Vincent)
+	* Don't reset visibility of all programs in the program list of the run
+	  dialog when selecting one item (Vincent)
+	* Use nice names in the bookmarks for fonts:// and other known methods.
+	  Also improve the name of remote files, based on what nautilus does
+	  (Vincent)
+	* Accept trash:// and nautilus search URIs in the bookmarks (Vincent)
+	* Use better icons when possible for the bookmarks (Vincent)
+	* Fix initial background not working on applets' handles (Vincent)
+	* Workaround a GTK+ bug that makes the panel change its background when
+	  the panel properties dialog is opened (Vincent)
+	* Make removing a comment for launchers actually work (Vincent)
+	* Use an icon for the removable medias menu item (Vincent)
+	* Fix drawer properties dialog title to refer to drawer and not panel
+	  (Vincent)
+
+  gnome-desktop-item-edit
+
+	* Make the dialog use the right buttons when creating a new .directory
+	  file (Vincent)
+
+  Clock Applet
+
+	* Have separate treeviews for appointments, birthdays and weather
+	  (Priit Laes, Vincent)
+	* Use GtkExpander to make it possible to show/hide events in the
+	  calendar popup (Vincent)
+	* Lots of code cleanup (Vincent)
+	* Mark multiple days events correctly (Sebastien Bacher)
+
+  Window List Applet
+
+	* Never group windows by default. This mode is buggy, and it's
+	  impossible to fix all the bugs, so let's try another mode by default
+	  for 2.19.
+	* Add an assertion to detect bad data returned by libwnck
+
+  Window Selector Applet
+
+	* Update for libwnck API change
+
+  Misc
+
+	* Fix some build errors (Loïc Minier)
+	* Fix typo for --with-clock-time-utility configure flag
+	  (Sebastien Bacher)
+	* Require libwnck 2.19.3
+	* Rework X libraries detection in configure (Loïc Minier)
+	* Add dependency on evolution-data-server (for icons) (Vincent)
+
+  Docs Translators
+
+	* Jorge Gonzalez (es)
+	* Daniel Nylander (sv)
+
+  Translators
+
+	* Ihar Hrachyshka (be@latin)
+	* David Lodge (en_GB)
+	* Jorge González (es)
+	* Ivar Smolin (et)
+	* Stéphane Raimbault (fr)
+	* Yuval Tanny (he)
+	* Kjartan Maraas (nb)
+	* Nickolay V. Shmyrev (ru)
+	* Daniel Nylander (sv)
+	* Theppitak Karoonboonyanan (th)
+
+==============
 Version 2.19.2
 ==============
 
