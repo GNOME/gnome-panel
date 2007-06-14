@@ -1037,9 +1037,9 @@ panel_applet_save_position (AppletInfo *applet_info,
 	if (!immediate) {
 		if (!queued_position_source)
 			queued_position_source =
-				g_timeout_add (1000,
-					       (GSourceFunc) panel_applet_position_save_timeout,
-					       NULL);
+				g_timeout_add_seconds (1,
+						       (GSourceFunc) panel_applet_position_save_timeout,
+						       NULL);
 
 		if (!g_slist_find (queued_position_saves, applet_info))
 			queued_position_saves =

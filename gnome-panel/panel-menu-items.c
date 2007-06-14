@@ -90,8 +90,8 @@ struct _PanelDesktopMenuItemPrivate {
 static GnomeVFSVolumeMonitor *volume_monitor = NULL;
 
 static void
-activate_uri (GtkWidget *menuitem,
-	      char      *path)
+activate_uri (GtkWidget  *menuitem,
+	      const char *path)
 {
 	GError    *error = NULL;
 	GdkScreen *screen;
@@ -126,6 +126,14 @@ activate_uri (GtkWidget *menuitem,
 		g_error_free (error);
 	}
 	g_free (url);
+}
+
+static void
+activate_desktop_uri (GtkWidget *menuitem,
+		      gpointer   data)
+{
+	activate_uri (menuitem,
+		      g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
 }
  
 static void
@@ -572,11 +580,6 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	if (!gconf_client_get_bool (panel_gconf_get_client (),
 				    DESKTOP_IS_HOME_DIR_KEY,
 				    NULL)) {
-		char *uri;
-
-		uri = gnome_vfs_make_uri_from_input_with_dirs ("Desktop",
-							       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
-
 		panel_menu_items_append_place_item (
 				PANEL_ICON_DESKTOP,
 				/* Translators: Desktop is used here as in
@@ -586,10 +589,8 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 				Q_("Desktop Folder|Desktop"),
 				_("Open the contents of your desktop in a folder"),
 				places_menu,
-				G_CALLBACK (activate_uri),
-				uri);
-
-		g_free (uri);
+				G_CALLBACK (activate_desktop_uri),
+				NULL);
 	}
 
 	panel_place_menu_item_append_gtk_bookmarks (places_menu);

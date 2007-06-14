@@ -1,3 +1,18 @@
+2007-06-14  Vincent Untz  <vuntz@gnome.org>
+
+	Use new glib API where it makes sense.
+
+	* applet.c: (panel_applet_save_position): use g_timeout_add_seconds()
+	* menu.c: (add_app_to_desktop): use g_get_user_special_dir() to know
+	where's the desktop
+	* panel-ditem-editor.c: (panel_ditem_editor_changed),
+	(panel_ditem_editor_revert): use g_timeout_add_seconds()
+	* panel-menu-items.c: (activate_uri): small update
+	(activate_desktop_uri): new,  use g_get_user_special_dir() to know
+	where's the desktop
+	(panel_place_menu_item_create_menu): use activate_desktop_uri() for
+	the desktop menu item
+
 ==================== 2.19.3 ====================
 
 2007-05-26  Vincent Untz  <vuntz@gnome.org>

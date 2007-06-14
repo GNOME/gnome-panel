@@ -82,8 +82,8 @@ struct _PanelDItemEditorPrivate
 	char *icon_theme_dir;
 };
 
-/* Time in milliseconds after which we save the file on the disk */
-#define SAVE_FREQUENCY 2000
+/* Time in seconds after which we save the file on the disk */
+#define SAVE_FREQUENCY 2
 
 enum {
 	REVERT_BUTTON
@@ -821,9 +821,10 @@ panel_ditem_editor_changed (PanelDItemEditor *dialog)
 		if (dialog->priv->save_timeout != 0)
 			g_source_remove (dialog->priv->save_timeout);
 
-		dialog->priv->save_timeout = g_timeout_add (SAVE_FREQUENCY,
-							    panel_ditem_editor_save_timeout,
-							    dialog);
+		dialog->priv->save_timeout = g_timeout_add_seconds (
+							SAVE_FREQUENCY,
+							panel_ditem_editor_save_timeout,
+							dialog);
 
 		/* We can revert to the original state */
 		if (dialog->priv->revert_key_file != NULL)
@@ -1544,9 +1545,10 @@ panel_ditem_editor_revert (PanelDItemEditor *dialog)
 		if (dialog->priv->save_timeout != 0)
 			g_source_remove (dialog->priv->save_timeout);
 
-		dialog->priv->save_timeout = g_timeout_add (SAVE_FREQUENCY,
-							    panel_ditem_editor_save_timeout,
-							    dialog);
+		dialog->priv->save_timeout = g_timeout_add_seconds (
+							SAVE_FREQUENCY,
+							panel_ditem_editor_save_timeout,
+							dialog);
 	}
 }
 

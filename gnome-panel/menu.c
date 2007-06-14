@@ -636,7 +636,7 @@ add_app_to_desktop (GtkWidget      *item,
 	if (desktop_is_home_dir ()) {
 		target_dir = g_build_filename (g_get_home_dir (), NULL);
 	} else {
-		target_dir = g_build_filename (g_get_home_dir (), "Desktop", NULL);
+		target_dir = g_strdup (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
 	}
 
 	target_uri = panel_make_unique_desktop_uri (target_dir, source_uri);
