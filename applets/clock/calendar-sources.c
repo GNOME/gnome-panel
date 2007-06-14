@@ -444,7 +444,8 @@ backend_died_cb (ECal *client, CalendarSourceData *source_data)
       source_data->timeout_id = 0;
     }
 
-  source_data->timeout_id = g_timeout_add (2000, backend_restart, source_data);
+  source_data->timeout_id = g_timeout_add_seconds (2, backend_restart,
+		  				   source_data);
 }
 
 static void
