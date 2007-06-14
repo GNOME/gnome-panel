@@ -132,6 +132,7 @@ struct _ClockData {
 };
 
 static void  update_clock (ClockData * cd);
+static void  update_tooltip (ClockData * cd);
 static int   clock_timeout_callback (gpointer data);
 static float get_itime    (time_t current_time);
 
@@ -190,23 +191,14 @@ calculate_minimum_width (GtkWidget   *widget,
 }
 
 static void
-set_tooltip (GtkWidget  *applet,
-	     GtkWidget  *widget,
+set_tooltip (GtkWidget  *widget,
 	     const char *tip)
 {
-	GtkTooltips *tooltips;
+	char *markup;
 
-	tooltips = g_object_get_data (G_OBJECT (applet), "tooltips");
-	if (!tooltips) {
-		tooltips = gtk_tooltips_new ();
-		g_object_ref (tooltips);
-		gtk_object_sink (GTK_OBJECT (tooltips));
-		g_object_set_data_full (
-			G_OBJECT (applet), "tooltips", tooltips,
-			(GDestroyNotify) g_object_unref);
-	}
-
-	gtk_tooltips_set_tip (tooltips, widget, tip, NULL);
+	markup = g_markup_escape_text (tip, -1);
+	g_object_set (widget, "tooltip-markup", markup, NULL);
+	g_free (markup);
 }
 
 static void
@@ -436,8 +428,8 @@ static void
 update_clock (ClockData * cd)
 {
 	struct tm *tm;
-	char date[256], hour[256];
-	char *utf8, *loc;
+	char hour[256];
+	char *utf8;
 	gboolean use_markup;
 
 	time (&cd->current_time);
@@ -506,7 +498,24 @@ update_clock (ClockData * cd)
 	update_orient (cd);
 	gtk_widget_queue_resize (cd->toggle);
 
+	update_tooltip (cd);
+}
+
+static void
+update_tooltip (ClockData * cd)
+{
         if (!cd->showdate) {
+		struct tm *tm;
+		char date[256];
+		char *utf8, *loc;
+
+		if (cd->gmt_time)
+			tm = gmtime (&cd->current_time);
+		else
+			tm = localtime (&cd->current_time);
+
+		utf8 = NULL;
+
                 /* Show date in tooltip */
                 loc = g_locale_from_utf8 (_("%A %B %d"), -1, NULL, NULL, NULL);
                 if (!loc)
@@ -516,13 +525,23 @@ update_clock (ClockData * cd)
                 g_free (loc);
 
                 utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
-                set_tooltip (cd->applet, cd->toggle, utf8);
+                set_tooltip (cd->toggle, utf8);
                 g_free (utf8);
         } else {
 #ifdef HAVE_LIBECAL
-                set_tooltip (cd->applet, cd->toggle, _("Click to view your appointments and tasks"));
+		if (cd->calendar_popup)
+			set_tooltip (cd->toggle,
+				     _("Click to hide your appointments and tasks"));
+		else
+			set_tooltip (cd->toggle,
+				     _("Click to view your appointments and tasks"));
 #else
-                set_tooltip (cd->applet, cd->toggle, _("Click to view month calendar"));
+		if (cd->calendar_popup)
+			set_tooltip (cd->toggle,
+				     _("Click to hide month calendar"));
+		else
+			set_tooltip (cd->toggle,
+				     _("Click to view month calendar"));
 #endif
         }
 }
@@ -764,6 +783,7 @@ update_popup (ClockData *cd)
                 if (cd->calendar_popup)
                         gtk_widget_destroy (cd->calendar_popup);
                 cd->calendar_popup = NULL;
+		update_tooltip (cd);
                 return;
         }
 
@@ -771,6 +791,7 @@ update_popup (ClockData *cd)
                 cd->calendar_popup = create_calendar (cd, gtk_widget_get_screen (cd->applet));
                 g_object_add_weak_pointer (G_OBJECT (cd->calendar_popup),
                                            (gpointer *) &cd->calendar_popup);
+		update_tooltip (cd);
         }
 
         if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle)) {

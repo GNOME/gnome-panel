@@ -1,5 +1,13 @@
 2007-06-14  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (set_tooltip): migrate to GtkTooltip
+	(update_clock): move tooltip code to its own function
+	(update_tooltip): s/view/hide/ in the tooltip if the calendar window
+	is opened
+	(update_popup): update the tooltip
+
+2007-06-14  Vincent Untz  <vuntz@gnome.org>
+
 	* calendar-window.c: make more code depend on libecal. Should fix
 	compilation issues. Fix bug #443788
 
