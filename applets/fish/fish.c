@@ -1703,34 +1703,12 @@ handle_button_release (FishApplet     *fish,
 static void
 set_tooltip (FishApplet *fish)
 {
-	GtkTooltips *tooltips;
-	const char  *desc_format = _("%s the Fish, the fortune teller");
-	char        *desc;
+	const char *desc_format = _("%s the Fish, the fortune teller");
+	char       *desc;
 
-	tooltips = g_object_get_data (G_OBJECT (fish), "tooltips");
-	if (!tooltips) {
-		tooltips = gtk_tooltips_new ();
-		g_object_ref (tooltips);
-		gtk_object_sink (GTK_OBJECT (tooltips));
-
-		g_object_set_data (G_OBJECT (fish), "tooltips", tooltips);
-	}
-
-	desc = g_strdup_printf (desc_format, fish->name);
-	gtk_tooltips_set_tip (tooltips, GTK_WIDGET (fish), desc, NULL);
+	desc = g_markup_printf_escaped (desc_format, fish->name);
+	g_object_set (fish, "tooltip-markup", desc, NULL);
 	g_free (desc);
-}
-
-static void
-destroy_tooltip (FishApplet *fish)
-{
-	GtkTooltips *tooltips;
-
-	tooltips = g_object_get_data (G_OBJECT (fish), "tooltips");
-	if (tooltips) {
-		g_object_unref (tooltips);
-		g_object_set_data (G_OBJECT (fish), "tooltips", NULL);
-	}
 }
 
 static void
@@ -1970,8 +1948,6 @@ fish_applet_destroy (GtkObject *object)
 	fish->source_id = 0;
 
 	fish_close_channel (fish);
-
-	destroy_tooltip (fish);
 
 	GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
