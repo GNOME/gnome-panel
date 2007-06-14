@@ -30,7 +30,6 @@
 #include <libgnomeui/gnome-help.h>
 #include <gtk/gtkaboutdialog.h>
 #include <gtk/gtkmessagedialog.h>
-#include <gtk/gtktooltips.h>
 #include <libwnck/screen.h>
 #include <libwnck/util.h>
 
@@ -44,18 +43,11 @@ void
 wncklet_set_tooltip (GtkWidget  *widget,
 		     const char *tip)
 {
-        GtkTooltips *tooltips;
+	char *markup;
 
-        tooltips = g_object_get_data (G_OBJECT (widget), "tooltips");
-        if (!tooltips) {
-                tooltips = gtk_tooltips_new ();
-                g_object_ref (tooltips);
-                gtk_object_sink (GTK_OBJECT (tooltips));
-                g_object_set_data_full (G_OBJECT (widget), "tooltips", tooltips,
-                                        (GDestroyNotify) g_object_unref);
-        }
-
-        gtk_tooltips_set_tip (tooltips, widget, tip, NULL);
+	markup = g_markup_escape_text (tip, -1);
+	g_object_set (widget, "tooltip-markup", markup, NULL);
+	g_free (markup);
 }
 
 void
