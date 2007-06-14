@@ -1158,8 +1158,6 @@ setup_list_size_constraint (GtkWidget *widget,
                                (GClosureNotify) g_free, 0);
 }
 
-#endif /* HAVE_LIBECAL */
-
 static void
 expander_activated (GtkExpander    *expander,
 		    CalendarWindow *calwin)
@@ -1236,6 +1234,7 @@ connect_expander_with_gconf (CalendarWindow *calwin,
 				G_CALLBACK (expander_activated),
 				calwin);
 }
+#endif /* HAVE_LIBECAL */
 
 static void
 calendar_window_pack_pim (CalendarWindow *calwin,
