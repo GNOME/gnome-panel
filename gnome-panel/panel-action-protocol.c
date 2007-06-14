@@ -122,7 +122,7 @@ panel_action_protocol_init (void)
 	display = gdk_display_get_default ();
 
 	gdk_atom_gnome_panel_action =
-		gdk_atom_intern ("_GNOME_PANEL_ACTION", FALSE);
+		gdk_atom_intern_static_string ("_GNOME_PANEL_ACTION");
 
 	atom_gnome_panel_action =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),

@@ -124,7 +124,7 @@ panel_background_monitor_init (PanelBackgroundMonitor *monitor)
 	monitor->gdkwindow = NULL;
 	monitor->xwindow   = None;
 
-	monitor->gdkatom = gdk_atom_intern ("_XROOTPMAP_ID", FALSE);
+	monitor->gdkatom = gdk_atom_intern_static_string ("_XROOTPMAP_ID");
 	monitor->xatom   = gdk_x11_atom_to_xatom (monitor->gdkatom);
 
 	monitor->gdkpixmap = NULL;

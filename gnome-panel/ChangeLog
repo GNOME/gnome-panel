@@ -1,5 +1,12 @@
 2007-06-14  Vincent Untz  <vuntz@gnome.org>
 
+	* launcher.c: (is_this_drop_ok), (drag_drop_cb): use
+	gdk_atom_intern_static_string() instead of gdk_atom_intern()
+	* panel-action-protocol.c: (panel_action_protocol_init): ditto
+	* panel-background-monitor.c: (panel_background_monitor_init): ditto
+
+2007-06-14  Vincent Untz  <vuntz@gnome.org>
+
 	Use new glib API where it makes sense.
 
 	* applet.c: (panel_applet_save_position): use g_timeout_add_seconds()
