@@ -861,10 +861,7 @@ panel_applet_focus (GtkWidget        *widget,
 
 	previous_focus_child = GTK_CONTAINER (widget)->focus_child;
 	 if (!previous_focus_child && !GTK_WIDGET_HAS_FOCUS (widget)) {
-		GtkTooltipsData *tooltip;
-
-		tooltip = gtk_tooltips_data_get (widget);
-		if (tooltip) {
+		if (gtk_tooltips_data_get (widget)) {
 			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
 			gtk_widget_grab_focus (widget);
 			GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);

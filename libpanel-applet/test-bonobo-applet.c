@@ -11,11 +11,8 @@
 #include <string.h>
 
 #include <libbonoboui.h>
-#include <gtk/gtktooltips.h>
 
 #include "panel-applet.h"
-
-static GtkTooltips *test_applet_tooltips = NULL;
 
 static void
 test_applet_on_do (BonoboUIComponent *uic,
@@ -63,17 +60,6 @@ test_applet_get_type (void)
 	}
 
 	return type;
-}
-
-static void
-test_applet_setup_tooltips (GtkWidget *widget)
-{
-	g_return_if_fail (!GTK_WIDGET_NO_WINDOW (widget));
-
-	if (!test_applet_tooltips)
-		test_applet_tooltips = gtk_tooltips_new ();
-
-	gtk_tooltips_set_tip (test_applet_tooltips, widget, "Hello Tip", "");
 }
 
 static void
@@ -173,7 +159,7 @@ test_applet_fill (TestApplet *applet)
 	panel_applet_setup_menu (
 		PANEL_APPLET (applet), test_applet_menu_xml, test_applet_menu_verbs, NULL);
 
-	test_applet_setup_tooltips (GTK_WIDGET (applet));
+	g_object_set (applet, "tooltip-markup", "Hello Tip", NULL);
 
 	panel_applet_set_flags (PANEL_APPLET (applet), PANEL_APPLET_HAS_HANDLE);
 
