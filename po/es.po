@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-27 03:23+0100\n"
-"PO-Revision-Date: 2007-05-28 21:58+0200\n"
+"POT-Creation-Date: 2007-06-15 03:27+0100\n"
+"PO-Revision-Date: 2007-06-15 11:35+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgid "_Preferences"
 msgstr "Prefere_ncias"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:1995
+#: ../applets/clock/clock.c:2016
 msgid "Clock"
 msgstr "Reloj"
 
@@ -87,12 +87,12 @@ msgstr "Fábrica para crear miniaplicaciones de reloj."
 msgid "Get the current time and date"
 msgstr "Obtener la fecha y hora actual"
 
-#: ../applets/clock/calendar-window.c:225 ../applets/clock/clock.c:353
+#: ../applets/clock/calendar-window.c:225 ../applets/clock/clock.c:345
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/calendar-window.c:227 ../applets/clock/clock.c:355
-#: ../applets/clock/clock.c:1015
+#: ../applets/clock/calendar-window.c:227 ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:1036
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -123,15 +123,15 @@ msgstr "_Cumpleaños y aniversarios"
 msgid "_Weather Information"
 msgstr "Información _meteorológica"
 
-#: ../applets/clock/calendar-window.c:1660
+#: ../applets/clock/calendar-window.c:1659
 msgid "Calendar"
 msgstr "Calendario"
 
-#: ../applets/clock/clock.c:353
+#: ../applets/clock/clock.c:345
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:355 ../applets/clock/clock.c:1013
+#: ../applets/clock/clock.c:347 ../applets/clock/clock.c:1034
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -140,7 +140,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:375
+#: ../applets/clock/clock.c:367
 msgid "%a %b %e"
 msgstr "%a %e de %b"
 
@@ -148,7 +148,7 @@ msgstr "%a %e de %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:382
+#: ../applets/clock/clock.c:374
 #, c-format
 msgid ""
 "%1$s\n"
@@ -161,46 +161,54 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:390
+#: ../applets/clock/clock.c:382
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:511
+#: ../applets/clock/clock.c:520
 msgid "%A %B %d"
 msgstr "%A, %e de %B"
 
-#: ../applets/clock/clock.c:523
+#: ../applets/clock/clock.c:534
+msgid "Click to hide your appointments and tasks"
+msgstr "Pulse para ocultar sus citas y tareas"
+
+#: ../applets/clock/clock.c:537
 msgid "Click to view your appointments and tasks"
 msgstr "Pulse para ver sus citas y tareas"
 
-#: ../applets/clock/clock.c:525
+#: ../applets/clock/clock.c:541
+msgid "Click to hide month calendar"
+msgstr "Pulse para ocultar el calendario del mes"
+
+#: ../applets/clock/clock.c:544
 msgid "Click to view month calendar"
 msgstr "Pulse para ver el calendario del mes"
 
-#: ../applets/clock/clock.c:904
+#: ../applets/clock/clock.c:925
 msgid "Computer Clock"
 msgstr "Reloj del equipo"
 
-#: ../applets/clock/clock.c:1008
+#: ../applets/clock/clock.c:1029
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1010
+#: ../applets/clock/clock.c:1031
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1052
+#: ../applets/clock/clock.c:1073
 msgid "%A, %B %d %Y"
 msgstr "%A, %d de %B de %Y"
 
-#: ../applets/clock/clock.c:1127
+#: ../applets/clock/clock.c:1148
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Falló al lanzar la herramienta de configuración de la hora: %s"
 
-#: ../applets/clock/clock.c:1165
+#: ../applets/clock/clock.c:1186
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -208,63 +216,63 @@ msgstr ""
 "Falló al localizar algún programa para configurar de la fecha y hora. "
 "¿Quizás no hay ninguno instalado?"
 
-#: ../applets/clock/clock.c:1651
+#: ../applets/clock/clock.c:1672
 msgid "Custom format"
 msgstr "Formato personalizado"
 
-#: ../applets/clock/clock.c:1775 ../applets/clock/clock.c:1953
+#: ../applets/clock/clock.c:1796 ../applets/clock/clock.c:1974
 #: ../applets/fish/fish.c:160 ../applets/notification_area/main.c:90
-#: ../applets/wncklet/wncklet.c:128
+#: ../applets/wncklet/wncklet.c:120
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Ha ocurrido un error al mostrar la ayuda: %s"
 
-#: ../applets/clock/clock.c:1812
+#: ../applets/clock/clock.c:1833
 msgid "Clock Preferences"
 msgstr "Preferencias del reloj"
 
-#: ../applets/clock/clock.c:1837
+#: ../applets/clock/clock.c:1858
 msgid "Clock _type:"
 msgstr "_Tipo de reloj:"
 
-#: ../applets/clock/clock.c:1848
+#: ../applets/clock/clock.c:1869
 msgid "12 hour"
 msgstr "12 horas"
 
-#: ../applets/clock/clock.c:1849
+#: ../applets/clock/clock.c:1870
 msgid "24 hour"
 msgstr "24 horas"
 
-#: ../applets/clock/clock.c:1850
+#: ../applets/clock/clock.c:1871
 msgid "UNIX time"
 msgstr "Hora UNIX"
 
-#: ../applets/clock/clock.c:1851
+#: ../applets/clock/clock.c:1872
 msgid "Internet time"
 msgstr "Hora de Internet"
 
-#: ../applets/clock/clock.c:1859
+#: ../applets/clock/clock.c:1880
 msgid "Custom _format:"
 msgstr "Formato _personalizado:"
 
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1899
 msgid "Show _seconds"
 msgstr "Mostrar los _segundos"
 
-#: ../applets/clock/clock.c:1887
+#: ../applets/clock/clock.c:1908
 msgid "Show _date"
 msgstr "Mostrar la _fecha"
 
-#: ../applets/clock/clock.c:1896
+#: ../applets/clock/clock.c:1917
 msgid "Use _UTC"
 msgstr "Usar _UTC"
 
-#: ../applets/clock/clock.c:1998
+#: ../applets/clock/clock.c:2019
 msgid "The Clock displays the current time and date"
 msgstr "El reloj muestra la fecha y hora actual"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2001 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:2022 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:762
 #: ../applets/wncklet/window-menu.c:75
@@ -552,7 +560,7 @@ msgstr "El agua necesita un cambio"
 msgid "Look at today's date!"
 msgstr "¡Mire la fecha de hoy!"
 
-#: ../applets/fish/fish.c:1707
+#: ../applets/fish/fish.c:1706
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s El Pez, el que dice la fortuna"
@@ -1156,9 +1164,9 @@ msgstr "_Lanzar"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "La clave %s no está definida, no se puede cargar el lanzador\n"
 
-#: ../gnome-panel/launcher.c:1015 ../gnome-panel/panel-ditem-editor.c:1346
-#: ../gnome-panel/panel-ditem-editor.c:1380
-#: ../gnome-panel/panel-ditem-editor.c:1412
+#: ../gnome-panel/launcher.c:1015 ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/panel-ditem-editor.c:1381
+#: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "Could not save launcher"
 msgstr "No se pudo guardar el lanzador"
 
@@ -1527,47 +1535,47 @@ msgstr "E_xaminar…"
 msgid "Co_mment:"
 msgstr "Co_mentario:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1020
+#: ../gnome-panel/panel-ditem-editor.c:1021
 msgid "Choose an application..."
 msgstr "Elija una aplicación…"
 
-#: ../gnome-panel/panel-ditem-editor.c:1024
+#: ../gnome-panel/panel-ditem-editor.c:1025
 msgid "Choose a file..."
 msgstr "Elija un archivo…"
 
-#: ../gnome-panel/panel-ditem-editor.c:1149
+#: ../gnome-panel/panel-ditem-editor.c:1150
 msgid "Comm_and:"
 msgstr "Co_mando:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1158
+#: ../gnome-panel/panel-ditem-editor.c:1159
 msgid "_Command:"
 msgstr "_Comando:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1167
+#: ../gnome-panel/panel-ditem-editor.c:1168
 msgid "_Location:"
 msgstr "_Lugar:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/panel-ditem-editor.c:1348
 msgid "The name of the launcher is not set."
 msgstr "No se ha establecido el nombre del lanzador."
 
-#: ../gnome-panel/panel-ditem-editor.c:1351
+#: ../gnome-panel/panel-ditem-editor.c:1352
 msgid "Could not save directory properties"
 msgstr "No se pudieron guardar las propiedades de la carpeta"
 
-#: ../gnome-panel/panel-ditem-editor.c:1352
+#: ../gnome-panel/panel-ditem-editor.c:1353
 msgid "The name of the directory is not set."
 msgstr "No se ha establecido el nombre de la carpeta."
 
-#: ../gnome-panel/panel-ditem-editor.c:1368
+#: ../gnome-panel/panel-ditem-editor.c:1369
 msgid "The command of the launcher is not set."
 msgstr "No se ha establecido un comando para el lanzador."
 
-#: ../gnome-panel/panel-ditem-editor.c:1371
+#: ../gnome-panel/panel-ditem-editor.c:1372
 msgid "The location of the launcher is not set."
 msgstr "No se ha establecido el lugar del lanzador"
 
-#: ../gnome-panel/panel-ditem-editor.c:1452 ../gnome-panel/panel-util.c:186
+#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:186
 msgid "Could not display help document"
 msgstr "No se pudo mostrar el documento de ayuda"
 
@@ -1889,21 +1897,21 @@ msgstr "_Editar menús"
 msgid "Could not open location '%s'"
 msgstr "No se puede abrir el lugar «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:396
+#: ../gnome-panel/panel-menu-items.c:404
 msgid "Bookmarks"
 msgstr "Marcadores"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:415
+#: ../gnome-panel/panel-menu-items.c:423
 #, c-format
 msgid "Open '%s'"
 msgstr "Abrir «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:507
+#: ../gnome-panel/panel-menu-items.c:515
 msgid "Network Places"
 msgstr "Lugares en la red"
 
-#: ../gnome-panel/panel-menu-items.c:510
+#: ../gnome-panel/panel-menu-items.c:518
 msgid "Removable Media"
 msgstr "Soporte extraíble"
 
@@ -1911,19 +1919,19 @@ msgstr "Soporte extraíble"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:586
+#: ../gnome-panel/panel-menu-items.c:589
 msgid "Desktop Folder|Desktop"
 msgstr "Escritorio"
 
-#: ../gnome-panel/panel-menu-items.c:587
+#: ../gnome-panel/panel-menu-items.c:590
 msgid "Open the contents of your desktop in a folder"
 msgstr "Abrir los contenidos de su escritorio en una carpeta"
 
-#: ../gnome-panel/panel-menu-items.c:897
+#: ../gnome-panel/panel-menu-items.c:898
 msgid "Places"
 msgstr "Lugares"
 
-#: ../gnome-panel/panel-menu-items.c:927
+#: ../gnome-panel/panel-menu-items.c:928
 msgid "System"
 msgstr "Sistema"
 
@@ -1931,7 +1939,7 @@ msgstr "Sistema"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1005
+#: ../gnome-panel/panel-menu-items.c:1006
 msgid "panel:showusername|1"
 msgstr "0"
 
@@ -1939,19 +1947,19 @@ msgstr "0"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1017
+#: ../gnome-panel/panel-menu-items.c:1018
 #, c-format
 msgid "Log Out %s..."
 msgstr "Cerrar sesión de %s…"
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1021
+#: ../gnome-panel/panel-menu-items.c:1022
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Cierra la sesión de %s para entrar como un usuario diferente"
 
-#: ../gnome-panel/panel-menu-items.c:1062
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Could not launch menu item"
 msgstr "No se pudo lanzar el elemento del menú"
 
@@ -2981,46 +2989,46 @@ msgstr "Miniaplicación de prueba de Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Fábrica de miniaplicaciones de prueba de Bonobo"
 
-#: ../libpanel-applet/panel-applet.c:1055
+#: ../libpanel-applet/panel-applet.c:1052
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Se recibió un tipo de fondo «%s» incompleto"
 
-#: ../libpanel-applet/panel-applet.c:1069
+#: ../libpanel-applet/panel-applet.c:1066
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Se recibió un tipo de fondo «%s» incompleto: %s"
 
-#: ../libpanel-applet/panel-applet.c:1078
+#: ../libpanel-applet/panel-applet.c:1075
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Ha ocurrido un error al obtener la imagen %s"
 
-#: ../libpanel-applet/panel-applet.c:1085
+#: ../libpanel-applet/panel-applet.c:1082
 msgid "Unknown background type received"
 msgstr "Se recibió un tipo de fondo desconocido"
 
-#: ../libpanel-applet/panel-applet.c:1309
+#: ../libpanel-applet/panel-applet.c:1306
 msgid "The Applet's containing Panel's orientation"
 msgstr "La orientación del panel que contiene la miniaplicación"
 
-#: ../libpanel-applet/panel-applet.c:1317
+#: ../libpanel-applet/panel-applet.c:1314
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "El tamaño en píxeles del panel que contiene la miniaplicación "
 
-#: ../libpanel-applet/panel-applet.c:1325
+#: ../libpanel-applet/panel-applet.c:1322
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "El color de fondo del panel que contiene la miniaplicación"
 
-#: ../libpanel-applet/panel-applet.c:1333
+#: ../libpanel-applet/panel-applet.c:1330
 msgid "The Applet's flags"
 msgstr "Las señales de la miniaplicación"
 
-#: ../libpanel-applet/panel-applet.c:1341
+#: ../libpanel-applet/panel-applet.c:1338
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Rangos que indican qué tamaños son aceptables para la miniaplicación"
 
-#: ../libpanel-applet/panel-applet.c:1349
+#: ../libpanel-applet/panel-applet.c:1346
 msgid "The Applet's containing Panel is locked down"
 msgstr "El panel contenedor de la miniaplicación está bloqueado"
 
