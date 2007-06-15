@@ -880,6 +880,14 @@ restore_grabs(GtkWidget *w, gpointer data)
 	gtk_grab_add (GTK_WIDGET (menu));
 }
 
+static void
+menu_destroy_context_menu (GtkWidget *item,
+			   GtkWidget *menu)
+{
+	g_signal_handlers_disconnect_by_func (menu, restore_grabs, item);
+	gtk_widget_destroy (menu);
+}
+
 static GtkWidget *
 create_item_context_menu (GtkWidget   *item,
 			  PanelWidget *panel_widget)
@@ -914,13 +922,11 @@ create_item_context_menu (GtkWidget   *item,
 		return NULL;
 
 	menu = create_empty_menu ();
-	g_object_set_data_full (G_OBJECT (item),
-				"panel-item-context-menu",
-				g_object_ref (menu),
-				(GDestroyNotify) g_object_unref);
-	gtk_object_sink (GTK_OBJECT (menu));
-
+	g_object_set_data (G_OBJECT (item), "panel-item-context-menu", menu);
 	g_object_set_data (G_OBJECT (menu), "menu_panel", panel_widget);
+
+	g_signal_connect (item, "destroy",
+			  G_CALLBACK (menu_destroy_context_menu), menu);
 	g_signal_connect (menu, "deactivate",
 			  G_CALLBACK (restore_grabs), item);
 

@@ -1,3 +1,11 @@
+2007-06-15  Vincent Untz  <vuntz@gnome.org>
+
+	* menu.c: (menu_destroy_context_menu): new
+	(create_item_context_menu): when the menu item is destroyed, also
+	destroy the context menu and block the restoring of grabs which would
+	fail since the applications menu has been destroyed.
+	Fix bug #350626.
+
 2007-06-14  Vincent Untz  <vuntz@gnome.org>
 
 	* launcher.c: (is_this_drop_ok), (drag_drop_cb): use
