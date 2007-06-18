@@ -1,3 +1,15 @@
+2007-06-18  Vincent Untz  <vuntz@gnome.org>
+
+	* window-list.c: (applet_realized): wnck_tasklist_set_screen() is
+	useless now
+	(window_list_applet_fill): no need to call wnck_screen_force_update()
+	* workspace-switcher.c: (applet_realized): wnck_pager_set_screen() is
+	useless now, set the screen of the pager
+	(applet_scroll): code cleanup 
+	(workspace_switcher_applet_fill): no need to call
+	wnck_screen_force_update()
+	Fix crash bug #350671.
+
 ==================== 2.19.4 ====================
 
 2007-06-14  Vincent Untz  <vuntz@gnome.org>

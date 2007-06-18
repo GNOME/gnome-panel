@@ -32,8 +32,6 @@ typedef struct {
 	GtkWidget *applet;
 	GtkWidget *tasklist;
 	
-	WnckScreen *screen;
-
 	gboolean include_all_workspaces;
 	WnckTasklistGroupingType grouping;
 	gboolean move_unminimized_windows;
@@ -108,12 +106,6 @@ static void
 applet_realized (PanelApplet  *applet,
 		 TasklistData *tasklist)
 {
-	WnckScreen *screen;
-
-	screen = wncklet_get_screen (GTK_WIDGET (applet));
-
-	wnck_tasklist_set_screen (WNCK_TASKLIST (tasklist->tasklist), screen);
-
 	tasklist->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (tasklist->applet));
 }
 
@@ -646,12 +638,7 @@ window_list_applet_fill (PanelApplet *applet)
 		break;
 	}
 
-	tasklist->screen = wncklet_get_screen (tasklist->applet);
-
-	/* because the tasklist doesn't respond to signals at the moment */
-	wnck_screen_force_update (tasklist->screen);
-
-	tasklist->tasklist = wnck_tasklist_new (tasklist->screen);
+	tasklist->tasklist = wnck_tasklist_new (NULL);
 
         wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
                                        icon_loader_func,

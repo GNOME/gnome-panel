@@ -95,11 +95,7 @@ static void
 applet_realized (PanelApplet *applet,
 		 PagerData   *pager)
 {
-	WnckScreen *screen;
-
-	screen = wncklet_get_screen (GTK_WIDGET (applet));
-
-	wnck_pager_set_screen (WNCK_PAGER (pager->pager), screen);
+	pager->screen = wncklet_get_screen (GTK_WIDGET (applet));
 }
 
 static void
@@ -158,19 +154,17 @@ applet_scroll (PanelApplet    *applet,
                GdkEventScroll *event,
                PagerData      *pager)
 {
-	WnckScreen         *screen;
-	GdkScrollDirection  absolute_direction;
-	int                 index;
-	int                 n_workspaces;
-	int                 n_columns;
-	int                 in_last_row;
+	GdkScrollDirection absolute_direction;
+	int                index;
+	int                n_workspaces;
+	int                n_columns;
+	int                in_last_row;
 	
 	if (event->type != GDK_SCROLL)
 		return FALSE;
 
-	screen         = wncklet_get_screen (GTK_WIDGET (applet));
-	index          = wnck_workspace_get_number (wnck_screen_get_active_workspace (screen));
-	n_workspaces   = wnck_screen_get_workspace_count (screen);
+	index          = wnck_workspace_get_number (wnck_screen_get_active_workspace (pager->screen));
+	n_workspaces   = wnck_screen_get_workspace_count (pager->screen);
 	n_columns      = n_workspaces / pager->n_rows;
 	if (n_workspaces % pager->n_rows != 0)
 		n_columns++;
@@ -225,7 +219,8 @@ applet_scroll (PanelApplet    *applet,
 		break;
 	}
 
-	wnck_workspace_activate (wnck_screen_get_workspace (screen, index),
+	wnck_workspace_activate (wnck_screen_get_workspace (pager->screen,
+							    index),
 				 event->time);
 	
 	return TRUE;
@@ -458,12 +453,8 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 		break;
 	}
 
-	pager->screen = wncklet_get_screen (pager->applet);
-
-	/* because the pager doesn't respond to signals at the moment */
-	wnck_screen_force_update (pager->screen);
-
-	pager->pager = wnck_pager_new (pager->screen);
+	pager->pager = wnck_pager_new (NULL);
+	pager->screen = NULL;
 	wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager), GTK_SHADOW_IN);
 
 	g_signal_connect (G_OBJECT (pager->pager), "destroy",
