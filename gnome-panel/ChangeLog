@@ -1,3 +1,16 @@
+2007-06-19  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-toplevel.c: (panel_toplevel_calc_new_orientation): do not
+	choose height over width for the "should I change orientation"
+	distance because the orientation is horizontal: since the geometry of
+	the panel might not have been updated, those may be swapped (eg, if
+	you had an horizontal panel and it becomes vertical, they're swapped
+	for some time). Instead, choose the lowest of the two which is correct
+	all cases, even when the height is bigger than the width in an
+	horizontal panel (think about it for a few minutes).
+	Fix the "panel goes a bit crazy when moving it around", also known as
+	bug #394670.
+
 ==================== 2.19.4 ====================
 
 2007-06-15  Vincent Untz  <vuntz@gnome.org>

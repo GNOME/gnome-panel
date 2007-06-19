@@ -579,7 +579,7 @@ panel_toplevel_calc_new_orientation (PanelToplevel *toplevel,
 
 	monitor = gdk_screen_get_monitor_at_point (screen, pointer_x, pointer_y);
 
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+	if (toplevel->priv->geometry.height < toplevel->priv->geometry.width)
 		vborder = hborder = (3 * toplevel->priv->geometry.height) >> 1;
 	else
 		vborder = hborder = (3 * toplevel->priv->geometry.width)  >> 1;
