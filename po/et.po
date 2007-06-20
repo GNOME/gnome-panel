@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-27 03:23+0100\n"
-"PO-Revision-Date: 2007-06-04 16:14+0300\n"
+"POT-Creation-Date: 2007-06-18 03:29+0100\n"
+"PO-Revision-Date: 2007-06-18 19:56+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgid "_Preferences"
 msgstr "_Eelistused"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:1995
+#: ../applets/clock/clock.c:2016
 msgid "Clock"
 msgstr "Kell"
 
@@ -83,12 +83,12 @@ msgstr "Kellarakendite loomise factory."
 msgid "Get the current time and date"
 msgstr "Praeguse kuupäeva ja kellaaja võtmine"
 
-#: ../applets/clock/calendar-window.c:225 ../applets/clock/clock.c:353
+#: ../applets/clock/calendar-window.c:225 ../applets/clock/clock.c:345
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/calendar-window.c:227 ../applets/clock/clock.c:355
-#: ../applets/clock/clock.c:1015
+#: ../applets/clock/calendar-window.c:227 ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:1036
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -119,15 +119,15 @@ msgstr "Sü_nnipäevad ja aastapäevad"
 msgid "_Weather Information"
 msgstr "_Ilmaandmed"
 
-#: ../applets/clock/calendar-window.c:1660
+#: ../applets/clock/calendar-window.c:1659
 msgid "Calendar"
 msgstr "Kalender"
 
-#: ../applets/clock/clock.c:353
+#: ../applets/clock/clock.c:345
 msgid "%l:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:355 ../applets/clock/clock.c:1013
+#: ../applets/clock/clock.c:347 ../applets/clock/clock.c:1034
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -136,7 +136,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:375
+#: ../applets/clock/clock.c:367
 msgid "%a %b %e"
 msgstr "%A, %e. %b"
 
@@ -144,7 +144,7 @@ msgstr "%A, %e. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:382
+#: ../applets/clock/clock.c:374
 #, c-format
 msgid ""
 "%1$s\n"
@@ -157,46 +157,54 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:390
+#: ../applets/clock/clock.c:382
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s, %1$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:511
+#: ../applets/clock/clock.c:520
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#: ../applets/clock/clock.c:523
+#: ../applets/clock/clock.c:534
+msgid "Click to hide your appointments and tasks"
+msgstr "Oma sündmuste ja ülesannete peitmiseks klõpsa siia"
+
+#: ../applets/clock/clock.c:537
 msgid "Click to view your appointments and tasks"
 msgstr "Oma sündmuste ja ülesannete vaatamiseks klõpsa siia"
 
-#: ../applets/clock/clock.c:525
+#: ../applets/clock/clock.c:541
+msgid "Click to hide month calendar"
+msgstr "Kalendri kuuvaate peitmiseks klõpsa siia"
+
+#: ../applets/clock/clock.c:544
 msgid "Click to view month calendar"
 msgstr "Kalendri kuuvaate vaatamiseks klõpsa siia"
 
-#: ../applets/clock/clock.c:904
+#: ../applets/clock/clock.c:925
 msgid "Computer Clock"
 msgstr "Arvuti kell"
 
-#: ../applets/clock/clock.c:1008
+#: ../applets/clock/clock.c:1029
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1010
+#: ../applets/clock/clock.c:1031
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:1052
+#: ../applets/clock/clock.c:1073
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. B% %Y"
 
-#: ../applets/clock/clock.c:1127
+#: ../applets/clock/clock.c:1148
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Tõrge aja seadistamisvahendi käivitamisel: %s"
 
-#: ../applets/clock/clock.c:1165
+#: ../applets/clock/clock.c:1186
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -204,63 +212,63 @@ msgstr ""
 "Kuupäeva ja kellaaja seadistusprogrammi ei leitud.Võibolla ei ole ühtegi "
 "paigaldatud?"
 
-#: ../applets/clock/clock.c:1651
+#: ../applets/clock/clock.c:1672
 msgid "Custom format"
 msgstr "Kohandatud vorming"
 
-#: ../applets/clock/clock.c:1775 ../applets/clock/clock.c:1953
+#: ../applets/clock/clock.c:1796 ../applets/clock/clock.c:1974
 #: ../applets/fish/fish.c:160 ../applets/notification_area/main.c:90
-#: ../applets/wncklet/wncklet.c:128
+#: ../applets/wncklet/wncklet.c:120
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Abiteabe kuvamisel tekkis viga: %s"
 
-#: ../applets/clock/clock.c:1812
+#: ../applets/clock/clock.c:1833
 msgid "Clock Preferences"
 msgstr "Kella eelistused"
 
-#: ../applets/clock/clock.c:1837
+#: ../applets/clock/clock.c:1858
 msgid "Clock _type:"
 msgstr "Kella _tüüp:"
 
-#: ../applets/clock/clock.c:1848
+#: ../applets/clock/clock.c:1869
 msgid "12 hour"
 msgstr "12 tunnine"
 
-#: ../applets/clock/clock.c:1849
+#: ../applets/clock/clock.c:1870
 msgid "24 hour"
 msgstr "24 tunnine"
 
-#: ../applets/clock/clock.c:1850
+#: ../applets/clock/clock.c:1871
 msgid "UNIX time"
 msgstr "UNIXi aeg"
 
-#: ../applets/clock/clock.c:1851
+#: ../applets/clock/clock.c:1872
 msgid "Internet time"
 msgstr "Interneti aeg"
 
-#: ../applets/clock/clock.c:1859
+#: ../applets/clock/clock.c:1880
 msgid "Custom _format:"
 msgstr "Kohandatud _vorming:"
 
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1899
 msgid "Show _seconds"
 msgstr "_Sekundite näitamine"
 
-#: ../applets/clock/clock.c:1887
+#: ../applets/clock/clock.c:1908
 msgid "Show _date"
 msgstr "_Kuupäeva näitamine"
 
-#: ../applets/clock/clock.c:1896
+#: ../applets/clock/clock.c:1917
 msgid "Use _UTC"
 msgstr "_UTC aeg"
 
-#: ../applets/clock/clock.c:1998
+#: ../applets/clock/clock.c:2019
 msgid "The Clock displays the current time and date"
 msgstr "Kellarakend näitab praegust kellaaega ja kuupäeva"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2001 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:2022 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:762
 #: ../applets/wncklet/window-menu.c:75
@@ -386,9 +394,9 @@ msgid ""
 "information."
 msgstr ""
 "Selle võtmega määratakse kellarakendi poolt kasutatav vorming juhul, kui "
-"vorminguvõtme väärtuseks on määratud \"custom\". See vorming on "
-"sarnane strftime() funktsiooni vormingule. Lähemat teavet saab vaadata "
-"käsiraamatu strftime() lehelt."
+"vorminguvõtme väärtuseks on määratud \"custom\". See vorming on sarnane "
+"strftime() funktsiooni vormingule. Lähemat teavet saab vaadata käsiraamatu "
+"strftime() lehelt."
 
 #: ../applets/clock/clock.schemas.in.h:33
 msgid ""
@@ -551,7 +559,7 @@ msgstr "Vesi tuleb ära vahetada"
 msgid "Look at today's date!"
 msgstr "Vaata, mis kuupäev täna on!"
 
-#: ../applets/fish/fish.c:1707
+#: ../applets/fish/fish.c:1706
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Kala %s, ennustaja"
@@ -1001,8 +1009,8 @@ msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr ""
-"Kui märgitud, siis näidatakse tööalahalduris kõiki tööalasid. Vastasel "
-"juhul näidatakse ainult aktiivset tööala."
+"Kui märgitud, siis näidatakse tööalahalduris kõiki tööalasid. Vastasel juhul "
+"näidatakse ainult aktiivset tööala."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
 msgid ""
@@ -1142,29 +1150,29 @@ msgstr "_Käivita"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Võti %s on määramata, käivitajat pole võimalik laadida\n"
 
-#: ../gnome-panel/launcher.c:1015 ../gnome-panel/panel-ditem-editor.c:1346
-#: ../gnome-panel/panel-ditem-editor.c:1380
-#: ../gnome-panel/panel-ditem-editor.c:1412
+#: ../gnome-panel/launcher.c:1015 ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/panel-ditem-editor.c:1381
+#: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "Could not save launcher"
 msgstr "Käivitajat pole võimalik salvestada"
 
-#: ../gnome-panel/menu.c:931
+#: ../gnome-panel/menu.c:937
 msgid "Add this launcher to _panel"
 msgstr "Lisa see käivitaja _paneelile"
 
-#: ../gnome-panel/menu.c:942
+#: ../gnome-panel/menu.c:948
 msgid "Add this launcher to _desktop"
 msgstr "Lisa see käivitaja _töölauale"
 
-#: ../gnome-panel/menu.c:958
+#: ../gnome-panel/menu.c:964
 msgid "_Entire menu"
 msgstr "_Kogu menüü"
 
-#: ../gnome-panel/menu.c:968
+#: ../gnome-panel/menu.c:974
 msgid "Add this as _drawer to panel"
 msgstr "Lisa see _sahtel paneelile"
 
-#: ../gnome-panel/menu.c:980
+#: ../gnome-panel/menu.c:986
 msgid "Add this as _menu to panel"
 msgstr "Lisa see _menüü paneelile"
 
@@ -1516,47 +1524,47 @@ msgstr "_Sirvi..."
 msgid "Co_mment:"
 msgstr "_Kommentaar:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1020
+#: ../gnome-panel/panel-ditem-editor.c:1021
 msgid "Choose an application..."
 msgstr "Vali rakendus..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1024
+#: ../gnome-panel/panel-ditem-editor.c:1025
 msgid "Choose a file..."
 msgstr "Vali fail..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1149
+#: ../gnome-panel/panel-ditem-editor.c:1150
 msgid "Comm_and:"
 msgstr "Kä_sk:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1158
+#: ../gnome-panel/panel-ditem-editor.c:1159
 msgid "_Command:"
 msgstr "_Käsk:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1167
+#: ../gnome-panel/panel-ditem-editor.c:1168
 msgid "_Location:"
 msgstr "_Asukoht:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/panel-ditem-editor.c:1348
 msgid "The name of the launcher is not set."
 msgstr "Käivitaja nimi on määramata."
 
-#: ../gnome-panel/panel-ditem-editor.c:1351
+#: ../gnome-panel/panel-ditem-editor.c:1352
 msgid "Could not save directory properties"
 msgstr "Kataloogi omadusi pole võimalik salvestada"
 
-#: ../gnome-panel/panel-ditem-editor.c:1352
+#: ../gnome-panel/panel-ditem-editor.c:1353
 msgid "The name of the directory is not set."
 msgstr "Kataloogi nimi on määramata."
 
-#: ../gnome-panel/panel-ditem-editor.c:1368
+#: ../gnome-panel/panel-ditem-editor.c:1369
 msgid "The command of the launcher is not set."
 msgstr "Käivitaja käsk on määramata."
 
-#: ../gnome-panel/panel-ditem-editor.c:1371
+#: ../gnome-panel/panel-ditem-editor.c:1372
 msgid "The location of the launcher is not set."
 msgstr "Käivitaja asukoht on määramata."
 
-#: ../gnome-panel/panel-ditem-editor.c:1452 ../gnome-panel/panel-util.c:186
+#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:186
 msgid "Could not display help document"
 msgstr "Abidokumenti pole võimalik kuvada"
 
@@ -1874,21 +1882,21 @@ msgstr "_Redigeeri menüüsid"
 msgid "Could not open location '%s'"
 msgstr "Asukohta '%s' pole võimalik avada"
 
-#: ../gnome-panel/panel-menu-items.c:396
+#: ../gnome-panel/panel-menu-items.c:404
 msgid "Bookmarks"
 msgstr "Järjehoidjad"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:415
+#: ../gnome-panel/panel-menu-items.c:423
 #, c-format
 msgid "Open '%s'"
 msgstr "Ava '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:507
+#: ../gnome-panel/panel-menu-items.c:515
 msgid "Network Places"
 msgstr "Võrgukohad"
 
-#: ../gnome-panel/panel-menu-items.c:510
+#: ../gnome-panel/panel-menu-items.c:518
 msgid "Removable Media"
 msgstr "Eemaldatav meedia"
 
@@ -1896,19 +1904,19 @@ msgstr "Eemaldatav meedia"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:586
+#: ../gnome-panel/panel-menu-items.c:589
 msgid "Desktop Folder|Desktop"
 msgstr "Töölaud"
 
-#: ../gnome-panel/panel-menu-items.c:587
+#: ../gnome-panel/panel-menu-items.c:590
 msgid "Open the contents of your desktop in a folder"
 msgstr "Töölaua avamine kaustana"
 
-#: ../gnome-panel/panel-menu-items.c:897
+#: ../gnome-panel/panel-menu-items.c:898
 msgid "Places"
 msgstr "Asukohad"
 
-#: ../gnome-panel/panel-menu-items.c:927
+#: ../gnome-panel/panel-menu-items.c:928
 msgid "System"
 msgstr "Süsteem"
 
@@ -1916,7 +1924,7 @@ msgstr "Süsteem"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1005
+#: ../gnome-panel/panel-menu-items.c:1006
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -1924,21 +1932,21 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1017
+#: ../gnome-panel/panel-menu-items.c:1018
 #, c-format
 msgid "Log Out %s..."
 msgstr "Logi %s välja..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1021
+#: ../gnome-panel/panel-menu-items.c:1022
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "Kasutaja %s väljalogimine sellest seansist, et oleks võimalik teise kasutaja "
 "alt sisse logida"
 
-#: ../gnome-panel/panel-menu-items.c:1062
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Could not launch menu item"
 msgstr "Menüükirjet pole võimalik käivitada"
 
@@ -2426,8 +2434,8 @@ msgid ""
 "d) and will exit.\n"
 "It may be automatically restarted."
 msgstr ""
-"Paneeli pole võimalik bonobo-activation serveris registreerida (vea kood: "
-"%d) ja see suletakse.\n"
+"Paneeli pole võimalik bonobo-activation serveris registreerida (vea kood: %"
+"d) ja see suletakse.\n"
 "Seda võidakse automaatselt taaskäivitada."
 
 #: ../gnome-panel/panel-shell.c:74
@@ -2953,46 +2961,46 @@ msgstr "Bonobo testrakend"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test Bonobo Applet Factory"
 
-#: ../libpanel-applet/panel-applet.c:1055
+#: ../libpanel-applet/panel-applet.c:1052
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Vastu võeti poolik '%s' tausta tüüp"
 
-#: ../libpanel-applet/panel-applet.c:1069
+#: ../libpanel-applet/panel-applet.c:1066
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Vastu võeti poolik '%s' tausta tüüp: %s"
 
-#: ../libpanel-applet/panel-applet.c:1078
+#: ../libpanel-applet/panel-applet.c:1075
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Tõrge pikselrastri %s hankimisel"
 
-#: ../libpanel-applet/panel-applet.c:1085
+#: ../libpanel-applet/panel-applet.c:1082
 msgid "Unknown background type received"
 msgstr "Vastu võeti tundmatu tausta tüüp"
 
-#: ../libpanel-applet/panel-applet.c:1309
+#: ../libpanel-applet/panel-applet.c:1306
 msgid "The Applet's containing Panel's orientation"
 msgstr "Rakendit omava paneeli suund"
 
-#: ../libpanel-applet/panel-applet.c:1317
+#: ../libpanel-applet/panel-applet.c:1314
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Rakendit omava paneeli suurus pikslites"
 
-#: ../libpanel-applet/panel-applet.c:1325
+#: ../libpanel-applet/panel-applet.c:1322
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Rakendit omava paneeli taustavärv või -pilt"
 
-#: ../libpanel-applet/panel-applet.c:1333
+#: ../libpanel-applet/panel-applet.c:1330
 msgid "The Applet's flags"
 msgstr "Rakendi sätted"
 
-#: ../libpanel-applet/panel-applet.c:1341
+#: ../libpanel-applet/panel-applet.c:1338
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Vahemikud, mis näitavad, millised suurused on rakendile vastuvõetavad"
 
-#: ../libpanel-applet/panel-applet.c:1349
+#: ../libpanel-applet/panel-applet.c:1346
 msgid "The Applet's containing Panel is locked down"
 msgstr "Rakendeid sisaldav paneel on lukus"
 
