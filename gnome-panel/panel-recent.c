@@ -35,6 +35,7 @@
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
 #include "panel-multiscreen.h"
+#include "panel-icon-names.h"
 
 static gboolean
 show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
@@ -210,8 +211,8 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 	menu_item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (menu_item,
 				   panel_menu_icon_get_size (),
+				   PANEL_ICON_RECENT,
 				   NULL,
-				   GTK_STOCK_OPEN,
 				   _("Recent Documents"),
 				   TRUE);
 	recent_menu = gtk_recent_chooser_menu_new_for_manager (manager);

@@ -1,5 +1,12 @@
 2007-06-26  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-icon-names.h: new icon for recent documents
+	* panel-recent.c: (panel_recent_append_documents_menu): use new icon
+	for this.
+	Fix bug #450894
+
+2007-06-26  Vincent Untz  <vuntz@gnome.org>
+
 	Improve handling of size hints from applets. This is needed to have
 	the latest tasklist (libwnck 2.19.5) to correctly work.
 	For non-expanded panels, this means we have to "forward" the size

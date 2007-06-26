@@ -16,6 +16,7 @@
 #define PANEL_ICON_NETWORK		"network-workgroup"
 #define PANEL_ICON_NETWORK_SERVER	"network-server"
 #define PANEL_ICON_PANEL		"gnome-panel"
+#define PANEL_ICON_RECENT		"document-open-recent"
 #define PANEL_ICON_REMOTE		"applications-internet"
 #define PANEL_ICON_REMOVABLE_MEDIA	"drive-removable-media"
 #define PANEL_ICON_RUN			"system-run"
