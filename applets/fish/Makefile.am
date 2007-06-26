@@ -7,7 +7,8 @@ INCLUDES =							\
 	-DFISH_GLADEDIR=\""$(gladedir)"\"			\
 	$(WARN_CFLAGS)						\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
-	$(FISH_CFLAGS)
+	$(FISH_CFLAGS)						\
+	$(LIBPANEL_APPLET_CFLAGS)
 
 FISH_SOURCES = fish.c
 

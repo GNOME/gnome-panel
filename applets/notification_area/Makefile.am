@@ -7,7 +7,7 @@ INCLUDES =							\
 	$(WARN_CFLAGS)						\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(PANEL_CFLAGS)						\
-	$(APPLET_CFLAGS)					\
+	$(LIBPANEL_APPLET_CFLAGS)				\
 	-DG_LOG_DOMAIN=\""notification-area-applet"\"		\
 	-DPREFIX=\"$(prefix)\"					\
 	-DSYSCONFDIR=\"$(sysconfdir)\"				\

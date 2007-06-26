@@ -5,6 +5,7 @@ INCLUDES = 						\
 	$(GNOME_INCLUDEDIR) 				\
 	$(WARN_CFLAGS) 					\
 	$(CLOCK_CFLAGS) 				\
+	$(LIBPANEL_APPLET_CFLAGS)			\
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBDIR=\""$(libdir)"\"			\
 	-DSYSCONFDIR=\""$(sysconfdir)"\"		\
