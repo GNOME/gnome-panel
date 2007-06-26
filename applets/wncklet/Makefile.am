@@ -4,6 +4,7 @@ INCLUDES = \
 	-I$(top_srcdir)/libpanel-applet \
 	-I$(top_builddir)/libpanel-applet \
 	$(WNCKLET_CFLAGS) \
+	$(LIBPANEL_APPLET_CFLAGS) \
 	$(DISABLE_DEPRECATED_CFLAGS) \
 	$(WARN_CFLAGS) \
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \

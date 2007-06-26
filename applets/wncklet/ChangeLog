@@ -1,5 +1,23 @@
 2007-06-26  Vincent Untz  <vuntz@gnome.org>
 
+	Get rid of minimum/maximum size for the window list.
+
+	* Makefile.am: add LIBPANEL_APPLET_CFLAGS to make compilation work. It
+	seems some pkgconfig file changed, and we didn't have the bonobo
+	headers anymore...
+	* window-list.c: (applet_change_orient): updated
+	(minimum_size_changed): killed
+	(maximum_size_changed): killed
+	(setup_gconf): updated
+	(window_list_applet_fill): updated
+	(spin_minimum_size_changed): killed
+	(spin_maximum_size_changed): killed
+	(setup_dialog): updated
+	* window-list.glade: updated
+	* window-list.schemas.in: mark the relevant keys as deprecated.
+
+2007-06-26  Vincent Untz  <vuntz@gnome.org>
+
 	Fix window list button size.
 	Applet part of bug #310809.
 

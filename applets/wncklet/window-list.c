@@ -38,7 +38,6 @@ typedef struct {
   
 	GtkOrientation orientation;
 	int size;
-	gint maximum_size;
 
         GtkIconTheme *icon_theme;
   
@@ -53,12 +52,10 @@ typedef struct {
 	GtkWidget *move_minimized_radio;
 	GtkWidget *change_workspace_radio;
 
-	GtkWidget *minimum_size_spin;
-	GtkWidget *maximum_size_spin;
 	GtkWidget *about;
 
 	/* gconf listeners id */
-	guint listeners [5];
+	guint listeners [3];
 } TasklistData;
 
 static void display_properties_dialog (BonoboUIComponent *uic,
@@ -115,8 +112,6 @@ applet_change_orient (PanelApplet       *applet,
 		      TasklistData      *tasklist)
 {
 	GtkOrientation new_orient;
-    	WnckTasklist *wncktl = WNCK_TASKLIST (tasklist->tasklist);
-	gint minimum_size = 0;
   
 	switch (orient)	{
 	case PANEL_APPLET_ORIENT_LEFT:
@@ -134,21 +129,6 @@ applet_change_orient (PanelApplet       *applet,
 		return;
   
 	tasklist->orientation = new_orient;
-	/* we need to unset minimum size on the wnck tasklist */
-	if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL)
-	{
-	    	/* unset the minimum height and reset minimum width */
-	        minimum_size = wnck_tasklist_get_minimum_height (wncktl); 
-	        wnck_tasklist_set_minimum_height (wncktl, -1);
-	        wnck_tasklist_set_minimum_width (wncktl, minimum_size);
-	}
-	else
-	{
-	    	/* unset the minimum width and reset minimum height */
-	        minimum_size = wnck_tasklist_get_minimum_width (wncktl); 
-	        wnck_tasklist_set_minimum_width (wncktl, -1);
-	        wnck_tasklist_set_minimum_height (wncktl, minimum_size);
-	}
 
 	tasklist_update (tasklist);
 }
@@ -377,54 +357,6 @@ move_unminimized_windows_changed (GConfClient  *client,
 	tasklist_update_unminimization_radio (tasklist);
 }
 
-/* GConf callback for changes in minimum_size */
-static void
-minimum_size_changed (GConfClient *client, guint cnxn_id,
-		      GConfEntry *entry, TasklistData *tasklist)
-{
-    	WnckTasklist *wncktl = WNCK_TASKLIST (tasklist->tasklist);
-	gint value;
-	GtkSpinButton *button;
-
-	if (!tasklist->minimum_size_spin)
-		return;
-
-	button = GTK_SPIN_BUTTON (tasklist->minimum_size_spin);
-
-	if (!entry->value || entry->value->type != GCONF_VALUE_INT)
-		return;
-	
-	value = gconf_value_get_int (entry->value);
-	
-	gtk_spin_button_set_value (button, value);
-	if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL)
-		wnck_tasklist_set_minimum_width (wncktl, value);
-	else
-		wnck_tasklist_set_minimum_height (wncktl, value);
-}
-
-/* GConf callback for changes in maximum_size */
-static void
-maximum_size_changed (GConfClient  *client, guint cnxn_id,
-                      GConfEntry   *entry, TasklistData *tasklist)
-{
-	gint value;
-	GtkSpinButton *button;
-
-	if (!tasklist->maximum_size_spin)
-		return;
-
-	button = GTK_SPIN_BUTTON (tasklist->maximum_size_spin);
-	if (!entry->value || entry->value->type != GCONF_VALUE_INT)
-		return;
-	
-	value = gconf_value_get_int (entry->value);
-
-	gtk_spin_button_set_value (button, value);
-	tasklist->maximum_size = value;
-        gtk_widget_queue_resize (GTK_WIDGET (tasklist->applet));
-}
-    
 static void
 setup_gconf (TasklistData *tasklist)
 {
@@ -453,21 +385,6 @@ setup_gconf (TasklistData *tasklist)
 					       "move_unminimized_windows");
 	tasklist->listeners[2] = gconf_client_notify_add(client, key,
 				(GConfClientNotifyFunc)move_unminimized_windows_changed,
-				tasklist,
-				NULL, NULL);
-	g_free (key);
-	
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
-					       "minimum_size");
-	tasklist->listeners[3] = gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)minimum_size_changed,
-				tasklist,
-				NULL, NULL);
-	g_free (key);
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
-					       "maximum_size");
-	tasklist->listeners[4] = gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)maximum_size_changed,
 				tasklist,
 				NULL, NULL);
 	g_free (key);
@@ -551,8 +468,6 @@ window_list_applet_fill (PanelApplet *applet)
 	GError *error;
 	GConfValue *value;
 
-	gint sizepref;
-
 	tasklist = g_new0 (TasklistData, 1);
 
 	tasklist->applet = GTK_WIDGET (applet);
@@ -612,28 +527,6 @@ window_list_applet_fill (PanelApplet *applet)
                                        tasklist,
                                        NULL);
         
-	/* get size preferences */
-	error = NULL;
-	sizepref = panel_applet_gconf_get_int (applet, "minimum_size", &error);
-	if (error) {
-		sizepref = 50; /* Default value */
-		g_error_free (error);
-	}
-
-	if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL)
-		wnck_tasklist_set_minimum_width (WNCK_TASKLIST (tasklist->tasklist), sizepref);	  
-	else
-		wnck_tasklist_set_minimum_height (WNCK_TASKLIST (tasklist->tasklist), sizepref);	  
-
-	error = NULL;
-	sizepref = panel_applet_gconf_get_int (applet, "maximum_size", &error);
-	if (error) {
-		sizepref = 4096; /* Default value */
-		g_error_free (error);
-	}
-
-	tasklist->maximum_size = sizepref;
-
 	g_signal_connect (G_OBJECT (tasklist->tasklist), "destroy",
 			  G_CALLBACK (destroy_tasklist),
 			  tasklist);
@@ -758,44 +651,6 @@ display_all_workspaces_toggled (GtkToggleButton *button,
 				     NULL);
 }
 
-/* called when minimum width spin button is changed
- * check if it exceeds max width
- * saves numeric GConf preference values
- */
-static void
-spin_minimum_size_changed (GtkSpinButton *button, TasklistData *tasklist)
-{
-	GtkSpinButton *max_b = GTK_SPIN_BUTTON (tasklist->maximum_size_spin);
-	PanelApplet *applet = PANEL_APPLET (tasklist->applet);
-	gint prop_value = gtk_spin_button_get_value (button);
-	gint max_size = gtk_spin_button_get_value (max_b);
-	
-	/* check if we exceed max width */
-	if (prop_value > max_size)
-	        panel_applet_gconf_set_int (applet, "maximum_size", 
-			                    prop_value, NULL);
-	panel_applet_gconf_set_int (applet, "minimum_size", prop_value, NULL);
-}
-
-/* called when maximum width spin button is changed
- * check if we drop below min width
- * saves numeric GConf preference values
- */
-static void
-spin_maximum_size_changed (GtkSpinButton *button, TasklistData *tasklist)
-{
-	GtkSpinButton *min_b = GTK_SPIN_BUTTON (tasklist->minimum_size_spin);
-	PanelApplet *applet = PANEL_APPLET (tasklist->applet);
-	gint prop_value = gtk_spin_button_get_value (button);
-	gint min_size = gtk_spin_button_get_value (min_b);
-
-	/* check if we drop below min width */
-	if (prop_value < min_size)
-		panel_applet_gconf_set_int (applet, "minimum_size", 
-					    prop_value, NULL);
-	panel_applet_gconf_set_int (applet, "maximum_size", prop_value, NULL);
-}
-
 static void
 setup_sensitivity (TasklistData *tasklist,
 		   GConfClient *client,
@@ -842,8 +697,6 @@ setup_dialog (GladeXML     *xml,
 {
 	GConfClient *client;
 	GtkWidget *button;
-	gint sizepref;
-	GError *error;
 	
 	client = gconf_client_get_default ();
 
@@ -876,20 +729,6 @@ setup_dialog (GladeXML     *xml,
 			   NULL,
 			   "move_unminimized_windows" /* key */);
 
-	tasklist->minimum_size_spin = WID ("minimum_size");
-	setup_sensitivity (tasklist, client, xml,
-			   "minimum_size",
-			   "minimum_size_label",
-			   "minimum_size_post_label",
-			   "minimum_size" /* key */);
-
-	tasklist->maximum_size_spin = WID ("maximum_size");
-	setup_sensitivity (tasklist, client, xml,
-			   "maximum_size",
-			   "maximum_size_label",
-			   "maximum_size_post_label",
-			   "maximum_size" /* key */);
-
 	/* Window grouping: */
 	button = get_grouping_button (tasklist, tasklist->grouping);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
@@ -899,14 +738,6 @@ setup_dialog (GladeXML     *xml,
 			   "group_value", "auto");
 	g_object_set_data (G_OBJECT (tasklist->always_group_radio),
 			   "group_value", "always");
-	error = NULL;
-	/* FIXME: what does one do in case of errors here ? */
-	sizepref = panel_applet_gconf_get_int (PANEL_APPLET (tasklist->applet), 
-	    				       "minimum_size", NULL);
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (tasklist->minimum_size_spin), sizepref);
-	sizepref = panel_applet_gconf_get_int (PANEL_APPLET (tasklist->applet), 
-	    				       "maximum_size", NULL);
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (tasklist->maximum_size_spin), sizepref);
 
 	g_signal_connect (G_OBJECT (tasklist->never_group_radio), "toggled",
 			  (GCallback) group_windows_toggled, tasklist);
@@ -925,14 +756,6 @@ setup_dialog (GladeXML     *xml,
 	g_signal_connect (G_OBJECT (tasklist->show_all_radio), "toggled",
 			  (GCallback) display_all_workspaces_toggled, tasklist);
 
-	g_signal_connect (G_OBJECT (tasklist->minimum_size_spin), 
-		          "value_changed", 
-			  (GCallback) spin_minimum_size_changed,
-			  tasklist);
-	g_signal_connect (G_OBJECT (tasklist->maximum_size_spin), 
-		          "value_changed", 
-			  (GCallback) spin_maximum_size_changed,
-			  tasklist);
 	g_signal_connect_swapped (WID ("done_button"), "clicked",
 				  (GCallback) gtk_widget_hide, 
 				  tasklist->properties_dialog);
