@@ -126,8 +126,8 @@ main (int argc, char * argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	context = g_option_context_new (_("- Edit .desktop files"));
-
+	context = g_option_context_new (N_("- Edit .desktop files"));
+	g_option_context_set_translation_domain (context, GETTEXT_PACKAGE);
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
 	program = gnome_program_init ("gnome-desktop-item-edit", VERSION,

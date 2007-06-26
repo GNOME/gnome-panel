@@ -1,5 +1,11 @@
 2007-06-26  Vincent Untz  <vuntz@gnome.org>
 
+	* gnome-desktop-item-edit.c: (main): use
+	g_option_context_set_translation_domain() to translate the description
+	Patch by Gabor Kelemen <kelemeng@gnome.hu>. Fix bug #450158
+
+2007-06-26  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-icon-names.h: new icon for recent documents
 	* panel-recent.c: (panel_recent_append_documents_menu): use new icon
 	for this.
