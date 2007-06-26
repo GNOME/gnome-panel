@@ -2195,6 +2195,93 @@ calculate_minimum_height (GtkWidget        *widget,
 	return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad + thickness);
 }
 
+static int
+panel_toplevel_update_size_from_hints (PanelToplevel  *toplevel,
+				       int             requisition_size,
+				       int             monitor_size,
+				       int             non_panel_widget_size)
+{
+	int                   nb_size_hints;
+	AppletSizeHints      *applets_hints;
+	AppletSizeHintsAlloc *using_hint;
+
+	int i;
+	int total_size;
+	int full_hints;
+
+	total_size = non_panel_widget_size + requisition_size;
+
+	nb_size_hints = toplevel->priv->panel_widget->nb_applets_size_hints;
+	if (nb_size_hints <= 0)
+		return total_size;
+
+	applets_hints = toplevel->priv->panel_widget->applets_hints;
+	using_hint = toplevel->priv->panel_widget->applets_using_hint;
+
+	for (i = 0; i < nb_size_hints; i++) {
+		using_hint[i].index = applets_hints[i].len - 2;
+		using_hint[i].size = applets_hints[i].hints[applets_hints[i].len - 1];
+		total_size += using_hint[i].size;
+	}
+
+	if (total_size > monitor_size)
+		return monitor_size;
+
+	full_hints = 0;
+	while (full_hints != nb_size_hints && total_size < monitor_size) {
+		int bonus;
+		int extra_bonus;
+
+		bonus = (monitor_size - total_size)
+			/ (nb_size_hints - full_hints);
+		extra_bonus = (monitor_size - total_size)
+			      % (nb_size_hints - full_hints);
+		full_hints = 0;
+
+		for (i = 0; i < nb_size_hints; i++) {
+			int new_size;
+			int current_bonus;
+
+			current_bonus = bonus;
+
+			while (using_hint[i].index > 0 && applets_hints[i].hints[using_hint[i].index - 1] < using_hint[i].size + current_bonus) {
+				new_size = applets_hints[i].hints[using_hint[i].index - 1];
+				current_bonus = using_hint[i].size
+						+ current_bonus - new_size;
+				total_size = total_size - using_hint[i].size
+					     + new_size;
+
+				using_hint[i].index -= 2;
+				using_hint[i].size = new_size;
+			}
+
+			new_size = MIN (applets_hints[i].hints[using_hint[i].index],
+					using_hint[i].size + current_bonus);
+			if (new_size > using_hint[i].size) {
+				total_size += (new_size - using_hint[i].size);
+				using_hint[i].size = new_size;
+			}
+
+			if (extra_bonus > 0) {
+				new_size = MIN (applets_hints[i].hints[using_hint[i].index],
+						using_hint[i].size + extra_bonus);
+				if (new_size > using_hint[i].size) {
+					total_size += (new_size
+						       - using_hint[i].size);
+					extra_bonus -= (new_size
+							- using_hint[i].size);
+					using_hint[i].size = new_size;
+				}
+			}
+
+			if (using_hint[i].size == applets_hints[i].hints[using_hint[i].index])
+				full_hints++;
+		}
+	}
+
+	return total_size;
+}
+
 static void
 panel_toplevel_update_size (PanelToplevel  *toplevel,
 			    GtkRequisition *requisition)
@@ -2203,6 +2290,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	int        monitor_width, monitor_height;
 	int        width, height;
 	int        minimum_height;
+	int        non_panel_widget_size;
 
 	if (toplevel->priv->animating)
 		return;
@@ -2215,29 +2303,70 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	width  = requisition->width;
 	height = requisition->height;
 
+	if (!toplevel->priv->expand &&
+	    !toplevel->priv->buttons_enabled && !toplevel->priv->attached)
+		non_panel_widget_size = 2 * HANDLE_SIZE;
+	else
+		non_panel_widget_size = 0;
+
 	minimum_height = calculate_minimum_height (GTK_WIDGET (toplevel),
 						   toplevel->priv->orientation);
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
+
 		height = MAX (MAX (height, toplevel->priv->size), minimum_height);
 
 		if (toplevel->priv->expand)
 			width  = monitor_width;
-		else if (!toplevel->priv->buttons_enabled &&
-			 !toplevel->priv->attached)
-			width = MAX (MINIMUM_WIDTH, width + 2 * HANDLE_SIZE);
-		else
-			width  = MAX (MINIMUM_WIDTH, width);
+		else {
+			int max_width;
+
+			if (!toplevel->priv->attached)
+				max_width = monitor_width;
+			else {
+				if (panel_toplevel_get_orientation (toplevel->priv->attach_toplevel) == PANEL_ORIENTATION_LEFT)
+					max_width = monitor_width
+						    - toplevel->priv->geometry.x;
+				else
+					max_width = toplevel->priv->geometry.x +
+						    toplevel->priv->geometry.width;
+			}
+
+			width = panel_toplevel_update_size_from_hints (
+							toplevel,
+							requisition->width,
+							max_width,
+							non_panel_widget_size);
+		}
+
+		width  = MAX (MINIMUM_WIDTH, width);
 	} else {
 		width = MAX (MAX (width, toplevel->priv->size), minimum_height);
 
 		if (toplevel->priv->expand)
 			height = monitor_height;
-		else if (!toplevel->priv->buttons_enabled &&
-			 !toplevel->priv->attached)
-			height = MAX (MINIMUM_WIDTH, height + 2 * HANDLE_SIZE);
-		else
-			height = MAX (MINIMUM_WIDTH, height);
+		else {
+			int max_height;
+
+			if (!toplevel->priv->attached)
+				max_height = monitor_height;
+			else {
+				if (panel_toplevel_get_orientation (toplevel->priv->attach_toplevel) == PANEL_ORIENTATION_TOP)
+					max_height = monitor_height
+						     - toplevel->priv->geometry.y;
+				else
+					max_height = toplevel->priv->geometry.y +
+						     toplevel->priv->geometry.height;
+			}
+
+			height = panel_toplevel_update_size_from_hints (
+							toplevel,
+							requisition->height,
+							max_height,
+							non_panel_widget_size);
+		}
+
+		height = MAX (MINIMUM_WIDTH, height);
 	}
 
 	if (toplevel->priv->edges & PANEL_EDGE_TOP)

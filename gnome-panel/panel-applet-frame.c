@@ -219,12 +219,12 @@ panel_applet_frame_set_size_hints_from_any (PanelAppletFrame *frame,
 
 	size_hints = g_new0 (int, seq->_length);
 
-	extra_size = 0;
-	if (frame->priv->has_handle)
+	if (frame->priv->has_handle) {
 		extra_size = HANDLE_SIZE + 1;
 	
-	for (i = 0; i < seq->_length; i++)
-		size_hints [i] = seq->_buffer [i] + extra_size;
+		for (i = 0; i < seq->_length; i++)
+			size_hints [i] = seq->_buffer [i] + extra_size;
+	}
 	
 	panel_widget_set_applet_size_hints (frame->priv->panel,
 					    GTK_WIDGET (frame),

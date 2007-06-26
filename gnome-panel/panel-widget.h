@@ -42,6 +42,19 @@ typedef struct _AppletRecord		AppletRecord;
 typedef struct _AppletData		AppletData;
 typedef struct _DNDRecord		DNDRecord;
 
+typedef struct _AppletSizeHints		AppletSizeHints;
+typedef struct _AppletSizeHintsAlloc	AppletSizeHintsAlloc;
+
+struct _AppletSizeHints {
+	int *hints;
+	int  len;
+};
+
+struct _AppletSizeHintsAlloc {
+	int index;
+	int size;
+};
+
 struct _AppletData
 {
 	GtkWidget *	applet;
@@ -96,6 +109,12 @@ struct _PanelWidget
 	PanelToplevel  *toplevel;
 	
 	GdkEventKey    *key_event;
+
+	/* helpers to get a good size in packed panels with applets using
+	 * size hints */
+	int                   nb_applets_size_hints;
+	AppletSizeHints      *applets_hints;
+	AppletSizeHintsAlloc *applets_using_hint;
 
 	guint           packed : 1;
 };

@@ -1,5 +1,45 @@
 2007-06-26  Vincent Untz  <vuntz@gnome.org>
 
+	Improve handling of size hints from applets. This is needed to have
+	the latest tasklist (libwnck 2.19.5) to correctly work.
+	For non-expanded panels, this means we have to "forward" the size
+	hints from all applets using it from PanelWidget to PanelToplevel.
+	This is a non-trivial change because it might break panel
+	sizing and positioning...
+
+	* panel-toplevel.c: (panel_toplevel_update_size_from_hints): new, when
+	there are size hints, try to share all the remaining space on the
+	screen that is not needed by applets not using size hints between
+	applets using size hints. This breaks a bit the separation between
+	PanelWidget and PanelToplevel, but I can't think of any other way to
+	do this.
+	(panel_toplevel_update_size): use
+	panel_toplevel_update_size_from_hints(), and make it nicely work for
+	drawers
+	* panel-widget.[ch]: (panel_widget_size_request): don't take into
+	account for the size request applets using size hints. Instead, keep a
+	list of those applets, to be used later.
+	(panel_widget_count_expanded_applets): kill
+	(panel_widget_size_allocate):
+	 - for packed panels: the toplevel will have decided which size to use
+	   for applets using size hints. We don't need the "compression" part
+	   anymore. Of course, we can have an overflow, but we didn't handle
+	   this before anyway, so...
+	 - for expanded panels: the cell and the minimum cell should be the
+	   minimum size in the size hints for applets using size hints: using
+	   the requested size is wrong since the requested size generally is
+	   "the best size" for the applet, which is not the smaller size the
+	   applet can handle. Also fix minor bugs where the minimum cell for
+	   applets using size hints is just too big for the panel.
+	(panel_widget_finalize): clean new fields
+	(panel_widget_init): init new fields
+	(panel_widget_set_applet_size_hints): check that the size hints are
+	valid before accepting them
+	* panel-applet-frame.c:
+	(panel_applet_frame_set_size_hints_from_any): simplify a bit
+
+2007-06-26  Vincent Untz  <vuntz@gnome.org>
+
 	* panel.c: (drop_uri): fix call to panel_util_get_label_for_uri()
 
 2007-06-19  Vincent Untz  <vuntz@gnome.org>
