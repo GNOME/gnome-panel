@@ -515,14 +515,13 @@ drop_uri (PanelWidget *panel,
 	  const char  *uri,
 	  const char  *icon)
 {
-	char  *base;
 	char  *name;
 	char  *comment;
 
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
 
-	name = panel_util_get_label_for_uri (base);
+	name = panel_util_get_label_for_uri (uri);
 
 	comment = gnome_vfs_unescape_string_for_display (uri);
 
