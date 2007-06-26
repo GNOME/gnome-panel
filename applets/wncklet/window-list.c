@@ -483,48 +483,15 @@ applet_size_request (GtkWidget      *widget,
 	int len;
 	const int *size_hints;
 	GtkRequisition child_req;
-	int i;
-	int maximum_size;
-	int *new_size_hints;
-	int new_len = 0;
     	WnckTasklist *wncktl = WNCK_TASKLIST (tasklist->tasklist);
-	gint minimum_size = 0;
-	
-	
-	if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL)
-		minimum_size = wnck_tasklist_get_minimum_width (wncktl);
-	else
-		minimum_size = wnck_tasklist_get_minimum_height (wncktl);
-	
+
 	gtk_widget_get_child_requisition (tasklist->applet, &child_req);
-	
+
 	size_hints = wnck_tasklist_get_size_hint_list (wncktl, &len);
 	g_assert (len % 2 == 0);
 
-	new_size_hints = g_new0 (int, len);
-	
-	/* size_hints is an array of (max, min) int pairs
-	 * where min(i) > max (i+1)
-	 * convert it to clipped values
-	 */
-	maximum_size = tasklist->maximum_size - minimum_size;
-	g_assert (maximum_size >= 0);
-
-	for (i = 0; i < len; i += 2) {
-		if (size_hints[i + 1] <= maximum_size) {
-		        /* this one should be stored */
-			if (size_hints[i] > maximum_size)
-			    	new_size_hints[new_len] = maximum_size;
-			else
-				new_size_hints[new_len] = size_hints[i];
-			new_size_hints[new_len + 1] = size_hints[i + 1];
-			new_len += 2;
-		}
-	}
         panel_applet_set_size_hints (PANEL_APPLET (tasklist->applet),
-		                     new_size_hints, 
-				     new_len, child_req.width - 1);
-	g_free (new_size_hints);
+		                     size_hints, len, 0);
 }
 
 static GdkPixbuf*

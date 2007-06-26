@@ -1,3 +1,16 @@
+2007-06-26  Vincent Untz  <vuntz@gnome.org>
+
+	Fix window list button size.
+	Applet part of bug #310809.
+
+	* window-list.c: (applet_size_request): simplify a lot, since we don't
+	care about the minimum width/height anymore. Also, the base for the
+	size hints is 0 now, it's not the width of the child size request
+	since the width of the child size request is the best size for the
+	child, not the minimum size for it. Basically, size hints + size
+	requests are just weird. You generally want to use one or another, not
+	a mix like what was done before.
+
 2007-06-18  Vincent Untz  <vuntz@gnome.org>
 
 	* window-list.c: (applet_realized): wnck_tasklist_set_screen() is
