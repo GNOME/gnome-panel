@@ -174,16 +174,12 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 	gconf_client_notify_remove (client, tasklist->listeners[0]);
 	gconf_client_notify_remove (client, tasklist->listeners[1]);
 	gconf_client_notify_remove (client, tasklist->listeners[2]);
-	gconf_client_notify_remove (client, tasklist->listeners[3]);
-	gconf_client_notify_remove (client, tasklist->listeners[4]);
 
 	g_object_unref (G_OBJECT (client));
 	
 	tasklist->listeners[0] = 0;
 	tasklist->listeners[1] = 0;
 	tasklist->listeners[2] = 0;
-	tasklist->listeners[3] = 0;
-	tasklist->listeners[4] = 0;
 
 	if (tasklist->properties_dialog)
 		gtk_widget_destroy (tasklist->properties_dialog);
