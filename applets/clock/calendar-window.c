@@ -649,17 +649,27 @@ compare_tasks  (GtkTreeModel *model,
                 GtkTreeIter  *b,
                 gpointer      user_data)
 {
-        int priority_a;
-        int priority_b;
+        gboolean done_a, done_b;
+        int priority_a, priority_b;
 
-        gtk_tree_model_get (model, a, TASK_COLUMN_PRIORITY, &priority_a, -1);
-        gtk_tree_model_get (model, b, TASK_COLUMN_PRIORITY, &priority_b, -1);
+        gtk_tree_model_get (model, a,
+                            TASK_COLUMN_COMPLETED, &done_a,
+                            TASK_COLUMN_PRIORITY, &priority_a,
+                            -1);
+        gtk_tree_model_get (model, b,
+                            TASK_COLUMN_COMPLETED, &done_b,
+                            TASK_COLUMN_PRIORITY, &priority_b,
+                            -1);
 
-	/* We change undefined priorities so they appear after 'Low'. */
-	if (priority_a <= 0)
-		priority_a = 10;
-	if (priority_b <= 0)
-		priority_b = 10;
+        /* Always sort completed tasks last */
+        if (done_a != done_b)
+                return done_a ? -1 : 1;
+
+        /* We change undefined priorities so they appear as "Normal" */
+        if (priority_a <= 0)
+                priority_a = 5;
+        if (priority_b <= 0)
+                priority_b = 5;
 
 	/* We'll just use the ordering of the priority values. */
 	if (priority_a < priority_b)
@@ -678,8 +688,21 @@ compare_tasks  (GtkTreeModel *model,
                         return -1;
                 else if (due_time_a > due_time_b)
                         return 1;
-                else
-                        return 0;
+                else {
+                        char *summary_a, *summary_b;
+                        int res;
+
+                        gtk_tree_model_get (model, a, TASK_COLUMN_SUMMARY, &summary_a, -1);
+                        gtk_tree_model_get (model, b, TASK_COLUMN_SUMMARY, &summary_b, -1);
+
+                        res = g_utf8_collate (summary_a ? summary_a: "",
+                                              summary_b ? summary_b: "");
+
+                        g_free (summary_a);
+                        g_free (summary_b);
+
+                        return res;
+                }
         }
 }
 
