@@ -7,15 +7,15 @@ msgid ""
 ""
 msgstr "Project-Id-Version: gnome-panel 2.19.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-15 03:27+0100\n"
-"PO-Revision-Date: 2007-06-26 23:20+0930\n"
+"POT-Creation-Date: 2007-06-27 03:24+0100\n"
+"PO-Revision-Date: 2007-06-27 14:59+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: LocFactoryEditor 1.6.4a3\n"
+"X-Generator: LocFactoryEditor 1.6.4a5\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -268,9 +268,9 @@ msgstr "Đồng hồ hiển thị thời gian và ngày hiện thời"
 #: ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:531
-#: ../applets/wncklet/window-list.c:762
+#: ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:546
+#: ../applets/wncklet/workspace-switcher.c:537
 #: ../gnome-panel/panel-context-menu.c:134
 #. Translator credits
 msgid "translator-credits"
@@ -379,7 +379,10 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr "Khoá này xác định định dạng được dùng bởi tiểu dụng đồng hồ khi khoá định dạng được đặt là \"custom\" (tự chọn). Bạn có thể dùng toán tử chuyển đổi được dùng bởi strftime() để xác định định dạng riêng. Xem sổ tay strftime() để tìm thông tin thêm."
+msgstr "Khoá này xác định định dạng được dùng bởi tiểu dụng đồng hồ khi khoá định "
+"dạng được đặt là \"custom\" (tự chọn). Bạn có thể dùng toán tử chuyển đổi "
+"được dùng bởi strftime() để xác định định dạng riêng. Xem sổ tay strftime() "
+"để tìm thông tin thêm."
 
 #: ../applets/clock/clock.schemas.in.h:33
 msgid ""
@@ -698,7 +701,7 @@ msgid "Switch between workspaces"
 msgstr "Chuyển đổi giữa các vùng làm việc"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:765
+#: ../applets/wncklet/window-list.c:608
 msgid "Window List"
 msgstr "Danh sách cửa sổ"
 
@@ -713,7 +716,7 @@ msgid "Window Selector"
 msgstr "Bộ chọn cửa sổ"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:549
+#: ../applets/wncklet/workspace-switcher.c:540
 msgid "Workspace Switcher"
 msgstr "Bộ chuyển đổi Vùng làm việc"
 
@@ -750,7 +753,7 @@ msgid ""
 msgstr "Trình quản lý cửa sổ của bạn không hỗ trợ nút hiển thị màn hình nền, hoặc "
 "bạn chưa chạy trình quản lý cửa sổ."
 
-#: ../applets/wncklet/window-list.c:767
+#: ../applets/wncklet/window-list.c:610
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -770,61 +773,36 @@ msgid "<b>Window List Content</b>"
 msgstr "<b>Nội dung danh sách cửa sổ</b>"
 
 #: ../applets/wncklet/window-list.glade.h:5
-msgid "<b>Window List Size</b>"
-msgstr "<b>Cỡ danh sách cửa sổ</b>"
-
-#: ../applets/wncklet/window-list.glade.h:6
-msgid "Behavior"
-msgstr "Ứng xử"
-
-#: ../applets/wncklet/window-list.glade.h:7
 msgid "Group windows when _space is limited"
 msgstr "_Xếp nhóm các cửa sổ khi không gian bị giới hạn"
 
-#: ../applets/wncklet/window-list.glade.h:8
-msgid "M_inimum size:"
-msgstr "Cỡ tối th_iểu :"
-
-#: ../applets/wncklet/window-list.glade.h:9
-msgid "Ma_ximum size:"
-msgstr "Cỡ tối đ_a:"
-
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to current _workspace"
 msgstr "Phục hồi _vùng làm việc hiện thời"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Restore to na_tive workspace"
 msgstr "Phục hồi vùng làm việc _nguyên thủy"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Sh_ow windows from current workspace"
 msgstr "_Hiện các cửa sổ trên vùng làm việc hiện thời"
 
-#: ../applets/wncklet/window-list.glade.h:13
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Show windows from a_ll workspaces"
 msgstr "Hiện các cửa sổ trên mọi vùng _làm việc"
 
-#: ../applets/wncklet/window-list.glade.h:14
-msgid "Size"
-msgstr "Cỡ"
-
-#: ../applets/wncklet/window-list.glade.h:15
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "Window List Preferences"
 msgstr "Tùy thích danh sách cửa sổ"
 
-#: ../applets/wncklet/window-list.glade.h:16
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Always group windows"
 msgstr "_Luôn xếp nhóm các cửa sổ"
 
-#: ../applets/wncklet/window-list.glade.h:17
+#: ../applets/wncklet/window-list.glade.h:12
 msgid "_Never group windows"
 msgstr "Khô_ng bao giờ xếp nhóm các cửa sổ"
-
-#: ../applets/wncklet/window-list.glade.h:18
-#: ../gnome-panel/panel-properties-dialog.glade.h:27
-msgid "pixels"
-msgstr "điểm ảnh"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -866,19 +844,11 @@ msgstr "Hiện các cửa sổ trên mọi vùng làm việc"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
 msgid ""
-"This key specifies the maximum width that the window list requests. The "
-"maximum width setting is useful to limit the size of the window list in "
-"large panels, where the window list could fill the entire space available."
-msgstr "Khoá này xác định độ rộng tối đa mà danh sách cửa sổ yêu cầu. Nó có ích để "
-"giới hạn kích thước của danh sách cửa sổ trong các Bảng điều khiển lớn, như "
-"Bảng điều khiển cạnh chẳng hạn, nơi mà danh sách cửa sổ có thể chiếm toàn bộ "
-"không gian sẵn có."
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr "Dùng khoá này đã bị phải đối trong GNOME 2.20. Giản đồ vẫn được giữ nguyên để tương thích với các phiên bản cũ."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
-msgid "This key specifies the minimum width that the window list requests."
-msgstr "Khoá này xác định kích thước tối thiểu mà danh sách cửa sổ yêu cầu."
-
-#: ../applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
 msgstr "Khi nên xếp nhóm cửa sổ"
 
@@ -889,37 +859,37 @@ msgid ""
 msgstr "Bộ chọn cửa sổ hiển thị danh sách tất cả các cửa sổ trong một trình đơn, và "
 "cho phép bạn duyệt qua chúng."
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:126
+#: ../applets/wncklet/workspace-switcher.c:856
 #: ../applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "hàng"
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:126
+#: ../applets/wncklet/workspace-switcher.c:856
 msgid "columns"
 msgstr "cột"
 
-#: ../applets/wncklet/workspace-switcher.c:417
+#: ../applets/wncklet/workspace-switcher.c:412
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "Gặp lỗi khi tải giá trị num_rows (số lượng hàng) cho bộ chuyển vùng làm "
 "việc: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:428
+#: ../applets/wncklet/workspace-switcher.c:423
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr "Gặp lỗi khi tải giá trị display_workspace_names (hiển thị các tên vùng làm "
 "việc) cho bộ chuyển vùng làm việc: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:443
+#: ../applets/wncklet/workspace-switcher.c:438
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "Gặp lỗi khi tải giá trị display_all_workspaces (hiển thị mọi vùng làm việc) "
 "cho bộ chuyển vùng làm việc: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:551
+#: ../applets/wncklet/workspace-switcher.c:542
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1074,7 +1044,8 @@ msgstr "Tài sản của bô khởi chạy"
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
-msgstr "Khởi chạy các ứng dụng khác và cung cấp các tiện ích khác nhau để quản lý cửa sổ, hiển thị giờ v.v."
+msgstr "Khởi chạy các ứng dụng khác và cung cấp các tiện ích khác nhau để quản lý "
+"cửa sổ, hiển thị giờ v.v."
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:2
 msgid "Panel"
@@ -1126,23 +1097,23 @@ msgstr "Chưa đặt khoá %s nên không thể tải bộ khởi chạy\n"
 msgid "Could not save launcher"
 msgstr "Không thể lưu bộ khởi chạy"
 
-#: ../gnome-panel/menu.c:931
+#: ../gnome-panel/menu.c:937
 msgid "Add this launcher to _panel"
 msgstr "Thêm bộ khởi chạy này vào _Bảng"
 
-#: ../gnome-panel/menu.c:942
+#: ../gnome-panel/menu.c:948
 msgid "Add this launcher to _desktop"
 msgstr "Thêm bộ khởi chạ_y này vào màn hình nền"
 
-#: ../gnome-panel/menu.c:958
+#: ../gnome-panel/menu.c:964
 msgid "_Entire menu"
 msgstr "T_oàn bộ trình đơn"
 
-#: ../gnome-panel/menu.c:968
+#: ../gnome-panel/menu.c:974
 msgid "Add this as _drawer to panel"
 msgstr "Thêm cái này _dạng ngăn kéo vào Bảng"
 
-#: ../gnome-panel/menu.c:980
+#: ../gnome-panel/menu.c:986
 msgid "Add this as _menu to panel"
 msgstr "Thê_m cái này dạng trình đơn vào Bảng"
 
@@ -1187,7 +1158,8 @@ msgstr "Cấp: %s,  Lần sống: %s"
 
 #: ../gnome-panel/nothing.cP:629
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr "Phím Trái/Phải để di chuyển, phím dài để bắn, « p » để tạm dừng, « q » để thoát"
+msgstr "Phím Trái/Phải để di chuyển, phím dài để bắn, « p » để tạm dừng, « q » để "
+"thoát"
 
 #: ../gnome-panel/nothing.cP:1369
 msgid "Killer GEGLs from Outer Space"
@@ -1430,7 +1402,8 @@ msgstr "Bảng điều khiển GNOME"
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
-msgstr "Chương trình này dùng để khởi chạy các ứng dụng khác, cũng cung cấp các tiện ích giúp đỡ."
+msgstr "Chương trình này dùng để khởi chạy các ứng dụng khác, cũng cung cấp các tiện "
+"ích giúp đỡ."
 
 #: ../gnome-panel/panel-context-menu.c:167
 msgid "Cannot delete this panel"
@@ -2231,26 +2204,30 @@ msgstr "_Cỡ:"
 msgid "_Tile"
 msgstr "_Lát"
 
-#: ../gnome-panel/panel-recent.c:50
+#: ../gnome-panel/panel-properties-dialog.glade.h:27
+msgid "pixels"
+msgstr "điểm ảnh"
+
+#: ../gnome-panel/panel-recent.c:51
 msgid "Could not find a suitable application."
 msgstr "Không tìm thấy ứng dụng thích hợp."
 
-#: ../gnome-panel/panel-recent.c:97
-#: ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:98
+#: ../gnome-panel/panel-recent.c:108
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Không thể mở tài liệu dùng gần đây « %s »"
 
-#: ../gnome-panel/panel-recent.c:109
+#: ../gnome-panel/panel-recent.c:110
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Gặp lỗi không rõ khi thử mở « %s »."
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:167
 msgid "Clear the Recent Documents list?"
 msgstr "Xoá danh sách Tài liệu gần đây chứ?"
 
-#: ../gnome-panel/panel-recent.c:168
+#: ../gnome-panel/panel-recent.c:169
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2259,16 +2236,16 @@ msgstr "Xoá Danh sách Tài liệu gần đây thì cũng xoá:\n"
 "* Mọi mục trong trình đơn Nơi > Tài liệu gần đây\n"
 "* Mọi mục trong danh sách tài liệu gần đây của mọi ứng dụng."
 
-#: ../gnome-panel/panel-recent.c:180
-#: ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:181
+#: ../gnome-panel/panel-recent.c:256
 msgid "Clear Recent Documents"
 msgstr "Xoá Danh sách Tài liệu gần đây"
 
-#: ../gnome-panel/panel-recent.c:215
+#: ../gnome-panel/panel-recent.c:216
 msgid "Recent Documents"
 msgstr "Tài liệu gần đây"
 
-#: ../gnome-panel/panel-recent.c:259
+#: ../gnome-panel/panel-recent.c:260
 msgid "Clear all items from the recent documents list"
 msgstr "Xoá mọi mục từ danh sách tài liệu gần đây"
 
@@ -2369,8 +2346,8 @@ msgid ""
 "The panel could not register with the bonobo-activation server (error code: %"
 "d) and will exit.\n"
 "It may be automatically restarted."
-msgstr "Bảng điều khiển không thể đăng ký với máy phục vụ bonobo-Activation "
-"(mã lỗi: %d) thì sẽ thoát.\n"
+msgstr "Bảng điều khiển không thể đăng ký với máy phục vụ bonobo-Activation (mã lỗi: "
+"%d) thì sẽ thoát.\n"
 "Nó có lẽ được khởi chạy lại tự động."
 
 #: ../gnome-panel/panel-shell.c:74
@@ -2837,22 +2814,22 @@ msgstr "%1$s trên %2$s"
 msgid "Open URL: %s"
 msgstr "Mở URL: %s"
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1305
 msgid "Delete this drawer?"
 msgstr "Xoá bỏ ngăn kéo này chứ?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1306
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "Khi một ngăn kéo bị xoá bỏ, ngăn kéo và\n"
 "những thiết lập của nó cũng bị mất."
 
-#: ../gnome-panel/panel.c:1310
+#: ../gnome-panel/panel.c:1309
 msgid "Delete this panel?"
 msgstr "Xoá bỏ Bảng điều khiển này chứ?"
 
-#: ../gnome-panel/panel.c:1311
+#: ../gnome-panel/panel.c:1310
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2977,6 +2954,33 @@ msgstr "_Tiểu dụng:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Thư mục Tù_y thích:"
+
+#~ msgid "<b>Window List Size</b>"
+#~ msgstr "<b>Cỡ danh sách cửa sổ</b>"
+
+#~ msgid "Behavior"
+#~ msgstr "Ứng xử"
+
+#~ msgid "M_inimum size:"
+#~ msgstr "Cỡ tối th_iểu :"
+
+#~ msgid "Ma_ximum size:"
+#~ msgstr "Cỡ tối đ_a:"
+
+#~ msgid "Size"
+#~ msgstr "Cỡ"
+
+#~ msgid ""
+#~ "This key specifies the maximum width that the window list requests. The "
+#~ "maximum width setting is useful to limit the size of the window list in "
+#~ "large panels, where the window list could fill the entire space available."
+#~ msgstr "Khoá này xác định độ rộng tối đa mà danh sách cửa sổ yêu cầu. Nó có ích "
+#~ "để giới hạn kích thước của danh sách cửa sổ trong các Bảng điều khiển "
+#~ "lớn, như Bảng điều khiển cạnh chẳng hạn, nơi mà danh sách cửa sổ có thể "
+#~ "chiếm toàn bộ không gian sẵn có."
+
+#~ msgid "This key specifies the minimum width that the window list requests."
+#~ msgstr "Khoá này xác định kích thước tối thiểu mà danh sách cửa sổ yêu cầu."
 
 #~ msgid "File"
 #~ msgstr "Tập tin"
