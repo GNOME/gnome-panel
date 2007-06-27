@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-15 03:27+0100\n"
-"PO-Revision-Date: 2007-06-15 11:35+0200\n"
+"POT-Creation-Date: 2007-06-27 03:24+0100\n"
+"PO-Revision-Date: 2007-06-27 11:21+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -274,9 +274,9 @@ msgstr "El reloj muestra la fecha y hora actual"
 #. Translator credits
 #: ../applets/clock/clock.c:2022 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
-#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:762
+#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:546
+#: ../applets/wncklet/workspace-switcher.c:537
 #: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr ""
@@ -732,7 +732,7 @@ msgid "Switch between workspaces"
 msgstr "Cambie entre las áreas de trabajo"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:765
+#: ../applets/wncklet/window-list.c:608
 msgid "Window List"
 msgstr "Lista de ventanas"
 
@@ -746,7 +746,7 @@ msgid "Window Selector"
 msgstr "Selector de ventanas"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:549
+#: ../applets/wncklet/workspace-switcher.c:540
 msgid "Workspace Switcher"
 msgstr "Selector de áreas de trabajo"
 
@@ -783,7 +783,7 @@ msgstr ""
 "Su gestor de ventanas no soporta el botón para mostrar el escritorio, o no "
 "está ejecutando un gestor de ventanas."
 
-#: ../applets/wncklet/window-list.c:767
+#: ../applets/wncklet/window-list.c:610
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -804,61 +804,36 @@ msgid "<b>Window List Content</b>"
 msgstr "<b>Contenido de la lista de ventanas</b>"
 
 #: ../applets/wncklet/window-list.glade.h:5
-msgid "<b>Window List Size</b>"
-msgstr "<b>Tamaño de la lista de ventanas</b>"
-
-#: ../applets/wncklet/window-list.glade.h:6
-msgid "Behavior"
-msgstr "Comportamiento"
-
-#: ../applets/wncklet/window-list.glade.h:7
 msgid "Group windows when _space is limited"
 msgstr "Agrupar las ventanas cuando el e_spacio esté limitado"
 
-#: ../applets/wncklet/window-list.glade.h:8
-msgid "M_inimum size:"
-msgstr "Tamaño mín_imo:"
-
-#: ../applets/wncklet/window-list.glade.h:9
-msgid "Ma_ximum size:"
-msgstr "Tamaño má_ximo:"
-
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to current _workspace"
 msgstr "Restaurar al área de _trabajo actual"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Restore to na_tive workspace"
 msgstr "Restaurar al área de trabajo na_tiva"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Sh_ow windows from current workspace"
 msgstr "_Mostrar las ventanas del área de trabajo actual"
 
-#: ../applets/wncklet/window-list.glade.h:13
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Show windows from a_ll workspaces"
 msgstr "Mostrar las ventanas de _todas las áreas de trabajo"
 
-#: ../applets/wncklet/window-list.glade.h:14
-msgid "Size"
-msgstr "Tamaño"
-
-#: ../applets/wncklet/window-list.glade.h:15
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "Window List Preferences"
 msgstr "Preferencias de la lista de ventanas"
 
-#: ../applets/wncklet/window-list.glade.h:16
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Always group windows"
 msgstr "_Siempre agrupar las ventanas"
 
-#: ../applets/wncklet/window-list.glade.h:17
+#: ../applets/wncklet/window-list.glade.h:12
 msgid "_Never group windows"
 msgstr "_Nunca agrupar las ventanas"
-
-#: ../applets/wncklet/window-list.glade.h:18
-#: ../gnome-panel/panel-properties-dialog.glade.h:27
-msgid "pixels"
-msgstr "píxeles"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -903,20 +878,11 @@ msgstr "Mostrar las ventanas de todas las áreas de trabajo"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
 msgid ""
-"This key specifies the maximum width that the window list requests. The "
-"maximum width setting is useful to limit the size of the window list in "
-"large panels, where the window list could fill the entire space available."
-msgstr ""
-"Esta clave especifica la anchura máxima que solicitará la lista de ventanas. "
-"La configuración de la anchura máxima es útil para limitar el tamaño de la "
-"lista de ventanas en los paneles grandes, donde la lista de ventanas podría "
-"utilizar el espacio total disponible."
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr "El uso de esta clave ha sido declarado obsoleto en GNOME 2.20. El esquema se conserva por compatibilidad con versiones antiguas."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
-msgid "This key specifies the minimum width that the window list requests."
-msgstr "Esta clave especifica la anchura mínima que solicitará la lista de ventanas."
-
-#: ../applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
 msgstr "Cuándo agrupar las ventanas"
 
@@ -928,39 +894,39 @@ msgstr ""
 "El «Selector de ventanas» muestra una lista de todas las ventanas en un menú "
 "y le permite examinarlas."
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:126
+#: ../applets/wncklet/workspace-switcher.c:856
 #: ../applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "filas"
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:126
+#: ../applets/wncklet/workspace-switcher.c:856
 msgid "columns"
 msgstr "columnas"
 
-#: ../applets/wncklet/workspace-switcher.c:417
+#: ../applets/wncklet/workspace-switcher.c:412
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Error al cargar el valor de «num_rows» para el «Selector de áreas de "
 "trabajo»: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:428
+#: ../applets/wncklet/workspace-switcher.c:423
 #, c-format
 msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Error al cargar el valor «display_workspace_names» para el «Selector de "
 "áreas de trabajo»: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:443
+#: ../applets/wncklet/workspace-switcher.c:438
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Error al cargar el valor «display_all_workspaces» para el selector de áreas "
 "de trabajo: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:551
+#: ../applets/wncklet/workspace-switcher.c:542
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1170,23 +1136,23 @@ msgstr "La clave %s no está definida, no se puede cargar el lanzador\n"
 msgid "Could not save launcher"
 msgstr "No se pudo guardar el lanzador"
 
-#: ../gnome-panel/menu.c:931
+#: ../gnome-panel/menu.c:937
 msgid "Add this launcher to _panel"
 msgstr "Añadir este lanzador al _panel"
 
-#: ../gnome-panel/menu.c:942
+#: ../gnome-panel/menu.c:948
 msgid "Add this launcher to _desktop"
 msgstr "Añadir este lanzador al _escritorio"
 
-#: ../gnome-panel/menu.c:958
+#: ../gnome-panel/menu.c:964
 msgid "_Entire menu"
 msgstr "Menú _completo"
 
-#: ../gnome-panel/menu.c:968
+#: ../gnome-panel/menu.c:974
 msgid "Add this as _drawer to panel"
 msgstr "Añadir esto como _cajón al panel"
 
-#: ../gnome-panel/menu.c:980
+#: ../gnome-panel/menu.c:986
 msgid "Add this as _menu to panel"
 msgstr "Añadir esto como _menú al panel"
 
@@ -2306,25 +2272,29 @@ msgstr "_Tamaño:"
 msgid "_Tile"
 msgstr "_Enlosado"
 
-#: ../gnome-panel/panel-recent.c:50
+#: ../gnome-panel/panel-properties-dialog.glade.h:27
+msgid "pixels"
+msgstr "píxeles"
+
+#: ../gnome-panel/panel-recent.c:51
 msgid "Could not find a suitable application."
 msgstr "No se pudo encontrar una aplicación adecuada."
 
-#: ../gnome-panel/panel-recent.c:97 ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:98 ../gnome-panel/panel-recent.c:108
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "No se pudo abrir el documento usado recientemente «%s»"
 
-#: ../gnome-panel/panel-recent.c:109
+#: ../gnome-panel/panel-recent.c:110
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Ocurrió un error desconocido al intentar abrir «%s»."
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:167
 msgid "Clear the Recent Documents list?"
 msgstr "¿Desea vaciar la lista de documentos recientes?"
 
-#: ../gnome-panel/panel-recent.c:168
+#: ../gnome-panel/panel-recent.c:169
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2335,15 +2305,15 @@ msgstr ""
 "• Todos los elementos de la lista de documentos recientes en todas las "
 "aplicaciones."
 
-#: ../gnome-panel/panel-recent.c:180 ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:181 ../gnome-panel/panel-recent.c:256
 msgid "Clear Recent Documents"
 msgstr "Vaciar documentos recientes"
 
-#: ../gnome-panel/panel-recent.c:215
+#: ../gnome-panel/panel-recent.c:216
 msgid "Recent Documents"
 msgstr "Documentos recientes"
 
-#: ../gnome-panel/panel-recent.c:259
+#: ../gnome-panel/panel-recent.c:260
 msgid "Clear all items from the recent documents list"
 msgstr "Vaciar todos los elementos de la lista de documentos recientes"
 
@@ -2953,11 +2923,11 @@ msgstr "%1$s en %2$s"
 msgid "Open URL: %s"
 msgstr "Abrir URL: %s"
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1305
 msgid "Delete this drawer?"
 msgstr "¿Desea borrar este cajón?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1306
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2965,11 +2935,11 @@ msgstr ""
 "Cuando se borra un cajón, el cajón y sus\n"
 "preferencias se pierden."
 
-#: ../gnome-panel/panel.c:1310
+#: ../gnome-panel/panel.c:1309
 msgid "Delete this panel?"
 msgstr "¿Desea borrar este panel?"
 
-#: ../gnome-panel/panel.c:1311
+#: ../gnome-panel/panel.c:1310
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
