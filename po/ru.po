@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-30 20:03+0400\n"
+"POT-Creation-Date: 2007-06-28 11:33+0400\n"
 "PO-Revision-Date: 2007-05-30 17:15+0200\n"
 "Last-Translator: Nickolay V. Shmyrev <nshmyrev@yandex.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -64,7 +64,7 @@ msgid "_Preferences"
 msgstr "_Параметры"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:1995
+#: ../applets/clock/clock.c:2016
 msgid "Clock"
 msgstr "Часы"
 
@@ -80,12 +80,12 @@ msgstr "Фабрика для создания апплетов часов."
 msgid "Get the current time and date"
 msgstr "Отображает текущие время и дату"
 
-#: ../applets/clock/calendar-window.c:225 ../applets/clock/clock.c:353
+#: ../applets/clock/calendar-window.c:225 ../applets/clock/clock.c:345
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/calendar-window.c:227 ../applets/clock/clock.c:355
-#: ../applets/clock/clock.c:1015
+#: ../applets/clock/calendar-window.c:227 ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:1036
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -96,35 +96,35 @@ msgstr "%H:%M"
 msgid "%b %d"
 msgstr "%d %b"
 
-#: ../applets/clock/calendar-window.c:718
+#: ../applets/clock/calendar-window.c:741
 msgid "_Tasks"
 msgstr "_Задачи"
 
-#: ../applets/clock/calendar-window.c:834
+#: ../applets/clock/calendar-window.c:857
 msgid "All Day"
 msgstr "Весь день"
 
-#: ../applets/clock/calendar-window.c:961
+#: ../applets/clock/calendar-window.c:984
 msgid "_Appointments"
 msgstr "_Встречи"
 
-#: ../applets/clock/calendar-window.c:978
+#: ../applets/clock/calendar-window.c:1001
 msgid "_Birthdays and Anniversaries"
 msgstr "Дни рожд_ения и годовщины"
 
-#: ../applets/clock/calendar-window.c:994
+#: ../applets/clock/calendar-window.c:1017
 msgid "_Weather Information"
 msgstr "Информация о _погоде"
 
-#: ../applets/clock/calendar-window.c:1660
+#: ../applets/clock/calendar-window.c:1682
 msgid "Calendar"
 msgstr "Календарь"
 
-#: ../applets/clock/clock.c:353
+#: ../applets/clock/clock.c:345
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:355 ../applets/clock/clock.c:1013
+#: ../applets/clock/clock.c:347 ../applets/clock/clock.c:1034
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -133,7 +133,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:375
+#: ../applets/clock/clock.c:367
 msgid "%a %b %e"
 msgstr "%a, %e %b"
 
@@ -141,7 +141,7 @@ msgstr "%a, %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:382
+#: ../applets/clock/clock.c:374
 #, c-format
 msgid ""
 "%1$s\n"
@@ -154,46 +154,54 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:390
+#: ../applets/clock/clock.c:382
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: ../applets/clock/clock.c:511
+#: ../applets/clock/clock.c:520
 msgid "%A %B %d"
 msgstr "%A, %d %B"
 
-#: ../applets/clock/clock.c:523
+#: ../applets/clock/clock.c:534
+msgid "Click to hide your appointments and tasks"
+msgstr "Нажмите, чтобы скрыть встречи и задачи"
+
+#: ../applets/clock/clock.c:537
 msgid "Click to view your appointments and tasks"
 msgstr "Нажмите, чтобы просмотреть свои встречи и задачи"
 
-#: ../applets/clock/clock.c:525
+#: ../applets/clock/clock.c:541
+msgid "Click to hide month calendar"
+msgstr "Нажмите, чтобы скрыть календарь на месяц"
+
+#: ../applets/clock/clock.c:544
 msgid "Click to view month calendar"
 msgstr "Нажмите, чтобы просмотреть календарь на месяц"
 
-#: ../applets/clock/clock.c:904
+#: ../applets/clock/clock.c:925
 msgid "Computer Clock"
 msgstr "Компьютерные часы"
 
-#: ../applets/clock/clock.c:1008
+#: ../applets/clock/clock.c:1029
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1010
+#: ../applets/clock/clock.c:1031
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1052
+#: ../applets/clock/clock.c:1073
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1127
+#: ../applets/clock/clock.c:1148
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Cбой при запуске программы установки часов: %s"
 
-#: ../applets/clock/clock.c:1165
+#: ../applets/clock/clock.c:1186
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -201,67 +209,67 @@ msgstr ""
 "Произошёл сбой при попытке найти программу, устанавливающую дату и время.  "
 "Возможно, ни одна подобная программа не установлена?"
 
-#: ../applets/clock/clock.c:1651
+#: ../applets/clock/clock.c:1672
 msgid "Custom format"
 msgstr "Другой формат"
 
-#: ../applets/clock/clock.c:1775 ../applets/clock/clock.c:1953
+#: ../applets/clock/clock.c:1796 ../applets/clock/clock.c:1974
 #: ../applets/fish/fish.c:160 ../applets/notification_area/main.c:90
-#: ../applets/wncklet/wncklet.c:128
+#: ../applets/wncklet/wncklet.c:120
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Произошла ошибка при отображении справки: %s"
 
-#: ../applets/clock/clock.c:1812
+#: ../applets/clock/clock.c:1833
 msgid "Clock Preferences"
 msgstr "Параметры апплета часов"
 
-#: ../applets/clock/clock.c:1837
+#: ../applets/clock/clock.c:1858
 msgid "Clock _type:"
 msgstr "_Тип часов:"
 
-#: ../applets/clock/clock.c:1848
+#: ../applets/clock/clock.c:1869
 msgid "12 hour"
 msgstr "12-часовые"
 
-#: ../applets/clock/clock.c:1849
+#: ../applets/clock/clock.c:1870
 msgid "24 hour"
 msgstr "24-часовые"
 
-#: ../applets/clock/clock.c:1850
+#: ../applets/clock/clock.c:1871
 msgid "UNIX time"
 msgstr "Время UNIX"
 
-#: ../applets/clock/clock.c:1851
+#: ../applets/clock/clock.c:1872
 msgid "Internet time"
 msgstr "Время Интернета"
 
-#: ../applets/clock/clock.c:1859
+#: ../applets/clock/clock.c:1880
 msgid "Custom _format:"
 msgstr "Другой _формат:"
 
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1899
 msgid "Show _seconds"
 msgstr "Показывать се_кунды"
 
-#: ../applets/clock/clock.c:1887
+#: ../applets/clock/clock.c:1908
 msgid "Show _date"
 msgstr "Показывать _дату"
 
-#: ../applets/clock/clock.c:1896
+#: ../applets/clock/clock.c:1917
 msgid "Use _UTC"
 msgstr "Показывать время по _Гринвичу (UTC)"
 
-#: ../applets/clock/clock.c:1998
+#: ../applets/clock/clock.c:2019
 msgid "The Clock displays the current time and date"
 msgstr "Отображает текущие время и дату"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2001 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:2022 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
-#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:762
+#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:546
+#: ../applets/wncklet/workspace-switcher.c:537
 #: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr ""
@@ -373,7 +381,7 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
-"Использовать этот ключ в среде GNOME версии 2.6  не рекомендуется. "
+"Использовать этот ключ в среде GNOME версии 2.6 не рекомендуется. "
 "Предпочтительнее использовать ключ «формат». Данный ключ остаётся только для "
 "совместимости с предыдущими версиями."
 
@@ -553,7 +561,7 @@ msgstr "Воду надо менять"
 msgid "Look at today's date!"
 msgstr "Посмотри на сегодняшнее число!"
 
-#: ../applets/fish/fish.c:1707
+#: ../applets/fish/fish.c:1706
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Рыбка по имени %s, гадалка"
@@ -718,7 +726,7 @@ msgid "Switch between workspaces"
 msgstr "Переключение между рабочими местами"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:765
+#: ../applets/wncklet/window-list.c:608
 msgid "Window List"
 msgstr "Список окон"
 
@@ -732,7 +740,7 @@ msgid "Window Selector"
 msgstr "Переключатель окон"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:549
+#: ../applets/wncklet/workspace-switcher.c:540
 msgid "Workspace Switcher"
 msgstr "Переключатель рабочих мест"
 
@@ -769,7 +777,7 @@ msgstr ""
 "Либо оконный менеджер не поддерживает функциональность, необходимую для "
 "кнопки расчистки рабочего стола, либо оконный менеджер не запущен вовсе."
 
-#: ../applets/wncklet/window-list.c:767
+#: ../applets/wncklet/window-list.c:610
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -790,61 +798,36 @@ msgid "<b>Window List Content</b>"
 msgstr "<b>Содержимое</b>"
 
 #: ../applets/wncklet/window-list.glade.h:5
-msgid "<b>Window List Size</b>"
-msgstr "<b>Размер списка окон</b>"
-
-#: ../applets/wncklet/window-list.glade.h:6
-msgid "Behavior"
-msgstr "Поведение"
-
-#: ../applets/wncklet/window-list.glade.h:7
 msgid "Group windows when _space is limited"
 msgstr "группировать окна, когда _пространство ограничено"
 
-#: ../applets/wncklet/window-list.glade.h:8
-msgid "M_inimum size:"
-msgstr "м_инимальный:"
-
-#: ../applets/wncklet/window-list.glade.h:9
-msgid "Ma_ximum size:"
-msgstr "м_аксимальный:"
-
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to current _workspace"
 msgstr "восстанавливать на текущее _рабочее место"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Restore to na_tive workspace"
 msgstr "восстанавливать на ис_ходное рабочее место"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Sh_ow windows from current workspace"
 msgstr "показывать окна тек_ущего рабочего места"
 
-#: ../applets/wncklet/window-list.glade.h:13
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Show windows from a_ll workspaces"
 msgstr "показывать окна вс_ех рабочих мест"
 
-#: ../applets/wncklet/window-list.glade.h:14
-msgid "Size"
-msgstr "Размер"
-
-#: ../applets/wncklet/window-list.glade.h:15
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "Window List Preferences"
 msgstr "Настройки списка окон"
 
-#: ../applets/wncklet/window-list.glade.h:16
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Always group windows"
 msgstr "всегда _группировать окна"
 
-#: ../applets/wncklet/window-list.glade.h:17
+#: ../applets/wncklet/window-list.glade.h:12
 msgid "_Never group windows"
 msgstr "никогда _не группировать окна"
-
-#: ../applets/wncklet/window-list.glade.h:18
-#: ../gnome-panel/panel-properties-dialog.glade.h:27
-msgid "pixels"
-msgstr "пикселей"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -888,20 +871,13 @@ msgstr "Показывать окна со всех рабочих мест"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
 msgid ""
-"This key specifies the maximum width that the window list requests. The "
-"maximum width setting is useful to limit the size of the window list in "
-"large panels, where the window list could fill the entire space available."
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
 msgstr ""
-"Этот ключ определяет максимальную ширину, запрашиваемую списком окон. "
-"Установка максимальной ширины списка полезна для ограничения размера списка "
-"окон на больших панелях, где список может занять всё доступное место."
+"Использовать этот ключ в среде GNOME версии начиная с 2.20 не рекомендуется. "
+"Данный ключ остаётся только для совместимости с предыдущими версиями."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
-msgid "This key specifies the minimum width that the window list requests."
-msgstr ""
-"Этот ключ определяет минимальную ширину, которую запрашивает список окон."
-
-#: ../applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
 msgstr "Группировать ли окна"
 
@@ -912,25 +888,25 @@ msgid ""
 msgstr ""
 "Отображает список всех окон в виде меню и позволяет переключаться между ними."
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:126
+#: ../applets/wncklet/workspace-switcher.c:856
 #: ../applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "строк(и)"
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:126
+#: ../applets/wncklet/workspace-switcher.c:856
 msgid "columns"
 msgstr "столбцов(а)"
 
-#: ../applets/wncklet/workspace-switcher.c:417
+#: ../applets/wncklet/workspace-switcher.c:412
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Произошла ошибка при загрузке значения num_rows для апплета переключателя "
 "рабочих мест: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:428
+#: ../applets/wncklet/workspace-switcher.c:423
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -938,14 +914,14 @@ msgstr ""
 "Произошла ошибка при загрузке значения display_workspace_names для апплета "
 "переключателя рабочих мест: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:443
+#: ../applets/wncklet/workspace-switcher.c:438
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Произошла ошибка при загрузке значения display_all_workspaces для апплета "
 "переключателя рабочих мест: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:551
+#: ../applets/wncklet/workspace-switcher.c:542
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1144,29 +1120,29 @@ msgstr "_Запустить"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Ключ %s не установлен, невозможно загрузить кнопку запуска\n"
 
-#: ../gnome-panel/launcher.c:1015 ../gnome-panel/panel-ditem-editor.c:1346
-#: ../gnome-panel/panel-ditem-editor.c:1380
-#: ../gnome-panel/panel-ditem-editor.c:1412
+#: ../gnome-panel/launcher.c:1015 ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/panel-ditem-editor.c:1381
+#: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "Could not save launcher"
 msgstr "Не удалось сохранить кнопку запуска"
 
-#: ../gnome-panel/menu.c:931
+#: ../gnome-panel/menu.c:937
 msgid "Add this launcher to _panel"
 msgstr "Добавить эту кнопку запуска на _панель"
 
-#: ../gnome-panel/menu.c:942
+#: ../gnome-panel/menu.c:948
 msgid "Add this launcher to _desktop"
 msgstr "Добавить эту кнопку запуска на _рабочий стол"
 
-#: ../gnome-panel/menu.c:958
+#: ../gnome-panel/menu.c:964
 msgid "_Entire menu"
 msgstr "В_сё меню"
 
-#: ../gnome-panel/menu.c:968
+#: ../gnome-panel/menu.c:974
 msgid "Add this as _drawer to panel"
 msgstr "Добавить как _ящик на панель"
 
-#: ../gnome-panel/menu.c:980
+#: ../gnome-panel/menu.c:986
 msgid "Add this as _menu to panel"
 msgstr "Добавить как _меню на панель"
 
@@ -1517,47 +1493,47 @@ msgstr "_Просмотреть..."
 msgid "Co_mment:"
 msgstr "При_мечание:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1020
+#: ../gnome-panel/panel-ditem-editor.c:1021
 msgid "Choose an application..."
 msgstr "Выбрать приложение..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1024
+#: ../gnome-panel/panel-ditem-editor.c:1025
 msgid "Choose a file..."
 msgstr "_Выбрать файл..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1149
+#: ../gnome-panel/panel-ditem-editor.c:1150
 msgid "Comm_and:"
 msgstr "_Команда:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1158
+#: ../gnome-panel/panel-ditem-editor.c:1159
 msgid "_Command:"
 msgstr "_Команда:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1167
+#: ../gnome-panel/panel-ditem-editor.c:1168
 msgid "_Location:"
 msgstr "_Адрес:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/panel-ditem-editor.c:1348
 msgid "The name of the launcher is not set."
 msgstr "Имя кнопки запуска не установлено"
 
-#: ../gnome-panel/panel-ditem-editor.c:1351
+#: ../gnome-panel/panel-ditem-editor.c:1352
 msgid "Could not save directory properties"
 msgstr "Не удалось сохранить параметры каталога"
 
-#: ../gnome-panel/panel-ditem-editor.c:1352
+#: ../gnome-panel/panel-ditem-editor.c:1353
 msgid "The name of the directory is not set."
 msgstr "Имя каталога не установлено"
 
-#: ../gnome-panel/panel-ditem-editor.c:1368
+#: ../gnome-panel/panel-ditem-editor.c:1369
 msgid "The command of the launcher is not set."
 msgstr "Команда для кнопки запуска не установлена."
 
-#: ../gnome-panel/panel-ditem-editor.c:1371
+#: ../gnome-panel/panel-ditem-editor.c:1372
 msgid "The location of the launcher is not set."
 msgstr "Адрес кнопки запуска не установлен."
 
-#: ../gnome-panel/panel-ditem-editor.c:1452 ../gnome-panel/panel-util.c:186
+#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:186
 msgid "Could not display help document"
 msgstr "Не удалось отобразить документ справки"
 
@@ -1889,21 +1865,21 @@ msgstr "_Изменить меню"
 msgid "Could not open location '%s'"
 msgstr "Не удалось открыть адрес «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:396
+#: ../gnome-panel/panel-menu-items.c:404
 msgid "Bookmarks"
 msgstr "Закладки"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:415
+#: ../gnome-panel/panel-menu-items.c:423
 #, c-format
 msgid "Open '%s'"
 msgstr "Открыть «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:507
+#: ../gnome-panel/panel-menu-items.c:515
 msgid "Network Places"
 msgstr "Сетевые ресурсы"
 
-#: ../gnome-panel/panel-menu-items.c:510
+#: ../gnome-panel/panel-menu-items.c:518
 msgid "Removable Media"
 msgstr "Сменные носители"
 
@@ -1911,19 +1887,19 @@ msgstr "Сменные носители"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:586
+#: ../gnome-panel/panel-menu-items.c:589
 msgid "Desktop Folder|Desktop"
 msgstr "Рабочий стол"
 
-#: ../gnome-panel/panel-menu-items.c:587
+#: ../gnome-panel/panel-menu-items.c:590
 msgid "Open the contents of your desktop in a folder"
 msgstr "Открыть рабочий стол как папку"
 
-#: ../gnome-panel/panel-menu-items.c:897
+#: ../gnome-panel/panel-menu-items.c:898
 msgid "Places"
 msgstr "Переход"
 
-#: ../gnome-panel/panel-menu-items.c:927
+#: ../gnome-panel/panel-menu-items.c:928
 msgid "System"
 msgstr "Система"
 
@@ -1931,7 +1907,7 @@ msgstr "Система"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1005
+#: ../gnome-panel/panel-menu-items.c:1006
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -1939,20 +1915,20 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1017
+#: ../gnome-panel/panel-menu-items.c:1018
 #, c-format
 msgid "Log Out %s..."
 msgstr "Завершить сеанс пользователя %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1021
+#: ../gnome-panel/panel-menu-items.c:1022
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "Завершить сеанс пользователя %s и войти под именем другого пользователя"
 
-#: ../gnome-panel/panel-menu-items.c:1062
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Could not launch menu item"
 msgstr "Не удалось выполнить элемент меню"
 
@@ -2283,7 +2259,7 @@ msgstr "_Нет (используется общесистемная тема)"
 #: ../gnome-panel/panel-properties-dialog.glade.h:23
 #: ../libpanel-applet/panel-test-applets.glade.h:4
 msgid "_Orientation:"
-msgstr "_Разположение:"
+msgstr "_Расположение:"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:24
 msgid "_Scale"
@@ -2298,25 +2274,29 @@ msgstr "_Размер:"
 msgid "_Tile"
 msgstr "Заполнять"
 
-#: ../gnome-panel/panel-recent.c:50
+#: ../gnome-panel/panel-properties-dialog.glade.h:27
+msgid "pixels"
+msgstr "пикселей"
+
+#: ../gnome-panel/panel-recent.c:51
 msgid "Could not find a suitable application."
 msgstr "Не удалось найти подходящее приложение"
 
-#: ../gnome-panel/panel-recent.c:97 ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:98 ../gnome-panel/panel-recent.c:108
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Не удалось открыть недавно использовавшийся документ «%s»"
 
-#: ../gnome-panel/panel-recent.c:109
+#: ../gnome-panel/panel-recent.c:110
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Произошла неизвестная ошибка при попытке открыть «%s»."
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:167
 msgid "Clear the Recent Documents list?"
 msgstr "Очистить список недавно использовавшихся документов?"
 
-#: ../gnome-panel/panel-recent.c:168
+#: ../gnome-panel/panel-recent.c:169
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2327,15 +2307,15 @@ msgstr ""
 "• Все элементы из списка недавно использовавшихся документов во всех "
 "приложениях."
 
-#: ../gnome-panel/panel-recent.c:180 ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:181 ../gnome-panel/panel-recent.c:256
 msgid "Clear Recent Documents"
 msgstr "Очистить недавно использовавшиеся документы"
 
-#: ../gnome-panel/panel-recent.c:215
+#: ../gnome-panel/panel-recent.c:216
 msgid "Recent Documents"
 msgstr "Недавние документы"
 
-#: ../gnome-panel/panel-recent.c:259
+#: ../gnome-panel/panel-recent.c:260
 msgid "Clear all items from the recent documents list"
 msgstr "Очистить все элементы списка недавно использовавшихся документов?"
 
@@ -2944,11 +2924,11 @@ msgstr "%1$s на %2$s"
 msgid "Open URL: %s"
 msgstr "Открыть URL: %s"
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1305
 msgid "Delete this drawer?"
 msgstr "Удалить этот ящик?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1306
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2956,11 +2936,11 @@ msgstr ""
 "При удалении ящика этот ящик и все его параметры\n"
 "будут утрачены."
 
-#: ../gnome-panel/panel.c:1310
+#: ../gnome-panel/panel.c:1309
 msgid "Delete this panel?"
 msgstr "Удалить эту панель?"
 
-#: ../gnome-panel/panel.c:1311
+#: ../gnome-panel/panel.c:1310
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2980,46 +2960,46 @@ msgstr "Тестовый апплет Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Фабрика тестового апплета Bonobo"
 
-#: ../libpanel-applet/panel-applet.c:1055
+#: ../libpanel-applet/panel-applet.c:1052
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Получен незавершённый тип фона «%s»"
 
-#: ../libpanel-applet/panel-applet.c:1069
+#: ../libpanel-applet/panel-applet.c:1066
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Получен незавершённый тип фона «%s»: %s"
 
-#: ../libpanel-applet/panel-applet.c:1078
+#: ../libpanel-applet/panel-applet.c:1075
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Произошёл сбой при получении изображения %s"
 
-#: ../libpanel-applet/panel-applet.c:1085
+#: ../libpanel-applet/panel-applet.c:1082
 msgid "Unknown background type received"
 msgstr "Получен неизвестный тип фона"
 
-#: ../libpanel-applet/panel-applet.c:1309
+#: ../libpanel-applet/panel-applet.c:1306
 msgid "The Applet's containing Panel's orientation"
 msgstr "Указание на расположение панели"
 
-#: ../libpanel-applet/panel-applet.c:1317
+#: ../libpanel-applet/panel-applet.c:1314
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Указание на размер панели в пикселях"
 
-#: ../libpanel-applet/panel-applet.c:1325
+#: ../libpanel-applet/panel-applet.c:1322
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Содержит цвет фона панели или изображение"
 
-#: ../libpanel-applet/panel-applet.c:1333
+#: ../libpanel-applet/panel-applet.c:1330
 msgid "The Applet's flags"
 msgstr "Флаги апплета"
 
-#: ../libpanel-applet/panel-applet.c:1341
+#: ../libpanel-applet/panel-applet.c:1338
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Изменяет размеры подсказки так, чтобы они были приемлемы для апплета"
 
-#: ../libpanel-applet/panel-applet.c:1349
+#: ../libpanel-applet/panel-applet.c:1346
 msgid "The Applet's containing Panel is locked down"
 msgstr "Панель, содержащая апплет, заблокирована"
 
