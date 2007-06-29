@@ -1,5 +1,14 @@
 2007-06-29  Vincent Untz  <vuntz@gnome.org>
 
+	* panel.[ch]: (panel_destroy): disconnect the "deactivate" signal
+	handler
+	(panel_menu_get): simplify
+	(make_popup_panel_menu): make static
+	Should fix bug #448025, where the panel was crashing because the
+	toplevel is used while already destroyed
+
+2007-06-29  Vincent Untz  <vuntz@gnome.org>
+
 	Add fields to PanelToplevel to have the possibility to use a position
 	relative from the right and/or bottom of the monitor. This is mainly
 	for non-expanded panels. This fixes the panel position:
