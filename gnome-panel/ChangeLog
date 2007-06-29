@@ -1,3 +1,66 @@
+2007-06-29  Vincent Untz  <vuntz@gnome.org>
+
+	Add fields to PanelToplevel to have the possibility to use a position
+	relative from the right and/or bottom of the monitor. This is mainly
+	for non-expanded panels. This fixes the panel position:
+	 - after a resolution change: if the panel was at the bottom or right
+	   of the screen and the resolution goes down and up again, we no
+	   longer have a panel that starts to be floating for no reason
+	 - when the panel is at the right of the screen and its size grows
+	   (because of a tasklist): it no longer becomes centered or snaps to
+	   the left of the screen.
+	This change should still compatibility with older configuration: if
+	you log in with an older GNOME after having used 2.20, things should
+	still work as expected.
+	Fix bug #107622 (and maybe other bugs).
+
+	* panel-toplevel.schemas.in: add x_right, y_bottom keys for toplevels
+	* panel-default-setup.entries: add those keys in the default setup
+	* panel-profile.c: (panel_profile_queue_toplevel_location_change):
+	(panel_profile_connect_to_toplevel):
+	(panel_profile_toplevel_change_notify):
+	(panel_profile_load_toplevel):
+	(panel_profile_can_be_moved_freely): basically, a dumb update to
+	handle the new keys (I just searched for what was done for the x and y
+	keys and copied that)
+	* panel-toplevel.[ch]: add new fields and properties for x_right and
+	y_bottom
+	(panel_toplevel_begin_grab_op): updated
+	(panel_toplevel_cancel_grab_op): updated
+	(panel_toplevel_resize_to_pointer): update y_bottom and x_right when
+	this is necessary
+	(panel_toplevel_move_to): fix x (y) when x_centered (y_centered) is
+	true, and compute the new x_right/y_bottom values
+	(panel_toplevel_calc_floating): use position from x_right/y_bottom
+	when they're different from -1
+	(panel_toplevel_update_normal_position): don't set x/y after snapping:
+	this is just wrong, since setting x/y should only be done after a
+	direct change by the user (and not automatically). This function is
+	only used to update the x/y in the geometry, and not in the config.
+	Also, to determine if we need to snap, only use x/y (with right/bottom
+	variants) from the config, not the computed values imposed by
+	constraints. This part fix the case where a panel is right aligned,
+	but gets centered and then left aligned because its size grows
+	(panel_toplevel_update_auto_hide_position): same update
+	(panel_toplevel_update_expanded_position): compute x_right and
+	y_bottom too, and notify of their changes when needed
+	(panel_toplevel_update_position): handle x_right/y_bottom in the
+	temporary position_centered case, and core part of the change: use
+	x_right/y_bottom when they're not -1
+	(panel_toplevel_set_property): updated for new properties
+	(panel_toplevel_get_property): ditto
+	(panel_toplevel_class_init): ditto
+	(panel_toplevel_init): ditto
+	(panel_toplevel_set_expand): small update to put the right values for
+	x_right/y_bottom
+	(panel_toplevel_set_orientation): when rotating a centered panel, set
+	the relevant x_right/y_bottom value to -1 (since the rotated panel is
+	centered (but not "force-centered"), its position is relative to the
+	left/top
+	(panel_toplevel_set_x): add x_right handling
+	(panel_toplevel_set_y): add y_bottom handling
+	(panel_toplevel_get_position): add x_right/y_bottom handling
+
 2007-06-26  Vincent Untz  <vuntz@gnome.org>
 
 	* gnome-desktop-item-edit.c: (main): use

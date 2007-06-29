@@ -44,8 +44,10 @@ typedef struct {
 	int              monitor;
 	int              size;
 	int              x;
+	int              x_right;
 	gboolean         x_centered;
 	int              y;
+	int              y_bottom;
 	gboolean         y_centered;
 	PanelOrientation orientation;
 
@@ -53,8 +55,10 @@ typedef struct {
 	guint monitor_changed : 1;
 	guint size_changed : 1;
 	guint x_changed : 1;
+	guint x_right_changed : 1;
 	guint x_centered_changed : 1;
 	guint y_changed : 1;
+	guint y_bottom_changed : 1;
 	guint y_centered_changed : 1;
 	guint orientation_changed : 1;
 } ToplevelLocationChange;
@@ -934,6 +938,12 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 				panel_profile_get_toplevel_key (toplevel, "x"),
 				change->x);
 
+		if (change->x_right_changed)
+			gconf_change_set_set_int (
+				queued_changes,
+				panel_profile_get_toplevel_key (toplevel, "x_right"),
+				change->x_right);
+
 		if (change->x_centered_changed)
 			gconf_change_set_set_bool (
 				queued_changes,
@@ -945,6 +955,12 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 				queued_changes,
 				panel_profile_get_toplevel_key (toplevel, "y"),
 				change->y);
+
+		if (change->y_bottom_changed)
+			gconf_change_set_set_int (
+				queued_changes,
+				panel_profile_get_toplevel_key (toplevel, "y_bottom"),
+				change->y_bottom);
 
 		if (change->y_centered_changed)
 			gconf_change_set_set_bool (
@@ -984,15 +1000,19 @@ TOPLEVEL_LOCATION_CHANGED_HANDLER(y_centered)
 	panel_profile_toplevel_##c##_changed (PanelToplevel *toplevel)            \
 	{                                                                         \
 		ToplevelLocationChange change = { NULL };                           \
-		int                    x, y;                                      \
+		int                    x, y, x_right, y_bottom;                   \
 		change.c##_changed = TRUE;                                        \
-		panel_toplevel_get_position (toplevel, &x, &y);                   \
+		panel_toplevel_get_position (toplevel,                            \
+					     &x, &x_right,                        \
+					     &y, &y_bottom);                      \
 		change.c = c;                                                     \
 		panel_profile_queue_toplevel_location_change (toplevel, &change); \
 	}
 
 TOPLEVEL_POSITION_CHANGED_HANDLER(x)
+TOPLEVEL_POSITION_CHANGED_HANDLER(x_right)
 TOPLEVEL_POSITION_CHANGED_HANDLER(y)
+TOPLEVEL_POSITION_CHANGED_HANDLER(y_bottom)
 
 static void
 panel_profile_toplevel_screen_changed (PanelToplevel *toplevel)
@@ -1016,10 +1036,14 @@ panel_profile_connect_to_toplevel (PanelToplevel *toplevel)
 			  G_CALLBACK (panel_profile_toplevel_size_changed), NULL);
 	g_signal_connect (toplevel, "notify::x",
 			  G_CALLBACK (panel_profile_toplevel_x_changed), NULL);
+	g_signal_connect (toplevel, "notify::x-right",
+			  G_CALLBACK (panel_profile_toplevel_x_right_changed), NULL);
 	g_signal_connect (toplevel, "notify::x-centered",
 			  G_CALLBACK (panel_profile_toplevel_x_centered_changed), NULL);
 	g_signal_connect (toplevel, "notify::y",
 			  G_CALLBACK (panel_profile_toplevel_y_changed), NULL);
+	g_signal_connect (toplevel, "notify::y-bottom",
+			  G_CALLBACK (panel_profile_toplevel_y_bottom_changed), NULL);
 	g_signal_connect (toplevel, "notify::y-centered",
 			  G_CALLBACK (panel_profile_toplevel_y_centered_changed), NULL);
 	g_signal_connect (toplevel, "notify::orientation",
@@ -1095,22 +1119,42 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 							gconf_value_get_bool (value));  \
 		}
 
-#define UPDATE_POS(k, n)                                                                \
+#define UPDATE_POS(k, n, n2)                                                            \
 		if (!strcmp (key, k)) {                                                 \
-			if (value->type == GCONF_VALUE_INT)                             \
+			if (value->type == GCONF_VALUE_INT) {                           \
+				int x, x_right, y, y_bottom;                            \
+				panel_toplevel_get_position (toplevel, &x, &x_right,    \
+							     &y, &y_bottom);            \
 				panel_toplevel_set_##n (                                \
 					toplevel,                                       \
 					gconf_value_get_int (value),                    \
+					n2,                                             \
 					panel_toplevel_get_##n##_centered (toplevel));  \
+			}                                                               \
 		}
 
-#define UPDATE_CENTERED(k, n)                                                           \
+#define UPDATE_POS2(k, n, n2)                                                           \
+		if (!strcmp (key, k)) {                                                 \
+			if (value->type == GCONF_VALUE_INT) {                           \
+				int x, x_right, y, y_bottom;                            \
+				panel_toplevel_get_position (toplevel, &x, &x_right,    \
+							     &y, &y_bottom);            \
+				panel_toplevel_set_##n (                                \
+					toplevel,                                       \
+					n,                                              \
+					gconf_value_get_int (value),                    \
+					panel_toplevel_get_##n##_centered (toplevel));  \
+			}                                                               \
+		}
+
+#define UPDATE_CENTERED(k, n, n2)                                                       \
 		if (!strcmp (key, k)) {                                                 \
 			if (value->type == GCONF_VALUE_BOOL) {                          \
-				int x, y;                                               \
-				panel_toplevel_get_position (toplevel, &x, &y);         \
+				int x, x_right, y, y_bottom;                            \
+				panel_toplevel_get_position (toplevel, &x, &x_right,    \
+							     &y, &y_bottom);            \
 				panel_toplevel_set_##n (                                \
-					toplevel, n, gconf_value_get_bool (value));     \
+					toplevel, n, n2, gconf_value_get_bool (value)); \
 			}                                                               \
 		}
 
@@ -1137,10 +1181,12 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 	else UPDATE_BOOL ("expand", expand)
 	else UPDATE_STRING ("orientation", orientation)
 	else UPDATE_INT ("size", size)
-	else UPDATE_POS ("x", x)
-	else UPDATE_POS ("y", y)
-	else UPDATE_CENTERED ("x_centered", x)
-	else UPDATE_CENTERED ("y_centered", y)
+	else UPDATE_POS ("x", x, x_right)
+	else UPDATE_POS ("y", y, y_bottom)
+	else UPDATE_POS2 ("x_right", x, x_right)
+	else UPDATE_POS2 ("y_bottom", y, y_bottom)
+	else UPDATE_CENTERED ("x_centered", x, x_right)
+	else UPDATE_CENTERED ("y_centered", y, y_bottom)
 	else UPDATE_BOOL ("auto_hide", auto_hide)
 	else UPDATE_BOOL ("enable_animations", animate)
 	else UPDATE_BOOL ("enable_buttons", enable_buttons)
@@ -1665,17 +1711,24 @@ panel_profile_load_toplevel (GConfClient       *client,
 	GET_INT ("auto_hide_size", auto_hide_size);
 	GET_STRING ("animation_speed", animation_speed);
 
-#define GET_POSITION(a, c, fn)                                                      \
+#define GET_POSITION(a, b, c, fn)                                                   \
 	{                                                                           \
 		gboolean centered;                                                  \
 		int      position;                                                  \
+		int      position2;                                                 \
 		key = panel_gconf_sprintf ("%s/" c, toplevel_dir);                  \
 		centered = gconf_client_get_bool (client, key, &error);             \
-		error = NULL;                                                       \
-		key = panel_gconf_sprintf ("%s/" a, toplevel_dir);                  \
-		position = gconf_client_get_int (client, key, &error);              \
+		if (!error) {                                                       \
+			key = panel_gconf_sprintf ("%s/" a, toplevel_dir);          \
+			position = gconf_client_get_int (client, key, &error);      \
+		}                                                                   \
+		if (!error) {                                                       \
+			key = panel_gconf_sprintf ("%s/" b, toplevel_dir);          \
+			position2 = gconf_client_get_int (client, key, &error);     \
+		}                                                                   \
 		if (!error)                                                         \
-			panel_toplevel_set_##fn (toplevel, position, centered);     \
+			panel_toplevel_set_##fn (toplevel, position, position2,     \
+						 centered);                         \
 		else {                                                              \
 			g_warning (_("Error reading GConf integer value '%s': %s"), \
 				   key, error->message);                            \
@@ -1683,8 +1736,8 @@ panel_profile_load_toplevel (GConfClient       *client,
 		}                                                                   \
 	}
 
-	GET_POSITION ("x", "x_centered", x);
-	GET_POSITION ("y", "y_centered", y);
+	GET_POSITION ("x", "x_right", "x_centered", x);
+	GET_POSITION ("y", "y_bottom", "y_centered", y);
 
 	panel_profile_load_background (toplevel, client, toplevel_dir);
 
@@ -2500,11 +2553,17 @@ panel_profile_can_be_moved_freely (PanelToplevel *toplevel)
 	key = panel_profile_get_toplevel_key (toplevel, "x");
 	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
+	key = panel_profile_get_toplevel_key (toplevel, "x_right");
+	if (!gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
 	key = panel_profile_get_toplevel_key (toplevel, "x_centered");
 	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 
 	key = panel_profile_get_toplevel_key (toplevel, "y");
+	if (!gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+	key = panel_profile_get_toplevel_key (toplevel, "y_bottom");
 	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 	key = panel_profile_get_toplevel_key (toplevel, "y_centered");

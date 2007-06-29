@@ -133,6 +133,44 @@
         </long>
       </locale>
     </schema>
+
+    <schema>
+      <key>/schemas/apps/panel/toplevels/x_right</key>
+      <owner>panel</owner>
+      <type>int</type>
+      <default>-1</default>
+      <locale name="C">
+        <short>X co-ordinate of panel, starting from the right of the screen</short>
+        <long>
+          The location of the panel along the x-axis, starting from the right of 
+	  the screen. If set to -1, the value is ignored and the value of the x
+	  key is used. If the value is greater than 0, then the value of the x
+	  key is ignored.
+	  This key is only relevant in un-expanded mode. In expanded mode this
+          key is ignored and the panel is placed at the screen edge
+          specified by the orientation key.
+        </long>
+      </locale>
+    </schema>
+ 
+    <schema>
+      <key>/schemas/apps/panel/toplevels/y_bottom</key>
+      <owner>panel</owner>
+      <type>int</type>
+      <default>-1</default>
+      <locale name="C">
+        <short>Y co-ordinate of panel, starting from the bottom of the screen</short>
+        <long>
+          The location of the panel along the y-axis, starting from the bottom of 
+	  the screen. If set to -1, the value is ignored and the value of the y
+	  key is used. If the value is greater than 0, then the value of the y
+	  key is ignored.
+	  This key is only relevant in un-expanded mode. In expanded mode this
+          key is ignored and the panel is placed at the screen edge
+          specified by the orientation key.
+        </long>
+      </locale>
+    </schema>
  
     <schema>
       <key>/schemas/apps/panel/toplevels/x_centered</key>
@@ -142,10 +180,10 @@
       <locale name="C">
         <short>Center panel on x-axis</short>
         <long>
-          If true, the x key is ignored and the panel is placed at
+          If true, the x and x_right keys are ignored and the panel is placed at
           the center of the x-axis of the screen. If the panel is
           resized it will remain at that position - i.e. the panel
-          will grow on both sides. If false, the x key specifies 
+          will grow on both sides. If false, the x and x_right keys specify
           the location of the panel.
         </long>
       </locale>
@@ -159,10 +197,10 @@
       <locale name="C">
         <short>Center panel on y-axis</short>
         <long>
-          If true, the y key is ignored and the panel is placed at
+          If true, the y and y_bottom keys are ignored and the panel is placed at
           the center of the y-axis of the screen. If the panel is
           resized it will remain at that position - i.e. the panel
-          will grow on both sides. If false, the y key specifies
+          will grow on both sides. If false, the y and y_bottom keys specify
           the location of the panel.
         </long>
       </locale>
