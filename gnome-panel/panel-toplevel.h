@@ -166,6 +166,7 @@ void                 panel_toplevel_update_edges           (PanelToplevel       
 
 gboolean             panel_toplevel_is_last_unattached     (PanelToplevel       *toplevel);
 int                  panel_toplevel_get_minimum_size       (PanelToplevel *toplevel);
+int                  panel_toplevel_get_maximum_size       (PanelToplevel *toplevel);
 GSList              *panel_toplevel_list_toplevels         (void);
 
 G_END_DECLS

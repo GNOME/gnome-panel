@@ -1,3 +1,21 @@
+2007-07-01  Vincent Untz  <vuntz@gnome.org>
+
+	Make it possible to have bigger panels (up to 1/5 the screen size).
+	Help for people wanting sidebars.
+	Fix bug #355010.
+
+	* panel-properties-dialog.glade: don't have a page_size of 12 for the
+	size spin button
+	* panel-properties-dialog.c:
+	(panel_properties_dialog_setup_size_spin): don't hardcode the maximum
+	size and use panel_toplevel_get_maximum_size()
+	(panel_properties_dialog_update_orientation): update the spin button
+	maximum size
+	* panel-toplevel.[ch]: (panel_toplevel_update_size): take into account
+	the maximum size computed by panel_toplevel_get_maximum_size() too
+	(panel_toplevel_get_maximum_size): new, gets the maximum size, which
+	depends on the monitor size
+
 2007-06-29  Vincent Untz  <vuntz@gnome.org>
 
 	* panel.[ch]: (panel_destroy): disconnect the "deactivate" signal

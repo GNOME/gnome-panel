@@ -209,7 +209,6 @@ panel_properties_dialog_size_changed (PanelPropertiesDialog *dialog,
 					 gtk_spin_button_get_value_as_int (spin_button));
 }
 
-#define TOPLEVEL_MAX_SIZE 120
 static void
 panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 					 GladeXML              *gui)
@@ -225,7 +224,7 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 
 	gtk_spin_button_set_range (GTK_SPIN_BUTTON (dialog->size_spin),
 				   panel_toplevel_get_minimum_size (dialog->toplevel),
-				   TOPLEVEL_MAX_SIZE);
+				   panel_toplevel_get_maximum_size (dialog->toplevel));
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->size_spin),
 				   panel_profile_get_toplevel_size (dialog->toplevel));
@@ -670,6 +669,9 @@ panel_properties_dialog_update_orientation (PanelPropertiesDialog *dialog,
 	GtkTreeModel         *model;
 	GtkTreeIter           iter;
 	OrientationComboItem *item;
+	int                   max_size;
+	int                   spin_size;
+	int                   profile_size;
 
 	if (!value || value->type != GCONF_VALUE_STRING)
 		return;
@@ -677,6 +679,24 @@ panel_properties_dialog_update_orientation (PanelPropertiesDialog *dialog,
 	if (!panel_profile_map_orientation_string (gconf_value_get_string (value), &orientation))
 		return;
 
+	/* change the maximum size of the panel */
+	//TODO: we should also do this when the monitor size changes
+	max_size = panel_toplevel_get_maximum_size (dialog->toplevel);
+	spin_size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (dialog->size_spin));
+	profile_size = panel_profile_get_toplevel_size (dialog->toplevel);
+
+	gtk_spin_button_set_range (GTK_SPIN_BUTTON (dialog->size_spin),
+				   panel_toplevel_get_minimum_size (dialog->toplevel),
+				   max_size);
+
+	if (spin_size > max_size)
+		gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->size_spin),
+					   max_size);
+	else if (spin_size != profile_size)
+		gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->size_spin),
+					   MIN (profile_size, max_size));
+
+	/* update the orientation combo box */
 	model = gtk_combo_box_get_model (GTK_COMBO_BOX (dialog->orientation_combo));
 
 	if (!gtk_tree_model_get_iter_first (model, &iter))

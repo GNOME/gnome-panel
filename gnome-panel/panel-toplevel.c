@@ -57,6 +57,7 @@ G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW);
 #define DEFAULT_UNHIDE_DELAY      500
 #define DEFAULT_DND_THRESHOLD     8
 #define MINIMUM_WIDTH             100
+#define MAXIMUM_SIZE_SCREEN_RATIO 5
 #define SNAP_TOLERANCE_FACTOR     6
 #define DEFAULT_ARROW_SIZE        20
 #define HANDLE_SIZE               10
@@ -2399,7 +2400,9 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 
-		height = MAX (MAX (height, toplevel->priv->size), minimum_height);
+		height = MAX (MIN (MAX (height, toplevel->priv->size),
+				   panel_toplevel_get_maximum_size (toplevel)),
+			      minimum_height);
 
 		if (toplevel->priv->expand)
 			width  = monitor_width;
@@ -2426,7 +2429,9 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 
 		width  = MAX (MINIMUM_WIDTH, width);
 	} else {
-		width = MAX (MAX (width, toplevel->priv->size), minimum_height);
+		width = MAX (MIN (MAX (width, toplevel->priv->size),
+				  panel_toplevel_get_maximum_size (toplevel)),
+			     minimum_height);
 
 		if (toplevel->priv->expand)
 			height = monitor_height;
@@ -5124,4 +5129,18 @@ panel_toplevel_get_minimum_size (PanelToplevel *toplevel)
 {
 	return calculate_minimum_height (GTK_WIDGET (toplevel),
 					 toplevel->priv->orientation);
+}
+
+int
+panel_toplevel_get_maximum_size (PanelToplevel *toplevel)
+{
+	int monitor_width, monitor_height;
+
+	panel_toplevel_get_monitor_geometry (toplevel, NULL, NULL,
+					     &monitor_width, &monitor_height);
+
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+		return monitor_height / MAXIMUM_SIZE_SCREEN_RATIO;
+	else
+		return monitor_width / MAXIMUM_SIZE_SCREEN_RATIO;
 }
