@@ -34,6 +34,7 @@
 #include "applet.h"
 #include "nothing.h"
 #include "xstuff.h"
+#include "panel-config-global.h"
 #include "panel-globals.h"
 #include "launcher.h"
 #include "panel-icon-names.h"
@@ -1541,4 +1542,34 @@ panel_util_get_icon_for_uri (const char *text_uri)
 				       NULL, text_uri, NULL,
 				       GNOME_ICON_LOOKUP_FLAGS_NONE,
 				       GNOME_ICON_LOOKUP_RESULT_FLAGS_NONE);
+}
+
+static gboolean
+panel_util_query_tooltip_cb (GtkWidget  *widget,
+			     gint        x,
+			     gint        y,
+			     gboolean    keyboard_tip,
+			     GtkTooltip *tooltip,
+			     const char *text)
+{
+	if (!panel_global_config_get_tooltips_enabled ())
+		return FALSE;
+
+	gtk_tooltip_set_text (tooltip, text);
+	return TRUE;
+}
+
+void
+panel_util_set_tooltip_text (GtkWidget  *widget,
+			     const char *text)
+{
+	if (string_empty (text)) {
+		g_object_set (widget, "has-tooltip", FALSE, NULL);
+		return;
+	}
+
+	g_object_set (widget, "has-tooltip", TRUE, NULL);
+	g_signal_connect_data (widget, "query-tooltip",
+			       G_CALLBACK (panel_util_query_tooltip_cb),
+			       g_strdup (text), (GClosureNotify) g_free, 0);
 }

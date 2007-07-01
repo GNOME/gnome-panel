@@ -255,10 +255,8 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 				   GTK_STOCK_CLEAR,
 				   _("Clear Recent Documents"),
 				   TRUE);
-	gtk_tooltips_set_tip (panel_tooltips,
-			      menu_item,
-			      _("Clear all items from the recent documents list"),
-			      NULL);
+	panel_util_set_tooltip_text (menu_item,
+				     _("Clear all items from the recent documents list"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (recent_menu), menu_item);
 
 	g_signal_connect (menu_item, "activate",

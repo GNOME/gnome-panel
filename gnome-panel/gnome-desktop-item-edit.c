@@ -16,6 +16,8 @@
 /* FIXME Symbol needed by panel-util.c - sucky */
 #include "applet.h"
 GSList *panel_applet_list_applets (void) { return NULL; }
+#include "panel-config-global.h"
+gboolean panel_global_config_get_tooltips_enabled (void) { return FALSE; }
 
 static int dialogs = 0;
 static gboolean create_new = FALSE;

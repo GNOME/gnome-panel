@@ -605,7 +605,8 @@ setup_button (Launcher *launcher)
 		str = unescaped_str;
 	}
 
-	gtk_tooltips_set_tip (panel_tooltips, launcher->button, str, NULL);
+	panel_util_set_tooltip_text (launcher->button, str);
+
 	/* Setup accessible name */
 	panel_a11y_set_atk_name_desc (launcher->button, str, NULL);
 

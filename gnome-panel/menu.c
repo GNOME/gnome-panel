@@ -1049,8 +1049,9 @@ drag_begin_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 {
 	/* FIXME: workaround for a possible gtk+ bug
 	 *    See bugs #92085(gtk+) and #91184(panel) for details.
+	 *    Maybe it's not needed with GtkTooltip?
 	 */
-	gtk_tooltips_disable (panel_tooltips);
+	g_object_set (widget, "has-tooltip", FALSE, NULL);
 }
 
 /* This is a _horrible_ hack to have this here. This needs to be added to the
@@ -1070,8 +1071,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
   /* FIXME: workaround for a possible gtk+ bug
    *    See bugs #92085(gtk+) and #91184(panel) for details.
    */
-  if (panel_global_config_get_tooltips_enabled ())
-    gtk_tooltips_enable (panel_tooltips);
+  g_object_set (widget, "has-tooltip", TRUE, NULL);
 
   while (parent)
     {
@@ -1441,10 +1441,8 @@ create_submenu_entry (GtkWidget          *menu,
 			TRUE);
 
 	if (gmenu_tree_directory_get_comment (directory))
-		gtk_tooltips_set_tip (panel_tooltips,
-				      menuitem,
-				      gmenu_tree_directory_get_comment (directory),
-				      NULL);
+		panel_util_set_tooltip_text (menuitem,
+					     gmenu_tree_directory_get_comment (directory));
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
@@ -1529,11 +1527,10 @@ create_menuitem (GtkWidget          *menu,
 	     gmenu_tree_directory_get_comment (alias_directory)) ||
 	    (!alias_directory &&
 	     gmenu_tree_entry_get_comment (entry)))
-		gtk_tooltips_set_tip (panel_tooltips,
-				      menuitem,
-				      alias_directory ? gmenu_tree_directory_get_comment (alias_directory) :
-							gmenu_tree_entry_get_comment (entry),
-				      NULL);
+		panel_util_set_tooltip_text (menuitem,
+					     alias_directory ?
+						gmenu_tree_directory_get_comment (alias_directory) :
+						gmenu_tree_entry_get_comment (entry));
 
 	g_signal_connect_after (menuitem, "button_press_event",
 				G_CALLBACK (menuitem_button_press_event), NULL);

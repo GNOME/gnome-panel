@@ -68,48 +68,15 @@ enum {
 static void panel_menu_bar_update_text_gravity (PanelMenuBar *menubar);
 
 static gboolean
-panel_menu_bar_enter_applications (GtkWidget        *widget,
-				   GdkEventCrossing *event,
-				   PanelMenuBar     *menubar)
-{
-	gtk_tooltips_set_tip (panel_tooltips,
-			      GTK_WIDGET (menubar),
-			      _("Browse and run installed applications"),
-			      NULL);
-	return FALSE;
-}
-
-static gboolean
-panel_menu_bar_enter_places (GtkWidget        *widget,
-			     GdkEventCrossing *event,
-			     PanelMenuBar     *menubar)
-{
-	gtk_tooltips_set_tip (panel_tooltips,
-			      GTK_WIDGET (menubar),
-			      _("Access documents, folders and network places"),
-			      NULL);
-	return FALSE;
-}
-
-static gboolean
-panel_menu_bar_enter_desktop (GtkWidget        *widget,
-			      GdkEventCrossing *event,
-			      PanelMenuBar     *menubar)
-{
-	gtk_tooltips_set_tip (panel_tooltips,
-			      GTK_WIDGET (menubar),
-			      _("Change desktop appearance and behavior, get help, or log out"),
-			      NULL);
-	return FALSE;
-}
-
-static gboolean
 panel_menu_bar_reinit_tooltip (GtkWidget    *widget,
 			       PanelMenuBar *menubar)
 {
-	gtk_tooltips_set_tip (panel_tooltips,
-			      GTK_WIDGET (menubar),
-			      "", NULL);
+	g_object_set (menubar->priv->applications_item,
+		      "has-tooltip", TRUE, NULL);
+	g_object_set (menubar->priv->places_item,
+		      "has-tooltip", TRUE, NULL);
+	g_object_set (menubar->priv->desktop_item,
+		      "has-tooltip", TRUE, NULL);
 
 	return FALSE;
 }
@@ -118,9 +85,7 @@ static gboolean
 panel_menu_bar_hide_tooltip (GtkWidget    *widget,
 			     PanelMenuBar *menubar)
 {
-	gtk_tooltips_set_tip (panel_tooltips,
-			      GTK_WIDGET (menubar),
-			      NULL, NULL);
+	g_object_set (widget, "has-tooltip", FALSE, NULL);
 
 	return FALSE;
 }
@@ -128,19 +93,12 @@ panel_menu_bar_hide_tooltip (GtkWidget    *widget,
 static void
 panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 {
-	/* Update tooltip when we enter the menu items */
-	g_signal_connect (menubar->priv->applications_item,
-			  "enter-notify-event",
-			  G_CALLBACK (panel_menu_bar_enter_applications),
-			  menubar);
-	g_signal_connect (menubar->priv->places_item,
-			  "enter-notify-event",
-			  G_CALLBACK (panel_menu_bar_enter_places),
-			  menubar);
-	g_signal_connect (menubar->priv->desktop_item,
-			  "enter-notify-event",
-			  G_CALLBACK (panel_menu_bar_enter_desktop),
-			  menubar);
+	panel_util_set_tooltip_text (menubar->priv->applications_item,
+				     _("Browse and run installed applications"));
+	panel_util_set_tooltip_text (menubar->priv->places_item,
+				     _("Access documents, folders and network places"));
+	panel_util_set_tooltip_text (menubar->priv->desktop_item,
+				     _("Change desktop appearance and behavior, get help, or log out"));
 
 	//FIXME: this doesn't handle the right-click case. Sigh.
 	/* Hide tooltip if a menu is activated */
@@ -162,13 +120,6 @@ panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 			  "deactivate",
 			  G_CALLBACK (panel_menu_bar_reinit_tooltip),
 			  menubar);
-
-	/* Preset a tooltip that will change when the cursor enters an item
-	 * If we don't do this, the tooltip will not work on the first enter
-	 * event. */
-	gtk_tooltips_set_tip (panel_tooltips,
-			      GTK_WIDGET (menubar),
-			      "", NULL);
 }
 
 static void

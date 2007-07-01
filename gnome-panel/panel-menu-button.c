@@ -814,8 +814,7 @@ panel_menu_button_set_tooltip (PanelMenuButton *button,
 
 	if (tooltip && tooltip [0]) {
 		button->priv->tooltip = g_strdup (tooltip);
-		gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button),
-				      tooltip, NULL);
+		panel_util_set_tooltip_text (GTK_WIDGET (button), tooltip);
 	}
 }
 

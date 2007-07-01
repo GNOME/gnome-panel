@@ -1,5 +1,34 @@
 2007-07-01  Vincent Untz  <vuntz@gnome.org>
 
+	Migrate to GtkTooltip.
+
+	* panel-util.[ch]: (panel_util_query_tooltip_cb): new, check if
+	tooltips are enabled but displaying one
+	(panel_util_set_tooltip_text): wrapper for tooltip for the panel,
+	since we need to check if the tooltips are enabled in the panel config.
+	* panel-config-global.c: simplify, since we don't need to do the
+	GtkTooltips stuff
+	* main.c: (main):
+	* panel-globals.h: remove useless global GtkTooltips variable
+	* drawer.c:
+	* launcher.c:
+	* menu.c:
+	* panel-action-button.c:
+	* panel-menu-button.c:
+	* panel-menu-items.c:
+	* panel-recent.c: use panel_util_set_tooltip_text()
+	* panel-menu-bar.c: (panel_menu_bar_enter_applications): kill
+	(panel_menu_bar_enter_places): kill
+	(panel_menu_bar_enter_desktop): kill
+	(panel_menu_bar_reinit_tooltip): updated
+	(panel_menu_bar_hide_tooltip): updated
+	(panel_menu_bar_setup_tooltip): simplify thanks to GtkTooltip
+	* gnome-desktop-item-edit.c:
+	(panel_global_config_get_tooltips_enabled): needed symbol for
+	compilation. This is just a hacky workaround.
+
+2007-07-01  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-icon-names.h: add icon for home folder
 	* panel-menu-items.c: (activate_home_uri): new
 	(panel_place_menu_item_create_menu): don't use nautilus-home.desktop,

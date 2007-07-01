@@ -131,6 +131,9 @@ const char *panel_util_get_vfs_method_display_name (const char *method);
 char *panel_util_get_label_for_uri (const char *text_uri);
 char *panel_util_get_icon_for_uri (const char *text_uri);
 
+void panel_util_set_tooltip_text (GtkWidget  *widget,
+				  const char *text);
+
 G_END_DECLS
 
 #endif /* PANEL_UTIL_H */

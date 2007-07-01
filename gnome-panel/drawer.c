@@ -316,7 +316,7 @@ set_tooltip_and_name (Drawer     *drawer,
 		tooltip = NULL;
 
 	panel_toplevel_set_name (drawer->toplevel, tooltip);
-	gtk_tooltips_set_tip (panel_tooltips, drawer->button, tooltip, NULL);
+	panel_util_set_tooltip_text (drawer->button, tooltip);
 }
 
 static Drawer *

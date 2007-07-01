@@ -616,8 +616,8 @@ panel_action_button_set_type (PanelActionButton     *button,
 	if (actions [type].icon_name != NULL)
 		button_widget_set_icon_name (BUTTON_WIDGET (button), actions [type].icon_name);
 
-	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button),
-			      _(actions [type].tooltip), NULL);
+	panel_util_set_tooltip_text (GTK_WIDGET (button),
+				     _(actions [type].tooltip));
 	panel_a11y_set_atk_name_desc (GTK_WIDGET (button), _(actions [type].tooltip), NULL);
 
 	panel_action_button_update_sensitivity (button);

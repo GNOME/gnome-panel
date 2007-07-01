@@ -208,8 +208,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 				   icon, NULL, name, TRUE);
 
-	if (comment != NULL)
-		gtk_tooltips_set_tip (panel_tooltips, item, comment, NULL);
+	panel_util_set_tooltip_text (item, comment);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect_data (item, "activate",
@@ -257,10 +256,7 @@ panel_menu_items_append_place_item (const char *icon_name,
 				   title,
 				   TRUE);
 
-	gtk_tooltips_set_tip (panel_tooltips,
-			      item,
-			      tooltip,
-			      NULL);
+	panel_util_set_tooltip_text (item, tooltip);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
@@ -292,10 +288,10 @@ panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
 				   label ? label : panel_action_get_text (action_type),
 				   TRUE);
 
-	gtk_tooltips_set_tip (panel_tooltips,
-			      item,
-			      tooltip ? tooltip : panel_action_get_tooltip (action_type),
-			      NULL);
+	panel_util_set_tooltip_text (item,
+				     tooltip ?
+					tooltip :
+					panel_action_get_tooltip (action_type));
 
 	g_signal_connect (item, "activate",
 			  panel_action_get_invoke (action_type), NULL);

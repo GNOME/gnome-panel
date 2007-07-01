@@ -32,8 +32,6 @@ G_BEGIN_DECLS
 extern GSList         *panels;
 extern GSList         *panel_list;
 
-extern GtkTooltips    *panel_tooltips;
-
 G_END_DECLS
 
 #endif /* __PANEL_GLOBALS_H__ */

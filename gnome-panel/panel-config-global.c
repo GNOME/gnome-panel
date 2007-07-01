@@ -98,15 +98,11 @@ panel_global_config_set_entry (GConfEntry *entry)
 	if (!value || !key)
 		return;
 
-	if (strcmp (key, "tooltips_enabled") == 0) {
+	if (strcmp (key, "tooltips_enabled") == 0)
 		global_config.tooltips_enabled =
 				gconf_value_get_bool (value);
-		if (global_config.tooltips_enabled)
-			gtk_tooltips_enable (panel_tooltips);
-		else
-			gtk_tooltips_disable (panel_tooltips);
 
-	} else if (strcmp (key, "enable_animations") == 0)
+	else if (strcmp (key, "enable_animations") == 0)
 		global_config.enable_animations =
 				gconf_value_get_bool (value);
 

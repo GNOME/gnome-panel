@@ -34,8 +34,6 @@
 GSList *panels = NULL;
 GSList *panel_list = NULL;
 
-GtkTooltips *panel_tooltips = NULL;
-
 static char *deprecated_profile;
 
 static const GOptionEntry options[] = {
@@ -71,8 +69,6 @@ main (int argc, char **argv)
 		return -1;
 
 	gnome_authentication_manager_init ();
-
-	panel_tooltips = gtk_tooltips_new ();
 
 	panel_action_protocol_init ();
 	panel_multiscreen_init ();
