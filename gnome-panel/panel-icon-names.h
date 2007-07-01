@@ -9,6 +9,7 @@
 #define PANEL_ICON_FOLDER		"folder"
 #define PANEL_ICON_FONTS		"preferences-desktop-font"
 #define PANEL_ICON_FORCE_QUIT		"gnome-panel-force-quit"
+#define PANEL_ICON_HOME			"user-home"
 #define PANEL_ICON_LAUNCHER		"gnome-panel-launcher"
 #define PANEL_ICON_LOCKSCREEN		"system-lock-screen"
 #define PANEL_ICON_LOGOUT		"gnome-logout"

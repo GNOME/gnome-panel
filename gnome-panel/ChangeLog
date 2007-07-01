@@ -1,5 +1,20 @@
 2007-07-01  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-icon-names.h: add icon for home folder
+	* panel-menu-items.c: (activate_home_uri): new
+	(panel_place_menu_item_create_menu): don't use nautilus-home.desktop,
+	but create a "place" menu item. Fix bug #338700.
+	Also, put an uri for the Desktop menu item, else it will crash on drag
+	and drop.
+	* panel-util.c: (panel_util_get_icon_for_uri_known_folders): new, gets
+	the icon for some well-know folders ($HOME, $Desktop)
+	(panel_util_get_icon_for_uri): updated to use
+	panel_util_get_icon_for_uri_known_folders()
+	* panel.c: (drop_uri): get the icon too
+	(drop_urilist): updated, don't get an icon here for uris
+
+2007-07-01  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-lockdown.c: (panel_lockdown_notify_find): compare the
 	GCallbacks too, instead of just checking that the GCallback that we
 	have in our list is not NULL. That was probably a typo.

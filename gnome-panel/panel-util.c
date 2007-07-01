@@ -1410,6 +1410,31 @@ panel_util_get_icon_for_uri_method (const char *uri)
 		return NULL;
 }
 
+static const char *
+panel_util_get_icon_for_uri_known_folders (const char *uri)
+{
+	const char *icon;
+	char       *path;
+	int         len;
+
+	icon = NULL;
+	path = gnome_vfs_get_local_path_from_uri (uri);
+
+	len = strlen (path);
+	if (path[len] == '/')
+		path[len] = '\0';
+
+	if (strcmp (path, g_get_home_dir ()) == 0)
+		icon = PANEL_ICON_HOME;
+	else if (strcmp (path,
+			 g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP)) == 0)
+		icon = PANEL_ICON_DESKTOP;
+
+	g_free (path);
+
+	return icon;
+}
+
 /* This is based on nautilus_compute_title_for_uri() and
  * nautilus_file_get_display_name_nocopy() */
 char *
@@ -1507,6 +1532,10 @@ panel_util_get_icon_for_uri (const char *text_uri)
 
 	if (!g_str_has_prefix (text_uri, "file:"))
 		return NULL;
+
+	icon = panel_util_get_icon_for_uri_known_folders (text_uri);
+	if (icon)
+		return g_strdup (icon);
 
 	return gnome_icon_lookup_sync (gtk_icon_theme_get_default (),
 				       NULL, text_uri, NULL,

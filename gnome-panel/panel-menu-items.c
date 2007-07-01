@@ -129,6 +129,13 @@ activate_uri (GtkWidget  *menuitem,
 }
 
 static void
+activate_home_uri (GtkWidget *menuitem,
+		   gpointer   data)
+{
+	activate_uri (menuitem, g_get_home_dir ());
+}
+
+static void
 activate_desktop_uri (GtkWidget *menuitem,
 		      gpointer   data)
 {
@@ -565,21 +572,31 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	GtkWidget *places_menu;
 	GtkWidget *item;
 	char      *gconf_name;
+	char      *uri;
 
 	places_menu = panel_create_menu ();
 
 	gconf_name = gconf_client_get_string (panel_gconf_get_client (),
 					      HOME_NAME_KEY,
 					      NULL);
-	panel_menu_items_append_from_desktop (places_menu,
-					      "nautilus-home.desktop",
-					      gconf_name);
+
+	uri = gnome_vfs_get_uri_from_local_path (g_get_home_dir ());
+	panel_menu_items_append_place_item (PANEL_ICON_HOME,
+					    string_empty (gconf_name) ?
+						_("Home Folder") : gconf_name,
+					    _("Open your personal folder"),
+					    places_menu,
+					    G_CALLBACK (activate_home_uri),
+					    uri);
+	g_free (uri);
+
 	if (gconf_name)
 		g_free (gconf_name);
 
 	if (!gconf_client_get_bool (panel_gconf_get_client (),
 				    DESKTOP_IS_HOME_DIR_KEY,
 				    NULL)) {
+		uri = gnome_vfs_get_uri_from_local_path (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
 		panel_menu_items_append_place_item (
 				PANEL_ICON_DESKTOP,
 				/* Translators: Desktop is used here as in
@@ -590,7 +607,9 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 				_("Open the contents of your desktop in a folder"),
 				places_menu,
 				G_CALLBACK (activate_desktop_uri),
-				NULL);
+				/* FIXME: if the dir changes, we'd need to update the drag data since the uri is not the same */
+				uri);
+		g_free (uri);
 	}
 
 	panel_place_menu_item_append_gtk_bookmarks (places_menu);

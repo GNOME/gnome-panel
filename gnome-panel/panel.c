@@ -514,23 +514,32 @@ static gboolean
 drop_uri (PanelWidget *panel,
 	  int          position,
 	  const char  *uri,
-	  const char  *icon)
+	  const char  *fallback_icon)
 {
 	char  *name;
 	char  *comment;
+	char  *buf;
+	char  *icon;
 
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
 
 	name = panel_util_get_label_for_uri (uri);
+	icon = panel_util_get_icon_for_uri (uri);
+	if (!icon)
+		icon = g_strdup (fallback_icon);
 
-	comment = gnome_vfs_unescape_string_for_display (uri);
+	buf = gnome_vfs_unescape_string_for_display (uri);
+	/* Translators: %s is a URI */
+	comment = g_strdup_printf (_("Open '%s'"), buf);
+	g_free (buf);
 
 	panel_launcher_create_from_info (panel->toplevel, position, FALSE,
 					 uri, name, comment, icon);
 
 	g_free (name);
 	g_free (comment);
+	g_free (icon);
 
 	return TRUE;
 }
@@ -651,22 +660,9 @@ drop_urilist (PanelWidget *panel,
 					success = FALSE;
 				g_free (filename);
 			} else {
-				char *icon;
-
-				//FIXME: use panel_util_get_icon_for_uri
-				icon = gnome_icon_lookup (gtk_icon_theme_get_default (),
-							  NULL, NULL, NULL,
-							  info, info->mime_type,
-							  GNOME_ICON_LOOKUP_FLAGS_NONE,
-							  NULL);
-
-				if (!icon)
-					icon = g_strdup (PANEL_ICON_UNKNOWN);
-
-				if (!drop_uri (panel, pos, uri, icon))
+				if (!drop_uri (panel, pos, uri,
+					       PANEL_ICON_UNKNOWN))
 					success = FALSE;
-
-				g_free (icon);
 			}
 		} else {
 			if (!drop_uri (panel, pos, uri, PANEL_ICON_UNKNOWN))
