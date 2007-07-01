@@ -168,7 +168,10 @@ struct _PanelToplevelPrivate {
 	/* This is a keyboard initiated grab operation */
 	guint                   grab_is_keyboard : 1;
 
-	/* The x-y co-ordinates temporarily specify the panel center */
+	/* The x-y co-ordinates temporarily specify the panel center.
+	 * This is used when the panel is rotating, because the width/height
+	 * of the toplevel might change, so we need to compute new values for
+	 * those. */
 	guint                   position_centered : 1;
 
 	/* The toplevel is "attached" to another widget */
@@ -593,6 +596,7 @@ panel_toplevel_resize_to_pointer (PanelToplevel *toplevel,
 	panel_toplevel_set_size (toplevel, new_size);
 }
 
+/* this is called for expanded panels that are dragged around */
 static void
 panel_toplevel_calc_new_orientation (PanelToplevel *toplevel,
 				     int            pointer_x,
