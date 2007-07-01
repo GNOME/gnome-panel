@@ -159,7 +159,7 @@ test_applet_fill (TestApplet *applet)
 	panel_applet_setup_menu (
 		PANEL_APPLET (applet), test_applet_menu_xml, test_applet_menu_verbs, NULL);
 
-	g_object_set (applet, "tooltip-markup", "Hello Tip", NULL);
+	gtk_widget_set_tooltip_text (applet, "Hello Tip");
 
 	panel_applet_set_flags (PANEL_APPLET (applet), PANEL_APPLET_HAS_HANDLE);
 
