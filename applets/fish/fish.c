@@ -1707,7 +1707,7 @@ set_tooltip (FishApplet *fish)
 	char       *desc;
 
 	desc = g_markup_printf_escaped (desc_format, fish->name);
-	g_object_set (fish, "tooltip-markup", desc, NULL);
+	gtk_widget_set_tooltip_markup (GTK_WIDGET (fish), desc);
 	g_free (desc);
 }
 
