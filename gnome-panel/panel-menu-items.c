@@ -206,7 +206,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 
 	item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-				   icon, NULL, name, TRUE);
+				   icon, NULL, name);
 
 	panel_util_set_tooltip_text (item, comment);
 
@@ -253,8 +253,7 @@ panel_menu_items_append_place_item (const char *icon_name,
 				   panel_menu_icon_get_size (),
 				   icon_name,
 				   NULL,
-				   title,
-				   TRUE);
+				   title);
 
 	panel_util_set_tooltip_text (item, tooltip);
 
@@ -285,8 +284,7 @@ panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
 				   panel_menu_icon_get_size (),
 				   panel_action_get_icon_name (action_type),
 				   NULL,
-				   label ? label : panel_action_get_text (action_type),
-				   TRUE);
+				   label ? label : panel_action_get_text (action_type));
 
 	panel_util_set_tooltip_text (item,
 				     tooltip ?
@@ -404,7 +402,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		item = gtk_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 					   PANEL_ICON_BOOKMARKS, NULL,
-					   _("Bookmarks"), TRUE);
+					   _("Bookmarks"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		gtk_widget_show (item);
@@ -524,7 +522,7 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 
 		item = gtk_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-					   icon, NULL, title, TRUE);
+					   icon, NULL, title);
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		gtk_widget_show (item);
@@ -910,8 +908,7 @@ panel_place_menu_item_new (gboolean use_image)
 	setup_menuitem (GTK_WIDGET (menuitem),
 			image ? panel_menu_icon_get_size () : GTK_ICON_SIZE_INVALID,
 			image,
-			_("Places"),
-			TRUE);
+			_("Places"));
 
 	menuitem->priv->use_image = use_image;
 
@@ -940,8 +937,7 @@ panel_desktop_menu_item_new (gboolean use_image,
 	setup_menuitem (GTK_WIDGET (menuitem),
 			image ? panel_menu_icon_get_size () : GTK_ICON_SIZE_INVALID,
 			image,
-			_("System"),
-			TRUE);
+			_("System"));
 
 	menuitem->priv->use_image = use_image;
 

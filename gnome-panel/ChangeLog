@@ -1,5 +1,18 @@
 2007-07-01  Vincent Untz  <vuntz@gnome.org>
 
+	* menu.[ch]: (create_item_context_menu): don't use setup_menuitem(),
+	but gtk_menu_item_new_with_mnemonic() since we don't need what
+	setup_menuitem() does
+	(setup_menuitem): always create invisible mnemonic
+	(create_submenu_entry): updated
+	(create_menuitem): updated
+	(setup_menu_item_with_icon): always create invisible mnemonic
+	* panel-menu-items.c:
+	* panel-recent.c: updated for
+	setup_menuitem()/setup_menu_item_with_icon() change
+
+2007-07-01  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-toplevel.c: add two comments to help with understanding the
 	code.
 

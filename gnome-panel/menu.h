@@ -32,14 +32,12 @@ G_BEGIN_DECLS
 void		setup_menuitem		  (GtkWidget        *menuitem,
 					   GtkIconSize       icon_size,
 					   GtkWidget        *pixmap,
-					   const char       *title,
-					   gboolean          create_invisible_mnemonic);
+					   const char       *title);
 void            setup_menu_item_with_icon (GtkWidget        *item,
 					   GtkIconSize       icon_size,
 					   const char       *icon_name,
 					   const char       *stock_id,
-					   const char       *title,
-					   gboolean          create_invisible_mnemonic);
+					   const char       *title);
 
 GtkWidget      *create_empty_menu         (void);
 GtkWidget      *create_applications_menu  (const char  *menu_file,

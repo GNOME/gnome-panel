@@ -213,8 +213,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 				   panel_menu_icon_get_size (),
 				   PANEL_ICON_RECENT,
 				   NULL,
-				   _("Recent Documents"),
-				   TRUE);
+				   _("Recent Documents"));
 	recent_menu = gtk_recent_chooser_menu_new_for_manager (manager);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), recent_menu);
 
@@ -253,8 +252,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 				   panel_menu_icon_get_size (),
 				   NULL,
 				   GTK_STOCK_CLEAR,
-				   _("Clear Recent Documents"),
-				   TRUE);
+				   _("Clear Recent Documents"));
 	panel_util_set_tooltip_text (menu_item,
 				     _("Clear all items from the recent documents list"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (recent_menu), menu_item);

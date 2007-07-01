@@ -930,65 +930,43 @@ create_item_context_menu (GtkWidget   *item,
 	g_signal_connect (menu, "deactivate",
 			  G_CALLBACK (restore_grabs), item);
 
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem,
-			panel_menu_icon_get_size (),
-			NULL,
-			_("Add this launcher to _panel"),
-			FALSE);
+	menuitem = gtk_menu_item_new_with_mnemonic (_("Add this launcher to _panel"));
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (add_app_to_panel), entry);
 	gtk_widget_set_sensitive (menuitem, id_lists_writable);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_widget_show (menuitem);
 
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem,
-			panel_menu_icon_get_size (),
-			NULL,
-			_("Add this launcher to _desktop"),
-			FALSE);
+	menuitem = gtk_menu_item_new_with_mnemonic (_("Add this launcher to _desktop"));
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (add_app_to_desktop), entry);
 	gtk_widget_set_sensitive (menuitem, id_lists_writable);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_widget_show (menuitem);
 
 
 	submenu = create_empty_menu ();
 
 	g_object_set_data (G_OBJECT (submenu), "menu_panel", panel_widget);
 
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem,
-			panel_menu_icon_get_size (),
-			NULL,
-			_("_Entire menu"),
-			FALSE);
+	menuitem = gtk_menu_item_new_with_mnemonic (_("_Entire menu"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_widget_show (menuitem);
 
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem,
-			panel_menu_icon_get_size (),
-			NULL,
-			_("Add this as _drawer to panel"),
-			FALSE);
+	menuitem = gtk_menu_item_new_with_mnemonic (_("Add this as _drawer to panel"));
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (add_menudrawer_to_panel), entry);
 	gtk_widget_set_sensitive (menuitem, id_lists_writable);
 	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
+	gtk_widget_show (menuitem);
 
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem,
-			panel_menu_icon_get_size (),
-			NULL,
-			_("Add this as _menu to panel"),
-			FALSE);
+	menuitem = gtk_menu_item_new_with_mnemonic (_("Add this as _menu to panel"));
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (add_menu_to_panel), entry);
 	gtk_widget_set_sensitive (menuitem, id_lists_writable);
 	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
+	gtk_widget_show (menuitem);
 
 	return menu;
 }
@@ -1204,26 +1182,21 @@ void
 setup_menuitem (GtkWidget   *menuitem,
 		GtkIconSize  icon_size,
 		GtkWidget   *image,
-		const char  *title,
-		gboolean     create_invisible_mnemonic)
+		const char  *title)
 			       
 {
 	GtkWidget *label;
+	char      *_title;
 
-	if (create_invisible_mnemonic) {
-		char *_title;
+	/* this creates a label with an invisible mnemonic */
+	label = g_object_new (GTK_TYPE_ACCEL_LABEL, NULL);
+	_title = menu_escape_underscores_and_prepend (title);
+	gtk_label_set_text_with_mnemonic (GTK_LABEL (label), _title);
+	g_free (_title);
 
-		label = g_object_new (GTK_TYPE_ACCEL_LABEL, NULL);
-		_title = menu_escape_underscores_and_prepend (title);
-		gtk_label_set_text_with_mnemonic (GTK_LABEL (label), _title);
-		g_free (_title);
+	gtk_label_set_pattern (GTK_LABEL (label), "");
 
-		gtk_label_set_pattern (GTK_LABEL (label), "");
-
-		gtk_accel_label_set_accel_widget (GTK_ACCEL_LABEL (label),
-						  menuitem);
-	} else
-		label = gtk_label_new_with_mnemonic (title);
+	gtk_accel_label_set_accel_widget (GTK_ACCEL_LABEL (label), menuitem);
 
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_widget_show (label);
@@ -1437,14 +1410,15 @@ create_submenu_entry (GtkWidget          *menu,
 	setup_menuitem (menuitem,
 			panel_menu_icon_get_size (),
 			NULL,
-			gmenu_tree_directory_get_name (directory),
-			TRUE);
+			gmenu_tree_directory_get_name (directory));
 
 	if (gmenu_tree_directory_get_comment (directory))
 		panel_util_set_tooltip_text (menuitem,
 					     gmenu_tree_directory_get_comment (directory));
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+	gtk_widget_show (menuitem);
 
 	return menuitem;
 }
@@ -1520,8 +1494,7 @@ create_menuitem (GtkWidget          *menu,
 			panel_menu_icon_get_size (),
 			NULL,
 			alias_directory ? gmenu_tree_directory_get_name (alias_directory) :
-					  gmenu_tree_entry_get_name (entry),
-			TRUE);
+					  gmenu_tree_entry_get_name (entry));
 
 	if ((alias_directory &&
 	     gmenu_tree_directory_get_comment (alias_directory)) ||
@@ -1570,6 +1543,8 @@ create_menuitem (GtkWidget          *menu,
 
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (activate_app_def), entry);
+
+	gtk_widget_show (menuitem);
 }
 
 static void
@@ -1747,14 +1722,13 @@ setup_menu_item_with_icon (GtkWidget   *item,
 			   GtkIconSize  icon_size,
 			   const char  *icon_name,
 			   const char  *stock_id,
-			   const char  *title,
-			   gboolean     create_invisible_mnemonic)
+			   const char  *title)
 {
 	if (icon_name || stock_id)
 		panel_load_menu_image_deferred (item, icon_size,
 						stock_id, icon_name, NULL);
 
-	setup_menuitem (item, icon_size, NULL, title, create_invisible_mnemonic);
+	setup_menuitem (item, icon_size, NULL, title);
 }
 
 static void
