@@ -40,17 +40,6 @@
 #include "showdesktop.h"
 
 void
-wncklet_set_tooltip (GtkWidget  *widget,
-		     const char *tip)
-{
-	char *markup;
-
-	markup = g_markup_escape_text (tip, -1);
-	g_object_set (widget, "tooltip-markup", markup, NULL);
-	g_free (markup);
-}
-
-void
 wncklet_display_about (GtkWidget   *applet,
 		       GtkWidget  **dialog,
 		       const char  *name,

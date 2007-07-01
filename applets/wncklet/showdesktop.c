@@ -237,13 +237,15 @@ static const BonoboUIVerb show_desktop_menu_verbs [] = {
 static void
 update_button_display (ShowDesktopData *sdd)
 {
+	const char *tip;
+
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (sdd->button))) {
-                wncklet_set_tooltip (sdd->button,
-				     _("Click here to restore hidden windows."));
+                tip = _("Click here to restore hidden windows.");
         } else {
-                wncklet_set_tooltip (sdd->button,
-				     _("Click here to hide all windows and show the desktop."));
+                tip = _("Click here to hide all windows and show the desktop.");
         }
+
+	gtk_widget_set_tooltip_text (sdd->button, tip);
 }
 
 static void

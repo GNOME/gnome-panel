@@ -237,7 +237,7 @@ window_menu_applet_fill (PanelApplet *applet)
 
 	window_menu->applet = GTK_WIDGET (applet);
 	force_no_focus_padding (window_menu->applet);
-	wncklet_set_tooltip (window_menu->applet, _("Window Selector"));
+	gtk_widget_set_tooltip_text (window_menu->applet, _("Window Selector"));
  
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 	window_menu->size = panel_applet_get_size (applet);

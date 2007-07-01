@@ -33,9 +33,6 @@
 
 G_BEGIN_DECLS
 
-void        wncklet_set_tooltip         (GtkWidget  *widget,
-					 const char *tip);
-
 void        wncklet_display_about       (GtkWidget   *applet,
 					 GtkWidget  **dialog,
 					 const char  *name,
