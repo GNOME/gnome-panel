@@ -1,3 +1,11 @@
+2007-07-02  Vincent Untz  <vuntz@gnome.org>
+
+	* menu.c: (menu_destroy_context_menu): new
+	(create_item_context_menu): when the menu item is destroyed, also
+	destroy the context menu and block the restoring of grabs which would
+	fail since the applications menu has been destroyed.
+	Fix bug #350626.
+
 ==================== 2.18.2 ====================
 
 2007-05-28  Vincent Untz  <vuntz@gnome.org>
