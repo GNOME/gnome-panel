@@ -383,7 +383,7 @@ panel_lockdown_notify_find (GSList    *closures,
                 GClosure  *closure  = l->data;
 
                 if (closure->data == user_data &&
-                    cclosure->callback)
+                    cclosure->callback == callback_func)
                         return closure;
         }
 

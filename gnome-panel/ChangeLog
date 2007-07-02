@@ -1,5 +1,12 @@
 2007-07-02  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-lockdown.c: (panel_lockdown_notify_find): compare the
+	GCallbacks too, instead of just checking that the GCallback that we
+	have in our list is not NULL. That was probably a typo.
+	Fix bug #301308.
+
+2007-07-02  Vincent Untz  <vuntz@gnome.org>
+
 	* panel.[ch]: (panel_destroy): disconnect the "deactivate" signal
 	handler
 	(panel_menu_get): simplify
