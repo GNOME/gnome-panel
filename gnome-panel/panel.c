@@ -269,8 +269,12 @@ panel_destroy (PanelToplevel *toplevel,
 	panel_lockdown_notify_remove (G_CALLBACK (panel_recreate_context_menu),
 				      pd);
 
-	if (pd->menu)
+	if (pd->menu) {
+		g_signal_handlers_disconnect_by_func (pd->menu,
+						      context_menu_deactivate,
+						      pd);
 		g_object_unref (pd->menu);
+	}
 	pd->menu = NULL;
 
 	pd->panel = NULL;
@@ -301,21 +305,18 @@ static GtkWidget *
 panel_menu_get (PanelWidget *panel, PanelData *pd)
 {
 	if (!pd->menu) {
-		pd->menu = g_object_ref (panel_context_menu_create (panel));
-		if (pd->menu) {
-			gtk_object_sink (GTK_OBJECT (pd->menu));
-			g_signal_connect (pd->menu, "deactivate",
-					  G_CALLBACK (context_menu_deactivate),
-					  pd);
-			g_signal_connect (pd->menu, "show",
-					  G_CALLBACK (context_menu_show), pd);
-		}
+		pd->menu = g_object_ref_sink (panel_context_menu_create (panel));
+		g_signal_connect (pd->menu, "deactivate",
+				  G_CALLBACK (context_menu_deactivate),
+				  pd);
+		g_signal_connect (pd->menu, "show",
+				  G_CALLBACK (context_menu_show), pd);
 	}
 
 	return pd->menu;
 }
 
-GtkWidget *
+static GtkWidget *
 make_popup_panel_menu (PanelWidget *panel_widget)
 {
 	PanelData *pd;

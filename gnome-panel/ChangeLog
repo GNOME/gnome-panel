@@ -1,5 +1,14 @@
 2007-07-02  Vincent Untz  <vuntz@gnome.org>
 
+	* panel.[ch]: (panel_destroy): disconnect the "deactivate" signal
+	handler
+	(panel_menu_get): simplify
+	(make_popup_panel_menu): make static
+	Should fix bug #448025, where the panel was crashing because the
+	toplevel is used while already destroyed
+
+2007-07-02  Vincent Untz  <vuntz@gnome.org>
+
 	* menu.c: (menu_destroy_context_menu): new
 	(create_item_context_menu): when the menu item is destroyed, also
 	destroy the context menu and block the restoring of grabs which would
