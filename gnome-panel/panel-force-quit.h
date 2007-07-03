@@ -29,7 +29,8 @@
 
 G_BEGIN_DECLS
 
-void panel_force_quit (GdkScreen *screen);
+void panel_force_quit (GdkScreen *screen,
+		       guint      time);
 
 G_END_DECLS
 

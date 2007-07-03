@@ -273,7 +273,8 @@ popup_filter (GdkXEvent *gdk_xevent,
 }
 
 void
-panel_force_quit (GdkScreen *screen)
+panel_force_quit (GdkScreen *screen,
+		  guint      time)
 {
 	GdkGrabStatus  status;
 	GdkCursor     *cross;
@@ -288,7 +289,7 @@ panel_force_quit (GdkScreen *screen)
 
 	cross = gdk_cursor_new (GDK_CROSS);
 	status = gdk_pointer_grab (root, FALSE, GDK_BUTTON_PRESS_MASK,
-				   NULL, cross, GDK_CURRENT_TIME);
+				   NULL, cross, time);
 	gdk_cursor_unref (cross);
 	if (status != GDK_GRAB_SUCCESS) {
 		g_warning ("Pointer grab failed\n");
@@ -296,7 +297,7 @@ panel_force_quit (GdkScreen *screen)
 		return;
 	}
 
-	status = gdk_keyboard_grab (root, FALSE, GDK_CURRENT_TIME);
+	status = gdk_keyboard_grab (root, FALSE, time);
 	if (status != GDK_GRAB_SUCCESS) {
 		g_warning ("Keyboard grab failed\n");
 		remove_popup (popup);

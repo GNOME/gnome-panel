@@ -226,7 +226,8 @@ panel_action_search (GtkWidget *widget)
 static void
 panel_action_force_quit (GtkWidget *widget)
 {
-	panel_force_quit (gtk_widget_get_screen (widget));
+	panel_force_quit (gtk_widget_get_screen (widget),
+			  gtk_get_current_event_time ());
 }
 
 /* Connect Server
