@@ -1,5 +1,5 @@
 /*
- * clock.h
+ * tz-sel-dialog.h: timezone selection dialog
  *
  * Copyright (C) 2007 Vincent Untz <vuntz@gnome.org>
  *
@@ -20,18 +20,20 @@
  *
  * Authors:
  *      Vincent Untz <vuntz@gnome.org>
- *
- * Most of the original code comes from clock.c
  */
 
-#ifndef CLOCK_H
-#define CLOCK_H
+#ifndef TZ_SEL_DIALOG_H
+#define TZ_SEL_DIALOG_H
+
+#include <gtk/gtk.h>
+
+#include "tz-list.h"
 
 G_BEGIN_DECLS
 
-#define CLOCK_ICON "gnome-panel-clock"
-#define CLOCK_SCHEMA_DIR "/schemas/apps/clock_applet/prefs"
+GtkWidget *tz_sel_dialog_new     (TzList    *tz_list);
+void       tz_sel_dialog_present (GtkWindow *window);
 
 G_END_DECLS
 
-#endif /* CLOCK_H */
+#endif /* TZ_SEL_DIALOG_H */

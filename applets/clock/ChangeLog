@@ -1,3 +1,63 @@
+2007-07-05  Vincent Untz  <vuntz@gnome.org>
+
+	Add support for timezones. This needs some more work and testing on
+	various OS. I'm not sure the tz.c part work well outside of Linux, eg.
+	Fix bug #88754.
+
+	* Makefile.am: add new files, and other updates needed for this commit
+	* calendar-window.c: make gconf keys #define
+	(calendar_window_destroy): unref the gconf client
+	* calendar-window.h: small update
+	* clock-utils.[ch]: new file, containing some common code:
+	clock_locale_format() and clock_utils_display_help()
+	* clock.h: small update
+	* clock.c: make gconf keys #define
+	(set_tooltip): kill
+	(update_clock): update the tz popup too with the new time
+	(update_tooltip): use gtk_widget_set_tooltip_text()
+	(destroy_clock): updated
+	(close_on_escape): make a bit more generic
+	(delete_event): ditto
+	(clock_locale_format): moved to clock-utils.c
+	(create_calendar): updated
+	(create_tz): new
+	(position_calendar_popup): updated to be a bit more simple
+	(position_tz_popup): new
+	(present_calendar_popup): killed
+	(update_calendar_popup): renamed from update_popup, close the tz popup
+	if it's open
+	(update_tz_popup): new, based on update_calendar_popup()
+	(toggle_calendar): updated
+	(toggle_timezone): new
+	(toggle_timezone_shown): new
+	(toggle_timezone_hidden): new
+	(create_clock_widget): updated, and added the obox and the tz toggle
+	(applet_change_orient): change obox orientation and the direction of
+	the arrow in the tz toggle
+	(format_changed): updated
+	(gmt_time_changed): updated
+	(show_week_changed): updated
+	(show_tz_changed): new
+	(setup_gconf): add new listener
+	(fill_clock_applet): updated
+	(set_show_zones_cb): new
+	(properties_response_cb): use clock_utils_display_help()
+	(display_properties_dialog): updated for the new checkbox
+	(display_help_dialog): use clock_utils_display_help()
+	* clock.schemas.in: add new show_timezones and timezones/tz_id_list
+	keys
+	* e-map/*: e-map code, taken from evolution/gnome-system-tools
+	* obox.[ch]: new, stolen from the notification area
+	* tz-list.[ch]: new, handles configuration related to the timezones.
+	* tz-sel-dialog.[ch]: new, a dialog to handle timezone configuration
+	* timezone.glade: new, glade file for the timezone configuration
+	dialog
+	* tz-window.[ch]: new, a popup similar to the calendar popup showing
+	selected timezones
+	* tz.[ch]: new, read timezone information from the OS. It's based on
+	code taken from anaconda/evolution/gnome-system-tools. The data is
+	shared among all instances in the process.
+
 2007-06-27  Ross Burton  <ross@openedhand.com>
 
 	* calendar-window.c:

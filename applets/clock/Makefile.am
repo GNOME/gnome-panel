@@ -1,3 +1,5 @@
+SUBDIRS = e-map
+
 INCLUDES = 						\
 	-I$(srcdir)/../../libpanel-applet 		\
 	-I$(top_builddir)/libpanel-applet 		\
@@ -7,6 +9,7 @@ INCLUDES = 						\
 	$(CLOCK_CFLAGS) 				\
 	$(LIBPANEL_APPLET_CFLAGS)			\
 	-DDATADIR=\""$(datadir)"\"			\
+	-DGLADEDIR=\""$(datadir)/gnome-panel/glade"\"	\
 	-DLIBDIR=\""$(libdir)"\"			\
 	-DSYSCONFDIR=\""$(sysconfdir)"\"		\
 	-DPREFIX=\""$(prefix)"\"			\
@@ -26,13 +29,26 @@ endif
 CLOCK_SOURCES = 		\
 	calendar-window.c	\
 	calendar-window.h	\
+	tz-window.c		\
+	tz-window.h		\
+	tz-sel-dialog.c		\
+	tz-sel-dialog.h		\
+ 	tz-list.c		\
+ 	tz-list.h		\
+ 	tz.c			\
+ 	tz.h			\
+	obox.c			\
+	obox.h			\
 	clock.c			\
 	clock.h			\
+	clock-utils.c		\
+	clock-utils.h		\
 	$(BUILT_SOURCES)	\
 	$(CALENDAR_SOURCES)
 
 CLOCK_LDADD =						\
 	../../libpanel-applet/libpanel-applet-2.la	\
+	e-map/libemap.a					\
 	$(CLOCK_LIBS)
 
 BUILT_SOURCES = \
@@ -40,7 +56,7 @@ BUILT_SOURCES = \
 	clock-typebuiltins.h
 
 clock_enum_headers =					\
-	$(top_srcdir)/applets/clock/clock.h
+	$(top_srcdir)/applets/clock/clock-utils.h
 
 clock-typebuiltins.c: @REBUILD@ $(clock_enum_headers)
 	glib-mkenums    --fhead "#include <glib-object.h>\n" \
@@ -89,6 +105,9 @@ clock_applet_LDADD = $(CLOCK_LDADD)
 clock_applet_CFLAGS =
 $(clock_applet_OBJECTS): $(BUILT_SOURCES)
 endif
+
+gladedir = $(datadir)/gnome-panel/glade
+glade_DATA = timezone.glade
 
 uidir 	= $(datadir)/gnome-2.0/ui
 ui_DATA	= GNOME_ClockApplet.xml	

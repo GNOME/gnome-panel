@@ -45,6 +45,7 @@
 #include "calendar-window.h"
 
 #include "clock.h"
+#include "clock-utils.h"
 #include "clock-typebuiltins.h"
 #ifdef HAVE_LIBECAL
 #include "calendar-client.h"
@@ -55,10 +56,10 @@
 #ifdef HAVE_LIBECAL
 #define N_CALENDAR_WINDOW_GCONF_PREFS 4
 
-static const char* KEY_APPOINTMENTS_EXPANDED = "expand_appointments";
-static const char* KEY_BIRTHDAYS_EXPANDED    = "expand_birthdays";
-static const char* KEY_TASKS_EXPANDED        = "expand_tasks";
-static const char* KEY_WEATHER_EXPANDED      = "expand_weather";
+#define KEY_APPOINTMENTS_EXPANDED "expand_appointments"
+#define KEY_BIRTHDAYS_EXPANDED    "expand_birthdays"
+#define KEY_TASKS_EXPANDED        "expand_tasks"
+#define KEY_WEATHER_EXPANDED      "expand_weather"
 #endif
 
 struct _CalendarWindowPrivate {
@@ -1591,6 +1592,10 @@ calendar_window_destroy (GtkObject *object)
 						    calwin->priv->listeners [i]);
 		calwin->priv->listeners [i] = 0;
 	}
+
+	if (calwin->priv->gconfclient)
+		g_object_unref (calwin->priv->gconfclient);
+	calwin->priv->gconfclient = NULL;
 #endif /* HAVE_LIBECAL */
 
 	GTK_OBJECT_CLASS (calendar_window_parent_class)->destroy (object);

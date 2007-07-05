@@ -29,7 +29,7 @@
 #define CALENDAR_WINDOW_H
 
 #include <gtk/gtk.h>
-#include "clock.h"
+#include "clock-utils.h"
 
 G_BEGIN_DECLS
 

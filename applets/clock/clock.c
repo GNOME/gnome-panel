@@ -48,26 +48,30 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <gconf/gconf-client.h>
-#include <libgnomeui/gnome-help.h>
 
 #include "clock.h"
 
 #include "calendar-window.h"
+#include "clock-utils.h"
+#include "obox.h"
+#include "tz-list.h"
+#include "tz-window.h"
 
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
 
-#define N_GCONF_PREFS 7
+#define N_GCONF_PREFS 8
 
 #define NEVER_SENSITIVE "never_sensitive"
 
-static const char* KEY_FORMAT        = "format";
-static const char* KEY_SHOW_SECONDS  = "show_seconds";
-static const char* KEY_SHOW_DATE     = "show_date";
-static const char* KEY_GMT_TIME      = "gmt_time";
-static const char* KEY_CONFIG_TOOL   = "config_tool";
-static const char* KEY_CUSTOM_FORMAT = "custom_format";
-static const char* KEY_SHOW_WEEK     = "show_week_numbers";
+#define KEY_FORMAT        "format"
+#define KEY_SHOW_SECONDS  "show_seconds"
+#define KEY_SHOW_DATE     "show_date"
+#define KEY_GMT_TIME      "gmt_time"
+#define KEY_CONFIG_TOOL   "config_tool"
+#define KEY_CUSTOM_FORMAT "custom_format"
+#define KEY_SHOW_WEEK     "show_week_numbers"
+#define KEY_SHOW_ZONES    "show_timezones"
 
 #define FALLBACK_CONFIG_TOOL "time-admin"
 
@@ -90,12 +94,20 @@ typedef struct _ClockData ClockData;
 struct _ClockData {
 	/* widgets */
 	GtkWidget *applet;
+
+	GtkWidget *obox;
 	GtkWidget *clockw;
         GtkWidget *toggle;
+	GtkWidget *tz_toggle;
+	GtkWidget *tz_arrow;
+
 	GtkWidget *props;
 	GtkWidget *about;
-        GtkWidget *calendar_popup;
+	GtkWidget *calendar_popup;
+	GtkWidget *tz_popup;
 
+	TzList    *tz_list;
+	
 	/* preferences */
 	ClockFormat  format;
 	char        *custom_format;
@@ -103,6 +115,7 @@ struct _ClockData {
 	gboolean     showdate;
 	gboolean     gmt_time;
 	gboolean     showweek;
+	gboolean     show_tz;
 
         char *config_tool;
 
@@ -114,13 +127,14 @@ struct _ClockData {
 	PanelAppletOrient  orient;
 	int                size;
 	GtkAllocation      old_allocation;
-
+	
 	int fixed_width;
 	int fixed_height;
 
         GtkWidget *showseconds_check;
         GtkWidget *showdate_check;
         GtkWidget *gmt_time_check;
+	GtkWidget *show_tz_check;
         GtkWidget *custom_hbox;
         GtkWidget *custom_label;
         GtkWidget *custom_entry;
@@ -148,10 +162,12 @@ static void display_help_dialog       (BonoboUIComponent *uic,
 static void display_about_dialog      (BonoboUIComponent *uic,
 				       ClockData         *cd,
 				       const gchar       *verbname);
-static void position_calendar_popup   (ClockData         *cd,
-                                       GtkWidget         *window,
-                                       GtkWidget         *button);
+static void position_calendar_popup   (ClockData         *cd);
+static void position_tz_popup         (ClockData         *cd);
 static void update_orient (ClockData *cd);
+static void applet_change_orient (PanelApplet       *applet,
+				  PanelAppletOrient  orient,
+				  ClockData         *cd);
 
 static void
 unfix_size (ClockData *cd)
@@ -188,17 +204,6 @@ calculate_minimum_width (GtkWidget   *widget,
 	width += 2 * (focus_width + focus_pad + widget->style->xthickness);
 
 	return width;
-}
-
-static void
-set_tooltip (GtkWidget  *widget,
-	     const char *tip)
-{
-	char *markup;
-
-	markup = g_markup_escape_text (tip, -1);
-	g_object_set (widget, "tooltip-markup", markup, NULL);
-	g_free (markup);
 }
 
 static void
@@ -495,6 +500,11 @@ update_clock (ClockData * cd)
 
 	g_free (utf8);
 
+	if (cd->tz_popup)
+	//TODO also, we might need to reposition the tz popup (except if we set the gravity)
+		tz_window_refresh (TZ_WINDOW (cd->tz_popup),
+				   cd->current_time, cd->fallback_timeformat);
+
 	update_orient (cd);
 	gtk_widget_queue_resize (cd->toggle);
 
@@ -525,23 +535,23 @@ update_tooltip (ClockData * cd)
                 g_free (loc);
 
                 utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
-                set_tooltip (cd->toggle, utf8);
+                gtk_widget_set_tooltip_text (cd->toggle, utf8);
                 g_free (utf8);
         } else {
 #ifdef HAVE_LIBECAL
 		if (cd->calendar_popup)
-			set_tooltip (cd->toggle,
-				     _("Click to hide your appointments and tasks"));
+			gtk_widget_set_tooltip_text (cd->toggle,
+						     _("Click to hide your appointments and tasks"));
 		else
-			set_tooltip (cd->toggle,
-				     _("Click to view your appointments and tasks"));
+			gtk_widget_set_tooltip_text (cd->toggle,
+						     _("Click to view your appointments and tasks"));
 #else
 		if (cd->calendar_popup)
-			set_tooltip (cd->toggle,
-				     _("Click to hide month calendar"));
+			gtk_widget_set_tooltip_text (cd->toggle,
+						     _("Click to hide month calendar"));
 		else
-			set_tooltip (cd->toggle,
-				     _("Click to view month calendar"));
+			gtk_widget_set_tooltip_text (cd->toggle,
+						     _("Click to view month calendar"));
 #endif
         }
 }
@@ -598,6 +608,14 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 		gtk_widget_destroy (cd->calendar_popup);
 	cd->calendar_popup = NULL;
 
+	if (cd->tz_popup)
+		gtk_widget_destroy (cd->tz_popup);
+	cd->tz_popup = NULL;
+
+	if (cd->tz_list)
+		g_object_unref (cd->tz_list);
+	cd->tz_list = NULL;
+
 	g_free (cd->timeformat);
 	g_free (cd->fallback_timeformat);
 	g_free (cd->config_tool);
@@ -606,12 +624,12 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 }
 
 static gboolean
-close_on_escape (GtkWidget   *widget,
-		 GdkEventKey *event,
-		 ClockData   *cd)
+close_on_escape (GtkWidget       *widget,
+		 GdkEventKey     *event,
+		 GtkToggleButton *toggle_button)
 {
 	if (event->keyval == GDK_Escape) {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->toggle), FALSE);
+		gtk_toggle_button_set_active (toggle_button, FALSE);
 		return TRUE;
 	}
 
@@ -619,30 +637,16 @@ close_on_escape (GtkWidget   *widget,
 }
 
 static gboolean
-delete_event (GtkWidget   *widget,
-	      GdkEvent    *event,
-	      ClockData   *cd)
+delete_event (GtkWidget       *widget,
+	      GdkEvent        *event,
+	      GtkToggleButton *toggle_button)
 {
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->toggle), FALSE);
+	gtk_toggle_button_set_active (toggle_button, FALSE);
 	return TRUE;
 }
 
-ClockFormat
-clock_locale_format (void)
-{
-#ifdef HAVE_NL_LANGINFO
-        const char *am;
-
-        am = nl_langinfo (AM_STR);
-        return (am[0] == '\0') ? CLOCK_FORMAT_24 : CLOCK_FORMAT_12;
-#else
-	return CLOCK_FORMAT_24;
-#endif
-}
-
 static GtkWidget *
-create_calendar (ClockData *cd,
-		 GdkScreen *screen)
+create_calendar (ClockData *cd)
 {
 	GtkWidget *window;
 	char      *prefs_dir;
@@ -660,20 +664,37 @@ create_calendar (ClockData *cd,
 	calendar_window_set_time_format (CALENDAR_WINDOW (window),
 					 cd->format);
 
-        gtk_window_set_screen (GTK_WINDOW (window), screen);
+        gtk_window_set_screen (GTK_WINDOW (window),
+			       gtk_widget_get_screen (cd->applet));
 
 	g_signal_connect (window, "delete_event",
-			  G_CALLBACK (delete_event), cd);
+			  G_CALLBACK (delete_event), cd->toggle);
 	g_signal_connect (window, "key_press_event",
-			  G_CALLBACK (close_on_escape), cd);
+			  G_CALLBACK (close_on_escape), cd->toggle);
+
+	return window;
+}
+
+static GtkWidget *
+create_tz (ClockData *cd)
+{
+	GtkWidget *window;
+
+	window = tz_window_new (cd->tz_list);
+
+        gtk_window_set_screen (GTK_WINDOW (window),
+			       gtk_widget_get_screen (cd->applet));
+
+	g_signal_connect (window, "delete_event",
+			  G_CALLBACK (delete_event), cd->tz_toggle);
+	g_signal_connect (window, "key_press_event",
+			  G_CALLBACK (close_on_escape), cd->tz_toggle);
 
 	return window;
 }
 
 static void
-position_calendar_popup (ClockData *cd,
-                         GtkWidget *window,
-                         GtkWidget *button)
+position_calendar_popup (ClockData *cd)
 {
 	GtkRequisition  req;
 	GdkScreen      *screen;
@@ -686,17 +707,17 @@ position_calendar_popup (ClockData *cd,
 	gboolean        found_monitor = FALSE;
 
 	/* Get root origin of the toggle button, and position above that. */
-	gdk_window_get_origin (button->window, &x, &y);
+	gdk_window_get_origin (cd->toggle->window, &x, &y);
 
-	gtk_window_get_size (GTK_WINDOW (window), &w, &h);
-	gtk_widget_size_request (window, &req);
+	gtk_window_get_size (GTK_WINDOW (cd->calendar_popup), &w, &h);
+	gtk_widget_size_request (cd->calendar_popup, &req);
 	w = req.width;
 	h = req.height;
 
-	button_w = button->allocation.width;
-	button_h = button->allocation.height;
+	button_w = cd->toggle->allocation.width;
+	button_h = cd->toggle->allocation.height;
 
-	screen = gtk_window_get_screen (GTK_WINDOW (window));
+	screen = gtk_window_get_screen (GTK_WINDOW (cd->calendar_popup));
 
 	n = gdk_screen_get_n_monitors (screen);
 	for (i = 0; i < n; i++) {
@@ -708,7 +729,7 @@ position_calendar_popup (ClockData *cd,
 		}
 	}
 
-	if ( ! found_monitor) {
+	if (!found_monitor) {
 		/* eek, we should be on one of those xinerama
 		   monitors */
 		monitor.x = 0;
@@ -763,21 +784,102 @@ position_calendar_popup (ClockData *cd,
 		break;
 	}
 		
-	gtk_window_move (GTK_WINDOW (window), x, y);
-	gtk_window_set_gravity (GTK_WINDOW (window), gravity);
+	gtk_window_move (GTK_WINDOW (cd->calendar_popup), x, y);
+	gtk_window_set_gravity (GTK_WINDOW (cd->calendar_popup), gravity);
 }
 
 static void
-present_calendar_popup (ClockData *cd,
-			GtkWidget *window,
-			GtkWidget *button)
+position_tz_popup (ClockData *cd)
 {
-        position_calendar_popup (cd, window, button);
-        gtk_window_present (GTK_WINDOW (window));
+	GtkRequisition  req;
+	GdkScreen      *screen;
+	GdkRectangle    monitor;
+	GdkGravity      gravity = GDK_GRAVITY_NORTH_WEST;
+	int             button_w, button_h;
+	int             x, y;
+	int             w, h;
+	int             i, n;
+	gboolean        found_monitor = FALSE;
+
+	/* Get root origin of the toggle button, and position above that. */
+	gdk_window_get_origin (cd->tz_toggle->window, &x, &y);
+	//TODO hrm, this returns wrong value???
+
+	gtk_window_get_size (GTK_WINDOW (cd->tz_popup), &w, &h);
+	gtk_widget_size_request (cd->tz_popup, &req);
+	w = req.width;
+	h = req.height;
+
+	button_w = cd->tz_toggle->allocation.width;
+	button_h = cd->tz_toggle->allocation.height;
+
+	screen = gtk_window_get_screen (GTK_WINDOW (cd->tz_popup));
+
+	n = gdk_screen_get_n_monitors (screen);
+	for (i = 0; i < n; i++) {
+		gdk_screen_get_monitor_geometry (screen, i, &monitor);
+		if (x >= monitor.x && x <= monitor.x + monitor.width &&
+		    y >= monitor.y && y <= monitor.y + monitor.height) {
+			found_monitor = TRUE;
+			break;
+		}
+	}
+
+	if (!found_monitor) {
+		/* eek, we should be on one of those xinerama
+		   monitors */
+		monitor.x = 0;
+		monitor.y = 0;
+		monitor.width = gdk_screen_get_width (screen);
+		monitor.height = gdk_screen_get_height (screen);
+	}
+		
+	/* Based on panel orientation, position the popup.
+	 * Ignore window gravity since the window is undecorated.
+	 * The orientations are all named backward from what
+	 * I expected.
+	 */
+	switch (cd->orient) {
+	case PANEL_APPLET_ORIENT_RIGHT:
+		x += button_w;
+		if ((y + h) > monitor.y + monitor.height)
+			y -= (y + h) - (monitor.y + monitor.height);
+
+		gravity = GDK_GRAVITY_NORTH_WEST;
+
+		break;
+	case PANEL_APPLET_ORIENT_LEFT:
+		x -= w;
+		if ((y + h) > monitor.y + monitor.height)
+			y -= (y + h) - (monitor.y + monitor.height);
+
+		gravity = GDK_GRAVITY_NORTH_EAST;
+
+		break;
+	case PANEL_APPLET_ORIENT_DOWN:
+		y += button_h;
+		if ((x + w) > monitor.x + monitor.width)
+			x -= (x + w) - (monitor.x + monitor.width);
+
+		gravity = GDK_GRAVITY_NORTH_EAST;
+
+		break;
+	case PANEL_APPLET_ORIENT_UP:
+		y -= h;
+		if ((x + w) > monitor.x + monitor.width)
+			x -= (x + w) - (monitor.x + monitor.width);
+
+		gravity = GDK_GRAVITY_SOUTH_EAST;
+
+		break;
+	}
+		
+	gtk_window_move (GTK_WINDOW (cd->tz_popup), x, y);
+	gtk_window_set_gravity (GTK_WINDOW (cd->tz_popup), gravity);
 }
 
 static void
-update_popup (ClockData *cd)
+update_calendar_popup (ClockData *cd)
 {
         if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (cd->toggle))) {
                 if (cd->calendar_popup)
@@ -788,23 +890,84 @@ update_popup (ClockData *cd)
         }
 
         if (!cd->calendar_popup) {
-                cd->calendar_popup = create_calendar (cd, gtk_widget_get_screen (cd->applet));
+                cd->calendar_popup = create_calendar (cd);
                 g_object_add_weak_pointer (G_OBJECT (cd->calendar_popup),
                                            (gpointer *) &cd->calendar_popup);
 		update_tooltip (cd);
         }
 
         if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle)) {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->tz_toggle),
+					      FALSE);
+
 		calendar_window_refresh (CALENDAR_WINDOW (cd->calendar_popup));
-                present_calendar_popup (cd, cd->calendar_popup, cd->toggle);
+		position_calendar_popup (cd);
+		gtk_window_present (GTK_WINDOW (cd->calendar_popup));
         }
+}
+
+static void
+update_tz_popup (ClockData *cd)
+{
+        if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (cd->tz_toggle))) {
+                if (cd->tz_popup)
+                        gtk_widget_destroy (cd->tz_popup);
+                cd->tz_popup = NULL;
+                return;
+        }
+
+	if (!cd->tz_popup) {
+		cd->tz_popup = create_tz (cd);
+                g_object_add_weak_pointer (G_OBJECT (cd->tz_popup),
+                                           (gpointer *) &cd->tz_popup);
+	}
+	
+	if (cd->tz_popup && GTK_WIDGET_REALIZED (cd->tz_toggle)) {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->toggle),
+					      FALSE);
+
+		tz_window_refresh (TZ_WINDOW (cd->tz_popup),
+				   cd->current_time, cd->fallback_timeformat);
+		position_tz_popup (cd);
+		gtk_window_present (GTK_WINDOW (cd->tz_popup));
+	}
 }
 
 static void
 toggle_calendar (GtkWidget *button,
                  ClockData *cd)
 {
-	update_popup (cd);
+	update_calendar_popup (cd);
+}
+
+static void
+toggle_timezone (GtkWidget *button,
+		 ClockData *cd)
+{
+	update_tz_popup (cd);
+}
+
+static void
+toggle_timezone_shown (GtkWidget *button,
+		       ClockData *cd)
+{
+	char *prefs_dir;
+
+	g_assert (cd->tz_list == NULL);
+
+	prefs_dir = panel_applet_get_preferences_key (PANEL_APPLET (cd->applet));
+	cd->tz_list = tz_list_new (prefs_dir);
+	g_free (prefs_dir);
+}
+
+static void
+toggle_timezone_hidden (GtkWidget *button,
+			ClockData *cd)
+{
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->tz_toggle), FALSE);
+
+	g_object_unref (cd->tz_list);
+	cd->tz_list = NULL;
 }
 
 static gboolean
@@ -869,63 +1032,95 @@ force_no_focus_padding (GtkWidget *widget)
 static void
 create_clock_widget (ClockData *cd)
 {
-	GtkWidget *clock;
-	GtkWidget *toggle;
 	GtkWidget *alignment;
 
-	clock = gtk_label_new ("hmm?");
-	g_signal_connect (clock, "size_request",
+	cd->clockw = gtk_label_new ("hmm?");
+	g_signal_connect (cd->clockw, "size_request",
 			  G_CALLBACK (clock_size_request),
 			  cd);
-	g_signal_connect_swapped (clock, "style_set",
+	g_signal_connect_swapped (cd->clockw, "style_set",
 				  G_CALLBACK (unfix_size),
 				  cd);
-	gtk_label_set_justify (GTK_LABEL (clock), GTK_JUSTIFY_CENTER);
-	clock_update_text_gravity (clock);
-	g_signal_connect (clock, "screen-changed",
+	gtk_label_set_justify (GTK_LABEL (cd->clockw), GTK_JUSTIFY_CENTER);
+	clock_update_text_gravity (cd->clockw);
+	g_signal_connect (cd->clockw, "screen-changed",
 			  G_CALLBACK (clock_update_text_gravity),
 			  NULL);
-	gtk_widget_show (clock);
+	gtk_widget_show (cd->clockw);
 
-	toggle = gtk_toggle_button_new ();
-	gtk_container_set_resize_mode (GTK_CONTAINER (toggle), GTK_RESIZE_IMMEDIATE);
-	gtk_button_set_relief (GTK_BUTTON (toggle), GTK_RELIEF_NONE);
+	cd->toggle = gtk_toggle_button_new ();
+	gtk_container_set_resize_mode (GTK_CONTAINER (cd->toggle), GTK_RESIZE_IMMEDIATE);
+	gtk_container_set_border_width (GTK_CONTAINER (cd->toggle), 0);
+	gtk_button_set_relief (GTK_BUTTON (cd->toggle), GTK_RELIEF_NONE);
 
-        force_no_focus_padding (toggle);
+        force_no_focus_padding (cd->toggle);
 
 	alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-	gtk_container_add (GTK_CONTAINER (alignment), clock);
+	gtk_container_add (GTK_CONTAINER (alignment), cd->clockw);
 	gtk_container_set_resize_mode (GTK_CONTAINER (alignment), GTK_RESIZE_IMMEDIATE);
 	gtk_widget_show (alignment);
-	gtk_container_add (GTK_CONTAINER (toggle), alignment);
+	gtk_container_add (GTK_CONTAINER (cd->toggle), alignment);
 
-	g_signal_connect (toggle, "button_press_event",
+	g_signal_connect (cd->toggle, "button_press_event",
 			  G_CALLBACK (do_not_eat_button_press), NULL);
 
-	g_signal_connect (toggle, "toggled",
+	g_signal_connect (cd->toggle, "toggled",
 			  G_CALLBACK (toggle_calendar), cd);
 
-	gtk_widget_show (toggle);
+	gtk_widget_show (cd->toggle);
 
-	cd->toggle = toggle;
+	/* Timezone toggle */
+	cd->tz_toggle = gtk_toggle_button_new ();
+	gtk_container_set_resize_mode (GTK_CONTAINER (cd->tz_toggle), GTK_RESIZE_IMMEDIATE);
+	gtk_container_set_border_width (GTK_CONTAINER (cd->tz_toggle), 0);
+	gtk_button_set_relief (GTK_BUTTON (cd->tz_toggle), GTK_RELIEF_NONE);
 
-	cd->clockw = clock;
+	force_no_focus_padding (cd->tz_toggle);
 
-	cd->props = NULL;
+	cd->tz_arrow = gtk_arrow_new (GTK_ARROW_NONE, GTK_SHADOW_OUT);
+	gtk_widget_show (cd->tz_arrow);
 
-	cd->orient = panel_applet_get_orient (PANEL_APPLET (cd->applet));
+	gtk_container_add (GTK_CONTAINER (cd->tz_toggle), cd->tz_arrow);
 
-	cd->size = panel_applet_get_size (PANEL_APPLET (cd->applet));
+	g_signal_connect (cd->tz_toggle, "show",
+                          G_CALLBACK (toggle_timezone_shown), cd);
 
-	g_signal_connect (G_OBJECT(clock), "destroy",
+	g_signal_connect (cd->tz_toggle, "hide",
+                          G_CALLBACK (toggle_timezone_hidden), cd);
+
+	g_signal_connect (cd->tz_toggle, "toggled",
+                          G_CALLBACK (toggle_timezone), cd);
+
+	if (cd->show_tz)
+		gtk_widget_show (cd->tz_toggle);
+
+	gtk_widget_set_tooltip_text (cd->tz_toggle,
+				     _("Click to view time in other timezones"));
+
+	g_signal_connect (G_OBJECT (cd->clockw), "destroy",
 			  G_CALLBACK (destroy_clock),
 			  cd);
-	
+
 	set_atk_name_description (GTK_WIDGET (cd->applet), NULL,
 	                          _("Computer Clock"));
 
+	cd->obox = clock_obox_new ();
+	gtk_container_add (GTK_CONTAINER (cd->obox), cd->toggle);
+	gtk_container_add (GTK_CONTAINER (cd->obox), cd->tz_toggle);
+	gtk_widget_show (cd->obox);
+
+	gtk_container_add (GTK_CONTAINER (cd->applet), cd->obox);
+	gtk_container_set_border_width (GTK_CONTAINER (cd->applet), 0);
+
+	cd->props = NULL;
+	cd->orient = -1;
+	cd->size = panel_applet_get_size (PANEL_APPLET (cd->applet));
+
 	/* Refresh the clock so that it paints its first state */
-	refresh_clock_timeout(cd);
+	refresh_clock_timeout (cd);
+	applet_change_orient (PANEL_APPLET (cd->applet),
+			      panel_applet_get_orient (PANEL_APPLET (cd->applet)),
+			      cd);
 }
 
 static void
@@ -965,10 +1160,38 @@ applet_change_orient (PanelApplet       *applet,
 		return;
 
         cd->orient = orient;
+
+	switch (cd->orient) {
+        case PANEL_APPLET_ORIENT_RIGHT:        
+		gtk_arrow_set (GTK_ARROW (cd->tz_arrow),
+			       GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
+		clock_obox_set_orientation (CLOCK_OBOX (cd->obox),
+					    GTK_ORIENTATION_VERTICAL);
+		break;
+        case PANEL_APPLET_ORIENT_LEFT:
+		gtk_arrow_set (GTK_ARROW (cd->tz_arrow),
+			       GTK_ARROW_LEFT, GTK_SHADOW_OUT);
+		clock_obox_set_orientation (CLOCK_OBOX (cd->obox),
+					    GTK_ORIENTATION_VERTICAL);
+		break;
+        case PANEL_APPLET_ORIENT_DOWN:
+		gtk_arrow_set (GTK_ARROW (cd->tz_arrow),
+			       GTK_ARROW_DOWN, GTK_SHADOW_OUT);
+		clock_obox_set_orientation (CLOCK_OBOX (cd->obox),
+					    GTK_ORIENTATION_HORIZONTAL);
+		break;
+        case PANEL_APPLET_ORIENT_UP:
+		gtk_arrow_set (GTK_ARROW (cd->tz_arrow),
+			       GTK_ARROW_UP, GTK_SHADOW_OUT);
+		clock_obox_set_orientation (CLOCK_OBOX (cd->obox),
+					    GTK_ORIENTATION_HORIZONTAL);
+		break;
+	}
         
         unfix_size (cd);
         update_clock (cd);
-        update_popup (cd);
+        update_calendar_popup (cd);
+	update_tz_popup (cd);
 }
 
 /* this is when the panel size changes */
@@ -1235,8 +1458,7 @@ format_changed (GConfClient  *client,
 
 	if (clock->calendar_popup != NULL) {
 		calendar_window_set_time_format (CALENDAR_WINDOW (clock->calendar_popup), clock->format);
-                position_calendar_popup (clock, clock->calendar_popup,
-					 clock->toggle);
+                position_calendar_popup (clock);
 	}
 
 }
@@ -1295,8 +1517,7 @@ gmt_time_changed (GConfClient  *client,
 
 	if (clock->calendar_popup != NULL) {
 		calendar_window_set_utc_time (CALENDAR_WINDOW (clock->calendar_popup), clock->gmt_time);
-                position_calendar_popup (clock, clock->calendar_popup,
-					 clock->toggle);
+                position_calendar_popup (clock);
 	}
 }
 
@@ -1383,9 +1604,31 @@ show_week_changed (GConfClient  *client,
 
 	if (clock->calendar_popup != NULL) {
 		calendar_window_set_show_weeks (CALENDAR_WINDOW (clock->calendar_popup), clock->showweek);
-                position_calendar_popup (clock, clock->calendar_popup,
-					 clock->toggle);
+                position_calendar_popup (clock);
 	}
+}
+
+static void
+show_tz_changed (GConfClient  *client,
+		 guint         cnxn_id,
+		 GConfEntry   *entry,
+		 ClockData    *clock)
+{
+	gboolean value;
+
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
+
+	clock->show_tz = (value != 0);
+
+	if (clock->show_tz)
+		gtk_widget_show (clock->tz_toggle);
+	else
+		gtk_widget_hide (clock->tz_toggle);
+
+	refresh_clock (clock);
 }
 
 static void
@@ -1459,6 +1702,15 @@ setup_gconf (ClockData *clock)
 				clock, NULL, NULL);
 	g_free (key);
 
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_SHOW_ZONES);
+	clock->listeners [7] =
+			gconf_client_notify_add (
+				client, key,
+				(GConfClientNotifyFunc) show_tz_changed,
+				clock, NULL, NULL);
+	g_free (key);
+
 	g_object_unref (G_OBJECT (client));
 }
 
@@ -1504,7 +1756,7 @@ fill_clock_applet (PanelApplet *applet)
         int                format;
 	char              *format_str;
 	
-	panel_applet_add_preferences (applet, "/schemas/apps/clock_applet/prefs", NULL);
+	panel_applet_add_preferences (applet, CLOCK_SCHEMA_DIR, NULL);
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 	
 	cd = g_new0 (ClockData, 1);
@@ -1545,8 +1797,8 @@ fill_clock_applet (PanelApplet *applet)
 
 	cd->gmt_time = panel_applet_gconf_get_bool (applet, KEY_GMT_TIME, NULL);
 	cd->showweek = panel_applet_gconf_get_bool (applet, KEY_SHOW_WEEK, NULL);
+	cd->show_tz = panel_applet_gconf_get_bool (applet, KEY_SHOW_ZONES, NULL);
 	cd->config_tool = panel_applet_gconf_get_string (applet, KEY_CONFIG_TOOL, NULL);
-
 	cd->timeformat = NULL;
 	cd->fallback_timeformat = NULL;
 
@@ -1555,10 +1807,6 @@ fill_clock_applet (PanelApplet *applet)
 		cd->format = CLOCK_FORMAT_24;
 
 	create_clock_widget (cd);
-
-	gtk_container_set_border_width (GTK_CONTAINER (cd->applet), 0);
-	gtk_container_set_border_width (GTK_CONTAINER (cd->toggle), 0);
-	gtk_container_add (GTK_CONTAINER (cd->applet), cd->toggle);
 
 #ifndef CLOCK_INPROCESS
 	gtk_window_set_default_icon_name (CLOCK_ICON);
@@ -1763,6 +2011,16 @@ set_gmt_time_cb (GtkWidget *w,
 }
 
 static void
+set_show_zones_cb (GtkWidget *w,
+		   ClockData *clock)
+{
+	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
+				     KEY_SHOW_ZONES,
+				     GTK_TOGGLE_BUTTON (w)->active,
+				     NULL);
+}
+
+static void
 set_custom_format_cb (GtkEntry  *entry,
 		      ClockData *cd)
 {
@@ -1779,38 +2037,12 @@ properties_response_cb (GtkWidget *widget,
 			ClockData *cd)
 {
 	
-	if (id == GTK_RESPONSE_HELP) {
-		GError *error = NULL;
+	if (id == GTK_RESPONSE_HELP)
+		clock_utils_display_help (cd->applet,
+					  "clock", "clock", "clock-settings");
 
-		gnome_help_display_desktop_on_screen (
-				NULL, "clock", "clock", "clock-settings",
-				gtk_widget_get_screen (cd->applet),
-				&error);
-
-		if (error) {
-			GtkWidget *dialog;
-			dialog = gtk_message_dialog_new (GTK_WINDOW (widget),
-							 GTK_DIALOG_DESTROY_WITH_PARENT,
-							 GTK_MESSAGE_ERROR,
-							 GTK_BUTTONS_OK,
-							  _("There was an error displaying help: %s"),
-							 error->message);
-
-			g_signal_connect (G_OBJECT (dialog), "response",
-					  G_CALLBACK (gtk_widget_destroy),
-					  NULL);
-
-			gtk_window_set_icon_name (GTK_WINDOW (dialog),
-						  CLOCK_ICON);
-			gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-			gtk_window_set_screen (GTK_WINDOW (dialog),
-					       gtk_widget_get_screen (cd->applet));
-			gtk_widget_show (dialog);
-			g_error_free (error);
-		}
-	} else {
+	else
 		gtk_widget_destroy (widget);
-	}
 }
 
 static void
@@ -1923,6 +2155,15 @@ display_properties_dialog (BonoboUIComponent *uic,
 			  cd);	
 	gtk_widget_show (cd->gmt_time_check);
 
+	cd->show_tz_check = gtk_check_button_new_with_mnemonic (_("Show multiple _timezones"));
+	gtk_box_pack_start (GTK_BOX (vbox), cd->show_tz_check, FALSE, FALSE, 0);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->show_tz_check),
+				      cd->show_tz);
+	g_signal_connect (G_OBJECT (cd->show_tz_check), "toggled",
+			  G_CALLBACK (set_show_zones_cb),
+			  cd);
+	gtk_widget_show (cd->show_tz_check);
+
 	g_signal_connect (cd->props, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
                           &cd->props);
@@ -1960,31 +2201,7 @@ display_help_dialog (BonoboUIComponent *uic,
 		     ClockData         *cd,
 		     const gchar       *verbname)
 {
-	GError *error = NULL;
-
-	gnome_help_display_desktop_on_screen (NULL, "clock", "clock", NULL,
-					      gtk_widget_get_screen (cd->applet),
-					      &error);
-	if (error) {
-		GtkWidget *dialog;
-		dialog = gtk_message_dialog_new (NULL,
-						 GTK_DIALOG_MODAL,
-						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_OK,
-						  _("There was an error displaying help: %s"),
-						 error->message);
-
-		g_signal_connect (G_OBJECT (dialog), "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  NULL);
-
-		gtk_window_set_icon_name (GTK_WINDOW (dialog), CLOCK_ICON);
-		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-		gtk_window_set_screen (GTK_WINDOW (dialog),
-				       gtk_widget_get_screen (cd->applet));
-		gtk_widget_show (dialog);
-		g_error_free (error);
-	}
+	clock_utils_display_help (cd->applet, "clock", "clock", NULL);
 }
 
 static void

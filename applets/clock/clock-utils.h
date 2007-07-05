@@ -1,5 +1,5 @@
 /*
- * clock.h
+ * clock-utils.h
  *
  * Copyright (C) 2007 Vincent Untz <vuntz@gnome.org>
  *
@@ -24,14 +24,30 @@
  * Most of the original code comes from clock.c
  */
 
-#ifndef CLOCK_H
-#define CLOCK_H
+#ifndef __CLOCK_UTILS_H__
+#define __CLOCK_UTILS_H__
+
+#include <gtk/gtkwidget.h>
 
 G_BEGIN_DECLS
 
-#define CLOCK_ICON "gnome-panel-clock"
-#define CLOCK_SCHEMA_DIR "/schemas/apps/clock_applet/prefs"
+/* Needs to match the indices in the combo of the prefs dialog */
+typedef enum {
+	CLOCK_FORMAT_INVALID = 0,
+	CLOCK_FORMAT_12,
+	CLOCK_FORMAT_24,
+	CLOCK_FORMAT_UNIX,
+	CLOCK_FORMAT_INTERNET,
+	CLOCK_FORMAT_CUSTOM
+} ClockFormat;
+
+ClockFormat clock_locale_format (void);
+
+void clock_utils_display_help (GtkWidget  *widget,
+			       const char *doc_id,
+			       const char *filename,
+			       const char *link_id);
 
 G_END_DECLS
 
-#endif /* CLOCK_H */
+#endif /* __CLOCK_UTILS_H__ */
