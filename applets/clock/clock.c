@@ -37,9 +37,6 @@
 #include <dirent.h>
 #include <string.h>
 #include <time.h>
-#ifdef HAVE_LANGINFO_H
-#include <langinfo.h>
-#endif
 #include <sys/time.h>
 
 #include <panel-applet.h>
