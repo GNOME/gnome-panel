@@ -2227,7 +2227,7 @@ display_about_dialog (BonoboUIComponent *uic,
 
 	cd->about = gtk_about_dialog_new ();
 	g_object_set (cd->about,
-		      "name",  _("Clock"),
+		      "program-name",  _("Clock"),
 		      "version", VERSION,
 		      "copyright", "Copyright \xc2\xa9 1998-2004 Free Software Foundation, Inc.",
 		      "comments", _("The Clock displays the current time and date"),

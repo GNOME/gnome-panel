@@ -61,7 +61,7 @@ wncklet_display_about (GtkWidget   *applet,
 
 	*dialog = gtk_about_dialog_new ();
 	g_object_set (*dialog,
-		      "name",  name,
+		      "program-name",  name,
 		      "version", VERSION,
 		      "copyright", copyright,
 		      "comments", comments,

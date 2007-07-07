@@ -132,7 +132,7 @@ about_cb (BonoboUIComponent *uic,
 
   data->about_dialog = gtk_about_dialog_new ();
   g_object_set (data->about_dialog,
-                "name", _("Notification Area"),
+                "program-name", _("Notification Area"),
                 "version", VERSION,
                 "copyright", "Copyright \xc2\xa9 2002 Red Hat, Inc.",
                 "authors", (const char **) authors,

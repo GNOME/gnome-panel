@@ -579,7 +579,7 @@ display_about_dialog (BonoboUIComponent *uic,
 		
 	fish->about_dialog = gtk_about_dialog_new ();
 	g_object_set (fish->about_dialog,
-		      "name", _("Fish"),
+		      "program-name", _("Fish"),
 		      "version", "3.4.7.4ac19",
 		      "copyright", "Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.",
 		      "comments", descr,

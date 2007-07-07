@@ -124,7 +124,7 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 	 * dialog */
 	about = gtk_about_dialog_new ();
 	g_object_set (about,
-		      "name",  _("The GNOME Panel"),
+		      "program-name",  _("The GNOME Panel"),
 		      "version", VERSION,
 		      "copyright", "Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.",
 		      "comments", _("This program is responsible for launching other "
