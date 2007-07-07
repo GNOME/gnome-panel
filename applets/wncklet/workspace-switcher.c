@@ -39,15 +39,25 @@
 #define NUM_WORKSPACES "/apps/metacity/general/num_workspaces"
 #define WORKSPACE_NAME "/apps/metacity/workspace_names/name_1"
 
+typedef enum {
+	PAGER_WM_METACITY,
+	PAGER_WM_COMPIZ,
+	PAGER_WM_UNKNOWN
+} PagerWM;
+
 typedef struct {
 	GtkWidget *applet;
 
 	GtkWidget *pager;
 	
 	WnckScreen *screen;
+	PagerWM     wm;
 
 	/* Properties: */
 	GtkWidget *properties_dialog;
+	GtkWidget *workspaces_frame;
+	GtkWidget *workspace_names_label;
+	GtkWidget *workspace_names_scroll;
 	GtkWidget *display_workspaces_toggle;
 	GtkWidget *all_workspaces_radio;
 	GtkWidget *current_only_radio;
@@ -55,9 +65,9 @@ typedef struct {
 	GtkWidget *label_row_col;
 	GtkWidget *num_workspaces_spin;
 	GtkWidget *workspaces_tree;
-	GtkWidget *about;
-
 	GtkListStore *workspaces_store;
+
+	GtkWidget *about;
 	
 	GtkOrientation orientation;
 	int n_rows;				/* for vertical layout this is cols */
@@ -85,10 +95,72 @@ pager_update (PagerData *pager)
 				    pager->orientation);
 	wnck_pager_set_n_rows (WNCK_PAGER (pager->pager),
 			       pager->n_rows);
-	wnck_pager_set_display_mode (WNCK_PAGER (pager->pager),
-				     pager->display_mode);
 	wnck_pager_set_show_all (WNCK_PAGER (pager->pager),
 				 pager->display_all);
+
+	if (pager->wm == PAGER_WM_METACITY)
+		wnck_pager_set_display_mode (WNCK_PAGER (pager->pager),
+					     pager->display_mode);
+	else
+		wnck_pager_set_display_mode (WNCK_PAGER (pager->pager),
+					     WNCK_PAGER_DISPLAY_CONTENT);
+}
+
+static void
+update_properties_for_wm (PagerData *pager)
+{
+	switch (pager->wm) {
+	case PAGER_WM_METACITY:
+		if (pager->workspaces_frame)
+			gtk_widget_show (pager->workspaces_frame);
+		if (pager->workspace_names_label)
+			gtk_widget_show (pager->workspace_names_label);
+		if (pager->workspace_names_scroll)
+			gtk_widget_show (pager->workspace_names_scroll);
+		if (pager->display_workspaces_toggle)
+			gtk_widget_show (pager->display_workspaces_toggle);
+		break;
+	case PAGER_WM_COMPIZ:
+		if (pager->workspaces_frame)
+			gtk_widget_show (pager->workspaces_frame);
+		if (pager->workspace_names_label)
+			gtk_widget_hide (pager->workspace_names_label);
+		if (pager->workspace_names_scroll)
+			gtk_widget_hide (pager->workspace_names_scroll);
+		if (pager->display_workspaces_toggle)
+			gtk_widget_hide (pager->display_workspaces_toggle);
+		break;
+	case PAGER_WM_UNKNOWN:
+		if (pager->workspaces_frame)
+			gtk_widget_hide (pager->workspaces_frame);
+		break;
+	default:
+		g_assert_not_reached ();
+	}
+
+	if (pager->properties_dialog)
+		gtk_window_reshow_with_initial_size (GTK_WINDOW (pager->properties_dialog));
+}
+
+static void
+window_manager_changed (WnckScreen *screen,
+			PagerData  *pager)
+{
+	const char *wm_name;
+
+	wm_name = wnck_screen_get_window_manager_name (screen);
+
+	if (!wm_name)
+		pager->wm = PAGER_WM_UNKNOWN;
+	else if (strcmp (wm_name, "Metacity") == 0)
+		pager->wm = PAGER_WM_METACITY;
+	else if (strcmp (wm_name, "Compiz") == 0)
+		pager->wm = PAGER_WM_COMPIZ;
+	else
+		pager->wm = PAGER_WM_UNKNOWN;
+
+	update_properties_for_wm (pager);
+	pager_update (pager);
 }
 
 static void
@@ -96,7 +168,22 @@ applet_realized (PanelApplet *applet,
 		 PagerData   *pager)
 {
 	pager->screen = wncklet_get_screen (GTK_WIDGET (applet));
+
+	window_manager_changed (pager->screen, pager);
+	wncklet_connect_while_alive (pager->screen, "window_manager_changed",
+				     G_CALLBACK (window_manager_changed),
+				     pager,
+				     pager->applet);
 }
+
+static void
+applet_unrealized (PanelApplet *applet,
+		   PagerData   *pager)
+{
+	pager->screen = NULL;
+	pager->wm = PAGER_WM_UNKNOWN;
+}
+
 
 static void
 applet_change_orient (PanelApplet       *applet,
@@ -224,18 +311,6 @@ applet_scroll (PanelApplet    *applet,
 				 event->time);
 	
 	return TRUE;
-}
-
-static void 
-response_cb (GtkWidget *widget,
-	     int        id,
-	     PagerData *pager)
-{
-	if (id == GTK_RESPONSE_HELP)
-		wncklet_display_help (pager->applet, "user-guide",
-				      "user-guide.xml", "gosoverview-39");
-	else
-		gtk_widget_hide (widget);
 }
 
 static void
@@ -455,6 +530,7 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 
 	pager->pager = wnck_pager_new (NULL);
 	pager->screen = NULL;
+	pager->wm = PAGER_WM_UNKNOWN;
 	wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager), GTK_SHADOW_IN);
 
 	g_signal_connect (G_OBJECT (pager->pager), "destroy",
@@ -471,6 +547,10 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "realize",
 			  G_CALLBACK (applet_realized),
+			  pager);
+	g_signal_connect (G_OBJECT (pager->applet),
+			  "unrealize",
+			  G_CALLBACK (applet_unrealized),
 			  pager);
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "change_orient",
@@ -588,17 +668,19 @@ update_workspaces_model (PagerData *pager)
 
 	nr_ws = wnck_screen_get_workspace_count (pager->screen);
         
-	if (nr_ws != gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pager->num_workspaces_spin)))
-		gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_workspaces_spin), nr_ws);
+	if (pager->properties_dialog) {
+		if (nr_ws != gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pager->num_workspaces_spin)))
+			gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_workspaces_spin), nr_ws);
 
-	gtk_list_store_clear (pager->workspaces_store);
-	for (i = 0; i < nr_ws; i++) {
-		workspace = wnck_screen_get_workspace (pager->screen, i);
-		gtk_list_store_append (pager->workspaces_store, &iter);
-		gtk_list_store_set (pager->workspaces_store,
-				    &iter,
-				    0, wnck_workspace_get_name (workspace),
-				    -1);
+		gtk_list_store_clear (pager->workspaces_store);
+		for (i = 0; i < nr_ws; i++) {
+			workspace = wnck_screen_get_workspace (pager->screen, i);
+			gtk_list_store_append (pager->workspaces_store, &iter);
+			gtk_list_store_set (pager->workspaces_store,
+					    &iter,
+					    0, wnck_workspace_get_name (workspace),
+					    -1);
+		}
 	}
 }
 
@@ -630,7 +712,7 @@ workspace_created (WnckScreen    *screen,
 	wncklet_connect_while_alive (space, "name_changed",
 				     G_CALLBACK(workspace_renamed),
 				     pager,
-				     pager->applet);
+				     pager->properties_dialog);
 
 }
 
@@ -696,13 +778,42 @@ workspace_name_edited (GtkCellRendererText *cell_renderer_text,
         gtk_tree_path_free (p);
 }
 
+static void
+properties_dialog_destroyed (GtkWidget *widget,
+			     PagerData *pager)
+{
+	pager->properties_dialog = NULL;
+	pager->workspaces_frame = NULL;
+	pager->workspace_names_label = NULL;
+	pager->workspace_names_scroll = NULL;
+	pager->display_workspaces_toggle = NULL;
+	pager->all_workspaces_radio = NULL;
+	pager->current_only_radio = NULL;
+	pager->num_rows_spin = NULL;
+	pager->label_row_col = NULL;
+	pager->num_workspaces_spin = NULL;
+	pager->workspaces_tree = NULL;
+	pager->workspaces_store = NULL;
+}
+
 static gboolean
 delete_event (GtkWidget *widget, gpointer data)
 {
-	gtk_widget_hide (widget);
+	gtk_widget_destroy (widget);
 	return TRUE;
 }
 
+static void 
+response_cb (GtkWidget *widget,
+	     int        id,
+	     PagerData *pager)
+{
+	if (id == GTK_RESPONSE_HELP)
+		wncklet_display_help (pager->applet, "user-guide",
+				      "user-guide.xml", "gosoverview-39");
+	else
+		gtk_widget_destroy (widget);
+}
 
 #define WID(s) glade_xml_get_widget (xml, s)
 
@@ -724,7 +835,7 @@ close_dialog (GtkWidget *button,
 	if (col->editable_widget != NULL && GTK_IS_CELL_EDITABLE (col->editable_widget))
 	    gtk_cell_editable_editing_done(col->editable_widget);
 
-	gtk_widget_hide (pager->properties_dialog);
+	gtk_widget_destroy (pager->properties_dialog);
 }
 
 static void
@@ -785,6 +896,10 @@ setup_dialog (GladeXML  *xml,
 	GtkCellRenderer *cell;
 	int nr_ws, i;
 	
+	pager->workspaces_frame = WID ("workspaces_frame");
+	pager->workspace_names_label = WID ("workspace_names_label");
+	pager->workspace_names_scroll = WID ("workspace_names_scroll");
+
 	pager->display_workspaces_toggle = WID ("workspace_name_toggle");
 	setup_sensitivity (pager, xml,
 			   "workspace_name_toggle",
@@ -855,6 +970,9 @@ setup_dialog (GladeXML  *xml,
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_rows_spin), pager->n_rows);
 	gtk_label_set_text (GTK_LABEL (pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));
 
+	g_signal_connect (pager->properties_dialog, "destroy",
+			  G_CALLBACK (properties_dialog_destroyed),
+			  pager);
 	g_signal_connect (pager->properties_dialog, "delete_event",
 			  G_CALLBACK (delete_event),
 			  pager);
@@ -873,12 +991,12 @@ setup_dialog (GladeXML  *xml,
 	wncklet_connect_while_alive (pager->screen, "workspace_created",
 				     G_CALLBACK(workspace_created),
 				     pager,
-				     pager->applet);
+				     pager->properties_dialog);
 
 	wncklet_connect_while_alive (pager->screen, "workspace_destroyed",
 				     G_CALLBACK(workspace_destroyed),
 				     pager,
-				     pager->applet);
+				     pager->properties_dialog);
 
 	g_signal_connect (G_OBJECT (pager->workspaces_tree), "focus_out_event",
 			  (GCallback) workspaces_tree_focused_out, pager);
@@ -905,8 +1023,10 @@ setup_dialog (GladeXML  *xml,
 			   	"name_changed",
 				G_CALLBACK(workspace_renamed),
 				pager,
-				pager->applet);
+				pager->properties_dialog);
 	}
+
+	update_properties_for_wm (pager);
 }
 
 static void 

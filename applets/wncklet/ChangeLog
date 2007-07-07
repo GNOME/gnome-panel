@@ -1,5 +1,34 @@
 2007-07-07  Vincent Untz  <vuntz@gnome.org>
 
+	Be a bit clever and show/hide relevant stuff in the properties dialog
+	depending on the window manager.
+	Fix bug #345153.
+
+	* workspace-switcher.c: (pager_update): only set the display mode if
+	we're running metacity. Else, we don't know if the workspaces have
+	useful names, so it's probably useless.
+	(update_properties_for_wm): new, hide/show some stuff in the
+	properties dialog, resize the properties dialog and update the pager
+	configuration because we have a new wm
+	(window_manager_changed): new, for WM changes
+	(applet_realized): connect to the wm-changed signal
+	(applet_unrealized): new, because it's better to have this
+	(workspace_switcher_applet_fill): init wm field, connect to the
+	unrealize signal
+	(update_workspaces_model): check that the properties dialog exist
+	(properties_dialog_destroyed): new, set to NULL all our fields related
+	to the dialog
+	(delete_event): destroy the dialog
+	(response_cb): ditto
+	(close_dialog): ditto
+	(setup_dialog): updated, connect to the destroy signal, and show/hide
+	stuff depending on the wm
+	* workspace-switcher.glade: use GtkFrame
+	* workspace-switcher.schemas.in: add a small note for
+	display_workspace_names telling that it only works for metacity
+
+2007-07-07  Vincent Untz  <vuntz@gnome.org>
+
 	* wncklet.c: (wncklet_display_about): use program-name instead of name
 	property for GtkAboutDialog.
 	Fix bug #438903.
