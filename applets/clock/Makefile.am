@@ -145,7 +145,8 @@ endif
 EXTRA_DIST =						\
 	GNOME_ClockApplet_Factory.server.in.in		\
 	$(schemas_in_files)				\
-	$(ui_DATA)
+	$(ui_DATA)					\
+	$(glade_DATA)
 
 CLEANFILES =			\
 	$(BUILT_SOURCES)	\
