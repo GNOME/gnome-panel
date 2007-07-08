@@ -1,4 +1,96 @@
 ==============
+Version 2.19.5
+==============
+
+  Panel
+
+	* Make changing orientation of an expanded panel work better when
+	  dragging the panel(Vincent)
+	* Fix name of launcher created by dropping an URI on the panel
+	  (Vincent)
+	* Improve handling of size hints from applets. This is needed for the
+	  tasklist sizing algorithm to correctly work (Vincent)
+	* Use new icon for recent documents (Vincent)
+	* Save the panel position relatively to the right/bottom edge of the
+	  monitor when needed. This fixes a lot of problems, like the panel
+	  being at the center of the screen when resizing the screen or when
+	  the size of the panel grows. (Vincent)
+	* Also do not save the position of the panel in gconf when the position
+	  is changed because of constraints. This also fixes a lot of problems,
+	  like the panel suddenly snapping to the center or an edge of the
+	  screen because its size has changed. (Vincent)
+	* Fix crash when a panel is destroyed whil its context menu is opened
+	  (Vincent)
+	* Make it possible to have bigger panels (up to 1/5 the screen size)
+	  for people wanting sidebars (Vincent)
+	* Fix a crash in the lockdown checking code (Vincent)
+	* Don't use nautilus-home.desktop for the places menu, but makes the
+	  item a real place item (Vincent)
+	* Automatically use the right icon for launchers for $HOME or ~/Desktop
+	  (Vincent)
+	* Migrate to GtkTooltip (Vincent)
+	* Code cleanups (Vincent)
+	* Add a detail for theming the arrow in the button widget (Vincent)
+	* Add new _GNOME_PANEL_ACTION_KILL_DIALOG action to the panel action
+	  protocol (Bastien Nocera)
+	* Use program-name instead of name property for GtkAboutDialog
+	  (Vincent)
+
+  gnome-desktop-item-edit
+
+	* Use g_option_context_set_translation_domain() (Gabor Kelemen)
+
+  All applets
+
+	* Use gtk_widget_set_tooltip_text() (Vincent)
+	* Use program-name instead of name property for GtkAboutDialog
+	  (Vincent)
+	* Fix compilation (Vincent)
+
+  Clock Applet
+
+	* Sort completed tasks last, treat unprioritised tasks as normal
+	  priority, and fall back on sorting by summary (Ross Burton)
+	* Add a first version of timezone support. This needs some UI love.
+	  (Vincent)
+
+  Window List Applet
+
+	* Do not call wnck_screen_force_update(). Fix a crash. (Vincent)
+	* Code cleanups (Vincent)
+	* Fix window list sizing (most of the changes are in libwnck) (Vincent)
+	* Deprecate minimum/maximum size settings (Vincent)
+
+  Workspace Switcher Applet
+
+	* Code cleanups (Vincent)
+	* Show/hide some of the settings in the properties dialog depending on
+	  the window manager, since some of the settings are not saved or don't
+	  make sense when metacity is not used. (Vincent)
+
+  Misc
+
+	* Require libwnck 2.19.5 (Vincent)
+	* Add libbonobo and libbonoboui explicit checks for compilation
+	  (Vincent)
+
+  Translators
+
+	* Jordi Mallach (ca)
+	* Tshewang Norbu (dz)
+	* Jorge González (es)
+	* Ivar Smolin (et)
+	* Changwoo Ryu (ko)
+	* Kjartan Maraas (nb)
+	* Tomasz Dominikowski (pl)
+	* Nickolay V. Shmyrev (ru)
+	* Danishka Navin (si)
+	* Daniel Nylander (sv)
+	* "Last-Translator:  (ta)
+	* Clytie Siddall (vi)
+	* Funda Wang (zh_CN)
+
+==============
 Version 2.19.4
 ==============
 
