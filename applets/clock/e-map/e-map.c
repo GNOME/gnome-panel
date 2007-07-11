@@ -26,7 +26,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtksignal.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libart_lgpl/art_filterlevel.h>
 
 #include "e-map.h"
 #include "e-map-marshal.h"
@@ -113,7 +112,7 @@ static gint e_map_expose (GtkWidget *widget, GdkEventExpose *event);
 static gint e_map_key_press (GtkWidget *widget, GdkEventKey *event);
 static void e_map_set_scroll_adjustments (GtkWidget *widget, GtkAdjustment *hadj, GtkAdjustment *vadj);
 
-static void update_render_pixbuf (EMap *map, ArtFilterLevel interp, gboolean render_overlays);
+static void update_render_pixbuf (EMap *map, gboolean render_overlays);
 static void set_scroll_area (EMap *view);
 static void request_paint_area (EMap *view, GdkRectangle *area);
 static void center_at (EMap *map, int x, int y, gboolean scroll);
@@ -339,7 +338,7 @@ e_map_realize (GtkWidget *widget)
 	widget->style = gtk_style_attach (widget->style, widget->window);
 
 	gdk_window_set_back_pixmap (widget->window, NULL, FALSE);
-	update_render_pixbuf (E_MAP (widget), GDK_INTERP_BILINEAR, TRUE);
+	update_render_pixbuf (E_MAP (widget), TRUE);
 }
 
 
@@ -413,7 +412,7 @@ e_map_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 		request_paint_area (E_MAP (widget), &area);
 	}
 
-	update_render_pixbuf (view, GDK_INTERP_BILINEAR, TRUE);
+	update_render_pixbuf (view, TRUE);
 }
 
 
@@ -846,7 +845,7 @@ e_map_remove_point (EMap *map, EMapPoint *point)
 		/* FIXME: Re-scaling the whole pixbuf is more than a little
 		 * overkill when just one point is removed */
 
-		update_render_pixbuf (map, GDK_INTERP_BILINEAR, TRUE);
+		update_render_pixbuf (map, TRUE);
 		repaint_point (map, point);
 	}
 	
@@ -977,7 +976,7 @@ repaint_visible (EMap *map)
 static void
 update_and_paint (EMap *map)
 {
-	update_render_pixbuf (map, GDK_INTERP_BILINEAR, TRUE);
+	update_render_pixbuf (map, TRUE);
 	repaint_visible (map);
 }
 
@@ -996,14 +995,14 @@ load_map_background (EMap *view, gchar *name)
 
 	if (priv->map_pixbuf) gdk_pixbuf_unref (priv->map_pixbuf);
 	priv->map_pixbuf = pb0;
-	update_render_pixbuf (view, GDK_INTERP_BILINEAR, TRUE);
+	update_render_pixbuf (view, TRUE);
 
 	return (TRUE);
 }
 
 
 static void
-update_render_pixbuf (EMap *map, ArtFilterLevel interp, gboolean render_overlays)
+update_render_pixbuf (EMap *map, gboolean render_overlays)
 {
 	EMapPrivate *priv;
 	EMapPoint *point;
@@ -1049,7 +1048,7 @@ update_render_pixbuf (EMap *map, ArtFilterLevel interp, gboolean render_overlays
 		gdk_pixbuf_scale (priv->map_pixbuf, priv->map_render_pixbuf, 0, 0,  /* Dest (x, y) */
 				  width, height, 0, 0,	                            /* Offset (x, y) */
 				  zoom, zoom,	                                    /* Scale (x, y) */
-				  interp);
+				  GDK_INTERP_BILINEAR);
 	}
 	
 	if (render_overlays)
@@ -1620,7 +1619,7 @@ zoom_in_smooth (EMap *map)
 	/* Render and paint a temporary map without overlays, so they don't get in
 	 * the way (look ugly) while zooming */
   
-	update_render_pixbuf (map, GDK_INTERP_BILINEAR, FALSE);
+	update_render_pixbuf (map, FALSE);
 	request_paint_area (map, &area);
   
 	/* Find out where in the area we're going to zoom to */
@@ -1631,7 +1630,7 @@ zoom_in_smooth (EMap *map)
 	 * blowup sequence ends */
   
 	priv->zoom_state = E_MAP_ZOOMED_IN;
-	update_render_pixbuf (map, GDK_INTERP_BILINEAR, TRUE);
+	update_render_pixbuf (map, TRUE);
   
 	/* Do the blowup */
   
@@ -1663,7 +1662,7 @@ zoom_in (EMap *map)
 
 	priv->zoom_state = E_MAP_ZOOMED_IN;
 
-	update_render_pixbuf (map, GDK_INTERP_BILINEAR, TRUE);
+	update_render_pixbuf (map, TRUE);
 
 	e_map_world_to_window (map, priv->zoom_target_long, priv->zoom_target_lat, &x, &y);
 	priv->xofs = CLAMP (priv->xofs + x - area.width / 2.0, 0, E_MAP_GET_WIDTH (map) - area.width);
@@ -1694,7 +1693,7 @@ zoom_out (EMap *map)
 			       &longitude, &latitude);
 
 	priv->zoom_state = E_MAP_ZOOMED_OUT;
-	update_render_pixbuf (map, GDK_INTERP_BILINEAR, TRUE);
+	update_render_pixbuf (map, TRUE);
 
 	e_map_world_to_window (map, longitude, latitude, &x, &y);
 	center_at (map, x + priv->xofs, y + priv->yofs, FALSE);
