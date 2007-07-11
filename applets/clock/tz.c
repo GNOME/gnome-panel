@@ -225,10 +225,12 @@ tz_build_db (void)
           locgrp->comment = tmpstrarr[4] ? g_strdup (tmpstrarr[4]) : NULL;
 #endif
 
-          g_ptr_array_add (tz_db->locations, locgrp);
+          g_ptr_array_add (global_tz_db->locations, locgrp);
         }
+#ifdef TZ_USE_COMMENT
       else
         loc->comment = NULL;
+#endif
 #else
 #ifdef TZ_USE_COMMENT
       loc->comment = (tmpstrarr[3]) ? g_strdup (tmpstrarr[3]) : NULL;
@@ -366,6 +368,7 @@ tz_get_system_timezone_solaris (void)
   char *contents;
   char *tz_token;
   char *retval;
+  char *tmpfilebuf;
 
   if (!g_file_get_contents (SYS_TZ_FILE, contents, -1, NULL))
     return NULL;
