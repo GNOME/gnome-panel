@@ -23,6 +23,7 @@ $(e_map_la_OBJECTS): e-map-marshal.h
 noinst_LIBRARIES = libemap.a
 
 libemap_a_CFLAGS = \
+	-fPIC		\
 	$(GNOME_CFLAGS) \
 	$(GDK_PIXBUF_CFLAGS)
 	
