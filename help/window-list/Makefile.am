@@ -4,4 +4,4 @@ dist-hook: doc-dist-hook
 DOC_MODULE = window-list
 DOC_INCLUDES = 
 
-DOC_LINGUAS = es fr it ko pa ru sv uk zh_CN
+DOC_LINGUAS = ca es fr it ko pa ru sv uk zh_CN
