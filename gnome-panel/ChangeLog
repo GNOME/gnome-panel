@@ -1,3 +1,11 @@
+2007-07-16  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-profile.c: (panel_profile_load_toplevel): really look at the
+	gconfvalue for x_right/y_bottom (just use -1 if it isn't set). This
+	is needed for people coming from old versions of GNOME. If we don't do
+	this, the returned value is 0, and the panel moves from the left to
+	the right, eg.
+
 ==================== 2.19.5 ====================
 
 2007-07-07  Vincent Untz  <vuntz@gnome.org>

@@ -1723,8 +1723,20 @@ panel_profile_load_toplevel (GConfClient       *client,
 			position = gconf_client_get_int (client, key, &error);      \
 		}                                                                   \
 		if (!error) {                                                       \
+			GConfValue *value;                                          \
 			key = panel_gconf_sprintf ("%s/" b, toplevel_dir);          \
-			position2 = gconf_client_get_int (client, key, &error);     \
+			/* we need to do this since the key was added in 2.19 and   \
+			 * the default value returned when the key is not set       \
+			 * (for people coming from older versions) is 0, which      \
+			 * is not what we want. */                                  \
+			value = gconf_client_get_without_default (client, key, &error);\
+			if (value && value->type == GCONF_VALUE_INT)                \
+				position2 = gconf_value_get_int (value);            \
+			else                                                        \
+				position2 = -1;                                     \
+                                                                                    \
+			if (value)                                                  \
+				gconf_value_free (value);                           \
 		}                                                                   \
 		if (!error)                                                         \
 			panel_toplevel_set_##fn (toplevel, position, position2,     \
