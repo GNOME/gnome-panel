@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-13 11:25+0100\n"
-"PO-Revision-Date: 2007-07-15 14:25+0300\n"
+"PO-Revision-Date: 2007-07-16 23:36+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -378,7 +378,7 @@ msgstr "Kui märgitud, siis kuvatakse kalendris nädalate numbreid."
 
 #: ../applets/clock/clock.schemas.in.h:29
 msgid "Name of the timezone"
-msgstr ""
+msgstr "Ajavööndi nimi"
 
 #: ../applets/clock/clock.schemas.in.h:30
 msgid "Show date in clock"
@@ -479,7 +479,7 @@ msgstr "UTC aeg"
 
 #: ../applets/clock/clock.schemas.in.h:46
 msgid "User-visible name of the timezone"
-msgstr ""
+msgstr "Kasutajale nähtav ajavööndi nimi"
 
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
@@ -504,6 +504,8 @@ msgid ""
 "<small><i>Click on the map to zoom and select the timezone of a city, or "
 "right click to zoom out.</i></small>"
 msgstr ""
+"<small><i>Kaardil klõpsamine kas suurendab või valib ajavööndi linna, parema "
+"nupuga klõpsamine vähendab kaarti.</i></small>"
 
 #: ../applets/clock/timezone.glade.h:5
 msgid "Edit Timezones"
@@ -519,7 +521,7 @@ msgstr "%s - %s"
 
 #: ../applets/clock/tz-sel-dialog.c:205
 msgid "move the mouse on the map"
-msgstr ""
+msgstr "liiguta hiirt kaardil"
 
 #: ../applets/clock/tz-sel-dialog.c:207
 #, c-format
@@ -540,7 +542,7 @@ msgstr "Ajavöönd"
 #: ../applets/clock/tz-window.c:102
 #, c-format
 msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr ""
+msgstr "%s koos suve- ja talveaja muutustega (UTC %s%.2ld:%.2ld)"
 
 #. Translators: the first string is a timezone name as in "UTC"
 #. * the second string is "+" or nothing. The result looks like
@@ -548,7 +550,7 @@ msgstr ""
 #: ../applets/clock/tz-window.c:111
 #, c-format
 msgid "%s (UTC %s%.2ld:%.2ld)"
-msgstr ""
+msgstr "%s (UTC %s%.2ld:%.2ld)"
 
 #. Translators: the first string is a timezone name (as in
 #. * "Europe/Paris"), the second string is a country name abbreviation
@@ -560,6 +562,8 @@ msgid ""
 "%s - %s\n"
 "%s"
 msgstr ""
+"%s - %s\n"
+"%s"
 
 #: ../applets/clock/tz-window.c:283
 msgid "_Edit timezones..."
@@ -1112,14 +1116,14 @@ msgstr ""
 "näidatakse ainult aktiivset tööala."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-#, fuzzy
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Metacity."
 msgstr ""
 "Kui märgitud, siis näidatakse tööalahalduris tööalade nimesid. Vastasel "
-"juhul näidatakse tööalades asuvaid aknaid."
+"juhul näidatakse tööalades asuvaid aknaid. See säte töötab ainult Metacity "
+"aknahalduri korral."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -1323,7 +1327,7 @@ msgstr ""
 
 #: ../gnome-panel/nothing.cP:1369
 msgid "Killer GEGLs from Outer Space"
-msgstr ""
+msgstr "Tapjad GEGL-id avakosmosest"
 
 #: ../gnome-panel/panel-action-button.c:126
 msgid "_Activate Screensaver"
@@ -2558,7 +2562,7 @@ msgstr "Paneelis tekkis tõsine viga"
 #. FIXME: the checkbox is not correctly aligned in the dialog...
 #: ../gnome-panel/panel-shell.c:80
 msgid "Force the panel to not be automatically restarted"
-msgstr ""
+msgstr "Paneeli pole lubatud automaatselt taaskäivitada"
 
 #: ../gnome-panel/panel-stock-icons.c:92
 msgid "_Force quit"
@@ -2882,7 +2886,6 @@ msgstr ""
 "laiust)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
-#, fuzzy
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -2891,9 +2894,11 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
-"Paneeli asukoht x-teljel. See võti on relevantne ainult laiendamata "
-"režiimis. Laiendatud režiimi puhul seda võtit eiratakse ja paneel asetatakse "
-"võtmega orientation määratud ekraani serva."
+"Paneeli asukoht x-teljel, kaugus ekraani paremast servast. Väärtust -1 "
+"eiratakse ja selle asemel kasutatakse võtme x väärtust. Nullist suurema "
+"väärtuse korral võtme x väärtust eiratakse. See võti on relevantne ainult "
+"laiendamata režiimis. Laiendatud režiimi korral seda võtit eiratakse ja "
+"paneel asetatakse võtmega orientation määratud ekraani serva."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2902,11 +2907,10 @@ msgid ""
 "at the screen edge specified by the orientation key."
 msgstr ""
 "Paneeli asukoht x-teljel. See võti on relevantne ainult laiendamata "
-"režiimis. Laiendatud režiimi puhul seda võtit eiratakse ja paneel asetatakse "
+"režiimis. Laiendatud režiimi korral seda võtit eiratakse ja paneel asetatakse "
 "võtmega orientation määratud ekraani serva."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
-#, fuzzy
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -2915,9 +2919,11 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
-"Paneeli asukoht y-teljel. See võti on relevantne ainult laiendamata "
-"režiimis. Laiendatud režiimi puhul seda võtit eiratakse ja paneel asetatakse "
-"võtmega orientation määratud ekraani serva."
+"Paneeli asukoht y-teljel, kaugus ekraani alumisest servast. Väärtust -1 "
+"eiratakse ja selle asemel kasutatakse võtme y väärtust. Nullist suurema "
+"väärtuse korral võtme y väärtust eiratakse. See võti on relevantne ainult "
+"laiendamata režiimis. Laiendatud režiimi korral seda võtit eiratakse ja "
+"paneel asetatakse võtmega orientation määratud ekraani serva."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -2926,7 +2932,7 @@ msgid ""
 "at the screen edge specified by the orientation key."
 msgstr ""
 "Paneeli asukoht y-teljel. See võti on relevantne ainult laiendamata "
-"režiimis. Laiendatud režiimi puhul seda võtit eiratakse ja paneel asetatakse "
+"režiimis. Laiendatud režiimi korral seda võtit eiratakse ja paneel asetatakse "
 "võtmega orientation määratud ekraani serva."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
@@ -2997,7 +3003,7 @@ msgstr "Paneeli X-koordinaat"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "X co-ordinate of panel, starting from the right of the screen"
-msgstr ""
+msgstr "Paneeli X-koordinaat kaugusena ekraani paremast servast"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:51
 msgid "X screen where the panel is displayed"
@@ -3013,7 +3019,7 @@ msgstr "Paneeli Y-koordinaat"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:54
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-msgstr ""
+msgstr "Paneeli Y-koordinaat kaugusena ekraani alumisest servast"
 
 #: ../gnome-panel/panel-util.c:714
 #, c-format
