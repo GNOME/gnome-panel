@@ -497,7 +497,7 @@ tz_get_system_timezone (void)
       buf_content = g_slice_alloc (stat_localtime.st_size);
 
       fd = g_open ("/etc/localtime", O_RDONLY, 0);
-      read (fd, &localtime_content, stat_localtime.st_size);
+      read (fd, localtime_content, stat_localtime.st_size);
       close (fd);
 
       for (i = 0; i < locs->len; i++)
@@ -518,7 +518,7 @@ tz_get_system_timezone (void)
             }
 
           fd = g_open (filename, O_RDONLY, 0);
-          read (fd, &buf_content, stat_localtime.st_size);
+          read (fd, buf_content, stat_localtime.st_size);
           close (fd);
 
           g_free (filename);

@@ -1,3 +1,8 @@
+2007-07-18  Pascal Terjan  <pterjan@linuxfr.org>
+
+	* tz.c: (tz_get_system_timezone): fix a crash when /etc/localtime is
+	not a hardlink
+
 2007-07-11  Vincent Untz  <vuntz@gnome.org>
 
 	* tz.c: (tz_build_db), (tz_get_system_timezone_solaris): trivial fixes
