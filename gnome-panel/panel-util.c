@@ -1563,6 +1563,12 @@ void
 panel_util_set_tooltip_text (GtkWidget  *widget,
 			     const char *text)
 {
+        g_signal_handlers_disconnect_matched (widget,
+					      G_SIGNAL_MATCH_FUNC,
+					      0, 0, NULL,
+					      panel_util_query_tooltip_cb,
+					      NULL);
+
 	if (string_empty (text)) {
 		g_object_set (widget, "has-tooltip", FALSE, NULL);
 		return;
