@@ -1,3 +1,12 @@
+2007-08-01  Ray Strode  <rstrode@redhat.com>
+
+	* panel-power-manager.c: (panel_power_manager_on_name_owner_change),
+	(panel_power_manager_ensure_gpm_connection),
+	(panel_power_manager_can_suspend),
+	(panel_power_manager_can_hibernate): 
+	Use new freedesktop.org power management interface.  Patch by
+	Matthias Clasen <mclasen@redhat.com> (bug 460400)
+
 2007-07-25  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-util.c: (panel_util_set_tooltip_text): remove old signal

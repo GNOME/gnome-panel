@@ -129,7 +129,7 @@ panel_power_manager_on_name_owner_changed (DBusGProxy        *bus_proxy,
 	                                   const char        *new_owner,
 	                                   PanelPowerManager *manager)
 {
-	if (strcmp (name, "org.gnome.PowerManager") != 0)
+	if (strcmp (name, "org.freedesktop.PowerManagement") != 0)
 		return;
 
 	if (manager->priv->gpm_proxy != NULL) {
@@ -189,9 +189,9 @@ panel_power_manager_ensure_gpm_connection (PanelPowerManager  *manager,
 		manager->priv->gpm_proxy =
 			dbus_g_proxy_new_for_name_owner (
 					manager->priv->dbus_connection,
-					"org.gnome.PowerManager",
-					"/org/gnome/PowerManager",
-					"org.gnome.PowerManager",
+					"org.freedesktop.PowerManagement",
+					"/org/freedesktop/PowerManagement",
+					"org.freedesktop.PowerManagement",
 					&connection_error);
 
 		if (manager->priv->gpm_proxy == NULL) {
@@ -324,7 +324,7 @@ panel_power_manager_can_suspend (PanelPowerManager *manager)
 	}
 
 	can_suspend = FALSE;
-	if (!dbus_g_proxy_call (manager->priv->gpm_proxy, "AllowedSuspend",
+	if (!dbus_g_proxy_call (manager->priv->gpm_proxy, "CanSuspend",
 				&error,
 				G_TYPE_INVALID,
 				G_TYPE_BOOLEAN, &can_suspend, G_TYPE_INVALID)) {
@@ -355,7 +355,7 @@ panel_power_manager_can_hibernate (PanelPowerManager *manager)
 	}
 
 	can_hibernate = FALSE;
-	if (!dbus_g_proxy_call (manager->priv->gpm_proxy, "AllowedHibernate",
+	if (!dbus_g_proxy_call (manager->priv->gpm_proxy, "CanHibernate",
 				&error,
 				G_TYPE_INVALID,
 				G_TYPE_BOOLEAN, &can_hibernate, G_TYPE_INVALID)) {
