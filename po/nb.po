@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.15.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-15 19:22+0200\n"
-"PO-Revision-Date: 2007-07-15 19:26+0200\n"
+"POT-Creation-Date: 2007-08-01 15:51+0200\n"
+"PO-Revision-Date: 2007-08-01 15:52+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -285,14 +285,10 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
-#, fuzzy
 msgid ""
 "A list of timezone IDs. Each ID identifies an individual timezone. The "
 "settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
-msgstr ""
-"En liste med panel-IDer. Hver ID identifiserer et individuelt panel. "
-"Innstillingene for hvert av disse panelene lagres i /apps/panel/toplevels/"
-"$(id)."
+msgstr "En liste med tidssone-IDer. Hver ID identifiserer en individuell tidssone. Innstillingene for hvert av disse panelene lagres i nøklene $(id)_name og $(id)_zone."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -489,7 +485,9 @@ msgstr "<small><b>Lokasjon:</b></small>"
 msgid ""
 "<small><i>Click on the map to zoom and select the timezone of a city, or "
 "right click to zoom out.</i></small>"
-msgstr "<small><i>Klikk på kartet for å zoome og velge tidssonen for en by eller høyreklikk for å zoome ut.</i></small>"
+msgstr ""
+"<small><i>Klikk på kartet for å zoome og velge tidssonen for en by eller "
+"høyreklikk for å zoome ut.</i></small>"
 
 #: ../applets/clock/timezone.glade.h:5
 msgid "Edit Timezones"
@@ -2227,8 +2225,9 @@ msgstr "Bruk egendefinert sti for menyinnhold"
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Feil under lesing av strengverdi «%s» fra GConf: %s"
 
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
 #: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
-#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1733
+#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Feil under lesing av heltallsverdi «%s» fra GConf: %s"
