@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-14 17:21+0200\n"
-"PO-Revision-Date: 2007-08-14 17:21+0200\n"
+"POT-Creation-Date: 2007-08-14 17:54+0200\n"
+"PO-Revision-Date: 2007-08-14 17:55+0200\n"
 "Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -100,26 +100,24 @@ msgid "%b %d"
 msgstr "%d. %b"
 
 #: ../applets/clock/calendar-window.c:742
-#, fuzzy
 msgid "_Tasks"
-msgstr "Aufgaben"
+msgstr "Auf_gaben"
 
 #: ../applets/clock/calendar-window.c:858
 msgid "All Day"
 msgstr "Ganztägig"
 
 #: ../applets/clock/calendar-window.c:985
-#, fuzzy
 msgid "_Appointments"
-msgstr "Termine"
+msgstr "_Termine"
 
 #: ../applets/clock/calendar-window.c:1002
 msgid "_Birthdays and Anniversaries"
-msgstr ""
+msgstr "_Geburts- und Jahrestage"
 
 #: ../applets/clock/calendar-window.c:1018
 msgid "_Weather Information"
-msgstr ""
+msgstr "_Wetterinformationen"
 
 #: ../applets/clock/calendar-window.c:1687
 msgid "Calendar"
@@ -170,27 +168,24 @@ msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
 #: ../applets/clock/clock.c:541
-#, fuzzy
 msgid "Click to hide your appointments and tasks"
-msgstr "Klicken um Ihre Termine und Aufgaben anzuzeigen"
+msgstr "Klicken um Ihre Termine und Aufgaben zu verbergen"
 
 #: ../applets/clock/clock.c:544
 msgid "Click to view your appointments and tasks"
 msgstr "Klicken um Ihre Termine und Aufgaben anzuzeigen"
 
 #: ../applets/clock/clock.c:548
-#, fuzzy
 msgid "Click to hide month calendar"
-msgstr "Klicken um den Monatskalender anzuzeigen"
+msgstr "Klicken um den Monatskalender zu verbergen"
 
 #: ../applets/clock/clock.c:551
 msgid "Click to view month calendar"
 msgstr "Klicken um den Monatskalender anzuzeigen"
 
 #: ../applets/clock/clock.c:1095
-#, fuzzy
 msgid "Click to view time in other timezones"
-msgstr "Klicken um den Monatskalender anzuzeigen"
+msgstr "Klicken um die Zeit in anderen Zeitzonen anzuzeigen"
 
 #: ../applets/clock/clock.c:1102
 msgid "Computer Clock"
@@ -266,9 +261,8 @@ msgid "Use _UTC"
 msgstr "_Koordinierte Weltzeit (UTC) verwenden"
 
 #: ../applets/clock/clock.c:2155
-#, fuzzy
 msgid "Show multiple _timezones"
-msgstr "Verbergen-_Knöpfe anzeigen"
+msgstr "Mehrere _Zeitzonen anzeigen"
 
 #: ../applets/clock/clock.c:2233
 msgid "The Clock displays the current time and date"
@@ -307,14 +301,13 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
-#, fuzzy
 msgid ""
 "A list of timezone IDs. Each ID identifies an individual timezone. The "
 "settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
 msgstr ""
-"Eine Liste der Panel-Kennungen. Jede Kennung entspricht einem Panel auf "
-"oberster Ebene. Die Einstellungen jedes dieser Panels werden unter »/apps/"
-"panel/toplevels/$(id)« abgelegt."
+"Eine Liste der Zeitzonen-Kennungen. Jede Kennung entspricht einer Zeitzone. "
+"Die Einstellungen jeder dieser Zeitzonen werden in den Schlüsseln $(kennung)"
+"_name und $(kennung)_zone abgelegt."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -322,19 +315,19 @@ msgstr "Benutzerdefiniertes Uhrenformat"
 
 #: ../applets/clock/clock.schemas.in.h:14
 msgid "Expand list of appointments"
-msgstr ""
+msgstr "Liste mit Terminen ausklappen"
 
 #: ../applets/clock/clock.schemas.in.h:15
 msgid "Expand list of birthdays"
-msgstr ""
+msgstr "Liste mit Geburtstagen ausklappen"
 
 #: ../applets/clock/clock.schemas.in.h:16
 msgid "Expand list of tasks"
-msgstr ""
+msgstr "Liste mit Aufgaben ausklappen"
 
 #: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of weather information"
-msgstr ""
+msgstr "Liste mit Wetterinformationen ausklappen"
 
 #: ../applets/clock/clock.schemas.in.h:18
 msgid "Hour format"
@@ -343,55 +336,58 @@ msgstr "Stundenformat"
 #: ../applets/clock/clock.schemas.in.h:19
 msgid "If true, display date in the clock, in addition to time."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird in der Uhr zusätzlich zur Zeit das "
+"Falls dieser Schlüssel WAHR ist, wird in der Uhr zusätzlich zur Zeit das "
 "Datum angezeigt."
 
 #: ../applets/clock/clock.schemas.in.h:20
 msgid "If true, display seconds in time."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird die Zeit sekundengenau angezeigt."
+"Falls dieser Schlüssel WAHR ist, wird die Zeit sekundengenau angezeigt."
 
 #: ../applets/clock/clock.schemas.in.h:21
-#, fuzzy
 msgid "If true, display the timezone button in the clock, in addition to time."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird in der Uhr zusätzlich zur Zeit das "
-"Datum angezeigt."
+"Falls dieser Schlüssel WAHR ist, wird in der Uhr zusätzlich zur Zeit der "
+"Zeitzonenknopf angezeigt."
 
 #: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird die Zeit in koordinierter Weltzeit "
+"Falls dieser Schlüssel WAHR ist, wird die Zeit in koordinierter Weltzeit "
 "(UTC) angezeigt."
 
 # CHECK
 #: ../applets/clock/clock.schemas.in.h:23
-#, fuzzy
 msgid "If true, expand the list of appointments in the calendar window."
-msgstr "Wenn »true«, werden die Wochennummern im Kalender angezeigt."
+msgstr ""
+"Falls dieser Schlüssel WAHR ist, wird die Liste der Termine im Kalender "
+"angezeigt."
 
 # CHECK
 #: ../applets/clock/clock.schemas.in.h:24
-#, fuzzy
 msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "Wenn »true«, werden die Wochennummern im Kalender angezeigt."
+msgstr ""
+"Falls dieser Schlüssel WAHR ist, wird die Liste der Geburtstage im Kalender "
+"angezeigt."
 
 # CHECK
 #: ../applets/clock/clock.schemas.in.h:25
-#, fuzzy
 msgid "If true, expand the list of tasks in the calendar window."
-msgstr "Wenn »true«, werden die Wochennummern im Kalender angezeigt."
+msgstr ""
+"Falls dieser Schlüssel WAHR ist, wird die Liste der Aufgaben im Kalender "
+"angezeigt."
 
 # CHECK
 #: ../applets/clock/clock.schemas.in.h:26
-#, fuzzy
 msgid "If true, expand the list of weather information in the calendar window."
-msgstr "Wenn »true«, werden die Wochennummern im Kalender angezeigt."
+msgstr ""
+"Falls dieser Schlüssel WAHR ist, wird die Liste der Wetterinformationen im "
+"Kalender angezeigt."
 
 #: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird das Datum in einer Minihilfe "
+"Falls dieser Schlüssel WAHR ist, wird das Datum in einer Minihilfe "
 "angezeigt, wenn sich die Maus über der Uhr befindet?"
 
 # CHECK
@@ -401,7 +397,7 @@ msgstr "Wenn »true«, werden die Wochennummern im Kalender angezeigt."
 
 #: ../applets/clock/clock.schemas.in.h:29
 msgid "Name of the timezone"
-msgstr ""
+msgstr "Name der Zeitzone"
 
 #: ../applets/clock/clock.schemas.in.h:30
 msgid "Show date in clock"
@@ -412,9 +408,8 @@ msgid "Show date in tooltip"
 msgstr "Datum in Minihilfe anzeigen"
 
 #: ../applets/clock/clock.schemas.in.h:32
-#, fuzzy
 msgid "Show the timezone button"
-msgstr "Verbergen-_Knöpfe anzeigen"
+msgstr "Den Zeitzonenknopf anzeigen"
 
 #: ../applets/clock/clock.schemas.in.h:33
 msgid "Show time with seconds"
@@ -434,7 +429,6 @@ msgstr ""
 "Rückwärtskompatibilität beibehalten."
 
 #: ../applets/clock/clock.schemas.in.h:36
-#, fuzzy
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -464,13 +458,12 @@ msgstr ""
 "Format entsprechend)."
 
 #: ../applets/clock/clock.schemas.in.h:38
-#, fuzzy
 msgid ""
 "This key specifies the name of the timezone as can be used in the TZ "
 "environment variable."
 msgstr ""
-"Dieser Schlüssel gibt die Anzahl der darzustellenden Einzelbilder in der "
-"Fischanimation an."
+"Dieser Schlüssel gibt den Namen der Zeitzone an und hat das selbe Format wie "
+"die Umgebungsvariable »$TZ«."
 
 #: ../applets/clock/clock.schemas.in.h:39
 msgid "This key specifies the program to run in order to configure the time."
@@ -479,20 +472,16 @@ msgstr ""
 "an."
 
 #: ../applets/clock/clock.schemas.in.h:40
-#, fuzzy
 msgid "This key specifies the user-visible name of the timezone."
-msgstr ""
-"Dieser Schlüssel gibt das zum Konfigurieren der Zeit auszuführende Programm "
-"an."
+msgstr "Dieser Schlüssel gibt den dargestellten Namen der Zeitzone an."
 
 #: ../applets/clock/clock.schemas.in.h:41
 msgid "Time configuration tool"
 msgstr "Werkzeug zur Zeitkonfiguration"
 
 #: ../applets/clock/clock.schemas.in.h:42
-#, fuzzy
 msgid "Timezone ID list"
-msgstr "Liste Panel-Kennungen"
+msgstr "Liste Zeitzonen-Kennungen"
 
 #: ../applets/clock/clock.schemas.in.h:43
 msgid "Use Internet time"
@@ -508,7 +497,7 @@ msgstr "UTC verwenden"
 
 #: ../applets/clock/clock.schemas.in.h:46
 msgid "User-visible name of the timezone"
-msgstr ""
+msgstr "Dargestellter Name der Zeitzone"
 
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
@@ -517,58 +506,55 @@ msgid "There was an error displaying help: %s"
 msgstr "Beim Anzeigen der Hilfe ist ein Fehler aufgetreten: %s"
 
 #: ../applets/clock/timezone.glade.h:1
-#, fuzzy
 msgid "<b>Active timezones</b>"
-msgstr "<b>Animation</b>"
+msgstr "<b>Aktive Zeitzonen</b>"
 
 #: ../applets/clock/timezone.glade.h:2
-#, fuzzy
 msgid "<b>Add timezone</b>"
-msgstr "<b>Animation</b>"
+msgstr "<b>Zeitzone hinzufügen</b>"
 
 #: ../applets/clock/timezone.glade.h:3
-#, fuzzy
 msgid "<small><b>Location:</b></small>"
-msgstr "<small>Deckend</small>"
+msgstr "<small><b>Ort:</b></small>"
 
 #: ../applets/clock/timezone.glade.h:4
 msgid ""
 "<small><i>Click on the map to zoom and select the timezone of a city, or "
 "right click to zoom out.</i></small>"
 msgstr ""
+"<small><i>Klicken Sie auf die Karte um die Ansicht zu vergrößern und die "
+"Zeitzone eines Ortes auszuwählen, oder rechtsklicken Sie um die Ansicht zu "
+"verkleinern.</i></small>"
 
 #: ../applets/clock/timezone.glade.h:5
-#, fuzzy
 msgid "Edit Timezones"
-msgstr "Menüs _bearbeiten"
+msgstr "Zeitzonen bearbeiten"
 
 # CHECK "%1$s auf %2$s"?
 #. Translators: the first %s is a place and the
 #. * second is a time. Result looks like this:
 #. * Europe/Paris - 15:45
 #: ../applets/clock/tz-sel-dialog.c:196
-#, fuzzy, c-format
+#, c-format
 msgid "%s - %s"
-msgstr "%1$s, %2$s"
+msgstr "%s - %s"
 
 #: ../applets/clock/tz-sel-dialog.c:205
-#, fuzzy
 msgid "move the mouse on the map"
-msgstr "Das Objekt auf dem Panel sperren"
+msgstr "Bewegen Sie die Maus über der Karte"
 
 #: ../applets/clock/tz-sel-dialog.c:207
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Location:</b> %s"
-msgstr "<b>Animation</b>"
+msgstr "<b>Ort:</b> %s"
 
 #: ../applets/clock/tz-sel-dialog.c:812
-#, fuzzy
 msgid "Name"
-msgstr "_Name:"
+msgstr "Name"
 
 #: ../applets/clock/tz-sel-dialog.c:825
 msgid "Timezone"
-msgstr ""
+msgstr "Zeitzone"
 
 #. Translators: the first string is a timezone name as in "UTC"
 #. * the second string is "+" or nothing. The result looks like
@@ -576,7 +562,7 @@ msgstr ""
 #: ../applets/clock/tz-window.c:102
 #, c-format
 msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr ""
+msgstr "%s mit Sommerzeit (UTC %s%.2ld:%.2ld)"
 
 #. Translators: the first string is a timezone name as in "UTC"
 #. * the second string is "+" or nothing. The result looks like
@@ -584,7 +570,7 @@ msgstr ""
 #: ../applets/clock/tz-window.c:111
 #, c-format
 msgid "%s (UTC %s%.2ld:%.2ld)"
-msgstr ""
+msgstr "%s (UTC %s%.2ld:%.2ld)"
 
 #. Translators: the first string is a timezone name (as in
 #. * "Europe/Paris"), the second string is a country name abbreviation
@@ -596,15 +582,16 @@ msgid ""
 "%s - %s\n"
 "%s"
 msgstr ""
+"%s - %s\n"
+"%s"
 
 #: ../applets/clock/tz-window.c:283
-#, fuzzy
 msgid "_Edit timezones..."
-msgstr "Menüs _bearbeiten"
+msgstr "Zeitzonen _bearbeiten …"
 
 #: ../applets/clock/tz-window.c:370
 msgid "Timezones"
-msgstr ""
+msgstr "Zeitzonen"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -809,7 +796,7 @@ msgstr "Einzelbilder in Fischanimation"
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird die Fischanimation auf vertikalen "
+"Falls dieser Schlüssel WAHR ist, wird die Fischanimation auf vertikalen "
 "Panels gedreht angezeigt."
 
 #: ../applets/fish/fish.schemas.in.h:5
@@ -1023,7 +1010,7 @@ msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, zeigt die Fensterliste alle geöffneten "
+"Falls dieser Schlüssel WAHR ist, zeigt die Fensterliste alle geöffneten "
 "Fenster an, einschließlich denen, die sich auf anderen Arbeitsflächen "
 "befinden. Andernfalls zeigt sie lediglich die auf der momentan sichtbaren "
 "Arbeitsfläche befindlichen Fenster an."
@@ -1033,7 +1020,7 @@ msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr ""
-"Fall dieser Schlüssel wahr ist, wird ein Fenster auf die sichtbare "
+"Fall dieser Schlüssel WAHR ist, wird ein Fenster auf die sichtbare "
 "Arbeitsfläche verschoben, wenn es wiederhergestellt wird. Andernfalls wird "
 "zur Arbeitsfläche gewechselt, auf der sich das Fenster befindet."
 
@@ -1056,14 +1043,12 @@ msgid "Show windows from all workspaces"
 msgstr "Auf allen Arbeitsfläche befindliche Fenster anzeigen"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
-#, fuzzy
 msgid ""
 "The use of this key was deprecated in GNOME 2.20. The schema is retained for "
 "compatibility with older versions."
 msgstr ""
-"Im Zuge von GNOME 2.6 wurde dieser Schlüssel zu Gunsten des »format«-"
-"Schlüssels für nichtig erklärt. Das Schema wird zwecks "
-"Rückwärtskompatibilität beibehalten."
+"Im Zuge von GNOME 2.20 wurde dieser Schlüssel für nichtig erklärt. Das "
+"Schema wird zwecks Rückwärtskompatibilität beibehalten."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "When to group windows"
@@ -1166,19 +1151,19 @@ msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, zeigt der Arbeitsflächenumschalter alle "
+"Falls dieser Schlüssel WAHR ist, zeigt der Arbeitsflächenumschalter alle "
 "Arbeitsflächen an. Andernfalls zeigt er lediglich die momentan sichtbare."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-#, fuzzy
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Metacity."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, zeigt der Arbeitsflächenumschalter auf den "
+"Falls dieser Schlüssel WAHR ist, zeigt der Arbeitsflächenumschalter auf den "
 "Mini-Arbeitsflächen im Umschalter deren Namen an. Andernfalls enthalten "
-"diese den Inhalt der Arbeitsflächen."
+"diese den Inhalt der Arbeitsflächen. Dies funktioniert nur, wenn der Fenster-"
+"Manager »Metacity« verwendet wird."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -1193,7 +1178,7 @@ msgstr ""
 "Dieser Schlüssel legt die Anzahl der Zeilen (bei horizontaler Darstellung) "
 "oder Spalten (bei vertikaler Darstellung) fest, in denen der Umschalter die "
 "Arbeitsflächen anzeigt. Dieser Schlüssel kommt ausschließlich zum Tragen, "
-"falls der Schlüssel »display_all_workspaces« wahr ist."
+"falls der Schlüssel »display_all_workspaces« WAHR ist."
 
 #: ../gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -1267,9 +1252,8 @@ msgid ""
 msgstr ""
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:2
-#, fuzzy
 msgid "Panel"
-msgstr "Panel a_nlegen"
+msgstr "Panel"
 
 #: ../gnome-panel/launcher.c:151
 msgid "Could not show this URL"
@@ -1339,7 +1323,7 @@ msgstr "Als _Menü zum Panel hinzufügen"
 #: ../gnome-panel/nothing.cP:601
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
-msgstr ""
+msgstr "<b>SPIEL VORBEI</b> in Stufe %d!"
 
 # CHECK "%1$s auf %2$s"?
 #. Translators: the first and third strings are similar to a
@@ -1347,43 +1331,43 @@ msgstr ""
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
 #: ../gnome-panel/nothing.cP:608
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s   %2$s   %3$s"
-msgstr "%1$s, %2$s"
+msgstr "%1$s   %2$s   %3$s"
 
 #: ../gnome-panel/nothing.cP:609
 msgid "Press 'q' to quit"
-msgstr ""
+msgstr "Drücken Sie »q« zum Beenden"
 
 #: ../gnome-panel/nothing.cP:614
 msgid "Paused"
-msgstr ""
+msgstr "Pause"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
 #: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s\t%2$s"
-msgstr ""
-"%1$s\n"
-"%2$s"
+msgstr "%1$s\t%2$s"
 
 #: ../gnome-panel/nothing.cP:618
 msgid "Press 'p' to unpause"
-msgstr ""
+msgstr "Drücken Sie »p« zum Fortfahren"
 
 #: ../gnome-panel/nothing.cP:624
 #, c-format
 msgid "Level: %s,  Lives: %s"
-msgstr ""
+msgstr "Stufe: %s, Leben: %s"
 
 #: ../gnome-panel/nothing.cP:629
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
+"Links/Rechts zum Bewegen, Leertaste zum Schießen, »p« für Pause, »q« zum "
+"Beenden"
 
 #: ../gnome-panel/nothing.cP:1369
 msgid "Killer GEGLs from Outer Space"
-msgstr ""
+msgstr "Tödliche GEGL aus dem All"
 
 #: ../gnome-panel/panel-action-button.c:126
 msgid "_Activate Screensaver"
@@ -1585,7 +1569,7 @@ msgstr "Neu _laden"
 #: ../gnome-panel/panel-applet-frame.c:1006
 #: ../gnome-panel/panel-applet-frame.c:1094 ../gnome-panel/panel-util.c:397
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #: ../gnome-panel/panel-applet-frame.c:1057
 #, c-format
@@ -1626,13 +1610,12 @@ msgid "The GNOME Panel"
 msgstr "Das GNOME-Panel"
 
 #: ../gnome-panel/panel-context-menu.c:130
-#, fuzzy
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
 msgstr ""
-"Dieses Programm ist verantwortlich für das Starten anderer Anwendungen sowie "
-"das Einbetten kleiner Applets in sich selbst."
+"Dieses Programm ist verantwortlich für das Starten anderer Anwendungen und "
+"stellt nützliches Zubehör bereit."
 
 #: ../gnome-panel/panel-context-menu.c:167
 msgid "Cannot delete this panel"
@@ -1667,9 +1650,8 @@ msgid "Application in Terminal"
 msgstr "Anwendung im Terminal"
 
 #: ../gnome-panel/panel-ditem-editor.c:117
-#, fuzzy
 msgid "Location"
-msgstr "_Ort:"
+msgstr "Ort"
 
 # CHECK
 #. Type
@@ -1704,7 +1686,6 @@ msgid "Choose a file..."
 msgstr "Datei auswählen …"
 
 #: ../gnome-panel/panel-ditem-editor.c:1150
-#, fuzzy
 msgid "Comm_and:"
 msgstr "_Befehl:"
 
@@ -1721,14 +1702,12 @@ msgid "The name of the launcher is not set."
 msgstr "Der Name des Starters ist nicht gesetzt."
 
 #: ../gnome-panel/panel-ditem-editor.c:1352
-#, fuzzy
 msgid "Could not save directory properties"
-msgstr "Übergebenes Objekt konnte nicht verarbeitet werden"
+msgstr "Ordner-Eigenschaften konnten nicht gespeichert werden"
 
 #: ../gnome-panel/panel-ditem-editor.c:1353
-#, fuzzy
 msgid "The name of the directory is not set."
-msgstr "Der Name des Starters ist nicht gesetzt."
+msgstr "Der Name des Ordners ist nicht gesetzt."
 
 #: ../gnome-panel/panel-ditem-editor.c:1369
 msgid "The command of the launcher is not set."
@@ -1752,18 +1731,14 @@ msgstr ""
 # CHECK - misbehaving übersetzen, ohne erzieherisch zu wirken
 # 	  ("schlecht benehmen")
 #: ../gnome-panel/panel-force-quit.c:204
-#, fuzzy
 msgid "Force this application to exit?"
-msgstr "Das Beenden einer fehlerhaften Anwendung erzwingen"
+msgstr "Das Beenden dieser Anwendung erzwingen?"
 
 #: ../gnome-panel/panel-force-quit.c:207
-#, fuzzy
 msgid ""
 "If you choose to force an application to exit, any open documents in it will "
 "be lost."
-msgstr ""
-"Das Beenden dieser Anwendung erzwingen?\n"
-"(Dabei gehen alle geöffneten Dokumente verloren.)"
+msgstr "Dabei gehen alle in dieser Anwendung geöffneten Dokumente verloren."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1819,7 +1794,7 @@ msgstr "Programmliste im »Anwendung ausführen«-Dialog ausklappen"
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird Autovervollständigung im »Anwendung "
+"Falls dieser Schlüssel WAHR ist, wird Autovervollständigung im »Anwendung "
 "ausführen«-Dialog aktiviert."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
@@ -1828,10 +1803,10 @@ msgid ""
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird die Liste bekannter Anwendungen der "
+"Falls dieser Schlüssel WAHR ist, wird die Liste bekannter Anwendungen der "
 "Größe des »Anwendung ausführen«-Dialogs angepasst, sobald dieser geöffnet "
 "wird. Dieser Schlüssel kommt ausschließlich zum Tragen, falls der Schlüssel "
-"»enable_program_list« wahr ist."
+"»enable_program_list« WAHR ist."
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
 msgid ""
@@ -1839,7 +1814,7 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird die Liste bekannter Anwendungen im "
+"Falls dieser Schlüssel WAHR ist, wird die Liste bekannter Anwendungen im "
 "»Anwendung ausführen«-Dialog angezeigt. Der Schlüssel »show_program_list« "
 "legt fest, ob die Größe der Liste der des Fensters angepasst werden soll."
 
@@ -1923,7 +1898,7 @@ msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird ein Dialog angezeigt, der den Benutzer "
+"Falls dieser Schlüssel WAHR ist, wird ein Dialog angezeigt, der den Benutzer "
 "dazu auffordert, das Entfernen eines Panels zu bestätigen."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
@@ -1931,14 +1906,14 @@ msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird eine Schublade automatisch "
+"Falls dieser Schlüssel WAHR ist, wird eine Schublade automatisch "
 "geschlossen, sobald der Benutzer darin einen Starter anklickt."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, werden Starter hervorgehoben, wenn sich der "
+"Falls dieser Schlüssel WAHR ist, werden Starter hervorgehoben, wenn sich der "
 "Zeiger über ihnen befindet."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
@@ -1946,7 +1921,7 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, erlaubt es das Panel dem Benutzer nicht, "
+"Falls dieser Schlüssel WAHR ist, erlaubt es das Panel dem Benutzer nicht, "
 "das Beenden einer Anwendung zu erzwingen. Dies wird durch das Entfernen des "
 "»Anwendung beenden«-Knopfes bewerkstelligt."
 
@@ -1955,7 +1930,7 @@ msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, erlaubt es das Panel dem Benutzer nicht, "
+"Falls dieser Schlüssel WAHR ist, erlaubt es das Panel dem Benutzer nicht, "
 "den Bildschirm zu sperren. Dies wird durch das Entfernen der »Bildschirm "
 "sperren«-Menüeinträge bewerkstelligt."
 
@@ -1964,7 +1939,7 @@ msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, erlaubt es das Panel dem Benutzer nicht, "
+"Falls dieser Schlüssel WAHR ist, erlaubt es das Panel dem Benutzer nicht, "
 "sich abzumelden. Dies wird durch das Entfernen der »Abmelden«-Menüeinträge "
 "bewerkstelligt."
 
@@ -1974,7 +1949,7 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, unterbindet das Panel jegliche Änderungen "
+"Falls dieser Schlüssel WAHR ist, unterbindet das Panel jegliche Änderungen "
 "an der Panel-Konfiguration. Applets müssen jedoch möglicherweise einzeln "
 "gesperrt werden. Damit diese Einstellungen wirksam werden, muss das Panel "
 "neu gestartet werden."
@@ -1982,30 +1957,38 @@ msgstr ""
 #: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, werden für Panelobjekte Minihilfen "
+"Falls dieser Schlüssel WAHR ist, werden für Panelobjekte Minihilfen "
 "angezeigt."
 
 #: ../gnome-panel/panel-logout.c:238
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
 "You will be automatically logged out in %d second."
 msgid_plural ""
 "You are currently logged in as \"%s\".\n"
 "You will be automatically logged out in %d seconds."
-msgstr[0] "Sie werden in %d Sekunde automatisch abgemeldet."
-msgstr[1] "Sie werden in %d Sekunden automatisch abgemeldet."
+msgstr[0] ""
+"Sie sind momentan als »%s« angemeldet.\n"
+"Sie werden in %d Sekunde automatisch abgemeldet."
+msgstr[1] ""
+"Sie sind momentan als »%s« angemeldet.\n"
+"Sie werden in %d Sekunden automatisch abgemeldet."
 
 #: ../gnome-panel/panel-logout.c:249
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
 "This system will be automatically shut down in %d second."
 msgid_plural ""
 "You are currently logged in as \"%s\".\n"
 "This system will be automatically shut down in %d seconds."
-msgstr[0] "Der Rechner wird in %d Sekunde automatisch ausgeschaltet."
-msgstr[1] "Der Rechner wird in %d Sekunden automatisch ausgeschaltet."
+msgstr[0] ""
+"Sie sind momentan als »%s« angemeldet.\n"
+"Der Rechner wird in %d Sekunde automatisch ausgeschaltet."
+msgstr[1] ""
+"Sie sind momentan als »%s« angemeldet.\n"
+"Der Rechner wird in %d Sekunden automatisch ausgeschaltet."
 
 #: ../gnome-panel/panel-logout.c:330
 msgid "Log out of this system now?"
@@ -2086,12 +2069,11 @@ msgstr "Wechselmedium"
 
 #: ../gnome-panel/panel-menu-items.c:580
 msgid "Home Folder"
-msgstr ""
+msgstr "Persönlicher Ordner"
 
 #: ../gnome-panel/panel-menu-items.c:581
-#, fuzzy
 msgid "Open your personal folder"
-msgstr "Dem Desktop als Ordner öffnen"
+msgstr "Den persönlichen Ordner öffnen"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
@@ -2160,9 +2142,9 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird der Schlüssel »custom_icon« als "
+"Falls dieser Schlüssel WAHR ist, wird der Schlüssel »custom_icon« als "
 "benutzerdefiniertes Symbol für den Knopf verwende. Falls dieser Schlüssel "
-"falsch ist, wird der Schlüssel »custom_icon« ignoriert. Dieser Schlüssel "
+"FALSCH ist, wird der Schlüssel »custom_icon« ignoriert. Dieser Schlüssel "
 "kommt ausschließlich zum Tragen, falls der Objekktypschlüssel »object_type« "
 "»menu-object« oder »drawer-object« ist."
 
@@ -2172,9 +2154,9 @@ msgid ""
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird der Schlüssel »menu_path« als Pfad "
+"Falls dieser Schlüssel WAHR ist, wird der Schlüssel »menu_path« als Pfad "
 "verwendet, mit dessen Hilfe der Menüinhalt konstruiert wird. Falls dieser "
-"Schlüssel falsch ist, wird der Schlüssel »menu_path« ignoriert. Dieser "
+"Schlüssel FALSCH ist, wird der Schlüssel »menu_path« ignoriert. Dieser "
 "Schlüssel kommt lediglich zum Tragen, falls der Objekttypschlüssel "
 "»object_type« »menu-object« oder »drawer-object« ist."
 
@@ -2183,7 +2165,7 @@ msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird die Position des Objekts relativ zur "
+"Falls dieser Schlüssel WAHR ist, wird die Position des Objekts relativ zur "
 "rechten Kante (oder der unteren, falls vertikal) des Panels berechnet."
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
@@ -2191,7 +2173,7 @@ msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, darf der Benutzer das Applet nicht "
+"Falls dieser Schlüssel WAHR ist, darf der Benutzer das Applet nicht "
 "verschieben, ohne das Objekt vorher freizugeben, und zwar durch Anklicken "
 "des Menüobjekts »Freigeben«."
 
@@ -2275,7 +2257,7 @@ msgstr ""
 "Der Speicherort der Bilddatei, die als Symbol für den Objektknopf verwendet "
 "werden soll. Dieser Schlüssel kommt ausschließlich zum Tragen, falls der "
 "Objekttypschlüssel »object_type« »drawer_object« oder »menu-object« ist und "
-"der Schlüssel »use_custom_icon« wahr ist."
+"der Schlüssel »use_custom_icon« WAHR ist."
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
 msgid ""
@@ -2284,7 +2266,7 @@ msgid ""
 "object\"."
 msgstr ""
 "Der Pfad, mit Hilfe dessen der Menüinhalt konstruiert wird. Dieser Schlüssel "
-"kommt ausschließlich zum Tragen, falls der Schlüssel »use_menu_path« wahr "
+"kommt ausschließlich zum Tragen, falls der Schlüssel »use_menu_path« WAHR "
 "ist und der Objekttypschlüssel »object_type« »menu-object« ist."
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
@@ -2378,9 +2360,8 @@ msgid "Orientation|Right"
 msgstr "Rechts"
 
 #: ../gnome-panel/panel-properties-dialog.c:947
-#, fuzzy
 msgid "Drawer Properties"
-msgstr "Ordner-Eigenschaften"
+msgstr "Schubladen-Eigenschaften"
 
 #: ../gnome-panel/panel-properties-dialog.c:1055
 #: ../gnome-panel/panel-run-dialog.c:1951
@@ -2517,14 +2498,12 @@ msgid "Clear the Recent Documents list?"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen?"
 
 #: ../gnome-panel/panel-recent.c:169
-#, fuzzy
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
-"Das Löschen der Liste der zuletzt geöffneten Dokumente betrifft:\n"
-"\n"
+"Das Leeren der Liste der zuletzt geöffneten Dokumente betrifft:\n"
 "• Alle Einträge im Menü Orte → Zuletzt geöffnete Dokumente.\n"
 "• Die Liste der zuletzt geöffneten Dokumente in allen Anwendungen."
 
@@ -2640,21 +2619,19 @@ msgid "_Run"
 msgstr "Aus_führen"
 
 #: ../gnome-panel/panel-shell.c:64
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The panel could not register with the bonobo-activation server (error code: %"
 "d) and will exit.\n"
 "It may be automatically restarted."
 msgstr ""
 "Beim Registrieren des Panels beim Bonobo-Activation-Server ist ein Problem "
-"aufgetreten.\n"
-"Die Fehlerkennung ist: %d\n"
-"Das Panel wird nun beendet."
+"aufgetreten (Fehlerkennung: %d).\n"
+"Das Panel wird nun beendet und startet möglicherweise automatisch erneut."
 
 #: ../gnome-panel/panel-shell.c:74
-#, fuzzy
 msgid "The panel has encountered a fatal error"
-msgstr "Das Panel ist beim Laden von »%s« auf ein Problem gestoßen."
+msgstr "Beim Panel ist ein nicht-behebbarer Fehler aufgetreten."
 
 #. FIXME: the checkbox is not correctly aligned in the dialog...
 #: ../gnome-panel/panel-shell.c:80
@@ -2796,16 +2773,16 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, werden auf den Verbergen-Knöpfen Pfeile "
+"Falls dieser Schlüssel WAHR ist, werden auf den Verbergen-Knöpfen Pfeile "
 "angezeigt. Dieser Schlüssel kommt ausschließlich zum Tragen, falls der "
-"Schlüssel »enable_buttons« wahr ist."
+"Schlüssel »enable_buttons« WAHR ist."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, werden auf jeder Seite des Panels Knöpfe "
+"Falls dieser Schlüssel WAHR ist, werden auf jeder Seite des Panels Knöpfe "
 "angezeigt, die verwendet werden können, um das Panel an den Rand des "
 "Bildschirms zu verschieben, wobei in diesem Zustand nur ein Knopf angezeigt "
 "wird."
@@ -2815,7 +2792,7 @@ msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird das Anzeigen/Verbergen dieses Panels "
+"Falls dieser Schlüssel WAHR ist, wird das Anzeigen/Verbergen dieses Panels "
 "animiert. Andernfalls wird das Panel unverzüglich angezeigt/verborgen."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
@@ -2823,7 +2800,7 @@ msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird das Hintergrundbild gedreht angezeigt, "
+"Falls dieser Schlüssel WAHR ist, wird das Hintergrundbild gedreht angezeigt, "
 "falls das Panel vertikal ausgerichtet ist."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
@@ -2831,7 +2808,7 @@ msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird das Bild auf Panel-Höhe (falls "
+"Falls dieser Schlüssel WAHR ist, wird das Bild auf Panel-Höhe (falls "
 "horizontal) skaliert, wobei das Ansichtsverhältnis des Bildes beibehalten "
 "wird."
 
@@ -2840,7 +2817,7 @@ msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird das Bild den Abmessungen des Panels "
+"Falls dieser Schlüssel WAHR ist, wird das Bild den Abmessungen des Panels "
 "angepasst. Das Ansichtsverhältnis des Bildes bleibt dabei nicht erhalten."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
@@ -2849,7 +2826,7 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird das Panel automatisch in einer "
+"Falls dieser Schlüssel WAHR ist, wird das Panel automatisch in einer "
 "Bildschirmecke verborgen, sobald der Zeiger die Panel-Fläche verlässt. "
 "Erneutes Bewegen in diese Ecke sorgt dafür, dass das Panel wieder angezeigt "
 "wird."
@@ -2861,39 +2838,37 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, belegt das Panel die gesamte "
+"Falls dieser Schlüssel WAHR ist, belegt das Panel die gesamte "
 "Bildschirmbreite (Höhe, falls es ein vertikales Panel ist). In diesem Modus "
 "kann das Panel ausschließlich an Bildschirmkanten platziert werden. Falls "
-"dieser Schlüssel falsch ist, ist das Panel gerade so groß, dass die Applets, "
+"dieser Schlüssel FALSCH ist, ist das Panel gerade so groß, dass die Applets, "
 "Starter und Knöpfe darauf passen."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
-#, fuzzy
 msgid ""
 "If true, the x and x_right keys are ignored and the panel is placed at the "
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird der Schlüssel »x« ignoriert und das "
-"Panel im Zentrum der X-Achse auf dem Bildschirm platziert. Falls die Größe "
-"des Panels verändert wird, verharrt es auf dieser Position - das Panel "
-"wächst also auf beiden Seiten. Falls dieser Schlüssel falsch ist, gibt der "
-"Schlüssel »x« den Anzeigeort des Panels an."
+"Falls dieser Schlüssel WAHR ist, werden die Schlüssel »x« und »x_right« "
+"ignoriert und das Panel im Zentrum der X-Achse auf dem Bildschirm platziert. "
+"Falls die Größe des Panels verändert wird, verharrt es auf dieser Position - "
+"das Panel wächst also auf beiden Seiten. Falls dieser Schlüssel FALSCH ist, "
+"geben die Schlüssel »x« und »x_right« den Anzeigeort des Panels an."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
-#, fuzzy
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
 msgstr ""
-"Falls dieser Schlüssel wahr ist, wird der Schlüssel »y« ignoriert und das "
-"Panel im Zentrum der Y-Achse auf dem Bildschirm platziert. Falls die Größe "
-"des Panels verändert wird, verharrt es auf dieser Position - das Panel "
-"wächst also auf beiden Seiten. Falls dieser Schlüssel falsch ist, gibt der "
-"Schlüssel »y« den Anzeigeort des Panels an."
+"Falls dieser Schlüssel WAHR ist, werden die Schlüssel »y« und »y_bottom« "
+"ignoriert und das Panel im Zentrum der Y-Achse auf dem Bildschirm platziert. "
+"Falls die Größe des Panels verändert wird, verharrt es auf dieser Position - "
+"das Panel wächst also auf beiden Seiten. Falls dieser Schlüssel FALSCH ist, "
+"geben dieSchlüssel »y« und »y_bottom« den Anzeigeort des Panels an."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -2950,7 +2925,7 @@ msgstr ""
 "Gibt die Anzahl der Millisekunden an, die sich der Zeiger über der Panel-"
 "Fläche befinden muss, bevor das Panel automatisch wieder angezeigt wird. "
 "Dieser Schlüssel kommt ausschließlich zum Tragen, falls der Schlüssel "
-"»auto_hide« wahr ist."
+"»auto_hide« WAHR ist."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
 msgid ""
@@ -2961,7 +2936,7 @@ msgstr ""
 "Gibt die Anzahl der Millisekunden an, die sich der Zeiger außerhalb der "
 "Panel-Fläche befinden muss, bevor das Panel automatisch verborgen wird. "
 "Dieser Schlüssel kommt ausschließlich zum Tragen, falls der Schlüssel "
-"»auto_hide« wahr ist."
+"»auto_hide« WAHR ist."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
@@ -2970,7 +2945,7 @@ msgid ""
 msgstr ""
 "Gibt die Anzahl der sichtbaren Pixel an, wenn das Panel automatisch in einer "
 "Ecke verbogen wurde. Dieser Schlüssel kommt ausschließlich zum Tragen, wenn "
-"der Schlüssel »auto_hide« wahr ist."
+"der Schlüssel »auto_hide« WAHR ist."
 
 # CHECK - was heißt das format im 1. Satz?
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
@@ -3000,7 +2975,6 @@ msgstr ""
 "breite) limitiert."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
-#, fuzzy
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -3009,10 +2983,13 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
-"Die Position des Panels auf der X-Achse. Dieser Schlüssel kommt "
-"ausschließlich im nichtausgedehnten Modus zum Tragen. Im ausgedehnten Modus "
-"wird dieser Schlüssel ignoriert und das Panel an der vom Schlüssel "
-"»orientation« angegebenen Bildschirmkante platziert."
+"Die Position des Panels auf der X-Achse, beginnend rechts vom Bildschirm. "
+"Falls dieser Wert -1 ist, wird er ignoriert und der Wert des Schlüssels »x« "
+"verwendet. Falls dieser Wert größer als 0 ist, wird der Wert des Schlüssels "
+"»x« ignoriert. Dieser Schlüssel kommt ausschließlich im nichtausgedehnten "
+"Modus zum Tragen. Im ausgedehnten Modus wird dieser Schlüssel ignoriert und "
+"das Panel an der vom Schlüssel »orientation« angegebenen Bildschirmkante "
+"platziert."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -3026,7 +3003,6 @@ msgstr ""
 "»orientation« angegebenen Bildschirmkante platziert."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
-#, fuzzy
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -3035,10 +3011,13 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
-"Die Position des Panels auf der Y-Achse. Dieser Schlüssel kommt "
-"ausschließlich im nichtausgedehnten Modus zum Tragen. Im ausgedehnten Modus "
-"wird dieser Schlüssel ignoriert und das Panel an der vom Schlüssel "
-"»orientation« angegebenen Bildschirmkante platziert."
+"Die Position des Panels auf der Y-Achse, beginnend unten vom Bildschirm. "
+"Falls dieser Wert -1 ist, wird er ignoriert und der Wert des Schlüssels »y« "
+"verwendet. Falls dieser Wert größer als 0 ist, wird der Wert des Schlüssels "
+"»y« ignoriert. Dieser Schlüssel kommt ausschließlich im nichtausgedehnten "
+"Modus zum Tragen. Im ausgedehnten Modus wird dieser Schlüssel ignoriert und "
+"das Panel an der vom Schlüssel »orientation« angegebenen Bildschirmkante "
+"platziert."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -3081,7 +3060,7 @@ msgstr ""
 "Die Geschwindigkeit, in der Animationen wiedergegeben werden sollen. "
 "Zulässige Werte: »slow« (langsam), »medium« (mittel) sowie »fast« (schnell). "
 "Dieser Schlüssel kommt ausschließlich zum Tragen, falls der Schlüssel "
-"»enable_animations« wahr ist."
+"»enable_animations« WAHR ist."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
@@ -3152,45 +3131,41 @@ msgid "file"
 msgstr "Datei"
 
 #: ../gnome-panel/panel-util.c:1370
-#, fuzzy
 msgid "Computer"
-msgstr "Rechner-Uhr"
+msgstr "Computer"
 
 #: ../gnome-panel/panel-util.c:1372
-#, fuzzy
 msgid "Network"
-msgstr "Netzwerkorte"
+msgstr "Netzwerk"
 
 #: ../gnome-panel/panel-util.c:1374
 msgid "Fonts"
-msgstr ""
+msgstr "Schriften"
 
 #: ../gnome-panel/panel-util.c:1376
 msgid "Themes"
-msgstr ""
+msgstr "Themen"
 
 #: ../gnome-panel/panel-util.c:1378
 msgid "CD/DVD Creator"
-msgstr ""
+msgstr "CD-/DVD-Ersteller"
 
 #: ../gnome-panel/panel-util.c:1380
-#, fuzzy
 msgid "Windows Network"
-msgstr "Fensterwähler"
+msgstr "Windows-Netzwerk"
 
 #. translators: this is the title of the "dns-sd:///" location
 #: ../gnome-panel/panel-util.c:1383
 msgid "Services in"
-msgstr ""
+msgstr "Dienste"
 
 #: ../gnome-panel/panel-util.c:1457
 msgid "Search"
-msgstr ""
+msgstr "Suchen"
 
 #: ../gnome-panel/panel-util.c:1460
-#, fuzzy
 msgid "Trash"
-msgstr "Aufgaben"
+msgstr "Müll"
 
 # CHECK "%1$s auf %2$s"?
 #. Translators: the first string is a path and the second
