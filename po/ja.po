@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-09 18:16+0900\n"
-"PO-Revision-Date: 2007-07-09 17:22+0900\n"
+"POT-Creation-Date: 2007-08-18 09:38+0900\n"
+"PO-Revision-Date: 2007-08-13 21:59+0900\n"
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -512,30 +512,6 @@ msgstr ""
 #: ../applets/clock/timezone.glade.h:5
 msgid "Edit Timezones"
 msgstr "タイムゾーンの編集"
-
-#: ../applets/clock/timezone.glade.h:6
-msgid "gtk-add"
-msgstr "gtk-add"
-
-#: ../applets/clock/timezone.glade.h:7
-msgid "gtk-close"
-msgstr "gtk-close"
-
-#: ../applets/clock/timezone.glade.h:8
-msgid "gtk-go-down"
-msgstr "gtk-go-down"
-
-#: ../applets/clock/timezone.glade.h:9
-msgid "gtk-go-up"
-msgstr "gtk-go-up"
-
-#: ../applets/clock/timezone.glade.h:10
-msgid "gtk-help"
-msgstr "gtk-help"
-
-#: ../applets/clock/timezone.glade.h:11
-msgid "gtk-remove"
-msgstr "gtk-remove"
 
 #. Translators: the first %s is a place and the
 #. * second is a time. Result looks like this:
@@ -1259,6 +1235,7 @@ msgid "Could not use dropped item"
 msgstr "ドロップしたアイテムを利用できませんでした"
 
 #: ../gnome-panel/launcher.c:471
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "パネル・ランチャのデスクトップ・ファイルに URI がありません\n"
 
@@ -1490,6 +1467,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\" へ追加するアイテムの検索(_I):"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "引き出しへ追加"
 
@@ -1498,6 +1476,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "引き出しへ追加するアイテムの検索(_I):"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "パネルへ追加"
 
@@ -2082,7 +2061,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-menu-items.c:1074
 msgid "Could not launch menu item"
-msgstr "メニューのアイテムを起動できませんでした"
+msgstr "アイテムを起動できませんでした"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2269,8 +2248,9 @@ msgstr "メニューの内容にカスタム・パスを使用する"
 msgid "Error reading GConf string value '%s': %s"
 msgstr "GConf の string 値 '%s' の読み込みでエラー: %s"
 
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
 #: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
-#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1733
+#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "GConf の int 値 '%s' の読み込みでエラー: %s"
@@ -2430,6 +2410,7 @@ msgid "pixels"
 msgstr "ピクセル"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "適切なアプリケーションが見つかりませんでした"
 
@@ -3243,3 +3224,21 @@ msgstr "アプレット(_A):"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "設定フォルダ(_P):"
+
+#~ msgid "gtk-add"
+#~ msgstr "gtk-add"
+
+#~ msgid "gtk-close"
+#~ msgstr "gtk-close"
+
+#~ msgid "gtk-go-down"
+#~ msgstr "gtk-go-down"
+
+#~ msgid "gtk-go-up"
+#~ msgstr "gtk-go-up"
+
+#~ msgid "gtk-help"
+#~ msgstr "gtk-help"
+
+#~ msgid "gtk-remove"
+#~ msgstr "gtk-remove"
