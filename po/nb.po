@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.15.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-01 15:51+0200\n"
-"PO-Revision-Date: 2007-08-01 15:52+0200\n"
+"POT-Creation-Date: 2007-08-20 15:23+0200\n"
+"PO-Revision-Date: 2007-08-20 15:26+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -288,7 +288,10 @@ msgstr "24-hour"
 msgid ""
 "A list of timezone IDs. Each ID identifies an individual timezone. The "
 "settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
-msgstr "En liste med tidssone-IDer. Hver ID identifiserer en individuell tidssone. Innstillingene for hvert av disse panelene lagres i nøklene $(id)_name og $(id)_zone."
+msgstr ""
+"En liste med tidssone-IDer. Hver ID identifiserer en individuell tidssone. "
+"Innstillingene for hvert av disse panelene lagres i nøklene $(id)_name og "
+"$(id)_zone."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -323,9 +326,8 @@ msgid "If true, display seconds in time."
 msgstr "Vis sekunder i tid hvis satt til «true»."
 
 #: ../applets/clock/clock.schemas.in.h:21
-#, fuzzy
 msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr "Vis dato i klokken, i tillegg til tid hvis satt til «true»."
+msgstr "Vis tidssone i klokken, i tillegg til tid hvis satt til «true»."
 
 #: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display time in Universal Coordinated Time zone."
@@ -422,11 +424,10 @@ msgstr ""
 "«custom_key»."
 
 #: ../applets/clock/clock.schemas.in.h:38
-#, fuzzy
 msgid ""
 "This key specifies the name of the timezone as can be used in the TZ "
 "environment variable."
-msgstr "Denne nøkkelen oppgir antall bilder som vises i fiskens animasjon."
+msgstr "Denne nøkkelen oppgir navnet på tidssonen som kan finnes i miljøvariabelen TZ."
 
 #: ../applets/clock/clock.schemas.in.h:39
 msgid "This key specifies the program to run in order to configure the time."
@@ -434,10 +435,8 @@ msgstr ""
 "Denne nøkkelen oppgir hvilket program som skal kjøres for å sette tiden."
 
 #: ../applets/clock/clock.schemas.in.h:40
-#, fuzzy
 msgid "This key specifies the user-visible name of the timezone."
-msgstr ""
-"Denne nøkkelen oppgir hvilket program som skal kjøres for å sette tiden."
+msgstr "Denne nøkkelen oppgir navn på tidssone slik det presenteres brukeren."
 
 #: ../applets/clock/clock.schemas.in.h:41
 msgid "Time configuration tool"
@@ -461,7 +460,7 @@ msgstr "Bruk UTC"
 
 #: ../applets/clock/clock.schemas.in.h:46
 msgid "User-visible name of the timezone"
-msgstr ""
+msgstr "Bruker-synlig navn på tidssonen"
 
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
@@ -981,13 +980,10 @@ msgid "Show windows from all workspaces"
 msgstr "Vis vinduer fra alle arbeidsområder"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
-#, fuzzy
 msgid ""
 "The use of this key was deprecated in GNOME 2.20. The schema is retained for "
 "compatibility with older versions."
-msgstr ""
-"Bruk av denne nøkkelen gikk ut i GNOME 2.6 til fordel for «format»-nøkkelen. "
-"Denne bevares for kompatibilitet med eldre versjoner."
+msgstr "Bruk av denne nøkkelen gikk ut i GNOME 2.20. Denne bevares for kompatibilitet med eldre versjoner."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "When to group windows"
@@ -1216,6 +1212,7 @@ msgid "Could not use dropped item"
 msgstr "Kunne ikke bruke sluppet oppføring"
 
 #: ../gnome-panel/launcher.c:471
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Ingen URI oppgitt for oppstarters .desktop-fil\n"
 
@@ -1448,6 +1445,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "Velg en _oppføring som skal legges til på «%s»:"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "Legg til i skuff"
 
@@ -1456,6 +1454,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "Velg en _oppføring som skal legges til i skuffen:"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "Legg til på panelet"
 
@@ -2387,6 +2386,7 @@ msgid "pixels"
 msgstr "piksler"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "Kunne ikke finne et passende program."
 
@@ -2982,7 +2982,7 @@ msgstr "Panelets x-koordinat"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "X co-ordinate of panel, starting from the right of the screen"
-msgstr ""
+msgstr "X-koordinat for panelet. Starter fra høyre side av skjermen"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:51
 msgid "X screen where the panel is displayed"
@@ -2998,7 +2998,7 @@ msgstr "Panelets y-koordinat"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:54
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-msgstr ""
+msgstr "Y-koordinat for panelet. Starter fra bunnen av skjermen"
 
 #: ../gnome-panel/panel-util.c:714
 #, c-format
