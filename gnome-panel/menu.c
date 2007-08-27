@@ -1412,10 +1412,6 @@ create_submenu_entry (GtkWidget          *menu,
 			NULL,
 			gmenu_tree_directory_get_name (directory));
 
-	if (gmenu_tree_directory_get_comment (directory))
-		panel_util_set_tooltip_text (menuitem,
-					     gmenu_tree_directory_get_comment (directory));
-
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
 	gtk_widget_show (menuitem);
