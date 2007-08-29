@@ -22,7 +22,7 @@
 #define PANEL_ICON_REMOVABLE_MEDIA	"drive-removable-media"
 #define PANEL_ICON_RUN			"system-run"
 #define PANEL_ICON_SEPARATOR		"gnome-panel-separator"
-#define PANEL_ICON_SEARCHTOOL		"gnome-searchtool"
+#define PANEL_ICON_SEARCHTOOL		"system-search"
 #define PANEL_ICON_SHUTDOWN		"gnome-shutdown"
 #define PANEL_ICON_THEME		"preferences-desktop-theme"
 #define PANEL_ICON_TRASH		"user-trash"
