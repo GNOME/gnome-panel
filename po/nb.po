@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.15.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-20 15:23+0200\n"
-"PO-Revision-Date: 2007-08-20 15:26+0200\n"
+"POT-Creation-Date: 2007-09-05 13:54+0200\n"
+"PO-Revision-Date: 2007-09-05 13:58+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -427,7 +427,9 @@ msgstr ""
 msgid ""
 "This key specifies the name of the timezone as can be used in the TZ "
 "environment variable."
-msgstr "Denne nøkkelen oppgir navnet på tidssonen som kan finnes i miljøvariabelen TZ."
+msgstr ""
+"Denne nøkkelen oppgir navnet på tidssonen som kan finnes i miljøvariabelen "
+"TZ."
 
 #: ../applets/clock/clock.schemas.in.h:39
 msgid "This key specifies the program to run in order to configure the time."
@@ -983,7 +985,9 @@ msgstr "Vis vinduer fra alle arbeidsområder"
 msgid ""
 "The use of this key was deprecated in GNOME 2.20. The schema is retained for "
 "compatibility with older versions."
-msgstr "Bruk av denne nøkkelen gikk ut i GNOME 2.20. Denne bevares for kompatibilitet med eldre versjoner."
+msgstr ""
+"Bruk av denne nøkkelen gikk ut i GNOME 2.20. Denne bevares for "
+"kompatibilitet med eldre versjoner."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "When to group windows"
@@ -1089,14 +1093,11 @@ msgstr ""
 "arbeidsområder, ellers vil kun aktivt arbeidsområde vises."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-#, fuzzy
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Metacity."
-msgstr ""
-"Hvis denne er satt til «true» vil arbeidsområdene i arbeidsområdebytter vise "
-"navn på arbeidsområdene, ellers vil vinduene vises."
+msgstr "Hvis denne er satt til «true» vil arbeidsområdebytter vise navn på arbeidsområdene, ellers vil vinduene på arbeidsområdet vises. Denne innstillingen virker kun med Metacity vindushåndtereren."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -2741,30 +2742,20 @@ msgstr ""
 "panelprogrammer, oppstartere og knapper på panelet."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
-#, fuzzy
 msgid ""
 "If true, the x and x_right keys are ignored and the panel is placed at the "
 "center of the x-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
-msgstr ""
-"Hvis «true» vil x-nøkkelen ignoreres og panelet plasseres sentrert på x-"
-"aksen av skjermen. Hvis panelets størrelse endres vil det forbli i denne "
-"posisjonen - dvs. panelet vil vokse på begge sider. Hvis «false» vil x-"
-"nøkkelen spesifisere panelets lokasjon."
+msgstr "Hvis «true» vil x og x_right-nøkkelen ignoreres og panelet plasseres sentrert på x-aksen av skjermen. Hvis panelets størrelse endres vil det forbli i denne posisjonen - dvs. panelet vil vokse på begge sider. Hvis «false» vil x og x_right-nøkkelen spesifisere panelets lokasjon."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
-#, fuzzy
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
-msgstr ""
-"Hvis «true» vil y-nøkkelen ignoreres og panelet plasseres sentrert på y-"
-"aksen av skjermen. Hvis panelets størrelse endres vil det forbli i denne "
-"posisjonen - dvs. panelet vil vokse på begge sider. Hvis «false» vil y-"
-"nøkkelen spesifisere panelets lokasjon."
+msgstr "Hvis «true» vil y og y_bottom-nøkkelen ignoreres og panelet plasseres sentrert på y-aksen av skjermen. Hvis panelets størrelse endres vil det forbli i denne posisjonen - dvs. panelet vil vokse på begge sider. Hvis «false» vil y og y_bottom-nøkkelen spesifisere panelets lokasjon."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -2866,7 +2857,6 @@ msgstr ""
 "bredden)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
-#, fuzzy
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -2874,10 +2864,7 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr ""
-"Lokasjon for panelet langs x-aksen. Denne nøkkelen er kun relevant i ikke-"
-"utvidet modus. I utvidet modus ignoreres denne nøkkelen og panelet plasseres "
-"ved skjermkanten oppgitt av nøkkelen orientation."
+msgstr "Lokasjon for panelet langs x-aksen fra bunnen av skjermen Hvis den settes til -1 ignoreres verdien og x-nøkkelen brukes i stedet Hvis verdien er større enn 0 vil x-nøkkelen ignoreres. Denne nøkkelen er kun relevant i ikke-utvidet modus. I utvidet modus ignoreres denne nøkkelen og panelet plasseres ved skjermkanten oppgitt av nøkkelen orientation."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2890,7 +2877,6 @@ msgstr ""
 "ved skjermkanten oppgitt av nøkkelen orientation."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
-#, fuzzy
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -2898,10 +2884,7 @@ msgid ""
 "ignored. This key is only relevant in un-expanded mode. In expanded mode "
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
-msgstr ""
-"Lokasjon for panelet langs y-aksen. Denne nøkkelen er kun relevant i ikke-"
-"utvidet modus. I utvidet modus ignoreres denne nøkkelen og panelet plasseres "
-"ved skjermkanten oppgitt av nøkkelen orientation."
+msgstr "Lokasjon for panelet langs y-aksen fra bunnen av skjermen Hvis den settes til -1 ignoreres verdien og y-nøkkelen brukes i stedet Hvis verdien er større enn 0 vil y-nøkkelen ignoreres. Denne nøkkelen er kun relevant i ikke-utvidet modus. I utvidet modus ignoreres denne nøkkelen og panelet plasseres ved skjermkanten oppgitt av nøkkelen orientation."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
