@@ -2007,6 +2007,7 @@ set_gmt_time_cb (GtkWidget *w,
 				     NULL);
 }
 
+#if 0
 static void
 set_show_zones_cb (GtkWidget *w,
 		   ClockData *clock)
@@ -2016,6 +2017,7 @@ set_show_zones_cb (GtkWidget *w,
 				     GTK_TOGGLE_BUTTON (w)->active,
 				     NULL);
 }
+#endif
 
 static void
 set_custom_format_cb (GtkEntry  *entry,
@@ -2152,6 +2154,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 			  cd);	
 	gtk_widget_show (cd->gmt_time_check);
 
+#if 0
 	cd->show_tz_check = gtk_check_button_new_with_mnemonic (_("Show multiple _timezones"));
 	gtk_box_pack_start (GTK_BOX (vbox), cd->show_tz_check, FALSE, FALSE, 0);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->show_tz_check),
@@ -2160,6 +2163,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 			  G_CALLBACK (set_show_zones_cb),
 			  cd);
 	gtk_widget_show (cd->show_tz_check);
+#endif
 
 	g_signal_connect (cd->props, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
