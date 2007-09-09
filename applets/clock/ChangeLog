@@ -1,3 +1,15 @@
+2007-09-09  Vincent Untz  <vuntz@gnome.org>
+
+	Fix various small insanities :-)
+	Fix crash reported as bug #457359.
+
+	* tz.c:
+	(tz_free_db): small change in for loop
+	(tz_build_db): never return NULL, don't add a false NULL pointer at the
+	end
+	(tz_get_system_timezone): make sure that various variables are not
+	NULL when they shouldn't
+
 ==================== 2.19.92 ====================
 
 ==================== 2.19.6 ====================

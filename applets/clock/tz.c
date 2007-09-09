@@ -144,7 +144,7 @@ tz_free_db (void)
   if (!global_tz_db)
     return;
 
-  for (i = 0; g_ptr_array_index (global_tz_db->locations, i); i++)
+  for (i = 0; i < global_tz_db->locations->len; i++)
     {
       TzLocation *loc = g_ptr_array_index (global_tz_db->locations, i);
       tz_location_free (loc);
@@ -164,15 +164,15 @@ tz_build_db (void)
 
   g_assert (global_tz_db == NULL);
 
+  global_tz_db = g_new0 (TzDB, 1);
+  global_tz_db->locations = g_ptr_array_new ();
+
   tzfile = g_fopen (TZ_DATA_FILE, "r");
   if (!tzfile)
     {
       g_warning ("Cannot open \"%s\".\n", TZ_DATA_FILE);
-      return NULL;
+      return global_tz_db;
     }
-
-  global_tz_db = g_new0 (TzDB, 1);
-  global_tz_db->locations = g_ptr_array_new ();
 
   while (fgets (buf, sizeof (buf), tzfile))
     {
@@ -248,9 +248,6 @@ tz_build_db (void)
 
   /* now sort by country */
   g_ptr_array_sort (global_tz_db->locations, tz_location_cmp_zone);
-
-  /* added a NULL pointer at the end of the array to prevent errors. Carlos */
-  g_ptr_array_add (global_tz_db->locations, NULL);
 
   return global_tz_db;
 }
@@ -453,7 +450,7 @@ tz_get_system_timezone (void)
         tz = g_strdup (file + strlen (ZONE_DIR"/"));
       g_free (file);
 
-      if (tz[0] != '\0')
+      if (tz && tz[0] != '\0')
         return tz;
 
       g_free (tz);
@@ -470,6 +467,8 @@ tz_get_system_timezone (void)
       char *buf_content;
 
       locs = tz_get_locations ();
+
+      tz_loc = NULL;
 
       /* try to locate by inode */
       for (i = 0; i < locs->len; i++)
@@ -490,7 +489,10 @@ tz_get_system_timezone (void)
         }
 
       if (i < locs->len)
-        return g_strdup (tz_loc->zone);
+        {
+          g_assert (tz_loc != NULL);
+          return g_strdup (tz_loc->zone);
+        }
 
       /* try to locate by content */
       localtime_content = g_slice_alloc (stat_localtime.st_size);
@@ -531,7 +533,10 @@ tz_get_system_timezone (void)
       g_slice_free1 (stat_localtime.st_size, buf_content);
 
       if (i < locs->len)
-        return g_strdup (tz_loc->zone);
+        {
+          g_assert (tz_loc != NULL);
+          return g_strdup (tz_loc->zone);
+        }
     }
 
   return g_strdup ("UTC");
