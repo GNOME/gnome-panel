@@ -2731,7 +2731,7 @@ panel_toplevel_attach_to_widget (PanelToplevel *toplevel,
 	gtk_window_set_screen (GTK_WINDOW (toplevel),
 			       gtk_widget_get_screen (GTK_WIDGET (attach_toplevel)));
 	panel_toplevel_set_monitor (toplevel,
-			            panel_toplevel_set_monitor (attach_toplevel));
+			            panel_toplevel_get_monitor (attach_toplevel));
 	if (toplevel->priv->state == PANEL_STATE_NORMAL)
 		panel_toplevel_push_autohide_disabler (toplevel->priv->attach_toplevel);
 
