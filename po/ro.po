@@ -10,14 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-11 14:49+0100\n"
-"PO-Revision-Date: 2007-09-12 23:00+0300\n"
+"POT-Creation-Date: 2007-09-13 08:57+0100\n"
+"PO-Revision-Date: 2007-09-13 11:07+0300\n"
 "Last-Translator: Alexandru Szasz <alexxed@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -62,7 +62,7 @@ msgid "_Preferences"
 msgstr "_Preferinţe"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2230
+#: ../applets/clock/clock.c:2234
 msgid "Clock"
 msgstr "Ceas"
 
@@ -215,56 +215,56 @@ msgstr ""
 msgid "Custom format"
 msgstr "Format personalizat"
 
-#: ../applets/clock/clock.c:2062
+#: ../applets/clock/clock.c:2064
 msgid "Clock Preferences"
 msgstr "Preferinţe ceas"
 
-#: ../applets/clock/clock.c:2087
+#: ../applets/clock/clock.c:2089
 msgid "Clock _type:"
 msgstr "_Tip ceas"
 
-#: ../applets/clock/clock.c:2098
+#: ../applets/clock/clock.c:2100
 msgid "12 hour"
 msgstr "12 ore"
 
-#: ../applets/clock/clock.c:2099
+#: ../applets/clock/clock.c:2101
 msgid "24 hour"
 msgstr "24 ore"
 
-#: ../applets/clock/clock.c:2100
+#: ../applets/clock/clock.c:2102
 msgid "UNIX time"
 msgstr "Timp UNIX"
 
-#: ../applets/clock/clock.c:2101
+#: ../applets/clock/clock.c:2103
 msgid "Internet time"
 msgstr "Timp Internet"
 
-#: ../applets/clock/clock.c:2109
+#: ../applets/clock/clock.c:2111
 msgid "Custom _format:"
 msgstr "_Format personalizat:"
 
-#: ../applets/clock/clock.c:2128
+#: ../applets/clock/clock.c:2130
 msgid "Show _seconds"
 msgstr "Arată _secunde"
 
-#: ../applets/clock/clock.c:2137
+#: ../applets/clock/clock.c:2139
 msgid "Show _date"
 msgstr "Arată _data"
 
-#: ../applets/clock/clock.c:2146
+#: ../applets/clock/clock.c:2148
 msgid "Use _UTC"
 msgstr "Foloseşte _UTC"
 
-#: ../applets/clock/clock.c:2155
+#: ../applets/clock/clock.c:2158
 msgid "Show multiple _timezones"
 msgstr "Ara_tă mai multe fusuri orare"
 
-#: ../applets/clock/clock.c:2233
+#: ../applets/clock/clock.c:2237
 msgid "The Clock displays the current time and date"
 msgstr "Ceasul arată timpul şi data curentă"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2236 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:2240 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -429,13 +429,13 @@ msgid ""
 "the custom_format key."
 msgstr ""
 "Această cheie specifică formatul orei utilizat în panou. Valorile "
-"posibile sunt „12-hour”, „24-hour”, „internet”, „unix” sau "
-"„custom”. Pentru valoarea „internet”, se va afişa în panou timpul "
+"posibile sunt „12 ore”, „24 ore”, „Timp internet”, „Timp unix” sau "
+"„personalizat”. Pentru valoarea „Timp internet”, se va afişa în panou timpul "
 "Internet. În acest sistem, ziua este împărţită în 1000 de "
 "„.beats”. Nu există fusuri orare în acest sistem, timpul este acelaşi "
-"peste tot în lume. Pentru valoarea „unix”, ceasul va afişa timpul în "
+"peste tot în lume. Pentru valoarea „Timp unix”, ceasul va afişa timpul în "
 "secunde de la momentul Epoch, adică 01.01.1970. Pentru valoarea "
-"„custom”, ceasul va arăta timpul în formatul specificat de cheia "
+"„personalizat”, ceasul va arăta timpul în formatul specificat de cheia "
 "„custom_format”."
 
 #: ../applets/clock/clock.schemas.in.h:38
@@ -1514,7 +1514,7 @@ msgid ""
 "panel."
 msgstr ""
 "Dacă reîncărcaţi un obiect din panou, acesta va fi automat "
-"adăugatînapoi în panou."
+"adăugat înapoi în panou."
 
 #: ../gnome-panel/panel-applet-frame.c:990
 msgid "_Don't Reload"
@@ -1919,26 +1919,30 @@ msgstr "La activare, se arată sugestii pentru obiectele din panouri."
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
-"You will be automatically logged out in %d second.You are currently logged "
-"in as \"%s\".\n"
+"You will be automatically logged out in %d second."
+msgid_plural ""
+"You are currently logged in as \"%s\".\n"
 "You will be automatically logged out in %d seconds."
-msgstr ""
+msgstr[0] ""
 "Sunteţi autentificat ca „%s”.\n"
-"Veţi fi dezautentificat automat în %d secundă.Sunteţi autentificat ca "
-"„%s”.\n"
+"Veţi fi dezautentificat automat în %d secundă."
+msgstr[1] ""
+"Sunteţi autentificat ca „%s”.\n"
 "Veţi fi dezautentificat automat în %d secunde."
 
 #: ../gnome-panel/panel-logout.c:249
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
-"This system will be automatically shut down in %d second.You are currently "
-"logged in as \"%s\".\n"
+"This system will be automatically shut down in %d second."
+msgid_plural ""
+"You are currently logged in as \"%s\".\n"
 "This system will be automatically shut down in %d seconds."
-msgstr ""
+msgstr[0] ""
 "Sunteţi autentificat ca „%s”.\n"
-"Sistemul va fi oprit automat în %d secundă.Sunteţi autentificat ca "
-"„%s”.\n"
+"Sistemul va fi oprit automat în %d secundă."
+msgstr[1] ""
+"Sunteţi autentificat ca „%s”.\n"
 "Sistemul va fi oprit automat în %d secunde."
 
 #: ../gnome-panel/panel-logout.c:330
@@ -2268,8 +2272,9 @@ msgstr "Utilizează o cale personalizată pentru conţinutul meniului"
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Eroare la citirea valorii şirului GConf „%s”: %s"
 
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
 #: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
-#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1733
+#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Eroare la citirea valorii întregi GConf „%s”: %s"
