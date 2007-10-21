@@ -1,23 +1,24 @@
-# Irish translations for gnome-panel
+# Irish translations for gnome-panel package.
 # Copyright (C) 2000, 2004, 2007 Free Software Foundation, Inc.
 # Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>, 2000.
 # Paul Duffy <dubhthach@frink.nuigalway.ie>, 2003.
 # David O'Callaghan <david.ocallaghan@cs.tcd.ie>, 2003.
 # Alastair McKinstry <mckinstry@computer.org>, 2004.
-# Sean Burke <leftmostcat@gmail.com>, 2007.
+# Seán de Búrca <leftmostcat@gmail.com>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-11 09:06+0100\n"
-"PO-Revision-Date: 2007-07-11 19:01-0700\n"
-"Last-Translator: Sean Burke <leftmostcat@gmail.com>\n"
+"POT-Creation-Date: 2007-10-21 13:21-0600\n"
+"PO-Revision-Date: 2007-10-21 13:21-0700\n"
+"Last-Translator: Seán de Búrca <leftmostcat@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=n==1 ? 0 : (n%10==1 || n%10==2) ? 1 : (n%10>=3 && n%10<= 6) ? 2 : ((n%10>=7 && n%10<=9) || n==10) ? 3 : 4;\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : (n%10==1 || n%10==2) ? 1 : (n%"
+"10>=3 && n%10<= 6) ? 2 : ((n%10>=7 && n%10<=9) || n==10) ? 3 : 4;\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -39,7 +40,7 @@ msgstr "Cóipeáil A_m"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About"
-msgstr "Eol_as"
+msgstr "_Maidir leis Seo"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:5
 #: ../applets/fish/GNOME_FishApplet.xml.h:2
@@ -48,10 +49,8 @@ msgstr "Eol_as"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:601
-#: ../gnome-panel/panel-action-button.c:709
-#: ../gnome-panel/panel-context-menu.c:280
-#: ../gnome-panel/panel-menu-bar.c:334
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:709
+#: ../gnome-panel/panel-context-menu.c:280 ../gnome-panel/panel-menu-bar.c:334
 #: ../gnome-panel/panel-menu-button.c:659
 msgid "_Help"
 msgstr "Cab_hair"
@@ -64,7 +63,7 @@ msgid "_Preferences"
 msgstr "_Sainroghanna"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2230
+#: ../applets/clock/clock.c:2234
 msgid "Clock"
 msgstr "Clog"
 
@@ -74,19 +73,17 @@ msgstr "Monarcha Fheidhmchláirín Cloig"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
-msgstr "Monarcha chun feidhmchláiríní cloig a chruthú"
+msgstr "Monarcha chun feidhmchláiríní cloig a chruthú."
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
 msgstr "Faigh an t-am agus an dáta anois"
 
-#: ../applets/clock/calendar-window.c:226
-#: ../applets/clock/clock.c:347
+#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.c:347
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/calendar-window.c:228
-#: ../applets/clock/clock.c:349
+#: ../applets/clock/calendar-window.c:228 ../applets/clock/clock.c:349
 #: ../applets/clock/clock.c:1256
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -126,8 +123,7 @@ msgstr "Féilire"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:349
-#: ../applets/clock/clock.c:1254
+#: ../applets/clock/clock.c:349 ../applets/clock/clock.c:1254
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -138,7 +134,7 @@ msgstr "%H:%M:%S"
 #.
 #: ../applets/clock/clock.c:369
 msgid "%a %b %e"
-msgstr "%a %b %e"
+msgstr "%a %e %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -165,11 +161,11 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip
 #: ../applets/clock/clock.c:527
 msgid "%A %B %d"
-msgstr "%A %B %d"
+msgstr "%A %d %B"
 
 #: ../applets/clock/clock.c:541
 msgid "Click to hide your appointments and tasks"
-msgstr "Cliceáil chun folú do chuid coinní agus tascanna"
+msgstr "Cliceáil chun do chuid coinní agus tascanna a fholú"
 
 #: ../applets/clock/clock.c:544
 msgid "Click to view your appointments and tasks"
@@ -177,15 +173,15 @@ msgstr "Cliceáil chun amharc ar do chuid coinní agus tascanna"
 
 #: ../applets/clock/clock.c:548
 msgid "Click to hide month calendar"
-msgstr "Cliceáil chun folú féilire míosa"
+msgstr "Cliceáil chun féilire an mhíosa a fholú"
 
 #: ../applets/clock/clock.c:551
 msgid "Click to view month calendar"
-msgstr "Cliceáil chun amharc ar fhéilire míosa"
+msgstr "Cliceáil chun amharc ar fhéilire an mhíosa"
 
 #: ../applets/clock/clock.c:1095
 msgid "Click to view time in other timezones"
-msgstr "Cliceáil chun amharc ar am i gcriosanna ama eile"
+msgstr "Cliceáil chun amharc ar an am i gcriosanna ama eile"
 
 #: ../applets/clock/clock.c:1102
 msgid "Computer Clock"
@@ -206,75 +202,82 @@ msgstr "%A, %B %d %Y"
 #: ../applets/clock/clock.c:1368
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr "Theip ar thosú uirlis cumraíochta ama: %s"
+msgstr "Theip ar thosú uirlis chumraíocht ama: %s"
 
 #: ../applets/clock/clock.c:1406
-msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
-msgstr "Theip ar aimsiú clár chun an dáta agus am a chumrú. B'fhéidir nach bhfuil clár ar bith suiteáilte?"
+msgid ""
+"Failed to locate a program for configuring the date and time. Perhaps none "
+"is installed?"
+msgstr ""
+"Theip ar aimsiú clár chun an dáta agus am a chumrú. B'fhéidir nach bhfuil "
+"clár mar sin suiteáilte?"
 
 #: ../applets/clock/clock.c:1917
 msgid "Custom format"
 msgstr "Formáid saincheaptha"
 
-#: ../applets/clock/clock.c:2062
+#: ../applets/clock/clock.c:2064
 msgid "Clock Preferences"
 msgstr "Sainroghanna an Chloig"
 
-#: ../applets/clock/clock.c:2087
+#: ../applets/clock/clock.c:2089
 msgid "Clock _type:"
-msgstr "_Saghas an Chloig:"
+msgstr "_Saghas an chloig:"
 
-#: ../applets/clock/clock.c:2098
+#: ../applets/clock/clock.c:2100
 msgid "12 hour"
 msgstr "12 uair"
 
-#: ../applets/clock/clock.c:2099
+#: ../applets/clock/clock.c:2101
 msgid "24 hour"
 msgstr "24 uair"
 
-#: ../applets/clock/clock.c:2100
+#: ../applets/clock/clock.c:2102
 msgid "UNIX time"
 msgstr "Am UNIX"
 
-#: ../applets/clock/clock.c:2101
+#: ../applets/clock/clock.c:2103
 msgid "Internet time"
 msgstr "Am Idirlín"
 
-#: ../applets/clock/clock.c:2109
+#: ../applets/clock/clock.c:2111
 msgid "Custom _format:"
 msgstr "_Formáid saincheaptha:"
 
-#: ../applets/clock/clock.c:2128
+#: ../applets/clock/clock.c:2130
 msgid "Show _seconds"
 msgstr "Taispeáin _soicindí"
 
-#: ../applets/clock/clock.c:2137
+#: ../applets/clock/clock.c:2139
 msgid "Show _date"
-msgstr "Taispeáin an _dáta"
+msgstr "Taispeáin _dáta"
 
-#: ../applets/clock/clock.c:2146
+#: ../applets/clock/clock.c:2148
 msgid "Use _UTC"
 msgstr "Bain úsáid as A_UL"
 
-#: ../applets/clock/clock.c:2155
+#: ../applets/clock/clock.c:2158
 msgid "Show multiple _timezones"
-msgstr "_Taispeáin il-criosanna ama"
+msgstr "_Taispeáin criosanna ama iomadúla"
 
-#: ../applets/clock/clock.c:2233
+#: ../applets/clock/clock.c:2237
 msgid "The Clock displays the current time and date"
-msgstr "Taispeáin an clog an t-am agus an dáta anois"
+msgstr "Taispeánann an clog an t-am agus dáta rití"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2236
-#: ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:2240 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
-#: ../applets/wncklet/showdesktop.c:533
-#: ../applets/wncklet/window-list.c:605
+#: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:617
 #: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
-msgstr "Seán Ó Ceallaigh, Paul Duffy, David O'Callaghan, Sean Burke"
+msgstr ""
+"Seán Ó Ceallaigh (s_oceallaigh@yahoo.com)\n"
+"Paul Duffy (dubhthach@frink.nuigalway.ie)\n"
+"David O'Callaghan (david.ocallaghan@cs.tcd.ie)\n"
+"Alastair McKinstry (mckinstry@computer.org)\n"
+"Seán de Búrca (leftmostcat@gmail.com)"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -291,12 +294,17 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
-msgid "A list of timezone IDs. Each ID identifies an individual timezone. The settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
+msgid ""
+"A list of timezone IDs. Each ID identifies an individual timezone. The "
+"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
 msgstr ""
+"Liosta CA criosanna ama. Sainaithníonn gach CA crios aonair ama. Tá na "
+"socruithe na criosanna ama seo stóráilte sna eochracha $(id)_name agus $(id)"
+"_zone."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
-msgstr "Formáid an chloig saincheaptha"
+msgstr "Formáid saincheaptha an chloig"
 
 #: ../applets/clock/clock.schemas.in.h:14
 msgid "Expand list of appointments"
@@ -312,7 +320,7 @@ msgstr "Leathnaigh liosta tascanna"
 
 #: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of weather information"
-msgstr "Leathnaigh liosta eolais aimsire"
+msgstr "Leathnaigh liosta eolas aimsire"
 
 #: ../applets/clock/clock.schemas.in.h:18
 msgid "Hour format"
@@ -320,47 +328,51 @@ msgstr "Formáid uaire"
 
 #: ../applets/clock/clock.schemas.in.h:19
 msgid "If true, display date in the clock, in addition to time."
-msgstr "Má tá fíor, taispeáin an dáta sa chlog, mar aon leis an am."
+msgstr "Má tá fíor, taispeáin dáta sa chlog, mar aon leis an am."
 
 #: ../applets/clock/clock.schemas.in.h:20
 msgid "If true, display seconds in time."
-msgstr "Má tá fíor, taispeáin soicind san am."
+msgstr "Má tá fíor, taispeáin soicindí san am."
 
 #: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr "Má tá fíor, taispeáin an cnaipe creasa ama sa chlog, mar aon leis an t-am."
+msgstr ""
+"Má tá fíor, taispeáin an cnaipe chrios ama sa chlog, mar aon leis an am."
 
 #: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "Má tá fíor, taispeáin an t-am sa chrios Ama Uilíoch Lárnach."
+msgstr "Má tá fíor, taispeáin am sa chrios Ama Uilíoch Lárnach."
 
 #: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, expand the list of appointments in the calendar window."
-msgstr "Má tá fíor, leathnaigh an liosta coinní san fhuinneog féilire."
+msgstr "Má tá fíor, leathnaigh an liosta coinní san fhuinneog fhéilire."
 
 #: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "Má tá fíor, leathnaigh an liosta breithlaethanta san fhuinneog féilire."
+msgstr ""
+"Má tá fíor, leathnaigh an liosta breithlaethanta san fhuinneog fhéilire."
 
 #: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of tasks in the calendar window."
-msgstr "Má tá fíor, leathnaigh an liosta tascanna san fhuinneog féilire."
+msgstr "Má tá fíor, leathnaigh an liosta tascanna san fhuinneog fhéilire."
 
 #: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of weather information in the calendar window."
-msgstr "Má tá fíor, leathnaigh an liosta eolais aimsire san fhuinneog féilire."
+msgstr "Má tá fíor, leathnaigh an liosta eolas aimsire san fhuinneog fhéilire."
 
 #: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Má tá fíor, taispeáin an dáta i leid uirlise nuair a bhíonn an tsnáthaid thar an gclog."
+msgstr ""
+"Má tá fíor, taispeáin dáta i leid uirlise nuair a bhíonn an tsnáthaid thar "
+"an gclog."
 
 #: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show week numbers in the calendar."
-msgstr "Má tá fíor, taispeáin uimhreacha seachtaine san fhéilire."
+msgstr "Má tá fíor, taispeáin uimhreacha na seachtainí san fhéilire."
 
 #: ../applets/clock/clock.schemas.in.h:29
 msgid "Name of the timezone"
-msgstr "Ainm an crios ama"
+msgstr "Ainm an chrios ama"
 
 #: ../applets/clock/clock.schemas.in.h:30
 msgid "Show date in clock"
@@ -372,7 +384,7 @@ msgstr "Taispeáin dáta sa leid uirlise"
 
 #: ../applets/clock/clock.schemas.in.h:32
 msgid "Show the timezone button"
-msgstr "Taispeáin an cnaipe creasa ama"
+msgstr "Taispeáin an cnaipe chrios ama"
 
 #: ../applets/clock/clock.schemas.in.h:33
 msgid "Show time with seconds"
@@ -380,22 +392,38 @@ msgstr "Taispeáin am le soicindí"
 
 #: ../applets/clock/clock.schemas.in.h:34
 msgid "Show week numbers in calendar"
-msgstr "Taispeáin uimhreacha san fhéilire"
+msgstr "Taispeáin uimhreacha na seachtainí san fhéilire"
 
 #: ../applets/clock/clock.schemas.in.h:35
-msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
 msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:36
-msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information."
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
 msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:37
-msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display Internet time. The Internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
 msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:38
-msgid "This key specifies the name of the timezone as can be used in the TZ environment variable."
+msgid ""
+"This key specifies the name of the timezone as can be used in the TZ "
+"environment variable."
 msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:39
@@ -408,32 +436,30 @@ msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:41
 msgid "Time configuration tool"
-msgstr "Uirlis cumraíochta ama"
+msgstr "Uirlis chumraíocht ama"
 
 #: ../applets/clock/clock.schemas.in.h:42
 msgid "Timezone ID list"
-msgstr "Liosta CA creasa ama"
+msgstr "Liosta CA chrios ama"
 
 #: ../applets/clock/clock.schemas.in.h:43
 msgid "Use Internet time"
-msgstr "Bain úsáid as am Idirlín"
+msgstr "Úsáid am Idirlín"
 
 #: ../applets/clock/clock.schemas.in.h:44
 msgid "Use UNIX time"
-msgstr "Bain úsáid as am UNIX"
+msgstr "Úsáid am UNIX"
 
 #: ../applets/clock/clock.schemas.in.h:45
 msgid "Use UTC"
-msgstr "Bain úsáid as UTC"
+msgstr "Úsáid UTC"
 
 #: ../applets/clock/clock.schemas.in.h:46
 msgid "User-visible name of the timezone"
-msgstr ""
+msgstr "Ainm úsáideoir-infheicthe an chreas ama"
 
-#: ../applets/clock/clock-utils.c:72
-#: ../applets/fish/fish.c:160
-#: ../applets/notification_area/main.c:90
-#: ../applets/wncklet/wncklet.c:109
+#: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
+#: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Tharla earráid agus cabhair a thaispeáint: %s"
@@ -460,30 +486,6 @@ msgstr ""
 msgid "Edit Timezones"
 msgstr "Eagar Criosanna Ama"
 
-#: ../applets/clock/timezone.glade.h:6
-msgid "gtk-add"
-msgstr ""
-
-#: ../applets/clock/timezone.glade.h:7
-msgid "gtk-close"
-msgstr ""
-
-#: ../applets/clock/timezone.glade.h:8
-msgid "gtk-go-down"
-msgstr ""
-
-#: ../applets/clock/timezone.glade.h:9
-msgid "gtk-go-up"
-msgstr ""
-
-#: ../applets/clock/timezone.glade.h:10
-msgid "gtk-help"
-msgstr ""
-
-#: ../applets/clock/timezone.glade.h:11
-msgid "gtk-remove"
-msgstr ""
-
 #. Translators: the first %s is a place and the
 #. * second is a time. Result looks like this:
 #. * Europe/Paris - 15:45
@@ -493,9 +495,8 @@ msgid "%s - %s"
 msgstr "%s - %s"
 
 #: ../applets/clock/tz-sel-dialog.c:205
-#, fuzzy
 msgid "move the mouse on the map"
-msgstr "bog an luchóg ar an léarscáil"
+msgstr "bog an luch ar an léarscáil"
 
 #: ../applets/clock/tz-sel-dialog.c:207
 #, c-format
@@ -558,11 +559,11 @@ msgstr "Iasc"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "From Whence That Stupid Fish Came"
-msgstr "An Áit Ó Tháinig An t-Iasc Amaideach Seo"
+msgstr "An Áit ar Tháinig an t-Iasc Amaideach Sin as"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "Wanda Factory"
-msgstr "Monarcha na Wanda"
+msgstr "Monarcha Wanda"
 
 #: ../applets/fish/fish.c:249
 #, c-format
@@ -573,13 +574,11 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr ""
 
-#: ../applets/fish/fish.c:436
-#: ../gnome-panel/panel-properties-dialog.c:449
+#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:449
 msgid "Images"
 msgstr "Íomhánna"
 
-#: ../applets/fish/fish.c:550
-#: ../applets/fish/fish.c:616
+#: ../applets/fish/fish.c:550 ../applets/fish/fish.c:616
 #: ../applets/fish/fish.c:732
 #, no-c-format
 msgid "%s the Fish"
@@ -587,12 +586,15 @@ msgstr "An t-Iasc %s"
 
 #: ../applets/fish/fish.c:551
 #, c-format
-msgid "%s has no use what-so-ever. It only takes up disk space and compilation time, and if loaded it also takes up precious panel space and memory. Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. "
+"Anybody found using it should be promptly sent for a psychiatric evaluation."
 msgstr ""
 
 #: ../applets/fish/fish.c:575
 msgid "(with minor help from George)"
-msgstr "(le beagán cúnamh de George)"
+msgstr "(le cuidiú bheag as George)"
 
 #: ../applets/fish/fish.c:617
 #, c-format
@@ -601,7 +603,7 @@ msgstr "An t-Iasc %s, aitheascal comhaimseartha"
 
 #: ../applets/fish/fish.c:688
 msgid "Unable to locate the command to execute"
-msgstr "Ní féidir an ordú le rith a fháil"
+msgstr "Ní féidir an ordú le rith a aimsiú"
 
 # no-c-format
 #: ../applets/fish/fish.c:737
@@ -664,8 +666,7 @@ msgstr "Féach ar an dáta inniu!"
 msgid "%s the Fish, the fortune teller"
 msgstr "%s an t-Iasc, an t-iasc feasa"
 
-#: ../applets/fish/fish.glade.h:1
-#: ../applets/wncklet/window-list.glade.h:1
+#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -680,7 +681,7 @@ msgstr "<b>Ginearálta</b>"
 
 #: ../applets/fish/fish.glade.h:4
 msgid "Co_mmand to run when clicked:"
-msgstr "_Ordú a rith agus é cliceáilte:"
+msgstr "_Ordú a rith agus cliceáilte:"
 
 #: ../applets/fish/fish.glade.h:5
 msgid "Fish Preferences"
@@ -700,7 +701,7 @@ msgstr "_Ainm an éisc:"
 
 #: ../applets/fish/fish.glade.h:9
 msgid "_Pause per frame:"
-msgstr "_Sos de réir na frámaí:"
+msgstr "_Sos de gach fráma:"
 
 #: ../applets/fish/fish.glade.h:10
 msgid "_Rotate on vertical panels"
@@ -719,7 +720,9 @@ msgid "seconds"
 msgstr "soicind"
 
 #: ../applets/fish/fish.schemas.in.h:1
-msgid "A fish without a name is a pretty dull fish. Bring your fish to life by naming him."
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
 msgstr "Is iasc cuibheasach dúr é iasc gan ainm. Ainmnigh d'iasc."
 
 #: ../applets/fish/fish.schemas.in.h:2
@@ -731,7 +734,8 @@ msgid "Frames in fish's animation"
 msgstr "Frámaí sa íomhá bheo an éisc"
 
 #: ../applets/fish/fish.schemas.in.h:4
-msgid "If true, the fish's animation will be displayed rotated on vertical panels."
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "Má tá fíor, casfadh timpeall beochan an éisc ar phainéail ingearaigh."
 
 #: ../applets/fish/fish.schemas.in.h:5
@@ -751,15 +755,21 @@ msgid "The fish's name"
 msgstr "Ainm an éisc"
 
 #: ../applets/fish/fish.schemas.in.h:9
-msgid "This key specifies the command that will be tried to execute when the fish is clicked."
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
 msgstr ""
 
 #: ../applets/fish/fish.schemas.in.h:10
-msgid "This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory."
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
 
 #: ../applets/fish/fish.schemas.in.h:11
-msgid "This key specifies the number of frames that will be displayed in the fish's animation."
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
 msgstr ""
 
 #: ../applets/fish/fish.schemas.in.h:12
@@ -777,11 +787,11 @@ msgstr "Limistéar Fógartha"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
 msgid "Notification Area Factory"
-msgstr "Monarcha Limistéir Fógartha"
+msgstr "Monarcha Limistéar Fógartha"
 
 #: ../applets/notification_area/main.c:224
 msgid "Panel Notification Area"
-msgstr "Limistéar Fógartha Painéil"
+msgstr "Limistéar Fhógairt Painéil"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 msgid "Factory for the window navigation related applets"
@@ -789,7 +799,7 @@ msgstr ""
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Hide application windows and show the desktop"
-msgstr "Folaigh fuinneoga feidhmchláir agus taispeáin an deasc"
+msgstr "Folaigh fuinneoga feidhmchlár agus taispeáin an deasc"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Show Desktop"
@@ -817,15 +827,14 @@ msgid "Window Navigation Applet Factory"
 msgstr "Monarcha Feidhmchláirín Nascleanúna Fuinneoige"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/window-menu.c:78
-#: ../applets/wncklet/window-menu.c:240
+#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:240
 msgid "Window Selector"
-msgstr "Roghnóir Fuinneoige"
+msgstr "Roghnóir Fuinneoiga"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: ../applets/wncklet/workspace-switcher.c:620
 msgid "Workspace Switcher"
-msgstr "Aistritheoir Spáis Oibre"
+msgstr "Aistritheoir Spás Oibre"
 
 #: ../applets/wncklet/showdesktop.c:183
 #, c-format
@@ -844,22 +853,28 @@ msgstr "Cliceáil anseo chun fuinneoga folaithe a aischur."
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Cliceáil anseo chun gach fuinneog a fholú agus an deasc a thaispeáint."
 
-#: ../applets/wncklet/showdesktop.c:455
-#: ../applets/wncklet/showdesktop.c:536
+#: ../applets/wncklet/showdesktop.c:455 ../applets/wncklet/showdesktop.c:536
 msgid "Show Desktop Button"
 msgstr "Taispeáin Cnaipe Deisce"
 
 #: ../applets/wncklet/showdesktop.c:538
 msgid "This button lets you hide all windows and show the desktop."
-msgstr "Ligeann an cnaipe seo duit gach fuinneog a fholú agus an deasc a thaispeáint."
+msgstr ""
+"Ligeann an cnaipe seo duit gach fuinneog a fholú agus an deasc a thaispeáint."
 
 #: ../applets/wncklet/showdesktop.c:568
-msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
 msgstr ""
 
 #: ../applets/wncklet/window-list.c:610
-msgid "The Window List shows a list of all windows in a set of buttons and lets you browse them."
-msgstr "Taispeánann an Liosta Fuinneoige liosta de gach fuinneog i bhfoireann cnaipí agus ligeann sé duit iad a bhrabhsáil."
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
+msgstr ""
+"Taispeánann an Liosta Fuinneoige liosta de gach fuinneog i bhfoireann cnaipí "
+"agus ligeann sé duit iad a bhrabhsáil."
 
 #: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -906,15 +921,25 @@ msgid "_Never group windows"
 msgstr "_Ná grúpáil fuinneoga riamh"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
-msgid "Decides when to group windows from the same application on the window list. Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Socraíonn sé seo an t-am fuinneoga don feidhmchlár chéanna a ghrúpáil ar liosta fuinneoige. Tá luachanna incheaptha \"never\", \"auto\" nó \"always\"."
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Socraíonn sé seo an t-am fuinneoga don feidhmchlár chéanna a ghrúpáil ar "
+"liosta fuinneoige. Tá luachanna incheaptha \"never\", \"auto\" nó \"always\"."
 
 #: ../applets/wncklet/window-list.schemas.in.h:2
-msgid "If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace."
-msgstr "Má tá fíor, taispeánfaidh liosta na fuinneoga fuinneoga ó gach spás oibre. Seachas sin, ní thaispeánfaidh sé ach fuinneoga ó spás oibre reatha."
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"Má tá fíor, taispeánfaidh liosta na fuinneoga fuinneoga ó gach spás oibre. "
+"Seachas sin, ní thaispeánfaidh sé ach fuinneoga ó spás oibre reatha."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
-msgid "If true, then when unminimizing a window, move it to the current workspace. Otherwise, switch to the workspace of the window."
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
 msgstr ""
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
@@ -934,7 +959,9 @@ msgid "Show windows from all workspaces"
 msgstr "Taispeáin fuinneoga ó gach spás oibre"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
-msgid "The use of this key was deprecated in GNOME 2.20. The schema is retained for compatibility with older versions."
+msgid ""
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
 msgstr ""
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
@@ -942,8 +969,12 @@ msgid "When to group windows"
 msgstr "An t-am fuinneoga a ghrúpáil"
 
 #: ../applets/wncklet/window-menu.c:82
-msgid "The Window Selector shows a list of all windows in a menu and lets you browse them."
-msgstr "Taispeánann Roghnóir Fuinneoge liosta de gach fuinneog i roghchlár agus ligeann sé duit iad a bhrabhsáil."
+msgid ""
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
+msgstr ""
+"Taispeánann Roghnóir Fuinneoge liosta de gach fuinneog i roghchlár agus "
+"ligeann sé duit iad a bhrabhsáil."
 
 #: ../applets/wncklet/workspace-switcher.c:213
 #: ../applets/wncklet/workspace-switcher.c:971
@@ -959,21 +990,31 @@ msgstr "colún"
 #: ../applets/wncklet/workspace-switcher.c:487
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "Earráid agus luach num_rows a luchtú don Aistritheoir Spáis Oibre: %s\n"
+msgstr ""
+"Earráid agus luach num_rows a luchtú don Aistritheoir Spáis Oibre: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:498
 #, c-format
-msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "Earráid agus luach display_workspace_names a luchtú don Aistritheoir Spáis Oibre: %s\n"
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Earráid agus luach display_workspace_names a luchtú don Aistritheoir Spáis "
+"Oibre: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:513
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "Earráid agus luach display_all_names a luchtú don Aistritheoir Spáis Oibre: %s\n"
+msgstr ""
+"Earráid agus luach display_all_names a luchtú don Aistritheoir Spáis Oibre: %"
+"s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:622
-msgid "The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."
-msgstr "Taispeánann an Aistritheoir Spáis Oibre leagan beag do spásanna oibre a ligean duit d'fhuinneoga a bhainistiú."
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"Taispeánann an Aistritheoir Spáis Oibre leagan beag do spásanna oibre a "
+"ligean duit d'fhuinneoga a bhainistiú."
 
 #: ../applets/wncklet/workspace-switcher.glade.h:1
 msgid "<b>Switcher</b>"
@@ -1020,11 +1061,16 @@ msgid "Display workspace names"
 msgstr "Taispeáin ainmneacha spásanna oibre"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:3
-msgid "If true, the workspace switcher will show all workspaces. Otherwise it will only show the current workspace."
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
 msgstr ""
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace. This setting only works when the window manager is Metacity."
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Metacity."
 msgstr ""
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
@@ -1032,25 +1078,25 @@ msgid "Rows in workspace switcher"
 msgstr "Rónna san aistritheoir spáis oibre"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:6
-msgid "This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true."
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
 msgstr ""
 
 #: ../gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
 msgstr "Blaosc Painéil GNOME"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1
-#: ../gnome-panel/applet.c:542
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:542
 msgid "Loc_k To Panel"
 msgstr "C_eangail ar Phainéal"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2
-#: ../gnome-panel/applet.c:525
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:525
 msgid "_Move"
 msgstr "_Bog"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3
-#: ../gnome-panel/applet.c:514
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:514
 msgid "_Remove From Panel"
 msgstr "_Bain ón bPainéal"
 
@@ -1062,8 +1108,7 @@ msgstr "???"
 msgid "Cannot find an empty spot"
 msgstr "Ní féidir áit fholamh a aimsiú"
 
-#: ../gnome-panel/drawer.c:350
-#: ../gnome-panel/panel-addto.c:170
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:170
 #: ../gnome-panel/panel-toplevel.c:1585
 msgid "Drawer"
 msgstr "Tarraiceán"
@@ -1072,8 +1117,7 @@ msgstr "Tarraiceán"
 msgid "_Add to Drawer..."
 msgstr "Cuir ar Th_arraiceán..."
 
-#: ../gnome-panel/drawer.c:595
-#: ../gnome-panel/launcher.c:859
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:859
 #: ../gnome-panel/panel-action-button.c:138
 #: ../gnome-panel/panel-context-menu.c:212
 msgid "_Properties"
@@ -1092,8 +1136,7 @@ msgid "- Edit .desktop files"
 msgstr "- Eagar comhaid .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:162
-#: ../gnome-panel/gnome-desktop-item-edit.c:214
-#: ../gnome-panel/launcher.c:949
+#: ../gnome-panel/gnome-desktop-item-edit.c:214 ../gnome-panel/launcher.c:949
 msgid "Create Launcher"
 msgstr "Cruthaigh Tosaitheoir"
 
@@ -1102,13 +1145,14 @@ msgstr "Cruthaigh Tosaitheoir"
 msgid "Directory Properties"
 msgstr "Airíonna Comhadlainne"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:193
-#: ../gnome-panel/launcher.c:787
+#: ../gnome-panel/gnome-desktop-item-edit.c:193 ../gnome-panel/launcher.c:787
 msgid "Launcher Properties"
 msgstr "Airíonna Tosaitheoir"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:1
-msgid "Launch other applications and provide various utilities to manage windows, show the time, etc."
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
 msgstr ""
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:2
@@ -1143,7 +1187,7 @@ msgstr ""
 #: ../gnome-panel/launcher.c:514
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "Ní féidir comhad deisce %s a oscailt le tosaitheoir painéil%s%s\n"
 
 #: ../gnome-panel/launcher.c:853
 msgid "_Launch"
@@ -1154,8 +1198,7 @@ msgstr "_Tosaigh"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr ""
 
-#: ../gnome-panel/launcher.c:1016
-#: ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/launcher.c:1016 ../gnome-panel/panel-ditem-editor.c:1347
 #: ../gnome-panel/panel-ditem-editor.c:1381
 #: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "Could not save launcher"
@@ -1205,8 +1248,7 @@ msgstr ""
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:617
-#: ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
@@ -1237,8 +1279,7 @@ msgid "_Lock Screen"
 msgstr "G_lasáil Scáileán"
 
 #: ../gnome-panel/panel-action-button.c:214
-#: ../gnome-panel/panel-menu-bar.c:409
-#: ../gnome-panel/panel-menu-button.c:990
+#: ../gnome-panel/panel-menu-bar.c:409 ../gnome-panel/panel-menu-button.c:990
 #: ../gnome-panel/panel-util.c:809
 #, c-format
 msgid "Could not execute '%s'"
@@ -1254,7 +1295,7 @@ msgstr "Glasáil Scáileán"
 
 #: ../gnome-panel/panel-action-button.c:285
 msgid "Protect your computer from unauthorized use"
-msgstr "Cosain do ríomhaire ar úsáid gan údarás"
+msgstr "Cosain do ríomhaire ar úsáid gan cead"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
@@ -1273,7 +1314,7 @@ msgstr "Rith Feidhmchlár..."
 
 #: ../gnome-panel/panel-action-button.c:310
 msgid "Run an application by typing a command or choosing from a list"
-msgstr "Rith feidhmchlár trí clóscríobh nó roghnú ó liosta"
+msgstr "Rith feidhmchlár trí chlóscríobh nó roghnú ó liosta"
 
 #: ../gnome-panel/panel-action-button.c:319
 msgid "Search for Files..."
@@ -1286,7 +1327,7 @@ msgstr "Aimsigh cáipéisí agus fillteáin ar an ríomhaire seo trí ainm nó �
 #: ../gnome-panel/panel-action-button.c:328
 #: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
-msgstr "Éignigh Scor"
+msgstr "Scor Éigeantach"
 
 #: ../gnome-panel/panel-action-button.c:329
 msgid "Force a misbehaving application to quit"
@@ -1325,8 +1366,7 @@ msgstr "Tosaitheoir Feidhmchláir..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Cóipeáil tosaitheoir ó roghchlár feidhmchlár"
 
-#: ../gnome-panel/panel-addto.c:137
-#: ../gnome-panel/panel-menu-button.c:1091
+#: ../gnome-panel/panel-addto.c:137 ../gnome-panel/panel-menu-button.c:1091
 msgid "Main Menu"
 msgstr "Príomhroghchlár"
 
@@ -1362,7 +1402,7 @@ msgstr "(folamh)"
 #: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
-msgstr ""
+msgstr "d'fhill an t-iarratas eisceacht %s\n"
 
 #: ../gnome-panel/panel-addto.c:1061
 #, c-format
@@ -1388,7 +1428,7 @@ msgstr "A_imsigh mír chun cur leis an bpainéal:"
 #: ../gnome-panel/panel-applet-frame.c:850
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr ""
+msgstr "Eisceacht as popup_menu '%s'\n"
 
 #: ../gnome-panel/panel-applet-frame.c:975
 #, c-format
@@ -1400,7 +1440,9 @@ msgid "Panel object has quit unexpectedly"
 msgstr "Tá scoirthe gan choinne ag réad painéil"
 
 #: ../gnome-panel/panel-applet-frame.c:984
-msgid "If you reload a panel object, it will automatically be added back to the panel."
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
 msgstr ""
 
 #: ../gnome-panel/panel-applet-frame.c:990
@@ -1417,8 +1459,7 @@ msgstr "_Athluchtaigh"
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/panel-applet-frame.c:1006
-#: ../gnome-panel/panel-applet-frame.c:1094
-#: ../gnome-panel/panel-util.c:397
+#: ../gnome-panel/panel-applet-frame.c:1094 ../gnome-panel/panel-util.c:397
 msgid "Error"
 msgstr "Earráid"
 
@@ -1438,17 +1479,17 @@ msgstr ""
 #: ../gnome-panel/panel-bindings.c:153
 #, c-format
 msgid "Error watching gconf key '%s': %s"
-msgstr ""
+msgstr "Earráid agus faire eochair gconf '%s': %s"
 
 #: ../gnome-panel/panel-bindings.c:171
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
-msgstr ""
+msgstr "Earráid agus luchtú comhadlann gconf '%s': %s"
 
 #: ../gnome-panel/panel-bindings.c:185
 #, c-format
 msgid "Error getting value for '%s': %s"
-msgstr ""
+msgstr "Earráid agus luach '%s' a fháil: %s"
 
 #: ../gnome-panel/panel-context-menu.c:101
 msgid "And many, many others..."
@@ -1459,7 +1500,9 @@ msgid "The GNOME Panel"
 msgstr "An Painéal GNOME"
 
 #: ../gnome-panel/panel-context-menu.c:130
-msgid "This program is responsible for launching other applications and provides useful utilities."
+msgid ""
+"This program is responsible for launching other applications and provides "
+"useful utilities."
 msgstr ""
 
 #: ../gnome-panel/panel-context-menu.c:167
@@ -1484,7 +1527,7 @@ msgstr "Painéal _Nua"
 
 #: ../gnome-panel/panel-context-menu.c:288
 msgid "A_bout Panels"
-msgstr "_Eolas faoi Phainéil"
+msgstr "_Maidir le Painéil"
 
 #: ../gnome-panel/panel-ditem-editor.c:113
 msgid "Application"
@@ -1561,37 +1604,50 @@ msgstr "Níl an ordú an tosaitheora socraithe."
 msgid "The location of the launcher is not set."
 msgstr "Níl an suíomh an tosaitheora socraithe."
 
-#: ../gnome-panel/panel-ditem-editor.c:1453
-#: ../gnome-panel/panel-util.c:187
+#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:187
 msgid "Could not display help document"
 msgstr "Níorbh fhéidir cáipéis cabhrach a thaispeáint"
 
 #: ../gnome-panel/panel-force-quit.c:76
-msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 
 #: ../gnome-panel/panel-force-quit.c:204
 msgid "Force this application to exit?"
-msgstr ""
+msgstr "Éignigh an feidhmchlár seo a scor?"
 
 #: ../gnome-panel/panel-force-quit.c:207
-msgid "If you choose to force an application to exit, any open documents in it will be lost."
+msgid ""
+"If you choose to force an application to exit, any open documents in it will "
+"be lost."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
-msgid "A boolean flag to indicate whether the user's previous configuration in /apps/panel/profiles/default has been copied to the new location in /apps/panel."
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
-msgid "A list of panel IDs. Each ID identifies an individual toplevel panel. The settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
-msgid "A list of panel applet IDs. Each ID identifies an individual panel applet. The settings for each of these applets are stored in /apps/panel/applets/$(id)."
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
-msgid "A list of panel object IDs. Each ID identifies an individual panel object (e.g. a launcher, action button or menu button/bar). The settings for each of these objects are stored in /apps/panel/objects/$(id)."
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
@@ -1607,15 +1663,22 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
-msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
-msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is expanded when the dialog is opened. This key is only relevant if the enable_program_list key is true."
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
-msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is made available. Whether or not the listing is expanded when the dialog is shown is controlled by the show_program_list key."
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
@@ -1635,7 +1698,11 @@ msgid "Panel object ID list"
 msgstr "Liosta CA réada painéil"
 
 #: ../gnome-panel/panel-global.schemas.in.h:1
-msgid "A list of applet IIDs that the panel will ignore. This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list. The panel must be restarted for this to take effect."
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
@@ -1660,7 +1727,7 @@ msgstr "Lochtach"
 
 #: ../gnome-panel/panel-global.schemas.in.h:7
 msgid "Disable Force Quit"
-msgstr ""
+msgstr "Díchumasaigh Scor Éigeantach"
 
 #: ../gnome-panel/panel-global.schemas.in.h:8
 msgid "Disable Lock Screen"
@@ -1684,31 +1751,45 @@ msgid "Highlight launchers on mouseover"
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
-msgid "If true, a dialog is shown asking for confirmation if the user wants to remove a panel."
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
-msgid "If true, a drawer will automatically be closed when the user clicks a launcher in it."
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
-msgid "If true, a launcher is highlighted when the user moves the pointer over it."
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
-msgid "If true, the panel will not allow a user to force an application to quit by removing access to the force quit button."
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
-msgid "If true, the panel will not allow a user to lock their screen, by removing access to the lock screen menu entries."
+msgid ""
+"If true, the panel will not allow a user to lock their screen, by removing "
+"access to the lock screen menu entries."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
-msgid "If true, the panel will not allow a user to log out, by removing access to the log out menu entries."
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
-msgid "If true, the panel will not allow any changes to the configuration of the panel. Individual applets may need to be locked down separately however. The panel must be restarted for this to take effect."
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:20
@@ -1811,13 +1892,11 @@ msgstr ""
 msgid "Applications"
 msgstr "Feidhmchláir"
 
-#: ../gnome-panel/panel-menu-bar.c:342
-#: ../gnome-panel/panel-menu-button.c:664
+#: ../gnome-panel/panel-menu-bar.c:342 ../gnome-panel/panel-menu-button.c:664
 msgid "_Edit Menus"
 msgstr "_Eagar Roghchláir"
 
-#: ../gnome-panel/panel-menu-items.c:118
-#: ../gnome-panel/panel-run-dialog.c:351
+#: ../gnome-panel/panel-menu-items.c:118 ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Níorbh fhéidir suíomh '%s' a oscailt"
@@ -1827,8 +1906,7 @@ msgid "Bookmarks"
 msgstr "Leabharmharcanna"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:424
-#: ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:424 ../gnome-panel/panel.c:534
 #, c-format
 msgid "Open '%s'"
 msgstr "Oscail '%s'"
@@ -1891,7 +1969,8 @@ msgstr "Logáil %s Amach..."
 #: ../gnome-panel/panel-menu-items.c:1033
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
-msgstr "Logáil %s amach as an seisiún seo chun logáil isteach mar úsáideoir eile"
+msgstr ""
+"Logáil %s amach as an seisiún seo chun logáil isteach mar úsáideoir eile"
 
 #: ../gnome-panel/panel-menu-items.c:1074
 msgid "Could not launch menu item"
@@ -1910,19 +1989,29 @@ msgid "Icon used for object's button"
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:4
-msgid "If true, the custom_icon key is used as a custom icon for the button. If false, the custom_icon key is ignored. This key is only relevant if the object_type key is \"menu-object\" or \"drawer-object\"."
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
-msgid "If true, the menu_path key is used as the path from which the menu contents should be constructed. If false, the menu_path key is ignored. This key is only relevant if the object_type key is \"menu-object\"."
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
-msgid "If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel."
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
-msgid "If true, the user may not move the applet without first unlocking the object using the \"Unlock\" menuitem."
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
@@ -1943,7 +2032,7 @@ msgstr "Conair ábhair roghchláir"
 
 #: ../gnome-panel/panel-object.schemas.in.h:12
 msgid "Object's position on the panel"
-msgstr ""
+msgstr "Ionad an réada ar an bpainéal"
 
 #: ../gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
@@ -1954,15 +2043,22 @@ msgid "Panel object type"
 msgstr "Cineál réada painéil"
 
 #: ../gnome-panel/panel-object.schemas.in.h:15
-msgid "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgid ""
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
-msgid "The action type this button represents. Possible values are \"lock\", \"logout\", \"run\", \"search\" and \"screenshot\". This key is only relevant if the object_type key is \"action-applet\"."
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
-msgid "The identifier of the panel attached to this drawer. This key is only relevant if the object_type key is \"drawer-object\"."
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
@@ -1970,32 +2066,47 @@ msgid "The identifier of the toplevel panel which contains this object."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
-msgid "The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is \"launcher-object\"."
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
-msgid "The location of the image file used as the icon for the object's button. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\" and the use_custom_icon key is true."
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
-msgid "The path from which the menu contents is contructed. This key is only relevant if the use_menu_path key is true and the object_type key is \"menu-object\"."
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
-msgid "The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge."
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
-msgid "The text to display in a tooltip for this drawer or this menu. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
-msgid "The type of this panel object. Possible values are \"drawer-object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and \"menu-bar\"."
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
-msgstr ""
+msgstr "Leid uirlise taispeánta le tarraiceán nó roghchlár"
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
@@ -2003,37 +2114,36 @@ msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Use custom icon for object's button"
-msgstr ""
+msgstr "Úsáid deilbhín saincheaptha le cnaipe an réada"
 
 #: ../gnome-panel/panel-object.schemas.in.h:28
 msgid "Use custom path for menu contents"
-msgstr ""
+msgstr "Úsáid conair shaincheaptha le ábhair an roghchláir"
 
-#: ../gnome-panel/panel-profile.c:766
-#: ../gnome-panel/panel-profile.c:793
-#: ../gnome-panel/panel-profile.c:829
-#: ../gnome-panel/panel-profile.c:1694
+#: ../gnome-panel/panel-profile.c:766 ../gnome-panel/panel-profile.c:793
+#: ../gnome-panel/panel-profile.c:829 ../gnome-panel/panel-profile.c:1694
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
-msgstr ""
+msgstr "Earráid agus luach teaghráin GConf '%s' a léamh: %s"
 
-#: ../gnome-panel/panel-profile.c:808
-#: ../gnome-panel/panel-profile.c:1590
-#: ../gnome-panel/panel-profile.c:1663
-#: ../gnome-panel/panel-profile.c:1733
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
+#: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
+#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
-msgstr ""
+msgstr "Earráid agus luach slánuimhreach GConf '%s' a léamh: %s"
 
 #: ../gnome-panel/panel-profile.c:1600
 #, c-format
-msgid "Panel '%s' is set to be displayed on screen %d which is not currently available. Not loading this panel."
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
 msgstr ""
 
 #: ../gnome-panel/panel-profile.c:1678
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
-msgstr ""
+msgstr "Earráid agus luach Boole GConf '%s' a léamh: %s"
 
 #: ../gnome-panel/panel-properties-dialog.c:124
 #: ../libpanel-applet/panel-test-applets.c:53
@@ -2151,7 +2261,7 @@ msgstr "_Deilbhín:"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:22
 msgid "_None (use system theme)"
-msgstr "_Tada (bain úsáid as téama an córais)"
+msgstr "_Neamhní (bain úsáid as téama an chórais)"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:23
 #: ../libpanel-applet/panel-test-applets.glade.h:4
@@ -2179,8 +2289,7 @@ msgstr "picteilín"
 msgid "Could not find a suitable application."
 msgstr "Níorbh fhéidir feidhmchlár oiriúnach a aimsiú."
 
-#: ../gnome-panel/panel-recent.c:98
-#: ../gnome-panel/panel-recent.c:108
+#: ../gnome-panel/panel-recent.c:98 ../gnome-panel/panel-recent.c:108
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Níorbh fhéidir cáipéis úsáidte le déanaí \"%s\" a oscail"
@@ -2192,7 +2301,7 @@ msgstr "Tharla earráid anaithnid agus ag iarraidh \"%s\" a oscailt."
 
 #: ../gnome-panel/panel-recent.c:167
 msgid "Clear the Recent Documents list?"
-msgstr ""
+msgstr "Glan an liosta Cáipéisí is Déanaí?"
 
 #: ../gnome-panel/panel-recent.c:169
 msgid ""
@@ -2200,11 +2309,13 @@ msgid ""
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
+"Má glanann tú an liosta Cáipéisí is Déanaí, glanann tú na rudaí a leanas:\n"
+"• Gach mír as an mír roghchláir Áiteanna → Cáipéisí is Déanaí.\n"
+"• Gach mír as an liosta cáipéisí is déanaí i ngach feidhmchlár."
 
-#: ../gnome-panel/panel-recent.c:181
-#: ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:181 ../gnome-panel/panel-recent.c:255
 msgid "Clear Recent Documents"
-msgstr "Glan Cáipéisí le Déanaí"
+msgstr "Glan Cáipéisí is Déanaí"
 
 #: ../gnome-panel/panel-recent.c:216
 msgid "Recent Documents"
@@ -2212,7 +2323,7 @@ msgstr "Cáipéisí le Déanaí"
 
 #: ../gnome-panel/panel-recent.c:257
 msgid "Clear all items from the recent documents list"
-msgstr "Glan gach mír as an liosta cáipéisí le déanaí"
+msgstr "Glan gach mír as an liosta cáipéisí is déanaí"
 
 #: ../gnome-panel/panel-run-dialog.c:322
 #, c-format
@@ -2226,12 +2337,12 @@ msgstr "Níorbh fhéidir '%s' a thiontú ó UTF-8"
 
 #: ../gnome-panel/panel-run-dialog.c:1212
 msgid "Choose a file to append to the command..."
-msgstr ""
+msgstr "Roghnaigh comhad a iarcheangal leis an ordú..."
 
 #: ../gnome-panel/panel-run-dialog.c:1588
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
-msgstr ""
+msgstr "Roghnaigh feidhmchlár chun a fhéachaint ar a thuairisc."
 
 #: ../gnome-panel/panel-run-dialog.c:1626
 #, c-format
@@ -2245,14 +2356,18 @@ msgstr ""
 
 #: ../gnome-panel/panel-run-dialog.c:1955
 msgid "Could not display run dialog"
-msgstr ""
+msgstr "Níorbh fhéidir dialóg reatha a thaispeáint"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:1
-msgid "Click this button to browse for a file whose name to append to the command string."
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
 msgstr ""
 
 #: ../gnome-panel/panel-run-dialog.glade.h:2
-msgid "Click this button to run the selected application or the command in the command entry field."
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
 msgstr ""
 
 #: ../gnome-panel/panel-run-dialog.glade.h:3
@@ -2303,7 +2418,8 @@ msgstr "_Rith"
 #: ../gnome-panel/panel-shell.c:64
 #, c-format
 msgid ""
-"The panel could not register with the bonobo-activation server (error code: %d) and will exit.\n"
+"The panel could not register with the bonobo-activation server (error code: %"
+"d) and will exit.\n"
 "It may be automatically restarted."
 msgstr ""
 
@@ -2318,7 +2434,7 @@ msgstr ""
 
 #: ../gnome-panel/panel-stock-icons.c:92
 msgid "_Force quit"
-msgstr "É_ignigh scor"
+msgstr "_Scor éigeantach"
 
 #: ../gnome-panel/panel-stock-icons.c:93
 msgid "C_lear"
@@ -2336,67 +2452,67 @@ msgstr "Folaigh Painéal"
 #. * popup when you pass the focus to a panel
 #: ../gnome-panel/panel-toplevel.c:1556
 msgid "Top Expanded Edge Panel"
-msgstr ""
+msgstr "Painéal Ciumhaise Leathnaithe ag Barr"
 
 #: ../gnome-panel/panel-toplevel.c:1557
 msgid "Top Centered Panel"
-msgstr ""
+msgstr "Painéal Láraithe ag Barr"
 
 #: ../gnome-panel/panel-toplevel.c:1558
 msgid "Top Floating Panel"
-msgstr ""
+msgstr "Painéal Inathraitheach ag Barr"
 
 #: ../gnome-panel/panel-toplevel.c:1559
 msgid "Top Edge Panel"
-msgstr ""
+msgstr "Painéal Ciumhaise ag Barr"
 
 #: ../gnome-panel/panel-toplevel.c:1563
 msgid "Bottom Expanded Edge Panel"
-msgstr ""
+msgstr "Painéal Ciumhaise Leathnaithe ag Bun"
 
 #: ../gnome-panel/panel-toplevel.c:1564
 msgid "Bottom Centered Panel"
-msgstr ""
+msgstr "Painéal Láraithe ag Bun"
 
 #: ../gnome-panel/panel-toplevel.c:1565
 msgid "Bottom Floating Panel"
-msgstr ""
+msgstr "Painéal Inathraitheach ag Bun"
 
 #: ../gnome-panel/panel-toplevel.c:1566
 msgid "Bottom Edge Panel"
-msgstr ""
+msgstr "Painéal Ciumhaise ag Bun"
 
 #: ../gnome-panel/panel-toplevel.c:1570
 msgid "Left Expanded Edge Panel"
-msgstr ""
+msgstr "Painéal Ciumhaise Leathnaithe ar Chlé"
 
 #: ../gnome-panel/panel-toplevel.c:1571
 msgid "Left Centered Panel"
-msgstr ""
+msgstr "Painéal Láraithe ar Chlé"
 
 #: ../gnome-panel/panel-toplevel.c:1572
 msgid "Left Floating Panel"
-msgstr ""
+msgstr "Painéal Inathraitheach ar Chlé"
 
 #: ../gnome-panel/panel-toplevel.c:1573
 msgid "Left Edge Panel"
-msgstr ""
+msgstr "Painéal Ciumhaise ar Chlé"
 
 #: ../gnome-panel/panel-toplevel.c:1577
 msgid "Right Expanded Edge Panel"
-msgstr ""
+msgstr "Painéal Ciumhaise Leathnaithe ar Dheis"
 
 #: ../gnome-panel/panel-toplevel.c:1578
 msgid "Right Centered Panel"
-msgstr ""
+msgstr "Painéal Láraithe ar Dheis"
 
 #: ../gnome-panel/panel-toplevel.c:1579
 msgid "Right Floating Panel"
-msgstr ""
+msgstr "Painéal Inathraitheach ar Dheis"
 
 #: ../gnome-panel/panel-toplevel.c:1580
 msgid "Right Edge Panel"
-msgstr ""
+msgstr "Painéal Ciumhaise ar Dheis"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:1
 msgid "Animation speed"
@@ -2404,7 +2520,7 @@ msgstr "Luas beochana"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
-msgstr ""
+msgstr "Folaigh painéal sa chúinne go huathoibríoch"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:3
 msgid "Background color"
@@ -2424,11 +2540,11 @@ msgstr "Cineál cúlra"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:7
 msgid "Center panel on x-axis"
-msgstr ""
+msgstr "Láraigh painéal ar x-ais"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:8
 msgid "Center panel on y-axis"
-msgstr ""
+msgstr "Láraigh painéal ar y-ais"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:10
 msgid "Enable arrows on hide buttons"
@@ -2440,54 +2556,83 @@ msgstr "Cumasaigh cnaipí folú"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:12
 msgid "Expand to occupy entire screen width"
-msgstr ""
+msgstr "Leathnaigh chun leithead scáileáin ar fad a líonadh"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:13
 msgid "Fit image to panel"
 msgstr "Oiriúnaigh íomhá do phainéal"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:14
-msgid "If true, arrows will be placed on the hide buttons. This key is only relevant if the enable_buttons key is true."
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
-msgid "If true, buttons will be placed on each side of the panel which may be used to move the panel to edge of the screen, leaving only a button showing."
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
-msgid "If true, hiding and un-hiding of this panel will be animated rather than happening instantly."
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
-msgid "If true, the background image will be rotated when the panel is oriented vertically."
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
-msgid "If true, the image will be scaled (retaining the aspect ratio of the image) to the panel height (if horizontal)."
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
-msgid "If true, the image will be scaled to the panel dimensions. The aspect ratio of the image will not be maintained."
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
-msgid "If true, the panel is automatically hidden into a corner of the screen when the pointer leaves the panel area. Moving the pointer to that corner again will cause the panel to re-appear."
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
-msgid "If true, the panel will occupy the entire screen width (height if this is a vertical panel). In this mode the panel can only be placed at a screen edge. If false, the panel will only be large enough to accommodate the applets, launchers and buttons on the panel."
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
-msgid "If true, the x and x_right keys are ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x and x_right keys specify the location of the panel."
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
-msgid "If true, the y and y_bottom keys are ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y and y_bottom keys specify the location of the panel."
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
-msgid "In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on."
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
@@ -2496,11 +2641,11 @@ msgstr "Ainm chun painéal a shainaithint"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:26
 msgid "Panel autohide delay"
-msgstr ""
+msgstr "Moill uathfholú an phainéil"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:27
 msgid "Panel autounhide delay"
-msgstr ""
+msgstr "Moill uath-dífholú an phainéil"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:28
 msgid "Panel orientation"
@@ -2519,59 +2664,109 @@ msgid "Specifies the background color for the panel in #RGB format."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:32
-msgid "Specifies the file to be used for the background image. If the image contains an alpha channel it will be composited onto the desktop background image."
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
-msgid "Specifies the number of milliseconds delay after the pointer enters the panel area before the panel is automatically re-shown. This key is only relevant if the auto_hide key is true."
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
-msgid "Specifies the number of milliseconds delay after the pointer leaves the panel area before the panel is automatically hidden. This key is only relevant if the auto_hide key is true."
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
-msgid "Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
-msgid "Specifies the opacity of the background color format. If the color is not completely opaque (a value of less than 65535), the color will be composited onto the desktop background image."
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
-msgstr ""
+msgstr "Sín íomhá leis an bpainéal"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:38
-msgid "The height (width for a vertical panel) of the panel. The panel will determine at runtime a minimum size based on the font size and other indicators. The maximum size is fixed at one quarter of the screen height (or width)."
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
-msgid "The location of the panel along the x-axis, starting from the right of the screen. If set to -1, the value is ignored and the value of the x key is used. If the value is greater than 0, then the value of the x key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
-msgid "The location of the panel along the x-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
-msgid "The location of the panel along the y-axis, starting from the bottom of the screen. If set to -1, the value is ignored and the value of the y key is used. If the value is greater than 0, then the value of the y key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
-msgid "The location of the panel along the y-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
-msgid "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left\", \"right\". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between \"top\" and \"bottom\" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a \"top\" panel a menu button will pop up its menu below the panel, whereas on a \"bottom\" panel the menu will be popped up above the panel."
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
-msgid "The speed in which panel animations should occur. Possible values are \"slow\", \"medium\" and \"fast\". This key is only relevant if the enable_animations key is true."
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
-msgid "This is a human readable name which you can use to identify a panel. Its main purpose is to serve as the panel's window title which is useful when navigating between panels."
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:46
@@ -2579,11 +2774,21 @@ msgid "Visible pixels when hidden"
 msgstr "Picteilíní infheicthe nuair atá folaithe"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
-msgid "Which type of background should be used for this panel. Possible values are \"gtk\" - the default GTK+ widget background will be used, \"color\" - the color key will be used as background color or \"image\" - the image specified by the image key will be used as background."
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
 msgstr ""
+"An saghas cúlra ba cheart a úsáid leis an bpainéal seo. Tá na luachanna "
+"incheaptha  \"gtk\"- beidh cúlra giuirléide GTK+ réamhshocraithe úsáidte, "
+"\"color\" - beidh eochair datha úsáidte mar dath cúlra nó \"image\" - beidh "
+"an íomhá sonraithe leis an eochair íomhá úsáidte mar cúlra."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
-msgid "With a multi-screen setup, you may have panels on each individual screen. This key identifies the current screen the panel is displayed on."
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:49
@@ -2596,11 +2801,11 @@ msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:51
 msgid "X screen where the panel is displayed"
-msgstr ""
+msgstr "Scáileán X ina bhfuil an painéal taispeánta"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:52
 msgid "Xinerama monitor where the panel is displayed"
-msgstr ""
+msgstr "Monatóir Xinerama ina bhfuil an painéal taispeánta"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:53
 msgid "Y co-ordinate of panel"
@@ -2637,7 +2842,7 @@ msgstr "Téamaí"
 
 #: ../gnome-panel/panel-util.c:1378
 msgid "CD/DVD Creator"
-msgstr "CD/DVD Cruthaitheoir"
+msgstr "Cruthaitheoir CD/DVD"
 
 #: ../gnome-panel/panel-util.c:1380
 msgid "Windows Network"
@@ -2650,7 +2855,7 @@ msgstr "Seirbhísí i"
 
 #: ../gnome-panel/panel-util.c:1457
 msgid "Search"
-msgstr "Cuardach"
+msgstr "Cuardaigh"
 
 #: ../gnome-panel/panel-util.c:1460
 msgid "Trash"
@@ -2749,7 +2954,8 @@ msgid "Specify an applet IID to load"
 msgstr ""
 
 #: ../libpanel-applet/panel-test-applets.c:35
-msgid "Specify a gconf location in which the applet preferences should be stored"
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
 
 #: ../libpanel-applet/panel-test-applets.c:36
@@ -2757,7 +2963,8 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
 
 #: ../libpanel-applet/panel-test-applets.c:37
-msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 
 #: ../libpanel-applet/panel-test-applets.c:61
@@ -2805,54 +3012,3 @@ msgstr "_Feidhmchláirín:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Cmhdlnn Snrghnna:"
-
-#~ msgid "<b>Window List Size</b>"
-#~ msgstr "<b>Méid Liosta Fuinneoige</b>"
-#~ msgid "Behavior"
-#~ msgstr "Oibriú"
-#~ msgid "M_inimum size:"
-#~ msgstr "Íosmhé_id:"
-#~ msgid "Ma_ximum size:"
-#~ msgstr "_Uasmhéid:"
-#~ msgid "Size"
-#~ msgstr "Méid"
-#~ msgid "File"
-#~ msgstr "Comhad"
-#~ msgid "Delete Drawer"
-#~ msgstr "Scrios Tarraiceán"
-#~ msgid "Delete Panel"
-#~ msgstr "Scrios Painéal"
-#~ msgid "24"
-#~ msgstr "24"
-#~ msgid "*"
-#~ msgstr "*"
-#~ msgid "Cannot save launcher to disk"
-#~ msgstr "Ní féidir lainseoir a sábháil go diosca"
-#~ msgid "Menu"
-#~ msgstr "Roghchlár"
-#~ msgid "Cannot load entry"
-#~ msgstr "Ní féidir iontráil a lódáil"
-#~ msgid "Find files, folders, and documents on your computer"
-#~ msgstr ""
-#~ "Cuardaigh le haighaidh comhad, comhadlann agus doiciméad ar do ríomhaire"
-#~ msgid "Take Screenshot..."
-#~ msgstr "Tóg Scáilghraf"
-#~ msgid "Take a screenshot of your desktop"
-#~ msgstr "Tóg pictiúr Scáileán"
-#~ msgid "You cannot remove your last panel."
-#~ msgstr "Ní féidir leat do phainéal deireanach a scrios."
-#~ msgid "_Delete This Panel..."
-#~ msgstr "_Scríos an paineál seo..."
-#~ msgid "Take screenshot"
-#~ msgstr "Glasál an scathán"
-#~ msgid "Top"
-#~ msgstr "Mullach"
-#~ msgid "Bottom"
-#~ msgstr "Bun"
-#~ msgid "Left"
-#~ msgstr "Clé"
-#~ msgid "Right"
-#~ msgstr "Deis"
-#~ msgid "Details: %s"
-#~ msgstr "Sonraí: %s"
-
