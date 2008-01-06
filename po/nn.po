@@ -4,20 +4,22 @@
 # Roy-Magne Mo <rmo@sunnmore.net>, 2001-2002.
 # Monica Gausen <monica@gausen.net>, 2001.
 # Åsmund Skjæveland <aasmunds@fys.uio.no>, 2003, 2004, 2006.
+# Eskild Hustvedt <eskildh@gnome.org>, 2008
 # Norwegian (nynorsk) translation of gnome-core.
 # Copyright (C) 1998-2000, 2003, 2004, 2006 Free Software Foundation, Inc.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-25 23:17+0200\n"
-"PO-Revision-Date: 2006-10-25 23:12+0200\n"
-"Last-Translator: Åsmund Skjæveland <aasmunds@fys.uio.no>\n"
+"POT-Creation-Date: 2008-01-06 18:30+0100\n"
+"PO-Revision-Date: 2008-01-06 18:58+0100\n"
+"Last-Translator: Eskild Hustvedt <i18n@zerodogg.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.2\n"
+"X-Generator: MagicPO 0.3\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
@@ -61,9 +63,9 @@ msgstr "_Om"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:723
-#: ../gnome-panel/panel-context-menu.c:295 ../gnome-panel/panel-menu-bar.c:404
-#: ../gnome-panel/panel-menu-button.c:685
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:709
+#: ../gnome-panel/panel-context-menu.c:280 ../gnome-panel/panel-menu-bar.c:334
+#: ../gnome-panel/panel-menu-button.c:659
 msgid "_Help"
 msgstr "_Hjelp"
 
@@ -77,7 +79,7 @@ msgstr "_Brukarval"
 
 # applets/gen_util/clock.c:927
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2801
+#: ../applets/clock/clock.c:2234
 msgid "Clock"
 msgstr "Klokke"
 
@@ -93,27 +95,64 @@ msgstr "fabrikk for oppretting av klokke-tilleggsprogram"
 msgid "Get the current time and date"
 msgstr "Hent aktiv tid og dato"
 
-# panel/foobar-widget.c:566
-#: ../applets/clock/clock.c:341
-msgid "%l:%M:%S %p"
-msgstr "%H:%M:%S"
-
 # panel/foobar-widget.c:565
-#: ../applets/clock/clock.c:341 ../applets/clock/clock.c:663
+#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.c:347
 msgid "%l:%M %p"
 msgstr "%k:%M"
 
-# panel/foobar-widget.c:564
-#: ../applets/clock/clock.c:343 ../applets/clock/clock.c:1843
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
 # applets/gen_util/clock.c:198 applets/gen_util/clock.c:400
 # panel/foobar-widget.c:563 panel/foobar-widget.c:1011
-#: ../applets/clock/clock.c:343 ../applets/clock/clock.c:665
-#: ../applets/clock/clock.c:1845
+#: ../applets/clock/calendar-window.c:228 ../applets/clock/clock.c:349
+#: ../applets/clock/clock.c:1256
 msgid "%H:%M"
 msgstr "%H:%M"
+
+# applets/gen_util/clock.c:209
+#. Translators: If the event did not start on the current day
+#. * we will display the start date in the most abbreviated way
+#. * possible.
+#: ../applets/clock/calendar-window.c:234
+msgid "%b %d"
+msgstr "%d. %b"
+
+#
+#: ../applets/clock/calendar-window.c:742
+msgid "_Tasks"
+msgstr "_Oppgåver"
+
+#: ../applets/clock/calendar-window.c:858
+msgid "All Day"
+msgstr "Heile dagen"
+
+#
+#: ../applets/clock/calendar-window.c:985
+msgid "_Appointments"
+msgstr "_Avtaler"
+
+#
+#: ../applets/clock/calendar-window.c:1002
+msgid "_Birthdays and Anniversaries"
+msgstr "_Fødsels- og bryllupsdager"
+
+#
+#: ../applets/clock/calendar-window.c:1018
+msgid "_Weather Information"
+msgstr "Informasjon om _vêr"
+
+# panel/menu.c:4751 panel/panel_config.c:1566
+#: ../applets/clock/calendar-window.c:1687
+msgid "Calendar"
+msgstr "Kalender"
+
+# panel/foobar-widget.c:566
+#: ../applets/clock/clock.c:347
+msgid "%l:%M:%S %p"
+msgstr "%H:%M:%S"
+
+# panel/foobar-widget.c:564
+#: ../applets/clock/clock.c:349 ../applets/clock/clock.c:1254
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
 
 # applets/gen_util/clock.c:214
 #. translators: replace %e with %d if, when the day of the
@@ -121,7 +160,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:354
+#: ../applets/clock/clock.c:369
 msgid "%a %b %e"
 msgstr "%a %d. %b"
 
@@ -129,7 +168,7 @@ msgstr "%a %d. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:361
+#: ../applets/clock/clock.c:376
 #, c-format
 msgid ""
 "%1$s\n"
@@ -142,77 +181,66 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:368
+#: ../applets/clock/clock.c:384
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 # panel/foobar-widget.c:464
 #. Show date in tooltip
-#: ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:527
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: ../applets/clock/clock.c:462
+#
+#: ../applets/clock/clock.c:541
+msgid "Click to hide your appointments and tasks"
+msgstr "Trykk for å skjule dine avtaler og oppgåver"
+
+#: ../applets/clock/clock.c:544
 msgid "Click to view your appointments and tasks"
 msgstr "Klikk for å visa dine avtaler og oppgaver"
 
-#: ../applets/clock/clock.c:464
+#
+#: ../applets/clock/clock.c:548
+msgid "Click to hide month calendar"
+msgstr "Trykk for å skjule månadskalender"
+
+#: ../applets/clock/clock.c:551
 msgid "Click to view month calendar"
 msgstr "Klikk for å visa kalender for denne månaden"
 
-# applets/gen_util/clock.c:209
-#. Translators: If the event did not start on the current day
-#. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:670
-msgid "%b %d"
-msgstr "%d. %b"
+#
+#: ../applets/clock/clock.c:1095
+msgid "Click to view time in other timezones"
+msgstr "Trykk for å visa tid i andre tidssoner"
 
-# applets/desk-guide/deskguide_applet.c:101
-#: ../applets/clock/clock.c:1016
-msgid "Tasks"
-msgstr "Oppgåver"
-
-#: ../applets/clock/clock.c:1166
-msgid "All Day"
-msgstr "Heile dagen"
-
-# panel/foobar-widget.c:573
-#: ../applets/clock/clock.c:1205
-msgid "Appointments"
-msgstr "Avtalar"
-
-# panel/menu.c:4751 panel/panel_config.c:1566
-#: ../applets/clock/clock.c:1454
-msgid "Calendar"
-msgstr "Kalender"
-
-#: ../applets/clock/clock.c:1735
+#: ../applets/clock/clock.c:1102
 msgid "Computer Clock"
 msgstr "Datamaskinklokke"
 
 # panel/menu.c:3522 panel/session.c:1541
-#: ../applets/clock/clock.c:1838
+#: ../applets/clock/clock.c:1249
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
 # applets/gen_util/clock.c:191 applets/gen_util/clock.c:395
-#: ../applets/clock/clock.c:1840
+#: ../applets/clock/clock.c:1251
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 # applets/gen_util/clock.c:425
-#: ../applets/clock/clock.c:1882
+#: ../applets/clock/clock.c:1293
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y"
 
 # panel/gnome-run.c:233
-#: ../applets/clock/clock.c:1939
+#: ../applets/clock/clock.c:1368
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Klarte ikkje å køyra oppsettprogrammet til klokka: %s"
 
-#: ../applets/clock/clock.c:1977
+#: ../applets/clock/clock.c:1406
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -221,87 +249,84 @@ msgstr ""
 "Kanskje ingen er installert?"
 
 # gnome-terminal/gnome-terminal.c:990
-#: ../applets/clock/clock.c:2458
+#: ../applets/clock/clock.c:1917
 msgid "Custom format"
 msgstr "Sjølvvald format"
 
-# gnome-terminal/gnome-terminal.c:2060
-#: ../applets/clock/clock.c:2582 ../applets/clock/clock.c:2759
-#: ../applets/fish/fish.c:160 ../applets/notification_area/main.c:105
-#: ../applets/wncklet/window-list.c:113 ../applets/wncklet/wncklet.c:128
-#: ../applets/wncklet/workspace-switcher.c:238
-#, c-format
-msgid "There was an error displaying help: %s"
-msgstr "Ein feil oppstod ved vising av hjelp: %s"
-
 # panel/logout.c:195
-#: ../applets/clock/clock.c:2619
+#: ../applets/clock/clock.c:2064
 msgid "Clock Preferences"
 msgstr "Brukarval for klokke"
 
 # applets/gen_util/clock.c:974
-#: ../applets/clock/clock.c:2644
+#: ../applets/clock/clock.c:2089
 msgid "Clock _type:"
 msgstr "Klokke_type:"
 
 # applets/gen_util/clock.c:779
-#: ../applets/clock/clock.c:2655
+#: ../applets/clock/clock.c:2100
 msgid "12 hour"
 msgstr "12 timar"
 
 # applets/gen_util/clock.c:788
-#: ../applets/clock/clock.c:2656
+#: ../applets/clock/clock.c:2101
 msgid "24 hour"
 msgstr "24 timar"
 
 # applets/gen_util/clock.c:865
-#: ../applets/clock/clock.c:2657
+#: ../applets/clock/clock.c:2102
 msgid "UNIX time"
 msgstr "UNIX-tid"
 
 # applets/gen_util/clock.c:869
-#: ../applets/clock/clock.c:2658
+#: ../applets/clock/clock.c:2103
 msgid "Internet time"
 msgstr "Internett-tid"
 
 # applets/gen_util/clock.c:521
-#: ../applets/clock/clock.c:2666
+#: ../applets/clock/clock.c:2111
 msgid "Custom _format:"
 msgstr "Sjølvvald _format:"
 
 # applets/gen_util/mailcheck.c:1230
-#: ../applets/clock/clock.c:2685
+#: ../applets/clock/clock.c:2130
 msgid "Show _seconds"
 msgstr "Vis _sekund"
 
 # applets/gen_util/clock.c:596
-#: ../applets/clock/clock.c:2694
+#: ../applets/clock/clock.c:2139
 msgid "Show _date"
 msgstr "Vis _dato"
 
 # applets/gen_util/clock.c:851
-#: ../applets/clock/clock.c:2703
+#: ../applets/clock/clock.c:2148
 msgid "Use _UTC"
 msgstr "Bruk _UTC"
 
-#: ../applets/clock/clock.c:2804
+#
+#: ../applets/clock/clock.c:2158
+msgid "Show multiple _timezones"
+msgstr "Vis fleire _tidssoner"
+
+#: ../applets/clock/clock.c:2237
 msgid "The Clock displays the current time and date"
 msgstr "Klokka viser noverande tid og dato"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2807 ../applets/fish/fish.c:588
-#: ../applets/notification_area/main.c:158
-#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:783
+#: ../applets/clock/clock.c:2240 ../applets/fish/fish.c:588
+#: ../applets/notification_area/main.c:140
+#: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:555
-#: ../gnome-panel/panel-context-menu.c:133
+#: ../applets/wncklet/workspace-switcher.c:617
+#: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr ""
 "Roy-Magne Mo <rmo@sunnmore.net>\n"
 "Åsmund Skjæveland <aasmunds@fys.uio.no>\n"
 "Christian Fredrik Kalager Schaller <Uraeus@linuxrising.org>\n"
 "Kjartan Maraas  <kmaraas@gnome.org>\n"
-"Monica Gausen <monica@gausen.net>"
+"Monica Gausen <monica@gausen.net>\n"
+"Eskild Hustvedt <eskildh@gnome.org>"
 
 # applets/gen_util/clock.c:788
 #. Translators:
@@ -318,60 +343,125 @@ msgstr ""
 msgid "24-hour"
 msgstr "24-hour"
 
+#
 #: ../applets/clock/clock.schemas.in.h:12
+msgid ""
+"A list of timezone IDs. Each ID identifies an individual timezone. The "
+"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
+msgstr ""
+"Ei liste med tidssone-IDer. Kvar ID identifiserer ein individuell tidssone. "
+"Innstillingane for kvart av desse panela lagrast i nøklene $(id)_name og "
+"$(id)_zone."
+
+#: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
 msgstr "Sjølvvald tidsformat i klokka"
 
+#
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "Expand list of appointments"
+msgstr "Utvid liste med avtaler"
+
+#
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "Expand list of birthdays"
+msgstr "Utvid liste med fødselsdager"
+
+#
+#: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of tasks"
+msgstr "Utvid liste med oppgåver"
+
+#
+#: ../applets/clock/clock.schemas.in.h:17
+msgid "Expand list of weather information"
+msgstr "Utvid liste med informasjon om vêr"
+
 # applets/gen_util/clock.c:521
-#: ../applets/clock/clock.schemas.in.h:13
+#: ../applets/clock/clock.schemas.in.h:18
 msgid "Hour format"
 msgstr "Timeformat"
 
-#: ../applets/clock/clock.schemas.in.h:14
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Dersom sann, vis dato i klokka i tillegg til tid."
 
 # gnome-hint/gnome-hint.c:648
-#: ../applets/clock/clock.schemas.in.h:15
+#: ../applets/clock/clock.schemas.in.h:20
 msgid "If true, display seconds in time."
 msgstr "Dersom denne er satt til «sann», vis sekund i tida."
 
-#: ../applets/clock/clock.schemas.in.h:16
+#
+#: ../applets/clock/clock.schemas.in.h:21
+msgid "If true, display the timezone button in the clock, in addition to time."
+msgstr "Vis tidssone i klokka, i tillegg til tid viss sett til «true»."
+
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr ""
 "Dersom denne er satt til «sann», vis tida i Universal Coordinated Timezone."
 
+#
+#: ../applets/clock/clock.schemas.in.h:23
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Avtalelisten i kalendervindauget utvides viss sann."
+
+#
+#: ../applets/clock/clock.schemas.in.h:24
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "Fødselsdagslisten i kalendervindauget utvides viss sann."
+
+#
+#: ../applets/clock/clock.schemas.in.h:25
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "Utvid listen med oppgåver i kalendervindauget viss sann."
+
+#
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "Utvid listen med værinformasjon i kalendervindauget viss sann."
+
 # panel/gnome-panel-properties.c:635
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Dersom denne er sann, vis datoen i eit verktøytips når peikaren er over "
 "klokka."
 
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show week numbers in the calendar."
 msgstr "Dersom sann, vis vekenummer i kalenderen."
 
+#
+#: ../applets/clock/clock.schemas.in.h:29
+msgid "Name of the timezone"
+msgstr "Namn på tidssonen"
+
 # applets/gen_util/clock.c:823
-#: ../applets/clock/clock.schemas.in.h:19
+#: ../applets/clock/clock.schemas.in.h:30
 msgid "Show date in clock"
 msgstr "Vis dato i klokka"
 
 # applets/gen_util/clock.c:837
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "Show date in tooltip"
 msgstr "Vis dato i verktøytips"
 
+#
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "Show the timezone button"
+msgstr "Vis knapp for tidssone"
+
 # applets/gen_util/mailcheck.c:1230
-#: ../applets/clock/clock.schemas.in.h:21
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show time with seconds"
 msgstr "Vis tid med sekund"
 
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show week numbers in calendar"
 msgstr "Vis vekenummer i kalenderen"
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:35
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -380,17 +470,20 @@ msgstr ""
 "nøkkelen «format». Dette skjemaet er med for å vera kompatibelt med eldre "
 "versjonar."
 
-#: ../applets/clock/clock.schemas.in.h:24
+#
+#: ../applets/clock/clock.schemas.in.h:36
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format."
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
 msgstr ""
-"Denne nøkkelen inneheld tidsformatet panelklokka bruker når nøkkelen "
-"«format» er stilt til «custom». Du kan bruka konverteringsmerka som strftime"
-"() skjønar til å laga ditt eige format."
+"Denne nøkkelen spesifiserer formatet som brukast av panelklokken når "
+"formatnøkkelen er sett til «custom». Du kan bruka "
+"konverteringsspesifikasjonane som er gyldige i strftime() for å tilpassa "
+"formatet. Sjå manualsida for strftime()."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:37
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -409,29 +502,157 @@ msgstr ""
 "tida i sekund sidan Epoch, dvs. fyrste januar 1970. Dersom verdien er "
 "«custom», vil klokka visa tida etter formatet i nøkkelen «custom_format»."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#
+#: ../applets/clock/clock.schemas.in.h:38
+msgid ""
+"This key specifies the name of the timezone as can be used in the TZ "
+"environment variable."
+msgstr ""
+"Denne nøkkelen oppgjev namnet på tidssonen som kan finst i miljøvariabelen "
+"TZ."
+
+#: ../applets/clock/clock.schemas.in.h:39
 msgid "This key specifies the program to run in order to configure the time."
 msgstr ""
 "Denne nøkkelen styrer kva for eit program som skal køyrast for å stilla tida."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "This key specifies the user-visible name of the timezone."
+msgstr ""
+"Denne nøkkelen oppgjev namn på tidssone slik det presenterast brukaren."
+
+#: ../applets/clock/clock.schemas.in.h:41
 msgid "Time configuration tool"
 msgstr "Tidsoppsettverktøy"
 
+#
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "Timezone ID list"
+msgstr "ID-liste for tidssoner"
+
 # applets/gen_util/clock.c:869
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:43
 msgid "Use Internet time"
 msgstr "Bruk Internett-tid"
 
 # applets/gen_util/clock.c:865
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:44
 msgid "Use UNIX time"
 msgstr "Bruk UNIX-tid"
 
 # applets/gen_util/clock.c:851
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:45
 msgid "Use UTC"
 msgstr "Bruk UTC"
+
+#
+#: ../applets/clock/clock.schemas.in.h:46
+msgid "User-visible name of the timezone"
+msgstr "Brukar-synleg namn på tidssonen"
+
+# gnome-terminal/gnome-terminal.c:2060
+#: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
+#: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Ein feil oppstod ved vising av hjelp: %s"
+
+#
+#: ../applets/clock/timezone.glade.h:1
+msgid "<b>Active timezones</b>"
+msgstr "<b>Aktive tidssoner</b>"
+
+#
+#: ../applets/clock/timezone.glade.h:2
+msgid "<b>Add timezone</b>"
+msgstr "<b>Legg til tidssone</b>"
+
+#
+#: ../applets/clock/timezone.glade.h:3
+msgid "<small><b>Location:</b></small>"
+msgstr "<small><b>Stad:</b></small>"
+
+#
+#: ../applets/clock/timezone.glade.h:4
+msgid ""
+"<small><i>Click on the map to zoom and select the timezone of a city, or "
+"right click to zoom out.</i></small>"
+msgstr ""
+"<small><i>Trykk på kartet for å forstørre og velja tidssonen for ein by "
+"eller høgreklikk for å forminske.</i></small>"
+
+#
+#: ../applets/clock/timezone.glade.h:5
+msgid "Edit Timezones"
+msgstr "Rediger tidssoner"
+
+#. Translators: the first %s is a place and the
+#. * second is a time. Result looks like this:
+#. * Europe/Paris - 15:45
+#: ../applets/clock/tz-sel-dialog.c:196
+#, c-format
+msgid "%s - %s"
+msgstr "%s - %s"
+
+#
+#: ../applets/clock/tz-sel-dialog.c:205
+msgid "move the mouse on the map"
+msgstr "Flytt musen på kartet"
+
+#: ../applets/clock/tz-sel-dialog.c:207
+#, c-format
+msgid "<b>Location:</b> %s"
+msgstr "<b>Stad:</b> %s"
+
+#
+#: ../applets/clock/tz-sel-dialog.c:812
+msgid "Name"
+msgstr "Namn"
+
+#
+#: ../applets/clock/tz-sel-dialog.c:825
+msgid "Timezone"
+msgstr "Tidssone"
+
+#. Translators: the first string is a timezone name as in "UTC"
+#. * the second string is "+" or nothing. The result looks like
+#. * this: BST (UTC +01:00)
+#: ../applets/clock/tz-window.c:102
+#, c-format
+msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
+msgstr "%s med daylight saving (UTC %s%.2ld:%.2ld)"
+
+#. Translators: the first string is a timezone name as in "UTC"
+#. * the second string is "+" or nothing. The result looks like
+#. * this: BST (UTC +01:00)
+#: ../applets/clock/tz-window.c:111
+#, c-format
+msgid "%s (UTC %s%.2ld:%.2ld)"
+msgstr "%s (UTC %s%.2ld:%.2ld)"
+
+#. Translators: the first string is a timezone name (as in
+#. * "Europe/Paris"), the second string is a country name abbreviation
+#. * (as in "FR") and the last string is another line (it's the one
+#. * looking like "BST (UTC +01:00)")
+#: ../applets/clock/tz-window.c:121
+#, c-format
+msgid ""
+"%s - %s\n"
+"%s"
+msgstr ""
+"%s - %s\n"
+"%s"
+
+#
+#: ../applets/clock/tz-window.c:283
+msgid "_Edit timezones..."
+msgstr "R_ediger tidssoner..."
+
+#
+#: ../applets/clock/tz-window.c:370
+msgid "Timezones"
+msgstr "Tidssoner"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -465,7 +686,7 @@ msgstr ""
 "Me vil på det sterkaste åtvara mot einkvar bruk av %s som\n"
 "fører med seg at programmet gjer nytte for seg."
 
-#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:441
+#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:449
 msgid "Images"
 msgstr "Bilete"
 
@@ -556,22 +777,23 @@ msgstr ""
 "\n"
 "Detaljar: %s"
 
-# applets/fish/fish.c:687
+#
 #: ../applets/fish/fish.c:1611
-msgid ""
-"The water needs changing!\n"
-"(Look at today's date)"
-msgstr ""
-"Vatnet må bytast ut!\n"
-"(Sjå på datoen i dag)"
+msgid "The water needs changing"
+msgstr "Vannet må skiftes"
+
+#
+#: ../applets/fish/fish.c:1613
+msgid "Look at today's date!"
+msgstr "Sjå på datoen i dag!"
 
 #: ../applets/fish/fish.c:1706
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Fisken %s, spåkona"
 
-#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
-#: ../applets/wncklet/workspace-switcher.glade.h:1
+#
+#: ../applets/fish/fish.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -710,7 +932,7 @@ msgid "Area where notification icons appear"
 msgstr "Område der varslingsikon kjem fram"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: ../applets/notification_area/main.c:153
+#: ../applets/notification_area/main.c:135
 msgid "Notification Area"
 msgstr "Varslingsområde"
 
@@ -718,17 +940,7 @@ msgstr "Varslingsområde"
 msgid "Notification Area Factory"
 msgstr "Varslingsområdefabrikk"
 
-# panel/menu.c:4783
-# TRN: Skulle dette vore plasseringa av panelet? Ref. glade-fil.
-#: ../applets/notification_area/na-tray-manager.c:119
-msgid "Orientation"
-msgstr "Orientering"
-
-#: ../applets/notification_area/na-tray-manager.c:120
-msgid "The orientation of the tray."
-msgstr "Orientering for trauet"
-
-#: ../applets/notification_area/main.c:650
+#: ../applets/notification_area/main.c:224
 msgid "Panel Notification Area"
 msgstr "Panelet sitt varslingsområde"
 
@@ -759,7 +971,7 @@ msgstr "Skift mellom arbeidsområde"
 
 # help-browser/window.c:227
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:786
+#: ../applets/wncklet/window-list.c:608
 msgid "Window List"
 msgstr "Vindaugsliste"
 
@@ -769,12 +981,12 @@ msgstr "Fabrikk for vindaugenavigeringshjelpeprogram "
 
 # gnome-terminal/gnome-terminal.c:1415
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:241
+#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:240
 msgid "Window Selector"
 msgstr "Vindaugeveljar"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:558
+#: ../applets/wncklet/workspace-switcher.c:620
 msgid "Workspace Switcher"
 msgstr "Arbeidsområdeskiftar"
 
@@ -788,7 +1000,7 @@ msgstr "Klarte ikkje å lasta %s: %s\n"
 msgid "Icon not found"
 msgstr "Fann ikkje ikonet"
 
-#: ../applets/wncklet/showdesktop.c:242
+#: ../applets/wncklet/showdesktop.c:243
 msgid "Click here to restore hidden windows."
 msgstr "Klikk her for å gjenoppretta skjulte vindauge."
 
@@ -797,15 +1009,15 @@ msgid "Click here to hide all windows and show the desktop."
 msgstr "Klikk her for å skjula alle vindauga og visa skrivebordet."
 
 # panel/panel_config.c:670
-#: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
+#: ../applets/wncklet/showdesktop.c:455 ../applets/wncklet/showdesktop.c:536
 msgid "Show Desktop Button"
 msgstr "Vis skrivebordet-knapp"
 
-#: ../applets/wncklet/showdesktop.c:536
+#: ../applets/wncklet/showdesktop.c:538
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Denne knappen let deg skjula alle vindauga og visa skrivebordet."
 
-#: ../applets/wncklet/showdesktop.c:566
+#: ../applets/wncklet/showdesktop.c:568
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -813,7 +1025,7 @@ msgstr ""
 "Vindaugehandsamaren din støttar ikkje knapp som viser skrivebordet, eller du "
 "køyrer ikkje nokon vindaugehandsamar."
 
-#: ../applets/wncklet/window-list.c:788
+#: ../applets/wncklet/window-list.c:610
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -821,82 +1033,54 @@ msgstr ""
 "Vindaugelista viser ei liste over alle vindauga som knappar og let deg sjå "
 "gjennom dei."
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>Gjenoppretting av minimerte vindauge</b>"
 
 # gsm/splash.c:67
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>Gruppéring av vindauge</b>"
 
 # help-browser/window.c:227
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>Innhald i vindaugeliste</b>"
 
-# help-browser/window.c:227
-#: ../applets/wncklet/window-list.glade.h:5
-msgid "<b>Window List Size</b>"
-msgstr "<b> Storleik på vindaugeliste</b>"
-
-# applets/desk-guide/deskguide_applet.c:149
-#: ../applets/wncklet/window-list.glade.h:6
-msgid "Behavior"
-msgstr "Åtferd"
-
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
 msgstr "Gruppér vindaguer når _plassen er liten"
 
-#: ../applets/wncklet/window-list.glade.h:8
-msgid "M_inimum size:"
-msgstr "M_inste storleik:"
-
-#: ../applets/wncklet/window-list.glade.h:9
-msgid "Ma_ximum size:"
-msgstr "Største storlei_k:"
-
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
 msgstr "Gjenopprett til gjeldande _arbeidsområde"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
 msgstr "Gjenopprett til _opprinneleg arbeidsområde"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
 msgstr "Vis vindauge frå _aktiv arbeidsområde"
 
-#: ../applets/wncklet/window-list.glade.h:13
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "Vis vindauger frå a_lle arbeidsområda"
 
-# applets/tasklist/tasklist_properties.c:276 panel/menu.c:4780
-#: ../applets/wncklet/window-list.glade.h:14
-msgid "Size"
-msgstr "Storleik"
-
 # help-browser/window.c:227
-#: ../applets/wncklet/window-list.glade.h:15
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "Brukarval for vindaugeliste"
 
 # panel/panel_config.c:1408
-#: ../applets/wncklet/window-list.glade.h:16
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "Gruppér _alltid vindauger"
 
 # panel/panel_config.c:1392
-#: ../applets/wncklet/window-list.glade.h:17
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "Gruppér aldri _vindauge"
-
-#: ../applets/wncklet/window-list.glade.h:18
-#: ../gnome-panel/panel-properties-dialog.glade.h:27
-msgid "pixels"
-msgstr "pikslar"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -939,22 +1123,17 @@ msgstr "Flytt vindauge til noverande arbeidsområde når dei vert gjenoppretta"
 msgid "Show windows from all workspaces"
 msgstr "Vis vindauge frå alle arbeidsområda"
 
+#
 #: ../applets/wncklet/window-list.schemas.in.h:8
 msgid ""
-"This key specifies the maximum width that the window list requests. The "
-"maximum width setting is useful to limit the size of the window list in "
-"large panels, where the window list could fill the entire space available."
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
 msgstr ""
-"Denne nøkkelen styrer den største breidda som vindaugelista ber om. Dette er "
-"nyttig for å avgrensa plassen vindaugelista tek i eit stort panel, der "
-"vindaugelisa ellers kunne brukt all den ledige plassen."
-
-#: ../applets/wncklet/window-list.schemas.in.h:9
-msgid "This key specifies the minimum width that the window list requests."
-msgstr "Denne nøkkelen styrer den minste breidda som vindaugelista ber om. "
+"Bruk av denne nøkkelen gikk ut i GNOME 2.20. Denne bevares for "
+"kompatibilitet med eldre versjonar."
 
 # panel/panel_config.c:1392
-#: ../applets/wncklet/window-list.schemas.in.h:10
+#: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "When to group windows"
 msgstr "Når vindauge skal setjast i grupper"
 
@@ -970,24 +1149,24 @@ msgstr ""
 # gnome-hint/gnome-hint-properties.c:146 panel/menu-properties.c:596
 # panel/menu-properties.c:634 panel/panel-util.c:193
 # panel/panel_config.c:1631 panel/swallow.c:261
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:859
-#: ../applets/wncklet/workspace-switcher.glade.h:11
+#: ../applets/wncklet/workspace-switcher.c:213
+#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "rader"
 
 # help-browser/history.c:260
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:859
+#: ../applets/wncklet/workspace-switcher.c:213
+#: ../applets/wncklet/workspace-switcher.c:971
 msgid "columns"
 msgstr "kolonner"
 
-#: ../applets/wncklet/workspace-switcher.c:426
+#: ../applets/wncklet/workspace-switcher.c:487
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "Feil ved lasting av num_rows-verdien for arbeidsområdeskiftaren: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:437
+#: ../applets/wncklet/workspace-switcher.c:498
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -995,14 +1174,14 @@ msgstr ""
 "Feil ved lasting av display_workspace_names-verdien for "
 "arbeidsområdeskiftaren: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:452
+#: ../applets/wncklet/workspace-switcher.c:513
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Feil ved lasting av display_all_workspaces-verdien for "
 "arbeidsområdeskiftaren: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:560
+#: ../applets/wncklet/workspace-switcher.c:622
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1011,40 +1190,40 @@ msgstr ""
 "handtera vindauga."
 
 # panel/gnome-panel-screenshot.glade.h:8
-#: ../applets/wncklet/workspace-switcher.glade.h:2
+#: ../applets/wncklet/workspace-switcher.glade.h:1
 msgid "<b>Switcher</b>"
 msgstr "<b>Skiftar</b>"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:3
+#: ../applets/wncklet/workspace-switcher.glade.h:2
 msgid "<b>Workspaces</b>"
 msgstr "<b>Arbeidsområde</b>"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:4
+#: ../applets/wncklet/workspace-switcher.glade.h:3
 msgid "Number of _workspaces:"
 msgstr "Tal på arbeids_flater:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:5
+#: ../applets/wncklet/workspace-switcher.glade.h:4
 msgid "Show _all workspaces in:"
 msgstr "Vis _alle arbeidsområda i:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:6
+#: ../applets/wncklet/workspace-switcher.glade.h:5
 msgid "Show _only the current workspace"
 msgstr "Viser berre det _gjeldande arbeidsområdet"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:7
+#: ../applets/wncklet/workspace-switcher.glade.h:6
 msgid "Show workspace _names in switcher"
 msgstr "Vis arbeidsområde_namn i skiftaren"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:8
+#: ../applets/wncklet/workspace-switcher.glade.h:7
 msgid "Workspace Names"
 msgstr "Namn på arbeidsområda"
 
 # applets/gen_util/printer.c:308
-#: ../applets/wncklet/workspace-switcher.glade.h:9
+#: ../applets/wncklet/workspace-switcher.glade.h:8
 msgid "Workspace Switcher Preferences"
 msgstr "Brukarval for arbeidsområdeskiftaren"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:10
+#: ../applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace na_mes:"
 msgstr "Na_mn på arbeidsområda:"
 
@@ -1064,13 +1243,16 @@ msgstr ""
 "Dersom sann, vil arbeidsområdeskiftaren visa alle arbeidsområda. Elles vil "
 "han berre visa det noverande arbeidsområdet."
 
+#
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
-"the workspaces. Otherwise they will display the windows on the workspace."
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Metacity."
 msgstr ""
-"Dersom sann, vil arbeidsområda i arbeidsområdeskiftaren visa namna på "
-"arbeidsområda. Elles vil dei visa vindauga på arbeidsområda."
+"Viss denne er sett til «true» vil arbeidsområdebyter visa namn på "
+"arbeidsområda, elles vil vindauga på arbeidsområdet vert viste. Denne "
+"innstillinga verkar berre med Metacity vindushandsamaren."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -1093,185 +1275,248 @@ msgid "GNOME Panel Shell"
 msgstr "GNOME-panelskal"
 
 # panel/applet.c:474
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:540
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:542
 msgid "Loc_k To Panel"
 msgstr "Lås til _panelet"
 
 # panel/applet.c:481
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:523
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:525
 msgid "_Move"
 msgstr "_Flytt"
 
 # panel/applet.c:474
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:514
 msgid "_Remove From Panel"
 msgstr "Fje_rn frå panelet"
 
 # applets/tasklist/tasklist_applet.c:135 panel/applet.c:434
 # panel/foobar-widget.c:747
-#: ../gnome-panel/applet.c:433
+#: ../gnome-panel/applet.c:434
 msgid "???"
 msgstr "???"
 
 # panel/applet.c:766
-#: ../gnome-panel/applet.c:1226
+#: ../gnome-panel/applet.c:1239
 msgid "Cannot find an empty spot"
 msgstr "Kunne ikkje finna ein tom plass"
 
-# panel/menu.c:5036
-#: ../gnome-panel/button-widget.c:199
-msgid "Could not load icon"
-msgstr "Kan ikkje lasta ikon"
-
 # panel/drawer.c:185 panel/drawer.c:319 panel/gnome-panel-properties.c:583
 # panel/menu.c:4883
-#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:169
-#: ../gnome-panel/panel-toplevel.c:1524
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:170
+#: ../gnome-panel/panel-toplevel.c:1585
 msgid "Drawer"
 msgstr "Skuff"
 
 # panel/menu.c:4960 panel/menu.c:4965 panel/menu.c:5050
-#: ../gnome-panel/drawer.c:588
+#: ../gnome-panel/drawer.c:589
 msgid "_Add to Drawer..."
 msgstr "_Legg til i skuff ..."
 
 # panel/menu.c:5102
-#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:835
-#: ../gnome-panel/panel-action-button.c:136
-#: ../gnome-panel/panel-context-menu.c:220
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:859
+#: ../gnome-panel/panel-action-button.c:138
+#: ../gnome-panel/panel-context-menu.c:212
 msgid "_Properties"
 msgstr "_Eigenskapar"
 
 # panel/menu.c:3729
-#: ../gnome-panel/gnome-desktop-item-edit.c:24
+#: ../gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
 msgstr "Opprett ei ny fil i gitt katalog"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:25
+#: ../gnome-panel/gnome-desktop-item-edit.c:28
 msgid "[FILE...]"
 msgstr "[FIL...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:172
+#: ../gnome-panel/gnome-desktop-item-edit.c:131
 msgid "- Edit .desktop files"
 msgstr "- Rediger .desktop-filer"
 
 # panel/launcher.c:744
-#: ../gnome-panel/gnome-desktop-item-edit.c:203
-#: ../gnome-panel/gnome-desktop-item-edit.c:275 ../gnome-panel/launcher.c:925
+#: ../gnome-panel/gnome-desktop-item-edit.c:162
+#: ../gnome-panel/gnome-desktop-item-edit.c:214 ../gnome-panel/launcher.c:949
 msgid "Create Launcher"
 msgstr "Lag oppstartar"
 
 # panel/panel_config.c:1842
-#: ../gnome-panel/gnome-desktop-item-edit.c:227
-#: ../gnome-panel/gnome-desktop-item-edit.c:261
+#: ../gnome-panel/gnome-desktop-item-edit.c:188
+#: ../gnome-panel/gnome-desktop-item-edit.c:208
 msgid "Directory Properties"
 msgstr "Eigenskapar for katalogen"
 
 # panel/launcher.c:554
-#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:763
+#: ../gnome-panel/gnome-desktop-item-edit.c:193 ../gnome-panel/launcher.c:787
 msgid "Launcher Properties"
 msgstr "Eigenskapar for oppstartar"
 
-#: ../gnome-panel/launcher.c:131
+#
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+"Start andre program og bruk ulike verktøy for å handtere vindauge, vis "
+"klokka etc."
+
+#
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
+msgid "Panel"
+msgstr "Panel"
+
+#: ../gnome-panel/launcher.c:151
 msgid "Could not show this URL"
 msgstr "Kunne ikkje visa denne URLen"
 
-#: ../gnome-panel/launcher.c:132
+#: ../gnome-panel/launcher.c:152
 msgid "No URL was specified."
 msgstr "Ingen URL vart oppgiven."
 
-#: ../gnome-panel/launcher.c:145
+#: ../gnome-panel/launcher.c:165
 #, c-format
 msgid "Could not show '%s'"
 msgstr "Kunne ikkje visa «%s»"
 
 # panel/menu.c:5036
-#: ../gnome-panel/launcher.c:190
+#: ../gnome-panel/launcher.c:210
 msgid "Could not launch application"
 msgstr "Kan ikkje starta programmet"
 
-#: ../gnome-panel/launcher.c:255
+#: ../gnome-panel/launcher.c:275
 msgid "Could not use dropped item"
 msgstr "Kunne ikkje bruke sluppen oppføring"
 
-#: ../gnome-panel/launcher.c:448
+#: ../gnome-panel/launcher.c:471
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Ikkje oppgitt nokon URI til .desktop-fila til oppstartaren\n"
 
-#: ../gnome-panel/launcher.c:491
+#: ../gnome-panel/launcher.c:514
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan ikkje opna skrivebordsfila «%s» for panel-oppstartaren %s%s\n"
 
-#: ../gnome-panel/launcher.c:829
+#: ../gnome-panel/launcher.c:853
 msgid "_Launch"
 msgstr "_Start"
 
-#: ../gnome-panel/launcher.c:868
+#: ../gnome-panel/launcher.c:892
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Nøkkelen %s er ikkje satt, kan ikkje lasta oppstartar\n"
 
 # panel/launcher.c:744
-#: ../gnome-panel/launcher.c:992 ../gnome-panel/panel-ditem-editor.c:1237
-#: ../gnome-panel/panel-ditem-editor.c:1263
-#: ../gnome-panel/panel-ditem-editor.c:1331
+#: ../gnome-panel/launcher.c:1016 ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/panel-ditem-editor.c:1381
+#: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "Could not save launcher"
 msgstr "Klarte ikkje lagra oppstartar"
 
 # panel/menu.c:1642
-#: ../gnome-panel/menu.c:935
+#: ../gnome-panel/menu.c:933
 msgid "Add this launcher to _panel"
 msgstr "Legg til denne oppstartaren på _panelet"
 
 # panel/menu.c:1642
-#: ../gnome-panel/menu.c:946
+#: ../gnome-panel/menu.c:940
 msgid "Add this launcher to _desktop"
 msgstr "Legg til denne oppstartaren på _skrivebordet"
 
 # panel/menu.c:1765
-#: ../gnome-panel/menu.c:962
+#: ../gnome-panel/menu.c:952
 msgid "_Entire menu"
 msgstr "H_eile menyen"
 
 # panel/menu.c:1775
-#: ../gnome-panel/menu.c:972
+#: ../gnome-panel/menu.c:957
 msgid "Add this as _drawer to panel"
 msgstr "Legg til som s_kuff på panelet"
 
 # panel/menu.c:1784
-#: ../gnome-panel/menu.c:984
+#: ../gnome-panel/menu.c:964
 msgid "Add this as _menu to panel"
 msgstr "Legg til som _meny på panelet"
 
+#: ../gnome-panel/nothing.cP:601
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr "<b>SPILL FERDIG</b> på nivå %d!"
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../gnome-panel/nothing.cP:608
+#, c-format
+msgid "%1$s   %2$s   %3$s"
+msgstr "%1$s   %2$s   %3$s"
+
+#
+#: ../gnome-panel/nothing.cP:609
+msgid "Press 'q' to quit"
+msgstr "Trykk «q» for å avslutte"
+
+#
+#: ../gnome-panel/nothing.cP:614
+msgid "Paused"
+msgstr "Pause"
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#, c-format
+msgid "%1$s\t%2$s"
+msgstr "%1$s\t%2$s"
+
+#
+#: ../gnome-panel/nothing.cP:618
+msgid "Press 'p' to unpause"
+msgstr "Trykk «p» for å halda fram"
+
+#: ../gnome-panel/nothing.cP:624
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr "Nivå: %s, Liv: %s"
+
+#
+#: ../gnome-panel/nothing.cP:629
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr ""
+"Venstre/høgre for å flytta, mellomrom for å skyte, «p» for å pause, «q» for "
+"å avslutte"
+
+#
+#: ../gnome-panel/nothing.cP:1369
+msgid "Killer GEGLs from Outer Space"
+msgstr "Morder-GEGLer frå det ytre rom"
+
 # gsm/splash.c:56 gsm/splash.c:57
-#: ../gnome-panel/panel-action-button.c:124
+#: ../gnome-panel/panel-action-button.c:126
 msgid "_Activate Screensaver"
 msgstr "St_art skjermsparar"
 
 # panel/foobar-widget.c:362
-#: ../gnome-panel/panel-action-button.c:130
+#: ../gnome-panel/panel-action-button.c:132
 msgid "_Lock Screen"
 msgstr "_Lås skjerm"
 
 # panel/menu.c:5177
-#: ../gnome-panel/panel-action-button.c:200
-#: ../gnome-panel/panel-menu-bar.c:479 ../gnome-panel/panel-menu-button.c:1017
-#: ../gnome-panel/panel-util.c:781
+#: ../gnome-panel/panel-action-button.c:214
+#: ../gnome-panel/panel-menu-bar.c:409 ../gnome-panel/panel-menu-button.c:990
+#: ../gnome-panel/panel-util.c:809
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Kunne ikkje køyra «%s»"
 
-#: ../gnome-panel/panel-action-button.c:238
+#: ../gnome-panel/panel-action-button.c:253
 msgid "Could not connect to server"
 msgstr "Kunne ikkje kopla til tenar"
 
 # panel/foobar-widget.c:362
-#: ../gnome-panel/panel-action-button.c:269
+#: ../gnome-panel/panel-action-button.c:284
 msgid "Lock Screen"
 msgstr "Lås skjerm"
 
-#: ../gnome-panel/panel-action-button.c:270
+#: ../gnome-panel/panel-action-button.c:285
 msgid "Protect your computer from unauthorized use"
 msgstr "Vern datamaskina di mot uatorisert bruk"
 
@@ -1279,159 +1524,165 @@ msgstr "Vern datamaskina di mot uatorisert bruk"
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:284
+#: ../gnome-panel/panel-action-button.c:299
 msgid "Log Out..."
 msgstr "Logg ut..."
 
 # panel/menu.c:5346
-#: ../gnome-panel/panel-action-button.c:285
+#: ../gnome-panel/panel-action-button.c:300
 msgid "Log out of this session to log in as a different user"
 msgstr "Logg ut for å logga inn som ein annan brukar"
 
 # panel/launcher.c:499 panel/launcher.c:693 panel/menu.c:1715
-#: ../gnome-panel/panel-action-button.c:294
+#: ../gnome-panel/panel-action-button.c:309
 msgid "Run Application..."
 msgstr "Køyr program ..."
 
-#: ../gnome-panel/panel-action-button.c:295
-msgid "Run an Application by entering a command"
-msgstr "Køyr program ved å skriva inn kommandoen"
+#
+#: ../gnome-panel/panel-action-button.c:310
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "Køyr program ved å skriva inn ein kommando eller vel frå ei liste"
 
-#: ../gnome-panel/panel-action-button.c:304
+#: ../gnome-panel/panel-action-button.c:319
 msgid "Search for Files..."
 msgstr "Søk etter filer ..."
 
-#: ../gnome-panel/panel-action-button.c:305
-msgid "Find files, folders, and documents on your computer"
-msgstr "Finn filer, mapper og dokument på datamaskinen"
+#
+#: ../gnome-panel/panel-action-button.c:320
+msgid "Locate documents and folders on this computer by name or content"
+msgstr "Finn dokument og mapper på denne datamaskinen etter namn eller innhald"
 
-#: ../gnome-panel/panel-action-button.c:313
+#: ../gnome-panel/panel-action-button.c:328
+#: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
 msgstr "Tving til å avslutta"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:329
 msgid "Force a misbehaving application to quit"
 msgstr "Tving eit program som ikkje ter seg ordentleg til å avslutta"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:323
+#: ../gnome-panel/panel-action-button.c:338
 msgid "Connect to Server..."
 msgstr "Kopla til tenar..."
 
-#: ../gnome-panel/panel-action-button.c:324
-msgid "Connect to a remote server"
-msgstr "Kopla til ein ekstern tenar"
+#
+#: ../gnome-panel/panel-action-button.c:339
+msgid "Connect to a remote computer or shared disk"
+msgstr "Kopla til ein ekstern datamaskin eller delt disk"
 
-#: ../gnome-panel/panel-action-button.c:332
+#: ../gnome-panel/panel-action-button.c:347
 msgid "Shut Down..."
 msgstr "Slå av..."
 
-#: ../gnome-panel/panel-action-button.c:333
+#: ../gnome-panel/panel-action-button.c:348
 msgid "Shut down the computer"
 msgstr "Slå av datamaskina"
 
 # panel/launcher.c:499 panel/launcher.c:693 panel/menu.c:1715
-#: ../gnome-panel/panel-addto.c:110
+#: ../gnome-panel/panel-addto.c:111
 msgid "Custom Application Launcher"
 msgstr "Sjølvlaga programoppstartar"
 
 # panel/launcher.c:744
-#: ../gnome-panel/panel-addto.c:111
+#: ../gnome-panel/panel-addto.c:112
 msgid "Create a new launcher"
 msgstr "Lag ny oppstartar"
 
 # panel/launcher.c:499 panel/launcher.c:693 panel/menu.c:1715
-#: ../gnome-panel/panel-addto.c:121
+#: ../gnome-panel/panel-addto.c:122
 msgid "Application Launcher..."
 msgstr "Programoppstartar ..."
 
-#: ../gnome-panel/panel-addto.c:122
+#: ../gnome-panel/panel-addto.c:123
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopier ein oppstartar frå programmenyen"
 
 # panel/menu.c:3969 panel/menu.c:3974 panel/menu.c:5655 panel/menu.c:5682
 # panel/menu.c:5816
-#: ../gnome-panel/panel-addto.c:136
+#: ../gnome-panel/panel-addto.c:137 ../gnome-panel/panel-menu-button.c:1091
 msgid "Main Menu"
 msgstr "Hovudmeny"
 
 # panel/menu-properties.c:416
-#: ../gnome-panel/panel-addto.c:137
+#: ../gnome-panel/panel-addto.c:138
 msgid "The main GNOME menu"
 msgstr "GNOME-hovudmenyen"
 
 # panel/menu-properties.c:593
-#: ../gnome-panel/panel-addto.c:147
+#: ../gnome-panel/panel-addto.c:148
 msgid "Menu Bar"
 msgstr "Menylinje"
 
 # panel/menu.c:2883
-#: ../gnome-panel/panel-addto.c:148
+#: ../gnome-panel/panel-addto.c:149
 msgid "A custom menu bar"
 msgstr "Sjølvlaga menylinje"
 
-#: ../gnome-panel/panel-addto.c:158
+#: ../gnome-panel/panel-addto.c:159
 msgid "Separator"
 msgstr "Delelinje"
 
-#: ../gnome-panel/panel-addto.c:159
+#: ../gnome-panel/panel-addto.c:160
 msgid "A separator to organize the panel items"
 msgstr "Ei delelinje å ordna panelelementa med"
 
-#: ../gnome-panel/panel-addto.c:170
+#: ../gnome-panel/panel-addto.c:171
 msgid "A pop out drawer to store other items in"
 msgstr "Ei sprettopp-skuff å lagra andre ting i"
 
 # panel/menu.c:3208 panel/menu.c:3210
-#: ../gnome-panel/panel-addto.c:261
+#: ../gnome-panel/panel-addto.c:262
 msgid "(empty)"
 msgstr "(tom)"
 
-#: ../gnome-panel/panel-addto.c:401
+#: ../gnome-panel/panel-addto.c:402
 #: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "spørjinga returnerte unntak %s\n"
 
-#: ../gnome-panel/panel-addto.c:1060
+#: ../gnome-panel/panel-addto.c:1061
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Finn ein _oppføring å leggja til på «%s»:"
 
 # panel/menu.c:4960 panel/menu.c:4965 panel/menu.c:5050
-#: ../gnome-panel/panel-addto.c:1064
+#: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "Legg til i skuff"
 
-#: ../gnome-panel/panel-addto.c:1066
+#: ../gnome-panel/panel-addto.c:1067
 msgid "Find an _item to add to the drawer:"
 msgstr "Finn eit _element å leggja til i skuffa:"
 
 # panel/menu.c:4960 panel/menu.c:4965 panel/menu.c:5050
-#: ../gnome-panel/panel-addto.c:1068
+#: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "Legg til på panelet"
 
-#: ../gnome-panel/panel-addto.c:1070
+#: ../gnome-panel/panel-addto.c:1071
 msgid "Find an _item to add to the panel:"
 msgstr "Finn ein _oppføring å leggja til på panelet:"
 
-#: ../gnome-panel/panel-applet-frame.c:836
+#: ../gnome-panel/panel-applet-frame.c:850
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Unntak frå popup_menu «%s»\n"
 
-#: ../gnome-panel/panel-applet-frame.c:958
+#: ../gnome-panel/panel-applet-frame.c:975
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "«%s» har avslutta uventa"
 
 # panel/gnome-panel-properties.c:1697
-#: ../gnome-panel/panel-applet-frame.c:960
+#: ../gnome-panel/panel-applet-frame.c:977
 msgid "Panel object has quit unexpectedly"
 msgstr "Panelobjektet har avslutta uventa"
 
-#: ../gnome-panel/panel-applet-frame.c:967
+#: ../gnome-panel/panel-applet-frame.c:984
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1441,24 +1692,35 @@ msgstr ""
 
 # gmenu/main.c:106 gsm/session-properties-capplet.c:257
 # gsm/session-properties-capplet.c:311
-#: ../gnome-panel/panel-applet-frame.c:973
+#: ../gnome-panel/panel-applet-frame.c:990
 msgid "_Don't Reload"
 msgstr "_Ikkje last på ny"
 
-#: ../gnome-panel/panel-applet-frame.c:974
+#: ../gnome-panel/panel-applet-frame.c:991
 msgid "_Reload"
 msgstr "_Last på ny"
 
-#: ../gnome-panel/panel-applet-frame.c:1020
+#
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../gnome-panel/panel-applet-frame.c:1006
+#: ../gnome-panel/panel-applet-frame.c:1094 ../gnome-panel/panel-util.c:397
+msgid "Error"
+msgstr "Feil"
+
+#: ../gnome-panel/panel-applet-frame.c:1057
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panelet støtte på eit problem medan «%s» vart lasta."
 
-#: ../gnome-panel/panel-applet-frame.c:1037
+#: ../gnome-panel/panel-applet-frame.c:1073
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Vil du fjerna panelprogrammet frå oppsettet ditt?"
 
-#: ../gnome-panel/panel-applet-frame.c:1136
+#: ../gnome-panel/panel-applet-frame.c:1147
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Ikkje i stand til å få tak i AppletShell-grensesnitt frå kontrollen\n"
 
@@ -1478,23 +1740,23 @@ msgid "Error getting value for '%s': %s"
 msgstr "Feil under henting av verdien til «%s»: %s"
 
 # panel/menu.c:213
-#: ../gnome-panel/panel-context-menu.c:100
+#: ../gnome-panel/panel-context-menu.c:101
 msgid "And many, many others..."
 msgstr "Og mange, mange andre ..."
 
 # panel/menu.c:235
-#: ../gnome-panel/panel-context-menu.c:126
+#: ../gnome-panel/panel-context-menu.c:127
 msgid "The GNOME Panel"
 msgstr "GNOME-Panel"
 
-# panel/menu.c:238
-#: ../gnome-panel/panel-context-menu.c:129
+#
+#: ../gnome-panel/panel-context-menu.c:130
 msgid ""
-"This program is responsible for launching other applications and embedding "
-"small applets within itself."
+"This program is responsible for launching other applications and provides "
+"useful utilities."
 msgstr ""
-"Dette programmet er ansvarleg for å starta andre program og åinnlemme små "
-"tilleggsprogram i seg sjølv."
+"Dette programmet er ansvarlig for å starta andre program og gjev deg nokon "
+"nyttige verktøy."
 
 # panel/menu.c:5022 panel/menu.c:5085
 #: ../gnome-panel/panel-context-menu.c:167
@@ -1506,117 +1768,136 @@ msgid "You must always have at least one panel."
 msgstr "Du må alltid ha minst eit panel."
 
 # panel/menu.c:4960 panel/menu.c:4965 panel/menu.c:5050
-#: ../gnome-panel/panel-context-menu.c:205
+#: ../gnome-panel/panel-context-menu.c:201
 msgid "_Add to Panel..."
 msgstr "_Legg til på panelet ..."
 
 # panel/menu.c:5022 panel/menu.c:5085
-#: ../gnome-panel/panel-context-menu.c:233
+#: ../gnome-panel/panel-context-menu.c:222
 msgid "_Delete This Panel"
 msgstr "_Slett dette panelet"
 
 # gsm/splash.c:65
-#: ../gnome-panel/panel-context-menu.c:250
+#: ../gnome-panel/panel-context-menu.c:237
 msgid "_New Panel"
 msgstr "_Nytt panel"
 
 # panel/menu.c:5266
-#: ../gnome-panel/panel-context-menu.c:306
+#: ../gnome-panel/panel-context-menu.c:288
 msgid "A_bout Panels"
 msgstr "_Om panel"
 
-#: ../gnome-panel/panel-ditem-editor.c:111
+#: ../gnome-panel/panel-ditem-editor.c:113
 msgid "Application"
 msgstr "Program"
 
 # panel/launcher.c:499 panel/launcher.c:693 panel/menu.c:1715
-#: ../gnome-panel/panel-ditem-editor.c:113
+#: ../gnome-panel/panel-ditem-editor.c:115
 msgid "Application in Terminal"
 msgstr "Program i terminal"
 
-# gnome-terminal/gnome-terminal.c:1586
-#: ../gnome-panel/panel-ditem-editor.c:115
-msgid "File"
-msgstr "Fil"
+#
+#: ../gnome-panel/panel-ditem-editor.c:117
+msgid "Location"
+msgstr "Stad"
 
 # gsm/gsm-client-editor.c:107
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:574
+#: ../gnome-panel/panel-ditem-editor.c:619
 msgid "_Type:"
 msgstr "_Type:"
 
 # gnome-about/contributors.h:279
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:581
+#: ../gnome-panel/panel-ditem-editor.c:626
 msgid "_Name:"
 msgstr "_Namn:"
 
 # applets/gen_util/mailcheck.c:1230
-#: ../gnome-panel/panel-ditem-editor.c:589
+#: ../gnome-panel/panel-ditem-editor.c:634
 msgid "Browse icons"
 msgstr "Bla gjennom ikon"
 
-#: ../gnome-panel/panel-ditem-editor.c:607
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "_Bla gjennom ..."
 
 # panel/swallow.c:259
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:614
+#: ../gnome-panel/panel-ditem-editor.c:659
 msgid "Co_mment:"
 msgstr "_Merknad:"
 
 # panel/launcher.c:499 panel/launcher.c:693 panel/menu.c:1715
-#: ../gnome-panel/panel-ditem-editor.c:943
+#: ../gnome-panel/panel-ditem-editor.c:1021
 msgid "Choose an application..."
 msgstr "Vel eit program ..."
 
-#: ../gnome-panel/panel-ditem-editor.c:947
+#: ../gnome-panel/panel-ditem-editor.c:1025
 msgid "Choose a file..."
 msgstr "Vel ei fil ..."
 
+#
+#: ../gnome-panel/panel-ditem-editor.c:1150
+msgid "Comm_and:"
+msgstr "Komm_ando:"
+
 # panel/swallow.c:259
-#: ../gnome-panel/panel-ditem-editor.c:1061
-#: ../gnome-panel/panel-ditem-editor.c:1070
+#: ../gnome-panel/panel-ditem-editor.c:1159
 msgid "_Command:"
 msgstr "_Kommando:"
 
 # panel/drawer.c:142 panel/menu-properties.c:617 panel/menu-properties.c:653
-#: ../gnome-panel/panel-ditem-editor.c:1079
+#: ../gnome-panel/panel-ditem-editor.c:1168
 msgid "_Location:"
 msgstr "_Plassering:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1238
+#: ../gnome-panel/panel-ditem-editor.c:1348
 msgid "The name of the launcher is not set."
 msgstr "Namn på oppstartar er ikkje vald."
 
+#
+#: ../gnome-panel/panel-ditem-editor.c:1352
+msgid "Could not save directory properties"
+msgstr "Kunne ikkje lagra eigenskapar for mappe"
+
+#
+#: ../gnome-panel/panel-ditem-editor.c:1353
+msgid "The name of the directory is not set."
+msgstr "Namnet på mappa er ikkje sett."
+
 # panel/gnome-panel-add-launcher.c:35
-#: ../gnome-panel/panel-ditem-editor.c:1251
+#: ../gnome-panel/panel-ditem-editor.c:1369
 msgid "The command of the launcher is not set."
 msgstr "Kommando for oppstartar er ikkje vald."
 
-#: ../gnome-panel/panel-ditem-editor.c:1254
+#: ../gnome-panel/panel-ditem-editor.c:1372
 msgid "The location of the launcher is not set."
 msgstr "Plasseringa til oppstartaren er ikkje vald."
 
-#: ../gnome-panel/panel-ditem-editor.c:1371 ../gnome-panel/panel-util.c:140
+#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:187
 msgid "Could not display help document"
 msgstr "Kunne ikkje visa hjelpedokument"
 
-#: ../gnome-panel/panel-force-quit.c:75
+#: ../gnome-panel/panel-force-quit.c:76
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Klikk på eit vindauge for å tvinga det programmet til å avslutta. Trykk "
 "<ESC> for å avbryta."
 
-#: ../gnome-panel/panel-force-quit.c:203
+#
+#: ../gnome-panel/panel-force-quit.c:204
+msgid "Force this application to exit?"
+msgstr "Tving dette programmet til å avslutte?"
+
+#
+#: ../gnome-panel/panel-force-quit.c:207
 msgid ""
-"Force this application to exit?\n"
-"(Any open documents will be lost.)"
+"If you choose to force an application to exit, any open documents in it will "
+"be lost."
 msgstr ""
-"Tvinga dette programmet til å avslutta?\n"
-"(Alle opne dokument vil gå tapt.)"
+"Viss du tvingar programmet til å avslutte vil alle opne dokument vil gå tapt."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1837,125 +2118,143 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Dersom sann, vert det vist verktøytips for objekta i panela."
 
-#: ../gnome-panel/panel-logout.c:236
+#: ../gnome-panel/panel-logout.c:238
 #, c-format
-msgid "You will be automatically logged out in %d second."
-msgid_plural "You will be automatically logged out in %d seconds."
-msgstr[0] "Du vert automatisk logga ut om %d sekund."
-msgstr[1] "Du vert automatisk logga ut om %d sekund."
+msgid ""
+"You are currently logged in as \"%s\".\n"
+"You will be automatically logged out in %d second."
+msgid_plural ""
+"You are currently logged in as \"%s\".\n"
+"You will be automatically logged out in %d seconds."
+msgstr[0] ""
+"Du er logga inn som «%s».\n"
+"Du vil verta logga ut automatisk om %d sekund."
+msgstr[1] ""
+"Du er logga inn som «%s».\n"
+"Du vil verta logga ut automatisk om %d sekund."
 
-#: ../gnome-panel/panel-logout.c:243
+#: ../gnome-panel/panel-logout.c:249
 #, c-format
-msgid "This system will be automatically shut down in %d second."
-msgid_plural "This system will be automatically shut down in %d seconds."
-msgstr[0] "Systemet vert slått av automatisk om %d sekund."
-msgstr[1] "Systemet vert slått av automatisk om %d sekund."
+msgid ""
+"You are currently logged in as \"%s\".\n"
+"This system will be automatically shut down in %d second."
+msgid_plural ""
+"You are currently logged in as \"%s\".\n"
+"This system will be automatically shut down in %d seconds."
+msgstr[0] ""
+"Du er logga inn som «%s».\n"
+"Datamaskinen vil verta skrudd av automatisk om %d sekund."
+msgstr[1] ""
+"Du er logga inn som «%s».\n"
+"Datamaskinen vil verta skrudd av automatisk om %d sekund."
 
-#: ../gnome-panel/panel-logout.c:315
+#: ../gnome-panel/panel-logout.c:330
 msgid "Log out of this system now?"
 msgstr "Logg ut frå dette systemet?"
 
-#: ../gnome-panel/panel-logout.c:321
+#: ../gnome-panel/panel-logout.c:336
 msgid "_Switch User"
 msgstr "_Byt brukar"
 
 # panel/foobar-widget.c:372
-#: ../gnome-panel/panel-logout.c:327
+#: ../gnome-panel/panel-logout.c:342
 msgid "_Log Out"
 msgstr "_Logg ut"
 
-#: ../gnome-panel/panel-logout.c:332
+#: ../gnome-panel/panel-logout.c:347
 msgid "Shut down this system now?"
 msgstr "Slå av dette systemet?"
 
-#: ../gnome-panel/panel-logout.c:337
+#: ../gnome-panel/panel-logout.c:352
 msgid "S_uspend"
 msgstr "_Kvilemodus"
 
-#: ../gnome-panel/panel-logout.c:342
+#: ../gnome-panel/panel-logout.c:357
 msgid "_Hibernate"
 msgstr "_Dvalemodus"
 
-#: ../gnome-panel/panel-logout.c:347
+#: ../gnome-panel/panel-logout.c:362
 msgid "_Restart"
 msgstr "Sta_rt på nytt"
 
-#: ../gnome-panel/panel-logout.c:353
+#: ../gnome-panel/panel-logout.c:371
 msgid "_Shut Down"
 msgstr "_Slå av"
 
-#: ../gnome-panel/panel-menu-bar.c:74
+#: ../gnome-panel/panel-menu-bar.c:97
 msgid "Browse and run installed applications"
 msgstr "Sjå gjennom og køyr installerte program"
 
-#: ../gnome-panel/panel-menu-bar.c:86
+#: ../gnome-panel/panel-menu-bar.c:99
 msgid "Access documents, folders and network places"
 msgstr "Åpne dokumenter, mapper og nettverksstader"
 
-#: ../gnome-panel/panel-menu-bar.c:98
+#: ../gnome-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "Endra utsjånad på og åtferda til skrivebordet, få hjelp eller logg ut"
 
-#: ../gnome-panel/panel-menu-bar.c:183
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "Program"
 
 # panel/menu.c:3969 panel/menu.c:3974 panel/menu.c:5655 panel/menu.c:5682
 # panel/menu.c:5816
-#: ../gnome-panel/panel-menu-bar.c:412 ../gnome-panel/panel-menu-button.c:690
+#: ../gnome-panel/panel-menu-bar.c:342 ../gnome-panel/panel-menu-button.c:664
 msgid "_Edit Menus"
 msgstr "R_ediger menyar"
 
-#: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:333
+#: ../gnome-panel/panel-menu-items.c:118 ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Kan ikkje opne plasseringa «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:374
+#: ../gnome-panel/panel-menu-items.c:405
 msgid "Bookmarks"
 msgstr "Bokmerker"
 
 # panel/panel.c:953
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:395
+#: ../gnome-panel/panel-menu-items.c:424 ../gnome-panel/panel.c:534
 #, c-format
 msgid "Open '%s'"
 msgstr "Opne «%s»"
 
-#. Translators: the first string is a
-#. * path and the second string is a
-#. * hostname. nautilus contains the same
-#. * string to translate.
-#: ../gnome-panel/panel-menu-items.c:436
-#, c-format
-msgid "%1$s on %2$s"
-msgstr "%1$s på %2$s"
-
-#: ../gnome-panel/panel-menu-items.c:509
+#: ../gnome-panel/panel-menu-items.c:516
 msgid "Network Places"
 msgstr "Nettverksstader"
 
-#: ../gnome-panel/panel-menu-items.c:512
+#: ../gnome-panel/panel-menu-items.c:519
 msgid "Removable Media"
 msgstr "Avtagbare medier"
+
+#
+#: ../gnome-panel/panel-menu-items.c:580
+msgid "Home Folder"
+msgstr "Heimemappe"
+
+#
+#: ../gnome-panel/panel-menu-items.c:581
+msgid "Open your personal folder"
+msgstr "Opna din personlige mappe"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:588
+#: ../gnome-panel/panel-menu-items.c:600
 msgid "Desktop Folder|Desktop"
 msgstr "Skrivebordsmappe"
 
-#: ../gnome-panel/panel-menu-items.c:589
-msgid "Open the desktop as a folder"
-msgstr "Opne skrivebordet som ei mappe"
+#
+#: ../gnome-panel/panel-menu-items.c:601
+msgid "Open the contents of your desktop in a folder"
+msgstr "Opna skrivebordet som ein mappe"
 
-#: ../gnome-panel/panel-menu-items.c:951
+#: ../gnome-panel/panel-menu-items.c:911
 msgid "Places"
 msgstr "Stader"
 
-#: ../gnome-panel/panel-menu-items.c:986
+#: ../gnome-panel/panel-menu-items.c:940
 msgid "System"
 msgstr "System"
 
@@ -1963,7 +2262,7 @@ msgstr "System"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1078
+#: ../gnome-panel/panel-menu-items.c:1017
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -1972,7 +2271,7 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1090
+#: ../gnome-panel/panel-menu-items.c:1029
 #, c-format
 msgid "Log Out %s..."
 msgstr "Logg ut %s..."
@@ -1980,13 +2279,13 @@ msgstr "Logg ut %s..."
 # panel/menu.c:5346
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1094
+#: ../gnome-panel/panel-menu-items.c:1033
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Logg ut %s for å logga inn som ein annan brukar"
 
 # panel/menu.c:5036
-#: ../gnome-panel/panel-menu-items.c:1135
+#: ../gnome-panel/panel-menu-items.c:1074
 msgid "Could not launch menu item"
 msgstr "Kan ikkje starta menyoppføringa"
 
@@ -2175,19 +2474,20 @@ msgstr "Bruk sjølvvalt ikon i knappen til objektet"
 msgid "Use custom path for menu contents"
 msgstr "Bruk sjølvvalt sti til menyinnhaldet"
 
-#: ../gnome-panel/panel-profile.c:762 ../gnome-panel/panel-profile.c:789
-#: ../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1648
+#: ../gnome-panel/panel-profile.c:766 ../gnome-panel/panel-profile.c:793
+#: ../gnome-panel/panel-profile.c:829 ../gnome-panel/panel-profile.c:1694
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Feil under lesing av strengverdien «%s» frå GConf: %s"
 
-#: ../gnome-panel/panel-profile.c:804 ../gnome-panel/panel-profile.c:1544
-#: ../gnome-panel/panel-profile.c:1617 ../gnome-panel/panel-profile.c:1680
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
+#: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
+#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Feil under lesing av heiltalsverdien «%s» frå GConf: %s"
 
-#: ../gnome-panel/panel-profile.c:1554
+#: ../gnome-panel/panel-profile.c:1600
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2196,47 +2496,52 @@ msgstr ""
 "Panel «%s» er stilt til å visast på skjerm %d, som ikkje er tilgjengeleg no. "
 "Lastar ikkje dette panelet."
 
-#: ../gnome-panel/panel-profile.c:1632
+#: ../gnome-panel/panel-profile.c:1678
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Feil under lesing av boolsk verdi «%s» frå GConf: %s"
 
 # panel/menu.c:4783
 # TRN: Skulle dette vore plasseringa av panelet? Ref. glade-fil.
-#: ../gnome-panel/panel-properties-dialog.c:121
+#: ../gnome-panel/panel-properties-dialog.c:124
 #: ../libpanel-applet/panel-test-applets.c:53
 msgid "Orientation|Top"
 msgstr "Top"
 
 # panel/menu.c:4783
 # TRN: Skulle dette vore plasseringa av panelet? Ref. glade-fil.
-#: ../gnome-panel/panel-properties-dialog.c:122
+#: ../gnome-panel/panel-properties-dialog.c:125
 #: ../libpanel-applet/panel-test-applets.c:54
 msgid "Orientation|Bottom"
 msgstr "Bunn"
 
 # panel/menu.c:4783
 # TRN: Skulle dette vore plasseringa av panelet? Ref. glade-fil.
-#: ../gnome-panel/panel-properties-dialog.c:123
+#: ../gnome-panel/panel-properties-dialog.c:126
 #: ../libpanel-applet/panel-test-applets.c:55
 msgid "Orientation|Left"
 msgstr "Venstre"
 
 # panel/menu.c:4783
 # TRN: Skulle dette vore plasseringa av panelet? Ref. glade-fil.
-#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../gnome-panel/panel-properties-dialog.c:127
 #: ../libpanel-applet/panel-test-applets.c:56
 msgid "Orientation|Right"
 msgstr "Høgre"
 
+#
+#: ../gnome-panel/panel-properties-dialog.c:947
+msgid "Drawer Properties"
+msgstr "Eigenskapar for skuff"
+
 # panel/gnome-run.c:328
-#: ../gnome-panel/panel-properties-dialog.c:1023
-#: ../gnome-panel/panel-run-dialog.c:1885
+#: ../gnome-panel/panel-properties-dialog.c:1055
+#: ../gnome-panel/panel-run-dialog.c:1951
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "Klarte ikkje å laste fila «%s»."
 
-#: ../gnome-panel/panel-properties-dialog.c:1028
+#: ../gnome-panel/panel-properties-dialog.c:1060
 msgid "Could not display properties dialog"
 msgstr "Kunne ikkje visa dialogen for eigeskaper"
 
@@ -2379,82 +2684,87 @@ msgstr "_Storleik:"
 msgid "_Tile"
 msgstr "Fl_islegg"
 
-#: ../gnome-panel/panel-recent.c:50
+#: ../gnome-panel/panel-properties-dialog.glade.h:27
+msgid "pixels"
+msgstr "pikslar"
+
+#: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "Klarte ikkje å finna eit høveleg program."
 
-#: ../gnome-panel/panel-recent.c:97 ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:98 ../gnome-panel/panel-recent.c:108
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Klarte ikkje å opna nyleg brukt dokument «%s»"
 
-#: ../gnome-panel/panel-recent.c:109
+#: ../gnome-panel/panel-recent.c:110
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Ein ukjend feil oppstod under freistnad på å opna «%s»"
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:167
 msgid "Clear the Recent Documents list?"
 msgstr "Tøm lista over nyleg brukte dokument?"
 
-#: ../gnome-panel/panel-recent.c:168
+#
+#: ../gnome-panel/panel-recent.c:169
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
-"\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
-"Dersom du tømmer lista over nyleg brukte dokument, vil du fjerna:\n"
+"Viss du tømmer listen over siste dokument vil følgjande fjernes:\n"
 "\n"
-"• Alle elementa frå menyvalet «Stader»->«Nyleg brukte dokument».\n"
-"• Alle elementa frå listene over nyleg brukte dokument i alle program."
+"• Alle oppføringar frå menyoppføringa Steder -> Siste dokument.\n"
+"• Alle oppføringar frå listen over siste dokument i alle program."
 
-#: ../gnome-panel/panel-recent.c:211
-msgid "Recent Documents"
-msgstr "Nyleg brukte dokument"
-
-#: ../gnome-panel/panel-recent.c:250
+#: ../gnome-panel/panel-recent.c:181 ../gnome-panel/panel-recent.c:255
 msgid "Clear Recent Documents"
 msgstr "Tøm lista over nyleg brukte dokument"
 
-#: ../gnome-panel/panel-recent.c:254
+#: ../gnome-panel/panel-recent.c:216
+msgid "Recent Documents"
+msgstr "Nyleg brukte dokument"
+
+#: ../gnome-panel/panel-recent.c:257
 msgid "Clear all items from the recent documents list"
 msgstr "Tøm lista over nyleg brukte dokument"
 
 # panel/menu.c:5036
-#: ../gnome-panel/panel-run-dialog.c:304
+#: ../gnome-panel/panel-run-dialog.c:322
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Kunne ikkje køyra kommandoen «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:388
+#: ../gnome-panel/panel-run-dialog.c:406
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Kunne ikkje konvertera «%s» frå UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1196
+#: ../gnome-panel/panel-run-dialog.c:1212
 msgid "Choose a file to append to the command..."
 msgstr "Vel ei fil å leggja til kommandoen ..."
 
-#: ../gnome-panel/panel-run-dialog.c:1572
+#: ../gnome-panel/panel-run-dialog.c:1588
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Vel eit program for å lesa skildringa av det."
 
 # panel/gnome-run.c:855
-#: ../gnome-panel/panel-run-dialog.c:1610
+#: ../gnome-panel/panel-run-dialog.c:1626
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Køyrer kommandoen «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:1641
+#: ../gnome-panel/panel-run-dialog.c:1657
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "Adresselista sleppt ved køyredialog hadde feil format (%d) eller lengde (%"
 "d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1889
+#: ../gnome-panel/panel-run-dialog.c:1955
 msgid "Could not display run dialog"
 msgstr "Kunne ikkje visa dialog for køyring av program"
 
@@ -2521,143 +2831,142 @@ msgstr "Ikon for kommandoen som skal køyrast."
 
 # panel/gnome-run.c:1156
 #: ../gnome-panel/panel-run-dialog.glade.h:14
-#: ../gnome-panel/panel-stock-icons.c:89
+#: ../gnome-panel/panel-stock-icons.c:91
 msgid "_Run"
 msgstr "Køy_r"
 
-# panel/main.c:455
-#: ../gnome-panel/panel-shell.c:74
-msgid ""
-"I've detected a panel already running,\n"
-"and will now exit."
-msgstr ""
-"Oppdaga allereie køyrende panel,\n"
-"og vil no avslutte."
-
-# panel/main.c:466
-#: ../gnome-panel/panel-shell.c:78
+#: ../gnome-panel/panel-shell.c:64
 #, c-format
 msgid ""
-"There was a problem registering the panel with the bonobo-activation "
-"server.\n"
-"The error code is: %d\n"
-"The panel will now exit."
+"The panel could not register with the bonobo-activation server (error code: %"
+"d) and will exit.\n"
+"It may be automatically restarted."
 msgstr ""
-"Det oppstod eit problem under registrering av panelet hos bonobo-activation "
-"tenaren.\n"
-"Feilkoda var: %d\n"
-"Panelet vil no avslutte."
+"Det oppstod eit problem under registrering av panelet hos bonobo-activation-"
+"tenaren (feilkode: %d). Panelet vil no avslutte.\n"
+"Det kan startast automatisk att avhengig av din oppsett."
 
-#: ../gnome-panel/panel-stock-icons.c:90
+#
+#: ../gnome-panel/panel-shell.c:74
+msgid "The panel has encountered a fatal error"
+msgstr "Det oppsto fatal feil i panelet"
+
+#
+#. FIXME: the checkbox is not correctly aligned in the dialog...
+#: ../gnome-panel/panel-shell.c:80
+msgid "Force the panel to not be automatically restarted"
+msgstr "Tving panelet til ikkje å starta på nytt automatisk"
+
+#: ../gnome-panel/panel-stock-icons.c:92
 msgid "_Force quit"
 msgstr "_Tving til å avslutta"
 
 # panel/menu.c:4751 panel/panel_config.c:1566
-#: ../gnome-panel/panel-stock-icons.c:91
+#: ../gnome-panel/panel-stock-icons.c:93
 msgid "C_lear"
 msgstr "T_øm"
 
 # gmenu/main.c:106 gsm/session-properties-capplet.c:257
 # gsm/session-properties-capplet.c:311
-#: ../gnome-panel/panel-stock-icons.c:92
+#: ../gnome-panel/panel-stock-icons.c:94
 msgid "D_on't Delete"
 msgstr "_Ikkje slett"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: ../gnome-panel/panel-toplevel.c:1114
+#: ../gnome-panel/panel-toplevel.c:1175
 msgid "Hide Panel"
 msgstr "Gøym panelet"
 
 # panel/menu.c:235
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1495
+#: ../gnome-panel/panel-toplevel.c:1556
 msgid "Top Expanded Edge Panel"
 msgstr "Øvre utvida kantpanel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: ../gnome-panel/panel-toplevel.c:1496
+#: ../gnome-panel/panel-toplevel.c:1557
 msgid "Top Centered Panel"
 msgstr "Øvre midtstilt panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: ../gnome-panel/panel-toplevel.c:1497
+#: ../gnome-panel/panel-toplevel.c:1558
 msgid "Top Floating Panel"
 msgstr "Øvre flytande panel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: ../gnome-panel/panel-toplevel.c:1498
+#: ../gnome-panel/panel-toplevel.c:1559
 msgid "Top Edge Panel"
 msgstr "Øvre kantpanel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: ../gnome-panel/panel-toplevel.c:1502
+#: ../gnome-panel/panel-toplevel.c:1563
 msgid "Bottom Expanded Edge Panel"
 msgstr "Nedre utvida kantpanel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: ../gnome-panel/panel-toplevel.c:1503
+#: ../gnome-panel/panel-toplevel.c:1564
 msgid "Bottom Centered Panel"
 msgstr "Nedre midtstilte panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: ../gnome-panel/panel-toplevel.c:1504
+#: ../gnome-panel/panel-toplevel.c:1565
 msgid "Bottom Floating Panel"
 msgstr "Nedre flytande panel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: ../gnome-panel/panel-toplevel.c:1505
+#: ../gnome-panel/panel-toplevel.c:1566
 msgid "Bottom Edge Panel"
 msgstr "Nedre kantpanel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: ../gnome-panel/panel-toplevel.c:1509
+#: ../gnome-panel/panel-toplevel.c:1570
 msgid "Left Expanded Edge Panel"
 msgstr "Venstre utvida kantpanel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: ../gnome-panel/panel-toplevel.c:1510
+#: ../gnome-panel/panel-toplevel.c:1571
 msgid "Left Centered Panel"
 msgstr "Venstre midtstilt panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: ../gnome-panel/panel-toplevel.c:1511
+#: ../gnome-panel/panel-toplevel.c:1572
 msgid "Left Floating Panel"
 msgstr "Venstre flytande panel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: ../gnome-panel/panel-toplevel.c:1512
+#: ../gnome-panel/panel-toplevel.c:1573
 msgid "Left Edge Panel"
 msgstr "Venstre kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1516
+#: ../gnome-panel/panel-toplevel.c:1577
 msgid "Right Expanded Edge Panel"
 msgstr "Høgre utvida kantpanel"
 
 # panel/menu.c:3618 panel/menu.c:4714 panel/panel_config.c:1757
 # panel/panel_config.c:1880
-#: ../gnome-panel/panel-toplevel.c:1517
+#: ../gnome-panel/panel-toplevel.c:1578
 msgid "Right Centered Panel"
 msgstr "Høgre midtstilt panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: ../gnome-panel/panel-toplevel.c:1518
+#: ../gnome-panel/panel-toplevel.c:1579
 msgid "Right Floating Panel"
 msgstr "Høgre flytande panel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: ../gnome-panel/panel-toplevel.c:1519
+#: ../gnome-panel/panel-toplevel.c:1580
 msgid "Right Edge Panel"
 msgstr "Høgre kantpanel"
 
@@ -2788,29 +3097,31 @@ msgstr ""
 "vil panelet berre vera så stort som det må vera for å få plass til alle "
 "panelprogramma, oppstartarane og knappane."
 
+#
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
-"If true, the x key is ignored and the panel is placed at the center of the x-"
-"axis of the screen. If the panel is resized it will remain at that position "
-"- i.e. the panel will grow on both sides. If false, the x key specifies the "
-"location of the panel."
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
 msgstr ""
-"Dersom sann, vert x-nøkkelen ignorert, og panelet vert plassert midt på X-"
-"aksen på skjermen. Dersom panelet endrar storleik vil det halda seg i "
-"midten, dvs. at det veks og krympar i endane. Dersom usann, så vil x-"
-"nøkkelen styra plasseringa til panelet."
+"Viss «true» vil x og x_right-nøkkelen ignorerast og panelet plasserast "
+"sentrert på x-aksen av skjermen. Viss panelets storleik endrast vil det "
+"forbli i denne posisjonen - dvs. panelet vil vokse på begge sider. Viss "
+"«false» vil x og x_right-nøkkelen spesifisere panelets stad."
 
+#
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
-"If true, the y key is ignored and the panel is placed at the center of the y-"
-"axis of the screen. If the panel is resized it will remain at that position "
-"- i.e. the panel will grow on both sides. If false, the y key specifies the "
-"location of the panel."
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
 msgstr ""
-"Dersom sann, vert y-nøkkelen ignorert, og panelet vert plassert midt på Y-"
-"aksen på skjermen. Dersom panelet endrar storleik vil det halda seg i "
-"midten, dvs. at det veks og krympar i endane. Dersom usann, så vil y-"
-"nøkkelen styra plasseringa til panelet."
+"Viss «true» vil y og y_bottom-nøkkelen ignorerast og panelet plasserast "
+"sentrert på y-aksen av skjermen. Viss panelets storleik endrast vil det "
+"forbli i denne posisjonen - dvs. panelet vil vokse på begge sider. Viss "
+"«false» vil y og y_bottom-nøkkelen spesifisere panelets stad."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -2919,7 +3230,23 @@ msgstr ""
 "anna. Den største storleiken er satt til ein fjerdedel av skrivebordshøgda "
 "(eller -breidda)."
 
+#
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Stad for panelet langs x-aksen frå botnen av skjermen Viss den setjes til -1 "
+"ignorerast verdien og x-nøkkelen brukast i staden Viss verdien er større enn "
+"0 vil x-nøkkelen ignorerast. Denne nøkkelen er berre relevant i ikkje-utvida "
+"modus. I utvida modus ignorerast denne nøkkelen og panelet plasserast ved "
+"skjermkanten oppgjeven av nøkkelen orientation."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -2930,7 +3257,23 @@ msgstr ""
 "ignorert, og panelet vert plassert på kanten av skjermen. Kva for ein kant "
 "vert styrt av nøkkelen «orientation»."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:40
+#
+#: ../gnome-panel/panel-toplevel.schemas.in.h:41
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Stad for panelet langs y-aksen frå botnen av skjermen Viss den setjes til -1 "
+"ignorerast verdien og y-nøkkelen brukast i staden Viss verdien er større enn "
+"0 vil y-nøkkelen ignorerast. Denne nøkkelen er berre relevant i ikkje-utvida "
+"modus. I utvida modus ignorerast denne nøkkelen og panelet plasserast ved "
+"skjermkanten oppgjeven av nøkkelen orientation."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -2941,7 +3284,7 @@ msgstr ""
 "ignorert, og panelet vert plassert på kanten av skjermen. Kva for ein kant "
 "vert styrt av nøkkelen «orientation»."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:41
+#: ../gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -2960,7 +3303,7 @@ msgstr ""
 "som har «top» opna menyane sine under panelet, medan eit panel som har "
 "«bottom» vil opna menyane sine over panelet."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:42
+#: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -2970,7 +3313,7 @@ msgstr ""
 "og «fast». Denne nøkkelene er berre relevant dersom nøkkelen "
 "«enable_animations» er sann."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:43
+#: ../gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -2980,11 +3323,11 @@ msgstr ""
 "Hovudformålet med namnet er å fungera som panelet sin vindaugstittel, som er "
 "nyttig når du navigerer mellom panel."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:44
+#: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid "Visible pixels when hidden"
 msgstr "Synlege pikslar når gøymt"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:45
+#: ../gnome-panel/panel-toplevel.schemas.in.h:47
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -2996,7 +3339,7 @@ msgstr ""
 "fargen i nøkkelen «color» skal brukast til bakgrunnsfarge, eller «image», "
 "som tyder at biletet oppgjeve i nøkkelen «image» skal brukast til bakgrunn."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:46
+#: ../gnome-panel/panel-toplevel.schemas.in.h:48
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
@@ -3005,41 +3348,110 @@ msgstr ""
 "nøkkelen inneheld kva for skjerm panelet vert vist på no."
 
 # panel/basep-widget.c:885
-#: ../gnome-panel/panel-toplevel.schemas.in.h:47
+#: ../gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "X co-ordinate of panel"
 msgstr "X-koordinaten til panelet"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:48
+#
+#: ../gnome-panel/panel-toplevel.schemas.in.h:50
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "X-koordinat for panelet. Startar frå høgre side av skjermen"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:51
 msgid "X screen where the panel is displayed"
 msgstr "X-skjerm der panelet vert vist"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:49
+#: ../gnome-panel/panel-toplevel.schemas.in.h:52
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "Xinerama-skjerm der panelet vert vist"
 
 # panel/basep-widget.c:885
-#: ../gnome-panel/panel-toplevel.schemas.in.h:50
+#: ../gnome-panel/panel-toplevel.schemas.in.h:53
 msgid "Y co-ordinate of panel"
 msgstr "Y-koordinaten til panelet"
 
-#: ../gnome-panel/panel-util.c:659
+#
+#: ../gnome-panel/panel-toplevel.schemas.in.h:54
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "Y-koordinat for panelet. Startar frå botnen av skjermen"
+
+#: ../gnome-panel/panel-util.c:714
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikon «%s» vart ikkje funnen"
 
+#
+#: ../gnome-panel/panel-util.c:937
+msgid "file"
+msgstr "fil"
+
+#
+#: ../gnome-panel/panel-util.c:1370
+msgid "Computer"
+msgstr "Datamaskin"
+
+#
+#: ../gnome-panel/panel-util.c:1372
+msgid "Network"
+msgstr "Nettverk"
+
+#
+#: ../gnome-panel/panel-util.c:1374
+msgid "Fonts"
+msgstr "Skrifter"
+
+#
+#: ../gnome-panel/panel-util.c:1376
+msgid "Themes"
+msgstr "Drakt"
+
+#
+#: ../gnome-panel/panel-util.c:1378
+msgid "CD/DVD Creator"
+msgstr "CD/DVD-brenner"
+
+#
+#: ../gnome-panel/panel-util.c:1380
+msgid "Windows Network"
+msgstr "Windows-nettverk"
+
+#
+#. translators: this is the title of the "dns-sd:///" location
+#: ../gnome-panel/panel-util.c:1383
+msgid "Services in"
+msgstr "Tenester inn"
+
+#
+#: ../gnome-panel/panel-util.c:1457
+msgid "Search"
+msgstr "Søk"
+
+#
+#: ../gnome-panel/panel-util.c:1460
+msgid "Trash"
+msgstr "Papirkurv"
+
+#. Translators: the first string is a path and the second
+#. * string is a hostname. nautilus contains the same string to
+#. * translate.
+#: ../gnome-panel/panel-util.c:1513
+#, c-format
+msgid "%1$s on %2$s"
+msgstr "%1$s på %2$s"
+
 # panel/panel.c:953
-#: ../gnome-panel/panel.c:479
+#: ../gnome-panel/panel.c:477
 #, c-format
 msgid "Open URL: %s"
 msgstr "Opne URL: %s"
 
 # panel/menu.c:5022 panel/menu.c:5085
-#: ../gnome-panel/panel.c:1310
+#: ../gnome-panel/panel.c:1302
 msgid "Delete this drawer?"
 msgstr "Slett denne skuffa?"
 
 # panel/menu.c:3930
-#: ../gnome-panel/panel.c:1311
+#: ../gnome-panel/panel.c:1303
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3048,28 +3460,18 @@ msgstr ""
 "innstillingane det har tapt. Fjern denne skuffa?"
 
 # panel/menu.c:5022 panel/menu.c:5085
-#: ../gnome-panel/panel.c:1313
-msgid "Delete Drawer"
-msgstr "Fjern skuff"
-
-# panel/menu.c:5022 panel/menu.c:5085
-#: ../gnome-panel/panel.c:1315
+#: ../gnome-panel/panel.c:1306
 msgid "Delete this panel?"
 msgstr "Slett denne skuffa?"
 
 # panel/menu.c:3930
-#: ../gnome-panel/panel.c:1316
+#: ../gnome-panel/panel.c:1307
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Når eit panel vert fjerna, går panelet og \n"
 "innstillingane det har tapt."
-
-# panel/menu.c:5022 panel/menu.c:5085
-#: ../gnome-panel/panel.c:1318
-msgid "Delete Panel"
-msgstr "Fjern dette panelet"
 
 #: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -3084,48 +3486,48 @@ msgstr "Panelprogram til å testa Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Fabrikk for bonobotest-panelprogram"
 
-#: ../libpanel-applet/panel-applet.c:1045
+#: ../libpanel-applet/panel-applet.c:1052
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Ufullstendig «%s»-bakgrunnstype motteke"
 
-#: ../libpanel-applet/panel-applet.c:1059
+#: ../libpanel-applet/panel-applet.c:1066
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Ufullstendig bakgrunnstype «%s» motteken: %s"
 
-#: ../libpanel-applet/panel-applet.c:1068
+#: ../libpanel-applet/panel-applet.c:1075
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Klarte ikkje å få tak i pixmap %s"
 
-#: ../libpanel-applet/panel-applet.c:1075
+#: ../libpanel-applet/panel-applet.c:1082
 msgid "Unknown background type received"
 msgstr "Ukjend bakgrunnstype motteke"
 
-#: ../libpanel-applet/panel-applet.c:1299
+#: ../libpanel-applet/panel-applet.c:1306
 msgid "The Applet's containing Panel's orientation"
 msgstr "Plasseringa til panelet som inneheld panelprogrammet"
 
-#: ../libpanel-applet/panel-applet.c:1307
+#: ../libpanel-applet/panel-applet.c:1314
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Storleiken til panelet som inneheld panelprogrammet, i pikslar"
 
-#: ../libpanel-applet/panel-applet.c:1315
+#: ../libpanel-applet/panel-applet.c:1322
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 "Bakgrunnsfargen eller bakgrunnsbiletet til panelet som inneheld "
 "panelprogrammet"
 
-#: ../libpanel-applet/panel-applet.c:1323
+#: ../libpanel-applet/panel-applet.c:1330
 msgid "The Applet's flags"
 msgstr "Flagga til panelprogrammet"
 
-#: ../libpanel-applet/panel-applet.c:1331
+#: ../libpanel-applet/panel-applet.c:1338
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Område som hintar om kva slags storleikar panelprogrammet godtek"
 
-#: ../libpanel-applet/panel-applet.c:1339
+#: ../libpanel-applet/panel-applet.c:1346
 msgid "The Applet's containing Panel is locked down"
 msgstr "Panelet som inneheld panelprogrammet er låst"
 
@@ -3202,6 +3604,68 @@ msgstr "Verkty for testing av panelprogram"
 msgid "_Applet:"
 msgstr "P_anelprogram:"
 
+#
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Brukarvalplassering:"
+
+# panel/menu.c:4783
+# TRN: Skulle dette vore plasseringa av panelet? Ref. glade-fil.
+#~ msgid "Orientation"
+#~ msgstr "Orientering"
+
+#~ msgid "The orientation of the tray."
+#~ msgstr "Orientering for trauet"
+
+# help-browser/window.c:227
+#~ msgid "<b>Window List Size</b>"
+#~ msgstr "<b> Storleik på vindaugeliste</b>"
+
+# applets/desk-guide/deskguide_applet.c:149
+#~ msgid "Behavior"
+#~ msgstr "Åtferd"
+
+#~ msgid "M_inimum size:"
+#~ msgstr "M_inste storleik:"
+
+#~ msgid "Ma_ximum size:"
+#~ msgstr "Største storlei_k:"
+
+# applets/tasklist/tasklist_properties.c:276 panel/menu.c:4780
+#~ msgid "Size"
+#~ msgstr "Storleik"
+
+#~ msgid ""
+#~ "This key specifies the maximum width that the window list requests. The "
+#~ "maximum width setting is useful to limit the size of the window list in "
+#~ "large panels, where the window list could fill the entire space available."
+#~ msgstr ""
+#~ "Denne nøkkelen styrer den største breidda som vindaugelista ber om. Dette "
+#~ "er nyttig for å avgrensa plassen vindaugelista tek i eit stort panel, der "
+#~ "vindaugelisa ellers kunne brukt all den ledige plassen."
+
+#~ msgid "This key specifies the minimum width that the window list requests."
+#~ msgstr "Denne nøkkelen styrer den minste breidda som vindaugelista ber om. "
+
+# panel/menu.c:5036
+#~ msgid "Could not load icon"
+#~ msgstr "Kan ikkje lasta ikon"
+
+#~ msgid "Find files, folders, and documents on your computer"
+#~ msgstr "Finn filer, mapper og dokument på datamaskinen"
+
+# panel/main.c:455
+#~ msgid ""
+#~ "I've detected a panel already running,\n"
+#~ "and will now exit."
+#~ msgstr ""
+#~ "Oppdaga allereie køyrende panel,\n"
+#~ "og vil no avslutte."
+
+# panel/menu.c:5022 panel/menu.c:5085
+#~ msgid "Delete Drawer"
+#~ msgstr "Fjern skuff"
+
+# panel/menu.c:5022 panel/menu.c:5085
+#~ msgid "Delete Panel"
+#~ msgstr "Fjern dette panelet"
