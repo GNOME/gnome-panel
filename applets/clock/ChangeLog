@@ -1,3 +1,519 @@
+2008-01-07  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (fill_prefs_window): Use
+	gweather_prefs_get_*_display_name() instead of pulling
+	translations from another module.
+
+2008-01-03  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-location-tile.c (clock_location_tile_new): Save the signal
+	connection ID of the location's "weather-updated" signal...
+	(clock_location_tile_finalize): ... so we can disconnect from it
+	when the location tile goes away.  This prevents us from getting
+	notified after the tile is destroyed.
+
+2008-01-03  Matthias Clasen  <mclasen@redhat.com>
+
+	* clock-location-tile.c (weather_info_setup_tooltip): Use
+	weather_info_get_icon_name() instead of the obsolete
+	weather_info_get_pixbuf().
+	(update_weather_icon): Likewise.
+
+2008-01-03  Matthias Clasen  <mclasen@redhat.com>
+
+	* clock.c (temp_unit_enum_map): Removed.
+	(speed_unit_enum_map): Removed.
+	(parse_and_set_temperature_string): Use the new
+	gweather_prefs_parse_temperature() instead of doing things by
+	hand.
+	(parse_and_set_speed_string): Likewise with
+	gweather_prefs_parse_speed().
+	(temperature_combo_changed): Use
+	gweather_prefs_temp_enum_to_string() instead of our home-grown
+	function.
+	(speed_combo_changed): Likewise with
+	gweather_prefs_speed_enum_to_string().
+
+2008-01-02  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (create_clock_window): Show the clock_vbox.
+
+2008-01-02  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (format_time): Move the code from update_clock().
+	(update_clock): Use format_time().
+	(location_tile_need_formatted_time_cb): Implement.
+
+	* clock-location-tile.c (clock_location_tile_refresh): Handle null
+	time strings.
+
+2008-01-02  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-location-tile.h (ClockLocationTileClass): Add a
+	need_formatted_time field.
+
+	* clock-location-tile.c (clock_location_tile_class_init): Define
+	the "need-formatted-time" signal.
+	(clock_location_tile_refresh): Emit the signal when we need the time.
+
+	* clock-marshallers.list: Add a STRING:VOID marshaller.
+
+	* clock.c (create_cities_section): Connect to
+	"need-formatted-time" on the location tile.
+
+2008-01-02  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (update_calendar_popup): NULL the widget fields after
+	freeing the whole calendar popup.
+	(run_prefs_locations_add): Set the "add location" window as
+	transient for the preferences window.  Present the window with the
+	correct timestamp.
+	(run_find_location): Likewise for the "find location" window, but
+	with the "add location" as its transient parent.
+
+2008-01-02  Federico Mena Quintero  <federico@novell.com>
+
+	* Makefile.am (libexec_PROGRAMS): Add gnome-clock-applet-mechanism.
+	(dbus_services_DATA): Add the D-Bus service files...
+	(dbus_conf_DATA): ... the configuration files ...
+	(polkitdir): and the PolicyKit files.
+
+2008-01-02  Federico Mena Quintero  <federico@novell.com>
+
+	* gnome-clock-applet-mechanism.c: New file, moved from intlclock.
+
+	* gnome-clock-applet-mechanism.h: New file, moved from intlclock.
+
+	* gnome-clock-applet-mechanism-main.c: New file, moved from intlclock.
+
+	* gnome-clock-applet-mechanism.xml: New file, moved from intlclock.
+
+	* Makefile.am (BUILT_SOURCES): Add the glue for the DBus stuff.
+	(gnome-clock-applet-mechanism-glue.h): Likewise.
+	(gnome_clock_applet_mechanism_SOURCES): Add the mechanism sources.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-location-tile.h (ClockLocationTileClass): Add a
+	weather_updated signal.
+
+	* clock-marshallers.list: Add a VOID:OBJECT,STRING marshaller for
+	the weather_updated signal.
+
+	* clock-location-tile.c (clock_location_tile_class_init): Define
+	the weather-updated signal.
+	(clock_location_tile_refresh): Emit the weather-updated signal.
+	(update_weather_icon): Likewise.
+
+	* clock.c (location_tile_weather_updated_cb): Set the weather icon
+	in the panel and the temperature label.
+	(create_cities_section): Connect to "weather-updated" on the
+	location tiles.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-map.c (clock_map_class_init): Oops, make the
+	need-locations signal RUN_LAST, since the handler must return a
+	value.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-location-tile.h (ClockLocationTileClass): Add a
+	timezone_set signal.
+
+	* clock-location-tile.c (clock_location_tile_class_init): Define
+	the timezone-set signal.
+	(make_current): Emit the signal.
+
+	* clock-map.c (clock_map_new): Remove dead code to connect to
+	current-timezone-changed on the clock.
+
+	* clock.c (create_cities_section): Connec to "timezone-set" on
+	each location tile....
+	(location_tile_timezone_set_cb): ... and refresh the map here.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-map.h (ClockMapClass): Add a need_locations signal.
+
+	* clock-map.c (clock_map_class_init): Define the need-locations signal.
+	(clock_map_place_locations): Emit the signal here to fetch the
+	list of locations.
+
+	* clock-marshallers.list: We need a POINTER:VOID marshaller.
+
+	* clock.c (create_map_section): Connect to "need-locations" on the map.
+	(map_need_locations_cb): New handler.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (update_clock): Only update the map if it exists.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-map.c (clock_map_blink_location): Made public; ref the location.
+	(highlight): Unref the location.
+
+	* clock-location-tile.h (ClockLocationTileClass): Add a
+	tile_pressed signal.
+
+	* clock-location-tile.c (clock_location_tile_class_init): Define
+	the "tile-pressed" signal.
+	(press_on_tile): Emit the "tile-pressed" signal.
+	(clock_location_tile_get_location): New public function.
+
+	* clock.c (create_cities_section): Connect to "tile-pressed" on
+	each new tile.
+	(location_tile_pressed_cb): New handler; makes the map blink the
+	location corresponding to the tile.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-map.c (clock_map_update_time): Made public; renamed from
+	clock_map_tick().
+
+	* clock.c (update_clock): Update the map's time.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (update_location_tiles): New function; refreshes the tiles.
+	(update_clock): Call update_location_tiles() so they tick in time
+	with the clock.
+	(struct _ClockData): New field "location_tiles".
+	(create_cities_section): Maintain the list of location tiles.
+	(destroy_clock): Free the location_tiles list.
+
+	* clock-location-tile.c (clock_location_tile_refresh): Make this
+	function public.
+	(clock_location_tile_tick): Removed.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-map.c (clock_map_locations_changed): Removed.
+
+	* clock.c (set_locations): Update the cities section and the map.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (cancel_time_settings): Refresh the clock timeout.
+	(run_time_settings): Likewise.
+	(prefs_hide): Likewise.
+	(display_properties_dialog): Likewise.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (update_tooltip): Add the timezone name to the tooltip here...
+	(update_time_tooltip): ... instead of here.  Remove this function.
+
+2007-12-14  Federico Mena Quintero  <federico@novell.com>
+
+	* calendar-window.h (struct _CalendarWindowClass): Add an
+	edit_locations signal.
+
+	* calendar-window.c (calendar_window_class_init): Define the
+	edit-locations signal.
+	(edit_locations): Emit the signal so our caller can respond.
+
+	* clock.c (create_calendar): Connect to edit-locations on the
+	calendar window...
+	(edit_locations_cb): ... and handle it here by popping up the
+	preferences dialog in the locations page.
+
+2007-12-13  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (config_date): Use run_time_settings(), which uses the
+	new set-the-time dialog backed by PolicyKit, instead of the old
+	code that picks a time configuration tool.
+	(set_time_callback): Moved from intlclock.
+	(set_time): Moved from intlclock.
+	(cancel_time_settings): Moved from intlclock.
+
+2007-12-13  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (run_time_settings): Moved from intlclock.
+	(edit_tree_row): Moved from intlclock.
+	(run_prefs_locations_add): Moved from intlclock.
+	(run_prefs_locations_remove): Moved from intlclock.
+	(zone_combo_changed): Moved from intlclock.
+	(run_prefs_edit_save): Moved from intlclock.
+	(save_cities_store): Moved from intlclock.
+	(loc_to_string): Moved from intlclock.
+	(location_start_element): Moved from intlclock.
+	(sort_zoneinfo_by_l10n_name): Moved from intlclock.
+
+2007-12-13  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (find_next_location): Moved from intlclock.
+	(find_location): Moved from intlclock.
+	(find_entry_changed): Moved from intlclock.
+	(location_tree_selection_changed): Moved from intlclock.
+
+2007-12-13  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (run_find_location): Moved from intlclock.
+	(location_row_activated): Moved from intlclock.
+	(fill_location_tree): Moved from intlclock.
+	(run_find_location_save): Moved from intlclock.
+	(update_coords): Moved from intlclock.
+	(update_timezone): Moved from intlclock.
+	(find_timezone): Moved from intlclock.
+	(fill_timezone_combo_from_location): Moved from intlclock.
+
+2007-12-13  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (edit_clear): Moved from intlclock.
+	(edit_hide): Moved from intlclock.
+	(wrap_cb): Moved from intlclock.
+
+2007-12-12  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (update_time_tooltip): Moved from intlclock's
+	update_panel_label(); we just keep the tooltip part.
+	(update_weather_locations): Moved from intlclock.
+
+2007-12-12  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (update_calendar_popup): Refresh the map display.
+
+2007-12-12  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (create_cities_section): Moved from intlclock.
+	(create_map_section): Moved from intlclock.
+
+2007-12-12  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (create_cities_store): Moved from intlclock.
+
+2007-12-10  Federico Mena Quintero  <federico@novell.com>
+
+	* Makefile.am (CLOCK_SOURCES): Add clock-location-tile.[ch].
+
+	* clock.c: Removed the cut&pasted enums from libgweather.
+
+2007-12-10  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c: Add missing includes.
+
+2007-12-07  Federico Mena Quintero  <federico@novell.com>
+
+	* calendar-window.c (calendar_window_get_locations_box): Moved
+	from intltlock.
+
+	* clock.c (weather_tooltip): Moved from intlclock.
+	(create_clock_widget): Add a tooltip callback for the weather_obox.
+
+2007-12-07  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (fill_clock_applet): Initialize the zone table.
+	(struct _ClockData): New field "zones".
+	(destroy_clock): Free the zone table and the locations.
+
+2007-12-07  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-map.[ch]: New files, moved from intlclock.
+
+	* Makefile.am (CLOCK_SOURCES): Add clock-map.[ch].
+
+2007-12-07  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-sunpos.[ch]: New files, moved from intlclock.
+
+	* Makefile.am (CLOCK_SOURCES): Add clock-sunpos.[ch].
+
+2007-12-06  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (N_GCONF_PREFS): Oops, fix the number of preferences.
+
+	* calendar-window.c (KEY_LOCATIONS_EXPANDED): New key.
+	(expander_activated): Support KEY_LOCATIONS_EXPANDED.
+	(calendar_window_pack_locations): Moved from Intlclock.
+
+	* clock.glade: Make the prefs-window not visible by default.
+
+2007-12-05  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-location-tile.c (clock_location_tile_new): Don't take in a
+	Clock and a ClockUI.  We'll make this object just emit signals
+	instead of frobbing things directly.  Elsewhere in the code,
+	commented out parts that require those objects to be present.
+
+2007-12-05  Federico Mena Quintero  <federico@novell.com>
+
+	* gweather-xml.[ch]: Moved from intlclock.
+
+	* clock-marshallers.list: New file, moved from intlclock.
+
+	* Makefile.am (BUILT_SOURCES): Add clock-marshallers.[ch].
+	(clock-marshallers.c, clock-marshallers.h): New targets.
+	(INCLUDES): Define SYSTEM_ZONEINFODIR.
+	(CLOCK_SOURCES): Add gweather-xml.[ch]
+	(CLOCK_LDADD): Ugh, add -lgweather.  We'll make this cleaner soon.
+
+	* clock-location.c: #ifdef-out again the code that requires
+	NetworkManager 0.7.
+
+2007-12-05  Federico Mena Quintero  <federico@novell.com>
+
+	* pixmaps/*: Moved from intlclock.
+
+	* Makefile.am (SUBDIRS): Add pixmaps directory.
+
+2007-12-05  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-location-tile.[ch]: New files, moved from intlclock.
+	These won't compile yet due to the clocks having a different
+	architecture.
+
+2007-12-05  Federico Mena Quintero  <federico@novell.com>
+
+	* Makefile.am (CLOCK_SOURCES): Add all the new files.
+	(glade_DATA): Add clock.glade.
+
+	* clock-face.[ch]: New files, moved from intlclock.
+
+2007-12-05  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-zoneinfo.[ch]:
+	* clock-zonetable.[ch]:
+	* clock-country.[ch]:
+	* clock-location.[ch]: New files, moved from intlclock.
+
+2007-12-05  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (struct _ClockData): New field "set_time_button".
+	(update_set_time_button): Moved from intlclock.
+
+	* set-timezone.[ch]: New files, moved from intlclock.
+
+	* Makefile.am (CLOCK_SOURCES): Add set-timezone.[ch].
+
+2007-12-04  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (load_gconf_settings): Finish merging from intlclock.
+
+2007-12-04  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (struct _ClockData): New fields "locations", "cities_store".
+	(cities_changed): Move from intlclock, along with helper function
+	stubs.
+	(fill_prefs_window): Mark the column headers for translation.
+
+2007-11-26  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (prefs_locations_changed): Move over from Intlclock.
+	(update_orient): Set the angle of the temperature label.
+
+2007-11-26  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (fill_prefs_window): Move over from Intlclock with its
+	helper functions.
+
+2007-11-26  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (display_properties_dialog): Set the screen of the
+	preferences window before presenting it.
+
+	* clock.glade: Add back the Location page to the preferences
+	dialog.  Add the Edit Location and Find Location dialogs.  Make
+	the preferences window a GtkDialog, with "center" for the position
+	hint.
+
+2007-11-26  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (verb_display_properties_dialog): Renamed from
+	display_properties_dialog().
+	(display_properties_dialog): Match the prototype from intlclock;
+	move the code from there.
+	(ensure_prefs_window_is_created): Move the code from intlclock;
+	with a bunch of stub functions.
+	(struct _ClockData): Add a bunch of fields for the preferences
+	dialog.
+
+2007-11-26  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (struct _ClockData): Removed tz_toggle, tz_arrow,
+	tz_popup, tz_list, show_tz, show_tz_check.  The code in Intlclock
+	is much better; we'll restore the timezone code from there.
+	(KEY_SHOW_ZONES): Removed.
+	(*): Remove the tz-related functions.
+
+	* clock.schemas.in: Remove these schemas:
+	/schemas/apps/clock_applet/prefs/show_timezones
+	/schemas/apps/clock_applet/prefs/timezones/tz_id_list
+	/schemas/apps/clock_applet/prefs/timezones/timezone_name
+	/schemas/apps/clock_applet/prefs/timezones/timezone_zone
+
+2007-11-22  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (create_clock_widget): Create the weather widgets.
+
+2007-11-22  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (struct _ClockData): Rename "obox" to "main_obox".  Add
+	a "weather_obox" field.
+	(create_clock_widget): Use the new container names, and clean up
+	this function a little.
+	(applet_change_orient): Factor out a ton of duplicated code.
+
+2007-11-22  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (struct _ClockData): Replace field "toggle" with
+	"panel_button".  Rename this throughout the code.
+	(force_no_focus_padding): Make the "first_time" variable static;
+	otherwise it's useless.
+
+2007-11-22  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (speed_unit_changed): Move from intlclock.
+	(update_speed_combo): Likewise.
+
+2007-11-22  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (temperature_unit_changed): Move from intlclock.
+	(update_temperature_combo): Likewise.
+	(update_weather_locations): Just a stub for now.
+
+2007-11-22  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (parse_and_set_temperature_string): Renamed from
+	parse_temperature_string().  Move the code from intlclock.
+	(parse_and_set_speed_string): Likewise.
+	(temp_unit_enum_map): Moved from intlclock.
+	(speed_unit_enum_map): Moved from intlclock.
+	(WeatherForecastType, TempUnit, SpeedUnit, PressureUnit,
+	DistanceUnit): Temporarily cut&pasted from libgweather, until it
+	becomes a standalone library.
+
+2007-11-22  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (show_weather_changed): Implement.
+	(show_temperature_changed): Implement.
+	(struct _ClockData): New fields panel_weather_icon,
+	panel_temperature_label.
+	(update_panel_weather): Moved over from intlclock.
+
+2007-11-21  Federico Mena Quintero  <federico@novell.com>
+
+	This begins the merge of the Intlclock applet into the gnome-panel clock.
+
+	* clock.glade: New Glade file for the clock's preferences dialog
+	and the set-time dialog.
+
+	* clock.c (struct _ClockData): New field glade_xml, to keep our
+	Glade data.  New fields show_weather, show_temperature for preferences.
+	(fill_clock_applet): Load the Glade data.
+	(setup_gconf): Make this easier to change by using a running count
+	of listeners, instead of hardcoding each listener's index within
+	the array.
+	(KEY_SHOW_WEATHER, KEY_SHOW_TEMPERATURE, KEY_CITIES,
+	KEY_TEMPERATURE_UNIT): New GConf keys.
+	(setup_gconf_preference): New helper function; factored out from
+	setup_gconf().
+	(setup_gconf): Use setup_gconf() instead of duplicating lots of
+	code.  Add listeners for the new GConf keys.
+	(load_gconf_settings): New function; move the code from
+	fill_clock_applet().  Also load the new GConf keys.
+
 ==================== 2.20.1 ====================
 
 ==================== 2.20.0.1 ====================

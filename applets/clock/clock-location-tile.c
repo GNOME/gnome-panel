@@ -1,0 +1,562 @@
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <string.h>
+#include <stdlib.h>
+#include <gtk/gtk.h>
+#include <libgnome/gnome-i18n.h>
+
+#include "clock.h"
+#include "clock-face.h"
+#include "clock-location-tile.h"
+#include "clock-location.h"
+#include "clock-marshallers.h"
+#include "set-timezone.h"
+
+G_DEFINE_TYPE (ClockLocationTile, clock_location_tile, GTK_TYPE_ALIGNMENT)
+
+enum {
+	TILE_PRESSED,
+	TIMEZONE_SET,
+	WEATHER_UPDATED,
+	NEED_FORMATTED_TIME,
+	LAST_SIGNAL
+};
+
+static guint signals[LAST_SIGNAL];
+
+typedef struct {
+        ClockLocation *location;
+
+        struct tm last_refresh;
+	long last_offset;
+
+        ClockFaceSize size;
+
+	GtkWidget *box;
+        GtkWidget *clock_face;
+        GtkWidget *city_label;
+        GtkWidget *time_label;
+
+        GtkWidget *current_button;
+        GtkWidget *current_label;
+        GtkWidget *current_marker;
+        GtkSizeGroup *button_group;
+
+        GtkWidget *weather_icon;
+
+	gulong location_weather_updated_id;
+} ClockLocationTilePrivate;
+
+static void clock_location_tile_finalize (GObject *);
+
+#define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_LOCATION_TILE_TYPE, ClockLocationTilePrivate))
+
+static void clock_location_tile_fill (ClockLocationTile *this);
+static void update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data);
+static gboolean weather_tooltip (GtkWidget *widget,
+                                 gint x, gint y,
+		                 gboolean    keyboard_mode,
+		                 GtkTooltip *tooltip,
+		                 gpointer    data);
+
+ClockLocationTile *
+clock_location_tile_new (ClockLocation *loc,
+			 ClockFaceSize size)
+{
+        ClockLocationTile *this;
+        ClockLocationTilePrivate *priv;
+
+        this = g_object_new (CLOCK_LOCATION_TILE_TYPE, NULL);
+        priv = PRIVATE (this);
+
+        priv->location = g_object_ref (loc);
+        priv->size = size;
+
+        clock_location_tile_fill (this);
+
+	update_weather_icon (loc, clock_location_get_weather_info (loc), this);
+	gtk_widget_set_has_tooltip (priv->weather_icon, TRUE);
+
+	g_signal_connect (priv->weather_icon, "query-tooltip",
+			  G_CALLBACK (weather_tooltip), this);
+	priv->location_weather_updated_id = g_signal_connect (G_OBJECT (loc), "weather-updated",
+							      G_CALLBACK (update_weather_icon), this);
+
+        return this;
+}
+
+static void
+clock_location_tile_class_init (ClockLocationTileClass *this_class)
+{
+        GObjectClass *g_obj_class = G_OBJECT_CLASS (this_class);
+
+        g_obj_class->finalize = clock_location_tile_finalize;
+
+        g_type_class_add_private (this_class, sizeof (ClockLocationTilePrivate));
+
+	signals[TILE_PRESSED] = g_signal_new ("tile-pressed",
+					      G_TYPE_FROM_CLASS (g_obj_class),
+					      G_SIGNAL_RUN_FIRST,
+					      G_STRUCT_OFFSET (ClockLocationTileClass, tile_pressed),
+					      NULL,
+					      NULL,
+					      g_cclosure_marshal_VOID__VOID,
+					      G_TYPE_NONE, 0);
+	signals[TILE_PRESSED] = g_signal_new ("timezone-set",
+					      G_TYPE_FROM_CLASS (g_obj_class),
+					      G_SIGNAL_RUN_FIRST,
+					      G_STRUCT_OFFSET (ClockLocationTileClass, timezone_set),
+					      NULL,
+					      NULL,
+					      g_cclosure_marshal_VOID__VOID,
+					      G_TYPE_NONE, 0);
+	signals[WEATHER_UPDATED] = g_signal_new ("weather-updated",
+						 G_TYPE_FROM_CLASS (g_obj_class),
+						 G_SIGNAL_RUN_FIRST,
+						 G_STRUCT_OFFSET (ClockLocationTileClass, weather_updated),
+						 NULL,
+						 NULL,
+						 _clock_marshal_VOID__OBJECT_STRING,
+						 G_TYPE_NONE, 2,
+						 G_TYPE_OBJECT,
+						 G_TYPE_STRING);
+	signals[NEED_FORMATTED_TIME] = g_signal_new ("need-formatted-time",
+						     G_TYPE_FROM_CLASS (g_obj_class),
+						     G_SIGNAL_RUN_LAST,
+						     G_STRUCT_OFFSET (ClockLocationTileClass, need_formatted_time),
+						     NULL,
+						     NULL,
+						     _clock_marshal_STRING__VOID,
+						     G_TYPE_STRING, 0);
+}
+
+static void
+clock_location_tile_init (ClockLocationTile *this)
+{
+        ClockLocationTilePrivate *priv = PRIVATE (this);
+
+        priv->location = NULL;
+
+        memset (&(priv->last_refresh), 0, sizeof (struct tm));
+	priv->last_offset = 0;
+
+        priv->size = CLOCK_FACE_SMALL;
+
+        priv->clock_face = NULL;
+        priv->city_label = NULL;
+        priv->time_label = NULL;
+}
+
+static void
+clock_location_tile_finalize (GObject *g_obj)
+{
+        ClockLocationTilePrivate *priv = PRIVATE (g_obj);
+
+        if (priv->location) {
+		g_signal_handler_disconnect (priv->location, priv->location_weather_updated_id);
+		priv->location_weather_updated_id = 0;
+
+                g_object_unref (priv->location);
+                priv->location = NULL;
+        }
+
+        if (priv->button_group) {
+                g_object_unref (priv->button_group);
+                priv->button_group = NULL;
+        }
+
+        G_OBJECT_CLASS (clock_location_tile_parent_class)->finalize (g_obj);
+}
+
+static gboolean
+press_on_tile      (GtkWidget             *widget,
+                    GdkEventButton        *event,
+                    ClockLocationTile *tile)
+{
+	g_signal_emit (tile, signals[TILE_PRESSED], 0);
+
+        return TRUE;
+}
+
+static void
+make_current (GtkWidget *widget, ClockLocationTile *tile)
+{
+        ClockLocationTilePrivate *priv = PRIVATE (tile);
+        GError *error = NULL;
+        GtkWidget *dialog;
+
+        if (clock_location_make_current (priv->location, &error)) {
+		g_signal_emit (tile, signals[TIMEZONE_SET], 0);
+        }
+        else if (error) {
+                dialog = gtk_message_dialog_new (NULL,
+                                                 0,
+                                                 GTK_MESSAGE_ERROR,
+                                                 GTK_BUTTONS_OK,
+                                                 _("Failed to set the system timezone"));
+                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), error->message);
+                g_signal_connect (dialog, "response",
+                                  G_CALLBACK (gtk_widget_destroy), NULL);
+                gtk_window_present (GTK_WINDOW (dialog));
+
+                g_error_free (error);
+        }
+}
+
+static gboolean
+enter_or_leave_tile (GtkWidget             *widget,
+                     GdkEventCrossing      *event,
+                     ClockLocationTile *tile)
+{
+        ClockLocationTilePrivate *priv = PRIVATE (tile);
+
+        if (event->type == GDK_ENTER_NOTIFY) {
+	      	gint can_set;
+
+		can_set = can_set_system_timezone ();
+		if (!clock_location_is_current (priv->location) &&
+		    can_set != 0) {
+			gtk_label_set_markup (GTK_LABEL (priv->current_label),
+					    can_set == 1 ?
+					    	_("<small>Set...</small>") :
+					    	_("<small>Set</small>"));
+			gtk_widget_show (priv->current_button);
+		}
+       }
+       else {
+               if (event->detail != GDK_NOTIFY_INFERIOR)
+                       gtk_widget_hide (priv->current_button);
+       }
+
+       return TRUE;
+}
+
+static void
+clock_location_tile_fill (ClockLocationTile *this)
+{
+        ClockLocationTilePrivate *priv = PRIVATE (this);
+	GtkWidget *align;
+        GtkWidget *strut;
+        GtkWidget *box;
+
+        priv->box = gtk_event_box_new ();
+
+        gtk_widget_add_events (priv->box, GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
+        g_signal_connect (priv->box, "button-press-event",
+                          G_CALLBACK (press_on_tile), this);
+        g_signal_connect (priv->box, "enter-notify-event",
+                          G_CALLBACK (enter_or_leave_tile), this);
+        g_signal_connect (priv->box, "leave-notify-event",
+                          G_CALLBACK (enter_or_leave_tile), this);
+
+        GtkWidget *alignment = gtk_alignment_new (0, 0, 1, 0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 3, 3, 3, 0);
+
+        GtkWidget *tile = gtk_hbox_new (FALSE, 6);
+        GtkWidget *head_section = gtk_vbox_new (FALSE, 0);
+
+        priv->city_label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (priv->city_label), 0, 0);
+
+        align = gtk_alignment_new (0, 0, 0, 0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 0, 3);
+        gtk_container_add (GTK_CONTAINER (align), priv->city_label);
+        gtk_box_pack_start (GTK_BOX (head_section), align, FALSE, FALSE, 0);
+
+        priv->time_label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (priv->time_label), 0, 0);
+
+        priv->weather_icon = gtk_image_new ();
+        align = gtk_alignment_new (0, 0, 0, 0);
+        gtk_container_add (GTK_CONTAINER (align), priv->weather_icon);
+
+        box = gtk_hbox_new (FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (head_section), box, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (box), align, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (box), priv->time_label, FALSE, FALSE, 0);
+
+        priv->current_button = gtk_button_new ();
+	priv->current_label = gtk_label_new ("");
+        gtk_widget_show (priv->current_label);
+        gtk_widget_set_no_show_all (priv->current_button, TRUE);
+        gtk_container_add (GTK_CONTAINER (priv->current_button), priv->current_label);
+        gtk_widget_set_tooltip_text (priv->current_button, _("Set as current timezone for this computer"));
+
+	priv->current_marker = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);
+	gtk_misc_set_alignment (GTK_MISC (priv->current_marker), 1.0, 0.5);
+	gtk_widget_set_no_show_all (priv->current_marker, TRUE);
+
+        strut = gtk_event_box_new ();
+        gtk_box_pack_start (GTK_BOX (box), strut, TRUE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (box), priv->current_button, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (box), priv->current_marker, FALSE, FALSE, 0);
+        priv->button_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
+        gtk_size_group_set_ignore_hidden (priv->button_group, FALSE);
+        gtk_size_group_add_widget (priv->button_group, strut);
+        gtk_size_group_add_widget (priv->button_group, priv->current_button);
+
+        g_signal_connect (priv->current_button, "clicked",
+                          G_CALLBACK (make_current), this);
+
+        priv->clock_face = clock_face_new_with_location (
+                priv->size, priv->location, head_section);
+
+        gtk_box_pack_start (GTK_BOX (tile), priv->clock_face, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (tile), head_section, TRUE, TRUE, 0);
+
+        gtk_container_add (GTK_CONTAINER (alignment), tile);
+        gtk_container_add (GTK_CONTAINER (priv->box), alignment);
+        gtk_container_add (GTK_CONTAINER (this), priv->box);
+
+        clock_location_tile_refresh (this);
+}
+
+static gboolean
+clock_needs_face_refresh (ClockLocationTile *this)
+{
+        ClockLocationTilePrivate *priv = PRIVATE (this);
+        struct tm now;
+
+        clock_location_localtime (priv->location, &now);
+
+        if (now.tm_year > priv->last_refresh.tm_year
+            || now.tm_mon > priv->last_refresh.tm_mon
+            || now.tm_mday > priv->last_refresh.tm_mday
+            || now.tm_hour > priv->last_refresh.tm_hour
+            || now.tm_min > priv->last_refresh.tm_min) {
+                return TRUE;
+        }
+
+        if ((priv->size == CLOCK_FACE_LARGE)
+            && now.tm_sec > priv->last_refresh.tm_sec) {
+                return TRUE;
+        }
+
+        return FALSE;
+}
+
+static gboolean
+clock_needs_label_refresh (ClockLocationTile *this)
+{
+        ClockLocationTilePrivate *priv = PRIVATE (this);
+        struct tm now;
+	long offset;
+
+        clock_location_localtime (priv->location, &now);
+	offset = clock_location_get_offset (priv->location);
+
+        if (now.tm_year > priv->last_refresh.tm_year
+            || now.tm_mon > priv->last_refresh.tm_mon
+            || now.tm_mday > priv->last_refresh.tm_mday
+            || now.tm_hour > priv->last_refresh.tm_hour
+            || now.tm_min > priv->last_refresh.tm_min
+	    || offset != priv->last_offset) {
+                return TRUE;
+        }
+
+        return FALSE;
+}
+
+static void
+copy_tm (struct tm *from, struct tm *to)
+{
+        to->tm_sec = from->tm_sec;
+        to->tm_min = from->tm_min;
+        to->tm_hour = from->tm_hour;
+        to->tm_mday = from->tm_mday;
+        to->tm_mon = from->tm_mon;
+        to->tm_year = from->tm_year;
+        to->tm_wday = from->tm_wday;
+        to->tm_yday = from->tm_yday;
+}
+
+static void
+emit_weather_updated (ClockLocationTile *this, GdkPixbuf *weather_icon, const char *temperature)
+{
+	g_signal_emit (this, signals[WEATHER_UPDATED], 0, weather_icon, temperature);
+}
+
+void
+clock_location_tile_refresh (ClockLocationTile *this)
+{
+        ClockLocationTilePrivate *priv = PRIVATE (this);
+        gchar *tmp, *tmp2, *tzname;
+        struct tm now;
+	long offset, hours, minutes;
+
+	g_return_if_fail (IS_CLOCK_LOCATION_TILE (this));
+
+        if (clock_location_is_current (priv->location)) {
+		if (!GTK_WIDGET_VISIBLE (priv->current_marker)) {
+			GdkPixbuf *pixbuf;
+                        const gchar *temp = NULL;
+
+			pixbuf = gtk_image_get_pixbuf (GTK_IMAGE (priv->weather_icon));
+                        if (clock_location_get_weather_info (priv->location))
+                               temp = weather_info_get_temp_summary (clock_location_get_weather_info (priv->location));
+
+			emit_weather_updated (this, pixbuf, temp);
+		}
+
+                gtk_widget_hide (priv->current_button);
+                gtk_widget_show (priv->current_marker);
+        }
+        else {
+                gtk_widget_hide (priv->current_marker);
+	}
+
+        if (clock_needs_face_refresh (this)) {
+                clock_face_refresh (CLOCK_FACE (priv->clock_face));
+        }
+
+        if (!clock_needs_label_refresh (this)) {
+                return;
+        }
+
+        clock_location_localtime (priv->location, &now);
+        tzname = clock_location_get_tzname (priv->location);
+
+        copy_tm (&now, &(priv->last_refresh));
+	priv->last_offset = clock_location_get_offset (priv->location);
+
+        tmp = g_strdup_printf ("<big><b>%s</b></big>",
+                               clock_location_get_name (priv->location));
+        gtk_label_set_markup (GTK_LABEL (priv->city_label), tmp);
+        g_free (tmp);
+
+	tmp = NULL;
+	g_signal_emit (this, signals[NEED_FORMATTED_TIME], 0, &tmp);
+
+	offset = - priv->last_offset;
+
+	hours = offset / 3600;
+	minutes = labs (offset % 3600) / 60;
+
+	if (hours != 0 && minutes != 0)
+		tmp2 = g_strdup_printf ("%s  <small>%+ld:%ld</small>", tmp ? tmp : "", hours, minutes);
+	else if (hours != 0)
+		tmp2 = g_strdup_printf ("%s  <small>%+ld</small>", tmp ? tmp : "", hours);
+	else {
+		tmp2 = tmp;
+		tmp = NULL;
+	}
+
+        gtk_label_set_markup (GTK_LABEL (priv->time_label), tmp2);
+        g_free (tmp);
+	g_free (tmp2);
+}
+
+void
+weather_info_setup_tooltip (WeatherInfo *info, GtkTooltip *tooltip)
+{
+        GdkPixbuf *pixbuf = NULL;
+        GtkIconTheme *theme = NULL;
+	const gchar *conditions, *temp, *apparent, *wind;
+	gchar *line1, *line2, *line3, *line4, *tip;
+	const gchar *icon_name;
+
+       	icon_name = weather_info_get_icon_name (info);
+        theme = gtk_icon_theme_get_default ();
+        pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 48, 0, NULL);
+        if (pixbuf)
+                gtk_tooltip_set_icon (tooltip, pixbuf);
+
+	conditions = weather_info_get_conditions (info);
+	if (strcmp (conditions, "-") != 0)
+		line1 = g_strdup_printf (_("%s, %s"),
+					 conditions,
+					 weather_info_get_sky (info));
+	else
+		line1 = g_strdup (weather_info_get_sky (info));
+
+	temp = weather_info_get_temp_summary (info);
+	apparent = weather_info_get_apparent (info);
+	if (strcmp (apparent, temp) != 0 &&
+	    /* FMQ: it's broken to read from another module's translations; add some API to libgweather. */
+            strcmp (apparent, dgettext ("gnome-applets-2.0", "Unknown")) != 0)
+		line2 = g_strdup_printf (_("%s, feels like %s"), temp, apparent);
+	else
+		line2 = g_strdup (temp);
+
+	wind = weather_info_get_wind (info);
+        if (strcmp (apparent, dgettext ("gnome-applets-2.0", "Unknown")) != 0)
+		line3 = g_strdup_printf ("%s\n", wind);
+	else
+		line3 = g_strdup ("");
+
+	line4 = g_strdup_printf (_("Sunrise: %s / Sunset: %s"),
+				 weather_info_get_sunrise (info),
+				 weather_info_get_sunset (info));
+
+	tip = g_strdup_printf ("<b>%s</b>\n%s\n%s%s", line1, line2, line3, line4);
+	gtk_tooltip_set_markup (tooltip, tip);
+	g_free (line1);
+	g_free (line2);
+	g_free (line3);
+	g_free (line4);
+	g_free (tip);
+}
+
+static gboolean
+weather_tooltip (GtkWidget  *widget,
+		 gint        x,
+		 gint	     y,
+		 gboolean    keyboard_mode,
+		 GtkTooltip *tooltip,
+		 gpointer    data)
+{
+        ClockLocationTile *tile = data;
+        ClockLocationTilePrivate *priv = PRIVATE (tile);
+	WeatherInfo *info;
+
+	info = clock_location_get_weather_info (priv->location);
+
+	if (!info || !weather_info_is_valid (info))
+		return FALSE;
+
+	weather_info_setup_tooltip (info, tooltip);
+
+	return TRUE;
+}
+
+static void
+update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
+{
+        ClockLocationTile *tile = data;
+        ClockLocationTilePrivate *priv = PRIVATE (tile);
+        GdkPixbuf *pixbuf = NULL;
+        GtkIconTheme *theme = NULL;
+        const gchar *icon_name;
+        const gchar *temp = NULL;
+
+        if (!info || !weather_info_is_valid (info))
+                return;
+
+        icon_name = weather_info_get_icon_name (info);
+        theme = gtk_icon_theme_get_default ();
+        pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16, 0, NULL);
+
+        temp = weather_info_get_temp_summary (info);
+
+        if (pixbuf) {
+                gtk_image_set_from_pixbuf (GTK_IMAGE (priv->weather_icon), pixbuf);
+                gtk_alignment_set_padding (GTK_ALIGNMENT (gtk_widget_get_parent (priv->weather_icon)), 0, 0, 0, 6);
+		if (clock_location_is_current (loc)) {
+			emit_weather_updated (tile, pixbuf, temp);
+		}
+        }
+}
+
+ClockLocation *
+clock_location_tile_get_location (ClockLocationTile *this)
+{
+        ClockLocationTilePrivate *priv;
+
+	g_return_val_if_fail (IS_CLOCK_LOCATION_TILE (this), NULL);
+
+	priv = PRIVATE (this);
+
+	return g_object_ref (priv->location);
+}

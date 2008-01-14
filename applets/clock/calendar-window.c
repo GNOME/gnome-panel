@@ -53,14 +53,24 @@
 
 #define CALENDAR_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CALENDAR_TYPE_WINDOW, CalendarWindowPrivate))
 
+#define KEY_LOCATIONS_EXPANDED      "expand_locations"
 #ifdef HAVE_LIBECAL
-#define N_CALENDAR_WINDOW_GCONF_PREFS 4
-
-#define KEY_APPOINTMENTS_EXPANDED "expand_appointments"
-#define KEY_BIRTHDAYS_EXPANDED    "expand_birthdays"
-#define KEY_TASKS_EXPANDED        "expand_tasks"
-#define KEY_WEATHER_EXPANDED      "expand_weather"
+/* For the following value, take into account the KEY_* that are not inside this #ifdef! */
+#  define N_CALENDAR_WINDOW_GCONF_PREFS 5
+#  define KEY_APPOINTMENTS_EXPANDED "expand_appointments"
+#  define KEY_BIRTHDAYS_EXPANDED    "expand_birthdays"
+#  define KEY_TASKS_EXPANDED        "expand_tasks"
+#  define KEY_WEATHER_EXPANDED      "expand_weather"
+#else
+#  define N_CALENDAR_WINDOW_GCONF_PREFS 1
 #endif
+
+enum {
+	EDIT_LOCATIONS,
+	LAST_SIGNAL
+};
+
+static guint signals[LAST_SIGNAL];
 
 struct _CalendarWindowPrivate {
 	GtkWidget  *calendar;
@@ -72,6 +82,8 @@ struct _CalendarWindowPrivate {
 	gboolean     show_weeks;
 	time_t      *current_time;
 
+	GtkWidget *locations_list;
+
 #ifdef HAVE_LIBECAL
 	ClockFormat  time_format;
 
@@ -81,7 +93,7 @@ struct _CalendarWindowPrivate {
         GtkWidget *birthday_list;
         GtkWidget *weather_list;
         GtkWidget *task_list;
-        
+
         GtkListStore *appointments_model;
         GtkListStore *tasks_model;
 
@@ -93,7 +105,6 @@ struct _CalendarWindowPrivate {
         GtkTreeModelFilter *weather_filter;
 
 	GConfClient *gconfclient;
-	guint        listeners [N_CALENDAR_WINDOW_GCONF_PREFS];
 #endif /* HAVE_LIBECAL */
 };
 
@@ -117,6 +128,11 @@ static void    calendar_window_set_current_time_p (CalendarWindow *calwin,
 static const char *calendar_window_get_prefs_dir  (CalendarWindow *calwin);
 static void    calendar_window_set_prefs_dir      (CalendarWindow *calwin,
 						   const char     *prefs_dir);
+static GtkWidget * create_hig_frame 		  (CalendarWindow *calwin,
+		  				   const char *title,
+                  				   const char *button_label,
+		  				   const char *key,
+                  				   GCallback   callback);
 
 #ifdef HAVE_LIBECAL
 
@@ -255,7 +271,7 @@ handle_tasks_changed (CalendarWindow *calwin)
                 char         *percent_complete_text;
 
                 g_assert (CALENDAR_EVENT (task)->type == CALENDAR_EVENT_TASK);
-      
+
                 /* FIXME: should this format be locale specific ? */
                 percent_complete_text = g_strdup_printf ("%d%%", task->percent_complete);
 
@@ -293,7 +309,7 @@ handle_task_completed_toggled (CalendarWindow        *calwin,
         char        *uid;
         gboolean     task_completed;
         guint        percent_complete;
-        
+
         path       = gtk_tree_path_new_from_string (path_str);
         child_path = gtk_tree_model_filter_convert_path_to_child_path (calwin->priv->tasks_filter, path);
         gtk_tree_model_get_iter (GTK_TREE_MODEL (calwin->priv->tasks_model),
@@ -399,7 +415,7 @@ is_weather (GtkTreeModel *model,
 		return (strcmp (uri, "weather") == 0);
 	return FALSE;
 }
-    
+
 static gboolean
 filter_out_tasks (GtkTreeModel   *model,
                   GtkTreeIter    *iter,
@@ -560,21 +576,21 @@ set_renderer_pixbuf_pixmap_for_bday (GtkCellRenderer *renderer,
 	const gchar *path   = NULL;
 	gchar       *type   = NULL;
 
-	gtk_tree_model_get (model, iter, data_column, &type, -1); 
+	gtk_tree_model_get (model, iter, data_column, &type, -1);
 	if (!type)
 		return;
 
 	/* type should be in format like this:
 	 * pas-id-4121A93E00000001-anniversary
-	 * pas-id-41112AF900000003-birthday 
+	 * pas-id-41112AF900000003-birthday
 	 * ...
 	 */
 	if (g_strrstr (type, "birthday") != 0)
-		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_birthday_16.png"; 
+		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_birthday_16.png";
 	else if (g_strrstr (type, "anniversary") != 0)
-		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_gifts_16.png"; 
+		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_gifts_16.png";
 	else
-		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_miscellaneous_16.png"; 
+		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_miscellaneous_16.png";
 
 	g_free (type);
 
@@ -727,6 +743,12 @@ calendar_window_tree_selection_changed (GtkTreeSelection *selection,
 	calwin->priv->previous_selection = selection;
 }
 
+static void
+edit_tasks (CalendarWindow *calwin)
+{
+       clock_launch_evolution (calwin, "--component=tasks");
+}
+
 static GtkWidget *
 create_task_list (CalendarWindow *calwin,
                   GtkWidget     **tree_view,
@@ -739,16 +761,19 @@ create_task_list (CalendarWindow *calwin,
         GtkTreeViewColumn *column;
         GtkTreeSelection  *selection;
 
-        list = gtk_expander_new_with_mnemonic (_("_Tasks"));
-
+	list = create_hig_frame (calwin, 
+                                 _("Tasks"), _("Edit"),
+                                 KEY_TASKS_EXPANDED,
+                                 G_CALLBACK (edit_tasks)); 
+ 
         *scrolled_window = scrolled = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
                                              GTK_SHADOW_IN);
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                         GTK_POLICY_NEVER,
                                         GTK_POLICY_AUTOMATIC);
-        gtk_container_add (GTK_CONTAINER (list), scrolled);
         gtk_widget_show (scrolled);
+        gtk_container_add (GTK_CONTAINER (list), scrolled);
 
         g_assert (calwin->priv->tasks_model != NULL);
 
@@ -898,7 +923,9 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
 				   GtkTreeCellDataFunc  set_pixbuf_cell,
 				   gboolean             show_start,
 				   GtkWidget          **tree_view,
-				   GtkWidget          **scrolled_window)
+				   GtkWidget          **scrolled_window,
+				   const char          *key,
+                                   GCallback            callback)
 {
         GtkWidget         *list;
         GtkWidget         *view;
@@ -907,7 +934,8 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
         GtkTreeViewColumn *column;
 	GtkTreeSelection  *selection;
 
-        list = gtk_expander_new_with_mnemonic (label);
+	
+	list = create_hig_frame (calwin, label, _("Edit"), key, callback);
 
         *scrolled_window = scrolled = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
@@ -953,7 +981,7 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
 						    "text", APPOINTMENT_COLUMN_START_TEXT);
 		gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 	}
-  
+
         /* Summary */
         column = gtk_tree_view_column_new ();
         cell = gtk_cell_renderer_text_new ();
@@ -975,6 +1003,12 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
         return list;
 }
 
+static void
+edit_appointments (CalendarWindow *calwin)
+{
+       clock_launch_evolution (calwin, "--component=calendar");
+}
+
 static GtkWidget *
 create_appointment_list (CalendarWindow  *calwin,
 			 GtkWidget      **tree_view,
@@ -982,13 +1016,21 @@ create_appointment_list (CalendarWindow  *calwin,
 {
 	return create_list_for_appointment_model (
 					calwin,
-					_("_Appointments"),
+					_("Appointments"),
 					&calwin->priv->appointments_filter,
 					is_appointment,
 					appointment_pixbuf_cell_data_func,
 					TRUE,
 					tree_view,
-					scrolled_window);
+					scrolled_window,
+				        KEY_APPOINTMENTS_EXPANDED,
+					G_CALLBACK (edit_appointments));
+}
+
+static void
+edit_birthdays (CalendarWindow *calwin)
+{
+       clock_launch_evolution (calwin, "--component=calendar");
 }
 
 static GtkWidget *
@@ -999,14 +1041,23 @@ create_birthday_list (CalendarWindow  *calwin,
         /* FIXME: Figure out how to get rid of useless localized message in front of the summary */
 	return create_list_for_appointment_model (
 					calwin,
-					_("_Birthdays and Anniversaries"),
+					_("Birthdays and Anniversaries"),
 					&calwin->priv->birthdays_filter,
 					is_birthday,
 					birthday_pixbuf_cell_data_func,
 					FALSE,
 					tree_view,
-					scrolled_window);
+					scrolled_window,
+					KEY_BIRTHDAYS_EXPANDED,
+					G_CALLBACK (edit_birthdays));
 }
+
+static void
+edit_weather (CalendarWindow *calwin)
+{
+       clock_launch_evolution (calwin, "--component=calendar");
+}
+
 
 static GtkWidget *
 create_weather_list (CalendarWindow  *calwin,
@@ -1015,13 +1066,15 @@ create_weather_list (CalendarWindow  *calwin,
 {
 	return create_list_for_appointment_model (
 					calwin,
-					_("_Weather Information"),
+					_("Weather Information"),
 					&calwin->priv->weather_filter,
 					is_weather,
 					weather_pixbuf_cell_data_func,
 					FALSE,
 					tree_view,
-					scrolled_window);
+					scrolled_window,
+					KEY_WEATHER_EXPANDED,
+					G_CALLBACK (edit_weather));
 }
 
 static void
@@ -1186,22 +1239,9 @@ static void
 expander_activated (GtkExpander    *expander,
 		    CalendarWindow *calwin)
 {
-	const char *relative_key;
-	char       *key;
+	const char *key;
 
-	if (GTK_WIDGET (expander) == calwin->priv->appointment_list)
-		relative_key = KEY_APPOINTMENTS_EXPANDED;
-	else if (GTK_WIDGET (expander) == calwin->priv->birthday_list)
-		relative_key = KEY_BIRTHDAYS_EXPANDED;
-	else if (GTK_WIDGET (expander) == calwin->priv->weather_list)
-		relative_key = KEY_WEATHER_EXPANDED;
-	else if (GTK_WIDGET (expander) == calwin->priv->task_list)
-		relative_key = KEY_TASKS_EXPANDED;
-	else
-		return;
-
-	key = g_strdup_printf ("%s/%s",
-			       calwin->priv->prefs_dir, relative_key);
+	key = (const gchar*)g_object_get_data (G_OBJECT (expander), "gconf-key");
 
 	if (gconf_client_key_is_writable (calwin->priv->gconfclient,
 					  key, NULL)) {
@@ -1209,8 +1249,6 @@ expander_activated (GtkExpander    *expander,
 				       gtk_expander_get_expanded (expander),
 				       NULL);
 	}
-
-	g_free (key);
 }
 
 static void
@@ -1220,43 +1258,54 @@ expanded_changed (GConfClient  *client,
 		  GtkExpander  *expander)
 {
 	gboolean value;
-	
+
 	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
 		return;
 
 	value = gconf_value_get_bool (entry->value);
 
-	if (value != gtk_expander_get_expanded (expander))
-		gtk_expander_set_expanded (expander, value);
+	gtk_expander_set_expanded (expander, value);
+}
+
+static void
+remove_listener (gpointer data)
+{
+	GConfClient *client;
+
+	client = gconf_client_get_default ();
+	gconf_client_notify_remove (client, GPOINTER_TO_UINT (data));
+	g_object_unref (client);
 }
 
 static void
 connect_expander_with_gconf (CalendarWindow *calwin,
 			     GtkWidget      *expander,
-			     const char     *relative_key,
-			     int             listener_n)
+			     const char     *relative_key)
 {
 	char     *key;
 	gboolean  expanded;
+	guint      listener;
 
 	key = g_strdup_printf ("%s/%s",
 			       calwin->priv->prefs_dir, relative_key);
+
+	g_object_set_data_full (G_OBJECT (expander), "gconf-key", (gpointer)key, g_free);
 
 	expanded = gconf_client_get_bool (calwin->priv->gconfclient, key,
 					  NULL);
 	gtk_expander_set_expanded (GTK_EXPANDER (expander), expanded);
 
-	calwin->priv->listeners [listener_n] =
-		gconf_client_notify_add (
+	g_signal_connect_after (expander, "activate",
+				G_CALLBACK (expander_activated),
+				calwin);
+
+	listener = gconf_client_notify_add (
 				calwin->priv->gconfclient, key,
 				(GConfClientNotifyFunc) expanded_changed,
 				expander, NULL, NULL);
 
-	g_free (key);
-
-	g_signal_connect_after (expander, "activate",
-				G_CALLBACK (expander_activated),
-				calwin);
+        g_object_set_data_full (G_OBJECT (expander), "listener-id",
+                                GUINT_TO_POINTER (listener), remove_listener);
 }
 #endif /* HAVE_LIBECAL */
 
@@ -1269,9 +1318,6 @@ calendar_window_pack_pim (CalendarWindow *calwin,
         GtkWidget *tree_view;
         GtkWidget *scrolled_window;
         guint      year, month, day;
-	int        i;
-        
-	i = 0;
 
 	calendar_window_create_tasks_model (calwin);
 	calendar_window_create_appointments_model (calwin);
@@ -1281,8 +1327,6 @@ calendar_window_pack_pim (CalendarWindow *calwin,
 				    calwin->priv->calendar, tree_view);
         update_frame_visibility (list,
 				 GTK_TREE_MODEL (calwin->priv->tasks_model));
-	connect_expander_with_gconf (calwin, list,
-				     KEY_TASKS_EXPANDED, i++);
         calwin->priv->task_list = list;
 
 	list = create_birthday_list (calwin, &tree_view, &scrolled_window);
@@ -1290,8 +1334,6 @@ calendar_window_pack_pim (CalendarWindow *calwin,
 				    calwin->priv->calendar, tree_view);
         update_frame_visibility (list,
 				 GTK_TREE_MODEL (calwin->priv->birthdays_filter));
-	connect_expander_with_gconf (calwin, list,
-				     KEY_BIRTHDAYS_EXPANDED, i++);
         calwin->priv->birthday_list = list;
 
         list = create_weather_list (calwin, &tree_view, &scrolled_window);
@@ -1299,8 +1341,6 @@ calendar_window_pack_pim (CalendarWindow *calwin,
 				    calwin->priv->calendar, tree_view);
         update_frame_visibility (list,
 				 GTK_TREE_MODEL (calwin->priv->weather_filter));
-	connect_expander_with_gconf (calwin, list,
-				     KEY_WEATHER_EXPANDED, i++);
 	calwin->priv->weather_list = list;
 
         list = create_appointment_list (calwin, &tree_view, &scrolled_window);
@@ -1308,11 +1348,7 @@ calendar_window_pack_pim (CalendarWindow *calwin,
 				    calwin->priv->calendar, tree_view);
         update_frame_visibility (list,
 				 GTK_TREE_MODEL (calwin->priv->appointments_filter));
-	connect_expander_with_gconf (calwin, list,
-				     KEY_APPOINTMENTS_EXPANDED, i++);
 	calwin->priv->appointment_list = list;
-
-	g_assert (i == N_CALENDAR_WINDOW_GCONF_PREFS);
 
 	if (!calwin->priv->invert_order) {
                 gtk_box_pack_start (GTK_BOX (vbox),
@@ -1408,6 +1444,122 @@ calendar_window_create_calendar (CalendarWindow *calwin)
 }
 
 static void
+expand_collapse_child (GtkWidget *child,
+		       gpointer   data)
+{
+	gboolean expanded;
+
+	if (data == child || gtk_widget_is_ancestor (data, child))
+		return;
+
+	expanded = gtk_expander_get_expanded (GTK_EXPANDER (data));
+	g_object_set (child, "visible", expanded, NULL);
+}
+
+static void
+expand_collapse (GtkWidget  *expander,
+		 GParamSpec *pspec,
+                 gpointer    data)
+{
+	GtkWidget *box = data;
+
+	gtk_container_foreach (GTK_CONTAINER (box),
+			       (GtkCallback)expand_collapse_child,
+			       expander);
+}
+
+static void add_child (GtkContainer *container,
+                       GtkWidget    *child,
+                       GtkExpander  *expander)
+{
+        gboolean expanded;
+
+        expanded = gtk_expander_get_expanded (expander);
+        g_object_set (child, "visible", expanded, NULL);
+}
+
+static GtkWidget *
+create_hig_frame (CalendarWindow *calwin,
+		  const char *title,
+                  const char *button_label,
+		  const char *key,
+                  GCallback   callback)
+{
+        GtkWidget *vbox;
+        GtkWidget *alignment;
+        GtkWidget *label;
+        GtkWidget *hbox;
+        GtkWidget *button;
+        char      *bold_title;
+	char      *text;
+        GtkWidget *expander;
+
+        vbox = gtk_vbox_new (FALSE, 6);
+
+        bold_title = g_strdup_printf ("<b>%s</b>", title);
+	expander = gtk_expander_new (bold_title);
+        g_free (bold_title);
+	gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
+
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (hbox), expander, FALSE, FALSE, 0);
+	gtk_widget_show_all (vbox);
+
+	g_signal_connect (expander, "notify::expanded",
+			  G_CALLBACK (expand_collapse), hbox);
+	g_signal_connect (expander, "notify::expanded",
+			  G_CALLBACK (expand_collapse), vbox);
+
+	/* FIXME: this doesn't really work, since "add" does not 
+	 * get emitted for e.g. gtk_box_pack_start
+	 */
+	g_signal_connect (vbox, "add", G_CALLBACK (add_child), expander);
+	g_signal_connect (hbox, "add", G_CALLBACK (add_child), expander);
+
+        if (button_label) {
+                button = gtk_button_new ();
+                text = g_markup_printf_escaped ("<small>%s</small>", button_label);
+                label = gtk_label_new (text);
+                g_free (text);
+                gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+                gtk_container_add (GTK_CONTAINER (button), label);
+
+		alignment = gtk_alignment_new (1, 0, 0, 0);
+                gtk_container_add (GTK_CONTAINER (alignment), button);
+        	gtk_widget_show_all (alignment);
+
+                gtk_container_add (GTK_CONTAINER (hbox), alignment);
+
+                g_signal_connect_swapped (button, "clicked", callback, calwin);
+        }
+
+	connect_expander_with_gconf (calwin, expander, key);
+
+        return vbox;
+}
+
+static void
+edit_locations (CalendarWindow *calwin)
+{
+	g_signal_emit (calwin, signals[EDIT_LOCATIONS], 0);
+}
+
+static void
+calendar_window_pack_locations (CalendarWindow *calwin, GtkWidget *vbox)
+{
+	calwin->priv->locations_list = create_hig_frame (calwin,
+							 _("Locations"), _("Edit"),
+							 KEY_LOCATIONS_EXPANDED,
+							 G_CALLBACK (edit_locations));
+
+	gtk_widget_show (calwin->priv->locations_list);
+	gtk_container_add (GTK_CONTAINER (vbox), calwin->priv->locations_list);
+
+	//gtk_box_pack_start (GTK_BOX (vbox), calwin->priv->locations_list, TRUE, FALSE, 0);
+}
+
+static void
 calendar_window_fill (CalendarWindow *calwin)
 {
         GtkWidget *frame;
@@ -1430,11 +1582,19 @@ calendar_window_fill (CalendarWindow *calwin)
                 gtk_box_pack_start (GTK_BOX (vbox),
 				    calwin->priv->calendar, TRUE, FALSE, 0);
                 calendar_window_pack_pim (calwin, vbox);
+		calendar_window_pack_locations (calwin, vbox);
 	} else {
+		calendar_window_pack_locations (calwin, vbox);
                 calendar_window_pack_pim (calwin, vbox);
                 gtk_box_pack_start (GTK_BOX (vbox),
 				    calwin->priv->calendar, TRUE, FALSE, 0);
 	}
+}
+
+GtkWidget *
+calendar_window_get_locations_box (CalendarWindow *calwin)
+{
+	return calwin->priv->locations_list;
 }
 
 static GObject *
@@ -1554,7 +1714,6 @@ calendar_window_destroy (GtkObject *object)
 {
 #ifdef HAVE_LIBECAL
 	CalendarWindow *calwin;
-	int             i;
 
 	calwin = CALENDAR_WINDOW (object);
 
@@ -1569,7 +1728,7 @@ calendar_window_destroy (GtkObject *object)
         if (calwin->priv->tasks_model)
                 g_object_unref (calwin->priv->tasks_model);
         calwin->priv->tasks_model = NULL;
-        
+
         if (calwin->priv->appointments_filter)
                 g_object_unref (calwin->priv->appointments_filter);
         calwin->priv->appointments_filter = NULL;
@@ -1577,7 +1736,7 @@ calendar_window_destroy (GtkObject *object)
         if (calwin->priv->birthdays_filter)
                 g_object_unref (calwin->priv->birthdays_filter);
         calwin->priv->birthdays_filter = NULL;
-        
+
         if (calwin->priv->tasks_filter)
                 g_object_unref (calwin->priv->tasks_filter);
         calwin->priv->tasks_filter = NULL;
@@ -1585,13 +1744,6 @@ calendar_window_destroy (GtkObject *object)
         if (calwin->priv->weather_filter)
                 g_object_unref (calwin->priv->weather_filter);
         calwin->priv->weather_filter = NULL;
-        
-	for (i = 0; i < N_CALENDAR_WINDOW_GCONF_PREFS; i++) {
-		if (calwin->priv->listeners [i] > 0)
-			gconf_client_notify_remove (calwin->priv->gconfclient,
-						    calwin->priv->listeners [i]);
-		calwin->priv->listeners [i] = 0;
-	}
 
 	if (calwin->priv->gconfclient)
 		g_object_unref (calwin->priv->gconfclient);
@@ -1614,6 +1766,15 @@ calendar_window_class_init (CalendarWindowClass *klass)
 	gtkobject_class->destroy = calendar_window_destroy;
 
 	g_type_class_add_private (klass, sizeof (CalendarWindowPrivate));
+
+	signals[EDIT_LOCATIONS] = g_signal_new ("edit-locations",
+						G_TYPE_FROM_CLASS (gobject_class),
+						G_SIGNAL_RUN_FIRST,
+						G_STRUCT_OFFSET (CalendarWindowClass, edit_locations),
+						NULL,
+						NULL,
+						g_cclosure_marshal_VOID__VOID,
+						G_TYPE_NONE, 0);
 
 	g_object_class_install_property (
 		gobject_class,

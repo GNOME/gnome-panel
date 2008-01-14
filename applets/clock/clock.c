@@ -38,6 +38,12 @@
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
+#include <math.h>
+#include <locale.h>
+
+#ifdef HAVE__NL_MEASUREMENT_MEASUREMENT
+#include <langinfo.h>
+#endif
 
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
@@ -46,29 +52,39 @@
 #include <gdk/gdkkeysyms.h>
 #include <gconf/gconf-client.h>
 
+#include <glade/glade.h>
+#include <libgweather/gweather-prefs.h>
+
 #include "clock.h"
 
 #include "calendar-window.h"
+#include "clock-location.h"
+#include "clock-location-tile.h"
+#include "clock-map.h"
 #include "clock-utils.h"
+#include "clock-zonetable.h"
+#include "gweather-xml.h"
 #include "obox.h"
-#include "tz-list.h"
-#include "tz-window.h"
+#include "set-timezone.h"
 
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
 
-#define N_GCONF_PREFS 8
-
 #define NEVER_SENSITIVE "never_sensitive"
 
-#define KEY_FORMAT        "format"
-#define KEY_SHOW_SECONDS  "show_seconds"
-#define KEY_SHOW_DATE     "show_date"
-#define KEY_GMT_TIME      "gmt_time"
-#define KEY_CONFIG_TOOL   "config_tool"
-#define KEY_CUSTOM_FORMAT "custom_format"
-#define KEY_SHOW_WEEK     "show_week_numbers"
-#define KEY_SHOW_ZONES    "show_timezones"
+#define N_GCONF_PREFS 12 /* Keep this in sync with the number of keys below! */
+#define KEY_FORMAT		"format"
+#define KEY_SHOW_SECONDS	"show_seconds"
+#define KEY_SHOW_DATE		"show_date"
+#define KEY_SHOW_WEATHER	"show_weather"
+#define KEY_SHOW_TEMPERATURE	"show_temperature"
+#define KEY_GMT_TIME		"gmt_time"
+#define KEY_CONFIG_TOOL		"config_tool"
+#define KEY_CUSTOM_FORMAT	"custom_format"
+#define KEY_SHOW_WEEK		"show_week_numbers"
+#define KEY_CITIES		"cities"
+#define KEY_TEMPERATURE_UNIT	"temperature_unit"
+#define KEY_SPEED_UNIT		"speed_unit"
 
 #define FALLBACK_CONFIG_TOOL "time-admin"
 
@@ -86,25 +102,69 @@ static GConfEnumStringPair format_type_enum_map [] = {
 	{ 0, NULL }
 };
 
+enum {
+	COL_CITY_NAME = 0,
+	COL_CITY_TZ,
+        COL_CITY_LOC,
+	COL_CITY_LAST
+};
+
 typedef struct _ClockData ClockData;
 
 struct _ClockData {
 	/* widgets */
 	GtkWidget *applet;
 
-	GtkWidget *obox;
-	GtkWidget *clockw;
-        GtkWidget *toggle;
-	GtkWidget *tz_toggle;
-	GtkWidget *tz_arrow;
+        GtkWidget *panel_button;	/* main toggle button for the whole clock */
+
+	GtkWidget *main_obox;		/* orientable box inside panel_button */
+        GtkWidget *weather_obox;        /* orientable box for the weather widgets */
+
+	GtkWidget *clockw;		/* main label for the date/time display */
+
+        GtkWidget *panel_weather_icon;
+        GtkWidget *panel_temperature_label;
 
 	GtkWidget *props;
 	GtkWidget *about;
 	GtkWidget *calendar_popup;
-	GtkWidget *tz_popup;
 
-	TzList    *tz_list;
-	
+        GtkWidget *clock_vbox;
+	GtkSizeGroup *clock_group;
+
+	GladeXML *glade_xml;
+
+        /* Preferences dialog */
+        GtkWidget *prefs_window;
+        GtkTreeView *prefs_locations;
+
+	GtkWidget *prefs_location_add_button;
+	GtkWidget *prefs_location_edit_button;
+	GtkWidget *prefs_location_remove_button;
+
+	GtkWidget *location_tree;
+	GtkWidget *find_next_location_button;
+	GtkWidget *find_location_entry;
+	GtkWidget *find_location_ok_button;
+
+	GtkWidget *time_settings_button;
+	GtkWidget *calendar;
+	GtkWidget *hours_spin;
+	GtkWidget *minutes_spin;
+	GtkWidget *seconds_spin;
+	GtkWidget *set_time_button;
+
+	GtkListStore *cities_store;
+        GtkWidget *cities_section;
+        GtkWidget *map_section;
+        GtkWidget *map_widget;
+
+	gulong zone_combo_changed;
+
+        /* Window to set the time */
+	GtkWidget *set_time_window;
+	GtkWidget *current_time_label;
+
 	/* preferences */
 	ClockFormat  format;
 	char        *custom_format;
@@ -112,9 +172,19 @@ struct _ClockData {
 	gboolean     showdate;
 	gboolean     gmt_time;
 	gboolean     showweek;
-	gboolean     show_tz;
+        gboolean     show_weather;
+        gboolean     show_temperature;
+
+        gboolean     use_temperature_default;
+        gboolean     use_speed_default;
+        TempUnit     temperature_unit;
+        SpeedUnit    speed_unit;
 
         char *config_tool;
+
+        /* Locations */
+        GList *locations;
+        GList *location_tiles;
 
 	/* runtime data */
         time_t             current_time;
@@ -124,14 +194,15 @@ struct _ClockData {
 	PanelAppletOrient  orient;
 	int                size;
 	GtkAllocation      old_allocation;
-	
+
+        ClockZoneTable *zones;
+
 	int fixed_width;
 	int fixed_height;
 
         GtkWidget *showseconds_check;
         GtkWidget *showdate_check;
         GtkWidget *gmt_time_check;
-	GtkWidget *show_tz_check;
         GtkWidget *custom_hbox;
         GtkWidget *custom_label;
         GtkWidget *custom_entry;
@@ -150,9 +221,12 @@ static float get_itime    (time_t current_time);
 static void set_atk_name_description (GtkWidget *widget,
                                       const char *name,
                                       const char *desc);
-static void display_properties_dialog (BonoboUIComponent *uic,
-				       ClockData         *cd,
-				       const gchar       *verbname);
+static void verb_display_properties_dialog (BonoboUIComponent *uic,
+                                            ClockData         *cd,
+                                            const gchar       *verbname);
+
+static void display_properties_dialog (ClockData         *cd,
+                                       gboolean           start_in_locations_page);
 static void display_help_dialog       (BonoboUIComponent *uic,
 				       ClockData         *cd,
 				       const gchar       *verbname);
@@ -160,18 +234,19 @@ static void display_about_dialog      (BonoboUIComponent *uic,
 				       ClockData         *cd,
 				       const gchar       *verbname);
 static void position_calendar_popup   (ClockData         *cd);
-static void position_tz_popup         (ClockData         *cd);
 static void update_orient (ClockData *cd);
 static void applet_change_orient (PanelApplet       *applet,
 				  PanelAppletOrient  orient,
 				  ClockData         *cd);
+
+static void edit_hide (GtkWidget *unused, ClockData *cd);
 
 static void
 unfix_size (ClockData *cd)
 {
 	cd->fixed_width = -1;
 	cd->fixed_height = -1;
-	gtk_widget_queue_resize (cd->toggle);
+	gtk_widget_queue_resize (cd->panel_button);
 }
 
 static int
@@ -230,10 +305,11 @@ clock_set_timeout (ClockData *cd,
 
 		/* timeout of one minute if we don't care about the seconds */
  		if (cd->format != CLOCK_FORMAT_UNIX &&
-		    !cd->showseconds)
+		    !cd->showseconds && 
+		    (!cd->set_time_window || !GTK_WIDGET_VISIBLE (cd->set_time_window)))
  			timeouttime += 1000 * (59 - now % 60);
  	}
-	
+
 	cd->timeout = g_timeout_add (timeouttime,
 	                             clock_timeout_callback,
 	                             cd);
@@ -247,10 +323,11 @@ clock_timeout_callback (gpointer data)
 
         time (&new_time);
 
-	if (!cd->showseconds &&
+	if (!cd->showseconds && 
+	    (!cd->set_time_window || !GTK_WIDGET_VISIBLE (cd->set_time_window)) &&
 	    cd->format != CLOCK_FORMAT_UNIX &&
 	    cd->format != CLOCK_FORMAT_CUSTOM) {
-		if (cd->format == CLOCK_FORMAT_INTERNET && 
+		if (cd->format == CLOCK_FORMAT_INTERNET &&
 		    (unsigned int)get_itime (new_time) !=
 		    (unsigned int)get_itime (cd->current_time)) {
 			update_clock (cd);
@@ -295,15 +372,15 @@ calculate_minimum_height (GtkWidget        *widget,
         int               ascent;
         int               descent;
         int               thickness;
-  
+
         context = gtk_widget_get_pango_context (widget);
         metrics = pango_context_get_metrics (context,
                                              widget->style->font_desc,
                                              pango_context_get_language (context));
-  
+
         ascent  = pango_font_metrics_get_ascent  (metrics);
         descent = pango_font_metrics_get_descent (metrics);
-  
+
         pango_font_metrics_unref (metrics);
 
         gtk_widget_style_get (widget,
@@ -324,7 +401,7 @@ calculate_minimum_height (GtkWidget        *widget,
 static gboolean
 use_two_line_format (ClockData *cd)
 {
-        if (cd->size >= 2 * calculate_minimum_height (cd->toggle, cd->orient))
+        if (cd->size >= 2 * calculate_minimum_height (cd->panel_button, cd->orient))
                 return TRUE;
 
         return FALSE;
@@ -427,22 +504,31 @@ set_atk_name_description (GtkWidget  *widget,
 }
 
 static void
-update_clock (ClockData * cd)
+update_location_tiles (ClockData *cd)
+{
+        GList *l;
+
+        for (l = cd->location_tiles; l; l = l->next) {
+                ClockLocationTile *tile;
+
+                tile = CLOCK_LOCATION_TILE (l->data);
+                clock_location_tile_refresh (tile);
+        }
+}
+
+static char *
+format_time (ClockData *cd)
 {
 	struct tm *tm;
 	char hour[256];
 	char *utf8;
-	gboolean use_markup;
 
-	time (&cd->current_time);
-	
+	utf8 = NULL;
+
 	if (cd->gmt_time)
 		tm = gmtime (&cd->current_time);
 	else
 		tm = localtime (&cd->current_time);
-
-	use_markup = FALSE;
-	utf8 = NULL;
 
 	if (cd->format == CLOCK_FORMAT_UNIX) {
 		if (use_two_line_format (cd)) {
@@ -469,26 +555,44 @@ update_clock (ClockData * cd)
 		g_free (timeformat);
 
 		utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
-		if (pango_parse_markup (utf8, -1, 0, NULL, NULL, NULL, NULL))
-			use_markup = TRUE;
 	} else {
 		if (strftime (hour, sizeof (hour), cd->timeformat, tm) <= 0)
 			strcpy (hour, "???");
 
 		utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
-		if (pango_parse_markup (utf8, -1, 0, NULL, NULL, NULL, NULL))
-			use_markup = TRUE;
-		else {
-			if (strftime (hour, sizeof (hour),
-				      cd->fallback_timeformat, tm) <= 0)
-				strcpy (hour, "???");
-			g_free (utf8);
-			utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
-		}
-	}
+        }
 
 	if (!utf8)
 		utf8 = g_strdup (hour);
+
+        return utf8;
+}
+
+static gchar *
+format_time_24 (ClockData *cd)
+{
+	struct tm *tm;
+	gchar buf[128];
+
+	tm = localtime (&cd->current_time);
+	strftime (buf, sizeof (buf) - 1, "%k:%M:%S", tm);
+	return g_locale_to_utf8 (buf, -1, NULL, NULL, NULL);
+}
+
+static void
+update_clock (ClockData * cd)
+{
+	gboolean use_markup;
+        char *utf8;
+
+        use_markup = FALSE;
+
+	time (&cd->current_time);
+        utf8 = format_time (cd);
+
+	use_markup = FALSE;
+        if (pango_parse_markup (utf8, -1, 0, NULL, NULL, NULL, NULL))
+                use_markup = TRUE;
 
 	if (use_markup)
 		gtk_label_set_markup (GTK_LABEL (cd->clockw), utf8);
@@ -497,15 +601,21 @@ update_clock (ClockData * cd)
 
 	g_free (utf8);
 
-	if (cd->tz_popup)
-	//TODO also, we might need to reposition the tz popup (except if we set the gravity)
-		tz_window_refresh (TZ_WINDOW (cd->tz_popup),
-				   cd->current_time, cd->fallback_timeformat);
-
 	update_orient (cd);
-	gtk_widget_queue_resize (cd->toggle);
+	gtk_widget_queue_resize (cd->panel_button);
 
 	update_tooltip (cd);
+        update_location_tiles (cd);
+
+        if (cd->map_widget && cd->calendar_popup && GTK_WIDGET_VISIBLE (cd->calendar_popup))
+                clock_map_update_time (CLOCK_MAP (cd->map_widget));
+
+	if (cd->current_time_label &&
+	    GTK_WIDGET_VISIBLE (cd->current_time_label)) {
+		utf8 = format_time_24 (cd);
+		gtk_label_set_text (GTK_LABEL (cd->current_time_label), utf8);
+		g_free (utf8);
+	}
 }
 
 static void
@@ -515,6 +625,10 @@ update_tooltip (ClockData * cd)
 		struct tm *tm;
 		char date[256];
 		char *utf8, *loc;
+                char *zone;
+                time_t now_t;
+                struct tm now;
+                char *tip;
 
 		if (cd->gmt_time)
 			tm = gmtime (&cd->current_time);
@@ -523,8 +637,10 @@ update_tooltip (ClockData * cd)
 
 		utf8 = NULL;
 
-                /* Show date in tooltip */
-                loc = g_locale_from_utf8 (_("%A %B %d"), -1, NULL, NULL, NULL);
+                /* Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+                 * use it to put in the timezone name later.
+                 */
+                loc = g_locale_from_utf8 (_("%A %B %d (%%s)"), -1, NULL, NULL, NULL);
                 if (!loc)
                         strcpy (date, "???");
                 else if (strftime (date, sizeof (date), loc, tm) <= 0)
@@ -532,22 +648,38 @@ update_tooltip (ClockData * cd)
                 g_free (loc);
 
                 utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
-                gtk_widget_set_tooltip_text (cd->toggle, utf8);
+
+                /* Add the timezone name */
+
+                tzset ();
+                time (&now_t);
+                localtime_r (&now_t, &now);
+
+                if (daylight && now.tm_isdst) {
+                        zone = tzname[1];
+                } else {
+                        zone = tzname[0];
+                }
+
+                tip = g_strdup_printf (utf8, zone);
+
+                gtk_widget_set_tooltip_text (cd->panel_button, tip);
                 g_free (utf8);
+                g_free (tip);
         } else {
 #ifdef HAVE_LIBECAL
 		if (cd->calendar_popup)
-			gtk_widget_set_tooltip_text (cd->toggle,
+			gtk_widget_set_tooltip_text (cd->panel_button,
 						     _("Click to hide your appointments and tasks"));
 		else
-			gtk_widget_set_tooltip_text (cd->toggle,
+			gtk_widget_set_tooltip_text (cd->panel_button,
 						     _("Click to view your appointments and tasks"));
 #else
 		if (cd->calendar_popup)
-			gtk_widget_set_tooltip_text (cd->toggle,
+			gtk_widget_set_tooltip_text (cd->panel_button,
 						     _("Click to hide month calendar"));
 		else
-			gtk_widget_set_tooltip_text (cd->toggle,
+			gtk_widget_set_tooltip_text (cd->panel_button,
 						     _("Click to view month calendar"));
 #endif
         }
@@ -564,19 +696,31 @@ static void
 refresh_clock_timeout(ClockData *cd)
 {
 	unfix_size (cd);
-	
+
 	update_timeformat (cd);
 
 	if (cd->timeout)
 		g_source_remove (cd->timeout);
 
 	update_clock (cd);
-	
+
 	clock_set_timeout (cd, cd->current_time);
 }
 
 static void
-destroy_clock(GtkWidget * widget, ClockData *cd)
+free_locations (ClockData *cd)
+{
+        GList *l;
+
+        for (l = cd->locations; l; l = l->next)
+                g_object_unref (l->data);
+
+        g_list_free (cd->locations);
+        cd->locations = NULL;
+}
+
+static void
+destroy_clock (GtkWidget * widget, ClockData *cd)
 {
 	GConfClient *client;
 	int          i;
@@ -605,18 +749,26 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 		gtk_widget_destroy (cd->calendar_popup);
 	cd->calendar_popup = NULL;
 
-	if (cd->tz_popup)
-		gtk_widget_destroy (cd->tz_popup);
-	cd->tz_popup = NULL;
-
-	if (cd->tz_list)
-		g_object_unref (cd->tz_list);
-	cd->tz_list = NULL;
-
 	g_free (cd->timeformat);
 	g_free (cd->fallback_timeformat);
 	g_free (cd->config_tool);
 	g_free (cd->custom_format);
+
+        free_locations (cd);
+
+        g_list_free (cd->location_tiles);
+        cd->location_tiles = NULL;
+
+        if (cd->zones) {
+                g_object_unref (cd->zones);
+                cd->zones = NULL;
+        }
+
+        if (cd->cities_store) {
+                g_object_unref (cd->cities_store);
+                cd->cities_store = NULL;
+        }
+
 	g_free (cd);
 }
 
@@ -642,6 +794,16 @@ delete_event (GtkWidget       *widget,
 	return TRUE;
 }
 
+static void
+edit_locations_cb (CalendarWindow *calwin, gpointer data)
+{
+        ClockData *cd;
+
+        cd = data;
+
+        display_properties_dialog (cd, TRUE);
+}
+
 static GtkWidget *
 create_calendar (ClockData *cd)
 {
@@ -664,28 +826,13 @@ create_calendar (ClockData *cd)
         gtk_window_set_screen (GTK_WINDOW (window),
 			       gtk_widget_get_screen (cd->applet));
 
-	g_signal_connect (window, "delete_event",
-			  G_CALLBACK (delete_event), cd->toggle);
-	g_signal_connect (window, "key_press_event",
-			  G_CALLBACK (close_on_escape), cd->toggle);
-
-	return window;
-}
-
-static GtkWidget *
-create_tz (ClockData *cd)
-{
-	GtkWidget *window;
-
-	window = tz_window_new (cd->tz_list);
-
-        gtk_window_set_screen (GTK_WINDOW (window),
-			       gtk_widget_get_screen (cd->applet));
+        g_signal_connect (window, "edit-locations",
+                          G_CALLBACK (edit_locations_cb), cd);
 
 	g_signal_connect (window, "delete_event",
-			  G_CALLBACK (delete_event), cd->tz_toggle);
+			  G_CALLBACK (delete_event), cd->panel_button);
 	g_signal_connect (window, "key_press_event",
-			  G_CALLBACK (close_on_escape), cd->tz_toggle);
+			  G_CALLBACK (close_on_escape), cd->panel_button);
 
 	return window;
 }
@@ -704,15 +851,15 @@ position_calendar_popup (ClockData *cd)
 	gboolean        found_monitor = FALSE;
 
 	/* Get root origin of the toggle button, and position above that. */
-	gdk_window_get_origin (cd->toggle->window, &x, &y);
+	gdk_window_get_origin (cd->panel_button->window, &x, &y);
 
 	gtk_window_get_size (GTK_WINDOW (cd->calendar_popup), &w, &h);
 	gtk_widget_size_request (cd->calendar_popup, &req);
 	w = req.width;
 	h = req.height;
 
-	button_w = cd->toggle->allocation.width;
-	button_h = cd->toggle->allocation.height;
+	button_w = cd->panel_button->allocation.width;
+	button_h = cd->panel_button->allocation.height;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (cd->calendar_popup));
 
@@ -734,7 +881,7 @@ position_calendar_popup (ClockData *cd)
 		monitor.width = gdk_screen_get_width (screen);
 		monitor.height = gdk_screen_get_height (screen);
 	}
-		
+
 	/* Based on panel orientation, position the popup.
 	 * Ignore window gravity since the window is undecorated.
 	 * The orientations are all named backward from what
@@ -780,108 +927,284 @@ position_calendar_popup (ClockData *cd)
 
 		break;
 	}
-		
+
 	gtk_window_move (GTK_WINDOW (cd->calendar_popup), x, y);
 	gtk_window_set_gravity (GTK_WINDOW (cd->calendar_popup), gravity);
 }
 
 static void
-position_tz_popup (ClockData *cd)
+add_to_group (GtkWidget *child, gpointer data)
 {
-	GtkRequisition  req;
-	GdkScreen      *screen;
-	GdkRectangle    monitor;
-	GdkGravity      gravity = GDK_GRAVITY_NORTH_WEST;
-	int             button_w, button_h;
-	int             x, y;
-	int             w, h;
-	int             i, n;
-	gboolean        found_monitor = FALSE;
+	GtkSizeGroup *group = data;
 
-	/* Get root origin of the toggle button, and position above that. */
-	gdk_window_get_origin (cd->tz_toggle->window, &x, &y);
-	//TODO hrm, this returns wrong value???
+	gtk_size_group_add_widget (group, child);
+}
 
-	gtk_window_get_size (GTK_WINDOW (cd->tz_popup), &w, &h);
-	gtk_widget_size_request (cd->tz_popup, &req);
-	w = req.width;
-	h = req.height;
+static void
+create_clock_window (ClockData *cd)
+{
+	GtkWidget *locations_box;
 
-	button_w = cd->tz_toggle->allocation.width;
-	button_h = cd->tz_toggle->allocation.height;
+        locations_box = calendar_window_get_locations_box (CALENDAR_WINDOW (cd->calendar_popup));
+        gtk_widget_show (locations_box);
 
-	screen = gtk_window_get_screen (GTK_WINDOW (cd->tz_popup));
+	cd->clock_vbox = gtk_vbox_new (FALSE, 6);
+	gtk_container_add (GTK_CONTAINER (locations_box), cd->clock_vbox);
 
-	n = gdk_screen_get_n_monitors (screen);
-	for (i = 0; i < n; i++) {
-		gdk_screen_get_monitor_geometry (screen, i, &monitor);
-		if (x >= monitor.x && x <= monitor.x + monitor.width &&
-		    y >= monitor.y && y <= monitor.y + monitor.height) {
-			found_monitor = TRUE;
-			break;
-		}
+	cd->clock_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+	gtk_size_group_set_ignore_hidden (cd->clock_group, FALSE);
+
+	gtk_container_foreach (GTK_CONTAINER (locations_box),
+			       (GtkCallback) add_to_group,
+			       cd->clock_group);
+}
+
+static gint
+sort_locations_by_name (gconstpointer a, gconstpointer b)
+{
+        ClockLocation *loc_a = (ClockLocation *) a;
+        ClockLocation *loc_b = (ClockLocation *) b;
+
+        char *name_a = clock_location_get_name (loc_a);
+        char *name_b = clock_location_get_name (loc_b);
+
+        return strcmp (name_a, name_b);
+}
+
+static void
+create_cities_store (ClockData *cd)
+{
+	GtkTreeIter iter;
+        GList *cities = cd->locations;
+        GList *list = NULL;
+
+        if (cd->cities_store) {
+                g_object_unref (G_OBJECT (cd->cities_store));
+                cd->cities_store = NULL;
+        }
+
+	/* City name, Timezone name, Coordinates in lat/long */
+	cd->cities_store = g_object_ref (gtk_list_store_new (COL_CITY_LAST,
+                                                             G_TYPE_STRING,		/* COL_CITY_NAME */
+                                                             G_TYPE_STRING,		/* COL_CITY_TZ */
+                                                             CLOCK_LOCATION_TYPE));	/* COL_CITY_LOC */
+
+        list = g_list_copy (cities);
+        list = g_list_sort (list, sort_locations_by_name);
+
+	while (list) {
+		ClockLocation *loc = CLOCK_LOCATION (list->data);
+
+		gtk_list_store_append (cd->cities_store, &iter);
+		gtk_list_store_set (cd->cities_store, &iter,
+				    COL_CITY_NAME, clock_location_get_name (loc),
+				    COL_CITY_TZ, clock_location_get_timezone (loc),
+                                    COL_CITY_LOC, loc,
+				    -1);
+
+                list = list->next;
 	}
 
-	if (!found_monitor) {
-		/* eek, we should be on one of those xinerama
-		   monitors */
-		monitor.x = 0;
-		monitor.y = 0;
-		monitor.width = gdk_screen_get_width (screen);
-		monitor.height = gdk_screen_get_height (screen);
-	}
-		
-	/* Based on panel orientation, position the popup.
-	 * Ignore window gravity since the window is undecorated.
-	 * The orientations are all named backward from what
-	 * I expected.
-	 */
-	switch (cd->orient) {
-	case PANEL_APPLET_ORIENT_RIGHT:
-		x += button_w;
-		if ((y + h) > monitor.y + monitor.height)
-			y -= (y + h) - (monitor.y + monitor.height);
+	if (cd->prefs_window) {
+                GtkWidget *widget = glade_xml_get_widget (cd->glade_xml, "cities_list");
+                gtk_tree_view_set_model (GTK_TREE_VIEW (widget),
+                                         GTK_TREE_MODEL (cd->cities_store));
+        }
+}
 
-		gravity = GDK_GRAVITY_NORTH_WEST;
+static gint
+sort_locations_by_time (gconstpointer a, gconstpointer b)
+{
+        ClockLocation *loc_a = (ClockLocation *) a;
+        ClockLocation *loc_b = (ClockLocation *) b;
 
-		break;
-	case PANEL_APPLET_ORIENT_LEFT:
-		x -= w;
-		if ((y + h) > monitor.y + monitor.height)
-			y -= (y + h) - (monitor.y + monitor.height);
+        struct tm tm_a;
+        struct tm tm_b;
+        gint ret;
 
-		gravity = GDK_GRAVITY_NORTH_EAST;
+        clock_location_localtime (loc_a, &tm_a);
+        clock_location_localtime (loc_b, &tm_b);
 
-		break;
-	case PANEL_APPLET_ORIENT_DOWN:
-		y += button_h;
-		if ((x + w) > monitor.x + monitor.width)
-			x -= (x + w) - (monitor.x + monitor.width);
+        ret = (tm_a.tm_year == tm_b.tm_year) ? 0 : 1;
+        if (ret) {
+                return (tm_a.tm_year < tm_b.tm_year) ? -1 : 1;
+        }
 
-		gravity = GDK_GRAVITY_NORTH_EAST;
+        ret = (tm_a.tm_mon == tm_b.tm_mon) ? 0 : 1;
+        if (ret) {
+                return (tm_a.tm_mon < tm_b.tm_mon) ? -1 : 1;
+        }
 
-		break;
-	case PANEL_APPLET_ORIENT_UP:
-		y -= h;
-		if ((x + w) > monitor.x + monitor.width)
-			x -= (x + w) - (monitor.x + monitor.width);
+        ret = (tm_a.tm_mday == tm_b.tm_mday) ? 0 : 1;
+        if (ret) {
+                return (tm_a.tm_mday < tm_b.tm_mday) ? -1 : 1;
+        }
 
-		gravity = GDK_GRAVITY_SOUTH_EAST;
+        ret = (tm_a.tm_hour == tm_b.tm_hour) ? 0 : 1;
+        if (ret) {
+                return (tm_a.tm_hour < tm_b.tm_hour) ? -1 : 1;
+        }
 
-		break;
-	}
-		
-	gtk_window_move (GTK_WINDOW (cd->tz_popup), x, y);
-	gtk_window_set_gravity (GTK_WINDOW (cd->tz_popup), gravity);
+        ret = (tm_a.tm_min == tm_b.tm_min) ? 0 : 1;
+        if (ret) {
+                return (tm_a.tm_min < tm_b.tm_min) ? -1 : 1;
+        }
+
+        ret = (tm_a.tm_sec == tm_b.tm_sec) ? 0 : 1;
+        if (ret) {
+                return (tm_a.tm_sec < tm_b.tm_sec) ? -1 : 1;
+        }
+
+        return ret;
+}
+
+static void
+location_tile_pressed_cb (ClockLocationTile *tile, gpointer data)
+{
+        ClockData *cd = data;
+        ClockLocation *loc;
+
+        loc = clock_location_tile_get_location (tile);
+
+        clock_map_blink_location (CLOCK_MAP (cd->map_widget), loc);
+
+        g_object_unref (loc);
+}
+
+static void
+location_tile_timezone_set_cb (ClockLocationTile *tile, gpointer data)
+{
+        ClockData *cd = data;
+
+        clock_map_refresh (CLOCK_MAP (cd->map_widget));
+}
+
+static void
+location_tile_weather_updated_cb (ClockLocationTile *tile, GdkPixbuf *weather_icon, const char *temperature, gpointer data)
+{
+        ClockData *cd = data;
+
+	gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon), weather_icon);
+        gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), temperature);
+}
+
+static char *
+location_tile_need_formatted_time_cb (ClockLocationTile *tile, gpointer data)
+{
+        ClockData *cd = data;
+
+        return format_time (cd);
+}
+
+static void
+create_cities_section (ClockData *cd)
+{
+        GList *node;
+        ClockLocationTile *city;
+        GList *cities;
+
+        if (cd->cities_section) {
+                gtk_widget_destroy (cd->cities_section);
+                cd->cities_section = NULL;
+        }
+
+        g_list_free (cd->location_tiles);
+        cd->location_tiles = NULL;
+
+        cd->cities_section = gtk_vbox_new (FALSE, 6);
+        gtk_container_set_border_width (GTK_CONTAINER (cd->cities_section), 0);
+
+	cities = cd->locations;
+        if (g_list_length (cities) == 0) {
+                /* if the list is empty, don't bother showing the
+                   cities section */
+                gtk_widget_hide (cd->cities_section);
+                return;
+        }
+
+        /* Copy the existing list, so we can sort it nondestructively */
+        node = g_list_copy (cities);
+        node = g_list_sort (node, sort_locations_by_time);
+        node = g_list_reverse (node);
+
+        while (node) {
+                ClockLocation *loc = node->data;
+
+                city = clock_location_tile_new (loc, CLOCK_FACE_SMALL);
+                g_signal_connect (city, "tile-pressed",
+                                  G_CALLBACK (location_tile_pressed_cb), cd);
+                g_signal_connect (city, "timezone-set",
+                                  G_CALLBACK (location_tile_timezone_set_cb), cd);
+                g_signal_connect (city, "weather-updated",
+                                  G_CALLBACK (location_tile_weather_updated_cb), cd);
+                g_signal_connect (city, "need-formatted-time",
+                                  G_CALLBACK (location_tile_need_formatted_time_cb), cd);
+
+                gtk_box_pack_start (GTK_BOX (cd->cities_section),
+                                    GTK_WIDGET (city),
+                                    FALSE, FALSE, 0);
+
+                cd->location_tiles = g_list_prepend (cd->location_tiles, city);
+
+                node = g_list_next (node);
+        }
+
+        g_list_free (node);
+
+        gtk_box_pack_end (GTK_BOX (cd->clock_vbox),
+                          cd->cities_section, FALSE, FALSE, 0);
+
+        gtk_widget_show_all (cd->cities_section);
+}
+
+static GList *
+map_need_locations_cb (ClockMap *map, gpointer data)
+{
+        ClockData *cd = data;
+
+        return cd->locations;
+}
+
+static void
+create_map_section (ClockData *cd)
+{
+        ClockMap *map;
+
+        if (cd->map_widget) {
+                gtk_widget_destroy (GTK_WIDGET (cd->map_section));
+                cd->map_widget = NULL;
+        }
+
+        map = clock_map_new ();
+        g_signal_connect (map, "need-locations",
+                          G_CALLBACK (map_need_locations_cb), cd);
+
+        cd->map_section = gtk_alignment_new (0, 0, 1, 1);
+        cd->map_widget = GTK_WIDGET (map);
+
+        gtk_container_add (GTK_CONTAINER (cd->map_section), cd->map_widget);
+
+        gtk_alignment_set_padding (GTK_ALIGNMENT (cd->map_section), 1, 1, 1, 1);
+
+        gtk_box_pack_start (GTK_BOX (cd->clock_vbox), cd->map_section, FALSE, FALSE, 0);
+        gtk_widget_show (cd->map_widget);
+        gtk_widget_show (cd->map_section);
 }
 
 static void
 update_calendar_popup (ClockData *cd)
 {
-        if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (cd->toggle))) {
-                if (cd->calendar_popup)
+        if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (cd->panel_button))) {
+                if (cd->calendar_popup) {
                         gtk_widget_destroy (cd->calendar_popup);
-                cd->calendar_popup = NULL;
+                        cd->calendar_popup = NULL;
+                        cd->cities_section = NULL;
+                        cd->map_section = NULL;
+                        cd->map_widget = NULL;
+			
+        		g_list_free (cd->location_tiles);
+        		cd->location_tiles = NULL;
+                }
 		update_tooltip (cd);
                 return;
         }
@@ -891,12 +1214,15 @@ update_calendar_popup (ClockData *cd)
                 g_object_add_weak_pointer (G_OBJECT (cd->calendar_popup),
                                            (gpointer *) &cd->calendar_popup);
 		update_tooltip (cd);
+
+                create_clock_window (cd);
+                create_cities_store (cd);
+                create_cities_section (cd);
+                create_map_section (cd);
         }
 
-        if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle)) {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->tz_toggle),
-					      FALSE);
-
+        if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->panel_button)) {
+                clock_map_refresh (CLOCK_MAP (cd->map_widget));
 		calendar_window_refresh (CALENDAR_WINDOW (cd->calendar_popup));
 		position_calendar_popup (cd);
 		gtk_window_present (GTK_WINDOW (cd->calendar_popup));
@@ -904,67 +1230,10 @@ update_calendar_popup (ClockData *cd)
 }
 
 static void
-update_tz_popup (ClockData *cd)
-{
-        if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (cd->tz_toggle))) {
-                if (cd->tz_popup)
-                        gtk_widget_destroy (cd->tz_popup);
-                cd->tz_popup = NULL;
-                return;
-        }
-
-	if (!cd->tz_popup) {
-		cd->tz_popup = create_tz (cd);
-                g_object_add_weak_pointer (G_OBJECT (cd->tz_popup),
-                                           (gpointer *) &cd->tz_popup);
-	}
-	
-	if (cd->tz_popup && GTK_WIDGET_REALIZED (cd->tz_toggle)) {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->toggle),
-					      FALSE);
-
-		tz_window_refresh (TZ_WINDOW (cd->tz_popup),
-				   cd->current_time, cd->fallback_timeformat);
-		position_tz_popup (cd);
-		gtk_window_present (GTK_WINDOW (cd->tz_popup));
-	}
-}
-
-static void
 toggle_calendar (GtkWidget *button,
                  ClockData *cd)
 {
 	update_calendar_popup (cd);
-}
-
-static void
-toggle_timezone (GtkWidget *button,
-		 ClockData *cd)
-{
-	update_tz_popup (cd);
-}
-
-static void
-toggle_timezone_shown (GtkWidget *button,
-		       ClockData *cd)
-{
-	char *prefs_dir;
-
-	g_assert (cd->tz_list == NULL);
-
-	prefs_dir = panel_applet_get_preferences_key (PANEL_APPLET (cd->applet));
-	cd->tz_list = tz_list_new (prefs_dir);
-	g_free (prefs_dir);
-}
-
-static void
-toggle_timezone_hidden (GtkWidget *button,
-			ClockData *cd)
-{
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->tz_toggle), FALSE);
-
-	g_object_unref (cd->tz_list);
-	cd->tz_list = NULL;
 }
 
 static gboolean
@@ -1008,7 +1277,7 @@ clock_update_text_gravity (GtkWidget *label)
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
-        gboolean first_time = TRUE;
+        static gboolean first_time = TRUE;
 
         if (first_time) {
                 gtk_rc_parse_string ("\n"
@@ -1026,87 +1295,115 @@ force_no_focus_padding (GtkWidget *widget)
         gtk_widget_set_name (widget, "clock-applet-button");
 }
 
+static GtkWidget *
+create_main_clock_button (void)
+{
+        GtkWidget *button;
+
+        button = gtk_toggle_button_new ();
+	gtk_container_set_resize_mode (GTK_CONTAINER (button), GTK_RESIZE_IMMEDIATE);
+	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+
+        force_no_focus_padding (button);
+
+        return button;
+}
+
+static GtkWidget *
+create_main_clock_label (ClockData *cd)
+{
+        GtkWidget *label;
+
+        label = gtk_label_new (NULL);
+	g_signal_connect (label, "size_request",
+			  G_CALLBACK (clock_size_request),
+			  cd);
+	g_signal_connect_swapped (label, "style_set",
+				  G_CALLBACK (unfix_size),
+				  cd);
+	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+	clock_update_text_gravity (label);
+	g_signal_connect (label, "screen-changed",
+			  G_CALLBACK (clock_update_text_gravity),
+			  NULL);
+
+        return label;
+}
+
+static gboolean
+weather_tooltip (GtkWidget   *widget,
+                 gint         x,
+                 gint         y,
+                 gboolean     keyboard_mode,
+                 GtkTooltip  *tooltip,
+                 ClockData   *cd)
+{
+        GList *locations, *l;
+        WeatherInfo *info;
+
+        locations = cd->locations;
+
+        for (l = locations; l; l = l->next) {
+                if (clock_location_is_current (l->data)) {
+                        info = clock_location_get_weather_info (l->data);
+                        if (!info || !weather_info_is_valid (info))
+                                continue;
+
+                        weather_info_setup_tooltip (info, tooltip);
+
+                        return TRUE;
+                }
+        }
+
+        return FALSE;
+}
+
 static void
 create_clock_widget (ClockData *cd)
 {
-	GtkWidget *alignment;
-
-	cd->clockw = gtk_label_new ("hmm?");
-	g_signal_connect (cd->clockw, "size_request",
-			  G_CALLBACK (clock_size_request),
-			  cd);
-	g_signal_connect_swapped (cd->clockw, "style_set",
-				  G_CALLBACK (unfix_size),
-				  cd);
-	gtk_label_set_justify (GTK_LABEL (cd->clockw), GTK_JUSTIFY_CENTER);
-	clock_update_text_gravity (cd->clockw);
-	g_signal_connect (cd->clockw, "screen-changed",
-			  G_CALLBACK (clock_update_text_gravity),
-			  NULL);
-	gtk_widget_show (cd->clockw);
-
-	cd->toggle = gtk_toggle_button_new ();
-	gtk_container_set_resize_mode (GTK_CONTAINER (cd->toggle), GTK_RESIZE_IMMEDIATE);
-	gtk_container_set_border_width (GTK_CONTAINER (cd->toggle), 0);
-	gtk_button_set_relief (GTK_BUTTON (cd->toggle), GTK_RELIEF_NONE);
-
-        force_no_focus_padding (cd->toggle);
-
-	alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-	gtk_container_add (GTK_CONTAINER (alignment), cd->clockw);
-	gtk_container_set_resize_mode (GTK_CONTAINER (alignment), GTK_RESIZE_IMMEDIATE);
-	gtk_widget_show (alignment);
-	gtk_container_add (GTK_CONTAINER (cd->toggle), alignment);
-
-	g_signal_connect (cd->toggle, "button_press_event",
+        /* Main toggle button */
+        cd->panel_button = create_main_clock_button ();
+	g_signal_connect (cd->panel_button, "button_press_event",
 			  G_CALLBACK (do_not_eat_button_press), NULL);
-
-	g_signal_connect (cd->toggle, "toggled",
+	g_signal_connect (cd->panel_button, "toggled",
 			  G_CALLBACK (toggle_calendar), cd);
-
-	gtk_widget_show (cd->toggle);
-
-	/* Timezone toggle */
-	cd->tz_toggle = gtk_toggle_button_new ();
-	gtk_container_set_resize_mode (GTK_CONTAINER (cd->tz_toggle), GTK_RESIZE_IMMEDIATE);
-	gtk_container_set_border_width (GTK_CONTAINER (cd->tz_toggle), 0);
-	gtk_button_set_relief (GTK_BUTTON (cd->tz_toggle), GTK_RELIEF_NONE);
-
-	force_no_focus_padding (cd->tz_toggle);
-
-	cd->tz_arrow = gtk_arrow_new (GTK_ARROW_NONE, GTK_SHADOW_OUT);
-	gtk_widget_show (cd->tz_arrow);
-
-	gtk_container_add (GTK_CONTAINER (cd->tz_toggle), cd->tz_arrow);
-
-	g_signal_connect (cd->tz_toggle, "show",
-                          G_CALLBACK (toggle_timezone_shown), cd);
-
-	g_signal_connect (cd->tz_toggle, "hide",
-                          G_CALLBACK (toggle_timezone_hidden), cd);
-
-	g_signal_connect (cd->tz_toggle, "toggled",
-                          G_CALLBACK (toggle_timezone), cd);
-
-	if (cd->show_tz)
-		gtk_widget_show (cd->tz_toggle);
-
-	gtk_widget_set_tooltip_text (cd->tz_toggle,
-				     _("Click to view time in other timezones"));
-
-	g_signal_connect (G_OBJECT (cd->clockw), "destroy",
+	g_signal_connect (G_OBJECT (cd->panel_button), "destroy",
 			  G_CALLBACK (destroy_clock),
 			  cd);
+        gtk_widget_show (cd->panel_button);
+
+        /* Main orientable box */
+        cd->main_obox = clock_obox_new ();
+        gtk_box_set_spacing (GTK_BOX (cd->main_obox), 12); /* spacing between weather and time */
+        gtk_container_add (GTK_CONTAINER (cd->panel_button), cd->main_obox);
+        gtk_widget_show (cd->main_obox);
+
+        /* Weather orientable box */
+        cd->weather_obox = clock_obox_new ();
+        gtk_box_set_spacing (GTK_BOX (cd->weather_obox), 2); /* spacing between weather icon and temperature */
+        gtk_box_pack_start (GTK_BOX (cd->main_obox), cd->weather_obox, FALSE, FALSE, 0);
+        gtk_widget_set_has_tooltip (cd->weather_obox, TRUE);
+        g_signal_connect (cd->weather_obox, "query-tooltip",
+                          G_CALLBACK (weather_tooltip), cd);
+
+        /* Weather widgets */
+        cd->panel_weather_icon = gtk_image_new ();
+        gtk_box_pack_start (GTK_BOX (cd->weather_obox), cd->panel_weather_icon, FALSE, FALSE, 0);
+
+        cd->panel_temperature_label = gtk_label_new (NULL);
+        gtk_box_pack_start (GTK_BOX (cd->weather_obox), cd->panel_temperature_label, FALSE, FALSE, 0);
+
+        /* Main label for time display */
+	cd->clockw = create_main_clock_label (cd);
+        gtk_box_pack_start (GTK_BOX (cd->main_obox), cd->clockw, FALSE, FALSE, 0);
+	gtk_widget_show (cd->clockw);
+
+        /* Done! */
 
 	set_atk_name_description (GTK_WIDGET (cd->applet), NULL,
 	                          _("Computer Clock"));
 
-	cd->obox = clock_obox_new ();
-	gtk_container_add (GTK_CONTAINER (cd->obox), cd->toggle);
-	gtk_container_add (GTK_CONTAINER (cd->obox), cd->tz_toggle);
-	gtk_widget_show (cd->obox);
-
-	gtk_container_add (GTK_CONTAINER (cd->applet), cd->obox);
+	gtk_container_add (GTK_CONTAINER (cd->applet), cd->panel_button);
 	gtk_container_set_border_width (GTK_CONTAINER (cd->applet), 0);
 
 	cd->props = NULL;
@@ -1129,13 +1426,13 @@ update_orient (ClockData *cd)
 	gdouble      angle;
 
 	text = gtk_label_get_text (GTK_LABEL (cd->clockw));
-	min_width = calculate_minimum_width (cd->toggle, text);
+	min_width = calculate_minimum_width (cd->panel_button, text);
 
 	if (cd->orient == PANEL_APPLET_ORIENT_LEFT &&
-	    min_width > cd->toggle->allocation.width)
+	    min_width > cd->panel_button->allocation.width)
 		new_angle = 270;
 	else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT &&
-		 min_width > cd->toggle->allocation.width)
+		 min_width > cd->panel_button->allocation.width)
 		new_angle = 90;
 	else
 		new_angle = 0;
@@ -1144,6 +1441,7 @@ update_orient (ClockData *cd)
 	if (angle != new_angle) {
 		unfix_size (cd);
 		gtk_label_set_angle (GTK_LABEL (cd->clockw), new_angle);
+                gtk_label_set_angle (GTK_LABEL (cd->panel_temperature_label), new_angle);
 	}
 }
 
@@ -1153,49 +1451,49 @@ applet_change_orient (PanelApplet       *applet,
 		      PanelAppletOrient  orient,
 		      ClockData         *cd)
 {
+        GtkArrowType a;
+        GtkOrientation o;
+
 	if (orient == cd->orient)
 		return;
 
         cd->orient = orient;
 
 	switch (cd->orient) {
-        case PANEL_APPLET_ORIENT_RIGHT:        
-		gtk_arrow_set (GTK_ARROW (cd->tz_arrow),
-			       GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
-		clock_obox_set_orientation (CLOCK_OBOX (cd->obox),
-					    GTK_ORIENTATION_VERTICAL);
+        case PANEL_APPLET_ORIENT_RIGHT:
+                a = GTK_ARROW_RIGHT;
+                o = GTK_ORIENTATION_VERTICAL;
 		break;
         case PANEL_APPLET_ORIENT_LEFT:
-		gtk_arrow_set (GTK_ARROW (cd->tz_arrow),
-			       GTK_ARROW_LEFT, GTK_SHADOW_OUT);
-		clock_obox_set_orientation (CLOCK_OBOX (cd->obox),
-					    GTK_ORIENTATION_VERTICAL);
+                a = GTK_ARROW_LEFT;
+                o = GTK_ORIENTATION_VERTICAL;
 		break;
         case PANEL_APPLET_ORIENT_DOWN:
-		gtk_arrow_set (GTK_ARROW (cd->tz_arrow),
-			       GTK_ARROW_DOWN, GTK_SHADOW_OUT);
-		clock_obox_set_orientation (CLOCK_OBOX (cd->obox),
-					    GTK_ORIENTATION_HORIZONTAL);
+                a = GTK_ARROW_DOWN;
+                o = GTK_ORIENTATION_HORIZONTAL;
 		break;
         case PANEL_APPLET_ORIENT_UP:
-		gtk_arrow_set (GTK_ARROW (cd->tz_arrow),
-			       GTK_ARROW_UP, GTK_SHADOW_OUT);
-		clock_obox_set_orientation (CLOCK_OBOX (cd->obox),
-					    GTK_ORIENTATION_HORIZONTAL);
+                a = GTK_ARROW_UP;
+                o = GTK_ORIENTATION_HORIZONTAL;
 		break;
+        default:
+                g_assert_not_reached ();
+                return;
 	}
-        
+
+        clock_obox_set_orientation (CLOCK_OBOX (cd->main_obox), o);
+        clock_obox_set_orientation (CLOCK_OBOX (cd->weather_obox), o);
+
         unfix_size (cd);
         update_clock (cd);
         update_calendar_popup (cd);
-	update_tz_popup (cd);
 }
 
 /* this is when the panel size changes */
 static void
-toggle_change_pixel_size (GtkWidget     *widget,
-			  GtkAllocation *allocation,
-			  ClockData	*cd)
+panel_button_change_pixel_size (GtkWidget     *widget,
+                                GtkAllocation *allocation,
+                                ClockData	*cd)
 {
 	int new_size;
 
@@ -1296,7 +1594,7 @@ copy_date (BonoboUIComponent *uic,
 	else if (strftime (string, sizeof (string), loc, tm) <= 0)
 		strcpy (string, "???");
 	g_free (loc);
-	
+
 	utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
 	gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_PRIMARY),
 				utf8, -1);
@@ -1354,7 +1652,7 @@ try_config_tool (GdkScreen  *screen,
                                  &pid,
                                  &err)) {
 
-		g_child_watch_add (pid, on_config_tool_exited, cd); 
+		g_child_watch_add (pid, on_config_tool_exited, cd);
 		g_strfreev (argv);
 		return TRUE;
 	}
@@ -1368,17 +1666,193 @@ try_config_tool (GdkScreen  *screen,
 					 _("Failed to launch time configuration tool: %s"),
 					 err->message);
 	g_error_free (err);
-		
+
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (gtk_widget_destroy), NULL);
 
 	gtk_window_set_icon_name (GTK_WINDOW (dialog), CLOCK_ICON);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-			
-	gtk_widget_show_all (dialog);			
-		
+
+	gtk_widget_show_all (dialog);
+
 	return TRUE;
+}
+
+static void
+update_set_time_button (ClockData *cd)
+{
+	gboolean can_set;
+
+	can_set = can_set_system_time () != 0; /* this can return 0, 1, 2 */
+
+	if (cd->time_settings_button)
+		gtk_widget_set_sensitive (cd->time_settings_button, can_set);
+
+	if (cd->set_time_button)
+		gtk_button_set_label (GTK_BUTTON (cd->set_time_button),
+				      can_set ?
+					_("Set System Time...") :
+					_("Set System Time"));
+}
+
+static void
+set_time_callback (ClockData *cd, GError *error)
+{
+	GtkWidget *window;
+	GtkWidget *dialog;
+
+	if (error) {
+                dialog = gtk_message_dialog_new (NULL,
+                                                 0,
+                                                 GTK_MESSAGE_ERROR,
+                                                 GTK_BUTTONS_OK,
+                                                 _("Failed to set the system time"));
+
+                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), error->message);
+                g_signal_connect (dialog, "response",
+                                  G_CALLBACK (gtk_widget_destroy), NULL);
+                gtk_window_present (GTK_WINDOW (dialog));
+
+                g_error_free (error);
+	}
+	else
+		update_set_time_button (cd);
+
+	window = glade_xml_get_widget (cd->glade_xml, "set-time-window");
+	gtk_widget_hide (window);
+}
+
+static void
+set_time (GtkWidget *widget, ClockData *cd)
+{
+	struct tm t;
+	gint64 time;
+	guint year, month, day;
+
+	t.tm_sec = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (cd->seconds_spin));
+	t.tm_min = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (cd->minutes_spin));
+	t.tm_hour = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (cd->hours_spin));
+	gtk_calendar_get_date (GTK_CALENDAR (cd->calendar), &year, &month, &day);
+	t.tm_year = year - 1900;
+	t.tm_mon = month;
+	t.tm_mday = day;
+
+	time = mktime (&t);
+
+	set_system_time_async (time, (GFunc)set_time_callback, cd, NULL);
+}
+
+static void
+cancel_time_settings (GtkWidget *button, ClockData *cd)
+{
+	gtk_widget_hide (cd->set_time_window);
+
+        refresh_clock_timeout (cd);
+}
+
+static void
+fill_time_settings_window (ClockData *cd)
+{
+	time_t now_t;
+	struct tm now;
+
+	/* Fill the time settings */
+	tzset ();
+	time (&now_t);
+	localtime_r (&now_t, &now);
+
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (cd->seconds_spin), now.tm_sec);
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (cd->minutes_spin), now.tm_min);
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (cd->hours_spin), now.tm_hour);
+}
+
+static void
+wrap_cb (GtkSpinButton *spin, ClockData *cd)
+{
+	gdouble value;
+	gdouble min, max;
+	GtkSpinType direction;
+
+	value = gtk_spin_button_get_value (spin);
+	gtk_spin_button_get_range (spin, &min, &max);
+
+	if (value == min)
+		direction = GTK_SPIN_STEP_FORWARD;
+	else
+		direction = GTK_SPIN_STEP_BACKWARD;
+
+	if (spin == (GtkSpinButton *) cd->seconds_spin)
+		gtk_spin_button_spin (GTK_SPIN_BUTTON (cd->minutes_spin), direction, 1.0);
+	else if (spin == (GtkSpinButton *) cd->minutes_spin)
+		gtk_spin_button_spin (GTK_SPIN_BUTTON (cd->hours_spin), direction, 1.0);
+	else {
+		guint year, month, day;
+		GDate *date;
+
+		gtk_calendar_get_date (GTK_CALENDAR (cd->calendar), &year, &month, &day);
+
+		date = g_date_new_dmy (day, month + 1, year);
+
+		if (direction == GTK_SPIN_STEP_FORWARD)
+			g_date_add_days (date, 1);
+		else
+			g_date_subtract_days (date, 1);
+
+		year = g_date_get_year (date);
+		month = g_date_get_month (date) - 1;
+		day = g_date_get_day (date);
+
+		gtk_calendar_select_month (GTK_CALENDAR (cd->calendar), month, year);
+		gtk_calendar_select_day (GTK_CALENDAR (cd->calendar), day);
+
+		g_date_free (date);
+	}
+}
+
+static void
+ensure_time_settings_window_is_created (ClockData *cd)
+{
+        GtkWidget *cancel_button;
+
+	if (cd->set_time_window)
+		return;
+
+	cd->set_time_window = glade_xml_get_widget (cd->glade_xml, "set-time-window");
+
+        cd->calendar = glade_xml_get_widget (cd->glade_xml, "calendar");
+        cd->hours_spin = glade_xml_get_widget (cd->glade_xml, "hours_spin");
+        cd->minutes_spin = glade_xml_get_widget (cd->glade_xml, "minutes_spin");
+        cd->seconds_spin = glade_xml_get_widget (cd->glade_xml, "seconds_spin");
+
+        gtk_entry_set_width_chars (GTK_ENTRY (cd->hours_spin), 2);
+        gtk_entry_set_width_chars (GTK_ENTRY (cd->minutes_spin), 2);
+        gtk_entry_set_width_chars (GTK_ENTRY (cd->seconds_spin), 2); 
+        gtk_entry_set_alignment (GTK_ENTRY (cd->hours_spin), 1.0);
+        gtk_entry_set_alignment (GTK_ENTRY (cd->minutes_spin), 1.0);
+        gtk_entry_set_alignment (GTK_ENTRY (cd->seconds_spin), 1.0);
+        g_signal_connect (cd->seconds_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
+        g_signal_connect (cd->minutes_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
+        g_signal_connect (cd->hours_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
+
+	cd->set_time_button = glade_xml_get_widget (cd->glade_xml, "set-time-button");
+	g_signal_connect (cd->set_time_button, "clicked", G_CALLBACK (set_time), cd);
+
+	cancel_button = glade_xml_get_widget (cd->glade_xml, "cancel-set-time-button");
+	g_signal_connect (cancel_button, "clicked", G_CALLBACK (cancel_time_settings), cd);
+
+	cd->current_time_label = glade_xml_get_widget (cd->glade_xml, "current_time_label");
+}
+
+static void
+run_time_settings (GtkWidget *unused, ClockData *cd)
+{
+	ensure_time_settings_window_is_created (cd);
+	fill_time_settings_window (cd);
+
+	gtk_window_present (GTK_WINDOW (cd->set_time_window));
+
+        refresh_clock_timeout (cd);
 }
 
 static void
@@ -1386,6 +1860,9 @@ config_date (BonoboUIComponent *uic,
              ClockData         *cd,
              const char        *verbname)
 {
+	run_time_settings (NULL, cd);
+#if 0
+        /* FMQ: this was from the old clock; it's replaced with our PolicyKit stuff */
 	GtkWidget *dialog;
 	GdkScreen *screen;
 	int i;
@@ -1394,31 +1871,32 @@ config_date (BonoboUIComponent *uic,
 
 	if (try_config_tool (screen, cd->config_tool, cd))
 		return;
-	
+
 	for (i = 0; i < G_N_ELEMENTS (clock_config_tools); i++)
 		if (try_config_tool (screen, clock_config_tools [i], cd))
 			return;
-		
+
 	dialog = gtk_message_dialog_new (NULL,
 					 GTK_DIALOG_DESTROY_WITH_PARENT,
 					 GTK_MESSAGE_ERROR,
 					 GTK_BUTTONS_OK,
 					 _("Failed to locate a program for configuring "
 					   "the date and time. Perhaps none is installed?"));
-		
+
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (gtk_widget_destroy), NULL);
-		
+
 	gtk_window_set_icon_name (GTK_WINDOW (dialog), CLOCK_ICON);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
 	gtk_widget_show_all (dialog);
+#endif
 }
 
 /* current timestamp */
 static const BonoboUIVerb clock_menu_verbs [] = {
-	BONOBO_UI_UNSAFE_VERB ("ClockPreferences", display_properties_dialog),
+	BONOBO_UI_UNSAFE_VERB ("ClockPreferences", verb_display_properties_dialog),
 	BONOBO_UI_UNSAFE_VERB ("ClockHelp",        display_help_dialog),
 	BONOBO_UI_UNSAFE_VERB ("ClockAbout",       display_about_dialog),
 	BONOBO_UI_UNSAFE_VERB ("ClockCopyTime",    copy_time),
@@ -1435,7 +1913,7 @@ format_changed (GConfClient  *client,
 {
 	const char  *value;
 	int          new_format;
-	
+
 	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
 		return;
 
@@ -1467,12 +1945,12 @@ show_seconds_changed (GConfClient  *client,
                    ClockData    *clock)
 {
 	gboolean value;
-	
+
 	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
 		return;
 
 	value = gconf_value_get_bool (entry->value);
-	
+
 	clock->showseconds = (value != 0);
 	refresh_clock_timeout (clock);
 }
@@ -1484,15 +1962,346 @@ show_date_changed (GConfClient  *client,
                    ClockData    *clock)
 {
 	gboolean value;
-	
+
 	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
 		return;
 
 	value = gconf_value_get_bool (entry->value);
-	
+
 	clock->showdate = (value != 0);
 	update_timeformat (clock);
 	refresh_clock (clock);
+}
+
+static void
+update_panel_weather (ClockData *cd)
+{
+        GtkWidget *weatherbox;
+
+        weatherbox = gtk_widget_get_parent (cd->panel_weather_icon);
+        if (cd->show_weather)
+                gtk_widget_show (cd->panel_weather_icon);
+        else
+                gtk_widget_hide (cd->panel_weather_icon);
+
+        if (cd->show_temperature)
+                gtk_widget_show (cd->panel_temperature_label);
+        else
+                gtk_widget_hide (cd->panel_temperature_label);
+
+	if (cd->show_weather || cd->show_temperature)
+                gtk_widget_show (weatherbox);
+        else
+                gtk_widget_hide (weatherbox);
+}
+
+static void
+update_weather_bool_value_and_toggle_from_gconf (ClockData *cd, GConfEntry *entry,
+                                                 gboolean *value_loc, const char *widget_name)
+{
+	GtkWidget *widget;
+        gboolean value;
+
+        if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+                return;
+
+        value = gconf_value_get_bool (entry->value);
+
+        *value_loc = (value != 0);
+
+	widget = glade_xml_get_widget (cd->glade_xml, widget_name);
+        if (!widget)
+                g_error ("Could not find the '%s' widget in the Glade file", widget_name);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
+				      *value_loc);
+
+        update_panel_weather (cd);
+}
+
+static void
+show_weather_changed (GConfClient  *client,
+                      guint         cnxn_id,
+                      GConfEntry   *entry,
+                      ClockData    *cd)
+{
+        update_weather_bool_value_and_toggle_from_gconf (cd, entry, &cd->show_weather, "weather_check");
+}
+
+static void
+show_temperature_changed (GConfClient  *client,
+                          guint         cnxn_id,
+                          GConfEntry   *entry,
+                          ClockData    *cd)
+{
+        update_weather_bool_value_and_toggle_from_gconf (cd, entry, &cd->show_temperature, "temperature_check");
+}
+
+static void
+set_locations (ClockData *cd, GList *locations)
+{
+        free_locations (cd);
+
+        cd->locations = locations;
+
+        if (cd->map_widget)
+                clock_map_refresh (CLOCK_MAP (cd->map_widget));
+
+	if (cd->clock_vbox)
+        	create_cities_section (cd);
+}
+
+typedef struct {
+        GList *cities;
+        ClockData *cd;
+} LocationParserData;
+
+/* Parser for our serialized locations in gconf */
+static void
+location_start_element (GMarkupParseContext *context,
+                        const gchar *element_name,
+                        const gchar **attribute_names,
+                        const gchar **attribute_values,
+                        gpointer user_data,
+                        GError **error)
+{
+        ClockLocation *loc;
+	LocationParserData *data = user_data;
+        ClockData *cd = data->cd;
+	WeatherPrefs prefs;
+        const gchar *att_name;
+
+        gchar *name = NULL;
+        gchar *timezone = NULL;
+        gfloat latitude = 0.0;
+        gfloat longitude = 0.0;
+	gchar *code = NULL;
+
+        int index = 0;
+
+	prefs.temperature_unit = cd->temperature_unit;
+	prefs.speed_unit = cd->speed_unit;
+
+        if (strcmp (element_name, "location") != 0) {
+                return;
+        }
+
+        setlocale (LC_NUMERIC, "POSIX");
+
+        for (att_name = attribute_names[index]; att_name != NULL;
+             att_name = attribute_names[++index]) {
+                if (strcmp (att_name, "name") == 0) {
+                        name = (gchar *)attribute_values[index];
+                } else if (strcmp (att_name, "timezone") == 0) {
+                        timezone = (gchar *)attribute_values[index];
+                } else if (strcmp (att_name, "latitude") == 0) {
+                        sscanf (attribute_values[index], "%f", &latitude);
+                } else if (strcmp (att_name, "longitude") == 0) {
+                        sscanf (attribute_values[index], "%f", &longitude);
+                } else if (strcmp (att_name, "code") == 0) {
+                        code = (gchar *)attribute_values[index];
+                }
+        }
+
+        setlocale (LC_NUMERIC, "");
+
+        if (!name || !timezone) {
+                return;
+        }
+
+        loc = clock_location_new (name, timezone, latitude, longitude, code, &prefs);
+
+        data->cities = g_list_append (data->cities, loc);
+}
+
+static GMarkupParser location_parser = {
+        location_start_element, NULL, NULL, NULL, NULL
+};
+
+static void
+cities_changed (GConfClient  *client,
+                guint         cnxn_id,
+                GConfEntry   *entry,
+                ClockData    *cd)
+{
+	LocationParserData data;
+
+        GSList *cur = NULL;
+
+        GMarkupParseContext *context;
+
+	data.cities = NULL;
+	data.cd = cd;
+
+        if (!entry->value || entry->value->type != GCONF_VALUE_LIST)
+                return;
+
+        context = g_markup_parse_context_new (&location_parser, 0, &data, NULL);
+
+        cur = gconf_value_get_list (entry->value);
+
+        while (cur) {
+                const char *str = gconf_value_get_string (cur->data);
+                g_markup_parse_context_parse (context, str, strlen (str), NULL);
+
+                cur = cur->next;
+        }
+
+        g_markup_parse_context_free (context);
+
+        set_locations (cd, data.cities);
+        create_cities_store (cd);
+}
+
+static void
+update_temperature_combo (ClockData *cd)
+{
+	GtkWidget *widget;
+        int active_index;
+
+	widget = glade_xml_get_widget (cd->glade_xml, "temperature_combo");
+	if (!widget)
+		g_error ("Could not find the 'temperature_combo' widget in the Glade file");
+
+        if (cd->use_temperature_default)
+                active_index = 0;
+        else
+                active_index = cd->temperature_unit - 1;
+
+        gtk_combo_box_set_active (GTK_COMBO_BOX (widget), active_index);
+}
+
+static void
+update_weather_locations (ClockData *cd)
+{
+	GList *locations, *l;
+        WeatherPrefs prefs = {
+                FORECAST_STATE,
+                FALSE,
+                NULL,
+                TEMP_UNIT_CENTIGRADE,
+                SPEED_UNIT_MS,
+                PRESSURE_UNIT_MB,
+                DISTANCE_UNIT_KM
+        };
+
+	prefs.temperature_unit = cd->temperature_unit;
+	prefs.speed_unit = cd->speed_unit;
+
+        locations = cd->locations;
+
+        for (l = locations; l; l = l->next) {
+		clock_location_set_weather_prefs (l->data, &prefs);
+	}
+}
+
+static void
+clock_migrate_to_26 (ClockData *clock)
+{
+	gboolean  unixtime;
+	gboolean  internettime;
+	int       hourformat;
+
+	internettime = panel_applet_gconf_get_bool (PANEL_APPLET (clock->applet),
+						    "internet_time",
+						    NULL);
+	unixtime = panel_applet_gconf_get_bool (PANEL_APPLET (clock->applet),
+						"unix_time",
+						NULL);
+	hourformat = panel_applet_gconf_get_int (PANEL_APPLET (clock->applet),
+						 "hour_format",
+						 NULL);
+
+	if (unixtime)
+		clock->format = CLOCK_FORMAT_UNIX;
+	else if (internettime)
+		clock->format = CLOCK_FORMAT_INTERNET;
+	else if (hourformat == 12)
+		clock->format = CLOCK_FORMAT_12;
+	else if (hourformat == 24)
+		clock->format = CLOCK_FORMAT_24;
+
+	panel_applet_gconf_set_string (PANEL_APPLET (clock->applet),
+				       KEY_FORMAT,
+				       gconf_enum_to_string (format_type_enum_map,
+							     clock->format),
+				       NULL);
+}
+
+static void
+parse_and_set_temperature_string (const char *str, ClockData *cd)
+{
+        gint value = 0;
+	gboolean use_default = FALSE;
+
+	value = gweather_prefs_parse_temperature (str, &use_default);
+
+	cd->use_temperature_default = use_default;
+	cd->temperature_unit = value;
+}
+
+static void
+parse_and_set_speed_string (const char *str, ClockData *cd)
+{
+        gint value = 0;
+	gboolean use_default = FALSE;
+
+	value = gweather_prefs_parse_speed (str, &use_default);
+
+	cd->use_speed_default = use_default;
+	cd->speed_unit = value;
+}
+
+static void
+temperature_unit_changed (GConfClient  *client,
+                          guint         cnxn_id,
+                          GConfEntry   *entry,
+                          ClockData    *cd)
+{
+        const gchar *value;
+
+        if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
+                return;
+
+        value = gconf_value_get_string (entry->value);
+        parse_and_set_temperature_string (value, cd);
+	update_temperature_combo (cd);
+	update_weather_locations (cd);
+}
+
+static void
+update_speed_combo (ClockData *cd)
+{
+	GtkWidget *widget;
+        int active_index;
+
+	widget = glade_xml_get_widget (cd->glade_xml, "wind_speed_combo");
+	if (!widget)
+		g_error ("Could not find the 'wind_speed_combo' widget in the Glade file");
+
+	if (cd->use_speed_default)
+                active_index = 0;
+        else
+                active_index = cd->speed_unit - 1;
+
+        gtk_combo_box_set_active (GTK_COMBO_BOX (widget), active_index);
+}
+
+static void
+speed_unit_changed (GConfClient  *client,
+                    guint         cnxn_id,
+                    GConfEntry   *entry,
+                    ClockData    *cd)
+{
+        const gchar *value;
+
+        if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
+                return;
+
+        value = gconf_value_get_string (entry->value);
+        parse_and_set_speed_string (value, cd);
+	update_speed_combo (cd);
+	update_weather_locations (cd);
 }
 
 static void
@@ -1502,12 +2311,12 @@ gmt_time_changed (GConfClient  *client,
                   ClockData    *clock)
 {
 	gboolean value;
-	
+
 	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
 		return;
 
 	value = gconf_value_get_bool (entry->value);
-	
+
 	clock->gmt_time = (value != 0);
 
 	refresh_clock_timeout (clock);
@@ -1549,7 +2358,7 @@ config_tool_changed (GConfClient  *client,
                      ClockData    *clock)
 {
 	const char *value;
-	
+
 	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
 		return;
 
@@ -1568,7 +2377,7 @@ custom_format_changed (GConfClient  *client,
                        ClockData    *clock)
 {
 	const char *value;
-	
+
 	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
 		return;
 
@@ -1588,12 +2397,12 @@ show_week_changed (GConfClient  *client,
 		   ClockData    *clock)
 {
 	gboolean value;
-	
+
 	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
 		return;
 
 	value = gconf_value_get_bool (entry->value);
-	
+
 	if (clock->showweek == (value != 0))
 		return;
 
@@ -1605,164 +2414,90 @@ show_week_changed (GConfClient  *client,
 	}
 }
 
-static void
-show_tz_changed (GConfClient  *client,
-		 guint         cnxn_id,
-		 GConfEntry   *entry,
-		 ClockData    *clock)
+static guint
+setup_gconf_preference (ClockData *cd, GConfClient *client, const char *key_name, GConfClientNotifyFunc callback)
 {
-	gboolean value;
+        char *key;
+        guint id;
 
-	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-		return;
+        key = panel_applet_gconf_get_full_key (PANEL_APPLET (cd->applet),
+                                               key_name);
+        id = gconf_client_notify_add (client, key,
+                                      callback,
+                                      cd, NULL, NULL);
+        g_free (key);
 
-	value = gconf_value_get_bool (entry->value);
-
-	clock->show_tz = (value != 0);
-
-	if (clock->show_tz)
-		gtk_widget_show (clock->tz_toggle);
-	else
-		gtk_widget_hide (clock->tz_toggle);
-
-	refresh_clock (clock);
+        return id;
 }
 
 static void
-setup_gconf (ClockData *clock)
+setup_gconf (ClockData *cd)
 {
+        struct {
+                const char *key_name;
+                GConfClientNotifyFunc callback;
+        } prefs[] = {
+                { KEY_FORMAT,		(GConfClientNotifyFunc) format_changed },
+                { KEY_SHOW_SECONDS,	(GConfClientNotifyFunc) show_seconds_changed },
+                { KEY_SHOW_DATE,	(GConfClientNotifyFunc) show_date_changed },
+                { KEY_SHOW_WEATHER,	(GConfClientNotifyFunc) show_weather_changed },
+                { KEY_SHOW_TEMPERATURE,	(GConfClientNotifyFunc) show_temperature_changed },
+                { KEY_GMT_TIME,		(GConfClientNotifyFunc) gmt_time_changed },
+                { KEY_CONFIG_TOOL,	(GConfClientNotifyFunc) config_tool_changed },
+                { KEY_CUSTOM_FORMAT,	(GConfClientNotifyFunc) custom_format_changed },
+                { KEY_SHOW_WEEK,	(GConfClientNotifyFunc) show_week_changed },
+                { KEY_CITIES,		(GConfClientNotifyFunc) cities_changed },
+                { KEY_TEMPERATURE_UNIT,	(GConfClientNotifyFunc) temperature_unit_changed },
+                { KEY_SPEED_UNIT,	(GConfClientNotifyFunc) speed_unit_changed },
+        };
+
 	GConfClient *client;
-	char        *key;
+        int          i;
 
 	client = gconf_client_get_default ();
 
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_FORMAT);
-	clock->listeners [0] =
-		gconf_client_notify_add (
-				client, key,
-				(GConfClientNotifyFunc) format_changed,
-				clock, NULL, NULL);
-	g_free (key);
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_SHOW_SECONDS);
-	clock->listeners [1] =
-			gconf_client_notify_add (
-				client, key,
-				(GConfClientNotifyFunc)show_seconds_changed,
-				clock, NULL, NULL);
-	g_free (key);
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_SHOW_DATE);
-	clock->listeners [2] =
-			gconf_client_notify_add (
-				client, key,
-				(GConfClientNotifyFunc) show_date_changed,
-				clock, NULL, NULL);
-	g_free (key);
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_GMT_TIME);
-	clock->listeners [3] =
-			gconf_client_notify_add (
-				client, key,
-				(GConfClientNotifyFunc) gmt_time_changed,
-				clock, NULL, NULL);
-	g_free (key);
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_CONFIG_TOOL);
-	clock->listeners [4] =
-		gconf_client_notify_add (
-				client, key,
-				(GConfClientNotifyFunc) config_tool_changed,
-				clock, NULL, NULL);
-	g_free (key);
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_CUSTOM_FORMAT);
-	clock->listeners [5] =
-		gconf_client_notify_add (
-				client, key,
-				(GConfClientNotifyFunc) custom_format_changed,
-				clock, NULL, NULL);
-	g_free (key);
-	
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_SHOW_WEEK);
-	clock->listeners [6] =
-			gconf_client_notify_add (
-				client, key,
-				(GConfClientNotifyFunc) show_week_changed,
-				clock, NULL, NULL);
-	g_free (key);
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_SHOW_ZONES);
-	clock->listeners [7] =
-			gconf_client_notify_add (
-				client, key,
-				(GConfClientNotifyFunc) show_tz_changed,
-				clock, NULL, NULL);
-	g_free (key);
+        for (i = 0; i < G_N_ELEMENTS (prefs); i++)
+                cd->listeners[i] = setup_gconf_preference (cd, client, prefs[i].key_name, prefs[i].callback);
 
 	g_object_unref (G_OBJECT (client));
 }
 
-static void
-clock_migrate_to_26 (ClockData *clock)
+static GList *
+parse_gconf_cities (ClockData *cd, GSList *values)
 {
-	gboolean  unixtime;
-	gboolean  internettime;
-	int       hourformat;
+        GSList *cur = values;
+	LocationParserData data;
 
-	internettime = panel_applet_gconf_get_bool (PANEL_APPLET (clock->applet),
-						    "internet_time",
-						    NULL);
-	unixtime = panel_applet_gconf_get_bool (PANEL_APPLET (clock->applet),
-						"unix_time",
-						NULL);
-	hourformat = panel_applet_gconf_get_int (PANEL_APPLET (clock->applet),
-						 "hour_format",
-						 NULL);
+	data.cities = NULL;
+	data.cd = cd;
 
-	if (unixtime)
-		clock->format = CLOCK_FORMAT_UNIX;
-	else if (internettime)
-		clock->format = CLOCK_FORMAT_INTERNET;
-	else if (hourformat == 12)
-		clock->format = CLOCK_FORMAT_12;
-	else if (hourformat == 24)
-		clock->format = CLOCK_FORMAT_24;
+        GMarkupParseContext *context =
+                g_markup_parse_context_new (&location_parser, 0, &data, NULL);
 
-	panel_applet_gconf_set_string (PANEL_APPLET (clock->applet),
-				       KEY_FORMAT,
-				       gconf_enum_to_string (format_type_enum_map,
-							     clock->format),
-				       NULL);
+        while (cur) {
+                const char *str = (char *)cur->data;
+                g_markup_parse_context_parse (context, str, strlen(str), NULL);
+
+                cur = cur->next;
+        }
+
+        g_markup_parse_context_free (context);
+
+        return data.cities;
 }
 
-static gboolean
-fill_clock_applet (PanelApplet *applet)
+static void
+load_gconf_settings (ClockData *cd)
 {
-	ClockData         *cd;
-	BonoboUIComponent *popup_component;
-	GError            *error;
-        int                format;
-	char              *format_str;
-	
-	panel_applet_add_preferences (applet, CLOCK_SCHEMA_DIR, NULL);
-	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
-	
-	cd = g_new0 (ClockData, 1);
-	cd->fixed_width = -1;
-	cd->fixed_height = -1;
+        PanelApplet *applet;
+        int format;
+        char *format_str;
+        char *value;
+        GError *error;
+        GSList *values = NULL;
+        GList *cities = NULL;
 
-	cd->applet = GTK_WIDGET (applet);
-
-	setup_gconf (cd);
+        applet = PANEL_APPLET (cd->applet);
 
         cd->format = CLOCK_FORMAT_INVALID;
 
@@ -1780,7 +2515,7 @@ fill_clock_applet (PanelApplet *applet)
 
 	cd->custom_format = panel_applet_gconf_get_string (applet, KEY_CUSTOM_FORMAT, NULL);
 	cd->showseconds = panel_applet_gconf_get_bool (applet, KEY_SHOW_SECONDS, NULL);
-	
+
 	error = NULL;
 	cd->showdate = panel_applet_gconf_get_bool (applet, KEY_SHOW_DATE, &error);
 	if (error) {
@@ -1792,16 +2527,63 @@ fill_clock_applet (PanelApplet *applet)
 			cd->showdate = TRUE;
 	}
 
+        cd->show_weather = panel_applet_gconf_get_bool (applet, KEY_SHOW_WEATHER, NULL);
+        cd->show_temperature = panel_applet_gconf_get_bool (applet, KEY_SHOW_TEMPERATURE, NULL);
 	cd->gmt_time = panel_applet_gconf_get_bool (applet, KEY_GMT_TIME, NULL);
 	cd->showweek = panel_applet_gconf_get_bool (applet, KEY_SHOW_WEEK, NULL);
-	cd->show_tz = panel_applet_gconf_get_bool (applet, KEY_SHOW_ZONES, NULL);
-	cd->config_tool = panel_applet_gconf_get_string (applet, KEY_CONFIG_TOOL, NULL);
-	cd->timeformat = NULL;
-	cd->fallback_timeformat = NULL;
+        cd->config_tool = panel_applet_gconf_get_string (applet, KEY_CONFIG_TOOL, NULL);
+        cd->timeformat = NULL;
+        cd->fallback_timeformat = NULL;
 
 	cd->can_handle_format_12 = (clock_locale_format () == CLOCK_FORMAT_12);
 	if (!cd->can_handle_format_12 && cd->format == CLOCK_FORMAT_12)
 		cd->format = CLOCK_FORMAT_24;
+
+	value = panel_applet_gconf_get_string (applet, KEY_TEMPERATURE_UNIT, NULL);
+	parse_and_set_temperature_string (value, cd);
+        g_free (value);
+
+	value = panel_applet_gconf_get_string (applet, KEY_SPEED_UNIT, NULL);
+	parse_and_set_speed_string (value, cd);
+        g_free (value);
+
+        values = panel_applet_gconf_get_list (PANEL_APPLET (cd->applet), KEY_CITIES,
+                                              GCONF_VALUE_STRING, NULL);
+
+        if (g_slist_length (values) == 0) {
+                cities = NULL;
+        } else {
+                cities = parse_gconf_cities (cd, values);
+        }
+
+        set_locations (cd, cities);
+}
+
+static gboolean
+fill_clock_applet (PanelApplet *applet)
+{
+	ClockData         *cd;
+	BonoboUIComponent *popup_component;
+        char              *filename;
+
+	panel_applet_add_preferences (applet, CLOCK_SCHEMA_DIR, NULL);
+	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
+
+	cd = g_new0 (ClockData, 1);
+	cd->fixed_width = -1;
+	cd->fixed_height = -1;
+
+	cd->applet = GTK_WIDGET (applet);
+
+	setup_gconf (cd);
+        load_gconf_settings (cd);
+
+        filename = g_build_filename (GLADEDIR, "clock.glade", NULL);
+        cd->glade_xml = glade_xml_new (filename, NULL, NULL);
+        if (!cd->glade_xml)
+                g_error ("%s/clock.glade not found; this installation is incorrect.", GLADEDIR);
+
+        g_free (filename);
 
 	create_clock_widget (cd);
 
@@ -1819,9 +2601,9 @@ fill_clock_applet (PanelApplet *applet)
 			  G_CALLBACK (applet_change_orient),
 			  cd);
 
-	g_signal_connect (G_OBJECT (cd->toggle),
+	g_signal_connect (G_OBJECT (cd->panel_button),
 			  "size_allocate",
-			  G_CALLBACK (toggle_change_pixel_size),
+			  G_CALLBACK (panel_button_change_pixel_size),
 			  cd);
 
 	panel_applet_set_background_widget (PANEL_APPLET (cd->applet),
@@ -1862,9 +2644,11 @@ fill_clock_applet (PanelApplet *applet)
                         }
         }
 
+        cd->zones = clock_zonetable_new (SYSTEM_ZONEINFODIR);
+
         bonobo_ui_component_set_prop (popup_component,
                                       "/commands/ClockConfig",
-                                      "hidden", cd->config_tool ? "0" : "1",
+                                      "hidden", can_set_system_time () ? "0" : "1",
                                       NULL);
 
 	return TRUE;
@@ -1873,6 +2657,7 @@ fill_clock_applet (PanelApplet *applet)
 static void
 setup_writability_sensitivity (ClockData *clock, GtkWidget *w, GtkWidget *label, const char *key)
 {
+        /* FMQ: was used from old preferences dialog; fix this up */
 	char *fullkey;
 	GConfClient *client;
 
@@ -1913,7 +2698,7 @@ update_properties_for_format (ClockData   *cd,
                 gtk_widget_show (cd->custom_hbox);
                 gtk_widget_show (cd->custom_label);
                 gtk_widget_show (cd->custom_entry);
-                
+
                 gtk_combo_box_append_text (combo, _("Custom format"));
 
                 cd->custom_format_shown = TRUE;
@@ -1960,6 +2745,7 @@ static void
 set_format_cb (GtkComboBox *combo,
 	       ClockData   *cd)
 {
+        /* FMQ: was used from old preferences dialog; fix this up */
         ClockFormat format;
 
 	/* valid values begin from 1 */
@@ -1998,11 +2784,21 @@ set_show_date_cb (GtkWidget *w,
 }
 
 static void
-set_gmt_time_cb (GtkWidget *w,
-		 ClockData *clock)
+set_show_weather_cb (GtkWidget *w,
+                     ClockData *clock)
 {
 	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
-				     KEY_GMT_TIME,
+				     KEY_SHOW_WEATHER,
+				     GTK_TOGGLE_BUTTON (w)->active,
+				     NULL);
+}
+
+static void
+set_show_temperature_cb (GtkWidget *w,
+                         ClockData *clock)
+{
+	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
+				     KEY_SHOW_TEMPERATURE,
 				     GTK_TOGGLE_BUTTON (w)->active,
 				     NULL);
 }
@@ -2023,6 +2819,7 @@ static void
 set_custom_format_cb (GtkEntry  *entry,
 		      ClockData *cd)
 {
+        /* FMQ: was used from old preferences dialog; fix this up */
 	const char *custom_format;
 
 	custom_format = gtk_entry_get_text (entry);
@@ -2035,7 +2832,8 @@ properties_response_cb (GtkWidget *widget,
 			int        id,
 			ClockData *cd)
 {
-	
+        /* FMQ: was used from old preferences dialog; fix this up */
+
 	if (id == GTK_RESPONSE_HELP)
 		clock_utils_display_help (cd->applet,
 					  "clock", "clock", "clock-settings");
@@ -2045,59 +2843,1116 @@ properties_response_cb (GtkWidget *widget,
 }
 
 static void
-display_properties_dialog (BonoboUIComponent *uic,
-			   ClockData         *cd,
-			   const gchar       *verbname)
+prefs_locations_changed (GtkTreeSelection *selection, ClockData *cd)
 {
+	gint n;
+
+	n = gtk_tree_selection_count_selected_rows (selection);
+	gtk_widget_set_sensitive (cd->prefs_location_edit_button, n > 0);
+	gtk_widget_set_sensitive (cd->prefs_location_remove_button, n > 0);
+}
+
+static gchar *
+loc_to_string (ClockLocation *loc)
+{
+        gfloat latitude, longitude;
+        gchar *prev_locale;
+        gchar *ret;
+
+        clock_location_get_coords (loc, &latitude, &longitude);
+
+        prev_locale = setlocale (LC_NUMERIC, "POSIX");
+
+        ret = g_markup_printf_escaped
+                ("<location name=\"%s\" timezone=\"%s\" latitude=\"%f\" longitude=\"%f\" code=\"%s\"/>",
+                 clock_location_get_name (loc),
+                 clock_location_get_timezone (loc),
+                 latitude, longitude,
+		 clock_location_get_weather_code (loc));
+
+        setlocale (LC_NUMERIC, "");
+
+        return ret;
+}
+
+static void
+save_cities_store (ClockData *cd)
+{
+        ClockLocation *loc;
+        GList *node = cd->locations;
+
+        GSList *root = NULL;
+        GSList *list = NULL;
+
+        while (node) {
+                loc = CLOCK_LOCATION (node->data);
+                list = g_slist_prepend (list, loc_to_string (loc));
+                node = node->next;
+        }
+
+        list = g_slist_reverse (list);
+	panel_applet_gconf_set_list (PANEL_APPLET (cd->applet),
+                                     KEY_CITIES, GCONF_VALUE_STRING, list, NULL);
+
+        root = list;
+
+        while (list) {
+                g_free (list->data);
+                list = g_slist_next (list);
+        }
+
+        g_slist_free (root);
+}
+
+static void
+run_prefs_edit_save (GtkButton *button, ClockData *cd)
+{
+        GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+        ClockZoneTable *zones = cd->zones;
+
+        ClockLocation *loc = g_object_get_data (G_OBJECT (edit_window), "clock-location");
+        GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
+        GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
+
+        GtkWidget *lat_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-entry");
+        GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
+        GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
+        GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
+
+        gchar *timezone_l10n = gtk_combo_box_get_active_text (GTK_COMBO_BOX (zone_combo));
+	gchar *weather_code = g_object_get_data (G_OBJECT (edit_window), "weather-code");
+
+        ClockZoneInfo *info = clock_zonetable_get_l10n_zone (zones, timezone_l10n);
+
+        if (!info) {
+                edit_hide (NULL, cd);
+                return;
+        }
+
+        const gchar *name = gtk_entry_get_text (GTK_ENTRY (name_entry));
+        gfloat lat = 0;
+        gfloat lon = 0;
+
+        sscanf (gtk_entry_get_text (GTK_ENTRY (lat_entry)), "%f", &lat);
+        sscanf (gtk_entry_get_text (GTK_ENTRY (lon_entry)), "%f", &lon);
+
+        if (gtk_combo_box_get_active (GTK_COMBO_BOX (lat_combo)) != 0) {
+                lat = -lat;
+        }
+
+        if (gtk_combo_box_get_active (GTK_COMBO_BOX (lon_combo)) != 0) {
+                lon = -lon;
+        }
+
+        if (loc) {
+                clock_location_set_timezone (loc, clock_zoneinfo_get_name (info));
+                clock_location_set_name (loc, name);
+                clock_location_set_coords (loc, lat, lon);
+		clock_location_set_weather_code (loc, weather_code);
+        } else {
+                GList *locs;
+		WeatherPrefs prefs;
+
+		prefs.temperature_unit = cd->temperature_unit;
+		prefs.speed_unit = cd->speed_unit;
+
+                loc = clock_location_new (name, clock_zoneinfo_get_name (info), lat, lon, weather_code, &prefs);
+
+                locs = g_list_copy (cd->locations);
+                locs = g_list_append (locs, loc);
+                set_locations (cd, locs);
+        }
+
+        save_cities_store (cd);
+
+        edit_hide (edit_window, cd);
+}
+
+static void
+find_hide (GtkWidget *unused, ClockData *cd)
+{
+        GtkWidget *find_window = glade_xml_get_widget (cd->glade_xml, "find-location-window");
+
+	gtk_widget_hide (find_window);
+}
+
+static gboolean
+find_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
+{
+        find_hide (NULL, cd);
+
+        return TRUE;
+}
+
+static void
+update_coords (ClockData *cd, gboolean valid, gfloat lat, gfloat lon)
+{
+        GtkWidget *lat_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-entry");
+        GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
+        GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
+        GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
+        gchar *tmp;
+
+	if (!valid) {
+        	gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
+        	gtk_entry_set_text (GTK_ENTRY (lon_entry), "");
+                gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), -1);
+                gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), -1);
+
+		return;
+	}
+
+        tmp = g_strdup_printf ("%f", fabsf(lat));
+        gtk_entry_set_text (GTK_ENTRY (lat_entry), tmp);
+        g_free (tmp);
+
+        if (lat > 0) {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), 0);
+        } else {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), 1);
+        }
+
+        tmp = g_strdup_printf ("%f", fabsf(lon));
+        gtk_entry_set_text (GTK_ENTRY (lon_entry), tmp);
+        g_free (tmp);
+
+        if (lon > 0) {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), 0);
+        } else {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), 1);
+        }
+}
+
+static gint
+sort_zoneinfo_by_l10n_name (gconstpointer a, gconstpointer b)
+{
+        ClockZoneInfo *info_a = CLOCK_ZONEINFO (a);
+        ClockZoneInfo *info_b = CLOCK_ZONEINFO (b);
+
+        char *name_a = clock_zoneinfo_get_l10n_name (info_a);
+        char *name_b = clock_zoneinfo_get_l10n_name (info_b);
+
+        return strcmp (name_a, name_b); /* FIXME: should this be g_utf8_collate() ? */
+}
+
+static void
+fill_timezone_combo_from_location (ClockData *cd, GtkWidget *zone_combo, ClockLocation *loc)
+{
+        ClockZoneTable *zones = cd->zones;
+        GtkTreeModel *model;
+        GtkTreeIter iter;
+
+        GList *list, *cur;
+        int timezone_idx = -1;
+        int i = 0;
+
+        gchar *loc_timezone = NULL;
+
+        if (loc != NULL) {
+                ClockZoneInfo *info;
+
+                loc_timezone = clock_location_get_timezone (loc);
+                info = clock_zonetable_get_zone (zones, loc_timezone);
+
+                if (info) {
+                        loc_timezone = clock_zoneinfo_get_l10n_name (info);
+                }
+        }
+
+        model = gtk_combo_box_get_model (GTK_COMBO_BOX (zone_combo));
+        while (gtk_tree_model_get_iter_first (model, &iter)) {
+                gtk_list_store_remove (GTK_LIST_STORE (model), &iter);
+        }
+
+        list = g_list_copy (clock_zonetable_get_zones (zones));
+        list = g_list_sort (list, &sort_zoneinfo_by_l10n_name);
+
+        cur = list;
+        while (cur) {
+                gchar *timezone = clock_zoneinfo_get_l10n_name (CLOCK_ZONEINFO (cur->data));
+
+                gtk_combo_box_append_text (GTK_COMBO_BOX (zone_combo), timezone);
+
+                if (loc_timezone && (strcmp (timezone, loc_timezone) == 0)) {
+                        timezone_idx = i;
+                }
+
+                i++;
+                cur = g_list_next (cur);
+        }
+
+        g_list_free (list);
+
+        if (timezone_idx >= 0) {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), timezone_idx);
+        } else if (loc_timezone) {
+                gtk_combo_box_prepend_text (GTK_COMBO_BOX (zone_combo), loc_timezone);
+                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), 0);
+        } else {
+                /* unfortunately gtk doesn't have an easy way to clear
+                   a combo box */
+                gtk_combo_box_prepend_text (GTK_COMBO_BOX (zone_combo), "");
+                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), 0);
+                gtk_combo_box_remove_text (GTK_COMBO_BOX (zone_combo), 0);
+                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), -1);
+        }
+}
+
+static gdouble
+distance (gdouble lat1, gdouble lon1,
+          gdouble lat2, gdouble lon2)
+{
+        gdouble radius = 6372.795;
+
+        return acos (cos (lat1) * cos (lat2) * cos (lon1 - lon2) + sin (lat1) * sin (lat2)) * radius;
+}
+
+static gchar *
+find_timezone (ClockData *cd, const char *name, gfloat lat, gfloat lon)
+{
+        ClockZoneTable *zonetab = cd->zones;
+	GList *zones, *l;
+	double dist, d;
+	gfloat zlat, zlon;
+	ClockZoneInfo *best;
+
+	dist = 1e6;
+	best = NULL;
+	zones = clock_zonetable_get_zones (zonetab);
+	for (l = zones; l; l = l->next) {
+		ClockZoneInfo *info = l->data;
+		clock_zoneinfo_get_coords (info, &zlat, &zlon);
+
+		d = distance (lat, lon, zlat*M_PI/180.0, zlon*M_PI/180.0);
+
+		if (d < dist) {
+			best = info;
+			dist = d;
+		}
+	}
+
+	clock_zoneinfo_get_coords (best, &zlat, &zlon);
+
+	return g_strdup (clock_zoneinfo_get_name (best));
+}
+
+static void
+update_timezone (ClockData *cd, const char *name, gfloat lat, gfloat lon)
+{
+        GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
+	gchar *timezone;
+	ClockLocation *loc;
+	WeatherPrefs prefs;
+
+	prefs.temperature_unit = cd->temperature_unit;
+	prefs.speed_unit = cd->speed_unit;
+
+	timezone = find_timezone (cd, name, lat, lon);
+	loc = clock_location_new (name, timezone, lat*180.0/M_PI, lon*180.0/M_PI, NULL, &prefs);
+
+	g_signal_handler_block (zone_combo, cd->zone_combo_changed);
+
+        fill_timezone_combo_from_location (cd, zone_combo, loc);
+
+	g_signal_handler_unblock (zone_combo, cd->zone_combo_changed);
+
+	g_object_unref (loc);
+	g_free (timezone);
+}
+
+static void
+run_find_location_save (GtkButton *button, ClockData *cd)
+{
+	GtkTreeSelection *selection;
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	WeatherLocation *loc = NULL;
+        GtkWidget *name_entry;
+        GtkWidget *edit_window;
+
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (cd->location_tree));
+	if (!gtk_tree_selection_get_selected (selection, &model, &iter))
+		return;
+
+	gtk_tree_model_get (model, &iter, GWEATHER_XML_COL_POINTER, &loc, -1);
+
+	if (!loc)
+		return;
+
+        edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+	name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
+	gtk_entry_set_text (GTK_ENTRY (name_entry), loc->name);
+	g_object_set_data_full (G_OBJECT (edit_window), "weather-code",
+			        g_strdup (loc->code), g_free);
+
+	update_coords (cd, loc->latlon_valid, loc->latitude*180.0/M_PI, loc->longitude*180.0/M_PI);
+
+	update_timezone (cd, loc->name, loc->latitude, loc->longitude);
+
+	find_hide (NULL, cd);
+}
+
+static void
+location_row_activated (GtkTreeView       *tree_view,
+			GtkTreePath       *path,
+			GtkTreeViewColumn *column,
+			ClockData         *cd)
+{
+	run_find_location_save (NULL, cd);
+}
+
+static void
+fill_location_tree (ClockData *cd)
+{
+	GtkTreeView *tree;
+	GtkTreeModel *model;
+	GtkTreeViewColumn *column;
+	GtkCellRenderer *cell;
+
+	tree = (GtkTreeView*) cd->location_tree;
+
+	if (gtk_tree_view_get_model (tree) != NULL)
+		return;
+
+	model = (GtkTreeModel*) gtk_tree_store_new (2, G_TYPE_STRING, G_TYPE_POINTER);
+	gtk_tree_view_set_model (tree, model);
+
+	cell = gtk_cell_renderer_text_new ();
+	column = gtk_tree_view_column_new_with_attributes ("not used", cell,
+							   "text", GWEATHER_XML_COL_LOC, NULL);
+	gtk_tree_view_append_column (tree, column);
+	gtk_tree_view_set_expander_column (tree, column);
+
+	g_signal_connect (tree, "row-activated",
+                          G_CALLBACK (location_row_activated), cd);
+
+	gweather_xml_load_locations (tree);
+}
+
+static void
+run_find_location (GtkButton *button, ClockData *cd)
+{
+        GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+
+	fill_location_tree (cd);
+        GtkWidget *window = glade_xml_get_widget (cd->glade_xml, "find-location-window");
+
+	gtk_tree_view_collapse_all (GTK_TREE_VIEW (cd->location_tree));
+	gtk_widget_grab_focus (cd->find_location_entry);
+
+        gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (edit_window));
+        gtk_window_present_with_time (GTK_WINDOW (window), gtk_get_current_event_time ());
+}
+
+static gboolean
+find_location (GtkTreeModel *model,
+	       GtkTreeIter  *iter,
+	       const gchar  *location,
+	       gboolean      go_parent)
+{
+	GtkTreeIter iter_child;
+	GtkTreeIter iter_parent;
+	gchar *aux_loc;
+	gboolean valid;
+	int len;
+
+	len = strlen (location);
+
+	if (len <= 0) {
+		return FALSE;
+	}
+
+	do {
+		gtk_tree_model_get (model, iter, GWEATHER_XML_COL_LOC, &aux_loc, -1);
+
+		if (g_ascii_strncasecmp (aux_loc, location, len) == 0) {
+			g_free (aux_loc);
+			return TRUE;
+		}
+
+		if (gtk_tree_model_iter_has_child (model, iter)) {
+			gtk_tree_model_iter_nth_child (model, &iter_child, iter, 0);
+			if (find_location (model, &iter_child, location, FALSE)) {
+				/* Manual copying of the iter */
+				iter->stamp = iter_child.stamp;
+				iter->user_data = iter_child.user_data;
+				iter->user_data2 = iter_child.user_data2;
+				iter->user_data3 = iter_child.user_data3;
+
+				g_free (aux_loc);
+
+				return TRUE;
+			}
+		}
+
+		g_free (aux_loc);
+
+		valid = gtk_tree_model_iter_next (model, iter);
+	} while (valid);
+
+	if (go_parent) {
+		iter_parent = *iter;
+		while (gtk_tree_model_iter_parent (model, iter, &iter_parent)) {
+			if (gtk_tree_model_iter_next (model, iter))
+				return find_location (model, iter, location, TRUE);
+			iter_parent = *iter;
+		}
+	}
+
+	return FALSE;
+}
+
+static void
+find_next_location (GtkButton *button, ClockData *cd)
+{
+	GtkTreeView *tree;
+	GtkTreeModel *model;
+	GtkEntry *entry;
+	GtkTreeSelection *selection;
+	GtkTreeIter iter;
+	GtkTreeIter iter_parent;
+	GtkTreePath *path;
+	const gchar *location;
+
+	tree = GTK_TREE_VIEW (cd->location_tree);
+	model = gtk_tree_view_get_model (tree);
+	entry = GTK_ENTRY (cd->find_location_entry);
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree));
+
+	if (gtk_tree_selection_count_selected_rows (selection) >= 1) {
+		gtk_tree_selection_get_selected (selection, &model, &iter);
+		/* Select next or select parent */
+		if (!gtk_tree_model_iter_next (model, &iter)) {
+			iter_parent = iter;
+			if (!gtk_tree_model_iter_parent (model, &iter, &iter_parent) ||
+			    !gtk_tree_model_iter_next (model, &iter))
+				gtk_tree_model_get_iter_first (model, &iter);
+		}
+	}
+	else {
+		gtk_tree_model_get_iter_first (model, &iter);
+	}
+	location = gtk_entry_get_text (entry);
+
+	if (find_location (model, &iter, location, TRUE)) {
+		gtk_widget_set_sensitive (cd->find_next_location_button, TRUE);
+		path = gtk_tree_model_get_path (model, &iter);
+		gtk_tree_view_expand_to_path (tree, path);
+		gtk_tree_selection_select_path (selection, path);
+		gtk_tree_view_scroll_to_cell (tree, path, NULL, TRUE, 0.5, 0);
+
+		gtk_tree_path_free (path);
+        }
+	else {
+		gtk_widget_set_sensitive (cd->find_next_location_button, FALSE);
+	}
+}
+
+static void
+find_entry_changed (GtkEditable *entry, ClockData *cd)
+{
+	GtkTreeView *tree;
+	GtkTreeModel *model;
+	GtkTreeSelection *selection;
+	GtkTreeIter iter;
+	GtkTreePath *path;
+	const gchar *location;
+
+	tree = GTK_TREE_VIEW (cd->location_tree);
+	model = gtk_tree_view_get_model (tree);
+
+	selection = gtk_tree_view_get_selection (tree);
+	gtk_tree_model_get_iter_first (model, &iter);
+
+	location = gtk_entry_get_text (GTK_ENTRY (entry));
+	if (find_location (model, &iter, location, TRUE)) {
+		gtk_widget_set_sensitive (cd->find_next_location_button, TRUE);
+		path = gtk_tree_model_get_path (model, &iter);
+		gtk_tree_view_expand_to_path (tree, path);
+		gtk_tree_selection_select_iter (selection, &iter);
+		gtk_tree_view_scroll_to_cell (tree, path, NULL, TRUE, 0.5, 0);
+		gtk_tree_path_free (path);
+	}
+	else {
+		gtk_widget_set_sensitive (cd->find_next_location_button, FALSE);
+	}
+}
+
+static void
+location_tree_selection_changed (GtkTreeSelection *selection, ClockData *cd)
+{
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	WeatherLocation *loc = NULL;
+	gboolean can_save = FALSE;
+
+	if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+		gtk_tree_model_get (model, &iter, GWEATHER_XML_COL_POINTER, &loc, -1);
+		if (loc != NULL)
+			can_save = TRUE;
+	}
+
+	gtk_widget_set_sensitive (cd->find_location_ok_button, can_save);
+}
+
+static void
+edit_clear (ClockData *cd)
+{
+        GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
+        GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
+
+        GtkWidget *lat_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-entry");
+        GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
+        GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
+        GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
+
+        /* clear out the old data */
+        gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), -1);
+
+        gtk_entry_set_text (GTK_ENTRY (name_entry), "");
+
+        gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
+        gtk_entry_set_text (GTK_ENTRY (lon_entry), "");
+
+        gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), -1);
+        gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), -1);
+}
+
+static void
+edit_hide (GtkWidget *unused, ClockData *cd)
+{
+        GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+
+        find_hide (NULL, cd);
+        gtk_widget_hide (edit_window);
+        edit_clear (cd);
+}
+
+static gboolean
+edit_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
+{
+        edit_hide (widget, cd);
+
+        return TRUE;
+}
+
+static void
+prefs_hide (GtkWidget *widget, ClockData *cd)
+{
+        GtkWidget *tree;
+
+	edit_hide (widget, cd);
+
+	gtk_widget_hide (cd->prefs_window);
+
+	tree = glade_xml_get_widget (cd->glade_xml, "cities_list");
+
+        gtk_tree_selection_unselect_all (gtk_tree_view_get_selection (GTK_TREE_VIEW (tree)));
+
+        refresh_clock_timeout (cd);
+}
+
+static gboolean
+prefs_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
+{
+        prefs_hide (widget, cd);
+
+        return TRUE;
+}
+
+static void
+zone_combo_changed (GtkComboBox *widget, ClockData *cd)
+{
+        ClockZoneTable *zones = cd->zones;
+        gchar *timezone = gtk_combo_box_get_active_text (widget);
+        gchar *city = NULL;
+        gfloat lat = 0;
+        gfloat lon = 0;
+	GtkTreeModel *model;
+	const gchar *name;
+
+        GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
+        GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+	gchar *weather_code;
+
+        ClockCountry *country;
+        ClockZoneInfo *info;
+
+        if (gtk_combo_box_get_active (widget) == -1) {
+                return;
+        }
+
+	/* only fill in other field if name is not set yet, to
+         * allow correcting a guessed timezone
+         */
+	name = gtk_entry_get_text (GTK_ENTRY (name_entry));
+	if (name && name[0]) {
+		return;
+	}
+
+        info = clock_zonetable_get_l10n_zone (zones, timezone);
+        g_free (timezone);
+
+        if (info == NULL) {
+                return;
+        }
+
+        country = clock_zonetable_get_country (zones, clock_zoneinfo_get_country (info));
+        if (country != NULL) {
+                city = g_strdup_printf (_("%s, %s"),
+                                        clock_zoneinfo_get_l10n_city (info),
+                                        clock_country_get_l10n_name (country));
+        } else {
+                city = g_strdup (clock_zoneinfo_get_l10n_city (info));
+        }
+
+        gtk_entry_set_text (GTK_ENTRY (name_entry), city);
+
+        g_free (city);
+
+        clock_zoneinfo_get_coords (info, &lat, &lon);
+	update_coords (cd, TRUE, lat, lon);
+
+	fill_location_tree (cd);
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (cd->location_tree));
+	weather_code = find_weather_code (model, city, lat * M_PI/180.0, lon * M_PI/180.0);
+	g_object_set_data_full (G_OBJECT (edit_window), "weather-code", weather_code, g_free);
+}
+
+static void
+remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+{
+        ClockData *cd = data;
+        ClockLocation *loc = NULL;
+        GList *list = g_list_copy (cd->locations);
+
+        gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
+
+        list = g_list_remove (list, loc);
+
+        gtk_list_store_remove (cd->cities_store, iter);
+        set_locations (cd, list);
+
+        save_cities_store (cd);
+}
+
+static void
+run_prefs_locations_remove (GtkButton *button, ClockData *cd)
+{
+        GtkTreeSelection *sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (cd->prefs_locations));
+
+        gtk_tree_selection_selected_foreach (sel, remove_tree_row, cd);
+}
+
+static void
+run_prefs_locations_add (GtkButton *button, ClockData *cd)
+{
+        GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+        GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
+
+        fill_timezone_combo_from_location (cd, zone_combo, NULL);
+/* 	fill_location_tree (this);    This was commented out in intlclock... */
+
+        g_object_set_data (G_OBJECT (edit_window), "clock-location", NULL);
+        gtk_window_set_transient_for (GTK_WINDOW (edit_window), GTK_WINDOW (cd->prefs_window));
+        gtk_window_present_with_time (GTK_WINDOW (edit_window), gtk_get_current_event_time ());
+}
+
+static void
+edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+{
+        ClockData *cd = data;
+        ClockLocation *loc;
+        gchar *tmp;
+        gfloat lat, lon;
+
+        /* fill the dialog with this location's data, show it */
+        GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+
+        GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
+
+        GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
+
+        GtkWidget *lat_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-entry");
+
+        GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
+
+        GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
+
+        GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
+
+        edit_clear (cd);
+
+        gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
+
+        fill_timezone_combo_from_location (cd, zone_combo, loc);
+
+        gtk_entry_set_text (GTK_ENTRY (name_entry), clock_location_get_name (loc));
+
+        clock_location_get_coords (loc, &lat, &lon);
+
+        tmp = g_strdup_printf ("%f", fabsf(lat));
+        gtk_entry_set_text (GTK_ENTRY (lat_entry), tmp);
+        g_free (tmp);
+
+        if (lat > 0) {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), 0);
+        } else {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), 1);
+        }
+
+        tmp = g_strdup_printf ("%f", fabsf(lon));
+        gtk_entry_set_text (GTK_ENTRY (lon_entry), tmp);
+        g_free (tmp);
+
+        if (lon > 0) {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), 0);
+        } else {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), 1);
+        }
+
+        g_object_set_data (G_OBJECT (edit_window), "clock-location", loc);
+
+        gtk_window_present (GTK_WINDOW (edit_window));
+}
+
+static void
+run_prefs_locations_edit (GtkButton *unused, ClockData *cd)
+{
+        GtkTreeSelection *sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (cd->prefs_locations));
+
+        gtk_tree_selection_selected_foreach (sel, edit_tree_row, cd);
+}
+
+static void
+set_12hr_format_radio_cb (GtkWidget *widget, ClockData *cd)
+{
+	const gchar *val;
+        ClockFormat format;
+
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+                format = CLOCK_FORMAT_12;
+        else
+                format = CLOCK_FORMAT_24;
+
+        val = gconf_enum_to_string (format_type_enum_map, format);
+
+	panel_applet_gconf_set_string (PANEL_APPLET (cd->applet),
+				       KEY_FORMAT, val, NULL);
+}
+
+static void
+temperature_combo_changed (GtkComboBox *combo, ClockData *cd)
+{
+	int value;
+	int old_value;
+	const gchar *str;
+
+	value = gtk_combo_box_get_active (combo) + 1;
+
+	if (cd->use_temperature_default)
+		old_value = TEMP_UNIT_DEFAULT;
+	else
+		old_value = cd->temperature_unit;
+
+	if (value == old_value)
+		return;
+
+	str = gweather_prefs_temp_enum_to_string (value);
+
+	panel_applet_gconf_set_string (PANEL_APPLET (cd->applet),
+				       KEY_TEMPERATURE_UNIT, str, NULL);
+}
+
+static void
+speed_combo_changed (GtkComboBox *combo, ClockData *cd)
+{
+	int value;
+	int old_value;
+	const gchar *str;
+
+	value = gtk_combo_box_get_active (combo) + 1;
+
+	if (cd->use_speed_default)
+		old_value = SPEED_UNIT_DEFAULT;
+	else
+		old_value = cd->speed_unit;
+
+	if (value == old_value)
+		return;
+
+	str = gweather_prefs_speed_enum_to_string (value);
+
+	panel_applet_gconf_set_string (PANEL_APPLET (cd->applet),
+				       KEY_SPEED_UNIT, str, NULL);
+}
+
+static void
+fill_prefs_window (ClockData *cd)
+{
+        static const int temperatures[] = {
+                TEMP_UNIT_DEFAULT,
+                TEMP_UNIT_KELVIN,
+                TEMP_UNIT_CENTIGRADE,
+                TEMP_UNIT_FAHRENHEIT,
+                -1
+        };
+
+        static const int speeds[] = {
+                SPEED_UNIT_DEFAULT,
+                SPEED_UNIT_MS,
+                SPEED_UNIT_KPH,
+                SPEED_UNIT_MPH,
+                SPEED_UNIT_KNOTS,
+                SPEED_UNIT_BFT,
+                -1
+        };
+
+        GtkWidget *radio_12hr;
+        GtkWidget *radio_24hr;
+	GtkWidget *widget;
+	GtkCellRenderer *renderer;
+        GtkTreeViewColumn *col;
+	GtkListStore *store;
+        int i;
+
+	/* Set the 12 hour / 24 hour widget */
+        radio_12hr = glade_xml_get_widget (cd->glade_xml, "12hr_radio");
+        radio_24hr = glade_xml_get_widget (cd->glade_xml, "24hr_radio");
+
+        if (cd->format == CLOCK_FORMAT_12)
+                widget = radio_12hr;
+        else
+                widget = radio_24hr;
+
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
+
+	g_signal_connect (radio_12hr, "toggled",
+			  G_CALLBACK (set_12hr_format_radio_cb), cd);
+
+	/* Set the "Show Date" checkbox */
+	widget = glade_xml_get_widget (cd->glade_xml, "date_check");
+	g_signal_connect (widget, "toggled",
+                          G_CALLBACK (set_show_date_cb), cd);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), cd->showdate);
+
+	/* Set the "Show Seconds" checkbox */
+	widget = glade_xml_get_widget (cd->glade_xml, "seconds_check");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), cd->showseconds);
+	g_signal_connect (widget, "toggled",
+                          G_CALLBACK (set_show_seconds_cb), cd);
+
+	/* Set the "Show weather" checkbox */
+	widget = glade_xml_get_widget (cd->glade_xml, "weather_check");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), cd->show_weather);
+	g_signal_connect (widget, "toggled",
+                          G_CALLBACK (set_show_weather_cb), cd);
+
+	/* Set the "Show temperature" checkbox */
+	widget = glade_xml_get_widget (cd->glade_xml, "temperature_check");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), cd->show_temperature);
+	g_signal_connect (widget, "toggled",
+                          G_CALLBACK (set_show_temperature_cb), cd);
+
+	/* Fill the Cities list */
+	widget = glade_xml_get_widget (cd->glade_xml, "cities_list");
+
+	renderer = gtk_cell_renderer_text_new ();
+        col = gtk_tree_view_column_new_with_attributes (_("City Name"), renderer, "text", COL_CITY_NAME, NULL);
+        gtk_tree_view_insert_column (GTK_TREE_VIEW (widget), col, -1);
+
+	renderer = gtk_cell_renderer_text_new ();
+        col = gtk_tree_view_column_new_with_attributes (_("City Time Zone"), renderer, "text", COL_CITY_TZ, NULL);
+        gtk_tree_view_insert_column (GTK_TREE_VIEW (widget), col, -1);
+
+        gtk_tree_view_set_model (GTK_TREE_VIEW (widget),
+                                 GTK_TREE_MODEL (cd->cities_store));
+
+        /* Temperature combo */
+	widget = glade_xml_get_widget (cd->glade_xml, "temperature_combo");
+	store = gtk_list_store_new (1, G_TYPE_STRING);
+	gtk_combo_box_set_model (GTK_COMBO_BOX (widget), GTK_TREE_MODEL (store));
+	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget), renderer, TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), renderer, "text", 0, NULL);
+
+        for (i = 0; temperatures[i] != -1; i++)
+                gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
+                                           gweather_prefs_get_temp_display_name (temperatures[i]));
+
+	update_temperature_combo (cd);
+	g_signal_connect (widget, "changed",
+                          G_CALLBACK (temperature_combo_changed), cd);
+
+        /* Wind speed combo */
+	widget = glade_xml_get_widget (cd->glade_xml, "wind_speed_combo");
+	store = gtk_list_store_new (1, G_TYPE_STRING);
+	gtk_combo_box_set_model (GTK_COMBO_BOX (widget), GTK_TREE_MODEL (store));
+	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget), renderer, TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), renderer, "text", 0, NULL);
+
+        for (i = 0; speeds[i] != -1; i++)
+                gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
+                                           gweather_prefs_get_speed_display_name (speeds[i]));
+
+	update_speed_combo (cd);
+	g_signal_connect (widget, "changed",
+                          G_CALLBACK (speed_combo_changed), cd);
+}
+
+static void
+ensure_prefs_window_is_created (ClockData *cd)
+{
+        GtkWidget *edit_window;
+	GtkWidget *prefs_close_button;
+        GtkWidget *edit_cancel_button;
+        GtkWidget *edit_ok_button;
+        GtkWidget *zone_combo;
+        GtkWidget *find_window;
+        GtkWidget *find_location_button;
+        GtkWidget *find_location_cancel_button;
+	GtkTreeSelection *selection;
+
+        if (cd->prefs_window)
+                return;
+
+        cd->prefs_window = glade_xml_get_widget (cd->glade_xml, "prefs-window");
+
+	gtk_window_set_icon_name (GTK_WINDOW (cd->prefs_window), CLOCK_ICON);
+
+        prefs_close_button = glade_xml_get_widget (cd->glade_xml, "prefs-close-button");
+        cd->prefs_locations = GTK_TREE_VIEW (glade_xml_get_widget (cd->glade_xml, "cities_list"));
+
+        selection = gtk_tree_view_get_selection (cd->prefs_locations);
+        g_signal_connect (G_OBJECT (selection), "changed",
+                          G_CALLBACK (prefs_locations_changed), cd);
+
+        g_signal_connect (G_OBJECT (cd->prefs_window), "delete_event",
+                          G_CALLBACK (prefs_hide_event), cd);
+
+        g_signal_connect (G_OBJECT (prefs_close_button), "clicked",
+                          G_CALLBACK (prefs_hide), cd);
+
+        cd->prefs_location_remove_button = glade_xml_get_widget (cd->glade_xml, "prefs-locations-remove-button");
+
+        g_signal_connect (G_OBJECT (cd->prefs_location_remove_button), "clicked",
+                          G_CALLBACK (run_prefs_locations_remove), cd);
+
+        cd->prefs_location_add_button = glade_xml_get_widget (cd->glade_xml, "prefs-locations-add-button");
+
+        g_signal_connect (G_OBJECT (cd->prefs_location_add_button), "clicked",
+                          G_CALLBACK (run_prefs_locations_add), cd);
+
+        cd->prefs_location_edit_button = glade_xml_get_widget (cd->glade_xml, "prefs-locations-edit-button");
+
+        g_signal_connect (G_OBJECT (cd->prefs_location_edit_button), "clicked",
+                          G_CALLBACK (run_prefs_locations_edit), cd);
+
+        edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+
+        gtk_window_set_transient_for (GTK_WINDOW (edit_window),
+                                      GTK_WINDOW (cd->prefs_window));
+
+        g_signal_connect (G_OBJECT (edit_window), "delete_event",
+                          G_CALLBACK (edit_hide_event), cd);
+
+        edit_cancel_button = glade_xml_get_widget (cd->glade_xml, "edit-location-cancel-button");
+
+        edit_ok_button = glade_xml_get_widget (cd->glade_xml, "edit-location-ok-button");
+
+        zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
+
+        find_window = glade_xml_get_widget (cd->glade_xml, "find-location-window");
+
+        gtk_window_set_transient_for (GTK_WINDOW (find_window),
+                                      GTK_WINDOW (edit_window));
+
+        g_signal_connect (G_OBJECT (find_window), "delete_event",
+                          G_CALLBACK (find_hide_event), cd);
+
+        find_location_button = glade_xml_get_widget (cd->glade_xml, "find-location-button");
+
+        cd->find_location_ok_button = glade_xml_get_widget (cd->glade_xml, "find-location-ok-button");
+
+        find_location_cancel_button = glade_xml_get_widget (cd->glade_xml, "find-location-cancel-button");
+
+        cd->find_next_location_button = glade_xml_get_widget (cd->glade_xml, "find-next-location-button");
+
+        cd->find_location_entry = glade_xml_get_widget (cd->glade_xml, "find-location-entry");
+
+        cd->location_tree = glade_xml_get_widget (cd->glade_xml, "find-location-tree");
+
+        cd->zone_combo_changed = g_signal_connect (G_OBJECT (zone_combo), "changed",
+                                                   G_CALLBACK (zone_combo_changed), cd);
+
+        g_signal_connect (G_OBJECT (edit_cancel_button), "clicked",
+                          G_CALLBACK (edit_hide), cd);
+
+        g_signal_connect (G_OBJECT (edit_ok_button), "clicked",
+                          G_CALLBACK (run_prefs_edit_save), cd);
+
+        g_signal_connect (find_location_button, "clicked",
+                          G_CALLBACK (run_find_location), cd);
+
+        g_signal_connect (G_OBJECT (find_location_cancel_button), "clicked",
+                          G_CALLBACK (find_hide), cd);
+
+        g_signal_connect (G_OBJECT (cd->find_location_ok_button), "clicked",
+                          G_CALLBACK (run_find_location_save), cd);
+
+        g_signal_connect (G_OBJECT (cd->find_next_location_button), "clicked",
+                          G_CALLBACK (find_next_location), cd);
+
+        g_signal_connect (G_OBJECT (cd->find_location_entry), "changed",
+                          G_CALLBACK (find_entry_changed), cd);
+
+        selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (cd->location_tree));
+        g_signal_connect (selection, "changed",
+                          G_CALLBACK (location_tree_selection_changed), cd);
+
+        /* We have to put an item in the combo box in the glade file
+           to get the simpler, string-only store.  Here we remove that
+           item. */
+        gtk_combo_box_remove_text (GTK_COMBO_BOX (zone_combo), 0);
+
+        /* Set up the time setting section */
+
+        cd->time_settings_button = glade_xml_get_widget (cd->glade_xml, "time-settings-button");
+        g_signal_connect (cd->time_settings_button, "clicked",
+                          G_CALLBACK (run_time_settings), cd);
+
+        /* fill it with the current preferences */
+        fill_prefs_window (cd);
+}
+
+static void
+display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
+{
+        ensure_prefs_window_is_created (cd);
+
+        if (start_in_locations_page) {
+                GtkWidget *notebook = glade_xml_get_widget (cd->glade_xml, "notebook");
+                gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
+        }
+
+	update_set_time_button (cd);
+
+        gtk_window_set_screen (GTK_WINDOW (cd->prefs_window),
+                               gtk_widget_get_screen (cd->applet));
+	gtk_window_present (GTK_WINDOW (cd->prefs_window));
+
+        refresh_clock_timeout (cd);
+
+        /* FMQ: cd->props was the old preferences window; remove references to it */
+        /* FMQ: connect to the Help button by hand; look at properties_response_cb() for the help code */
+#if 0
+        /* FMQ: check the code below; replace the proper parts */
 	GtkWidget *hbox;
 	GtkWidget *vbox;
 	GtkWidget *combo;
 	GtkWidget *label;
 
-	if (cd->props) {
-		gtk_window_set_screen (GTK_WINDOW (cd->props),
-				       gtk_widget_get_screen (cd->applet));
-		gtk_window_present (GTK_WINDOW (cd->props));
-		return;
-	}
-
-	cd->props = gtk_dialog_new_with_buttons (_("Clock Preferences"), NULL, 0,
-						 GTK_STOCK_HELP,
-						 GTK_RESPONSE_HELP,
-						 GTK_STOCK_CLOSE,
-						 GTK_RESPONSE_CLOSE,
-						 NULL);
-
-	gtk_window_set_icon_name (GTK_WINDOW (cd->props), CLOCK_ICON);
-	gtk_dialog_set_has_separator (GTK_DIALOG (cd->props), FALSE);
-	gtk_dialog_set_default_response (GTK_DIALOG (cd->props), GTK_RESPONSE_CLOSE);
-	gtk_window_set_resizable (GTK_WINDOW (cd->props), FALSE);
-	gtk_window_set_screen (GTK_WINDOW (cd->props),
-			       gtk_widget_get_screen (cd->applet));
-	gtk_container_set_border_width (GTK_CONTAINER (cd->props), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (cd->props)->vbox), 2);
-		
-	vbox = gtk_vbox_new (FALSE, 6);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->props)->vbox), vbox, FALSE, FALSE, 0);
-	gtk_widget_show (vbox);
-
-	hbox = gtk_hbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-	gtk_widget_show (hbox);
-
-	label = gtk_label_new_with_mnemonic (_("Clock _type:"));
-	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-	gtk_widget_show (label);
-
-        combo = gtk_combo_box_new_text ();
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-
-	if (cd->can_handle_format_12)
-		gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("12 hour"));
         gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("24 hour"));
         gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("UNIX time"));
         gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("Internet time"));
@@ -2118,7 +3973,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 			    FALSE, FALSE, 0);
 
 	cd->custom_entry = gtk_entry_new ();
-	gtk_box_pack_start (GTK_BOX (cd->custom_hbox), 
+	gtk_box_pack_start (GTK_BOX (cd->custom_hbox),
                             cd->custom_entry,
 			    FALSE, FALSE, 0);
 	gtk_entry_set_text (GTK_ENTRY (cd->custom_entry),
@@ -2126,44 +3981,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 	g_signal_connect (cd->custom_entry, "changed",
 			  G_CALLBACK (set_custom_format_cb),
 			  cd);
-
-	cd->showseconds_check = gtk_check_button_new_with_mnemonic (_("Show _seconds"));
-	gtk_box_pack_start (GTK_BOX (vbox), cd->showseconds_check, FALSE, FALSE, 0);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->showseconds_check),
-	                              cd->showseconds);
-	g_signal_connect (cd->showseconds_check, "toggled",
-			  G_CALLBACK (set_show_seconds_cb),
-			  cd);
-	gtk_widget_show (cd->showseconds_check);
-
-	cd->showdate_check = gtk_check_button_new_with_mnemonic (_("Show _date"));
-	gtk_box_pack_start (GTK_BOX (vbox), cd->showdate_check, FALSE, FALSE, 0);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->showdate_check),
-	                              cd->showdate);
-	g_signal_connect (cd->showdate_check, "toggled",
-			  G_CALLBACK (set_show_date_cb),
-			  cd);
-  	gtk_widget_show (cd->showdate_check);
-
-	cd->gmt_time_check = gtk_check_button_new_with_mnemonic (_("Use _UTC"));
-	gtk_box_pack_start (GTK_BOX (vbox), cd->gmt_time_check, FALSE, FALSE, 0);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->gmt_time_check),
-	                              cd->gmt_time);
-	g_signal_connect (cd->gmt_time_check, "toggled",
-			  G_CALLBACK (set_gmt_time_cb),
-			  cd);	
-	gtk_widget_show (cd->gmt_time_check);
-
-#if 0
-	cd->show_tz_check = gtk_check_button_new_with_mnemonic (_("Show multiple _timezones"));
-	gtk_box_pack_start (GTK_BOX (vbox), cd->show_tz_check, FALSE, FALSE, 0);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->show_tz_check),
-				      cd->show_tz);
-	g_signal_connect (G_OBJECT (cd->show_tz_check), "toggled",
-			  G_CALLBACK (set_show_zones_cb),
-			  cd);
-	gtk_widget_show (cd->show_tz_check);
-#endif
 
 	g_signal_connect (cd->props, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
@@ -2195,6 +4012,15 @@ display_properties_dialog (BonoboUIComponent *uic,
 	setup_writability_sensitivity (cd, cd->gmt_time_check, NULL, KEY_GMT_TIME);
 
 	gtk_widget_show (cd->props);
+#endif
+}
+
+static void
+verb_display_properties_dialog (BonoboUIComponent *uic,
+                                ClockData         *cd,
+                                const gchar       *verbname)
+{
+        display_properties_dialog (cd, FALSE);
 }
 
 static void
@@ -2240,7 +4066,7 @@ display_about_dialog (BonoboUIComponent *uic,
 		      "translator-credits", _("translator-credits"),
 		      "logo-icon-name", CLOCK_ICON,
 		      NULL);
-	
+
 	gtk_window_set_icon_name (GTK_WINDOW (cd->about), CLOCK_ICON);
 	gtk_window_set_wmclass (GTK_WINDOW (cd->about), "clock", "Clock");
 	gtk_window_set_screen (GTK_WINDOW (cd->about),
@@ -2248,7 +4074,7 @@ display_about_dialog (BonoboUIComponent *uic,
 
 	g_signal_connect (G_OBJECT(cd->about), "destroy",
 			  (GCallback)gtk_widget_destroyed, &cd->about);
-	
+
 	g_signal_connect (cd->about, "response",
 			  G_CALLBACK (gtk_widget_destroy),
 			  NULL);

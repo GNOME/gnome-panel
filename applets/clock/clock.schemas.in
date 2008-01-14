@@ -92,6 +92,28 @@
       </schema>
 
       <schema>
+        <key>/schemas/apps/clock_applet/prefs/show_weather</key>
+        <owner>clock-applet</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short>Show weather in clock</short>
+          <long>If true, display a weather icon.</long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/clock_applet/prefs/show_temperature</key>
+        <owner>clock-applet</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short>Show temperature in clock</short>
+          <long>If true, show the temperature next to the weather icon.</long>
+        </locale>
+      </schema>
+
+      <schema>
         <key>/schemas/apps/clock_applet/prefs/gmt_time</key>
         <owner>clock-applet</owner>
         <type>bool</type>
@@ -185,63 +207,18 @@
       </schema>
 
       <schema>
-        <key>/schemas/apps/clock_applet/prefs/show_timezones</key>
+        <key>/schemas/apps/clock_applet/prefs/expand_locations</key>
         <owner>clock-applet</owner>
         <type>bool</type>
         <default>false</default>
         <locale name="C">
-          <short>Show the timezone button</short>
+          <short>Expand list of locations</short>
           <long>
-	    If true, display the timezone button in the clock, in addition to
-	    time.
-	  </long>
-        </locale>
-      </schema>
-
-      <schema>
-        <key>/schemas/apps/clock_applet/prefs/timezones/tz_id_list</key>
-        <owner>clock-applet</owner>
-        <type>list</type>
-	<list_type>string</list_type>
-        <default>[]</default>
-        <locale name="C">
-          <short>Timezone ID list</short>
-          <long>
-	    A list of timezone IDs. Each ID identifies an individual timezone.
-	    The settings of these timezones are stored in the $(id)_name and
-	    $(id)_zone keys.
-	  </long>
-        </locale>
-      </schema>
-
-      <!--
-      <schema>
-        <key>/schemas/apps/clock_applet/prefs/timezones/timezone_name</key>
-        <owner>clock-applet</owner>
-        <type>string</type>
-        <default></default>
-        <locale name="C">
-          <short>User-visible name of the timezone</short>
-          <long>
-            This key specifies the user-visible name of the timezone.
+            If true, expand the list of locations in the calendar
+            window.
           </long>
         </locale>
       </schema>
-
-      <schema>
-        <key>/schemas/apps/clock_applet/prefs/timezones/timezone_zone</key>
-        <owner>clock-applet</owner>
-        <type>string</type>
-        <default></default>
-        <locale name="C">
-          <short>Name of the timezone</short>
-          <long>
-            This key specifies the name of the timezone as can be used in the
-	    TZ environment variable.
-          </long>
-        </locale>
-      </schema>
-      -->
 
       <schema>
         <key>/schemas/apps/clock_applet/prefs/hour_format</key>
@@ -284,6 +261,45 @@
 	    The use of this key was deprecated in GNOME 2.6 in favour of the
 	    'format' key. The schema is retained for compatibility with older
 	    versions.
+          </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/clock_applet/prefs/cities</key>
+        <owner>clock-applet</owner>
+        <type>list</type>
+        <default>[]</default>
+        <locale name="C">
+          <short>List of locations</short>
+          <long>
+            A list of locations to display in the calendar window.
+          </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/clock_applet/prefs/temperature_unit</key>
+        <owner>clock-applet</owner>
+        <type>string</type>
+        <default>Default</default>
+        <locale name="C">
+          <short>Temperature unit</short>
+          <long>
+            The unit to use when showing temperatures.
+          </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/clock_applet/prefs/speed_unit</key>
+        <owner>clock-applet</owner>
+        <type>string</type>
+        <default>Default</default>
+        <locale name="C">
+          <short>Speed unit</short>
+          <long>
+            The unit to use when showing wind speed.
           </long>
         </locale>
       </schema>
