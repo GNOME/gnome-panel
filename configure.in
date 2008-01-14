@@ -174,25 +174,6 @@ AC_ARG_WITH(clock-time-utility,
 CLOCK_TIME_UTILITY=$with_clock_time_utility
 AC_SUBST(CLOCK_TIME_UTILITY)
 
-dnl ==============================================
-dnl _NL_MEASUREMENT_MEASUREMENT is an enum and not a define
-dnl ==============================================
-
-AC_MSG_CHECKING([for _NL_MEASUREMENT_MEASUREMENT])
-AC_TRY_LINK([#include <langinfo.h>], [
-char c;
-c = *((unsigned char *)  nl_langinfo(_NL_MEASUREMENT_MEASUREMENT));
-], gtk_ok=yes, gtk_ok=no)
-AC_MSG_RESULT($gtk_ok)
-if test "$gtk_ok" = "yes"; then
-  AC_DEFINE([HAVE__NL_MEASUREMENT_MEASUREMENT], [1],
-            [Define if _NL_MEASUREMENT_MEASUREMENT is available])
-fi
-
-dnl ==============================================
-dnl End: _NL_MEASUREMENT_MEASUREMENT
-dnl ==============================================
-
 
 # Make it possible to compile the applets in-process
 PANEL_INPROCESS_NONE=

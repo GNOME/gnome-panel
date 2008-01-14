@@ -41,10 +41,6 @@
 #include <math.h>
 #include <locale.h>
 
-#ifdef HAVE__NL_MEASUREMENT_MEASUREMENT
-#include <langinfo.h>
-#endif
-
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
