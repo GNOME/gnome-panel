@@ -1,6 +1,6 @@
 # Swedish messages for gnome-panel.
-# Copyright (C) 1998-2007 Free Software Foundation, Inc.
-# Daniel Nylander <po@danielnylander.se>, 2006, 2007.
+# Copyright (C) 1998-2008 Free Software Foundation, Inc.
+# Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008.
 # Martin Wahlen <mva@sbbs.se>, 1998.
 # Anders Carlsson <anders.carlsson@tordata.se>, 1999.
 # Andreas Hyden  <a.hyden@cyberpoint.se>, 2000.
@@ -8,14 +8,12 @@
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003, 2004, 2005.
 # Johan Dahlin <jdahlin@telia.com>, 2002.
 #
-# $Id: sv.po,v 1.259 2006/08/16 05:46:26 dnylande Exp $
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-08 17:31+0100\n"
-"PO-Revision-Date: 2007-11-08 17:32+0100\n"
+"POT-Creation-Date: 2008-01-15 02:20+0100\n"
+"PO-Revision-Date: 2008-01-15 02:28+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -68,7 +66,7 @@ msgid "_Preferences"
 msgstr "_Inställningar"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2234
+#: ../applets/clock/clock.c:4056
 msgid "Clock"
 msgstr "Klocka"
 
@@ -84,54 +82,65 @@ msgstr "Fabrik för skapande av klockpanelprogram."
 msgid "Get the current time and date"
 msgstr "Visa aktuell tid och aktuellt datum"
 
-#: ../applets/clock/calendar-window.c:226
-#: ../applets/clock/clock.c:347
+#: ../applets/clock/calendar-window.c:242
+#: ../applets/clock/clock.c:420
 msgid "%l:%M %p"
 msgstr "%k.%M"
 
-#: ../applets/clock/calendar-window.c:228
-#: ../applets/clock/clock.c:349
-#: ../applets/clock/clock.c:1256
+#: ../applets/clock/calendar-window.c:244
+#: ../applets/clock/clock.c:422
+#: ../applets/clock/clock.c:1550
 msgid "%H:%M"
 msgstr "%H.%M"
 
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: ../applets/clock/calendar-window.c:234
+#: ../applets/clock/calendar-window.c:250
 msgid "%b %d"
 msgstr "%d %b"
 
-#: ../applets/clock/calendar-window.c:742
-msgid "_Tasks"
-msgstr "_Uppgifter"
+#: ../applets/clock/calendar-window.c:765
+msgid "Tasks"
+msgstr "Uppgifter"
 
-#: ../applets/clock/calendar-window.c:858
+#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:938
+#: ../applets/clock/calendar-window.c:1552
+msgid "Edit"
+msgstr "Redigera"
+
+#: ../applets/clock/calendar-window.c:883
 msgid "All Day"
 msgstr "Hela dagen"
 
-#: ../applets/clock/calendar-window.c:985
-msgid "_Appointments"
-msgstr "_Möten"
+#: ../applets/clock/calendar-window.c:1019
+msgid "Appointments"
+msgstr "Möten"
 
-#: ../applets/clock/calendar-window.c:1002
-msgid "_Birthdays and Anniversaries"
-msgstr "_Födelsedagar och jubileum"
+#: ../applets/clock/calendar-window.c:1044
+msgid "Birthdays and Anniversaries"
+msgstr "Födelsedagar och jubileum"
 
-#: ../applets/clock/calendar-window.c:1018
-msgid "_Weather Information"
-msgstr "_Väderinformation"
+#: ../applets/clock/calendar-window.c:1069
+msgid "Weather Information"
+msgstr "Väderinformation"
 
-#: ../applets/clock/calendar-window.c:1687
+#: ../applets/clock/calendar-window.c:1552
+#: ../applets/clock/clock.glade.h:17
+msgid "Locations"
+msgstr "Platser"
+
+#: ../applets/clock/calendar-window.c:1848
 msgid "Calendar"
 msgstr "Kalender"
 
-#: ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:420
 msgid "%l:%M:%S %p"
 msgstr "%k.%M.%S"
 
-#: ../applets/clock/clock.c:349
-#: ../applets/clock/clock.c:1254
+#: ../applets/clock/clock.c:422
+#: ../applets/clock/clock.c:1548
 msgid "%H:%M:%S"
 msgstr "%H.%M.%S"
 
@@ -140,7 +149,7 @@ msgstr "%H.%M.%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:369
+#: ../applets/clock/clock.c:442
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -148,7 +157,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:449
 #, c-format
 msgid ""
 "%1$s\n"
@@ -161,115 +170,113 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:384
+#: ../applets/clock/clock.c:457
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip
-#: ../applets/clock/clock.c:527
-msgid "%A %B %d"
-msgstr "%A %d %B"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:639
+msgid "%A %B %d (%%s)"
+msgstr "%A %d %B (%%s)"
 
-#: ../applets/clock/clock.c:541
+#: ../applets/clock/clock.c:669
 msgid "Click to hide your appointments and tasks"
 msgstr "Klicka för att dölja dina möten och uppgifter"
 
-#: ../applets/clock/clock.c:544
+#: ../applets/clock/clock.c:672
 msgid "Click to view your appointments and tasks"
 msgstr "Klicka för att visa dina möten och uppgifter"
 
-#: ../applets/clock/clock.c:548
+#: ../applets/clock/clock.c:676
 msgid "Click to hide month calendar"
 msgstr "Klicka för att dölja månadskalendern"
 
-#: ../applets/clock/clock.c:551
+#: ../applets/clock/clock.c:679
 msgid "Click to view month calendar"
 msgstr "Klicka för att visa månadskalendern"
 
-#: ../applets/clock/clock.c:1095
-msgid "Click to view time in other timezones"
-msgstr "Klicka för att visa tid i andra tidszoner"
-
-#: ../applets/clock/clock.c:1102
+#: ../applets/clock/clock.c:1400
 msgid "Computer Clock"
 msgstr "Datorklocka"
 
-#: ../applets/clock/clock.c:1249
+#: ../applets/clock/clock.c:1543
 msgid "%I:%M:%S %p"
 msgstr "%k.%M.%S"
 
-#: ../applets/clock/clock.c:1251
+#: ../applets/clock/clock.c:1545
 msgid "%I:%M %p"
 msgstr "%k.%M"
 
-#: ../applets/clock/clock.c:1293
+#: ../applets/clock/clock.c:1587
 msgid "%A, %B %d %Y"
 msgstr "%A %d %B %Y"
 
-#: ../applets/clock/clock.c:1368
+#: ../applets/clock/clock.c:1662
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Misslyckades med att köra tidskonfigurationsverktyget: %s"
 
-#: ../applets/clock/clock.c:1406
+#: ../applets/clock/clock.c:1691
+msgid "Set System Time..."
+msgstr "Ställ in systemtid..."
+
+#: ../applets/clock/clock.c:1692
+#: ../applets/clock/clock.glade.h:21
+msgid "Set System Time"
+msgstr "Ställ in systemtid"
+
+#: ../applets/clock/clock.c:1706
+msgid "Failed to set the system time"
+msgstr "Misslyckades med att ställa in systemtiden"
+
+#: ../applets/clock/clock.c:1879
 msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
 msgstr "Misslyckades med att hitta ett program för konfiguration av datumet och tiden. Kanske inga sådana är installerade?"
 
-#: ../applets/clock/clock.c:1917
+#: ../applets/clock/clock.c:2698
 msgid "Custom format"
 msgstr "Anpassat format"
 
-#: ../applets/clock/clock.c:2064
-msgid "Clock Preferences"
-msgstr "Klockinställningar"
+#: ../applets/clock/clock.c:3498
+#: ../applets/clock/clock-location.c:373
+#: ../applets/clock/clock-location-tile.c:468
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:2089
-msgid "Clock _type:"
-msgstr "_Typ av klocka:"
+#: ../applets/clock/clock.c:3757
+msgid "City Name"
+msgstr "Stadens namn"
 
-#: ../applets/clock/clock.c:2100
-msgid "12 hour"
-msgstr "12-timmars"
+#: ../applets/clock/clock.c:3761
+msgid "City Time Zone"
+msgstr "Stadens tidszon"
 
-#: ../applets/clock/clock.c:2101
+#: ../applets/clock/clock.c:3952
 msgid "24 hour"
 msgstr "24-timmars"
 
-#: ../applets/clock/clock.c:2102
+#: ../applets/clock/clock.c:3953
 msgid "UNIX time"
 msgstr "UNIX-tid"
 
-#: ../applets/clock/clock.c:2103
+#: ../applets/clock/clock.c:3954
 msgid "Internet time"
 msgstr "Internettid"
 
-#: ../applets/clock/clock.c:2111
+#: ../applets/clock/clock.c:3962
 msgid "Custom _format:"
 msgstr "Anpassat _format:"
 
-#: ../applets/clock/clock.c:2130
-msgid "Show _seconds"
-msgstr "Visa _sekunder"
-
-#: ../applets/clock/clock.c:2139
-msgid "Show _date"
-msgstr "Visa _datum"
-
-#: ../applets/clock/clock.c:2148
-msgid "Use _UTC"
-msgstr "Använd UT_C"
-
-#: ../applets/clock/clock.c:2158
-msgid "Show multiple _timezones"
-msgstr "Visa flera _tidszoner"
-
-#: ../applets/clock/clock.c:2237
+#: ../applets/clock/clock.c:4059
 msgid "The Clock displays the current time and date"
 msgstr "Klockan visar aktuell tid och datum"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2240
+#: ../applets/clock/clock.c:4062
 #: ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533
@@ -290,6 +297,135 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "tp-sv@listor.tp-sv.se"
 
+#: ../applets/clock/clock.glade.h:1
+msgid "12 _hour format"
+msgstr "12-_timmarsformat"
+
+#: ../applets/clock/clock.glade.h:2
+msgid "24 h_our format"
+msgstr "24-timma_rsformat"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Clock Options</b>"
+msgstr "<b>Alternativ för klocka</b>"
+
+#: ../applets/clock/clock.glade.h:4
+msgid "<b>Display</b>"
+msgstr "<b>Visning</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<b>Panel Display</b>"
+msgstr "<b>Panelvisning</b>"
+
+#: ../applets/clock/clock.glade.h:6
+msgid "<b>Time Settings</b>"
+msgstr "<b>Tidsinställningar</b>"
+
+#: ../applets/clock/clock.glade.h:7
+msgid "<i>(optional)</i>"
+msgstr "<i>(valfritt)</i>"
+
+#: ../applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "Klockinställningar"
+
+#: ../applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr "Aktuell tid:"
+
+#: ../applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"Öst\n"
+"Väst"
+
+#: ../applets/clock/clock.glade.h:12
+msgid "Find _Next"
+msgstr "Sök _nästa"
+
+#: ../applets/clock/clock.glade.h:13
+msgid "Find..."
+msgstr "Sök..."
+
+#: ../applets/clock/clock.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "Allmänt"
+
+#: ../applets/clock/clock.glade.h:15
+msgid "Latitude:"
+msgstr "Latitud:"
+
+#: ../applets/clock/clock.glade.h:16
+msgid "Location Name:"
+msgstr "Platsens namn:"
+
+#: ../applets/clock/clock.glade.h:18
+msgid "Longitude:"
+msgstr "Longitud:"
+
+#: ../applets/clock/clock.glade.h:19
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"Nord\n"
+"Syd"
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Show _seconds"
+msgstr "Visa _sekunder"
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Show _temperature"
+msgstr "Visa _temperatur"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Show _weather"
+msgstr "Visa _väder"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Show the _date"
+msgstr "Visa _datumet"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Time Settings"
+msgstr "Tidsinställningar"
+
+#: ../applets/clock/clock.glade.h:27
+msgid "Time:"
+msgstr "Tid:"
+
+#: ../applets/clock/clock.glade.h:28
+msgid "Timezone:"
+msgstr "Tidszon:"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "Weather"
+msgstr "Väder"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "_Find:"
+msgstr "_Sök:"
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Pressure unit:"
+msgstr "Enhet för _lufttryck:"
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Temperature unit:"
+msgstr "_Temperaturenhet:"
+
+#: ../applets/clock/clock.glade.h:33
+msgid "_Visibility unit:"
+msgstr "_Siktenhet:"
+
+#: ../applets/clock/clock.glade.h:34
+msgid "_Wind speed unit:"
+msgstr "Enhet för _vindhastighet:"
+
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
 #. or 12 hour mode by default. The only valid values for this are "24-hour" and
@@ -305,8 +441,8 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
-msgid "A list of timezone IDs. Each ID identifies an individual timezone. The settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
-msgstr "En lista med tidszons-id. Varje id identifierar en individuell tidszon. Inställningarna för dessa tidszoner lagras i nycklarna $(id)_name och $(id)_zone."
+msgid "A list of locations to display in the calendar window."
+msgstr "En lista över platser att visa i kalenderfönstret."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -321,128 +457,183 @@ msgid "Expand list of birthdays"
 msgstr "Fäll ut listan över födelsedagar"
 
 #: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "Fäll ut listan över platser"
+
+#: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
 msgstr "Fäll ut listan över uppgifter"
 
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:18
 msgid "Expand list of weather information"
 msgstr "Fäll ut listan över väderinformation"
 
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "Timformat"
 
-#: ../applets/clock/clock.schemas.in.h:19
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "Om detta är sant visas en väderikon."
+
+#: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Om detta är sant visas datum i klockan, utöver tiden."
 
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
 msgstr "Om detta är sant visas sekunder i tiden."
 
-#: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr "Om detta är sant visas tidszonsknappen i klockan, i tillägg till tiden."
-
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Om detta är sant visas tid i koordinerad universaltid (UTC)."
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr "Om detta är sant fälls listan över möten ut i kalenderfönstret."
 
-#: ../applets/clock/clock.schemas.in.h:24
+#: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr "Om detta är sant fälls listan över födelsedagar ut i kalenderfönstret."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "Om detta är sant fälls listan över platser ut i kalenderfönstret."
+
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "Om detta är sant fälls listan över uppgifter ut i kalenderfönstret."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr "Om detta är sant fälls listan över väderinformation ut i kalendervyn."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "Om detta är sant visas datum i ett verktygstips när muspekaren är över klockan."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Om detta är sant visas temperaturen bredvid väderikonen."
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "Om detta är sant visas veckonummer i kalendern."
 
-#: ../applets/clock/clock.schemas.in.h:29
-msgid "Name of the timezone"
-msgstr "Namn på tidszonen"
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "List of locations"
+msgstr "Lista över platser"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "Visa datum i klockan"
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "Visa datum som verktygstips"
 
-#: ../applets/clock/clock.schemas.in.h:32
-msgid "Show the timezone button"
-msgstr "Visa tidszonsknappen"
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show temperature in clock"
+msgstr "Visa temperatur i klockan"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "Visa tid med sekunder"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show weather in clock"
+msgstr "Visa väder i klockan"
+
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "Visa veckonummer i kalendern"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "Hastighetsenhet"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "Temperaturenhet"
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "Enheten att använda vid visning av temperaturer."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "Enheten att använda vid visning av vindhastighet."
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
 msgstr "Användandet av denna nyckel föråldrades i GNOME 2.6 till förmån för nyckeln \"format\". Schemat har behållits för kompatibilitet med äldre versioner."
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:44
 msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information."
 msgstr "Denna nyckel anger formatet som används av klockpanelprogrammet då formatnyckeln är inställd till \"custom\". Du kan använda de konverteringsspecifierare som förstås av strftime() för att få ett specifikt format. Se manualsidan för strftime() för mer information."
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:45
 msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display Internet time. The Internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
 msgstr "Denna nyckel anger timformatet som används av klockpanelprogrammet. Möjliga värden är \"12-hour\" (12-timmars), \"24-hour\" (24-timmars), \"internet\", \"unix\" och \"custom\" (anpassat). Om detta är satt till \"internet\" kommer klockan att visa Internettid. Internettidssystemet delar in dagen i 1000 \".beats\" (slag). Det finns inga tidszoner i detta system, så tiden är densamma i hela världen. Om detta är satt till \"unix\" kommer klockan att visa tiden i sekunder sedan epoken, dvs. 1970-01-01. Om detta är satt till \"custom\" kommer klockan att visa tiden enligt det format som är angivet i nyckeln custom_format."
 
-#: ../applets/clock/clock.schemas.in.h:38
-msgid "This key specifies the name of the timezone as can be used in the TZ environment variable."
-msgstr "Denna nyckel anger namnet på tidszonen som kan användas i miljövariabeln TZ."
-
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Denna nyckel anger programmet som ska köras för att konfigurera tiden."
 
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "This key specifies the user-visible name of the timezone."
-msgstr "Denna nyckel anger det användarsynliga namnet på tidszonen."
-
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "Tidskonfigurationsverktyg"
 
-#: ../applets/clock/clock.schemas.in.h:42
-msgid "Timezone ID list"
-msgstr "Lista med tidszons-id"
-
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "Använd Internettid"
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "Använd UNIX-tid"
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "Använd UTC"
 
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "User-visible name of the timezone"
-msgstr "Användarsynligt namn på tidszonen"
+#. make a fake location with a null TZ
+#. make a fake location with the current TZ
+#: ../applets/clock/clock-location.c:356
+#: ../applets/clock/clock-location.c:363
+msgid "Unknown Location"
+msgstr "Okänd plats"
+
+#: ../applets/clock/clock-location-tile.c:198
+msgid "Failed to set the system timezone"
+msgstr "Misslyckades med att ställa in systemets tidszon"
+
+#: ../applets/clock/clock-location-tile.c:223
+msgid "<small>Set...</small>"
+msgstr "<small>Ställ in...</small>"
+
+#: ../applets/clock/clock-location-tile.c:224
+msgid "<small>Set</small>"
+msgstr "<small>Ställ in</small>"
+
+#: ../applets/clock/clock-location-tile.c:285
+msgid "Set as current timezone for this computer"
+msgstr "Ställ in som aktuell tidszon för denna dator"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:478
+#: ../applets/clock/clock-location-tile.c:484
+msgid "Unknown"
+msgstr "Okänt"
+
+#: ../applets/clock/clock-location-tile.c:479
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, känns som %s"
+
+#: ../applets/clock/clock-location-tile.c:489
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Soluppgång: %s / Solnedgång: %s"
 
 #: ../applets/clock/clock-utils.c:72
 #: ../applets/fish/fish.c:160
@@ -656,7 +847,6 @@ msgid "%s the Fish, the fortune teller"
 msgstr "Fisken %s, siaren"
 
 #: ../applets/fish/fish.glade.h:1
-#: ../applets/wncklet/window-list.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -852,47 +1042,47 @@ msgstr "Din fönsterhanterare stöder inte knappen för att visa skrivbordet, el
 msgid "The Window List shows a list of all windows in a set of buttons and lets you browse them."
 msgstr "Fönsterlistan visar en lista med alla fönster i en samling knappar och låter dig bläddra bland dem."
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>Återställer minimerade fönster</b>"
 
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>Fönstergruppering</b>"
 
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>Innehåll i fönsterlista</b>"
 
-#: ../applets/wncklet/window-list.glade.h:5
+#: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
 msgstr "Gruppera fönster då _utrymmet är begränsat"
 
-#: ../applets/wncklet/window-list.glade.h:6
+#: ../applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
 msgstr "Återställ på aktuell arbets_yta"
 
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
 msgstr "Återställ på u_rsprunglig arbetsyta"
 
-#: ../applets/wncklet/window-list.glade.h:8
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
 msgstr "V_isa fönster från aktuell arbetsyta"
 
-#: ../applets/wncklet/window-list.glade.h:9
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "Visa fönster från a_lla arbetsytor"
 
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "Inställningar för fönsterlista"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "_Gruppera alltid fönster"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "Gruppera al_drig fönster"
 
@@ -2087,10 +2277,6 @@ msgstr "F_ärg:"
 msgid "E_xpand"
 msgstr "F_äll ut"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "Allmänt"
-
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
 msgstr "Bildbakgrundsdetaljer"
@@ -2812,6 +2998,44 @@ msgstr "_Panelprogram:"
 msgid "_Prefs Dir:"
 msgstr "_Inställningskatalog:"
 
+#~ msgid "%A %B %d"
+#~ msgstr "%A %d %B"
+#~ msgid "Click to view time in other timezones"
+#~ msgstr "Klicka för att visa tid i andra tidszoner"
+#~ msgid "Clock _type:"
+#~ msgstr "_Typ av klocka:"
+#~ msgid "12 hour"
+#~ msgstr "12-timmars"
+#~ msgid "Use _UTC"
+#~ msgstr "Använd UT_C"
+#~ msgid "Show multiple _timezones"
+#~ msgstr "Visa flera _tidszoner"
+#~ msgid ""
+#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
+#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
+#~ "keys."
+#~ msgstr ""
+#~ "En lista med tidszons-id. Varje id identifierar en individuell tidszon. "
+#~ "Inställningarna för dessa tidszoner lagras i nycklarna $(id)_name och "
+#~ "$(id)_zone."
+#~ msgid ""
+#~ "If true, display the timezone button in the clock, in addition to time."
+#~ msgstr ""
+#~ "Om detta är sant visas tidszonsknappen i klockan, i tillägg till tiden."
+#~ msgid "Show the timezone button"
+#~ msgstr "Visa tidszonsknappen"
+#~ msgid ""
+#~ "This key specifies the name of the timezone as can be used in the TZ "
+#~ "environment variable."
+#~ msgstr ""
+#~ "Denna nyckel anger namnet på tidszonen som kan användas i miljövariabeln "
+#~ "TZ."
+#~ msgid "This key specifies the user-visible name of the timezone."
+#~ msgstr "Denna nyckel anger det användarsynliga namnet på tidszonen."
+#~ msgid "Timezone ID list"
+#~ msgstr "Lista med tidszons-id"
+#~ msgid "User-visible name of the timezone"
+#~ msgstr "Användarsynligt namn på tidszonen"
 #~ msgid "<b>Window List Size</b>"
 #~ msgstr "<b>Fönsterlistestorlek</b>"
 #~ msgid "Behavior"
