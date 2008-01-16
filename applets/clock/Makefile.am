@@ -139,7 +139,7 @@ gnome_clock_applet_mechanism_SOURCES =		\
 	gnome-clock-applet-mechanism-main.c
 
 if HAVE_POLKIT
-BUILT_SOURCES += gnome-clock-applet-mechanism.h
+BUILT_SOURCES += gnome-clock-applet-mechanism-glue.h
 endif
 
 gnome_clock_applet_mechanism_INCLUDES =	\
