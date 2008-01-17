@@ -240,9 +240,9 @@ EXTRA_DIST =						\
 	$(ui_DATA)					\
 	$(glade_DATA)					\
 	clock-marshallers.list				\
-	$(dbus_services_DATA_in)                        \
-	$(dbus_conf_DATA)                               \
-	$(polkit_DATA)                                  \
+	org.gnome.ClockApplet.Mechanism.service.in	\
+	org.gnome.ClockApplet.Mechanism.conf		\
+	gnome-clock-applet-mechanism.policy		\
 	gnome-clock-applet-mechanism.xml
 
 CLEANFILES =			\

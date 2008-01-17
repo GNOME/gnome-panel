@@ -1,3 +1,9 @@
+2008-01-16  Matthias Clasen <mclasen@redhat.com>
+
+	* Makefile.am (EXTRA_DIST): This must not depend on 
+	HAVE_POLKIT unless the maintainer remembers to only ever
+	distcheck on systems with a new enough PolicyKit.
+
 2008-01-16  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* Makefile.am: Fix a typo that broke the build.
