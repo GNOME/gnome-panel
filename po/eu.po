@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-08 18:37+0100\n"
-"PO-Revision-Date: 2008-01-08 18:33+0100\n"
+"POT-Creation-Date: 2008-01-18 19:25+0100\n"
+"PO-Revision-Date: 2008-01-18 19:27+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "Kopiatu _ordua"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About"
-msgstr "_Honi buruz"
+msgstr "Honi _buruz"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:5
 #: ../applets/fish/GNOME_FishApplet.xml.h:2
@@ -62,7 +62,7 @@ msgid "_Preferences"
 msgstr "_Hobespenak"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2234
+#: ../applets/clock/clock.c:4056
 msgid "Clock"
 msgstr "Erlojua"
 
@@ -78,51 +78,61 @@ msgstr "Erlojuen applet-ak sortzeko fabrika."
 msgid "Get the current time and date"
 msgstr "Hartu uneko data eta ordua"
 
-#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.c:347
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:420
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/calendar-window.c:228 ../applets/clock/clock.c:349
-#: ../applets/clock/clock.c:1256
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:422
+#: ../applets/clock/clock.c:1550
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: ../applets/clock/calendar-window.c:234
+#: ../applets/clock/calendar-window.c:250
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:742
-msgid "_Tasks"
-msgstr "_Zereginak"
+#: ../applets/clock/calendar-window.c:765
+msgid "Tasks"
+msgstr "Zereginak"
 
-#: ../applets/clock/calendar-window.c:858
+#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:938
+#: ../applets/clock/calendar-window.c:1552
+msgid "Edit"
+msgstr "Editatu"
+
+#: ../applets/clock/calendar-window.c:883
 msgid "All Day"
 msgstr "Egun osoa"
 
-#: ../applets/clock/calendar-window.c:985
-msgid "_Appointments"
-msgstr "_Hitzorduak"
+#: ../applets/clock/calendar-window.c:1019
+msgid "Appointments"
+msgstr "Hitzorduak"
 
-#: ../applets/clock/calendar-window.c:1002
-msgid "_Birthdays and Anniversaries"
-msgstr "_Urtebetetzeak eta urteurrenak"
+#: ../applets/clock/calendar-window.c:1044
+msgid "Birthdays and Anniversaries"
+msgstr "Urtebetetzeak eta urteurrenak"
 
-#: ../applets/clock/calendar-window.c:1018
-msgid "_Weather Information"
-msgstr "_Eguraldiaren informazioa"
+#: ../applets/clock/calendar-window.c:1069
+msgid "Weather Information"
+msgstr "Eguraldiaren informazioa"
 
-#: ../applets/clock/calendar-window.c:1687
+#: ../applets/clock/calendar-window.c:1552 ../applets/clock/clock.glade.h:17
+msgid "Locations"
+msgstr "Kokalekuak"
+
+#: ../applets/clock/calendar-window.c:1848
 msgid "Calendar"
 msgstr "Egutegia"
 
-#: ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:420
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:349 ../applets/clock/clock.c:1254
+#: ../applets/clock/clock.c:422 ../applets/clock/clock.c:1548
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -131,7 +141,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:369
+#: ../applets/clock/clock.c:442
 msgid "%a %b %e"
 msgstr "%a, %b %d"
 
@@ -139,7 +149,7 @@ msgstr "%a, %b %d"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:449
 #, c-format
 msgid ""
 "%1$s\n"
@@ -152,119 +162,115 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:384
+#: ../applets/clock/clock.c:457
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip
-#: ../applets/clock/clock.c:527
-msgid "%A %B %d"
-msgstr "%A, %B %d"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:639
+msgid "%A %B %d (%%s)"
+msgstr "%A, %B %d (%%s)"
 
-#: ../applets/clock/clock.c:541
+#: ../applets/clock/clock.c:669
 msgid "Click to hide your appointments and tasks"
 msgstr "Egin klik hitzorduak eta zereginak ezkutatzeko"
 
-#: ../applets/clock/clock.c:544
+#: ../applets/clock/clock.c:672
 msgid "Click to view your appointments and tasks"
 msgstr "Egin klik hitzorduak eta zereginak ikusteko"
 
-#: ../applets/clock/clock.c:548
+#: ../applets/clock/clock.c:676
 msgid "Click to hide month calendar"
 msgstr "Egin klik hileko egutegia ezkutatzeko"
 
-#: ../applets/clock/clock.c:551
+#: ../applets/clock/clock.c:679
 msgid "Click to view month calendar"
 msgstr "Egin klik hileko egutegia ikusteko"
 
-#: ../applets/clock/clock.c:1095
-msgid "Click to view time in other timezones"
-msgstr "Egin klik ordua beste ordu-zonatan ikusteko"
-
-#: ../applets/clock/clock.c:1102
+#: ../applets/clock/clock.c:1400
 msgid "Computer Clock"
 msgstr "Ordenagailuaren erlojua"
 
-#: ../applets/clock/clock.c:1249
+#: ../applets/clock/clock.c:1543
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1251
+#: ../applets/clock/clock.c:1545
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1293
+#: ../applets/clock/clock.c:1587
 msgid "%A, %B %d %Y"
 msgstr "%A, %Y %B %d"
 
-#: ../applets/clock/clock.c:1368
+#: ../applets/clock/clock.c:1662
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Huts egin du ordua konfiguratzeko tresna abiaraztean: %s"
 
-#: ../applets/clock/clock.c:1406
+#: ../applets/clock/clock.c:1691
+msgid "Set System Time..."
+msgstr "Ezarri sistemako ordua..."
+
+#: ../applets/clock/clock.c:1692 ../applets/clock/clock.glade.h:21
+msgid "Set System Time"
+msgstr "Ezarri sistemako ordua"
+
+#: ../applets/clock/clock.c:1706
+msgid "Failed to set the system time"
+msgstr "Huts egin du sistemako ordua ezartzean"
+
+#: ../applets/clock/clock.c:1879
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
-"Ezin izan da data eta ordua konfiguratzeko programarik aurkitu. Ez daukazu "
-"bat ere instalatuta?"
+"Huts egin du data eta ordua konfiguratzeko programa aurkitzean. Agian ez "
+"dago instalatuta?"
 
-#: ../applets/clock/clock.c:1917
+#: ../applets/clock/clock.c:2698
 msgid "Custom format"
 msgstr "Formatu pertsonalizatua"
 
-#: ../applets/clock/clock.c:2064
-msgid "Clock Preferences"
-msgstr "Erlojuaren hobespenak"
+#: ../applets/clock/clock.c:3498 ../applets/clock/clock-location.c:373
+#: ../applets/clock/clock-location-tile.c:468
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:2089
-msgid "Clock _type:"
-msgstr "Erloju-_mota:"
+#: ../applets/clock/clock.c:3757
+msgid "City Name"
+msgstr "Herriaren izena"
 
-#: ../applets/clock/clock.c:2100
-msgid "12 hour"
-msgstr "12 ordu"
+#: ../applets/clock/clock.c:3761
+msgid "City Time Zone"
+msgstr "Herriaren ordu-zona"
 
-#: ../applets/clock/clock.c:2101
+#: ../applets/clock/clock.c:3952
 msgid "24 hour"
 msgstr "24 ordu"
 
-#: ../applets/clock/clock.c:2102
+#: ../applets/clock/clock.c:3953
 msgid "UNIX time"
 msgstr "UNIX ordua"
 
-#: ../applets/clock/clock.c:2103
+#: ../applets/clock/clock.c:3954
 msgid "Internet time"
 msgstr "Interneteko ordua"
 
-#: ../applets/clock/clock.c:2111
+#: ../applets/clock/clock.c:3962
 msgid "Custom _format:"
 msgstr "_Formatu pertsonalizatua"
 
-#: ../applets/clock/clock.c:2130
-msgid "Show _seconds"
-msgstr "Erakutsi _segundoak"
-
-#: ../applets/clock/clock.c:2139
-msgid "Show _date"
-msgstr "Erakutsi _data"
-
-#: ../applets/clock/clock.c:2148
-msgid "Use _UTC"
-msgstr "Erabili _UTC"
-
-#: ../applets/clock/clock.c:2158
-msgid "Show multiple _timezones"
-msgstr "Erakutsi _hainbat ordu-zona"
-
-#: ../applets/clock/clock.c:2237
+#: ../applets/clock/clock.c:4059
 msgid "The Clock displays the current time and date"
 msgstr "Uneko data eta ordua erakusten ditu erlojuak"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2240 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4062 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -274,6 +280,135 @@ msgid "translator-credits"
 msgstr ""
 "Hizkuntza Politikarako Sailburuordetza <hizkpol@ej-gv.es>\n"
 "Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>"
+
+#: ../applets/clock/clock.glade.h:1
+msgid "12 _hour format"
+msgstr "12 _orduko formatua"
+
+#: ../applets/clock/clock.glade.h:2
+msgid "24 h_our format"
+msgstr "24 o_rduko formatua"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Clock Options</b>"
+msgstr "<b>Ordulariaren aukerak:</b> %s"
+
+#: ../applets/clock/clock.glade.h:4
+msgid "<b>Display</b>"
+msgstr "<b>Pantaila</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<b>Panel Display</b>"
+msgstr "<b>Panela bistaratzea</b>"
+
+#: ../applets/clock/clock.glade.h:6
+msgid "<b>Time Settings</b>"
+msgstr "<b>Orduaren ezarpenak</b>"
+
+#: ../applets/clock/clock.glade.h:7
+msgid "<i>(optional)</i>"
+msgstr "<i>(aukerakoa)</i>"
+
+#: ../applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "Erlojuaren hobespenak"
+
+#: ../applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr "Uneko ordua:"
+
+#: ../applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"Ekialdea\n"
+"Mendebaldea"
+
+#: ../applets/clock/clock.glade.h:12
+msgid "Find _Next"
+msgstr "Bilatu _hurrengoa"
+
+#: ../applets/clock/clock.glade.h:13
+msgid "Find..."
+msgstr "Bilatu..."
+
+#: ../applets/clock/clock.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "Orokorra"
+
+#: ../applets/clock/clock.glade.h:15
+msgid "Latitude:"
+msgstr "Latitudea:"
+
+#: ../applets/clock/clock.glade.h:16
+msgid "Location Name:"
+msgstr "Kokalekuaren izena:"
+
+#: ../applets/clock/clock.glade.h:18
+msgid "Longitude:"
+msgstr "Longitudea:"
+
+#: ../applets/clock/clock.glade.h:19
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"Iparraldea\n"
+"Hegoaldea"
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Show _seconds"
+msgstr "Erakutsi _segundoak"
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Show _temperature"
+msgstr "Erakutsi _tenperatura"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Show _weather"
+msgstr "Erakutsi _eguraldia"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Show the _date"
+msgstr "Erakutsi _data"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Time Settings"
+msgstr "Orduaren ezarpenak"
+
+#: ../applets/clock/clock.glade.h:27
+msgid "Time:"
+msgstr "Ordua:"
+
+#: ../applets/clock/clock.glade.h:28
+msgid "Timezone:"
+msgstr "Ordu-zona:"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "Weather"
+msgstr "Eguraldia"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "_Find:"
+msgstr "_Bilatu:"
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Pressure unit:"
+msgstr "_Presio-unitatea:"
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Temperature unit:"
+msgstr "_Tenperatura unitatea:"
+
+#: ../applets/clock/clock.glade.h:33
+msgid "_Visibility unit:"
+msgstr "_Ikusgaitasun-unitatea:"
+
+#: ../applets/clock/clock.glade.h:34
+msgid "_Wind speed unit:"
+msgstr "_Haizearen abiadura-unitatea:"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -290,13 +425,8 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
-msgid ""
-"A list of timezone IDs. Each ID identifies an individual timezone. The "
-"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
-msgstr ""
-"Ordu-zonen zerrenda. ID bakoitzak ordu-zona bat identifikatzen du. Ordu-zona "
-"horietako bakoitzaren ezarpenak $(id)_name eta $(id)_zone gakoetan gordetzen "
-"dira."
+msgid "A list of locations to display in the calendar window."
+msgstr "Kokalekuen zerrenda egutegiaren leihoan bistaratzeko."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -311,88 +441,119 @@ msgid "Expand list of birthdays"
 msgstr "Zabaldu urtebetetzeen zerrenda"
 
 #: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "Zabaldu kokalekuen zerrenda"
+
+#: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
 msgstr "Zabaldu zereginen zerrenda"
 
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:18
 msgid "Expand list of weather information"
 msgstr "Zabaldu eguraldiaren informazioaren zerrenda"
 
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "Ordu-formatua"
 
-#: ../applets/clock/clock.schemas.in.h:19
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "Egia bada, eguraldiaren ikonoa bistaratzen du."
+
+#: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Ezarrita badago, orduaz gain data ere erakusten du."
 
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
 msgstr "Ezarrita badago, segundoak erakusten ditu orduan."
 
-#: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr ""
-"Egia bada, orduaz gain ordu-zonaren botoia ete erakusten du ordularian."
-
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr ""
 "Ezarrita badago, UCT (Universal Coordinated Time) zonako ordua erakusten du."
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr "Egia bada, hitzorduen zerrenda egutegiaren leihoan zabaltzen du."
 
-#: ../applets/clock/clock.schemas.in.h:24
+#: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr "Egia bada, urtebetetzeen zerrenda egutegiaren leihoan zabaltzen du."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "Egia bada, kokalekuen zerrenda egutegiaren leihoan zabaltzen du."
+
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "Egia bada, zereginen zerrenda egutegiaren leihoan zabaltzen du."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr ""
 "Egia bada, eguraldiaren informazioaren zerrenda egutegiaren leihoan "
 "zabaltzen du."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Ezarrita badago, data argibide gisa erakusten du erakuslea erlojuan "
 "dagoenean."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Egia bada, tenperatura eguraldiaren ikonotik gertu erakusten du."
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "Egia bada, asteko zenbakiak egutegian erakusten ditu."
 
-#: ../applets/clock/clock.schemas.in.h:29
-msgid "Name of the timezone"
-msgstr "Ordu-zonaren izena"
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "List of locations"
+msgstr "Kokalekuen zerrenda"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "Erakutsi data erlojuan"
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "Erakutsi data argibide moduan"
 
-#: ../applets/clock/clock.schemas.in.h:32
-msgid "Show the timezone button"
-msgstr "Erakutsi ordu-zonaren botoia"
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show temperature in clock"
+msgstr "Erakutsi tenperatura ordularian"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "Erakutsi ordua segundoekin"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show weather in clock"
+msgstr "Erakutsi eguraldia ordularian"
+
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "Erakutsi asteko zenbakiak egutegian"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "Abiadura-unitateak"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "Tenperatura-unitatea"
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "Tenperaturak erakustean erabiliko den unitatea."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "Haizearen abiadura erakusteko erabiliko diren unitateak."
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -401,7 +562,7 @@ msgstr ""
 "giltzaren alde. Eskema hau bertsio zaharkituekin parekotasuna mantentzeko "
 "jarraitzen da."
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:44
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -413,7 +574,7 @@ msgstr ""
 "dituen bihurtzaile bereziak erabil dezakezu formatu berezi bat lortzeko. "
 "Ikus strftime()-en eskuliburua xehetasun gehiagorako."
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -434,45 +595,63 @@ msgstr ""
 "aukeratuz ordua \"custom_format\" giltzan zehaztutakoaren arabera "
 "bistaratuko du."
 
-#: ../applets/clock/clock.schemas.in.h:38
-msgid ""
-"This key specifies the name of the timezone as can be used in the TZ "
-"environment variable."
-msgstr ""
-"Gako honek ordu-zonaren izena zehazten du, inguruneko TZ aldagaian "
-"erabiltzeko."
-
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Gako honek ordua konfiguratzeko exekutatuko den programa zehazten du."
 
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "This key specifies the user-visible name of the timezone."
-msgstr "Gako honek ordu-zonaren izen ikusgaia zehazten du."
-
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "Ordua konfiguratzeko tresna"
 
-#: ../applets/clock/clock.schemas.in.h:42
-msgid "Timezone ID list"
-msgstr "Ordu-zonen ID zerrenda"
-
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "Erabili Interneteko ordua"
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "Erabili UNIX ordua"
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "Erabili UTC"
 
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "User-visible name of the timezone"
-msgstr "Ordu-zonaren izen ikusgaia"
+#. make a fake location with a null TZ
+#. make a fake location with the current TZ
+#: ../applets/clock/clock-location.c:356 ../applets/clock/clock-location.c:363
+msgid "Unknown Location"
+msgstr "Kokaleku ezezaguna"
+
+#: ../applets/clock/clock-location-tile.c:198
+msgid "Failed to set the system timezone"
+msgstr "Huts egin du sistemaren ordu-zona ezartzean"
+
+#: ../applets/clock/clock-location-tile.c:223
+msgid "<small>Set...</small>"
+msgstr "<small>Ezarri...</small>"
+
+#: ../applets/clock/clock-location-tile.c:224
+msgid "<small>Set</small>"
+msgstr "<small>Ezarri</small>"
+
+#: ../applets/clock/clock-location-tile.c:285
+msgid "Set as current timezone for this computer"
+msgstr "Ezarri ordenagailuaren uneko ordu-zona gisa"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:478
+#: ../applets/clock/clock-location-tile.c:484
+msgid "Unknown"
+msgstr "Ezezaguna"
+
+#: ../applets/clock/clock-location-tile.c:479
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s. Honakoa dirudi: %s"
+
+#: ../applets/clock/clock-location-tile.c:489
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Eguna argitu: %s / Eguzki-sartzea: %s"
 
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
@@ -2322,10 +2501,6 @@ msgstr "_Kolorea:"
 #: ../gnome-panel/panel-properties-dialog.glade.h:8
 msgid "E_xpand"
 msgstr "Za_baldu"
-
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "Orokorra"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
