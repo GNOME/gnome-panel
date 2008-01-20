@@ -94,10 +94,10 @@ BUILT_SOURCES =					\
 	clock-typebuiltins.h
 
 clock-marshallers.c: clock-marshallers.list
-	glib-genmarshal --prefix _clock_marshal --body $< > $@
+	glib-genmarshal --prefix _clock_marshal --header --body --internal $< > $@
 
 clock-marshallers.h: clock-marshallers.list
-	glib-genmarshal --prefix _clock_marshal --header $< > $@
+	glib-genmarshal --prefix _clock_marshal --header --internal $< > $@
 
 clock_enum_headers =					\
 	$(top_srcdir)/applets/clock/clock-utils.h
