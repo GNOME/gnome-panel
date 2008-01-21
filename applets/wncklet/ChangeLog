@@ -1,3 +1,9 @@
+2008-01-21  Vincent Untz  <vuntz@gnome.org>
+
+	* workspace-switcher.c: (workspace_switcher_applet_fill): call
+	pager_update() a bit later, else the set_orientation() or set_n_rows()
+	calls can fail
+
 ==================== 2.21.5 ====================
 
 2007-11-13  Christian Persch  <chpe@gnome.org>

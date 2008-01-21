@@ -536,11 +536,14 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (pager->pager), "destroy",
 			  G_CALLBACK (destroy_pager),
 			  pager);
-
-	pager_update (pager);
 	
 	gtk_container_add (GTK_CONTAINER (pager->applet), pager->pager);
 	gtk_widget_show (pager->pager);
+
+	/* we need to call this after the pager has been added to the
+	 * container, else it might not work in some cases in multiscreen
+	 * environments. See wnck_pager_set_orientation() doc */
+	pager_update (pager);
 
 	gtk_widget_show (pager->applet);
 
