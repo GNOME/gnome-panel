@@ -357,7 +357,7 @@ gweather_xml_load_locations( GtkTreeView *tree)
 
   /* Open the xml file containing the different locations */
 #ifdef GWEATHER_XML_LOCATION
-  xml = xmlNewTextReaderFilename (GWEATHER_XML_LOCATION "Locations.xml");
+  xml = xmlNewTextReaderFilename (GWEATHER_XML_LOCATION);
 #else
   xml = xmlNewTextReaderFilename ("/usr/share/gnome-applets/gweather/Locations.xml");
 #endif

@@ -1,5 +1,13 @@
 2008-01-28  Vincent Untz  <vuntz@gnome.org>
 
+	* Makefile.am: define where Locations.xml is (via pkg-config)
+	* gweather-xml.c: (gweather_xml_load_locations): updated for the
+	change
+	Fix bug #509888.
+	Patch by Patryk Zawadzki <patrys@pld-linux.org>
+
+2008-01-28  Vincent Untz  <vuntz@gnome.org>
+
 	* calendar-window.c: (create_hig_frame): fix compilation when there's
 	no eds support. Fix bug #509840.
 	Patch by Saleem Abdulrasool <compnerd@compnerd.org>

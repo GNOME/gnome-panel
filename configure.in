@@ -115,6 +115,9 @@ PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-2.0 >= $GTK_REQUIRED glib
 AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
+LIBGWEATHER_LOCATIONS=`pkg-config --variable=locations_file gweather`
+AC_SUBST(LIBGWEATHER_LOCATIONS)
+
 dnl Hmm, we already checked for these above.  Is there a way to avoid checking twice?
 PKG_CHECK_MODULES(CLOCK_MECHANISM, [ gthread-2.0 dbus-glib-1 ])
 AC_SUBST(CLOCK_MECHANISM_CFLAGS)
