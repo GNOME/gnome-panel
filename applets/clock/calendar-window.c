@@ -1534,7 +1534,9 @@ create_hig_frame (CalendarWindow *calwin,
                 g_signal_connect_swapped (button, "clicked", callback, calwin);
         }
 
+#ifdef HAVE_LIBECAL
 	connect_expander_with_gconf (calwin, expander, key);
+#endif
 
         return vbox;
 }
