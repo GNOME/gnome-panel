@@ -1,5 +1,13 @@
 2008-01-28  Vincent Untz  <vuntz@gnome.org>
 
+	* Makefile.am: updated to intltoolize the policy.in file
+	* gnome-clock-applet-mechanism.policy: moved...
+	* gnome-clock-applet-mechanism.policy.in: ... here, and mark strings
+	as translatable
+	Fix bug #510635. Patch by Luca Ferretti <elle.uca@libero.it>
+
+2008-01-28  Vincent Untz  <vuntz@gnome.org>
+
 	* Makefile.am: define where Locations.xml is (via pkg-config)
 	* gweather-xml.c: (gweather_xml_load_locations): updated for the
 	change

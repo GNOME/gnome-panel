@@ -228,6 +228,8 @@ $(dbus_services_DATA): $(dbus_services_DATA:.service=.service.in)
 	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
 
 dbus_conf_DATA = org.gnome.ClockApplet.Mechanism.conf
+
+@INTLTOOL_POLICY_RULE@
 polkit_DATA = gnome-clock-applet-mechanism.policy
 else
 dbus_services_DATA =
@@ -243,7 +245,7 @@ EXTRA_DIST =						\
 	clock-marshallers.list				\
 	org.gnome.ClockApplet.Mechanism.service.in	\
 	org.gnome.ClockApplet.Mechanism.conf		\
-	gnome-clock-applet-mechanism.policy		\
+	gnome-clock-applet-mechanism.policy.in		\
 	gnome-clock-applet-mechanism.xml
 
 CLEANFILES =			\
@@ -251,4 +253,5 @@ CLEANFILES =			\
 	$(server_in_files)	\
 	$(server_DATA)		\
 	$(schemas_DATA)		\
+	$(polkit_DATA)		\
 	$(dbus_services_DATA)
