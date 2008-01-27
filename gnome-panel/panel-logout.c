@@ -261,7 +261,7 @@ panel_logout_timeout (gpointer data)
 	}
 
 	name = g_get_real_name ();
-	if (!name || name[0] == '\0')
+	if (!name || name[0] == '\0' || strcmp (name, "Unknown") == 0)
 		name = g_get_user_name ();
 
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (logout_dialog),
