@@ -3,13 +3,11 @@
  "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
  "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
 
-<!-- needs i18n work -->
-
 <policyconfig>
 
   <action id="org.gnome.clockapplet.mechanism.settimezone">
     <_description>Change system time zone</_description>
-    <_message>Changing the system time zone requires privileges.</_message>
+    <_message>Privileges are required to change the system time zone.</_message>
     <defaults>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_self_keep_always</allow_active>
@@ -18,7 +16,7 @@
 
   <action id="org.gnome.clockapplet.mechanism.settime">
     <_description>Change system time</_description>
-    <_message>Changing the system time requires privileges.</_message>
+    <_message>Privileges are required to change the system time.</_message>
     <defaults>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_self_keep_always</allow_active>
@@ -27,7 +25,7 @@
 
   <action id="org.gnome.clockapplet.mechanism.configurehwclock">
     <_description>Configure hardware clock</_description>
-    <_message>Configuring the hardware clock requires privileges.</_message>
+    <_message>Privileges are required to configure the hardware clock.</_message>
     <defaults>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_self_keep_always</allow_active>
