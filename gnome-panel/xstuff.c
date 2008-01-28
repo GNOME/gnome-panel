@@ -93,18 +93,18 @@ get_typed_property_data (Display *xdisplay,
       requested_type != AnyPropertyType &&
       requested_type != type_returned)
     {
-      g_warning (G_GNUC_PRETTY_FUNCTION "(): Property has wrong type, probably on crack");
+      g_warning (G_STRFUNC "(): Property has wrong type, probably on crack");
       abort++;
     }
   if (!abort && bytes_after_return)
     {
-      g_warning (G_GNUC_PRETTY_FUNCTION "(): Eeek, property has more than %u bytes, stored on harddisk?",
+      g_warning (G_STRFUNC "(): Eeek, property has more than %u bytes, stored on harddisk?",
 		 prop_buffer_lengh);
       abort++;
     }
   if (!abort && expected_format && expected_format != format_returned)
     {
-      g_warning (G_GNUC_PRETTY_FUNCTION "(): Expected format (%u) unmatched (%d), programmer was drunk?",
+      g_warning (G_STRFUNC "(): Expected format (%u) unmatched (%d), programmer was drunk?",
 		 expected_format, format_returned);
       abort++;
     }
