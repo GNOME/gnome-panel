@@ -2,14 +2,14 @@
 # Copyright (C) 1997-2006 Free Software Foundation, Inc.
 # Christopher R. Gabriel <cgabriel@pluto.linux.it>
 # Alessio Frusciante <algol@firenze.linux.it>, 2003
-# Luca Ferretti <elle.uca@libero.it>, 2003-2007
+# Luca Ferretti <elle.uca@libero.it>, 2003-2008
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.19.x\n"
+"Project-Id-Version: gnome-panel 2.21.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-15 09:14+0100\n"
-"PO-Revision-Date: 2008-01-15 09:31+0100\n"
+"POT-Creation-Date: 2008-01-28 17:22+0100\n"
+"PO-Revision-Date: 2008-01-28 17:49+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italiano <tp@list.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -100,7 +100,7 @@ msgstr "Compiti"
 # GNOME-2-22
 #: ../applets/clock/calendar-window.c:765
 #: ../applets/clock/calendar-window.c:938
-#: ../applets/clock/calendar-window.c:1552
+#: ../applets/clock/calendar-window.c:1554
 msgid "Edit"
 msgstr "Modifica"
 
@@ -124,11 +124,11 @@ msgid "Weather Information"
 msgstr "Informazioni meteo"
 
 # GNOME-2-22
-#: ../applets/clock/calendar-window.c:1552 ../applets/clock/clock.glade.h:17
+#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
 msgid "Locations"
 msgstr "Località"
 
-#: ../applets/clock/calendar-window.c:1848
+#: ../applets/clock/calendar-window.c:1850
 msgid "Calendar"
 msgstr "Calendario"
 
@@ -216,17 +216,20 @@ msgstr "%A, %-d %B %Y"
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Lancio dello strumento di configurazione dell'orario fallito: %s"
 
+# GNOME-2-22
 #: ../applets/clock/clock.c:1691
 msgid "Set System Time..."
-msgstr ""
+msgstr "Imposta ora sistema..."
 
+# GNOME-2-22
 #: ../applets/clock/clock.c:1692 ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
-msgstr ""
+msgstr "Imposta ora sistema"
 
+# GNOME-2-22
 #: ../applets/clock/clock.c:1706
 msgid "Failed to set the system time"
-msgstr ""
+msgstr "Impostazione dell'ora del sistema fallita"
 
 #: ../applets/clock/clock.c:1879
 msgid ""
@@ -282,7 +285,7 @@ msgstr "Orologio mostra l'ora e la data correnti"
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:617
+#: ../applets/wncklet/workspace-switcher.c:620
 #: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr ""
@@ -307,13 +310,17 @@ msgstr "Formato 24 o_re"
 msgid "<b>Clock Options</b>"
 msgstr "<b>Opzioni orologio</b>"
 
+# GNOME-2-22
+# infedele, ma funzionale nell'uso
 #: ../applets/clock/clock.glade.h:4
 msgid "<b>Display</b>"
-msgstr ""
+msgstr "<b>Visualizzazione</b>"
 
+# GNOME-2-22
+# infedele, ma funzionale nell'uso
 #: ../applets/clock/clock.glade.h:5
 msgid "<b>Panel Display</b>"
-msgstr ""
+msgstr "<b>Visibili sul pannello</b>"
 
 # GNOME-2-22
 #: ../applets/clock/clock.glade.h:6
@@ -382,19 +389,20 @@ msgstr ""
 "Nord\n"
 "Sud"
 
-#: ../applets/clock/clock.glade.h:22
-msgid "Show _seconds"
-msgstr "Mostrare i _secondi"
-
 # GNOME-2-22
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.glade.h:22
 msgid "Show _temperature"
 msgstr "Mostrare la _temperatura"
 
 # GNOME-2-22
-#: ../applets/clock/clock.glade.h:24
+#: ../applets/clock/clock.glade.h:23
 msgid "Show _weather"
 msgstr "Mostrare le condizioni _meteo"
+
+# GNOME-2-22
+#: ../applets/clock/clock.glade.h:24
+msgid "Show seco_nds"
+msgstr "Mostrare i _secondi"
 
 # GNOME-2-22
 #: ../applets/clock/clock.glade.h:25
@@ -408,38 +416,48 @@ msgstr "Impostazioni orario"
 
 # GNOME-2-22
 #: ../applets/clock/clock.glade.h:27
+msgid "Time _Settings"
+msgstr "Imposta_zioni orario"
+
+# GNOME-2-22
+#: ../applets/clock/clock.glade.h:28
 msgid "Time:"
 msgstr "Ora:"
 
 # GNOME-2-22
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.glade.h:29
 msgid "Timezone:"
 msgstr "Fuso orario:"
 
 # GNOME-2-22
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.glade.h:30
 msgid "Weather"
 msgstr "Condizioni meteo"
 
-#: ../applets/clock/clock.glade.h:30
-msgid "_Find:"
-msgstr ""
-
+# GNOME-2-22
 #: ../applets/clock/clock.glade.h:31
-msgid "_Pressure unit:"
-msgstr ""
+msgid "_Find:"
+msgstr "Tr_ova:"
 
+# GNOME-2-22
 #: ../applets/clock/clock.glade.h:32
-msgid "_Temperature unit:"
-msgstr ""
+msgid "_Pressure unit:"
+msgstr "Unità di _pressione:"
 
+# GNOME-2-22
 #: ../applets/clock/clock.glade.h:33
-msgid "_Visibility unit:"
-msgstr ""
+msgid "_Temperature unit:"
+msgstr "Unità di _temperatura:"
 
+# GNOME-2-22
 #: ../applets/clock/clock.glade.h:34
+msgid "_Visibility unit:"
+msgstr "Unità di _visibilità:"
+
+# GNOME-2-22
+#: ../applets/clock/clock.glade.h:35
 msgid "_Wind speed unit:"
-msgstr ""
+msgstr "Unità di v_elocità del vento:"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -489,10 +507,10 @@ msgstr "Espandere l'elenco delle informazioni meteo"
 msgid "Hour format"
 msgstr "Formato dell'ora"
 
+# GNOME-2-22
 #: ../applets/clock/clock.schemas.in.h:20
-#, fuzzy
 msgid "If true, display a weather icon."
-msgstr "Se impostata a vero, l'orologio mostra anche i secondi nell'ora."
+msgstr "Se impostata a vero, mostra un'icona delle condizioni meteo."
 
 #: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
@@ -520,12 +538,10 @@ msgstr ""
 "Se impostata a vero, espande l'elenco dei compleanni nella finestra del "
 "calendario."
 
+# GNOME-2-22
 #: ../applets/clock/clock.schemas.in.h:26
-#, fuzzy
 msgid "If true, expand the list of locations in the calendar window."
-msgstr ""
-"Se impostata a vero, espande l'elenco dei compiti nella finestra del "
-"calendario."
+msgstr "Se impostata a vero, espande l'elenco delle località nella finestra del calendario."
 
 #: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of tasks in the calendar window."
@@ -545,61 +561,64 @@ msgstr ""
 "Se impostata a vero, mostra la data in un suggerimento al passaggio del "
 "puntatore sull'orologio."
 
+# GNOME-2-22
 #: ../applets/clock/clock.schemas.in.h:30
-#, fuzzy
 msgid "If true, show the temperature next to the weather icon."
-msgstr "Se impostata a vero mostra nel calendario i numeri di settimana."
+msgstr "Se impostata a vero, mostra la temperatura accanto all'icona del meteo."
 
 #: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
-msgstr "Se impostata a vero mostra nel calendario i numeri di settimana."
+msgstr "Se impostata a vero, mostra nel calendario i numeri di settimana."
 
+# GNOME-2-22
 #: ../applets/clock/clock.schemas.in.h:32
-#, fuzzy
 msgid "List of locations"
-msgstr "Elenco delle applicazioni conosciute"
+msgstr "Elenco delle località"
 
 #: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
-msgstr "Mostra data nell'orologio"
+msgstr "Mostrare data nell'orologio"
 
 #: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
-msgstr "Mosta data nel suggerimento"
+msgstr "Mostare data nel suggerimento"
 
+# GNOME-2-22
 #: ../applets/clock/clock.schemas.in.h:35
-#, fuzzy
 msgid "Show temperature in clock"
-msgstr "Mostra data nell'orologio"
+msgstr "Mostrare temperatura nell'orologio"
 
 #: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
-msgstr "Mostra orario con i secondi"
+msgstr "Mostrare orario con i secondi"
 
 #: ../applets/clock/clock.schemas.in.h:37
-#, fuzzy
 msgid "Show weather in clock"
-msgstr "Mostra data nell'orologio"
+msgstr "Mostrare meteo nell'orologio"
 
 #: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
-msgstr "Mostra nel calendario i numeri di settimana"
+msgstr "Mostrare numeri di settimana nel calendario"
 
+# GNOME-2-22
 #: ../applets/clock/clock.schemas.in.h:39
 msgid "Speed unit"
-msgstr ""
+msgstr "Unità di velocità"
 
+# GNOME-2-22
 #: ../applets/clock/clock.schemas.in.h:40
 msgid "Temperature unit"
-msgstr ""
+msgstr "Unità di temperatura"
 
+# GNOME-2-22
 #: ../applets/clock/clock.schemas.in.h:41
 msgid "The unit to use when showing temperatures."
-msgstr ""
+msgstr "L'unità di misura da usare nel mostrare le temperature."
 
+# GNOME-2-22
 #: ../applets/clock/clock.schemas.in.h:42
 msgid "The unit to use when showing wind speed."
-msgstr ""
+msgstr "L'unità di misura da usare nel mostrare la velocità del vento."
 
 #: ../applets/clock/clock.schemas.in.h:43
 msgid ""
@@ -671,9 +690,10 @@ msgstr "Usa UTC"
 msgid "Unknown Location"
 msgstr "Località sconosciuta"
 
+# GNOME-2-22
 #: ../applets/clock/clock-location-tile.c:198
 msgid "Failed to set the system timezone"
-msgstr ""
+msgstr "Impostazione del fuso orario del sistema fallita"
 
 # GNOME-2-22
 #: ../applets/clock/clock-location-tile.c:223
@@ -685,25 +705,29 @@ msgstr "<small>Imposta...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>Imposta</small>"
 
+# GNOME-2-22
 #: ../applets/clock/clock-location-tile.c:285
 msgid "Set as current timezone for this computer"
-msgstr ""
+msgstr "Imposta come fuso orario corrente per questo computer"
 
+# GNOME-2-22
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
 #: ../applets/clock/clock-location-tile.c:478
 #: ../applets/clock/clock-location-tile.c:484
 msgid "Unknown"
-msgstr ""
+msgstr "Sconosciuto"
 
+# GNOME-2-22
 #: ../applets/clock/clock-location-tile.c:479
 #, c-format
 msgid "%s, feels like %s"
-msgstr ""
+msgstr "%s, percepita %s"
 
+# GNOME-2-22
 #: ../applets/clock/clock-location-tile.c:489
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
-msgstr ""
+msgstr "Alba: %s / Tramonto: %s"
 
 # dopo i ':' c'è sempre una lettera maiuscola... empiricamente
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
@@ -711,6 +735,36 @@ msgstr ""
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Errore nel mostrare la guida. %s"
+
+# GNOME-2-22
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "Cambia l'ora del sistema"
+
+# GNOME-2-22
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "Cambia il fuso orario del sistema"
+
+# GNOME-2-22
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "Configura orologio hardware"
+
+# GNOME-2-22
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "Sono richiesti dei privilegi per cambiare il fuso orario del sistema."
+
+# GNOME-2-22
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "Sono richiesti dei privilegi per cambiare l'ora del sistema."
+
+# GNOME-2-22
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "Sono richiesti dei privilegi per configurare l'orologio hardware."
 
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -1101,7 +1155,7 @@ msgid "Window Selector"
 msgstr "Selettore finestre"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:620
+#: ../applets/wncklet/workspace-switcher.c:623
 msgid "Workspace Switcher"
 msgstr "Selettore area di lavoro"
 
@@ -1257,13 +1311,13 @@ msgstr ""
 "consentendo la loro navigazione"
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 #: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "righe"
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "colonne"
 
@@ -1288,7 +1342,7 @@ msgstr ""
 "Errore nel caricare il valore display_all_workspaces per il selettore area "
 "di lavoro: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:622
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -2280,9 +2334,8 @@ msgid "Could not open location '%s'"
 msgstr "Impossibile mostrare la posizione «%s»"
 
 #: ../gnome-panel/panel-menu-items.c:405
-#, fuzzy
-msgid "Bookmarked Folders"
-msgstr "Cartella home"
+msgid "Bookmarks"
+msgstr "Segnalibri"
 
 # Commento alle voci del menù Documenti recenti
 #. Translators: %s is a URI
@@ -3550,60 +3603,3 @@ msgstr "_Applet:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Directory preferen_ze:"
-
-#~ msgid "%A %B %d"
-#~ msgstr "%A %-d %B"
-
-#~ msgid "Click to view time in other timezones"
-#~ msgstr "Fare clic per visualizzare l'ora in altri fusi orari"
-
-#~ msgid "Clock _type:"
-#~ msgstr "_Tipo di orologio:"
-
-#~ msgid "12 hour"
-#~ msgstr "12 ore"
-
-#~ msgid "Use _UTC"
-#~ msgstr "Utilizzare _UTC"
-
-#~ msgid "Show multiple _timezones"
-#~ msgstr "Mostrare diversi _fusi orari"
-
-#~ msgid ""
-#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
-#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
-#~ "keys."
-#~ msgstr ""
-#~ "Un elenco di ID di fusi orari. Ogni ID identifica un singolo fuso orario. "
-#~ "Le impostazioni di questi fusi orari sono memorizzate nelle chiavi $(id)"
-#~ "_name e $(id)_zone."
-
-#~ msgid ""
-#~ "If true, display the timezone button in the clock, in addition to time."
-#~ msgstr ""
-#~ "Se impostata a vero, mostra nell'orologio anche il pulsante fuso orario "
-#~ "oltre all'ora."
-
-#~ msgid "Show the timezone button"
-#~ msgstr "Mostrare il pulsante fuso orario"
-
-# RIVEDERE!!!
-#~ msgid ""
-#~ "This key specifies the name of the timezone as can be used in the TZ "
-#~ "environment variable."
-#~ msgstr ""
-#~ "Questa chiave specifica il nome del fuso orario così come riconosciuto "
-#~ "dalla variabile d'ambiente TZ."
-
-#~ msgid "This key specifies the user-visible name of the timezone."
-#~ msgstr ""
-#~ "Questa chiave specifica il nome visibile all'utente del fuso orario."
-
-#~ msgid "Timezone ID list"
-#~ msgstr "Elenco ID fusi orari"
-
-#~ msgid "User-visible name of the timezone"
-#~ msgstr "Nome visibile all'utente del fuso orario"
-
-#~ msgid "Bookmarks"
-#~ msgstr "Segnalibri"
