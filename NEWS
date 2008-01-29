@@ -1,3 +1,66 @@
+===============
+Version 2.21.90
+===============
+
+  Misc
+
+	* If the name of the user is "Unknown" then display the login name,
+          #509129 (Martin Schoen, Vincent)
+        * Use G_STRFUNC instead of the deprecated G_GNUC_FUNCTION
+          (Christian Persch, Elijah Newren)
+        * Use AM_PROG_CC_C_O for build, #509781 (Christian Kirbach, Vincent)
+        * Add a 48x48 version of gnome-panel.svg, which is one of the
+	  more frequently rendered svgs on the desktop. (Matthias
+	  Clasen)
+        * look for Locations.xml through pkg-config, #509888. (Patryk
+          Zawadzki)
+
+  Workspace Switcher Applet
+
+	* prevent failure of the set_orientation() or set_n_rows() calls by
+          calling pager_update() a bit later.  (Vincent)
+
+  Clock Applet
+
+        Endlessing tweaking/fixing of the build...
+
+        * Fix build by acknowledging libgweather API instability,
+          #509581 (Carlos Carcia Campos)
+        * Fix a typo that broke the build (Kjartan Maraas)
+        * Fix build issue with HAVE_POLKIT (Matthias Clasen)
+        * Fix minor HIGness problems in Prefs dialogue -- spacings,
+          missing mnemonics (Christian Persch)   [NOT A BUILD ISSUE!]
+        * Build: Add "--interal" when generating the marshalers
+          (Christian Persch)
+        * Fix compilation when there's no eds support, #509840 (Saleem
+          Abdulrasool)
+        * Build: define where Locations.xml is (via pkg-config),
+          #509888 (Patryk Zawadzki)
+        * Build: Fixes to allow applet mechanism policy strings to be
+          translated, #510635 (Luca Ferretti)
+        * Build: Clean up Makefile.am a bit (Vincent)
+        * Change <message> strings to match the ones from PolicyKit
+          package (Luca Ferretti)
+
+  Translators
+
+        * Jonh Wendell (pt_BR)
+        * Luca Ferretti (it)
+        * Daniel Nylander (sv)
+        * Priit Laes (et)
+        * Petr Kovar (cs)
+        * Inaki Larranaga Murgoitio (eu)
+        * Priit Laes (et)
+        * Kjartan Maraas (nb)
+        * Jorge Gonzalez (es)
+        * Inaki Larranaga Murgoitio (eu)
+        * Krishna Babu K (te)
+        * Espen Stefansen (nb)
+        * Luca Ferretti (it)
+        * Laurent Dhima (sq)
+        * Jorge Gonzalez (es)
+        * Daniel Nylander (sv)
+
 ==============
 Version 2.21.5
 ==============
