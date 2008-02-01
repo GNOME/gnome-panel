@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-01 08:13+0300\n"
-"PO-Revision-Date: 2007-05-27 23:54+0300\n"
+"POT-Creation-Date: 2008-02-01 11:06+0200\n"
+"PO-Revision-Date: 2008-02-01 11:20+0200\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: i18n@mova.org <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +61,7 @@ msgid "_Preferences"
 msgstr "Nała_dy"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2230
+#: ../applets/clock/clock.c:4056
 msgid "Clock"
 msgstr "Hadzińnik"
 
@@ -77,51 +77,61 @@ msgstr "Hieneratar, što stvaraje aplety hadzińnika."
 msgid "Get the current time and date"
 msgstr "Pakazvaje dziejnuju datu j čas"
 
-#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.c:347
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:420
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/calendar-window.c:228 ../applets/clock/clock.c:349
-#: ../applets/clock/clock.c:1256
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:422
+#: ../applets/clock/clock.c:1550
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: ../applets/clock/calendar-window.c:234
+#: ../applets/clock/calendar-window.c:250
 msgid "%b %d"
 msgstr "%d %b"
 
-#: ../applets/clock/calendar-window.c:742
-msgid "_Tasks"
-msgstr "_Zadačy"
+#: ../applets/clock/calendar-window.c:765
+msgid "Tasks"
+msgstr "Zadačy"
 
-#: ../applets/clock/calendar-window.c:858
+#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:938
+#: ../applets/clock/calendar-window.c:1554
+msgid "Edit"
+msgstr "Redahuj"
+
+#: ../applets/clock/calendar-window.c:883
 msgid "All Day"
 msgstr "Ceły dzień"
 
-#: ../applets/clock/calendar-window.c:985
-msgid "_Appointments"
-msgstr "_Terminy"
+#: ../applets/clock/calendar-window.c:1019
+msgid "Appointments"
+msgstr "Terminy"
 
-#: ../applets/clock/calendar-window.c:1002
-msgid "_Birthdays and Anniversaries"
-msgstr "_Dni narodzinaŭ i ŭhodki"
+#: ../applets/clock/calendar-window.c:1044
+msgid "Birthdays and Anniversaries"
+msgstr "Dni narodzinaŭ i ŭhodki"
 
-#: ../applets/clock/calendar-window.c:1018
-msgid "_Weather Information"
-msgstr "_Źviestki ab nadvorji"
+#: ../applets/clock/calendar-window.c:1069
+msgid "Weather Information"
+msgstr "Źviestki ab nadvorji"
 
-#: ../applets/clock/calendar-window.c:1687
+#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
+msgid "Locations"
+msgstr "Pałažeńni"
+
+#: ../applets/clock/calendar-window.c:1850
 msgid "Calendar"
 msgstr "Kalandar"
 
-#: ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:420
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:349 ../applets/clock/clock.c:1254
+#: ../applets/clock/clock.c:422 ../applets/clock/clock.c:1548
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -130,7 +140,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:369
+#: ../applets/clock/clock.c:442
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -138,7 +148,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:449
 #, c-format
 msgid ""
 "%1$s\n"
@@ -151,58 +161,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:384
+#: ../applets/clock/clock.c:457
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip
-#: ../applets/clock/clock.c:527
-msgid "%A %B %d"
-msgstr "%A %d %B"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:639
+msgid "%A %B %d (%%s)"
+msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:541
+#: ../applets/clock/clock.c:669
 msgid "Click to hide your appointments and tasks"
 msgstr "Klikni, kab schavać tvaje terminy j zadačy"
 
-#: ../applets/clock/clock.c:544
+#: ../applets/clock/clock.c:672
 msgid "Click to view your appointments and tasks"
 msgstr "Klikni, kab pabačyć terminy j zadačy"
 
-#: ../applets/clock/clock.c:548
+#: ../applets/clock/clock.c:676
 msgid "Click to hide month calendar"
 msgstr "Klikni, kab schavać miesiačny kalandar"
 
-#: ../applets/clock/clock.c:551
+#: ../applets/clock/clock.c:679
 msgid "Click to view month calendar"
 msgstr "Klikni, kab pabačyć miesiačny kalandar"
 
-#: ../applets/clock/clock.c:1095
-msgid "Click to view time in other timezones"
-msgstr "Klikni, kab pabačyć čas dla inšych časavych pajasoŭ"
-
-#: ../applets/clock/clock.c:1102
+#: ../applets/clock/clock.c:1400
 msgid "Computer Clock"
 msgstr "Kamputarny hadzińnik"
 
-#: ../applets/clock/clock.c:1249
+#: ../applets/clock/clock.c:1543
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1251
+#: ../applets/clock/clock.c:1545
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1293
+#: ../applets/clock/clock.c:1587
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1368
+#: ../applets/clock/clock.c:1662
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Niemahčyma ŭruchomić pryładu kanfihuracyi času: %s"
 
-#: ../applets/clock/clock.c:1406
+#: ../applets/clock/clock.c:1691
+msgid "Set System Time..."
+msgstr "Akreśl systemny čas..."
+
+#: ../applets/clock/clock.c:1692 ../applets/clock/clock.glade.h:21
+msgid "Set System Time"
+msgstr "Akreśl systemny čas"
+
+#: ../applets/clock/clock.c:1706
+msgid "Failed to set the system time"
+msgstr "Nie ŭdałosia akreślić systemny čas"
+
+#: ../applets/clock/clock.c:1879
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -210,67 +230,186 @@ msgstr ""
 "Nielha adšukać prahramu kanfihuracyi daty j času. Moža, jana nie "
 "zainstalavanaja?"
 
-#: ../applets/clock/clock.c:1917
+#: ../applets/clock/clock.c:2698
 msgid "Custom format"
 msgstr "Ułasny farmat"
 
-#: ../applets/clock/clock.c:2062
-msgid "Clock Preferences"
-msgstr "Nałady hadzińnika"
+#: ../applets/clock/clock.c:3498 ../applets/clock/clock-location.c:373
+#: ../applets/clock/clock-location-tile.c:468
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:2087
-msgid "Clock _type:"
-msgstr "Typ _hadzińnika:"
+#: ../applets/clock/clock.c:3757
+msgid "City Name"
+msgstr "Nazva horadu"
 
-#: ../applets/clock/clock.c:2098
-msgid "12 hour"
-msgstr "12-hadzinny"
+#: ../applets/clock/clock.c:3761
+msgid "City Time Zone"
+msgstr "Časavy pojas horadu"
 
-#: ../applets/clock/clock.c:2099
+#: ../applets/clock/clock.c:3952
 msgid "24 hour"
 msgstr "24-hadzinny"
 
-#: ../applets/clock/clock.c:2100
+#: ../applets/clock/clock.c:3953
 msgid "UNIX time"
 msgstr "Uniksavy čas"
 
-#: ../applets/clock/clock.c:2101
+#: ../applets/clock/clock.c:3954
 msgid "Internet time"
 msgstr "Internetny čas"
 
-#: ../applets/clock/clock.c:2109
+#: ../applets/clock/clock.c:3962
 msgid "Custom _format:"
 msgstr "Ułasny _farmat:"
 
-#: ../applets/clock/clock.c:2128
-msgid "Show _seconds"
-msgstr "Pakazvaj _sekundy"
-
-#: ../applets/clock/clock.c:2137
-msgid "Show _date"
-msgstr "Pakazvaj _datu"
-
-#: ../applets/clock/clock.c:2146
-msgid "Use _UTC"
-msgstr "Čas _UTC"
-
-#: ../applets/clock/clock.c:2155
-msgid "Show multiple _timezones"
-msgstr "Pakazvaj niekalki časavych _pajasoŭ"
-
-#: ../applets/clock/clock.c:2233
+#: ../applets/clock/clock.c:4059
 msgid "The Clock displays the current time and date"
 msgstr "Aplet hadzińnika, jaki pakazvaje dziejnuju datu j čas"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2236 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4062 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:617
+#: ../applets/wncklet/workspace-switcher.c:620
 #: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr "Alaksandar Navicki <zolak@lacinka.org>"
+
+#: ../applets/clock/clock.glade.h:1
+msgid "12 _hour format"
+msgstr "12-_hadzinny farmat"
+
+#: ../applets/clock/clock.glade.h:2
+msgid "24 h_our format"
+msgstr "24-h_adzinny farmat"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Clock Options</b>"
+msgstr "<b>Opcyi hadzińnika:</b>"
+
+#: ../applets/clock/clock.glade.h:4
+msgid "<b>Display</b>"
+msgstr "<b>Pakaz</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<b>Panel Display</b>"
+msgstr "<b>Pakaz na paneli</b>"
+
+#: ../applets/clock/clock.glade.h:6
+msgid "<b>Time Settings</b>"
+msgstr "<b>Nałady času</b>"
+
+#: ../applets/clock/clock.glade.h:7
+msgid "<i>(optional)</i>"
+msgstr "<i>(nieabaviazkova)</i>"
+
+#: ../applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "Nałady hadzińnika"
+
+#: ../applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr "Ciapierašni čas:"
+
+#: ../applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"Uschod\n"
+"Zachad"
+
+#: ../applets/clock/clock.glade.h:12
+msgid "Find _Next"
+msgstr "Znajdzi _dalej"
+
+#: ../applets/clock/clock.glade.h:13
+msgid "Find..."
+msgstr "Znajdzi..."
+
+#: ../applets/clock/clock.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "Ahulnaje"
+
+#: ../applets/clock/clock.glade.h:15
+msgid "Latitude:"
+msgstr "Šyrynia:"
+
+#: ../applets/clock/clock.glade.h:16
+msgid "Location Name:"
+msgstr "Nazva pałažeńnia:"
+
+#: ../applets/clock/clock.glade.h:18
+msgid "Longitude:"
+msgstr "Daŭžynia:"
+
+#: ../applets/clock/clock.glade.h:19
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"Poŭnač\n"
+"Poŭdzień"
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Show _temperature"
+msgstr "Pakazvaj _temperaturu"
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Show _weather"
+msgstr "Pakazvaj _nadvorje"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Show seco_nds"
+msgstr "Pakazvaj _sekundy"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Show the _date"
+msgstr "Pakazvaj _datu"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Time Settings"
+msgstr "Nałady času"
+
+#: ../applets/clock/clock.glade.h:27
+msgid "Time _Settings"
+msgstr "_Nałady času"
+
+#: ../applets/clock/clock.glade.h:28
+msgid "Time:"
+msgstr "Čas:"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "Timezone:"
+msgstr "Časavy pojas:"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "Weather"
+msgstr "Nadvorje"
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Find:"
+msgstr "_Šukaj:"
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Pressure unit:"
+msgstr "Adzinki _cisku:"
+
+#: ../applets/clock/clock.glade.h:33
+msgid "_Temperature unit:"
+msgstr "Adzinki _temperatury:"
+
+#: ../applets/clock/clock.glade.h:34
+msgid "_Visibility unit:"
+msgstr "Adzinki _bačnaści:"
+
+#: ../applets/clock/clock.glade.h:35
+msgid "_Wind speed unit:"
+msgstr "Adzinki _chutkaści vietru:"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -287,13 +426,8 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
-msgid ""
-"A list of timezone IDs. Each ID identifies an individual timezone. The "
-"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
-msgstr ""
-"Śpis identyfikataraŭ (ID) časavych pajasoŭ. Kožny identyfikatar akreślivaje "
-"paasobny časavy pojas. Nałady kožnaha z hetych pajasoŭ zachoŭvajucca ŭ "
-"klučach $(id)_name i $(id)_zone."
+msgid "A list of locations to display in the calendar window."
+msgstr "Śpis pałažeńniaŭ, pakazvanych u vaknie kalandara."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -308,85 +442,117 @@ msgid "Expand list of birthdays"
 msgstr "Razharni śpis dnioŭ naradžeńniaŭ"
 
 #: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "Razharni śpis pałažeńniaŭ"
+
+#: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
 msgstr "Razharni śpis zadač"
 
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:18
 msgid "Expand list of weather information"
 msgstr "Razharni śpis sa źviestkami ab nadvorji"
 
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "Farmat hadzin"
 
-#: ../applets/clock/clock.schemas.in.h:19
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "Akreślivaje, ci pakazvać ikonu nadvorja."
+
+#: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Akreślivaje, ci pakazvać u hadzińniku datu pobač z časam."
 
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
 msgstr "Akreślivaje, ci pakazvać sekundy."
 
-#: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr "Akreślivaje, ci pakazvać knopku časavaha pojasu, u dadatak da času."
-
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Akreślivaje, ci pakazvać čas UTC."
 
-#: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr "Akreślivaje, ci raskryvać śpis terminaŭ u kalandarnym aknie."
-
 #: ../applets/clock/clock.schemas.in.h:24
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "Akreślivaje, ci raskryvać śpis dzion narodzinaŭ u kalandarnym aknie."
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Akreślivaje, ci razhortvać śpis terminaŭ u kalandarnym aknie."
 
 #: ../applets/clock/clock.schemas.in.h:25
-msgid "If true, expand the list of tasks in the calendar window."
-msgstr "Akreślivaje, ci raskryvać śpis zadačaŭ u kalandarnym aknie."
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "Akreślivaje, ci razhortvać śpis dzion narodzinaŭ u kalandarnym aknie."
 
 #: ../applets/clock/clock.schemas.in.h:26
-msgid "If true, expand the list of weather information in the calendar window."
-msgstr ""
-"Akreślivaje, ci raskryvać śpis źviestak ab nadvorji ŭ kalandarnym aknie."
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "Akreślivaje, ci razhortvać śpis pałažeńniaŭ u kalandarnym aknie."
 
 #: ../applets/clock/clock.schemas.in.h:27
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "Akreślivaje, ci razhortvać śpis zadačaŭ u kalandarnym aknie."
+
+#: ../applets/clock/clock.schemas.in.h:28
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr ""
+"Akreślivaje, ci razhortvać śpis źviestak ab nadvorji ŭ kalandarnym aknie."
+
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Akreślivaje, ci pakazvać datu ŭ padkazcy, kali kursor myšy znachodzicca nad "
 "hadzińnikam."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Kali PRAŬDA, pakazvaje temperaturu kala ikony nadvorja."
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "Kali PRAŬDA, pakazvaje numary tydniaŭ u kalandary."
 
-#: ../applets/clock/clock.schemas.in.h:29
-msgid "Name of the timezone"
-msgstr "Nazva časavaha pojasu"
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "List of locations"
+msgstr "Śpis pałažeńniaŭ"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "Pakazvaj datu ŭ hadzińniku"
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "Pakazvaj datu ŭ padkazcy"
 
-#: ../applets/clock/clock.schemas.in.h:32
-msgid "Show the timezone button"
-msgstr "Pakažy knopku časavaha pojasu"
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show temperature in clock"
+msgstr "Pakazvaj temperaturu ŭ hadzińniku"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "Pakazvaj čas z sekundami"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show weather in clock"
+msgstr "Pakazvaj nadvorje ŭ hadzińniku"
+
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "Pakazvaj numary tydniaŭ u kalandary"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "Adzinki chutkaści"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "Adzinki temperatury"
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "Adzinki vymiareńnia temperatury."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "Adzinki vymiareńnia chutkaści vietru."
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -394,7 +560,7 @@ msgstr ""
 "Užyvańnie hetaha kluča sastarełaje ŭ GNOME 2.6 ad času pajaŭleńnia kluča "
 "\"format\". Schiema była zachavanaja dla zhodnaści z papiarednimi versijami."
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:44
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -406,7 +572,7 @@ msgstr ""
 "možna ŭžyvać parametry, zrazumiełyja dla funkcyi strftime(). Hladzi "
 "dadatkovyja źviestki ŭ dapamožniku pa strftime()."
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -427,45 +593,63 @@ msgstr ""
 "\" (ułasny), hadzińnik budzie pakazvać čas zhodna z farmatam, padadzienym u "
 "klučy custom_format."
 
-#: ../applets/clock/clock.schemas.in.h:38
-msgid ""
-"This key specifies the name of the timezone as can be used in the TZ "
-"environment variable."
-msgstr ""
-"Hety kluč akreślaje nazvu časavaha pojasu, prydatnuju dla źmiennaj "
-"asiarodździa TZ."
-
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Akreślivaje prahramu, uklučanuju z metaj kanfihuravańnia času."
 
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "This key specifies the user-visible name of the timezone."
-msgstr "Hety kluč akreślaje bačnuju dla karystalnika nazvu časavaha pojasu."
-
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "Pryłada kanfihuracyi času"
 
-#: ../applets/clock/clock.schemas.in.h:42
-msgid "Timezone ID list"
-msgstr "Śpis identyfikataraŭ (ID) časavych pajasoŭ"
-
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "Užyćcio internetnaha času"
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "Uniksavy čas"
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "Čas UTC"
 
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "User-visible name of the timezone"
-msgstr "Bačnaja dla karystalnika nazva časavaha pojasu"
+#. make a fake location with a null TZ
+#. make a fake location with the current TZ
+#: ../applets/clock/clock-location.c:356 ../applets/clock/clock-location.c:363
+msgid "Unknown Location"
+msgstr "Nieviadomaje pałažeńnie"
+
+#: ../applets/clock/clock-location-tile.c:198
+msgid "Failed to set the system timezone"
+msgstr "Nie ŭdałosia akreślić systemnaha časavoha pojasu"
+
+#: ../applets/clock/clock-location-tile.c:223
+msgid "<small>Set...</small>"
+msgstr "<small>Akreśl...</small>"
+
+#: ../applets/clock/clock-location-tile.c:224
+msgid "<small>Set</small>"
+msgstr "<small>Akreśl</small>"
+
+#: ../applets/clock/clock-location-tile.c:285
+msgid "Set as current timezone for this computer"
+msgstr "Akreśl dziejny časavy pojas dla hetaha kamputara"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:478
+#: ../applets/clock/clock-location-tile.c:484
+msgid "Unknown"
+msgstr "Nieviadoma"
+
+#: ../applets/clock/clock-location-tile.c:479
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, adčuvajecca jak %s"
+
+#: ../applets/clock/clock-location-tile.c:489
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Uschod sonca: %s / Zachad sonca: %s"
 
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
@@ -685,7 +869,7 @@ msgstr "Pahladzi siońniašniuju datu!"
 msgid "%s the Fish, the fortune teller"
 msgstr "Rybka %s, miascovaja varažbitka"
 
-#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
+#: ../applets/fish/fish.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -859,7 +1043,7 @@ msgid "Window Selector"
 msgstr "Menu voknaŭ"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:620
+#: ../applets/wncklet/workspace-switcher.c:623
 msgid "Workspace Switcher"
 msgstr "Pieraklučalnik rabočych abšaraŭ"
 
@@ -904,47 +1088,47 @@ msgstr ""
 "Śpis voknaŭ pakazvaje śpis usich voknaŭ u jakaści naboru knopak i dazvalaje "
 "ich prahladać."
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>Pry viartańni źminimalizavanych voknaŭ</b>"
 
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>Hrupavańnie voknaŭ</b>"
 
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>Źmieściva śpisu voknaŭ</b>"
 
-#: ../applets/wncklet/window-list.glade.h:5
+#: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
 msgstr "Hrupavańnie voknaŭ pry adsutnaści _miesca"
 
-#: ../applets/wncklet/window-list.glade.h:6
+#: ../applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
 msgstr "Viartańnie _na dziejnym rabočym abšary"
 
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
 msgstr "Viartańnie n_a pieršasnym rabočym abšary"
 
-#: ../applets/wncklet/window-list.glade.h:8
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
 msgstr "Pakazvaj _vokny na dziejnym rabočym abšary"
 
-#: ../applets/wncklet/window-list.glade.h:9
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "Pakazvaj vo_kny z usich rabočych abšaraŭ"
 
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "Nałady śpisu voknaŭ"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "_Zaŭždy hrupuj vokny"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "_Nikoli nie hrupuj voknaŭ"
 
@@ -994,8 +1178,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.20. The schema is retained for "
 "compatibility with older versions."
 msgstr ""
-"Užyvańnie hetaha kluča sastarełaje ŭ GNOME 2.20. Schiema była zachavanaja dla "
-"zhodnaści z papiarednimi versijami."
+"Užyvańnie hetaha kluča sastarełaje ŭ GNOME 2.20. Schiema była zachavanaja "
+"dla zhodnaści z papiarednimi versijami."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "When to group windows"
@@ -1010,13 +1194,13 @@ msgstr ""
 "prahladać."
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 #: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "radkach"
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "kalonach"
 
@@ -1042,7 +1226,7 @@ msgstr ""
 "Pry adčytvańni vartaści display_all_workspaces u aplecie, jaki pieraklučaje "
 "rabočyja abšary, zdaryłasia pamyłka: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:622
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -2330,10 +2514,6 @@ msgstr "_Koler:"
 msgid "E_xpand"
 msgstr "_Razhortvańnie"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "Ahulnaje"
-
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
 msgstr "Padrabiaznaści fonavaj vyjavy"
@@ -2902,8 +3082,8 @@ msgstr ""
 "Pałažeńnie paneli ŭzdoŭž vosi x, pačynajučy ad pravaha bierahu ekranu. Kali "
 "hety kluč maje vartaść -1, jon ihnarujecca, a zamiest jaho vykarystoŭvajecca "
 "kluč x. Kali vartaść bolšaja za 0, tady kluč x ihnarujecca. Hety kluč maje "
-"značeńnie tolki ŭ nierazhornutym režymie. U razhornutym režymie hetaja opcyja "
-"ihnarujecca, a panel źmiaščajecca pa baku ekranu, akreślenym opcyjaj "
+"značeńnie tolki ŭ nierazhornutym režymie. U razhornutym režymie hetaja "
+"opcyja ihnarujecca, a panel źmiaščajecca pa baku ekranu, akreślenym opcyjaj "
 "aryjentacyi."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
@@ -2928,11 +3108,10 @@ msgstr ""
 "Pałažeńnie paneli ŭzdoŭž vosi y, pačynajučy ad pravaha bierahu ekranu. Kali "
 "hety kluč maje vartaść -1, jon ihnarujecca, a zamiest jaho vykarystoŭvajecca "
 "kluč x. Kali vartaść bolšaja za 0, tady kluč x ihnarujecca. Hety kluč maje "
-"značeńnie tolki ŭ nierazhornutym režymie. U razhornutym režymie hetaja opcyja "
-"ihnarujecca, a panel źmiaščajecca pa baku ekranu, akreślenym opcyjaj "
-"aryjentacyi."
-"režymie. U razhornutym hetaja opcyja ihnarujecca, a panel źmiaščajecca pa "
-"baku ekranu, akreślenym opcyjaj aryjentacyi."
+"značeńnie tolki ŭ nierazhornutym režymie. U razhornutym režymie hetaja "
+"opcyja ihnarujecca, a panel źmiaščajecca pa baku ekranu, akreślenym opcyjaj "
+"aryjentacyi.režymie. U razhornutym hetaja opcyja ihnarujecca, a panel "
+"źmiaščajecca pa baku ekranu, akreślenym opcyjaj aryjentacyi."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -3235,3 +3414,53 @@ msgstr "_Aplet:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Kataloh z naładami:"
+
+#~ msgid "%A %B %d"
+#~ msgstr "%A %d %B"
+
+#~ msgid "Click to view time in other timezones"
+#~ msgstr "Klikni, kab pabačyć čas dla inšych časavych pajasoŭ"
+
+#~ msgid "Clock _type:"
+#~ msgstr "Typ _hadzińnika:"
+
+#~ msgid "12 hour"
+#~ msgstr "12-hadzinny"
+
+#~ msgid "Use _UTC"
+#~ msgstr "Čas _UTC"
+
+#~ msgid "Show multiple _timezones"
+#~ msgstr "Pakazvaj niekalki časavych _pajasoŭ"
+
+#~ msgid ""
+#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
+#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
+#~ "keys."
+#~ msgstr ""
+#~ "Śpis identyfikataraŭ (ID) časavych pajasoŭ. Kožny identyfikatar "
+#~ "akreślivaje paasobny časavy pojas. Nałady kožnaha z hetych pajasoŭ "
+#~ "zachoŭvajucca ŭ klučach $(id)_name i $(id)_zone."
+
+#~ msgid ""
+#~ "If true, display the timezone button in the clock, in addition to time."
+#~ msgstr "Akreślivaje, ci pakazvać knopku časavaha pojasu, u dadatak da času."
+
+#~ msgid "Show the timezone button"
+#~ msgstr "Pakažy knopku časavaha pojasu"
+
+#~ msgid ""
+#~ "This key specifies the name of the timezone as can be used in the TZ "
+#~ "environment variable."
+#~ msgstr ""
+#~ "Hety kluč akreślaje nazvu časavaha pojasu, prydatnuju dla źmiennaj "
+#~ "asiarodździa TZ."
+
+#~ msgid "This key specifies the user-visible name of the timezone."
+#~ msgstr "Hety kluč akreślaje bačnuju dla karystalnika nazvu časavaha pojasu."
+
+#~ msgid "Timezone ID list"
+#~ msgstr "Śpis identyfikataraŭ (ID) časavych pajasoŭ"
+
+#~ msgid "User-visible name of the timezone"
+#~ msgstr "Bačnaja dla karystalnika nazva časavaha pojasu"
