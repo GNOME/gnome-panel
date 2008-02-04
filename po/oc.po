@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-02 21:19+0100\n"
+"POT-Creation-Date: 2008-02-02 21:53+0100\n"
 "PO-Revision-Date: 2008-02-02 21:21+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -265,7 +265,7 @@ msgstr "_Format personalisat :"
 
 #: ../applets/clock/clock.c:4059
 msgid "The Clock displays the current time and date"
-msgstr "Le relòtge mostra l'ora e la data actualas"
+msgstr "Le relòtge visualiza l'ora e la data actualas"
 
 #. Translator credits
 #: ../applets/clock/clock.c:4062 ../applets/fish/fish.c:588
@@ -458,15 +458,15 @@ msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
-msgstr "S'es validat, la data se mostra dins lo relòtge, al costat de l'ora."
+msgstr "S'es validat, la data se visualiza dins lo relòtge, al costat de l'ora."
 
 #: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
-msgstr "S'es validat, las segondas se mostran dins l'ora."
+msgstr "S'es validat, las segondas se visualizan dins l'ora."
 
 #: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "S'es verai, mostra l'ora en temps universal coordinat (UTC)."
+msgstr "S'es verai, visualiza l'ora en temps universal coordinat (UTC)."
 
 #: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
@@ -574,7 +574,7 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
-"Aquesta clau indica lo format d'ora utilizat pel ajuston relòtge. Las valors "
+"Aquesta clau indica lo format d'ora utilizat per l'ajuston relòtge. Las valors "
 "possiblas son \"12-hour\", \"24-hour\", \"internet\", \"unix\" e "
 "\"personalisat\". S'es definida a \"internet\", lo relòtge visualiza l'ora "
 "internet. Lo sistèma d'ora internet devisís lo jorn en 1000 segments. I a "
@@ -1042,7 +1042,7 @@ msgstr "Tièra de las fenèstras"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
 msgid "Window Navigation Applet Factory"
-msgstr "Fabrica pel ajuston de navegacion entre las fenèstras"
+msgstr "Fabrica per l'ajuston de navegacion entre las fenèstras"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:240
@@ -1127,7 +1127,7 @@ msgstr "_Mostrar las fenèstras de l'espaci de trabalh actiu"
 
 #: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
-msgstr "Visualizar las fenèstras de _totes les espacis de trabalh"
+msgstr "Visualizar las fenèstras de _totes los espacis de trabalh"
 
 #: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
@@ -1410,7 +1410,7 @@ msgstr "Pas d'URI provesida pel fichièr de burèu de l'aviaire del panèl\n"
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
-"Impossible de dobrir lo fichièr de burèu %s pel aviaire del panèl %s%s\n"
+"Impossible de dobrir lo fichièr de burèu %s per l'aviaire del panèl %s%s\n"
 
 #: ../gnome-panel/launcher.c:853
 msgid "_Launch"
@@ -2028,18 +2028,22 @@ msgstr ""
 msgid ""
 "You are currently logged in as \"%s\".\n"
 "You will be automatically logged out in %d second."
+msgid_plural ""
 "You are currently logged in as \"%s\".\n"
 "You will be automatically logged out in %d seconds."
-msgstr ""
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../gnome-panel/panel-logout.c:249
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
 "This system will be automatically shut down in %d second."
+msgid_plural ""
 "You are currently logged in as \"%s\".\n"
 "This system will be automatically shut down in %d seconds."
-msgstr ""
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../gnome-panel/panel-logout.c:330
 msgid "Log out of this system now?"
@@ -3198,4 +3202,3 @@ msgstr "_Aplet :"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Repertòri de las _preferéncias :"
-
