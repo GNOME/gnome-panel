@@ -3,15 +3,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-07 23:56+0200\n"
-"PO-Revision-Date: 2007-07-25 13:29+0100\n"
+"POT-Creation-Date: 2008-02-07 22:18+0100\n"
+"PO-Revision-Date: 2008-02-06 15:14+0100\n"
 "Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
-"Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
+"Language-Team: Tomasz Dominikowski (Aviary.pl <dominikowski@gmai.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: Poland\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -56,7 +58,7 @@ msgid "_Preferences"
 msgstr "P_referencje"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2230
+#: ../applets/clock/clock.c:4056
 msgid "Clock"
 msgstr "Zegar"
 
@@ -72,51 +74,61 @@ msgstr "Generator tworzący aplety zegara."
 msgid "Get the current time and date"
 msgstr "Wyświetla bieżącą datę i czas"
 
-#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.c:347
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:420
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/calendar-window.c:228 ../applets/clock/clock.c:349
-#: ../applets/clock/clock.c:1256
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:422
+#: ../applets/clock/clock.c:1550
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: ../applets/clock/calendar-window.c:234
+#: ../applets/clock/calendar-window.c:250
 msgid "%b %d"
 msgstr "%d %b"
 
-#: ../applets/clock/calendar-window.c:742
-msgid "_Tasks"
-msgstr "_Zadania"
+#: ../applets/clock/calendar-window.c:765
+msgid "Tasks"
+msgstr "Zadania"
 
-#: ../applets/clock/calendar-window.c:858
+#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:938
+#: ../applets/clock/calendar-window.c:1554
+msgid "Edit"
+msgstr "Modyfikuj"
+
+#: ../applets/clock/calendar-window.c:883
 msgid "All Day"
 msgstr "Cały dzień"
 
-#: ../applets/clock/calendar-window.c:985
-msgid "_Appointments"
-msgstr "_Przypomnienia"
+#: ../applets/clock/calendar-window.c:1019
+msgid "Appointments"
+msgstr "Spotkania"
 
-#: ../applets/clock/calendar-window.c:1002
-msgid "_Birthdays and Anniversaries"
-msgstr "_Urodziny i rocznice"
+#: ../applets/clock/calendar-window.c:1044
+msgid "Birthdays and Anniversaries"
+msgstr "Urodziny i rocznice"
 
-#: ../applets/clock/calendar-window.c:1018
-msgid "_Weather Information"
-msgstr "Informacje _pogodowe"
+#: ../applets/clock/calendar-window.c:1069
+msgid "Weather Information"
+msgstr "Informacje pogodowe"
 
-#: ../applets/clock/calendar-window.c:1687
+#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
+msgid "Locations"
+msgstr "Położenia"
+
+#: ../applets/clock/calendar-window.c:1850
 msgid "Calendar"
 msgstr "Kalendarz"
 
-#: ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:420
 msgid "%l:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:349 ../applets/clock/clock.c:1254
+#: ../applets/clock/clock.c:422 ../applets/clock/clock.c:1548
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -125,7 +137,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:369
+#: ../applets/clock/clock.c:442
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -133,7 +145,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:449
 #, c-format
 msgid ""
 "%1$s\n"
@@ -146,58 +158,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:384
+#: ../applets/clock/clock.c:457
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip
-#: ../applets/clock/clock.c:527
-msgid "%A %B %d"
-msgstr "%A %d %B"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:639
+msgid "%A %B %d (%%s)"
+msgstr "%A, %d %B %Y (%%s)"
 
-#: ../applets/clock/clock.c:541
+#: ../applets/clock/clock.c:669
 msgid "Click to hide your appointments and tasks"
 msgstr "Kliknij, aby ukryć terminy i zadania"
 
-#: ../applets/clock/clock.c:544
+#: ../applets/clock/clock.c:672
 msgid "Click to view your appointments and tasks"
 msgstr "Kliknij aby wyświetlić terminy i zadania"
 
-#: ../applets/clock/clock.c:548
+#: ../applets/clock/clock.c:676
 msgid "Click to hide month calendar"
 msgstr "Kliknij, aby ukryć miesięczny kalendarz"
 
-#: ../applets/clock/clock.c:551
+#: ../applets/clock/clock.c:679
 msgid "Click to view month calendar"
 msgstr "Kliknij aby wyświetlić miesięczny kalendarz"
 
-#: ../applets/clock/clock.c:1095
-msgid "Click to view time in other timezones"
-msgstr "Kliknij, aby wyświetlić czas w innych strefach czasowych"
-
-#: ../applets/clock/clock.c:1102
+#: ../applets/clock/clock.c:1400
 msgid "Computer Clock"
 msgstr "Zegar komputerowy"
 
-#: ../applets/clock/clock.c:1249
+#: ../applets/clock/clock.c:1543
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1251
+#: ../applets/clock/clock.c:1545
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:1293
+#: ../applets/clock/clock.c:1587
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1368
+#: ../applets/clock/clock.c:1662
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nie można uruchomić narzędzia do konfiguracji czasu: %s"
 
-#: ../applets/clock/clock.c:1406
+#: ../applets/clock/clock.c:1691
+msgid "Set System Time..."
+msgstr "Ustaw czas systemowy..."
+
+#: ../applets/clock/clock.c:1692 ../applets/clock/clock.glade.h:21
+msgid "Set System Time"
+msgstr "Ustawienie czasu systemowego"
+
+#: ../applets/clock/clock.c:1706
+msgid "Failed to set the system time"
+msgstr "Ustawienie czasu systemowego nieudane"
+
+#: ../applets/clock/clock.c:1879
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -205,67 +227,186 @@ msgstr ""
 "Nie można odnaleźć programu do konfiguracji daty i czasu. Być może żaden nie "
 "jest zainstalowany?"
 
-#: ../applets/clock/clock.c:1917
+#: ../applets/clock/clock.c:2698
 msgid "Custom format"
 msgstr "Własny format"
 
-#: ../applets/clock/clock.c:2062
-msgid "Clock Preferences"
-msgstr "Preferencje zegara"
+#: ../applets/clock/clock.c:3498 ../applets/clock/clock-location.c:373
+#: ../applets/clock/clock-location-tile.c:468
+#, c-format
+msgid "%s, %s"
+msgstr "%s - %s"
 
-#: ../applets/clock/clock.c:2087
-msgid "Clock _type:"
-msgstr "Typ _zegara:"
+#: ../applets/clock/clock.c:3757
+msgid "City Name"
+msgstr "Nazwa miasta"
 
-#: ../applets/clock/clock.c:2098
-msgid "12 hour"
-msgstr "12-godzinny"
+#: ../applets/clock/clock.c:3761
+msgid "City Time Zone"
+msgstr "Strefa czasowa miasta"
 
-#: ../applets/clock/clock.c:2099
+#: ../applets/clock/clock.c:3952
 msgid "24 hour"
 msgstr "24-godzinny"
 
-#: ../applets/clock/clock.c:2100
+#: ../applets/clock/clock.c:3953
 msgid "UNIX time"
 msgstr "Czas uniksowy"
 
-#: ../applets/clock/clock.c:2101
+#: ../applets/clock/clock.c:3954
 msgid "Internet time"
 msgstr "Czas internetowy"
 
-#: ../applets/clock/clock.c:2109
+#: ../applets/clock/clock.c:3962
 msgid "Custom _format:"
 msgstr "Własny _format:"
 
-#: ../applets/clock/clock.c:2128
-msgid "Show _seconds"
-msgstr "Wyświetlanie _sekund"
-
-#: ../applets/clock/clock.c:2137
-msgid "Show _date"
-msgstr "Wyświetlanie _daty"
-
-#: ../applets/clock/clock.c:2146
-msgid "Use _UTC"
-msgstr "Czas _UTC"
-
-#: ../applets/clock/clock.c:2155
-msgid "Show multiple _timezones"
-msgstr "Wyświetlanie wielu s_tref czasowych"
-
-#: ../applets/clock/clock.c:2233
+#: ../applets/clock/clock.c:4059
 msgid "The Clock displays the current time and date"
 msgstr "Aplet zegara wyświetlający bieżącą datę i czas"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2236 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4062 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:617
+#: ../applets/wncklet/workspace-switcher.c:620
 #: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr "GNOME PL Team <translators@gnomepl.org>"
+
+#: ../applets/clock/clock.glade.h:1
+msgid "12 _hour format"
+msgstr "Format 12-_godzinny"
+
+#: ../applets/clock/clock.glade.h:2
+msgid "24 h_our format"
+msgstr "Format 24-g_odzinny"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Clock Options</b>"
+msgstr "<b>Opcje zegara</b>"
+
+#: ../applets/clock/clock.glade.h:4
+msgid "<b>Display</b>"
+msgstr "<b>Wyświetlanie</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<b>Panel Display</b>"
+msgstr "<b>Wyświetlanie paneli</b>"
+
+#: ../applets/clock/clock.glade.h:6
+msgid "<b>Time Settings</b>"
+msgstr "<b>Ustawienia czasu</b>"
+
+#: ../applets/clock/clock.glade.h:7
+msgid "<i>(optional)</i>"
+msgstr "<i>(opcjonalne)</i>"
+
+#: ../applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "Preferencje zegara"
+
+#: ../applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr "Bieżący czas"
+
+#: ../applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"Wschód\n"
+"Zachód"
+
+#: ../applets/clock/clock.glade.h:12
+msgid "Find _Next"
+msgstr "Znajdź _następny"
+
+#: ../applets/clock/clock.glade.h:13
+msgid "Find..."
+msgstr "Znajdź..."
+
+#: ../applets/clock/clock.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "Ogólne"
+
+#: ../applets/clock/clock.glade.h:15
+msgid "Latitude:"
+msgstr "Szerokość:"
+
+#: ../applets/clock/clock.glade.h:16
+msgid "Location Name:"
+msgstr "Nazwa położenia:"
+
+#: ../applets/clock/clock.glade.h:18
+msgid "Longitude:"
+msgstr "Długość:"
+
+#: ../applets/clock/clock.glade.h:19
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"Północ\n"
+"Południe"
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Show _temperature"
+msgstr "Wyświetlanie _temperatury"
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Show _weather"
+msgstr "Wyświetlanie _pogody"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Show seco_nds"
+msgstr "Wyświetlanie seku_nd"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Show the _date"
+msgstr "Wyświetlanie _daty"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Time Settings"
+msgstr "Ustawienia czasu"
+
+#: ../applets/clock/clock.glade.h:27
+msgid "Time _Settings"
+msgstr "Ustawienia _czasu"
+
+#: ../applets/clock/clock.glade.h:28
+msgid "Time:"
+msgstr "Czas:"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "Timezone:"
+msgstr "Strefa czasowa:"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "Weather"
+msgstr "Pogoda"
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Find:"
+msgstr "_Znajdź:"
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Pressure unit:"
+msgstr "Jednostka _ciśnienia:"
+
+#: ../applets/clock/clock.glade.h:33
+msgid "_Temperature unit:"
+msgstr "Jednostka _temperatury:"
+
+#: ../applets/clock/clock.glade.h:34
+msgid "_Visibility unit:"
+msgstr "Jednostka _widoczności:"
+
+#: ../applets/clock/clock.glade.h:35
+msgid "_Wind speed unit:"
+msgstr "Jednostka prędkości _wiatru:"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -282,13 +423,8 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
-msgid ""
-"A list of timezone IDs. Each ID identifies an individual timezone. The "
-"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
-msgstr ""
-"Lista identyfikatorów (ID) stref czasowych. Każdy identyfikator określa "
-"pojedynczą strefę czasową. Ustawienia każdego z tych paneli są przechowywane "
-"w kluczach  $(id)_name i $(id)_zone."
+msgid "A list of locations to display in the calendar window."
+msgstr "Lista położeń do wyświetlenia w oknie kalendarza."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -303,84 +439,116 @@ msgid "Expand list of birthdays"
 msgstr "Rozwiń listę urodzin"
 
 #: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "Rozwinięcie listy położeń"
+
+#: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
 msgstr "Rozwiń listę zadań"
 
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:18
 msgid "Expand list of weather information"
 msgstr "Rozwiń listę informacji pogodowych"
 
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "Format godzin"
 
-#: ../applets/clock/clock.schemas.in.h:19
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "Jeżeli ustawione, wyświetla ikonę pogody."
+
+#: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Określa czy wyświetlać w zegarze datę obok czasu."
 
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
 msgstr "Określa czy wyświetlać sekundy."
 
-#: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr "Określa, czy wyświetlać w zegarze przycisk strefy czasowej obok czasu."
-
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Określa czy wyświetlać czas UTC."
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr "Jeżeli ustawione, wysuwa listę spotkań w kalendarzu."
 
-#: ../applets/clock/clock.schemas.in.h:24
+#: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr "Jeżeli ustawione, wysuwa listę urodzin w kalendarzu."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "Jeżeli ustawione, wysuwa listę położeń w oknie kalendarza."
+
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "Jeżeli ustawione, wysuwa listę zadań w kalendarzu."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr "Jeżeli ustawione, wysuwa listę informacji pogodowych w kalendarzu."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Określa czy wyświetlać datę w podpowiedzi, gdy wskaźnik myszy znajduje się "
 "nad zegarem."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Jeżeli ustawione, wyświetla temperaturę obok ikony pogody."
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "Jeżeli ustawione, wyświetla numery tygodni w kalendarzu."
 
-#: ../applets/clock/clock.schemas.in.h:29
-msgid "Name of the timezone"
-msgstr "Nazwa strefy czasowej"
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "List of locations"
+msgstr "Lista położeń"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "Wyświetlanie daty w zegarze"
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "Wyświetlanie daty w podpowiedzi"
 
-#: ../applets/clock/clock.schemas.in.h:32
-msgid "Show the timezone button"
-msgstr "Wyświetlanie przycisku strefy czasowej"
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show temperature in clock"
+msgstr "Wyświetlanie temperatury w zegarze"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "Wyświetlanie czasu z sekundami"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show weather in clock"
+msgstr "Wyświetlanie pogody w zegarze"
+
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "Wyświetlanie numerów tygodni w kalendarzu"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "Jednostka prędkości"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "Jednostka temperatury"
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "Jednostka używana podczas wyświetlania temperatur."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "Jednostka używana podczas wyświetlania prędkości wiatrów."
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -389,7 +557,7 @@ msgstr ""
 "klucz \"format\". Schemat został zachowany dla zgodności z poprzednimi "
 "wersjami."
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:44
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -401,7 +569,7 @@ msgstr ""
 "używać parametrów zrozumiałych dla funkcji strftime(). Proszę zobaczyć "
 "instrukcję strtrime() po więcej informacji."
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -422,51 +590,97 @@ msgstr ""
 "\" (własny), zegar będzie wyświetlał czas zgodnie z formatem podanym w "
 "kluczu custom_format."
 
-#: ../applets/clock/clock.schemas.in.h:38
-msgid ""
-"This key specifies the name of the timezone as can be used in the TZ "
-"environment variable."
-msgstr ""
-"Określa nazwę strefy czasowej, jaka może zostać użyta w zmiennej "
-"środowiskowej TZ."
-
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Określa program uruchamiany w celu skonfigurowania czasu."
 
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "This key specifies the user-visible name of the timezone."
-msgstr "Określa widoczną dla użytkownika nazwę strefy czasowej."
-
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "Narzędzie konfiguracji czasu"
 
-#: ../applets/clock/clock.schemas.in.h:42
-msgid "Timezone ID list"
-msgstr "Lista identyfikatorów (ID) stref czasowych"
-
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "Użycie czasu internetowego"
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "Czasu uniksowy"
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "Czas UTC"
 
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "User-visible name of the timezone"
-msgstr "Nazwa strefy czasowej widoczna dla użytkownika"
+#. make a fake location with a null TZ
+#. make a fake location with the current TZ
+#: ../applets/clock/clock-location.c:356 ../applets/clock/clock-location.c:363
+msgid "Unknown Location"
+msgstr "Nieznane położenie"
+
+#: ../applets/clock/clock-location-tile.c:198
+msgid "Failed to set the system timezone"
+msgstr "Ustawienie strefy czasowej systemu nieudane"
+
+#: ../applets/clock/clock-location-tile.c:223
+msgid "<small>Set...</small>"
+msgstr "<small>Ustaw...</small>"
+
+#: ../applets/clock/clock-location-tile.c:224
+msgid "<small>Set</small>"
+msgstr "<small>Ustaw</small>"
+
+#: ../applets/clock/clock-location-tile.c:285
+msgid "Set as current timezone for this computer"
+msgstr "Ustawienie jako bieżąca strefa czasowa dla tego komputera"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:478
+#: ../applets/clock/clock-location-tile.c:484
+msgid "Unknown"
+msgstr "Nieznany"
+
+#: ../applets/clock/clock-location-tile.c:479
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, odczuwalna %s"
+
+#: ../applets/clock/clock-location-tile.c:489
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Wschód słońca: %s / Zachód słońca: %s"
 
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Przy wyświetlaniu pomocy wystąpił błąd: %s"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+#, fuzzy
+msgid "Change system time"
+msgstr "Ustawienie czasu systemowego"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+#, fuzzy
+msgid "Change system time zone"
+msgstr "Ustawienie strefy czasowej systemu nieudane"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr ""
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+#, fuzzy
+msgid "Privileges are required to change the system time zone."
+msgstr "Ustawienie strefy czasowej systemu nieudane"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+#, fuzzy
+msgid "Privileges are required to change the system time."
+msgstr "Ustawienie czasu systemowego nieudane"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr ""
 
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -680,7 +894,7 @@ msgstr "Zobacz dzisiejszą datę!"
 msgid "%s the Fish, the fortune teller"
 msgstr "Rybka %s obwieszczająca wróżby"
 
-#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
+#: ../applets/fish/fish.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -854,7 +1068,7 @@ msgid "Window Selector"
 msgstr "Menu okien"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:620
+#: ../applets/wncklet/workspace-switcher.c:623
 msgid "Workspace Switcher"
 msgstr "Przełącznik obszarów roboczych"
 
@@ -899,47 +1113,47 @@ msgstr ""
 "Lista okien wyświetla listę wszystkich okien jako zestaw przycisków i "
 "pozwala na ich przeglądanie."
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>Przy przywracaniu zminimalizowanych okien</b>"
 
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>Grupowanie okien</b>"
 
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>Zawartość listy okien</b>"
 
-#: ../applets/wncklet/window-list.glade.h:5
+#: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
 msgstr "Grupowanie okien przy braku _miejsca"
 
-#: ../applets/wncklet/window-list.glade.h:6
+#: ../applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
 msgstr "Przywracanie _na bieżącym biurku"
 
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
 msgstr "Przywracanie n_a pierwotnym biurku"
 
-#: ../applets/wncklet/window-list.glade.h:8
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
 msgstr "Wyświetlanie _okien na bieżącym obszarze roboczym"
 
-#: ../applets/wncklet/window-list.glade.h:9
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "Wyświetlanie o_kien ze wszystkich obszarów roboczych"
 
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "Ustawienia listy okien"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "Grupowanie okien _zawsze"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "_Bez grupowania okien"
 
@@ -1005,13 +1219,13 @@ msgstr ""
 "przeglądanie."
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 #: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "wierszach"
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "kolumnach"
 
@@ -1037,7 +1251,7 @@ msgstr ""
 "Przy odczytywaniu wartości display_all_workspaces w aplecie przełączającym "
 "obszary robocze wystąpił błąd: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:622
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1170,7 +1384,7 @@ msgstr "[PLIK...]"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:131
 msgid "- Edit .desktop files"
-msgstr "- Edytuj pliki .desktop"
+msgstr "- Modyfikowanie plików .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:162
 #: ../gnome-panel/gnome-desktop-item-edit.c:214 ../gnome-panel/launcher.c:949
@@ -1220,6 +1434,7 @@ msgid "Could not use dropped item"
 msgstr "Nie można użyć opuszczonego elementu"
 
 #: ../gnome-panel/launcher.c:471
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Dla pliku aktywatora panelu nie określono URI\n"
 
@@ -1452,6 +1667,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "_Wyszukiwany element do dodania do \"%s\":"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "Dodawanie do szuflady"
 
@@ -1460,6 +1676,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "_Wyszukiwany element do dodania do szuflady:"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "Dodawanie do panelu"
 
@@ -2320,10 +2537,6 @@ msgstr "_Kolor:"
 msgid "E_xpand"
 msgstr "_Rozwijanie"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "Ogólne"
-
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
 msgstr "Szczegóły dotyczące tła obrazu"
@@ -2399,6 +2612,7 @@ msgid "pixels"
 msgstr "pikseli"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "Nie można odnaleźć odpowiedniej aplikacji."
 
@@ -3228,6 +3442,57 @@ msgstr "_Aplet:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Katalog z ustawieniami:"
+
+#~ msgid "%A %B %d"
+#~ msgstr "%A %d %B"
+
+#~ msgid "Click to view time in other timezones"
+#~ msgstr "Kliknij, aby wyświetlić czas w innych strefach czasowych"
+
+#~ msgid "Clock _type:"
+#~ msgstr "Typ _zegara:"
+
+#~ msgid "12 hour"
+#~ msgstr "12-godzinny"
+
+#~ msgid "Use _UTC"
+#~ msgstr "Czas _UTC"
+
+#~ msgid "Show multiple _timezones"
+#~ msgstr "Wyświetlanie wielu s_tref czasowych"
+
+#~ msgid ""
+#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
+#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
+#~ "keys."
+#~ msgstr ""
+#~ "Lista identyfikatorów (ID) stref czasowych. Każdy identyfikator określa "
+#~ "pojedynczą strefę czasową. Ustawienia każdego z tych paneli są "
+#~ "przechowywane w kluczach  $(id)_name i $(id)_zone."
+
+#~ msgid ""
+#~ "If true, display the timezone button in the clock, in addition to time."
+#~ msgstr ""
+#~ "Określa, czy wyświetlać w zegarze przycisk strefy czasowej obok czasu."
+
+#~ msgid "Show the timezone button"
+#~ msgstr "Wyświetlanie przycisku strefy czasowej"
+
+#~ msgid ""
+#~ "This key specifies the name of the timezone as can be used in the TZ "
+#~ "environment variable."
+#~ msgstr ""
+#~ "Określa nazwę strefy czasowej, jaka może zostać użyta w zmiennej "
+#~ "środowiskowej TZ."
+
+#~ msgid "This key specifies the user-visible name of the timezone."
+#~ msgstr "Określa widoczną dla użytkownika nazwę strefy czasowej."
+
+#~ msgid "Timezone ID list"
+#~ msgstr "Lista identyfikatorów (ID) stref czasowych"
+
+#~ msgid "User-visible name of the timezone"
+#~ msgstr "Nazwa strefy czasowej widoczna dla użytkownika"
 
 #~ msgid "<b>Window List Size</b>"
 #~ msgstr "<b>Rozmiar listy okien</b>"
