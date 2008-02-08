@@ -1,5 +1,5 @@
 # Thai translation of gnome-panel.
-# Copyright (C) 2004-2007 Free Software Foundation, Inc.
+# Copyright (C) 2004-2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 #
 # Supphachoke Suntiwichaya <mrchoke@opentle.org>, 2003.
@@ -7,14 +7,14 @@
 # Supranee Thirawatthanasuk <supranee@opentle.org>, 2004.
 # Chanchai Junlouchai <taz@opentle.org>, 2004.
 # Paisa Seeluangsawat <paisa@users.sf.net>, 2004.
-# Theppitak Karoonboonyanan  <thep@linux.thai.net>, 2004-2007.
+# Theppitak Karoonboonyanan  <thep@linux.thai.net>, 2004-2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-10 09:03+0700\n"
-"PO-Revision-Date: 2007-07-10 15:48+0700\n"
+"POT-Creation-Date: 2008-02-08 08:07+0700\n"
+"PO-Revision-Date: 2008-02-08 08:53+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgid "_Preferences"
 msgstr "_ปรับแต่ง..."
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:2230
+#: applets/clock/clock.c:4056
 msgid "Clock"
 msgstr "นาฬิกา"
 
@@ -81,51 +81,61 @@ msgstr "โรงงานสร้างแอพเพล็ตนาฬิก
 msgid "Get the current time and date"
 msgstr "ดูวันและเวลาปัจจุบัน"
 
-#: applets/clock/calendar-window.c:226 applets/clock/clock.c:347
+#: applets/clock/calendar-window.c:242 applets/clock/clock.c:420
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/calendar-window.c:228 applets/clock/clock.c:349
-#: applets/clock/clock.c:1256
+#: applets/clock/calendar-window.c:244 applets/clock/clock.c:422
+#: applets/clock/clock.c:1550
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: applets/clock/calendar-window.c:234
+#: applets/clock/calendar-window.c:250
 msgid "%b %d"
 msgstr "%a %e %b"
 
-#: applets/clock/calendar-window.c:742
-msgid "_Tasks"
-msgstr "_งาน"
+#: applets/clock/calendar-window.c:765
+msgid "Tasks"
+msgstr "งาน"
 
-#: applets/clock/calendar-window.c:858
+#: applets/clock/calendar-window.c:765
+#: applets/clock/calendar-window.c:938
+#: applets/clock/calendar-window.c:1554
+msgid "Edit"
+msgstr "แก้ไข"
+
+#: applets/clock/calendar-window.c:883
 msgid "All Day"
 msgstr "ทั้งวัน"
 
-#: applets/clock/calendar-window.c:985
-msgid "_Appointments"
-msgstr "_นัด"
+#: applets/clock/calendar-window.c:1019
+msgid "Appointments"
+msgstr "นัด"
 
-#: applets/clock/calendar-window.c:1002
-msgid "_Birthdays and Anniversaries"
-msgstr "_วันเกิดและวันครบรอบ"
+#: applets/clock/calendar-window.c:1044
+msgid "Birthdays and Anniversaries"
+msgstr "วันเกิดและวันครบรอบ"
 
-#: applets/clock/calendar-window.c:1018
-msgid "_Weather Information"
-msgstr "_รายงานอากาศ"
+#: applets/clock/calendar-window.c:1069
+msgid "Weather Information"
+msgstr "รายงานอากาศ"
 
-#: applets/clock/calendar-window.c:1687
+#: applets/clock/calendar-window.c:1554 applets/clock/clock.glade.h:17
+msgid "Locations"
+msgstr "ตำแหน่งที่ตั้ง"
+
+#: applets/clock/calendar-window.c:1850
 msgid "Calendar"
 msgstr "ปฏิทิน"
 
-#: applets/clock/clock.c:347
+#: applets/clock/clock.c:420
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:349 applets/clock/clock.c:1254
+#: applets/clock/clock.c:422 applets/clock/clock.c:1548
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -134,7 +144,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:369
+#: applets/clock/clock.c:442
 msgid "%a %b %e"
 msgstr "%a %-d %b"
 
@@ -142,7 +152,7 @@ msgstr "%a %-d %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:376
+#: applets/clock/clock.c:449
 #, c-format
 msgid ""
 "%1$s\n"
@@ -155,121 +165,117 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:384
+#: applets/clock/clock.c:457
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip
-#: applets/clock/clock.c:527
-msgid "%A %B %d"
-msgstr "%Aที่ %-d %B"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: applets/clock/clock.c:639
+msgid "%A %B %d (%%s)"
+msgstr "วัน%Aที่ %-d %B %EY (%%s)"
 
-#: applets/clock/clock.c:541
+#: applets/clock/clock.c:669
 msgid "Click to hide your appointments and tasks"
 msgstr "กดเพื่อซ่อนนัดหมายและรายการภารกิจของคุณ"
 
-#: applets/clock/clock.c:544
+#: applets/clock/clock.c:672
 msgid "Click to view your appointments and tasks"
 msgstr "กดเพื่อดูนัดหมายและรายการภารกิจของคุณ"
 
-#: applets/clock/clock.c:548
+#: applets/clock/clock.c:676
 msgid "Click to hide month calendar"
 msgstr "กดเพื่อซ่อนปฏิทินรายเดือน"
 
-#: applets/clock/clock.c:551
+#: applets/clock/clock.c:679
 msgid "Click to view month calendar"
 msgstr "กดเพื่อดูปฏิทินรายเดือน"
 
-#: applets/clock/clock.c:1095
-msgid "Click to view time in other timezones"
-msgstr "กดเพื่อดูเวลาในเขตเวลาอื่น"
-
-#: applets/clock/clock.c:1102
+#: applets/clock/clock.c:1400
 msgid "Computer Clock"
 msgstr "นาฬิกาคอมพิวเตอร์"
 
-#: applets/clock/clock.c:1249
+#: applets/clock/clock.c:1543
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:1251
+#: applets/clock/clock.c:1545
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: applets/clock/clock.c:1293
+#: applets/clock/clock.c:1587
 msgid "%A, %B %d %Y"
 msgstr "วัน%Aที่ %-d %B %EY"
 
-#: applets/clock/clock.c:1368
+#: applets/clock/clock.c:1662
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "เรียกใช้เครื่องมือตั้งเวลาไม่สำเร็จ: %s"
 
-#: applets/clock/clock.c:1406
+#: applets/clock/clock.c:1691
+msgid "Set System Time..."
+msgstr "ตั้งเวลาของเครื่อง..."
+
+#: applets/clock/clock.c:1692 applets/clock/clock.glade.h:21
+msgid "Set System Time"
+msgstr "ตั้งเวลาของเครื่อง"
+
+#: applets/clock/clock.c:1706
+msgid "Failed to set the system time"
+msgstr "ตั้งเวลาของเครื่องไม่สำเร็จ"
+
+#: applets/clock/clock.c:1879
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "หาโปรแกรมสำหรับตั้งวันที่และเวลาไม่พบ โปรแกรมอาจยังไม่ได้ติดตั้ง?"
 
-#: applets/clock/clock.c:1917
+#: applets/clock/clock.c:2698
 msgid "Custom format"
 msgstr "กำหนดรูปแบบเอง"
 
-#: applets/clock/clock.c:2062
-msgid "Clock Preferences"
-msgstr "ปรับแต่งนาฬิกา"
+#: applets/clock/clock.c:3498 applets/clock/clock-location.c:373
+#: applets/clock/clock-location-tile.c:468
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
 
-#: applets/clock/clock.c:2087
-msgid "Clock _type:"
-msgstr "_แบบบอกเวลา:"
+#: applets/clock/clock.c:3757
+msgid "City Name"
+msgstr "ชื่อเมือง"
 
-#: applets/clock/clock.c:2098
-msgid "12 hour"
-msgstr "12 ชั่วโมง"
+#: applets/clock/clock.c:3761
+msgid "City Time Zone"
+msgstr "เขตเวลาของเมือง"
 
-#: applets/clock/clock.c:2099
+#: applets/clock/clock.c:3952
 msgid "24 hour"
 msgstr "24 ชั่วโมง"
 
-#: applets/clock/clock.c:2100
+#: applets/clock/clock.c:3953
 msgid "UNIX time"
 msgstr "เวลาแบบยูนิกซ์"
 
-#: applets/clock/clock.c:2101
+#: applets/clock/clock.c:3954
 msgid "Internet time"
 msgstr "เวลาแบบอินเทอร์เน็ต"
 
-#: applets/clock/clock.c:2109
+#: applets/clock/clock.c:3962
 msgid "Custom _format:"
 msgstr "_กำหนดรูปแบบเอง:"
 
-#: applets/clock/clock.c:2128
-msgid "Show _seconds"
-msgstr "แสดง_วินาที"
-
-#: applets/clock/clock.c:2137
-msgid "Show _date"
-msgstr "แสดงวั_นที่"
-
-#: applets/clock/clock.c:2146
-msgid "Use _UTC"
-msgstr "แสดงเวลา _UTC"
-
-#: applets/clock/clock.c:2155
-msgid "Show multiple _timezones"
-msgstr "แสดงหลายเ_ขตเวลา"
-
-#: applets/clock/clock.c:2233
+#: applets/clock/clock.c:4059
 msgid "The Clock displays the current time and date"
 msgstr "นาฬิกาแสดงวันและเวลาปัจจุบัน"
 
 #. Translator credits
-#: applets/clock/clock.c:2236 applets/fish/fish.c:588
+#: applets/clock/clock.c:4062 applets/fish/fish.c:588
 #: applets/notification_area/main.c:140
 #: applets/wncklet/showdesktop.c:533 applets/wncklet/window-list.c:605
 #: applets/wncklet/window-menu.c:75
-#: applets/wncklet/workspace-switcher.c:617
+#: applets/wncklet/workspace-switcher.c:620
 #: gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr ""
@@ -282,6 +288,139 @@ msgstr ""
 "\n"
 "ถ้ามีเวลาโปรดมาช่วยกันแปล :-)\n"
 "http://gnome-th.sf.net"
+
+#: applets/clock/clock.glade.h:1
+msgid "12 _hour format"
+msgstr "แ_บบ AM/PM"
+
+#: applets/clock/clock.glade.h:2
+msgid "24 h_our format"
+msgstr "แบบ 24 _นาฬิกา"
+
+#: applets/clock/clock.glade.h:3
+msgid "<b>Clock Options</b>"
+msgstr "<b>รูปแบบนาฬิกา</b>"
+
+#: applets/clock/clock.glade.h:4
+msgid "<b>Display</b>"
+msgstr "<b>การแสดงผล</b>"
+
+#: applets/clock/clock.glade.h:5
+msgid "<b>Panel Display</b>"
+msgstr "<b>การแสดงบนพาเนล</b>"
+
+#: applets/clock/clock.glade.h:6
+msgid "<b>Time Settings</b>"
+msgstr "<b>ตั้งเวลา</b>"
+
+#: applets/clock/clock.glade.h:7
+msgid "<i>(optional)</i>"
+msgstr "<b>(ระบุหรือไม่ก็ได้)</b>"
+
+#: applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "ปรับแต่งนาฬิกา"
+
+#: applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr "เวลาปัจจุบัน:"
+
+#: applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"ตะวันออก\n"
+"ตะวันตก"
+
+#: applets/clock/clock.glade.h:12
+msgid "Find _Next"
+msgstr "หาต่_อ"
+
+#: applets/clock/clock.glade.h:13
+msgid "Find..."
+msgstr "หา..."
+
+#: applets/clock/clock.glade.h:14
+#: gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "ทั่วไป"
+
+#: applets/clock/clock.glade.h:15
+msgid "Latitude:"
+msgstr "ละติจูด:"
+
+#: applets/clock/clock.glade.h:16
+msgid "Location Name:"
+msgstr "ชื่อตำแหน่งที่ตั้ง:"
+
+#: applets/clock/clock.glade.h:18
+msgid "Longitude:"
+msgstr "ลองจิจูด:"
+
+#: applets/clock/clock.glade.h:19
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"เหนือ\n"
+"ใต้"
+
+#: applets/clock/clock.glade.h:22
+msgid "Show _temperature"
+msgstr "แสดงอุณหภู_มิ"
+
+#: applets/clock/clock.glade.h:23
+msgid "Show _weather"
+msgstr "แสดงรายงาน_อากาศ"
+
+#: applets/clock/clock.glade.h:24
+msgid "Show seco_nds"
+msgstr "แสดง_วินาที"
+
+#: applets/clock/clock.glade.h:25
+msgid "Show the _date"
+msgstr "แสดงวัน_ที่"
+
+#: applets/clock/clock.glade.h:26
+msgid "Time Settings"
+msgstr "ตั้งเวลา"
+
+#: applets/clock/clock.glade.h:27
+msgid "Time _Settings"
+msgstr "_ตั้งเวลา"
+
+#: applets/clock/clock.glade.h:28
+msgid "Time:"
+msgstr "เวลา:"
+
+#: applets/clock/clock.glade.h:29
+msgid "Timezone:"
+msgstr "เขตเวลา:"
+
+#: applets/clock/clock.glade.h:30
+msgid "Weather"
+msgstr "อากาศ"
+
+#: applets/clock/clock.glade.h:31
+msgid "_Find:"
+msgstr "_หา:"
+
+#: applets/clock/clock.glade.h:32
+msgid "_Pressure unit:"
+msgstr "หน่วยความ_กดอากาศ:"
+
+#: applets/clock/clock.glade.h:33
+msgid "_Temperature unit:"
+msgstr "หน่วยอุณหภู_มิ:"
+
+#: applets/clock/clock.glade.h:34
+msgid "_Visibility unit:"
+msgstr "หน่วย_ทัศนวิสัย:"
+
+#: applets/clock/clock.glade.h:35
+msgid "_Wind speed unit:"
+msgstr "หน่วยความเร็ว_ลม:"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -298,12 +437,8 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: applets/clock/clock.schemas.in.h:12
-msgid ""
-"A list of timezone IDs. Each ID identifies an individual timezone. The "
-"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
-msgstr ""
-"รายการ ID ของเขตเวลา แต่ละ ID แทนเขตเวลาแต่ละเขต "
-"ค่าตั้งสำหรับเขตเวลาเหล่านี้จะเก็บไว้ในคีย์ $(id)_name และ $(id)_zone"
+msgid "A list of locations to display in the calendar window."
+msgstr "รายชื่อตำแหน่งที่ตั้งที่จะแสดงในหน้าต่างปฏิทิน"
 
 #: applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -318,82 +453,114 @@ msgid "Expand list of birthdays"
 msgstr "ขยายรายการวันเกิด"
 
 #: applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "ขยายรายการตำแหน่งที่ตั้ง"
+
+#: applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
 msgstr "ขยายรายการงาน"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:18
 msgid "Expand list of weather information"
 msgstr "ขยายรายการรายงานอากาศ"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "รูปแบบชั่วโมง"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "ถ้าเลือก จะแสดงไอคอนรายงานอากาศ"
+
+#: applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
 msgstr "ถ้าเลือก จะแสดงวันที่ในนาฬิกาพร้อมกับเวลา"
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
 msgstr "ถ้าเลือก จะแสดงวินาทีในเวลา"
 
-#: applets/clock/clock.schemas.in.h:21
-msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr "ถ้าเลือก จะแสดงปุ่มเขตเวลาในนาฬิกา เพิ่มเติมจากการแสดงเวลา"
-
-#: applets/clock/clock.schemas.in.h:22
+#: applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "ถ้าเลือก จะแสดงเวลาตามเขตพิกัดเวลาสากล"
 
-#: applets/clock/clock.schemas.in.h:23
+#: applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr "ถ้าเลือก จะขยายรายการนัดในหน้าต่างปฏิทิน"
 
-#: applets/clock/clock.schemas.in.h:24
+#: applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr "ถ้าเลือก จะขยายรายการวันเกิดในหน้าต่างปฏิทิน"
 
-#: applets/clock/clock.schemas.in.h:25
+#: applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "ถ้าเลือก จะขยายรายการตำแหน่งที่ตั้งในหน้าต่างปฏิทิน"
+
+#: applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "ถ้าเลือก จะขยายรายการงานในหน้าต่างปฏิทิน"
 
-#: applets/clock/clock.schemas.in.h:26
+#: applets/clock/clock.schemas.in.h:28
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr "ถ้าเลือก จะขยายรายการรายงานอากาศในหน้าต่างปฏิทิน"
 
-#: applets/clock/clock.schemas.in.h:27
+#: applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "ถ้าเลือก จะแสดงวันที่ในคำแนะนำเครื่องมือเมื่อตัวชี้อยู่เหนือนาฬิกา"
 
-#: applets/clock/clock.schemas.in.h:28
+#: applets/clock/clock.schemas.in.h:30
+msgid "If true, show the temperature next to the weather icon."
+msgstr "ถ้าเลือก จะแสดงอุณหภูมิข้างไอคอนรายงานอากาศ"
+
+#: applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "ถ้าเลือก จะแสดงเลขสัปดาห์ในปฏิทิน"
 
-#: applets/clock/clock.schemas.in.h:29
-msgid "Name of the timezone"
-msgstr "ชื่อของเขตเวลา"
+#: applets/clock/clock.schemas.in.h:32
+msgid "List of locations"
+msgstr "รายการตำแหน่งที่ตั้ง"
 
-#: applets/clock/clock.schemas.in.h:30
+#: applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "แสดงวันที่ในนาฬิกา"
 
-#: applets/clock/clock.schemas.in.h:31
+#: applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "แสดงวันที่ในคำแนะนำเครื่องมือ"
 
-#: applets/clock/clock.schemas.in.h:32
-msgid "Show the timezone button"
-msgstr "แสดงปุ่มเขตเวลา"
+#: applets/clock/clock.schemas.in.h:35
+msgid "Show temperature in clock"
+msgstr "แสดงอุณหภูมิในนาฬิกา"
 
-#: applets/clock/clock.schemas.in.h:33
+#: applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "แสดงเวลาพร้อมวินาที"
 
-#: applets/clock/clock.schemas.in.h:34
+#: applets/clock/clock.schemas.in.h:37
+msgid "Show weather in clock"
+msgstr "แสดงสภาพอากาศในนาฬิกา"
+
+#: applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "แสดงเลขสัปดาห์ในปฏิทิน"
 
-#: applets/clock/clock.schemas.in.h:35
+#: applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "หน่วยความเร็ว"
+
+#: applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "หน่วยอุณหภูมิ"
+
+#: applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "หน่วยที่จะใช้แสดงอุณหภูมิ"
+
+#: applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "หน่วยที่จะใช้แสดงความเร็วลม"
+
+#: applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -401,7 +568,7 @@ msgstr ""
 "ค่านี้เลิกใช้แล้วใน GNOME 2.6 และจะใช้ค่า 'format' แทน schema "
 "นี้คงไว้เพื่อความเข้ากันได้กับโปรแกรมรุ่นเก่าเท่านั้น"
 
-#: applets/clock/clock.schemas.in.h:36
+#: applets/clock/clock.schemas.in.h:44
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -412,7 +579,7 @@ msgstr ""
 "คุณสามารถใช้รหัสการแปลงของ strftime() เพื่อระบุรูปแบบที่ต้องการได้ "
 "ดูข้อมูลเพิ่มเติมได้จากคู่มือของ strftime()"
 
-#: applets/clock/clock.schemas.in.h:37
+#: applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -429,49 +596,93 @@ msgstr ""
 "เวลาจึงเหมือนกันทุกแห่งในโลกถ้ากำหนดเป็น \"unix\" นาฬิกาจะแสดงเวลาเป็นวินาทีนับจาก 1970-"
 "01-01 ถ้ากำหนดเป็น \"custom\" นาฬิกาจะแสดงตามรูปแบบที่กำหนดใน custom_format"
 
-#: applets/clock/clock.schemas.in.h:38
-msgid ""
-"This key specifies the name of the timezone as can be used in the TZ "
-"environment variable."
-msgstr "ค่านี้ระบุชื่อเขตเวลาในรูปแบบที่ใช้กับตัวแปรสภาพแวดล้อม TZ"
-
-#: applets/clock/clock.schemas.in.h:39
+#: applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "ค่านี้กำหนดโปรแกรมที่เรียกใช้เพื่อตั้งเวลา"
 
-#: applets/clock/clock.schemas.in.h:40
-msgid "This key specifies the user-visible name of the timezone."
-msgstr "ค่านี้กำหนดชื่อเขตเวลาที่จะแสดงต่อผู้ใช้"
-
-#: applets/clock/clock.schemas.in.h:41
+#: applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "เครื่องมือตั้งเวลา"
 
-#: applets/clock/clock.schemas.in.h:42
-msgid "Timezone ID list"
-msgstr "รายการ ID ของเขตเวลา"
-
-#: applets/clock/clock.schemas.in.h:43
+#: applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "ใช้เวลาแบบอินเทอร์เน็ต"
 
-#: applets/clock/clock.schemas.in.h:44
+#: applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "ใช้เวลาแบบยูนิกซ์"
 
-#: applets/clock/clock.schemas.in.h:45
+#: applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "แสดงเวลา UTC"
 
-#: applets/clock/clock.schemas.in.h:46
-msgid "User-visible name of the timezone"
-msgstr "ชื่อเขตเวลาที่จะแสงต่อผู้ใช้"
+#. make a fake location with a null TZ
+#. make a fake location with the current TZ
+#: applets/clock/clock-location.c:356 applets/clock/clock-location.c:363
+msgid "Unknown Location"
+msgstr "ตำแหน่งที่ตั้งที่ไม่รู้จัก"
+
+#: applets/clock/clock-location-tile.c:198
+msgid "Failed to set the system timezone"
+msgstr "ตั้งชื่อเขตเวลาของระบบไม่สำเร็จ"
+
+#: applets/clock/clock-location-tile.c:223
+msgid "<small>Set...</small>"
+msgstr "<small>ตั้ง...</small>"
+
+#: applets/clock/clock-location-tile.c:224
+msgid "<small>Set</small>"
+msgstr "<small>ตั้ง</small>"
+
+#: applets/clock/clock-location-tile.c:285
+msgid "Set as current timezone for this computer"
+msgstr "กำหนดเป็นเขตเวลาปัจจุบันของเครื่องนี้"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: applets/clock/clock-location-tile.c:478
+#: applets/clock/clock-location-tile.c:484
+msgid "Unknown"
+msgstr "ไม่ทราบ"
+
+#: applets/clock/clock-location-tile.c:479
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, รู้สึกเหมือน %s"
+
+#: applets/clock/clock-location-tile.c:489
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "ดวงอาทิตย์ขึ้น: %s / ดวงอาทิตย์ตก: %s"
 
 #: applets/clock/clock-utils.c:72 applets/fish/fish.c:160
 #: applets/notification_area/main.c:90 applets/wncklet/wncklet.c:109
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "เกิดข้อผิดพลาดในการแสดงวิธีใช้: %s"
+
+#: applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "ตั้งเวลาของระบบ"
+
+#: applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "เปลี่ยนเขตเวลาของระบบ"
+
+#: applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "ตั้งนาฬิกาฮาร์ดแวร์"
+
+#: applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "ต้องมีสิทธิ์พิเศษหากจะเปลี่ยนเขตเวลาของระบบ"
+
+#: applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "ต้องมีสิทธิ์พิเศษหากจะตั้งเวลาของระบบ"
+
+#: applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "ต้องมีสิทธิ์พิเศษหากจะตั้งนาฬิกาฮาร์ดแวร์"
 
 #: applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -490,36 +701,12 @@ msgid ""
 "<small><i>Click on the map to zoom and select the timezone of a city, or "
 "right click to zoom out.</i></small>"
 msgstr ""
-"<small><i>คลิกที่แผนที่เพื่อขยายดูและเลือกเขตเวลาของเมือง "
-"หรือคลิกปุ่มขวาเพื่อย่อแผนที่</i></small>"
+"<small><i>คลิกที่แผนที่เพื่อขยายดูและเลือกเขตเวลาของเมือง หรือคลิกปุ่มขวาเพื่อย่อแผนที่</i></"
+"small>"
 
 #: applets/clock/timezone.glade.h:5
 msgid "Edit Timezones"
 msgstr "แก้ไขเขตเวลา"
-
-#: applets/clock/timezone.glade.h:6
-msgid "gtk-add"
-msgstr "gtk-add"
-
-#: applets/clock/timezone.glade.h:7
-msgid "gtk-close"
-msgstr "gtk-close"
-
-#: applets/clock/timezone.glade.h:8
-msgid "gtk-go-down"
-msgstr "gtk-go-down"
-
-#: applets/clock/timezone.glade.h:9
-msgid "gtk-go-up"
-msgstr "gtk-go-up"
-
-#: applets/clock/timezone.glade.h:10
-msgid "gtk-help"
-msgstr "gtk-help"
-
-#: applets/clock/timezone.glade.h:11
-msgid "gtk-remove"
-msgstr "gtk-remove"
 
 #. Translators: the first %s is a place and the
 #. * second is a time. Result looks like this:
@@ -706,7 +893,7 @@ msgstr "ดูปฏิทินสิ!"
 msgid "%s the Fish, the fortune teller"
 msgstr "ปลา %s หมอดูไม่แม่น"
 
-#: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
+#: applets/fish/fish.glade.h:1
 #: gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -874,7 +1061,7 @@ msgid "Window Selector"
 msgstr "รายการหน้าต่างแบบเมนู"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/workspace-switcher.c:620
+#: applets/wncklet/workspace-switcher.c:623
 msgid "Workspace Switcher"
 msgstr "สลับพื้นที่ทำงาน"
 
@@ -916,47 +1103,47 @@ msgid ""
 "browse them."
 msgstr "รายการหน้าต่าง แสดงรายการหน้าต่างทั้งหมดเป็นชุดปุ่มกด และให้คุณเรียกดูหน้าต่างเหล่านั้น"
 
-#: applets/wncklet/window-list.glade.h:2
+#: applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>การขยายคืนหน้าต่างที่ถูกย่อ</b>"
 
-#: applets/wncklet/window-list.glade.h:3
+#: applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>การรวมกลุ่มหน้าต่าง</b>"
 
-#: applets/wncklet/window-list.glade.h:4
+#: applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>เนื้อหารายการหน้าต่าง</b>"
 
-#: applets/wncklet/window-list.glade.h:5
+#: applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
 msgstr "_รวมกลุ่มหน้าต่างเมื่อมีเนื้อที่จำกัด"
 
-#: applets/wncklet/window-list.glade.h:6
+#: applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
 msgstr "ขยายคืนกลับพื้นที่ทำงาน_ปัจจุบัน"
 
-#: applets/wncklet/window-list.glade.h:7
+#: applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
 msgstr "ขยายคืนกลับพื้นที่ทำงาน_ดั้งเดิม"
 
-#: applets/wncklet/window-list.glade.h:8
+#: applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
 msgstr "แสดงหน้าต่างจากพื้นที่ทำงาน_ปัจจุบัน"
 
-#: applets/wncklet/window-list.glade.h:9
+#: applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "แสดงหน้าต่างจากพื้นที่ทำงาน_ทั้งหมด"
 
-#: applets/wncklet/window-list.glade.h:10
+#: applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "การปรับแต่งรายการหน้าต่าง"
 
-#: applets/wncklet/window-list.glade.h:11
+#: applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "รว_มกลุ่มหน้าต่างเสมอ"
 
-#: applets/wncklet/window-list.glade.h:12
+#: applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "_อย่ารวมกลุ่มหน้าต่าง"
 
@@ -1018,13 +1205,13 @@ msgid ""
 msgstr "ตัวเลือกหน้าต่าง แสดงรายการหน้าต่างทั้งหมดในเมนู และให้คุณเรียกดูหน้าต่างเหล่านั้น"
 
 #: applets/wncklet/workspace-switcher.c:213
-#: applets/wncklet/workspace-switcher.c:971
+#: applets/wncklet/workspace-switcher.c:974
 #: applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "แถว"
 
 #: applets/wncklet/workspace-switcher.c:213
-#: applets/wncklet/workspace-switcher.c:971
+#: applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "คอลัมน์"
 
@@ -1045,7 +1232,7 @@ msgstr ""
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "ผิดพลาดในการโหลดค่า display all workspaces สำหรับตัวสลับเปลี่ยนพื้นที่ทำงาน: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:622
+#: applets/wncklet/workspace-switcher.c:625
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1223,6 +1410,7 @@ msgid "Could not use dropped item"
 msgstr "ไม่สามารถใช้สิ่งที่ลากมาปล่อยได้"
 
 #: gnome-panel/launcher.c:471
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "ไม่ได้กำหนด URI ของแฟ้มพื้นโต๊ะของปุ่มเรียกโปรแกรมบนพาเนล\n"
 
@@ -1452,6 +1640,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "หา_รายการที่จะเพิ่มลงใน \"%s\":"
 
 #: gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "เพิ่มลงในลิ้นชัก"
 
@@ -1460,6 +1649,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "หา_รายการที่จะเพิ่มลงในลิ้นชัก:"
 
 #: gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "เพิ่มลงในพาเนล"
 
@@ -2185,8 +2375,9 @@ msgstr "ใช้พาธที่กำหนดเองสำหรับเ
 msgid "Error reading GConf string value '%s': %s"
 msgstr "ผิดพลาดในขณะอ่านค่าข้อความของ GConf '%s': %s"
 
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
 #: gnome-panel/panel-profile.c:808 gnome-panel/panel-profile.c:1590
-#: gnome-panel/panel-profile.c:1663 gnome-panel/panel-profile.c:1733
+#: gnome-panel/panel-profile.c:1663 gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "ผิดพลาดในขณะอ่านค่าเลขจำนวนเต็มของ GConf '%s': %s"
@@ -2265,10 +2456,6 @@ msgstr "_สี:"
 msgid "E_xpand"
 msgstr "ข_ยายเต็ม"
 
-#: gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "ทั่วไป"
-
 #: gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
 msgstr "รายละเอียดภาพพื้นหลัง"
@@ -2345,6 +2532,7 @@ msgid "pixels"
 msgstr "พิกเซล"
 
 #: gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "ไม่พบโปรแกรมที่เหมาะสม"
 
@@ -2811,7 +2999,8 @@ msgid ""
 msgstr ""
 "ตำแหน่งของพาเนลตามแกน X นับจากขอบขวาของหน้าจอ ถ้ากำหนดเป็น -1 จะไม่ใช้ค่านี้ "
 "และไปใช้ค่าในคีย์ x แทน ถ้าค่านี้มากกว่า 0 ก็จะไม่ใช้ค่าในคีย์ x  ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น "
-"ในโหมดขยายตัว ค่านี้จะถูกละเลย และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
+"ในโหมดขยายตัว ค่านี้จะถูกละเลย "
+"และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2833,7 +3022,8 @@ msgid ""
 msgstr ""
 "ตำแหน่งของพาเนลตามแกน Y นับจากขอบล่างของหน้าจอ ถ้ากำหนดเป็น -1 จะไม่ใช้ค่านี้ "
 "และไปใช้ค่าในคีย์ y แทน ถ้าค่านี้มากกว่า 0 ก็จะไม่ใช้ค่าในคีย์ y  ค่านี้มีผลในโหมดไม่ขยายตัวเท่านั้น "
-"ในโหมดขยายตัว ค่านี้จะถูกละเลย และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
+"ในโหมดขยายตัว ค่านี้จะถูกละเลย "
+"และพาเนลจะถูกวางไว้ที่ขอบหน้าจอซึ่งกำหนดโดยค่าแนววางของพาเนล"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -3130,6 +3320,71 @@ msgstr "แ_อพเพล็ต:"
 msgid "_Prefs Dir:"
 msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
 
+#~ msgid "%A %B %d"
+#~ msgstr "%Aที่ %-d %B"
+
+#~ msgid "Click to view time in other timezones"
+#~ msgstr "กดเพื่อดูเวลาในเขตเวลาอื่น"
+
+#~ msgid "Clock _type:"
+#~ msgstr "_แบบบอกเวลา:"
+
+#~ msgid "12 hour"
+#~ msgstr "12 ชั่วโมง"
+
+#~ msgid "Use _UTC"
+#~ msgstr "แสดงเวลา _UTC"
+
+#~ msgid "Show multiple _timezones"
+#~ msgstr "แสดงหลายเ_ขตเวลา"
+
+#~ msgid ""
+#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
+#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
+#~ "keys."
+#~ msgstr ""
+#~ "รายการ ID ของเขตเวลา แต่ละ ID แทนเขตเวลาแต่ละเขต "
+#~ "ค่าตั้งสำหรับเขตเวลาเหล่านี้จะเก็บไว้ในคีย์ $(id)_name และ $(id)_zone"
+
+#~ msgid ""
+#~ "If true, display the timezone button in the clock, in addition to time."
+#~ msgstr "ถ้าเลือก จะแสดงปุ่มเขตเวลาในนาฬิกา เพิ่มเติมจากการแสดงเวลา"
+
+#~ msgid "Show the timezone button"
+#~ msgstr "แสดงปุ่มเขตเวลา"
+
+#~ msgid ""
+#~ "This key specifies the name of the timezone as can be used in the TZ "
+#~ "environment variable."
+#~ msgstr "ค่านี้ระบุชื่อเขตเวลาในรูปแบบที่ใช้กับตัวแปรสภาพแวดล้อม TZ"
+
+#~ msgid "This key specifies the user-visible name of the timezone."
+#~ msgstr "ค่านี้กำหนดชื่อเขตเวลาที่จะแสดงต่อผู้ใช้"
+
+#~ msgid "Timezone ID list"
+#~ msgstr "รายการ ID ของเขตเวลา"
+
+#~ msgid "User-visible name of the timezone"
+#~ msgstr "ชื่อเขตเวลาที่จะแสงต่อผู้ใช้"
+
+#~ msgid "gtk-add"
+#~ msgstr "gtk-add"
+
+#~ msgid "gtk-close"
+#~ msgstr "gtk-close"
+
+#~ msgid "gtk-go-down"
+#~ msgstr "gtk-go-down"
+
+#~ msgid "gtk-go-up"
+#~ msgstr "gtk-go-up"
+
+#~ msgid "gtk-help"
+#~ msgstr "gtk-help"
+
+#~ msgid "gtk-remove"
+#~ msgstr "gtk-remove"
+
 #~ msgid "<b>Window List Size</b>"
 #~ msgstr "<b>ขนาดรายการหน้าต่าง</b>"
 
@@ -3314,9 +3569,6 @@ msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
 #~ msgid "file not found"
 #~ msgstr "ไม่พบแฟ้ม"
 
-#~ msgid "Unknown Window"
-#~ msgstr "หน้าต่างที่ไม่รู้จัก"
-
 #~ msgid "No Windows Open"
 #~ msgstr "ไม่มีหน้าต่างเปิดอยู่"
 
@@ -3481,9 +3733,6 @@ msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
 
 #~ msgid "Take screenshot after specified delay [in seconds]"
 #~ msgstr "จับภาพหน้าจอหลังจากระยะเวลาที่กำหนด [ในหน่วยวินาที]"
-
-#~ msgid "<b>Options</b>"
-#~ msgstr "<b>ตัวเลือก</b>"
 
 #~ msgid "<b>Preview</b>"
 #~ msgstr "<b>ตัวอย่างภาพ</b>"
