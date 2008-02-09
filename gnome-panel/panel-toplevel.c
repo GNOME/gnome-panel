@@ -3113,7 +3113,7 @@ panel_toplevel_expose (GtkWidget      *widget,
 				  GTK_SHADOW_OUT,
 				  &event->area, widget, "handlebox",
 				  x, y, width, height,
-				  GTK_ORIENTATION_HORIZONTAL);
+				  GTK_ORIENTATION_VERTICAL);
 
 		x = widget->allocation.width - HANDLE_SIZE;
 		if (edges & PANEL_EDGE_RIGHT)
@@ -3124,7 +3124,7 @@ panel_toplevel_expose (GtkWidget      *widget,
 				  GTK_SHADOW_OUT,
 				  &event->area, widget, "handlebox",
 				  x, y, width, height,
-				  GTK_ORIENTATION_HORIZONTAL);
+				  GTK_ORIENTATION_VERTICAL);
 	} else {
 		int x, y, width, height;
 		int xthickness, ythickness;
@@ -3151,7 +3151,7 @@ panel_toplevel_expose (GtkWidget      *widget,
 				  GTK_SHADOW_OUT,
 				  &event->area, widget, "handlebox",
 				  x, y, width, height,
-				  GTK_ORIENTATION_VERTICAL);
+				  GTK_ORIENTATION_HORIZONTAL);
 
 		y = widget->allocation.height - HANDLE_SIZE;
 		if (edges & PANEL_EDGE_BOTTOM)
@@ -3162,7 +3162,7 @@ panel_toplevel_expose (GtkWidget      *widget,
 				  GTK_SHADOW_OUT,
 				  &event->area, widget, "handlebox",
 				  x, y, width, height,
-				  GTK_ORIENTATION_VERTICAL);
+				  GTK_ORIENTATION_HORIZONTAL);
 	}
 
 	return retval;
