@@ -14,8 +14,8 @@
 #include <math.h>
 
 #include <glib.h>
+#include <gio/gio.h>
 #include <libgnome/gnome-i18n.h>
-#include <libgnomevfs/gnome-vfs.h>
 
 #ifdef HAVE_NETWORK_MANAGER
 #include <dbus/dbus-glib.h>
@@ -232,7 +232,7 @@ guess_zone_from_tree (const gchar *localtime, ClockZoneTable *zones)
 }
 
 static gchar *current_zone = NULL;
-static GnomeVFSMonitorHandle *monitor = NULL;
+static GFileMonitor *monitor = NULL;
 
 static void
 parse_etc_sysconfig_clock (void)
@@ -281,10 +281,10 @@ out:
 }
 
 static void
-monitor_etc_sysconfig_clock (GnomeVFSMonitorHandle *handle,
-			     const gchar *monitor_uri,
-			     const gchar *info_uri,
-			     GnomeVFSMonitorEventType event_type,
+monitor_etc_sysconfig_clock (GFileMonitor *handle,
+			     GFile *file,
+			     GFile *other_file,
+			     GFileMonitorEvent event,
 			     gpointer user_data)
 {
 	parse_etc_sysconfig_clock ();
@@ -294,13 +294,21 @@ static const gchar *
 zone_from_etc_sysconfig_clock (void)
 {
 	if (monitor == NULL) {
-		parse_etc_sysconfig_clock ();
+		GFile *file;
 
-		gnome_vfs_monitor_add (&monitor,
-				       "/etc/sysconfig/clock",
-				       GNOME_VFS_MONITOR_FILE,
-				       monitor_etc_sysconfig_clock,
-				       NULL);
+		parse_etc_sysconfig_clock ();
+		
+		file = g_file_new_for_path ("/etc/sysconfig/clock");
+
+		monitor = g_file_monitor_file (file, G_FILE_MONITOR_NONE,
+					       NULL, NULL);
+
+		g_object_unref (file);
+
+		if (monitor)
+			g_signal_connect (G_OBJECT (monitor), "changed", 
+					  G_CALLBACK (monitor_etc_sysconfig_clock),
+					  NULL);
 	}
 
 	return current_zone;
@@ -464,6 +472,12 @@ clock_location_finalize (GObject *g_obj)
                 g_source_remove (priv->weather_timeout);
                 priv->weather_timeout = 0;
         }
+
+	if (monitor) {
+		g_file_monitor_cancel (monitor);
+		g_object_unref (monitor);
+		monitor = NULL;
+	}
 
         G_OBJECT_CLASS (clock_location_parent_class)->finalize (g_obj);
 }

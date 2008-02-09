@@ -1,3 +1,14 @@
+2008-02-09  Vincent Untz  <vuntz@gnome.org>
+
+	Port to gio.
+	Based on patch by Diego Escalante Urrelo <diegoe@gnome.org>
+	Fix part of bug #509756.
+
+	* clock-location.c: (monitor_etc_sysconfig_clock): updated for
+	GFileMonitor changed signal
+	(zone_from_etc_sysconfig_clock): use GFileMonitor
+	(clock_location_finalize): free the monitor
+
 ==================== 2.21.90 ====================
 
 2008-01-28  Luca Ferretti  <elle.uca@libero.it>
