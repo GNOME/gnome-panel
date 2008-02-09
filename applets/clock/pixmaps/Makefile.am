@@ -7,11 +7,13 @@ icon_DATA =				\
 	clock-face-small-day.svg	\
 	clock-face-small-evening.svg	\
 	clock-face-small-night.svg	\
-	clock-map.svg			\
+	clock-map.png		\
 	clock-map-location-marker.png	\
 	clock-map-location-current.png	\
 	clock-map-location-hilight.png
 
-EXTRA_DIST = $(icon_DATA)
+EXTRA_DIST = 		\
+	clock-map.svg	\
+	$(icon_DATA)
 
 MAINTAINERCLEANFILES = Makefile.in

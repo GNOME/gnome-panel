@@ -6,7 +6,6 @@
 #include <sys/time.h>
 #include <sys/timeb.h>
 #include <gtk/gtk.h>
-#include <librsvg/rsvg.h>
 #include <math.h>
 
 #include "clock.h"
@@ -196,10 +195,9 @@ clock_map_refresh (ClockMap *this)
         }
 
         if (!priv->stock_map_pixbuf) {
-                /* load it small; resize later */
-                GdkPixbuf *pixbuf = rsvg_pixbuf_from_file_at_size
-                        (ICONDIR "/clock-map.svg",
-                         width, height, NULL);
+                GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale
+                        (ICONDIR "/clock-map.png",
+                         width, height, FALSE, NULL);
 
                 priv->width = gdk_pixbuf_get_width (pixbuf);
                 priv->height = gdk_pixbuf_get_height (pixbuf);
