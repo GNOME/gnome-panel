@@ -27,11 +27,8 @@
 #include <string.h>
 
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
-#include <libgnomevfs/gnome-vfs-result.h>
-#include <libgnomevfs/gnome-vfs-uri.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
-#include <libgnomevfs/gnome-vfs-xfer.h>
 #include <gconf/gconf-client.h>
 
 #include "launcher.h"
@@ -618,20 +615,16 @@ static void
 add_app_to_desktop (GtkWidget      *item,
 		    GMenuTreeEntry *entry)
 {
-	GnomeVFSURI *vfs_source_uri;
-	GnomeVFSURI *vfs_target_uri;
-	GnomeVFSResult res;
-	char *source_uri;
+	GFile *source;
+	GFile *target;
+	GError *error;
 	char *target_dir;
 	char *target_uri;
+	char *source_uri;
 
 	g_return_if_fail (entry != NULL);
 
-	source_uri = g_filename_to_uri (gmenu_tree_entry_get_desktop_file_path (entry), NULL, NULL);
-	g_return_if_fail (source_uri != NULL);
-
-	vfs_source_uri = gnome_vfs_uri_new (source_uri);
-	g_return_if_fail (vfs_source_uri != NULL);
+	source = g_file_new_for_path (gmenu_tree_entry_get_desktop_file_path (entry));
 
 	if (desktop_is_home_dir ()) {
 		target_dir = g_build_filename (g_get_home_dir (), NULL);
@@ -639,29 +632,27 @@ add_app_to_desktop (GtkWidget      *item,
 		target_dir = g_strdup (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
 	}
 
+	source_uri = g_file_get_uri (source);
 	target_uri = panel_make_unique_desktop_uri (target_dir, source_uri);
-	g_return_if_fail (target_uri != NULL);
-
-	vfs_target_uri = gnome_vfs_uri_new (target_uri);
-	g_return_if_fail (vfs_target_uri != NULL);
-
-	res = gnome_vfs_xfer_uri (vfs_source_uri, vfs_target_uri,
-				  GNOME_VFS_XFER_DEFAULT,
-				  GNOME_VFS_XFER_ERROR_MODE_ABORT,
-				  GNOME_VFS_XFER_OVERWRITE_MODE_ABORT,
-				  NULL, NULL);
-
-	if (res != GNOME_VFS_OK) {
-		g_warning ("Problem while copying launcher to desktop: %s",
-			   gnome_vfs_result_to_string (res));
-	}
-
-	gnome_vfs_uri_unref (vfs_source_uri);
-	gnome_vfs_uri_unref (vfs_target_uri);
-
 	g_free (source_uri);
 	g_free (target_dir);
+	g_return_if_fail (target_uri != NULL);
+
+	target = g_file_new_for_uri (target_uri);
 	g_free (target_uri);
+
+	error = NULL;
+	g_file_copy (source, target, G_FILE_COPY_NONE,
+		     NULL, NULL, NULL, &error);
+
+	g_object_unref (source);
+	g_object_unref (target);
+	
+	if (error != NULL) {
+		g_warning ("Problem while copying launcher to desktop: %s",
+			   error->message);
+		g_error_free (error);
+	}
 }
 
 
@@ -1106,9 +1097,12 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 	const char *path;
 	char       *uri;
 	char       *uri_list;
+	GFile      *file;
 
 	path = gmenu_tree_entry_get_desktop_file_path (entry);
-	uri = gnome_vfs_get_uri_from_local_path (path);
+	file = g_file_new_for_path (path);
+	uri = g_file_get_uri (file);
+	g_object_unref (file);
 	uri_list = g_strconcat (uri, "\r\n", NULL);
 	g_free (uri);
 
