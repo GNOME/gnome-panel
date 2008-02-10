@@ -1,5 +1,16 @@
 2008-02-10  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-menu-items.c: (panel_place_menu_item_append_volumes): renamed
+	to...
+	(panel_place_menu_item_append_local_gio): this. Also add mounts that
+	have no volume and that have a root with a file: scheme
+	(panel_place_menu_item_append_mounts): renamed to...
+	(panel_place_menu_item_append_remote_gio): this. Only add mounts that
+	have not a root with a file: scheme
+	(panel_place_menu_item_create_menu): updated
+
+2008-02-10  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-items.c: (panel_menu_items_append_from_desktop): fix
 	compilation
 	(panel_place_menu_item_drives_changed): new

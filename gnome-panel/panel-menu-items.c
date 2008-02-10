@@ -694,8 +694,8 @@ panel_menu_item_append_mount (GtkWidget *menu,
 
 /* this is loosely based on update_places() from nautilus-places-sidebar.c */
 static void
-panel_place_menu_item_append_volumes (PanelPlaceMenuItem *place_item,
-				      GtkWidget          *menu)
+panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
+					GtkWidget          *menu)
 {
 	GList   *l;
 	GList   *ll;
@@ -703,6 +703,7 @@ panel_place_menu_item_append_volumes (PanelPlaceMenuItem *place_item,
 	GDrive  *drive;
 	GList   *volumes;
 	GVolume *volume;
+	GList   *mounts;
 	GMount  *mount;
 
 	/* first go through all connected drives */
@@ -779,12 +780,43 @@ panel_place_menu_item_append_volumes (PanelPlaceMenuItem *place_item,
 		g_object_unref (volume);
 	}
 	g_list_free (volumes);
+
+	/* add mounts that has no volume (/etc/mtab mounts, ftp, sftp,...) */
+	mounts = g_volume_monitor_get_mounts (place_item->priv->volume_monitor);
+	for (l = mounts; l != NULL; l = l->next) {
+		GFile *root;
+		char  *scheme;
+
+		mount = l->data;
+
+		volume = g_mount_get_volume (mount);
+		if (volume != NULL) {
+			g_object_unref (volume);
+			g_object_unref (mount);
+			continue;
+		}
+
+		root = g_mount_get_root (mount);
+		scheme = g_file_get_uri_scheme (root);
+		g_object_unref (root);
+
+		if (scheme && strcmp (scheme, "file") != 0) {
+			g_free (scheme);
+			g_object_unref (mount);
+			continue;
+		}
+		g_free (scheme);
+
+		panel_menu_item_append_mount (menu, mount);
+		g_object_unref (mount);
+	}
+	g_list_free (mounts);
 }
 
 /* this is loosely based on update_places() from nautilus-places-sidebar.c */
 static void
-panel_place_menu_item_append_mounts (PanelPlaceMenuItem *place_item,
-				     GtkWidget          *menu)
+panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
+					 GtkWidget          *menu)
 {
 	GtkWidget *add_menu;
 	GList     *mounts, *l;
@@ -797,6 +829,8 @@ panel_place_menu_item_append_mounts (PanelPlaceMenuItem *place_item,
 
 	for (l = mounts; l; l = l->next) {
 		GVolume *volume;
+		GFile   *root;
+		char    *scheme;
 
 		mount = l->data;
 		volume = g_mount_get_volume (mount);
@@ -805,6 +839,17 @@ panel_place_menu_item_append_mounts (PanelPlaceMenuItem *place_item,
 			g_object_unref (mount);
 			continue;
 		}
+
+		root = g_mount_get_root (mount);
+		scheme = g_file_get_uri_scheme (root);
+		g_object_unref (root);
+
+		if (scheme && strcmp (scheme, "file") == 0) {
+			g_free (scheme);
+			g_object_unref (mount);
+			continue;
+		}
+		g_free (scheme);
 
 		add_mounts = g_slist_prepend (add_mounts, mount);
 	}
@@ -902,13 +947,13 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 					      "nautilus-cd-burner.desktop",
 					      NULL);
 
-	panel_place_menu_item_append_volumes (place_item, places_menu);
+	panel_place_menu_item_append_local_gio (place_item, places_menu);
 	add_menu_separator (places_menu);
 
 	panel_menu_items_append_from_desktop (places_menu,
 					      "network-scheme.desktop",
 					      NULL);
-	panel_place_menu_item_append_mounts (place_item, places_menu);
+	panel_place_menu_item_append_remote_gio (place_item, places_menu);
 
 	if (panel_is_program_in_path ("nautilus-connect-server")) {
 		item = panel_menu_items_create_action_item (PANEL_ACTION_CONNECT_SERVER);
