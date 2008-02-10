@@ -19,9 +19,6 @@
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
 
-#include <libgnomeui/gnome-icon-lookup.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
-
 #include "panel.h"
 
 #include "applet.h"
@@ -517,6 +514,7 @@ drop_uri (PanelWidget *panel,
 	char  *comment;
 	char  *buf;
 	char  *icon;
+	GFile *file;
 
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
@@ -526,7 +524,9 @@ drop_uri (PanelWidget *panel,
 	if (!icon)
 		icon = g_strdup (fallback_icon);
 
-	buf = gnome_vfs_unescape_string_for_display (uri);
+	file = g_file_new_for_uri (uri);
+	buf = g_file_get_parse_name (file);
+	g_object_unref (file);
 	/* Translators: %s is a URI */
 	comment = g_strdup_printf (_("Open '%s'"), buf);
 	g_free (buf);
