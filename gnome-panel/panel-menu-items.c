@@ -75,6 +75,12 @@ struct _PanelPlaceMenuItemPrivate {
 	GFileMonitor *bookmarks_monitor;
 
 	GVolumeMonitor *volume_monitor;
+	gulong       drive_changed_id;
+	gulong       drive_connected_id;
+	gulong       drive_disconnected_id;
+	gulong       volume_added_id;
+	gulong       volume_changed_id;
+	gulong       volume_removed_id;
 	gulong       mount_added_id;
 	gulong       mount_changed_id;
 	gulong       mount_removed_id;
@@ -229,7 +235,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
-	uri = g_filename_to_uri (full_path);
+	uri = g_filename_to_uri (full_path, NULL, NULL);
 
 	setup_uri_drag (item, uri, icon);
 	g_free (uri);
@@ -961,6 +967,22 @@ panel_place_menu_item_gtk_bookmarks_changed (GFileMonitor *handle,
 }
 
 static void
+panel_place_menu_item_drives_changed (GVolumeMonitor *monitor,
+				      GDrive         *drive,
+				      GtkWidget      *place_menu)
+{
+	panel_place_menu_item_recreate_menu (place_menu);
+}
+
+static void
+panel_place_menu_item_volumes_changed (GVolumeMonitor *monitor,
+				       GVolume        *volume,
+				       GtkWidget      *place_menu)
+{
+	panel_place_menu_item_recreate_menu (place_menu);
+}
+
+static void
 panel_place_menu_item_mounts_changed (GVolumeMonitor *monitor,
 				      GMount         *mount,
 				      GtkWidget      *place_menu)
@@ -1046,6 +1068,36 @@ panel_place_menu_item_finalize (GObject *object)
 		g_object_unref (menuitem->priv->bookmarks_monitor);
 	}
 	menuitem->priv->bookmarks_monitor = NULL;
+
+	if (menuitem->priv->drive_changed_id)
+		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+					     menuitem->priv->drive_changed_id);
+	menuitem->priv->drive_changed_id = 0;
+
+	if (menuitem->priv->drive_connected_id)
+		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+					     menuitem->priv->drive_connected_id);
+	menuitem->priv->drive_connected_id = 0;
+
+	if (menuitem->priv->drive_disconnected_id)
+		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+					     menuitem->priv->drive_disconnected_id);
+	menuitem->priv->drive_disconnected_id = 0;
+
+	if (menuitem->priv->volume_added_id)
+		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+					     menuitem->priv->volume_added_id);
+	menuitem->priv->volume_added_id = 0;
+
+	if (menuitem->priv->volume_changed_id)
+		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+					     menuitem->priv->volume_changed_id);
+	menuitem->priv->volume_changed_id = 0;
+
+	if (menuitem->priv->volume_removed_id)
+		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+					     menuitem->priv->volume_removed_id);
+	menuitem->priv->volume_removed_id = 0;
 
 	if (menuitem->priv->mount_added_id)
 		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
@@ -1136,6 +1188,30 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 
 	menuitem->priv->volume_monitor = g_volume_monitor_get ();
 
+	menuitem->priv->drive_changed_id = g_signal_connect (menuitem->priv->volume_monitor,
+							   "drive-changed",
+							   G_CALLBACK (panel_place_menu_item_drives_changed),
+							   menuitem);
+	menuitem->priv->drive_connected_id = g_signal_connect (menuitem->priv->volume_monitor,
+							     "drive-connected",
+							     G_CALLBACK (panel_place_menu_item_drives_changed),
+							     menuitem);
+	menuitem->priv->drive_disconnected_id = g_signal_connect (menuitem->priv->volume_monitor,
+							     "drive-disconnected",
+							     G_CALLBACK (panel_place_menu_item_drives_changed),
+							     menuitem);
+	menuitem->priv->volume_added_id = g_signal_connect (menuitem->priv->volume_monitor,
+							   "volume-added",
+							   G_CALLBACK (panel_place_menu_item_volumes_changed),
+							   menuitem);
+	menuitem->priv->volume_changed_id = g_signal_connect (menuitem->priv->volume_monitor,
+							     "volume-changed",
+							     G_CALLBACK (panel_place_menu_item_volumes_changed),
+							     menuitem);
+	menuitem->priv->volume_removed_id = g_signal_connect (menuitem->priv->volume_monitor,
+							     "volume-removed",
+							     G_CALLBACK (panel_place_menu_item_volumes_changed),
+							     menuitem);
 	menuitem->priv->mount_added_id = g_signal_connect (menuitem->priv->volume_monitor,
 							   "mount-added",
 							   G_CALLBACK (panel_place_menu_item_mounts_changed),
