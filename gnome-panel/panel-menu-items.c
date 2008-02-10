@@ -706,6 +706,9 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	GList   *mounts;
 	GMount  *mount;
 
+	/* FIXME: use it for a submenu */
+	char *submenu_title = _("Removable Media");
+
 	/* first go through all connected drives */
 	drives = g_volume_monitor_get_connected_drives (place_item->priv->volume_monitor);
 	for (l = drives; l != NULL; l = l->next) {
