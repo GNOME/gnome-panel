@@ -19,8 +19,9 @@
 #include <string.h>
 
 #include <glib/gi18n.h>
+#include <gio/gio.h>
+#include <libgnome/gnome-util.h>
 #include <libgnomeui/gnome-url.h>
-#include <libgnomevfs/gnome-vfs.h>
 #include <gdk/gdkx.h>
 
 #include "launcher.h"
@@ -91,6 +92,25 @@ launcher_register_error_dialog (Launcher *launcher,
 			  launcher);
 }
 
+static GFile *
+panel_launcher_get_gfile (const char *location)
+{
+	char  *path;
+	GFile *file;
+
+	if (!g_ascii_strncasecmp (location, "file:", strlen ("file:")))
+		return g_file_new_for_uri (location);
+
+	if (g_path_is_absolute (location))
+		return g_file_new_for_path (location);
+
+	path = panel_make_full_path (NULL, location);
+	file = g_file_new_for_path (path);
+	g_free (path);
+
+	return file;
+}
+
 static char *
 panel_launcher_get_uri (const char *location)
 {
@@ -105,7 +125,7 @@ panel_launcher_get_uri (const char *location)
 	else
 		path = g_strdup (location);
 
-	uri = gnome_vfs_get_uri_from_local_path (path);
+	uri = g_filename_to_uri (path, NULL, NULL);
 	g_free (path);
 
 	return uri;
@@ -131,7 +151,6 @@ static void
 launch_url (Launcher *launcher)
 {
 	char *url;
-	char *canonical_url;
 	GError *error = NULL;
 	GdkScreen *screen;
 
@@ -155,15 +174,13 @@ launch_url (Launcher *launcher)
 		return;
 	}
 
-	canonical_url = gnome_vfs_make_uri_canonical (url);
-	gnome_url_show_on_screen (canonical_url, screen, &error);
+	gnome_url_show_on_screen (url, screen, &error);
 
 	if (error) {
 		GtkWidget *error_dialog;
 		char      *primary;
 	
-		primary = g_strdup_printf (_("Could not show '%s'"),
-					   canonical_url);
+		primary = g_strdup_printf (_("Could not show '%s'"), url);
 		error_dialog = panel_error_dialog (NULL, screen,
 						   "cannot_show_url_dialog",
 						   TRUE,
@@ -174,7 +191,6 @@ launch_url (Launcher *launcher)
 	}
 
 	g_free (url);
-	g_free (canonical_url);
 }
 
 void
@@ -244,27 +260,27 @@ drag_data_received_cb (GtkWidget        *widget,
 		       guint             time,
 		       Launcher         *launcher)
 {
-	GError     *error = NULL;
-	GList      *li;
-	GList      *list;
+	GError  *error = NULL;
+	char   **uris;
+	int      i;
+	GList   *file_list;
 
 	if (panel_global_config_get_enable_animations ())
 		xstuff_zoom_animate (widget, NULL);
 	
-	list = gnome_vfs_uri_list_parse ((const char*) selection_data->data);
-	for (li = list; li != NULL; li = li->next) {
-		GnomeVFSURI *uri = li->data;
-		li->data = gnome_vfs_uri_to_string (uri, 0 /* hide_options */);
-		gnome_vfs_uri_unref (uri);
-	}
+	file_list = NULL;
+	uris = g_uri_list_extract_uris ((const char *) selection_data->data);
+	for (i = 0; uris[i]; i++)
+		file_list = g_list_prepend (file_list, uris[i]);
+	file_list = g_list_reverse (file_list);
 
 	panel_util_launch_from_key_file (launcher->key_file,
-					 list,
+					 file_list,
 					 launcher_get_screen (launcher),
 					 &error);
 
-	g_list_foreach (list, (GFunc)g_free, NULL);
-	g_list_free (list);
+	g_list_free (file_list);
+	g_strfreev (uris);
 
 	if (error) {
 		GtkWidget *error_dialog;
@@ -320,29 +336,37 @@ free_launcher (gpointer data)
 void
 panel_launcher_delete (Launcher *launcher)
 {
-	char *location;
-	char *p;
+	GFile *file;
+	GFile *launchers;
+	char  *launchers_path;
 
 	if (!launcher->location)
 		return;
 
-	p = NULL;
+	launchers_path = gnome_util_home_file (PANEL_LAUNCHERS_PATH);
+	launchers = g_file_new_for_path (launchers_path);
+	g_free (launchers_path);
 
-	location = panel_launcher_get_uri (launcher->location);
-	if (location)
-		p = strstr (location, PANEL_LAUNCHERS_PATH);
+	file = panel_launcher_get_gfile (launcher->location);
 
 	/* do not remove the file if it's not in the user's launchers path */
-	if (p) {
-		GnomeVFSResult result;
+	if (g_file_contains_file (launchers, file)) {
+		GError *error;
 
-		result = gnome_vfs_unlink (location);
-		if (result != GNOME_VFS_OK)
-			g_warning ("Error unlinking '%s': %s\n", location,
-				   gnome_vfs_result_to_string (result));
+		error = NULL;
+		if (!g_file_delete (file, NULL, &error)) {
+			char *path;
+
+			path = g_file_get_path (file);
+			g_warning ("Error deleting '%s': %s\n",
+				   path, error->message);
+			g_free (path);
+			g_error_free (error);
+		}
 	}
 
-	g_free (location);
+	g_object_unref (file);
+	g_object_unref (launchers);
 }
 
 static gboolean
@@ -599,7 +623,7 @@ setup_button (Launcher *launcher)
 	 * string (a location e.g.). If we can't, then it most probably means
 	 * we have a % that is not here to encode a character, and we don't
 	 * want to unescape in this case. See bug #170516 for details. */
-	unescaped_str = gnome_vfs_unescape_string (str, NULL);
+	unescaped_str = g_uri_unescape_string (str, NULL);
 	if (unescaped_str) {
 		g_free (str);
 		str = unescaped_str;
@@ -642,16 +666,18 @@ panel_launcher_find_writable_uri (const char *launcher_location,
 
 	if (!strchr (launcher_location, G_DIR_SEPARATOR)) {
 		path = panel_make_full_path (NULL, launcher_location);
-		uri = gnome_vfs_get_uri_from_local_path (path);
+		uri = g_filename_to_uri (path, NULL, NULL);
 		g_free (path);
 		return uri;
 	}
 
 	if (panel_launcher_get_filename (launcher_location) != NULL) {
-		if (g_path_is_absolute (launcher_location)) {
-			uri = gnome_vfs_get_uri_from_local_path (launcher_location);
-			return uri;
-		} else
+		/* we have a file in the user directory. We either have a path
+		 * or an URI */
+		if (g_path_is_absolute (launcher_location))
+			return g_filename_to_uri (launcher_location,
+						  NULL, NULL);
+		else
 			return g_strdup (launcher_location);
 	}
 
@@ -1045,7 +1071,7 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 	/* if we have an URI, it might contain escaped characters (? : etc)
 	 * that might get unescaped on disk */
 	if (!g_ascii_strncasecmp (location, "file:", strlen ("file:")))
-		no_uri = gnome_vfs_get_local_path_from_uri (location);
+		no_uri = g_filename_from_uri (location, NULL, NULL);
 	if (!no_uri)
 		no_uri = g_strdup (location);
 
@@ -1079,33 +1105,21 @@ panel_launcher_create_copy (PanelToplevel *toplevel,
 			    int            position,
 			    const char    *location)
 {
-	GnomeVFSResult  vfs_result;
-	GnomeVFSURI    *source_uri;
-	GnomeVFSURI    *dest_uri;
-	char           *old_location;
-	char           *new_location;
-	const char     *filename;
+	char       *new_location;
+	GFile      *source;
+	GFile      *dest;
+	gboolean    copied;
+	const char *filename;
 
 	new_location = panel_make_unique_desktop_uri (NULL, location);
+
+	source = panel_launcher_get_gfile (location);
+	dest = g_file_new_for_uri (new_location);
+
+	copied = g_file_copy (source, dest, G_FILE_COPY_OVERWRITE,
+			      NULL, NULL, NULL, NULL);
 	
-	old_location = panel_launcher_get_uri (location);
-
-	source_uri = gnome_vfs_uri_new (old_location);
-	dest_uri   = gnome_vfs_uri_new (new_location);
-
-	g_free (old_location);
-
-	vfs_result = gnome_vfs_xfer_uri (source_uri,
-					 dest_uri,
-					 GNOME_VFS_XFER_FOLLOW_LINKS,
-					 GNOME_VFS_XFER_ERROR_MODE_ABORT,
-					 GNOME_VFS_XFER_OVERWRITE_MODE_REPLACE,
-					 NULL, NULL);
-
-	gnome_vfs_uri_unref (source_uri);
-	gnome_vfs_uri_unref (dest_uri);
-
-	if (vfs_result != GNOME_VFS_OK) {
+	if (!copied) {
 		g_free (new_location);
 		return FALSE;
 	}

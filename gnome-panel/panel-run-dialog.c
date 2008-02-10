@@ -38,13 +38,13 @@
 #include <unistd.h>
 
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
 #include <glade/glade-xml.h>
 #include <libgnome/gnome-exec.h>
 #include <libgnome/gnome-util.h>
 #include <libgnomeui/gnome-entry.h>
 #include <libgnomeui/gnome-url.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
 #include <gconf/gconf-client.h>
 #include <gmenu-tree.h>
 
@@ -186,7 +186,7 @@ panel_run_dialog_set_default_icon (PanelRunDialog *dialog, gboolean set_drag)
 
 	if (set_drag)
 		gtk_drag_source_set_icon_name (dialog->run_dialog,
-					       PANEL_ICON_RUN);
+					       PANEL_ICON_LAUNCHER);
 }
 
 static void
@@ -249,7 +249,7 @@ command_is_executable (const char *command)
 	char      *path;
 	int        argc;
 	
-	path = gnome_vfs_get_local_path_from_uri (command);
+	path = g_filename_from_uri (command, NULL, NULL);
 	if (!path)
 		path = g_strdup (command);
 	
@@ -370,6 +370,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	gboolean   result;
 	char      *command;
 	char      *escaped;
+	GFile     *file;
 	char      *disk, *url;
 	char      *scheme;	
 	
@@ -414,20 +415,21 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		return;
 	}
 
-	url = gnome_vfs_make_uri_from_input_with_dirs (command,
-						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
+	file = panel_util_get_file_optional_homedir (command);
+	url = g_file_get_uri (file);
+	scheme = g_file_get_uri_scheme (file);
+	g_object_unref (file);
+
 	escaped = g_markup_escape_text (url, -1);
-	scheme = gnome_vfs_get_uri_scheme (url);
 	result = FALSE;
 	
 	if (!g_ascii_strcasecmp (scheme, "http") ||
 	    !g_ascii_strcasecmp (scheme, "file"))
-		/* If this returns an http or file url, the url might refer to a
-		 * command that is somewhere in the path or an executable file.
-		 * So try executing it before displaying it. We execute the 
-		 * command in the user's shell so that it can do all the parameter
-		 * expansion and other magic for us.
-		 */
+		/* If this returns an http or file url, the url might refer to
+		 * a command that is somewhere in the path or an executable
+		 * file. So try executing it before displaying it. We execute
+		 * the command in the user's shell so that it can do all the
+		 * parameter expansion and other magic for us. */
 		result = panel_run_dialog_launch_command (dialog, disk, escaped);
 	
 	if (!result)
@@ -439,7 +441,8 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 					     TRUE, /* save item in history */
 					     command);
 		
-		/* only close the dialog if we successfully showed or launched something */
+		/* only close the dialog if we successfully showed or launched
+		 * something */
 		gtk_widget_destroy (dialog->run_dialog);
 	}
 
@@ -1671,7 +1674,7 @@ entry_drag_data_received (GtkEditable      *entry,
 		if (!uris [i] || !uris [i][0])
 			continue;
 		
-		file = gnome_vfs_get_local_path_from_uri (uris [i]);
+		file = g_filename_from_uri (uris [i], NULL, NULL);
 
 		/* FIXME: I assume the file is in utf8 encoding if coming from a URI? */
 		if (file) {
@@ -1728,10 +1731,11 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	GKeyFile   *key_file;
 	gboolean    exec = FALSE;
 	const char *text;
-	char       *uri;
+	GFile      *file;
 	char       *name;
 	char       *disk;
 	char       *scheme;
+	char       *save_uri;
 
 	text = gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry));
 	
@@ -1741,11 +1745,10 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	key_file = panel_util_key_file_new_desktop ();
 
 	disk = g_locale_from_utf8 (text, -1, NULL, NULL, NULL);
-	uri = gnome_vfs_make_uri_from_input_with_dirs (disk,
-						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
+	file = panel_util_get_file_optional_homedir (disk);
 	g_free (disk);
 
-	scheme = gnome_vfs_get_uri_scheme (uri);
+	scheme = g_file_get_uri_scheme (file);
 	if (!g_ascii_strcasecmp (scheme, "http"))
 		exec = command_is_executable (text);
 	else if (!g_ascii_strcasecmp (scheme, "file"))
@@ -1759,13 +1762,18 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 						"Exec", text);
 		name = g_strdup (text);
 	} else {
+		char *uri;
+
+		uri = g_file_get_uri (file);
+
 		panel_util_key_file_set_string (key_file,
 						"Type", "Link");
 		panel_util_key_file_set_string (key_file,
 						"URL", uri);
-		name = g_strdup (uri);
+		name = uri;
 	}
-	g_free (uri);
+
+	g_object_unref (file);
 
 	panel_util_key_file_set_locale_string (key_file, "Name",
 					       (dialog->item_name) ?
@@ -1774,22 +1782,26 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	panel_util_key_file_set_boolean (key_file, "Terminal",
 					 gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)));
 
-	panel_util_key_file_set_locale_string (key_file, "Icon",
-					       dialog->icon_path);
+	if (dialog->icon_path)
+		panel_util_key_file_set_locale_string (key_file, "Icon",
+						       dialog->icon_path);
+	else
+		panel_util_key_file_set_locale_string (key_file, "Icon",
+						       PANEL_ICON_LAUNCHER);
 
-	uri = panel_make_unique_desktop_uri (g_get_tmp_dir (), name);
-	disk = g_filename_from_uri (uri, NULL, NULL);
+	save_uri = panel_make_unique_desktop_uri (g_get_tmp_dir (), name);
+	disk = g_filename_from_uri (save_uri, NULL, NULL);
 
 	if (!disk || !panel_util_key_file_to_file (key_file, disk, NULL)) {
-		g_free (uri);
-		uri = NULL;
+		g_free (save_uri);
+		save_uri = NULL;
 	}
 
 	g_key_file_free (key_file);
 	g_free (disk);
 	g_free (name);
 
-	return uri;
+	return save_uri;
 }
 
 static void
@@ -1803,7 +1815,7 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 	char *uri;
 
 	if (dialog->use_program_list && dialog->desktop_path)
-		uri = g_strdup (dialog->desktop_path);
+		uri = g_filename_to_uri (dialog->desktop_path, NULL, NULL);
 	else
 		uri = panel_run_dialog_create_desktop_file (dialog);
 

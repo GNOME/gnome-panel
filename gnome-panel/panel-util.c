@@ -22,19 +22,17 @@
 #include <sys/types.h>
 
 #include <glib/gi18n.h>
+#include <gio/gio.h>
+
 #include <libgnome/gnome-desktop-item.h>
 #include <libgnome/gnome-util.h>
-#include <libgnomeui/gnome-icon-lookup.h>
 #include <libgnomeui/gnome-help.h>
-
-#include <libgnomevfs/gnome-vfs-utils.h>
-#include <libgnomevfs/gnome-vfs-uri.h>
-#include <libgnomevfs/gnome-vfs-ops.h>
 
 #include "applet.h"
 #include "nothing.h"
 #include "xstuff.h"
 #include "panel-config-global.h"
+#include "panel-gconf.h"
 #include "panel-globals.h"
 #include "launcher.h"
 #include "panel-icon-names.h"
@@ -521,112 +519,57 @@ panel_ensure_dir (const char *dirname)
 	return TRUE;
 }
 
-static gboolean
-internal_panel_is_uri_writable (const char *uri, gboolean recurse)
-{
-	GnomeVFSFileInfo *info = gnome_vfs_file_info_new ();
-
-	if (gnome_vfs_get_file_info
-	    (uri, info, GNOME_VFS_FILE_INFO_DEFAULT) != GNOME_VFS_OK) {
-		char *dir;
-		gboolean ret;
-
-		gnome_vfs_file_info_unref (info);
-
-		if ( ! recurse)
-			return FALSE;
-
-		dir = g_path_get_dirname (uri);
-		ret = internal_panel_is_uri_writable (dir, FALSE);
-		g_free (dir);
-
-		return ret;
-	}
-
-	if ( ! (info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_PERMISSIONS)) {
-		gnome_vfs_file_info_unref (info);
-		/* assume writable, if no permissions */
-		return TRUE;
-	} 
-
-	if (info->permissions & GNOME_VFS_PERM_OTHER_WRITE) {
-		gnome_vfs_file_info_unref (info);
-		return TRUE;
-	}
-
-	if (info->gid == getgid () &&
-	    info->permissions & GNOME_VFS_PERM_GROUP_WRITE) {
-		gnome_vfs_file_info_unref (info);
-		return TRUE;
-	}
-
-	if (info->uid == getuid () &&
-	    info->permissions & GNOME_VFS_PERM_USER_WRITE) {
-		gnome_vfs_file_info_unref (info);
-		return TRUE;
-	}
-
-	if (info->gid == getgid () &&
-	    info->permissions & GNOME_VFS_PERM_GROUP_WRITE) {
-		gnome_vfs_file_info_unref (info);
-		return TRUE;
-	}
-
-	if (info->permissions & GNOME_VFS_PERM_GROUP_WRITE) {
-		gid_t *groups;
-		int i, n;
-
-		/* get size */
-		n = getgroups (0, NULL);
-
-		if (n == 0) {
-			/* no more groups */
-			gnome_vfs_file_info_unref (info);
-			return FALSE;
-		}
-
-		groups = g_new0 (gid_t, n);
-
-		n = getgroups (n, groups);
-		for (i = 0; i < n; i++) {
-			if (info->gid == groups[i]) {
-				/* ok */
-				gnome_vfs_file_info_unref (info);
-				return TRUE;
-			}
-		}
-	}
-
-	/* no more perimission stuff to try */
-	gnome_vfs_file_info_unref (info);
-	return FALSE;
-}
-
 gboolean
 panel_is_uri_writable (const char *uri)
 {
+	GFile     *file;
+	GFileInfo *info;
+	gboolean   retval;
+
 	g_return_val_if_fail (uri != NULL, FALSE);
 
-	return internal_panel_is_uri_writable (uri, TRUE /* recurse */);
+	retval = FALSE;
+
+	file = g_file_new_for_uri (uri);
+
+	if (!g_file_query_exists (file, NULL)) {
+		GFile *parent;
+
+		parent = g_file_get_parent (file);
+		g_object_unref (file);
+
+		if (!g_file_query_exists (parent, NULL)) {
+			g_object_unref (parent);
+			return FALSE;
+		}
+
+		file = parent;
+	}
+
+	info = g_file_query_info (file, "access::*",
+				  G_FILE_QUERY_INFO_NONE, NULL, NULL);
+	g_object_unref (file);
+
+	if (info) {
+		retval = g_file_info_get_attribute_boolean (info,
+							    G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE);
+		g_object_unref (info);
+	}
+
+	return retval;
 }
 
 gboolean
 panel_uri_exists (const char *uri)
 {
-	GnomeVFSURI *suri;
+	GFile *suri;
 	gboolean ret;
 
 	g_return_val_if_fail (uri != NULL, FALSE);
 
-	suri = gnome_vfs_uri_new (uri);
-
-	if (!suri) {
-		return FALSE;
-	}
-
-	ret = gnome_vfs_uri_exists (suri);
-
-	gnome_vfs_uri_unref (suri);
+	suri = g_file_new_for_uri (uri);
+	ret = g_file_query_exists (suri, NULL);
+	g_object_unref (suri);
 
 	return ret;
 }
@@ -940,7 +883,7 @@ panel_make_unique_desktop_uri (const char *dir,
 	path = panel_make_unique_desktop_path_from_name (dir, name);
 	g_free (name);
 
-	uri = gnome_vfs_get_uri_from_local_path (path);
+	uri = g_filename_to_uri (path, NULL, NULL);
 	g_free (path);
 
 	return uri;
@@ -1170,7 +1113,7 @@ panel_util_key_file_load_from_uri (GKeyFile       *keyfile,
 	g_return_val_if_fail (uri != NULL, FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-	scheme = gnome_vfs_get_uri_scheme (uri);
+	scheme = g_uri_get_scheme (uri);
 	is_local = (scheme == NULL) || !g_ascii_strcasecmp (scheme, "file");
 	g_free (scheme);
 
@@ -1185,12 +1128,17 @@ panel_util_key_file_load_from_uri (GKeyFile       *keyfile,
 						    flags, error);
 		g_free (path);
 	} else {
-		GnomeVFSResult  vfs_result;
-		int             size;
-		char           *contents;
+		GFile   *file;
+		char	*contents;
+		gsize    size;
+		gboolean ret;
 
-		vfs_result = gnome_vfs_read_entire_file (uri, &size, &contents);
-		if (vfs_result != GNOME_VFS_OK)
+		file = g_file_new_for_uri (uri);
+		ret = g_file_load_contents (file, NULL, &contents, &size,
+					    NULL, NULL);
+		g_object_unref (file);
+		
+		if (!ret)
 			return FALSE;
 
 		result = g_key_file_load_from_data (keyfile, contents, size,
@@ -1361,54 +1309,168 @@ guess_icon_from_exec (GtkIconTheme *icon_theme,
 	return icon_name;
 }
 
-/* This is nautilus_get_vfs_method_display_name() */
-const char *
-panel_util_get_vfs_method_display_name (const char *method)
+static GFile *
+panel_util_get_gfile_root (GFile *file)
 {
-	//FIXME: /apps/nautilus/desktop/computer_icon_visible (same for trash and network)
-	if (g_ascii_strcasecmp (method, "computer") == 0 ) {
-		return _("Computer");
-	} else if (g_ascii_strcasecmp (method, "network") == 0 ) {
-		return _("Network");
-	} else if (g_ascii_strcasecmp (method, "fonts") == 0 ) {
-		return _("Fonts");
-	} else if (g_ascii_strcasecmp (method, "themes") == 0 ) {
-		return _("Themes");
-	} else if (g_ascii_strcasecmp (method, "burn") == 0 ) {
-		return _("CD/DVD Creator");
-	} else if (g_ascii_strcasecmp (method, "smb") == 0 ) {
-		return _("Windows Network");
-	} else if (g_ascii_strcasecmp (method, "dns-sd") == 0 ) {
-		/* translators: this is the title of the "dns-sd:///" location */
-		return _("Services in");
+	GFile *parent;
+	GFile *parent_old;
+
+	/* search for the root on the URI */
+	parent_old = g_object_ref (file);
+	parent = g_file_get_parent (file);
+	while (parent != NULL) {
+		g_object_unref (parent_old);
+		parent_old = parent;
+		parent = g_file_get_parent (parent);
 	}
+
+	return parent_old;
+}
+
+static char *
+panel_util_get_icon_name_from_g_icon (GIcon *gicon)
+{
+	const char * const *names;
+	GtkIconTheme *icon_theme;
+	int i;
+
+	if (!G_IS_THEMED_ICON (gicon))
+		return NULL;
+
+	names = g_themed_icon_get_names (G_THEMED_ICON (gicon));
+	icon_theme = gtk_icon_theme_get_default ();
+
+	for (i = 0; names[i] != NULL; i++) {
+		if (gtk_icon_theme_has_icon (icon_theme, names[i]))
+			return g_strdup (names[i]);
+	}
+
 	return NULL;
 }
 
-static const char *
-panel_util_get_icon_for_uri_method (const char *uri)
+static char *
+panel_util_get_file_display_name_if_mount (GFile *file)
 {
-	if (g_str_has_prefix (uri, "computer:")) {
-		return PANEL_ICON_COMPUTER;
-	} else if (g_str_has_prefix (uri, "network:")) {
-		return PANEL_ICON_NETWORK;
-	} else if (g_str_has_prefix (uri, "fonts:")) {
-		return PANEL_ICON_FONTS;
-	} else if (g_str_has_prefix (uri, "themes:")) {
-		return PANEL_ICON_THEME;
-	} else if (g_str_has_prefix (uri, "burn:")) {
-		return PANEL_ICON_BURNER;
-	} else if (g_str_has_prefix (uri, "smb:")) {
-		return PANEL_ICON_NETWORK;
-	} else if (g_str_has_prefix (uri, "dns-sd:")) {
-		return PANEL_ICON_NETWORK;
-	} else if (g_str_has_prefix (uri, "trash:")) {
-		//FIXME: we should look if the trash is empty or not
-		return PANEL_ICON_TRASH;
-	} else if (g_str_has_prefix (uri, "x-nautilus-search:")) {
-		return PANEL_ICON_SEARCHTOOL;
-	} else
-		return NULL;
+	GFile          *compare;
+	GVolumeMonitor *monitor;
+	GList          *mounts, *l;
+	char           *ret;
+
+	ret = NULL;
+
+	/* compare with all mounts */
+	monitor = g_volume_monitor_get ();
+	mounts = g_volume_monitor_get_mounts (monitor);
+	for (l = mounts; l != NULL; l = l->next) {
+		GMount *mount;
+		mount = G_MOUNT (l->data);
+		compare = g_mount_get_root (mount);
+		if (g_file_equal (file, compare)) {
+			ret = g_mount_get_name (mount);
+			break;
+		}
+	}
+	g_list_free (mounts);
+	g_object_unref (monitor);
+
+	return ret;
+}
+
+#define HOME_NAME_KEY           "/apps/nautilus/desktop/home_icon_name"
+static char *
+panel_util_get_file_display_for_common_files (GFile *file)
+{
+	GFile *compare;
+
+	compare = g_file_new_for_path (g_get_home_dir ());
+	if (g_file_equal (file, compare)) {
+		char *gconf_name;
+
+		g_object_unref (compare);
+
+		gconf_name = gconf_client_get_string (panel_gconf_get_client (),
+						      HOME_NAME_KEY,
+						      NULL);
+		if (string_empty (gconf_name)) {
+			g_free (gconf_name);
+			return g_strdup (_("Home Folder"));
+		} else {
+			return gconf_name;
+		}
+	}
+	g_object_unref (compare);
+
+	compare = g_file_new_for_path ("/");
+	if (g_file_equal (file, compare)) {
+		g_object_unref (compare);
+		/* Translators: this is the same string as the one found in
+		 * nautilus */
+		return g_strdup (_("File System"));
+	}
+	g_object_unref (compare);
+
+	return NULL;
+}
+
+static char *
+panel_util_get_file_display_name (GFile    *file,
+				  gboolean  use_fallback)
+{
+	GFileInfo *info;
+	char      *ret;
+
+	ret = NULL;
+
+	info = g_file_query_info (file, "standard::display-name",
+				  G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+				  NULL, NULL);
+
+	if (info) {
+		ret = g_strdup (g_file_info_get_display_name (info));
+		g_object_unref (info);
+	}
+
+	if (!ret && use_fallback) {
+		/* can happen with URI schemes non supported by gvfs */
+		char *basename;
+
+		basename = g_file_get_basename (file);
+		ret = g_filename_display_name (basename);
+		g_free (basename);
+	}
+
+	return ret;
+}
+
+static char *
+panel_util_get_file_icon_name_if_mount (GFile *file)
+{
+	GFile          *compare;
+	GVolumeMonitor *monitor;
+	GList          *mounts, *l;
+	char           *ret;
+
+	ret = NULL;
+
+	/* compare with all mounts */
+	monitor = g_volume_monitor_get ();
+	mounts = g_volume_monitor_get_mounts (monitor);
+	for (l = mounts; l != NULL; l = l->next) {
+		GMount *mount;
+		mount = G_MOUNT (l->data);
+		compare = g_mount_get_root (mount);
+		if (g_file_equal (file, compare)) {
+			GIcon *gicon;
+			gicon = g_mount_get_icon (mount);
+			ret = panel_util_get_icon_name_from_g_icon (gicon);
+			g_object_unref (gicon);
+			break;
+		}
+	}
+	g_list_free (mounts);
+	g_object_unref (monitor);
+
+	return ret;
 }
 
 static const char *
@@ -1419,13 +1481,19 @@ panel_util_get_icon_for_uri_known_folders (const char *uri)
 	int         len;
 
 	icon = NULL;
-	path = gnome_vfs_get_local_path_from_uri (uri);
+	
+	if (!g_str_has_prefix (uri, "file:"))
+		return NULL;
+
+	path = g_filename_from_uri (uri, NULL, NULL);
 
 	len = strlen (path);
 	if (path[len] == '/')
 		path[len] = '\0';
 
-	if (strcmp (path, g_get_home_dir ()) == 0)
+	if (strcmp (path, "/") == 0)
+		icon = PANEL_ICON_FILESYSTEM;
+	else if (strcmp (path, g_get_home_dir ()) == 0)
 		icon = PANEL_ICON_HOME;
 	else if (strcmp (path,
 			 g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP)) == 0)
@@ -1441,83 +1509,85 @@ panel_util_get_icon_for_uri_known_folders (const char *uri)
 char *
 panel_util_get_label_for_uri (const char *text_uri)
 {
-	GnomeVFSURI *uri;
-	const char  *hostname;
-	const char  *method;
-	char        *displayname;
-	char        *label;
-	char        *buffer;
+	GFile *file;
+	char  *label;
+	char *hostname;
+	char *displayname;
 
-	//FIXME: we're not handling $HOME and $Desktop
-	hostname = NULL;
+	/* Here's what we do:
+	 *  + x-nautilus-search: URI
+	 *  + check if the URI is a mount
+	 *  + if file: URI:
+	 *   - check for known file: URI
+	 *   - use display name of the GFile
+	 *  + else:
+	 *   - if we have a hostname: "displayname on hostname"
+	 *   - if the URI is a root: "root displayname"
+	 *   - else: "root displayname: displayname"
+	 */
+
 	label = NULL;
 
-	//FIXME: nautilus uses nautilus_query_to_readable_string() to have a nice name
+	//FIXME: see nautilus_query_to_readable_string() to have a nice name
 	if (g_str_has_prefix (text_uri, "x-nautilus-search:"))
 		return g_strdup (_("Search"));
 
-	if (g_str_has_prefix (text_uri, "trash:"))
-		return g_strdup (_("Trash"));
+	file = g_file_new_for_uri (text_uri);
+
+	label = panel_util_get_file_display_name_if_mount (file);
+	if (label) {
+		g_object_unref (file);
+		return label;
+	}
 
 	if (g_str_has_prefix (text_uri, "file:")) {
-		buffer = gnome_vfs_get_local_path_from_uri (text_uri);
-		if (!buffer)
-			return NULL;
-
-		label = g_filename_display_basename (buffer);
-		g_free (buffer);
+		label = panel_util_get_file_display_for_common_files (file);
+		if (!label)
+			label = panel_util_get_file_display_name (file, TRUE);
+		g_object_unref (file);
 
 		return label;
 	}
 
-	uri = gnome_vfs_uri_new (text_uri);
-	if (uri) {
-		char *short_name;
+	g_filename_from_uri (text_uri, &hostname, NULL);
+	displayname = panel_util_get_file_display_name (file, TRUE);
 
-		hostname = gnome_vfs_uri_get_host_name (uri);
-
-		buffer = gnome_vfs_uri_extract_short_path_name (uri);
-		short_name = gnome_vfs_unescape_string_for_display (buffer);
-		g_free (buffer);
-
-		if (strcmp (short_name, GNOME_VFS_URI_PATH_STR) != 0) {
-			displayname = short_name;
-		} else {
-			g_free (short_name);
-			method = panel_util_get_vfs_method_display_name (uri->method_string);
-			if (method == NULL)
-				method = uri->method_string;
-
-			buffer = gnome_vfs_uri_extract_short_name (uri);
-			short_name = gnome_vfs_unescape_string_for_display (buffer);
-			g_free (buffer);
-
-			if (short_name == NULL ||
-			    strcmp (short_name, GNOME_VFS_URI_PATH_STR) == 0) {
-				displayname = g_strdup (method);
-			} else {
-				displayname = g_strdup_printf ("%s: %s",
-							       method,
-							       short_name);
-			}
-			g_free (short_name);
-		}
-	} else {
-		displayname = gnome_vfs_format_uri_for_display (text_uri);
-	}
-
+	//FIXME: bah, doesn't work
 	if (hostname) {
 		/* Translators: the first string is a path and the second
 		 * string is a hostname. nautilus contains the same string to
 		 * translate. */
-		label = g_strdup_printf (_("%1$s on %2$s"), displayname, hostname);
-		g_free (displayname);
+		label = g_strdup_printf (_("%1$s on %2$s"),
+					 displayname, hostname);
+		g_free (hostname);
 	} else {
-		label = displayname;
+		GFile *root;
+		char  *root_display;
+
+		root = panel_util_get_gfile_root (file);
+		root_display = panel_util_get_file_display_name (root, FALSE);
+		if (!root_display)
+			/* can happen with URI schemes non supported by gvfs */
+			root_display = g_file_get_uri_scheme (root);
+
+		if (g_file_equal (file, root))
+			label = root_display;
+		else {
+			/* Translators: the first string is the name of a gvfs
+			 * method, and the second string is a path. For
+			 * example, "Trash: some-directory". In means that the
+			 * directory called "some-directory" is in the trash.
+			 */
+			label = g_strdup_printf (_("%1$s: %2$s"),
+						 root_display, displayname);
+			g_free (root_display);
+		}
+
+		g_object_unref (root);
 	}
 
-	if (uri)
-		gnome_vfs_uri_unref (uri);
+	g_free (displayname);
+	g_object_unref (file);
 
 	return label;
 }
@@ -1526,22 +1596,72 @@ char *
 panel_util_get_icon_for_uri (const char *text_uri)
 {
 	const char *icon;
+	GFile      *file;
+	GFileInfo  *info;
+	const char *content;
+	GIcon      *gicon;
+	char       *retval;
 
-	icon = panel_util_get_icon_for_uri_method (text_uri);
-	if (icon)
-		return g_strdup (icon);
+	/* Here's what we do:
+	 *  + check for known file: URI
+	 *  + x-nautilus-search: URI
+	 *  + override burn: URI icon
+	 *  + check if the URI is a mount
+	 *  + override trash: URI icon for subfolders
+	 *  + check for application/x-gnome-saved-search mime type and override
+	 *    icon of the GFile
+	 *  + use icon of the GFile
+	 */
 
-	if (!g_str_has_prefix (text_uri, "file:"))
-		return NULL;
-
+	/* this only checks file: URI */
 	icon = panel_util_get_icon_for_uri_known_folders (text_uri);
 	if (icon)
 		return g_strdup (icon);
 
-	return gnome_icon_lookup_sync (gtk_icon_theme_get_default (),
-				       NULL, text_uri, NULL,
-				       GNOME_ICON_LOOKUP_FLAGS_NONE,
-				       GNOME_ICON_LOOKUP_RESULT_FLAGS_NONE);
+	if (g_str_has_prefix (text_uri, "x-nautilus-search:"))
+		return g_strdup (PANEL_ICON_SAVED_SEARCH);
+	/* gvfs doesn't give us a nice icon, so overriding */
+	if (g_str_has_prefix (text_uri, "burn:"))
+		return g_strdup (PANEL_ICON_BURNER);
+
+	file = g_file_new_for_uri (text_uri);
+
+	retval = panel_util_get_file_icon_name_if_mount (file);
+	if (retval)
+		return retval;
+
+	/* gvfs doesn't give us a nice icon for subfolders of the trash, so
+	 * overriding */
+	if (g_str_has_prefix (text_uri, "trash:")) {
+		GFile *root;
+
+		root = panel_util_get_gfile_root (file);
+		g_object_unref (file);
+		file = root;
+	}
+
+	info = g_file_query_info (file,
+				  "standard::icon,standard::fast-content-type",
+				  G_FILE_QUERY_INFO_NONE, NULL, NULL);
+	g_object_unref (file);
+
+	if (!info)
+		return NULL;
+
+	/* FIXME: weird that we don't get the right icon without this */
+	content = g_file_info_get_attribute_string (info,
+						    G_FILE_ATTRIBUTE_STANDARD_FAST_CONTENT_TYPE);
+	if (content &&
+	    strcmp (content, "application/x-gnome-saved-search") == 0) {
+		g_object_unref (info);
+		return g_strdup (PANEL_ICON_SAVED_SEARCH);
+	}
+
+	gicon = g_file_info_get_icon (info);
+	retval = panel_util_get_icon_name_from_g_icon (gicon);
+	g_object_unref (info);
+
+	return retval;
 }
 
 static gboolean
@@ -1578,4 +1698,31 @@ panel_util_set_tooltip_text (GtkWidget  *widget,
 	g_signal_connect_data (widget, "query-tooltip",
 			       G_CALLBACK (panel_util_query_tooltip_cb),
 			       g_strdup (text), (GClosureNotify) g_free, 0);
+}
+
+/* This is similar to what g_file_new_for_commandline_arg() does, but
+ * we end up with something relative to $HOME instead of the current working
+ * directory */
+GFile *
+panel_util_get_file_optional_homedir (const char *location)
+{
+	GFile *file;
+	char  *path;
+	char  *scheme;
+
+	if (g_path_is_absolute (location))
+		return g_file_new_for_path (location);
+
+	scheme = g_uri_get_scheme (location);
+	if (scheme) {
+		file = g_file_new_for_uri (location);
+		g_free (scheme);
+		return file;
+	}
+
+	path = g_build_filename (g_get_home_dir (), location, NULL);
+	file = g_file_new_for_path (path);
+	g_free (path);
+
+	return file;
 }

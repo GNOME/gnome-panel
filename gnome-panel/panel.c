@@ -619,7 +619,7 @@ drop_urilist (PanelWidget *panel,
 		file = g_file_new_for_uri (uri);
 		info = g_file_query_info (file,
 					  "standard::type,"
-					  "standard::fast-content-type,"
+					  "standard::content-type,"
 					  "access::can-execute",
 					  G_FILE_QUERY_INFO_NONE,
 					  NULL, NULL);

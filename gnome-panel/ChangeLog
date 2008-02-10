@@ -1,5 +1,67 @@
 2008-02-10  Vincent Untz  <vuntz@gnome.org>
 
+	I wonder what this commit is about. Maybe some gio port work? Oh,
+	right, it is about this. Cool.
+
+	* gnome-desktop-item-edit.c: (panel_gconf_get_client): add sucky
+	symbols for linking with panel-util.o
+	* launcher.c: (panel_launcher_get_gfile): new, get a GFile of the
+	location of the launcher
+	(panel_launcher_get_uri): gio port
+	(launch_url): we don't need to make the url canonical
+	(drag_data_received_cb): get rid of gnome-vfs
+	(panel_launcher_delete): gio port
+	(setup_button): get rid of gnome-vfs
+	(panel_launcher_find_writable_uri): ditto
+	(panel_launcher_create_with_id): ditto
+	(panel_launcher_create_copy): gio port
+	* panel-ditem-editor.c: (panel_ditem_editor_constructor): gio port
+	* panel-icon-names.h: add two icons
+	* panel-recent.c: (show_uri): port to gio. We'll need to use
+	GdkAppLaunchContext when we can depend on the new gtk+, though.
+	* panel-run-dialog.c: (panel_run_dialog_set_default_icon): use the
+	launcher icon as a default icon for drag and drop
+	(command_is_executable): trivial gio port
+	(panel_run_dialog_execute): trivial gio port, thanks to
+	panel_util_get_file_optional_homedir()
+	(entry_drag_data_received): trivial gio port
+	(panel_run_dialog_create_desktop_file): trivial gio port, thanks to
+	panel_util_get_file_optional_homedir()
+	Also fix a crash when dragging the icon for a command without an icon
+	by setting the .desktop icon to the launcher one
+	(pixmap_drag_data_get): we want an URI here, not a path
+	* panel-util.c: (internal_panel_is_uri_writable): kill
+	(panel_is_uri_writable): gio port
+	(panel_uri_exists): ditto
+	(panel_make_unique_desktop_uri): ditto
+	(panel_util_key_file_load_from_uri): ditto
+	(panel_util_get_vfs_method_display_name): killed
+	(panel_util_get_icon_for_uri_method): killed
+	(panel_util_get_gfile_root): new, get the root parent of a GFile
+	(panel_util_get_icon_name_from_g_icon): new, get an icon name that
+	exists in the default icon theme from a GIcon
+	(panel_util_get_file_display_name_if_mount): new, get name of a GFile
+	if it's the root of a GMount
+	(panel_util_get_file_display_for_common_files): new, get name of
+	GFiles that are common
+	(panel_util_get_file_display_name): new, utility to easily get the
+	display name
+	(panel_util_get_file_icon_name_if_mount): new, get icon name of a
+	GFile if it's the root of a GMount
+	(panel_util_get_icon_for_uri_known_folders): updated, port to gio and
+	add icon for /
+	(panel_util_get_label_for_uri): gio port. Explicitly mention the
+	algorithm. There's a bug for hostnames, though.
+	(panel_util_get_icon_for_uri): gio port. Explicitly mention the
+	algorithm.
+	(panel_util_get_file_optional_homedir): new, get a GFile from a
+	location which might be relative to $HOME
+	* panel-util.h: updated
+	* panel.c: (drop_urilist): use the content-type, not the
+	fast-content-type. It's okay. This is a rarely used operation anyway.
+
+2008-02-10  Vincent Untz  <vuntz@gnome.org>
+
 	Lalalala. gio port. Lalalala.
 
 	* gnome-desktop-item-edit.c: (get_uri): killed

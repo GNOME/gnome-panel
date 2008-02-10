@@ -26,12 +26,12 @@
 
 #include <string.h>
 
-#include <glib/gi18n-lib.h>
+#include <glib/gi18n.h>
+#include <gio/gio.h>
 #include <gtk/gtk.h>
 
 #include <libgnomeui/gnome-icon-entry.h>
 #include <libgnomeui/gnome-help.h>
-#include <libgnomevfs/gnome-vfs.h>
 #include "panel-ditem-editor.h"
 #include "panel-icon-names.h"
 #include "panel-util.h"
@@ -221,7 +221,7 @@ panel_ditem_editor_constructor (GType                  type,
 {
 	GObject          *obj;
 	PanelDItemEditor *dialog;
-	GnomeVFSURI      *vfs_uri;
+	GFile            *file;
 	gboolean          loaded;
 	char             *desktop_type;
 
@@ -246,15 +246,15 @@ panel_ditem_editor_constructor (GType                  type,
 	}
 
 	if (!loaded && dialog->priv->uri) {
-		vfs_uri = gnome_vfs_uri_new (dialog->priv->uri);
-		if (gnome_vfs_uri_exists (vfs_uri)) {
+		file = g_file_new_for_uri (dialog->priv->uri);
+		if (g_file_query_exists (file, NULL)) {
 			//FIXME what if there's an error?
 			panel_ditem_editor_load_uri (dialog, NULL);
 			dialog->priv->new_file = FALSE;
 		} else {
 			dialog->priv->new_file = TRUE;
 		}
-		gnome_vfs_uri_unref (vfs_uri);
+		g_object_unref (file);
 	} else {
 		dialog->priv->new_file = !loaded;
 	}

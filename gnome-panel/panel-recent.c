@@ -27,8 +27,7 @@
 
 #include <string.h>
 #include <glib/gi18n.h>
-#include <libgnomevfs/gnome-vfs-mime-handlers.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
+#include <gio/gio.h>
 #include "menu.h"
 #include "panel-util.h"
 #include "panel-globals.h"
@@ -42,31 +41,28 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 	  GError **error)
 {
 	char **env;
-	GnomeVFSResult result;
-	GnomeVFSMimeApplication *app;
+	GAppInfo *app;
 	GList *uris = NULL;
+	gboolean ret;
 
-	app = gnome_vfs_mime_get_default_application_for_uri (uri, mime_type);
+	app = g_app_info_get_default_for_type (mime_type, TRUE);
 	if (app == NULL) {
-		g_set_error (error, 0, 0, _("Could not find a suitable application."));
+		g_set_error (error, 0, 0,
+			     _("Could not find a suitable application."));
 		return FALSE;
 	}
 
 	env = panel_make_environment_for_screen (screen, NULL);
 
 	uris = g_list_append (uris, (gpointer)uri);
-	result = gnome_vfs_mime_application_launch_with_env (app, uris, env);
+	//FIXME: use GdkAppLaunchContext
+	ret = g_app_info_launch_uris (app, uris, NULL, error);
 	g_list_free (uris);
 
 	g_strfreev (env);
-	gnome_vfs_mime_application_free (app);
+	g_object_unref (app);
 
-	if (result != GNOME_VFS_OK) {
-		g_set_error (error, 0, 0, gnome_vfs_result_to_string (result));
-		return FALSE;
-	}
-
-	return TRUE;
+	return ret;
 }
 
 

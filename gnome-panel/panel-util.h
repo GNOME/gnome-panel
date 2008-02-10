@@ -1,6 +1,7 @@
 #ifndef PANEL_UTIL_H
 #define PANEL_UTIL_H
 
+#include <gio/gio.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
@@ -133,6 +134,8 @@ char *panel_util_get_icon_for_uri (const char *text_uri);
 
 void panel_util_set_tooltip_text (GtkWidget  *widget,
 				  const char *text);
+
+GFile *panel_util_get_file_optional_homedir (const char *location);
 
 G_END_DECLS
 
