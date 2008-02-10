@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.21.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-10 22:59+0100\n"
-"PO-Revision-Date: 2008-02-10 23:00+0100\n"
+"POT-Creation-Date: 2008-02-11 00:51+0100\n"
+"PO-Revision-Date: 2008-02-11 00:51+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -2177,46 +2177,51 @@ msgstr "Programmer"
 msgid "_Edit Menus"
 msgstr "R_ediger menyer"
 
-#: ../gnome-panel/panel-menu-items.c:129 ../gnome-panel/panel-run-dialog.c:351
+#: ../gnome-panel/panel-menu-items.c:135 ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Kan ikke åpne lokasjon «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:410
+#: ../gnome-panel/panel-menu-items.c:416
 msgid "Bookmarks"
 msgstr "Bokmerker"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:432 ../gnome-panel/panel.c:531
+#: ../gnome-panel/panel-menu-items.c:438 ../gnome-panel/panel.c:531
 #, c-format
 msgid "Open '%s'"
 msgstr "Åpne «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:498
+#: ../gnome-panel/panel-menu-items.c:504
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Kan ikke søke etter endringer for medie på %s"
 
-#: ../gnome-panel/panel-menu-items.c:545
+#: ../gnome-panel/panel-menu-items.c:551
 #, c-format
 msgid "Rescan %s"
 msgstr "Oppdater %s"
 
-#: ../gnome-panel/panel-menu-items.c:582
+#: ../gnome-panel/panel-menu-items.c:588
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Kan ikke montere %s"
 
-#: ../gnome-panel/panel-menu-items.c:639
+#: ../gnome-panel/panel-menu-items.c:645
 #, c-format
 msgid "Mount %s"
 msgstr "Monter %s"
 
-#: ../gnome-panel/panel-menu-items.c:815
+#. FIXME: use it for a submenu
+#: ../gnome-panel/panel-menu-items.c:710
+msgid "Removable Media"
+msgstr "Avtagbart medie"
+
+#: ../gnome-panel/panel-menu-items.c:869
 msgid "Network Places"
 msgstr "Nettverkslokasjoner"
 
-#: ../gnome-panel/panel-menu-items.c:854
+#: ../gnome-panel/panel-menu-items.c:908
 msgid "Open your personal folder"
 msgstr "Åpne din personlige mappe"
 
@@ -2224,19 +2229,19 @@ msgstr "Åpne din personlige mappe"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:874
+#: ../gnome-panel/panel-menu-items.c:928
 msgid "Desktop Folder|Desktop"
 msgstr "Skrivebord"
 
-#: ../gnome-panel/panel-menu-items.c:875
+#: ../gnome-panel/panel-menu-items.c:929
 msgid "Open the contents of your desktop in a folder"
 msgstr "Åpne skrivebordet som en mappe"
 
-#: ../gnome-panel/panel-menu-items.c:1197
+#: ../gnome-panel/panel-menu-items.c:1321
 msgid "Places"
 msgstr "Steder"
 
-#: ../gnome-panel/panel-menu-items.c:1226
+#: ../gnome-panel/panel-menu-items.c:1350
 msgid "System"
 msgstr "System"
 
@@ -2244,7 +2249,7 @@ msgstr "System"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1303
+#: ../gnome-panel/panel-menu-items.c:1427
 msgid "panel:showusername|1"
 msgstr "panel:showusername|1"
 
@@ -2252,19 +2257,19 @@ msgstr "panel:showusername|1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1315
+#: ../gnome-panel/panel-menu-items.c:1439
 #, c-format
 msgid "Log Out %s..."
 msgstr "Logg ut %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1319
+#: ../gnome-panel/panel-menu-items.c:1443
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Logg ut %s fra denne sesjonen for å logge inn som en annen bruker."
 
-#: ../gnome-panel/panel-menu-items.c:1360
+#: ../gnome-panel/panel-menu-items.c:1484
 msgid "Could not launch menu item"
 msgstr "Kan ikke starte menyoppføring"
 
@@ -3266,7 +3271,7 @@ msgstr "%1$s på %2$s"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:474
+#: ../gnome-panel/panel.c:471
 #, c-format
 msgid "Open URL: %s"
 msgstr "Åpne URL: %s"
