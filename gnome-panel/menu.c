@@ -1097,12 +1097,9 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 	const char *path;
 	char       *uri;
 	char       *uri_list;
-	GFile      *file;
 
 	path = gmenu_tree_entry_get_desktop_file_path (entry);
-	file = g_file_new_for_path (path);
-	uri = g_file_get_uri (file);
-	g_object_unref (file);
+	uri = g_filename_to_uri (path, NULL, NULL);
 	uri_list = g_strconcat (uri, "\r\n", NULL);
 	g_free (uri);
 

@@ -16,14 +16,11 @@
 #include <sys/wait.h>
 
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
 
 #include <libgnomeui/gnome-icon-lookup.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
-#include <libgnomevfs/gnome-vfs-uri.h>
-#include <libgnomevfs/gnome-vfs-ops.h>
-#include <libgnomevfs/gnome-vfs-mime-handlers.h>
-#include <libgnomevfs/gnome-vfs-file-info.h>
 
 #include "panel.h"
 
@@ -592,12 +589,9 @@ drop_urilist (PanelWidget *panel,
 
 	success = TRUE;
 	for (i = 0; uris[i]; i++) {
-		GnomeVFSURI      *vfs_uri;
-		GnomeVFSFileInfo *info;
-		GnomeVFSResult    res;
-		const char       *uri;
-		char             *basename;
-		char             *filename;
+		GFile      *file;
+		GFileInfo  *info;
+		const char *uri;
 
 		uri = uris[i];
 
@@ -622,40 +616,46 @@ drop_urilist (PanelWidget *panel,
 			continue;
 		}
 
-		if (!(vfs_uri = gnome_vfs_uri_new (uri))) {
-			success = FALSE;
-			continue;
-		}
+		file = g_file_new_for_uri (uri);
+		info = g_file_query_info (file,
+					  "standard::type,"
+					  "standard::fast-content-type,"
+					  "access::can-execute",
+					  G_FILE_QUERY_INFO_NONE,
+					  NULL, NULL);
 
-		basename = gnome_vfs_uri_extract_short_path_name (vfs_uri);
+		if (info) {
+			const char *mime;
+			GFileType   type;
+			gboolean    can_exec;
 
-		info = gnome_vfs_file_info_new ();
-		res = gnome_vfs_get_file_info_uri (vfs_uri, info,
-						   GNOME_VFS_FILE_INFO_GET_MIME_TYPE |
-						   GNOME_VFS_FILE_INFO_FOLLOW_LINKS);
-		if (res == GNOME_VFS_OK) {
-			if (info->mime_type &&
-			    !strncmp (info->mime_type, "image", sizeof ("image") - 1)) {
+			mime = g_file_info_get_content_type (info);
+			type = g_file_info_get_file_type (info);
+			can_exec = g_file_info_get_attribute_boolean (info,
+								      G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE);
+
+			if (mime &&
+			    g_str_has_prefix (mime, "image")) {
 				if (!set_background_image_from_uri (panel->toplevel, uri))
 					success = FALSE;
-			} else if (info->mime_type != NULL &&
-				   (!strcmp (info->mime_type, "application/x-gnome-app-info") ||
-				    !strcmp (info->mime_type, "application/x-desktop") ||
-				    !strcmp (info->mime_type, "application/x-kde-app-info"))) {
+			} else if (mime &&
+				   (!strcmp (mime, "application/x-gnome-app-info") ||
+				    !strcmp (mime, "application/x-desktop") ||
+				    !strcmp (mime, "application/x-kde-app-info"))) {
 				if (panel_profile_id_lists_are_writable ())
 					panel_launcher_create (panel->toplevel, pos, uri);
 				else
 					success = FALSE;
-			} else if (info->type != GNOME_VFS_FILE_TYPE_DIRECTORY &&
-				   info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_PERMISSIONS &&
-				   info->permissions & (GNOME_VFS_PERM_USER_EXEC |
-							GNOME_VFS_PERM_GROUP_EXEC |
-							GNOME_VFS_PERM_OTHER_EXEC) &&
-				   (filename = g_filename_from_uri (uri, NULL, NULL))) {
+			} else if (type != G_FILE_TYPE_DIRECTORY && can_exec) {
+				char *filename;
+
+				filename = g_file_get_path (file);
+
 				if (panel_profile_id_lists_are_writable ())
-					/* executable and local, so add a launcher with it
-					 */
-					ask_about_launcher (filename, panel, pos, TRUE);
+					/* executable and local, so add a
+					 * launcher with it */
+					ask_about_launcher (filename, panel,
+							    pos, TRUE);
 				else
 					success = FALSE;
 				g_free (filename);
@@ -669,11 +669,8 @@ drop_urilist (PanelWidget *panel,
 				success = FALSE;
 		}
 
-		gnome_vfs_file_info_unref (info);
-
-		g_free (basename);
-
-		gnome_vfs_uri_unref (vfs_uri);
+		g_object_unref (info);
+		g_object_unref (file);
 	}
 
 	g_strfreev (uris);
