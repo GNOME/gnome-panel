@@ -1575,7 +1575,7 @@ panel_util_get_label_for_uri (const char *text_uri)
 		else {
 			/* Translators: the first string is the name of a gvfs
 			 * method, and the second string is a path. For
-			 * example, "Trash: some-directory". In means that the
+			 * example, "Trash: some-directory". It means that the
 			 * directory called "some-directory" is in the trash.
 			 */
 			label = g_strdup_printf (_("%1$s: %2$s"),
