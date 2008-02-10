@@ -1,5 +1,40 @@
 2008-02-10  Vincent Untz  <vuntz@gnome.org>
 
+	Once upon a time, someone created gio. And those words were told:
+	"thou shall port your application to gio".
+	And people worked hard towards this goal.
+
+	* Makefile.am:
+	* panel-mount-operation.[ch]: add PanelMountOperation, stolen from eel
+	* panel-menu-items.c: (activate_uri): easy port to gio
+	(panel_menu_items_append_from_desktop):  ditto
+	(panel_place_menu_item_append_gtk_bookmarks): harder, but still okay
+	port to gio
+	(drive_poll_for_media_cb): new, callback when polling a drive. There's
+	a FIXME: should we automount the newly discovered volume?
+	(panel_menu_item_rescan_drive): new, we poll a drive when we activate
+	it
+	(panel_menu_item_append_drive): new, to append a drive to the menu
+	(volume_mount_cb): new, callback when mounting a volume. There's a
+	FIXME: should we activate the URI of the new mount?
+	(panel_menu_item_mount_volume): new, we mount a volume when we
+	activate it
+	(panel_menu_item_append_volume): new, to append a volume to the menu
+	(panel_menu_item_append_mount): new, to append a mount to the menu
+	(panel_place_menu_item_append_volumes): new, based on nautilus code
+	(panel_place_menu_item_append_mounts): ditto
+	(panel_place_menu_item_create_menu): simplify code to get the name of
+	the Home folder, easy port to gio
+	(panel_place_menu_item_gtk_bookmarks_changed): updated
+	(panel_place_menu_item_mounts_changed): updated
+	(panel_place_menu_item_finalize): updated
+	(panel_place_menu_item_init): easy port
+	* panel-util.[ch]: (panel_util_get_icon_name_from_g_icon): export
+	(panel_util_get_file_display_name_if_mount): fix leak
+	(panel_util_get_file_icon_name_if_mount): fix leak
+
+2008-02-10  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_util_get_label_for_uri): typo in translator
 	comment
 

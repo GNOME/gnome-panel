@@ -1327,7 +1327,7 @@ panel_util_get_gfile_root (GFile *file)
 	return parent_old;
 }
 
-static char *
+char *
 panel_util_get_icon_name_from_g_icon (GIcon *gicon)
 {
 	const char * const *names;
@@ -1365,10 +1365,9 @@ panel_util_get_file_display_name_if_mount (GFile *file)
 		GMount *mount;
 		mount = G_MOUNT (l->data);
 		compare = g_mount_get_root (mount);
-		if (g_file_equal (file, compare)) {
+		if (!ret && g_file_equal (file, compare))
 			ret = g_mount_get_name (mount);
-			break;
-		}
+		g_object_unref (mount);
 	}
 	g_list_free (mounts);
 	g_object_unref (monitor);
@@ -1459,13 +1458,13 @@ panel_util_get_file_icon_name_if_mount (GFile *file)
 		GMount *mount;
 		mount = G_MOUNT (l->data);
 		compare = g_mount_get_root (mount);
-		if (g_file_equal (file, compare)) {
+		if (!ret && g_file_equal (file, compare)) {
 			GIcon *gicon;
 			gicon = g_mount_get_icon (mount);
 			ret = panel_util_get_icon_name_from_g_icon (gicon);
 			g_object_unref (gicon);
-			break;
 		}
+		g_object_unref (mount);
 	}
 	g_list_free (mounts);
 	g_object_unref (monitor);

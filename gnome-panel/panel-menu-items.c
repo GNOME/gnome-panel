@@ -37,8 +37,8 @@
 
 #include <string.h>
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 
-#include <libgnomevfs/gnome-vfs.h>
 #include <libgnome/gnome-url.h>
 #include <libgnomeui/gnome-url.h>
 
@@ -47,6 +47,7 @@
 #include "panel-globals.h"
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
+#include "panel-mount-operation.h"
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
 #include "panel-util.h"
@@ -71,10 +72,12 @@ struct _PanelPlaceMenuItemPrivate {
 
 	GtkRecentManager *recent_manager;
 
-	GnomeVFSMonitorHandle *bookmarks_monitor;
+	GFileMonitor *bookmarks_monitor;
 
-	gulong       volume_mounted_id;
-	gulong       volume_unmounted_id;
+	GVolumeMonitor *volume_monitor;
+	gulong       mount_added_id;
+	gulong       mount_changed_id;
+	gulong       mount_removed_id;
 
 	guint        use_image : 1;
 };
@@ -87,21 +90,29 @@ struct _PanelDesktopMenuItemPrivate {
 	guint        append_lock_logout : 1;
 };
 
-static GnomeVFSVolumeMonitor *volume_monitor = NULL;
-
 static void
 activate_uri (GtkWidget  *menuitem,
 	      const char *path)
 {
 	GError    *error = NULL;
+	GFile     *file;
 	GdkScreen *screen;
-	char      *url;
 	char      *escaped;
+	char      *scheme;
+	char      *url;
 
 	screen = menuitem_to_screen (menuitem);
-
-	url = gnome_vfs_make_uri_from_input_with_dirs (path,
-						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
+	
+	scheme = g_uri_get_scheme (path);
+	if (scheme) {
+		url = g_strdup (path);
+		g_free (scheme);
+	} else {
+		file = g_file_new_for_path (path);
+		url = g_file_get_uri (file);
+		g_object_unref (file);
+	}
+	
 	if (g_str_has_prefix (url, "x-nautilus-search:")) {
 		//FIXME: this is ugly...
 		char *command;
@@ -218,7 +229,8 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
-	uri = gnome_vfs_get_uri_from_local_path (full_path);
+	uri = g_filename_to_uri (full_path);
+
 	setup_uri_drag (item, uri, icon);
 	g_free (uri);
 
@@ -342,10 +354,10 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 
 	for (i = 0; lines[i]; i++) {
 		if (lines[i][0] && !g_hash_table_lookup (table, lines[i])) {
-			GnomeVFSURI *uri;
-			char        *space;
-			char        *label;
-			gboolean     keep;
+			GFile    *file;
+			char     *space;
+			char     *label;
+			gboolean  keep;
 
 			g_hash_table_insert (table, lines[i], lines[i]);
 
@@ -358,22 +370,15 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			}
 
 			keep = FALSE;
-			uri = NULL;
 
-			if (g_str_has_prefix (lines[i], "x-nautilus-search:") ||
-			    g_str_has_prefix (lines[i], "trash:"))
+			if (g_str_has_prefix (lines[i], "x-nautilus-search:"))
 				keep = TRUE;
 
 			if (!keep) {
-				uri = gnome_vfs_uri_new (lines[i]);
-				if (uri) {
-					const char *scheme;
-
-					scheme = gnome_vfs_uri_get_scheme (uri);
-					keep = strcmp (scheme, "file") != 0 ||
-					       gnome_vfs_uri_exists (uri);
-					gnome_vfs_uri_unref (uri);
-				}
+				file = g_file_new_for_uri (lines[i]);
+				keep = !g_file_is_native (file) ||
+				       g_file_query_exists (file, NULL);
+				g_object_unref (file);
 			}
 
 			if (!keep) {
@@ -412,17 +417,20 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	}
 
 	for (l = add_bookmarks; l; l = l->next) {
-		char *display_uri;
+		char *display_name;
 		char *tooltip;
 		char *label;
 		char *icon;
+		GFile *file;
 
 		bookmark = l->data;
-
-		display_uri = gnome_vfs_format_uri_for_display (bookmark->full_uri);
+		
+		file = g_file_new_for_uri (bookmark->full_uri);
+		display_name = g_file_get_parse_name (file);
+		g_object_unref (file);
 		/* Translators: %s is a URI */
-		tooltip = g_strdup_printf (_("Open '%s'"), display_uri);
-		g_free (display_uri);
+		tooltip = g_strdup_printf (_("Open '%s'"), display_name);
+		g_free (display_name);
 
 		label = NULL;
 		if (bookmark->label) {
@@ -471,58 +479,340 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 }
 
 static void
-panel_place_menu_item_append_volumes (GtkWidget *menu,
-				      gboolean   connected_volumes)
+drive_poll_for_media_cb (GObject      *source_object,
+			 GAsyncResult *res,
+			 gpointer      user_data)
 {
-	GtkWidget *add_menu;
-	GList     *volumes, *l;
-	GSList    *add_volumes, *sl;
+	GdkScreen *screen;
+	GError    *error;
+	char      *primary;
+	char      *name;
 
-	volumes = gnome_vfs_volume_monitor_get_mounted_volumes (volume_monitor);
-	add_volumes = NULL;
+	error = NULL;
+	if (!g_drive_poll_for_media_finish (G_DRIVE (source_object),
+					    res, &error)) {
+		if (error->code != G_IO_ERROR_FAILED_HANDLED) {
+			screen = GDK_SCREEN (user_data);
 
-	for (l = volumes; l; l = l->next) {
-		GnomeVFSVolume *volume = l->data;
-
-		if (!gnome_vfs_volume_is_user_visible (volume) ||
-		    !gnome_vfs_volume_is_mounted (volume))
-			continue;
-
-		switch (gnome_vfs_volume_get_volume_type (volume)) {
-		case GNOME_VFS_VOLUME_TYPE_CONNECTED_SERVER:
-			if (connected_volumes)
-				add_volumes = g_slist_prepend (add_volumes,
-							       volume);
-			break;
-		default:
-			if (!connected_volumes)
-				add_volumes = g_slist_prepend (add_volumes,
-							       volume);
-			break;
+			name = g_drive_get_name (G_DRIVE (source_object));
+			primary = g_strdup_printf (_("Unable to scan %s for media changes"),
+						   name);
+			g_free (name);
+			panel_error_dialog (NULL, screen,
+					    "cannot_scan_drive", TRUE,
+					    primary, error->message);
+			g_free (primary);
 		}
+		g_error_free (error);
 	}
 
-	add_volumes = g_slist_sort (add_volumes,
-				    (GCompareFunc) gnome_vfs_volume_compare);
+	//FIXME: should we mount the volume and activate the root of the new
+	//mount?
+}
 
-	if (g_slist_length (add_volumes) <= MAX_ITEMS_OR_SUBMENU) {
+static void
+panel_menu_item_rescan_drive (GtkWidget *menuitem,
+			      GDrive    *drive)
+{
+	g_drive_poll_for_media (drive, NULL,
+				drive_poll_for_media_cb,
+				menuitem_to_screen (menuitem));
+}
+
+static void
+panel_menu_item_append_drive (GtkWidget *menu,
+			      GDrive    *drive)
+{
+	GtkWidget *item;
+	GIcon     *icon;
+	char      *icon_name;
+	char      *title;
+	char      *tooltip;
+
+	icon = g_drive_get_icon (drive);
+	icon_name = panel_util_get_icon_name_from_g_icon (icon);
+	g_object_unref (icon);
+
+	title = g_drive_get_name (drive);
+
+	item = gtk_image_menu_item_new ();
+	setup_menu_item_with_icon (item,
+				   panel_menu_icon_get_size (),
+				   icon_name,
+				   NULL,
+				   title);
+
+	tooltip = g_strdup_printf (_("Rescan %s"), title);
+	panel_util_set_tooltip_text (item, tooltip);
+	g_free (tooltip);
+
+	g_free (icon_name);
+	g_free (title);
+
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+	g_signal_connect_data (item, "activate",
+			       G_CALLBACK (panel_menu_item_rescan_drive),
+			       g_object_ref (drive),
+			       (GClosureNotify) g_object_unref, 0);
+
+	g_signal_connect (G_OBJECT (item), "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+}
+
+typedef struct {
+	GdkScreen       *screen;
+	GMountOperation *mount_op;
+} PanelVolumeMountData;
+
+static void
+volume_mount_cb (GObject      *source_object,
+		 GAsyncResult *res,
+		 gpointer      user_data)
+{
+	PanelVolumeMountData *mount_data = user_data;
+	GError *error;
+	char   *primary;
+	char   *name;
+
+	error = NULL;
+	if (!g_volume_mount_finish (G_VOLUME (source_object), res, &error)) {
+		if (error->code != G_IO_ERROR_FAILED_HANDLED) {
+			name = g_volume_get_name (G_VOLUME (source_object));
+			primary = g_strdup_printf (_("Unable to mount %s"),
+						   name);
+			g_free (name);
+
+			panel_error_dialog (NULL, mount_data->screen,
+					    "cannot_mount_volume", TRUE,
+					    primary, error->message);
+			g_free (primary);
+		}
+		g_error_free (error);
+	}
+	
+	//FIXME: should we activate the root of the new mount?
+
+	g_object_unref (mount_data->mount_op);
+	g_slice_free (PanelVolumeMountData, mount_data);
+}
+
+static void
+panel_menu_item_mount_volume (GtkWidget *menuitem,
+			      GVolume   *volume)
+{
+	PanelVolumeMountData *mount_data;
+
+	mount_data = g_slice_new (PanelVolumeMountData);
+	mount_data->screen = menuitem_to_screen (menuitem);
+	/*FIXME: kill PanelMountOperation when we can depend on newer GTK+ that
+	 * will have the same feature */
+	mount_data->mount_op = panel_mount_operation_new (NULL);
+
+	g_volume_mount (volume, mount_data->mount_op, NULL,
+			volume_mount_cb, mount_data);
+}
+
+static void
+panel_menu_item_append_volume (GtkWidget *menu,
+			       GVolume   *volume)
+{
+	GtkWidget *item;
+	GIcon     *icon;
+	char      *icon_name;
+	char      *title;
+	char      *tooltip;
+
+	icon = g_volume_get_icon (volume);
+	icon_name = panel_util_get_icon_name_from_g_icon (icon);
+	g_object_unref (icon);
+
+	title = g_volume_get_name (volume);
+
+	item = gtk_image_menu_item_new ();
+	setup_menu_item_with_icon (item,
+				   panel_menu_icon_get_size (),
+				   icon_name,
+				   NULL,
+				   title);
+
+	tooltip = g_strdup_printf (_("Mount %s"), title);
+	panel_util_set_tooltip_text (item, tooltip);
+	g_free (tooltip);
+
+	g_free (icon_name);
+	g_free (title);
+
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+	g_signal_connect_data (item, "activate",
+			       G_CALLBACK (panel_menu_item_mount_volume),
+			       g_object_ref (volume),
+			       (GClosureNotify) g_object_unref, 0);
+
+	g_signal_connect (G_OBJECT (item), "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+}
+
+static void
+panel_menu_item_append_mount (GtkWidget *menu,
+			      GMount    *mount)
+{
+	GFile  *root;
+	GIcon  *icon;
+	char   *icon_name;
+	char   *display_name;
+	char   *activation_uri;
+
+	icon = g_mount_get_icon (mount);
+	icon_name = panel_util_get_icon_name_from_g_icon (icon);
+	g_object_unref (icon);
+
+	display_name = g_mount_get_name (mount);
+
+	root = g_mount_get_root (mount);
+	activation_uri = g_file_get_uri (root);
+	g_object_unref (root);
+
+	panel_menu_items_append_place_item (icon_name,
+					    display_name,
+					    display_name, //FIXME tooltip
+					    menu,
+					    G_CALLBACK (activate_uri),
+					    activation_uri);
+
+	g_free (icon_name);
+	g_free (display_name);
+	g_free (activation_uri);
+}
+
+/* this is loosely based on update_places() from nautilus-places-sidebar.c */
+static void
+panel_place_menu_item_append_volumes (PanelPlaceMenuItem *place_item,
+				      GtkWidget          *menu)
+{
+	GList   *l;
+	GList   *ll;
+	GList   *drives;
+	GDrive  *drive;
+	GList   *volumes;
+	GVolume *volume;
+	GMount  *mount;
+
+	/* first go through all connected drives */
+	drives = g_volume_monitor_get_connected_drives (place_item->priv->volume_monitor);
+	for (l = drives; l != NULL; l = l->next) {
+		drive = l->data;
+
+		volumes = g_drive_get_volumes (drive);
+		if (volumes != NULL) {
+			for (ll = volumes; ll != NULL; ll = ll->next) {
+				volume = ll->data;
+				mount = g_volume_get_mount (volume);
+				if (mount != NULL) {
+					panel_menu_item_append_mount (menu,
+								      mount);
+					g_object_unref (mount);
+				} else {
+					/* Do show the unmounted volumes; this
+					 * is so the user can mount it (in case
+					 * automounting is off).
+					 *
+					 * Also, even if automounting is
+					 * enabled, this gives a visual cue
+					 * that the user should remember to
+					 * yank out the media if he just
+					 * unmounted it.
+					 */
+					panel_menu_item_append_volume (menu,
+								       volume);
+				}
+				g_object_unref (volume);
+			}
+			g_list_free (volumes);
+		} else {
+			if (g_drive_is_media_removable (drive) &&
+			    !g_drive_is_media_check_automatic (drive)) {
+				/* If the drive has no mountable volumes and we
+				 * cannot detect media change.. we display the
+				 * drive so the user can manually poll the
+				 * drive by clicking on it..."
+				 *
+				 * This is mainly for drives like floppies
+				 * where media detection doesn't work.. but
+				 * it's also for human beings who like to turn
+				 * off media detection in the OS to save
+				 * battery juice.
+				 */
+				panel_menu_item_append_drive (menu, drive);
+			}
+		}
+		g_object_unref (drive);
+	}
+	g_list_free (drives);
+
+	/* add all volumes that is not associated with a drive */
+	volumes = g_volume_monitor_get_volumes (place_item->priv->volume_monitor);
+	for (l = volumes; l != NULL; l = l->next) {
+		volume = l->data;
+		drive = g_volume_get_drive (volume);
+		if (drive != NULL) {
+		    	g_object_unref (volume);
+			g_object_unref (drive);
+			continue;
+		}
+		mount = g_volume_get_mount (volume);
+		if (mount != NULL) {
+			panel_menu_item_append_mount (menu, mount);
+			g_object_unref (mount);
+		} else {
+			/* see comment above in why we add an icon for an
+			 * unmounted mountable volume */
+			panel_menu_item_append_volume (menu, volume);
+		}
+		g_object_unref (volume);
+	}
+	g_list_free (volumes);
+}
+
+/* this is loosely based on update_places() from nautilus-places-sidebar.c */
+static void
+panel_place_menu_item_append_mounts (PanelPlaceMenuItem *place_item,
+				     GtkWidget          *menu)
+{
+	GtkWidget *add_menu;
+	GList     *mounts, *l;
+	GMount    *mount;
+	GSList    *add_mounts, *sl;
+
+	/* add mounts that has no volume (/etc/mtab mounts, ftp, sftp,...) */
+	mounts = g_volume_monitor_get_mounts (place_item->priv->volume_monitor);
+	add_mounts = NULL;
+
+	for (l = mounts; l; l = l->next) {
+		GVolume *volume;
+
+		mount = l->data;
+		volume = g_mount_get_volume (mount);
+		if (volume != NULL) {
+			g_object_unref (volume);
+			g_object_unref (mount);
+			continue;
+		}
+
+		add_mounts = g_slist_prepend (add_mounts, mount);
+	}
+	add_mounts = g_slist_reverse (add_mounts);
+
+	if (g_slist_length (add_mounts) <= MAX_ITEMS_OR_SUBMENU) {
 		add_menu = menu;
 	} else {
 		GtkWidget  *item;
-		const char *title;
-		const char *icon;
-
-		if (connected_volumes) {
-			title = _("Network Places");
-			icon = PANEL_ICON_NETWORK_SERVER;
-		} else {
-			title = _("Removable Media");
-			icon = PANEL_ICON_REMOVABLE_MEDIA;
-		}
 
 		item = gtk_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-					   icon, NULL, title);
+					   PANEL_ICON_NETWORK_SERVER, NULL,
+					   _("Network Places"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		gtk_widget_show (item);
@@ -531,32 +821,14 @@ panel_place_menu_item_append_volumes (GtkWidget *menu,
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
 	}
 
-	for (sl = add_volumes; sl; sl = sl->next) {
-		GnomeVFSVolume *volume = sl->data;
-		char           *icon;
-		char           *display_name;
-		char           *activation_uri;
-
-		icon           = gnome_vfs_volume_get_icon (volume);
-		display_name   = gnome_vfs_volume_get_display_name (volume);
-		activation_uri = gnome_vfs_volume_get_activation_uri (volume);
-
-		panel_menu_items_append_place_item (icon,
-						    display_name,
-						    display_name, //FIXME tooltip
-						    add_menu,
-						    G_CALLBACK (activate_uri),
-						    activation_uri);
-
-		g_free (icon);
-		g_free (display_name);
-		g_free (activation_uri);
+	for (sl = add_mounts; sl; sl = sl->next) {
+		mount = sl->data;
+		panel_menu_item_append_mount (add_menu, mount);
+		g_object_unref (mount);
 	}
 
-	g_slist_free (add_volumes);
-
-	g_list_foreach (volumes, (GFunc) gnome_vfs_volume_unref, NULL);
-	g_list_free (volumes);
+	g_slist_free (add_mounts);
+	g_list_free (mounts);
 }
 
 
@@ -566,31 +838,33 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	GtkWidget *places_menu;
 	GtkWidget *item;
 	char      *gconf_name;
+	char      *name;
 	char      *uri;
+	GFile     *file;
 
 	places_menu = panel_create_menu ();
 
-	gconf_name = gconf_client_get_string (panel_gconf_get_client (),
-					      HOME_NAME_KEY,
-					      NULL);
-
-	uri = gnome_vfs_get_uri_from_local_path (g_get_home_dir ());
+	file = g_file_new_for_path (g_get_home_dir ());
+	uri = g_file_get_uri (file);
+	name = panel_util_get_label_for_uri (uri);
+	g_object_unref (file);
+	
 	panel_menu_items_append_place_item (PANEL_ICON_HOME,
-					    string_empty (gconf_name) ?
-						_("Home Folder") : gconf_name,
+					    name,
 					    _("Open your personal folder"),
 					    places_menu,
 					    G_CALLBACK (activate_home_uri),
 					    uri);
+	g_free (name);
 	g_free (uri);
-
-	if (gconf_name)
-		g_free (gconf_name);
 
 	if (!gconf_client_get_bool (panel_gconf_get_client (),
 				    DESKTOP_IS_HOME_DIR_KEY,
 				    NULL)) {
-		uri = gnome_vfs_get_uri_from_local_path (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
+		file = g_file_new_for_path (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
+		uri = g_file_get_uri (file);
+		g_object_unref (file);
+		
 		panel_menu_items_append_place_item (
 				PANEL_ICON_DESKTOP,
 				/* Translators: Desktop is used here as in
@@ -622,13 +896,13 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 					      "nautilus-cd-burner.desktop",
 					      NULL);
 
-	panel_place_menu_item_append_volumes (places_menu, FALSE);
+	panel_place_menu_item_append_volumes (place_item, places_menu);
 	add_menu_separator (places_menu);
 
 	panel_menu_items_append_from_desktop (places_menu,
 					      "network-scheme.desktop",
 					      NULL);
-	panel_place_menu_item_append_volumes (places_menu, TRUE);
+	panel_place_menu_item_append_mounts (place_item, places_menu);
 
 	if (panel_is_program_in_path ("nautilus-connect-server")) {
 		item = panel_menu_items_create_action_item (PANEL_ACTION_CONNECT_SERVER);
@@ -677,19 +951,19 @@ panel_place_menu_item_key_changed (GConfClient *client,
 }
 
 static void
-panel_place_menu_item_gtk_bookmarks_changed (GnomeVFSMonitorHandle *handle,
-					     const gchar *monitor_uri,
-					     const gchar *info_uri,
-					     GnomeVFSMonitorEventType event_type,
-					     gpointer user_data)
+panel_place_menu_item_gtk_bookmarks_changed (GFileMonitor *handle,
+					     GFile        *file,
+					     GFile        *other_file,
+					     GFileMonitorEvent event,
+					     gpointer      user_data)
 {
 	panel_place_menu_item_recreate_menu (GTK_WIDGET (user_data));
 }
 
 static void
-panel_place_menu_item_volume_changed (GnomeVFSVolumeMonitor *monitor,
-				      GnomeVFSVolume        *volume,
-				      GtkWidget             *place_menu)
+panel_place_menu_item_mounts_changed (GVolumeMonitor *monitor,
+				      GMount         *mount,
+				      GtkWidget      *place_menu)
 {
 	panel_place_menu_item_recreate_menu (place_menu);
 }
@@ -767,19 +1041,30 @@ panel_place_menu_item_finalize (GObject *object)
 				 NAMES_DIR,
 				 NULL);
 
-	if (menuitem->priv->bookmarks_monitor != NULL)
-		gnome_vfs_monitor_cancel (menuitem->priv->bookmarks_monitor);
+	if (menuitem->priv->bookmarks_monitor != NULL) {
+		g_file_monitor_cancel (menuitem->priv->bookmarks_monitor);
+		g_object_unref (menuitem->priv->bookmarks_monitor);
+	}
 	menuitem->priv->bookmarks_monitor = NULL;
 
-	if (menuitem->priv->volume_mounted_id)
-		g_signal_handler_disconnect (volume_monitor,
-					     menuitem->priv->volume_mounted_id);
-	menuitem->priv->volume_mounted_id = 0;
+	if (menuitem->priv->mount_added_id)
+		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+					     menuitem->priv->mount_added_id);
+	menuitem->priv->mount_added_id = 0;
 
-	if (menuitem->priv->volume_unmounted_id)
-		g_signal_handler_disconnect (volume_monitor,
-					     menuitem->priv->volume_unmounted_id);
-	menuitem->priv->volume_unmounted_id = 0;
+	if (menuitem->priv->mount_changed_id)
+		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+					     menuitem->priv->mount_changed_id);
+	menuitem->priv->mount_changed_id = 0;
+
+	if (menuitem->priv->mount_removed_id)
+		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+					     menuitem->priv->mount_removed_id);
+	menuitem->priv->mount_removed_id = 0;
+
+	if (menuitem->priv->volume_monitor != NULL)
+		g_object_unref (menuitem->priv->volume_monitor);
+	menuitem->priv->volume_monitor = NULL;
 
 	G_OBJECT_CLASS (panel_place_menu_item_parent_class)->finalize (object);
 }
@@ -798,8 +1083,9 @@ panel_desktop_menu_item_finalize (GObject *object)
 static void
 panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 {
-	char *bookmarks_filename;
-	char *bookmarks_uri;
+	GFile *bookmark;
+	char  *bookmarks_filename;
+	GError *error;
 
 	menuitem->priv = PANEL_PLACE_MENU_ITEM_GET_PRIVATE (menuitem);
 
@@ -826,42 +1112,42 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 
 	bookmarks_filename = g_build_filename (g_get_home_dir (),
 					       BOOKMARKS_FILENAME, NULL);
-	bookmarks_uri = gnome_vfs_get_uri_from_local_path (bookmarks_filename);
+	bookmark = g_file_new_for_path (bookmarks_filename);
 
-	if (bookmarks_uri) {
-		GnomeVFSResult result;
-
-		result = gnome_vfs_monitor_add (&menuitem->priv->bookmarks_monitor,
-						bookmarks_uri,
-						GNOME_VFS_MONITOR_FILE,
-						panel_place_menu_item_gtk_bookmarks_changed,
-						menuitem);
-
-		if (result == GNOME_VFS_ERROR_NOT_SUPPORTED)
-			g_message ("File monitoring not supported in the compiled version of gnome-vfs: bookmarks won't be monitored.");
-		else if (result != GNOME_VFS_OK)
-			g_warning ("Failed to add file monitor for %s: %s\n",
-				   bookmarks_uri,
-				   gnome_vfs_result_to_string (result));
-
-		g_free (bookmarks_uri);
+	error = NULL;
+	menuitem->priv->bookmarks_monitor = g_file_monitor_file 
+        						(bookmark,
+        						G_FILE_MONITOR_NONE,
+        						NULL,
+        						&error);
+	if (error) {
+		g_warning ("Failed to add file monitor for %s: %s\n",
+			   bookmarks_filename, error->message);
+		g_error_free (error);
 	} else {
-		g_warning ("Could not make URI of ~/"BOOKMARKS_FILENAME);
+		g_signal_connect (G_OBJECT (menuitem->priv->bookmarks_monitor), 
+				  "changed", 
+				  (GCallback) panel_place_menu_item_gtk_bookmarks_changed,
+				  menuitem);
 	}
 
+	g_object_unref (bookmark);
 	g_free (bookmarks_filename);
 
-	if (!volume_monitor)
-		volume_monitor = gnome_vfs_get_volume_monitor ();
+	menuitem->priv->volume_monitor = g_volume_monitor_get ();
 
-	menuitem->priv->volume_mounted_id = g_signal_connect (volume_monitor,
-							      "volume_mounted",
-							      G_CALLBACK (panel_place_menu_item_volume_changed),
-							      menuitem);
-	menuitem->priv->volume_unmounted_id = g_signal_connect (volume_monitor,
-							        "volume_unmounted",
-							        G_CALLBACK (panel_place_menu_item_volume_changed),
-							        menuitem);
+	menuitem->priv->mount_added_id = g_signal_connect (menuitem->priv->volume_monitor,
+							   "mount-added",
+							   G_CALLBACK (panel_place_menu_item_mounts_changed),
+							   menuitem);
+	menuitem->priv->mount_changed_id = g_signal_connect (menuitem->priv->volume_monitor,
+							     "mount-changed",
+							     G_CALLBACK (panel_place_menu_item_mounts_changed),
+							     menuitem);
+	menuitem->priv->mount_removed_id = g_signal_connect (menuitem->priv->volume_monitor,
+							     "mount-removed",
+							     G_CALLBACK (panel_place_menu_item_mounts_changed),
+							     menuitem);
 
 }
 
