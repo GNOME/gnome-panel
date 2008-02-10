@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-10 21:21+0100\n"
-"PO-Revision-Date: 2008-02-10 21:21+0100\n"
+"POT-Creation-Date: 2008-02-11 00:03+0100\n"
+"PO-Revision-Date: 2008-02-11 00:04+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -1999,37 +1999,53 @@ msgstr "Program"
 msgid "_Edit Menus"
 msgstr "_Redigera menyer"
 
-#: ../gnome-panel/panel-menu-items.c:118
+#: ../gnome-panel/panel-menu-items.c:135
 #: ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Kunde inte öppna platsen \"%s\""
 
-#: ../gnome-panel/panel-menu-items.c:405
+#: ../gnome-panel/panel-menu-items.c:416
 msgid "Bookmarks"
 msgstr "Bokmärken"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:424
+#: ../gnome-panel/panel-menu-items.c:438
 #: ../gnome-panel/panel.c:531
 #, c-format
 msgid "Open '%s'"
 msgstr "Öppna \"%s\""
 
-#: ../gnome-panel/panel-menu-items.c:516
-msgid "Network Places"
-msgstr "Nätverksplatser"
+#: ../gnome-panel/panel-menu-items.c:504
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "Kunde inte söka av %s efter mediabyten"
 
-#: ../gnome-panel/panel-menu-items.c:519
+#: ../gnome-panel/panel-menu-items.c:551
+#, c-format
+msgid "Rescan %s"
+msgstr "Sök av %s igen"
+
+#: ../gnome-panel/panel-menu-items.c:588
+#, c-format
+msgid "Unable to mount %s"
+msgstr "Kunde inte montera %s"
+
+#: ../gnome-panel/panel-menu-items.c:645
+#, c-format
+msgid "Mount %s"
+msgstr "Montera %s"
+
+#. FIXME: use it for a submenu
+#: ../gnome-panel/panel-menu-items.c:710
 msgid "Removable Media"
 msgstr "Flyttbara media"
 
-#: ../gnome-panel/panel-menu-items.c:580
-#: ../gnome-panel/panel-util.c:1396
-msgid "Home Folder"
-msgstr "Hemmapp"
+#: ../gnome-panel/panel-menu-items.c:869
+msgid "Network Places"
+msgstr "Nätverksplatser"
 
-#: ../gnome-panel/panel-menu-items.c:581
+#: ../gnome-panel/panel-menu-items.c:908
 msgid "Open your personal folder"
 msgstr "Öppna din personliga mapp"
 
@@ -2037,19 +2053,19 @@ msgstr "Öppna din personliga mapp"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:600
+#: ../gnome-panel/panel-menu-items.c:928
 msgid "Desktop Folder|Desktop"
 msgstr "Skrivbord"
 
-#: ../gnome-panel/panel-menu-items.c:601
+#: ../gnome-panel/panel-menu-items.c:929
 msgid "Open the contents of your desktop in a folder"
 msgstr "Öppna innehållet på ditt skrivbord in en mapp"
 
-#: ../gnome-panel/panel-menu-items.c:911
+#: ../gnome-panel/panel-menu-items.c:1321
 msgid "Places"
 msgstr "Platser"
 
-#: ../gnome-panel/panel-menu-items.c:940
+#: ../gnome-panel/panel-menu-items.c:1350
 msgid "System"
 msgstr "System"
 
@@ -2057,7 +2073,7 @@ msgstr "System"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1017
+#: ../gnome-panel/panel-menu-items.c:1427
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -2065,21 +2081,25 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1029
+#: ../gnome-panel/panel-menu-items.c:1439
 #, c-format
 msgid "Log Out %s..."
 msgstr "Logga ut %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1033
+#: ../gnome-panel/panel-menu-items.c:1443
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Logga ut %s från denna session för att logga in som en annan användare"
 
-#: ../gnome-panel/panel-menu-items.c:1074
+#: ../gnome-panel/panel-menu-items.c:1484
 msgid "Could not launch menu item"
 msgstr "Kunde inte starta menyobjekt"
+
+#: ../gnome-panel/panel-mount-operation.c:124
+msgid "Enter Password"
+msgstr "Ange lösenord"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2806,20 +2826,24 @@ msgstr "Ikonen \"%s\" hittades inte"
 msgid "file"
 msgstr "fil"
 
+#: ../gnome-panel/panel-util.c:1395
+msgid "Home Folder"
+msgstr "Hemmapp"
+
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:1408
+#: ../gnome-panel/panel-util.c:1407
 msgid "File System"
 msgstr "Filsystem"
 
-#: ../gnome-panel/panel-util.c:1533
+#: ../gnome-panel/panel-util.c:1532
 msgid "Search"
 msgstr "Sök"
 
 #. Translators: the first string is a path and the second
 #. * string is a hostname. nautilus contains the same string to
 #. * translate.
-#: ../gnome-panel/panel-util.c:1560
+#: ../gnome-panel/panel-util.c:1559
 #, c-format
 msgid "%1$s on %2$s"
 msgstr "%1$s på %2$s"
@@ -2829,7 +2853,7 @@ msgstr "%1$s på %2$s"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1581
+#: ../gnome-panel/panel-util.c:1580
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -2990,8 +3014,6 @@ msgstr "_Inställningskatalog:"
 #~ msgstr "Dator"
 #~ msgid "Network"
 #~ msgstr "Nätverk"
-#~ msgid "Fonts"
-#~ msgstr "Typsnitt"
 #~ msgid "Themes"
 #~ msgstr "Teman"
 #~ msgid "CD/DVD Creator"
