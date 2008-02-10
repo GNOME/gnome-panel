@@ -1,11 +1,9 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 #include <gtk/gtk.h>
 #include <libgnomeui/gnome-ui-init.h>
-#include <libgnomevfs/gnome-vfs-uri.h>
-#include <libgnomevfs/gnome-vfs-ops.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
 
 #include "panel-ditem-editor.h"
 #include "panel-util.h"
@@ -36,30 +34,6 @@ dialog_destroyed (GtkWidget *dialog, gpointer data)
 
 	if (dialogs <= 0)
 		gtk_main_quit ();
-}
-
-static char *
-get_uri (const char *arg)
-{
-	char *current_dir;
-	char *resolved;
-	char *uri;
-
-	if (!g_path_is_absolute (arg)) {
-		current_dir = g_get_current_dir ();
-		uri = g_strconcat (current_dir, "/", NULL);
-		g_free (current_dir);
-		current_dir = uri;
-
-		resolved = gnome_vfs_uri_make_full_from_relative (current_dir, arg);
-		g_free (current_dir);
-
-		uri = gnome_vfs_make_uri_canonical (resolved);
-		g_free (resolved);
-	} else
-		uri = gnome_vfs_get_uri_from_local_path (arg);
-
-	return uri;
 }
 
 static void
@@ -122,7 +96,6 @@ main (int argc, char * argv[])
 	GOptionContext *context;
 	GnomeProgram *program;
 	int i;
-	GnomeVFSFileInfo *info;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -146,18 +119,23 @@ main (int argc, char * argv[])
 		return 0;
 	}
 
-	info = gnome_vfs_file_info_new ();
-
 	for (i = 0; desktops[i] != NULL; i++) {
-		char *uri = get_uri (desktops[i]);
+		GFile     *file;
+		GFileInfo *info;
+		GFileType  type;
+		char      *uri;
 		GtkWidget *dlg = NULL;
 
-		gnome_vfs_file_info_clear (info);
+		file = g_file_new_for_commandline_arg (desktops[i]);
+		uri  = g_file_get_uri (file);
+		info = g_file_query_info (file, "standard::type",
+					  G_FILE_QUERY_INFO_NONE, NULL, NULL);
+		g_object_unref (file);
 
-		if (gnome_vfs_get_file_info
-		    (uri, info, GNOME_VFS_FILE_INFO_DEFAULT) == GNOME_VFS_OK) {
+		if (info) {
+			type = g_file_info_get_file_type (info);
 
-			if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY && create_new) {
+			if (type == G_FILE_TYPE_DIRECTORY && create_new) {
 				dlg = panel_ditem_editor_new (NULL, NULL, NULL,
 							     _("Create Launcher"));
 				g_object_set_data_full (G_OBJECT (dlg), "dir",
@@ -168,7 +146,7 @@ main (int argc, char * argv[])
 								    find_uri_on_save,
 								    NULL);
 
-			} else if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
+			} else if (type == G_FILE_TYPE_DIRECTORY) {
 				/* Rerun this iteration with the .directory
 				 * file
 				 * Note: No need to free, for one we can't free
@@ -179,19 +157,21 @@ main (int argc, char * argv[])
 				g_free (uri);
 				i--;
 				continue;
-			} else if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
-				   && g_str_has_suffix (desktops [i], ".directory")
+			} else if (type == G_FILE_TYPE_REGULAR
+				   && g_str_has_suffix (desktops [i],
+					   		".directory")
 				   && !create_new) {
 				dlg = panel_ditem_editor_new_directory (NULL,
 									NULL,
 									uri,
 									_("Directory Properties"));
-			} else if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
-				   && g_str_has_suffix (desktops [i], ".desktop")
+			} else if (type == G_FILE_TYPE_REGULAR
+				   && g_str_has_suffix (desktops [i],
+					   		".desktop")
 				   && !create_new) {
 				dlg = panel_ditem_editor_new (NULL, NULL, uri,
 							      _("Launcher Properties"));
-			} else if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
+			} else if (type == G_FILE_TYPE_REGULAR
 				   && create_new) {
 				g_printerr ("gnome-desktop-item-edit: %s "
 					    "already exists\n", uri);
@@ -200,6 +180,8 @@ main (int argc, char * argv[])
 					    "does not look like a desktop "
 					    "item\n", uri);
 			}
+
+			g_object_unref (info);
 
 		} else if (g_str_has_suffix (desktops [i], ".directory")) {
 			/* a non-existant file.  Well we can still edit that
@@ -230,8 +212,6 @@ main (int argc, char * argv[])
 
 		g_free (uri);
 	}
-
-	gnome_vfs_file_info_unref (info);
 
 	if (dialogs > 0)
 		gtk_main ();
