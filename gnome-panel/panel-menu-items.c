@@ -788,7 +788,6 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	mounts = g_volume_monitor_get_mounts (place_item->priv->volume_monitor);
 	for (l = mounts; l != NULL; l = l->next) {
 		GFile *root;
-		char  *scheme;
 
 		mount = l->data;
 
@@ -800,15 +799,12 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 		}
 
 		root = g_mount_get_root (mount);
-		scheme = g_file_get_uri_scheme (root);
-		g_object_unref (root);
-
-		if (scheme && strcmp (scheme, "file") != 0) {
-			g_free (scheme);
+		if (!g_file_is_native (root)) {
+			g_object_unref (root);
 			g_object_unref (mount);
 			continue;
 		}
-		g_free (scheme);
+		g_object_unref (root);
 
 		panel_menu_item_append_mount (menu, mount);
 		g_object_unref (mount);
@@ -833,7 +829,6 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 	for (l = mounts; l; l = l->next) {
 		GVolume *volume;
 		GFile   *root;
-		char    *scheme;
 
 		mount = l->data;
 		volume = g_mount_get_volume (mount);
@@ -844,15 +839,13 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 		}
 
 		root = g_mount_get_root (mount);
-		scheme = g_file_get_uri_scheme (root);
-		g_object_unref (root);
-
-		if (scheme && strcmp (scheme, "file") == 0) {
-			g_free (scheme);
+		if (g_file_is_native (root)) {
+			g_object_unref (root);
 			g_object_unref (mount);
 			continue;
 		}
-		g_free (scheme);
+		g_object_unref (root);
+
 
 		add_mounts = g_slist_prepend (add_mounts, mount);
 	}
