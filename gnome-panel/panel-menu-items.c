@@ -615,7 +615,7 @@ panel_menu_item_mount_volume (GtkWidget *menuitem,
 	 * will have the same feature */
 	mount_data->mount_op = panel_mount_operation_new (NULL);
 
-	g_volume_mount (volume, mount_data->mount_op, NULL,
+	g_volume_mount (volume, G_MOUNT_MOUNT_NONE, mount_data->mount_op, NULL,
 			volume_mount_cb, mount_data);
 }
 
