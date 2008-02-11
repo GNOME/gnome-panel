@@ -1,5 +1,12 @@
 2008-02-11  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-util.c: (panel_util_get_file_description): new, to get the
+	description of a GFile
+	(panel_util_get_label_for_uri): rework to use the description of the
+	GFile when available
+
+2008-02-11  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-items.c: (panel_place_menu_item_append_local_gio),
 	(panel_place_menu_item_append_remote_gio): use g_file_is_native()
 	instead of looking at the URI scheme

@@ -1412,6 +1412,27 @@ panel_util_get_file_display_for_common_files (GFile *file)
 }
 
 static char *
+panel_util_get_file_description (GFile *file)
+{
+	GFileInfo *info;
+	char      *ret;
+
+	ret = NULL;
+
+	info = g_file_query_info (file, "standard::description",
+				  G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+				  NULL, NULL);
+
+	if (info) {
+		ret = g_strdup (g_file_info_get_attribute_string (info,
+								  G_FILE_ATTRIBUTE_STANDARD_DESCRIPTION));
+		g_object_unref (info);
+	}
+
+	return ret;
+}
+
+static char *
 panel_util_get_file_display_name (GFile    *file,
 				  gboolean  use_fallback)
 {
@@ -1510,17 +1531,18 @@ panel_util_get_label_for_uri (const char *text_uri)
 {
 	GFile *file;
 	char  *label;
-	char *hostname;
-	char *displayname;
+	GFile *root;
+	char  *root_display;
 
 	/* Here's what we do:
 	 *  + x-nautilus-search: URI
 	 *  + check if the URI is a mount
 	 *  + if file: URI:
 	 *   - check for known file: URI
+	 *   - check for description of the GFile
 	 *   - use display name of the GFile
 	 *  + else:
-	 *   - if we have a hostname: "displayname on hostname"
+	 *   - check for description of the GFile
 	 *   - if the URI is a root: "root displayname"
 	 *   - else: "root displayname: displayname"
 	 */
@@ -1542,50 +1564,46 @@ panel_util_get_label_for_uri (const char *text_uri)
 	if (g_str_has_prefix (text_uri, "file:")) {
 		label = panel_util_get_file_display_for_common_files (file);
 		if (!label)
+			label = panel_util_get_file_description (file);
+		if (!label)
 			label = panel_util_get_file_display_name (file, TRUE);
 		g_object_unref (file);
 
 		return label;
 	}
 
-	g_filename_from_uri (text_uri, &hostname, NULL);
-	displayname = panel_util_get_file_display_name (file, TRUE);
-
-	//FIXME: bah, doesn't work
-	if (hostname) {
-		/* Translators: the first string is a path and the second
-		 * string is a hostname. nautilus contains the same string to
-		 * translate. */
-		label = g_strdup_printf (_("%1$s on %2$s"),
-					 displayname, hostname);
-		g_free (hostname);
-	} else {
-		GFile *root;
-		char  *root_display;
-
-		root = panel_util_get_gfile_root (file);
-		root_display = panel_util_get_file_display_name (root, FALSE);
-		if (!root_display)
-			/* can happen with URI schemes non supported by gvfs */
-			root_display = g_file_get_uri_scheme (root);
-
-		if (g_file_equal (file, root))
-			label = root_display;
-		else {
-			/* Translators: the first string is the name of a gvfs
-			 * method, and the second string is a path. For
-			 * example, "Trash: some-directory". It means that the
-			 * directory called "some-directory" is in the trash.
-			 */
-			label = g_strdup_printf (_("%1$s: %2$s"),
-						 root_display, displayname);
-			g_free (root_display);
-		}
-
-		g_object_unref (root);
+	label = panel_util_get_file_description (file);
+	if (label) {
+		g_object_unref (file);
+		return label;
 	}
 
-	g_free (displayname);
+	root = panel_util_get_gfile_root (file);
+	root_display = panel_util_get_file_description (root);
+	if (!root_display)
+		root_display = panel_util_get_file_display_name (root, FALSE);
+	if (!root_display)
+		/* can happen with URI schemes non supported by gvfs */
+		root_display = g_file_get_uri_scheme (root);
+
+	if (g_file_equal (file, root))
+		label = root_display;
+	else {
+		char *displayname;
+
+		displayname = panel_util_get_file_display_name (file, TRUE);
+		/* Translators: the first string is the name of a gvfs
+		 * method, and the second string is a path. For
+		 * example, "Trash: some-directory". It means that the
+		 * directory called "some-directory" is in the trash.
+		 */
+		label = g_strdup_printf (_("%1$s: %2$s"),
+					 root_display, displayname);
+		g_free (root_display);
+		g_free (displayname);
+	}
+
+	g_object_unref (root);
 	g_object_unref (file);
 
 	return label;
