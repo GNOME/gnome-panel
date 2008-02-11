@@ -692,6 +692,21 @@ panel_menu_item_append_mount (GtkWidget *menu,
 	g_free (activation_uri);
 }
 
+typedef enum {
+	PANEL_GIO_DRIVE,
+	PANEL_GIO_VOLUME,
+	PANEL_GIO_MOUNT
+} PanelGioItemType;
+
+typedef struct {
+	PanelGioItemType type;
+	union {
+		GDrive *drive;
+		GVolume *volume;
+		GMount *mount;
+	} u;
+} PanelGioItem;
+
 /* this is loosely based on update_places() from nautilus-places-sidebar.c */
 static void
 panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
@@ -705,9 +720,12 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	GVolume *volume;
 	GList   *mounts;
 	GMount  *mount;
+	GSList       *items;
+	GSList       *sl;
+	PanelGioItem *item;
+	GtkWidget *add_menu;
 
-	/* FIXME: use it for a submenu */
-	char *submenu_title = _("Removable Media");
+	items = NULL;
 
 	/* first go through all connected drives */
 	drives = g_volume_monitor_get_connected_drives (place_item->priv->volume_monitor);
@@ -719,10 +737,10 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 			for (ll = volumes; ll != NULL; ll = ll->next) {
 				volume = ll->data;
 				mount = g_volume_get_mount (volume);
+				item = g_slice_new (PanelGioItem);
 				if (mount != NULL) {
-					panel_menu_item_append_mount (menu,
-								      mount);
-					g_object_unref (mount);
+					item->type = PANEL_GIO_MOUNT;
+					item->u.mount = mount;
 				} else {
 					/* Do show the unmounted volumes; this
 					 * is so the user can mount it (in case
@@ -734,9 +752,10 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 					 * yank out the media if he just
 					 * unmounted it.
 					 */
-					panel_menu_item_append_volume (menu,
-								       volume);
+					item->type = PANEL_GIO_VOLUME;
+					item->u.volume = g_object_ref (volume);
 				}
+				items = g_slist_prepend (items, item);
 				g_object_unref (volume);
 			}
 			g_list_free (volumes);
@@ -754,7 +773,10 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 				 * off media detection in the OS to save
 				 * battery juice.
 				 */
-				panel_menu_item_append_drive (menu, drive);
+				item = g_slice_new (PanelGioItem);
+				item->type = PANEL_GIO_DRIVE;
+				item->u.drive = g_object_ref (drive);
+				items = g_slist_prepend (items, item);
 			}
 		}
 		g_object_unref (drive);
@@ -772,14 +794,17 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 			continue;
 		}
 		mount = g_volume_get_mount (volume);
+		item = g_slice_new (PanelGioItem);
 		if (mount != NULL) {
-			panel_menu_item_append_mount (menu, mount);
-			g_object_unref (mount);
+			item->type = PANEL_GIO_MOUNT;
+			item->u.mount = mount;
 		} else {
 			/* see comment above in why we add an icon for an
 			 * unmounted mountable volume */
-			panel_menu_item_append_volume (menu, volume);
+			item->type = PANEL_GIO_VOLUME;
+			item->u.volume = g_object_ref (volume);
 		}
+		items = g_slist_prepend (items, item);
 		g_object_unref (volume);
 	}
 	g_list_free (volumes);
@@ -806,10 +831,55 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 		}
 		g_object_unref (root);
 
-		panel_menu_item_append_mount (menu, mount);
-		g_object_unref (mount);
+		item = g_slice_new (PanelGioItem);
+		item->type = PANEL_GIO_MOUNT;
+		item->u.mount = mount;
+		items = g_slist_prepend (items, item);
 	}
 	g_list_free (mounts);
+
+	/* now that we have everything, add the items inline or in a submenu */
+	items = g_slist_reverse (items);
+
+	if (g_slist_length (items) <= MAX_ITEMS_OR_SUBMENU) {
+		add_menu = menu;
+	} else {
+		GtkWidget  *item;
+
+		item = gtk_image_menu_item_new ();
+		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
+					   PANEL_ICON_REMOVABLE_MEDIA, NULL,
+					   _("Removable Media"));
+
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		gtk_widget_show (item);
+
+		add_menu = create_empty_menu ();
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
+	}
+
+	for (sl = items; sl; sl = sl->next) {
+		item = sl->data;
+		switch (item->type) {
+		case PANEL_GIO_DRIVE:
+			panel_menu_item_append_drive (add_menu, item->u.drive);
+			g_object_unref (item->u.drive);
+			break;
+		case PANEL_GIO_VOLUME:
+			panel_menu_item_append_volume (add_menu, item->u.volume);
+			g_object_unref (item->u.volume);
+			break;
+		case PANEL_GIO_MOUNT:
+			panel_menu_item_append_mount (add_menu, item->u.mount);
+			g_object_unref (item->u.mount);
+			break;
+		default:
+			g_assert_not_reached ();
+		}
+		g_slice_free (PanelGioItem, item);
+	}
+
+	g_slist_free (items);
 }
 
 /* this is loosely based on update_places() from nautilus-places-sidebar.c */
