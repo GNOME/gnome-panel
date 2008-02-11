@@ -188,6 +188,8 @@ struct _PanelToplevelPrivate {
 	/* flag to see if we have already done geometry updating,
 	   if not then we're still loading and can ignore many things */
 	guint                   updated_geometry_initial : 1;
+	/* flag to see if we have done the initial animation */
+	guint                   initial_animation_done : 1;
 };
 
 enum {
@@ -1811,16 +1813,21 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	height = toplevel->priv->original_height;
 	snap_tolerance = toplevel->priv->snap_tolerance;
 
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-		auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
-					1, height / 2);
-	else
-		auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
-					1, width / 2);
+	if (toplevel->priv->initial_animation_done) {
+		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+			auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
+						1, height / 2);
+		else
+			auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
+						1, width / 2);
 
-	/* paranoia */
-	if (auto_hide_size <= 0)
-		auto_hide_size = DEFAULT_AUTO_HIDE_SIZE;
+		/* paranoia */
+		if (auto_hide_size <= 0)
+			auto_hide_size = DEFAULT_AUTO_HIDE_SIZE;
+	} else {
+		/* when loading, we animate from outside the screen */
+		auto_hide_size = 0;
+	}
 
 	switch (toplevel->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
@@ -3267,6 +3274,7 @@ panel_toplevel_animation_timeout (PanelToplevel *toplevel)
 		toplevel->priv->animation_end_time.tv_sec    = 0xdead;
 		toplevel->priv->animation_end_time.tv_usec   = 0xdead;
 		toplevel->priv->animation_timeout            = 0;
+		toplevel->priv->initial_animation_done       = TRUE;
 	}
 
 	return toplevel->priv->animating;
@@ -3527,6 +3535,20 @@ panel_toplevel_auto_unhide_timeout_handler (PanelToplevel *toplevel)
 	 */
 	if (toplevel->priv->animating)
 		return TRUE;
+
+	if (!toplevel->priv->animate)
+		toplevel->priv->initial_animation_done = TRUE;
+
+	/* initial animation for auto-hidden panels: we need to unhide and hide
+	 * again to get at the right size */
+	if (!toplevel->priv->initial_animation_done &&
+	    toplevel->priv->auto_hide) {
+		toplevel->priv->unhide_timeout = 0;
+		panel_toplevel_unhide (toplevel);
+		toplevel->priv->initial_animation_done = TRUE;
+		panel_toplevel_hide (toplevel, TRUE, -1);
+		return FALSE;
+	}
 
 	if (!panel_toplevel_contains_pointer (toplevel) &&
 	    toplevel->priv->auto_hide) {
@@ -4444,6 +4466,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->attached          = FALSE;
 	toplevel->priv->attach_hidden     = FALSE;
 	toplevel->priv->updated_geometry_initial = FALSE;
+	toplevel->priv->initial_animation_done   = FALSE;
 
 	gtk_widget_add_events (GTK_WIDGET (toplevel),
 			       GDK_BUTTON_PRESS_MASK |

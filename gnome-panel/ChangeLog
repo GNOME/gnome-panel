@@ -1,5 +1,19 @@
 2008-02-11  Vincent Untz  <vuntz@gnome.org>
 
+	Improve startup animation by starting the toplevels totally hidden.
+
+	* panel-toplevel.c: add a new initial_animation_done field
+	(panel_toplevel_update_auto_hide_position): if we haven't done the
+	startup animation, set the auto hide size to 0
+	(panel_toplevel_animation_timeout): when finishing an animation, mark
+	that we're done with the initial startup animation
+	(panel_toplevel_auto_unhide_timeout_handler): disable startup
+	animation if there's no animation, for auto-hiding toplevels, unhide
+	and hide again the toplevel so we can animate to the autohide size
+	(panel_toplevel_init): init new field
+
+2008-02-11  Vincent Untz  <vuntz@gnome.org>
+
 	Smooth animation between two auto-hide sizes.
 
 	* panel-toplevel.c: (panel_toplevel_start_animation): don't override
