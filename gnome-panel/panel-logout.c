@@ -25,6 +25,8 @@
 
 #include <config.h>
 
+#include <string.h>
+
 #include <glib/gi18n.h>
 #include <gtk/gtkimage.h>
 #include <gtk/gtklabel.h>
@@ -140,6 +142,8 @@ panel_logout_init (PanelLogoutDialog *logout_dialog)
 	gtk_window_set_skip_taskbar_hint (GTK_WINDOW (logout_dialog), TRUE);
 	gtk_window_set_keep_above (GTK_WINDOW (logout_dialog), TRUE);
 	gtk_window_stick (GTK_WINDOW (logout_dialog));
+	gtk_window_set_position (GTK_WINDOW (logout_dialog),
+				 GTK_WIN_POS_CENTER_ALWAYS);
 
 	logout_dialog->priv->power_manager = panel_get_power_manager ();
 
@@ -388,4 +392,5 @@ panel_logout_new (PanelLogoutDialogType  type,
 
 	gtk_window_set_screen (GTK_WINDOW (logout_dialog), screen);
 	gtk_widget_show (GTK_WIDGET (logout_dialog));
+	gdk_window_focus (GTK_WIDGET (current_dialog)->window, activate_time);
 }
