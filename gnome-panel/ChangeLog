@@ -1,5 +1,16 @@
 2008-02-11  Vincent Untz  <vuntz@gnome.org>
 
+	Smooth animation between two auto-hide sizes.
+
+	* panel-toplevel.c: (panel_toplevel_start_animation): don't override
+	the timeout id if we already have one. Keep the current handler since
+	it will work with the new goal too.
+	(panel_toplevel_set_auto_hide_size): if the panel is auto-hidden, then
+	unhide and hide the panel so that we have an animation towards the new
+	size
+
+2008-02-11  Vincent Untz  <vuntz@gnome.org>
+
 	Switch back to 24x24 icons again.
 	Based on patch by Matthias Clasen <mclasen@redhat.com>
 	Fix bug #487051

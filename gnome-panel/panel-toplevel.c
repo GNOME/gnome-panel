@@ -3401,8 +3401,9 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	g_get_current_time (&toplevel->priv->animation_end_time);
 	g_time_val_add (&toplevel->priv->animation_end_time, t);
 
-	toplevel->priv->animation_timeout =
-		g_timeout_add (20, (GSourceFunc) panel_toplevel_animation_timeout, toplevel);
+	if (!toplevel->priv->animation_timeout)
+		toplevel->priv->animation_timeout =
+			g_timeout_add (20, (GSourceFunc) panel_toplevel_animation_timeout, toplevel);
 }
 
 void
@@ -4747,8 +4748,13 @@ panel_toplevel_set_auto_hide_size (PanelToplevel *toplevel,
 	toplevel->priv->auto_hide_size = auto_hide_size;
 
 	if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
-		if (panel_toplevel_update_struts (toplevel, FALSE))
-			gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+		if (panel_toplevel_update_struts (toplevel, FALSE)) {
+			if (toplevel->priv->animate) {
+				panel_toplevel_unhide (toplevel);
+				panel_toplevel_hide (toplevel, TRUE, -1);
+			} else
+				gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+		}
 	}
 
 	g_object_notify (G_OBJECT (toplevel), "auto-hide-size");
