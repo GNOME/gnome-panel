@@ -1,5 +1,21 @@
 2008-02-11  Vincent Untz  <vuntz@gnome.org>
 
+	Fancy launcher animation when in a composited environment.
+	Based on patch by Denis Washington <denisw@svn.gnome.org>
+	Fix bug #479562
+
+	* launcher.c: (launcher_launch), (drag_data_received_cb): update for
+	xstuff_zoom_animate change
+	* xstuff.[ch]: (zoom_timeout): new, redraw the zoom window
+	(zoom_expose): new, fill the zoom window with the current state of the
+	animation, or free resources at the end
+	(draw_zoom_animation_composited): new, magic stuff inside :-)
+	(draw_zoom_animation): remove trailing spaces
+	(xstuff_zoom_animate): use the fancy effect if the screen is
+	composited
+
+2008-02-11  Vincent Untz  <vuntz@gnome.org>
+
 	Improve startup animation by starting the toplevels totally hidden.
 
 	* panel-toplevel.c: add a new initial_animation_done field

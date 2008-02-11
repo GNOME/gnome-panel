@@ -203,7 +203,10 @@ launcher_launch (Launcher  *launcher,
 	g_return_if_fail (launcher->key_file != NULL);
 
 	if (panel_global_config_get_enable_animations ())
-		xstuff_zoom_animate (widget, NULL);
+		xstuff_zoom_animate (widget,
+				     button_widget_get_pixbuf (BUTTON_WIDGET (widget)),
+				     button_widget_get_orientation (BUTTON_WIDGET (widget)),
+				     NULL);
 	
 	type = panel_util_key_file_get_string (launcher->key_file, "Type");
 	if (type && !strcmp (type, "Link"))
@@ -266,7 +269,10 @@ drag_data_received_cb (GtkWidget        *widget,
 	GList   *file_list;
 
 	if (panel_global_config_get_enable_animations ())
-		xstuff_zoom_animate (widget, NULL);
+		xstuff_zoom_animate (widget,
+				     button_widget_get_pixbuf (BUTTON_WIDGET (widget)),
+				     button_widget_get_orientation (BUTTON_WIDGET (widget)),
+				     NULL);
 	
 	file_list = NULL;
 	uris = g_uri_list_extract_uris ((const char *) selection_data->data);

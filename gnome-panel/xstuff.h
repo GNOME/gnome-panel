@@ -21,8 +21,10 @@ void xstuff_set_wmspec_strut		(GdkWindow *window,
 					 int top,
 					 int bottom);
 
-void xstuff_zoom_animate                (GtkWidget    *widget,
-					 GdkRectangle *opt_src_rect);
+void xstuff_zoom_animate                (GtkWidget        *widget,
+					 GdkPixbuf        *pixbuf,
+					 PanelOrientation  orientation,
+					 GdkRectangle     *opt_src_rect);
 
 int  xstuff_get_current_workspace       (GdkScreen *screen);
 
