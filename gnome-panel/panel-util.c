@@ -1615,7 +1615,6 @@ panel_util_get_icon_for_uri (const char *text_uri)
 	const char *icon;
 	GFile      *file;
 	GFileInfo  *info;
-	const char *content;
 	GIcon      *gicon;
 	char       *retval;
 
@@ -1657,22 +1656,12 @@ panel_util_get_icon_for_uri (const char *text_uri)
 		file = root;
 	}
 
-	info = g_file_query_info (file,
-				  "standard::icon,standard::fast-content-type",
+	info = g_file_query_info (file, "standard::icon",
 				  G_FILE_QUERY_INFO_NONE, NULL, NULL);
 	g_object_unref (file);
 
 	if (!info)
 		return NULL;
-
-	/* FIXME: weird that we don't get the right icon without this */
-	content = g_file_info_get_attribute_string (info,
-						    G_FILE_ATTRIBUTE_STANDARD_FAST_CONTENT_TYPE);
-	if (content &&
-	    strcmp (content, "application/x-gnome-saved-search") == 0) {
-		g_object_unref (info);
-		return g_strdup (PANEL_ICON_SAVED_SEARCH);
-	}
 
 	gicon = g_file_info_get_icon (info);
 	retval = panel_util_get_icon_name_from_g_icon (gicon);

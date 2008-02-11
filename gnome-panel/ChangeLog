@@ -1,5 +1,12 @@
 2008-02-11  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-util.c: (panel_util_get_icon_for_uri): remove workaround for
+	application/x-gnome-saved-search places. We don't need the
+	fast-content-type anymore. Maybe this was needed before because of a
+	bug in gio?
+
+2008-02-11  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_util_get_file_description): new, to get the
 	description of a GFile
 	(panel_util_get_label_for_uri): rework to use the description of the
