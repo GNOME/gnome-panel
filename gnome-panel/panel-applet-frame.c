@@ -96,14 +96,9 @@ static GSList *no_reload_applets = NULL;
 static void panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 					   PanelAppletFrame *frame);
 
-static char *panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
-						   PanelWidget      *panel,
-						   const char       *iid,
-						   const char       *id);
-
-static void panel_applet_frame_activated (Bonobo_Unknown     object,
-					  CORBA_Environment *ev,
-					  gpointer          *data);
+static void panel_applet_frame_activated (CORBA_Object object,
+					  const char   *error_reason,
+					  gpointer     data);
 
 void
 panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
@@ -335,7 +330,6 @@ panel_applet_frame_load (const gchar *iid,
 {
 	PanelAppletFrame           *frame;
 	CORBA_Environment           ev;
-	char                       *moniker;
 	PanelAppletFrameActivating *frame_act;
 
 	g_return_if_fail (iid != NULL);
@@ -360,15 +354,11 @@ panel_applet_frame_load (const gchar *iid,
 	frame_act->exactpos = exactpos;
 	frame_act->id       = g_strdup (id);
 
-	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, id);
-
 	CORBA_exception_init (&ev);
 
-	bonobo_get_object_async (moniker, "IDL:Bonobo/Control:1.0", &ev,
-				 (BonoboMonikerAsyncFn) panel_applet_frame_activated,
-				 frame_act);
-
-	g_free (moniker);
+	bonobo_activation_activate_from_id_async (frame->priv->iid, 0,
+						  (BonoboActivationCallback) panel_applet_frame_activated,
+						  frame_act, &ev);
 }
 
 void
@@ -1209,10 +1199,9 @@ panel_applet_frame_get_size_string (PanelAppletFrame *frame,
 }
 
 static char *
-panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
-				      PanelWidget      *panel,
-				      const char       *iid,
-				      const char       *id)
+panel_applet_frame_construct_item (PanelAppletFrame *frame,
+				   PanelWidget      *panel,
+				   const char       *id)
 {
 	char *retval;
 	char *bg_str;
@@ -1227,9 +1216,9 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	locked_down = panel_lockdown_get_locked_down ();
 
 	retval = g_strdup_printf (
-			"%s!prefs_key=/apps/panel/applets/%s/prefs;"
+			"prefs_key=/apps/panel/applets/%s/prefs;"
 			"background=%s;orient=%s;size=%s;locked_down=%s",
-			iid, id, bg_str,
+			id, bg_str,
 			panel_applet_frame_get_orient_string (frame, panel),
 			panel_applet_frame_get_size_string (frame, panel),
 			locked_down ? "true" : "false");
@@ -1254,40 +1243,82 @@ panel_applet_frame_event_listener (BonoboListener    *listener,
 }
 
 static void
-panel_applet_frame_activated (Bonobo_Unknown     object,
-			      CORBA_Environment *ev,
-			      gpointer          *data)
+panel_applet_frame_activated (CORBA_Object  object,
+			      const char   *error_reason,
+			      gpointer      data)
 {
 	PanelAppletFrameActivating *frame_act;
 	PanelAppletFrame   *frame;
 	GtkWidget          *widget;
 	BonoboControlFrame *control_frame;
 	Bonobo_Control      control;
+	Bonobo_ItemContainer container;
 	CORBA_Environment   corba_ev;
 	AppletInfo         *info;
 	char               *error;
+	char               *item_name;
 
 	frame_act = (PanelAppletFrameActivating *) data;
 	frame = frame_act->frame;
 
 	/* according to the source of bonobo control == NULL && no
 	   exception can happen, so handle it */
-	if (BONOBO_EX (ev) || object == CORBA_OBJECT_NIL) {
-		error = bonobo_exception_get_text (ev);
+	if (error_reason != NULL || object == CORBA_OBJECT_NIL) {
 		g_warning (G_STRLOC ": failed to load applet %s:\n%s",
-			   frame->priv->iid, error);
+			   frame->priv->iid, error_reason);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
 		g_free (frame_act->id);
+		g_free (frame_act);
+		return;
+	}
+
+	CORBA_exception_init (&corba_ev);
+
+	item_name = panel_applet_frame_construct_item (frame,
+						       frame->priv->panel,
+						       frame_act->id);
+
+	frame->priv->control = CORBA_OBJECT_NIL;
+	container = Bonobo_Unknown_queryInterface (object,
+						   "IDL:Bonobo/ItemContainer:1.0",
+						   &corba_ev);
+	if (!BONOBO_EX (&corba_ev) && container != CORBA_OBJECT_NIL) {
+		Bonobo_Unknown containee;
+
+		containee = Bonobo_ItemContainer_getObjectByName (container,
+								  item_name,
+								  TRUE,
+								  &corba_ev);
+		bonobo_object_release_unref (container, NULL);
+
+		if (!BONOBO_EX (&corba_ev) && containee != CORBA_OBJECT_NIL) {
+			frame->priv->control =
+				Bonobo_Unknown_queryInterface (containee,
+							       "IDL:Bonobo/Control:1.0",
+							       &corba_ev);
+
+			bonobo_object_release_unref (containee, NULL);
+		}
+	}
+	g_free (item_name);
+
+	if (frame->priv->control == CORBA_OBJECT_NIL) {
+		error = bonobo_exception_get_text (&corba_ev);
+		g_warning (G_STRLOC ": failed to get Bonobo/Control interface on applet %s:\n%s",
+                           frame->priv->iid, error);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
+		CORBA_exception_free (&corba_ev);
+		bonobo_object_release_unref (object, NULL);
+                g_free (frame_act->id);
 		g_free (frame_act);
 		g_free (error);
 		return;
 	}
 
-	frame->priv->control = CORBA_Object_duplicate (object, NULL);
-
-	widget = bonobo_widget_new_control_from_objref (object,
+	widget = bonobo_widget_new_control_from_objref (frame->priv->control,
 							CORBA_OBJECT_NIL);
 
+	CORBA_exception_free (&corba_ev);
 	bonobo_object_release_unref (object, NULL);
 
 	if (!widget) {

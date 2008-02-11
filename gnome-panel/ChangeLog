@@ -1,5 +1,19 @@
 2008-02-11  Vincent Untz  <vuntz@gnome.org>
 
+	Better bonobo applets asynchronous loading.
+	Patch by openSUSE people (don't know who, probably Rodrigo Moya or
+	Michael Meeks).
+	Fix bug #499973.
+
+	* panel-applet-frame.c: (panel_applet_frame_load): use
+	bonobo-activation instead of moniker
+	(panel_applet_frame_construct_moniker): renamed to...
+	(panel_applet_frame_construct_item): this, and updated
+	(panel_applet_frame_activated): do lots of complex stuff I don't fully
+	understand :-) But it works! I promise!
+
+2008-02-11  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-logout.c: (panel_logout_init): center the window
 	(panel_logout_new): focus the window. Patch by Matthias Clasen
 	<mclasen@redhat.com>. Fix bug #514026
