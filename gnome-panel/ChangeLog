@@ -1,5 +1,24 @@
 2008-02-11  Vincent Untz  <vuntz@gnome.org>
 
+	Animate panel startup.
+	Based on patch by William Jon McCann <mccann@jhu.edu>
+	Fix bug #513756.
+
+	* panel-toplevel.c: (get_delta): use GTimeVal
+	(panel_toplevel_update_animating_position): updated for get_delta()
+	change
+	(panel_toplevel_realize): queue an automatic unhide
+	(panel_toplevel_animation_timeout): updated
+	(panel_toplevel_get_animation_time): make the time depend on the
+	speed only
+	(panel_toplevel_start_animation): updated for
+	panel_toplevel_get_animation_time() change
+	(panel_toplevel_initially_hide): new
+	(panel_toplevel_init): initially make the toplevel automatically
+	hidden
+
+2008-02-11  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-items.c: (panel_place_menu_item_append_local_gio): put
 	items in a submenu if there are too many items. Fix a regression.
 

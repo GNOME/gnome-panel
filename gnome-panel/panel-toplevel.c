@@ -1,4 +1,5 @@
-/*
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
+ *
  * panel-toplevel.c: The panel's toplevel window object.
  *
  * Copyright (C) 2003 Sun Microsystems, Inc.
@@ -133,7 +134,7 @@ struct _PanelToplevelPrivate {
 	int                     animation_end_width;
 	int                     animation_end_height;
 	GTimeVal                animation_start_time;
-	long                    animation_end_time;
+	GTimeVal                animation_end_time;
 	guint                   animation_timeout;
 
 	PanelWidget            *panel_widget;
@@ -1929,16 +1930,20 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
  * mathematical now :) -- _v_
  */
 static int
-get_delta (int  src,
-	   int  dest,
-	   long start_time,
-	   long end_time,
-	   long cur_time)
+get_delta (int       src,
+	   int       dest,
+	   GTimeVal *start_time,
+	   GTimeVal *end_time,
+	   GTimeVal *cur_time)
 {
-	double x, n, d, percentage;
+	double x, s, n, d, percentage;
 
-	n = cur_time - start_time;
-	d = end_time - start_time;
+	s = start_time->tv_sec + ((double)start_time->tv_usec / G_USEC_PER_SEC);
+	n = cur_time->tv_sec + ((double)cur_time->tv_usec / G_USEC_PER_SEC);
+	d = end_time->tv_sec + ((double)end_time->tv_usec / G_USEC_PER_SEC);
+
+	n -= s;
+	d -= s;
 
 	if (abs (dest - src) <= 1 || n >= d)
 		return dest - src;
@@ -1947,7 +1952,7 @@ get_delta (int  src,
 	/* running p(p(x)) to make it more "pronounced",
 	 * effectively making it a ninth-degree polynomial */
 
-	x = n/d;
+	x = (double)n/d;
 	x = -2 * (x*x) * (x-1.5);
 	/* run it again */
 	percentage = -2 * (x*x) * (x-1.5);
@@ -1962,14 +1967,10 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 {
 	GdkScreen *screen;
 	GTimeVal   time_val;
-	long       current_time;
 	int        deltax, deltay, deltaw = 0, deltah = 0;
 	int        monitor_offset_x, monitor_offset_y;
 
 	g_get_current_time (&time_val);
-
-	current_time =  (time_val.tv_sec - toplevel->priv->animation_start_time.tv_sec)
-					* 1000000 + time_val.tv_usec;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 
@@ -1979,28 +1980,28 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 	if (toplevel->priv->animation_end_width != -1)
 		deltaw = get_delta (toplevel->priv->geometry.width,
 				    toplevel->priv->animation_end_width,
-				    toplevel->priv->animation_start_time.tv_usec,
-				    toplevel->priv->animation_end_time,
-				    current_time);
+				    &toplevel->priv->animation_start_time,
+				    &toplevel->priv->animation_end_time,
+				    &time_val);
 
 	if (toplevel->priv->animation_end_height != -1)
 		deltah = get_delta (toplevel->priv->geometry.height,
 				    toplevel->priv->animation_end_height,
-				    toplevel->priv->animation_start_time.tv_usec,
-				    toplevel->priv->animation_end_time,
-				    current_time);
+				    &toplevel->priv->animation_start_time,
+				    &toplevel->priv->animation_end_time,
+				    &time_val);
 
 	deltax = get_delta (toplevel->priv->geometry.x - monitor_offset_x,
 			    toplevel->priv->animation_end_x,
-			    toplevel->priv->animation_start_time.tv_usec,
-			    toplevel->priv->animation_end_time,
-			    current_time);
+			    &toplevel->priv->animation_start_time,
+			    &toplevel->priv->animation_end_time,
+			    &time_val);
 
 	deltay = get_delta (toplevel->priv->geometry.y - monitor_offset_y,
 			    toplevel->priv->animation_end_y,
-			    toplevel->priv->animation_start_time.tv_usec,
-			    toplevel->priv->animation_end_time,
-			    current_time);
+			    &toplevel->priv->animation_start_time,
+			    &toplevel->priv->animation_end_time,
+			    &time_val);
 
 	if (deltaw != 0 && abs (deltaw) > abs (deltax))
 		deltax = deltaw;
@@ -2898,6 +2899,8 @@ panel_toplevel_realize (GtkWidget *widget)
 	gdk_window_set_group (widget->window, widget->window);
 	gdk_window_set_geometry_hints (widget->window, NULL, GDK_HINT_POS);
 
+	panel_toplevel_queue_auto_unhide (toplevel);
+
 	panel_toplevel_move_resize_window (toplevel, TRUE, TRUE);
 }
 
@@ -3261,7 +3264,8 @@ panel_toplevel_animation_timeout (PanelToplevel *toplevel)
 		toplevel->priv->animation_end_height         = 0xdead;
 		toplevel->priv->animation_start_time.tv_sec  = 0xdead;
 		toplevel->priv->animation_start_time.tv_usec = 0xdead;
-		toplevel->priv->animation_end_time           = 0xdead;
+		toplevel->priv->animation_end_time.tv_sec    = 0xdead;
+		toplevel->priv->animation_end_time.tv_usec   = 0xdead;
 		toplevel->priv->animation_timeout            = 0;
 	}
 
@@ -3269,32 +3273,25 @@ panel_toplevel_animation_timeout (PanelToplevel *toplevel)
 }
 
 static long
-panel_toplevel_get_animation_time (PanelToplevel *toplevel,
-				   int            delta)
+panel_toplevel_get_animation_time (PanelToplevel *toplevel)
 {
- /* The average number of miliseconds per pixel
-  * to complete the animation.
+ /* The number of seconds to complete the animation.
   */
- /* FIXME: for auto_hide this should really be slower. Or
-  *        maybe not ...
-  */
-#define ANIMATION_TIME_FAST    .4
+#define ANIMATION_TIME_FAST   0.4
 #define ANIMATION_TIME_MEDIUM 1.2
 #define ANIMATION_TIME_SLOW   2.0
 
 	long t;
 
-	t = toplevel->priv->animation_start_time.tv_usec;
-
 	switch (toplevel->priv->animation_speed) {
 	case PANEL_ANIMATION_SLOW:
-		t += (abs (delta) * ANIMATION_TIME_SLOW * 1000);
+		t = ANIMATION_TIME_SLOW * G_USEC_PER_SEC;
 		break;
 	case PANEL_ANIMATION_MEDIUM:
-		t += (abs (delta) * ANIMATION_TIME_MEDIUM * 1000);
+		t = ANIMATION_TIME_MEDIUM * G_USEC_PER_SEC;
 		break;
 	case PANEL_ANIMATION_FAST:
-		t += (abs (delta) * ANIMATION_TIME_FAST * 1000);
+		t = ANIMATION_TIME_FAST * G_USEC_PER_SEC;
 		break;
 	default:
 		g_assert_not_reached ();
@@ -3303,7 +3300,7 @@ panel_toplevel_get_animation_time (PanelToplevel *toplevel,
 
 	return t;
 
-#undef ANIMATION_TIME_FAST  
+#undef ANIMATION_TIME_FAST
 #undef ANIMATION_TIME_MEDIUM
 #undef ANIMATION_TIME_SLOW
 }
@@ -3315,7 +3312,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	int        monitor_width, monitor_height;
 	int        deltax, deltay, deltaw = 0, deltah = 0;
 	int        cur_x = -1, cur_y = -1;
-	long       t1, t2;
+	long       t;
 
 	screen = panel_toplevel_get_monitor_geometry (
 				toplevel, NULL, NULL, &monitor_width, &monitor_height);
@@ -3376,7 +3373,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	if (toplevel->priv->animation_end_width != -1)
 		deltaw = toplevel->priv->animation_end_width -
 			GTK_WIDGET (toplevel)->requisition.width;
-	
+
 	if (toplevel->priv->animation_end_height != -1)
 		deltah = toplevel->priv->animation_end_height -
 			GTK_WIDGET (toplevel)->requisition.height;
@@ -3400,18 +3397,9 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 
 	g_get_current_time (&toplevel->priv->animation_start_time);
 
-	t1 = panel_toplevel_get_animation_time (toplevel, deltax);
-	t2 = panel_toplevel_get_animation_time (toplevel, deltay);
-	
-	t1 = MAX (t1, t2);
-	
-	t2 = panel_toplevel_get_animation_time (toplevel, deltaw);
-	
-	t1 = MAX (t1, t2);
-
-	t2 = panel_toplevel_get_animation_time (toplevel, deltah);
-	
-	toplevel->priv->animation_end_time = MAX (t1, t2);
+	t = panel_toplevel_get_animation_time (toplevel);
+	g_get_current_time (&toplevel->priv->animation_end_time);
+	g_time_val_add (&toplevel->priv->animation_end_time, t);
 
 	toplevel->priv->animation_timeout =
 		g_timeout_add (20, (GSourceFunc) panel_toplevel_animation_timeout, toplevel);
@@ -4368,6 +4356,12 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 }
 
 static void
+panel_toplevel_initially_hide (PanelToplevel *toplevel)
+{
+	panel_toplevel_hide (toplevel, TRUE, -1);
+}
+
+static void
 panel_toplevel_init (PanelToplevel *toplevel)
 {
 	int i;
@@ -4417,7 +4411,8 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->animation_end_height         = 0;
 	toplevel->priv->animation_start_time.tv_sec  = 0;
 	toplevel->priv->animation_start_time.tv_usec = 0;
-	toplevel->priv->animation_end_time           = 0;
+	toplevel->priv->animation_end_time.tv_sec    = 0;
+	toplevel->priv->animation_end_time.tv_usec   = 0;
 	toplevel->priv->animation_timeout            = 0;
 
 	toplevel->priv->panel_widget       = NULL;
@@ -4461,6 +4456,8 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	panel_toplevel_update_gtk_settings (toplevel);
 	
 	toplevel_list = g_slist_prepend (toplevel_list, toplevel);
+
+	panel_toplevel_initially_hide (toplevel);
 
 	/* Prevent the window from being deleted via Alt+F4 by accident.  This
 	 * happens with "alternative" window managers such as Sawfish or XFWM4.
