@@ -31,7 +31,7 @@
 G_BEGIN_DECLS
 
 /* themeable size - "panel-menu" */
-#define PANEL_DEFAULT_MENU_ICON_SIZE 	22
+#define PANEL_DEFAULT_MENU_ICON_SIZE 	24
 
 /* stock icons */
 #define PANEL_STOCK_FORCE_QUIT          "gnome-panel-force-quit"

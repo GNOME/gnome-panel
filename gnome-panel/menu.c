@@ -382,8 +382,27 @@ panel_make_menu_icon (GtkIconTheme *icon_theme,
 	}
 
 	if (pb == NULL) {
-		pb = gdk_pixbuf_new_from_file_at_size (file, size, size, NULL);
-		
+		pb = gdk_pixbuf_new_from_file (file, NULL);
+		if (pb) {
+			gint width, height;
+
+			width = gdk_pixbuf_get_width (pb);
+			height = gdk_pixbuf_get_height (pb);
+			
+			/* if we want 24 and we get 22, do nothing;
+			 * else scale */
+			if (!(size - 2 <= width && width <= size &&
+                              size - 2 <= height && height <= size)) {
+				GdkPixbuf *tmp;
+
+				tmp = gdk_pixbuf_scale_simple (pb, size, size,
+							       GDK_INTERP_BILINEAR);
+
+				g_object_unref (pb);
+				pb = tmp;
+			}
+		}
+				
 		/* add icon to the hash table so we don't load it again */
 		loaded = TRUE;
 	}

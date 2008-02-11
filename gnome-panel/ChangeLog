@@ -1,5 +1,19 @@
 2008-02-11  Vincent Untz  <vuntz@gnome.org>
 
+	Switch back to 24x24 icons again.
+	Based on patch by Matthias Clasen <mclasen@redhat.com>
+	Fix bug #487051
+
+	* button-widget.c: (button_widget_size_allocate): handle 24x24 icons
+	too
+	* menu.c: (panel_make_menu_icon): scale the icon to the size only if
+	it's not a bit smaller (ie, don't scale to 24 if we get 22)
+	* panel-stock-icons.c: (panel_init_stock_icons_and_items): use 24x24
+	for the menu bar icon
+	* panel-stock-icons.h: default menu icon size is 24
+
+2008-02-11  Vincent Untz  <vuntz@gnome.org>
+
 	Better bonobo applets asynchronous loading.
 	Patch by openSUSE people (don't know who, probably Rodrigo Moya or
 	Michael Meeks).
