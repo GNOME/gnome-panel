@@ -461,6 +461,8 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		}
 
 		icon = panel_util_get_icon_for_uri (bookmark->full_uri);
+		/*FIXME: we should probably get a GIcon if possible, so that we
+		 * have customized icons for cd-rom, eg */
 		if (!icon)
 			icon = g_strdup (PANEL_ICON_FOLDER);
 

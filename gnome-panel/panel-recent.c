@@ -54,6 +54,7 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 
 	env = panel_make_environment_for_screen (screen, NULL);
 
+	//FIXME: would g_app_info_launch_default_for_uri() be enough?
 	uris = g_list_append (uris, (gpointer)uri);
 	//FIXME: use GdkAppLaunchContext
 	ret = g_app_info_launch_uris (app, uris, NULL, error);
