@@ -223,7 +223,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 
 	item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-				   icon, NULL, name);
+				   icon, NULL, NULL, name);
 
 	panel_util_set_tooltip_text (item, comment);
 
@@ -257,6 +257,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 
 static void
 panel_menu_items_append_place_item (const char *icon_name,
+				    GIcon      *gicon,
 				    const char *title,
 				    const char *tooltip,
 				    GtkWidget  *menu,
@@ -269,8 +270,7 @@ panel_menu_items_append_place_item (const char *icon_name,
 	item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
-				   icon_name,
-				   NULL,
+				   icon_name, NULL, gicon,
 				   title);
 
 	panel_util_set_tooltip_text (item, tooltip);
@@ -301,7 +301,7 @@ panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
         setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   panel_action_get_icon_name (action_type),
-				   NULL,
+				   NULL, NULL,
 				   label ? label : panel_action_get_text (action_type));
 
 	panel_util_set_tooltip_text (item,
@@ -412,7 +412,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 
 		item = gtk_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-					   PANEL_ICON_BOOKMARKS, NULL,
+					   PANEL_ICON_BOOKMARKS, NULL, NULL,
 					   _("Bookmarks"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -465,7 +465,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			icon = g_strdup (PANEL_ICON_FOLDER);
 
 		//FIXME: drag and drop will be broken for x-nautilus-search uris
-		panel_menu_items_append_place_item (icon,
+		panel_menu_items_append_place_item (icon, NULL,
 						    label,
 						    tooltip,
 						    add_menu,
@@ -531,28 +531,23 @@ panel_menu_item_append_drive (GtkWidget *menu,
 {
 	GtkWidget *item;
 	GIcon     *icon;
-	char      *icon_name;
 	char      *title;
 	char      *tooltip;
 
 	icon = g_drive_get_icon (drive);
-	icon_name = panel_util_get_icon_name_from_g_icon (icon);
-	g_object_unref (icon);
-
 	title = g_drive_get_name (drive);
 
 	item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
-				   icon_name,
-				   NULL,
+				   NULL, NULL, icon,
 				   title);
+	g_object_unref (icon);
 
 	tooltip = g_strdup_printf (_("Rescan %s"), title);
 	panel_util_set_tooltip_text (item, tooltip);
 	g_free (tooltip);
 
-	g_free (icon_name);
 	g_free (title);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -625,28 +620,23 @@ panel_menu_item_append_volume (GtkWidget *menu,
 {
 	GtkWidget *item;
 	GIcon     *icon;
-	char      *icon_name;
 	char      *title;
 	char      *tooltip;
 
 	icon = g_volume_get_icon (volume);
-	icon_name = panel_util_get_icon_name_from_g_icon (icon);
-	g_object_unref (icon);
-
 	title = g_volume_get_name (volume);
 
 	item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
-				   icon_name,
-				   NULL,
+				   NULL, NULL, icon,
 				   title);
+	g_object_unref (icon);
 
 	tooltip = g_strdup_printf (_("Mount %s"), title);
 	panel_util_set_tooltip_text (item, tooltip);
 	g_free (tooltip);
 
-	g_free (icon_name);
 	g_free (title);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -666,28 +656,24 @@ panel_menu_item_append_mount (GtkWidget *menu,
 {
 	GFile  *root;
 	GIcon  *icon;
-	char   *icon_name;
 	char   *display_name;
 	char   *activation_uri;
 
 	icon = g_mount_get_icon (mount);
-	icon_name = panel_util_get_icon_name_from_g_icon (icon);
-	g_object_unref (icon);
-
 	display_name = g_mount_get_name (mount);
 
 	root = g_mount_get_root (mount);
 	activation_uri = g_file_get_uri (root);
 	g_object_unref (root);
 
-	panel_menu_items_append_place_item (icon_name,
+	panel_menu_items_append_place_item (NULL, icon,
 					    display_name,
 					    display_name, //FIXME tooltip
 					    menu,
 					    G_CALLBACK (activate_uri),
 					    activation_uri);
 
-	g_free (icon_name);
+	g_object_unref (icon);
 	g_free (display_name);
 	g_free (activation_uri);
 }
@@ -848,7 +834,8 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 
 		item = gtk_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-					   PANEL_ICON_REMOVABLE_MEDIA, NULL,
+					   PANEL_ICON_REMOVABLE_MEDIA,
+					   NULL, NULL,
 					   _("Removable Media"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -928,7 +915,8 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 
 		item = gtk_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-					   PANEL_ICON_NETWORK_SERVER, NULL,
+					   PANEL_ICON_NETWORK_SERVER,
+					   NULL, NULL,
 					   _("Network Places"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -966,7 +954,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	name = panel_util_get_label_for_uri (uri);
 	g_object_unref (file);
 	
-	panel_menu_items_append_place_item (PANEL_ICON_HOME,
+	panel_menu_items_append_place_item (PANEL_ICON_HOME, NULL,
 					    name,
 					    _("Open your personal folder"),
 					    places_menu,
@@ -983,7 +971,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 		g_object_unref (file);
 		
 		panel_menu_items_append_place_item (
-				PANEL_ICON_DESKTOP,
+				PANEL_ICON_DESKTOP, NULL,
 				/* Translators: Desktop is used here as in
 				 * "Desktop Folder" (this is not the Desktop
 				 * environment). Do not keep "Desktop Folder|"

@@ -136,6 +136,8 @@ void panel_util_set_tooltip_text (GtkWidget  *widget,
 				  const char *text);
 
 char *panel_util_get_icon_name_from_g_icon (GIcon *gicon);
+GdkPixbuf *panel_util_get_pixbuf_from_g_loadable_icon (GIcon *gicon,
+						       int    size);
 GFile *panel_util_get_file_optional_homedir (const char *location);
 
 G_END_DECLS

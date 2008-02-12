@@ -26,6 +26,7 @@
 #include "panel-widget.h"
 #include "applet.h"
 #include <gmenu-tree.h>
+#include <gio/gio.h>
 
 G_BEGIN_DECLS
 
@@ -37,6 +38,7 @@ void            setup_menu_item_with_icon (GtkWidget        *item,
 					   GtkIconSize       icon_size,
 					   const char       *icon_name,
 					   const char       *stock_id,
+					   GIcon            *gicon,
 					   const char       *title);
 
 GtkWidget      *create_empty_menu         (void);

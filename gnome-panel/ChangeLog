@@ -1,3 +1,40 @@
+2008-02-12  Vincent Untz  <vuntz@gnome.org>
+
+	Use the customized CD icons when there's one.
+	Fix bug #516032
+
+	* menu.[ch]: make IconToLoad handle GIcon
+	(icon_to_load_free): updated
+	(icon_to_load_copy): ditto
+	(load_icons_handler): load from GIcon when there's one
+	(create_submenu_entry): updated for panel_load_menu_image_deferred()
+	change
+	(create_menuitem): ditto
+	(setup_menu_item_with_icon): take a GIcon parameter
+	(panel_load_menu_image_deferred): ditto, and use it
+	* panel-menu-items.c: (panel_menu_items_append_from_desktop): updated
+	for setup_menu_item_with_icon() change
+	(panel_menu_items_append_place_item): add a GIcon parameter and use it
+	(panel_menu_items_create_action_item_full): updated
+	for setup_menu_item_with_icon() change
+	(panel_place_menu_item_append_gtk_bookmarks): updated
+	for setup_menu_item_with_icon() change
+	(panel_menu_item_append_drive): directly use the GIcon
+	(panel_menu_item_append_volume): ditto
+	(panel_menu_item_append_mount): ditto
+	(panel_place_menu_item_append_local_gio): updated
+	for setup_menu_item_with_icon() change
+	(panel_place_menu_item_append_remote_gio): updated
+	for setup_menu_item_with_icon() change
+	(panel_place_menu_item_create_menu): updated for
+	panel_menu_items_append_place_item() change
+	* panel-recent.c: (panel_recent_append_documents_menu): updated for
+	setup_menu_item_with_icon() change
+	* panel-util.[ch]: (panel_util_gdk_pixbuf_load_from_stream): new,
+	stolen from eel
+	(panel_util_get_pixbuf_from_g_loadable_icon): new, load a
+	GLoadableIcon in a pixbuf
+
 ==================== 2.21.91 ====================
 
 2008-02-11  Vincent Untz  <vuntz@gnome.org>

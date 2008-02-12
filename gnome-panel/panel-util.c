@@ -1348,6 +1348,97 @@ panel_util_get_icon_name_from_g_icon (GIcon *gicon)
 	return NULL;
 }
 
+/* TODO: kill this when we can depend on GTK+ 2.14 */
+static GdkPixbuf *
+panel_util_gdk_pixbuf_load_from_stream (GInputStream  *stream)
+{
+#define LOAD_BUFFER_SIZE 65536
+	unsigned char buffer[LOAD_BUFFER_SIZE];
+	gssize bytes_read;
+	GdkPixbufLoader *loader;
+	GdkPixbuf *pixbuf;
+	gboolean got_eos;
+	
+
+	g_return_val_if_fail (stream != NULL, NULL);
+
+	got_eos = FALSE;
+	loader = gdk_pixbuf_loader_new ();
+	while (1) {
+		bytes_read = g_input_stream_read (stream, buffer, sizeof (buffer),
+						  NULL, NULL);
+		
+		if (bytes_read < 0) {
+			break;
+		}
+		if (bytes_read == 0) {
+			got_eos = TRUE;
+			break;
+		}
+		if (!gdk_pixbuf_loader_write (loader,
+					      buffer,
+					      bytes_read,
+					      NULL)) {
+			break;
+		}
+	}
+
+	g_input_stream_close (stream, NULL, NULL);
+	gdk_pixbuf_loader_close (loader, NULL);
+
+	pixbuf = NULL;
+	if (got_eos) {
+		pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+		if (pixbuf != NULL) {
+			g_object_ref (pixbuf);
+		}
+	}
+
+	g_object_unref (loader);
+
+	return pixbuf;
+}
+
+GdkPixbuf *
+panel_util_get_pixbuf_from_g_loadable_icon (GIcon *gicon,
+					    int    size)
+{
+	GdkPixbuf    *pixbuf;
+	GInputStream *stream;
+
+	if (!G_IS_LOADABLE_ICON (gicon))
+		return NULL;
+
+	pixbuf = NULL;
+
+	stream = g_loadable_icon_load (G_LOADABLE_ICON (gicon),
+				       size,
+				       NULL, NULL, NULL);
+	if (stream) {
+		pixbuf = panel_util_gdk_pixbuf_load_from_stream (stream);
+		g_object_unref (stream);
+	}
+
+	if (pixbuf) {
+		gint width, height;
+
+		width = gdk_pixbuf_get_width (pixbuf);
+		height = gdk_pixbuf_get_height (pixbuf);
+
+		if (width > size || height > size) {
+			GdkPixbuf *tmp;
+
+			tmp = gdk_pixbuf_scale_simple (pixbuf, size, size,
+						       GDK_INTERP_BILINEAR);
+
+			g_object_unref (pixbuf);
+			pixbuf = tmp;
+		}
+	}
+
+	return pixbuf;
+}
+
 static char *
 panel_util_get_file_display_name_if_mount (GFile *file)
 {
