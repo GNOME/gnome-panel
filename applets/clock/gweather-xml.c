@@ -479,8 +479,5 @@ find_weather_code (GtkTreeModel *model,
   else
     code = g_strdup ("-");
 
-  g_debug ("distance: %f\nin: %s\nlat, lon: %f, %f\nout: %s\nDMS: %s\ncode: %s\n", 
-           data.distance, name, lat, lon, data.location->name, data.location->coordinates, code);
-
   return code;
 }
