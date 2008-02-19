@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-14 12:49+0100\n"
-"PO-Revision-Date: 2008-02-14 13:00+0100\n"
+"POT-Creation-Date: 2008-02-20 14:20+0100\n"
+"PO-Revision-Date: 2008-02-20 14:24+0100\n"
 "Last-Translator: Ignacio Casal Quinteiro <icq@svn.gnome.org>\n"
 "Language-Team: Galego <proxecto@trasno.net>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgid "_Preferences"
 msgstr "_Preferencias"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4056
+#: ../applets/clock/clock.c:4101
 msgid "Clock"
 msgstr "Reloxo"
 
@@ -83,12 +83,17 @@ msgstr "Factoría para crear miniaplicacións de reloxo."
 msgid "Get the current time and date"
 msgstr "Obter a hora e data actuais"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:420
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:422
-#: ../applets/clock/clock.c:1550
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
+#: ../applets/clock/clock.c:1552 ../applets/clock/clock-location-tile.c:425
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -133,11 +138,11 @@ msgstr "Localizacións"
 msgid "Calendar"
 msgstr "Calendario"
 
-#: ../applets/clock/clock.c:420
+#: ../applets/clock/clock.c:421
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:422 ../applets/clock/clock.c:1548
+#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1550
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -146,7 +151,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:442
+#: ../applets/clock/clock.c:443
 msgid "%a %b %e"
 msgstr "%a %e de %b"
 
@@ -154,7 +159,7 @@ msgstr "%a %e de %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:449
+#: ../applets/clock/clock.c:450
 #, c-format
 msgid ""
 "%1$s\n"
@@ -167,7 +172,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:458
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -175,23 +180,23 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:639
+#: ../applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
 msgstr "%A, %d de %B (%%s)"
 
-#: ../applets/clock/clock.c:669
+#: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "Prema para ocultar as súas citas e tarefas"
 
-#: ../applets/clock/clock.c:672
+#: ../applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "Prema para ver as súas citas e tarefas"
 
-#: ../applets/clock/clock.c:676
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "Prema para ocultar o calendario do mes"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "Prema para ver o calendario do mes"
 
@@ -199,36 +204,36 @@ msgstr "Prema para ver o calendario do mes"
 msgid "Computer Clock"
 msgstr "Reloxo do computador"
 
-#: ../applets/clock/clock.c:1543
+#: ../applets/clock/clock.c:1545
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1545
+#: ../applets/clock/clock.c:1547
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1587
+#: ../applets/clock/clock.c:1589
 msgid "%A, %B %d %Y"
 msgstr "%A, %d de %B de %Y"
 
-#: ../applets/clock/clock.c:1662
+#: ../applets/clock/clock.c:1664
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Produciuse un fallo ao iniciar a ferramenta de configuración da hora: %s"
 
-#: ../applets/clock/clock.c:1691
+#: ../applets/clock/clock.c:1693
 msgid "Set System Time..."
 msgstr "Establecer a hora do sistema..."
 
-#: ../applets/clock/clock.c:1692 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1694 ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr "Establecer a hora do sistema"
 
-#: ../applets/clock/clock.c:1706
+#: ../applets/clock/clock.c:1708
 msgid "Failed to set the system time"
 msgstr "Fallou ao establecer a hora do sistema"
 
-#: ../applets/clock/clock.c:1879
+#: ../applets/clock/clock.c:1881
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -236,46 +241,46 @@ msgstr ""
 "Produciuse un fallo ao localizar un programa para configurar a data e a "
 "hora. Pode ser que non haxa ningún instalado?"
 
-#: ../applets/clock/clock.c:2698
+#: ../applets/clock/clock.c:2746
 msgid "Custom format"
 msgstr "Formato personalizado"
 
-#: ../applets/clock/clock.c:3498 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:468
+#: ../applets/clock/clock.c:3544 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:519
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3757
+#: ../applets/clock/clock.c:3802
 msgid "City Name"
 msgstr "Nome da cidade"
 
-#: ../applets/clock/clock.c:3761
+#: ../applets/clock/clock.c:3806
 msgid "City Time Zone"
 msgstr "Fuso horario da cidade"
 
-#: ../applets/clock/clock.c:3952
+#: ../applets/clock/clock.c:3997
 msgid "24 hour"
 msgstr "24 horas"
 
-#: ../applets/clock/clock.c:3953
+#: ../applets/clock/clock.c:3998
 msgid "UNIX time"
 msgstr "Hora Unix"
 
-#: ../applets/clock/clock.c:3954
+#: ../applets/clock/clock.c:3999
 msgid "Internet time"
 msgstr "Hora Internet"
 
-#: ../applets/clock/clock.c:3962
+#: ../applets/clock/clock.c:4007
 msgid "Custom _format:"
 msgstr "Formato _personalizado:"
 
-#: ../applets/clock/clock.c:4059
+#: ../applets/clock/clock.c:4104
 msgid "The Clock displays the current time and date"
 msgstr "O reloxo mostra a hora e a data actuais"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4062 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4107 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -626,34 +631,63 @@ msgstr "Usar UTC"
 msgid "Unknown Location"
 msgstr "Localización descoñecida"
 
-#: ../applets/clock/clock-location-tile.c:198
+#: ../applets/clock/clock-location-tile.c:187
 msgid "Failed to set the system timezone"
 msgstr "Fallou ao establecer o fuso horario do sistema"
 
-#: ../applets/clock/clock-location-tile.c:223
+#: ../applets/clock/clock-location-tile.c:221
 msgid "<small>Set...</small>"
 msgstr "<small>Establecer...</small>"
 
-#: ../applets/clock/clock-location-tile.c:224
+#: ../applets/clock/clock-location-tile.c:222
 msgid "<small>Set</small>"
 msgstr "<small>Establecer</small>"
 
-#: ../applets/clock/clock-location-tile.c:285
+#: ../applets/clock/clock-location-tile.c:283
 msgid "Set as current timezone for this computer"
 msgstr "Establecer como fuso horario actual para este computador"
 
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:398
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:407
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:417
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:478
-#: ../applets/clock/clock-location-tile.c:484
+#: ../applets/clock/clock-location-tile.c:529
+#: ../applets/clock/clock-location-tile.c:535
 msgid "Unknown"
 msgstr "Descoñecido"
 
-#: ../applets/clock/clock-location-tile.c:479
+#: ../applets/clock/clock-location-tile.c:530
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, sensación térmica %s"
 
-#: ../applets/clock/clock-location-tile.c:489
+#: ../applets/clock/clock-location-tile.c:540
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Amencer: %s / Ocaso: %s"
@@ -1775,7 +1809,9 @@ msgstr "O panel de Gnome"
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
-msgstr "Este programa é o responsable de lanzar outras aplicacións e proporcionar utilidades."
+msgstr ""
+"Este programa é o responsable de lanzar outras aplicacións e proporcionar "
+"utilidades."
 
 #: ../gnome-panel/panel-context-menu.c:167
 msgid "Cannot delete this panel"
@@ -2661,10 +2697,8 @@ msgid ""
 "• All items from the recent documents list in all applications."
 msgstr ""
 "Se baleira a lista de documentos recentes, limparase o seguinte:\n"
-"• Todos os elementos da opción do menú Lugares → Documentos "
-"recentes.\n"
-"• Todos os elementos da lista de documentos recentes de todas as "
-"aplicacións."
+"• Todos os elementos da opción do menú Lugares → Documentos recentes.\n"
+"• Todos os elementos da lista de documentos recentes de todas as aplicacións."
 
 #: ../gnome-panel/panel-recent.c:178 ../gnome-panel/panel-recent.c:252
 msgid "Clear Recent Documents"
@@ -2781,7 +2815,8 @@ msgid ""
 "d) and will exit.\n"
 "It may be automatically restarted."
 msgstr ""
-"Houbo un problema ao rexistrar o panel co servidor bonobo-activation (O código de erro é: %d) e sairá agora.\n"
+"Houbo un problema ao rexistrar o panel co servidor bonobo-activation (O "
+"código de erro é: %d) e sairá agora.\n"
 "Reiniciarase automaticamente."
 
 #: ../gnome-panel/panel-shell.c:74
@@ -3000,10 +3035,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
-"Se é verdadeira, a chave x e x_right ignórase e o panel colócase no centro do eixe x "
-"da pantalla. Se o panel se redimensiona permanecerá nesa posición - é dicir, "
-"o panel aumentará cara aos dous lados. Se é falsa, a chave x e x_right especifica a "
-"localización do panel."
+"Se é verdadeira, a chave x e x_right ignórase e o panel colócase no centro "
+"do eixe x da pantalla. Se o panel se redimensiona permanecerá nesa posición "
+"- é dicir, o panel aumentará cara aos dous lados. Se é falsa, a chave x e "
+"x_right especifica a localización do panel."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
@@ -3012,10 +3047,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
 msgstr ""
-"Se é verdadeira, a chave y e y_bottom ignórase e o panel colócase no centro do eixe y "
-"da pantalla. Se o panel se redimensiona permanecerá nesa posición - é dicir, "
-"o panel aumentará cara aos dous lados. Se é falsa, a chave y e y_bottom indica a "
-"localización do panel."
+"Se é verdadeira, a chave y e y_bottom ignórase e o panel colócase no centro "
+"do eixe y da pantalla. Se o panel se redimensiona permanecerá nesa posición "
+"- é dicir, o panel aumentará cara aos dous lados. Se é falsa, a chave y e "
+"y_bottom indica a localización do panel."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -3126,9 +3161,11 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
-"A localización do panel no eixe x, comezando desde a dereita da pantalla. Se é -1, o valor é ignorado e úsase o valor da chave x. Se o valor é maior que 0, entón ignórase o valor da chave x. Esta chave só ten relevancia se está en "
-"modo non expandido. No modo expandido a chave ignórase e o panel colócase na "
-"marxe da pantalla especificada pola chave de orientación."
+"A localización do panel no eixe x, comezando desde a dereita da pantalla. Se "
+"é -1, o valor é ignorado e úsase o valor da chave x. Se o valor é maior que "
+"0, entón ignórase o valor da chave x. Esta chave só ten relevancia se está "
+"en modo non expandido. No modo expandido a chave ignórase e o panel colócase "
+"na marxe da pantalla especificada pola chave de orientación."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -3149,9 +3186,11 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
-"A localización do panel no eixe y, comezando desde a dereita da pantalla. Se é -1, o valor é ignorado e úsase o valor da chave y. Se o valor é maior que 0, entón ignórase o valor da chave y. Esta chave só ten relevancia se está en "
-"modo non expandido. No modo expandido a chave ignórase e o panel colócase na "
-"marxe da pantalla especificada pola chave de orientación."
+"A localización do panel no eixe y, comezando desde a dereita da pantalla. Se "
+"é -1, o valor é ignorado e úsase o valor da chave y. Se o valor é maior que "
+"0, entón ignórase o valor da chave y. Esta chave só ten relevancia se está "
+"en modo non expandido. No modo expandido a chave ignórase e o panel colócase "
+"na marxe da pantalla especificada pola chave de orientación."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
