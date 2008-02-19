@@ -1,5 +1,11 @@
 2008-02-18  Matthias Clasen  <mclasen@redhat.com>
 
+	* clock.glade: Make all of the nested pref dialogs use the dialog
+	window class, to avoid some focus and stacking order oddities with
+	metacity.
+	
+2008-02-18  Matthias Clasen  <mclasen@redhat.com>
+
 	Fix the time display in the location tiles to be the time at the 
 	location (currently, all tiles show the local time, which is rather 
 	pointless). Also fix the problem where the time is invisible for
