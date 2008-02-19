@@ -20,7 +20,6 @@ G_DEFINE_TYPE (ClockLocationTile, clock_location_tile, GTK_TYPE_ALIGNMENT)
 enum {
 	TILE_PRESSED,
 	TIMEZONE_SET,
-	WEATHER_UPDATED,
 	NEED_CLOCK_FORMAT,
 	LAST_SIGNAL
 };
@@ -113,17 +112,6 @@ clock_location_tile_class_init (ClockLocationTileClass *this_class)
 					      NULL,
 					      g_cclosure_marshal_VOID__VOID,
 					      G_TYPE_NONE, 0);
-	signals[WEATHER_UPDATED] = g_signal_new ("weather-updated",
-						 G_TYPE_FROM_CLASS (g_obj_class),
-						 G_SIGNAL_RUN_FIRST,
-						 G_STRUCT_OFFSET (ClockLocationTileClass, weather_updated),
-						 NULL,
-						 NULL,
-						 _clock_marshal_VOID__OBJECT_STRING,
-						 G_TYPE_NONE, 2,
-						 G_TYPE_OBJECT,
-						 G_TYPE_STRING);
-
 	signals[NEED_CLOCK_FORMAT] = g_signal_new ("need-clock-format",
 						   G_TYPE_FROM_CLASS (g_obj_class),
 						   G_SIGNAL_RUN_LAST,
@@ -374,12 +362,6 @@ copy_tm (struct tm *from, struct tm *to)
         to->tm_yday = from->tm_yday;
 }
 
-static void
-emit_weather_updated (ClockLocationTile *this, GdkPixbuf *weather_icon, const char *temperature)
-{
-	g_signal_emit (this, signals[WEATHER_UPDATED], 0, weather_icon, temperature);
-}
-
 static char *
 format_time (struct tm   *now, 
              char        *tzname,
@@ -466,23 +448,12 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
         ClockLocationTilePrivate *priv = PRIVATE (this);
         gchar *tmp, *tzname;
         struct tm now;
-	long offset, hours, minutes;
+	long offset;
 	int format;
 
 	g_return_if_fail (IS_CLOCK_LOCATION_TILE (this));
 
         if (clock_location_is_current (priv->location)) {
-		if (!GTK_WIDGET_VISIBLE (priv->current_marker)) {
-			GdkPixbuf *pixbuf;
-                        const gchar *temp = NULL;
-
-			pixbuf = gtk_image_get_pixbuf (GTK_IMAGE (priv->weather_icon));
-                        if (clock_location_get_weather_info (priv->location))
-                               temp = weather_info_get_temp_summary (clock_location_get_weather_info (priv->location));
-
-			emit_weather_updated (this, pixbuf, temp);
-		}
-
                 gtk_widget_hide (priv->current_button);
                 gtk_widget_show (priv->current_marker);
         }
@@ -601,7 +572,6 @@ update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
         GdkPixbuf *pixbuf = NULL;
         GtkIconTheme *theme = NULL;
         const gchar *icon_name;
-        const gchar *temp = NULL;
 
         if (!info || !weather_info_is_valid (info))
                 return;
@@ -610,14 +580,9 @@ update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
         theme = gtk_icon_theme_get_default ();
         pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16, 0, NULL);
 
-        temp = weather_info_get_temp_summary (info);
-
         if (pixbuf) {
                 gtk_image_set_from_pixbuf (GTK_IMAGE (priv->weather_icon), pixbuf);
                 gtk_alignment_set_padding (GTK_ALIGNMENT (gtk_widget_get_parent (priv->weather_icon)), 0, 0, 0, 6);
-		if (clock_location_is_current (loc)) {
-			emit_weather_updated (tile, pixbuf, temp);
-		}
         }
 }
 

@@ -27,7 +27,6 @@ typedef struct
 
 	void (* tile_pressed) (ClockLocationTile *tile);
 	void (* timezone_set) (ClockLocationTile *tile);
-	void (* weather_updated) (ClockLocationTile *tile, GdkPixbuf *weather_icon, const char *temperature);
         int  (* need_clock_format) (ClockLocationTile *tile);
 } ClockLocationTileClass;
 

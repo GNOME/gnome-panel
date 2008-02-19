@@ -1,5 +1,16 @@
 2008-02-18  Matthias Clasen  <mclasen@redhat.com>
 
+	Fix the display of the weather on the panel.
+
+	* clock.c: Fix some memory management issues wrt. to 
+	ClockData.locations, and connect to the weather-updated
+	signal on the ClockLocation instead of the ClockLocationTile.
+
+	* clock-location-tile.[ch]: Get rid of the weather-updated
+	signal that is no longer used.
+
+2008-02-18  Matthias Clasen  <mclasen@redhat.com>
+
 	* clock.glade: Make all of the nested pref dialogs use the dialog
 	window class, to avoid some focus and stacking order oddities with
 	metacity.

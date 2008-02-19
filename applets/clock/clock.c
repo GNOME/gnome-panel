@@ -211,6 +211,7 @@ struct _ClockData {
 
 static void  update_clock (ClockData * cd);
 static void  update_tooltip (ClockData * cd);
+static void  update_panel_weather (ClockData *cd);
 static int   clock_timeout_callback (gpointer data);
 static float get_itime    (time_t current_time);
 
@@ -1131,8 +1132,6 @@ create_cities_section (ClockData *cd)
                                   G_CALLBACK (location_tile_pressed_cb), cd);
                 g_signal_connect (city, "timezone-set",
                                   G_CALLBACK (location_tile_timezone_set_cb), cd);
-                g_signal_connect (city, "weather-updated",
-                                  G_CALLBACK (location_tile_weather_updated_cb), cd);
                 g_signal_connect (city, "need-clock-format",
                                   G_CALLBACK (location_tile_need_clock_format_cb), cd);
 
@@ -1299,7 +1298,6 @@ create_main_clock_button (void)
         GtkWidget *button;
 
         button = gtk_toggle_button_new ();
-	gtk_container_set_resize_mode (GTK_CONTAINER (button), GTK_RESIZE_IMMEDIATE);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
         force_no_focus_padding (button);
@@ -1407,6 +1405,8 @@ create_clock_widget (ClockData *cd)
 	cd->props = NULL;
 	cd->orient = -1;
 	cd->size = panel_applet_get_size (PANEL_APPLET (cd->applet));
+
+	update_panel_weather (cd);
 
 	/* Refresh the clock so that it paints its first state */
 	refresh_clock_timeout (cd);
@@ -1974,9 +1974,6 @@ show_date_changed (GConfClient  *client,
 static void
 update_panel_weather (ClockData *cd)
 {
-        GtkWidget *weatherbox;
-
-        weatherbox = gtk_widget_get_parent (cd->panel_weather_icon);
         if (cd->show_weather)
                 gtk_widget_show (cd->panel_weather_icon);
         else
@@ -1988,9 +1985,11 @@ update_panel_weather (ClockData *cd)
                 gtk_widget_hide (cd->panel_temperature_label);
 
 	if (cd->show_weather || cd->show_temperature)
-                gtk_widget_show (weatherbox);
+                gtk_widget_show (cd->weather_obox);
         else
-                gtk_widget_hide (weatherbox);
+                gtk_widget_hide (cd->weather_obox);
+
+	gtk_widget_queue_resize (cd->applet);
 }
 
 static void
@@ -2036,17 +2035,64 @@ show_temperature_changed (GConfClient  *client,
 }
 
 static void
+location_weather_updated_cb (ClockLocation *location,
+                             WeatherInfo   *info,
+                             gpointer       data)
+{
+	ClockData *cd = data;
+	const gchar *icon_name;
+	const gchar *temp;
+	GtkIconTheme *theme;
+	GdkPixbuf *pixbuf;
+
+	if (!info || !weather_info_is_valid (info))
+		return;
+
+	if (!clock_location_is_current (location))
+		return;
+
+	icon_name = weather_info_get_icon_name (info);
+	theme = gtk_icon_theme_get_default ();
+	pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16, 0, NULL);
+
+	temp = weather_info_get_temp_summary (info);
+
+	gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon), pixbuf);
+	gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), temp);
+}
+
+static void
+locations_changed (ClockData *cd)
+{
+	GList *l;
+	ClockLocation *loc;
+	glong id;
+
+	for (l = cd->locations; l; l = l->next) {
+		loc = l->data;
+
+		id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (loc), "weather-updated"));
+		if (id == 0) {
+			id = g_signal_connect (loc, "weather-updated",
+						G_CALLBACK (location_weather_updated_cb), cd);
+			g_object_set_data (G_OBJECT (loc), "weather-updated", GINT_TO_POINTER (id));
+		}
+	}
+
+	if (cd->map_widget)
+		clock_map_refresh (CLOCK_MAP (cd->map_widget));
+
+	if (cd->clock_vbox)
+		create_cities_section (cd);
+}
+
+
+static void
 set_locations (ClockData *cd, GList *locations)
 {
         free_locations (cd);
-
         cd->locations = locations;
-
-        if (cd->map_widget)
-                clock_map_refresh (CLOCK_MAP (cd->map_widget));
-
-	if (cd->clock_vbox)
-        	create_cities_section (cd);
+	locations_changed (cd);
 }
 
 typedef struct {
@@ -2948,7 +2994,6 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
                 clock_location_set_coords (loc, lat, lon);
 		clock_location_set_weather_code (loc, weather_code);
         } else {
-                GList *locs;
 		WeatherPrefs prefs;
 
 		prefs.temperature_unit = cd->temperature_unit;
@@ -2956,9 +3001,8 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
 
                 loc = clock_location_new (name, clock_zoneinfo_get_name (info), lat, lon, weather_code, &prefs);
 
-                locs = g_list_copy (cd->locations);
-                locs = g_list_append (locs, loc);
-                set_locations (cd, locs);
+                cd->locations = g_list_append (cd->locations, loc);
+                locations_changed (cd);
         }
 
         save_cities_store (cd);
@@ -3522,14 +3566,13 @@ remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
 {
         ClockData *cd = data;
         ClockLocation *loc = NULL;
-        GList *list = g_list_copy (cd->locations);
 
         gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
 
-        list = g_list_remove (list, loc);
-
         gtk_list_store_remove (cd->cities_store, iter);
-        set_locations (cd, list);
+	cd->locations = g_list_remove (cd->locations, loc);
+	locations_changed (cd);
+	g_object_unref (loc);
 
         save_cities_store (cd);
 }
