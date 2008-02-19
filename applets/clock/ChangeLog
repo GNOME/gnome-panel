@@ -1,5 +1,19 @@
 2008-02-18  Matthias Clasen  <mclasen@redhat.com>
 
+	Set timezones asynchronously. This keeps the clock ticking
+	while the auth dialog is up.
+
+	* set-timezone.[hc]: Replace the synchronous set_timezone call
+	by an asynchronous version, reusing the async machinery for the
+	set_time call.
+
+	* clock-location.[hc]: Do the same for the 
+	clock_location_make_current call.
+	
+	* clock-location-tile.c: Use async call to set the timezone.
+
+2008-02-18  Matthias Clasen  <mclasen@redhat.com>
+
 	Fix the display of the weather on the panel.
 
 	* clock.c: Fix some memory management issues wrt. to 

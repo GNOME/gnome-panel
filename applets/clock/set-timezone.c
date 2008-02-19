@@ -91,108 +91,6 @@ get_pk_context (void)
 	return pk_context;
 }
 
-gboolean
-set_system_timezone (const char *filename, GError **err)
-{
-        DBusGConnection *session_bus;
-        DBusGConnection *system_bus;
-        DBusGProxy      *mechanism_proxy;
-        DBusGProxy      *polkit_gnome_proxy;
-	gboolean ret = FALSE;
-
-       	session_bus = get_session_bus ();
-        if (session_bus == NULL) 
-		goto out;
-
-        system_bus = get_system_bus ();
-        if (system_bus == NULL) 
-               	goto out;
-
-	mechanism_proxy = dbus_g_proxy_new_for_name (system_bus,
-                                                     "org.gnome.ClockApplet.Mechanism",
-                                                     "/",
-                                                     "org.gnome.ClockApplet.Mechanism");
-
-	polkit_gnome_proxy = dbus_g_proxy_new_for_name (session_bus,
-                                                        "org.gnome.PolicyKit",
-                                                        "/org/gnome/PolicyKit/Manager",
-                                                        "org.gnome.PolicyKit.Manager");
-
-        if (filename != NULL) {
-                GError *error;
-
-                g_debug ("Trying to set timezone '%s'", filename);
-        try_again:
-                error = NULL;
-                /* first, try to call into the mechanism */
-                if (!dbus_g_proxy_call_with_timeout (mechanism_proxy,
-                                                     "SetTimezone",
-                                                     INT_MAX,
-                                                     &error,
-                                                     /* parameters: */
-                                                     G_TYPE_STRING, filename,
-                                                     G_TYPE_INVALID,
-                                                     /* return values: */
-                                                     G_TYPE_INVALID)) {
-                        if (dbus_g_error_has_name (error, "org.gnome.ClockApplet.Mechanism.NotPrivileged")) {
-                                char **tokens;
-                                char *polkit_result_textual;
-                                char *polkit_action;
-                                gboolean gained_privilege;
-
-                                tokens = g_strsplit (error->message, " ", 2);
-                                g_error_free (error);                                
-                                if (g_strv_length (tokens) != 2) {
-                                        g_warning ("helper return string malformed");
-                                        g_strfreev (tokens);
-                                        goto out;
-                                }
-                                polkit_action = tokens[0];
-                                polkit_result_textual = tokens[1];
-
-                                g_debug ("helper refused; returned polkit_result='%s' and polkit_action='%s'", 
-                                         polkit_result_textual, polkit_action);
-
-                                /* Now ask the user for auth... */
-                                if (!dbus_g_proxy_call_with_timeout (polkit_gnome_proxy,
-                                                                     "ShowDialog",
-                                                                     INT_MAX,
-                                                                     &error,
-                                                                     /* parameters: */
-                                                                     G_TYPE_STRING, polkit_action,
-                                                                     G_TYPE_UINT, 0, /* X11 window ID; none */
-                                                                     G_TYPE_INVALID,
-                                                                     /* return values: */
-                                                                     G_TYPE_BOOLEAN, &gained_privilege,
-                                                                     G_TYPE_INVALID)) {
-                                        g_propagate_error (err, error);
-                                        g_strfreev (tokens);
-                                        goto out;
-                                }
-                                g_strfreev (tokens);
-
-                                if (gained_privilege) {
-                                        g_debug ("Gained privilege; trying to set timezone again");
-                                        goto try_again;
-                                }
-
-                        } else {
-                                g_propagate_error (err, error);
-                        }
-                        goto out;
-                }
-
-                g_debug ("Successfully set time zone to '%s'", filename);
-        }
-
-        ret = TRUE;
-out:
-	g_object_unref (mechanism_proxy);
-	g_object_unref (polkit_gnome_proxy);
-
-        return ret;
-}
-
 static gint
 can_do (const gchar *pk_action_id)
 {
@@ -269,7 +167,9 @@ can_set_system_time (void)
 
 typedef struct {
 	gint ref_count;
+        gchar *call;
 	gint64 time;
+	gchar *filename;
 	GFunc callback;
 	gpointer data;
 	GDestroyNotify notify;
@@ -284,6 +184,7 @@ free_data (gpointer d)
 	if (data->ref_count == 0) {
 		if (data->notify)
 			data->notify (data->data);
+		g_free (data->filename);
 		g_free (data);
 	}
 }
@@ -392,16 +293,28 @@ set_time_async (SetTimeCallbackData *data)
 					   "org.gnome.ClockApplet.Mechanism");
 
 	data->ref_count++;
-	dbus_g_proxy_begin_call_with_timeout (proxy, 
-					      "SetTime",
-					      set_time_notify,
-					      data, free_data,
-					      INT_MAX,
-					      /* parameters: */
-					      G_TYPE_INT64, data->time,
-					      G_TYPE_INVALID,
-					      /* return values: */
-					      G_TYPE_INVALID);
+	if (strcmp (data->call, "SetTime") == 0)
+		dbus_g_proxy_begin_call_with_timeout (proxy, 
+						      "SetTime",
+						      set_time_notify,
+						      data, free_data,
+						      INT_MAX,
+						      /* parameters: */
+						      G_TYPE_INT64, data->time,
+						      G_TYPE_INVALID,
+						      /* return values: */
+						      G_TYPE_INVALID);
+	else 
+		dbus_g_proxy_begin_call_with_timeout (proxy, 
+						      "SetTimezone",
+						      set_time_notify,
+						      data, free_data,
+						      INT_MAX,
+						      /* parameters: */
+						      G_TYPE_STRING, data->filename,
+						      G_TYPE_INVALID,
+						      /* return values: */
+						      G_TYPE_INVALID);
 }
 
 void
@@ -417,7 +330,33 @@ set_system_time_async (gint64         time,
 
 	data = g_new (SetTimeCallbackData, 1);
 	data->ref_count = 1;
+	data->call = "SetTime";
 	data->time = time;
+	data->filename = NULL;
+	data->callback = callback;
+	data->data = d;
+	data->notify = notify;
+
+	set_time_async (data);
+	free_data (data);
+}
+
+void
+set_system_timezone_async (const gchar    *filename,
+	             	   GFunc           callback, 
+		           gpointer        d, 
+		           GDestroyNotify  notify)
+{
+	SetTimeCallbackData *data;
+
+	if (filename == NULL)
+		return;
+
+	data = g_new (SetTimeCallbackData, 1);
+	data->ref_count = 1;
+	data->call = "SetTimezone";
+	data->time = -1;
+	data->filename = g_strdup (filename);
 	data->callback = callback;
 	data->data = d;
 	data->notify = notify;

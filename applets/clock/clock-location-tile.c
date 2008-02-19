@@ -104,7 +104,7 @@ clock_location_tile_class_init (ClockLocationTileClass *this_class)
 					      NULL,
 					      g_cclosure_marshal_VOID__VOID,
 					      G_TYPE_NONE, 0);
-	signals[TILE_PRESSED] = g_signal_new ("timezone-set",
+	signals[TIMEZONE_SET] = g_signal_new ("timezone-set",
 					      G_TYPE_FROM_CLASS (g_obj_class),
 					      G_SIGNAL_RUN_FIRST,
 					      G_STRUCT_OFFSET (ClockLocationTileClass, timezone_set),
@@ -171,16 +171,15 @@ press_on_tile      (GtkWidget             *widget,
 }
 
 static void
-make_current (GtkWidget *widget, ClockLocationTile *tile)
+make_current_cb (gpointer data, GError *error)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (tile);
-        GError *error = NULL;
-        GtkWidget *dialog;
+	ClockLocationTile *tile = data;
+	GtkWidget *dialog;
 
-        if (clock_location_make_current (priv->location, &error)) {
+        if (error == NULL) {
 		g_signal_emit (tile, signals[TIMEZONE_SET], 0);
         }
-        else if (error) {
+        else {
                 dialog = gtk_message_dialog_new (NULL,
                                                  0,
                                                  GTK_MESSAGE_ERROR,
@@ -193,6 +192,15 @@ make_current (GtkWidget *widget, ClockLocationTile *tile)
 
                 g_error_free (error);
         }
+}
+
+static void
+make_current (GtkWidget *widget, ClockLocationTile *tile)
+{
+        ClockLocationTilePrivate *priv = PRIVATE (tile);
+
+	clock_location_make_current (priv->location, 
+				     (GFunc)make_current_cb, tile, NULL);
 }
 
 static gboolean

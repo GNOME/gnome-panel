@@ -667,18 +667,20 @@ clock_location_get_offset (ClockLocation *loc)
         return offset;
 }
 
-gboolean
-clock_location_make_current (ClockLocation *loc, GError **error)
+typedef struct {
+	ClockLocation *location;
+	GFunc callback;
+	gpointer data;
+	GDestroyNotify destroy;
+} MakeCurrentData;
+
+static void
+make_current_cb (gpointer data, GError *error)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
-        gchar *filename;
-        gboolean ret;
+	MakeCurrentData *mcdata = data;
+        ClockLocationPrivate *priv = PRIVATE (mcdata->location);
 
-        filename = g_build_filename (SYSTEM_ZONEINFODIR, priv->timezone, NULL);
-        ret = set_system_timezone (filename, error);
-        g_free (filename);
-
-	if (ret) {
+	if (error == NULL) {
 		/* FIXME this ugly shortcut is necessary until we move the
  	  	 * current timezone tracking to clock.c and emit the
  	 	 * signal from there
@@ -687,7 +689,47 @@ clock_location_make_current (ClockLocation *loc, GError **error)
 		current_zone = g_strdup (priv->timezone);
 	}
 
-        return ret;
+	if (mcdata->callback)
+		mcdata->callback (mcdata->data, error);
+	else
+		g_error_free (error);
+}
+
+static void
+free_make_current_data (gpointer data)
+{
+	MakeCurrentData *mcdata = data;
+	
+	if (mcdata->destroy)
+		mcdata->destroy (mcdata->data);
+	
+	g_object_unref (mcdata->location);
+	g_free (mcdata);
+}
+
+void
+clock_location_make_current (ClockLocation *loc, 
+                             GFunc          callback,
+                             gpointer       data,
+                             GDestroyNotify destroy)
+{
+        ClockLocationPrivate *priv = PRIVATE (loc);
+        gchar *filename;
+	MakeCurrentData *mcdata;
+
+	mcdata = g_new (MakeCurrentData, 1);
+
+	mcdata->location = g_object_ref (loc);
+	mcdata->callback = callback;
+	mcdata->data = data;
+	mcdata->destroy = destroy;
+
+        filename = g_build_filename (SYSTEM_ZONEINFODIR, priv->timezone, NULL);
+        set_system_timezone_async (filename, 
+                                   (GFunc)make_current_cb, 
+				   mcdata,
+                                   free_make_current_data);
+        g_free (filename);
 }
 
 const gchar *
