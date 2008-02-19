@@ -508,7 +508,7 @@ update_location_tiles (ClockData *cd)
                 ClockLocationTile *tile;
 
                 tile = CLOCK_LOCATION_TILE (l->data);
-                clock_location_tile_refresh (tile);
+                clock_location_tile_refresh (tile, FALSE);
         }
 }
 
@@ -1084,12 +1084,12 @@ location_tile_weather_updated_cb (ClockLocationTile *tile, GdkPixbuf *weather_ic
         gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), temperature);
 }
 
-static char *
-location_tile_need_formatted_time_cb (ClockLocationTile *tile, gpointer data)
+static ClockFormat
+location_tile_need_clock_format_cb(ClockLocationTile *tile, gpointer data)
 {
         ClockData *cd = data;
 
-        return format_time (cd);
+        return cd->format;
 }
 
 static void
@@ -1133,8 +1133,10 @@ create_cities_section (ClockData *cd)
                                   G_CALLBACK (location_tile_timezone_set_cb), cd);
                 g_signal_connect (city, "weather-updated",
                                   G_CALLBACK (location_tile_weather_updated_cb), cd);
-                g_signal_connect (city, "need-formatted-time",
-                                  G_CALLBACK (location_tile_need_formatted_time_cb), cd);
+                g_signal_connect (city, "need-clock-format",
+                                  G_CALLBACK (location_tile_need_clock_format_cb), cd);
+
+		clock_location_tile_refresh (city, TRUE);
 
                 gtk_box_pack_start (GTK_BOX (cd->cities_section),
                                     GTK_WIDGET (city),

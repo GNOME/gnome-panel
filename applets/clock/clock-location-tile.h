@@ -28,7 +28,7 @@ typedef struct
 	void (* tile_pressed) (ClockLocationTile *tile);
 	void (* timezone_set) (ClockLocationTile *tile);
 	void (* weather_updated) (ClockLocationTile *tile, GdkPixbuf *weather_icon, const char *temperature);
-	char *(* need_formatted_time) (ClockLocationTile *tile);
+        int  (* need_clock_format) (ClockLocationTile *tile);
 } ClockLocationTileClass;
 
 GType clock_location_tile_get_type (void);
@@ -40,7 +40,8 @@ ClockLocation *clock_location_tile_get_location (ClockLocationTile *this);
 
 void weather_info_setup_tooltip (WeatherInfo *info, GtkTooltip *tip);
 
-void clock_location_tile_refresh (ClockLocationTile *this);
+void clock_location_tile_refresh (ClockLocationTile *this,
+                                  gboolean           force_refresh);
 
 G_END_DECLS
 #endif /* __CLOCK_H__ */

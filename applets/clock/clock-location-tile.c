@@ -11,6 +11,7 @@
 #include "clock-face.h"
 #include "clock-location-tile.h"
 #include "clock-location.h"
+#include "clock-utils.h"
 #include "clock-marshallers.h"
 #include "set-timezone.h"
 
@@ -20,7 +21,7 @@ enum {
 	TILE_PRESSED,
 	TIMEZONE_SET,
 	WEATHER_UPDATED,
-	NEED_FORMATTED_TIME,
+	NEED_CLOCK_FORMAT,
 	LAST_SIGNAL
 };
 
@@ -122,14 +123,15 @@ clock_location_tile_class_init (ClockLocationTileClass *this_class)
 						 G_TYPE_NONE, 2,
 						 G_TYPE_OBJECT,
 						 G_TYPE_STRING);
-	signals[NEED_FORMATTED_TIME] = g_signal_new ("need-formatted-time",
-						     G_TYPE_FROM_CLASS (g_obj_class),
-						     G_SIGNAL_RUN_LAST,
-						     G_STRUCT_OFFSET (ClockLocationTileClass, need_formatted_time),
-						     NULL,
-						     NULL,
-						     _clock_marshal_STRING__VOID,
-						     G_TYPE_STRING, 0);
+
+	signals[NEED_CLOCK_FORMAT] = g_signal_new ("need-clock-format",
+						   G_TYPE_FROM_CLASS (g_obj_class),
+						   G_SIGNAL_RUN_LAST,
+						   G_STRUCT_OFFSET (ClockLocationTileClass, need_clock_format),
+						   NULL,
+						   NULL,
+						   _clock_marshal_INT__VOID,
+						   G_TYPE_INT, 0);
 }
 
 static void
@@ -310,7 +312,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_container_add (GTK_CONTAINER (priv->box), alignment);
         gtk_container_add (GTK_CONTAINER (this), priv->box);
 
-        clock_location_tile_refresh (this);
+        clock_location_tile_refresh (this, TRUE);
 }
 
 static gboolean
@@ -378,13 +380,94 @@ emit_weather_updated (ClockLocationTile *this, GdkPixbuf *weather_icon, const ch
 	g_signal_emit (this, signals[WEATHER_UPDATED], 0, weather_icon, temperature);
 }
 
+static char *
+format_time (struct tm   *now, 
+             char        *tzname,
+             ClockFormat  clock_format,
+	     long         offset)
+{
+	char buf[256];
+	char *format;
+	time_t local_t;
+	struct tm local_now;
+	char *utf8;	
+	char *tmp;	
+	long hours, minutes;
+
+	time (&local_t);
+	localtime_r (&local_t, &local_now);
+
+	if (local_now.tm_wday != now->tm_wday) {
+		if (clock_format == CLOCK_FORMAT_12) {
+/* translators: This is a strftime format string that is used for formatting 
+ * the time that is displayed for locations in the popup. This string is used
+ * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+ * from the weekday at the location (the %A expands to the weekday).
+ * There should be little need to translate this string.
+ */
+			format = _("%l:%M <small>%p (%A)</small>");
+		}
+		else {
+/* translators: This is a strftime format string that is used for formatting 
+ * the time that is displayed for locations in the popup. This string is used
+ * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+ * from the weekday at the location (the %A expands to the weekday).
+ * There should be little need to translate this string.
+ */
+			format = _("%H:%M <small>(%A)</small>");
+		}
+	}
+	else {
+		if (clock_format == CLOCK_FORMAT_12) {
+/* translators: This is a strftime format string that is used for formatting 
+ * the time that is displayed for locations in the popup. This string is used
+ * for 12-hour format (the %p expands to am/pm). 
+ * There should be little need to translate this string.
+ */
+			format = _("%l:%M <small>%p</small>");
+		}
+		else {
+/* translators: This is a strftime format string that is used for formatting 
+ * the time that is displayed for locations in the popup. This string is used
+ * for 24-hour format.
+ * There should be little need to translate this string.
+ */
+			format = _("%H:%M");
+		}
+	}
+
+	if (strftime (buf, sizeof (buf), format, now) <= 0) {
+		strcpy (buf, "???");
+	}
+
+        hours = offset / 3600;
+        minutes = labs (offset % 3600) / 60;
+
+	if (hours != 0 && minutes != 0) {
+		tmp = g_strdup_printf ("%s <small>%s %+ld:%ld</small>", buf, tzname, hours, minutes);
+	}
+	else if (hours != 0) {
+		tmp = g_strdup_printf ("%s <small>%s %+ld</small>", buf, tzname, hours);
+	}
+	else {
+		tmp = g_strdup_printf ("%s <small>%s</small>", buf, tzname);
+	}
+
+	utf8 = g_locale_to_utf8 (tmp, -1, NULL, NULL, NULL);
+
+	g_free (tmp);
+
+	return utf8;
+}
+
 void
-clock_location_tile_refresh (ClockLocationTile *this)
+clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 {
         ClockLocationTilePrivate *priv = PRIVATE (this);
-        gchar *tmp, *tmp2, *tzname;
+        gchar *tmp, *tzname;
         struct tm now;
 	long offset, hours, minutes;
+	int format;
 
 	g_return_if_fail (IS_CLOCK_LOCATION_TILE (this));
 
@@ -411,7 +494,7 @@ clock_location_tile_refresh (ClockLocationTile *this)
                 clock_face_refresh (CLOCK_FACE (priv->clock_face));
         }
 
-        if (!clock_needs_label_refresh (this)) {
+        if (!force_refresh && !clock_needs_label_refresh (this)) {
                 return;
         }
 
@@ -426,26 +509,15 @@ clock_location_tile_refresh (ClockLocationTile *this)
         gtk_label_set_markup (GTK_LABEL (priv->city_label), tmp);
         g_free (tmp);
 
-	tmp = NULL;
-	g_signal_emit (this, signals[NEED_FORMATTED_TIME], 0, &tmp);
+	g_signal_emit (this, signals[NEED_CLOCK_FORMAT], 0, &format);
 
 	offset = - priv->last_offset;
 
-	hours = offset / 3600;
-	minutes = labs (offset % 3600) / 60;
+	tmp = format_time (&now, tzname, format, offset);
 
-	if (hours != 0 && minutes != 0)
-		tmp2 = g_strdup_printf ("%s  <small>%+ld:%ld</small>", tmp ? tmp : "", hours, minutes);
-	else if (hours != 0)
-		tmp2 = g_strdup_printf ("%s  <small>%+ld</small>", tmp ? tmp : "", hours);
-	else {
-		tmp2 = tmp;
-		tmp = NULL;
-	}
+        gtk_label_set_markup (GTK_LABEL (priv->time_label), tmp);
 
-        gtk_label_set_markup (GTK_LABEL (priv->time_label), tmp2);
         g_free (tmp);
-	g_free (tmp2);
 }
 
 void

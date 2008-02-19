@@ -1,3 +1,24 @@
+2008-02-18  Matthias Clasen  <mclasen@redhat.com>
+
+	Fix the time display in the location tiles to be the time at the 
+	location (currently, all tiles show the local time, which is rather 
+	pointless). Also fix the problem where the time is invisible for
+	a while after the popup has been shown.
+
+	This introduces some new strings (the strftime formats used for 
+	formatting the time for the tiles), but there should be little
+	need to translate them.
+
+	* clock-location-tile.[hc]: Replace the need-formatted-time signal
+	by a need-clock-format. Do our own time formatting, since the
+	needs are somewhat different from the time display in the panel,
+	and we really only want to respect the 12/24h preference.
+
+	* clock.c: Handle the need-clock-format signal.
+
+	* clock-marshallers.list: Add INT:VOID marshaller for the 
+	need-clock-format signal.
+
 2008-02-15  Matthias Clasen  <mclasen@redhat.com>
 
 	* gweather-xml.c (find_weather_code): Remove a debug statement
