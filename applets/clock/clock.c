@@ -1074,6 +1074,7 @@ location_tile_timezone_set_cb (ClockLocationTile *tile, gpointer data)
         ClockData *cd = data;
 
         clock_map_refresh (CLOCK_MAP (cd->map_widget));
+	update_location_tiles (cd);
 }
 
 static void
