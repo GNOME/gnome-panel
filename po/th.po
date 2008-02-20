@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-11 07:40+0700\n"
-"PO-Revision-Date: 2008-02-11 07:44+0700\n"
+"POT-Creation-Date: 2008-02-20 08:54+0700\n"
+"PO-Revision-Date: 2008-02-20 08:59+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgid "_Preferences"
 msgstr "_ปรับแต่ง..."
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:4056
+#: applets/clock/clock.c:4101
 msgid "Clock"
 msgstr "นาฬิกา"
 
@@ -81,12 +81,17 @@ msgstr "โรงงานสร้างแอพเพล็ตนาฬิก
 msgid "Get the current time and date"
 msgstr "ดูวันและเวลาปัจจุบัน"
 
-#: applets/clock/calendar-window.c:242 applets/clock/clock.c:420
+#: applets/clock/calendar-window.c:242 applets/clock/clock.c:421
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/calendar-window.c:244 applets/clock/clock.c:422
-#: applets/clock/clock.c:1550
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: applets/clock/calendar-window.c:244 applets/clock/clock.c:423
+#: applets/clock/clock.c:1552 applets/clock/clock-location-tile.c:425
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -131,11 +136,11 @@ msgstr "ตำแหน่งที่ตั้ง"
 msgid "Calendar"
 msgstr "ปฏิทิน"
 
-#: applets/clock/clock.c:420
+#: applets/clock/clock.c:421
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:422 applets/clock/clock.c:1548
+#: applets/clock/clock.c:423 applets/clock/clock.c:1550
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -144,7 +149,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:442
+#: applets/clock/clock.c:443
 msgid "%a %b %e"
 msgstr "%a %-d %b"
 
@@ -152,7 +157,7 @@ msgstr "%a %-d %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:449
+#: applets/clock/clock.c:450
 #, c-format
 msgid ""
 "%1$s\n"
@@ -165,7 +170,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:457
+#: applets/clock/clock.c:458
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -173,23 +178,23 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: applets/clock/clock.c:639
+#: applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
 msgstr "วัน%Aที่ %-d %B %EY (%%s)"
 
-#: applets/clock/clock.c:669
+#: applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "กดเพื่อซ่อนนัดหมายและรายการภารกิจของคุณ"
 
-#: applets/clock/clock.c:672
+#: applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "กดเพื่อดูนัดหมายและรายการภารกิจของคุณ"
 
-#: applets/clock/clock.c:676
+#: applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "กดเพื่อซ่อนปฏิทินรายเดือน"
 
-#: applets/clock/clock.c:679
+#: applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "กดเพื่อดูปฏิทินรายเดือน"
 
@@ -197,81 +202,81 @@ msgstr "กดเพื่อดูปฏิทินรายเดือน"
 msgid "Computer Clock"
 msgstr "นาฬิกาคอมพิวเตอร์"
 
-#: applets/clock/clock.c:1543
+#: applets/clock/clock.c:1545
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:1545
+#: applets/clock/clock.c:1547
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: applets/clock/clock.c:1587
+#: applets/clock/clock.c:1589
 msgid "%A, %B %d %Y"
 msgstr "วัน%Aที่ %-d %B %EY"
 
-#: applets/clock/clock.c:1662
+#: applets/clock/clock.c:1664
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "เรียกใช้เครื่องมือตั้งเวลาไม่สำเร็จ: %s"
 
-#: applets/clock/clock.c:1691
+#: applets/clock/clock.c:1693
 msgid "Set System Time..."
 msgstr "ตั้งเวลาของเครื่อง..."
 
-#: applets/clock/clock.c:1692 applets/clock/clock.glade.h:21
+#: applets/clock/clock.c:1694 applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr "ตั้งเวลาของเครื่อง"
 
-#: applets/clock/clock.c:1706
+#: applets/clock/clock.c:1708
 msgid "Failed to set the system time"
 msgstr "ตั้งเวลาของเครื่องไม่สำเร็จ"
 
-#: applets/clock/clock.c:1879
+#: applets/clock/clock.c:1881
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "หาโปรแกรมสำหรับตั้งวันที่และเวลาไม่พบ โปรแกรมอาจยังไม่ได้ติดตั้ง?"
 
-#: applets/clock/clock.c:2698
+#: applets/clock/clock.c:2746
 msgid "Custom format"
 msgstr "กำหนดรูปแบบเอง"
 
-#: applets/clock/clock.c:3498 applets/clock/clock-location.c:381
-#: applets/clock/clock-location-tile.c:468
+#: applets/clock/clock.c:3544 applets/clock/clock-location.c:381
+#: applets/clock/clock-location-tile.c:519
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: applets/clock/clock.c:3757
+#: applets/clock/clock.c:3802
 msgid "City Name"
 msgstr "ชื่อเมือง"
 
-#: applets/clock/clock.c:3761
+#: applets/clock/clock.c:3806
 msgid "City Time Zone"
 msgstr "เขตเวลาของเมือง"
 
-#: applets/clock/clock.c:3952
+#: applets/clock/clock.c:3997
 msgid "24 hour"
 msgstr "24 ชั่วโมง"
 
-#: applets/clock/clock.c:3953
+#: applets/clock/clock.c:3998
 msgid "UNIX time"
 msgstr "เวลาแบบยูนิกซ์"
 
-#: applets/clock/clock.c:3954
+#: applets/clock/clock.c:3999
 msgid "Internet time"
 msgstr "เวลาแบบอินเทอร์เน็ต"
 
-#: applets/clock/clock.c:3962
+#: applets/clock/clock.c:4007
 msgid "Custom _format:"
 msgstr "_กำหนดรูปแบบเอง:"
 
-#: applets/clock/clock.c:4059
+#: applets/clock/clock.c:4104
 msgid "The Clock displays the current time and date"
 msgstr "นาฬิกาแสดงวันและเวลาปัจจุบัน"
 
 #. Translator credits
-#: applets/clock/clock.c:4062 applets/fish/fish.c:588
+#: applets/clock/clock.c:4107 applets/fish/fish.c:588
 #: applets/notification_area/main.c:140
 #: applets/wncklet/showdesktop.c:533 applets/wncklet/window-list.c:605
 #: applets/wncklet/window-menu.c:75
@@ -622,34 +627,63 @@ msgstr "แสดงเวลา UTC"
 msgid "Unknown Location"
 msgstr "ตำแหน่งที่ตั้งที่ไม่รู้จัก"
 
-#: applets/clock/clock-location-tile.c:198
+#: applets/clock/clock-location-tile.c:187
 msgid "Failed to set the system timezone"
 msgstr "ตั้งชื่อเขตเวลาของระบบไม่สำเร็จ"
 
-#: applets/clock/clock-location-tile.c:223
+#: applets/clock/clock-location-tile.c:221
 msgid "<small>Set...</small>"
 msgstr "<small>ตั้ง...</small>"
 
-#: applets/clock/clock-location-tile.c:224
+#: applets/clock/clock-location-tile.c:222
 msgid "<small>Set</small>"
 msgstr "<small>ตั้ง</small>"
 
-#: applets/clock/clock-location-tile.c:285
+#: applets/clock/clock-location-tile.c:283
 msgid "Set as current timezone for this computer"
 msgstr "กำหนดเป็นเขตเวลาปัจจุบันของเครื่องนี้"
 
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: applets/clock/clock-location-tile.c:398
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%I:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: applets/clock/clock-location-tile.c:407
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: applets/clock/clock-location-tile.c:417
+msgid "%l:%M <small>%p</small>"
+msgstr "%I:%M <small>%p</small>"
+
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: applets/clock/clock-location-tile.c:478
-#: applets/clock/clock-location-tile.c:484
+#: applets/clock/clock-location-tile.c:529
+#: applets/clock/clock-location-tile.c:535
 msgid "Unknown"
 msgstr "ไม่ทราบ"
 
-#: applets/clock/clock-location-tile.c:479
+#: applets/clock/clock-location-tile.c:530
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, รู้สึกเหมือน %s"
 
-#: applets/clock/clock-location-tile.c:489
+#: applets/clock/clock-location-tile.c:540
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "ดวงอาทิตย์ขึ้น: %s / ดวงอาทิตย์ตก: %s"
@@ -1095,7 +1129,7 @@ msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
-"โปรแกรมจัดการหน้าต่างของคุณ ไม่สนับสนุนปุ่มแสดงพื้นโต๊ะ หรือคุณไม่ได้ใช้โปรแกรมจัดการหน้าต่างอยู่"
+"โปรแกรมจัดการหน้าต่างของคุณ ไม่รองรับปุ่มแสดงพื้นโต๊ะ หรือคุณไม่ได้ใช้โปรแกรมจัดการหน้าต่างอยู่"
 
 #: applets/wncklet/window-list.c:610
 msgid ""
@@ -1338,7 +1372,7 @@ msgid "Cannot find an empty spot"
 msgstr "ไม่มีที่ว่าง"
 
 #: gnome-panel/drawer.c:350 gnome-panel/panel-addto.c:170
-#: gnome-panel/panel-toplevel.c:1585
+#: gnome-panel/panel-toplevel.c:1588
 msgid "Drawer"
 msgstr "ลิ้นชัก"
 
@@ -1346,7 +1380,7 @@ msgstr "ลิ้นชัก"
 msgid "_Add to Drawer..."
 msgstr "เ_พิ่มลงในลิ้นชัก..."
 
-#: gnome-panel/drawer.c:595 gnome-panel/launcher.c:885
+#: gnome-panel/drawer.c:595 gnome-panel/launcher.c:891
 #: gnome-panel/panel-action-button.c:138
 #: gnome-panel/panel-context-menu.c:212
 msgid "_Properties"
@@ -1365,7 +1399,7 @@ msgid "- Edit .desktop files"
 msgstr "- แก้ไขแฟ้ม .desktop"
 
 #: gnome-panel/gnome-desktop-item-edit.c:142
-#: gnome-panel/gnome-desktop-item-edit.c:198 gnome-panel/launcher.c:975
+#: gnome-panel/gnome-desktop-item-edit.c:198 gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "สร้างปุ่มเรียกโปรแกรม"
 
@@ -1374,7 +1408,7 @@ msgstr "สร้างปุ่มเรียกโปรแกรม"
 msgid "Directory Properties"
 msgstr "คุณสมบัติไดเรกทอรี"
 
-#: gnome-panel/gnome-desktop-item-edit.c:175 gnome-panel/launcher.c:813
+#: gnome-panel/gnome-desktop-item-edit.c:175 gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "คุณสมบัติปุ่มเรียกโปรแกรม"
 
@@ -1401,56 +1435,56 @@ msgstr "ไม่ได้ระบุ URL"
 msgid "Could not show '%s'"
 msgstr "ไม่สามารถแสดง '%s'"
 
-#: gnome-panel/launcher.c:226
+#: gnome-panel/launcher.c:229
 msgid "Could not launch application"
 msgstr "ไม่สามารถเรียกใช้โปรแกรมได้"
 
-#: gnome-panel/launcher.c:291
+#: gnome-panel/launcher.c:297
 msgid "Could not use dropped item"
 msgstr "ไม่สามารถใช้สิ่งที่ลากมาปล่อยได้"
 
-#: gnome-panel/launcher.c:495
+#: gnome-panel/launcher.c:501
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "ไม่ได้กำหนด URI ของแฟ้มพื้นโต๊ะของปุ่มเรียกโปรแกรมบนพาเนล\n"
 
-#: gnome-panel/launcher.c:538
+#: gnome-panel/launcher.c:544
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "ไม่สามารถเปิดแฟ้มพื้นโต๊ะ %s สำหรับปุ่มเรียกโปรแกรมบนพาเนล %s%s\n"
 
-#: gnome-panel/launcher.c:879
+#: gnome-panel/launcher.c:885
 msgid "_Launch"
 msgstr "เ_รียกใช้"
 
-#: gnome-panel/launcher.c:918
+#: gnome-panel/launcher.c:924
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "ไม่ได้กำหนดค่า %s ไม่สามารถโหลดปุ่มเรียกโปรแกรม\n"
 
-#: gnome-panel/launcher.c:1042 gnome-panel/panel-ditem-editor.c:1347
+#: gnome-panel/launcher.c:1048 gnome-panel/panel-ditem-editor.c:1347
 #: gnome-panel/panel-ditem-editor.c:1381
 #: gnome-panel/panel-ditem-editor.c:1413
 msgid "Could not save launcher"
 msgstr "ไม่สามารถบันทึกปุ่มเรียกโปรแกรมได้"
 
-#: gnome-panel/menu.c:924
+#: gnome-panel/menu.c:1004
 msgid "Add this launcher to _panel"
 msgstr "เพิ่มปุ่มเรียกโปรแกรมนี้ใน_พาเนล"
 
-#: gnome-panel/menu.c:931
+#: gnome-panel/menu.c:1011
 msgid "Add this launcher to _desktop"
 msgstr "เพิ่มไอคอนเรียกโปรแกรมนี้บนพื้นโ_ต๊ะ"
 
-#: gnome-panel/menu.c:943
+#: gnome-panel/menu.c:1023
 msgid "_Entire menu"
 msgstr "เมนูทั้งห_มด"
 
-#: gnome-panel/menu.c:948
+#: gnome-panel/menu.c:1028
 msgid "Add this as _drawer to panel"
 msgstr "เพิ่มลงเป็น_ลิ้นชักในพาเนล"
 
-#: gnome-panel/menu.c:955
+#: gnome-panel/menu.c:1035
 msgid "Add this as _menu to panel"
 msgstr "เพิ่มลงเป็นเ_มนูในพาเนล"
 
@@ -1657,31 +1691,31 @@ msgstr "เพิ่มลงในพาเนล"
 msgid "Find an _item to add to the panel:"
 msgstr "หา_รายการที่จะเพิ่มลงในพาเนล:"
 
-#: gnome-panel/panel-applet-frame.c:850
+#: gnome-panel/panel-applet-frame.c:840
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "สิ่งผิดปรกติจากเมนูแบบผุดขึ้น '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:975
+#: gnome-panel/panel-applet-frame.c:965
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" หยุดทำงานกระทันหัน"
 
-#: gnome-panel/panel-applet-frame.c:977
+#: gnome-panel/panel-applet-frame.c:967
 msgid "Panel object has quit unexpectedly"
 msgstr "วัตถุพาเนลหยุดทำงานกระทันหัน"
 
-#: gnome-panel/panel-applet-frame.c:984
+#: gnome-panel/panel-applet-frame.c:974
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "การโหลดวัตถุพาเนลใหม่ จะเป็นการเพิ่มวัตถุพาเนลนั้นกลับเข้าไปในพาเนลอีกครั้งโดยอัตโนมัติ"
 
-#: gnome-panel/panel-applet-frame.c:990
+#: gnome-panel/panel-applet-frame.c:980
 msgid "_Don't Reload"
 msgstr "ไ_ม่ต้องโหลดใหม่"
 
-#: gnome-panel/panel-applet-frame.c:991
+#: gnome-panel/panel-applet-frame.c:981
 msgid "_Reload"
 msgstr "โห_ลดใหม่"
 
@@ -1690,21 +1724,21 @@ msgstr "โห_ลดใหม่"
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: gnome-panel/panel-applet-frame.c:1006
-#: gnome-panel/panel-applet-frame.c:1094 gnome-panel/panel-util.c:395
+#: gnome-panel/panel-applet-frame.c:996
+#: gnome-panel/panel-applet-frame.c:1084 gnome-panel/panel-util.c:395
 msgid "Error"
 msgstr "ข้อผิดพลาด"
 
-#: gnome-panel/panel-applet-frame.c:1057
+#: gnome-panel/panel-applet-frame.c:1047
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "พาเนลพบกับปัญหาในขณะเรียกใช้ \"%s\""
 
-#: gnome-panel/panel-applet-frame.c:1073
+#: gnome-panel/panel-applet-frame.c:1063
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "คุณต้องการลบแอพเพล็ตนี้จากการกำหนดค่าของคุณหรือไม่?"
 
-#: gnome-panel/panel-applet-frame.c:1147
+#: gnome-panel/panel-applet-frame.c:1137
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "ไม่สามารถเรียกอินเทอร์เฟซของแอพเพล็ตเชลล์จากคอนโทรลได้\n"
 
@@ -2047,7 +2081,7 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "ถ้าเลือก จะแสดงคำแนะนำเครื่องมือของวัตถุในพาเนล"
 
-#: gnome-panel/panel-logout.c:238
+#: gnome-panel/panel-logout.c:242
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
@@ -2059,7 +2093,7 @@ msgstr[0] ""
 "คุณกำลังเข้าระบบในชื่อ \"%s\"\n"
 "คุณจะออกจากระบบโดยอัตโนมัติภายใน %d วินาที"
 
-#: gnome-panel/panel-logout.c:249
+#: gnome-panel/panel-logout.c:253
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
@@ -2071,35 +2105,35 @@ msgstr[0] ""
 "คุณกำลังเข้าระบบในชื่อ \"%s\"\n"
 "ระบบจะปิดโดยอัตโนมัติภายใน %d วินาที"
 
-#: gnome-panel/panel-logout.c:330
+#: gnome-panel/panel-logout.c:334
 msgid "Log out of this system now?"
 msgstr "จะออกจากระบบหรือไม่?"
 
-#: gnome-panel/panel-logout.c:336
+#: gnome-panel/panel-logout.c:340
 msgid "_Switch User"
 msgstr "_สลับผู้ใช้"
 
-#: gnome-panel/panel-logout.c:342
+#: gnome-panel/panel-logout.c:346
 msgid "_Log Out"
 msgstr "_ออกจากระบบ"
 
-#: gnome-panel/panel-logout.c:347
+#: gnome-panel/panel-logout.c:351
 msgid "Shut down this system now?"
 msgstr "จะปิดเครื่องหรือไม่?"
 
-#: gnome-panel/panel-logout.c:352
+#: gnome-panel/panel-logout.c:356
 msgid "S_uspend"
 msgstr "_พักเครื่อง"
 
-#: gnome-panel/panel-logout.c:357
+#: gnome-panel/panel-logout.c:361
 msgid "_Hibernate"
 msgstr "_จำศีลเครื่อง"
 
-#: gnome-panel/panel-logout.c:362
+#: gnome-panel/panel-logout.c:366
 msgid "_Restart"
 msgstr "เ_ริ่มเปิดเครื่องใหม่"
 
-#: gnome-panel/panel-logout.c:371
+#: gnome-panel/panel-logout.c:375
 msgid "_Shut Down"
 msgstr "_ปิดเครื่อง"
 
@@ -2138,36 +2172,35 @@ msgstr "ที่คั่นหน้า"
 msgid "Open '%s'"
 msgstr "เปิด '%s'"
 
-#: gnome-panel/panel-menu-items.c:504
+#: gnome-panel/panel-menu-items.c:506
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "ไม่สามารถตรวจสอบการเปลี่ยนแผ่นใน %s"
 
-#: gnome-panel/panel-menu-items.c:551
+#: gnome-panel/panel-menu-items.c:549
 #, c-format
 msgid "Rescan %s"
 msgstr "ตรวจสอบ %s ใหม่"
 
-#: gnome-panel/panel-menu-items.c:588
+#: gnome-panel/panel-menu-items.c:585
 #, c-format
 msgid "Unable to mount %s"
 msgstr "ไม่สามารถเมานท์ %s"
 
-#: gnome-panel/panel-menu-items.c:645
+#: gnome-panel/panel-menu-items.c:638
 #, c-format
 msgid "Mount %s"
 msgstr "เมานท์ %s"
 
-#. FIXME: use it for a submenu
-#: gnome-panel/panel-menu-items.c:710
+#: gnome-panel/panel-menu-items.c:841
 msgid "Removable Media"
 msgstr "สื่อถอดเสียบ"
 
-#: gnome-panel/panel-menu-items.c:869
+#: gnome-panel/panel-menu-items.c:922
 msgid "Network Places"
 msgstr "เซิร์ฟเวอร์ในเครือข่าย"
 
-#: gnome-panel/panel-menu-items.c:908
+#: gnome-panel/panel-menu-items.c:961
 msgid "Open your personal folder"
 msgstr "เปิดโฟลเดอร์ส่วนตัวของคุณ"
 
@@ -2175,19 +2208,19 @@ msgstr "เปิดโฟลเดอร์ส่วนตัวของคุ
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: gnome-panel/panel-menu-items.c:928
+#: gnome-panel/panel-menu-items.c:981
 msgid "Desktop Folder|Desktop"
 msgstr "โฟลเดอร์พื้นโต๊ะ"
 
-#: gnome-panel/panel-menu-items.c:929
+#: gnome-panel/panel-menu-items.c:982
 msgid "Open the contents of your desktop in a folder"
 msgstr "เปิดดูสิ่งต่างๆ บนพื้นโต๊ะในแบบโฟลเดอร์"
 
-#: gnome-panel/panel-menu-items.c:1321
+#: gnome-panel/panel-menu-items.c:1374
 msgid "Places"
 msgstr "ที่หลักๆ"
 
-#: gnome-panel/panel-menu-items.c:1350
+#: gnome-panel/panel-menu-items.c:1403
 msgid "System"
 msgstr "ระบบ"
 
@@ -2195,7 +2228,7 @@ msgstr "ระบบ"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: gnome-panel/panel-menu-items.c:1427
+#: gnome-panel/panel-menu-items.c:1480
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -2203,19 +2236,19 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: gnome-panel/panel-menu-items.c:1439
+#: gnome-panel/panel-menu-items.c:1492
 #, c-format
 msgid "Log Out %s..."
 msgstr "ออกจากระบบ (ผู้ใช้ %s)..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: gnome-panel/panel-menu-items.c:1443
+#: gnome-panel/panel-menu-items.c:1496
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "ออกจากวาระนี้ของผู้ใช้ %s เพื่อเข้าระบบเป็นผู้ใช้อื่น"
 
-#: gnome-panel/panel-menu-items.c:1484
+#: gnome-panel/panel-menu-items.c:1537
 msgid "Could not launch menu item"
 msgstr "ไม่สามารถเรียกใช้รายการเมนูได้"
 
@@ -2557,21 +2590,21 @@ msgstr "พิกเซล"
 msgid "Could not find a suitable application."
 msgstr "ไม่พบโปรแกรมที่เหมาะสม"
 
-#: gnome-panel/panel-recent.c:94 gnome-panel/panel-recent.c:104
+#: gnome-panel/panel-recent.c:95 gnome-panel/panel-recent.c:105
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "ไม่สามารถเปิดเอกสารล่าสุดชื่อ \"%s\" ได้"
 
-#: gnome-panel/panel-recent.c:106
+#: gnome-panel/panel-recent.c:107
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "เกิดข้อผิดพลาดไม่ทราบสาเหตุขณะพยายามเปิด \"%s\""
 
-#: gnome-panel/panel-recent.c:163
+#: gnome-panel/panel-recent.c:164
 msgid "Clear the Recent Documents list?"
 msgstr "ล้างรายการเอกสารล่าสุดหรือไม่?"
 
-#: gnome-panel/panel-recent.c:165
+#: gnome-panel/panel-recent.c:166
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2581,15 +2614,15 @@ msgstr ""
 "•·รายการทั้งหมดในเมนู ที่หลักๆ → เอกสารล่าสุด\n"
 "•·รายการเอกสารล่าสุดในโปรแกรมทั้งหมด"
 
-#: gnome-panel/panel-recent.c:177 gnome-panel/panel-recent.c:251
+#: gnome-panel/panel-recent.c:178 gnome-panel/panel-recent.c:252
 msgid "Clear Recent Documents"
 msgstr "ล้างรายการเอกสารล่าสุด"
 
-#: gnome-panel/panel-recent.c:212
+#: gnome-panel/panel-recent.c:213
 msgid "Recent Documents"
 msgstr "เอกสารล่าสุด"
 
-#: gnome-panel/panel-recent.c:253
+#: gnome-panel/panel-recent.c:254
 msgid "Clear all items from the recent documents list"
 msgstr "ล้างรายการเอกสารล่าสุดทั้งหมด"
 
@@ -2717,73 +2750,73 @@ msgstr "_ล้าง"
 msgid "D_on't Delete"
 msgstr "_อย่าลบ"
 
-#: gnome-panel/panel-toplevel.c:1175
+#: gnome-panel/panel-toplevel.c:1178
 msgid "Hide Panel"
 msgstr "ซ่อนพาเนล"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1556
+#: gnome-panel/panel-toplevel.c:1559
 msgid "Top Expanded Edge Panel"
 msgstr "พาเนลที่ขยายเต็มขอบบน"
 
-#: gnome-panel/panel-toplevel.c:1557
+#: gnome-panel/panel-toplevel.c:1560
 msgid "Top Centered Panel"
 msgstr "พาเนลที่อยู่ตรงกลางขอบบน"
 
-#: gnome-panel/panel-toplevel.c:1558
+#: gnome-panel/panel-toplevel.c:1561
 msgid "Top Floating Panel"
 msgstr "พาเนลที่ลอยอยู่ด้านบน"
 
-#: gnome-panel/panel-toplevel.c:1559
+#: gnome-panel/panel-toplevel.c:1562
 msgid "Top Edge Panel"
 msgstr "พาเนลที่ขอบบน"
 
-#: gnome-panel/panel-toplevel.c:1563
+#: gnome-panel/panel-toplevel.c:1566
 msgid "Bottom Expanded Edge Panel"
 msgstr "พาเนลที่ขยายเต็มขอบล่าง"
 
-#: gnome-panel/panel-toplevel.c:1564
+#: gnome-panel/panel-toplevel.c:1567
 msgid "Bottom Centered Panel"
 msgstr "พาเนลที่อยู่ตรงกลางขอบล่าง"
 
-#: gnome-panel/panel-toplevel.c:1565
+#: gnome-panel/panel-toplevel.c:1568
 msgid "Bottom Floating Panel"
 msgstr "พาเนลที่ลอยอยู่ด้านล่าง"
 
-#: gnome-panel/panel-toplevel.c:1566
+#: gnome-panel/panel-toplevel.c:1569
 msgid "Bottom Edge Panel"
 msgstr "พาเนลที่ขอบล่าง"
 
-#: gnome-panel/panel-toplevel.c:1570
+#: gnome-panel/panel-toplevel.c:1573
 msgid "Left Expanded Edge Panel"
 msgstr "พาเนลที่ขยายเต็มขอบซ้าย"
 
-#: gnome-panel/panel-toplevel.c:1571
+#: gnome-panel/panel-toplevel.c:1574
 msgid "Left Centered Panel"
 msgstr "พาเนลที่อยู่ตรงกลางขอบซ้าย"
 
-#: gnome-panel/panel-toplevel.c:1572
+#: gnome-panel/panel-toplevel.c:1575
 msgid "Left Floating Panel"
 msgstr "พาเนลที่ลอยออยู่ด้านซ้าย"
 
-#: gnome-panel/panel-toplevel.c:1573
+#: gnome-panel/panel-toplevel.c:1576
 msgid "Left Edge Panel"
 msgstr "พาเนลที่ขอบซ้าย"
 
-#: gnome-panel/panel-toplevel.c:1577
+#: gnome-panel/panel-toplevel.c:1580
 msgid "Right Expanded Edge Panel"
 msgstr "พาเนลที่ขยายเต็มขอบขวา"
 
-#: gnome-panel/panel-toplevel.c:1578
+#: gnome-panel/panel-toplevel.c:1581
 msgid "Right Centered Panel"
 msgstr "พาเนลที่อยู่ตรงกลางขอบขวา"
 
-#: gnome-panel/panel-toplevel.c:1579
+#: gnome-panel/panel-toplevel.c:1582
 msgid "Right Floating Panel"
 msgstr "พาเนลที่ลอยอยู่ด้านขวา"
 
-#: gnome-panel/panel-toplevel.c:1580
+#: gnome-panel/panel-toplevel.c:1583
 msgid "Right Edge Panel"
 msgstr "พาเนลที่ขอบขวา"
 
@@ -3148,34 +3181,26 @@ msgstr "ไม่พบไอคอน '%s'"
 msgid "file"
 msgstr "แฟ้ม"
 
-#: gnome-panel/panel-util.c:1395
+#: gnome-panel/panel-util.c:1486
 msgid "Home Folder"
 msgstr "โฟลเดอร์บ้าน"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: gnome-panel/panel-util.c:1407
+#: gnome-panel/panel-util.c:1498
 msgid "File System"
 msgstr "ระบบแฟ้ม"
 
-#: gnome-panel/panel-util.c:1532
+#: gnome-panel/panel-util.c:1645
 msgid "Search"
 msgstr "ค้นหาแฟ้ม"
-
-#. Translators: the first string is a path and the second
-#. * string is a hostname. nautilus contains the same string to
-#. * translate.
-#: gnome-panel/panel-util.c:1559
-#, c-format
-msgid "%1$s on %2$s"
-msgstr "%1$s ที่ %2$s"
 
 #. Translators: the first string is the name of a gvfs
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:1580
+#: gnome-panel/panel-util.c:1691
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3327,6 +3352,9 @@ msgstr "แ_อพเพล็ต:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
+
+#~ msgid "%1$s on %2$s"
+#~ msgstr "%1$s ที่ %2$s"
 
 #~ msgid "Computer"
 #~ msgstr "คอมพิวเตอร์"
