@@ -126,10 +126,12 @@ main (int argc, char * argv[])
 		GFileInfo *info;
 		GFileType  type;
 		char      *uri;
+		char      *path;
 		GtkWidget *dlg = NULL;
 
 		file = g_file_new_for_commandline_arg (desktops[i]);
 		uri  = g_file_get_uri (file);
+		path = g_file_get_path (file);
 		info = g_file_query_info (file, "standard::type",
 					  G_FILE_QUERY_INFO_NONE, NULL, NULL);
 		g_object_unref (file);
@@ -138,10 +140,11 @@ main (int argc, char * argv[])
 			type = g_file_info_get_file_type (info);
 
 			if (type == G_FILE_TYPE_DIRECTORY && create_new) {
+
 				dlg = panel_ditem_editor_new (NULL, NULL, NULL,
 							     _("Create Launcher"));
 				g_object_set_data_full (G_OBJECT (dlg), "dir",
-							g_strdup (uri),
+							g_strdup (path),
 							(GDestroyNotify)g_free);
 
 				panel_ditem_register_save_uri_func (PANEL_DITEM_EDITOR (dlg),
@@ -156,9 +159,7 @@ main (int argc, char * argv[])
 				 * secondly we will soon exit */
 			        desktops[i] = g_build_path ("/", uri,
 							    ".directory", NULL);
-				g_free (uri);
 				i--;
-				continue;
 			} else if (type == G_FILE_TYPE_REGULAR
 				   && g_str_has_suffix (desktops [i],
 					   		".directory")
@@ -213,6 +214,7 @@ main (int argc, char * argv[])
 		}
 
 		g_free (uri);
+		g_free (path);
 	}
 
 	if (dialogs > 0)
