@@ -645,17 +645,30 @@ glong
 clock_location_get_offset (ClockLocation *loc)
 {
         ClockLocationPrivate *priv = PRIVATE (loc);
-        glong sys_timezone;
+        glong sys_timezone, local_timezone;
 	glong offset;
+	time_t t;
+	struct tm *tm;
 
+	t = time (NULL);
+	
         unsetenv ("TZ");
-        tzset ();
+        tm = localtime (&t);
         sys_timezone = timezone;
 
-        setenv ("TZ", priv->timezone, 1);
-        tzset();
+	if (tm->tm_isdst > 0) {
+		sys_timezone -= 3600;
+	}
 
-        offset = timezone - sys_timezone;
+        setenv ("TZ", priv->timezone, 1);
+        tm = localtime (&t);
+	local_timezone = timezone;
+
+	if (tm->tm_isdst > 0) {
+		local_timezone -= 3600;
+	}
+
+        offset = local_timezone - sys_timezone;
 
         if (priv->sys_timezone) {
                 setenv ("TZ", priv->sys_timezone, 1);
