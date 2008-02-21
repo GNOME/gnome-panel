@@ -1,3 +1,13 @@
+2008-02-21  Vincent Untz  <vuntz@gnome.org>
+
+	Make drawer work again. Fix bug #517191.
+
+	* panel-toplevel.c: (panel_toplevel_initially_hide):
+	explicitly do everything for the initial hide here. And don't hide for
+	drawers.
+	(panel_toplevel_realize): initially hide here
+	(panel_toplevel_init): don't initially hide here
+
 2008-02-20  Vincent Untz  <vuntz@gnome.org>
 
 	* gnome-desktop-item-edit.c: (main): make creating .desktop files with

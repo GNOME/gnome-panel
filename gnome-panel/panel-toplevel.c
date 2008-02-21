@@ -2890,6 +2890,21 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 }
 
 static void
+panel_toplevel_initially_hide (PanelToplevel *toplevel)
+{
+	if (!toplevel->priv->attached) {
+		toplevel->priv->initial_animation_done = FALSE;
+
+		toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
+		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+
+		panel_toplevel_queue_auto_unhide (toplevel);
+	} else
+		toplevel->priv->initial_animation_done = TRUE;
+
+}
+
+static void
 panel_toplevel_realize (GtkWidget *widget)
 {
 	PanelToplevel *toplevel = (PanelToplevel *) widget;
@@ -2906,7 +2921,7 @@ panel_toplevel_realize (GtkWidget *widget)
 	gdk_window_set_group (widget->window, widget->window);
 	gdk_window_set_geometry_hints (widget->window, NULL, GDK_HINT_POS);
 
-	panel_toplevel_queue_auto_unhide (toplevel);
+	panel_toplevel_initially_hide (toplevel);
 
 	panel_toplevel_move_resize_window (toplevel, TRUE, TRUE);
 }
@@ -4379,12 +4394,6 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 }
 
 static void
-panel_toplevel_initially_hide (PanelToplevel *toplevel)
-{
-	panel_toplevel_hide (toplevel, TRUE, -1);
-}
-
-static void
 panel_toplevel_init (PanelToplevel *toplevel)
 {
 	int i;
@@ -4480,8 +4489,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	panel_toplevel_update_gtk_settings (toplevel);
 	
 	toplevel_list = g_slist_prepend (toplevel_list, toplevel);
-
-	panel_toplevel_initially_hide (toplevel);
 
 	/* Prevent the window from being deleted via Alt+F4 by accident.  This
 	 * happens with "alternative" window managers such as Sawfish or XFWM4.
