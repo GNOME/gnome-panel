@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-15 03:21+0000\n"
-"PO-Revision-Date: 2007-03-04 21:15+0300\n"
+"POT-Creation-Date: 2008-02-19 00:44+0000\n"
+"PO-Revision-Date: 2008-02-21 08:32+0300\n"
 "Last-Translator: Thierry Randrianiriana <randrianiriana@gmail.com>,2006\n"
 "Language-Team: Malagasy <i18n-malagasy-gnome@gna.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,9 +45,9 @@ msgstr "_Ny mombamomba"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:736
-#: ../gnome-panel/panel-context-menu.c:295 ../gnome-panel/panel-menu-bar.c:404
-#: ../gnome-panel/panel-menu-button.c:689
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:709
+#: ../gnome-panel/panel-context-menu.c:280 ../gnome-panel/panel-menu-bar.c:334
+#: ../gnome-panel/panel-menu-button.c:659
 msgid "_Help"
 msgstr "_Toro-làlana"
 
@@ -59,7 +59,7 @@ msgid "_Preferences"
 msgstr "_Safidy manokana"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2807
+#: ../applets/clock/clock.c:4058
 msgid "Clock"
 msgstr "Famantaranandro"
 
@@ -75,29 +75,75 @@ msgstr "Toerana fanamboarana applet-na famataranandro."
 msgid "Get the current time and date"
 msgstr "Hamantatra ny ora sy ny daty amin'izao fotoana izao"
 
-#: ../applets/clock/clock.c:341
-msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %p"
-
-#: ../applets/clock/clock.c:341 ../applets/clock/clock.c:663
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:420
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:343 ../applets/clock/clock.c:1849
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
-#: ../applets/clock/clock.c:343 ../applets/clock/clock.c:665
-#: ../applets/clock/clock.c:1851
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:422
+#: ../applets/clock/clock.c:1552 ../applets/clock/clock-location-tile.c:435
 msgid "%H:%M"
 msgstr "%H:%M"
+
+#. Translators: If the event did not start on the current day
+#. * we will display the start date in the most abbreviated way
+#. * possible.
+#: ../applets/clock/calendar-window.c:250
+msgid "%b %d"
+msgstr "%b %d"
+
+#: ../applets/clock/calendar-window.c:765
+msgid "Tasks"
+msgstr "Zara asa"
+
+#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:938
+#: ../applets/clock/calendar-window.c:1554
+msgid "Edit"
+msgstr "Ovay"
+
+#: ../applets/clock/calendar-window.c:883
+msgid "All Day"
+msgstr "Tontolon'ny andro"
+
+#: ../applets/clock/calendar-window.c:1019
+msgid "Appointments"
+msgstr "Fotoana"
+
+#: ../applets/clock/calendar-window.c:1044
+msgid "Birthdays and Anniversaries"
+msgstr ""
+
+#: ../applets/clock/calendar-window.c:1069
+msgid "Weather Information"
+msgstr "Momban'ny toetry ny andro"
+
+#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
+msgid "Locations"
+msgstr "Toerana"
+
+#: ../applets/clock/calendar-window.c:1850
+msgid "Calendar"
+msgstr "Kalandrie"
+
+#: ../applets/clock/clock.c:420
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#: ../applets/clock/clock.c:422 ../applets/clock/clock.c:1550
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
 
 #. translators: replace %e with %d if, when the day of the
 #. *              month as a decimal number is a single digit, it
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:354
+#: ../applets/clock/clock.c:442
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -105,79 +151,83 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:361
-#, fuzzy, c-format
+#: ../applets/clock/clock.c:449
+#, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
-msgstr "%1$s amin'ny %2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:368
-#, fuzzy, c-format
+#: ../applets/clock/clock.c:457
+#, c-format
 msgid "%1$s, %2$s"
-msgstr "%1$s amin'ny %2$s"
+msgstr "%1$s, %2$s"
 
-#. Show date in tooltip
-#: ../applets/clock/clock.c:450
-msgid "%A %B %d"
-msgstr "%A %B %d"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:639
+msgid "%A %B %d (%%s)"
+msgstr "%A %B %d (%s)"
 
-#: ../applets/clock/clock.c:462
+#: ../applets/clock/clock.c:669
+#, fuzzy
+msgid "Click to hide your appointments and tasks"
+msgstr "Tsindrio eto raha hijery ireo fotoana sy zara asanao ianao"
+
+#: ../applets/clock/clock.c:672
 msgid "Click to view your appointments and tasks"
 msgstr "Tsindrio eto raha hijery ireo fotoana sy zara asanao ianao"
 
-#: ../applets/clock/clock.c:464
+#: ../applets/clock/clock.c:676
+#, fuzzy
+msgid "Click to hide month calendar"
+msgstr "Tsindrio eto raha hijery ny kalandrie ara-bolana ianao"
+
+#: ../applets/clock/clock.c:679
 msgid "Click to view month calendar"
 msgstr "Tsindrio eto raha hijery ny kalandrie ara-bolana ianao"
 
-#. Translators: If the event did not start on the current day
-#. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:670
-msgid "%b %d"
-msgstr "%b %d"
-
-#: ../applets/clock/clock.c:1016
-msgid "Tasks"
-msgstr "Zara asa"
-
-#: ../applets/clock/clock.c:1166
-msgid "All Day"
-msgstr "Tontolon'ny andro"
-
-#: ../applets/clock/clock.c:1205
-msgid "Appointments"
-msgstr "Fotoana"
-
-#: ../applets/clock/clock.c:1460
-msgid "Calendar"
-msgstr "Kalandrie"
-
-#: ../applets/clock/clock.c:1741
+#: ../applets/clock/clock.c:1402
 msgid "Computer Clock"
 msgstr "Famantaranandro"
 
-#: ../applets/clock/clock.c:1844
+#: ../applets/clock/clock.c:1545
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1846
+#: ../applets/clock/clock.c:1547
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1888
+#: ../applets/clock/clock.c:1589
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1945
+#: ../applets/clock/clock.c:1664
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Tsy afaka nandefa ny fitaovana mpanefy ny ora: %s"
 
-#: ../applets/clock/clock.c:1983
+#: ../applets/clock/clock.c:1693
+msgid "Set System Time..."
+msgstr ""
+
+#: ../applets/clock/clock.c:1694 ../applets/clock/clock.glade.h:21
+msgid "Set System Time"
+msgstr ""
+
+#: ../applets/clock/clock.c:1708
+msgid "Failed to set the system time"
+msgstr ""
+
+#: ../applets/clock/clock.c:1881
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -185,73 +235,194 @@ msgstr ""
 "Tsy nahita rindra'asa afaka manefy ny andro sy ny ora. Mety mbola tsy misy "
 "angamba ao anaty solosainao."
 
-#: ../applets/clock/clock.c:2464
+#: ../applets/clock/clock.c:2700
 msgid "Custom format"
 msgstr "Lamina araka ny safidinao"
 
-#: ../applets/clock/clock.c:2588 ../applets/clock/clock.c:2765
-#: ../applets/fish/fish.c:160 ../applets/notification_area/main.c:90
-#: ../applets/wncklet/window-list.c:113 ../applets/wncklet/wncklet.c:128
-#: ../applets/wncklet/workspace-switcher.c:238
+#: ../applets/clock/clock.c:3500 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:540
 #, c-format
-msgid "There was an error displaying help: %s"
-msgstr "Nisy olana teo am-panokafana ny pejin'ny toro-làlana: %s"
+msgid "%s, %s"
+msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:2625
-msgid "Clock Preferences"
-msgstr "Famantaranandro: safidy manokana"
+#: ../applets/clock/clock.c:3759
+msgid "City Name"
+msgstr "Anaran-tanana"
 
-#: ../applets/clock/clock.c:2650
-msgid "Clock _type:"
-msgstr "Rafi-_pamantaranandro:"
+#: ../applets/clock/clock.c:3763
+#, fuzzy
+msgid "City Time Zone"
+msgstr "Ataovy mifanaraka amin'ny tontonana ilay sary"
 
-#: ../applets/clock/clock.c:2661
-msgid "12 hour"
-msgstr "12 ora"
-
-#: ../applets/clock/clock.c:2662
+#: ../applets/clock/clock.c:3954
 msgid "24 hour"
 msgstr "24 ora"
 
-#: ../applets/clock/clock.c:2663
+#: ../applets/clock/clock.c:3955
 msgid "UNIX time"
 msgstr "Oran'ny UNIX"
 
-#: ../applets/clock/clock.c:2664
+#: ../applets/clock/clock.c:3956
 msgid "Internet time"
 msgstr "Oran'ny Internet"
 
-#: ../applets/clock/clock.c:2672
+#: ../applets/clock/clock.c:3964
 msgid "Custom _format:"
 msgstr "_Lamina araka ny safidinao:"
 
-#: ../applets/clock/clock.c:2691
-msgid "Show _seconds"
-msgstr "Asehoy ny _segaondra"
-
-#: ../applets/clock/clock.c:2700
-msgid "Show _date"
-msgstr "Asehoy ny _daty"
-
-#: ../applets/clock/clock.c:2709
-msgid "Use _UTC"
-msgstr "Ampiasao ny _UTC"
-
-#: ../applets/clock/clock.c:2810
+#: ../applets/clock/clock.c:4061
 msgid "The Clock displays the current time and date"
 msgstr ""
 "Mampiseho ny ora amin'izao fotoana izao sy ny daty androany ny "
 "famantaranandro."
 
 #. Translator credits
-#: ../applets/clock/clock.c:2813 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4064 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
-#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:783
+#: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:555
-#: ../gnome-panel/panel-context-menu.c:133
+#: ../applets/wncklet/workspace-switcher.c:620
+#: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr "Fankasitrahana ireo mpandika teny"
+
+#: ../applets/clock/clock.glade.h:1
+#, fuzzy
+msgid "12 _hour format"
+msgstr "Lamin'ny ora"
+
+#: ../applets/clock/clock.glade.h:2
+#, fuzzy
+msgid "24 h_our format"
+msgstr "Lamin'ny ora"
+
+#: ../applets/clock/clock.glade.h:3
+#, fuzzy
+msgid "<b>Clock Options</b>"
+msgstr "<b>Sary mihetsika</b>"
+
+#: ../applets/clock/clock.glade.h:4
+msgid "<b>Display</b>"
+msgstr "<b>Seho</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<b>Panel Display</b>"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:6
+msgid "<b>Time Settings</b>"
+msgstr "<b>Fandrindrana ny ora</b>"
+
+#: ../applets/clock/clock.glade.h:7
+msgid "<i>(optional)</i>"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "Famantaranandro: safidy manokana"
+
+#: ../applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"Atsinanana\n"
+"Andrefana"
+
+#: ../applets/clock/clock.glade.h:12
+msgid "Find _Next"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:13
+msgid "Find..."
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "Ankapobe"
+
+#: ../applets/clock/clock.glade.h:15
+msgid "Latitude:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:16
+#, fuzzy
+msgid "Location Name:"
+msgstr "_Kisary:"
+
+#: ../applets/clock/clock.glade.h:18
+msgid "Longitude:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:19
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"Avaratra\n"
+"Atsimo"
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Show _temperature"
+msgstr "Asehoy ny hafanana"
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Show _weather"
+msgstr "Asehoy toetry ny andro"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Show seco_nds"
+msgstr "Asehoy ny _segaondra"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Show the _date"
+msgstr "Asehoy ny _daty"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Time Settings"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:27
+msgid "Time _Settings"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:28
+msgid "Time:"
+msgstr "Ora:"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "Timezone:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:30
+msgid "Weather"
+msgstr "Toetry ny andro"
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Find:"
+msgstr "_Mitadiava:"
+
+#: ../applets/clock/clock.glade.h:32
+#, fuzzy
+msgid "_Pressure unit:"
+msgstr "_Laha-tahirin'ny safidy manokana:"
+
+#: ../applets/clock/clock.glade.h:33
+msgid "_Temperature unit:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:34
+msgid "_Visibility unit:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:35
+msgid "_Wind speed unit:"
+msgstr ""
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -268,56 +439,146 @@ msgid "24-hour"
 msgstr "24 ora"
 
 #: ../applets/clock/clock.schemas.in.h:12
+msgid "A list of locations to display in the calendar window."
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
 msgstr "Lamina ara-tsafidin'ny famantaranandro"
 
-#: ../applets/clock/clock.schemas.in.h:13
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "Expand list of appointments"
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "Expand list of birthdays"
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:16
+#, fuzzy
+msgid "Expand list of locations"
+msgstr "Asehoy ny lisitry ny _rindran'asa fantatra"
+
+#: ../applets/clock/clock.schemas.in.h:17
+msgid "Expand list of tasks"
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:18
+msgid "Expand list of weather information"
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "Lamin'ny ora"
 
-#: ../applets/clock/clock.schemas.in.h:14
+#: ../applets/clock/clock.schemas.in.h:20
+#, fuzzy
+msgid "If true, display a weather icon."
+msgstr "Raha toa ka marina, dia asehoy ny segaondra."
+
+#: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
 msgstr ""
 "Raha toa ka marina, dia asehoy amin'ny famantaranandro ny daty, ankoatra ny "
 "ora."
 
-#: ../applets/clock/clock.schemas.in.h:15
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
 msgstr "Raha toa ka marina, dia asehoy ny segaondra."
 
-#: ../applets/clock/clock.schemas.in.h:16
+#: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr ""
 "Raha toa ka marina, dia asehoy mifanaraka amin'ny faritra UTC (Universal "
 "Coordinated Time na Ora iraisana voarindra)"
 
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:24
+#, fuzzy
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Raha toa ka marina, dia asehoy anaty kalandrie ny isan'ny herinandro."
+
+#: ../applets/clock/clock.schemas.in.h:25
+#, fuzzy
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "Raha toa ka marina, dia asehoy anaty kalandrie ny isan'ny herinandro."
+
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of locations in the calendar window."
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:27
+#, fuzzy
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "Raha toa ka marina, dia asehoy anaty kalandrie ny isan'ny herinandro."
+
+#: ../applets/clock/clock.schemas.in.h:28
+#, fuzzy
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "Raha toa ka marina, dia asehoy anaty kalandrie ny isan'ny herinandro."
+
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Raha toa ka marina, dia asehoy anaty toro-hevitra miserana ny daty rehefa "
 "manondro ilay famantaranandro ny totozy."
 
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:30
+#, fuzzy
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Raha toa ka marina, dia asehoy anaty kalandrie ny isan'ny herinandro."
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "Raha toa ka marina, dia asehoy anaty kalandrie ny isan'ny herinandro."
 
-#: ../applets/clock/clock.schemas.in.h:19
+#: ../applets/clock/clock.schemas.in.h:32
+#, fuzzy
+msgid "List of locations"
+msgstr "Lisitry ny rindran'asa fantatra"
+
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "Asehoy amin'ny famantaranandro ny daty"
 
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "Asehoy anaty toro-hevitra miserana ny daty"
 
-#: ../applets/clock/clock.schemas.in.h:21
+#: ../applets/clock/clock.schemas.in.h:35
+#, fuzzy
+msgid "Show temperature in clock"
+msgstr "Asehoy amin'ny famantaranandro ny daty"
+
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "Asehoy miaraka amin'ny segaondra ny ora"
 
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:37
+#, fuzzy
+msgid "Show weather in clock"
+msgstr "Asehoy amin'ny famantaranandro ny daty"
+
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "Asehoy anaty kalandrie ny isan'ny herinandro"
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -326,17 +587,19 @@ msgstr ""
 "'format'. Notanana io drafitra io mba hisian'ny fifanarahana amin'ny ireo "
 "kinovan-drindran'asa efa nivoaka."
 
-#: ../applets/clock/clock.schemas.in.h:24
+#: ../applets/clock/clock.schemas.in.h:44
+#, fuzzy
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format."
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
 msgstr ""
 "Ity famaha ity dia mamaritra ny lamina arahin'ny applet'ny famantaranandro "
 "rehefa \"custom\" ny famahan'ny lamina. Afaka mampiasa mpamaritra famadihana "
 "azon'ny strftime() ianao mba ahazoana lamina voafaritra iray."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -358,26 +621,194 @@ msgstr ""
 "01, no miseho. Raha toa ka \"custom\" no ampiasaina, dia ora mifanaraka "
 "amin'izay lamina voafaritra ao amin'ny famaha custom_format no miseho."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr ""
 "Ity famaha ity dia mampandefa ilay rindran'asa ahafahana mikirakira ny ora."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "Fitaovana fikirakirana ny ora"
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "Ny oran'ny Internet ampiasaina"
 
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "Ny oran'ny UNIX ampiasaina"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "Ny ora iraisana voarindra (UTC) ampiasaina"
+
+#. make a fake location with a null TZ
+#. make a fake location with the current TZ
+#: ../applets/clock/clock-location.c:364 ../applets/clock/clock-location.c:371
+#, fuzzy
+msgid "Unknown Location"
+msgstr "_Kisary:"
+
+#: ../applets/clock/clock-location-tile.c:200
+msgid "Failed to set the system timezone"
+msgstr ""
+
+#: ../applets/clock/clock-location-tile.c:225
+#, fuzzy
+msgid "<small>Set...</small>"
+msgstr "<small>Tsy tatera-pahazavana</small>"
+
+#: ../applets/clock/clock-location-tile.c:226
+#, fuzzy
+msgid "<small>Set</small>"
+msgstr "<small>Tsy tatera-pahazavana</small>"
+
+#: ../applets/clock/clock-location-tile.c:287
+msgid "Set as current timezone for this computer"
+msgstr ""
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:408
+#, fuzzy
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "<small>Tsy tatera-pahazavana</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:417
+#, fuzzy
+msgid "%H:%M <small>(%A)</small>"
+msgstr "<small>Tsy tatera-pahazavana</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:427
+#, fuzzy
+msgid "%l:%M <small>%p</small>"
+msgstr "<small>Tsy tatera-pahazavana</small>"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:550
+#: ../applets/clock/clock-location-tile.c:556
+msgid "Unknown"
+msgstr ""
+
+#: ../applets/clock/clock-location-tile.c:551
+#, c-format
+msgid "%s, feels like %s"
+msgstr ""
+
+#: ../applets/clock/clock-location-tile.c:561
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr ""
+
+#: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
+#: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Nisy olana teo am-panokafana ny pejin'ny toro-làlana: %s"
+
+#: ../applets/clock/timezone.glade.h:1
+#, fuzzy
+msgid "<b>Active timezones</b>"
+msgstr "<b>Sary mihetsika</b>"
+
+#: ../applets/clock/timezone.glade.h:2
+#, fuzzy
+msgid "<b>Add timezone</b>"
+msgstr "<b>Sary mihetsika</b>"
+
+#: ../applets/clock/timezone.glade.h:3
+#, fuzzy
+msgid "<small><b>Location:</b></small>"
+msgstr "<small>Tsy tatera-pahazavana</small>"
+
+#: ../applets/clock/timezone.glade.h:4
+msgid ""
+"<small><i>Click on the map to zoom and select the timezone of a city, or "
+"right click to zoom out.</i></small>"
+msgstr ""
+
+#: ../applets/clock/timezone.glade.h:5
+#, fuzzy
+msgid "Edit Timezones"
+msgstr "_Hanova karazan-tsafidy"
+
+#. Translators: the first %s is a place and the
+#. * second is a time. Result looks like this:
+#. * Europe/Paris - 15:45
+#: ../applets/clock/tz-sel-dialog.c:196
+#, fuzzy, c-format
+msgid "%s - %s"
+msgstr "%1$s amin'ny %2$s"
+
+#: ../applets/clock/tz-sel-dialog.c:205
+#, fuzzy
+msgid "move the mouse on the map"
+msgstr "Gejao eo amin'ny tontonana ilay zavatra"
+
+#: ../applets/clock/tz-sel-dialog.c:207
+#, fuzzy, c-format
+msgid "<b>Location:</b> %s"
+msgstr "<b>Sary mihetsika</b>"
+
+#: ../applets/clock/tz-sel-dialog.c:812
+#, fuzzy
+msgid "Name"
+msgstr "A_narana:"
+
+#: ../applets/clock/tz-sel-dialog.c:825
+msgid "Timezone"
+msgstr ""
+
+#. Translators: the first string is a timezone name as in "UTC"
+#. * the second string is "+" or nothing. The result looks like
+#. * this: BST (UTC +01:00)
+#: ../applets/clock/tz-window.c:102
+#, c-format
+msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
+msgstr ""
+
+#. Translators: the first string is a timezone name as in "UTC"
+#. * the second string is "+" or nothing. The result looks like
+#. * this: BST (UTC +01:00)
+#: ../applets/clock/tz-window.c:111
+#, c-format
+msgid "%s (UTC %s%.2ld:%.2ld)"
+msgstr ""
+
+#. Translators: the first string is a timezone name (as in
+#. * "Europe/Paris"), the second string is a country name abbreviation
+#. * (as in "FR") and the last string is another line (it's the one
+#. * looking like "BST (UTC +01:00)")
+#: ../applets/clock/tz-window.c:121
+#, c-format
+msgid ""
+"%s - %s\n"
+"%s"
+msgstr ""
+
+#: ../applets/clock/tz-window.c:283
+#, fuzzy
+msgid "_Edit timezones..."
+msgstr "_Hanova karazan-tsafidy"
+
+#: ../applets/clock/tz-window.c:370
+msgid "Timezones"
+msgstr ""
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -410,7 +841,7 @@ msgstr ""
 "Feranay mafy ianao tsy hampiasa ny %s hanaovana zavatra izay mety hampisy "
 "antony mahasoa io applet tsy misy ilàna azy io."
 
-#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:441
+#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:449
 msgid "Images"
 msgstr "Sary"
 
@@ -504,13 +935,12 @@ msgstr ""
 msgid "Look at today's date!"
 msgstr "Jereo ny daty androany!"
 
-#: ../applets/fish/fish.c:1707
+#: ../applets/fish/fish.c:1706
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s ilay Trondro, ilay mpaminany ny ho avy"
 
-#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
-#: ../applets/wncklet/workspace-switcher.glade.h:1
+#: ../applets/fish/fish.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -676,7 +1106,7 @@ msgid "Switch between workspaces"
 msgstr "Hiovaova workspace"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:786
+#: ../applets/wncklet/window-list.c:608
 msgid "Window List"
 msgstr "Lisitr'ireo fikandrana"
 
@@ -685,12 +1115,12 @@ msgid "Window Navigation Applet Factory"
 msgstr "Toerana fanamboarana ny applet'ny fizahana fikandrana"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:241
+#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:240
 msgid "Window Selector"
 msgstr "Mpisafidy fikandrana"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:558
+#: ../applets/wncklet/workspace-switcher.c:623
 msgid "Workspace Switcher"
 msgstr "Mpampifandimby workspace"
 
@@ -703,7 +1133,7 @@ msgstr "Tsy azo ny %s: %s\n"
 msgid "Icon not found"
 msgstr "Tsy hita ny kisary"
 
-#: ../applets/wncklet/showdesktop.c:242
+#: ../applets/wncklet/showdesktop.c:243
 msgid "Click here to restore hidden windows."
 msgstr "Tsindrio eto hanehoana ireo fikandrana miafina"
 
@@ -712,17 +1142,17 @@ msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "Tsindrio eto hanafenana ny fikandrana rehetra ary hanehoana ny desktop."
 
-#: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
+#: ../applets/wncklet/showdesktop.c:455 ../applets/wncklet/showdesktop.c:536
 msgid "Show Desktop Button"
 msgstr "Asehoy ny tsindrin'ny Desktop"
 
-#: ../applets/wncklet/showdesktop.c:536
+#: ../applets/wncklet/showdesktop.c:538
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Ity tsindry ity dia ahafahanao manafina ny fikandrana rehetra ary mampiseho "
 "ny desktop."
 
-#: ../applets/wncklet/showdesktop.c:566
+#: ../applets/wncklet/showdesktop.c:568
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -730,7 +1160,7 @@ msgstr ""
 "Tsy misy ilay tsindry mampiseho ny desktop ny mpandrindra fikandranao, na "
 "tsy mampiasa mpandrindra fikandrana ianao amin'izao fotoana izao."
 
-#: ../applets/wncklet/window-list.c:788
+#: ../applets/wncklet/window-list.c:610
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -738,74 +1168,49 @@ msgstr ""
 "Ny Lisitry ny Fikandrana dia mampiseho ny lisitr'ireo fikandrana rehetra "
 "amin'ny endrika button ary mamela anao hizaha azy ireo."
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>Averina amin'ny endriny teo aloha ireo fikandrana nakelezina</b>"
 
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>Fanavondronana fikandrana</b>"
 
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>Ny mpiatin'ny lisitry ny fikandrana</b>"
 
-#: ../applets/wncklet/window-list.glade.h:5
-msgid "<b>Window List Size</b>"
-msgstr "<b>Haben'ny lisitry ny fikandrana</b>"
-
-#: ../applets/wncklet/window-list.glade.h:6
-msgid "Behavior"
-msgstr "Fombafombany"
-
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
 msgstr "Avondrony ireo fikandrana raha toa ka tsy ampy ny _toerana"
 
-#: ../applets/wncklet/window-list.glade.h:8
-msgid "M_inimum size:"
-msgstr "Habe am_bany indrindra:"
-
-#: ../applets/wncklet/window-list.glade.h:9
-msgid "Ma_ximum size:"
-msgstr "Habe _ambony indrindra:"
-
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
 msgstr "Avereno halehibiazina anatin'ny _workspace iasana izao"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
 msgstr "Avereno halehibiazina anatin'ny workspace _niaviana"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
 msgstr "A_sehoy avy amin'ity workspace ity ireo fikandrana"
 
-#: ../applets/wncklet/window-list.glade.h:13
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "Asehoy avy amin'ny workspace re_hetra ireo fikandrana"
 
-#: ../applets/wncklet/window-list.glade.h:14
-msgid "Size"
-msgstr "Habe"
-
-#: ../applets/wncklet/window-list.glade.h:15
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "Safidy manokana mikasika ny lisitry ny fikandrana"
 
-#: ../applets/wncklet/window-list.glade.h:16
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "Avondrony _foana ireo fikandrana"
 
-#: ../applets/wncklet/window-list.glade.h:17
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "Aza avondrona _mihitsy ireo fikandrana"
-
-#: ../applets/wncklet/window-list.glade.h:18
-#: ../gnome-panel/panel-properties-dialog.glade.h:27
-msgid "pixels"
-msgstr "pixel"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -852,23 +1257,16 @@ msgid "Show windows from all workspaces"
 msgstr "Asehoy avy amin'ny workspace rehetra ireo fikandrana"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
+#, fuzzy
 msgid ""
-"This key specifies the maximum width that the window list requests. The "
-"maximum width setting is useful to limit the size of the window list in "
-"large panels, where the window list could fill the entire space available."
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
 msgstr ""
-"Ity famaha ity dia mamaritra ny saka ambony indirindra takian'ny lisitry ny "
-"fikandrana. Ilaina ny famerana io habe ambony indrindra io mba tsy "
-"hamenoan'ny lisitry ny fikandrana izay toerana misy rehefa sendra tontonana "
-"lehibe."
+"Tsy nampiasaina tamin'ny GNOME 2.6 ity famaha ity fa nosoloana ny famaha "
+"'format'. Notanana io drafitra io mba hisian'ny fifanarahana amin'ny ireo "
+"kinovan-drindran'asa efa nivoaka."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
-msgid "This key specifies the minimum width that the window list requests."
-msgstr ""
-"Ity famaha ity dia mamaritra ny saka ambany indrindra takian'ny lisitry ny "
-"fikandrana."
-
-#: ../applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
 msgstr "Ny fotoana amondronana ireo fikandrana"
 
@@ -880,25 +1278,25 @@ msgstr ""
 "Ny mpisafidy fikandrana dia mampiseho ny lisitry ny fikandrana rehetra ary "
 "mamela anao hizaha azy ireo."
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:859
-#: ../applets/wncklet/workspace-switcher.glade.h:11
+#: ../applets/wncklet/workspace-switcher.c:213
+#: ../applets/wncklet/workspace-switcher.c:974
+#: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "Andalana"
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:859
+#: ../applets/wncklet/workspace-switcher.c:213
+#: ../applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "Fariana"
 
-#: ../applets/wncklet/workspace-switcher.c:426
+#: ../applets/wncklet/workspace-switcher.c:487
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Nisy olana teo am-pakana ny sanda num_rows ho an'ny mpampifandimby "
 "workspace: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:437
+#: ../applets/wncklet/workspace-switcher.c:498
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -906,14 +1304,14 @@ msgstr ""
 "Nisy olana teo am-pakana ny sanda display_workspace_names ho an'ny "
 "mpampifandimby workspace: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:452
+#: ../applets/wncklet/workspace-switcher.c:513
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Nisy olana teo am-pakana ny sanda display_all_workspaces ho an'ny "
 "mpampifandimby workspace: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:560
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -921,39 +1319,39 @@ msgstr ""
 "Ny mpampifandimby workspace dia mampiseho anao endrika nakelezina an'ireo "
 "workspace iasanao ary mamela anao handrindra ireo fikandranao."
 
-#: ../applets/wncklet/workspace-switcher.glade.h:2
+#: ../applets/wncklet/workspace-switcher.glade.h:1
 msgid "<b>Switcher</b>"
 msgstr "<b>Mpampifandimby</b>"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:3
+#: ../applets/wncklet/workspace-switcher.glade.h:2
 msgid "<b>Workspaces</b>"
 msgstr "<b>Workspace</b>"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:4
+#: ../applets/wncklet/workspace-switcher.glade.h:3
 msgid "Number of _workspaces:"
 msgstr "Isan'ny _workspace:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:5
+#: ../applets/wncklet/workspace-switcher.glade.h:4
 msgid "Show _all workspaces in:"
 msgstr "Asehoy ato ny workspace _rehetra:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:6
+#: ../applets/wncklet/workspace-switcher.glade.h:5
 msgid "Show _only the current workspace"
 msgstr "Ilay workspace iasana _ihany no asehoy"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:7
+#: ../applets/wncklet/workspace-switcher.glade.h:6
 msgid "Show workspace _names in switcher"
 msgstr "Asehoy anatin'ny mpampifandimby ny _anaran'ny workspace"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:8
+#: ../applets/wncklet/workspace-switcher.glade.h:7
 msgid "Workspace Names"
 msgstr "Anaran'ny workspace"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:9
+#: ../applets/wncklet/workspace-switcher.glade.h:8
 msgid "Workspace Switcher Preferences"
 msgstr "Safidy manokana mikasika ny mpampifandimby workspace"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:10
+#: ../applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace na_mes:"
 msgstr "A_naran'ny workspace:"
 
@@ -974,9 +1372,11 @@ msgstr ""
 "workspace rehetra. Raha tsy izany dia ny workspace iasana ihany no asehony."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
+#, fuzzy
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
-"the workspaces. Otherwise they will display the windows on the workspace."
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Metacity."
 msgstr ""
 "Raha marina izay voalaza, dia hampiseho anarana ireo workspace anatin'ny "
 "mpampifandimby workspace. Raha tsy izany dia ireo fikandrana no asehon'izy "
@@ -1001,136 +1401,193 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "Shell'ny tontonan'ny GNOME"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:540
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:542
 msgid "Loc_k To Panel"
 msgstr "Ge_jao eo amin'ny tontonana"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:523
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:525
 msgid "_Move"
 msgstr "_Afindrao"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:514
 msgid "_Remove From Panel"
 msgstr "_Esory teo amin'ny tontonana"
 
-#: ../gnome-panel/applet.c:433
+#: ../gnome-panel/applet.c:434
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1226
+#: ../gnome-panel/applet.c:1239
 #, fuzzy
 msgid "Cannot find an empty spot"
 msgstr "Tsy mahita toerana malalaka"
 
-#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:169
-#: ../gnome-panel/panel-toplevel.c:1524
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:170
+#: ../gnome-panel/panel-toplevel.c:1588
 msgid "Drawer"
 msgstr "Vatasarihana"
 
-#: ../gnome-panel/drawer.c:588
+#: ../gnome-panel/drawer.c:589
 msgid "_Add to Drawer..."
 msgstr "_Ampidiro anatin'ny vatasarihana..."
 
-#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:857
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:891
 #: ../gnome-panel/panel-action-button.c:138
-#: ../gnome-panel/panel-context-menu.c:220
+#: ../gnome-panel/panel-context-menu.c:212
 msgid "_Properties"
 msgstr "_Toetoetra"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:24
+#: ../gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
 msgstr "Hamorona rakitra vaovao anatin'ny laha-tahiry voalaza"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:25
+#: ../gnome-panel/gnome-desktop-item-edit.c:28
 msgid "[FILE...]"
 msgstr "[RAKITRA...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:172
+#: ../gnome-panel/gnome-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- Ovay ny rakitra .desktop"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:203
-#: ../gnome-panel/gnome-desktop-item-edit.c:269 ../gnome-panel/launcher.c:947
+#: ../gnome-panel/gnome-desktop-item-edit.c:142
+#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "Mamorona mpandefa"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:227
-#: ../gnome-panel/gnome-desktop-item-edit.c:256
+#: ../gnome-panel/gnome-desktop-item-edit.c:169
+#: ../gnome-panel/gnome-desktop-item-edit.c:192
 #, fuzzy
 msgid "Directory Properties"
 msgstr "Toetoetry ny mpandefa"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:785
+#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "Toetoetry ny mpandefa"
 
-#: ../gnome-panel/launcher.c:151
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
+#, fuzzy
+msgid "Panel"
+msgstr "_Tontonana vaovao"
+
+#: ../gnome-panel/launcher.c:170
 msgid "Could not show this URL"
 msgstr "Tsy afaka mampiseho ity URL ity"
 
-#: ../gnome-panel/launcher.c:152
+#: ../gnome-panel/launcher.c:171
 msgid "No URL was specified."
 msgstr "Tsy misy URL voalaza."
 
-#: ../gnome-panel/launcher.c:165
+#: ../gnome-panel/launcher.c:183
 #, c-format
 msgid "Could not show '%s'"
 msgstr "Tsy afaka mampiseho ny '%s'"
 
-#: ../gnome-panel/launcher.c:210
+#: ../gnome-panel/launcher.c:229
 msgid "Could not launch application"
 msgstr "Tsy afaka nandefa ilay rindran'asa"
 
-#: ../gnome-panel/launcher.c:275
+#: ../gnome-panel/launcher.c:297
 msgid "Could not use dropped item"
 msgstr "Tsy afaka nampiasa zavatra efa nariana"
 
-#: ../gnome-panel/launcher.c:462
+#: ../gnome-panel/launcher.c:501
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "Tsy misy URI ho an'ny rakitry ny mpandefa tontonana eo amin'ny desktop\n"
 
-#: ../gnome-panel/launcher.c:505
+#: ../gnome-panel/launcher.c:544
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Tsy voasokatra ny rakitry ny desktop %s ho an'ny mpandefa tontonana%s%s\n"
 
-#: ../gnome-panel/launcher.c:851
+#: ../gnome-panel/launcher.c:885
 msgid "_Launch"
 msgstr "_Alefaso"
 
-#: ../gnome-panel/launcher.c:890
+#: ../gnome-panel/launcher.c:924
 #, fuzzy, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Tsy voafaritra ny famaha %s. Tsy afaka manomana ny mpandefa\n"
 
-#: ../gnome-panel/launcher.c:1014 ../gnome-panel/panel-ditem-editor.c:1237
-#: ../gnome-panel/panel-ditem-editor.c:1263
-#: ../gnome-panel/panel-ditem-editor.c:1331
+#: ../gnome-panel/launcher.c:1048 ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/panel-ditem-editor.c:1381
+#: ../gnome-panel/panel-ditem-editor.c:1413
 #, fuzzy
 msgid "Could not save launcher"
 msgstr "Tsy afaka namorona mpandefa"
 
-#: ../gnome-panel/menu.c:935
+#: ../gnome-panel/menu.c:1004
 msgid "Add this launcher to _panel"
 msgstr "Ataovy eo amin'ny _tontonana ity mpandefa ity"
 
-#: ../gnome-panel/menu.c:946
+#: ../gnome-panel/menu.c:1011
 msgid "Add this launcher to _desktop"
 msgstr "Ataovy eo amin'ny _desktop ity mpandefa ity"
 
-#: ../gnome-panel/menu.c:962
+#: ../gnome-panel/menu.c:1023
 msgid "_Entire menu"
 msgstr "Karazan-tsafidy _manontolo"
 
-#: ../gnome-panel/menu.c:972
+#: ../gnome-panel/menu.c:1028
 msgid "Add this as _drawer to panel"
 msgstr "Ataovy _vatasarihana eo amin'ny tontonana"
 
-#: ../gnome-panel/menu.c:984
+#: ../gnome-panel/menu.c:1035
 msgid "Add this as _menu to panel"
 msgstr "Ataovy _karazan-tsafidy eo amin'ny tontonana"
+
+#: ../gnome-panel/nothing.cP:601
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr ""
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../gnome-panel/nothing.cP:608
+#, fuzzy, c-format
+msgid "%1$s   %2$s   %3$s"
+msgstr "%1$s amin'ny %2$s"
+
+#: ../gnome-panel/nothing.cP:609
+msgid "Press 'q' to quit"
+msgstr ""
+
+#: ../gnome-panel/nothing.cP:614
+msgid "Paused"
+msgstr ""
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#, fuzzy, c-format
+msgid "%1$s\t%2$s"
+msgstr "%1$s amin'ny %2$s"
+
+#: ../gnome-panel/nothing.cP:618
+msgid "Press 'p' to unpause"
+msgstr ""
+
+#: ../gnome-panel/nothing.cP:624
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr ""
+
+#: ../gnome-panel/nothing.cP:629
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr ""
+
+#: ../gnome-panel/nothing.cP:1369
+msgid "Killer GEGLs from Outer Space"
+msgstr ""
 
 #: ../gnome-panel/panel-action-button.c:126
 msgid "_Activate Screensaver"
@@ -1140,170 +1597,173 @@ msgstr "_Ampandehano ny sary mpitsitsy"
 msgid "_Lock Screen"
 msgstr "_Gejao ny efijery"
 
-#: ../gnome-panel/panel-action-button.c:213
-#: ../gnome-panel/panel-menu-bar.c:479 ../gnome-panel/panel-menu-button.c:1033
-#: ../gnome-panel/panel-util.c:781
+#: ../gnome-panel/panel-action-button.c:214
+#: ../gnome-panel/panel-menu-bar.c:409 ../gnome-panel/panel-menu-button.c:990
+#: ../gnome-panel/panel-util.c:752
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Tsy afaka nanatanteraka ny '%s'"
 
-#: ../gnome-panel/panel-action-button.c:251
+#: ../gnome-panel/panel-action-button.c:253
 msgid "Could not connect to server"
 msgstr "Tsy afaka nifandray tamin'ny mpizara"
 
-#: ../gnome-panel/panel-action-button.c:282
+#: ../gnome-panel/panel-action-button.c:284
 msgid "Lock Screen"
 msgstr "Gejao ny efijery"
 
-#: ../gnome-panel/panel-action-button.c:283
+#: ../gnome-panel/panel-action-button.c:285
 msgid "Protect your computer from unauthorized use"
 msgstr "Misakana ny fampiasana tsy ahazoan-dàlana ny solosainao"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:297
+#: ../gnome-panel/panel-action-button.c:299
 msgid "Log Out..."
 msgstr "Hivoaka..."
 
-#: ../gnome-panel/panel-action-button.c:298
+#: ../gnome-panel/panel-action-button.c:300
 msgid "Log out of this session to log in as a different user"
 msgstr "Hivoaka ity session ity mba hiditra amin'ny alalan'ny anarana hafa"
 
-#: ../gnome-panel/panel-action-button.c:307
+#: ../gnome-panel/panel-action-button.c:309
 msgid "Run Application..."
 msgstr "Hampandeha rindran'asa..."
 
-#: ../gnome-panel/panel-action-button.c:308
+#: ../gnome-panel/panel-action-button.c:310
 #, fuzzy
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Hampandeha rindran'asa amin'ny alalan'ny baiko iray"
 
-#: ../gnome-panel/panel-action-button.c:317
+#: ../gnome-panel/panel-action-button.c:319
 msgid "Search for Files..."
 msgstr "Hitady rakitra..."
 
-#: ../gnome-panel/panel-action-button.c:318
+#: ../gnome-panel/panel-action-button.c:320
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "Tadiavo ny tahirin-kevitra sy ny laha-tahiry ao amin'io solosaina io sakajina araky ny anarana na ny anatiny"
+msgstr ""
+"Tadiavo ny tahirin-kevitra sy ny laha-tahiry ao amin'io solosaina io "
+"sakajina araky ny anarana na ny anatiny"
 
-#: ../gnome-panel/panel-action-button.c:326
+#: ../gnome-panel/panel-action-button.c:328
+#: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
 msgstr "Tereo hijanona"
 
-#: ../gnome-panel/panel-action-button.c:327
+#: ../gnome-panel/panel-action-button.c:329
 msgid "Force a misbehaving application to quit"
 msgstr "Tereo hijanona ny rindran'asa mikaviavia iray"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:336
+#: ../gnome-panel/panel-action-button.c:338
 msgid "Connect to Server..."
 msgstr "Hifandray amin'ny mpizara..."
 
-#: ../gnome-panel/panel-action-button.c:337
+#: ../gnome-panel/panel-action-button.c:339
 #, fuzzy
 msgid "Connect to a remote computer or shared disk"
 msgstr "Hifandray amin'ny mpizara lavi-toerana iray"
 
-#: ../gnome-panel/panel-action-button.c:345
+#: ../gnome-panel/panel-action-button.c:347
 msgid "Shut Down..."
 msgstr "Vonoy..."
 
-#: ../gnome-panel/panel-action-button.c:346
+#: ../gnome-panel/panel-action-button.c:348
 msgid "Shut down the computer"
 msgstr "Vonoy ny solosaina"
 
-#: ../gnome-panel/panel-addto.c:110
+#: ../gnome-panel/panel-addto.c:111
 msgid "Custom Application Launcher"
 msgstr "Mpampandeha rindran'asa manara-tsafidy"
 
-#: ../gnome-panel/panel-addto.c:111
+#: ../gnome-panel/panel-addto.c:112
 msgid "Create a new launcher"
 msgstr "Hamorona mpampandeha vaovao"
 
-#: ../gnome-panel/panel-addto.c:121
+#: ../gnome-panel/panel-addto.c:122
 msgid "Application Launcher..."
 msgstr "Mpampandeha rindran'asa..."
 
-#: ../gnome-panel/panel-addto.c:122
+#: ../gnome-panel/panel-addto.c:123
 msgid "Copy a launcher from the applications menu"
 msgstr ""
 "Mandikà mpampandeha iray avy ao amin'ny karazan-tsafidin'ny rindran'asa"
 
-#: ../gnome-panel/panel-addto.c:136
+#: ../gnome-panel/panel-addto.c:137 ../gnome-panel/panel-menu-button.c:1091
 msgid "Main Menu"
 msgstr "Karazan-tsafidy fototra"
 
-#: ../gnome-panel/panel-addto.c:137
+#: ../gnome-panel/panel-addto.c:138
 msgid "The main GNOME menu"
 msgstr "Ny karazan-tsafidy fototry ny GNOME"
 
-#: ../gnome-panel/panel-addto.c:147
+#: ../gnome-panel/panel-addto.c:148
 msgid "Menu Bar"
 msgstr "Tsipiky ny karazan-tsafidy"
 
-#: ../gnome-panel/panel-addto.c:148
+#: ../gnome-panel/panel-addto.c:149
 msgid "A custom menu bar"
 msgstr "Tsipiky ny karazan-tsafidy voafantina"
 
-#: ../gnome-panel/panel-addto.c:158
+#: ../gnome-panel/panel-addto.c:159
 msgid "Separator"
 msgstr "Mpampisaraka"
 
-#: ../gnome-panel/panel-addto.c:159
+#: ../gnome-panel/panel-addto.c:160
 msgid "A separator to organize the panel items"
 msgstr "Mpampisaraka handaminana ireo zavatra amin'ny tontonana"
 
-#: ../gnome-panel/panel-addto.c:170
+#: ../gnome-panel/panel-addto.c:171
 msgid "A pop out drawer to store other items in"
 msgstr "Vatasarihana misokatra asiana zavatra hafa"
 
-#: ../gnome-panel/panel-addto.c:261
+#: ../gnome-panel/panel-addto.c:262
 msgid "(empty)"
 msgstr "(foana)"
 
-#: ../gnome-panel/panel-addto.c:401
+#: ../gnome-panel/panel-addto.c:402
 #: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "Naverin'ny query ny zavatra navahana %s\n"
 
-#: ../gnome-panel/panel-addto.c:1060
+#: ../gnome-panel/panel-addto.c:1061
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Mitadiava _zavatra hanampiana ny \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:1064
+#: ../gnome-panel/panel-addto.c:1065
 msgid "Add to Drawer"
 msgstr "Ataovy anatin'ny vatasarihana"
 
-#: ../gnome-panel/panel-addto.c:1066
+#: ../gnome-panel/panel-addto.c:1067
 msgid "Find an _item to add to the drawer:"
 msgstr "Mitadiava zavatra atao anatin'ny vatasarihana:"
 
-#: ../gnome-panel/panel-addto.c:1068
+#: ../gnome-panel/panel-addto.c:1069
 msgid "Add to Panel"
 msgstr "Ataovy eo amin'ny tontonana"
 
-#: ../gnome-panel/panel-addto.c:1070
+#: ../gnome-panel/panel-addto.c:1071
 msgid "Find an _item to add to the panel:"
 msgstr "Mitadiava zavatra atao eo amin'ny tontonana:"
 
-#: ../gnome-panel/panel-applet-frame.c:836
+#: ../gnome-panel/panel-applet-frame.c:840
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Fanavahana avy amin'ny popup_menu '%s'\n"
 
-#: ../gnome-panel/panel-applet-frame.c:958
+#: ../gnome-panel/panel-applet-frame.c:965
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "Nijanona tampoka ny \"%s\""
 
-#: ../gnome-panel/panel-applet-frame.c:960
+#: ../gnome-panel/panel-applet-frame.c:967
 msgid "Panel object has quit unexpectedly"
 msgstr "Nijanona tampoka ilay zavatra teo amin'ny tontonana"
 
-#: ../gnome-panel/panel-applet-frame.c:967
+#: ../gnome-panel/panel-applet-frame.c:974
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1311,24 +1771,34 @@ msgstr ""
 "Raha toa ka miverina maka zavatra izay mipetraka eo amin'ny tontonana ianao, "
 "dia hiverina hoazy eo amin'ny tontonana ilay izy."
 
-#: ../gnome-panel/panel-applet-frame.c:973
+#: ../gnome-panel/panel-applet-frame.c:980
 msgid "_Don't Reload"
 msgstr "_Aza averina alaina"
 
-#: ../gnome-panel/panel-applet-frame.c:974
+#: ../gnome-panel/panel-applet-frame.c:981
 msgid "_Reload"
 msgstr "_Avereno alaina"
 
-#: ../gnome-panel/panel-applet-frame.c:1020
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../gnome-panel/panel-applet-frame.c:996
+#: ../gnome-panel/panel-applet-frame.c:1084 ../gnome-panel/panel-util.c:395
+msgid "Error"
+msgstr ""
+
+#: ../gnome-panel/panel-applet-frame.c:1047
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Nahita olana ny tontonana rehefa naka ny \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:1037
+#: ../gnome-panel/panel-applet-frame.c:1063
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Tianao ho fafàna tamin'ny kirakiranao ve ilay applet?"
 
-#: ../gnome-panel/panel-applet-frame.c:1136
+#: ../gnome-panel/panel-applet-frame.c:1137
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Tsy mety mahazo mpanera AppletShell avy amin'ny mpanome baiko\n"
 
@@ -1347,18 +1817,19 @@ msgstr "Nisy olana teo am-pakana ny laha-tahiry gconf '%s': %s"
 msgid "Error getting value for '%s': %s"
 msgstr "Nisy olana teo am-pangalana ny sanda ho an'ny '%s': %s"
 
-#: ../gnome-panel/panel-context-menu.c:100
+#: ../gnome-panel/panel-context-menu.c:101
 msgid "And many, many others..."
 msgstr "Ary zavatra maro dia maro hafa koa..."
 
-#: ../gnome-panel/panel-context-menu.c:126
+#: ../gnome-panel/panel-context-menu.c:127
 msgid "The GNOME Panel"
 msgstr "Ny tontonan'ny GNOME"
 
-#: ../gnome-panel/panel-context-menu.c:129
+#: ../gnome-panel/panel-context-menu.c:130
+#, fuzzy
 msgid ""
-"This program is responsible for launching other applications and embedding "
-"small applets within itself."
+"This program is responsible for launching other applications and provides "
+"useful utilities."
 msgstr ""
 "Ity rindran'asa ity dia miandraikitra ny fandefasana rindran'asa hafa ary ny "
 "fametrahana applet madinika eo aminy."
@@ -1371,111 +1842,131 @@ msgstr "Tsy afaka mamafa io tontonana io"
 msgid "You must always have at least one panel."
 msgstr "Tsy maintsy manana tontonana iray foana farafahakeliny ianao."
 
-#: ../gnome-panel/panel-context-menu.c:205
+#: ../gnome-panel/panel-context-menu.c:201
 msgid "_Add to Panel..."
 msgstr "_Ataovy eo amin'ny tontonana..."
 
-#: ../gnome-panel/panel-context-menu.c:233
+#: ../gnome-panel/panel-context-menu.c:222
 msgid "_Delete This Panel"
 msgstr "_Fafao io tontonana io"
 
-#: ../gnome-panel/panel-context-menu.c:250
+#: ../gnome-panel/panel-context-menu.c:237
 msgid "_New Panel"
 msgstr "_Tontonana vaovao"
 
-#: ../gnome-panel/panel-context-menu.c:306
+#: ../gnome-panel/panel-context-menu.c:288
 msgid "A_bout Panels"
 msgstr "_Mombamomba ny tontonana"
 
-#: ../gnome-panel/panel-ditem-editor.c:111
+#: ../gnome-panel/panel-ditem-editor.c:113
 #, fuzzy
 msgid "Application"
 msgstr "Rindran'asa"
 
-#: ../gnome-panel/panel-ditem-editor.c:113
+#: ../gnome-panel/panel-ditem-editor.c:115
 #, fuzzy
 msgid "Application in Terminal"
 msgstr "Mpampandeha rindran'asa..."
 
-#: ../gnome-panel/panel-ditem-editor.c:115
+#: ../gnome-panel/panel-ditem-editor.c:117
 #, fuzzy
-msgid "File"
-msgstr "_Rakitra:"
+msgid "Location"
+msgstr "_Kisary:"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:574
+#: ../gnome-panel/panel-ditem-editor.c:619
 #, fuzzy
 msgid "_Type:"
 msgstr "_Endrika:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:581
+#: ../gnome-panel/panel-ditem-editor.c:626
 msgid "_Name:"
 msgstr "A_narana:"
 
-#: ../gnome-panel/panel-ditem-editor.c:589
+#: ../gnome-panel/panel-ditem-editor.c:634
 #, fuzzy
 msgid "Browse icons"
 msgstr "Asehoy ny _segaondra"
 
-#: ../gnome-panel/panel-ditem-editor.c:607
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "_Hizaha..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:614
+#: ../gnome-panel/panel-ditem-editor.c:659
 #, fuzzy
 msgid "Co_mment:"
 msgstr "Fidiran'ilay baiko"
 
-#: ../gnome-panel/panel-ditem-editor.c:943
+#: ../gnome-panel/panel-ditem-editor.c:1021
 #, fuzzy
 msgid "Choose an application..."
 msgstr "Hampandeha rindran'asa..."
 
-#: ../gnome-panel/panel-ditem-editor.c:947
+#: ../gnome-panel/panel-ditem-editor.c:1025
 msgid "Choose a file..."
 msgstr "Misafidy rakitra..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1061
-#: ../gnome-panel/panel-ditem-editor.c:1070
+#: ../gnome-panel/panel-ditem-editor.c:1150
+#, fuzzy
+msgid "Comm_and:"
+msgstr "Kisarin'ilay baiko"
+
+#: ../gnome-panel/panel-ditem-editor.c:1159
 #, fuzzy
 msgid "_Command:"
 msgstr "Kisarin'ilay baiko"
 
-#: ../gnome-panel/panel-ditem-editor.c:1079
+#: ../gnome-panel/panel-ditem-editor.c:1168
 #, fuzzy
 msgid "_Location:"
 msgstr "_Kisary:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1238
+#: ../gnome-panel/panel-ditem-editor.c:1348
 msgid "The name of the launcher is not set."
 msgstr "Tsy voafaritra ny anaran'ny mpandefa."
 
-#: ../gnome-panel/panel-ditem-editor.c:1251
+#: ../gnome-panel/panel-ditem-editor.c:1352
+#, fuzzy
+msgid "Could not save directory properties"
+msgstr "Tsy afaka nampiasa zavatra efa nariana"
+
+#: ../gnome-panel/panel-ditem-editor.c:1353
+#, fuzzy
+msgid "The name of the directory is not set."
+msgstr "Tsy voafaritra ny anaran'ny mpandefa."
+
+#: ../gnome-panel/panel-ditem-editor.c:1369
 #, fuzzy
 msgid "The command of the launcher is not set."
 msgstr "Ny kisarin'ny baiko ho tanterahina."
 
-#: ../gnome-panel/panel-ditem-editor.c:1254
+#: ../gnome-panel/panel-ditem-editor.c:1372
 msgid "The location of the launcher is not set."
 msgstr "Tsy voafetra ny toeranan'ny mpandefa."
 
-#: ../gnome-panel/panel-ditem-editor.c:1371 ../gnome-panel/panel-util.c:140
+#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:185
 msgid "Could not display help document"
 msgstr "Tsy afaka nampiseho ireo toro-làlana"
 
-#: ../gnome-panel/panel-force-quit.c:75
+#: ../gnome-panel/panel-force-quit.c:76
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Mikitia fikandrana iray hanerena ilay rindran'asa hijanona. Tsindrio ny "
 "<ECHAP> raha tsy hanatanteraka  izany asa izany."
 
-#: ../gnome-panel/panel-force-quit.c:203
+#: ../gnome-panel/panel-force-quit.c:204
+#, fuzzy
+msgid "Force this application to exit?"
+msgstr "Tereo hijanona ny rindran'asa mikaviavia iray"
+
+#: ../gnome-panel/panel-force-quit.c:207
+#, fuzzy
 msgid ""
-"Force this application to exit?\n"
-"(Any open documents will be lost.)"
+"If you choose to force an application to exit, any open documents in it will "
+"be lost."
 msgstr ""
 "Terena hijanona ity rindran'asa ity?\n"
 "(Ho very daholo ny tahirin-kevitra rehetra.)"
@@ -1704,126 +2195,150 @@ msgstr ""
 "Raha marina izay voalaza, dia hampiseho toro-hevitra miserana ireo zavatra "
 "eo amin'ny tontonana."
 
-#: ../gnome-panel/panel-logout.c:236
+#: ../gnome-panel/panel-logout.c:242
 #, fuzzy, c-format
-msgid "You will be automatically logged out in %d second."
-msgid_plural "You will be automatically logged out in %d seconds."
+msgid ""
+"You are currently logged in as \"%s\".\n"
+"You will be automatically logged out in %d second."
+msgid_plural ""
+"You are currently logged in as \"%s\".\n"
+"You will be automatically logged out in %d seconds."
 msgstr[0] "Hivoaka hoazy ianao afaka %d segaondra."
 msgstr[1] "Hivoaka hoazy ianao afaka %d segaondra."
 
-#: ../gnome-panel/panel-logout.c:243
+#: ../gnome-panel/panel-logout.c:253
 #, fuzzy, c-format
-msgid "This system will be automatically shut down in %d second."
-msgid_plural "This system will be automatically shut down in %d seconds."
+msgid ""
+"You are currently logged in as \"%s\".\n"
+"This system will be automatically shut down in %d second."
+msgid_plural ""
+"You are currently logged in as \"%s\".\n"
+"This system will be automatically shut down in %d seconds."
 msgstr[0] "Hijanona hoazy ity rafitra ity afaka %d segaondra."
 msgstr[1] "Hijanona hoazy ity rafitra ity afaka %d segaondra."
 
-#: ../gnome-panel/panel-logout.c:315
+#: ../gnome-panel/panel-logout.c:334
 msgid "Log out of this system now?"
 msgstr "Hivoaka ity rafitra ity izao dieny izao?"
 
-#: ../gnome-panel/panel-logout.c:321
+#: ../gnome-panel/panel-logout.c:340
 msgid "_Switch User"
 msgstr "_Hiova mpampiasa"
 
-#: ../gnome-panel/panel-logout.c:327
+#: ../gnome-panel/panel-logout.c:346
 msgid "_Log Out"
 msgstr "_Hivoaka"
 
-#: ../gnome-panel/panel-logout.c:332
+#: ../gnome-panel/panel-logout.c:351
 msgid "Shut down this system now?"
 msgstr "Hajanona ity rafitra ity izao dieny izao?"
 
-#: ../gnome-panel/panel-logout.c:337
+#: ../gnome-panel/panel-logout.c:356
 #, fuzzy
 msgid "S_uspend"
 msgstr "_Ampiatoy"
 
-#: ../gnome-panel/panel-logout.c:342
+#: ../gnome-panel/panel-logout.c:361
 #, fuzzy
 msgid "_Hibernate"
 msgstr "_Hibernate"
 
-#: ../gnome-panel/panel-logout.c:347
+#: ../gnome-panel/panel-logout.c:366
 msgid "_Restart"
 msgstr "_Avereno alefa"
 
-#: ../gnome-panel/panel-logout.c:353
+#: ../gnome-panel/panel-logout.c:375
 msgid "_Shut Down"
 msgstr "_Ajanony"
 
-#: ../gnome-panel/panel-menu-bar.c:74
+#: ../gnome-panel/panel-menu-bar.c:97
 msgid "Browse and run installed applications"
 msgstr "Zahavo ary alefaso ireo rindran'asa voapetraka"
 
-#: ../gnome-panel/panel-menu-bar.c:86
+#: ../gnome-panel/panel-menu-bar.c:99
 msgid "Access documents, folders and network places"
 msgstr ""
 "Zahavo anatin'ny tahirin-kevitra, laha-tahiry ary ireo toerana anaty rezo"
 
-#: ../gnome-panel/panel-menu-bar.c:98
+#: ../gnome-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr ""
 "Hanova ny endrika sy ny fiasan'ny desktop, hitady fanampiana, na hivoaka"
 
-#: ../gnome-panel/panel-menu-bar.c:183
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "Rindran'asa"
 
-#: ../gnome-panel/panel-menu-bar.c:412 ../gnome-panel/panel-menu-button.c:694
+#: ../gnome-panel/panel-menu-bar.c:342 ../gnome-panel/panel-menu-button.c:664
 msgid "_Edit Menus"
 msgstr "_Hanova karazan-tsafidy"
 
-#: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:333
+#: ../gnome-panel/panel-menu-items.c:135 ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Tsy afaka nanokatra ny '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:374
+#: ../gnome-panel/panel-menu-items.c:416
 msgid "Bookmarks"
 msgstr "Tobin-drohy"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:395
+#: ../gnome-panel/panel-menu-items.c:438 ../gnome-panel/panel.c:531
 #, c-format
 msgid "Open '%s'"
 msgstr "Sokafy ny '%s'"
 
-#. Translators: the first string is a
-#. * path and the second string is a
-#. * hostname. nautilus contains the same
-#. * string to translate.
-#: ../gnome-panel/panel-menu-items.c:446
+#: ../gnome-panel/panel-menu-items.c:506
 #, c-format
-msgid "%1$s on %2$s"
-msgstr "%1$s amin'ny %2$s"
+msgid "Unable to scan %s for media changes"
+msgstr ""
 
-#: ../gnome-panel/panel-menu-items.c:519
+#: ../gnome-panel/panel-menu-items.c:549
+#, c-format
+msgid "Rescan %s"
+msgstr ""
+
+#: ../gnome-panel/panel-menu-items.c:585
+#, fuzzy, c-format
+msgid "Unable to mount %s"
+msgstr "Ampiasao ny toro-hevitra miserana"
+
+#: ../gnome-panel/panel-menu-items.c:638
+#, c-format
+msgid "Mount %s"
+msgstr ""
+
+#: ../gnome-panel/panel-menu-items.c:841
+msgid "Removable Media"
+msgstr "Kapila mahaleotena"
+
+#: ../gnome-panel/panel-menu-items.c:922
 msgid "Network Places"
 msgstr "Toerana anatin'ny rezo"
 
-#: ../gnome-panel/panel-menu-items.c:522
-msgid "Removable Media"
-msgstr "Kapila mahaleotena"
+#: ../gnome-panel/panel-menu-items.c:961
+#, fuzzy
+msgid "Open your personal folder"
+msgstr "Sokafy toa laha-tahiry ny sehatr'asa"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:598
+#: ../gnome-panel/panel-menu-items.c:981
 msgid "Desktop Folder|Desktop"
 msgstr "Sehatr'asa"
 
-#: ../gnome-panel/panel-menu-items.c:599
+#: ../gnome-panel/panel-menu-items.c:982
 #, fuzzy
 msgid "Open the contents of your desktop in a folder"
 msgstr "Sokafy toa laha-tahiry ny sehatr'asa"
 
-#: ../gnome-panel/panel-menu-items.c:930
+#: ../gnome-panel/panel-menu-items.c:1374
 msgid "Places"
 msgstr "Toerana"
 
-#: ../gnome-panel/panel-menu-items.c:965
+#: ../gnome-panel/panel-menu-items.c:1403
 msgid "System"
 msgstr "Rafitra"
 
@@ -1831,7 +2346,7 @@ msgstr "Rafitra"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1057
+#: ../gnome-panel/panel-menu-items.c:1480
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -1839,21 +2354,25 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1069
+#: ../gnome-panel/panel-menu-items.c:1492
 #, c-format
 msgid "Log Out %s..."
 msgstr "Hivoaka i %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1073
+#: ../gnome-panel/panel-menu-items.c:1496
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Hivoaka i %s mba ahafahana miditra amin'ny anarana hafa"
 
-#: ../gnome-panel/panel-menu-items.c:1114
+#: ../gnome-panel/panel-menu-items.c:1537
 msgid "Could not launch menu item"
 msgstr "Tsy afaka nampandeha ilay zavatra tanatin'ny karazan-tsafidy"
+
+#: ../gnome-panel/panel-mount-operation.c:124
+msgid "Enter Password"
+msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2041,20 +2560,21 @@ msgstr "Mampiasà kisary nosafidiana ho solon'ny tsindrin'ilay zavatra"
 msgid "Use custom path for menu contents"
 msgstr "Mampiasà sori-dàlana nosafidiana ho an'ny mpiatin'ny karazan-tsafidy"
 
-#: ../gnome-panel/panel-profile.c:762 ../gnome-panel/panel-profile.c:789
-#: ../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1648
+#: ../gnome-panel/panel-profile.c:766 ../gnome-panel/panel-profile.c:793
+#: ../gnome-panel/panel-profile.c:829 ../gnome-panel/panel-profile.c:1694
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr ""
 "Nisy olana teo am-pamakiana ny sandan'ny laha-teny '%s': %s an'ny GConf"
 
-#: ../gnome-panel/panel-profile.c:804 ../gnome-panel/panel-profile.c:1544
-#: ../gnome-panel/panel-profile.c:1617 ../gnome-panel/panel-profile.c:1680
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
+#: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
+#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Nisy olana teo am-pamakiana ny sanda feno '%s': %s an'ny GConf"
 
-#: ../gnome-panel/panel-profile.c:1554
+#: ../gnome-panel/panel-profile.c:1600
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2063,38 +2583,43 @@ msgstr ""
 "Ny tontonana '%s' dia natao hiseho eo amin'ny efijery %d nefa tsy mbola azo "
 "ampiasaina io efijery io. Tsy alefa ity tontonana ity."
 
-#: ../gnome-panel/panel-profile.c:1632
+#: ../gnome-panel/panel-profile.c:1678
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Nisy olana teo am-pamakiana ny sanda boleanina '%s': %s an'ny GConf"
 
-#: ../gnome-panel/panel-properties-dialog.c:121
+#: ../gnome-panel/panel-properties-dialog.c:124
 #: ../libpanel-applet/panel-test-applets.c:53
 msgid "Orientation|Top"
 msgstr "Ambony"
 
-#: ../gnome-panel/panel-properties-dialog.c:122
+#: ../gnome-panel/panel-properties-dialog.c:125
 #: ../libpanel-applet/panel-test-applets.c:54
 msgid "Orientation|Bottom"
 msgstr "Ambany"
 
-#: ../gnome-panel/panel-properties-dialog.c:123
+#: ../gnome-panel/panel-properties-dialog.c:126
 #: ../libpanel-applet/panel-test-applets.c:55
 msgid "Orientation|Left"
 msgstr "Havia"
 
-#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../gnome-panel/panel-properties-dialog.c:127
 #: ../libpanel-applet/panel-test-applets.c:56
 msgid "Orientation|Right"
 msgstr "Havanana"
 
-#: ../gnome-panel/panel-properties-dialog.c:1023
-#: ../gnome-panel/panel-run-dialog.c:1889
+#: ../gnome-panel/panel-properties-dialog.c:947
+#, fuzzy
+msgid "Drawer Properties"
+msgstr "Toetoetry ny mpandefa"
+
+#: ../gnome-panel/panel-properties-dialog.c:1055
+#: ../gnome-panel/panel-run-dialog.c:1963
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "Tsy azo ny rakitra '%s'."
 
-#: ../gnome-panel/panel-properties-dialog.c:1028
+#: ../gnome-panel/panel-properties-dialog.c:1060
 msgid "Could not display properties dialog"
 msgstr "Tsy afaka nampiseho ny takelaka kelin'ny toetoetra"
 
@@ -2125,10 +2650,6 @@ msgstr "Lo_ko:"
 #: ../gnome-panel/panel-properties-dialog.glade.h:8
 msgid "E_xpand"
 msgstr "V_elaro"
-
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "Ankapobe"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
@@ -2200,28 +2721,32 @@ msgstr "_Habe:"
 msgid "_Tile"
 msgstr "_Mizarazara"
 
-#: ../gnome-panel/panel-recent.c:50
+#: ../gnome-panel/panel-properties-dialog.glade.h:27
+msgid "pixels"
+msgstr "pixel"
+
+#: ../gnome-panel/panel-recent.c:51
 msgid "Could not find a suitable application."
 msgstr "Tsy nahita rindran'asa mety."
 
-#: ../gnome-panel/panel-recent.c:97 ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:95 ../gnome-panel/panel-recent.c:105
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Tsy voasokatra ilay tahirin-kevitra vao nampiasaina \"%s\""
 
-#: ../gnome-panel/panel-recent.c:109
+#: ../gnome-panel/panel-recent.c:107
 #, fuzzy, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Nisy olana tsy fantatra teo am-panandramana ny fanokafana ny \"%s\""
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:164
 msgid "Clear the Recent Documents list?"
 msgstr "Foanana izay anatin'ny lisitry Tahirin-kevitra Vao Nampiasaina?"
 
-#: ../gnome-panel/panel-recent.c:168
+#: ../gnome-panel/panel-recent.c:166
+#, fuzzy
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
-"\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
@@ -2233,52 +2758,52 @@ msgstr ""
 "• ny zavatra rehetra ao anatin'ny lisitry ny Tahirin-kevitra Vao Nampiasaina "
 "amin'ny rindran'asa rehetra."
 
-#: ../gnome-panel/panel-recent.c:211
-msgid "Recent Documents"
-msgstr "Tahirin-kevitra Vao Nampiasaina"
-
-#: ../gnome-panel/panel-recent.c:251
+#: ../gnome-panel/panel-recent.c:178 ../gnome-panel/panel-recent.c:252
 msgid "Clear Recent Documents"
 msgstr "Foano ireo Tahirin-kevitra Vao Nampiasaina"
 
-#: ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:213
+msgid "Recent Documents"
+msgstr "Tahirin-kevitra Vao Nampiasaina"
+
+#: ../gnome-panel/panel-recent.c:254
 msgid "Clear all items from the recent documents list"
 msgstr ""
 "Foano tao anatin'ny lisitry ny Tahirin-kevitra Vao Nampiasaina ny zavatra ao "
 "rehetra"
 
-#: ../gnome-panel/panel-run-dialog.c:304
+#: ../gnome-panel/panel-run-dialog.c:322
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Tsy afaka nanatanteraka ny baiko '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:388
+#: ../gnome-panel/panel-run-dialog.c:407
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Tsy afaka namadika ny '%s' avy amin'ny UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1196
+#: ../gnome-panel/panel-run-dialog.c:1215
 msgid "Choose a file to append to the command..."
 msgstr "Misafidiana rakitra ampiarahana amin'ilay baiko..."
 
-#: ../gnome-panel/panel-run-dialog.c:1572
+#: ../gnome-panel/panel-run-dialog.c:1591
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Misafidiana rindran'asa iray hijerena ny mombamomba azy."
 
-#: ../gnome-panel/panel-run-dialog.c:1610
+#: ../gnome-panel/panel-run-dialog.c:1629
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Ho tanterahina ny baiko: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1641
+#: ../gnome-panel/panel-run-dialog.c:1660
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "Diso ny lamina (%d) sy ny halava (%d) an'ny lisitra URI natao teo amin'ny "
 "takelaka kelin'ny fandefasana\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1893
+#: ../gnome-panel/panel-run-dialog.c:1967
 msgid "Could not display run dialog"
 msgstr "Tsy afaka naneho ny takelaka kelin'ny fandefasana"
 
@@ -2341,110 +2866,111 @@ msgid "The icon of the command to be run."
 msgstr "Ny kisarin'ny baiko ho tanterahina."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:14
-#: ../gnome-panel/panel-stock-icons.c:89
+#: ../gnome-panel/panel-stock-icons.c:91
 msgid "_Run"
 msgstr "_Alefaso"
 
-#: ../gnome-panel/panel-shell.c:74
+#: ../gnome-panel/panel-shell.c:64
+#, fuzzy, c-format
 msgid ""
-"I've detected a panel already running,\n"
-"and will now exit."
-msgstr ""
-"Nahita aho fa efa misy tontonana iray mandeha, \n"
-"noho izany dia ajanoko ity."
-
-#: ../gnome-panel/panel-shell.c:78
-#, c-format
-msgid ""
-"There was a problem registering the panel with the bonobo-activation "
-"server.\n"
-"The error code is: %d\n"
-"The panel will now exit."
+"The panel could not register with the bonobo-activation server (error code: %"
+"d) and will exit.\n"
+"It may be automatically restarted."
 msgstr ""
 "Nisy olana teo am-panambarana ilay tontonana tamin'ny alalan'ny mpizara "
 "misahana ny fampandehanana ny Bonobo.\n"
 "Ny fangon'ilay olana: %d\n"
 "Hijanona izany ny tontonana."
 
-#: ../gnome-panel/panel-stock-icons.c:90
+#: ../gnome-panel/panel-shell.c:74
+#, fuzzy
+msgid "The panel has encountered a fatal error"
+msgstr "Nahita olana ny tontonana rehefa naka ny \"%s\"."
+
+#. FIXME: the checkbox is not correctly aligned in the dialog...
+#: ../gnome-panel/panel-shell.c:80
+msgid "Force the panel to not be automatically restarted"
+msgstr ""
+
+#: ../gnome-panel/panel-stock-icons.c:92
 msgid "_Force quit"
 msgstr "_Tereo hijanona"
 
-#: ../gnome-panel/panel-stock-icons.c:91
+#: ../gnome-panel/panel-stock-icons.c:93
 msgid "C_lear"
 msgstr "F_oano"
 
-#: ../gnome-panel/panel-stock-icons.c:92
+#: ../gnome-panel/panel-stock-icons.c:94
 msgid "D_on't Delete"
 msgstr "A_za fafana"
 
-#: ../gnome-panel/panel-toplevel.c:1114
+#: ../gnome-panel/panel-toplevel.c:1178
 msgid "Hide Panel"
 msgstr "Afeno ny tontonana"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1495
+#: ../gnome-panel/panel-toplevel.c:1559
 msgid "Top Expanded Edge Panel"
 msgstr "Tontonana ambony manana sisiny mivelatra"
 
-#: ../gnome-panel/panel-toplevel.c:1496
+#: ../gnome-panel/panel-toplevel.c:1560
 msgid "Top Centered Panel"
 msgstr "Tontonana ambony mahazo ny afovoa"
 
-#: ../gnome-panel/panel-toplevel.c:1497
+#: ../gnome-panel/panel-toplevel.c:1561
 msgid "Top Floating Panel"
 msgstr "Tontonana ambony mitsingevana"
 
-#: ../gnome-panel/panel-toplevel.c:1498
+#: ../gnome-panel/panel-toplevel.c:1562
 msgid "Top Edge Panel"
 msgstr "Tontonana amin'ny sisiny ambony"
 
-#: ../gnome-panel/panel-toplevel.c:1502
+#: ../gnome-panel/panel-toplevel.c:1566
 msgid "Bottom Expanded Edge Panel"
 msgstr "Tontonana ambany manana sisiny mivelatra"
 
-#: ../gnome-panel/panel-toplevel.c:1503
+#: ../gnome-panel/panel-toplevel.c:1567
 msgid "Bottom Centered Panel"
 msgstr "Tontonana ambany mahazo ny afovoa"
 
-#: ../gnome-panel/panel-toplevel.c:1504
+#: ../gnome-panel/panel-toplevel.c:1568
 msgid "Bottom Floating Panel"
 msgstr "Tontonana ambany mitsingevana"
 
-#: ../gnome-panel/panel-toplevel.c:1505
+#: ../gnome-panel/panel-toplevel.c:1569
 msgid "Bottom Edge Panel"
 msgstr "Tontonana amin'ny sisiny ambany"
 
-#: ../gnome-panel/panel-toplevel.c:1509
+#: ../gnome-panel/panel-toplevel.c:1573
 msgid "Left Expanded Edge Panel"
 msgstr "Tontonana havia manana sisiny mivelatra"
 
-#: ../gnome-panel/panel-toplevel.c:1510
+#: ../gnome-panel/panel-toplevel.c:1574
 msgid "Left Centered Panel"
 msgstr "Tontonana havia mahazo ny afovoa"
 
-#: ../gnome-panel/panel-toplevel.c:1511
+#: ../gnome-panel/panel-toplevel.c:1575
 msgid "Left Floating Panel"
 msgstr "Tontonana havia mitsingevana"
 
-#: ../gnome-panel/panel-toplevel.c:1512
+#: ../gnome-panel/panel-toplevel.c:1576
 msgid "Left Edge Panel"
 msgstr "Tontonana amin'ny sisiny havia"
 
-#: ../gnome-panel/panel-toplevel.c:1516
+#: ../gnome-panel/panel-toplevel.c:1580
 msgid "Right Expanded Edge Panel"
 msgstr "Tontonana havanana manana sisiny mivelatra"
 
-#: ../gnome-panel/panel-toplevel.c:1517
+#: ../gnome-panel/panel-toplevel.c:1581
 msgid "Right Centered Panel"
 msgstr "Tontonana havanana mahazo afovoa"
 
-#: ../gnome-panel/panel-toplevel.c:1518
+#: ../gnome-panel/panel-toplevel.c:1582
 msgid "Right Floating Panel"
 msgstr "Tontonana havanana mitsingevana"
 
-#: ../gnome-panel/panel-toplevel.c:1519
+#: ../gnome-panel/panel-toplevel.c:1583
 msgid "Right Edge Panel"
 msgstr "Tontonana amin'ny sisiny havanana"
 
@@ -2573,11 +3099,12 @@ msgstr ""
 "tontonana."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
+#, fuzzy
 msgid ""
-"If true, the x key is ignored and the panel is placed at the center of the x-"
-"axis of the screen. If the panel is resized it will remain at that position "
-"- i.e. the panel will grow on both sides. If false, the x key specifies the "
-"location of the panel."
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
 msgstr ""
 "Raha marina izay voalaza, dia tsy raharahaina ny famaha x ary apetraka eo "
 "afovoan'ny axe X'ny efijery ny tontonana. Na ovaina aza ny haben'ilay "
@@ -2586,11 +3113,12 @@ msgstr ""
 "toeran'ny tontonana."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
+#, fuzzy
 msgid ""
-"If true, the y key is ignored and the panel is placed at the center of the y-"
-"axis of the screen. If the panel is resized it will remain at that position "
-"- i.e. the panel will grow on both sides. If false, the y key specifies the "
-"location of the panel."
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
 msgstr ""
 " Raha marina izay voalaza, dia tsy raharahaina ny famaha y ary apetraka eo "
 "afovoan'ny axe Y'ny efijery ny tontonana. Na dia ovaina aza ny haben'ilay "
@@ -2701,6 +3229,21 @@ msgstr ""
 "mitsivalana ilay tontonana)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
+#, fuzzy
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Ny toerana misy ny tontonana manaraka ny axe X. Tsy mitombina ity famaha ity "
+"raha tsy manaraka ny fomba tsy mivelatra. Tsy raharahaina ity famaha ity "
+"amin'ny fomba mivelatra ary apetraka amin'ny sisin'ny efijery voafaritry ny "
+"famahan'ny fitodika ilay tontonana."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -2711,7 +3254,22 @@ msgstr ""
 "amin'ny fomba mivelatra ary apetraka amin'ny sisin'ny efijery voafaritry ny "
 "famahan'ny fitodika ilay tontonana."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:40
+#: ../gnome-panel/panel-toplevel.schemas.in.h:41
+#, fuzzy
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Ny toerana misy ny tontonana manaraka ny axe Y. Tsy mitombina ity famaha ity "
+"raha tsy manaraka ny fomba tsy mivelatra. Tsy raharahaina ity famaha ity "
+"amin'ny fomba mivelatra ary apetraka amin'ny sisin'ny efijery voafaritry ny "
+"famahan'ny fitodika ilay tontonana."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -2722,7 +3280,7 @@ msgstr ""
 "amin'ny fomba mivelatra ary apetraka amin'ny sisin'ny efijery voafaritry ny "
 "famahan'ny fitodika ilay tontonana."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:41
+#: ../gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -2743,7 +3301,7 @@ msgstr ""
 "tsindriana ny tsindry karazan-tsafidy raha toa ka mankany ambony izany ho "
 "an'ny tontonana manana sanda \"bottom\"."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:42
+#: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -2753,7 +3311,7 @@ msgstr ""
 "\"medium\" and \"fast\" no sanda azo ampiasaina. Tsy mitombina ity famaha "
 "ity raha tsy marina ny famaha enable_animations."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:43
+#: ../gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -2763,11 +3321,11 @@ msgstr ""
 "tontonana iray. Io no atao anaran'ny fikandran'ny tontonana iray izay "
 "manampy anao tokoa rehefa mizaha tontonana maromaro misokatra ianao. "
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:44
+#: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid "Visible pixels when hidden"
 msgstr "Isan'ny pixel hita rehefa afenina"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:45
+#: ../gnome-panel/panel-toplevel.schemas.in.h:47
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -2779,7 +3337,7 @@ msgstr ""
 "famahan'ny loko no atao lokon'ny afara, na \"image\" - ilay sary voafaritry "
 "ny famahan'ny sary no atao afara."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:46
+#: ../gnome-panel/panel-toplevel.schemas.in.h:48
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
@@ -2788,42 +3346,73 @@ msgstr ""
 "ampiasana efijery maromaro. Ity famaha ity dia mamantatra ny efijery "
 "ampiasaina isehoan'ilay tontonana."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:47
+#: ../gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "X co-ordinate of panel"
 msgstr "Ny marika X an'ilay tontonana"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:48
+#: ../gnome-panel/panel-toplevel.schemas.in.h:50
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr ""
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:51
 msgid "X screen where the panel is displayed"
 msgstr "Ny efijery X isehoan'ilay tontonana"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:49
+#: ../gnome-panel/panel-toplevel.schemas.in.h:52
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "Ny monitor Xinerama isehoan'ilay tontonana"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:50
+#: ../gnome-panel/panel-toplevel.schemas.in.h:53
 msgid "Y co-ordinate of panel"
 msgstr "Ny marika Y an'ilay tontonana"
 
-#: ../gnome-panel/panel-util.c:659
+#: ../gnome-panel/panel-toplevel.schemas.in.h:54
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr ""
+
+#: ../gnome-panel/panel-util.c:657
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Tsy hita ny kisary '%s'"
 
-#: ../gnome-panel/panel-util.c:854
-#, fuzzy
+#: ../gnome-panel/panel-util.c:880
 msgid "file"
-msgstr "_Mizarazara"
+msgstr "rakitra"
 
-#: ../gnome-panel/panel.c:479
+#: ../gnome-panel/panel-util.c:1486
+msgid "Home Folder"
+msgstr "Laha-tahirin'ny fandraisana"
+
+#. Translators: this is the same string as the one found in
+#. * nautilus
+#: ../gnome-panel/panel-util.c:1498
+msgid "File System"
+msgstr "Rafi-drafitra"
+
+#: ../gnome-panel/panel-util.c:1645
+msgid "Search"
+msgstr "Karohy"
+
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../gnome-panel/panel-util.c:1691
+#, c-format
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: ../gnome-panel/panel.c:471
 #, c-format
 msgid "Open URL: %s"
 msgstr "Hanokatra URL: %s"
 
-#: ../gnome-panel/panel.c:1311
+#: ../gnome-panel/panel.c:1299
 msgid "Delete this drawer?"
 msgstr "Fafana ity vatasarihana ity?"
 
-#: ../gnome-panel/panel.c:1312
+#: ../gnome-panel/panel.c:1300
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2831,25 +3420,17 @@ msgstr ""
 "Rehefa voafafa ny vatasarihana iray, dia voafafa miaraka aminy koa ireo "
 "kirakirany."
 
-#: ../gnome-panel/panel.c:1314
-msgid "Delete Drawer"
-msgstr "Fafao io vatasarihana io"
-
-#: ../gnome-panel/panel.c:1316
+#: ../gnome-panel/panel.c:1303
 msgid "Delete this panel?"
 msgstr "Hofafana ity tontonana ity?"
 
-#: ../gnome-panel/panel.c:1317
+#: ../gnome-panel/panel.c:1304
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Rehefa voafafa ny tontonana iray, dia very\n"
 " hatramin'ireo fandrindrana natao"
-
-#: ../gnome-panel/panel.c:1319
-msgid "Delete Panel"
-msgstr "Esory ny tontonana"
 
 #: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2863,46 +3444,46 @@ msgstr "Applet'ny fitsapana ny Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Toerana fanamboarana ny applet'ny fitsapana ny Bonobo"
 
-#: ../libpanel-applet/panel-applet.c:1045
+#: ../libpanel-applet/panel-applet.c:1052
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Karazan-tsary afara '%s' tsy feno voaray"
 
-#: ../libpanel-applet/panel-applet.c:1059
+#: ../libpanel-applet/panel-applet.c:1066
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Karazan-tsary afara  '%s' tsy feno voaray: %s"
 
-#: ../libpanel-applet/panel-applet.c:1068
+#: ../libpanel-applet/panel-applet.c:1075
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Tsy azo ny pixmap %s"
 
-#: ../libpanel-applet/panel-applet.c:1075
+#: ../libpanel-applet/panel-applet.c:1082
 msgid "Unknown background type received"
 msgstr "Karazan-tsary afara tsy fantatra voaray"
 
-#: ../libpanel-applet/panel-applet.c:1299
+#: ../libpanel-applet/panel-applet.c:1306
 msgid "The Applet's containing Panel's orientation"
 msgstr "Fitodiky ny tontonana fitoeran'ilay applet"
 
-#: ../libpanel-applet/panel-applet.c:1307
+#: ../libpanel-applet/panel-applet.c:1314
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Ny habe ara-pixel'ny tontonana fisy ny applet"
 
-#: ../libpanel-applet/panel-applet.c:1315
+#: ../libpanel-applet/panel-applet.c:1322
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Ny lokon'ny afara na pixmap'ny tontonana fisy ny applet"
 
-#: ../libpanel-applet/panel-applet.c:1323
+#: ../libpanel-applet/panel-applet.c:1330
 msgid "The Applet's flags"
 msgstr "Ny sain'ilay applet"
 
-#: ../libpanel-applet/panel-applet.c:1331
+#: ../libpanel-applet/panel-applet.c:1338
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Habe tahaka ny ahoana no mety ho an'ilay applet"
 
-#: ../libpanel-applet/panel-applet.c:1339
+#: ../libpanel-applet/panel-applet.c:1346
 msgid "The Applet's containing Panel is locked down"
 msgstr "Mihidy ilay tontonana fitoeran'ilay applet"
 
@@ -2973,6 +3554,65 @@ msgstr "_Applet:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Laha-tahirin'ny safidy manokana:"
+
+#~ msgid "%A %B %d"
+#~ msgstr "%A %B %d"
+
+#~ msgid "Clock _type:"
+#~ msgstr "Rafi-_pamantaranandro:"
+
+#~ msgid "12 hour"
+#~ msgstr "12 ora"
+
+#~ msgid "Use _UTC"
+#~ msgstr "Ampiasao ny _UTC"
+
+#~ msgid "<b>Window List Size</b>"
+#~ msgstr "<b>Haben'ny lisitry ny fikandrana</b>"
+
+#~ msgid "Behavior"
+#~ msgstr "Fombafombany"
+
+#~ msgid "M_inimum size:"
+#~ msgstr "Habe am_bany indrindra:"
+
+#~ msgid "Ma_ximum size:"
+#~ msgstr "Habe _ambony indrindra:"
+
+#~ msgid "Size"
+#~ msgstr "Habe"
+
+#~ msgid ""
+#~ "This key specifies the maximum width that the window list requests. The "
+#~ "maximum width setting is useful to limit the size of the window list in "
+#~ "large panels, where the window list could fill the entire space available."
+#~ msgstr ""
+#~ "Ity famaha ity dia mamaritra ny saka ambony indirindra takian'ny lisitry "
+#~ "ny fikandrana. Ilaina ny famerana io habe ambony indrindra io mba tsy "
+#~ "hamenoan'ny lisitry ny fikandrana izay toerana misy rehefa sendra "
+#~ "tontonana lehibe."
+
+#~ msgid "This key specifies the minimum width that the window list requests."
+#~ msgstr ""
+#~ "Ity famaha ity dia mamaritra ny saka ambany indrindra takian'ny lisitry "
+#~ "ny fikandrana."
+
+#, fuzzy
+#~ msgid "File"
+#~ msgstr "_Rakitra:"
+
+#~ msgid ""
+#~ "I've detected a panel already running,\n"
+#~ "and will now exit."
+#~ msgstr ""
+#~ "Nahita aho fa efa misy tontonana iray mandeha, \n"
+#~ "noho izany dia ajanoko ity."
+
+#~ msgid "Delete Drawer"
+#~ msgstr "Fafao io vatasarihana io"
+
+#~ msgid "Delete Panel"
+#~ msgstr "Esory ny tontonana"
 
 #~ msgid ""
 #~ "%1$s\n"
