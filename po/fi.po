@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-13 13:49+0300\n"
+"POT-Creation-Date: 2008-02-22 08:56+0300\n"
 "PO-Revision-Date: 2007-02-12 20:29+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -82,7 +82,7 @@ msgstr "_Asetukset"
 # applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 # applets/gen_util/clock.c:1156
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4056
+#: ../applets/clock/clock.c:4102
 msgid "Clock"
 msgstr "Kello"
 
@@ -102,13 +102,18 @@ msgid "Get the current time and date"
 msgstr "Hae nykyinen aika ja päiväys"
 
 # applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:420
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
 msgid "%l:%M %p"
-msgstr "%I:%M %p"
+msgstr "%I.%M %p"
 
 # applets/gen_util/clock.c:159 applets/gen_util/clock.c:469
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:422
-#: ../applets/clock/clock.c:1550
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
+#: ../applets/clock/clock.c:1553 ../applets/clock/clock-location-tile.c:485
 msgid "%H:%M"
 msgstr "%H.%M"
 
@@ -156,12 +161,12 @@ msgid "Calendar"
 msgstr "Kalenteri"
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
-#: ../applets/clock/clock.c:420
+#: ../applets/clock/clock.c:421
 msgid "%l:%M:%S %p"
-msgstr "%I:%M:%S %p"
+msgstr "%I.%M.%S %p"
 
 # applets/gen_util/clock.c:157 applets/gen_util/clock.c:467
-#: ../applets/clock/clock.c:422 ../applets/clock/clock.c:1548
+#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1551
 msgid "%H:%M:%S"
 msgstr "%H.%M.%S"
 
@@ -171,7 +176,7 @@ msgstr "%H.%M.%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:442
+#: ../applets/clock/clock.c:443
 msgid "%a %b %e"
 msgstr "%a %e. %Bta"
 
@@ -179,7 +184,7 @@ msgstr "%a %e. %Bta"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:449
+#: ../applets/clock/clock.c:450
 #, c-format
 msgid ""
 "%1$s\n"
@@ -192,7 +197,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:458
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -201,65 +206,65 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:639
+#: ../applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
 msgstr "%A %e. %Bta %Y (%%s)"
 
-#: ../applets/clock/clock.c:669
+#: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "Piilota tapaamisesi ja tehtäväsi napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:672
+#: ../applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "Näytä tapaamisesi ja tehtäväsi napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:676
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "Piilota kuukauden kalenteri napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "Näytä kuukauden kalenteri napsauttamalla tästä"
 
 # applets/gen_util/clock.c:378
-#: ../applets/clock/clock.c:1400
+#: ../applets/clock/clock.c:1401
 msgid "Computer Clock"
 msgstr "Tietokoneen kello"
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
-#: ../applets/clock/clock.c:1543
+#: ../applets/clock/clock.c:1546
 msgid "%I:%M:%S %p"
-msgstr "%I:%M:%S %p"
+msgstr "%I.%M.%S %p"
 
 # applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
-#: ../applets/clock/clock.c:1545
+#: ../applets/clock/clock.c:1548
 msgid "%I:%M %p"
-msgstr "%I:%M %p"
+msgstr "%I.%M %p"
 
 # applets/gen_util/clock.c:503
-#: ../applets/clock/clock.c:1587
+#: ../applets/clock/clock.c:1590
 msgid "%A, %B %d %Y"
 msgstr "%A %e. %Bta %Y"
 
 # gnome-panel/gnome-run.c:229 gnome-panel/gnome-run.c:246
-#: ../applets/clock/clock.c:1662
+#: ../applets/clock/clock.c:1665
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Ajan asetustyökalun käynnistys epäonnistui: %s"
 
-#: ../applets/clock/clock.c:1691
+#: ../applets/clock/clock.c:1694
 msgid "Set System Time..."
 msgstr "Aseta tietokoneen aika..."
 
-#: ../applets/clock/clock.c:1692 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1695 ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr "Aseta tietokoneen aika"
 
-#: ../applets/clock/clock.c:1706
+#: ../applets/clock/clock.c:1709
 msgid "Failed to set the system time"
 msgstr "Tietokoneen aikaa ei voitu asettaa"
 
-#: ../applets/clock/clock.c:1879
+#: ../applets/clock/clock.c:1882
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -267,48 +272,48 @@ msgstr ""
 "Päiväyksen ja ajan muuttamiseen käytettävää ohjelmaa ei löytynyt. Ehkäpä "
 "sitä ei ole asennettu?"
 
-#: ../applets/clock/clock.c:2698
+#: ../applets/clock/clock.c:2747
 msgid "Custom format"
 msgstr "Muu muoto"
 
-#: ../applets/clock/clock.c:3498 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:468
+#: ../applets/clock/clock.c:3545 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:584
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 # applets/fish/fish.c:713
-#: ../applets/clock/clock.c:3757
+#: ../applets/clock/clock.c:3803
 msgid "City Name"
 msgstr "Kaupungin nimi"
 
 # gnome-panel/distribution.c:26
-#: ../applets/clock/clock.c:3761
+#: ../applets/clock/clock.c:3807
 msgid "City Time Zone"
 msgstr "Kaupungin aikavyöhyke"
 
 # applets/gen_util/clock.c:959
-#: ../applets/clock/clock.c:3952
+#: ../applets/clock/clock.c:3998
 msgid "24 hour"
 msgstr "24-tuntinen"
 
 # applets/gen_util/clock.c:964
-#: ../applets/clock/clock.c:3953
+#: ../applets/clock/clock.c:3999
 msgid "UNIX time"
 msgstr "Unix-aika"
 
 # applets/gen_util/clock.c:968
-#: ../applets/clock/clock.c:3954
+#: ../applets/clock/clock.c:4000
 msgid "Internet time"
 msgstr "Internet-aika"
 
 # applets/gen_util/clock.schemas.in.h:6
-#: ../applets/clock/clock.c:3962
+#: ../applets/clock/clock.c:4008
 msgid "Custom _format:"
 msgstr "Muu _muoto:"
 
 # applets/gen_util/clock.c:1158
-#: ../applets/clock/clock.c:4059
+#: ../applets/clock/clock.c:4105
 msgid "The Clock displays the current time and date"
 msgstr "Kello näyttää nykyisen ajan ja päiväyksen"
 
@@ -316,7 +321,7 @@ msgstr "Kello näyttää nykyisen ajan ja päiväyksen"
 # applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 # gnome-panel/menu.c:242
 #. Translator credits
-#: ../applets/clock/clock.c:4062 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4108 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -697,34 +702,65 @@ msgstr "Näytä UTC-aikaa"
 msgid "Unknown Location"
 msgstr "Tuntematon sijainti"
 
-#: ../applets/clock/clock-location-tile.c:198
+#: ../applets/clock/clock-location-tile.c:194
 msgid "Failed to set the system timezone"
 msgstr "Järjestelmän aikavyöhykettä ei voitu asettaa"
 
-#: ../applets/clock/clock-location-tile.c:223
+#: ../applets/clock/clock-location-tile.c:239
+#: ../applets/clock/clock-location-tile.c:314
 msgid "<small>Set...</small>"
 msgstr "<small>Aseta...</small>"
 
-#: ../applets/clock/clock-location-tile.c:224
+#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:315
 msgid "<small>Set</small>"
 msgstr "<small>Aseta</small>"
 
-#: ../applets/clock/clock-location-tile.c:285
+#: ../applets/clock/clock-location-tile.c:320
 msgid "Set as current timezone for this computer"
 msgstr "Aseta tietokoneen aikavyöhyke"
 
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:458
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l.%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:467
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H.%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:477
+msgid "%l:%M <small>%p</small>"
+msgstr "%l.%M <small>%p</small>"
+
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:478
-#: ../applets/clock/clock-location-tile.c:484
+#: ../applets/clock/clock-location-tile.c:594
+#: ../applets/clock/clock-location-tile.c:600
 msgid "Unknown"
 msgstr "Tuntematon"
 
-#: ../applets/clock/clock-location-tile.c:479
+#: ../applets/clock/clock-location-tile.c:595
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, tuntuu %s"
 
-#: ../applets/clock/clock-location-tile.c:489
+#: ../applets/clock/clock-location-tile.c:605
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Aurinko nousee: %s / laskee: %s"
@@ -753,7 +789,8 @@ msgstr "Aseta tietokoneen laitekello"
 
 #: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
 msgid "Privileges are required to change the system time zone."
-msgstr "Ylläpitäjän oikeudet vaaditaan järjestelmän aikavyöhykkeen vaihtamiseksi."
+msgstr ""
+"Ylläpitäjän oikeudet vaaditaan järjestelmän aikavyöhykkeen vaihtamiseksi."
 
 #: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
 msgid "Privileges are required to change the system time."
@@ -1569,20 +1606,20 @@ msgid "- Edit .desktop files"
 msgstr "- Muokkaa .desktop-tiedostoja"
 
 # gnome-panel/launcher.c:766 gnome-panel/menu-ditem.c:514
-#: ../gnome-panel/gnome-desktop-item-edit.c:142
-#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:981
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "Luo käynnistin"
 
 # gnome-panel/panel-config.c:1638
-#: ../gnome-panel/gnome-desktop-item-edit.c:169
-#: ../gnome-panel/gnome-desktop-item-edit.c:192
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "Kansion ominaisuudet"
 
 # gnome-panel/launcher.c:573 gnome-panel/menu-ditem.c:176
 # gnome-panel/menu-ditem.c:250
-#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:819
+#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "Käynnistimen ominaisuudet"
 
