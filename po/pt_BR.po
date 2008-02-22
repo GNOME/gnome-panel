@@ -15,15 +15,14 @@
 # Og Maciel <ogmaciel@ubuntu.com>, 2007.
 # Leonardo Ferreira Fontenelle <leo.fontenelle@gmail.com>, 2007.
 # Vladimir Melo <vladimirmelo.psi@gmail.com>, 2008.
-# Hugo Doria <hugodoria@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-16 23:24-0300\n"
-"PO-Revision-Date: 2008-02-16 23:36-0300\n"
-"Last-Translator: Hugo Doria <hugodoria@gmail.com>\n"
+"POT-Creation-Date: 2008-02-22 11:12-0300\n"
+"PO-Revision-Date: 2008-02-22 10:57-0300\n"
+"Last-Translator: Vladimir Melo <vladimirmelo@foresightlinux.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,7 +72,7 @@ msgid "_Preferences"
 msgstr "_Preferências"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4056
+#: ../applets/clock/clock.c:4102
 msgid "Clock"
 msgstr "Relógio"
 
@@ -90,13 +89,18 @@ msgid "Get the current time and date"
 msgstr "Obtenha hora e data atuais"
 
 # Usuário escolheu 12h sem segundos.
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:420
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
 # Usuário escolheu 24h sem segundos.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:422
-#: ../applets/clock/clock.c:1550
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
+#: ../applets/clock/clock.c:1553 ../applets/clock/clock-location-tile.c:485
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -142,12 +146,12 @@ msgid "Calendar"
 msgstr "Calendário"
 
 # Usuário escolheu 12h com segundos.
-#: ../applets/clock/clock.c:420
+#: ../applets/clock/clock.c:421
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 # Usuário escolheu 24h com segundos.
-#: ../applets/clock/clock.c:422 ../applets/clock/clock.c:1548
+#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1551
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -156,7 +160,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:442
+#: ../applets/clock/clock.c:443
 msgid "%a %b %e"
 msgstr "%a %d %b"
 
@@ -164,7 +168,7 @@ msgstr "%a %d %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:449
+#: ../applets/clock/clock.c:450
 #, c-format
 msgid ""
 "%1$s\n"
@@ -177,7 +181,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:458
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -185,62 +189,62 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:639
+#: ../applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
 msgstr "%A %d %B (%%s)"
 
-#: ../applets/clock/clock.c:669
+#: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "Clique para ocultar seus compromissos e tarefas"
 
-#: ../applets/clock/clock.c:672
+#: ../applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "Clique para ver os seus compromissos e tarefas"
 
-#: ../applets/clock/clock.c:676
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "Clique para ocultar o calendário do mês"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "Clique para ver o calendário do mês"
 
-#: ../applets/clock/clock.c:1400
+#: ../applets/clock/clock.c:1401
 msgid "Computer Clock"
 msgstr "Relógio do Computador"
 
 # Formato 12h, com segundos. Integrado?
-#: ../applets/clock/clock.c:1543
+#: ../applets/clock/clock.c:1546
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
 # Formato 12h, sem segundos. Integrado?
-#: ../applets/clock/clock.c:1545
+#: ../applets/clock/clock.c:1548
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1587
+#: ../applets/clock/clock.c:1590
 msgid "%A, %B %d %Y"
 msgstr "%A, %d de %B de %Y"
 
-#: ../applets/clock/clock.c:1662
+#: ../applets/clock/clock.c:1665
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Erro ao carregar ferramenta de configuração de hora: %s"
 
-#: ../applets/clock/clock.c:1691
+#: ../applets/clock/clock.c:1694
 msgid "Set System Time..."
 msgstr "Definir Hora do Sistema..."
 
-#: ../applets/clock/clock.c:1692 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1695 ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr "Definir Hora do Sistema"
 
-#: ../applets/clock/clock.c:1706
+#: ../applets/clock/clock.c:1709
 msgid "Failed to set the system time"
 msgstr "Falha ao definir a hora do sistema"
 
-#: ../applets/clock/clock.c:1879
+#: ../applets/clock/clock.c:1882
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -248,46 +252,46 @@ msgstr ""
 "Falha ao localizar um programa para configurar a hora e a data. Talvez não "
 "haja um instalado?"
 
-#: ../applets/clock/clock.c:2698
+#: ../applets/clock/clock.c:2747
 msgid "Custom format"
 msgstr "Formato personalizado"
 
-#: ../applets/clock/clock.c:3498 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:468
+#: ../applets/clock/clock.c:3545 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:584
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3757
+#: ../applets/clock/clock.c:3803
 msgid "City Name"
 msgstr "Nome da Cidade"
 
-#: ../applets/clock/clock.c:3761
+#: ../applets/clock/clock.c:3807
 msgid "City Time Zone"
 msgstr "Fuso Horário da Cidade"
 
-#: ../applets/clock/clock.c:3952
+#: ../applets/clock/clock.c:3998
 msgid "24 hour"
 msgstr "24 horas"
 
-#: ../applets/clock/clock.c:3953
+#: ../applets/clock/clock.c:3999
 msgid "UNIX time"
 msgstr "Hora UNIX"
 
-#: ../applets/clock/clock.c:3954
+#: ../applets/clock/clock.c:4000
 msgid "Internet time"
 msgstr "Hora da internet"
 
-#: ../applets/clock/clock.c:3962
+#: ../applets/clock/clock.c:4008
 msgid "Custom _format:"
 msgstr "_Formato personalizado:"
 
-#: ../applets/clock/clock.c:4059
+#: ../applets/clock/clock.c:4105
 msgid "The Clock displays the current time and date"
 msgstr "O Relógio mostra a hora e a data atuais"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4062 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4108 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -303,11 +307,10 @@ msgstr ""
 "Evandro Fernandes Giovanini <evandrofg@ig.com.br>\n"
 "Gustavo Noronha Silva <kov@debian.org>\n"
 "Welther José O. Esteves <weltherjoe@yahoo.com.br>\n"
-"Raphael Higino <phhigino@gmail.com>\n"
+"Raphael Higino <In memoriam>\n"
 "Evandro Fernandes Giovanini <evandrofg@ig.com.br>\n"
 "Og Maciel <ogmaciel@ubuntu.com>\n"
-"Vladimir Melo <vladimirmelo.psi@gmail.com>\n"
-"Hugo Doria <hugodoria@gmail.com>"
+"Vladimir Melo <vladimirmelo.psi@gmail.com>"
 
 #: ../applets/clock/clock.glade.h:1
 msgid "12 _hour format"
@@ -655,34 +658,65 @@ msgstr "Usar UTC"
 msgid "Unknown Location"
 msgstr "Local Desconhecido"
 
-#: ../applets/clock/clock-location-tile.c:198
+#: ../applets/clock/clock-location-tile.c:194
 msgid "Failed to set the system timezone"
 msgstr "Falha ao definir o fuso horário do sistema"
 
-#: ../applets/clock/clock-location-tile.c:223
+#: ../applets/clock/clock-location-tile.c:239
+#: ../applets/clock/clock-location-tile.c:314
 msgid "<small>Set...</small>"
 msgstr "<small>Definir...</small>"
 
-#: ../applets/clock/clock-location-tile.c:224
+#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:315
 msgid "<small>Set</small>"
 msgstr "<small>Definir</small>"
 
-#: ../applets/clock/clock-location-tile.c:285
+#: ../applets/clock/clock-location-tile.c:320
 msgid "Set as current timezone for this computer"
 msgstr "Definir como fuso horário para este computador"
 
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:458
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:467
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:477
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:478
-#: ../applets/clock/clock-location-tile.c:484
+#: ../applets/clock/clock-location-tile.c:594
+#: ../applets/clock/clock-location-tile.c:600
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: ../applets/clock/clock-location-tile.c:479
+#: ../applets/clock/clock-location-tile.c:595
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, sensação térmica %s"
 
-#: ../applets/clock/clock-location-tile.c:489
+#: ../applets/clock/clock-location-tile.c:605
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Amanhecer: %s / Anoitecer: %s"
@@ -692,6 +726,30 @@ msgstr "Amanhecer: %s / Anoitecer: %s"
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Houve um erro ao exibir a ajuda: %s"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "Alterar hora do sistema"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "Alterar fuso horário do sistema"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "Configurar relógio do hardware"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "Privilégios são necessários para alterar o fuso horário do sistema."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "Privilégios são necessários para alterar a hora do sistema."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "Privilégios são necessários para configurar o relógio do hardware."
 
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -1115,7 +1173,7 @@ msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
-"Seu gerenciador de janelas não tem suporte ao botão mostrar área de trabalho, ou "
+"Seu gerenciador de janelas não suporta o botão mostrar área de trabalho, ou "
 "você não está executando um gerenciador de janelas."
 
 #: ../applets/wncklet/window-list.c:610
@@ -1401,17 +1459,17 @@ msgstr "[ARQUIVO...]"
 msgid "- Edit .desktop files"
 msgstr "- Editar arquivos .desktop"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:142
-#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:981
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "Criar Lançador"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:169
-#: ../gnome-panel/gnome-desktop-item-edit.c:192
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "Propriedades do Diretório"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:819
+#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "Propriedades do Lançador"
 
@@ -1449,6 +1507,7 @@ msgid "Could not use dropped item"
 msgstr "Não foi possível usar item arrastado"
 
 #: ../gnome-panel/launcher.c:501
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Não foi fornecida URI para o arquivo desktop do lançador do painel\n"
 
@@ -1681,6 +1740,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "Localizar um _item para adicionar a \"%s\":"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "Adicionar à Gaveta"
 
@@ -1689,6 +1749,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "Localizar um _item para adicionar à gaveta:"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "Adicionar ao Painel"
 
@@ -2146,11 +2207,11 @@ msgid_plural ""
 "You are currently logged in as \"%s\".\n"
 "This system will be automatically shut down in %d seconds."
 msgstr[0] ""
-"Você está atualmente registrado como \"%s\".\n"
-"Este sistema vai desligar-se automaticamente em %d segundo."
+"You are currently logged in as \"%s\".\n"
+"This system will be automatically shut down in %d second."
 msgstr[1] ""
 "Você está atualmente registrado como \"%s\".\n"
-"Este sistema vai desligar-se automaticamente em %d segundos."
+"Este sistema vai desligar automaticamente em %d segundos."
 
 #: ../gnome-panel/panel-logout.c:334
 msgid "Log out of this system now?"
@@ -2223,12 +2284,12 @@ msgstr "Abrir '%s'"
 #: ../gnome-panel/panel-menu-items.c:506
 #, c-format
 msgid "Unable to scan %s for media changes"
-msgstr "Não é possível varrer %s em busca de mudanças na mídia"
+msgstr "Não foi possível varrer %s por alterações na mídia"
 
 #: ../gnome-panel/panel-menu-items.c:549
 #, c-format
 msgid "Rescan %s"
-msgstr "Varrer novamente %s"
+msgstr "Varrer Novamente %s"
 
 #: ../gnome-panel/panel-menu-items.c:585
 #, c-format
@@ -2302,7 +2363,7 @@ msgstr "Não foi possível lançar o item do menu"
 
 #: ../gnome-panel/panel-mount-operation.c:124
 msgid "Enter Password"
-msgstr "Digite a senha"
+msgstr "Digite a Senha"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2648,6 +2709,7 @@ msgid "pixels"
 msgstr "pixels"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "Não foi possível localizar uma aplicação apropriada."
 
@@ -3454,560 +3516,3 @@ msgstr "Mini_aplicativo:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Dir. de _Pref.:"
-
-#~ msgid "Computer"
-#~ msgstr "Computador"
-
-#~ msgid "Network"
-#~ msgstr "Rede"
-
-#~ msgid "Themes"
-#~ msgstr "Temas"
-
-#~ msgid "CD/DVD Creator"
-#~ msgstr "Criador de CD/DVD"
-
-#~ msgid "Windows Network"
-#~ msgstr "Rede Windows"
-
-#~ msgid "Services in"
-#~ msgstr "Entrada de serviços"
-
-#~ msgid "Trash"
-#~ msgstr "Lixeira"
-
-#~ msgid "%1$s on %2$s"
-#~ msgstr "%1$s em %2$s"
-
-#~ msgid "%A %B %d"
-#~ msgstr "%A, %e de %B"
-
-#~ msgid "Click to view time in other timezones"
-#~ msgstr "Clique para ver a hora em outros fusos horários"
-
-#~ msgid "Clock _type:"
-#~ msgstr "_Tipo de relógio:"
-
-#~ msgid "12 hour"
-#~ msgstr "12 horas"
-
-#~ msgid "Use _UTC"
-#~ msgstr "Usar _UTC"
-
-#~ msgid "Show multiple _timezones"
-#~ msgstr "Mostrar múltiplos fusos _horários"
-
-#~ msgid ""
-#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
-#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
-#~ "keys."
-#~ msgstr ""
-#~ "Uma lista de IDs de fuso horário. Cada ID identifica um fuso horário "
-#~ "individual. As configurações para esses fusos horários estão armazenadas "
-#~ "nas chaves $(id)_name e $(id)_zone."
-
-#~ msgid ""
-#~ "If true, display the timezone button in the clock, in addition to time."
-#~ msgstr ""
-#~ "Se verdadeiro, mostra o botão de fuso horário no relógio, além da hora."
-
-#~ msgid "Show the timezone button"
-#~ msgstr "Mostrar o botão de fuso horário"
-
-#~ msgid ""
-#~ "This key specifies the name of the timezone as can be used in the TZ "
-#~ "environment variable."
-#~ msgstr ""
-#~ "Essa chave especifica o nome do fuso horário que pode ser usado na "
-#~ "variável de ambiente TZ."
-
-#~ msgid "This key specifies the user-visible name of the timezone."
-#~ msgstr "Essa chave especifica o nome do usuário-visível do fuso horário."
-
-#~ msgid "Timezone ID list"
-#~ msgstr "Lista de IDs de fuso horário"
-
-#~ msgid "User-visible name of the timezone"
-#~ msgstr "Nome do fuso horário visível ao usuário"
-
-#~ msgid "<b>Window List Size</b>"
-#~ msgstr "<b>Tamanho da Lista de Janelas</b>"
-
-#~ msgid "Behavior"
-#~ msgstr "Comportamento"
-
-#~ msgid "M_inimum size:"
-#~ msgstr "Tamanho Mín_imo:"
-
-#~ msgid "Ma_ximum size:"
-#~ msgstr "Tamanho Má_ximo:"
-
-#~ msgid "Size"
-#~ msgstr "Tamanho"
-
-#~ msgid ""
-#~ "This key specifies the maximum width that the window list requests. The "
-#~ "maximum width setting is useful to limit the size of the window list in "
-#~ "large panels, where the window list could fill the entire space available."
-#~ msgstr ""
-#~ "Essa chave define a largura máxima da lista de janelas. A largura máxima "
-#~ "é útil para limitar o tamanho usado em painéis grandes onde a lista de "
-#~ "janelas preencheria todo o espaço disponível, como em painéis de canto."
-
-#~ msgid "This key specifies the minimum width that the window list requests."
-#~ msgstr ""
-#~ "Essa chave especifica o tamanho mínimo que a lista de jarefas requisita."
-
-#~ msgid "File"
-#~ msgstr "Arquivo"
-
-#~ msgid ""
-#~ "I've detected a panel already running,\n"
-#~ "and will now exit."
-#~ msgstr ""
-#~ "Detectei um painel já em execução,\n"
-#~ "e vou sair agora."
-
-#~ msgid "Delete Drawer"
-#~ msgstr "Excluir Gaveta"
-
-#~ msgid "Delete Panel"
-#~ msgstr "Excluir Painel"
-
-#~ msgid "Orientation"
-#~ msgstr "Orientação"
-
-#~ msgid "The orientation of the tray."
-#~ msgstr "A orientação da bandeja."
-
-#~ msgid "Could not load icon"
-#~ msgstr "Não foi possível carregar ícone"
-
-#~ msgid "Find files, folders, and documents on your computer"
-#~ msgstr "Localiza arquivos, pastas e documentos no computador"
-
-#~ msgid "Empty"
-#~ msgstr "Vazio"
-
-#~ msgid "Could not save launcher to disk"
-#~ msgstr "Não foi possível salvar o lançador no disco"
-
-#~ msgid "You have to specify a name."
-#~ msgstr "Você precisa especificar um nome."
-
-#~ msgid "You have to specify a valid URL or command."
-#~ msgstr "Você precisa especificar uma URL ou comando válido."
-
-#~ msgid "Could not save changes to launcher"
-#~ msgstr "Não foi possível salvar as alterações feitas ao lançador"
-
-#~ msgid "Menu"
-#~ msgstr "Menu"
-
-#~ msgid "You do not have permission to write to this location."
-#~ msgstr "Você não tem permissão para escrever neste local."
-
-#~ msgid "_Delete This Panel..."
-#~ msgstr "_Excluir Este Painel..."
-
-#~ msgid "Desktop Environment|Desktop"
-#~ msgstr "Desktop"
-
-#~ msgid "Could not load menu item"
-#~ msgstr "Não foi possível carregar o item do menu"
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "Details: %s"
-#~ msgstr "Detalhes: %s"
-
-#~ msgid "_Reboot"
-#~ msgstr "_Reiniciar"
-
-#~ msgid "Take Screenshot..."
-#~ msgstr "Capturar Imagem da Tela..."
-
-#~ msgid "Take a screenshot of your desktop"
-#~ msgstr "Captura uma imagem da sua tela"
-
-#~ msgid "Launch a program that is already in the GNOME menu"
-#~ msgstr "Lança um programa que já está no menu do GNOME"
-
-#~ msgid ""
-#~ "Open and search local, remote and recently-used documents and folders"
-#~ msgstr "Abrir e procurar arquivos e pastas"
-
-#~ msgid "Top"
-#~ msgstr "Topo"
-
-#~ msgid "Bottom"
-#~ msgstr "Fundo"
-
-#~ msgid "Left"
-#~ msgstr "Esquerda"
-
-#~ msgid "Right"
-#~ msgstr "Direita"
-
-#~ msgid "24"
-#~ msgstr "24"
-
-#~ msgid "This launch icon does not specify a url to show."
-#~ msgstr "Este ícone de lançador não especifica uma URL a ser exibida."
-
-#~ msgid "Cannot save menu item to disk"
-#~ msgstr "Não é possível salvar o item de menu no disco"
-
-#~ msgid ""
-#~ "You can not create a new launcher at this location since the location is "
-#~ "not writable."
-#~ msgstr ""
-#~ "Você não pode criar um novo lançador nessa localização já que você não "
-#~ "pode gravar ela."
-
-#~ msgid "_Kill Screensaver Daemon"
-#~ msgstr "_Terminar Servidor de Proteção de Tela"
-
-#~ msgid "Restart _Screensaver Daemon"
-#~ msgstr "Reiniciar _Servidor de Proteção de Tela"
-
-#~ msgid "You cannot remove your last panel."
-#~ msgstr "Você não pode remover seu último painel."
-
-#~ msgid "Cannot load entry"
-#~ msgstr "Não foi possível carregar a entrada"
-
-#~ msgid "Display \"Run Application\" dialog keybinding"
-#~ msgstr "Mostra a combinação de teclas de \"Executar Aplicação\""
-
-#~ msgid "Enable keybindings"
-#~ msgstr "Habilita associação de teclas"
-
-#~ msgid "FIXME - is this resolved with the new menu stuff"
-#~ msgstr "FIXME - isso é resolvido com as novas coisas de menu?"
-
-#~ msgid "FIXME - need to define limits"
-#~ msgstr "FIXME - é necessário definir limites"
-
-#~ msgid "If true, panel-specific keybindings are enabled."
-#~ msgstr ""
-#~ "Se verdadeiro, associações de teclas específicas do painel são "
-#~ "habilitadas."
-
-#~ msgid "Popup panel menu keybinding"
-#~ msgstr "Associação de teclas para abrir menu do painel"
-
-#~ msgid "Take screenshot"
-#~ msgstr "Captura imagem da tela"
-
-#~ msgid "Take window screenshot"
-#~ msgstr "Captura imagem de janela"
-
-#~ msgid "none"
-#~ msgstr "nenhum"
-
-#~ msgid "file not found"
-#~ msgstr "arquivo não encontrado"
-
-#~ msgid "No Windows Open"
-#~ msgstr "Nenhuma Janela Aberta"
-
-#~ msgid "Tool to switch between windows"
-#~ msgstr "Ferramenta para alternar entre janelas"
-
-#~ msgid "Desktop"
-#~ msgstr "Área de trabalho"
-
-#~ msgid "Workspace Selector"
-#~ msgstr "Seletor de Espaços de Trabalho"
-
-#~ msgid "_Lock"
-#~ msgstr "_Bloquear"
-
-#~ msgid "Un_lock"
-#~ msgstr "Des_bloquear"
-
-#~ msgid "Lock screen"
-#~ msgstr "Travar tela"
-
-#~ msgid "Add to %s"
-#~ msgstr "Adicionar a %s"
-
-#~ msgid "Add to the panel"
-#~ msgstr "Adicionar ao painel"
-
-#~ msgid "About GNOME"
-#~ msgstr "Sobre o GNOME"
-
-#~ msgid "About _GNOME"
-#~ msgstr "Sobre o _GNOME"
-
-#~ msgid "Actions"
-#~ msgstr "Ações"
-
-#~ msgid "Workspace List"
-#~ msgstr "Lista de Espaços de Trabalho"
-
-#~ msgid "Specify a profile name to load"
-#~ msgstr "Especifica um perfil para carregar"
-
-#~ msgid "Could not get file name from path: %s"
-#~ msgstr "Não foi possível encontrar o arquivo através do caminho: %s"
-
-#~ msgid "Remove this item"
-#~ msgstr "Remover este item"
-
-#~ msgid "Add new item to this menu"
-#~ msgstr "Adicionar novo item a este menu"
-
-#~ msgid "Properties"
-#~ msgstr "Propriedades"
-
-#~ msgid ""
-#~ "The default application for this type of file cannot handle remote files"
-#~ msgstr ""
-#~ "A aplicação padrão para esse tipo de arquivo não consegue lidar com "
-#~ "arquivos remotos"
-
-#~ msgid "Unable to get the name of the command to execute"
-#~ msgstr "Não pude obter o nome do comando a ser executado"
-
-#~ msgid ""
-#~ "You do not have fortune installed or you have not specified a program to "
-#~ "run.\n"
-#~ "\n"
-#~ "Please refer to fish properties dialog."
-#~ msgstr ""
-#~ "Você não possui fortune instalado ou você não especificou um programa "
-#~ "para executar.\n"
-#~ "\n"
-#~ "Por favor, olhe a caixa de diálogo de propriedades do peixe."
-
-#~ msgid "Debian GNU/Linux"
-#~ msgstr "Debian GNU/Linux"
-
-#~ msgid "Debian Menu"
-#~ msgstr "Menu Debian"
-
-#~ msgid "SuSE Linux"
-#~ msgstr "SuSE Linux"
-
-#~ msgid "SuSE Menu"
-#~ msgstr "Menu SuSE"
-
-#~ msgid "Solaris"
-#~ msgstr "Solaris"
-
-#~ msgid ""
-#~ "Unable to initialize png structure.\n"
-#~ "You probably have a bad version of libpng on your system"
-#~ msgstr ""
-#~ "Não foi possível iniciar a estrutura png.\n"
-#~ "Você provavelmente possui uma versão inválida da libpng em seu sistema"
-
-#~ msgid ""
-#~ "Unable to create png info.\n"
-#~ "You probably have a bad version of libpng on your system"
-#~ msgstr ""
-#~ "Não foi possível criar informação png.\n"
-#~ "Você provavelmente possui uma versão inválida da libpng em seu sistema"
-
-#~ msgid ""
-#~ "Unable to set png info.\n"
-#~ "You probably have a bad version of libpng on your system"
-#~ msgstr ""
-#~ "Não foi possível atribuir informação png.\n"
-#~ "Você provavelmente possui uma versão inválida da libpng em seu sistema"
-
-#~ msgid ""
-#~ "Insufficient memory to save the screenshot.\n"
-#~ "Please free up some resources and try again."
-#~ msgstr ""
-#~ "Memória insufiente para salvar a tela capturada.\n"
-#~ "Por favor, libere alguns recursos e tente novamente."
-
-#~ msgid "File %s already exists. Overwrite?"
-#~ msgstr "O arquivo %s já existe. Sobrescrever?"
-
-#~ msgid ""
-#~ "Unable to create the file:\n"
-#~ "\"%s\"\n"
-#~ "Please check your permissions of the parent directory"
-#~ msgstr ""
-#~ "Não é possível criar arquivo:\n"
-#~ "\"%s\"\n"
-#~ "Por favor, verifique as permissões do diretório pai"
-
-#~ msgid "Screenshot-%s.png"
-#~ msgstr "TelaCapturada-%s.png"
-
-#~ msgid "Screenshot.png"
-#~ msgstr "TelaCapturada.png"
-
-#~ msgid "Screenshot-%s-%d.png"
-#~ msgstr "TelaCapturada-%s-%d.png"
-
-#~ msgid "Screenshot-%d.png"
-#~ msgstr "TelaCapturada-%d.png"
-
-#~ msgid "Not enough room to write file %s"
-#~ msgstr "Sem espaço para gravar o arquivo %s"
-
-#~ msgid ""
-#~ "There was an error displaying help: \n"
-#~ "%s"
-#~ msgstr ""
-#~ "Houve um erro ao mostrar a ajuda: \n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Glade file for the screenshot program is missing.\n"
-#~ "Please check your installation of gnome-panel"
-#~ msgstr ""
-#~ "O arquivo glade para o programa de captura de telas está faltando.\n"
-#~ "Verifique a sua instalação do gnome-panel"
-
-#~ msgid "Unable to take a screenshot of the current desktop."
-#~ msgstr "Não é possível capturar a tela da área de trabalho atual."
-
-#~ msgid "Save screenshot to _web page (save in %s)"
-#~ msgstr "Salvar tela capturada em página _web (salvar em %s)"
-
-#~ msgid "Grab a window instead of the entire screen"
-#~ msgstr "Capturar uma janela em vez de a tela inteira"
-
-#~ msgid "Take screenshot after specified delay [in seconds]"
-#~ msgstr ""
-#~ "Capturar a tela depois do tempo de espera especificado [em segundos]"
-
-#~ msgid "<b>Preview</b>"
-#~ msgstr "<b>Visualização</b>"
-
-#~ msgid "Save Screenshot"
-#~ msgstr "Salvar Tela Capturada"
-
-#~ msgid "Save screenshot to _desktop"
-#~ msgstr "Salvar _tela capturada na área de trabalho"
-
-#~ msgid "Save screenshot to _file:"
-#~ msgstr "Salvar tela capturada no _arquivo:"
-
-#~ msgid "Save screenshot to _web page (save in ~/public__html)"
-#~ msgstr "Salvar tela capturada em página _web (salvar em ~/public__html)"
-
-#~ msgid ""
-#~ "The user's directory in which screenshots should be saved so as to appear "
-#~ "on the web."
-#~ msgstr ""
-#~ "O diretório do usuário em que as telas capturadas devem ser salvas para "
-#~ "aparecerem na web."
-
-#~ msgid ""
-#~ "The \"%s\" applet appears to have died unexpectedly.\n"
-#~ "\n"
-#~ "Do you want to reload this applet?"
-#~ msgstr ""
-#~ "O mini-aplicativo \"%s\" parece ter terminado inesperadamente.\n"
-#~ "\n"
-#~ "Você quer recarregar esse mini-aplicativo?"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "(If you choose not to reload it at this time you can always add it by "
-#~ "right clicking on the panel and clicking on the \"Add to Panel\" submenu)"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "(Se você escolher não recarregá-lo agora você sempre pode adicioná-lo "
-#~ "clicando com o botão direito no painel e clicando no submenu \"Adicionar "
-#~ "ao Painel\")"
-
-#~ msgid "Unable to load panel stock icon '%s'\n"
-#~ msgstr "Não foi possível carregar o ícone padrão do painel '%s'\n"
-
-#~ msgid "Size:"
-#~ msgstr "Tamanho:"
-
-#~ msgid ""
-#~ "The system administrator has disallowed\n"
-#~ "modification of the panel configuration"
-#~ msgstr ""
-#~ "O administrador do sistema desautorizou\n"
-#~ "modificações na configuração do painel"
-
-#~ msgid "Error loading glade file %s"
-#~ msgstr "Erro ao carregar o arquivo glade %s"
-
-#~ msgid "Select preferences for all your panels"
-#~ msgstr "Selecione as preferências para todos os seus painéis"
-
-#~ msgid "Animation _speed:"
-#~ msgstr "Velocidade da _animação:"
-
-#~ msgid "Close _drawer when launcher is clicked"
-#~ msgstr "Fechar _gaveta caso um lançador interno seja clicado"
-
-#~ msgid "Drawer and panel _animation"
-#~ msgstr "_Animação de gavetas e painéis"
-
-#~ msgid "Fast"
-#~ msgstr "Rápida"
-
-#~ msgid "Panel Preferences"
-#~ msgstr "Preferências do Painel"
-
-#~ msgid "Slow"
-#~ msgstr "Lenta"
-
-#~ msgid "Lock the screen so that you can temporarily leave your computer"
-#~ msgstr ""
-#~ "Trava a tela de modo que você possa deixar temporariamente o seu "
-#~ "computador"
-
-#~ msgid "Log out of GNOME"
-#~ msgstr "Sair do GNOME"
-
-#~ msgid "Search for Files"
-#~ msgstr "Procurar por Arquivos"
-
-#~ msgid "Screenshot"
-#~ msgstr "Captura de Tela"
-
-#~ msgid "Lock"
-#~ msgstr "Travar Tela"
-
-#~ msgid "Lock the screen so you can temporarily leave your computer"
-#~ msgstr ""
-#~ "Trava a tela para que você possa deixar temporariamente o seu computador"
-
-#~ msgid "Run"
-#~ msgstr "Executar"
-
-#~ msgid "Run a command"
-#~ msgstr "Executa um comando"
-
-#~ msgid "Accessories"
-#~ msgstr "Acessórios"
-
-#~ msgid "Amusements"
-#~ msgstr "Diversões"
-
-#~ msgid "Utility"
-#~ msgstr "Utilitários"
-
-#~ msgid "Clear recent document history?"
-#~ msgstr "Documentos Recentes"
-
-#~ msgid "Launcher from menu"
-#~ msgstr "Lançador a partir do menu"
-
-#~ msgid "Cannot add to run box"
-#~ msgstr "Não foi possível adicionar à caixa de diálogo Executar"
-
-#~ msgid "No 'Exec' or 'URL' field in entry"
-#~ msgstr "Não há campo 'Exec' ou 'URL' na entrada"
-
-#~ msgid "Error reading GConf list value '%s': %s"
-#~ msgstr "Erro ao ler valor lista do GConf '%s': %s"
