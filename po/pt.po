@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.22\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-19 07:59+0000\n"
-"PO-Revision-Date: 2008-02-19 08:00+0000\n"
+"POT-Creation-Date: 2008-02-22 14:29+0000\n"
+"PO-Revision-Date: 2008-02-22 22:22+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Português <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -60,7 +60,7 @@ msgid "_Preferences"
 msgstr "_Preferências"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4101
+#: ../applets/clock/clock.c:4102
 msgid "Clock"
 msgstr "Relógio"
 
@@ -86,7 +86,7 @@ msgstr "%l:%M %p"
 #. * There should be little need to translate this string.
 #.
 #: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1552 ../applets/clock/clock-location-tile.c:425
+#: ../applets/clock/clock.c:1553 ../applets/clock/clock-location-tile.c:485
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -135,7 +135,7 @@ msgstr "Calendário"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1550
+#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1551
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -193,40 +193,40 @@ msgstr "Clique para esconder o calendário do mês"
 msgid "Click to view month calendar"
 msgstr "Clique para visualizar o calendário do mês"
 
-#: ../applets/clock/clock.c:1400
+#: ../applets/clock/clock.c:1401
 msgid "Computer Clock"
 msgstr "Relógio Informático"
 
-#: ../applets/clock/clock.c:1545
+#: ../applets/clock/clock.c:1546
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1547
+#: ../applets/clock/clock.c:1548
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1589
+#: ../applets/clock/clock.c:1590
 msgid "%A, %B %d %Y"
 msgstr "%A, %d de %B de %Y"
 
-#: ../applets/clock/clock.c:1664
+#: ../applets/clock/clock.c:1665
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Falha ao iniciar a ferramenta de configuração de hora: %s"
 
-#: ../applets/clock/clock.c:1693
+#: ../applets/clock/clock.c:1694
 msgid "Set System Time..."
 msgstr "Definir a Hora do Sistema..."
 
-#: ../applets/clock/clock.c:1694 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1695 ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr "Definir a Hora do Sistema"
 
-#: ../applets/clock/clock.c:1708
+#: ../applets/clock/clock.c:1709
 msgid "Failed to set the system time"
 msgstr "Falha ao definir a hora do sistema"
 
-#: ../applets/clock/clock.c:1881
+#: ../applets/clock/clock.c:1882
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -234,46 +234,46 @@ msgstr ""
 "Falha ao localizar uma aplicação para configurar a data e hora. Talvez não "
 "esteja nenhuma instalada?"
 
-#: ../applets/clock/clock.c:2746
+#: ../applets/clock/clock.c:2747
 msgid "Custom format"
 msgstr "Formato personalizado"
 
-#: ../applets/clock/clock.c:3544 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:3545 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:584
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3802
+#: ../applets/clock/clock.c:3803
 msgid "City Name"
 msgstr "Nome da Cidade"
 
-#: ../applets/clock/clock.c:3806
+#: ../applets/clock/clock.c:3807
 msgid "City Time Zone"
 msgstr "Fuso-Horário da Cidade"
 
-#: ../applets/clock/clock.c:3997
+#: ../applets/clock/clock.c:3998
 msgid "24 hour"
 msgstr "24 horas"
 
-#: ../applets/clock/clock.c:3998
+#: ../applets/clock/clock.c:3999
 msgid "UNIX time"
 msgstr "Hora UNIX"
 
-#: ../applets/clock/clock.c:3999
+#: ../applets/clock/clock.c:4000
 msgid "Internet time"
 msgstr "Hora Internet"
 
-#: ../applets/clock/clock.c:4007
+#: ../applets/clock/clock.c:4008
 msgid "Custom _format:"
 msgstr "_Formato personalizado:"
 
-#: ../applets/clock/clock.c:4104
+#: ../applets/clock/clock.c:4105
 msgid "The Clock displays the current time and date"
 msgstr "O Relógio apresenta a data e hora actuais"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4107 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4108 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -628,19 +628,21 @@ msgstr "Utilizar UTC"
 msgid "Unknown Location"
 msgstr "Localização Desconhecida"
 
-#: ../applets/clock/clock-location-tile.c:187
+#: ../applets/clock/clock-location-tile.c:194
 msgid "Failed to set the system timezone"
 msgstr "Falha ao definir o fuso-horário do sistema"
 
-#: ../applets/clock/clock-location-tile.c:221
+#: ../applets/clock/clock-location-tile.c:239
+#: ../applets/clock/clock-location-tile.c:314
 msgid "<small>Set...</small>"
 msgstr "<small>Definir...</small>"
 
-#: ../applets/clock/clock-location-tile.c:222
+#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:315
 msgid "<small>Set</small>"
 msgstr "<small>Definir</small>"
 
-#: ../applets/clock/clock-location-tile.c:283
+#: ../applets/clock/clock-location-tile.c:320
 msgid "Set as current timezone for this computer"
 msgstr "Definir como o fuso-horário actual deste computador"
 
@@ -650,7 +652,7 @@ msgstr "Definir como o fuso-horário actual deste computador"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:398
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -660,7 +662,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:407
+#: ../applets/clock/clock-location-tile.c:467
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -669,22 +671,22 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:417
+#: ../applets/clock/clock-location-tile.c:477
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:529
-#: ../applets/clock/clock-location-tile.c:535
+#: ../applets/clock/clock-location-tile.c:594
+#: ../applets/clock/clock-location-tile.c:600
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: ../applets/clock/clock-location-tile.c:530
+#: ../applets/clock/clock-location-tile.c:595
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, parece %s"
 
-#: ../applets/clock/clock-location-tile.c:540
+#: ../applets/clock/clock-location-tile.c:605
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Nascer do sol: %s / Pôr do sol: %s"
@@ -694,6 +696,30 @@ msgstr "Nascer do sol: %s / Pôr do sol: %s"
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Ocorreu um erro ao apresentar a ajuda: %s"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "Alterar a hora do sistema"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "Alterar o fuso-horário do sistema"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "Configurar o relógio físico (hardware)"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "São necessários privilégios para alterar o fuso-horário do sistema."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "São necessários privilégios para alterar a hora do sistema."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "São necessários privilégios para configurar o relógio físico (hardware)."
 
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -1398,17 +1424,17 @@ msgstr "[FICHEIRO...]"
 msgid "- Edit .desktop files"
 msgstr "- Editar ficheiros .desktop"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:142
-#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:981
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "Criar Iniciador"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:169
-#: ../gnome-panel/gnome-desktop-item-edit.c:192
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "Propriedades do Directório"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:819
+#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "Propriedades do Iniciador"
 
@@ -1446,6 +1472,7 @@ msgid "Could not use dropped item"
 msgstr "Incapaz de utilizar o item largado"
 
 #: ../gnome-panel/launcher.c:501
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Nenhum URI indicado para o ficheiro de área do iniciador de painel\n"
 
@@ -1678,6 +1705,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "Procurar um _item para adicionar a \"%s\":"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "Adicionar à Gaveta"
 
@@ -1686,6 +1714,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "Procurar um _item para adicionar à gaveta:"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "Adicionar ao Painel"
 
@@ -2638,6 +2667,7 @@ msgid "pixels"
 msgstr "pixels"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "Incapaz de encontrar uma aplicação adequada."
 
