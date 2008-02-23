@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-19 23:03+0100\n"
-"PO-Revision-Date: 2008-02-19 23:05+0100\n"
+"POT-Creation-Date: 2008-02-22 12:53+0100\n"
+"PO-Revision-Date: 2008-02-22 12:57+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "Kopiera _datum"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:3
 msgid "Copy _Time"
-msgstr "Kopiera _tid"
+msgstr "Kopi_era tid"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:4
 #: ../applets/fish/GNOME_FishApplet.xml.h:1
@@ -66,7 +66,7 @@ msgid "_Preferences"
 msgstr "_Inställningar"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4101
+#: ../applets/clock/clock.c:4102
 msgid "Clock"
 msgstr "Klocka"
 
@@ -94,8 +94,8 @@ msgstr "%k.%M"
 #.
 #: ../applets/clock/calendar-window.c:244
 #: ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1552
-#: ../applets/clock/clock-location-tile.c:425
+#: ../applets/clock/clock.c:1553
+#: ../applets/clock/clock-location-tile.c:485
 msgid "%H:%M"
 msgstr "%H.%M"
 
@@ -146,7 +146,7 @@ msgid "%l:%M:%S %p"
 msgstr "%k.%M.%S"
 
 #: ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1550
+#: ../applets/clock/clock.c:1551
 msgid "%H:%M:%S"
 msgstr "%H.%M.%S"
 
@@ -204,85 +204,85 @@ msgstr "Klicka för att dölja månadskalendern"
 msgid "Click to view month calendar"
 msgstr "Klicka för att visa månadskalendern"
 
-#: ../applets/clock/clock.c:1400
+#: ../applets/clock/clock.c:1401
 msgid "Computer Clock"
 msgstr "Datorklocka"
 
-#: ../applets/clock/clock.c:1545
+#: ../applets/clock/clock.c:1546
 msgid "%I:%M:%S %p"
 msgstr "%k.%M.%S"
 
-#: ../applets/clock/clock.c:1547
+#: ../applets/clock/clock.c:1548
 msgid "%I:%M %p"
 msgstr "%k.%M"
 
-#: ../applets/clock/clock.c:1589
+#: ../applets/clock/clock.c:1590
 msgid "%A, %B %d %Y"
 msgstr "%A %d %B %Y"
 
-#: ../applets/clock/clock.c:1664
+#: ../applets/clock/clock.c:1665
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Misslyckades med att köra tidskonfigurationsverktyget: %s"
 
-#: ../applets/clock/clock.c:1693
+#: ../applets/clock/clock.c:1694
 msgid "Set System Time..."
 msgstr "Ställ in systemtid..."
 
-#: ../applets/clock/clock.c:1694
+#: ../applets/clock/clock.c:1695
 #: ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr "Ställ in systemtid"
 
-#: ../applets/clock/clock.c:1708
+#: ../applets/clock/clock.c:1709
 msgid "Failed to set the system time"
 msgstr "Misslyckades med att ställa in systemtiden"
 
-#: ../applets/clock/clock.c:1881
+#: ../applets/clock/clock.c:1882
 msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
 msgstr "Misslyckades med att hitta ett program för konfiguration av datumet och tiden. Kanske inga sådana är installerade?"
 
-#: ../applets/clock/clock.c:2746
+#: ../applets/clock/clock.c:2747
 msgid "Custom format"
 msgstr "Anpassat format"
 
-#: ../applets/clock/clock.c:3544
+#: ../applets/clock/clock.c:3545
 #: ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock-location-tile.c:584
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3802
+#: ../applets/clock/clock.c:3803
 msgid "City Name"
 msgstr "Stadens namn"
 
-#: ../applets/clock/clock.c:3806
+#: ../applets/clock/clock.c:3807
 msgid "City Time Zone"
 msgstr "Stadens tidszon"
 
-#: ../applets/clock/clock.c:3997
+#: ../applets/clock/clock.c:3998
 msgid "24 hour"
 msgstr "24-timmars"
 
-#: ../applets/clock/clock.c:3998
+#: ../applets/clock/clock.c:3999
 msgid "UNIX time"
 msgstr "UNIX-tid"
 
-#: ../applets/clock/clock.c:3999
+#: ../applets/clock/clock.c:4000
 msgid "Internet time"
 msgstr "Internettid"
 
-#: ../applets/clock/clock.c:4007
+#: ../applets/clock/clock.c:4008
 msgid "Custom _format:"
 msgstr "Anpassat _format:"
 
-#: ../applets/clock/clock.c:4104
+#: ../applets/clock/clock.c:4105
 msgid "The Clock displays the current time and date"
 msgstr "Klockan visar aktuell tid och datum"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4107
+#: ../applets/clock/clock.c:4108
 #: ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533
@@ -613,19 +613,21 @@ msgstr "Använd UTC"
 msgid "Unknown Location"
 msgstr "Okänd plats"
 
-#: ../applets/clock/clock-location-tile.c:187
+#: ../applets/clock/clock-location-tile.c:194
 msgid "Failed to set the system timezone"
 msgstr "Misslyckades med att ställa in systemets tidszon"
 
-#: ../applets/clock/clock-location-tile.c:221
+#: ../applets/clock/clock-location-tile.c:239
+#: ../applets/clock/clock-location-tile.c:314
 msgid "<small>Set...</small>"
 msgstr "<small>Ställ in...</small>"
 
-#: ../applets/clock/clock-location-tile.c:222
+#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:315
 msgid "<small>Set</small>"
 msgstr "<small>Ställ in</small>"
 
-#: ../applets/clock/clock-location-tile.c:283
+#: ../applets/clock/clock-location-tile.c:320
 msgid "Set as current timezone for this computer"
 msgstr "Ställ in som aktuell tidszon för denna dator"
 
@@ -635,7 +637,7 @@ msgstr "Ställ in som aktuell tidszon för denna dator"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:398
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small> (%A)</small>"
 
@@ -645,7 +647,7 @@ msgstr "%l:%M <small> (%A)</small>"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:407
+#: ../applets/clock/clock-location-tile.c:467
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -654,22 +656,22 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:417
+#: ../applets/clock/clock-location-tile.c:477
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small></small>"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:529
-#: ../applets/clock/clock-location-tile.c:535
+#: ../applets/clock/clock-location-tile.c:594
+#: ../applets/clock/clock-location-tile.c:600
 msgid "Unknown"
 msgstr "Okänt"
 
-#: ../applets/clock/clock-location-tile.c:530
+#: ../applets/clock/clock-location-tile.c:595
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, känns som %s"
 
-#: ../applets/clock/clock-location-tile.c:540
+#: ../applets/clock/clock-location-tile.c:605
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Soluppgång: %s / Solnedgång: %s"
@@ -681,6 +683,30 @@ msgstr "Soluppgång: %s / Solnedgång: %s"
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Det uppstod ett fel vid visning av hjälp: %s"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "Ändra systemtid"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "Ändra systemets tidszon"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "Konfigurera hårdvaruklocka"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "Behörighet krävs för att ändra systemets tidszon."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "Behörighet krävs för att ändra systemtiden."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "Behörighet krävs för att konfigurera hårdvaruklockan."
 
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -1311,18 +1337,18 @@ msgstr "[FIL...]"
 msgid "- Edit .desktop files"
 msgstr "- Redigera .desktop-filer"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:142
-#: ../gnome-panel/gnome-desktop-item-edit.c:198
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199
 #: ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "Skapa programstartare"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:169
-#: ../gnome-panel/gnome-desktop-item-edit.c:192
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "Katalogegenskaper"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:175
+#: ../gnome-panel/gnome-desktop-item-edit.c:176
 #: ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "Egenskaper för programstartaren"
