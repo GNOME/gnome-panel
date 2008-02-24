@@ -20,18 +20,6 @@
 #include <glib.h>
 #include "set-timezone.h"
 
-gboolean 
-set_system_timezone (const char  *filename,
-                     GError     **err)
-{
-	g_set_error (err, 
-                     G_SPAWN_ERROR, 
-                     G_SPAWN_ERROR_FAILED, 
-                     "Timezone setting is not supported");
-
-	return FALSE;
-}
-
 gint
 can_set_system_timezone (void)
 {
@@ -64,4 +52,28 @@ set_system_time_async (gint64         time,
 
 	if (notify)
 		notify (data);
+}
+
+void
+set_system_timezone_async (const gchar    *filename,
+	             	   GFunc           callback, 
+		           gpointer        d, 
+		           GDestroyNotify  notify)
+{
+	GError *error;
+
+	if (filename == NULL)
+		return;
+
+	if (callback) {
+		error = g_error_new_literal (G_SPAWN_ERROR,
+					     G_SPAWN_ERROR_FAILED,
+					     "Timezone setting is not supported");
+		callback (d, error);
+
+		g_error_free (error);
+	}
+
+	if (notify)
+		notify (d);
 }
