@@ -10,14 +10,15 @@
 # Christian Neumair <chris@gnome-de.org>, 2002-2004.
 # Hendrik Richter <hendrikr@gnome.org>, 2004, 2005, 2006, 2007.
 # Christian Kintner <mail@christian-kintner.de>, 2006.
+# Philipp Kerling <k.philipp@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-12 18:18+0100\n"
-"PO-Revision-Date: 2008-02-12 18:19+0100\n"
-"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
+"POT-Creation-Date: 2008-02-24 14:12+0100\n"
+"PO-Revision-Date: 2008-02-24 14:06+0100\n"
+"Last-Translator: Philipp Kerling <k.philipp@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,7 +68,7 @@ msgid "_Preferences"
 msgstr "_Einstellungen"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4056
+#: ../applets/clock/clock.c:4102
 msgid "Clock"
 msgstr "Uhr"
 
@@ -83,12 +84,17 @@ msgstr "Fabrik zum Erzeugen von Uhrenapplets."
 msgid "Get the current time and date"
 msgstr "Die aktuelle Zeit und das heutige Datum ermitteln"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:420
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:422
-#: ../applets/clock/clock.c:1550
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
+#: ../applets/clock/clock.c:1553 ../applets/clock/clock-location-tile.c:485
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -100,49 +106,44 @@ msgid "%b %d"
 msgstr "%d. %b"
 
 #: ../applets/clock/calendar-window.c:765
-#, fuzzy
 msgid "Tasks"
-msgstr "Auf_gaben"
+msgstr "Aufgaben"
 
 #: ../applets/clock/calendar-window.c:765
 #: ../applets/clock/calendar-window.c:938
 #: ../applets/clock/calendar-window.c:1554
 msgid "Edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 #: ../applets/clock/calendar-window.c:883
 msgid "All Day"
 msgstr "Ganztägig"
 
 #: ../applets/clock/calendar-window.c:1019
-#, fuzzy
 msgid "Appointments"
-msgstr "_Termine"
+msgstr "Termine"
 
 #: ../applets/clock/calendar-window.c:1044
-#, fuzzy
 msgid "Birthdays and Anniversaries"
-msgstr "_Geburts- und Jahrestage"
+msgstr "Geburts- und Jahrestage"
 
 #: ../applets/clock/calendar-window.c:1069
-#, fuzzy
 msgid "Weather Information"
-msgstr "_Wetterinformationen"
+msgstr "Wetterinformationen"
 
 #: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
-#, fuzzy
 msgid "Locations"
-msgstr "Ort"
+msgstr "Orte"
 
 #: ../applets/clock/calendar-window.c:1850
 msgid "Calendar"
 msgstr "Kalender"
 
-#: ../applets/clock/clock.c:420
+#: ../applets/clock/clock.c:421
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:422 ../applets/clock/clock.c:1548
+#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1551
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -151,7 +152,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:442
+#: ../applets/clock/clock.c:443
 msgid "%a %b %e"
 msgstr "%a, %d. %b"
 
@@ -159,7 +160,7 @@ msgstr "%a, %d. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:449
+#: ../applets/clock/clock.c:450
 #, c-format
 msgid ""
 "%1$s\n"
@@ -172,7 +173,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:458
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -180,61 +181,60 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:639
-#, fuzzy
+#: ../applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
-msgstr "%A, %B %d %Y"
+msgstr "%A, %d. %B (%%s)"
 
-#: ../applets/clock/clock.c:669
+#: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "Klicken um Ihre Termine und Aufgaben zu verbergen"
 
-#: ../applets/clock/clock.c:672
+#: ../applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "Klicken um Ihre Termine und Aufgaben anzuzeigen"
 
-#: ../applets/clock/clock.c:676
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "Klicken um den Monatskalender zu verbergen"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "Klicken um den Monatskalender anzuzeigen"
 
-#: ../applets/clock/clock.c:1400
+#: ../applets/clock/clock.c:1401
 msgid "Computer Clock"
 msgstr "Rechner-Uhr"
 
-#: ../applets/clock/clock.c:1543
+#: ../applets/clock/clock.c:1546
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1545
+#: ../applets/clock/clock.c:1548
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1587
+#: ../applets/clock/clock.c:1590
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1662
+#: ../applets/clock/clock.c:1665
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Das Zeit-Konfigurationswerkzeug konnte nicht gestartet werden: %s"
 
-#: ../applets/clock/clock.c:1691
+#: ../applets/clock/clock.c:1694
 msgid "Set System Time..."
-msgstr ""
+msgstr "Systemzeit setzen …"
 
-#: ../applets/clock/clock.c:1692 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1695 ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
-msgstr ""
+msgstr "Systemzeit setzen"
 
-#: ../applets/clock/clock.c:1706
+#: ../applets/clock/clock.c:1709
 msgid "Failed to set the system time"
-msgstr ""
+msgstr "Systemzeit konnte nicht gesetzt werden"
 
-#: ../applets/clock/clock.c:1879
+#: ../applets/clock/clock.c:1882
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -242,49 +242,46 @@ msgstr ""
 "Es konnte kein Programm zum Anpassen von Datum und Zeit gefunden werden. "
 "Vermutlich ist keines installiert."
 
-#: ../applets/clock/clock.c:2698
+#: ../applets/clock/clock.c:2747
 msgid "Custom format"
 msgstr "Benutzerdefiniertes Format"
 
-# CHECK "%1$s auf %2$s"?
-#: ../applets/clock/clock.c:3498 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:468
-#, fuzzy, c-format
+#: ../applets/clock/clock.c:3545 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:584
+#, c-format
 msgid "%s, %s"
-msgstr "%s - %s"
+msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3757
-#, fuzzy
+#: ../applets/clock/clock.c:3803
 msgid "City Name"
-msgstr "Name"
+msgstr "Stadtname"
 
-#: ../applets/clock/clock.c:3761
-#, fuzzy
+#: ../applets/clock/clock.c:3807
 msgid "City Time Zone"
-msgstr "Zeitzonen bearbeiten"
+msgstr "Stadt-Zeitzone"
 
-#: ../applets/clock/clock.c:3952
+#: ../applets/clock/clock.c:3998
 msgid "24 hour"
 msgstr "24 Stunden"
 
-#: ../applets/clock/clock.c:3953
+#: ../applets/clock/clock.c:3999
 msgid "UNIX time"
 msgstr "UNIX-Zeit"
 
-#: ../applets/clock/clock.c:3954
+#: ../applets/clock/clock.c:4000
 msgid "Internet time"
 msgstr "Internet-Zeit"
 
-#: ../applets/clock/clock.c:3962
+#: ../applets/clock/clock.c:4008
 msgid "Custom _format:"
 msgstr "_Benutzerdefiniertes Format"
 
-#: ../applets/clock/clock.c:4059
+#: ../applets/clock/clock.c:4105
 msgid "The Clock displays the current time and date"
 msgstr "Die Uhr zeigt die aktuelle Uhrzeit und das heutige Datum an"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4062 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4108 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -299,40 +296,37 @@ msgstr ""
 "Jörgen Scheibengruber <mfcn@gmx.de>\n"
 "Matthias Warkus <mawarkus@gnome.org>\n"
 "Hendrik Richter <hendrikr@gnome.org>\n"
-"Christian Kintner <mail@christian-kintner.de>"
+"Christian Kintner <mail@christian-kintner.de>\n"
+"Philipp Kerling <k.philipp@gmail.com>"
 
+# CHECK: Besser Stunden-Format?
 #: ../applets/clock/clock.glade.h:1
-#, fuzzy
 msgid "12 _hour format"
-msgstr "Stundenformat"
+msgstr "12-_Stundenformat"
 
 #: ../applets/clock/clock.glade.h:2
-#, fuzzy
 msgid "24 h_our format"
-msgstr "Stundenformat"
+msgstr "24-S_tundenformat"
 
 #: ../applets/clock/clock.glade.h:3
-#, fuzzy
 msgid "<b>Clock Options</b>"
-msgstr "<b>Ort:</b> %s"
+msgstr "<b>Uhreinstellungen</b>"
 
 #: ../applets/clock/clock.glade.h:4
-#, fuzzy
 msgid "<b>Display</b>"
-msgstr "<b>Arbeitsflächen</b>"
+msgstr "<b>Anzeige</b>"
 
 #: ../applets/clock/clock.glade.h:5
 msgid "<b>Panel Display</b>"
-msgstr ""
+msgstr "<b>Panel-Anzeige</b>"
 
 #: ../applets/clock/clock.glade.h:6
-#, fuzzy
 msgid "<b>Time Settings</b>"
-msgstr "<b>Animation</b>"
+msgstr "<b>Zeiteinstellungen</b>"
 
 #: ../applets/clock/clock.glade.h:7
 msgid "<i>(optional)</i>"
-msgstr ""
+msgstr "<i>(optional)</i>"
 
 #: ../applets/clock/clock.glade.h:8
 msgid "Clock Preferences"
@@ -340,21 +334,23 @@ msgstr "Einstellungen der Uhr"
 
 #: ../applets/clock/clock.glade.h:9
 msgid "Current Time:"
-msgstr ""
+msgstr "Aktuelle Zeit:"
 
 #: ../applets/clock/clock.glade.h:10
 msgid ""
 "East\n"
 "West"
 msgstr ""
+"Ost\n"
+"West"
 
 #: ../applets/clock/clock.glade.h:12
 msgid "Find _Next"
-msgstr ""
+msgstr "_Nächsten suchen"
 
 #: ../applets/clock/clock.glade.h:13
 msgid "Find..."
-msgstr ""
+msgstr "Suchen …"
 
 #: ../applets/clock/clock.glade.h:14
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
@@ -363,86 +359,79 @@ msgstr "Allgemein"
 
 #: ../applets/clock/clock.glade.h:15
 msgid "Latitude:"
-msgstr ""
+msgstr "Breitengrad:"
 
 #: ../applets/clock/clock.glade.h:16
-#, fuzzy
 msgid "Location Name:"
-msgstr "_Ort:"
+msgstr "Ort:"
 
 #: ../applets/clock/clock.glade.h:18
 msgid "Longitude:"
-msgstr ""
+msgstr "Längengrad:"
 
 #: ../applets/clock/clock.glade.h:19
 msgid ""
 "North\n"
 "South"
 msgstr ""
+"Nord\n"
+"Süd"
 
 #: ../applets/clock/clock.glade.h:22
-#, fuzzy
 msgid "Show _temperature"
-msgstr "_Datum anzeigen"
+msgstr "_Temperatur anzeigen"
 
 #: ../applets/clock/clock.glade.h:23
-#, fuzzy
 msgid "Show _weather"
-msgstr "_Datum anzeigen"
+msgstr "_Wetter anzeigen"
 
 #: ../applets/clock/clock.glade.h:24
-#, fuzzy
 msgid "Show seco_nds"
 msgstr "_Sekunden anzeigen"
 
 #: ../applets/clock/clock.glade.h:25
-#, fuzzy
 msgid "Show the _date"
 msgstr "_Datum anzeigen"
 
 #: ../applets/clock/clock.glade.h:26
 msgid "Time Settings"
-msgstr ""
+msgstr "Zeiteinstellungen"
 
 #: ../applets/clock/clock.glade.h:27
 msgid "Time _Settings"
-msgstr ""
+msgstr "Zeit_einstellungen"
 
 #: ../applets/clock/clock.glade.h:28
-#, fuzzy
 msgid "Time:"
-msgstr "Zeitzone"
+msgstr "Zeit:"
 
 #: ../applets/clock/clock.glade.h:29
-#, fuzzy
 msgid "Timezone:"
-msgstr "Zeitzone"
+msgstr "Zeitzone:"
 
 #: ../applets/clock/clock.glade.h:30
 msgid "Weather"
-msgstr ""
+msgstr "Wetter"
 
 #: ../applets/clock/clock.glade.h:31
-#, fuzzy
 msgid "_Find:"
-msgstr "_Datei:"
+msgstr "_Suchen:"
 
 #: ../applets/clock/clock.glade.h:32
-#, fuzzy
 msgid "_Pressure unit:"
-msgstr "_Einstellungsverzeichnis:"
+msgstr "_Luftdruckeinheit:"
 
 #: ../applets/clock/clock.glade.h:33
 msgid "_Temperature unit:"
-msgstr ""
+msgstr "_Temperatureinheit:"
 
 #: ../applets/clock/clock.glade.h:34
 msgid "_Visibility unit:"
-msgstr ""
+msgstr "_Sichtweiteneinheit:"
 
 #: ../applets/clock/clock.glade.h:35
 msgid "_Wind speed unit:"
-msgstr ""
+msgstr "_Windgeschwindigkeitseinheit:"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -458,13 +447,9 @@ msgstr ""
 msgid "24-hour"
 msgstr "24-hour"
 
-# CHECK
 #: ../applets/clock/clock.schemas.in.h:12
-#, fuzzy
 msgid "A list of locations to display in the calendar window."
-msgstr ""
-"Falls dieser Schlüssel WAHR ist, wird die Liste der Geburtstage im Kalender "
-"angezeigt."
+msgstr "Eine Liste der im Kalenderfenster anzuzeigenden Orte."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -479,9 +464,8 @@ msgid "Expand list of birthdays"
 msgstr "Liste mit Geburtstagen ausklappen"
 
 #: ../applets/clock/clock.schemas.in.h:16
-#, fuzzy
 msgid "Expand list of locations"
-msgstr "Liste mit Aufgaben ausklappen"
+msgstr "Liste mit Orten ausklappen"
 
 #: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
@@ -496,10 +480,8 @@ msgid "Hour format"
 msgstr "Stundenformat"
 
 #: ../applets/clock/clock.schemas.in.h:20
-#, fuzzy
 msgid "If true, display a weather icon."
-msgstr ""
-"Falls dieser Schlüssel WAHR ist, wird die Zeit sekundengenau angezeigt."
+msgstr "Legt fest, ob ein Wettersymbol angezeigt wird."
 
 #: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
@@ -532,13 +514,9 @@ msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird die Liste der Geburtstage im Kalender "
 "angezeigt."
 
-# CHECK
 #: ../applets/clock/clock.schemas.in.h:26
-#, fuzzy
 msgid "If true, expand the list of locations in the calendar window."
-msgstr ""
-"Falls dieser Schlüssel WAHR ist, wird die Liste der Aufgaben im Kalender "
-"angezeigt."
+msgstr "Legt fest, ob die Liste der Orte im Kalenderfenster ausgeklappt ist."
 
 # CHECK
 #: ../applets/clock/clock.schemas.in.h:27
@@ -560,11 +538,9 @@ msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird das Datum in einer Minihilfe "
 "angezeigt, wenn sich die Maus über der Uhr befindet?"
 
-# CHECK
 #: ../applets/clock/clock.schemas.in.h:30
-#, fuzzy
 msgid "If true, show the temperature next to the weather icon."
-msgstr "Wenn »true«, werden die Wochennummern im Kalender angezeigt."
+msgstr "Legt fest, ob die Temperatur neben dem Wettersymbol angezeigt wird."
 
 # CHECK
 #: ../applets/clock/clock.schemas.in.h:31
@@ -572,9 +548,8 @@ msgid "If true, show week numbers in the calendar."
 msgstr "Wenn »true«, werden die Wochennummern im Kalender angezeigt."
 
 #: ../applets/clock/clock.schemas.in.h:32
-#, fuzzy
 msgid "List of locations"
-msgstr "Liste bekannter Anwendungen"
+msgstr "Liste der Orte"
 
 #: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
@@ -585,18 +560,16 @@ msgid "Show date in tooltip"
 msgstr "Datum in Minihilfe anzeigen"
 
 #: ../applets/clock/clock.schemas.in.h:35
-#, fuzzy
 msgid "Show temperature in clock"
-msgstr "Datum in Uhr anzeigen"
+msgstr "Die Temperatur in der Uhr anzeigen"
 
 #: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "Zeit sekundengenau anzeigen"
 
 #: ../applets/clock/clock.schemas.in.h:37
-#, fuzzy
 msgid "Show weather in clock"
-msgstr "Datum in Uhr anzeigen"
+msgstr "Das Wetter in der Uhr anzeigen"
 
 #: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
@@ -604,19 +577,19 @@ msgstr "Wochennummern im Kalender anzeigen"
 
 #: ../applets/clock/clock.schemas.in.h:39
 msgid "Speed unit"
-msgstr ""
+msgstr "Geschwindigkeitseinheit"
 
 #: ../applets/clock/clock.schemas.in.h:40
 msgid "Temperature unit"
-msgstr ""
+msgstr "Temperatureinheit"
 
 #: ../applets/clock/clock.schemas.in.h:41
 msgid "The unit to use when showing temperatures."
-msgstr ""
+msgstr "Die für die Anzeige von Temperaturen zu benutzende Einheit."
 
 #: ../applets/clock/clock.schemas.in.h:42
 msgid "The unit to use when showing wind speed."
-msgstr ""
+msgstr "Die für die Anzeige der Windgeschwindigkeit zu benutzende Einheit."
 
 #: ../applets/clock/clock.schemas.in.h:43
 msgid ""
@@ -680,44 +653,71 @@ msgstr "UTC verwenden"
 #. make a fake location with a null TZ
 #. make a fake location with the current TZ
 #: ../applets/clock/clock-location.c:364 ../applets/clock/clock-location.c:371
-#, fuzzy
 msgid "Unknown Location"
-msgstr "Ort"
+msgstr "Unbekannter Ort"
 
-#: ../applets/clock/clock-location-tile.c:198
-#, fuzzy
+#: ../applets/clock/clock-location-tile.c:194
 msgid "Failed to set the system timezone"
-msgstr "Name der Zeitzone"
+msgstr "Systemzeitzone konnte nicht gesetzt werden"
 
-#: ../applets/clock/clock-location-tile.c:223
-#, fuzzy
+#: ../applets/clock/clock-location-tile.c:239
+#: ../applets/clock/clock-location-tile.c:314
 msgid "<small>Set...</small>"
-msgstr "<small>Deckend</small>"
+msgstr "<small>Setzen …</small>"
 
-#: ../applets/clock/clock-location-tile.c:224
-#, fuzzy
+#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:315
 msgid "<small>Set</small>"
-msgstr "<small>Deckend</small>"
+msgstr "<small>Setzen</small>"
 
-#: ../applets/clock/clock-location-tile.c:285
+#: ../applets/clock/clock-location-tile.c:320
 msgid "Set as current timezone for this computer"
-msgstr ""
+msgstr "Als aktuelle Zeitzone für diesen Rechner einstellen"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:458
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:467
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:477
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:478
-#: ../applets/clock/clock-location-tile.c:484
+#: ../applets/clock/clock-location-tile.c:594
+#: ../applets/clock/clock-location-tile.c:600
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
-#: ../applets/clock/clock-location-tile.c:479
+#: ../applets/clock/clock-location-tile.c:595
 #, c-format
 msgid "%s, feels like %s"
-msgstr ""
+msgstr "%s, gefühlt %s"
 
-#: ../applets/clock/clock-location-tile.c:489
+#: ../applets/clock/clock-location-tile.c:605
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
-msgstr ""
+msgstr "Sonnenaufgang: %s / Sonnenuntergang: %s"
 
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
@@ -726,30 +726,28 @@ msgid "There was an error displaying help: %s"
 msgstr "Beim Anzeigen der Hilfe ist ein Fehler aufgetreten: %s"
 
 #: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
-#, fuzzy
 msgid "Change system time"
-msgstr "_Keiner (System-Thema verwenden)"
+msgstr "Systemzeit ändern"
 
 #: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
-#, fuzzy
 msgid "Change system time zone"
-msgstr "Name der Zeitzone"
+msgstr "Systemzeitzone ändern"
 
 #: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
 msgid "Configure hardware clock"
-msgstr ""
+msgstr "Hardwareuhr einstellen"
 
 #: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
 msgid "Privileges are required to change the system time zone."
-msgstr ""
+msgstr "Es werden Rechte für die Änderung der Systemzeitzone benötigt."
 
 #: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
 msgid "Privileges are required to change the system time."
-msgstr ""
+msgstr "Es werden Rechte für die Änderung der Systemzeit benötigt."
 
 #: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
 msgid "Privileges are required to configure the hardware clock."
-msgstr ""
+msgstr "Es werden Rechte zum Konfigurieren der Hardwareuhr benötigt."
 
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -776,7 +774,6 @@ msgstr ""
 msgid "Edit Timezones"
 msgstr "Zeitzonen bearbeiten"
 
-# CHECK "%1$s auf %2$s"?
 #. Translators: the first %s is a place and the
 #. * second is a time. Result looks like this:
 #. * Europe/Paris - 15:45
@@ -1477,17 +1474,17 @@ msgstr "[DATEI …]"
 msgid "- Edit .desktop files"
 msgstr "– .desktop-Dateien bearbeiten"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:142
-#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:981
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "Einen Starter anlegen"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:169
-#: ../gnome-panel/gnome-desktop-item-edit.c:192
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "Ordner-Eigenschaften"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:819
+#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "Starter-Eigenschaften"
 
@@ -1549,23 +1546,23 @@ msgstr "Schlüssel %s ist nicht festgelegt; Starter kann nicht geladen werden\n"
 msgid "Could not save launcher"
 msgstr "Starter konnte nicht gespeichert werden"
 
-#: ../gnome-panel/menu.c:943
+#: ../gnome-panel/menu.c:1004
 msgid "Add this launcher to _panel"
 msgstr "Als Starter zum _Panel hinzufügen"
 
-#: ../gnome-panel/menu.c:950
+#: ../gnome-panel/menu.c:1011
 msgid "Add this launcher to _desktop"
 msgstr "Als Starter zum _Desktop hinzufügen"
 
-#: ../gnome-panel/menu.c:962
+#: ../gnome-panel/menu.c:1023
 msgid "_Entire menu"
 msgstr "_Gesamtes Menü"
 
-#: ../gnome-panel/menu.c:967
+#: ../gnome-panel/menu.c:1028
 msgid "Add this as _drawer to panel"
 msgstr "Als _Schublade zum Panel hinzufügen"
 
-#: ../gnome-panel/menu.c:974
+#: ../gnome-panel/menu.c:1035
 msgid "Add this as _menu to panel"
 msgstr "Als _Menü zum Panel hinzufügen"
 
@@ -2310,35 +2307,35 @@ msgstr "Lesezeichen"
 msgid "Open '%s'"
 msgstr "»%s« öffnen"
 
-#: ../gnome-panel/panel-menu-items.c:504
+#: ../gnome-panel/panel-menu-items.c:506
 #, c-format
 msgid "Unable to scan %s for media changes"
-msgstr ""
+msgstr "%s konnte nicht auf Medienwechsel überprüft werden"
 
-#: ../gnome-panel/panel-menu-items.c:551
+#: ../gnome-panel/panel-menu-items.c:549
 #, c-format
 msgid "Rescan %s"
-msgstr ""
+msgstr "%s neu einlesen"
 
-#: ../gnome-panel/panel-menu-items.c:588
-#, fuzzy, c-format
+#: ../gnome-panel/panel-menu-items.c:585
+#, c-format
 msgid "Unable to mount %s"
-msgstr "Minihilfen aktivieren"
+msgstr "%s konnte nicht eingehängt werden"
 
-#: ../gnome-panel/panel-menu-items.c:645
-#, fuzzy, c-format
+#: ../gnome-panel/panel-menu-items.c:638
+#, c-format
 msgid "Mount %s"
-msgstr "Schriften"
+msgstr "%s einhängen"
 
-#: ../gnome-panel/panel-menu-items.c:852
+#: ../gnome-panel/panel-menu-items.c:841
 msgid "Removable Media"
 msgstr "Wechselmedium"
 
-#: ../gnome-panel/panel-menu-items.c:932
+#: ../gnome-panel/panel-menu-items.c:922
 msgid "Network Places"
 msgstr "Netzwerkorte"
 
-#: ../gnome-panel/panel-menu-items.c:971
+#: ../gnome-panel/panel-menu-items.c:961
 msgid "Open your personal folder"
 msgstr "Den persönlichen Ordner öffnen"
 
@@ -2346,19 +2343,19 @@ msgstr "Den persönlichen Ordner öffnen"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:991
+#: ../gnome-panel/panel-menu-items.c:981
 msgid "Desktop Folder|Desktop"
 msgstr "Desktop"
 
-#: ../gnome-panel/panel-menu-items.c:992
+#: ../gnome-panel/panel-menu-items.c:982
 msgid "Open the contents of your desktop in a folder"
 msgstr "Den Desktop als Ordner öffnen"
 
-#: ../gnome-panel/panel-menu-items.c:1384
+#: ../gnome-panel/panel-menu-items.c:1374
 msgid "Places"
 msgstr "Orte"
 
-#: ../gnome-panel/panel-menu-items.c:1413
+#: ../gnome-panel/panel-menu-items.c:1403
 msgid "System"
 msgstr "System"
 
@@ -2366,7 +2363,7 @@ msgstr "System"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1490
+#: ../gnome-panel/panel-menu-items.c:1480
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -2374,26 +2371,26 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1502
+#: ../gnome-panel/panel-menu-items.c:1492
 #, c-format
 msgid "Log Out %s..."
 msgstr "%s abmelden …"
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1506
+#: ../gnome-panel/panel-menu-items.c:1496
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "%s von dieser Sitzung abmelden, um sich als ein anderer Benutzer anzumelden"
 
-#: ../gnome-panel/panel-menu-items.c:1547
+#: ../gnome-panel/panel-menu-items.c:1537
 msgid "Could not launch menu item"
 msgstr "Eintrag konnte nicht gestartet werden"
 
 #: ../gnome-panel/panel-mount-operation.c:124
 msgid "Enter Password"
-msgstr ""
+msgstr "Passwort eingeben"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2750,21 +2747,21 @@ msgstr "Pixel"
 msgid "Could not find a suitable application."
 msgstr "Es konnte keine passende Anwendung gefunden werden"
 
-#: ../gnome-panel/panel-recent.c:94 ../gnome-panel/panel-recent.c:104
+#: ../gnome-panel/panel-recent.c:95 ../gnome-panel/panel-recent.c:105
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Zuletzt geöffnetes Dokument »%s« konnte nicht geöffnet werden"
 
-#: ../gnome-panel/panel-recent.c:106
+#: ../gnome-panel/panel-recent.c:107
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Beim Versuch, »%s« zu öffnen, ist ein unbekannter Fehler aufgetreten."
 
-#: ../gnome-panel/panel-recent.c:163
+#: ../gnome-panel/panel-recent.c:164
 msgid "Clear the Recent Documents list?"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen?"
 
-#: ../gnome-panel/panel-recent.c:165
+#: ../gnome-panel/panel-recent.c:166
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2774,15 +2771,15 @@ msgstr ""
 "• Alle Einträge im Menü Orte → Zuletzt geöffnete Dokumente.\n"
 "• Die Liste der zuletzt geöffneten Dokumente in allen Anwendungen."
 
-#: ../gnome-panel/panel-recent.c:177 ../gnome-panel/panel-recent.c:251
+#: ../gnome-panel/panel-recent.c:178 ../gnome-panel/panel-recent.c:252
 msgid "Clear Recent Documents"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen"
 
-#: ../gnome-panel/panel-recent.c:212
+#: ../gnome-panel/panel-recent.c:213
 msgid "Recent Documents"
 msgstr "Zuletzt geöffnete Dokumente"
 
-#: ../gnome-panel/panel-recent.c:253
+#: ../gnome-panel/panel-recent.c:254
 msgid "Clear all items from the recent documents list"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen"
 
@@ -3397,18 +3394,17 @@ msgstr "Symbol »%s« konnte nicht gefunden werden"
 msgid "file"
 msgstr "Datei"
 
-#: ../gnome-panel/panel-util.c:1395
+#: ../gnome-panel/panel-util.c:1486
 msgid "Home Folder"
 msgstr "Persönlicher Ordner"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:1407
-#, fuzzy
+#: ../gnome-panel/panel-util.c:1498
 msgid "File System"
-msgstr "System"
+msgstr "Dateisystem"
 
-#: ../gnome-panel/panel-util.c:1554
+#: ../gnome-panel/panel-util.c:1645
 msgid "Search"
 msgstr "Suchen"
 
@@ -3417,10 +3413,10 @@ msgstr "Suchen"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1600
-#, fuzzy, c-format
+#: ../gnome-panel/panel-util.c:1691
+#, c-format
 msgid "%1$s: %2$s"
-msgstr "%1$s, %2$s"
+msgstr "%1$s: %2$s"
 
 #: ../gnome-panel/panel.c:471
 #, c-format
@@ -3646,104 +3642,3 @@ msgstr "_Einstellungsverzeichnis:"
 
 #~ msgid "Trash"
 #~ msgstr "Müll"
-
-# CHECK "%1$s auf %2$s"?
-#~ msgid "%1$s on %2$s"
-#~ msgstr "%1$s, %2$s"
-
-#~ msgid "<b>Window List Size</b>"
-#~ msgstr "<b>Größe der Fensterliste</b>"
-
-#~ msgid "Behavior"
-#~ msgstr "Verhalten"
-
-#~ msgid "M_inimum size:"
-#~ msgstr "_Minimale Größe:"
-
-#~ msgid "Ma_ximum size:"
-#~ msgstr "Ma_ximale Größe:"
-
-#~ msgid "Size"
-#~ msgstr "Größe"
-
-#~ msgid ""
-#~ "This key specifies the maximum width that the window list requests. The "
-#~ "maximum width setting is useful to limit the size of the window list in "
-#~ "large panels, where the window list could fill the entire space available."
-#~ msgstr ""
-#~ "Dieser Schlüssel legt die maximale Breite fest, die die Fensterliste "
-#~ "anfordern darf. Dies ist nützlich, um ihre Größe in großen Panels zu "
-#~ "begrenzen, in denen sie andernfalls die gesamte verfügbare Breite in "
-#~ "Anspruch nehmen würde."
-
-#~ msgid "This key specifies the minimum width that the window list requests."
-#~ msgstr ""
-#~ "Dieser Wert legt die minimale Breite fest, die die Fensterliste anfordern "
-#~ "darf."
-
-#~ msgid "File"
-#~ msgstr "Datei"
-
-#~ msgid ""
-#~ "I've detected a panel already running,\n"
-#~ "and will now exit."
-#~ msgstr ""
-#~ "Es wurde ein bereits laufendes Panel gefunden.\n"
-#~ "Dieses Panel wird nun beendet."
-
-#~ msgid "Delete Drawer"
-#~ msgstr "Schublade löschen"
-
-#~ msgid "Delete Panel"
-#~ msgstr "Panel löschen"
-
-#~ msgid "Orientation"
-#~ msgstr "Ausrichtung"
-
-#~ msgid "The orientation of the tray."
-#~ msgstr "Die Ausrichtung der Anzeige."
-
-#~ msgid "Could not load icon"
-#~ msgstr "Symbol konnte nicht geladen werden"
-
-#~ msgid "Find files, folders, and documents on your computer"
-#~ msgstr "Auf dem Rechner nach Dateien, Ordnern und Dokumenten suchen"
-
-#~ msgid "Empty"
-#~ msgstr "Leer"
-
-#~ msgid "Could not save launcher to disk"
-#~ msgstr "Der Starter konnte nicht auf der Platte gespeichert werden"
-
-#~ msgid "You have to specify a name."
-#~ msgstr "Sie müssen einen Namen angeben."
-
-#~ msgid "You have to specify a valid URL or command."
-#~ msgstr "Sie müssen eine gültige Adresse oder einen gültigen Befehl angeben."
-
-#~ msgid "Could not save changes to launcher"
-#~ msgstr "Die Änderungen am Starter konnten nicht gespeichert werden"
-
-#~ msgid "Menu"
-#~ msgstr "Menü"
-
-#~ msgid "You do not have permission to write to this location."
-#~ msgstr "Sie haben keine Schreibrechte für diesen Ort."
-
-#~ msgid "_Delete This Panel..."
-#~ msgstr "Dieses Panel _löschen …"
-
-#~ msgid "Desktop Environment|Desktop"
-#~ msgstr "System"
-
-#~ msgid "Could not load menu item"
-#~ msgstr "Eintrag konnte nicht geladen werden"
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "Details: %s"
-#~ msgstr "Details: %s"
-
-#~ msgid "_Reboot"
-#~ msgstr "_Neu starten"
