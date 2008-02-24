@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-19 00:44+0000\n"
-"PO-Revision-Date: 2008-02-20 17:27+0100\n"
+"POT-Creation-Date: 2008-02-22 14:29+0000\n"
+"PO-Revision-Date: 2008-02-24 11:08+0100\n"
 "Last-Translator: Daniel van Eeden <translation@myname.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -83,7 +83,7 @@ msgid "_Preferences"
 msgstr "_Voorkeuren"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4058
+#: ../applets/clock/clock.c:4102
 msgid "Clock"
 msgstr "Klok"
 
@@ -100,7 +100,7 @@ msgid "Get the current time and date"
 msgstr "Huidige tijd en datum"
 
 #: ../applets/clock/calendar-window.c:242
-#: ../applets/clock/clock.c:420
+#: ../applets/clock/clock.c:421
 msgid "%l:%M %p"
 msgstr "%l:%M"
 
@@ -110,9 +110,9 @@ msgstr "%l:%M"
 #. * There should be little need to translate this string.
 #.
 #: ../applets/clock/calendar-window.c:244
-#: ../applets/clock/clock.c:422
-#: ../applets/clock/clock.c:1552
-#: ../applets/clock/clock-location-tile.c:435
+#: ../applets/clock/clock.c:423
+#: ../applets/clock/clock.c:1553
+#: ../applets/clock/clock-location-tile.c:485
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -158,12 +158,12 @@ msgstr "Locaties"
 msgid "Calendar"
 msgstr "Kalender"
 
-#: ../applets/clock/clock.c:420
+#: ../applets/clock/clock.c:421
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S"
 
-#: ../applets/clock/clock.c:422
-#: ../applets/clock/clock.c:1550
+#: ../applets/clock/clock.c:423
+#: ../applets/clock/clock.c:1551
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -172,7 +172,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:442
+#: ../applets/clock/clock.c:443
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -180,7 +180,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:449
+#: ../applets/clock/clock.c:450
 #, c-format
 msgid ""
 "%1$s\n"
@@ -193,7 +193,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:458
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -201,105 +201,105 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:639
+#: ../applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:669
+#: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "Klik om uw afspraken en taken te verbergen"
 
-#: ../applets/clock/clock.c:672
+#: ../applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "Klik om uw afspraken en taken te zien"
 
-#: ../applets/clock/clock.c:676
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "Klik om de maandkalender te verbergen"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "Klik om de maandkalender te zien"
 
-#: ../applets/clock/clock.c:1402
+#: ../applets/clock/clock.c:1401
 msgid "Computer Clock"
 msgstr "Computerklok"
 
-#: ../applets/clock/clock.c:1545
+#: ../applets/clock/clock.c:1546
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S"
 
-#: ../applets/clock/clock.c:1547
+#: ../applets/clock/clock.c:1548
 msgid "%I:%M %p"
 msgstr "%I:%M"
 
-#: ../applets/clock/clock.c:1589
+#: ../applets/clock/clock.c:1590
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1664
+#: ../applets/clock/clock.c:1665
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Het starten van het tijdsconfiguratieprogramma is mislukt: %s"
 
-#: ../applets/clock/clock.c:1693
+#: ../applets/clock/clock.c:1694
 msgid "Set System Time..."
 msgstr "Systeemtijd instellen..."
 
-#: ../applets/clock/clock.c:1694
+#: ../applets/clock/clock.c:1695
 #: ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr "Systeemtijd instellen"
 
-#: ../applets/clock/clock.c:1708
+#: ../applets/clock/clock.c:1709
 msgid "Failed to set the system time"
 msgstr "Fout bij het instellen van de systeemtijd"
 
-#: ../applets/clock/clock.c:1881
+#: ../applets/clock/clock.c:1882
 msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
 msgstr "Er is geen programma gevonden om de datum en tijd te configureren. Wellicht is er geen geïnstalleerd?"
 
-#: ../applets/clock/clock.c:2700
+#: ../applets/clock/clock.c:2747
 msgid "Custom format"
 msgstr "Aangepaste weergave"
 
-#: ../applets/clock/clock.c:3500
+#: ../applets/clock/clock.c:3545
 #: ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:540
+#: ../applets/clock/clock-location-tile.c:584
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3759
+#: ../applets/clock/clock.c:3803
 msgid "City Name"
 msgstr "Plaatsnaam"
 
-#: ../applets/clock/clock.c:3763
+#: ../applets/clock/clock.c:3807
 msgid "City Time Zone"
 msgstr "Stad's tijdzone"
 
-#: ../applets/clock/clock.c:3954
+#: ../applets/clock/clock.c:3998
 msgid "24 hour"
 msgstr "24 uur"
 
-#: ../applets/clock/clock.c:3955
+#: ../applets/clock/clock.c:3999
 msgid "UNIX time"
 msgstr "UNIX-tijd"
 
-#: ../applets/clock/clock.c:3956
+#: ../applets/clock/clock.c:4000
 msgid "Internet time"
 msgstr "Internet-tijd"
 
-#: ../applets/clock/clock.c:3964
+#: ../applets/clock/clock.c:4008
 msgid "Custom _format:"
 msgstr "Aangepaste _weergave:"
 
-#: ../applets/clock/clock.c:4061
+#: ../applets/clock/clock.c:4105
 msgid "The Clock displays the current time and date"
 msgstr "De klok toont de huidige tijd en datum"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4064
+#: ../applets/clock/clock.c:4108
 #: ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533
@@ -633,19 +633,21 @@ msgstr "UTC gebruiken"
 msgid "Unknown Location"
 msgstr "Onbekende locatie"
 
-#: ../applets/clock/clock-location-tile.c:200
+#: ../applets/clock/clock-location-tile.c:194
 msgid "Failed to set the system timezone"
 msgstr "Fout bij het zetten van de systeem tijdzone"
 
-#: ../applets/clock/clock-location-tile.c:225
+#: ../applets/clock/clock-location-tile.c:239
+#: ../applets/clock/clock-location-tile.c:314
 msgid "<small>Set...</small>"
 msgstr "<small>Instellen...</small>"
 
-#: ../applets/clock/clock-location-tile.c:226
+#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:315
 msgid "<small>Set</small>"
 msgstr "<small>Instellen</small>"
 
-#: ../applets/clock/clock-location-tile.c:287
+#: ../applets/clock/clock-location-tile.c:320
 msgid "Set as current timezone for this computer"
 msgstr "Instellen als huidige tijdzone voor deze computer"
 
@@ -655,7 +657,7 @@ msgstr "Instellen als huidige tijdzone voor deze computer"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:408
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -665,7 +667,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:417
+#: ../applets/clock/clock-location-tile.c:467
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -674,22 +676,22 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:427
+#: ../applets/clock/clock-location-tile.c:477
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:550
-#: ../applets/clock/clock-location-tile.c:556
+#: ../applets/clock/clock-location-tile.c:594
+#: ../applets/clock/clock-location-tile.c:600
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: ../applets/clock/clock-location-tile.c:551
+#: ../applets/clock/clock-location-tile.c:595
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, voelt als %s"
 
-#: ../applets/clock/clock-location-tile.c:561
+#: ../applets/clock/clock-location-tile.c:605
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Zonsopkomst: %s / Zonsondergang: %s"
@@ -701,6 +703,30 @@ msgstr "Zonsopkomst: %s / Zonsondergang: %s"
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Er is een fout opgetreden bij de hulpweergave: %s"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "Systeemtijd aanpassen"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "De computer tijdzone aanpassen"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "De hardware klok instellen"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "Privileges welke nodig zijn voor het aanpassen van de systeem tijdzone"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "Privileges welke nodig zijn voor het aanpassen van de systeemtijd."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "Privileges welke nodig zijn voor het instellen van de hardware klok."
 
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -1334,18 +1360,18 @@ msgstr "[BESTAND...]"
 msgid "- Edit .desktop files"
 msgstr "- .desktop-bestanden bewerken"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:142
-#: ../gnome-panel/gnome-desktop-item-edit.c:198
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199
 #: ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "Starter aanmaken"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:169
-#: ../gnome-panel/gnome-desktop-item-edit.c:192
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "Mapeigenschappen"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:175
+#: ../gnome-panel/gnome-desktop-item-edit.c:176
 #: ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "Starter-eigenschappen"
@@ -1380,6 +1406,7 @@ msgid "Could not use dropped item"
 msgstr "Kan gesleept item niet gebruiken"
 
 #: ../gnome-panel/launcher.c:501
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Geen URI aangegeven voor bureaublad-bestand van paneel-starter\n"
 
@@ -1614,6 +1641,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "Een i_tem zoeken om aan ‘%s’ toe te voegen:"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "In opberglade stoppen"
 
@@ -1622,6 +1650,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "Een i_tem zoeken om in de opberglade te stoppen:"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "Toevoegen aan paneel"
 
@@ -2424,6 +2453,7 @@ msgid "pixels"
 msgstr "beeldpunten"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "Kan geen geschikte toepassing vinden."
 
