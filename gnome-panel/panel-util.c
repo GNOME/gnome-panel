@@ -1113,7 +1113,7 @@ panel_util_key_file_load_from_uri (GKeyFile       *keyfile,
 	g_return_val_if_fail (uri != NULL, FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-	scheme = g_uri_get_scheme (uri);
+	scheme = g_uri_parse_scheme (uri);
 	is_local = (scheme == NULL) || !g_ascii_strcasecmp (scheme, "file");
 	g_free (scheme);
 
@@ -1810,7 +1810,7 @@ panel_util_get_file_optional_homedir (const char *location)
 	if (g_path_is_absolute (location))
 		return g_file_new_for_path (location);
 
-	scheme = g_uri_get_scheme (location);
+	scheme = g_uri_parse_scheme (location);
 	if (scheme) {
 		file = g_file_new_for_uri (location);
 		g_free (scheme);

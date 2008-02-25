@@ -109,7 +109,7 @@ activate_uri (GtkWidget  *menuitem,
 
 	screen = menuitem_to_screen (menuitem);
 	
-	scheme = g_uri_get_scheme (path);
+	scheme = g_uri_parse_scheme (path);
 	if (scheme) {
 		url = g_strdup (path);
 		g_free (scheme);
