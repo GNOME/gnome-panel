@@ -356,7 +356,7 @@ panel_launcher_delete (Launcher *launcher)
 	file = panel_launcher_get_gfile (launcher->location);
 
 	/* do not remove the file if it's not in the user's launchers path */
-	if (g_file_contains_file (launchers, file)) {
+	if (g_file_has_prefix (file, launchers)) {
 		GError *error;
 
 		error = NULL;
