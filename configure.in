@@ -147,6 +147,8 @@ else
   if test "x$HAVE_POLKIT" = "xyes" ; then
     AC_DEFINE(HAVE_POLKIT, 1, [Defined if PolicyKit support is enabled])
     PKG_CHECK_MODULES(POLKIT_DBUS, polkit-dbus >= $POLKIT_DBUS_REQUIRED dbus-glib-1 >= $DBUS_GLIB_REQUIRED gobject-2.0)
+    AC_CHECK_PROG([POLKIT_POLICY_FILE_VALIDATE],
+                  [polkit-policy-file-validate], [polkit-policy-file-validate])
   fi
 fi
 AM_CONDITIONAL(HAVE_POLKIT, test "x$HAVE_POLKIT" = "xyes")
