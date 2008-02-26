@@ -1,15 +1,15 @@
 # gnome-panel
 # Sung-Hyun Nam <namsh@kldp.org>, 2000.
 # Young-Ho Cha <ganadist@chollian.net>, 2000, 2001, 2006, 2007.
-# Changwoo Ryu <cwryu@debian.org>, 1998, 2002-2006, 2007, 2008.
 # Eunju Kim <eukim@redhat.com>, 2007.
+# Changwoo Ryu <cwryu@debian.org>, 1998, 2002-2006, 2007, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-16 02:55+0900\n"
-"PO-Revision-Date: 2008-02-16 03:10+0900\n"
+"POT-Creation-Date: 2008-02-26 18:49+0900\n"
+"PO-Revision-Date: 2008-02-26 18:51+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@list.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -60,7 +60,7 @@ msgid "_Preferences"
 msgstr "기본 설정(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4056
+#: ../applets/clock/clock.c:4102
 msgid "Clock"
 msgstr "시계"
 
@@ -76,12 +76,17 @@ msgstr "시계 애플릿을 만드는 데 쓰이는 팩토리."
 msgid "Get the current time and date"
 msgstr "현재 시각과 날짜를 보여 줍니다"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:420
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
 msgid "%l:%M %p"
 msgstr "%p %I:%M"
 
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:422
-#: ../applets/clock/clock.c:1550
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
+#: ../applets/clock/clock.c:1553 ../applets/clock/clock-location-tile.c:485
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -126,11 +131,11 @@ msgstr "위치"
 msgid "Calendar"
 msgstr "달력"
 
-#: ../applets/clock/clock.c:420
+#: ../applets/clock/clock.c:421
 msgid "%l:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: ../applets/clock/clock.c:422 ../applets/clock/clock.c:1548
+#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1551
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -139,7 +144,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:442
+#: ../applets/clock/clock.c:443
 msgid "%a %b %e"
 msgstr "%b %e일 (%a)"
 
@@ -147,7 +152,7 @@ msgstr "%b %e일 (%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:449
+#: ../applets/clock/clock.c:450
 #, c-format
 msgid ""
 "%1$s\n"
@@ -160,7 +165,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:458
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s %s"
@@ -168,60 +173,60 @@ msgstr "%s %s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:639
+#: ../applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
 msgstr "%B %e일 %A (%%s)"
 
-#: ../applets/clock/clock.c:669
+#: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "약속과 작업을 감추려면 누르십시오"
 
-#: ../applets/clock/clock.c:672
+#: ../applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "약속과 작업을 보려면 누르십시오"
 
-#: ../applets/clock/clock.c:676
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "달력을 감추려면 누르십시오"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "달력을 보려면 누르십시오"
 
-#: ../applets/clock/clock.c:1400
+#: ../applets/clock/clock.c:1401
 msgid "Computer Clock"
 msgstr "컴퓨터 시계"
 
-#: ../applets/clock/clock.c:1543
+#: ../applets/clock/clock.c:1546
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: ../applets/clock/clock.c:1545
+#: ../applets/clock/clock.c:1548
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
-#: ../applets/clock/clock.c:1587
+#: ../applets/clock/clock.c:1590
 msgid "%A, %B %d %Y"
 msgstr "%Y년 %b %e일 %A"
 
-#: ../applets/clock/clock.c:1662
+#: ../applets/clock/clock.c:1665
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "시간 설정 도구를 실행하는 데 실패: %s"
 
-#: ../applets/clock/clock.c:1691
+#: ../applets/clock/clock.c:1694
 msgid "Set System Time..."
 msgstr "시스템 시간 설정..."
 
-#: ../applets/clock/clock.c:1692 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1695 ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr "시스템 시간 설정"
 
-#: ../applets/clock/clock.c:1706
+#: ../applets/clock/clock.c:1709
 msgid "Failed to set the system time"
 msgstr "시스템 시간을 설정하는 데 실패했습니다"
 
-#: ../applets/clock/clock.c:1879
+#: ../applets/clock/clock.c:1882
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -229,46 +234,46 @@ msgstr ""
 "날짜 및 시간을 설정하는 프로그램을 찾는데 실패했습니다. 설치가 안 된 것 같습"
 "니다?"
 
-#: ../applets/clock/clock.c:2698
+#: ../applets/clock/clock.c:2747
 msgid "Custom format"
 msgstr "사용자 지정 형식"
 
-#: ../applets/clock/clock.c:3498 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:468
+#: ../applets/clock/clock.c:3545 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:584
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3757
+#: ../applets/clock/clock.c:3803
 msgid "City Name"
 msgstr "도시 이름"
 
-#: ../applets/clock/clock.c:3761
+#: ../applets/clock/clock.c:3807
 msgid "City Time Zone"
 msgstr "도시 시간대"
 
-#: ../applets/clock/clock.c:3952
+#: ../applets/clock/clock.c:3998
 msgid "24 hour"
 msgstr "24시간"
 
-#: ../applets/clock/clock.c:3953
+#: ../applets/clock/clock.c:3999
 msgid "UNIX time"
 msgstr "유닉스 시각"
 
-#: ../applets/clock/clock.c:3954
+#: ../applets/clock/clock.c:4000
 msgid "Internet time"
 msgstr "인터넷 시각"
 
-#: ../applets/clock/clock.c:3962
+#: ../applets/clock/clock.c:4008
 msgid "Custom _format:"
 msgstr "사용자 지정 형식(_F):"
 
-#: ../applets/clock/clock.c:4059
+#: ../applets/clock/clock.c:4105
 msgid "The Clock displays the current time and date"
 msgstr "시계는 현재 시간과 날짜를 보여 줍니다"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4062 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4108 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -618,34 +623,65 @@ msgstr "UTC 사용"
 msgid "Unknown Location"
 msgstr "알 수 없는 위치"
 
-#: ../applets/clock/clock-location-tile.c:198
+#: ../applets/clock/clock-location-tile.c:194
 msgid "Failed to set the system timezone"
 msgstr "시스템 시간대를 설정하는 데 실패했습니다"
 
-#: ../applets/clock/clock-location-tile.c:223
+#: ../applets/clock/clock-location-tile.c:239
+#: ../applets/clock/clock-location-tile.c:314
 msgid "<small>Set...</small>"
 msgstr "<small>설정...</small>"
 
-#: ../applets/clock/clock-location-tile.c:224
+#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:315
 msgid "<small>Set</small>"
 msgstr "<small>설정</small>"
 
-#: ../applets/clock/clock-location-tile.c:285
+#: ../applets/clock/clock-location-tile.c:320
 msgid "Set as current timezone for this computer"
 msgstr "이 컴퓨터의 현재 시간대로 맞춥니다"
 
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:458
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:467
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:477
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:478
-#: ../applets/clock/clock-location-tile.c:484
+#: ../applets/clock/clock-location-tile.c:594
+#: ../applets/clock/clock-location-tile.c:600
 msgid "Unknown"
 msgstr "알 수 없음"
 
-#: ../applets/clock/clock-location-tile.c:479
+#: ../applets/clock/clock-location-tile.c:595
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, 체감 %s"
 
-#: ../applets/clock/clock-location-tile.c:489
+#: ../applets/clock/clock-location-tile.c:605
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "일출: %s / 일몰: %s"
@@ -1381,17 +1417,17 @@ msgstr "[파일...]"
 msgid "- Edit .desktop files"
 msgstr "- .desktop 파일을 편집합니다"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:142
-#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:981
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "실행 아이콘 만들기"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:169
-#: ../gnome-panel/gnome-desktop-item-edit.c:192
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "디렉토리 속성"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:819
+#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "실행 아이콘 속성"
 
