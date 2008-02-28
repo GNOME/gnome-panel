@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-21 18:24+0100\n"
-"PO-Revision-Date: 2008-02-21 18:25+0100\n"
+"POT-Creation-Date: 2008-02-28 20:38+0100\n"
+"PO-Revision-Date: 2008-02-28 20:41+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgid "_Preferences"
 msgstr "_Hobespenak"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4102
+#: ../applets/clock/clock.c:4106
 msgid "Clock"
 msgstr "Erlojua"
 
@@ -236,46 +236,46 @@ msgstr ""
 "Huts egin du data eta ordua konfiguratzeko programa aurkitzean. Agian ez "
 "dago instalatuta?"
 
-#: ../applets/clock/clock.c:2747
+#: ../applets/clock/clock.c:2751
 msgid "Custom format"
 msgstr "Formatu pertsonalizatua"
 
-#: ../applets/clock/clock.c:3545 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock.c:3549 ../applets/clock/clock-location.c:381
 #: ../applets/clock/clock-location-tile.c:584
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3803
+#: ../applets/clock/clock.c:3807
 msgid "City Name"
 msgstr "Herriaren izena"
 
-#: ../applets/clock/clock.c:3807
+#: ../applets/clock/clock.c:3811
 msgid "City Time Zone"
 msgstr "Herriaren ordu-zona"
 
-#: ../applets/clock/clock.c:3998
+#: ../applets/clock/clock.c:4002
 msgid "24 hour"
 msgstr "24 ordu"
 
-#: ../applets/clock/clock.c:3999
+#: ../applets/clock/clock.c:4003
 msgid "UNIX time"
 msgstr "UNIX ordua"
 
-#: ../applets/clock/clock.c:4000
+#: ../applets/clock/clock.c:4004
 msgid "Internet time"
 msgstr "Interneteko ordua"
 
-#: ../applets/clock/clock.c:4008
+#: ../applets/clock/clock.c:4012
 msgid "Custom _format:"
 msgstr "_Formatu pertsonalizatua"
 
-#: ../applets/clock/clock.c:4105
+#: ../applets/clock/clock.c:4109
 msgid "The Clock displays the current time and date"
 msgstr "Uneko data eta ordua erakusten ditu erlojuak"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4108 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4112 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -697,6 +697,30 @@ msgstr "Eguna argitu: %s / Eguzki-sartzea: %s"
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Errorea gertatu da laguntza bistaratzean: %s"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "Aldatu sistemako ordua"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "Aldatu sistemaren ordu-zona"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "Konfiguratu hardwareko ordularia"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "Pribilegioak behar dira sistemaren ordu-zona aldatzeko."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "Pribilegioak behar dira sistemako ordua aldatzeko."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "Pribilegioak behar dira hardwareko ordularia aldatzeko."
 
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -1441,6 +1465,7 @@ msgid "Could not use dropped item"
 msgstr "Ezin izan da jaregindako elementua erabili"
 
 #: ../gnome-panel/launcher.c:501
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Ez da URIrik eman panel-abiarazlearen mahaigaineko fitxategiarentzat\n"
 
@@ -1674,6 +1699,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "Bilatu _elementu bat \"%s\"(r)i gehitzeko:"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "_Gehitu tiraderari..."
 
@@ -1682,6 +1708,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "Bilatu _elementu bat tiraderari gehitzeko:"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "Gehitu panelari"
 
@@ -2624,6 +2651,7 @@ msgid "pixels"
 msgstr "pixel"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "Ezin izan da aplikazio egokirik aurkitu."
 
