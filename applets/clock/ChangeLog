@@ -1,3 +1,18 @@
+2008-02-28  David Zeuthen  <davidz@redhat.com>
+
+	* set-timezone.c (can_do): Don't hardcode the polkit results for
+	determining when we can authenticate to gain an
+	authorization. This fixes a bug where ONE_SHOT auths weren't
+	handled because PolKitResult enumerations for these were added
+	after this code was written.
+	(get_pk_context): Integrate libpolkit into the main loop. Need
+	this to refresh the authorization cache. This fixes a bug where
+	the Set buttons were not updated. Now it works as expected, e.g.
+	the "Set..." becomes a "Set" if you gain the authorization (and
+	it's not a one shot one)
+	(pk_io_remove_watch_fn, pk_io_add_watch_fn)
+	(pk_io_watch_have_data): libpolkit mainloop integration functions.
+
 2008-02-28  Vincent Untz  <vuntz@gnome.org>
 
 	* clock.c: (clock_migrate_to_26): fix previous commit to not break the

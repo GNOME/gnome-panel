@@ -75,6 +75,40 @@ get_system_bus (void)
         return bus;
 }
 
+static gboolean
+pk_io_watch_have_data (GIOChannel *channel, GIOCondition condition, gpointer user_data)
+{
+        int fd;
+        PolKitContext *pk_context = user_data;
+        fd = g_io_channel_unix_get_fd (channel);
+        polkit_context_io_func (pk_context, fd);
+        return TRUE;
+}
+
+static int 
+pk_io_add_watch_fn (PolKitContext *pk_context, int fd)
+{
+        guint id = 0;
+        GIOChannel *channel;
+        channel = g_io_channel_unix_new (fd);
+        if (channel == NULL)
+                goto out;
+        id = g_io_add_watch (channel, G_IO_IN, pk_io_watch_have_data, pk_context);
+        if (id == 0) {
+                g_io_channel_unref (channel);
+                goto out;
+        }
+        g_io_channel_unref (channel);
+out:
+        return id;
+}
+
+static void 
+pk_io_remove_watch_fn (PolKitContext *pk_context, int watch_id)
+{
+        g_source_remove (watch_id);
+}
+
 static PolKitContext *
 get_pk_context (void)
 {
@@ -82,6 +116,9 @@ get_pk_context (void)
 
 	if (pk_context == NULL) {
 		pk_context = polkit_context_new ();
+                polkit_context_set_io_watch_functions (pk_context,
+                                                       pk_io_add_watch_fn,
+                                                       pk_io_remove_watch_fn);
 		if (!polkit_context_init (pk_context, NULL)) {
 			polkit_context_unref (pk_context);
 			pk_context = NULL;
@@ -126,21 +163,18 @@ can_do (const gchar *pk_action_id)
         pk_result = polkit_context_can_caller_do_action (pk_context, pk_action, pk_caller);
 
 	switch (pk_result) {
-        default:
         case POLKIT_RESULT_UNKNOWN:
         case POLKIT_RESULT_NO:
  		res = 0;
 		break;
-        case POLKIT_RESULT_ONLY_VIA_ADMIN_AUTH:
-        case POLKIT_RESULT_ONLY_VIA_ADMIN_AUTH_KEEP_SESSION:
-        case POLKIT_RESULT_ONLY_VIA_ADMIN_AUTH_KEEP_ALWAYS:
-        case POLKIT_RESULT_ONLY_VIA_SELF_AUTH:
-        case POLKIT_RESULT_ONLY_VIA_SELF_AUTH_KEEP_SESSION:
-        case POLKIT_RESULT_ONLY_VIA_SELF_AUTH_KEEP_ALWAYS:
-		res = 1;
-		break;
         case POLKIT_RESULT_YES:
 		res = 2;
+		break;
+        default:
+                /* This covers all the POLKIT_RESULT_ONLY_VIA_[SELF|ADMIN]_AUTH_* cases as more of these
+                 * may be added in the future.
+                 */
+		res = 1;
 		break;
 	}
 	
