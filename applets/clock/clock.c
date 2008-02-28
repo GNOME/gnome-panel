@@ -2269,7 +2269,7 @@ clock_migrate_to_26 (ClockData *clock)
 	/* It's still possible that we have none of the old keys, in which case
 	 * we're not migrating from 2.6, but the config is simply wrong. So
 	 * don't set the format key in this case. */
-	if (cd->format != CLOCK_FORMAT_INVALID)
+	if (clock->format != CLOCK_FORMAT_INVALID)
 		panel_applet_gconf_set_string (PANEL_APPLET (clock->applet),
 					       KEY_FORMAT,
 					       gconf_enum_to_string (format_type_enum_map,

@@ -1,5 +1,10 @@
 2008-02-28  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (clock_migrate_to_26): fix previous commit to not break the
+	build
+
+2008-02-28  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (clock_migrate_to_26): don't set the format key if we're
 	reaching this without really migrating from 2.6 but because the value
 	is just non-sense. Fix a crash, bug #518963.
