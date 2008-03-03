@@ -565,13 +565,14 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 }
 
 void
-weather_info_setup_tooltip (WeatherInfo *info, GtkTooltip *tooltip)
+weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkTooltip *tooltip)
 {
         GdkPixbuf *pixbuf = NULL;
         GtkIconTheme *theme = NULL;
 	const gchar *conditions, *temp, *apparent, *wind;
 	gchar *line1, *line2, *line3, *line4, *tip;
 	const gchar *icon_name;
+	const gchar *sys_timezone;
 
        	icon_name = weather_info_get_icon_name (info);
         theme = gtk_icon_theme_get_default ();
@@ -602,9 +603,20 @@ weather_info_setup_tooltip (WeatherInfo *info, GtkTooltip *tooltip)
 	else
 		line3 = g_strdup ("");
 
+	/* FIXME: we need libgweather to give us the time,
+	 * not just a formatted string
+	 */
+	sys_timezone = getenv ("TZ");
+	setenv ("TZ", clock_location_get_timezone (location), 1);
+	tzset ();
 	line4 = g_strdup_printf (_("Sunrise: %s / Sunset: %s"),
 				 weather_info_get_sunrise (info),
 				 weather_info_get_sunset (info));
+	if (sys_timezone)
+		setenv ("TZ", sys_timezone, 1);
+	else
+		unsetenv ("TZ");
+	tzset ();
 
 	tip = g_strdup_printf ("<b>%s</b>\n%s\n%s%s", line1, line2, line3, line4);
 	gtk_tooltip_set_markup (tooltip, tip);
@@ -632,7 +644,7 @@ weather_tooltip (GtkWidget  *widget,
 	if (!info || !weather_info_is_valid (info))
 		return FALSE;
 
-	weather_info_setup_tooltip (info, tooltip);
+	weather_info_setup_tooltip (info, priv->location, tooltip);
 
 	return TRUE;
 }

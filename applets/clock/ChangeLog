@@ -1,3 +1,13 @@
+2008-03-03  Vincent Untz  <vuntz@gnome.org>
+
+	Display sunrise/sunset in local (to the location) time.
+	Fix bug #518106. Patch by Matthias Clasen <mclasen@redhat.com>
+
+	* clock-location-tile.[ch]: (weather_info_setup_tooltip): hack to
+	display the sunrise/sunset in local time
+	(weather_tooltip): update
+	* clock.c: (weather_tooltip): update
+
 2008-02-28  David Zeuthen  <davidz@redhat.com>
 
 	* set-timezone.c (can_do): Don't hardcode the polkit results for

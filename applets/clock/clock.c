@@ -1341,12 +1341,13 @@ weather_tooltip (GtkWidget   *widget,
         locations = cd->locations;
 
         for (l = locations; l; l = l->next) {
-                if (clock_location_is_current (l->data)) {
-                        info = clock_location_get_weather_info (l->data);
+		ClockLocation *location = l->data;
+                if (clock_location_is_current (location)) {
+                        info = clock_location_get_weather_info (location);
                         if (!info || !weather_info_is_valid (info))
                                 continue;
 
-                        weather_info_setup_tooltip (info, tooltip);
+                        weather_info_setup_tooltip (info, location, tooltip);
 
                         return TRUE;
                 }

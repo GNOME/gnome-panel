@@ -37,7 +37,7 @@ ClockLocationTile *clock_location_tile_new (ClockLocation *loc,
 
 ClockLocation *clock_location_tile_get_location (ClockLocationTile *this);
 
-void weather_info_setup_tooltip (WeatherInfo *info, GtkTooltip *tip);
+void weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkTooltip *tip);
 
 void clock_location_tile_refresh (ClockLocationTile *this,
                                   gboolean           force_refresh);
