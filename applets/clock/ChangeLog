@@ -1,3 +1,14 @@
+2008-03-05  Jens Granseuer  <jensgr@gmx.net>
+
+	* clock-face.c: (update_timeofday):
+	* clock-location-tile.c: (clock_location_tile_fill):
+	* clock-location.c: (guess_zone_from_tree):
+	* clock-zonetable.c: (clock_zonetable_parse_location),
+	(clock_zonetable_load_zonetab), (clock_zonetable_load_iso3166):
+	* clock.c: (parse_gconf_cities), (run_prefs_edit_save),
+	(run_find_location): fix build for compilers that don't like C99.
+	Fixes bug #518895.
+
 2008-03-03  Vincent Untz  <vuntz@gnome.org>
 
 	Display sunrise/sunset in local (to the location) time.

@@ -2517,11 +2517,12 @@ parse_gconf_cities (ClockData *cd, GSList *values)
 {
         GSList *cur = values;
 	LocationParserData data;
+        GMarkupParseContext *context;
 
 	data.cities = NULL;
 	data.cd = cd;
 
-        GMarkupParseContext *context =
+        context =
                 g_markup_parse_context_new (&location_parser, 0, &data, NULL);
 
         while (cur) {
@@ -2974,14 +2975,16 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
 
         ClockZoneInfo *info = clock_zonetable_get_l10n_zone (zones, timezone_l10n);
 
+        const gchar *name;
+        gfloat lat = 0;
+        gfloat lon = 0;
+
         if (!info) {
                 edit_hide (NULL, cd);
                 return;
         }
 
-        const gchar *name = gtk_entry_get_text (GTK_ENTRY (name_entry));
-        gfloat lat = 0;
-        gfloat lon = 0;
+        name = gtk_entry_get_text (GTK_ENTRY (name_entry));
 
         sscanf (gtk_entry_get_text (GTK_ENTRY (lat_entry)), "%f", &lat);
         sscanf (gtk_entry_get_text (GTK_ENTRY (lon_entry)), "%f", &lon);
@@ -3281,9 +3284,10 @@ static void
 run_find_location (GtkButton *button, ClockData *cd)
 {
         GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+        GtkWidget *window;
 
 	fill_location_tree (cd);
-        GtkWidget *window = glade_xml_get_widget (cd->glade_xml, "find-location-window");
+        window = glade_xml_get_widget (cd->glade_xml, "find-location-window");
 
 	gtk_tree_view_collapse_all (GTK_TREE_VIEW (cd->location_tree));
 	gtk_widget_grab_focus (cd->find_location_entry);

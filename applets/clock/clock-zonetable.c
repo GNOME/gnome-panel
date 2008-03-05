@@ -267,8 +267,8 @@ clock_zonetable_parse_location (gchar *location, gfloat *lat, gfloat *lon)
 {
         int i;
 
-        gchar *lat_str;
-        gchar *lon_str;
+        gchar *lat_str = NULL;
+        gchar *lon_str = NULL;
 
         for (i = 1; location[i] != '\0'; i++) {
                 if (location[i] == '+' || location[i] == '-') {
@@ -339,12 +339,13 @@ static void
 clock_zonetable_load_zonetab (ClockZoneTable *this)
 {
         ClockZoneTablePrivate *priv = PRIVATE (this);
+        GIOChannel *channel;
         gchar *line;
 
         priv->table = g_hash_table_new (g_str_hash, g_str_equal);
         priv->l10n_table = g_hash_table_new (g_str_hash, g_str_equal);
 
-        GIOChannel *channel = g_io_channel_new_file (priv->zonetab, "r", NULL);
+        channel = g_io_channel_new_file (priv->zonetab, "r", NULL);
 
         g_assert (channel != NULL);
 
@@ -377,11 +378,12 @@ static void
 clock_zonetable_load_iso3166 (ClockZoneTable *this)
 {
         ClockZoneTablePrivate *priv = PRIVATE (this);
+        GIOChannel *channel;
         gchar *line;
 
         priv->country_table = g_hash_table_new (g_str_hash, g_str_equal);
 
-        GIOChannel *channel = g_io_channel_new_file (priv->iso3166, "r", NULL);
+        channel = g_io_channel_new_file (priv->iso3166, "r", NULL);
 
         g_assert (channel != NULL);
 

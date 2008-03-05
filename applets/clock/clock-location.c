@@ -199,7 +199,7 @@ guess_zone_from_tree (const gchar *localtime, ClockZoneTable *zones)
         int i;
         struct stat s;
         struct stat dir_s;
-        char *ret = NULL;;
+        char *ret = NULL;
 
         char *localtime_data = NULL;
         gsize localtime_len = -1;

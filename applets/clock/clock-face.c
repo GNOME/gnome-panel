@@ -321,8 +321,9 @@ update_timeofday (ClockFace *this)
 		timeofday = CLOCK_FACE_NIGHT;
 
 	if (priv->timeofday != timeofday) {
-		priv->timeofday = timeofday;
 		gint width, height;
+
+		priv->timeofday = timeofday;
 
 		width = GTK_WIDGET (this)->requisition.width;
 		height = GTK_WIDGET (this)->requisition.height;
