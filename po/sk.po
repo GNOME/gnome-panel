@@ -13,14 +13,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-29 03:31+0000\n"
+"POT-Creation-Date: 2008-03-07 10:45+0100\n"
 "PO-Revision-Date: 2007-11-17 22:48+0100\n"
 "Last-Translator: Pavol Šimo <palo.simo@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural= (n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;"
+"Plural-Forms: nplurals=3; plural= (n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -1221,6 +1221,7 @@ msgid "Could not use dropped item"
 msgstr "Nepodarilo sa použiť pustenú položku"
 
 #: ../gnome-panel/launcher.c:471
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Pre spúšťač panelu nie je v desktop súbore uvedené URI\n"
 
@@ -1451,6 +1452,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "_Zvoľte položku, ktorú pridať do \"%s\":"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "Pridať do zásuvky"
 
@@ -1459,6 +1461,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "_Zvoľte položku, ktorú pridať do zásuvky:"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "Pridať do panelu"
 
@@ -2388,6 +2391,7 @@ msgid "pixels"
 msgstr "bodov"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "Nepodarilo sa nájsť vhodnú aplikáciu."
 
@@ -2685,16 +2689,15 @@ msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
-"Ak je true, na každej strane panelu budú tlačidlá pre presun panelu na "
-"okraj obrazovky. Zostane zobrazené iba malé tlačidlo."
+"Ak je true, na každej strane panelu budú tlačidlá pre presun panelu na okraj "
+"obrazovky. Zostane zobrazené iba malé tlačidlo."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
 msgstr ""
-"Ak je true, skrývanie a obnova tohto panelu bude animovaná a nie "
-"okamžitá."
+"Ak je true, skrývanie a obnova tohto panelu bude animovaná a nie okamžitá."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2707,16 +2710,16 @@ msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"Ak je true, obrázok bude roztiahnutý (so zachovaním pomeru strán) na "
-"výšku panelu (pre vodorovný panel)."
+"Ak je true, obrázok bude roztiahnutý (so zachovaním pomeru strán) na výšku "
+"panelu (pre vodorovný panel)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
-"Ak je true, obrázok bude roztiahnutý na rozmery panelu. Pomer strán "
-"nebude zachovaný."
+"Ak je true, obrázok bude roztiahnutý na rozmery panelu. Pomer strán nebude "
+"zachovaný."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2724,8 +2727,8 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"Ak je true, panel sa automaticky skryje do rohu v momente, keď kurzor "
-"myši opustí panel. Panel sa obnoví ak kurzor myši ukáže na roh."
+"Ak je true, panel sa automaticky skryje do rohu v momente, keď kurzor myši "
+"opustí panel. Panel sa obnoví ak kurzor myši ukáže na roh."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
@@ -2736,8 +2739,8 @@ msgid ""
 msgstr ""
 "Ak je true, panel bude zaberať celú šírku obrazovky (výšku pre zvislé "
 "panely). V tomto režime je možné panel umiestniť iba na okraje obrazovky. Ak "
-"je false, panel bude veľký akurát pre všetky aplety a objekty, ktoré na "
-"ňom sú."
+"je false, panel bude veľký akurát pre všetky aplety a objekty, ktoré na ňom "
+"sú."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2746,9 +2749,9 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
-"Ak je true, kľúče x a x_right sa ignorujú a panel sa umiestni do stredu "
-"osi X obrazovky. Ak je veľkosť panelu zmenená, zostane na tejto pozícii - "
-"čiže bude rásť na oboch stranách. Ak je toto false, kľúče x a x_right určujú "
+"Ak je true, kľúče x a x_right sa ignorujú a panel sa umiestni do stredu osi "
+"X obrazovky. Ak je veľkosť panelu zmenená, zostane na tejto pozícii - čiže "
+"bude rásť na oboch stranách. Ak je toto false, kľúče x a x_right určujú "
 "umiestnenie panelu."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
@@ -2758,10 +2761,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
 msgstr ""
-"Ak je true, kľúče y a y_bottom sa ignorujú a panel sa umiestni do "
-"stredu osi y obrazovky. Ak je veľkosť panelu zmenená, zostane na tejto "
-"pozícii - čiže bude rásť na oboch stranách. Ak je toto false, kľúče y a "
-"y_bottom určujú umiestnenie panelu."
+"Ak je true, kľúče y a y_bottom sa ignorujú a panel sa umiestni do stredu osi "
+"y obrazovky. Ak je veľkosť panelu zmenená, zostane na tejto pozícii - čiže "
+"bude rásť na oboch stranách. Ak je toto false, kľúče y a y_bottom určujú "
+"umiestnenie panelu."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -2824,7 +2827,8 @@ msgid ""
 "relevant if the auto_hide key is true."
 msgstr ""
 "Určuje počet milisekúnd po opustení panelu kurzorom, po ktorých sa panel "
-"automaticky skryje. Tento kľúč má zmysel iba ak má kľúč auto_hide hodnotu true."
+"automaticky skryje. Tento kľúč má zmysel iba ak má kľúč auto_hide hodnotu "
+"true."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
@@ -2919,12 +2923,12 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"Orientácia panelu. Možné hodnoty sú \"top\" (hore), \"bottom\" (dole), \"left\" "
-"(vľavo), \"right\" (napravo). V roztiahnutom režime kľúč určuje, pri ktorom "
-"okraji obrazovky je panel. Inak je rozdiel medzi hore a dole menej významný "
-"- obe určujú, že sa jedná o horizontálny panel - ale stále ešte pomáhajú pri "
-"nastavení správania objektov panelu. Napríklad pri \"top\" sa ponuka panelu "
-"rozbalí dolu a pri \"bottom\" hore."
+"Orientácia panelu. Možné hodnoty sú \"top\" (hore), \"bottom\" (dole), \"left"
+"\" (vľavo), \"right\" (napravo). V roztiahnutom režime kľúč určuje, pri "
+"ktorom okraji obrazovky je panel. Inak je rozdiel medzi hore a dole menej "
+"významný - obe určujú, že sa jedná o horizontálny panel - ale stále ešte "
+"pomáhajú pri nastavení správania objektov panelu. Napríklad pri \"top\" sa "
+"ponuka panelu rozbalí dolu a pri \"bottom\" hore."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid ""
@@ -2933,8 +2937,8 @@ msgid ""
 "enable_animations key is true."
 msgstr ""
 "Rýchlosť, ktorou sa má animovať panel. Možné hodnoty sú \"slow\" (pomaly), "
-"\"medium\" (normálne) a \"fast\" (rýchlo). Tento kľúč má zmysel iba ak má kľúč "
-"enable_animations hodnotu true."
+"\"medium\" (normálne) a \"fast\" (rýchlo). Tento kľúč má zmysel iba ak má "
+"kľúč enable_animations hodnotu true."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
@@ -2958,7 +2962,8 @@ msgid ""
 msgstr ""
 "Ktorý typ pozadia sa má pre tento panel použiť. Možné hodnoty sú \"gtk\" - "
 "štandardný prvok GTK+ pre pozadie, \"color\" - použije sa farba zadaná v "
-"kľúči \"color\" alebo \"image\" - použije sa obrázok zadaný v kľúči \"image\"."
+"kľúči \"color\" alebo \"image\" - použije sa obrázok zadaný v kľúči \"image"
+"\"."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
 msgid ""
@@ -3193,4 +3198,3 @@ msgstr "_Aplet:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Priečinok nastavení:"
-
