@@ -13,14 +13,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 20:19+0100\n"
-"PO-Revision-Date: 2007-11-17 22:48+0100\n"
+"POT-Creation-Date: 2008-03-07 10:43+0100\n"
+"PO-Revision-Date: 2008-03-03 16:36+0100\n"
 "Last-Translator: Pavol Šimo <palo.simo@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural= (n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;"
+"Plural-Forms: nplurals=3; plural= (n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -65,7 +65,7 @@ msgid "_Preferences"
 msgstr "Nas_tavenia"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2234
+#: ../applets/clock/clock.c:4111
 msgid "Clock"
 msgstr "Hodiny"
 
@@ -81,51 +81,66 @@ msgstr "Vytváracie rozhranie pre aplety Hodiny."
 msgid "Get the current time and date"
 msgstr "Získanie aktuálneho dátumu a času"
 
-#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.c:347
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/calendar-window.c:228 ../applets/clock/clock.c:349
-#: ../applets/clock/clock.c:1256
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
+#: ../applets/clock/clock.c:1554 ../applets/clock/clock-location-tile.c:488
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: ../applets/clock/calendar-window.c:234
+#: ../applets/clock/calendar-window.c:250
 msgid "%b %d"
-msgstr "%b %d"
+msgstr "%d.%b"
 
-#: ../applets/clock/calendar-window.c:742
-msgid "_Tasks"
-msgstr "Ú_lohy"
+#: ../applets/clock/calendar-window.c:765
+msgid "Tasks"
+msgstr "Úlohy"
 
-#: ../applets/clock/calendar-window.c:858
+#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:938
+#: ../applets/clock/calendar-window.c:1554
+msgid "Edit"
+msgstr "Upraviť"
+
+#: ../applets/clock/calendar-window.c:883
 msgid "All Day"
 msgstr "Celý deň"
 
-#: ../applets/clock/calendar-window.c:985
-msgid "_Appointments"
-msgstr "_Schôdzky"
+#: ../applets/clock/calendar-window.c:1019
+msgid "Appointments"
+msgstr "Schôdzky"
 
-#: ../applets/clock/calendar-window.c:1002
-msgid "_Birthdays and Anniversaries"
-msgstr "_Narodeniny a výročia"
+#: ../applets/clock/calendar-window.c:1044
+msgid "Birthdays and Anniversaries"
+msgstr "Narodeniny a výročia"
 
-#: ../applets/clock/calendar-window.c:1018
-msgid "_Weather Information"
-msgstr "Informácie o _počasí"
+#: ../applets/clock/calendar-window.c:1069
+msgid "Weather Information"
+msgstr "Informácie o počasí"
 
-#: ../applets/clock/calendar-window.c:1687
+#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
+msgid "Locations"
+msgstr "Umiestnenia"
+
+#: ../applets/clock/calendar-window.c:1850
 msgid "Calendar"
 msgstr "Kalendár"
 
-#: ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:421
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:349 ../applets/clock/clock.c:1254
+#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1552
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -134,15 +149,15 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:369
+#: ../applets/clock/clock.c:443
 msgid "%a %b %e"
-msgstr "%a %b %e"
+msgstr "%a %e. %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:450
 #, c-format
 msgid ""
 "%1$s\n"
@@ -155,58 +170,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:384
+#: ../applets/clock/clock.c:458
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s, %1$s"
 
-#. Show date in tooltip
-#: ../applets/clock/clock.c:527
-msgid "%A %B %d"
-msgstr "%A %B %d"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:640
+msgid "%A %B %d (%%s)"
+msgstr "%A %d. %B (%%s)"
 
-#: ../applets/clock/clock.c:541
+#: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "Kliknutím skryjete svoje schôdzky a úlohy"
 
-#: ../applets/clock/clock.c:544
+#: ../applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "Kliknutím si pozriete svoje schôdzky a úlohy"
 
-#: ../applets/clock/clock.c:548
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "Kliknutím skryjete mesačný kalendár"
 
-#: ../applets/clock/clock.c:551
+#: ../applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "Kliknutím si pozriete mesačný kalendár"
 
-#: ../applets/clock/clock.c:1095
-msgid "Click to view time in other timezones"
-msgstr "Kliknutím si pozriete čas v iných časových pásmach"
-
-#: ../applets/clock/clock.c:1102
+#: ../applets/clock/clock.c:1402
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
-#: ../applets/clock/clock.c:1249
+#: ../applets/clock/clock.c:1547
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1251
+#: ../applets/clock/clock.c:1549
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1293
+#: ../applets/clock/clock.c:1591
 msgid "%A, %B %d %Y"
-msgstr "%A, %B %d %Y"
+msgstr "%A, %d. %B %Y"
 
-#: ../applets/clock/clock.c:1368
+#: ../applets/clock/clock.c:1666
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Zlyhalo spustenie nástroja pre nastavenie času: %s"
 
-#: ../applets/clock/clock.c:1406
+#: ../applets/clock/clock.c:1695
+msgid "Set System Time..."
+msgstr "Nastaviť čas systému..."
+
+#: ../applets/clock/clock.c:1696 ../applets/clock/clock.glade.h:21
+msgid "Set System Time"
+msgstr "Nastaviť čas systému"
+
+#: ../applets/clock/clock.c:1710
+msgid "Failed to set the system time"
+msgstr "Nastavenie času systému zlyhalo"
+
+#: ../applets/clock/clock.c:1883
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -214,64 +239,50 @@ msgstr ""
 "Nepodarilo sa nájsť program pre nastavenie dátumu a času. Možno nie je "
 "nainštalovaný."
 
-#: ../applets/clock/clock.c:1917
+#: ../applets/clock/clock.c:2753
 msgid "Custom format"
 msgstr "Vlastný formát"
 
-#: ../applets/clock/clock.c:2064
-msgid "Clock Preferences"
-msgstr "Nastavenie hodín"
+#: ../applets/clock/clock.c:3554 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:588
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:2089
-msgid "Clock _type:"
-msgstr "_Typ hodín:"
+#: ../applets/clock/clock.c:3812
+msgid "City Name"
+msgstr "Názov mesta"
 
-#: ../applets/clock/clock.c:2100
-msgid "12 hour"
-msgstr "12-hodinový"
+#: ../applets/clock/clock.c:3816
+msgid "City Time Zone"
+msgstr "Časové pásmo mesta"
 
-#: ../applets/clock/clock.c:2101
+#: ../applets/clock/clock.c:4007
 msgid "24 hour"
 msgstr "24-hodinový"
 
-#: ../applets/clock/clock.c:2102
+#: ../applets/clock/clock.c:4008
 msgid "UNIX time"
 msgstr "Unixový čas"
 
-#: ../applets/clock/clock.c:2103
+#: ../applets/clock/clock.c:4009
 msgid "Internet time"
 msgstr "Internetový čas"
 
-#: ../applets/clock/clock.c:2111
+#: ../applets/clock/clock.c:4017
 msgid "Custom _format:"
 msgstr "Vlastný _formát:"
 
-#: ../applets/clock/clock.c:2130
-msgid "Show _seconds"
-msgstr "Zobraziť _sekundy"
-
-#: ../applets/clock/clock.c:2139
-msgid "Show _date"
-msgstr "Zobraziť _dátum"
-
-#: ../applets/clock/clock.c:2148
-msgid "Use _UTC"
-msgstr "Používať _UTC"
-
-#: ../applets/clock/clock.c:2158
-msgid "Show multiple _timezones"
-msgstr "Zobraziť viacero časových _pásiem"
-
-#: ../applets/clock/clock.c:2237
+#: ../applets/clock/clock.c:4114
 msgid "The Clock displays the current time and date"
 msgstr "Aplet Hodiny zobrazuje aktuálny dátum a čas"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2240 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4117 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:617
+#: ../applets/wncklet/workspace-switcher.c:620
 #: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr ""
@@ -279,6 +290,139 @@ msgstr ""
 "Marcel Telka <marcel@telka.sk>\n"
 "Peter Tuhársky <tuharsky@misbb.sk>\n"
 "Pavol Šimo <palo.simo@post.sk>"
+
+#: ../applets/clock/clock.glade.h:1
+msgid "12 _hour format"
+msgstr "12-_hodinový formát"
+
+#: ../applets/clock/clock.glade.h:2
+msgid "24 h_our format"
+msgstr "24-h_odinový formát"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Clock Options</b>"
+msgstr "<b>Nastavenie hodín</b>"
+
+#: ../applets/clock/clock.glade.h:4
+msgid "<b>Display</b>"
+msgstr "<b>Zobrazenie</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<b>Panel Display</b>"
+msgstr "<b>Zobrazenie v paneli</b>"
+
+#: ../applets/clock/clock.glade.h:6
+msgid "<b>Time Settings</b>"
+msgstr "<b>Nastavenie času</b>"
+
+#: ../applets/clock/clock.glade.h:7
+msgid "<i>(optional)</i>"
+msgstr "<i>(voliteľné)</i>"
+
+#: ../applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "Nastavenie hodín"
+
+#: ../applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr "Aktuálny čas:"
+
+#: ../applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"Východne\n"
+"Západne"
+
+#: ../applets/clock/clock.glade.h:12
+msgid "Find _Next"
+msgstr "Nájsť ď_alšie"
+
+#: ../applets/clock/clock.glade.h:13
+msgid "Find..."
+msgstr "Vyhľadať..."
+
+#: ../applets/clock/clock.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "Všeobecné"
+
+#: ../applets/clock/clock.glade.h:15
+msgid "Latitude:"
+msgstr "Zemepisná šírka:"
+
+#: ../applets/clock/clock.glade.h:16
+msgid "Location Name:"
+msgstr "Názov miesta:"
+
+#: ../applets/clock/clock.glade.h:18
+msgid "Longitude:"
+msgstr "Zemepisná dĺžka:"
+
+#: ../applets/clock/clock.glade.h:19
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"Severne\n"
+"Južne"
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Show _temperature"
+msgstr "Zobraziť _teplotu"
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Show _weather"
+msgstr "Zobraziť počasi_e"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Show seco_nds"
+msgstr "Zobraziť _sekundy"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Show the _date"
+msgstr "Zobraziť _dátum"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Time Settings"
+msgstr "Nastavenie času"
+
+#: ../applets/clock/clock.glade.h:27
+msgid "Time _Settings"
+msgstr "Na_stavenie času"
+
+#: ../applets/clock/clock.glade.h:28
+msgid "Time:"
+msgstr "Čas:"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "Timezone:"
+msgstr "Časové pásmo:"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "Weather"
+msgstr "Počasie"
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Find:"
+msgstr "_Nájsť:"
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Pressure unit:"
+msgstr "Jednotka _tlaku:"
+
+#: ../applets/clock/clock.glade.h:33
+msgid "_Temperature unit:"
+msgstr "Jednotka t_eploty:"
+
+#: ../applets/clock/clock.glade.h:34
+msgid "_Visibility unit:"
+msgstr "Jednotka vi_diteľnosti:"
+
+#: ../applets/clock/clock.glade.h:35
+msgid "_Wind speed unit:"
+msgstr "Jednotka _rýchlosti vetra:"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -295,13 +439,8 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
-msgid ""
-"A list of timezone IDs. Each ID identifies an individual timezone. The "
-"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
-msgstr ""
-"Zoznam ID časových pásiem. Každé ID určuje jedno časové pásmo. Nastavenia "
-"každého z týchto časových pásiem sú uložené v kľúčoch $(id)_name a $(id)"
-"_zone."
+msgid "A list of locations to display in the calendar window."
+msgstr "Zoznam umiestnení zobrazených v okne kalendára."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -316,93 +455,125 @@ msgid "Expand list of birthdays"
 msgstr "Rozšíriť zoznam narodenín"
 
 #: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "Rozšíriť zoznam umiestnení"
+
+#: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
 msgstr "Rozšíriť zoznam úloh"
 
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:18
 msgid "Expand list of weather information"
 msgstr "Rozšíriť zoznam informácií o počasí"
 
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "Formát hodín"
 
-#: ../applets/clock/clock.schemas.in.h:19
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "Ak je true, bude sa zobrazovať ikona počasia."
+
+#: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Ak je true, v hodinách sa bude zobrazovať aj dátum."
 
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
 msgstr "Ak je true, budú sa zobrazovať aj sekundy."
 
-#: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr ""
-"Ak je true, v hodinách sa bude zobrazovať nielen čas, ale aj časové pásmo."
-
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Ak je true, čas bude z pásma Universal Coordinated Time."
 
-#: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr "Ak je true, rozšíri sa zoznam schôdzok v okne kalendára."
-
 #: ../applets/clock/clock.schemas.in.h:24
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "Ak je true, rozšíri sa zoznam narodenín v okne kalendára."
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Ak je true, zoznam schôdzok v okne kalendára bude roztiahnutý."
 
 #: ../applets/clock/clock.schemas.in.h:25
-msgid "If true, expand the list of tasks in the calendar window."
-msgstr "Ak je true, rozšíri sa zoznam úloh v okne kalendára."
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "Ak je true, zoznam narodenín v okne kalendára bude roztiahnutý."
 
 #: ../applets/clock/clock.schemas.in.h:26
-msgid "If true, expand the list of weather information in the calendar window."
-msgstr "Ak je true, rozšíri sa zoznam informácií o počasí v okne kalendára."
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "Ak je true, zoznam umiestnení v okne kalendára bude roztiahnutý."
 
 #: ../applets/clock/clock.schemas.in.h:27
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "Ak je true, zoznam úloh v okne kalendára bude roztiahnutý."
+
+#: ../applets/clock/clock.schemas.in.h:28
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr ""
+"Ak je true, zoznam informácií o počasí v okne kalendára bude roztiahnutý."
+
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Ak je true, dátum sa bude zobrazovať v bublinovom popise pri namierení "
 "kurzorom myši na hodiny."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Ak je true, v kalendári sa zobrazí pri ikone počasia aj teplota."
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "Ak je true, v kalendári sa zobrazia čísla týždňov."
 
-#: ../applets/clock/clock.schemas.in.h:29
-msgid "Name of the timezone"
-msgstr "Názov časového pásma"
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "List of locations"
+msgstr "Zoznam umiestnení"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "Zobraziť dátum v hodinách"
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "Zobraziť dátum ako bublinový popis"
 
-#: ../applets/clock/clock.schemas.in.h:32
-msgid "Show the timezone button"
-msgstr "Zobraziť tlačidlo časového pásma"
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show temperature in clock"
+msgstr "Zobraziť teplotu v hodinách"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
-msgstr "Zobraziť sekundy"
+msgstr "Zobraziť sekundy v čase"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show weather in clock"
+msgstr "Zobraziť počasie v hodinách"
+
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "Zobraziť čísla týždňov v kalendári"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "Jednotka rýchlosti"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "Jednotka teploty"
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "Jednotka použitá na zobrazenie teplôt."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "Jednotka použitá na zobrazenie rýchlosti vetra."
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
-"Použitie tohto kľúča je zastaralé v GNOME 2.6. Použite 'format'. Schéma sa "
-"necháva iba kvôli spätnej kompatibilite."
+"Použitie tohto kľúča je zastaralé v GNOME 2.6. Použite kľúč 'format'. Schéma "
+"sa necháva iba kvôli spätnej kompatibilite."
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:44
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -410,10 +581,11 @@ msgid ""
 "information."
 msgstr ""
 "Tento kľúč určuje formát pre aplet hodín pri použití formátovacieho typu "
-"\"vlastný\". Môžete použiť všetky konverzné prepínače známe funkcii strftime"
-"() a získať tak špecifický formát. Podrobnosti nájdete v manuáli funkcie."
+"\"custom\" (vlastný). Môžete použiť všetky konverzné prepínače známe funkcii "
+"strftime() a získať tak špecifický formát. Podrobnosti nájdete v manuáli "
+"funkcie."
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -425,58 +597,131 @@ msgid ""
 "the custom_format key."
 msgstr ""
 "Tento kľúč určuje formát hodín pre aplet hodín. Možné hodnoty sú \"12-hour"
-"\", \"24-hour\", \"internet\", \"unix\" a \"custom\". Ak použijete "
-"\"internet\", hodiny budú zobrazovať internetový čas. Ten rozdeľuje deň na "
-"1000 \".beats\". V tomto systéme neexistujú časové zóny, takže je rovnaký na "
-"celom svete. Ak použijete \"unix\", hodiny budú zobrazovať počet sekúnd od "
-"1.1.1970. Ak použijete \"custom\", hodiny budú zobrazovať čas podľa "
-"formátu, ktorý ste zadali v kľúči custom_format."
+"\", \"24-hour\", \"internet\", \"unix\" a \"custom\". Ak použijete \"internet"
+"\", hodiny budú zobrazovať internetový čas. Ten rozdeľuje deň na 1000 \"."
+"beats\". V tomto systéme neexistujú časové zóny, takže je rovnaký na celom "
+"svete. Ak použijete \"unix\", hodiny budú zobrazovať počet sekúnd od "
+"1.1.1970. Ak použijete \"custom\", hodiny budú zobrazovať čas podľa formátu, "
+"ktorý ste zadali v kľúči custom_format."
 
-#: ../applets/clock/clock.schemas.in.h:38
-msgid ""
-"This key specifies the name of the timezone as can be used in the TZ "
-"environment variable."
-msgstr ""
-"Tento kľúč určuje názov časového pásma, ktorý sa používa v premennej "
-"prostredia TZ."
-
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Tento kľúč určuje program spúšťaný pre nastavenie času."
 
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "This key specifies the user-visible name of the timezone."
-msgstr "Tento kľúč určuje názov časového pásma viditeľný pre používateľa."
-
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "Nástroj pre nastavenie hodín"
 
-#: ../applets/clock/clock.schemas.in.h:42
-msgid "Timezone ID list"
-msgstr "Zoznam ID časových pásiem"
-
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "Používať internetový čas"
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "Používať Unixový čas"
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "Používať UTC"
 
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "User-visible name of the timezone"
-msgstr "Používateľom viditeľný názov časového pásma"
+#. make a fake location with a null TZ
+#. make a fake location with the current TZ
+#: ../applets/clock/clock-location.c:364 ../applets/clock/clock-location.c:371
+msgid "Unknown Location"
+msgstr "Neznáme umiestnenie"
+
+#: ../applets/clock/clock-location-tile.c:194
+msgid "Failed to set the system timezone"
+msgstr "Nastavenie časového pásma zlyhalo"
+
+#: ../applets/clock/clock-location-tile.c:239
+#: ../applets/clock/clock-location-tile.c:317
+msgid "<small>Set...</small>"
+msgstr "<small>Nastaviť...</small>"
+
+#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:318
+msgid "<small>Set</small>"
+msgstr "<small>Nastaviť</small>"
+
+#: ../applets/clock/clock-location-tile.c:323
+msgid "Set as current timezone for this computer"
+msgstr "Nastaviť ako aktuálne časové pásmo pre tento počítač"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:461
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:470
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:480
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:598
+#: ../applets/clock/clock-location-tile.c:604
+msgid "Unknown"
+msgstr "Neznáme"
+
+#: ../applets/clock/clock-location-tile.c:599
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, ako keby %s"
+
+#: ../applets/clock/clock-location-tile.c:615
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Vychádza: %s / Zapadá: %s"
 
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Pri pokuse o zobrazenie Pomocníka nastala chyba: %s"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "Zmena času systému"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "Zmena časového pásma systému"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "Nastavenie hardvérových hodín"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "Zmena časového pásma systému vyžaduje oprávnenia."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "Zmena času systému vyžaduje oprávnenia."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "Nastavenie hardvérových hodín vyžaduje oprávnenia."
 
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -689,7 +934,7 @@ msgstr "Pozrite na dnešný dátum!"
 msgid "%s the Fish, the fortune teller"
 msgstr "Ryba %s, rozprávač citátov"
 
-#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
+#: ../applets/fish/fish.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -857,7 +1102,7 @@ msgid "Window Selector"
 msgstr "Výber okna"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:620
+#: ../applets/wncklet/workspace-switcher.c:623
 msgid "Workspace Switcher"
 msgstr "Prepínanie plôch"
 
@@ -902,47 +1147,47 @@ msgstr ""
 "Zoznam okien zobrazuje zoznam všetkých okien pomocou tlačidiel a umožňuje "
 "medzi nimi prechádzať."
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>Obnova minimalizovaných okien</b>"
 
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>Zoskupovanie okien</b>"
 
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>Obsah zoznamu okien</b>"
 
-#: ../applets/wncklet/window-list.glade.h:5
+#: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
 msgstr "Zoskupiť okná pri nedostatku _miesta"
 
-#: ../applets/wncklet/window-list.glade.h:6
+#: ../applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
 msgstr "_Obnoviť na aktuálnu plochu"
 
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
 msgstr "Obnoviť na pôvo_dnú plochu"
 
-#: ../applets/wncklet/window-list.glade.h:8
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
 msgstr "Zobraziť okná z _aktuálnej plochy"
 
-#: ../applets/wncklet/window-list.glade.h:9
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "Zobraziť okná zo všet_kých plôch"
 
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "Nastavenie zoznamu okien"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "Vždy _zoskupovať okná"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "_Nikdy nezoskupovať okná"
 
@@ -1007,13 +1252,13 @@ msgstr ""
 "prechádzať."
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 #: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "riadky"
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "stĺpce"
 
@@ -1038,7 +1283,7 @@ msgstr ""
 "Chyba pri načítavaní hodnoty display_all_workspaces pre aplet prepínania "
 "plochy: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:622
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1104,8 +1349,9 @@ msgid ""
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Metacity."
 msgstr ""
-"Ak je toto true, pracovné plochy budú v prepínači plôch zobrazovať svoje názvy, "
-"ináč budú zobrazovať obsah plochy. Funguje to iba so správcom okien Metacity."
+"Ak je toto true, pracovné plochy budú v prepínači plôch zobrazovať svoje "
+"názvy, ináč budú zobrazovať obsah plochy. Funguje to iba so správcom okien "
+"Metacity."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -1146,7 +1392,7 @@ msgid "Cannot find an empty spot"
 msgstr "Nepodarilo sa nájsť prázdne miesto"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:170
-#: ../gnome-panel/panel-toplevel.c:1585
+#: ../gnome-panel/panel-toplevel.c:1588
 msgid "Drawer"
 msgstr "Zásuvka"
 
@@ -1154,7 +1400,7 @@ msgstr "Zásuvka"
 msgid "_Add to Drawer..."
 msgstr "Pridať do zás_uvky..."
 
-#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:859
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:891
 #: ../gnome-panel/panel-action-button.c:138
 #: ../gnome-panel/panel-context-menu.c:212
 msgid "_Properties"
@@ -1168,21 +1414,21 @@ msgstr "Vytvoriť nový súbor v danom priečinku"
 msgid "[FILE...]"
 msgstr "[SÚBOR...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:131
+#: ../gnome-panel/gnome-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- Upraviť súbory .desktop"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:162
-#: ../gnome-panel/gnome-desktop-item-edit.c:214 ../gnome-panel/launcher.c:949
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "Vytvoriť spúšťač"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:188
-#: ../gnome-panel/gnome-desktop-item-edit.c:208
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "Vlastnosti adresára"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:193 ../gnome-panel/launcher.c:787
+#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "Vlastnosti spúšťača"
 
@@ -1198,68 +1444,69 @@ msgstr ""
 msgid "Panel"
 msgstr "Panel"
 
-#: ../gnome-panel/launcher.c:151
+#: ../gnome-panel/launcher.c:170
 msgid "Could not show this URL"
 msgstr "Nepodarilo sa zobraziť toto URL"
 
-#: ../gnome-panel/launcher.c:152
+#: ../gnome-panel/launcher.c:171
 msgid "No URL was specified."
 msgstr "Nebolo zadané URL."
 
-#: ../gnome-panel/launcher.c:165
+#: ../gnome-panel/launcher.c:183
 #, c-format
 msgid "Could not show '%s'"
 msgstr "Nie je možné zobraziť '%s'"
 
-#: ../gnome-panel/launcher.c:210
+#: ../gnome-panel/launcher.c:229
 msgid "Could not launch application"
 msgstr "Nepodarilo sa spustiť aplikáciu"
 
-#: ../gnome-panel/launcher.c:275
+#: ../gnome-panel/launcher.c:297
 msgid "Could not use dropped item"
 msgstr "Nepodarilo sa použiť pustenú položku"
 
-#: ../gnome-panel/launcher.c:471
+#: ../gnome-panel/launcher.c:501
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Pre spúšťač panelu nie je v desktop súbore uvedené URI\n"
 
-#: ../gnome-panel/launcher.c:514
+#: ../gnome-panel/launcher.c:544
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Nepodarilo sa otvoriť súbor desktop %s pre spúšťač %s%s\n"
 
-#: ../gnome-panel/launcher.c:853
+#: ../gnome-panel/launcher.c:885
 msgid "_Launch"
 msgstr "_Spustiť"
 
-#: ../gnome-panel/launcher.c:892
+#: ../gnome-panel/launcher.c:924
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Kľúč %s nie je nastavený, nie je možné načítať spúšťač\n"
 
-#: ../gnome-panel/launcher.c:1016 ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/launcher.c:1048 ../gnome-panel/panel-ditem-editor.c:1347
 #: ../gnome-panel/panel-ditem-editor.c:1381
 #: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "Could not save launcher"
 msgstr "Nepodarilo sa uložiť spúšťač"
 
-#: ../gnome-panel/menu.c:933
+#: ../gnome-panel/menu.c:1004
 msgid "Add this launcher to _panel"
 msgstr "Pridať tento spúšťač do _panelu"
 
-#: ../gnome-panel/menu.c:940
+#: ../gnome-panel/menu.c:1011
 msgid "Add this launcher to _desktop"
 msgstr "Pridať tento spúšťač na pracovnú p_lochu"
 
-#: ../gnome-panel/menu.c:952
+#: ../gnome-panel/menu.c:1023
 msgid "_Entire menu"
 msgstr "_Celá ponuka"
 
-#: ../gnome-panel/menu.c:957
+#: ../gnome-panel/menu.c:1028
 msgid "Add this as _drawer to panel"
 msgstr "Pridať toto ako _zásuvku do panelu"
 
-#: ../gnome-panel/menu.c:964
+#: ../gnome-panel/menu.c:1035
 msgid "Add this as _menu to panel"
 msgstr "Pridať ako _ponuku do panelu"
 
@@ -1303,7 +1550,8 @@ msgstr "Úroveň: %s, Životy: %s"
 
 #: ../gnome-panel/nothing.cP:629
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr "Vľavo/Vpravo pre pohyb, medzerník pre paľbu, 'p' pozastavenie, 'q' koniec"
+msgstr ""
+"Vľavo/Vpravo pre pohyb, medzerník pre paľbu, 'p' pozastavenie, 'q' koniec"
 
 #: ../gnome-panel/nothing.cP:1369
 msgid "Killer GEGLs from Outer Space"
@@ -1319,7 +1567,7 @@ msgstr "_Uzamknúť obrazovku"
 
 #: ../gnome-panel/panel-action-button.c:214
 #: ../gnome-panel/panel-menu-bar.c:409 ../gnome-panel/panel-menu-button.c:990
-#: ../gnome-panel/panel-util.c:809
+#: ../gnome-panel/panel-util.c:752
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Nepodarilo sa spustiť '%s'"
@@ -1449,6 +1697,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "_Zvoľte položku, ktorú pridať do \"%s\":"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "Pridať do zásuvky"
 
@@ -1457,6 +1706,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "_Zvoľte položku, ktorú pridať do zásuvky:"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "Pridať do panelu"
 
@@ -1464,32 +1714,32 @@ msgstr "Pridať do panelu"
 msgid "Find an _item to add to the panel:"
 msgstr "_Zvoľte položku, ktorú pridať do panelu:"
 
-#: ../gnome-panel/panel-applet-frame.c:850
+#: ../gnome-panel/panel-applet-frame.c:840
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Výnimka z vyskakovacej ponuky '%s'\n"
 
-#: ../gnome-panel/panel-applet-frame.c:975
+#: ../gnome-panel/panel-applet-frame.c:965
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" skončil neočakávane"
 
-#: ../gnome-panel/panel-applet-frame.c:977
+#: ../gnome-panel/panel-applet-frame.c:967
 msgid "Panel object has quit unexpectedly"
 msgstr "Objekt panelu neočakávane skončil"
 
-#: ../gnome-panel/panel-applet-frame.c:984
+#: ../gnome-panel/panel-applet-frame.c:974
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
 "Ak opätovne načítate objekt panelu, automaticky bude pridaný späť do panelu."
 
-#: ../gnome-panel/panel-applet-frame.c:990
+#: ../gnome-panel/panel-applet-frame.c:980
 msgid "_Don't Reload"
 msgstr "_Nevykonať opätovné načítanie"
 
-#: ../gnome-panel/panel-applet-frame.c:991
+#: ../gnome-panel/panel-applet-frame.c:981
 msgid "_Reload"
 msgstr "_Opäť načítať"
 
@@ -1498,21 +1748,21 @@ msgstr "_Opäť načítať"
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:1006
-#: ../gnome-panel/panel-applet-frame.c:1094 ../gnome-panel/panel-util.c:397
+#: ../gnome-panel/panel-applet-frame.c:996
+#: ../gnome-panel/panel-applet-frame.c:1084 ../gnome-panel/panel-util.c:395
 msgid "Error"
 msgstr "Chyba"
 
-#: ../gnome-panel/panel-applet-frame.c:1057
+#: ../gnome-panel/panel-applet-frame.c:1047
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Pri načítavaní \"%s\" nastala chyba."
 
-#: ../gnome-panel/panel-applet-frame.c:1073
+#: ../gnome-panel/panel-applet-frame.c:1063
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Chcete odstrániť tento aplet z vašej konfigurácie?"
 
-#: ../gnome-panel/panel-applet-frame.c:1147
+#: ../gnome-panel/panel-applet-frame.c:1137
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Nepodarilo sa získať rozhranie AppletShell z ovládacieho prvku\n"
 
@@ -1646,7 +1896,7 @@ msgstr "Príkaz spúšťača nie je nastavený."
 msgid "The location of the launcher is not set."
 msgstr "Umiestnenie spúšťača nie je nastavené."
 
-#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:187
+#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:185
 msgid "Could not display help document"
 msgstr "Nepodarilo sa zobraziť pomocníka"
 
@@ -1666,8 +1916,8 @@ msgid ""
 "If you choose to force an application to exit, any open documents in it will "
 "be lost."
 msgstr ""
-"Ak sa rozhodnete vynútiť ukončenie aplikácie, všetky v nej otvorené dokumenty "
-"sa stratia."
+"Ak sa rozhodnete vynútiť ukončenie aplikácie, všetky v nej otvorené "
+"dokumenty sa stratia."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1730,8 +1980,8 @@ msgid ""
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
-"Ak je toto true, \"Zoznam známych aplikácií\" v dialógu \"Spustiť aplikáciu\" "
-"bude pri otvorení dialógu rozbalený. Tento kľúč má zmysel iba ak "
+"Ak je toto true, \"Zoznam známych aplikácií\" v dialógu \"Spustiť aplikáciu"
+"\" bude pri otvorení dialógu rozbalený. Tento kľúč má zmysel iba ak "
 "enable_program_list je true."
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
@@ -1829,39 +2079,37 @@ msgstr ""
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr ""
-"Ak je true, zásuvka sa zatvorí automaticky po kliknutí na spúšťač."
+msgstr "Ak je true, zásuvka sa zatvorí automaticky po kliknutí na spúšťač."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
-"Ak je true, spúšťač bude zvýraznený v prípade, že je nad ním kurzor "
-"myši."
+"Ak je true, spúšťač bude zvýraznený v prípade, že je nad ním kurzor myši."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
-"Ak je TRUE, panel neumožní vynútené ukončenie aplikácie tým, že zabráni "
-"v prístupe k danému tlačidlu."
+"Ak je TRUE, panel neumožní vynútené ukončenie aplikácie tým, že zabráni v "
+"prístupe k danému tlačidlu."
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
-"Ak je TRUE, panel neumožní uzamknúť obrazovku tým, že zabráni v "
-"prístupe k položkám ponuky pre uzamknutie."
+"Ak je TRUE, panel neumožní uzamknúť obrazovku tým, že zabráni v prístupe k "
+"položkám ponuky pre uzamknutie."
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
-"Ak je TRUE, panel neumožní odhlásenie používateľa tým, že zabráni v "
-"prístupe k položkám ponuky pre odhlásenie."
+"Ak je TRUE, panel neumožní odhlásenie používateľa tým, že zabráni v prístupe "
+"k položkám ponuky pre odhlásenie."
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
 msgid ""
@@ -1869,15 +2117,15 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
-"Ak je TRUE, panel neumožní žiadne zmeny v svojom nastavení. Je možné, "
-"že budete musieť jednotlivé aplety zamknúť samostatne. Aby sa zmena tohto "
+"Ak je TRUE, panel neumožní žiadne zmeny v svojom nastavení. Je možné, že "
+"budete musieť jednotlivé aplety zamknúť samostatne. Aby sa zmena tohto "
 "nastavenia prejavila, je nutné panel znovu spustiť."
 
 #: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Ak je true, pre objekty na paneli sa zobrazujú bublinové popisy."
 
-#: ../gnome-panel/panel-logout.c:238
+#: ../gnome-panel/panel-logout.c:242
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
@@ -1895,7 +2143,7 @@ msgstr[2] ""
 "Momentálne ste prihlásený ako \"%s\".\n"
 "Budete automaticky odhlásený o %d sekundy."
 
-#: ../gnome-panel/panel-logout.c:249
+#: ../gnome-panel/panel-logout.c:253
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
@@ -1913,35 +2161,35 @@ msgstr[2] ""
 "Momentálne ste prihlásený ako \"%s\".\n"
 "Tento systém sa automaticky vypne o %d sekundy."
 
-#: ../gnome-panel/panel-logout.c:330
+#: ../gnome-panel/panel-logout.c:334
 msgid "Log out of this system now?"
 msgstr "Odhlásiť sa teraz zo systému?"
 
-#: ../gnome-panel/panel-logout.c:336
+#: ../gnome-panel/panel-logout.c:340
 msgid "_Switch User"
 msgstr "_Prepnúť používateľa"
 
-#: ../gnome-panel/panel-logout.c:342
+#: ../gnome-panel/panel-logout.c:346
 msgid "_Log Out"
 msgstr "_Odhlásiť"
 
-#: ../gnome-panel/panel-logout.c:347
+#: ../gnome-panel/panel-logout.c:351
 msgid "Shut down this system now?"
 msgstr "Vypnúť systém teraz?"
 
-#: ../gnome-panel/panel-logout.c:352
+#: ../gnome-panel/panel-logout.c:356
 msgid "S_uspend"
 msgstr "_Uspať"
 
-#: ../gnome-panel/panel-logout.c:357
+#: ../gnome-panel/panel-logout.c:361
 msgid "_Hibernate"
 msgstr "_Hibernovať"
 
-#: ../gnome-panel/panel-logout.c:362
+#: ../gnome-panel/panel-logout.c:366
 msgid "_Restart"
 msgstr "_Reštartovať"
 
-#: ../gnome-panel/panel-logout.c:371
+#: ../gnome-panel/panel-logout.c:375
 msgid "_Shut Down"
 msgstr "_Vypnúť"
 
@@ -1956,8 +2204,7 @@ msgstr "Môžete pristupovať k dokumentom, priečinkom a miestam v sieti"
 #: ../gnome-panel/panel-menu-bar.c:101
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr ""
-"Môžete meniť vzhľad a správanie prostredia, získať pomoc, alebo sa "
-"odhlásiť"
+"Môžete meniť vzhľad a správanie prostredia, získať pomoc, alebo sa odhlásiť"
 
 #: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
@@ -1967,34 +2214,50 @@ msgstr "Aplikácie"
 msgid "_Edit Menus"
 msgstr "_Upraviť ponuky"
 
-#: ../gnome-panel/panel-menu-items.c:118 ../gnome-panel/panel-run-dialog.c:351
+#: ../gnome-panel/panel-menu-items.c:135 ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Nepodarilo sa zobraziť umiestnenie '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:405
+#: ../gnome-panel/panel-menu-items.c:416
 msgid "Bookmarks"
 msgstr "Záložky"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:424 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:438 ../gnome-panel/panel.c:531
 #, c-format
 msgid "Open '%s'"
 msgstr "Otvoriť '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:516
-msgid "Network Places"
-msgstr "Sieťové miesta"
+#: ../gnome-panel/panel-menu-items.c:506
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "Nepodarilo sa prezrieť %s na zmeny média"
 
-#: ../gnome-panel/panel-menu-items.c:519
+#: ../gnome-panel/panel-menu-items.c:549
+#, c-format
+msgid "Rescan %s"
+msgstr "Znovunačítať %s"
+
+#: ../gnome-panel/panel-menu-items.c:585
+#, c-format
+msgid "Unable to mount %s"
+msgstr "Nepodarilo sa pripojiť %s"
+
+#: ../gnome-panel/panel-menu-items.c:638
+#, c-format
+msgid "Mount %s"
+msgstr "Pripojiť %s"
+
+#: ../gnome-panel/panel-menu-items.c:841
 msgid "Removable Media"
 msgstr "Vymeniteľné médiá"
 
-#: ../gnome-panel/panel-menu-items.c:580
-msgid "Home Folder"
-msgstr "Domovský priečinok"
+#: ../gnome-panel/panel-menu-items.c:922
+msgid "Network Places"
+msgstr "Sieťové miesta"
 
-#: ../gnome-panel/panel-menu-items.c:581
+#: ../gnome-panel/panel-menu-items.c:961
 msgid "Open your personal folder"
 msgstr "Otvoriť osobný priečinok"
 
@@ -2002,19 +2265,19 @@ msgstr "Otvoriť osobný priečinok"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:600
+#: ../gnome-panel/panel-menu-items.c:981
 msgid "Desktop Folder|Desktop"
 msgstr "Pracovná plocha"
 
-#: ../gnome-panel/panel-menu-items.c:601
+#: ../gnome-panel/panel-menu-items.c:982
 msgid "Open the contents of your desktop in a folder"
 msgstr "Otvoriť pracovnú plochu ako priečinok"
 
-#: ../gnome-panel/panel-menu-items.c:911
+#: ../gnome-panel/panel-menu-items.c:1374
 msgid "Places"
 msgstr "Miesta"
 
-#: ../gnome-panel/panel-menu-items.c:940
+#: ../gnome-panel/panel-menu-items.c:1403
 msgid "System"
 msgstr "Systém"
 
@@ -2022,7 +2285,7 @@ msgstr "Systém"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1017
+#: ../gnome-panel/panel-menu-items.c:1480
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -2030,22 +2293,26 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1029
+#: ../gnome-panel/panel-menu-items.c:1492
 #, c-format
 msgid "Log Out %s..."
 msgstr "Odhlásiť používateľa %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1033
+#: ../gnome-panel/panel-menu-items.c:1496
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "Odhlásiť používateľa %s z tejto relácie a prihlásiť sa ako iný používateľ"
 
-#: ../gnome-panel/panel-menu-items.c:1074
+#: ../gnome-panel/panel-menu-items.c:1537
 msgid "Could not launch menu item"
 msgstr "Nepodarilo sa spustiť položku ponuky"
+
+#: ../gnome-panel/panel-mount-operation.c:124
+msgid "Enter Password"
+msgstr "Zadajte heslo"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2065,9 +2332,9 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
-"Ak je true, použije sa custom_icon pre vlastnú ikonu tlačidla. Ak je "
-"false, custom_icon key sa ignoruje. Tento kľúč má zmysel iba ak má "
-"kľúč object_type hodnotu \"menu-object\" alebo \"drawer-object\"."
+"Ak je true, použije sa custom_icon pre vlastnú ikonu tlačidla. Ak je false, "
+"custom_icon key sa ignoruje. Tento kľúč má zmysel iba ak má kľúč object_type "
+"hodnotu \"menu-object\" alebo \"drawer-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
 msgid ""
@@ -2075,9 +2342,9 @@ msgid ""
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
-"Ak je true, kľúč menu_path určuje cestu, z ktorej sa vytvorí obsah "
-"ponuky. Ak je false, menu_path sa ignoruje. Tento kľúč má zmysel iba ak "
-"má kľúč object_type hodnotu \"menu-object\"."
+"Ak je true, kľúč menu_path určuje cestu, z ktorej sa vytvorí obsah ponuky. "
+"Ak je false, menu_path sa ignoruje. Tento kľúč má zmysel iba ak má kľúč "
+"object_type hodnotu \"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
 msgid ""
@@ -2138,8 +2405,8 @@ msgid ""
 "relevant if the object_type key is \"action-applet\"."
 msgstr ""
 "Typ akcie pre toto tlačidlo. Možné hodnoty sú \"lock\", \"logout\", \"run\", "
-"\"search\" a \"screenshot\". Tento kľúč má zmysel iba ak má kľúč "
-"object_type hodnoru \"action-applet\"."
+"\"search\" a \"screenshot\". Tento kľúč má zmysel iba ak má kľúč object_type "
+"hodnoru \"action-applet\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
 msgid ""
@@ -2178,22 +2445,22 @@ msgid ""
 "object\"."
 msgstr ""
 "Cesta, z ktorej sa má vytvoriť obsah ponuky. Tento kľúč má zmysel iba ak má "
-"kľúč use_menu_path hodnotu true a kľúč object_type má hodnotu \"menu-object\"."
+"kľúč use_menu_path hodnotu true a kľúč object_type má hodnotu \"menu-object"
+"\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr ""
-"Pozícia objektu panelu. Je to počet bodov zľava (pri zvislom odvrchu)."
+msgstr "Pozícia objektu panelu. Je to počet bodov zľava (pri zvislom odvrchu)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
-"Text zobrazený ako bublinový popis pre túto zásuvku alebo ponuku. Tento "
-"kľúč má zmysel iba ak má kľúč object_type hodnotu \"drawer-object\" alebo "
+"Text zobrazený ako bublinový popis pre túto zásuvku alebo ponuku. Tento kľúč "
+"má zmysel iba ak má kľúč object_type hodnotu \"drawer-object\" alebo "
 "\"menu_object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
@@ -2273,7 +2540,7 @@ msgid "Drawer Properties"
 msgstr "Vlastnosti zásuvky"
 
 #: ../gnome-panel/panel-properties-dialog.c:1055
-#: ../gnome-panel/panel-run-dialog.c:1951
+#: ../gnome-panel/panel-run-dialog.c:1963
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "Nepodarilo sa načítať súbor '%s'."
@@ -2309,10 +2576,6 @@ msgstr "_Farba:"
 #: ../gnome-panel/panel-properties-dialog.glade.h:8
 msgid "E_xpand"
 msgstr "_Roztiahnuť"
-
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "Všeobecné"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
@@ -2389,24 +2652,25 @@ msgid "pixels"
 msgstr "bodov"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "Nepodarilo sa nájsť vhodnú aplikáciu."
 
-#: ../gnome-panel/panel-recent.c:98 ../gnome-panel/panel-recent.c:108
+#: ../gnome-panel/panel-recent.c:95 ../gnome-panel/panel-recent.c:105
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Nepodarilo sa nedávno použitý dokument \"%s\""
 
-#: ../gnome-panel/panel-recent.c:110
+#: ../gnome-panel/panel-recent.c:107
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Počas pokusu o otvorenie \"%s\" nastala neznáma chyba."
 
-#: ../gnome-panel/panel-recent.c:167
+#: ../gnome-panel/panel-recent.c:164
 msgid "Clear the Recent Documents list?"
 msgstr "Vyčistiť zoznam Nedávnych dokumentov?"
 
-#: ../gnome-panel/panel-recent.c:169
+#: ../gnome-panel/panel-recent.c:166
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2416,15 +2680,15 @@ msgstr ""
 "• Všetky položky z položky ponuky Miesta → Nedávne dokumenty.\n"
 "• Všetky položky zo zoznamu nedávnych dokumentov všetkých aplikácií."
 
-#: ../gnome-panel/panel-recent.c:181 ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:178 ../gnome-panel/panel-recent.c:252
 msgid "Clear Recent Documents"
 msgstr "Vyčistiť Nedávne dokumenty"
 
-#: ../gnome-panel/panel-recent.c:216
+#: ../gnome-panel/panel-recent.c:213
 msgid "Recent Documents"
 msgstr "Nedávne dokumenty"
 
-#: ../gnome-panel/panel-recent.c:257
+#: ../gnome-panel/panel-recent.c:254
 msgid "Clear all items from the recent documents list"
 msgstr "Vyčistiť všetky položky zo zoznamu nedávnych dokumentov"
 
@@ -2433,33 +2697,33 @@ msgstr "Vyčistiť všetky položky zo zoznamu nedávnych dokumentov"
 msgid "Could not run command '%s'"
 msgstr "Nepodarilo sa spustiť príkaz '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:406
+#: ../gnome-panel/panel-run-dialog.c:407
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nie je možné previesť '%s' z UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1212
+#: ../gnome-panel/panel-run-dialog.c:1215
 msgid "Choose a file to append to the command..."
 msgstr "Vyberte súbor, ktorý sa má odovzdať príkazu..."
 
-#: ../gnome-panel/panel-run-dialog.c:1588
+#: ../gnome-panel/panel-run-dialog.c:1591
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Vyberte aplikáciu, ktorej popis chcete zobraziť."
 
-#: ../gnome-panel/panel-run-dialog.c:1626
+#: ../gnome-panel/panel-run-dialog.c:1629
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Spustí príkaz: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1657
+#: ../gnome-panel/panel-run-dialog.c:1660
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "Zoznam URI pustený na dialógovom okne spustenia mal zlý formát (%d) alebo "
 "dĺžku (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1955
+#: ../gnome-panel/panel-run-dialog.c:1967
 msgid "Could not display run dialog"
 msgstr "Nepodarilo sa zobraziť dialógové okno spustenia"
 
@@ -2468,7 +2732,8 @@ msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
-"Stlačením tohto tlačidla môžete zvoliť názov súboru, ktorý sa pridá za príkaz."
+"Stlačením tohto tlačidla môžete zvoliť názov súboru, ktorý sa pridá za "
+"príkaz."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
@@ -2554,73 +2819,73 @@ msgstr "Vyči_stiť"
 msgid "D_on't Delete"
 msgstr "_Neodstraňovať"
 
-#: ../gnome-panel/panel-toplevel.c:1175
+#: ../gnome-panel/panel-toplevel.c:1178
 msgid "Hide Panel"
 msgstr "Skryť panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1556
+#: ../gnome-panel/panel-toplevel.c:1559
 msgid "Top Expanded Edge Panel"
 msgstr "Horný roztiahnutý okrajový panel"
 
-#: ../gnome-panel/panel-toplevel.c:1557
+#: ../gnome-panel/panel-toplevel.c:1560
 msgid "Top Centered Panel"
 msgstr "Horný panel v strede"
 
-#: ../gnome-panel/panel-toplevel.c:1558
+#: ../gnome-panel/panel-toplevel.c:1561
 msgid "Top Floating Panel"
 msgstr "Horný plávajúci panel"
 
-#: ../gnome-panel/panel-toplevel.c:1559
+#: ../gnome-panel/panel-toplevel.c:1562
 msgid "Top Edge Panel"
 msgstr "Horný okrajový panel"
 
-#: ../gnome-panel/panel-toplevel.c:1563
+#: ../gnome-panel/panel-toplevel.c:1566
 msgid "Bottom Expanded Edge Panel"
 msgstr "Dolný roztiahnutý okrajový panel"
 
-#: ../gnome-panel/panel-toplevel.c:1564
+#: ../gnome-panel/panel-toplevel.c:1567
 msgid "Bottom Centered Panel"
 msgstr "Dolný panel v strede"
 
-#: ../gnome-panel/panel-toplevel.c:1565
+#: ../gnome-panel/panel-toplevel.c:1568
 msgid "Bottom Floating Panel"
 msgstr "Dolný plávajúci panel"
 
-#: ../gnome-panel/panel-toplevel.c:1566
+#: ../gnome-panel/panel-toplevel.c:1569
 msgid "Bottom Edge Panel"
 msgstr "Dolný okrajový panel"
 
-#: ../gnome-panel/panel-toplevel.c:1570
+#: ../gnome-panel/panel-toplevel.c:1573
 msgid "Left Expanded Edge Panel"
 msgstr "Ľavý roztiahnutý okrajový panel"
 
-#: ../gnome-panel/panel-toplevel.c:1571
+#: ../gnome-panel/panel-toplevel.c:1574
 msgid "Left Centered Panel"
 msgstr "Ľavý panel v strede"
 
-#: ../gnome-panel/panel-toplevel.c:1572
+#: ../gnome-panel/panel-toplevel.c:1575
 msgid "Left Floating Panel"
 msgstr "Ľavý plávajúci panel"
 
-#: ../gnome-panel/panel-toplevel.c:1573
+#: ../gnome-panel/panel-toplevel.c:1576
 msgid "Left Edge Panel"
 msgstr "Ľavý okrajový panel"
 
-#: ../gnome-panel/panel-toplevel.c:1577
+#: ../gnome-panel/panel-toplevel.c:1580
 msgid "Right Expanded Edge Panel"
 msgstr "Pravý roztiahnutý okrajový panel"
 
-#: ../gnome-panel/panel-toplevel.c:1578
+#: ../gnome-panel/panel-toplevel.c:1581
 msgid "Right Centered Panel"
 msgstr "Pravý panel v strede"
 
-#: ../gnome-panel/panel-toplevel.c:1579
+#: ../gnome-panel/panel-toplevel.c:1582
 msgid "Right Floating Panel"
 msgstr "Pravý plávajúci panel"
 
-#: ../gnome-panel/panel-toplevel.c:1580
+#: ../gnome-panel/panel-toplevel.c:1583
 msgid "Right Edge Panel"
 msgstr "Pravý okrajový panel"
 
@@ -2685,16 +2950,15 @@ msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
-"Ak je true, na každej strane panelu budú tlačidlá pre presun panelu na "
-"okraj obrazovky. Zostane zobrazené iba malé tlačidlo."
+"Ak je true, na každej strane panelu budú tlačidlá pre presun panelu na okraj "
+"obrazovky. Zostane zobrazené iba malé tlačidlo."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
 msgstr ""
-"Ak je true, skrývanie a obnova tohto panelu bude animovaná a nie "
-"okamžitá."
+"Ak je true, skrývanie a obnova tohto panelu bude animovaná a nie okamžitá."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2707,16 +2971,16 @@ msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"Ak je true, obrázok bude roztiahnutý (so zachovaním pomeru strán) na "
-"výšku panelu (pre vodorovný panel)."
+"Ak je true, obrázok bude roztiahnutý (so zachovaním pomeru strán) na výšku "
+"panelu (pre vodorovný panel)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
-"Ak je true, obrázok bude roztiahnutý na rozmery panelu. Pomer strán "
-"nebude zachovaný."
+"Ak je true, obrázok bude roztiahnutý na rozmery panelu. Pomer strán nebude "
+"zachovaný."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2724,8 +2988,8 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"Ak je true, panel sa automaticky skryje do rohu v momente, keď kurzor "
-"myši opustí panel. Panel sa obnoví ak kurzor myši ukáže na roh."
+"Ak je true, panel sa automaticky skryje do rohu v momente, keď kurzor myši "
+"opustí panel. Panel sa obnoví ak kurzor myši ukáže na roh."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
@@ -2736,8 +3000,8 @@ msgid ""
 msgstr ""
 "Ak je true, panel bude zaberať celú šírku obrazovky (výšku pre zvislé "
 "panely). V tomto režime je možné panel umiestniť iba na okraje obrazovky. Ak "
-"je false, panel bude veľký akurát pre všetky aplety a objekty, ktoré na "
-"ňom sú."
+"je false, panel bude veľký akurát pre všetky aplety a objekty, ktoré na ňom "
+"sú."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2746,9 +3010,9 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
-"Ak je true, kľúče x a x_right sa ignorujú a panel sa umiestni do stredu "
-"osi X obrazovky. Ak je veľkosť panelu zmenená, zostane na tejto pozícii - "
-"čiže bude rásť na oboch stranách. Ak je toto false, kľúče x a x_right určujú "
+"Ak je true, kľúče x a x_right sa ignorujú a panel sa umiestni do stredu osi "
+"X obrazovky. Ak je veľkosť panelu zmenená, zostane na tejto pozícii - čiže "
+"bude rásť na oboch stranách. Ak je toto false, kľúče x a x_right určujú "
 "umiestnenie panelu."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
@@ -2758,10 +3022,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
 msgstr ""
-"Ak je true, kľúče y a y_bottom sa ignorujú a panel sa umiestni do "
-"stredu osi y obrazovky. Ak je veľkosť panelu zmenená, zostane na tejto "
-"pozícii - čiže bude rásť na oboch stranách. Ak je toto false, kľúče y a "
-"y_bottom určujú umiestnenie panelu."
+"Ak je true, kľúče y a y_bottom sa ignorujú a panel sa umiestni do stredu osi "
+"y obrazovky. Ak je veľkosť panelu zmenená, zostane na tejto pozícii - čiže "
+"bude rásť na oboch stranách. Ak je toto false, kľúče y a y_bottom určujú "
+"umiestnenie panelu."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -2824,7 +3088,8 @@ msgid ""
 "relevant if the auto_hide key is true."
 msgstr ""
 "Určuje počet milisekúnd po opustení panelu kurzorom, po ktorých sa panel "
-"automaticky skryje. Tento kľúč má zmysel iba ak má kľúč auto_hide hodnotu true."
+"automaticky skryje. Tento kľúč má zmysel iba ak má kľúč auto_hide hodnotu "
+"true."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
@@ -2919,12 +3184,12 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"Orientácia panelu. Možné hodnoty sú \"top\" (hore), \"bottom\" (dole), \"left\" "
-"(vľavo), \"right\" (napravo). V roztiahnutom režime kľúč určuje, pri ktorom "
-"okraji obrazovky je panel. Inak je rozdiel medzi hore a dole menej významný "
-"- obe určujú, že sa jedná o horizontálny panel - ale stále ešte pomáhajú pri "
-"nastavení správania objektov panelu. Napríklad pri \"top\" sa ponuka panelu "
-"rozbalí dolu a pri \"bottom\" hore."
+"Orientácia panelu. Možné hodnoty sú \"top\" (hore), \"bottom\" (dole), \"left"
+"\" (vľavo), \"right\" (napravo). V roztiahnutom režime kľúč určuje, pri "
+"ktorom okraji obrazovky je panel. Inak je rozdiel medzi hore a dole menej "
+"významný - obe určujú, že sa jedná o horizontálny panel - ale stále ešte "
+"pomáhajú pri nastavení správania objektov panelu. Napríklad pri \"top\" sa "
+"ponuka panelu rozbalí dolu a pri \"bottom\" hore."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid ""
@@ -2933,8 +3198,8 @@ msgid ""
 "enable_animations key is true."
 msgstr ""
 "Rýchlosť, ktorou sa má animovať panel. Možné hodnoty sú \"slow\" (pomaly), "
-"\"medium\" (normálne) a \"fast\" (rýchlo). Tento kľúč má zmysel iba ak má kľúč "
-"enable_animations hodnotu true."
+"\"medium\" (normálne) a \"fast\" (rýchlo). Tento kľúč má zmysel iba ak má "
+"kľúč enable_animations hodnotu true."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
@@ -2957,8 +3222,9 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 "Ktorý typ pozadia sa má pre tento panel použiť. Možné hodnoty sú \"gtk\" - "
-"štandardný prvok GTK+ pre pozadie, \"color\" - použije sa farba zadaná v "
-"kľúči \"color\" alebo \"image\" - použije sa obrázok zadaný v kľúči \"image\"."
+"predvolený prvok GTK+ pre pozadie, \"color\" - použije sa farba zadaná v "
+"kľúči \"color\" alebo \"image\" - použije sa obrázok zadaný v kľúči \"image"
+"\"."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
 msgid ""
@@ -2992,70 +3258,49 @@ msgstr "Súradnica Y panelu"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Y-ová súradnica panelu, relatívna k spodnému okraju obrazovky"
 
-#: ../gnome-panel/panel-util.c:714
+#: ../gnome-panel/panel-util.c:657
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikona '%s' sa nenašla"
 
-#: ../gnome-panel/panel-util.c:937
+#: ../gnome-panel/panel-util.c:880
 msgid "file"
 msgstr "súbor"
 
-#: ../gnome-panel/panel-util.c:1370
-msgid "Computer"
-msgstr "Počítač"
+#: ../gnome-panel/panel-util.c:1486
+msgid "Home Folder"
+msgstr "Domovský priečinok"
 
-#: ../gnome-panel/panel-util.c:1372
-msgid "Network"
-msgstr "Sieť"
+#. Translators: this is the same string as the one found in
+#. * nautilus
+#: ../gnome-panel/panel-util.c:1498
+msgid "File System"
+msgstr "Súborový systém"
 
-#: ../gnome-panel/panel-util.c:1374
-msgid "Fonts"
-msgstr "Písma"
-
-#: ../gnome-panel/panel-util.c:1376
-msgid "Themes"
-msgstr "Témy"
-
-#: ../gnome-panel/panel-util.c:1378
-msgid "CD/DVD Creator"
-msgstr "Vytváranie CD/DVD"
-
-#: ../gnome-panel/panel-util.c:1380
-msgid "Windows Network"
-msgstr "Sieť Windows"
-
-#. translators: this is the title of the "dns-sd:///" location
-#: ../gnome-panel/panel-util.c:1383
-msgid "Services in"
-msgstr "Služby na"
-
-#: ../gnome-panel/panel-util.c:1457
+#: ../gnome-panel/panel-util.c:1645
 msgid "Search"
 msgstr "Hľadať"
 
-#: ../gnome-panel/panel-util.c:1460
-msgid "Trash"
-msgstr "Kôš"
-
-#. Translators: the first string is a path and the second
-#. * string is a hostname. nautilus contains the same string to
-#. * translate.
-#: ../gnome-panel/panel-util.c:1513
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../gnome-panel/panel-util.c:1691
 #, c-format
-msgid "%1$s on %2$s"
-msgstr "%1$s na %2$s"
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:477
+#: ../gnome-panel/panel.c:471
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otvoriť URL: %s"
 
-#: ../gnome-panel/panel.c:1302
+#: ../gnome-panel/panel.c:1299
 msgid "Delete this drawer?"
 msgstr "Odstrániť túto zásuvku?"
 
-#: ../gnome-panel/panel.c:1303
+#: ../gnome-panel/panel.c:1300
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3063,11 +3308,11 @@ msgstr ""
 "Keď je zásuvka odstránená, stratí sa spolu\n"
 "s nastaveniami."
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1303
 msgid "Delete this panel?"
 msgstr "Odstrániť tento panel?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1304
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -3194,3 +3439,77 @@ msgstr "_Aplet:"
 msgid "_Prefs Dir:"
 msgstr "_Priečinok nastavení:"
 
+#~ msgid "%A %B %d"
+#~ msgstr "%A %B %d"
+
+#~ msgid "Click to view time in other timezones"
+#~ msgstr "Kliknutím si pozriete čas v iných časových pásmach"
+
+#~ msgid "Clock _type:"
+#~ msgstr "_Typ hodín:"
+
+#~ msgid "12 hour"
+#~ msgstr "12-hodinový"
+
+#~ msgid "Use _UTC"
+#~ msgstr "Používať _UTC"
+
+#~ msgid "Show multiple _timezones"
+#~ msgstr "Zobraziť viacero časových _pásiem"
+
+#~ msgid ""
+#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
+#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
+#~ "keys."
+#~ msgstr ""
+#~ "Zoznam ID časových pásiem. Každé ID určuje jedno časové pásmo. Nastavenia "
+#~ "každého z týchto časových pásiem sú uložené v kľúčoch $(id)_name a $(id)"
+#~ "_zone."
+
+#~ msgid ""
+#~ "If true, display the timezone button in the clock, in addition to time."
+#~ msgstr ""
+#~ "Ak je true, v hodinách sa bude zobrazovať nielen čas, ale aj časové pásmo."
+
+#~ msgid "Show the timezone button"
+#~ msgstr "Zobraziť tlačidlo časového pásma"
+
+#~ msgid ""
+#~ "This key specifies the name of the timezone as can be used in the TZ "
+#~ "environment variable."
+#~ msgstr ""
+#~ "Tento kľúč určuje názov časového pásma, ktorý sa používa v premennej "
+#~ "prostredia TZ."
+
+#~ msgid "This key specifies the user-visible name of the timezone."
+#~ msgstr "Tento kľúč určuje názov časového pásma viditeľný pre používateľa."
+
+#~ msgid "Timezone ID list"
+#~ msgstr "Zoznam ID časových pásiem"
+
+#~ msgid "User-visible name of the timezone"
+#~ msgstr "Používateľom viditeľný názov časového pásma"
+
+#~ msgid "Computer"
+#~ msgstr "Počítač"
+
+#~ msgid "Network"
+#~ msgstr "Sieť"
+
+#~ msgid "Themes"
+#~ msgstr "Témy"
+
+#~ msgid "CD/DVD Creator"
+#~ msgstr "Vytváranie CD/DVD"
+
+#~ msgid "Windows Network"
+#~ msgstr "Sieť Windows"
+
+#~ msgid "Services in"
+#~ msgstr "Služby na"
+
+#~ msgid "Trash"
+#~ msgstr "Kôš"
+
+#~ msgid "%1$s on %2$s"
+#~ msgstr "%1$s na %2$s"
