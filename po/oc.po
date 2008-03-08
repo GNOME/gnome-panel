@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-19 20:23+0100\n"
+"POT-Creation-Date: 2008-03-07 10:21+0100\n"
 "PO-Revision-Date: 2008-02-26 22:55+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -60,7 +60,7 @@ msgid "_Preferences"
 msgstr "_Preferéncias"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4101
+#: ../applets/clock/clock.c:4107
 msgid "Clock"
 msgstr "Relòtge"
 
@@ -86,7 +86,7 @@ msgstr "%l:%M %p"
 #. * There should be little need to translate this string.
 #.
 #: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1552 ../applets/clock/clock-location-tile.c:425
+#: ../applets/clock/clock.c:1554 ../applets/clock/clock-location-tile.c:485
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -135,7 +135,7 @@ msgstr "Calendièr"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1550
+#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1552
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -193,40 +193,40 @@ msgstr ""
 msgid "Click to view month calendar"
 msgstr "Clicatz per visualizar lo calendièr del mes"
 
-#: ../applets/clock/clock.c:1400
+#: ../applets/clock/clock.c:1402
 msgid "Computer Clock"
 msgstr "Relòtge de l'ordenador"
 
-#: ../applets/clock/clock.c:1545
+#: ../applets/clock/clock.c:1547
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1547
+#: ../applets/clock/clock.c:1549
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1589
+#: ../applets/clock/clock.c:1591
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d de %Y"
 
-#: ../applets/clock/clock.c:1664
+#: ../applets/clock/clock.c:1666
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Impossible d'executar l'esplech de configuracion de l'ora : %s"
 
-#: ../applets/clock/clock.c:1693
+#: ../applets/clock/clock.c:1695
 msgid "Set System Time..."
 msgstr ""
 
-#: ../applets/clock/clock.c:1694 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1696 ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr ""
 
-#: ../applets/clock/clock.c:1708
+#: ../applets/clock/clock.c:1710
 msgid "Failed to set the system time"
 msgstr ""
 
-#: ../applets/clock/clock.c:1881
+#: ../applets/clock/clock.c:1883
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -234,46 +234,46 @@ msgstr ""
 "Impossible de localizar un programa per configurar l'ora e la data. Benlèu "
 "n'i a pas cap installat ?"
 
-#: ../applets/clock/clock.c:2746
+#: ../applets/clock/clock.c:2752
 msgid "Custom format"
 msgstr "Format personalisat"
 
-#: ../applets/clock/clock.c:3544 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:519
+#: ../applets/clock/clock.c:3550 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:585
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3802
+#: ../applets/clock/clock.c:3808
 msgid "City Name"
 msgstr ""
 
-#: ../applets/clock/clock.c:3806
+#: ../applets/clock/clock.c:3812
 msgid "City Time Zone"
 msgstr ""
 
-#: ../applets/clock/clock.c:3997
+#: ../applets/clock/clock.c:4003
 msgid "24 hour"
 msgstr "24 oras"
 
-#: ../applets/clock/clock.c:3998
+#: ../applets/clock/clock.c:4004
 msgid "UNIX time"
 msgstr "Ora UNIX"
 
-#: ../applets/clock/clock.c:3999
+#: ../applets/clock/clock.c:4005
 msgid "Internet time"
 msgstr "Ora internet"
 
-#: ../applets/clock/clock.c:4007
+#: ../applets/clock/clock.c:4013
 msgid "Custom _format:"
 msgstr "_Format personalisat :"
 
-#: ../applets/clock/clock.c:4104
+#: ../applets/clock/clock.c:4110
 msgid "The Clock displays the current time and date"
 msgstr "Le relòtge visualiza l'ora e la data actualas"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4107 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4113 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -616,66 +616,68 @@ msgstr "Utilizar l'ora UTC"
 msgid "Unknown Location"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:187
+#: ../applets/clock/clock-location-tile.c:194
 msgid "Failed to set the system timezone"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:221
+#: ../applets/clock/clock-location-tile.c:239
+#: ../applets/clock/clock-location-tile.c:314
 msgid "<small>Set...</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:222
+#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:315
 msgid "<small>Set</small>"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:283
+#: ../applets/clock/clock-location-tile.c:320
 msgid "Set as current timezone for this computer"
 msgstr ""
 
+#
 #. translators: This is a strftime format string that is used for formatting
 #. * the time that is displayed for locations in the popup. This string is used
 #. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:398
-#
+#: ../applets/clock/clock-location-tile.c:458
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "<small>Opac</small>"
 
+#
 #. translators: This is a strftime format string that is used for formatting
 #. * the time that is displayed for locations in the popup. This string is used
 #. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:407
-#
+#: ../applets/clock/clock-location-tile.c:467
 msgid "%H:%M <small>(%A)</small>"
 msgstr "<small>Opac</small>"
 
+#
 #. translators: This is a strftime format string that is used for formatting
 #. * the time that is displayed for locations in the popup. This string is used
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:417
-#
+#: ../applets/clock/clock-location-tile.c:477
 msgid "%l:%M <small>%p</small>"
 msgstr "<small>Opac</small>"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:529
-#: ../applets/clock/clock-location-tile.c:535
+#: ../applets/clock/clock-location-tile.c:595
+#: ../applets/clock/clock-location-tile.c:601
 msgid "Unknown"
 msgstr "Desconegut"
 
-#: ../applets/clock/clock-location-tile.c:530
+#: ../applets/clock/clock-location-tile.c:596
 #, c-format
 msgid "%s, feels like %s"
 msgstr ""
 
-#: ../applets/clock/clock-location-tile.c:540
+#: ../applets/clock/clock-location-tile.c:612
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr ""
@@ -1394,17 +1396,17 @@ msgid "- Edit .desktop files"
 msgstr "- Editar los fichièrs .desktop"
 
 # hum, j'ai un doute...
-#: ../gnome-panel/gnome-desktop-item-edit.c:142
-#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:981
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "Crear un aviaire"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:169
-#: ../gnome-panel/gnome-desktop-item-edit.c:192
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "Propietats del repertòri"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:819
+#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "Propietats de l'aviaire"
 
@@ -2068,18 +2070,22 @@ msgstr ""
 msgid ""
 "You are currently logged in as \"%s\".\n"
 "You will be automatically logged out in %d second."
+msgid_plural ""
 "You are currently logged in as \"%s\".\n"
 "You will be automatically logged out in %d seconds."
-msgstr ""
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../gnome-panel/panel-logout.c:253
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
 "This system will be automatically shut down in %d second."
+msgid_plural ""
 "You are currently logged in as \"%s\".\n"
 "This system will be automatically shut down in %d seconds."
-msgstr ""
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../gnome-panel/panel-logout.c:334
 msgid "Log out of this system now?"
