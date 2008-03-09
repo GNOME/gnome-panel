@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 01:51+0300\n"
+"POT-Creation-Date: 2008-03-10 01:11+0300\n"
 "PO-Revision-Date: 2008-03-09 00:06+0300\n"
 "Last-Translator: Vasiliy Faronov <qvvx@yandex.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -109,7 +109,7 @@ msgstr "Задачи"
 #: ../applets/clock/calendar-window.c:938
 #: ../applets/clock/calendar-window.c:1554
 msgid "Edit"
-msgstr "Правка"
+msgstr "Изменить"
 
 #: ../applets/clock/calendar-window.c:883
 msgid "All Day"
@@ -250,7 +250,7 @@ msgstr "%s, %s"
 
 #: ../applets/clock/clock.c:3812
 msgid "City Name"
-msgstr "Город"
+msgstr "Название города"
 
 #: ../applets/clock/clock.c:3816
 msgid "City Time Zone"
@@ -357,7 +357,7 @@ msgstr "Широта:"
 
 #: ../applets/clock/clock.glade.h:16
 msgid "Location Name:"
-msgstr "Местность:"
+msgstr "Название местности:"
 
 #: ../applets/clock/clock.glade.h:18
 msgid "Longitude:"
@@ -715,6 +715,30 @@ msgstr "Восход: %s / Заход: %s"
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Произошла ошибка при отображении справки: %s"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "Изменение системного времени"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "Изменение системного часового пояса"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "Настройка аппаратных часов"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "Чтобы изменить системный часовой пояс, нужны привилегии."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "Чтобы изменить системное время, нужны привилегии."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "Чтобы настроить аппаратные часы, нужны привилегии."
 
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
@@ -1416,7 +1440,7 @@ msgstr "[ФАЙЛ...]"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
-msgstr "— правка файлов .desktop"
+msgstr "— редактирование файлов .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:145
 #: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
@@ -1466,6 +1490,7 @@ msgid "Could not use dropped item"
 msgstr "Не удалось использовать брошенный объект"
 
 #: ../gnome-panel/launcher.c:501
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Адрес (URI) не установлен для файла кнопки запуска панели\n"
 
@@ -1698,6 +1723,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "Найти _элемент для добавления к «%s»:"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "Добавить в ящик"
 
@@ -1706,6 +1732,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "Найти _элемент для добавления в ящик:"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "Добавить на панель"
 
@@ -2666,6 +2693,7 @@ msgid "pixels"
 msgstr "пикселей"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "Не удалось найти подходящее приложение."
 
@@ -3476,3 +3504,77 @@ msgstr "_Апплет:"
 msgid "_Prefs Dir:"
 msgstr "Каталог _параметров:"
 
+#~ msgid "%A %B %d"
+#~ msgstr "%A, %d %B"
+
+#~ msgid "Click to view time in other timezones"
+#~ msgstr "Нажмите, чтобы просмотреть время в других часовых поясах"
+
+#~ msgid "Clock _type:"
+#~ msgstr "_Тип часов:"
+
+#~ msgid "12 hour"
+#~ msgstr "12-часовые"
+
+#~ msgid "Use _UTC"
+#~ msgstr "Показывать время по _Гринвичу (UTC)"
+
+#~ msgid "Show multiple _timezones"
+#~ msgstr "Показывать несколько _часовых поясов"
+
+#~ msgid ""
+#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
+#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
+#~ "keys."
+#~ msgstr ""
+#~ "Список идентификаторов часовых поясов. Каждый идентификатор соответствует "
+#~ "своему часовому поясу Параметры хранятся в ключах $(id)_name и $(id)_zone."
+
+#~ msgid ""
+#~ "If true, display the timezone button in the clock, in addition to time."
+#~ msgstr ""
+#~ "Если этот ключ установлен, в апплете времени отображается кнопка часового "
+#~ "пояса."
+
+#~ msgid "Show the timezone button"
+#~ msgstr "Показывать кнопку часового пояса"
+
+#~ msgid ""
+#~ "This key specifies the name of the timezone as can be used in the TZ "
+#~ "environment variable."
+#~ msgstr ""
+#~ "Этот ключ имя часового пояса, которое используется в переменной окружения "
+#~ "TZ."
+
+#~ msgid "This key specifies the user-visible name of the timezone."
+#~ msgstr "Этот ключ задаёт имя часового пояса, отображаемое на панели."
+
+#~ msgid "Timezone ID list"
+#~ msgstr "Список идентификаторов часовых поясов"
+
+#~ msgid "User-visible name of the timezone"
+#~ msgstr "Отображаемое имя часового пояса"
+
+#~ msgid "Computer"
+#~ msgstr "Компьютер"
+
+#~ msgid "Network"
+#~ msgstr "Сетевые ресурсы"
+
+#~ msgid "Themes"
+#~ msgstr "Темы"
+
+#~ msgid "CD/DVD Creator"
+#~ msgstr "Создание CD/DVD"
+
+#~ msgid "Windows Network"
+#~ msgstr "Сеть Windows"
+
+#~ msgid "Services in"
+#~ msgstr "Сервисы в"
+
+#~ msgid "Trash"
+#~ msgstr "Корзина"
+
+#~ msgid "%1$s on %2$s"
+#~ msgstr "%1$s на %2$s"
