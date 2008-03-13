@@ -3414,10 +3414,10 @@ find_entry_changed (GtkEditable *entry, ClockData *cd)
 	model = gtk_tree_view_get_model (tree);
 
 	selection = gtk_tree_view_get_selection (tree);
-	gtk_tree_model_get_iter_first (model, &iter);
-
+	
 	location = gtk_entry_get_text (GTK_ENTRY (entry));
-	if (find_location (model, &iter, location, TRUE)) {
+	if (gtk_tree_model_get_iter_first (model, &iter) && 
+            find_location (model, &iter, location, TRUE)) {
 		gtk_widget_set_sensitive (cd->find_next_location_button, TRUE);
 		path = gtk_tree_model_get_path (model, &iter);
 		gtk_tree_view_expand_to_path (tree, path);
