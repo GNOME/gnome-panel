@@ -1,11 +1,11 @@
-# translation of gnome-panel.po to Georgian
-# Vladimer Sichinava ვლადიმერ სიჭინავა <vsichi@gnome.org>, 2007.
+# translation of ka.po to Georgian
+# Vladimer Sichinava ვლადიმერ სიჭინავა <vsichi@gnome.org>, 2007, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel\n"
+"Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-14 05:23+0200\n"
-"PO-Revision-Date: 2007-09-20 00:56+0200\n"
+"POT-Creation-Date: 2008-03-12 04:21+0100\n"
+"PO-Revision-Date: 2008-03-12 22:00+0100\n"
 "Last-Translator: Vladimer Sichinava ვლადიმერ სიჭინავა <vsichi@gnome.org>\n"
 "Language-Team: Georgian <http://mail.gnome.org/mailman/listinfo/gnome-ge-list>\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,7 @@ msgid "_Preferences"
 msgstr "_პარამეტრები"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2230
+#: ../applets/clock/clock.c:4111
 msgid "Clock"
 msgstr "საათი"
 
@@ -73,51 +73,66 @@ msgstr "საათის აპლეტების შემქმნელ�
 msgid "Get the current time and date"
 msgstr "მიმდინარე დროის და თარიღის გაგება"
 
-#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.c:347
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/calendar-window.c:228 ../applets/clock/clock.c:349
-#: ../applets/clock/clock.c:1256
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
+#: ../applets/clock/clock.c:1554 ../applets/clock/clock-location-tile.c:488
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: ../applets/clock/calendar-window.c:234
+#: ../applets/clock/calendar-window.c:250
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:742
-msgid "_Tasks"
-msgstr "_დავალებანი"
+#: ../applets/clock/calendar-window.c:765
+msgid "Tasks"
+msgstr "დავალებანი"
 
-#: ../applets/clock/calendar-window.c:858
+#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:938
+#: ../applets/clock/calendar-window.c:1554
+msgid "Edit"
+msgstr "რედაქტირება"
+
+#: ../applets/clock/calendar-window.c:883
 msgid "All Day"
 msgstr "მთელი დღე"
 
-#: ../applets/clock/calendar-window.c:985
-msgid "_Appointments"
-msgstr "შ_ეხვედრები"
+#: ../applets/clock/calendar-window.c:1019
+msgid "Appointments"
+msgstr "შეხვედრები"
 
-#: ../applets/clock/calendar-window.c:1002
-msgid "_Birthdays and Anniversaries"
-msgstr "და_ბადების დღე და იუბილე"
+#: ../applets/clock/calendar-window.c:1044
+msgid "Birthdays and Anniversaries"
+msgstr "დაბადების დღე და წლისთავი"
 
-#: ../applets/clock/calendar-window.c:1018
-msgid "_Weather Information"
-msgstr "ამინდის _პროგნოზი"
+#: ../applets/clock/calendar-window.c:1069
+msgid "Weather Information"
+msgstr "ამინდის პროგნოზი"
 
-#: ../applets/clock/calendar-window.c:1687
+#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
+msgid "Locations"
+msgstr "მდებარეობა"
+
+#: ../applets/clock/calendar-window.c:1850
 msgid "Calendar"
 msgstr "კალენდარი"
 
-#: ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:421
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:349 ../applets/clock/clock.c:1254
+#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1552
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -126,7 +141,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:369
+#: ../applets/clock/clock.c:443
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -134,7 +149,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:450
 #, c-format
 msgid ""
 "%1$s\n"
@@ -147,58 +162,68 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:384
+#: ../applets/clock/clock.c:458
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip
-#: ../applets/clock/clock.c:527
-msgid "%A %B %d"
-msgstr "%A %B %d"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:640
+msgid "%A %B %d (%%s)"
+msgstr "%A, %d %B (%%s)"
 
-#: ../applets/clock/clock.c:541
+#: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "დააწკაპეთ, თქვენი შეხვედრების და დავალებების დასამალად"
 
-#: ../applets/clock/clock.c:544
+#: ../applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "დააწკაპეთ შეხვედრების და დავალებათა სიის სანახავად"
 
-#: ../applets/clock/clock.c:548
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "დააწკაპეთ, თვიური კალენდრის დასამალად"
 
-#: ../applets/clock/clock.c:551
+#: ../applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "დააწკაპეთ, თვიური კალენდრის სანახავად"
 
-#: ../applets/clock/clock.c:1095
-msgid "Click to view time in other timezones"
-msgstr "დააწკაპეთ სხვა დროის სარტყელების სანახავად"
-
-#: ../applets/clock/clock.c:1102
+#: ../applets/clock/clock.c:1402
 msgid "Computer Clock"
 msgstr "კომპიუტერის საათი"
 
-#: ../applets/clock/clock.c:1249
+#: ../applets/clock/clock.c:1547
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1251
+#: ../applets/clock/clock.c:1549
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1293
+#: ../applets/clock/clock.c:1591
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1368
+#: ../applets/clock/clock.c:1666
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "შეუძლებელია საათის დამარეგულირებელი ინსტრუმენტის ჩართვა: %s"
 
-#: ../applets/clock/clock.c:1406
+#: ../applets/clock/clock.c:1695
+msgid "Set System Time..."
+msgstr "სისტემის დროის გამართვა..."
+
+#: ../applets/clock/clock.c:1696 ../applets/clock/clock.glade.h:21
+msgid "Set System Time"
+msgstr "სისტემის დროის გამართვა"
+
+#: ../applets/clock/clock.c:1710
+msgid "Failed to set the system time"
+msgstr "შეუძლებელი გახდა სისტემური დროის გამართვა"
+
+#: ../applets/clock/clock.c:1883
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -206,67 +231,186 @@ msgstr ""
 "შეუძლებელია თარიღისა და დროის მარეგულირებელ პროგრამის პოვნა. შესაძლებელია "
 "რომ ის არ იყოს ინსტალირებული?"
 
-#: ../applets/clock/clock.c:1917
+#: ../applets/clock/clock.c:2753
 msgid "Custom format"
 msgstr "პირადი ფორმატი"
 
-#: ../applets/clock/clock.c:2062
-msgid "Clock Preferences"
-msgstr "საათის პარამეტრები"
+#: ../applets/clock/clock.c:3554 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:588
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:2087
-msgid "Clock _type:"
-msgstr "საათის_ტიპი:"
+#: ../applets/clock/clock.c:3812
+msgid "City Name"
+msgstr "ქალაქის სახელი"
 
-#: ../applets/clock/clock.c:2098
-msgid "12 hour"
-msgstr "12 საათიანი"
+#: ../applets/clock/clock.c:3816
+msgid "City Time Zone"
+msgstr "ქალაქის დროის სარტყელი"
 
-#: ../applets/clock/clock.c:2099
+#: ../applets/clock/clock.c:4007
 msgid "24 hour"
 msgstr "24 საათიანი"
 
-#: ../applets/clock/clock.c:2100
+#: ../applets/clock/clock.c:4008
 msgid "UNIX time"
 msgstr "UNIX დრო"
 
-#: ../applets/clock/clock.c:2101
+#: ../applets/clock/clock.c:4009
 msgid "Internet time"
 msgstr "ინტერნეტ დრო"
 
-#: ../applets/clock/clock.c:2109
+#: ../applets/clock/clock.c:4017
 msgid "Custom _format:"
 msgstr "სხვა _ფორმატი"
 
-#: ../applets/clock/clock.c:2128
-msgid "Show _seconds"
-msgstr "_წამების ჩვენება"
-
-#: ../applets/clock/clock.c:2137
-msgid "Show _date"
-msgstr "თ_არიღის ჩვენება"
-
-#: ../applets/clock/clock.c:2146
-msgid "Use _UTC"
-msgstr "_UTC გამოყენება"
-
-#: ../applets/clock/clock.c:2155
-msgid "Show multiple _timezones"
-msgstr "მრავალი სხვა დროის სარ_ტყელების ჩვენება"
-
-#: ../applets/clock/clock.c:2233
+#: ../applets/clock/clock.c:4114
 msgid "The Clock displays the current time and date"
-msgstr "საათი აჩვენებს ამჟამინდელ თარიღსა და დროს"
+msgstr "აჩვენებს ამჟამინდელ თარიღსა და დროს"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2236 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4117 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:617
+#: ../applets/wncklet/workspace-switcher.c:620
 #: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr "Vladimer Sichinava  ვლადიმერ სიჭინავა  <vsichi@gnome.org>"
+
+#: ../applets/clock/clock.glade.h:1
+msgid "12 _hour format"
+msgstr "12 _საათიანი ფორმატი"
+
+#: ../applets/clock/clock.glade.h:2
+msgid "24 h_our format"
+msgstr "24 ს_აათიანი ფორმატი"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Clock Options</b>"
+msgstr "<b>საათის პარამეტრები</b>"
+
+#: ../applets/clock/clock.glade.h:4
+msgid "<b>Display</b>"
+msgstr "<b>ჩვენება</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<b>Panel Display</b>"
+msgstr "<b>ხედი პანელზე</b>"
+
+#: ../applets/clock/clock.glade.h:6
+msgid "<b>Time Settings</b>"
+msgstr "<b>დროის პარამეტრები</b>"
+
+#: ../applets/clock/clock.glade.h:7
+msgid "<i>(optional)</i>"
+msgstr "<i>(არამნიშვნელოვანი)</i>"
+
+#: ../applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "საათის პარამეტრები"
+
+#: ../applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr "მიმდინარე დრო:"
+
+#: ../applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"აღმოსავლეთი\n"
+"დასავლეთი"
+
+#: ../applets/clock/clock.glade.h:12
+msgid "Find _Next"
+msgstr "შე_მდეგის პოვნა"
+
+#: ../applets/clock/clock.glade.h:13
+msgid "Find..."
+msgstr "პოვნა..."
+
+#: ../applets/clock/clock.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "საერთო"
+
+#: ../applets/clock/clock.glade.h:15
+msgid "Latitude:"
+msgstr "სიგანე:"
+
+#: ../applets/clock/clock.glade.h:16
+msgid "Location Name:"
+msgstr "მდებარეობის სახელწოდება:"
+
+#: ../applets/clock/clock.glade.h:18
+msgid "Longitude:"
+msgstr "სიგრძე:"
+
+#: ../applets/clock/clock.glade.h:19
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"ჩრდილო\n"
+"სამხრეთი"
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Show _temperature"
+msgstr "_ტემპერატურის ჩვენება"
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Show _weather"
+msgstr "ა_მინდის ჩვენება"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Show seco_nds"
+msgstr "წა_მების ჩვენება"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Show the _date"
+msgstr "თ_არიღის ჩვენება"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Time Settings"
+msgstr "დროის პარამეტრები"
+
+#: ../applets/clock/clock.glade.h:27
+msgid "Time _Settings"
+msgstr "დროის _პარამეტრები"
+
+#: ../applets/clock/clock.glade.h:28
+msgid "Time:"
+msgstr "საათი:"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "Timezone:"
+msgstr "დროის სარტყელი:"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "Weather"
+msgstr "ამინდი"
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Find:"
+msgstr "_ძებნა:"
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Pressure unit:"
+msgstr "წ_ნევის ერთეული:"
+
+#: ../applets/clock/clock.glade.h:33
+msgid "_Temperature unit:"
+msgstr "_ტემპერატურის ერთეული:"
+
+#: ../applets/clock/clock.glade.h:34
+msgid "_Visibility unit:"
+msgstr "ხი_ლვადობის ერთეული:"
+
+#: ../applets/clock/clock.glade.h:35
+msgid "_Wind speed unit:"
+msgstr "ქა_რის სიჩქარის ერთეული:"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -283,12 +427,8 @@ msgid "24-hour"
 msgstr "24-საათი"
 
 #: ../applets/clock/clock.schemas.in.h:12
-msgid ""
-"A list of timezone IDs. Each ID identifies an individual timezone. The "
-"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
-msgstr ""
-"A list of timezone IDs. Each ID identifies an individual timezone. The "
-"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
+msgid "A list of locations to display in the calendar window."
+msgstr "მდებარეობების სია, კალენდრის ფანჯარაში გამოსაჩენათ."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -300,95 +440,123 @@ msgstr "შეხვედრების სიის ჩვენება"
 
 #: ../applets/clock/clock.schemas.in.h:15
 msgid "Expand list of birthdays"
-msgstr "დაბადების დღის ჩვენება"
+msgstr "დაბადების დღეების სიის ჩვენება"
 
 #: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "მდებარეობების სიის ჩვენება"
+
+#: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
 msgstr "დავალებათა სიის ჩვენება"
 
-#: ../applets/clock/clock.schemas.in.h:17
-msgid "Expand list of weather information"
-msgstr "ამინდის პროგნოზის ჩვენება"
-
 #: ../applets/clock/clock.schemas.in.h:18
+msgid "Expand list of weather information"
+msgstr "ამინდის შესახებ ინფორმაციის ჩვენება"
+
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "დროის ფორმატი"
 
-#: ../applets/clock/clock.schemas.in.h:19
-msgid "If true, display date in the clock, in addition to time."
-msgstr "თუ მონიშნულია, გამოსახე თარიღი საათთან."
-
 #: ../applets/clock/clock.schemas.in.h:20
-msgid "If true, display seconds in time."
-msgstr "თუ მონიშნულია,მაშინ საათთან ერთად აჩვენე წამებიც."
+msgid "If true, display a weather icon."
+msgstr "თუ მონიშნულია, აჩვენებს ამინდის აღმნიშვნელ ხატულას."
 
 #: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr "თუ მონიშნულია, გამოაჩენს დროის სარტყელს საათთან გვერდით."
+msgid "If true, display date in the clock, in addition to time."
+msgstr "თუ მონიშნულია, აჩვენებს თარიღს საათთან ერთად."
 
 #: ../applets/clock/clock.schemas.in.h:22
-msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "თუ მონიშნულია, გამოსახე დრო უნივერსალურად კოორდინირებულ დროის ზონაში."
+msgid "If true, display seconds in time."
+msgstr "თუ მონიშნულია, აჩვენებს წამებს საათთან ერთად."
 
 #: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr "თუ მონიშნულია, გამოაჩენს შეხვედრებს კალენდრის ფანჯარაში."
+msgid "If true, display time in Universal Coordinated Time zone."
+msgstr "თუ მონიშნულია, აჩვენებს საათს გრინვიჩის დროით (UTC)."
 
 #: ../applets/clock/clock.schemas.in.h:24
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "თუ მონიშნულია, გამოაჩენს დაბადების დღეებს კალენდის ფანჯარაში."
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "თუ მონიშნულია, აჩვენებს შეხვედრებს კალენდრის ფანჯარაში."
 
 #: ../applets/clock/clock.schemas.in.h:25
-msgid "If true, expand the list of tasks in the calendar window."
-msgstr "თუ მონიშნულია, გამოაჩენს დავალებებს კალენდრის ფანჯარაში."
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "თუ მონიშნულია, აჩვენებს დაბადების დღეებს კალენდის ფანჯარაში."
 
 #: ../applets/clock/clock.schemas.in.h:26
-msgid "If true, expand the list of weather information in the calendar window."
-msgstr "თუ მონიშნულია, გამოაჩენს პროგნოზს კალენდრის ფანჯარაში."
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "თუ მონიშნულია, აჩვენებს მდებარეობებს კალენდრის ფანჯარაში."
 
 #: ../applets/clock/clock.schemas.in.h:27
-msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr ""
-"თუ მონიშნულია, გამოსახე თარიღი კარნახის ფანჯარაში,როდესაც მიმთითებელი საათს "
-"ზევითაა."
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "თუ მონიშნულია, აჩვენებს დავალებებს კალენდრის ფანჯარაში."
 
 #: ../applets/clock/clock.schemas.in.h:28
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "თუ მონიშნულია, აჩვენებს პროგნოზს კალენდრის ფანჯარაში."
+
+#: ../applets/clock/clock.schemas.in.h:29
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr "თუ მონიშნულია, გამოსახე თარიღი კარნახის ფანჯარაში,როდესაც მიმთითებელი საათს ზევითაა."
+
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show the temperature next to the weather icon."
+msgstr "თუ მონიშნულია, აჩვენებს ტემპერატურას ამინდის ხატულას გვერდით."
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "თუ მონიშნულია, გამოსახე კვირათა რიცხვი კალენდარში."
 
-#: ../applets/clock/clock.schemas.in.h:29
-msgid "Name of the timezone"
-msgstr "დროის სარტყლის დასახელება"
-
-#: ../applets/clock/clock.schemas.in.h:30
-msgid "Show date in clock"
-msgstr "აჩვენე თარიღი საათში"
-
-#: ../applets/clock/clock.schemas.in.h:31
-msgid "Show date in tooltip"
-msgstr "აჩვენე თარიღი კარნახის ფანჯარაში."
-
 #: ../applets/clock/clock.schemas.in.h:32
-msgid "Show the timezone button"
-msgstr "დროის სარტყლის ღილაკის ჩვენება"
+msgid "List of locations"
+msgstr "მდებარეობების სია"
 
 #: ../applets/clock/clock.schemas.in.h:33
-msgid "Show time with seconds"
-msgstr "აჩვენე დრო წამებით"
+msgid "Show date in clock"
+msgstr "საათში თარიღის ჩვენება"
 
 #: ../applets/clock/clock.schemas.in.h:34
-msgid "Show week numbers in calendar"
-msgstr "აჩვენე კვირის ნომერი კალენდარში"
+msgid "Show date in tooltip"
+msgstr "კარნახში თარიღის ჩვენება"
 
 #: ../applets/clock/clock.schemas.in.h:35
+msgid "Show temperature in clock"
+msgstr "საათში ტემპერატურის ჩვენება"
+
+#: ../applets/clock/clock.schemas.in.h:36
+msgid "Show time with seconds"
+msgstr "დროის წამებით ჩვენება"
+
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show weather in clock"
+msgstr "საათში ამინდის ჩვენება"
+
+#: ../applets/clock/clock.schemas.in.h:38
+msgid "Show week numbers in calendar"
+msgstr "კვირის რიცხვის კალენდარში ჩვენება"
+
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "სიჩქარის ერთეული"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "ტემპერატურის ერთეული"
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "ტემპერატურის აღმნიშვნელი გამოსაყენებელი ერთეული "
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "ქარის სიჩქარისთვის აღმნიშვნელი გამოსაყენებელი ერთეული"
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
-msgstr ""
-"GNOME 2.6 ვერსიიდან მოყოლებული, კლავიატურის ღილაკთა ეს კომბინაცია "
-"გაუქმებულია."
+msgstr "GNOME 2.6 ვერსიიდან მოყოლებული, კლავიატურის ღილაკთა ეს კომბინაცია გაუქმებულია."
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:44
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -399,7 +567,7 @@ msgstr ""
 "ინდივიდუალურ ფორმატშია მოცემული. საათის ფორმატის შეცვლა შესაძლებელია ფუნქცია "
 "strftime()-ით. დამატებითი ინფორმაციისთვის იხილეთ strftime()-ის დოკუმენტაცია."
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -419,47 +587,94 @@ msgstr ""
 "1970.01.01. თუ საათი დაყენებულია  “სამომხარებლო“, ტრადიციულ ფორმატში. იგი "
 "აჩვენებს დროს, რომელიც განისაზღვრება სამომხმარებლო დროის სარტყელით."
 
-#: ../applets/clock/clock.schemas.in.h:38
-msgid ""
-"This key specifies the name of the timezone as can be used in the TZ "
-"environment variable."
-msgstr ""
-"This key specifies the name of the timezone as can be used in the TZ "
-"environment variable."
-
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
-msgstr ""
-"მოცემული ღილაკი გამოიყენება დროის გასწორებისთვის საჭირო პროგრამის "
-"გამოსაძახებლად."
+msgstr "მოცემული ღილაკი გამოიყენება დროის გასწორებისთვის საჭირო პროგრამის გამოსაძახებლად."
 
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "This key specifies the user-visible name of the timezone."
-msgstr "მოცემული ღილაკი მიუთითებს მომხმარებლის მიერ ხილულ დროის სარტყლის დასახელებას."
-
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
-msgstr "დროის დასაყენებელი ხელსაწყო"
+msgstr "დროის მარეგულირებელი ხელსაწყო"
 
-#: ../applets/clock/clock.schemas.in.h:42
-msgid "Timezone ID list"
-msgstr "დროის სარტყელთა ID სია"
-
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "ინტერნეტ დროის გამოყენება"
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "UNIX დროის გამოყენება"
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "UTC გრინვიჩის დროის გამოყენება"
 
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "User-visible name of the timezone"
-msgstr "მომხმარებლის მიერ ხილული დროის სარტყლები"
+#. make a fake location with a null TZ
+#. make a fake location with the current TZ
+#: ../applets/clock/clock-location.c:364 ../applets/clock/clock-location.c:371
+msgid "Unknown Location"
+msgstr "უცნობი მდებარეობა"
+
+#: ../applets/clock/clock-location-tile.c:194
+msgid "Failed to set the system timezone"
+msgstr "შეუძლებელი გახდა დროის სარტყლის შეცვლა"
+
+#: ../applets/clock/clock-location-tile.c:239
+#: ../applets/clock/clock-location-tile.c:317
+msgid "<small>Set...</small>"
+msgstr "<small>გამართვა...</small>"
+
+#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:318
+msgid "<small>Set</small>"
+msgstr "<small>გამართვა</small>"
+
+#: ../applets/clock/clock-location-tile.c:323
+msgid "Set as current timezone for this computer"
+msgstr "დროის სარტყლის ამ კომპიუტერისთვის დამტკიცება"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:461
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:470
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:480
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:598
+#: ../applets/clock/clock-location-tile.c:604
+msgid "Unknown"
+msgstr "უცნობია"
+
+#: ../applets/clock/clock-location-tile.c:599
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, თითქოს ყოფილიყოს %s"
+
+#: ../applets/clock/clock-location-tile.c:615
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "აისი: %s / დაისი: %s"
 
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
@@ -467,9 +682,33 @@ msgstr "მომხმარებლის მიერ ხილული დ
 msgid "There was an error displaying help: %s"
 msgstr "დახმარების გამოძახებისას დაიშვა შეცდომა: %s"
 
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "სისტემის დროის შეცვლა"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "სისტემის დროის სარტყლის შეცვლა"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "შიდა საათის გამართვა"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "სისტემის დროის სარტყლის შეცვლისთვის საჭიროა უფლებები."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "სისტემის საათის დროის შეცვლისთვის საჭიროა უფლებები."
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "სისტემის შიდა საათის გამართვისთვის საჭიროა უფლებები."
+
 #: ../applets/clock/timezone.glade.h:1
 msgid "<b>Active timezones</b>"
-msgstr "<b>გააქტიურებული დროის სარტყლები</b>"
+msgstr "<b>აქტიური დროის სარტყლები</b>"
 
 #: ../applets/clock/timezone.glade.h:2
 msgid "<b>Add timezone</b>"
@@ -483,13 +722,11 @@ msgstr "<small><b>მდებარეობა:</b></small>"
 msgid ""
 "<small><i>Click on the map to zoom and select the timezone of a city, or "
 "right click to zoom out.</i></small>"
-msgstr ""
-"<small><i>მაშტაბის გადიდებისთვის დააწკაპეთ რუქას და აირჩიეთ ქალაქის დროის "
-"სარტყელი, ან მარჯვენა წკაპი უკან დაბრუნებისთვის. </i></small>"
+msgstr "<small><i>მაშტაბის გადიდებისთვის დააწკაპეთ რუქას და აირჩიეთ ქალაქი თავის დროის სარტყელთან ერთად, ან მარჯვენა წკაპი უკან დაბრუნებისთვის. </i></small>"
 
 #: ../applets/clock/timezone.glade.h:5
 msgid "Edit Timezones"
-msgstr "დროის სარტყელის დამუშავება"
+msgstr "დროის სარტყლის დამუშავება"
 
 #. Translators: the first %s is a place and the
 #. * second is a time. Result looks like this:
@@ -501,7 +738,7 @@ msgstr "%s - %s"
 
 #: ../applets/clock/tz-sel-dialog.c:205
 msgid "move the mouse on the map"
-msgstr "აამოძრავეთ თაგუნა რუკის გასწვრივ"
+msgstr "აამოძრავეთ თაგუნა რუქაზე"
 
 #: ../applets/clock/tz-sel-dialog.c:207
 #, c-format
@@ -522,7 +759,7 @@ msgstr "დროის სარტყელი"
 #: ../applets/clock/tz-window.c:102
 #, c-format
 msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr "%s with daylight saving (UTC %s%.2ld:%.2ld)"
+msgstr "%s საზაფზულო დროით (UTC %s%.2ld:%.2ld)"
 
 #. Translators: the first string is a timezone name as in "UTC"
 #. * the second string is "+" or nothing. The result looks like
@@ -676,7 +913,7 @@ msgstr "შეხედე დღევანდელ თარიღს!"
 msgid "%s the Fish, the fortune teller"
 msgstr "%s მკითხავი ტევზი"
 
-#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
+#: ../applets/fish/fish.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -847,7 +1084,7 @@ msgid "Window Selector"
 msgstr "ფანჯრების სელექტორი"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:620
+#: ../applets/wncklet/workspace-switcher.c:623
 msgid "Workspace Switcher"
 msgstr "სამუშაო სივრცის გადამრთველი"
 
@@ -892,47 +1129,47 @@ msgstr ""
 "\"ფანჯრების სია\" გიჩვენებთ გარემოს ყველა ფანჯარას ერთი ღილაკით მართვადი "
 "სიის სახით და გაძლევთ მათი დათვალიერების საშუალებას."
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>დაპატარავებული ფანჯრების დაბრუნება</b>"
 
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>ფანჯრების დაჯგუფება</b>"
 
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>ფანჯრების სარჩევი</b>"
 
-#: ../applets/wncklet/window-list.glade.h:5
+#: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
 msgstr "ფანჯრების დაჯგუფება ადგილის არ ქონის დროს"
 
-#: ../applets/wncklet/window-list.glade.h:6
+#: ../applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
 msgstr "_მიმდინარე სამუშაო გარემოს აღდგენა"
 
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
 msgstr "თ_ავდაპირველი სამუშაო გარემოს აღდგენა"
 
-#: ../applets/wncklet/window-list.glade.h:8
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
 msgstr "მიმდინარე სამუშაო გარემოს ფანჯრების ჩვ_ენება"
 
-#: ../applets/wncklet/window-list.glade.h:9
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "ყ_ველა სამუშაო გარემოებებიდან ფანჯრების ჩვენება"
 
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "ფანჯარათა სიის პარამეტრები"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "_ყოველთვის დააჯგუფე ფანჯრები"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "_არასოდეს დააჯგუფო ფანჯრები"
 
@@ -949,16 +1186,16 @@ msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"თუ მონიშნულია, ფანჯრების სია გამოაჩენს არამარტო მიმდინარე გარემოში "
-"გახსნილ ფანჯრებს, არამედ ყველა ფანჯრებს სისტემაში არსებული გარემოებებიდან."
+"თუ მონიშნულია, ფანჯრების სია აჩვენებს არამარტო მიმდინარე გარემოში გახსნილ "
+"ფანჯრებს, არამედ ყველა ფანჯრებს სისტემაში არსებული გარემოებებიდან."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr ""
-"თუ მონიშნულია, ფანჯარა გაიხსნება მიმდინარე სამუშაო გარემოში და არა "
-"იმ გარემოში სადაც ის პირველად გაიხსნა."
+"თუ მონიშნულია, ფანჯარა გაიხსნება მიმდინარე სამუშაო გარემოში და არა იმ "
+"გარემოში სადაც ის პირველად გაიხსნა."
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
@@ -996,13 +1233,13 @@ msgid ""
 msgstr "ფანჯრების სიის მენუს სახით წარმოსახვა და მათი მენუს სახით დათვალიერება."
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 #: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "ხაზი"
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "სვეტი"
 
@@ -1027,7 +1264,7 @@ msgstr ""
 "დაიშვა შეცდომა display_all_workspaces მნიშვნელობის ჩატვირთვისას სამუშაო "
 "გარემოთა გადამრთველისთვის: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:622
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1084,8 +1321,8 @@ msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr ""
-"თუ მონიშნულია, გადამრთველი გამოსახავს არა მხოლოდ მიმდინარე გარემოს "
-"არამედ, ყველა არსებულს."
+"თუ მონიშნულია, გადამრთველი გამოსახავს არა მხოლოდ მიმდინარე გარემოს არამედ, "
+"ყველა არსებულს."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
 msgid ""
@@ -1093,9 +1330,9 @@ msgid ""
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Metacity."
 msgstr ""
-"თუ მონიშნულია, გადამრთველი გამოსახავს სამუშაო გარემოებების "
-"სახელწოდებებს, სხვაგვარად, სამუშაო გარემოებებში მხოლოდ ფანჯრები გამოისახება. "
-"ყოველი ეს მუშაობს Metacity ფანჯრების მმართველის გამოყენების შემთხვევაში."
+"თუ მონიშნულია, გადამრთველი გამოსახავს სამუშაო გარემოებების სახელწოდებებს, "
+"სხვაგვარად, სამუშაო გარემოებებში მხოლოდ ფანჯრები გამოისახება. ყოველი ეს "
+"მუშაობს Metacity ფანჯრების მმართველის გამოყენების შემთხვევაში."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -1136,7 +1373,7 @@ msgid "Cannot find an empty spot"
 msgstr "შეუძლებელია ცარიელი ადგილის პოვნა"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:170
-#: ../gnome-panel/panel-toplevel.c:1585
+#: ../gnome-panel/panel-toplevel.c:1588
 msgid "Drawer"
 msgstr "უჯრა"
 
@@ -1144,7 +1381,7 @@ msgstr "უჯრა"
 msgid "_Add to Drawer..."
 msgstr "_უჯრაზე დამატება"
 
-#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:859
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:891
 #: ../gnome-panel/panel-action-button.c:138
 #: ../gnome-panel/panel-context-menu.c:212
 msgid "_Properties"
@@ -1158,21 +1395,21 @@ msgstr "ახალი ფაილის მოცემულ დირექ
 msgid "[FILE...]"
 msgstr "[FILE...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:131
+#: ../gnome-panel/gnome-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- .desktop ფაილების რედაქტირება"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:162
-#: ../gnome-panel/gnome-desktop-item-edit.c:214 ../gnome-panel/launcher.c:949
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "გამშვების შექმნა"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:188
-#: ../gnome-panel/gnome-desktop-item-edit.c:208
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "დასტის თვისებები"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:193 ../gnome-panel/launcher.c:787
+#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "გამშვების თვისებები"
 
@@ -1188,69 +1425,69 @@ msgstr ""
 msgid "Panel"
 msgstr "პანელი"
 
-#: ../gnome-panel/launcher.c:151
+#: ../gnome-panel/launcher.c:170
 msgid "Could not show this URL"
 msgstr "ვერ ვანახებ მოცემულ URL-ს"
 
-#: ../gnome-panel/launcher.c:152
+#: ../gnome-panel/launcher.c:171
 msgid "No URL was specified."
 msgstr "არავითარი მითითებული URL-ი"
 
-#: ../gnome-panel/launcher.c:165
+#: ../gnome-panel/launcher.c:183
 #, c-format
 msgid "Could not show '%s'"
 msgstr "ვერ ვანახებ '%s'"
 
-#: ../gnome-panel/launcher.c:210
+#: ../gnome-panel/launcher.c:229
 msgid "Could not launch application"
 msgstr "ვერ ვრთავ პროგრამას"
 
-#: ../gnome-panel/launcher.c:275
+#: ../gnome-panel/launcher.c:297
 msgid "Could not use dropped item"
 msgstr "ვერ გამოვიყენებ გადაგდებულ ელემენტს"
 
-#: ../gnome-panel/launcher.c:471
+#: ../gnome-panel/launcher.c:501
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "პანელ გამშვებისთვის არ მიცემულა URI მისამართი\n"
 
-#: ../gnome-panel/launcher.c:514
+#: ../gnome-panel/launcher.c:544
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "ვერ ვხსნი სამუშაო მაგიდაზე მყოფ ფაილ %s -ის პანელზე გამშვებ %s%s\n"
 
-#: ../gnome-panel/launcher.c:853
+#: ../gnome-panel/launcher.c:885
 msgid "_Launch"
 msgstr "_გაშვება"
 
-#: ../gnome-panel/launcher.c:892
+#: ../gnome-panel/launcher.c:924
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "გასაღები %s არ არის მონიშნული, შეუძლებელია გამშვების ჩატვირთვა\n"
 
-#: ../gnome-panel/launcher.c:1016 ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/launcher.c:1048 ../gnome-panel/panel-ditem-editor.c:1347
 #: ../gnome-panel/panel-ditem-editor.c:1381
 #: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "Could not save launcher"
 msgstr "შეუძლებელია გამშვების დამახსოვრება"
 
-#: ../gnome-panel/menu.c:933
+#: ../gnome-panel/menu.c:1004
 msgid "Add this launcher to _panel"
 msgstr "გამშვების _პანელზე დამატება"
 
-#: ../gnome-panel/menu.c:940
+#: ../gnome-panel/menu.c:1011
 msgid "Add this launcher to _desktop"
 msgstr "გამშვების სამუშაო _მაგიდაზე დამატება"
 
-#: ../gnome-panel/menu.c:952
+#: ../gnome-panel/menu.c:1023
 msgid "_Entire menu"
 msgstr "_მთლიანი მენუ"
 
-#: ../gnome-panel/menu.c:957
+#: ../gnome-panel/menu.c:1028
 msgid "Add this as _drawer to panel"
 msgstr "დაამატე პანელს როგორც ახალი უჯრა"
 
-#: ../gnome-panel/menu.c:964
+#: ../gnome-panel/menu.c:1035
 msgid "Add this as _menu to panel"
 msgstr "პანელზე დამატებითი _მენუს დამატება"
 
@@ -1310,7 +1547,7 @@ msgstr "ეკრანის _ბლოკირება"
 
 #: ../gnome-panel/panel-action-button.c:214
 #: ../gnome-panel/panel-menu-bar.c:409 ../gnome-panel/panel-menu-button.c:990
-#: ../gnome-panel/panel-util.c:809
+#: ../gnome-panel/panel-util.c:752
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "ვერ ვახერხებ '%s' -ის გაშვებას"
@@ -1457,21 +1694,21 @@ msgstr "პანელზე დამატება"
 msgid "Find an _item to add to the panel:"
 msgstr "შეარჩიეთ პანელზე დასამატებელი ელემენტი:"
 
-#: ../gnome-panel/panel-applet-frame.c:850
+#: ../gnome-panel/panel-applet-frame.c:840
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "გამონაკლისი მხტუნავი _მენუდან '%s'\n"
 
-#: ../gnome-panel/panel-applet-frame.c:975
+#: ../gnome-panel/panel-applet-frame.c:965
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" მოულოდნელად გაითიშა"
 
-#: ../gnome-panel/panel-applet-frame.c:977
+#: ../gnome-panel/panel-applet-frame.c:967
 msgid "Panel object has quit unexpectedly"
 msgstr "პანელის ელემენტი მოულოდნელად გაითიშა"
 
-#: ../gnome-panel/panel-applet-frame.c:984
+#: ../gnome-panel/panel-applet-frame.c:974
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1479,11 +1716,11 @@ msgstr ""
 "პანელის ობიექტის გადატვირთვის შემთხვევაში, ის პანელს ავტომატურად ხელახლა "
 "დაემატება."
 
-#: ../gnome-panel/panel-applet-frame.c:990
+#: ../gnome-panel/panel-applet-frame.c:980
 msgid "_Don't Reload"
 msgstr "_არ გადატვირთო"
 
-#: ../gnome-panel/panel-applet-frame.c:991
+#: ../gnome-panel/panel-applet-frame.c:981
 msgid "_Reload"
 msgstr "_გადატვირთო"
 
@@ -1492,21 +1729,21 @@ msgstr "_გადატვირთო"
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:1006
-#: ../gnome-panel/panel-applet-frame.c:1094 ../gnome-panel/panel-util.c:397
+#: ../gnome-panel/panel-applet-frame.c:996
+#: ../gnome-panel/panel-applet-frame.c:1084 ../gnome-panel/panel-util.c:395
 msgid "Error"
 msgstr "შეცდომა"
 
-#: ../gnome-panel/panel-applet-frame.c:1057
+#: ../gnome-panel/panel-applet-frame.c:1047
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "პანელის ჩატვირთვის დროს წარმოიშვა პრობლემა \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:1073
+#: ../gnome-panel/panel-applet-frame.c:1063
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "გსურთ აპლეტის მიმდინარე კონფიგურაციიდან მოშორება?"
 
-#: ../gnome-panel/panel-applet-frame.c:1147
+#: ../gnome-panel/panel-applet-frame.c:1137
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "შეუძლებელია მართული ელემენტიდან AppletShell-ის ინტერფეისის მიღება\n"
 
@@ -1640,7 +1877,7 @@ msgstr "არ მითითებულა გაშვების ღილ
 msgid "The location of the launcher is not set."
 msgstr "არ მითითებულა გაშვების ღილაკის მდებარეობა."
 
-#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:187
+#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:185
 msgid "Could not display help document"
 msgstr "შეუძლებელია დახმარების დოკუმენტის გაშვება"
 
@@ -1715,9 +1952,7 @@ msgstr "პროგრამების სიის ფართო ჩვე
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
 msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr ""
-"თუ მონიშნულია, \"Run Application\" დიალოგ ფანჯარაში ავტოაკრეფვა "
-"იმუშავებს."
+msgstr "თუ მონიშნულია, \"Run Application\" დიალოგ ფანჯარაში ავტოაკრეფვა იმუშავებს."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1725,8 +1960,8 @@ msgid ""
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
-"თუ მონიშნულია, \"ნაცნობი პროგრამები\"-ს სია \"პროგრამების გაშვება\"-"
-"ის დიალოგ ფანჯარაში გაშლილი სახით გამოჩნდება.ყოველივე ამას აქვს აზრი თუ "
+"თუ მონიშნულია, \"ნაცნობი პროგრამები\"-ს სია \"პროგრამების გაშვება\"-ის "
+"დიალოგ ფანჯარაში გაშლილი სახით გამოჩნდება.ყოველივე ამას აქვს აზრი თუ "
 "მომიშნულია პარამეტრი enable_program_list."
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
@@ -1735,9 +1970,9 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"თუ მონიშნულია, \"ნაცნობი პროგრამები\"-ს სია გამოჩნდება "
-"\"პროგრამების გაშვება\"-ის დიალოგ ფანჯარაში. მის გაშლა/შეკეცვას განაპირობებს "
-"show_program_list გასაღები."
+"თუ მონიშნულია, \"ნაცნობი პროგრამები\"-ს სია გამოჩნდება \"პროგრამების გაშვება"
+"\"-ის დიალოგ ფანჯარაში. მის გაშლა/შეკეცვას განაპირობებს show_program_list "
+"გასაღები."
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
@@ -1823,9 +2058,7 @@ msgstr "თუ მონიშნულია, პანელის მოშ�
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr ""
-"თუ მონიშნულია, უჯრაში მყოფ ღილაკებზე დაწკაპვისას უჯრა მყისვე "
-"დაიკეტება."
+msgstr "თუ მონიშნულია, უჯრაში მყოფ ღილაკებზე დაწკაპვისას უჯრა მყისვე დაიკეტება."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
 msgid "If true, a launcher is highlighted when the user moves the pointer over it."
@@ -1836,24 +2069,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
-"თუ მონიშნულია, პანელი აუკრძალავს მომხმარებელს პროგრამის "
-"ძალდატანებით გამორთვას. ძალდატანების ღილაკი ამოირთვება."
+"თუ მონიშნულია, პანელი აუკრძალავს მომხმარებელს პროგრამის ძალდატანებით "
+"გამორთვას. ძალდატანების ღილაკი ამოირთვება."
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
-"თუ მონიშნულია, პანელი აკრძალავს მომხმარებლის მიერ ეკრანის "
-"ბლოკირებას. ბლოკირების ღილაკი ამოირთვება."
+"თუ მონიშნულია, პანელი აკრძალავს მომხმარებლის მიერ ეკრანის ბლოკირებას. "
+"ბლოკირების ღილაკი ამოირთვება."
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
-"თუ მონიშნულია, პანელი აკრძალავს მომხმარებლის მიერ სეანსის "
-"დასრულებას. სეანსიდან გამოსვლის ღილაკი ამოირთვება."
+"თუ მონიშნულია, პანელი აკრძალავს მომხმარებლის მიერ სეანსის დასრულებას. "
+"სეანსიდან გამოსვლის ღილაკი ამოირთვება."
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
 msgid ""
@@ -1869,7 +2102,7 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "თუ მონიშნულია, პანელის ობიექტების გასწვრივ კარნახი გამოჩნდება."
 
-#: ../gnome-panel/panel-logout.c:238
+#: ../gnome-panel/panel-logout.c:242
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
@@ -1881,7 +2114,7 @@ msgstr[0] ""
 "მომხმარებელ \"%s\" სესია.\n"
 "სესიიდან ავტომატური გასვლა %d წამში."
 
-#: ../gnome-panel/panel-logout.c:249
+#: ../gnome-panel/panel-logout.c:253
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
@@ -1893,35 +2126,35 @@ msgstr[0] ""
 "მომხმარებელ \"%s\" სესია.\n"
 "კომპიუტერი ავტომატურად გამოირთვება %d წამში."
 
-#: ../gnome-panel/panel-logout.c:330
+#: ../gnome-panel/panel-logout.c:334
 msgid "Log out of this system now?"
 msgstr "გნებავთ სესიის მიტოვება?"
 
-#: ../gnome-panel/panel-logout.c:336
+#: ../gnome-panel/panel-logout.c:340
 msgid "_Switch User"
 msgstr "_მომხმარებლის გადართვა"
 
-#: ../gnome-panel/panel-logout.c:342
+#: ../gnome-panel/panel-logout.c:346
 msgid "_Log Out"
 msgstr "სესიის _დასრულება"
 
-#: ../gnome-panel/panel-logout.c:347
+#: ../gnome-panel/panel-logout.c:351
 msgid "Shut down this system now?"
 msgstr "გნებავთ კომპიუტერის გამორთვა?"
 
-#: ../gnome-panel/panel-logout.c:352
+#: ../gnome-panel/panel-logout.c:356
 msgid "S_uspend"
 msgstr "_დაყოვნება"
 
-#: ../gnome-panel/panel-logout.c:357
+#: ../gnome-panel/panel-logout.c:361
 msgid "_Hibernate"
 msgstr "მძ_ინარე რეჟიმი"
 
-#: ../gnome-panel/panel-logout.c:362
+#: ../gnome-panel/panel-logout.c:366
 msgid "_Restart"
 msgstr "_გადატვირთვა"
 
-#: ../gnome-panel/panel-logout.c:371
+#: ../gnome-panel/panel-logout.c:375
 msgid "_Shut Down"
 msgstr "გამორთ_ვა"
 
@@ -1945,34 +2178,50 @@ msgstr "პროგრამები"
 msgid "_Edit Menus"
 msgstr "_მენუს დამუშავება"
 
-#: ../gnome-panel/panel-menu-items.c:118 ../gnome-panel/panel-run-dialog.c:351
+#: ../gnome-panel/panel-menu-items.c:135 ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "შეუძლებელია '%s' მდებარეობის გახსნა"
 
-#: ../gnome-panel/panel-menu-items.c:405
+#: ../gnome-panel/panel-menu-items.c:416
 msgid "Bookmarks"
 msgstr "სანიშნე"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:424 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:438 ../gnome-panel/panel.c:531
 #, c-format
 msgid "Open '%s'"
 msgstr "გახსნა '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:516
-msgid "Network Places"
-msgstr "ქსელის ბმულები"
+#: ../gnome-panel/panel-menu-items.c:506
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "შეუძლებელია %s-ის სკანირება"
 
-#: ../gnome-panel/panel-menu-items.c:519
+#: ../gnome-panel/panel-menu-items.c:549
+#, c-format
+msgid "Rescan %s"
+msgstr "ხელახალი სკანირება - %s"
+
+#: ../gnome-panel/panel-menu-items.c:585
+#, c-format
+msgid "Unable to mount %s"
+msgstr "შეუძლებელია მონტაჟი %s"
+
+#: ../gnome-panel/panel-menu-items.c:638
+#, c-format
+msgid "Mount %s"
+msgstr "%s-ის დამონტაჟემა"
+
+#: ../gnome-panel/panel-menu-items.c:841
 msgid "Removable Media"
 msgstr "ამორთვადი მედია"
 
-#: ../gnome-panel/panel-menu-items.c:580
-msgid "Home Folder"
-msgstr "სახლის დასტა"
+#: ../gnome-panel/panel-menu-items.c:922
+msgid "Network Places"
+msgstr "ქსელის ბმულები"
 
-#: ../gnome-panel/panel-menu-items.c:581
+#: ../gnome-panel/panel-menu-items.c:961
 msgid "Open your personal folder"
 msgstr "პირადი დასტის გახსნა"
 
@@ -1980,19 +2229,19 @@ msgstr "პირადი დასტის გახსნა"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:600
+#: ../gnome-panel/panel-menu-items.c:981
 msgid "Desktop Folder|Desktop"
 msgstr "სამუშაო მაგიდა"
 
-#: ../gnome-panel/panel-menu-items.c:601
+#: ../gnome-panel/panel-menu-items.c:982
 msgid "Open the contents of your desktop in a folder"
 msgstr "სამუშაო მაგიდის დასტისებრი გახსნა"
 
-#: ../gnome-panel/panel-menu-items.c:911
+#: ../gnome-panel/panel-menu-items.c:1374
 msgid "Places"
 msgstr "მდებარეობა"
 
-#: ../gnome-panel/panel-menu-items.c:940
+#: ../gnome-panel/panel-menu-items.c:1403
 msgid "System"
 msgstr "სისტემა"
 
@@ -2000,7 +2249,7 @@ msgstr "სისტემა"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1017
+#: ../gnome-panel/panel-menu-items.c:1480
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -2008,23 +2257,27 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1029
+#: ../gnome-panel/panel-menu-items.c:1492
 #, c-format
 msgid "Log Out %s..."
 msgstr "%s სეანსის დასრულება ..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1033
+#: ../gnome-panel/panel-menu-items.c:1496
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "მომხმარებელი %s სეანსის დასრულება და სხვა მომხმარებლის სახელით სისტემაში "
 "ხელახალი შემოსვლა"
 
-#: ../gnome-panel/panel-menu-items.c:1074
+#: ../gnome-panel/panel-menu-items.c:1537
 msgid "Could not launch menu item"
 msgstr "ვერ ვრთავ მენუს ელემენტს"
+
+#: ../gnome-panel/panel-mount-operation.c:124
+msgid "Enter Password"
+msgstr "პაროლის შეყვანა"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2056,26 +2309,26 @@ msgid ""
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
-"თუ მონიშნულია, menu_path-ის მნიშვნელობა გამოიყენება როგორც "
-"მდებარეობა, რომლისგანაც იგება მენუ. თუ მონიშნული არ არის, მაშინ menu_path-ის "
-"მნიშვნელობა ინგორირებულ იქნება. ამ პარამეტრს აქვს მნიშვნელობა თუ გასაღები "
-"object_type შეიცავს \"menu-object\"-ს."
+"თუ მონიშნულია, menu_path-ის მნიშვნელობა გამოიყენება როგორც მდებარეობა, "
+"რომლისგანაც იგება მენუ. თუ მონიშნული არ არის, მაშინ menu_path-ის მნიშვნელობა "
+"ინგორირებულ იქნება. ამ პარამეტრს აქვს მნიშვნელობა თუ გასაღები object_type "
+"შეიცავს \"menu-object\"-ს."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
-"თუ მონიშნულია, მაშინ ობიექტის ადგილმდებარეობა განისაზღვრება პანელის "
-"მარჯვენა(ან ქვედა, ვერტიკალური პანელების შემთხვევაში) ნაპირიდან."
+"თუ მონიშნულია, მაშინ ობიექტის ადგილმდებარეობა განისაზღვრება პანელის მარჯვენა"
+"(ან ქვედა, ვერტიკალური პანელების შემთხვევაში) ნაპირიდან."
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
-"თუ მონიშნულია, მომხმარებელს არ შეუძლია აპლეტის პანელზე "
-"გადაადგილება, მანამ სანამ არ გაუშვებს\"ბლოკის მოხსნა\" ბრძანებას."
+"თუ მონიშნულია, მომხმარებელს არ შეუძლია აპლეტის პანელზე გადაადგილება, მანამ "
+"სანამ არ გაუშვებს\"ბლოკის მოხსნა\" ბრძანებას."
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
@@ -2260,7 +2513,7 @@ msgid "Drawer Properties"
 msgstr "უჯრის თვისებები"
 
 #: ../gnome-panel/panel-properties-dialog.c:1055
-#: ../gnome-panel/panel-run-dialog.c:1951
+#: ../gnome-panel/panel-run-dialog.c:1963
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "ვერ ვტვირთავ %s ფაილს"
@@ -2296,10 +2549,6 @@ msgstr "ფერ_ი:"
 #: ../gnome-panel/panel-properties-dialog.glade.h:8
 msgid "E_xpand"
 msgstr "გაშლ_ა"
-
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "საერთო"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
@@ -2380,21 +2629,21 @@ msgstr "პიქსელი"
 msgid "Could not find a suitable application."
 msgstr "ვერ ვპოულობ სათადარიგო პროგრამას."
 
-#: ../gnome-panel/panel-recent.c:98 ../gnome-panel/panel-recent.c:108
+#: ../gnome-panel/panel-recent.c:95 ../gnome-panel/panel-recent.c:105
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "ვერ ვხსნი ახლახანს დამუშავებულ დოკუმენტს \"%s\""
 
-#: ../gnome-panel/panel-recent.c:110
+#: ../gnome-panel/panel-recent.c:107
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "დაიშვა უცნობი შეცდომა \"%s\"-ის გახსნის მცდელობისას."
 
-#: ../gnome-panel/panel-recent.c:167
+#: ../gnome-panel/panel-recent.c:164
 msgid "Clear the Recent Documents list?"
 msgstr "გნებავთ \"ბოლო დოკუმენტები\" -ს სიის წაშლა?"
 
-#: ../gnome-panel/panel-recent.c:169
+#: ../gnome-panel/panel-recent.c:166
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2404,15 +2653,15 @@ msgstr ""
 "• მენუ \"მდებარეობა\"-> \"ბოლო დოკუმენტები\"-ის სია.\n"
 "• ყველა პროგრამაში ბოლოს დამუშავებული დოკუმენტების სია."
 
-#: ../gnome-panel/panel-recent.c:181 ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:178 ../gnome-panel/panel-recent.c:252
 msgid "Clear Recent Documents"
 msgstr "ბოლოს დამუშავებული დოკუმენტების გასუფთავება"
 
-#: ../gnome-panel/panel-recent.c:216
+#: ../gnome-panel/panel-recent.c:213
 msgid "Recent Documents"
 msgstr "ბოლო დოკუმენტები"
 
-#: ../gnome-panel/panel-recent.c:257
+#: ../gnome-panel/panel-recent.c:254
 msgid "Clear all items from the recent documents list"
 msgstr "ბოლოს დამუშავებულ დოკუმენტების სიის გასუფთავება"
 
@@ -2421,33 +2670,33 @@ msgstr "ბოლოს დამუშავებულ დოკუმენ�
 msgid "Could not run command '%s'"
 msgstr "ვერ ვუშვებ ბრძანებას '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:406
+#: ../gnome-panel/panel-run-dialog.c:407
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "შეუძლებელი გახდა  \"%s\"-ის UTF-8-დან კონვერტირება"
 
-#: ../gnome-panel/panel-run-dialog.c:1212
+#: ../gnome-panel/panel-run-dialog.c:1215
 msgid "Choose a file to append to the command..."
 msgstr "ბრძანებასთან მისაერთებელი ფაილის ამორჩევა..."
 
-#: ../gnome-panel/panel-run-dialog.c:1588
+#: ../gnome-panel/panel-run-dialog.c:1591
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "ამოირჩიეთ პროგრამა მისი აღწერილობის სანახავად."
 
-#: ../gnome-panel/panel-run-dialog.c:1626
+#: ../gnome-panel/panel-run-dialog.c:1629
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "გაუშვებს ბრძანება: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1657
+#: ../gnome-panel/panel-run-dialog.c:1660
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "URI სიას,გამშვებ ფანჯარაშია გადმოტანილი,აქვს არასწორი ფორმატი (%d) ან სიგრძე "
 "(%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1955
+#: ../gnome-panel/panel-run-dialog.c:1967
 msgid "Could not display run dialog"
 msgstr "ვერ ვრთავ გამშვებ დიალოგ ფანჯარას"
 
@@ -2544,73 +2793,73 @@ msgstr "გა_სუფთავება"
 msgid "D_on't Delete"
 msgstr "_არ წაშალო"
 
-#: ../gnome-panel/panel-toplevel.c:1175
+#: ../gnome-panel/panel-toplevel.c:1178
 msgid "Hide Panel"
 msgstr "პანელის დამალვა"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1556
+#: ../gnome-panel/panel-toplevel.c:1559
 msgid "Top Expanded Edge Panel"
 msgstr "ნაპირის ზემო გაფართოებული პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1557
+#: ../gnome-panel/panel-toplevel.c:1560
 msgid "Top Centered Panel"
 msgstr "ზევიდან შუა პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1558
+#: ../gnome-panel/panel-toplevel.c:1561
 msgid "Top Floating Panel"
 msgstr "ზემო მცურავი პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1559
+#: ../gnome-panel/panel-toplevel.c:1562
 msgid "Top Edge Panel"
 msgstr "ზემო ნაპირის პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1563
+#: ../gnome-panel/panel-toplevel.c:1566
 msgid "Bottom Expanded Edge Panel"
 msgstr "ნაპირის ქვემო გაფართოებული პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1564
+#: ../gnome-panel/panel-toplevel.c:1567
 msgid "Bottom Centered Panel"
 msgstr "ქვემო ცენტრალური პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1565
+#: ../gnome-panel/panel-toplevel.c:1568
 msgid "Bottom Floating Panel"
 msgstr "ქვემო მცურავი პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1566
+#: ../gnome-panel/panel-toplevel.c:1569
 msgid "Bottom Edge Panel"
 msgstr "ქვემო ნაპირის პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1570
+#: ../gnome-panel/panel-toplevel.c:1573
 msgid "Left Expanded Edge Panel"
 msgstr "ნაპირის მარცხება გაფართოებული  პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1571
+#: ../gnome-panel/panel-toplevel.c:1574
 msgid "Left Centered Panel"
 msgstr "მარცხენა ცენტრალური პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1572
+#: ../gnome-panel/panel-toplevel.c:1575
 msgid "Left Floating Panel"
 msgstr "მარცხენა მცურავი პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1573
+#: ../gnome-panel/panel-toplevel.c:1576
 msgid "Left Edge Panel"
 msgstr "მარცხენა ნაპირის პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1577
+#: ../gnome-panel/panel-toplevel.c:1580
 msgid "Right Expanded Edge Panel"
 msgstr "ნაპირის მარჯვენა გაფართოებული პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1578
+#: ../gnome-panel/panel-toplevel.c:1581
 msgid "Right Centered Panel"
 msgstr "მარჯვენა ცენტრალური პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1579
+#: ../gnome-panel/panel-toplevel.c:1582
 msgid "Right Floating Panel"
 msgstr "მარჯვენა მცურავი პანელი"
 
-#: ../gnome-panel/panel-toplevel.c:1580
+#: ../gnome-panel/panel-toplevel.c:1583
 msgid "Right Edge Panel"
 msgstr "მარჯვენა ნაპირის პანელი"
 
@@ -2667,19 +2916,18 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
-"თუ მონიშნულია, დამალვა/გამოჩენის ღილაკებზე გამოჩნდებიან "
-"მიმანიშნებელი იზრები. ამ გასაღებს აქვს მნიშვნელობა თუ გასაღები "
-"enable_buttons მონიშნულია."
+"თუ მონიშნულია, დამალვა/გამოჩენის ღილაკებზე გამოჩნდებიან მიმანიშნებელი "
+"იზრები. ამ გასაღებს აქვს მნიშვნელობა თუ გასაღები enable_buttons მონიშნულია."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
-"თუ მონიშნულია, პანელზე გამოჩნდება ჩვენება/დამალვის ღილაკები. ეს "
-"ღილაკები გამოიყენება პანელის ეკრანის არედან გარეთ გატანისთვის, ისე რომ "
-"მხოლოდ ღილაკის ხილვა ხდება შესაძლებელი, ამავე ღილაკების მეშვეობით "
-"შესაძლებელია პანელის უკან დაბრუნება."
+"თუ მონიშნულია, პანელზე გამოჩნდება ჩვენება/დამალვის ღილაკები. ეს ღილაკები "
+"გამოიყენება პანელის ეკრანის არედან გარეთ გატანისთვის, ისე რომ მხოლოდ ღილაკის "
+"ხილვა ხდება შესაძლებელი, ამავე ღილაკების მეშვეობით შესაძლებელია პანელის უკან "
+"დაბრუნება."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
@@ -2692,25 +2940,25 @@ msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
-"თუ მონიშნულია, ფონური გრაფიკული გამოსახულება გადმოტრიალდება თუ "
-"პანელი ვერტიკალურ მდგომარეობას მიიღებს."
+"თუ მონიშნულია, ფონური გრაფიკული გამოსახულება გადმოტრიალდება თუ პანელი "
+"ვერტიკალურ მდგომარეობას მიიღებს."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"თუ მონიშნულია, ფონური გამოსახულება განიცდის მაშტაბირებას (ანუ არ "
-"კარგავს სიმაღლე/სიგანეს) პანელის მაქსიმალურ სიმაღლემდე.(თუ პანელს "
-"ჰორიზონტალური ფორმა აქვს)."
+"თუ მონიშნულია, ფონური გამოსახულება განიცდის მაშტაბირებას (ანუ არ კარგავს "
+"სიმაღლე/სიგანეს) პანელის მაქსიმალურ სიმაღლემდე.(თუ პანელს ჰორიზონტალური "
+"ფორმა აქვს)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
-"თუ მონიშნულია, გრაფიკული გამოსახულება პანელის ზომას მიიღებს. მაგრამ "
-"ამავე დროს დაირღვევა პიქტოგრამის პროპორციები.თუ მონიშნულია,"
+"თუ მონიშნულია, გრაფიკული გამოსახულება პანელის ზომას მიიღებს. მაგრამ ამავე "
+"დროს დაირღვევა პიქტოგრამის პროპორციები.თუ მონიშნულია,"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2718,9 +2966,8 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"თუ მონიშნულია, პანელი ავტომატურად იმალება ეკრანის კუთხეში როდესაც "
-"კურსორი მის არეში აღარ იმყოფება. კურსორის კუთხეში გადატარებით პანელი ისევ "
-"ხილვადია."
+"თუ მონიშნულია, პანელი ავტომატურად იმალება ეკრანის კუთხეში როდესაც კურსორი "
+"მის არეში აღარ იმყოფება. კურსორის კუთხეში გადატარებით პანელი ისევ ხილვადია."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
@@ -2741,10 +2988,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
-"თუ მონიშნულია, x-ის კოორდინატები იგნორირებულია და ათვლის წერტილი "
-"ეკრანის ცენტრი ხდება. თუ პანელის ზომა იცვლება იგი მაინც არ იცვლის "
-"ადგილმდებარეობას (ანუ ფართოვდება ორივე მხარეს). თუ გასაღები არ არის "
-"მონიშნული, x-ის კოორდინატები საზღვრავენ პანელის ადგილმდებარეობას."
+"თუ მონიშნულია, x-ის კოორდინატები იგნორირებულია და ათვლის წერტილი ეკრანის "
+"ცენტრი ხდება. თუ პანელის ზომა იცვლება იგი მაინც არ იცვლის ადგილმდებარეობას "
+"(ანუ ფართოვდება ორივე მხარეს). თუ გასაღები არ არის მონიშნული, x-ის "
+"კოორდინატები საზღვრავენ პანელის ადგილმდებარეობას."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
@@ -2753,10 +3000,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
 msgstr ""
-"თუ მონიშნულია, y-ის კოორდინატები იგნორირებულია და ათვლის წერტილი "
-"ეკრანის ცენტრი ხდება. თუ პანელის ზომა იცვლება იგი მაინც არ იცვლის "
-"ადგილმდებარეობას (ანუ ფართოვდება ორივე მხარეს). თუ გასაღები არ არის "
-"მონიშნული, y-ის კოორდინატები საზღვრავენ პანელის ადგილმდებარეობას."
+"თუ მონიშნულია, y-ის კოორდინატები იგნორირებულია და ათვლის წერტილი ეკრანის "
+"ცენტრი ხდება. თუ პანელის ზომა იცვლება იგი მაინც არ იცვლის ადგილმდებარეობას "
+"(ანუ ფართოვდება ორივე მხარეს). თუ გასაღები არ არის მონიშნული, y-ის "
+"კოორდინატები საზღვრავენ პანელის ადგილმდებარეობას."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -2990,70 +3237,49 @@ msgstr "პანელის Y კოორდინატი"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "პანელის Y კოორდინატი, ეკრანის ქვემო ბოლოდან"
 
-#: ../gnome-panel/panel-util.c:714
+#: ../gnome-panel/panel-util.c:657
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "ვერ ვპოუულობ '%s' ხატულას"
 
-#: ../gnome-panel/panel-util.c:937
+#: ../gnome-panel/panel-util.c:880
 msgid "file"
 msgstr "ფაილი"
 
-#: ../gnome-panel/panel-util.c:1370
-msgid "Computer"
-msgstr "კომპიუტერი"
+#: ../gnome-panel/panel-util.c:1486
+msgid "Home Folder"
+msgstr "სახლის დასტა"
 
-#: ../gnome-panel/panel-util.c:1372
-msgid "Network"
-msgstr "ქსელის რესურსები"
+#. Translators: this is the same string as the one found in
+#. * nautilus
+#: ../gnome-panel/panel-util.c:1498
+msgid "File System"
+msgstr "ფაილური სისტემა"
 
-#: ../gnome-panel/panel-util.c:1374
-msgid "Fonts"
-msgstr "შრიფტი"
-
-#: ../gnome-panel/panel-util.c:1376
-msgid "Themes"
-msgstr "გაფორმება"
-
-#: ../gnome-panel/panel-util.c:1378
-msgid "CD/DVD Creator"
-msgstr "CD/DVD ჩამწერი"
-
-#: ../gnome-panel/panel-util.c:1380
-msgid "Windows Network"
-msgstr "Windows ქსელი"
-
-#. translators: this is the title of the "dns-sd:///" location
-#: ../gnome-panel/panel-util.c:1383
-msgid "Services in"
-msgstr "სერვისები :"
-
-#: ../gnome-panel/panel-util.c:1457
+#: ../gnome-panel/panel-util.c:1645
 msgid "Search"
 msgstr "ძიება"
 
-#: ../gnome-panel/panel-util.c:1460
-msgid "Trash"
-msgstr "სანაგვე ყუთი"
-
-#. Translators: the first string is a path and the second
-#. * string is a hostname. nautilus contains the same string to
-#. * translate.
-#: ../gnome-panel/panel-util.c:1513
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../gnome-panel/panel-util.c:1691
 #, c-format
-msgid "%1$s on %2$s"
-msgstr "%1$s - %2$s"
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:477
+#: ../gnome-panel/panel.c:471
 #, c-format
 msgid "Open URL: %s"
 msgstr "გახსენი URL: %s"
 
-#: ../gnome-panel/panel.c:1302
+#: ../gnome-panel/panel.c:1299
 msgid "Delete this drawer?"
 msgstr "წავშალო მოცემული უჯრა?"
 
-#: ../gnome-panel/panel.c:1303
+#: ../gnome-panel/panel.c:1300
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3061,11 +3287,11 @@ msgstr ""
 "პანელის წაშლის შემთხვევაში,თვით პანელი და მისი\n"
 "პარამეტრები დაიკარგებიან."
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1303
 msgid "Delete this panel?"
 msgstr "წავშალო პანელი?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1304
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
