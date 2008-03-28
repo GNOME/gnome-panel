@@ -1745,6 +1745,14 @@ cancel_time_settings (GtkWidget *button, ClockData *cd)
         refresh_clock_timeout (cd);
 }
 
+static gboolean
+delete_time_settings (GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+	cancel_time_settings (widget, data);
+
+	return TRUE;
+}
+
 static void
 fill_time_settings_window (ClockData *cd)
 {
@@ -1813,6 +1821,8 @@ ensure_time_settings_window_is_created (ClockData *cd)
 		return;
 
 	cd->set_time_window = glade_xml_get_widget (cd->glade_xml, "set-time-window");
+	g_signal_connect (cd->set_time_window, "delete_event",
+			  G_CALLBACK (delete_time_settings), cd); 
 
         cd->calendar = glade_xml_get_widget (cd->glade_xml, "calendar");
         cd->hours_spin = glade_xml_get_widget (cd->glade_xml, "hours_spin");

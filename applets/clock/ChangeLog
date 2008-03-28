@@ -1,5 +1,12 @@
 2008-03-27  Matthias Clasen  <mclasen@redhat.com>
 
+	* clock.glade: Convert the set-time window into a dialog, to
+	make Esc work, pointed out by Dan Winship. 
+
+	* clock.c (ensure_time_settings_window): Handle delete events.
+
+2008-03-27  Matthias Clasen  <mclasen@redhat.com>
+
 	* clock.glade: Make the find-location window larger. 
 	Change proposed by Dan Winship.
 
