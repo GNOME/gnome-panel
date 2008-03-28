@@ -237,6 +237,8 @@ static void applet_change_orient (PanelApplet       *applet,
 				  ClockData         *cd);
 
 static void edit_hide (GtkWidget *unused, ClockData *cd);
+static gboolean edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd);
+static void save_cities_store (ClockData *cd);
 
 static void
 unfix_size (ClockData *cd)
@@ -962,8 +964,8 @@ sort_locations_by_name (gconstpointer a, gconstpointer b)
         ClockLocation *loc_a = (ClockLocation *) a;
         ClockLocation *loc_b = (ClockLocation *) b;
 
-        char *name_a = clock_location_get_name (loc_a);
-        char *name_b = clock_location_get_name (loc_b);
+        const char *name_a = clock_location_get_name (loc_a);
+        const char *name_b = clock_location_get_name (loc_b);
 
         return strcmp (name_a, name_b);
 }
@@ -1063,15 +1065,6 @@ location_tile_pressed_cb (ClockLocationTile *tile, gpointer data)
 }
 
 static void
-location_tile_timezone_set_cb (ClockLocationTile *tile, gpointer data)
-{
-        ClockData *cd = data;
-
-        clock_map_refresh (CLOCK_MAP (cd->map_widget));
-	update_location_tiles (cd);
-}
-
-static void
 location_tile_weather_updated_cb (ClockLocationTile *tile, GdkPixbuf *weather_icon, const char *temperature, gpointer data)
 {
         ClockData *cd = data;
@@ -1125,8 +1118,6 @@ create_cities_section (ClockData *cd)
                 city = clock_location_tile_new (loc, CLOCK_FACE_SMALL);
                 g_signal_connect (city, "tile-pressed",
                                   G_CALLBACK (location_tile_pressed_cb), cd);
-                g_signal_connect (city, "timezone-set",
-                                  G_CALLBACK (location_tile_timezone_set_cb), cd);
                 g_signal_connect (city, "need-clock-format",
                                   G_CALLBACK (location_tile_need_clock_format_cb), cd);
 
@@ -2068,6 +2059,21 @@ location_weather_updated_cb (ClockLocation *location,
 }
 
 static void
+location_set_current_cb (ClockLocation *loc, 
+			 gpointer       data)
+{
+	ClockData *cd = data;
+	WeatherInfo *info;
+
+	info = clock_location_get_weather_info (loc);
+	location_weather_updated_cb (loc, info, cd);
+
+        clock_map_refresh (CLOCK_MAP (cd->map_widget));
+        update_location_tiles (cd);
+	save_cities_store (cd);	
+}
+
+static void
 locations_changed (ClockData *cd)
 {
 	GList *l;
@@ -2082,6 +2088,8 @@ locations_changed (ClockData *cd)
 			id = g_signal_connect (loc, "weather-updated",
 						G_CALLBACK (location_weather_updated_cb), cd);
 			g_object_set_data (G_OBJECT (loc), "weather-updated", GINT_TO_POINTER (id));
+			g_signal_connect (loc, "set-current", 
+					  G_CALLBACK (location_set_current_cb), cd);
 		}
 	}
 
@@ -2126,6 +2134,7 @@ location_start_element (GMarkupParseContext *context,
         gfloat latitude = 0.0;
         gfloat longitude = 0.0;
 	gchar *code = NULL;
+	gboolean current = FALSE;
 
         int index = 0;
 
@@ -2151,6 +2160,11 @@ location_start_element (GMarkupParseContext *context,
                 } else if (strcmp (att_name, "code") == 0) {
                         code = (gchar *)attribute_values[index];
                 }
+		else if (strcmp (att_name, "current") == 0) {
+			if (strcmp (attribute_values[index], "true") == 0) {
+				current = TRUE;
+			}
+		}
         }
 
         setlocale (LC_NUMERIC, "");
@@ -2160,6 +2174,9 @@ location_start_element (GMarkupParseContext *context,
         }
 
         loc = clock_location_new (name, timezone, latitude, longitude, code, &prefs);
+
+	if (current)
+		clock_location_make_current (loc, NULL, NULL, NULL);
 
         data->cities = g_list_append (data->cities, loc);
 }
@@ -2917,13 +2934,14 @@ loc_to_string (ClockLocation *loc)
         clock_location_get_coords (loc, &latitude, &longitude);
 
         prev_locale = setlocale (LC_NUMERIC, "POSIX");
-
+	
         ret = g_markup_printf_escaped
-                ("<location name=\"%s\" timezone=\"%s\" latitude=\"%f\" longitude=\"%f\" code=\"%s\"/>",
+                ("<location name=\"%s\" timezone=\"%s\" latitude=\"%f\" longitude=\"%f\" code=\"%s\" current=\"%s\"/>",
                  clock_location_get_name (loc),
                  clock_location_get_timezone (loc),
                  latitude, longitude,
-		 clock_location_get_weather_code (loc));
+		 clock_location_get_weather_code (loc),
+		 clock_location_is_current (loc) ? "true" : "false");
 
         setlocale (LC_NUMERIC, "");
 
@@ -3418,10 +3436,10 @@ find_entry_changed (GtkEditable *entry, ClockData *cd)
 	model = gtk_tree_view_get_model (tree);
 
 	selection = gtk_tree_view_get_selection (tree);
-	
+	gtk_tree_model_get_iter_first (model, &iter);
+
 	location = gtk_entry_get_text (GTK_ENTRY (entry));
-	if (gtk_tree_model_get_iter_first (model, &iter) && 
-            find_location (model, &iter, location, TRUE)) {
+	if (find_location (model, &iter, location, TRUE)) {
 		gtk_widget_set_sensitive (cd->find_next_location_button, TRUE);
 		path = gtk_tree_model_get_path (model, &iter);
 		gtk_tree_view_expand_to_path (tree, path);
@@ -3482,6 +3500,14 @@ edit_hide (GtkWidget *unused, ClockData *cd)
         find_hide (NULL, cd);
         gtk_widget_hide (edit_window);
         edit_clear (cd);
+}
+
+static gboolean
+edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd)
+{
+	edit_hide (unused, cd);
+
+	return TRUE;
 }
 
 static gboolean
@@ -3610,6 +3636,13 @@ run_prefs_locations_add (GtkButton *button, ClockData *cd)
 
         g_object_set_data (G_OBJECT (edit_window), "clock-location", NULL);
         gtk_window_set_transient_for (GTK_WINDOW (edit_window), GTK_WINDOW (cd->prefs_window));
+
+	if (g_object_get_data (G_OBJECT (edit_window), "delete-handler")
+ == NULL) {
+		g_object_set_data (G_OBJECT (edit_window), "delete-handler",
+				   GINT_TO_POINTER (g_signal_connect (edit_window, "delete_event", G_CALLBACK (edit_delete), cd)));
+	}
+
         gtk_window_present_with_time (GTK_WINDOW (edit_window), gtk_get_current_event_time ());
 }
 
