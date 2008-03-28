@@ -1003,6 +1003,13 @@ create_cities_store (ClockData *cd)
 
                 list = list->next;
 	}
+
+	 
+	if (cd->prefs_window) { 	 
+		GtkWidget *widget = glade_xml_get_widget (cd->glade_xml, "cities_list"); 	 
+		gtk_tree_view_set_model (GTK_TREE_VIEW (widget), 	 
+		GTK_TREE_MODEL (cd->cities_store)); 	 
+	}
 }
 
 static gint
