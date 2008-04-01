@@ -8,16 +8,16 @@
 # Lauris Kaplinski <lauris@ariman.ee>, 1999.
 # Ilmar Kerm <ikerm@hot.ee>, 2001, 2002.
 # Tõivo Leedjärv <toivo@linux.ee>, 2002, 2003.
-# Priit Laes <amd@store20.com>, 2004-2006.
+# Priit Laes <amd@store20.com>, 2004-2006, 2008
 # Ivar Smolin <okul@linux.ee>, 2005-2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-22 14:29+0000\n"
+"POT-Creation-Date: 2008-03-20 09:41+0000\n"
 "PO-Revision-Date: 2008-03-12 19:31+0200\n"
-"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
+"Last-Translator: Priit Laes <plaes@plaes.org>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,7 +67,7 @@ msgid "_Preferences"
 msgstr "_Eelistused"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4102
+#: ../applets/clock/clock.c:4108
 msgid "Clock"
 msgstr "Kell"
 
@@ -93,7 +93,7 @@ msgstr "%H:%M"
 #. * There should be little need to translate this string.
 #.
 #: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1553 ../applets/clock/clock-location-tile.c:485
+#: ../applets/clock/clock.c:1548 ../applets/clock/clock-location-tile.c:488
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -142,7 +142,7 @@ msgstr "Kalender"
 msgid "%l:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1551
+#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1546
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -182,7 +182,7 @@ msgstr "%2$s, %1$s"
 #.
 #: ../applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
-msgstr "%A, %d. B% %Y (%%s)"
+msgstr "%A, %e. %B %Y (%%s)"
 
 #: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
@@ -200,40 +200,40 @@ msgstr "Kalendri kuuvaate peitmiseks klõpsa siia"
 msgid "Click to view month calendar"
 msgstr "Kalendri kuuvaate vaatamiseks klõpsa siia"
 
-#: ../applets/clock/clock.c:1401
+#: ../applets/clock/clock.c:1396
 msgid "Computer Clock"
 msgstr "Arvuti kell"
 
-#: ../applets/clock/clock.c:1546
+#: ../applets/clock/clock.c:1541
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1548
+#: ../applets/clock/clock.c:1543
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:1590
+#: ../applets/clock/clock.c:1585
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. B% %Y"
 
-#: ../applets/clock/clock.c:1665
+#: ../applets/clock/clock.c:1660
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Tõrge aja seadistamisvahendi käivitamisel: %s"
 
-#: ../applets/clock/clock.c:1694
+#: ../applets/clock/clock.c:1689
 msgid "Set System Time..."
 msgstr "Määra süsteemi aeg..."
 
-#: ../applets/clock/clock.c:1695 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1690 ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr "Muuda süsteemset aega"
 
-#: ../applets/clock/clock.c:1709
+#: ../applets/clock/clock.c:1704
 msgid "Failed to set the system time"
 msgstr "Tõrge süsteemi aja seadmisel"
 
-#: ../applets/clock/clock.c:1882
+#: ../applets/clock/clock.c:1877
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -245,42 +245,42 @@ msgstr ""
 msgid "Custom format"
 msgstr "Kohandatud vorming"
 
-#: ../applets/clock/clock.c:3545 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:584
+#: ../applets/clock/clock.c:3548 ../applets/clock/clock-location.c:381
+#: ../applets/clock/clock-location-tile.c:588
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3803
+#: ../applets/clock/clock.c:3806
 msgid "City Name"
 msgstr "Linna nimi"
 
-#: ../applets/clock/clock.c:3807
+#: ../applets/clock/clock.c:3810
 msgid "City Time Zone"
 msgstr "Linna ajavöönd"
 
-#: ../applets/clock/clock.c:3998
+#: ../applets/clock/clock.c:4004
 msgid "24 hour"
 msgstr "24 tunnine"
 
-#: ../applets/clock/clock.c:3999
+#: ../applets/clock/clock.c:4005
 msgid "UNIX time"
 msgstr "UNIXi aeg"
 
-#: ../applets/clock/clock.c:4000
+#: ../applets/clock/clock.c:4006
 msgid "Internet time"
 msgstr "Interneti aeg"
 
-#: ../applets/clock/clock.c:4008
+#: ../applets/clock/clock.c:4014
 msgid "Custom _format:"
 msgstr "Kohandatud _vorming:"
 
-#: ../applets/clock/clock.c:4105
+#: ../applets/clock/clock.c:4111
 msgid "The Clock displays the current time and date"
 msgstr "Kellarakend näitab praegust kellaaega ja kuupäeva"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4108 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4114 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -291,7 +291,7 @@ msgstr ""
 "Lauris Kaplinski <lauris@ariman.ee>, 1999.\n"
 "Ilmar Kerm <ikerm@hot.ee>, 2001, 2002.\n"
 "Tõivo Leedjärv <toivo@linux.ee>, 2002, 2003.\n"
-"Priit Laes <amd@store20.com>, 2004-2006.\n"
+"Priit Laes <plaes@plaes.org>, 2004-2006, 2008\n"
 "Ivar Smolin <okul@linux.ee>, 2005-2008."
 
 #: ../applets/clock/clock.glade.h:1
@@ -644,16 +644,16 @@ msgid "Failed to set the system timezone"
 msgstr "Tõrge süsteemse ajavööndi seadmisel"
 
 #: ../applets/clock/clock-location-tile.c:239
-#: ../applets/clock/clock-location-tile.c:314
+#: ../applets/clock/clock-location-tile.c:317
 msgid "<small>Set...</small>"
 msgstr "<small>Muuda...</small>"
 
 #: ../applets/clock/clock-location-tile.c:240
-#: ../applets/clock/clock-location-tile.c:315
+#: ../applets/clock/clock-location-tile.c:318
 msgid "<small>Set</small>"
 msgstr "<small>Muuda</small>"
 
-#: ../applets/clock/clock-location-tile.c:320
+#: ../applets/clock/clock-location-tile.c:323
 msgid "Set as current timezone for this computer"
 msgstr "Sellele arvutile praeguse ajavööndi määramine"
 
@@ -663,7 +663,7 @@ msgstr "Sellele arvutile praeguse ajavööndi määramine"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:458
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -673,7 +673,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/clock-location-tile.c:470
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -682,22 +682,22 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:477
+#: ../applets/clock/clock-location-tile.c:480
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:594
-#: ../applets/clock/clock-location-tile.c:600
+#: ../applets/clock/clock-location-tile.c:598
+#: ../applets/clock/clock-location-tile.c:604
 msgid "Unknown"
 msgstr "Tundmatu"
 
-#: ../applets/clock/clock-location-tile.c:595
+#: ../applets/clock/clock-location-tile.c:599
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, tundub kui %s"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:615
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Päikesetõus: %s / Loojang: %s"
@@ -2177,35 +2177,35 @@ msgstr[1] ""
 "Sa oled praegu sisse logitud kasutajana \"%s\".\n"
 "Süsteem seisatakse %d sekundi möödumisel automaatselt."
 
-#: ../gnome-panel/panel-logout.c:334
+#: ../gnome-panel/panel-logout.c:339
 msgid "Log out of this system now?"
 msgstr "Kas logida süsteemist välja?"
 
-#: ../gnome-panel/panel-logout.c:340
+#: ../gnome-panel/panel-logout.c:345
 msgid "_Switch User"
 msgstr "Lülitu teisele _kasutajale"
 
-#: ../gnome-panel/panel-logout.c:346
+#: ../gnome-panel/panel-logout.c:351
 msgid "_Log Out"
 msgstr "Logi _välja"
 
-#: ../gnome-panel/panel-logout.c:351
+#: ../gnome-panel/panel-logout.c:356
 msgid "Shut down this system now?"
 msgstr "Kas lülitada arvuti välja?"
 
-#: ../gnome-panel/panel-logout.c:356
+#: ../gnome-panel/panel-logout.c:361
 msgid "S_uspend"
 msgstr "_Ooterežiimile"
 
-#: ../gnome-panel/panel-logout.c:361
+#: ../gnome-panel/panel-logout.c:366
 msgid "_Hibernate"
 msgstr "_Talveunne"
 
-#: ../gnome-panel/panel-logout.c:366
+#: ../gnome-panel/panel-logout.c:371
 msgid "_Restart"
 msgstr "_Taaskäivita"
 
-#: ../gnome-panel/panel-logout.c:375
+#: ../gnome-panel/panel-logout.c:380
 msgid "_Shut Down"
 msgstr "_Seiska arvuti"
 
