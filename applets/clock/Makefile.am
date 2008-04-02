@@ -1,4 +1,4 @@
-SUBDIRS = e-map pixmaps
+SUBDIRS = pixmaps
 
 INCLUDES =							\
 	-I$(srcdir)/../../libpanel-applet			\
@@ -45,14 +45,6 @@ endif
 CLOCK_SOURCES = 		\
 	calendar-window.c	\
 	calendar-window.h	\
-	tz-window.c		\
-	tz-window.h		\
-	tz-sel-dialog.c		\
-	tz-sel-dialog.h		\
-	tz-list.c		\
-	tz-list.h		\
-	tz.c			\
-	tz.h			\
 	obox.c			\
 	obox.h			\
 	clock.c			\
@@ -83,7 +75,6 @@ CLOCK_SOURCES = 		\
 
 CLOCK_LDADD =						\
 	../../libpanel-applet/libpanel-applet-2.la	\
-	e-map/libemap.a					\
 	$(CLOCK_LIBS)					\
 	$(POLKIT_GNOME_LIBS)				\
 	-lgweather
