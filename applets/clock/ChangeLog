@@ -1,3 +1,10 @@
+2008-04-02  Vincent Untz  <vuntz@gnome.org>
+
+	* set-timezone.c: (can_do): initialize variables at the beginning of
+	the function, so that we don't crash because of unitiliazed variables
+	after a goto.
+	Should fix bug #522538, bug #523643.
+
 2008-03-28  Matthias Clasen  <mclasen@redhat.com>
 
 	* clock.c: Fix issues with adding/removing locations, pointed
