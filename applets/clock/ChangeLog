@@ -1,5 +1,16 @@
 2008-04-02  Vincent Untz  <vuntz@gnome.org>
 
+	Clean things a bit. It's easier to have one function call instead of
+	always the same three calls.
+
+	* clock-map.c: (clock_map_refresh):
+	(highlight):
+	(clock_map_update_time): don't call clock_map_render_shadow() and
+	clock_map_rotate()
+	(clock_map_display): add those calls here.
+
+2008-04-02  Vincent Untz  <vuntz@gnome.org>
+
 	Fix crash when closing the clock window while a city is blinking on the
 	map. Fix bug #519493.
 	Also improve things a bit if you click quickly on two cities.

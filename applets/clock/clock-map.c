@@ -215,9 +215,6 @@ clock_map_refresh (ClockMap *this)
 
         clock_map_place_locations (this);
 
-        clock_map_render_shadow (this);
-        clock_map_rotate (this);
-
         clock_map_display (this);
 }
 
@@ -655,6 +652,8 @@ clock_map_rotate (ClockMap *this)
 static void
 clock_map_display (ClockMap *this)
 {
+        clock_map_render_shadow (this);
+        clock_map_rotate (this);
 	gtk_widget_queue_draw (GTK_WIDGET (this));
 }
 
@@ -676,8 +675,6 @@ highlight (gpointer user_data)
                  clock_map_place_location (data->map, data->location, TRUE);
        else
                  clock_map_place_locations (data->map);
-       clock_map_render_shadow (data->map);
-       clock_map_rotate (data->map);
        clock_map_display (data->map);
 
        data->count++;
@@ -764,7 +761,5 @@ clock_map_update_time (ClockMap *this)
                 return;
         }
 
-        clock_map_render_shadow (this);
-        clock_map_rotate (this);
         clock_map_display (this);
 }
