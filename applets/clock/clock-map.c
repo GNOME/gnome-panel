@@ -28,6 +28,8 @@ typedef struct {
         gint width;
         gint height;
 
+	guint highlight_timeout_id;
+
         GdkPixbuf *stock_map_pixbuf;
         GdkPixbuf *location_marker_pixbuf[3];
 
@@ -121,6 +123,7 @@ clock_map_init (ClockMap *this)
 
 	GTK_WIDGET_SET_FLAGS (this, GTK_NO_WINDOW);
 
+	priv->highlight_timeout_id = 0;
         priv->stock_map_pixbuf = NULL;
         priv->location_marker_pixbuf[0] = NULL;
         priv->location_marker_pixbuf[1] = NULL;
@@ -132,6 +135,11 @@ clock_map_finalize (GObject *g_obj)
 {
         ClockMapPrivate *priv = PRIVATE (g_obj);
 	int i;
+
+	if (priv->highlight_timeout_id) {
+		g_source_remove (priv->highlight_timeout_id);
+		priv->highlight_timeout_id = 0;
+	}
 
         if (priv->stock_map_pixbuf) {
                 gdk_pixbuf_unref (priv->stock_map_pixbuf);
@@ -661,11 +669,8 @@ highlight (gpointer user_data)
 {
        BlinkData *data = user_data;
 
-       if (data->count == 6) {
-	       g_object_unref (data->location);
-               g_free (data);
+       if (data->count == 6)
                return FALSE;
-       }
 
        if (data->count % 2 == 0)
                  clock_map_place_location (data->map, data->location, TRUE);
@@ -680,10 +685,26 @@ highlight (gpointer user_data)
        return TRUE;
 }
 
+static void
+highlight_destroy (gpointer user_data)
+{
+       BlinkData *data = user_data;
+       ClockMapPrivate *priv;
+
+       priv = PRIVATE (data->map);
+       priv->highlight_timeout_id = 0;
+
+       g_object_unref (data->location);
+       g_free (data);
+}
+
 void
 clock_map_blink_location (ClockMap *this, ClockLocation *loc)
 {
        BlinkData *data;
+       ClockMapPrivate *priv;
+
+       priv = PRIVATE (this);
 
        g_return_if_fail (IS_CLOCK_MAP (this));
        g_return_if_fail (IS_CLOCK_LOCATION (loc));
@@ -692,9 +713,16 @@ clock_map_blink_location (ClockMap *this, ClockLocation *loc)
        data->map = this;
        data->location = g_object_ref (loc);
 
+       if (priv->highlight_timeout_id) {
+	       g_source_remove (priv->highlight_timeout_id);
+	       clock_map_place_locations (this);
+       }
+
        highlight (data);
 
-       g_timeout_add (300, highlight, data);
+       priv->highlight_timeout_id = g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
+							300, highlight, data,
+							highlight_destroy);
 }
 
 static gboolean

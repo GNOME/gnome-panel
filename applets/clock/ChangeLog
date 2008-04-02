@@ -1,5 +1,18 @@
 2008-04-02  Vincent Untz  <vuntz@gnome.org>
 
+	Fix crash when closing the clock window while a city is blinking on the
+	map. Fix bug #519493.
+	Also improve things a bit if you click quickly on two cities.
+
+	* clock-map.c: (clock_map_init): add a timeout id for the blinking
+	(clock_map_finalize): stop blinking. This fixes the crash
+	(highlight): simplify a bit because of the destroy handler
+	(highlight_destroy): new, destroy handler for the timeout
+	(clock_map_blink_location): if there was already something blinking,
+	stop it first. Add a destroy handler for the timeout.
+
+2008-04-02  Vincent Untz  <vuntz@gnome.org>
+
 	* set-timezone.c: (can_do): initialize variables at the beginning of
 	the function, so that we don't crash because of unitiliazed variables
 	after a goto.
