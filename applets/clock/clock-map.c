@@ -252,8 +252,9 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
         /* draw a simple outline */
         cairo_rectangle (
                 cr,
-                region.x + 0.5, region.y + 0.5,
-                region.width - 1, region.height - 1);
+                allocation.x + 0.5, allocation.y + 0.5,
+                gdk_pixbuf_get_width (priv->rotated_map_pixbuf) - 1,
+                gdk_pixbuf_get_height (priv->rotated_map_pixbuf) - 1);
 
         cairo_set_source_rgb (
                 cr,

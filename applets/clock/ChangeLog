@@ -1,5 +1,11 @@
 2008-04-02  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-map.c: (clock_map_expose): correctly redraw the map outline in
+	expose event, instead of painting it inside the map. Fix bug #519246.
+	Patch by Matthias Clasen <mclasen@redhat.com>
+
+2008-04-02  Vincent Untz  <vuntz@gnome.org>
+
 	* Makefile.am: updated
 	* e-map/Makefile.am:
 	* e-map/e-map-marshal.list:
