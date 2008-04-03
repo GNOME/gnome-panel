@@ -1,5 +1,17 @@
 2008-04-03  Vincent Untz  <vuntz@gnome.org>
 
+	Fix initial visibility of the appointments to actually follow the state
+	of the expander. Fix bug #524296.
+
+	* calendar-window.c: (create_task_list): add comment
+	(create_list_for_appointment_model): add comment and change order of
+	gtk_widget_show() and gtk_container_add() to fix the bug
+	(add_child): simplify by calling expand_collapse_child()
+	(calendar_window_pack_locations): add comment
+	* clock.c: (locations_changed): add FIXME about a runtime warning
+
+2008-04-03  Vincent Untz  <vuntz@gnome.org>
+
 	* Makefile.am:
 	* timezone.glade: remove timezone.glade, unused now.
 

@@ -772,6 +772,9 @@ create_task_list (CalendarWindow *calwin,
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                         GTK_POLICY_NEVER,
                                         GTK_POLICY_AUTOMATIC);
+	/* we show the widget before adding to the container, since adding to
+	 * the container changes the visibility depending on the state of the
+	 * expander */
         gtk_widget_show (scrolled);
         gtk_container_add (GTK_CONTAINER (list), scrolled);
 
@@ -943,8 +946,11 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                         GTK_POLICY_NEVER,
                                         GTK_POLICY_AUTOMATIC);
-        gtk_container_add (GTK_CONTAINER (list), scrolled);
+	/* we show the widget before adding to the container, since adding to
+	 * the container changes the visibility depending on the state of the
+	 * expander */
         gtk_widget_show (scrolled);
+        gtk_container_add (GTK_CONTAINER (list), scrolled);
 
 	g_assert (calwin->priv->appointments_model != NULL);
 
@@ -1472,10 +1478,7 @@ static void add_child (GtkContainer *container,
                        GtkWidget    *child,
                        GtkExpander  *expander)
 {
-        gboolean expanded;
-
-        expanded = gtk_expander_get_expanded (expander);
-        g_object_set (child, "visible", expanded, NULL);
+	expand_collapse_child (child, expander);
 }
 
 static GtkWidget *
@@ -1555,6 +1558,9 @@ calendar_window_pack_locations (CalendarWindow *calwin, GtkWidget *vbox)
 							 KEY_LOCATIONS_EXPANDED,
 							 G_CALLBACK (edit_locations));
 
+	/* we show the widget before adding to the container, since adding to
+	 * the container changes the visibility depending on the state of the
+	 * expander */
 	gtk_widget_show (calwin->priv->locations_list);
 	gtk_container_add (GTK_CONTAINER (vbox), calwin->priv->locations_list);
 

@@ -2096,6 +2096,7 @@ locations_changed (ClockData *cd)
 			id = g_signal_connect (loc, "weather-updated",
 						G_CALLBACK (location_weather_updated_cb), cd);
 			g_object_set_data (G_OBJECT (loc), "weather-updated", GINT_TO_POINTER (id));
+			/* FIXME: there's no such signal? */
 			g_signal_connect (loc, "set-current", 
 					  G_CALLBACK (location_set_current_cb), cd);
 		}
