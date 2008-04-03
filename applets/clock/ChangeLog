@@ -1,3 +1,11 @@
+2008-04-03  Vincent Untz  <vuntz@gnome.org>
+
+	* clock.c: (update_timezone): if the coordinates are known to not be
+	valid, just empty the timezone selection
+	(run_find_location_save): updated to pass a new argument to
+	update_timezone()
+	Fix crash bug #522438
+
 2008-04-02  Vincent Untz  <vuntz@gnome.org>
 
 	* clock-map.c: (clock_map_expose): correctly redraw the map outline in

@@ -3217,12 +3217,22 @@ find_timezone (ClockData *cd, const char *name, gfloat lat, gfloat lon)
 }
 
 static void
-update_timezone (ClockData *cd, const char *name, gfloat lat, gfloat lon)
+update_timezone (ClockData *cd, const char *name, gboolean valid, gfloat lat, gfloat lon)
 {
         GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
 	gchar *timezone;
 	ClockLocation *loc;
 	WeatherPrefs prefs;
+
+	if (!valid) {
+                /* unfortunately gtk doesn't have an easy way to clear
+                   a combo box */
+                gtk_combo_box_prepend_text (GTK_COMBO_BOX (zone_combo), "");
+                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), 0);
+                gtk_combo_box_remove_text (GTK_COMBO_BOX (zone_combo), 0);
+                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), -1);
+		return;
+	}
 
 	prefs.temperature_unit = cd->temperature_unit;
 	prefs.speed_unit = cd->speed_unit;
@@ -3267,7 +3277,10 @@ run_find_location_save (GtkButton *button, ClockData *cd)
 
 	update_coords (cd, loc->latlon_valid, loc->latitude*180.0/M_PI, loc->longitude*180.0/M_PI);
 
-	update_timezone (cd, loc->name, loc->latitude, loc->longitude);
+	/* FIXME: loc->zone can gives us the timezone. For Bristol, it's
+	 * :westcountry. No idea how to map this to a real timezone, though. */
+	update_timezone (cd, loc->name, loc->latlon_valid,
+			 loc->latitude, loc->longitude);
 
 	find_hide (NULL, cd);
 }
