@@ -1,5 +1,11 @@
 2008-04-03  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (update_calendar_popup): nullify a widget pointer when
+	closing the popup. Should fix bug #525754, where the destroyed widget
+	was used.
+
+2008-04-03  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (update_timezone): if the coordinates are known to not be
 	valid, just empty the timezone selection
 	(run_find_location_save): updated to pass a new argument to

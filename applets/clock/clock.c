@@ -1191,6 +1191,7 @@ update_calendar_popup (ClockData *cd)
                         cd->cities_section = NULL;
                         cd->map_section = NULL;
                         cd->map_widget = NULL;
+			cd->clock_vbox = NULL;
 			
         		g_list_free (cd->location_tiles);
         		cd->location_tiles = NULL;
