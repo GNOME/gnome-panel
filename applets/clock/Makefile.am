@@ -172,8 +172,7 @@ endif
 
 gladedir = $(datadir)/gnome-panel/glade
 glade_DATA =		\
-	clock.glade	\
-	timezone.glade
+	clock.glade
 
 uidir 	= $(datadir)/gnome-2.0/ui
 ui_DATA	= GNOME_ClockApplet.xml
