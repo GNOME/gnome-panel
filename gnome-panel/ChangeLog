@@ -1,3 +1,10 @@
+2008-04-04  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-applet-frame.c: (panel_applet_frame_load): plug potential leak
+	(panel_applet_frame_finalize): correctly release the bonobo object.
+	This fixes bug #513347, and also bug #522025 as a side-effect.
+	Thanks to Michael Meeks <michael.meeks@novell.com> for the hint!
+
 2008-03-18  Frederic Crozat  <fcrozat@mandriva.com>
 
 	* panel-logout.c: convert username / login

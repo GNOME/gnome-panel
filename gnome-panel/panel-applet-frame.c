@@ -359,6 +359,8 @@ panel_applet_frame_load (const gchar *iid,
 	bonobo_activation_activate_from_id_async (frame->priv->iid, 0,
 						  (BonoboActivationCallback) panel_applet_frame_activated,
 						  frame_act, &ev);
+
+	CORBA_exception_free (&ev);
 }
 
 void
@@ -540,7 +542,7 @@ panel_applet_frame_finalize (GObject *object)
 		 * like we can receive some events when unref'ing them */
 		ORBit_small_unlisten_for_broken (frame->priv->control,
 						 G_CALLBACK (panel_applet_frame_cnx_broken));
-		CORBA_Object_release (frame->priv->control, NULL);
+		bonobo_object_release_unref (frame->priv->control, NULL);
 		frame->priv->control = CORBA_OBJECT_NIL;
 	}
 
