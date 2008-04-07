@@ -3060,6 +3060,10 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
 		prefs.speed_unit = cd->speed_unit;
 
                 loc = clock_location_new (name, clock_zoneinfo_get_name (info), lat, lon, weather_code, &prefs);
+		/* has the side-effect of setting the current location if
+		 * there's none and this one can be considered as a current one
+		 */
+		clock_location_is_current (loc);
 
                 cd->locations = g_list_append (cd->locations, loc);
                 locations_changed (cd);

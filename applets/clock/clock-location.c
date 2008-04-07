@@ -653,16 +653,20 @@ clock_location_is_current_timezone (ClockLocation *loc)
 gboolean
 clock_location_is_current (ClockLocation *loc)
 {
-
 	if (current_location == loc)
 		return TRUE;
 	else if (current_location != NULL)
 		return FALSE;
 
 	if (clock_location_is_current_timezone (loc)) {
+		/* Note that some code in clock.c depends on the fact that
+		 * calling this function can set the current location if
+		 * there's none */
 		current_location = loc;
 		g_object_add_weak_pointer (G_OBJECT (current_location), 
 					   (gpointer *)&current_location);
+		g_signal_emit (current_location, location_signals[SET_CURRENT],
+			       0, NULL);
 
 		return TRUE;
 	}
