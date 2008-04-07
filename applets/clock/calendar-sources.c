@@ -87,6 +87,8 @@ static void calendar_sources_class_init (CalendarSourcesClass *klass);
 static void calendar_sources_init       (CalendarSources      *sources);
 static void calendar_sources_finalize   (GObject             *object);
 
+static void backend_died_cb (ECal *client, CalendarSourceData *source_data);
+
 enum
 {
   APPOINTMENT_SOURCES_CHANGED,
@@ -206,7 +208,12 @@ calendar_sources_finalize_source_data (CalendarSources    *sources,
 	}
 
       for (l = source_data->clients; l; l = l->next)
-	g_object_unref (l->data);
+        {
+          g_signal_handlers_disconnect_by_func (G_OBJECT (l->data),
+                                                G_CALLBACK (backend_died_cb),
+                                                source_data);
+          g_object_unref (l->data);
+        }
       source_data->clients = NULL;
 
       if (source_data->esource_list)

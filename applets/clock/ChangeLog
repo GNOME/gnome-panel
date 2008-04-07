@@ -1,5 +1,12 @@
 2008-04-07  Vincent Untz  <vuntz@gnome.org>
 
+	* calendar-sources.c: (calendar_sources_finalize_source_data):
+	disconnect the backend_died signal handler to not have it left around
+	with invalid user data when the CalendarSources object is finalized.
+	Fix famous crash from bug #378854.
+
+2008-04-07  Vincent Untz  <vuntz@gnome.org>
+
 	* calendar-window.c: (calendar_day_activated): open evo on the right
 	day, instead of some day before or after because of timezone
 	confusion.
