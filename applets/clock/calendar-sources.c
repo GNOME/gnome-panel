@@ -214,10 +214,16 @@ calendar_sources_finalize_source_data (CalendarSources    *sources,
                                                 source_data);
           g_object_unref (l->data);
         }
+      g_slist_free (source_data->clients);
       source_data->clients = NULL;
 
       if (source_data->esource_list)
-	g_object_unref (source_data->esource_list);
+        {
+          g_signal_handlers_disconnect_by_func (source_data->esource_list,
+                                                G_CALLBACK (calendar_sources_esource_list_changed),
+                                                source_data);
+          g_object_unref (source_data->esource_list);
+	}
       source_data->esource_list = NULL;
 
       for (l = source_data->selected_sources; l; l = l->next)

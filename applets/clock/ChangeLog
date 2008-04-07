@@ -1,5 +1,12 @@
 2008-04-07  Vincent Untz  <vuntz@gnome.org>
 
+	* calendar-sources.c: (calendar_sources_finalize_source_data):
+	disconnect the changed signal handler for esource_list. Might fix bug
+	#488819.
+	Also fix a small GSList leak.
+
+2008-04-07  Vincent Untz  <vuntz@gnome.org>
+
 	Don't show weather information of the last location once it has been
 	removed. Fix bug #526300.
 	Also fixes the empty space at the left of the clock when there's no
