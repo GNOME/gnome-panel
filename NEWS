@@ -1,4 +1,77 @@
 ==============
+Version 2.22.1
+==============
+
+  Panel
+
+	* Convert username/login to UTF-8 in logout dialog (Frederic Crozat)
+	* Fix applet processes not quitting when the applet is removed
+	  (Michael Meeks, Vincent)
+
+  Misc
+
+	* Remove old and useless files
+	* Require gweather 2.22.1 (Vincent)
+	* Don't explicitly require libxml for the weather applet anymore
+	  (Vincent)
+
+  Clock Applet
+
+	* Fix crash when there are no locations available (William Lachance)
+	* Fix locations not appearing in the preferences dialog
+	  (Matthias Clasen)
+	* Make find location window larger (Matthias Clasen)
+	* Handle escape to close the dialog in the time/timezone dialogs
+	  (Matthias Clasen)
+	* Fix various issues with adding/removing locations (Matthias Clasen)
+	* Fix crash when PolicyKit helper can't be called (Vincent)
+	* Fix crash when closing the calendar popup when a city is blinking on
+	  the map (Vincent)
+	* Improve the blinking on the map when clicking on various locations
+	  (Vincent)
+	* Cleanups (Vincent)
+	* Correctly redraw the map outline on expose events (Matthias Clasen)
+	* Fix crash when the location doesn't have coordinates (Vincent)
+	* Fix crash when updating locations while calendar popup is not shown
+	  (Vincent)
+	* Fix initial visibility of the appointments to actually follow the
+	  state of the expander (Vincent)
+	*  Make sure we always use data from the right country (Dan Winship)
+	* Show caldav appointments in the calendar (Roland Mas)
+	* Ignore dbus errors when setting the time and there's no reply on the
+	  bus (Matthias Clasen)
+	* Open evolution on the right day, in all timezones (Vincent)
+	* Fix crash when an evolution-data-server dies (Vincent)
+	* Correctly set time, even when DST is on (Pascal Terjan, Vincent)
+	* Handle multiple locations in the same timezone in a better way
+	  (Matthias Clasen, Vincent)
+	* Fix weather tooltip to show the real temperature and the apparent
+	  temperature, instead of only the apparent one (Vincent)
+	* Do not lose the weather location information when changing the
+	  timezone of a location (Vincent)
+	* Don't show weather information of the last location once it has been
+	  removed (Vincent)
+	* Remove empty space on the left of the clock when there's no location
+	  (Vincent)
+	* Potential fix for another crash in the calendar code (Vincent)
+	* When adding a location, make it the current one if it makes sense
+	  (Vincent)
+
+  Translators
+
+	* Ihar Hrachyshka (be@latin)
+	* nikosCharonitakis (el)
+	* Priit Laes (et)
+	* Massimo Furlani (fur)
+	* Vladimer Sichinava ვლადიმერ სიჭინავა (ka)
+	* Žygimantas Beručka (lt)
+	* Wouter Bolsterlee (nl)
+	* Eskild Hustvedt (nn)
+	* Tomasz Dominikowski (pl)
+	* Krishna Babu K (te)
+	* Clytie Siddall (vi)
+
+==============
 Version 2.22.0
 ==============
 
