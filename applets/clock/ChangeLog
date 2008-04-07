@@ -1,5 +1,11 @@
 2008-04-07  Vincent Untz  <vuntz@gnome.org>
 
+	* calendar-sources.c: fix compilation
+	(calendar_sources_load_esource_list): complete fix for bug #378854.
+	There was a case where the handler wasn't disconnected.
+
+2008-04-07  Vincent Untz  <vuntz@gnome.org>
+
 	* calendar-sources.c: (calendar_sources_finalize_source_data):
 	disconnect the changed signal handler for esource_list. Might fix bug
 	#488819.

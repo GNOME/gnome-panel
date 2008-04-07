@@ -88,6 +88,8 @@ static void calendar_sources_init       (CalendarSources      *sources);
 static void calendar_sources_finalize   (GObject             *object);
 
 static void backend_died_cb (ECal *client, CalendarSourceData *source_data);
+static void calendar_sources_esource_list_changed (ESourceList        *source_list,
+                                                   CalendarSourceData *source_data);
 
 enum
 {
@@ -496,9 +498,6 @@ calendar_sources_load_esource_list (CalendarSourceData *source_data)
 	  if (is_source_selected (esource, source_data->selected_sources) &&
 	      (client = load_esource (esource, source_data->source_type, source_data->clients)))
 	    {
-              g_signal_connect (G_OBJECT (client), "backend_died",
-                                G_CALLBACK (backend_died_cb), source_data);
-
 	      loaded_clients = g_slist_prepend (loaded_clients, client);
 	    }
 	}
@@ -510,9 +509,24 @@ calendar_sources_load_esource_list (CalendarSourceData *source_data)
     emit_signal = TRUE;
 
   for (l = source_data->clients; l; l = l->next)
-    g_object_unref (l->data);
+    {
+      g_signal_handlers_disconnect_by_func (G_OBJECT (l->data),
+                                            G_CALLBACK (backend_died_cb),
+                                            source_data);
+
+      g_object_unref (l->data);
+    }
   g_slist_free (source_data->clients);
   source_data->clients = g_slist_reverse (loaded_clients);
+
+  /* connect to backend_died after we disconnected the previous signal
+   * handlers. If we do it before, we'll lose some handlers (for clients that
+   * were already there before) */
+  for (l = source_data->clients; l; l = l->next)
+    {
+      g_signal_connect (G_OBJECT (l->data), "backend_died",
+                        G_CALLBACK (backend_died_cb), source_data);
+    }
 
   if (emit_signal) 
     {
