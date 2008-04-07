@@ -563,7 +563,8 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
 {
         GdkPixbuf *pixbuf = NULL;
         GtkIconTheme *theme = NULL;
-	const gchar *conditions, *temp, *apparent, *wind;
+	const gchar *conditions, *wind;
+	gchar *temp, *apparent;
 	gchar *line1, *line2, *line3, *line4, *tip;
 	const gchar *icon_name;
 	const gchar *sys_timezone;
@@ -582,14 +583,18 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
 	else
 		line1 = g_strdup (weather_info_get_sky (info));
 
-	temp = weather_info_get_temp_summary (info);
-	apparent = weather_info_get_apparent (info);
+	/* we need to g_strdup() since both functions return the same address
+	 * of a static buffer */
+	temp = g_strdup (weather_info_get_temp (info));
+	apparent = g_strdup (weather_info_get_apparent (info));
 	if (strcmp (apparent, temp) != 0 &&
 	    /* FMQ: it's broken to read from another module's translations; add some API to libgweather. */
             strcmp (apparent, dgettext ("gnome-applets-2.0", "Unknown")) != 0)
 		line2 = g_strdup_printf (_("%s, feels like %s"), temp, apparent);
 	else
 		line2 = g_strdup (temp);
+	g_free (temp);
+	g_free (apparent);
 
 	wind = weather_info_get_wind (info);
         if (strcmp (apparent, dgettext ("gnome-applets-2.0", "Unknown")) != 0)

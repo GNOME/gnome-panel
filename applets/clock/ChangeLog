@@ -1,5 +1,13 @@
 2008-04-07  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-location-tile.c: (weather_info_setup_tooltip): strdup the
+	various temperatures we get, since else we end up with the same
+	string which makes it useless to compare the strings.
+	Also display the non-rounded temperature.
+	Fix bug #526171.
+
+2008-04-07  Vincent Untz  <vuntz@gnome.org>
+
 	Handle multiple locations in the same timezone in a better way.
 	Patch by Matthias Clasen <mclasen@redhat.com>
 	Fix bug #520212.
