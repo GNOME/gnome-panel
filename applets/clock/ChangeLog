@@ -1,5 +1,11 @@
 2008-04-07  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (set_time): correctly set time, even when DST is on.
+	Thanks to Pascal Terjan <pascal.terjan@free.fr> for the hint.
+	Should fix bug #525762.
+
+2008-04-07  Vincent Untz  <vuntz@gnome.org>
+
 	* calendar-sources.c: (calendar_sources_finalize_source_data):
 	disconnect the backend_died signal handler to not have it left around
 	with invalid user data when the CalendarSources object is finalized.

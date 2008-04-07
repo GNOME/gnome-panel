@@ -1720,8 +1720,13 @@ static void
 set_time (GtkWidget *widget, ClockData *cd)
 {
 	struct tm t;
-	gint64 time;
+	time_t tim;
 	guint year, month, day;
+
+	time (&tim);
+	/* sets t.isdst -- we could set it to -1 to have mktime() guess the
+	 * right value , but we don't know if this works with all libc */
+	localtime_r (&tim, &t);
 
 	t.tm_sec = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (cd->seconds_spin));
 	t.tm_min = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (cd->minutes_spin));
@@ -1731,9 +1736,9 @@ set_time (GtkWidget *widget, ClockData *cd)
 	t.tm_mon = month;
 	t.tm_mday = day;
 
-	time = mktime (&t);
+	tim = mktime (&t);
 
-	set_system_time_async (time, (GFunc)set_time_callback, cd, NULL);
+	set_system_time_async (tim, (GFunc)set_time_callback, cd, NULL);
 }
 
 static void
