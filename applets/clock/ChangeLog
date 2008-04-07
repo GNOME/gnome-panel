@@ -1,5 +1,18 @@
 2008-04-07  Vincent Untz  <vuntz@gnome.org>
 
+	Don't show weather information of the last location once it has been
+	removed. Fix bug #526300.
+	Also fixes the empty space at the left of the clock when there's no
+	location.
+
+	* clock.c: (update_panel_weather): show the weather obox only if there
+	is at least one location
+	(locations_changed): show/hide weather obox if there's locations/no
+	location
+	(location_weather_updated_cb): add FIXME for later
+
+2008-04-07  Vincent Untz  <vuntz@gnome.org>
+
 	Don't lose weather code when editing a location and changing the
 	timezone. Fix bug #522007
 

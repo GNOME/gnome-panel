@@ -1994,7 +1994,8 @@ update_panel_weather (ClockData *cd)
         else
                 gtk_widget_hide (cd->panel_temperature_label);
 
-	if (cd->show_weather || cd->show_temperature)
+	if ((cd->show_weather || cd->show_temperature) &&
+	    g_list_length (cd->locations) > 0)
                 gtk_widget_show (cd->weather_obox);
         else
                 gtk_widget_hide (cd->weather_obox);
@@ -2062,6 +2063,7 @@ location_weather_updated_cb (ClockLocation *location,
 		return;
 
 	icon_name = weather_info_get_icon_name (info);
+	/* FIXME: mmh, screen please? Also, don't hardcode to 16 */
 	theme = gtk_icon_theme_get_default ();
 	pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16, 0, NULL);
 
@@ -2092,6 +2094,20 @@ locations_changed (ClockData *cd)
 	GList *l;
 	ClockLocation *loc;
 	glong id;
+
+	if (!cd->locations) {
+		if (cd->weather_obox)
+			gtk_widget_hide (cd->weather_obox);
+		if (cd->panel_weather_icon)
+			gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon),
+						   NULL);
+		if (cd->panel_temperature_label)
+			gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label),
+					    "");
+	} else {
+		if (cd->weather_obox)
+			gtk_widget_show (cd->weather_obox);
+	}
 
 	for (l = cd->locations; l; l = l->next) {
 		loc = l->data;
