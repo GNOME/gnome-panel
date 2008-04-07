@@ -50,6 +50,7 @@
 
 #include <glade/glade.h>
 #include <libgweather/gweather-prefs.h>
+#include <libgweather/gweather-xml.h>
 
 #include "clock.h"
 
@@ -59,7 +60,6 @@
 #include "clock-map.h"
 #include "clock-utils.h"
 #include "clock-zonetable.h"
-#include "gweather-xml.h"
 #include "obox.h"
 #include "set-timezone.h"
 
@@ -3190,19 +3190,28 @@ distance (gdouble lat1, gdouble lon1,
 }
 
 static gchar *
-find_timezone (ClockData *cd, const char *name, gfloat lat, gfloat lon)
+find_timezone (ClockData *cd, const char *name, const char *iso_code,
+               gfloat lat, gfloat lon)
 {
         ClockZoneTable *zonetab = cd->zones;
 	GList *zones, *l;
 	double dist, d;
 	gfloat zlat, zlon;
 	ClockZoneInfo *best;
+        const char *country;
 
 	dist = 1e6;
 	best = NULL;
 	zones = clock_zonetable_get_zones (zonetab);
 	for (l = zones; l; l = l->next) {
 		ClockZoneInfo *info = l->data;
+
+                if (iso_code) {
+                        country = clock_zoneinfo_get_country (info);
+                        if (!country || g_ascii_strcasecmp (iso_code, country) != 0)
+                                continue;
+                }
+
 		clock_zoneinfo_get_coords (info, &zlat, &zlon);
 
 		d = distance (lat, lon, zlat*M_PI/180.0, zlon*M_PI/180.0);
@@ -3213,13 +3222,16 @@ find_timezone (ClockData *cd, const char *name, gfloat lat, gfloat lon)
 		}
 	}
 
-	clock_zoneinfo_get_coords (best, &zlat, &zlon);
-
-	return g_strdup (clock_zoneinfo_get_name (best));
+        if (best)
+                return g_strdup (clock_zoneinfo_get_name (best));
+        else
+                return NULL;
 }
 
 static void
-update_timezone (ClockData *cd, const char *name, gboolean valid, gfloat lat, gfloat lon)
+update_timezone (ClockData *cd, const char *name,
+                 const char *country_code, const char *tz_hint,
+                 gboolean valid, gfloat lat, gfloat lon)
 {
         GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
 	gchar *timezone;
@@ -3239,7 +3251,14 @@ update_timezone (ClockData *cd, const char *name, gboolean valid, gfloat lat, gf
 	prefs.temperature_unit = cd->temperature_unit;
 	prefs.speed_unit = cd->speed_unit;
 
-	timezone = find_timezone (cd, name, lat, lon);
+        if (tz_hint)
+                timezone = g_strdup (tz_hint);
+        else {
+                timezone = find_timezone (cd, name, country_code, lat, lon);
+                if (!timezone)
+                        return;
+        }
+
 	loc = clock_location_new (name, timezone, lat*180.0/M_PI, lon*180.0/M_PI, NULL, &prefs);
 
 	g_signal_handler_block (zone_combo, cd->zone_combo_changed);
@@ -3279,10 +3298,8 @@ run_find_location_save (GtkButton *button, ClockData *cd)
 
 	update_coords (cd, loc->latlon_valid, loc->latitude*180.0/M_PI, loc->longitude*180.0/M_PI);
 
-	/* FIXME: loc->zone can gives us the timezone. For Bristol, it's
-	 * :westcountry. No idea how to map this to a real timezone, though. */
-	update_timezone (cd, loc->name, loc->latlon_valid,
-			 loc->latitude, loc->longitude);
+	update_timezone (cd, loc->name, loc->country_code, loc->tz_hint,
+                         loc->latlon_valid, loc->latitude, loc->longitude);
 
 	find_hide (NULL, cd);
 }
@@ -3309,9 +3326,6 @@ fill_location_tree (ClockData *cd)
 	if (gtk_tree_view_get_model (tree) != NULL)
 		return;
 
-	model = (GtkTreeModel*) gtk_tree_store_new (2, G_TYPE_STRING, G_TYPE_POINTER);
-	gtk_tree_view_set_model (tree, model);
-
 	cell = gtk_cell_renderer_text_new ();
 	column = gtk_tree_view_column_new_with_attributes ("not used", cell,
 							   "text", GWEATHER_XML_COL_LOC, NULL);
@@ -3321,7 +3335,9 @@ fill_location_tree (ClockData *cd)
 	g_signal_connect (tree, "row-activated",
                           G_CALLBACK (location_row_activated), cd);
 
-	gweather_xml_load_locations (tree);
+	model = gweather_xml_load_locations ();
+	gtk_tree_view_set_model (tree, model);
+        g_object_unref (model);
 }
 
 static void
@@ -3564,6 +3580,70 @@ prefs_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
         return TRUE;
 }
 
+typedef struct {
+  const gchar *name;
+  const gchar *country_code;
+  gdouble latitude;
+  gdouble longitude;
+  gdouble distance;
+  WeatherLocation *location;
+} SearchData;
+  
+static gboolean
+compare_location (GtkTreeModel *model,
+                  GtkTreePath  *path,
+                  GtkTreeIter  *iter,
+                  gpointer      user_data)
+{
+  SearchData *data = user_data;
+  WeatherLocation *loc;
+  gdouble d;
+   
+  gtk_tree_model_get (model, iter, GWEATHER_XML_COL_POINTER, &loc, -1);
+
+  if (!loc)
+    return FALSE;
+  if (loc->country_code && data->country_code &&
+      g_ascii_strcasecmp (loc->country_code, data->country_code) != 0)
+    return FALSE;
+
+  d = distance (data->latitude, data->longitude, loc->latitude, loc->longitude);
+
+  if (d < data->distance) {
+    data->distance = d;
+    data->location = loc;
+  }
+
+  return FALSE;
+}
+
+static gchar *
+find_weather_code (GtkTreeModel *model,
+		   const gchar  *name,
+		   const gchar  *iso_code,
+                   gdouble       lat, 
+                   gdouble       lon)
+{
+  SearchData data;
+  gchar *code;
+
+  data.name = name;
+  data.country_code = iso_code;
+  data.latitude = lat;
+  data.longitude = lon;
+  data.distance = 1e6;
+  data.location = NULL;
+
+  gtk_tree_model_foreach (GTK_TREE_MODEL (model), compare_location, &data);
+
+  if (data.location)
+    code = g_strdup (data.location->code);
+  else
+    code = g_strdup ("-");
+
+  return code;
+}
+
 static void
 zone_combo_changed (GtkComboBox *widget, ClockData *cd)
 {
@@ -3619,7 +3699,8 @@ zone_combo_changed (GtkComboBox *widget, ClockData *cd)
 
 	fill_location_tree (cd);
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (cd->location_tree));
-	weather_code = find_weather_code (model, city, lat * M_PI/180.0, lon * M_PI/180.0);
+	weather_code = find_weather_code (model, city, clock_zoneinfo_get_country (info),
+                                          lat * M_PI/180.0, lon * M_PI/180.0);
 	g_object_set_data_full (G_OBJECT (edit_window), "weather-code", weather_code, g_free);
 }
 

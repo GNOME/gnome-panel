@@ -20,7 +20,6 @@ INCLUDES =							\
 	-DCLOCK_TIME_UTILITY="\"$(CLOCK_TIME_UTILITY)\""	\
 	-DEVOLUTION_TEXTDOMAIN=\"evolution-2.12\"		\
 	-DSYSTEM_ZONEINFODIR=\"/usr/share/zoneinfo\"		\
-	-DGWEATHER_XML_LOCATION=\"$(LIBGWEATHER_LOCATIONS)\"	\
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE
 
 if HAVE_LIBECAL
@@ -67,8 +66,6 @@ CLOCK_SOURCES = 		\
 	clock-zoneinfo.h	\
 	clock-zonetable.c	\
 	clock-zonetable.h	\
-	gweather-xml.c		\
-	gweather-xml.h		\
 	$(BUILT_SOURCES)	\
 	$(CALENDAR_SOURCES)	\
 	$(SETTIME_SOURCES)

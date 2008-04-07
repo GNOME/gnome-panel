@@ -26,7 +26,6 @@
 #include "clock-location.h"
 #include "clock-marshallers.h"
 #include "set-timezone.h"
-#include "gweather-xml.h"
 
 G_DEFINE_TYPE (ClockLocation, clock_location, G_TYPE_OBJECT)
 
@@ -983,7 +982,7 @@ setup_weather_updates (ClockLocation *loc)
 
 	dms = rad2dms (priv->latitude, priv->longitude);
 	wl = weather_location_new (priv->name, priv->weather_code,
-				   NULL, NULL, dms);
+				   NULL, NULL, dms, NULL, NULL);
 
 	priv->weather_info =
 		weather_info_new (wl, &prefs, weather_info_updated, loc);

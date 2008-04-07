@@ -1,3 +1,21 @@
+2008-04-07  Vincent Untz  <vuntz@gnome.org>
+
+	Use new gweather API, and make sure we always use data from the right
+	country. Patch by Dan Winship <danw@gnome.org>. Fix bug #519823.
+
+	* gweather-xml.c: gone, moved to libgweather
+	* clock-location.c: updated
+	* Makefile.am: updated
+	* clock.c: #include <libgweather/gweather-xml.h> rather than
+	"gweather-xml.h"
+	(find_timezone): if the weather station has a country code
+	associated with it, only return timezones that are also located in
+	that country.
+	(update_timezone): Use the tz-hint and iso-code from the location
+	data to more reliably pick a timezone. #519823.
+	(find_weather_code): Moved here from gweather-xml.c and updated to
+	look for a matching country code as well.
+
 2008-04-03  Vincent Untz  <vuntz@gnome.org>
 
 	Fix initial visibility of the appointments to actually follow the state
