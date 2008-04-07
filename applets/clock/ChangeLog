@@ -1,5 +1,29 @@
 2008-04-07  Vincent Untz  <vuntz@gnome.org>
 
+	Handle multiple locations in the same timezone in a better way.
+	Patch by Matthias Clasen <mclasen@redhat.com>
+	Fix bug #520212.
+	Matthias had committed the clock.c part of this patch by accident in
+	commit 10968 (when converting to GtkDialog).
+
+	* clock-location-tile.[ch]: (clock_location_tile_class_init),
+	(make_current_cb), (enter_or_leave_tile),
+	(clock_location_tile_fill): remove the timezone-set signal
+	* clock-location.[ch]: We now have the current location.
+	(clock_location_class_init): add new set-current signal
+	(clock_location_is_current_timezone): updated for clarity
+	(clock_location_is_current): new
+	(make_current_cb): updated, to update the static variable containing
+	the current location
+	(clock_location_make_current): ditto, and don't change timezone if
+	we're already in the right one, just  change the current location
+	* clock.c: (locations_changed): remove FIXME
+	(location_start_element): only mark the location as the current one if
+	it's in the current timezone. Else, this means changing the system
+	timezone each time the applet starts, which is kind of wrong.
+
+2008-04-07  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (set_time): correctly set time, even when DST is on.
 	Thanks to Pascal Terjan <pascal.terjan@free.fr> for the hint.
 	Should fix bug #525762.

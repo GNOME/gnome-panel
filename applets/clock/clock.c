@@ -2101,7 +2101,6 @@ locations_changed (ClockData *cd)
 			id = g_signal_connect (loc, "weather-updated",
 						G_CALLBACK (location_weather_updated_cb), cd);
 			g_object_set_data (G_OBJECT (loc), "weather-updated", GINT_TO_POINTER (id));
-			/* FIXME: there's no such signal? */
 			g_signal_connect (loc, "set-current", 
 					  G_CALLBACK (location_set_current_cb), cd);
 		}
@@ -2189,7 +2188,7 @@ location_start_element (GMarkupParseContext *context,
 
         loc = clock_location_new (name, timezone, latitude, longitude, code, &prefs);
 
-	if (current)
+	if (current && clock_location_is_current_timezone (loc))
 		clock_location_make_current (loc, NULL, NULL, NULL);
 
         data->cities = g_list_append (data->cities, loc);

@@ -27,6 +27,8 @@ typedef struct
         GObjectClass g_object_class;
 
 	void (* weather_updated) (ClockLocation *location, WeatherInfo *info);
+
+	void (* set_current) (ClockLocation *location);
 } ClockLocationClass;
 
 GType clock_location_get_type (void);
@@ -40,7 +42,7 @@ ClockLocation *clock_location_new_from_env (ClockZoneTable *zones);
 
 gchar *clock_location_get_tzname (ClockLocation *loc);
 
-gchar *clock_location_get_name (ClockLocation *loc);
+const gchar *clock_location_get_name (ClockLocation *loc);
 void clock_location_set_name (ClockLocation *loc, const gchar *name);
 
 gchar *clock_location_get_timezone (ClockLocation *loc);
@@ -56,6 +58,7 @@ void clock_location_make_current (ClockLocation *loc,
 				  GFunc          callback,
 				  gpointer       data,
 				  GDestroyNotify destroy);
+gboolean clock_location_is_current_timezone (ClockLocation *loc);
 
 const gchar *clock_location_get_weather_code (ClockLocation *loc);
 void         clock_location_set_weather_code (ClockLocation *loc, const gchar *code);

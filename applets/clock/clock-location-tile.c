@@ -19,7 +19,6 @@ G_DEFINE_TYPE (ClockLocationTile, clock_location_tile, GTK_TYPE_ALIGNMENT)
 
 enum {
 	TILE_PRESSED,
-	TIMEZONE_SET,
 	NEED_CLOCK_FORMAT,
 	LAST_SIGNAL
 };
@@ -106,14 +105,6 @@ clock_location_tile_class_init (ClockLocationTileClass *this_class)
 					      NULL,
 					      g_cclosure_marshal_VOID__VOID,
 					      G_TYPE_NONE, 0);
-	signals[TIMEZONE_SET] = g_signal_new ("timezone-set",
-					      G_TYPE_FROM_CLASS (g_obj_class),
-					      G_SIGNAL_RUN_FIRST,
-					      G_STRUCT_OFFSET (ClockLocationTileClass, timezone_set),
-					      NULL,
-					      NULL,
-					      g_cclosure_marshal_VOID__VOID,
-					      G_TYPE_NONE, 0);
 	signals[NEED_CLOCK_FORMAT] = g_signal_new ("need-clock-format",
 						   G_TYPE_FROM_CLASS (g_obj_class),
 						   G_SIGNAL_RUN_LAST,
@@ -180,13 +171,9 @@ press_on_tile      (GtkWidget             *widget,
 static void
 make_current_cb (gpointer data, GError *error)
 {
-	ClockLocationTile *tile = data;
 	GtkWidget *dialog;
 
-        if (error == NULL) {
-		g_signal_emit (tile, signals[TIMEZONE_SET], 0);
-        }
-        else {
+        if (error) {
                 dialog = gtk_message_dialog_new (NULL,
                                                  0,
                                                  GTK_MESSAGE_ERROR,
@@ -232,7 +219,10 @@ enter_or_leave_tile (GtkWidget             *widget,
 	if (event->type == GDK_ENTER_NOTIFY) {
 		gint can_set;
 
-		can_set = can_set_system_timezone ();
+		if (clock_location_is_current_timezone (priv->location))
+			can_set = 2;
+		else
+			can_set = can_set_system_timezone ();
 		if (can_set != 0) {
 			gtk_label_set_markup (GTK_LABEL (priv->current_label),
 						can_set == 1 ?
@@ -320,6 +310,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_widget_show (priv->current_label);
         gtk_widget_set_no_show_all (priv->current_button, TRUE);
         gtk_container_add (GTK_CONTAINER (priv->current_button), priv->current_label);
+	/* FIXME: this needs to talk about locations, not timezones */
         gtk_widget_set_tooltip_text (priv->current_button, _("Set as current timezone for this computer"));
 
 	priv->current_marker = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);

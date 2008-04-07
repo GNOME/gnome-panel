@@ -50,6 +50,7 @@ typedef struct {
 
 enum {
 	WEATHER_UPDATED,
+	SET_CURRENT,
 	LAST_SIGNAL
 };
 
@@ -231,6 +232,7 @@ guess_zone_from_tree (const gchar *localtime, ClockZoneTable *zones)
 }
 
 static gchar *current_zone = NULL;
+static ClockLocation *current_location = NULL;
 static GFileMonitor *monitor = NULL;
 
 static void
@@ -408,6 +410,15 @@ clock_location_class_init (ClockLocationClass *this_class)
 			      _clock_marshal_VOID__POINTER,
 			      G_TYPE_NONE, 1, G_TYPE_POINTER);
 
+	location_signals[SET_CURRENT] = 
+		g_signal_new ("set-current",
+			      G_OBJECT_CLASS_TYPE (g_obj_class),
+			      G_SIGNAL_RUN_FIRST,
+			      G_STRUCT_OFFSET (ClockLocationClass, set_current),
+			      NULL, NULL,
+			      _clock_marshal_VOID__VOID,
+			      G_TYPE_NONE, 0);
+
         g_type_class_add_private (this_class, sizeof (ClockLocationPrivate));
 }
 
@@ -481,7 +492,7 @@ clock_location_finalize (GObject *g_obj)
         G_OBJECT_CLASS (clock_location_parent_class)->finalize (g_obj);
 }
 
-gchar *
+const gchar *
 clock_location_get_name (ClockLocation *loc)
 {
         ClockLocationPrivate *priv = PRIVATE (loc);
@@ -628,15 +639,35 @@ clock_location_localtime (ClockLocation *loc, struct tm *tm)
 }
 
 gboolean
-clock_location_is_current (ClockLocation *loc)
+clock_location_is_current_timezone (ClockLocation *loc)
 {
         ClockLocationPrivate *priv = PRIVATE (loc);
 	const char *zone;
 
 	if ((zone = zone_from_etc_sysconfig_clock ()))
 		return strcmp (zone, priv->timezone) == 0;
+	else
+		return clock_location_get_offset (loc) == 0;
+}
 
-	return clock_location_get_offset (loc) == 0;
+gboolean
+clock_location_is_current (ClockLocation *loc)
+{
+
+	if (current_location == loc)
+		return TRUE;
+	else if (current_location != NULL)
+		return FALSE;
+
+	if (clock_location_is_current_timezone (loc)) {
+		current_location = loc;
+		g_object_add_weak_pointer (G_OBJECT (current_location), 
+					   (gpointer *)&current_location);
+
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 
@@ -699,6 +730,15 @@ make_current_cb (gpointer data, GError *error)
  	 	 */
 		g_free (current_zone);
 		current_zone = g_strdup (priv->timezone);
+
+		if (current_location)
+			g_object_remove_weak_pointer (G_OBJECT (current_location), 
+						      (gpointer *)&current_location);
+		current_location = mcdata->location;
+		g_object_add_weak_pointer (G_OBJECT (current_location), 
+					   (gpointer *)&current_location);
+		g_signal_emit (current_location, location_signals[SET_CURRENT],
+			       0, NULL);
 	}
 
 	if (mcdata->callback)
@@ -728,6 +768,22 @@ clock_location_make_current (ClockLocation *loc,
         ClockLocationPrivate *priv = PRIVATE (loc);
         gchar *filename;
 	MakeCurrentData *mcdata;
+
+	if (clock_location_is_current_timezone (loc)) {
+		if (current_location)
+			g_object_remove_weak_pointer (G_OBJECT (current_location), 
+						      (gpointer *)&current_location);
+		current_location = loc;
+		g_object_add_weak_pointer (G_OBJECT (current_location), 
+					   (gpointer *)&current_location);
+		g_signal_emit (current_location, location_signals[SET_CURRENT],
+			       0, NULL);
+		if (callback)
+               		callback (data, NULL);
+		if (destroy)
+			destroy (data);	
+		return;
+	}
 
 	mcdata = g_new (MakeCurrentData, 1);
 

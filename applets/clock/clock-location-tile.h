@@ -26,7 +26,6 @@ typedef struct
         GtkAlignmentClass parent_class;
 
 	void (* tile_pressed) (ClockLocationTile *tile);
-	void (* timezone_set) (ClockLocationTile *tile);
         int  (* need_clock_format) (ClockLocationTile *tile);
 } ClockLocationTileClass;
 
