@@ -1,5 +1,16 @@
 2008-04-07  Vincent Untz  <vuntz@gnome.org>
 
+	Don't lose weather code when editing a location and changing the
+	timezone. Fix bug #522007
+
+	* clock.c: (update_coords_helper): new, from code of update_coords
+	(update_coords): updated to use update_coords_helper
+	(zone_combo_changed): be a bit more clever and only update fields of
+	the window if we have to guess them from the timezone
+	(edit_tree_row): set weather-code on the window so that it's saved
+
+2008-04-07  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-location-tile.c: (weather_info_setup_tooltip): strdup the
 	various temperatures we get, since else we end up with the same
 	string which makes it useless to compare the strings.

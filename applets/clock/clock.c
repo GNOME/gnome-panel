@@ -3071,13 +3071,28 @@ find_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
 }
 
 static void
+update_coords_helper (gfloat value, GtkWidget *entry, GtkWidget *combo)
+{
+        gchar *tmp;
+
+        tmp = g_strdup_printf ("%f", fabsf (value));
+        gtk_entry_set_text (GTK_ENTRY (entry), tmp);
+        g_free (tmp);
+
+        if (value > 0) {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
+        } else {
+                gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 1);
+        }
+}
+
+static void
 update_coords (ClockData *cd, gboolean valid, gfloat lat, gfloat lon)
 {
         GtkWidget *lat_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-entry");
         GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
         GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
         GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
-        gchar *tmp;
 
 	if (!valid) {
         	gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
@@ -3088,25 +3103,8 @@ update_coords (ClockData *cd, gboolean valid, gfloat lat, gfloat lon)
 		return;
 	}
 
-        tmp = g_strdup_printf ("%f", fabsf(lat));
-        gtk_entry_set_text (GTK_ENTRY (lat_entry), tmp);
-        g_free (tmp);
-
-        if (lat > 0) {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), 0);
-        } else {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), 1);
-        }
-
-        tmp = g_strdup_printf ("%f", fabsf(lon));
-        gtk_entry_set_text (GTK_ENTRY (lon_entry), tmp);
-        g_free (tmp);
-
-        if (lon > 0) {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), 0);
-        } else {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), 1);
-        }
+	update_coords_helper (lat, lat_entry, lat_combo);
+	update_coords_helper (lon, lon_entry, lon_combo);
 }
 
 static gint
@@ -3652,14 +3650,16 @@ static void
 zone_combo_changed (GtkComboBox *widget, ClockData *cd)
 {
         ClockZoneTable *zones = cd->zones;
-        gchar *timezone = gtk_combo_box_get_active_text (widget);
-        gchar *city = NULL;
+        gchar *timezone;
         gfloat lat = 0;
         gfloat lon = 0;
 	GtkTreeModel *model;
-	const gchar *name;
+	gchar *city;
+	const gchar *buffer;
 
         GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
+        GtkWidget *lat_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-entry");
+        GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
         GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
 	gchar *weather_code;
 
@@ -3670,14 +3670,7 @@ zone_combo_changed (GtkComboBox *widget, ClockData *cd)
                 return;
         }
 
-	/* only fill in other field if name is not set yet, to
-         * allow correcting a guessed timezone
-         */
-	name = gtk_entry_get_text (GTK_ENTRY (name_entry));
-	if (name && name[0]) {
-		return;
-	}
-
+	timezone = gtk_combo_box_get_active_text (widget);
         info = clock_zonetable_get_l10n_zone (zones, timezone);
         g_free (timezone);
 
@@ -3685,27 +3678,55 @@ zone_combo_changed (GtkComboBox *widget, ClockData *cd)
                 return;
         }
 
-        country = clock_zonetable_get_country (zones, clock_zoneinfo_get_country (info));
-        if (country != NULL) {
-                city = g_strdup_printf (_("%s, %s"),
-                                        clock_zoneinfo_get_l10n_city (info),
-                                        clock_country_get_l10n_name (country));
-        } else {
-                city = g_strdup (clock_zoneinfo_get_l10n_city (info));
-        }
+	buffer = gtk_entry_get_text (GTK_ENTRY (name_entry));
+	weather_code = g_object_get_data (G_OBJECT (edit_window),
+					  "weather-code");
 
-        gtk_entry_set_text (GTK_ENTRY (name_entry), city);
+	if (!buffer || !buffer[0] || !weather_code) {
+		country = clock_zonetable_get_country (zones,
+						       clock_zoneinfo_get_country (info));
+		if (country != NULL) {
+			city = g_strdup_printf (_("%s, %s"),
+						clock_zoneinfo_get_l10n_city (info),
+						clock_country_get_l10n_name (country));
+		} else {
+			city = g_strdup (clock_zoneinfo_get_l10n_city (info));
+		}
+	} else
+		city = NULL;
 
-        g_free (city);
+	/* only fill fields in if not set yet, to allow correcting
+	 * a guessed timezone */
+	if (!buffer || !buffer[0]) {
+		gtk_entry_set_text (GTK_ENTRY (name_entry), city);
+	}
+
+	if (!weather_code) {
+		fill_location_tree (cd);
+		model = gtk_tree_view_get_model (GTK_TREE_VIEW (cd->location_tree));
+		weather_code = find_weather_code (model, city,
+						  clock_zoneinfo_get_country (info),
+						  lat * M_PI/180.0,
+						  lon * M_PI/180.0);
+		g_object_set_data_full (G_OBJECT (edit_window),
+					"weather-code", weather_code, g_free);
+	}
+
+	g_free (city);
 
         clock_zoneinfo_get_coords (info, &lat, &lon);
-	update_coords (cd, TRUE, lat, lon);
 
-	fill_location_tree (cd);
-	model = gtk_tree_view_get_model (GTK_TREE_VIEW (cd->location_tree));
-	weather_code = find_weather_code (model, city, clock_zoneinfo_get_country (info),
-                                          lat * M_PI/180.0, lon * M_PI/180.0);
-	g_object_set_data_full (G_OBJECT (edit_window), "weather-code", weather_code, g_free);
+	buffer = gtk_entry_get_text (GTK_ENTRY (lat_entry));
+	if (!buffer || !buffer[0]) {
+		GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
+		update_coords_helper (lat, lat_entry, lat_combo);
+	}
+
+	buffer = gtk_entry_get_text (GTK_ENTRY (lon_entry));
+	if (!buffer || !buffer[0]) {
+		GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
+		update_coords_helper (lon, lon_entry, lon_combo);
+	}
 }
 
 static void
@@ -3780,11 +3801,17 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
         gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
 
-        fill_timezone_combo_from_location (cd, zone_combo, loc);
-
-        gtk_entry_set_text (GTK_ENTRY (name_entry), clock_location_get_name (loc));
+        gtk_entry_set_text (GTK_ENTRY (name_entry),
+			    clock_location_get_name (loc));
+	g_object_set_data_full (G_OBJECT (edit_window), "weather-code",
+				g_strdup (clock_location_get_weather_code (loc)),
+				g_free);
 
         clock_location_get_coords (loc, &lat, &lon);
+
+	/* doing this after setting all the other fields will make it possible
+	 * to do less work in zone_combo_changed */
+        fill_timezone_combo_from_location (cd, zone_combo, loc);
 
         tmp = g_strdup_printf ("%f", fabsf(lat));
         gtk_entry_set_text (GTK_ENTRY (lat_entry), tmp);
