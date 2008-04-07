@@ -1,5 +1,12 @@
 2008-04-07  Vincent Untz  <vuntz@gnome.org>
 
+	* calendar-window.c: (calendar_day_activated): open evo on the right
+	day, instead of some day before or after because of timezone
+	confusion.
+	Fix bug #372155
+
+2008-04-07  Vincent Untz  <vuntz@gnome.org>
+
 	* set-timezone.c: (set_time_notify): ignore no-reply dbus errors when
 	setting the time because dbus doesn't use a monotonic clock.
 	Patch by Matthias Clasen <mclasen@redhat.com>

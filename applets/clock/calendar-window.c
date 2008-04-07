@@ -1158,12 +1158,25 @@ calendar_day_activated (GtkCalendar    *calendar,
 	unsigned int  day;
 	unsigned int  month;
 	unsigned int  year;
+	time_t        now;
+	struct tm     utc_tm;
+	struct tm     local_tm;
 	char         *argument;
 
 	gtk_calendar_get_date (calendar, &year, &month, &day);
 
-	argument = g_strdup_printf ("calendar:///?startdate=%.4d%.2d%.2d",
-				    year, month + 1, day);
+	time (&now);
+	gmtime_r (&now, &utc_tm);
+	localtime_r (&now, &local_tm);
+
+	/* FIXME: once bug 409200 is fixed, we'll have to make this hh:mm:ss
+	 * instead of hhmmss */
+	argument = g_strdup_printf ("calendar:///?startdate="
+				    "%.4d%.2d%.2dT%.2d%.2d%.2dZ",
+				    year, month + 1, day,
+				    12 + utc_tm.tm_hour - local_tm.tm_hour,
+				    0  + utc_tm.tm_min  - local_tm.tm_min,
+				    0);
 
 	clock_launch_evolution (calwin, argument);
 
