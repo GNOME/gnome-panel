@@ -291,7 +291,17 @@ set_time_notify (DBusGProxy     *proxy,
 			data->callback (data->data, NULL);
 	}
 	else {
-		if (dbus_g_error_has_name (error, "org.gnome.ClockApplet.Mechanism.NotPrivileged")) {
+		if (error->domain == DBUS_GERROR &&
+		    error->code == DBUS_GERROR_NO_REPLY) {
+			/* these errors happen because dbus doesn't
+			 * use monotonic clocks
+			 */	
+			g_warning ("ignoring no-reply error when setting time");
+			g_error_free (error);
+			if (data->callback)
+				data->callback (data->data, NULL);
+		}
+		else if (dbus_g_error_has_name (error, "org.gnome.ClockApplet.Mechanism.NotPrivileged")) {
 			gchar **tokens;
 
 			tokens = g_strsplit (error->message, " ", 2);
