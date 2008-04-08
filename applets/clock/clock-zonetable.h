@@ -28,7 +28,7 @@ typedef struct
 
 GType clock_zonetable_get_type (void);
 
-ClockZoneTable *clock_zonetable_new (gchar *zonetab);
+ClockZoneTable *clock_zonetable_new (void);
 ClockZoneInfo *clock_zonetable_get_zone (ClockZoneTable *this, gchar *name);
 ClockZoneInfo *clock_zonetable_get_l10n_zone (ClockZoneTable *this, gchar *l10n_name);
 GList *clock_zonetable_get_zones (ClockZoneTable *this);

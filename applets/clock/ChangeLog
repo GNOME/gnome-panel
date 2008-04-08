@@ -1,5 +1,19 @@
 2008-04-08  Vincent Untz  <vuntz@gnome.org>
 
+	Use the right directory for timezone data on Solaris.
+	Based on patch by Brian Cameron <brian.cameron@sun.com>
+	Fix bug #515085.
+	Also use the right evolution text domain for timezone translations.
+
+	* Makefile.am: remove definition of SYSTEM_ZONEINFODIR, and update the
+	evolution text domain
+	* clock-zoneinfo.h: define SYSTEM_ZONEINFODIR
+	* clock-zonetable.[ch]: (clock_zonetable_new): do not take an argument,
+	and directly use the defined value for the directory
+	* clock.c: (fill_clock_applet): updated
+
+2008-04-08  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-map.c: (clock_map_new), (clock_map_init): minor cleanup
 
 2008-04-08  Vincent Untz  <vuntz@gnome.org>

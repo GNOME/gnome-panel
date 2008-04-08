@@ -2746,7 +2746,7 @@ fill_clock_applet (PanelApplet *applet)
                         }
         }
 
-        cd->zones = clock_zonetable_new (SYSTEM_ZONEINFODIR);
+        cd->zones = clock_zonetable_new ();
 
         bonobo_ui_component_set_prop (popup_component,
                                       "/commands/ClockConfig",

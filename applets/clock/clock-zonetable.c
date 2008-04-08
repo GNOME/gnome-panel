@@ -115,7 +115,7 @@ static void clock_zonetable_load_iso3166 (ClockZoneTable *this);
 #define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_ZONETABLE_TYPE, ClockZoneTablePrivate))
 
 ClockZoneTable *
-clock_zonetable_new (gchar *zoneinfodir)
+clock_zonetable_new (void)
 {
         ClockZoneTable *this;
         ClockZoneTablePrivate *priv;
@@ -123,8 +123,17 @@ clock_zonetable_new (gchar *zoneinfodir)
         this = g_object_new (CLOCK_ZONETABLE_TYPE, NULL);
         priv = PRIVATE (this);
 
-        priv->zonetab = g_build_filename (zoneinfodir, "zone.tab", NULL);
-        priv->iso3166 = g_build_filename (zoneinfodir, "iso3166.tab", NULL);
+#ifdef HAVE_SOLARIS
+        priv->zonetab = g_build_filename (SYSTEM_ZONEINFODIR,
+                                          "zone_sun.tab", NULL);
+        priv->iso3166 = g_build_filename (SYSTEM_ZONEINFODIR,
+                                          "country.tab", NULL);
+#else
+        priv->zonetab = g_build_filename (SYSTEM_ZONEINFODIR,
+                                          "zone.tab", NULL);
+        priv->iso3166 = g_build_filename (SYSTEM_ZONEINFODIR,
+                                          "iso3166.tab", NULL);
+#endif
 
 #ifdef CLOCK_TEXTDOMAIN
         /* this is used when clock is embedded in the gnome-panel
