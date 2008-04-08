@@ -103,11 +103,7 @@ static char *system_timezone_find (void);
 SystemTimezone *
 system_timezone_new (void)
 {
-        SystemTimezone *systz;
-
-        systz = g_object_new (SYSTEM_TIMEZONE_TYPE, NULL);
-
-        return systz;
+        return g_object_new (SYSTEM_TIMEZONE_TYPE, NULL);
 }
 
 const char *
