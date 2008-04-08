@@ -62,6 +62,7 @@
 #include "clock-zonetable.h"
 #include "obox.h"
 #include "set-timezone.h"
+#include "system-timezone.h"
 
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
@@ -191,6 +192,7 @@ struct _ClockData {
 	int                size;
 	GtkAllocation      old_allocation;
 
+	SystemTimezone *systz;
         ClockZoneTable *zones;
 
 	int fixed_width;
@@ -757,6 +759,11 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 
         g_list_free (cd->location_tiles);
         cd->location_tiles = NULL;
+
+	if (cd->systz) {
+		g_object_unref (cd->systz);
+		cd->systz = NULL;
+	}
 
         if (cd->zones) {
                 g_object_unref (cd->zones);
@@ -2331,6 +2338,17 @@ clock_migrate_to_26 (ClockData *clock)
 }
 
 static void
+clock_timezone_changed (SystemTimezone *systz,
+			const char     *new_tz,
+			ClockData      *cd)
+{
+	/* This will refresh the current location */
+	save_cities_store (cd);
+
+	refresh_clock_timeout (cd);
+}
+
+static void
 parse_and_set_temperature_string (const char *str, ClockData *cd)
 {
         gint value = 0;
@@ -2746,6 +2764,10 @@ fill_clock_applet (PanelApplet *applet)
                                 break;
                         }
         }
+
+	cd->systz = system_timezone_new ();
+	g_signal_connect (cd->systz, "changed",
+			  G_CALLBACK (clock_timezone_changed), cd);
 
         cd->zones = clock_zonetable_new ();
 

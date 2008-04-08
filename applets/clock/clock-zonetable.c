@@ -11,6 +11,7 @@
 
 #include "clock-country.h"
 #include "clock-zoneinfo.h"
+#include "system-timezone.h"
 
 #ifdef HAVE_SOLARIS
 #define ZONETAB_FILE SYSTEM_ZONEINFODIR"/zone_sun.tab"
@@ -94,7 +95,6 @@ clock_zonetable_constructor (GType                  type,
                                                 type,
                                                 n_construct_properties,
                                                 construct_properties);
-
 
         clock_zonetable_load_zonetab (CLOCK_ZONETABLE (obj));
         clock_zonetable_load_iso3166 (CLOCK_ZONETABLE (obj));

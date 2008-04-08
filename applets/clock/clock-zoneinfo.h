@@ -6,12 +6,6 @@
 
 G_BEGIN_DECLS
 
-#ifdef HAVE_SOLARIS
-#define SYSTEM_ZONEINFODIR "/usr/share/lib/zoneinfo/tab"
-#else
-#define SYSTEM_ZONEINFODIR "/usr/share/zoneinfo"
-#endif
-
 #define CLOCK_ZONEINFO_TYPE         (clock_zoneinfo_get_type ())
 #define CLOCK_ZONEINFO(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), CLOCK_ZONEINFO_TYPE, ClockZoneInfo))
 #define CLOCK_ZONEINFO_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), CLOCK_ZONEINFO_TYPE, ClockZoneInfoClass))

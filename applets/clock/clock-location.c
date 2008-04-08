@@ -26,13 +26,15 @@
 #include "clock-location.h"
 #include "clock-marshallers.h"
 #include "set-timezone.h"
+#include "system-timezone.h"
 
 G_DEFINE_TYPE (ClockLocation, clock_location, G_TYPE_OBJECT)
 
 typedef struct {
         gchar *name;
 
-        gchar *sys_timezone;
+        SystemTimezone *systz;
+
         gchar *timezone;
 
         gchar *tzname;
@@ -79,11 +81,6 @@ clock_location_new (const gchar *name, const gchar *timezone,
         priv->name = g_strdup (name);
         priv->timezone = g_strdup (timezone);
 
-        priv->sys_timezone = getenv ("TZ");
-        if (priv->sys_timezone) {
-                priv->sys_timezone = g_strdup (priv->sys_timezone);
-        }
-
         /* initialize priv->tzname */
         clock_location_set_tz (this);
         clock_location_unset_tz (this);
@@ -103,244 +100,7 @@ clock_location_new (const gchar *name, const gchar *timezone,
         return this;
 }
 
-static gboolean
-files_are_identical (const char *localtime, struct stat *localtime_s,
-                     const char *localtime_data, const gsize localtime_len,
-                     char *file, struct stat *file_s)
-{
-        gsize file_len = -1;
-        gchar *file_data = NULL;
-
-        if (localtime_s->st_size != file_s->st_size) {
-                return FALSE;
-        }
-
-        if (!g_file_get_contents (file, &file_data, &file_len, NULL)) {
-                return FALSE;
-        }
-
-        if (localtime_len != file_len) {
-                g_free (file_data);
-                return FALSE;
-        }
-
-        if (memcmp (localtime_data, file_data, localtime_len) == 0) {
-                g_free (file_data);
-                return TRUE;
-        }
-
-        g_free (file_data);
-        return FALSE;
-}
-
-static gchar *
-recursive_guess_zone (const char *localtime, struct stat *localtime_s,
-                      const char *localtime_data, const gsize localtime_len,
-                      char *file, struct stat *file_s, ClockZoneTable *zones)
-{
-        if (S_ISREG (file_s->st_mode)) {
-                gchar *zone = file + strlen (SYSTEM_ZONEINFODIR) + 1;
-
-                /* ignore files that aren't in the Olson database */
-                if (!clock_zonetable_get_zone (zones, zone)) {
-                        return NULL;
-                }
-
-                if (files_are_identical (localtime, localtime_s,
-                                         localtime_data, localtime_len,
-                                         file, file_s)) {
-                        return g_strdup (file + strlen (SYSTEM_ZONEINFODIR) + 1);
-                } else {
-                        return NULL;
-                }
-        } else if (S_ISDIR (file_s->st_mode)) {
-                GDir *dir = NULL;
-                gchar *ret = NULL;
-
-                const gchar *subfile = NULL;
-                gchar *subpath = NULL;
-                struct stat subpath_s;
-
-                dir = g_dir_open (file, 0, NULL);
-                if (dir == NULL) {
-                        return NULL;
-                }
-
-                while ((subfile = g_dir_read_name (dir)) != NULL) {
-                        subpath = g_build_filename (file, subfile, NULL);
-
-                        if (stat (subpath, &subpath_s) == -1) {
-                                continue;
-                        }
-
-                        ret = recursive_guess_zone (localtime, localtime_s,
-                                                    localtime_data, localtime_len,
-                                                    subpath, &subpath_s,
-                                                    zones);
-
-                        g_free (subpath);
-
-                        if (ret != NULL) {
-                                break;
-                        }
-                }
-
-                g_dir_close (dir);
-
-                return ret;
-        }
-
-        return NULL;
-}
-
-static gchar *
-guess_zone_from_tree (const gchar *localtime, ClockZoneTable *zones)
-{
-        int i;
-        struct stat s;
-        struct stat dir_s;
-        char *ret = NULL;
-
-        char *localtime_data = NULL;
-        gsize localtime_len = -1;
-
-        /* walk the zoneinfo tree and compare with
-           /etc/localtime to try to find the current zone */
-
-        i = stat (localtime, &s);
-        if (i == -1 || !S_ISREG (s.st_mode)) {
-                return NULL;
-        }
-
-        i = stat (SYSTEM_ZONEINFODIR, &dir_s);
-        if (i == -1 || !S_ISDIR (dir_s.st_mode)) {
-                return NULL;
-        }
-
-        if (!g_file_get_contents (localtime, &localtime_data,
-                                  &localtime_len, NULL)) {
-                return NULL;
-        }
-
-        ret = recursive_guess_zone (localtime, &s,
-                                    localtime_data, localtime_len,
-                                    SYSTEM_ZONEINFODIR, &dir_s, zones);
-
-        g_free (localtime_data);
-
-        return ret;
-}
-
-static gchar *current_zone = NULL;
 static ClockLocation *current_location = NULL;
-static GFileMonitor *monitor = NULL;
-
-static void
-parse_etc_sysconfig_clock (void)
-{
-	gchar *data;
-	gsize len;
-	gchar **lines;
-	gchar *res;
-	gint i;
-	gchar *p, *q;
-
-	lines = NULL;
-	res = NULL;
-	if (g_file_test ("/etc/sysconfig/clock",
-			 G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR)) {
-		if (!g_file_get_contents ("/etc/sysconfig/clock",
-		    			  &data, &len, NULL))
-			goto out;
-
-		lines = g_strsplit (data, "\n", 0);
-		g_free (data);
-
-		for (i = 0; lines[i] && !res; i++) {
-			/* If you are Fedora, uncomment these and comment out the other version
-			   if (g_str_has_prefix (lines[i], "ZONE=")) {
-			   p = lines[i] + strlen ("ZONE=");
-			*/
-			if (g_str_has_prefix (lines[i], "TIMEZONE=")) {
-				p = lines[i] + strlen ("TIMEZONE=");
-				if (p[0] != '\"')
-					goto out;
-				p++;
-				q = strchr (p, '\"');
-				q[0] = '\0';
-				res = g_strdup (p);
-			}
-		}
-	}
-
-out:
-	if (lines)
-		g_strfreev (lines);
-
-	g_free (current_zone);
-	current_zone = res;
-}
-
-static void
-monitor_etc_sysconfig_clock (GFileMonitor *handle,
-			     GFile *file,
-			     GFile *other_file,
-			     GFileMonitorEvent event,
-			     gpointer user_data)
-{
-	parse_etc_sysconfig_clock ();
-}
-
-static const gchar *
-zone_from_etc_sysconfig_clock (void)
-{
-	if (monitor == NULL) {
-		GFile *file;
-
-		parse_etc_sysconfig_clock ();
-		
-		file = g_file_new_for_path ("/etc/sysconfig/clock");
-
-		monitor = g_file_monitor_file (file, G_FILE_MONITOR_NONE,
-					       NULL, NULL);
-
-		g_object_unref (file);
-
-		if (monitor)
-			g_signal_connect (G_OBJECT (monitor), "changed", 
-					  G_CALLBACK (monitor_etc_sysconfig_clock),
-					  NULL);
-	}
-
-	return current_zone;
-}
-
-static gchar *
-clock_location_guess_zone (ClockZoneTable *zones)
-{
-        const char *localtime = "/etc/localtime";
-        gchar *linkfile = NULL;
-        GError *err = NULL;
-	const gchar *zone;
-
-	/* look for /etc/sysconfig/clock */
-	if ((zone = zone_from_etc_sysconfig_clock ())) {
-		return g_strdup (zone);
-	}
-
-        /* guess the current time zone by readlink() on /etc/localtime */
-        linkfile = g_file_read_link (localtime, &err);
-        if (err) {
-                return guess_zone_from_tree (localtime, zones);
-        }
-
-        if (strncmp (linkfile, SYSTEM_ZONEINFODIR,
-                     strlen (SYSTEM_ZONEINFODIR)) == 0) {
-                return g_strdup (linkfile + strlen (SYSTEM_ZONEINFODIR) + 1);
-        }
-
-        return NULL;
-}
 
 static void
 clock_location_class_init (ClockLocationClass *this_class)
@@ -355,7 +115,7 @@ clock_location_class_init (ClockLocationClass *this_class)
 			      G_SIGNAL_RUN_FIRST,
 			      G_STRUCT_OFFSET (ClockLocationClass, weather_updated),
 			      NULL, NULL,
-			      _clock_marshal_VOID__POINTER,
+			      g_cclosure_marshal_VOID__POINTER,
 			      G_TYPE_NONE, 1, G_TYPE_POINTER);
 
 	location_signals[SET_CURRENT] = 
@@ -364,7 +124,7 @@ clock_location_class_init (ClockLocationClass *this_class)
 			      G_SIGNAL_RUN_FIRST,
 			      G_STRUCT_OFFSET (ClockLocationClass, set_current),
 			      NULL, NULL,
-			      _clock_marshal_VOID__VOID,
+			      g_cclosure_marshal_VOID__VOID,
 			      G_TYPE_NONE, 0);
 
         g_type_class_add_private (this_class, sizeof (ClockLocationPrivate));
@@ -377,7 +137,8 @@ clock_location_init (ClockLocation *this)
 
         priv->name = NULL;
 
-        priv->sys_timezone = NULL;
+        priv->systz = system_timezone_new ();
+
         priv->timezone = NULL;
 
         priv->tzname = NULL;
@@ -401,14 +162,14 @@ clock_location_finalize (GObject *g_obj)
                 priv->name = NULL;
         }
 
+        if (priv->systz) {
+                g_object_unref (priv->systz);
+                priv->systz = NULL;
+        }
+
         if (priv->timezone) {
                 g_free (priv->timezone);
                 priv->timezone = NULL;
-        }
-
-        if (priv->sys_timezone) {
-                g_free (priv->sys_timezone);
-                priv->sys_timezone = NULL;
         }
 
         if (priv->tzname) {
@@ -430,12 +191,6 @@ clock_location_finalize (GObject *g_obj)
                 g_source_remove (priv->weather_timeout);
                 priv->weather_timeout = 0;
         }
-
-	if (monitor) {
-		g_file_monitor_cancel (monitor);
-		g_object_unref (monitor);
-		monitor = NULL;
-	}
 
         G_OBJECT_CLASS (clock_location_parent_class)->finalize (g_obj);
 }
@@ -560,13 +315,16 @@ static void
 clock_location_unset_tz (ClockLocation *this)
 {
         ClockLocationPrivate *priv = PRIVATE (this);
+        const char *env_timezone;
 
         if (priv->timezone == NULL) {
                 return;
         }
 
-        if (priv->sys_timezone) {
-                setenv ("TZ", priv->sys_timezone, 1);
+        env_timezone = system_timezone_get_env (priv->systz);
+
+        if (env_timezone) {
+                setenv ("TZ", env_timezone, 1);
         } else {
                 unsetenv ("TZ");
         }
@@ -592,7 +350,9 @@ clock_location_is_current_timezone (ClockLocation *loc)
         ClockLocationPrivate *priv = PRIVATE (loc);
 	const char *zone;
 
-	if ((zone = zone_from_etc_sysconfig_clock ()))
+	zone = system_timezone_get (priv->systz);
+
+	if (zone)
 		return strcmp (zone, priv->timezone) == 0;
 	else
 		return clock_location_get_offset (loc) == 0;
@@ -652,12 +412,7 @@ clock_location_get_offset (ClockLocation *loc)
 
         offset = local_timezone - sys_timezone;
 
-        if (priv->sys_timezone) {
-                setenv ("TZ", priv->sys_timezone, 1);
-        } else {
-                unsetenv ("TZ");
-        }
-        tzset();
+        clock_location_unset_tz (loc);
 
         return offset;
 }
@@ -673,16 +428,8 @@ static void
 make_current_cb (gpointer data, GError *error)
 {
 	MakeCurrentData *mcdata = data;
-        ClockLocationPrivate *priv = PRIVATE (mcdata->location);
 
 	if (error == NULL) {
-		/* FIXME this ugly shortcut is necessary until we move the
- 	  	 * current timezone tracking to clock.c and emit the
- 	 	 * signal from there
- 	 	 */
-		g_free (current_zone);
-		current_zone = g_strdup (priv->timezone);
-
 		if (current_location)
 			g_object_remove_weak_pointer (G_OBJECT (current_location), 
 						      (gpointer *)&current_location);

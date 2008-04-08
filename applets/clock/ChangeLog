@@ -1,5 +1,44 @@
 2008-04-08  Vincent Untz  <vuntz@gnome.org>
 
+	Completely rewrite the way we detect the system timezone. It will work
+	on more distributions this way. Also the code is better and it helps
+	improve the world.
+	Good thing is that now the clock will always immediately update after
+	the timezone is updated.
+
+	* Makefile.am: add new files
+	* system-timezone.[ch]: new file, implement a singleton that knows how
+	to read the system timezone and that monitors it
+	* clock-location.[ch]: (clock_location_new): don't get the TZ
+	environment variable here
+	(files_are_identical):
+	(recursive_guess_zone):
+	(guess_zone_from_tree):
+	(parse_etc_sysconfig_clock):
+	(monitor_etc_sysconfig_clock):
+	(zone_from_etc_sysconfig_clock):
+	(clock_location_guess_zone): killed
+	(clock_location_init): updated to create the SystemTimezone object
+	(clock_location_finalize): updated
+	(clock_location_unset_tz): use system_timezone_get_env() instead of a
+	local variable
+	(clock_location_is_current_timezone): use system_timezone_get()
+	(clock_location_get_offset): use clock_location_unset_tz() instead of
+	duplicating code
+	(make_current_cb): updated to remove the current timezone handling
+	* clock-zoneinfo.h: move SYSTEM_ZONEINFODIR to system-timezone.h
+	* clock-zonetable.c: add new include
+	* clock.c: add a SystemTimezone object
+	(destroy_clock): unref it
+	(clock_timezone_changed): new, handle system timezone change
+	(fill_clock_applet): create the SystemTimezone object and connect to
+	its changed signal
+
+	* clock-marshallers.list: remove marshallers that already exist in glib
+	* clock-location.[ch]: (clock_location_class_init): updated for this
+
+2008-04-08  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-zoneinfo.[ch]: add some const to function declarations
 	(clock_zoneinfo_new): fix a leak, fix a problem with localized city
 	names for timezones that are just named after a city

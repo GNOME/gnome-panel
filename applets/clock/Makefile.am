@@ -65,6 +65,8 @@ CLOCK_SOURCES = 		\
 	clock-zoneinfo.h	\
 	clock-zonetable.c	\
 	clock-zonetable.h	\
+	system-timezone.c	\
+	system-timzone.h	\
 	$(BUILT_SOURCES)	\
 	$(CALENDAR_SOURCES)	\
 	$(SETTIME_SOURCES)
