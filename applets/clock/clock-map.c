@@ -73,10 +73,8 @@ ClockMap *
 clock_map_new (void)
 {
         ClockMap *this;
-        ClockMapPrivate *priv;
 
         this = g_object_new (CLOCK_MAP_TYPE, NULL);
-        priv = PRIVATE (this);
 
         clock_map_refresh (this);
 
@@ -131,6 +129,7 @@ clock_map_init (ClockMap *this)
         priv->stock_map_pixbuf = NULL;
 
         g_assert (sizeof (marker_files)/sizeof (char *) == MARKER_NB);
+
         for (i = 0; i < MARKER_NB; i++) {
                 priv->location_marker_pixbuf[i] = gdk_pixbuf_new_from_file
                                                   (marker_files[i], NULL);
