@@ -1,5 +1,13 @@
 2008-04-08  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-zonetable.c: (clock_zonetable_new), (clock_zonetable_init),
+	(clock_zonetable_finalize), (clock_zonetable_load_zonetab): remove all
+	code using available_zones since it wasn't used. The initialization was
+	done in a "#ifdef USE_CRIPPLED_ZONELIST" and it's not possible to
+	trigger it. The code was used to only add timezones from a whitelist.
+
+2008-04-08  Vincent Untz  <vuntz@gnome.org>
+
 	Use the right directory for timezone data on Solaris.
 	Based on patch by Brian Cameron <brian.cameron@sun.com>
 	Fix bug #515085.

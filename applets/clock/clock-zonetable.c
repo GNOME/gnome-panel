@@ -22,91 +22,9 @@ typedef struct {
         GHashTable *table;
         GHashTable *l10n_table;
 
-        GHashTable *zone_whitelist;
-
         GList *country_list;
         GHashTable *country_table;
 } ClockZoneTablePrivate;
-
-/* Seeded with the list from Nat's Blackberry */
-char *available_zones[] = {
-        /* Eniwetok (-12) */
-        "Pacific/Midway",
-        "Pacific/Honolulu",
-        "America/Anchorage",
-        "America/Los_Angeles",
-        "America/Phoenix",
-        "America/Denver",
-        "America/Chihuahua",
-        /* Central America (-6) */
-        "America/Regina",
-        "America/Chicago",
-        "America/Mexico_City",
-        "America/Bogota",
-        /* Indiana (-5) */
-        "America/New_York",
-        "America/Caracas",
-        "America/Santiago",
-        "America/Halifax",
-        "America/St_Johns",
-        "America/Argentina/Buenos_Aires",
-        "America/Sao_Paulo",
-        /* Greenland (-3) */
-        /* Mid-Atlantic (-2) */
-        "Atlantic/Cape_Verde",
-        "Atlantic/Azores",
-        "Africa/Casablanca",
-        "Europe/London",
-        /* W Central Africa */
-        "Europe/Berlin",
-        "Europe/Belgrade",
-        "Europe/Brussels",
-        "Europe/Sarajevo",
-        "Africa/Harare",
-        "Asia/Jerusalem",
-        "Europe/Bucharest",
-        "Africa/Cairo",
-        "Europe/Athens",
-        "Europe/Helsinki",
-        "Asia/Kuwait",
-        "Africa/Nairobi",
-        "Asia/Baghdad",
-        "Europe/Moscow",
-        "Asia/Tehran",
-        /* Abu Dhabi (+4) */
-        "Asia/Baku",
-        "Asia/Kabul",
-        /* Islamabad (+5) */
-        "Asia/Yekaterinburg",
-        "Asia/Calcutta",
-        /* Kathmandu (+5.75) */
-        /* Astana (+6) */
-        /* Sri Lanka (+6) */
-        "Asia/Almaty",
-        "Asia/Rangoon",
-        "Asia/Bangkok",
-        "Asia/Krasnoyarsk",
-        "Asia/Beijing",
-        "Asia/Kuala_Lumpur",
-        "Australia/Perth",
-        "Asia/Taipei",
-        "Asia/Irkutsk",
-        "Asia/Tokyo",
-        "Asia/Seoul",
-        "Asia/Yakutsk",
-        "Australia/Darwin",
-        "Australia/Adelaide",
-        "Australia/Brisbane",
-        "Pacific/Guam",
-        "Australia/Sydney",
-        "Australia/Hobart",
-        "Asia/Vladivostok",
-        "Asia/Magadan",
-        "Pacific/Fiji",
-        "Pacific/Auckland",
-        /* Nuku'alofa (+13) */
-        NULL
-};
 
 static void clock_zonetable_finalize (GObject *);
 static void clock_zonetable_load_zonetab (ClockZoneTable *this);
@@ -145,15 +63,6 @@ clock_zonetable_new (void)
         bindtextdomain (EVOLUTION_TEXTDOMAIN, GNOMELOCALEDIR);
         bind_textdomain_codeset (EVOLUTION_TEXTDOMAIN, "UTF-8");
 
-#ifdef USE_CRIPPLED_ZONELIST
-        int i;
-        priv->zone_whitelist = g_hash_table_new (g_str_hash, g_str_equal);
-        for (i=0; available_zones[i]; i++) {
-                g_hash_table_replace
-                        (priv->zone_whitelist, available_zones[i], this);
-        }
-#endif
-
         clock_zonetable_load_zonetab (this);
         clock_zonetable_load_iso3166 (this);
 
@@ -180,8 +89,6 @@ clock_zonetable_init (ClockZoneTable *this)
         priv->list = NULL;
         priv->table = NULL;
         priv->l10n_table = NULL;
-
-        priv->zone_whitelist = NULL;
 
         priv->country_list = NULL;
         priv->country_table = NULL;
@@ -215,11 +122,6 @@ clock_zonetable_finalize (GObject *g_obj)
         if (priv->l10n_table) {
                 g_hash_table_destroy (priv->l10n_table);
                 priv->l10n_table = NULL;
-        }
-
-        if (priv->zone_whitelist) {
-                g_hash_table_destroy (priv->zone_whitelist);
-                priv->zone_whitelist = NULL;
         }
 
         if (priv->country_list) {
@@ -364,13 +266,6 @@ clock_zonetable_load_zonetab (ClockZoneTable *this)
                 if (line[0] != '#') {
                         ClockZoneInfo *info =
                                 clock_zonetable_parse_info_line (line);
-
-                        if (priv->zone_whitelist &&
-                            !g_hash_table_lookup (priv->zone_whitelist, clock_zoneinfo_get_name (info))) {
-                                g_object_unref (info);
-                                g_free (line);
-                                continue;
-                        }
 
                         priv->list = g_list_prepend (priv->list, info);
                         g_hash_table_replace (priv->table, clock_zoneinfo_get_name (info), info);
