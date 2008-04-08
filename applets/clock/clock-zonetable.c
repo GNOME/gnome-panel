@@ -296,6 +296,8 @@ clock_zonetable_load_zonetab (ClockZoneTable *this)
                         continue;
 
                 priv->list = g_list_prepend (priv->list, info);
+		/* note that it's fine to cast to char * since the
+		 * ClockZoneinfo object is ref'ed from inside the hash table */
                 g_hash_table_replace (priv->table,
                                       (char *) clock_zoneinfo_get_name (info),
                                       g_object_ref_sink (info));
@@ -341,6 +343,8 @@ clock_zonetable_load_iso3166 (ClockZoneTable *this)
                         continue;
 
                 priv->country_list = g_list_prepend (priv->country_list, info);
+		/* note that it's fine to cast to char * since the
+		 * ClockCountry object is ref'ed from inside the hash table */
                 g_hash_table_replace (priv->country_table,
                                       (char *) clock_country_get_code (info),
                                       g_object_ref_sink (info));
