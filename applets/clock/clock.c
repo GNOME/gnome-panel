@@ -2083,7 +2083,8 @@ location_set_current_cb (ClockLocation *loc,
 	info = clock_location_get_weather_info (loc);
 	location_weather_updated_cb (loc, info, cd);
 
-        clock_map_refresh (CLOCK_MAP (cd->map_widget));
+	if (cd->map_widget)
+		clock_map_refresh (CLOCK_MAP (cd->map_widget));
         update_location_tiles (cd);
 	save_cities_store (cd);	
 }
