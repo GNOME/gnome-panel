@@ -40,9 +40,6 @@ typedef struct {
 
         /* The map with the shadow composited onto it */
         GdkPixbuf *shadow_map_pixbuf;
-
-        /* The rotated shadow_map_pixbuf, ready for display */
-        GdkPixbuf *rotated_map_pixbuf;
 } ClockMapPrivate;
 
 static void clock_map_finalize (GObject *);
@@ -55,7 +52,6 @@ static gboolean clock_map_expose (GtkWidget *this,
 
 static void clock_map_place_locations (ClockMap *this);
 static void clock_map_render_shadow (ClockMap *this);
-static void clock_map_rotate (ClockMap *this);
 static void clock_map_display (ClockMap *this);
 
 #define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_MAP_TYPE, ClockMapPrivate))
@@ -169,11 +165,6 @@ clock_map_finalize (GObject *g_obj)
                 priv->shadow_map_pixbuf = NULL;
         }
 
-        if (priv->rotated_map_pixbuf) {
-                gdk_pixbuf_unref (priv->rotated_map_pixbuf);
-                priv->rotated_map_pixbuf = NULL;
-        }
-
         G_OBJECT_CLASS (clock_map_parent_class)->finalize (g_obj);
 }
 
@@ -227,20 +218,20 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
 	GdkRectangle region;
         cairo_t *cr;
 
-	if (!priv->rotated_map_pixbuf)
+	if (!priv->shadow_map_pixbuf)
 		clock_map_refresh (CLOCK_MAP (this));
 
         cr = gdk_cairo_create (this->window);
 
 	region.x = allocation.x;
 	region.y = allocation.y;
-	region.width = gdk_pixbuf_get_width (priv->rotated_map_pixbuf);
-	region.height = gdk_pixbuf_get_height (priv->rotated_map_pixbuf);
+	region.width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
+	region.height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
 
 	gdk_rectangle_intersect (&region, &(event->area), &region);
 	gdk_draw_pixbuf (this->window,
 			 this->style->black_gc,
-			 priv->rotated_map_pixbuf,
+			 priv->shadow_map_pixbuf,
 			 region.x - allocation.x,
 			 region.y - allocation.y,
 			 region.x,
@@ -254,8 +245,8 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
         cairo_rectangle (
                 cr,
                 allocation.x + 0.5, allocation.y + 0.5,
-                gdk_pixbuf_get_width (priv->rotated_map_pixbuf) - 1,
-                gdk_pixbuf_get_height (priv->rotated_map_pixbuf) - 1);
+                gdk_pixbuf_get_width (priv->shadow_map_pixbuf) - 1,
+                gdk_pixbuf_get_height (priv->shadow_map_pixbuf) - 1);
 
         cairo_set_source_rgb (
                 cr,
@@ -585,79 +576,11 @@ clock_map_render_shadow (ClockMap *this)
 }
 
 static void
-clock_map_rotate (ClockMap *this)
-{
-        ClockMapPrivate *priv = PRIVATE (this);
-
-        int rot_center, map_center;
-        gfloat latitude, longitude;
-
-        map_center = priv->width / 2;
-
-#ifdef TESTER
-	priv->rotated_map_pixbuf = gdk_pixbuf_copy (priv->shadow_map_pixbuf);
-
-#else
-
-        if (priv->rotated_map_pixbuf) {
-                gdk_pixbuf_unref (priv->rotated_map_pixbuf);
-        }
-
-        priv->rotated_map_pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
-                                                   priv->width, priv->height);
-
-        latitude = 0.0;
-        longitude = 0.0;
-
-        rot_center = (priv->width / 2.0 + (priv->width / 2.0) * longitude / 180.0);
-
-        if (rot_center < map_center) {
-                /* copy the part after the image center */
-                gdk_pixbuf_copy_area (priv->shadow_map_pixbuf,
-                                      rot_center, 0,
-                                      map_center, priv->height,
-                                      priv->rotated_map_pixbuf, map_center, 0);
-
-                /* copy the part before the image center */
-                gdk_pixbuf_copy_area (priv->shadow_map_pixbuf,
-                                      rot_center + map_center, 0,
-                                      priv->width - (rot_center + map_center),
-                                      priv->height,
-                                      priv->rotated_map_pixbuf, 0, 0);
-
-                gdk_pixbuf_copy_area (priv->shadow_map_pixbuf,
-                                      0, 0, rot_center, priv->height,
-                                      priv->rotated_map_pixbuf,
-                                      map_center - rot_center, 0);
-        } else {
-                /* copy the part after the image center */
-                gdk_pixbuf_copy_area (priv->shadow_map_pixbuf,
-                                      rot_center - map_center, 0,
-                                      map_center, priv->height,
-                                      priv->rotated_map_pixbuf, 0, 0);
-
-                /* copy the part before the image center */
-                gdk_pixbuf_copy_area (priv->shadow_map_pixbuf,
-                                      rot_center, 0, priv->width - rot_center,
-                                      priv->height,
-                                      priv->rotated_map_pixbuf, map_center, 0);
-
-                gdk_pixbuf_copy_area (priv->shadow_map_pixbuf,
-                                      0, 0, rot_center - map_center,
-                                      priv->height,
-                                      priv->rotated_map_pixbuf,
-                                      map_center + priv->width -  rot_center, 0);
-        }
-#endif
-}
-
-static void
 clock_map_display (ClockMap *this)
 {
         ClockMapPrivate *priv = PRIVATE (this);
 
         clock_map_render_shadow (this);
-        clock_map_rotate (this);
 	gtk_widget_queue_draw (GTK_WIDGET (this));
 
         time (&priv->last_refresh);

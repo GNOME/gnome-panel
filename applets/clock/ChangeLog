@@ -1,5 +1,17 @@
 2008-04-08  Vincent Untz  <vuntz@gnome.org>
 
+	Remove the rotation step in the map. I believe the goal was to make it
+	possible to display a map where the center is not 0/0 (lat/lon) but the
+	center is hardcoded to 0/0 right now and I don't think it makes sense
+	to rotate the map since this view is really usual.
+	Might fix #516345.
+
+	* clock-map.c: (clock_map_finalize), (clock_map_expose),
+	(clock_map_display): trivial updates
+	(clock_map_rotate): kill
+
+2008-04-08  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-map.c: make last_refresh a time_t since we don't need struct tm
 	(clock_map_init): initialize last_refresh
 	(clock_map_display): update the last_refresh time here
