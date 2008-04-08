@@ -69,8 +69,6 @@ struct GnomeClockAppletMechanismPrivate
         PolKitContext   *pol_ctx;
 };
 
-static void     gnome_clock_applet_mechanism_class_init  (GnomeClockAppletMechanismClass *klass);
-static void     gnome_clock_applet_mechanism_init        (GnomeClockAppletMechanism      *seat);
 static void     gnome_clock_applet_mechanism_finalize    (GObject     *object);
 
 G_DEFINE_TYPE (GnomeClockAppletMechanism, gnome_clock_applet_mechanism, G_TYPE_OBJECT)
@@ -322,11 +320,6 @@ _set_time (GnomeClockAppletMechanism    *mechanism,
            DBusGMethodInvocation        *context)
 {
         GError *error;
-        const char *sender;
-        DBusError dbus_error;
-        PolKitCaller *pk_caller;
-        PolKitAction *pk_action;
-        PolKitResult pk_result;
 
         if (!_check_polkit_for_action (mechanism, context, "org.gnome.clockapplet.mechanism.settime"))
                 return FALSE;
@@ -374,7 +367,6 @@ _rh_update_etc_sysconfig_clock (DBusGMethodInvocation *context, const char *key,
 {
         /* On Red Hat / Fedora, the /etc/sysconfig/clock file needs to be kept in sync */
         if (g_file_test ("/etc/sysconfig/clock", G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR)) {
-                char *p;
                 char **lines;
                 int n;
                 gboolean replaced;
