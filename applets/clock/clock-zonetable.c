@@ -297,10 +297,10 @@ clock_zonetable_load_zonetab (ClockZoneTable *this)
 
                 priv->list = g_list_prepend (priv->list, info);
                 g_hash_table_replace (priv->table,
-                                      clock_zoneinfo_get_name (info),
+                                      (char *) clock_zoneinfo_get_name (info),
                                       g_object_ref_sink (info));
                 g_hash_table_replace (priv->l10n_table,
-                                      clock_zoneinfo_get_l10n_name (info),
+                                      (char *) clock_zoneinfo_get_l10n_name (info),
                                       g_object_ref_sink (info));
         }
         g_free (old_line);

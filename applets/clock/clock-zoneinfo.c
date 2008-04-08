@@ -28,13 +28,15 @@ static void clock_zoneinfo_finalize (GObject *);
 #define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_ZONEINFO_TYPE, ClockZoneInfoPrivate))
 
 ClockZoneInfo *
-clock_zoneinfo_new (gchar *zone, gchar *country, gchar *comment,
+clock_zoneinfo_new (const gchar *zone,
+                    const gchar *country,
+                    const gchar *comment,
 		    gfloat latitude, gfloat longitude)
 {
         ClockZoneInfo *this;
         ClockZoneInfoPrivate *priv;
         int i;
-        gchar *city;
+        const gchar *city;
         gchar *l10n_city;
 
         this = g_object_new (CLOCK_ZONEINFO_TYPE, NULL);
@@ -44,15 +46,20 @@ clock_zoneinfo_new (gchar *zone, gchar *country, gchar *comment,
         priv->country = g_strdup (country);
 
         city = g_strrstr (zone, "/");
-        if (city == NULL) {
-                city = g_strdup (zone);
-        } else {
-                city = g_strdup (city + 1);
+        if (city == NULL)
+                priv->city = g_strdup (zone);
+        else
+                priv->city = g_strdup (city + 1);
+
+        /* replace underscores in the city with spaces */
+        for (i = 0; priv->city[i] != '\0'; i++) {
+                if (priv->city[i] == '_') {
+                        priv->city[i] = ' ';
+                }
         }
 
-        priv->city = g_strdup (city);
-
-        priv->l10n_name = g_strdup (dgettext (EVOLUTION_TEXTDOMAIN, priv->name));
+        priv->l10n_name = g_strdup (dgettext (EVOLUTION_TEXTDOMAIN,
+                                              priv->name));
 
         /* replace underscores in the localized zone name with spaces */
         for (i = 0; priv->l10n_name[i] != '\0'; i++) {
@@ -62,18 +69,10 @@ clock_zoneinfo_new (gchar *zone, gchar *country, gchar *comment,
         }
 
         l10n_city = g_strrstr (priv->l10n_name, "/");
-        if (l10n_city == NULL) {
-                priv->l10n_city = g_strdup (l10n_city);
-        } else {
+        if (l10n_city == NULL)
+                priv->l10n_city = g_strdup (priv->l10n_name);
+        else
                 priv->l10n_city = g_strdup (l10n_city + 1);
-        }
-
-        /* replace underscores in the city with spaces */
-        for (i = 0; priv->city[i] != '\0'; i++) {
-                if (priv->city[i] == '_') {
-                        priv->city[i] = ' ';
-                }
-        }
 
         priv->comment = g_strdup (comment);
 
@@ -147,7 +146,7 @@ clock_zoneinfo_finalize (GObject *g_obj)
         G_OBJECT_CLASS (clock_zoneinfo_parent_class)->finalize (g_obj);
 }
 
-gchar *
+const gchar *
 clock_zoneinfo_get_name (ClockZoneInfo *this)
 {
         ClockZoneInfoPrivate *priv = PRIVATE (this);
@@ -155,7 +154,7 @@ clock_zoneinfo_get_name (ClockZoneInfo *this)
         return priv->name;
 }
 
-gchar *
+const gchar *
 clock_zoneinfo_get_l10n_name (ClockZoneInfo *this)
 {
         ClockZoneInfoPrivate *priv = PRIVATE (this);
@@ -163,7 +162,7 @@ clock_zoneinfo_get_l10n_name (ClockZoneInfo *this)
         return priv->l10n_name;
 }
 
-gchar *
+const gchar *
 clock_zoneinfo_get_country (ClockZoneInfo *this)
 {
         ClockZoneInfoPrivate *priv = PRIVATE (this);
@@ -171,7 +170,7 @@ clock_zoneinfo_get_country (ClockZoneInfo *this)
         return priv->country;
 }
 
-gchar *
+const gchar *
 clock_zoneinfo_get_city (ClockZoneInfo *this)
 {
         ClockZoneInfoPrivate *priv = PRIVATE (this);
@@ -179,7 +178,7 @@ clock_zoneinfo_get_city (ClockZoneInfo *this)
         return priv->city;
 }
 
-gchar *
+const gchar *
 clock_zoneinfo_get_l10n_city (ClockZoneInfo *this)
 {
         ClockZoneInfoPrivate *priv = PRIVATE (this);

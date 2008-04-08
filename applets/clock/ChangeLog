@@ -1,5 +1,15 @@
 2008-04-08  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-zoneinfo.[ch]: add some const to function declarations
+	(clock_zoneinfo_new): fix a leak, fix a problem with localized city
+	names for timezones that are just named after a city
+	* clock-zonetable.c: (clock_zonetable_load_zonetab): add some casting
+	(clock_zonetable_load_iso3166): add useful comment
+	* clock.c: (sort_zoneinfo_by_l10n_name),
+	(fill_timezone_combo_from_location): make some strings const
+
+2008-04-08  Vincent Untz  <vuntz@gnome.org>
+
 	Lots of cleanup, some leak plugging.
 
 	* clock-country.[ch]: add some const to function declarations

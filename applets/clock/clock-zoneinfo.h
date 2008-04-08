@@ -31,16 +31,17 @@ typedef struct
 
 GType clock_zoneinfo_get_type (void);
 
-ClockZoneInfo *clock_zoneinfo_new (gchar *zone, gchar *country,
-				   gchar *comment,
+ClockZoneInfo *clock_zoneinfo_new (const gchar *zone,
+                                   const gchar *country,
+				   const gchar *comment,
 				   gfloat latitude, gfloat longitude);
 
 
-gchar *clock_zoneinfo_get_city (ClockZoneInfo *this);
-gchar *clock_zoneinfo_get_l10n_city (ClockZoneInfo *this);
-gchar *clock_zoneinfo_get_country (ClockZoneInfo *this);
-gchar *clock_zoneinfo_get_name (ClockZoneInfo *this);
-gchar *clock_zoneinfo_get_l10n_name (ClockZoneInfo *this);
+const gchar *clock_zoneinfo_get_city (ClockZoneInfo *this);
+const gchar *clock_zoneinfo_get_l10n_city (ClockZoneInfo *this);
+const gchar *clock_zoneinfo_get_country (ClockZoneInfo *this);
+const gchar *clock_zoneinfo_get_name (ClockZoneInfo *this);
+const gchar *clock_zoneinfo_get_l10n_name (ClockZoneInfo *this);
 void clock_zoneinfo_get_coords (ClockZoneInfo *this,
 				gfloat *lat, gfloat *lon);
 

@@ -3135,8 +3135,8 @@ sort_zoneinfo_by_l10n_name (gconstpointer a, gconstpointer b)
         ClockZoneInfo *info_a = CLOCK_ZONEINFO (a);
         ClockZoneInfo *info_b = CLOCK_ZONEINFO (b);
 
-        char *name_a = clock_zoneinfo_get_l10n_name (info_a);
-        char *name_b = clock_zoneinfo_get_l10n_name (info_b);
+        const char *name_a = clock_zoneinfo_get_l10n_name (info_a);
+        const char *name_b = clock_zoneinfo_get_l10n_name (info_b);
 
         return strcmp (name_a, name_b); /* FIXME: should this be g_utf8_collate() ? */
 }
@@ -3152,7 +3152,7 @@ fill_timezone_combo_from_location (ClockData *cd, GtkWidget *zone_combo, ClockLo
         int timezone_idx = -1;
         int i = 0;
 
-        gchar *loc_timezone = NULL;
+        const gchar *loc_timezone = NULL;
 
         if (loc != NULL) {
                 ClockZoneInfo *info;
@@ -3175,7 +3175,7 @@ fill_timezone_combo_from_location (ClockData *cd, GtkWidget *zone_combo, ClockLo
 
         cur = list;
         while (cur) {
-                gchar *timezone = clock_zoneinfo_get_l10n_name (CLOCK_ZONEINFO (cur->data));
+                const gchar *timezone = clock_zoneinfo_get_l10n_name (CLOCK_ZONEINFO (cur->data));
 
                 gtk_combo_box_append_text (GTK_COMBO_BOX (zone_combo), timezone);
 
