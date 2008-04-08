@@ -23,7 +23,7 @@ enum {
 static guint signals[LAST_SIGNAL];
 
 typedef struct {
-        struct tm last_refresh;
+        time_t last_refresh;
 
         gint width;
         gint height;
@@ -123,6 +123,7 @@ clock_map_init (ClockMap *this)
 
 	GTK_WIDGET_SET_FLAGS (this, GTK_NO_WINDOW);
 
+	priv->last_refresh = 0;
 	priv->highlight_timeout_id = 0;
         priv->stock_map_pixbuf = NULL;
         priv->location_marker_pixbuf[0] = NULL;
@@ -653,9 +654,13 @@ clock_map_rotate (ClockMap *this)
 static void
 clock_map_display (ClockMap *this)
 {
+        ClockMapPrivate *priv = PRIVATE (this);
+
         clock_map_render_shadow (this);
         clock_map_rotate (this);
 	gtk_widget_queue_draw (GTK_WIDGET (this));
+
+        time (&priv->last_refresh);
 }
 
 typedef struct {
@@ -727,26 +732,12 @@ static gboolean
 clock_map_needs_refresh (ClockMap *this)
 {
         ClockMapPrivate *priv = PRIVATE (this);
-        gboolean refresh = FALSE;
-
-        struct tm now;
         time_t now_t;
+
         time (&now_t);
 
-        gmtime_r (&now_t, &now);
-
-        /* refresh once per minute */
-        if (now.tm_year > priv->last_refresh.tm_year
-            || now.tm_mon > priv->last_refresh.tm_mon
-            || now.tm_mday > priv->last_refresh.tm_mday
-            || now.tm_hour > priv->last_refresh.tm_hour
-            || now.tm_min > priv->last_refresh.tm_min) {
-                refresh = TRUE;
-        }
-
-        gmtime_r (&now_t, &priv->last_refresh);
-
-        return refresh;
+	/* refresh once per minute */
+	return (ABS (now_t - priv->last_refresh) >= 60);
 }
 
 void

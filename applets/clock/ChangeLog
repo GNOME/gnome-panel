@@ -1,5 +1,15 @@
 2008-04-08  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-map.c: make last_refresh a time_t since we don't need struct tm
+	(clock_map_init): initialize last_refresh
+	(clock_map_display): update the last_refresh time here
+	(clock_map_needs_refresh): simplify a bit, do not update the
+	last_refresh time here since we didn't refresh anything, and also take
+	into account the fact that the clock can go back in the past when
+	changing time
+
+2008-04-08  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-location.[ch]: remove clock_location_new_from_env(). Not really
 	sure it's a good thing to have (can give pretty wrong results), and
 	it's not used.
