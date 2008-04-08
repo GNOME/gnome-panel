@@ -342,58 +342,6 @@ clock_location_guess_zone (ClockZoneTable *zones)
         return NULL;
 }
 
-ClockLocation *
-clock_location_new_from_env (ClockZoneTable *zones)
-{
-        ClockLocation *ret;
-
-        ClockZoneInfo *info;
-        ClockCountry *country;
-
-        gchar *name;
-        gfloat lat = 0;
-        gfloat lon = 0;
-
-        char *zone = getenv ("TZ");
-
-        if (zone == NULL) {
-                zone = clock_location_guess_zone (zones);
-        }
-
-        if (zone == NULL) {
-                /* make a fake location with a null TZ */
-                return clock_location_new (_("Unknown Location"), NULL, 0.0, 0.0, NULL, NULL);
-        }
-
-        info = clock_zonetable_get_zone (zones, zone);
-
-        if (info == NULL) {
-                /* make a fake location with the current TZ */
-                return clock_location_new (_("Unknown Location"), zone, 0.0, 0.0, NULL, NULL);
-        }
-
-        g_free (zone);
-
-        clock_zoneinfo_get_coords (info, &lat, &lon);
-
-        country = clock_zonetable_get_country (zones, clock_zoneinfo_get_country (info));
-
-        if (country) {
-                name = g_strdup_printf (_("%s, %s"),
-                                        clock_zoneinfo_get_l10n_city (info),
-                                        clock_country_get_l10n_name (country));
-        } else {
-                name = g_strdup (clock_zoneinfo_get_l10n_city (info));
-        }
-
-        ret = clock_location_new (name, clock_zoneinfo_get_name (info),
-				  lat, lon, NULL, NULL);
-
-        g_free (name);
-
-        return ret;
-}
-
 static void
 clock_location_class_init (ClockLocationClass *this_class)
 {

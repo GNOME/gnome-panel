@@ -38,8 +38,6 @@ ClockLocation *clock_location_new (const gchar *name, const gchar *timezone,
 				   const gchar *code,
 				   WeatherPrefs *prefs);
 
-ClockLocation *clock_location_new_from_env (ClockZoneTable *zones);
-
 gchar *clock_location_get_tzname (ClockLocation *loc);
 
 const gchar *clock_location_get_name (ClockLocation *loc);
