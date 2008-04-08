@@ -15,9 +15,13 @@ typedef struct {
         gchar *name;
         gchar *l10n_name;
         gchar *country;
+#ifdef MEMORY_DOESNT_MATTER
         gchar *city;
+#endif
         gchar *l10n_city;
+#ifdef MEMORY_DOESNT_MATTER
         gchar *comment;
+#endif
 
         gfloat latitude;
         gfloat longitude;
@@ -36,7 +40,9 @@ clock_zoneinfo_new (const gchar *zone,
         ClockZoneInfo *this;
         ClockZoneInfoPrivate *priv;
         int i;
+#ifdef MEMORY_DOESNT_MATTER
         const gchar *city;
+#endif
         gchar *l10n_city;
 
         this = g_object_new (CLOCK_ZONEINFO_TYPE, NULL);
@@ -45,6 +51,7 @@ clock_zoneinfo_new (const gchar *zone,
         priv->name = g_strdup (zone);
         priv->country = g_strdup (country);
 
+#ifdef MEMORY_DOESNT_MATTER
         city = g_strrstr (zone, "/");
         if (city == NULL)
                 priv->city = g_strdup (zone);
@@ -57,6 +64,7 @@ clock_zoneinfo_new (const gchar *zone,
                         priv->city[i] = ' ';
                 }
         }
+#endif
 
         priv->l10n_name = g_strdup (dgettext (EVOLUTION_TEXTDOMAIN,
                                               priv->name));
@@ -74,7 +82,9 @@ clock_zoneinfo_new (const gchar *zone,
         else
                 priv->l10n_city = g_strdup (l10n_city + 1);
 
+#ifdef MEMORY_DOESNT_MATTER
         priv->comment = g_strdup (comment);
+#endif
 
         priv->latitude = latitude;
         priv->longitude = longitude;
@@ -100,9 +110,13 @@ clock_zoneinfo_init (ClockZoneInfo *this)
         priv->name = NULL;
         priv->l10n_name = NULL;
         priv->country = NULL;
+#ifdef MEMORY_DOESNT_MATTER
         priv->city = NULL;
+#endif
         priv->l10n_city = NULL;
+#ifdef MEMORY_DOESNT_MATTER
         priv->comment = NULL;
+#endif
 
         priv->latitude = 0.0;
         priv->longitude = 0.0;
@@ -128,20 +142,24 @@ clock_zoneinfo_finalize (GObject *g_obj)
                 priv->country = NULL;
         }
 
+#ifdef MEMORY_DOESNT_MATTER
         if (priv->city) {
                 g_free (priv->city);
                 priv->city = NULL;
         }
+#endif
 
         if (priv->l10n_city) {
                 g_free (priv->l10n_city);
                 priv->l10n_city = NULL;
         }
 
+#ifdef MEMORY_DOESNT_MATTER
         if (priv->comment) {
                 g_free (priv->comment);
                 priv->comment = NULL;
         }
+#endif
 
         G_OBJECT_CLASS (clock_zoneinfo_parent_class)->finalize (g_obj);
 }
@@ -170,6 +188,7 @@ clock_zoneinfo_get_country (ClockZoneInfo *this)
         return priv->country;
 }
 
+#ifdef MEMORY_DOESNT_MATTER
 const gchar *
 clock_zoneinfo_get_city (ClockZoneInfo *this)
 {
@@ -177,6 +196,7 @@ clock_zoneinfo_get_city (ClockZoneInfo *this)
 
         return priv->city;
 }
+#endif
 
 const gchar *
 clock_zoneinfo_get_l10n_city (ClockZoneInfo *this)

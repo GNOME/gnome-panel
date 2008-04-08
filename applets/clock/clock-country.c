@@ -13,7 +13,10 @@ G_DEFINE_TYPE (ClockCountry, clock_country, G_TYPE_OBJECT)
 
 typedef struct {
         gchar *code;
+#ifdef MEMORY_DOESNT_MATTER
         gchar *name;
+#endif
+        const gchar *l10n_name;
 } ClockCountryPrivate;
 
 static void clock_country_finalize (GObject *);
@@ -30,7 +33,11 @@ clock_country_new (const gchar *code, const gchar *name)
         priv = PRIVATE (this);
 
         priv->code = g_strdup (code);
+#ifdef MEMORY_DOESNT_MATTER
         priv->name = g_strdup (name);
+#endif
+        /* FIXME: It is broken to read from Evolution's text domain */
+        priv->l10n_name = dgettext (EVOLUTION_TEXTDOMAIN, name);
 
         return this;
 }
@@ -51,7 +58,10 @@ clock_country_init (ClockCountry *this)
         ClockCountryPrivate *priv = PRIVATE (this);
 
         priv->code = NULL;
+#ifdef MEMORY_DOESNT_MATTER
         priv->name = NULL;
+#endif
+        priv->l10n_name = NULL;
 }
 
 static void
@@ -64,10 +74,12 @@ clock_country_finalize (GObject *g_obj)
                 priv->code = NULL;
         }
 
+#ifdef MEMORY_DOESNT_MATTER
         if (priv->name) {
                 g_free (priv->name);
                 priv->name = NULL;
         }
+#endif
 
         G_OBJECT_CLASS (clock_country_parent_class)->finalize (g_obj);
 }
@@ -80,6 +92,7 @@ clock_country_get_code (ClockCountry *this)
         return priv->code;
 }
 
+#ifdef MEMORY_DOESNT_MATTER
 const gchar *
 clock_country_get_name (ClockCountry *this)
 {
@@ -87,12 +100,12 @@ clock_country_get_name (ClockCountry *this)
 
         return priv->name;
 }
+#endif
 
 const gchar *
 clock_country_get_l10n_name (ClockCountry *this)
 {
         ClockCountryPrivate *priv = PRIVATE (this);
 
-	/* FMQ: It is broken to read from Evolution's text domain */
-        return dgettext (EVOLUTION_TEXTDOMAIN, priv->name);
+        return priv->l10n_name;
 }

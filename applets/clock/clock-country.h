@@ -28,7 +28,9 @@ GType clock_country_get_type (void);
 ClockCountry *clock_country_new (const gchar *code, const gchar *name);
 
 const gchar *clock_country_get_code (ClockCountry *this);
+#ifdef MEMORY_DOESNT_MATTER
 const gchar *clock_country_get_name (ClockCountry *this);
+#endif
 const gchar *clock_country_get_l10n_name (ClockCountry *this);
 
 G_END_DECLS

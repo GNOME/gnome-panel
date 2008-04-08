@@ -31,7 +31,9 @@ ClockZoneInfo *clock_zoneinfo_new (const gchar *zone,
 				   gfloat latitude, gfloat longitude);
 
 
+#ifdef MEMORY_DOESNT_MATTER
 const gchar *clock_zoneinfo_get_city (ClockZoneInfo *this);
+#endif
 const gchar *clock_zoneinfo_get_l10n_city (ClockZoneInfo *this);
 const gchar *clock_zoneinfo_get_country (ClockZoneInfo *this);
 const gchar *clock_zoneinfo_get_name (ClockZoneInfo *this);

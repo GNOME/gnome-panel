@@ -1,5 +1,18 @@
 2008-04-08  Vincent Untz  <vuntz@gnome.org>
 
+	Make some memory savings by not remembering useless data. The code to
+	keep the data is still available by compiling with
+	-DMEMORY_DOESNT_MATTER
+
+	* clock-country.[ch]: remove all the non-localized name stuff in
+	"#ifdef MEMORY_DOESNT_MATTER". This implies having a new field to keep
+	the localized name in memory (but it's not strdupped, so it's still
+	better)
+	* clock-zoneinfo.[ch]: remove all the non-localized city and comment
+	stuff in "#ifdef MEMORY_DOESNT_MATTER"
+
+2008-04-08  Vincent Untz  <vuntz@gnome.org>
+
 	* system-timezone.c: add a minor FIXME
 
 2008-04-08  Vincent Untz  <vuntz@gnome.org>
