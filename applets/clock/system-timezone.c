@@ -44,6 +44,9 @@
  * Largely based on Michael Fulbright's work on Anaconda.
  */
 
+/* FIXME: it'd be nice to filter out the timezones that we might get when
+ * parsing config files that are not in zone.tab */
+
 #include <string.h>
 
 #include <glib.h>
