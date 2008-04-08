@@ -21,7 +21,7 @@ static void clock_country_finalize (GObject *);
 #define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_COUNTRY_TYPE, ClockCountryPrivate))
 
 ClockCountry *
-clock_country_new (gchar *code, gchar *name)
+clock_country_new (const gchar *code, const gchar *name)
 {
         ClockCountry *this;
         ClockCountryPrivate *priv;
@@ -72,7 +72,7 @@ clock_country_finalize (GObject *g_obj)
         G_OBJECT_CLASS (clock_country_parent_class)->finalize (g_obj);
 }
 
-gchar *
+const gchar *
 clock_country_get_code (ClockCountry *this)
 {
         ClockCountryPrivate *priv = PRIVATE (this);
@@ -80,7 +80,7 @@ clock_country_get_code (ClockCountry *this)
         return priv->code;
 }
 
-gchar *
+const gchar *
 clock_country_get_name (ClockCountry *this)
 {
         ClockCountryPrivate *priv = PRIVATE (this);
@@ -88,7 +88,7 @@ clock_country_get_name (ClockCountry *this)
         return priv->name;
 }
 
-gchar *
+const gchar *
 clock_country_get_l10n_name (ClockCountry *this)
 {
         ClockCountryPrivate *priv = PRIVATE (this);

@@ -997,6 +997,7 @@ create_cities_store (ClockData *cd)
 		gtk_list_store_append (cd->cities_store, &iter);
 		gtk_list_store_set (cd->cities_store, &iter,
 				    COL_CITY_NAME, clock_location_get_name (loc),
+				    /* FIXME: translate the timezone */
 				    COL_CITY_TZ, clock_location_get_timezone (loc),
                                     COL_CITY_LOC, loc,
 				    -1);

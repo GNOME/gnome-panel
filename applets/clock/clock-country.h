@@ -25,11 +25,11 @@ typedef struct
 
 GType clock_country_get_type (void);
 
-ClockCountry *clock_country_new (gchar *code, gchar *name);
+ClockCountry *clock_country_new (const gchar *code, const gchar *name);
 
-gchar *clock_country_get_code (ClockCountry *this);
-gchar *clock_country_get_name (ClockCountry *this);
-gchar *clock_country_get_l10n_name (ClockCountry *this);
+const gchar *clock_country_get_code (ClockCountry *this);
+const gchar *clock_country_get_name (ClockCountry *this);
+const gchar *clock_country_get_l10n_name (ClockCountry *this);
 
 G_END_DECLS
 #endif /* __CLOCK_COUNTRY_H__ */

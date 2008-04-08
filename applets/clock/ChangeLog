@@ -1,5 +1,20 @@
 2008-04-08  Vincent Untz  <vuntz@gnome.org>
 
+	Lots of cleanup, some leak plugging.
+
+	* clock-country.[ch]: add some const to function declarations
+	* clock-zonetable.[ch]: lots of minor changes all over the place.
+	Basically:
+	 - make the ClockZonetable object a singleton
+	 - be a bit more solid when parsing files
+	 - plug some leaks (don't forget to unref ClockCountry and
+	   ClockZoneinfo, eg)
+	 - clean up the code to be more readable
+	 - add some const to function declarations
+	* clock.c: (create_cities_store): small FIXME for later
+
+2008-04-08  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-zonetable.c: (clock_zonetable_new), (clock_zonetable_init),
 	(clock_zonetable_finalize), (clock_zonetable_load_zonetab): remove all
 	code using available_zones since it wasn't used. The initialization was

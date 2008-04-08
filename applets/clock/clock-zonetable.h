@@ -29,11 +29,15 @@ typedef struct
 GType clock_zonetable_get_type (void);
 
 ClockZoneTable *clock_zonetable_new (void);
-ClockZoneInfo *clock_zonetable_get_zone (ClockZoneTable *this, gchar *name);
-ClockZoneInfo *clock_zonetable_get_l10n_zone (ClockZoneTable *this, gchar *l10n_name);
-GList *clock_zonetable_get_zones (ClockZoneTable *this);
 
-ClockCountry *clock_zonetable_get_country (ClockZoneTable *this, gchar *code);
+GList *clock_zonetable_get_zones             (ClockZoneTable *this);
+ClockZoneInfo *clock_zonetable_get_zone      (ClockZoneTable *this,
+                                              const gchar    *name);
+ClockZoneInfo *clock_zonetable_get_l10n_zone (ClockZoneTable *this,
+                                              const gchar    *l10n_name);
+
+ClockCountry *clock_zonetable_get_country    (ClockZoneTable *this, 
+                                              const gchar    *code);
 
 G_END_DECLS
 #endif /* __CLOCK_ZONETABLE_H__ */
