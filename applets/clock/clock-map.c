@@ -20,6 +20,19 @@ enum {
 	LAST_SIGNAL
 };
 
+enum {
+        MARKER_NORMAL = 0,
+        MARKER_HILIGHT,
+        MARKER_CURRENT,
+        MARKER_NB
+};
+
+static char *marker_files[MARKER_NB] = {
+        ICONDIR "/clock-map-location-marker.png",
+        ICONDIR "/clock-map-location-hilight.png",
+        ICONDIR "/clock-map-location-current.png"
+};
+
 static guint signals[LAST_SIGNAL];
 
 typedef struct {
@@ -31,7 +44,7 @@ typedef struct {
 	guint highlight_timeout_id;
 
         GdkPixbuf *stock_map_pixbuf;
-        GdkPixbuf *location_marker_pixbuf[3];
+        GdkPixbuf *location_marker_pixbuf[MARKER_NB];
 
         GdkPixbuf *location_map_pixbuf;
 
@@ -64,13 +77,6 @@ clock_map_new (void)
 
         this = g_object_new (CLOCK_MAP_TYPE, NULL);
         priv = PRIVATE (this);
-
-        priv->location_marker_pixbuf[0] = gdk_pixbuf_new_from_file
-                (ICONDIR "/clock-map-location-marker.png", NULL);
-        priv->location_marker_pixbuf[1] = gdk_pixbuf_new_from_file
-                (ICONDIR "/clock-map-location-hilight.png", NULL);
-        priv->location_marker_pixbuf[2] = gdk_pixbuf_new_from_file
-                (ICONDIR "/clock-map-location-current.png", NULL);
 
         clock_map_refresh (this);
 
@@ -115,6 +121,7 @@ clock_map_class_init (ClockMapClass *this_class)
 static void
 clock_map_init (ClockMap *this)
 {
+        int i;
         ClockMapPrivate *priv = PRIVATE (this);
 
 	GTK_WIDGET_SET_FLAGS (this, GTK_NO_WINDOW);
@@ -122,9 +129,12 @@ clock_map_init (ClockMap *this)
 	priv->last_refresh = 0;
 	priv->highlight_timeout_id = 0;
         priv->stock_map_pixbuf = NULL;
-        priv->location_marker_pixbuf[0] = NULL;
-        priv->location_marker_pixbuf[1] = NULL;
-        priv->location_marker_pixbuf[2] = NULL;
+
+        g_assert (sizeof (marker_files)/sizeof (char *) == MARKER_NB);
+        for (i = 0; i < MARKER_NB; i++) {
+                priv->location_marker_pixbuf[i] = gdk_pixbuf_new_from_file
+                                                  (marker_files[i], NULL);
+        }
 }
 
 static void
@@ -143,7 +153,7 @@ clock_map_finalize (GObject *g_obj)
                 priv->stock_map_pixbuf = NULL;
         }
 
-	for (i = 0; i < 3; i++) {
+	for (i = 0; i < MARKER_NB; i++) {
         	if (priv->location_marker_pixbuf[i]) {
                 	gdk_pixbuf_unref (priv->location_marker_pixbuf[i]);
                 	priv->location_marker_pixbuf[i] = NULL;
@@ -411,11 +421,11 @@ clock_map_place_location (ClockMap *this, ClockLocation *loc, gboolean hilight)
         clock_location_get_coords (loc, &latitude, &longitude);
 
 	if (hilight)
-		marker = 1;
+		marker = MARKER_HILIGHT;
 	else if (clock_location_is_current (loc))
-		marker = 2;
+		marker = MARKER_CURRENT;
 	else
-		marker = 0;
+		marker = MARKER_NORMAL;
 
         clock_map_mark (this, latitude, longitude, marker);
 }

@@ -1,5 +1,13 @@
 2008-04-08  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-map.c: add enums for markers and an array for marker files
+	(clock_map_new),: do not load the marker pixbuf here
+	(clock_map_init): do it here, with a simple loop
+	(clock_map_finalize):
+	(clock_map_place_location): trivial updates to use the enum
+
+2008-04-08  Vincent Untz  <vuntz@gnome.org>
+
 	Remove the rotation step in the map. I believe the goal was to make it
 	possible to display a map where the center is not 0/0 (lat/lon) but the
 	center is hardcoded to 0/0 right now and I don't think it makes sense
