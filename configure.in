@@ -124,6 +124,7 @@ POLKIT_GNOME_REQUIRED=0.7
 POLKIT_DBUS_REQUIRED=0.7
 DBUS_GLIB_REQUIRED=0.71
 DBUS_REQUIRED=1.1.2
+NETWORK_MANAGER_REQUIRED=0.6
  
 # PolicyKit detection; defaults to 'auto' (use it if it's available)
 #
@@ -159,7 +160,7 @@ AC_ARG_ENABLE(network_manager, AS_HELP_STRING([--enable-network-manager],[Enable
 if test "x$enable_network_manager" = "xno" ; then
   HAVE_NETWORK_MANAGER=no
 else
-  PKG_CHECK_MODULES(NETWORK_MANAGER, NetworkManager, HAVE_NETWORK_MANAGER=yes, HAVE_NETWORK_MANAGER=no)
+  PKG_CHECK_MODULES(NETWORK_MANAGER, NetworkManager >= $NETWORK_MANAGER_REQUIRED, HAVE_NETWORK_MANAGER=yes, HAVE_NETWORK_MANAGER=no)
 fi
 if test "x$HAVE_NETWORK_MANAGER" = "xyes" ; then
     AC_DEFINE(HAVE_NETWORK_MANAGER, 1, [Defined if NetworkManager support is enabled])
