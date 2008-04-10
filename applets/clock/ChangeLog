@@ -1,5 +1,37 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	Rewrite the code to set the system timezone. It should work on most
+	distributions now, instead of only the ones doing the same thing as
+	Fedora. Like the rewrite to get the timezone, it helps improve the
+	world.
+
+	* Makefile.am: fix typo and add system-timezone.[ch] to
+	gnome_clock_applet_mechanism_SOURCES
+	* gnome-clock-applet-mechanism.c:
+	(gnome_clock_applet_mechanism_set_timezone): just call
+	system_timezone_set_from_file()
+	* system-timezone.[ch]: add clear comments and some code to easily test
+	the functions
+	Also add comments on our current knowledge about system timezones on
+	the various distributions.
+	(system_timezone_constructor),
+	(system_timezone_finalize): fix the same singleton issue as the one
+	fixed in the previous commit
+	(system_timezone_write_etc_timezone),
+	(system_timezone_write_key_file),
+	(system_timezone_write_etc_TIMEZONE),
+	(system_timezone_write_etc_sysconfig_clock),
+	(system_timezone_write_etc_sysconfig_clock_alt),
+	(system_timezone_write_etc_conf_d_clock),
+	(system_timezone_is_zone_file_valid),
+	(system_timezone_set_etc_timezone),
+	(system_timezone_update_config), (system_timezone_set_from_file),
+	(system_timezone_set), (system_timezone_error_quark): well, all new. To
+	do some magic things. Some code is loosely based on what was in
+	gnome-clock-applet-mechanism.c
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-zonetable.c: (clock_zonetable_constructor),
 	(clock_zonetable_finalize): fix invalid singleton after last ref. This
 	was mostly a theoretical problem, since when the singleton is

@@ -39,6 +39,8 @@
 
 #include <polkit-dbus/polkit-dbus.h>
 
+#include "system-timezone.h"
+
 #include "gnome-clock-applet-mechanism.h"
 #include "gnome-clock-applet-mechanism-glue.h"
 
@@ -470,12 +472,10 @@ gnome_clock_applet_mechanism_adjust_time (GnomeClockAppletMechanism    *mechanis
 
 
 gboolean
-gnome_clock_applet_mechanism_set_timezone (GnomeClockAppletMechanism    *mechanism,
-                                           const char                   *zone_file,
-                                           DBusGMethodInvocation        *context)
+gnome_clock_applet_mechanism_set_timezone (GnomeClockAppletMechanism *mechanism,
+                                           const char                *zone_file,
+                                           DBusGMethodInvocation     *context)
 {
-        char *data;
-        gsize len;
         GError *error;
 
         reset_killtimer ();
@@ -484,87 +484,28 @@ gnome_clock_applet_mechanism_set_timezone (GnomeClockAppletMechanism    *mechani
         if (!_check_polkit_for_action (mechanism, context, "org.gnome.clockapplet.mechanism.settimezone"))
                 return FALSE;
 
-        /* First, check the zone_file is properly rooted (TODO: May be OS specific) */
-        if (!g_str_has_prefix (zone_file, "/usr/share/zoneinfo/")) {
-                error = g_error_new (GNOME_CLOCK_APPLET_MECHANISM_ERROR,
-                                     GNOME_CLOCK_APPLET_MECHANISM_ERROR_INVALID_TIMEZONE_FILE,
-                                     "Timezone file needs to be somewhere under /usr/share/zoneinfo");
-                dbus_g_method_return_error (context, error);
-                g_error_free (error);
-                return FALSE;
-        }
-
-        /* Second, check it's a regular file that exists */
-        if (!g_file_test (zone_file, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR)) {
-                error = g_error_new (GNOME_CLOCK_APPLET_MECHANISM_ERROR,
-                                     GNOME_CLOCK_APPLET_MECHANISM_ERROR_INVALID_TIMEZONE_FILE,
-                                     "No such timezone file %s", zone_file);
-                dbus_g_method_return_error (context, error);
-                g_error_free (error);
-                return FALSE;
-        }
-
-        /* Now copy the file to /etc/localtime. This is what we do on
-         * Red Hat / Fedora; to handle updates of tzdata
-         * /etc/sysconfig/clock has a ZONE="<timezone>" entry that is
-         * used to regenerate /etc/localtime.
-         *
-         * TODO: Check if /etc/localtime is a symlink and write out a symlink
-         *       into /usr/share/zoneinfo instead.
-         */
-
         error = NULL;
-        if (!g_file_get_contents (zone_file, &data, &len, &error)) {
+
+        if (!system_timezone_set_from_file (zone_file, &error)) {
                 GError *error2;
+                int     code;
+
+                if (error->code == SYSTEM_TIMEZONE_ERROR_INVALID_TIMEZONE_FILE)
+                        code = GNOME_CLOCK_APPLET_MECHANISM_ERROR_INVALID_TIMEZONE_FILE;
+                else 
+                        code = GNOME_CLOCK_APPLET_MECHANISM_ERROR_GENERAL;
+
                 error2 = g_error_new (GNOME_CLOCK_APPLET_MECHANISM_ERROR,
-                                      GNOME_CLOCK_APPLET_MECHANISM_ERROR_GENERAL,
-                                      "Error reading timezone file %s: %s", zone_file, error->message);
+                                      code, error->message);
+
                 g_error_free (error);
+
                 dbus_g_method_return_error (context, error2);
                 g_error_free (error2);
+
                 return FALSE;
         }
 
-        /* Verify it's a tzfile (see tzfile(5))
-         *
-         * TODO: is there glibc API for this? 
-         */
-        if (data[0] != 'T' ||
-            data[1] != 'Z' ||
-            data[2] != 'i' ||
-            data[3] != 'f') {
-                error = g_error_new (GNOME_CLOCK_APPLET_MECHANISM_ERROR,
-                                     GNOME_CLOCK_APPLET_MECHANISM_ERROR_GENERAL,
-                                     "File %s is not a timezone file", zone_file);
-                dbus_g_method_return_error (context, error);
-                g_error_free (error);
-                g_free (data);
-                return FALSE;
-        }
-
-        if (!g_file_set_contents ("/etc/localtime", data, len, &error)) {
-                GError *error2;
-                error2 = g_error_new (GNOME_CLOCK_APPLET_MECHANISM_ERROR,
-                                      GNOME_CLOCK_APPLET_MECHANISM_ERROR_GENERAL,
-                                      "Error writing timezone data to /etc/localtime: %s", error->message);
-                g_error_free (error);
-                dbus_g_method_return_error (context, error2);
-                g_error_free (error2);
-                g_free (data);
-                return FALSE;
-        }
-        g_free (data);
-
-        /* OS specific bits here: */
-
-	/* FMQ: openSUSE uses "TIMEZONE=", not "ZONE=" */
-        data = g_strdup_printf ("\"%s\"", zone_file + sizeof ("/usr/share/zoneinfo"));
-        if (!_rh_update_etc_sysconfig_clock (context, "ZONE=", data)) {
-                g_free (data);
-                return FALSE;
-        }
-        g_free (data);
-        
         dbus_g_method_return (context);
         return TRUE;
 }

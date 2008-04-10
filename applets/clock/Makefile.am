@@ -66,7 +66,7 @@ CLOCK_SOURCES = 		\
 	clock-zonetable.c	\
 	clock-zonetable.h	\
 	system-timezone.c	\
-	system-timzone.h	\
+	system-timezone.h	\
 	$(BUILT_SOURCES)	\
 	$(CALENDAR_SOURCES)	\
 	$(SETTIME_SOURCES)
@@ -126,7 +126,9 @@ gnome-clock-applet-mechanism-glue.h: $(srcdir)/gnome-clock-applet-mechanism.xml
 gnome_clock_applet_mechanism_SOURCES =		\
 	gnome-clock-applet-mechanism.c		\
 	gnome-clock-applet-mechanism.h		\
-	gnome-clock-applet-mechanism-main.c
+	gnome-clock-applet-mechanism-main.c	\
+	system-timezone.c			\
+	system-timezone.h
 
 if HAVE_POLKIT
 BUILT_SOURCES += gnome-clock-applet-mechanism-glue.h

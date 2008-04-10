@@ -1,4 +1,4 @@
-AC_INIT([gnome-panel], [2.22.2],
+AC_INIT([gnome-panel], [2.22.1.2],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2])
@@ -116,7 +116,7 @@ AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
 dnl Hmm, we already checked for these above.  Is there a way to avoid checking twice?
-PKG_CHECK_MODULES(CLOCK_MECHANISM, [ gthread-2.0 dbus-glib-1 ])
+PKG_CHECK_MODULES(CLOCK_MECHANISM, [ gthread-2.0 gio-2.0 dbus-glib-1 ])
 AC_SUBST(CLOCK_MECHANISM_CFLAGS)
 AC_SUBST(CLOCK_MECHANISM_LIBS)
 

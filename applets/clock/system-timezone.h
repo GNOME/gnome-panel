@@ -61,5 +61,23 @@ SystemTimezone *system_timezone_new (void);
 const char *system_timezone_get (SystemTimezone *systz);
 const char *system_timezone_get_env (SystemTimezone *systz);
 
+/* Functions to set the timezone. They won't be used by the applet, but
+ * by a program with more privileges */
+
+#define SYSTEM_TIMEZONE_ERROR system_timezone_error_quark ()
+GQuark system_timezone_error_quark (void);
+
+typedef enum
+{
+        SYSTEM_TIMEZONE_ERROR_GENERAL,
+        SYSTEM_TIMEZONE_ERROR_INVALID_TIMEZONE_FILE,
+        SYSTEM_TIMEZONE_NUM_ERRORS
+} SystemTimezoneError;
+
+gboolean system_timezone_set_from_file (const char  *zone_file,
+                                        GError     **error);
+gboolean system_timezone_set (const char  *tz,
+                              GError     **error);
+
 G_END_DECLS
 #endif /* __SYSTEM_TIMEZONE_H__ */
