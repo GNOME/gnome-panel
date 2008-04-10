@@ -37,7 +37,8 @@ typedef enum {
 	CLOCK_FACE_MORNING,
 	CLOCK_FACE_DAY,
 	CLOCK_FACE_EVENING,
-	CLOCK_FACE_NIGHT
+	CLOCK_FACE_NIGHT,
+	CLOCK_FACE_INVALID
 } ClockFaceTimeOfDay;
 
 struct _ClockFacePrivate
@@ -89,7 +90,7 @@ clock_face_init (ClockFace *this)
         ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (this);
 
         priv->size = CLOCK_FACE_SMALL;
-        priv->timeofday = CLOCK_FACE_DAY;
+        priv->timeofday = CLOCK_FACE_INVALID;
         priv->location = NULL;
         priv->size_widget = NULL;
 
@@ -295,12 +296,21 @@ clock_face_size_request (GtkWidget *this,
 }
 
 static void
-update_timeofday (ClockFace *this)
+update_time (ClockFace *this)
 {
         ClockFacePrivate *priv;
 	ClockFaceTimeOfDay timeofday;
 
         priv = CLOCK_FACE_GET_PRIVATE (this);
+
+        /* update the time */
+        if (priv->location) {
+                clock_location_localtime (priv->location, &priv->time);
+        } else {
+                time_t timet;
+                time (&timet);
+                localtime_r (&timet, &priv->time);
+        }
 
 	/* FIXME  this should be a gconf setting
          * currently we hardcode
@@ -348,16 +358,7 @@ clock_face_refresh (ClockFace *this)
                 return FALSE;
         }
 
-        /* update the time */
-        if (priv->location) {
-                clock_location_localtime (priv->location, &priv->time);
-        } else {
-                time_t timet;
-                time (&timet);
-                localtime_r (&timet, &priv->time);
-        }
-
-	update_timeofday (this);
+	update_time (this);
 
         clock_face_redraw_canvas (this);
 
@@ -370,9 +371,11 @@ clock_face_new (ClockFaceSize size)
         GObject *obj = g_object_new (INTL_TYPE_CLOCK_FACE, NULL);
         ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (obj);
 
+        /* FIXME: this is horribly broken from a GObject perspective.
+         * Everything should be done in the constructor */
         priv->size = size;
 
-        clock_face_load_face (CLOCK_FACE (obj), -1, -1);
+        update_time (CLOCK_FACE (obj));
 
         return GTK_WIDGET (obj);
 }
@@ -382,11 +385,14 @@ clock_face_new_with_location (ClockFaceSize size,
 			      ClockLocation *loc,
 			      GtkWidget *size_widget)
 {
-        ClockFace *obj = CLOCK_FACE (clock_face_new (size));
+        GObject *obj = g_object_new (INTL_TYPE_CLOCK_FACE, NULL);
         ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (obj);
 
+        priv->size = size;
         priv->location = g_object_ref (loc);
         priv->size_widget = g_object_ref (size_widget);
+
+        update_time (CLOCK_FACE (obj));
 
         return GTK_WIDGET (obj);
 }

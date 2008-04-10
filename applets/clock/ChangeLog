@@ -1,5 +1,19 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	Rework to not load two svg files on creation (once for the initial file
+	and once for the current time of day file). Can save between 0.01s and
+	0.02s per tile.
+
+	* clock-face.c: (clock_face_init): initial time of day is invalid
+	(update_time): renamed from update_timeofday() and update the current
+	time here
+	(clock_face_refresh): do not update time here
+	(clock_face_new): do not load a face directly, but call update_time()
+	that will have the side effect of loading one
+	(clock_face_new_with_location): ditto
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (create_cities_section): do not refresh the tile after
 	having created it. It's already fresh when created, so no need to
 	refresh. Really small saving (clearly less than 0.01s per tile), but
