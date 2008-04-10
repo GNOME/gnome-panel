@@ -2208,7 +2208,11 @@ location_start_element (GMarkupParseContext *context,
                 return;
         }
 
-        loc = clock_location_new (name, timezone, latitude, longitude, code, &prefs);
+	loc = clock_location_find_and_ref (cd->locations, name, timezone,
+					   latitude, longitude, code);
+	if (!loc)
+		loc = clock_location_new (name, timezone,
+					  latitude, longitude, code, &prefs);
 
 	if (current && clock_location_is_current_timezone (loc))
 		clock_location_make_current (loc, NULL, NULL, NULL);
@@ -3087,9 +3091,10 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
 		clock_location_is_current (loc);
 
                 cd->locations = g_list_append (cd->locations, loc);
-                locations_changed (cd);
         }
 
+	/* This will update everything related to locations to take into
+	 * account the new location (via the gconf notification) */
         save_cities_store (cd);
 
         edit_hide (edit_window, cd);
@@ -3828,12 +3833,11 @@ remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
         ClockLocation *loc = NULL;
 
         gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
-
-        gtk_list_store_remove (cd->cities_store, iter);
 	cd->locations = g_list_remove (cd->locations, loc);
-	locations_changed (cd);
 	g_object_unref (loc);
 
+	/* This will update everything related to locations to take into
+	 * account the removed location (via the gconf notification) */
         save_cities_store (cd);
 }
 

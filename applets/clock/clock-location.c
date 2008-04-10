@@ -67,6 +67,34 @@ static void remove_from_network_monitor (ClockLocation *loc);
 #define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_LOCATION_TYPE, ClockLocationPrivate))
 
 ClockLocation *
+clock_location_find_and_ref (GList       *locations,
+                             const gchar *name,
+                             const gchar *timezone,
+                             gfloat       latitude,
+                             gfloat       longitude,
+                             const gchar *code)
+{
+        GList *l;
+        ClockLocationPrivate *priv;
+
+        for (l = locations; l != NULL; l = l->next) {
+                priv = PRIVATE (l->data);
+
+                if (priv->latitude == latitude &&
+                    priv->longitude == longitude &&
+                    g_strcmp0 (priv->weather_code, code) == 0 &&
+                    g_strcmp0 (priv->timezone, timezone) == 0 &&
+                    g_strcmp0 (priv->name, name) == 0)
+                        break;
+        }
+
+        if (l != NULL)
+                return g_object_ref (CLOCK_LOCATION (l->data));
+        else
+                return NULL;
+}
+
+ClockLocation *
 clock_location_new (const gchar *name, const gchar *timezone,
 		    gfloat latitude, gfloat longitude,
 		    const gchar *code, WeatherPrefs *prefs)
@@ -466,6 +494,12 @@ clock_location_make_current (ClockLocation *loc,
         ClockLocationPrivate *priv = PRIVATE (loc);
         gchar *filename;
 	MakeCurrentData *mcdata;
+
+        if (loc == current_location) {
+                if (destroy)
+                        destroy (data);
+                return;
+        }
 
 	if (clock_location_is_current_timezone (loc)) {
 		if (current_location)

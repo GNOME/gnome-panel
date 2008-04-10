@@ -38,6 +38,13 @@ ClockLocation *clock_location_new (const gchar *name, const gchar *timezone,
 				   const gchar *code,
 				   WeatherPrefs *prefs);
 
+ClockLocation *clock_location_find_and_ref (GList       *locations,
+                                            const gchar *name,
+                                            const gchar *timezone,
+                                            gfloat       latitude,
+                                            gfloat       longitude,
+                                            const gchar *code);
+
 gchar *clock_location_get_tzname (ClockLocation *loc);
 
 const gchar *clock_location_get_name (ClockLocation *loc);

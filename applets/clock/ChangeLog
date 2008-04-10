@@ -1,3 +1,20 @@
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
+	Do not create lots of new ClockLocation everytime we load the locations
+	from gconf, and try to re-use the old ones.
+	As a side-effect, it fixes a bug where you need to click twice on Set
+	to set the current location from a different timezone.
+
+	* clock-location.[ch]: (clock_location_find_and_ref): new, find a
+	ClockLocation if it already exists, and ref it
+	(clock_location_make_current): do not do anything if the location is
+	already the current one
+	* clock.c: (location_start_element): try to find the location among
+	existing ones first, and then fallback on creating a new one
+	(run_prefs_edit_save): do not explicitly call locations_changed(), it
+	will be done later via gconf notification
+	(remove_tree_row): ditto
+
 ==================== 2.22.1.2 ====================
 
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
