@@ -259,7 +259,6 @@ clock_location_tile_fill (ClockLocationTile *this)
         GtkWidget *alignment;
         GtkWidget *tile;
         GtkWidget *head_section;
-	gint can_set;
 
         priv->box = gtk_event_box_new ();
 
@@ -297,16 +296,9 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_box_pack_start (GTK_BOX (box), align, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (box), priv->time_label, FALSE, FALSE, 0);
 
-	can_set = can_set_system_timezone ();
-
         priv->current_button = gtk_button_new ();
+	/* The correct label is set on EnterNotify events */
 	priv->current_label = gtk_label_new ("");
-	if (can_set != 0) {
-		gtk_label_set_markup (GTK_LABEL (priv->current_label),
-				can_set == 1 ?  
-					_("<small>Set...</small>") :
-					_("<small>Set</small>"));
-	}
         gtk_widget_show (priv->current_label);
         gtk_widget_set_no_show_all (priv->current_button, TRUE);
         gtk_container_add (GTK_CONTAINER (priv->current_button), priv->current_label);
