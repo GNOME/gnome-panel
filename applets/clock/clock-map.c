@@ -123,6 +123,8 @@ clock_map_init (ClockMap *this)
 	GTK_WIDGET_SET_FLAGS (this, GTK_NO_WINDOW);
 
 	priv->last_refresh = 0;
+	priv->width = 0;
+	priv->height = 0;
 	priv->highlight_timeout_id = 0;
         priv->stock_map_pixbuf = NULL;
 
@@ -180,34 +182,28 @@ clock_map_refresh (ClockMap *this)
 {
         ClockMapPrivate *priv = PRIVATE (this);
 	GtkWidget *widget = GTK_WIDGET (this);
-        GtkWidget *parent = gtk_widget_get_parent (widget);
-	GtkRequisition req;
-        gint width;
-        gint height;
 
-	gtk_widget_size_request (widget, &req);
-        width = req.width;
-        height = req.height;
+        /* Only do something if we have some space allocated.
+         * Note that 1x1 is not really some space... */
+        if (widget->allocation.width <= 1 || widget->allocation.height <= 1)
+                return;
 
-        if (parent) {
-		if (widget->allocation.width != 1) {
-			width = widget->allocation.width;
-			height = widget->allocation.height;
-		}
-
+        /* Allocation changed => we reload the map */
+	if (priv->width != widget->allocation.width ||
+	    priv->height != widget->allocation.height) {
                 if (priv->stock_map_pixbuf) {
                         gdk_pixbuf_unref (priv->stock_map_pixbuf);
                         priv->stock_map_pixbuf = NULL;
                 }
+
+                priv->width = widget->allocation.width;
+                priv->height = widget->allocation.height;
         }
 
         if (!priv->stock_map_pixbuf) {
                 GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale
                         (ICONDIR "/clock-map.png",
-                         width, height, FALSE, NULL);
-
-                priv->width = gdk_pixbuf_get_width (pixbuf);
-                priv->height = gdk_pixbuf_get_height (pixbuf);
+                         priv->width, priv->height, FALSE, NULL);
 
                 priv->stock_map_pixbuf = pixbuf;
         }
@@ -225,8 +221,10 @@ clock_map_expose (GtkWidget *this, GdkEventExpose *event)
 	GdkRectangle region;
         cairo_t *cr;
 
-	if (!priv->shadow_map_pixbuf)
+	if (!priv->shadow_map_pixbuf) {
+                g_warning ("Needed to refresh the map in expose event.");
 		clock_map_refresh (CLOCK_MAP (this));
+        }
 
         cr = gdk_cairo_create (this->window);
 
@@ -284,9 +282,8 @@ clock_map_size_allocate (GtkWidget *this, GtkAllocation *allocation)
 	if (GTK_WIDGET_CLASS (clock_map_parent_class)->size_allocate)
 		GTK_WIDGET_CLASS (clock_map_parent_class)->size_allocate (this, allocation);
 
-	if (!priv->stock_map_pixbuf
-	    || priv->width != this->allocation.width
-	    || priv->height != this->allocation.height)
+	if (priv->width != this->allocation.width ||
+	    priv->height != this->allocation.height)
                 clock_map_refresh (CLOCK_MAP (this));
 }
 

@@ -1,5 +1,15 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-map.c: (clock_map_init): init some fields
+	(clock_map_refresh): be a bit more clever about what we do. Do nothing
+	if we have no space allocated. Only reload the map if the allocation
+	changed.
+	(clock_map_expose): add a warning for a case that should never happen
+	(clock_map_size_allocate): simplify. The stock map will be loaded at
+	the beginning because of an allocation anyway.
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (update_calendar_popup): no need to call clock_map_refresh()
 	here: it will be done on expose event and on ClockMap size allocation
 	anyway. Saves ~0.06s.
