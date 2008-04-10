@@ -3413,12 +3413,22 @@ static void
 run_find_location (GtkButton *button, ClockData *cd)
 {
         GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+	GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
         GtkWidget *window;
+	const char *find;
 
 	fill_location_tree (cd);
         window = glade_xml_get_widget (cd->glade_xml, "find-location-window");
 
-	gtk_tree_view_collapse_all (GTK_TREE_VIEW (cd->location_tree));
+	/* prefill the find entry if it's empty */
+	find = gtk_entry_get_text (GTK_ENTRY (cd->find_location_entry));
+	if (!find || !find[0]) {
+		const char *location;
+
+		location = gtk_entry_get_text (GTK_ENTRY (name_entry));
+		gtk_entry_set_text (GTK_ENTRY (cd->find_location_entry),
+				    location);
+	}
 	gtk_widget_grab_focus (cd->find_location_entry);
 
         gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (edit_window));
@@ -3600,8 +3610,10 @@ edit_clear (ClockData *cd)
         gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), -1);
         gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), -1);
 
-	if (cd->find_location_entry)
-		gtk_entry_set_text (GTK_ENTRY (cd->find_location_entry), "");
+	/* reset the state of the find window */
+	gtk_entry_set_text (GTK_ENTRY (cd->find_location_entry), "");
+
+	gtk_tree_view_collapse_all (GTK_TREE_VIEW (cd->location_tree));
 
 	adjustment = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scroll));
 	gtk_adjustment_set_value (adjustment, 0);

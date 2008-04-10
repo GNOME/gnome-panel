@@ -1,5 +1,13 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (run_find_location): pre-fill the find location entry if it
+	was empty and the user typed something in the name entry of the
+	previous dialog
+	(edit_clear): also collapse the find location treeview when resetting
+	the state of the find window
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (find_timezone), (update_timezone): don't uselessly copy a
 	string
 
