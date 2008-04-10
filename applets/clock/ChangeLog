@@ -1,5 +1,12 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (edit_clear): when clearing the "edit location" window, also
+	clear the "find location" window, so that next time it gets opened,
+	there's no weird pre-filled text
+	* clock.glade: name the scrolled window in the find location window
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-country.c:
 	* clock-location-tile.c:
 	* clock-location.c:

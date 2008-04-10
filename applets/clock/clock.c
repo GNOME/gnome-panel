@@ -3587,6 +3587,8 @@ edit_clear (ClockData *cd)
         GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
         GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
         GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
+        GtkWidget *scroll = glade_xml_get_widget (cd->glade_xml, "find-location-scroll");
+	GtkAdjustment *adjustment;
 
         /* clear out the old data */
         gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), -1);
@@ -3598,6 +3600,14 @@ edit_clear (ClockData *cd)
 
         gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), -1);
         gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), -1);
+
+	if (cd->find_location_entry)
+		gtk_entry_set_text (GTK_ENTRY (cd->find_location_entry), "");
+
+	adjustment = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scroll));
+	gtk_adjustment_set_value (adjustment, 0);
+	gtk_scrolled_window_set_vadjustment (GTK_SCROLLED_WINDOW (scroll),
+					     adjustment);
 }
 
 static void
