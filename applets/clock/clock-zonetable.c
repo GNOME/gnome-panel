@@ -285,8 +285,13 @@ clock_zonetable_load_zonetab (ClockZoneTable *this)
 
         channel = g_io_channel_new_file (ZONETAB_FILE, "r", NULL);
 
-        /* FIXME: be more solid than just crashing */
-        g_assert (channel != NULL);
+        /* If the file cannot be read, then it means we won't know anything
+         * about timezones. Ouch. FIXME: should we hide all the timezone
+         * feature in this case? */
+        if (!channel) {
+                g_warning ("No timezone data installed.");
+                return;
+        }
 
         old_line = NULL;
         while (g_io_channel_read_line (channel, &line, NULL,
@@ -332,8 +337,11 @@ clock_zonetable_load_iso3166 (ClockZoneTable *this)
 
         channel = g_io_channel_new_file (ISO3166_FILE, "r", NULL);
 
-        /* FIXME: be more solid than just crashing */
-        g_assert (channel != NULL);
+        /* If the file cannot be read, then it means we won't have any country
+         * name in the user interface. It's a minor problem that we can live
+         * with. */
+        if (!channel)
+                return;
 
         old_line = NULL;
         while (g_io_channel_read_line (channel, &line, NULL,

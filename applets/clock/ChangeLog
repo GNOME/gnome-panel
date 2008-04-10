@@ -1,5 +1,14 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-zonetable.c: (clock_zonetable_load_zonetab),
+	(clock_zonetable_load_iso3166): do not assume the timezone and country
+	data files exist, so don't crash when they're not present. We still
+	need to define a proper behavior when we don't have timezone data,
+	though.
+	Fix bug #527309.
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock.c: (edit_clear): when clearing the "edit location" window, also
 	clear the "find location" window, so that next time it gets opened,
 	there's no weird pre-filled text
