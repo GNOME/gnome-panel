@@ -1,3 +1,18 @@
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
+	Huge performance improvement when clicking "Add" for adding a location.
+	Before this, the first click took around 0.2s and the following clicks
+	took more than 0.8s (!!!). Now the first click takes less than 0.15s
+	and the following clicks take around 0.007s. (put some James Bond music
+	here)
+
+	* clock.c: (revert_sort_zoneinfo_by_l10n_name): renamed from
+	sort_zoneinfo_by_l10n_name() because it revert sorts.
+	(fill_timezone_combo_from_location): be a bit more serious. First,
+	let's not clear the combo box to add items again since the list of
+	timezones never changes. Then don't append to the combo box, but
+	prepend. There's no need to append.
+
 2008-04-09  Vincent Untz  <vuntz@gnome.org>
 
 	* gnome-clock-applet-mechanism.c: (_set_time),

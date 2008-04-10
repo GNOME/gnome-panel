@@ -3152,7 +3152,7 @@ update_coords (ClockData *cd, gboolean valid, gfloat lat, gfloat lon)
 }
 
 static gint
-sort_zoneinfo_by_l10n_name (gconstpointer a, gconstpointer b)
+revert_sort_zoneinfo_by_l10n_name (gconstpointer a, gconstpointer b)
 {
         ClockZoneInfo *info_a = CLOCK_ZONEINFO (a);
         ClockZoneInfo *info_b = CLOCK_ZONEINFO (b);
@@ -3160,7 +3160,7 @@ sort_zoneinfo_by_l10n_name (gconstpointer a, gconstpointer b)
         const char *name_a = clock_zoneinfo_get_l10n_name (info_a);
         const char *name_b = clock_zoneinfo_get_l10n_name (info_b);
 
-        return strcmp (name_a, name_b); /* FIXME: should this be g_utf8_collate() ? */
+        return strcmp (name_b, name_a); /* FIXME: should this be g_utf8_collate() ? */
 }
 
 static void
@@ -3170,7 +3170,6 @@ fill_timezone_combo_from_location (ClockData *cd, GtkWidget *zone_combo, ClockLo
         GtkTreeModel *model;
         GtkTreeIter iter;
 
-        GList *list, *cur;
         int timezone_idx = -1;
         int i = 0;
 
@@ -3188,28 +3187,56 @@ fill_timezone_combo_from_location (ClockData *cd, GtkWidget *zone_combo, ClockLo
         }
 
         model = gtk_combo_box_get_model (GTK_COMBO_BOX (zone_combo));
-        while (gtk_tree_model_get_iter_first (model, &iter)) {
-                gtk_list_store_remove (GTK_LIST_STORE (model), &iter);
-        }
 
-        list = g_list_copy (clock_zonetable_get_zones (zones));
-        list = g_list_sort (list, &sort_zoneinfo_by_l10n_name);
+	/* FIXME: not clearing the combo means if the list of timezones
+	 * changes, we won't have the right list. But right now, our list
+	 * will never change so it doesn't matter. */
 
-        cur = list;
-        while (cur) {
-                const gchar *timezone = clock_zoneinfo_get_l10n_name (CLOCK_ZONEINFO (cur->data));
+	/* Fill the combo if it's empty, and also remember the item that should
+	 * be selected if we have a location */
+	if (!gtk_tree_model_get_iter_first (model, &iter)) {
+		GList *list, *cur;
+		const gchar *timezone;
 
-                gtk_combo_box_append_text (GTK_COMBO_BOX (zone_combo), timezone);
+		list = g_list_copy (clock_zonetable_get_zones (zones));
+		/* this is a revert sort because we prepend to the combo box */
+		list = g_list_sort (list, &revert_sort_zoneinfo_by_l10n_name);
 
-                if (loc_timezone && (strcmp (timezone, loc_timezone) == 0)) {
-                        timezone_idx = i;
-                }
+		cur = list;
+		while (cur) {
+			timezone = clock_zoneinfo_get_l10n_name (CLOCK_ZONEINFO (cur->data));
 
-                i++;
-                cur = g_list_next (cur);
-        }
+			gtk_combo_box_prepend_text (GTK_COMBO_BOX (zone_combo),
+						    timezone);
 
-        g_list_free (list);
+			if (loc_timezone && timezone_idx == -1
+			    && (strcmp (timezone, loc_timezone) == 0)) {
+				timezone_idx = i;
+			}
+
+			i++;
+			cur = g_list_next (cur);
+		}
+
+		g_list_free (list);
+	} else if (loc_timezone) {
+		/* Find the item to select */
+		gchar *timezone;
+		int count = 0;
+
+		do {
+			gtk_tree_model_get (model, &iter, 0, &timezone, -1);
+
+			if (strcmp (timezone, loc_timezone) == 0) {
+				timezone_idx = count;
+				g_free (timezone);
+				break;
+			}
+			count++;
+
+			g_free (timezone);
+		} while (gtk_tree_model_iter_next (model, &iter));
+	}
 
         if (timezone_idx >= 0) {
                 gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), timezone_idx);
