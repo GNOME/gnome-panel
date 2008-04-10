@@ -1,4 +1,53 @@
 ================
+Version 2.22.1.2
+================
+
+  Distributors: this release rewrites the way the system timezone is read/set.
+  Please check that it correctly works on your OS (including changing the right
+  configuration files), and if not, file a bug.
+
+  Clock Applet
+
+	* Lots of code cleanup (Vincent)
+	* Fix small bug where the map might not update when time goes backwards
+	  (Vincent)
+	* Do not even try to rotate the map. We didn't want to do this and can
+	  cause corrupted maps on OpenSolaris (Vincent)
+	* Use the right directory for timezone data on Solaris (Brian Cameron,
+	  Vincent)
+	* Use the latest evolution text domain for timezone translations
+	  (Vincent)
+	* Plug some leaks (Vincent)
+	* Completely rewrite the system timezone detection to work on more
+	  OS (Vincent)
+	* Immediately update the time on the clock when the system timezone is
+	  changed (even by an external program) (Vincent)
+	* Use less memory by not keeping data that will not be used (Vincent)
+	* Optimization work to display the Add/Edit Location dialog much faster
+	  (Vincent)
+	* Completely rewrite the way we set the system timezone to correctly
+	  work on more OS. It should now update the correct config files and
+	  use a symlink for /etc/localtime if it was already a symlink before.
+	  (Vincent)
+	* Small optimization: cache the can_do result for PolicyKit actions to
+	  not query too often and save some time (Vincent)
+	* Lots of optimization work for opening the calendar & timezone popup
+	  faster. Do not display things multiple times, load files multiples
+	  times, do useless things, etc. (Vincent)
+	* Reset the state of the find location window when closing the Add/Edit
+	  Location dialog (Vincent)
+	* Do not assume that the timezone and country data files are available
+	  and so don't crash when they're not (Vincent)
+	* Pre-fill the find location entry when it makes sense (Vincent)
+	* Make the add/edit location dialog not resizable (Vincent)
+	* Improve initial size of the find location dialog (Vincent)
+
+  Misc
+
+	* When compiling with NetworkManager support, check that the
+	  NetworkManager version is recent enough (Vincent)
+
+================
 Version 2.22.1.1
 ================
 
