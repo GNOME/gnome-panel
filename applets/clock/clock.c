@@ -3259,7 +3259,7 @@ distance (gdouble lat1, gdouble lon1,
         return acos (cos (lat1) * cos (lat2) * cos (lon1 - lon2) + sin (lat1) * sin (lat2)) * radius;
 }
 
-static gchar *
+static const gchar *
 find_timezone (ClockData *cd, const char *name, const char *iso_code,
                gfloat lat, gfloat lon)
 {
@@ -3293,7 +3293,7 @@ find_timezone (ClockData *cd, const char *name, const char *iso_code,
 	}
 
         if (best)
-                return g_strdup (clock_zoneinfo_get_name (best));
+                return clock_zoneinfo_get_name (best);
         else
                 return NULL;
 }
@@ -3304,7 +3304,7 @@ update_timezone (ClockData *cd, const char *name,
                  gboolean valid, gfloat lat, gfloat lon)
 {
         GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
-	gchar *timezone;
+	const gchar *timezone;
 	ClockLocation *loc;
 	WeatherPrefs prefs;
 
@@ -3322,7 +3322,7 @@ update_timezone (ClockData *cd, const char *name,
 	prefs.speed_unit = cd->speed_unit;
 
         if (tz_hint)
-                timezone = g_strdup (tz_hint);
+                timezone = tz_hint;
         else {
                 timezone = find_timezone (cd, name, country_code, lat, lon);
                 if (!timezone)
@@ -3338,7 +3338,6 @@ update_timezone (ClockData *cd, const char *name,
 	g_signal_handler_unblock (zone_combo, cd->zone_combo_changed);
 
 	g_object_unref (loc);
-	g_free (timezone);
 }
 
 static void

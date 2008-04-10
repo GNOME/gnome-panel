@@ -1,5 +1,10 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (find_timezone), (update_timezone): don't uselessly copy a
+	string
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-zonetable.c: (clock_zonetable_load_zonetab),
 	(clock_zonetable_load_iso3166): do not assume the timezone and country
 	data files exist, so don't crash when they're not present. We still
