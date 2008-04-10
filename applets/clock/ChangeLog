@@ -1,5 +1,17 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-zonetable.c: (clock_zonetable_constructor),
+	(clock_zonetable_finalize): fix invalid singleton after last ref. This
+	was mostly a theoretical problem, since when the singleton is
+	finalized, the applet process leaves. Except that some distributions
+	ship in-process applets :-)
+
+	* clock-zonetable.c: (clock_zonetable_parse_coord): actually save the
+	result of sscanf before evaluating. Fix timezone combo box being
+	empty. Fix by Sébastien Bacher <seb128@ubuntu.com>
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	Huge performance improvement when clicking "Add" for adding a location.
 	Before this, the first click took around 0.2s and the following clicks
 	took more than 0.8s (!!!). Now the first click takes less than 0.15s

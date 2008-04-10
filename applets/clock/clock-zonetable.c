@@ -21,6 +21,8 @@
 #define ISO3166_FILE SYSTEM_ZONEINFODIR"/iso3166.tab"
 #endif
 
+static GObject *zonetable_singleton = NULL;
+
 G_DEFINE_TYPE (ClockZoneTable, clock_zonetable, G_TYPE_OBJECT)
 
 typedef struct {
@@ -85,11 +87,11 @@ clock_zonetable_constructor (GType                  type,
                              guint                  n_construct_properties,
                              GObjectConstructParam *construct_properties)
 {
-        static GObject *obj = NULL;
+        GObject *obj;
 
         /* This is a singleton, we don't need to have it per-applet */
-        if (obj)
-                return g_object_ref (obj);
+        if (zonetable_singleton)
+                return g_object_ref (zonetable_singleton);
 
         obj = G_OBJECT_CLASS (clock_zonetable_parent_class)->constructor (
                                                 type,
@@ -100,7 +102,9 @@ clock_zonetable_constructor (GType                  type,
         clock_zonetable_load_iso3166 (CLOCK_ZONETABLE (obj));
         /* FIXME: add some file monitoring here to reload the files? */
 
-        return obj;
+        zonetable_singleton = obj;
+
+        return zonetable_singleton;
 }
 
 static void
@@ -134,6 +138,10 @@ clock_zonetable_finalize (GObject *g_obj)
         }
 
         G_OBJECT_CLASS (clock_zonetable_parent_class)->finalize (g_obj);
+
+        g_assert (g_obj == zonetable_singleton);
+
+        zonetable_singleton = NULL;
 }
 
 static gboolean
@@ -154,17 +162,17 @@ clock_zonetable_parse_coord (const gchar *coord, gfloat *ret)
                         return FALSE;
         } else if (len == 5) {
                 /* DDDMM */
-                sscanf (num, "%3f%2f", &deg, &min);
+                read = sscanf (num, "%3f%2f", &deg, &min);
                 if (read != 2)
                         return FALSE;
         } else if (len == 6) {
                 /* DDMMSS */
-                sscanf (num, "%2f%2f%2f", &deg, &min, &sec);
+                read = sscanf (num, "%2f%2f%2f", &deg, &min, &sec);
                 if (read != 3)
                         return FALSE;
         } else if (len == 7) {
                 /* DDDMMSS */
-                sscanf (num, "%3f%2f%2f", &deg, &min, &sec);
+                read = sscanf (num, "%3f%2f%2f", &deg, &min, &sec);
                 if (read != 3)
                         return FALSE;
         }
