@@ -1,5 +1,23 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	Implement a cache for clock face pixbufs. They're loaded from SVG, so
+	it can be a bit slow to read the file. With the cache, we win around
+	0.01s and 0.02s per face clock that can use it.
+	It's totally useless if you have only one location or all the locations
+	are in completely different timezones (always using different SVG
+	files), but it doesn't cost us anything, so it's a good thing in the
+	end.
+
+	* clock-face.c: (clock_face_finalize): don't use deprecated
+	gdk_pixbuf_unref(), free the cache if it's empty
+	(remove_pixbuf_from_cache): helper, to remove a unused pixbuf from the
+	cache when it's reference count reaches 0
+	(clock_face_load_face): initialize the cache (implemented with a
+	hashtable) if needed, and try to use it. If the searched pixbuf isn't
+	there, load it as we did before and add it to the cache.
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	Rework to not load two svg files on creation (once for the initial file
 	and once for the current time of day file). Can save between 0.01s and
 	0.02s per tile.
