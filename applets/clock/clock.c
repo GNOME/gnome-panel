@@ -1219,7 +1219,6 @@ update_calendar_popup (ClockData *cd)
         }
 
         if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->panel_button)) {
-                clock_map_refresh (CLOCK_MAP (cd->map_widget));
 		calendar_window_refresh (CALENDAR_WINDOW (cd->calendar_popup));
 		position_calendar_popup (cd);
 		gtk_window_present (GTK_WINDOW (cd->calendar_popup));

@@ -1,5 +1,11 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (update_calendar_popup): no need to call clock_map_refresh()
+	here: it will be done on expose event and on ClockMap size allocation
+	anyway. Saves ~0.06s.
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-face.c: (clock_face_finalize): do not try to get the size of
 	the cache if there's no cache. Can happen if the faces are destroyed
 	before being shown.
