@@ -1,5 +1,31 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	Do not load the image when the object is created. Only load it once we
+	actually have a useful allocation to display it. Else, we were loading
+	it twice on the calendar popup: once on object creation, and once when
+	the real size request happened (which was broken too, since it should
+	have been size allocation...). So we can save again between 0.01s and
+	0.02s per different face.
+
+	* clock-face.c: remove old commented out code that will never be used
+	in the clock applet
+	(clock_face_class_init): we have a size_allocate function now
+	(clock_face_init): update
+	(clock_face_size_request): rewrite to just request a size, and do
+	nothing else
+	(clock_face_size_allocate): new, reload the face if the allocation
+	changed
+	(update_time_and_face): renamed from update_time(), add a
+	force_face_loading argument, and only load the face if the allocation
+	makes sense
+	(clock_face_refresh): trivial update
+	(clock_face_new): no need to call update_time() here, it will get
+	called on the first useful allocation
+	(clock_face_new_with_location): ditto
+	(clock_face_unmap): kill this. It's useless in the clock applet too.
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	Implement a cache for clock face pixbufs. They're loaded from SVG, so
 	it can be a bit slow to read the file. With the cache, we win around
 	0.01s and 0.02s per face clock that can use it.

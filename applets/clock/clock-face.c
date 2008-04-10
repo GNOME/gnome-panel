@@ -30,9 +30,14 @@ static void clock_face_finalize (GObject *);
 static gboolean clock_face_expose (GtkWidget *clock, GdkEventExpose *event);
 static void clock_face_size_request (GtkWidget *clock,
 				     GtkRequisition *requisition);
-static void clock_face_unmap (GtkWidget *clock);
+static void clock_face_size_allocate (GtkWidget     *clock,
+				      GtkAllocation *allocation);
+
+static void update_time_and_face (ClockFace *this,
+                                  gboolean   force_face_loading);
 static void clock_face_load_face (ClockFace *this,
 				  gint width, gint height);
+
 typedef struct _ClockFacePrivate ClockFacePrivate;
 
 typedef enum {
@@ -48,23 +53,12 @@ struct _ClockFacePrivate
         struct tm time; /* the time on the clock face */
         int minute_offset; /* the offset of the minutes hand */
 
-        gboolean running;
         ClockFaceSize size;
 	ClockFaceTimeOfDay timeofday;
         ClockLocation *location;
         GdkPixbuf *face_pixbuf;
         GtkWidget *size_widget;
 };
-
-#if 0
-enum
-{
-        TIME_CHANGED,
-        LAST_SIGNAL
-};
-
-static guint clock_face_signals[LAST_SIGNAL] = { 0 };
-#endif
 
 static void
 clock_face_class_init (ClockFaceClass *class)
@@ -78,7 +72,7 @@ clock_face_class_init (ClockFaceClass *class)
         /* GtkWidget signals */
         widget_class->expose_event = clock_face_expose;
         widget_class->size_request = clock_face_size_request;
-        widget_class->unmap = clock_face_unmap;
+        widget_class->size_allocate = clock_face_size_allocate;
 
         /* GObject signals */
         obj_class->finalize = clock_face_finalize;
@@ -95,8 +89,6 @@ clock_face_init (ClockFace *this)
         priv->timeofday = CLOCK_FACE_INVALID;
         priv->location = NULL;
         priv->size_widget = NULL;
-
-        priv->running = TRUE;
 
         GTK_WIDGET_SET_FLAGS (GTK_WIDGET (this), GTK_NO_WINDOW);
 }
@@ -214,66 +206,15 @@ clock_face_redraw_canvas (ClockFace *this)
         gtk_widget_queue_draw (GTK_WIDGET (this));
 }
 
-#if 0
-static void
-emit_time_changed_signal (ClockFace *this, int x, int y)
-{
-        ClockFacePrivate *priv;
-        double phi;
-        int hour, minute;
-
-        priv = CLOCK_FACE_GET_PRIVATE (this);
-
-        /* decode the minute hand */
-        /* normalise the coordinates around the origin */
-        x -= GTK_WIDGET (this)->allocation.width / 2;
-        y -= GTK_WIDGET (this)->allocation.height / 2;
-
-        /* phi is a bearing from north clockwise, use the same geometry as we
-         * did to position the minute hand originally */
-        phi = atan2 (x, -y);
-        if (phi < 0)
-                phi += M_PI * 2;
-
-        hour = priv->time.tm_hour;
-        minute = phi * 30 / M_PI;
-
-        /* update the offset */
-        priv->minute_offset = minute - priv->time.tm_min;
-        clock_face_redraw_canvas (this);
-
-        g_signal_emit (this,
-                        clock_face_signals[TIME_CHANGED],
-                        0,
-                        hour, minute);
-}
-#endif
-
 static void
 clock_face_size_request (GtkWidget *this,
 			 GtkRequisition *requisition)
 {
         ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (this);
-        GtkRequisition req;
-        int w, h;
-
-        if (priv->face_pixbuf == NULL) {
-                /* we couldn't load the svg, so use known dimensions
-                 * for the svg files */
-                if (priv->size == CLOCK_FACE_LARGE) {
-                        requisition->width = 50;
-                        requisition->height = 50;
-                } else {
-                        requisition->width = 36;
-                        requisition->height = 36;
-                }
-                return;
-        }
-
-        w = gdk_pixbuf_get_width (GDK_PIXBUF (priv->face_pixbuf));
-        h = gdk_pixbuf_get_height (GDK_PIXBUF (priv->face_pixbuf));
 
         if (priv->size_widget != NULL) {
+                GtkRequisition req;
+
                 /* Tie our size to the height of the size_widget */
                 gtk_widget_size_request (GTK_WIDGET (priv->size_widget), &req);
 
@@ -281,24 +222,51 @@ clock_face_size_request (GtkWidget *this,
                    the balance */
                 requisition->width = req.height + req.height / 8;
                 requisition->height = req.height + req.height / 8;
+        } else if (priv->face_pixbuf != NULL) {
+                int w, h;
 
-                if (requisition->width != w || requisition->height != h) {
-                        /* resize the pixbuf */
-                        clock_face_load_face (CLOCK_FACE (this),
-					      requisition->width,
-					      requisition->height);
+                /* Use the size of the current pixbuf */
+                w = gdk_pixbuf_get_width (GDK_PIXBUF (priv->face_pixbuf));
+                h = gdk_pixbuf_get_height (GDK_PIXBUF (priv->face_pixbuf));
+
+                requisition->width = w;
+                requisition->height = h;
+        } else {
+                /* we don't know anything, so use known dimensions for the svg
+                 * files */
+                if (priv->size == CLOCK_FACE_LARGE) {
+                        requisition->width = 50;
+                        requisition->height = 50;
+                } else {
+                        requisition->width = 36;
+                        requisition->height = 36;
                 }
-
-                return;
         }
-
-        /* Otherwise, just use the size of the pixbuf we loaded */
-        requisition->width = w;
-        requisition->height = h;
 }
 
 static void
-update_time (ClockFace *this)
+clock_face_size_allocate (GtkWidget     *this,
+                          GtkAllocation *allocation)
+{
+        GtkAllocation old_allocation;
+
+        old_allocation.width = this->allocation.width;
+        old_allocation.height = this->allocation.height;
+
+        if (GTK_WIDGET_CLASS (clock_face_parent_class)->size_allocate)
+                GTK_WIDGET_CLASS (clock_face_parent_class)->size_allocate (this, allocation);
+
+        if (old_allocation.width  == allocation->width &&
+            old_allocation.height == allocation->height)
+                return;
+
+        /* Reload the face for the new size */
+        update_time_and_face (CLOCK_FACE (this), TRUE);
+}
+
+static void
+update_time_and_face (ClockFace *this,
+                      gboolean   force_face_loading)
 {
         ClockFacePrivate *priv;
 	ClockFaceTimeOfDay timeofday;
@@ -315,6 +283,7 @@ update_time (ClockFace *this)
         }
 
 	/* FIXME  this should be a gconf setting
+         * Or we could use some code from clock-sun.c?
          * currently we hardcode
          * morning 7-9
          * day 9-17
@@ -332,36 +301,25 @@ update_time (ClockFace *this)
 	else
 		timeofday = CLOCK_FACE_NIGHT;
 
-	if (priv->timeofday != timeofday) {
+	if (priv->timeofday != timeofday || force_face_loading) {
 		gint width, height;
 
 		priv->timeofday = timeofday;
 
-		width = GTK_WIDGET (this)->requisition.width;
-		height = GTK_WIDGET (this)->requisition.height;
+		width = GTK_WIDGET (this)->allocation.width;
+		height = GTK_WIDGET (this)->allocation.height;
 
-		if (width == 0)
-			width = -1;
-		if (height == 0)
-			height = -1;
-
-		clock_face_load_face (this, width, height);
+                /* Only load the pixbuf if we have some space allocated.
+                 * Note that 1x1 is not really some space... */
+		if (width > 1 && height > 1)
+                        clock_face_load_face (this, width, height);
 	}
 }
 
 gboolean
 clock_face_refresh (ClockFace *this)
 {
-        ClockFacePrivate *priv;
-
-        priv = CLOCK_FACE_GET_PRIVATE (this);
-
-        if (!priv->running) {
-                return FALSE;
-        }
-
-	update_time (this);
-
+	update_time_and_face (this, FALSE);
         clock_face_redraw_canvas (this);
 
         return TRUE; /* keep running this event */
@@ -373,11 +331,7 @@ clock_face_new (ClockFaceSize size)
         GObject *obj = g_object_new (INTL_TYPE_CLOCK_FACE, NULL);
         ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (obj);
 
-        /* FIXME: this is horribly broken from a GObject perspective.
-         * Everything should be done in the constructor */
         priv->size = size;
-
-        update_time (CLOCK_FACE (obj));
 
         return GTK_WIDGET (obj);
 }
@@ -393,8 +347,6 @@ clock_face_new_with_location (ClockFaceSize size,
         priv->size = size;
         priv->location = g_object_ref (loc);
         priv->size_widget = g_object_ref (size_widget);
-
-        update_time (CLOCK_FACE (obj));
 
         return GTK_WIDGET (obj);
 }
@@ -425,16 +377,6 @@ clock_face_finalize (GObject *obj)
                 g_hash_table_destroy (pixbuf_cache);
                 pixbuf_cache = NULL;
         }
-}
-
-static void
-clock_face_unmap (GtkWidget *this)
-{
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (this);
-
-        priv->running = FALSE;
-
-        GTK_WIDGET_CLASS (clock_face_parent_class)->unmap (this);
 }
 
 /* The pixbuf is being disposed, so remove it from the cache */
