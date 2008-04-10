@@ -1,5 +1,20 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	Improve how the find entry is filled: always use the location name as a
+	start, and put the cursor at the end of the string so the user can
+	continue to type. Fix bug #527403
+	Be more solid against cases where there's no Locations.xml
+
+	* clock.c: (fill_location_tree): be more solid
+	(find_next_location): ditto
+	(find_entry_changed): ditto
+	(find_weather_code): ditto
+	(edit_clear): don't reset the state of the find window here, it's done
+	in run_find_location()
+	(run_find_location): improve the behavior of the find entry
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	Do not create lots of new ClockLocation everytime we load the locations
 	from gconf, and try to re-use the old ones.
 	As a side-effect, it fixes a bug where you need to click twice on Set

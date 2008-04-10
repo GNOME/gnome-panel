@@ -3410,8 +3410,12 @@ fill_location_tree (ClockData *cd)
                           G_CALLBACK (location_row_activated), cd);
 
 	model = gweather_xml_load_locations ();
-	gtk_tree_view_set_model (tree, model);
-        g_object_unref (model);
+
+	/* Can be NULL if libgweather is not correctly installed */
+	if (model) {
+		gtk_tree_view_set_model (tree, model);
+		g_object_unref (model);
+	}
 }
 
 static void
@@ -3421,23 +3425,41 @@ run_find_location (GtkButton *button, ClockData *cd)
 	GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
         GtkWidget *window;
 	const char *find;
+	const char *location;
 
 	fill_location_tree (cd);
         window = glade_xml_get_widget (cd->glade_xml, "find-location-window");
 
 	/* prefill the find entry if it's empty */
 	find = gtk_entry_get_text (GTK_ENTRY (cd->find_location_entry));
-	if (!find || !find[0]) {
-		const char *location;
+	location = gtk_entry_get_text (GTK_ENTRY (name_entry));
 
-		location = gtk_entry_get_text (GTK_ENTRY (name_entry));
-		gtk_entry_set_text (GTK_ENTRY (cd->find_location_entry),
-				    location);
+	if (g_strcmp0 (find, location) != 0 || !find || !find[0]) {
+		GtkWidget *scroll = glade_xml_get_widget (cd->glade_xml, "find-location-scroll");
+		GtkAdjustment *adjustment;
+
+		/* If we autofill the entry, reset the state of the treeview
+		 * first so that it looks like a brand new search */
+		gtk_tree_view_collapse_all (GTK_TREE_VIEW (cd->location_tree));
+
+		adjustment = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scroll));
+		gtk_adjustment_set_value (adjustment, 0);
+		gtk_scrolled_window_set_vadjustment (GTK_SCROLLED_WINDOW (scroll),
+						     adjustment);
+
+		if (g_strcmp0 (find, location) != 0)
+			gtk_entry_set_text (GTK_ENTRY (cd->find_location_entry),
+					    location);
 	}
-	gtk_widget_grab_focus (cd->find_location_entry);
 
-        gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (edit_window));
-        gtk_window_present_with_time (GTK_WINDOW (window), gtk_get_current_event_time ());
+	gtk_widget_grab_focus (cd->find_location_entry);
+	gtk_editable_set_position (GTK_EDITABLE (cd->find_location_entry),
+				   -1);
+
+        gtk_window_set_transient_for (GTK_WINDOW (window),
+				      GTK_WINDOW (edit_window));
+        gtk_window_present_with_time (GTK_WINDOW (window),
+				      gtk_get_current_event_time ());
 }
 
 static gboolean
@@ -3512,6 +3534,10 @@ find_next_location (GtkButton *button, ClockData *cd)
 
 	tree = GTK_TREE_VIEW (cd->location_tree);
 	model = gtk_tree_view_get_model (tree);
+	/* Can happen if libgweather is not correctly installed */
+	if (!model)
+		return;
+
 	entry = GTK_ENTRY (cd->find_location_entry);
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree));
 
@@ -3556,6 +3582,9 @@ find_entry_changed (GtkEditable *entry, ClockData *cd)
 
 	tree = GTK_TREE_VIEW (cd->location_tree);
 	model = gtk_tree_view_get_model (tree);
+	/* Can happen if libgweather is not correctly installed */
+	if (!model)
+		return;
 
 	selection = gtk_tree_view_get_selection (tree);
 	gtk_tree_model_get_iter_first (model, &iter);
@@ -3601,8 +3630,6 @@ edit_clear (ClockData *cd)
         GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
         GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
         GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
-        GtkWidget *scroll = glade_xml_get_widget (cd->glade_xml, "find-location-scroll");
-	GtkAdjustment *adjustment;
 
         /* clear out the old data */
         gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), -1);
@@ -3614,16 +3641,6 @@ edit_clear (ClockData *cd)
 
         gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), -1);
         gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), -1);
-
-	/* reset the state of the find window */
-	gtk_entry_set_text (GTK_ENTRY (cd->find_location_entry), "");
-
-	gtk_tree_view_collapse_all (GTK_TREE_VIEW (cd->location_tree));
-
-	adjustment = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scroll));
-	gtk_adjustment_set_value (adjustment, 0);
-	gtk_scrolled_window_set_vadjustment (GTK_SCROLLED_WINDOW (scroll),
-					     adjustment);
 }
 
 static void
@@ -3730,7 +3747,10 @@ find_weather_code (GtkTreeModel *model,
   data.distance = 1e6;
   data.location = NULL;
 
-  gtk_tree_model_foreach (GTK_TREE_MODEL (model), compare_location, &data);
+  /* Can be NULL if libgweather is not correctly installed */
+  if (model)
+	  gtk_tree_model_foreach (GTK_TREE_MODEL (model),
+			  	  compare_location, &data);
 
   if (data.location)
     code = g_strdup (data.location->code);
