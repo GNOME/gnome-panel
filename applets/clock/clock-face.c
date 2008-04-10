@@ -373,7 +373,7 @@ clock_face_finalize (GObject *obj)
 
         G_OBJECT_CLASS (clock_face_parent_class)->finalize (obj);
 
-        if (g_hash_table_size (pixbuf_cache) == 0) {
+        if (pixbuf_cache && g_hash_table_size (pixbuf_cache) == 0) {
                 g_hash_table_destroy (pixbuf_cache);
                 pixbuf_cache = NULL;
         }

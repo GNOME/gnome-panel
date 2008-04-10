@@ -1,5 +1,11 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-face.c: (clock_face_finalize): do not try to get the size of
+	the cache if there's no cache. Can happen if the faces are destroyed
+	before being shown.
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-location-tile.c: (clock_location_tile_fill): actually, we don't
 	have to call can_set_system_timezone() here since the button label is
 	dynamically set on EnterNotify anyway. Again, save some time quite
