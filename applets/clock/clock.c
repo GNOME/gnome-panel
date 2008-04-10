@@ -3785,7 +3785,10 @@ zone_combo_changed (GtkComboBox *widget, ClockData *cd)
 		city = NULL;
 
 	/* only fill fields in if not set yet, to allow correcting
-	 * a guessed timezone */
+	 * a guessed timezone. FIXME: we should be a bit more clever
+	 * and allow replacing if the value was already auto-filled by
+	 * this function (to allow just multiple tries by selecting things
+	 * in the timezone combo */
 	if (!buffer || !buffer[0]) {
 		gtk_entry_set_text (GTK_ENTRY (name_entry), city);
 	}
