@@ -1,5 +1,12 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock.c: (create_cities_section): do not refresh the tile after
+	having created it. It's already fresh when created, so no need to
+	refresh. Really small saving (clearly less than 0.01s per tile), but
+	obvious thing to do.
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-map.c: (clock_map_new): do not refresh the map here. It will
 	get refreshed on expose anyway (if not before). Save 0.03s.
 

@@ -1136,8 +1136,6 @@ create_cities_section (ClockData *cd)
                 g_signal_connect (city, "need-clock-format",
                                   G_CALLBACK (location_tile_need_clock_format_cb), cd);
 
-		clock_location_tile_refresh (city, TRUE);
-
                 gtk_box_pack_start (GTK_BOX (cd->cities_section),
                                     GTK_WIDGET (city),
                                     FALSE, FALSE, 0);
