@@ -76,8 +76,6 @@ clock_map_new (void)
 
         this = g_object_new (CLOCK_MAP_TYPE, NULL);
 
-        clock_map_refresh (this);
-
         return this;
 }
 

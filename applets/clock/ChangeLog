@@ -1,5 +1,10 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-map.c: (clock_map_new): do not refresh the map here. It will
+	get refreshed on expose anyway (if not before). Save 0.03s.
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* set-timezone.c: (can_set_system_timezone), (can_set_system_time):
 	Implement some caching of the can_do variables. This is some minor
 	saving (around 0.01s for each location when opening the calendar
