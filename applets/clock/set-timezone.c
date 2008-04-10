@@ -37,6 +37,8 @@
 
 #include "set-timezone.h"
 
+#define CACHE_VALIDITY_SEC 2
+
 static DBusGConnection *
 get_session_bus (void)
 {
@@ -190,13 +192,33 @@ out:
 gint
 can_set_system_timezone (void)
 {
-	return can_do ("org.gnome.clockapplet.mechanism.settimezone");
+	static gboolean cache = FALSE;
+	static time_t   last_refreshed = 0;
+	time_t          now;
+
+	time (&now);
+	if (ABS (now - last_refreshed) > CACHE_VALIDITY_SEC) {
+		cache = can_do ("org.gnome.clockapplet.mechanism.settimezone");
+		last_refreshed = now;
+	}
+
+	return cache;
 }
 
 gint
 can_set_system_time (void)
 {
-	return can_do ("org.gnome.clockapplet.mechanism.settime");
+	static gboolean cache = FALSE;
+	static time_t   last_refreshed = 0;
+	time_t          now;
+
+	time (&now);
+	if (ABS (now - last_refreshed) > CACHE_VALIDITY_SEC) {
+		cache = can_do ("org.gnome.clockapplet.mechanism.settime");
+		last_refreshed = now;
+	}
+
+	return cache;
 }
 
 typedef struct {

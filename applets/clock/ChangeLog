@@ -1,5 +1,12 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* set-timezone.c: (can_set_system_timezone), (can_set_system_time):
+	Implement some caching of the can_do variables. This is some minor
+	saving (around 0.01s for each location when opening the calendar
+	window), but it was kind of obvious to do.
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	Rewrite the code to set the system timezone. It should work on most
 	distributions now, instead of only the ones doing the same thing as
 	Fedora. Like the rewrite to get the timezone, it helps improve the
