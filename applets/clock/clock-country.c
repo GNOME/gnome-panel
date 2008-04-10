@@ -4,10 +4,11 @@
 #include <config.h>
 #endif
 
-#include <glib.h>
 #include <stdio.h>
 #include <string.h>
-#include <libgnome/gnome-i18n.h>
+
+#include <glib.h>
+#include <glib/gi18n.h>
 
 G_DEFINE_TYPE (ClockCountry, clock_country, G_TYPE_OBJECT)
 

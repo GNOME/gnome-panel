@@ -4,10 +4,11 @@
 #include <config.h>
 #endif
 
-#include <glib.h>
-#include <libgnome/gnome-i18n.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <glib.h>
+#include <glib/gi18n.h>
 
 G_DEFINE_TYPE (ClockZoneInfo, clock_zoneinfo, G_TYPE_OBJECT)
 

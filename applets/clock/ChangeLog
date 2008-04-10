@@ -1,5 +1,12 @@
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-country.c:
+	* clock-location-tile.c:
+	* clock-location.c:
+	* clock-zoneinfo.c: don't use libgnome/gnome-i18n.h, but glib/gi18n.h
+
+2008-04-10  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-map.c: (clock_map_init): init some fields
 	(clock_map_refresh): be a bit more clever about what we do. Do nothing
 	if we have no space allocated. Only reload the map if the allocation

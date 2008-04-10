@@ -15,7 +15,6 @@
 
 #include <glib.h>
 #include <gio/gio.h>
-#include <libgnome/gnome-i18n.h>
 
 #ifdef HAVE_NETWORK_MANAGER
 #include <dbus/dbus-glib.h>
