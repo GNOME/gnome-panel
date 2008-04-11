@@ -41,9 +41,9 @@
  */
 
 /* To compile a test program, do:
- * $ gcc -DSYSTZ_GET_TEST -Wall -o system-timezone-get `pkg-config --cflags --libs glib-2.0 gobject-2.0 gio-2.0` system-timezone.c
+ * $ gcc -DSYSTZ_GET_TEST -Wall -g -O0 -o system-timezone-get `pkg-config --cflags --libs glib-2.0 gobject-2.0 gio-2.0` system-timezone.c
  * or:
- * $ gcc -DSYSTZ_SET_TEST -Wall -o system-timezone-set `pkg-config --cflags --libs glib-2.0 gobject-2.0 gio-2.0` system-timezone.c
+ * $ gcc -DSYSTZ_SET_TEST -Wall -g -O0 -o system-timezone-set `pkg-config --cflags --libs glib-2.0 gobject-2.0 gio-2.0` system-timezone.c
  *
  * You can then read the system timezone with:
  * $ system-timezone-get
@@ -53,7 +53,9 @@
 
 
 /* FIXME: it'd be nice to filter out the timezones that we might get when
- * parsing config files that are not in zone.tab */
+ * parsing config files that are not in zone.tab. Note that it's also wrong
+ * in some cases: eg, in tzdata2008b, Asia/Calcutta got renamed to
+ * Asia/Kolkata and the old name is not in zone.tab. */
 
 #include <string.h>
 #include <unistd.h>
@@ -303,11 +305,11 @@ system_timezone_monitor_changed (GFileMonitor *handle,
  *  + However, most distributions also have the timezone setting
  *    configured somewhere else. This might be better to read it from there.
  *
+ *    Debian/Ubuntu/Gentoo (new): content of /etc/timezone
  *    Fedora/Mandriva: the ZONE key in /etc/sysconfig/clock
  *    openSUSE: the TIMEZONE key in /etc/sysconfig/clock
- *    Gentoo (old): the ZONE key in /etc/conf.d/clock
- *    Debian/Ubuntu/Gentoo (new): content of /etc/timezone
  *    Solaris/OpenSolaris: the TZ key in /etc/TIMEZONE
+ *    Gentoo (old): the ZONE key in /etc/conf.d/clock
  *
  *    FIXME: reading the system-tools-backends, it seems there's this too:
  *           ArchLinux: the TIMEZONE key in /etc/rc.conf
@@ -318,7 +320,7 @@ system_timezone_monitor_changed (GFileMonitor *handle,
  *
  */
 
-/* This works for Debian and derivatives (including Ubuntu) */
+/* This works for Debian and derivatives (including Ubuntu), and new Gentoo */
 static char *
 system_timezone_read_etc_timezone (void)
 {
@@ -588,6 +590,28 @@ system_timezone_write_etc_conf_d_clock (const char  *tz,
  *
  */
 
+static char *
+system_timezone_strip_path_if_valid (const char *filename)
+{
+        int skip;
+
+        if (!filename || !g_str_has_prefix (filename, SYSTEM_ZONEINFODIR"/"))
+                return NULL;
+
+        /* Timezone data files also live under posix/ and right/ for some
+         * reason.
+         * FIXME: make sure accepting those files is valid. I think "posix" is
+         * okay, not sure about "right" */
+        if (g_str_has_prefix (filename, SYSTEM_ZONEINFODIR"/posix/"))
+                skip = strlen (SYSTEM_ZONEINFODIR"/posix/");
+        else if (g_str_has_prefix (filename, SYSTEM_ZONEINFODIR"/right/"))
+                skip = strlen (SYSTEM_ZONEINFODIR"/right/");
+        else
+                skip = strlen (SYSTEM_ZONEINFODIR"/");
+
+        return g_strdup (filename + skip);
+}
+
 /* Read the soft symlink from /etc/localtime */
 static char *
 system_timezone_read_etc_localtime_softlink (void)
@@ -598,17 +622,9 @@ system_timezone_read_etc_localtime_softlink (void)
         if (!g_file_test (ETC_LOCALTIME, G_FILE_TEST_IS_SYMLINK))
                 return NULL;
 
-        tz = NULL;
-
         file = g_file_read_link (ETC_LOCALTIME, NULL);
-        if (g_str_has_prefix (file, SYSTEM_ZONEINFODIR"/"))
-                tz = g_strdup (file + strlen (SYSTEM_ZONEINFODIR"/"));
+        tz = system_timezone_strip_path_if_valid (file);
         g_free (file);
-
-        if (!tz || tz[0] == '\0') {
-                g_free (tz);
-                tz = NULL;
-        }
 
         return tz;
 }
@@ -636,20 +652,9 @@ recursive_compare (struct stat  *localtime_stat,
                                   &file_stat,
                                   localtime_content,
                                   localtime_content_len,
-                                  file)) {
-                        int skip;
-
-                        g_assert (g_str_has_prefix (file,
-                                                    SYSTEM_ZONEINFODIR"/"));
-
-                        if (g_str_has_prefix (file,
-                                              SYSTEM_ZONEINFODIR"/posix/"))
-                                skip = strlen (SYSTEM_ZONEINFODIR"/posix/");
-                        else
-                                skip = strlen (SYSTEM_ZONEINFODIR"/");
-
-                        return g_strdup (file + skip);
-                } else
+                                  file))
+                        return system_timezone_strip_path_if_valid (file);
+                else
                         return NULL;
         } else if (S_ISDIR (file_stat.st_mode)) {
                 GDir       *dir = NULL;
@@ -778,13 +783,15 @@ system_timezone_read_etc_localtime_content (void)
 }
 
 typedef char * (*GetSystemTimezone) (void);
+/* The order of the functions here define the priority of the methods used
+ * to find the timezone. First method has higher priority. */
 static GetSystemTimezone get_system_timezone_methods[] = {
+        system_timezone_read_etc_localtime_softlink,
         system_timezone_read_etc_timezone,
-        system_timezone_read_etc_TIMEZONE,
         system_timezone_read_etc_sysconfig_clock,
         system_timezone_read_etc_sysconfig_clock_alt,
+        system_timezone_read_etc_TIMEZONE,
         system_timezone_read_etc_conf_d_clock,
-        system_timezone_read_etc_localtime_softlink,
         system_timezone_read_etc_localtime_hardlink,
         system_timezone_read_etc_localtime_content,
         NULL
@@ -940,11 +947,15 @@ system_timezone_set_etc_timezone (const char  *zone_file,
 
 typedef gboolean (*SetSystemTimezone) (const char  *tz,
                                        GError     **error);
+/* The order here does not matter too much: we'll try to change all files
+ * that already have a timezone configured. It matters in case of error,
+ * since the process will be stopped and the last methods won't be called.
+ * So we use the same order as in get_system_timezone_methods */
 static SetSystemTimezone set_system_timezone_methods[] = {
         system_timezone_write_etc_timezone,
-        system_timezone_write_etc_TIMEZONE,
         system_timezone_write_etc_sysconfig_clock,
         system_timezone_write_etc_sysconfig_clock_alt,
+        system_timezone_write_etc_TIMEZONE,
         system_timezone_write_etc_conf_d_clock,
         NULL
 };

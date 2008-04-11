@@ -1,5 +1,17 @@
 2008-04-11  Vincent Untz  <vuntz@gnome.org>
 
+	* system-timezone.c: add/clarify some comments
+	change the default order of methods to get the timezone. First look if
+	/etc/locatime is a symlink, since it's cheap.
+	(system_timezone_strip_path_if_valid): new, to strip the prefix path of
+	a timezone filename
+	(system_timezone_read_etc_localtime_softlink): use
+	system_timezone_strip_path_if_valid() to also strip "posix/" if this is
+	the case
+	(recursive_compare): now use system_timezone_strip_path_if_valid()
+
+2008-04-11  Vincent Untz  <vuntz@gnome.org>
+
 	* system-timezone.c: (recursive_compare): handle the case where the
 	found file is /usr/share/zoneinfo/posix/Europe/Paris (ie, strip the
 	"posix/" too)
