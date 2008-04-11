@@ -1,5 +1,16 @@
 2008-04-11  Vincent Untz  <vuntz@gnome.org>
 
+	* system-timezone.c: (system_timezone_write_key_file),
+	(recursive_compare), (files_are_identical_inode),
+	(files_are_identical_content),
+	(system_timezone_read_etc_localtime_content),
+	(system_timezone_is_zone_file_valid),
+	(system_timezone_set_etc_timezone): s/unsigned int/gsize/ since it's
+	not the same on 64 bits machines. Fix bug #527441.
+	Thanks to Jan de Groot <jan@jgc.homeip.net> for debugging this.
+
+2008-04-11  Vincent Untz  <vuntz@gnome.org>
+
 	Add support for Arch Linux system timezone.
 
 	* system-timezone.c: (system_timezone_read_etc_rc_conf),

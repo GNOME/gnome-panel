@@ -447,14 +447,14 @@ system_timezone_write_key_file (const char  *filename,
                                 const char  *value,
                                 GError     **error)
 {
-        GError        *our_error;
-        char          *content;
-        unsigned int   len;
-        char          *key_eq;
-        char         **lines;
-        gboolean       replaced;
-        gboolean       retval;
-        int            n;
+        GError    *our_error;
+        char      *content;
+        gsize      len;
+        char      *key_eq;
+        char     **lines;
+        gboolean   replaced;
+        gboolean   retval;
+        int        n;
         
         if (!g_file_test (filename, G_FILE_TEST_IS_REGULAR))
                 return TRUE;
@@ -647,16 +647,16 @@ system_timezone_read_etc_localtime_softlink (void)
         return tz;
 }
 
-typedef gboolean (*CompareFiles) (struct stat  *a_stat,
-                                  struct stat  *b_stat,
-                                  const char   *a_content,
-                                  unsigned int  a_content_len,
-                                  const char   *b_filename);
+typedef gboolean (*CompareFiles) (struct stat *a_stat,
+                                  struct stat *b_stat,
+                                  const char  *a_content,
+                                  gsize        a_content_len,
+                                  const char  *b_filename);
 
 static char *
 recursive_compare (struct stat  *localtime_stat,
                    const char   *localtime_content,
-                   unsigned int  localtime_content_len,
+                   gsize         localtime_content_len,
                    char         *file,
                    CompareFiles  compare_func)
 {
@@ -709,11 +709,11 @@ recursive_compare (struct stat  *localtime_stat,
 
 
 static gboolean
-files_are_identical_inode (struct stat  *a_stat,
-                           struct stat  *b_stat,
-                           const char   *a_content,
-                           unsigned int  a_content_len,
-                           const char   *b_filename)
+files_are_identical_inode (struct stat *a_stat,
+                           struct stat *b_stat,
+                           const char  *a_content,
+                           gsize        a_content_len,
+                           const char  *b_filename)
 {
         return (a_stat->st_ino == b_stat->st_ino);
 }
@@ -740,15 +740,15 @@ system_timezone_read_etc_localtime_hardlink (void)
 }
 
 static gboolean
-files_are_identical_content (struct stat  *a_stat,
-                             struct stat  *b_stat,
-                             const char   *a_content,
-                             unsigned int  a_content_len,
-                             const char   *b_filename)
+files_are_identical_content (struct stat *a_stat,
+                             struct stat *b_stat,
+                             const char  *a_content,
+                             gsize        a_content_len,
+                             const char  *b_filename)
 {
-        char         *b_content = NULL;
-        unsigned int  b_content_len = -1;
-        int           cmp;
+        char  *b_content = NULL;
+        gsize  b_content_len = -1;
+        int    cmp;
 
         if (a_stat->st_size != b_stat->st_size)
                 return FALSE;
@@ -772,10 +772,10 @@ files_are_identical_content (struct stat  *a_stat,
 static char *
 system_timezone_read_etc_localtime_content (void)
 {
-        struct stat   stat_localtime;
-        char         *localtime_content = NULL;
-        unsigned int  localtime_content_len = -1;
-        char         *retval;
+        struct stat  stat_localtime;
+        char        *localtime_content = NULL;
+        gsize        localtime_content_len = -1;
+        char        *retval;
 
         if (g_stat (ETC_LOCALTIME, &stat_localtime) != 0)
                 return NULL;
@@ -866,11 +866,11 @@ static gboolean
 system_timezone_is_zone_file_valid (const char  *zone_file,
                                     GError     **error)
 {
-        GError       *our_error;
-        GIOChannel   *channel;
-        GIOStatus     status;
-        char          buffer[strlen (TZ_MAGIC)];
-        unsigned int  read;
+        GError     *our_error;
+        GIOChannel *channel;
+        GIOStatus   status;
+        char        buffer[strlen (TZ_MAGIC)];
+        gsize       read;
 
         /* First, check the zone_file is properly rooted */
         if (!g_str_has_prefix (zone_file, SYSTEM_ZONEINFODIR"/")) {
@@ -925,9 +925,9 @@ static gboolean
 system_timezone_set_etc_timezone (const char  *zone_file,
                                   GError     **error)
 {
-        GError       *our_error;
-        char         *content;
-        unsigned int  len;
+        GError *our_error;
+        char   *content;
+        gsize   len;
 
         if (!system_timezone_is_zone_file_valid (zone_file, error))
                 return FALSE;
