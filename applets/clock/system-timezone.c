@@ -636,9 +636,20 @@ recursive_compare (struct stat  *localtime_stat,
                                   &file_stat,
                                   localtime_content,
                                   localtime_content_len,
-                                  file))
-                        return g_strdup (file + strlen (SYSTEM_ZONEINFODIR"/"));
-                else
+                                  file)) {
+                        int skip;
+
+                        g_assert (g_str_has_prefix (file,
+                                                    SYSTEM_ZONEINFODIR"/"));
+
+                        if (g_str_has_prefix (file,
+                                              SYSTEM_ZONEINFODIR"/posix/"))
+                                skip = strlen (SYSTEM_ZONEINFODIR"/posix/");
+                        else
+                                skip = strlen (SYSTEM_ZONEINFODIR"/");
+
+                        return g_strdup (file + skip);
+                } else
                         return NULL;
         } else if (S_ISDIR (file_stat.st_mode)) {
                 GDir       *dir = NULL;
@@ -741,6 +752,7 @@ system_timezone_read_etc_localtime_content (void)
         struct stat   stat_localtime;
         char         *localtime_content = NULL;
         unsigned int  localtime_content_len = -1;
+        char         *retval;
 
         if (g_stat (ETC_LOCALTIME, &stat_localtime) != 0)
                 return NULL;
@@ -754,11 +766,15 @@ system_timezone_read_etc_localtime_content (void)
                                   NULL))
                 return NULL;
 
-        return recursive_compare (&stat_localtime,
-                                  localtime_content,
-                                  localtime_content_len,
-                                  SYSTEM_ZONEINFODIR,
-                                  files_are_identical_content);
+        retval = recursive_compare (&stat_localtime,
+                                   localtime_content,
+                                   localtime_content_len,
+                                   SYSTEM_ZONEINFODIR,
+                                   files_are_identical_content);
+
+        g_free (localtime_content);
+
+        return retval;
 }
 
 typedef char * (*GetSystemTimezone) (void);

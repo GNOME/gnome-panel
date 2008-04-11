@@ -1,3 +1,10 @@
+2008-04-11  Vincent Untz  <vuntz@gnome.org>
+
+	* system-timezone.c: (recursive_compare): handle the case where the
+	found file is /usr/share/zoneinfo/posix/Europe/Paris (ie, strip the
+	"posix/" too)
+	(system_timezone_read_etc_localtime_content): plug leak
+
 2008-04-10  Vincent Untz  <vuntz@gnome.org>
 
 	Improve how the find entry is filled: always use the location name as a
