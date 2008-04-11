@@ -71,6 +71,7 @@
 #ifndef SYSTZ_SET_TEST
 #define ETC_TIMEZONE        "/etc/timezone"
 #define ETC_TIMEZONE_MAJ    "/etc/TIMEZONE"
+#define ETC_RC_CONF         "/etc/rc.conf"
 #define ETC_SYSCONFIG_CLOCK "/etc/sysconfig/clock"
 #define ETC_CONF_D_CLOCK    "/etc/conf.d/clock"
 #define ETC_LOCALTIME       "/etc/localtime"
@@ -79,6 +80,7 @@
 #define TEST_PREFIX         "/tmp/systz-test"
 #define ETC_TIMEZONE        TEST_PREFIX"/etc/timezone"
 #define ETC_TIMEZONE_MAJ    TEST_PREFIX"/etc/TIMEZONE"
+#define ETC_RC_CONF         TEST_PREFIX"/etc/rc.conf"
 #define ETC_SYSCONFIG_CLOCK TEST_PREFIX"/etc/sysconfig/clock"
 #define ETC_CONF_D_CLOCK    TEST_PREFIX"/etc/conf.d/clock"
 #define ETC_LOCALTIME       TEST_PREFIX"/etc/localtime"
@@ -309,10 +311,10 @@ system_timezone_monitor_changed (GFileMonitor *handle,
  *    Fedora/Mandriva: the ZONE key in /etc/sysconfig/clock
  *    openSUSE: the TIMEZONE key in /etc/sysconfig/clock
  *    Solaris/OpenSolaris: the TZ key in /etc/TIMEZONE
+ *    Arch Linux: the TIMEZONE key in /etc/rc.conf
  *    Gentoo (old): the ZONE key in /etc/conf.d/clock
  *
  *    FIXME: reading the system-tools-backends, it seems there's this too:
- *           ArchLinux: the TIMEZONE key in /etc/rc.conf
  *           Solaris: the TZ key in /etc/default/init
  *                    /etc/TIMEZONE seems to be a link to /etc/default/init
  *
@@ -584,6 +586,22 @@ system_timezone_write_etc_conf_d_clock (const char  *tz,
                                                "TIMEZONE", tz, error);
 }
 
+/* This works for Arch Linux */
+static char *
+system_timezone_read_etc_rc_conf (void)
+{
+        return system_timezone_read_key_file (ETC_RC_CONF,
+                                              "TIMEZONE");
+}
+
+static gboolean
+system_timezone_write_etc_rc_conf (const char  *tz,
+                                   GError     **error)
+{
+        return system_timezone_write_key_file (ETC_RC_CONF,
+                                               "TIMEZONE", tz, error);
+}
+
 /*
  *
  * First, getting the timezone.
@@ -786,12 +804,18 @@ typedef char * (*GetSystemTimezone) (void);
 /* The order of the functions here define the priority of the methods used
  * to find the timezone. First method has higher priority. */
 static GetSystemTimezone get_system_timezone_methods[] = {
+        /* cheap and "more correct" than data from a config file */
         system_timezone_read_etc_localtime_softlink,
+        /* reading various config files */
         system_timezone_read_etc_timezone,
         system_timezone_read_etc_sysconfig_clock,
         system_timezone_read_etc_sysconfig_clock_alt,
         system_timezone_read_etc_TIMEZONE,
+        system_timezone_read_etc_rc_conf,
+        /* reading deprecated config files */
         system_timezone_read_etc_conf_d_clock,
+        /* reading /etc/timezone directly. Expensive since we have to stat
+         * many files */
         system_timezone_read_etc_localtime_hardlink,
         system_timezone_read_etc_localtime_content,
         NULL
@@ -952,10 +976,15 @@ typedef gboolean (*SetSystemTimezone) (const char  *tz,
  * since the process will be stopped and the last methods won't be called.
  * So we use the same order as in get_system_timezone_methods */
 static SetSystemTimezone set_system_timezone_methods[] = {
+        /* writing various config files if they exist and have the
+         * setting already present */
         system_timezone_write_etc_timezone,
         system_timezone_write_etc_sysconfig_clock,
         system_timezone_write_etc_sysconfig_clock_alt,
         system_timezone_write_etc_TIMEZONE,
+        system_timezone_write_etc_rc_conf,
+        /* writing deprecated config files if they exist and have the
+         * setting already present */
         system_timezone_write_etc_conf_d_clock,
         NULL
 };

@@ -1,5 +1,14 @@
 2008-04-11  Vincent Untz  <vuntz@gnome.org>
 
+	Add support for Arch Linux system timezone.
+
+	* system-timezone.c: (system_timezone_read_etc_rc_conf),
+	(system_timezone_write_etc_rc_conf): new methods for config in Arch
+	Linux
+	Add the new methods to the list of methods.
+
+2008-04-11  Vincent Untz  <vuntz@gnome.org>
+
 	* system-timezone.c: add/clarify some comments
 	change the default order of methods to get the timezone. First look if
 	/etc/locatime is a symlink, since it's cheap.
