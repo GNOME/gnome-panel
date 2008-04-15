@@ -1,4 +1,30 @@
 ================
+Version 2.22.1.3
+================
+
+  Clock Applet
+
+	* Fix internal handling of locations to not create new locations all
+	  the time. As a side-effect, this fixes the location not being
+	  recognized as the current one when the user clicks "Set" (Vincent)
+	* Improve pre-filling of the find entry (Vincent)
+	* Be more solid against cases where there's no Locations.xml (Vincent)
+	* Better handling of some special cases when detecting the system
+	  timezone (like /usr/share/zoneinfo/posix/Europe/Paris) (Vincent)
+	* Fix memory leaks (Vincent)
+	* First look if /etc/localtime is a symbolic link when detecting the
+	  current timezone instead of first parsing a few files (Vincent)
+	* Add support for Arch Linux system timezone (Vincent)
+	* Fix a crash in the system timezone reading/writing code on 64-bits
+	  machines (Vincent)
+
+  Misc
+
+	* Add new keys to gnome-panel.desktop to also make it work with
+	  gnome-session 2.23/2.24. The panel will still work with gnome-session
+	  2.22, of course. (Lucas Rocha)
+
+================
 Version 2.22.1.2
 ================
 
