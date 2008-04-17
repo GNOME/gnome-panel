@@ -2954,21 +2954,6 @@ set_custom_format_cb (GtkEntry  *entry,
 }
 
 static void
-properties_response_cb (GtkWidget *widget,
-			int        id,
-			ClockData *cd)
-{
-        /* FMQ: was used from old preferences dialog; fix this up */
-
-	if (id == GTK_RESPONSE_HELP)
-		clock_utils_display_help (cd->applet,
-					  "clock", "clock", "clock-settings");
-
-	else
-		gtk_widget_destroy (widget);
-}
-
-static void
 prefs_locations_changed (GtkTreeSelection *selection, ClockData *cd)
 {
 	gint n;
@@ -3693,6 +3678,13 @@ prefs_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
         return TRUE;
 }
 
+static void
+prefs_help (GtkWidget *widget, ClockData *cd)
+{
+	clock_utils_display_help (cd->applet,
+				  "clock", "clock", "clock-settings");
+}
+
 typedef struct {
   const gchar *name;
   const gchar *country_code;
@@ -4147,6 +4139,7 @@ ensure_prefs_window_is_created (ClockData *cd)
 {
         GtkWidget *edit_window;
 	GtkWidget *prefs_close_button;
+	GtkWidget *prefs_help_button;
         GtkWidget *edit_cancel_button;
         GtkWidget *edit_ok_button;
         GtkWidget *zone_combo;
@@ -4163,6 +4156,7 @@ ensure_prefs_window_is_created (ClockData *cd)
 	gtk_window_set_icon_name (GTK_WINDOW (cd->prefs_window), CLOCK_ICON);
 
         prefs_close_button = glade_xml_get_widget (cd->glade_xml, "prefs-close-button");
+        prefs_help_button = glade_xml_get_widget (cd->glade_xml, "prefs-help-button");
         cd->prefs_locations = GTK_TREE_VIEW (glade_xml_get_widget (cd->glade_xml, "cities_list"));
 
         selection = gtk_tree_view_get_selection (cd->prefs_locations);
@@ -4174,6 +4168,9 @@ ensure_prefs_window_is_created (ClockData *cd)
 
         g_signal_connect (G_OBJECT (prefs_close_button), "clicked",
                           G_CALLBACK (prefs_hide), cd);
+
+        g_signal_connect (G_OBJECT (prefs_help_button), "clicked",
+                          G_CALLBACK (prefs_help), cd);
 
         cd->prefs_location_remove_button = glade_xml_get_widget (cd->glade_xml, "prefs-locations-remove-button");
 
