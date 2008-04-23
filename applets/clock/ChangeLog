@@ -1,3 +1,9 @@
+2008-04-23  Matthias Clasen  <mclasen@redhat.com>
+
+	* system-timezone.c (system_timezone_is_valid): Don't assume
+	that g_io_channel_read_chars returns a NUL-terminated string - 
+	it doesn't.
+
 ==================== 2.23.1 ====================
 
 2008-04-21  Vincent Untz  <vuntz@gnome.org>
