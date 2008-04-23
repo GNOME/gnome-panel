@@ -910,7 +910,7 @@ system_timezone_is_zone_file_valid (const char  *zone_file,
                 return FALSE;
         }
 
-        if (read != 4 || strcmp (buffer, TZ_MAGIC) != 0) {
+        if (read != strlen (TZ_MAGIC) || strncmp (buffer, TZ_MAGIC, strlen (TZ_MAGIC)) != 0) {
                 g_set_error (error, SYSTEM_TIMEZONE_ERROR,
                              SYSTEM_TIMEZONE_ERROR_INVALID_TIMEZONE_FILE,
                              "%s is not a timezone file",
