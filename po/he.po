@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-11 14:49+0100\n"
+"POT-Creation-Date: 2008-04-17 04:10+0100\n"
 "PO-Revision-Date: 2008-02-20 18:37+0300\n"
 "Last-Translator: Yair Hershkovitz <>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -62,7 +62,7 @@ msgid "_Preferences"
 msgstr "_העדפות"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4058
+#: ../applets/clock/clock.c:4398
 msgid "Clock"
 msgstr "שעון"
 
@@ -78,7 +78,7 @@ msgstr "יצרן ליצירת ישומוני שעון."
 msgid "Get the current time and date"
 msgstr "קבל את השעה והתאריך הנוכחיים"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:420
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:425
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -87,8 +87,8 @@ msgstr "%l:%M %p"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:422
-#: ../applets/clock/clock.c:1552 ../applets/clock/clock-location-tile.c:435
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:427
+#: ../applets/clock/clock.c:1552 ../applets/clock/clock-location-tile.c:472
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -99,45 +99,45 @@ msgstr "%H:%M"
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:766
 msgid "Tasks"
 msgstr "משימות"
 
-#: ../applets/clock/calendar-window.c:765
-#: ../applets/clock/calendar-window.c:938
-#: ../applets/clock/calendar-window.c:1554
+#: ../applets/clock/calendar-window.c:766
+#: ../applets/clock/calendar-window.c:942
+#: ../applets/clock/calendar-window.c:1571
 msgid "Edit"
 msgstr "עריכה"
 
-#: ../applets/clock/calendar-window.c:883
+#: ../applets/clock/calendar-window.c:887
 msgid "All Day"
 msgstr "כל היום"
 
-#: ../applets/clock/calendar-window.c:1019
+#: ../applets/clock/calendar-window.c:1026
 msgid "Appointments"
 msgstr "פגישות"
 
-#: ../applets/clock/calendar-window.c:104
+#: ../applets/clock/calendar-window.c:1051
 msgid "Birthdays and Anniversaries"
 msgstr "ימי הולדת וימי שנה"
 
-#: ../applets/clock/calendar-window.c:1069
+#: ../applets/clock/calendar-window.c:1076
 msgid "Weather Information"
 msgstr "מידע על התחזית"
 
-#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
+#: ../applets/clock/calendar-window.c:1571 ../applets/clock/clock.glade.h:15
 msgid "Locations"
 msgstr "מקומות"
 
-#: ../applets/clock/calendar-window.c:1850
+#: ../applets/clock/calendar-window.c:1870
 msgid "Calendar"
 msgstr "לוח שנה"
 
-#: ../applets/clock/clock.c:420
+#: ../applets/clock/clock.c:425
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:422 ../applets/clock/clock.c:1550
+#: ../applets/clock/clock.c:427 ../applets/clock/clock.c:1550
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -146,7 +146,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:442
+#: ../applets/clock/clock.c:447
 msgid "%a %b %e"
 msgstr "%a %d ב%b"
 
@@ -154,7 +154,7 @@ msgstr "%a %d ב%b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:449
+#: ../applets/clock/clock.c:454
 #, c-format
 msgid ""
 "%1$s\n"
@@ -167,7 +167,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:462
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -175,27 +175,27 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:639
+#: ../applets/clock/clock.c:644
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:669
+#: ../applets/clock/clock.c:674
 msgid "Click to hide your appointments and tasks"
 msgstr "לחץ כדי להסתיר את הפגישות והמשימות שלך"
 
-#: ../applets/clock/clock.c:672
+#: ../applets/clock/clock.c:677
 msgid "Click to view your appointments and tasks"
 msgstr "לחץ כדי לראות את הפגישות והמשימות שלך"
 
-#: ../applets/clock/clock.c:676
+#: ../applets/clock/clock.c:681
 msgid "Click to hide month calendar"
 msgstr "לחץ כדי להסתיר את לוח השנה החודשי"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:684
 msgid "Click to view month calendar"
 msgstr "לחץ כדי לראות לוח שנה חודשי"
 
-#: ../applets/clock/clock.c:1402
+#: ../applets/clock/clock.c:1400
 msgid "Computer Clock"
 msgstr "שעון מחשב"
 
@@ -220,7 +220,7 @@ msgstr "נכשל בהפעלת הכלי להגדרת השעה: %s"
 msgid "Set System Time..."
 msgstr "קבע את שעת המערכת..."
 
-#: ../applets/clock/clock.c:1694 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1694 ../applets/clock/clock.glade.h:19
 msgid "Set System Time"
 msgstr "קבע את שעת המערכת"
 
@@ -228,52 +228,51 @@ msgstr "קבע את שעת המערכת"
 msgid "Failed to set the system time"
 msgstr "נכשל בקביעת שעת המערכת"
 
-#: ../applets/clock/clock.c:1881
+#: ../applets/clock/clock.c:1896
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "נכשל במציאת תוכנית להגדרת התאריך והשעה. אולי אין כזו תוכנית מותקנת?"
 
-#: ../applets/clock/clock.c:2700
+#: ../applets/clock/clock.c:2828
 msgid "Custom format"
 msgstr "סידור מותאם אישית"
 
-#: ../applets/clock/clock.c:3500 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:540
+#: ../applets/clock/clock.c:3795 ../applets/clock/clock-location-tile.c:573
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3759
+#: ../applets/clock/clock.c:4091
 msgid "City Name"
 msgstr "שם העיר"
 
-#: ../applets/clock/clock.c:3763
+#: ../applets/clock/clock.c:4095
 msgid "City Time Zone"
 msgstr "אזור זמן העיר"
 
-#: ../applets/clock/clock.c:3954
+#: ../applets/clock/clock.c:4294
 msgid "24 hour"
 msgstr "24 שעות"
 
-#: ../applets/clock/clock.c:3955
+#: ../applets/clock/clock.c:4295
 msgid "UNIX time"
 msgstr "זמן UNIX"
 
-#: ../applets/clock/clock.c:3956
+#: ../applets/clock/clock.c:4296
 msgid "Internet time"
 msgstr "זמן אינטרנט"
 
-#: ../applets/clock/clock.c:3964
+#: ../applets/clock/clock.c:4304
 msgid "Custom _format:"
 msgstr "_סידור מותאם אישית"
 
-#: ../applets/clock/clock.c:4061
+#: ../applets/clock/clock.c:4401
 msgid "The Clock displays the current time and date"
 msgstr "השעון מציג את הזמן והתאריך הנוכחיים"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4064 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4404 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -288,42 +287,34 @@ msgstr ""
 "‏http://gnome-il.berlios.de"
 
 #: ../applets/clock/clock.glade.h:1
-msgid "12 _hour format"
-msgstr "תצוגת שעון 12 _שעות"
-
-#: ../applets/clock/clock.glade.h:2
-msgid "24 h_our format"
-msgstr "תצוגת שעון 24 ש_עות"
-
-#: ../applets/clock/clock.glade.h:3
 msgid "<b>Clock Options</b>"
 msgstr "<b>אפשרויות שעון</b>"
 
-#: ../applets/clock/clock.glade.h:4
+#: ../applets/clock/clock.glade.h:2
 msgid "<b>Display</b>"
 msgstr "‏<b>תצוגה</b>"
 
-#: ../applets/clock/clock.glade.h:5
+#: ../applets/clock/clock.glade.h:3
 msgid "<b>Panel Display</b>"
 msgstr "<b>תצוגת לוח</b>"
 
-#: ../applets/clock/clock.glade.h:6
+#: ../applets/clock/clock.glade.h:4
 msgid "<b>Time Settings</b>"
 msgstr "<b>הגדרות זמןb>"
 
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.glade.h:5
 msgid "<i>(optional)</i>"
 msgstr "<i>(אפשרי)</i>"
 
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.glade.h:6
 msgid "Clock Preferences"
 msgstr "העדפות שעון"
 
-#: ../applets/clock/clock.glade.h:9
+#: ../applets/clock/clock.glade.h:7
 msgid "Current Time:"
 msgstr "זמן נוכחי:"
 
-#: ../applets/clock/clock.glade.h:10
+#: ../applets/clock/clock.glade.h:8
 msgid ""
 "East\n"
 "West"
@@ -331,32 +322,32 @@ msgstr ""
 "מזרח\n"
 "מערב"
 
-#: ../applets/clock/clock.glade.h:12
+#: ../applets/clock/clock.glade.h:10
 msgid "Find _Next"
 msgstr "חפש את _הבא"
 
-#: ../applets/clock/clock.glade.h:13
+#: ../applets/clock/clock.glade.h:11
 msgid "Find..."
 msgstr "חפש..."
 
-#: ../applets/clock/clock.glade.h:14
+#: ../applets/clock/clock.glade.h:12
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
 msgid "General"
 msgstr "כללי"
 
-#: ../applets/clock/clock.glade.h:15
+#: ../applets/clock/clock.glade.h:13
 msgid "Latitude:"
 msgstr "קו רוחב:"
 
-#: ../applets/clock/clock.glade.h:16
+#: ../applets/clock/clock.glade.h:14
 msgid "Location Name:"
 msgstr "שם מיקום:"
 
-#: ../applets/clock/clock.glade.h:18
+#: ../applets/clock/clock.glade.h:16
 msgid "Longitude:"
 msgstr "קו אורך:"
 
-#: ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.glade.h:17
 msgid ""
 "North\n"
 "South"
@@ -364,41 +355,49 @@ msgstr ""
 "צפון\n"
 "דרום"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.glade.h:20
 msgid "Show _temperature"
 msgstr "הצג _טמפרטורה"
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.glade.h:21
 msgid "Show _weather"
 msgstr "הצג _מזג אוויר"
 
-#: ../applets/clock/clock.glade.h:24
+#: ../applets/clock/clock.glade.h:22
 msgid "Show seco_nds"
 msgstr "הצג שנ_יות"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.glade.h:23
 msgid "Show the _date"
 msgstr "הצג _תאריך"
 
-#: ../applets/clock/clock.glade.h:26
+#: ../applets/clock/clock.glade.h:24
 msgid "Time Settings"
-msgstr "הגדרות זמן"
+msgstr "הגדרות שעה"
 
-#: ../applets/clock/clock.glade.h:27
+#: ../applets/clock/clock.glade.h:25
 msgid "Time _Settings"
-msgstr "_הגדרות זמן"
+msgstr "_הגדרות שעה"
 
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.glade.h:26
 msgid "Time:"
 msgstr "שעה:‏"
 
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.glade.h:27
 msgid "Timezone:"
-msgstr "אזור זמן:"
+msgstr "איזור זמן:"
 
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.glade.h:28
 msgid "Weather"
 msgstr "מזג אויר"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "_12 hour format"
+msgstr "תצורת 12 _שעות"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "_24 hour format"
+msgstr "תצורת 24 ש_עות"
 
 #: ../applets/clock/clock.glade.h:31
 msgid "_Find:"
@@ -617,25 +616,20 @@ msgstr "Use UNIX time"
 msgid "Use UTC"
 msgstr "השתמש ב UTC"
 
-#. make a fake location with a null TZ
-#. make a fake location with the current TZ
-#: ../applets/clock/clock-location.c:364 ../applets/clock/clock-location.c:371
-msgid "Unknown Location"
-msgstr "מיקום לא ידוע"
-
-#: ../applets/clock/clock-location-tile.c:200
+#: ../applets/clock/clock-location-tile.c:182
 msgid "Failed to set the system timezone"
 msgstr "נכשל בקביעת אזור הזמן במערכת"
 
-#: ../applets/clock/clock-location-tile.c:225
+#: ../applets/clock/clock-location-tile.c:230
 msgid "<small>Set...</small>"
 msgstr "<small>קבע...</small>"
 
-#: ../applets/clock/clock-location-tile.c:226
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set</small>"
 msgstr "<small>קבע</small>"
 
-#: ../applets/clock/clock-location-tile.c:287
+#. FIXME: this needs to talk about locations, not timezones
+#: ../applets/clock/clock-location-tile.c:307
 msgid "Set as current timezone for this computer"
 msgstr "קבע כאיזור זמן נוכחי עבור המחשב הזה"
 
@@ -645,7 +639,7 @@ msgstr "קבע כאיזור זמן נוכחי עבור המחשב הזה"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:408
+#: ../applets/clock/clock-location-tile.c:445
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -655,7 +649,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:417
+#: ../applets/clock/clock-location-tile.c:454
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -664,23 +658,22 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:427
+#: ../applets/clock/clock-location-tile.c:464
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:550
-#: ../applets/clock/clock-location-tile.c:556
+#: ../applets/clock/clock-location-tile.c:585
+#: ../applets/clock/clock-location-tile.c:593
 msgid "Unknown"
 msgstr "לא ידוע"
 
-#: ../applets/clock/clock-location-tile.c:551
+#: ../applets/clock/clock-location-tile.c:586
 #, c-format
 msgid "%s, feels like %s"
-msgstr ""
-"‏%s, מרגיש כמו %s"
+msgstr "‏%s, מרגיש כמו %s"
 
-#: ../applets/clock/clock-location-tile.c:561
+#: ../applets/clock/clock-location-tile.c:604
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "זריחה: %s \\ שקיעה: %s"
@@ -691,94 +684,31 @@ msgstr "זריחה: %s \\ שקיעה: %s"
 msgid "There was an error displaying help: %s"
 msgstr "ארעה שגיאה בהצגת העזרה: %s"
 
-#: ../applets/clock/timezone.glade.h:1
-msgid "<b>Active timezones</b>"
-msgstr "<b>אזורי זמן פעילים</b>"
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "שנה את שעת המערכת"
 
-#: ../applets/clock/timezone.glade.h:2
-msgid "<b>Add timezone</b>"
-msgstr "<b>הוסף אזור זמן</b>"
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "שנה את איזור הזמן במערכת"
 
-#: ../applets/clock/timezone.glade.h:3
-msgid "<small><b>Location:</b></small>"
-msgstr "<small><b>מיקום:</b></small>"
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "הגדרות שעון חומרה"
 
-#: ../applets/clock/timezone.glade.h:4
-msgid ""
-"<small><i>Click on the map to zoom and select the timezone of a city, or "
-"right click to zoom out.</i></small>"
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+#, fuzzy
+msgid "Privileges are required to change the system time zone."
+msgstr "נכשל בקביעת אזור הזמן במערכת"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+#, fuzzy
+msgid "Privileges are required to change the system time."
+msgstr "נכשל בקביעת שעת המערכת"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
 msgstr ""
-"<small><i>לחץ על המפה כדי להתקרב ובחר את אזור הזמן של עירך. השתמש בלחיצה "
-"ימנית כדי להתרחק.</i></small>"
-
-#: ../applets/clock/timezone.glade.h:5
-msgid "Edit Timezones"
-msgstr "ערוך אזורי זמן"
-
-#. Translators: the first %s is a place and the
-#. * second is a time. Result looks like this:
-#. * Europe/Paris - 15:45
-#: ../applets/clock/tz-sel-dialog.c:196
-#, c-format
-msgid "%s - %s"
-msgstr "%s - %s"
-
-#: ../applets/clock/tz-sel-dialog.c:205
-msgid "move the mouse on the map"
-msgstr "הזז את העכבר על המפה"
-
-#: ../applets/clock/tz-sel-dialog.c:207
-#, c-format
-msgid "<b>Location:</b> %s"
-msgstr "<b>מיקום:</b> %s"
-
-#: ../applets/clock/tz-sel-dialog.c:812
-msgid "Name"
-msgstr "שם"
-
-#: ../applets/clock/tz-sel-dialog.c:825
-msgid "Timezone"
-msgstr "אזור זמן"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:102
-#, c-format
-msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr ""
-"‏%s עם שעון קיץ (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:111
-#, c-format
-msgid "%s (UTC %s%.2ld:%.2ld)"
-msgstr ""
-"‏%s "
-"(UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name (as in
-#. * "Europe/Paris"), the second string is a country name abbreviation
-#. * (as in "FR") and the last string is another line (it's the one
-#. * looking like "BST (UTC +01:00)")
-#: ../applets/clock/tz-window.c:121
-#, c-format
-msgid ""
-"%s - %s\n"
-"%s"
-msgstr ""
-"‏%s - %s\n"
-"‏%s"
-
-#: ../applets/clock/tz-window.c:283
-msgid "_Edit timezones..."
-msgstr "_ערוך אזורי זמן..."
-
-#: ../applets/clock/tz-window.c:370
-msgid "Timezones"
-msgstr "אזורי זמן"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -1381,17 +1311,17 @@ msgid "- Edit .desktop files"
 msgstr "- Edit .desktop files"
 
 # console messages end
-#: ../gnome-panel/gnome-desktop-item-edit.c:142
-#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:981
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "צור משגר"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:169
-#: ../gnome-panel/gnome-desktop-item-edit.c:192
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "מאפייני ספרייה"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:819
+#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "מאפייני משגר"
 
@@ -1427,6 +1357,7 @@ msgid "Could not use dropped item"
 msgstr "לא ניתן להשתמש בפריט ששוחרר"
 
 #: ../gnome-panel/launcher.c:501
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "לא סופקה כתובת לקובץ שולחן העבודה של משגר הלוח\n"
 
@@ -1514,8 +1445,7 @@ msgstr "ימין/שמאל לתנועה, רווח ליריה, 'p' להשהייה,
 
 #: ../gnome-panel/nothing.cP:1369
 msgid "Killer GEGLs from Outer Space"
-msgstr ""
-"‏GEGLים קטלניים מהחלל החיצון"
+msgstr "‏GEGLים קטלניים מהחלל החיצון"
 
 #: ../gnome-panel/panel-action-button.c:126
 msgid "_Activate Screensaver"
@@ -1657,6 +1587,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "חפש _פריט להוסיף ל \"%s\":"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "הוסף למגירה"
 
@@ -1665,6 +1596,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "חפש _פריט כדי להוסיף למגירה:"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "הוסף ללוח"
 
@@ -1672,31 +1604,31 @@ msgstr "הוסף ללוח"
 msgid "Find an _item to add to the panel:"
 msgstr "חפש _פריט כדי להוסיף ללוח:"
 
-#: ../gnome-panel/panel-applet-frame.c:840
+#: ../gnome-panel/panel-applet-frame.c:842
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "חריגה מתפריט קופץ '%s'\n"
 
-#: ../gnome-panel/panel-applet-frame.c:965
+#: ../gnome-panel/panel-applet-frame.c:967
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" הסתיים באופן בלתי צפוי"
 
-#: ../gnome-panel/panel-applet-frame.c:967
+#: ../gnome-panel/panel-applet-frame.c:969
 msgid "Panel object has quit unexpectedly"
 msgstr "אובייקט הלוח הסתיים באופן בלתי צפוי"
 
-#: ../gnome-panel/panel-applet-frame.c:974
+#: ../gnome-panel/panel-applet-frame.c:976
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "אם תטען מחדש את אובייקט הלוח, הוא יחזור אוטומטית למקומו בלוח."
 
-#: ../gnome-panel/panel-applet-frame.c:980
+#: ../gnome-panel/panel-applet-frame.c:982
 msgid "_Don't Reload"
 msgstr "_אל תטען מחדש"
 
-#: ../gnome-panel/panel-applet-frame.c:981
+#: ../gnome-panel/panel-applet-frame.c:983
 msgid "_Reload"
 msgstr "_רענן"
 
@@ -1705,21 +1637,21 @@ msgstr "_רענן"
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:996
-#: ../gnome-panel/panel-applet-frame.c:1084 ../gnome-panel/panel-util.c:395
+#: ../gnome-panel/panel-applet-frame.c:998
+#: ../gnome-panel/panel-applet-frame.c:1086 ../gnome-panel/panel-util.c:395
 msgid "Error"
 msgstr "שגיאה"
 
-#: ../gnome-panel/panel-applet-frame.c:1047
+#: ../gnome-panel/panel-applet-frame.c:1049
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "הלוח נתקל בתקלה בזמן טעינת \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:1063
+#: ../gnome-panel/panel-applet-frame.c:1065
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "האם אתה רוצה למחוק ישומון זה מהגדרותיך?"
 
-#: ../gnome-panel/panel-applet-frame.c:1137
+#: ../gnome-panel/panel-applet-frame.c:1139
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "לא ניתן לקבל את ממשק AppletShell מהבקרה\n"
 
@@ -2098,35 +2030,35 @@ msgstr[1] ""
 "כרגע אתה מחובר כ-\"%s\".\n"
 "המערכת תכבה באופן אוטומטי תוך %d שניות."
 
-#: ../gnome-panel/panel-logout.c:334
+#: ../gnome-panel/panel-logout.c:339
 msgid "Log out of this system now?"
 msgstr "להתנתק מהמערכת?"
 
-#: ../gnome-panel/panel-logout.c:340
+#: ../gnome-panel/panel-logout.c:345
 msgid "_Switch User"
 msgstr "ה_חלף משתמש"
 
-#: ../gnome-panel/panel-logout.c:346
+#: ../gnome-panel/panel-logout.c:351
 msgid "_Log Out"
 msgstr "_התנתק"
 
-#: ../gnome-panel/panel-logout.c:351
+#: ../gnome-panel/panel-logout.c:356
 msgid "Shut down this system now?"
 msgstr "לכבות את המערכת?"
 
-#: ../gnome-panel/panel-logout.c:356
+#: ../gnome-panel/panel-logout.c:361
 msgid "S_uspend"
 msgstr "ה_שהה"
 
-#: ../gnome-panel/panel-logout.c:361
+#: ../gnome-panel/panel-logout.c:366
 msgid "_Hibernate"
 msgstr "מצב _שינה"
 
-#: ../gnome-panel/panel-logout.c:366
+#: ../gnome-panel/panel-logout.c:371
 msgid "_Restart"
 msgstr "ה_פעל מחדש"
 
-#: ../gnome-panel/panel-logout.c:375
+#: ../gnome-panel/panel-logout.c:380
 msgid "_Shut Down"
 msgstr "_כבה"
 
@@ -2168,7 +2100,7 @@ msgstr "פתח '%s'"
 #: ../gnome-panel/panel-menu-items.c:506
 #, c-format
 msgid "Unable to scan %s for media changes"
-msgstr ""
+msgstr "לא ניתן לסרוק את %s עבור שינויים במדיה"
 
 #: ../gnome-panel/panel-menu-items.c:549
 #, c-format
@@ -2178,7 +2110,7 @@ msgstr "רענן %s"
 #: ../gnome-panel/panel-menu-items.c:585
 #, c-format
 msgid "Unable to mount %s"
-msgstr ""
+msgstr "לא ניתן לעגון את %s"
 
 #: ../gnome-panel/panel-menu-items.c:638
 #, c-format
@@ -2584,6 +2516,7 @@ msgid "pixels"
 msgstr "פיקסלים"
 
 #: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "לא נמצא יישום מתאים."
 
@@ -3356,6 +3289,62 @@ msgstr "_ישומון:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_ספריית העדפות:"
+
+#~ msgid "Unknown Location"
+#~ msgstr "מיקום לא ידוע"
+
+#~ msgid "<b>Active timezones</b>"
+#~ msgstr "<b>אזורי זמן פעילים</b>"
+
+#~ msgid "<b>Add timezone</b>"
+#~ msgstr "<b>הוסף אזור זמן</b>"
+
+#~ msgid "<small><b>Location:</b></small>"
+#~ msgstr "<small><b>מיקום:</b></small>"
+
+#~ msgid ""
+#~ "<small><i>Click on the map to zoom and select the timezone of a city, or "
+#~ "right click to zoom out.</i></small>"
+#~ msgstr ""
+#~ "<small><i>לחץ על המפה כדי להתקרב ובחר את אזור הזמן של עירך. השתמש בלחיצה "
+#~ "ימנית כדי להתרחק.</i></small>"
+
+#~ msgid "Edit Timezones"
+#~ msgstr "ערוך אזורי זמן"
+
+#~ msgid "%s - %s"
+#~ msgstr "%s - %s"
+
+#~ msgid "move the mouse on the map"
+#~ msgstr "הזז את העכבר על המפה"
+
+#~ msgid "<b>Location:</b> %s"
+#~ msgstr "<b>מיקום:</b> %s"
+
+#~ msgid "Name"
+#~ msgstr "שם"
+
+#~ msgid "Timezone"
+#~ msgstr "אזור זמן"
+
+#~ msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
+#~ msgstr "‏%s עם שעון קיץ (UTC %s%.2ld:%.2ld)"
+
+#~ msgid "%s (UTC %s%.2ld:%.2ld)"
+#~ msgstr "‏%s (UTC %s%.2ld:%.2ld)"
+
+#~ msgid ""
+#~ "%s - %s\n"
+#~ "%s"
+#~ msgstr ""
+#~ "‏%s - %s\n"
+#~ "‏%s"
+
+#~ msgid "_Edit timezones..."
+#~ msgstr "_ערוך אזורי זמן..."
+
+#~ msgid "Timezones"
+#~ msgstr "אזורי זמן"
 
 #~ msgid "%A %B %d"
 #~ msgstr "יום %A, ה %d ב%B"
