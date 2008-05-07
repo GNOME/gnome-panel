@@ -1,3 +1,9 @@
+2008-05-07  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-recent.c: (show_uri): do not only look for applications that
+	can open URI; if the file is gio-native (file://), then it's fine to
+	get applications that can open paths.
+
 ==================== 2.22.1.3 ====================
 
 ==================== 2.22.1.2 ====================
