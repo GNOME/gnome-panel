@@ -385,9 +385,10 @@ is_appointment (GtkTreeModel *model,
 
 	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
 	if (uri)
-		return (strcmp (uri, "file") == 0 ||
-			strcmp (uri, "webcal") == 0 ||
-			strcmp (uri, "caldav") == 0);
+		return (g_ascii_strcasecmp (uri, "file")   == 0 ||
+			g_ascii_strcasecmp (uri, "webcal") == 0 ||
+			g_ascii_strcasecmp (uri, "caldav") == 0 ||
+			g_ascii_strcasecmp (uri, "google") == 0);
 	return FALSE;
 }
 
@@ -400,7 +401,7 @@ is_birthday (GtkTreeModel *model,
 
 	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
 	if (uri)
-		return (strcmp (uri, "contacts") == 0);
+		return (g_ascii_strcasecmp (uri, "contacts") == 0);
 	return FALSE;
 }
 
@@ -413,7 +414,7 @@ is_weather (GtkTreeModel *model,
 
 	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
 	if (uri)
-		return (strcmp (uri, "weather") == 0);
+		return (g_ascii_strcasecmp (uri, "weather") == 0);
 	return FALSE;
 }
 

@@ -1,3 +1,10 @@
+2008-05-07  Vincent Untz  <vuntz@gnome.org>
+
+	* calendar-window.c: (is_appointment): accept google uri too, for
+	google calendars and use g_ascii_strcasecmp(). Should help with bug
+	#525691
+	(is_birthday), (is_weather): use g_ascii_strcasecmp()
+
 2008-04-23  Matthias Clasen  <mclasen@redhat.com>
 
         * system-timezone.c (system_timezone_is_zone_file_valid): Don't 
