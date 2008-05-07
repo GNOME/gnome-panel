@@ -41,11 +41,15 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 	  GError **error)
 {
 	char **env;
+	GFile *file;
 	GAppInfo *app;
 	GList *uris = NULL;
 	gboolean ret;
 
-	app = g_app_info_get_default_for_type (mime_type, TRUE);
+	file = g_file_new_for_uri (uri);
+	app = g_app_info_get_default_for_type (mime_type, !g_file_is_native (file));
+	g_object_unref (file);
+
 	if (app == NULL) {
 		g_set_error (error, 0, 0,
 			     _("Could not find a suitable application."));
