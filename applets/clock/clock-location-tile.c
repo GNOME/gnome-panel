@@ -7,6 +7,7 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 
 #include "clock.h"
 #include "clock-face.h"
@@ -198,9 +199,9 @@ make_current (GtkWidget *widget, ClockLocationTile *tile)
 
 	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (tile));
 	if (toplevel && toplevel->window)
-		xid = GDK_WINDOW_XID (toplevel->window);
+		xid = GDK_WINDOW_XWINDOW (toplevel->window);
 	else
-		xid = NULL;
+		xid = 0;
 
 	clock_location_make_current (priv->location,
 				     xid,

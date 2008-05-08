@@ -1744,7 +1744,7 @@ set_time (GtkWidget *widget, ClockData *cd)
 
 	tim = mktime (&t);
 
-	set_system_time_async (tim, GDK_WINDOW_XID (cd->applet->window), (GFunc)set_time_callback, cd, NULL);
+	set_system_time_async (tim, GDK_WINDOW_XWINDOW (cd->applet->window), (GFunc)set_time_callback, cd, NULL);
 }
 
 static void
@@ -2216,7 +2216,7 @@ location_start_element (GMarkupParseContext *context,
 					  latitude, longitude, code, &prefs);
 
 	if (current && clock_location_is_current_timezone (loc))
-		clock_location_make_current (loc, GDK_WINDOW_XID (cd->applet->window), NULL, NULL, NULL);
+		clock_location_make_current (loc, GDK_WINDOW_XWINDOW (cd->applet->window), NULL, NULL, NULL);
 
         data->cities = g_list_append (data->cities, loc);
 }
