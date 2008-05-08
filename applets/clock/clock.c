@@ -1743,7 +1743,7 @@ set_time (GtkWidget *widget, ClockData *cd)
 
 	tim = mktime (&t);
 
-	set_system_time_async (tim, (GFunc)set_time_callback, cd, NULL);
+	set_system_time_async (tim, 0, (GFunc)set_time_callback, cd, NULL);
 }
 
 static void

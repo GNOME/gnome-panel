@@ -1,3 +1,40 @@
+2008-05-08  Federico Mena Quintero  <federico@novell.com>
+
+	* clock.c (set_time): Pass the XID of the applet's windowto
+	set_system_time_async().
+
+2008-05-08  Federico Mena Quintero  <federico@novell.com>
+
+	* clock-location.c (clock_location_make_current): Take in a
+	transient_parent_xid argument.
+
+	* clock.c (location_start_element): Pass the XID of the applet's
+	window to clock_location_make_current().
+
+	* clock-location-tile.c (make_current): Pass XID of the toplevel
+	widget's window.
+
+2008-05-08  Federico Mena Quintero  <federico@novell.com>
+
+	https://bugzilla.novell.com/show_bug.cgi?id=384159
+
+	When calling the (obsolete) org.gnome.PolicyKit.Manager.ShowDialog
+	method through PolicyKit, pass an XID for the transient parent
+	window of what will be the auth dialog.  This prevents the window
+	manager from thinking that the auth dialog is a rogue dialog with
+	no parent.
+
+	* set-timezone.c (SetTimeCallbackData): Add a transient_parent_xid
+	field.
+	(do_auth_async): Pass the transient_parent_xid to the ShowDialog
+	method, instead of 0.
+	(set_system_time_async): g_new() for safety.  Take in a transient_parent_xid argument.
+	(set_system_timezone_async): Likewise.
+
+	* clock.c (set_time): For now, pass 0 for the transient_parent_xid.
+
+	* clock-location.c (clock_location_make_current): Likewise.
+
 2008-05-07  Vincent Untz  <vuntz@gnome.org>
 
 	* calendar-window.c: (is_appointment): accept google uri too, for

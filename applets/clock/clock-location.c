@@ -525,7 +525,8 @@ clock_location_make_current (ClockLocation *loc,
 	mcdata->destroy = destroy;
 
         filename = g_build_filename (SYSTEM_ZONEINFODIR, priv->timezone, NULL);
-        set_system_timezone_async (filename, 
+        set_system_timezone_async (filename,
+				   0,
                                    (GFunc)make_current_cb, 
 				   mcdata,
                                    free_make_current_data);
