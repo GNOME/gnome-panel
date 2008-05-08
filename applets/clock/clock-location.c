@@ -486,7 +486,8 @@ free_make_current_data (gpointer data)
 }
 
 void
-clock_location_make_current (ClockLocation *loc, 
+clock_location_make_current (ClockLocation *loc,
+			     guint          transient_parent_xid,
                              GFunc          callback,
                              gpointer       data,
                              GDestroyNotify destroy)
@@ -526,7 +527,7 @@ clock_location_make_current (ClockLocation *loc,
 
         filename = g_build_filename (SYSTEM_ZONEINFODIR, priv->timezone, NULL);
         set_system_timezone_async (filename,
-				   0,
+				   transient_parent_xid,
                                    (GFunc)make_current_cb, 
 				   mcdata,
                                    free_make_current_data);
