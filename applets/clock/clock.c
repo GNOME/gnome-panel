@@ -1681,18 +1681,20 @@ try_config_tool (GdkScreen  *screen,
 static void
 update_set_time_button (ClockData *cd)
 {
-	gboolean can_set;
+	gint can_set;
 
-	can_set = can_set_system_time () != 0; /* this can return 0, 1, 2 */
+	can_set = can_set_system_time (); /* this can return 0, 1, 2 */
 
 	if (cd->time_settings_button)
 		gtk_widget_set_sensitive (cd->time_settings_button, can_set);
 
-	if (cd->set_time_button)
+	if (cd->set_time_button) {
+		gtk_widget_set_sensitive (cd->set_time_button, can_set != 0); 
 		gtk_button_set_label (GTK_BUTTON (cd->set_time_button),
-				      can_set ?
+				      can_set == 1 ?
 					_("Set System Time...") :
 					_("Set System Time"));
+	}
 }
 
 static void
@@ -1863,6 +1865,8 @@ run_time_settings (GtkWidget *unused, ClockData *cd)
 {
 	ensure_time_settings_window_is_created (cd);
 	fill_time_settings_window (cd);
+
+	update_set_time_button (cd);
 
 	gtk_window_present (GTK_WINDOW (cd->set_time_window));
 
