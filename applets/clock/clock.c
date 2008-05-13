@@ -3865,6 +3865,7 @@ static void
 run_prefs_locations_add (GtkButton *button, ClockData *cd)
 {
         GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
+        GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
         GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
 
         fill_timezone_combo_from_location (cd, zone_combo, NULL);
@@ -3878,6 +3879,9 @@ run_prefs_locations_add (GtkButton *button, ClockData *cd)
 		g_object_set_data (G_OBJECT (edit_window), "delete-handler",
 				   GINT_TO_POINTER (g_signal_connect (edit_window, "delete_event", G_CALLBACK (edit_delete), cd)));
 	}
+
+	gtk_widget_grab_focus (name_entry);
+	gtk_editable_set_position (GTK_EDITABLE (name_entry), -1);
 
         gtk_window_present_with_time (GTK_WINDOW (edit_window), gtk_get_current_event_time ());
 }
@@ -3942,6 +3946,9 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
         }
 
         g_object_set_data (G_OBJECT (edit_window), "clock-location", loc);
+
+	gtk_widget_grab_focus (name_entry);
+	gtk_editable_set_position (GTK_EDITABLE (name_entry), -1);
 
         gtk_window_present (GTK_WINDOW (edit_window));
 }
