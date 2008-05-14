@@ -1,4 +1,37 @@
 ==============
+Version 2.23.2
+==============
+
+  Panel
+
+	* When opening a recent file, do not only look for applications that
+	  can open URI; if the file is gio-native (file://), then it's fine to
+	  get applications that can open paths (Vincent)
+
+  Clock Applet
+
+	* Fix timezone file handling to correctly recognize timezone magic
+	  header (Matthias Clasen)
+	* Accept Google URI for Google calendars appointments (Vincent)
+	* Set a parent for the PolicyKit authentication dialog so that it
+	  doesn't end up below other windows (Federico)
+	* Disable the "Set System Time" button when the user doesn't have the
+	  necessary privileges (Matthias Clasen)
+	* Put the initial focus in the name entry for the Edit location dialog
+	  (Vincent)
+
+  Docs Translators
+
+	* Fabricio Godoy (pt_BR)
+
+  Translators
+
+	* Ignacio Casal Quinteiro (gl)
+	* Yair Hershkovitz (he)
+	* Anna Jonna Ármannsdóttir (is)
+	* Shankar Prasad (kn)
+
+==============
 Version 2.23.1
 ==============
 
