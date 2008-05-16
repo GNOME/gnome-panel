@@ -97,18 +97,15 @@ struct _PanelDesktopMenuItemPrivate {
 };
 
 static void
-activate_uri (GtkWidget  *menuitem,
-	      const char *path)
+activate_uri_on_screen (const char *path,
+			GdkScreen  *screen)
 {
 	GError    *error = NULL;
 	GFile     *file;
-	GdkScreen *screen;
 	char      *escaped;
 	char      *scheme;
 	char      *url;
 
-	screen = menuitem_to_screen (menuitem);
-	
 	scheme = g_uri_parse_scheme (path);
 	if (scheme) {
 		url = g_strdup (path);
@@ -143,6 +140,13 @@ activate_uri (GtkWidget  *menuitem,
 		g_error_free (error);
 	}
 	g_free (url);
+}
+
+static void
+activate_uri (GtkWidget  *menuitem,
+	      const char *path)
+{
+	activate_uri_on_screen (path, menuitem_to_screen (menuitem));
 }
 
 static void
@@ -575,11 +579,12 @@ volume_mount_cb (GObject      *source_object,
 {
 	PanelVolumeMountData *mount_data = user_data;
 	GError *error;
-	char   *primary;
-	char   *name;
 
 	error = NULL;
 	if (!g_volume_mount_finish (G_VOLUME (source_object), res, &error)) {
+		char *primary;
+		char *name;
+
 		if (error->code != G_IO_ERROR_FAILED_HANDLED) {
 			name = g_volume_get_name (G_VOLUME (source_object));
 			primary = g_strdup_printf (_("Unable to mount %s"),
@@ -592,9 +597,19 @@ volume_mount_cb (GObject      *source_object,
 			g_free (primary);
 		}
 		g_error_free (error);
+	} else {
+		GMount *mount;
+		GFile  *root;
+		char   *rootpath;
+
+		mount = g_volume_get_mount (G_VOLUME (source_object));
+		root = g_mount_get_root (mount);
+		rootpath = g_file_get_uri (root);
+		activate_uri_on_screen (rootpath, mount_data->screen);
+		g_object_unref (mount);
+		g_object_unref (root);
+		g_free (rootpath);
 	}
-	
-	//FIXME: should we activate the root of the new mount?
 
 	g_object_unref (mount_data->mount_op);
 	g_slice_free (PanelVolumeMountData, mount_data);
