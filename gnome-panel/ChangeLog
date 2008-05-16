@@ -1,3 +1,11 @@
+2008-05-16  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-menu-items.c: (activate_uri_on_screen): new, based on
+	activate_uri
+	(activate_uri): just call activate_uri_on_screen
+	(volume_mount_cb): open the mount after having mounted it
+	Fix bug #528423
+
 ==================== 2.23.2.1 ====================
 
 ==================== 2.23.2 ====================
