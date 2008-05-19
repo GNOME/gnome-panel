@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.gnome-2-16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-21 12:22+0000\n"
+"POT-Creation-Date: 2008-05-19 01:54+0100\n"
 "PO-Revision-Date: 2008-02-26 10:12+0100\n"
 "Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
@@ -19,7 +19,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : 3\n"
+"Plural-Forms: Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && "
+"n<=10 ? 2 : 3\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -50,10 +51,8 @@ msgstr "_حوْل"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:601
-#: ../gnome-panel/panel-action-button.c:709
-#: ../gnome-panel/panel-context-menu.c:280
-#: ../gnome-panel/panel-menu-bar.c:334
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:709
+#: ../gnome-panel/panel-context-menu.c:280 ../gnome-panel/panel-menu-bar.c:334
 #: ../gnome-panel/panel-menu-button.c:659
 msgid "_Help"
 msgstr "م_ساعدة"
@@ -66,7 +65,7 @@ msgid "_Preferences"
 msgstr "ال_تّفضيلات"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4102
+#: ../applets/clock/clock.c:4410
 msgid "Clock"
 msgstr "ساعة"
 
@@ -82,8 +81,7 @@ msgstr "مصنع لانشاء بريمجات الساعة."
 msgid "Get the current time and date"
 msgstr "احصل على الوقت والتاريخ الحالي"
 
-#: ../applets/clock/calendar-window.c:242
-#: ../applets/clock/clock.c:421
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:426
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
@@ -92,10 +90,8 @@ msgstr "%I:%M %p"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/calendar-window.c:244
-#: ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1553
-#: ../applets/clock/clock-location-tile.c:485
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:428
+#: ../applets/clock/clock.c:1553 ../applets/clock/clock-location-tile.c:482
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -106,47 +102,45 @@ msgstr "%H:%M"
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:767
 msgid "Tasks"
 msgstr "المهمات"
 
-#: ../applets/clock/calendar-window.c:765
-#: ../applets/clock/calendar-window.c:938
-#: ../applets/clock/calendar-window.c:1554
+#: ../applets/clock/calendar-window.c:767
+#: ../applets/clock/calendar-window.c:943
+#: ../applets/clock/calendar-window.c:1572
 msgid "Edit"
 msgstr "حرِّرْ"
 
-#: ../applets/clock/calendar-window.c:883
+#: ../applets/clock/calendar-window.c:888
 msgid "All Day"
 msgstr "كامل اليوم"
 
-#: ../applets/clock/calendar-window.c:1019
+#: ../applets/clock/calendar-window.c:1027
 msgid "Appointments"
 msgstr "المواعيد"
 
-#: ../applets/clock/calendar-window.c:1044
+#: ../applets/clock/calendar-window.c:1052
 msgid "Birthdays and Anniversaries"
 msgstr "أعياد الميلاد"
 
-#: ../applets/clock/calendar-window.c:1069
+#: ../applets/clock/calendar-window.c:1077
 msgid "Weather Information"
 msgstr "معلومات الطقس"
 
-#: ../applets/clock/calendar-window.c:1554
-#: ../applets/clock/clock.glade.h:17
+#: ../applets/clock/calendar-window.c:1572 ../applets/clock/clock.glade.h:15
 msgid "Locations"
 msgstr "المواقع"
 
-#: ../applets/clock/calendar-window.c:1850
+#: ../applets/clock/calendar-window.c:1871
 msgid "Calendar"
 msgstr "التقويم"
 
-#: ../applets/clock/clock.c:421
+#: ../applets/clock/clock.c:426
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1551
+#: ../applets/clock/clock.c:428 ../applets/clock/clock.c:1551
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -155,7 +149,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:443
+#: ../applets/clock/clock.c:448
 msgid "%a %b %e"
 msgstr "%a %b %d"
 
@@ -163,7 +157,7 @@ msgstr "%a %b %d"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:455
 #, c-format
 msgid ""
 "%1$s\n"
@@ -176,7 +170,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:458
+#: ../applets/clock/clock.c:463
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s، %1$s"
@@ -184,23 +178,23 @@ msgstr "%2$s، %1$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:640
+#: ../applets/clock/clock.c:645
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:670
+#: ../applets/clock/clock.c:675
 msgid "Click to hide your appointments and tasks"
 msgstr "انقر لإخفاء مواعيدك و مهماتك"
 
-#: ../applets/clock/clock.c:673
+#: ../applets/clock/clock.c:678
 msgid "Click to view your appointments and tasks"
 msgstr "انقر لعرض مواعدك و مشاغلك"
 
-#: ../applets/clock/clock.c:677
+#: ../applets/clock/clock.c:682
 msgid "Click to hide month calendar"
 msgstr "انقر لإخفاء تقويم الشهر"
 
-#: ../applets/clock/clock.c:680
+#: ../applets/clock/clock.c:685
 msgid "Click to view month calendar"
 msgstr "انقر لعرض تقويم الشهر"
 
@@ -225,68 +219,66 @@ msgstr "%A، %B %d %Y"
 msgid "Failed to launch time configuration tool: %s"
 msgstr "فشل تشغيل أداة إعداد الوقت: %s"
 
-#: ../applets/clock/clock.c:1694
+#: ../applets/clock/clock.c:1695
 msgid "Set System Time..."
 msgstr "اضبط وقت النظام..."
 
-#: ../applets/clock/clock.c:1695
-#: ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1696 ../applets/clock/clock.glade.h:19
 msgid "Set System Time"
 msgstr "اضبط وقت النظام"
 
-#: ../applets/clock/clock.c:1709
+#: ../applets/clock/clock.c:1711
 msgid "Failed to set the system time"
 msgstr "فشل في ضبط وقت النظام"
 
-#: ../applets/clock/clock.c:1882
-msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
-msgstr "فشل تحديد مكان برنامج لإعداد التاريخ و الوقت. ربما لأنه لا وجود لبرنامج مثبّت؟"
+#: ../applets/clock/clock.c:1901
+msgid ""
+"Failed to locate a program for configuring the date and time. Perhaps none "
+"is installed?"
+msgstr ""
+"فشل تحديد مكان برنامج لإعداد التاريخ و الوقت. ربما لأنه لا وجود لبرنامج مثبّت؟"
 
-#: ../applets/clock/clock.c:2747
+#: ../applets/clock/clock.c:2833
 msgid "Custom format"
 msgstr "تهيئة خاصة"
 
-#: ../applets/clock/clock.c:3545
-#: ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:584
+#: ../applets/clock/clock.c:3800 ../applets/clock/clock-location-tile.c:583
 #, c-format
 msgid "%s, %s"
 msgstr "%s، %s"
 
-#: ../applets/clock/clock.c:3803
+#: ../applets/clock/clock.c:4103
 msgid "City Name"
 msgstr "اسم المدينة"
 
-#: ../applets/clock/clock.c:3807
+#: ../applets/clock/clock.c:4107
 msgid "City Time Zone"
 msgstr " المنطقة الزمنية للمدينة"
 
-#: ../applets/clock/clock.c:3998
+#: ../applets/clock/clock.c:4306
 msgid "24 hour"
 msgstr "24 ساعة"
 
-#: ../applets/clock/clock.c:3999
+#: ../applets/clock/clock.c:4307
 msgid "UNIX time"
 msgstr "وقت يونكس"
 
-#: ../applets/clock/clock.c:4000
+#: ../applets/clock/clock.c:4308
 msgid "Internet time"
 msgstr "وقت الإنترنت"
 
-#: ../applets/clock/clock.c:4008
+#: ../applets/clock/clock.c:4316
 msgid "Custom _format:"
 msgstr "ت_هيئة خاصة:"
 
-#: ../applets/clock/clock.c:4105
+#: ../applets/clock/clock.c:4413
 msgid "The Clock displays the current time and date"
 msgstr "تعرض الساعة الوقت و اليوم الحاليين"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4108
-#: ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4416 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
-#: ../applets/wncklet/showdesktop.c:533
-#: ../applets/wncklet/window-list.c:605
+#: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:620
 #: ../gnome-panel/panel-context-menu.c:134
@@ -298,42 +290,34 @@ msgstr ""
 "خالد حسني\t<khaledhosny@eglug.org>"
 
 #: ../applets/clock/clock.glade.h:1
-msgid "12 _hour format"
-msgstr "نسق 12 _ساعة"
-
-#: ../applets/clock/clock.glade.h:2
-msgid "24 h_our format"
-msgstr "نسق 24 س_اعة"
-
-#: ../applets/clock/clock.glade.h:3
 msgid "<b>Clock Options</b>"
 msgstr "<b>خيارات الساعة</b>"
 
-#: ../applets/clock/clock.glade.h:4
+#: ../applets/clock/clock.glade.h:2
 msgid "<b>Display</b>"
 msgstr "<b>عرض</b>"
 
-#: ../applets/clock/clock.glade.h:5
+#: ../applets/clock/clock.glade.h:3
 msgid "<b>Panel Display</b>"
 msgstr "<b>عرض الشريط</b>"
 
-#: ../applets/clock/clock.glade.h:6
+#: ../applets/clock/clock.glade.h:4
 msgid "<b>Time Settings</b>"
 msgstr "<b>إعدادت الوقت</b>"
 
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.glade.h:5
 msgid "<i>(optional)</i>"
 msgstr "<i>(اختياري)</i>"
 
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.glade.h:6
 msgid "Clock Preferences"
 msgstr "تفضيلات الساعة"
 
-#: ../applets/clock/clock.glade.h:9
+#: ../applets/clock/clock.glade.h:7
 msgid "Current Time:"
 msgstr "الوقت الحاضر:"
 
-#: ../applets/clock/clock.glade.h:10
+#: ../applets/clock/clock.glade.h:8
 msgid ""
 "East\n"
 "West"
@@ -341,32 +325,32 @@ msgstr ""
 "شرق\n"
 "غرب"
 
-#: ../applets/clock/clock.glade.h:12
+#: ../applets/clock/clock.glade.h:10
 msgid "Find _Next"
 msgstr "ابحث عن ال_تالي"
 
-#: ../applets/clock/clock.glade.h:13
+#: ../applets/clock/clock.glade.h:11
 msgid "Find..."
 msgstr "ابحث..."
 
-#: ../applets/clock/clock.glade.h:14
+#: ../applets/clock/clock.glade.h:12
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
 msgid "General"
 msgstr "عام"
 
-#: ../applets/clock/clock.glade.h:15
+#: ../applets/clock/clock.glade.h:13
 msgid "Latitude:"
 msgstr "خط العرض:"
 
-#: ../applets/clock/clock.glade.h:16
+#: ../applets/clock/clock.glade.h:14
 msgid "Location Name:"
 msgstr "اسم الموقع:"
 
-#: ../applets/clock/clock.glade.h:18
+#: ../applets/clock/clock.glade.h:16
 msgid "Longitude:"
 msgstr "خط الطول:"
 
-#: ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.glade.h:17
 msgid ""
 "North\n"
 "South"
@@ -374,41 +358,51 @@ msgstr ""
 "الشمال\n"
 "الجنوب"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.glade.h:20
 msgid "Show _temperature"
 msgstr "اعرض ال_حرارة"
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.glade.h:21
 msgid "Show _weather"
 msgstr "اعرض ال_طقس"
 
-#: ../applets/clock/clock.glade.h:24
+#: ../applets/clock/clock.glade.h:22
 msgid "Show seco_nds"
 msgstr "اعرض ال_ثواني"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.glade.h:23
 msgid "Show the _date"
 msgstr "اعرض ال_تاريخ"
 
-#: ../applets/clock/clock.glade.h:26
+#: ../applets/clock/clock.glade.h:24
 msgid "Time Settings"
 msgstr "إعدادات الوقت"
 
-#: ../applets/clock/clock.glade.h:27
+#: ../applets/clock/clock.glade.h:25
 msgid "Time _Settings"
 msgstr "إ_عدادت الوقت"
 
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.glade.h:26
 msgid "Time:"
 msgstr "الوقت:"
 
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.glade.h:27
 msgid "Timezone:"
 msgstr "المنطقة الزمنية:"
 
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.glade.h:28
 msgid "Weather"
 msgstr "الطقس"
+
+#: ../applets/clock/clock.glade.h:29
+#, fuzzy
+msgid "_12 hour format"
+msgstr "نسق 12 _ساعة"
+
+#: ../applets/clock/clock.glade.h:30
+#, fuzzy
+msgid "_24 hour format"
+msgstr "نسق 24 س_اعة"
 
 #: ../applets/clock/clock.glade.h:31
 msgid "_Find:"
@@ -569,16 +563,42 @@ msgid "The unit to use when showing wind speed."
 msgstr "الوحدة التي ستستخدم عند إظهار سرعة الريح."
 
 #: ../applets/clock/clock.schemas.in.h:43
-msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
-msgstr "ألغ استخدام هذا المفتاح في جنوم 2.6 دعما لمفتاح 'format'. أُبق على المخطط فقط للتطابق مع الإصدارات القديمة."
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"ألغ استخدام هذا المفتاح في جنوم 2.6 دعما لمفتاح 'format'. أُبق على المخطط فقط "
+"للتطابق مع الإصدارات القديمة."
 
 #: ../applets/clock/clock.schemas.in.h:44
-msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information."
-msgstr "يحدّد المفتاح التهيئة المستخدمة من قبل بريمج الساعة عند ضبط مفتاح التهيئة لـ \"custom\".يمكنك إستعمال محدّدات تحويل مفهومة من قبل strftime() للحصول على تهيئة محدّدة. راجع دليل strftime() لمزيد من المعلومات."
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
+msgstr ""
+"يحدّد المفتاح التهيئة المستخدمة من قبل بريمج الساعة عند ضبط مفتاح التهيئة لـ "
+"\"custom\".يمكنك إستعمال محدّدات تحويل مفهومة من قبل strftime() للحصول على "
+"تهيئة محدّدة. راجع دليل strftime() لمزيد من المعلومات."
 
 #: ../applets/clock/clock.schemas.in.h:45
-msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display Internet time. The Internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
-msgstr "يحدّد هذا المفتاح نسق السّاعة المستخدم من قبل بريمج السّاعة. القيم الممكنة هي  \"12-hour\" و \"24-hour\" و \"internet\" و \"unix\" و \"custom\". إذا ضبط لـ \"internet\" ستعرض السّاعة وقت الإنترنت. نظام وقت الإنترنت يقسم اليوم إلى ألف نبضة. لا توجد نظاقات زمنيّة في هذا النّظام ممّا يجعل الوقت هو نفسه في جميع أنحاء العالم. إذا ضبط لـ\"unix\" فستعرض السّاعة الوقت بالثّواني منذ بداية العصر، أي 1970-01-01. إذا ضبط لـ\"custom\" فستعرض السّاعة الوقت حسب النّسق المحدّد في مفتاح custom_format."
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"يحدّد هذا المفتاح نسق السّاعة المستخدم من قبل بريمج السّاعة. القيم الممكنة هي  "
+"\"12-hour\" و \"24-hour\" و \"internet\" و \"unix\" و \"custom\". إذا ضبط لـ "
+"\"internet\" ستعرض السّاعة وقت الإنترنت. نظام وقت الإنترنت يقسم اليوم إلى ألف "
+"نبضة. لا توجد نظاقات زمنيّة في هذا النّظام ممّا يجعل الوقت هو نفسه في جميع "
+"أنحاء العالم. إذا ضبط لـ\"unix\" فستعرض السّاعة الوقت بالثّواني منذ بداية "
+"العصر، أي 1970-01-01. إذا ضبط لـ\"custom\" فستعرض السّاعة الوقت حسب النّسق "
+"المحدّد في مفتاح custom_format."
 
 #: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
@@ -600,28 +620,20 @@ msgstr "استخدم وقت يونكس"
 msgid "Use UTC"
 msgstr "استخدم UTC"
 
-#. make a fake location with a null TZ
-#. make a fake location with the current TZ
-#: ../applets/clock/clock-location.c:364
-#: ../applets/clock/clock-location.c:371
-msgid "Unknown Location"
-msgstr "موقع مجهول"
-
-#: ../applets/clock/clock-location-tile.c:194
+#: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
 msgstr "تعذَّر تعيين المنطقة الزمنية للنظام"
 
-#: ../applets/clock/clock-location-tile.c:239
-#: ../applets/clock/clock-location-tile.c:314
+#: ../applets/clock/clock-location-tile.c:240
 msgid "<small>Set...</small>"
 msgstr "<small>اضبط...</small>"
 
-#: ../applets/clock/clock-location-tile.c:240
-#: ../applets/clock/clock-location-tile.c:315
+#: ../applets/clock/clock-location-tile.c:241
 msgid "<small>Set</small>"
 msgstr "<small>اضبط</small>"
 
-#: ../applets/clock/clock-location-tile.c:320
+#. FIXME: this needs to talk about locations, not timezones
+#: ../applets/clock/clock-location-tile.c:317
 msgid "Set as current timezone for this computer"
 msgstr "عيِّن كالمنطقة الزمنية الحالية لهذا الحاسوب "
 
@@ -631,7 +643,7 @@ msgstr "عيِّن كالمنطقة الزمنية الحالية لهذا ال�
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:458
+#: ../applets/clock/clock-location-tile.c:455
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "‏%l:%M <small>%p (%A)</small>"
 
@@ -641,7 +653,7 @@ msgstr "‏%l:%M <small>%p (%A)</small>"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/clock-location-tile.c:464
 msgid "%H:%M <small>(%A)</small>"
 msgstr "‏%H:%M <small>(%A)</small>"
 
@@ -650,139 +662,55 @@ msgstr "‏%H:%M <small>(%A)</small>"
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:477
+#: ../applets/clock/clock-location-tile.c:474
 msgid "%l:%M <small>%p</small>"
 msgstr "‏%l:%M <small>%p</small>"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:594
-#: ../applets/clock/clock-location-tile.c:600
+#: ../applets/clock/clock-location-tile.c:595
+#: ../applets/clock/clock-location-tile.c:603
 msgid "Unknown"
 msgstr "مجهول"
 
-#: ../applets/clock/clock-location-tile.c:595
+#: ../applets/clock/clock-location-tile.c:596
 #, c-format
 msgid "%s, feels like %s"
 msgstr "‏%s, وكأنه %s"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "الشروق : %s / غروب : %s"
 
-#: ../applets/clock/clock-utils.c:72
-#: ../applets/fish/fish.c:160
-#: ../applets/notification_area/main.c:90
-#: ../applets/wncklet/wncklet.c:109
+#: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
+#: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "حصل خطأ أثناء عرض المساعدة: %s"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
 msgid "Change system time"
 msgstr "غَيِّرْ وقت النظام"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
 msgid "Change system time zone"
 msgstr "غَيِّرْ المنطقة الزمنية للنظام"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
 msgid "Configure hardware clock"
 msgstr "تشكيل ساعة العتاد"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
 msgid "Privileges are required to change the system time zone."
 msgstr "يتَطَلَّبُ تغيير المنطقة الزمنية للنظام امتيازات. "
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
 msgid "Privileges are required to change the system time."
 msgstr "يتَطَلَّبُ تغيير وقت النظام امتيازات."
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
 msgid "Privileges are required to configure the hardware clock."
 msgstr " يتطَلَّبُ تشكيل ساعة العتاد امتيازات."
-
-#: ../applets/clock/timezone.glade.h:1
-msgid "<b>Active timezones</b>"
-msgstr "<b>مناطق زمنية نشطة</b>"
-
-#: ../applets/clock/timezone.glade.h:2
-msgid "<b>Add timezone</b>"
-msgstr "<b>أضف منطقة زمنية</b>"
-
-#: ../applets/clock/timezone.glade.h:3
-msgid "<small><b>Location:</b></small>"
-msgstr "<small><b>الموقع:</b></small>"
-
-#: ../applets/clock/timezone.glade.h:4
-msgid "<small><i>Click on the map to zoom and select the timezone of a city, or right click to zoom out.</i></small>"
-msgstr "<small><i>انقر على الخريطة لتكبير واختيار المنطقة الزمنية لمدينة، أو انقر بالزر الأيمن للتصغير.</i></small>"
-
-#: ../applets/clock/timezone.glade.h:5
-msgid "Edit Timezones"
-msgstr "ح_رّر المناطق الزمنية"
-
-#. Translators: the first %s is a place and the
-#. * second is a time. Result looks like this:
-#. * Europe/Paris - 15:45
-#: ../applets/clock/tz-sel-dialog.c:196
-#, c-format
-msgid "%s - %s"
-msgstr "%s - %s"
-
-#: ../applets/clock/tz-sel-dialog.c:205
-msgid "move the mouse on the map"
-msgstr "حرّك الفأرة على الخريطة"
-
-#: ../applets/clock/tz-sel-dialog.c:207
-#, c-format
-msgid "<b>Location:</b> %s"
-msgstr "<b>الموقع:</b> %s"
-
-#: ../applets/clock/tz-sel-dialog.c:812
-msgid "Name"
-msgstr "الاسم"
-
-#: ../applets/clock/tz-sel-dialog.c:825
-msgid "Timezone"
-msgstr "المنطقة الزمنية"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:102
-#, c-format
-msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr "%s مع التوقيت الصيفي (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:111
-#, c-format
-msgid "%s (UTC %s%.2ld:%.2ld)"
-msgstr "%s (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name (as in
-#. * "Europe/Paris"), the second string is a country name abbreviation
-#. * (as in "FR") and the last string is another line (it's the one
-#. * looking like "BST (UTC +01:00)")
-#: ../applets/clock/tz-window.c:121
-#, c-format
-msgid ""
-"%s - %s\n"
-"%s"
-msgstr ""
-"%s - %s\n"
-"%s"
-
-#: ../applets/clock/tz-window.c:283
-msgid "_Edit timezones..."
-msgstr "ح_رّر المناطق الزمنية..."
-
-#: ../applets/clock/tz-window.c:370
-msgid "Timezones"
-msgstr "المناطق الزمنية"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -814,13 +742,11 @@ msgstr ""
 "إننا ننصحك بشدة عدم إستخدام %s لأي غرض\n"
 "قد يجعل البريمج عمليا أو مفيدا."
 
-#: ../applets/fish/fish.c:436
-#: ../gnome-panel/panel-properties-dialog.c:449
+#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:449
 msgid "Images"
 msgstr "صور"
 
-#: ../applets/fish/fish.c:550
-#: ../applets/fish/fish.c:616
+#: ../applets/fish/fish.c:550 ../applets/fish/fish.c:616
 #: ../applets/fish/fish.c:732
 #, no-c-format
 msgid "%s the Fish"
@@ -828,8 +754,13 @@ msgstr "السمكة %s"
 
 #: ../applets/fish/fish.c:551
 #, c-format
-msgid "%s has no use what-so-ever. It only takes up disk space and compilation time, and if loaded it also takes up precious panel space and memory. Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr "ليس لـ %s أي فائدة. إنه يتطلب فضاء قرص و وقت تجميع كما يقتضي فضاء و ذاكرة شريط ثمينين إذا تم تحميلّه. الرجاء إرسال أي إنسان يستخدمه إلى العلاج النفسي."
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. "
+"Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgstr ""
+"ليس لـ %s أي فائدة. إنه يتطلب فضاء قرص و وقت تجميع كما يقتضي فضاء و ذاكرة "
+"شريط ثمينين إذا تم تحميلّه. الرجاء إرسال أي إنسان يستخدمه إلى العلاج النفسي."
 
 #: ../applets/fish/fish.c:575
 msgid "(with minor help from George)"
@@ -958,7 +889,9 @@ msgid "seconds"
 msgstr "ثواني"
 
 #: ../applets/fish/fish.schemas.in.h:1
-msgid "A fish without a name is a pretty dull fish. Bring your fish to life by naming him."
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
 msgstr "سمكة بدون أسم سمكة مملة. أحيي سمكتك باعطائها إسما."
 
 #: ../applets/fish/fish.schemas.in.h:2
@@ -970,7 +903,8 @@ msgid "Frames in fish's animation"
 msgstr "إطارات رسوم السمكة المتحركة"
 
 #: ../applets/fish/fish.schemas.in.h:4
-msgid "If true, the fish's animation will be displayed rotated on vertical panels."
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "إذا ضبط لـ true ستعرض صور السمكة المتحرّكة مدوّرة على الشرائط العموديّة."
 
 #: ../applets/fish/fish.schemas.in.h:5
@@ -990,15 +924,23 @@ msgid "The fish's name"
 msgstr "اسم السمكة"
 
 #: ../applets/fish/fish.schemas.in.h:9
-msgid "This key specifies the command that will be tried to execute when the fish is clicked."
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
 msgstr "يحدد هذا المفاتح الأمر الذي سيحاول تنفيذه عند نقر السمكة."
 
 #: ../applets/fish/fish.schemas.in.h:10
-msgid "This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory."
-msgstr "يحدّد المفتاح إسم ملف البكسماب الذي سيستعمل للصور المتحرّكة في بريمج السمكة نسبة إلى دليل البكسماب."
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"يحدّد المفتاح إسم ملف البكسماب الذي سيستعمل للصور المتحرّكة في بريمج السمكة "
+"نسبة إلى دليل البكسماب."
 
 #: ../applets/fish/fish.schemas.in.h:11
-msgid "This key specifies the number of frames that will be displayed in the fish's animation."
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
 msgstr "يحدد هذا المفتاح عدد الإطارات التي ستعرض في الرسم المتحرك للسمكة."
 
 #: ../applets/fish/fish.schemas.in.h:12
@@ -1056,8 +998,7 @@ msgid "Window Navigation Applet Factory"
 msgstr "مصنع بريمج تصفح النوافذ"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/window-menu.c:78
-#: ../applets/wncklet/window-menu.c:240
+#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:240
 msgid "Window Selector"
 msgstr "منتقي النوافذ"
 
@@ -1083,8 +1024,7 @@ msgstr "انقر هنا لاسترجاع النوافذ المخفية."
 msgid "Click here to hide all windows and show the desktop."
 msgstr "انقر هنا لاخفاء جميع النوافذ و إظهار سطح المكتب."
 
-#: ../applets/wncklet/showdesktop.c:455
-#: ../applets/wncklet/showdesktop.c:536
+#: ../applets/wncklet/showdesktop.c:455 ../applets/wncklet/showdesktop.c:536
 msgid "Show Desktop Button"
 msgstr "أظهر زر سطح المكتب"
 
@@ -1093,11 +1033,15 @@ msgid "This button lets you hide all windows and show the desktop."
 msgstr "يمكنّك هذا الزر من إخفاء جميع النوافذ و إظهار المكتب."
 
 #: ../applets/wncklet/showdesktop.c:568
-msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
 msgstr "مدير نوافذك لا يدعم زر إظهار سطح المكتب، أو أنك لا تستخدم مدير نوافذ."
 
 #: ../applets/wncklet/window-list.c:610
-msgid "The Window List shows a list of all windows in a set of buttons and lets you browse them."
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
 msgstr "تعرض لك قائمة النوافذ قائمة بكل النوافذ كما تسمح لك بتصفحها."
 
 #: ../applets/wncklet/window-list.glade.h:1
@@ -1145,16 +1089,28 @@ msgid "_Never group windows"
 msgstr "لا تجمّع النوافذ أ_بدا"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
-msgid "Decides when to group windows from the same application on the window list. Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "يقرر متى تجميع نوافذ نفس التطبيق في قائمة النوافذ. القيم الممكنة هي \"never\"، \"auto\" و \"always\"."
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"يقرر متى تجميع نوافذ نفس التطبيق في قائمة النوافذ. القيم الممكنة هي \"never"
+"\"، \"auto\" و \"always\"."
 
 #: ../applets/wncklet/window-list.schemas.in.h:2
-msgid "If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace."
-msgstr "إذا ضبط لـ true، ستعرض قائمة النوافذ نوافذ جميع مساحات العمل. أو أنّها ستعرض نوافذ مساحة العمل الحاليّة فقط."
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"إذا ضبط لـ true، ستعرض قائمة النوافذ نوافذ جميع مساحات العمل. أو أنّها ستعرض "
+"نوافذ مساحة العمل الحاليّة فقط."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
-msgid "If true, then when unminimizing a window, move it to the current workspace. Otherwise, switch to the workspace of the window."
-msgstr "إذا ضبط لـ true ستنقل النافذة إلى مساحة العمل الحاليّة عند إلغاء تصغيرها. و إلا فسيقع التحوّل إلى مساحة عمل النافذة."
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"إذا ضبط لـ true ستنقل النافذة إلى مساحة العمل الحاليّة عند إلغاء تصغيرها. و "
+"إلا فسيقع التحوّل إلى مساحة عمل النافذة."
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
@@ -1173,15 +1129,21 @@ msgid "Show windows from all workspaces"
 msgstr "أظهر النوافذ من جميع مساحات العمل"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
-msgid "The use of this key was deprecated in GNOME 2.20. The schema is retained for compatibility with older versions."
-msgstr "ألغ استخدام هذا المفتاح في جنوم 2.6 دعماً لمفتاح 'format'. أبق على المخطط فقط للتطابق مع الإصدارات القديمة."
+msgid ""
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr ""
+"ألغ استخدام هذا المفتاح في جنوم 2.6 دعماً لمفتاح 'format'. أبق على المخطط فقط "
+"للتطابق مع الإصدارات القديمة."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "When to group windows"
 msgstr "متى تجمّع النوافذ"
 
 #: ../applets/wncklet/window-menu.c:82
-msgid "The Window Selector shows a list of all windows in a menu and lets you browse them."
+msgid ""
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
 msgstr "يعرض منتقي النوافذ قائمة لكل النوافذ و يمكنك من تصفحها."
 
 #: ../applets/wncklet/workspace-switcher.c:213
@@ -1202,17 +1164,24 @@ msgstr "حدث خطأ عند تحميل قيمة 'num_rows' لمبدّل مسا�
 
 #: ../applets/wncklet/workspace-switcher.c:498
 #, c-format
-msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "حدث خطأ عند تحميل قيمة 'display_workspace_names' لمبدّل مساحات العمل: %s\n"
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"حدث خطأ عند تحميل قيمة 'display_workspace_names' لمبدّل مساحات العمل: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:513
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "حدث خطأ عند تحميل قيمة 'display_all_workspaces' لمبدّل مساحات العمل: %s\n"
+msgstr ""
+"حدث خطأ عند تحميل قيمة 'display_all_workspaces' لمبدّل مساحات العمل: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:625
-msgid "The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."
-msgstr "يظهر لك مبدّل مساحات العمل صوراً صغيرة لمساحات عملك يمكنك من خلالها إدارة نوافذك."
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"يظهر لك مبدّل مساحات العمل صوراً صغيرة لمساحات عملك يمكنك من خلالها إدارة "
+"نوافذك."
 
 #: ../applets/wncklet/workspace-switcher.glade.h:1
 msgid "<b>Switcher</b>"
@@ -1259,37 +1228,50 @@ msgid "Display workspace names"
 msgstr "اعرض أسماء مساحات العمل"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:3
-msgid "If true, the workspace switcher will show all workspaces. Otherwise it will only show the current workspace."
-msgstr "إذا ضبط لـ true، فسيعرض مبدّل مساحات العمل كل مساحات العمل، وإلا فإنه سيظهر.مساحة العمل الحالية فقط."
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"إذا ضبط لـ true، فسيعرض مبدّل مساحات العمل كل مساحات العمل، وإلا فإنه سيظهر."
+"مساحة العمل الحالية فقط."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace. This setting only works when the window manager is Metacity."
-msgstr "إذا ضبط لـ true، فسيعرض مبدّل مساحات العمل أسماء مساحات العمل، وإلا فإنه سيظهر النوافذ في مساحة العمل. هذا الإعداد يعمل فقط إن كان مدير النوافذ هو Meatcity."
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Metacity."
+msgstr ""
+"إذا ضبط لـ true، فسيعرض مبدّل مساحات العمل أسماء مساحات العمل، وإلا فإنه "
+"سيظهر النوافذ في مساحة العمل. هذا الإعداد يعمل فقط إن كان مدير النوافذ هو "
+"Meatcity."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
 msgstr "أعمدة في مبدّل مساحات العمل"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:6
-msgid "This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true."
-msgstr "يحدد المفاتاح عدد السطور (للتصميم الأفقي) أو عدد الأعمدة (للتصميم العمودي) التي سيعرض فيها مبدّل مساحات العمل مساحات العمل. هذا المفتاح مفيد فقط عندضبط مفتاح display_all_workspaces لـ true."
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"يحدد المفاتاح عدد السطور (للتصميم الأفقي) أو عدد الأعمدة (للتصميم العمودي) "
+"التي سيعرض فيها مبدّل مساحات العمل مساحات العمل. هذا المفتاح مفيد فقط عندضبط "
+"مفتاح display_all_workspaces لـ true."
 
 #: ../gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
 msgstr "صدفة شريط جنوم"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1
-#: ../gnome-panel/applet.c:542
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:542
 msgid "Loc_k To Panel"
 msgstr "ا_قفل في الشّريط"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2
-#: ../gnome-panel/applet.c:525
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:525
 msgid "_Move"
 msgstr "ا_نقل"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3
-#: ../gnome-panel/applet.c:514
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:514
 msgid "_Remove From Panel"
 msgstr "ا_حذف من الشريط"
 
@@ -1301,8 +1283,7 @@ msgstr "؟؟؟"
 msgid "Cannot find an empty spot"
 msgstr "لم يمكن العثور على بقعة فارغة"
 
-#: ../gnome-panel/drawer.c:350
-#: ../gnome-panel/panel-addto.c:170
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:170
 #: ../gnome-panel/panel-toplevel.c:1588
 msgid "Drawer"
 msgstr "الدرج"
@@ -1311,8 +1292,7 @@ msgstr "الدرج"
 msgid "_Add to Drawer..."
 msgstr "أ_ضف للشّريط..."
 
-#: ../gnome-panel/drawer.c:595
-#: ../gnome-panel/launcher.c:891
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:891
 #: ../gnome-panel/panel-action-button.c:138
 #: ../gnome-panel/panel-context-menu.c:212
 msgid "_Properties"
@@ -1331,8 +1311,7 @@ msgid "- Edit .desktop files"
 msgstr "- حرّر ملفات .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:145
-#: ../gnome-panel/gnome-desktop-item-edit.c:199
-#: ../gnome-panel/launcher.c:981
+#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "أنشئ مطلق"
 
@@ -1341,13 +1320,14 @@ msgstr "أنشئ مطلق"
 msgid "Directory Properties"
 msgstr "خصائص الدليل"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:176
-#: ../gnome-panel/launcher.c:819
+#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "خصائص المطلق"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:1
-msgid "Launch other applications and provide various utilities to manage windows, show the time, etc."
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
 msgstr "بدء تطبيقات أخرى وتزويد وظائف متعددة لإدارة النوافذ، إظهار الوقت، إلخ"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:2
@@ -1394,8 +1374,7 @@ msgstr "أ_طلق"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "المفتاح %s غير مضبوط، لا يمكن تحميل المطلق\n"
 
-#: ../gnome-panel/launcher.c:1048
-#: ../gnome-panel/panel-ditem-editor.c:1347
+#: ../gnome-panel/launcher.c:1048 ../gnome-panel/panel-ditem-editor.c:1347
 #: ../gnome-panel/panel-ditem-editor.c:1381
 #: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "Could not save launcher"
@@ -1445,8 +1424,7 @@ msgstr "موقف مؤقتاً"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:617
-#: ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
@@ -1462,7 +1440,8 @@ msgstr "المستوى: %s، الأرواح: %s"
 
 #: ../gnome-panel/nothing.cP:629
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr "يمين/يسار للتحرك، مفتاح المسافة لإطلاق النار، 'p' للتوقف المؤقت، 'q' للخروج"
+msgstr ""
+"يمين/يسار للتحرك، مفتاح المسافة لإطلاق النار، 'p' للتوقف المؤقت، 'q' للخروج"
 
 #: ../gnome-panel/nothing.cP:1369
 msgid "Killer GEGLs from Outer Space"
@@ -1477,8 +1456,7 @@ msgid "_Lock Screen"
 msgstr "ا_قفل الشاشة"
 
 #: ../gnome-panel/panel-action-button.c:214
-#: ../gnome-panel/panel-menu-bar.c:409
-#: ../gnome-panel/panel-menu-button.c:990
+#: ../gnome-panel/panel-menu-bar.c:409 ../gnome-panel/panel-menu-button.c:990
 #: ../gnome-panel/panel-util.c:752
 #, c-format
 msgid "Could not execute '%s'"
@@ -1565,8 +1543,7 @@ msgstr "مطلق تطبيق..."
 msgid "Copy a launcher from the applications menu"
 msgstr "انسخ مُطلِق من قائمة التطبيقات"
 
-#: ../gnome-panel/panel-addto.c:137
-#: ../gnome-panel/panel-menu-button.c:1091
+#: ../gnome-panel/panel-addto.c:137 ../gnome-panel/panel-menu-button.c:1091
 msgid "Main Menu"
 msgstr "القائمة الرئيسية"
 
@@ -1627,29 +1604,31 @@ msgstr "أضِف للشّريط"
 msgid "Find an _item to add to the panel:"
 msgstr "اختر _عنصراً ليضاف إلى الشّريط:"
 
-#: ../gnome-panel/panel-applet-frame.c:840
+#: ../gnome-panel/panel-applet-frame.c:842
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "استثناء من popup_menu '%s'\n"
 
-#: ../gnome-panel/panel-applet-frame.c:965
+#: ../gnome-panel/panel-applet-frame.c:967
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "توقف \"%s\" بصورة غير متوقعة"
 
-#: ../gnome-panel/panel-applet-frame.c:967
+#: ../gnome-panel/panel-applet-frame.c:969
 msgid "Panel object has quit unexpectedly"
 msgstr "توقف جسم الشريط بصورة غير متوقعة"
 
-#: ../gnome-panel/panel-applet-frame.c:974
-msgid "If you reload a panel object, it will automatically be added back to the panel."
+#: ../gnome-panel/panel-applet-frame.c:976
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
 msgstr "إذا قمت بإعادة تحميل جسم من الشريط، سيتم إعادة إضافتها آليا."
 
-#: ../gnome-panel/panel-applet-frame.c:980
+#: ../gnome-panel/panel-applet-frame.c:982
 msgid "_Don't Reload"
 msgstr "_لا تعيد التحميل"
 
-#: ../gnome-panel/panel-applet-frame.c:981
+#: ../gnome-panel/panel-applet-frame.c:983
 msgid "_Reload"
 msgstr "أ_عد التحميل"
 
@@ -1658,22 +1637,21 @@ msgstr "أ_عد التحميل"
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:996
-#: ../gnome-panel/panel-applet-frame.c:1084
-#: ../gnome-panel/panel-util.c:395
+#: ../gnome-panel/panel-applet-frame.c:998
+#: ../gnome-panel/panel-applet-frame.c:1086 ../gnome-panel/panel-util.c:395
 msgid "Error"
 msgstr "خطأ"
 
-#: ../gnome-panel/panel-applet-frame.c:1047
+#: ../gnome-panel/panel-applet-frame.c:1049
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "واجه الشريط مشكلة أثناء تحميل \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:1063
+#: ../gnome-panel/panel-applet-frame.c:1065
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "هل تريد حذف البريمج من إعداداتك؟"
 
-#: ../gnome-panel/panel-applet-frame.c:1137
+#: ../gnome-panel/panel-applet-frame.c:1139
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "لا يمكن الحصول على واجهة AppletShell من القطعة\n"
 
@@ -1701,7 +1679,9 @@ msgid "The GNOME Panel"
 msgstr "لوحة جنوم"
 
 #: ../gnome-panel/panel-context-menu.c:130
-msgid "This program is responsible for launching other applications and provides useful utilities."
+msgid ""
+"This program is responsible for launching other applications and provides "
+"useful utilities."
 msgstr "هذا البرنامج مسؤول عن تشغيل تطبيقات أخرى ويزوّد بريمجات مفيدة ضمن نفسه."
 
 #: ../gnome-panel/panel-context-menu.c:167
@@ -1803,13 +1783,13 @@ msgstr "أمر المُطلِق غير مضبوط."
 msgid "The location of the launcher is not set."
 msgstr "موقع المُطلِق غير مضبوط."
 
-#: ../gnome-panel/panel-ditem-editor.c:1453
-#: ../gnome-panel/panel-util.c:185
+#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:185
 msgid "Could not display help document"
 msgstr "لا يمكن فتح مستند المساعدة"
 
 #: ../gnome-panel/panel-force-quit.c:76
-msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "انقر على نافذة لإجبار التطبيق على الإنهاء. للإلغاء انقر <ESC>."
 
 #: ../gnome-panel/panel-force-quit.c:204
@@ -1817,24 +1797,46 @@ msgid "Force this application to exit?"
 msgstr "أجبر هذا التطبيق على الانتهاء؟"
 
 #: ../gnome-panel/panel-force-quit.c:207
-msgid "If you choose to force an application to exit, any open documents in it will be lost."
+msgid ""
+"If you choose to force an application to exit, any open documents in it will "
+"be lost."
 msgstr "إجبار هذا التطبيق على الخروج؟ (ستضيع جميع المستندات المفتوحة)"
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
-msgid "A boolean flag to indicate whether the user's previous configuration in /apps/panel/profiles/default has been copied to the new location in /apps/panel."
-msgstr "علم منطقي لعرض ما إذا كانت إعدادات المستخدم /apps/panel/profiles/default تم نسخها في المكان الجديد /apps/panel."
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+"علم منطقي لعرض ما إذا كانت إعدادات المستخدم /apps/panel/profiles/default تم "
+"نسخها في المكان الجديد /apps/panel."
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
-msgid "A list of panel IDs. Each ID identifies an individual toplevel panel. The settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "قائمة لهويات الشرائط. كل هوية تعرف شريطا علويا. تعيينات كل من هذه الشرائط مخزونة في /apps/panel/toplevels/$(id)."
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"قائمة لهويات الشرائط. كل هوية تعرف شريطا علويا. تعيينات كل من هذه الشرائط "
+"مخزونة في /apps/panel/toplevels/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
-msgid "A list of panel applet IDs. Each ID identifies an individual panel applet. The settings for each of these applets are stored in /apps/panel/applets/$(id)."
-msgstr "قائمة لهويات بريمجات الشرائط. كل هوية تعرف بريمج شريط واحد.تعيينات كل من هذه البريمجات مخزونة في /apps/panel/applets/$(id)."
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+"قائمة لهويات بريمجات الشرائط. كل هوية تعرف بريمج شريط واحد.تعيينات كل من هذه "
+"البريمجات مخزونة في /apps/panel/applets/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
-msgid "A list of panel object IDs. Each ID identifies an individual panel object (e.g. a launcher, action button or menu button/bar). The settings for each of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "قائمة لهويات أجسام الشرائط. كل هوية تعرف جسم شريط واحد(مثلا مطلق أو زر عمل أو زر/عمود قائمة). تعيينات كل من هذه الأجسام مخزونة في /apps/panel/objects/$(id)."
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"قائمة لهويات أجسام الشرائط. كل هوية تعرف جسم شريط واحد(مثلا مطلق أو زر عمل "
+"أو زر/عمود قائمة). تعيينات كل من هذه الأجسام مخزونة في /apps/panel/objects/"
+"$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1849,16 +1851,27 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr "ابسط قائمة البرامج في حوار  \"شغّل تطبيق\""
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
-msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr "إذا كان true، يتم إضافة الإكمال الآلي في  \"شغّل تطبيق\""
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
-msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is expanded when the dialog is opened. This key is only relevant if the enable_program_list key is true."
-msgstr "إذا ضبط لـ true، فتسمدّد قائمة \"التطبيقات المعروفة\" في حوار  \"شغّل تطبيق\" عند فتحه. ليس للمفتاح معنى إلا إذا ضبط مفتاح enable_program_list لـ true."
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"إذا ضبط لـ true، فتسمدّد قائمة \"التطبيقات المعروفة\" في حوار  \"شغّل تطبيق\" "
+"عند فتحه. ليس للمفتاح معنى إلا إذا ضبط مفتاح enable_program_list لـ true."
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
-msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is made available. Whether or not the listing is expanded when the dialog is shown is controlled by the show_program_list key."
-msgstr "إذا ضبط لـ true، فستوفر  قائمة \"التطبيقات المعروفة\" في حوار  \"شغّل تطبيق\". يتحكم مفتاح show_program_list في تمديد القائمة أو عدمه عند عرض الحوار."
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"إذا ضبط لـ true، فستوفر  قائمة \"التطبيقات المعروفة\" في حوار  \"شغّل تطبيق"
+"\". يتحكم مفتاح show_program_list في تمديد القائمة أو عدمه عند عرض الحوار."
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
@@ -1877,8 +1890,16 @@ msgid "Panel object ID list"
 msgstr "قائمة هويات أجسام الشرائط"
 
 #: ../gnome-panel/panel-global.schemas.in.h:1
-msgid "A list of applet IIDs that the panel will ignore. This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list. The panel must be restarted for this to take effect."
-msgstr "قائمة IID البريمج التي سيتجاهلها الشريط. يمكنك هكذا منع بعض البريمجات من التحميل أو الظهور في الشريط. يمكنك لتعطيل بريمج المتحكم الصغير مثلا إضافة 'OAFIID:GNOME_MiniCommanderApplet' لهذه القائمة. يجب إعادة تشغيل الشريط لتطبيق التغييرات."
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+"قائمة IID البريمج التي سيتجاهلها الشريط. يمكنك هكذا منع بعض البريمجات من "
+"التحميل أو الظهور في الشريط. يمكنك لتعطيل بريمج المتحكم الصغير مثلا إضافة "
+"'OAFIID:GNOME_MiniCommanderApplet' لهذه القائمة. يجب إعادة تشغيل الشريط "
+"لتطبيق التغييرات."
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
 msgid "Applet IIDs to disable from loading"
@@ -1926,32 +1947,54 @@ msgid "Highlight launchers on mouseover"
 msgstr "يبرز المطلقات عند مرور الفأرة فوقها"
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
-msgid "If true, a dialog is shown asking for confirmation if the user wants to remove a panel."
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
 msgstr "إذا ضبط لـ true، سيعرض حوار يسأل عن تأكيد لطلب المستخدم حذف الشريط."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
-msgid "If true, a drawer will automatically be closed when the user clicks a launcher in it."
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
 msgstr "إذا ضبط true، سيغلق الدرج آليّا عند نقر المستخدم مطلقا فيه."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
-msgid "If true, a launcher is highlighted when the user moves the pointer over it."
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "إذا ضبط true، سيبرز مطلق عند سحب المستخدم المؤشر فوقه."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
-msgid "If true, the panel will not allow a user to force an application to quit by removing access to the force quit button."
-msgstr "إذا ضبط true، لن يسمح الشريط للمستخدم بإجبار تطبيق على الإنهاء، بحذف النفاذ إلى زر إجبار الإنهاء."
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"إذا ضبط true، لن يسمح الشريط للمستخدم بإجبار تطبيق على الإنهاء، بحذف النفاذ "
+"إلى زر إجبار الإنهاء."
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
-msgid "If true, the panel will not allow a user to lock their screen, by removing access to the lock screen menu entries."
-msgstr "إذا ضبط true، لن يسمح الشريط للمستخدم بقفل الشاشة ،بحذف النفاذ إلى خانات قائمة قفل الشاشة."
+msgid ""
+"If true, the panel will not allow a user to lock their screen, by removing "
+"access to the lock screen menu entries."
+msgstr ""
+"إذا ضبط true، لن يسمح الشريط للمستخدم بقفل الشاشة ،بحذف النفاذ إلى خانات "
+"قائمة قفل الشاشة."
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
-msgid "If true, the panel will not allow a user to log out, by removing access to the log out menu entries."
-msgstr "إذا ضبط true، لن يسمح الشريط للمستخدم بتسجيل الخروج ،بحذف النفاذ إلى خانات قائمة تسجيل الخروج."
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"إذا ضبط true، لن يسمح الشريط للمستخدم بتسجيل الخروج ،بحذف النفاذ إلى خانات "
+"قائمة تسجيل الخروج."
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
-msgid "If true, the panel will not allow any changes to the configuration of the panel. Individual applets may need to be locked down separately however. The panel must be restarted for this to take effect."
-msgstr "إذا ضبط true، فلن يسمح الشريط بأي تغييرات على إعدادات الشريط. قد يتطلب قفل البريمجات الشخصيّة. يجب إعادة تشغيل الشريط حتى تطبّق التغييرات."
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"إذا ضبط true، فلن يسمح الشريط بأي تغييرات على إعدادات الشريط. قد يتطلب قفل "
+"البريمجات الشخصيّة. يجب إعادة تشغيل الشريط حتى تطبّق التغييرات."
 
 #: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
@@ -1999,35 +2042,35 @@ msgstr[3] ""
 "أنت سجلت دخولك تحت اسم \"%s\".\n"
 "سيتم إطفاء النظام آلياً في %d ثانية."
 
-#: ../gnome-panel/panel-logout.c:334
+#: ../gnome-panel/panel-logout.c:339
 msgid "Log out of this system now?"
 msgstr "هل تريد تسجيل الخروج من النظام الآن؟"
 
-#: ../gnome-panel/panel-logout.c:340
+#: ../gnome-panel/panel-logout.c:345
 msgid "_Switch User"
 msgstr "_بدّل المستخدم"
 
-#: ../gnome-panel/panel-logout.c:346
+#: ../gnome-panel/panel-logout.c:351
 msgid "_Log Out"
 msgstr "_سجّل خروج"
 
-#: ../gnome-panel/panel-logout.c:351
+#: ../gnome-panel/panel-logout.c:356
 msgid "Shut down this system now?"
 msgstr "غلق النظام الآن؟"
 
-#: ../gnome-panel/panel-logout.c:356
+#: ../gnome-panel/panel-logout.c:361
 msgid "S_uspend"
 msgstr "_علّق"
 
-#: ../gnome-panel/panel-logout.c:361
+#: ../gnome-panel/panel-logout.c:366
 msgid "_Hibernate"
 msgstr "أ_سبِت"
 
-#: ../gnome-panel/panel-logout.c:366
+#: ../gnome-panel/panel-logout.c:371
 msgid "_Restart"
 msgstr "أ_عد التشغيل"
 
-#: ../gnome-panel/panel-logout.c:375
+#: ../gnome-panel/panel-logout.c:380
 msgid "_Shut Down"
 msgstr "أ_طفيء"
 
@@ -2047,57 +2090,54 @@ msgstr "غيّر حالة و تعامل سطح المكتب، إحصل على ا
 msgid "Applications"
 msgstr "تطبيقات"
 
-#: ../gnome-panel/panel-menu-bar.c:342
-#: ../gnome-panel/panel-menu-button.c:664
+#: ../gnome-panel/panel-menu-bar.c:342 ../gnome-panel/panel-menu-button.c:664
 msgid "_Edit Menus"
 msgstr "ح_رّر القوائم"
 
-#: ../gnome-panel/panel-menu-items.c:135
-#: ../gnome-panel/panel-run-dialog.c:351
+#: ../gnome-panel/panel-menu-items.c:132 ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "لم يمكن فتح المكان '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:416
+#: ../gnome-panel/panel-menu-items.c:420
 msgid "Bookmarks"
 msgstr "العلامات المرجعية"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:438
-#: ../gnome-panel/panel.c:531
+#: ../gnome-panel/panel-menu-items.c:442 ../gnome-panel/panel.c:531
 #, c-format
 msgid "Open '%s'"
 msgstr "افتح '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:510
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "تعذّر امسح %s بحثا عن تغيرات الأجهزة"
 
-#: ../gnome-panel/panel-menu-items.c:549
+#: ../gnome-panel/panel-menu-items.c:553
 #, c-format
 msgid "Rescan %s"
 msgstr "أعد مسح %s"
 
-#: ../gnome-panel/panel-menu-items.c:585
+#: ../gnome-panel/panel-menu-items.c:590
 #, c-format
 msgid "Unable to mount %s"
 msgstr "لا يمكن ضم %s"
 
-#: ../gnome-panel/panel-menu-items.c:638
+#: ../gnome-panel/panel-menu-items.c:653
 #, c-format
 msgid "Mount %s"
 msgstr "ضم %s"
 
-#: ../gnome-panel/panel-menu-items.c:841
+#: ../gnome-panel/panel-menu-items.c:856
 msgid "Removable Media"
 msgstr "الوسائط القابلة للفصل"
 
-#: ../gnome-panel/panel-menu-items.c:922
+#: ../gnome-panel/panel-menu-items.c:937
 msgid "Network Places"
 msgstr "أماكن في الشبكة"
 
-#: ../gnome-panel/panel-menu-items.c:961
+#: ../gnome-panel/panel-menu-items.c:976
 msgid "Open your personal folder"
 msgstr "افتح مجلدك الشخصي"
 
@@ -2105,19 +2145,19 @@ msgstr "افتح مجلدك الشخصي"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:981
+#: ../gnome-panel/panel-menu-items.c:996
 msgid "Desktop Folder|Desktop"
 msgstr "مجلد سطح المكتب"
 
-#: ../gnome-panel/panel-menu-items.c:982
+#: ../gnome-panel/panel-menu-items.c:997
 msgid "Open the contents of your desktop in a folder"
 msgstr "افتح محتويات سطح مكتبك في مجلد"
 
-#: ../gnome-panel/panel-menu-items.c:1374
+#: ../gnome-panel/panel-menu-items.c:1389
 msgid "Places"
 msgstr "أماكن"
 
-#: ../gnome-panel/panel-menu-items.c:1403
+#: ../gnome-panel/panel-menu-items.c:1418
 msgid "System"
 msgstr "نظام"
 
@@ -2125,7 +2165,7 @@ msgstr "نظام"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1480
+#: ../gnome-panel/panel-menu-items.c:1495
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -2133,19 +2173,19 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1492
+#: ../gnome-panel/panel-menu-items.c:1507
 #, c-format
 msgid "Log Out %s..."
 msgstr "تسجيل خروج %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1496
+#: ../gnome-panel/panel-menu-items.c:1511
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "سجّل خروج %s من هذه الجلسة لتسجيل الدخول كمستخدم آخر"
 
-#: ../gnome-panel/panel-menu-items.c:1537
+#: ../gnome-panel/panel-menu-items.c:1552
 msgid "Could not launch menu item"
 msgstr "لم يمكن بدء العنصر"
 
@@ -2166,20 +2206,40 @@ msgid "Icon used for object's button"
 msgstr "الأيقونة المستعملة لزر الجسم"
 
 #: ../gnome-panel/panel-object.schemas.in.h:4
-msgid "If true, the custom_icon key is used as a custom icon for the button. If false, the custom_icon key is ignored. This key is only relevant if the object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "إذا ضبط true، سيستخدم مفتاح custom_icon كأيقونة خاصة للزر. إذا ضبط لـ false، سيتجاهل مفتاح custom_icon. لهذا المفتاح معنى فقط عند ضبط مفتاح object_type كـ \"menu-object\" أو \"drawer-object\"."
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"إذا ضبط true، سيستخدم مفتاح custom_icon كأيقونة خاصة للزر. إذا ضبط لـ false، "
+"سيتجاهل مفتاح custom_icon. لهذا المفتاح معنى فقط عند ضبط مفتاح object_type "
+"كـ \"menu-object\" أو \"drawer-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
-msgid "If true, the menu_path key is used as the path from which the menu contents should be constructed. If false, the menu_path key is ignored. This key is only relevant if the object_type key is \"menu-object\"."
-msgstr "إذا ضبط true، فسيستخدم مفتاح menu_path كالمسار الذي منه ستبنى محتويات القائمة. إذا ضبط لـ false، فسيتجاهل مفتاح menu_path. لا معنى للمفتاح إلا عند ضبط مفتاح object_type كـ \"menu-object\"."
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"إذا ضبط true، فسيستخدم مفتاح menu_path كالمسار الذي منه ستبنى محتويات "
+"القائمة. إذا ضبط لـ false، فسيتجاهل مفتاح menu_path. لا معنى للمفتاح إلا عند "
+"ضبط مفتاح object_type كـ \"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
-msgid "If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel."
-msgstr "إذا ضبط true، فسيترجم موقع الجسم نسبة للحافة اليمنى للشريط  (أو السفلى للشرائط العمودية)."
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"إذا ضبط true، فسيترجم موقع الجسم نسبة للحافة اليمنى للشريط  (أو السفلى "
+"للشرائط العمودية)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
-msgid "If true, the user may not move the applet without first unlocking the object using the \"Unlock\" menuitem."
-msgstr "إذا ضبط true، لن يتمكن المستخدم من نقل بريمج دون إلغاء قفله أولا بإستعمال عنصر القائمة \"Unlock\"."
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+"إذا ضبط true، لن يتمكن المستخدم من نقل بريمج دون إلغاء قفله أولا بإستعمال "
+"عنصر القائمة \"Unlock\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
@@ -2210,44 +2270,87 @@ msgid "Panel object type"
 msgstr "نوع جسم الشريط"
 
 #: ../gnome-panel/panel-object.schemas.in.h:15
-msgid "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet\". This key is only relevant if the object_type key is \"bonobo-applet\"."
-msgstr "هوية تطبيق بونوبو للبريمج - مثلا \"OAFIID:GNOME_ClockApplet\". ليس لهذا المفتاح معنى إلا عند ضبط المفتاح object_type كـ \"bonobo-applet\"."
+msgid ""
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgstr ""
+"هوية تطبيق بونوبو للبريمج - مثلا \"OAFIID:GNOME_ClockApplet\". ليس لهذا "
+"المفتاح معنى إلا عند ضبط المفتاح object_type كـ \"bonobo-applet\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
-msgid "The action type this button represents. Possible values are \"lock\", \"logout\", \"run\", \"search\" and \"screenshot\". This key is only relevant if the object_type key is \"action-applet\"."
-msgstr "نوع الحدث الذي يمثّله هذا الزر. القيم الممكنة هي \"lock\"، \"logout\"، \"run\"، \"search\" و \"screenshot\". ليس للمفتاح معنى إلا عند ضبط مفتاح object_type كـ \"action-applet\"."
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"نوع الحدث الذي يمثّله هذا الزر. القيم الممكنة هي \"lock\"، \"logout\"، \"run"
+"\"، \"search\" و \"screenshot\". ليس للمفتاح معنى إلا عند ضبط مفتاح "
+"object_type كـ \"action-applet\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
-msgid "The identifier of the panel attached to this drawer. This key is only relevant if the object_type key is \"drawer-object\"."
-msgstr "محدد هويّة الشريط المنسوب لهذا الدرج. ليس لهذا المفتاح معنى إلا عنذ ضبط مفتاح object_type لـ \"drawer-object\"."
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"محدد هويّة الشريط المنسوب لهذا الدرج. ليس لهذا المفتاح معنى إلا عنذ ضبط مفتاح "
+"object_type لـ \"drawer-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr "محدد هويّة شريط المستوى الأعلى الحاوي لهذا الجسم."
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
-msgid "The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is \"launcher-object\"."
-msgstr "موقع ملف .desktop الواصف للمطلق. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح object_type كـ \"launcher-object\"."
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"موقع ملف .desktop الواصف للمطلق. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح "
+"object_type كـ \"launcher-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
-msgid "The location of the image file used as the icon for the object's button. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\" and the use_custom_icon key is true."
-msgstr "موقع ملف الصورة المستخدم كأيقونة لزر الجسم. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح object_type كـ \"drawer-object\" أو \"menu-object\" و ضبط مفتاح use_custom_icon لـ true."
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+"موقع ملف الصورة المستخدم كأيقونة لزر الجسم. ليس لهذا المفتاح معنى إلا عند "
+"ضبط مفتاح object_type كـ \"drawer-object\" أو \"menu-object\" و ضبط مفتاح "
+"use_custom_icon لـ true."
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
-msgid "The path from which the menu contents is contructed. This key is only relevant if the use_menu_path key is true and the object_type key is \"menu-object\"."
-msgstr "المسار الذي منه ستركب محتويات القائمة. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح use_menu_path لـ true و مفتاح object_type لـ \"menu-object\"."
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"المسار الذي منه ستركب محتويات القائمة. ليس لهذا المفتاح معنى إلا عند ضبط "
+"مفتاح use_menu_path لـ true و مفتاح object_type لـ \"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
-msgid "The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge."
-msgstr "موقع جسم الشريط هذا. الموقع محدّد بعدد البكسلات من حافة الشريط اليسرى (أو العليا إذا كان الشريط عموديّا)."
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"موقع جسم الشريط هذا. الموقع محدّد بعدد البكسلات من حافة الشريط اليسرى (أو "
+"العليا إذا كان الشريط عموديّا)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
-msgid "The text to display in a tooltip for this drawer or this menu. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
-msgstr "النص الذي سيعرض لهذا الدرج أو هذه القائمة. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح object_type key كـ \"drawer-object\" أو \"menu-object\"."
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+"النص الذي سيعرض لهذا الدرج أو هذه القائمة. ليس لهذا المفتاح معنى إلا عند ضبط "
+"مفتاح object_type key كـ \"drawer-object\" أو \"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
-msgid "The type of this panel object. Possible values are \"drawer-object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and \"menu-bar\"."
-msgstr "نوع جسم الشريط. القيم الممكنة هي \"drawer-object\" (جسم درج) و \"menu-object\" (جسم قائمة) و \"launcher-object\" (جسم مطلق) و \"bonobo-applet\" (بريمج بونوبو) و \"action-applet\" (بريمج حدث) و \"menu-bar\" (عمود قائمة)"
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
+msgstr ""
+"نوع جسم الشريط. القيم الممكنة هي \"drawer-object\" (جسم درج) و \"menu-object"
+"\" (جسم قائمة) و \"launcher-object\" (جسم مطلق) و \"bonobo-applet\" (بريمج "
+"بونوبو) و \"action-applet\" (بريمج حدث) و \"menu-bar\" (عمود قائمة)"
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
@@ -2265,26 +2368,24 @@ msgstr "استخدم أيقونة خاصة لزر الشريط"
 msgid "Use custom path for menu contents"
 msgstr "استخدم مسار خاص لمحتويات القائمة"
 
-#: ../gnome-panel/panel-profile.c:766
-#: ../gnome-panel/panel-profile.c:793
-#: ../gnome-panel/panel-profile.c:829
-#: ../gnome-panel/panel-profile.c:1694
+#: ../gnome-panel/panel-profile.c:766 ../gnome-panel/panel-profile.c:793
+#: ../gnome-panel/panel-profile.c:829 ../gnome-panel/panel-profile.c:1694
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "خطأ قراءة قيمة سلسلة GConf '%s': %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:808
-#: ../gnome-panel/panel-profile.c:1590
-#: ../gnome-panel/panel-profile.c:1663
-#: ../gnome-panel/panel-profile.c:1745
+#: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
+#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "خطأ قراءة قيمة العدد الصحيح لـ GConf '%s': %s"
 
 #: ../gnome-panel/panel-profile.c:1600
 #, c-format
-msgid "Panel '%s' is set to be displayed on screen %d which is not currently available. Not loading this panel."
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
 msgstr "اضبط عرض الشريط '%s' على الشاشة %d الغير متوفرة الآن.لن يحمل الشريط."
 
 #: ../gnome-panel/panel-profile.c:1678
@@ -2428,27 +2529,26 @@ msgstr "_مربع"
 msgid "pixels"
 msgstr "بكسلات"
 
-#: ../gnome-panel/panel-recent.c:51
+#: ../gnome-panel/panel-recent.c:55
 #, c-format
 msgid "Could not find a suitable application."
 msgstr "لا يمكن إيجاد تطبيق مناسب."
 
-#: ../gnome-panel/panel-recent.c:95
-#: ../gnome-panel/panel-recent.c:105
+#: ../gnome-panel/panel-recent.c:99 ../gnome-panel/panel-recent.c:109
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "لا يمكن فتح المستند \"%s\" المفتوح حديثا"
 
-#: ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:111
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "حدث خطأ مجهول عند محاولة فتح \"%s\""
 
-#: ../gnome-panel/panel-recent.c:164
+#: ../gnome-panel/panel-recent.c:168
 msgid "Clear the Recent Documents list?"
 msgstr "مسح قائمة المستندات الحديثة؟"
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:170
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2458,16 +2558,15 @@ msgstr ""
 "• كافّة العناصر من عنصر قائمة أماكن -> المستندات الحديثة.\n"
 "• كافّة العناصر من قائمة المستندات الحديثة في كافّة التّطبيقات."
 
-#: ../gnome-panel/panel-recent.c:178
-#: ../gnome-panel/panel-recent.c:252
+#: ../gnome-panel/panel-recent.c:182 ../gnome-panel/panel-recent.c:256
 msgid "Clear Recent Documents"
 msgstr "امسح المستندات الحديثة"
 
-#: ../gnome-panel/panel-recent.c:213
+#: ../gnome-panel/panel-recent.c:217
 msgid "Recent Documents"
 msgstr "المستندات الحديثة"
 
-#: ../gnome-panel/panel-recent.c:254
+#: ../gnome-panel/panel-recent.c:258
 msgid "Clear all items from the recent documents list"
 msgstr "امسح كل العناصر من قائمة المستندات الحديثة"
 
@@ -2505,11 +2604,15 @@ msgid "Could not display run dialog"
 msgstr "لم يمكن عرض حوار التشغيل"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:1
-msgid "Click this button to browse for a file whose name to append to the command string."
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
 msgstr "أنقر هذا الزر للتصفّح عن ملف سيلحق بالأمر."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:2
-msgid "Click this button to run the selected application or the command in the command entry field."
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
 msgstr "أنقر هذا الزر لتنفيذ التطبيق المنتقى أو الأمر في حقل خانة الأمر."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:3
@@ -2560,10 +2663,12 @@ msgstr "_شغّل"
 #: ../gnome-panel/panel-shell.c:64
 #, c-format
 msgid ""
-"The panel could not register with the bonobo-activation server (error code: %d) and will exit.\n"
+"The panel could not register with the bonobo-activation server (error code: %"
+"d) and will exit.\n"
 "It may be automatically restarted."
 msgstr ""
-"حدثت مشكلة عند محاولة تسجيل اللوحة مع خادم bonobo-activation. (شفرة الخطأ هي: %d) وستخرج اللوحة الآن.\n"
+"حدثت مشكلة عند محاولة تسجيل اللوحة مع خادم bonobo-activation. (شفرة الخطأ "
+"هي: %d) وستخرج اللوحة الآن.\n"
 "سوف يُعاد التشغيل تلقائياً."
 
 #: ../gnome-panel/panel-shell.c:74
@@ -2706,48 +2811,99 @@ msgid "Fit image to panel"
 msgstr "ملائمة الصورة للشريط"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:14
-msgid "If true, arrows will be placed on the hide buttons. This key is only relevant if the enable_buttons key is true."
-msgstr "إذا ضبط لـ true، ستوضع أسهم على أزرار الإخفاء. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح enable_buttons لـ true."
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"إذا ضبط لـ true، ستوضع أسهم على أزرار الإخفاء. ليس لهذا المفتاح معنى إلا عند "
+"ضبط مفتاح enable_buttons لـ true."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
-msgid "If true, buttons will be placed on each side of the panel which may be used to move the panel to edge of the screen, leaving only a button showing."
-msgstr "إذا ضبط لـ true، ستوضع الأزرار على كل جهة من الشريط مما يجعله من الممكن نقله إلى حافة الشاشة، و لن يظهر إلا زر واحد."
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"إذا ضبط لـ true، ستوضع الأزرار على كل جهة من الشريط مما يجعله من الممكن نقله "
+"إلى حافة الشاشة، و لن يظهر إلا زر واحد."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
-msgid "If true, hiding and un-hiding of this panel will be animated rather than happening instantly."
-msgstr "إذا ضبط لـ true، فسيحرّك إخفاء أو إلغاء إخفاء الشريط عوض أن يكون تلقائيّا."
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
+msgstr ""
+"إذا ضبط لـ true، فسيحرّك إخفاء أو إلغاء إخفاء الشريط عوض أن يكون تلقائيّا."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
-msgid "If true, the background image will be rotated when the panel is oriented vertically."
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
 msgstr "إذا ضبط لـ true، ستدور صورة الخلفية عند توجه الشريط عموديا."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
-msgid "If true, the image will be scaled (retaining the aspect ratio of the image) to the panel height (if horizontal)."
-msgstr "إذا ضبط لـ true، ستحجم الصورة (مع الحفاظ على نسبة المظهر)  لإرتفاع الشريط (إذا كان أفقيا)."
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+"إذا ضبط لـ true، ستحجم الصورة (مع الحفاظ على نسبة المظهر)  لإرتفاع الشريط "
+"(إذا كان أفقيا)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
-msgid "If true, the image will be scaled to the panel dimensions. The aspect ratio of the image will not be maintained."
-msgstr "إذا ضبط لـ true، يتحجم الصورة لأبعاد الشريط. لن يحافظ على نسبة مظهر الصورة."
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"إذا ضبط لـ true، يتحجم الصورة لأبعاد الشريط. لن يحافظ على نسبة مظهر الصورة."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
-msgid "If true, the panel is automatically hidden into a corner of the screen when the pointer leaves the panel area. Moving the pointer to that corner again will cause the panel to re-appear."
-msgstr "إذا ضبط لـ true، سيخفى الشريط آليا في زاوية من الشاشة عند خروج المؤشر من مساحة الشريط. نقل المؤشر فوق تلك الزاوية مرة أخرى سيعيد إظهار الشريط."
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"إذا ضبط لـ true، سيخفى الشريط آليا في زاوية من الشاشة عند خروج المؤشر من "
+"مساحة الشريط. نقل المؤشر فوق تلك الزاوية مرة أخرى سيعيد إظهار الشريط."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
-msgid "If true, the panel will occupy the entire screen width (height if this is a vertical panel). In this mode the panel can only be placed at a screen edge. If false, the panel will only be large enough to accommodate the applets, launchers and buttons on the panel."
-msgstr "إذا ضبط لـ true، سيشغل الشريط كامل عرض الشاشة (أو إرتفاعها إذا كان شريطا عموديا). في هذا النسق لا يمكن وضع الشريط إلى على حافة الشاشة. إذا ضبط لـ false، فسيكون عرض الشريط مناسبا فقط لإحتواء البريمجات و المطلقات و الأزرار عليه."
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+"إذا ضبط لـ true، سيشغل الشريط كامل عرض الشاشة (أو إرتفاعها إذا كان شريطا "
+"عموديا). في هذا النسق لا يمكن وضع الشريط إلى على حافة الشاشة. إذا ضبط لـ "
+"false، فسيكون عرض الشريط مناسبا فقط لإحتواء البريمجات و المطلقات و الأزرار "
+"عليه."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
-msgid "If true, the x and x_right keys are ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x and x_right keys specify the location of the panel."
-msgstr "إذا ضبط لـ true، فسيتجاهل مفتاح س وسيوضع الشريط وسط محور س للشاشة. إذا أعيد تحجيم الشريط فسيبقى في ذلك الموقع - مثلاً سينمو الشريط في الجهتين. إذا ضبط لـ false، فسيحدد مفتاح س موقع الشريط."
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
+msgstr ""
+"إذا ضبط لـ true، فسيتجاهل مفتاح س وسيوضع الشريط وسط محور س للشاشة. إذا أعيد "
+"تحجيم الشريط فسيبقى في ذلك الموقع - مثلاً سينمو الشريط في الجهتين. إذا ضبط لـ "
+"false، فسيحدد مفتاح س موقع الشريط."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
-msgid "If true, the y and y_bottom keys are ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y and y_bottom keys specify the location of the panel."
-msgstr "إذا ضبط لـ true، فسيتجاهل مفتاح ص و سيوضع الشريط وسط محور ص للشاشة. إذا أعيد تحجيم الشريط فسيبقى في ذلك الموقع - مثلا سينمو الشريط في الجهتين. إذا ضبط لـ false، فسيحدد مفتاح ص موقع الشريط."
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
+msgstr ""
+"إذا ضبط لـ true، فسيتجاهل مفتاح ص و سيوضع الشريط وسط محور ص للشاشة. إذا أعيد "
+"تحجيم الشريط فسيبقى في ذلك الموقع - مثلا سينمو الشريط في الجهتين. إذا ضبط لـ "
+"false، فسيحدد مفتاح ص موقع الشريط."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
-msgid "In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on."
-msgstr "قد يكون لك شريط لكل شاشة في تعيين Xinerama. يحدد هذا المفتاح الشاشة الحالية التي فيها جاري عرض الشريط."
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"قد يكون لك شريط لكل شاشة في تعيين Xinerama. يحدد هذا المفتاح الشاشة الحالية "
+"التي فيها جاري عرض الشريط."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
 msgid "Name to identify panel"
@@ -2778,72 +2934,171 @@ msgid "Specifies the background color for the panel in #RGB format."
 msgstr "يحدد لون خلفية الشريط بتهيئة #RGB"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:32
-msgid "Specifies the file to be used for the background image. If the image contains an alpha channel it will be composited onto the desktop background image."
-msgstr "يحدد الملف الذي سيستخدم لصورة الخلفيّة. إذا كانت الصورة تحوي قنات ألفا فستركب مع خلفيّة الشاشة."
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"يحدد الملف الذي سيستخدم لصورة الخلفيّة. إذا كانت الصورة تحوي قنات ألفا فستركب "
+"مع خلفيّة الشاشة."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
-msgid "Specifies the number of milliseconds delay after the pointer enters the panel area before the panel is automatically re-shown. This key is only relevant if the auto_hide key is true."
-msgstr "يحدّد عدد المليثواني للتأخير  قبل إعادة إظهار الشريط عند دخول المؤشر مساحة الشريط. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح auto_hide لـ true."
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"يحدّد عدد المليثواني للتأخير  قبل إعادة إظهار الشريط عند دخول المؤشر مساحة "
+"الشريط. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح auto_hide لـ true."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
-msgid "Specifies the number of milliseconds delay after the pointer leaves the panel area before the panel is automatically hidden. This key is only relevant if the auto_hide key is true."
-msgstr "يحدّد عدد المليثواني للتأخير قبل إخفاء الشريط آليّا عند خروج المؤشر من مساحة الشريط. ليس لهذا المفتاح  معنى إلا عند ضبط مفتاح auto_hide لـ true."
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"يحدّد عدد المليثواني للتأخير قبل إخفاء الشريط آليّا عند خروج المؤشر من مساحة "
+"الشريط. ليس لهذا المفتاح  معنى إلا عند ضبط مفتاح auto_hide لـ true."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
-msgid "Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true."
-msgstr "يحدد عدد البكسلات المرئية عند أخفاء الشريط آليا في زاوية. ليس لهذا المفتاح معنى إلا عند ضبط مفتاح auto_hide لـ true."
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"يحدد عدد البكسلات المرئية عند أخفاء الشريط آليا في زاوية. ليس لهذا المفتاح "
+"معنى إلا عند ضبط مفتاح auto_hide لـ true."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
-msgid "Specifies the opacity of the background color format. If the color is not completely opaque (a value of less than 65535), the color will be composited onto the desktop background image."
-msgstr "يحدّد عتامة تهيئة لون الخلفيّة. إذا لم يكن اللون معتما تماما (قيمة أقل من 65535) فسيركّب اللون على صورة خلفيّة المكتب."
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr ""
+"يحدّد عتامة تهيئة لون الخلفيّة. إذا لم يكن اللون معتما تماما (قيمة أقل من "
+"65535) فسيركّب اللون على صورة خلفيّة المكتب."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
 msgstr "مدّد الصورة لكامل الشريط"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:38
-msgid "The height (width for a vertical panel) of the panel. The panel will determine at runtime a minimum size based on the font size and other indicators. The maximum size is fixed at one quarter of the screen height (or width)."
-msgstr "إرتفاع الشريط (أو عرضه لشريط عمودي). سيحدّد الشريط عند وقت العمل حجما أدنى مؤسّس على حجم الخطّ و مؤشّرات أخرى.الحجم الأقصى محدّد كربع إرتفاع (أو عرض) الشاشة."
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"إرتفاع الشريط (أو عرضه لشريط عمودي). سيحدّد الشريط عند وقت العمل حجما أدنى "
+"مؤسّس على حجم الخطّ و مؤشّرات أخرى.الحجم الأقصى محدّد كربع إرتفاع (أو عرض) "
+"الشاشة."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
-msgid "The location of the panel along the x-axis, starting from the right of the screen. If set to -1, the value is ignored and the value of the x key is used. If the value is greater than 0, then the value of the x key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "موقع الشريط على طول محور س. إذا ضُبط على -1، ستـُتجاهل القيمة وستـُستخدم قيمة مفتاح س. إذا كانت القيمة أكبر من 0، ستـُتجاهل قيمة مفتاح س. هذا المفتاح مفيد فقط عند النسق الغير منبسط. عند النسق المنبسط يتجاهل هذا المفتاح و يوضع الشريط على حافة الشاشة المحدّدة من قبل مفتاح الإتّجاه."
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"موقع الشريط على طول محور س. إذا ضُبط على -1، ستـُتجاهل القيمة وستـُستخدم قيمة "
+"مفتاح س. إذا كانت القيمة أكبر من 0، ستـُتجاهل قيمة مفتاح س. هذا المفتاح مفيد "
+"فقط عند النسق الغير منبسط. عند النسق المنبسط يتجاهل هذا المفتاح و يوضع "
+"الشريط على حافة الشاشة المحدّدة من قبل مفتاح الإتّجاه."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
-msgid "The location of the panel along the x-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "موقع الشريط على طول محور س. هذا المفتاح مفيد فقط عند النسق الغير منبسط. عند النسق المنبسط يتجاهل هذا المفتاح و يوضع الشريط على حافة الشاشة المحدّدة من قبل مفتاح الإتّجاه."
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"موقع الشريط على طول محور س. هذا المفتاح مفيد فقط عند النسق الغير منبسط. عند "
+"النسق المنبسط يتجاهل هذا المفتاح و يوضع الشريط على حافة الشاشة المحدّدة من "
+"قبل مفتاح الإتّجاه."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
-msgid "The location of the panel along the y-axis, starting from the bottom of the screen. If set to -1, the value is ignored and the value of the y key is used. If the value is greater than 0, then the value of the y key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "موقع الشريط على طول محور ص. إذا ضُبط على -1، ستـُتجاهل القيمة وستـُستخدم قيمة مفتاح ص. إذا كانت القيمة أكبر من 0، ستـُتجاهل قيمة مفتاح ص. هذا المفتاح مفيد فقط عند النسق الغير منبسط. عند النسق المنبسط يتجاهل هذا المفتاح و يوضع الشريط على حافة الشاشة المحدّدة من قبل مفتاح الإتّجاه."
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"موقع الشريط على طول محور ص. إذا ضُبط على -1، ستـُتجاهل القيمة وستـُستخدم قيمة "
+"مفتاح ص. إذا كانت القيمة أكبر من 0، ستـُتجاهل قيمة مفتاح ص. هذا المفتاح مفيد "
+"فقط عند النسق الغير منبسط. عند النسق المنبسط يتجاهل هذا المفتاح و يوضع "
+"الشريط على حافة الشاشة المحدّدة من قبل مفتاح الإتّجاه."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
-msgid "The location of the panel along the y-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "موقع الشريط على طول محور ص. هذا المفتاح مفيد فقط عند النسق الغير منبسط. عند النسق المنبسط يتجاهل هذا المفتاح و يوضع الشريط على حافة الشاشة المحدّدة من قبل مفتاح الإتّجاه."
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"موقع الشريط على طول محور ص. هذا المفتاح مفيد فقط عند النسق الغير منبسط. عند "
+"النسق المنبسط يتجاهل هذا المفتاح و يوضع الشريط على حافة الشاشة المحدّدة من "
+"قبل مفتاح الإتّجاه."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
-msgid "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left\", \"right\". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between \"top\" and \"bottom\" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a \"top\" panel a menu button will pop up its menu below the panel, whereas on a \"bottom\" panel the menu will be popped up above the panel."
-msgstr "إتجاه الشريط. القيم الممكنة هي \"top\" و \"bottom\" و \"left\" و \"right\". في نسق التمديد يحدد المفتاح أي حافة شاشة سيكون عليها الشريط. في نسق اللا تمديد يكون الفرق بين الأعلى و الأسفل أقل أ هميّة. - كلاهما يؤشر على أن هذا الشريط أفقي -  لكنهما يعطيان تلميحة مفيدة لكيفية تصرف يعض أجسام الشريط، مثلا سيبثق زر قائمة قائمته تحت الشريط في شرائط \"top\"، أم في شرائط \"bottom\" ستبثق القائمة فوق الشريط."
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr ""
+"إتجاه الشريط. القيم الممكنة هي \"top\" و \"bottom\" و \"left\" و \"right\". "
+"في نسق التمديد يحدد المفتاح أي حافة شاشة سيكون عليها الشريط. في نسق اللا "
+"تمديد يكون الفرق بين الأعلى و الأسفل أقل أ هميّة. - كلاهما يؤشر على أن هذا "
+"الشريط أفقي -  لكنهما يعطيان تلميحة مفيدة لكيفية تصرف يعض أجسام الشريط، مثلا "
+"سيبثق زر قائمة قائمته تحت الشريط في شرائط \"top\"، أم في شرائط \"bottom\" "
+"ستبثق القائمة فوق الشريط."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
-msgid "The speed in which panel animations should occur. Possible values are \"slow\", \"medium\" and \"fast\". This key is only relevant if the enable_animations key is true."
-msgstr "السرعة التي يجب أن تحدث فيها حركات الشريط. القيم الممكنة هي \"بطيء\" و \"متوسّط\" و \"سريع\". هذا المفتاح مفيد فقط عند ضبط مفتاح enable_animations لـ true."
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+"السرعة التي يجب أن تحدث فيها حركات الشريط. القيم الممكنة هي \"بطيء\" و "
+"\"متوسّط\" و \"سريع\". هذا المفتاح مفيد فقط عند ضبط مفتاح enable_animations "
+"لـ true."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
-msgid "This is a human readable name which you can use to identify a panel. Its main purpose is to serve as the panel's window title which is useful when navigating between panels."
-msgstr "هذا إسم يمكن قرائته من قبل فرد لتحديد الشريط. هدفه الرئيس أن يكون عنوان نافذة الشريط ممّا يساعد في تصفّح في النوافذ."
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"هذا إسم يمكن قرائته من قبل فرد لتحديد الشريط. هدفه الرئيس أن يكون عنوان "
+"نافذة الشريط ممّا يساعد في تصفّح في النوافذ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid "Visible pixels when hidden"
 msgstr "البكسلات المرئية عند اخفائه"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
-msgid "Which type of background should be used for this panel. Possible values are \"gtk\" - the default GTK+ widget background will be used, \"color\" - the color key will be used as background color or \"image\" - the image specified by the image key will be used as background."
-msgstr "أي نوع خلفية ستستخدم لهذا الشريط. القيم الممكنة هي \"gtk\" - خلفية قطع GTK+ الإفتراضيّة أو \"لون\" - سيستخدم مفتاح الألوان كلون الخلفيّة أو\"صورة\" - ستسخدم في هذه الحالة الصورة المحدّدة من قبل مفتاح الصور كخلفيّة."
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"أي نوع خلفية ستستخدم لهذا الشريط. القيم الممكنة هي \"gtk\" - خلفية قطع GTK+ "
+"الإفتراضيّة أو \"لون\" - سيستخدم مفتاح الألوان كلون الخلفيّة أو\"صورة\" - "
+"ستسخدم في هذه الحالة الصورة المحدّدة من قبل مفتاح الصور كخلفيّة."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
-msgid "With a multi-screen setup, you may have panels on each individual screen. This key identifies the current screen the panel is displayed on."
-msgstr "يمكن أن تكون لديك شرائط على كل شاشة  عند ضبط تعيين الشاشات متعدّدة. يحدّد هذا المفتاح الشاشة الحاليّة التي جاري عرض الشريط عليها."
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"يمكن أن تكون لديك شرائط على كل شاشة  عند ضبط تعيين الشاشات متعدّدة. يحدّد هذا "
+"المفتاح الشاشة الحاليّة التي جاري عرض الشريط عليها."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "X co-ordinate of panel"
@@ -2991,7 +3246,8 @@ msgid "Specify an applet IID to load"
 msgstr "حدّد هوية الواجهة لبريمج لتحميلها"
 
 #: ../libpanel-applet/panel-test-applets.c:35
-msgid "Specify a gconf location in which the applet preferences should be stored"
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
 msgstr "حدّد موقع gconf يجب أن تخزن فيه تفضيلات البريمج"
 
 #: ../libpanel-applet/panel-test-applets.c:36
@@ -2999,8 +3255,11 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "حدّد الحجم الأصلي للبريمج (صغير جدا جدا أو متوسط أو كبير الخ)"
 
 #: ../libpanel-applet/panel-test-applets.c:37
-msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr "حدّد الاتجاه الأصلي للبريمج (إلى الأعلى أو إلى الأسفل أو إلى اليسار أو إلى اليمين)"
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr ""
+"حدّد الاتجاه الأصلي للبريمج (إلى الأعلى أو إلى الأسفل أو إلى اليسار أو إلى "
+"اليمين)"
 
 #: ../libpanel-applet/panel-test-applets.c:61
 msgid "Size|XX Small"
@@ -3048,34 +3307,104 @@ msgstr "بريم_ج:"
 msgid "_Prefs Dir:"
 msgstr "د_ليل التفضيلات:"
 
+#~ msgid "Unknown Location"
+#~ msgstr "موقع مجهول"
+
+#~ msgid "<b>Active timezones</b>"
+#~ msgstr "<b>مناطق زمنية نشطة</b>"
+
+#~ msgid "<b>Add timezone</b>"
+#~ msgstr "<b>أضف منطقة زمنية</b>"
+
+#~ msgid "<small><b>Location:</b></small>"
+#~ msgstr "<small><b>الموقع:</b></small>"
+
+#~ msgid ""
+#~ "<small><i>Click on the map to zoom and select the timezone of a city, or "
+#~ "right click to zoom out.</i></small>"
+#~ msgstr ""
+#~ "<small><i>انقر على الخريطة لتكبير واختيار المنطقة الزمنية لمدينة، أو انقر "
+#~ "بالزر الأيمن للتصغير.</i></small>"
+
+#~ msgid "Edit Timezones"
+#~ msgstr "ح_رّر المناطق الزمنية"
+
+#~ msgid "%s - %s"
+#~ msgstr "%s - %s"
+
+#~ msgid "move the mouse on the map"
+#~ msgstr "حرّك الفأرة على الخريطة"
+
+#~ msgid "<b>Location:</b> %s"
+#~ msgstr "<b>الموقع:</b> %s"
+
+#~ msgid "Name"
+#~ msgstr "الاسم"
+
+#~ msgid "Timezone"
+#~ msgstr "المنطقة الزمنية"
+
+#~ msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s مع التوقيت الصيفي (UTC %s%.2ld:%.2ld)"
+
+#~ msgid "%s (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s (UTC %s%.2ld:%.2ld)"
+
+#~ msgid ""
+#~ "%s - %s\n"
+#~ "%s"
+#~ msgstr ""
+#~ "%s - %s\n"
+#~ "%s"
+
+#~ msgid "_Edit timezones..."
+#~ msgstr "ح_رّر المناطق الزمنية..."
+
+#~ msgid "Timezones"
+#~ msgstr "المناطق الزمنية"
+
 #~ msgid "Computer"
 #~ msgstr "الحاسوب"
+
 #~ msgid "Network"
 #~ msgstr "الشبكة"
+
 #~ msgid "Themes"
 #~ msgstr "السِمات"
+
 #~ msgid "CD/DVD Creator"
 #~ msgstr "منشئ أقراص CD/DVD"
+
 #~ msgid "Windows Network"
 #~ msgstr "شبكة ويندوز"
+
 #~ msgid "Services in"
 #~ msgstr "الخدمات في"
+
 #~ msgid "Trash"
 #~ msgstr "سلة النفايات"
+
 #~ msgid "%1$s on %2$s"
 #~ msgstr "%1$s على %2$s"
+
 #~ msgid "%A %B %d"
 #~ msgstr "%A %B %d"
+
 #~ msgid "Click to view time in other timezones"
 #~ msgstr "انقر لعرض الوقت في مناطق زمنية أخرى"
+
 #~ msgid "Clock _type:"
 #~ msgstr "_نوع الساعة:"
+
 #~ msgid "12 hour"
 #~ msgstr "12 ساعة"
+
 #~ msgid "Use _UTC"
 #~ msgstr "ا_ستخدم UTC"
+
 #~ msgid "Show multiple _timezones"
 #~ msgstr "أظهر منا_طق زمنية متعددة"
+
 #~ msgid ""
 #~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
 #~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
@@ -3083,33 +3412,45 @@ msgstr "د_ليل التفضيلات:"
 #~ msgstr ""
 #~ "قائمة لهويات الأشرطة. كل هوية تعرف منطقة زمنية ذاتية. تعيينات كل من هذه "
 #~ "المناطق الزمنية مخزنة في $(id)_name و $(id)_zone keys."
+
 #~ msgid ""
 #~ "If true, display the timezone button in the clock, in addition to time."
 #~ msgstr ""
 #~ "إذا ضبط لـ true، سيعرض في زر المنطقة الزمنية في الساعة بالإضافة إلى الوقت."
+
 #~ msgid "Show the timezone button"
 #~ msgstr "أظهر زر المنطقة الزمنية"
+
 #~ msgid ""
 #~ "This key specifies the name of the timezone as can be used in the TZ "
 #~ "environment variable."
 #~ msgstr ""
 #~ "يحدد هذا المفتاح اسم المنطقة الزمنية كما سيُستخدم في متغير البيئة TZ."
+
 #~ msgid "This key specifies the user-visible name of the timezone."
 #~ msgstr "يحدّد هذا المفتاح اسم المنطقة الزمنية المرئي للمستخدم."
+
 #~ msgid "Timezone ID list"
 #~ msgstr "قائمة هويات المناطق الزمنية"
+
 #~ msgid "User-visible name of the timezone"
 #~ msgstr "اسم المنطقة الزمنية المرئي للمستخدم"
+
 #~ msgid "<b>Window List Size</b>"
 #~ msgstr "<b>حجم قائمة النوافذ</b>"
+
 #~ msgid "Behavior"
 #~ msgstr "السلوك"
+
 #~ msgid "M_inimum size:"
 #~ msgstr "الحجم الأ_صغر:"
+
 #~ msgid "Ma_ximum size:"
 #~ msgstr "الحجم الأ_كبر:"
+
 #~ msgid "Size"
 #~ msgstr "الحجم"
+
 #~ msgid ""
 #~ "This key specifies the maximum width that the window list requests. The "
 #~ "maximum width setting is useful to limit the size of the window list in "
@@ -3118,18 +3459,22 @@ msgstr "د_ليل التفضيلات:"
 #~ "يحدّد هذا المفتاح العرض الأقصى الذي تطلبه قائمة النوافذ. تعيين العرض "
 #~ "الأقصى مفيد لتحديد حجم قائمة النوافذ في الشرائط العريضة التي يمكن أن تملأ "
 #~ "فيها قائمة النوافذ كامل الفضاء المتاح."
+
 #~ msgid "This key specifies the minimum width that the window list requests."
 #~ msgstr "يحدد هذا المفتاح العرض الأدنى الذي ستطلبه قائمة النوافذ."
+
 #~ msgid "File"
 #~ msgstr "ملف"
+
 #~ msgid ""
 #~ "I've detected a panel already running,\n"
 #~ "and will now exit."
 #~ msgstr ""
 #~ "لقد اكتشفت شريطا شاغلا،\n"
 #~ "سأخرج الآن."
+
 #~ msgid "Delete Drawer"
 #~ msgstr "احذف الدرج"
+
 #~ msgid "Delete Panel"
 #~ msgstr "احذف الشريط"
-
