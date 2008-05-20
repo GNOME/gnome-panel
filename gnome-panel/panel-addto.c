@@ -350,16 +350,19 @@ panel_addto_setup_drag (GtkTreeView          *tree_view,
 
 static void
 panel_addto_setup_launcher_drag (GtkTreeView *tree_view,
-				 const char  *uri)
+				 const char  *path)
 {
         static GtkTargetEntry target[] = {
 		{ "text/uri-list", 0, 0 }
 	};
+	char *uri;
 	char *uri_list;
 
+	uri = g_filename_to_uri (path, NULL, NULL);
 	uri_list = g_strconcat (uri, "\r\n", NULL);
 	panel_addto_setup_drag (tree_view, target, uri_list);
 	g_free (uri_list);
+	g_free (uri);
 }
 
 static void
