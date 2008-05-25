@@ -1,21 +1,21 @@
 # Vietnamese Translation for Gnome Panel.
-# Copyright © 2007 Free Software Foundation, Inc.
+# Copyright © 2008 Free Software Foundation, Inc.
 # Nguyễn Thái Ngọc Duy <pclouds@gmail.com> 2002-2004,2007-2008.
-# Clytie Siddall <clytie@riverland.net.au>, 2005-2007.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.19.4\n"
+"Project-Id-Version: gnome-panel 2.23.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-22 14:29+0000\n"
-"PO-Revision-Date: 2008-03-23 17:42+0700\n"
+"POT-Creation-Date: 2008-04-17 04:10+0100\n"
+"PO-Revision-Date: 2008-05-25 23:42+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
-"Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
+"Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: LocFactoryEditor 1.7b1\n"
+"X-Generator: LocFactoryEditor 1.7b3\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -60,7 +60,7 @@ msgid "_Preferences"
 msgstr "Tù_y thích"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4102
+#: ../applets/clock/clock.c:4398
 msgid "Clock"
 msgstr "Đồng hồ"
 
@@ -76,7 +76,7 @@ msgstr "Bộ tạo tiểu dụng đồng hồ."
 msgid "Get the current time and date"
 msgstr "Lấy thời gian hiện thời"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:425
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -85,8 +85,8 @@ msgstr "%l:%M %p"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1553 ../applets/clock/clock-location-tile.c:485
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:427
+#: ../applets/clock/clock.c:1552 ../applets/clock/clock-location-tile.c:472
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -97,45 +97,45 @@ msgstr "%H:%M"
 msgid "%b %d"
 msgstr "%d %b"
 
-#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:766
 msgid "Tasks"
 msgstr "Tác vụ"
 
-#: ../applets/clock/calendar-window.c:765
-#: ../applets/clock/calendar-window.c:938
-#: ../applets/clock/calendar-window.c:1554
+#: ../applets/clock/calendar-window.c:766
+#: ../applets/clock/calendar-window.c:942
+#: ../applets/clock/calendar-window.c:1571
 msgid "Edit"
 msgstr "Sửa"
 
-#: ../applets/clock/calendar-window.c:883
+#: ../applets/clock/calendar-window.c:887
 msgid "All Day"
 msgstr "Suốt ngày"
 
-#: ../applets/clock/calendar-window.c:1019
+#: ../applets/clock/calendar-window.c:1026
 msgid "Appointments"
 msgstr "Cuộc hẹn"
 
-#: ../applets/clock/calendar-window.c:1044
+#: ../applets/clock/calendar-window.c:1051
 msgid "Birthdays and Anniversaries"
 msgstr "Sinh nhật và Kỷ niệm"
 
-#: ../applets/clock/calendar-window.c:1069
+#: ../applets/clock/calendar-window.c:1076
 msgid "Weather Information"
 msgstr "Thông tin thời tiết"
 
-#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
+#: ../applets/clock/calendar-window.c:1571 ../applets/clock/clock.glade.h:15
 msgid "Locations"
 msgstr "Địa điểm"
 
-#: ../applets/clock/calendar-window.c:1850
+#: ../applets/clock/calendar-window.c:1870
 msgid "Calendar"
 msgstr "Lịch"
 
-#: ../applets/clock/clock.c:421
+#: ../applets/clock/clock.c:425
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1551
+#: ../applets/clock/clock.c:427 ../applets/clock/clock.c:1550
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -144,7 +144,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:443
+#: ../applets/clock/clock.c:447
 msgid "%a %b %e"
 msgstr "%a %d %b"
 
@@ -152,7 +152,7 @@ msgstr "%a %d %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:454
 #, c-format
 msgid ""
 "%1$s\n"
@@ -165,7 +165,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:458
+#: ../applets/clock/clock.c:462
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s, %1$s"
@@ -173,60 +173,60 @@ msgstr "%2$s, %1$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:640
+#: ../applets/clock/clock.c:644
 msgid "%A %B %d (%%s)"
 msgstr "%A, %d %B (%%s)"
 
-#: ../applets/clock/clock.c:670
+#: ../applets/clock/clock.c:674
 msgid "Click to hide your appointments and tasks"
 msgstr "Nhấn để ẩn các cuộc hẹn và tác vụ của bạn"
 
-#: ../applets/clock/clock.c:673
+#: ../applets/clock/clock.c:677
 msgid "Click to view your appointments and tasks"
 msgstr "Nhắp để xem các cuộc hẹn và tác vụ của bạn"
 
-#: ../applets/clock/clock.c:677
+#: ../applets/clock/clock.c:681
 msgid "Click to hide month calendar"
 msgstr "Nhấn để ẩn lịch tháng"
 
-#: ../applets/clock/clock.c:680
+#: ../applets/clock/clock.c:684
 msgid "Click to view month calendar"
 msgstr "Nhắp để xem lịch tháng"
 
-#: ../applets/clock/clock.c:1401
+#: ../applets/clock/clock.c:1400
 msgid "Computer Clock"
 msgstr "Đồng hồ máy tính"
 
-#: ../applets/clock/clock.c:1546
+#: ../applets/clock/clock.c:1545
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1548
+#: ../applets/clock/clock.c:1547
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1590
+#: ../applets/clock/clock.c:1589
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1665
+#: ../applets/clock/clock.c:1664
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Lỗi khởi động công cụ cấu hình thời gian: %s"
 
-#: ../applets/clock/clock.c:1694
+#: ../applets/clock/clock.c:1693
 msgid "Set System Time..."
 msgstr "Đặt giờ hệ thống..."
 
-#: ../applets/clock/clock.c:1695 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1694 ../applets/clock/clock.glade.h:19
 msgid "Set System Time"
 msgstr "Đặt giờ hệ thống"
 
-#: ../applets/clock/clock.c:1709
+#: ../applets/clock/clock.c:1708
 msgid "Failed to set the system time"
 msgstr "Lỗi đặt giờ hệ thống"
 
-#: ../applets/clock/clock.c:1882
+#: ../applets/clock/clock.c:1896
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -234,46 +234,45 @@ msgstr ""
 "Lỗi định vị chương trình cấu hình ngày giờ. Có lẽ do chưa cài đặt trình loại "
 "ấy?"
 
-#: ../applets/clock/clock.c:2747
+#: ../applets/clock/clock.c:2828
 msgid "Custom format"
 msgstr "Dạng thức tự chọn"
 
-#: ../applets/clock/clock.c:3545 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:584
+#: ../applets/clock/clock.c:3795 ../applets/clock/clock-location-tile.c:573
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:3803
+#: ../applets/clock/clock.c:4091
 msgid "City Name"
 msgstr "Tên thành phố"
 
-#: ../applets/clock/clock.c:3807
+#: ../applets/clock/clock.c:4095
 msgid "City Time Zone"
 msgstr "Múi giờ thành phố"
 
-#: ../applets/clock/clock.c:3998
+#: ../applets/clock/clock.c:4294
 msgid "24 hour"
 msgstr "24 giờ"
 
-#: ../applets/clock/clock.c:3999
+#: ../applets/clock/clock.c:4295
 msgid "UNIX time"
 msgstr "Giờ UNIX"
 
-#: ../applets/clock/clock.c:4000
+#: ../applets/clock/clock.c:4296
 msgid "Internet time"
 msgstr "Giờ Mạng"
 
-#: ../applets/clock/clock.c:4008
+#: ../applets/clock/clock.c:4304
 msgid "Custom _format:"
 msgstr "_Dạng thức tự chọn:"
 
-#: ../applets/clock/clock.c:4105
+#: ../applets/clock/clock.c:4401
 msgid "The Clock displays the current time and date"
 msgstr "Đồng hồ hiển thị thời gian và ngày hiện thời"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4108 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4404 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -283,42 +282,34 @@ msgid "translator-credits"
 msgstr "Nhóm Việt hoá GNOME (http://gnomevi.sourceforge.net)"
 
 #: ../applets/clock/clock.glade.h:1
-msgid "12 _hour format"
-msgstr "Dạng thức 12 _giờ"
-
-#: ../applets/clock/clock.glade.h:2
-msgid "24 h_our format"
-msgstr "Dạng thức 24 g_iờ"
-
-#: ../applets/clock/clock.glade.h:3
 msgid "<b>Clock Options</b>"
 msgstr "<b>Tuỳ chọn đồng hồ</b>"
 
-#: ../applets/clock/clock.glade.h:4
+#: ../applets/clock/clock.glade.h:2
 msgid "<b>Display</b>"
 msgstr "<b>Hiển thị</b>"
 
-#: ../applets/clock/clock.glade.h:5
+#: ../applets/clock/clock.glade.h:3
 msgid "<b>Panel Display</b>"
 msgstr "<b>Hiển thị bảng</b>"
 
-#: ../applets/clock/clock.glade.h:6
+#: ../applets/clock/clock.glade.h:4
 msgid "<b>Time Settings</b>"
 msgstr "<b>Thiết lập thời gian</b>"
 
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.glade.h:5
 msgid "<i>(optional)</i>"
 msgstr "<i>(tuỳ chọn)</i>"
 
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.glade.h:6
 msgid "Clock Preferences"
 msgstr "Tùy thích đồng hồ"
 
-#: ../applets/clock/clock.glade.h:9
+#: ../applets/clock/clock.glade.h:7
 msgid "Current Time:"
 msgstr "Giờ hiện thời:"
 
-#: ../applets/clock/clock.glade.h:10
+#: ../applets/clock/clock.glade.h:8
 msgid ""
 "East\n"
 "West"
@@ -326,32 +317,32 @@ msgstr ""
 "Đông\n"
 "Tây"
 
-#: ../applets/clock/clock.glade.h:12
+#: ../applets/clock/clock.glade.h:10
 msgid "Find _Next"
 msgstr "Tìm t_iếp"
 
-#: ../applets/clock/clock.glade.h:13
+#: ../applets/clock/clock.glade.h:11
 msgid "Find..."
 msgstr "Tìm..."
 
-#: ../applets/clock/clock.glade.h:14
+#: ../applets/clock/clock.glade.h:12
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
 msgid "General"
 msgstr "Chung"
 
-#: ../applets/clock/clock.glade.h:15
+#: ../applets/clock/clock.glade.h:13
 msgid "Latitude:"
 msgstr "Vĩ độ:"
 
-#: ../applets/clock/clock.glade.h:16
+#: ../applets/clock/clock.glade.h:14
 msgid "Location Name:"
 msgstr "Tên vị trí:"
 
-#: ../applets/clock/clock.glade.h:18
+#: ../applets/clock/clock.glade.h:16
 msgid "Longitude:"
 msgstr "Kinh độ:"
 
-#: ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.glade.h:17
 msgid ""
 "North\n"
 "South"
@@ -359,41 +350,49 @@ msgstr ""
 "Bắc\n"
 "Nam"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.glade.h:20
 msgid "Show _temperature"
 msgstr "Hiện _nhiệt độ"
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.glade.h:21
 msgid "Show _weather"
 msgstr "Hiện _thời tiết"
 
-#: ../applets/clock/clock.glade.h:24
+#: ../applets/clock/clock.glade.h:22
 msgid "Show seco_nds"
 msgstr "Hiện _giây"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.glade.h:23
 msgid "Show the _date"
 msgstr "Hiện _ngày"
 
-#: ../applets/clock/clock.glade.h:26
+#: ../applets/clock/clock.glade.h:24
 msgid "Time Settings"
 msgstr "Thiết lập thời gian"
 
-#: ../applets/clock/clock.glade.h:27
+#: ../applets/clock/clock.glade.h:25
 msgid "Time _Settings"
 msgstr "T_hiết lập thời gian"
 
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.glade.h:26
 msgid "Time:"
 msgstr "Thời gian:"
 
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.glade.h:27
 msgid "Timezone:"
 msgstr "Múi giờ:"
 
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.glade.h:28
 msgid "Weather"
 msgstr "Thời tiết"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "_12 hour format"
+msgstr "Định dạng _12 giờ"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "_24 hour format"
+msgstr "Định dạng _24 giờ"
 
 #: ../applets/clock/clock.glade.h:31
 msgid "_Find:"
@@ -612,27 +611,20 @@ msgstr "Dùng giờ UNIX"
 msgid "Use UTC"
 msgstr "Dùng UTC"
 
-#. make a fake location with a null TZ
-#. make a fake location with the current TZ
-#: ../applets/clock/clock-location.c:364 ../applets/clock/clock-location.c:371
-msgid "Unknown Location"
-msgstr "Địa điểm lạ"
-
-#: ../applets/clock/clock-location-tile.c:194
+#: ../applets/clock/clock-location-tile.c:182
 msgid "Failed to set the system timezone"
 msgstr "Lỗi đặt múi giờ hệ thống"
 
-#: ../applets/clock/clock-location-tile.c:239
-#: ../applets/clock/clock-location-tile.c:314
+#: ../applets/clock/clock-location-tile.c:230
 msgid "<small>Set...</small>"
 msgstr "<small>Đặt...</small>"
 
-#: ../applets/clock/clock-location-tile.c:240
-#: ../applets/clock/clock-location-tile.c:315
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set</small>"
 msgstr "<small>Đặt</small>"
 
-#: ../applets/clock/clock-location-tile.c:320
+#. FIXME: this needs to talk about locations, not timezones
+#: ../applets/clock/clock-location-tile.c:307
 msgid "Set as current timezone for this computer"
 msgstr "Đặt làm múi giờ hiện thời cho máy này"
 
@@ -642,7 +634,7 @@ msgstr "Đặt làm múi giờ hiện thời cho máy này"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:458
+#: ../applets/clock/clock-location-tile.c:445
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -652,7 +644,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/clock-location-tile.c:454
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -661,22 +653,22 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:477
+#: ../applets/clock/clock-location-tile.c:464
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:594
-#: ../applets/clock/clock-location-tile.c:600
+#: ../applets/clock/clock-location-tile.c:585
+#: ../applets/clock/clock-location-tile.c:593
 msgid "Unknown"
 msgstr "Không rõ"
 
-#: ../applets/clock/clock-location-tile.c:595
+#: ../applets/clock/clock-location-tile.c:586
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, cảm giác như %s"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:604
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Bình minh: %s / Hoàng hôn: %s"
@@ -710,92 +702,6 @@ msgstr "Cần quyền ưu tiên để thay đổi giờ hệ thống."
 #: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
 msgid "Privileges are required to configure the hardware clock."
 msgstr "Cần quyền ưu tiên để cấu hình đồng hồ phần cứng."
-
-#: ../applets/clock/timezone.glade.h:1
-msgid "<b>Active timezones</b>"
-msgstr "<b>Múi giờ đã bật</b>"
-
-#: ../applets/clock/timezone.glade.h:2
-msgid "<b>Add timezone</b>"
-msgstr "<b>Thêm múi giờ</b>"
-
-#: ../applets/clock/timezone.glade.h:3
-msgid "<small><b>Location:</b></small>"
-msgstr "<small><b>Địa điểm:</b></small>"
-
-#: ../applets/clock/timezone.glade.h:4
-msgid ""
-"<small><i>Click on the map to zoom and select the timezone of a city, or "
-"right click to zoom out.</i></small>"
-msgstr ""
-"<small><i>Nhấn vào bản đồ để phóng to, rồi chọn múi giờ của thành phố riêng, "
-"hoặc nhấn-phải để thu nhỏ.</i></small>"
-
-#: ../applets/clock/timezone.glade.h:5
-msgid "Edit Timezones"
-msgstr "Sửa múi giờ"
-
-#. Translators: the first %s is a place and the
-#. * second is a time. Result looks like this:
-#. * Europe/Paris - 15:45
-#: ../applets/clock/tz-sel-dialog.c:196
-#, c-format
-msgid "%s - %s"
-msgstr "%s - %s"
-
-#: ../applets/clock/tz-sel-dialog.c:205
-msgid "move the mouse on the map"
-msgstr "di chuyển con chuột qua bản đồ"
-
-#: ../applets/clock/tz-sel-dialog.c:207
-#, c-format
-msgid "<b>Location:</b> %s"
-msgstr "<b>Địa điểm:</b> %s"
-
-#: ../applets/clock/tz-sel-dialog.c:812
-msgid "Name"
-msgstr "Tên"
-
-#: ../applets/clock/tz-sel-dialog.c:825
-msgid "Timezone"
-msgstr "Múi giờ"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:102
-#, c-format
-msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr "%s có giờ giữ ban ngày (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:111
-#, c-format
-msgid "%s (UTC %s%.2ld:%.2ld)"
-msgstr "%s (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name (as in
-#. * "Europe/Paris"), the second string is a country name abbreviation
-#. * (as in "FR") and the last string is another line (it's the one
-#. * looking like "BST (UTC +01:00)")
-#: ../applets/clock/tz-window.c:121
-#, c-format
-msgid ""
-"%s - %s\n"
-"%s"
-msgstr ""
-"%s - %s\n"
-"%s"
-
-#: ../applets/clock/tz-window.c:283
-msgid "_Edit timezones..."
-msgstr "_Sửa múi giờ..."
-
-#: ../applets/clock/tz-window.c:370
-msgid "Timezones"
-msgstr "Múi giờ"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -1714,21 +1620,21 @@ msgstr "Thêm vào Bảng"
 msgid "Find an _item to add to the panel:"
 msgstr "Tìm một _mục để thêm vào bảng:"
 
-#: ../gnome-panel/panel-applet-frame.c:840
+#: ../gnome-panel/panel-applet-frame.c:842
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Lỗi ngoại lệ từ popup_menu (trình đơn bật lên) '%s'\n"
 
-#: ../gnome-panel/panel-applet-frame.c:965
+#: ../gnome-panel/panel-applet-frame.c:967
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "« %s » đã thoát bất ngờ"
 
-#: ../gnome-panel/panel-applet-frame.c:967
+#: ../gnome-panel/panel-applet-frame.c:969
 msgid "Panel object has quit unexpectedly"
 msgstr "Đối tượng Bảng điều khiển đã kết thúc bất ngờ"
 
-#: ../gnome-panel/panel-applet-frame.c:974
+#: ../gnome-panel/panel-applet-frame.c:976
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1736,11 +1642,11 @@ msgstr ""
 "Nếu tải lại đối tượng bảng điểu khiển, nó sẽ tự động được thêm lại vào bảng "
 "điều khiển."
 
-#: ../gnome-panel/panel-applet-frame.c:980
+#: ../gnome-panel/panel-applet-frame.c:982
 msgid "_Don't Reload"
 msgstr "_Không tải lại"
 
-#: ../gnome-panel/panel-applet-frame.c:981
+#: ../gnome-panel/panel-applet-frame.c:983
 msgid "_Reload"
 msgstr "Tải _lại"
 
@@ -1749,21 +1655,21 @@ msgstr "Tải _lại"
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:996
-#: ../gnome-panel/panel-applet-frame.c:1084 ../gnome-panel/panel-util.c:395
+#: ../gnome-panel/panel-applet-frame.c:998
+#: ../gnome-panel/panel-applet-frame.c:1086 ../gnome-panel/panel-util.c:395
 msgid "Error"
 msgstr "Lỗi"
 
-#: ../gnome-panel/panel-applet-frame.c:1047
+#: ../gnome-panel/panel-applet-frame.c:1049
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Bảng điều khiển gặp lỗi khi tải « %s »."
 
-#: ../gnome-panel/panel-applet-frame.c:1063
+#: ../gnome-panel/panel-applet-frame.c:1065
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Bạn có muốn xoá bỏ tiểu dụng khỏi cấu hình của bạn không?"
 
-#: ../gnome-panel/panel-applet-frame.c:1137
+#: ../gnome-panel/panel-applet-frame.c:1139
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 "Không thể lấy giao diện AppletShell (trình bao tiểu dụng) từ Điều khiển\n"
@@ -2154,35 +2060,35 @@ msgstr[0] ""
 "Bạn hiện thời được đăng nhập là « %s ».\n"
 "Hệ thống này sẽ được tắt tự động trong vòng %d giây."
 
-#: ../gnome-panel/panel-logout.c:334
+#: ../gnome-panel/panel-logout.c:339
 msgid "Log out of this system now?"
 msgstr "Đăng xuất hệ thống này ngay bây giờ không?"
 
-#: ../gnome-panel/panel-logout.c:340
+#: ../gnome-panel/panel-logout.c:345
 msgid "_Switch User"
 msgstr "_Đổi người dùng"
 
-#: ../gnome-panel/panel-logout.c:346
+#: ../gnome-panel/panel-logout.c:351
 msgid "_Log Out"
 msgstr "Đăng _xuất"
 
-#: ../gnome-panel/panel-logout.c:351
+#: ../gnome-panel/panel-logout.c:356
 msgid "Shut down this system now?"
 msgstr "Tắt hệ thống này ngay bây giờ không?"
 
-#: ../gnome-panel/panel-logout.c:356
+#: ../gnome-panel/panel-logout.c:361
 msgid "S_uspend"
 msgstr "_Ngưng"
 
-#: ../gnome-panel/panel-logout.c:361
+#: ../gnome-panel/panel-logout.c:366
 msgid "_Hibernate"
 msgstr "N_gủ đông"
 
-#: ../gnome-panel/panel-logout.c:366
+#: ../gnome-panel/panel-logout.c:371
 msgid "_Restart"
 msgstr "_Khởi chạy lại"
 
-#: ../gnome-panel/panel-logout.c:375
+#: ../gnome-panel/panel-logout.c:380
 msgid "_Shut Down"
 msgstr "_Tắt máy"
 
@@ -3446,133 +3352,3 @@ msgstr "_Tiểu dụng:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Thư mục Tù_y thích:"
-
-#~ msgid "%A %B %d"
-#~ msgstr "%A %d %B"
-
-#~ msgid "Click to view time in other timezones"
-#~ msgstr "Nhấn chuột để xem giờ trong múi giờ khác"
-
-#~ msgid "Clock _type:"
-#~ msgstr "Kiểu đồng _hồ:"
-
-#~ msgid "12 hour"
-#~ msgstr "12 giờ"
-
-#~ msgid "Use _UTC"
-#~ msgstr "Dùng _UTC"
-
-#~ msgid "Show multiple _timezones"
-#~ msgstr "Hiện nhiều _múi giờ"
-
-#~ msgid ""
-#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
-#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
-#~ "keys."
-#~ msgstr ""
-#~ "Danh sách ID (thông tin nhận biết) múi giờ. Mỗi ID xác định múi giờ đơn "
-#~ "lẻ. Thiết lập cho mỗi múi giờ này được lưu trong hai khoá « $(id)_name "
-#~ "» (tên) và « $(id)_zone » (múi)."
-
-#~ msgid ""
-#~ "If true, display the timezone button in the clock, in addition to time."
-#~ msgstr "Đúng thì hiển thị cái nút múi giờ trong đồng hồ, kèm với giờ."
-
-#~ msgid "Show the timezone button"
-#~ msgstr "Hiện nút múi giờ"
-
-#~ msgid ""
-#~ "This key specifies the name of the timezone as can be used in the TZ "
-#~ "environment variable."
-#~ msgstr ""
-#~ "Khoá này xác định tên của múi giờ theo định dạng thích hợp với biến môi "
-#~ "trường « TZ »."
-
-#~ msgid "This key specifies the user-visible name of the timezone."
-#~ msgstr "Khoá này xác định tên múi giờ có thể hiển thị cho người dùng."
-
-#~ msgid "Timezone ID list"
-#~ msgstr "Danh sách ID múi giờ"
-
-#~ msgid "User-visible name of the timezone"
-#~ msgstr "Tê múi giờ hiển thị cho người dùng"
-
-#~ msgid "Computer"
-#~ msgstr "Máy tính"
-
-#~ msgid "Network"
-#~ msgstr "Mạng"
-
-#~ msgid "Themes"
-#~ msgstr "Sắc thái"
-
-#~ msgid "CD/DVD Creator"
-#~ msgstr "Bộ tạo đĩa CD/DVD"
-
-#~ msgid "Windows Network"
-#~ msgstr "Mạng Windows"
-
-#~ msgid "Services in"
-#~ msgstr "Dịch vụ trong"
-
-#~ msgid "Trash"
-#~ msgstr "Rác"
-
-#~ msgid "%1$s on %2$s"
-#~ msgstr "%1$s trên %2$s"
-
-#~ msgid "<b>Window List Size</b>"
-#~ msgstr "<b>Cỡ danh sách cửa sổ</b>"
-
-#~ msgid "Behavior"
-#~ msgstr "Ứng xử"
-
-#~ msgid "M_inimum size:"
-#~ msgstr "Cỡ tối th_iểu :"
-
-#~ msgid "Ma_ximum size:"
-#~ msgstr "Cỡ tối đ_a:"
-
-#~ msgid "Size"
-#~ msgstr "Cỡ"
-
-#~ msgid ""
-#~ "This key specifies the maximum width that the window list requests. The "
-#~ "maximum width setting is useful to limit the size of the window list in "
-#~ "large panels, where the window list could fill the entire space available."
-#~ msgstr ""
-#~ "Khoá này xác định độ rộng tối đa mà danh sách cửa sổ yêu cầu. Nó có ích "
-#~ "để giới hạn kích thước của danh sách cửa sổ trong các Bảng điều khiển "
-#~ "lớn, như Bảng điều khiển cạnh chẳng hạn, nơi mà danh sách cửa sổ có thể "
-#~ "chiếm toàn bộ không gian sẵn có."
-
-#~ msgid "This key specifies the minimum width that the window list requests."
-#~ msgstr "Khoá này xác định kích thước tối thiểu mà danh sách cửa sổ yêu cầu."
-
-#~ msgid "File"
-#~ msgstr "Tập tin"
-
-#~ msgid ""
-#~ "I've detected a panel already running,\n"
-#~ "and will now exit."
-#~ msgstr ""
-#~ "Đã phát hiện được Bảng điều khiển đang chạy,\n"
-#~ "vậy sẽ thoát ngay."
-
-#~ msgid "Delete Drawer"
-#~ msgstr "Xoá bỏ Ngăn kéo"
-
-#~ msgid "Delete Panel"
-#~ msgstr "Xoá bỏ Bảng điều khiển"
-
-#~ msgid "Orientation"
-#~ msgstr "Hướng"
-
-#~ msgid "The orientation of the tray."
-#~ msgstr "Hướng của khay."
-
-#~ msgid "Could not load icon"
-#~ msgstr "Không thể tải biểu tượng"
-
-#~ msgid "Find files, folders, and documents on your computer"
-#~ msgstr "Tìm tập tin, thư mục, tài liệu trên máy tính"
