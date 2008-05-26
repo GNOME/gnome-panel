@@ -212,7 +212,7 @@ dbus_confdir = $(sysconfdir)/dbus-1/system.d
 polkitdir = $(datadir)/PolicyKit/policy
 
 dbus_services_in_files = org.gnome.ClockApplet.Mechanism.service.in
-polkit_in_files = gnome-clock-applet-mechanism.policy.in
+polkit_in_files = org.gnome.clockapplet.mechanism.policy.in
 
 if HAVE_POLKIT
 dbus_services_DATA = $(dbus_services_in_files:.service.in=.service)
