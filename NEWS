@@ -1,3 +1,33 @@
+==============
+Version 2.22.2
+==============
+
+  Panel
+
+	* When opening a recent file, do not only look for applications that
+	  can open URI; if the file is gio-native (file://), then it's fine to
+	  get applications that can open paths (Vincent)
+	* Open a mount after having mounted it since nautilus won't
+	  automatically open it anymore (Vincent)
+	* Fix dragging of launchers from the Add to panel dialog (Vincent)
+
+  Clock Applet
+
+	* Make the help button on the preference dialog work (Matthias Clasen)
+	* Fix timezone file handling to correctly recognize timezone magic
+	  header (Matthias Clasen)
+	* Accept Google URI for Google calendars appointments (Vincent)
+	* Put the initial focus in the name entry for the Edit location dialog
+	  (Vincent)
+	* Rename the clock applet PolicyKit .policy file so that it validates
+	  and add some more information there (Vincent)
+
+  Translators
+
+	* Yavor Doganov (bg)
+	* Shankar Prasad (kn)
+	* Eskild Hustvedt (nn)
+
 ================
 Version 2.22.1.3
 ================
