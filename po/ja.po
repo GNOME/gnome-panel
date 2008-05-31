@@ -13,10 +13,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel trunk\n"
+"Project-Id-Version: gnome-panel gnome-2-22\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-23 13:47+0900\n"
-"PO-Revision-Date: 2008-02-23 13:46+0900\n"
+"POT-Creation-Date: 2008-05-31 23:15+0900\n"
+"PO-Revision-Date: 2008-05-31 23:15+0900\n"
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgid "_Preferences"
 msgstr "設定(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4102
+#: ../applets/clock/clock.c:4405
 msgid "Clock"
 msgstr "時計"
 
@@ -83,7 +83,7 @@ msgstr "時計アプレットを生成するためのファクトリです。"
 msgid "Get the current time and date"
 msgstr "現在の時刻と日付を取得します"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:425
 msgid "%l:%M %p"
 msgstr "%p%l:%M"
 
@@ -92,8 +92,8 @@ msgstr "%p%l:%M"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1553 ../applets/clock/clock-location-tile.c:485
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:427
+#: ../applets/clock/clock.c:1552 ../applets/clock/clock-location-tile.c:472
 msgid "%H:%M"
 msgstr "%k:%M"
 
@@ -104,45 +104,45 @@ msgstr "%k:%M"
 msgid "%b %d"
 msgstr "%b%e日"
 
-#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:767
 msgid "Tasks"
 msgstr "タスク"
 
-#: ../applets/clock/calendar-window.c:765
-#: ../applets/clock/calendar-window.c:938
-#: ../applets/clock/calendar-window.c:1554
+#: ../applets/clock/calendar-window.c:767
+#: ../applets/clock/calendar-window.c:943
+#: ../applets/clock/calendar-window.c:1572
 msgid "Edit"
 msgstr "編集"
 
-#: ../applets/clock/calendar-window.c:883
+#: ../applets/clock/calendar-window.c:888
 msgid "All Day"
 msgstr "全日"
 
-#: ../applets/clock/calendar-window.c:1019
+#: ../applets/clock/calendar-window.c:1027
 msgid "Appointments"
 msgstr "予定"
 
-#: ../applets/clock/calendar-window.c:1044
+#: ../applets/clock/calendar-window.c:1052
 msgid "Birthdays and Anniversaries"
 msgstr "誕生日と記念日"
 
-#: ../applets/clock/calendar-window.c:1069
+#: ../applets/clock/calendar-window.c:1077
 msgid "Weather Information"
 msgstr "天気の情報"
 
-#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
+#: ../applets/clock/calendar-window.c:1572 ../applets/clock/clock.glade.h:17
 msgid "Locations"
 msgstr "都市"
 
-#: ../applets/clock/calendar-window.c:1850
+#: ../applets/clock/calendar-window.c:1871
 msgid "Calendar"
 msgstr "カレンダ"
 
-#: ../applets/clock/clock.c:421
+#: ../applets/clock/clock.c:425
 msgid "%l:%M:%S %p"
 msgstr "%p%l:%M:%S"
 
-#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1551
+#: ../applets/clock/clock.c:427 ../applets/clock/clock.c:1550
 msgid "%H:%M:%S"
 msgstr "%k:%M:%S"
 
@@ -151,7 +151,7 @@ msgstr "%k:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:443
+#: ../applets/clock/clock.c:447
 msgid "%a %b %e"
 msgstr "%b%e日 (%a)"
 
@@ -159,7 +159,7 @@ msgstr "%b%e日 (%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:454
 #, c-format
 msgid ""
 "%1$s\n"
@@ -172,7 +172,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:458
+#: ../applets/clock/clock.c:462
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s %2$s"
@@ -180,60 +180,60 @@ msgstr "%1$s %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:640
+#: ../applets/clock/clock.c:644
 msgid "%A %B %d (%%s)"
 msgstr "%B%e日 %A (%%s)"
 
-#: ../applets/clock/clock.c:670
+#: ../applets/clock/clock.c:674
 msgid "Click to hide your appointments and tasks"
 msgstr "クリックすると予定とタスクを隠します"
 
-#: ../applets/clock/clock.c:673
+#: ../applets/clock/clock.c:677
 msgid "Click to view your appointments and tasks"
 msgstr "クリックすると予定とタスクを表示します"
 
-#: ../applets/clock/clock.c:677
+#: ../applets/clock/clock.c:681
 msgid "Click to hide month calendar"
 msgstr "クリックすると月間カレンダを隠します"
 
-#: ../applets/clock/clock.c:680
+#: ../applets/clock/clock.c:684
 msgid "Click to view month calendar"
 msgstr "クリックすると月間カレンダを表示します"
 
-#: ../applets/clock/clock.c:1401
+#: ../applets/clock/clock.c:1400
 msgid "Computer Clock"
 msgstr "コンピュータ時計"
 
-#: ../applets/clock/clock.c:1546
+#: ../applets/clock/clock.c:1545
 msgid "%I:%M:%S %p"
 msgstr "%p%l:%M:%S"
 
-#: ../applets/clock/clock.c:1548
+#: ../applets/clock/clock.c:1547
 msgid "%I:%M %p"
 msgstr "%p%l:%M"
 
-#: ../applets/clock/clock.c:1590
+#: ../applets/clock/clock.c:1589
 msgid "%A, %B %d %Y"
 msgstr "%Y/%m/%d (%a)"
 
-#: ../applets/clock/clock.c:1665
+#: ../applets/clock/clock.c:1664
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "時刻設定ツールの起動に失敗しました: %s"
 
-#: ../applets/clock/clock.c:1694
+#: ../applets/clock/clock.c:1693
 msgid "Set System Time..."
 msgstr "システム時刻の設定..."
 
-#: ../applets/clock/clock.c:1695 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1694 ../applets/clock/clock.glade.h:21
 msgid "Set System Time"
 msgstr "システム時刻の設定"
 
-#: ../applets/clock/clock.c:1709
+#: ../applets/clock/clock.c:1708
 msgid "Failed to set the system time"
 msgstr "システム時刻を設定できませんでした"
 
-#: ../applets/clock/clock.c:1882
+#: ../applets/clock/clock.c:1896
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -241,46 +241,45 @@ msgstr ""
 "日付と時刻を設定するプログラムの特定に失敗しました。おそらく何もインストール"
 "されていないのでは？"
 
-#: ../applets/clock/clock.c:2747
+#: ../applets/clock/clock.c:2828
 msgid "Custom format"
 msgstr "書式のカスタマイズ"
 
-#: ../applets/clock/clock.c:3545 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:584
+#: ../applets/clock/clock.c:3795 ../applets/clock/clock-location-tile.c:573
 #, c-format
 msgid "%s, %s"
 msgstr "%s、%s"
 
-#: ../applets/clock/clock.c:3803
+#: ../applets/clock/clock.c:4098
 msgid "City Name"
 msgstr "都市名"
 
-#: ../applets/clock/clock.c:3807
+#: ../applets/clock/clock.c:4102
 msgid "City Time Zone"
 msgstr "都市のタイムゾーン"
 
-#: ../applets/clock/clock.c:3998
+#: ../applets/clock/clock.c:4301
 msgid "24 hour"
 msgstr "24時間制"
 
-#: ../applets/clock/clock.c:3999
+#: ../applets/clock/clock.c:4302
 msgid "UNIX time"
 msgstr "UNIX 時間"
 
-#: ../applets/clock/clock.c:4000
+#: ../applets/clock/clock.c:4303
 msgid "Internet time"
 msgstr "インターネット時間"
 
-#: ../applets/clock/clock.c:4008
+#: ../applets/clock/clock.c:4311
 msgid "Custom _format:"
 msgstr "書式のカスタマイズ(_F):"
 
-#: ../applets/clock/clock.c:4105
+#: ../applets/clock/clock.c:4408
 msgid "The Clock displays the current time and date"
 msgstr "現在の時刻と日付を表示する時計です。"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4108 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:4411 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -633,27 +632,20 @@ msgstr "UNIX 時間を使用する"
 msgid "Use UTC"
 msgstr "UTC 時間を使用する"
 
-#. make a fake location with a null TZ
-#. make a fake location with the current TZ
-#: ../applets/clock/clock-location.c:364 ../applets/clock/clock-location.c:371
-msgid "Unknown Location"
-msgstr "都市が不明です"
-
-#: ../applets/clock/clock-location-tile.c:194
+#: ../applets/clock/clock-location-tile.c:182
 msgid "Failed to set the system timezone"
 msgstr "システムのタイムゾーンを指定できませんでした"
 
-#: ../applets/clock/clock-location-tile.c:239
-#: ../applets/clock/clock-location-tile.c:314
+#: ../applets/clock/clock-location-tile.c:230
 msgid "<small>Set...</small>"
 msgstr "<small>セット...</small>"
 
-#: ../applets/clock/clock-location-tile.c:240
-#: ../applets/clock/clock-location-tile.c:315
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set</small>"
 msgstr "<small>セット</small>"
 
-#: ../applets/clock/clock-location-tile.c:320
+#. FIXME: this needs to talk about locations, not timezones
+#: ../applets/clock/clock-location-tile.c:307
 msgid "Set as current timezone for this computer"
 msgstr "このコンピュータのタイムゾーンにします"
 
@@ -663,7 +655,7 @@ msgstr "このコンピュータのタイムゾーンにします"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:458
+#: ../applets/clock/clock-location-tile.c:445
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "<small>%p</small>%l:%M <small>(%A)</small>"
 
@@ -673,7 +665,7 @@ msgstr "<small>%p</small>%l:%M <small>(%A)</small>"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/clock-location-tile.c:454
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%k:%M <small>(%A)</small>"
 
@@ -682,22 +674,22 @@ msgstr "%k:%M <small>(%A)</small>"
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:477
+#: ../applets/clock/clock-location-tile.c:464
 msgid "%l:%M <small>%p</small>"
 msgstr "<small>%p</small>%l:%M"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:594
-#: ../applets/clock/clock-location-tile.c:600
+#: ../applets/clock/clock-location-tile.c:585
+#: ../applets/clock/clock-location-tile.c:593
 msgid "Unknown"
 msgstr "不明"
 
-#: ../applets/clock/clock-location-tile.c:595
+#: ../applets/clock/clock-location-tile.c:586
 #, c-format
 msgid "%s, feels like %s"
-msgstr "%s、%s の気分です"
+msgstr "%s (体感温度は %s)"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:604
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "日の出: %s / 日の入り: %s"
@@ -708,115 +700,29 @@ msgstr "日の出: %s / 日の入り: %s"
 msgid "There was an error displaying help: %s"
 msgstr "ヘルプを表示する際にエラーが発生しました:%s"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
 msgid "Change system time"
 msgstr "システム時刻の変更"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
 msgid "Change system time zone"
 msgstr "システムのタイムゾーンの変更"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
 msgid "Configure hardware clock"
 msgstr "ハードウェア・クロックの設定"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
 msgid "Privileges are required to change the system time zone."
 msgstr "システムのタイムゾーンを変更するのに必要な特権です。"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
 msgid "Privileges are required to change the system time."
 msgstr "システム時刻を変更するのに必要な特権です。"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
 msgid "Privileges are required to configure the hardware clock."
 msgstr "ハードウェア・クロックを設定するのに必要な特権です。"
-
-#: ../applets/clock/timezone.glade.h:1
-msgid "<b>Active timezones</b>"
-msgstr "<b>有効にするタイムゾーン</b>"
-
-#: ../applets/clock/timezone.glade.h:2
-msgid "<b>Add timezone</b>"
-msgstr "<b>タイムゾーンの追加</b>"
-
-#: ../applets/clock/timezone.glade.h:3
-msgid "<small><b>Location:</b></small>"
-msgstr "<small><b>都市:</b></small>"
-
-#: ../applets/clock/timezone.glade.h:4
-msgid ""
-"<small><i>Click on the map to zoom and select the timezone of a city, or "
-"right click to zoom out.</i></small>"
-msgstr ""
-"<small><i>有効にするタイムゾーンを地図上の都市から選択して下さい。地図をク"
-"リックすると拡大し、右クリックすると縮小します。</i></small>"
-
-#: ../applets/clock/timezone.glade.h:5
-msgid "Edit Timezones"
-msgstr "タイムゾーンの編集"
-
-#. Translators: the first %s is a place and the
-#. * second is a time. Result looks like this:
-#. * Europe/Paris - 15:45
-#: ../applets/clock/tz-sel-dialog.c:196
-#, c-format
-msgid "%s - %s"
-msgstr "%s - %s"
-
-#: ../applets/clock/tz-sel-dialog.c:205
-msgid "move the mouse on the map"
-msgstr "マウスを地図上に移動してみて下さい"
-
-#: ../applets/clock/tz-sel-dialog.c:207
-#, c-format
-msgid "<b>Location:</b> %s"
-msgstr "<b>都市:</b> %s"
-
-#: ../applets/clock/tz-sel-dialog.c:812
-msgid "Name"
-msgstr "名前"
-
-#: ../applets/clock/tz-sel-dialog.c:825
-msgid "Timezone"
-msgstr "タイムゾーン"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:102
-#, c-format
-msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr "サマータイム有りの %s (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:111
-#, c-format
-msgid "%s (UTC %s%.2ld:%.2ld)"
-msgstr "%s (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name (as in
-#. * "Europe/Paris"), the second string is a country name abbreviation
-#. * (as in "FR") and the last string is another line (it's the one
-#. * looking like "BST (UTC +01:00)")
-#: ../applets/clock/tz-window.c:121
-#, c-format
-msgid ""
-"%s - %s\n"
-"%s"
-msgstr ""
-"%s - %s\n"
-"%s"
-
-#: ../applets/clock/tz-window.c:283
-msgid "_Edit timezones..."
-msgstr "タイムゾーンの編集(_E)..."
-
-#: ../applets/clock/tz-window.c:370
-msgid "Timezones"
-msgstr "タイムゾーン"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -1699,50 +1605,50 @@ msgstr "他のアイテムを格納するポップアップ式の引き出しで
 msgid "(empty)"
 msgstr "(空)"
 
-#: ../gnome-panel/panel-addto.c:402
+#: ../gnome-panel/panel-addto.c:405
 #: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "問い合わせが例外 %s を返しました\n"
 
-#: ../gnome-panel/panel-addto.c:1061
+#: ../gnome-panel/panel-addto.c:1064
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\" へ追加するアイテムの検索(_I):"
 
-#: ../gnome-panel/panel-addto.c:1065
+#: ../gnome-panel/panel-addto.c:1068
 #, c-format
 msgid "Add to Drawer"
 msgstr "引き出しへ追加"
 
-#: ../gnome-panel/panel-addto.c:1067
+#: ../gnome-panel/panel-addto.c:1070
 msgid "Find an _item to add to the drawer:"
 msgstr "引き出しへ追加するアイテムの検索(_I):"
 
-#: ../gnome-panel/panel-addto.c:1069
+#: ../gnome-panel/panel-addto.c:1072
 #, c-format
 msgid "Add to Panel"
 msgstr "パネルへ追加"
 
-#: ../gnome-panel/panel-addto.c:1071
+#: ../gnome-panel/panel-addto.c:1074
 msgid "Find an _item to add to the panel:"
 msgstr "パネルへ追加するアイテムの検索(_I):"
 
-#: ../gnome-panel/panel-applet-frame.c:840
+#: ../gnome-panel/panel-applet-frame.c:842
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "popup_menu '%s' から例外です\n"
 
-#: ../gnome-panel/panel-applet-frame.c:965
+#: ../gnome-panel/panel-applet-frame.c:967
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" が突然終了しました"
 
-#: ../gnome-panel/panel-applet-frame.c:967
+#: ../gnome-panel/panel-applet-frame.c:969
 msgid "Panel object has quit unexpectedly"
 msgstr "パネル・オブジェクトが突然終了しました"
 
-#: ../gnome-panel/panel-applet-frame.c:974
+#: ../gnome-panel/panel-applet-frame.c:976
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1750,11 +1656,11 @@ msgstr ""
 "パネル・オブジェクトを再読み込みすると、自動的にオブジェクトをパネルの後ろに"
 "追加します。"
 
-#: ../gnome-panel/panel-applet-frame.c:980
+#: ../gnome-panel/panel-applet-frame.c:982
 msgid "_Don't Reload"
 msgstr "再読み込みしない(_D)"
 
-#: ../gnome-panel/panel-applet-frame.c:981
+#: ../gnome-panel/panel-applet-frame.c:983
 msgid "_Reload"
 msgstr "再読み込み(_R)"
 
@@ -1763,21 +1669,21 @@ msgstr "再読み込み(_R)"
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:996
-#: ../gnome-panel/panel-applet-frame.c:1084 ../gnome-panel/panel-util.c:395
+#: ../gnome-panel/panel-applet-frame.c:998
+#: ../gnome-panel/panel-applet-frame.c:1086 ../gnome-panel/panel-util.c:395
 msgid "Error"
 msgstr "エラー"
 
-#: ../gnome-panel/panel-applet-frame.c:1047
+#: ../gnome-panel/panel-applet-frame.c:1049
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\" を読み込む際にパネルで問題が発生しました。"
 
-#: ../gnome-panel/panel-applet-frame.c:1063
+#: ../gnome-panel/panel-applet-frame.c:1065
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "お使いの設定からアプレットを削除しますか？"
 
-#: ../gnome-panel/panel-applet-frame.c:1137
+#: ../gnome-panel/panel-applet-frame.c:1139
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "コントロールから AppletShell インターフェイスを取得できません\n"
 
@@ -2174,35 +2080,35 @@ msgstr[1] ""
 "現在 \"%s\" でログインしています。\n"
 "システムは %d秒後に自動的にシャットダウンします。"
 
-#: ../gnome-panel/panel-logout.c:334
+#: ../gnome-panel/panel-logout.c:339
 msgid "Log out of this system now?"
 msgstr "このシステムからログアウトしますか？"
 
-#: ../gnome-panel/panel-logout.c:340
+#: ../gnome-panel/panel-logout.c:345
 msgid "_Switch User"
 msgstr "ユーザの切り替え(_S)"
 
-#: ../gnome-panel/panel-logout.c:346
+#: ../gnome-panel/panel-logout.c:351
 msgid "_Log Out"
 msgstr "ログアウト(_L)"
 
-#: ../gnome-panel/panel-logout.c:351
+#: ../gnome-panel/panel-logout.c:356
 msgid "Shut down this system now?"
 msgstr "このシステムをシャットダウンしますか？"
 
-#: ../gnome-panel/panel-logout.c:356
+#: ../gnome-panel/panel-logout.c:361
 msgid "S_uspend"
 msgstr "サスペンド(_U)"
 
-#: ../gnome-panel/panel-logout.c:361
+#: ../gnome-panel/panel-logout.c:366
 msgid "_Hibernate"
 msgstr "ハイバーネート(_H)"
 
-#: ../gnome-panel/panel-logout.c:366
+#: ../gnome-panel/panel-logout.c:371
 msgid "_Restart"
 msgstr "再起動(_R)"
 
-#: ../gnome-panel/panel-logout.c:375
+#: ../gnome-panel/panel-logout.c:380
 msgid "_Shut Down"
 msgstr "シャットダウン(_S)"
 
@@ -2227,50 +2133,50 @@ msgstr "アプリケーション"
 msgid "_Edit Menus"
 msgstr "メニューの編集(_E)"
 
-#: ../gnome-panel/panel-menu-items.c:135 ../gnome-panel/panel-run-dialog.c:351
+#: ../gnome-panel/panel-menu-items.c:132 ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "場所 '%s' を開けませんでした"
 
-#: ../gnome-panel/panel-menu-items.c:416
+#: ../gnome-panel/panel-menu-items.c:420
 msgid "Bookmarks"
 msgstr "ブックマーク"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:438 ../gnome-panel/panel.c:531
+#: ../gnome-panel/panel-menu-items.c:442 ../gnome-panel/panel.c:531
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' を開きます"
 
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:510
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "メディアの変更で %s をスキャンできません"
 
-#: ../gnome-panel/panel-menu-items.c:549
+#: ../gnome-panel/panel-menu-items.c:553
 #, c-format
 msgid "Rescan %s"
 msgstr "%s の再スキャン"
 
-#: ../gnome-panel/panel-menu-items.c:585
+#: ../gnome-panel/panel-menu-items.c:590
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s をマウントできません"
 
-#: ../gnome-panel/panel-menu-items.c:638
+#: ../gnome-panel/panel-menu-items.c:653
 #, c-format
 msgid "Mount %s"
 msgstr "%s のマウント"
 
-#: ../gnome-panel/panel-menu-items.c:841
+#: ../gnome-panel/panel-menu-items.c:856
 msgid "Removable Media"
 msgstr "リムーバブル・メディア"
 
-#: ../gnome-panel/panel-menu-items.c:922
+#: ../gnome-panel/panel-menu-items.c:937
 msgid "Network Places"
 msgstr "ネットワークの場所"
 
-#: ../gnome-panel/panel-menu-items.c:961
+#: ../gnome-panel/panel-menu-items.c:976
 msgid "Open your personal folder"
 msgstr "ユーザ専用のフォルダを開きます"
 
@@ -2278,19 +2184,19 @@ msgstr "ユーザ専用のフォルダを開きます"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:981
+#: ../gnome-panel/panel-menu-items.c:996
 msgid "Desktop Folder|Desktop"
 msgstr "デスクトップ"
 
-#: ../gnome-panel/panel-menu-items.c:982
+#: ../gnome-panel/panel-menu-items.c:997
 msgid "Open the contents of your desktop in a folder"
 msgstr "お使いのデスクトップをフォルダとして開きます"
 
-#: ../gnome-panel/panel-menu-items.c:1374
+#: ../gnome-panel/panel-menu-items.c:1389
 msgid "Places"
 msgstr "場所"
 
-#: ../gnome-panel/panel-menu-items.c:1403
+#: ../gnome-panel/panel-menu-items.c:1418
 msgid "System"
 msgstr "システム"
 
@@ -2298,7 +2204,7 @@ msgstr "システム"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1480
+#: ../gnome-panel/panel-menu-items.c:1495
 msgid "panel:showusername|1"
 msgstr "1"
 
@@ -2306,20 +2212,20 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1492
+#: ../gnome-panel/panel-menu-items.c:1507
 #, c-format
 msgid "Log Out %s..."
 msgstr "%s のログアウト..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1496
+#: ../gnome-panel/panel-menu-items.c:1511
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
 "別のユーザでログインするために、このセッション (%s) からログアウトします"
 
-#: ../gnome-panel/panel-menu-items.c:1537
+#: ../gnome-panel/panel-menu-items.c:1552
 msgid "Could not launch menu item"
 msgstr "アイテムを起動できませんでした"
 
@@ -2669,26 +2575,26 @@ msgstr "タイル状(_T)"
 msgid "pixels"
 msgstr "ピクセル"
 
-#: ../gnome-panel/panel-recent.c:51
+#: ../gnome-panel/panel-recent.c:55
 #, c-format
 msgid "Could not find a suitable application."
 msgstr "適切なアプリケーションが見つかりませんでした"
 
-#: ../gnome-panel/panel-recent.c:95 ../gnome-panel/panel-recent.c:105
+#: ../gnome-panel/panel-recent.c:99 ../gnome-panel/panel-recent.c:109
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "最近開いたドキュメント \"%s\" を開けませんでした"
 
-#: ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:111
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "\"%s\" を開こうとする時に原因不明のエラーが発生しました"
 
-#: ../gnome-panel/panel-recent.c:164
+#: ../gnome-panel/panel-recent.c:168
 msgid "Clear the Recent Documents list?"
 msgstr "\"最近開いたドキュメント\" の一覧をクリアしますか？"
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:170
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2700,15 +2606,15 @@ msgstr ""
 "• [最近開いたドキュメント] にある全てのエントリ\n"
 "• アプリケーションで記録した [最近開いた...] の全てのエントリ"
 
-#: ../gnome-panel/panel-recent.c:178 ../gnome-panel/panel-recent.c:252
+#: ../gnome-panel/panel-recent.c:182 ../gnome-panel/panel-recent.c:256
 msgid "Clear Recent Documents"
 msgstr "この一覧をクリアする"
 
-#: ../gnome-panel/panel-recent.c:213
+#: ../gnome-panel/panel-recent.c:217
 msgid "Recent Documents"
 msgstr "最近開いたドキュメント"
 
-#: ../gnome-panel/panel-recent.c:254
+#: ../gnome-panel/panel-recent.c:258
 msgid "Clear all items from the recent documents list"
 msgstr "\"最近開いたドキュメント\" の一覧を全てクリアします"
 
@@ -3463,3 +3369,59 @@ msgstr "アプレット(_A):"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "設定フォルダ(_P):"
+
+#~ msgid "Unknown Location"
+#~ msgstr "都市が不明です"
+
+#~ msgid "<b>Active timezones</b>"
+#~ msgstr "<b>有効にするタイムゾーン</b>"
+
+#~ msgid "<b>Add timezone</b>"
+#~ msgstr "<b>タイムゾーンの追加</b>"
+
+#~ msgid "<small><b>Location:</b></small>"
+#~ msgstr "<small><b>都市:</b></small>"
+
+#~ msgid ""
+#~ "<small><i>Click on the map to zoom and select the timezone of a city, or "
+#~ "right click to zoom out.</i></small>"
+#~ msgstr ""
+#~ "<small><i>有効にするタイムゾーンを地図上の都市から選択して下さい。地図をク"
+#~ "リックすると拡大し、右クリックすると縮小します。</i></small>"
+
+#~ msgid "Edit Timezones"
+#~ msgstr "タイムゾーンの編集"
+
+#~ msgid "%s - %s"
+#~ msgstr "%s - %s"
+
+#~ msgid "move the mouse on the map"
+#~ msgstr "マウスを地図上に移動してみて下さい"
+
+#~ msgid "<b>Location:</b> %s"
+#~ msgstr "<b>都市:</b> %s"
+
+#~ msgid "Name"
+#~ msgstr "名前"
+
+#~ msgid "Timezone"
+#~ msgstr "タイムゾーン"
+
+#~ msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
+#~ msgstr "サマータイム有りの %s (UTC %s%.2ld:%.2ld)"
+
+#~ msgid "%s (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s (UTC %s%.2ld:%.2ld)"
+
+#~ msgid ""
+#~ "%s - %s\n"
+#~ "%s"
+#~ msgstr ""
+#~ "%s - %s\n"
+#~ "%s"
+
+#~ msgid "_Edit timezones..."
+#~ msgstr "タイムゾーンの編集(_E)..."
+
+#~ msgid "Timezones"
+#~ msgstr "タイムゾーン"
