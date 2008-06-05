@@ -22,6 +22,8 @@ noinst_LTLIBRARIES=libpanel-util.la
 libpanel_util_la_SOURCES=	\
 	panel-cleanup.c			\
 	panel-cleanup.h			\
+	panel-dbus-service.c		\
+	panel-dbus-service.h		\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
 	$(NULL)

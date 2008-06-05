@@ -1,3 +1,14 @@
+2008-06-06  Vincent Untz  <vuntz@gnome.org>
+
+	* libpanel-util/panel-cleanup.[ch]: add description
+	* libpanel-util/panel-keyfile.[ch]: ditto
+	* libpanel-util/Makefile.am: add new file
+	* libpanel-util/panel-dbus-service.[ch]: new utility object to make it
+	easier to use dbus services. Maybe this is insane, but I have the
+	feeling I'm going to duplicate lots of code without this.
+	* panel-power-manager.[ch]: basically port to PanelDBusService and:
+	(panel_get_power_manager): use panel_cleanup_register()
+
 2008-06-05  Vincent Untz  <vuntz@gnome.org>
 
 	* libpanel-util/Makefile.am: add new file

@@ -2,6 +2,7 @@
  *                         suspending the computer
  *
  * Copyright (C) 2006 Ray Strode <rstrode@redhat.com>
+ * Copyright (C) 2008 Novell, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +18,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
  * 02111-1307, USA.
+ *
+ * Authors:
+ *      Ray Strode <rstrode@redhat.com>
+ *      Vincent Untz <vuntz@gnome.org>
  */
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include "panel-power-manager.h"
 
 #include <errno.h>
 #include <string.h>
@@ -33,30 +33,15 @@
 
 #include <dbus/dbus-glib.h>
 
-struct _PanelPowerManagerPrivate {
-	DBusGConnection *dbus_connection;
-	DBusGProxy      *bus_proxy;
-	DBusGProxy      *gpm_proxy;
-	guint32          is_connected : 1;
-};
+#include <libpanel-util/panel-cleanup.h>
+#include <libpanel-util/panel-dbus-service.h>
 
+#include "panel-power-manager.h"
 
-static void panel_power_manager_finalize (GObject *object);
 static void panel_power_manager_class_install_signals (PanelPowerManagerClass *manager_class);
-static void panel_power_manager_class_install_properties (PanelPowerManagerClass *manager_class);
-
-static void panel_power_manager_get_property (GObject    *object,
-					      guint       prop_id,
-					      GValue     *value,
-					      GParamSpec *pspec);
-
-static gboolean panel_power_manager_ensure_gpm_connection (PanelPowerManager  *manager,
-	                                                   GError            **error);
-
-enum {
-  PROP_0 = 0,
-  PROP_IS_CONNECTED
-};
+static GObject *panel_power_manager_constructor (GType                  type,
+						 guint                  n_construct_properties,
+						 GObjectConstructParam *construct_properties);
 
 enum {
   REQUEST_FAILED = 0,
@@ -65,7 +50,7 @@ enum {
 
 static guint panel_power_manager_signals[NUMBER_OF_SIGNALS];
 
-G_DEFINE_TYPE (PanelPowerManager, panel_power_manager, G_TYPE_OBJECT);
+G_DEFINE_TYPE (PanelPowerManager, panel_power_manager, PANEL_TYPE_DBUS_SERVICE);
 
 static void
 panel_power_manager_class_init (PanelPowerManagerClass *manager_class)
@@ -74,13 +59,9 @@ panel_power_manager_class_init (PanelPowerManagerClass *manager_class)
 
 	object_class = G_OBJECT_CLASS (manager_class);
 
-	object_class->finalize = panel_power_manager_finalize;
+	object_class->constructor = panel_power_manager_constructor;
 
-	panel_power_manager_class_install_properties (manager_class);
 	panel_power_manager_class_install_signals (manager_class);
-
-	g_type_class_add_private (manager_class,
-				  sizeof (PanelPowerManagerPrivate));
 }
 
 static void
@@ -104,187 +85,37 @@ panel_power_manager_class_install_signals (PanelPowerManagerClass *manager_class
 }
 
 static void
-panel_power_manager_class_install_properties (PanelPowerManagerClass *manager_class)
-{
-	GObjectClass *object_class;
-	GParamSpec *param_spec;
-
-	object_class = G_OBJECT_CLASS (manager_class);
-	object_class->get_property = panel_power_manager_get_property;
-
-	param_spec = g_param_spec_boolean ("is-connected",
-					   "Is connected",
-					   "Whether the panel is connected to "
-					   "the power manager",
-					   FALSE,
-					   G_PARAM_READABLE);
-	g_object_class_install_property (object_class, PROP_IS_CONNECTED,
-					 param_spec);
-}
-
-static void
-panel_power_manager_on_name_owner_changed (DBusGProxy        *bus_proxy,
-	                                   const char        *name,
-	                                   const char        *prev_owner,
-	                                   const char        *new_owner,
-	                                   PanelPowerManager *manager)
-{
-	if (strcmp (name, "org.freedesktop.PowerManagement") != 0)
-		return;
-
-	if (manager->priv->gpm_proxy != NULL) {
-		g_object_unref (manager->priv->gpm_proxy);
-		manager->priv->gpm_proxy = NULL;
-	}
-
-	panel_power_manager_ensure_gpm_connection (manager, NULL);
-}
-
-static gboolean
-panel_power_manager_ensure_gpm_connection (PanelPowerManager  *manager,
-					   GError            **error)
-{
-	GError   *connection_error;
-	gboolean  is_connected;
-
-	connection_error = NULL;
-	if (manager->priv->dbus_connection == NULL) {
-		manager->priv->dbus_connection = dbus_g_bus_get (DBUS_BUS_SESSION,
-								 &connection_error);
-
-		if (manager->priv->dbus_connection == NULL) {
-			g_propagate_error (error, connection_error);
-			is_connected = FALSE;
-			goto out;
-		}
-	}
-
-	if (manager->priv->bus_proxy == NULL) {
-		manager->priv->bus_proxy =
-			dbus_g_proxy_new_for_name_owner (manager->priv->dbus_connection,
-							 DBUS_SERVICE_DBUS,
-							 DBUS_PATH_DBUS,
-							 DBUS_INTERFACE_DBUS,
-							 &connection_error);
-
-		if (manager->priv->bus_proxy == NULL) {
-			g_propagate_error (error, connection_error);
-			is_connected = FALSE;
-			goto out;
-		}
-
-		dbus_g_proxy_add_signal (manager->priv->bus_proxy,
-					 "NameOwnerChanged",
-					 G_TYPE_STRING,
-					 G_TYPE_STRING,
-					 G_TYPE_STRING,
-					 G_TYPE_INVALID);
-		dbus_g_proxy_connect_signal (manager->priv->bus_proxy,
-					     "NameOwnerChanged",
-					     G_CALLBACK (panel_power_manager_on_name_owner_changed),
-					     manager, NULL);
-	}
-
-	if (manager->priv->gpm_proxy == NULL) {
-		manager->priv->gpm_proxy =
-			dbus_g_proxy_new_for_name_owner (
-					manager->priv->dbus_connection,
-					"org.freedesktop.PowerManagement",
-					"/org/freedesktop/PowerManagement",
-					"org.freedesktop.PowerManagement",
-					&connection_error);
-
-		if (manager->priv->gpm_proxy == NULL) {
-			g_propagate_error (error, connection_error);
-			is_connected = FALSE;
-			goto out;
-		}
-	}
-	is_connected = TRUE;
-
-out:
-	if (manager->priv->is_connected != is_connected) {
-		manager->priv->is_connected = is_connected;
-		g_object_notify (G_OBJECT (manager), "is-connected");
-	}
-
-	if (!is_connected) {
-		if (manager->priv->dbus_connection == NULL) {
-			if (manager->priv->bus_proxy != NULL) {
-				g_object_unref (manager->priv->bus_proxy);
-				manager->priv->bus_proxy = NULL;
-			}
-
-			if (manager->priv->gpm_proxy != NULL) {
-				g_object_unref (manager->priv->gpm_proxy);
-				manager->priv->gpm_proxy = NULL;
-			}
-		} else if (manager->priv->bus_proxy == NULL) {
-			if (manager->priv->gpm_proxy != NULL) {
-				g_object_unref (manager->priv->gpm_proxy);
-				manager->priv->gpm_proxy = NULL;
-			}
-		}
-	}
-
-	return is_connected;
-}
-
-static void
 panel_power_manager_init (PanelPowerManager *manager)
 {
-	GError *error;
+}
 
-	manager->priv = G_TYPE_INSTANCE_GET_PRIVATE (manager,
-						     PANEL_TYPE_POWER_MANAGER,
-						     PanelPowerManagerPrivate);
+static GObject *
+panel_power_manager_constructor (GType                  type,
+				 guint                  n_construct_properties,
+				 GObjectConstructParam *construct_properties)
+{
+	GObject *obj;
+	GError  *error;
 
-	manager->priv->dbus_connection = NULL;
-	manager->priv->bus_proxy = NULL;
-	manager->priv->gpm_proxy = NULL;
-	manager->priv->is_connected = FALSE;
+	obj = G_OBJECT_CLASS (panel_power_manager_parent_class)->constructor (type,
+									      n_construct_properties,
+									      construct_properties);
+
+
+	panel_dbus_service_init_service (PANEL_DBUS_SERVICE (obj),
+					 "org.freedesktop.PowerManagement",
+					 "/org/freedesktop/PowerManagement",
+					 "org.freedesktop.PowerManagement");
 
 	error = NULL;
-	if (!panel_power_manager_ensure_gpm_connection (manager, &error)) {
+	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (obj),
+						   &error)) {
 		g_message ("Could not connect to power manager: %s",
 			   error->message);
 		g_error_free (error);
 	}
-}
 
-static void
-panel_power_manager_finalize (GObject *object)
-{
-	PanelPowerManager *manager;
-	GObjectClass *parent_class;
-
-	manager = PANEL_POWER_MANAGER (object);
-
-	parent_class = G_OBJECT_CLASS (panel_power_manager_parent_class);
-
-	if (parent_class->finalize != NULL)
-		parent_class->finalize (object);
-}
-
-static void
-panel_power_manager_get_property (GObject    *object,
-				  guint       prop_id,
-				  GValue     *value,
-				  GParamSpec *pspec)
-{
-	PanelPowerManager *manager = PANEL_POWER_MANAGER (object);
-
-	switch (prop_id) {
-	case PROP_IS_CONNECTED:
-		g_value_set_boolean (value,
-				     manager->priv->is_connected);
-		break;
-
-	default:
-		G_OBJECT_WARN_INVALID_PROPERTY_ID (object,
-						   prop_id,
-						   pspec);
-	}
+	return obj;
 }
 
 GQuark
@@ -313,18 +144,22 @@ panel_power_manager_can_suspend (PanelPowerManager *manager)
 {
 	GError *error;
 	gboolean can_suspend;
+	DBusGProxy *proxy;
 
 	error = NULL;
 
-	if (!panel_power_manager_ensure_gpm_connection (manager, &error)) {
+	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
+						   &error)) {
 		g_message ("Could not connect to power manager: %s",
 			   error->message);
 		g_error_free (error);
 		return FALSE;
 	}
 
+	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+
 	can_suspend = FALSE;
-	if (!dbus_g_proxy_call (manager->priv->gpm_proxy, "CanSuspend",
+	if (!dbus_g_proxy_call (proxy, "CanSuspend",
 				&error,
 				G_TYPE_INVALID,
 				G_TYPE_BOOLEAN, &can_suspend, G_TYPE_INVALID)) {
@@ -344,18 +179,22 @@ panel_power_manager_can_hibernate (PanelPowerManager *manager)
 {
 	GError *error;
 	gboolean can_hibernate;
+	DBusGProxy *proxy;
 
 	error = NULL;
 
-	if (!panel_power_manager_ensure_gpm_connection (manager, &error)) {
+	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
+						   &error)) {
 		g_message ("Could not connect to power manager: %s",
 			   error->message);
 		g_error_free (error);
 		return FALSE;
 	}
 
+	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+
 	can_hibernate = FALSE;
-	if (!dbus_g_proxy_call (manager->priv->gpm_proxy, "CanHibernate",
+	if (!dbus_g_proxy_call (proxy, "CanHibernate",
 				&error,
 				G_TYPE_INVALID,
 				G_TYPE_BOOLEAN, &can_hibernate, G_TYPE_INVALID)) {
@@ -374,17 +213,21 @@ void
 panel_power_manager_attempt_suspend (PanelPowerManager *manager)
 {
 	GError *error;
+	DBusGProxy *proxy;
 
 	error = NULL;
 
-	if (!panel_power_manager_ensure_gpm_connection (manager, &error)) {
+	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
+						   &error)) {
 		g_warning ("Could not connect to power manager: %s",
 			   error->message);
 		g_error_free (error);
 		return;
 	}
 
-	if (!dbus_g_proxy_call (manager->priv->gpm_proxy, "Suspend",
+	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+
+	if (!dbus_g_proxy_call (proxy, "Suspend",
 				&error,
 				G_TYPE_INVALID, G_TYPE_INVALID) &&
 	    error != NULL) {
@@ -410,17 +253,21 @@ void
 panel_power_manager_attempt_hibernate (PanelPowerManager *manager)
 {
 	GError *error;
+	DBusGProxy *proxy;
 
 	error = NULL;
 
-	if (!panel_power_manager_ensure_gpm_connection (manager, &error)) {
+	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
+						   &error)) {
 		g_warning ("Could not connect to power manager: %s",
 			   error->message);
 		g_error_free (error);
 		return;
 	}
 
-	if (!dbus_g_proxy_call (manager->priv->gpm_proxy, "Hibernate",
+	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+
+	if (!dbus_g_proxy_call (proxy, "Hibernate",
 				&error,
 				G_TYPE_INVALID, G_TYPE_INVALID) &&
 	    error != NULL) {
@@ -447,8 +294,11 @@ panel_get_power_manager (void)
 {
 	static PanelPowerManager *manager = NULL;
 
-	if (manager == NULL)
+	if (manager == NULL) {
 		manager = panel_power_manager_new ();
+		panel_cleanup_register (panel_cleanup_unref_and_nullify,
+					&manager);
+	}
 
 	return g_object_ref (manager);
 }

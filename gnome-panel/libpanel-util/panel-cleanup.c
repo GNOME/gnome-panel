@@ -1,5 +1,5 @@
 /*
- * panel-cleanup.c:
+ * panel-cleanup.c: utility to clean up things on exit
  *
  * Copyright (C) 2008 Novell, Inc.
  *

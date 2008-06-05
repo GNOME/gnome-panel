@@ -21,8 +21,9 @@
 #ifndef PANEL_POWER_MANAGER_H
 #define PANEL_POWER_MANAGER_H
 
-#include <glib.h>
 #include <glib-object.h>
+
+#include <libpanel-util/panel-dbus-service.h>
 
 G_BEGIN_DECLS
 
@@ -36,19 +37,14 @@ G_BEGIN_DECLS
 
 typedef struct _PanelPowerManager		PanelPowerManager;
 typedef struct _PanelPowerManagerClass		PanelPowerManagerClass;
-typedef struct _PanelPowerManagerPrivate	PanelPowerManagerPrivate;
 typedef enum _PanelPowerManagerError		PanelPowerManagerError;
 
-
 struct _PanelPowerManager {
-	GObject parent;
-
-	/*< private > */
-	PanelPowerManagerPrivate *priv;
+	PanelDBusService parent;
 };
 
 struct _PanelPowerManagerClass {
-	GObjectClass parent_class;
+	PanelDBusServiceClass parent_class;
 
 	/* signals */
 	void (* request_failed) (PanelPowerManager *manager, 

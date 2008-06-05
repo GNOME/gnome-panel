@@ -1,5 +1,5 @@
 /*
- * panel-keyfile.c:
+ * panel-keyfile.c: GKeyFile extensions
  *
  * Copyright (C) 2008 Novell, Inc.
  *
