@@ -42,6 +42,8 @@
 #include <libgnome/gnome-url.h>
 #include <libgnomeui/gnome-url.h>
 
+#include <libpanel-util/panel-keyfile.h>
+
 #include "menu.h"
 #include "panel-action-button.h"
 #include "panel-globals.h"
@@ -217,11 +219,11 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 		return;
 	}
 
-	icon    = panel_util_key_file_get_locale_string (key_file, "Icon");
-	comment = panel_util_key_file_get_locale_string (key_file, "Comment");
+	icon    = panel_key_file_get_locale_string (key_file, "Icon");
+	comment = panel_key_file_get_locale_string (key_file, "Comment");
 
 	if (string_empty (force_name))
-		name = panel_util_key_file_get_locale_string (key_file, "Name");
+		name = panel_key_file_get_locale_string (key_file, "Name");
 	else
 		name = g_strdup (force_name);
 

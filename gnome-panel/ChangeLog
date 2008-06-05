@@ -1,3 +1,22 @@
+2008-06-05  Vincent Untz  <vuntz@gnome.org>
+
+	Let's start cleaning up the source. Okay, this attempt will certainly
+	fail at some point ;-)
+	First step, create an internal libpanel-util library where we put some
+	utility functions.
+	We start with the GKeyFile extensions.
+
+	* Makefile.am: updated for this change
+	* libpanel-util/Makefile.am: new
+	* libpanel-util/panel-keyfile.[ch]: new, based on panel-util.c code
+	* panel-ditem-editor.c: s/panel_util_key_file/panel_key_file/g
+	* panel-menu-items.c: s/panel_util_key_file/panel_key_file/g
+	* panel-run-dialog.c: s/panel_util_key_file/panel_key_file/g
+	* panel-util.[ch]: s/panel_util_key_file/panel_key_file/g and remove
+	panel_util_key_file*
+	* launcher.c: s/panel_util_key_file/panel_key_file/g
+	* gnome-desktop-item-edit.c: s/panel_util_key_file/panel_key_file/g
+
 ==================== 2.23.3 ====================
 
 2008-05-20  Vincent Untz  <vuntz@gnome.org>

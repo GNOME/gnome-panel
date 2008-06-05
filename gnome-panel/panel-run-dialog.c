@@ -48,6 +48,8 @@
 #include <gconf/gconf-client.h>
 #include <gmenu-tree.h>
 
+#include <libpanel-util/panel-keyfile.h>
+
 #include "nothing.h"
 #include "panel-gconf.h"
 #include "panel-util.h"
@@ -1029,32 +1031,30 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	 * drag source is enabled, otherwise the drag icon can't be set by
 	 * panel_run_dialog_set_icon.
 	 */
-	temp = panel_util_key_file_get_string (key_file, "Exec");
+	temp = panel_key_file_get_string (key_file, "Exec");
 	if (temp) {
 		stripped = remove_parameters (temp);
 		gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry),
 				    stripped);
 		g_free (stripped);
 	} else {
-		temp = panel_util_key_file_get_string (key_file, "URL");
+		temp = panel_key_file_get_string (key_file, "URL");
 		gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry),
 				    sure_string (temp));
 	}
 	g_free (temp);
 
-	temp = panel_util_key_file_get_locale_string (key_file, "Icon");
+	temp = panel_key_file_get_locale_string (key_file, "Icon");
 	panel_run_dialog_set_icon (dialog, temp, FALSE);
 	g_free (temp);
 	
-	temp = panel_util_key_file_get_locale_string (key_file, "Comment");
+	temp = panel_key_file_get_locale_string (key_file, "Comment");
 	//FIXME: if sure_string () == "", we should display "Will run..." as in entry_changed()
 	gtk_label_set_text (GTK_LABEL (dialog->program_label),
 			    sure_string (temp));
 	g_free (temp);
 
-	terminal = panel_util_key_file_get_boolean (key_file,
-						    "Terminal",
-						    FALSE);
+	terminal = panel_key_file_get_boolean (key_file, "Terminal", FALSE);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox),
 				      terminal);
 
@@ -1742,7 +1742,7 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	if (!text || !text [0])
 		return NULL;
 		
-	key_file = panel_util_key_file_new_desktop ();
+	key_file = panel_key_file_new_desktop ();
 
 	disk = g_locale_from_utf8 (text, -1, NULL, NULL, NULL);
 	file = panel_util_get_file_optional_homedir (disk);
@@ -1756,43 +1756,39 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	g_free (scheme);
 		
 	if (exec) {
-		panel_util_key_file_set_string (key_file,
-						"Type", "Application");
-		panel_util_key_file_set_string (key_file,
-						"Exec", text);
+		panel_key_file_set_string (key_file, "Type", "Application");
+		panel_key_file_set_string (key_file, "Exec", text);
 		name = g_strdup (text);
 	} else {
 		char *uri;
 
 		uri = g_file_get_uri (file);
 
-		panel_util_key_file_set_string (key_file,
-						"Type", "Link");
-		panel_util_key_file_set_string (key_file,
-						"URL", uri);
+		panel_key_file_set_string (key_file, "Type", "Link");
+		panel_key_file_set_string (key_file, "URL", uri);
 		name = uri;
 	}
 
 	g_object_unref (file);
 
-	panel_util_key_file_set_locale_string (key_file, "Name",
-					       (dialog->item_name) ?
-					       	dialog->item_name : text);
+	panel_key_file_set_locale_string (key_file, "Name",
+					  (dialog->item_name) ?
+					  dialog->item_name : text);
 
-	panel_util_key_file_set_boolean (key_file, "Terminal",
-					 gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)));
+	panel_key_file_set_boolean (key_file, "Terminal",
+				    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)));
 
 	if (dialog->icon_path)
-		panel_util_key_file_set_locale_string (key_file, "Icon",
-						       dialog->icon_path);
+		panel_key_file_set_locale_string (key_file, "Icon",
+						  dialog->icon_path);
 	else
-		panel_util_key_file_set_locale_string (key_file, "Icon",
-						       PANEL_ICON_LAUNCHER);
+		panel_key_file_set_locale_string (key_file, "Icon",
+						  PANEL_ICON_LAUNCHER);
 
 	save_uri = panel_make_unique_desktop_uri (g_get_tmp_dir (), name);
 	disk = g_filename_from_uri (save_uri, NULL, NULL);
 
-	if (!disk || !panel_util_key_file_to_file (key_file, disk, NULL)) {
+	if (!disk || !panel_key_file_to_file (key_file, disk, NULL)) {
 		g_free (save_uri);
 		save_uri = NULL;
 	}

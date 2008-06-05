@@ -32,6 +32,9 @@
 
 #include <libgnomeui/gnome-icon-entry.h>
 #include <libgnomeui/gnome-help.h>
+
+#include <libpanel-util/panel-keyfile.h>
+
 #include "panel-ditem-editor.h"
 #include "panel-icon-names.h"
 #include "panel-util.h"
@@ -237,10 +240,10 @@ panel_ditem_editor_constructor (GType                  type,
 		dialog->priv->free_key_file = FALSE;
 		loaded = TRUE;
 	} else {
-		dialog->priv->key_file = panel_util_key_file_new_desktop ();
+		dialog->priv->key_file = panel_key_file_new_desktop ();
 		if (dialog->priv->type_directory)
-			panel_util_key_file_set_string (dialog->priv->key_file,
-							"Type", "Directory");
+			panel_key_file_set_string (dialog->priv->key_file,
+						   "Type", "Directory");
 		dialog->priv->free_key_file = TRUE;
 		loaded = FALSE;
 	}
@@ -261,8 +264,8 @@ panel_ditem_editor_constructor (GType                  type,
 
 	dialog->priv->dirty = FALSE;
 
-	desktop_type = panel_util_key_file_get_string (dialog->priv->key_file,
-						       "Type");
+	desktop_type = panel_key_file_get_string (dialog->priv->key_file,
+						  "Type");
 	if (desktop_type && !strcmp (desktop_type, "Directory"))
 		dialog->priv->type_directory = TRUE;
 	g_free (desktop_type);
@@ -856,11 +859,11 @@ panel_ditem_editor_name_changed (PanelDItemEditor *dialog)
 	name = gtk_entry_get_text (GTK_ENTRY (dialog->priv->name_entry));
 
 	if (name && name[0])
-		panel_util_key_file_set_locale_string (dialog->priv->key_file,
-						       "Name", name);
+		panel_key_file_set_locale_string (dialog->priv->key_file,
+						  "Name", name);
 	else
-		panel_util_key_file_remove_all_locale_key (dialog->priv->key_file,
-							   "Name");
+		panel_key_file_remove_all_locale_key (dialog->priv->key_file,
+						      "Name");
 
 	g_signal_emit (G_OBJECT (dialog), ditem_edit_signals[NAME_CHANGED], 0,
 		       name);
@@ -884,9 +887,9 @@ panel_ditem_editor_command_changed (PanelDItemEditor *dialog)
 	switch (type) {
 	case PANEL_DITEM_EDITOR_TYPE_APPLICATION:
 	case PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION:
-		panel_util_key_file_remove_key (dialog->priv->key_file, "URL");
-		panel_util_key_file_set_string (dialog->priv->key_file, "Exec",
-						exec_or_uri);
+		panel_key_file_remove_key (dialog->priv->key_file, "URL");
+		panel_key_file_set_string (dialog->priv->key_file, "Exec",
+					   exec_or_uri);
 
 		icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (dialog)));
 		icon = guess_icon_from_exec (icon_theme,
@@ -894,8 +897,8 @@ panel_ditem_editor_command_changed (PanelDItemEditor *dialog)
 		if (icon) {
 			char *current;
 
-			current = panel_util_key_file_get_locale_string (dialog->priv->key_file,
-									 "Icon");
+			current = panel_key_file_get_locale_string (dialog->priv->key_file,
+								    "Icon");
 
 			if (!current || strcmp (icon, current))
 				setup_icon_entry (dialog, icon);
@@ -905,13 +908,13 @@ panel_ditem_editor_command_changed (PanelDItemEditor *dialog)
 		}
 		break;
 	case PANEL_DITEM_EDITOR_TYPE_LINK:
-		panel_util_key_file_remove_key (dialog->priv->key_file, "Exec");
-		panel_util_key_file_set_string (dialog->priv->key_file, "URL",
-						exec_or_uri);
+		panel_key_file_remove_key (dialog->priv->key_file, "Exec");
+		panel_key_file_set_string (dialog->priv->key_file, "URL",
+					   exec_or_uri);
 		break;
 	default:
-		panel_util_key_file_remove_key (dialog->priv->key_file, "Exec");
-		panel_util_key_file_remove_key (dialog->priv->key_file, "URL");
+		panel_key_file_remove_key (dialog->priv->key_file, "Exec");
+		panel_key_file_remove_key (dialog->priv->key_file, "URL");
 	}
 
 	g_signal_emit (G_OBJECT (dialog), ditem_edit_signals[COMMAND_CHANGED],
@@ -926,11 +929,11 @@ panel_ditem_editor_comment_changed (PanelDItemEditor *dialog)
 	comment = gtk_entry_get_text (GTK_ENTRY (dialog->priv->comment_entry));
 
 	if (comment && comment[0])
-		panel_util_key_file_set_locale_string (dialog->priv->key_file,
-						       "Comment", comment);
+		panel_key_file_set_locale_string (dialog->priv->key_file,
+						  "Comment", comment);
 	else
-		panel_util_key_file_remove_all_locale_key (dialog->priv->key_file,
-							   "Comment");
+		panel_key_file_remove_all_locale_key (dialog->priv->key_file,
+						      "Comment");
 
 	g_signal_emit (G_OBJECT (dialog), ditem_edit_signals[COMMENT_CHANGED],
 		       0, comment);
@@ -962,11 +965,11 @@ panel_ditem_editor_icon_changed (PanelDItemEditor *dialog)
 	}
 
 	if (icon)
-		panel_util_key_file_set_locale_string (dialog->priv->key_file,
-						       "Icon", icon);
+		panel_key_file_set_locale_string (dialog->priv->key_file,
+						  "Icon", icon);
 	else
-		panel_util_key_file_remove_all_locale_key (dialog->priv->key_file,
-							   "Icon");
+		panel_key_file_remove_all_locale_key (dialog->priv->key_file,
+						      "Icon");
 
 	g_signal_emit (G_OBJECT (dialog), ditem_edit_signals[ICON_CHANGED], 0,
 		       file);
@@ -1149,34 +1152,34 @@ type_combo_changed (PanelDItemEditor *dialog)
 	case PANEL_DITEM_EDITOR_TYPE_APPLICATION:
 		text = _("Comm_and:");
 		if (dialog->priv->combo_setuped) {
-			panel_util_key_file_set_string (dialog->priv->key_file,
-							"Type", "Application");
-			panel_util_key_file_set_boolean (dialog->priv->key_file,
-							 "Terminal", FALSE);
+			panel_key_file_set_string (dialog->priv->key_file,
+						   "Type", "Application");
+			panel_key_file_set_boolean (dialog->priv->key_file,
+						    "Terminal", FALSE);
 		}
 		break;
 	case PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION:
 		text = _("_Command:");
 		if (dialog->priv->combo_setuped) {
-			panel_util_key_file_set_string (dialog->priv->key_file,
-							"Type", "Application");
-			panel_util_key_file_set_boolean (dialog->priv->key_file,
-							 "Terminal", TRUE);
+			panel_key_file_set_string (dialog->priv->key_file,
+						   "Type", "Application");
+			panel_key_file_set_boolean (dialog->priv->key_file,
+						    "Terminal", TRUE);
 		}
 		break;
 	case PANEL_DITEM_EDITOR_TYPE_LINK:
 		text = _("_Location:");
 		if (dialog->priv->combo_setuped) {
-			panel_util_key_file_set_string (dialog->priv->key_file,
-							"Type", "Link");
-			panel_util_key_file_remove_key (dialog->priv->key_file,
-							"Terminal");
+			panel_key_file_set_string (dialog->priv->key_file,
+						   "Type", "Link");
+			panel_key_file_remove_key (dialog->priv->key_file,
+						   "Terminal");
 		}
 		break;
 	case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
 		if (dialog->priv->combo_setuped) {
-			panel_util_key_file_set_string (dialog->priv->key_file,
-							"Type", "Directory");
+			panel_key_file_set_string (dialog->priv->key_file,
+						   "Type", "Directory");
 		}
 		return;
 	default:
@@ -1253,13 +1256,13 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 	key_file = dialog->priv->key_file;
 
 	/* Name */
-	buffer = panel_util_key_file_get_locale_string (key_file, "Name");
+	buffer = panel_key_file_get_locale_string (key_file, "Name");
 	gtk_entry_set_text (GTK_ENTRY (dialog->priv->name_entry),
 			    buffer ? buffer : "");
 	g_free (buffer);
 
 	/* Type */
-	type = panel_util_key_file_get_string (key_file, "Type");
+	type = panel_key_file_get_string (key_file, "Type");
 	if (!dialog->priv->combo_setuped) {
 		setup_combo (dialog->priv->type_combo,
 			     type_items, G_N_ELEMENTS (type_items),
@@ -1267,8 +1270,8 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 		dialog->priv->combo_setuped = TRUE;
 	}
 
-	run_in_terminal = panel_util_key_file_get_boolean (key_file, "Terminal",
-							   FALSE);
+	run_in_terminal = panel_key_file_get_boolean (key_file, "Terminal",
+						      FALSE);
 	editor_type = map_type_from_desktop_item (type, run_in_terminal);
 	g_free (type);
 
@@ -1289,10 +1292,10 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 
 	/* Command */
 	if (editor_type == PANEL_DITEM_EDITOR_TYPE_LINK)
-		buffer = panel_util_key_file_get_string (key_file, "URL");
+		buffer = panel_key_file_get_string (key_file, "URL");
 	else if (editor_type == PANEL_DITEM_EDITOR_TYPE_APPLICATION ||
 		 editor_type == PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION)
-		buffer = panel_util_key_file_get_string (key_file, "Exec");
+		buffer = panel_key_file_get_string (key_file, "Exec");
 	else
 		buffer = NULL;
 
@@ -1301,14 +1304,14 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 	g_free (buffer);
 
 	/* Comment */
-	buffer = panel_util_key_file_get_locale_string (key_file, "Comment");
+	buffer = panel_key_file_get_locale_string (key_file, "Comment");
 	gtk_entry_set_text (GTK_ENTRY (dialog->priv->comment_entry),
 			    buffer ? buffer : "");
 	g_free (buffer);
 
 
 	/* Icon */
-	buffer = panel_util_key_file_get_locale_string (key_file, "Icon");
+	buffer = panel_key_file_get_locale_string (key_file, "Icon");
 	setup_icon_entry (dialog, buffer);
 	g_free (buffer);
 
@@ -1385,9 +1388,9 @@ panel_ditem_editor_save (PanelDItemEditor *dialog,
 
 	key_file = dialog->priv->key_file;
 
-	panel_util_key_file_ensure_C_key (key_file, "Name");
-	panel_util_key_file_ensure_C_key (key_file, "Comment");
-	panel_util_key_file_ensure_C_key (key_file, "Icon");
+	panel_key_file_ensure_C_key (key_file, "Name");
+	panel_key_file_ensure_C_key (key_file, "Comment");
+	panel_key_file_ensure_C_key (key_file, "Icon");
 
 	if (dialog->priv->save_uri) {
 		char *uri;
@@ -1403,9 +1406,9 @@ panel_ditem_editor_save (PanelDItemEditor *dialog,
 
 	/* And now, try to save */
 	error = NULL;
-	panel_util_key_file_to_file (dialog->priv->key_file,
-				     dialog->priv->uri,
-				     &error);
+	panel_key_file_to_file (dialog->priv->key_file,
+				dialog->priv->uri,
+				&error);
 	if (error != NULL) {
 		if (report_errors)
 			g_signal_emit (G_OBJECT (dialog),
@@ -1499,41 +1502,41 @@ panel_ditem_editor_revert (PanelDItemEditor *dialog)
 	for (i = 0; i < G_N_ELEMENTS (revert_keys); i++) {
 		if (revert_keys [i].type == G_TYPE_STRING) {
 			if (revert_keys [i].locale) {
-				string = panel_util_key_file_get_locale_string (
+				string = panel_key_file_get_locale_string (
 						revert_key_file,
 						revert_keys [i].key);
 				if (string == NULL)
-					panel_util_key_file_remove_all_locale_key (
+					panel_key_file_remove_all_locale_key (
 							key_file,
 							revert_keys [i].key);
 				else
-					panel_util_key_file_set_locale_string (
+					panel_key_file_set_locale_string (
 							key_file,
 							revert_keys [i].key,
 							string);
 			} else {
-				string = panel_util_key_file_get_string (
+				string = panel_key_file_get_string (
 						revert_key_file,
 						revert_keys [i].key);
 				if (string == NULL)
-					panel_util_key_file_remove_key (
+					panel_key_file_remove_key (
 							key_file,
 							revert_keys [i].key);
 				else
-					panel_util_key_file_set_string (
+					panel_key_file_set_string (
 							key_file,
 							revert_keys [i].key,
 							string);
 			}
 			g_free (string);
 		} else if (revert_keys [i].type == G_TYPE_BOOLEAN) {
-			boolean = panel_util_key_file_get_boolean (
+			boolean = panel_key_file_get_boolean (
 					revert_key_file,
 					revert_keys [i].key,
 					revert_keys [i].default_value);
-			panel_util_key_file_set_boolean (key_file,
-							 revert_keys [i].key,
-							 boolean);
+			panel_key_file_set_boolean (key_file,
+						    revert_keys [i].key,
+						    boolean);
 		} else {
 			g_assert_not_reached ();
 		}
@@ -1572,33 +1575,33 @@ panel_ditem_editor_set_revert (PanelDItemEditor *dialog)
 	for (i = 0; i < G_N_ELEMENTS (revert_keys); i++) {
 		if (revert_keys [i].type == G_TYPE_STRING) {
 			if (revert_keys [i].locale) {
-				string = panel_util_key_file_get_locale_string (
+				string = panel_key_file_get_locale_string (
 						key_file,
 						revert_keys [i].key);
 				if (string != NULL)
-					panel_util_key_file_set_locale_string (
+					panel_key_file_set_locale_string (
 							revert_key_file,
 							revert_keys [i].key,
 							string);
 			} else {
-				string = panel_util_key_file_get_string (
+				string = panel_key_file_get_string (
 						key_file,
 						revert_keys [i].key);
 				if (string != NULL)
-					panel_util_key_file_set_string (
+					panel_key_file_set_string (
 							revert_key_file,
 							revert_keys [i].key,
 							string);
 			}
 			g_free (string);
 		} else if (revert_keys [i].type == G_TYPE_BOOLEAN) {
-			boolean = panel_util_key_file_get_boolean (
+			boolean = panel_key_file_get_boolean (
 					key_file,
 					revert_keys [i].key,
 					revert_keys [i].default_value);
-			panel_util_key_file_set_boolean (revert_key_file,
-							 revert_keys [i].key,
-							 boolean);
+			panel_key_file_set_boolean (revert_key_file,
+						    revert_keys [i].key,
+						    boolean);
 		} else {
 			g_assert_not_reached ();
 		}
@@ -1631,10 +1634,10 @@ panel_ditem_editor_load_uri (PanelDItemEditor  *dialog,
 
 	key_file = g_key_file_new ();
 
-	if (!panel_util_key_file_load_from_uri (key_file,
-						dialog->priv->uri,
-						G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
-						error)) {
+	if (!panel_key_file_load_from_uri (key_file,
+					   dialog->priv->uri,
+					   G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
+					   error)) {
 		g_key_file_free (key_file);
 		return FALSE;
 	}

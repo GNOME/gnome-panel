@@ -24,6 +24,8 @@
 #include <libgnomeui/gnome-url.h>
 #include <gdk/gdkx.h>
 
+#include <libpanel-util/panel-keyfile.h>
+
 #include "launcher.h"
 
 #include "button-widget.h"
@@ -158,7 +160,7 @@ launch_url (Launcher *launcher)
 	g_return_if_fail (launcher->key_file != NULL);
 
 	/* FIXME panel_ditem_launch() should be enough for this! */
-	url = panel_util_key_file_get_string (launcher->key_file, "URL");
+	url = panel_key_file_get_string (launcher->key_file, "URL");
 
 	screen = launcher_get_screen (launcher);
 
@@ -208,7 +210,7 @@ launcher_launch (Launcher  *launcher,
 				     button_widget_get_orientation (BUTTON_WIDGET (widget)),
 				     NULL);
 	
-	type = panel_util_key_file_get_string (launcher->key_file, "Type");
+	type = panel_key_file_get_string (launcher->key_file, "Type");
 	if (type && !strcmp (type, "Link"))
 		launch_url (launcher);
 	else {
@@ -536,9 +538,9 @@ create_launcher (const char *location)
 			g_free (path);
 		}
 	} else
-		loaded = panel_util_key_file_load_from_uri (key_file, location,
-							    G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
-							    &error);
+		loaded = panel_key_file_load_from_uri (key_file, location,
+						       G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
+						       &error);
 
 	if (!loaded) {
 		g_printerr (_("Unable to open desktop file %s for panel launcher%s%s\n"),
@@ -611,10 +613,9 @@ setup_button (Launcher *launcher)
 	
 	g_return_if_fail (launcher != NULL);
 
-	name = panel_util_key_file_get_locale_string (launcher->key_file,
-						      "Name");
-	comment = panel_util_key_file_get_locale_string (launcher->key_file,
-							 "Comment");
+	name = panel_key_file_get_locale_string (launcher->key_file, "Name");
+	comment = panel_key_file_get_locale_string (launcher->key_file,
+						    "Comment");
 
 	/* Setup tooltip */
 	if ( ! string_empty (comment))
@@ -643,8 +644,7 @@ setup_button (Launcher *launcher)
 	g_free (str);
 
 	/* Setup icon */
-	icon = panel_util_key_file_get_locale_string (launcher->key_file,
-						      "Icon");
+	icon = panel_key_file_get_locale_string (launcher->key_file, "Icon");
 	if (icon && icon[0] == '\0') {
 		g_free (icon);
 		icon = NULL;
@@ -710,14 +710,12 @@ launcher_command_changed (PanelDItemEditor *dialog,
 	revert_key_file = panel_ditem_editor_get_revert_key_file (dialog);
 
 	if (revert_key_file) {
-		exec = panel_util_key_file_get_string (launcher->key_file,
-						       "Exec");
-		old_exec = panel_util_key_file_get_string (revert_key_file,
-							   "Exec");
+		exec = panel_key_file_get_string (launcher->key_file, "Exec");
+		old_exec = panel_key_file_get_string (revert_key_file, "Exec");
 
 		if (!old_exec || !exec || strcmp (old_exec, exec))
-			panel_util_key_file_remove_key (launcher->key_file,
-							"StartupNotify");
+			panel_key_file_remove_key (launcher->key_file,
+						   "StartupNotify");
 
 		g_free (exec);
 		g_free (old_exec);
@@ -736,13 +734,13 @@ launcher_save_uri (PanelDItemEditor *dialog,
 	const char *uri;
 
 	key_file = panel_ditem_editor_get_key_file (dialog);
-	type = panel_util_key_file_get_string (key_file, "Type");
+	type = panel_key_file_get_string (key_file, "Type");
 	if (type && !strcmp (type, "Application"))
-		exec_or_uri = panel_util_key_file_get_string (key_file, "Exec");
+		exec_or_uri = panel_key_file_get_string (key_file, "Exec");
 	else if (type && !strcmp (type, "Link"))
-		exec_or_uri = panel_util_key_file_get_string (key_file, "URL");
+		exec_or_uri = panel_key_file_get_string (key_file, "URL");
 	else
-		exec_or_uri = panel_util_key_file_get_string (key_file, "Name");
+		exec_or_uri = panel_key_file_get_string (key_file, "Name");
 	g_free (type);
 
 	launcher = (Launcher *) data;
@@ -983,8 +981,8 @@ ask_about_launcher (const char  *file,
 
 	key_file = panel_ditem_editor_get_key_file (PANEL_DITEM_EDITOR (dialog));
 	if (file != NULL)
-		panel_util_key_file_set_string (key_file, "Exec", file);
-	panel_util_key_file_set_string (key_file, "Type", "Application");
+		panel_key_file_set_string (key_file, "Exec", file);
+	panel_key_file_set_string (key_file, "Type", "Application");
 	panel_ditem_editor_sync_display (PANEL_DITEM_EDITOR (dialog));
 
 	panel_ditem_register_save_uri_func (PANEL_DITEM_EDITOR (dialog),
@@ -1019,27 +1017,27 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 	char     *location;
 	GError   *error;
 
-	key_file = panel_util_key_file_new_desktop ();
+	key_file = panel_key_file_new_desktop ();
 
 	/* set current language and the "C" locale to this name,
 	 * this is kind of evil... */
-	panel_util_key_file_set_string (key_file, "Name", name);
-	panel_util_key_file_set_string (key_file, "Comment", comment);
-	panel_util_key_file_set_string (key_file, "Icon", icon);
-	panel_util_key_file_set_locale_string (key_file, "Name", name);
-	panel_util_key_file_set_locale_string (key_file, "Comment", comment);
-	panel_util_key_file_set_locale_string (key_file, "Icon", icon);
+	panel_key_file_set_string (key_file, "Name", name);
+	panel_key_file_set_string (key_file, "Comment", comment);
+	panel_key_file_set_string (key_file, "Icon", icon);
+	panel_key_file_set_locale_string (key_file, "Name", name);
+	panel_key_file_set_locale_string (key_file, "Comment", comment);
+	panel_key_file_set_locale_string (key_file, "Icon", icon);
 
 	if (exec_info) {
-		panel_util_key_file_set_string (key_file, "Exec", exec_or_uri);
-		panel_util_key_file_set_string (key_file, "Type", "Application");
+		panel_key_file_set_string (key_file, "Exec", exec_or_uri);
+		panel_key_file_set_string (key_file, "Type", "Application");
 	} else {
-		panel_util_key_file_set_string (key_file, "URL", exec_or_uri);
-		panel_util_key_file_set_string (key_file, "Type", "Link");
+		panel_key_file_set_string (key_file, "URL", exec_or_uri);
+		panel_key_file_set_string (key_file, "Type", "Link");
 	}
 
 	location = panel_make_unique_desktop_uri (NULL, exec_or_uri);
-	if (panel_util_key_file_to_file (key_file, location, &error)) {
+	if (panel_key_file_to_file (key_file, location, &error)) {
 		panel_launcher_create (toplevel, position, location);
 	} else {
 		panel_error_dialog (GTK_WINDOW (toplevel),

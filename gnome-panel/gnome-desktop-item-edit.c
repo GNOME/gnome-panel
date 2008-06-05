@@ -5,8 +5,9 @@
 #include <gtk/gtk.h>
 #include <libgnomeui/gnome-ui-init.h>
 
+#include <libpanel-util/panel-keyfile.h>
+
 #include "panel-ditem-editor.h"
-#include "panel-util.h"
 #include "panel-icon-names.h"
 
 #include "nothing.cP"
@@ -64,7 +65,7 @@ find_uri_on_save (PanelDItemEditor *dialog,
 	char     *dir;
 
 	keyfile = panel_ditem_editor_get_key_file (dialog);
-	name = panel_util_key_file_get_string (keyfile, "Name");
+	name = panel_key_file_get_string (keyfile, "Name");
 
 	validate_for_filename (name);
 	filename = g_filename_from_utf8 (name, -1, NULL, NULL, NULL);

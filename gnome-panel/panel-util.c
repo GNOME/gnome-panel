@@ -28,6 +28,8 @@
 #include <libgnome/gnome-util.h>
 #include <libgnomeui/gnome-help.h>
 
+#include <libpanel-util/panel-keyfile.h>
+
 #include "applet.h"
 #include "nothing.h"
 #include "xstuff.h"
@@ -87,8 +89,7 @@ panel_util_launch_from_key_file (GKeyFile   *keyfile,
 	for (i = 0; i < G_N_ELEMENTS (keys); i++) {
 		char *value;
 
-		value = panel_util_key_file_get_string (keyfile,
-							keys [i]);
+		value = panel_key_file_get_string (keyfile, keys [i]);
 		if (value != NULL) {
 			gnome_desktop_item_set_string (ditem, keys [i], value);
 			g_free (value);
@@ -98,8 +99,8 @@ panel_util_launch_from_key_file (GKeyFile   *keyfile,
 	for (i = 0; i < G_N_ELEMENTS (locale_keys); i++) {
 		char *value;
 
-		value = panel_util_key_file_get_locale_string (keyfile,
-							       locale_keys [i]);
+		value = panel_key_file_get_locale_string (keyfile,
+							  locale_keys [i]);
 		if (value != NULL) {
 			gnome_desktop_item_set_string (ditem, locale_keys [i], value);
 			g_free (value);
@@ -1038,251 +1039,6 @@ panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
 	return retval;
 }
 
-GKeyFile *
-panel_util_key_file_new_desktop (void)
-{
-	GKeyFile *retval;
-
-	retval = g_key_file_new ();
-
-	//FIXME? g_key_file_set_string (retval, "Desktop Entry", "Name", _("No Name"));
-	g_key_file_set_string (retval, "Desktop Entry", "Encoding", "UTF-8");
-	g_key_file_set_string (retval, "Desktop Entry", "Version", "1.0");
-
-	return retval;
-}
-
-//FIXME: kill this when bug #309224 is fixed
-gboolean
-panel_util_key_file_to_file (GKeyFile     *keyfile,
-			     const gchar  *file,
-			     GError      **error)
-{
-	gchar   *filename;
-	GError  *write_error;
-	gchar   *data;
-	gsize    length;
-	gboolean res;
-
-	g_return_val_if_fail (keyfile != NULL, FALSE);
-	g_return_val_if_fail (file != NULL, FALSE);
-
-	write_error = NULL;
-	data = g_key_file_to_data (keyfile, &length, &write_error);
-	if (write_error) {
-		g_propagate_error (error, write_error);
-		return FALSE;
-	}
-
-	if (!g_path_is_absolute (file))
-		filename = g_filename_from_uri (file, NULL, &write_error);
-	else
-		filename = g_filename_from_utf8 (file, -1, NULL, NULL,
-						 &write_error);
-
-	if (write_error) {
-		g_propagate_error (error, write_error);
-		g_free (data);
-		return FALSE;
-	}
-
-	res = g_file_set_contents (filename, data, length, &write_error);
-	g_free (filename);
-
-	if (write_error) {
-		g_propagate_error (error, write_error);
-		g_free (data);
-		return FALSE;
-	}
-
-	g_free (data);
-	return res;
-}
-
-gboolean
-panel_util_key_file_load_from_uri (GKeyFile       *keyfile,
-                                   const gchar    *uri,
-				   GKeyFileFlags   flags,
-				   GError        **error)
-{
-	char     *scheme;
-	gboolean  is_local;
-	gboolean  result;
-
-	g_return_val_if_fail (keyfile != NULL, FALSE);
-	g_return_val_if_fail (uri != NULL, FALSE);
-	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	scheme = g_uri_parse_scheme (uri);
-	is_local = (scheme == NULL) || !g_ascii_strcasecmp (scheme, "file");
-	g_free (scheme);
-
-	if (is_local) {
-		char *path;
-
-		if (g_path_is_absolute (uri))
-			path = g_filename_from_utf8 (uri, -1, NULL, NULL, NULL);
-		else
-			path = g_filename_from_uri (uri, NULL, NULL);
-		result = g_key_file_load_from_file (keyfile, path,
-						    flags, error);
-		g_free (path);
-	} else {
-		GFile   *file;
-		char	*contents;
-		gsize    size;
-		gboolean ret;
-
-		file = g_file_new_for_uri (uri);
-		ret = g_file_load_contents (file, NULL, &contents, &size,
-					    NULL, NULL);
-		g_object_unref (file);
-		
-		if (!ret)
-			return FALSE;
-
-		result = g_key_file_load_from_data (keyfile, contents, size,
-						    flags, error);
-
-		g_free (contents);
-	}
-
-	return result;
-}
-
-gboolean
-panel_util_key_file_get_boolean (GKeyFile       *keyfile,
-				 const gchar    *key,
-				 gboolean        default_value)
-{
-	GError   *error;
-	gboolean  retval;
-
-	error = NULL;
-	retval = g_key_file_get_boolean (keyfile, "Desktop Entry", key, &error);
-	if (error != NULL) {
-		retval = default_value;
-		g_error_free (error);
-	}
-
-	return retval;
-}
-
-void
-panel_util_key_file_set_locale_string (GKeyFile    *keyfile,
-				       const gchar *key,
-				       const gchar *value)
-{
-	const char         *locale;
-	const char * const *langs_pointer;
-	int                 i;
-
-	locale = NULL;
-	langs_pointer = g_get_language_names ();
-	for (i = 0; langs_pointer[i] != NULL; i++) {
-		/* find first without encoding  */
-		if (strchr (langs_pointer[i], '.') == NULL) {
-			locale = langs_pointer[i]; 
-			break;
-		}
-	}
-
-	if (locale)
-		g_key_file_set_locale_string (keyfile, "Desktop Entry",
-					      key, locale, value);
-	else
-		g_key_file_set_string (keyfile, "Desktop Entry",
-				       key, value);
-}
-
-void
-panel_util_key_file_remove_locale_key (GKeyFile    *keyfile,
-				       const gchar *key)
-{
-	const char * const *langs_pointer;
-	int                 i;
-	char               *locale_key;
-
-	locale_key = NULL;
-	langs_pointer = g_get_language_names ();
-	for (i = 0; langs_pointer[i] != NULL; i++) {
-		/* find first without encoding  */
-		if (strchr (langs_pointer[i], '.') == NULL) {
-			locale_key = g_strdup_printf ("%s[%s]",
-						      key, langs_pointer[i]);
-			if (g_key_file_has_key (keyfile, "Desktop Entry",
-						locale_key, NULL))
-				break;
-
-			g_free (locale_key);
-			locale_key = NULL;
-		}
-	}
-
-	if (locale_key) {
-		g_key_file_remove_key (keyfile, "Desktop Entry",
-				       locale_key, NULL);
-		g_free (locale_key);
-	} else
-		g_key_file_remove_key (keyfile, "Desktop Entry",
-				       key, NULL);
-}
-
-void
-panel_util_key_file_remove_all_locale_key (GKeyFile    *keyfile,
-					   const gchar *key)
-{
-	char **keys;
-	int    key_len;
-	int    i;
-
-	if (!key)
-		return;
-
-	keys = g_key_file_get_keys (keyfile, "Desktop Entry", NULL, NULL);
-	if (!keys)
-		return;
-
-	key_len = strlen (key);
-
-	for (i = 0; keys[i] != NULL; i++) {
-		int len;
-
-		if (strncmp (keys[i], key, key_len))
-			continue;
-
-		len = strlen (keys[i]);
-		if (len == key_len ||
-		    (len > key_len && keys[i][key_len] == '['))
-			g_key_file_remove_key (keyfile, "Desktop Entry",
-					       keys[i], NULL);
-	}
-
-	g_strfreev (keys);
-}
-
-void
-panel_util_key_file_ensure_C_key (GKeyFile   *keyfile,
-				  const char *key)
-{
-	char *C_value;
-	char *buffer;
-
-	/* Make sure we set the "C" locale strings to the terms we set here.
-	 * This is so that if the user logs into another locale they get their
-	 * own description there rather then empty. It is not the C locale
-	 * however, but the user created this entry herself so it's OK */
-	C_value = panel_util_key_file_get_string (keyfile, key);
-	if (C_value == NULL || C_value [0] == '\0') {
-		buffer = panel_util_key_file_get_locale_string (keyfile, key);
-		if (buffer) {
-			panel_util_key_file_set_string (keyfile, key, buffer);
-			g_free (buffer);
-		}
-	}
-	g_free (C_value);
-}
-
 char *
 guess_icon_from_exec (GtkIconTheme *icon_theme,
 		      GKeyFile     *key_file)
@@ -1291,7 +1047,7 @@ guess_icon_from_exec (GtkIconTheme *icon_theme,
 	char *icon_name;
 	char *path;
 
-	exec = panel_util_key_file_get_string (key_file, "Exec");
+	exec = panel_key_file_get_string (key_file, "Exec");
 	if (!exec || !exec [0]) {
 		g_free (exec);
 		return NULL;

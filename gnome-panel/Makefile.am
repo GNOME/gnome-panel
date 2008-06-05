@@ -1,5 +1,6 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.3
+SUBDIRS = libpanel-util
 
 NULL =
 
@@ -7,6 +8,7 @@ INCLUDES =							\
 	-I.							\
 	-I$(srcdir)						\
 	-I$(top_builddir)/gnome-panel				\
+	-I$(top_builddir)/gnome-panel/libpanel-util		\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DGLADEDIR=\""$(gladedir)"\"				\
@@ -160,6 +162,7 @@ gnome_panel_SOURCES =			\
 	$(NULL)
 
 gnome_panel_LDADD =		\
+	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS)		\
 	$(X_LIBS)
 
@@ -175,6 +178,7 @@ gnome_desktop_item_edit_SOURCES = \
 gnome_desktop_item_edit_LDFLAGS = -export-dynamic
 
 gnome_desktop_item_edit_LDADD = 	\
+	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS)			\
 	$(X_LIBS)
 
