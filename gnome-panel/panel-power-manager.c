@@ -290,7 +290,7 @@ panel_power_manager_attempt_hibernate (PanelPowerManager *manager)
 
 
 PanelPowerManager *
-panel_get_power_manager (void)
+panel_power_manager_get (void)
 {
 	static PanelPowerManager *manager = NULL;
 

@@ -69,7 +69,7 @@ gboolean panel_power_manager_can_restart (PanelPowerManager *manager);
 void panel_power_manager_attempt_suspend (PanelPowerManager *manager);
 void panel_power_manager_attempt_hibernate (PanelPowerManager *manager);
 
-PanelPowerManager *panel_get_power_manager (void);
+PanelPowerManager *panel_power_manager_get (void);
 
 G_END_DECLS
 

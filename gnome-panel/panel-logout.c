@@ -145,7 +145,7 @@ panel_logout_init (PanelLogoutDialog *logout_dialog)
 	gtk_window_set_position (GTK_WINDOW (logout_dialog),
 				 GTK_WIN_POS_CENTER_ALWAYS);
 
-	logout_dialog->priv->power_manager = panel_get_power_manager ();
+	logout_dialog->priv->power_manager = panel_power_manager_get ();
 
 	g_signal_connect (logout_dialog, "destroy",
 			  G_CALLBACK (panel_logout_destroy), NULL);
