@@ -99,7 +99,6 @@ panel_sources =			\
 	panel-addto.c		\
 	panel-logout.c		\
 	panel-gdm.c		\
-	panel-power-manager.c   \
 	panel-ditem-editor.c	\
 	panel-mount-operation.c	\
 	$(NULL)
@@ -149,7 +148,6 @@ panel_headers =			\
 	panel-addto.h		\
 	panel-logout.h		\
 	panel-gdm.h		\
-	panel-power-manager.h	\
 	panel-ditem-editor.h	\
 	panel-icon-names.h	\
 	panel-mount-operation.h	\

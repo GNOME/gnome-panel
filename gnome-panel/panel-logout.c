@@ -32,9 +32,10 @@
 #include <gtk/gtklabel.h>
 #include <gtk/gtkstock.h>
 
+#include <libpanel-util/panel-power-manager.h>
+
 #include "panel-logout.h"
 #include "panel-gdm.h"
-#include "panel-power-manager.h"
 #include "panel-session.h"
 #include "panel-icon-names.h"
 

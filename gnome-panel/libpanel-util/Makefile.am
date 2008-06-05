@@ -26,4 +26,6 @@ libpanel_util_la_SOURCES=	\
 	panel-dbus-service.h		\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
+	panel-power-manager.c		\
+	panel-power-manager.h		\
 	$(NULL)
