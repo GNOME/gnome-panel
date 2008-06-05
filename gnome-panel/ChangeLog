@@ -1,5 +1,13 @@
 2008-06-05  Vincent Untz  <vuntz@gnome.org>
 
+	* libpanel-util/Makefile.am: add new file
+	* libpanel-util/panel-cleanup.[ch]: small utility API to ease cleanup
+	when the panel exits
+	* main.c: (main): use new API
+	* panel-gconf.c: (panel_gconf_get_client): ditto
+
+2008-06-05  Vincent Untz  <vuntz@gnome.org>
+
 	Let's start cleaning up the source. Okay, this attempt will certainly
 	fail at some point ;-)
 	First step, create an internal libpanel-util library where we put some

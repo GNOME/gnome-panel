@@ -31,6 +31,8 @@
 #include <glib.h>
 #include <gconf/gconf-client.h>
 
+#include <libpanel-util/panel-cleanup.h>
+
 #undef PANEL_GCONF_DEBUG
 
 GConfClient *
@@ -38,8 +40,11 @@ panel_gconf_get_client (void)
 {
 	static GConfClient *panel_gconf_client = NULL;
 
-	if (!panel_gconf_client)
+	if (!panel_gconf_client) {
 		panel_gconf_client = gconf_client_get_default ();
+		panel_cleanup_register (panel_cleanup_unref_and_nullify,
+					&panel_gconf_client);
+	}
 
 	return panel_gconf_client;
 }

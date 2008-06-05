@@ -16,6 +16,8 @@
 #include <libgnomeui/gnome-authentication-manager.h>
 #include <libgnomeui/gnome-ui-init.h>
 
+#include <libpanel-util/panel-cleanup.h>
+
 #include "panel-gconf.h"
 #include "panel-profile.h"
 #include "panel-config-global.h"
@@ -62,11 +64,14 @@ main (int argc, char **argv)
 				      GNOME_PARAM_GOPTION_CONTEXT, context,
 				      GNOME_PROGRAM_STANDARD_PROPERTIES,
 				      NULL);
+	panel_cleanup_register (PANEL_CLEAN_FUNC (g_object_unref), program);
 
 	gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
 
-	if (!panel_shell_register ())
+	if (!panel_shell_register ()) {
+		panel_cleanup_do ();
 		return -1;
+	}
 
 	gnome_authentication_manager_init ();
 
@@ -100,7 +105,7 @@ main (int argc, char **argv)
 				 "/desktop/gnome/interface",
 				 NULL);
 
-	g_object_unref (program);
+	panel_cleanup_do ();
 
 	return 0;
 }

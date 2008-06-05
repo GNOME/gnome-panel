@@ -20,6 +20,8 @@ INCLUDES =							\
 noinst_LTLIBRARIES=libpanel-util.la
 
 libpanel_util_la_SOURCES=	\
+	panel-cleanup.c			\
+	panel-cleanup.h			\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
 	$(NULL)
