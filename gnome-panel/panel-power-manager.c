@@ -102,10 +102,10 @@ panel_power_manager_constructor (GType                  type,
 									      construct_properties);
 
 
-	panel_dbus_service_init_service (PANEL_DBUS_SERVICE (obj),
-					 "org.freedesktop.PowerManagement",
-					 "/org/freedesktop/PowerManagement",
-					 "org.freedesktop.PowerManagement");
+	panel_dbus_service_define_service (PANEL_DBUS_SERVICE (obj),
+					   "org.freedesktop.PowerManagement",
+					   "/org/freedesktop/PowerManagement",
+					   "org.freedesktop.PowerManagement");
 
 	error = NULL;
 	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (obj),

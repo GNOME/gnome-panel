@@ -279,10 +279,10 @@ out:
 }
 
 void
-panel_dbus_service_init_service (PanelDBusService *service,
-				 const char       *name,
-				 const char       *path,
-				 const char       *interface)
+panel_dbus_service_define_service (PanelDBusService *service,
+				   const char       *name,
+				   const char       *path,
+				   const char       *interface)
 {
 	g_return_if_fail (PANEL_IS_DBUS_SERVICE (service));
 

@@ -59,7 +59,7 @@ struct _PanelDBusServiceClass {
 
 GType panel_dbus_service_get_type (void);
 
-void     panel_dbus_service_init_service      (PanelDBusService *service,
+void     panel_dbus_service_define_service    (PanelDBusService *service,
 					       const char       *name,
 					       const char       *path,
 					       const char       *interface);
