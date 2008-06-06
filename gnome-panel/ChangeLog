@@ -1,5 +1,29 @@
 2008-06-06  Vincent Untz  <vuntz@gnome.org>
 
+	Use the gnome-session DBus API to log out/shut down. The dialog is also
+	displayed by gnome-session.
+	Fix bug #507391
+
+	* Makefile.am: remove files
+	* panel-gdm.[ch]: killed, not used anymore
+	* panel-logout.[ch]: killed, not used anymore
+	* panel-session.[ch]: remove panel_session_request_logout()
+	* libpanel-util/Makefile.am: add new files
+	* libpanel-util/panel-session-manager.[ch]: new, object to interact
+	with the session manager
+	* panel-action-button.c: (panel_action_logout): use PanelSessionManager
+	API
+	(panel_action_shutdown): ditto
+	(panel_action_shutdown_reboot_is_disabled): updated, with a comment
+	about a regression
+	* libpanel-util/panel-power-manager.c: remove useless includes
+	(panel_power_manager_can_suspend): add g_return_val_if_fail
+	(panel_power_manager_can_hibernate): add g_return_val_if_fail
+	(panel_power_manager_attempt_suspend): add g_return_if_fail
+	(panel_power_manager_attempt_hibernate): add g_return_if_fail
+
+2008-06-06  Vincent Untz  <vuntz@gnome.org>
+
 	* Makefile.am:
 	* libpanel-util/Makefile.am:
 	* panel-power-manager.[ch]: move PanelPowerManager to libpanel-util

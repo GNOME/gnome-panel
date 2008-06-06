@@ -97,8 +97,6 @@ panel_sources =			\
 	panel-force-quit.c	\
 	panel-lockdown.c	\
 	panel-addto.c		\
-	panel-logout.c		\
-	panel-gdm.c		\
 	panel-ditem-editor.c	\
 	panel-mount-operation.c	\
 	$(NULL)
@@ -146,8 +144,6 @@ panel_headers =			\
 	panel-force-quit.h	\
 	panel-lockdown.h	\
 	panel-addto.h		\
-	panel-logout.h		\
-	panel-gdm.h		\
 	panel-ditem-editor.h	\
 	panel-icon-names.h	\
 	panel-mount-operation.h	\

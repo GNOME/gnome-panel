@@ -24,13 +24,6 @@
  *      Vincent Untz <vuntz@gnome.org>
  */
 
-#include <errno.h>
-#include <string.h>
-
-#include <glib.h>
-#include <glib-object.h>
-#include <glib/gi18n.h>
-
 #include <dbus/dbus-glib.h>
 
 #include <libpanel-util/panel-cleanup.h>
@@ -146,6 +139,8 @@ panel_power_manager_can_suspend (PanelPowerManager *manager)
 	gboolean can_suspend;
 	DBusGProxy *proxy;
 
+	g_return_val_if_fail (PANEL_IS_POWER_MANAGER (manager), FALSE);
+
 	error = NULL;
 
 	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
@@ -181,6 +176,8 @@ panel_power_manager_can_hibernate (PanelPowerManager *manager)
 	gboolean can_hibernate;
 	DBusGProxy *proxy;
 
+	g_return_val_if_fail (PANEL_IS_POWER_MANAGER (manager), FALSE);
+
 	error = NULL;
 
 	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
@@ -215,6 +212,8 @@ panel_power_manager_attempt_suspend (PanelPowerManager *manager)
 	GError *error;
 	DBusGProxy *proxy;
 
+	g_return_if_fail (PANEL_IS_POWER_MANAGER (manager));
+
 	error = NULL;
 
 	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
@@ -248,12 +247,13 @@ panel_power_manager_attempt_suspend (PanelPowerManager *manager)
 	}
 }
 
-
 void
 panel_power_manager_attempt_hibernate (PanelPowerManager *manager)
 {
 	GError *error;
 	DBusGProxy *proxy;
+
+	g_return_if_fail (PANEL_IS_POWER_MANAGER (manager));
 
 	error = NULL;
 
@@ -287,7 +287,6 @@ panel_power_manager_attempt_hibernate (PanelPowerManager *manager)
 		g_error_free (call_error);
 	}
 }
-
 
 PanelPowerManager *
 panel_power_manager_get (void)

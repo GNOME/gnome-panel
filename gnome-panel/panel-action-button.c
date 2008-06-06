@@ -32,6 +32,8 @@
 
 #include <glib/gi18n.h>
 
+#include <libpanel-util/panel-session-manager.h>
+
 #include "applet.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
@@ -44,9 +46,7 @@
 #include "panel-run-dialog.h"
 #include "panel-a11y.h"
 #include "panel-lockdown.h"
-#include "panel-logout.h"
 #include "panel-compatibility.h"
-#include "panel-gdm.h"
 #include "panel-icon-names.h"
 
 G_DEFINE_TYPE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET);
@@ -155,7 +155,8 @@ panel_action_lock_invoke_menu (PanelActionButton *button,
 static void
 panel_action_logout (GtkWidget *widget)
 {
-	gboolean not_prompt;
+	PanelSessionManager *manager;
+	gboolean             not_prompt;
 
 	not_prompt = gconf_client_get_bool (panel_gconf_get_client (),
 					    LOGOUT_PROMPT_KEY, NULL);
@@ -163,28 +164,40 @@ panel_action_logout (GtkWidget *widget)
 	 * safer */
 	not_prompt = !not_prompt;
 
+	manager = panel_session_manager_get ();
+
 	if (not_prompt)
-		panel_session_request_logout ();
+		panel_session_manager_request_logout (manager,
+						      PANEL_SESSION_MANAGER_LOGOUT_MODE_NO_CONFIRMATION);
 	else
-		panel_logout_new (PANEL_LOGOUT_DIALOG_LOGOUT,
-				  gtk_widget_get_screen (widget),
-				  gtk_get_current_event_time ());
+		/* FIXME: we need to use widget to get the screen for the
+		 * confirmation dialog, see
+		 * http://bugzilla.gnome.org/show_bug.cgi?id=536914 */
+		panel_session_manager_request_logout (manager,
+						      PANEL_SESSION_MANAGER_LOGOUT_MODE_NORMAL);
 }
 
 static void
 panel_action_shutdown (GtkWidget *widget)
 {
-	panel_logout_new (PANEL_LOGOUT_DIALOG_SHUTDOWN,
-			  gtk_widget_get_screen (widget),
-			  gtk_get_current_event_time ());
+	PanelSessionManager *manager;
+
+	manager = panel_session_manager_get ();
+	panel_session_manager_request_shutdown (manager);
 }
 
 static gboolean
 panel_action_shutdown_reboot_is_disabled (void)
 {
+	return panel_lockdown_get_disable_log_out();
+#if 0
+	/* FIXME: waiting for a gnome-session dbus api to know if
+	 * shutdown/reboot is possible:
+	 * http://bugzilla.gnome.org/show_bug.cgi?id=536915 */
 	return (panel_lockdown_get_disable_log_out() ||
 	(!gdm_supports_logout_action (GDM_LOGOUT_ACTION_SHUTDOWN) &&
 	 !gdm_supports_logout_action (GDM_LOGOUT_ACTION_REBOOT)));
+#endif
 }
 
 /* Run Application

@@ -28,4 +28,6 @@ libpanel_util_la_SOURCES=	\
 	panel-keyfile.h			\
 	panel-power-manager.c		\
 	panel-power-manager.h		\
+	panel-session-manager.c		\
+	panel-session-manager.h		\
 	$(NULL)

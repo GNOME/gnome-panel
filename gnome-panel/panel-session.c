@@ -32,34 +32,6 @@
 #include "panel-profile.h"
 #include "panel-shell.h"
 
-void
-panel_session_request_logout (void)
-{
-	GnomeClient *client;
-	static int   recursion_guard = 0;
-
-	if (recursion_guard)
-		return;
-
-	recursion_guard++;
-
-	if (!(client = gnome_master_client ()))
-		return;
-
-	/* Only request a Global save. We only want a Local
-	 * save if the user selects 'Save current setup'
-	 * from the dialog.
-	 */
-	gnome_client_request_save (client,
-				   GNOME_SAVE_GLOBAL,
-				   TRUE,
-				   GNOME_INTERACT_ANY,
-				   TRUE, /* do not use the gnome-session gui */
-				   TRUE);
-
-	recursion_guard--;
-}
-
 static void
 panel_session_handle_die_request (GnomeClient *client)
 {

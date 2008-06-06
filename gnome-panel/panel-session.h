@@ -29,7 +29,6 @@ G_BEGIN_DECLS
 
 void panel_session_init           (void);
 void panel_session_do_not_restart (void);
-void panel_session_request_logout (void);
 
 G_END_DECLS
 
