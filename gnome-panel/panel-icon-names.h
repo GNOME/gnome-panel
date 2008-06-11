@@ -13,7 +13,7 @@
 #define PANEL_ICON_HOME			"user-home"
 #define PANEL_ICON_LAUNCHER		"gnome-panel-launcher"
 #define PANEL_ICON_LOCKSCREEN		"system-lock-screen"
-#define PANEL_ICON_LOGOUT		"gnome-logout"
+#define PANEL_ICON_LOGOUT		"system-log-out"
 #define PANEL_ICON_MAIN_MENU		"start-here"
 #define PANEL_ICON_NETWORK		"network-workgroup"
 #define PANEL_ICON_NETWORK_SERVER	"network-server"
@@ -28,6 +28,6 @@
 #define PANEL_ICON_SHUTDOWN		"gnome-shutdown"
 #define PANEL_ICON_THEME		"preferences-desktop-theme"
 #define PANEL_ICON_TRASH		"user-trash"
-#define PANEL_ICON_UNKNOWN		"gnome-unknown"
+#define PANEL_ICON_UNKNOWN		"image-missing"
 
 #endif /* PANEL_ICON_NAMES_H */
