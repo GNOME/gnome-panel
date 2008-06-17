@@ -27,7 +27,7 @@
 
 #include <glib-object.h>
 
-#include <libpanel-util/panel-dbus-service.h>
+#include "panel-dbus-service.h"
 
 G_BEGIN_DECLS
 
