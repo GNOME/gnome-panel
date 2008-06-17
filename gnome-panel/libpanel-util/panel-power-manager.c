@@ -26,8 +26,8 @@
 
 #include <dbus/dbus-glib.h>
 
-#include <libpanel-util/panel-cleanup.h>
-#include <libpanel-util/panel-dbus-service.h>
+#include "panel-cleanup.h"
+#include "panel-dbus-service.h"
 
 #include "panel-power-manager.h"
 
