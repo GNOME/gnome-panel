@@ -1779,6 +1779,10 @@ fill_time_settings_window (ClockData *cd)
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (cd->seconds_spin), now.tm_sec);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (cd->minutes_spin), now.tm_min);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (cd->hours_spin), now.tm_hour);
+
+	gtk_calendar_select_month (GTK_CALENDAR (cd->calendar), now->tm_mon,
+				   now->tm_year + 1900);
+	gtk_calendar_select_day (GTK_CALENDAR (cd->calendar), now->tm_mday);
 }
 
 static void
