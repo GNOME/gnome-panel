@@ -1,3 +1,12 @@
+2008-06-18  Vincent Untz  <vuntz@gnome.org>
+
+	* clock.c: (fill_time_settings_window): also select the current day on
+	the calendar so that if you open the "set time" dialog on two
+	different days, the calendar is always on the current day (and you
+	don't accidentaly set time in past)
+	Patch by Michael Meeks <michael.meeks@novell.com>.
+	https://bugzilla.novell.com/show_bug.cgi?id=395146
+
 ==================== 2.22.2 ====================
 
 2008-05-26  Vincent Untz  <vuntz@gnome.org>
