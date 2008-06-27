@@ -176,11 +176,11 @@ update_icon (ShowDesktopData *sdd)
 
 	error = NULL;
 	icon = gtk_icon_theme_load_icon (sdd->icon_theme,
-					 "gnome-fs-desktop",
+					 "user-desktop",
 					 icon_size, 0, &error);
 
 	if (icon == NULL) {
-		g_printerr (_("Failed to load %s: %s\n"), "gnome-fs-desktop",
+		g_printerr (_("Failed to load %s: %s\n"), "user-desktop",
 			    error ? error->message : _("Icon not found"));
 		if (error) {
 			g_error_free (error);
@@ -539,7 +539,7 @@ display_about_dialog (BonoboUIComponent *uic,
 			       authors,
 			       documenters,
 			       translator_credits,
-			       "gnome-fs-desktop",
+			       "user-desktop",
 			       "show-desktop",
 			       "show-desktop");
 }
