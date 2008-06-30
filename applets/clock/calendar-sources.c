@@ -311,14 +311,13 @@ auth_func_cb (ECal       *ecal,
 	return e_passwords_get_password (component_name, key);
 }
 
+/* The clients are just created here but not loaded */
 static ECal *
-load_esource (ESource        *esource,
-	      ECalSourceType  source_type,
-	      GSList         *existing_clients)
+get_ecal_from_source (ESource        *esource,
+		      ECalSourceType  source_type,
+		      GSList         *existing_clients)
 {
-  ECal   *retval;
-  GError *error;
-
+  ECal *retval;
 
   if (existing_clients)
     {
@@ -347,20 +346,6 @@ load_esource (ESource        *esource,
     }
 
   e_cal_set_auth_func (retval, auth_func_cb, NULL);
-
-  error = NULL;
-  if (!e_cal_open (retval, TRUE, &error))
-    {
-      g_assert (error != NULL);
-      g_warning ("Cannot open calendar from uri '%s': %s\n",
-		 e_cal_get_uri (retval), error->message);
-      g_error_free (error);
-      g_object_unref (retval);
-      return NULL;
-    }
-
-  dprintf ("        Loaded calendar from uri '%s'\n",
-	   e_cal_get_uri (retval));
 
   return retval;
 }
@@ -466,7 +451,7 @@ backend_died_cb (ECal *client, CalendarSourceData *source_data)
 static void
 calendar_sources_load_esource_list (CalendarSourceData *source_data)
 {
-  GSList  *loaded_clients = NULL;
+  GSList  *clients = NULL;
   GSList  *groups, *l;
   gboolean emit_signal = FALSE;
 
@@ -496,16 +481,16 @@ calendar_sources_load_esource_list (CalendarSourceData *source_data)
 		   e_source_peek_relative_uri (esource));
 
 	  if (is_source_selected (esource, source_data->selected_sources) &&
-	      (client = load_esource (esource, source_data->source_type, source_data->clients)))
+	      (client = get_ecal_from_source (esource, source_data->source_type, source_data->clients)))
 	    {
-	      loaded_clients = g_slist_prepend (loaded_clients, client);
+	      clients = g_slist_prepend (clients, client);
 	    }
 	}
     }
   dprintf ("\n");
 
   if (source_data->loaded && 
-      !compare_ecal_lists (source_data->clients, loaded_clients))
+      !compare_ecal_lists (source_data->clients, clients))
     emit_signal = TRUE;
 
   for (l = source_data->clients; l; l = l->next)
@@ -517,7 +502,7 @@ calendar_sources_load_esource_list (CalendarSourceData *source_data)
       g_object_unref (l->data);
     }
   g_slist_free (source_data->clients);
-  source_data->clients = g_slist_reverse (loaded_clients);
+  source_data->clients = g_slist_reverse (clients);
 
   /* connect to backend_died after we disconnected the previous signal
    * handlers. If we do it before, we'll lose some handlers (for clients that
