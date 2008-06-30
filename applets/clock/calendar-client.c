@@ -738,16 +738,12 @@ static char *
 get_source_color (ECal *esource)
 {
   ESource *source;
-  guint32  color;
 
   g_return_val_if_fail (E_IS_CAL (esource), NULL);
 
   source = e_cal_get_source (esource);
-  if (e_source_get_color (source, &color)) {
-    return g_strdup_printf ("%06x", color);
-  }
-  
-  return NULL;
+
+  return g_strdup (e_source_peek_color_spec (source));
 }
 
 static gchar *

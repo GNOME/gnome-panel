@@ -1,5 +1,16 @@
 2008-06-30  Vincent Untz  <vuntz@gnome.org>
 
+	Use the right color for tasks and appointments.
+	Patch by Sjoerd Simons <sjoerd@luon.net>
+	Fix bug #503581
+
+	* calendar-client.c: (get_source_color): use e_source_peek_color_spec()
+	instead of deprecated e_source_get_color()
+	* calendar-window.c: (set_renderer_pixbuf_color_by_column): use
+	gdk_color_parse()
+
+2008-06-30  Vincent Untz  <vuntz@gnome.org>
+
 	Fix compiler warnings. Patch by Kjartan Maraas <kmaraas@gnome.org>.
 	Part of bug #521409.
 

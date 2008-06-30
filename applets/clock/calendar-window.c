@@ -522,14 +522,18 @@ set_renderer_pixbuf_color_by_column (GtkCellRenderer *renderer,
 {
         char      *color_string;
         GdkPixbuf *pixbuf = NULL;
-        guint32    color;
+        GdkColor   color;
 
         gtk_tree_model_get (model, iter, column_number, &color_string, -1);
 
-        if (color_string) {
-                sscanf (color_string, "%06x", &color);
+        if (color_string && gdk_color_parse (color_string, &color)) {
                 pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 16, 16);
-                gdk_pixbuf_fill (pixbuf, color << 8);
+                /* GdkColor has 16 bits per color, gdk_pixbuf only uses 8 bits
+                 * per color. So just drop the least significant parts */
+                gdk_pixbuf_fill (pixbuf,
+				 (color.red   & 0xff00) << 16 |
+				 (color.green & 0xff00) << 8  | 
+				 (color.blue  & 0xff00));
 
                 g_object_set (renderer, "visible", pixbuf != NULL, "pixbuf", pixbuf, NULL);
 
