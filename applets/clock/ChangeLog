@@ -1,5 +1,22 @@
 2008-06-30  Vincent Untz  <vuntz@gnome.org>
 
+	Fix compiler warnings. Patch by Kjartan Maraas <kmaraas@gnome.org>.
+	Part of bug #521409.
+
+	* calendar-client.c: (calendar_client_select_month), (filter_task),
+	(calendar_client_foreach_appointment_day):
+	* calendar-window.c: (set_renderer_pixbuf_pixmap_for_bday):
+	* clock-face.c:
+	* clock-map.c: (clock_map_update_time):
+	* clock.c: (applet_change_orient), (loc_to_string):
+	* gnome-clock-applet-mechanism-main.c: (get_system_bus), (main):
+	* gnome-clock-applet-mechanism.c:
+	(gnome_clock_applet_mechanism_constructor),
+	(_check_polkit_for_action):
+	* set-timezone.c: (can_do):
+
+2008-06-30  Vincent Untz  <vuntz@gnome.org>
+
 	Load calendars asynchronously. Fix bug #515948, and probably a few
 	others. Based on patch by Chenthill Palanisamy <pchenthill@novell.com>
 

@@ -670,11 +670,8 @@ clock_map_needs_refresh (ClockMap *this)
 void
 clock_map_update_time (ClockMap *this)
 {
-        ClockMapPrivate *priv;
 
 	g_return_if_fail (IS_CLOCK_MAP (this));
-
-	priv = PRIVATE (this);
 
         if (!clock_map_needs_refresh (this)) {
                 return;

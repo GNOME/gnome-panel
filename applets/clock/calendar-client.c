@@ -1803,7 +1803,7 @@ calendar_client_select_month (CalendarClient *client,
 			      guint           year)
 {
   g_return_if_fail (CALENDAR_IS_CLIENT (client));
-  g_return_if_fail (month >= 0 && month <= 11);
+  g_return_if_fail (month <= 11);
 
   if (client->priv->year != year || client->priv->month != month)
     {
@@ -1897,14 +1897,16 @@ filter_task (const char    *uid,
 	     CalendarEvent *event,
 	     FilterData    *filter_data)
 {
+#ifdef FIX_BROKEN_TASKS_QUERY
   CalendarTask *task;
+#endif
 
   if (event->type != CALENDAR_EVENT_TASK)
     return;
 
+#ifdef FIX_BROKEN_TASKS_QUERY
   task = CALENDAR_TASK (event);
 
-#ifdef FIX_BROKEN_TASKS_QUERY
   if (task->start_time && task->start_time > filter_data->start_time)
     return;
 
@@ -2058,12 +2060,12 @@ calendar_client_foreach_appointment_day (CalendarClient  *client,
 	      /* mark the days for the appointment, no need to add an extra one when duration is a multiple of 86400 */
               for (day_offset = 1; day_offset <= duration / 86400 && duration != day_offset * 86400; day_offset++)
                 {
-                  GTime day_time = appointment->start_time + day_offset * 86400;
+                  GTime day_tm = appointment->start_time + day_offset * 86400;
 
-                  if (day_time > month_end)
+                  if (day_tm > month_end)
                     break;
-                  if (day_time >= month_begin)
-                    marked_days [day_from_time_t (day_time)] = TRUE;
+                  if (day_tm >= month_begin)
+                    marked_days [day_from_time_t (day_tm)] = TRUE;
                 }
             }
         }

@@ -108,7 +108,7 @@ struct _CalendarWindowPrivate {
 #endif /* HAVE_LIBECAL */
 };
 
-G_DEFINE_TYPE (CalendarWindow, calendar_window, GTK_TYPE_WINDOW);
+G_DEFINE_TYPE (CalendarWindow, calendar_window, GTK_TYPE_WINDOW)
 
 enum {
 	PROP_0,
@@ -589,9 +589,9 @@ set_renderer_pixbuf_pixmap_for_bday (GtkCellRenderer *renderer,
 	 * pas-id-41112AF900000003-birthday
 	 * ...
 	 */
-	if (g_strrstr (type, "birthday") != 0)
+	if (g_strrstr (type, "birthday") != NULL)
 		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_birthday_16.png";
-	else if (g_strrstr (type, "anniversary") != 0)
+	else if (g_strrstr (type, "anniversary") != NULL)
 		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_gifts_16.png";
 	else
 		path = CLOCK_EDS_ICONDIR G_DIR_SEPARATOR_S "category_miscellaneous_16.png";

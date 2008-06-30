@@ -122,9 +122,6 @@ gnome_clock_applet_mechanism_constructor (GType                  type,
                                   GObjectConstructParam *construct_properties)
 {
         GnomeClockAppletMechanism      *mechanism;
-        GnomeClockAppletMechanismClass *klass;
-
-        klass = GNOME_CLOCK_APPLET_MECHANISM_CLASS (g_type_class_peek (GNOME_CLOCK_APPLET_TYPE_MECHANISM));
 
         mechanism = GNOME_CLOCK_APPLET_MECHANISM (G_OBJECT_CLASS (gnome_clock_applet_mechanism_parent_class)->constructor (
                                                 type,
@@ -296,7 +293,7 @@ _check_polkit_for_action (GnomeClockAppletMechanism *mechanism, DBusGMethodInvoc
 
         pk_action = polkit_action_new ();
         polkit_action_set_action_id (pk_action, action);
-        pk_result = polkit_context_can_caller_do_action (mechanism->priv->pol_ctx, pk_action, pk_caller);
+        pk_result = polkit_context_is_caller_authorized (mechanism->priv->pol_ctx, pk_action, pk_caller, FALSE, NULL);
         polkit_caller_unref (pk_caller);
         polkit_action_unref (pk_action);
 

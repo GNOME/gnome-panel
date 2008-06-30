@@ -109,18 +109,13 @@ get_system_bus (void)
 {
         GError          *error;
         DBusGConnection *bus;
-        DBusConnection  *connection;
 
         error = NULL;
         bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
         if (bus == NULL) {
                 g_warning ("Couldn't connect to system bus: %s", error->message);
                 g_error_free (error);
-                goto out;
         }
-
-        connection = dbus_g_connection_get_connection (bus);
- out:
         return bus;
 }
 
@@ -129,7 +124,6 @@ main (int argc, char **argv)
 {
         GMainLoop                  *loop;
         GnomeClockAppletMechanism  *mechanism;
-        GOptionContext             *context;
         DBusGProxy                 *bus_proxy;
         DBusGConnection            *connection;
         int                         ret;

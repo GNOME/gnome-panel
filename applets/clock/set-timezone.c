@@ -162,7 +162,7 @@ can_do (const gchar *pk_action_id)
                 goto out;
         }
 
-        pk_result = polkit_context_can_caller_do_action (pk_context, pk_action, pk_caller);
+        pk_result = polkit_context_is_caller_authorized (pk_context, pk_action, pk_caller, FALSE, NULL);
 
 	switch (pk_result) {
         case POLKIT_RESULT_UNKNOWN:

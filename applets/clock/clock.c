@@ -1080,15 +1080,6 @@ location_tile_pressed_cb (ClockLocationTile *tile, gpointer data)
         g_object_unref (loc);
 }
 
-static void
-location_tile_weather_updated_cb (ClockLocationTile *tile, GdkPixbuf *weather_icon, const char *temperature, gpointer data)
-{
-        ClockData *cd = data;
-
-	gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon), weather_icon);
-        gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), temperature);
-}
-
 static ClockFormat
 location_tile_need_clock_format_cb(ClockLocationTile *tile, gpointer data)
 {
@@ -1450,7 +1441,6 @@ applet_change_orient (PanelApplet       *applet,
 		      PanelAppletOrient  orient,
 		      ClockData         *cd)
 {
-        GtkArrowType a;
         GtkOrientation o;
 
 	if (orient == cd->orient)
@@ -1460,19 +1450,15 @@ applet_change_orient (PanelApplet       *applet,
 
 	switch (cd->orient) {
         case PANEL_APPLET_ORIENT_RIGHT:
-                a = GTK_ARROW_RIGHT;
                 o = GTK_ORIENTATION_VERTICAL;
 		break;
         case PANEL_APPLET_ORIENT_LEFT:
-                a = GTK_ARROW_LEFT;
                 o = GTK_ORIENTATION_VERTICAL;
 		break;
         case PANEL_APPLET_ORIENT_DOWN:
-                a = GTK_ARROW_DOWN;
                 o = GTK_ORIENTATION_HORIZONTAL;
 		break;
         case PANEL_APPLET_ORIENT_UP:
-                a = GTK_ARROW_UP;
                 o = GTK_ORIENTATION_HORIZONTAL;
 		break;
         default:
@@ -1602,6 +1588,8 @@ copy_date (BonoboUIComponent *uic,
 	g_free (utf8);
 }
 
+/* FIXME old clock applet */
+#if 0
 static void
 on_config_tool_exited (GPid     pid,
                        gint     status,
@@ -1677,6 +1665,7 @@ try_config_tool (GdkScreen  *screen,
 
 	return TRUE;
 }
+#endif
 
 static void
 update_set_time_button (ClockData *cd)
@@ -2789,6 +2778,8 @@ fill_clock_applet (PanelApplet *applet)
 	return TRUE;
 }
 
+/* FIXME old clock applet */
+#if 0
 static void
 setup_writability_sensitivity (ClockData *clock, GtkWidget *w, GtkWidget *label, const char *key)
 {
@@ -2816,6 +2807,7 @@ setup_writability_sensitivity (ClockData *clock, GtkWidget *w, GtkWidget *label,
 
 	g_object_unref (G_OBJECT (client));
 }
+#endif
 
 static void
 update_properties_for_format (ClockData   *cd,
@@ -2876,6 +2868,8 @@ update_properties_for_format (ClockData   *cd,
 	}
 }
 
+/* FIXME old clock applet */
+#if 0
 static void
 set_format_cb (GtkComboBox *combo,
 	       ClockData   *cd)
@@ -2897,6 +2891,7 @@ set_format_cb (GtkComboBox *combo,
                                                gconf_enum_to_string (format_type_enum_map, format),
                                                NULL);
 }
+#endif
 
 static void
 set_show_seconds_cb (GtkWidget *w,
@@ -2950,6 +2945,8 @@ set_show_zones_cb (GtkWidget *w,
 }
 #endif
 
+/* FIXME old clock applet */
+#if 0
 static void
 set_custom_format_cb (GtkEntry  *entry,
 		      ClockData *cd)
@@ -2961,6 +2958,7 @@ set_custom_format_cb (GtkEntry  *entry,
 	panel_applet_gconf_set_string (PANEL_APPLET (cd->applet),
 				       KEY_CUSTOM_FORMAT, custom_format, NULL);
 }
+#endif
 
 static void
 prefs_locations_changed (GtkTreeSelection *selection, ClockData *cd)
@@ -2976,12 +2974,11 @@ static gchar *
 loc_to_string (ClockLocation *loc)
 {
         gfloat latitude, longitude;
-        gchar *prev_locale;
         gchar *ret;
 
         clock_location_get_coords (loc, &latitude, &longitude);
 
-        prev_locale = setlocale (LC_NUMERIC, "POSIX");
+        setlocale (LC_NUMERIC, "POSIX");
 	
         ret = g_markup_printf_escaped
                 ("<location name=\"%s\" timezone=\"%s\" latitude=\"%f\" longitude=\"%f\" code=\"%s\" current=\"%s\"/>",
@@ -4454,12 +4451,12 @@ PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_ClockApplet_Factory",
 				   PANEL_TYPE_APPLET,
 				   "ClockApplet",
 				   clock_factory,
-				   NULL);
+				   NULL)
 #else
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_ClockApplet_Factory",
                              PANEL_TYPE_APPLET,
                              "ClockApplet",
                              "0",
                              clock_factory,
-                             NULL);
+                             NULL)
 #endif

@@ -24,7 +24,7 @@ static GHashTable *pixbuf_cache = NULL;
 
 #define CLOCK_FACE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), INTL_TYPE_CLOCK_FACE, ClockFacePrivate))
 
-G_DEFINE_TYPE (ClockFace, clock_face, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE (ClockFace, clock_face, GTK_TYPE_WIDGET)
 
 static void clock_face_finalize (GObject *);
 static gboolean clock_face_expose (GtkWidget *clock, GdkEventExpose *event);
