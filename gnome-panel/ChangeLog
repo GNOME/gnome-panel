@@ -1,5 +1,29 @@
 2008-06-30  Vincent Untz  <vuntz@gnome.org>
 
+	Fix compiler warnings. Patch by Kjartan Maraas <kmaraas@gnome.org>.
+	Part of bug #521409.
+
+	* button-widget.c: (button_widget_unrealize),
+	(button_widget_get_icon_theme), (button_widget_get_pixbuf):
+	* launcher.c: (drag_drop_cb):
+	* panel-action-button.c: (panel_action_connect_server):
+	* panel-applet-frame.c:
+	* panel-background-monitor.c:
+	* panel-ditem-editor.c: (panel_ditem_editor_save):
+	* panel-force-quit.c:
+	* panel-frame.c:
+	* panel-menu-bar.c:
+	* panel-menu-button.c:
+	* panel-menu-items.c:
+	* panel-multiscreen.c: (panel_multiscreen_reinit):
+	* panel-separator.c:
+	* panel-toplevel.c: (panel_toplevel_calc_floating),
+	(panel_toplevel_get_auto_hide):
+	* panel-widget.c: (panel_widget_reparent):
+	* xstuff.c: (zoom_expose):
+
+2008-06-30  Vincent Untz  <vuntz@gnome.org>
+
 	* launcher.c: (setup_button): fox crash when editing launcher
 	properties on OS where NULL isn't a good idea in printf(). Patch by
 	Marcel Telka <marcel@telka.sk>. Fix bug #528581.

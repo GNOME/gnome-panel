@@ -88,10 +88,10 @@ panel_multiscreen_reinit (void)
 		g_free (monitors);
 
 	if (geometries) {
-		int i;
+		int j;
 
-		for (i = 0; i < screens; i++)
-			g_free (geometries[i]);
+		for (j = 0; j < screens; j++)
+			g_free (geometries[j]);
 		g_free (geometries);
 	}
 

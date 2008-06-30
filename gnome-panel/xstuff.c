@@ -326,7 +326,7 @@ zoom_expose (GtkWidget      *widget,
 		zoom->timeout_id = 0;
 
 		g_object_unref (zoom->pixbuf);
-		zoom->pixbuf = 0;
+		zoom->pixbuf = NULL;
 
 		g_slice_free (CompositedZoomData, zoom);
 

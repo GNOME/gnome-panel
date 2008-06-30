@@ -39,7 +39,7 @@ struct _PanelSeparatorPrivate {
 	GtkOrientation  orientation;
 };
 
-G_DEFINE_TYPE (PanelSeparator, panel_separator, GTK_TYPE_EVENT_BOX);
+G_DEFINE_TYPE (PanelSeparator, panel_separator, GTK_TYPE_EVENT_BOX)
 
 static void
 panel_separator_paint (GtkWidget    *widget,

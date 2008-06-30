@@ -48,7 +48,7 @@
 #include "panel-config-global.h"
 #include "panel-lockdown.h"
 
-G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW);
+G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
 
 #define PANEL_TOPLEVEL_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_TOPLEVEL, PanelToplevelPrivate))
 
@@ -1045,7 +1045,6 @@ panel_toplevel_handle_grab_op_motion_event (PanelToplevel  *toplevel,
 static void
 panel_toplevel_calc_floating (PanelToplevel *toplevel)
 {
-	GdkScreen *screen;
 	int        screen_width, screen_height;
 	int        monitor_x, monitor_y;
 	int        monitor_width, monitor_height;
@@ -1057,9 +1056,8 @@ panel_toplevel_calc_floating (PanelToplevel *toplevel)
 		return;
 	}
 
-	screen = panel_toplevel_get_screen_geometry (
-			toplevel, &screen_width, &screen_height);
-
+	panel_toplevel_get_screen_geometry (toplevel,
+					    &screen_width, &screen_height);
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_x, &monitor_y,
 					     &monitor_width, &monitor_height);
 
@@ -4963,7 +4961,7 @@ panel_toplevel_set_auto_hide (PanelToplevel *toplevel,
 gboolean
 panel_toplevel_get_auto_hide (PanelToplevel *toplevel)
 {
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), -1);
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
 
 	return toplevel->priv->auto_hide;
 }

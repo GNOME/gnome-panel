@@ -70,7 +70,7 @@ struct _PanelBackgroundMonitor {
 	gboolean   display_grabbed;
 };
 
-G_DEFINE_TYPE (PanelBackgroundMonitor, panel_background_monitor, G_TYPE_OBJECT);
+G_DEFINE_TYPE (PanelBackgroundMonitor, panel_background_monitor, G_TYPE_OBJECT)
 
 static PanelBackgroundMonitor **global_background_monitors = NULL;
 

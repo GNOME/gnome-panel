@@ -50,7 +50,7 @@ enum {
 
 #define BUTTON_WIDGET_DISPLACEMENT 2
 
-G_DEFINE_TYPE (ButtonWidget, button_widget, GTK_TYPE_BUTTON);
+G_DEFINE_TYPE (ButtonWidget, button_widget, GTK_TYPE_BUTTON)
 
 /* colorshift a pixbuf */
 static void
@@ -163,12 +163,10 @@ static void
 button_widget_unrealize (GtkWidget *widget)
 {
 	GtkButton *button;
-	PanelWidget *panel;
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (BUTTON_IS_WIDGET (widget));
 
-	panel  = PANEL_WIDGET (widget->parent);
 	button = GTK_BUTTON (widget);
 
 	if (button->event_window != NULL) {
@@ -876,7 +874,7 @@ button_widget_get_ignore_leave (ButtonWidget *button)
 GtkIconTheme *
 button_widget_get_icon_theme (ButtonWidget *button)
 {
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
 
 	return button->priv->icon_theme;
 }
@@ -884,7 +882,7 @@ button_widget_get_icon_theme (ButtonWidget *button)
 GdkPixbuf *
 button_widget_get_pixbuf (ButtonWidget *button)
 {
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
 
 	if (!button->priv->pixbuf)
 		return NULL;

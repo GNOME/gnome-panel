@@ -42,7 +42,7 @@
 #include "panel-stock-icons.h"
 #include "xstuff.h"
 
-G_DEFINE_TYPE (PanelAppletFrame, panel_applet_frame, GTK_TYPE_EVENT_BOX);
+G_DEFINE_TYPE (PanelAppletFrame, panel_applet_frame, GTK_TYPE_EVENT_BOX)
 
 #define PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFramePrivate))
 

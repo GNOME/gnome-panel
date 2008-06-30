@@ -169,7 +169,7 @@ static guint ditem_edit_signals[LAST_SIGNAL] = { 0 };
 
 #define PANEL_DITEM_EDITOR_GET_PRIVATE(o)  (PANEL_DITEM_EDITOR (o)->priv)
 
-G_DEFINE_TYPE (PanelDItemEditor, panel_ditem_editor, GTK_TYPE_DIALOG);
+G_DEFINE_TYPE (PanelDItemEditor, panel_ditem_editor, GTK_TYPE_DIALOG)
 
 static void panel_ditem_editor_setup_ui (PanelDItemEditor *dialog);
 
@@ -1362,17 +1362,17 @@ panel_ditem_editor_save (PanelDItemEditor *dialog,
 	if (!dialog->priv->type_directory &&
 	    (const_buf == NULL || const_buf [0] == '\0')) {
 		PanelDItemEditorType  type;
-		char                 *error;
+		char                 *err;
 
 		type = panel_ditem_editor_get_item_type (dialog);
 
 		switch (type) {
 		case PANEL_DITEM_EDITOR_TYPE_APPLICATION:
 		case PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION:
-			error = _("The command of the launcher is not set.");
+			err = _("The command of the launcher is not set.");
 			break;
 		case PANEL_DITEM_EDITOR_TYPE_LINK:
-			error = _("The location of the launcher is not set.");
+			err = _("The location of the launcher is not set.");
 			break;
 		default:
 			g_assert_not_reached ();
@@ -1381,8 +1381,7 @@ panel_ditem_editor_save (PanelDItemEditor *dialog,
 		if (report_errors)
 			g_signal_emit (G_OBJECT (dialog),
 				       ditem_edit_signals[ERROR_REPORTED], 0,
-				       _("Could not save launcher"),
-				       error);
+				       _("Could not save launcher"), err);
 		return FALSE;
 	}
 

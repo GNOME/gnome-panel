@@ -49,7 +49,7 @@
 #include "panel-compatibility.h"
 #include "panel-icon-names.h"
 
-G_DEFINE_TYPE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET);
+G_DEFINE_TYPE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET)
 
 #define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
 
@@ -258,13 +258,11 @@ panel_action_connect_server (GtkWidget *widget)
 					  &error);
 
 	if (error) {
-		GtkWidget *error_dialog;
-
-		error_dialog = panel_error_dialog (NULL, screen,
-						   "cannot_connect_server",
-						   TRUE,
-						   _("Could not connect to server"),
-						   error->message);
+		panel_error_dialog (NULL, screen,
+				    "cannot_connect_server",
+				    TRUE,
+				    _("Could not connect to server"),
+				    error->message);
 		g_clear_error (&error);
 	}
 }

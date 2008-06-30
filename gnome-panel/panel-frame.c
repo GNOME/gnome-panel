@@ -28,7 +28,7 @@
 
 #include "panel-typebuiltins.h"
 
-G_DEFINE_TYPE (PanelFrame, panel_frame, GTK_TYPE_BIN);
+G_DEFINE_TYPE (PanelFrame, panel_frame, GTK_TYPE_BIN)
 
 enum {
 	PROP_0,

@@ -35,9 +35,9 @@
 #include "panel-icon-names.h"
 #include "panel-stock-icons.h"
 
-GdkFilterReturn popup_filter (GdkXEvent *gdk_xevent,
-			      GdkEvent  *event,
-			      GtkWidget *popup);
+static GdkFilterReturn popup_filter (GdkXEvent *gdk_xevent,
+				     GdkEvent  *event,
+				     GtkWidget *popup);
 
 static Atom wm_state_atom = None;
 
@@ -248,7 +248,7 @@ handle_button_press_event (GtkWidget *popup,
 	}
 }
 
-GdkFilterReturn
+static GdkFilterReturn
 popup_filter (GdkXEvent *gdk_xevent,
 	      GdkEvent  *event,
 	      GtkWidget *popup)

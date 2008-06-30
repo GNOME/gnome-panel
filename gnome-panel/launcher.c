@@ -446,7 +446,7 @@ drag_drop_cb (GtkWidget	        *widget,
 	if ( ! is_this_drop_ok (widget, context))
 		return FALSE;
 
-	if (text_uri_list == 0)
+	if (text_uri_list == NULL)
 		text_uri_list = gdk_atom_intern_static_string ("text/uri-list");
 
 	gtk_drag_get_data (widget, context, text_uri_list, time);

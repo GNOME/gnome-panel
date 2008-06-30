@@ -41,7 +41,7 @@
 #include "panel-a11y.h"
 #include "panel-icon-names.h"
 
-G_DEFINE_TYPE (PanelMenuButton, panel_menu_button, BUTTON_TYPE_WIDGET);
+G_DEFINE_TYPE (PanelMenuButton, panel_menu_button, BUTTON_TYPE_WIDGET)
 
 #define PANEL_MENU_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BUTTON, PanelMenuButtonPrivate))
 

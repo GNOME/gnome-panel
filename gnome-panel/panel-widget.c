@@ -2548,13 +2548,13 @@ panel_widget_reparent (PanelWidget *old_panel,
 	GtkWidget *focus_widget = NULL;
 	AppletInfo* info;
 
-	g_return_val_if_fail(PANEL_IS_WIDGET(old_panel),-1);
-	g_return_val_if_fail(PANEL_IS_WIDGET(new_panel),-1);
-	g_return_val_if_fail(GTK_IS_WIDGET(applet),-1);
-	g_return_val_if_fail(pos>=0,-1);
+	g_return_val_if_fail(PANEL_IS_WIDGET(old_panel), FALSE);
+	g_return_val_if_fail(PANEL_IS_WIDGET(new_panel), FALSE);
+	g_return_val_if_fail(GTK_IS_WIDGET(applet), FALSE);
+	g_return_val_if_fail(pos>=0, FALSE);
 
 	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
-	g_return_val_if_fail(ad!=NULL,-1);
+	g_return_val_if_fail(ad!=NULL, FALSE);
 
 	/* Don't try and reparent to an explicitly hidden panel,
 	 * very confusing for the user ...
