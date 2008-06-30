@@ -1,5 +1,27 @@
 2008-06-30  Vincent Untz  <vuntz@gnome.org>
 
+	Load calendars asynchronously. Fix bug #515948, and probably a few
+	others. Based on patch by Chenthill Palanisamy <pchenthill@novell.com>
+
+	* calendar-client.c: (calendar_client_set_timezone): always set the
+	timezone, even if the calendar is not loaded yet
+	(cal_opened_cb): new, callback when a calendar has been opened. We just
+	update the appointments/tasks when relevant.
+	(load_calendars): new, asynchronously open all calendars from a source
+	(calendar_client_init): move some stuff around, and call
+	load_calendars()
+	(calendar_client_update_appointments): ignore not-loaded calendars
+	(calendar_client_update_tasks): ditto
+	(calendar_client_source_finalize): disconnect the opened handler
+	(calendar_client_appointment_sources_changed): call load_calendars()
+	since there have been changes in the list of calendars
+	(calendar_client_task_sources_changed): ditto
+	* calendar-sources.c: (get_ecal_from_source): renamed from
+	load_esource(), we just don't open the calendar there anymore
+	(calendar_sources_load_esource_list): rename variable
+
+2008-06-30  Vincent Untz  <vuntz@gnome.org>
+
 	* calendar-window.c: (is_appointment): also show groupwise and exchange
 	appointments. Patch by Chenthill Palanisamy <pchenthill@novell.com>
 
