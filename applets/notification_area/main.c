@@ -252,12 +252,12 @@ applet_factory (PanelApplet *applet,
   return TRUE;
 }
 
-#if NOTIFICATION_AREA_INPROCESS
+#ifdef NOTIFICATION_AREA_INPROCESS
 PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_NotificationAreaApplet_Factory",
 				   PANEL_TYPE_APPLET,
 				   "NotificationArea",
 				   applet_factory,
-				   NULL);
+				   NULL)
 #else
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_NotificationAreaApplet_Factory",
 			     PANEL_TYPE_APPLET,
