@@ -1,5 +1,11 @@
 2008-06-30  Vincent Untz  <vuntz@gnome.org>
 
+	* launcher.c: (setup_button): fox crash when editing launcher
+	properties on OS where NULL isn't a good idea in printf(). Patch by
+	Marcel Telka <marcel@telka.sk>. Fix bug #528581.
+
+2008-06-30  Vincent Untz  <vuntz@gnome.org>
+
 	s/string_empty/PANEL_GLIB_STR_EMPTY/
 
 	* libpanel-util/Makefile.am: updated

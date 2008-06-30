@@ -619,10 +619,12 @@ setup_button (Launcher *launcher)
 						    "Comment");
 
 	/* Setup tooltip */
-	if (!PANEL_GLIB_STR_EMPTY (comment))
+	if (!PANEL_GLIB_STR_EMPTY (name) && !PANEL_GLIB_STR_EMPTY (comment))
 		str = g_strdup_printf ("%s\n%s", name, comment);
-	else
+	else if (!PANEL_GLIB_STR_EMPTY (name))
 		str = g_strdup (name);
+	else
+		str = g_strdup (comment);
 
 	g_free (name);
 	g_free (comment);
