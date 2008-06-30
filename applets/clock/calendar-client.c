@@ -29,6 +29,7 @@
 
 #include <libintl.h>
 #include <string.h>
+#define HANDLE_LIBICAL_MEMORY
 #include <libecal/e-cal.h>
 #include <libecal/e-cal-time-util.h>
 #include <libecal/e-cal-recur.h>
@@ -596,7 +597,7 @@ get_ical_rid (icalcomponent *ical)
   ical_time = icalproperty_get_recurrenceid (prop);
 
   return icaltime_is_valid_time (ical_time) && !icaltime_is_null_time (ical_time) ? 
-    g_strdup (icaltime_as_ical_string (ical_time)) : NULL;
+    icaltime_as_ical_string (ical_time) : NULL;
 }
 
 static char *
@@ -852,6 +853,9 @@ calendar_appointment_finalize (CalendarAppointment *appointment)
 
   g_free (appointment->uid);
   appointment->uid = NULL;
+
+  g_free (appointment->rid);
+  appointment->rid = NULL;
 
   g_free (appointment->uri);
   appointment->uri = NULL;
