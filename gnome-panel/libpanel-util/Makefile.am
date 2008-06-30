@@ -24,6 +24,7 @@ libpanel_util_la_SOURCES=	\
 	panel-cleanup.h			\
 	panel-dbus-service.c		\
 	panel-dbus-service.h		\
+	panel-glib.h			\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
 	panel-power-manager.c		\

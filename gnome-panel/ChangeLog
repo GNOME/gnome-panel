@@ -1,3 +1,24 @@
+2008-06-30  Vincent Untz  <vuntz@gnome.org>
+
+	s/string_empty/PANEL_GLIB_STR_EMPTY/
+
+	* libpanel-util/Makefile.am: updated
+	* libpanel-util/panel-glib.h: add new file, with only the
+	PANEL_GLIB_STR_EMPTY macro right now...
+	* panel-util.h: remove string_empty
+
+	* launcher.c: (setup_button):
+	* panel-addto.c: (panel_addto_make_text),
+	(panel_addto_name_change):
+	* panel-menu-items.c: (panel_menu_items_append_from_desktop):
+	* panel-properties-dialog.c:
+	(panel_properties_dialog_setup_image_chooser),
+	(panel_properties_dialog_update_background_image):
+	* panel-util.c: (panel_util_get_file_display_for_common_files),
+	(panel_util_set_tooltip_text):
+	* panel.c: (drop_url): actuall do the
+	s/string_empty/PANEL_GLIB_STR_EMPTY/
+
 2008-06-27  Luca Ferretti  <elle.uca@libero.it>
 
 	* panel-icon-names.h: Use non-legacy icon "system-shutdown" from

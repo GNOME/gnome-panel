@@ -29,6 +29,8 @@
 
 #include <gmenu-tree.h>
 
+#include <libpanel-util/panel-glib.h>
+
 #include "launcher.h"
 #include "panel.h"
 #include "drawer.h"
@@ -261,7 +263,7 @@ panel_addto_make_text (const char *name,
 
 	real_name = name ? name : _("(empty)");
 
-	if (!string_empty (desc)) {
+	if (!PANEL_GLIB_STR_EMPTY (desc)) {
 		result = g_markup_printf_escaped ("<span weight=\"bold\">%s</span>\n%s",
 						  real_name, desc);
 	} else {
@@ -1060,7 +1062,7 @@ panel_addto_name_change (PanelAddtoDialog *dialog,
 
 	label = NULL;
 
-	if (!string_empty (name))
+	if (!PANEL_GLIB_STR_EMPTY (name))
 		label = g_strdup_printf (_("Find an _item to add to \"%s\":"),
 					 name);
 

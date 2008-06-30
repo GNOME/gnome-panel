@@ -24,6 +24,7 @@
 #include <libgnomeui/gnome-url.h>
 #include <gdk/gdkx.h>
 
+#include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
 
 #include "launcher.h"
@@ -618,7 +619,7 @@ setup_button (Launcher *launcher)
 						    "Comment");
 
 	/* Setup tooltip */
-	if ( ! string_empty (comment))
+	if (!PANEL_GLIB_STR_EMPTY (comment))
 		str = g_strdup_printf ("%s\n%s", name, comment);
 	else
 		str = g_strdup (name);

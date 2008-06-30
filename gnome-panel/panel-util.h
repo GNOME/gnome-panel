@@ -8,9 +8,6 @@ G_BEGIN_DECLS
 
 typedef void (*UpdateFunction) (gpointer);
 
-/* TRUE if string is NULL or the first character is '\0' */
-#define		string_empty(s)		((s)==NULL||((char *)(s))[0]=='\0')
-
 #define		sure_string(s)		((const char *)((s)!=NULL?(s):""))
 
 void            panel_util_launch_from_key_file (GKeyFile                *keyfile,

@@ -19,6 +19,8 @@
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
 
+#include <libpanel-util/panel-glib.h>
+
 #include "panel.h"
 
 #include "applet.h"
@@ -463,7 +465,8 @@ drop_url (PanelWidget *panel,
 		return FALSE;
 
 	netscape_url = g_strsplit (url, "\n", 2);
-	if (!netscape_url || string_empty (netscape_url[NETSCAPE_URL_URL])) {
+	if (!netscape_url ||
+	    PANEL_GLIB_STR_EMPTY (netscape_url[NETSCAPE_URL_URL])) {
 		g_strfreev (netscape_url);
 		return FALSE;
 	}
@@ -471,7 +474,7 @@ drop_url (PanelWidget *panel,
 	comment = g_strdup_printf (_("Open URL: %s"),
 				   netscape_url[NETSCAPE_URL_URL]);
 
-	if (string_empty (netscape_url[NETSCAPE_URL_NAME]))
+	if (PANEL_GLIB_STR_EMPTY (netscape_url[NETSCAPE_URL_NAME]))
 		name = netscape_url[NETSCAPE_URL_URL];
 	else
 		name = netscape_url[NETSCAPE_URL_NAME];

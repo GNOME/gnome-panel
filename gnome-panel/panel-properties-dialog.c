@@ -31,6 +31,8 @@
 #include <glib/gi18n.h>
 #include <libgnomeui/gnome-icon-entry.h>
 
+#include <libpanel-util/panel-glib.h>
+
 #include "nothing.h"
 #include "panel-profile.h"
 #include "panel-gconf.h"
@@ -462,7 +464,7 @@ panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 
 	image = panel_profile_get_background_image (dialog->toplevel);
 
-	if (string_empty (image))
+	if (PANEL_GLIB_STR_EMPTY (image))
 		gtk_file_chooser_unselect_all (GTK_FILE_CHOOSER (dialog->image_chooser));
 	else
 		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog->image_chooser),
@@ -841,9 +843,10 @@ panel_properties_dialog_update_background_image (PanelPropertiesDialog *dialog,
 	text = gconf_value_get_string (value);
 	old_text = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->image_chooser));
 
-	if (string_empty (text) && old_text)
+	if (PANEL_GLIB_STR_EMPTY (text) && old_text)
 		gtk_file_chooser_unselect_all (GTK_FILE_CHOOSER (dialog->image_chooser));
-	else if (!string_empty (text) && (!old_text || strcmp (text, old_text)))
+	else if (!PANEL_GLIB_STR_EMPTY (text) &&
+		 (!old_text || strcmp (text, old_text)))
 		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog->image_chooser),
 					       text);
 

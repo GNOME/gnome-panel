@@ -28,6 +28,7 @@
 #include <libgnome/gnome-util.h>
 #include <libgnomeui/gnome-help.h>
 
+#include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
 
 #include "applet.h"
@@ -1237,7 +1238,7 @@ panel_util_get_file_display_for_common_files (GFile *file)
 		gconf_name = gconf_client_get_string (panel_gconf_get_client (),
 						      HOME_NAME_KEY,
 						      NULL);
-		if (string_empty (gconf_name)) {
+		if (PANEL_GLIB_STR_EMPTY (gconf_name)) {
 			g_free (gconf_name);
 			return g_strdup (_("Home Folder"));
 		} else {
@@ -1542,7 +1543,7 @@ panel_util_set_tooltip_text (GtkWidget  *widget,
 					      panel_util_query_tooltip_cb,
 					      NULL);
 
-	if (string_empty (text)) {
+	if (PANEL_GLIB_STR_EMPTY (text)) {
 		g_object_set (widget, "has-tooltip", FALSE, NULL);
 		return;
 	}
