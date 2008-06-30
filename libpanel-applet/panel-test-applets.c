@@ -17,7 +17,7 @@
 
 #include "panel-applet.h"
 
-void on_execute_button_clicked (GtkButton *button, gpointer dummy);
+G_GNUC_UNUSED void on_execute_button_clicked (GtkButton *button, gpointer dummy);
 
 static GtkWidget *win = NULL;
 static GtkWidget *applet_combo = NULL;

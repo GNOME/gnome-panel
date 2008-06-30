@@ -83,7 +83,7 @@ panel_applet_shell_init (PanelAppletShell *shell)
 BONOBO_TYPE_FUNC_FULL (PanelAppletShell,
 		       GNOME_Vertigo_PanelAppletShell,
 		       BONOBO_OBJECT_TYPE,
-		       panel_applet_shell);
+		       panel_applet_shell)
 
 void
 panel_applet_shell_construct (PanelAppletShell *shell,
