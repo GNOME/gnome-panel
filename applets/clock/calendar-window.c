@@ -388,6 +388,8 @@ is_appointment (GtkTreeModel *model,
 		return (g_ascii_strcasecmp (uri, "file")   == 0 ||
 			g_ascii_strcasecmp (uri, "webcal") == 0 ||
 			g_ascii_strcasecmp (uri, "caldav") == 0 ||
+			g_ascii_strcasecmp (uri, "exchange")  == 0 ||
+			g_ascii_strcasecmp (uri, "groupwise") == 0 ||
 			g_ascii_strcasecmp (uri, "google") == 0);
 	return FALSE;
 }
