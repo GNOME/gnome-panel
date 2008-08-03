@@ -147,7 +147,7 @@ panel_multiscreen_x (GdkScreen *screen,
 	n_screen = gdk_screen_get_number (screen);
 
 	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
-	g_return_val_if_fail (monitor >= 0 || monitor < monitors [n_screen], 0);
+	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
 
 	return geometries [n_screen][monitor].x;
 }
@@ -161,7 +161,7 @@ panel_multiscreen_y (GdkScreen *screen,
 	n_screen = gdk_screen_get_number (screen);
 
 	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
-	g_return_val_if_fail (monitor >= 0 || monitor < monitors [n_screen], 0);
+	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
 
 	return geometries [n_screen][monitor].y;
 }
@@ -175,7 +175,7 @@ panel_multiscreen_width (GdkScreen *screen,
 	n_screen = gdk_screen_get_number (screen);
 
 	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
-	g_return_val_if_fail (monitor >= 0 || monitor < monitors [n_screen], 0);
+	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
 
 	return geometries [n_screen][monitor].width;
 }
@@ -189,7 +189,7 @@ panel_multiscreen_height (GdkScreen *screen,
 	n_screen = gdk_screen_get_number (screen);
 
 	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
-	g_return_val_if_fail (monitor >= 0 || monitor < monitors [n_screen], 0);
+	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
 
 	return geometries [n_screen][monitor].height;
 }
@@ -253,7 +253,7 @@ panel_multiscreen_is_at_visible_extreme (GdkScreen *screen,
 	*bottommost = TRUE;
 
 	g_return_if_fail (n_screen >= 0 && n_screen < screens);
-	g_return_if_fail (n_monitor >= 0 || n_monitor < monitors [n_screen]);
+	g_return_if_fail (n_monitor >= 0 && n_monitor < monitors [n_screen]);
 
 	get_monitor_bounds (n_screen, n_monitor, &monitor);
 	
