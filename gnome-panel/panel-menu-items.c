@@ -50,7 +50,6 @@
 #include "panel-globals.h"
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
-#include "panel-mount-operation.h"
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
 #include "panel-util.h"
@@ -626,9 +625,9 @@ panel_menu_item_mount_volume (GtkWidget *menuitem,
 
 	mount_data = g_slice_new (PanelVolumeMountData);
 	mount_data->screen = menuitem_to_screen (menuitem);
-	/*FIXME: kill PanelMountOperation when we can depend on newer GTK+ that
-	 * will have the same feature */
-	mount_data->mount_op = panel_mount_operation_new (NULL);
+	mount_data->mount_op = gtk_mount_operation_new (NULL);
+	gtk_mount_operation_set_screen (GTK_MOUNT_OPERATION (mount_data->mount_op),
+					mount_data->screen);
 
 	g_volume_mount (volume, G_MOUNT_MOUNT_NONE, mount_data->mount_op, NULL,
 			volume_mount_cb, mount_data);

@@ -98,7 +98,6 @@ panel_sources =			\
 	panel-lockdown.c	\
 	panel-addto.c		\
 	panel-ditem-editor.c	\
-	panel-mount-operation.c	\
 	$(NULL)
 
 panel_headers =			\
@@ -146,7 +145,6 @@ panel_headers =			\
 	panel-addto.h		\
 	panel-ditem-editor.h	\
 	panel-icon-names.h	\
-	panel-mount-operation.h	\
 	$(NULL)
 
 gnome_panel_SOURCES =			\
