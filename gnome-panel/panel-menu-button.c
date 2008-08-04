@@ -31,6 +31,8 @@
 
 #include <gmenu-tree.h>
 
+#include <libpanel-util/panel-error.h>
+
 #include "applet.h"
 #include "panel-widget.h"
 #include "panel-util.h"

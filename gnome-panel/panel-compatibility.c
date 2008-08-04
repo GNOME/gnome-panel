@@ -25,6 +25,8 @@
 
 #include "string.h"
 
+#include <libpanel-util/panel-glib.h>
+
 #include "panel-compatibility.h"
 
 #include "panel-profile.h"
@@ -1050,17 +1052,12 @@ panel_compatibility_migrate_applications_scheme (GConfClient *client,
 	    !strncmp (location, "all-preferences:", strlen ("all-preferences:")) ||
 	    !strncmp (location, "system-settings:", strlen ("system-settings:")) ||
 	    !strncmp (location, "server-settings:", strlen ("server-settings:"))) {
-		char *buffer;
 		char *basename;
 		char *new_location;
 
 		basename = g_path_get_basename (location);
-
-		buffer = g_strconcat ("applications/", basename, NULL);
+		new_location = panel_g_lookup_in_applications_dirs (basename);
 		g_free (basename);
-
-		new_location = panel_lookup_in_data_dirs (buffer);
-		g_free (buffer);
 
 		if (new_location != NULL) {
 			gconf_client_set_string (client, key,

@@ -34,6 +34,8 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 
+#include <libpanel-util/panel-error.h>
+
 #include "nothing.h"
 #include "panel-util.h"
 #include "panel.h"

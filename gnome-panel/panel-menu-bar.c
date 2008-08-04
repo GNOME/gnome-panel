@@ -31,6 +31,8 @@
 #include <string.h>
 #include <glib/gi18n.h>
 
+#include <libpanel-util/panel-error.h>
+
 #include "panel-util.h"
 #include "panel-background.h"
 #include "panel-action-button.h"

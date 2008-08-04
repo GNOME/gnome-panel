@@ -1131,10 +1131,10 @@ panel_addto_filter_func (GtkTreeModel *model,
 	    gtk_tree_store_iter_depth (GTK_TREE_STORE (model), iter) == 0)
 		return TRUE;
 
-	return (panel_util_utf8_strstrcase (data->name,
-					    dialog->search_text) != NULL ||
-	        panel_util_utf8_strstrcase (data->description,
-					    dialog->search_text) != NULL);
+	return (panel_g_utf8_strstrcase (data->name,
+					 dialog->search_text) != NULL ||
+	        panel_g_utf8_strstrcase (data->description,
+					 dialog->search_text) != NULL);
 }
 
 static void

@@ -28,6 +28,8 @@
 #include <string.h>
 #include <gtk/gtk.h>
 
+#include <libpanel-util/panel-error.h>
+
 #include "panel-shell.h"
 #include "panel-session.h"
 #include "panel-util.h"

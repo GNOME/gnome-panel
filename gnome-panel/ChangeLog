@@ -1,3 +1,52 @@
+2008-08-04  Vincent Untz  <vuntz@gnome.org>
+
+	* libpanel-util/Makefile.am: add new files
+	* libpanel-util/panel-error.[ch]: new, moved from panel-util.c
+	* libpanel-util/panel-glib.[ch]: moved some functions from panel-util.c
+	here and rename them: panel_g_lookup_in_data_dirs(),
+	panel_g_utf8_strstrcase()
+	also add panel_g_lookup_in_applications_dirs
+	* libpanel-util/panel-show.[ch]: new, to ease showing of URIs
+
+	* panel-util.[ch]:
+	(panel_error_dialog): moved to libpanel-util/panel-error.c
+	(panel_ensure_dir): use g_mkdir()
+	(panel_lookup_in_data_dirs): moved to libpanel-util/panel-error.c
+	(panel_util_utf8_strstrcase): ditto
+	(panel_util_gdk_pixbuf_load_from_stream): kill because we use GTK+ 2.13
+	now
+	(panel_util_get_pixbuf_from_g_loadable_icon): use
+	gdk_pixbuf_new_from_stream()
+
+	* launcher.c: (launch_url): simply call panel_show_uri()
+	(create_launcher): use panel_g_lookup_in_applications_dirs()
+	* panel-addto.c: (panel_addto_filter_func): small update
+	(panel_compatibility_migrate_applications_scheme): use
+	panel_g_lookup_in_applications_dirs()
+	* panel-menu-items.c: (activate_uri_on_screen): simply use
+	panel_show_uri()
+	(activate_uri): fix parameter name
+	(activate_path): new, to change a path into a uri before
+	activate_uri_on_screen()
+	(activate_home_uri): call activate_path()
+	(activate_desktop_uri): ditto
+	(volume_mount_cb): s/path/uri
+	* panel-recent.c: (show_uri): simply use
+	panel_show_uri_force_mime_type()
+	(recent_documents_activate_cb): add a comment
+	* panel-run-dialog.c: (panel_run_dialog_show_url): kill
+	(panel_run_dialog_execute): use panel_show_uri()
+	(panel_run_dialog_find_command_idle): updated
+
+	* gnome-desktop-item-edit.c: #include update
+	* panel-action-button.c: ditto
+	* panel-compatibility.c: ditto
+	* panel-context-menu.c: ditto
+	* panel-menu-button.c: ditto
+	* panel-menu-bar.c:  ditto
+	* panel-properties-dialog.c: ditto
+	* panel-shell.c: ditto
+
 2008-08-03  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-menu-items.c: (panel_menu_item_mount_volume): use

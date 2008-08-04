@@ -21,11 +21,12 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <libgnome/gnome-util.h>
-#include <libgnomeui/gnome-url.h>
 #include <gdk/gdkx.h>
 
+#include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
+#include <libpanel-util/panel-show.h>
 
 #include "launcher.h"
 
@@ -154,7 +155,6 @@ static void
 launch_url (Launcher *launcher)
 {
 	char *url;
-	GError *error = NULL;
 	GdkScreen *screen;
 
 	g_return_if_fail (launcher != NULL);
@@ -177,21 +177,7 @@ launch_url (Launcher *launcher)
 		return;
 	}
 
-	gnome_url_show_on_screen (url, screen, &error);
-
-	if (error) {
-		GtkWidget *error_dialog;
-		char      *primary;
-	
-		primary = g_strdup_printf (_("Could not show '%s'"), url);
-		error_dialog = panel_error_dialog (NULL, screen,
-						   "cannot_show_url_dialog",
-						   TRUE,
-						   primary, error->message);
-		g_free (primary);
-		launcher_register_error_dialog (launcher, error_dialog);
-		g_clear_error (&error);
-	}
+	panel_show_uri (screen, url, gtk_get_current_event_time (), NULL);
 
 	g_free (url);
 }
@@ -516,12 +502,8 @@ create_launcher (const char *location)
 		path = panel_make_full_path (NULL, location);
 
 		if (!g_file_test (path, G_FILE_TEST_EXISTS)) {
-			char *buffer;
-
 			g_free (path);
-			buffer = g_strconcat ("applications/", location, NULL);
-			path = panel_lookup_in_data_dirs (buffer);
-			g_free (buffer);
+			path = panel_g_lookup_in_applications_dirs (location);
 			/* it's important to keep the full path if the desktop
 			 * file comes from a data dir: when the user will edit
 			 * it, we'll want to save it in PANEL_LAUNCHERS_PATH

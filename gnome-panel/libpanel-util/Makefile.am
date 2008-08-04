@@ -24,6 +24,9 @@ libpanel_util_la_SOURCES=	\
 	panel-cleanup.h			\
 	panel-dbus-service.c		\
 	panel-dbus-service.h		\
+	panel-error.c			\
+	panel-error.h			\
+	panel-glib.c			\
 	panel-glib.h			\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
@@ -31,4 +34,6 @@ libpanel_util_la_SOURCES=	\
 	panel-power-manager.h		\
 	panel-session-manager.c		\
 	panel-session-manager.h		\
+	panel-show.c			\
+	panel-show.h			\
 	$(NULL)

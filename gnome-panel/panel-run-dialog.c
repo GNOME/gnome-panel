@@ -44,11 +44,13 @@
 #include <libgnome/gnome-exec.h>
 #include <libgnome/gnome-util.h>
 #include <libgnomeui/gnome-entry.h>
-#include <libgnomeui/gnome-url.h>
 #include <gconf/gconf-client.h>
 #include <gmenu-tree.h>
 
+#include <libpanel-util/panel-error.h>
+#include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
+#include <libpanel-util/panel-show.h>
 
 #include "nothing.h"
 #include "panel-gconf.h"
@@ -336,34 +338,6 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	return result;
 }
 
-static gboolean
-panel_run_dialog_show_url (PanelRunDialog *dialog,
-	                   const char     *url,
-	                   const char     *escaped)
-{
-	GError    *error = NULL;
-	GdkScreen *screen;
-	
-	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
-
-	gnome_url_show_on_screen (url, screen, &error);
-	if (error) {
-		char *primary;
-
-		primary = g_strdup_printf (_("Could not open location '%s'"),
-					   escaped);
-		panel_error_dialog (GTK_WINDOW (dialog->run_dialog), NULL,
-				    "cannot_show_url", TRUE,
-				    primary, error->message);
-		g_free (primary);
-
-		g_error_free (error);
-		return FALSE;
-	}
-	
-	return TRUE;
-}
-
 static void
 panel_run_dialog_execute (PanelRunDialog *dialog)
 {
@@ -434,8 +408,13 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		 * parameter expansion and other magic for us. */
 		result = panel_run_dialog_launch_command (dialog, disk, escaped);
 	
-	if (!result)
-		result = panel_run_dialog_show_url (dialog, url, escaped);
+	if (!result) {
+		GdkScreen *screen;
+		
+		screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
+		result = panel_show_uri (screen, url,
+					 gtk_get_current_event_time (), NULL);
+	}
 		
 	if (result) {
 		/* only save working commands in history */
@@ -655,9 +634,9 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 					    &iter,
 					    COLUMN_VISIBLE, TRUE,
 					    -1);
-		} else if (panel_util_utf8_strstrcase (exec, text) != NULL ||
-			   panel_util_utf8_strstrcase (name, text) != NULL ||
-			   panel_util_utf8_strstrcase (comment, text) != NULL) {
+		} else if (panel_g_utf8_strstrcase (exec, text) != NULL ||
+			   panel_g_utf8_strstrcase (name, text) != NULL ||
+			   panel_g_utf8_strstrcase (comment, text) != NULL) {
 			gtk_list_store_set (dialog->program_list_store,
 					    &iter,
 					    COLUMN_VISIBLE, TRUE,

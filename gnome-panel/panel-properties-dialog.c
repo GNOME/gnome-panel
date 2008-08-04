@@ -31,6 +31,7 @@
 #include <glib/gi18n.h>
 #include <libgnomeui/gnome-icon-entry.h>
 
+#include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 
 #include "nothing.h"

@@ -39,11 +39,10 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
-#include <libgnome/gnome-url.h>
-#include <libgnomeui/gnome-url.h>
-
+#include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
+#include <libpanel-util/panel-show.h>
 
 #include "menu.h"
 #include "panel-action-button.h"
@@ -99,71 +98,43 @@ struct _PanelDesktopMenuItemPrivate {
 };
 
 static void
-activate_uri_on_screen (const char *path,
+activate_uri_on_screen (const char *uri,
 			GdkScreen  *screen)
 {
-	GError    *error = NULL;
-	GFile     *file;
-	char      *escaped;
-	char      *scheme;
-	char      *url;
-
-	scheme = g_uri_parse_scheme (path);
-	if (scheme) {
-		url = g_strdup (path);
-		g_free (scheme);
-	} else {
-		file = g_file_new_for_path (path);
-		url = g_file_get_uri (file);
-		g_object_unref (file);
-	}
-	
-	if (g_str_has_prefix (url, "x-nautilus-search:")) {
-		//FIXME: this is ugly...
-		char *command;
-
-		command = g_strdup_printf ("nautilus --no-desktop %s", url);
-		gdk_spawn_command_line_on_screen (screen, command, &error);
-	} else
-		gnome_url_show_on_screen (url, screen, &error);
-
-	if (error != NULL) {
-		if (error->code != GNOME_URL_ERROR_CANCELLED) {
-			char *primary;
-			escaped = g_markup_escape_text (url, -1);
-			primary = g_strdup_printf (_("Could not open location '%s'"),
-						   escaped);
-			g_free (escaped);
-			panel_error_dialog (NULL, screen,
-					    "cannot_show_url", TRUE,
-					    primary, error->message);
-			g_free (primary);
-		}
-		g_error_free (error);
-	}
-	g_free (url);
+	panel_show_uri (screen, uri, gtk_get_current_event_time (), NULL);
 }
 
 static void
 activate_uri (GtkWidget  *menuitem,
-	      const char *path)
+	      const char *uri)
 {
-	activate_uri_on_screen (path, menuitem_to_screen (menuitem));
+	activate_uri_on_screen (uri, menuitem_to_screen (menuitem));
+}
+
+static void
+activate_path (GtkWidget  *menuitem,
+	       const char *path)
+{
+	char *uri;
+
+	uri = g_filename_to_uri (path, NULL, NULL);
+	activate_uri_on_screen (uri, menuitem_to_screen (menuitem));
+	g_free (uri);
 }
 
 static void
 activate_home_uri (GtkWidget *menuitem,
 		   gpointer   data)
 {
-	activate_uri (menuitem, g_get_home_dir ());
+	activate_path (menuitem, g_get_home_dir ());
 }
 
 static void
 activate_desktop_uri (GtkWidget *menuitem,
 		      gpointer   data)
 {
-	activate_uri (menuitem,
-		      g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
+	activate_path (menuitem,
+		       g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
 }
  
 static void
@@ -602,15 +573,15 @@ volume_mount_cb (GObject      *source_object,
 	} else {
 		GMount *mount;
 		GFile  *root;
-		char   *rootpath;
+		char   *rooturi;
 
 		mount = g_volume_get_mount (G_VOLUME (source_object));
 		root = g_mount_get_root (mount);
-		rootpath = g_file_get_uri (root);
-		activate_uri_on_screen (rootpath, mount_data->screen);
+		rooturi = g_file_get_uri (root);
+		activate_uri_on_screen (rooturi, mount_data->screen);
 		g_object_unref (mount);
 		g_object_unref (root);
-		g_free (rootpath);
+		g_free (rooturi);
 	}
 
 	g_object_unref (mount_data->mount_op);

@@ -43,13 +43,6 @@ GSList *panel_g_slist_make_unique (GSList       *list,
 				   GCompareFunc  compare,
 				   gboolean      free_data);
 
-GtkWidget      *panel_error_dialog      (GtkWindow  *parent,
-					 GdkScreen  *screen,
-					 const char *class,
-					 gboolean    auto_destroy,
-					 const char *primary_text,
-					 const char *secondary_text);
-
 int		panel_find_applet_index	(GtkWidget *widget);
 
 void		panel_push_window_busy	(GtkWidget *window);
@@ -82,10 +75,6 @@ char *panel_make_unique_desktop_path_from_name (const char *dir,
 						const char *name);
 char *panel_make_unique_desktop_uri (const char *dir,
 				     const char *source);
-char *panel_lookup_in_data_dirs (const char *basename);
-
-const char *panel_util_utf8_strstrcase (const char *haystack,
-					const char *needle);
 
 GdkPixbuf *panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
 					       int            width,

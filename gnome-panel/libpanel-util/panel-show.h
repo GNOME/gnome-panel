@@ -1,5 +1,5 @@
 /*
- * panel-glib.h: various small extensions to glib
+ * panel-show.h: a helper around gtk_show_uri
  *
  * Copyright (C) 2008 Novell, Inc.
  *
@@ -22,21 +22,24 @@
  *	Vincent Untz <vuntz@gnome.org>
  */
 
-#ifndef PANEL_GLIB_H
-#define PANEL_GLIB_H
+#ifndef PANEL_SHOW_H
+#define PANEL_SHOW_H
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-#define PANEL_GLIB_STR_EMPTY(x) ((x) == NULL || (x)[0] == '\0')
+gboolean panel_show_uri (GdkScreen    *screen,
+			 const gchar  *uri,
+			 guint32       timestamp,
+			 GError      **error);
 
-char       *panel_g_lookup_in_data_dirs         (const char *basename);
-char       *panel_g_lookup_in_applications_dirs (const char *basename);
-
-const char *panel_g_utf8_strstrcase             (const char *haystack,
-						 const char *needle);
+gboolean panel_show_uri_force_mime_type (GdkScreen    *screen,
+					 const gchar  *uri,
+					 const gchar  *mime_type,
+					 guint32       timestamp,
+					 GError      **error);
 
 G_END_DECLS
 
-#endif /* PANEL_GLIB_H */
+#endif /* PANEL_SHOW_H */

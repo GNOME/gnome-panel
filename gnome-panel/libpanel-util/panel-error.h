@@ -1,7 +1,10 @@
 /*
- * panel-glib.h: various small extensions to glib
+ * panel-error.h: an easy-to-use error dialog
  *
  * Copyright (C) 2008 Novell, Inc.
+ *
+ * Originally based on code from panel-util.h (there was no relevant copyright
+ * header at the time).
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -22,21 +25,21 @@
  *	Vincent Untz <vuntz@gnome.org>
  */
 
-#ifndef PANEL_GLIB_H
-#define PANEL_GLIB_H
+#ifndef PANEL_ERROR_H
+#define PANEL_ERROR_H
 
 #include <glib.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-#define PANEL_GLIB_STR_EMPTY(x) ((x) == NULL || (x)[0] == '\0')
-
-char       *panel_g_lookup_in_data_dirs         (const char *basename);
-char       *panel_g_lookup_in_applications_dirs (const char *basename);
-
-const char *panel_g_utf8_strstrcase             (const char *haystack,
-						 const char *needle);
+GtkWidget *panel_error_dialog (GtkWindow  *parent,
+			       GdkScreen  *screen,
+			       const char *dialog_class,
+			       gboolean    auto_destroy,
+			       const char *primary_text,
+			       const char *secondary_text);
 
 G_END_DECLS
 
-#endif /* PANEL_GLIB_H */
+#endif /* PANEL_ERROR_H */

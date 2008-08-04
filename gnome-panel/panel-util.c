@@ -21,13 +21,17 @@
 #include <unistd.h>
 #include <sys/types.h>
 
+#include <glib.h>
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
 #include <gio/gio.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <libgnome/gnome-desktop-item.h>
 #include <libgnome/gnome-util.h>
 #include <libgnomeui/gnome-help.h>
 
+#include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
 
@@ -354,62 +358,6 @@ panel_g_slist_make_unique (GSList       *list,
 	return list;
 }
 
-GtkWidget *
-panel_error_dialog (GtkWindow  *parent,
-		    GdkScreen  *screen,
-		    const char *class,
-		    gboolean    auto_destroy,
-		    const char *primary_text,
-		    const char *secondary_text)
-{
-	GtkWidget *dialog;
-	char      *freeme;
-
-	freeme = NULL;
-
-	if (primary_text == NULL) {
-		g_warning ("NULL dialog");
-		 /* No need to translate this, this should NEVER happen */
-		freeme = g_strdup_printf ("Error with displaying error "
-					  "for dialog of class %s", class);
-		primary_text = freeme;
-	}
-
-	dialog = gtk_message_dialog_new (parent, 0, GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_OK, "%s", primary_text);
-	if (secondary_text != NULL)
-		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-							  "%s", secondary_text);
-
-	gtk_widget_add_events (dialog, GDK_KEY_PRESS_MASK);
-	g_signal_connect (dialog, "event",
-			  G_CALLBACK (panel_dialog_window_event), NULL);
-
-	if (screen)
-		gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-
-	if (!parent) {
-		gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
-		/* FIXME: We need a title in this case, but we don't know what
-		 * the format should be. Let's put something simple until
-		 * the following bug gets fixed:
-		 * http://bugzilla.gnome.org/show_bug.cgi?id=165132 */
-		gtk_window_set_title (GTK_WINDOW (dialog), _("Error"));
-	}
-
-	gtk_widget_show_all (dialog);
-
-	if (auto_destroy)
-		g_signal_connect_swapped (G_OBJECT (dialog), "response",
-					  G_CALLBACK (gtk_widget_destroy),
-					  G_OBJECT (dialog));
-
-	if (freeme)
-		g_free (freeme);
-
-	return dialog;
-}
-
 int
 panel_find_applet_index (GtkWidget *widget)
 {
@@ -502,7 +450,7 @@ panel_ensure_dir (const char *dirname)
 
 	while (p != NULL) {
 		*p = '\0';
-		if (mkdir (parsed, 0700) != 0 &&
+		if (g_mkdir (parsed, 0700) != 0 &&
 		    errno != EEXIST && errno != ENOSYS) {
 			g_free (parsed);
 			return FALSE;
@@ -511,7 +459,7 @@ panel_ensure_dir (const char *dirname)
 		p = strchr (p+1, '/');
 	}
 
-	if (mkdir (parsed, 0700) != 0 &&
+	if (g_mkdir (parsed, 0700) != 0 &&
 	    errno != EEXIST && errno != ENOSYS) {
 		g_free (parsed);
 		return FALSE;
@@ -891,99 +839,6 @@ panel_make_unique_desktop_uri (const char *dir,
 	return uri;
 }
 
-static char *
-lookup_in_data_dir (const char *basename,
-                    const char *data_dir)
-{
-	char *path;
-
-	path = g_build_filename (data_dir, basename, NULL);
-	if (!g_file_test (path, G_FILE_TEST_EXISTS)) {
-		g_free (path);
-		return NULL;
-	}
-
-	return path;
-}
-
-char *
-panel_lookup_in_data_dirs (const char *basename)
-{
-	const char * const *system_data_dirs;
-	const char          *user_data_dir;
-	char                *retval;
-	int                  i;
-
-	user_data_dir    = g_get_user_data_dir ();
-	system_data_dirs = g_get_system_data_dirs ();
-
-	if ((retval = lookup_in_data_dir (basename, user_data_dir)))
-		return retval;
-
-	for (i = 0; system_data_dirs[i]; i++)
-		if ((retval = lookup_in_data_dir (basename, system_data_dirs[i])))
-			return retval;
-
-	return NULL;
-}
-
-/* Stolen from evolution-data-server/libedataserver/e-util.c:
- * e_util_unicode_get_utf8()
- * e_util_utf8_strstrcase() */
-static char *
-panel_util_unicode_get_utf8 (const char *text, gunichar *out)
-{
-	*out = g_utf8_get_char (text);
-	return (*out == (gunichar)-1) ? NULL : g_utf8_next_char (text);
-}
-
-const char *
-panel_util_utf8_strstrcase (const char *haystack, const char *needle)
-{
-	gunichar *nuni;
-	gunichar unival;
-	gint nlen;
-	const char *o, *p;
-
-	if (haystack == NULL) return NULL;
-	if (needle == NULL) return NULL;
-	if (strlen (needle) == 0) return haystack;
-	if (strlen (haystack) == 0) return NULL;
-
-	nuni = g_alloca (sizeof (gunichar) * strlen (needle));
-
-	nlen = 0;
-	for (p = panel_util_unicode_get_utf8 (needle, &unival); p && unival; p = panel_util_unicode_get_utf8 (p, &unival)) {
-		nuni[nlen++] = g_unichar_tolower (unival);
-	}
-	/* NULL means there was illegal utf-8 sequence */
-	if (!p) return NULL;
-
-	o = haystack;
-	for (p = panel_util_unicode_get_utf8 (o, &unival); p && unival; p = panel_util_unicode_get_utf8 (p, &unival)) {
-		gint sc;
-		sc = g_unichar_tolower (unival);
-		/* We have valid stripped char */
-		if (sc == nuni[0]) {
-			const char *q = p;
-			gint npos = 1;
-			while (npos < nlen) {
-				q = panel_util_unicode_get_utf8 (q, &unival);
-				if (!q || !unival) return NULL;
-				sc = g_unichar_tolower (unival);
-				if (sc != nuni[npos]) break;
-				npos++;
-			}
-			if (npos == nlen) {
-				return o;
-			}
-		}
-		o = p;
-	}
-
-	return NULL;
-}
-
 GdkPixbuf *
 panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
 				    int            width,
@@ -1105,57 +960,6 @@ panel_util_get_icon_name_from_g_icon (GIcon *gicon)
 	return NULL;
 }
 
-/* TODO: kill this when we can depend on GTK+ 2.14 */
-static GdkPixbuf *
-panel_util_gdk_pixbuf_load_from_stream (GInputStream  *stream)
-{
-#define LOAD_BUFFER_SIZE 65536
-	unsigned char buffer[LOAD_BUFFER_SIZE];
-	gssize bytes_read;
-	GdkPixbufLoader *loader;
-	GdkPixbuf *pixbuf;
-	gboolean got_eos;
-	
-
-	g_return_val_if_fail (stream != NULL, NULL);
-
-	got_eos = FALSE;
-	loader = gdk_pixbuf_loader_new ();
-	while (1) {
-		bytes_read = g_input_stream_read (stream, buffer, sizeof (buffer),
-						  NULL, NULL);
-		
-		if (bytes_read < 0) {
-			break;
-		}
-		if (bytes_read == 0) {
-			got_eos = TRUE;
-			break;
-		}
-		if (!gdk_pixbuf_loader_write (loader,
-					      buffer,
-					      bytes_read,
-					      NULL)) {
-			break;
-		}
-	}
-
-	g_input_stream_close (stream, NULL, NULL);
-	gdk_pixbuf_loader_close (loader, NULL);
-
-	pixbuf = NULL;
-	if (got_eos) {
-		pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
-		if (pixbuf != NULL) {
-			g_object_ref (pixbuf);
-		}
-	}
-
-	g_object_unref (loader);
-
-	return pixbuf;
-}
-
 GdkPixbuf *
 panel_util_get_pixbuf_from_g_loadable_icon (GIcon *gicon,
 					    int    size)
@@ -1172,7 +976,7 @@ panel_util_get_pixbuf_from_g_loadable_icon (GIcon *gicon,
 				       size,
 				       NULL, NULL, NULL);
 	if (stream) {
-		pixbuf = panel_util_gdk_pixbuf_load_from_stream (stream);
+		pixbuf = gdk_pixbuf_new_from_stream (stream, NULL, NULL);
 		g_object_unref (stream);
 	}
 

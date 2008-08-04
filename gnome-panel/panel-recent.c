@@ -28,6 +28,10 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+
+#include <libpanel-util/panel-error.h>
+#include <libpanel-util/panel-show.h>
+
 #include "menu.h"
 #include "panel-util.h"
 #include "panel-globals.h"
@@ -40,34 +44,9 @@ static gboolean
 show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 	  GError **error)
 {
-	char **env;
-	GFile *file;
-	GAppInfo *app;
-	GList *uris = NULL;
-	gboolean ret;
-
-	file = g_file_new_for_uri (uri);
-	app = g_app_info_get_default_for_type (mime_type, !g_file_is_native (file));
-	g_object_unref (file);
-
-	if (app == NULL) {
-		g_set_error (error, 0, 0,
-			     _("Could not find a suitable application."));
-		return FALSE;
-	}
-
-	env = panel_make_environment_for_screen (screen, NULL);
-
-	//FIXME: would g_app_info_launch_default_for_uri() be enough?
-	uris = g_list_append (uris, (gpointer)uri);
-	//FIXME: use GdkAppLaunchContext
-	ret = g_app_info_launch_uris (app, uris, NULL, error);
-	g_list_free (uris);
-
-	g_strfreev (env);
-	g_object_unref (app);
-
-	return ret;
+	return panel_show_uri_force_mime_type (screen, uri, mime_type,
+					       gtk_get_current_event_time (),
+					       error);
 }
 
 
@@ -120,7 +99,7 @@ recent_documents_activate_cb (GtkRecentChooser *chooser,
 		g_free (uri_utf8);
 	}
 
-
+	/* we can unref it only after having used the data we fetched from it */
 	gtk_recent_info_unref (recent_info);
 }
 

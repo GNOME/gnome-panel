@@ -5,6 +5,7 @@
 #include <gtk/gtk.h>
 #include <libgnomeui/gnome-ui-init.h>
 
+#include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-keyfile.h>
 
 #include "panel-ditem-editor.h"

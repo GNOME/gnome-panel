@@ -32,6 +32,7 @@
 
 #include <glib/gi18n.h>
 
+#include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-session-manager.h>
 
 #include "applet.h"
