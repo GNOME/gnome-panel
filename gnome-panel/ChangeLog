@@ -1,5 +1,17 @@
 2008-08-04  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-toplevel.c: (panel_toplevel_update_struts): remove the special
+	case for auto-hidden panels. We just update the struts as if they were
+	normal panels, with their current position.
+	This changes a bit the behavior (ie, full-screen windows resize when
+	the panel gets unhidden and then hidden again), but after playing with
+	it, I think the new behavior is actually quite nice. If we revert the
+	change, then we'll have to fix bug #529031 by clamping auto_hide_size,
+	like we do in panel_toplevel_update_auto_hide_position().
+	Fix bug #529031.
+
+2008-08-04  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_make_unique_desktop_path_from_name): go back to
 	NAME_MAX instead of MAXNAMLEN since the former is POSIX and not all OS
 	have MAXNAMLEN either. Since we have to be compatible with all OS out

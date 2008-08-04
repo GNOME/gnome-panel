@@ -1439,9 +1439,6 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 		g_object_notify (G_OBJECT (toplevel), "orientation");
 	}
 
-	if (toplevel->priv->auto_hide && strut > 0)
-		strut = toplevel->priv->auto_hide_size;
-
 	if (strut > 0)
 		geometry_changed = panel_struts_register_strut (toplevel,
 								screen,
