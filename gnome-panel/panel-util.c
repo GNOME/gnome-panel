@@ -758,7 +758,15 @@ panel_make_unique_desktop_path_from_name (const char *dir,
 {
 	int   num = 1;
 	char *path = NULL;
-	char  filename[MAXNAMLEN];
+#ifndef NAME_MAX
+/* sigh: some OS don't have NAME_MAX (which is POSIX). */
+#ifdef MAXNAMLEN
+#define NAME_MAX MAXNAMLEN
+#else
+#define NAME_MAX 255
+#endif
+#endif
+	char  filename[NAME_MAX];
 
 /* g_file_set_contents() use "%s.XXXXXX"
  * FIXME: waiting for http://bugzilla.gnome.org/show_bug.cgi?id=437977 */

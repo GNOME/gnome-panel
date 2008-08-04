@@ -1,5 +1,13 @@
 2008-08-04  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-util.c: (panel_make_unique_desktop_path_from_name): go back to
+	NAME_MAX instead of MAXNAMLEN since the former is POSIX and not all OS
+	have MAXNAMLEN either. Since we have to be compatible with all OS out
+	there, use MAXNAMLEN if NAME_MAX is not defined on the OS.
+	Fix bug #500341.
+
+2008-08-04  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-bar.c: (panel_menu_bar_hide_tooltip_and_focus): renamed
 	from panel_menu_bar_hide_tooltip(), and also unfocus the focused
 	child of the toplevel when opening the menu. This fixes a cosmetic
