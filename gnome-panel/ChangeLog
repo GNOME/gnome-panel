@@ -1,5 +1,14 @@
 2008-08-04  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-menu-bar.c: (panel_menu_bar_hide_tooltip_and_focus): renamed
+	from panel_menu_bar_hide_tooltip(), and also unfocus the focused
+	child of the toplevel when opening the menu. This fixes a cosmetic
+	issue.
+	(panel_menu_bar_setup_tooltip): updated
+	Fix bug #308632.
+
+2008-08-04  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-menu-items.c: (panel_menu_items_append_lock_logout): don't show
 	logout/shutdown if it's locked down. Remove extra separator that got
 	added when screensaver is locked down.

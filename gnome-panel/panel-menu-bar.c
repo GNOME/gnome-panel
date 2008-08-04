@@ -84,9 +84,14 @@ panel_menu_bar_reinit_tooltip (GtkWidget    *widget,
 }
 
 static gboolean
-panel_menu_bar_hide_tooltip (GtkWidget    *widget,
-			     PanelMenuBar *menubar)
+panel_menu_bar_hide_tooltip_and_focus (GtkWidget    *widget,
+				       PanelMenuBar *menubar)
 {
+	/* remove focus that would be drawn on the currently focused child of
+	 * the toplevel. See bug#308632. */
+	gtk_window_set_focus (GTK_WINDOW (menubar->priv->panel->toplevel),
+			      NULL);
+
 	g_object_set (widget, "has-tooltip", FALSE, NULL);
 
 	return FALSE;
@@ -106,15 +111,15 @@ panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 	/* Hide tooltip if a menu is activated */
 	g_signal_connect (menubar->priv->applications_item,
 			  "activate",
-			  G_CALLBACK (panel_menu_bar_hide_tooltip),
+			  G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus),
 			  menubar);
 	g_signal_connect (menubar->priv->places_item,
 			  "activate",
-			  G_CALLBACK (panel_menu_bar_hide_tooltip),
+			  G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus),
 			  menubar);
 	g_signal_connect (menubar->priv->desktop_item,
 			  "activate",
-			  G_CALLBACK (panel_menu_bar_hide_tooltip),
+			  G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus),
 			  menubar);
 
 	/* Reset tooltip when the menu bar is not used */
