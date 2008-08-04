@@ -1,5 +1,18 @@
 2008-08-04  Vincent Untz  <vuntz@gnome.org>
 
+	Mount volumes if needed in panel_show_*
+	Based on patch by Matthias Clasen <mclasen@redhat.com>
+	Fix bug #529243
+
+	* libpanel-util/panel-show.c: (_panel_show_mount_async_callback): new,
+	callback when the mount operation is finished
+	(_panel_show_handle_error): improve code, and handle
+	G_IO_ERROR_NOT_MOUNTED
+	(_panel_app_info_launch_uri): updated
+	(panel_show_uri): ditto
+
+2008-08-04  Vincent Untz  <vuntz@gnome.org>
+
 	* libpanel-util/Makefile.am: add new files
 	* libpanel-util/panel-error.[ch]: new, moved from panel-util.c
 	* libpanel-util/panel-glib.[ch]: moved some functions from panel-util.c

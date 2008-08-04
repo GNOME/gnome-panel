@@ -51,23 +51,97 @@ _panel_show_error_dialog (const gchar *uri,
 	g_free (primary);
 }
 
+typedef struct {
+	GMountOperation *mount_op;
+	GdkScreen *screen;
+} PanelShowMountOperationHandle;
+
 static void
+_panel_show_mount_async_callback (GObject      *source_object,
+				  GAsyncResult *result,
+				  gpointer      user_data)
+{
+	GError *error = NULL;
+	GFile *file;
+	PanelShowMountOperationHandle *handle = user_data;
+
+	file = G_FILE (source_object);
+
+	error = NULL;
+	if (g_file_mount_enclosing_volume_finish (file, result, &error)) {
+		char *uri = g_file_get_uri (file);
+
+		panel_show_uri (handle->screen, uri,
+				gtk_get_current_event_time (), NULL);
+		g_free (uri);
+	} else {
+		if (!g_error_matches (error, G_IO_ERROR,
+				      G_IO_ERROR_PERMISSION_DENIED) &&
+		    !g_error_matches (error, G_IO_ERROR,
+			    	      G_IO_ERROR_FAILED_HANDLED)) {
+			char *uri;
+
+			uri = g_file_get_uri (file);
+			_panel_show_error_dialog (uri, handle->screen,
+						  error->message);
+			g_free (uri);
+		}
+		g_error_free (error);
+	}
+
+	if (handle->mount_op)
+		g_object_unref (handle->mount_op);
+
+	g_slice_free (PanelShowMountOperationHandle, handle);
+}
+
+static gboolean
 _panel_show_handle_error (const gchar  *uri,
 			  GdkScreen    *screen,
 			  GError       *local_error,
 			  GError      **error)
 {
-	g_return_if_fail (local_error != NULL);
+	if (local_error == NULL)
+		return TRUE;
 
-	if (error != NULL)
+	else if (g_error_matches (local_error,
+				  G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
+		g_error_free (local_error);
+		return TRUE;
+	}
+
+	else if (g_error_matches (local_error,
+				  G_IO_ERROR, G_IO_ERROR_NOT_MOUNTED)) {
+		GFile *file;
+		PanelShowMountOperationHandle *handle;
+
+		handle = g_slice_new (PanelShowMountOperationHandle);
+		file = g_file_new_for_uri (uri);
+
+		/* If it's not mounted, try to mount it ourselves */
+		handle->mount_op = gtk_mount_operation_new (NULL);
+		gtk_mount_operation_set_screen (GTK_MOUNT_OPERATION (handle->mount_op),
+						screen);
+		handle->screen = screen;
+
+		g_file_mount_enclosing_volume (file, G_MOUNT_MOUNT_NONE,
+					       handle->mount_op, NULL,
+					       _panel_show_mount_async_callback,
+					       handle);
+		g_object_unref (file);
+
+		return TRUE;
+	}
+
+	else if (error != NULL)
 		g_propagate_error (error, local_error);
 
-	else if (local_error != NULL) {
-		if (local_error->code != G_IO_ERROR_CANCELLED)
-			_panel_show_error_dialog (uri, screen,
-						  local_error->message);
+	else {
+		_panel_show_error_dialog (uri, screen, local_error->message);
 		g_error_free (local_error);
 	}
+
+	return FALSE;
 }
 
 static gboolean
@@ -95,12 +169,7 @@ _panel_app_info_launch_uri (GAppInfo     *appinfo,
 	g_list_free (uris);
 	g_object_unref (context);
 
-	if (local_error == NULL)
-		return TRUE;
-
-	_panel_show_handle_error (uri, screen, local_error, error);
-
-	return FALSE;
+	return _panel_show_handle_error (uri, screen, local_error, error);
 }
 
 static gboolean
@@ -151,12 +220,7 @@ panel_show_uri (GdkScreen    *screen,
 
 	gtk_show_uri (screen, uri, timestamp, &local_error);
 
-	if (local_error == NULL)
-		return TRUE;
-
-	_panel_show_handle_error (uri, screen, local_error, error);
-
-	return FALSE;
+	return _panel_show_handle_error (uri, screen, local_error, error);
 }
 
 gboolean
