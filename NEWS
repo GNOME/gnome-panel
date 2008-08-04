@@ -1,4 +1,47 @@
 ==============
+Version 2.23.6
+==============
+
+  Panel
+
+	* Fix assertion in multiscreen code (Matthias Clasen)
+	* Use GtkMountOperation instead of custom code (Vincent)
+	* Lots of code cleanup (Vincent)
+	* Use GIO to open URI, including mounting volumes if required (Vincent,
+	  Matthias Clasen))
+	* Improve use of GIO to open recent documents, including startup
+	  notification (Vincent)
+	* Do not show lock/logout/shutdown in the menus if those items are
+	  locked down (Matt Keenan, Vincent)
+	* Fix cosmetic issue when opening the menu where launchers or applets
+	  got the focus drawn (Vincent)
+	* Fix compilation on OS where MAXNAMLEN is not defined (Vincent)
+	* Change behavior of struts for auto-hiding panels: the strut is live
+	  updated and matches what is shown of the panel. This means the size
+	  of a fullscreen window changes when the panel gets hidden/unhidden
+	  (Vincent)
+
+  Misc
+
+	* Require GTK+ 2.13.1 (Vincent)
+	* Explicitly require gio-unix-2.0 (Vincent)
+	* Require libgweather 2.23.6 (Vincent)
+
+  Clock Applet
+
+	* Use new GWeatherLocationEntry and GWeatherTimezoneMenu widgets to
+	  select location/timezone (Dan Winship).
+
+  Docs Translators
+
+	* Florian Ackermann (de)
+
+  Translators
+
+	* Djihed Afifi (ar)
+	* Leonardo Ferreira Fontenelle (pt_BR)
+
+==============
 Version 2.23.5
 ==============
 
