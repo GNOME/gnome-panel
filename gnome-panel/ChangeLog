@@ -1,5 +1,17 @@
 2008-08-04  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-util.c: (panel_lock_screen_action_available),
+	(panel_lock_screen_action): check the lock screen lockdown setting
+	before doing anything. The UI is already blocking the user for locking
+	the screen (by making the widget non-sensitive, eg), but this is extra
+	safety.
+	* gnome-desktop-item-edit.c: update to make it compile because of this
+	change...
+	Based on a patch from Matt Keenan <matt.keenan@sun.com>
+	Part of bug #522453
+
+2008-08-04  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-run-dialog.c: (panel_run_dialog_execute): s/url/uri/
 
 2008-08-04  Vincent Untz  <vuntz@gnome.org>

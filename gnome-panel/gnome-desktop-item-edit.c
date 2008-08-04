@@ -20,6 +20,8 @@ GSList *panel_applet_list_applets (void) { return NULL; }
 GConfClient *panel_gconf_get_client (void) { return NULL; }
 #include "panel-config-global.h"
 gboolean panel_global_config_get_tooltips_enabled (void) { return FALSE; }
+#include "panel-lockdown.h"
+gboolean panel_lockdown_get_disable_lock_screen (void) { return FALSE; }
 
 static int dialogs = 0;
 static gboolean create_new = FALSE;

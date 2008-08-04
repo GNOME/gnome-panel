@@ -43,6 +43,7 @@
 #include "panel-globals.h"
 #include "launcher.h"
 #include "panel-icon-names.h"
+#include "panel-lockdown.h"
 
 static int
 panel_ditem_launch (GnomeDesktopItem  *item,
@@ -672,6 +673,10 @@ panel_lock_screen_action_available (const char *action)
 
 	g_return_val_if_fail (action != NULL, FALSE);
 
+	if (strcmp (action, "prefs") != 0 &&
+	    panel_lockdown_get_disable_lock_screen ())
+		return FALSE;
+
 	command = panel_lock_screen_action_get_command (action);
 	if (command)
 		enabled = TRUE;
@@ -690,6 +695,10 @@ panel_lock_screen_action (GdkScreen  *screen,
 
 	g_return_if_fail (GDK_IS_SCREEN (screen));
 	g_return_if_fail (action != NULL);
+
+	if (strcmp (action, "prefs") != 0 &&
+	    panel_lockdown_get_disable_lock_screen ())
+		return;
 
 	command = panel_lock_screen_action_get_command (action);
 
