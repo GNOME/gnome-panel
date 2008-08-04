@@ -52,6 +52,8 @@
 #include <glade/glade.h>
 #include <libgweather/gweather-prefs.h>
 #include <libgweather/gweather-xml.h>
+#include <libgweather/location-entry.h>
+#include <libgweather/timezone-menu.h>
 
 #include "clock.h"
 
@@ -60,7 +62,6 @@
 #include "clock-location-tile.h"
 #include "clock-map.h"
 #include "clock-utils.h"
-#include "clock-zonetable.h"
 #include "obox.h"
 #include "set-timezone.h"
 #include "system-timezone.h"
@@ -140,10 +141,8 @@ struct _ClockData {
 	GtkWidget *prefs_location_edit_button;
 	GtkWidget *prefs_location_remove_button;
 
-	GtkWidget *location_tree;
-	GtkWidget *find_next_location_button;
-	GtkWidget *find_location_entry;
-	GtkWidget *find_location_ok_button;
+	GWeatherLocationEntry *location_entry;
+        GWeatherTimezoneMenu *zone_combo;
 
 	GtkWidget *time_settings_button;
 	GtkWidget *calendar;
@@ -156,8 +155,6 @@ struct _ClockData {
         GtkWidget *cities_section;
         GtkWidget *map_section;
         GtkWidget *map_widget;
-
-	gulong zone_combo_changed;
 
         /* Window to set the time */
 	GtkWidget *set_time_window;
@@ -194,7 +191,6 @@ struct _ClockData {
 	GtkAllocation      old_allocation;
 
 	SystemTimezone *systz;
-        ClockZoneTable *zones;
 
 	int fixed_width;
 	int fixed_height;
@@ -765,11 +761,6 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 		g_object_unref (cd->systz);
 		cd->systz = NULL;
 	}
-
-        if (cd->zones) {
-                g_object_unref (cd->zones);
-                cd->zones = NULL;
-        }
 
         if (cd->cities_store) {
                 g_object_unref (cd->cities_store);
@@ -2768,8 +2759,6 @@ fill_clock_applet (PanelApplet *applet)
 	g_signal_connect (cd->systz, "changed",
 			  G_CALLBACK (clock_timezone_changed), cd);
 
-        cd->zones = clock_zonetable_new ();
-
         bonobo_ui_component_set_prop (popup_component,
                                       "/commands/ClockConfig",
                                       "hidden", can_set_system_time () ? "0" : "1",
@@ -2807,7 +2796,6 @@ setup_writability_sensitivity (ClockData *clock, GtkWidget *w, GtkWidget *label,
 
 	g_object_unref (G_OBJECT (client));
 }
-#endif
 
 static void
 update_properties_for_format (ClockData   *cd,
@@ -2868,8 +2856,6 @@ update_properties_for_format (ClockData   *cd,
 	}
 }
 
-/* FIXME old clock applet */
-#if 0
 static void
 set_format_cb (GtkComboBox *combo,
 	       ClockData   *cd)
@@ -2963,11 +2949,11 @@ set_custom_format_cb (GtkEntry  *entry,
 static void
 prefs_locations_changed (GtkTreeSelection *selection, ClockData *cd)
 {
-	gint n;
+        gint n;
 
-	n = gtk_tree_selection_count_selected_rows (selection);
-	gtk_widget_set_sensitive (cd->prefs_location_edit_button, n > 0);
-	gtk_widget_set_sensitive (cd->prefs_location_remove_button, n > 0);
+        n = gtk_tree_selection_count_selected_rows (selection);
+        gtk_widget_set_sensitive (cd->prefs_location_edit_button, n > 0);
+        gtk_widget_set_sensitive (cd->prefs_location_remove_button, n > 0);
 }
 
 static gchar *
@@ -3026,32 +3012,35 @@ static void
 run_prefs_edit_save (GtkButton *button, ClockData *cd)
 {
         GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
-        ClockZoneTable *zones = cd->zones;
 
         ClockLocation *loc = g_object_get_data (G_OBJECT (edit_window), "clock-location");
-        GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
-        GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
 
         GtkWidget *lat_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-entry");
         GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
         GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
         GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
 
-        gchar *timezone_l10n = gtk_combo_box_get_active_text (GTK_COMBO_BOX (zone_combo));
-	gchar *weather_code = g_object_get_data (G_OBJECT (edit_window), "weather-code");
+        const gchar *timezone, *weather_code;
+        gchar *name;
 
-        ClockZoneInfo *info = clock_zonetable_get_l10n_zone (zones, timezone_l10n);
-
-        const gchar *name;
+        GWeatherLocation *gloc;
         gfloat lat = 0;
         gfloat lon = 0;
 
-        if (!info) {
+        timezone = gweather_timezone_menu_get_tzid (cd->zone_combo);
+        if (!timezone) {
                 edit_hide (NULL, cd);
                 return;
         }
 
-        name = gtk_entry_get_text (GTK_ENTRY (name_entry));
+        gloc = gweather_location_entry_get_location (cd->location_entry);
+        if (gloc) {
+                name = gweather_location_get_city_name (gloc);
+                weather_code = gweather_location_get_code (gloc);
+        } else {
+                name = gtk_editable_get_chars (GTK_EDITABLE (cd->location_entry), 0, -1);
+                weather_code = NULL;
+        }
 
         sscanf (gtk_entry_get_text (GTK_ENTRY (lat_entry)), "%f", &lat);
         sscanf (gtk_entry_get_text (GTK_ENTRY (lon_entry)), "%f", &lon);
@@ -3065,7 +3054,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
         }
 
         if (loc) {
-                clock_location_set_timezone (loc, clock_zoneinfo_get_name (info));
+                clock_location_set_timezone (loc, timezone);
                 clock_location_set_name (loc, name);
                 clock_location_set_coords (loc, lat, lon);
 		clock_location_set_weather_code (loc, weather_code);
@@ -3074,8 +3063,8 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
 
 		prefs.temperature_unit = cd->temperature_unit;
 		prefs.speed_unit = cd->speed_unit;
-
-                loc = clock_location_new (name, clock_zoneinfo_get_name (info), lat, lon, weather_code, &prefs);
+ 
+                loc = clock_location_new (name, timezone, lat, lon, weather_code, &prefs);
 		/* has the side-effect of setting the current location if
 		 * there's none and this one can be considered as a current one
 		 */
@@ -3083,28 +3072,13 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
 
                 cd->locations = g_list_append (cd->locations, loc);
         }
+        g_free (name);
 
 	/* This will update everything related to locations to take into
 	 * account the new location (via the gconf notification) */
         save_cities_store (cd);
 
         edit_hide (edit_window, cd);
-}
-
-static void
-find_hide (GtkWidget *unused, ClockData *cd)
-{
-        GtkWidget *find_window = glade_xml_get_widget (cd->glade_xml, "find-location-window");
-
-	gtk_widget_hide (find_window);
-}
-
-static gboolean
-find_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
-{
-        find_hide (NULL, cd);
-
-        return TRUE;
 }
 
 static void
@@ -3144,488 +3118,54 @@ update_coords (ClockData *cd, gboolean valid, gfloat lat, gfloat lon)
 	update_coords_helper (lon, lon_entry, lon_combo);
 }
 
-static gint
-revert_sort_zoneinfo_by_l10n_name (gconstpointer a, gconstpointer b)
-{
-        ClockZoneInfo *info_a = CLOCK_ZONEINFO (a);
-        ClockZoneInfo *info_b = CLOCK_ZONEINFO (b);
-
-        const char *name_a = clock_zoneinfo_get_l10n_name (info_a);
-        const char *name_b = clock_zoneinfo_get_l10n_name (info_b);
-
-        return strcmp (name_b, name_a); /* FIXME: should this be g_utf8_collate() ? */
-}
-
 static void
-fill_timezone_combo_from_location (ClockData *cd, GtkWidget *zone_combo, ClockLocation *loc)
+fill_timezone_combo_from_location (ClockData *cd, ClockLocation *loc)
 {
-        ClockZoneTable *zones = cd->zones;
-        GtkTreeModel *model;
-        GtkTreeIter iter;
-
-        int timezone_idx = -1;
-        int i = 0;
-
-        const gchar *loc_timezone = NULL;
-
         if (loc != NULL) {
-                ClockZoneInfo *info;
-
-                loc_timezone = clock_location_get_timezone (loc);
-                info = clock_zonetable_get_zone (zones, loc_timezone);
-
-                if (info) {
-                        loc_timezone = clock_zoneinfo_get_l10n_name (info);
-                }
-        }
-
-        model = gtk_combo_box_get_model (GTK_COMBO_BOX (zone_combo));
-
-	/* FIXME: not clearing the combo means if the list of timezones
-	 * changes, we won't have the right list. But right now, our list
-	 * will never change so it doesn't matter. */
-
-	/* Fill the combo if it's empty, and also remember the item that should
-	 * be selected if we have a location */
-	if (!gtk_tree_model_get_iter_first (model, &iter)) {
-		GList *list, *cur;
-		const gchar *timezone;
-
-		list = g_list_copy (clock_zonetable_get_zones (zones));
-		/* this is a revert sort because we prepend to the combo box */
-		list = g_list_sort (list, &revert_sort_zoneinfo_by_l10n_name);
-
-		cur = list;
-		while (cur) {
-			timezone = clock_zoneinfo_get_l10n_name (CLOCK_ZONEINFO (cur->data));
-
-			gtk_combo_box_prepend_text (GTK_COMBO_BOX (zone_combo),
-						    timezone);
-
-			if (loc_timezone && timezone_idx == -1
-			    && (strcmp (timezone, loc_timezone) == 0)) {
-				timezone_idx = i;
-			}
-
-			i++;
-			cur = g_list_next (cur);
-		}
-
-		g_list_free (list);
-	} else if (loc_timezone) {
-		/* Find the item to select */
-		gchar *timezone;
-		int count = 0;
-
-		do {
-			gtk_tree_model_get (model, &iter, 0, &timezone, -1);
-
-			if (strcmp (timezone, loc_timezone) == 0) {
-				timezone_idx = count;
-				g_free (timezone);
-				break;
-			}
-			count++;
-
-			g_free (timezone);
-		} while (gtk_tree_model_iter_next (model, &iter));
-	}
-
-        if (timezone_idx >= 0) {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), timezone_idx);
-        } else if (loc_timezone) {
-                gtk_combo_box_prepend_text (GTK_COMBO_BOX (zone_combo), loc_timezone);
-                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), 0);
+                gweather_timezone_menu_set_tzid (cd->zone_combo, 
+                                                 clock_location_get_timezone (loc));
         } else {
-                /* unfortunately gtk doesn't have an easy way to clear
-                   a combo box */
-                gtk_combo_box_prepend_text (GTK_COMBO_BOX (zone_combo), "");
-                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), 0);
-                gtk_combo_box_remove_text (GTK_COMBO_BOX (zone_combo), 0);
-                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), -1);
+                gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
         }
 }
 
-static gdouble
-distance (gdouble lat1, gdouble lon1,
-          gdouble lat2, gdouble lon2)
+static void
+location_changed (GObject *object, GParamSpec *param, ClockData *cd)
 {
-        gdouble radius = 6372.795;
+        GWeatherLocationEntry *entry = GWEATHER_LOCATION_ENTRY (object);
+        GWeatherLocation *gloc;
+        GWeatherTimezone *zone;
+        gboolean latlon_valid;
+        double latitude = 0.0, longitude = 0.0;
 
-        return acos (cos (lat1) * cos (lat2) * cos (lon1 - lon2) + sin (lat1) * sin (lat2)) * radius;
-}
+        gloc = gweather_location_entry_get_location (entry);
 
-static const gchar *
-find_timezone (ClockData *cd, const char *name, const char *iso_code,
-               gfloat lat, gfloat lon)
-{
-        ClockZoneTable *zonetab = cd->zones;
-	GList *zones, *l;
-	double dist, d;
-	gfloat zlat, zlon;
-	ClockZoneInfo *best;
-        const char *country;
+	latlon_valid = gloc && gweather_location_has_coords (gloc);
+        if (latlon_valid)
+                gweather_location_get_coords (gloc, &latitude, &longitude);
+        update_coords (cd, latlon_valid, latitude, longitude);
 
-	dist = 1e6;
-	best = NULL;
-	zones = clock_zonetable_get_zones (zonetab);
-	for (l = zones; l; l = l->next) {
-		ClockZoneInfo *info = l->data;
-
-                if (iso_code) {
-                        country = clock_zoneinfo_get_country (info);
-                        if (!country || g_ascii_strcasecmp (iso_code, country) != 0)
-                                continue;
-                }
-
-		clock_zoneinfo_get_coords (info, &zlat, &zlon);
-
-		d = distance (lat, lon, zlat*M_PI/180.0, zlon*M_PI/180.0);
-
-		if (d < dist) {
-			best = info;
-			dist = d;
-		}
-	}
-
-        if (best)
-                return clock_zoneinfo_get_name (best);
+        zone = gloc ? gweather_location_get_timezone (gloc) : NULL;
+        if (zone)
+                gweather_timezone_menu_set_tzid (cd->zone_combo, gweather_timezone_get_tzid (zone));
         else
-                return NULL;
-}
+                gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
 
-static void
-update_timezone (ClockData *cd, const char *name,
-                 const char *country_code, const char *tz_hint,
-                 gboolean valid, gfloat lat, gfloat lon)
-{
-        GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
-	const gchar *timezone;
-	ClockLocation *loc;
-	WeatherPrefs prefs;
-
-	if (!valid) {
-                /* unfortunately gtk doesn't have an easy way to clear
-                   a combo box */
-                gtk_combo_box_prepend_text (GTK_COMBO_BOX (zone_combo), "");
-                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), 0);
-                gtk_combo_box_remove_text (GTK_COMBO_BOX (zone_combo), 0);
-                gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), -1);
-		return;
-	}
-
-	prefs.temperature_unit = cd->temperature_unit;
-	prefs.speed_unit = cd->speed_unit;
-
-        if (tz_hint)
-                timezone = tz_hint;
-        else {
-                timezone = find_timezone (cd, name, country_code, lat, lon);
-                if (!timezone)
-                        return;
-        }
-
-	loc = clock_location_new (name, timezone, lat*180.0/M_PI, lon*180.0/M_PI, NULL, &prefs);
-
-	g_signal_handler_block (zone_combo, cd->zone_combo_changed);
-
-        fill_timezone_combo_from_location (cd, zone_combo, loc);
-
-	g_signal_handler_unblock (zone_combo, cd->zone_combo_changed);
-
-	g_object_unref (loc);
-}
-
-static void
-run_find_location_save (GtkButton *button, ClockData *cd)
-{
-	GtkTreeSelection *selection;
-	GtkTreeModel *model;
-	GtkTreeIter iter;
-	WeatherLocation *loc = NULL;
-        GtkWidget *name_entry;
-        GtkWidget *edit_window;
-
-	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (cd->location_tree));
-	if (!gtk_tree_selection_get_selected (selection, &model, &iter))
-		return;
-
-	gtk_tree_model_get (model, &iter, GWEATHER_XML_COL_POINTER, &loc, -1);
-
-	if (!loc)
-		return;
-
-        edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
-	name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
-	gtk_entry_set_text (GTK_ENTRY (name_entry), loc->name);
-	g_object_set_data_full (G_OBJECT (edit_window), "weather-code",
-			        g_strdup (loc->code), g_free);
-
-	update_coords (cd, loc->latlon_valid, loc->latitude*180.0/M_PI, loc->longitude*180.0/M_PI);
-
-	update_timezone (cd, loc->name, loc->country_code, loc->tz_hint,
-                         loc->latlon_valid, loc->latitude, loc->longitude);
-
-	find_hide (NULL, cd);
-}
-
-static void
-location_row_activated (GtkTreeView       *tree_view,
-			GtkTreePath       *path,
-			GtkTreeViewColumn *column,
-			ClockData         *cd)
-{
-	run_find_location_save (NULL, cd);
-}
-
-static void
-fill_location_tree (ClockData *cd)
-{
-	GtkTreeView *tree;
-	GtkTreeModel *model;
-	GtkTreeViewColumn *column;
-	GtkCellRenderer *cell;
-
-	tree = (GtkTreeView*) cd->location_tree;
-
-	if (gtk_tree_view_get_model (tree) != NULL)
-		return;
-
-	cell = gtk_cell_renderer_text_new ();
-	column = gtk_tree_view_column_new_with_attributes ("not used", cell,
-							   "text", GWEATHER_XML_COL_LOC, NULL);
-	gtk_tree_view_append_column (tree, column);
-	gtk_tree_view_set_expander_column (tree, column);
-
-	g_signal_connect (tree, "row-activated",
-                          G_CALLBACK (location_row_activated), cd);
-
-	model = gweather_xml_load_locations ();
-
-	/* Can be NULL if libgweather is not correctly installed */
-	if (model) {
-		gtk_tree_view_set_model (tree, model);
-		g_object_unref (model);
-	}
-}
-
-static void
-run_find_location (GtkButton *button, ClockData *cd)
-{
-        GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
-	GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
-        GtkWidget *window;
-	const char *find;
-	const char *location;
-
-	fill_location_tree (cd);
-        window = glade_xml_get_widget (cd->glade_xml, "find-location-window");
-
-	/* prefill the find entry if it's empty */
-	find = gtk_entry_get_text (GTK_ENTRY (cd->find_location_entry));
-	location = gtk_entry_get_text (GTK_ENTRY (name_entry));
-
-	if (g_strcmp0 (find, location) != 0 || !find || !find[0]) {
-		GtkWidget *scroll = glade_xml_get_widget (cd->glade_xml, "find-location-scroll");
-		GtkAdjustment *adjustment;
-
-		/* If we autofill the entry, reset the state of the treeview
-		 * first so that it looks like a brand new search */
-		gtk_tree_view_collapse_all (GTK_TREE_VIEW (cd->location_tree));
-
-		adjustment = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scroll));
-		gtk_adjustment_set_value (adjustment, 0);
-		gtk_scrolled_window_set_vadjustment (GTK_SCROLLED_WINDOW (scroll),
-						     adjustment);
-
-		if (g_strcmp0 (find, location) != 0)
-			gtk_entry_set_text (GTK_ENTRY (cd->find_location_entry),
-					    location);
-	}
-
-	gtk_widget_grab_focus (cd->find_location_entry);
-	gtk_editable_set_position (GTK_EDITABLE (cd->find_location_entry),
-				   -1);
-
-        gtk_window_set_transient_for (GTK_WINDOW (window),
-				      GTK_WINDOW (edit_window));
-        gtk_window_present_with_time (GTK_WINDOW (window),
-				      gtk_get_current_event_time ());
-}
-
-static gboolean
-find_location (GtkTreeModel *model,
-	       GtkTreeIter  *iter,
-	       const gchar  *location,
-	       gboolean      go_parent)
-{
-	GtkTreeIter iter_child;
-	GtkTreeIter iter_parent;
-	gchar *aux_loc;
-	gboolean valid;
-	int len;
-
-	len = strlen (location);
-
-	if (len <= 0) {
-		return FALSE;
-	}
-
-	do {
-		gtk_tree_model_get (model, iter, GWEATHER_XML_COL_LOC, &aux_loc, -1);
-
-		if (g_ascii_strncasecmp (aux_loc, location, len) == 0) {
-			g_free (aux_loc);
-			return TRUE;
-		}
-
-		if (gtk_tree_model_iter_has_child (model, iter)) {
-			gtk_tree_model_iter_nth_child (model, &iter_child, iter, 0);
-			if (find_location (model, &iter_child, location, FALSE)) {
-				/* Manual copying of the iter */
-				iter->stamp = iter_child.stamp;
-				iter->user_data = iter_child.user_data;
-				iter->user_data2 = iter_child.user_data2;
-				iter->user_data3 = iter_child.user_data3;
-
-				g_free (aux_loc);
-
-				return TRUE;
-			}
-		}
-
-		g_free (aux_loc);
-
-		valid = gtk_tree_model_iter_next (model, iter);
-	} while (valid);
-
-	if (go_parent) {
-		iter_parent = *iter;
-		while (gtk_tree_model_iter_parent (model, iter, &iter_parent)) {
-			if (gtk_tree_model_iter_next (model, iter))
-				return find_location (model, iter, location, TRUE);
-			iter_parent = *iter;
-		}
-	}
-
-	return FALSE;
-}
-
-static void
-find_next_location (GtkButton *button, ClockData *cd)
-{
-	GtkTreeView *tree;
-	GtkTreeModel *model;
-	GtkEntry *entry;
-	GtkTreeSelection *selection;
-	GtkTreeIter iter;
-	GtkTreeIter iter_parent;
-	GtkTreePath *path;
-	const gchar *location;
-
-	tree = GTK_TREE_VIEW (cd->location_tree);
-	model = gtk_tree_view_get_model (tree);
-	/* Can happen if libgweather is not correctly installed */
-	if (!model)
-		return;
-
-	entry = GTK_ENTRY (cd->find_location_entry);
-	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree));
-
-	if (gtk_tree_selection_count_selected_rows (selection) >= 1) {
-		gtk_tree_selection_get_selected (selection, &model, &iter);
-		/* Select next or select parent */
-		if (!gtk_tree_model_iter_next (model, &iter)) {
-			iter_parent = iter;
-			if (!gtk_tree_model_iter_parent (model, &iter, &iter_parent) ||
-			    !gtk_tree_model_iter_next (model, &iter))
-				gtk_tree_model_get_iter_first (model, &iter);
-		}
-	}
-	else {
-		gtk_tree_model_get_iter_first (model, &iter);
-	}
-	location = gtk_entry_get_text (entry);
-
-	if (find_location (model, &iter, location, TRUE)) {
-		gtk_widget_set_sensitive (cd->find_next_location_button, TRUE);
-		path = gtk_tree_model_get_path (model, &iter);
-		gtk_tree_view_expand_to_path (tree, path);
-		gtk_tree_selection_select_path (selection, path);
-		gtk_tree_view_scroll_to_cell (tree, path, NULL, TRUE, 0.5, 0);
-
-		gtk_tree_path_free (path);
-        }
-	else {
-		gtk_widget_set_sensitive (cd->find_next_location_button, FALSE);
-	}
-}
-
-static void
-find_entry_changed (GtkEditable *entry, ClockData *cd)
-{
-	GtkTreeView *tree;
-	GtkTreeModel *model;
-	GtkTreeSelection *selection;
-	GtkTreeIter iter;
-	GtkTreePath *path;
-	const gchar *location;
-
-	tree = GTK_TREE_VIEW (cd->location_tree);
-	model = gtk_tree_view_get_model (tree);
-	/* Can happen if libgweather is not correctly installed */
-	if (!model)
-		return;
-
-	selection = gtk_tree_view_get_selection (tree);
-	gtk_tree_model_get_iter_first (model, &iter);
-
-	location = gtk_entry_get_text (GTK_ENTRY (entry));
-	if (find_location (model, &iter, location, TRUE)) {
-		gtk_widget_set_sensitive (cd->find_next_location_button, TRUE);
-		path = gtk_tree_model_get_path (model, &iter);
-		gtk_tree_view_expand_to_path (tree, path);
-		gtk_tree_selection_select_iter (selection, &iter);
-		gtk_tree_view_scroll_to_cell (tree, path, NULL, TRUE, 0.5, 0);
-		gtk_tree_path_free (path);
-	}
-	else {
-		gtk_widget_set_sensitive (cd->find_next_location_button, FALSE);
-	}
-}
-
-static void
-location_tree_selection_changed (GtkTreeSelection *selection, ClockData *cd)
-{
-	GtkTreeModel *model;
-	GtkTreeIter iter;
-	WeatherLocation *loc = NULL;
-	gboolean can_save = FALSE;
-
-	if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
-		gtk_tree_model_get (model, &iter, GWEATHER_XML_COL_POINTER, &loc, -1);
-		if (loc != NULL)
-			can_save = TRUE;
-	}
-
-	gtk_widget_set_sensitive (cd->find_location_ok_button, can_save);
+        if (gloc)
+                gweather_location_unref (gloc);
 }
 
 static void
 edit_clear (ClockData *cd)
 {
-        GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
-        GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
-
         GtkWidget *lat_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-entry");
         GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
         GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
         GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
 
         /* clear out the old data */
-        gtk_combo_box_set_active (GTK_COMBO_BOX (zone_combo), -1);
-
-        gtk_entry_set_text (GTK_ENTRY (name_entry), "");
+        gweather_location_entry_set_location (cd->location_entry, NULL);
+        gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
 
         gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
         gtk_entry_set_text (GTK_ENTRY (lon_entry), "");
@@ -3639,7 +3179,6 @@ edit_hide (GtkWidget *unused, ClockData *cd)
 {
         GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
 
-        find_hide (NULL, cd);
         gtk_widget_hide (edit_window);
         edit_clear (cd);
 }
@@ -3691,159 +3230,6 @@ prefs_help (GtkWidget *widget, ClockData *cd)
 				  "clock", "clock", "clock-settings");
 }
 
-typedef struct {
-  const gchar *name;
-  const gchar *country_code;
-  gdouble latitude;
-  gdouble longitude;
-  gdouble distance;
-  WeatherLocation *location;
-} SearchData;
-  
-static gboolean
-compare_location (GtkTreeModel *model,
-                  GtkTreePath  *path,
-                  GtkTreeIter  *iter,
-                  gpointer      user_data)
-{
-  SearchData *data = user_data;
-  WeatherLocation *loc;
-  gdouble d;
-   
-  gtk_tree_model_get (model, iter, GWEATHER_XML_COL_POINTER, &loc, -1);
-
-  if (!loc)
-    return FALSE;
-  if (loc->country_code && data->country_code &&
-      g_ascii_strcasecmp (loc->country_code, data->country_code) != 0)
-    return FALSE;
-
-  d = distance (data->latitude, data->longitude, loc->latitude, loc->longitude);
-
-  if (d < data->distance) {
-    data->distance = d;
-    data->location = loc;
-  }
-
-  return FALSE;
-}
-
-static gchar *
-find_weather_code (GtkTreeModel *model,
-		   const gchar  *name,
-		   const gchar  *iso_code,
-                   gdouble       lat, 
-                   gdouble       lon)
-{
-  SearchData data;
-  gchar *code;
-
-  data.name = name;
-  data.country_code = iso_code;
-  data.latitude = lat;
-  data.longitude = lon;
-  data.distance = 1e6;
-  data.location = NULL;
-
-  /* Can be NULL if libgweather is not correctly installed */
-  if (model)
-	  gtk_tree_model_foreach (GTK_TREE_MODEL (model),
-			  	  compare_location, &data);
-
-  if (data.location)
-    code = g_strdup (data.location->code);
-  else
-    code = g_strdup ("-");
-
-  return code;
-}
-
-static void
-zone_combo_changed (GtkComboBox *widget, ClockData *cd)
-{
-        ClockZoneTable *zones = cd->zones;
-        gchar *timezone;
-        gfloat lat = 0;
-        gfloat lon = 0;
-	GtkTreeModel *model;
-	gchar *city;
-	const gchar *buffer;
-
-        GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
-        GtkWidget *lat_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-entry");
-        GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
-        GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
-	gchar *weather_code;
-
-        ClockCountry *country;
-        ClockZoneInfo *info;
-
-        if (gtk_combo_box_get_active (widget) == -1) {
-                return;
-        }
-
-	timezone = gtk_combo_box_get_active_text (widget);
-        info = clock_zonetable_get_l10n_zone (zones, timezone);
-        g_free (timezone);
-
-        if (info == NULL) {
-                return;
-        }
-
-	buffer = gtk_entry_get_text (GTK_ENTRY (name_entry));
-	weather_code = g_object_get_data (G_OBJECT (edit_window),
-					  "weather-code");
-
-	if (!buffer || !buffer[0] || !weather_code) {
-		country = clock_zonetable_get_country (zones,
-						       clock_zoneinfo_get_country (info));
-		if (country != NULL) {
-			city = g_strdup_printf (_("%s, %s"),
-						clock_zoneinfo_get_l10n_city (info),
-						clock_country_get_l10n_name (country));
-		} else {
-			city = g_strdup (clock_zoneinfo_get_l10n_city (info));
-		}
-	} else
-		city = NULL;
-
-	/* only fill fields in if not set yet, to allow correcting
-	 * a guessed timezone. FIXME: we should be a bit more clever
-	 * and allow replacing if the value was already auto-filled by
-	 * this function (to allow just multiple tries by selecting things
-	 * in the timezone combo */
-	if (!buffer || !buffer[0]) {
-		gtk_entry_set_text (GTK_ENTRY (name_entry), city);
-	}
-
-	if (!weather_code) {
-		fill_location_tree (cd);
-		model = gtk_tree_view_get_model (GTK_TREE_VIEW (cd->location_tree));
-		weather_code = find_weather_code (model, city,
-						  clock_zoneinfo_get_country (info),
-						  lat * M_PI/180.0,
-						  lon * M_PI/180.0);
-		g_object_set_data_full (G_OBJECT (edit_window),
-					"weather-code", weather_code, g_free);
-	}
-
-	g_free (city);
-
-        clock_zoneinfo_get_coords (info, &lat, &lon);
-
-	buffer = gtk_entry_get_text (GTK_ENTRY (lat_entry));
-	if (!buffer || !buffer[0]) {
-		GtkWidget *lat_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-combo");
-		update_coords_helper (lat, lat_entry, lat_combo);
-	}
-
-	buffer = gtk_entry_get_text (GTK_ENTRY (lon_entry));
-	if (!buffer || !buffer[0]) {
-		GtkWidget *lon_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-combo");
-		update_coords_helper (lon, lon_entry, lon_combo);
-	}
-}
-
 static void
 remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
@@ -3871,23 +3257,19 @@ static void
 run_prefs_locations_add (GtkButton *button, ClockData *cd)
 {
         GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
-        GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
-        GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
 
-        fill_timezone_combo_from_location (cd, zone_combo, NULL);
-/* 	fill_location_tree (this);    This was commented out in intlclock... */
+        fill_timezone_combo_from_location (cd, NULL);
 
         g_object_set_data (G_OBJECT (edit_window), "clock-location", NULL);
         gtk_window_set_transient_for (GTK_WINDOW (edit_window), GTK_WINDOW (cd->prefs_window));
 
-	if (g_object_get_data (G_OBJECT (edit_window), "delete-handler")
- == NULL) {
+	if (g_object_get_data (G_OBJECT (edit_window), "delete-handler") == NULL) {
 		g_object_set_data (G_OBJECT (edit_window), "delete-handler",
 				   GINT_TO_POINTER (g_signal_connect (edit_window, "delete_event", G_CALLBACK (edit_delete), cd)));
 	}
 
-	gtk_widget_grab_focus (name_entry);
-	gtk_editable_set_position (GTK_EDITABLE (name_entry), -1);
+	gtk_widget_grab_focus (GTK_WIDGET (cd->location_entry));
+	gtk_editable_set_position (GTK_EDITABLE (cd->location_entry), -1);
 
         gtk_window_present_with_time (GTK_WINDOW (edit_window), gtk_get_current_event_time ());
 }
@@ -3903,10 +3285,6 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
         /* fill the dialog with this location's data, show it */
         GtkWidget *edit_window = glade_xml_get_widget (cd->glade_xml, "edit-location-window");
 
-        GtkWidget *zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
-
-        GtkWidget *name_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-name-entry");
-
         GtkWidget *lat_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-latitude-entry");
 
         GtkWidget *lon_entry = glade_xml_get_widget (cd->glade_xml, "edit-location-longitude-entry");
@@ -3919,17 +3297,13 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
         gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
 
-        gtk_entry_set_text (GTK_ENTRY (name_entry),
-			    clock_location_get_name (loc));
-	g_object_set_data_full (G_OBJECT (edit_window), "weather-code",
-				g_strdup (clock_location_get_weather_code (loc)),
-				g_free);
+        gweather_location_entry_set_city (cd->location_entry,
+                                          clock_location_get_name (loc),
+                                          clock_location_get_weather_code (loc));
 
         clock_location_get_coords (loc, &lat, &lon);
 
-	/* doing this after setting all the other fields will make it possible
-	 * to do less work in zone_combo_changed */
-        fill_timezone_combo_from_location (cd, zone_combo, loc);
+        fill_timezone_combo_from_location (cd, loc);
 
         tmp = g_strdup_printf ("%f", fabsf(lat));
         gtk_entry_set_text (GTK_ENTRY (lat_entry), tmp);
@@ -3953,8 +3327,8 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
         g_object_set_data (G_OBJECT (edit_window), "clock-location", loc);
 
-	gtk_widget_grab_focus (name_entry);
-	gtk_editable_set_position (GTK_EDITABLE (name_entry), -1);
+	gtk_widget_grab_focus (GTK_WIDGET (cd->location_entry));
+	gtk_editable_set_position (GTK_EDITABLE (cd->location_entry), -1);
 
         gtk_window_present (GTK_WINDOW (edit_window));
 }
@@ -4155,11 +3529,10 @@ ensure_prefs_window_is_created (ClockData *cd)
 	GtkWidget *prefs_help_button;
         GtkWidget *edit_cancel_button;
         GtkWidget *edit_ok_button;
-        GtkWidget *zone_combo;
-        GtkWidget *find_window;
-        GtkWidget *find_location_button;
-        GtkWidget *find_location_cancel_button;
-	GtkTreeSelection *selection;
+        GtkWidget *location_box;
+        GtkWidget *zone_box;
+        GtkTreeSelection *selection;
+        GWeatherLocation *world;
 
         if (cd->prefs_window)
                 return;
@@ -4212,60 +3585,27 @@ ensure_prefs_window_is_created (ClockData *cd)
 
         edit_ok_button = glade_xml_get_widget (cd->glade_xml, "edit-location-ok-button");
 
-        zone_combo = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-combo");
+        world = gweather_location_new_world (FALSE);
 
-        find_window = glade_xml_get_widget (cd->glade_xml, "find-location-window");
+        location_box = glade_xml_get_widget (cd->glade_xml, "edit-location-name-box");
+        cd->location_entry = GWEATHER_LOCATION_ENTRY (gweather_location_entry_new (world));
+        gtk_widget_show (GTK_WIDGET (cd->location_entry));
+        gtk_container_add (GTK_CONTAINER (location_box), GTK_WIDGET (cd->location_entry));
+        g_signal_connect (G_OBJECT (cd->location_entry), "notify::location",
+                          G_CALLBACK (location_changed), cd);
 
-        gtk_window_set_transient_for (GTK_WINDOW (find_window),
-                                      GTK_WINDOW (edit_window));
+        zone_box = glade_xml_get_widget (cd->glade_xml, "edit-location-timezone-box");
+        cd->zone_combo = GWEATHER_TIMEZONE_MENU (gweather_timezone_menu_new (world));
+        gtk_widget_show (GTK_WIDGET (cd->zone_combo));
+        gtk_container_add (GTK_CONTAINER (zone_box), GTK_WIDGET (cd->zone_combo));
 
-        g_signal_connect (G_OBJECT (find_window), "delete_event",
-                          G_CALLBACK (find_hide_event), cd);
-
-        find_location_button = glade_xml_get_widget (cd->glade_xml, "find-location-button");
-
-        cd->find_location_ok_button = glade_xml_get_widget (cd->glade_xml, "find-location-ok-button");
-
-        find_location_cancel_button = glade_xml_get_widget (cd->glade_xml, "find-location-cancel-button");
-
-        cd->find_next_location_button = glade_xml_get_widget (cd->glade_xml, "find-next-location-button");
-
-        cd->find_location_entry = glade_xml_get_widget (cd->glade_xml, "find-location-entry");
-
-        cd->location_tree = glade_xml_get_widget (cd->glade_xml, "find-location-tree");
-
-        cd->zone_combo_changed = g_signal_connect (G_OBJECT (zone_combo), "changed",
-                                                   G_CALLBACK (zone_combo_changed), cd);
+        gweather_location_unref (world);
 
         g_signal_connect (G_OBJECT (edit_cancel_button), "clicked",
                           G_CALLBACK (edit_hide), cd);
 
         g_signal_connect (G_OBJECT (edit_ok_button), "clicked",
                           G_CALLBACK (run_prefs_edit_save), cd);
-
-        g_signal_connect (find_location_button, "clicked",
-                          G_CALLBACK (run_find_location), cd);
-
-        g_signal_connect (G_OBJECT (find_location_cancel_button), "clicked",
-                          G_CALLBACK (find_hide), cd);
-
-        g_signal_connect (G_OBJECT (cd->find_location_ok_button), "clicked",
-                          G_CALLBACK (run_find_location_save), cd);
-
-        g_signal_connect (G_OBJECT (cd->find_next_location_button), "clicked",
-                          G_CALLBACK (find_next_location), cd);
-
-        g_signal_connect (G_OBJECT (cd->find_location_entry), "changed",
-                          G_CALLBACK (find_entry_changed), cd);
-
-        selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (cd->location_tree));
-        g_signal_connect (selection, "changed",
-                          G_CALLBACK (location_tree_selection_changed), cd);
-
-        /* We have to put an item in the combo box in the glade file
-           to get the simpler, string-only store.  Here we remove that
-           item. */
-        gtk_combo_box_remove_text (GTK_COMBO_BOX (zone_combo), 0);
 
         /* Set up the time setting section */
 

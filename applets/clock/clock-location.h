@@ -6,8 +6,6 @@
 #include <glib-object.h>
 #include <libgweather/weather.h>
 
-#include "clock-zonetable.h"
-
 G_BEGIN_DECLS
 
 #define CLOCK_LOCATION_TYPE         (clock_location_get_type ())

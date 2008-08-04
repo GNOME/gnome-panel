@@ -18,7 +18,6 @@ INCLUDES =							\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\""		\
 	-DCLOCK_TIME_UTILITY="\"$(CLOCK_TIME_UTILITY)\""	\
-	-DEVOLUTION_TEXTDOMAIN=\"evolution-2.22\"		\
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE
 
 if HAVE_LIBECAL
@@ -47,8 +46,6 @@ CLOCK_SOURCES = 		\
 	obox.h			\
 	clock.c			\
 	clock.h			\
-	clock-country.c		\
-	clock-country.h		\
 	clock-face.c		\
 	clock-face.h		\
 	clock-location.c	\
@@ -61,10 +58,6 @@ CLOCK_SOURCES = 		\
 	clock-sunpos.h		\
 	clock-utils.c		\
 	clock-utils.h		\
-	clock-zoneinfo.c	\
-	clock-zoneinfo.h	\
-	clock-zonetable.c	\
-	clock-zonetable.h	\
 	system-timezone.c	\
 	system-timezone.h	\
 	$(BUILT_SOURCES)	\

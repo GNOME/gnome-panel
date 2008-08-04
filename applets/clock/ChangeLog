@@ -1,3 +1,20 @@
+2008-08-04  Dan Winship  <danw@gnome.org>
+
+	* clock.c: Use GWeatherLocationEntry and GWeatherTimezoneMenu in
+	the add/edit location dialog. Remove all the old
+	find-location-dialog code
+
+	* clock.glade: Remove some old versions of dialogs, and update for
+	new widgets
+
+	* clock-country.c:
+	* clock-zoneinfo.c:
+	* clock-zonetable.c: Gone; GWeatherTimezone handles this now
+
+	* Makefile.am (INCLUDES): remove refs to EVOLUTION_TEXTDOMAIN; we
+	don't need to steal evolution's translations any more
+	(CLOCK_SOURCES): remove stuff
+
 ==================== 2.23.5 ====================
 
 2008-06-30  Vincent Untz  <vuntz@gnome.org>
