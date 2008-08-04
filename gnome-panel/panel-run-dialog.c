@@ -347,7 +347,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	char      *command;
 	char      *escaped;
 	GFile     *file;
-	char      *disk, *url;
+	char      *disk, *uri;
 	char      *scheme;	
 	
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));	
@@ -392,16 +392,16 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	}
 
 	file = panel_util_get_file_optional_homedir (command);
-	url = g_file_get_uri (file);
+	uri = g_file_get_uri (file);
 	scheme = g_file_get_uri_scheme (file);
 	g_object_unref (file);
 
-	escaped = g_markup_escape_text (url, -1);
+	escaped = g_markup_escape_text (uri, -1);
 	result = FALSE;
 	
 	if (!g_ascii_strcasecmp (scheme, "http") ||
 	    !g_ascii_strcasecmp (scheme, "file"))
-		/* If this returns an http or file url, the url might refer to
+		/* If this returns an http or file uri, the uri might refer to
 		 * a command that is somewhere in the path or an executable
 		 * file. So try executing it before displaying it. We execute
 		 * the command in the user's shell so that it can do all the
@@ -412,7 +412,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		GdkScreen *screen;
 		
 		screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
-		result = panel_show_uri (screen, url,
+		result = panel_show_uri (screen, uri,
 					 gtk_get_current_event_time (), NULL);
 	}
 		
@@ -429,7 +429,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 
 	g_free (command);
 	g_free (disk);
-	g_free (url);
+	g_free (uri);
 	g_free (escaped);
 	g_free (scheme);
 }
