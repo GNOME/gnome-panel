@@ -1461,6 +1461,10 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		}
 	}
 
+	if (panel_lockdown_get_disable_log_out ())
+		return;
+	/* Below this, we only have log out/shutdown items */
+
 	/* Translators: translate "panel:showusername|1" to anything
 	 * but "1" if "Log Out %s" doesn't make any sense in your
 	 * language (where %s is a username).
@@ -1495,8 +1499,10 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	g_free (tooltip);
 
 	if (item != NULL) {
-		if (!separator_inserted)
+		if (!separator_inserted) {
 			add_menu_separator (menu);
+			separator_inserted = TRUE;
+		}
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	}

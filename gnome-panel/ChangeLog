@@ -1,5 +1,12 @@
 2008-08-04  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-menu-items.c: (panel_menu_items_append_lock_logout): don't show
+	logout/shutdown if it's locked down. Remove extra separator that got
+	added when screensaver is locked down.
+	End of bug #522453.
+
+2008-08-04  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.c: (panel_lock_screen_action_available),
 	(panel_lock_screen_action): check the lock screen lockdown setting
 	before doing anything. The UI is already blocking the user for locking
