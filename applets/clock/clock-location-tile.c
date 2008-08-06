@@ -364,8 +364,6 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_container_add (GTK_CONTAINER (alignment), tile);
         gtk_container_add (GTK_CONTAINER (priv->box), alignment);
         gtk_container_add (GTK_CONTAINER (this), priv->box);
-
-        clock_location_tile_refresh (this, TRUE);
 }
 
 static gboolean
