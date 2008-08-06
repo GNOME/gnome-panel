@@ -1142,6 +1142,8 @@ create_cities_section (ClockData *cd)
 
                 cd->location_tiles = g_list_prepend (cd->location_tiles, city);
 
+                clock_location_tile_refresh (city, TRUE);
+
                 node = g_list_next (node);
         }
 

@@ -1,3 +1,20 @@
+2008-08-06  Federico Mena Quintero  <federico@novell.com>
+
+	Merged from trunk:
+
+	https://bugzilla.novell.com/show_bug.cgi?id=414458 - When in
+	12-hour mode, bringing up the clock window shows the location
+	tiles in 24-hour format, but they get updated to 12-hour format at
+	the next minute.
+
+	* clock-location-tile.c (clock_location_tile_fill): Don't refresh
+	the tile during creation (this gets called from
+	clock_location_tile_new()), since the caller will not have had a
+	chance to connect to the "need_clock_format" signal yet.
+
+	* clock.c (create_cities_section): Refresh the location tile here,
+	after connecting to its signals.
+
 2008-06-30  Vincent Untz  <vuntz@gnome.org>
 
 	Load calendars asynchronously. Fix bug #515948, and probably a few
