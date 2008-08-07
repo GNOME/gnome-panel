@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-06 09:18+0100\n"
+"POT-Creation-Date: 2008-08-07 09:02+0100\n"
 "PO-Revision-Date: 2008-08-03 00:39+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
@@ -65,7 +65,7 @@ msgid "_Preferences"
 msgstr "ال_تّفضيلات"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3751
+#: ../applets/clock/clock.c:3753
 msgid "Clock"
 msgstr "ساعة"
 
@@ -83,7 +83,7 @@ msgstr "احصل على الوقت والتاريخ الحالي"
 
 #: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:422
 msgid "%l:%M %p"
-msgstr "%OI:%OM %p"
+msgstr "%H:%M"
 
 #. translators: This is a strftime format string that is used for formatting
 #. * the time that is displayed for locations in the popup. This string is used
@@ -91,7 +91,7 @@ msgstr "%OI:%OM %p"
 #. * There should be little need to translate this string.
 #.
 #: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:424
-#: ../applets/clock/clock.c:1530 ../applets/clock/clock-location-tile.c:482
+#: ../applets/clock/clock.c:1532 ../applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%OH:O%M"
 
@@ -100,7 +100,7 @@ msgstr "%OH:O%M"
 #. * possible.
 #: ../applets/clock/calendar-window.c:250
 msgid "%b %d"
-msgstr "%Oe %b"
+msgstr "%d %B"
 
 #: ../applets/clock/calendar-window.c:773
 msgid "Tasks"
@@ -138,11 +138,11 @@ msgstr "التقويم"
 
 #: ../applets/clock/clock.c:422
 msgid "%l:%M:%S %p"
-msgstr "%Ol:%OM:%OS %p"
+msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:424 ../applets/clock/clock.c:1528
+#: ../applets/clock/clock.c:424 ../applets/clock/clock.c:1530
 msgid "%H:%M:%S"
-msgstr "%OH:%OM:%OS"
+msgstr "%H:%M:%S"
 
 #. translators: replace %e with %d if, when the day of the
 #. *              month as a decimal number is a single digit, it
@@ -151,7 +151,7 @@ msgstr "%OH:%OM:%OS"
 #.
 #: ../applets/clock/clock.c:444
 msgid "%a %b %e"
-msgstr "%a %Oe %b"
+msgstr "%A %e %B"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -163,8 +163,8 @@ msgid ""
 "%1$s\n"
 "%2$s"
 msgstr ""
-"‏%2$s\n"
-"‏%1$s"
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -173,14 +173,14 @@ msgstr ""
 #: ../applets/clock/clock.c:459
 #, c-format
 msgid "%1$s, %2$s"
-msgstr "‏%2$s، %1$s"
+msgstr "%1$s، %2$s"
 
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
 #: ../applets/clock/clock.c:641
 msgid "%A %B %d (%%s)"
-msgstr "%Oe %A %B (%%s)"
+msgstr "%A %d %B (%%s)"
 
 #: ../applets/clock/clock.c:671
 msgid "Click to hide your appointments and tasks"
@@ -198,80 +198,80 @@ msgstr "انقر لإخفاء تقويم الشهر"
 msgid "Click to view month calendar"
 msgstr "انقر لعرض تقويم الشهر"
 
-#: ../applets/clock/clock.c:1383
+#: ../applets/clock/clock.c:1385
 msgid "Computer Clock"
 msgstr "ساعة الحاسوب"
 
-#: ../applets/clock/clock.c:1523
-msgid "%I:%M:%S %p"
-msgstr "%OI:%OM:%OS %p"
-
 #: ../applets/clock/clock.c:1525
+msgid "%I:%M:%S %p"
+msgstr "%H:%M:%S"
+
+#: ../applets/clock/clock.c:1527
 msgid "%I:%M %p"
-msgstr "%OI:%OM %p"
+msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:1567
+#: ../applets/clock/clock.c:1569
 msgid "%A, %B %d %Y"
-msgstr "%A، %Oe %B %Y"
+msgstr "%A، %e %B %Y"
 
-#: ../applets/clock/clock.c:1644
+#: ../applets/clock/clock.c:1646
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "فشل تشغيل أداة إعداد الوقت: %s"
 
-#: ../applets/clock/clock.c:1675
+#: ../applets/clock/clock.c:1677
 msgid "Set System Time..."
 msgstr "اضبط وقت النظام..."
 
-#: ../applets/clock/clock.c:1676 ../applets/clock/clock.glade.h:17
+#: ../applets/clock/clock.c:1678 ../applets/clock/clock.glade.h:17
 msgid "Set System Time"
 msgstr "اضبط وقت النظام"
 
-#: ../applets/clock/clock.c:1691
+#: ../applets/clock/clock.c:1693
 msgid "Failed to set the system time"
 msgstr "فشل في ضبط وقت النظام"
 
-#: ../applets/clock/clock.c:1885
+#: ../applets/clock/clock.c:1887
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
 "فشل تحديد مكان برنامج لإعداد التاريخ و الوقت. ربما لأنه لا وجود لبرنامج مثبّت؟"
 
-#: ../applets/clock/clock.c:2817
+#: ../applets/clock/clock.c:2819
 msgid "Custom format"
 msgstr "تهيئة خاصة"
 
-#: ../applets/clock/clock.c:3478
+#: ../applets/clock/clock.c:3480
 msgid "City Name"
 msgstr "اسم المدينة"
 
-#: ../applets/clock/clock.c:3482
+#: ../applets/clock/clock.c:3484
 msgid "City Time Zone"
 msgstr "المنطقة الزمنية للمدينة"
 
-#: ../applets/clock/clock.c:3647
+#: ../applets/clock/clock.c:3649
 msgid "24 hour"
 msgstr "24 ساعة"
 
-#: ../applets/clock/clock.c:3648
+#: ../applets/clock/clock.c:3650
 msgid "UNIX time"
 msgstr "وقت يونكس"
 
-#: ../applets/clock/clock.c:3649
+#: ../applets/clock/clock.c:3651
 msgid "Internet time"
 msgstr "وقت الإنترنت"
 
-#: ../applets/clock/clock.c:3657
+#: ../applets/clock/clock.c:3659
 msgid "Custom _format:"
 msgstr "ت_هيئة خاصة:"
 
-#: ../applets/clock/clock.c:3754
+#: ../applets/clock/clock.c:3756
 msgid "The Clock displays the current time and date"
 msgstr "تعرض الساعة الوقت و اليوم الحاليين"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3757 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:3759 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
@@ -624,9 +624,9 @@ msgstr "عيِّن كالمنطقة الزمنية الحالية لهذا ال�
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:455
+#: ../applets/clock/clock-location-tile.c:453
 msgid "%l:%M <small>%p (%A)</small>"
-msgstr "‏ %Ol:%OM <small>%p (%A)</small>"
+msgstr "‏ %l:%M <small>%p (%A)</small>"
 
 #. translators: This is a strftime format string that is used for formatting
 #. * the time that is displayed for locations in the popup. This string is used
@@ -634,36 +634,36 @@ msgstr "‏ %Ol:%OM <small>%p (%A)</small>"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:464
+#: ../applets/clock/clock-location-tile.c:462
 msgid "%H:%M <small>(%A)</small>"
-msgstr "‏ %OH:%OM <small>(%A)</small>"
+msgstr "‏ %H:%M <small>(%A)</small>"
 
 #. translators: This is a strftime format string that is used for formatting
 #. * the time that is displayed for locations in the popup. This string is used
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:474
+#: ../applets/clock/clock-location-tile.c:472
 msgid "%l:%M <small>%p</small>"
-msgstr "‏ %Ol:%OM <small>%p</small>"
+msgstr "‏ %l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:583
+#: ../applets/clock/clock-location-tile.c:581
 #, c-format
 msgid "%s, %s"
 msgstr "‏%s، ‏%s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:595
-#: ../applets/clock/clock-location-tile.c:603
+#: ../applets/clock/clock-location-tile.c:593
+#: ../applets/clock/clock-location-tile.c:601
 msgid "Unknown"
 msgstr "مجهول"
 
-#: ../applets/clock/clock-location-tile.c:596
+#: ../applets/clock/clock-location-tile.c:594
 #, c-format
 msgid "%s, feels like %s"
 msgstr "‏%s، وكأنه %s"
 
-#: ../applets/clock/clock-location-tile.c:614
+#: ../applets/clock/clock-location-tile.c:612
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "الشروق : %s / غروب : %s"
