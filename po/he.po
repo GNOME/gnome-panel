@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-04 21:25+0000\n"
+"POT-Creation-Date: 2008-08-06 09:23+0000\n"
 "PO-Revision-Date: 2008-02-20 18:37+0300\n"
 "Last-Translator: Yair Hershkovitz <>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -68,7 +68,7 @@ msgstr "שעון"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock Applet Factory"
-msgstr "יצרן ישומון שעון"
+msgstr "Clock Applet Factory"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
@@ -123,7 +123,7 @@ msgstr "ימי הולדת וימי שנה"
 
 #: ../applets/clock/calendar-window.c:1083
 msgid "Weather Information"
-msgstr "מידע על התחזית"
+msgstr "מידע אודות מזג האוויר"
 
 #: ../applets/clock/calendar-window.c:1578 ../applets/clock/clock.glade.h:13
 msgid "Locations"
@@ -244,7 +244,7 @@ msgstr "שם העיר"
 
 #: ../applets/clock/clock.c:3482
 msgid "City Time Zone"
-msgstr "אזור זמן העיר"
+msgstr "איזור זמן העיר"
 
 #: ../applets/clock/clock.c:3647
 msgid "24 hour"
@@ -295,7 +295,7 @@ msgstr "<b>תצוגת לוח</b>"
 
 #: ../applets/clock/clock.glade.h:4
 msgid "<b>Time Settings</b>"
-msgstr "<b>הגדרות זמןb>"
+msgstr "<b>הגדרות זמן</b>"
 
 #: ../applets/clock/clock.glade.h:5
 msgid "<i>(optional)</i>"
@@ -462,7 +462,7 @@ msgstr "אם אמת, מציג שניות בזמן."
 
 #: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "אם אמת, מציג את הזמן באזור זמן Universal Coordinated."
+msgstr "If true, display time in Universal Coordinated Time zone."
 
 #: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
@@ -572,12 +572,14 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
-"המפתח מציין את סידור השעה המשמש את ישומון השעון. ערכים אפשריים הם \"12-hour"
-"\", \"24-hour\", \"internet\", \"unix\" and \"custom\". אם נקבע ל \"internet"
-"\", השעון יציג זמן אינטרנט. שיטת זמן האינטרנט מחלקת את היום ל 1000 \".פעימות"
-"\". אין אזורי זמן בשיטה זו, כך שהזמן זהה בכל רחבי העולם. אם נקבע ל \"unix\", "
-"השעון יציג את הזמן בשניות מאז Epoch, כלומר 01-01-1970. אם נקבע ל \"custom\", "
-"השעון יציג את הזמן בסידור שנקבע במפתח custom_format."
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
 
 #: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
@@ -601,7 +603,7 @@ msgstr "השתמש ב UTC"
 
 #: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
-msgstr "נכשל בקביעת אזור הזמן במערכת"
+msgstr "נכשל בקביעת איזור הזמן במערכת"
 
 #: ../applets/clock/clock-location-tile.c:240
 msgid "<small>Set...</small>"
@@ -686,7 +688,7 @@ msgstr "הגדרות שעון חומרה"
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
 msgid "Privileges are required to change the system time zone."
-msgstr "דרושות הרשאות על מנת לשנות את אזור הזמן של המערכת."
+msgstr "דרושות הרשאות על מנת לשנות את איזור הזמן של המערכת."
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
 msgid "Privileges are required to change the system time."
@@ -934,20 +936,20 @@ msgstr "מפתח זה מציין את מספר השניות שבה כל פריי
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr "האזור בו סמלי ההתראה מופיעים"
+msgstr "האיזור בו איקוני ההתראה מופיעים"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 #: ../applets/notification_area/main.c:135
 msgid "Notification Area"
-msgstr "אזור התראה"
+msgstr "איזור התראה"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
 msgid "Notification Area Factory"
-msgstr "יצרן אזור התראה"
+msgstr "יצרן איזור התראה"
 
 #: ../applets/notification_area/main.c:224
 msgid "Panel Notification Area"
-msgstr "אזור התרעת לוח"
+msgstr "איזור התרעת לוח"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 msgid "Factory for the window navigation related applets"
@@ -999,7 +1001,7 @@ msgstr "שגיאה בטעינת %s: %s\n"
 
 #: ../applets/wncklet/showdesktop.c:184
 msgid "Icon not found"
-msgstr "סמל לא נמצא"
+msgstr "איקון לא נמצא"
 
 #: ../applets/wncklet/showdesktop.c:243
 msgid "Click here to restore hidden windows."
@@ -1132,7 +1134,7 @@ msgstr "מתי לקבץ חלונות"
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
-msgstr "בוחר החלונות מציג רשימה של כל החלונות בתפריט ונותן לך לדפדף בהם."
+msgstr "בוחר החלונות מציג רשימה של כל החלונות בתפריט ומאפשר לדפדף בהם."
 
 #: ../applets/wncklet/workspace-switcher.c:213
 #: ../applets/wncklet/workspace-switcher.c:974
@@ -1723,7 +1725,7 @@ msgstr "_שם:"
 
 #: ../gnome-panel/panel-ditem-editor.c:637
 msgid "Browse icons"
-msgstr "עיין בסמלים"
+msgstr "עיין באיקונים"
 
 #: ../gnome-panel/panel-ditem-editor.c:655
 msgid "_Browse..."
@@ -2112,7 +2114,7 @@ msgstr "IID של ישומון Bonobo"
 
 #: ../gnome-panel/panel-object.schemas.in.h:3
 msgid "Icon used for object's button"
-msgstr "הסמל אשר בשימוש לכפתור האובייקט"
+msgstr "האיקון אשר בשימוש לכפתור האובייקט"
 
 #: ../gnome-panel/panel-object.schemas.in.h:4
 msgid ""
@@ -2408,7 +2410,7 @@ msgstr "_הסתר אוטומטית"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:21
 msgid "_Icon:"
-msgstr "_סמל:"
+msgstr "_איקון:"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:22
 msgid "_None (use system theme)"
@@ -2526,7 +2528,7 @@ msgstr "ערך הפקודה"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command icon"
-msgstr "סמל הפקודה"
+msgstr "איקון הפקודה"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:5
 msgid "Enter a command string here to run it."
@@ -2558,7 +2560,7 @@ msgstr "הצג רשימה של _יישומים ידועים"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:13
 msgid "The icon of the command to be run."
-msgstr "הסמל של הפקודה להפעלה."
+msgstr "האיקון של הפקודה להפעלה."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:14
 #: ../gnome-panel/panel-stock-icons.c:91
@@ -2763,7 +2765,7 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"אם אמת, הסמן מוסתר באופן אוטומטי לפינת המסך כאשר הסמן עוזב את אזור הלוח. "
+"אם אמת, הסמן מוסתר באופן אוטומטי לפינת המסך כאשר הסמן עוזב את איזור הלוח. "
 "הזזת הסמן לפינה הזו יגרום ללוח להופיע שוב."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
@@ -2852,7 +2854,7 @@ msgid ""
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
-"מציין את מספר מילי-השניות של ההשהיה לאחר שהסמן נכנס לאזור הלוח לפני שהלוח "
+"מציין את מספר מילי-השניות של ההשהיה לאחר שהסמן נכנס לאיזור הלוח לפני שהלוח "
 "מופיע מחדש אוטומטית. מפתח זה רלוונטי רק אם מפתח auto_hide הוא אמת."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
@@ -2861,7 +2863,7 @@ msgid ""
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
-"מציין את מספר מילי-השניות של ההשהיה לאחר שהסמן עוזב את אזור הלוח לפני שהלוח "
+"מציין את מספר מילי-השניות של ההשהיה לאחר שהסמן עוזב את איזור הלוח לפני שהלוח "
 "מוסתר אוטומטית. מפתח זה רלוונטי רק אם מפתח auto_hide הוא אמת."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
@@ -3032,7 +3034,7 @@ msgstr "Y co-ordinate of panel, starting from the bottom of the screen"
 #: ../gnome-panel/panel-util.c:608
 #, c-format
 msgid "Icon '%s' not found"
-msgstr "הסמל '%s' לא נמצא"
+msgstr "האיקון '%s' לא נמצא"
 
 #: ../gnome-panel/panel-util.c:847
 msgid "file"
@@ -3206,334 +3208,95 @@ msgstr "_ישומון:"
 msgid "_Prefs Dir:"
 msgstr "_ספריית העדפות:"
 
-#~ msgid "Find _Next"
-#~ msgstr "חפש את _הבא"
 
-#~ msgid "Find..."
-#~ msgstr "חפש..."
 
-#~ msgid "_Find:"
-#~ msgstr "_חפש:"
 
-#~ msgid "Could not show '%s'"
-#~ msgstr "לא יכול להציג את '%s'"
 
-#~ msgid ""
-#~ "You are currently logged in as \"%s\".\n"
-#~ "You will be automatically logged out in %d second."
-#~ msgid_plural ""
-#~ "You are currently logged in as \"%s\".\n"
-#~ "You will be automatically logged out in %d seconds."
-#~ msgstr[0] ""
-#~ "כרגע אתה מחובר כ-\"%s\".\n"
-#~ "תנותק באופן אוטומטי תוך שניה."
-#~ msgstr[1] ""
-#~ "כרגע אתה מחובר כ-\"%s\".\n"
-#~ "תנותק באופן אוטומטי תוך %d שניות."
 
-#~ msgid ""
-#~ "You are currently logged in as \"%s\".\n"
-#~ "This system will be automatically shut down in %d second."
-#~ msgid_plural ""
-#~ "You are currently logged in as \"%s\".\n"
-#~ "This system will be automatically shut down in %d seconds."
-#~ msgstr[0] ""
-#~ "כרגע אתה מחובר כ-\"%s\".\n"
-#~ "המערכת תכבה באופן אוטומטי תוך שניה."
-#~ msgstr[1] ""
-#~ "כרגע אתה מחובר כ-\"%s\".\n"
-#~ "המערכת תכבה באופן אוטומטי תוך %d שניות."
 
-#~ msgid "Log out of this system now?"
-#~ msgstr "להתנתק מהמערכת?"
 
-#~ msgid "_Switch User"
-#~ msgstr "ה_חלף משתמש"
 
-#~ msgid "_Log Out"
-#~ msgstr "_התנתק"
 
-#~ msgid "Shut down this system now?"
-#~ msgstr "לכבות את המערכת?"
 
-#~ msgid "S_uspend"
-#~ msgstr "ה_שהה"
 
-#~ msgid "_Hibernate"
-#~ msgstr "מצב _שינה"
 
-#~ msgid "_Restart"
-#~ msgstr "ה_פעל מחדש"
 
-#~ msgid "_Shut Down"
-#~ msgstr "_כבה"
 
-#~ msgid "Enter Password"
-#~ msgstr "הכנס סיסמה"
 
-#~ msgid "Could not find a suitable application."
-#~ msgstr "לא נמצא יישום מתאים."
 
-#~ msgid "Unknown Location"
-#~ msgstr "מיקום לא ידוע"
 
-#~ msgid "<b>Active timezones</b>"
-#~ msgstr "<b>אזורי זמן פעילים</b>"
 
-#~ msgid "<b>Add timezone</b>"
-#~ msgstr "<b>הוסף אזור זמן</b>"
 
-#~ msgid "<small><b>Location:</b></small>"
-#~ msgstr "<small><b>מיקום:</b></small>"
 
-#~ msgid ""
-#~ "<small><i>Click on the map to zoom and select the timezone of a city, or "
-#~ "right click to zoom out.</i></small>"
-#~ msgstr ""
-#~ "<small><i>לחץ על המפה כדי להתקרב ובחר את אזור הזמן של עירך. השתמש בלחיצה "
-#~ "ימנית כדי להתרחק.</i></small>"
 
-#~ msgid "Edit Timezones"
-#~ msgstr "ערוך אזורי זמן"
 
-#~ msgid "%s - %s"
-#~ msgstr "%s - %s"
 
-#~ msgid "move the mouse on the map"
-#~ msgstr "הזז את העכבר על המפה"
 
-#~ msgid "<b>Location:</b> %s"
-#~ msgstr "<b>מיקום:</b> %s"
 
-#~ msgid "Name"
-#~ msgstr "שם"
 
-#~ msgid "Timezone"
-#~ msgstr "אזור זמן"
 
-#~ msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-#~ msgstr "‏%s עם שעון קיץ (UTC %s%.2ld:%.2ld)"
 
-#~ msgid "%s (UTC %s%.2ld:%.2ld)"
-#~ msgstr "‏%s (UTC %s%.2ld:%.2ld)"
 
-#~ msgid ""
-#~ "%s - %s\n"
-#~ "%s"
-#~ msgstr ""
-#~ "‏%s - %s\n"
-#~ "‏%s"
 
-#~ msgid "_Edit timezones..."
-#~ msgstr "_ערוך אזורי זמן..."
 
-#~ msgid "Timezones"
-#~ msgstr "אזורי זמן"
 
-#~ msgid "%A %B %d"
-#~ msgstr "יום %A, ה %d ב%B"
 
-#~ msgid "Click to view time in other timezones"
-#~ msgstr "לחץ כדי לראות את השעה באזורי זמן אחרים"
 
-#~ msgid "Clock _type:"
-#~ msgstr "_סוג שעון:"
 
-#~ msgid "12 hour"
-#~ msgstr "12 שעות"
 
-#~ msgid "Use _UTC"
-#~ msgstr "השתמש ב _UTC"
 
-#~ msgid "Show multiple _timezones"
-#~ msgstr "הצג _אזורי זמן מרובים"
 
-#~ msgid ""
-#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
-#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
-#~ "keys."
-#~ msgstr ""
-#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
-#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
-#~ "keys."
 
-#~ msgid ""
-#~ "If true, display the timezone button in the clock, in addition to time."
-#~ msgstr ""
-#~ "If true, display the timezone button in the clock, in addition to time."
 
-#~ msgid "Show the timezone button"
-#~ msgstr "Show the timezone button"
 
-#~ msgid ""
-#~ "This key specifies the name of the timezone as can be used in the TZ "
-#~ "environment variable."
-#~ msgstr ""
-#~ "This key specifies the name of the timezone as can be used in the TZ "
-#~ "environment variable."
 
-#~ msgid "This key specifies the user-visible name of the timezone."
-#~ msgstr "This key specifies the user-visible name of the timezone."
 
-#~ msgid "Timezone ID list"
-#~ msgstr "Timezone ID list"
 
-#~ msgid "User-visible name of the timezone"
-#~ msgstr "User-visible name of the timezone"
 
-#~ msgid "Computer"
-#~ msgstr "מחשב"
 
-#~ msgid "Network"
-#~ msgstr "רשת"
 
-#~ msgid "Themes"
-#~ msgstr "ערכות נושא"
 
-#~ msgid "CD/DVD Creator"
-#~ msgstr "יוצר CD/DVD"
 
-#~ msgid "Windows Network"
-#~ msgstr "רשת חלונות"
 
-#~ msgid "Trash"
-#~ msgstr "אשפה"
 
-#~ msgid "%1$s on %2$s"
-#~ msgstr "‏%1$s ב-%2$s"
 
-#~ msgid "<b>Window List Size</b>"
-#~ msgstr "‏<b>גודל רשימת חלונות</b>"
 
-#~ msgid "Behavior"
-#~ msgstr "התנהגות"
 
-#~ msgid "M_inimum size:"
-#~ msgstr "גודל מי_נימלי:"
 
-#~ msgid "Ma_ximum size:"
-#~ msgstr "גודל מ_קסימלי:"
 
-#~ msgid "Size"
-#~ msgstr "גודל"
 
-#~ msgid ""
-#~ "This key specifies the maximum width that the window list requests. The "
-#~ "maximum width setting is useful to limit the size of the window list in "
-#~ "large panels, where the window list could fill the entire space available."
-#~ msgstr ""
-#~ "מפתח זה מציין את הרוחב המקסימלי שרשימת החלונות דורשת. הגדרת רוחב המקסימלי "
-#~ "שימושי להגבלת הגודל של רשימת החלונות בלוחות גדולים, בהם רשימת החלונות "
-#~ "יכולה למלא את כל המקום הפנוי."
 
-#~ msgid "This key specifies the minimum width that the window list requests."
-#~ msgstr "מפתח זה מציין את הרוחב המינימלי שרשימת החלונות דורשת."
 
-#~ msgid "File"
-#~ msgstr "קובץ"
 
-#~ msgid ""
-#~ "I've detected a panel already running,\n"
-#~ "and will now exit."
-#~ msgstr ""
-#~ "זיהיתי לוח שכבר פועל,\n"
-#~ "התוכנית תסגר."
 
-#~ msgid "Delete Drawer"
-#~ msgstr "מחק מגירה"
 
-#~ msgid "Delete Panel"
-#~ msgstr "מחק לוח"
 
-#~ msgid "Orientation"
-#~ msgstr "ישור"
 
-#~ msgid "The orientation of the tray."
-#~ msgstr "הישור של המגש"
 
-#~ msgid "Could not load icon"
-#~ msgstr "לא ניתן לטעון סמל"
 
-#~ msgid "Find files, folders, and documents on your computer"
-#~ msgstr "חפש קבצים, תיקיות ומסמכים במחשב שלך"
 
-#~ msgid "Empty"
-#~ msgstr "ריק"
 
-#~ msgid "Could not save launcher to disk"
-#~ msgstr "לא ניתן לשמור משגר בדיסק"
 
-#~ msgid "You have to specify a name."
-#~ msgstr "אתה חייב לציין שם."
 
-#~ msgid "You have to specify a valid URL or command."
-#~ msgstr "אתה חייב לציין כתובת או פקודה תקינים."
 
-#~ msgid "Could not save changes to launcher"
-#~ msgstr "לא ניתן לשמור שינויים למשגר"
 
-#~ msgid "Menu"
-#~ msgstr "תפריט"
 
-#~ msgid "You do not have permission to write to this location."
-#~ msgstr "אין לך הרשאות לכתוב למיקום זה"
 
-#~ msgid "_Delete This Panel..."
-#~ msgstr "_מחק לוח זה..."
 
-#~ msgid "Desktop Environment|Desktop"
-#~ msgstr "שולחן עבודה"
 
-#~ msgid "Could not load menu item"
-#~ msgstr "לא ניתן לטעון פריט"
 
-#~ msgid "*"
-#~ msgstr "*"
 
-#~ msgid "Details: %s"
-#~ msgstr "פרטים: %s"
 
-#~ msgid "24"
-#~ msgstr "24"
 
-#~ msgid "This launch icon does not specify a url to show."
-#~ msgstr "סמל המשגר הזה לא מציין כתובת להצגה."
 
-#~ msgid "Cannot save menu item to disk"
-#~ msgstr "לא ניתן לשמור פריט תפריט לדיסק"
 
-#~ msgid ""
-#~ "You can not create a new launcher at this location since the location is "
-#~ "not writable."
-#~ msgstr ""
-#~ "אתה לא יכול ליצור משגר חדש במיקום זה כיוון שלא ניתן לכתוב למיקום זה."
 
-#~ msgid "_Kill Screensaver Daemon"
-#~ msgstr "ה_רוג את שירות שומר המסך"
 
-#~ msgid "Restart _Screensaver Daemon"
-#~ msgstr "הפעל מחדש את שירות _שומר המסך"
 
-#~ msgid "Take Screenshot..."
-#~ msgstr "צלם תמונת מסך..."
 
-#~ msgid "Take a screenshot of your desktop"
-#~ msgstr "צלם תמונת מסך של שולחן העבודה שלך"
 
-#~ msgid "Launch a program that is already in the GNOME menu"
-#~ msgstr "הפעל תוכנה שכבר נמצאת בתפריט"
 
-#~ msgid "You cannot remove your last panel."
-#~ msgstr "אתה לא יכול להסיר את הלוח האחרון שלך."
 
-#~ msgid "Top"
-#~ msgstr "למעלה"
 
-#~ msgid "Bottom"
-#~ msgstr "למטה"
 
-#~ msgid "Left"
-#~ msgstr "שמאלה"
 
-#~ msgid "Right"
-#~ msgstr "ימינה"
