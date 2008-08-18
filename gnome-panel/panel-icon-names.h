@@ -1,7 +1,7 @@
 #ifndef PANEL_ICON_NAMES_H
 #define PANEL_ICON_NAMES_H
 
-#define PANEL_ICON_BOOKMARKS		"stock_bookmark"
+#define PANEL_ICON_BOOKMARKS		"user-bookmarks"
 #define PANEL_ICON_BURNER		"nautilus-cd-burner"
 #define PANEL_ICON_COMPUTER		"computer"
 #define PANEL_ICON_DESKTOP		"user-desktop"
