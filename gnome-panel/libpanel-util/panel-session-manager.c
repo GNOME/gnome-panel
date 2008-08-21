@@ -102,7 +102,7 @@ panel_session_manager_request_logout (PanelSessionManager           *manager,
 	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
 
 	if (!dbus_g_proxy_call (proxy, "Logout", &error,
-				G_TYPE_INT, mode, G_TYPE_INVALID,
+				G_TYPE_UINT, mode, G_TYPE_INVALID,
 				G_TYPE_INVALID) &&
 	    error != NULL) {
 		g_warning ("Could not ask session manager to log out: %s",
