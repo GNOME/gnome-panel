@@ -133,6 +133,7 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 				    "applications and provides useful utilities."),
 		      "authors", authors,
 		      "documenters", documenters,
+		      "title", _("About the GNOME Panel"),
 		      "translator-credits", _("translator-credits"),
 		      "logo-icon-name", PANEL_ICON_PANEL,
 		      NULL);
