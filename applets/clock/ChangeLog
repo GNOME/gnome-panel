@@ -1,5 +1,12 @@
 2008-09-02  Vincent Untz  <vuntz@gnome.org>
 
+	* calendar-window.c: (calendar_day_activated): really open the calendar
+	on the right day. Timezones make this harder.
+	Patch by Matthias Drochner <M.Drochner@fz-juelich.de>
+	Fix bug #372155 again.
+
+2008-09-02  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-location-tile.c: (clock_location_tile_fill): improve tooltip of
 	"Set" button
 	Fix bug #550087
