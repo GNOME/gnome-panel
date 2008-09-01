@@ -313,8 +313,8 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_widget_show (priv->current_label);
         gtk_widget_set_no_show_all (priv->current_button, TRUE);
         gtk_container_add (GTK_CONTAINER (priv->current_button), priv->current_label);
-	/* FIXME: this needs to talk about locations, not timezones */
-        gtk_widget_set_tooltip_text (priv->current_button, _("Set as current timezone for this computer"));
+        gtk_widget_set_tooltip_text (priv->current_button,
+				     _("Set location as current location and use its timezone for this computer"));
 
 	priv->current_marker = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);
 	gtk_misc_set_alignment (GTK_MISC (priv->current_marker), 1.0, 0.5);
