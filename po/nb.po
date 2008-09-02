@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.23.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-12 10:05+0200\n"
-"PO-Revision-Date: 2008-08-12 10:05+0200\n"
+"POT-Creation-Date: 2008-09-02 08:02+0200\n"
+"PO-Revision-Date: 2008-09-02 08:03+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "_Om"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:721
-#: ../gnome-panel/panel-context-menu.c:282 ../gnome-panel/panel-menu-bar.c:341
+#: ../gnome-panel/panel-context-menu.c:283 ../gnome-panel/panel-menu-bar.c:341
 #: ../gnome-panel/panel-menu-button.c:661
 msgid "_Help"
 msgstr "_Hjelp"
@@ -102,7 +102,7 @@ msgstr "Oppgaver"
 
 #: ../applets/clock/calendar-window.c:773
 #: ../applets/clock/calendar-window.c:949
-#: ../applets/clock/calendar-window.c:1578
+#: ../applets/clock/calendar-window.c:1585
 msgid "Edit"
 msgstr "Rediger"
 
@@ -122,11 +122,11 @@ msgstr "Fødsels- og bryllupsdager"
 msgid "Weather Information"
 msgstr "Informasjon om vær"
 
-#: ../applets/clock/calendar-window.c:1578 ../applets/clock/clock.glade.h:13
+#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:13
 msgid "Locations"
 msgstr "Lokasjoner"
 
-#: ../applets/clock/calendar-window.c:1877
+#: ../applets/clock/calendar-window.c:1884
 msgid "Calendar"
 msgstr "Kalender"
 
@@ -271,7 +271,7 @@ msgstr "Klokken viser nåværende klokkeslett og dato"
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:620
-#: ../gnome-panel/panel-context-menu.c:136
+#: ../gnome-panel/panel-context-menu.c:137
 msgid "translator-credits"
 msgstr ""
 "Kjartan Maraas <kmaraas@gnome.org>\n"
@@ -611,10 +611,9 @@ msgstr "<small>Sett...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>Sett</small>"
 
-#. FIXME: this needs to talk about locations, not timezones
 #: ../applets/clock/clock-location-tile.c:317
-msgid "Set as current timezone for this computer"
-msgstr "Sett som aktiv tidssone for denne datamaskinen"
+msgid "Set location as current location and use its timezone for this computer"
+msgstr "Sett lokasjonen som aktiv lokasjon og bruk tidssonen for denne datamaskinen"
 
 #. translators: This is a strftime format string that is used for formatting
 #. * the time that is displayed for locations in the popup. This string is used
@@ -1312,7 +1311,7 @@ msgstr "L_egg til i skuff..."
 
 #: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:874
 #: ../gnome-panel/panel-action-button.c:139
-#: ../gnome-panel/panel-context-menu.c:214
+#: ../gnome-panel/panel-context-menu.c:215
 msgid "_Properties"
 msgstr "_Egenskaper"
 
@@ -1695,27 +1694,31 @@ msgstr ""
 "Dette programmet er ansvarlig for å starte andre programmer og gir deg noen "
 "nyttige verktøy."
 
-#: ../gnome-panel/panel-context-menu.c:169
+#: ../gnome-panel/panel-context-menu.c:136
+msgid "About the GNOME Panel"
+msgstr "Om GNOME Panel"
+
+#: ../gnome-panel/panel-context-menu.c:170
 msgid "Cannot delete this panel"
 msgstr "Kan ikke slette dette panelet"
 
-#: ../gnome-panel/panel-context-menu.c:170
+#: ../gnome-panel/panel-context-menu.c:171
 msgid "You must always have at least one panel."
 msgstr "Du må ha minst ett panel."
 
-#: ../gnome-panel/panel-context-menu.c:203
+#: ../gnome-panel/panel-context-menu.c:204
 msgid "_Add to Panel..."
 msgstr "_Legg til på panelet..."
 
-#: ../gnome-panel/panel-context-menu.c:224
+#: ../gnome-panel/panel-context-menu.c:225
 msgid "_Delete This Panel"
 msgstr "_Slett dette panelet"
 
-#: ../gnome-panel/panel-context-menu.c:239
+#: ../gnome-panel/panel-context-menu.c:240
 msgid "_New Panel"
 msgstr "_Nytt panel"
 
-#: ../gnome-panel/panel-context-menu.c:290
+#: ../gnome-panel/panel-context-menu.c:291
 msgid "A_bout Panels"
 msgstr "O_m paneler"
 
