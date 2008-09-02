@@ -92,6 +92,7 @@ AC_ARG_ENABLE(eds,
 LIBECAL_REQUIREMENT=
 if test "x$enable_eds" = "xyes"; then
   LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED libedataserverui-1.2 >= $LIBEDATASERVERUI_REQUIRED"
+  CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
 else
   if test "x$enable_eds" != "xno"; then
     AC_MSG_CHECKING(for evolution-data-server)
