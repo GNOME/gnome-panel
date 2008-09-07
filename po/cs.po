@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-28 01:04+0200\n"
-"PO-Revision-Date: 2008-08-28 00:59+0200\n"
+"POT-Creation-Date: 2008-09-08 00:40+0200\n"
+"PO-Revision-Date: 2008-09-08 00:39+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr "O _aplikaci"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:721
-#: ../gnome-panel/panel-context-menu.c:282 ../gnome-panel/panel-menu-bar.c:341
+#: ../gnome-panel/panel-context-menu.c:283 ../gnome-panel/panel-menu-bar.c:341
 #: ../gnome-panel/panel-menu-button.c:661
 msgid "_Help"
 msgstr "Nápo_věda"
@@ -110,7 +110,7 @@ msgstr "Úkoly"
 
 #: ../applets/clock/calendar-window.c:773
 #: ../applets/clock/calendar-window.c:949
-#: ../applets/clock/calendar-window.c:1578
+#: ../applets/clock/calendar-window.c:1585
 msgid "Edit"
 msgstr "Upravit"
 
@@ -130,11 +130,11 @@ msgstr "Narozeniny a výročí"
 msgid "Weather Information"
 msgstr "Informace o počasí"
 
-#: ../applets/clock/calendar-window.c:1578 ../applets/clock/clock.glade.h:13
+#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:13
 msgid "Locations"
 msgstr "Umístění"
 
-#: ../applets/clock/calendar-window.c:1877
+#: ../applets/clock/calendar-window.c:1884
 msgid "Calendar"
 msgstr "Kalendář"
 
@@ -279,7 +279,7 @@ msgstr "Hodiny zobrazují aktuální datum a čas"
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:620
-#: ../gnome-panel/panel-context-menu.c:136
+#: ../gnome-panel/panel-context-menu.c:137
 msgid "translator-credits"
 msgstr ""
 "GIS <gis@academy.cas.cz>\n"
@@ -623,10 +623,11 @@ msgstr "<small>Nastavit...</small>"
 msgid "<small>Set</small>"
 msgstr "<small>Nastavit</small>"
 
-#. FIXME: this needs to talk about locations, not timezones
 #: ../applets/clock/clock-location-tile.c:317
-msgid "Set as current timezone for this computer"
-msgstr "Nastavit jako aktuální časové pásmo pro tento počítač"
+msgid "Set location as current location and use its timezone for this computer"
+msgstr ""
+"Nastavit umístění pro tento počítač jako aktuální a použít odpovídající "
+"časové pásmo"
 
 #. translators: This is a strftime format string that is used for formatting
 #. * the time that is displayed for locations in the popup. This string is used
@@ -1328,7 +1329,7 @@ msgstr "_Přidat do zásuvky..."
 
 #: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:874
 #: ../gnome-panel/panel-action-button.c:139
-#: ../gnome-panel/panel-context-menu.c:214
+#: ../gnome-panel/panel-context-menu.c:215
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
@@ -1709,27 +1710,31 @@ msgstr ""
 "Tento program zodpovídá za spouštění jiných aplikací a poskytuje užitečné "
 "nástroje."
 
-#: ../gnome-panel/panel-context-menu.c:169
+#: ../gnome-panel/panel-context-menu.c:136
+msgid "About the GNOME Panel"
+msgstr "O panelu GNOME"
+
+#: ../gnome-panel/panel-context-menu.c:170
 msgid "Cannot delete this panel"
 msgstr "Tento panel nelze odstranit"
 
-#: ../gnome-panel/panel-context-menu.c:170
+#: ../gnome-panel/panel-context-menu.c:171
 msgid "You must always have at least one panel."
 msgstr "Vždy je nutné mít alespoň jeden panel."
 
-#: ../gnome-panel/panel-context-menu.c:203
+#: ../gnome-panel/panel-context-menu.c:204
 msgid "_Add to Panel..."
 msgstr "_Přidat na panel..."
 
-#: ../gnome-panel/panel-context-menu.c:224
+#: ../gnome-panel/panel-context-menu.c:225
 msgid "_Delete This Panel"
 msgstr "O_dstranit tento panel"
 
-#: ../gnome-panel/panel-context-menu.c:239
+#: ../gnome-panel/panel-context-menu.c:240
 msgid "_New Panel"
 msgstr "_Nový panel"
 
-#: ../gnome-panel/panel-context-menu.c:290
+#: ../gnome-panel/panel-context-menu.c:291
 msgid "A_bout Panels"
 msgstr "_O panelech"
 
