@@ -1355,6 +1355,22 @@ panel_toplevel_contains_pointer (PanelToplevel *toplevel)
 	return TRUE;
 }
 
+static inline int
+panel_toplevel_get_effective_auto_hide_size (PanelToplevel *toplevel)
+{
+	int size;
+
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+		size = CLAMP (toplevel->priv->auto_hide_size,
+			      1, toplevel->priv->original_height / 2);
+	else
+		size = CLAMP (toplevel->priv->auto_hide_size,
+			      1, toplevel->priv->original_width / 2);
+
+	/* paranoia */
+	return (size <= 0) ? DEFAULT_AUTO_HIDE_SIZE : size;
+}
+
 static gboolean
 panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation)
 {
@@ -1438,6 +1454,9 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 		toplevel->priv->orientation = orientation;
 		g_object_notify (G_OBJECT (toplevel), "orientation");
 	}
+
+	if (toplevel->priv->auto_hide && strut > 0)
+		strut = panel_toplevel_get_effective_auto_hide_size (toplevel);
 
 	if (strut > 0)
 		geometry_changed = panel_struts_register_strut (toplevel,
@@ -1809,16 +1828,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	snap_tolerance = toplevel->priv->snap_tolerance;
 
 	if (toplevel->priv->initial_animation_done) {
-		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-			auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
-						1, height / 2);
-		else
-			auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
-						1, width / 2);
-
-		/* paranoia */
-		if (auto_hide_size <= 0)
-			auto_hide_size = DEFAULT_AUTO_HIDE_SIZE;
+		auto_hide_size = panel_toplevel_get_effective_auto_hide_size (toplevel);
 	} else {
 		/* when loading, we animate from outside the screen */
 		auto_hide_size = 0;

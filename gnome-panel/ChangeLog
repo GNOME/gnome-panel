@@ -1,3 +1,15 @@
+2008-09-09  Vincent Untz  <vuntz@gnome.org>
+
+	Revert the auto-hide behavior change that got introduced in 2.23.6.
+	It was annoying for users.
+
+	* panel-toplevel.c: (panel_toplevel_get_effective_auto_hide_size): new
+	function, to know the effective auto hide size
+	(panel_toplevel_update_struts): use
+	panel_toplevel_get_effective_auto_hide_size() for the strut
+	(panel_toplevel_update_auto_hide_position): use
+	panel_toplevel_get_effective_auto_hide_size() now
+
 ==================== 2.23.91 ====================
 
 2008-08-31  Seán de Búrca  <sdeburca@svn.gnome.org>
