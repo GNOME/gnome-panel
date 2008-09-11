@@ -276,6 +276,7 @@ panel_context_menu_create (PanelWidget *panel)
 	}
 
 	retval = create_empty_menu ();
+	gtk_widget_set_name (retval, "gnome-panel-context-menu");
 
 	if (!panel_lockdown_get_locked_down ())
 		panel_context_menu_build_edition (panel, retval);

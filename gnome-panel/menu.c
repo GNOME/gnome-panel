@@ -275,6 +275,7 @@ panel_create_menu (void)
 	}
 	
 	retval = gtk_menu_new ();
+	gtk_widget_set_name (retval, "gnome-panel-main-menu");
 	
 	panel_gconf_notify_add_while_alive ("/desktop/gnome/interface/menus_have_icons",
 					    (GConfClientNotifyFunc) menus_have_icons_changed,
